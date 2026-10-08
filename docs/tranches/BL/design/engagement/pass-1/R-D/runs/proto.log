@@ -1,0 +1,61 @@
+13:12  up 22:39, 2 users, load averages: 26.15 42.61 50.83
+E-2 chromium exit 1 · E-2 chromium FAIL · 46 pass, 2 fail, 0 unmeasured of 48 gating cells (0 reported) · load 26.1/42.6/50.8 at start, 24.0/39.2/49.0 at end · 55 s, load at start 26.1/42.6/50.8
+    FAIL       E-2 radio commit·keyboard(ArrowDown) light · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 109 frames, median 7.6 ms · load 20.3/39.6/49.5
+    FAIL       E-2 radio commit·keyboard(ArrowDown) dark · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 101 frames, median 8.5 ms · load 28.4/41.0/49.9
+E-2 webkit   exit 0 · E-2 webkit PASS · 48 pass, 0 fail, 0 unmeasured of 48 gating cells (0 reported) · load 24.0/39.2/49.0 at start, 29.5/38.0/47.9 at end · 62 s, load at start 24.0/39.2/49.0
+E-5 chromium exit 0 · E-5 chromium PASS · 12 pass, 0 fail, 0 unmeasured of 12 gating cells (0 reported) · load 29.5/38.0/47.9 at start, 25.6/36.3/46.9 at end · 27 s, load at start 29.5/38.0/47.9
+E-5 webkit   exit 0 · E-5 webkit PASS · 12 pass, 0 fail, 0 unmeasured of 12 gating cells (0 reported) · load 25.6/36.3/46.9 at start, 19.7/33.5/45.4 at end · 44 s, load at start 25.6/36.3/46.9
+E-8 chromium exit 0 · E-8 chromium PASS · 9 pass, 0 fail, 0 unmeasured of 9 gating cells (0 reported) · load 19.7/33.5/45.4 at start, 22.6/33.2/45.0 at end · 17 s, load at start 19.7/33.5/45.4
+E-8 webkit   exit 0 · E-8 webkit PASS · 9 pass, 0 fail, 0 unmeasured of 9 gating cells (0 reported) · load 22.6/33.2/45.0 at start, 28.2/33.8/45.0 at end · 19 s, load at start 22.6/33.2/45.0
+E-9 chromium exit 0 · E-9 chromium PASS · 30 pass, 0 fail, 0 unmeasured of 30 gating cells (0 reported) · load 28.2/33.8/45.0 at start, 27.2/33.2/44.4 at end · 27 s, load at start 28.2/33.8/45.0
+E-9 webkit   exit 0 · E-9 webkit PASS · 30 pass, 0 fail, 0 unmeasured of 30 gating cells (0 reported) · load 27.2/33.2/44.4 at start, 23.4/31.7/43.5 at end · 31 s, load at start 27.2/33.2/44.4
+13:17  up 22:44, 2 users, load averages: 23.41 31.74 43.53
+E-1 chromium exit 2 · E-1 chromium HARNESS ERROR · page.evaluate: TypeError: Cannot read properties of null (reading 's') · load 23.4/31.5/43.3 · 11 s, load at start 23.4/31.7/43.5
+    FAIL       E-1 runtime capsule (chip) PRM press-light · scene chip, reduce: Δscale 0.000 · press-only paint [] (bound ≥ 1 property) · load 24.4/31.8/43.5
+    FAIL       E-1 runtime field (input) · no harness scene exemplifies input (H-2: add one to the scene app) · load 24.4/31.8/43.5
+    FAIL       E-1 runtime row (menu) · no harness scene exemplifies menu (H-2: add one to the scene app) · load 23.4/31.5/43.3
+    FAIL       E-1 runtime drag (sortable-list) · no harness scene exemplifies sortable-list (H-2: add one to the scene app) · load 23.4/31.5/43.3
+    FAIL       E-1 runtime plate (card) · no harness scene exemplifies card (H-2: add one to the scene app) · load 23.4/31.5/43.3
+    HARNESS ERROR page.evaluate: TypeError: Cannot read properties of null (reading 's') |     at eval (eval at evaluate (:303:30), <anonymous>:1:112) |     at UtilityScript.evaluate (<anonymous>:305:16)
+E-1 webkit   exit 2 · E-1 webkit HARNESS ERROR · page.evaluate: TypeError: null is not an object (evaluating 'window.__eff(document.querySelector('[data-e~="target"]')).s') · load 24.8/31.4/43.1 · 13 s, load at start 24.0/31.5/43.2
+    FAIL       E-1 runtime capsule (chip) PRM press-light · scene chip, reduce: Δscale 0.000 · press-only paint [] (bound ≥ 1 property) · load 24.7/31.5/43.2
+    FAIL       E-1 runtime field (input) · no harness scene exemplifies input (H-2: add one to the scene app) · load 24.7/31.5/43.2
+    FAIL       E-1 runtime row (menu) · no harness scene exemplifies menu (H-2: add one to the scene app) · load 24.7/31.5/43.2
+    FAIL       E-1 runtime drag (sortable-list) · no harness scene exemplifies sortable-list (H-2: add one to the scene app) · load 24.8/31.4/43.1
+    FAIL       E-1 runtime plate (card) · no harness scene exemplifies card (H-2: add one to the scene app) · load 24.8/31.4/43.1
+    HARNESS ERROR page.evaluate: TypeError: null is not an object (evaluating 'window.__eff(document.querySelector('[data-e~="target"]')).s') |     at snap (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/e1-census.mjs:53:35) |     at /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/e1-census.mjs:54:26
+E-3 chromium exit 1 · E-3 chromium FAIL · 10 pass, 2 fail, 0 unmeasured of 12 gating cells (0 reported) · load 24.8/31.4/43.1 at start, 22.0/30.5/42.5 at end · 12 s, load at start 24.8/31.4/43.1
+    FAIL       E-3 slider phone touch-held light · 390×844 coarse · rest 358.0 px → touch-held 358.0 px (×1.000; [data-engaged] 2) · bound ×1.03 · load 24.5/31.2/42.9
+    FAIL       E-3 slider phone touch-held dark · 390×844 coarse · rest 358.0 px → touch-held 358.0 px (×1.000; [data-engaged] 2) · bound ×1.03 · load 23.2/30.9/42.7
+E-3 webkit   exit 1 · E-3 webkit FAIL · 10 pass, 2 fail, 0 unmeasured of 12 gating cells (0 reported) · load 22.0/30.5/42.5 at start, 23.5/30.4/42.3 at end · 19 s, load at start 22.0/30.5/42.5
+    FAIL       E-3 slider phone touch-held light · 390×844 coarse · rest 358.0 px → touch-held 358.0 px (×1.000; [data-engaged] 2) · bound ×1.03 · load 22.6/30.4/42.5
+    FAIL       E-3 slider phone touch-held dark · 390×844 coarse · rest 358.0 px → touch-held 358.0 px (×1.000; [data-engaged] 2) · bound ×1.03 · load 23.5/30.4/42.3
+E-4 chromium exit 1 · E-4 chromium FAIL · 1 pass, 1 fail, 0 unmeasured of 2 gating cells (0 reported) · load 23.5/30.4/42.3 at start, 23.3/30.1/42.0 at end · 9 s, load at start 23.5/30.4/42.3
+    FAIL       E-4 slider fling carries velocity · axis x · fling: carry 0.00 px, settles -0.00 px past release · still: carry 0.00 px, settles 0.00 px · difference: carry 0.00 px, settle -0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 0.0 px, still 0.0 px · 262 frames, median 8.0 ms · load 23.3/30.1/42.0
+E-4 webkit   exit 1 · E-4 webkit FAIL · 1 pass, 1 fail, 0 unmeasured of 2 gating cells (0 reported) · load 23.3/30.1/42.0 at start, 22.6/29.7/41.8 at end · 10 s, load at start 23.3/30.1/42.0
+    FAIL       E-4 slider fling carries velocity · axis x · fling: carry 0.00 px, settles 0.00 px past release · still: carry 0.00 px, settles 0.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 0.0 px, still 0.0 px · 197 frames, median 10.0 ms · load 22.6/29.7/41.8
+E-6 chromium exit 1 · E-6 chromium FAIL · 4 pass, 2 fail, 8 unmeasured of 14 gating cells (0 reported) · load 22.6/29.7/41.8 at start, 28.8/30.8/42.0 at end · 11 s, load at start 22.6/29.7/41.8
+    FAIL       E-6 s6 present light · 0 running infinite animation(s) at rest · load 24.9/30.1/41.8
+    UNMEASURED E-6 s6 channel light · no idle animation to read · load 24.9/30.1/41.8
+    UNMEASURED E-6 s6 shape light · no idle animation to read · load 24.9/30.1/41.8
+    UNMEASURED E-6 s6 amplitude light · no idle animation to read · load 24.9/30.1/41.8
+    UNMEASURED E-6 s6 period light · no idle animation to read · load 24.9/30.1/41.8
+    FAIL       E-6 s6 present dark · 0 running infinite animation(s) at rest · load 28.8/30.8/42.0
+    UNMEASURED E-6 s6 channel dark · no idle animation to read · load 28.8/30.8/42.0
+    UNMEASURED E-6 s6 shape dark · no idle animation to read · load 28.8/30.8/42.0
+    UNMEASURED E-6 s6 amplitude dark · no idle animation to read · load 28.8/30.8/42.0
+    UNMEASURED E-6 s6 period dark · no idle animation to read · load 28.8/30.8/42.0
+E-6 webkit   exit 1 · E-6 webkit FAIL · 2 pass, 2 fail, 8 unmeasured of 12 gating cells (2 reported) · load 29.6/30.9/42.0 at start, 29.4/30.9/41.9 at end · 6 s, load at start 29.6/30.9/42.0
+    FAIL       E-6 s6 present light · 0 running infinite animation(s) at rest · load 29.6/30.9/42.0
+    UNMEASURED E-6 s6 channel light · no idle animation to read · load 29.6/30.9/42.0
+    UNMEASURED E-6 s6 shape light · no idle animation to read · load 29.6/30.9/42.0
+    UNMEASURED E-6 s6 amplitude light · no idle animation to read · load 29.6/30.9/42.0
+    UNMEASURED E-6 s6 period light · no idle animation to read · load 29.6/30.9/42.0
+    FAIL       E-6 s6 present dark · 0 running infinite animation(s) at rest · load 29.4/30.9/41.9
+    UNMEASURED E-6 s6 channel dark · no idle animation to read · load 29.4/30.9/41.9
+    UNMEASURED E-6 s6 shape dark · no idle animation to read · load 29.4/30.9/41.9
+    UNMEASURED E-6 s6 amplitude dark · no idle animation to read · load 29.4/30.9/41.9
+    UNMEASURED E-6 s6 period dark · no idle animation to read · load 29.4/30.9/41.9
+E-7 chromium exit 0 · E-7 chromium PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 29.4/30.9/41.9 at start, 28.6/30.7/41.8 at end · 4 s, load at start 29.4/30.9/41.9
+E-7 webkit   exit 0 · E-7 webkit PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 28.6/30.7/41.8 at start, 28.0/30.5/41.7 at end · 5 s, load at start 28.6/30.7/41.8
+13:18  up 22:46, 2 users, load averages: 27.97 30.52 41.66

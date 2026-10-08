@@ -1,0 +1,21 @@
+# tapfilm · chromium 149.0.7827.55 · scene switch · other headless processes: chromium 12, webkit 2 · load 73.9/50.9/54.5 at start
+# build: the FIRST prototype cut (control-bit host carried the scale press, scale: var(--scale-press) on :active, AND the commit swell).
+# That build was overwritten by the second cut; this log is transcribed verbatim from the run's stdout in the R-D session.
+# columns: ms since tap · effective scale (rect ratio) · computed `scale` · --commit-t · :active · data-state (every 3rd frame)
+0	1.000	1	0.000	-	unchecked
+18	1.000	0.998448	0.011	A	checked
+46	1.001	0.985192	0.132	A	checked
+68	1.004	0.974626	0.276	A	checked
+95	1.004	0.965788	0.466	A	checked
+121	0.996	0.961423	0.638	A	checked
+150	0.983	0.96	0.792	A	checked
+172	0.975	0.961099	0.881	-	checked
+194	0.977	0.970416	0.946	-	checked
+218	0.983	0.982692	0.994	-	checked
+246	0.990	0.993005	1.027	-	checked
+269	0.993	0.997598	1.039	-	checked
+290	0.995	1	1.042	-	checked
+459	1.000	1	1.000	-	checked
+# load 73.9/50.9/54.5 at end
+# reading: a touch tap commits at ~18 ms while :active holds to ~170 ms; the 0.96 press and the 1.04 swell multiply to a
+# peak of 1.004, so E-2 tap(coarse) read FAIL (peak 1.005 trough 0.971). The second cut moves the bit's press to the face fill.

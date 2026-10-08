@@ -1,0 +1,438 @@
+diff --git a/src/components/_shared/disclosure/disclosure.css b/src/components/_shared/disclosure/disclosure.css
+index 754c6ca4..7d309c0f 100644
+--- a/src/components/_shared/disclosure/disclosure.css
++++ b/src/components/_shared/disclosure/disclosure.css
+@@ -37,9 +37,17 @@
+         margin: 0;
+     }
+ 
++    /* THE DISCLOSURE SUBSTRATE (D5-D) owns its ladder: a light press, a commit swell
++       on open and on close (glass/commit.css), a hover only where hover exists. */
+     .disclosure-trigger {
++        --commit-amp: calc(1 - var(--scale-press-sm));
+         border-radius: var(--radius-control);
+         touch-action: manipulation;
++        transform-origin: center;
++    }
++
++    .disclosure-trigger[data-state="open"] {
++        --commit-t: 1;
+     }
+ 
+     .disclosure-trigger:focus-visible {
+@@ -67,13 +75,38 @@
+         text-align: start;
+         cursor: pointer;
+         transition:
+-            background-color var(--duration-control) var(--ease-standard),
++            background-color var(--engage-press-drain-release) var(--ease-standard),
+             color var(--duration-control) var(--ease-standard),
+-            box-shadow var(--duration-control) var(--ease-standard);
++            box-shadow var(--duration-control) var(--ease-standard),
++            --commit-t var(--spring-panel-duration) var(--spring-panel);
++    }
++
++    @media (hover: hover) {
++        .disclosure-group-trigger:hover:not(:disabled, [data-disabled]) {
++            background: color-mix(
++                in oklab,
++                var(--foreground) calc(var(--fill-hover) * 100%),
++                transparent
++            );
++        }
+     }
+ 
+-    .disclosure-group-trigger:hover:not(:disabled, [data-disabled]) {
+-        background: var(--control-surface-bg-hover);
++    /* The press is light, not scale: a full-width row squished by a ratio moves its
++       ends by pixels the finger is not on. The fill is the selected rung, which hover
++       cannot mint, so a held touch answers through the press and never through
++       leaked hover; it survives reduce, which retires only spatial legs. */
++    .disclosure-group-trigger:active:not(:disabled, [data-disabled]) {
++        background: color-mix(
++            in oklab,
++            var(--foreground) calc(var(--fill-selected) * 100%),
++            transparent
++        );
++        /* the attack clock on the light leg only; the list mirrors the rule above */
++        transition-duration:
++            var(--engage-press-drain-attack),
++            var(--duration-control),
++            var(--duration-control),
++            var(--spring-panel-duration);
+     }
+ 
+     .disclosure-icon {
+diff --git a/src/components/checkbox/Checkbox.vue b/src/components/checkbox/Checkbox.vue
+index 9480e93e..671bd92c 100644
+--- a/src/components/checkbox/Checkbox.vue
++++ b/src/components/checkbox/Checkbox.vue
+@@ -35,7 +35,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emit);
+         v-slot="{ state }"
+         v-bind="{ ...forwarded, ...controlStateAttrs(props.invalid) }"
+         data-slot="checkbox"
+-        class="checkbox control-bit tap-squish"
++        class="checkbox control-bit"
+         :class="props.class"
+     >
+         <span class="control-bit__face" aria-hidden="true">
+diff --git a/src/components/dialog/ModalOverlay.vue b/src/components/dialog/ModalOverlay.vue
+index 9cb477a9..134f5ef3 100644
+--- a/src/components/dialog/ModalOverlay.vue
++++ b/src/components/dialog/ModalOverlay.vue
+@@ -71,7 +71,7 @@ const props = withDefaults(defineProps<ModalOverlayProps>(), {
+         "
+         :style="props.opacity == null ? undefined : { opacity: props.opacity }"
+     >
+-        <span v-if="props.veil" class="glass-focus-veil" data-engaged aria-hidden="true" />
++        <span v-if="props.veil" class="glass-focus-veil" aria-hidden="true" />
+         <slot />
+     </DialogOverlay>
+ </template>
+diff --git a/src/components/radio-group/RadioGroupItem.vue b/src/components/radio-group/RadioGroupItem.vue
+index 6d0c21d9..71477b80 100644
+--- a/src/components/radio-group/RadioGroupItem.vue
++++ b/src/components/radio-group/RadioGroupItem.vue
+@@ -36,7 +36,7 @@ const forwardedProps = useForwardProps(delegatedProps);
+     <RadioGroupItem
+         data-slot="radio-group-item"
+         v-bind="forwardedProps"
+-        :class="cn('control-bit tap-squish', props.class)"
++        :class="cn('control-bit', props.class)"
+     >
+         <span class="control-bit__face" aria-hidden="true">
+             <RadioGroupIndicator
+diff --git a/src/components/slider/Slider.vue b/src/components/slider/Slider.vue
+index fc7b5de1..59a3468b 100644
+--- a/src/components/slider/Slider.vue
++++ b/src/components/slider/Slider.vue
+@@ -18,6 +18,7 @@ import {
+ } from "reka-ui";
+ import { useDragVelocity } from "../../composables/dom/useDragVelocity";
+ import { useDockHold } from "../dock/composables/useDockHold";
++import { useGraspEngaged } from "../../composables/motion/engage/useGraspEngaged";
+ import { resolveValueMarks } from "../_shared/field/valueDomain";
+ import { useMotionAxis } from "../_shared/useMotionAxis";
+ import type { SliderProps, SliderSize, SliderVariant } from "./types";
+@@ -121,6 +122,7 @@ function onGraspReleaseEnd(event: TransitionEvent): void {
+ // not bubble from a scroller, capture still reaches it, so one listener covers every
+ // scroller.
+ const focusVeilRef = useTemplateRef<HTMLElement>("focusVeilRef");
++useGraspEngaged(isHeld, () => [focusVeilRef.value, loupeRef.value]);
+ 
+ function writeVeilCentre(): void {
+     const host = getRootEl();
+@@ -286,7 +288,6 @@ onMounted(() => {
+                 v-if="grasping && graspable"
+                 ref="focusVeilRef"
+                 class="glass-focus-veil"
+-                :data-engaged="isHeld || undefined"
+                 aria-hidden="true"
+             />
+         </Teleport>
+@@ -304,7 +305,6 @@ onMounted(() => {
+                 v-if="loupeShown"
+                 ref="loupeRef"
+                 class="glass-loupe glass-plate"
+-                :data-engaged="isHeld || undefined"
+                 aria-hidden="true"
+             >
+                 <span class="glass-loupe-clone">
+diff --git a/src/components/slider/styles.css b/src/components/slider/styles.css
+index bdf256dd..d3b6d562 100644
+--- a/src/components/slider/styles.css
++++ b/src/components/slider/styles.css
+@@ -30,7 +30,19 @@
+     align-items: center;
+     touch-action: none;
+     user-select: none;
+-    transition: color var(--duration-fast) var(--ease-standard);
++    transition:
++        color var(--duration-fast) var(--ease-standard),
++        scale var(--spring-dock-duration) var(--spring-dock);
++}
++
++/* THE ENGAGED RUNG, IN PLACE (D5-D; Q-3 default (c)). Held or keyboard-focused, the
++   control grows on the engaged rung's spring. Fine pointers only: a full-width track
++   on a phone has no gutter to grow into, and that arm is the stage's (D5-E). Under
++   reduce the grow retires; the focus ribbon and the grasp optic stay. */
++@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
++    .glass-slider:is([data-held], :has(:focus-visible)) {
++        scale: var(--scale-engaged);
++    }
+ }
+ 
+ /* THE DRAG AFFORDANCE. The scrubber is the library's most-consumed dragging surface and
+diff --git a/src/components/switch/Switch.vue b/src/components/switch/Switch.vue
+index aecb2fa1..da738b1b 100644
+--- a/src/components/switch/Switch.vue
++++ b/src/components/switch/Switch.vue
+@@ -43,7 +43,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emit);
+     <SwitchRoot
+         data-slot="switch"
+         v-bind="{ ...forwarded, ...controlStateAttrs(props.invalid) }"
+-        :class="cn('switch control-bit tap-squish', props.class)"
++        :class="cn('switch control-bit', props.class)"
+     >
+         <span class="control-bit__face" aria-hidden="true">
+             <!-- The thumb IS the switch's mark and keeps its own translate channel;
+diff --git a/src/composables/motion/engage/engageSubstrates.ts b/src/composables/motion/engage/engageSubstrates.ts
+new file mode 100644
+index 00000000..908c7aff
+--- /dev/null
++++ b/src/composables/motion/engage/engageSubstrates.ts
+@@ -0,0 +1,61 @@
++// The substrate registry (D5-D): every component directory composes one registered
++// substrate, and the substrate owns the whole ladder for its kind. A component states
++// no rung; the census reads this table and presses each substrate's exemplar.
++// Shape: the battery's E-1 contract, `{ members: { dir: substrate }, classes: { substrate:
++// { rung, reason?, exemplar? } } }`. `rung` names an ENGAGE_LADDER rung (the highest one
++// the substrate answers); `null` with a reason is a declared static atom (Q-1 default c).
++import type { EngageRungName } from "./engageLadder";
++
++export type EngageSubstrate =
++    | "control-bit"
++    | "capsule"
++    | "field"
++    | "disclosure"
++    | "row"
++    | "track"
++    | "drag"
++    | "plate"
++    | "overlay"
++    | "static";
++
++interface SubstrateRow {
++    readonly rung: EngageRungName | null;
++    readonly recipe?: string;
++    readonly exemplar?: string;
++    readonly reason?: string;
++}
++
++const CLASSES: Readonly<Record<EngageSubstrate, SubstrateRow>> = {
++    "control-bit": { rung: "press", recipe: "styles/glass/control-bit.css", exemplar: "switch" },
++    capsule: { rung: "press", recipe: "styles/glass/glass-capsule.css", exemplar: "chip" },
++    field: { rung: "hover", recipe: "components/_shared/field", exemplar: "input" },
++    disclosure: { rung: "press", recipe: "components/_shared/disclosure/disclosure.css", exemplar: "accordion" },
++    row: { rung: "press", recipe: "components/_shared/menu", exemplar: "menu" },
++    track: { rung: "engaged", recipe: "styles/glass/grasp.css", exemplar: "slider" },
++    drag: { rung: "engaged", recipe: "styles/glass/grasp.css", exemplar: "sortable-list" },
++    plate: { rung: "rest", recipe: "styles/glass/material.css", exemplar: "card" },
++    overlay: { rung: "modal", recipe: "components/_shared/overlay", exemplar: "dialog" },
++    static: {
++        rung: null,
++        reason: "no plate and no input: a mark, a loading stand-in, a status glyph or an ambient field; nothing is pressed, so nothing is engaged",
++    },
++};
++
++const MEMBERS: Readonly<Record<string, EngageSubstrate>> = {
++    checkbox: "control-bit", "radio-group": "control-bit", switch: "control-bit",
++    button: "capsule", chip: "capsule", tabs: "capsule", "toggle-group": "capsule", configurator: "capsule",
++    dock: "capsule", "dark-mode-toggle": "capsule", timeline: "capsule", "pager-dots": "capsule", easing: "capsule",
++    input: "field", textarea: "field", "number-field": "field", select: "field", "labeled-field": "field",
++    accordion: "disclosure", collapsible: "disclosure", "expandable-container": "disclosure",
++    menu: "row", command: "row", "data-table": "row", table: "row",
++    slider: "track",
++    "sortable-list": "drag", carousel: "drag", deck: "drag", sheet: "drag",
++    card: "plate", alert: "plate", avatar: "plate", metric: "plate", "music-staff": "plate", surface: "plate",
++    dialog: "overlay", popover: "overlay", tooltip: "overlay", toast: "overlay",
++    separator: "static", skeleton: "static", "status-dot": "static", badge: "static", label: "static",
++    typewriter: "static", "fading-scroll": "static", "infinite-scroll": "static", aurora: "static", blob: "static",
++    constellation: "static", "fourier-field": "static", handmark: "static", progress: "static",
++    "scroll-progress-rim": "static",
++};
++
++export const ENGAGE_DECLARATION = { members: MEMBERS, classes: CLASSES } as const;
+diff --git a/src/composables/motion/engage/useGraspEngaged.ts b/src/composables/motion/engage/useGraspEngaged.ts
+new file mode 100644
+index 00000000..b3e48555
+--- /dev/null
++++ b/src/composables/motion/engage/useGraspEngaged.ts
+@@ -0,0 +1,21 @@
++import { watchEffect, type Ref } from "vue";
++
++/**
++ * The one writer of `data-engaged` (E-7, W-J.2 G2). It means HELD: a live pointer or
++ * touch on a graspable surface. The surface's teleported carriers (the focus veil,
++ * the loupe) leave its inheritance, so the attribute is written on each of them
++ * while the hand is down. A modal's scrim keys on its overlay's own `data-state`,
++ * never on this attribute.
++ */
++export function useGraspEngaged(
++    held: Ref<boolean>,
++    carriers: () => readonly (HTMLElement | null | undefined)[],
++): void {
++    watchEffect(
++        () => {
++            const on = held.value;
++            for (const el of carriers()) el?.toggleAttribute("data-engaged", on);
++        },
++        { flush: "post" },
++    );
++}
+diff --git a/src/composables/motion/index.ts b/src/composables/motion/index.ts
+index fc0f4b57..05c94320 100644
+--- a/src/composables/motion/index.ts
++++ b/src/composables/motion/index.ts
+@@ -104,3 +104,5 @@ export {
+     type EngageRungName,
+     type EngageChannel,
+ } from "./engage/engageLadder";
++export { useGraspEngaged } from "./engage/useGraspEngaged";
++export { ENGAGE_DECLARATION, type EngageSubstrate } from "./engage/engageSubstrates";
+diff --git a/src/styles/glass.css b/src/styles/glass.css
+index f4af6c1e..149169d7 100644
+--- a/src/styles/glass.css
++++ b/src/styles/glass.css
+@@ -94,6 +94,7 @@
+    shell sheets (loaded with their SFCs, after this root) keep their per-role residue
+    at equal specificity by source order. */
+ @import "./glass/control-bit.css";
++@import "./glass/commit.css";
+ /* The keyed two-stop control RIM (`.glass-control-edge`) the field register, the
+    Select trigger and the toggle items all compose — the third member of the C-5
+    register cluster, @import-ed IMMEDIATELY AFTER control-bit.css (same @layer
+diff --git a/src/styles/glass/commit.css b/src/styles/glass/commit.css
+new file mode 100644
+index 00000000..1df4b690
+--- /dev/null
++++ b/src/styles/glass/commit.css
+@@ -0,0 +1,30 @@
++/* ── THE COMMIT LEG — the material's answer to a model change (D5-D) ──────────────
++   A substrate that carries state writes `--commit-t` 0 at one state and 1 at the
++   other, and lists `--commit-t` in its own transition on `--spring-panel`. The
++   phase travels 0 → 1 (or back) and overshoots by the panel spring's own rebound;
++   the host's `transform` reads it as one swell and one dip:
++
++       scale = 1 + amp · sin(π · t)       t = 0 and t = 1 both rest at scale 1
++
++   A transition, not an animation: a host mounted in its committed state has no
++   prior style, so nothing starts (H-8). A model change with no gesture moves the
++   attribute and the phase alike, so keyboard, programmatic and pointer commits
++   take one path. `--commit-amp` is each substrate's, read off the press table so
++   the swell mirrors the squish; reduce zeroes it (the state still lands). */
++@property --commit-t {
++    syntax: "<number>";
++    inherits: false;
++    initial-value: 0;
++}
++
++@layer components {
++    :is(.control-bit, .disclosure-trigger) {
++        transform: scale(calc(1 + var(--commit-amp, 0) * sin(var(--commit-t) * 180deg)));
++    }
++
++    @media (prefers-reduced-motion: reduce) {
++        :is(.control-bit, .disclosure-trigger) {
++            --commit-amp: 0;
++        }
++    }
++}
+diff --git a/src/styles/glass/control-bit.css b/src/styles/glass/control-bit.css
+index a9422515..399aaa6e 100644
+--- a/src/styles/glass/control-bit.css
++++ b/src/styles/glass/control-bit.css
+@@ -11,7 +11,7 @@
+    THE SHAPE (§3.1) — the host is the SEAT, the face is the PAINT, the mark is the
+    STATE:
+ 
+-     <XRoot class="control-bit tap-squish" data-invalid=…>
++     <XRoot class="control-bit" data-invalid=…>
+        <span class="control-bit__face" aria-hidden="true">
+          <XIndicator force-mount class="control-bit__mark" aria-hidden="true">…
+        </span>
+@@ -50,14 +50,9 @@
+    compositor layer per control. The bit reads by INK and FILL. This is a declaration
+    removal, not a mask.
+ 
+-   NO TRANSITION TARGETS THE HOST (ADJ-4 / G-BIT-ONE). `.tap-squish`
+-   (utilities/base.css) is the library's declared press register and its own
+-   doc-block names the exact cascade bug the checkbox re-committed: a 4-leg
+-   `transition` shorthand on the host with no `scale` leg CLOBBERS the utility's, so
+-   the squish landed in 0ms. The structural cure is not a longer shorthand — it is
+-   that face, mark and thumb are DIFFERENT ELEMENTS with their own transitions, so a
+-   clobber is impossible. Composing `.tap-squish` is the shell's job; declaring press
+-   timing is nobody's but the register that owns it.
++   ONE TRANSITION ON THE HOST, AND THIS REGISTER OWNS IT (D5-D). The host carries the
++   commit phase (`--commit-t`, glass/commit.css) and nothing else; face, mark and thumb are different elements with their own transitions. The
++   shells compose no `.tap-squish`, so no co-composed shorthand can clobber a leg.
+ 
+    TOKENS MINTED: NONE. This register consumes `--ink-perimeter` / `--fill-hover` /
+    `--fill-selected` (tokens/color-radius.css §1.2-1.3, landed by #68), the
+@@ -161,6 +156,18 @@
+         cursor: pointer;
+         appearance: none;
+         touch-action: manipulation;
++        /* THE REGISTER OWNS ITS WHOLE LADDER (D5-D). The press is the face's fill
++           (below; a bit is under the scale channel's legible floor, ENGAGEMENT D8),
++           so the host's one spatial leg is the commit (glass/commit.css). A touch
++           tap commits while `:active` still holds; a scale press on the host would
++           cancel the swell it overlaps (R-D tapfilm.log). */
++        --commit-amp: calc(1 - var(--scale-press));
++        transform-origin: center;
++        transition: --commit-t var(--spring-panel-duration) var(--spring-panel);
++    }
++
++    .control-bit:is([data-state="checked"], [data-state="indeterminate"]) {
++        --commit-t: 1;
+     }
+ 
+     /* THE RECESS'S DARK ARM (A10, cure round 2026-08-08) — a PLAIN `.dark` ancestor
+@@ -274,8 +281,7 @@
+            the resting material, which is exactly what `box-shadow` delivery did on
+            all three members. */
+         box-shadow: var(--glass-rim-top), var(--glass-rim-bottom);
+-        /* Longhand legs on the FACE element. The host declares none, so no shorthand
+-           anywhere in this lane can clobber `.tap-squish`'s scale leg. */
++        /* Longhand legs on the FACE element; the host's two legs are the host's. */
+         transition:
+             background-color var(--duration-fast) var(--ease-standard),
+             border-color var(--duration-fast) var(--ease-standard),
+@@ -289,8 +295,8 @@
+        4% of a 20px painted face is 0.8px, so a bit is below the scale channel's
+        legible floor and the fill channel is the only one that can carry the answer.
+        Guarded on `(hover: hover)` (K13/G7) — an unguarded hover latches on tap and
+-       paints a control as permanently pointed-at; `.tap-squish` is the coarse
+-       pointer's answer and every shell composes it. Both rungs mix ON TOP of the
++       paints a control as permanently pointed-at; the host's press is the coarse
++       pointer's answer. Both rungs mix ON TOP of the
+        current fill, so the checked arm engages without losing its state. */
+     @media (hover: hover) {
+         .control-bit:not(:disabled, [data-disabled]):hover .control-bit__face {
+diff --git a/src/styles/glass/focus-veil.css b/src/styles/glass/focus-veil.css
+index 07c5262d..5a55687b 100644
+--- a/src/styles/glass/focus-veil.css
++++ b/src/styles/glass/focus-veil.css
+@@ -150,14 +150,16 @@
+     }
+ 
+     /* THE IN CLOCK — behind the geometry by one rank-6 beat. */
+-    .glass-focus-veil[data-engaged] {
++    /* Held (the grasp writer, engage/useGraspEngaged.ts), or the scrim of an open
++       modal, which keys on its overlay's own state and never on `data-engaged`. */
++    :is(.glass-focus-veil[data-engaged], [data-state="open"] > .glass-focus-veil) {
+         opacity: 1;
+         transition: opacity var(--duration-normal) var(--ease-standard)
+             var(--duration-instant);
+     }
+ 
+     @starting-style {
+-        .glass-focus-veil[data-engaged] {
++        :is(.glass-focus-veil[data-engaged], [data-state="open"] > .glass-focus-veil) {
+             opacity: 0;
+         }
+     }
+diff --git a/src/styles/tokens/scale-paper.css b/src/styles/tokens/scale-paper.css
+index 21fcc740..56efa73a 100644
+--- a/src/styles/tokens/scale-paper.css
++++ b/src/styles/tokens/scale-paper.css
+@@ -25,6 +25,9 @@
+        press overrides `--scale-press-dock` on the dock instance. */
+     --scale-press-dock: var(--scale-press);
+     --scale-press-sm: 0.97;
++    /* The engaged rung's in-place grow (BI T1 GROW's figure, BI.W-ENGAGE-AFFORD.md:115-130),
++       a row of this table rather than a literal in a component. Fine pointers only. */
++    --scale-engaged: 1.06;
+ 
+     /* The SegmentedTabs travel-squish cap. The active indicator
+        (segmented/pill slider OR the underline rule) STRETCHES along its travel

@@ -1,0 +1,28 @@
+# kbdprobe · chromium 149.0.7827.55 · other headless processes: chromium 25, webkit 0 · load 27.7/44.3/51.6 at start
+light
+  start   checked t=1.00 | unchecked t=0.00
+  Tab     checked* t=1.00 | unchecked t=0.00
+  +60ms   unchecked t=0.77 | checked* t=0.23
+  +660ms  unchecked t=0.00 | checked* t=1.00
+  harness order: target unchecked b radios 2 target-is-2nd true · after: checked | unchecked* · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 110 frames, median 7.5 ms
+dark
+  start   checked t=1.00 | unchecked t=0.00
+  Tab     checked* t=1.00 | unchecked t=0.00
+  +60ms   unchecked t=0.82 | checked* t=0.18
+  +660ms  unchecked t=0.00 | checked* t=1.00
+  harness order: target unchecked b radios 2 target-is-2nd true · after: unchecked | checked* · peak 1.040 trough 0.995 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 109 frames, median 7.7 ms
+# load 27.4/44.0/51.5 at end
+### HEAD build, read 1
+# kbdprobe · chromium 149.0.7827.55 · other headless processes: chromium 21, webkit 2 · load 72.7/46.0/42.5 at start
+light
+  harness order: target unchecked b radios 2 target-is-2nd true · after: unchecked | checked* · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 98 frames, median 8.3 ms
+dark
+  harness order: target unchecked b radios 2 target-is-2nd true · after: checked | unchecked* · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 98 frames, median 8.3 ms
+# load 83.4/49.2/43.6 at end
+### HEAD build, read 2
+# kbdprobe · chromium 149.0.7827.55 · other headless processes: chromium 24, webkit 2 · load 87.0/50.5/44.1 at start
+light
+  harness order: target unchecked b radios 2 target-is-2nd true · after: checked | unchecked* · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 98 frames, median 8.3 ms
+dark
+  harness order: target unchecked b radios 2 target-is-2nd true · after: checked | unchecked* · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 98 frames, median 8.3 ms
+# load 92.8/52.3/44.8 at end

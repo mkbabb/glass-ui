@@ -1,0 +1,26 @@
+### build head
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rD/out/builds/head · engine webkit · lock wait 0.0 s · other headless processes: chromium 19, webkit 0 · load 24.8/28.8/39.9 at start
+  FAIL       E-2 toggle commit·pointer light · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 45 s; then CELL TIMEOUT 45 s) · load 23.7/28.2/38.5
+  FAIL       E-2 toggle commit·tap(coarse) light · ENGINE CLOSED, REPRODUCED 2/2 (page.evaluate: Target page, context or browser has been closed; then page.evaluate: Target page, context or browser has been closed) · load 23.7/28.2/38.5
+  FAIL       E-2 accordion commit·pointer light · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 45 s; then CELL TIMEOUT 45 s) · load 33.7/31.4/38.7
+  FAIL       E-2 accordion commit·tap(coarse) light · ENGINE CLOSED, REPRODUCED 2/2 (page.evaluate: Target page, context or browser has been closed; then page.evaluate: Target page, context or browser has been closed) · load 35.5/31.8/38.8
+E-2 webkit FAIL · 4 pass, 8 fail, 0 unmeasured of 12 gating cells (0 reported) · load 24.8/28.8/39.9 at start, 35.5/31.8/38.8 at end
+### build pf1
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rD/out/builds/pf1 · engine webkit · lock wait 0.0 s · other headless processes: chromium 18, webkit 2 · load 35.5/31.8/38.8 at start
+  FAIL       E-2 toggle commit·pointer light · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 45 s; then CELL TIMEOUT 45 s) · load 39.7/34.1/39.0
+  FAIL       E-2 toggle commit·tap(coarse) light · ENGINE CLOSED, REPRODUCED 2/2 (page.evaluate: Target page, context or browser has been closed; then page.evaluate: Target page, context or browser has been closed) · load 40.6/34.4/39.1
+  FAIL       E-2 accordion commit·pointer light · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 45 s; then CELL TIMEOUT 45 s) · load 50.4/38.3/40.0
+  PASS       E-2 accordion commit·tap(coarse) light · peak 1.030 trough 0.996 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 49 frames, median 17.0 ms · load 50.4/38.3/40.0
+E-2 webkit FAIL · 7 pass, 5 fail, 0 unmeasured of 12 gating cells (0 reported) · load 35.5/31.8/38.8 at start, 50.4/38.3/40.0 at end
+### build proto
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rD/out/builds/proto · engine webkit · lock wait 0.0 s · other headless processes: chromium 13, webkit 6 · load 50.4/38.3/40.0 at start
+  FAIL       E-2 toggle commit·pointer light · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 45 s; then CELL TIMEOUT 45 s) · load 45.9/38.8/39.9
+  FAIL       E-2 toggle commit·tap(coarse) light · ENGINE CLOSED, REPRODUCED 2/2 (page.evaluate: Target page, context or browser has been closed; then page.evaluate: Target page, context or browser has been closed) · load 42.9/38.3/39.8
+  PASS       E-2 accordion commit·pointer light · peak 1.030 trough 0.996 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 48 frames, median 17.0 ms · load 40.3/37.9/39.6
+  PASS       E-2 accordion commit·tap(coarse) light · peak 1.030 trough 0.996 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 50 frames, median 17.0 ms · load 43.9/38.6/39.9
+E-2 webkit FAIL · 8 pass, 4 fail, 0 unmeasured of 12 gating cells (0 reported) · load 50.4/38.3/40.0 at start, 43.9/38.6/39.9 at end
+### build tok (proto + --control-surface-bg-hover re-pointed to the 5% foreground ink)
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/rD/out/builds/tok · engine webkit · lock wait 0.0 s · other headless processes: chromium 19, webkit 2 · load 55.7/41.6/40.9 at start
+  FAIL       E-2 toggle commit·pointer light · peak 1.015 trough 1.015 settle 1.015 · body travel 0.00 px overshoot 0.00 px · 49 frames, median 17.0 ms · load 60.0/42.7/41.3
+  FAIL       E-2 toggle commit·tap(coarse) light · peak 1.015 trough 1.015 settle 1.015 · body travel 0.00 px overshoot 0.00 px · 50 frames, median 16.0 ms · load 66.2/44.3/41.8
+E-2 webkit FAIL · 2 pass, 4 fail, 0 unmeasured of 6 gating cells (0 reported) · load 55.7/41.6/40.9 at start, 66.2/44.3/41.8 at end
