@@ -1,0 +1,18 @@
+// adapter.mjs · critique-B pass 6 · written AFTER the battery hash, after reading pass-6/B-kit/LAW.md and the seal CLI
+// header. It maps the landed gate onto the battery's contract and decides nothing: judge(root) returns the gate's own
+// V table (clause ids are unchanged, B0..B17). One child process per judgement, so no module cache survives between
+// plants. Exit 1 is a RED verdict, not an error; any other non-zero exit throws.
+import { execFileSync } from "node:child_process";
+import { mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { join } from "node:path";
+import { tmpdir } from "node:os";
+export async function judge(root) {
+    const d = mkdtempSync(join(process.env.CRIT_TMP ?? tmpdir(), "seal-"));
+    const out = join(d, "v.json");
+    try {
+        execFileSync("node", [join(root, "scripts/structure/seal/seal.mjs"), "--root", root, "--json", out], { stdio: "ignore", maxBuffer: 1 << 26 });
+    } catch (e) { if (e.status !== 1) throw new Error(`seal exited ${e.status}`); }
+    const r = JSON.parse(readFileSync(out, "utf8")).V;
+    rmSync(d, { recursive: true, force: true });
+    return r;
+}
