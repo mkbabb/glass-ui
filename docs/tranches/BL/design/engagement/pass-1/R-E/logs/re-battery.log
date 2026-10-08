@@ -1,0 +1,75 @@
+# R-E battery on the prototype · 2026-10-08 14:28:36 · load 56.14 58.25 61.42
+E-3 chromium exit 1 · E-3 chromium FAIL · 10 pass, 2 fail, 0 unmeasured of 12 gating cells (0 reported) · load 54.8/58.0/61.3 at start, 53.3/57.4/61.0 at end · 16 s, load at start 54.8/58.0/61.3
+    FAIL       E-3 slider phone touch-held light · 390×844 coarse · rest 358.0 px → touch-held 358.0 px (×1.000; [data-engaged] 1) · bound ×1.03 · load 52.5/57.4/61.1
+    FAIL       E-3 slider phone touch-held dark · 390×844 coarse · rest 358.0 px → touch-held 358.0 px (×1.000; [data-engaged] 1) · bound ×1.03 · load 53.3/57.4/61.0
+E-3 webkit   exit 1 · E-3 webkit FAIL · 10 pass, 2 fail, 0 unmeasured of 12 gating cells (0 reported) · load 54.5/57.6/61.1 at start, 54.4/57.4/60.9 at end · 25 s, load at start 54.5/57.6/61.1
+    FAIL       E-3 slider phone touch-held light · 390×844 coarse · rest 358.0 px → touch-held 358.0 px (×1.000; [data-engaged] 1) · bound ×1.03 · load 54.9/57.6/61.0
+    FAIL       E-3 slider phone touch-held dark · 390×844 coarse · rest 358.0 px → touch-held 358.0 px (×1.000; [data-engaged] 1) · bound ×1.03 · load 55.3/57.6/61.0
+E-4 chromium exit 1 · E-4 chromium FAIL · 4 pass, 6 fail, 0 unmeasured of 10 gating cells (0 reported) · load 53.9/57.2/60.9 at start, 50.7/56.1/60.3 at end · 44 s, load at start 53.9/57.2/60.9
+    FAIL       E-4 slider fling carries velocity · axis x · fling: carry 0.00 px, settles 0.00 px past release · still: carry 0.00 px, settles 0.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 0.0 px, still 0.0 px · 242 frames, median 8.4 ms · load 55.4/57.5/60.9
+    FAIL       E-4 tabsdrag fling carries velocity · axis x · fling: carry 37.51 px, settles -54.53 px past release · still: carry 36.73 px, settles -54.53 px · difference: carry 0.78 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 245.6 px, still 247.8 px · 241 frames, median 8.3 ms · load 54.7/57.3/60.8
+    FAIL       E-4 tabsdrag release PRM · NOT DRIVEN under reduce: the drag moved the thumb 0.0 px (bound ≥ 20 px) · load 54.1/57.1/60.7
+    FAIL       E-4 sheet fling carries velocity · unreadable: the press point (350, 535) lies outside the 700×500 viewport: the surface is not on screen · load 54.1/57.1/60.7
+    FAIL       E-4 sheet release PRM · unreadable: the press point (350, 535) lies outside the 700×500 viewport: the surface is not on screen · load 52.9/56.8/60.6
+    FAIL       E-4 sortable fling carries velocity · axis y · fling: carry 17.61 px, settles -36.69 px past release · still: carry 26.57 px, settles -36.69 px · difference: carry -8.96 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 72.5 px, still 20.6 px · 241 frames, median 8.3 ms · load 52.6/56.7/60.5
+E-4 webkit   exit 1 · E-4 webkit FAIL · 2 pass, 6 fail, 2 unmeasured of 10 gating cells (0 reported) · load 50.7/56.1/60.3 at start, 53.2/56.1/60.1 at end · 47 s, load at start 50.7/56.1/60.3
+    FAIL       E-4 slider fling carries velocity · axis x · fling: carry 0.00 px, settles 0.00 px past release · still: carry 0.00 px, settles 0.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 0.0 px, still 0.0 px · 121 frames, median 16.0 ms · load 51.6/56.1/60.2
+    FAIL       E-4 tabsdrag fling carries velocity · axis x · fling: carry 37.68 px, settles -54.34 px past release · still: carry 36.93 px, settles -54.34 px · difference: carry 0.75 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 239.7 px, still 240.5 px · 121 frames, median 17.0 ms · load 53.6/56.4/60.3
+    FAIL       E-4 tabsdrag release PRM · NOT DRIVEN under reduce: the drag moved the thumb 0.0 px (bound ≥ 20 px) · load 53.2/56.3/60.2
+    FAIL       E-4 sheet fling carries velocity · unreadable: the press point (350, 535) lies outside the 700×500 viewport: the surface is not on screen · load 53.2/56.3/60.2
+    FAIL       E-4 sheet release PRM · unreadable: the press point (350, 535) lies outside the 700×500 viewport: the surface is not on screen · load 54.2/56.5/60.3
+    FAIL       E-4 sortable fling carries velocity · axis y · fling: carry 18.95 px, settles -36.69 px past release · still: carry 30.37 px, settles -36.69 px · difference: carry -11.42 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 81.6 px, still 23.4 px · 121 frames, median 17.0 ms · load 53.3/56.2/60.2
+    UNMEASURED E-4 carousel fling carries velocity · the touch drag moved the thumb 0.0 px (fling) and 0.0 px (still), bound ≥ 20 px: macOS WebKit has no touch scrolling, so a touch drag cannot drive this surface (H-4); real Safari UNMEASURED (owner's safaridriver checkbox) · load 53.2/56.1/60.1
+    UNMEASURED E-4 carousel release PRM · the surface is not driven in this engine (above) · load 53.2/56.1/60.1
+E-5 chromium exit 1 · E-5 chromium FAIL · 18 pass, 10 fail, 0 unmeasured of 28 gating cells (0 reported) · load 51.6/55.7/59.9 at start, 48.6/54.0/59.0 at end · 70 s, load at start 51.6/55.7/59.9
+    FAIL       E-5 tabs press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [] · hover-changed [] · press-only [] (bound ≥ 1 press-only property under reduce) · load 52.9/55.9/60.0
+    FAIL       E-5 tabs press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [] · hover-changed [] · press-only [] (bound ≥ 1 press-only property under reduce) · load 52.5/55.8/59.9
+    FAIL       E-5 toggle press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [background-color, background-image] · hover-changed [background-color, background-image] · press-only [] (bound ≥ 1 press-only property under reduce) · load 51.9/55.6/59.8
+    FAIL       E-5 toggle press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [background-color, background-image] · hover-changed [background-color, background-image] · press-only [] (bound ≥ 1 press-only property under reduce) · load 50.9/55.4/59.7
+    FAIL       E-5 chip press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [] · hover-changed [] · press-only [] (bound ≥ 1 press-only property under reduce) · load 49.7/55.0/59.5
+    FAIL       E-5 chip press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [] · hover-changed [] · press-only [] (bound ≥ 1 press-only property under reduce) · load 51.2/55.2/59.6
+    FAIL       E-5 accordion press light · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] · load 51.1/55.2/59.5
+    FAIL       E-5 accordion press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce) · load 51.1/55.2/59.5
+    FAIL       E-5 accordion press dark · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] · load 49.3/54.7/59.4
+    FAIL       E-5 accordion press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce) · load 49.3/54.7/59.4
+E-5 webkit   exit 1 · E-5 webkit FAIL · 16 pass, 8 fail, 0 unmeasured of 24 gating cells (0 reported) · load 48.6/54.0/59.0 at start, 27.1/41.4/50.7 at end · 799 s, load at start 48.6/54.0/59.0
+    FAIL       E-5 tabs press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [] · hover-changed [] · press-only [] (bound ≥ 1 press-only property under reduce) · load 47.1/53.5/58.7
+    FAIL       E-5 tabs press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [] · hover-changed [] · press-only [] (bound ≥ 1 press-only property under reduce) · load 44.0/52.8/58.4
+    FAIL       E-5 toggle press light · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s) · load 60.2/55.5/58.4
+    FAIL       E-5 toggle press dark · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s) · load 59.1/58.5/59.2
+    FAIL       E-5 chip press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [] · hover-changed [] · press-only [] (bound ≥ 1 press-only property under reduce) · load 55.0/57.7/58.9
+    FAIL       E-5 chip press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [] · hover-changed [] · press-only [] (bound ≥ 1 press-only property under reduce) · load 54.3/57.5/58.8
+    FAIL       E-5 accordion press light · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s) · load 44.6/51.0/55.7
+    FAIL       E-5 accordion press dark · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s) · load 32.5/44.4/52.2
+E-7 chromium exit 0 · E-7 chromium PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 58.0/46.0/50.8 at start, 57.0/45.9/50.7 at end · 158 s, load at start 58.0/46.0/50.8
+E-7 webkit   exit 0 · E-7 webkit PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 47.2/47.5/50.7 at start, 52.5/48.6/51.0 at end · 162 s, load at start 47.2/47.5/50.7
+E-8 chromium exit 1 · E-8 chromium FAIL · 16 pass, 1 fail, 0 unmeasured of 17 gating cells (0 reported) · load 52.7/48.7/51.0 at start, 54.9/49.7/51.3 at end · 39 s, load at start 52.7/48.7/51.0
+    FAIL       E-8 literal switch PRM · 1 animation(s) ran [opacity@300ms] against 0 clock tokens · minted [CSSTransition opacity 300ms on switch control-bit tap-squish] · load 53.7/48.9/51.1
+E-8 webkit   exit 1 · E-8 webkit FAIL · 11 pass, 6 fail, 0 unmeasured of 17 gating cells (0 reported) · load 54.9/49.7/51.3 at start, 66.7/54.8/52.5 at end · 515 s, load at start 54.9/49.7/51.3
+    FAIL       E-8 literal switch · 20 animation(s) ran [background-color@200ms, scale@210ms, opacity@300ms, opacity@155ms, border-bottom-color@200ms, border-left-color@200ms, border-right-color@200ms, border-top-color@200ms, translate@210ms, outline-color@200ms] against 54 clock tokens · minted [CSSTransition opacity 155ms on switch control-bit tap-squish] · load 54.4/49.6/51.3
+    FAIL       E-8 literal switch PRM · 1 animation(s) ran [opacity@300ms] against 0 clock tokens · minted [CSSTransition opacity 300ms on switch control-bit tap-squish] · load 55.4/49.9/51.4
+    FAIL       E-8 literal toggle · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then CELL TIMEOUT 60 s) · load 44.9/50.0/51.4
+    FAIL       E-8 literal toggle PRM · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then CELL TIMEOUT 60 s) · load 48.9/48.6/50.5
+    FAIL       E-8 literal accordion · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then CELL TIMEOUT 60 s) · load 53.6/50.2/50.9
+    FAIL       E-8 literal accordion PRM · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then CELL TIMEOUT 60 s) · load 66.4/54.5/52.4
+E-9 chromium exit 1 · E-9 chromium FAIL · 46 pass, 8 fail, 0 unmeasured of 54 gating cells (0 reported) · load 66.7/54.8/52.5 at start, 60.8/55.2/52.8 at end · 53 s, load at start 66.7/54.8/52.5
+    FAIL       E-9 tabs press-light light · press-only paint changes [] (bound ≥ 1) · load 65.3/55.4/52.8
+    FAIL       E-9 tabs press-light dark · press-only paint changes [] (bound ≥ 1) · load 65.3/55.4/52.8
+    FAIL       E-9 toggle press-light light · press-only paint changes [] (bound ≥ 1) · load 65.3/55.6/52.9
+    FAIL       E-9 toggle press-light dark · press-only paint changes [] (bound ≥ 1) · load 65.3/55.6/52.9
+    FAIL       E-9 chip press-light light · press-only paint changes [] (bound ≥ 1) · load 63.0/55.3/52.8
+    FAIL       E-9 chip press-light dark · press-only paint changes [] (bound ≥ 1) · load 63.0/55.3/52.8
+    FAIL       E-9 accordion press-light light · press-only paint changes [] (bound ≥ 1) · load 61.8/55.1/52.7
+    FAIL       E-9 accordion press-light dark · press-only paint changes [] (bound ≥ 1) · load 61.8/55.1/52.7
+E-9 webkit   exit 1 · E-9 webkit FAIL · 36 pass, 10 fail, 0 unmeasured of 46 gating cells (0 reported) · load 60.8/55.2/52.8 at start, 86.6/72.6/62.6 at end · 534 s, load at start 60.8/55.2/52.8
+    FAIL       E-9 tabs press-light light · press-only paint changes [] (bound ≥ 1) · load 62.9/56.1/53.2
+    FAIL       E-9 tabs press-light dark · press-only paint changes [] (bound ≥ 1) · load 62.7/56.2/53.2
+    FAIL       E-9 toggle press-spatial light · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then CELL TIMEOUT 60 s) · load 90.1/65.0/56.9
+    FAIL       E-9 toggle press-spatial dark · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then CELL TIMEOUT 60 s) · load 63.0/63.4/57.3
+    FAIL       E-9 chip press-light light · press-only paint changes [] (bound ≥ 1) · load 62.0/63.2/57.3
+    FAIL       E-9 chip press-light dark · press-only paint changes [] (bound ≥ 1) · load 60.1/62.8/57.2
+    FAIL       E-9 accordion press-spatial light · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then CELL TIMEOUT 60 s) · load 66.4/63.0/57.9
+    FAIL       E-9 accordion press-spatial dark · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then CELL TIMEOUT 60 s) · load 82.5/71.2/61.9
+    FAIL       E-9 button press-spatial light · scale range while pressed 0.030 over 20 frames (bound < 0.002) · load 82.5/71.2/61.9
+    FAIL       E-9 button press-spatial dark · scale range while pressed 0.030 over 20 frames (bound < 0.002) · load 84.7/71.8/62.2
+# end 15:09:42 · load 86.63 72.64 62.57
