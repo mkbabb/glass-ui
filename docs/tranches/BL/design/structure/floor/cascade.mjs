@@ -17,16 +17,19 @@
 //                                                 swapped pair can change a value, or a band
 //                                                 spec that reads it ran
 // Flattening inlines relative @imports depth-first (layer()/supports()/media wrap the
-// inlined sheet), and normalises Vue scope ids, hashed v-bind vars and scoped @keyframes
-// suffixes (FD-4) by first appearance, so a pure move reads identical while any reorder
-// or content change reads RED.
+// inlined sheet). A Vue scope id and a scoped @keyframes suffix are read as the component
+// they scope (P6-F1): `data-v-(Timeline)`, `tl-check-(Timeline)`. A pure move reads
+// identical; an SFC split that re-homes rules into a new component is declared by the
+// listing's `scopes`; any reorder or content change reads RED. FD-4's coverage arm reads a
+// browser-seat/2 report: each result's spec at its path from the report's testDir (P6-F2).
 import { createHash } from "node:crypto";
 import { createRequire } from "node:module";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join, posix, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { DEFAULT_ROOT, openTree } from "./lib/tree.mjs";
 import { classRecipes, classOwners, coOccurrence, impliedBy } from "./lib/recipes.mjs";
+import { SEAT_REPORT } from "./lib/scan/playwright.mjs";
 
 export function cssEntries(root) {
     const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
@@ -58,7 +61,30 @@ export function flatten(postcss, file, seen = []) {
     return root;
 }
 
-export function leafSequence(postcss, root) {
+/**
+ * P6-F1 · Vue scope ids by the component they scope. In a production build a scoped SFC's id
+ * is sha256(<its path from the root> + <its source>), first 8 hex (@vitejs/plugin-vue), so it
+ * changes with every byte of the file and with every move. `scopeNames(tree)` hashes every SFC
+ * of the tree that built the dist and maps each id to its component: the SFC's basename. A
+ * pure move keeps the name, so it reads identical. A dist id that matches no SFC of the tree,
+ * and two SFCs of one name both scoping rules, throw: the verifier was handed the wrong tree,
+ * or the names cannot say which component a rule scopes.
+ */
+export function scopeNames(tree) {
+    const ids = new Map();
+    for (const f of tree.files) if (f.endsWith(".vue")) ids.set(createHash("sha256").update(f + tree.read(f)).digest("hex").slice(0, 8), f);
+    const used = new Map();
+    return (id, where) => {
+        const f = ids.get(id);
+        if (!f) throw new Error(`cascade: ${where} carries scope id ${id}, which no SFC of ${tree.root} hashes to; snapshot a dist with the tree that built it (--root)`);
+        const name = posix.basename(f, ".vue");
+        if (used.has(name) && used.get(name) !== f) throw new Error(`cascade: two SFCs named ${name} scope rules (${used.get(name)}, ${f}); a scope label cannot tell them apart`);
+        used.set(name, f);
+        return name;
+    };
+}
+
+export function leafSequence(postcss, root, scopeOf) {
     const out = [];
     const ctxOf = (n) => { const c = []; let p = n.parent; while (p && p.type !== "root") { c.unshift(p.type === "atrule" ? `@${p.name} ${p.params}`.trim() : p.selector); p = p.parent; } return c.join(" > "); };
     const decls = (n) => (n.nodes ?? []).filter((d) => d.type === "decl").map((d) => `${d.prop}:${d.value}${d.important ? "!important" : ""}`).join(";");
@@ -67,28 +93,22 @@ export function leafSequence(postcss, root) {
         else if (n.type === "atrule" && (!n.nodes || n.nodes.some((d) => d.type === "decl"))) out.push(`${ctxOf(n)} :: @${n.name} ${n.params}${n.nodes ? ` {${decls(n)}}` : ""}`);
         else if (n.type === "decl" && n.parent.type === "atrule" && n.parent.nodes.every((d) => d.type !== "rule")) { /* folded into its at-rule */ }
     });
-    const ids = new Map();
-    const vars = new Map();
-    const seq = out.map((line) =>
-        line
-            .replace(/data-v-([0-9a-f]{8})/g, (_, h) => { if (!ids.has(h)) ids.set(h, ids.size + 1); return `data-v-#${ids.get(h)}`; })
-            .replace(/--([0-9a-f]{8})-/g, (_, h) => { if (!vars.has(h)) vars.set(h, vars.size + 1); return `--#${vars.get(h)}-`; }),
-    );
-    return scopedKeyframes(seq);
+    const seq = out.map((line) => line.replace(/data-v-([0-9a-f]{8})/g, (_, h) => `data-v-(${scopeOf(h, `a rule (${line.slice(0, 80)})`)})`));
+    return scopedKeyframes(seq, scopeOf);
 }
 
 /**
  * FD-4 · Vue's scoped `@keyframes` suffix. A scoped SFC renames `@keyframes x` to
- * `x-<8hex>`, the hash derived from the SFC's path and source, so a pure move reads as
- * changed rules. Every name the sequence declares with `@keyframes` and that carries an
- * 8-hex suffix is renamed `x-#N` by order of first declaration, and the same map is
- * applied to every use (`animation`, `animation-name`). Unscoped names are untouched.
+ * `x-<scope id>`. Every name the sequence declares with `@keyframes` and that carries an
+ * 8-hex suffix is renamed `x-(Component)` by the component that id scopes (P6-F1), and the
+ * same map is applied to every use (`animation`, `animation-name`). Unscoped names are
+ * untouched; an 8-hex suffix that is no SFC's id throws.
  */
-export function scopedKeyframes(seq) {
+export function scopedKeyframes(seq, scopeOf) {
     const names = new Map();
     for (const line of seq) for (const m of line.matchAll(/@keyframes ([A-Za-z0-9_-]+?)-([0-9a-f]{8})(?![0-9A-Za-z_-])/g)) {
         const full = `${m[1]}-${m[2]}`;
-        if (!names.has(full)) names.set(full, `${m[1]}-#${names.size + 1}`);
+        if (!names.has(full)) names.set(full, `${m[1]}-(${scopeOf(m[2], `@keyframes ${full}`)})`);
     }
     if (!names.size) return seq;
     const re = new RegExp(`(?<![0-9A-Za-z_-])(${[...names.keys()].join("|")})(?![0-9A-Za-z_-])`, "g");
@@ -97,13 +117,42 @@ export function scopedKeyframes(seq) {
 
 export function snapshotDist(root, dist) {
     const postcss = createRequire(join(root, "package.json"))("postcss");
+    const scopeOf = scopeNames(openTree(root));
     const entries = {};
     for (const { key, file } of cssEntries(root)) {
         if (file.includes("*")) continue;
-        const seq = leafSequence(postcss, flatten(postcss, join(dist, file)));
+        const seq = leafSequence(postcss, flatten(postcss, join(dist, file)), scopeOf);
         entries[key] = { file, rules: seq.length, sha256: createHash("sha256").update(seq.join("\n")).digest("hex"), seq };
     }
     return entries;
+}
+
+/**
+ * P6-F1 · a declared SFC split. `scopes: [{ from: "Timeline", to: "TimelineMarks", reason }]`
+ * states that the now-tree's component `to` holds rules re-homed from the base's `from`: its
+ * labels read as `from`'s, and the entry is then compared as usual (identical, a listed
+ * reorder, or RED). A declaration is refused (RED) when `to` scopes nothing now (stale), when
+ * `to` already scoped rules at base (two live components merged), or when `from` scoped
+ * nothing at base. A value changed under the re-homed rules stays a content change.
+ */
+export function rescope(base, now, scopes) {
+    const label = (name) => new RegExp(`-\\(${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\)`, "g");
+    const count = (entries, name) => Object.values(entries).reduce((n, e) => n + e.seq.filter((l) => label(name).test(l)).length, 0);
+    const findings = [];
+    const rows = scopes.map((s) => {
+        const r = { from: s.from, to: s.to, reason: s.reason ?? null, now: count(now, s.to), atBase: count(base, s.to), fromAtBase: count(base, s.from) };
+        if (!s.from || !s.to || !s.reason) findings.push(`scope ${s.from} → ${s.to}: a declaration names from, to and its reason`);
+        else if (!r.now) findings.push(`scope ${s.from} → ${s.to}: stale, ${s.to} scopes no rule now`);
+        else if (r.atBase) findings.push(`scope ${s.from} → ${s.to}: ${s.to} already scoped ${r.atBase} rule(s) at base; a split re-homes rules into a new component`);
+        else if (!r.fromAtBase) findings.push(`scope ${s.from} → ${s.to}: ${s.from} scoped no rule at base`);
+        return r;
+    });
+    const out = {};
+    for (const [key, e] of Object.entries(now)) {
+        const seq = scopes.reduce((q, s) => (s.from && s.to ? q.map((l) => l.replace(label(s.to), `-(${s.from})`)) : q), e.seq);
+        out[key] = { ...e, seq, sha256: createHash("sha256").update(seq.join("\n")).digest("hex") };
+    }
+    return { now: out, rows, findings };
 }
 
 export function compare(base, now) {
@@ -215,10 +264,19 @@ export function reorderRisks(a, b, recipes) {
  *  (or a class whose every wearer wears one), it has a base-green band, it passed, and it
  *  has no new failure. Naming the class alone is not reading the property: the P4 battery
  *  measured the accent-tone rung (22%/25% → 18%) pass all 18 base-green tests of the five
- *  specs that name `.glass-chip`, none of which reads --accent-band-strength. */
+ *  specs that name `.glass-chip`, none of which reads --accent-band-strength.
+ *  P6-F2: a report is browser-seat/2. Its results and bands are keyed by the spec's path from
+ *  the config's testDir, recorded as the report's `testDir`, and each spec is read at that
+ *  path in the tree under judgment. A report of another schema, or a result whose spec the
+ *  tree does not hold, throws: a spec the arm cannot read is never read as empty. */
 const tokenRe = (names) => new RegExp(`(?<![-\\w])(${names.map((x) => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})(?![-\\w])`);
 export function coverRisks(risks, reports, tree, { recipes, owners }) {
-    const text = (spec) => { try { return tree.read(`tests-visual/${spec}`); } catch { return ""; } };
+    for (const rep of reports) if (rep.$schema !== SEAT_REPORT || typeof rep.testDir !== "string") throw new Error(`FD-4: the browser report of ${rep.root ?? "an unnamed tree"} is ${rep.$schema ?? "unversioned"}; the coverage arm reads ${SEAT_REPORT} (specs keyed by their path from the config's testDir); re-run the seat with this floor`);
+    const text = (rep, spec) => {
+        const path = posix.join(rep.testDir, spec);
+        if (!tree.isFile(path)) throw new Error(`FD-4: the browser report of ${rep.root} names spec ${spec}, at ${path}, which ${tree.root} does not hold; the coverage arm cannot read it`);
+        return tree.read(path);
+    };
     for (const r of risks) {
         const cls = new Set(r.classes);
         const propRe = tokenRe(r.props);
@@ -230,7 +288,7 @@ export function coverRisks(risks, reports, tree, { recipes, owners }) {
             const bySpec = new Map();
             for (const t of rep.results ?? []) (bySpec.get(t.spec) ?? bySpec.set(t.spec, []).get(t.spec)).push(t);
             for (const [spec, ts] of bySpec) {
-                const t = text(spec);
+                const t = text(rep, spec);
                 const c = classRe.exec(t);
                 if (!c) continue;
                 const p = propRe.exec(t);
@@ -263,6 +321,10 @@ export async function contract(root, graph = null) {
     return { terminal, stylesSource, imports: imports.length, last: imports.at(-1)?.to ?? null, importers, findings, pass: findings.length === 0 };
 }
 
+/** The baseline's schema. /2 labels scopes by component (P6-F1); a /1 baseline numbered them
+ *  by first appearance and is refused, never compared. */
+export const BASELINE_SCHEMA = "cascade-baseline/2";
+
 const isMain = import.meta.url === pathToFileURL(process.argv[1]).href;
 if (isMain) {
     const args = process.argv.slice(2);
@@ -279,7 +341,7 @@ if (isMain) {
         const out = resolve(opt("--out"));
         mkdirSync(out, { recursive: true });
         const entries = snapshotDist(root, dist);
-        const manifest = { $schema: "cascade-baseline/1", sha: opt("--sha") ?? null, dist, entries: {} };
+        const manifest = { $schema: BASELINE_SCHEMA, sha: opt("--sha") ?? null, dist, entries: {} };
         for (const [key, e] of Object.entries(entries)) {
             const name = key.replace(/^\.\//, "").replace(/[/.]/g, "_");
             writeFileSync(join(out, `${name}.seq`), `${e.seq.join("\n")}\n`);
@@ -292,11 +354,14 @@ if (isMain) {
     if (cmd === "verify") {
         const baseDir = resolve(opt("--baseline"));
         const manifest = JSON.parse(readFileSync(join(baseDir, "manifest.json"), "utf8"));
+        if (manifest.$schema !== BASELINE_SCHEMA) { console.error(`cascade: ${baseDir} is a ${manifest.$schema} baseline; verify reads ${BASELINE_SCHEMA} (re-snapshot the base tree with this floor)`); process.exit(2); }
         const base = {};
         for (const [key, e] of Object.entries(manifest.entries)) base[key] = { ...e, seq: readFileSync(join(baseDir, e.seq), "utf8").replace(/\n$/, "").split("\n") };
-        const now = snapshotDist(root, dist);
+        const listing = opt("--reorders") ? JSON.parse(readFileSync(resolve(opt("--reorders")), "utf8")) : {};
+        const listed = listing.reorders ?? [];
+        const scoped = rescope(base, snapshotDist(root, dist), listing.scopes ?? []);
+        const now = scoped.now;
         const rows = compare(base, now);
-        const listed = opt("--reorders") ? JSON.parse(readFileSync(resolve(opt("--reorders")), "utf8")).reorders ?? [] : [];
         const reports = args.flatMap((a, i) => (a === "--browser" ? [JSON.parse(readFileSync(resolve(args[i + 1]), "utf8"))] : []));
         let ctx = null;
         for (const r of rows) {
@@ -316,7 +381,8 @@ if (isMain) {
             if (!l) { r.verdict = `RED: an unlisted reorder (${j.moved} moved rule(s))`; continue; }
             if (!Array.isArray(l.moved)) { r.verdict = "RED: the listing names no moved rule set (P5-F3)"; continue; }
             if (r.unlistedRules.length || r.staleRules.length) { r.verdict = `RED: the reorder is not the listed rung (${r.unlistedRules.length} moved rule(s) unlisted, ${r.staleRules.length} listed rule(s) unmoved)`; continue; }
-            coverRisks(j.risks, reports, ctx.tree, ctx);
+            // P6-F2: a report the coverage arm cannot read refuses the verdict, by name
+            try { coverRisks(j.risks, reports, ctx.tree, ctx); } catch (e) { r.verdict = `RED: ${e.message}`; continue; }
             const open = j.risks.filter((x) => !x.covered);
             r.listed = l.reason;
             r.judged = { moved: j.moved, swappedPairs: j.swappedPairs, risks: j.risks.length, covered: j.risks.length - open.length };
@@ -324,8 +390,10 @@ if (isMain) {
             r.verdict = open.length ? `RED: ${open.length} swapped pair(s) can change a value and no band spec that reads it ran` : j.risks.length ? "GREEN: listed reorder; every risky pair covered by a band spec that ran" : "GREEN: listed reorder; no swapped pair shares a property on co-occurring classes";
         }
         const stale = listed.filter((x) => !rows.some((r) => r.key === x.entry && !r.identical));
-        const ok = rows.every((r) => r.identical || r.verdict?.startsWith("GREEN")) && stale.length === 0;
-        console.log(JSON.stringify({ baseline: manifest.sha, verdict: ok ? "GREEN" : "RED", staleListings: stale, entries: rows.map(({ risks, unlistedRules, staleRules, ...x }) => ({ ...x, ...(unlistedRules ? { unlistedRules: unlistedRules.length, staleRules: staleRules.length } : {}) })) }, null, 1));
+        const ok = rows.every((r) => r.identical || r.verdict?.startsWith("GREEN")) && stale.length === 0 && scoped.findings.length === 0;
+        console.log(JSON.stringify({ baseline: manifest.sha, verdict: ok ? "GREEN" : "RED", staleListings: stale, scopes: scoped.rows, scopeFindings: scoped.findings, entries: rows.map(({ risks, unlistedRules, staleRules, ...x }) => ({ ...x, ...(unlistedRules ? { unlistedRules: unlistedRules.length, staleRules: staleRules.length } : {}) })) }, null, 1));
+        for (const x of scoped.rows) console.log(`SCOPE ${x.from} → ${x.to}: ${x.now} rule line(s) re-homed`);
+        for (const f of scoped.findings) console.log(`SCOPE-REFUSED ${f}`);
         // the rule lines, as a listing names them: a route copies UNLISTED lines into `moved`
         for (const r of rows) for (const x of r.unlistedRules ?? []) console.log(`UNLISTED ${r.key} ${JSON.stringify(x)}`);
         for (const r of rows) for (const x of r.staleRules ?? []) console.log(`STALE-RULE ${r.key} ${JSON.stringify(x)}`);

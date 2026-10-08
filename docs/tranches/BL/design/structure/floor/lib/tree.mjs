@@ -13,7 +13,8 @@ export const FLOOR_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 /** The repo root: the nearest ancestor of the floor whose package.json is the library's. */
 export const DEFAULT_ROOT = (() => {
     for (let d = FLOOR_DIR; d !== dirname(d); d = dirname(d)) {
-        try { if (JSON.parse(readFileSync(join(d, "package.json"), "utf8")).name === "@mkbabb/glass-ui") return d; } catch { /* keep walking */ }
+        // P6-F3: a dir with no package.json is passed; one that does not parse stops the walk
+        if (existsSync(join(d, "package.json")) && JSON.parse(readFileSync(join(d, "package.json"), "utf8")).name === "@mkbabb/glass-ui") return d;
     }
     throw new Error(`floor: no @mkbabb/glass-ui package.json above ${FLOOR_DIR}`);
 })();
@@ -69,9 +70,10 @@ export function openTree(root = DEFAULT_ROOT, { overlay = {} } = {}) {
     for (const p of listed) {
         if (SKIP.test(p) || p === "node_modules") continue;
         if (Object.prototype.hasOwnProperty.call(overlay, p) && overlay[p] === null) continue;
-        let st;
-        try { st = statSync(join(root, p)); } catch { continue; }
-        if (st.isFile()) all.add(p);
+        // git's index lists a file deleted from the worktree: that one is absent, any other
+        // stat failure stops the tree (P6-F3)
+        if (!existsSync(join(root, p))) continue;
+        if (statSync(join(root, p)).isFile()) all.add(p);
     }
     for (const [p, c] of Object.entries(overlay)) if (c !== null) all.add(p);
     const files = [...all].sort();

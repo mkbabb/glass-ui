@@ -7,15 +7,15 @@
 // declared path exists and is non-empty, no name repeats, no source serves two names,
 // and the cascade's declared terminal exists. Placement is free: a source may live
 // anywhere; only the record names the door.
-import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { DEFAULT_ROOT, recordPath } from "./tree.mjs";
 
 export function loadRecord(tree) {
     const path = recordPath(tree.root);
-    let text;
-    try { text = tree.read(path); } catch { throw new Error(`entry-record: ${tree.root} has no ${path} (a landed tree is read by its own floor: node scripts/structure/…)`); }
-    return JSON.parse(text);
+    // P6-F3: absent is named; any other read or parse failure surfaces as itself
+    if (!tree.isFile(path)) throw new Error(`entry-record: ${tree.root} has no ${path} (a landed tree is read by its own floor: node scripts/structure/…)`);
+    return JSON.parse(tree.read(path));
 }
 
 /** src/<p> ships at dist/<p>; the styles and fonts copies preserve the relative path. A CSS
@@ -131,10 +131,6 @@ export function compareToPackage(record, pkg) {
     };
 }
 
-export function fileSize(root, p) {
-    try { return statSync(join(root, p)).size; } catch { return -1; }
-}
-
 export function readJson(root, p) {
     return JSON.parse(readFileSync(join(root, p), "utf8"));
 }
@@ -151,7 +147,7 @@ function diskTree(root) {
         }
     };
     walk("src");
-    const stat = (p) => { try { return statSync(join(root, p)); } catch { return null; } };
+    const stat = (p) => (existsSync(join(root, p)) ? statSync(join(root, p)) : null);
     return {
         root,
         files,

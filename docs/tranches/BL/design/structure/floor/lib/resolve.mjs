@@ -169,8 +169,9 @@ export function discoverAliases(tree, ts, makeEvaluator) {
     const found = [];
     for (const f of tree.parsed) {
         if (/(^|\/)tsconfig[^/]*\.json$/.test(f)) {
+            // P6-F3: a tsconfig that does not parse stops the graph; its aliases are unknown, never none
             let json;
-            try { json = JSON.parse(stripJsonComments(tree.read(f))); } catch { continue; }
+            try { json = JSON.parse(stripJsonComments(tree.read(f))); } catch (e) { throw new Error(`resolve: ${f} does not parse (${e.message}); its paths cannot be read`); }
             const paths = json.compilerOptions?.paths ?? {};
             const base = posix.join(posix.dirname(f), json.compilerOptions?.baseUrl ?? ".");
             for (const [k, vs] of Object.entries(paths)) {

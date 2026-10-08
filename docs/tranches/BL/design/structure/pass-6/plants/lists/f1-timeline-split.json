@@ -1,0 +1,43 @@
+{
+ "scopes": [
+  {
+   "from": "Timeline",
+   "to": "TimelineMarks",
+   "reason": "B-S11 (pass-5 frozen row S39-03): TimelineMarks.vue is split out of Timeline.vue; the rules it scopes are the marks-list rules Timeline.vue scoped before, values kept"
+  }
+ ],
+ "reorders": [
+  {
+   "entry": "./styles",
+   "moved": [
+    "@layer components :: .tl[data-v-(Timeline)] {row-gap:var(--space-body);grid-template-columns:100%;display:grid;position:relative}",
+    "@layer components :: .tl__track[data-v-(Timeline)],.tl__marks[data-v-(Timeline)] {grid-area:1/1;align-self:center}",
+    "@layer components :: .tl__track[data-v-(Timeline)] {block-size:var(--timeline-track-h);background:oklch(from var(--card) calc(l - .04) c h)}",
+    "@layer components :: .tl__span[data-v-(Timeline)] {inset-block:0;left:calc(var(--tl-l) * 100%);width:calc(var(--tl-w) * 100%);position:absolute;overflow:hidden}",
+    "@layer components :: .tl__fill[data-v-(Timeline)] {background:var(--tl-accent);transform:translateX(calc((var(--tl-f) - 1) * 100%));position:absolute;inset:0}",
+    "@layer components :: .tl__track[data-advancing] .tl__fill[data-v-(Timeline)] {will-change:transform}",
+    "@layer components :: .tl__cap[data-v-(Timeline)] {inset-block:0;inline-size:var(--timeline-track-h);border-radius:var(--radius-pill);background:var(--tl-accent);box-shadow:var(--glass-rim-top);transform:scaleX(var(--stretch,1)) scaleY(calc(1 / var(--stretch,1)));pointer-events:none;position:absolute;right:0}",
+    "@layer components :: .tl .track-flow[data-v-(Timeline)] {--track-flow-peak:var(--fill-selected)}",
+    "@layer components :: .tl__detail[data-v-(Timeline)] {animation:tl-detail-(Timeline) var(--spring-dock-duration) var(--spring-dock) both;grid-area:2/1}",
+    "@layer components > @media (prefers-reduced-motion:reduce) :: .tl__detail[data-v-(Timeline)] {animation-duration:.01ms}"
+   ],
+   "reason": "the split emits TimelineMarks.vue's style block before Timeline.vue's, so the Timeline rules that stayed follow the re-homed marks rules; transcribed from cascade verify's UNLISTED output after review"
+  },
+  {
+   "entry": "./styles.css",
+   "moved": [
+    "@layer components :: .tl[data-v-(Timeline)] {row-gap:var(--space-body);grid-template-columns:100%;display:grid;position:relative}",
+    "@layer components :: .tl__track[data-v-(Timeline)],.tl__marks[data-v-(Timeline)] {grid-area:1/1;align-self:center}",
+    "@layer components :: .tl__track[data-v-(Timeline)] {block-size:var(--timeline-track-h);background:oklch(from var(--card) calc(l - .04) c h)}",
+    "@layer components :: .tl__span[data-v-(Timeline)] {inset-block:0;left:calc(var(--tl-l) * 100%);width:calc(var(--tl-w) * 100%);position:absolute;overflow:hidden}",
+    "@layer components :: .tl__fill[data-v-(Timeline)] {background:var(--tl-accent);transform:translateX(calc((var(--tl-f) - 1) * 100%));position:absolute;inset:0}",
+    "@layer components :: .tl__track[data-advancing] .tl__fill[data-v-(Timeline)] {will-change:transform}",
+    "@layer components :: .tl__cap[data-v-(Timeline)] {inset-block:0;inline-size:var(--timeline-track-h);border-radius:var(--radius-pill);background:var(--tl-accent);box-shadow:var(--glass-rim-top);transform:scaleX(var(--stretch,1)) scaleY(calc(1 / var(--stretch,1)));pointer-events:none;position:absolute;right:0}",
+    "@layer components :: .tl .track-flow[data-v-(Timeline)] {--track-flow-peak:var(--fill-selected)}",
+    "@layer components :: .tl__detail[data-v-(Timeline)] {animation:tl-detail-(Timeline) var(--spring-dock-duration) var(--spring-dock) both;grid-area:2/1}",
+    "@layer components > @media (prefers-reduced-motion:reduce) :: .tl__detail[data-v-(Timeline)] {animation-duration:.01ms}"
+   ],
+   "reason": "the split emits TimelineMarks.vue's style block before Timeline.vue's, so the Timeline rules that stayed follow the re-homed marks rules; transcribed from cascade verify's UNLISTED output after review"
+  }
+ ]
+}

@@ -17,8 +17,7 @@ export function classRecipes(tree) {
     const out = [];
     for (const f of tree.files) {
         if (!f.startsWith("src/") || !/\.(ts|tsx|vue)$/.test(f) || /\.d\.ts$/.test(f) || f.includes("/__tests__/")) continue;
-        let text;
-        try { text = tree.read(f); } catch { continue; }
+        const text = tree.read(f);
         for (const m of text.matchAll(STRING)) {
             const s = m[1] ?? m[2] ?? m[3];
             const toks = s.split(/\s+/).map((t) => t.replace(/^[a-z-]+:/, "")).filter((t) => TOKEN.test(t));
@@ -28,11 +27,11 @@ export function classRecipes(tree) {
     return out;
 }
 
-/** Class tokens a stylesheet's selectors name (postcss), each with the selectors naming it. */
-export function selectorClasses(postcss, css, from = "x.css") {
+/** Class tokens a stylesheet's selectors name (postcss). A sheet that does not parse throws
+ *  (P6-F3): its classes are unknown, never none. */
+export function selectorClasses(postcss, css, from) {
     const out = new Set();
-    let root;
-    try { root = postcss.parse(css, { from }); } catch { return out; }
+    const root = postcss.parse(css, { from });
     root.walkRules((r) => { for (const m of r.selector.matchAll(/\.(-?[_a-zA-Z][-_a-zA-Z0-9]*)/g)) out.add(m[1]); });
     return out;
 }
@@ -45,17 +44,18 @@ export function classOwners(tree) {
     const owners = new Map();
     for (const f of tree.files) {
         if (!f.startsWith("src/") || !/\.(css|vue)$/.test(f) || f.includes("/__tests__/")) continue;
-        let text;
-        try { text = styleText(f, tree.read(f)); } catch { continue; }
-        for (const c of selectorClasses(postcss, text, f)) (owners.get(c) ?? owners.set(c, new Set()).get(c)).add(f);
+        for (const c of selectorClasses(postcss, styleText(f, tree.read(f)), f)) (owners.get(c) ?? owners.set(c, new Set()).get(c)).add(f);
     }
     return { owners, postcss };
 }
 
-/** The classes a file contributes: a style file's selector classes, a script's recipe tokens. */
+/** The classes a file contributes: a style file's selector classes, a script's recipe tokens.
+ *  The file is one the tree holds; a caller with an absent file says so itself (P6-F3: the
+ *  browser seat gives a moved-away file no classes by its own `isFile` test), so a file this
+ *  is handed and cannot read throws, never contributes nothing. */
 export function classesOf(tree, file, { owners, postcss }, recipes) {
-    let text;
-    try { text = tree.read(file); } catch { return new Set(); }
+    if (!tree.isFile(file)) throw new Error(`recipes: classesOf(${file}): ${tree.root} holds no such file`);
+    const text = tree.read(file);
     if (/\.(css|vue)$/.test(file)) {
         const own = selectorClasses(postcss, styleText(file, text), file);
         if (file.endsWith(".vue")) for (const r of recipes) if (r.file === file) for (const c of r.classes) if (owners.has(c)) own.add(c);

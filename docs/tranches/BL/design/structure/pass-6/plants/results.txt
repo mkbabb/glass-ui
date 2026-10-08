@@ -1,0 +1,526 @@
+P6 floor plants — recorded commands and outputs (2026-10-08)
+Seat: FLOOR, D1 pass 6, claude-opus-5-5. Battery: <structure>/pass-6/plants/p6-tree-plants.sh.
+HEAD moved during the run, by docs-only commits only: 0dd061c1 (session start) → a115850c → 8bf8d7f8 → 3fbaa0e7 →
+11ff23bb → a59d0909 → b0111693 → d948b29b. `git diff --stat a115850c d948b29b -- . ':!docs'` is empty, so every cut
+below has the same code (10.1.0). Each plant log's header names the commit its cut was taken at.
+Paths shortened: <repo> = the checkout, <structure> = docs/tranches/BL/design/structure in it, <scratch> = this seat's
+scratch dir (bulky logs, not durable), <wt> = the seat's linked worktree, <repo>/.claude/worktrees/bl/D1/p6/floor/wt.
+
+  before arm: <wt> = HEAD with its own (pass-5, committed) floor and rows:
+              sh <structure>/pass-6/plants/p6-tree-plants.sh before <wt> <scratch>/battery
+  after arm:  <wt> = HEAD + the P6 floor (the checkout's, rsync'd by pass-4/tools/fresh.sh --floor, which prints
+              "+ P4 floor" as its fixed label), cut by node <structure>/floor/rows/apply.mjs --root <wt> (r1 first);
+              the floor then runs from <wt>/scripts/structure
+              sh <structure>/pass-6/plants/p6-tree-plants.sh after <wt> <scratch>/battery
+  regression: sh <structure>/pass-5/plants/p5-tree-plants.sh after <repo>/.claude/worktrees/bl/D1/p6/floor F1 F2 F2d F3 F4r F4m R7 R48
+              sh <structure>/pass-4/plants/p4-tree-plants.sh after <repo>/.claude/worktrees/bl/D1/p6/floor F0 F1 F2 F2u F3 F4 F5 F6
+              (both scripts cut <scratch arg>/wt, so the seat dir is passed to put the cut at <wt>; pass 4's also cuts
+              <scratch arg>/wt-base for F5/F6. Their logs landed in <seat dir>/after and were moved to <scratch>/reg-p5
+              and <scratch>/reg-p4 after each run)
+  baseline:   sh <structure>/pass-6/tools/baseline.sh <wt> <scratch>/baseline
+
+Filter: the battery section keeps, from each plant log, every command line ($), its exit ([exit n]) and the lines that
+carry a verdict or a reading (VERDICT, "verdict" fields, SCOPE, COVER, GRAPH, CLASSES, evidence, band, report,
+the seat's GREEN/RED and band lines, EACCES and Error lines, the plant tools' one-line reports, the chain's digest).
+Dropped: the per-row lines of the floor chain (identical in every cut), vite's chunk tables, Playwright's per-test lines.
+
+============================================================================================================
+VERDICTS
+============================================================================================================
+P6 battery                      before (pass-5 floor)   after (P6 floor)
+  F1   split listed GREEN        MISSED                  CAUGHT
+  F1v  value changed RED         CAUGHT (control)        CAUGHT
+  F1m  pure SFC move identical   CAUGHT (control)        CAUGHT
+  F2   carved spec is evidence   MISSED                  CAUGHT
+  F2g  moved spec fails loud     MISSED                  CAUGHT
+  F3a  absent ledger stops       MISSED                  CAUGHT
+  F3l  malformed ledger stops    MISSED                  CAUGHT
+  F3r  unreadable file stops     MISSED                  CAUGHT
+  total                          2/9 (6 MISSED)          9/9
+
+Regressions on the P6 floor (after arm):
+  pass 5:  CAUGHT F1 F2 F2d F3 F4r F4m R7 R48   8/8
+  pass 4:  CAUGHT F0 F1 F2 F2u F3 F4 F5 F6      8/8
+Graph batteries (baseline): plants-59 59/59, plants-p3 18/18.
+
+------------------------------------------------------------------------------------------------------------
+P6 battery verdict lines, as printed (<scratch>/battery/verdicts.txt; the first run stopped at before/F1m on a shell
+quoting fault in the script, `$k0→`, read under set -u as a variable named k0 plus the arrow's bytes; the script was
+fixed to ${k0} and the whole battery re-run from a fresh cut, both arms; the lines below are the re-run)
+------------------------------------------------------------------------------------------------------------
+MISSED  F1   listed exit 1 (want 0), unlisted exit 1 (want 1):  "verdict": "RED: content changed"
+CAUGHT  F1v  a value changed under the re-homed scope reads RED: content changed, under the split's listing
+CAUGHT  F1m  the pure SFC move reads identical; its scope id re-hashed (feedback-mark-pulse-4a47d962 -> feedback-mark-pulse-7cd2991d )
+MISSED  F2   COVER covered=false evidence=0 namedOnlyTheClass=0 refuted=0: the carved spec cannot be evidence
+MISSED  F2g  fd4-cover exit 0: COVER covered=false evidence=0 namedOnlyTheClass=0 refuted=0 (the moved spec read as empty)
+MISSED  F3a  the absent ledger read as empty: GRAPH built: 7404 edges, 17 violations ({"unresolved":14,"opaque":3}), 0 ledgered edges
+MISSED  F3l  the malformed ledger read as empty: GRAPH built: 7404 edges, 17 violations ({"unresolved":14,"opaque":3}), 0 ledgered edges
+MISSED  F3r  GRAPH built: 7436 edges, 0 violations ({}), 17 ledgered edges; CLASSES 0: ; select-only exit 0
+CAUGHT  F1   the split listed by scope + moved rules GREEN; unlisted RED (exit 1): SCOPE Timeline → TimelineMarks: 40 rule line(s) re-homed
+CAUGHT  F1v  a value changed under the re-homed scope reads RED: content changed, under the split's listing
+CAUGHT  F1m  the pure SFC move reads identical; its scope id re-hashed (feedback-mark-pulse-4a47d962 -> feedback-mark-pulse-7cd2991d )
+CAUGHT  F2   the carved readback spec is FD-4 evidence: evidence src/components/chip/__tests__/chip-accent-band.visual.ts reads --accent-band-strength on .glass-chip, passed 1, band base-green 1
+CAUGHT  F2g  the spec moved out from under the report fails the coverage arm loud: COVER THREW FD-4: the browser report of /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p6/floor/wt names spec src/components/chip/__tests_
+CAUGHT  F3a  GRAPH THREW graph: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p6/floor/wt has no scripts/structure/records/opaque-ledger.json; the opa
+CAUGHT  F3l  GRAPH THREW graph: scripts/structure/records/opaque-ledger.json does not parse (Unexpected end of JSON input); the opaque ledger cannot be read
+CAUGHT  F3r  an unreadable src/components/chip/accent-tone.css stops the graph, classesOf and the selection (exit 1), each naming EACCES
+
+============================================================================================================
+APPENDIX A · the P6 battery, filtered logs (<scratch>/battery/{before,after}/<plant>.log)
+============================================================================================================
+=== before/F1
+# F1 · arm before · HEAD 3fbaa0e7 · 2026-10-08T15:51:20Z · load 47.96 55.02 65.59
+$ <structure>/pass-4/tools/fresh.sh <wt>
+fresh <wt> at 3fbaa0e7
+[exit 0]
+tree digest 873847886035d59f92943ef756bd5ff55050bff713cf6cf9ffaa6d925d00efab
+[exit 0]
+$ npx vite build
+[exit 0]
+$ node <wt>/scripts/structure/cascade.mjs snapshot --root <wt> --dist <wt>/dist --out <scratch>/before/F1-base --sha 3fbaa0e7
+[exit 0]
+$ node <structure>/pass-6/plants/sfc-split.mjs <wt> keep
+sfc-split keep: src/components/timeline/Timeline.vue 455 lines, src/components/timeline/TimelineMarks.vue created (11289 B)
+[exit 0]
+$ npx vite build
+[exit 0]
+$ node <wt>/scripts/structure/cascade.mjs verify --root <wt> --baseline <scratch>/before/F1-base --dist <wt>/dist
+ "verdict": "RED",
+   "verdict": "RED: content changed"
+   "verdict": "RED: content changed"
+[exit 1]
+$ node <wt>/scripts/structure/cascade.mjs verify --root <wt> --baseline <scratch>/before/F1-base --dist <wt>/dist --reorders <structure>/pass-6/plants/lists/f1-timeline-split.json
+ "verdict": "RED",
+   "verdict": "RED: content changed"
+   "verdict": "RED: content changed"
+[exit 1]
+VERDICT MISSED F1 — listed exit 1 (want 0), unlisted exit 1 (want 1):  "verdict": "RED: content changed"
+=== before/F1v
+# F1v · arm before · HEAD 3fbaa0e7 · 2026-10-08T15:52:09Z · load 39.46 51.89 63.84
+$ <structure>/pass-4/tools/fresh.sh <wt>
+fresh <wt> at 3fbaa0e7
+[exit 0]
+tree digest 873847886035d59f92943ef756bd5ff55050bff713cf6cf9ffaa6d925d00efab
+[exit 0]
+$ npx vite build
+[exit 0]
+$ node <wt>/scripts/structure/cascade.mjs snapshot --root <wt> --dist <wt>/dist --out <scratch>/before/F1v-base --sha 3fbaa0e7
+[exit 0]
+$ node <structure>/pass-6/plants/sfc-split.mjs <wt> value
+sfc-split value: src/components/timeline/Timeline.vue 455 lines, src/components/timeline/TimelineMarks.vue created (11289 B), stroke-width 3 → 4 under TimelineMarks
+[exit 0]
+$ npx vite build
+[exit 0]
+$ node <wt>/scripts/structure/cascade.mjs verify --root <wt> --baseline <scratch>/before/F1v-base --dist <wt>/dist --reorders <structure>/pass-6/plants/lists/f1-timeline-split.json
+ "verdict": "RED",
+   "verdict": "RED: content changed"
+   "verdict": "RED: content changed"
+[exit 1]
+VERDICT CAUGHT F1v — a value changed under the re-homed scope reads RED: content changed, under the split's listing
+=== before/F1m
+# F1m · arm before · HEAD 3fbaa0e7 · 2026-10-08T15:53:02Z · load 38.81 49.73 62.29
+$ <structure>/pass-4/tools/fresh.sh <wt>
+fresh <wt> at 3fbaa0e7
+[exit 0]
+tree digest 873847886035d59f92943ef756bd5ff55050bff713cf6cf9ffaa6d925d00efab
+[exit 0]
+$ npx vite build
+[exit 0]
+$ node <wt>/scripts/structure/cascade.mjs snapshot --root <wt> --dist <wt>/dist --out <scratch>/before/F1m-base --sha 3fbaa0e7
+[exit 0]
+$ node <wt>/scripts/structure/move.mjs <structure>/pass-6/plants/lists/f1m-statusdot-move.json --root <wt>
+[exit 0]
+$ npx vite build
+[exit 0]
+StatusDot's scoped keyframe in dist: base feedback-mark-pulse-4a47d962  -> moved feedback-mark-pulse-7cd2991d
+$ node <wt>/scripts/structure/cascade.mjs verify --root <wt> --baseline <scratch>/before/F1m-base --dist <wt>/dist
+ "verdict": "GREEN",
+[exit 0]
+VERDICT CAUGHT F1m — the pure SFC move reads identical; its scope id re-hashed (feedback-mark-pulse-4a47d962 -> feedback-mark-pulse-7cd2991d )
+=== before/F2
+# F2 · arm before · HEAD 11ff23bb · 2026-10-08T15:54:15Z · load 44.72 48.98 61.00
+$ <structure>/pass-4/tools/fresh.sh <wt>
+fresh <wt> at 11ff23bb
+[exit 0]
+tree digest 753b08d6ae2765cbb00f2d161b6f7d31e7103cfcb39178ded33daf4ce801a859
+[exit 0]
+$ node <structure>/pass-6/plants/carve-spec.mjs <wt> carve
+carve-spec carve: tests-visual/playwright.config.ts program row (testDir "..", slot pattern); src/components/chip/__tests__/chip-accent-band.visual.ts (1317 B)
+[exit 0]
+$ node <wt>/scripts/structure/browser.mjs --root <wt> --changed src/components/chip/__tests__/chip-accent-band.visual.ts --select-only --out <scratch>/before/F2-select.json
+[browser-seat 2026-10-08T15:55:04.813Z] band chip: 1 spec(s): ../src/components/chip/__tests__/chip-accent-band.visual.ts
+[exit 0]
+$ node <wt>/scripts/structure/browser.mjs --root <wt> --changed src/components/chip/__tests__/chip-accent-band.visual.ts --out <scratch>/before/F2-seat-base.json --wait 3600
+[browser-seat 2026-10-08T15:55:45.375Z] GREEN: 4/4 passed, 0 failed, 0 skipped in 39s → <scratch>/before/F2-seat-base.json
+[browser-seat 2026-10-08T15:55:45.375Z]   band chip: 1 spec(s), base-green —, new failures —
+[exit 0]
+$ node <wt>/scripts/structure/browser.mjs --root <wt> --changed src/components/chip/__tests__/chip-accent-band.visual.ts --base-report <scratch>/before/F2-seat-base.json --out <scratch>/before/F2-seat.json --wait 3600
+[browser-seat 2026-10-08T15:56:29.586Z] GREEN: 4/4 passed, 0 failed, 0 skipped in 42s → <scratch>/before/F2-seat.json
+[browser-seat 2026-10-08T15:56:29.587Z]   band chip: 1 spec(s), base-green 0, new failures 0 — NO BROWSER SIGNAL
+[exit 0]
+$ node <structure>/pass-6/plants/fd4-cover.mjs --root <wt> --report <scratch>/before/F2-seat.json
+report browser-seat/1 testDir=- baseReport=yes; results 4: chip-accent-band.visual.ts, substrate-paints-color.spec.ts
+band chip: base-green 0; specs ../src/components/chip/__tests__/chip-accent-band.visual.ts
+COVER covered=false evidence=0 namedOnlyTheClass=0 refuted=0
+[exit 0]
+VERDICT MISSED F2 — COVER covered=false evidence=0 namedOnlyTheClass=0 refuted=0: the carved spec cannot be evidence
+$ node <structure>/pass-6/plants/carve-spec.mjs <wt> gone
+carve-spec gone: src/components/chip/__tests__/chip-accent-band.visual.ts → src/components/chip/__tests__/chip-accent-band-2.visual.ts
+[exit 0]
+$ node <structure>/pass-6/plants/fd4-cover.mjs --root <wt> --report <scratch>/before/F2-seat.json
+report browser-seat/1 testDir=- baseReport=yes; results 4: chip-accent-band.visual.ts, substrate-paints-color.spec.ts
+band chip: base-green 0; specs ../src/components/chip/__tests__/chip-accent-band.visual.ts
+COVER covered=false evidence=0 namedOnlyTheClass=0 refuted=0
+[exit 0]
+VERDICT MISSED F2g — fd4-cover exit 0: COVER covered=false evidence=0 namedOnlyTheClass=0 refuted=0 (the moved spec read as empty)
+=== before/F3a
+# F3a · arm before · HEAD a59d0909 · 2026-10-08T15:56:48Z · load 50.34 48.41 58.70
+$ <structure>/pass-4/tools/fresh.sh <wt>
+fresh <wt> at a59d0909
+[exit 0]
+tree digest 3d2f3490cec0e28c46a2969d9efb84f9bb5295c4812bd865a70a0c30d8b5da78
+[exit 0]
+$ rm <wt>/scripts/structure/records/opaque-ledger.json
+[exit 0]
+$ node <structure>/pass-6/plants/f3-probe.mjs --root <wt>
+GRAPH built: 7404 edges, 17 violations ({"unresolved":14,"opaque":3}), 0 ledgered edges
+[exit 0]
+$ node <wt>/scripts/structure/graph.mjs --root <wt> --quiet
+[exit 1]
+VERDICT MISSED F3a — the absent ledger read as empty: GRAPH built: 7404 edges, 17 violations ({"unresolved":14,"opaque":3}), 0 ledgered edges
+=== before/F3l
+# F3l · arm before · HEAD a59d0909 · 2026-10-08T15:57:43Z · load 70.06 53.81 60.04
+$ <structure>/pass-4/tools/fresh.sh <wt>
+fresh <wt> at a59d0909
+[exit 0]
+tree digest 3d2f3490cec0e28c46a2969d9efb84f9bb5295c4812bd865a70a0c30d8b5da78
+[exit 0]
+$ sh -c printf '{"entries": [' > '<wt>/scripts/structure/records/opaque-ledger.json'
+[exit 0]
+$ node <structure>/pass-6/plants/f3-probe.mjs --root <wt>
+GRAPH built: 7404 edges, 17 violations ({"unresolved":14,"opaque":3}), 0 ledgered edges
+[exit 0]
+$ node <wt>/scripts/structure/graph.mjs --root <wt> --quiet
+[exit 1]
+VERDICT MISSED F3l — the malformed ledger read as empty: GRAPH built: 7404 edges, 17 violations ({"unresolved":14,"opaque":3}), 0 ledgered edges
+=== before/F3r
+# F3r · arm before · HEAD a59d0909 · 2026-10-08T15:58:23Z · load 60.06 53.03 59.45
+$ <structure>/pass-4/tools/fresh.sh <wt>
+fresh <wt> at a59d0909
+[exit 0]
+tree digest 3d2f3490cec0e28c46a2969d9efb84f9bb5295c4812bd865a70a0c30d8b5da78
+[exit 0]
+$ chmod 000 src/components/chip/accent-tone.css
+[exit 0]
+$ node <structure>/pass-6/plants/f3-probe.mjs --root <wt> --file src/components/chip/accent-tone.css
+GRAPH built: 7436 edges, 0 violations ({}), 17 ledgered edges
+CLASSES 0:
+[exit 0]
+$ node <wt>/scripts/structure/browser.mjs --root <wt> --changed src/components/chip/accent-tone.css --select-only --out <scratch>/before/F3r-select.json
+[browser-seat 2026-10-08T15:58:59.536Z] band chip: 0 spec(s) (no spec reads it)
+[exit 0]
+$ chmod 644 src/components/chip/accent-tone.css
+[exit 0]
+VERDICT MISSED F3r — GRAPH built: 7436 edges, 0 violations ({}), 17 ledgered edges; CLASSES 0: ; select-only exit 0
+=== after/F1
+# F1 · arm after · HEAD a59d0909 · 2026-10-08T15:59:04Z · load 60.20 53.95 59.50
+$ <structure>/pass-4/tools/fresh.sh <wt> --floor
+fresh <wt> at a59d0909 + P4 floor
+[exit 0]
+tree digest cb18aeab014afcd0ab33002c2cf4aa6137f77a62eb2fbecbed003f5f20adf9b9
+[exit 0]
+$ npx vite build
+[exit 0]
+$ node <wt>/scripts/structure/cascade.mjs snapshot --root <wt> --dist <wt>/dist --out <scratch>/after/F1-base --sha a59d0909
+[exit 0]
+$ node <structure>/pass-6/plants/sfc-split.mjs <wt> keep
+sfc-split keep: src/components/timeline/Timeline.vue 455 lines, src/components/timeline/TimelineMarks.vue created (11289 B)
+[exit 0]
+$ npx vite build
+[exit 0]
+$ node <wt>/scripts/structure/cascade.mjs verify --root <wt> --baseline <scratch>/after/F1-base --dist <wt>/dist
+ "verdict": "RED",
+   "verdict": "RED: content changed"
+   "verdict": "RED: content changed"
+[exit 1]
+$ node <wt>/scripts/structure/cascade.mjs verify --root <wt> --baseline <scratch>/after/F1-base --dist <wt>/dist --reorders <structure>/pass-6/plants/lists/f1-timeline-split.json
+ "verdict": "GREEN",
+   "verdict": "GREEN: listed reorder; no swapped pair shares a property on co-occurring classes",
+   "verdict": "GREEN: listed reorder; no swapped pair shares a property on co-occurring classes",
+SCOPE Timeline → TimelineMarks: 40 rule line(s) re-homed
+[exit 0]
+VERDICT CAUGHT F1 — the split listed by scope + moved rules GREEN; unlisted RED (exit 1): SCOPE Timeline → TimelineMarks: 40 rule line(s) re-homed
+=== after/F1v
+# F1v · arm after · HEAD a59d0909 · 2026-10-08T15:59:53Z · load 46.25 51.00 58.08
+$ <structure>/pass-4/tools/fresh.sh <wt> --floor
+fresh <wt> at a59d0909 + P4 floor
+[exit 0]
+tree digest cb18aeab014afcd0ab33002c2cf4aa6137f77a62eb2fbecbed003f5f20adf9b9
+[exit 0]
+$ npx vite build
+[exit 0]
+$ node <wt>/scripts/structure/cascade.mjs snapshot --root <wt> --dist <wt>/dist --out <scratch>/after/F1v-base --sha a59d0909
+[exit 0]
+$ node <structure>/pass-6/plants/sfc-split.mjs <wt> value
+sfc-split value: src/components/timeline/Timeline.vue 455 lines, src/components/timeline/TimelineMarks.vue created (11289 B), stroke-width 3 → 4 under TimelineMarks
+[exit 0]
+$ npx vite build
+[exit 0]
+$ node <wt>/scripts/structure/cascade.mjs verify --root <wt> --baseline <scratch>/after/F1v-base --dist <wt>/dist --reorders <structure>/pass-6/plants/lists/f1-timeline-split.json
+ "verdict": "RED",
+   "verdict": "RED: content changed"
+   "verdict": "RED: content changed"
+SCOPE Timeline → TimelineMarks: 40 rule line(s) re-homed
+[exit 1]
+VERDICT CAUGHT F1v — a value changed under the re-homed scope reads RED: content changed, under the split's listing
+=== after/F1m
+# F1m · arm after · HEAD a59d0909 · 2026-10-08T16:00:41Z · load 45.81 50.11 57.34
+$ <structure>/pass-4/tools/fresh.sh <wt> --floor
+fresh <wt> at a59d0909 + P4 floor
+[exit 0]
+tree digest cb18aeab014afcd0ab33002c2cf4aa6137f77a62eb2fbecbed003f5f20adf9b9
+[exit 0]
+$ npx vite build
+[exit 0]
+$ node <wt>/scripts/structure/cascade.mjs snapshot --root <wt> --dist <wt>/dist --out <scratch>/after/F1m-base --sha a59d0909
+[exit 0]
+$ node <wt>/scripts/structure/move.mjs <structure>/pass-6/plants/lists/f1m-statusdot-move.json --root <wt>
+[exit 0]
+$ npx vite build
+[exit 0]
+StatusDot's scoped keyframe in dist: base feedback-mark-pulse-4a47d962  -> moved feedback-mark-pulse-7cd2991d
+$ node <wt>/scripts/structure/cascade.mjs verify --root <wt> --baseline <scratch>/after/F1m-base --dist <wt>/dist
+ "verdict": "GREEN",
+[exit 0]
+VERDICT CAUGHT F1m — the pure SFC move reads identical; its scope id re-hashed (feedback-mark-pulse-4a47d962 -> feedback-mark-pulse-7cd2991d )
+=== after/F2
+# F2 · arm after · HEAD a59d0909 · 2026-10-08T16:01:37Z · load 50.58 51.33 57.38
+$ <structure>/pass-4/tools/fresh.sh <wt> --floor
+fresh <wt> at a59d0909 + P4 floor
+[exit 0]
+tree digest cb18aeab014afcd0ab33002c2cf4aa6137f77a62eb2fbecbed003f5f20adf9b9
+[exit 0]
+$ node <structure>/pass-6/plants/carve-spec.mjs <wt> carve
+carve-spec carve: tests-visual/playwright.config.ts program row (testDir "..", slot pattern); src/components/chip/__tests__/chip-accent-band.visual.ts (1317 B)
+[exit 0]
+$ node <wt>/scripts/structure/browser.mjs --root <wt> --changed src/components/chip/__tests__/chip-accent-band.visual.ts --select-only --out <scratch>/after/F2-select.json
+[browser-seat 2026-10-08T16:02:08.836Z] band chip: 1 spec(s): src/components/chip/__tests__/chip-accent-band.visual.ts
+[exit 0]
+$ node <wt>/scripts/structure/browser.mjs --root <wt> --changed src/components/chip/__tests__/chip-accent-band.visual.ts --out <scratch>/after/F2-seat-base.json --wait 3600
+[browser-seat 2026-10-08T16:02:47.966Z] GREEN: 4/4 passed, 0 failed, 0 skipped in 37s → <scratch>/after/F2-seat-base.json
+[browser-seat 2026-10-08T16:02:47.966Z]   band chip: 1 spec(s), base-green —, new failures —
+[exit 0]
+$ node <wt>/scripts/structure/browser.mjs --root <wt> --changed src/components/chip/__tests__/chip-accent-band.visual.ts --base-report <scratch>/after/F2-seat-base.json --out <scratch>/after/F2-seat.json --wait 3600
+[browser-seat 2026-10-08T16:03:28.307Z] GREEN: 4/4 passed, 0 failed, 0 skipped in 38s → <scratch>/after/F2-seat.json
+[browser-seat 2026-10-08T16:03:28.307Z]   band chip: 1 spec(s), base-green 1, new failures 0
+[exit 0]
+$ node <structure>/pass-6/plants/fd4-cover.mjs --root <wt> --report <scratch>/after/F2-seat.json
+report browser-seat/2 testDir=. baseReport=yes; results 4: src/components/chip/__tests__/chip-accent-band.visual.ts, tests-visual/substrate-paints-color.spec.ts
+band chip: base-green 1; specs src/components/chip/__tests__/chip-accent-band.visual.ts
+evidence src/components/chip/__tests__/chip-accent-band.visual.ts reads --accent-band-strength on .glass-chip, passed 1, band base-green 1
+COVER covered=true evidence=1 namedOnlyTheClass=0 refuted=0
+[exit 0]
+VERDICT CAUGHT F2 — the carved readback spec is FD-4 evidence: evidence src/components/chip/__tests__/chip-accent-band.visual.ts reads --accent-band-strength on .glass-chip, passed 1, band base-green 1
+$ node <structure>/pass-6/plants/carve-spec.mjs <wt> gone
+carve-spec gone: src/components/chip/__tests__/chip-accent-band.visual.ts → src/components/chip/__tests__/chip-accent-band-2.visual.ts
+[exit 0]
+$ node <structure>/pass-6/plants/fd4-cover.mjs --root <wt> --report <scratch>/after/F2-seat.json
+report browser-seat/2 testDir=. baseReport=yes; results 4: src/components/chip/__tests__/chip-accent-band.visual.ts, tests-visual/substrate-paints-color.spec.ts
+band chip: base-green 1; specs src/components/chip/__tests__/chip-accent-band.visual.ts
+COVER THREW FD-4: the browser report of <wt> names spec src/components/chip/__tests__/chip-accent-band.visual.ts, at src/components/chip/__tests__/chip-accent-band.visual.ts, which <wt> does not hold; the coverage arm cannot read it
+[exit 3]
+VERDICT CAUGHT F2g — the spec moved out from under the report fails the coverage arm loud: COVER THREW FD-4: the browser report of <wt> names spec src/components/chip/__tests_
+=== after/F3a
+# F3a · arm after · HEAD a59d0909 · 2026-10-08T16:03:32Z · load 45.02 50.38 56.36
+$ <structure>/pass-4/tools/fresh.sh <wt> --floor
+fresh <wt> at a59d0909 + P4 floor
+[exit 0]
+tree digest cb18aeab014afcd0ab33002c2cf4aa6137f77a62eb2fbecbed003f5f20adf9b9
+[exit 0]
+$ rm <wt>/scripts/structure/records/opaque-ledger.json
+[exit 0]
+$ node <structure>/pass-6/plants/f3-probe.mjs --root <wt>
+GRAPH THREW graph: <wt> has no scripts/structure/records/opaque-ledger.json; the opaque ledger is a floor record (a landed tree is read by its own floor: node scripts/structure/…)
+[exit 0]
+$ node <wt>/scripts/structure/graph.mjs --root <wt> --quiet
+Error: graph: <wt> has no scripts/structure/records/opaque-ledger.json; the opaque ledger is a floor record (a landed tree is read by its own floor: node scripts/structure/…)
+[exit 1]
+VERDICT CAUGHT F3a — GRAPH THREW graph: <wt> has no scripts/structure/records/opaque-ledger.json; the opa
+=== after/F3l
+# F3l · arm after · HEAD a59d0909 · 2026-10-08T16:04:15Z · load 59.19 53.13 57.08
+$ <structure>/pass-4/tools/fresh.sh <wt> --floor
+fresh <wt> at a59d0909 + P4 floor
+[exit 0]
+tree digest cb18aeab014afcd0ab33002c2cf4aa6137f77a62eb2fbecbed003f5f20adf9b9
+[exit 0]
+$ sh -c printf '{"entries": [' > '<wt>/scripts/structure/records/opaque-ledger.json'
+[exit 0]
+$ node <structure>/pass-6/plants/f3-probe.mjs --root <wt>
+GRAPH THREW graph: scripts/structure/records/opaque-ledger.json does not parse (Unexpected end of JSON input); the opaque ledger cannot be read
+[exit 0]
+$ node <wt>/scripts/structure/graph.mjs --root <wt> --quiet
+Error: graph: scripts/structure/records/opaque-ledger.json does not parse (Unexpected end of JSON input); the opaque ledger cannot be read
+[exit 1]
+VERDICT CAUGHT F3l — GRAPH THREW graph: scripts/structure/records/opaque-ledger.json does not parse (Unexpected end of JSON input); the opaque ledger cannot be read
+=== after/F3r
+# F3r · arm after · HEAD a59d0909 · 2026-10-08T16:05:00Z · load 71.62 56.87 58.23
+$ <structure>/pass-4/tools/fresh.sh <wt> --floor
+fresh <wt> at a59d0909 + P4 floor
+[exit 0]
+tree digest cb18aeab014afcd0ab33002c2cf4aa6137f77a62eb2fbecbed003f5f20adf9b9
+[exit 0]
+$ chmod 000 src/components/chip/accent-tone.css
+[exit 0]
+$ node <structure>/pass-6/plants/f3-probe.mjs --root <wt> --file src/components/chip/accent-tone.css
+GRAPH THREW EACCES: permission denied, open '<wt>/src/components/chip/accent-tone.css'
+CLASSES THREW EACCES: permission denied, open '<wt>/src/components/chip/accent-tone.css'
+[exit 0]
+$ node <wt>/scripts/structure/browser.mjs --root <wt> --changed src/components/chip/accent-tone.css --select-only --out <scratch>/after/F3r-select.json
+Error: EACCES: permission denied, open '<wt>/src/components/chip/accent-tone.css'
+  code: 'EACCES',
+[exit 1]
+$ chmod 644 src/components/chip/accent-tone.css
+[exit 0]
+VERDICT CAUGHT F3r — an unreadable src/components/chip/accent-tone.css stops the graph, classesOf and the selection (exit 1), each naming EACCES
+
+============================================================================================================
+APPENDIX B · regressions on the P6 floor (after arm)
+============================================================================================================
+$ sh <structure>/pass-5/plants/p5-tree-plants.sh after <repo>/.claude/worktrees/bl/D1/p6/floor F1 F2 F2d F3 F4r F4m R7 R48
+CAUGHT  F1   the landed floor's runtime has no file cycle:    "sccs": 4,
+CAUGHT  F2   theme.css -> theme/index.css: ./styles/theme targets ./dist/styles/theme/index.css (93 B), no file at the old name, 4 gates PASS, cascade identical
+CAUGHT  F2d  a declared second dist name is a guard violation (css-dist-declared); entries check exit 1
+CAUGHT  F3   the listed rung a GREEN; rung a + the unreviewed rung c under the same listing RED, 9 moved rule(s) named UNLISTED
+CAUGHT  F4r  the row is refused before its first write (profile-bundle.mjs unchanged, node --check 0): scripts/profile-bundle.mjs (295:1 Declaration or statement expected.)
+CAUGHT  F4m  the step is refused at parse, nothing written: PARSE refused {"file":"scripts/zz-importer.mjs","error":"4:12 ':' expected."}
+CAUGHT  R7   rung a listed by its rule set GREEN; rung b listed by its rule set RED, the pair named on --accent-band-strength
+CAUGHT  R48  the readback spec refutes the rule-set-listed accent-tone rung
+  readings from the logs (<scratch>/reg-p5):
+  F1  (HEAD b0111693) node <structure>/pass-5/plants/floor-cycles.mjs --root <wt>
+      {"floor":"scripts/structure","files":31,"valueEdges":55,"sccs":0}
+      (the VERDICT detail's `"sccs": 4` is the chain's m03 move report, the script's first grep match, as in pass 5)
+  R48 [browser-seat]   band chip: 6 spec(s), base-green —, new failures —
+      [browser-seat]   band chip: 6 spec(s), base-green 19, new failures 1
+        REFUTED by zz-chip-band.spec.ts (reads --accent-band-strength on .accent-tone): 1 new failure(s) zz-chip-band.spec.ts :: a Chip's --accent-band-strength is glass-chip's floored band, not the register's 18%
+      (the seat reports and the --browser report verify reads are browser-seat/2; the planted spec's key is
+      zz-chip-band.spec.ts, its path from testDir tests-visual)
+
+$ sh <structure>/pass-4/plants/p4-tree-plants.sh after <repo>/.claude/worktrees/bl/D1/p6/floor F0 F1 F2 F2u F3 F4 F5 F6
+CAUGHT  F0   the floor's surface pin follows 10.1.0: all four gates PASS on the cut
+CAUGHT  F1   the register is retired by the floor cut; the R-3 move of tabs-seam.test.ts applies and no register test reds (0/0)
+CAUGHT  F2   isTeleportedTarget.ts leaves _shared with its @source glob delta declared: carried, applied, typecheck 0
+CAUGHT  F2u  the undeclared glob delta is named at preflight; nothing written (8 src/demo changes, the cut's own)
+CAUGHT  F3   resolve.mjs moves; the generated root literal is kept verbatim; graph 0
+CAUGHT  F4   5/5 of the chip-paint specs; selected: css-critical.spec.ts,demo-design.spec.ts,glass-cal.spec.ts,page-chassis.spec.ts,storybook-meta.spec.ts,substrate-paints-color.spec.ts
+CAUGHT  F5   the spec leaving the Playwright program is refused (LOST playwright.config.ts test-program edge), rolled back
+CAUGHT  F6   the engine's own join respelling classifies (CLI PASS) and the engine step carries its FD-5 verdict
+  (cuts at b0111693 .. d948b29b; logs <scratch>/reg-p4)
+
+============================================================================================================
+APPENDIX C · baseline on HEAD d948b29b + the P6 floor (<scratch>/baseline/baseline.log)
+============================================================================================================
+$ sh <structure>/pass-6/tools/baseline.sh <wt> <scratch>/baseline
+fresh                        exit 0  25s
+commit d948b29b; load 22.86 54.33 62.80
+graph@docs                   exit 0  2s
+plants-59                    exit 0  58s
+plants-p3                    exit 0  18s
+chain                        exit 0  15s
+chain-replay                 exit 0  7s
+graph                        exit 0  2s
+graph-dump-p6                exit 0  1s
+floor-cycles                 exit 0  2s
+parse-tree                   exit 0  0s
+placement                    exit 0  2s
+placement-none               exit 0  2s
+bounds                       exit 0  0s
+fixpoint-dry                 exit 1  5s
+scc-per-move                 exit 0  2s
+build                        exit 0  6s
+css-dist-names               exit 0  0s
+gates                        exit 0  2s
+entries                      exit 0  1s
+cascade-contract             exit 0  1s
+cascade-snapshot             exit 0  1s
+cascade-self                 exit 0  0s
+cascade-labels               exit 0  0s
+surface                      exit 0  1s
+demo-build                   exit 0  1s
+vitest                       exit 0  16s
+typecheck                    exit 0  19s
+verify-package               exit 1  2s
+browser-select               exit 0  3s
+browser-seat                 exit 0  43s
+browser-seat-keys            exit 0  0s
+fresh-p5                     exit 0  19s
+chain-p5                     exit 0  26s
+graph-dump-p5                exit 0  2s
+graph-diff                   exit 0  0s
+worktree removed
+
+Readings (from the log, per step):
+graph@docs       "edges": 7526, "violations": 0, "fsReadCensus": 536, "srcValueSccs": [2, 2]
+plants-59        59/59 plants caught; baseline violations 0
+plants-p3        18/18 caught
+chain            floor rows applied: r1-register-retire, f3-entry-record, f4-terminal-role, m02-overlay-host, m03-roving-move,
+                 f9-wire, fd6-harness, fd7-programs, fd11-land; tree digest 5a5bd59ff3dcb9117146e204c871748e9fd1b3fe8027a23a0ca66aecf2918d7b
+chain-replay     every row "already applied … nothing written"; tree digest 5a5bd59ff3dcb9117146e204c871748e9fd1b3fe8027a23a0ca66aecf2918d7b
+graph            "edges": 7435, "violations": 0, "fsReadCensus": 517, "srcValueSccs": [2, 2]
+floor-cycles     {"floor":"scripts/structure","files":31,"valueEdges":55,"sccs":0}
+parse-tree       {"floor":"scripts/structure","files":1302,"unparsed":0}
+placement        "anchored":36,"move":14,"global":2,"proposedMoves":15,"needsName":1
+placement-none   "move":40,"global":12,"proposedMoves":47,"needsName":5
+bounds           "dirsOver": 18 (src 9, demo 2, tests 6, tests-visual 1); 55 FILE rows over 500 lines
+fixpoint-dry     pass 1 proposes 15 moves; members 14 → 24, "addedPairs": 169; stops on FD-2 (exit 1, as pass 4 and 5)
+css-dist-names   ./styles -> ./dist/styles/index.css 1514 B; ./styles/fonts -> ./dist/styles/fonts.css 132840 B;
+                 ./styles/theme -> ./dist/styles/theme.css 117 B
+gates            PASS F-1 graph {"edges":7435,"violations":0}; PASS F-3 entries {"exportKeys":68,"typesVersions":62,
+                 "exportsByteEqual":true,"typesVersionsByteEqual":true,"guard":[]}; PASS F-4 cascade contract; PASS F-9 surface
+                 pin {"exportKeys":68,"typesVersions":62,"jsEntries":63,"runtimeNames":603,"typeNames":1281}, differences []
+cascade-snapshot {"./styles":1970,"./styles/fonts":4,"./styles/theme":4,"./styles.css":365}
+cascade-self     verdict GREEN, every entry "identical": true
+cascade-labels   16 scoped components, each a distinct basename:
+                 68 StatusDot, 58 Timeline, 46 PagerDots, 30 Progress, 24 LabeledField, 22 Separator, 22 Aurora, 20 HandMark,
+                 14 TypewriterText, 14 Blob, 12 ConfiguratorRow, 8 Constellation, 6 Skeleton, 6 Label, 6 FourierField,
+                 4 ConfiguratorLayer (rule lines across the four .seq files);
+                 6 scoped keyframes: feedback-mark-pulse-(StatusDot) hm-settle-(HandMark) progress-discharge-(Progress)
+                 skeleton-breathe-(Skeleton) tl-check-(Timeline) tl-detail-(Timeline)
+surface          "differences":0
+demo-build       ✓ built in 1.03s (exit 0)
+vitest           Test Files 239 passed (239); Tests 2302 passed | 10 expected fail | 1 skipped (2313)
+typecheck        exit 0
+verify-package   Error: G-BUNDLE-RATCHET: bundle ratchet shrink — rebind down deliberately: 2913546 < 2919057  (−5,511 B, as
+                 pass 4 and 5; P4-R3 rebinds at the migration's landing commit)
+browser-select   band chip: 5 spec(s): css-critical.spec.ts, demo-design.spec.ts, glass-cal.spec.ts, page-chassis.spec.ts,
+                 storybook-meta.spec.ts; 6 spec(s) selected
+browser-seat     GREEN: 3/3 passed, 0 failed, 0 skipped in 41s
+browser-seat-keys  browser-seat/2 testDir=tests-visual GREEN ["substrate-paints-color.spec.ts"]
+graph-diff       (graph-p5 = HEAD's own pass-5 floor landed on a second cut of d948b29b; graph-p6 = this floor)
+  edges: a 7436, b 7435; only a 3, only b 2
+    - scripts/structure/browser.mjs | path-literal | root-relative | tests-visual | tests-visual
+    - scripts/structure/browser.mjs | path-literal | root-relative | tests-visual | tests-visual
+    - scripts/structure/cascade.mjs | helper-base | anchored | tests-visual | <wt>/tests-visual
+    + scripts/structure/browser.mjs | import | relative | scripts/structure/lib/scan/playwright.mjs | ./lib/scan/playwright.mjs
+    + scripts/structure/cascade.mjs | import | relative | scripts/structure/lib/scan/playwright.mjs | ./lib/scan/playwright.mjs
+  violations: a 0, b 0; only a 0, only b 0
+  census: a 518, b 517; only a 1, only b 0
+    - path-helper | scripts/structure/cascade.mjs | text(spec) |  |
+
+============================================================================================================
+APPENDIX D · development readings (dev cuts of HEAD a115850c + this floor, before the battery)
+============================================================================================================
+The F1 listing was written once, from the verifier's own output, on a dev cut of HEAD + this floor:
+  snapshot; sfc-split.mjs keep; vite build;
+  cascade.mjs verify --reorders <scopes only: {"scopes":[Timeline → TimelineMarks]}>
+    → SCOPE Timeline → TimelineMarks: 40 rule line(s) re-homed
+      ./styles and ./styles.css: "class": "reorder", "RED: an unlisted reorder (10 moved rule(s))"; 20 UNLISTED lines
+  node <structure>/pass-6/tools/listing.mjs <that output> <structure>/pass-6/plants/lists/f1-scopes.json <out> "<reason>"
+    → listing: 1 scope(s), ./styles 10, ./styles.css 10
+  cascade.mjs verify --reorders <that listing>  → exit 0, "GREEN: listed reorder; no swapped pair shares a property on
+    co-occurring classes", "judged": {"moved": 10, "swappedPairs": 132, "risks": 0, "covered": 0}
+  (the listing was copied verbatim to <structure>/pass-6/plants/lists/f1-timeline-split.json; the 10 moved rules per entry
+  are the Timeline rules that stayed, now emitted after TimelineMarks' block; pass 5 argued 0 risks from erased-scope text,
+  this is the verifier's own verdict)
+The draft snapshot on HEAD (dev): every data-v id resolved to an SFC of the tree; v-bind var lines in the four .seq files: 0;
+`grep -rln "v-bind(" src demo`: no file.
+Graph of HEAD under both floors (dev, a115850c): the same diff as Appendix C's graph-diff, edge for edge.

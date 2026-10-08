@@ -33,8 +33,12 @@ export function buildGraph(root, { overlay = {}, deps } = {}) {
     const record = loadRecord(tree);
     const { aliases, conflicts } = discoverAliases(tree, ts, makeEvaluator);
     const R = makeResolver(tree, { aliases, record });
-    let ledger = { entries: [] };
-    try { ledger = JSON.parse(tree.read(ledgerPath(tree.root))); } catch { /* absent ledger = empty */ }
+    // P6-F3: the ledger is a record like the entry record: absent or malformed, the graph stops
+    const ledgerFile = ledgerPath(tree.root);
+    if (!tree.isFile(ledgerFile)) throw new Error(`graph: ${tree.root} has no ${ledgerFile}; the opaque ledger is a floor record (a landed tree is read by its own floor: node scripts/structure/…)`);
+    let ledger;
+    try { ledger = JSON.parse(tree.read(ledgerFile)); } catch (e) { throw new Error(`graph: ${ledgerFile} does not parse (${e.message}); the opaque ledger cannot be read`); }
+    if (!Array.isArray(ledger?.entries)) throw new Error(`graph: ${ledgerFile} has no entries array`);
     const ledgerUsed = new Set();
     const recordsDir = `${floorHome(tree.root)}/records/`;
     const edges = [];
@@ -54,8 +58,7 @@ export function buildGraph(root, { overlay = {}, deps } = {}) {
     const publishedJs = record.js.map(([name, source]) => ({ dist: name === "index" ? "dist/glass-ui.js" : `dist/${name}.js`, source }));
 
     for (const f of tree.parsed) {
-        let code;
-        try { code = tree.read(f); } catch { continue; }
+        const code = tree.read(f);
         let out = { refs: [] };
         try {
             if (f.endsWith(".vue")) out = scanVue(ts, postcss, sfc, f, code, ctx);
@@ -129,7 +132,7 @@ export function buildGraph(root, { overlay = {}, deps } = {}) {
         violations.push({ kind, edgeKind: ref.kind, from, line: lineOf(code, ref.start), spec: ref.spec, ...extra });
     }
     function ledgered(from, ref) {
-        const i = (ledger.entries ?? []).findIndex((x) => x.file === from && x.kind === ref.kind && x.spec === ref.spec);
+        const i = ledger.entries.findIndex((x) => x.file === from && x.kind === ref.kind && x.spec === ref.spec);
         if (i >= 0) ledgerUsed.add(i);
         return i >= 0;
     }
@@ -145,8 +148,8 @@ export function buildGraph(root, { overlay = {}, deps } = {}) {
         if (ref.mode === "npm-script") {
             // FD-10: `npm run x` in CI names a package script; a missing one is a violation
             const pkg = ref.workspace ? `${ref.workspace.replace(/\/$/, "")}/package.json` : "package.json";
-            let scripts = null;
-            try { scripts = JSON.parse(tree.read(pkg)).scripts ?? {}; } catch { /* no such package */ }
+            // P6-F3: an absent package is the violation below; a malformed one stops the graph
+            const scripts = tree.isFile(pkg) ? JSON.parse(tree.read(pkg)).scripts ?? {} : null;
             if (!scripts || !Object.prototype.hasOwnProperty.call(scripts, ref.spec)) return violate(from, code, ref, "unresolved", { target: `${pkg}#scripts.${ref.spec}` });
             return add(from, code, ref, { via: "npm-script", to: pkg }, fileEdges);
         }
@@ -267,7 +270,7 @@ export function buildGraph(root, { overlay = {}, deps } = {}) {
         else {
             // an anchor is a file this file reads whose own text carries the quoted path
             const quotes = [`"${ref.spec}"`, `'${ref.spec}'`, `(${ref.spec})`];
-            const carries = (a) => { try { const t = tree.read(a); return quotes.some((q) => t.includes(q)); } catch { return false; } };
+            const carries = (a) => { const t = tree.read(a); return quotes.some((q) => t.includes(q)); };
             const anchors = [...new Set(fileEdges.filter((e) => e.to && !e.dir && tree.isFile(e.to)).map((e) => e.to))].filter(carries);
             for (const a of anchors) {
                 const t = posix.normalize(posix.join(posix.dirname(a), ref.spec));
@@ -287,7 +290,7 @@ export function buildGraph(root, { overlay = {}, deps } = {}) {
      *  files a quoted or searched path string can be relative to. */
     function textAnchors(fileEdges, spec) {
         const needles = [`"${spec}"`, `'${spec}'`, `(${spec})`, `/${spec}`];
-        const carries = (a) => { try { const t = tree.read(a); return needles.some((q) => t.includes(q)); } catch { return false; } };
+        const carries = (a) => { const t = tree.read(a); return needles.some((q) => t.includes(q)); };
         return [...new Set(fileEdges.filter((e) => e.to && !e.dir && tree.isFile(e.to)).map((e) => e.to))].filter(carries);
     }
 
@@ -348,7 +351,7 @@ export function buildGraph(root, { overlay = {}, deps } = {}) {
     }
 
     for (const c of conflicts) violations.push({ kind: "alias-conflict", from: c.planes.map((p) => p.plane).join(","), spec: c.key });
-    (ledger.entries ?? []).forEach((x, i) => { if (!ledgerUsed.has(i)) violations.push({ kind: "ledger-stale", from: x.file, spec: x.spec, edgeKind: x.kind }); });
+    ledger.entries.forEach((x, i) => { if (!ledgerUsed.has(i)) violations.push({ kind: "ledger-stale", from: x.file, spec: x.spec, edgeKind: x.kind }); });
 
     return { tree, record, aliases, edges, violations, census, exportsOf, refsOf };
 }

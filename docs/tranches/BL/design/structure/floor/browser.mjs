@@ -44,10 +44,11 @@ import { execFileSync, spawn } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { createServer } from "node:net";
 import { tmpdir } from "node:os";
-import { basename, join, posix, resolve } from "node:path";
-import { buildGraph } from "./lib/graph.mjs";
+import { basename, join, resolve } from "node:path";
+import { buildGraph, loadDeps } from "./lib/graph.mjs";
 import { zoneOf } from "./lib/tree.mjs";
 import { classOwners, classRecipes, classesOf, impliedBy } from "./lib/recipes.mjs";
+import { playwrightProgram, SEAT_REPORT } from "./lib/scan/playwright.mjs";
 
 const args = process.argv.slice(2);
 const all = (k) => args.flatMap((a, i) => (a === k ? [args[i + 1]] : []));
@@ -58,15 +59,20 @@ const plant = opt("--pi-plant");
 const waitS = Number(opt("--wait") ?? 1800);
 const out = resolve(opt("--out") ?? join(root, "tests-visual/.cache/browser-seat.json"));
 const LOCK = join(tmpdir(), "glass-ui-browser-seat.lock");
-const PI_FLOOR = "substrate-paints-color.spec.ts";
 const log = (m) => console.log(`[browser-seat ${new Date().toISOString()}] ${m}`);
 
 // ---- the spec selection -------------------------------------------------------------
+// P6-F2: every spec is keyed by its path from the config's testDir (Playwright's rootDir),
+// the key Playwright's own report uses; selection, bands and results share it.
 const specsDir = join(root, "tests-visual");
 const g = buildGraph(root);
-const programSpecs = [...new Set(g.edges.filter((e) => e.kind === "test-program" && e.via === "glob" && e.to).map((e) => e.to))]
-    .filter((f) => !basename(f).startsWith("_")).sort();
-const allSpecs = programSpecs.map((f) => posix.relative("tests-visual", f));
+const program = playwrightProgram(g, loadDeps(root).ts);
+const programSpecs = program.specs.filter((f) => !basename(f).startsWith("_"));
+const allSpecs = programSpecs.map(program.keyOf);
+// the π pixel floor is the one program spec of that name, wherever the program holds it
+const piFloors = allSpecs.filter((k) => basename(k) === "substrate-paints-color.spec.ts");
+if (piFloors.length !== 1) { console.error(`browser-seat: ${piFloors.length} π pixel floor spec(s) in the program (${piFloors.join(", ")}); want exactly one`); process.exit(2); }
+const [PI_FLOOR] = piFloors;
 const unitOf = (p) => {
     const parts = p.split("/");
     const unit = parts[0] === "src" && ["components", "composables"].includes(parts[1]) ? parts[2] : parts[0] === "src" ? parts[1] : null;
@@ -103,7 +109,7 @@ if (changed.length) {
                 if (zoneOf(e.to) === "tests-visual" && !programSpecs.includes(e.to) && !seen.has(e.to) && /\.(ts|mts|js|mjs)$/.test(e.to)) { seen.add(e.to); queue.push(e.to); }
             }
         }
-        reach.set(spec, { reads, text: [...seen].map((f) => { try { return g.tree.read(f); } catch { return ""; } }).join("\n") });
+        reach.set(spec, { reads, text: [...seen].map((f) => g.tree.read(f)).join("\n") });
     }
     const esc = (x) => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     for (const c of changed) {
@@ -113,7 +119,7 @@ if (changed.length) {
         const needles = [...new Set([...c.paths, ...c.paths.map((p) => basename(p)), ...(c.band && c.path.startsWith("src/components/") ? [`components/${c.path.split("/")[2]}/`] : [])])];
         c.classes = [...classes].sort();
         for (const spec of programSpecs) {
-            const name = posix.relative("tests-visual", spec);
+            const name = program.keyOf(spec);
             const { reads, text } = reach.get(spec);
             const r = [];
             if (c.paths.some((p) => reads.has(p))) r.push("reads");
@@ -127,12 +133,12 @@ if (changed.length) {
     }
 }
 pick(PI_FLOOR, null, "the π pixel floor (every call)");
-for (const s of selected.keys()) if (!allSpecs.includes(s)) { console.error(`browser-seat: no spec ${s} in the Playwright program under ${specsDir}`); process.exit(2); }
+for (const s of selected.keys()) if (!allSpecs.includes(s)) { console.error(`browser-seat: no spec ${s} in the Playwright program (a spec is named by its path from ${program.rootDir}/)`); process.exit(2); }
 const specs = [...selected.keys()].sort();
 const selection = specs.map((s) => ({ spec: s, bands: [...selected.get(s).bands], reasons: selected.get(s).reasons }));
 const bandNames = [...new Set(changed.map((c) => c.band).filter(Boolean))].sort();
 if (args.includes("--select-only")) {
-    const doc = { $schema: "browser-seat-selection/1", root, changed: changed.map(({ path, paths, band, classes }) => ({ path, paths, band, classes })), bands: bandNames.map((b) => ({ band: b, specs: selection.filter((x) => x.bands.includes(b)).map((x) => x.spec) })), specs, selection };
+    const doc = { $schema: "browser-seat-selection/2", root, testDir: program.rootDir, changed: changed.map(({ path, paths, band, classes }) => ({ path, paths, band, classes })), bands: bandNames.map((b) => ({ band: b, specs: selection.filter((x) => x.bands.includes(b)).map((x) => x.spec) })), specs, selection };
     writeFileSync(out, `${JSON.stringify(doc, null, 1)}\n`);
     for (const b of doc.bands) log(`band ${b.band}: ${b.specs.length} spec(s)${b.specs.length ? `: ${b.specs.join(", ")}` : " (no spec reads it)"}`);
     log(`${specs.length} spec(s) selected → ${out}`);
@@ -192,13 +198,20 @@ mkdirSync(join(specsDir, ".cache"), { recursive: true });
 const env = { ...process.env, GLASS_UI_DEMO_PORT: String(port), GLASS_UI_DEMO_URL: url, PI_REPORT: report };
 if (plant) env.PI_PLANT = plant;
 try {
-    execFileSync(join(root, "node_modules/.bin/playwright"), ["test", ...specs, `--project=${project}`], { cwd: specsDir, env, stdio: "inherit", maxBuffer: 1 << 28 });
+    // a CLI filter is a RegExp over the absolute path: a spec's own path names it alone
+    execFileSync(join(root, "node_modules/.bin/playwright"), ["test", ...specs.map((k) => join(root, program.pathOf(k))), `--project=${project}`], { cwd: specsDir, env, stdio: "inherit", maxBuffer: 1 << 28 });
 } catch { /* the verdict is the report's, never the exit code */ }
 if (!existsSync(report)) { console.error(`browser-seat: no machine report at ${report}; RED`); process.exit(1); }
 const r = JSON.parse(readFileSync(report, "utf8"));
 const tests = [];
+// Playwright's `file` is the spec's path from its rootDir: the seat's key, read as written.
+// A key that is no selected spec means the seat and the runner disagree on the root: refuse.
 const walk = (suite) => {
-    for (const s of suite.specs ?? []) for (const t of s.tests ?? []) tests.push({ spec: basename(s.file ?? suite.file ?? ""), title: s.title, status: t.status, results: (t.results ?? []).map((x) => x.status) });
+    for (const s of suite.specs ?? []) for (const t of s.tests ?? []) {
+        const spec = s.file ?? suite.file;
+        if (!specs.includes(spec)) { console.error(`browser-seat: the runner reports spec ${spec}, which is no selected spec key (root ${program.rootDir}/); refusing the report`); process.exit(2); }
+        tests.push({ spec, title: s.title, status: t.status, results: (t.results ?? []).map((x) => x.status) });
+    }
     for (const c of suite.suites ?? []) walk(c);
 };
 for (const s of r.suites ?? []) walk(s);
@@ -219,6 +232,7 @@ if (plant) {
 // base-green (P4-F4): a band's signal is the tests that passed on the base tree
 const key = (t) => `${t.spec} :: ${t.title}`;
 const base = opt("--base-report") ? JSON.parse(readFileSync(opt("--base-report"), "utf8")) : null;
+if (base && (base.$schema !== SEAT_REPORT || base.testDir !== program.rootDir)) { console.error(`browser-seat: the base report is ${base.$schema} keyed from ${base.testDir ?? "basenames"}; this seat reads ${SEAT_REPORT} keyed from ${program.rootDir}/ (re-run the base arm with this floor)`); process.exit(2); }
 const baseGreen = base ? new Set((base.results ?? []).filter((t) => t.status === "expected").map(key)) : null;
 const nowStatus = new Map(tests.map((t) => [key(t), t.status]));
 const newFailures = baseGreen ? [...baseGreen].filter((k) => specs.includes(k.split(" :: ")[0]) && nowStatus.get(k) !== "expected") : [];
@@ -229,7 +243,7 @@ const bandReport = bandNames.map((b) => {
 });
 const everyRan = ran.length > 0; // a skip the spec declares is not a failure
 const verdict = plant ? (planted ? "GREEN (the planted floors bit)" : "RED (a planted floor did not bite)") : base ? (everyRan && newFailures.length === 0 ? "GREEN" : "RED") : ran.length > 0 && passed.length === ran.length ? "GREEN" : "RED";
-const doc = { $schema: "browser-seat/1", root, project, plant, specs, selection, bands: bandReport, url, waitedS: waited, ranS: (Date.now() - started) / 1000, stats: r.stats, tests: tests.length, ran: ran.length, passed: passed.length, failed: failed.length, skipped: tests.length - ran.length, verdict, baseReport: base ? opt("--base-report") : null, newFailures, failures: failed.map(key), results: tests.map(({ spec, title, status }) => ({ spec, title, status })) };
+const doc = { $schema: SEAT_REPORT, root, testDir: program.rootDir, project, plant, specs, selection, bands: bandReport, url, waitedS: waited, ranS: (Date.now() - started) / 1000, stats: r.stats, tests: tests.length, ran: ran.length, passed: passed.length, failed: failed.length, skipped: tests.length - ran.length, verdict, baseReport: base ? opt("--base-report") : null, newFailures, failures: failed.map(key), results: tests.map(({ spec, title, status }) => ({ spec, title, status })) };
 writeFileSync(out, `${JSON.stringify(doc, null, 1)}\n`);
 rmSync(report, { force: true });
 log(`${verdict}: ${passed.length}/${ran.length} passed, ${failed.length} failed, ${doc.skipped} skipped in ${doc.ranS.toFixed(0)}s → ${out}`);

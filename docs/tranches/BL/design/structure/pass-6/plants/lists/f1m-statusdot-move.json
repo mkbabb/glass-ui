@@ -1,0 +1,9 @@
+{
+ "why": "P6-F1 control: a pure move of a scoped SFC. StatusDot.vue (34 scoped rule lines per bundle and a scoped @keyframes) moves one dir down inside its unit, so Vue re-hashes its scope id from the new path; the verifier reads the rules by the component they scope and must still read the sequences identical.",
+ "moves": [{ "from": "src/components/status-dot/StatusDot.vue", "to": "src/components/status-dot/dot/StatusDot.vue" }],
+ "scanDeltas": [
+  { "scanner": "tests/gates/orphan-css-partial.test.ts", "spec": "resolve(SRC, spec.slice(\"@glass/\".length))", "file": "src/components/status-dot/StatusDot.vue", "reason": "the partial census walks src; the SFC relocates inside it" },
+  { "scanner": "tests/styles/engage-ladder.test.ts", "spec": "join(COMPONENTS, entry)", "file": "src/components/status-dot/StatusDot.vue", "reason": "the ladder walks src/components recursively; the SFC stays under it" },
+  { "scanner": "tests/styles/engage-ladder.test.ts", "spec": "join(COMPONENTS, name)", "file": "src/components/status-dot/StatusDot.vue", "reason": "the ladder walks src/components recursively; the SFC stays under it" }
+ ]
+}
