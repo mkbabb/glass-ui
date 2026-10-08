@@ -1,0 +1,225 @@
+15:46  up 1 day,  1:14, 2 users, load averages: 23.81 23.84 33.10
+
+ RUN  v4.1.10 /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D2/p3/D2-Bp-proto/wtb
+
+ ❯ tests/gates/boot-graph.test.ts (14 tests | 3 failed) 215ms
+     × the built demo has a dist-demo to measure 4ms
+     × the dist-demo it measures is NEWER than every source it is built from 1ms
+     × the eager graph stays under the modulepreload and byte ceilings 0ms
+ ❯ tests/components/fourier-field/FourierField.smoke.test.ts (0 test)
+ ❯ tests/styles/backdrop-prefix-normalization.test.ts (4 tests | 1 failed) 44ms
+     × ships every backdrop-filter as an adjacent -webkit-/standard pair 35ms
+ ❯ tests/public-surface.spec.ts (96 tests | 5 failed) 2139ms
+     × G-NO-ORPHAN-EXPORT: the committed .published-roster equals the emitted roster 7ms
+     × has a built dist/ to accept 1ms
+     × ships exactly the style closure plus the three generated members 1ms
+     × rejects packed CSS drift against the built artifact 0ms
+     × keeps raw code-bearing sources out of the built artifact 0ms
+(node:75659) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:75763) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/fourier-field/FourierField.smoke.test.ts [ tests/components/fourier-field/FourierField.smoke.test.ts ]
+Error: Failed to resolve import "@mkbabb/glass-ui/fourier-math" from "tests/components/fourier-field/FourierField.smoke.test.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D2/p3/D2-Bp-proto/wtb/tests/components/fourier-field/FourierField.smoke.test.ts:18:29
+  15 |  import { readFileSync, readdirSync, statSync } from "node:fs";
+  16 |  import { join } from "node:path";
+  17 |  import * as fourierMath from "@mkbabb/glass-ui/fourier-math";
+     |                                ^
+  18 |  import { dftFromPoints, makeEllipticSpectrum, positionsAt } from "@mkbabb/glass-ui/fourier-math";
+  19 |  import { DEFAULT_FOURIER_CONFIG, FourierField, FOURIER_FIGURES, makeHarmonicFigure, mintSpectrum } from "@glass/compo...
+ ❯ TransformPluginContext._formatLog ../../../../../../../../../../Users/mkbabb/Programming/glass-ui/node_modules/vite/dist/node/chunks/node.js:30416:39
+ ❯ TransformPluginContext.error ../../../../../../../../../../Users/mkbabb/Programming/glass-ui/node_modules/vite/dist/node/chunks/node.js:30413:14
+ ❯ normalizeUrl ../../../../../../../../../../Users/mkbabb/Programming/glass-ui/node_modules/vite/dist/node/chunks/node.js:27438:18
+ ❯ ../../../../../../../../../../Users/mkbabb/Programming/glass-ui/node_modules/vite/dist/node/chunks/node.js:27506:30
+ ❯ TransformPluginContext.transform ../../../../../../../../../../Users/mkbabb/Programming/glass-ui/node_modules/vite/dist/node/chunks/node.js:27474:4
+ ❯ EnvironmentPluginContainer.transform ../../../../../../../../../../Users/mkbabb/Programming/glass-ui/node_modules/vite/dist/node/chunks/node.js:30201:14
+ ❯ loadAndTransform ../../../../../../../../../../Users/mkbabb/Programming/glass-ui/node_modules/vite/dist/node/chunks/node.js:20124:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/10]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/public-surface.spec.ts > Row 8 package falsifiers > G-NO-ORPHAN-EXPORT: the committed .published-roster equals the emitted roster
+AssertionError: dist/ is absent — run `npm run build` first: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/public-surface.spec.ts:939:83
+    937|     // here), so what it measures is exactly what `npm run verify:pack…
+    938|     it("G-NO-ORPHAN-EXPORT: the committed .published-roster equals the…
+    939|         expect(existsSync("dist"), "dist/ is absent — run `npm run bui…
+       |                                                                                   ^
+    940|         const verifier = pathToFileURL(resolve("scripts/verify-export-…
+    941|         const probe = `
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/10]⎯
+
+ FAIL  tests/public-surface.spec.ts > Row 8 built-artifact acceptance > has a built dist/ to accept
+AssertionError: dist/ is absent — run `npm run build` first; the dist arm is load-bearing: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/public-surface.spec.ts:964:34
+    962|
+    963|     it("has a built dist/ to accept", () => {
+    964|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    965|     });
+    966|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/10]⎯
+
+ FAIL  tests/public-surface.spec.ts > Row 8 built-artifact acceptance > ships exactly the style closure plus the three generated members
+AssertionError: dist/ is absent — run `npm run build` first; the dist arm is load-bearing: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/public-surface.spec.ts:976:34
+    974|
+    975|     it("ships exactly the style closure plus the three generated membe…
+    976|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    977|         const closure = collectStyleClosure(process.cwd());
+    978|         const sourceRoot = resolve(process.cwd(), "src");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/10]⎯
+
+ FAIL  tests/public-surface.spec.ts > Row 8 built-artifact acceptance > rejects packed CSS drift against the built artifact
+AssertionError: dist/ is absent — run `npm run build` first; the dist arm is load-bearing: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/public-surface.spec.ts:995:34
+    993|
+    994|     it("rejects packed CSS drift against the built artifact", () => {
+    995|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    996|         const verifier = pathToFileURL(resolve("scripts/verify-export-…
+    997|         const probe = `
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/10]⎯
+
+ FAIL  tests/public-surface.spec.ts > Row 8 built-artifact acceptance > keeps raw code-bearing sources out of the built artifact
+AssertionError: dist/ is absent — run `npm run build` first; the dist arm is load-bearing: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/public-surface.spec.ts:1025:34
+    1023|
+    1024|     it("keeps raw code-bearing sources out of the built artifact", () …
+    1025|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    1026|         const files = filesUnder("dist");
+    1027|         expect(files.filter((file) => /\.vue$/.test(file))).toEqual([]…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/10]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the built demo has a dist-demo to measure
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:566:34
+    564|
+    565|     it("the built demo has a dist-demo to measure", () => {
+    566|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    567|     });
+    568|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/10]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:570:34
+    568|
+    569|     it("the dist-demo it measures is NEWER than every source it is bui…
+    570|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    571|         const builtAt = statSync(indexHtml).mtimeMs;
+    572|         const newestSrc = newestSourceMtime();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/10]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the eager graph stays under the modulepreload and byte ceilings
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:580:34
+    578|
+    579|     it("the eager graph stays under the modulepreload and byte ceiling…
+    580|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    581|         const html = readFileSync(indexHtml, "utf8");
+    582|         const graph = measureEagerGraph(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/10]⎯
+
+ FAIL  tests/styles/backdrop-prefix-normalization.test.ts > G-GLASS-HAS-FROST arm (b) — the shipped dist bytes > ships every backdrop-filter as an adjacent -webkit-/standard pair
+AssertionError: dist/ is absent — run `npm run build` first; the dist arm is load-bearing and a skipped run is not a pass: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/styles/backdrop-prefix-normalization.test.ts:152:34
+    150|     const buildHint = "dist/ is absent — run `npm run build` first; th…
+    151|     it("ships every backdrop-filter as an adjacent -webkit-/standard p…
+    152|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    153|         const files = distCssFiles(DIST);
+    154|         expect(files.length).toBeGreaterThan(0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/10]⎯
+
+
+ Test Files  4 failed | 239 passed | 2 skipped (245)
+      Tests  9 failed | 2313 passed | 10 expected fail | 8 skipped (2340)
+   Start at  15:46:49
+   Duration  18.58s (transform 31.73s, setup 22.03s, import 96.79s, tests 43.57s, environment 93.84s)
+
+exit 1
