@@ -1,0 +1,253 @@
+{
+ "step": "B-S1b relays cut (LAW §5, B12)",
+ "files": {
+  "src/components/aurora/composables/color.ts": {
+   "hunks": [
+    [
+     "// W-SHIM-PURGE struck the pass-through that held these four names on this path).\nexport type { OklchStop } from \"../../../composables/color\";\n\n",
+     "// W-SHIM-PURGE struck the pass-through that held these four names on this path).\n\n"
+    ],
+    [
+     "// public alias of the shared `ColorHarmony` (surface preserved — no break).\nexport type { ColorHarmony } from \"../../../composables/color\";\n\n",
+     "// public alias of the shared `ColorHarmony` (surface preserved — no break).\n\n"
+    ]
+   ]
+  },
+  "src/components/constellation/Constellation.vue": {
+   "hunks": [
+    [
+     "import { type ConstellationProps } from \"./constellationField\";\n",
+     "import { type ConstellationProps } from \"./constellationTypes\";\n"
+    ]
+   ]
+  },
+  "src/components/constellation/composables/createConstellationField.ts": {
+   "hunks": [
+    [
+     "import type {\n    ConstellationField,\n    ConstellationWander,\n    ConstellationWell,\n} from \"../constellationField\";\n",
+     "import type { ConstellationField, ConstellationWander, ConstellationWell } from \"../constellationTypes\";\n"
+    ]
+   ]
+  },
+  "src/components/constellation/composables/useConstellation.ts": {
+   "hunks": [
+    [
+     "import {\n    appendPointerWeb,\n    buildEdges,\n    refitField,\n    seedField,\n    stepField,\n    type ConstellationField,\n    type ConstellationPalette,\n    type ConstellationPointer,\n    type ConstellationProps,\n    type ConstellationRipple,\n} from \"../constellationField\";\n",
+     "import { appendPointerWeb, buildEdges, refitField, seedField, stepField } from \"../constellationField\";\nimport { type ConstellationField, type ConstellationPalette, type ConstellationPointer, type ConstellationProps, type ConstellationRipple } from \"../constellationTypes\";\n"
+    ]
+   ]
+  },
+  "src/components/constellation/constants.ts": {
+   "hunks": [
+    [
+     "import type { ConstellationPalette, ConstellationWellConfig } from \"./constellationField\";\n",
+     "import type { ConstellationPalette, ConstellationWellConfig } from \"./constellationTypes\";\n"
+    ]
+   ]
+  },
+  "src/components/constellation/constellationInteraction.ts": {
+   "hunks": [
+    [
+     "import type {\n    ConstellationField,\n    ConstellationPinnedDrift,\n    ConstellationWarpConfig,\n    ConstellationWellConfig,\n} from \"./constellationField\";\n",
+     "import type { ConstellationField, ConstellationPinnedDrift, ConstellationWarpConfig, ConstellationWellConfig } from \"./constellationTypes\";\n"
+    ]
+   ]
+  },
+  "src/components/constellation/constellationWell.ts": {
+   "hunks": [
+    [
+     "import type { ConstellationField } from \"./constellationField\";\n",
+     "import type { ConstellationField } from \"./constellationTypes\";\n"
+    ]
+   ]
+  },
+  "tests/components/custom/constellation/constellationField.test.ts": {
+   "hunks": [
+    [
+     "import {\n    seedField,\n    stepField,\n    refitField,\n    buildEdges,\n    appendPointerWeb,\n    parallaxNodePos,\n    type ConstellationField,\n    type ConstellationNode,\n    type ConstellationWander,\n    type ConstellationWell,\n} from \"@glass/components/constellation/constellationField\";\n",
+     "import { seedField, stepField, refitField, buildEdges, appendPointerWeb, parallaxNodePos } from \"@glass/components/constellation/constellationField\";\nimport { type ConstellationField, type ConstellationNode, type ConstellationWander, type ConstellationWell } from \"@glass/components/constellation/constellationTypes\";\n"
+    ]
+   ]
+  },
+  "src/components/constellation/constellationField.ts": {
+   "hunks": [
+    [
+     "// (no public-surface change).\nexport type * from \"./constellationTypes\";\nimport type {\n",
+     "// (no public-surface change).\nimport type {\n"
+    ]
+   ]
+  },
+  "src/components/dock/index.ts": {
+   "hunks": [
+    [
+     "export type { UseDockStateOptions, UseDockStateReturn, DockState } from \"./composables\";\n",
+     "export type { UseDockStateOptions, UseDockStateReturn, DockState } from \"./composables/useDockState\";\n"
+    ],
+    [
+     "export { useDockSearch } from \"./composables\";\nexport type { UseDockSearchOptions, UseDockSearchReturn } from \"./composables\";\n",
+     "export { useDockSearch } from \"./composables/useDockSearch\";\nexport type { UseDockSearchOptions, UseDockSearchReturn } from \"./composables/useDockSearch\";\n"
+    ]
+   ]
+  },
+  "src/components/dock/composables/index.ts": {
+   "remove": true,
+   "before": "export { useDockState } from \"./useDockState\";\nexport type { UseDockStateOptions, UseDockStateReturn, DockState } from \"./useDockState\";\n\n// The dock-as-native-dynamic-search-bar seam. Composes useDockState +\n// the SHIPPED /search fuzzy pipeline (useFuzzySearch, the VSCode scorer — no re-fork) +\n// the dock's own --dock-morph-t metaball morph + the optional useScrollChrome shrink +\n// the ToC ensureTargetWindow/scrollTo subsume. A consuming seam BESIDE the morph engine\n// (useDockMorph/DOCK_SPRING byte-untouched — the box-inviolate fence).\nexport { useDockSearch } from \"./useDockSearch\";\nexport type { UseDockSearchOptions, UseDockSearchReturn } from \"./useDockSearch\";\n\nexport { useDockHold } from \"./useDockHold\";\nexport type { UseDockHoldOptions, UseDockHoldReturn } from \"./useDockHold\";\n\n/* The portal predicate moved to `_shared/overlay/` — beside `overlayContentAttrs`,\n   the writer of the very attribute pair it parses. The dock re-exports it because\n   the dock is where consumers reach for it; the direction is dock → _shared. */\nexport { isTeleportedTarget } from \"../../_shared/overlay/isTeleportedTarget\";\nexport {\n    provideDockContext,\n    useDockContext,\n    useOptionalDockContext,\n    DOCK_CONTEXT_KEY,\n    type DockContext,\n    type DockOrientation,\n} from \"./dockContext\";\n// The face registry provided by DockCrossfade, consumed by DockLayer and the switcher.\nexport {\n    provideDockCrossfadeContext,\n    useDockCrossfadeContext,\n    DOCK_CROSSFADE_KEY,\n    type DockFaceDescriptor,\n    type DockFaceRegistration,\n    type DockCrossfadeContext,\n} from \"./dockCrossfadeContext\";\nexport {\n    useDockMorphOrchestrator,\n    type UseDockMorphOrchestratorOptions,\n    type UseDockMorphOrchestratorReturn,\n} from \"./useDockMorph\";\n\n// The V↔H orientation morph (`useDockOrientationMorph`), the fission\n// facility (`useDockFission` + `dockFissionSignatures`), and the Siri island (`useSiriDock`)\n// are DEFINITION-ABSENT (decided-terminal, clean break, no alias). The V↔H flip is the\n// crossfade (`<DockCrossfade>`); the fission spectacle + the Siri island were demo-only\n// zero-binary-consumer mechanisms + the prime Safari suspect (goo `filter:url()`\n// stacked with `backdrop-filter`).\n"
+  },
+  "src/components/index.ts": {
+   "remove": true,
+   "before": "export * from \"./accordion\";\nexport * from \"./alert\";\nexport * from \"./avatar\";\nexport * from \"./badge\";\nexport * from \"./button\";\nexport * from \"./card\";\nexport * from \"./carousel\";\nexport * from \"./checkbox\";\nexport * from \"./collapsible\";\nexport * from \"./command\";\nexport * from \"./data-table\";\nexport * from \"./dialog\";\nexport * from \"./menu\";\n// `./hover-card` RETIRED (folds onto `<Popover trigger=\"hover\">`).\nexport * from \"./input\";\nexport * from \"./label\";\n// `./multi-select` RETIRED; no replacement (there is no `<Combobox>` component).\nexport * from \"./number-field\";\nexport * from \"./popover\";\nexport * from \"./progress\";\nexport * from \"./radio-group\";\nexport * from \"./select\";\nexport * from \"./separator\";\nexport * from \"./sheet\";\nexport * from \"./skeleton\";\nexport * from \"./slider\";\nexport * from \"./switch\";\nexport * from \"./table\";\n// `ui/Tabs` retired from the public barrel (the standardized family is\n// `SegmentedTabs`). The reka substrate stays INTERNAL for the dock switcher consumer\n// only (`DockLayerGroup.vue`); see src/index.ts for the full rationale.\nexport * from \"./textarea\";\nexport * from \"./toast\";\nexport * from \"./toggle-group\";\nexport * from \"./tooltip\";\n"
+  },
+  "src/components/infinite-scroll/InfiniteScroll.vue": {
+   "hunks": [
+    [
+     "import { useInfiniteScroll } from \"./composables\";\n",
+     "import { useInfiniteScroll } from \"./composables/useInfiniteScroll\";\n"
+    ]
+   ]
+  },
+  "src/components/infinite-scroll/index.ts": {
+   "hunks": [
+    [
+     "export * from \"./composables\";\n",
+     "export { useInfiniteScroll } from \"./composables/useInfiniteScroll\";\nexport type { InfiniteScrollOptions, InfiniteScrollReturn } from \"./composables/types\";\n"
+    ]
+   ]
+  },
+  "src/components/infinite-scroll/composables/index.ts": {
+   "remove": true,
+   "before": "export { useInfiniteScroll } from \"./useInfiniteScroll\";\nexport type { InfiniteScrollOptions, InfiniteScrollReturn } from \"./types\";\n"
+  },
+  "src/components/sortable-list/useSortable.ts": {
+   "hunks": [
+    [
+     "\nexport type { SortableId, SortableContainerBinding, UseSortableReturn } from \"./types\";\n",
+     "\n"
+    ]
+   ]
+  },
+  "src/composables/glass/webgl/useWebGLCanvas.ts": {
+   "hunks": [
+    [
+     "\nexport type { BackingSize, DprPolicy } from \"./createCanvasLifecycle\";\n\n",
+     "\n\n"
+    ]
+   ]
+  },
+  "src/components/aurora/composables/glSetup.ts": {
+   "hunks": [
+    [
+     "import type {\n    BackingSize,\n    WebGLCanvasFrame,\n} from \"../../../composables/glass/webgpu/useGpuSubstrate\";\n",
+     "import type { WebGLCanvasFrame } from \"../../../composables/glass/webgpu/useGpuSubstrate\";\nimport type { BackingSize } from \"../../../composables/glass/webgl/createCanvasLifecycle\";\n"
+    ]
+   ]
+  },
+  "src/components/aurora/composables/runtime.ts": {
+   "hunks": [
+    [
+     "import {\n    createGpuSubstrate,\n    type GpuSubstrateHandle,\n    type RendererStatus,\n} from \"../../../composables/glass/webgpu/useGpuSubstrate\";\n",
+     "import { createGpuSubstrate, type GpuSubstrateHandle } from \"../../../composables/glass/webgpu/useGpuSubstrate\";\nimport { type RendererStatus } from \"../../../composables/glass/webgpu/rendererStatus\";\n"
+    ]
+   ]
+  },
+  "src/components/blob/composables/blobSimulation.ts": {
+   "hunks": [
+    [
+     "import type { BackingSize } from \"../../../composables/glass/webgpu/useGpuSubstrate\";\n",
+     "import type { BackingSize } from \"../../../composables/glass/webgl/createCanvasLifecycle\";\n"
+    ]
+   ]
+  },
+  "src/components/blob/composables/useMetaballRenderer.ts": {
+   "hunks": [
+    [
+     "import {\n    createGpuSubstrate,\n    type BackingSize,\n    type RendererStatus,\n} from \"../../../composables/glass/webgpu/useGpuSubstrate\";\n",
+     "import { createGpuSubstrate } from \"../../../composables/glass/webgpu/useGpuSubstrate\";\nimport { type BackingSize } from \"../../../composables/glass/webgl/createCanvasLifecycle\";\nimport { type RendererStatus } from \"../../../composables/glass/webgpu/rendererStatus\";\n"
+    ]
+   ]
+  },
+  "src/components/fourier-field/useFourierField.ts": {
+   "hunks": [
+    [
+     "import {\n    createGpuSubstrate,\n    type GpuBackend,\n    type RendererStatus,\n} from \"../../composables/glass/webgpu/useGpuSubstrate\";\n",
+     "import { createGpuSubstrate, type GpuBackend } from \"../../composables/glass/webgpu/useGpuSubstrate\";\nimport { type RendererStatus } from \"../../composables/glass/webgpu/rendererStatus\";\n"
+    ]
+   ]
+  },
+  "src/composables/glass/webgpu/useGpuSubstrate.ts": {
+   "hunks": [
+    [
+     "export type { BackingSize, DprPolicy } from \"../webgl/createCanvasLifecycle\";\nimport {\n    createWebGPUCanvas,\n    supportsWebGPU,\n    type WebGPUCanvasFrame,\n    type WebGPUCanvasHandle,\n    type WebGPUCanvasOptions,\n} from \"./useWebGPUCanvas\";\n",
+     "import { createWebGPUCanvas, supportsWebGPU } from \"./useWebGPUCanvas\";\nimport { type WebGPUCanvasFrame, type WebGPUCanvasHandle, type WebGPUCanvasOptions } from \"./webgpuCanvasTypes\";\n"
+    ],
+    [
+     "} from \"./rendererStatus\";\nexport type { RendererStatus, RendererEngine } from \"./rendererStatus\";\n\n",
+     "} from \"./rendererStatus\";\n\n"
+    ]
+   ]
+  },
+  "src/components/aurora/composables/wgpuSetup.ts": {
+   "hunks": [
+    [
+     "import type {\n    WebGPUCanvasFrame,\n    BackingSize,\n} from \"../../../composables/glass/webgpu/useWebGPUCanvas\";\n",
+     "import type { WebGPUCanvasFrame } from \"../../../composables/glass/webgpu/webgpuCanvasTypes\";\nimport type { BackingSize } from \"../../../composables/glass/webgl/createCanvasLifecycle\";\n"
+    ]
+   ]
+  },
+  "src/components/blob/composables/wgpuSetup.ts": {
+   "hunks": [
+    [
+     "import type {\n    WebGPUCanvasFrame,\n    BackingSize,\n} from \"../../../composables/glass/webgpu/useWebGPUCanvas\";\n",
+     "import type { WebGPUCanvasFrame } from \"../../../composables/glass/webgpu/webgpuCanvasTypes\";\nimport type { BackingSize } from \"../../../composables/glass/webgl/createCanvasLifecycle\";\n"
+    ]
+   ]
+  },
+  "src/components/fourier-field/renderer/wgpu.ts": {
+   "hunks": [
+    [
+     "import type {\n    WebGPUCanvasFrame,\n    BackingSize,\n} from \"../../../composables/glass/webgpu/useWebGPUCanvas\";\n",
+     "import type { WebGPUCanvasFrame } from \"../../../composables/glass/webgpu/webgpuCanvasTypes\";\nimport type { BackingSize } from \"../../../composables/glass/webgl/createCanvasLifecycle\";\n"
+    ]
+   ]
+  },
+  "src/composables/glass/webgpu/useWebGPUCanvas.ts": {
+   "hunks": [
+    [
+     "\nexport type { BackingSize, DprPolicy } from \"../webgl/createCanvasLifecycle\";\n// Typed initialization failures, adapter classification, and acquisition timing live\n",
+     "\n// Typed initialization failures, adapter classification, and acquisition timing live\n"
+    ],
+    [
+     "// `useGpuSubstrate` and the barrel reach it through this substrate unchanged.\nexport type {\n    WebGPUSuspendReason,\n    WebGPUCanvasFrame,\n    WebGPUCanvasOptions,\n    WebGPUCanvasHandle,\n} from \"./webgpuCanvasTypes\";\nimport type {\n",
+     "// `useGpuSubstrate` and the barrel reach it through this substrate unchanged.\nimport type {\n"
+    ]
+   ]
+  },
+  "scripts/structure/records/entry-record.json": {
+   "hunks": [
+    [
+     "        \"src/components/avatar/index.ts\",\n        \"src/components/dock/composables/index.ts\",\n        \"src/components/index.ts\",\n        \"src/components/infinite-scroll/composables/index.ts\",\n        \"src/components/skeleton/index.ts\",\n",
+     "        \"src/components/avatar/index.ts\",\n        \"src/components/skeleton/index.ts\",\n"
+    ]
+   ]
+  }
+ },
+ "report": {
+  "relays": [
+   "src/components/aurora/composables/color.ts: 2 relay statement(s), 2 name(s)",
+   "src/components/constellation/constellationField.ts: 1 relay statement(s), 13 name(s)",
+   "src/components/dock/composables/index.ts: 10 relay statement(s), 26 name(s)",
+   "src/components/index.ts: 30 relay statement(s), 5 name(s)",
+   "src/components/infinite-scroll/composables/index.ts: 2 relay statement(s), 3 name(s)",
+   "src/components/sortable-list/useSortable.ts: 1 relay statement(s), 3 name(s)",
+   "src/composables/glass/webgl/useWebGLCanvas.ts: 1 relay statement(s), 2 name(s)",
+   "src/composables/glass/webgpu/useGpuSubstrate.ts: 2 relay statement(s), 4 name(s)",
+   "src/composables/glass/webgpu/useWebGPUCanvas.ts: 2 relay statement(s), 6 name(s)"
+  ],
+  "importersRewritten": 21,
+  "deleted": [
+   "src/components/dock/composables/index.ts",
+   "src/components/index.ts",
+   "src/components/infinite-scroll/composables/index.ts"
+  ],
+  "left": []
+ }
+}

@@ -1,0 +1,33 @@
+# cascade.txt — pass-6 B-proto: cascade verify and FD-4 (raw lines; seat claude-opus-5-5)
+# Baseline: `cascade.mjs snapshot` of the floor base's dist (worktree of HEAD at the P6 floor cut, sha label d95b5248):
+#   ./styles 1970 rules, ./styles/fonts 4, ./styles/theme 4, ./styles.css 365
+# Listing: B-kit/authored/p6-listed-reorders.json (P6-F1 `scopes` + `reorders`)
+
+## verify, replay r2's dist, full listing (the committed result)
+verdict GREEN  stale listings 0  scopes [Timeline -> TimelineMarks: now 40, atBase 0, fromAtBase 64]  scopeFindings 0
+  ./styles       reorder rulesBase=1970 rulesNow=1970 onlyBase=0 onlyNow=0 judged={moved 28, swappedPairs 1950, risks 0} unlisted=0 stale=0 :: GREEN: listed reorder; no swapped pair shares a property on co-occurring classes
+  ./styles/fonts identical rules=4
+  ./styles/theme identical rules=4
+  ./styles.css   reorder rulesBase=365 rulesNow=365 onlyBase=0 onlyNow=0 judged={moved 10, swappedPairs 132, risks 0} unlisted=0 stale=0 :: GREEN: listed reorder; no swapped pair shares a property on co-occurring classes
+# The same run on the working tree (wt) printed the identical report apart from the tree path.
+
+## the SFC split with values kept (Timeline.vue -> Timeline.vue + TimelineMarks.vue, S39-03): GREEN once listed
+no listing                  RED  ./styles: content changed | ./styles.css: content changed      (scope ids differ; nothing declares the re-home)
+scopes only, no reorders    RED  ./styles: the reorder is not the listed rung (10 moved rule(s) unlisted) | ./styles.css: an unlisted reorder (10 moved rule(s))
+scopes + reorders           GREEN (above)
+
+## the SFC split with a value changed: RED
+plant: a copy of the migrated dist with TimelineMarks' `.tl__marks` min-block-size 1.5rem -> 1.75rem
+verdict RED  scopes [Timeline -> TimelineMarks: now 40]
+  ./styles       content onlyBase=1 onlyNow=1 :: RED: content changed
+  ./styles.css   content onlyBase=1 onlyNow=1 :: RED: content changed
+    now: @layer components :: .tl__marks[data-v-(Timeline)] {pointer-events:none;min-block-size:1.75rem;margin:0;padding:0;list-style:none;position:relative}
+
+## FD-4 coverage arm (P6-F2)
+# tools/fd4-v2-probe.mjs <r2>  (a browser-seat/2 report as browser.mjs writes it: testDir ".", spec keyed from it)
+ARM A /2, carved spec keyed from testDir: covered=true evidence=1
+ARM A' /2, a spec the tree does not hold: throws: FD-4: the browser report of <r2> names spec tests-visual/nope.spec.ts, at tests-visual/nope.
+# pass-5/critique-B/tools/fd4-cover-probe.mjs --root <r2>  (the critic's probe, unchanged: its report carries no $schema)
+spec src/components/chip/__tests__/chip-accent-band.visual.ts: names --accent-band-strength true, names glass-chip true, names accent-tone true
+Error: FD-4: the browser report of <r2> is unversioned; the coverage arm reads browser-seat/2 (specs keyed by their path from the config's testDir); re-run the seat with this floor
+exit 1

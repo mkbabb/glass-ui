@@ -1,0 +1,127 @@
+# plants.txt — pass-6 B-proto plant batteries (raw verdict lines; seat claude-opus-5-5)
+# Sources: scratch logs of the commands named in pass-6/B-proto.md §3, transcribed here by the Write tool.
+## tools/plants-p6.mjs on the migrated tree (overlay, nothing written)
+PASS X5 src/components/button/s14plant.ts: expect [B0,B17] red [B0,B17]
+PASS X5 demo/composables/s14plant.ts: expect [B0,B17] red [B0,B17]
+PASS X5 tests/harness/s14plant.ts: expect [B0,B17] red [B0,B17]
+PASS X5 tests-visual/paint/s14plant.ts: expect [B0,B17] red [B0,B17]
+PASS X5 scripts/minify/s14plant.ts: expect [B0,B17] red [B0,B17]
+PASS N part-1: expect [B15] red [B15]
+PASS N GlassDock-2: expect [B15] red [B15]
+PASS N GlassDock2: expect [B15] red [B15]
+PASS N GlassDockPart2: expect [B15] red [B15]
+PASS N bs11: expect [B15] red [B15]
+PASS N GlassDockSplit: expect [B15] red [B15]
+PASS N test stem category2.spec.ts: expect [B15] red [B15]
+PASS PW orphan: a page spec saved as .ts: expect [B16] red [B16]
+PASS PW orphan: the chip readback renamed out of *.visual.ts: expect [B16] red [B16]
+PASS PWL legal page-driving *.visual.ts: expect [] red []
+PASS SUBJ a one-unit page spec in tests-visual: expect [B16] red [B16]
+PASS B2 demo reads a private module: expect [B2] red [B2]
+PASS B2L demo reads a published name: expect [] red []
+PASS KT kernel-slot test reads a _shared module: expect [B16] red [B16]
+PASS KTL kernel-slot test reads its own files: expect [] red []
+battery 20/20; clean tree: all 18 clauses 0
+
+## pass-2 intent battery (tools/battery.mjs)
+CAUGHT I1 [B10] global composable read by one component :: {"B1":1,"B10":1,"B15":1}
+OTHER  I2 [B10] I1 published through the kernel door :: {"B11":1,"B15":1}
+CAUGHT I3 [B10] dock composable read only by slider :: {"B1":1,"B6":1,"B10":1,"B15":1}
+CAUGHT I4 [B1] relative deep import past dock/legibility door :: {"B1":1,"B15":1}
+OTHER  I4b [B1] @/ alias deep import past a door :: {"B0":1}
+CAUGHT I5 [B1] member imports its own door :: {"B1":1,"B15":1}
+OTHER  I6 [B1] self-name import of the package from src :: {"B0":1,"B15":1}
+MISSED I7 [B3] style kernel @imports a private dock sheet :: {}
+CAUGHT I7b [B3] a kernel leaf sheet @imports a component's private sheet :: {"B3":1,"B8":1,"B10":1}
+CAUGHT I8 [B6] 13 direct files :: {"B6":1,"B15":8}
+CAUGHT I9 [B6] file > 500 lines :: {"B6":1}
+CAUGHT I10 [B6] script > 500 lines :: {"B6":1}
+OTHER  I11 [R-3] test whose one subject is chip, left in tests/ :: {"B16":1}
+CAUGHT I11b [B2] test in tests/ deep-reads chip internals :: {"B2":1,"B16":1}
+OTHER  I12 [R-3] test colocated in chip whose subject is slider :: {"B16":1}
+CAUGHT I13 [B9] dual door: badge door republishes Chip :: {"B9":2,"B11":1}
+CAUGHT I14 [B11] alias name on a door :: {"B11":1}
+CAUGHT I15 [B15] part-1 module :: {"B7":1,"B11":3,"B15":1}
+CAUGHT I15b [B15] placeholder name utils :: {"B7":1,"B11":3,"B15":1}
+CAUGHT I15c [B15] placeholder name v2 :: {"B7":1,"B11":3,"B15":1}
+CAUGHT I16 [B15] module repeats parent :: {"B7":1,"B11":3,"B15":1}
+CAUGHT I17 [B1] masked fallback: dynamic-template deep import with catch :: {"B1":12,"B10":4,"B15":1,"B17":1}
+CAUGHT I17b [B0] masked fallback: CSS import of a missing sheet :: {"B0":1}
+CAUGHT I17c [B1] masked fallback: try deep import, fall back to door :: {"B1":1,"B17":1}
+CAUGHT I18 [B10] skeleton in skeleton/ read only by data-table :: {"B1":1,"B10":1,"B15":1}
+CAUGHT I19 [B10] skeleton in _shared read only by data-table :: {"B10":1,"B15":1}
+CAUGHT I20 [B10] stylesheet in style kernel loaded only by slider :: {"B3":1,"B10":1}
+CAUGHT I21 [B7] doorless dir deep-imported :: {"B6":1,"B7":1,"B15":1}
+CAUGHT I22 [B8] kernel type-imports a unit :: {"B4":1,"B8":1,"B11":1}
+CAUGHT I23 [B8] src reads demo :: {"B8":1,"B15":1}
+CAUGHT I24 [B4] sibling cycle chip <-> badge :: {"B4":1}
+CAUGHT I25 [B14] code in a JS door :: {"B11":1,"B14":1}
+CAUGHT I26 [B14] rule in a CSS door :: {"B14":1}
+CAUGHT I27 [B12] legacy shim relay :: {"B6":1,"B12":1,"B15":1}
+CAUGHT I28 [B5] dir inside a kind slot :: {"B5":1,"B6":1,"B15":1}
+CAUGHT I29 [B13] bin imports a bin :: {"B13":1}
+CAUGHT I30 [B8] kernel entry re-exports a unit file :: {"B1":1,"B4":1,"B8":1,"B9":1,"B11":1}
+CAUGHT I31 [B2] demo past a door :: {"B2":1,"B15":1}
+CAUGHT I32 [B0] computed-path read in tests :: {"B0":1,"B15":1}
+CAUGHT I33 [B7] undeclared index.ts :: {"B7":1,"B11":2,"B15":1}
+CAUGHT I34 [B6] 13 files in a story category :: {"B6":1,"B15":4}
+FALSE+ L1 [null] slider reads dock through its door :: {"B15":1}
+FALSE+ L2 [null] colocated slider-local composable :: {"B15":1}
+
+## pass-5 critic battery: plants.mjs on replay r2 (--group)
+BASE {"B0":0,"B1":0,"B2":0,"B3":0,"B4":0,"B5":0,"B6":0,"B7":0,"B8":0,"B9":0,"B10":0,"B11":0,"B12":0,"B13":0,"B14":0,"B15":0,"B16":0,"B17":0}
+GROUP of 216 co-planted plants judged once
+RESTORED base judgement unchanged
+tally:  190 CAUGHT; 14 CLEAN; 7 FALSE+; 5 OTHER;
+FALSE+  S14-scripts-CTL-read [S-14 control] scripts: legal plain read :: named=B0 namedLines={"B0":1}
+FALSE+  S14-scripts-CTL-rethrow [S-14 control] scripts: legal try/catch that rethrows with context :: named=B0 namedLines={"B0":1}
+FALSE+  S14-tests-CTL-read [S-14 control] tests: legal plain read :: named=B0 namedLines={"B0":1}
+FALSE+  S14-tests-CTL-rethrow [S-14 control] tests: legal try/catch that rethrows with context :: named=B0 namedLines={"B0":1}
+FALSE+  S14-tests-visual-CTL-read [S-14 control] tests-visual: legal plain read :: named=B0 namedLines={"B0":1}
+FALSE+  S14-tests-visual-CTL-rethrow [S-14 control] tests-visual: legal try/catch that rethrows with context :: named=B0 namedLines={"B0":1}
+FALSE+  VIS-in-L [legal] legal: unit visual spec in its slot by the route's convention :: named=B16 namedLines={"B16":1}
+OTHER   B2-demo-deep [B-01 (B2)] demo imports a private by a package deep path :: named=B0 namedLines={"B0":1}
+OTHER   B2-tests-deep [B-01 (B2)] tests imports a private by a package deep path :: named=B0 namedLines={"B0":1}
+OTHER   B2-tests-visual-deep [B-01 (B2)] tests-visual imports a private by a package deep path :: named=B0 namedLines={"B0":1}
+OTHER   B2-scripts-deep [B-01 (B2)] scripts imports a private by a package deep path :: named=B0 namedLines={"B0":1}
+OTHER   B2-tests-mock [B-01 (B2)] a test outside the unit vi.mock()s a chip private :: named=B16 namedLines={"B16":1}
+# line texts (from the run's --out json):
+#   S14-*-CTL-read      tests/zqtestsCtlRead.ts:2 computed-path read p [fs-read]   (the same in scripts/, tests-visual/)
+#   VIS-in-L            src/components/chip/__tests__/zqCarveIn.visual.ts (colocated in src/components/chip; its subject's home is the harness (several units) (by the 0 stories it opens))
+#   VIS-orphan          tests-visual/zqCarveOrphan.ts (declares Playwright tests outside the program tests-visual/playwright.config.ts: it never runs)   [CAUGHT; MISSED in pass 5]
+
+## pass-5 critic battery: regress.mjs (pass 4's battery) on replay r2 (--group)
+BASE {"B0":0,"B1":0,"B2":0,"B3":0,"B4":0,"B5":0,"B6":0,"B7":0,"B8":0,"B9":0,"B10":0,"B11":0,"B12":0,"B13":0,"B14":0,"B15":0,"B16":0,"B17":0}
+GROUP of 36 co-planted plants judged once
+RESTORED base judgement unchanged
+tally:  36 CAUGHT; 3 CLEAN; 6 UNNAMED;
+UNNAMED P4-F-CYC [B-01 (same-dir cycle)] a.ts <-> b.ts value cycle in one dir (slider) :: named=- namedLines={}
+UNNAMED P4-F-CYC-T [B-01 (same-dir cycle)] type-only a.ts <-> b.ts cycle in one dir (slider) :: named=- namedLines={}
+UNNAMED P4-B-13F [B-01 (bounds)] 13 new direct files in chip :: named=- namedLines={}
+UNNAMED P4-T-CYC-N [B-01 (B4)] type-only cycle search <-> legibility through doors :: named=- gained={"B4":1,"B10":2,"B11":4}
+UNNAMED P4-T-CYC [B-01 (B4)] type-only cycle chip <-> badge through their doors :: named=- gained={"B4":1,"B11":2}
+UNNAMED P4-V-CYC [B-01 (B4)] value cycle chip <-> badge through their doors (tooth) :: named=- gained={"B4":1,"B11":2}
+### the six UNNAMED re-run alone, gained lines printed (a scratch copy of run-plants.mjs that prints each gained line; the runner's mark match needs a non-word char after the mark, and these marks are prefixes of the planted names, e.g. plantFcyc in plantFcycA.ts)
+   gained B4: cycle @src/components/dock [search legibility] (type-only) via src/components/dock/search/plantTcycNa.ts -> src/components/dock/legibility/index.ts [type] ; src/components/dock/legibility/plantTcycNb.
+   gained B10: src/components/dock/legibility/plantTcycNb.ts -> src/components/dock/search [move] readers: src/components/dock/search
+   gained B10: src/components/dock/search/plantTcycNa.ts -> src/components/dock/legibility [move] readers: src/components/dock/legibility
+   gained B11: src/components/dock/search/index.ts exports PlantTcycNa (no reader outside src/components/dock/search)
+   gained B11: src/components/dock/legibility/index.ts exports PlantTcycNb (no reader outside src/components/dock/legibility)
+UNNAMED P4-T-CYC-N [B-01 (B4)] type-only cycle search <-> legibility through doors :: named=- gained={"B4":1,"B10":2,"B11":4}
+   gained B4: cycle @src [components/chip components/badge] (type-only) via src/components/chip/plantTcycA.ts -> src/components/badge/index.ts [type] ; src/components/badge/plantTcycB.ts -> src/components/chip/inde
+   gained B11: src/components/chip/index.ts +PlantTcycA (not in the pin)
+   gained B11: src/components/badge/index.ts +PlantTcycB (not in the pin)
+UNNAMED P4-T-CYC [B-01 (B4)] type-only cycle chip <-> badge through their doors :: named=- gained={"B4":1,"B11":2}
+   gained B4: cycle @src [components/chip components/badge] via src/components/chip/plantVcycA.ts -> src/components/badge/index.ts ; src/components/badge/plantVcycB.ts -> src/components/chip/index.ts
+   gained B11: src/components/chip/index.ts +plantVcycA (not in the pin)
+   gained B11: src/components/badge/index.ts +plantVcycB (not in the pin)
+UNNAMED P4-V-CYC [B-01 (B4)] value cycle chip <-> badge through their doors (tooth) :: named=- gained={"B4":1,"B11":2}
+   gained B4: cycle @src/components/slider [plantFcycB.ts plantFcycA.ts] via src/components/slider/plantFcycB.ts -> src/components/slider/plantFcycA.ts ; src/components/slider/plantFcycA.ts -> src/components/slider
+UNNAMED P4-F-CYC [B-01 (same-dir cycle)] a.ts <-> b.ts value cycle in one dir (slider) :: named=- gained={"B4":1}
+   gained B4: cycle @src/components/slider [plantFcycTB.ts plantFcycTA.ts] (type-only) via src/components/slider/plantFcycTB.ts -> src/components/slider/plantFcycTA.ts [type] ; src/components/slider/plantFcycTA.ts
+UNNAMED P4-F-CYC-T [B-01 (same-dir cycle)] type-only a.ts <-> b.ts cycle in one dir (slider) :: named=- gained={"B4":1}
+   gained B6: src/components/chip/: 18 direct files > 12
+   gained B15: src/components/chip/plantThirteen0.ts (placeholder file name)
+   gained B15: src/components/chip/plantThirteen1.ts (placeholder file name)
+UNNAMED P4-B-13F [B-01 (bounds)] 13 new direct files in chip :: named=- gained={"B6":1,"B15":13}
+RESTORED base judgement unchanged

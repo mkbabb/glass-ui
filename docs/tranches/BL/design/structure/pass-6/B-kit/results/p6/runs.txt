@@ -1,0 +1,42 @@
+# runs.txt — pass-6 B-proto: replays, gate, toolchain, vitest, browser (raw figures; seat claude-opus-5-5)
+# Machine: macOS 26.4.1, 18 cores; node v26.0.0, vite 8.1.5, vue-tsc 3.3.7, vitest 4.1.10, typescript 6.0.3, @playwright/test 1.61.1
+
+## replays (fresh worktrees of HEAD 544c9271; node_modules + tests-visual/node_modules symlinked)
+r1  replay.mjs --root <r1>           exit 0  replay done in 383.8 s; code digest bb3f6c58723b95d84a66eeec26926da8625524aa06783fa23fb2afdddd0add29 over 1580 files; chain final MATCH
+r2  replay.mjs --root <r2> --twice   exit 0  replay done in 1124.3 s; code digest bb3f6c58723b95d84a66eeec26926da8625524aa06783fa23fb2afdddd0add29 over 1580 files; chain final MATCH
+    113 steps logged "again:"; every one wrote/applied nothing new except S1 (floor rows), whose second pass re-derives the same digest
+    replay: from the base (digest 35f7b831fe810aac…)
+
+## gate on r2: node scripts/structure/seal/seal.mjs --root <r2>
+PASS B0..B17, every clause 0 (18/18); exit 0
+seal record (wt, identical tree): files 15165, edges 8328, modules 139/139 required, b0 {f1 0, walks 0, computed 0},
+  b10 anchored 40 held 0 counted 0, multiDoorSymbols 0, pin {modules 139, doors 119, names 1297, reviewed 2}
+npx vitest run tests/gates/seal.test.ts   exit 0   20/20
+pre-S60 (the rebased chain on the P6 floor, gate of pass 6): B2 61, B6 1, B11 5, B15 3, B16 3, B17 4
+
+## toolchain on r2
+npx vite build                                 exit 0   55s
+npm run verify:package                         exit 0  118s   terminal CLEAN; ratchet datum 2925765 = unpackedBytes 2925765, increase false
+npx vue-tsc --noEmit                           exit 0   23s
+npx vue-tsc --noEmit -p tsconfig.test.json     exit 0   35s
+npm run demo:dist:build                        exit 0    8s
+
+## vitest on r2 (load average 27.6)
+npx vitest run   Test Files 1 failed | 273 passed (274); Tests 1 failed | 2324 passed | 10 expected fail | 1 skipped (2336); 27.08s
+  FAIL tests/gates/boot-graph/build.test.ts > the dist-demo it measures is NEWER than every source it is built from
+       dist-demo/index.html is STALE (built 19:20:48Z, newest source 19:23:45Z): the plant batteries wrote and restored
+       r2 sources after the demo build (bytes restored, mtimes not)
+npm run demo:dist:build; npx vitest run tests/gates/boot-graph   exit 0   14/14
+# an earlier full run on wt before S69s, at load ~58: 15 failed / 2310 passed; S69s cured the two public-surface
+# and the orphan-CSS rows; the rest (atoms fuzz, derive-color, menu contract, aurora-stage-affordance, grasp,
+# comment-ratio, boot-graph) pass on r2 above
+
+## browser (browser-seat/2, chromium-headless-new, 1 worker)
+base   worktree of the floor base, testDir tests-visual: 866 tests, 822 ran, 428 passed, 394 failed, 44 skipped; 6057 s; load 27-53
+rekey  tools/rekey.mjs <base> <wt>: 153 specs mapped through the chain's moves, 0 unmapped; results 866
+route  wt, testDir ".", selection 71 specs (from the changed list + moves), 16 bands:
+       386 tests, 378 ran, 184 passed, 194 failed, 8 skipped; 3158 s; load 24-67
+       verdict GREEN, newFailures 0; base-green tests in the selection 183, green now 183; route results unmatched in base 0
+bands (specs, base-green, new): aurora 13/27/0  avatar 0/0/0 (no browser signal)  blob 18/47/0  dark 2/10/0  dock 14/11/0
+  easing 1/5/0  expandable-container 1/4/0  fourier-field 2/2/0  glass 13/40/0  handmark 1/10/0  index 2/2/0
+  motion 6/18/0  shared 0/0/0 (no browser signal)  sidebar 2/2/0  sortable-list 1/3/0  tabs 1/6/0

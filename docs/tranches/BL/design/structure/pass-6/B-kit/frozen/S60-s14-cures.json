@@ -1,0 +1,63 @@
+{
+ "step": "S-14 (LAW §10, pass 6): the four masking fallbacks the widened B17 names on the tree, each cured at its cause: the SFC bundle fold and the utility scan read the SFC bundle unconditionally (a missing bundle fails the build), Tailwind's theme is read unconditionally (a dependency the build already resolved), and the code highlighter's chunk load rejects loudly instead of returning",
+ "files": {
+  "vite.style-fold.ts": {
+   "hunks": [
+    [
+     "    if (existsSync(distIndex) && existsSync(sfcBundle)) {\n        const indexSrc = readFileSync(distIndex, \"utf-8\");\n        const sfcImport = '@import \"../glass-ui.css\";';\n        if (!indexSrc.includes(sfcImport)) {\n            const sourceAt = terminalImportIndex(indexSrc, distStyles, root);\n            const folded =\n                `${indexSrc.slice(0, sourceAt)}/* AN.W1 — SFC scoped component CSS (folded so a single\\n   @import \"@mkbabb/glass-ui/styles\" carries cascade + components) */\\n${sfcImport}\\n\\n${indexSrc.slice(sourceAt)}`;\n            writeFileSync(distIndex, folded, \"utf-8\");\n        }\n",
+     "    // Both are build outputs this fold requires: a missing one is a broken build, never a\n    // fold to skip (the index read below fails on its own).\n    if (!existsSync(sfcBundle)) throw new Error(`style-fold: the SFC bundle ${sfcBundle} was not built; ./styles would ship without the component CSS`);\n    const indexSrc = readFileSync(distIndex, \"utf-8\");\n    const sfcImport = '@import \"../glass-ui.css\";';\n    if (!indexSrc.includes(sfcImport)) {\n        const sourceAt = terminalImportIndex(indexSrc, distStyles, root);\n        const folded =\n            `${indexSrc.slice(0, sourceAt)}/* AN.W1 — SFC scoped component CSS (folded so a single\\n   @import \"@mkbabb/glass-ui/styles\" carries cascade + components) */\\n${sfcImport}\\n\\n${indexSrc.slice(sourceAt)}`;\n        writeFileSync(distIndex, folded, \"utf-8\");\n"
+    ]
+   ]
+  },
+  "vite.utility-emit.ts": {
+   "hunks": [
+    [
+     "import { existsSync, readdirSync, readFileSync, writeFileSync } from \"node:fs\";\n",
+     "import { readdirSync, readFileSync, writeFileSync } from \"node:fs\";\n"
+    ],
+    [
+     "    const sfcBundle = resolve(dist, \"glass-ui.css\");\n    if (existsSync(sfcBundle)) scanPaths.push(sfcBundle);\n",
+     "    scanPaths.push(resolve(dist, \"glass-ui.css\"));\n"
+    ],
+    [
+     "    if (existsSync(twThemePath)) {\n        const twTheme = postcss.parse(readFileSync(twThemePath, \"utf-8\"));\n        twTheme.walkAtRules(\"theme\", (atRule) => {\n            atRule.walkDecls((decl) => {\n                if (decl.prop.startsWith(\"--\")) {\n                    themeOwned.set(decl.prop, decl.value);\n                }\n            });\n",
+     "    const twTheme = postcss.parse(readFileSync(twThemePath, \"utf-8\"));\n    twTheme.walkAtRules(\"theme\", (atRule) => {\n        atRule.walkDecls((decl) => {\n            if (decl.prop.startsWith(\"--\")) {\n                themeOwned.set(decl.prop, decl.value);\n            }\n"
+    ],
+    [
+     "        // Tailwind pairs each `--animate-*` token with the `@keyframes` it names,\n        // nested in the same `@theme` block. The token alone is inert.\n        twTheme.walkAtRules(\"keyframes\", (atRule) => {\n            twKeyframes.set(atRule.params.trim(), atRule);\n        });\n    }\n",
+     "    });\n    // Tailwind pairs each `--animate-*` token with the `@keyframes` it names,\n    // nested in the same `@theme` block. The token alone is inert.\n    twTheme.walkAtRules(\"keyframes\", (atRule) => {\n        twKeyframes.set(atRule.params.trim(), atRule);\n    });\n"
+    ]
+   ]
+  },
+  "demo/chassis/code/useCodeHighlight.ts": {
+   "hunks": [
+    [
+     "        // Best-effort COLOR: a failed chunk (offline, missing dep) leaves the raw\n        // fira-code text Vue already painted — legible mono, never a blank box\n        // (no-masking-fallback). The primary is the text; color is the enhancement.\n        let hljs: Hljs;\n        try {\n            hljs = await loadHljs();\n        } catch {\n            return;\n        }\n",
+     "        // The raw fira-code text is already painted; colour is the enhancement. A failed\n        // chunk load (offline, missing dep) rejects here and surfaces through Vue's error\n        // handling: the text stays legible and the failure is reported, never swallowed.\n        const hljs = await loadHljs();\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "vite.style-fold.ts",
+   "why": "the fold reads the staged index.css and the SFC bundle unconditionally: a build that did not write either fails here, instead of shipping ./styles without the component CSS"
+  },
+  {
+   "file": "vite.utility-emit.ts",
+   "why": "the SFC bundle is always scanned: a missing bundle fails the read below instead of dropping its classes from the utility scan"
+  },
+  {
+   "file": "vite.utility-emit.ts",
+   "why": "Tailwind's theme.css is read unconditionally: the build resolved the package above, so a missing theme is a broken install and fails"
+  },
+  {
+   "file": "vite.utility-emit.ts",
+   "why": "existsSync has no reader left in this file"
+  },
+  {
+   "file": "demo/chassis/code/useCodeHighlight.ts",
+   "why": "the highlighter chunk's load is not swallowed: a failed load rejects highlight() and surfaces through Vue's error handling, while the raw text Vue already painted stays (the text is the primary, the colour is the enhancement)"
+  }
+ ]
+}

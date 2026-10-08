@@ -1,0 +1,374 @@
+{
+ "step": "B-S14 (P5-R3): consumer references re-point at the entries that publish their names (S64); /data/search drives the engine through useDockSearch (arm (a)); the Fourier studio's PRNG is demo-local; the page-imported aurora names read their entry sources",
+ "files": {
+  "demo/composables/virtual/virtualSectionLayout.ts": {
+   "hunks": [
+    [
+     "import type { SectionHierarchy } from \"@glass/composables/sidebar/types\";\n",
+     "import type { SectionHierarchy } from \"@glass/composables/sidebar\";\n"
+    ]
+   ]
+  },
+  "demo/stories/data/search/catalogue.ts": {
+   "hunks": [
+    [
+     "import type { SearchableItem } from \"@glass/components/dock/search/types\";\n",
+     "import type { SearchableItem } from \"@glass/components/dock\";\n"
+    ]
+   ]
+  },
+  "demo/stories/dock/_frame/DockStage.vue": {
+   "hunks": [
+    [
+     "} from \"@glass/components/dock/legibility/useGlassBackdropLuminance\";\n",
+     "} from \"@glass/components/dock\";\n"
+    ]
+   ]
+  },
+  "demo/stories/dock/dock-search.vue": {
+   "hunks": [
+    [
+     "import { GlassDock, useDockSearch } from \"@glass/components/dock\";\nimport { useDockState } from \"@glass/components/dock/composables/useDockState\";\n",
+     "import { GlassDock, useDockSearch, useDockState, type SearchableItem } from \"@glass/components/dock\";\n"
+    ],
+    [
+     "import { useScrollTo } from \"@glass/composables/sidebar\";\nimport type { SearchableItem } from \"@glass/components/dock/search/types\";\nimport DockStage from \"./_frame/DockStage.vue\";\n",
+     "import { useScrollTo } from \"@glass/composables/sidebar\";\nimport DockStage from \"./_frame/DockStage.vue\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/glass-material.vue": {
+   "hunks": [
+    [
+     "import { useGlassBackdropLuminance } from \"@glass/components/dock/legibility/useGlassBackdropLuminance\";\n",
+     "import { useGlassBackdropLuminance } from \"@glass/components/dock\";\n"
+    ]
+   ]
+  },
+  "demo/stories/data/search.vue": {
+   "hunks": [
+    [
+     "import { useFuzzySearch } from \"@glass/components/dock/search/useFuzzySearch\";\nimport type { SearchResult, SearchableItem } from \"@glass/components/dock/search/types\";\n",
+     "// The engine ships as the dock's search mode (BK #42, SE-4): `useDockSearch` composes\n// `useFuzzySearch` and hands it back as `fuzzy`, so this route reads the same handle the\n// dock does. No dock is mounted here, so the composed state machine has no root to watch.\nimport {\n    useDockSearch,\n    useDockState,\n    type SearchResult,\n    type SearchableItem,\n} from \"@glass/components/dock\";\n"
+    ],
+    [
+     "const searchState = useFuzzySearch<SearchableItem>({\n",
+     "const { fuzzy: searchState } = useDockSearch<SearchableItem>({\n    dockState: useDockState({ rootEl: ref(null) }),\n"
+    ],
+    [
+     "    onSelect: (result) => {\n",
+     "    onResultSelect: (result) => {\n"
+    ]
+   ]
+  },
+  "demo/stories/motion/scroll.vue": {
+   "hunks": [
+    [
+     "import { useScrollScene } from \"@glass/composables/motion/scroll/useScrollScene\";\n",
+     "import { useScrollScene } from \"@glass/composables/motion/motion-core\";\n"
+    ]
+   ]
+  },
+  "demo/stories/motion/springs/CustomAuthoring.vue": {
+   "hunks": [
+    [
+     "import { springPreset } from \"@glass/composables/motion\";\nimport { springProjection } from \"@glass/composables/motion/spring/springProjection\";\nimport { motionTempo } from \"@glass/composables/motion/core/tempo/motionTempo\";\n",
+     "import { springPreset, springProjection } from \"@glass/composables/motion\";\nimport { motionTempo } from \"@glass/composables/motion/motion-core\";\n"
+    ]
+   ]
+  },
+  "demo/stories/motion/springs/NamedRegisters.vue": {
+   "hunks": [
+    [
+     "import { springPreset } from \"@glass/composables/motion\";\nimport { springProjection } from \"@glass/composables/motion/spring/springProjection\";\nimport { motionTempo } from \"@glass/composables/motion/core/tempo/motionTempo\";\n",
+     "import { springPreset, springProjection } from \"@glass/composables/motion\";\nimport { motionTempo } from \"@glass/composables/motion/motion-core\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/aurora/AuroraStage.vue": {
+   "hunks": [
+    [
+     "import type { AuroraConfig } from \"@glass/components/aurora/aurora-config\";\nimport { isAuroraPointerEnabled } from \"@glass/components/aurora/runtime/contract\";\n",
+     "import { isAuroraPointerEnabled, type AuroraConfig } from \"@glass/components/aurora/aurora-config\";\n"
+    ],
+    [
+     "} from \"@glass/composables/glass/webgpu/rendererStatus\";\n",
+     "} from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/blob.vue": {
+   "hunks": [
+    [
+     "import { pendingRenderer, type RendererStatus } from \"@glass/composables/glass/webgpu/rendererStatus\";\n",
+     "import { pendingRenderer, type RendererStatus } from \"@glass/index\";\n"
+    ],
+    [
+     "import { BLOB_CONFIG_DEFAULTS } from \"@glass/components/blob/config\";\nimport { MAX_SATS } from \"@glass/components/blob/mood/constants\";\n",
+     "import { BLOB_CONFIG_DEFAULTS, MAX_SATS } from \"@glass/components/blob/config\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/constellation.vue": {
+   "hunks": [
+    [
+     "import { pendingRenderer, type RendererStatus } from \"@glass/composables/glass/webgpu/rendererStatus\";\n",
+     "import { pendingRenderer, type RendererStatus } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/fourier-field.vue": {
+   "hunks": [
+    [
+     "} from \"@glass/composables/glass/webgpu/rendererStatus\";\n",
+     "} from \"@glass/index\";\n"
+    ],
+    [
+     "    type MintedSpectrum,\n} from \"@glass/components/fourier-field\";\n",
+     "    type MintedSpectrum,\n    // The rung ladder: the one source of the three strokes this control offers.\n    FOURIER_STROKE_RUNGS,\n} from \"@glass/components/fourier-field\";\n"
+    ],
+    [
+     "} from \"@glass/components/fourier-field\";\n// The rung ladder is module-level, not barrel surface — the one source of the three\n// strokes this control offers.\nimport { FOURIER_STROKE_RUNGS } from \"@glass/components/fourier-field/register/constants\";\nimport { cssToOklch, type OklchStop } from \"@glass/composables/color\";\n",
+     "} from \"@glass/components/fourier-field\";\nimport { cssToOklch, type OklchStop } from \"@glass/composables/color\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/fourier-field/sources.ts": {
+   "hunks": [
+    [
+     "import { mulberry32, hashString } from \"@glass/composables/glass/procedural/prng\";\n",
+     "import { mulberry32, hashString } from \"./prng\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/fourier-field/prng.ts": {
+   "create": "// The Fourier studio's seeded PRNG: the elliptic source is keyed by a string seed, so a\n// shape reproduces across mounts. The two primitives are the library's own seeding\n// functions, which no entry publishes (P5-R3), so the studio keeps its own copy.\n\n/** Mulberry32, a fast 32-bit seeded PRNG. Returns a `() => number` in [0, 1). */\nexport function mulberry32(seed: number): () => number {\n    return () => {\n        seed |= 0;\n        seed = (seed + 0x6d2b79f5) | 0;\n        let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);\n        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;\n        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;\n    };\n}\n\n/** String to u32 hash (djb2). */\nexport function hashString(str: string): number {\n    let hash = 5381;\n    for (let i = 0; i < str.length; i++) {\n        hash = ((hash << 5) + hash + str.charCodeAt(i)) | 0;\n    }\n    return hash >>> 0;\n}\n"
+  },
+  "scripts/regen-spring-tokens.mjs": {
+   "hunks": [
+    [
+     "import { SPRING_PRESETS } from \"../src/composables/motion/index.ts\";\nimport {\n    springProjection,\n    springSettleDurationSeconds,\n} from \"../src/composables/motion/spring/springProjection.ts\";\n",
+     "import { SPRING_PRESETS, springProjection } from \"../src/composables/motion/index.ts\";\n"
+    ],
+    [
+     "        const sec = springSettleDurationSeconds(preset);\n",
+     "        const sec = springProjection(preset).settleSeconds;\n"
+    ],
+    [
+     "            `  --spring-${preset.name}: response=${preset.response}s, ζ=${preset.dampingFraction}, settle=${springSettleDurationSeconds(preset)}s (${preset.comment})`,\n",
+     "            `  --spring-${preset.name}: response=${preset.response}s, ζ=${preset.dampingFraction}, settle=${springProjection(preset).settleSeconds}s (${preset.comment})`,\n"
+    ]
+   ]
+  },
+  "tests-visual/aurora/aurora-swraster.spec.ts": {
+   "hunks": [
+    [
+     "                        \"/src/components/aurora/composables/auroraFallbackGround.ts\"\n",
+     "                        \"/src/components/aurora/aurora-config.ts\"\n"
+    ],
+    [
+     "                        \"/src/components/aurora/config/presets.ts\"\n",
+     "                        \"/src/components/aurora/aurora-config.ts\"\n"
+    ],
+    [
+     "                \"/src/components/aurora/config/renderMode.ts\"\n",
+     "                \"/src/components/aurora/aurora-config.ts\"\n"
+    ],
+    [
+     "                \"/src/components/aurora/runtime/runtime.ts\"\n",
+     "                \"/src/components/aurora/index.ts\"\n"
+    ],
+    [
+     "            const presetMod = await import(\n                \"/src/components/aurora/config/presets.ts\"\n            );\n",
+     "            const presetMod = await import(\n                \"/src/components/aurora/aurora-config.ts\"\n            );\n"
+    ]
+   ]
+  },
+  "tests-visual/aurora/aurora-vibrancy.spec.ts": {
+   "hunks": [
+    [
+     "                        \"/src/components/aurora/composables/auroraFallbackGround.ts\"\n",
+     "                        \"/src/components/aurora/aurora-config.ts\"\n"
+    ],
+    [
+     "            const groundMod = await import(\n                \"/src/components/aurora/composables/auroraFallbackGround.ts\"\n            );\n",
+     "            const groundMod = await import(\n                \"/src/components/aurora/aurora-config.ts\"\n            );\n"
+    ],
+    [
+     "                const groundMod = await import(\n                    \"/src/components/aurora/composables/auroraFallbackGround.ts\"\n                );\n",
+     "                const groundMod = await import(\n                    \"/src/components/aurora/aurora-config.ts\"\n                );\n"
+    ]
+   ]
+  },
+  "tests/composables/motion/springProjection.test.ts": {
+   "hunks": [
+    [
+     "import { SPRING_PRESETS } from \"@glass/composables/motion\";\nimport { springProjection } from \"@glass/composables/motion/spring/springProjection\";\n",
+     "import { SPRING_PRESETS, springProjection } from \"@glass/composables/motion\";\n"
+    ]
+   ]
+  },
+  "tests/demo/springs-story.test.ts": {
+   "hunks": [
+    [
+     "import { springProjection } from \"@glass/composables/motion/spring/springProjection\";\nimport { springPreset } from \"@glass/composables/motion\";\n",
+     "import { springPreset, springProjection } from \"@glass/composables/motion\";\n"
+    ]
+   ]
+  },
+  "tests/components/sheet/sheet-motion.test.ts": {
+   "hunks": [
+    [
+     "import * as springMountModule from \"@glass/composables/motion/spring/useSpringMount\";\n",
+     "import * as springMountModule from \"@glass/composables/motion\";\n"
+    ]
+   ]
+  },
+  "tests/components/fourier-field/surface.smoke.test.ts": {
+   "hunks": [
+    [
+     "import { DEFAULT_FOURIER_CONFIG, FourierField } from \"@glass/components/fourier-field\";\nimport { FOURIER_QUANTUM_FINE } from \"@glass/components/fourier-field/register/constants\";\n\n",
+     "import { DEFAULT_FOURIER_CONFIG, FourierField } from \"@glass/components/fourier-field\";\n\n"
+    ],
+    [
+     "            FOURIER_QUANTUM_FINE,\n",
+     "            1 / 64, // the fine keyboard quantum: 1/64 of the period\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "demo/composables/virtual/virtualSectionLayout.ts",
+   "why": "SectionHierarchy is published on ./sidebar (S64)"
+  },
+  {
+   "file": "demo/stories/data/search/catalogue.ts",
+   "why": "SearchableItem is published on ./dock (S64)"
+  },
+  {
+   "file": "demo/stories/dock/_frame/DockStage.vue",
+   "why": "the backdrop-luminance pair is published on ./dock (S64)"
+  },
+  {
+   "file": "demo/stories/dock/dock-search.vue",
+   "why": "useDockState is published on ./dock (P5-R3, S64)"
+  },
+  {
+   "file": "demo/stories/dock/dock-search.vue",
+   "why": "SearchableItem rides the ./dock import above"
+  },
+  {
+   "file": "demo/stories/substrates/glass-material.vue",
+   "why": "useGlassBackdropLuminance is published on ./dock (S64)"
+  },
+  {
+   "file": "demo/stories/data/search.vue",
+   "why": "arm (a): the route drives the ranking engine through useDockSearch, its one public expression (BK #42, SE-4); no dock is mounted, so the composed state machine has no root"
+  },
+  {
+   "file": "demo/stories/data/search.vue",
+   "why": "arm (a): the select hook is useDockSearch's onResultSelect; the engine handle is its fuzzy"
+  },
+  {
+   "file": "demo/stories/motion/scroll.vue",
+   "why": "useScrollScene is published on ./motion-core (S64)"
+  },
+  {
+   "file": "demo/stories/motion/springs/CustomAuthoring.vue",
+   "why": "springProjection is published on ./motion, motionTempo on ./motion-core (S64)"
+  },
+  {
+   "file": "demo/stories/motion/springs/NamedRegisters.vue",
+   "why": "springProjection is published on ./motion, motionTempo on ./motion-core (S64)"
+  },
+  {
+   "file": "demo/stories/substrates/aurora/AuroraStage.vue",
+   "why": "isAuroraPointerEnabled is published on ./aurora-config (S64)"
+  },
+  {
+   "file": "demo/stories/substrates/aurora/AuroraStage.vue",
+   "why": "pendingRenderer and RendererStatus ride the root (S64)"
+  },
+  {
+   "file": "demo/stories/substrates/blob.vue",
+   "why": "pendingRenderer and RendererStatus ride the root (S64)"
+  },
+  {
+   "file": "demo/stories/substrates/blob.vue",
+   "why": "MAX_SATS is published on ./blob-config (S64)"
+  },
+  {
+   "file": "demo/stories/substrates/constellation.vue",
+   "why": "pendingRenderer and RendererStatus ride the root (S64)"
+  },
+  {
+   "file": "demo/stories/substrates/fourier-field.vue",
+   "why": "pendingRenderer and RendererStatus ride the root (S64)"
+  },
+  {
+   "file": "demo/stories/substrates/fourier-field.vue",
+   "why": "FOURIER_STROKE_RUNGS is published on ./fourier-field beside the config (S64)"
+  },
+  {
+   "file": "demo/stories/substrates/fourier-field/sources.ts",
+   "why": "P5-R3: the PRNG primitives are not a published contract; the studio seeds from a demo-local copy"
+  },
+  {
+   "file": "demo/stories/substrates/fourier-field/prng.ts",
+   "why": "P5-R3: the studio's seeded PRNG, demo-local (the same two primitives the library seeds its organic shapes with; no published name carries them)"
+  },
+  {
+   "file": "scripts/regen-spring-tokens.mjs",
+   "why": "springProjection is published on ./motion (S64); its settleSeconds is the settle the tokens carry, so the script reads the one projection"
+  },
+  {
+   "file": "scripts/regen-spring-tokens.mjs",
+   "why": "the settle clock is the projection's settleSeconds"
+  },
+  {
+   "file": "scripts/regen-spring-tokens.mjs",
+   "why": "the settle clock is the projection's settleSeconds"
+  },
+  {
+   "file": "tests-visual/aurora/aurora-swraster.spec.ts",
+   "why": "sampleAuroraField and auroraFallbackGround are published on ./aurora-config"
+  },
+  {
+   "file": "tests-visual/aurora/aurora-swraster.spec.ts",
+   "why": "DEFAULT_AURORA_CONFIG is published on ./aurora-config"
+  },
+  {
+   "file": "tests-visual/aurora/aurora-swraster.spec.ts",
+   "why": "isSoftwareWebGLRenderer is published on ./aurora-config"
+  },
+  {
+   "file": "tests-visual/aurora/aurora-swraster.spec.ts",
+   "why": "createAurora is published on ./aurora"
+  },
+  {
+   "file": "tests-visual/aurora/aurora-vibrancy.spec.ts",
+   "why": "sampleAuroraField is published on ./aurora-config"
+  },
+  {
+   "file": "tests/composables/motion/springProjection.test.ts",
+   "why": "springProjection is published on ./motion (S64)"
+  },
+  {
+   "file": "tests/demo/springs-story.test.ts",
+   "why": "springProjection is published on ./motion (S64)"
+  },
+  {
+   "file": "tests/components/sheet/sheet-motion.test.ts",
+   "why": "the sheet calls useSpringMount through the ./motion entry; the spy sits on that entry"
+  },
+  {
+   "file": "tests/components/fourier-field/surface.smoke.test.ts",
+   "why": "FOURIER_QUANTUM_FINE is not published; the test states the quantum the slider steps by"
+  },
+  {
+   "file": "tests/components/fourier-field/surface.smoke.test.ts",
+   "why": "the fine keyboard quantum, 1/64 of the period, stated where it is observed"
+  }
+ ]
+}

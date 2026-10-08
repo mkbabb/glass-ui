@@ -1,0 +1,31 @@
+{
+ "step": "P5-R2: the S39-12 shader chunks are declared `string`, so the stage source they hold (13,678 B of comment prose in the pass-5 datum) stays in the source and leaves the declarations; one source of record",
+ "files": {
+  "src/components/blob/renderer/webgl/metaball-field.glsl.ts": {
+   "hunks": [
+    [
+     "export const METABALL_FIELD_GLSL = /* glsl */ `\n",
+     "export const METABALL_FIELD_GLSL: string = /* glsl */ `\n"
+    ]
+   ]
+  },
+  "src/components/blob/renderer/webgpu/metaball-field.wgsl.ts": {
+   "hunks": [
+    [
+     "export const METABALL_FIELD_WGSL = /* wgsl */ `// The composite SDF field with its analytic gradient: vec3(dist, ∂/∂x, ∂/∂y).\n",
+     "export const METABALL_FIELD_WGSL: string = /* wgsl */ `// The composite SDF field with its analytic gradient: vec3(dist, ∂/∂x, ∂/∂y).\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "src/components/blob/renderer/webgl/metaball-field.glsl.ts",
+   "why": "the GLSL field stage is a string to its one reader (metaball.frag.ts); its source is not a declaration"
+  },
+  {
+   "file": "src/components/blob/renderer/webgpu/metaball-field.wgsl.ts",
+   "why": "the WGSL field stage is a string to its one reader (metaball.wgsl.ts); its source is not a declaration"
+  }
+ ]
+}

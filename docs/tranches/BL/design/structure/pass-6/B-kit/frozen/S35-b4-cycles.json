@@ -1,0 +1,51 @@
+{
+ "step": "B4 (LAW §8, cB O-1): same-directory file cycles are counted; the two on the tree are cured by moving the declaration or helper to the file that owns its meaning",
+ "files": {
+  "src/composables/glass/lifecycle/createCanvasLifecycle.ts": {
+   "hunks": [
+    [
+     "\n// Offscreen parking combines two independent detectors writing\n// DISTINCT reason keys, so the \"one writer per reason\" invariant is literally true:\n//   - \"off-screen\"    — the substrate's `contentvisibilityautostatechange` path\n//                       (content-visibility:auto, the headline lever).\n//   - \"off-screen-io\" — the consumer's IntersectionObserver `rootMargin` fallback\n//                       (the engine-without-content-visibility path).\n// Both gate the same empty-`Set` `isRunning()` check, so the loop runs only when both\n// agree the surface is visible.\nexport type CanvasSuspendReason =\n    | \"tab-hidden\"\n    | \"off-screen\"\n    | \"off-screen-io\"\n    | \"manual\";\n\n// The backing-store sizer and its `BackingSize`/`DprPolicy` types live in the\n",
+     "\n// The backing-store sizer and its `BackingSize`/`DprPolicy` types live in the\n"
+    ],
+    [
+     "import { createCanvasVisibility } from \"./visibility\";\n",
+     "import { createCanvasVisibility, type CanvasSuspendReason } from \"./visibility\";\n"
+    ]
+   ]
+  },
+  "src/composables/glass/lifecycle/visibility.ts": {
+   "hunks": [
+    [
+     "import type { CanvasSuspendReason } from \"./createCanvasLifecycle\";\n",
+     "// Offscreen parking combines two independent detectors writing\n// DISTINCT reason keys, so the \"one writer per reason\" invariant is literally true:\n//   - \"off-screen\"    — the substrate's `contentvisibilityautostatechange` path\n//                       (content-visibility:auto, the headline lever).\n//   - \"off-screen-io\" — the consumer's IntersectionObserver `rootMargin` fallback\n//                       (the engine-without-content-visibility path).\n// Both gate the same empty-`Set` `isRunning()` check, so the loop runs only when both\n// agree the surface is visible.\nexport type CanvasSuspendReason =\n    | \"tab-hidden\"\n    | \"off-screen\"\n    | \"off-screen-io\"\n    | \"manual\";\n"
+    ]
+   ]
+  },
+  "src/composables/color/useAccentTone.ts": {
+   "hunks": [
+    [
+     "type AccentToneSolveModule = typeof import(\"./accent-tone-solve\");\n",
+     "/** The one export this shell reads from the lazy solve leaf. The leaf implements it\n *  (it reads `UseAccentToneOptions` from here), so the type edge runs one way. */\ninterface AccentToneSolveModule {\n    solveAccentInk(toneCss: string, opts?: UseAccentToneOptions): string;\n}\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "src/composables/glass/lifecycle/createCanvasLifecycle.ts",
+   "why": "the suspend-reason union moves to the observers that write three of its four reasons"
+  },
+  {
+   "file": "src/composables/glass/lifecycle/createCanvasLifecycle.ts",
+   "why": "the scheduler reads the union from the observers' leaf, which it already composes"
+  },
+  {
+   "file": "src/composables/glass/lifecycle/visibility.ts",
+   "why": "the union is declared where its reasons are written"
+  },
+  {
+   "file": "src/composables/color/useAccentTone.ts",
+   "why": "the shell declares the one export it reads from the lazy leaf; the leaf implements it"
+  }
+ ]
+}

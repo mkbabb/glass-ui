@@ -1,0 +1,212 @@
+{
+ "step": "gate re-land (pass 6): B17 reads named loaders and every reader the tree defines, a swallowed read and a conditional read (S-14); B15 reads provenance-numbered stems, test stems judged (B-07); B16 reads a page-driving spec's subject from its stories (P5-R5) and guards Playwright-program membership (B-S16); B6 includes the root zone; LAW §9 pass 6: the kernel container's own files have one test slot; the pin after S60-S68",
+ "files": {
+  "scripts/structure/seal/seal.mjs": {
+   "hunks": [
+    [
+     "// seal.mjs — the D1-B gate, pass 4 (B-kit/LAW.md): sealed modules, one door each, over the\n",
+     "// seal.mjs — the D1-B gate, pass 6 (B-kit/LAW.md): sealed modules, one door each, over the\n"
+    ],
+    [
+     "import { buildGraph, CONTAINERS as FLOOR_CONTAINERS, isSlot as floorIsSlot, makeOrigins, placeAll, proposedPath, sccGrowth, VALUE_KINDS } from \"../lib/index.mjs\";\n",
+     "import { buildGraph, CONTAINERS as FLOOR_CONTAINERS, isSlot as floorIsSlot, makeOrigins, placeAll, playwrightProgram, proposedPath, sccGrowth, VALUE_KINDS } from \"../lib/index.mjs\";\n"
+    ],
+    [
+     "const dirOf = (f) => posix.dirname(f);\n/** FD-3, the floor's one predicate (P3-R3: a slot is bounded like any dir). */\n",
+     "const dirOf = (f) => posix.dirname(f);\n// LAW §1/§9 (pass 6): the kernel container `_shared` holds files of its own (axes, interaction,\n// primitive, selection, useMotionAxis …) beside its modules. Their tests live in its\n// `__tests__/` slot, the one slot a container has; every other child of a container is a module.\nexport const KERNEL_FILES = \"src/components/_shared\";\nconst KERNEL_TEST_SLOT = `${KERNEL_FILES}/__tests__`;\n/** FD-3, the floor's one predicate (P3-R3: a slot is bounded like any dir). */\n"
+    ],
+    [
+     "export const isSlot = (d) => d.includes(\"/\") && floorIsSlot(d) && !CONTAINERS.has(dirOf(d));\n",
+     "export const isSlot = (d) => d === KERNEL_TEST_SLOT || (d.includes(\"/\") && floorIsSlot(d) && !CONTAINERS.has(dirOf(d)));\n"
+    ],
+    [
+     "// B15 name floor. A placeholder stem names no role, and a digit suffix, with or without a\n// separator (`helpers2`, `utils-3`, `tmp_1`), numbers copies of it (pass 5, P4-G10)\n",
+     "// B15 name floor (LAW §11). A placeholder stem names no role. A stem or directory that ends in\n// a number numbers a copy or a slice, with or without a separator (`helpers2`, `utils-3`,\n// `motion2`, `GlassDock-2`, `part-1`, a wave id `bs11`), and one that ends in `Part` or\n// `Split` (optionally numbered) names a slice of another file, not a concept (pass 6, B-07).\n// A test stem is judged without its kind suffix (`suffuse2.spec.ts` → `suffuse2`). A name the\n// pin reviews (`names`, each with its reason) is exempt.\n"
+    ],
+    [
+     "const PLACEHOLDER_DIR = new RegExp(`^(${PLACEHOLDER_STEM})[-_]?\\\\d*$|^(v\\\\d+|part-?\\\\d+|[wp]\\\\d+)$|-\\\\d+$`);\nconst PLACEHOLDER_FILE = new RegExp(`^(use|index\\\\d+|(${PLACEHOLDER_STEM})[-_]?\\\\d*)$`);\nconst stemOf = (f) => posix.basename(f).replace(/\\.(d\\.ts|ts|mts|mjs|js|vue|css)$/, \"\").replace(/\\.(glsl|wgsl|vert|frag)$/, \"\");\n",
+     "const PROVENANCE = \"\\\\d+|(^|[-_])(part|split)[-_]?\\\\d*|(Part|Split)\\\\d*\";\nconst PLACEHOLDER_DIR = new RegExp(`^(${PLACEHOLDER_STEM})[-_]?\\\\d*$|^(v\\\\d+|part-?\\\\d+|[wp]\\\\d+)$|(${PROVENANCE})$`);\nconst PLACEHOLDER_FILE = new RegExp(`^(use|index\\\\d+|(${PLACEHOLDER_STEM})[-_]?\\\\d*)$|(${PROVENANCE})$`);\nconst stemOf = (f) => posix.basename(f).replace(/\\.(d\\.ts|ts|tsx|mts|mjs|js|vue|css)$/, \"\").replace(/\\.(glsl|wgsl|vert|frag)$/, \"\").replace(/\\.(test|spec|test-d|visual)$/, \"\");\n"
+    ],
+    [
+     "    // ---- B6 bounds (R-5, P3-R3 strict): every zone, tests counted, every dir bounded (slots too)\n",
+     "    // ---- B6 bounds (R-5, P3-R3 strict): every zone, tests counted, every dir bounded (slots too);\n    //      a hand-written root config is bounded by lines only (P5-R4: the root dir is not counted)\n"
+    ],
+    [
+     "        if (!ZONES5.includes(zoneOf(f)) || !CODE.test(f)) continue;\n",
+     "        if (!(ZONES5.includes(zoneOf(f)) || zoneOf(f) === \"root\") || !CODE.test(f)) continue;\n"
+    ],
+    [
+     "        if (!ZONES5.includes(zoneOf(f)) || !CODE.test(f) || isTest(f) || DOOR_BASENAMES.includes(posix.basename(f))) continue;\n",
+     "        if (!ZONES5.includes(zoneOf(f)) || !CODE.test(f) || DOOR_BASENAMES.includes(posix.basename(f))) continue;\n"
+    ],
+    [
+     "        if (PLACEHOLDER_FILE.test(stem)) { put(\"B15\", `${f} (placeholder file name)`); continue; }\n",
+     "        if (PLACEHOLDER_FILE.test(stem) && !reviewed.has(f)) { put(\"B15\", `${f} (placeholder file name)`); continue; }\n"
+    ],
+    [
+     "        if (!subj.length) return null;\n        let d = subj.map(dirOf).reduce((a, b) => { const x = a.split(\"/\"), y = b.split(\"/\"); const o = []; for (let i = 0; i < x.length && x[i] === y[i]; i++) o.push(x[i]); return o.join(\"/\"); });\n",
+     "        if (!subj.length) return null;\n        // LAW §9 (pass 6): a subject made only of the kernel container's own files is homed in\n        // that container's test slot (a subject that reaches into one of its modules is not)\n        if (subj.every((f) => dirOf(f) === KERNEL_FILES)) return KERNEL_FILES;\n        let d = subj.map(dirOf).reduce((a, b) => { const x = a.split(\"/\"), y = b.split(\"/\"); const o = []; for (let i = 0; i < x.length && x[i] === y[i]; i++) o.push(x[i]); return o.join(\"/\"); });\n"
+    ],
+    [
+     "    };\n    for (const t of T.files) {\n",
+     "    };\n    // P5-R5 · the subject of a page-driving visual spec is the unit whose story it drives. A\n    // spec opens a story by a route literal in its own text (`\"/display/buttons\"`), and the\n    // story manifest's key rule names the story's file: the one `demo/stories/<category>/**/<id>.vue`\n    // (manifest/lazy.ts `storyKey`). A story's units are the component units its own files reach\n    // through their entries (the story file and the files of its category it reads, at any depth).\n    // A spec's subject is the sealed files it reads; a spec that reads none takes its stories' units.\n    const pw = playwrightProgram(g, ts);\n    const inProgram = new Set(pw.specs);\n    const STORY_ROOT = \"demo/stories/\";\n    const storyFiles = T.files.filter((f) => f.startsWith(STORY_ROOT) && f.endsWith(\".vue\") && !f.endsWith(\".tile.vue\"));\n    const ROUTE = /^\\/([a-z0-9][a-z0-9-]*)\\/([a-z0-9][a-z0-9-]*)\\/?(?:[?#].*)?$/;\n    const storyOf = (route) => { const m = ROUTE.exec(route); if (!m) return null; const hits = storyFiles.filter((f) => f.startsWith(`${STORY_ROOT}${m[1]}/`) && f.endsWith(`/${m[2]}.vue`)); return hits.length === 1 ? hits[0] : null; };\n    const outOf = new Map(); for (const e of g.edges) if (e.to && !e.dir && MODULE_KINDS.has(e.kind)) { if (!outOf.has(e.from)) outOf.set(e.from, []); outOf.get(e.from).push(e.to); }\n    const unitOfSrc = (f) => { const m = /^src\\/components\\/([^/_][^/]*)\\//.exec(f); return m ? `src/components/${m[1]}` : KERNEL(f) ? \"kernel\" : \"src\"; };\n    const storyUnits = (story) => {\n        const cat = story.split(\"/\").slice(0, 3).join(\"/\");\n        const seen = new Set([story]), units = new Set(), todo = [story];\n        while (todo.length) for (const to of outOf.get(todo.pop()) ?? []) {\n            if (zoneOf(to) === \"src\") units.add(unitOfSrc(to));\n            else if (under(to, cat) && !seen.has(to)) { seen.add(to); todo.push(to); }\n        }\n        const above = [...units].filter((u) => u !== \"kernel\");\n        return above.length ? above : [...units];\n    };\n    const routesOf = (t) => { const out = new Set(); const sf = ts.createSourceFile(t, T.read(t), ts.ScriptTarget.Latest, true); const v = (n) => { if ((ts.isStringLiteral(n) || ts.isNoSubstitutionTemplateLiteral(n)) && ROUTE.test(n.text)) out.add(n.text); ts.forEachChild(n, v); }; v(sf); return [...out]; };\n    const PW_TEST = /\\.(spec|test)\\.(ts|tsx|mts)$|\\.visual\\.ts$/;\n    for (const t of T.files) {\n"
+    ],
+    [
+     "        if (!TEST_FILE.test(t) || zoneOf(t) === \"tests-visual\" || HARNESS.test(t)) continue;\n        if (zoneOf(t) !== \"tests\" && !/(^|\\/)__tests__\\//.test(t)) continue;\n",
+     "        if (!TEST_FILE.test(t) || HARNESS.test(t)) continue;\n        const visual = zoneOf(t) === \"tests-visual\" || /\\.visual\\.ts$/.test(t);\n        if (visual && !inProgram.has(t)) continue; // membership is judged below\n        if (!visual && zoneOf(t) !== \"tests\" && !/(^|\\/)__tests__\\//.test(t)) continue;\n"
+    ],
+    [
+     "        const subj = above.length ? above : sealedReads;\n        const foreign = [...reads].some((f) => [\"demo\", \"tests-visual\"].includes(zoneOf(f)));\n",
+     "        let subj = above.length ? above : sealedReads;\n        let foreign = [...reads].some((f) => [\"demo\", \"tests-visual\"].includes(zoneOf(f)));\n        // P5-R5: a visual spec that reads no sealed file is subject to the stories it opens\n        let viaStory = null;\n        if (visual && !subj.length) {\n            const stories = routesOf(t).map(storyOf).filter(Boolean);\n            const us = [...new Set(stories.flatMap(storyUnits))];\n            viaStory = stories.length;\n            subj = us.length === 1 && us[0].startsWith(\"src/components/\") ? [`${us[0]}/index.ts`] : [];\n            foreign = false;\n        }\n"
+    ],
+    [
+     "        if (slot === null && home) put(\"B16\", `${t} (subject in ${home}: belongs in ${home}/__tests__/)`);\n        else if (slot !== null && home !== slot) put(\"B16\", `${t} (colocated in ${slot}; its subject's home is ${home ?? \"the harness (several units)\"})`);\n",
+     "        const named = viaStory !== null ? ` (by the ${viaStory} stor${viaStory === 1 ? \"y\" : \"ies\"} it opens)` : \"\";\n        if (slot === null && home) put(\"B16\", `${t} (subject in ${home}${named}: belongs in ${home}/__tests__/${visual ? \" as *.visual.ts\" : \"\"})`);\n        else if (slot !== null && home !== slot) put(\"B16\", `${t} (colocated in ${slot}; its subject's home is ${home ?? \"the harness (several units)\"}${named})`);\n    }\n    // R-3 · the Playwright program holds every Playwright test file in the five zones: a file\n    // that declares Playwright tests (a top-level `test(…)`/`test.describe(…)` call on a `test`\n    // imported from anything but vitest) and that the program does not collect silently never runs\n    for (const t of T.files) {\n        if (!ZONES5.includes(zoneOf(t)) || !/\\.(ts|tsx|mts)$/.test(t) || /\\.d\\.ts$/.test(t) || inProgram.has(t)) continue;\n        const text = T.read(t);\n        if (!/\\btest\\b/.test(text) || !/@playwright\\/test|\\btest\\b[^;]*from/.test(text)) continue;\n        const sf = ts.createSourceFile(t, text, ts.ScriptTarget.Latest, true);\n        let testFrom = null;\n        for (const st of sf.statements) if (ts.isImportDeclaration(st) && st.importClause?.namedBindings && ts.isNamedImports(st.importClause.namedBindings) && st.importClause.namedBindings.elements.some((el) => el.name.text === \"test\" && !el.isTypeOnly)) testFrom = st.moduleSpecifier.text;\n        if (!testFrom || /^vitest(\\/|$)/.test(testFrom)) continue;\n        const declares = sf.statements.some((st) => { if (!ts.isExpressionStatement(st)) return false; let x = st.expression; while (ts.isAwaitExpression(x)) x = x.expression; if (!ts.isCallExpression(x)) return false; let c = x.expression; while (ts.isPropertyAccessExpression(c)) c = c.expression; return ts.isIdentifier(c) && c.text === \"test\"; });\n        if (declares) put(\"B16\", `${t} (declares Playwright tests outside the program ${pw.config}: it never runs)`);\n"
+    ]
+   ]
+  },
+  "scripts/structure/seal/fallbacks.mjs": {
+   "hunks": [
+    [
+     "// Pass 5 reads every shape S-35 found live, on any path, literal or parameter:\n",
+     "// B17's scope is reads and loads: a file read, a module load, and a read through any reader the\n// tree defines. Pass 6 states which calls are reads, and reads every shape on any path, literal\n// or parameter:\n//  READ  a call is a read when its callee (an identifier, or a property name) is\n//        - an fs read (`readFileSync`, `readFile`, `readdirSync`, `readdir`, `openSync`,\n//          `readJson`, `readJsonSync`), `import(…)` or `require(…)`;\n//        - named `read…` (`tree.read`, `T.read`, `readJson`, `readSpec`): the tree's readers\n//          are named so;\n//        - called by its bare name (`load(p)`, `text(spec)`), a function the five zones or the\n//          root configs declare (a function declaration, a method, or a binding or property\n//          whose value is a function) whose body calls a read, to a fixpoint over the whole\n//          tree. A method call on an object (`page.goto(…)`, `handle.armAsync()`) is a read\n//          only by the two rules above: an object's method is its own API.\n"
+    ],
+    [
+     "//      `existsSync(p)` says the file is absent. The negative guard (`if (!existsSync(p))\n//      return x`), the positive guard (`if (existsSync(p)) return read(p); return x`, the\n//      fall-through `return x` or an `else` that returns it, or the implicit `undefined` at\n//      a function's end), and the ternary (`existsSync(p) ? read(p) : x`), where the live\n//      arm calls something (reads, parses) and the other hands back a value. The value is\n//      silent when it is nothing, a nullish or empty literal, or a value the code was\n//      handed (an identifier: an accumulator, the input, the text it would have replaced).\n//      A record that names the absence reports it, and `false` is a predicate's answer;\n//  (b) a swallowed read: `try { read } catch { return x }` whose handler is that one\n//      silent return, or `try { read } catch {}` whose handler is empty (comments are not\n//      statements: the error is dropped and the code runs on as if the read had found\n//      nothing), where `read` is an fs read (`readFileSync`, `readFile`, `readdirSync`);\n//      or a `try` that loads a module (`import(…)`) whose handler does not throw. A `stat`\n//      is a probe, like `existsSync`: a predicate that answers \"absent\" is an answer, not\n//      a fallback;\n//  (c) a swallowed module load: `.catch(h)` or `.then(ok, h)` whose handler never throws,\n//      on a chain that starts at `import(…)` or at a call of a loader bound to a name.\n//      A loader bound to a name is a local binding or a parameter whose value is a\n//      function, called with no arguments: `const c = () => import(…); c().catch(…)`, or\n//      `comps.map((c) => c().catch(…))` over route components. A declared function or an\n//      import is an API, not a loader value, and is not read this way.\n",
+     "//      `existsSync(p)` says the file is absent, where the live arm reads. The negative guard\n//      (`if (!existsSync(p)) return x`), the positive guard (`if (existsSync(p)) return read(p);\n//      return x`, the fall-through `return x` or an `else` that returns it, or the implicit\n//      `undefined` at a function's end), the conditional read (`if (existsSync(p)) { …read(p)… }`\n//      with no `else`: the read is skipped and the code runs on), the conditional collect\n//      (`if (existsSync(p)) paths.push(p)`: a missing input drops out of the list it would\n//      have been read from), and the ternary\n//      (`existsSync(p) ? read(p) : x`). The value is silent when it is nothing, a nullish or\n//      empty literal, or a value the code was handed (an identifier). A record that names the\n//      absence reports it, and `false` is a predicate's answer. A `stat` is a probe, like\n//      `existsSync`: an arm that only stats reads nothing;\n//  (b) a swallowed read: `try { read } catch { return x }` whose handler is that one silent\n//      return, or `try { read } catch {}` whose handler is empty (comments are not statements:\n//      the error is dropped and the code runs on as if the read had found nothing); a `try`\n//      that loads a module (`import(…)`) whose handler does not throw;\n//  (c) a swallowed load or read on a promise: `.catch(h)` or `.then(ok, h)` whose handler never\n//      throws, on a chain that starts at `import(…)`, at a read (`readFile(p).catch(() => \"\")`),\n//      or at a call of a loader bound to a name, with any arguments: a local binding or a\n//      parameter whose value is a function (`const load = (k) => import(…); load(k).catch(…)`,\n//      `comps.map((c) => c().catch(…))` over route components);\n"
+    ],
+    [
+     "//      reports nothing, which reads as a pass. A missing subject fails the suite.\n\n",
+     "//      reports nothing, which reads as a pass. A missing subject fails the suite.\n// Declared limits (the syntax is read, not values): a read reached through a computed callee\n// (`obj[k]()`), a reader passed as a value under a name that is neither `read…` nor declared\n// as a reader, and a handler that is a named function (`.catch(onError)`), are not seen.\n\n"
+    ],
+    [
+     "    const FS_READ = new Set([\"readFileSync\", \"readFile\", \"readdirSync\", \"readdir\", \"openSync\", \"readJsonSync\", \"readJson\"]);\n    const isFsRead = (n) => ts.isCallExpression(n) && FS_READ.has(calleeName(n));\n    const has = (n, pred) => { let hit = false; const v = (x) => { if (hit) return; if (pred(x)) hit = true; else ts.forEachChild(x, v); }; v(n); return hit; };\n",
+     "    const FS_READ = new Set([\"readFileSync\", \"readFile\", \"readdirSync\", \"readdir\", \"openSync\", \"readJsonSync\", \"readJson\"]);\n    const has = (n, pred) => { let hit = false; const v = (x) => { if (hit) return; if (pred(x)) hit = true; else ts.forEachChild(x, v); }; v(n); return hit; };\n"
+    ],
+    [
+     "    for (const f of T.files) {\n        const z = zoneOf(f);\n        if (!(zones.includes(z) || z === \"root\") || !SCRIPT.test(f) || /\\.d\\.[mc]?ts$/.test(f)) continue;\n",
+     "    const isRequireCall = (n) => ts.isCallExpression(n) && ts.isIdentifier(n.expression) && n.expression.text === \"require\";\n    const READ_NAME = /^read/;\n    const judged = T.files.filter((f) => { const z = zoneOf(f); return (zones.includes(z) || z === \"root\") && SCRIPT.test(f) && !/\\.d\\.[mc]?ts$/.test(f); });\n    const sourcesOf = new Map();\n    for (const f of judged) {\n"
+    ],
+    [
+     "        for (const { code, off } of blocks) {\n            const sf = ts.createSourceFile(f, code, ts.ScriptTarget.Latest, true);\n",
+     "        sourcesOf.set(f, blocks.map(({ code, off }) => ({ sf: ts.createSourceFile(f, code, ts.ScriptTarget.Latest, true), off })));\n    }\n    // the tree's readers: every declared function whose body reads, to a fixpoint (READ above)\n    const decls = [];\n    const collect = (n) => {\n        let name = null, body = null;\n        if ((ts.isFunctionDeclaration(n) || ts.isMethodDeclaration(n)) && n.name && n.body) { name = n.name.getText(); body = n.body; }\n        else if ((ts.isVariableDeclaration(n) || ts.isPropertyAssignment(n)) && n.name && n.initializer && isFnValue(n.initializer)) { name = n.name.getText(); body = unwrap(n.initializer).body; }\n        if (name && body) decls.push({ name: name.replace(/^[\"']|[\"']$/g, \"\"), body });\n        ts.forEachChild(n, collect);\n    };\n    for (const blocks of sourcesOf.values()) for (const { sf } of blocks) collect(sf);\n    const readers = new Set(FS_READ);\n    const calleeOf = (n) => (ts.isCallExpression(n) ? calleeName(n) : null);\n    const isRead = (n) => { if (!ts.isCallExpression(n)) return false; if (isImportCall(n) || isRequireCall(n)) return true; const c = calleeOf(n); if (!c) return false; return READ_NAME.test(c) || FS_READ.has(c) || (ts.isIdentifier(n.expression) && readers.has(c)); };\n    for (let grew = true; grew; ) { grew = false; for (const d of decls) if (!readers.has(d.name) && has(d.body, isRead)) { readers.add(d.name); grew = true; } }\n    for (const [f, blocks] of sourcesOf) {\n        for (const { sf, off } of blocks) {\n"
+    ],
+    [
+     "            const loaderCall = (x) => { x = unwrap(x); return ts.isCallExpression(x) && x.arguments.length === 0 && ts.isIdentifier(x.expression) && valueNames.has(x.expression.text) && !apiNames.has(x.expression.text); };\n            const loadChain = (n) => { for (let x = n; x; ) { if (isImportCall(x) || loaderCall(x)) return true; if (ts.isCallExpression(x) || ts.isPropertyAccessExpression(x) || ts.isParenthesizedExpression(x) || ts.isAwaitExpression(x)) x = x.expression; else return false; } return false; };\n",
+     "            const loaderCall = (x) => { x = unwrap(x); return ts.isCallExpression(x) && ts.isIdentifier(x.expression) && valueNames.has(x.expression.text) && !apiNames.has(x.expression.text); };\n            const loadChain = (n) => { for (let x = n; x; ) { if (isImportCall(x) || loaderCall(x) || isRead(x)) return true; if (ts.isCallExpression(x) || ts.isPropertyAccessExpression(x) || ts.isParenthesizedExpression(x) || ts.isAwaitExpression(x)) x = x.expression; else return false; } return false; };\n"
+    ],
+    [
+     "                if (ts.isIfStatement(n) && presentGuard(n.expression) && endsInReturn(n.thenStatement) && has(n.thenStatement, ts.isCallExpression)) {\n",
+     "                if (ts.isIfStatement(n) && presentGuard(n.expression) && !endsInReturn(n.thenStatement) && !n.elseStatement && has(n.thenStatement, isRead)) put(\"B17\", `${at(n)} reads a file only when it exists and skips the read otherwise (a masking fallback: read it and let the read fail, or throw)`);\n                if (ts.isIfStatement(n) && presentGuard(n.expression) && !n.elseStatement) {\n                    const guarded = new Set(); const g = (x) => { if (isExists(x) && x.arguments[0]) guarded.add(x.arguments[0].getText(sf)); ts.forEachChild(x, g); }; g(n.expression);\n                    const only = ts.isBlock(n.thenStatement) ? (n.thenStatement.statements.length === 1 ? n.thenStatement.statements[0] : null) : n.thenStatement;\n                    const call = only && ts.isExpressionStatement(only) ? unwrap(only.expression) : null;\n                    if (call && ts.isCallExpression(call) && ts.isPropertyAccessExpression(call.expression) && [\"push\", \"unshift\", \"add\", \"set\"].includes(call.expression.name.text) && call.arguments.some((a) => guarded.has(a.getText(sf)))) put(\"B17\", `${at(n)} collects a path only when the file exists (a masking fallback: a missing input drops out silently; collect it and let the read fail)`);\n                }\n                if (ts.isIfStatement(n) && presentGuard(n.expression) && endsInReturn(n.thenStatement) && has(n.thenStatement, isRead)) {\n"
+    ],
+    [
+     "                if (ts.isConditionalExpression(n) && ((presentGuard(n.condition) && silentValue(n.whenFalse) && has(n.whenTrue, ts.isCallExpression)) || (missingGuard(n.condition) && silentValue(n.whenTrue) && has(n.whenFalse, ts.isCallExpression)))) put(\"B17\", `${at(n)} falls back to an empty value when a file is missing (a ternary masking fallback)`);\n",
+     "                if (ts.isConditionalExpression(n) && ((presentGuard(n.condition) && silentValue(n.whenFalse) && has(n.whenTrue, isRead)) || (missingGuard(n.condition) && silentValue(n.whenTrue) && has(n.whenFalse, isRead)))) put(\"B17\", `${at(n)} falls back to an empty value when a file is missing (a ternary masking fallback)`);\n"
+    ],
+    [
+     "                    else if (has(n.tryBlock, isFsRead) && (cb.statements.length === 0 || (cb.statements.length === 1 && ts.isReturnStatement(cb.statements[0]) && silentValue(cb.statements[0].expression)))) put(\"B17\", `${at(n)} swallows a failed read (try/catch that ${cb.statements.length ? \"hands back an empty value\" : \"drops the error\"})`);\n",
+     "                    else if (has(n.tryBlock, isRead) && (cb.statements.length === 0 || (cb.statements.length === 1 && ts.isReturnStatement(cb.statements[0]) && silentValue(cb.statements[0].expression)))) put(\"B17\", `${at(n)} swallows a failed read (try/catch that ${cb.statements.length ? \"hands back an empty value\" : \"drops the error\"})`);\n"
+    ],
+    [
+     "                    if (m === \"catch\" && !throws(n.arguments[0])) put(\"B17\", `${at(n)} swallows a failed module load (.catch without a throw)`);\n                    if (m === \"then\" && n.arguments.length >= 2 && !throws(n.arguments[1])) put(\"B17\", `${at(n)} swallows a failed module load (.then with a rejection handler that does not throw)`);\n",
+     "                    if (m === \"catch\" && !throws(n.arguments[0])) put(\"B17\", `${at(n)} swallows a failed module load or read (.catch without a throw)`);\n                    if (m === \"then\" && n.arguments.length >= 2 && !throws(n.arguments[1])) put(\"B17\", `${at(n)} swallows a failed module load or read (.then with a rejection handler that does not throw)`);\n"
+    ]
+   ]
+  },
+  "scripts/structure/records/seal-pin.json": {
+   "hunks": [
+    [
+     "   \"DockTrigger\",\n   \"GlassDock\",\n",
+     "   \"DockTrigger\",\n   \"FuzzySearchState\",\n   \"GLASS_BACKDROP_SHARED_ATTR\",\n   \"GlassDock\",\n"
+    ],
+    [
+     "   \"GlassDock\",\n   \"UseDockSearchOptions\",\n",
+     "   \"GlassDock\",\n   \"SearchResult\",\n   \"SearchableItem\",\n   \"UseDockSearchOptions\",\n"
+    ],
+    [
+     "   \"useDockSearch\",\n   \"useOptionalDockContext\"\n",
+     "   \"useDockSearch\",\n   \"useDockState\",\n   \"useGlassBackdropLuminance\",\n   \"useOptionalDockContext\"\n"
+    ],
+    [
+     "   \"DEFAULT_ROOT\",\n   \"VALUE_KINDS\",\n",
+     "   \"DEFAULT_ROOT\",\n   \"SEAT_REPORT\",\n   \"VALUE_KINDS\",\n"
+    ],
+    [
+     "   \"libraryEntryMap\",\n   \"loadRecord\",\n",
+     "   \"libraryEntryMap\",\n   \"loadDeps\",\n   \"loadRecord\",\n"
+    ],
+    [
+     "   \"placeAll\",\n   \"proposedPath\",\n",
+     "   \"placeAll\",\n   \"playwrightProgram\",\n   \"proposedPath\",\n"
+    ],
+    [
+     "   \"springPreset\",\n   \"useAnimatedNumber\",\n",
+     "   \"springPreset\",\n   \"springProjection\",\n   \"useAnimatedNumber\",\n"
+    ],
+    [
+     "   \"ScrollTrackerOptions\",\n   \"SidebarFollowOptions\",\n",
+     "   \"ScrollTrackerOptions\",\n   \"SectionHierarchy\",\n   \"SidebarFollowOptions\",\n"
+    ],
+    [
+     "  \"src/components/dock/search/index.ts\": [\n   \"UseDockSearchOptions\",\n",
+     "  \"src/components/dock/search/index.ts\": [\n   \"FuzzySearchState\",\n   \"SearchResult\",\n   \"SearchableItem\",\n   \"UseDockSearchOptions\",\n"
+    ],
+    [
+     "  \"scripts/structure/lib/graph/index.mjs\": [\n   \"VALUE_KINDS\",\n",
+     "  \"scripts/structure/lib/graph/index.mjs\": [\n   \"SEAT_REPORT\",\n   \"VALUE_KINDS\",\n"
+    ],
+    [
+     "   \"moduleSccs\",\n   \"scanCss\",\n",
+     "   \"moduleSccs\",\n   \"playwrightProgram\",\n   \"scanCss\",\n"
+    ],
+    [
+     "   \"DEFAULT_FOURIER_CONFIG\",\n   \"FourierField\",\n",
+     "   \"DEFAULT_FOURIER_CONFIG\",\n   \"FOURIER_STROKE_RUNGS\",\n   \"FourierField\",\n"
+    ],
+    [
+     "  \"src/composables/motion/morph/index.ts\": [\n   \"DEFAULT_INDICATOR_MAX_STRETCH\",\n",
+     "  \"src/composables/motion/morph/index.ts\": [\n   \"CASCADE_RANKS\",\n   \"CASCADE_RANK_MS\",\n   \"DEFAULT_INDICATOR_MAX_STRETCH\",\n"
+    ],
+    [
+     "   \"DragMorphSnapTarget\",\n   \"ElementMorphMeasurement\",\n",
+     "   \"DragMorphSnapTarget\",\n   \"EYEGLASS_EDGE_RATIO\",\n   \"EYEGLASS_ORIGIN_FRACTION\",\n   \"EYEGLASS_OVERFLOW_LICENSE\",\n   \"EYEGLASS_SPAN_MAX\",\n   \"EYEGLASS_SWELL_MAX\",\n   \"ElementMorphMeasurement\",\n"
+    ],
+    [
+     "   \"UseSelectionIndicatorReturn\",\n   \"lockSpatialTransition\",\n",
+     "   \"UseSelectionIndicatorReturn\",\n   \"cascadeRankMs\",\n   \"eyeglassOriginPercent\",\n   \"eyeglassSpan\",\n   \"eyeglassSwell\",\n   \"lockSpatialTransition\",\n"
+    ],
+    [
+     "   \"createAurora\"\n",
+     "   \"createAurora\",\n   \"isAuroraPointerEnabled\"\n"
+    ],
+    [
+     "   \"UseScrollChromeReturn\",\n   \"UseScrollTriggerOptions\",\n",
+     "   \"UseScrollChromeReturn\",\n   \"UseScrollSceneOptions\",\n   \"UseScrollSceneReturn\",\n   \"UseScrollTriggerOptions\",\n"
+    ],
+    [
+     "   \"useScrollProgress\",\n   \"useScrollTrigger\"\n",
+     "   \"useScrollProgress\",\n   \"useScrollScene\",\n   \"useScrollTrigger\"\n"
+    ],
+    [
+     "   \"springPreset\",\n   \"useLiquidFlex\",\n",
+     "   \"springPreset\",\n   \"springProjection\",\n   \"useLiquidFlex\",\n"
+    ],
+    [
+     "  \"src/components/dock/legibility/index.ts\": [\n   \"useDockBackdropLuminance\",\n",
+     "  \"src/components/dock/legibility/index.ts\": [\n   \"GLASS_BACKDROP_SHARED_ATTR\",\n   \"useDockBackdropLuminance\",\n"
+    ],
+    [
+     "   \"FOURIER_SCRUB_GAIN\",\n   \"FOURIER_TAIL_CHROMA_FLOOR\",\n",
+     "   \"FOURIER_SCRUB_GAIN\",\n   \"FOURIER_STROKE_RUNGS\",\n   \"FOURIER_TAIL_CHROMA_FLOOR\",\n"
+    ]
+   ]
+  }
+ },
+ "pin": {
+  "modules": 139,
+  "doors": 119,
+  "names": 1297,
+  "reviewed": 2,
+  "holds": 0
+ }
+}

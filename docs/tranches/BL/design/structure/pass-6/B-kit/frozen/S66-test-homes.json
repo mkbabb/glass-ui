@@ -1,0 +1,45 @@
+{
+ "step": "B-S66 (frozen from authored/p6-test-homes.json, F-9)",
+ "moves": [
+  {
+   "from": "tests/components/avatar.contract.test.ts",
+   "to": "src/components/avatar/__tests__/avatar.contract.test.ts"
+  },
+  {
+   "from": "tests/components/_shared/public-contracts.test-d.ts",
+   "to": "src/components/_shared/__tests__/public-contracts.test-d.ts"
+  },
+  {
+   "from": "tests/components/ui/_shared/useMotionAxis.test.ts",
+   "to": "src/components/_shared/__tests__/useMotionAxis.test.ts"
+  },
+  {
+   "from": "tests/gates/tabs-seam.test.ts",
+   "to": "src/components/tabs/__tests__/tabs-seam.test.ts"
+  }
+ ],
+ "scanDeltas": [],
+ "globDeltas": [],
+ "reasons": [
+  {
+   "from": "tests/components/avatar.contract.test.ts",
+   "to": "src/components/avatar/__tests__/avatar.contract.test.ts",
+   "why": "its subject is the avatar unit (the unit publishes no entry, so a consumer zone cannot read it); it reads status-dot through that unit's door"
+  },
+  {
+   "from": "tests/components/_shared/public-contracts.test-d.ts",
+   "to": "src/components/_shared/__tests__/public-contracts.test-d.ts",
+   "why": "its subject is the kernel container's own files (axes, interaction, primitive, selection) against reka-ui's contracts; LAW §9 (pass 6) homes their tests in _shared/__tests__"
+  },
+  {
+   "from": "tests/components/ui/_shared/useMotionAxis.test.ts",
+   "to": "src/components/_shared/__tests__/useMotionAxis.test.ts",
+   "why": "its subject is _shared/useMotionAxis.ts, a file of the kernel container itself (LAW §9, pass 6)"
+  },
+  {
+   "from": "tests/gates/tabs-seam.test.ts",
+   "to": "src/components/tabs/__tests__/tabs-seam.test.ts",
+   "why": "its subject is the tabs unit (its sheets and SegmentedTabs); the eyeglass law it checks the sheets against is a kernel dependency, read through the motion door"
+  }
+ ]
+}

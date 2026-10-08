@@ -1,0 +1,47 @@
+{
+ "step": "P4-R2: the exact runtime surfaces the public-surface spec states carry the names S64 published on the root (pendingRenderer) and on ./dock (useDockState, GLASS_BACKDROP_SHARED_ATTR, useGlassBackdropLuminance); the orphan-CSS bite's unreachable referrer is a colocated test, since S64 publishes useScrollScene",
+ "files": {
+  "tests/public-surface/exports.ts": {
+   "hunks": [
+    [
+     "    \"createTokenColorCache\",\n    \"provideConfiguratorSize\",\n",
+     "    \"createTokenColorCache\",\n    \"pendingRenderer\",\n    \"provideConfiguratorSize\",\n"
+    ]
+   ]
+  },
+  "tests/public-surface/runtime.spec.ts": {
+   "hunks": [
+    [
+     "            // The dock-as-native-dynamic-search-bar seam.\n",
+     "            // The dock-as-native-dynamic-search-bar seam, and the state machine it composes.\n"
+    ],
+    [
+     "            \"useDockSearch\",\n            \"provideDockContext\",\n",
+     "            \"useDockSearch\",\n            \"useDockState\",\n            // The adaptive-legibility sampler and the attribute a shared backdrop carries.\n            \"GLASS_BACKDROP_SHARED_ATTR\",\n            \"useGlassBackdropLuminance\",\n            \"provideDockContext\",\n"
+    ]
+   ]
+  },
+  "tests/gates/orphan-css/partial.test.ts": {
+   "hunks": [
+    [
+     "        // so any nonexistent path is vacuously \"unreachable\" — that proves nothing). `useScrollScene`\n        // is a genuine `src/` module that no public entry imports: present AND excluded from reach.\n        const deadSfc = join(SRC, \"composables\", \"motion\", \"scroll\", \"useScrollScene.ts\");\n",
+     "        // so any nonexistent path is vacuously \"unreachable\" — that proves nothing). A colocated test\n        // is a genuine `src/` module that no public entry imports (a slot is never on a door's\n        // chain): present AND excluded from reach.\n        const deadSfc = join(SRC, \"composables\", \"color\", \"__tests__\", \"resolveColor.test.ts\");\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "tests/public-surface/exports.ts",
+   "why": "the root publishes pendingRenderer (S64)"
+  },
+  {
+   "file": "tests/public-surface/runtime.spec.ts",
+   "why": "./dock publishes the state machine useDockSearch composes and the backdrop-luminance pair (S64)"
+  },
+  {
+   "file": "tests/gates/orphan-css/partial.test.ts",
+   "why": "S64 publishes useScrollScene, so it is reachable; a colocated test is present in src and reached by no entry"
+  }
+ ]
+}

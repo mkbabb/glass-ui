@@ -1,0 +1,209 @@
+D1 pass 5 · B-S11 zone scripts · commands run by the SPLIT-AUTHOR seat (claude-opus-5-5), 2026-09-26
+Scratch: $S = /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D1/p5/split-scripts
+$D = docs/tranches/BL/design/structure/pass-5/B-kit/authored/splits/scripts
+
+== Arms
+arm F: $S/wt   = git worktree at 00d8db5a (HEAD at seat start) + the P5 floor rows
+  node <checkout>/docs/tranches/BL/design/structure/floor/rows/apply.mjs --root $S/wt
+  -> floor rows applied (r1 … fd11-land); tree digest 0760f6a071bfa333…
+arm C: $S/wt-c = git worktree at 5e278aa7 + the pass-4 chain, replayed from kit home $S/wt-kit4 (5e278aa7)
+  node $S/wt-kit4/docs/tranches/BL/design/structure/pass-4/B-kit/replay.mjs --root $S/wt-c
+  -> replay done in 106.2 s; code digest 6618df1f7d2f5a0c… over 1437 files; chain final MATCH
+snapshots: $S/beforeF, $S/beforeC (scripts/, tests/, vite.style-assets.ts, package.json) taken before any split
+HEAD moved during the run 00d8db5a -> fff6771c; git diff --stat 00d8db5a fff6771c -- . ":!docs" is empty (docs only)
+
+== Sources (wc -l, arm C / arm F)
+scripts/comment-census.mjs        725 /  725
+scripts/profile-bundle.mjs        936 /  938   (arm C carries S34: two existsSync guards dropped, the styles-draw guard moved to its caller)
+scripts/verify-export-types.mjs  1078 / 1079   (arm C carries S34's listFiles guard drop and S11's minify-css.ts citation)
+(the pass-4 b6-files.txt scripts lines; on arm F the floor's bounds.mjs also lists scripts/lib/paint-arm.mjs 586 and
+ scripts/reflect-capture-verify.mjs 583, which the chain moves to tests-visual/paint/ at S19: the tests-visual zone)
+
+== Seal on arm C before the split (node scripts/structure/seal/seal.mjs --json)
+{"B0":444,"B1":0,"B2":67,"B3":0,"B4":0,"B5":0,"B6":62,"B7":0,"B8":0,"B9":0,"B10":0,"B11":0,"B12":0,"B13":0,"B14":0,"B15":0,"B16":0,"B17":0}
+edges 7809 modules 135 pin {"modules":135,"doors":116,"names":1251,"reviewed":2}
+B6 in the zone: scripts/comment-census.mjs: 725 lines > 500; scripts/profile-bundle.mjs: 936 lines > 500; scripts/verify-export-types.mjs: 1078 lines > 500
+
+== Derive + rows (both arms, from the snapshots)
+for arm in C F: $D/tools/verify/reset.sh <before> <tree>; node $D/tools/gen-rows.mjs --root <tree> [--out $D/arm-f]
+  gen-rows runs, per row: tools/author/<script> then tools/author/pin.mjs, and diffs scripts/, tests/, tests-visual/ and the root build configs
+node $D/tools/apply.mjs --root <copy of before> [--rows $D/arm-f] --check <after>; a second apply on the applied copy
+node $D/tools/conserve.mjs --before <before> --root <after> --quiet
+== arm C
+{"out":"docs/tranches/BL/design/structure/pass-5/B-kit/authored/splits/scripts","rows":[{"row":"01-comment-census","files":9,"create":6,"hunk":4,"remove":0},{"row":"02-profile-bundle","files":9,"create":7,"hunk":12,"remove":0},{"row":"03-verify-export-types","files":13,"create":9,"hunk":14,"remove":0}]}
+{"check":"afterC","files":176,"differ":0,"first":[]}
+second apply on the applied copy: "01-comment-census: stopped" (a `from` no longer matches)
+[{"row":"01-comment-census","sourceLines":725,"nonBlank":681,"missing":0},{"row":"02-profile-bundle","sourceLines":936,"nonBlank":895,"missing":14},{"row":"03-verify-export-types","sourceLines":1078,"nonBlank":1032,"missing":6}]
+== arm F
+03-verify-export-types: not on this tree, skipped: scripts/structure/records/seal-pin.json
+{"out":"docs/tranches/BL/design/structure/pass-5/B-kit/authored/splits/scripts/arm-f","rows":[{"row":"01-comment-census","files":8,"create":6,"hunk":2,"remove":0},{"row":"02-profile-bundle","files":8,"create":7,"hunk":10,"remove":0},{"row":"03-verify-export-types","files":12,"create":9,"hunk":12,"remove":0}]}
+{"check":"afterF","files":325,"differ":0,"first":[]}
+second apply on the applied copy: "01-comment-census: stopped" (a `from` no longer matches)
+[{"row":"01-comment-census","sourceLines":725,"nonBlank":681,"missing":0},{"row":"02-profile-bundle","sourceLines":938,"nonBlank":897,"missing":14},{"row":"03-verify-export-types","sourceLines":1079,"nonBlank":1033,"missing":6}]
+(arm F: the seal pin lives with the seal gate, which the floor alone does not carry; each row's pin line is skipped there,
+ and rows 01 and 02 print the same skip line as row 03 above)
+arm C: the applied worktree equals the derived after-tree: diff -rq over scripts/ and tests/, cmp vite.style-assets.ts and package.json -> no difference
+
+== Conservation: the absent lines (non-blank source lines not found verbatim among the row's scripts-zone outputs)
+arm C  02-profile-bundle	1× existsSync,
+arm C  02-profile-bundle	1× mkdirSync,
+arm C  02-profile-bundle	1× readFileSync,
+arm C  02-profile-bundle	1× readdirSync,
+arm C  02-profile-bundle	1× statSync,
+arm C  02-profile-bundle	1× writeFileSync,
+arm C  02-profile-bundle	1× } from "node:fs";
+arm C  02-profile-bundle	1× import { dirname, extname, join, resolve } from "node:path";
+arm C  02-profile-bundle	1× function evaluateValueCapabilities() {
+arm C  02-profile-bundle	1× anyBudgetExceeded = true;
+arm C  02-profile-bundle	1× if (status === "FAIL") anyBudgetExceeded = true;
+arm C  02-profile-bundle	1× const valueCapabilities = evaluateValueCapabilities();
+arm C  02-profile-bundle	1× function evaluateExternalPayload(jsFiles) {
+arm C  02-profile-bundle	1× const externalPayload = evaluateExternalPayload(externalPayloadJs);
+arm C  03-verify-export-types	1× readdirSync,
+arm C  03-verify-export-types	1× import { isBuiltin, createRequire } from "node:module";
+arm C  03-verify-export-types	1× import { dirname, join, posix, resolve } from "node:path";
+arm C  03-verify-export-types	1× const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
+arm C  03-verify-export-types	1× ? new URL("../package.json", import.meta.url)
+arm C  03-verify-export-types	1× ? new URL("../package-lock.json", import.meta.url)
+arm C  [{"row":"01-comment-census","sourceLines":725,"nonBlank":681,"missing":0},{"row":"02-profile-bundle","sourceLines":936,"nonBlank":895,"missing":14},{"row":"03-verify-export-types","sourceLines":1078,"nonBlank":1032,"missing":6}]
+
+== Arm C checks (tree after the three rows; zsh $D/tools/verify/battery.sh C $S/wt-c $S/beforeC <out>)
+== arm C battery (03:08:11, load averages: 61.04 56.74 42.94)
+2884 total; 440 scripts/profile-bundle.mjs; 232 scripts/bundle-checks/budgets.mjs; 200 scripts/comment-census.mjs; 188 scripts/package-verify/pack.mjs; 186 scripts/package-verify/roster.mjs; 186 scripts/package-verify/install.mjs; 171 scripts/comments/lexer.mjs; 140 scripts/package-verify/type-resolution.mjs; 125 scripts/comments/census.mjs; 124 scripts/package-verify/verify.mjs; 121 scripts/package-verify/closure.mjs; 112 scripts/comments/interpolation.mjs; 100 scripts/package-verify/claims.mjs; 95 scripts/bundle-checks/drift.mjs; 89 scripts/package-verify/references.mjs; 82 scripts/comments/detectors.mjs; 76 scripts/bundle-checks/external-payload.mjs; 61 scripts/bundle-checks/critical-path.mjs; 57 scripts/bundle-checks/value-capabilities.mjs; 53 scripts/comments/corpus.mjs; 19 scripts/verify-export-types.mjs; 13 scripts/bundle-checks/files.mjs; 8 scripts/bundle-checks/index.mjs; 3 scripts/package-verify/index.mjs; 3 scripts/comments/index.mjs;
+{"files":25,"findings":0}
+build exit 0
+typecheck (vue-tsc, both programs) exit 0
+demo build exit 0
+PASS  F-1 graph  {"edges":7881,"violations":0,"byKind":{},"first":[]}
+PASS  F-3 entries  {"exportKeys":69,"typesVersions":63,"exportsByteEqual":true,"typesVersi
+PASS  F-4 cascade contract  {"terminal":"src/styles/accessibility.css","stylesSource":"src
+PASS  F-9 surface pin  {"pinned":{"exportKeys":69,"typesVersions":63,"jsEntries":64,"runti
+bounds {"dirsOver":6,"filesOver":53}
+bounds scripts-zone files over 500: 0
+seal {"B0":436,"B1":0,"B2":67,"B3":0,"B4":0,"B5":0,"B6":59,"B7":0,"B8":0,"B9":0,"B10":0,"B11":0,"B12":0,"B13":0,"B14":0,"B15":0,"B16":0,"B17":0}
+comment-census [] SAME 35b0fa5648ab
+comment-census [--json] SAME 7e0befe9d567
+comment-census [--json --per-file --prose --dead --audit-interp] SAME cc610593713e
+comment-census [--prose] SAME 9bf513e3af4e
+comment-census [--per-file] SAME 5b9877c310b6
+comment-census [--audit-interp] SAME 16d4fbcd25b5
+comment-census [--dead] SAME 4c6a2804ef05
+comment-census [--root demo] SAME 4e5c352e5b67
+comment-census [--rev HEAD --json] SAME d47b0cca439e
+comment-census [--root tests --json] SAME 151a38a6c462
+profile-bundle before [] exit 0
+profile-bundle before [--enforce] exit 1
+profile-bundle after [] exit 0
+profile-bundle after [--enforce] exit 1
+profile-bundle .json SAME
+profile-bundle .md SAME
+profile-bundle .out SAME
+profile-bundle --enforce.json SAME
+profile-bundle --enforce.md SAME
+profile-bundle --enforce.out SAME
+verify:package before exit 1 Error: G-BUNDLE-RATCHET: bundle ratchet increase forbidden: 2930810 > 2919057
+verify:package after exit 1 Error: G-BUNDLE-RATCHET: bundle ratchet increase forbidden: 2930810 > 2919057
+verify:package full before (datum 2930810) exit 0
+verify:package full after (datum 2930810) exit 0
+verify:package full evidence SAME (normalized temp paths and npm timing)
+  evidence {"claims":196,"declarations":488,"css":156,"roster":{"status":"PRESENT","datum":289,"emitted":289},"packBytes":1027745,"types":"Bundler:0 Node16:0 NodeNext:0","runtimeExit":0,"fonts":4}
+vitest exit 1
+vitest {"files":723,"tests":2331,"passed":2327,"failed":3,"skipped":1}
+  FAIL tests/gates/seal.test.ts :: seal (route D1-B) B0
+  FAIL tests/gates/seal.test.ts :: seal (route D1-B) B2
+  FAIL tests/gates/seal.test.ts :: seal (route D1-B) B6
+   tests/public-surface.spec.ts 94/94
+   tests/gates/comment-ratio.test.ts 15/15
+   tests/gates/floor.test.ts 4/4
+   tests/gates/seal.test.ts 17/20
+   tests/scripts/profile-bundle-value-js.test.ts 1/1
+== arm C done 03:11:20
+
+(the batteries ran from a scratch copy of battery.sh; the committed $D/tools/verify/battery.sh, re-run on the arm C tree afterwards,
+ reproduces the arm C battery line for line, timestamps and load aside)
+
+== Arm C seal, before -> after
+before {"B0":444,"B1":0,"B2":67,"B3":0,"B4":0,"B5":0,"B6":62,"B7":0,"B8":0,"B9":0,"B10":0,"B11":0,"B12":0,"B13":0,"B14":0,"B15":0,"B16":0,"B17":0}
+after  {"B0":436,"B1":0,"B2":67,"B3":0,"B4":0,"B5":0,"B6":59,"B7":0,"B8":0,"B9":0,"B10":0,"B11":0,"B12":0,"B13":0,"B14":0,"B15":0,"B16":0,"B17":0}
+edges 7809 -> 7881 ; modules 135 -> 138 ; pin {"modules":135,"doors":116,"names":1251,"reviewed":2} -> {"modules":138,"doors":119,"names":1266,"reviewed":2}
+B6 added [] removed ["scripts/comment-census.mjs: 725 lines > 500","scripts/profile-bundle.mjs: 936 lines > 500","scripts/verify-export-types.mjs: 1078 lines > 500"]
+B0 in the split files: before 48 {"walk":3,"fs-read":37,"path-helper":8} after 40 {"walk":3,"fs-read":37}
+B0 outside the split files: before 396 after 396
+B0 path-helper hits gone: ["scripts/profile-bundle.mjs:520 computed-path read combinedStylesDraw(distRoot) [path-helper]","scripts/profile-bundle.mjs:520 computed-path read combinedStylesDraw(distRoot) [path-helper]","scripts/profile-bundle.mjs:646 computed-path read evaluateCriticalPath(distRoot) [path-helper]","scripts/profile-bundle.mjs:646 computed-path read evaluateCriticalPath(distRoot) [path-helper]","scripts/verify-export-types.mjs:1014 computed-path read rosterRatchetFailures(repositoryRoot) [path-helper]","scripts/verify-export-types.mjs:1014 computed-path read rosterRatchetFailures(repositoryRoot) [path-helper]","scripts/verify-export-types.mjs:1033 computed-path read ratchetEvidence(repositoryRoot) [path-helper]","scripts/verify-export-types.mjs:1037 computed-path read runTypeResolverChecks(installEvidence.consumerRoot) [path-helper]"]
+B10 bound files in the zone after (FD-2 stop, not a violation): ["scripts/bundle-checks/files.mjs"]
+
+== Arm F checks (tree after the three rows; zsh $D/tools/verify/battery.sh F $S/wt $S/beforeF <out>)
+== arm F battery (03:11:20, load averages: 42.02 48.31 42.04)
+2887 total; 440 scripts/profile-bundle.mjs; 233 scripts/bundle-checks/budgets.mjs; 200 scripts/comment-census.mjs; 188 scripts/package-verify/pack.mjs; 186 scripts/package-verify/roster.mjs; 186 scripts/package-verify/install.mjs; 171 scripts/comments/lexer.mjs; 140 scripts/package-verify/type-resolution.mjs; 125 scripts/comments/census.mjs; 124 scripts/package-verify/verify.mjs; 121 scripts/package-verify/closure.mjs; 112 scripts/comments/interpolation.mjs; 100 scripts/package-verify/claims.mjs; 95 scripts/bundle-checks/drift.mjs; 90 scripts/package-verify/references.mjs; 82 scripts/comments/detectors.mjs; 76 scripts/bundle-checks/external-payload.mjs; 61 scripts/bundle-checks/critical-path.mjs; 57 scripts/bundle-checks/value-capabilities.mjs; 53 scripts/comments/corpus.mjs; 19 scripts/verify-export-types.mjs; 14 scripts/bundle-checks/files.mjs; 8 scripts/bundle-checks/index.mjs; 3 scripts/package-verify/index.mjs; 3 scripts/comments/index.mjs;
+{"files":25,"findings":0}
+build exit 0
+typecheck (vue-tsc, both programs) exit 0
+demo build exit 0
+PASS  F-1 graph  {"edges":7505,"violations":0,"byKind":{},"first":[]}
+PASS  F-3 entries  {"exportKeys":68,"typesVersions":62,"exportsByteEqual":true,"typesVersi
+PASS  F-4 cascade contract  {"terminal":"src/styles/accessibility.css","stylesSource":"src
+PASS  F-9 surface pin  {"pinned":{"exportKeys":68,"typesVersions":62,"jsEntries":63,"runti
+bounds {"dirsOver":18,"filesOver":52}
+bounds scripts-zone files over 500: 2
+comment-census [] SAME d036529c348b
+comment-census [--json] SAME 392f916c6e54
+comment-census [--json --per-file --prose --dead --audit-interp] SAME 4a534a007a7c
+comment-census [--prose] SAME 1cb466b67d85
+comment-census [--per-file] SAME 0e91f64c5087
+comment-census [--audit-interp] SAME 16d4fbcd25b5
+comment-census [--dead] SAME 4c6a2804ef05
+comment-census [--root demo] SAME b228cb7f9d59
+comment-census [--rev HEAD --json] SAME d47b0cca439e
+comment-census [--root tests --json] SAME 0a122495fd0e
+profile-bundle before [] exit 0
+profile-bundle before [--enforce] exit 1
+profile-bundle after [] exit 0
+profile-bundle after [--enforce] exit 1
+profile-bundle .json SAME
+profile-bundle .md SAME
+profile-bundle .out SAME
+profile-bundle --enforce.json SAME
+profile-bundle --enforce.md SAME
+profile-bundle --enforce.out SAME
+verify:package before exit 1 Error: G-BUNDLE-RATCHET: bundle ratchet shrink — rebind down deliberately: 2913546 < 2919057
+verify:package after exit 1 Error: G-BUNDLE-RATCHET: bundle ratchet shrink — rebind down deliberately: 2913546 < 2919057
+verify:package full before (datum 2913546) exit 0
+verify:package full after (datum 2913546) exit 0
+verify:package full evidence SAME (normalized temp paths and npm timing)
+  evidence {"claims":193,"declarations":453,"css":124,"roster":{"status":"PRESENT","datum":289,"emitted":289},"packBytes":1022870,"types":"Bundler:0 Node16:0 NodeNext:0","runtimeExit":0,"fonts":4}
+vitest exit 0
+vitest {"files":721,"tests":2313,"passed":2312,"failed":0,"skipped":1}
+   tests/public-surface.spec.ts 96/96
+   tests/scripts/profile-bundle-value-js.test.ts 1/1
+   tests/gates/comment-ratio.test.ts 15/15
+   tests/gates/floor.test.ts 4/4
+== arm F done 03:13:49
+arm F bounds before (FLOOR-P5 §3 baseline): 55 files over 500, scripts 5 (the three + paint-arm.mjs, reflect-capture-verify.mjs)
+
+== vitest failures outside the split, re-run alone
+the first arm F run (fixed import lists, before importLines) failed its build: ReferenceError: existsSync is not defined. Arm F's
+walk() and listFiles() still carry the existsSync guards S34 drops on arm C, so bundle-checks/files.mjs and package-verify/references.mjs
+needed an fs import arm C does not (bindings.mjs: 2 findings, TS2304). Every file's imports are computed since (lib.mjs importLines).
+an earlier full run of the same arm F tree, at load 45, failed 2 tests: tests/styles/glass-subtlety.test.ts (grasp register) and
+tests/components/custom/aurora/atoms.test.ts (resolveAtoms fuzz), both STACK_TRACE_ERROR; re-run alone at load 81: 2 files, 60/60 passed (P4-G8).
+an earlier arm C full run at load 34 failed src/components/menu/__tests__/contract.test.ts (the fixed 30 ms sleep, P4-G8); re-run alone: passed.
+
+== Plants (arm C; zsh $D/tools/verify/plants.sh $S/wt-c $S/beforeC <out>; each on a fresh reset of the before snapshot)
+== P1 reader re-carved first: tests/public-surface.spec.ts -> tests/zz-carve/public-surface.spec.ts
+  frozen row 03 exit 1 (ENOENT: no such file or directory); files written: 0
+  derive: split scripts/verify-export-types.mjs: scripts/package-verify/{references,claims,closure,roster,pack,install,type-resolution,verify,index}.mjs; vite.style-assets.ts and tests/zz-carve/public-surface.spec.ts re-pointed
+  probes re-pointed in the moved file: 7; old path left under tests/: 0
+== P2 a chain row cures the ternary in combinedStylesDraw before row 02
+  frozen row 02: 02-profile-bundle: stopped
+  frozen row 02:   scripts/profile-bundle.mjs: 0 match(es) for "\n// Bundle budget — enforced via `npm run profile:bundle -- --enforce`"
+  derive: split scripts/profile-bundle.mjs: scripts/bundle-checks/{budgets,files,value-capabilities,critical-path,external-payload,drift,index}.mjs
+  budgets.mjs:229:        return `\n${readFileSync(target, "utf-8")}\n`;
+  existsSync reads left in budgets.mjs: 0
+  bindings: {"files":2,"findings":0}
+== P3 a new module under a placeholder name: scripts/bundle-checks -> scripts/utils (rows 01, 02 applied)
+  seal B15 1 ["scripts/utils (placeholder name)"]
+== P4 an import the split forgot: the walk import dropped from critical-path.mjs (rows 01, 02 applied)
+  bindings: scripts/bundle-checks/critical-path.mjs:41 TS2304 Cannot find name 'walk'.
+  bindings: {"files":1,"findings":1}
+== P5 a module file over 500 lines: 500 comment lines appended to scripts/bundle-checks/budgets.mjs (all rows applied)
+  seal B6 60 ["scripts/bundle-checks/budgets.mjs: 732 lines > 500"]

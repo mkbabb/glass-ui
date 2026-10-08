@@ -1,0 +1,40 @@
+# pack.txt — pass-6 B-proto: the datum row (P4-R3, P5-R2); seat claude-opus-5-5
+# Packed unpacked bytes of the floor base's build and the route's build (verify:package's pack),
+# classed by derive tooling (pack-diff) and the declaration diff by kind and by chain step.
+
+## pack
+floor (base worktree at the P6 floor cut)   2,913,546 B   838 files
+route (migrated tree, S70)                  2,925,765 B   919 files
+delta                                         +12,219 B   (HEAD datum 2,919,057: +6,708)
+verify:package on replay r2: terminal CLEAN; ratchet datum 2925765, unpackedBytes 2925765, equal true, increase false
+
+## by class (delta B; added/removed/changed files)
+MIGRATION.md         +9,654   0/0/1
+door declaration     +3,192   44/3/23
+other declaration    -1,703   119/93/62
+css door               +574   38/2/1
+other css               +69   71/69/8
+js                     +201   35/59/27
+other                  +232   0/0/1
+sum                 +12,219
+
+## declarations by kind (B)
+base  wiring 72,835  comments 652,924  body 328,108  total 1,053,867
+now   wiring 90,384  comments 630,421  body 334,551  total 1,055,356
+delta wiring +17,549 comments -22,503  body +6,443  total +1,489
+
+## declarations by step (largest |delta|; wiring/comments/body = total, files)
+S39-12        0 / -30,660 /   -119 = -30,779   1  (components/blob/renderer/webgpu/metaball.wgsl.d.ts, moved+edited; S63 declares the chunks `string`)
+S5-1      7,496 /   8,084 /  1,752 = +17,332  91
+S64       7,928 /       0 /      0 =  +7,928  14
+S5a         489 /  -5,698 / -1,176 =  -6,385   7
+S39-03      102 /     879 /  1,164 =  +2,145   3
+S39-05      194 /     912 /    839 =  +1,945   3
+S39-09      280 /     918 /    710 =  +1,908   3
+S39-04      214 /     566 /  1,127 =  +1,907   2
+S39-10      872 /     790 /    157 =  +1,819   3
+S67       1,607 /       0 /      0 =  +1,607   1  (composables/motion/morph/index.d.ts, added: the eyeglass names on the morph door)
+S39-01       64 /     466 /    860 =  +1,390   3
+S33      -1,223 /       0 /      0 =  -1,223   1
+unattrib     77 /     398 /    558 =  +1,033   6
+S39-11      113 /     336 /    225 =    +674   2
