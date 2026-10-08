@@ -32,6 +32,16 @@
 //                             rewriting a style attribute (H-3's violations, which a name grep misses)
 //   --fx-motion-thin: 1       with motion on, every surface goes transparent for 300 ms of every 600 ms (M-2m leg 1)
 //   --fx-step-dip: 1          on a ceiling step, every surface goes transparent for 400 ms (M-2m leg 2, Q-8)
+//   --fx-drift-thin: <ms>     with motion on, every surface goes transparent once <ms> have passed since load (M-2m
+//                             drift leg, H3-12: an erosion only a window longer than pass 2's 60 s sees)
+//   --fx-release-dip: 1       on the pointer's release, the held dock goes transparent for 600 ms (M-2h, H3-5)
+//   --fx-warn-retune: 1       the page logs one console.warn when --foreground is retuned (W-C leg 2: refused loud)
+//   --fx-stamp: <value>|none  the field-claim scenes' stamp on <main> (H3-7); default: "unpublished" (fieldout,
+//                             fieldgone) or "ambiguous" (fieldtwo); "none" removes it
+// H3 scenes the fixture lays out as the specimen app does: claim (a page claim over a --secondary tray and an opaque
+// card), fieldout / fieldtwo / fieldgone (a field claim; under it the content plates thin to 85% and the page stamps
+// its state, the shape a fail-loud claim takes), o66field and o66menu (one field colour on both controls; an accent-tint
+// highlighted row). Every content plate carries a "muted-strong" run and the ladder a "capsule" (H3-2).
 // The aurora grounds are real field pixels: the frozen aurora (PRM, one frame) captured by the HEAD run's empty
 // scene in Chromium, per theme and ceiling (--fields <capdir>). Profile B paints a flat field instead.
 import fs from "node:fs";
@@ -47,9 +57,10 @@ function oklabHex(L, a, b) {
 const polar = (L, C, hdeg) => oklabHex(L, C * Math.cos((hdeg * Math.PI) / 180), C * Math.sin((hdeg * Math.PI) / 180));
 
 const SPECS = ["wash", "quiet", "resting", "card", "floating", "overlay", "dialog-rung", "opaque"];
+const CONTENT_IDS = ["wash", "quiet", "resting", "card"];
 const BAND = { wash: "content", quiet: "content", resting: "content", card: "content", floating: "chrome", overlay: "chrome", "dialog-rung": "chrome", opaque: "escape", dock: "chrome", popover: "chrome", dialog: "chrome",
-  "wash-held": "content", "floating-held": "chrome", "dock-held": "chrome", "dock-collapsed": "chrome" };
-const ALL = [...SPECS, "dock", "popover", "dialog", "wash-held", "floating-held", "dock-held", "dock-collapsed"];
+  "wash-held": "content", "floating-held": "chrome", "dock-held": "chrome", "dock-collapsed": "chrome", capsule: "content", "wash-in-card": "content", "quiet-in-card": "content" };
+const ALL = [...SPECS, "dock", "popover", "dialog", "wash-held", "floating-held", "dock-held", "dock-collapsed", "capsule", "wash-in-card", "quiet-in-card"];
 export { oklabHex, polar };
 
 // The shared theme: page, card, inks. Light ink clears ≥ 5.4:1 on the lightest plate; dark likewise.
@@ -61,9 +72,9 @@ const THEME = {
 // The green profile's plates: light tints on a 0.013 circle around paper (adjacent chord 0.0153), dark tones stepping L.
 function greenPlates() {
   const angle = { wash: 0, quiet: 72, resting: 144, floating: 216, overlay: 288, card: 36, "dialog-rung": 108, opaque: 180, dock: 252, popover: 324, dialog: 0,
-    "wash-held": 0, "floating-held": 216, "dock-held": 252, "dock-collapsed": 252 };
+    "wash-held": 0, "floating-held": 216, "dock-held": 252, "dock-collapsed": 252, capsule: 144, "wash-in-card": 0, "quiet-in-card": 72 };
   const Ld = { wash: 0.22, quiet: 0.235, resting: 0.25, floating: 0.265, overlay: 0.28, card: 0.242, "dialog-rung": 0.272, opaque: 0.3, dock: 0.257, popover: 0.227, dialog: 0.29,
-    "wash-held": 0.22, "floating-held": 0.265, "dock-held": 0.257, "dock-collapsed": 0.257 };
+    "wash-held": 0.22, "floating-held": 0.265, "dock-held": 0.257, "dock-collapsed": 0.257, capsule: 0.25, "wash-in-card": 0.22, "quiet-in-card": 0.235 };
   const light = {}, dark = {};
   for (const id of ALL) {
     const r = id === "dialog" ? 0.008 : 0.013, t = (angle[id] * Math.PI) / 180;
@@ -92,9 +103,11 @@ export function fixtureProfile(profile, o = {}) {
     css += `.fx-well { background: var(--card); }\n`;
   } else if (profile === "C") {
     // A per-level plate between card and page; the muted ink solves 5.0:1 against it (OKLab l³ = Y for achromatic).
-    const k = { wash: 100, quiet: 94, resting: 88, card: 82, floating: 76, overlay: 70, "dialog-rung": 64, opaque: 100, dock: 91, popover: 73, dialog: 67 };
+    const k = { wash: 100, quiet: 94, resting: 88, card: 82, floating: 76, overlay: 70, "dialog-rung": 64, opaque: 100, dock: 91, popover: 73, dialog: 67,
+      capsule: 85, "wash-in-card": 100, "quiet-in-card": 94, "wash-held": 100, "floating-held": 76, "dock-held": 91, "dock-collapsed": 91 };
     for (const id of ALL) css += plate(id, `--plate: color-mix(in oklab, var(--card) ${k[id]}%, var(--background)); background: var(--plate);`);
-    css += `:root { --background: var(--page); }
+    css += `:root { --background: var(--page); --foreground: var(--fg); }
+.fx-fg, .fx-tab:not(.fx-mutedtab), .fx-well, .fx-dialog h2 { color: var(--foreground); }
 [data-spec] { --muted-solved: oklch(from var(--plate) calc(pow(max(0, (pow(l, 3) + 0.05) / 5 - 0.05), 1 / 3)) 0 0); }
 html.dark [data-spec] { --muted-solved: oklch(from var(--plate) calc(pow(min(1, 5 * (pow(l, 3) + 0.05) - 0.05), 1 / 3)) 0 0); }
 [data-spec] .fx-muted, [data-spec] .fx-muted *, [data-spec] .fx-mutedtab, [data-spec] .fx-mutedtab *, [data-spec] .fx-well::placeholder { color: var(--muted-solved); }
@@ -130,6 +143,28 @@ html[data-ground="white"] #field { background: #fff; }
 html[data-ground="checker"] #field { background: repeating-conic-gradient(#000 0 25%, #fff 0 50%) 0 0 / 16px 16px; }
 html[data-ground="stripes"] #field { background: repeating-linear-gradient(90deg, #7c3aed 0 24px, #facc15 24px 48px); }
 html[data-ground="red"] #field { background: #761617; }
+html[data-ground="deep"] #field { background: #193b59; }
+#field2 { position: fixed; left: 0; top: 12px; width: 1280px; height: 212px; z-index: -1; background-size: 1280px 900px; background-position: 0 -12px; }
+.fx-strong { color: var(--muted); }
+.fx-capsule2 { position: absolute; left: 24px; top: 600px; padding: 8px 18px; border-radius: 999px; }
+/* the library's --secondary stand-in: a mid-tone tray, so a plate a page claim thins over it loses its ink */
+.fx-tray { position: absolute; left: 0; top: 12px; width: 1280px; height: 212px; background: #cfc6bb; }
+html.dark .fx-tray { background: #4a4038; }
+.fx-host2 { position: absolute; left: 24px; top: 236px; width: 640px; height: 182px; border-radius: 20px; background: var(--card); }
+.fx-host2 .fx-plate { height: 150px; }
+.fx-o66 { padding: 24px; }
+.fx-o66col { display: grid; gap: 16px; width: 340px; margin-bottom: 24px; }
+.fx-pane { width: 380px; padding: 20px; border-radius: 24px; box-sizing: border-box; background: var(--card); }
+.fx-ctl { height: 36px; padding: 0 12px; display: flex; align-items: center; border-radius: 10px; border: 1px solid var(--edge); background: #f3ece2; color: var(--fg); box-sizing: border-box; }
+html.dark .fx-ctl { background: #3f3731; }
+.fx-menu { position: absolute; left: 24px; top: 70px; width: 280px; padding: 6px; border-radius: 14px; background: #fbf6ef; }
+html.dark .fx-menu { background: #2b2420; }
+.fx-row { padding: 8px 10px; border-radius: 8px; }
+.fx-row[data-highlighted] { background: #d6e4f8; }
+html.dark .fx-row[data-highlighted] { background: #2c3e55; }
+/* H3-5/H3-11: a grasp host forms a stacking context, so its carriers stay inside it */
+[data-held] { z-index: 0; }
+.fx-slider { display: inline-block; width: 100px; height: 20px; border-radius: 999px; background: var(--muted); }
 .fx-band { position: absolute; left: 0; width: 1280px; background: #0b1020; }
 html.dark .fx-band { background: #f4f1ea; }
 .fx-declared { position: absolute; left: 920px; top: 500px; width: 330px; height: 220px; background: #000; }
@@ -148,6 +183,8 @@ html.dark .fx-declared { background: #fff; }
 .fx-veil { position: fixed; inset: 0; pointer-events: none; background: rgb(0 0 0 / 0.12);
   -webkit-mask-image: radial-gradient(closest-side, #000 60%, transparent) ; mask-image: radial-gradient(closest-side, #000 60%, transparent);
   -webkit-mask-size: 360px 240px; mask-size: 360px 240px; -webkit-mask-position: 720px 80px; mask-position: 720px 80px; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; }
+/* H3-4: the dark veil dims the dark page by ΔL ≤ −0.02 too (12% black moves #0b0a09 by about 0.005) */
+html.dark .fx-veil { background: rgb(0 0 0 / 0.6); }
 .fx-veilprobe { position: absolute; left: 870px; top: 180px; width: 60px; height: 40px; }
 .fx-collapsed { width: 56px; height: 56px; padding: 0; justify-content: center; }
 .fx-page { position: relative; width: 1280px; height: 900px; }
@@ -183,11 +220,12 @@ const PROFILE = document.documentElement.dataset.profile;
 document.documentElement.dataset.ground = ground; document.documentElement.dataset.scene = scene;
 const field = document.getElementById("field");
 const FLAT = { light: [228, 106, 60], dark: [228, 106, 60] }, PAGE = { light: [251, 250, 248], dark: [11, 10, 9] };
+const claimQ = q.get("claim"), FIELDCLAIM = ["fieldout", "fieldtwo", "fieldgone"].includes(scene);
 let ceiling = ground === "aurora50" ? 0.5 : 1;
-const isField = ground === "aurora" || ground === "aurora50";
+let isField = ground === "aurora" || ground === "aurora50";
 const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const paintField = () => {
-  if (!isField) return;
+  if (!isField) { field.style.backgroundImage = ""; return; }
   if (PROFILE === "B") { field.style.background = "rgb(" + FLAT[theme].join(" ") + ")"; field.style.opacity = String(ceiling); }
   else field.style.backgroundImage = "url(field-" + theme + "-" + (ceiling === 1 ? "aurora" : "aurora50") + ".png)";
 };
@@ -210,27 +248,33 @@ const h = (tag, attrs = {}, kids = []) => { const e = document.createElement(tag
   for (const [k, v] of Object.entries(attrs)) if (k === "text") e.textContent = v; else if (k === "style") e.style.cssText = v; else e.setAttribute(k, v);
   for (const k of kids) e.append(k); return e; };
 const BAND = ${JSON.stringify(BAND)};
+const CONTENT_IDS = ${JSON.stringify(CONTENT_IDS)};
 const G_POLE = ${JSON.stringify(["wash", "quiet", "resting", "card", "dock", "wash-held", "dock-held", "dock-collapsed"])};
 const root = document.getElementById("root");
 if (scene === "isolated") root.style.isolation = "isolate";
 const wells = () => h("div", { class: "fx-wells" }, [
   h("input", { class: "fx-well", value: "Lot 42", "aria-label": "Lot", "data-ink": "well-fg", "data-edge": "well", "data-ring": "well" }),
   h("input", { class: "fx-well", placeholder: "Search lots", "aria-label": "Search", "data-ink": "well-muted" })]);
+const mutedP = (id) => h("p", { class: "fx-muted" }, [h("span", { "data-ink": "muted", text: "Muted caption ink" }),
+  ...(BAND[id] === "content" ? [" ", h("span", { class: "fx-strong", "data-ink": "muted-strong", text: "strong" })] : [])]);
 const plateEl = (id, style, extra = {}, kids) => h("section", { class: "fx-plate", "data-spec": id, "data-band": BAND[id], style, ...extra }, kids || [
   h("p", { class: "fx-fg" }, [h("span", { "data-ink": "fg", text: id + " Aa foreground" })]),
-  h("p", { class: "fx-muted" }, [h("span", { "data-ink": "muted", text: "Muted caption ink" })]),
-  wells(), h("div", { class: "fx-sample", "data-sample": "" })]);
+  mutedP(id), wells(), h("div", { class: "fx-sample", "data-sample": "" })]);
 const dockEl = (id, top, extra = {}, fills = false) => h("div", { class: "fx-dock", "data-spec": id, "data-band": "chrome", style: "top:" + top + "px", ...extra }, [
   h("span", { class: "fx-tab fx-tabpill", "data-fill": "active" }, [h("span", { "data-ink": "fg", text: "Photos" })]),
   h("span", { class: "fx-tab fx-mutedtab fx-tabpill", ...(fills ? { "data-fill": "hover", "data-hover": "" } : {}) }, [h("span", { "data-ink": "muted-tab", text: "Lots" })]),
   ...(fills ? [] : [h("span", { class: "fx-muted" }, [h("span", { "data-ink": "muted", text: "12 lots" })])]),
-  h("span", { class: "fx-docksample", "data-sample": "", ...(id === "dock-held" ? { "data-press": "" } : {}) })]);
+  h("span", { class: "fx-docksample", "data-sample": "" }), ...(id === "dock-held" ? [h("span", { class: "fx-slider", "data-press": "" })] : [])]);
 const heldKids = (el) => { el.prepend(h("span", { class: "glass-grasp-carrier", "data-grasp": "grasp", style: "display:none" })); return el; };
-if (["ladder", "hostile", "isolated"].includes(scene)) {
+if (["ladder", "hostile", "isolated", "fieldout", "fieldtwo", "fieldgone"].includes(scene)) {
+  if (FIELDCLAIM && claimQ !== "none") root.setAttribute("data-glass-ground", "field");
+  if (scene === "fieldtwo") { const f2 = h("div", { id: "field2" }); document.body.prepend(f2); f2.style.backgroundImage = "url(field-" + theme + "-aurora50.png)"; }
+  if (scene === "fieldgone") setTimeout(() => { isField = false; paintField(); }, 1200);
   if (scene === "hostile") root.append(h("div", { class: "fx-band", "data-hx-band": "", style: "top:36px;height:52px" }), h("div", { class: "fx-band", "data-hx-band": "", style: "top:474px;height:48px;width:900px" }),
     h("div", { class: "fx-declared", "data-hx-declared": theme === "dark" ? "light" : "dark" }));
   ${JSON.stringify(SPECS)}.forEach((id, i) => root.append(plateEl(id, "left:" + (24 + (i % 4) * 304) + "px;top:" + (24 + Math.floor(i / 4) * 212) + "px")));
   if (!nodock) { const d = dockEl("dock", 470); d.querySelector("[data-fill=active]").removeAttribute("data-fill"); d.querySelector(".fx-tabpill").classList.add("fx-active"); root.append(d); }
+  root.append(h("span", { class: "fx-capsule2", "data-spec": "capsule", "data-band": "content" }, [h("span", { class: "fx-fg", "data-ink": "fg", text: "Chip" }), " ", h("span", { class: "fx-muted", "data-ink": "muted", text: "12 lots" })]));
   if (scene !== "isolated") root.append(h("div", { class: "fx-pop", "data-spec": "popover", "data-band": "chrome" }, [
     h("p", { class: "fx-fg" }, [h("span", { "data-ink": "fg", text: "Popover Aa foreground" })]),
     h("p", { class: "fx-muted" }, [h("span", { "data-ink": "muted", text: "Muted caption ink" })]), h("div", { class: "fx-popsample", "data-sample": "" })]));
@@ -248,6 +292,23 @@ if (["ladder", "hostile", "isolated"].includes(scene)) {
   if (!nodock) root.append(dockEl("dock", 300, {}, true));
   document.body.append(h("div", { class: "fx-veil", "data-raw-hide": "" }));
   root.append(h("div", { class: "fx-veilprobe", "data-veil-probe": "" }));
+} else if (scene === "claim") {
+  if (claimQ !== "none") root.setAttribute("data-glass-ground", "page");
+  root.append(h("div", { class: "fx-tray" }));
+  CONTENT_IDS.forEach((id, i) => root.append(plateEl(id, "left:" + (24 + i * 304) + "px;top:24px", {}, [
+    h("p", { class: "fx-fg" }, [h("span", { "data-ink": "fg", text: id + " Aa foreground" })]), mutedP(id), h("div", { class: "fx-sample", "data-sample": "" })])));
+  const host2 = h("section", { class: "fx-host2" });
+  ["wash-in-card", "quiet-in-card"].forEach((id, i) => host2.append(plateEl(id, "left:" + (16 + i * 304) + "px;top:16px", {}, [
+    h("p", { class: "fx-fg" }, [h("span", { "data-ink": "fg", text: id + " Aa foreground" })]), mutedP(id), h("div", { class: "fx-sample", "data-sample": "" })])));
+  root.append(host2);
+} else if (scene === "o66field") {
+  root.classList.add("fx-o66");
+  const ctl = (probe, text) => h("div", { class: "fx-ctl", "data-probe": probe, text });
+  root.append(h("section", { class: "fx-o66col" }, [ctl("trigger-paper", "Normal"), ctl("input-paper", "1000ms")]),
+    h("section", { class: "fx-o66col fx-pane" }, [ctl("trigger-pane", "Normal"), ctl("input-pane", "1000ms")]));
+} else if (scene === "o66menu") {
+  root.append(h("div", { class: "fx-menu" }, [h("div", { class: "fx-row", "data-probe": "row-0", "data-highlighted": "", text: "First command" }),
+    h("div", { class: "fx-row", "data-probe": "row-1", text: "Second command" }), h("div", { class: "fx-row", "data-probe": "row-2", text: "Third command" })]));
 } else if (scene === "dialog") {
   root.append(h("div", { class: "fx-dialog", "data-spec": "dialog", "data-band": "chrome", role: "dialog" }, [
     h("h2", {}, [h("span", { "data-ink": "fg", text: "Dialog Aa title" })]),
@@ -275,7 +336,8 @@ if (PROFILE === "F" && isField && scene !== "empty") requestAnimationFrame(() =>
 publish();
 // The per-frame loop: the moving field (motion on only), the planted readback and writers, and the planted dips.
 const cv = document.createElement("canvas"); cv.width = cv.height = 8; const cx = cv.getContext("2d");
-const t0 = performance.now(); let n = 0;
+const t0 = performance.now(); let n = 0, relUntil = 0, thinned = false, warned = false;
+document.addEventListener("mouseup", () => { if (cssVar("--fx-release-dip") !== "1") return; const d = document.querySelector('[data-spec="dock-held"]'); if (d) { d.style.background = "transparent"; relUntil = performance.now() + 600; } });
 const loop = () => { const now = performance.now(); n++;
   if (isField && !still && PROFILE !== "B") field.style.backgroundPosition = Math.round(((now - t0) / 25) % 1280) + "px 0px";
   if (cssVar("--fx-readback") === "1") { cx.fillRect(0, 0, 8, 8); cx.getImageData(0, 0, 8, 8); }
@@ -284,6 +346,16 @@ const loop = () => { const now = performance.now(); n++;
   if (w === "attr" && d) d.setAttribute("style", (d.getAttribute("style") || "").replace(/--x-tone:[^;]*;?/, "") + "--x-tone:" + (n % 7) + ";");
   if (!still && cssVar("--fx-motion-thin") === "1") setThin(Math.floor((now - t0) / 300) % 2 === 1);
   if (dipUntil && now >= dipUntil) { dipUntil = 0; setThin(false); }
+  const dt = parseFloat(cssVar("--fx-drift-thin")); if (!still && dt > 0 && now - t0 >= dt) setThin(true);
+  if (relUntil && now >= relUntil) { relUntil = 0; const d = document.querySelector('[data-spec="dock-held"]'); if (d) d.style.background = ""; }
+  // H3-7: under a field claim the content plates thin to 85% and the page stamps its claim state (or not: --fx-stamp).
+  if (FIELDCLAIM && root.hasAttribute("data-glass-ground")) {
+    const st = cssVar("--fx-stamp") || (scene === "fieldtwo" ? "ambiguous" : "unpublished");
+    if (st === "none") root.removeAttribute("data-glass-ground-state"); else if (root.getAttribute("data-glass-ground-state") !== st) root.setAttribute("data-glass-ground-state", st);
+    if (!thinned) { thinned = true; for (const id of CONTENT_IDS) { const e = document.querySelector('[data-spec="' + id + '"]'); if (e) { const m = getComputedStyle(e).backgroundColor.match(/[0-9.]+/g); e.style.backgroundColor = "rgb(" + m[0] + " " + m[1] + " " + m[2] + " / 0.85)"; } } }
+  }
+  // --fx-warn-retune: 1 · the page refuses a colour retune of --foreground loud (one console.warn), W-C leg 2's other arm.
+  if (!warned && cssVar("--fx-warn-retune") === "1" && cssVar("--foreground") && cssVar("--foreground") !== cssVar("--fg")) { warned = true; console.warn("[fixture] --foreground written as a colour: retune refused"); }
   // The plant styles arrive after load (capture.mjs injects them), so the silent-flat plant is read per frame.
   if (PROFILE === "G" && scene === "isolated" && cssVar("--fx-g-nostamp") === "1") root.removeAttribute("data-glass-flat");
   requestAnimationFrame(loop); };
@@ -308,6 +380,20 @@ export function writeFixture(profile, o = {}) {
     fs.copyFileSync(src, path.join(dir, `field-${theme}-${g}.png`));
   }
   fs.writeFileSync(path.join(dir, "build.json"), JSON.stringify({ label: `fixture-${profile}`, fixture: profile, alphas: o.alphas || null, bounds: o.bounds || null, fields: o.fields || null }, null, 1));
+  return dir;
+}
+
+// H3-10: a stand-in for a demo build's glass-material story (glance.mjs --story-claim): it answers the demo's capture
+// boot (`?capture=…&mode=<theme>` → html[data-capture-ready]) and paints a page with or without one claimed region.
+export function writeStoryFixture(out, { claim }) {
+  const dir = path.resolve(out); fs.rmSync(dir, { recursive: true, force: true }); fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, "index.html"), `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>D3 story fixture</title>
+<style>html, body { margin: 0; min-height: 100vh; } body { background: #193b59; font: 15px/20px system-ui, sans-serif; }
+html.dark body { background: #0b0a09; } .card { position: absolute; left: 80px; top: 80px; width: 480px; height: 240px; border-radius: 24px; background: rgb(253 245 236 / ${claim ? "0.55" : "0.9"}); padding: 20px; box-sizing: border-box; }</style>
+<script>const q = new URLSearchParams(location.search); if (q.get("mode") === "dark") document.documentElement.classList.add("dark");</script></head>
+<body><main style="position: absolute; left: 60px; top: 60px; width: 520px; height: 280px"${claim ? ' data-glass-ground="field"' : ""}><section class="card" style="left: 20px; top: 20px">story card</section></main>
+<script>requestAnimationFrame(() => document.documentElement.setAttribute("data-capture-ready", ""));</script></body></html>
+`);
   return dir;
 }
 

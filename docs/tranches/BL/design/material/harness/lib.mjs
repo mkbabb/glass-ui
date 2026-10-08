@@ -24,24 +24,41 @@ export const OUT = process.env.D3_OUT || path.join(os.tmpdir(), "d3-material-har
 
 export const GROUNDS = ["paper", "aurora", "aurora50", "black", "white", "checker", "stripes"];
 export const FIELD_GROUNDS = ["aurora", "aurora50"];
-// Grounds captured only by the scenes that need them (W-G): UIA-V-198's saturated red.
-export const EXTRA_GROUNDS = ["red"];
-// The H2 scenes and the grounds each is captured on (run.mjs and the witnesses share this one table).
-//   ladder  every GROUNDS entry and red (W-G)   dialog  every GROUNDS entry (the M battery)          halo  paper          empty  the field grounds (W-F)
-//   held     H-5: a held dock (a real press-and-hold), two held rungs (the consumer grasp contract) and a collapsed dock
+// Grounds captured only by the scenes that need them: UIA-V-198's saturated red (W-G) and the glass-material story's
+// deep canvas #193b59 (H3-1, M-1x: the light veil read off paper).
+export const EXTRA_GROUNDS = ["red", "deep"];
+// The off-paper grounds M-1x reads (H3-1): black, the 16 px checker and the story's deep canvas.
+export const OFF_PAPER = ["black", "checker", "deep"];
+// The scenes and the grounds each is captured on (run.mjs and the witnesses share this one table).
+//   ladder  every GROUNDS entry, red (W-G) and deep (M-1x)   dialog  every GROUNDS entry and deep   halo  paper   empty  the field grounds (W-F)
+//   held     H-5/H3-5: a held dock (a real press-and-hold on its Slider, then the release window), two held rungs (the
+//            consumer grasp contract, read only where the library declares the host graspable) and a collapsed dock
 //   hostile  H-10: an opaque band interposed between the field and the dock and first plate row; a teleported Popover
 //            over a declared region
 //   state    H-6 (M-9): the painted state fills (active, hover, checked, selected) and an engaged focus veil
 //   isolated H-15 (W-G): the content rungs and a dock inside an isolated group (isolation: isolate)
+//   claim    H3-6: a "page" claim over library paint: an opaque --secondary tray under the content rungs, and a wash and
+//            a quiet nested inside an opaque card
+//   fieldout, fieldtwo, fieldgone   H3-7 (W-S): a "field" claim whose publication is out of scope (the Aurora is not an
+//            ancestor's), shared by two Auroras (c1 page-wide, c0.5 under the content row), or unmounted after 1.2 s
+//   o66field, o66menu   H3-9 (O-66 §1, W-0.1 G2 and G3): a filled SelectTrigger beside a filled Input on paper and in a
+//            .glass-floating pane; an open DropdownMenu with its first row highlighted by focus
 export const SCENE_GROUNDS = {
-  ladder: [...GROUNDS, "red"], dialog: GROUNDS, halo: ["paper"], empty: FIELD_GROUNDS,
+  ladder: [...GROUNDS, "red", "deep"], dialog: [...GROUNDS, "deep"], halo: ["paper"], empty: FIELD_GROUNDS,
   held: ["black", "white", "aurora"], hostile: FIELD_GROUNDS, state: ["paper", "aurora"], isolated: ["aurora", "red"],
+  claim: ["paper"], fieldout: ["aurora"], fieldtwo: ["aurora"], fieldgone: ["aurora"], o66field: ["paper"], o66menu: ["paper"],
 };
+// H3-7: the field-claim scenes, each captured twice: claimed (variant base) and unclaimed (variant noclaim, ?claim=none).
+export const FIELD_CLAIM_SCENES = ["fieldout", "fieldtwo", "fieldgone"];
 export const SCENES = Object.keys(SCENE_GROUNDS);
 // The H-4 contract: the floor patch (FL-5) exposes each band's computed bound as a number on every plate.
 export const BOUND_PROP = "--glass-bound";
 // The H-15 contract: a plate that knows its pole went flat carries this attribute (on itself or an ancestor).
 export const FLAT_ATTR = "data-glass-flat";
+// The H3-7 contract: a claim whose ground knowledge is dead, stale or ambiguous says so with this attribute, on the plate
+// or an ancestor. "published" and "live" are the two values that claim the knowledge is good; any other value is a stamp.
+export const GROUND_STATE_ATTR = "data-glass-ground-state";
+export const LIVE_STATES = ["published", "live"];
 // H-14: D2's WebKit crash shim (docs/tranches/BL/design/dock/harness/adapter-head.mjs:45, D2 SPECS S-2): it pins the
 // plate border's nested translucent color-mix() to one arm, colours only. Every WebKit dock row is labelled "+shim".
 export const WEBKIT_SHIM = ".glass-dock .dock-plate { border-color: var(--dock-plate-expanded-border) !important; }";
@@ -260,7 +277,13 @@ export function report(cap, { id, title, lines, gateFails, gateRows, infoFails =
 }
 export const tag = (c) => `${c.engine === "webkit" ? "webkit" + (c.shim ? "+shim" : "") : "chromium"} ${c.theme} ${c.ground}${c.scene !== "ladder" ? " " + c.scene : ""}${c.variant && c.variant !== "base" ? " [" + c.variant + "]" : ""}`;
 
-// ── the consumer retune (W-C) ──────────────────────────────────────────────────────────────────────────
-// A consumer preset that re-points only the ground tokens, as E-5 allows: a cool paper and card per theme.
-export const RETUNE_CSS = `html:root:not(.dark) { --background: hsl(210 22% 93%); --card: hsl(212 30% 98%); }
-html.dark:root { --background: hsl(220 16% 13%); --card: hsl(222 14% 23%); }`;
+// ── the consumer colour retunes (W-C leg 2, H3-8) ──────────────────────────────────────────────────────
+// Three consumer presets, each writing ONE ground or ink token as a colour (the form every consumer retune in the
+// constellation uses; music-staff writes --card as a colour beside --card-l). A library that reads a numeric twin
+// (--background-l, --foreground-l, --card-l) goes stale under them; one that reads the colour follows. Each is captured
+// as its own variant (retune-bg, retune-fg, retune-card) over paper, ladder and dialog.
+export const RETUNES = {
+  "retune-bg": `html:root:not(.dark) { --background: hsl(210 22% 93%); } html.dark:root { --background: hsl(220 16% 13%); }`,
+  "retune-fg": `html:root:not(.dark) { --foreground: oklch(0.42 0.02 56); } html.dark:root { --foreground: oklch(0.86 0.01 68); }`,
+  "retune-card": `html:root:not(.dark) { --card: hsl(212 30% 98%); } html.dark:root { --card: hsl(222 14% 23%); }`,
+};

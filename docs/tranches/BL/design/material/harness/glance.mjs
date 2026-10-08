@@ -11,6 +11,9 @@
 // --ground, --ids and --route-query widen the pair for a route whose change lives off paper or on the content rungs
 // (D3 C′: the claimed content band over the c1 aurora). --route-query rides the route half's URL only. The default
 // pair is H-13's: paper; dock, Dialog, floating.
+// --story-claim (H3-10): the route's story page must claim at least one region (an element carrying data-glass-ground
+// with a painted box), so the owner glance can show what a claim buys; the claimed region is cropped as its own pair
+// (glance-<engine>-<theme>-story-claim-base-vs-<name>.png). A route story with no claimed region is a FAIL pair.
 // --require-delta is the pair's own sanity check: exit 1 when any pair's halves are the same picture (under 0.1% of
 // the crop's pixels differ by more than 8/255), i.e. the pair captured one build twice or the route changed nothing
 // the owner would see.
@@ -21,10 +24,10 @@ import { capture } from "./capture.mjs";
 import { inkRows } from "./rows.mjs";
 
 const a = cli({ base: { type: "string" }, route: { type: "string" }, overlay: { type: "string" }, out: { type: "string" }, name: { type: "string" }, themes: { type: "string" },
-  "story-base": { type: "string" }, "story-route": { type: "string" }, "require-delta": { type: "boolean" }, engine: { type: "string" }, ground: { type: "string" }, ids: { type: "string" }, "route-query": { type: "string" } });
+  "story-base": { type: "string" }, "story-route": { type: "string" }, "require-delta": { type: "boolean" }, "story-claim": { type: "boolean" }, engine: { type: "string" }, ground: { type: "string" }, ids: { type: "string" }, "route-query": { type: "string" } });
 if (!a.base || !(a.route || a.overlay) || !a.out) { console.error("usage: node glance.mjs --base <dist> (--route <dist> | --overlay <css>) --out <dir> [--name route] [--themes light,dark] [--story-base d --story-route d] [--require-delta]"); process.exit(2); }
 const out = path.resolve(a.out), name = a.name || "route", themes = list(a.themes, ["light", "dark"]), engine = a.engine || "chromium";
-const ground = a.ground || "paper", ids = list(a.ids, ["dock", "dialog", "floating"]);
+const ground = a.ground || "paper", ids = a.ids === "none" ? [] : list(a.ids, ["dock", "dialog", "floating"]);   // --ids none: the story pair only
 fs.mkdirSync(out, { recursive: true });
 const PAD = 28, GAP = 16, doc = { base: path.resolve(a.base), route: a.route ? path.resolve(a.route) : null, overlay: a.overlay ? path.resolve(a.overlay) : null, pairs: [] };
 
@@ -40,6 +43,7 @@ function writePair(file, pngs, box) {
 }
 
 for (const theme of themes) {
+  if (ids.length) {
   const sel = { engines: engine, themes: theme, grounds: ground, scenes: "ladder,dialog", quiet: true };
   const cb = path.join(OUT, "caps", `glance-base-${engine}-${theme}-${ground}`), cr = path.join(OUT, "caps", `glance-${name}-${engine}-${theme}-${ground}`);
   for (const d of [cb, cr]) fs.rmSync(d, { recursive: true, force: true });
@@ -65,6 +69,7 @@ for (const theme of themes) {
     doc.pairs.push({ engine, theme, id, file, crop: box, delta: +delta.toFixed(4), base: halves[0].read, [name]: halves[1].read });
     console.log(`${theme} ${id}: ${path.basename(file)} · delta ${f(delta * 100, 2)}% of the crop\n  base      ${JSON.stringify(halves[0].read)}\n  ${name.padEnd(8)}  ${JSON.stringify(halves[1].read)}`);
   }
+  }
   // The glass-material story, from two demo builds.
   if (a["story-base"] && a["story-route"]) {
     const pw = await playwright(), browser = await pw[engine].launch({ headless: true, args: engine === "chromium" ? CHROMIUM_ARGS : [] });
@@ -78,7 +83,10 @@ for (const theme of themes) {
       try { await page.goto(`${srv.url}?capture=/substrates/glass-material&mode=${theme}`, { waitUntil: "load", timeout: 120000 });
         await page.waitForSelector("html[data-capture-ready]", { timeout: 60000 }); await page.waitForTimeout(1500); }
       catch (e) { err = String(e).split("\n")[0].slice(0, 160); }
-      shots.push({ png: PNG.sync.read(await page.screenshot({ type: "png" })), err });
+      const claims = err ? [] : await page.evaluate(() => [...document.querySelectorAll("[data-glass-ground]")].map((e) => { const r = e.getBoundingClientRect();
+        return { ground: e.getAttribute("data-glass-ground"), tag: e.tagName.toLowerCase(), rect: [Math.max(0, Math.floor(r.left)), Math.max(0, Math.floor(r.top)), Math.floor(r.width), Math.floor(r.height)] }; })
+        .filter((c) => c.rect[2] >= 8 && c.rect[3] >= 8 && c.rect[0] < innerWidth && c.rect[1] < innerHeight));
+      shots.push({ png: PNG.sync.read(await page.screenshot({ type: "png" })), err, claims });
       await ctx.close(); srv.close();
     }
     await browser.close();
@@ -87,8 +95,20 @@ for (const theme of themes) {
     const delta = diffFrac(shots[0].png, shots[1].png, box);
     doc.pairs.push({ engine, theme, id: "story", route: "/substrates/glass-material", file, delta: +delta.toFixed(4), errors: shots.map((s) => s.err) });
     console.log(`${theme} story: ${path.basename(file)} · delta ${f(delta * 100, 2)}%${shots.some((s) => s.err) ? " · " + shots.map((s) => s.err).join(" | ") : ""}`);
+    if (a["story-claim"]) {
+      const c = shots[1].claims[0];
+      if (!c) { doc.pairs.push({ engine, theme, id: "story-claim", error: `the route's story claims no region (${shots[1].claims.length} claimed elements with a box)` }); console.log(`${theme} story-claim: the route's story claims no region ✗`); }
+      else {
+        const box = [c.rect[0], c.rect[1], Math.min(c.rect[2], VIEW.width - c.rect[0]), Math.min(c.rect[3], VIEW.height - c.rect[1])];
+        const cf = path.join(out, `glance-${engine}-${theme}-story-claim-base-vs-${name}.png`); writePair(cf, shots.map((s) => s.png), box);
+        const cd = diffFrac(shots[0].png, shots[1].png, box);
+        doc.pairs.push({ engine, theme, id: "story-claim", ground: c.ground, el: c.tag, file: cf, crop: box, delta: +cd.toFixed(4) });
+        console.log(`${theme} story-claim: <${c.tag} data-glass-ground="${c.ground}"> ${box.join(",")} · ${path.basename(cf)} · delta ${f(cd * 100, 2)}%`);
+      }
+    }
   }
 }
 fs.writeFileSync(path.join(out, `glance-${engine}-${name}${ground === "paper" ? "" : "-" + ground}.json`), JSON.stringify(doc, null, 1));
 const flat = doc.pairs.filter((p) => p.error || p.errors?.some(Boolean) || !(p.delta >= 0.001));
+if (a["story-claim"] && !a["require-delta"]) { const miss = doc.pairs.filter((p) => p.id === "story-claim" && p.error); console.log(miss.length ? `GLANCE FAIL: ${miss.length} story pairs with no claimed region` : "GLANCE PASS: every story pair shows a claimed region"); process.exitCode = miss.length ? 1 : 0; }
 if (a["require-delta"]) { console.log(flat.length ? `GLANCE FAIL: ${flat.length} of ${doc.pairs.length} pairs show no delta or failed (${flat.map((p) => p.theme + " " + p.id).join(", ")})` : `GLANCE PASS: ${doc.pairs.length} pairs, each with a visible delta`); process.exitCode = flat.length ? 1 : 0; }

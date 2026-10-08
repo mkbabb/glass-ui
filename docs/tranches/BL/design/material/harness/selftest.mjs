@@ -4,7 +4,9 @@
 // exit 1. The violation targets the check's own invariant, and the FAIL rows it prints are kept in the summary so a
 // reader can see the check failed for that reason and no other.
 // H2: every check runs in BOTH engines, once gated on Chromium (--gate chromium) and once gated on Playwright WebKit
-// (--gate webkit), on the same captures. The four pass-1 family witnesses that H2 left alone (W-B, W-C, W-E, W-F) and
+// (--gate webkit), on the same captures. H3 (pass 3) adds M-1x, M-2h, O-66, STACK and W-S, changes M-2 (the -strong
+// run, the declared-graspable held rungs, the claim cell), M-2m (the 100 s drift leg), M-4 (signed), M-9 (the dark veil),
+// W-C (band [4.5, ∞), three colour retunes) and GLANCE (--story-claim); each ships a fixture PASS and a planted FAIL. The four pass-1 family witnesses that H2 left alone (W-B, W-C, W-E, W-F) and
 // W-D keep their pass-1 Chromium test. A planted capture holds only the cells its plant touches, and its witness run
 // is restricted to them with --cells (the fixture PASS runs read every cell unrestricted).
 //   node selftest.mjs [--fields <HEAD capdir>] [--only M-1,W-B] [--skip-capture] [--reuse-green]
@@ -13,8 +15,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
-import { OUT, HERE, RETUNE_CSS, cli, list, lin } from "./lib.mjs";
-import { writeFixture } from "./fixtures.mjs";
+import { OUT, HERE, RETUNES, FIELD_CLAIM_SCENES, cli, list, lin } from "./lib.mjs";
+import { writeFixture, writeStoryFixture } from "./fixtures.mjs";
 import { capture } from "./capture.mjs";
 
 const a = cli({ fields: { type: "string" }, only: { type: "string" }, "skip-capture": { type: "boolean" }, "reuse-green": { type: "boolean" } });
@@ -36,10 +38,12 @@ async function cap(name, fixtureDir, opts) {
     if (inject != null) { const f = path.join(ROOT, `${name}.inject.css`); fs.writeFileSync(f, inject); inject = f; }
     const t0 = Date.now();
     await capture(fixtureDir, { ...FAST, engines: BOTH.join(","), ...opts, out, inject, label: name });
-    if (opts.retune) {
-      const f = path.join(ROOT, `${name}.retune.css`); fs.writeFileSync(f, RETUNE_CSS + "\n" + (opts.injectCss || ""));
-      await capture(fixtureDir, { ...FAST, engines: opts.engines || BOTH.join(","), out, grounds: "paper", scenes: "ladder,dialog", variant: "retune", inject: f, label: name });
+    if (opts.retune) for (const [variant, css] of Object.entries(RETUNES)) {
+      const f = path.join(ROOT, `${name}.${variant}.css`); fs.writeFileSync(f, css + "\n" + (opts.injectCss || ""));
+      await capture(fixtureDir, { ...FAST, engines: opts.engines || BOTH.join(","), themes: opts.themes, out, grounds: "paper", scenes: "ladder,dialog", variant, inject: f, label: name });
     }
+    // H3-7: the field-claim scenes' unclaimed reference.
+    if (opts.noclaim) await capture(fixtureDir, { ...FAST, engines: opts.engines || BOTH.join(","), themes: opts.themes, out, grounds: "aurora", scenes: FIELD_CLAIM_SCENES.join(","), variant: "noclaim", query: "claim=none", inject, label: name });
     console.log(`     captured ${name} in ${((Date.now() - t0) / 1000).toFixed(0)} s (load ${(await import("node:os")).loadavg().map((v) => v.toFixed(1)).join(" ")})`);
   }
   return out;
@@ -63,6 +67,7 @@ function witness(id, script, capdir, expect, extra = [], note = "", engines = BO
 const cells = (re) => ["--cells", re];
 
 const ALLG = "paper,aurora,aurora50,black,white,checker,stripes";
+const HELD = { grounds: "black,white,aurora", scenes: "held,ladder" };   // M-2h's halo leg reads the resting dock in the ladder
 
 // ── the green battery fixture: RAW, M-1..M-9 and M-2m PASS, gated in each engine ──────────────────────────────
 const green = writeFixture("green", { out: path.join(ROOT, "fx", "green"), fields: FIELDS });
@@ -70,21 +75,30 @@ const green = writeFixture("green", { out: path.join(ROOT, "fx", "green"), field
 const M = [
   ["RAW", "raw-clean", [[{ grounds: "black,white", scenes: "ladder,dialog" }, null, `html[data-cap="raw"] [data-spec] .fx-tab { visibility: visible !important; }`, "a dock tab paints through its hidden surface in raw (S-10)"]]],
   ["M-1", "m1-no-grey", [[{ themes: "light", grounds: "paper", scenes: "ladder,dialog" }, null, `html:not(.dark) [data-spec="floating"] { background: #d7d4ce !important; }`, "floating painted HEAD's grey composite #d7d4ce"]]],
+  // H3-1: gated under Q-11 (b) for the self-test; REPORTED (exit 0) without a ruling is its own expectation below.
+  ["M-1x", "m1x-off-paper", [[{ themes: "light", grounds: "paper,black,checker,deep", scenes: "ladder,dialog" }, null, `html:not(.dark) [data-spec="floating"] { background: color-mix(in srgb, #fef7f2 89.1%, transparent) !important; }`, "H3-1: floating at the floor's light bound (#fef7f2 at α 0.891): #e2dcd7 over black"]], ["--q11", "b"]],
   ["M-2", "m2-text-contrast", [
     [{ grounds: "paper", scenes: "ladder,dialog" }, " paper (ladder|dialog)$", `.fx-muted, .fx-muted *, .fx-mutedtab, .fx-mutedtab * { color: #a39a91 !important; } html.dark .fx-muted, html.dark .fx-muted *, html.dark .fx-mutedtab, html.dark .fx-mutedtab * { color: #6e665e !important; }`, "muted ink moved toward the plate"],
     [{ themes: "light", grounds: "black", scenes: "ladder" }, "light black ladder$", `html:not(.dark) [data-spec] { background: transparent !important; } html:not(.dark) [data-spec] [data-ink] { -webkit-text-stroke: 5px var(--card); paint-order: stroke fill; }`, "H-8: no plate, a 5 px card stroke under every glyph (E's sticker geometry, sized to the R 1 ring): R 1 reads the stroke, R 3 the black ground"],
     [{ grounds: "black,white,aurora", scenes: "held" }, "held$", `[data-held] { background: transparent !important; }`, "H-5: the held register sheds the whole plate"],
-    [{ grounds: "aurora,aurora50", scenes: "hostile" }, "hostile$", `html[data-scene="hostile"] [data-spec] { background: rgb(255 255 255 / 0.25) !important; } html.dark[data-scene="hostile"] [data-spec] { background: rgb(0 0 0 / 0.25) !important; }`, "H-10: surfaces thin in the hostile cells (a thin arm that misses the interposed band)"]]],
+    [{ grounds: "aurora,aurora50", scenes: "hostile" }, "hostile$", `html[data-scene="hostile"] [data-spec] { background: rgb(255 255 255 / 0.25) !important; } html.dark[data-scene="hostile"] [data-spec] { background: rgb(0 0 0 / 0.25) !important; }`, "H-10: surfaces thin in the hostile cells (a thin arm that misses the interposed band)"],
+    [{ grounds: "paper", scenes: "ladder" }, " paper ladder$", `[data-ink="muted-strong"], [data-spec="capsule"] [data-ink="muted"] { color: #c9c0b6 !important; } html.dark [data-ink="muted-strong"], html.dark [data-spec="capsule"] [data-ink="muted"] { color: #4a423b !important; }`, "H3-2: the -strong run and the capsule's muted run moved toward the plate"],
+    [{ themes: "light", grounds: "paper", scenes: "claim" }, "light paper claim$", `html[data-scene="claim"] [data-spec] { background: rgb(255 255 255 / 0.25) !important; }`, "H3-6: the page claim thins every plate over the --secondary tray and inside the opaque card"]]],
   ["M-2m", "m2-motion", [
     [{ grounds: "aurora,aurora50", scenes: "ladder", motion: true }, "ladder$", `:root { --fx-motion-thin: 1; }`, "H-11: every surface goes transparent for 300 ms of every 600 ms while the field moves"],
-    [{ grounds: "aurora,aurora50", scenes: "ladder", motion: true }, "ladder$", `:root { --fx-step-dip: 1; }`, "H-11: every surface dips transparent for 400 ms on the ceiling step (a symmetric spring)"]]],
+    [{ grounds: "aurora,aurora50", scenes: "ladder", motion: true }, "ladder$", `:root { --fx-step-dip: 1; }`, "H-11: every surface dips transparent for 400 ms on the ceiling step (a symmetric spring)"],
+    [{ themes: "light", grounds: "aurora", scenes: "ladder", motion: true, drift: true }, "light aurora ladder$", `:root { --fx-drift-thin: 70000; }`, "H3-12: every surface goes transparent 70 s after load (an erosion a 60 s window misses)"]]],
+  ["M-2h", "m2-held-window", [
+    [HELD, "(held|ladder)$", `:root { --fx-release-dip: 1; }`, "H3-5: the held dock goes transparent for 600 ms on the release"],
+    [HELD, "(held|ladder)$", `[data-spec="dock-held"] { -webkit-mask-image: linear-gradient(90deg, #000 45%, rgb(0 0 0 / 0.55)); mask-image: linear-gradient(90deg, #000 45%, rgb(0 0 0 / 0.55)); }`, "H3-5: the held dock's right half lets the ground through (a halo)"]]],
   ["M-3", "m3-non-text", [
     [{ grounds: "paper", scenes: "ladder,dialog" }, " paper (ladder|dialog)$", `.fx-well { border-color: #d9d3cc !important; } html.dark .fx-well { border-color: #4a423b !important; }`, "well perimeter faded to 1.3-1.6:1"],
     [{ grounds: "black,white,aurora", scenes: "held" }, "held$", `[data-held] .fx-well { border-color: transparent !important; }`, "H-5: the held rungs' well perimeter vanishes"]]],
   ["M-4", "m4-dock-register", [
     [{ grounds: "paper", scenes: "ladder,dialog" }, " paper (ladder|dialog)$", `[data-spec="dock"] .fx-muted, [data-spec="dock"] .fx-muted * { color: #000 !important; } html.dark [data-spec="dock"] .fx-muted, html.dark [data-spec="dock"] .fx-muted * { color: #fff !important; }`, "dock muted ink pinned to the pole (#000 / #fff)"],
     [{ grounds: "paper", scenes: "ladder,dialog" }, " paper (ladder|dialog)$", `.fx-muted, .fx-muted * { color: var(--fg) !important; }`, "H-7: a dead solve, every plate's muted falls back to the fg ink"],
-    [{ grounds: "paper", scenes: "ladder" }, " paper ladder$", `[data-spec="dock"] .fx-active { color: var(--muted) !important; font-weight: 400 !important; }`, "H-2: the dock's active tab painted in the muted register"]]],
+    [{ grounds: "paper", scenes: "ladder" }, " paper ladder$", `[data-spec="dock"] .fx-active { color: var(--muted) !important; font-weight: 400 !important; }`, "H-2: the dock's active tab painted in the muted register"],
+    [{ themes: "light", grounds: "paper", scenes: "ladder,dialog" }, "light paper (ladder|dialog)$", `.fx-muted, .fx-muted * { color: #050302 !important; }`, "H3-3: light muted darker than fg (|ΔL| ≥ 0.08: green unsigned, inverted signed)"]]],
   ["M-5", "m5-live-dock", [
     [{ grounds: "aurora,aurora50", scenes: "ladder", live: true }, null, `:root { --fx-readback: 1; }`, "the page reads back a canvas every frame"],
     [{ grounds: "aurora,aurora50", scenes: "ladder", live: true }, null, `:root { --fx-writer: rename; }`, "H-3: a per-frame writer under a new name (--x-field-y, setProperty)"],
@@ -97,16 +111,25 @@ const M = [
   ["M-8", "m8-chrome-calm", [[{ grounds: "stripes", scenes: "ladder,dialog" }, null, `[data-spec="floating"], [data-spec="dialog"] { background: rgb(255 255 255 / 0.2) !important; }`, "floating and the Dialog at a thin white veil"]]],
   ["M-9", "m9-state-registers", [
     [{ grounds: "paper,aurora", scenes: "state" }, null, `[data-fill], [data-fill]:hover, .fx-tabpill[data-fill] { background: transparent !important; }`, "H-6: every state fill paints nothing (a same-hue no-op under a card pole)"],
-    [{ grounds: "paper,aurora", scenes: "state" }, null, `.fx-veil { background: rgb(255 255 255 / 0.3) !important; }`, "H-6: the focus veil brightens instead of dimming"]]],
+    [{ grounds: "paper,aurora", scenes: "state" }, null, `.fx-veil { background: rgb(255 255 255 / 0.3) !important; }`, "H-6: the focus veil brightens instead of dimming"],
+    [{ themes: "dark", grounds: "paper,aurora", scenes: "state" }, "dark", `html.dark .fx-veil { background: rgb(255 255 255 / 0.06) !important; }`, "H3-4: the dark focus veil brightens"]]],
+  ["O-66", "o66-field-row", [
+    [{ grounds: "paper", scenes: "o66field,o66menu" }, null, `[data-probe^="trigger-"] { background: #e7e4df !important; } html.dark [data-probe^="trigger-"] { background: #2b2723 !important; }`, "H3-9 G2: the trigger paints a grey plate beside the cream Input (W-0.1 §2: #e7e4df)"],
+    [{ themes: "light", grounds: "paper", scenes: "o66field,o66menu" }, "light", `.fx-row[data-highlighted] { background: #e3ddd8 !important; } .fx-menu { background: #f3eee8 !important; }`, "H3-9 G3: the highlighted row darkens the plate with no tint (ΔL about −0.02, C under 0.02)"]]],
+  ["STACK", "stack-host", [[{ grounds: "black,white,aurora", scenes: "held" }, null, `[data-held] { position: static !important; z-index: 1 !important; }`, "H3-11: the grasp hosts carry a z-index digit on a non-positioned, non-flex box (no stacking context)"]]],
 ];
 let greenCap = null;
 if (M.some(([id]) => want(id)) || want("W-D")) {
-  greenCap = await cap("green", green, { grounds: ALLG + ",red", live: true, motion: true, probeUnshimmed: true });
-  for (const [id, script] of M) if (want(id)) witness(id, script, greenCap, "PASS", [], "green fixture");
-  for (const [id, script, plants] of M) if (want(id)) for (const [k, [sel, re, css, note]] of plants.entries()) {
+  greenCap = await cap("green", green, { grounds: ALLG + ",red,deep", live: true, motion: true, drift: true, probeUnshimmed: true });
+  for (const [id, script, , args = []] of M) if (want(id)) witness(id, script, greenCap, "PASS", args, "green fixture" + (args.length ? " (" + args.join(" ") + ")" : ""));
+  for (const [id, script, plants, args = []] of M) if (want(id)) for (const [k, [sel, re, css, note]] of plants.entries()) {
     const c = await cap(`green-${id}-${k}`, green, { ...sel, injectCss: css });
-    witness(id, script, c, "FAIL", re ? cells(re) : [], note);
+    witness(id, script, c, "FAIL", [...args, ...(re ? cells(re) : [])], note);
   }
+  // H3-1: REPORTED until Q-11 is ruled: the same grey plant exits 0 with no ruling and under ruling (a).
+  if (want("M-1x")) for (const r of [[], ["--q11", "a"]]) witness("M-1x", "m1x-off-paper", path.join(ROOT, "caps", "green-M-1x-0"), "PASS", r, `H3-1: REPORTED (${r.length ? "Q-11 ruled (a)" : "Q-11 unruled"}): the bound's grey over black prints and does not gate`);
+  // H3-5: a held rung the library does not declare graspable (a backdrop-root former standing) is not read, even shed.
+  if (want("M-2")) witness("M-2", "m2-text-contrast", await cap("green-M-2-undeclared", green, { grounds: "black,white,aurora", scenes: "held", injectCss: `[data-spec="wash-held"] { contain: paint !important; background: transparent !important; }` }), "PASS", cells("held$"), "H3-5: wash-held sheds its plate under contain: paint (not declared graspable): not read");
 }
 
 // ── W-A (A′) and T: the card pole at the band's bound, calibrated against the witness's own analytic bound ──────
@@ -157,6 +180,14 @@ if (want("W-G")) {
   witness("W-G", "wg-hue-through", await cap("G-noblend", fx, { grounds: "aurora,red", scenes: "ladder", injectCss: ".fx-pole { mix-blend-mode: normal !important; }" }), "FAIL", cells("ladder$"), "mechanism removed: the pole paints normally (no luminosity blend)");
 }
 
+// ── W-S (H3-7): a field claim that acts is stamped, truthfully ────────────────────────────────────────────────────
+if (want("W-S")) {
+  const sel = { grounds: "aurora", scenes: FIELD_CLAIM_SCENES.join(","), noclaim: true };
+  witness("W-S", "ws-claim-stamp", await cap("S", green, sel), "PASS", [], "the claim thins the content plates to 85% and stamps unpublished / ambiguous");
+  witness("W-S", "ws-claim-stamp", await cap("S-silent", green, { ...sel, injectCss: ":root { --fx-stamp: none; }" }), "FAIL", [], "the claim acts with no stamp (the silent dead arm)");
+  witness("W-S", "ws-claim-stamp", await cap("S-lies", green, { ...sel, injectCss: ":root { --fx-stamp: published; }" }), "FAIL", cells("(fieldout|fieldgone)$"), "the claim acts under a live stamp (published)");
+}
+
 // ── the owner-glance pair (H-13): a real pair shows a delta; the same build twice shows none ──────────────────
 if (want("GLANCE")) {
   const dir = path.join(ROOT, "glance"), overlay = path.join(ROOT, "glance-route.css");
@@ -166,6 +197,16 @@ if (want("GLANCE")) {
     const out = (r.stdout || "") + (r.stderr || ""), verdict = out.trim().split("\n").pop(), ok = expect === "PASS" ? r.status === 0 : r.status === 1;
     fs.mkdirSync(path.join(dir, `${engine}-${expect}`), { recursive: true }); fs.writeFileSync(path.join(dir, `${engine}-${expect}`, "selftest.log"), out);
     results.push({ id: "GLANCE", engine, expect, exit: r.status, ok, verdict, capdir: path.join(dir, `${engine}-${expect}`), note, fails: [] });
+    console.log(`${ok ? "ok  " : "BAD "} GLANCE ${engine.padEnd(8)} expect ${expect.padEnd(4)} exit ${r.status} · ${verdict} · ${note}`);
+  }
+  // H3-10: --story-claim reds a route story that claims no region.
+  const sBase = writeStoryFixture(path.join(ROOT, "fx", "story-base"), { claim: false }), sClaim = writeStoryFixture(path.join(ROOT, "fx", "story-claim"), { claim: true });
+  for (const engine of BOTH) for (const [expect, route, note] of [["PASS", sClaim, "H3-10: the route story claims one region"], ["FAIL", sBase, "H3-10: the route story claims nothing"]]) {
+    const o = path.join(dir, `${engine}-story-${expect}`);
+    const r = spawnSync(process.execPath, [path.join(HERE, "glance.mjs"), "--base", green, "--route", green, "--ids", "none", "--story-base", sBase, "--story-route", route, "--story-claim", "--out", o, "--name", "claim", "--engine", engine], { encoding: "utf8", maxBuffer: 64 << 20 });
+    const out = (r.stdout || "") + (r.stderr || ""), verdict = out.trim().split("\n").pop(), ok = expect === "PASS" ? r.status === 0 : r.status === 1;
+    fs.mkdirSync(o, { recursive: true }); fs.writeFileSync(path.join(o, "selftest.log"), out);
+    results.push({ id: "GLANCE", engine, expect, exit: r.status, ok, verdict, capdir: o, note, fails: [] });
     console.log(`${ok ? "ok  " : "BAD "} GLANCE ${engine.padEnd(8)} expect ${expect.padEnd(4)} exit ${r.status} · ${verdict} · ${note}`);
   }
 }
@@ -178,15 +219,15 @@ if (want("W-B")) {
   witness("W-B", "wb-substrate-publishes", await cap("B-late", fx, { ...sel, injectCss: ":root { --fx-publish-delay: 12; }" }), "FAIL", [], "publication lands 12 frames after the step", ["chromium"]);
 }
 if (want("W-C")) {
+  // H3-8: band [4.5, ∞) and three colour retunes (followed, refused loud, or a silent desync), both engines.
   const fx = writeFixture("C", { out: path.join(ROOT, "fx", "C"), fields: FIELDS });
-  const sel = { engines: "chromium", grounds: ALLG, scenes: "ladder,dialog", retune: true };
-  witness("W-C", "wc-ink-follows", await cap("C", fx, sel), "PASS", [], "RCS solve at 5.0:1 against each plate", ["chromium"]);
-  const Yc = (hexs) => { const v = [1, 3, 5].map((i) => parseInt(hexs.slice(i, i + 2), 16)); return 0.2126 * lin(v[0]) + 0.7152 * lin(v[1]) + 0.0722 * lin(v[2]); };
-  const grey = (Yt) => { const e = Yt <= 0.0031308 ? 12.92 * Yt : 1.055 * Yt ** (1 / 2.4) - 0.055; const h = Math.round(e * 255).toString(16).padStart(2, "0"); return "#" + h + h + h; };
-  const lightInk = grey((Yc("#fdf5ec") + 0.05) / 5 - 0.05), darkInk = grey(5 * (Yc("#352a22") + 0.05) - 0.05);
-  const css = `[data-spec] .fx-muted, [data-spec] .fx-muted *, [data-spec] .fx-well::placeholder { color: ${lightInk} !important; }
-html.dark [data-spec] .fx-muted, html.dark [data-spec] .fx-muted *, html.dark [data-spec] .fx-well::placeholder { color: ${darkInk} !important; }`;
-  witness("W-C", "wc-ink-follows", await cap("C-static", fx, { ...sel, injectCss: css }), "FAIL", [], `muted frozen at the default-card solve (${lightInk} / ${darkInk})`, ["chromium"]);
+  const sel = { grounds: ALLG, scenes: "ladder,dialog", retune: true };
+  witness("W-C", "wc-ink-follows", await cap("C", fx, sel), "PASS", [], "RCS solve at 5.0:1 against each plate, fg read from --foreground: every retune followed");
+  const frozen = `[data-spec] .fx-muted, [data-spec] .fx-muted *, [data-spec] .fx-mutedtab, [data-spec] .fx-mutedtab *, [data-spec] .fx-well::placeholder { color: #3a3a3a !important; }
+html.dark [data-spec] .fx-muted, html.dark [data-spec] .fx-muted *, html.dark [data-spec] .fx-mutedtab, html.dark [data-spec] .fx-mutedtab *, html.dark [data-spec] .fx-well::placeholder { color: #b0b0b0 !important; }`;
+  const rsel = { themes: "light", grounds: "paper", scenes: "ladder,dialog", retune: true };
+  witness("W-C", "wc-ink-follows", await cap("C-frozen", fx, { ...rsel, injectCss: frozen }), "FAIL", cells("light paper"), "muted frozen at #3a3a3a: under --foreground oklch(0.42) the hierarchy inverts with no word (a silent desync)");
+  witness("W-C", "wc-ink-follows", await cap("C-loud", fx, { ...rsel, injectCss: frozen + "\n:root { --fx-warn-retune: 1; }" }), "PASS", cells("light paper"), "the same frozen ink, but the page refuses the --foreground retune loud (console.warn)");
 }
 if (want("W-D")) {
   const mk = (name, committed) => {

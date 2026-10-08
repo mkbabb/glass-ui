@@ -25,6 +25,17 @@ export function need(cap, gate, want) {
 
 export const inkClass = (id) => (id.includes("muted") ? "muted" : "fg");
 
+// H3-5: a held rung is read only where the library declares its host graspable: the host (the carriers' parent) stands
+// down every backdrop-root former it declares (grasp.css's law, host-subject slice). The dock is the shipped consumer
+// and is always read. Returns null when the spec is read, else the reason it is not.
+export function heldUnread(spec) {
+  if (!spec.id.includes("held") || spec.id.startsWith("dock")) return null;
+  const hosts = spec.hosts || [];
+  if (!hosts.length) return "no grasp host mounted";
+  const standing = hosts.filter((h) => h.formers.length);
+  return standing.length ? `not declared graspable (host ${standing[0].cls}: ${standing[0].formers.join(", ")} standing)` : null;
+}
+
 const _ink = new Map();
 export function inkRows(cap, cell) {
   const k = cap.capdir + "|" + cell.files.full;

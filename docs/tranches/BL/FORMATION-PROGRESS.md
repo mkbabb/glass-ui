@@ -205,3 +205,9 @@ Outage log:
   - FL-6: Skeleton's loop not measured.
   - FL-7: Safari unmeasured.
   E-3 and E-4 belong to B and E; E-6 needs the owner's words for the S6 RETIRE. P-B launched.
+- 2026-10-08 — D3 pass 3 H3 banked (material harness, H3-1..H3-12 in place).
+  - New checks: M-1x, M-2h, O-66 (W-0.1 G2/G3), STACK, W-S.
+  - M-4 and M-9 are now signed. W-C is banded [4.5, ∞). RETUNE_CSS is removed. New contract: data-glass-ground-state.
+  - Selftest 142/142 in both engines; the M-4 signed plant was re-cut, because the first never separated signed from unsigned.
+  - HEAD under H3: O-66 reproduces W-0.1 §2 within 0.002. M-1x REPORTED: 23/33 off-paper light composites read grey in Chromium. The light dock's muted is #000 (ΔL −0.229).
+  FLOOR-V2 launched next.

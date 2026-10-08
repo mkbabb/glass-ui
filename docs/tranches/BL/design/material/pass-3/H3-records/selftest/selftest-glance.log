@@ -1,0 +1,9 @@
+ok   GLANCE chromium expect PASS exit 0 · GLANCE PASS: 6 pairs, each with a visible delta · base against a route that repaints every plate
+ok   GLANCE chromium expect FAIL exit 1 · GLANCE FAIL: 6 of 6 pairs show no delta or failed (light dock, light dialog, light floating, dark dock, dark dialog, dark floating) · base against itself (no delta)
+ok   GLANCE webkit   expect PASS exit 0 · GLANCE PASS: 6 pairs, each with a visible delta · base against a route that repaints every plate
+ok   GLANCE webkit   expect FAIL exit 1 · GLANCE FAIL: 6 of 6 pairs show no delta or failed (light dock, light dialog, light floating, dark dock, dark dialog, dark floating) · base against itself (no delta)
+ok   GLANCE chromium expect PASS exit 0 · GLANCE PASS: every story pair shows a claimed region · H3-10: the route story claims one region
+ok   GLANCE chromium expect FAIL exit 1 · GLANCE FAIL: 2 story pairs with no claimed region · H3-10: the route story claims nothing
+ok   GLANCE webkit   expect PASS exit 0 · GLANCE PASS: every story pair shows a claimed region · H3-10: the route story claims one region
+ok   GLANCE webkit   expect FAIL exit 1 · GLANCE FAIL: 2 story pairs with no claimed region · H3-10: the route story claims nothing
+SELFTEST PASS: 8 expectations met

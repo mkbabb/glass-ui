@@ -18,15 +18,21 @@
 //   [data-hx-band]       an opaque band interposed between the field and the glass (H-10); part of the ground
 //   [data-hx-declared]   a page region a consumer declares ("dark" or "light"); class .hx-declared is the route's hook
 //   window.__harness.setCeiling(v)   steps the field's opacity ceiling (W-B's step, M-2m's ground step)
-//   [data-glass-ground]  a consumer's claim on the ground under a scope (D3 C′, tokens/glass.css); written only
-//                        under ?claim=, and inert on a build whose library has no claim
-// URL: ?scene=<SCENES> &ground=<GROUNDS|red> &theme=light|dark &nodock=1 &claim=honest|field-false|root-page
+//   [data-glass-ground]  a consumer's claim on the ground under a scope (D3 C′, tokens/glass.css); written under
+//                        ?claim= and, always, in the claim and field-claim scenes (H3-6, H3-7); inert on a build whose
+//                        library has no claim
+//   [data-probe="<id>"]  an O-66 §1 probe (H3-9): trigger-paper, input-paper, trigger-pane, input-pane, row-0, row-2
+//   [data-focus]         the element the capture focuses after resting the pointer (the highlighted menu row, H3-9)
+// H3-2: every content plate carries a "muted-strong" run (--muted-foreground-strong, which every rung re-points), and
+// the ladder carries a .glass-capsule ("capsule"), whose muted run the library re-points to the -strong register.
+// URL: ?scene=<SCENES> &ground=<GROUNDS|red|deep> &theme=light|dark &nodock=1 &claim=honest|field-false|root-page|none
 //   claim=honest       the page claims what it paints under every <main>, as a consumer would: paper → "page", the
 //                      aurora → "field" (the field's own publication), a stand → its colours' tones, and the hostile
 //                      scene → the worst of its band and declared region (both painted under <main>). Portals and the
 //                      Dialog stay unclaimed.
 //   claim=field-false  as honest, except the hostile scene claims the field and hides its band (a false claim)
 //   claim=root-page    <html> claims the page ground everywhere (pass 1's page default, the masking plant)
+//   claim=none         the claim and field-claim scenes drop their claim (H3-7's unclaimed reference, variant noclaim)
 // The ink ids: "fg" and "muted" on every surface; the dock's fg run is the ACTIVE tab and its inactive tab is
 // "muted-tab" (S-9, H-2: an inactive DockControl paints --muted-foreground by design, so it is a muted run).
 import fs from "node:fs";
@@ -58,6 +64,8 @@ import { Input } from "@glass/components/input";
 import { Checkbox } from "@glass/components/checkbox";
 import { SegmentedTabs } from "@glass/components/tabs";
 import { Slider } from "@glass/components/slider";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@glass/components/select";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@glass/components/menu";
 ${hasTone ? 'import { glassGroundTone, readGlassSaturate } from "@glass/composables/glass/groundTone";' : "const glassGroundTone = null as any, readGlassSaturate = null as any;"}
 
 const q = new URLSearchParams(location.search);
@@ -69,16 +77,25 @@ const ceiling = ref(ground === "aurora50" ? 0.5 : 1);
 (window as any).__harness = { setCeiling: (v: number) => { ceiling.value = v; } };
 const keep = (e: Event) => e.preventDefault();
 const declared = q.get("theme") === "dark" ? "light" : "dark";
-const LADDERISH = ["ladder", "hostile", "isolated"].includes(scene);
+const FIELDCLAIM = ["fieldout", "fieldtwo", "fieldgone"].includes(scene);
+const LADDERISH = ["ladder", "hostile", "isolated", ...(FIELDCLAIM ? [scene] : [])].includes(scene);
+// H3-7: fieldgone unmounts the Aurora 1.2 s after mount (the claim stays); fieldout mounts it outside every ancestor of
+// <main>; fieldtwo adds a second Aurora at ceiling 0.5 under the content row (y 12-224).
+const auroraOn = ref(true);
+if (scene === "fieldgone") setTimeout(() => { auroraOn.value = false; }, 1200);
+// H3-9 (O-66 §1): a filled Select beside a filled Input; a menu open with its first row focused.
+const o66sel = ref("normal"), o66inp = ref("1000ms"), o66open = ref(true);
 const seg = ref("a");
 const SEG = [{ label: "Grid", value: "a" }, { label: "List", value: "b" }];
 
 // The consumer's claim (?claim=). The stands' colours and the hostile scene's band + declared region are what
 // this page paints under <main>; the field is the aurora's own publication.
 const claim = q.get("claim");
-const STAND: Record<string, string[]> = { black: ["#000000"], white: ["#ffffff"], checker: ["#000000", "#ffffff"], stripes: ["#7c3aed", "#facc15"], red: ["#761617"] };
+const STAND: Record<string, string[]> = { black: ["#000000"], white: ["#ffffff"], checker: ["#000000", "#ffffff"], stripes: ["#7c3aed", "#facc15"], red: ["#761617"], deep: ["#193b59"] };
 const HOSTILE = q.get("theme") === "dark" ? ["#f4f1ea", "#ffffff"] : ["#0b1020", "#000000"];
-const claimMode = !claim || claim === "root-page" ? undefined
+const claimMode = FIELDCLAIM ? (claim === "none" ? undefined : "field")
+  : scene === "claim" ? (claim === "none" ? undefined : "page")
+  : !claim || claim === "root-page" || claim === "none" ? undefined
   : scene === "hostile" ? (claim === "field-false" ? "field" : "")
   : field ? "field" : ground === "paper" ? "page" : "";
 const claimColors = claimMode === "" ? (scene === "hostile" ? HOSTILE : STAND[ground] ?? null) : null;
@@ -116,7 +133,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <Aurora v-if="field && scene !== 'halo'" class="fixed inset-0 -z-10" :opacity-ceiling="ceiling" aria-hidden="true" />
+  <div v-if="scene === 'fieldout'" class="hx-fieldhost" aria-hidden="true"><Aurora class="fixed inset-0 -z-10" :opacity-ceiling="ceiling" /></div>
+  <Aurora v-else-if="field && scene !== 'halo' && auroraOn" class="fixed inset-0 -z-10" :opacity-ceiling="ceiling" aria-hidden="true" />
+  <Aurora v-if="scene === 'fieldtwo'" class="hx-field2" :opacity-ceiling="0.5" aria-hidden="true" />
   <div v-else-if="ground !== 'paper'" class="hx-stand" :data-ground="ground" aria-hidden="true"></div>
   <div class="hx-bare" data-bare aria-hidden="true"></div>
 
@@ -128,7 +147,7 @@ onMounted(() => {
     </template>
     <section v-for="L in LEVELS" :key="L.id" :class="['hx-plate', L.cls]" :data-spec="L.id" :data-band="L.band" :style="{ ...L.pos, ...(L.style || {}) }">
       <p class="hx-fg"><span data-ink="fg">{{ L.id }} Aa foreground</span></p>
-      <p class="text-muted-foreground"><span data-ink="muted">Muted caption ink</span></p>
+      <p class="text-muted-foreground"><span data-ink="muted">Muted caption ink</span><template v-if="L.band === 'content'"> <span class="hx-strong" data-ink="muted-strong">strong</span></template></p>
       <div class="hx-wells">
         <Input model-value="Lot 42" aria-label="Lot" data-ink="well-fg" data-edge="well" data-ring="well" />
         <Input placeholder="Search lots" aria-label="Search" data-ink="well-muted" />
@@ -144,6 +163,7 @@ onMounted(() => {
         <span class="hx-docksample" data-sample></span>
       </GlassDock>
     </div>
+    <div class="hx-capcell"><span class="glass-capsule hx-capspec" data-spec="capsule" data-band="content"><span data-ink="fg">Chip</span> <span class="text-muted-foreground" data-ink="muted">12 lots</span></span></div>
     <div v-if="scene !== 'isolated'" class="hx-popcell">
       <Popover default-open>
         <PopoverTrigger class="hx-poptrigger">Filters</PopoverTrigger>
@@ -210,6 +230,46 @@ onMounted(() => {
     <div class="hx-veilprobe" data-veil-probe aria-hidden="true"></div>
   </main>
 
+  <main v-else-if="scene === 'claim'" class="hx-page" :data-glass-ground="claimMode">
+    <div class="hx-tray bg-secondary" aria-hidden="true"></div>
+    <section v-for="(L, i) in LEVELS.filter((x) => x.band === 'content')" :key="L.id" :class="['hx-plate', L.cls]" :data-spec="L.id" data-band="content" :style="{ left: 24 + i * 304 + 'px', top: '24px' }">
+      <p class="hx-fg"><span data-ink="fg">{{ L.id }} Aa foreground</span></p>
+      <p class="text-muted-foreground"><span data-ink="muted">Muted caption ink</span> <span class="hx-strong" data-ink="muted-strong">strong</span></p>
+      <div class="hx-sample" data-sample></div>
+    </section>
+    <section class="hx-plate glass-card glass-opaque hx-host2" aria-label="Opaque card">
+      <section v-for="(L, i) in [{ id: 'wash-in-card', cls: 'glass-wash' }, { id: 'quiet-in-card', cls: 'glass-quiet' }]" :key="L.id" :class="['hx-plate', L.cls]" :data-spec="L.id" data-band="content" :style="{ left: 16 + i * 304 + 'px', top: '16px', height: '150px' }">
+        <p class="hx-fg"><span data-ink="fg">{{ L.id }} Aa foreground</span></p>
+        <p class="text-muted-foreground"><span data-ink="muted">Muted caption ink</span> <span class="hx-strong" data-ink="muted-strong">strong</span></p>
+        <div class="hx-sample" data-sample></div>
+      </section>
+    </section>
+  </main>
+
+  <main v-else-if="scene === 'o66field'" class="hx-page hx-o66">
+    <section class="hx-o66col">
+      <Select v-model="o66sel"><SelectTrigger aria-label="Direction" data-probe="trigger-paper"><SelectValue /></SelectTrigger>
+        <SelectContent><SelectItem value="normal">Normal</SelectItem><SelectItem value="reverse">Reverse</SelectItem></SelectContent></Select>
+      <Input v-model="o66inp" aria-label="Duration" data-probe="input-paper" />
+    </section>
+    <section class="glass-floating hx-o66col hx-o66pane">
+      <Select v-model="o66sel"><SelectTrigger aria-label="Direction in pane" data-probe="trigger-pane"><SelectValue /></SelectTrigger>
+        <SelectContent><SelectItem value="normal">Normal</SelectItem><SelectItem value="reverse">Reverse</SelectItem></SelectContent></Select>
+      <Input v-model="o66inp" aria-label="Duration in pane" data-probe="input-pane" />
+    </section>
+  </main>
+
+  <main v-else-if="scene === 'o66menu'" class="hx-page hx-o66">
+    <DropdownMenu v-model:open="o66open">
+      <DropdownMenuTrigger as-child><button type="button" class="hx-poptrigger">Commands</button></DropdownMenuTrigger>
+      <DropdownMenuContent class="hx-o66menu" @focus-outside="keep" @interact-outside="keep" @pointer-down-outside="keep">
+        <DropdownMenuItem data-probe="row-0" data-focus>First command</DropdownMenuItem>
+        <DropdownMenuItem data-probe="row-1">Second command</DropdownMenuItem>
+        <DropdownMenuItem data-probe="row-2">Third command</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  </main>
+
   <Dialog v-else-if="scene === 'dialog'" default-open>
     <DialogContent data-spec="dialog" data-band="chrome" class="hx-dialog" @pointer-down-outside="keep" @interact-outside="keep">
       <DialogHeader>
@@ -246,6 +306,17 @@ body { background: var(--background); color: var(--foreground); font-family: sys
 .hx-stand[data-ground="checker"] { background: repeating-conic-gradient(#000 0 25%, #fff 0 50%) 0 0 / 16px 16px; }
 .hx-stand[data-ground="stripes"] { background: repeating-linear-gradient(90deg, #7c3aed 0 24px, #facc15 24px 48px); }
 .hx-stand[data-ground="red"] { background: #761617; }
+.hx-stand[data-ground="deep"] { background: #193b59; }
+.hx-field2 { position: fixed; left: 0; top: 12px; width: 1280px; height: 212px; z-index: -9; }
+.hx-strong { color: var(--muted-foreground-strong); }
+.hx-capcell { position: absolute; left: 24px; top: 600px; }
+.hx-capspec { display: inline-block; padding: 8px 18px; font-size: 15px; line-height: 20px; }
+.hx-tray { position: absolute; left: 0; top: 12px; width: 1280px; height: 212px; }
+.hx-host2 { left: 24px; top: 236px; width: 640px; height: 182px; }
+.hx-o66 { padding: 24px; box-sizing: border-box; }
+.hx-o66col { display: grid; gap: 16px; width: 340px; margin-bottom: 24px; }
+.hx-o66pane { width: 380px; padding: 20px; border-radius: 24px; box-sizing: border-box; }
+.hx-o66menu { width: 280px; }
 .hx-band { position: absolute; left: 0; width: 1280px; background: #0b1020; }
 html.dark .hx-band { background: #f4f1ea; }
 .hx-declared { position: absolute; left: 920px; top: 500px; width: 330px; height: 220px; background: #000; }

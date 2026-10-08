@@ -7,9 +7,10 @@
 //   it (the ring 3-6 px outside the fill, inside its surface, outside every other fill) by ΔE_OK ≥ 0.02. A fill that
 //   is not painted or not found is a FAIL row. This catches a plate-as-fill reader under a --card pole, which turns
 //   a pill into a same-hue no-op (PF-9).
-//   Veil (signed): an engaged .glass-focus-veil centred on an empty page region ([data-veil-probe]): in light,
-//   OKLab L inside the probe with the veil (full) is at least 0.02 below the same pixels without it (raw); a veil that
-//   brightens is a FAIL. Dark prints the signed ΔL as information.
+//   Veil (signed, both themes; H3-4 adds dark): an engaged .glass-focus-veil centred on an empty page region
+//   ([data-veil-probe]): OKLab L inside the probe with the veil (full) is at least 0.02 below the same pixels without it
+//   (raw); a veil that brightens is a FAIL. Pass 2 read the dark veil over paper at ΔL +0.006 (Chromium): it did not dim
+//   and nothing reddened.
 //   node m9-state-registers.mjs <capdir> [--gate chromium[,webkit]]
 import { cli, loadCapture, gateEngines, report, region, mean3, dE, lch, hex, f, tag, THEMES, SCENE_GROUNDS } from "./lib.mjs";
 import { need, tally } from "./rows.mjs";
@@ -41,10 +42,9 @@ for (const { cell, gated } of have) {
   for (const probe of cell.veil || []) {
     const on = mean3(region(cap.img(cell, "full"), probe)), off = mean3(region(cap.img(cell, "raw"), probe));
     const dL = lch(on)[0] - lch(off)[0];
-    if (cell.theme === "light") { const ok = dL <= -0.02; t.add(gated, ok); parts.push(`focus veil ${hex(off)} → ${hex(on)} ΔL ${dL >= 0 ? "+" : ""}${f(dL, 3)} (dims ≥ 0.02)${ok ? "" : dL > 0 ? " brightens ✗" : " ✗"}`); }
-    else parts.push(`focus veil ${hex(off)} → ${hex(on)} ΔL ${dL >= 0 ? "+" : ""}${f(dL, 3)} (dark: information)`);
+    const ok = dL <= -0.02; t.add(gated, ok); parts.push(`focus veil ${hex(off)} → ${hex(on)} ΔL ${dL >= 0 ? "+" : ""}${f(dL, 3)} (dims ≥ 0.02)${ok ? "" : dL > 0 ? " brightens ✗" : " ✗"}`);
   }
-  if (!(cell.veil || []).length && cell.theme === "light") { t.add(gated, false); parts.push("focus veil probe not found ✗"); }
+  if (!(cell.veil || []).length) { t.add(gated, false); parts.push("focus veil probe not found ✗"); }
   lines.push(`${tag(cell)}${gated ? "" : " [info]"}: ${parts.join(" · ")}`);
 }
-report(cap, { id: "M-9", title: "state registers (active, hover, checked and selected fills differ from their surface by ΔE_OK ≥ 0.02; the focus veil dims in light)", lines, ...t, gate });
+report(cap, { id: "M-9", title: "state registers (active, hover, checked and selected fills differ from their surface by ΔE_OK ≥ 0.02; the focus veil dims, both themes)", lines, ...t, gate });

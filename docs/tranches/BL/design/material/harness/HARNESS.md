@@ -1,11 +1,11 @@
-# D3 · the glass material battery (harness), H2
+# D3 · the glass material battery (harness), H3
 
 | field | value |
 |---|---|
-| seat | D3 pass 2, H2. Lands the harness revision of `REGISTRY.md` §3.3 (H-1..H-15) in place over the pass-1 battery |
+| seat | D3 pass 3, H3. Lands `REGISTRY.md` P2-6.2 step 1 (H3-1..H3-12) in place over H2 (pass 2's H-1..H-15, which stay) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | engines | Chromium 149 (`--enable-unsafe-webgpu --ignore-gpu-blocklist --use-angle=metal`, WebGPU adapter present) and Playwright WebKit 26.5, both headless, Playwright imported from `glass-ui/node_modules/playwright`. **Playwright WebKit is not Safari.** Every real-Safari cell is UNMEASURED (owner's safaridriver checkbox) |
-| records | the self-test result per check and engine, and the HEAD baseline per witness, engine and theme: `../pass-2/H2.md` (the one source of record for those numbers; this file describes the instrument) |
+| records | the self-test result per check and engine, and the HEAD baseline per witness, engine and theme: `../pass-3/H3.md` for H3 (`../pass-2/H2.md` for H2's). Those files are the source of record for the numbers; this file describes the instrument |
 
 ## 1 · What is here
 
@@ -18,12 +18,17 @@
 | `rows.mjs` | Shared row generators: required cells (`need`), ink rows at R 1 and R 3, indicator rows, the behavioural signal leg (`signalLeg`) |
 | `raw-clean.mjs` | RAW (H-1): the raw capture shows the bare ground under every surface |
 | `m1-…` … `m9-…`, `m2-motion.mjs` | M-1..M-9 and M-2m, one script each |
+| `m1x-off-paper.mjs` | M-1x (H3-1): no grey off paper; REPORTED until the owner rules Q-11, `--q11 b|c` gates it |
+| `m2-held-window.mjs` | M-2h (H3-5): the held release window, frame-locked, and the held host's non-glyph paint (the Slider halo) |
+| `o66-field-row.mjs` | O-66 (H3-9): W-0.1's G2 (trigger against Input) and G3 (the highlighted menu row) in D3's battery |
+| `stack-host.mjs` | STACK (H3-11): every grasp host forms a stacking context, read from computed style in the held cells |
+| `ws-claim-stamp.mjs` | W-S (H3-7, C″): a field claim whose publication is out of scope, shared or unmounted does not act or is stamped |
 | `wa-…` … `wg-…` | W-A (A′), W-B..W-F (banked or retired families, unchanged), W-G (D3-G) |
 | `t-transmission.mjs` | T (H-12): T = 1 − α and T_c1 per rung; reported, not gated |
 | `glance.mjs` | The owner-glance pair (H-13): base against route, dock, Dialog, floating and the glass-material story, both themes |
 | `run.mjs` | `node run.mjs <worktree> [--label x] [--demo]`: build, capture everything, run every check. Logs in `<capdir>/results/<id>.log` |
 | `baseline.mjs` | `node baseline.mjs <capdir> [--out f.json] [--only ids]`: every check once per gate engine × theme (`--gate <engine> --cells '^<engine> <theme> '`), printed as one Markdown table. Results go to a mirror `<capdir>-baseline/`, so the run's own `results/` stay as `run.mjs` wrote them. It is how `../pass-2/H2.md` §3 was made, and how a route's run is laid beside it |
-| `fixtures.mjs` | Hand-made pages that honour the same contract: `green` (the M battery), `A`, `B`, `C`, `E`, `F`, `G`, each laying out every H2 scene |
+| `fixtures.mjs` | Hand-made pages that honour the same contract: `green` (the M battery), `A`, `B`, `C`, `E`, `F`, `G`, each laying out every H2 and H3 scene; `writeStoryFixture` (a stand-in story page for GLANCE `--story-claim`) |
 | `selftest.mjs` | Every check PASS on its fixture and FAIL on a planted violation, gated once per engine |
 | `v700-veil.css` | The pass-1 7.0.0 veil overlay, usable as `glance.mjs --overlay` |
 
@@ -34,15 +39,16 @@ git worktree add --detach <scratch>/wt <rev>
 ln -s <checkout>/node_modules <scratch>/wt/node_modules
 export D3_OUT=<scratch>/out
 H=docs/tranches/BL/design/material/harness
-node $H/run.mjs <scratch>/wt --label <route> --demo                 # 19 min 49 s at load 10-16 (H2's HEAD run)
+node $H/run.mjs <scratch>/wt --label <route> --demo                 # H3: see ../pass-3/H3.md §3 for the time and load (H2's HEAD run: 19 min 49 s at load 10-16)
 node $H/baseline.mjs $D3_OUT/caps/<route> --out <file.json>          # the per-engine, per-theme table; about 2 min, no browser
 node $H/m2-text-contrast.mjs $D3_OUT/caps/<route> [--gate chromium|webkit] [--verbose] [--cells <regex>]
 node $H/glance.mjs --base $D3_OUT/builds/head/dist --route $D3_OUT/builds/<route>/dist --out <dir> --name <route> \
     --story-base $D3_OUT/builds/head/demo --story-route $D3_OUT/builds/<route>/demo [--engine webkit]
-node $H/selftest.mjs --fields $D3_OUT/caps/head [--only M-2,W-G]    # 1 h 5 min at load 7-70 (100 expectations)
+node $H/selftest.mjs --fields $D3_OUT/caps/head [--only M-2,W-G]    # H3: ../pass-3/H3.md §2 for the time and load
+node $H/m1x-off-paper.mjs $D3_OUT/caps/<route> [--q11 a|b|c]         # REPORTED with no ruling or under (a); gated under (b), (c)
 ```
 
-**Consumer switches (D3 pass 2, C′ prototype).** `capture.mjs` and `run.mjs` take `--query <k=v>`, appended to every page URL the capture opens (cells, live and motion windows, the unshimmed probe); the cells keep their variant, so every witness reads the run it is pointed at. The specimen page reads `claim=`: `honest` (each `<main>` claims what the page paints under it: paper → `data-glass-ground="page"`, the aurora → `"field"`, a stand → its colours' tones through the library's `glassGroundTone`, the hostile scene → the worst of its band and declared region), `field-false` (the hostile scene claims the field and hides its band) and `root-page` (`<html>` claims the page ground: pass 1's page default). A library without the claim ignores the attribute, so HEAD and the floor read the same under any `claim=`. `glance.mjs` takes `--ground`, `--ids` and `--route-query` to widen the pair beyond H-13's paper chrome crops; its default pair is unchanged. Records: `../pass-2/D3-Cp-proto.md`.
+**Consumer switches (D3 pass 2, C′ prototype).** `capture.mjs` and `run.mjs` take `--query <k=v>`, appended to every page URL the capture opens (cells, live and motion windows, the unshimmed probe); the cells keep their variant, so every witness reads the run it is pointed at. The specimen page reads `claim=` (H3 adds `none`: the claim and field-claim scenes drop their claim, run.mjs's `noclaim` variant): `honest` (each `<main>` claims what the page paints under it: paper → `data-glass-ground="page"`, the aurora → `"field"`, a stand → its colours' tones through the library's `glassGroundTone`, the hostile scene → the worst of its band and declared region), `field-false` (the hostile scene claims the field and hides its band) and `root-page` (`<html>` claims the page ground: pass 1's page default). A library without the claim ignores the attribute, so HEAD and the floor read the same under any `claim=`. `glance.mjs` takes `--ground`, `--ids` and `--route-query` to widen the pair beyond H-13's paper chrome crops; its default pair is unchanged. Records: `../pass-2/D3-Cp-proto.md`.
 
 Every check exits 0 on PASS and 1 on FAIL; its last line is the verdict and the lines above it are the measured rows. `--gate` names the gate engines (default Chromium); rows of any other captured engine print as information. `--cells <regex>` restricts a check to the cells whose `engine theme ground scene` matches; only the self-test's planted captures use it.
 
@@ -54,29 +60,39 @@ A cell is engine × theme × ground × scene. Grounds: paper, the default `<Auro
 
 | scene | grounds | contents |
 |---|---|---|
-| `ladder` | the seven + red | the eight plates (wash, quiet, resting, card, floating, overlay, the dialog rung, the opaque escape), each with fg and muted text and two real `Input` wells; a live `GlassDock` (active tab = fg run, inactive tab = `muted-tab`, label = muted); an open `Popover` |
-| `dialog` | the seven | the real `Dialog` (title, description, caption, a well, Close), scrim included |
+| `ladder` | the seven + red + deep | the eight plates (wash, quiet, resting, card, floating, overlay, the dialog rung, the opaque escape), each with fg and muted text and two real `Input` wells; a live `GlassDock` (active tab = fg run, inactive tab = `muted-tab`, label = muted); an open `Popover` |
+| `dialog` | the seven + deep | the real `Dialog` (title, description, caption, a well, Close), scrim included |
 | `halo` | paper | `.glass-capsule` 2 px inside wash, quiet, resting, card, and a reference on the open page |
 | `empty` | c1, c0.5 | the field with nothing mounted (W-F) |
 | `held` (H-5) | black, white, c1 | `wash-held` and `floating-held`: plates carrying the consumer grasp contract (`[data-held]` + a `.glass-grasp-carrier[data-grasp=grasp]` child, `glass/grasp.css`); `dock-held`: a dock held by a real press-and-hold on a `Slider` inside it (the only library path that takes the dock's grasp, `useDockHold`); `dock-collapsed`: `:collapse="true"`, its `#collapsed` summary a single fg glyph run |
 | `hostile` (H-10) | c1, c0.5 | the ladder, plus an opaque band (light `#0b1020`, dark `#f4f1ea`) under the first plate row (y 36-88) and under the dock's text row (y 474-522), and a declared region (`.hx-declared[data-hx-declared]`, black in light, white in dark) under the teleported Popover. The band and region are ground: `raw` keeps them |
 | `state` (H-6) | paper, c1 | a resting plate with a checked `Checkbox` and a `SegmentedTabs` (selected indicator); a dock with its active tab and a hovered inactive tab; an engaged `.glass-focus-veil` centred on an empty page region |
 | `isolated` (H-15) | c1, red | the ladder's plates and dock inside `isolation: isolate` |
+| `claim` (H3-6) | paper | `<main data-glass-ground="page">` over an opaque `bg-secondary` tray (y 12-224) under the four content rungs, and a `glass-wash` and `glass-quiet` nested in an opaque `glass-card glass-opaque`: library paint inside a page claim |
+| `fieldout`, `fieldtwo`, `fieldgone` (H3-7) | c1 | the ladder under `<main data-glass-ground="field">`: the Aurora mounted in a wrapper outside every ancestor of `<main>`; a second Aurora at ceiling 0.5 under the content row (y 12-224); the Aurora unmounted 1.2 s after mount. Each is captured claimed (`base`) and unclaimed (`noclaim`, `?claim=none`) |
+| `o66field`, `o66menu` (H3-9) | paper | W-0.1's probe scenes on the real library: a filled `SelectTrigger` beside a filled `Input`, on paper and in a `.glass-floating` pane; an open `DropdownMenu` whose first row takes focus (`data-highlighted`) |
+
+H3 also adds, in every ladder-like scene: a `muted-strong` run (`--muted-foreground-strong`) on each content plate, and a `.glass-capsule` spec (`capsule`, its muted run the library's `-strong` register) at (24, 600) (H3-2). The `ladder` and `dialog` scenes gain the `deep` ground, the story's deep canvas `#193b59` (H3-1).
 
 Each cell is a fresh context at 1280×900, DPR 1, `reducedMotion: reduce` (the aurora parks after one frame). Captures: `full`, `noink`, `maskA`/`maskB` (glyph coverage), `raw`, one clip per focused `[data-ring]`, and `on`/`off` for halo. The pointer rests on `[data-press]` (pressed and held through every capture; the cell records whether the held register was still engaged after them), else on `[data-hover]`, else in the far corner.
 
 ### 2.2 · The DOM contract (fixtures honour it)
 
-`[data-spec]` a surface (`data-band` content, chrome, escape) · `[data-ink]` a text run (an id containing `muted` is the muted register) · `[data-edge]` a border perimeter · `[data-ring]` a focusable ring · `[data-sample]` an empty surface region · `[data-bare]` an empty page region · `[data-raw-hide]` hidden in `raw` besides surfaces (the scrim, the focus veil) · `[data-fill]` a state fill (active, hover, checked, selected) · `[data-veil-probe]` a region under an engaged focus veil · `[data-hover]`, `[data-press]` the pointer's rest · `[data-hx-band]`, `[data-hx-declared]` the H-10 grounds · `window.__harness.setCeiling(v)` steps the field.
+`[data-spec]` a surface (`data-band` content, chrome, escape) · `[data-ink]` a text run (an id containing `muted` is the muted register) · `[data-edge]` a border perimeter · `[data-ring]` a focusable ring · `[data-sample]` an empty surface region · `[data-bare]` an empty page region · `[data-raw-hide]` hidden in `raw` besides surfaces (the scrim, the focus veil) · `[data-fill]` a state fill (active, hover, checked, selected) · `[data-veil-probe]` a region under an engaged focus veil · `[data-hover]`, `[data-press]` the pointer's rest · `[data-focus]` focused after the pointer rests (H3-9) · `[data-probe]` an O-66 probe (H3-9) · `[data-hx-band]`, `[data-hx-declared]` the H-10 grounds · `window.__harness.setCeiling(v)` steps the field.
 
 Two contracts a route implements, read from the cascade and the DOM:
 - **`--glass-bound`** (`BOUND_PROP`, H-4): the floor patch (FL-5) exposes each band's computed any-input bound as a number on every plate. W-A reads it; its absence is a FAIL row.
 - **`data-glass-flat`** (`FLAT_ATTR`, H-15): a plate that knows its luminosity pole went flat carries it, on itself or an ancestor. W-G reads it.
+- **`data-glass-ground-state`** (`GROUND_STATE_ATTR`, H3-7): a claim whose ground knowledge is dead, stale or ambiguous says so on the plate or an ancestor. `published` and `live` (`LIVE_STATES`) claim the knowledge is good; any other value is a stamp. W-S reads it.
+
+The capture also records, per surface: its grasp hosts (the carriers' parents) with their backdrop-root formers and whether each forms a stacking context (H3-5, H3-11), and the claim and stamp it sits under (H3-6, H3-7); per cell, the O-66 probes and the pressed control's box, and the console's error and warning counts (H3-8).
 
 ### 2.3 · The live and motion windows
 
 - **Live windows** (`--live`; both engines, WebKit `+shim`; c1 and c0.5; both themes; one default dock; the pass-1 fed window is retired, H-3). After a 1.5 s settle the tallies reset; over 9 s the page counts main-thread readbacks (`getImageData`, WebGL `readPixels`, `toDataURL`, by wrapping the prototypes) and **custom-property writes per animation frame, by name, from any source**: `CSSStyleDeclaration`/`CSSStyleProperties.setProperty`, Typed-OM `StylePropertyMap.set`, a `style`-attribute rewrite (a MutationObserver that compares each `--` declaration's value), a `<style>` text rewrite, `CSSStyleSheet.insertRule`/`replace`/`replaceSync`. The ceiling step for W-B follows.
 - **Motion windows** (`--motion`, H-11; both engines; the ladder over c1 and c0.5; both themes; motion on). Whole frames are saved: 12 `motion` frames spread over 3 s of the moving field, then `step` frames from 200 ms before a ceiling step (1 → 0.5, 0.5 → 1) to 1.5 s after. Chromium frames are the compositor's own (CDP `Page.startScreencast`, PNG, every frame; 138-168 step frames per window at load 10-16); Playwright WebKit frames are a `page.screenshot` loop (about 10-14 per second), which opens 200 ms before the step as Chromium's window does.
+- **Release windows** (H3-5; every held cell, both engines). After the held captures, motion is switched on (`emulateMedia`), and whole frames are kept from 100 ms before the pointer lifts to 1.2 s after: Chromium a screenshot, then the screencast (every painted frame), then a screenshot; Playwright WebKit a screenshot loop.
+- **Drift windows** (`--drift`, H3-12; both engines; the ladder over c1; both themes; motion on). One frame every 2 s for 100 s, each written to disk as taken, so the window holds one frame in memory. Pass 2's 90 s screencast window exhausted the node heap because it kept every frame.
 - **The unshimmed probe** (`--probe-unshimmed`): each theme loads the ladder in Playwright WebKit without the shim and records whether the page crashes, so the shim never hides the crash.
 
 No canvas context is ever requested; the live WebGPU field is observed only by screenshot.
@@ -103,23 +119,39 @@ No canvas context is ever requested; the live WebGPU field is observed only by s
 |---|---|---|---|
 | RAW | ladder, dialog over black, white | raw under every surface rect (inset 2 px) within 3/255 of the bare ground on ≥ 99.9% of pixels | H-1 (`raw` hides `[data-spec], [data-spec] *`) |
 | M-1 | light paper ladder, dialog | L ≥ L_paper − 0.01, ΔE_OK ≤ 0.02 | — |
-| M-2 | ladder, dialog × 7 grounds; held × black, white, c1; hostile × c1, c0.5 | every ink p05 ≥ 4.5 at R 1 **and** R 3; a held surface whose register is not engaged is a FAIL row | H-5, H-8, H-10 |
-| M-2m | motion windows | every ink p05 ≥ 4.5 in every motion frame and every step frame (Q-8 c: never dips); ≥ 6 motion and ≥ 10 (Chromium) / ≥ 5 (WebKit) step frames | H-11 |
+| M-1x | light ladder, dialog × black, checker, deep | each composite is cream (M-1's predicate against the paper cell's page) or carries colour (C ≥ 0.02). REPORTED until Q-11; `--q11 b` gates every row, `--q11 c` the claimed plates | H3-1 |
+| M-2 | ladder, dialog × 7 grounds; held × black, white, c1; hostile × c1, c0.5; claim × paper | every ink p05 ≥ 4.5 at R 1 **and** R 3, the `-strong` runs and the capsule included; a held surface whose register is not engaged is a FAIL row; a held rung whose host keeps a backdrop-root former standing (not declared graspable) is not read | H-5, H-8, H-10, H3-2, H3-5, H3-6 |
+| M-2m | motion and drift windows | every ink p05 ≥ 4.5 in every motion, step and drift frame (Q-8 c: never dips); ≥ 6 motion and ≥ 10 (Chromium) / ≥ 5 (WebKit) step frames; ≥ 45 drift frames over ≥ 95 s | H-11, H3-12 |
+| M-2h | held × black, white, c1 (+ the ladder dock over black and white) | release: every read held ink p05 ≥ 4.5 in every release frame, with a frame before and one ≥ 800 ms after; halo: the held dock's painted α per column across its sample ≥ the resting dock's α − 0.02 | H3-5 |
 | M-3 | ladder, dialog × 7; held; hostile | perimeter and ring ≥ 3.0 | H-5, H-10 |
-| M-4 | ladder, dialog × 7 | on **every** plate ΔL_OK(fg, muted) ≥ 0.08; the dock's fg is its active tab; neither dock ink is `#000`/`#fff` within 4/255 (Playwright WebKit paints a `#000` ink's cores at `#010102`-`#030303`) | H-2, H-7 |
+| M-4 | ladder, dialog × 7 | on **every** plate, signed: muted lighter than fg in light and darker in dark by ΔL_OK ≥ 0.08 (H3-3); the dock's fg is its active tab; neither dock ink is `#000`/`#fff` within 4/255 (Playwright WebKit paints a `#000` ink's cores at `#010102`-`#030303`) | H-2, H-7 |
 | M-5 | live windows; ladder over c1, c0.5 | 0 readbacks and no custom property written in ≥ 3 frames; dock inks ≥ 4.5 | H-3 |
 | M-6 | paper ladder, dialog | adjacent ΔE ≥ 0.01; every dark plate ΔE ≥ 0.05 from the page **and** L ≥ L_page | H-9 |
 | M-7, M-8 | as pass 1 | as pass 1 | — |
-| M-9 | state × paper, c1 | active, hover, checked, selected fills ΔE_OK ≥ 0.02 from their surround; light focus veil ΔL ≤ −0.02 (dims; brightening is a FAIL); dark prints ΔL | H-6 |
+| M-9 | state × paper, c1 | active, hover, checked, selected fills ΔE_OK ≥ 0.02 from their surround; the focus veil ΔL ≤ −0.02 in both themes (dims; brightening is a FAIL) | H-6, H3-4 |
+| O-66 | o66field, o66menu × paper | G2: ΔE_OK(trigger strip, Input strip) ≤ 0.01, light and dark, paper and pane; G3 (light): the highlighted row's C ≥ 0.02 or L ≥ the plate's L − 0.005; dark recorded | H3-9 |
+| STACK | held × black, white, c1 | every grasp host forms a stacking context (computed) | H3-11 |
+| W-S | fieldout, fieldtwo, fieldgone × c1, claimed and unclaimed | a claim that changes the content plates' paint (ΔE > 0.006 from unclaimed) carries a stamp; out of scope or unmounted, a stamp that is not live; with two substrates, M-2 holds too | H3-7 |
 | W-A | live; ladder, dialog × paper, c1, c0.5, black, white | leg 1 = M-5's behavioural leg; legs 2-3 as pass 1; leg 4: the thinnest rung of each band has painted α ∈ [bound − 0.005, bound + 0.03], bound = computed `--glass-bound` on that plate (0.005 is paint-read noise); the analytic bound prints as information | H-3, H-4 |
 | W-G | ladder, isolated × c1, red | content rungs and the dock: Δh ≤ 10°, C ≥ 0.5 × gamut max, M-2 (R 1 and R 3) on the same surface; in `isolated`, that or `data-glass-flat` | H-15 |
 | T | black, white, c1 | reported (exit 0); with `--expect`, measured α within 0.01 of expected | H-12 |
-| GLANCE | specimen builds (+ demo builds) | `--require-delta`: every pair's halves differ on ≥ 0.1% of the crop | H-13 |
-| W-B, W-C, W-D, W-E, W-F | as pass 1 | as pass 1 | written only when their families' re-triggers fire (REGISTRY §3.3) |
+| GLANCE | specimen builds (+ demo builds) | `--require-delta`: every pair's halves differ on ≥ 0.1% of the crop; `--story-claim`: the route's story claims a region (cropped as its own pair) | H-13, H3-10 |
+| W-C | ladder, dialog × 7; retune-bg, retune-fg, retune-card × paper | every muted run p05 ≥ 4.5 (the [4.5, 5.5] ceiling struck); each colour retune followed (every run ≥ 4.5 and the signed hierarchy kept) or refused loud (more console errors and warnings than the base cell) | C″'s witness, row 17; H3-8 |
+| W-B, W-D, W-E, W-F | as pass 1 | as pass 1 | written only when their families' re-triggers fire (REGISTRY §3.3) |
 
 M-2m, RAW and the new cells carry the raw fix (H-1) through every `raw` read: W-B, W-F leg 1, W-A's analytic bound, M-1 and M-6's page, T_c1 and W-G's raw ground.
 
 ## 4 · Known limits
+
+- **M-1x's "grey"** is a two-clause reading (cream against paper, or C ≥ 0.02). It has no hue term: a composite at C 0.02 in a muddy hue passes. Q-11's ruling may sharpen it.
+- **M-1x's colour clause passes a ground that shows through.** At HEAD the light plates over the deep canvas read C 0.04-0.09 because they transmit its blue (wash `#0d3c66`), not because the veil carries colour. T and M-2 read that transmission; M-1x does not. Its paper clause also reds a cream opaque card a hair under L_paper − 0.01 (HEAD's `#fdf5ec`, L 0.974 against 0.975), the same predicate M-1 applies over paper.
+- **M-2h's halo leg reads any thinning of the held dock**, the grasp register's designed ink shed included. At HEAD (dock α about 0.1) it reads that shed; under floor v2 (the veil held on the carriers, FL-7, FL-14) held should equal rest, so what remains is the halo.
+- **GLANCE `--story-claim`** counts a claimed element only with a painted box of at least 8 × 8 px inside the viewport; a claim on a zero-height wrapper is not shown.
+- **Playwright WebKit's release window** depends on screenshot latency: under load one screenshot can outlast the 100 ms pre-window, so pre frames are timed at the screenshot's start.
+- **The declared-graspable test** (H3-5) reads the host's own formers (the library arm's host-subject slice). Ancestor formers are not read.
+- **The release window under PRM.** The held cell is captured under reduced motion; the window switches motion on with `emulateMedia` while the pointer stays down, so the release a user without the preference sees is what it reads.
+- **W-S at HEAD and floor v2** reads "inert": neither library thins under a claim, so every row passes by fail-safe construction. It discriminates only on a route with a thinning arm (C″).
+- **W-C's loud arm** counts console errors and warnings against the base cell; a library that warns for an unrelated reason in the retuned cell only would pass it.
 
 - **Motion frames in Playwright WebKit** are a screenshot loop, about 10-14 per second, so a dip shorter than about 100 ms can fall between frames there. Chromium's screencast frames are every composited frame.
 - **The frame-locked ring** uses the frozen cell's glyph coverage. The witness first checks that every surface and ink box sits within 1 px of where the frozen cell measured it, and FAILs the window otherwise.
