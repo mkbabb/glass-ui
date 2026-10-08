@@ -1,0 +1,264 @@
+### pe chromium e7-one-writer.mjs  · load { 72.93 64.34 55.01 } · 19:24:27
+# E-7 · one writer of data-engaged, meaning held
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pE/out/builds/pe · engine chromium · lock wait 0.0 s · other headless processes: chromium 25, webkit 6 · load 72.9/64.3/55.0 at start
+# chromium 149.0.7827.55
+  PASS       E-7 writers (static) · 1 writer file(s): src/composables/motion/engage/engageStage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pE/wt · load 73.7/64.6/55.2
+  PASS       E-7 slider held · [data-engaged] nodes while pointer-held 2 · bound ≥ 1 · load 73.7/64.6/55.2
+  PASS       E-7 slider held PRM · reduce · [data-engaged] nodes while pointer-held 2 · bound ≥ 1 · load 73.7/64.6/55.2
+  PASS       E-7 modal open, nothing held · dialog open true · veil nodes 1 · [data-engaged] nodes 0 · bound 0 · load 73.7/64.6/55.2
+E-7 chromium PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 72.9/64.3/55.0 at start, 74.3/64.9/55.3 at end
+### exit 0 · load { 74.32 64.92 55.33 } · 19:24:33
+### pe chromium e3-slider.mjs  · load { 74.32 64.92 55.33 } · 19:24:33
+# E-3 · the slider exemplar (T1 GROW) and its phone arm
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pE/out/builds/pe · engine chromium · lock wait 0.0 s · other headless processes: chromium 29, webkit 4 · load 74.3/64.9/55.3 at start
+# chromium 149.0.7827.55
+  PASS       E-3 slider desk pointer-held light · rest 360.0 px → held 381.6 px (×1.060; [data-engaged] 2) · bound ×1.03 sustained at 450 ms · load 71.3/64.5/55.2
+  PASS       E-3 slider desk keyboard-focused light · rest 360.0 px → focused 381.6 px (×1.060; focus on slider) · bound ×1.03 · load 71.3/64.5/55.2
+  FAIL       E-3 slider phone touch-held light · 390×844 coarse · rest 358.0 px → touch-held 358.0 px (×1.000; [data-engaged] 2) · bound ×1.03 · load 71.3/64.5/55.2
+  PASS       E-3 slider phone gutter light · engaged box 16.0..374.0 px in a 390 px viewport · bound 16..374 px · load 71.3/64.5/55.2
+  PASS       E-3 slider keyboard-focused PRM light · reduce · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1 ± 0.002 · load 71.3/64.5/55.2
+  PASS       E-3 slider phone touch-held PRM light · reduce · rest 358.0 px → touch-held 358.0 px (×1.000) · bound ×1 ± 0.002 · load 71.3/64.5/55.2
+  PASS       E-3 slider desk pointer-held dark · rest 360.0 px → held 381.6 px (×1.060; [data-engaged] 2) · bound ×1.03 sustained at 450 ms · load 71.3/64.6/55.3
+  PASS       E-3 slider desk keyboard-focused dark · rest 360.0 px → focused 381.6 px (×1.060; focus on slider) · bound ×1.03 · load 71.3/64.6/55.3
+  FAIL       E-3 slider phone touch-held dark · 390×844 coarse · rest 358.0 px → touch-held 358.0 px (×1.000; [data-engaged] 2) · bound ×1.03 · load 71.3/64.6/55.3
+  PASS       E-3 slider phone gutter dark · engaged box 16.0..374.0 px in a 390 px viewport · bound 16..374 px · load 71.3/64.6/55.3
+  PASS       E-3 slider keyboard-focused PRM dark · reduce · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1 ± 0.002 · load 71.3/64.6/55.3
+  PASS       E-3 slider phone touch-held PRM dark · reduce · rest 358.0 px → touch-held 358.0 px (×1.000) · bound ×1 ± 0.002 · load 73.2/65.1/55.5
+E-3 chromium FAIL · 10 pass, 2 fail, 0 unmeasured of 12 gating cells (0 reported) · load 74.3/64.9/55.3 at start, 73.2/65.1/55.5 at end
+### exit 1 · load { 73.20 65.07 55.54 } · 19:24:49
+### pb chromium e3-slider.mjs  · load { 73.20 65.07 55.54 } · 19:24:49
+# E-3 · the slider exemplar (T1 GROW) and its phone arm
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pE/out/builds/pb · engine chromium · lock wait 0.0 s · other headless processes: chromium 29, webkit 2 · load 73.2/65.1/55.5 at start
+# chromium 149.0.7827.55
+  FAIL       E-3 slider desk pointer-held light · rest 360.0 px → held 360.0 px (×1.000; [data-engaged] 2) · bound ×1.03 sustained at 450 ms · load 73.2/65.1/55.5
+  FAIL       E-3 slider desk keyboard-focused light · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1.03 · load 73.2/65.1/55.5
+  FAIL       E-3 slider phone touch-held light · 390×844 coarse · rest 358.0 px → touch-held 358.0 px (×1.000; [data-engaged] 2) · bound ×1.03 · load 71.7/64.9/55.5
+  PASS       E-3 slider phone gutter light · engaged box 16.0..374.0 px in a 390 px viewport · bound 16..374 px · load 71.7/64.9/55.5
+  PASS       E-3 slider keyboard-focused PRM light · reduce · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1 ± 0.002 · load 71.7/64.9/55.5
+  PASS       E-3 slider phone touch-held PRM light · reduce · rest 358.0 px → touch-held 358.0 px (×1.000) · bound ×1 ± 0.002 · load 71.7/64.9/55.5
+  FAIL       E-3 slider desk pointer-held dark · rest 360.0 px → held 360.0 px (×1.000; [data-engaged] 2) · bound ×1.03 sustained at 450 ms · load 69.8/64.6/55.5
+  FAIL       E-3 slider desk keyboard-focused dark · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1.03 · load 69.8/64.6/55.5
+  FAIL       E-3 slider phone touch-held dark · 390×844 coarse · rest 358.0 px → touch-held 358.0 px (×1.000; [data-engaged] 2) · bound ×1.03 · load 69.8/64.6/55.5
+  PASS       E-3 slider phone gutter dark · engaged box 16.0..374.0 px in a 390 px viewport · bound 16..374 px · load 69.8/64.6/55.5
+  PASS       E-3 slider keyboard-focused PRM dark · reduce · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1 ± 0.002 · load 69.8/64.6/55.5
+  PASS       E-3 slider phone touch-held PRM dark · reduce · rest 358.0 px → touch-held 358.0 px (×1.000) · bound ×1 ± 0.002 · load 69.8/64.6/55.5
+E-3 chromium FAIL · 6 pass, 6 fail, 0 unmeasured of 12 gating cells (0 reported) · load 73.2/65.1/55.5 at start, 69.8/64.6/55.5 at end
+### exit 1 · load { 66.97 64.12 55.37 } · 19:25:03
+### pe chromium e4-momentum.mjs --scenes slider,sortable · load { 66.97 64.12 55.37 } · 19:25:03
+# E-4 · momentum: a release carries its velocity into the settle
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pE/out/builds/pe · engine chromium · lock wait 0.0 s · other headless processes: chromium 33, webkit 2 · load 67.0/64.1/55.4 at start
+# chromium 149.0.7827.55
+# narrowed to scenes slider, sortable
+  FAIL       E-4 slider fling carries velocity · axis x · fling: carry 0.00 px, settles 0.00 px past release · still: carry 0.00 px, settles -0.00 px · difference: carry -0.00 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 0.0 px, still 0.0 px · 263 frames, median 7.6 ms · load 70.7/64.9/55.7
+  PASS       E-4 slider release PRM · reduce · moved 79.2 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px · load 69.6/64.8/55.7
+  PASS       E-4 sortable fling carries velocity · axis y · fling: carry 7.92 px, settles -36.69 px past release · still: carry 0.00 px, settles -36.69 px · difference: carry 7.92 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 66.6 px, still 2.6 px · 269 frames, median 7.7 ms · load 69.0/64.8/55.8
+  PASS       E-4 sortable release PRM · reduce · moved 83.8 px · fling: carry 0.00 px, settles -0.50 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.5 px · load 69.0/64.8/55.8
+E-4 chromium FAIL · 3 pass, 1 fail, 0 unmeasured of 4 gating cells (0 reported) · load 67.0/64.1/55.4 at start, 69.0/64.8/55.8 at end
+### exit 1 · load { 69.03 64.76 55.76 } · 19:25:22
+### pb chromium e4-momentum.mjs --scenes slider · load { 69.03 64.76 55.76 } · 19:25:22
+# E-4 · momentum: a release carries its velocity into the settle
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pE/out/builds/pb · engine chromium · lock wait 0.0 s · other headless processes: chromium 18, webkit 2 · load 69.0/64.8/55.8 at start
+# chromium 149.0.7827.55
+# narrowed to scenes slider
+  PASS       E-4 slider fling carries velocity · axis x · fling: carry 12.20 px, settles 0.00 px past release · still: carry 0.00 px, settles 0.00 px · difference: carry 12.20 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 7.1 px, still 0.0 px · 263 frames, median 7.5 ms · load 72.6/65.7/56.2
+  PASS       E-4 slider release PRM · reduce · moved 79.2 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px · load 72.6/65.7/56.2
+E-4 chromium PASS · 2 pass, 0 fail, 0 unmeasured of 2 gating cells (0 reported) · load 69.0/64.8/55.8 at start, 77.8/66.9/56.7 at end
+### exit 0 · load { 77.77 66.89 56.67 } · 19:25:35
+### pe chromium e2-commit.mjs --scenes switch,accordion,button · load { 77.77 66.89 56.67 } · 19:25:35
+# E-2 · the commit bar, generalized
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pE/out/builds/pe · engine chromium · lock wait 0.0 s · other headless processes: chromium 14, webkit 2 · load 77.8/66.9/56.7 at start
+# chromium 149.0.7827.55
+# narrowed to scenes switch, accordion, button
+  PASS       E-2 switch Tab-entry light · scale range 0.000 body moved 0.00 px · focus on switch · load 77.5/67.0/56.8
+  PASS       E-2 switch commit·keyboard(Space) light · peak 1.020 trough 0.997 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 109 frames, median 7.4 ms · load 77.5/67.0/56.8
+  PASS       E-2 switch commit·programmatic light · peak 1.020 trough 0.997 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 108 frames, median 7.6 ms · load 77.5/67.0/56.8
+  PASS       E-2 switch commit·pointer light · peak 1.020 trough 0.997 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 105 frames, median 7.9 ms · load 77.5/67.0/56.8
+  PASS       E-2 switch commit·tap(coarse) light · peak 1.020 trough 0.997 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 107 frames, median 7.8 ms · load 77.5/67.0/56.8
+  PASS       E-2 switch mount(committed) light · after mount: scale range 0.000 body moved 0.00 px over 107 of 107 frames with the target present · load 76.4/67.0/56.8
+  PASS       E-2 switch Tab-entry dark · scale range 0.000 body moved 0.00 px · focus on switch · load 76.4/67.0/56.8
+  PASS       E-2 switch commit·keyboard(Space) dark · peak 1.020 trough 0.997 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 104 frames, median 8.0 ms · load 76.4/67.0/56.8
+  PASS       E-2 switch commit·programmatic dark · peak 1.020 trough 0.997 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 109 frames, median 7.6 ms · load 76.4/67.0/56.8
+  PASS       E-2 switch commit·pointer dark · peak 1.020 trough 0.997 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 107 frames, median 7.8 ms · load 75.8/67.0/56.9
+  PASS       E-2 switch commit·tap(coarse) dark · peak 1.020 trough 0.997 settle 1.000 · body travel 20.00 px overshoot 0.00 px · 107 frames, median 7.7 ms · load 75.8/67.0/56.9
+  PASS       E-2 switch mount(committed) dark · after mount: scale range 0.000 body moved 0.00 px over 107 of 107 frames with the target present · load 75.8/67.0/56.9
+  PASS       E-2 accordion Tab-entry light · scale range 0.000 body moved 0.00 px · focus on BUTTON · load 75.7/67.1/57.0
+  PASS       E-2 accordion commit·keyboard(Enter) light · peak 1.018 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 108 frames, median 7.8 ms · load 75.7/67.1/57.0
+  PASS       E-2 accordion commit·programmatic light · peak 1.020 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 106 frames, median 7.8 ms · load 75.7/67.1/57.0
+  PASS       E-2 accordion commit·pointer light · peak 1.018 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 110 frames, median 7.2 ms · load 75.7/67.1/57.0
+  PASS       E-2 accordion commit·tap(coarse) light · peak 1.020 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 106 frames, median 7.9 ms · load 75.7/67.1/57.0
+  PASS       E-2 accordion mount(committed) light · after mount: scale range 0.000 body moved 0.00 px over 107 of 107 frames with the target present · load 73.4/66.8/56.9
+  PASS       E-2 accordion Tab-entry dark · scale range 0.000 body moved 0.00 px · focus on BUTTON · load 73.4/66.8/56.9
+  PASS       E-2 accordion commit·keyboard(Enter) dark · peak 1.018 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 108 frames, median 7.8 ms · load 73.4/66.8/56.9
+  PASS       E-2 accordion commit·programmatic dark · peak 1.020 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 104 frames, median 7.9 ms · load 73.4/66.8/56.9
+  PASS       E-2 accordion commit·pointer dark · peak 1.018 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 107 frames, median 7.7 ms · load 75.0/67.2/57.1
+  PASS       E-2 accordion commit·tap(coarse) dark · peak 1.020 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 109 frames, median 7.7 ms · load 75.0/67.2/57.1
+  PASS       E-2 accordion mount(committed) dark · after mount: scale range 0.000 body moved 0.00 px over 106 of 106 frames with the target present · load 75.0/67.2/57.1
+  PASS       E-2 button Tab-entry light · scale range 0.000 body moved 0.00 px · focus on BUTTON · load 75.0/67.2/57.1
+  PASS       E-2 button commit·keyboard(Space) light · peak 1.021 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 107 frames, median 7.9 ms · load 75.0/67.2/57.1
+  PASS       E-2 button commit·programmatic light · peak 1.020 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 110 frames, median 7.5 ms · load 73.7/67.1/57.2
+  PASS       E-2 button commit·pointer light · peak 1.031 trough 1.012 settle 1.015 · body travel 0.00 px overshoot 0.00 px · 106 frames, median 7.8 ms · load 73.7/67.1/57.2
+  PASS       E-2 button commit·tap(coarse) light · peak 1.034 trough 1.012 settle 1.015 · body travel 0.00 px overshoot 0.00 px · 108 frames, median 7.6 ms · load 73.7/67.1/57.2
+  PASS       E-2 button mount(committed) light · after mount: scale range 0.000 body moved 0.00 px over 109 of 109 frames with the target present · load 70.5/66.5/57.0
+  PASS       E-2 button Tab-entry dark · scale range 0.000 body moved 0.00 px · focus on BUTTON · load 70.5/66.5/57.0
+  PASS       E-2 button commit·keyboard(Space) dark · peak 1.021 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 108 frames, median 7.6 ms · load 70.5/66.5/57.0
+  PASS       E-2 button commit·programmatic dark · peak 1.020 trough 0.997 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 104 frames, median 7.7 ms · load 70.5/66.5/57.0
+  PASS       E-2 button commit·pointer dark · peak 1.030 trough 1.012 settle 1.015 · body travel 0.00 px overshoot 0.00 px · 108 frames, median 7.5 ms · load 70.5/66.5/57.0
+  PASS       E-2 button commit·tap(coarse) dark · peak 1.034 trough 1.012 settle 1.015 · body travel 0.00 px overshoot 0.00 px · 107 frames, median 7.7 ms · load 66.7/65.8/56.8
+  PASS       E-2 button mount(committed) dark · after mount: scale range 0.000 body moved 0.00 px over 103 of 103 frames with the target present · load 66.7/65.8/56.8
+E-2 chromium PASS · 36 pass, 0 fail, 0 unmeasured of 36 gating cells (0 reported) · load 77.8/66.9/56.7 at start, 66.7/65.8/56.8 at end
+### exit 0 · load { 66.75 65.81 56.82 } · 19:26:20
+### pe chromium e5-touch.mjs --scenes accordion,press_switch,button · load { 66.75 65.81 56.82 } · 19:26:20
+# E-5 · a held touch answers through a press rung
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pE/out/builds/pe · engine chromium · lock wait 0.0 s · other headless processes: chromium 36, webkit 2 · load 66.7/65.8/56.8 at start
+# chromium 149.0.7827.55
+# narrowed to scenes accordion, press_switch, button
+  PASS       E-5 accordion press light · :active true · Δscale -0.030 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color] · load 65.3/65.5/56.8
+  PASS       E-5 accordion press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color] (bound ≥ 1 press-only property under reduce) · load 65.3/65.5/56.8
+  PASS       E-5 accordion press dark · :active true · Δscale -0.030 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color] · load 65.6/65.6/56.8
+  PASS       E-5 accordion press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color] (bound ≥ 1 press-only property under reduce) · load 65.6/65.6/56.8
+  PASS       E-5 button press light · :active true · Δscale 0.027 · touch-changed [::before opacity] · hover-changed [::before opacity] · press-only [::before opacity] · load 69.3/66.3/57.2
+  PASS       E-5 button press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [::before opacity] · hover-changed [::before opacity] · press-only [::before opacity] (bound ≥ 1 press-only property under reduce) · load 69.3/66.3/57.2
+  PASS       E-5 button press dark · :active true · Δscale 0.027 · touch-changed [::before opacity] · hover-changed [::before opacity] · press-only [::before opacity] · load 71.2/66.8/57.4
+  PASS       E-5 button press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [::before opacity] · hover-changed [::before opacity] · press-only [::before opacity] (bound ≥ 1 press-only property under reduce) · load 71.2/66.8/57.4
+  PASS       E-5 press_switch press light · :active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] · load 75.2/67.7/57.7
+  PASS       E-5 press_switch press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce) · load 75.2/67.7/57.7
+  PASS       E-5 press_switch press dark · :active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] · load 72.6/67.3/57.7
+  PASS       E-5 press_switch press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce) · load 72.6/67.3/57.7
+E-5 chromium PASS · 12 pass, 0 fail, 0 unmeasured of 12 gating cells (0 reported) · load 66.7/65.8/56.8 at start, 72.6/67.3/57.7 at end
+### exit 0 · load { 72.56 67.28 57.65 } · 19:26:50
+### pe chromium e9-prm.mjs --scenes switch,accordion,slider,button · load { 72.56 67.28 57.65 } · 19:26:50
+# E-9 · the PRM arm
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pE/out/builds/pe · engine chromium · lock wait 0.0 s · other headless processes: chromium 36, webkit 2 · load 72.6/67.3/57.7 at start
+# chromium 149.0.7827.55
+# narrowed to scenes switch, accordion, slider, button
+  PASS       E-9 switch press-spatial light · scale range while pressed 0.000 over 41 frames (bound < 0.002) · load 72.0/67.2/57.7
+  PASS       E-9 switch press-light light · press-only paint changes [child0 bg] (bound ≥ 1) · load 72.0/67.2/57.7
+  PASS       E-9 switch commit-spatial light · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 20.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 82 frames · load 72.0/67.2/57.7
+  PASS       E-9 switch press-spatial dark · scale range while pressed 0.000 over 40 frames (bound < 0.002) · load 69.6/66.8/57.6
+  PASS       E-9 switch press-light dark · press-only paint changes [child0 bg] (bound ≥ 1) · load 69.6/66.8/57.6
+  PASS       E-9 switch commit-spatial dark · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 20.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 82 frames · load 69.6/66.8/57.6
+  PASS       E-9 accordion press-spatial light · scale range while pressed 0.000 over 41 frames (bound < 0.002) · load 69.6/66.8/57.6
+  PASS       E-9 accordion press-light light · press-only paint changes [background-color] (bound ≥ 1) · load 69.6/66.8/57.6
+  PASS       E-9 accordion commit-spatial light · commit(Enter): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 79 frames · load 69.6/66.8/57.6
+  PASS       E-9 accordion press-spatial dark · scale range while pressed 0.000 over 41 frames (bound < 0.002) · load 68.9/66.7/57.6
+  PASS       E-9 accordion press-light dark · press-only paint changes [background-color] (bound ≥ 1) · load 68.9/66.7/57.6
+  PASS       E-9 accordion commit-spatial dark · commit(Enter): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 82 frames · load 68.9/66.7/57.6
+  PASS       E-9 button press-spatial light · scale range while pressed 0.000 over 40 frames (bound < 0.002) · load 68.9/66.7/57.6
+  PASS       E-9 button press-light light · press-only paint changes [::before opacity] (bound ≥ 1) · load 68.9/66.7/57.6
+  PASS       E-9 button commit-spatial light · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 77 frames · load 68.9/66.7/57.6
+  PASS       E-9 button press-spatial dark · scale range while pressed 0.000 over 42 frames (bound < 0.002) · load 67.4/66.4/57.6
+  PASS       E-9 button press-light dark · press-only paint changes [::before opacity] (bound ≥ 1) · load 67.4/66.4/57.6
+  PASS       E-9 button commit-spatial dark · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 79 frames · load 67.4/66.4/57.6
+  PASS       E-9 slider press-spatial light · scale range while pressed 0.000 over 41 frames (bound < 0.002) · load 67.2/66.4/57.6
+  PASS       E-9 slider press-light light · press-only paint changes [child0 bg, child0 shadow, child1 bg, child1 shadow, child2 bg, child2 opacity] (bound ≥ 1) · load 67.2/66.4/57.6
+  PASS       E-9 slider commit-spatial light · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 3.59 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 82 frames · load 67.2/66.4/57.6
+  PASS       E-9 slider press-spatial dark · scale range while pressed 0.000 over 42 frames (bound < 0.002) · load 67.2/66.4/57.6
+  PASS       E-9 slider press-light dark · press-only paint changes [child0 bg, child0 shadow, child1 bg, child1 shadow, child2 bg, child2 opacity] (bound ≥ 1) · load 67.2/66.4/57.6
+  PASS       E-9 slider commit-spatial dark · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 81 frames · load 67.2/66.4/57.6
+E-9 chromium PASS · 24 pass, 0 fail, 0 unmeasured of 24 gating cells (0 reported) · load 72.6/67.3/57.7 at start, 67.2/66.4/57.6 at end
+### exit 0 · load { 67.24 66.44 57.63 } · 19:27:16
+### pe chromium e8-clock.mjs --scenes switch,accordion,button,slider · load { 67.24 66.44 57.63 } · 19:27:16
+# E-8 · one clock authority; no rung literal
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pE/out/builds/pe · engine chromium · lock wait 0.0 s · other headless processes: chromium 29, webkit 4 · load 67.2/66.4/57.6 at start
+# chromium 149.0.7827.55
+# narrowed to scenes switch, accordion, button, slider
+  PASS       E-8 mirror · 4 rows, 8 --engage-* tokens on :root · drift [] · orphans [] · load 75.2/68.1/58.3
+  PASS       E-8 literal switch · 19 animation(s) ran [background-color@200ms, border-bottom-color@200ms, border-left-color@200ms, border-right-color@200ms, border-top-color@200ms, translate@210ms, script@450ms, outline-color@200ms] against 54 clock tokens · minted [] · load 75.2/68.1/58.3
+  PASS       E-8 literal switch PRM · 0 animation(s) ran [] against 0 clock tokens · minted [] · load 77.4/68.7/58.5
+  PASS       E-8 literal accordion · 12 animation(s) ran [background-color@120ms, rotate@200ms, disclosure-open@200ms, script@450ms, box-shadow@120ms, disclosure-close@200ms] against 54 clock tokens · minted [] · load 77.4/68.7/58.5
+  PASS       E-8 literal accordion PRM · 2 animation(s) ran [disclosure-open@0ms, disclosure-close@0ms] against 0 clock tokens · minted [] · load 82.1/69.8/59.0
+  PASS       E-8 literal button · 81 animation(s) ran [scale@120ms, opacity@300ms, script@450ms] against 54 clock tokens · minted [] · load 82.1/69.8/59.0
+  PASS       E-8 literal button PRM · 0 animation(s) ran [] against 0 clock tokens · minted [] · load 87.3/71.1/59.5
+E-8 chromium PASS · 7 pass, 0 fail, 0 unmeasured of 7 gating cells (0 reported) · load 67.2/66.4/57.6 at start, 87.3/71.1/59.5 at end
+### exit 0 · load { 87.35 71.08 59.50 } · 19:27:35
+### pe chromium e6-idle.mjs  · load { 87.35 71.08 59.50 } · 19:27:35
+# E-6 · the idle rung under the compositor-only bound
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pE/out/builds/pe · engine chromium · lock wait 0.0 s · other headless processes: chromium 28, webkit 4 · load 87.3/71.1/59.5 at start
+# chromium 149.0.7827.55
+  FAIL       E-6 s6 present light · 0 running infinite animation(s) at rest · load 85.6/71.0/59.5
+  UNMEASURED E-6 s6 channel light · no idle animation to read · load 85.6/71.0/59.5
+  UNMEASURED E-6 s6 shape light · no idle animation to read · load 85.6/71.0/59.5
+  UNMEASURED E-6 s6 amplitude light · no idle animation to read · load 85.6/71.0/59.5
+  UNMEASURED E-6 s6 period light · no idle animation to read · load 85.6/71.0/59.5
+  PASS       E-6 s6 layouts/s light · layouts/s 0.0 · style recalcs/s 0.0 over 3 s at rest (bound 0 layouts/s) · load 85.6/71.0/59.5
+  PASS       E-6 s6 PRM light · 0 idle animation(s) under reduced motion, 0 spatial · load 85.6/71.0/59.5
+  FAIL       E-6 s6 present dark · 0 running infinite animation(s) at rest · load 83.4/70.8/59.5
+  UNMEASURED E-6 s6 channel dark · no idle animation to read · load 83.4/70.8/59.5
+  UNMEASURED E-6 s6 shape dark · no idle animation to read · load 83.4/70.8/59.5
+  UNMEASURED E-6 s6 amplitude dark · no idle animation to read · load 83.4/70.8/59.5
+  UNMEASURED E-6 s6 period dark · no idle animation to read · load 83.4/70.8/59.5
+  PASS       E-6 s6 layouts/s dark · layouts/s 0.0 · style recalcs/s 0.0 over 3 s at rest (bound 0 layouts/s) · load 83.4/70.8/59.5
+  PASS       E-6 s6 PRM dark · 0 idle animation(s) under reduced motion, 0 spatial · load 83.4/70.8/59.5
+E-6 chromium FAIL · 4 pass, 2 fail, 8 unmeasured of 14 gating cells (0 reported) · load 87.3/71.1/59.5 at start, 83.4/70.8/59.5 at end
+### exit 1 · load { 83.35 70.77 59.52 } · 19:27:48
+### pe chromium e1-census.mjs  · load { 83.35 70.77 59.52 } · 19:27:48
+# E-1 · the census over a declared denominator
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pE/out/builds/pe · engine chromium · lock wait 0.0 s · other headless processes: chromium 32, webkit 4 · load 86.6/71.6/59.9 at start
+# chromium 149.0.7827.55
+  FAIL       E-1 declaration present · no declaration in the build (the export does not exist); 55 directories to declare · load 86.6/71.6/59.9
+  FAIL       E-1 denominator declared · 0 of 55 directories declared: accordion alert aurora avatar badge blob button card carousel checkbox chip collapsible command configurator constellation dark-mode-toggle data-table deck dialog dock easing expandable-container fading-scroll fourier-field handmark infinite-scroll input label labeled-field menu metric music-staff number-field pager-dots popover progress radio-group scroll-progress-rim select separator sheet skeleton slider sortable-list status-dot surface switch table tabs textarea timeline toast toggle-group tooltip typewriter · load 86.6/71.6/59.9
+  FAIL       E-1 class carries a rung · no classes declared · load 86.6/71.6/59.9
+E-1 chromium FAIL · 0 pass, 3 fail, 0 unmeasured of 3 gating cells (0 reported) · load 86.6/71.6/59.9 at start, 86.6/71.6/59.9 at end
+### exit 1 · load { 86.61 71.65 59.90 } · 19:27:51
+### probe pe chromium · load { 86.61 71.65 59.90 } · 19:27:51
+# P-E · family E prototype probe (pe)
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pE/out/builds/pe · engine chromium · lock wait 0.0 s · other headless processes: chromium 28, webkit 4 · load 86.6/71.6/59.9 at start
+# chromium 149.0.7827.55
+  PASS       kbd light tab · Tab, +450 ms · scale 1.060 × 1.060 · stage true · [data-engaged] 2 · veil 1.00 · data-held null (range null) · range 1.000 × 1.000 · cursor grab · value 40 · focus slider (bound: promoted, ≥ ×1.03, no hand paint) · load 82.6/71.3/59.9
+  PASS       kbd light arrow · ArrowRight · scale 1.060 × 1.060 · stage true · [data-engaged] 2 · veil 1.00 · data-held null (range null) · range 1.000 × 1.000 · cursor grab · value 41 · focus slider · load 82.6/71.3/59.9
+  PASS       kbd light escape · Escape, +1500 ms · scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil 0.00 · data-held null (range null) · range 1.000 × 1.000 · cursor grab · value 41 · focus slider · load 82.6/71.3/59.9
+  PASS       kbd light key re-engages · ArrowRight after Escape · scale 1.060 × 1.060 · stage true · [data-engaged] 2 · veil 1.00 · data-held null (range null) · range 1.000 × 1.000 · cursor grab · value 42 · focus slider · load 82.6/71.3/59.9
+  PASS       kbd light tab-out · Tab out, +1500 ms · scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil 0.00 · data-held null (range null) · range 1.000 × 1.000 · cursor grab · value 42 · focus BUTTON · load 82.6/71.3/59.9
+  PASS       kbd dark tab · Tab, +450 ms · scale 1.060 × 1.060 · stage true · [data-engaged] 2 · veil 1.00 · data-held null (range null) · range 1.000 × 1.000 · cursor grab · value 40 · focus slider (bound: promoted, ≥ ×1.03, no hand paint) · load 82.2/71.4/60.0
+  PASS       kbd dark arrow · ArrowRight · scale 1.060 × 1.060 · stage true · [data-engaged] 2 · veil 1.00 · data-held null (range null) · range 1.000 × 1.000 · cursor grab · value 41 · focus slider · load 82.2/71.4/60.0
+  PASS       kbd dark escape · Escape, +1500 ms · scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil 0.00 · data-held null (range null) · range 1.000 × 1.000 · cursor grab · value 41 · focus slider · load 82.2/71.4/60.0
+  PASS       kbd dark key re-engages · ArrowRight after Escape · scale 1.060 × 1.060 · stage true · [data-engaged] 2 · veil 1.00 · data-held null (range null) · range 1.000 × 1.000 · cursor grab · value 42 · focus slider · load 82.2/71.4/60.0
+  PASS       kbd dark tab-out · Tab out, +1500 ms · scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil 0.00 · data-held null (range null) · range 1.000 × 1.000 · cursor grab · value 42 · focus BUTTON · load 82.2/71.4/60.0
+  PASS       modifier Shift · after a drag, +1500 ms: scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil 0.00 · data-held null (range null) · range 1.000 × 1.000 · cursor grab · value 48 · focus slider | Shift down: scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil 0.00 · data-held null (range null) · range 1.000 × 1.000 · cursor grab · value 48 · focus slider | up: stage false, engaged 0 · load 82.2/71.4/60.0
+  PASS       modifier Meta · after a drag, +1500 ms: scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil 0.00 · data-held null (range null) · range 1.000 × 1.000 · cursor grab · value 48 · focus slider | Meta down: scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil 0.00 · data-held null (range null) · range 1.000 × 1.000 · cursor grab · value 48 · focus slider | up: stage false, engaged 0 · load 84.0/71.9/60.3
+  PASS       modifier Control · after a drag, +1500 ms: scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil 0.00 · data-held null (range null) · range 1.000 × 1.000 · cursor grab · value 48 · focus slider | Control down: scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil 0.00 · data-held null (range null) · range 1.000 × 1.000 · cursor grab · value 48 · focus slider | up: stage false, engaged 0 · load 82.2/71.8/60.3
+  PASS       modifier Alt · after a drag, +1500 ms: scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil 0.00 · data-held null (range null) · range 1.000 × 1.000 · cursor grab · value 48 · focus slider | Alt down: scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil 0.00 · data-held null (range null) · range 1.000 × 1.000 · cursor grab · value 48 · focus slider | up: stage false, engaged 0 · load 82.2/71.8/60.3
+  REPORT     fling fling · leading edge past footprint: max 18.93 px, min 0.00 px · value 62 → 62 · leaves the top layer at 235 ms · last 12 frames move 0.00 px · veil max 0.70 · 192 frames · load 79.8/71.4/60.2
+  REPORT     fling still · leading edge past footprint: max 10.80 px, min 0.00 px · value 62 → 62 · leaves the top layer at 236 ms · last 12 frames move 0.00 px · veil max 1.00 · 184 frames · load 79.8/71.4/60.2
+  PASS       fling differential · visible leading edge, page frame: fling 18.93 − still 10.80 = 8.13 px (bound ≥ 4, E-4's TRAVEL) · fling at rest true, value held 62 → 62, top-layer exit 235 ms · load 79.8/71.4/60.2
+  REPORT     fling PRM fling · leading edge past footprint: max 0.00 px, min 0.00 px · value 62 → 62 · leaves the top layer at 4 ms · last 12 frames move 0.00 px · veil max 0.00 · 201 frames · load 77.3/71.1/60.2
+  REPORT     fling PRM still · leading edge past footprint: max 0.00 px, min 0.00 px · value 62 → 62 · leaves the top layer at 4 ms · last 12 frames move 0.00 px · veil max 0.00 · 202 frames · load 77.3/71.1/60.2
+  PASS       fling PRM · reduce: leading edge past footprint max 0.00 px (bound ≤ 0.5: no grow, no stretch) · at rest true · veil max 0.00 (the light answer stays) · load 77.3/71.1/60.2
+  REPORT     shots light · pe-chromium-light-slider-{keyboard-engaged,fling-48ms,fling-settled}.png · load 74.4/70.6/60.1 · load 74.4/70.6/60.1
+  REPORT     shots dark · pe-chromium-dark-slider-{keyboard-engaged,fling-48ms,fling-settled}.png · load 72.5/70.2/60.0 · load 72.5/70.2/60.0
+P-E chromium PASS · 16 pass, 0 fail, 0 unmeasured of 16 gating cells (6 reported) · load 86.6/71.6/59.9 at start, 72.5/70.2/60.0 at end
+### exit 0
+### probe pb chromium · load { 72.53 70.24 60.00 } · 19:28:37
+# P-E · family E prototype probe (pb)
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pE/out/builds/pb · engine chromium · lock wait 0.0 s · other headless processes: chromium 34, webkit 4 · load 72.5/70.2/60.0 at start
+# chromium 149.0.7827.55
+  FAIL       kbd light tab · Tab, +450 ms · scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil null · data-held "key" (range "key") · range 1.020 × 0.940 · cursor grabbing · value 40 · focus slider (bound: promoted, ≥ ×1.03, no hand paint) · load 74.7/70.8/60.3
+  FAIL       kbd light arrow · ArrowRight · scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil null · data-held "key" (range "key") · range 1.020 × 0.940 · cursor grabbing · value 41 · focus slider · load 74.7/70.8/60.3
+  PASS       kbd light escape · Escape, +1500 ms · scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil null · data-held "key" (range "key") · range 1.020 × 0.940 · cursor grabbing · value 41 · focus slider · load 74.7/70.8/60.3
+  FAIL       kbd light key re-engages · ArrowRight after Escape · scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil null · data-held "key" (range "key") · range 1.020 × 0.940 · cursor grabbing · value 42 · focus slider · load 74.7/70.8/60.3
+  PASS       kbd light tab-out · Tab out, +1500 ms · scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil null · data-held null (range null) · range 1.000 × 1.000 · cursor grab · value 42 · focus BUTTON · load 74.7/70.8/60.3
+  FAIL       kbd dark tab · Tab, +450 ms · scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil null · data-held "key" (range "key") · range 1.020 × 0.940 · cursor grabbing · value 40 · focus slider (bound: promoted, ≥ ×1.03, no hand paint) · load 73.9/70.7/60.3
+  FAIL       kbd dark arrow · ArrowRight · scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil null · data-held "key" (range "key") · range 1.020 × 0.940 · cursor grabbing · value 41 · focus slider · load 73.9/70.7/60.3
+  PASS       kbd dark escape · Escape, +1500 ms · scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil null · data-held "key" (range "key") · range 1.020 × 0.940 · cursor grabbing · value 41 · focus slider · load 73.9/70.7/60.3
+  FAIL       kbd dark key re-engages · ArrowRight after Escape · scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil null · data-held "key" (range "key") · range 1.020 × 0.940 · cursor grabbing · value 42 · focus slider · load 73.9/70.7/60.3
+  PASS       kbd dark tab-out · Tab out, +1500 ms · scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil null · data-held null (range null) · range 1.000 × 1.000 · cursor grab · value 42 · focus BUTTON · load 73.9/70.7/60.3
+  FAIL       modifier Shift · after a drag, +1500 ms: scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil null · data-held null (range null) · range 1.000 × 1.000 · cursor grab · value 48 · focus slider | Shift down: scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil null · data-held "key" (range "key") · range 1.020 × 0.940 · cursor grabbing · value 48 · focus slider | up: stage false, engaged 0 · load 73.4/70.6/60.4
+  FAIL       modifier Meta · after a drag, +1500 ms: scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil null · data-held null (range null) · range 1.000 × 1.000 · cursor grab · value 48 · focus slider | Meta down: scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil null · data-held "key" (range "key") · range 1.020 × 0.940 · cursor grabbing · value 48 · focus slider | up: stage false, engaged 0 · load 73.4/70.6/60.4
+  FAIL       modifier Control · after a drag, +1500 ms: scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil null · data-held null (range null) · range 1.000 × 1.000 · cursor grab · value 48 · focus slider | Control down: scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil null · data-held "key" (range "key") · range 1.020 × 0.940 · cursor grabbing · value 48 · focus slider | up: stage false, engaged 0 · load 73.1/70.6/60.4
+  FAIL       modifier Alt · after a drag, +1500 ms: scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil null · data-held null (range null) · range 1.000 × 1.000 · cursor grab · value 48 · focus slider | Alt down: scale 1.000 × 1.000 · stage false · [data-engaged] 0 · veil null · data-held "key" (range "key") · range 1.020 × 0.940 · cursor grabbing · value 48 · focus slider | up: stage false, engaged 0 · load 73.1/70.6/60.4
+  REPORT     fling fling · leading edge past footprint: max 0.00 px, min 0.00 px · value 62 → 62 · leaves the top layer at 5 ms · last 12 frames move 0.00 px · veil max 0.12 · 197 frames · load 70.5/70.1/60.3
+  REPORT     fling still · leading edge past footprint: max 0.00 px, min 0.00 px · value 62 → 62 · leaves the top layer at 7 ms · last 12 frames move 0.00 px · veil max 1.00 · 185 frames · load 70.5/70.1/60.3
+  FAIL       fling differential · visible leading edge, page frame: fling 0.00 − still 0.00 = 0.00 px (bound ≥ 4, E-4's TRAVEL) · fling at rest true, value held 62 → 62, top-layer exit 5 ms · load 70.5/70.1/60.3
+  REPORT     fling PRM fling · leading edge past footprint: max 0.00 px, min 0.00 px · value 62 → 62 · leaves the top layer at 5 ms · last 12 frames move 0.00 px · veil max 0.00 · 202 frames · load 71.7/70.4/60.5
+  REPORT     fling PRM still · leading edge past footprint: max 0.00 px, min 0.00 px · value 62 → 62 · leaves the top layer at 2 ms · last 12 frames move 0.00 px · veil max 0.00 · 199 frames · load 71.7/70.4/60.5
+  PASS       fling PRM · reduce: leading edge past footprint max 0.00 px (bound ≤ 0.5: no grow, no stretch) · at rest true · veil max 0.00 (the light answer stays) · load 71.7/70.4/60.5
+  REPORT     shots light · pb-chromium-light-slider-{keyboard-engaged,fling-48ms,fling-settled}.png · load 73.4/70.7/60.6 · load 73.4/70.7/60.6
+  REPORT     shots dark · pb-chromium-dark-slider-{keyboard-engaged,fling-48ms,fling-settled}.png · load 73.1/70.7/60.7 · load 73.1/70.7/60.7
+P-E chromium FAIL · 5 pass, 11 fail, 0 unmeasured of 16 gating cells (6 reported) · load 72.5/70.2/60.0 at start, 73.1/70.7/60.7 at end
+### exit 1
+### afterdrag pe chromium · load { 73.11 70.72 60.70 }
+# afterdrag · /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pE/out/builds/pe · chromium 149.0.7827.55 · lock wait 0.0 s · load 75.6/71.3/61.0 at start
+  REPORT     drag release · rest 360.0 · 50 ms: width 374.5 (×1.040) scale 1.04023 thumb:focus-visible true active slider · 600 ms: width 360.0 (×1.000) scale none thumb:focus-visible true active slider · 1500 ms: width 360.0 (×1.000) scale none thumb:focus-visible true active slider · load 75.6/71.3/61.0
+  REPORT     click release · rest 360.0 · 50 ms: width 360.0 (×1.000) scale none thumb:focus-visible false active BODY · 600 ms: width 360.0 (×1.000) scale none thumb:focus-visible false active BODY · 1500 ms: width 360.0 (×1.000) scale none thumb:focus-visible false active BODY · load 74.3/71.1/60.9
+# done · load 74.3/71.1/60.9
+### battery done chromium · load { 75.11 71.30 61.08 } · 19:29:33

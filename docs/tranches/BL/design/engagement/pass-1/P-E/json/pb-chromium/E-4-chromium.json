@@ -1,0 +1,25 @@
+{
+ "id": "E-4",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pE/out/builds/pb"
+ },
+ "loadStart": "69.0/64.8/55.8",
+ "loadEnd": "77.8/66.9/56.7",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "E-4 slider fling carries velocity",
+   "status": "PASS",
+   "line": "axis x · fling: carry 12.20 px, settles 0.00 px past release · still: carry 0.00 px, settles 0.00 px · difference: carry 12.20 px, settle 0.00 px (bound: either ≥ 4, both at rest) · largest one-frame jump: fling 7.1 px, still 0.0 px · 263 frames, median 7.5 ms",
+   "load": "72.6/65.7/56.2"
+  },
+  {
+   "name": "E-4 slider release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 79.2 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px",
+   "load": "72.6/65.7/56.2"
+  }
+ ]
+}

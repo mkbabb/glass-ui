@@ -1,0 +1,1097 @@
+diff --git a/src/components/slider/Slider.vue b/src/components/slider/Slider.vue
+index c24e6f6e..cadd62f2 100644
+--- a/src/components/slider/Slider.vue
++++ b/src/components/slider/Slider.vue
+@@ -2,7 +2,6 @@
+ import {
+     computed,
+     nextTick,
+-    onBeforeUnmount,
+     onMounted,
+     ref,
+     useAttrs,
+@@ -16,6 +15,7 @@ import {
+     SliderTrack,
+     useForwardPropsEmits,
+ } from "reka-ui";
++import { useEngageStage } from "../../composables/motion/engage/engageStage";
+ import { useEngage } from "../../composables/motion/engage/useEngage";
+ import { resolveValueMarks } from "../_shared/field/valueDomain";
+ import { useMotionAxis } from "../_shared/useMotionAxis";
+@@ -56,9 +56,9 @@ const delegatedProps = computed(() => {
+ const forwarded = useForwardPropsEmits(delegatedProps, emits);
+ 
+ /* The engage primitive owns the hand (a native pointer/touch hold with a window-scoped
+-   release), the velocity (the live smear and the release carry) and every engagement
+-   attribute: `data-held` on the root and the range, `data-engaged` on the veil and the
+-   loupe. Nothing in this template writes either. */
++   release), the keyboard modality, and the velocity (the live smear, and the release
++   that seeds the stage's settle). It writes `data-held` (the hand, and only the hand) on
++   the root and the range. Nothing in this template writes an engagement attribute. */
+ const sliderRootRef = useTemplateRef<{ $el: HTMLElement } | HTMLElement | null>(
+     "sliderRootRef",
+ );
+@@ -71,23 +71,22 @@ function getRootEl(): HTMLElement | null {
+ }
+ 
+ const loupeRef = useTemplateRef<HTMLElement>("loupeRef");
+-const focusVeilRef = useTemplateRef<HTMLElement>("focusVeilRef");
+ const motionAxis = useMotionAxis(() => props.motion);
+ 
+-const { isHeld } = useEngage(getRootEl, {
++const { isHeld, isEngaged } = useEngage(getRootEl, {
+     component: "slider",
+     hold: true,
+     drag: {
+         axis: () => (props.orientation === "vertical" ? "y" : "x"),
+-        body: () =>
+-            getRootEl()?.querySelector<HTMLElement>(".slider-thumb:focus") ??
+-            getRootEl()?.querySelector<HTMLElement>(".slider-thumb") ??
+-            null,
++        // The release is the stage's: the promoted control itself leaves the hand at
++        // the hand's velocity (engageStage.ts `flingStage`). The reka thumb paints
++        // nothing (styles.css "THE INVISIBLE THUMB"), so it carries nothing.
++        body: getRootEl,
++        carry: "stage",
+         mirror: () => loupeRef.value,
+         enabled: () => motionAxis.armed.value,
+     },
+     heldOn: () => [getRootEl()?.querySelector(".slider-range")],
+-    engagedOn: () => [focusVeilRef.value, loupeRef.value],
+ });
+ 
+ // ── The GRASP mount (glass/grasp.css) ────────────────────────────────────────────
+@@ -108,31 +107,13 @@ function onGraspReleaseEnd(event: TransitionEvent): void {
+     if (event.propertyName === "opacity" && !isHeld.value) grasping.value = false;
+ }
+ 
+-// ── The FOCUS VEIL mount (glass/focus-veil.css) ──────────────────────────────────
+-// While this slider is held the world behind it frosts and the slider stays crisp. The
+-// centre is VIEWPORT-space, so it is written whenever the control moves against the
+-// viewport — never per frame. A slider does not move under its OWN drag, so the drag
+-// loop stays layout-read-free; a PAGE SCROLL during a live hold does move it, and a
+-// centre taken once would leave the pool burning a hole where the control no longer
+-// is. The re-take rides a capture-phase `scroll` listener on `window` — `scroll` does
+-// not bubble from a scroller, capture still reaches it, so one listener covers every
+-// scroller.
+-function writeVeilCentre(): void {
+-    const host = getRootEl();
+-    const veil = focusVeilRef.value;
+-    if (!host || !veil) return;
+-    const rect = host.getBoundingClientRect();
+-    veil.style.setProperty(
+-        "--veil-x",
+-        `${((rect.left + rect.width / 2) / window.innerWidth) * 100}%`,
+-    );
+-    veil.style.setProperty(
+-        "--veil-y",
+-        `${((rect.top + rect.height / 2) / window.innerHeight) * 100}%`,
+-    );
+-    veil.style.setProperty("--glass-focus-veil-core-x", `${rect.width / 2}px`);
+-    veil.style.setProperty("--glass-focus-veil-core-y", `${rect.height / 2}px`);
+-}
++// ── The ENGAGED STAGE (composables/motion/engage/engageStage.ts) ─────────────────
++// The engagement (the hand down, or the keyboard driving it) promotes the slider where
++// it stands into the top layer over the stage's one veil. The stage is the one writer
++// of `data-engaged`, owns the veil centre and its scroll re-take, and needs no z raise:
++// the top layer clears every stacking context. The spectrum is not graspable, so it is
++// not promoted either.
++useEngageStage(getRootEl, isEngaged, () => graspable.value);
+ 
+ // ── The LOUPE (slider/styles.css) ────────────────────────────────────────────────
+ // The lens organ over the scrub site. Its geometry is measured ONCE per grasp — the
+@@ -167,8 +148,6 @@ function writeLoupeGeometry(): void {
+     const rect = track.getBoundingClientRect();
+     loupeTrackW.value = rect.width;
+     lens.style.setProperty("--loupe-track-w", `${rect.width}px`);
+-    lens.style.setProperty("--loupe-left", `${rect.left + rect.width / 2}px`);
+-    lens.style.setProperty("--loupe-top", `${rect.top}px`);
+ }
+ 
+ function writeLoupeValue(): void {
+@@ -179,32 +158,11 @@ function writeLoupeValue(): void {
+     lens.style.setProperty("--loupe-fill-w", `${x * 3}px`);
+ }
+ 
+-function trackViewport(on: boolean): void {
+-    if (typeof window === "undefined") return;
+-    // Remove-then-add is idempotent: a re-grab mid-release must not leave two.
+-    window.removeEventListener("scroll", onViewportMove, true);
+-    if (on)
+-        window.addEventListener("scroll", onViewportMove, {
+-            passive: true,
+-            capture: true,
+-        });
+-}
+-
+-function onViewportMove(): void {
+-    writeVeilCentre();
+-    writeLoupeGeometry();
+-}
+-
+ watch(grasping, async (open) => {
+-    if (!open) {
+-        trackViewport(false);
+-        return;
+-    }
++    if (!open) return;
+     await nextTick();
+-    writeVeilCentre();
+     writeLoupeGeometry();
+     writeLoupeValue();
+-    trackViewport(true);
+ });
+ watch(
+     () => props.modelValue,
+@@ -213,20 +171,6 @@ watch(
+     },
+     { deep: true },
+ );
+-onBeforeUnmount(() => trackViewport(false));
+-
+-// The ENGAGED RAISE, inline. The veil is a `<body>` child, so the crisp control has to
+-// clear it in the ROOT stacking context: the root takes `--z-overlay` for exactly as
+-// long as the plate is mounted, one rung over the plate's own
+-// `calc(var(--z-overlay) - 1)`. It is INLINE and not a `[data-focus-veil]` rule
+-// because a scoped attribute selector ties on specificity with any single-class
+-// descendant rule a host writes over its own children, and source order then decides
+-// the raise away silently. Inline has no tie to lose.
+-const hostStyle = computed<Record<string, string> | undefined>(() => {
+-    const raised = grasping.value && graspable.value;
+-    if (!raised) return motionAxis.hostStyle.value;
+-    return { ...(motionAxis.hostStyle.value ?? {}), zIndex: "var(--z-overlay)" };
+-});
+ 
+ /* The never-nameless floor's DX signal. reka's SliderThumbImpl names the thumb
+    `$attrs['aria-label'] || getLabel(index, count)`, and getLabel returns UNDEFINED for
+@@ -262,49 +206,22 @@ onMounted(() => {
+         :data-size="s"
+         :data-invalid="props.invalid || undefined"
+         :data-inverted="props.inverted || undefined"
+-        :data-focus-veil="(grasping && graspable) || undefined"
+         :data-motion="motionAxis.dataMotion.value"
+-        :style="hostStyle"
++        :style="motionAxis.hostStyle.value"
+         v-bind="forwarded"
+     >
+         <!--
+-            The focus veil — the world's half of the grasp, TELEPORTED to `<body>`.
+-            `position: fixed` resolves against the viewport only while no ancestor
+-            carries `backdrop-filter`/`transform`/`filter`/`contain: paint`, and a
+-            slider's ordinary home is a glass plate that carries exactly those — left
+-            nested, the plate collapses to that ancestor's box and frosts the slider's
+-            own siblings instead of the world.
+-        -->
+-        <Teleport to="body">
+-            <span
+-                v-if="grasping && graspable"
+-                ref="focusVeilRef"
+-                class="glass-focus-veil"
+-                aria-hidden="true"
+-            />
+-        </Teleport>
+-        <!--
+-            The loupe, teleported for the same reason and clipped by its own housing so
+-            the lens sits outside every glass stack. The clone is a SECOND RENDER of the
+-            track at `--s: 3`, laid out once; only its transform moves per value.
+-            SCRUBBER-ONLY, and unconditionally so: `loupeShown` reads `grasping`, which
+-            opens only for a graspable variant, so neither a variant hook nor a
+-            `graspable` guard on the fill can discriminate anything here — both would be
+-            branches that never take. The one place that decides is `loupeShown`.
++            The loupe rides INSIDE the host: promoted, the host is in the top layer, so
++            no ancestor clips or traps it and no teleport is needed. The clone is a
++            SECOND RENDER of the track at `--s: 3`, laid out once; only its transform
++            moves per value. `loupeShown` is the one predicate (scrubber, horizontal).
+         -->
+-        <Teleport to="body">
+-            <span
+-                v-if="loupeShown"
+-                ref="loupeRef"
+-                class="glass-loupe glass-plate"
+-                aria-hidden="true"
+-            >
+-                <span class="glass-loupe-clone">
+-                    <span class="glass-loupe-fill"></span>
+-                </span>
+-                <span class="glass-loupe-mark"></span>
++        <span v-if="loupeShown" ref="loupeRef" class="glass-loupe glass-plate" aria-hidden="true">
++            <span class="glass-loupe-clone">
++                <span class="glass-loupe-fill"></span>
+             </span>
+-        </Teleport>
++            <span class="glass-loupe-mark"></span>
++        </span>
+         <SliderTrack class="slider-track track-well">
+             <span
+                 v-if="marks.length"
+diff --git a/src/components/slider/styles.css b/src/components/slider/styles.css
+index bdf256dd..a4445d09 100644
+--- a/src/components/slider/styles.css
++++ b/src/components/slider/styles.css
+@@ -402,12 +402,13 @@
+        carried one level down. */
+     --loupe-vel: var(--flex-vel, 0);
+     --loupe-span: calc(var(--slider-track-height, 1.25rem) * 6);
+-    position: fixed;
+-    z-index: calc(var(--z-overlay) - 1);
++    /* Host-relative: the loupe is the promoted host's own child, hung from the track's
++       top edge at the track's centre. */
++    position: absolute;
+     inline-size: var(--loupe-span);
+     block-size: calc(var(--slider-track-height, 1.25rem) * var(--loupe-k-max));
+-    inset-block-start: var(--loupe-top, 0);
+-    inset-inline-start: var(--loupe-left, 0);
++    inset-block-start: calc(50% - var(--slider-track-height, 1.25rem) / 2);
++    inset-inline-start: 50%;
+     /* The raise: a `present` spring from a 0.13 seed anchored on the well's centre. The
+        seed is a RATIFIED CONSTANT, written as one — nothing declares `--loupe-scale`
+        anywhere, and this file's own opening law is that a knob whose only declaration is
+@@ -430,14 +431,23 @@
+         var(--glass-under-shadow-quiet);
+ }
+ 
+-.glass-loupe[data-engaged] {
++[data-engaged] > .glass-loupe {
+     scale: 1;
+     opacity: 1;
+ }
+ 
++/* The loupe mounts in the frame the stage engages its host, so it has no prior style to
++   rise from: the seed is its starting style. */
++@starting-style {
++    [data-engaged] > .glass-loupe {
++        scale: 0.13;
++        opacity: 0;
++    }
++}
++
+ /* The exit is the entry's own shorter rung — the library's ratified exit clock, not a
+    second literal. */
+-.glass-loupe:not([data-engaged]) {
++:not([data-engaged]) > .glass-loupe {
+     transition:
+         scale var(--spring-present-exit-duration) var(--ease-standard),
+         opacity var(--spring-present-exit-duration) var(--ease-standard);
+diff --git a/src/composables/motion/engage/engageStage.ts b/src/composables/motion/engage/engageStage.ts
+new file mode 100644
+index 00000000..d12bba0c
+--- /dev/null
++++ b/src/composables/motion/engage/engageStage.ts
+@@ -0,0 +1,211 @@
++import { onBeforeUnmount, ref, watch, type Ref } from "vue";
++
++import { impulseFrames, rowClockMs } from "./release";
++
++/**
++ * THE ENGAGED STAGE: the ladder's ENGAGED rung (`engageLadder.ts`, "the control promoted
++ * out of its own footprint"), built once.
++ *
++ * A held control is PROMOTED WHERE IT STANDS: it takes `popover="manual"` and enters the
++ * top layer without leaving its place in the DOM. That keeps the three things a moved node
++ * loses (pointer capture, focus, its inherited custom properties) and escapes the trap
++ * every teleport existed for: a top-layer box resolves against the viewport whatever its
++ * ancestors carry (`backdrop-filter`, `transform`, `filter`, `contain: paint`). A
++ * footprint the size of the control stays in flow beneath it and is the anchor the
++ * promoted control is pinned to (`anchor()`), so it tracks scroll with no listener.
++ *
++ * The world recedes behind ONE stage-owned veil (`.glass-focus-veil`, the focus-veil
++ * recipe), itself a manual popover shown just before the host so the top layer stacks it
++ * under the control. It is an element and not the host's `::backdrop`: Playwright WebKit
++ * runs no transition on a `::backdrop` engaged after it opens, and re-applies a
++ * `::backdrop` starting style when its ramp ends (R-E stage-flicker-film).
++ *
++ * SINGLETON (the ladder's `singleton: true`): a second request releases the first.
++ * ONE WRITER of `data-engaged`: this module, and it means engaged (the hand down, or the
++ * keyboard driving the control; the engage door, `useEngage`, says which).
++ *
++ * THE RELEASE CARRIES THE HAND (hallmark 6). A fling hands its velocity to `flingStage`:
++ * the promoted control stretches toward the fling on the `dock` row's impulse response
++ * (the engaged rung's own spring) and springs home, its trailing edge fixed. It spends
++ * at most the reach the grow is allowed (`--stage-reach`, glass/engage-stage.css), so
++ * a control on its gutter does not cross it. The stage leaves the top layer when every
++ * finite animation on the control and its veil has finished.
++ */
++
++interface Holder {
++    host: HTMLElement;
++    footprint: HTMLElement;
++    generation: number;
++}
++
++let holder: Holder | null = null;
++let generation = 0;
++let veil: HTMLElement | null = null;
++
++function stageVeil(): HTMLElement {
++    if (veil?.isConnected) return veil;
++    veil = document.createElement("span");
++    veil.className = "glass-focus-veil";
++    veil.setAttribute("popover", "manual");
++    veil.setAttribute("aria-hidden", "true");
++    document.body.append(veil);
++    return veil;
++}
++
++function writeGeometry(host: HTMLElement, footprint: HTMLElement): void {
++    // One layout read per engage (and per scroll while engaged), never per frame.
++    const rect = footprint.getBoundingClientRect();
++    const vw = window.innerWidth;
++    const vh = window.innerHeight;
++    const v = stageVeil();
++    v.style.setProperty("--veil-x", `${((rect.left + rect.width / 2) / vw) * 100}%`);
++    v.style.setProperty("--veil-y", `${((rect.top + rect.height / 2) / vh) * 100}%`);
++    v.style.setProperty("--glass-focus-veil-core-x", `${rect.width / 2}px`);
++    v.style.setProperty("--glass-focus-veil-core-y", `${rect.height / 2}px`);
++    // The inline grow is capped in CSS (glass/engage-stage.css) by the control's own
++    // clearance to the viewport edge less the page gutter rung: these are its inputs.
++    host.style.setProperty("--stage-room", `${Math.max(0, Math.min(rect.left, vw - rect.right))}px`);
++    host.style.setProperty("--stage-w", `${rect.width}px`);
++}
++
++function onViewportMove(): void {
++    if (holder) writeGeometry(holder.host, holder.footprint);
++}
++
++function setEngaged(host: HTMLElement, on: boolean): void {
++    host.toggleAttribute("data-engaged", on);
++    stageVeil().toggleAttribute("data-engaged", on);
++}
++
++function hide(h: Holder): void {
++    setEngaged(h.host, false);
++    if (h.host.matches(":popover-open")) h.host.hidePopover();
++    if (veil?.matches(":popover-open")) veil.hidePopover();
++    h.host.removeAttribute("popover");
++    h.host.removeAttribute("data-engage-stage");
++    h.footprint.remove();
++    window.removeEventListener("scroll", onViewportMove, true);
++    if (holder === h) holder = null;
++}
++
++/** Promote `host` onto the stage. Re-requesting the current holder re-engages it. */
++export function engageStage(host: HTMLElement): void {
++    if (holder && holder.host !== host) hide(holder);
++    generation += 1;
++    if (holder?.host === host) {
++        holder.generation = generation;
++        setEngaged(host, true);
++        return;
++    }
++    const rect = host.getBoundingClientRect();
++    const cs = getComputedStyle(host);
++    const footprint = document.createElement("span");
++    footprint.className = "engage-footprint";
++    footprint.setAttribute("aria-hidden", "true");
++    footprint.style.inlineSize = `${rect.width}px`;
++    footprint.style.blockSize = `${rect.height}px`;
++    footprint.style.margin = cs.margin;
++    footprint.style.display = cs.display.startsWith("inline") ? "inline-block" : "block";
++    footprint.style.verticalAlign = cs.verticalAlign;
++    host.before(footprint);
++    holder = { host, footprint, generation };
++    writeGeometry(host, footprint);
++    // Top-layer order is show order: the veil first, so the control stacks above it.
++    stageVeil().showPopover();
++    host.setAttribute("popover", "manual");
++    host.setAttribute("data-engage-stage", "");
++    host.showPopover();
++    // The host keeps its prior style through the promotion, so its grow transitions in
++    // this frame. The veil was `display: none` until now: resolving its rest style first
++    // gives its in-clock a value to transition FROM.
++    void getComputedStyle(stageVeil()).opacity;
++    setEngaged(host, true);
++    window.addEventListener("scroll", onViewportMove, { passive: true, capture: true });
++}
++
++/**
++ * Release `host`. The control springs home on its own clock and the veil fades on its
++ * out-clock; both leave the top layer when those transitions finish (read from the
++ * running animations, never a timer). Under reduced motion nothing runs: they leave at once.
++ */
++export function releaseStage(host: HTMLElement, immediate = false): void {
++    const h = holder;
++    if (!h || h.host !== host) return;
++    setEngaged(host, false);
++    if (immediate) return hide(h);
++    const mine = h.generation;
++    const finite = (a: Animation) => a.effect?.getComputedTiming().endTime !== Infinity;
++    const running = [
++        ...host.getAnimations({ subtree: true }).filter(finite),
++        ...stageVeil().getAnimations().filter(finite),
++    ];
++    Promise.all(running.map((a) => a.finished.catch(() => undefined))).then(() => {
++        // A re-grab during the exit took a new generation: this release is stale.
++        if (holder === h && h.generation === mine && !host.hasAttribute("data-engaged")) hide(h);
++    });
++}
++
++/**
++ * The release fling: `host`, still promoted, leaves the hand at `v` (px/s along `axis`)
++ * and the `dock` row brings it home. The leading edge travels, the trailing edge holds
++ * (a stretch, not a travel: the value the control shows does not move). The travel is
++ * soft-limited (tanh) to the reach the engaged grow is allowed along that axis.
++ */
++export function flingStage(host: HTMLElement, axis: "x" | "y", v: number): void {
++    if (!v || holder?.host !== host) return;
++    const ms = rowClockMs("dock", host);
++    const cs = getComputedStyle(host);
++    const reach =
++        axis === "x"
++            ? Number.parseFloat(cs.getPropertyValue("--stage-reach"))
++            : Number.parseFloat(cs.getPropertyValue("--scale-engage"));
++    const size = axis === "x" ? holder.footprint.offsetWidth : holder.footprint.offsetHeight;
++    const cap = (reach - 1) * size;
++    if (!ms || !(cap > 0) || !size) return;
++    const dir = Math.sign(v);
++    const frames = impulseFrames("dock", v, ms).map((d) => {
++        const t = cap * Math.tanh(d / cap);
++        const s = 1 + (dir * t) / size;
++        return {
++            transform:
++                axis === "x"
++                    ? `translateX(${t / 2}px) scaleX(${s})`
++                    : `translateY(${t / 2}px) scaleY(${s})`,
++        };
++    });
++    host.animate(frames, { duration: ms, composite: "add" });
++}
++
++export interface UseEngageStageReturn {
++    /** True while this host is on the stage and engaged. */
++    engaged: Readonly<Ref<boolean>>;
++}
++
++/**
++ * Bind a control's engagement to the stage: `held` true promotes the host, false
++ * releases it. The engagement is the caller's (the engage door's `isEngaged`); the
++ * stage owns the rung.
++ */
++export function useEngageStage(
++    resolveHost: () => HTMLElement | null,
++    held: Ref<boolean>,
++    enabled: () => boolean = () => true,
++): UseEngageStageReturn {
++    const engaged = ref(false);
++    watch(held, (on) => {
++        const host = resolveHost();
++        if (!host || typeof window === "undefined") return;
++        if (on && enabled()) {
++            engageStage(host);
++            engaged.value = true;
++        } else if (engaged.value) {
++            releaseStage(host);
++            engaged.value = false;
++        }
++    });
++    onBeforeUnmount(() => {
++        const host = resolveHost();
++        if (host) releaseStage(host, true);
++    });
++    return { engaged };
++}
+diff --git a/src/composables/motion/engage/useEngage.ts b/src/composables/motion/engage/useEngage.ts
+index 67cc2391..9eabad41 100644
+--- a/src/composables/motion/engage/useEngage.ts
++++ b/src/composables/motion/engage/useEngage.ts
+@@ -3,21 +3,26 @@
+ // Engagement is behaviour, so it has one door. A component hands it its host and says
+ // which parts it has; the primitive owns the state and is the ONLY writer of the
+ // engagement attributes:
+-//   · data-held     the control is engaged: "" while the hand is down on it, "key" while
+-//                   the keyboard drives it (focus that did not arrive from a pointer)
+-//   · data-engaged  the held control's organs (veil, loupe) are live — it means the
+-//                   hand is down, and nothing else writes it (E-7)
++//   · data-held     the hand is down on the control (a pointer or touch hold), and only
++//                   that: the grasp register (glass/grasp.css) and a host's own rules
++//                   read it as the hand's
+ //   · data-press    the press part is down (the press light leg reads it)
+ //   · data-commit   one commit edge, present while its crest plays (none under reduce)
+ //
++// `data-engaged` is not the door's: the engaged stage (`engageStage.ts`) writes it, and
++// the door hands the stage its `isEngaged` (the hand down, or the keyboard driving).
++//
+ // Three parts behind the door, each the shipped leaf, composed rather than copied:
+ //   · the hand      `useDockHold` (pointer + touch acquire, window-scoped release,
+-//                   the dock posture token), plus the keyboard modality
++//                   the dock posture token), plus the keyboard modality: focus that did
++//                   not arrive from a pointer, or a key the control acts on, engages;
++//                   Escape and leaving disengage
+ //   · the press     `useLiquidPress` (the interruptible press spring), its options passed
+ //                   through; the primitive binds its handlers natively and writes its
+ //                   style, so an adopter binds nothing in its template
+ //   · the velocity  `useDragVelocity` (the live smear) plus the release rule
+-//                   (`release.ts`): the release velocity seeds the settle
++//                   (`release.ts`): the release velocity seeds the settle. A promoted
++//                   control's settle is the stage's (`carry: "stage"`)
+ //
+ // THE COMMIT FIRES FROM THE MODEL. `commit: "state"` watches the host's `data-state`,
+ // which a reka host writes from its model whoever changed it (keyboard, pointer, a
+@@ -34,6 +39,7 @@
+ // or reason. Without that global nothing is recorded.
+ 
+ import {
++    computed,
+     onBeforeUnmount,
+     onMounted,
+     shallowRef,
+@@ -45,6 +51,7 @@ import {
+ 
+ import { useDockHold } from "../../../components/dock/composables/useDockHold";
+ import { useDragVelocity } from "../../dom/useDragVelocity";
++import { flingStage } from "./engageStage";
+ import { impulseFrames, rowClockMs, stepFrames } from "./release";
+ import { useLiquidPress } from "../spring/useLiquidPress";
+ 
+@@ -72,26 +79,34 @@ export interface UseEngageOptions {
+     press?: boolean | EngagePressOptions;
+     /** The commit edge: the host's `data-state`, a model getter, or the adopter's call. */
+     commit?: "state" | "call" | (() => unknown);
+-    /** A drag surface: the axis its velocity is read on, and the body the release carries. */
++    /** A drag surface: the axis its velocity is read on, and the body the release carries:
++     *  `"travel"` (default) translates the body; `"stage"` hands the velocity to the
++     *  engaged stage, which stretches the promoted body toward the fling. */
+     drag?: {
+         axis: () => "x" | "y";
+         body: () => HTMLElement | null;
++        carry?: "travel" | "stage";
+         mirror?: () => HTMLElement | null;
+         enabled?: () => boolean;
+     };
+     /** Elements that carry `data-held` with the host (the grasp register's own host). */
+     heldOn?: () => (Element | null | undefined)[];
+-    /** The held control's organs: they carry `data-engaged` while the hand is down. */
+-    engagedOn?: () => (Element | null | undefined)[];
+ }
+ 
+ export interface UseEngageReturn {
+     state: Readonly<Ref<EngageState>>;
++    /** The hand is down on the control. */
+     isHeld: Readonly<Ref<boolean>>;
++    /** The control is engaged: the hand is down, or the keyboard drives it. The stage's input. */
++    isEngaged: Readonly<Ref<boolean>>;
+     /** Fire the commit edge now (a stateless control's activation). */
+     commit: () => void;
+ }
+ 
++/** A key the control acts on (a character, an arrow, a page or end key, Enter): it keys
++ *  the engagement. Tab traverses and a modifier alone does nothing, so neither does. */
++const ACTING_KEY = /^(.|Arrow\w+|Page(Up|Down)|Home|End|Enter)$/u;
++
+ type Census = Map<string, { parts: string[]; exempt?: string }>;
+ 
+ const reduced = (): boolean =>
+@@ -177,19 +192,29 @@ export function useEngage(
+         const h = host();
+         if (ready && h) fireCommit(h);
+     };
+-    if (o.exempt) return { state, isHeld: shallowRef(false), commit };
++    if (o.exempt) return { state, isHeld: shallowRef(false), isEngaged: shallowRef(false), commit };
+ 
+     // ── the hand, and the keyboard that engages like it ─────────────────────────
+     const isHeld: Ref<boolean> = o.hold ? useDockHold(host).isHeld : shallowRef(false);
++    const keyed = shallowRef(false);
++    const isEngaged = computed(() => isHeld.value || keyed.value);
+     if (o.hold) {
+         // Focus that a pointer brought (reka focuses the thumb by script on a slide)
+-        // is not a keyboard engagement, though `:focus-visible` may match it.
+-        const keyed = shallowRef(false);
++        // is not a keyboard engagement, though `:focus-visible` may match it. The mark
++        // lives as long as the hand: a press that focused nothing must not leave the
++        // next keyboard arrival read as pointed.
+         let pointed = false;
++        watch(isHeld, (held) => {
++            if (!held) pointed = false;
++        });
+         listen(host, [
+             ["pointerdown", () => { pointed = true; keyed.value = false; }],
+             ["focusin", () => { keyed.value = !pointed; }],
+-            ["keydown", (e) => { if ((e as KeyboardEvent).key !== "Tab") keyed.value = true; }],
++            ["keydown", (e) => {
++                const k = (e as KeyboardEvent).key;
++                if (k === "Escape") keyed.value = false;
++                else if (ACTING_KEY.test(k)) keyed.value = true;
++            }],
+             ["focusout", (e) => {
+                 const to = (e as FocusEvent).relatedTarget as Node | null;
+                 if (to && host()?.contains(to)) return;
+@@ -198,15 +223,10 @@ export function useEngage(
+             }],
+         ]);
+         watch(
+-            [isHeld, keyed, () => o.heldOn?.(), () => o.engagedOn?.()],
+-            ([held, key]) => {
+-                state.value = held || key ? "held" : "rest";
+-                const v = held ? "" : key ? "key" : null;
+-                for (const el of [host(), ...(o.heldOn?.() ?? [])]) {
+-                    if (v === null) el?.removeAttribute("data-held");
+-                    else el?.setAttribute("data-held", v);
+-                }
+-                for (const el of o.engagedOn?.() ?? []) el?.toggleAttribute("data-engaged", held);
++            [isHeld, isEngaged, () => o.heldOn?.()],
++            ([held, engaged]) => {
++                state.value = engaged ? "held" : "rest";
++                for (const el of [host(), ...(o.heldOn?.() ?? [])]) el?.toggleAttribute("data-held", held);
+             },
+             { flush: "post" },
+         );
+@@ -268,7 +288,9 @@ export function useEngage(
+             axis: d.axis,
+             onRelease: (v) => {
+                 const body = d.body();
+-                if (body) carry(body, d.axis(), v);
++                if (!body || reduced()) return;
++                if (d.carry === "stage") flingStage(body, d.axis(), v);
++                else carry(body, d.axis(), v);
+             },
+         });
+     }
+@@ -300,5 +322,5 @@ export function useEngage(
+         }
+     }
+ 
+-    return { state, isHeld, commit };
++    return { state, isHeld, isEngaged, commit };
+ }
+diff --git a/src/composables/motion/index.ts b/src/composables/motion/index.ts
+index fc0f4b57..d99687c6 100644
+--- a/src/composables/motion/index.ts
++++ b/src/composables/motion/index.ts
+@@ -104,3 +104,12 @@ export {
+     type EngageRungName,
+     type EngageChannel,
+ } from "./engage/engageLadder";
++// The ENGAGED STAGE: the ladder's engaged rung built once (a held control promoted where
++// it stands into the top layer; singleton; the one writer of `data-engaged`).
++export {
++    engageStage,
++    flingStage,
++    releaseStage,
++    useEngageStage,
++    type UseEngageStageReturn,
++} from "./engage/engageStage";
+diff --git a/src/styles/glass.css b/src/styles/glass.css
+index f4af6c1e..b5825a45 100644
+--- a/src/styles/glass.css
++++ b/src/styles/glass.css
+@@ -76,6 +76,10 @@
+    is unique to the file, so the rung is cascade-order-invariant; its own @layer
+    components. */
+ @import "./glass/focus-veil.css";
++/* The ENGAGED STAGE — the ladder's engaged rung: a held control promoted where it stands
++   into the top layer, pinned to its in-flow footprint. UNLAYERED, like the slider lane
++   it promotes, at (0,2,0) so it outranks any host's own single-class geometry. */
++@import "./glass/engage-stage.css";
+ @import "./glass/surfaces.css";
+ /* The .glass-pager-ring pager-pill chassis, a partial held under the 500-line
+    bound; its own @layer components block @import-ed IMMEDIATELY AFTER surfaces.css and
+diff --git a/src/styles/glass/engage-stage.css b/src/styles/glass/engage-stage.css
+new file mode 100644
+index 00000000..3af02b52
+--- /dev/null
++++ b/src/styles/glass/engage-stage.css
+@@ -0,0 +1,86 @@
++/* glass/engage-stage.css
++   THE ENGAGED STAGE (composables/motion/engage/engageStage.ts): the ladder's ENGAGED rung.
++
++   A held control takes `popover="manual"` + `[data-engage-stage]` and enters the top layer
++   WHERE IT STANDS (no DOM move: pointer capture, focus and inheritance survive). Its
++   footprint stays in flow and is the anchor it is pinned to, so the promoted control
++   sits exactly on its rest box and follows scroll by anchor positioning. While
++   `[data-engaged]` it grows on the dock spring by `--scale-engage`, capped along the
++   inline axis by the gutter (below). The world's half is the stage's one veil, a manual
++   popover shown under the host (glass/focus-veil.css). Reduced motion retires the grow
++   and keeps the veil.
++
++   TWO STRENGTHS, ON PURPOSE. The popover UA sheet paints a box (border, padding, margin,
++   Canvas, CanvasText) the host never asked for: those are neutralized at the LOWEST
++   author strength (`@layer base`, zero specificity), so any paint or box the host
++   authors itself still wins. The pin is GEOMETRY and has to win over the host's own:
++   it is UNLAYERED at (0,2,0), because the hosts it promotes author their geometry
++   unlayered at (0,1,0) (slider/styles.css). */
++
++@layer base {
++    :where([popover][data-engage-stage], [popover].glass-focus-veil) {
++        margin: 0;
++        border: 0;
++        padding: 0;
++        overflow: visible;
++        background: transparent;
++        color: inherit;
++    }
++    /* The stage's veil is a manual popover too: the UA's fit-content box would collapse
++       the full-viewport plate the recipe's `inset: 0` asks for. */
++    :where([popover].glass-focus-veil) {
++        inline-size: auto;
++        block-size: auto;
++        max-inline-size: none;
++        max-block-size: none;
++    }
++}
++
++.engage-footprint {
++    display: block;
++    flex: none;
++    anchor-name: --engage-footprint;
++}
++
++[popover][data-engage-stage] {
++    position: fixed;
++    position-anchor: --engage-footprint;
++    inset: auto;
++    left: anchor(left);
++    top: anchor(top);
++    inline-size: anchor-size(width);
++    block-size: anchor-size(height);
++    scale: 1;
++    transition: scale var(--spring-dock-duration) var(--spring-dock);
++}
++
++/* THE GUTTER CAP, AND THE REACH. Inline, the grow may spend only the clearance the
++   control has beyond the page gutter (`--space-section`, the spacing register's "page
++   gutter" rung): 1 + 2·max(0, room − gutter)/width, at most `--scale-engage`. A control
++   already on its gutter (a full-width phone slider) keeps its width and grows along the
++   block axis alone. The figure is `--stage-reach`, registered so it computes to a
++   number the stage can read: the release fling (engageStage.ts `flingStage`) spends
++   the same reach and no more. Typed arithmetic (length ÷ length) parses in both
++   engines (R-E platform probe). */
++@property --stage-reach {
++    syntax: "<number>";
++    inherits: false;
++    initial-value: 1;
++}
++
++[popover][data-engage-stage] {
++    --stage-reach: min(
++        var(--scale-engage),
++        calc(1 + 2 * max(0px, var(--stage-room) - var(--space-section)) / var(--stage-w))
++    );
++}
++
++[popover][data-engage-stage][data-engaged] {
++    scale: var(--stage-reach) var(--scale-engage);
++}
++
++@media (prefers-reduced-motion: reduce) {
++    [popover][data-engage-stage][data-engaged] {
++        scale: 1;
++    }
++}
+diff --git a/src/styles/glass/focus-veil.css b/src/styles/glass/focus-veil.css
+index 19b2f215..b45119cb 100644
+--- a/src/styles/glass/focus-veil.css
++++ b/src/styles/glass/focus-veil.css
+@@ -149,9 +149,10 @@
+         transition: opacity var(--duration-fast) var(--ease-standard);
+     }
+ 
+-    /* THE IN CLOCK — behind the geometry by one rank-6 beat. Two readers, two meanings:
+-       a held control's veil carries `data-engaged` (the engage primitive writes it); a
+-       modal's veil reads its overlay's own open state. */
++    /* THE IN CLOCK — behind the geometry by one rank-6 beat. Two hosts: the engaged
++       stage's one veil (composables/motion/engage/engageStage.ts), keyed on
++       `data-engaged`, which means held; and the modal's, keyed on its overlay's own
++       open state. */
+     .glass-focus-veil[data-engaged],
+     [data-state="open"] > .glass-focus-veil {
+         opacity: 1;
+@@ -159,8 +160,9 @@
+             var(--duration-instant);
+     }
+ 
++    /* The modal's veil mounts with its overlay, so its ramp needs a starting style. The
++       stage's veil does not: the stage resolves it at rest before it engages. */
+     @starting-style {
+-        .glass-focus-veil[data-engaged],
+         [data-state="open"] > .glass-focus-veil {
+             opacity: 0;
+         }
+diff --git a/src/styles/tokens/scale-paper.css b/src/styles/tokens/scale-paper.css
+index 6c8b2d45..5281b257 100644
+--- a/src/styles/tokens/scale-paper.css
++++ b/src/styles/tokens/scale-paper.css
+@@ -9,6 +9,10 @@
+     --scale-hover: 1.08;
+     --scale-hover-dock: 1.1;
+     --scale-press: 0.96;
++    /* The ENGAGED rung's grow (engageLadder.ts "engaged"): T1 GROW's 1.06
++       (BI.W-ENGAGE-AFFORD §T1), under HOVER_GEOMETRY_BUDGET (1.08). The engaged stage
++       (glass/engage-stage.css) reads it by name. */
++    --scale-engage: 1.06;
+ 
+     /* Press-scale rungs. `--scale-press` (0.96) is the canonical iOS Liquid
+        Glass press value every primitive reaches for unless it has a documented
+diff --git a/tests/composables/motion/engageStage.keyboard.test.ts b/tests/composables/motion/engageStage.keyboard.test.ts
+new file mode 100644
+index 00000000..35cfbcc1
+--- /dev/null
++++ b/tests/composables/motion/engageStage.keyboard.test.ts
+@@ -0,0 +1,83 @@
++// The engaged stage's keyboard arm, through the engage door (`useEngage` → `isEngaged`).
++//
++// The door keys the engagement on focus that did not arrive from a pointer, or on a key the
++// control acts on; Escape and leaving disengage. The stage, and nothing else, writes
++// `data-engaged`. `data-held` stays the hand's alone: the grasp register and the slider
++// lane read it as a pointer hold (glass/grasp.css), so a keyboard engagement must not
++// write it.
++import { mount } from "@vue/test-utils";
++import { describe, expect, it } from "vitest";
++import { nextTick } from "vue";
++
++import { Slider } from "@glass/components/slider";
++
++async function ticks(): Promise<void> {
++    await nextTick();
++    await nextTick();
++}
++
++function mountSlider() {
++    const wrapper = mount(Slider, {
++        props: { modelValue: [40], "aria-label": "Keys" },
++        attachTo: document.body,
++    });
++    return { wrapper, root: wrapper.element as HTMLElement };
++}
++
++describe("engaged stage · keyboard arm", () => {
++    it("focus from the keyboard promotes the slider and writes no hand", async () => {
++        const { root } = mountSlider();
++        root.dispatchEvent(new FocusEvent("focusin", { bubbles: true }));
++        await ticks();
++        expect(root.matches(":popover-open")).toBe(true);
++        expect(root.hasAttribute("data-engaged")).toBe(true);
++        expect(root.hasAttribute("data-held")).toBe(false);
++        expect(root.querySelector(".slider-range")?.hasAttribute("data-held")).toBe(false);
++
++        root.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
++        await ticks();
++        expect(root.hasAttribute("data-engaged")).toBe(false);
++    });
++
++    it("focus a pointer brought does not engage, and a modifier alone does not either", async () => {
++        const { root } = mountSlider();
++        root.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true }));
++        root.dispatchEvent(new FocusEvent("focusin", { bubbles: true }));
++        window.dispatchEvent(new PointerEvent("pointerup", { bubbles: true }));
++        await ticks();
++        expect(root.hasAttribute("data-engaged")).toBe(false);
++
++        for (const key of ["Shift", "Meta", "Control", "Alt", "Tab"]) {
++            root.dispatchEvent(new KeyboardEvent("keydown", { key, bubbles: true }));
++            await ticks();
++            expect(root.hasAttribute("data-engaged"), key).toBe(false);
++        }
++
++        root.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowRight", bubbles: true }));
++        await ticks();
++        expect(root.hasAttribute("data-engaged")).toBe(true);
++        expect(root.hasAttribute("data-held")).toBe(false);
++    });
++
++    it("a press that focused nothing leaves the next keyboard arrival keyed", async () => {
++        const { root } = mountSlider();
++        root.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true }));
++        await ticks();
++        window.dispatchEvent(new PointerEvent("pointerup", { bubbles: true }));
++        await ticks();
++        root.dispatchEvent(new FocusEvent("focusin", { bubbles: true }));
++        await ticks();
++        expect(root.hasAttribute("data-engaged")).toBe(true);
++        expect(root.hasAttribute("data-held")).toBe(false);
++    });
++
++    it("leaving the control disengages it", async () => {
++        const { root } = mountSlider();
++        root.dispatchEvent(new FocusEvent("focusin", { bubbles: true }));
++        await ticks();
++        expect(root.hasAttribute("data-engaged")).toBe(true);
++        root.dispatchEvent(new FocusEvent("focusout", { bubbles: true, relatedTarget: document.body }));
++        await ticks();
++        expect(root.hasAttribute("data-engaged")).toBe(false);
++    });
++});
+diff --git a/tests/gates/orphan-css-partial.test.ts b/tests/gates/orphan-css-partial.test.ts
+index 8cf6485c..c492e13a 100644
+--- a/tests/gates/orphan-css-partial.test.ts
++++ b/tests/gates/orphan-css-partial.test.ts
+@@ -333,8 +333,14 @@ const orphans = files
+ // NAMED EXCEPTIONS, each with its grounds. The slider lane is unlayered on purpose
+ // (`slider/styles.css:6-10`): it composes the `@layer components` groove and fill registers and
+ // its sizing and state legs win over them by layer, with no `!important` anywhere (O-20 LEDGER
+-// §A-3-CLASS).
+-const LAYER_EXCEPTIONS = new Set(["src/components/slider/styles.css"]);
++// §A-3-CLASS). The engaged stage's pin and grow are unlayered for the same reason, one step
++// on (`glass/engage-stage.css:13-18`): a promoted host's own geometry and transition are
++// unlayered (the slider lane above), and a layered promotion rule would lose to them whatever
++// its specificity.
++const LAYER_EXCEPTIONS = new Set([
++    "src/components/slider/styles.css",
++    "src/styles/glass/engage-stage.css",
++]);
+ 
+ // The A-3-CLASS domain is this gate's own reach union — every partial either channel carries
+ // into a published entry, plus the inline `<style>` blocks of the public SFC reach set (they ship
+diff --git a/tests/setup.ts b/tests/setup.ts
+index 9ed09bdc..40f2ce59 100644
+--- a/tests/setup.ts
++++ b/tests/setup.ts
+@@ -123,6 +123,21 @@ HTMLElement.prototype.animate = vi.fn(() => ({
+     finished: Promise.resolve(),
+ })) as unknown as typeof HTMLElement.prototype.animate;
+ HTMLElement.prototype.getAnimations = vi.fn(() => []);
++// happy-dom has no popover API. The engaged stage (composables/motion/engage/engageStage.ts)
++// promotes a held control with `showPopover()`; these stubs keep `:popover-open` honest by
++// toggling a flag the stage reads through `matches`, which happy-dom does not know either.
++const popoverOpen = new WeakSet<HTMLElement>();
++HTMLElement.prototype.showPopover = function (this: HTMLElement) {
++    popoverOpen.add(this);
++};
++HTMLElement.prototype.hidePopover = function (this: HTMLElement) {
++    popoverOpen.delete(this);
++};
++const nativeMatches = Element.prototype.matches;
++Element.prototype.matches = function (this: Element, selector: string): boolean {
++    if (selector === ":popover-open") return popoverOpen.has(this as HTMLElement);
++    return nativeMatches.call(this, selector);
++} as typeof Element.prototype.matches;
+ 
+ HTMLCanvasElement.prototype.getContext = vi.fn(() => ({
+     createImageData: (width: number, height: number) => ({
+diff --git a/tests/styles/focus-veil.test.ts b/tests/styles/focus-veil.test.ts
+index b140c498..4f54105c 100644
+--- a/tests/styles/focus-veil.test.ts
++++ b/tests/styles/focus-veil.test.ts
+@@ -73,7 +73,9 @@ const consumers: readonly [string, string][] = [
+     // deleted, and a centred modal IS the definitional focus event — it sits at the
+     // veil's own 50% rest, so the overlay composes the class and writes no centre.
+     ["src/components/dialog/ModalOverlay.vue", "the modal scrim's focus veil"],
+-    ["src/components/slider/Slider.vue", "the engaged Slider (F49/F50)"],
++    // The engaged Slider (F49/F50) reaches the recipe through the engaged stage, which
++    // owns the one veil a held control recedes the world behind.
++    ["src/composables/motion/engage/engageStage.ts", "the engaged stage's veil"],
+ ];
+ 
+ describe("G-RUNG-ONLY · GRADIENT-BLUR arm — the focus-veil primitive exists", () => {
+@@ -209,55 +211,65 @@ describe("G-RUNG-ONLY · GRADIENT-BLUR arm — applied at its named consumers",
+     });
+ 
+     // THE RENDER-LEVEL DETECTOR. It mounts a real Slider, grasps it, and reads the
+-    // DOM — so it reds on a dead binding (a `v-if` that never opens), on a veil left
+-    // nested in the host's own subtree (where a `backdrop-filter` ancestor would
+-    // collapse the fixed plate to that ancestor's box), and on a raise that a host
+-    // rule can tie away. A source scan can see none of the three.
+-    it("the engaged Slider mounts the plate to <body> and clears it inline", async () => {
++    // DOM: the engaged stage promotes the host WHERE IT STANDS (no portal, no node
++    // move), leaves its footprint in flow, shows its one veil as a body child, writes
++    // the centre on that veil, and is the one writer of `data-engaged`.
++    it("the engaged Slider is promoted onto the stage over its one veil", async () => {
+         const wrapper = mount(Slider, {
+             props: { modelValue: [40], "aria-label": "Grasp" },
+             attachTo: document.body,
+-            global: { stubs: { teleport: false } },
+         });
+         const root = wrapper.element as HTMLElement;
++        const parent = root.parentElement;
+ 
+-        // At rest: no full-viewport backdrop sample anywhere, no raise on the host.
+-        expect(document.querySelectorAll(".glass-focus-veil")).toHaveLength(0);
+-        expect(root.style.zIndex).toBe("");
++        // At rest: nothing promoted, no footprint, no veil engaged.
++        expect(root.hasAttribute("popover")).toBe(false);
++        expect(document.querySelector(".engage-footprint")).toBeNull();
++        expect(document.querySelector(".glass-focus-veil[data-engaged]")).toBeNull();
+ 
+         root.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true }));
+         await nextTick();
+         await nextTick();
+ 
+-        const veil = document.querySelector<HTMLElement>(".glass-focus-veil");
+-        expect(veil, "the engaged Slider renders no focus veil").not.toBeNull();
+-        // PORTALLED, not nested — the plate is a body child and NOT inside the host.
+-        expect(veil!.parentElement).toBe(document.body);
+-        expect(root.contains(veil!)).toBe(false);
+-        expect(veil!.hasAttribute("data-engaged")).toBe(true);
+-        // The centre is written from the host's own rect on the mount tick.
+-        expect(veil!.style.getPropertyValue("--veil-x")).not.toBe("");
+-        expect(veil!.style.getPropertyValue("--veil-y")).not.toBe("");
+-        // The raise is INLINE, so no host rule can tie it out of effect.
+-        expect(root.style.zIndex).toBe("var(--z-overlay)");
+-        expect(root.getAttribute("data-focus-veil")).toBe("true");
++        // Promoted in place: same parent, the top layer, held.
++        expect(root.parentElement).toBe(parent);
++        expect(root.getAttribute("popover")).toBe("manual");
++        expect(root.matches(":popover-open")).toBe(true);
++        expect(root.hasAttribute("data-engage-stage")).toBe(true);
++        expect(root.hasAttribute("data-engaged")).toBe(true);
++        // The footprint holds the rest box in flow, right where the host stood.
++        expect(root.previousElementSibling?.classList.contains("engage-footprint")).toBe(true);
++        // The veil: one body child, in the top layer, engaged, its centre written.
++        const veils = document.querySelectorAll<HTMLElement>(".glass-focus-veil");
++        expect(veils).toHaveLength(1);
++        const v = veils[0]!;
++        expect(v.parentElement).toBe(document.body);
++        expect(v.matches(":popover-open")).toBe(true);
++        expect(v.hasAttribute("data-engaged")).toBe(true);
++        expect(v.style.getPropertyValue("--veil-x")).not.toBe("");
++        expect(v.style.getPropertyValue("--veil-y")).not.toBe("");
+ 
+         wrapper.unmount();
+-        expect(document.querySelectorAll(".glass-focus-veil")).toHaveLength(0);
++        expect(document.querySelector(".engage-footprint")).toBeNull();
++        expect(v.matches(":popover-open")).toBe(false);
++        expect(document.querySelector("[data-engaged]")).toBeNull();
+     });
+ 
+     it("re-takes the centre when the page scrolls under a live grasp", async () => {
+         const wrapper = mount(Slider, {
+             props: { modelValue: [40], "aria-label": "Grasp" },
+             attachTo: document.body,
+-            global: { stubs: { teleport: false } },
+         });
+         const root = wrapper.element as HTMLElement;
+-        // The rect is viewport-space, and the test environment paints nothing, so the
+-        // host's own rect is the thing to drive: the control holds still on the page
+-        // while the page moves under it.
++        root.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true }));
++        await nextTick();
++        await nextTick();
++        // The centre is read off the FOOTPRINT (the in-flow rest box the host is pinned
++        // to); the test environment paints nothing, so its rect is the thing to drive.
++        const footprint = root.previousElementSibling as HTMLElement;
++        const v = document.querySelector<HTMLElement>(".glass-focus-veil")!;
+         let top = 200;
+-        root.getBoundingClientRect = (() => ({
++        footprint.getBoundingClientRect = (() => ({
+             x: 100,
+             y: top,
+             left: 100,
+@@ -268,27 +280,18 @@ describe("G-RUNG-ONLY · GRADIENT-BLUR arm — applied at its named consumers",
+             height: 20,
+             toJSON: () => ({}),
+         })) as HTMLElement["getBoundingClientRect"];
+-
+-        root.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true }));
+-        await nextTick();
+-        await nextTick();
+-
+-        const veil = document.querySelector<HTMLElement>(".glass-focus-veil")!;
+-        const atGrasp = veil.style.getPropertyValue("--veil-y");
++        window.dispatchEvent(new Event("scroll"));
++        const atGrasp = v.style.getPropertyValue("--veil-y");
+         expect(atGrasp).not.toBe("");
+ 
+         top = -184;
+         window.dispatchEvent(new Event("scroll"));
+         expect(
+-            veil.style.getPropertyValue("--veil-y"),
++            v.style.getPropertyValue("--veil-y"),
+             "the pool stranded at the grasp position after a scroll",
+         ).not.toBe(atGrasp);
+ 
+-        // The listener lives exactly as long as the grasp — nothing left on `window`.
+         wrapper.unmount();
+-        top = 900;
+-        window.dispatchEvent(new Event("scroll"));
+-        expect(document.querySelectorAll(".glass-focus-veil")).toHaveLength(0);
+     });
+ });
+ 

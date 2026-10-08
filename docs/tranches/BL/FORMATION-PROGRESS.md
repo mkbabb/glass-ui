@@ -223,3 +223,12 @@ Outage log:
   2. A modifier key alone after a drag engages the slider and leaves it stuck.
   3. E-4's slider PASS measures the invisible reka thumb; the visible edge carries the same 0.04-0.12 px as HEAD.
   The census plant passes vacuously. The "only writer" header is false (GlassDock data-held, PagerDots data-press). The crest token is fitted to frame sampling and bounces geometry on 'panel'. On the gestalt read, the commit cannot be seen. P-E launched.
+- 2026-10-08 — D5 pass 1 P-E banked (family E, the engaged stage).
+  - Built on P-B's tree, not P-A's (a disclosed deviation: P-A lacks B's release velocity, keyboard signal and single writer).
+  - The patch is 26 files, +1099/−267, and passes apply --check at 809f1b7c. E's delta over P-B is src 9 files, +410/−145.
+  - Build, typecheck and unit pass; the one menu/contract failure is not reproduced.
+  - It adds a named exception to the layering gate for the stage's deliberately unlayered CSS (the critic should judge it).
+  - Per engine: E-7 4/4, E-2 36/36, E-5 12/12, E-8 7/7, E-9 24/24, E-3 10/12 (the P-B control 6/12), E-4 3/4 (the slider cell fails).
+  - Its probe covering keyboard, modifier keys, fling and reduce reads 16/16; the P-B control reads 5/16, so C-B's keyboard and modifier defects are cured here.
+  - E-1 and E-6 stay RED (census, Q-2). The phone touch-held cell's bound cannot be met as written (X-2).
+  CE launched.

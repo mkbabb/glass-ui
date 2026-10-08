@@ -1,0 +1,16 @@
+# demo:dist:build 19:07:54 load averages: 68.55 58.42 45.07
+dist-demo/assets/Aurora-BOppQyYQ.js                                            207.96 kB │ gzip: 69.28 kB
+
+✓ built in 3.02s
+exit 0
+# vitest start 19:07:58 load averages: 67.70 58.41 45.14
+ ❯ tests/components/menu/contract.test.ts (12 tests | 1 failed) 1771ms
+     × keeps the click branch to one portaled menu and restores focus on execute 555ms
+ ❯ tests/gates/orphan-css-partial.test.ts (9 tests | 1 failed) 25ms
+     × every top-level style rule the reach union ships sits inside an @layer 6ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/gates/orphan-css-partial.test.ts > gate:orphan-CSS-partial — every src/ partial is reachable from a published entry via the source graph > every top-level style rule the reach union ships sits inside an @layer
+ FAIL  tests/components/menu/contract.test.ts > DropdownMenu contract > keeps the click branch to one portaled menu and restores focus on execute
+ Test Files  2 failed | 237 passed (239)
+      Tests  2 failed | 2317 passed | 10 expected fail | 1 skipped (2330)
+exit 1 19:08:47 load averages: 69.78 60.11 46.44
