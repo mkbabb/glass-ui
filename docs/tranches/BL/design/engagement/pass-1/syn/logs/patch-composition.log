@@ -1,0 +1,16 @@
+# patch composition at da1ab7b7 (src = v10.1.0 bytes) · load 159.32 130.96 106.06
+R-A alone: clean
+R-B alone: clean
+R-C alone: clean
+R-D alone: clean
+R-E alone: clean
+A then B: patch failed: src/components/switch/Switch.vue:41;
+A then E: patch failed: src/components/switch/Switch.vue:41;patch failed: src/composables/motion/index.ts:104;
+B then E: patch failed: src/components/dialog/ModalOverlay.vue:71;patch failed: src/components/slider/Slider.vue:17;patch failed: src/components/switch/Switch.vue:1;patch failed: src/styles/glass/focus-veil.css:149;patch failed: tests/styles/focus-veil.test.ts:209;
+D then B: patch failed: src/components/_shared/disclosure/disclosure.css:76;patch failed: src/components/dialog/ModalOverlay.vue:71;patch failed: src/components/slider/Slider.vue:16;patch failed: src/components/switch/Switch.vue:41;patch failed: src/styles/glass/focus-veil.css:149;
+D then E: patch failed: src/components/dialog/ModalOverlay.vue:71;patch failed: src/components/slider/Slider.vue:17;patch failed: src/components/switch/Switch.vue:41;patch failed: src/composables/motion/index.ts:104;patch failed: src/styles/glass/focus-veil.css:149;
+C then B: patch failed: src/components/_shared/disclosure/disclosure.css:76;patch failed: src/components/slider/Slider.vue:16;patch failed: src/components/switch/Switch.vue:41;patch failed: src/composables/dom/useDragVelocity.ts:62;
+C then E: patch failed: src/components/slider/Slider.vue:17;patch failed: src/components/switch/Switch.vue:41;
+A then D: patch failed: src/components/slider/styles.css:30;patch failed: src/components/switch/Switch.vue:43;patch failed: src/composables/motion/index.ts:104;patch failed: src/styles/tokens/scale-paper.css:25;
+A then C: patch failed: src/components/accordion/AccordionTrigger.vue:43;patch failed: src/components/slider/Slider.vue:259;patch failed: src/components/slider/styles.css:30;patch failed: src/components/switch/Switch.vue:42;patch failed: tests/components/control-bit/binary-triad.test.ts:301;
+C then D: patch failed: src/components/_shared/disclosure/disclosure.css:67;patch failed: src/components/slider/Slider.vue:18;patch failed: src/components/slider/styles.css:30;patch failed: src/components/switch/Switch.vue:43;
