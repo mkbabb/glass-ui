@@ -1,0 +1,8 @@
+16:23  up 1 day,  1:51, 2 users, load averages: 60.09 75.27 88.56
+
+> @mkbabb/glass-ui@10.1.0 typecheck
+> vue-tsc --noEmit && vue-tsc --noEmit -p tsconfig.test.json
+
+tests/components/fourier-field/FourierField.smoke.test.ts(18,30): error TS2307: Cannot find module '@mkbabb/glass-ui/fourier-math' or its corresponding type declarations.
+tests/components/fourier-field/FourierField.smoke.test.ts(19,66): error TS2307: Cannot find module '@mkbabb/glass-ui/fourier-math' or its corresponding type declarations.
+npm run typecheck  34.08s user 1.85s system 86% cpu 41.651 total

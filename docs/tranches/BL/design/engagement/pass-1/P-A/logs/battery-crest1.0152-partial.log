@@ -1,0 +1,35 @@
+start 16:30:17 16:30  up 1 day,  1:57, 2 users, load averages: 67.79 66.15 78.70
+E-1 chromium exit 2 · E-1 chromium HARNESS ERROR · page.evaluate: TypeError: Cannot read properties of null (reading 's') · load 67.6/66.3/78.5 · 17 s, load at start 67.8/66.1/78.7
+    HARNESS ERROR page.evaluate: TypeError: Cannot read properties of null (reading 's') |     at eval (eval at evaluate (:303:30), <anonymous>:1:112) |     at UtilityScript.evaluate (<anonymous>:305:16)
+E-1 webkit   exit 2 · E-1 webkit HARNESS ERROR · page.evaluate: TypeError: null is not an object (evaluating 'window.__eff(document.querySelector('[data-e~="target"]')).s') · load 67.6/66.3/78.3 · 20 s, load at start 67.6/66.3/78.5
+    HARNESS ERROR page.evaluate: TypeError: null is not an object (evaluating 'window.__eff(document.querySelector('[data-e~="target"]')).s') |     at snap (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/e1-census.mjs:53:35) |     at /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/e1-census.mjs:56:115
+E-2 chromium exit 1 · E-2 chromium FAIL · 80 pass, 28 fail, 0 unmeasured of 108 gating cells (0 reported) · load 67.6/66.3/78.3 at start, 38.1/55.3/72.1 at end · 129 s, load at start 67.6/66.3/78.3
+    FAIL       E-2 radio commit·keyboard(ArrowDown) light · peak 1.015 trough 0.998 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 52.5/62.8/76.6
+    FAIL       E-2 radio commit·keyboard(ArrowDown) dark · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 98 frames, median 8.3 ms · load 49.4/61.8/76.1
+    FAIL       E-2 tabs commit·programmatic light · peak 1.000 trough 1.000 settle 1.000 · body travel 78.31 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 48.4/61.2/75.7
+    FAIL       E-2 tabs mount(committed) light · after mount: scale range 0.000 body moved 123.09 px over 97 of 97 frames with the target present · load 48.4/61.2/75.7
+    FAIL       E-2 tabs commit·programmatic dark · peak 1.000 trough 1.000 settle 1.000 · body travel 78.31 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 47.4/60.8/75.4
+    FAIL       E-2 tabs mount(committed) dark · after mount: scale range 0.000 body moved 123.09 px over 97 of 97 frames with the target present · load 45.3/60.1/75.1
+    FAIL       E-2 toggle commit·keyboard(ArrowRight) light · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 45.3/60.1/75.1
+    FAIL       E-2 toggle commit·programmatic light · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 45.3/60.1/75.1
+    FAIL       E-2 toggle commit·pointer light · peak 1.015 trough 1.015 settle 1.015 · body travel 0.00 px overshoot 0.00 px · 96 frames, median 8.4 ms · load 45.6/59.9/75.0
+    FAIL       E-2 toggle commit·tap(coarse) light · peak 1.015 trough 1.015 settle 1.015 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.4 ms · load 45.6/59.9/75.0
+    FAIL       E-2 toggle commit·keyboard(ArrowRight) dark · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 98 frames, median 8.3 ms · load 46.0/59.8/74.8
+    FAIL       E-2 toggle commit·programmatic dark · peak 1.000 trough 1.000 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 46.0/59.8/74.8
+    FAIL       E-2 toggle commit·pointer dark · peak 1.015 trough 1.015 settle 1.015 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.4 ms · load 46.0/59.8/74.8
+    FAIL       E-2 toggle commit·tap(coarse) dark · peak 1.015 trough 1.015 settle 1.015 · body travel 0.00 px overshoot 0.00 px · 98 frames, median 8.4 ms · load 46.0/59.8/74.8
+    FAIL       E-2 chip commit·programmatic light · peak 1.015 trough 0.998 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.4 ms · load 46.9/59.7/74.7
+    FAIL       E-2 chip commit·tap(coarse) light · peak 1.023 trough 1.013 settle 1.015 · body travel 0.00 px overshoot 0.00 px · 98 frames, median 8.3 ms · load 45.5/59.2/74.5
+    FAIL       E-2 chip commit·keyboard(Space) dark · peak 1.015 trough 0.998 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 45.5/59.2/74.5
+    FAIL       E-2 chip commit·programmatic dark · peak 1.015 trough 0.998 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 45.1/58.9/74.2
+    FAIL       E-2 chip commit·tap(coarse) dark · peak 1.023 trough 1.013 settle 1.015 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 45.1/58.9/74.2
+    FAIL       E-2 accordion commit·keyboard(Enter) light · peak 1.015 trough 0.998 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 98 frames, median 8.4 ms · load 45.8/58.8/74.1
+    FAIL       E-2 accordion commit·tap(coarse) dark · peak 1.015 trough 0.998 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 45.0/58.2/73.7
+    FAIL       E-2 button commit·keyboard(Space) light · peak 1.016 trough 0.998 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 43.3/57.6/73.4
+    FAIL       E-2 button commit·programmatic dark · peak 1.015 trough 0.998 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 40.6/56.9/73.1
+    FAIL       E-2 chipaction commit·pointer light · peak 1.012 trough 0.998 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 40.0/56.2/72.7
+    FAIL       E-2 chipaction commit·tap(coarse) light · peak 1.000 trough 0.967 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 98 frames, median 8.3 ms · load 40.0/56.2/72.7
+    FAIL       E-2 chipaction commit·programmatic dark · peak 1.015 trough 0.998 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 39.6/55.8/72.4
+    FAIL       E-2 chipaction commit·pointer dark · peak 1.012 trough 0.998 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 98 frames, median 8.4 ms · load 39.6/55.8/72.4
+    FAIL       E-2 chipaction commit·tap(coarse) dark · peak 1.000 trough 0.967 settle 1.000 · body travel 0.00 px overshoot 0.00 px · 97 frames, median 8.3 ms · load 38.1/55.3/72.1
+exit 143 end 16:35:46 16:35  up 1 day,  2:03, 2 users, load averages: 40.15 47.94 66.10

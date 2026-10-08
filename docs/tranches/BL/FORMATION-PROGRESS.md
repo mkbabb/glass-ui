@@ -194,3 +194,4 @@ Outage log:
   - P2, shared with floor v2: route1 long-run-v keyboard reach is 10/11.
   - The route's hit arm never sampled the corner lunes (Q-7); the critic's lune arm reads 0/40.
   The G prototype is launched next.
+- 2026-10-08 — D5 pass 1 P-A banked (family A, the declared register). The patch is 31 files, +514/−150, and passes apply --check at 49db558e. Build, typecheck and vitest pass (2321). E-2 reads 167/168 cells in both engines; the one miss is the radio's ArrowDown, unchanged from HEAD. Mount is quiet 14/14 with no guard. E-8 passes 19/19 in Chromium. E-1 reads 16/18 per engine. The census probe passes with 3/3 plants caught. The X-1 slider stick is gone (×1.000 by 600 ms). Still RED, with carriers named: the E-3 keyboard and phone arms (B, E), E-4 velocity (B), E-7. Critique CA launched.

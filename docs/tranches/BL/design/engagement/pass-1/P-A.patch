@@ -1,0 +1,1125 @@
+diff --git a/.published-roster b/.published-roster
+index a0e86608..e175e0da 100644
+--- a/.published-roster
++++ b/.published-roster
+@@ -243,6 +243,13 @@ theme --z-index-toggle
+ theme --z-index-tooltip
+ utility cartoon-surface
+ utility dock-label
++utility engage-chosen
++utility engage-disclosed
++utility engage-dragged
++utility engage-field
++utility engage-held
++utility engage-pressed
++utility engage-static
+ utility fira-code
+ utility fourier-f
+ utility ghost-slot
+diff --git a/src/components/_shared/disclosure/disclosure.css b/src/components/_shared/disclosure/disclosure.css
+index 754c6ca4..1482a044 100644
+--- a/src/components/_shared/disclosure/disclosure.css
++++ b/src/components/_shared/disclosure/disclosure.css
+@@ -72,8 +72,19 @@
+             box-shadow var(--duration-control) var(--ease-standard);
+     }
+ 
+-    .disclosure-group-trigger:hover:not(:disabled, [data-disabled]) {
+-        background: var(--control-surface-bg-hover);
++    /* The hover rung: where hover exists only (a coarse tap latches `:hover`), and on
++       the one-ink fill register rather than the control-surface plate. Painting
++       `--control-surface-bg-hover` closes Playwright WebKit's page (PF-1, localized in
++       D5 pass 1, R-D §5 item 5); a row trigger is not a form control's plate either.
++       The press is the engagement class's (`engage-disclosed`). */
++    @media (hover: hover) {
++        .disclosure-group-trigger:hover:not(:disabled, [data-disabled]) {
++            background-color: color-mix(
++                in oklab,
++                var(--foreground) calc(var(--fill-hover) * 100%),
++                transparent
++            );
++        }
+     }
+ 
+     .disclosure-icon {
+diff --git a/src/components/accordion/AccordionTrigger.vue b/src/components/accordion/AccordionTrigger.vue
+index 26edfad1..99da8999 100644
+--- a/src/components/accordion/AccordionTrigger.vue
++++ b/src/components/accordion/AccordionTrigger.vue
+@@ -45,7 +45,7 @@ const forwardedAttrs = computed(() => {
+             data-slot="accordion-trigger"
+             :id="ids.trigger"
+             :aria-controls="ids.content"
+-            :class="cn('disclosure-trigger disclosure-group-trigger', props.class)"
++            :class="cn('disclosure-trigger disclosure-group-trigger engage-disclosed', props.class)"
+         >
+             <slot />
+             <slot name="icon">
+diff --git a/src/components/button/Button.vue b/src/components/button/Button.vue
+index 9c6f3827..a7010a99 100644
+--- a/src/components/button/Button.vue
++++ b/src/components/button/Button.vue
+@@ -115,7 +115,7 @@ const press = useLiquidPress({
+ const hostStyle = computed<CSSProperties>(() => press.pressStyle.value);
+ const hostClass = computed(() =>
+     cn(
+-        "button tap-squish focus-ring",
++        "button engage-pressed focus-ring",
+         glassMaterial.value && "glass-capsule glass-specular-track",
+         props.emphasis === "primary" && "glass-deep",
+         interactiveGlass.value && "glass-capsule-hover",
+@@ -155,6 +155,17 @@ function guardDisabledActivation(event: MouseEvent): void {
+     event.preventDefault();
+     event.stopImmediatePropagation();
+ }
++
++/* THE STATELESS COMMIT EDGE. A command holds no state for a transition to read, so each
++ * activation flips a parity the pressed class maps to its commit phase
++ * (utilities/engage.css `engage-pressed`). Pointer, keyboard and a programmatic
++ * `click()` all arrive here. The first value renders with the element, so a mount pops
++ * nothing. A blocked activation returns above and never flips. */
++const commitParity = ref<"a" | "b">("a");
++function onClick(event: MouseEvent): void {
++    guardDisabledActivation(event);
++    if (!activationBlocked.value) commitParity.value = commitParity.value === "a" ? "b" : "a";
++}
+ </script>
+ 
+ <template>
+@@ -171,11 +182,12 @@ function guardDisabledActivation(event: MouseEvent): void {
+         data-control-target=""
+         :data-loading="loading || undefined"
+         :data-press-armed="press.armed ? '' : undefined"
++        :data-commit="commitParity"
+         :aria-busy="loading || undefined"
+         v-bind="hostAttrs"
+         :class="hostClass"
+         :style="hostStyle"
+-        @click="guardDisabledActivation"
++        @click="onClick"
+         @pointerdown="press.handlers.onPointerdown"
+         @pointerup="press.handlers.onPointerup"
+         @pointercancel="press.handlers.onPointercancel"
+diff --git a/src/components/button/styles.css b/src/components/button/styles.css
+index 222fe736..de3c7c60 100644
+--- a/src/components/button/styles.css
++++ b/src/components/button/styles.css
+@@ -83,25 +83,10 @@
+         appearance: none;
+         touch-action: manipulation;
+         user-select: none;
+-        scale: 1;
++        /* The press depth the pressed class reads. The host's transition list, its
++           `scale` and its `transform` are the class's (`engage-pressed`,
++           utilities/engage.css), which carries the coherent surface legs. */
+         --scale-press: var(--scale-press-sm);
+-        /* THE MERGED LIST, AUTHORED RATHER THAN ACCIDENTAL. `transition` is a
+-           shorthand: `.tap-squish` (utilities) and `.glass-capsule-hover` (glass) tie
+-           at (0,1,0) and the later import replaces the whole list, so on HEAD the
+-           button's authored surface legs were simply gone and hover moved `scale` and
+-           nothing else. `.button` is imported after both, so it declares the coherent
+-           set ONCE and wins deliberately, mirroring `.tap-squish`'s legs so a
+-           library-wide re-point of either clock flows through here unchanged. Deleting
+-           the `scale` leg from the loser (the other candidate cure) resurrects nothing
+-           — it leaves `scale` with no transition on every `.tap-squish` consumer in
+-           the library. */
+-        transition:
+-            background-color var(--engage-control-engage-release) var(--ease-standard),
+-            border-color var(--engage-control-engage-release) var(--ease-standard),
+-            box-shadow var(--engage-control-engage-release) var(--ease-standard),
+-            color var(--engage-control-engage-release) var(--ease-standard),
+-            opacity var(--engage-control-engage-release) var(--ease-standard),
+-            scale var(--spring-press-duration) var(--transition-liquid-spatial);
+     }
+ 
+     .button > svg {
+diff --git a/src/components/checkbox/Checkbox.vue b/src/components/checkbox/Checkbox.vue
+index 9480e93e..0d5d66b2 100644
+--- a/src/components/checkbox/Checkbox.vue
++++ b/src/components/checkbox/Checkbox.vue
+@@ -35,7 +35,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emit);
+         v-slot="{ state }"
+         v-bind="{ ...forwarded, ...controlStateAttrs(props.invalid) }"
+         data-slot="checkbox"
+-        class="checkbox control-bit tap-squish"
++        class="checkbox control-bit engage-chosen"
+         :class="props.class"
+     >
+         <span class="control-bit__face" aria-hidden="true">
+diff --git a/src/components/chip/Chip.vue b/src/components/chip/Chip.vue
+index 429c99f7..d25d7c6b 100644
+--- a/src/components/chip/Chip.vue
++++ b/src/components/chip/Chip.vue
+@@ -1,6 +1,7 @@
+ <script setup lang="ts">
+ import {
+     computed,
++    ref,
+     type CSSProperties,
+     type StyleValue,
+     useAttrs,
+@@ -56,6 +57,17 @@ const staticAttrs = computed(() =>
+     ),
+ );
+ const { toneStyle } = useAccentTone(() => props.tone ?? "var(--primary)");
++/* The chip is mode-split on the engagement register: a selectable chip is CHOSEN (it
++ * holds a state and commits it), an action chip is PRESSED (stateless; it commits on
++ * each activation through the parity edge below), a removable or static chip is STATIC
++ * (its remove button is its own control). The declaration lists the three under
++ * `modes.chip`; the census reads the stamp per rendered mode. */
++const ENGAGE_CLASS: Record<ChipMode, string> = {
++    selectable: "engage-chosen",
++    action: "engage-pressed",
++    removable: "engage-static",
++    static: "engage-static",
++};
+ const chipClass = computed(() =>
+     cn(
+         chipVariants({
+@@ -63,9 +75,17 @@ const chipClass = computed(() =>
+             shape: shape.value,
+             size: size.value,
+         }),
++        ENGAGE_CLASS[mode.value],
+         props.class,
+     ),
+ );
++/* The stateless commit edge: each activation flips the parity, which the pressed
++ * class maps to its commit phase. The first value renders with the element, so a mount
++ * has no before-change style and pops nothing. */
++const commitParity = ref<"a" | "b">("a");
++function commitEdge(): void {
++    if (!props.disabled) commitParity.value = commitParity.value === "a" ? "b" : "a";
++}
+ const chipStyle = computed<CSSProperties | undefined>(() =>
+     props.tone === undefined
+         ? undefined
+@@ -115,6 +135,8 @@ watchEffect(() => {
+         :data-mode="mode"
+         :data-shape="shape"
+         :data-surface="surface"
++        :data-commit="commitParity"
++        @click="commitEdge"
+     >
+         <slot />
+     </button>
+diff --git a/src/components/dialog/ModalOverlay.vue b/src/components/dialog/ModalOverlay.vue
+index 9cb477a9..134f5ef3 100644
+--- a/src/components/dialog/ModalOverlay.vue
++++ b/src/components/dialog/ModalOverlay.vue
+@@ -71,7 +71,7 @@ const props = withDefaults(defineProps<ModalOverlayProps>(), {
+         "
+         :style="props.opacity == null ? undefined : { opacity: props.opacity }"
+     >
+-        <span v-if="props.veil" class="glass-focus-veil" data-engaged aria-hidden="true" />
++        <span v-if="props.veil" class="glass-focus-veil" aria-hidden="true" />
+         <slot />
+     </DialogOverlay>
+ </template>
+diff --git a/src/components/input/Input.vue b/src/components/input/Input.vue
+index 4b6b149e..21bd5bc1 100644
+--- a/src/components/input/Input.vue
++++ b/src/components/input/Input.vue
+@@ -41,7 +41,7 @@ const { ariaInvalid, forwardedAttrs, state } = useFieldControlState(props, attrs
+         :data-size="size"
+         :data-state="state"
+         :aria-invalid="ariaInvalid"
+-        :class="cn('field-control glass-control-edge', props.class)"
++        :class="cn('field-control glass-control-edge engage-field', props.class)"
+     />
+ </template>
+ 
+diff --git a/src/components/radio-group/RadioGroupItem.vue b/src/components/radio-group/RadioGroupItem.vue
+index 6d0c21d9..5d8386b8 100644
+--- a/src/components/radio-group/RadioGroupItem.vue
++++ b/src/components/radio-group/RadioGroupItem.vue
+@@ -36,7 +36,7 @@ const forwardedProps = useForwardProps(delegatedProps);
+     <RadioGroupItem
+         data-slot="radio-group-item"
+         v-bind="forwardedProps"
+-        :class="cn('control-bit tap-squish', props.class)"
++        :class="cn('control-bit engage-chosen', props.class)"
+     >
+         <span class="control-bit__face" aria-hidden="true">
+             <RadioGroupIndicator
+diff --git a/src/components/separator/Separator.vue b/src/components/separator/Separator.vue
+index 2502d6fe..4b090fd9 100644
+--- a/src/components/separator/Separator.vue
++++ b/src/components/separator/Separator.vue
+@@ -74,7 +74,7 @@ const labelledAttrs = computed(() => {
+         v-if="visibleLabel"
+         v-bind="labelledAttrs"
+         data-slot="separator"
+-        :class="cn('separator separator-labelled', props.class)"
++        :class="cn('separator separator-labelled engage-static', props.class)"
+     >
+         <span class="separator-segment" aria-hidden="true" />
+         <span :id="labelId" class="separator-label">{{ visibleLabel }}</span>
+@@ -85,7 +85,7 @@ const labelledAttrs = computed(() => {
+         v-else
+         v-bind="{ ...forwardedAttrs, ...delegatedProps }"
+         data-slot="separator"
+-        :class="cn('separator', props.class)"
++        :class="cn('separator engage-static', props.class)"
+     />
+ </template>
+ 
+diff --git a/src/components/skeleton/Skeleton.vue b/src/components/skeleton/Skeleton.vue
+index cdcd090e..808960be 100644
+--- a/src/components/skeleton/Skeleton.vue
++++ b/src/components/skeleton/Skeleton.vue
+@@ -30,7 +30,7 @@ const hostAttrs = computed(() =>
+         v-bind="hostAttrs"
+         data-slot="skeleton"
+         aria-hidden="true"
+-        :class="cn('skeleton', props.class)"
++        :class="cn('skeleton engage-static', props.class)"
+     />
+ </template>
+ 
+@@ -58,7 +58,7 @@ const hostAttrs = computed(() =>
+ 
+ /* The DEFAULT tile radius lives on @layer components so a caller's public shape
+    utility (rounded-full for an avatar specimen, rounded-card for a card specimen —
+-   merged onto this element by `cn('skeleton', props.class)`) wins from the later
++   merged onto this element by `cn('skeleton engage-static', props.class)`) wins from the later
+    utilities layer. An unlayered radius here would outrank those utilities and defeat
+    the public shape seam. --radius-media is the media/tile default, not a hard owner. */
+ @layer components {
+@@ -96,7 +96,7 @@ const hostAttrs = computed(() =>
+ @layer components {
+     @media (prefers-reduced-motion: no-preference) {
+         .skeleton {
+-            animation: skeleton-breathe 1.1s var(--ease-standard) infinite alternate;
++            animation: skeleton-breathe var(--duration-xl) var(--ease-standard) infinite alternate;
+         }
+     }
+ }
+diff --git a/src/components/slider/Slider.vue b/src/components/slider/Slider.vue
+index fc7b5de1..0b6f5a9a 100644
+--- a/src/components/slider/Slider.vue
++++ b/src/components/slider/Slider.vue
+@@ -260,7 +260,7 @@ onMounted(() => {
+         v-slot="{ modelValue: values }"
+         data-slot="slider"
+         ref="sliderRootRef"
+-        class="glass-slider"
++        class="glass-slider engage-held"
+         data-control-target
+         :class="props.class"
+         :data-variant="v"
+diff --git a/src/components/slider/styles.css b/src/components/slider/styles.css
+index bdf256dd..06cf8264 100644
+--- a/src/components/slider/styles.css
++++ b/src/components/slider/styles.css
+@@ -30,7 +30,6 @@
+     align-items: center;
+     touch-action: none;
+     user-select: none;
+-    transition: color var(--duration-fast) var(--ease-standard);
+ }
+ 
+ /* THE DRAG AFFORDANCE. The scrubber is the library's most-consumed dragging surface and
+diff --git a/src/components/sortable-list/SortableItem.vue b/src/components/sortable-list/SortableItem.vue
+index edcc6751..ea361b24 100644
+--- a/src/components/sortable-list/SortableItem.vue
++++ b/src/components/sortable-list/SortableItem.vue
+@@ -27,7 +27,7 @@ provideSortableItemContext({ id: props.id, label, binding });
+ <template>
+     <li
+         :ref="binding.ref"
+-        class="sortable-item"
++        class="sortable-item engage-dragged"
+         v-bind="binding.dataAttrs"
+         :aria-disabled="disabled || undefined"
+         :data-disabled="disabled || undefined"
+diff --git a/src/components/sortable-list/styles.css b/src/components/sortable-list/styles.css
+index f0ac3c6e..1434787b 100644
+--- a/src/components/sortable-list/styles.css
++++ b/src/components/sortable-list/styles.css
+@@ -70,7 +70,9 @@
+         /* THE ROW'S OWN CLOCK. Parting and closing are the same mechanism read in two
+            directions, so the transition is unconditional and the controller only ever
+            writes (or clears) a transform. Compositor-only. */
+-        transition: transform var(--spring-dock-duration) var(--spring-dock);
++        transition:
++            transform var(--spring-dock-duration) var(--spring-dock),
++            background-color var(--engage-press-drain-release) var(--ease-standard);
+         user-select: none;
+         -webkit-user-select: none;
+     }
+@@ -132,6 +134,15 @@
+         }
+     }
+ 
++    /* THE PRESS (the dragged class's rung, `engage-dragged`): the row takes the
++       selected fill the lift will hold, on the press envelope's attack, on every
++       pointer and under reduce (it is light, not motion). A held touch answers through
++       it, not through a latched hover. */
++    .sortable-item:not([data-disabled]):active {
++        background-color: oklch(from var(--foreground) l c h / var(--fill-selected));
++        transition-duration: var(--spring-dock-duration), var(--engage-press-drain-attack);
++    }
++
+     /* The keyboard lift is IN PLACE: same material promotion, one copy, no clone. A
+        clone has no pointer to follow — it would hang static while the rows part
+        beneath it. `.glass-floating` is composed by the controller; the swell is here. */
+diff --git a/src/components/switch/Switch.vue b/src/components/switch/Switch.vue
+index aecb2fa1..715bca8d 100644
+--- a/src/components/switch/Switch.vue
++++ b/src/components/switch/Switch.vue
+@@ -43,13 +43,14 @@ const forwarded = useForwardPropsEmits(delegatedProps, emit);
+     <SwitchRoot
+         data-slot="switch"
+         v-bind="{ ...forwarded, ...controlStateAttrs(props.invalid) }"
+-        :class="cn('switch control-bit tap-squish', props.class)"
++        :class="cn('switch control-bit engage-chosen', props.class)"
+     >
+         <span class="control-bit__face" aria-hidden="true">
+             <!-- The thumb IS the switch's mark and keeps its own translate channel;
+                  it does not compose `.control-bit__mark`, whose job is a scale/opacity
+-                 entrance a travelling thumb must not have. -->
+-            <SwitchThumb class="switch__thumb" />
++                 entrance a travelling thumb must not have. Its travel is the chosen
++                 class's commit body (`engage-chosen`, utilities/engage.css). -->
++            <SwitchThumb class="switch__thumb" data-engage-body />
+         </span>
+     </SwitchRoot>
+ </template>
+diff --git a/src/components/switch/styles.css b/src/components/switch/styles.css
+index 982fd8f6..b480243a 100644
+--- a/src/components/switch/styles.css
++++ b/src/components/switch/styles.css
+@@ -37,16 +37,6 @@
+         box-shadow: var(--shadow-md);
+         pointer-events: none;
+         translate: 0;
+-        /* The travel rides the DOCK spring. The canon-deleted preset this used to read
+-         * bought 0.63px of overshoot on a 20px travel (ζ0.74) on a 0.44s settle — 2.1×
+-         * the control channel: sub-pixel excursion on a perceptible clock, the worst of
+-         * both. Its name is deliberately not spelled here; a retired register name in
+-         * `src` is a retired register name (G-SPRING-ONE-JOB), and a comment is not an
+-         * exemption. No manufactured stretch
+-         * rides with it: `--lq-stretch-x` on a 20px thumb is 1.2px, and minting a 1.25
+-         * to make it visible is a value invented against no law (R12, routed to
+-         * MOTION-CANON LAW-0c). Honest travel on a correct clock. */
+-        transition: translate var(--spring-dock-duration) var(--spring-dock);
+     }
+ 
+     /* travel = face inline − face block = 44 − 24 = 20 = the thumb. */
+@@ -57,10 +47,4 @@
+     .switch:dir(rtl)[data-state="checked"] .switch__thumb {
+         translate: calc(var(--control-bit-face-block) - var(--control-bit-face-inline));
+     }
+-
+-    @media (prefers-reduced-motion: reduce) {
+-        .switch__thumb {
+-            transition: none;
+-        }
+-    }
+ }
+diff --git a/src/composables/motion/engage/engageClasses.ts b/src/composables/motion/engage/engageClasses.ts
+new file mode 100644
+index 00000000..2a2eb092
+--- /dev/null
++++ b/src/composables/motion/engage/engageClasses.ts
+@@ -0,0 +1,122 @@
++// The glass-ui ENGAGEMENT DECLARATION — what each component directory IS on the ladder.
++//
++// The ladder (`engageLadder.ts`) names the rungs; this table names the members. Every
++// component directory is declared into exactly one class, and every class names the
++// highest ladder rung it owes (or none, with the reason). The census reads THIS table
++// and then proves each class at runtime on its exemplar; it never reads source bytes
++// for behaviour. One source of record: a class's look and motion live in its ONE CSS
++// recipe (`styles/utilities/engage.css`, `engage-<class>`), which stamps the class on
++// the element as the registered `--rung-class`, so the runtime census can check a
++// member composes the recipe its row declares.
++//
++// It mints no figure: rungs come from `ENGAGE_LADDER`, clocks from the spring and
++// envelope tables, scales from the scale register.
++
++import type { EngageRungName } from "./engageLadder";
++
++/** The register classes. */
++export type EngageClass =
++    | "pressed"
++    | "chosen"
++    | "held"
++    | "dragged"
++    | "disclosed"
++    | "presented"
++    | "field"
++    | "ambient"
++    | "static";
++
++/** One class: the rung it owes, or none with the reason, and the directory that proves it. */
++export interface EngageClassRow {
++    readonly rung: EngageRungName | null;
++    readonly reason?: string;
++    readonly exemplar?: string;
++}
++
++export interface EngageDeclaration {
++    readonly classes: Readonly<Record<EngageClass, EngageClassRow>>;
++    /** Each directory's PRIMARY class. */
++    readonly members: Readonly<Record<string, EngageClass>>;
++    /** A member whose class depends on its rendered mode lists every class it may
++     *  stamp (its primary first). The runtime census accepts any of them per element. */
++    readonly modes: Readonly<Record<string, readonly EngageClass[]>>;
++}
++
++export const ENGAGE_DECLARATION: EngageDeclaration = {
++    classes: {
++        pressed: { rung: "press", exemplar: "button" },
++        chosen: { rung: "press", exemplar: "switch" },
++        held: { rung: "engaged", exemplar: "slider" },
++        dragged: { rung: "press", exemplar: "sortable-list" },
++        disclosed: { rung: "press", exemplar: "accordion" },
++        presented: { rung: "modal", exemplar: "sheet" },
++        field: { rung: "hover", exemplar: "input" },
++        ambient: { rung: "rest", exemplar: "aurora" },
++        static: {
++            rung: null,
++            reason: "no input of its own: its engagement is its host's (a separator, a placeholder) or its members' (a table, a labelled field)",
++        },
++    },
++    members: {
++        accordion: "disclosed",
++        alert: "static",
++        aurora: "ambient",
++        avatar: "static",
++        badge: "static",
++        blob: "ambient",
++        button: "pressed",
++        card: "static",
++        carousel: "dragged",
++        checkbox: "chosen",
++        chip: "chosen",
++        collapsible: "disclosed",
++        command: "field",
++        configurator: "static",
++        constellation: "ambient",
++        "dark-mode-toggle": "chosen",
++        "data-table": "static",
++        deck: "dragged",
++        dialog: "presented",
++        dock: "held",
++        easing: "chosen",
++        "expandable-container": "disclosed",
++        "fading-scroll": "dragged",
++        "fourier-field": "ambient",
++        handmark: "static",
++        "infinite-scroll": "dragged",
++        input: "field",
++        label: "static",
++        "labeled-field": "static",
++        menu: "disclosed",
++        metric: "static",
++        "music-staff": "ambient",
++        "number-field": "held",
++        "pager-dots": "chosen",
++        popover: "disclosed",
++        progress: "static",
++        "radio-group": "chosen",
++        "scroll-progress-rim": "static",
++        select: "disclosed",
++        separator: "static",
++        sheet: "presented",
++        skeleton: "static",
++        slider: "held",
++        "sortable-list": "dragged",
++        "status-dot": "static",
++        surface: "static",
++        switch: "chosen",
++        table: "static",
++        tabs: "chosen",
++        textarea: "field",
++        timeline: "held",
++        toast: "presented",
++        "toggle-group": "chosen",
++        tooltip: "presented",
++        typewriter: "static",
++    },
++    modes: {
++        // selectable → chosen; action → pressed; removable and static → static (the
++        // remove button is its own control)
++        chip: ["chosen", "pressed", "static"],
++    },
++};
+diff --git a/src/composables/motion/index.ts b/src/composables/motion/index.ts
+index fc0f4b57..ce135047 100644
+--- a/src/composables/motion/index.ts
++++ b/src/composables/motion/index.ts
+@@ -104,3 +104,12 @@ export {
+     type EngageRungName,
+     type EngageChannel,
+ } from "./engage/engageLadder";
++
++// The DECLARATION is the ladder's member list: every component directory in one class,
++// every class naming the rung it owes. The census reads it; the recipes stamp it.
++export {
++    ENGAGE_DECLARATION,
++    type EngageClass,
++    type EngageClassRow,
++    type EngageDeclaration,
++} from "./engage/engageClasses";
+diff --git a/src/styles/glass/control-bit.css b/src/styles/glass/control-bit.css
+index a9422515..36ee0087 100644
+--- a/src/styles/glass/control-bit.css
++++ b/src/styles/glass/control-bit.css
+@@ -11,7 +11,7 @@
+    THE SHAPE (§3.1) — the host is the SEAT, the face is the PAINT, the mark is the
+    STATE:
+ 
+-     <XRoot class="control-bit tap-squish" data-invalid=…>
++     <XRoot class="control-bit engage-chosen" data-invalid=…>
+        <span class="control-bit__face" aria-hidden="true">
+          <XIndicator force-mount class="control-bit__mark" aria-hidden="true">…
+        </span>
+@@ -50,14 +50,11 @@
+    compositor layer per control. The bit reads by INK and FILL. This is a declaration
+    removal, not a mask.
+ 
+-   NO TRANSITION TARGETS THE HOST (ADJ-4 / G-BIT-ONE). `.tap-squish`
+-   (utilities/base.css) is the library's declared press register and its own
+-   doc-block names the exact cascade bug the checkbox re-committed: a 4-leg
+-   `transition` shorthand on the host with no `scale` leg CLOBBERS the utility's, so
+-   the squish landed in 0ms. The structural cure is not a longer shorthand — it is
+-   that face, mark and thumb are DIFFERENT ELEMENTS with their own transitions, so a
+-   clobber is impossible. Composing `.tap-squish` is the shell's job; declaring press
+-   timing is nobody's but the register that owns it.
++   NO TRANSITION TARGETS THE HOST FROM THIS FILE (ADJ-4 / G-BIT-ONE). The host's one
++   transition list is its engagement class's (`engage-chosen`, utilities/engage.css:
++   the commit on the `panel` row). Face, mark and thumb are DIFFERENT ELEMENTS with
++   their own transitions, so no shorthand here can clobber the class's. Composing the
++   class is the shell's job; declaring commit timing is nobody's but the class's.
+ 
+    TOKENS MINTED: NONE. This register consumes `--ink-perimeter` / `--fill-hover` /
+    `--fill-selected` (tokens/color-radius.css §1.2-1.3, landed by #68), the
+@@ -275,7 +272,7 @@
+            all three members. */
+         box-shadow: var(--glass-rim-top), var(--glass-rim-bottom);
+         /* Longhand legs on the FACE element. The host declares none, so no shorthand
+-           anywhere in this lane can clobber `.tap-squish`'s scale leg. */
++           anywhere in this lane can clobber the engagement class's list. */
+         transition:
+             background-color var(--duration-fast) var(--ease-standard),
+             border-color var(--duration-fast) var(--ease-standard),
+@@ -289,9 +286,10 @@
+        4% of a 20px painted face is 0.8px, so a bit is below the scale channel's
+        legible floor and the fill channel is the only one that can carry the answer.
+        Guarded on `(hover: hover)` (K13/G7) — an unguarded hover latches on tap and
+-       paints a control as permanently pointed-at; `.tap-squish` is the coarse
+-       pointer's answer and every shell composes it. Both rungs mix ON TOP of the
+-       current fill, so the checked arm engages without losing its state. */
++       paints a control as permanently pointed-at. The PRESS below is unguarded: it
++       is the coarse pointer's answer, and the bit's whole press (the chosen class
++       presses in light, never by host scale). Both rungs mix ON TOP of the current
++       fill, so the checked arm engages without losing its state. */
+     @media (hover: hover) {
+         .control-bit:not(:disabled, [data-disabled]):hover .control-bit__face {
+             background-color: color-mix(
+diff --git a/src/styles/glass/focus-veil.css b/src/styles/glass/focus-veil.css
+index 07c5262d..ce81a886 100644
+--- a/src/styles/glass/focus-veil.css
++++ b/src/styles/glass/focus-veil.css
+@@ -149,15 +149,17 @@
+         transition: opacity var(--duration-fast) var(--ease-standard);
+     }
+ 
+-    /* THE IN CLOCK — behind the geometry by one rank-6 beat. */
+-    .glass-focus-veil[data-engaged] {
++    /* THE IN CLOCK — behind the geometry by one rank-6 beat. Two readers: a held
++       control's veil carries `data-engaged` (held); a modal's scrim keys on its
++       overlay's own open state and never on `data-engaged`. */
++    :is(.glass-focus-veil[data-engaged], [data-state="open"] > .glass-focus-veil) {
+         opacity: 1;
+         transition: opacity var(--duration-normal) var(--ease-standard)
+             var(--duration-instant);
+     }
+ 
+     @starting-style {
+-        .glass-focus-veil[data-engaged] {
++        :is(.glass-focus-veil[data-engaged], [data-state="open"] > .glass-focus-veil) {
+             opacity: 0;
+         }
+     }
+diff --git a/src/styles/glass/glass-chip.css b/src/styles/glass/glass-chip.css
+index 7cef8b74..a4e50da9 100644
+--- a/src/styles/glass/glass-chip.css
++++ b/src/styles/glass/glass-chip.css
+@@ -24,13 +24,18 @@
+         --chip-tint-floor: 15%;
+     }
+ 
+-    .glass-chip--interactive {
+-        scale: calc(1 + 0.12 * var(--chip-flood-t) * var(--motion-weight, 0.618));
+-        transition:
+-            scale var(--duration-normal) var(--ease-cartoon-punch),
+-            background-color var(--duration-fast) var(--ease-standard),
+-            border-color var(--duration-fast) var(--ease-standard),
+-            color var(--duration-fast) var(--ease-standard);
++    /* THE PRESS IS LIGHT: one `--fill-selected` ink layer over the chip's own fill, on
++       every pointer and under reduce (it is not motion). The geometry is the
++       engagement class's (`engage-chosen` commits; `engage-pressed` squishes and
++       commits). The flood no longer scales the chip: a committed chip that rests 7 %
++       larger is a resting scale, not a commit. */
++    .glass-chip--interactive:not(:disabled, [data-disabled]):active {
++        background-image:
++            linear-gradient(
++                color-mix(in oklab, var(--foreground) calc(var(--fill-selected) * 100%), transparent),
++                color-mix(in oklab, var(--foreground) calc(var(--fill-selected) * 100%), transparent)
++            ),
++            linear-gradient(var(--glass-fill-tinted), var(--glass-fill-tinted));
+     }
+ 
+     .glass-chip[data-mode="selectable"][data-state="on"] {
+@@ -88,12 +93,6 @@
+         opacity: var(--opacity-disabled);
+     }
+ 
+-    @media (prefers-reduced-motion: reduce) {
+-        .glass-chip--interactive {
+-            --motion-weight: 0;
+-        }
+-    }
+-
+     @media (pointer: coarse) {
+         .glass-chip--interactive {
+             min-inline-size: var(--touch-target, 2.75rem);
+diff --git a/src/styles/tokens/scale-paper.css b/src/styles/tokens/scale-paper.css
+index 21fcc740..9a212949 100644
+--- a/src/styles/tokens/scale-paper.css
++++ b/src/styles/tokens/scale-paper.css
+@@ -26,6 +26,16 @@
+     --scale-press-dock: var(--scale-press);
+     --scale-press-sm: 0.97;
+ 
++    /* The ENGAGED rung's in-place grow (T1 GROW, BI.W-ENGAGE-AFFORD) and the COMMIT
++       pop's crest. The pop is `1 + (crest − 1)·sin(π·c)` over the `panel` spring's
++       state coordinate c (utilities/engage.css): its rebound is sin(π·M_panel) = 0.132
++       of the crest. The least crest that bounces the commit bar's 0.002 is
++       1 + 0.002 / 0.1319 = 1.0152; read frame by frame (8.3 ms) that minimum misses its
++       own peak or trough in 9 of 37 commit cells (D5 pass 1, P-A), so the crest carries
++       a sampling margin: 1.02, a rebound of 0.0026. */
++    --scale-engage: 1.06;
++    --scale-commit-pop: 1.02;
++
+     /* The SegmentedTabs travel-squish cap. The active indicator
+        (segmented/pill slider OR the underline rule) STRETCHES along its travel
+        axis as it glides between tabs, then settles to fit — the Material 3
+diff --git a/src/styles/utilities.css b/src/styles/utilities.css
+index 743855bf..4134d786 100644
+--- a/src/styles/utilities.css
++++ b/src/styles/utilities.css
+@@ -22,3 +22,4 @@
+ @import "./utilities/metal.css";
+ @import "./utilities/components.css";
+ @import "./utilities/btn.css";
++@import "./utilities/engage.css";
+diff --git a/src/styles/utilities/engage.css b/src/styles/utilities/engage.css
+new file mode 100644
+index 00000000..c2e15e12
+--- /dev/null
++++ b/src/styles/utilities/engage.css
+@@ -0,0 +1,203 @@
++/* utilities/engage.css — ONE RECIPE PER ENGAGEMENT CLASS.
++ *
++ * `ENGAGE_DECLARATION` (composables/motion/engage/engageClasses.ts) says what each
++ * component directory is; this file says what each class does. A member composes its
++ * class's utility. Every recipe stamps its class as `--rung-class` (registered, not
++ * inherited), which the runtime census reads to prove a member composes the recipe its
++ * row declares. Where a class's light answer belongs to a substrate that already paints
++ * the member (the control bit's face, the sortable row, the field), the substrate keeps
++ * it and the utility only stamps.
++ *
++ * The registered names are `--rung-*`: the `--engage-*` namespace on `:root` is the
++ * envelope table's mirror, and a registered property with an initial value lands there.
++ *
++ * THE MECHANISM IS REGISTERED NUMBERS, NOT KEYFRAMES. Each rung is a registered
++ * `<number>` that a state selector sets and a spring row transitions; the geometry is a
++ * function of those numbers. So a member that MOUNTS committed pops nothing (a
++ * transition needs a before-style, and an inserted element has none); a commit from
++ * the model and one from a gesture take one path; a re-commit mid-flight retargets.
++ *
++ * THE PRESS IS NEVER A CLASS'S GEOMETRY. A member presses in LIGHT on its own paint
++ * (the control bit's face, the chip's press layer, the row's fill), or by script where
++ * a press primitive owns it (`useLiquidPress` writes an inline `scale` on the Button).
++ * A CSS squish released into the commit cancels the pop it precedes (measured: an action
++ * chip's pointer commit peaked at 1.012, its tap at 1.000). The commit writes
++ * `transform` and the held grow writes `scale`, so neither can mask the other, and the
++ * pressed and chosen classes set `scale: none`: a co-composed hover lift or press-snap
++ * (`.glass-capsule-hover`) would sum into the commit, and its unguarded hover latches on
++ * a coarse tap (measured: the chip's tap settled at 1.015).
++ *
++ * THE POP. `c` (`--rung-commit`) rides the `panel` spring, the one row whose rebound is
++ * intrinsic, from 0 to 1 (or back). The commit is `scale(1 + (crest − 1)·sin(π·c))`: a
++ * crest at c = ½, rest at c = 1, and a rebound below rest while `panel` overshoots c past
++ * 1, of sin(π·M_panel) ≈ 0.132 of the crest. The crest is a scale-register row. A
++ * stateless member flips a parity attribute (`data-commit="a" ↔ "b"`) on each commit
++ * edge; parity maps to c, and `sin(π·c)` pops in both directions.
++ *
++ * Clocks: geometry on the spring table's generated tokens, light on the envelope
++ * table's (`--engage-*`). */
++
++@property --rung-class {
++    syntax: "<custom-ident>";
++    inherits: false;
++    initial-value: unclassed;
++}
++
++@property --rung-commit {
++    syntax: "<number>";
++    inherits: false;
++    initial-value: 0;
++}
++
++@property --rung-grow {
++    syntax: "<number>";
++    inherits: false;
++    initial-value: 0;
++}
++
++/* PRESSED — an action with no state (button, action chip). The press is the member's
++   light or its script press; the commit pops on each parity edge. */
++@utility engage-pressed {
++    --rung-class: pressed;
++    scale: none;
++    transform: scale(
++        calc(1 + (var(--scale-commit-pop) - 1) * sin(var(--rung-commit) * 180deg))
++    );
++    transform-origin: center;
++    transition:
++        --rung-commit var(--spring-panel-duration) var(--spring-panel),
++        background-color var(--engage-control-engage-release) var(--ease-standard),
++        border-color var(--engage-control-engage-release) var(--ease-standard),
++        box-shadow var(--engage-control-engage-release) var(--ease-standard),
++        color var(--engage-control-engage-release) var(--ease-standard),
++        opacity var(--engage-control-engage-release) var(--ease-standard);
++
++    &[data-commit="b"] {
++        --rung-commit: 1;
++    }
++
++    @media (prefers-reduced-motion: reduce) {
++        transform: none;
++    }
++}
++
++/* CHOSEN — a control with a committed state (switch, checkbox, radio, selectable chip).
++   The press is LIGHT, on the member's own paint (the control bit's face, the chip's
++   press layer), never a host squish: at 20 px the scale channel is below the legible
++   floor (glass/control-bit.css §ENGAGEMENT), and a squish released into the commit
++   cancels the pop it precedes. The commit pops on the host, or, where the member has a
++   travelling body (`[data-engage-body]`, the switch's thumb), the body travels on the
++   same `panel` row instead. */
++@utility engage-chosen {
++    --rung-class: chosen;
++    --rung-crest: var(--scale-commit-pop);
++    scale: none;
++    transform: scale(calc(1 + (var(--rung-crest) - 1) * sin(var(--rung-commit) * 180deg)));
++    transform-origin: center;
++    transition:
++        --rung-commit var(--spring-panel-duration) var(--spring-panel),
++        background-color var(--engage-control-engage-release) var(--ease-standard),
++        border-color var(--engage-control-engage-release) var(--ease-standard),
++        color var(--engage-control-engage-release) var(--ease-standard);
++
++    &:is([data-state="checked"], [data-state="on"]) {
++        --rung-commit: 1;
++    }
++
++    &:has([data-engage-body]) {
++        --rung-crest: 1;
++    }
++
++    & [data-engage-body] {
++        transition: translate var(--spring-panel-duration) var(--spring-panel);
++    }
++
++    @media (prefers-reduced-motion: reduce) {
++        transform: none;
++
++        & [data-engage-body] {
++            transition: none;
++        }
++    }
++}
++
++/* DISCLOSED — a trigger that opens a region (accordion, collapsible, popover, select).
++   A row-width target answers a press in LIGHT only (a full-width squish reads as the row
++   collapsing), on the press envelope's attack; it pops when the region opens and when it
++   closes. Its hover is the substrate's (components/_shared/disclosure/disclosure.css). */
++@utility engage-disclosed {
++    --rung-class: disclosed;
++    transform: scale(
++        calc(1 + (var(--scale-commit-pop) - 1) * sin(var(--rung-commit) * 180deg))
++    );
++    transform-origin: center;
++    transition:
++        --rung-commit var(--spring-panel-duration) var(--spring-panel),
++        background-color var(--engage-press-drain-release) var(--ease-standard),
++        color var(--duration-control) var(--ease-standard),
++        box-shadow var(--duration-control) var(--ease-standard);
++
++    &[data-state="open"] {
++        --rung-commit: 1;
++    }
++
++    &:active:not(:disabled, [data-disabled]) {
++        background-color: color-mix(
++            in oklab,
++            var(--foreground) calc(var(--fill-selected) * 100%),
++            transparent
++        );
++        transition-duration:
++            var(--spring-panel-duration), var(--engage-press-drain-attack),
++            var(--duration-control), var(--duration-control);
++    }
++
++    @media (prefers-reduced-motion: reduce) {
++        transform: none;
++    }
++}
++
++/* HELD — a control the hand holds (slider, number-field scrub, the dock's controls).
++   The ENGAGED rung in place on a fine pointer: the host grows to `--scale-engage` on
++   the `dock` row while `[data-held]` (the hold's writer, `useDockHold`), and leaves on
++   the row's exit clock when the hold ends. Not `:has(:focus-visible)`: reka focuses the
++   thumb by script on a pointer drag, so that arm held the grow after release. A
++   keyboard engagement needs a modality signal, which is script. On a coarse pointer it
++   does not grow in place; the rung there is a promotion this class does not own. */
++@utility engage-held {
++    --rung-class: held;
++    scale: calc(1 + (var(--scale-engage) - 1) * var(--rung-grow));
++    transform-origin: center;
++    transition:
++        --rung-grow var(--spring-dock-exit-duration) var(--spring-dock),
++        color var(--duration-fast) var(--ease-standard);
++
++    @media (hover: hover) and (pointer: fine) {
++        &[data-held] {
++            --rung-grow: 1;
++            transition-duration: var(--spring-dock-duration), var(--duration-fast);
++        }
++    }
++
++    @media (prefers-reduced-motion: reduce) {
++        scale: none;
++    }
++}
++
++/* DRAGGED — a surface the hand moves, whose job is momentum (script). Its press is the
++   substrate's light rule (sortable-list/styles.css); the utility stamps the class. */
++@utility engage-dragged {
++    --rung-class: dragged;
++}
++
++/* FIELD — text entry. Its engagement is focus, painted by the field substrate
++   (components/_shared/field/control.css); the utility stamps the class. */
++@utility engage-field {
++    --rung-class: field;
++}
++
++/* STATIC — no input of its own. The class carries no rung; composing it is the
++   member's declaration that it was classified, read at runtime like any other. */
++@utility engage-static {
++    --rung-class: static;
++}
+diff --git a/tests/components/button/Button.test.ts b/tests/components/button/Button.test.ts
+index cd2e19c7..647a0652 100644
+--- a/tests/components/button/Button.test.ts
++++ b/tests/components/button/Button.test.ts
+@@ -273,10 +273,16 @@ describe("Button §5 STATE — three states that differ", () => {
+         // HEAD zeroed the WHOLE list under PRM on a component that declared no
+         // transition of its own, so the rule existed only to clobber the composed
+         // surface legs that `base.css`'s own doctrine says survive PRM.
++        // The host's list is its engagement class's (`engage-pressed`): the surface legs
++        // ride it, and its reduce arm retires the spatial channels only.
+         expect(live(STYLES)).not.toMatch(/prefers-reduced-motion/);
+-        const base = live(STYLES).match(/\.button\s*\{([\s\S]*?)\n    \}/);
+-        expect(base![1]).toMatch(/transition:[\s\S]*background-color/);
+-        expect(base![1]).toMatch(/scale var\(--spring-press-duration\)/);
++        expect(live(STYLES)).not.toMatch(/transition:/);
++        const engage = live("src/styles/utilities/engage.css");
++        const pressed = engage.slice(engage.indexOf("@utility engage-pressed"), engage.indexOf("@utility engage-chosen"));
++        expect(pressed).toMatch(/transition:[\s\S]*background-color/);
++        const reduce = pressed.slice(pressed.indexOf("prefers-reduced-motion"));
++        expect(reduce).toMatch(/transform: none/);
++        expect(reduce).not.toMatch(/transition/);
+     });
+ });
+ 
+diff --git a/tests/components/control-bit/binary-triad.test.ts b/tests/components/control-bit/binary-triad.test.ts
+index 903b1e5d..cb3bbdcc 100644
+--- a/tests/components/control-bit/binary-triad.test.ts
++++ b/tests/components/control-bit/binary-triad.test.ts
+@@ -299,9 +299,11 @@ describe("W-CONTROL-BIT — the binary triad", () => {
+                     '<RadioGroup model-value="a"><RadioGroupItem value="a" /></RadioGroup>',
+             }).get('[role="radio"]').element as HTMLElement,
+         ];
++        // the engagement class (utilities/engage.css): all three are CHOSEN members
+         for (const root of roots) {
+             expect(root.classList.contains("control-bit")).toBe(true);
+-            expect(root.classList.contains("tap-squish")).toBe(true);
++            expect(root.classList.contains("engage-chosen")).toBe(true);
++            expect(root.classList.contains("tap-squish")).toBe(false);
+             expect(root.querySelectorAll(".control-bit__face")).toHaveLength(1);
+         }
+     });
+diff --git a/tests/components/field/forms-seam.test.ts b/tests/components/field/forms-seam.test.ts
+index c5da0294..ba68d208 100644
+--- a/tests/components/field/forms-seam.test.ts
++++ b/tests/components/field/forms-seam.test.ts
+@@ -293,6 +293,7 @@ describe("W-FIELD — the forms-seam lane battery", () => {
+         expect(mount(Input).classes()).toEqual([
+             "field-control",
+             "glass-control-edge",
++            "engage-field",
+         ]);
+         expect(mount(Textarea).classes()).toEqual([
+             "field-control",
+diff --git a/tests/components/slider.contract.test.ts b/tests/components/slider.contract.test.ts
+index 06f3df78..fc3c5715 100644
+--- a/tests/components/slider.contract.test.ts
++++ b/tests/components/slider.contract.test.ts
+@@ -20,7 +20,7 @@ describe("Slider", () => {
+             },
+         });
+ 
+-        expect(wrapper.classes()).toEqual(["glass-slider", "consumer-class"]);
++        expect(wrapper.classes()).toEqual(["glass-slider", "engage-held", "consumer-class"]);
+         expect(wrapper.attributes()).toMatchObject({
+             "data-variant": "spectrum",
+             "data-size": "lg",
+diff --git a/tests/styles/engage-ladder.test.ts b/tests/styles/engage-ladder.test.ts
+index c0c43711..62255472 100644
+--- a/tests/styles/engage-ladder.test.ts
++++ b/tests/styles/engage-ladder.test.ts
+@@ -16,15 +16,11 @@
+ // that the two channels' exit asymmetries are ruled rather than colliding, and that
+ // the shared interactive seat answers inside the budget it publishes.
+ //
+-// THE CENSUS ARM IS `it.fails`, AND THE LATCH IS THE POINT. G-ENGAGE-RUNG's seat text
+-// is a claim about all 63 components, and this cut builds the shared vocabulary rather
+-// than retrofitting 63 components — those are the component rows (#28/#29/#30,
+-// #79-#88, #31-#42). A latch that must be hand-flipped would be a second state to keep
+-// true; `it.fails` is self-flipping in the correct direction — the day the last
+-// component row lands its rung, this case FAILS with "expected to fail but passed" and
+-// forces the seat GREEN. The born-RED figures were measured on a pristine
+-// `git archive HEAD` tree (HEAD `c381cec2`, before any byte of this cut) and are
+-// banked at the row's RECORD.md §BORN-RED.
++// THE CENSUS ARM READS THE DECLARATION. Every component directory is declared into
++// one engagement class (`ENGAGE_DECLARATION`), and each class names the ladder rung it
++// owes or none with a reason. This file proves the declaration total; the runtime half
++// (each rendered exemplar composes its class's recipe) is the D5 battery's E-1, because
++// a byte detector scores quoted prose as a rung and misses a composed one.
+ 
+ import { readFileSync, readdirSync, statSync } from "node:fs";
+ import { join } from "node:path";
+@@ -45,6 +41,7 @@ import {
+     engageAttackT90Ms,
+ } from "@glass/composables/motion/engage/engageEnvelopes";
+ import { SPRING_PRESETS } from "@glass/composables/motion/spring/springPresets";
++import { ENGAGE_DECLARATION } from "@glass/composables/motion/engage/engageClasses";
+ 
+ const read = (rel: string): string => readFileSync(join(process.cwd(), rel), "utf8");
+ 
+@@ -96,63 +93,45 @@ const COMPONENT_DIRS = readdirSync(COMPONENTS)
+     .filter((entry) => entry !== "_shared")
+     .filter((entry) => statSync(join(COMPONENTS, entry)).isDirectory());
+ 
+-function readDirText(dir: string, out: string[] = []): string[] {
+-    for (const entry of readdirSync(dir)) {
+-        const path = join(dir, entry);
+-        if (statSync(path).isDirectory()) readDirText(path, out);
+-        else if (/\.(css|vue|ts)$/.test(entry)) out.push(readFileSync(path, "utf8"));
+-    }
+-    return out;
+-}
++const ENGAGE_CSS = decomment(read("src/styles/utilities/engage.css"));
+ 
+ /**
+- * THE CENSUS DETECTOR, stated so the figure re-derives (the J-10 law). A component
+- * implements a rung BEYOND hover when its own `*.vue|*.ts|*.css` bytes carry a press
+- * (`:active`), a hold (`[data-held]`), an engagement (`data-engaged`), or when it
+- * composes one of the two SHARED ladder recipes that carry those rungs from the token
+- * set (`tap-squish` / `interactive-item`), or reads an `--engage-*` clock directly.
+- * Hover alone never counts — the seat text says "beyond hover" and this is that word
+- * made executable.
+- *
+- * `:active` MATCHES IN CSS PSEUDO-CLASS CONTEXT ONLY — the lookahead requires a
+- * selector-continuation character after it. A bare `/:active/` scores a Vue prop
+- * binding (`:active="isActive(…)"`) and a prose mention (`v-model:active`) as press
+- * rungs, and both are sole-match false positives that inflate ADOPTION — the one
+- * direction a born-RED census may never be wrong in.
++ * THE CENSUS IS A DECLARATION, NOT A BYTE DETECTOR. `ENGAGE_DECLARATION` names every
++ * component directory's class; this arm proves the declaration is total and well-formed.
++ * Whether a rendered member composes the recipe its row declares is a RUNTIME fact (the
++ * registered `--rung-class` stamp, read per exemplar by the D5 battery's E-1), because
++ * no reading of source text can tell a composed class from a quoted one.
+  */
+-const RUNG_BEYOND_HOVER =
+-    /:active(?=[\s,){:.#[>+~])|\[data-held\]|data-engaged|tap-squish|interactive-item|--engage-/;
+-
+-const withRung = COMPONENT_DIRS.filter((name) =>
+-    readDirText(join(COMPONENTS, name)).some((text) => RUNG_BEYOND_HOVER.test(text)),
+-);
+-
+-describe("G-ENGAGE-RUNG — every interactive component implements a rung beyond hover", () => {
+-    // BORN-RED AND STILL RED. This is the seat's own claim and it is the honest state
+-    // of the library: the vocabulary now exists, the components have not adopted it.
+-    // `it.fails` flips the moment they do — see the header.
+-    it.fails("every component directory carries a rung beyond hover", () => {
+-        expect(withRung).toEqual(COMPONENT_DIRS);
++describe("G-ENGAGE-RUNG — every component directory is declared into one class", () => {
++    const { members, classes } = ENGAGE_DECLARATION;
++    const rungs = ENGAGE_LADDER.map((row) => row.rung) as readonly (string | null)[];
++
++    it("the denominator is the directory list, each declared exactly once", () => {
++        expect(Object.keys(members).sort()).toEqual([...COMPONENT_DIRS].sort());
+     });
+ 
+-    it("the census is measurable, and its denominator is the directory count", () => {
+-        // No figure is frozen here — freezing "63" would be a second authority that
+-        // drifts the next time a component lands. What IS asserted is that the
+-        // detector discriminates.
+-        //
+-        // DISCRIMINATION IS ASSERTED ON THE DETECTOR, NOT ON THE CENSUS. Asserting
+-        // `withRung.length < COMPONENT_DIRS.length` reads as the same claim and is not:
+-        // it forbids the row's own GOAL state, so the day the last component row lands
+-        // its rung this plain `it` REDs the suite on success and the `it.fails` census
+-        // above can never self-flip. A gate may not make the win a failure.
+-        expect(COMPONENT_DIRS.length).toBeGreaterThan(0);
+-        expect(withRung.length).toBeGreaterThan(0);
+-        expect(withRung.length).toBeLessThanOrEqual(COMPONENT_DIRS.length);
+-        expect(RUNG_BEYOND_HOVER.test("<div class='x' @click='go'>hover only</div>")).toBe(
+-            false,
+-        );
+-        expect(RUNG_BEYOND_HOVER.test(':active="isActive(option.value)"')).toBe(false);
+-        expect(RUNG_BEYOND_HOVER.test(".x:active { scale: 1; }")).toBe(true);
++    it("every member names a declared class, and every class names a rung or a reason", () => {
++        for (const cls of Object.values(members)) expect(Object.keys(classes)).toContain(cls);
++        for (const row of Object.values(classes)) {
++            if (row.rung === null) expect(row.reason?.trim()).toBeTruthy();
++            else expect(rungs).toContain(row.rung);
++        }
++    });
++
++    it("a mode-split member lists its primary class first, and only declared classes", () => {
++        for (const [dir, list] of Object.entries(ENGAGE_DECLARATION.modes)) {
++            expect(list[0]).toBe(members[dir]);
++            for (const cls of list) expect(Object.keys(classes)).toContain(cls);
++        }
++    });
++
++    it("every class with a recipe stamps its own name, and only its own", () => {
++        const stamped = [...ENGAGE_CSS.matchAll(/@utility engage-([a-z]+)\s*\{\s*--rung-class:\s*([a-z]+);/g)];
++        expect(stamped.length).toBeGreaterThan(0);
++        for (const [, utility, stamp] of stamped) {
++            expect(stamp).toBe(utility);
++            expect(Object.keys(classes)).toContain(stamp);
++        }
+     });
+ 
+     it("the shared token set the seat refers to is REACHABLE, not notional", () => {

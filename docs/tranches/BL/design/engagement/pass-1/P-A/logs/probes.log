@@ -1,0 +1,305 @@
+# P-A census · final · chromium 149.0.7827.55 · lock wait 123.2 s · load 37.6/43.2/60.7 at start
+  PASS       drift switch/switch · computed "chosen" · declared chosen · classed descendants [] · load 37.6/43.2/60.7
+  PASS       single switch · every element composes at most one engage-* class · load 37.6/43.2/60.7
+  PLANT-FAILS single plant: switch composes engage-chosen + engage-pressed · 1 element(s) with > 1 engage-* class (computed stamp then reads "pressed") · load 37.6/43.2/60.7
+  PASS       drift checkbox/checkbox · computed "chosen" · declared chosen · classed descendants [] · load 37.6/43.2/60.7
+  PASS       single checkbox · every element composes at most one engage-* class · load 37.6/43.2/60.7
+  PASS       drift radio/radio-group · computed "chosen" · declared chosen · classed descendants [] · load 37.6/43.2/60.7
+  PASS       single radio · every element composes at most one engage-* class · load 37.6/43.2/60.7
+  PASS       drift chip/chip · computed "chosen" · declared chosen|pressed|static · classed descendants [] · load 37.6/43.2/60.7
+  PASS       single chip · every element composes at most one engage-* class · load 37.6/43.2/60.7
+  PASS       drift chipaction/chip · computed "pressed" · declared chosen|pressed|static · classed descendants [] · load 37.6/43.2/60.7
+  PASS       single chipaction · every element composes at most one engage-* class · load 37.6/43.2/60.7
+  PASS       drift button/button · computed "pressed" · declared pressed · classed descendants [] · load 37.6/43.2/60.7
+  PASS       single button · every element composes at most one engage-* class · load 37.6/43.2/60.7
+  PASS       drift accordion/accordion · computed "disclosed" · declared disclosed · classed descendants [] · load 37.1/43.0/60.5
+  PASS       single accordion · every element composes at most one engage-* class · load 37.1/43.0/60.5
+  PASS       drift slider/slider · computed "held" · declared held · classed descendants [] · load 37.1/43.0/60.5
+  PASS       single slider · every element composes at most one engage-* class · load 37.1/43.0/60.5
+  PASS       drift sortable/sortable-list · computed "dragged" · declared dragged · classed descendants [] · load 37.1/43.0/60.5
+  PASS       single sortable · every element composes at most one engage-* class · load 37.1/43.0/60.5
+  PASS       drift input/input · computed "field" · declared field · classed descendants [] · load 37.1/43.0/60.5
+  PASS       single input · every element composes at most one engage-* class · load 37.1/43.0/60.5
+  PASS       drift passive/separator · computed "static" · declared static · classed descendants [] · load 37.1/43.0/60.5
+  PASS       single passive · every element composes at most one engage-* class · load 37.1/43.0/60.5
+  PASS       static-inert separator · tabIndex -1 role separator · load 37.1/43.0/60.5
+  PLANT-FAILS drift plant: separator recomposed engage-static → engage-chosen · computed "chosen" · declared static · load 37.1/43.0/60.5
+  PLANT-FAILS static-inert plant: separator given tabindex=0 · tabIndex 0 · load 37.1/43.0/60.5
+  PASS       drift passive/skeleton · computed "static" · declared static · classed descendants [] · load 37.1/43.0/60.5
+  PASS       single passive · every element composes at most one engage-* class · load 37.1/43.0/60.5
+  PASS       static-inert skeleton · tabIndex -1 role none · load 37.1/43.0/60.5
+# P-A census chromium PASS · 0 failing cell(s) or blind plant(s) · load 37.1/43.0/60.5 at end
+census chromium exit 0
+# P-A census · final · webkit 26.5 · lock wait 331.2 s · load 64.5/56.7/61.1 at start
+  PASS       drift switch/switch · computed "chosen" · declared chosen · classed descendants [] · load 64.7/56.9/61.2
+  PASS       single switch · every element composes at most one engage-* class · load 64.7/56.9/61.2
+  PLANT-FAILS single plant: switch composes engage-chosen + engage-pressed · 1 element(s) with > 1 engage-* class (computed stamp then reads "pressed") · load 64.7/56.9/61.2
+  PASS       drift checkbox/checkbox · computed "chosen" · declared chosen · classed descendants [] · load 64.7/56.9/61.2
+  PASS       single checkbox · every element composes at most one engage-* class · load 64.7/56.9/61.2
+  PASS       drift radio/radio-group · computed "chosen" · declared chosen · classed descendants [] · load 64.7/56.9/61.2
+  PASS       single radio · every element composes at most one engage-* class · load 64.7/56.9/61.2
+  PASS       drift chip/chip · computed "chosen" · declared chosen|pressed|static · classed descendants [] · load 64.7/56.9/61.2
+  PASS       single chip · every element composes at most one engage-* class · load 64.7/56.9/61.2
+  PASS       drift chipaction/chip · computed "pressed" · declared chosen|pressed|static · classed descendants [] · load 64.7/56.9/61.2
+  PASS       single chipaction · every element composes at most one engage-* class · load 64.7/56.9/61.2
+  PASS       drift button/button · computed "pressed" · declared pressed · classed descendants [] · load 64.7/56.9/61.2
+  PASS       single button · every element composes at most one engage-* class · load 64.7/56.9/61.2
+  PASS       drift accordion/accordion · computed "disclosed" · declared disclosed · classed descendants [] · load 64.7/56.9/61.2
+  PASS       single accordion · every element composes at most one engage-* class · load 64.7/56.9/61.2
+  PASS       drift slider/slider · computed "held" · declared held · classed descendants [] · load 64.7/56.9/61.2
+  PASS       single slider · every element composes at most one engage-* class · load 64.7/56.9/61.2
+  PASS       drift sortable/sortable-list · computed "dragged" · declared dragged · classed descendants [] · load 64.4/57.0/61.2
+  PASS       single sortable · every element composes at most one engage-* class · load 64.4/57.0/61.2
+  PASS       drift input/input · computed "field" · declared field · classed descendants [] · load 64.4/57.0/61.2
+  PASS       single input · every element composes at most one engage-* class · load 64.4/57.0/61.2
+  PASS       drift passive/separator · computed "static" · declared static · classed descendants [] · load 64.4/57.0/61.2
+  PASS       single passive · every element composes at most one engage-* class · load 64.4/57.0/61.2
+  PASS       static-inert separator · tabIndex -1 role separator · load 64.4/57.0/61.2
+  PLANT-FAILS drift plant: separator recomposed engage-static → engage-chosen · computed "chosen" · declared static · load 64.4/57.0/61.2
+  PLANT-FAILS static-inert plant: separator given tabindex=0 · tabIndex 0 · load 64.4/57.0/61.2
+  PASS       drift passive/skeleton · computed "static" · declared static · classed descendants [] · load 64.4/57.0/61.2
+  PASS       single passive · every element composes at most one engage-* class · load 64.4/57.0/61.2
+  PASS       static-inert skeleton · tabIndex -1 role none · load 64.4/57.0/61.2
+# P-A census webkit PASS · 0 failing cell(s) or blind plant(s) · load 64.4/57.0/61.2 at end
+census webkit exit 0
+# afterdrag · /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pA/out/builds/final · chromium 149.0.7827.55 · lock wait 15.1 s · load 64.5/57.4/61.2 at start
+  REPORT     drag release · rest 360.0 · 50 ms: width 377.0 (×1.047) scale 1.04726 thumb:focus-visible true active slider · 600 ms: width 360.0 (×1.000) scale 1 thumb:focus-visible true active slider · 1500 ms: width 360.0 (×1.000) scale 1 thumb:focus-visible true active slider · load 62.7/57.2/61.1
+  REPORT     click release · rest 360.0 · 50 ms: width 360.0 (×1.000) scale 1 thumb:focus-visible false active BODY · 600 ms: width 360.0 (×1.000) scale 1 thumb:focus-visible false active BODY · 1500 ms: width 360.0 (×1.000) scale 1 thumb:focus-visible false active BODY · load 62.7/57.2/61.1
+# done · load 62.7/57.2/61.1
+# afterdrag · /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pA/out/builds/head · chromium 149.0.7827.55 · lock wait 20.7 s · load 64.2/57.8/61.2 at start
+  REPORT     drag release · rest 360.0 · 50 ms: width 360.0 (×1.000) scale none thumb:focus-visible true active slider · 600 ms: width 360.0 (×1.000) scale none thumb:focus-visible true active slider · 1500 ms: width 360.0 (×1.000) scale none thumb:focus-visible true active slider · load 68.1/58.7/61.5
+  REPORT     click release · rest 360.0 · 50 ms: width 360.0 (×1.000) scale none thumb:focus-visible false active BODY · 600 ms: width 360.0 (×1.000) scale none thumb:focus-visible false active BODY · 1500 ms: width 360.0 (×1.000) scale none thumb:focus-visible false active BODY · load 68.1/58.7/61.5
+# done · load 68.1/58.7/61.5
+# afterdrag · /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pA/out/builds/final · webkit 26.5 · lock wait 37.8 s · load 61.1/58.2/61.2 at start
+  REPORT     drag release · rest 360.0 · 50 ms: width 367.0 (×1.019) scale 1.019364 thumb:focus-visible true active slider · 600 ms: width 360.0 (×1.000) scale 1 thumb:focus-visible true active slider · 1500 ms: width 360.0 (×1.000) scale 1 thumb:focus-visible true active slider · load 58.8/57.8/61.0
+  REPORT     click release · rest 360.0 · 50 ms: width 360.0 (×1.000) scale 1 thumb:focus-visible false active BODY · 600 ms: width 360.0 (×1.000) scale 1 thumb:focus-visible false active BODY · 1500 ms: width 360.0 (×1.000) scale 1 thumb:focus-visible false active BODY · load 58.8/57.8/61.0
+# done · load 58.8/57.8/61.0
+# afterdrag · /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D5/p1/pA/out/builds/head · webkit 26.5 · lock wait 0.0 s · load 56.8/57.4/60.9 at start
+  REPORT     drag release · rest 360.0 · 50 ms: width 360.0 (×1.000) scale none thumb:focus-visible true active slider · 600 ms: width 360.0 (×1.000) scale none thumb:focus-visible true active slider · 1500 ms: width 360.0 (×1.000) scale none thumb:focus-visible true active slider · load 55.1/57.0/60.7
+  REPORT     click release · rest 360.0 · 50 ms: width 360.0 (×1.000) scale none thumb:focus-visible false active BODY · 600 ms: width 360.0 (×1.000) scale none thumb:focus-visible false active BODY · 1500 ms: width 360.0 (×1.000) scale none thumb:focus-visible false active BODY · load 55.1/57.0/60.7
+# done · load 55.1/57.0/60.7
+# P-A capture · proto · chromium 149.0.7827.55 · lock wait 42.8 s · load 57.3/57.1/60.5
+proto chromium light switch     rest        scale 1.000 · load 57.3/57.1/60.5
+proto chromium light switch     pressed     scale 1.000 · load 57.3/57.1/60.5
+proto chromium light switch     crest       scale 1.000 · load 57.3/57.1/60.5
+proto chromium light switch     committed   scale 1.000 · load 57.3/57.1/60.5
+proto chromium light checkbox   rest        scale 1.000 · load 57.3/57.1/60.5
+proto chromium light checkbox   pressed     scale 1.000 · load 62.2/58.1/60.9
+proto chromium light checkbox   crest       scale 1.020 · load 62.2/58.1/60.9
+proto chromium light checkbox   committed   scale 1.000 · load 62.2/58.1/60.9
+proto chromium light chip       rest        scale 1.000 · load 62.2/58.1/60.9
+proto chromium light chip       pressed     scale 1.000 · load 62.2/58.1/60.9
+proto chromium light chip       crest       scale 1.020 · load 62.2/58.1/60.9
+proto chromium light chip       committed   scale 1.000 · load 62.2/58.1/60.9
+proto chromium light chipaction rest        scale 1.000 · load 62.2/58.1/60.9
+proto chromium light chipaction pressed     scale 1.000 · load 62.2/58.1/60.9
+proto chromium light chipaction crest       scale 1.020 · load 65.0/58.8/61.1
+proto chromium light chipaction committed   scale 1.000 · load 65.0/58.8/61.1
+proto chromium light button     rest        scale 1.000 · load 65.0/58.8/61.1
+proto chromium light button     pressed     scale 1.033 · load 65.0/58.8/61.1
+proto chromium light button     crest       scale 1.021 · load 65.0/58.8/61.1
+proto chromium light button     committed   scale 1.000 · load 65.0/58.8/61.1
+proto chromium light accordion  rest        scale 1.000 · load 65.0/58.8/61.1
+proto chromium light accordion  pressed     scale 1.000 · load 65.0/58.8/61.1
+proto chromium light accordion  crest       scale 1.020 · load 65.0/58.8/61.1
+proto chromium light accordion  committed   scale 1.000 · load 64.5/58.8/61.1
+proto chromium light slider     rest        scale 1.000 · load 64.5/58.8/61.1
+proto chromium light slider     held        scale 1.060 · load 64.5/58.8/61.1
+proto chromium light slider     released    scale 1.000 · load 64.5/58.8/61.1
+proto chromium dark switch     rest        scale 1.000 · load 64.5/58.8/61.1
+proto chromium dark switch     pressed     scale 1.000 · load 64.5/58.8/61.1
+proto chromium dark switch     crest       scale 1.000 · load 64.5/58.8/61.1
+proto chromium dark switch     committed   scale 1.000 · load 64.5/58.8/61.1
+proto chromium dark checkbox   rest        scale 1.000 · load 60.9/58.1/60.8
+proto chromium dark checkbox   pressed     scale 1.000 · load 60.9/58.1/60.8
+proto chromium dark checkbox   crest       scale 1.020 · load 60.9/58.1/60.8
+proto chromium dark checkbox   committed   scale 1.000 · load 60.9/58.1/60.8
+proto chromium dark chip       rest        scale 1.000 · load 60.9/58.1/60.8
+proto chromium dark chip       pressed     scale 1.000 · load 60.9/58.1/60.8
+proto chromium dark chip       crest       scale 1.020 · load 60.9/58.1/60.8
+proto chromium dark chip       committed   scale 1.000 · load 60.9/58.1/60.8
+proto chromium dark chipaction rest        scale 1.000 · load 60.9/58.1/60.8
+proto chromium dark chipaction pressed     scale 1.000 · load 60.9/58.1/60.8
+proto chromium dark chipaction crest       scale 1.020 · load 60.9/58.1/60.8
+proto chromium dark chipaction committed   scale 1.000 · load 59.6/57.9/60.7
+proto chromium dark button     rest        scale 1.000 · load 59.6/57.9/60.7
+proto chromium dark button     pressed     scale 1.033 · load 59.6/57.9/60.7
+proto chromium dark button     crest       scale 1.021 · load 59.6/57.9/60.7
+proto chromium dark button     committed   scale 1.000 · load 59.6/57.9/60.7
+proto chromium dark accordion  rest        scale 1.000 · load 59.6/57.9/60.7
+proto chromium dark accordion  pressed     scale 1.000 · load 59.6/57.9/60.7
+proto chromium dark accordion  crest       scale 1.020 · load 59.6/57.9/60.7
+proto chromium dark accordion  committed   scale 1.000 · load 58.0/57.6/60.6
+proto chromium dark slider     rest        scale 1.000 · load 58.0/57.6/60.6
+proto chromium dark slider     held        scale 1.060 · load 58.0/57.6/60.6
+proto chromium dark slider     released    scale 1.000 · load 58.0/57.6/60.6
+# done · load 58.0/57.6/60.6
+# P-A capture · head · chromium 149.0.7827.55 · lock wait 75.6 s · load 60.1/58.7/60.8
+head chromium light switch     rest        scale 1.000 · load 60.1/58.7/60.8
+head chromium light switch     pressed     scale 0.960 · load 57.5/58.1/60.6
+head chromium light switch     crest       scale 0.995 · load 57.5/58.1/60.6
+head chromium light switch     committed   scale 1.000 · load 57.5/58.1/60.6
+head chromium light checkbox   rest        scale 1.000 · load 57.5/58.1/60.6
+head chromium light checkbox   pressed     scale 0.960 · load 57.5/58.1/60.6
+head chromium light checkbox   crest       scale 0.996 · load 57.5/58.1/60.6
+head chromium light checkbox   committed   scale 1.000 · load 57.5/58.1/60.6
+head chromium light chip       rest        scale 1.000 · load 57.5/58.1/60.6
+head chromium light chip       pressed     scale 0.967 · load 57.5/58.1/60.6
+head chromium light chip       crest       scale 0.977 · load 57.5/58.1/60.6
+head chromium light chip       committed   scale 1.074 · load 55.3/57.7/60.4
+head chromium light chipaction rest        scale 1.000 · load 55.3/57.7/60.4
+head chromium light chipaction pressed     scale 0.969 · load 55.3/57.7/60.4
+head chromium light chipaction crest       scale 0.978 · load 55.3/57.7/60.4
+head chromium light chipaction committed   scale 1.000 · load 55.3/57.7/60.4
+head chromium light button     rest        scale 1.000 · load 55.3/57.7/60.4
+head chromium light button     pressed     scale 1.022 · load 55.3/57.7/60.4
+head chromium light button     crest       scale 1.023 · load 55.3/57.7/60.4
+head chromium light button     committed   scale 1.000 · load 55.3/57.7/60.4
+head chromium light accordion  rest        scale 1.000 · load 53.9/57.4/60.3
+head chromium light accordion  pressed     scale 1.000 · load 53.9/57.4/60.3
+head chromium light accordion  crest       scale 1.000 · load 53.9/57.4/60.3
+head chromium light accordion  committed   scale 1.000 · load 53.9/57.4/60.3
+head chromium light slider     rest        scale 1.000 · load 53.9/57.4/60.3
+head chromium light slider     held        scale 1.000 · load 53.9/57.4/60.3
+head chromium light slider     released    scale 1.000 · load 53.9/57.4/60.3
+head chromium dark switch     rest        scale 1.000 · load 53.9/57.4/60.3
+head chromium dark switch     pressed     scale 0.960 · load 53.0/57.1/60.2
+head chromium dark switch     crest       scale 0.993 · load 53.0/57.1/60.2
+head chromium dark switch     committed   scale 1.000 · load 53.0/57.1/60.2
+head chromium dark checkbox   rest        scale 1.000 · load 53.0/57.1/60.2
+head chromium dark checkbox   pressed     scale 0.960 · load 53.0/57.1/60.2
+head chromium dark checkbox   crest       scale 0.995 · load 53.0/57.1/60.2
+head chromium dark checkbox   committed   scale 1.000 · load 53.0/57.1/60.2
+head chromium dark chip       rest        scale 1.000 · load 53.0/57.1/60.2
+head chromium dark chip       pressed     scale 0.967 · load 53.0/57.1/60.2
+head chromium dark chip       crest       scale 0.977 · load 53.0/57.1/60.2
+head chromium dark chip       committed   scale 1.074 · load 50.7/56.6/59.9
+head chromium dark chipaction rest        scale 1.000 · load 50.7/56.6/59.9
+head chromium dark chipaction pressed     scale 0.967 · load 50.7/56.6/59.9
+head chromium dark chipaction crest       scale 0.982 · load 50.7/56.6/59.9
+head chromium dark chipaction committed   scale 1.000 · load 50.7/56.6/59.9
+head chromium dark button     rest        scale 1.000 · load 50.7/56.6/59.9
+head chromium dark button     pressed     scale 1.020 · load 50.7/56.6/59.9
+head chromium dark button     crest       scale 1.021 · load 50.7/56.6/59.9
+head chromium dark button     committed   scale 1.000 · load 50.7/56.6/59.9
+head chromium dark accordion  rest        scale 1.000 · load 51.2/56.6/59.9
+head chromium dark accordion  pressed     scale 1.000 · load 51.2/56.6/59.9
+head chromium dark accordion  crest       scale 1.000 · load 51.2/56.6/59.9
+head chromium dark accordion  committed   scale 1.000 · load 51.2/56.6/59.9
+head chromium dark slider     rest        scale 1.000 · load 51.2/56.6/59.9
+head chromium dark slider     held        scale 1.000 · load 51.2/56.6/59.9
+head chromium dark slider     released    scale 1.000 · load 51.2/56.6/59.9
+# done · load 51.2/56.6/59.9
+# P-A capture · proto · webkit 26.5 · lock wait 466.7 s · load 29.1/41.4/51.2
+proto webkit light switch     rest        scale 1.000 · load 29.1/41.4/51.2
+proto webkit light switch     pressed     scale 1.000 · load 29.1/41.4/51.2
+proto webkit light switch     crest       scale 1.000 · load 29.1/41.4/51.2
+proto webkit light switch     committed   scale 1.000 · load 29.1/41.4/51.2
+proto webkit light checkbox   rest        scale 1.000 · load 28.3/41.0/51.0
+proto webkit light checkbox   pressed     scale 1.000 · load 28.3/41.0/51.0
+proto webkit light checkbox   crest       scale 1.020 · load 28.3/41.0/51.0
+proto webkit light checkbox   committed   scale 1.000 · load 28.3/41.0/51.0
+proto webkit light chip       rest        scale 1.000 · load 28.3/41.0/51.0
+proto webkit light chip       pressed     scale 1.000 · load 28.3/41.0/51.0
+proto webkit light chip       crest       scale 1.020 · load 28.3/41.0/51.0
+proto webkit light chip       committed   scale 1.000 · load 28.3/41.0/51.0
+proto webkit light chipaction rest        scale 1.000 · load 28.3/41.0/51.0
+proto webkit light chipaction pressed     scale 1.000 · load 28.3/41.0/51.0
+proto webkit light chipaction crest       scale 1.020 · load 27.8/40.7/50.9
+proto webkit light chipaction committed   scale 1.000 · load 27.8/40.7/50.9
+proto webkit light button     rest        scale 1.000 · load 27.8/40.7/50.9
+proto webkit light button     pressed     scale 1.033 · load 27.8/40.7/50.9
+proto webkit light button     crest       scale 1.021 · load 27.8/40.7/50.9
+proto webkit light button     committed   scale 1.000 · load 27.8/40.7/50.9
+proto webkit light accordion  rest        scale 1.000 · load 27.8/40.7/50.9
+proto webkit light accordion  pressed     scale 1.000 · load 27.8/40.7/50.9
+proto webkit light accordion  crest       scale 1.020 · load 27.8/40.7/50.9
+proto webkit light accordion  committed   scale 1.000 · load 27.0/40.4/50.7
+proto webkit light slider     rest        scale 1.000 · load 27.0/40.4/50.7
+proto webkit light slider     held        scale 1.060 · load 27.0/40.4/50.7
+proto webkit light slider     released    scale 1.000 · load 27.0/40.4/50.7
+proto webkit dark switch     rest        scale 1.000 · load 27.0/40.4/50.7
+proto webkit dark switch     pressed     scale 1.000 · load 27.0/40.4/50.7
+proto webkit dark switch     crest       scale 1.000 · load 27.0/40.4/50.7
+proto webkit dark switch     committed   scale 1.000 · load 26.7/40.1/50.5
+proto webkit dark checkbox   rest        scale 1.000 · load 26.7/40.1/50.5
+proto webkit dark checkbox   pressed     scale 1.000 · load 26.7/40.1/50.5
+proto webkit dark checkbox   crest       scale 1.019 · load 26.7/40.1/50.5
+proto webkit dark checkbox   committed   scale 1.000 · load 26.7/40.1/50.5
+proto webkit dark chip       rest        scale 1.000 · load 26.7/40.1/50.5
+proto webkit dark chip       pressed     scale 1.000 · load 26.7/40.1/50.5
+proto webkit dark chip       crest       scale 1.020 · load 26.7/40.1/50.5
+proto webkit dark chip       committed   scale 1.000 · load 26.7/40.1/50.5
+proto webkit dark chipaction rest        scale 1.000 · load 26.5/39.8/50.3
+proto webkit dark chipaction pressed     scale 1.000 · load 26.5/39.8/50.3
+proto webkit dark chipaction crest       scale 1.020 · load 26.5/39.8/50.3
+proto webkit dark chipaction committed   scale 1.000 · load 26.5/39.8/50.3
+proto webkit dark button     rest        scale 1.000 · load 26.5/39.8/50.3
+proto webkit dark button     pressed     scale 1.033 · load 26.5/39.8/50.3
+proto webkit dark button     crest       scale 1.021 · load 26.5/39.8/50.3
+proto webkit dark button     committed   scale 1.000 · load 26.5/39.8/50.3
+proto webkit dark accordion  rest        scale 1.000 · load 26.1/39.5/50.2
+proto webkit dark accordion  pressed     scale 1.000 · load 26.1/39.5/50.2
+proto webkit dark accordion  crest       scale 1.020 · load 26.1/39.5/50.2
+proto webkit dark accordion  committed   scale 1.000 · load 26.1/39.5/50.2
+proto webkit dark slider     rest        scale 1.000 · load 26.1/39.5/50.2
+proto webkit dark slider     held        scale 1.060 · load 26.1/39.5/50.2
+proto webkit dark slider     released    scale 1.000 · load 26.1/39.5/50.2
+# done · load 26.1/39.5/50.2
+# P-A capture · head · webkit 26.5 · lock wait 10.6 s · load 23.7/38.3/49.6
+head webkit light switch     rest        scale 1.000 · load 25.0/38.3/49.5
+head webkit light switch     pressed     scale 0.960 · load 25.0/38.3/49.5
+head webkit light switch     crest       scale 0.996 · load 25.0/38.3/49.5
+head webkit light switch     committed   scale 1.000 · load 25.0/38.3/49.5
+head webkit light checkbox   rest        scale 1.000 · load 25.0/38.3/49.5
+head webkit light checkbox   pressed     scale 0.960 · load 25.0/38.3/49.5
+head webkit light checkbox   crest       scale 0.995 · load 25.0/38.3/49.5
+head webkit light checkbox   committed   scale 1.000 · load 25.0/38.3/49.5
+head webkit light chip       rest        scale 1.000 · load 24.9/38.1/49.4
+head webkit light chip       pressed     scale 0.967 · load 24.9/38.1/49.4
+head webkit light chip       crest       scale 0.970 · load 24.9/38.1/49.4
+head webkit light chip       committed   scale 1.074 · load 24.9/38.1/49.4
+head webkit light chipaction rest        scale 1.000 · load 24.9/38.1/49.4
+head webkit light chipaction pressed     scale 0.967 · load 24.9/38.1/49.4
+head webkit light chipaction crest       scale 0.975 · load 24.9/38.1/49.4
+head webkit light chipaction committed   scale 1.000 · load 24.9/38.1/49.4
+head webkit light button     rest        scale 1.000 · load 25.4/38.0/49.3
+head webkit light button     pressed     scale 1.023 · load 25.4/38.0/49.3
+head webkit light button     crest       scale 1.021 · load 25.4/38.0/49.3
+head webkit light button     committed   scale 1.000 · load 25.4/38.0/49.3
+head webkit light accordion  rest        scale 1.000 · load 25.4/38.0/49.3
+head webkit light accordion  pressed-kbd scale 1.000 · load 25.4/38.0/49.3
+head webkit light accordion  crest       scale 1.000 · load 25.4/38.0/49.3
+head webkit light accordion  committed   scale 1.000 · load 25.4/38.0/49.3
+head webkit light slider     rest        scale 1.000 · load 25.4/38.0/49.3
+head webkit light slider     held        scale 1.000 · load 27.0/38.1/49.2
+head webkit light slider     released    scale 1.000 · load 27.0/38.1/49.2
+head webkit dark switch     rest        scale 1.000 · load 27.0/38.1/49.2
+head webkit dark switch     pressed     scale 0.960 · load 27.0/38.1/49.2
+head webkit dark switch     crest       scale 0.995 · load 27.0/38.1/49.2
+head webkit dark switch     committed   scale 1.000 · load 27.0/38.1/49.2
+head webkit dark checkbox   rest        scale 1.000 · load 27.0/38.1/49.2
+head webkit dark checkbox   pressed     scale 0.960 · load 27.0/38.1/49.2
+head webkit dark checkbox   crest       scale 0.995 · load 27.0/38.1/49.2
+head webkit dark checkbox   committed   scale 1.000 · load 26.1/37.7/49.0
+head webkit dark chip       rest        scale 1.000 · load 26.1/37.7/49.0
+head webkit dark chip       pressed     scale 0.966 · load 26.1/37.7/49.0
+head webkit dark chip       crest       scale 0.973 · load 26.1/37.7/49.0
+head webkit dark chip       committed   scale 1.074 · load 26.1/37.7/49.0
+head webkit dark chipaction rest        scale 1.000 · load 26.1/37.7/49.0
+head webkit dark chipaction pressed     scale 0.965 · load 26.1/37.7/49.0
+head webkit dark chipaction crest       scale 0.972 · load 26.1/37.7/49.0
+head webkit dark chipaction committed   scale 1.000 · load 25.7/37.5/48.9
+head webkit dark button     rest        scale 1.000 · load 25.7/37.5/48.9
+head webkit dark button     pressed     scale 1.022 · load 25.7/37.5/48.9
+head webkit dark button     crest       scale 1.021 · load 25.7/37.5/48.9
+head webkit dark button     committed   scale 1.000 · load 25.7/37.5/48.9
+head webkit dark accordion  rest        scale 1.000 · load 25.7/37.5/48.9
+head webkit dark accordion  pressed-kbd scale 1.000 · load 25.7/37.5/48.9
+head webkit dark accordion  crest       scale 1.000 · load 25.7/37.5/48.9
+head webkit dark accordion  committed   scale 1.000 · load 25.7/37.5/48.9
+head webkit dark slider     rest        scale 1.000 · load 25.8/37.3/48.7
+head webkit dark slider     held        scale 1.000 · load 25.8/37.3/48.7
+head webkit dark slider     released    scale 1.000 · load 25.8/37.3/48.7
+# done · load 25.8/37.3/48.7
+chain end 16:58:50 16:58  up 1 day,  2:26, 2 users, load averages: 27.37 37.41 48.72
