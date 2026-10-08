@@ -1892,3 +1892,263 @@ These continue S-1..S-37.
 **Held with the bank.** G-01..G-12 and D′'s gaps, unchanged.
 
 No route converged in pass 5. The kept declaration is B's; the pass-5 critique re-opened two items, so its convergence record is not written.
+
+
+---
+---
+
+# D1 · pass 6 · REGISTRY: the route after pass 6
+
+| field | value |
+|---|---|
+| seat | D1 pass-6 agglomeration. Closes pass 6 with B's status and convergence, the two-clean-passes count, G's re-trigger, the P5-R3 residual table, the rulings owed, the floor's open gaps and the pass-7 plan. Passes 1-5 above are kept intact |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `acf3bb3d`. `git diff 544c9271 HEAD -- . ':!docs'` is empty: the route and the critic judged 10.1.0's code (base digest `35f7b831…`). The kit is committed at `6eeb55e1` (373 tracked files under `pass-6/`), the critique at `acf3bb3d` |
+| inputs, read in full | `pass-6/`: `FLOOR-P6.md`, `B-proto.md`, `B2-residual-arms.md`, `critique-B.md`, `critique-B/results/RESULTS.md`; this file §P2-6.5, §P2-7, §P3-9, §P5-0..§P5-9; `RULINGS.md` |
+| instruments | none re-run. Read-only checks: `git log`, the empty code diff above, `git ls-files pass-6`; `B-kit/authored/p6-publish.mjs` (rows 23, 39, 73-74); HEAD's `src/composables/motion/scroll/useScrollScene.ts:1-25`, `src/index.ts:42`, `src/composables/motion/index.ts:3-12`; a `grep -w` census of the residual names' library readers |
+| fences | no source edit, no git write; this part is the only write |
+
+Short citations: `FP6` is `pass-6/FLOOR-P6.md`, `Bp6` is `pass-6/B-proto.md`, `B2A` is `pass-6/B2-residual-arms.md`, `cB6` is `pass-6/critique-B.md`, `cB6-R` is `pass-6/critique-B/results/RESULTS.md`.
+
+---
+
+## P6-0 · In brief
+
+| id | route | status | conv. (critic) | critic's verdict | re-opened by the critic | reason in one line |
+|---|---|---|---:|---|---|---|
+| D1-B | sealed modules, flat | **ADVANCE** | 27/27 = 100% | ADVANCE | **0** | exact replay from committed bytes (`bb3f6c58…`, 1,580 files, 113 steps); 18/18 clauses at 0; cascade GREEN with the Timeline split listed; FD-4 counts the carved spec; B17, B2 and B15 close on their plants |
+| D1-G | eponymous closures | BANK (unchanged) | 44% (pass 3) | — | — | re-trigger not fired (§P6-3) |
+
+**The two-clean-passes count for B moves 0 → 1.** The pass-6 critique closes all 27 items, re-opens none, and maps none of its eight outside findings to an edict clause the list leaves out (cB6 §0, §4). By §P2-6.5 (3) and §P5-8.5 this is the first clean pass. D1-B converges at the pass-7 agglomeration if and only if the pass-7 critique also re-opens nothing and every item stays closed by a committed, replayable measurement.
+
+Four findings shape pass 7.
+
+1. **The pass-6 work landed and replays.** S60-S70 cured the four live masking sites at cause, split `vite.style-fold.ts` (589 → 318 + 286), renamed the numbered specs by concept, took the S39-12 prose out of the declarations (−30,779 B), and brought B2 61 → 0. The critic's replay from the commit matches to the byte, and its rerun is a no-op (cB6 §1, cB6-R §1).
+2. **One landed residual arm breaks an entry's contract, and no gate saw it.** S64 publishes `useScrollScene` on `./motion-core`, calling it "engine-free". The file imports `SmoothProgress` and `SpringProgress` from `@mkbabb/keyframes.js` at line 25, and its header says "KEYFRAMES-BEARING → ships on `/motion`, NEVER `/motion-core`". `./motion-core` is the keyframes-free entry (`src/index.ts:42`, `composables/motion/index.ts:3-12`), so a cheap-leaf import from it would now reach the engine. The same row file places `springProjection` on `./motion` for exactly that reason (`p6-publish.mjs:72`). Read from committed rows, not measured on a built dist. It is a recommended row awaiting the driver, so the cure is the ruling (§P6-4, P6-R1).
+3. **The pass-6 browser verdict rests on scratch.** Only the summary (`results/p6/runs.txt`) is committed; the selection and both `/2` reports are not (cB6 §4.4). S-12 holds on its text, but the convergence pass must replay its browser verdict from committed bytes.
+4. **Two known gate blind spots remain inside listed items' ambit.** I7 (a style-kernel `@import` of a private dock sheet) has been missed by B3 since pass 2 (Bp6 §3.4, cB6 §4.3). `seal.mjs` exits 1 on both a RED verdict and an uncaught throw (cB6 §4.6). Neither changes a verdict today; both are cheap to cure before the last critique.
+
+---
+
+## P6-1 · Registry
+
+| id | unit set declared by | enforced between units | status | conv. | re-trigger / refutation | pass-7 role |
+|---|---|---|---|---:|---|---|
+| D1-B | a module is a code dir in `src` or `scripts` with a door (B7), recursively; containers and kind slots excepted | privacy: the recursive door seal, kernel included (B1); direction (B8); sibling acyclicity, value and type, same-dir files included (B4); no masking fallback (B17), reads and loads, every reader the tree defines; names (B15), test stems included; Playwright-program membership and visual subject (B16) | ADVANCE | 100% | — | the one live route; the second clean pass |
+| D1-G | first-level component units; eponymous roots | B1 into component units only | BANK | 44% | not fired (§P6-3) | none |
+| D1-D′ | — | — | BANK (unchanged) | 7% | not fired: no plant found a rank inversion B4 and B8 both miss | none |
+| D1-A | — | — | BLOCK (unchanged) | 35% | — | none |
+| D1-C, D1-E, D1-F | — | — | BANK (unchanged) | 40/35/30% | no trigger fired | none |
+
+---
+
+## P6-2 · D1-B · Sealed modules, flat: ADVANCE, 100%
+
+**What ran** (Bp6 §0-§4, confirmed by cB6 §1-§3 and cB6-R §1-§7).
+
+| item | result |
+|---|---|
+| floor | P6-F1 (SFC scopes labelled by component; `scopes` declares a split), P6-F2 (one key from `testDir`; `/2` reports; a missing spec throws), P6-F3 (the ledger and recipe reads cured, and the rest of the class in the floor runtime). Battery 2/9 → 9/9; pass 5's 8/8, pass 4's 8/8, graph 59/59 and 18/18 (FP6 §2) |
+| chain | 113 steps from the P6 floor cut to S70; S60-S70, S62c, S69s added |
+| replay | final digest `bb3f6c58…0add29` over 1,580 files. Route: r1 383.8 s, r2 `--twice` 1,124.3 s. Critic: 649.6 s from `6eeb55e1`'s own kit, rerun 2.8 s, unchanged after every battery. Floor base (chain truncated to S1): `5b14c6c7…` |
+| gate | 18/18, every clause 0. Pin: modules 139, doors 119, names 1,297, reviewed 2, held 0 |
+| toolchain | build 0 on both trees; both `vue-tsc` programs 0; demo build 0; `seal.test.ts` 20/20 |
+| vitest | critic: 2,323 passed, 2 failed (5,000 ms timeouts at load 61-68), both files 38/38 alone. Route: 2,324 passed, 1 failed (boot-graph mtime after the plant batteries; 14/14 after `demo:dist:build`) |
+| package | verify:package CLEAN at 2,925,765, the datum rebound once at S70 (2,919,057 → 2,925,765). Over the floor's 2,913,546: +12,219 B, of which MIGRATION.md +9,654, door declarations +3,192, other declarations −1,703 |
+| cascade | GREEN against the floor base: `./styles` 28 moved, `./styles.css` 10 moved, 0 risks, `SCOPE Timeline → TimelineMarks: 40 rule line(s) re-homed`. Unlisted RED, scopes-only RED, a changed value under the new scope RED. The critic's own Aurora → AuroraShade split: none RED, scopes-only RED, listed GREEN, value RED, restore GREEN |
+| FD-4 | `/2` report: arm A covered=true, evidence 1; a moved spec throws naming it (G, G2); an unversioned report throws (U) |
+| browser | base 866 tests (428 / 394 / 44); route selection 71 specs in 16 bands, 386 tests (184 / 194 / 8); rekey 153 specs, 0 unmapped; **0 new failures**, 183 base-green all pass. Loads 24-67. Scratch artefacts, summary committed (§P6-6) |
+| plants | critic: 106 + 6 extra, 89 CAUGHT, 13 CLEAN, 4 FALSE+, 1 SKIP; regressions 259: 233 CAUGHT, 17 CLEAN, 7 FALSE+, 5 OTHER, 6 UNNAMED (all caught in the expected clause solo). Route: 20/20 |
+
+**The critic's items** (cB6 §2): 27 CLOSED, 0 OPEN, 0 re-opened. The five that entered open:
+
+| item | closed by |
+|---|---|
+| S-10 | cascade GREEN on the migrated tree with the Timeline split listed; P6-F1 on a split the route did not make; FD-4 arm A covered=true from a `/2` report |
+| S-14 | B17 70/70 on every X5 shape in five zones (the loader form caught by B17 alone in its literal arm); pass 5's 140 + 7 regressions; the floor and tree sites read; LAW §10 states the scope |
+| B-01 | 18/18 GREEN, B2 0 |
+| B-07 | the six split-name plants, 4 cross-zone, 6 test stems, PH5 15/15; census PH6-NAMES 0; LAW §11 states the forms |
+| B-10 | B2 0; the program guard in three forms, pass 5's orphan now caught; PW-PROGRAM 0 missing; P5-R5 subject reading CLEAN in slot, caught out of slot |
+
+**This registry's reading.** It agrees with every verdict. Three need a sentence.
+
+- **FD-4 is met by the critic's re-issued probe.** §P5-8.4 named the critic's `fd4-cover-probe.mjs`. That probe built an unversioned, basename-keyed report, the shape P6-F2 removes, so as written it now throws (FP6 §4.4). The pass-6 critic's `fd4-probe.mjs` builds a `/2` report and reads arm A covered=true; the probe's intent ("the carved spec counts as evidence") is what the bar states. Met.
+- **VIS-in-L is re-adjudicated, not dismissed.** Under P5-R5 a spec's subject is the unit whose story it opens. VIS-in-L opens `/` and reads nothing sealed, so its home is the harness, and B16 placing it there is the law's verdict. The control was legal only under pass 5's convention (cB6 §3.4).
+- **The six B0 control FALSE+ stay a battery-design class.** LAW §B0 sends a computed-path read outside the harness to B0 in those zones; three pass-6 controls and six pass-5 controls planted exactly that form. No verdict rests on them.
+
+**The critic's outside findings** (cB6 §4), read under §P2-6.5:
+
+| # | finding | maps to | effect |
+|---|---|---|---|
+| 1 | P5-R3's residual names landed on recommended arms awaiting the driver | B-01 (B2), P4-R2/P5-R3 | ruling owed, P6-R1 (§P6-4). This registry adds the `useScrollScene` defect (§P6-0 finding 2) |
+| 2 | S67 publishes 11 eyeglass names on the morph door for a colocated test (+1,607 B declarations) | B-10 / R-3, P4-R2 | ruling owed, P6-R2 |
+| 3 | I7 missed by B3 since pass 2 | B-01's ambit (B3) | pass-7 route work (§P6-8.3). B-01's text holds today |
+| 4 | the pass-6 browser selection and reports uncommitted | S-12 | pass-7 route work: committed. S-12's text holds |
+| 5 | P5-G3 persists (renderer `armAsync().catch`, Playwright page-operation swallows) | edict "no masking fallbacks", logged to the tranche cursor | outside D1, as ruled |
+| 6 | `seal.mjs` exits 1 on RED and on an uncaught throw | S-14 (fail loud) | pass-7 route work: a distinct exit for a crash |
+| 7 | 38 one-line `@import` CSS dist files | B-12 | none; LAW §5 doors |
+| 8 | seal `files` 15,616 against the route's 15,165 at the same digest, edges, pin and clauses | — | pass-7 route work: the route states what the walk counts, so the number is a function of the tree alone |
+
+The registry's own finding (§P6-0 finding 2) maps to B-01/B-10 through P5-R3's table and to the edict's "encapsulated"; the list carries that clause. It re-opens nothing because the row is a recommendation the driver has not ruled; it must be cured by the ruling before the pass-7 critique, or the pass-7 critic may read it as a B-10 failure.
+
+**No finding maps to an edict clause the list leaves out. No item is added; the checklist stays at 27.**
+
+---
+
+## P6-3 · G's re-trigger: not fired
+
+§P3-2.2's first condition is a conjunction: B's doors buy no catch G's E3 and B1 would not also make, **and** the owner rules the door bytes too high.
+
+- **The first arm fails again.** Pass 4's door plants regress on the pass-6 tree as in passes 4 and 5: the kernel-interior and nested-interior reaches by B1, the module-grain type and value cycles by B4, the legal door controls clean (cB6 §2 B-12/B-13, cB6-R §5). G's law has no kernel seal and no module-grain cycle clause.
+- **The second arm has no ruling.** P5-R2 ruled the datum "(b), then (a)": the prose cure landed at S63 (S39-12 −30,779 B, all prose), so the remainder is ruled as measured. The door wiring is +17,332 B (S5-1) and +7,928 B (S64); no ruling calls it too high.
+
+G stays banked. The second re-trigger (the owner asks for eponymy as the declaration) has not fired.
+
+---
+
+## P6-4 · The P5-R3 residual table: the driver's recommended ruling per name
+
+P5-R3 ruled four rows outright and left the rest to this table. Each recommended row landed on its recommended arm, so a flip is one S64 row out and one S65 edit in (B2A). The library-reader census is HEAD's (`grep -w`, `__tests__` excluded).
+
+| name | owner | consumer | landed | recommended ruling | why |
+|---|---|---|---|---|---|
+| `useDockState` | `dock/composables/useDockState.ts` | demo dock-search | (b) `./dock` | **ruled (b)** (P5-R3) | `useDockSearch` needs a `dockState` the consumer constructs |
+| `SearchableItem`, `SearchResult`, `FuzzySearchState` | `dock/search/types.ts` | demo search, catalogue, dock-search | (b) `./dock` | **ruled (b)** | the contract types of a published composable |
+| `SectionHierarchy` | `composables/sidebar/types.ts` | demo virtual layout | (b) `./sidebar` | **ruled (b)** | the base of the published `TreeIndexEntry` |
+| `mulberry32`, `hashString` | `procedural/prng.ts` | demo fourier-field | (a) demo-local prng | **ruled (a)** | — |
+| `useFuzzySearch` | `dock/search/useFuzzySearch.ts` | demo `/data/search` | (a) via `useDockSearch` | **(a)** | BK #42 / SE-4 made the dock the engine's one public expression |
+| `GLASS_BACKDROP_SHARED_ATTR`, `useGlassBackdropLuminance` | `glass/useGlassBackdropLuminance.ts` | demo DockStage, glass-material | (b) `./dock` | **(b)** | the attribute is the contract a consumer sets on a shared backdrop the dock samples (`GlassDock.vue` and the dock's legibility sheets name it); a second sampler is a second authority |
+| `springProjection` | `motion/spring/springProjection.ts` | demo springs (2), `regen-spring-tokens` | (b) `./motion` | **(b)** | the `--spring-*` tokens are generated from it; a consumer re-derivation is a third copy. Keyframes-bearing, so `./motion` is right |
+| `springSettleDurationSeconds` | the same file | `regen-spring-tokens` | (a) | **(a)** | `springProjection(row).settleSeconds` is the same number |
+| `useScrollScene` (+ options, return) | `motion/scroll/useScrollScene.ts` | demo scroll (2) | (b) `./motion-core` | **(a): the demo keeps the spine; the library file leaves `src`** | no library file reads it (HEAD: 0 readers outside itself; `scroll-driven.css` names it in a comment), so it belongs to no published component's contract and P4-R2's default holds. The landed arm is also wrong on its own terms: the file statically imports keyframes.js, and `./motion-core` is the keyframes-free entry. If the driver rules (b), it is `./motion`, never `./motion-core`. S69s's orphan-CSS row (its dead-referrer bite re-pointed because S64 published `useScrollScene`) is re-derived either way |
+| `motionTempo` | `motion/core/motionTempo.ts` | demo springs (2) | (b) `./motion-core` | **(b)** | the tempo register eight library sites read (`useSpring`, `useElementMorph`, `useDockSpring`, the sheet detents, sortable-list motion, three token sheets); pure, so `./motion-core` is right |
+| `pendingRenderer` | `glass/webgpu/rendererStatus.ts` | demo aurora, blob, constellation, fourier-field | (b) root | **(b)** | the initial value of the published `RendererStatus`, read by five library renderers; four story copies otherwise |
+| `RendererStatus` (type) | the same file | the same four stories | (a) re-pointed at the root | **(a)** | already published |
+| `isAuroraPointerEnabled` | `aurora/runtime/contract.ts` | demo AuroraStage | (b) `./aurora-config` | **(b)** | a predicate over the published config type; a consumer gating pointer UI would restate it |
+| `MAX_SATS` | `blob/mood/constants.ts` | demo blob | (b) `./blob-config` | **(b)** | the bound of a published config field, read by six library files across both engines |
+| `FOURIER_STROKE_RUNGS` | `fourier-field/register/constants.ts` | demo fourier-field | (b) `./fourier-field` | **(b)** | the rungs a published config field takes |
+| `FOURIER_QUANTUM_FINE` | the same file | tests surface.smoke | (a) | **(a)** | the test states the quantum it observes |
+| `sampleAuroraField`, `auroraFallbackGround`, `DEFAULT_AURORA_CONFIG`, `isSoftwareWebGLRenderer`, `createAurora` | aurora internals | tests-visual page imports | (a) entry sources | **(a)** | already published |
+
+**One flip from the landed chain:** `useScrollScene` (b) → (a). The test rows of B2A's second table are all (a) by R-3 and LAW §9 and need no ruling.
+
+---
+
+## P6-5 · Rulings: P6-R1..P6-R3, owed
+
+P5-R1..P5-R5 were ruled before pass 6 and held: no seat found one unbuildable. Three are owed now.
+
+| id | question | arms | evidence | recommendation |
+|---|---|---|---|---|
+| **P6-R1** | the P5-R3 residual table | per name, §P6-4 | B2A; `p6-publish.mjs`; HEAD reader census | **§P6-4 as written**: every recommended row as landed except `useScrollScene`, which flips to (a) |
+| **P6-R2** | S67's morph-door widening: 11 eyeglass names published on `composables/motion/morph/index.ts` (+1,607 B shipped declarations) so the colocated tabs-seam test can read them | (a) keep: the door publishes the law, the test reads it; (b) the tabs test states the law it observes, and the door stays as it was | Bp6 §5.3, cB6 §4.2; B11 requires an outside reader for a door name, and the one reader is a test | **(b).** A door grows for its consumers, and a test is not one (P4-R2's default, re-point). The test asserts the geometry the tabs seam renders, which it can state; the 1,607 B leave the package |
+| **P6-R3** | does `seal.mjs` separate a crash from a verdict | (a) exit 1 RED, exit 2 an uncaught throw; (b) leave it | cB6 §4.6 | **(a).** A harness that reads exit 1 as RED cannot tell a crashed gate from a verdict; S-14's fail-loud law applies to the gate's own exit |
+
+---
+
+## P6-6 · The floor: open gaps
+
+FLOOR-P6's battery went 2/9 → 9/9, with every regression held (FP6 §2). Its own gaps:
+
+| id | gap | state after pass 6 |
+|---|---|---|
+| FP6-1 | P6-F1 labels a scope by SFC basename; two same-named scoping SFCs throw; a rename-move needs a `scopes` row | declared limit; fails loud (16 scoping SFCs, all distinct) |
+| FP6-2 | P6-F1 reads plugin-vue's default production id; v-bind CSS vars unmodelled | declared limit; the safe direction (0 in tree and dist) |
+| FP6-3 | `coverRisks` does not compare a report's root with the judged tree | declared limit; `verify --browser` takes the judged tree's own report |
+| FP6-4 | a split into several children is admitted but unplanted | untested; every route split is one child. Pass-7 battery plants one (§P6-8.4) |
+| FP6-5 | the critic's pass-5 probe arm A | **closed**: re-issued as a `/2` probe (cB6 §3.1) |
+| FP6-6 | fence disclosures | disclosed |
+| FP6-7 | `scan/text.mjs` keeps the raw token on a non-JSON escape | listed in FLOOR.md; a tokenizer decode, not a read |
+
+Pass 5's floor gaps carry forward: FP5-3, FP5-4, FP5-7 declared limits; FP5-5 ruled (P4-R3, P5-R2). **No floor work is owed for pass 7.**
+
+---
+
+## P6-7 · Open gaps outside the floor
+
+| id | gap | source | pass-7 disposition |
+|---|---|---|---|
+| P6-G1 | `useScrollScene` published on `./motion-core` though keyframes-bearing | this registry, §P6-0 | P6-R1 flip; pass-7 battery probes every S64 name's entry class |
+| P6-G2 | the morph door widened for a test reader | cB6 §4.2 | P6-R2 |
+| P6-G3 | I7: B3 does not read a style-kernel `@import` of a private module sheet | Bp6 §5.1, cB6 §4.3 (since pass 2) | pass-7 route: B3 reads CSS `@import` past a door, plant I7 CAUGHT |
+| P6-G4 | the browser selection and both `/2` reports uncommitted | cB6 §4.4 | pass-7 route: committed with the kit |
+| P6-G5 | `seal.mjs` exit codes | cB6 §4.6 | P6-R3 |
+| P6-G6 | the seal's `files` count differs across worktrees at the same digest (15,616 / 15,165) | cB6 §4.8 | pass-7 route: the record states the walk's scope; the count depends on the tree alone |
+| P6-G7 | leftover seat dirs: `.claude/worktrees/bl/D1/p6/B-proto/{build-s61.log,rebase-1.log}`, empty `crit-B/` and `floor/` | Bp6 §6, cB6 §6 | the driver removes them (both seats were refused) |
+| P5-G3, P5-G5, P5-G8 | renderer and page-operation swallows; no `pretest` for `dist-demo`; 394 common browser failures | pass 5 | outside D1; on the tranche cursor |
+| P5-G7 | load | pass 5 | every pass-6 verdict states its load (24-155); none depends on a timing |
+
+---
+
+## P6-8 · Pass-7 plan
+
+### P6-8.1 Routes
+
+| route | status | pass-7 work |
+|---|---|---|
+| D1-B | ADVANCE | the second clean pass: land P6-R1..P6-R3, cure P6-G3, P6-G4, P6-G6; hold all 27 items |
+| D1-G, D1-D′, D1-A, D1-C, D1-E, D1-F | unchanged | none; triggers watched |
+
+### P6-8.2 Order
+
+1. **Rulings.** P6-R1..P6-R3 ruled into `RULINGS.md` as one list, before the route seat.
+2. **Floor.** None owed. The route re-derives from the P6 floor cut it already uses (S1 `5b14c6c7…`).
+3. **Route.** B extends the chain from S70; seat by model declared. The kit and every result it cites, browser selection and reports included, are committed before the critic is launched (S-01).
+4. **Critique.** A fresh critic who authored nothing in passes 2-7, the pass-6 critic included, writes and hashes the battery before reading the kit.
+5. **Pass-7 agglomeration.** Writes the convergence record if the count reaches 2.
+
+### P6-8.3 Route work
+
+| id | build | closes or holds |
+|---|---|---|
+| route · P6-R1 | `useScrollScene` per the ruling: (a) the spine moves to the demo and the library file leaves `src`, its names out of S64, its MIGRATION and pin rows gone, S69s's orphan-CSS row re-derived; or (b) on `./motion`. Every other residual row as landed | B-01, B-10 |
+| route · P6-R2 | per the ruling: (b) the 11 eyeglass names leave the morph door and the tabs-seam test states the law it observes; the datum row re-measured. P4-R3's one rebind moves to the last step that changes the bytes, and is the only rebind in the chain | B-10, S-03 |
+| route · P6-R3 | `seal.mjs` exits 2 on an uncaught throw, 1 on RED, 0 on GREEN; LAW states it | S-14 |
+| route · I7 | B3 reads a CSS `@import` (and `<style src>`) that crosses a door into a module's private sheet; LAW states it; the pass-2 battery's I7 reads CAUGHT | B-01 |
+| route · browser | the full graph-selected run (§P4-8.4) on the pass-7 tree against the floor base, both `/2` reports and the selection committed with the kit, re-derivable from committed bytes | S-12 |
+| route · walk | the seal record states what `files` counts (tracked files in the five zones and the root configs, or the walk's stated roots), so two worktrees at one digest read one number | — (no verdict rests on it) |
+
+### P6-8.4 What pass 7 must prove
+
+§P5-8.4's bar unchanged, re-met on the pass-7 tree, plus:
+- the chain replays from the commit to one digest, rerun a no-op;
+- 18/18 clauses at 0 (19 if I7 lands as a clause), verify:package CLEAN at the one rebound datum, cascade GREEN against the floor base with every moved rule listed;
+- the browser verdict, 0 new failures with per-band base-green counts, replayed from committed reports;
+- every name the chain publishes sits on an entry whose declared peer class its static closure keeps: nothing reachable from `./motion-core` imports `@mkbabb/keyframes.js`.
+
+**The battery must plant:** I7 (CAUGHT by B3); a keyframes-bearing name published on `./motion-core` (the probe reads it; if no gate clause reads it, the critic records the class and its owner); a door name published for a test reader only; a seal crash (exit 2, not 1); an SFC split into two children (FP6-4). It re-runs pass 4's, pass 5's and pass 6's batteries as regressions, with the pass-6 critic's 112 plants among them.
+
+### P6-8.5 Convergence criterion
+
+§P2-6.5 unchanged. The checklist is §P3-9's 27 items, frozen, with the status in §P6-9. **B's two-clean-passes count is 1.** D1-B converges at the pass-7 agglomeration if and only if all 27 items remain closed by committed, replayable measurements and the pass-7 critique re-opens nothing and maps no finding to an edict clause the list leaves out. If it re-opens an item or maps a finding outside the list, the count restarts at 0.
+
+---
+
+## P6-9 · Open gaps, enumerated (the pass-7 checklist)
+
+§P3-9's list carries forward with its text frozen. No item is added in pass 6.
+
+| item | pass-6 critic | entering pass 7 | what holds it closed |
+|---|---|---|---|
+| S-01 | CLOSED | CLOSED | the pass-7 kit, results and browser reports committed before judgment |
+| S-02 | CLOSED | CLOSED | B8 0, B9 0 |
+| S-03 | CLOSED | CLOSED | P5-R1..P5-R5 as landed; P6-R1..P6-R3 ruled and landed; the datum rebound once |
+| S-04..S-08 | CLOSED | CLOSED | — |
+| S-09 | CLOSED | CLOSED | replay idempotent, rerun a no-op |
+| **S-10** | CLOSED (was OPEN) | CLOSED | cascade GREEN listed; FD-4 `/2` coverage |
+| S-11 | CLOSED | CLOSED | — |
+| S-12 | CLOSED | CLOSED | the pass-7 browser run committed and replayable |
+| S-13 | CLOSED | CLOSED | — |
+| **S-14** | CLOSED (was OPEN) | CLOSED | B17 0; the seal's crash exit distinct |
+| **B-01** | CLOSED (was OPEN) | CLOSED | every clause GREEN, B2 0; I7 caught |
+| B-02..B-06 | CLOSED | CLOSED | — |
+| **B-07** | CLOSED (was OPEN) | CLOSED | B15 over every stem |
+| B-08, B-09 | CLOSED | CLOSED | — |
+| **B-10** | CLOSED (was OPEN) | CLOSED | B-S7..B-S16 run; the residual names on the ruled arms |
+| B-11..B-13 | CLOSED | CLOSED | — |
+
+**Count entering pass 7:** 27 items, 27 closed, 0 open. Two-clean-passes count: 1.
+
+**Held with the bank.** G-01..G-12 and D′'s gaps, unchanged.
+
+No route converged in pass 6. The pass-6 critique is the first clean pass; D1-B's convergence record waits on the pass-7 critique.

@@ -58,3 +58,13 @@ Ruled by the driver on 2026-10-07, before pass 6's floor and route seats, from R
 | P5-R3 | B2's 61 lines | **One list, ruled together.** Tests and the aurora visual specs colocate into the subject unit's `__tests__/` (inside the unit is not a crossing, P4-R1); a test whose subjects are several units splits. Publish only a published component's contract: `useDockState` and the dock search types on `./dock`, `SectionHierarchy` on `./sidebar`, each with a MIGRATION "added" row and a pin row. `mulberry32` and `hashString` become a demo-local prng. For the rest (`useFuzzySearch`, `useGlassBackdropLuminance` + `GLASS_BACKDROP_SHARED_ATTR`, `useScrollScene`, `springProjection` + `motionTempo` with `regen-spring-tokens`, `isAuroraPointerEnabled`, `pendingRenderer`, `MAX_SATS`, `FOURIER_STROKE_RUNGS`) the route measures both arms per name and the driver rules on that table. | P4-R1, P4-R2 |
 | P5-R4 | hand-written root configs and R-5's zones | **(a) Yes, bounds only.** 500 lines per file; the root directory is not counted against 12. `vite.style-fold.ts` (588 lines) splits into named modules beside it. | edict ("the same for backend files") |
 | P5-R5 | the subject of a page-driving visual spec | **(a) The unit whose story or route the spec drives.** The law states how the subject is read (the story path the spec opens, through the story manifest), and B16 judges the tests-visual zone by it. | R-3 (a visual spec lives with its subject) |
+
+## Pass-6 rulings P6-R1..P6-R3
+
+Ruled by the driver on 2026-10-08, before pass 7's route seat, from REGISTRY §P6-5. Each follows the registry's recommendation. The owner may override any row.
+
+| id | question | ruling | ground |
+|---|---|---|---|
+| P6-R1 | the P5-R3 residual table | **§P6-4 as written.** Every recommended row stays as landed except `useScrollScene`, which flips to (a): the demo keeps the scroll spine and the library file leaves `src`. Its S64 names, MIGRATION rows and pin rows go, and S69s's orphan-CSS row is re-derived. | P4-R2 (re-point by default); no library reader; `./motion-core` is the keyframes-free entry |
+| P6-R2 | S67's morph-door widening for the tabs-seam test | **(b).** The 11 names leave `composables/motion/morph/index.ts`; the tabs-seam test states the geometry it observes. The datum row is re-measured and P4-R3's one rebind moves to the last step that changes the bytes. | P4-R2: a door grows for its consumers, and a test is not one |
+| P6-R3 | `seal.mjs` exit codes | **(a).** 0 GREEN, 1 RED, 2 an uncaught throw; LAW states it. | S-14 fail-loud applies to the gate's own exit |
