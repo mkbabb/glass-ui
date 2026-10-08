@@ -1,0 +1,18 @@
+2026-10-08 17:40:08 · load { 50.48 56.72 56.37 }
+selftest · harness H3 dcab5177e252 (27 files)
+OK     W-E  chromium clean exit 0 · W-E PASS · 6/6 gating cells pass [library 6/6]
+OK     W-E  chromium fault   we (the one-line guard is absent) exit 1 · W-E FAIL · 3/6 gating cells pass [library 3/6]
+         first planted FAIL: FAIL       preset refusal (flavor dist) · a line added to item 0 → no refusal (no console error, no throw)
+OK     W-E  chromium fault   we-devonly (the one-line guard is DEV-only, so what a consumer installs refuses nothing) exit 1 · W-E FAIL · 3/6 gating cells pass [library 3/6]
+         first planted FAIL: FAIL       preset refusal (flavor dist) · a line added to item 0 → no refusal (no console error, no throw)
+OK     W-E  chromium fault   we-lh1 (an option stacks two lines at line-height 1 inside its rung (the midpoint row test must count 2)) exit 1 · W-E FAIL · 4/6 gating cells pass [library 4/6]
+         first planted FAIL: FAIL       preset · 4 items · 1 not one line · e.g. 40.00 px tall at rung 40.00 (1.00 rungs), 2 rows
+OK     W-E  webkit   clean exit 0 · W-E PASS · 6/6 gating cells pass [library 6/6]
+OK     W-E  webkit   fault   we (the one-line guard is absent) exit 1 · W-E FAIL · 3/6 gating cells pass [library 3/6]
+         first planted FAIL: FAIL       preset refusal (flavor dist) · a line added to item 0 → no refusal (no console error, no throw)
+OK     W-E  webkit   fault   we-devonly (the one-line guard is DEV-only, so what a consumer installs refuses nothing) exit 1 · W-E FAIL · 3/6 gating cells pass [library 3/6]
+         first planted FAIL: FAIL       preset refusal (flavor dist) · a line added to item 0 → no refusal (no console error, no throw)
+OK     W-E  webkit   fault   we-lh1 (an option stacks two lines at line-height 1 inside its rung (the midpoint row test must count 2)) exit 1 · W-E FAIL · 4/6 gating cells pass [library 4/6]
+         first planted FAIL: FAIL       preset · 4 items · 1 not one line · e.g. 40.00 px tall at rung 40.00 (1.00 rungs), 2 rows
+selftest: 8 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0 · 2026-10-08 17:50:15 · load { 44.09 63.84 61.01 }

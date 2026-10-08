@@ -1,0 +1,14 @@
+2026-10-08 17:37:44 · load { 30.92 60.89 57.65 }
+selftest · harness H3 357dcb472f74 (27 files)
+OK     W-D  chromium clean exit 0 · W-D PASS · 8/8 gating cells pass [library 8/8]
+OK     W-D  chromium fault   wd (the declared cell lays out as a row) exit 1 · W-D FAIL · 4/8 gating cells pass [library 4/8]
+         first planted FAIL: FAIL       family-d #0 · corner 16px→16.00 (--radius-field 16.00) · row · line-height 21.00 vs body 21.00 · rows 1
+OK     W-D  chromium fault   wd2 (the declaration is ignored: every item is a cell, the undeclared pair included) exit 1 · W-D FAIL · 4/8 gating cells pass [library 4/8]
+         first planted FAIL: FAIL       family-d-undeclared #0 (undeclared pair) · 226.00×66.00 rung 40.00 · corner 16px→16.00 (÷h/2 0.48) · rows 2
+OK     W-D  webkit   clean exit 0 · W-D PASS · 8/8 gating cells pass [library 8/8]
+OK     W-D  webkit   fault   wd (the declared cell lays out as a row) exit 1 · W-D FAIL · 4/8 gating cells pass [library 4/8]
+         first planted FAIL: FAIL       family-d #0 · corner 16px→16.00 (--radius-field 16.00) · row · line-height 21.00 vs body 21.00 · rows 1
+OK     W-D  webkit   fault   wd2 (the declaration is ignored: every item is a cell, the undeclared pair included) exit 1 · W-D FAIL · 4/8 gating cells pass [library 4/8]
+         first planted FAIL: FAIL       family-d-undeclared #0 (undeclared pair) · 226.00×66.00 rung 40.00 · corner 16px→16.00 (÷h/2 0.48) · rows 2
+selftest: 6 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0 · 2026-10-08 17:38:15 · load { 31.21 58.01 56.71 }

@@ -1,0 +1,10 @@
+2026-10-08 11:58:54 · load { 60.02 53.74 59.49 }
+== fixture PASS: plated=fixture, flush=fixture@preset (the tool's own run)
+film --pair · harness H3 e81a1fe4f8ce · lock waited 0s · other browsers 7 · load 60.02 / 53.74 / 59.49
+preset-light-fine-chromium pair → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p3/h3/out/pair-fixture/preset-light-fine-chromium-pair.jpg (129.7 KB; rows plated | focusplant; columns selected | focused-selected) · load 57.69 / 53.36 / 59.32
+preset-light-fine-webkit pair → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p3/h3/out/pair-fixture/preset-light-fine-webkit-pair.jpg (129.5 KB; rows plated | focusplant; columns selected | focused-selected) · load 60.20 / 53.95 / 59.50
+exit 0
+== planted FAIL: fixture:t5-stop (the port is a tab stop: Tab from the sentinel lands on the port, not the checked item)
+film --pair · harness H3 e81a1fe4f8ce · lock waited 0s · other browsers 9 · load 60.20 / 53.95 / 59.50
+film --pair HARNESS ERROR: planted preset-light-fine-chromium: the FOCUSED-SELECTED frame is not as labelled (Tab from the sentinel focused item -1, the checked item is 1, :focus-visible false)
+exit 2 · 2026-10-08 11:59:08 · load { 58.26 53.65 59.36 }

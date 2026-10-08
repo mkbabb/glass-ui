@@ -48,18 +48,24 @@ export const SCENES = [
   { id: "f1", site: "F1 fourier-analysis HarmonicLevelGrid, a thumbnail strip of glass Buttons (one-of-N, no ARIA state)", holder: "tile", arms: true, gates: ["T-1", "T-3", "T-4", "T-5", "T-6", "T-7"] },
   { id: "v2", site: "V2 value.js MixSourceSelector, N-of-M palette thumbnails on native buttons", holder: "tile", arms: true, multi: true, gates: ["T-1", "T-3", "T-5", "T-7"] },
   { id: "c1", site: "C1 chicago status filter, radios with a check mark", holder: "row", arms: true, gates: ["T-3", "T-4", "T-5", "T-7"] },
-  // H-3 · the selected carrier under what erases a border (T-3)
-  { id: "preset-invalid", site: "K1 tiles in an invalid group with a selection (ToggleGroup invalid)", holder: "tile", gates: ["T-3"] },
-  { id: "preset-sibling", site: "K1 tiles carrying a sibling state at equal specificity (F1's is-bound: a full-ink border)", holder: "tile", gates: ["T-3"] },
-  { id: "preset-tone-translucent", site: "K1 tiles with --selection-tone: rgb(120 80 200 / 0.35)", holder: "tile", gates: ["T-3"] },
-  { id: "preset-tone-unresolvable", site: "K1 tiles with --selection-tone set to an undefined custom property", holder: "tile", gates: ["T-3"] },
+  // H-3 · the selected carrier under what erases a border (T-3). H3-11: each state also renders on a route's
+  // migrated preset markup (`<id>-migrated`, `migratedArm: "preset"`), so the battery reads the route's carrier
+  // under the state, not only the library's probe markup
+  { id: "preset-invalid", site: "K1 tiles in an invalid group with a selection (ToggleGroup invalid)", holder: "tile", migratedArm: "preset", gates: ["T-3"] },
+  { id: "preset-sibling", site: "K1 tiles carrying a sibling state at equal specificity (F1's is-bound: a full-ink border)", holder: "tile", migratedArm: "preset", gates: ["T-3"] },
+  { id: "preset-tone-translucent", site: "K1 tiles with --selection-tone: rgb(120 80 200 / 0.35)", holder: "tile", migratedArm: "preset", gates: ["T-3"] },
+  { id: "preset-tone-unresolvable", site: "K1 tiles with --selection-tone set to an undefined custom property", holder: "tile", migratedArm: "preset", gates: ["T-3"] },
   // H-10 · structure
-  { id: "preset-contents", site: "K1 tiles behind a display: contents wrapper inside the group", holder: "tile", gates: ["T-1", "T-3", "T-5"] },
+  { id: "preset-contents", site: "K1 tiles behind a display: contents wrapper inside the group", holder: "tile", migratedArm: "preset", gates: ["T-1", "T-3", "T-5"] },
   { id: "preset-input", site: "K1 tiles, the first holding an <input> (an interactive descendant)", holder: "tile", descendant: true, gates: ["T-5"] },
+  // H3-12 · a consumer role and tabindex written on every ToggleGroupItem (B first critique CX-4)
+  { id: "preset-consumer-aria", site: "K1 tiles whose consumer writes role=\"option\" and tabindex=\"0\" on every ToggleGroupItem", holder: "tile", gates: ["T-5"] },
   // single-line references
   { id: "single", site: "single-line ToggleGroup sm (the keyframes.js family filter)", holder: "pill", gates: ["T-2", "T-5"], info: ["T-3", "T-6"] },
   { id: "vertical", site: "single-line vertical ToggleGroup, four items (the ConsoleRail analogue)", holder: "pill", gates: ["T-2", "T-5"] },
-  { id: "tabs", site: "SegmentedTabs semantics=toggle, four single-line options", holder: "pill", gates: ["T-2", "T-5"] },
+  { id: "tabs", site: "SegmentedTabs semantics=radio, four single-line options (H3-10: the floor's value)", holder: "pill", gates: ["T-2", "T-5"] },
+  // H3-10 · the retired spelling (semantics="toggle"), its own cell: under the Q-5 policy it is refused, never a silent fall-through
+  { id: "tabs-retired", site: "SegmentedTabs semantics=toggle (a retired value)", holder: "pill", retired: "semantics=\"toggle\"", gates: ["T-5"] },
   { id: "pill-icon", site: "ToggleGroup pills of an icon plus a label (D4-F question 1: stays a pill)", holder: "pill", gates: ["T-2"] },
   { id: "pill-badge", site: "ToggleGroup pills of a label plus a Badge (D4-F question 1: stays a pill)", holder: "pill", gates: ["T-2"] },
   { id: "card", site: "Card's selectable arm, wired as demo/stories/display/card.vue", holder: "tile", gates: ["T-1", "T-3", "T-4", "T-5", "T-6", "W-C"] },
@@ -117,10 +123,10 @@ const STATUSES = [
 ];
 
 // ── the groups, per site and arm ──────────────────────────────────────────────
-function presetGroup({ verbatim = false, invalid = false, sibling = false, tone = null, contents = false, input = false } = {}) {
+function presetGroup({ verbatim = false, invalid = false, sibling = false, tone = null, contents = false, input = false, consumerAria = false } = {}) {
   const gcls = "preset-grid grid w-auto max-w-none grid-cols-2 gap-2" + (verbatim ? " rounded-none bg-transparent p-0 shadow-none backdrop-filter-none" : "");
   const icls = "preset-cell w-full min-w-0 flex-col items-start gap-0.5" + (verbatim ? " bg-background" : "") + " px-3 py-2 font-medium leading-normal" + (sibling ? " is-bound" : "");
-  const item = `<ToggleGroupItem v-for="p in orderedPresets" :key="p.name" :value="p.name" :title="p.blurb" data-item class="${icls}">
+  const item = `<ToggleGroupItem v-for="p in orderedPresets" :key="p.name" :value="p.name" :title="p.blurb" data-item${consumerAria ? ' role="option" tabindex="0"' : ""} class="${icls}">
           <span data-ink class="text-small text-foreground capitalize">{{ p.name }}</span>
           <span data-ink data-line-slot class="text-mono-caption text-muted-foreground tabular-nums whitespace-nowrap">{{ p.response }} s · ζ {{ p.damping }}</span>${input ? `
           <input v-if="p.name === orderedPresets[0].name" data-ink data-descendant class="tx-input" aria-label="Preset note" value="note" />` : ""}
@@ -234,6 +240,59 @@ export function stripItemClasses(tpl) {
   return out;
 }
 
+/** Every tag of a template, with its offsets: [{ start, end, text }] (quoted attribute values respected). */
+function tags(tpl) {
+  const out = [];
+  for (let i = tpl.indexOf("<"); i >= 0; i = tpl.indexOf("<", i + 1)) {
+    let j = i + 1, q = null;
+    for (; j < tpl.length; j++) { const ch = tpl[j]; if (q) { if (ch === q) q = null; } else if (ch === '"' || ch === "'") q = ch; else if (ch === ">") break; }
+    out.push({ start: i, end: j + 1, text: tpl.slice(i, j + 1) });
+    i = j;
+  }
+  return out;
+}
+const isTag = (re) => (t) => re.test(t.text);
+const ITEM = /\sdata-item(?=[\s>=/])/, GROUP = /\sdata-group(?=[\s>=/])/;
+/**
+ * H3-11 · the H-3 states written onto a route's migrated preset markup, the way they are written onto the library
+ * arm: `invalid` and a tone on the group, the sibling class on every item, a `display: contents` wrapper around the
+ * item. A transform that finds no group or item throws, so a migration the states cannot reach fails loud.
+ */
+export function stateOnMigrated(tpl, { invalid = false, sibling = false, tone = null, contents = false } = {}) {
+  const T = tags(tpl);
+  const g = T.find(isTag(GROUP)), it = T.find(isTag(ITEM));
+  if (!g || !it) throw new Error("stateOnMigrated: the migrated preset markup has no [data-group] or no [data-item] tag");
+  const edits = [];
+  const close = (t) => t.text.endsWith("/>") ? t.end - 2 : t.end - 1;
+  if (invalid || tone) edits.push([close(g), `${invalid ? " invalid" : ""}${tone ? ` style="--selection-tone: ${tone}"` : ""}`]);
+  if (sibling) for (const t of T.filter(isTag(ITEM))) {
+    const m = t.text.match(/\sclass="([^"]*)"/);
+    if (m) edits.push([t.start + m.index + m[0].length - 1, " is-bound"]);
+    else edits.push([close(t), ' class="is-bound"']);
+  }
+  if (contents) {
+    // move the item's v-for and :key onto a display: contents wrapper and close it after the item's own end tag
+    const name = it.text.match(/^<([\w-]+)/)[1];
+    let depth = 0, endAt = -1;
+    for (const t of T.filter((x) => x.start >= it.start)) {
+      if (new RegExp(`^<${name}[\\s>/]`).test(t.text) && !t.text.endsWith("/>")) depth++;
+      else if (t.text.startsWith(`</${name}`)) { depth--; if (!depth) { endAt = t.end; break; } }
+    }
+    if (endAt < 0) throw new Error(`stateOnMigrated: no closing </${name}> for the migrated item`);
+    const loop = [...it.text.matchAll(/\s(v-for|:key)="[^"]*"/g)].map((m) => m[0]);
+    const open = loop.reduce((acc, a) => acc.replace(a, ""), it.text);
+    return tpl.slice(0, it.start) + `<div class="tx-contents"${loop.join("")}>` + open + tpl.slice(it.end, endAt) + "</div>" + tpl.slice(endAt);
+  }
+  let out = tpl;
+  for (const [at, text] of edits.sort((a, b) => b[0] - a[0])) out = out.slice(0, at) + text + out.slice(at);
+  return out;
+}
+const STATE_OPTS = {
+  "preset-invalid": { invalid: true }, "preset-sibling": { sibling: true },
+  "preset-tone-translucent": { tone: "rgb(120 80 200 / 0.35)" }, "preset-tone-unresolvable": { tone: "var(--th-undefined-tone)" },
+  "preset-contents": { contents: true },
+};
+
 export function sceneApp(wt, nm, { familyModules = {}, migration = null, flavor = "src" } = {}) {
   const famImports = Object.entries(familyModules)
     .map(([k, dir]) => `import * as fam_${k} from "@glass/components/${dir}";`).join("\n");
@@ -256,6 +315,11 @@ export function sceneApp(wt, nm, { familyModules = {}, migration = null, flavor 
   sections.push(["preset-tone-translucent", "library", presetHost(presetGroup({ tone: "rgb(120 80 200 / 0.35)" }))]);
   sections.push(["preset-tone-unresolvable", "library", presetHost(presetGroup({ tone: "var(--th-undefined-tone)" }))]);
   sections.push(["preset-contents", "library", presetHost(presetGroup({ contents: true }))]);
+  // H3-11: the same states on the route's migrated preset markup (the route's CSS reaches them through tx-preset)
+  if (mig.preset) for (const [id, o] of Object.entries(STATE_OPTS)) {
+    sections.push([`${id}-migrated`, "migrated", presetHost(stateOnMigrated(mig.preset.group, o)), "tx-preset"]);
+  }
+  sections.push(["preset-consumer-aria", "library", presetHost(presetGroup({ consumerAria: true }))]);
   sections.push(["preset-input", "library", presetHost(presetGroup({ input: true }))]);
   sections.push(["single", "library", `<ToggleGroup type="single" size="sm" data-group aria-label="Filter curves by family" v-model="model">
         <ToggleGroupItem v-for="v in values.single" :key="v" :value="v" data-item><span data-ink data-line-slot>{{ v }}</span></ToggleGroupItem>
@@ -263,7 +327,8 @@ export function sceneApp(wt, nm, { familyModules = {}, migration = null, flavor 
   sections.push(["vertical", "library", `<ToggleGroup type="single" orientation="vertical" data-group aria-label="Channel" v-model="model" class="w-16">
         <ToggleGroupItem v-for="v in values.vertical" :key="v" :value="v" data-item><span data-ink data-line-slot>{{ v }}</span></ToggleGroupItem>
       </ToggleGroup>`]);
-  sections.push(["tabs", "library", `<SegmentedTabs data-group v-model="model" :options="tabsOptions" semantics="toggle" aria-label="Family" />`]);
+  sections.push(["tabs", "library", `<SegmentedTabs data-group v-model="model" :options="tabsOptions" semantics="radio" aria-label="Family" />`]);
+  sections.push(["tabs-retired", "library", `<SegmentedTabs data-group v-model="model" :options="tabsOptions" semantics="toggle" aria-label="Family" />`]);
   sections.push(["pill-icon", "library", `<ToggleGroup type="single" data-group aria-label="View" v-model="model">
         <ToggleGroupItem v-for="v in values['pill-icon']" :key="v" :value="v" data-item><svg data-ink viewBox="0 0 24 24" class="size-4" aria-hidden="true"><path d="M4 12h16M12 4v16" fill="none" stroke="currentColor" stroke-width="2" /></svg><span data-ink data-line-slot>{{ v }}</span></ToggleGroupItem>
       </ToggleGroup>`]);
@@ -298,8 +363,8 @@ export function sceneApp(wt, nm, { familyModules = {}, migration = null, flavor 
   sections.push(["family-d", "library", familyD(true)]);
   sections.push(["family-d-undeclared", "library", familyD(false)]);
 
-  const sectionHtml = sections.map(([id, arm, inner]) =>
-    `    <section v-else-if="scene === '${id}'" data-scene="${id}" data-arm="${arm}" class="tx-host tx-${id.replace(/-(verbatim|migrated)(-stripped)?$/, "")}">
+  const sectionHtml = sections.map(([id, arm, inner, extra = ""]) =>
+    `    <section v-else-if="scene === '${id}'" data-scene="${id}" data-arm="${arm}" class="tx-host tx-${id.replace(/-(verbatim|migrated)(-stripped)?$/, "")}${extra ? " " + extra : ""}">
       ${inner}
     </section>`).join("\n");
 
@@ -340,7 +405,7 @@ const MIGRATION = ${JSON.stringify(migration ? { label: migration.label, sites: 
 const q = new URLSearchParams(location.search);
 const scene = q.get("scene") ?? "__index";
 const shape = q.get("shape") ?? "stadium";
-const base = scene.replace(/-(verbatim|migrated)(-stripped)?$/, "").replace(/^preset-.*$/, "preset").replace(/^family-d-undeclared$/, "family-d");
+const base = scene.replace(/-(verbatim|migrated)(-stripped)?$/, "").replace(/^preset-.*$/, "preset").replace(/^family-d-undeclared$/, "family-d").replace(/^tabs-retired$/, "tabs");
 
 // Every scene's values, in item order; the model holds one of them (or NONE); V2 holds a set.
 const NONE = "__none__";
@@ -448,6 +513,8 @@ body { background: var(--background); color: var(--foreground); font-family: sys
 [data-arm="verbatim"] .preset-cell[data-state="on"] { background: color-mix(in srgb, var(--color-progress) 8%, var(--background)); outline-color: color-mix(in srgb, var(--color-progress) 65%, transparent); border-color: transparent; box-shadow: none; }
 /* H-3 · X-1: a sibling state at equal specificity, F1's bound endpoint (HarmonicLevelGrid.vue:327-329) without its :not(.active) */
 .preset-cell.is-bound { border-color: var(--foreground); }
+/* H3-11: the same sibling state on the migrated preset markup, at the same specificity (0,2,0) */
+:where(.tx-preset-sibling) [data-item].is-bound { border-color: var(--foreground); }
 
 /* ── K2 · EasingCatalogue.vue:304-438 layout and type, design-idioms.css:250-264 (the ball on the curve) ── */
 .easing-catalogue { --ball-tone: var(--color-progress); display: flex; flex-direction: column; gap: 0.75rem; min-height: 0; min-width: 0; }

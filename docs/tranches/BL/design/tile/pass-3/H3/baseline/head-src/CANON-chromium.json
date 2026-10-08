@@ -1,0 +1,59 @@
+{
+ "id": "CANON",
+ "title": "the canon unit's law on widened fixtures (size, orientation, children, state), parsed by the engine",
+ "engine": "chromium",
+ "engineLabel": "Chromium 149.0.7827.55",
+ "target": "head-src",
+ "dev": false,
+ "cells": [
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "canon",
+   "arm": "library",
+   "line": "canon tile corner · 48 twins, 137 corner rules · tile spelling «.toggle-group[data-shape=\"cell\"] .toggle-group__item» · exactly one rule reaches a tile and not its pill twin, on var(--radius-field) · 0 rule(s): no rule declares the tile"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "canon",
+   "arm": "library",
+   "line": "canon pill corner · 48 twins, 137 corner rules · tile spelling «.toggle-group[data-shape=\"cell\"] .toggle-group__item» · every group-scoped corner on a pill is var(--radius-pill) or inherit · 1 rule(s) reach a pill"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "canon",
+   "arm": "library",
+   "line": "canon unmatched · 48 twins, 137 corner rules · tile spelling «.toggle-group[data-shape=\"cell\"] .toggle-group__item» · every corner selector is matched by the engine · 0 unmatched"
+  }
+ ],
+ "flavor": "src",
+ "harness": {
+  "hash": "9fd4983bc6b9",
+  "files": 27,
+  "rev": "H3"
+ },
+ "run": {
+  "loadStart": "62.36 / 50.94 / 52.96",
+  "loadEnd": "62.36 / 50.94 / 52.96",
+  "census": {
+   "n": 29,
+   "sample": [
+    "1428 /Applications/Visual Studio Code.app/Contents/Resources/app/node_modules.asar.un",
+    "5528 /Users/mkbabb/Library/Caches/ms-playwright/chromium_headless_shell-1228/chrome-h",
+    "5531 /Users/mkbabb/Library/Caches/ms-playwright/chromium_headless_shell-1228/chrome-h"
+   ],
+   "waitedS": 1.2
+  },
+  "lockWaitS": 0
+ },
+ "pass": false,
+ "tally": "2/3 gating cells pass [library 2/3]",
+ "arms": {
+  "library": {
+   "pass": 2,
+   "of": 3
+  }
+ }
+}

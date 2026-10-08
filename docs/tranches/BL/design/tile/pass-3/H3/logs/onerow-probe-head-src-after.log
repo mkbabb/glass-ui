@@ -1,0 +1,26 @@
+2026-10-08 18:27:24 · load { 42.06 33.86 37.85 }
+ONEROW-PROBE · H3-3 audit: the one-row cases against raw rects and paint
+  target head-src (flavor src) · Chromium 149.0.7827.55 · harness H3 9fd4983bc6b9
+  load 42.06 / 33.86 / 37.85 at start, 41.63 / 34.03 / 37.87 at end · other headless browser processes at start: 25 (waited 1.6 s) · browser lock waited 0 s
+  info-fail  pill-icon #0 <br> inside the label · 40.00 px · rows 2 · cut 0 · label span display block white-space normal overflow visible/visible line-clamp none max-block none · rects [svg 71.0–87.0, span 61.7–79.7, span+ 77.0–95.0]
+  info-fail  pill-icon #0 a block child (div) inside the label · 40.00 px · rows 2 · cut 0 · label span display block white-space normal overflow visible/visible line-clamp none max-block none · rects [svg 71.0–87.0, span 61.7–79.7, div+ 77.0–95.0]
+  info-pass  pill-icon #0 a div appended to the item, beside the label · 40.00 px · rows 1 · cut 0 · label span display block white-space normal overflow visible/visible line-clamp none max-block none · rects [svg 71.0–87.0, span 69.3–87.3, div+ 69.3–87.3]
+ONEROW-PROBE FAIL · 0/0 gating cells pass
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p3/h3/out/orp/runs/head-src/ONEROW-PROBE-chromium.json
+ONEROW-PROBE · H3-3 audit: the one-row cases against raw rects and paint
+  target head-src (flavor src) · Chromium 149.0.7827.55 · harness H3 9fd4983bc6b9
+  load 41.63 / 34.03 / 37.87 at start, 43.90 / 34.63 / 38.05 at end · other headless browser processes at start: 23 (waited 1.5 s) · browser lock waited 0 s
+  info-fail  family-d-undeclared #0 <br> inside the label · 40.00 px · rows 2 · cut 0 · label span display block white-space normal overflow visible/visible line-clamp none max-block none · rects [span 69.3–88.3, span 63.5–79.5, span+ 77.0–93.0]
+  info-fail  family-d-undeclared #0 a block child (div) inside the label · 40.00 px · rows 2 · cut 0 · label span display block white-space normal overflow visible/visible line-clamp none max-block none · rects [span 69.3–88.3, span 63.5–79.5, div+ 77.0–93.0]
+  info-pass  family-d-undeclared #0 a div appended to the item, beside the label · 40.00 px · rows 1 · cut 0 · label span display block white-space normal overflow visible/visible line-clamp none max-block none · rects [span 69.3–88.3, span 70.3–86.3, div+ 69.3–87.3]
+ONEROW-PROBE FAIL · 0/0 gating cells pass
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p3/h3/out/orp/runs/head-src/ONEROW-PROBE-chromium.json
+ONEROW-PROBE · H3-3 audit: the one-row cases against raw rects and paint
+  target head-src (flavor src) · Chromium 149.0.7827.55 · harness H3 9fd4983bc6b9
+  load 42.87 / 34.57 / 38.01 at start, 41.28 / 34.38 / 37.92 at end · other headless browser processes at start: 23 (waited 0.5 s) · browser lock waited 0 s
+  info-fail  pill-badge #0 <br> inside the label · 40.00 px · rows 2 · cut 0 · label span display block white-space normal overflow visible/visible line-clamp none max-block none · rects [span 61.7–79.7, span+ 77.0–95.0, div 70.6–86.6, div 67.6–90.4]
+  info-fail  pill-badge #0 a block child (div) inside the label · 40.00 px · rows 2 · cut 0 · label span display block white-space normal overflow visible/visible line-clamp none max-block none · rects [span 61.7–79.7, div+ 77.0–95.0, div 70.6–86.6, div 67.6–90.4]
+  info-pass  pill-badge #0 a div appended to the item, beside the label · 40.00 px · rows 1 · cut 0 · label span display block white-space normal overflow visible/visible line-clamp none max-block none · rects [span 69.3–87.3, div 70.6–86.6, div 67.6–90.4, div+ 69.3–87.3]
+ONEROW-PROBE FAIL · 0/0 gating cells pass
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p3/h3/out/orp/runs/head-src/ONEROW-PROBE-chromium.json
+exit · 2026-10-08 18:27:48 · load { 41.28 34.38 37.92 }

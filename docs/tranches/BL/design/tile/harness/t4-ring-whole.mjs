@@ -5,7 +5,8 @@
 // percentile), so a ring cut by its host or replaced by other paint fails. H-6: the focused item's computed
 // `outline-style` must not be `auto` (the UA's focus indicator, which the pixels alone cannot tell from the ring
 // in light). Two cells per scene: nothing selected and an item selected, so selection paint cannot stand in for
-// the ring. Light and dark gate; forced colours are reported.
+// the ring. Light and dark gate. H3-8: forced colours gate the ring's reach (≥ 1.5 px on every side, so a host that
+// pads less than the forced-colours ring reaches fails; pass 2 read 1.00 px on one side of specimen-migrated, `D′c` §7).
 //   node t4-ring-whole.mjs --build <dir> | --fixture [--fault t4] [--engine chromium|webkit] [--save <dir>]
 import path from "node:path";
 import { cli, openPage, sceneList, scenesFor, engineVersion, engineOf } from "./lib.mjs";
@@ -18,8 +19,8 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     for (const sc of scenesFor(await sceneList(target, engine), "T-4")) for (const mode of ["light", "dark", "forced"]) for (const sel of ["none", "1"]) {
       const P = await openPage(target, engine, sc.id, { mode, query: { sel } });
       const m = await ringCoverage(P, { save: typeof args.save === "string" ? path.join(args.save, `${sc.id}-${engine}-${mode}-sel${sel}`) : null });
-      const j = judgeT4(m);
-      cells.push({ gating: sc.gating && mode !== "forced", pass: P.modeOk ? j.pass : false, scene: sc.id, arm: sc.arm, mode, sel, m, line: `${sc.id} ${P.modeLabel} sel=${sel}${P.keys.note} · ${j.line}` });
+      const j = judgeT4(m, { forced: mode === "forced" });
+      cells.push({ gating: sc.gating, pass: P.modeOk ? j.pass : false, scene: sc.id, arm: sc.arm, mode, sel, m, line: `${sc.id} ${P.modeLabel}${P.modeOk ? "" : " (MODE NOT APPLIED)"} sel=${sel}${P.keys.note} · ${mode === "forced" ? "ring reach (H3-8) · " : ""}${j.line}` });
       await P.close();
     }
     return { id: "T-4", title: "focus paints whole, is the library's ring, and stands apart from selection", engine, engineLabel: await engineVersion(engine), target: target.label, dev: target.meta.dev, cells };

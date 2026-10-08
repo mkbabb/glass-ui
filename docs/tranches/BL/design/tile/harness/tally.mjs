@@ -15,9 +15,11 @@ const order = ["T-1", "T-2", "T-3", "T-4", "T-5", "T-6", "T-7", "T-8", "W-A", "W
 const files = fs.readdirSync(dir).filter((f) => f.endsWith(".json"))
   .map((f) => JSON.parse(fs.readFileSync(path.join(dir, f), "utf8")))
   .sort((x, y) => order.indexOf(x.id) - order.indexOf(y.id) || String(x.engine).localeCompare(String(y.engine)));
-console.log("| witness | engine | verdict | tally | load at start / end |");
-console.log("|---|---|---|---|---|");
-for (const r of files) console.log(`| ${r.id} | ${r.engineLabel} | ${r.pass ? "PASS" : "FAIL"} | ${r.tally} | ${r.run?.loadStart ?? "?"} → ${r.run?.loadEnd ?? "?"} |`);
+const hashes = [...new Set(files.map((r) => r.harness?.hash ?? "none (pre-H3)"))];
+console.log(`harness ${hashes.join(", ")}${hashes.length > 1 ? " · MIXED: these runs are not comparable cell for cell (H3-10)" : ""}\n`);
+console.log("| witness | engine | verdict | tally | load at start / end | harness |");
+console.log("|---|---|---|---|---|---|");
+for (const r of files) console.log(`| ${r.id} | ${r.engineLabel} | ${r.pass ? "PASS" : "FAIL"} | ${r.tally} | ${r.run?.loadStart ?? "?"} → ${r.run?.loadEnd ?? "?"} | ${r.harness?.hash ?? "—"} |`);
 if (a.scenes) {
   console.log("\n| witness | engine | scene | arm | gating pass / measured | unmeasured |");
   console.log("|---|---|---|---|---|---|");

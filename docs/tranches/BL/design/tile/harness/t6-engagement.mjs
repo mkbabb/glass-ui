@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 // T-6 · Engagement: hover answers in a light channel as well as scale, and keeps the light channel under PRM
 // (R3-02-12); press squishes; a commit clears the COMMIT BAR (H-4); coarse taps do not latch hover (F-77).
-//   light channel  scale pinned to 1, rest vs hover: ≥ 2 % of the item's device pixels move by more than 10
+//   light channel  scale pinned to 1, ink hidden, rest vs hover: the mean OKLab ΔE over the plate's interior ≥ 0.02
+//                  (H3-5; H2's "≥ 2 % of pixels moved > 10 levels" is reported beside it). Read at rest, under PRM
+//                  and under PRT (H3-5: the HF-4 class, a hover rung that mixes to the rest plate at --glass-level 0)
 //   hover scale    the hovered item's computed scale > 1.001 (no PRM)
 //   press          mouse down 180 ms: scale < 0.999
 //   (hover scale and press are sampled per frame; a janky failing read is re-read twice, as the commits are)
@@ -10,6 +12,7 @@
 //                  ≥ 0.5 px. Three commits, each gating: a keyboard commit (an arrow, the pointer never moved), a
 //                  programmatic commit (__tile.select with focus on the sentinel after the group), a pointer commit
 //                  (release of a press). A colour change or a linear fade fails it.
+//   calm observer  H3-9: a programmatic commit with [data-reorder] on the scene (a calm observer ancestor) clears the bar
 //   Tab entry      Tab into the group whose choice is made: no item scales and no body moves (C-crit C-1)
 //   coarse         touch context (hover:none, pointer:coarse): tap u then v; u's scale is 1 and its paint moves
 //                  on < 1 % of pixels against its pre-tap rest
@@ -21,7 +24,7 @@
 // the pointer (PF-1: ToggleGroupItem in Playwright WebKit) still yields them; the pointer segment then fails loud.
 //   node t6-engagement.mjs --build <dir> | --fixture [--fault t6-fade] [--engine chromium|webkit]
 import { cli, openPage, sceneList, scenesFor, engineVersion, engineOf, f2, within, load, engineClosed } from "./lib.mjs";
-import { unselectedIdx, hoverLight, hoverScale, pressScale, coarseLatch, tagItems, sampleOver, commitBar, quietEntry } from "./measure.mjs";
+import { unselectedIdx, hoverLight, hoverLine, hoverScale, pressScale, coarseLatch, tagItems, sampleOver, commitBar, quietEntry } from "./measure.mjs";
 
 const JANK_MS = 20;
 const committed = (frames) => {
@@ -58,6 +61,17 @@ const MEASURES = {
     const P = await openPage(target, engine, sc.id);
     const u = await unselectedIdx(P);
     await P.page.evaluate(() => document.querySelector('[data-sentinel="after"]').focus());
+    const frames = await sampleOver(P, () => P.page.evaluate((i) => window.__tile.select(i), u));
+    await P.close();
+    return { ...commitBar(frames, u), i: u, med: medianDt(frames) };
+  },
+  // H3-9 · a programmatic commit under a calm observer ancestor (the library's `:where([data-reorder], [data-autoplay])`
+  // pins --motion-weight: 0 there): the commit still clears the bar (H-4); the calm law governs ambient motion only
+  async calm(target, engine, sc) {
+    const P = await openPage(target, engine, sc.id);
+    const u = await unselectedIdx(P);
+    await P.page.evaluate(() => { document.querySelector("[data-scene]").setAttribute("data-reorder", ""); document.querySelector('[data-sentinel="after"]').focus(); });
+    await P.page.waitForTimeout(100);
     const frames = await sampleOver(P, () => P.page.evaluate((i) => window.__tile.select(i), u));
     await P.close();
     return { ...commitBar(frames, u), i: u, med: medianDt(frames) };
@@ -132,13 +146,15 @@ if (import.meta.url === `file://${process.argv[1]}`) {
         push(kb.pass, `commit bar, keyboard commit (ArrowRight, pointer never moved) on #${kb.i} · ${kb.line} · load ${kb.load}${kb.note}`);
         const pg = await measured("programmatic", target, engine, sc);
         push(pg.pass, `commit bar, programmatic commit (focus on the sentinel after the group) on #${pg.i} · ${pg.line} · load ${pg.load}${pg.note}`);
+        const cm = await measured("calm", target, engine, sc);
+        push(cm.pass, `commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #${cm.i} · ${cm.line} · load ${cm.load}${cm.note}`);
       });
       // the pointer segment; an engine that hangs or crashes under the pointer is a FAIL in that engine, not a stalled run
       await segment("pointer", async (push, H) => {
         let P = H.cur = await openPage(target, engine, sc.id);
         let u = await unselectedIdx(P);
         const hl = await hoverLight(P, u);
-        push(hl.changedPct >= 2, `hover light channel (scale pinned) · ${f2(hl.changedPct)} % of pixels moved, p95 ${f2(hl.p95)}:1`);
+        push(hl.pass, `hover light channel (scale pinned, ink hidden) · ${hoverLine(hl)}`);
         const hs = await reread(() => hoverScale(P, u), (x) => x.sx > 1.001, (x) => f2(x.sx));
         push(hs.pass, `hover scale · ${f2(hs.r.sx)} (${hs.r.scale}); median frame ${f2(hs.r.med)} ms, load ${hs.load}${hs.note}`);
         // a press re-read releases off the item (no click, so nothing commits) and presses again; the last read
@@ -160,7 +176,13 @@ if (import.meta.url === `file://${process.argv[1]}`) {
         P = H.cur = await openPage(target, engine, sc.id, { prm: true });
         u = await unselectedIdx(P);
         const hp = await hoverLight(P, u);
-        push(P.modeOk && hp.changedPct >= 2, `PRM hover light channel · ${f2(hp.changedPct)} % of pixels moved`);
+        push(P.modeOk && hp.pass, `PRM hover light channel · ${hoverLine(hp)}`);
+        await P.close();
+        // H3-5 · the hover under reduced transparency (HF-4: at --glass-level 0 the floor's rung mixed to the rest plate)
+        P = H.cur = await openPage(target, engine, sc.id, { mode: "prt" });
+        u = await unselectedIdx(P);
+        const ht = await hoverLight(P, u);
+        push(P.modeOk && ht.pass, `PRT hover light channel (${P.modeLabel}${P.modeOk ? "" : ", MODE NOT APPLIED"}) · ${hoverLine(ht)}`);
         await P.close();
         P = H.cur = await openPage(target, engine, sc.id, { coarse: true });
         u = await unselectedIdx(P);

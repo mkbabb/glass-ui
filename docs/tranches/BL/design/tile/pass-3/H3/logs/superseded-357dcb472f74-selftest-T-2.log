@@ -1,0 +1,28 @@
+2026-10-08 12:54:09 · load { 58.36 70.04 64.41 }
+selftest · harness H3 357dcb472f74 (27 files)
+OK     T-2  chromium clean exit 0 · T-2 PASS · 40/40 gating cells pass [library 40/40]
+OK     T-2  chromium fault   t2 (one-line pills get a 12 px corner instead of h/2) exit 1 · T-2 FAIL · 18/40 gating cells pass [library 18/40]
+         first planted FAIL: FAIL       single #0 48.08×40.00 rung 40.00 12px→12.00 (÷h/2 0.60), 1 row(s)
+OK     T-2  chromium fault   t2-skip (a one-line pill wraps to two lines and leaves its rung) exit 1 · T-2 FAIL · 36/40 gating cells pass [library 36/40]
+         first planted FAIL: FAIL       single #0 52.00×60.00 rung 40.00 9999px→26.00 (÷h/2 0.87), 2 row(s) · left its rung (1.50 rungs)
+OK     T-2  chromium fault   t2-stack (H3-3: no one-row law: a <br>, a block child or an appended row stacks two rows inside a pill, and nothing names it) exit 1 · T-2 FAIL · 28/40 gating cells pass [library 28/40]
+         first planted FAIL: FAIL       single #0 one-row law · <br> inside the label, after mount · 60.00 px at rung 40.00 · nothing cut; STACKED: 2 rows, unnamed
+OK     T-2  chromium fault   t2-cut (H3-3: each pill label is a 1lh block that clips (max-block-size 20px, overflow hidden): a second row is cut, unnamed) exit 1 · T-2 FAIL · 28/40 gating cells pass [library 28/40]
+         first planted FAIL: FAIL       single #0 one-row law · <br> inside the label, after mount · 40.00 px at rung 40.00 · CUT: 1 content box(es) past the plate, up to 18.00 px; STACKED: 2 rows, unnamed
+OK     T-2  chromium control t2-named (CONTROL, must PASS: no one-row law, but an observer names every stacked pill (a console error), late content included) exit 0 · T-2 PASS · 40/40 gating cells pass [library 40/40]
+OK     T-2  chromium fault   t2-mountonly (H3-6: the stacked pill is named only at mount; a row added after mount is never named) exit 1 · T-2 FAIL · 28/40 gating cells pass [library 28/40]
+         first planted FAIL: FAIL       single #0 one-row law · <br> inside the label, after mount · 60.00 px at rung 40.00 · nothing cut; STACKED: 2 rows, unnamed
+OK     T-2  webkit   clean exit 0 · T-2 PASS · 40/40 gating cells pass [library 40/40]
+OK     T-2  webkit   fault   t2 (one-line pills get a 12 px corner instead of h/2) exit 1 · T-2 FAIL · 18/40 gating cells pass [library 18/40]
+         first planted FAIL: FAIL       single #0 48.08×40.00 rung 40.00 12px→12.00 (÷h/2 0.60), 1 row(s)
+OK     T-2  webkit   fault   t2-skip (a one-line pill wraps to two lines and leaves its rung) exit 1 · T-2 FAIL · 36/40 gating cells pass [library 36/40]
+         first planted FAIL: FAIL       single #0 52.00×60.00 rung 40.00 9999px→26.00 (÷h/2 0.87), 2 row(s) · left its rung (1.50 rungs)
+OK     T-2  webkit   fault   t2-stack (H3-3: no one-row law: a <br>, a block child or an appended row stacks two rows inside a pill, and nothing names it) exit 1 · T-2 FAIL · 28/40 gating cells pass [library 28/40]
+         first planted FAIL: FAIL       single #0 one-row law · <br> inside the label, after mount · 60.00 px at rung 40.00 · nothing cut; STACKED: 2 rows, unnamed
+OK     T-2  webkit   fault   t2-cut (H3-3: each pill label is a 1lh block that clips (max-block-size 20px, overflow hidden): a second row is cut, unnamed) exit 1 · T-2 FAIL · 28/40 gating cells pass [library 28/40]
+         first planted FAIL: FAIL       single #0 one-row law · <br> inside the label, after mount · 40.00 px at rung 40.00 · CUT: 1 content box(es) past the plate, up to 18.24 px; STACKED: 2 rows, unnamed
+OK     T-2  webkit   control t2-named (CONTROL, must PASS: no one-row law, but an observer names every stacked pill (a console error), late content included) exit 0 · T-2 PASS · 40/40 gating cells pass [library 40/40]
+OK     T-2  webkit   fault   t2-mountonly (H3-6: the stacked pill is named only at mount; a row added after mount is never named) exit 1 · T-2 FAIL · 28/40 gating cells pass [library 28/40]
+         first planted FAIL: FAIL       single #0 one-row law · <br> inside the label, after mount · 60.00 px at rung 40.00 · nothing cut; STACKED: 2 rows, unnamed
+selftest: 14 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0 · 2026-10-08 13:04:07 · load { 30.72 47.84 57.27 }

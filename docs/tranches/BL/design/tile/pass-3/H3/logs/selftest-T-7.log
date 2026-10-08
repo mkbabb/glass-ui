@@ -1,0 +1,10 @@
+2026-10-08 17:24:34 · load { 14.75 21.87 29.47 }
+selftest · harness H3 357dcb472f74 (27 files)
+OK     T-7  chromium clean exit 0 · T-7 PASS · 24/24 gating cells pass [unmigrated 0/24 · migrated 24/24]
+OK     T-7  chromium fault   t7 (the migrated arm keeps the consumer's dashed outline on the tile) exit 1 · T-7 FAIL · 0/24 gating cells pass [unmigrated 0/24 · migrated 0/24]
+         first planted FAIL: FAIL       [migrated] preset-migrated vs its stripped twin · rest · outline-style: none → dashed; outline-width: 3px → 1px; outline-color: rgb(28, 25, 23) → rgba(0, 0, 0, 0); outline-offset: 0px → -1px
+OK     T-7  webkit   clean exit 0 · T-7 PASS · 24/24 gating cells pass [unmigrated 0/24 · migrated 24/24]
+OK     T-7  webkit   fault   t7 (the migrated arm keeps the consumer's dashed outline on the tile) exit 1 · T-7 FAIL · 0/24 gating cells pass [unmigrated 0/24 · migrated 0/24]
+         first planted FAIL: FAIL       [migrated] preset-migrated vs its stripped twin · rest · outline-style: none → dashed; outline-width: 3px → 1px; outline-color: rgb(28, 25, 23) → rgba(0, 0, 0, 0); outline-offset: 0px → -1px
+selftest: 4 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0 · 2026-10-08 17:29:17 · load { 82.23 59.31 44.52 }

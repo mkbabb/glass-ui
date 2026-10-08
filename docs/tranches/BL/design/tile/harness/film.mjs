@@ -15,12 +15,25 @@
 //                                     the arms run in step. Each panel carries its arm's name in the page.
 // Anything over --max-kb (default 400) is written to --scratch instead of --dest, and film.json records where.
 // Playwright WebKit is not Safari: every WebKit file is labelled "Playwright WebKit" in film.json.
+//
+// H3-13 · the GLANCE PAIR (Q-2 plated against flush, Q-3 focused-selected against selected), stills, not a film:
+//   node film.mjs --pair --arms plated=<build>[@<scene>],flush=<build>[@<scene>] --dest <dir> --scratch <dir>
+//                 [--site preset] [--modes light,dark] [--pointers fine,coarse] [--engines chromium,webkit]
+//   An arm is a build.mjs output (scene `<site>-migrated` unless `@<scene>` names another) or `fixture[:<fault>]`.
+//   Per engine × mode × pointer it writes <site>-<mode>-<pointer>-<engine>-pair.jpg: one row per arm (in --arms
+//   order), two columns: SELECTED (the model on item 1, focus nowhere, pointer parked) and FOCUSED-SELECTED
+//   (focus walked from the "before" sentinel with the engine's real Tab key onto the selected item). Each frame is
+//   checked before it is shot: the selected frame has no focused item; the focused frame's active element is the
+//   checked item and matches :focus-visible. A frame that is not what its label says stops the tool (exit 2) with
+//   the reason, so the owner never judges a mislabelled still. pair.json records every frame, the load and the
+//   harness hash.
 import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
-import { browser, closeBrowsers, parseArgs, serve, acquireLock, browserCensus, load, ENGINE_LABEL, PNG } from "./lib.mjs";
+import { browser, closeBrowsers, parseArgs, serve, acquireLock, browserCensus, load, ENGINE_LABEL, PNG, openTarget, openPage, HARNESS } from "./lib.mjs";
 
 const a = parseArgs();
+if (a.pair) await pairMode(a);
 if (!a.arms || !a.dest || !a.scratch) { console.error("usage: node film.mjs --arms name=<build>,… --dest <dir> --scratch <dir> [--sites …] [--modes …] [--engines …]"); process.exit(2); }
 const ARMS = a.arms.split(",").map((kv) => { const [name, dir] = kv.split("="); return { name, dir: path.resolve(dir) }; });
 const SITES = (typeof a.sites === "string" ? a.sites : "preset,specimen").split(",");
@@ -150,3 +163,73 @@ fs.writeFileSync(path.join(a.dest, "film.json"), JSON.stringify(out, null, 1));
 await closeBrowsers();
 for (const s of Object.values(servers)) await s.close();
 lock.release();
+
+// ── H3-13 · the glance pair ───────────────────────────────────────────────────
+async function pairMode(a) {
+  if (!a.arms || !a.dest || !a.scratch) { console.error("usage: node film.mjs --pair --arms name=<build|fixture[:fault]>[@scene],… --dest <dir> --scratch <dir>"); process.exit(2); }
+  const site = typeof a.site === "string" ? a.site : "preset";
+  const modes = (typeof a.modes === "string" ? a.modes : "light,dark").split(",");
+  const pointers = (typeof a.pointers === "string" ? a.pointers : "fine,coarse").split(",");
+  const engines = (typeof a.engines === "string" ? a.engines : "chromium,webkit").split(",");
+  fs.mkdirSync(a.dest, { recursive: true }); fs.mkdirSync(a.scratch, { recursive: true });
+  const arms = [];
+  for (const kv of a.arms.split(",")) {
+    const [name, rest] = kv.split("=");
+    const [src, sceneOverride] = rest.split("@");
+    const [kind, fault] = src.split(":");
+    const target = kind === "fixture" ? await openTarget({ fixture: true, fault: fault ?? "" }) : await openTarget({ build: path.resolve(src) });
+    arms.push({ name, target, scene: sceneOverride ?? (kind === "fixture" ? site : `${site}-migrated`) });
+  }
+  const lock = await acquireLock("film --pair");
+  const out = { tool: "film.mjs --pair (H3-13)", harness: HARNESS, site, arms: arms.map((x) => ({ name: x.name, target: x.target.label, scene: x.scene })), loadStart: load(), census: browserCensus().n, files: [] };
+  console.log(`film --pair · harness ${HARNESS.rev} ${HARNESS.hash} · lock waited ${lock.waitedS}s · other browsers ${out.census} · load ${out.loadStart}`);
+  const fail = async (msg) => { console.error(`film --pair HARNESS ERROR: ${msg}`); await closeBrowsers(); lock.release(); process.exit(2); };
+  for (const engine of engines) for (const mode of modes) for (const pointer of pointers) {
+    const label = `${site}-${mode}-${pointer}-${engine}`;
+    const rows = [];
+    for (const arm of arms) {
+      const P = await openPage(arm.target, engine, arm.scene, { mode, coarse: pointer === "coarse", query: { sel: 1 } });
+      if (!P.modeOk) await fail(`${arm.name} ${label}: mode not applied (${P.modeLabel})`);
+      await P.page.mouse.move(1, 1).catch(() => {});
+      const clip = await P.page.evaluate(() => {
+        const g = document.querySelector("[data-group]").getBoundingClientRect();
+        return { x: Math.max(0, Math.floor(g.left - 10)), y: Math.max(0, Math.floor(g.top - 10)), width: Math.ceil(g.width + 20), height: Math.ceil(g.height + 20) };
+      });
+      const state = () => P.page.evaluate(() => {
+        const its = [...document.querySelectorAll("[data-item]")];
+        const on = (e) => e.getAttribute("aria-checked") === "true" || e.getAttribute("aria-pressed") === "true" || e.getAttribute("data-state") === "on" || e.hasAttribute("data-th-on");
+        const s = its.findIndex(on), f = its.findIndex((e) => e === document.activeElement || e.contains(document.activeElement));
+        return { s, f, fv: f >= 0 && its[f].matches(":focus-visible"), n: its.length };
+      });
+      await P.page.evaluate(() => document.activeElement?.blur?.());
+      await P.page.waitForTimeout(250);
+      const s0 = await state();
+      if (s0.s < 0 || s0.f >= 0) await fail(`${arm.name} ${label}: the SELECTED frame is not as labelled (checked item ${s0.s}, focused item ${s0.f})`);
+      const sel = PNG.sync.read(await P.page.screenshot({ clip, animations: "disabled", caret: "hide" }));
+      await P.page.focus('[data-sentinel="before"]');
+      await P.page.keyboard.press(P.keys.tab);
+      await P.page.waitForTimeout(400);
+      const s1 = await state();
+      if (s1.f !== s1.s || !s1.fv) await fail(`${arm.name} ${label}: the FOCUSED-SELECTED frame is not as labelled (Tab from the sentinel focused item ${s1.f}, the checked item is ${s1.s}, :focus-visible ${s1.fv})`);
+      const foc = PNG.sync.read(await P.page.screenshot({ clip, animations: "disabled", caret: "hide" }));
+      rows.push({ arm: arm.name, frames: [sel, foc], checked: s0.s });
+      await P.close();
+    }
+    const fw = Math.max(...rows.flatMap((r) => r.frames.map((f) => f.width))), fh = Math.max(...rows.flatMap((r) => r.frames.map((f) => f.height))), G = 8;
+    const sheet = new PNG({ width: 2 * (fw + G) + G, height: rows.length * (fh + G) + G });
+    sheet.data.fill(128);
+    rows.forEach((r, ri) => r.frames.forEach((f, fi) => PNG.bitblt(f, sheet, 0, 0, f.width, f.height, G + fi * (fw + G), G + ri * (fh + G))));
+    const tmpPng = path.join(a.scratch, `${label}-pair.png`), jpg = path.join(a.dest, `${label}-pair.jpg`);
+    fs.writeFileSync(tmpPng, PNG.sync.write(sheet));
+    execFileSync("sips", ["-s", "format", "jpeg", "-s", "formatOptions", "75", tmpPng, "--out", jpg], { stdio: "ignore" });
+    const kb = +(fs.statSync(jpg).size / 1024).toFixed(1);
+    out.files.push({ engine: ENGINE_LABEL[engine], mode, pointer, file: jpg, kb, rows: rows.map((r) => r.arm), columns: ["selected", "focused-selected"], frame: `${fw}×${fh}`, load: load() });
+    console.log(`${label} pair → ${jpg} (${kb} KB; rows ${rows.map((r) => r.arm).join(" | ")}; columns selected | focused-selected) · load ${load()}`);
+  }
+  out.loadEnd = load();
+  fs.writeFileSync(path.join(a.dest, "pair.json"), JSON.stringify(out, null, 1));
+  await closeBrowsers();
+  for (const arm of arms) await arm.target.close();
+  lock.release();
+  process.exit(0);
+}

@@ -11,7 +11,12 @@
 // and Space toggles it; stops and arrows reported).
 // Every key is a real key press. Chromium starts arrows with a real click; Playwright WebKit with focus + Space.
 //   node t5-one-of-n-keys.mjs --build <dir> | --fixture [--fault t5] [--engine chromium|webkit]
-import { cli, openPage, sceneList, scenesFor, engineVersion, engineOf } from "./lib.mjs";
+// H3-10 · a retired value (`retired`, the tabs scene's old `semantics="toggle"`) is refused under the Q-5 policy: the
+// page logs a console error or throws while it renders the value. Like W-E's refusal it gates only on what a consumer
+// installs (a dist flavour, or the fixture's emulation of one) and is reported on a src build.
+// H3-12 · `preset-consumer-aria`: the consumer writes role="option" and tabindex="0" on every item; the scene runs
+// the ordinary ARIA, stop and arrow cells, so an engine the consumer overrides fails them.
+import { cli, openPage, sceneList, scenesFor, engineVersion, engineOf, installed } from "./lib.mjs";
 import { axRoles, tabStops, arrowCells, tagItems, arrow, layout } from "./measure.mjs";
 
 const states = (ax, k) => ax.items.map((i) => i[k] ?? "-").join("");
@@ -52,7 +57,18 @@ async function multiCells(target, engine, sc) {
   return cells;
 }
 
+async function retiredCell(target, engine, sc) {
+  const P = await openPage(target, engine, sc.id);
+  await P.page.waitForTimeout(300);
+  const errs = P.logs.filter((l) => l.type === "error" || l.type === "pageerror");
+  await P.close();
+  const gate = installed(target.meta);
+  return { gating: sc.gating && gate, pass: errs.length > 0, scene: sc.id, arm: sc.arm,
+    line: `${sc.id} retired value ${sc.retired} (flavor ${target.meta.flavor ?? "?"}${gate ? "" : ": a src alias build, reported, not gated"}) · ${errs.length ? `refused: ${errs[0].text.slice(0, 120)}` : "not refused (no console error, no throw): a silent fall-through"}` };
+}
+
 export async function t5Cells(target, engine, sc) {
+  if (sc.retired) return [await retiredCell(target, engine, sc)];
   if (sc.descendant) return [await descendantCell(target, engine, sc)];
   if (sc.multi) return multiCells(target, engine, sc);
   const cells = [];

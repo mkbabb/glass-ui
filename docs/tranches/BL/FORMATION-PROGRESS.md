@@ -232,3 +232,7 @@ Outage log:
   - Its probe covering keyboard, modifier keys, fling and reduce reads 16/16; the P-B control reads 5/16, so C-B's keyboard and modifier defects are cured here.
   - E-1 and E-6 stay RED (census, Q-2). The phone touch-held cell's bound cannot be met as written (X-2).
   CE launched.
+- 2026-10-08 — D4 pass 3 H3 banked (tile harness, H3-1..H3-13 in place; harness hash 9fd4983bc6b9; tally flags mixed hashes). Selftest: 147 runs over 14 witnesses, 0 BROKEN in both engines; every plant fails its cell.
+  - **H3-1 root cause:** before each http page load, Playwright WebKit waits for an answer from the macOS AppSSO service. On 2026-10-07 three processes stopped getting that answer at about their 90th load. The cure restarts WebKit every 60 loads and retries a stalled page on a fresh process with the cause from the system log (the stall plant exits 2; navcap 97/97 over 29 restarts). This class likely explains earlier WebKit "page closes" (PF-1) in other loops.
+  - Harness defects cured: the T-2 clean fixture; W-E's family; rows() passing two-line pills.
+  FLOOR-V2 launched next.

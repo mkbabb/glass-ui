@@ -1,0 +1,18 @@
+2026-10-08 14:14:24 · load { 58.49 64.88 66.01 }
+selftest · harness H3 357dcb472f74 (27 files)
+OK     T-4  chromium clean exit 0 · T-4 PASS · 54/54 gating cells pass [library 30/30 · unmigrated 0/24 · migrated 24/24]
+OK     T-4  chromium fault   t4 (the specimen scroll port leaves 2 px of padding against the 4 px ring reach) exit 1 · T-4 FAIL · 42/54 gating cells pass [library 24/30 · unmigrated 0/24 · migrated 18/24]
+         first planted FAIL: FAIL       specimen light sel=none · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 0.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+OK     T-4  chromium fault   t4-auto (no ring rule: the focused tile paints the UA's outline: auto) exit 1 · T-4 FAIL · 0/54 gating cells pass [library 0/30 · unmigrated 0/24 · migrated 0/24]
+         first planted FAIL: FAIL       preset light sel=none · item 0 (unselected); outline auto 1px offset 0px — the UA's focus outline, not the ring; painted ring px top 0.00 right 0.00 bottom 0.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on eve
+OK     T-4  chromium fault   t4-forced (H3-8: in forced colours the specimen port pads 1 px, so the ring is cut on one side) exit 1 · T-4 FAIL · 50/54 gating cells pass [library 28/30 · unmigrated 0/24 · migrated 22/24]
+         first planted FAIL: FAIL       specimen forced sel=none · ring reach (H3-8) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 0.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th p
+OK     T-4  webkit   clean exit 0 · T-4 PASS · 54/54 gating cells pass [library 30/30 · unmigrated 0/24 · migrated 24/24]
+OK     T-4  webkit   fault   t4 (the specimen scroll port leaves 2 px of padding against the 4 px ring reach) exit 1 · T-4 FAIL · 42/54 gating cells pass [library 24/30 · unmigrated 0/24 · migrated 18/24]
+         first planted FAIL: FAIL       specimen light sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 0.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 
+OK     T-4  webkit   fault   t4-auto (no ring rule: the focused tile paints the UA's outline: auto) exit 1 · T-4 FAIL · 18/54 gating cells pass [library 10/30 · unmigrated 0/24 · migrated 8/24]
+         first planted FAIL: FAIL       preset light sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · item 0 (unselected); outline auto 3px offset 0px — the UA's focus outline, not the ring; painted ring px top 3.00 right 3.00 bottom 3
+OK     T-4  webkit   fault   t4-forced (H3-8: in forced colours the specimen port pads 1 px, so the ring is cut on one side) exit 1 · T-4 FAIL · 50/54 gating cells pass [library 28/30 · unmigrated 0/24 · migrated 22/24]
+         first planted FAIL: FAIL       specimen forced sel=none (Option+Tab: Playwright WebKit's Tab skips buttons) · ring reach (H3-8) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 0.00 right 2.00 bottom 2.00 left 0.00 (
+selftest: 8 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0 · 2026-10-08 14:34:27 · load { 58.92 54.70 58.30 }

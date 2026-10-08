@@ -1,0 +1,134 @@
+2026-10-08 19:45:30 · load { 58.36 50.59 52.79 }
+T-5 · one-of-N ARIA, one tab stop, all four arrows move and check (Q-4 b), no selection, reorder, descendants, N-of-M
+  target head-dist (flavor dist) · Chromium 149.0.7827.55 · harness H3 9fd4983bc6b9
+  load 58.36 / 50.59 / 52.79 at start, 61.67 / 53.13 / 53.53 at end · other headless browser processes at start: 31 (waited 1.2 s) · browser lock waited 0 s
+  PASS       preset ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----
+  PASS       preset tab stops · 1 stop(s) between the sentinels, 1 of them items [1]
+  PASS       preset grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  PASS       preset grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true
+  FAIL       preset grid ArrowDown from #0 · focus 0 → 0 · moved false · checked true
+  FAIL       preset grid ArrowUp from #2 · focus 2 → 2 · moved false · checked true
+  info-fail  preset grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 2 · moved false · checked true
+  info-fail  preset grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 0 · moved false · checked true
+  PASS       preset no selection (Q-6 a) · checked falsefalsefalsefalse · stops [0] (want nothing checked and one stop, the first item)
+  FAIL       preset keyed reorder · ArrowRight from DOM #0 · focus 0 → 3 (want 1, the new order's next) · checked true
+  FAIL       preset keyed reorder · ArrowDown from DOM #3 (no item below: the linear step) · focus 3 → 3 (want 0) · checked true
+  info-pass  [unmigrated] preset-verbatim ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----
+  info-pass  [unmigrated] preset-verbatim tab stops · 1 stop(s) between the sentinels, 1 of them items [1]
+  info-pass  [unmigrated] preset-verbatim grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  info-pass  [unmigrated] preset-verbatim grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true
+  info-fail  [unmigrated] preset-verbatim grid ArrowDown from #0 · focus 0 → 0 · moved false · checked true
+  info-fail  [unmigrated] preset-verbatim grid ArrowUp from #2 · focus 2 → 2 · moved false · checked true
+  info-fail  [unmigrated] preset-verbatim grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 2 · moved false · checked true
+  info-fail  [unmigrated] preset-verbatim grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 0 · moved false · checked true
+  PASS       specimen ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalsefalsefalsefalsefalse · pressed -------- · selected --------
+  FAIL       specimen tab stops · 2 stop(s) between the sentinels, 1 of them items [other:div.fading-scroll → 1]
+  PASS       specimen grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  PASS       specimen grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true
+  FAIL       specimen grid ArrowDown from #0 · focus 0 → 0 · moved false · checked true
+  FAIL       specimen grid ArrowUp from #2 · focus 2 → 2 · moved false · checked true
+  info-fail  specimen grid edge ArrowDown from #6 (no item that way; reported) · focus 6 → 6 · moved false · checked false (the click did not focus; focus placed by script)
+  info-fail  specimen grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 0 · moved false · checked false (the click did not focus; focus placed by script)
+  info-pass  [unmigrated] specimen-verbatim ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalsefalsefalsefalsefalse · pressed -------- · selected --------
+  info-fail  [unmigrated] specimen-verbatim tab stops · 2 stop(s) between the sentinels, 1 of them items [other:div.fading-scroll → 1]
+  info-pass  [unmigrated] specimen-verbatim grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  info-pass  [unmigrated] specimen-verbatim grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true
+  info-fail  [unmigrated] specimen-verbatim grid ArrowDown from #0 · focus 0 → 0 · moved false · checked true
+  info-fail  [unmigrated] specimen-verbatim grid ArrowUp from #2 · focus 2 → 2 · moved false · checked true
+  info-fail  [unmigrated] specimen-verbatim grid edge ArrowDown from #6 (no item that way; reported) · focus 6 → 6 · moved false · checked false (the click did not focus; focus placed by script)
+  info-fail  [unmigrated] specimen-verbatim grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 0 · moved false · checked false (the click did not focus; focus placed by script)
+  FAIL       strip ARIA (CDP AX tree) · group group · items button · checked ------ · pressed falsetruefalsefalsefalsefalse · selected ------
+  FAIL       strip tab stops · 7 stop(s) between the sentinels, 6 of them items [other:div.fading-scroll → 0 → 1 → 2 → 3 → 4 → 5]
+  FAIL       strip row ArrowRight from #0 · focus 0 → 0 · moved false · checked true
+  FAIL       strip row ArrowLeft from #1 · focus 1 → 1 · moved false · checked true
+  FAIL       strip row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true
+  FAIL       strip row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 5 · moved false · checked true
+  info-fail  [unmigrated] strip-verbatim ARIA (CDP AX tree) · group group · items button · checked ------ · pressed falsetruefalsefalsefalsefalse · selected ------
+  info-fail  [unmigrated] strip-verbatim tab stops · 7 stop(s) between the sentinels, 6 of them items [other:div.fading-scroll → 0 → 1 → 2 → 3 → 4 → 5]
+  info-fail  [unmigrated] strip-verbatim row ArrowRight from #0 · focus 0 → 0 · moved false · checked true
+  info-fail  [unmigrated] strip-verbatim row ArrowLeft from #1 · focus 1 → 1 · moved false · checked true
+  info-fail  [unmigrated] strip-verbatim row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true
+  info-fail  [unmigrated] strip-verbatim row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 5 · moved false · checked true
+  FAIL       f1 ARIA (CDP AX tree) · group generic · items button · checked ------ · pressed ------ · selected ------
+  FAIL       f1 tab stops · 6 stop(s) between the sentinels, 6 of them items [0 → 1 → 2 → 3 → 4 → 5]
+  FAIL       f1 row ArrowRight from #0 · focus 0 → 0 · moved false · checked true
+  FAIL       f1 row ArrowLeft from #1 · focus 1 → 1 · moved false · checked true
+  FAIL       f1 row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true
+  FAIL       f1 row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 5 · moved false · checked false (the click did not focus; focus placed by script)
+  info-fail  [unmigrated] f1-verbatim ARIA (CDP AX tree) · group generic · items button · checked ------ · pressed ------ · selected ------
+  info-fail  [unmigrated] f1-verbatim tab stops · 6 stop(s) between the sentinels, 6 of them items [0 → 1 → 2 → 3 → 4 → 5]
+  info-fail  [unmigrated] f1-verbatim row ArrowRight from #0 · focus 0 → 0 · moved false · checked true
+  info-fail  [unmigrated] f1-verbatim row ArrowLeft from #1 · focus 1 → 1 · moved false · checked false
+  info-fail  [unmigrated] f1-verbatim row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true
+  info-fail  [unmigrated] f1-verbatim row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 5 · moved false · checked false (the click did not focus; focus placed by script)
+  PASS       v2 N-of-M ARIA (CDP AX tree) · group none · items button · pressed falsetruefalsefalse · checked ----
+  PASS       v2 N-of-M Space toggles #0 · false → true → false
+  info-pass  v2 N-of-M tab stops (reported) · 4 [0 → 1 → 2 → 3]
+  info-pass  [unmigrated] v2-verbatim N-of-M ARIA (CDP AX tree) · group none · items button · pressed falsetruefalsefalse · checked ----
+  info-pass  [unmigrated] v2-verbatim N-of-M Space toggles #0 · false → true → false
+  info-pass  [unmigrated] v2-verbatim N-of-M tab stops (reported) · 4 [0 → 1 → 2 → 3]
+  PASS       c1 ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalsefalse · pressed ----- · selected -----
+  FAIL       c1 tab stops · 5 stop(s) between the sentinels, 5 of them items [0 → 1 → 2 → 3 → 4]
+  FAIL       c1 column ArrowRight from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true
+  FAIL       c1 column ArrowLeft from #4 (linear step, Q-4 b) · focus 4 → 4 · moved false · checked true
+  FAIL       c1 column ArrowDown from #0 · focus 0 → 0 · moved false · checked true
+  FAIL       c1 column ArrowUp from #1 · focus 1 → 1 · moved false · checked true
+  info-pass  [unmigrated] c1-verbatim ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalsefalse · pressed ----- · selected -----
+  info-fail  [unmigrated] c1-verbatim tab stops · 5 stop(s) between the sentinels, 5 of them items [0 → 1 → 2 → 3 → 4]
+  info-fail  [unmigrated] c1-verbatim column ArrowRight from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true
+  info-fail  [unmigrated] c1-verbatim column ArrowLeft from #4 (linear step, Q-4 b) · focus 4 → 4 · moved false · checked true
+  info-fail  [unmigrated] c1-verbatim column ArrowDown from #0 · focus 0 → 0 · moved false · checked true
+  info-fail  [unmigrated] c1-verbatim column ArrowUp from #1 · focus 1 → 1 · moved false · checked true
+  PASS       preset-contents ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----
+  PASS       preset-contents tab stops · 1 stop(s) between the sentinels, 1 of them items [1]
+  PASS       preset-contents grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  PASS       preset-contents grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true
+  FAIL       preset-contents grid ArrowDown from #0 · focus 0 → 0 · moved false · checked true
+  FAIL       preset-contents grid ArrowUp from #2 · focus 2 → 2 · moved false · checked true
+  info-fail  preset-contents grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 2 · moved false · checked true
+  info-fail  preset-contents grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 0 · moved false · checked true
+  FAIL       preset-input interactive descendant (flavor dist) · ArrowRight typed in the <input> · focus inside:0 → 2 · selection "snappy" → "bouncy"
+  FAIL       preset-consumer-aria ARIA (CDP AX tree) · group radiogroup · items option · checked falsetruefalsefalse · pressed ---- · selected ----
+  FAIL       preset-consumer-aria tab stops · 4 stop(s) between the sentinels, 4 of them items [0 → 1 → 2 → 3]
+  PASS       preset-consumer-aria grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  PASS       preset-consumer-aria grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true
+  FAIL       preset-consumer-aria grid ArrowDown from #0 · focus 0 → 0 · moved false · checked true
+  FAIL       preset-consumer-aria grid ArrowUp from #2 · focus 2 → 2 · moved false · checked true
+  info-fail  preset-consumer-aria grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 2 · moved false · checked true
+  info-fail  preset-consumer-aria grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 0 · moved false · checked true
+  PASS       single ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----
+  PASS       single tab stops · 1 stop(s) between the sentinels, 1 of them items [1]
+  PASS       single row ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  PASS       single row ArrowLeft from #1 · focus 1 → 0 · moved true · checked true
+  FAIL       single row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true
+  FAIL       single row ArrowUp from #3 (linear step, Q-4 b) · focus 3 → 3 · moved false · checked true
+  PASS       vertical ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----
+  PASS       vertical tab stops · 1 stop(s) between the sentinels, 1 of them items [1]
+  FAIL       vertical column ArrowRight from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true
+  FAIL       vertical column ArrowLeft from #3 (linear step, Q-4 b) · focus 3 → 3 · moved false · checked true
+  PASS       vertical column ArrowDown from #0 · focus 0 → 1 · moved true · checked true
+  PASS       vertical column ArrowUp from #1 · focus 1 → 0 · moved true · checked true
+  FAIL       tabs ARIA (CDP AX tree) · group group · items button · checked ---- · pressed falsetruefalsefalse · selected ----
+  PASS       tabs tab stops · 1 stop(s) between the sentinels, 1 of them items [1]
+  PASS       tabs row ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  PASS       tabs row ArrowLeft from #1 · focus 1 → 0 · moved true · checked true (the click did not focus; focus placed by script)
+  FAIL       tabs row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true (the click did not focus; focus placed by script)
+  FAIL       tabs row ArrowUp from #3 (linear step, Q-4 b) · focus 3 → 3 · moved false · checked true
+  FAIL       tabs-retired retired value semantics="toggle" (flavor dist) · not refused (no console error, no throw): a silent fall-through
+  FAIL       card ARIA (CDP AX tree) · group listbox · items option · checked ---- · pressed ---- · selected falsetruefalsefalse
+  FAIL       card tab stops · 4 stop(s) between the sentinels, 4 of them items [0 → 1 → 2 → 3]
+  FAIL       card grid ArrowRight from #0 · focus 0 → 0 · moved false · checked true
+  FAIL       card grid ArrowLeft from #1 · focus 1 → 1 · moved false · checked true
+  FAIL       card grid ArrowDown from #0 · focus 0 → 0 · moved false · checked true
+  FAIL       card grid ArrowUp from #2 · focus 2 → 2 · moved false · checked true
+  info-fail  card grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 2 · moved false · checked true
+  info-fail  card grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 0 · moved false · checked true
+  FAIL       chipcell ARIA (CDP AX tree) · group group · items button · checked ---- · pressed falsetruefalsefalse · selected ----
+  FAIL       chipcell tab stops · 4 stop(s) between the sentinels, 4 of them items [0 → 1 → 2 → 3]
+  FAIL       chipcell row ArrowRight from #0 · focus 0 → 0 · moved false · checked true
+  FAIL       chipcell row ArrowLeft from #1 · focus 1 → 1 · moved false · checked true
+  FAIL       chipcell row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true
+  FAIL       chipcell row ArrowUp from #3 (linear step, Q-4 b) · focus 3 → 3 · moved false · checked true
+T-5 FAIL · 28/79 gating cells pass [library 28/79 · unmigrated 11/37]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p3/h3/out/bl2/runs/head-dist/T-5-chromium.json
+exit 1 · 2026-10-08 19:46:57 · load { 61.67 53.13 53.53 }

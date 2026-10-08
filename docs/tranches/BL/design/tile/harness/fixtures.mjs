@@ -50,6 +50,27 @@ export const FAULTS = {
   "t6-still": { why: "hover keeps its light channel but does not scale, and a press does not squish (the per-frame hover-scale and press reads must fail on smooth frames, not be re-read away)", witnesses: ["T-6"], cell: /hover scale|press ·/ },
   "t6-glide": { why: "no pop; the selection body glides to the committed tile on a linear path and lands without overshoot (travel with no weight)", witnesses: ["T-6"], cell: /commit bar/ },
   t7: { why: "the migrated arm keeps the consumer's dashed outline on the tile", witnesses: ["T-7"], cell: /migrated/ },
+  // H3 (pass 3)
+  "t2-stack": { why: "H3-3: no one-row law: a <br>, a block child or an appended row stacks two rows inside a pill, and nothing names it", witnesses: ["T-2"], cell: /one-row law .*STACKED/ },
+  "t2-cut": { why: "H3-3: each pill label is a 1lh block that clips (max-block-size 20px, overflow hidden): a second row is cut, unnamed", witnesses: ["T-2"], cell: /one-row law .*CUT/ },
+  "t2-named": { why: "CONTROL, must PASS: no one-row law, but an observer names every stacked pill (a console error), late content included", witnesses: ["T-2"], expect: "pass" },
+  "t2-mountonly": { why: "H3-6: the stacked pill is named only at mount; a row added after mount is never named", witnesses: ["T-2"], cell: /one-row law .*STACKED/ },
+  "t3-migstate": { why: "H3-11: the migrated arm carries selection on the tile's own border (the erasable carrier); the library arm keeps the perimeter", witnesses: ["T-3"], cell: /preset-(invalid|sibling)-migrated/ },
+  "t3-cv": { why: "H3-7: the perimeter straddles the border box, so paint containment (content-visibility: auto) cuts it", witnesses: ["T-3"], cell: /paint containment/ },
+  "t4-forced": { why: "H3-8: in forced colours the specimen port pads 1 px, so the ring is cut on one side", witnesses: ["T-4"], cell: /forced/ },
+  "t5-consumer": { why: "H3-12: a consumer role=option and tabindex=0 on every item override the engine: no radio, N tab stops", witnesses: ["T-5"], cell: /preset-consumer-aria/ },
+  "t5-retired": { why: "H3-10: semantics=\"toggle\" falls through to the default with no signal", witnesses: ["T-5"], cell: /retired value/ },
+  "t6-faint": { why: "H3-5: hover lifts the plate by a 1 % ink step: under the perceptual bar", witnesses: ["T-6"], cell: /hover light/ },
+  "t6-rung": { why: "CONTROL, must PASS: hover lifts the plate by a 5 % ink step in oklab (the floor's rung, which sat on H2's 10-level threshold)", witnesses: ["T-6"], expect: "pass" },
+  "t6-prt": { why: "H3-5: under reduced transparency the hover mixes by --glass-level, which PRT pins to 0: hover moves nothing", witnesses: ["T-6"], cell: /PRT hover light/ },
+  "t6-calm": { why: "H3-9: a calm observer ancestor ([data-reorder]) suppresses the commit pop on a programmatic commit", witnesses: ["T-6"], cell: /calm observer/ },
+  stall: { why: "H3-1 plant: the server never answers preset-contents' page (a navigation that never loads, the AppSSO stall's symptom): the witness stops loud (exit 2), names the scene, re-opens on a new browser process, and reads the unified log (AppSSO answered: not the AppSSO stall)", witnesses: ["T-3"], expect: "error", cell: /preset-contents \(light\) stalled twice, the second time on a new browser process, REPRODUCED.*first stall: (AppSSO answered|no AppSSO in this engine)/ },
+  navcap: { why: "H3-1 CONTROL, must PASS: TILE_HARNESS_NAV_CAP=5 retires the Playwright WebKit browser every 5 navigations and every cell still reads", witnesses: ["T-3"], expect: "pass", env: { TILE_HARNESS_NAV_CAP: "5" }, note: { webkit: /retired and relaunched \d+×/ } },
+  "canon-a": { why: "H3-4 plant A: the tile corner re-spelled in a second sheet (`:is(<tile>)`, 12 px): two rules decide the tile", witnesses: ["CANON"], cell: /canon tile corner/ },
+  "canon-s": { why: "H3-4 plant S: a size arm on the tile (`[data-size=\"sm\"]`) on --radius-panel, which a one-md-item fixture never reaches", witnesses: ["CANON"], cell: /canon tile corner/ },
+  "canon-h": { why: "H3-4 plant H: a structural re-spelling (`.toggle-group__item:has(> * + *)`, 12 px), which a childless fixture never reaches", witnesses: ["CANON"], cell: /canon pill corner/ },
+  "t8-migrated": { why: "H3-2: a WebKit-only rule turns the MIGRATED tiles back into stadiums (the library arm and Chromium stay green)", witnesses: ["T-8"], cell: /Playwright WebKit T-1 .*-migrated/ },
+
   t8: { why: "a WebKit-only rule turns the tiles back into stadiums (Chromium stays green)", witnesses: ["T-8"], cell: /Playwright WebKit T-1/ },
   wa: { why: "the control-role holders keep the stadium, so a wrapped holder balloons", witnesses: ["W-A"], cell: /wrap/ },
   wb: { why: "no choice-card slot and no ChoiceGroup/ChoiceCard export", witnesses: ["W-B"], cell: /exports|slots/ },
@@ -71,6 +92,7 @@ const STATUSES = [["Any status", ""], ["Messaged", "12"], ["Not messaged", "30"]
 
 export function fixturePage(params, fault = "", family = "", flavor = "dist") {
   const scene = params.get("scene") ?? "__index";
+  if (fault === "stall" && scene === "preset-contents") return null; // H3-1 plant: lib.serve holds a null page
   const armMatch = scene.match(/-(verbatim|migrated)(-stripped)?$/);
   const arm = armMatch ? (armMatch[2] ? "stripped" : armMatch[1]) : "library";
   const site = scene.replace(/-(verbatim|migrated)(-stripped)?$/, "");
@@ -80,9 +102,9 @@ export function fixturePage(params, fault = "", family = "", flavor = "dist") {
   const slot = fault === "wb" ? "" : 'data-slot="choice-card"';
   const cc = arm === "verbatim" || arm === "migrated" ? " c-cell" : ""; // the consumer's paint class; twins drop it
 
-  const tile = (name, meta, { extra = "", input = false, sibling = false, cls = "" } = {}) => oneLine
+  const tile = (name, meta, { extra = "", input = false, sibling = false, cls = "", consumer = false } = {}) => oneLine
     ? `<button type="button" class="it${cc}" role="radio" data-item ${extra}>${fault === "we-lh1" && name === "smooth" ? `<span data-ink class="t-lh1">a<br>b</span>` : `<span data-ink data-line-slot>${name}</span>`}</button>`
-    : `<button type="button" class="it tile${cls}${sibling ? " is-bound" : ""}${cc}" role="radio" data-item ${slot} ${extra}><span data-ink class="t-name">${name}</span><span data-ink data-line-slot class="t-meta">${meta}</span>${input ? '<input data-ink data-descendant class="t-input" aria-label="note" value="note">' : ""}</button>`;
+    : `<button type="button" class="it tile${cls}${sibling ? " is-bound" : ""}${cc}" ${consumer ? 'role="option" tabindex="0"' : 'role="radio"'} data-item ${slot} ${extra}><span data-ink class="t-name">${name}</span><span data-ink data-line-slot class="t-meta">${meta}</span>${input ? '<input data-ink data-descendant class="t-input" aria-label="note" value="note">' : ""}</button>`;
   const pill = (v, extra = "", inner = null) => `<button type="button" class="it" role="radio" data-item ${extra}>${inner ?? `<span data-ink data-line-slot>${v}</span>`}</button>`;
   const group = (label, cls, body, attrs = "") => `<div role="radiogroup" aria-label="${label}" data-group class="${cls}" ${attrs}>${body}</div>`;
   const spark = `<svg class="spark" viewBox="0 0 1 1" preserveAspectRatio="none"><path d="M0 1 C .4 1 .6 0 1 0"/></svg>`;
@@ -98,6 +120,7 @@ export function fixturePage(params, fault = "", family = "", flavor = "dist") {
     case "preset-tone-unresolvable": body = group("Spring presets", "g-grid2", presetTiles(), 'style="--selection-tone: var(--th-undefined-tone)"'); break;
     case "preset-contents": body = group("Spring presets", "g-grid2", `<div style="display: contents">${presetTiles()}</div>`); break;
     case "preset-input": body = group("Spring presets", "g-grid2", presetTiles({ input: true })); break;
+    case "preset-consumer-aria": body = group("Spring presets", "g-grid2", presetTiles({ consumer: true })); break;
     case "specimen": body = `<div class="port" ${fault === "t5-stop" ? 'tabindex="0"' : ""}>${group("Easing curve specimens", "g-auto", CURVES.map((c) => staged(c, c, "")).join(""))}</div>`; break;
     case "strip": body = group("Easing curve specimens", "g-row", STRIP.map((s) => staged(s, s.split("-").slice(1).join("-"), "t-glyph")).join("")); break;
     case "f1": body = `<div class="port-x">${group("Harmonic level", "g-row g-nowrap", LEVELS.map((n) => staged(`n${n}`, `n=${n}`, "t-thumb")).join(""))}</div>`; break;
@@ -105,7 +128,7 @@ export function fixturePage(params, fault = "", family = "", flavor = "dist") {
     case "c1": body = group("Status", "g-col-wide", STATUSES.map(([l, n]) => `<button type="button" class="it row${cc}" role="radio" data-item><svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-ink data-line-slot class="t-grow">${l}</span>${n ? `<span data-ink class="t-meta">${n}</span>` : ""}</button>`).join("")); break;
     case "single": body = group("Filter curves by family", "g-row", ["All", "Power", "Back", "Elastic"].map((v, i) => pill(v, fault === "t2-skip" && i === 0 ? 'style="max-inline-size: 52px; white-space: normal"' : "", fault === "t2-skip" && i === 0 ? `<span data-ink data-line-slot>All power</span>` : null)).join("")); break;
     case "vertical": body = group("Channel", "g-col", ["L", "C", "H", "A"].map((v) => pill(v)).join("")); break;
-    case "tabs": body = group("Family", "g-row", ["All", "Power", "Back", "Elastic"].map((v) => pill(v)).join("")); break;
+    case "tabs": case "tabs-retired": body = group("Family", "g-row", ["All", "Power", "Back", "Elastic"].map((v) => pill(v)).join("")); break;
     case "pill-icon": body = group("View", "g-row", ["Grid", "List", "Board"].map((v) => pill(v, "", `<svg data-ink class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M12 4v16"/></svg><span data-ink data-line-slot>${v}</span>`)).join("")); break;
     case "pill-badge": body = group("Inbox", "g-row", ["Inbox", "Sent", "Drafts"].map((v) => pill(v, "", `<span data-ink data-line-slot>${v}</span><span data-ink class="badge">${v.length}</span>`)).join("")); break;
     case "card": body = fault === "wc"
@@ -124,6 +147,7 @@ export function fixturePage(params, fault = "", family = "", flavor = "dist") {
   --ui-scale: 1; --control-rung: calc(40px * var(--ui-scale)); --radius-control: calc(var(--control-rung) / 2); --radius-field: 16px; --radius-pill: 9999px; --type-leading-body: 1.5;
   ${fault === "t3-unres" ? "--selection-tone: var(--edge-on);" : ""} }
 @media (pointer: coarse) { :root { --ui-scale: 1.5; } }
+@media (prefers-reduced-transparency: reduce) { :root { --glass-level: 0; } }
 :root.dark { color-scheme: dark; --bg: #141210; --fg: #f5f5f4; --seam: #3a3633; --edge-on: #f5f5f4; --fill-on: #26221f; --hover: #221f1c; --ring: #93c5fd; }
 html, body { margin: 0; } body { background: var(--bg); color: var(--fg); font: 14px/20px system-ui, sans-serif; }
 main { padding: 24px; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
@@ -136,6 +160,7 @@ section { width: 460px; }
 .g-col-wide { display: flex; flex-direction: column; gap: 6px; }
 .port { overflow: auto; max-block-size: 260px; padding: ${fault === "t4" ? 2 : 6}px; }
 .port-x { overflow-x: auto; overflow-y: hidden; padding: 6px; }
+${fault === "t4-forced" ? "@media (forced-colors: active) { .port { padding: 1px; } }" : ""}
 .it { position: relative; appearance: none; font: inherit; color: inherit; box-sizing: border-box; min-block-size: var(--control-rung); padding: 8px 14px; margin: 0;
   border: 2px solid var(--seam); background: var(--bg); border-radius: var(--radius-pill); display: inline-flex; align-items: center; justify-content: center; gap: 4px; line-height: 20px; cursor: pointer;
   transition: scale 120ms cubic-bezier(.3, 1.4, .5, 1), background-color 260ms cubic-bezier(.3, 1.3, .5, 1), border-color 260ms ease;
@@ -144,8 +169,12 @@ section { width: 460px; }
 :root.dark .it { --tone-edge: ${fault === "t3-alpha" ? "var(--tone)" : "oklch(from var(--tone) max(l, 0.8) c h / 1)"}; }
 .g-col .it { width: 100%; }
 .it:not(.tile):not(.holder):not(.row) { white-space: nowrap; }
+/* H3-3 · the pill's one-row law: a break, a block child or an appended row inside a pill lays out in its one row */
+${oneLine /* not on the W-E family: its guard refuses a second line */ || fault === "t2-stack" || fault === "t2-named" || fault === "t2-mountonly" ? "" : fault === "t2-cut"
+  ? ".it:not(.tile):not(.holder):not(.row) [data-ink] { display: block; max-block-size: 20px; overflow: hidden; }"
+  : ".it:not(.tile):not(.holder):not(.row) [data-ink] br { display: none; } .it:not(.tile):not(.holder):not(.row) [data-ink], .it:not(.tile):not(.holder):not(.row) [data-ink] * { display: inline; }"}
 ${fault === "t2" ? ".it:not(.tile):not(.holder):not(.row) { border-radius: 12px; }" : ""}
-@media (hover: hover) { .it:hover { ${fault === "t6-still" ? "" : "scale: 1.015; "}background: var(--hover); } }
+@media (hover: hover) { .it:hover { ${fault === "t6-still" ? "" : "scale: 1.015; "}background: ${fault === "t6-faint" ? "color-mix(in srgb, var(--fg) 1%, var(--bg))" : fault === "t6-rung" ? "color-mix(in oklab, var(--fg) 5%, var(--bg))" : fault === "t6-prt" ? "color-mix(in srgb, var(--hover) calc(var(--glass-level, 1) * 100%), var(--bg))" : "var(--hover)"}; } }
 ${fault === "t6-still" ? "" : ".it:active { scale: 0.97; }"}
 .it[aria-checked="true"], .it[aria-pressed="true"] { background: ${fault === "t3" ? "#f7f7f6" : "var(--fill-on)"}; }
 :root.dark .it[aria-checked="true"], :root.dark .it[aria-pressed="true"] { ${fault === "t3" ? "background: #181614;" : ""} }
@@ -153,11 +182,14 @@ ${fault === "t6-still" ? "" : ".it:active { scale: 0.97; }"}
 .it::before { content: ""; position: absolute; inset: 0; border: 2px solid ${fault === "t3-unres" ? "var(--tone-edge, transparent)" : "var(--tone-edge)"}; border-radius: inherit; pointer-events: none; opacity: 0;
   ${fault === "t6-fade" ? "transition: opacity 120ms linear;" : ""} }
 ${fault === "t3" || fault === "t3-border" ? "" : '.it[aria-checked="true"]::before, .it[aria-pressed="true"]::before { opacity: 1; }'}
+${fault === "t3-migstate" ? ':where([data-arm="migrated"]) .it[aria-checked="true"]::before { opacity: 0; } :where([data-arm="migrated"]) .it[aria-checked="true"] { border-color: var(--edge-on); }' : ""}
+${fault === "t3-cv" ? ".it::before { inset: -2px; }" : ""}
 ${fault === "t3-border" ? '.it[aria-checked="true"], .it[aria-pressed="true"] { border-color: var(--edge-on); }' : ""}
 ${fault === "t4-auto" ? "" : ".it:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }"}
 .tile { border-radius: ${fault === "t1" ? "9999px" : fault === "t1-self" ? "var(--radius-control)" : fault === "t1-scale" ? "calc(16px * var(--ui-scale))" : "var(--radius-field)"}; flex-direction: column; align-items: flex-start; justify-content: flex-start; padding: 8px 12px; line-height: calc(var(--type-leading-body) * 1em); text-align: start; }
 ${fault === "t1-coarse" ? "@media (pointer: coarse) { .tile { border-radius: calc(var(--control-rung) / 2); } }" : ""}
 .webkit-only .tile { ${fault === "t8" ? "border-radius: 9999px;" : ""} }
+${fault === "t8-migrated" ? '.webkit-only [data-arm="migrated"] .tile { border-radius: 9999px; }' : ""}
 .cell .tile { flex-direction: ${fault === "wd" ? "row" : "column"}; }
 .holder { border-radius: ${fault === "wa" || late ? "9999px" : "var(--radius-control)"}; max-inline-size: 110px; white-space: normal; }
 ${late ? '.holder[data-extent="block"] { border-radius: var(--radius-control); }' : ""}
@@ -187,6 +219,7 @@ ${fault === "t7" ? '[data-arm="migrated"] .c-cell { outline: 1px dashed transpar
 /* the commit: a spring pop on the committed tile (overshoot, bounce, settle) */
 @keyframes pop { 0% { scale: 1; } 45% { scale: 1.035; } 70% { scale: 0.99; } 85% { scale: 1.003; } 100% { scale: 1; } }
 .it.pop { animation: pop 420ms linear; }
+${fault === "t6-calm" ? "[data-reorder] .it.pop { animation: none; }" : ""}
 ${fault === "t6-rest" ? '.it[aria-checked="true"], .it[aria-pressed="true"] { scale: 1.05; } @keyframes pop-rest { 0% { scale: 1; } 45% { scale: 1.085; } 70% { scale: 1.04; } 85% { scale: 1.053; } 100% { scale: 1.05; } } .it.pop { animation-name: pop-rest; }' : ""}
 .sentinel { font: 12px system-ui; padding: 2px 6px; }
 /* the t6-body / t6-glide plants: a selection body, out of flow, under the pointer's reach */
@@ -240,7 +273,7 @@ function select(i, user = true) {
 }
 function toggle(i) { const el = list()[i]; const v = el.getAttribute("aria-pressed") !== "true"; el.setAttribute("aria-pressed", String(v)); if (v) pop(el); }
 function roving() {
-  if (MULTI || (FAULT === "wc" && SITE === "card")) return;
+  if (MULTI || (FAULT === "wc" && SITE === "card") || (FAULT === "t5-consumer" && SITE === "preset-consumer-aria")) return;
   const L = live(), s = L.findIndex(on);
   L.forEach((el, k) => { el.tabIndex = (s < 0 ? k === 0 : k === s) ? 0 : -1; });
 }
@@ -281,6 +314,15 @@ if (g) {
   });
   g.addEventListener("focusin", (e) => { const el = e.target.closest("[data-item]"); if (FAULT === "t6-tabpop" && el && on(el)) pop(el); });
 }
+// H3-12: the engine owns role and tabindex; a consumer's role=option / tabindex=0 is overwritten (the t5-consumer plant keeps them)
+if (SITE === "preset-consumer-aria" && FAULT !== "t5-consumer") live().forEach((el) => el.setAttribute("role", "radio"));
+// H3-10: a retired value is refused, named (the t5-retired plant falls through silently)
+if (SITE === "tabs-retired" && FAULT !== "t5-retired") console.error('[fixture] SegmentedTabs: semantics="toggle" is retired; use "radio"');
+// H3-3 / H3-6: the t2-named control names every stacked pill whenever it stacks; t2-mountonly names it at mount only
+const PILL = (el) => !el.classList.contains("tile") && !el.classList.contains("holder") && !el.classList.contains("row");
+const stacked = (el) => el.getBoundingClientRect().height > parseFloat(getComputedStyle(el).minBlockSize) + 0.5;
+if (FAULT === "t2-named") { const ro = new ResizeObserver((es) => { for (const e of es) if (stacked(e.target)) console.error("[fixture] a pill holds more than one row"); }); live().filter(PILL).forEach((el) => ro.observe(el)); }
+if (FAULT === "t2-mountonly") requestAnimationFrame(() => { for (const el of live().filter(PILL)) if (stacked(el)) console.error("[fixture] a pill holds more than one row"); });
 const selQ = q.get("sel");
 if (MULTI) roving();
 else select(selQ === "none" ? (FAULT === "t5-deselect" ? 0 : -1) : Math.min(selQ ? Number(selQ) : 1, live().length - 1), false);

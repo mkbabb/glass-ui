@@ -1,0 +1,4 @@
+173c173
+< ${fault === "t2-stack" || fault === "t2-named" || fault === "t2-mountonly" ? "" : fault === "t2-cut"
+---
+> ${oneLine /* not on the W-E family: its guard refuses a second line */ || fault === "t2-stack" || fault === "t2-named" || fault === "t2-mountonly" ? "" : fault === "t2-cut"

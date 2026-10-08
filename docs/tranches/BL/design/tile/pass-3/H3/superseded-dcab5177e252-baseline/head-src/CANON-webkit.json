@@ -1,0 +1,59 @@
+{
+ "id": "CANON",
+ "title": "the canon unit's law on widened fixtures (size, orientation, children, state), parsed by the engine",
+ "engine": "webkit",
+ "engineLabel": "Playwright WebKit 26.5",
+ "target": "head-src",
+ "dev": false,
+ "cells": [
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "canon",
+   "arm": "library",
+   "line": "canon tile corner · 48 twins, 137 corner rules · tile spelling «.toggle-group[data-shape=\"cell\"] .toggle-group__item» · exactly one rule reaches a tile and not its pill twin, on var(--radius-field) · 0 rule(s): no rule declares the tile"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "canon",
+   "arm": "library",
+   "line": "canon pill corner · 48 twins, 137 corner rules · tile spelling «.toggle-group[data-shape=\"cell\"] .toggle-group__item» · every group-scoped corner on a pill is var(--radius-pill) or inherit · 1 rule(s) reach a pill"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "canon",
+   "arm": "library",
+   "line": "canon unmatched · 48 twins, 137 corner rules · tile spelling «.toggle-group[data-shape=\"cell\"] .toggle-group__item» · every corner selector is matched by the engine · 0 unmatched"
+  }
+ ],
+ "flavor": "src",
+ "harness": {
+  "hash": "dcab5177e252",
+  "files": 27,
+  "rev": "H3"
+ },
+ "run": {
+  "loadStart": "20.47 / 30.50 / 41.18",
+  "loadEnd": "20.47 / 30.50 / 41.18",
+  "census": {
+   "n": 25,
+   "sample": [
+    "1428 /Applications/Visual Studio Code.app/Contents/Resources/app/node_modules.asar.un",
+    "91664 bash /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh --inspecto",
+    "91670 /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/Playwright.app/Contents/M"
+   ],
+   "waitedS": 0.4
+  },
+  "lockWaitS": 0
+ },
+ "pass": false,
+ "tally": "2/3 gating cells pass [library 2/3]",
+ "arms": {
+  "library": {
+   "pass": 2,
+   "of": 3
+  }
+ }
+}

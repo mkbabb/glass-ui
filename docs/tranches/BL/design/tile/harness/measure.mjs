@@ -2,7 +2,7 @@
 // returns plain numbers; the witness files turn them into PASS/FAIL cells. Every read is painted pixels,
 // computed style and geometry, the accessibility tree (CDP in Chromium; Playwright's aria snapshot plus DOM
 // states in Playwright WebKit), or a real key press or pointer event.
-import { shot, clipAround, meanRect, compare, contrast, hex, savePng, backendIds, axOf, f2 } from "./lib.mjs";
+import { step, shot, clipAround, meanRect, meanDeltaE, compare, contrast, hex, savePng, backendIds, axOf, f2 } from "./lib.mjs";
 
 const TOL = 0.5; // px, geometry tolerance
 const wait = (P, ms) => P.page.waitForTimeout(ms);
@@ -65,8 +65,8 @@ export const stepLine = (st) => st.steps.map((s, k) => {
 // ── the selected state (T-3, T-8) ─────────────────────────────────────────────
 /** Paint of the selected item vs an unselected sibling of the same size, with [data-ink] hidden and scale pinned. */
 export async function selectedSeparation(P, { save } = {}) {
-  await park(P);
-  const n = await tagItems(P);
+  await step("T-3 park", () => park(P));
+  const n = await step("T-3 tag", () => tagItems(P));
   const info = await P.page.evaluate(() => {
     const th = window.__th;
     const its = th.items();
@@ -84,7 +84,7 @@ export async function selectedSeparation(P, { save } = {}) {
   const clip = (r) => ({ x: Math.round(r.x), y: Math.round(r.y), width: Math.floor(r.w), height: Math.floor(r.h) });
   const cs = clip(rects[0]), cu = clip(rects[1]);
   cs.width = cu.width = Math.min(cs.width, cu.width); cs.height = cu.height = Math.min(cs.height, cu.height);
-  const A = await shot(P.page, cs), B = await shot(P.page, cu);
+  const A = await step("T-3 shot selected", () => shot(P.page, cs)), B = await step("T-3 shot unselected", () => shot(P.page, cu));
   await P.page.evaluate(({ s, u }) => { const th = window.__th; th.hideInk(false); for (const i of [s, u]) th.pin(document.querySelector(`[data-th-idx="${i}"]`), false); }, info);
   if (save) { savePng(A, `${save}-sel.png`); savePng(B, `${save}-unsel.png`); }
   // the fill: the inner region, inset past the corner so the ground never enters it
@@ -115,6 +115,49 @@ export function judgeT3(m) {
     fillLine: `fill alone ${f2(m.fill)}:1 (${m.fillSel} vs ${m.fillUnsel}) — decoration, reported apart from the edge`,
     fillPass: m.fill >= 3,
   };
+}
+
+/**
+ * H3-7 · the painted thickness of the selected carrier's edge, in CSS px: selected against its unselected sibling
+ * (ink hidden, scale pinned, the T-3 crops), along the middle 60 % of each side, the count of ≥ 3:1 device pixels in
+ * the 8 CSS px band inside the border box. A side reads its median; the item reads its thinnest side.
+ */
+export async function edgeThickness(P) {
+  await park(P);
+  await tagItems(P);
+  const info = await P.page.evaluate(() => {
+    const th = window.__th, its = th.items(), s = its.findIndex((e) => th.on(e));
+    const sr = s >= 0 ? th.size(its[s]) : null;
+    let u = -1, best = Infinity;
+    its.forEach((e, i) => { if (i === s || th.on(e) || !sr) return; const z = th.size(e), d = Math.abs(z.w - sr.w) + Math.abs(z.h - sr.h); if (d < best) { best = d; u = i; } });
+    return { s, u };
+  });
+  if (info.s < 0 || info.u < 0) return { error: "no selected/unselected pair" };
+  await P.page.evaluate(({ s, u }) => { const th = window.__th; th.hideInk(true); for (const i of [s, u]) th.pin(document.querySelector(`[data-th-idx="${i}"]`), true); }, info);
+  await wait(P, 350);
+  const rects = await P.page.evaluate(({ s, u }) => [s, u].map((i) => window.__th.rect(document.querySelector(`[data-th-idx="${i}"]`))), info);
+  const clip = (r) => ({ x: Math.round(r.x), y: Math.round(r.y), width: Math.floor(r.w), height: Math.floor(r.h) });
+  const cs = clip(rects[0]), cu = clip(rects[1]);
+  cs.width = cu.width = Math.min(cs.width, cu.width); cs.height = cu.height = Math.min(cs.height, cu.height);
+  const A = await shot(P.page, cs), B = await shot(P.page, cu);
+  await P.page.evaluate(({ s, u }) => { const th = window.__th; th.hideInk(false); for (const i of [s, u]) th.pin(document.querySelector(`[data-th-idx="${i}"]`), false); }, info);
+  const W = A.png.width, H = A.png.height, d = A.dsf, band = Math.round(8 * d);
+  const sep = (x, y) => { const i = y * W + x; return contrast([A.png.data[i * 4], A.png.data[i * 4 + 1], A.png.data[i * 4 + 2]], [B.png.data[i * 4], B.png.data[i * 4 + 1], B.png.data[i * 4 + 2]]) >= 3; };
+  const side = (name) => {
+    const horiz = name === "top" || name === "bottom", L = horiz ? W : H, v = [];
+    for (let t = Math.round(0.2 * L); t < Math.round(0.8 * L); t++) {
+      let n = 0;
+      for (let k = 0; k < band; k++) {
+        const x = name === "left" ? k : name === "right" ? W - 1 - k : t, y = name === "top" ? k : name === "bottom" ? H - 1 - k : t;
+        if (x >= 0 && y >= 0 && x < W && y < H && sep(x, y)) n++;
+      }
+      v.push(n / d);
+    }
+    v.sort((a, b) => a - b);
+    return v.length ? v[Math.floor(v.length / 2)] : 0;
+  };
+  const sides = Object.fromEntries(["top", "right", "bottom", "left"].map((k) => [k, side(k)]));
+  return { sides, min: Math.min(...Object.values(sides)) };
 }
 
 // ── the focus ring (T-4) ──────────────────────────────────────────────────────
@@ -184,12 +227,13 @@ export async function ringCoverage(P, { save } = {}) {
  * whose computed `outline-style` is `auto` is painting the user agent's default focus indicator, which the pixel
  * read alone cannot tell from the ring in light (E `pl/t4`).
  */
-export function judgeT4(m) {
+export function judgeT4(m, { forced = false } = {}) {
   if (m.error) return { pass: false, line: m.error };
   const min = Math.min(...Object.values(m.cov));
   const ua = m.outlineStyle === "auto";
   return {
-    pass: min >= 1.5 && !ua,
+    // H3-8: in forced colours the cell gates the ring's reach only (a host that clips it); the system may own the style
+    pass: min >= 1.5 && (forced || !ua),
     line: `item ${m.idx} (${m.on ? "selected" : "unselected"}); outline ${m.outline}${ua ? " — the UA's focus outline, not the ring" : ""}; painted ring px top ${f2(m.cov.top)} right ${f2(m.cov.right)} bottom ${f2(m.cov.bottom)} left ${f2(m.cov.left)} (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)`,
   };
 }
@@ -338,21 +382,31 @@ export async function unselectedIdx(P) {
 }
 const itemSel = (i) => `[data-th-idx="${i}"]`;
 async function center(P, i) { const r = await P.page.evaluate((s) => window.__th.rect(document.querySelector(s)), itemSel(i)); return { r, x: r.x + r.w / 2, y: r.y + r.h / 2 }; }
-/** Hover light channel with scale pinned: the fraction of the item's pixels that change between rest and hover. */
+/**
+ * Hover light channel with scale pinned and the item's ink hidden (the plate alone). H3-5: the gate is the mean
+ * OKLab ΔE over the plate's interior (inset past the corner), PASS at ≥ HOVER_DE. H2's count (the share of pixels
+ * whose largest channel moved by more than 10 levels) is reported beside it: a 5 % ink rung moved about 10 levels,
+ * so it read 0.52 % in Chromium and 73 % in Playwright WebKit on identical computed values (`Fp` §6.4).
+ */
+export const HOVER_DE = 0.02;
 export async function hoverLight(P, i) {
   await park(P); await wait(P, 400);
   const { r, x, y } = await center(P, i);
   const clip = clipAround(r, 2);
-  await P.page.evaluate((s) => window.__th.pin(document.querySelector(s), true), itemSel(i));
+  await P.page.evaluate((s) => { window.__th.hideInk(true); window.__th.pin(document.querySelector(s), true); }, itemSel(i));
   await wait(P, 150);
   const A = await shot(P.page, clip);
   await P.page.mouse.move(x, y); await wait(P, 600);
   const B = await shot(P.page, clip);
-  await P.page.evaluate((s) => window.__th.pin(document.querySelector(s), false), itemSel(i));
+  const rad = await P.page.evaluate((s) => window.__th.corner(document.querySelector(s)).used, itemSel(i));
+  await P.page.evaluate((s) => { window.__th.hideInk(false); window.__th.pin(document.querySelector(s), false); }, itemSel(i));
   await park(P); await wait(P, 300);
   const c = compare(A, B);
-  return { changedPct: (100 * c.changed) / c.total, p95: c.p95 };
+  const inset = Math.min(Math.max(rad * 0.3, 4), r.w / 3, r.h / 3);
+  const de = meanDeltaE(A, B, { x: r.x + inset, y: r.y + inset, w: r.w - 2 * inset, h: r.h - 2 * inset });
+  return { changedPct: (100 * c.changed) / c.total, p95: c.p95, de, pass: de >= HOVER_DE };
 }
+export const hoverLine = (h) => `mean ΔE(OKLab) ${h.de.toFixed(4)} over the plate interior vs the bar ${HOVER_DE} (reported: ${f2(h.changedPct)} % of pixels moved > 10 levels, p95 ${f2(h.p95)}:1)`;
 export async function hoverScale(P, i) {
   await park(P); await wait(P, 400);
   const { x, y } = await center(P, i);

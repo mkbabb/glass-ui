@@ -1,0 +1,14 @@
+2026-10-08 17:36:52 · load { 28.40 66.68 59.35 }
+selftest · harness H3 357dcb472f74 (27 files)
+OK     W-C  chromium clean exit 0 · W-C PASS · 8/8 gating cells pass [library 8/8]
+OK     W-C  chromium fault   wc (the card board is a listbox of options, each its own tab stop, with no group stamp) exit 1 · W-C FAIL · 1/8 gating cells pass [library 1/8]
+         first planted FAIL: FAIL       card · group listbox · items option (CDP AX tree) · tab stops 4
+OK     W-C  chromium fault   wc-stamp (the group stamp is present but its values are stale: aria-checked never follows the selection) exit 1 · W-C FAIL · 2/8 gating cells pass [library 2/8]
+         first planted FAIL: FAIL       card stamp values at rest (role/aria-checked/tabindex, * = group-stamped; selected #1) · radio/false/0* radio/false/-1* radio/false/-1* radio/false/-1*
+OK     W-C  webkit   clean exit 0 · W-C PASS · 8/8 gating cells pass [library 8/8]
+OK     W-C  webkit   fault   wc (the card board is a listbox of options, each its own tab stop, with no group stamp) exit 1 · W-C FAIL · 1/8 gating cells pass [library 1/8]
+         first planted FAIL: FAIL       card · group listbox · items option (Playwright aria snapshot + DOM states) · tab stops 4
+OK     W-C  webkit   fault   wc-stamp (the group stamp is present but its values are stale: aria-checked never follows the selection) exit 1 · W-C FAIL · 2/8 gating cells pass [library 2/8]
+         first planted FAIL: FAIL       card stamp values at rest (role/aria-checked/tabindex, * = group-stamped; selected #1) · radio/false/0* radio/false/-1* radio/false/-1* radio/false/-1*
+selftest: 6 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0 · 2026-10-08 17:37:44 · load { 30.92 60.89 57.65 }

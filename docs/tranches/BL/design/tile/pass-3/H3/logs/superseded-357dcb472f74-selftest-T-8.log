@@ -1,0 +1,9 @@
+2026-10-08 17:29:17 · load { 82.23 59.31 44.52 }
+selftest · harness H3 357dcb472f74 (27 files)
+OK     T-8  both     clean exit 0 · T-8 PASS · 48/48 gating cells pass, 1 unmeasured [library 24/24 · migrated 24/24]
+OK     T-8  both     fault   t8-migrated (H3-2: a WebKit-only rule turns the MIGRATED tiles back into stadiums (the library arm and Chromium stay green)) exit 1 · T-8 FAIL · 42/48 gating cells pass, 1 unmeasured [library 24/24 · migrated 18/24]
+         first planted FAIL: FAIL       [migrated] Playwright WebKit T-1 preset-migrated light #0 choice-card (tile) rung 40.0 · 226.00×66.00 9999px→33.00 (÷h/2 1.00) | 226.00×87.00 9999px→43.50 (÷h/2 1.00) | 226.00×108.00 9999px→54.00 (÷h/2 1.00) ·
+OK     T-8  both     fault   t8 (a WebKit-only rule turns the tiles back into stadiums (Chromium stays green)) exit 1 · T-8 FAIL · 36/48 gating cells pass, 1 unmeasured [library 18/24 · migrated 18/24]
+         first planted FAIL: FAIL       Playwright WebKit T-1 preset light #0 choice-card (tile) rung 40.0 · 226.00×66.00 9999px→33.00 (÷h/2 1.00) | 226.00×87.00 9999px→43.50 (÷h/2 1.00) | 226.00×108.00 9999px→54.00 (÷h/2 1.00) · bound root --radius
+selftest: 3 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0 · 2026-10-08 17:33:22 · load { 155.57 102.92 66.77 }

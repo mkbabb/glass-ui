@@ -11,6 +11,7 @@ import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 export const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -21,6 +22,18 @@ const pw = await import(pathToFileURL(path.join(NM, "playwright/index.mjs")).hre
 const requireNM = createRequire(path.join(NM, "_.cjs"));
 const { PNG } = requireNM("pngjs");
 export { PNG };
+
+/**
+ * H3-10 · the harness hash: sha256 over every `*.mjs` file in this directory, by name in order (name, NUL, bytes,
+ * NUL), cut to 12 hex. Every run JSON records it (`harness.hash`), so two routes' tallies are comparable only when
+ * their hashes match. Printed by every witness, by run.mjs and by tally.mjs.
+ */
+export const HARNESS = (() => {
+  const h = createHash("sha256");
+  const files = fs.readdirSync(HERE).filter((f) => f.endsWith(".mjs")).sort();
+  for (const f of files) { h.update(f); h.update("\0"); h.update(fs.readFileSync(path.join(HERE, f))); h.update("\0"); }
+  return { hash: h.digest("hex").slice(0, 12), files: files.length, rev: "H3" };
+})();
 
 export const DSF = 2;
 export const VIEWPORT = { width: 1000, height: 900 };
@@ -82,6 +95,45 @@ export async function quiet(waitS = 0) {
   return { ...c, waitedS: +((Date.now() - t0) / 1000).toFixed(1) };
 }
 
+/**
+ * H3-1 · the step trace: with `TILE_HARNESS_TRACE=1` every page step (context, page, goto, ready, fonts, settle,
+ * each measurement step a witness names) prints one stderr line with the time since the process started, the step's
+ * own duration and the load. A stall then names its step instead of its scene only.
+ */
+const T0 = Date.now();
+export const TRACE = !!process.env.TILE_HARNESS_TRACE;
+/** This process's descendant browser processes: pid, %cpu, rss MB and a short name (ps; no browser API). */
+export function ownBrowsers() {
+  let out = "";
+  try { out = execFileSync("ps", ["-axo", "pid=,ppid=,pcpu=,rss=,command="], { encoding: "utf8", maxBuffer: 32 << 20 }); } catch { return []; }
+  const rows = out.split("\n").map((l) => l.trim().match(/^(\d+)\s+(\d+)\s+([\d.]+)\s+(\d+)\s+(.*)$/)).filter(Boolean);
+  const mine = new Set([String(process.pid)]);
+  let grew = true;
+  while (grew) { grew = false; for (const [, pid, ppid] of rows) if (mine.has(ppid) && !mine.has(pid)) { mine.add(pid); grew = true; } }
+  // Playwright WebKit's WebContent, Networking and GPU services are XPC services launchd starts (ppid 1), so they are
+  // nobody's descendants; they are listed by their Playwright path and marked `xpc` (another seat's WebKit would
+  // share the label: the census says whether one ran)
+  const xpc = (cmd) => /ms-playwright\/webkit-\d+\/.*\.xpc\//.test(cmd);
+  return rows.filter(([, pid, ppid, , , cmd]) => pid !== String(process.pid) && !/^ps -axo/.test(cmd) && (mine.has(pid) || (ppid === "1" && xpc(cmd))))
+    .map(([, pid, ppid, cpu, rss, cmd]) => ({ pid: +pid, cpu: +cpu, rssMB: Math.round(+rss / 1024),
+      name: (xpc(cmd) ? "xpc:" + (cmd.match(/com\.apple\.WebKit\.(\w+)/)?.[1] ?? "?") : (cmd.match(/(pw_run\.sh|Playwright\.app|chrome-headless-shell|headless_shell)/) ?? [cmd.slice(0, 30)])[0]) + (/--type=([\w-]+)/.exec(cmd)?.[1] ? `:${/--type=([\w-]+)/.exec(cmd)[1]}` : "") }));
+}
+// H3-1: under TILE_HARNESS_TRACE every 5 s prints this process's browser processes (a spinning renderer shows as
+// a WebContent process pinned near 100 % while the page step waits)
+if (TRACE) setInterval(() => {
+  const ps = ownBrowsers();
+  // open file descriptors per process (lsof): launchd starts the XPC services with a soft limit of 256
+  const fds = (pid) => { try { return execFileSync("lsof", ["-p", String(pid)], { encoding: "utf8", maxBuffer: 32 << 20 }).split("\n").length - 2; } catch { return "?"; } };
+  process.stderr.write(`[trace +${((Date.now() - T0) / 1000).toFixed(1)}s] procs ${ps.length}: ${ps.map((p) => `${p.name}#${p.pid} ${p.cpu}% ${p.rssMB}MB ${fds(p.pid)}fd`).join(", ")} · load ${load()}\n`);
+}, 5000).unref();
+export async function step(label, fn) {
+  if (!TRACE) return fn();
+  const t = Date.now();
+  process.stderr.write(`[trace +${((t - T0) / 1000).toFixed(1)}s] ${label} …\n`);
+  try { return await fn(); }
+  finally { process.stderr.write(`[trace +${((Date.now() - T0) / 1000).toFixed(1)}s] ${label} done in ${Date.now() - t} ms · load ${load()}\n`); }
+}
+
 // ── CLI ───────────────────────────────────────────────────────────────────────
 export function parseArgs(argv = process.argv.slice(2)) {
   const a = { positional: [] };
@@ -107,8 +159,10 @@ export function serve(rootOrFn) {
   const server = http.createServer((req, res) => {
     const url = new URL(req.url, "http://x");
     if (typeof rootOrFn === "function") {
+      const body = rootOrFn(url);
+      if (body === null) return; // a planted stall: the request is held, never answered (fixture fault `stall`)
       res.writeHead(200, { "content-type": MIME[".html"], "cache-control": "no-store" });
-      res.end(rootOrFn(url));
+      res.end(body);
       return;
     }
     let p = path.join(rootOrFn, decodeURIComponent(url.pathname));
@@ -169,7 +223,52 @@ export async function browser(engine) {
   return browsers[engine];
 }
 export async function closeBrowsers() {
-  for (const k of Object.keys(browsers)) { await browsers[k].close().catch(() => {}); delete browsers[k]; }
+  for (const k of Object.keys(browsers)) await dropBrowser(k);
+}
+/**
+ * Close one engine's browser, bounded: a WebKit whose navigation waits on an AppSSO reply that never comes cannot
+ * close its page (H3-1), so after 15 s the browser's own processes (this process's descendants) are killed.
+ */
+async function dropBrowser(engine) {
+  const b = browsers[engine]; delete browsers[engine]; navs[engine] = 0;
+  if (!b) return;
+  const r = await within(15000, () => b.close());
+  if (!r.ok) for (const p of ownBrowsers().filter((x) => !x.name.startsWith("xpc:"))) { try { process.kill(p.pid, "SIGKILL"); } catch {} }
+}
+
+/**
+ * H3-1 · the routed Playwright WebKit T-3 stall (F1-3, HF-2), root-caused. Every http(s) main-frame navigation in
+ * Playwright WebKit asks macOS AppSSO whether the URL belongs to an SSO extension before it loads
+ * (`SOAuthorizationCoordinator::tryAuthorize` → AppSSOCore `canPerformAuthorizationWithURL`; `appsso-probe.mjs`
+ * counts one call per `goto` and per `location.assign`, none for about:blank). In the boot epoch that ended
+ * 2026-10-07 14:32:54, the unified log shows that call's reply never arriving at the 90th or 91st navigation of
+ * one Playwright process, in all three processes that got that far (pids 11741, 24625, 66362), while other
+ * Playwright processes' calls answered at the same moments. The navigation then waits forever, its page cannot
+ * close, and a fresh context in the same process stalls the same way. The routed T-3 was the only witness whose one
+ * browser opened ≥ 90 pages, and `preset-contents (light)` was its 90th: hence "routed", hence that scene, 10 of 10
+ * pass-2 stalls. Unrouted, the same witness opened 75.
+ * The cure is per process, as the fault is: a WebKit browser is retired after NAV_CAP navigations (default 60, under
+ * the 89 that held) and relaunched, and a stall is diagnosed from the unified log (`appssoPending`), its browser
+ * dropped (not a fresh context in it), and the page re-opened once on a new process. Every retirement and every
+ * stall is printed. TILE_HARNESS_NAV_CAP overrides the cap (the self-test runs it at 5).
+ */
+export const NAV_CAP = Number(process.env.TILE_HARNESS_NAV_CAP ?? 60);
+const navs = {};
+export const recycles = [];
+/** The pid of this process's Playwright WebKit UI process, or null. */
+function webkitPid() { return ownBrowsers().find((p) => p.name === "Playwright.app")?.pid ?? null; }
+/**
+ * Read the unified log of this process's Playwright WebKit for the last 3 minutes: is an AppSSO check pending (a
+ * `Calling async canPerformAuthorizationWithURL` with no later `completed`)? macOS only; null when it cannot read.
+ */
+export function appssoPending(pid = webkitPid()) {
+  if (!pid || process.platform !== "darwin") return null;
+  let out = "";
+  try { out = execFileSync("log", ["show", "--last", "3m", "--style", "compact", "--predicate", `processID == ${pid} AND category == "AppSSO"`], { encoding: "utf8", maxBuffer: 64 << 20, timeout: 60000 }); } catch (e) { out = String(e.stdout ?? ""); if (!out) return null; }
+  const lines = out.split("\n").filter((l) => /canPerformAuthorizationWithURL/.test(l));
+  const calls = lines.filter((l) => /Calling async/.test(l)).length, done = lines.filter((l) => /completed/.test(l)).length;
+  const last = lines.at(-1) ?? "";
+  return { pid, calls, completed: done, pending: /Calling async/.test(last), at: last.slice(11, 23) };
 }
 export async function engineVersion(engine) {
   return `${ENGINE_LABEL[engine]} ${(await browser(engine)).version()}`;
@@ -198,18 +297,30 @@ export async function openPage(target, engine, scene, opts = {}) {
   catch (e) {
     if (engineClosed(e)) throw e;
     const first = String(e.message ?? e).split("\n")[0];
+    // H3-1: name the cause before the browser goes, then re-open on a NEW browser process (the fault is per process)
+    const nav = navs[engine] ?? 0;
+    const dx = engine === "webkit" ? appssoPending() : null;
+    const cause = dx === null ? (engine === "webkit" ? "AppSSO state unread" : "no AppSSO in this engine")
+      : dx.pending ? `AppSSO check PENDING since ${dx.at} (navigation #${nav} of this browser; ${dx.completed}/${dx.calls} answered in 3 min)`
+      : `AppSSO answered (${dx.completed}/${dx.calls} in 3 min): not the AppSSO stall`;
+    await dropBrowser(engine);
     try {
       const P = await openPageOnce(target, engine, scene, opts);
-      stalls.push({ engine, scene, mode: opts.mode ?? "light", load: load(), first, reproduced: false });
+      stalls.push({ engine, scene, mode: opts.mode ?? "light", load: load(), first, cause, reproduced: false });
       return P;
     } catch (e2) {
-      stalls.push({ engine, scene, mode: opts.mode ?? "light", load: load(), first, reproduced: true });
-      throw new Error(`openPage ${scene} (${opts.mode ?? "light"}) stalled twice, REPRODUCED: ${first} / ${String(e2.message ?? e2).split("\n")[0]}`);
+      stalls.push({ engine, scene, mode: opts.mode ?? "light", load: load(), first, cause, reproduced: true });
+      throw new Error(`openPage ${scene} (${opts.mode ?? "light"}) stalled twice, the second time on a new browser process, REPRODUCED: ${first} / ${String(e2.message ?? e2).split("\n")[0]} · first stall: ${cause}`);
     }
   }
 }
 async function openPageOnce(target, engine, scene, { mode = "light", prm = false, coarse = false, uiScale = null, query = {} } = {}) {
-  const b = await browser(engine);
+  const tag = `${ENGINE_LABEL[engine]} ${scene} (${mode})`;
+  if (engine === "webkit" && (navs[engine] ?? 0) >= NAV_CAP) {
+    recycles.push({ engine, after: navs[engine], load: load() });
+    await step(`${tag} retire browser after ${navs[engine]} navigations`, () => dropBrowser(engine));
+  }
+  const b = await step(`${tag} browser`, () => browser(engine));
   const opts = {
     viewport: VIEWPORT, deviceScaleFactor: DSF,
     colorScheme: mode === "dark" ? "dark" : "light",
@@ -217,8 +328,8 @@ async function openPageOnce(target, engine, scene, { mode = "light", prm = false
     forcedColors: mode === "forced" ? "active" : "none",
   };
   if (coarse) { opts.hasTouch = true; if (engine === "chromium") opts.isMobile = true; }
-  const ctx = await b.newContext(opts);
-  const page = await ctx.newPage();
+  const ctx = await step(`${tag} newContext`, () => b.newContext(opts));
+  const page = await step(`${tag} newPage`, () => ctx.newPage());
   const logs = [];
   page.on("console", (m) => logs.push({ type: m.type(), text: m.text() }));
   page.on("pageerror", (e) => logs.push({ type: "pageerror", text: String(e) }));
@@ -237,14 +348,15 @@ async function openPageOnce(target, engine, scene, { mode = "light", prm = false
   const q = new URLSearchParams({ scene });
   if (mode === "dark") q.set("mode", "dark");
   for (const [k, v] of Object.entries(query)) q.set(k, String(v));
+  navs[engine] = (navs[engine] ?? 0) + 1;
   try {
-    await page.goto(target.url(q.toString()), { waitUntil: "load", timeout: 60000 });
-    await page.waitForFunction(() => window.__tile && window.__tile.ready === true, null, { timeout: 30000 });
-  } catch (e) { await ctx.close().catch(() => {}); throw e; }
+    await step(`${tag} goto`, () => page.goto(target.url(q.toString()), { waitUntil: "load", timeout: 60000 }));
+    await step(`${tag} ready`, () => page.waitForFunction(() => window.__tile && window.__tile.ready === true, null, { timeout: 30000 }));
+  } catch (e) { await within(10000, () => ctx.close()); throw e; }
   if (mode === "prt" && engine !== "chromium") await page.addStyleTag({ content: LEVEL0 });
   if (uiScale !== null) await page.addStyleTag({ content: `:root{--ui-scale:${uiScale} !important}` });
-  await page.evaluate(() => document.fonts.ready.then(() => true));
-  await page.waitForTimeout(SETTLE_MS);
+  await step(`${tag} fonts`, () => page.evaluate(() => document.fonts.ready.then(() => true)));
+  await step(`${tag} settle`, () => page.waitForTimeout(SETTLE_MS));
   const verify = await page.evaluate(() => ({
     dark: document.documentElement.classList.contains("dark"),
     prt: matchMedia("(prefers-reduced-transparency: reduce)").matches,
@@ -265,7 +377,7 @@ async function openPageOnce(target, engine, scene, { mode = "light", prm = false
   if (prm && !verify.prm) modeOk = false;
   if (coarse) { modeLabel += " coarse"; if (!(verify.hoverNone && verify.coarse)) modeOk = false; }
   if (uiScale !== null) { modeLabel += ` --ui-scale ${uiScale}`; if (parseFloat(verify.uiScale) !== uiScale) modeOk = false; }
-  return { page, ctx, cdp, logs, verify, engine, keys: KEYS[engine], mode, modeLabel, modeOk, close: () => ctx.close() };
+  return { page, ctx, cdp, logs, verify, engine, keys: KEYS[engine], mode, modeLabel, modeOk, close: () => step(`${tag} close`, () => ctx.close()) };
 }
 
 // ── in-page helpers (window.__th): DOM reads only, no source text ─────────────
@@ -359,8 +471,9 @@ function inPageHelpers() {
      * stacked lines at `line-height: 1` overlap by their glyph overhang and still read as two rows, while an icon
      * beside a label, or a badge beside a label, stays one.
      */
-    rows(el) {
-      const roots = [...el.querySelectorAll("[data-ink]")];
+    /** Content boxes inside the item: text line boxes, graphics and painted leaves inside [data-ink] (or the item), each with its node. */
+    contentRects(el) {
+      const roots = [...el.querySelectorAll("[data-ink]")].filter((e) => !e.parentElement.closest("[data-ink]"));
       const scope = roots.length ? roots : [el];
       const rects = [];
       for (const root of scope) {
@@ -370,7 +483,7 @@ function inPageHelpers() {
           if (!t.textContent.trim()) continue;
           if (t.parentElement && t.parentElement.closest(".sr-only,[hidden]")) continue;
           const r = document.createRange(); r.selectNodeContents(t);
-          for (const q of r.getClientRects()) if (q.width > 0.5 && q.height > 0.5) rects.push(q);
+          for (const q of r.getClientRects()) if (q.width > 0.5 && q.height > 0.5) rects.push({ q, node: t.parentElement });
         }
         for (const e of [root, ...root.querySelectorAll("*")]) {
           if (e.closest("svg") && e.tagName.toLowerCase() !== "svg") continue;
@@ -379,16 +492,44 @@ function inPageHelpers() {
           const leafPaint = !e.children.length && (cs.backgroundColor !== "rgba(0, 0, 0, 0)" || cs.backgroundImage !== "none");
           if (!graphic && !leafPaint) continue;
           const q = e.getBoundingClientRect();
-          if (q.width > 0.5 && q.height > 0.5) rects.push(q);
+          if (q.width > 0.5 && q.height > 0.5) rects.push({ q, node: e });
         }
       }
-      rects.sort((a, b) => a.top - b.top);
-      let rows = 0, bottom = -Infinity;
-      for (const q of rects) {
-        const mid = (q.top + q.bottom) / 2;
-        if (mid > bottom) { rows++; bottom = q.bottom; } else bottom = Math.max(bottom, q.bottom);
+      return rects;
+    },
+    /**
+     * Rows of content (contentRects): a box lies below another when its vertical midpoint lies below the other's
+     * bottom (H-8, the midpoint test), and the rows are the longest chain of such boxes. Two stacked lines at
+     * `line-height: 1` overlap by their glyph overhang and still read as two rows; an icon beside a label, or a
+     * badge beside a label, stays one; two lines beside an icon read two.
+     */
+    rows(el) {
+      // H3-3: the longest chain of boxes each lying below the last by the midpoint test (b's midpoint below a's
+      // bottom). H2 clustered top-down and let a tall box (an icon, a two-line name) extend a row's bottom, so two
+      // stacked text lines beside a 16 px icon read as one row (`pass-3/H3.md` §3.2, a vacuous one-row PASS)
+      const rects = th.contentRects(el).map((r) => r.q).sort((a, b) => a.top - b.top);
+      const depth = rects.map(() => 1);
+      for (let j = 0; j < rects.length; j++) for (let i = 0; i < j; i++)
+        if ((rects[j].top + rects[j].bottom) / 2 > rects[i].bottom) depth[j] = Math.max(depth[j], depth[i] + 1);
+      return rects.length ? Math.max(...depth) : 0;
+    },
+    /**
+     * H3-3 · content the plate does not show: a content box past the item's border box (spilt), or past an ancestor
+     * inside the item that clips (overflow other than visible). Returns the count and the worst overhang in px.
+     */
+    cut(el) {
+      const box = el.getBoundingClientRect();
+      let n = 0, worst = 0;
+      const past = (q, b) => Math.max(b.top - q.top, q.bottom - b.bottom, b.left - q.left, q.right - b.right);
+      for (const { q, node } of th.contentRects(el)) {
+        let over = past(q, box);
+        for (let a = node; a && a !== el && el.contains(a); a = a.parentElement) {
+          const cs = getComputedStyle(a);
+          if (cs.overflowX !== "visible" || cs.overflowY !== "visible") over = Math.max(over, past(q, a.getBoundingClientRect()));
+        }
+        if (over > 0.5) { n++; worst = Math.max(worst, over); }
       }
-      return rows;
+      return { n, worst };
     },
     /** The item's one-line extent: its [data-ink] content swapped for one short text line, measured, restored. */
     rung(el) {
@@ -541,6 +682,31 @@ export function compare(a, b, mask = null, edgeBand = 0) {
   cs.sort((x, y) => x - y);
   return { total, changed, c3, c15, c3Edge, c3Inner: c3 - c3Edge, p95: cs.length ? cs[Math.floor(cs.length * 0.95)] : 1 };
 }
+/** sRGB (0-255) → OKLab [L, a, b] (Björn Ottosson's matrices). */
+export function oklab(c) {
+  const f = (v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
+  const [r, g, b] = c.map(f);
+  const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
+  const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
+  const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
+  return [0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s, 1.9779984951 * l - 2.428592205 * m + 0.4505937099 * s, 0.0259040371 * l + 0.7827717662 * m - 0.808675766 * s];
+}
+/**
+ * H3-5 · the mean perceptual distance (ΔE in OKLab, Euclidean) between two shots of the same clip, over a CSS-px
+ * rect inside it. A continuous read: it has no per-pixel threshold for a rung to sit on (H2's light channel counted
+ * pixels whose largest channel moved by more than 10 levels, and a 5 % ink step moved about 10).
+ */
+export function meanDeltaE(a, b, r) {
+  const { png, clip, dsf } = a;
+  const x0 = Math.max(0, Math.round((r.x - clip.x) * dsf)), y0 = Math.max(0, Math.round((r.y - clip.y) * dsf));
+  const x1 = Math.min(png.width, Math.round((r.x + r.w - clip.x) * dsf)), y1 = Math.min(png.height, Math.round((r.y + r.h - clip.y) * dsf));
+  let sum = 0, n = 0;
+  for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) {
+    const i = y * png.width + x, p = oklab(px(a, i)), q = oklab(px(b, i));
+    sum += Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]); n++;
+  }
+  return n ? sum / n : 0;
+}
 export function savePng(s, file) { fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, PNG.sync.write(s.png)); }
 
 // ── CDP: accessibility tree and matched styles (Chromium only) ────────────────
@@ -589,7 +755,7 @@ export function verdict(res) {
 }
 export function print(res) {
   console.log(`${res.id} · ${res.title}`);
-  console.log(`  target ${res.target} (flavor ${res.flavor ?? "?"}${res.dev ? ", DEV" : ""}) · ${res.engineLabel}`);
+  console.log(`  target ${res.target} (flavor ${res.flavor ?? "?"}${res.dev ? ", DEV" : ""}) · ${res.engineLabel} · harness ${res.harness?.rev ?? "?"} ${res.harness?.hash ?? "?"}`);
   if (res.run) console.log(`  load ${res.run.loadStart} at start, ${res.run.loadEnd} at end · other headless browser processes at start: ${res.run.census.n}${res.run.census.waitedS ? ` (waited ${res.run.census.waitedS} s)` : ""} · browser lock waited ${res.run.lockWaitS} s`);
   for (const c of res.cells) {
     const tag = c.pass === null ? "UNMEASURED" : !c.gating ? (c.pass ? "info-pass" : "info-fail") : c.pass ? "PASS" : "FAIL";
@@ -612,9 +778,11 @@ export async function cli(id, runFn) {
     target = await openTarget(args);
     const res = await runFn(args, target);
     res.flavor = target.meta.flavor ?? (target.meta.dev ? "src-dev" : "src");
+    res.harness = HARNESS;
     res.run = { loadStart, loadEnd: load(), census, lockWaitS: lock.waitedS };
     for (const d of disconnects) (res.notes ??= []).push(`${ENGINE_LABEL[d.engine]} disconnected (the browser process died) and was relaunched; load ${d.load}`);
-    for (const t of stalls) (res.notes ??= []).push(`${ENGINE_LABEL[t.engine]} page load stalled on ${t.scene} (${t.mode}): ${t.first}; re-opened on a fresh context, ${t.reproduced ? "REPRODUCED" : "NOT-REPRODUCED"}; load ${t.load}`);
+    for (const t of stalls) (res.notes ??= []).push(`${ENGINE_LABEL[t.engine]} page load stalled on ${t.scene} (${t.mode}): ${t.first}; ${t.cause}; re-opened on a new browser process, ${t.reproduced ? "REPRODUCED" : "NOT-REPRODUCED"}; load ${t.load}`);
+    if (recycles.length) (res.notes ??= []).push(`H3-1: ${ENGINE_LABEL.webkit} browser retired and relaunched ${recycles.length}× at the ${NAV_CAP}-navigation cap; loads ${recycles.map((r) => r.load.split(" / ")[0]).join(", ")}`);
     verdict(res);
     print(res);
     const dir = path.join(outRoot(args), "runs", target.label);
@@ -652,8 +820,13 @@ export function scenesFor(list, id, { info = true, arms = true } = {}) {
     out.push({ ...s, id: `${s.id}-verbatim`, base: s.id, gating: (s.armGates?.verbatim ?? []).includes(id), arm: "unmigrated" });
     if (list.migration) out.push({ ...s, id: `${s.id}-migrated`, base: s.id, gating, arm: "migrated" });
   };
-  for (const s of list) if ((s.gates ?? []).includes(id)) push(s, true);
-  if (info) for (const s of list) if ((s.info ?? []).includes(id)) push(s, false);
+  // H3-11 · a state scene (invalid, sibling, tones, display: contents) also renders on the route's migrated markup of
+  // the site it names (`migratedArm`), gating as its library arm does, when the route migrates that site
+  const pushState = (s, gating) => {
+    if (arms && s.migratedArm && (list.migration?.sites ?? []).includes(s.migratedArm)) out.push({ ...s, id: `${s.id}-migrated`, base: s.id, gating, arm: "migrated" });
+  };
+  for (const s of list) if ((s.gates ?? []).includes(id)) { push(s, true); pushState(s, true); }
+  if (info) for (const s of list) if ((s.info ?? []).includes(id)) { push(s, false); pushState(s, false); }
   return out;
 }
 /** Race a step against a deadline; resolves { ok, value } or { ok: false, error } (a hang or a crashed target). */

@@ -6,7 +6,7 @@
 // A witness that fails its clean fixture, passes a planted FAIL, fails a planted control, or fails a plant on some
 // other cell than the planted one, is BROKEN; exit 1 if any is. A run whose engine closed under load is re-run
 // once by runOne (NOT-REPRODUCED or REPRODUCED, printed on its line and counted at the end).
-import { parseArgs } from "./lib.mjs";
+import { parseArgs, HARNESS } from "./lib.mjs";
 import { WITNESSES, runOne } from "./run.mjs";
 import { FAULTS } from "./fixtures.mjs";
 
@@ -16,6 +16,7 @@ const onlyFaults = typeof a.faults === "string" ? new Set(a.faults.split(",")) :
 const engines = typeof a.engines === "string" ? a.engines.split(",") : ["chromium", "webkit"];
 const out = typeof a.out === "string" ? ["--out", a.out] : [];
 let broken = 0, runs = 0; const retried = [];
+console.log(`selftest · harness ${HARNESS.rev} ${HARNESS.hash} (${HARNESS.files} files)`);
 const failLines = (o) => o.split("\n").filter((l) => /^\s+FAIL\s/.test(l));
 for (const [id, file, generic] of WITNESSES) {
   if (only && !only.has(id)) continue;
@@ -34,14 +35,17 @@ for (const [id, file, generic] of WITNESSES) {
     for (const [name, f] of Object.entries(FAULTS)) {
       if (!f.witnesses.includes(id) || (onlyFaults && !onlyFaults.has(name))) continue;
       const fam = f.family ? ["--family", f.family] : cleanFamily;
-      const r = runOne(file, ["--fixture", ...fam, "--fault", name, ...eng, ...out]); runs++;
+      const r = runOne(file, ["--fixture", ...fam, "--fault", name, ...eng, ...out], f.env ?? {}); runs++;
       if (r.retried) retried.push(`${tag.trim()} ${name}: ${r.retried}`);
       const expectPass = f.expect === "pass";
-      const fails = failLines(r.out);
+      // H3-1: `expect: "error"` plants a stall: the witness must stop loud (exit 2) with the planted line in its output
+      const fails = f.expect === "error" ? r.out.split("\n").filter((l) => /HARNESS ERROR/.test(l)) : failLines(r.out);
       const hit = !f.cell || fails.some((l) => f.cell.test(l));
-      const ok = expectPass ? r.code === 0 : r.code === 1 && hit;
+      const noteRe = f.note?.[engine];
+      const noted = !noteRe || noteRe.test(r.out);
+      const ok = expectPass ? r.code === 0 && noted : f.expect === "error" ? r.code === 2 && hit : r.code === 1 && hit;
       if (!ok) broken++;
-      console.log(`${ok ? "OK    " : "BROKEN"} ${tag} ${expectPass ? "control" : "fault  "} ${name} (${f.why}) exit ${r.code}${!expectPass && r.code === 1 && !hit ? ` · the planted cell ${f.cell} is not among the ${fails.length} failing lines` : ""} · ${r.last}`);
+      console.log(`${ok ? "OK    " : "BROKEN"} ${tag} ${expectPass ? "control" : "fault  "} ${name} (${f.why}) exit ${r.code}${!expectPass && r.code === 1 && !hit ? ` · the planted cell ${f.cell} is not among the ${fails.length} failing lines` : ""}${expectPass && noteRe ? ` · note ${noted ? "present" : "ABSENT"}: ${(r.out.match(noteRe) ?? ["—"])[0]}` : ""} · ${r.last}`);
       if (!ok) for (const l of (expectPass ? fails : fails.length ? fails : r.out.split("\n")).slice(0, 4)) console.log(`         ${l.trim()}`);
       else if (!expectPass) console.log(`         first planted FAIL: ${fails.find((l) => !f.cell || f.cell.test(l))?.trim().slice(0, 220)}`);
     }

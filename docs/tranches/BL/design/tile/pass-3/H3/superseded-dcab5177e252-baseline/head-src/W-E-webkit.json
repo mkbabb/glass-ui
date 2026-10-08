@@ -1,0 +1,74 @@
+{
+ "id": "W-E",
+ "title": "every one-of-N option is one line, and what a consumer installs refuses one that is not (D4-E)",
+ "engine": "webkit",
+ "engineLabel": "Playwright WebKit 26.5",
+ "target": "head-src",
+ "dev": false,
+ "cells": [
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset",
+   "line": "preset · 4 items · 4 not one line · e.g. 61.58 px tall at rung 40.00 (1.54 rungs), 2 rows"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset",
+   "line": "preset refusal (flavor src: a src alias build, reported, not gated) · a line added to item 0 → no refusal (no console error, no throw)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "specimen",
+   "line": "specimen · 8 items · 8 not one line · e.g. 100.16 px tall at rung 36.00 (2.78 rungs), 3 rows"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen",
+   "line": "specimen refusal (flavor src: a src alias build, reported, not gated) · a line added to item 0 → no refusal (no console error, no throw)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "strip",
+   "line": "strip · 6 items · 6 not one line · e.g. 44.00 px tall at rung 44.00 (1.00 rungs), 2 rows"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip",
+   "line": "strip refusal (flavor src: a src alias build, reported, not gated) · a line added to item 0 → no refusal (no console error, no throw)"
+  }
+ ],
+ "flavor": "src",
+ "harness": {
+  "hash": "dcab5177e252",
+  "files": 27,
+  "rev": "H3"
+ },
+ "run": {
+  "loadStart": "22.22 / 31.16 / 41.54",
+  "loadEnd": "20.47 / 30.50 / 41.18",
+  "census": {
+   "n": 27,
+   "sample": [
+    "1428 /Applications/Visual Studio Code.app/Contents/Resources/app/node_modules.asar.un",
+    "91664 bash /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh --inspecto",
+    "91670 /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/Playwright.app/Contents/M"
+   ],
+   "waitedS": 0.3
+  },
+  "lockWaitS": 0
+ },
+ "pass": false,
+ "tally": "0/3 gating cells pass [library 0/3]",
+ "arms": {
+  "library": {
+   "pass": 0,
+   "of": 3
+  }
+ }
+}

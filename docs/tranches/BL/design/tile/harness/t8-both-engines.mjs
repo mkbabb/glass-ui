@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // T-8 · Both engines (D-4): T-1 (the corner: fine, coarse, --ui-scale; H-1) and T-3 (the selected state, light,
-// dark, PRT) re-run on every T-8 scene in Chromium and in Playwright WebKit; PASS when every measured cell passes
+// dark, PRT) re-run on every T-8 scene, its library arm and (H3-2) the route's migrated arm, in Chromium and in Playwright WebKit; PASS when every measured cell passes
 // in both. Playwright WebKit is not Safari: WebKit cannot emulate prefers-reduced-transparency, so its PRT cell
 // takes the forced level-0 path. The real-Safari cell runs through safari.mjs (H-11): UNMEASURED (owner's
 // safaridriver checkbox) until the owner enables remote automation, measured once it is.
@@ -17,7 +17,8 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     let scenes = [];
     for (const engine of ["chromium", "webkit"]) {
       labels.push(await engineVersion(engine));
-      scenes = scenesFor(await sceneList(target, engine), "T-8", { info: false, arms: false });
+      // H3-2 · the library and the route's migrated arms (the unmigrated arm is T-1's and T-3's to report, not T-8's)
+      scenes = scenesFor(await sceneList(target, engine), "T-8", { info: false }).filter((s) => s.arm !== "unmigrated");
       for (const c of await t1Cells(target, engine, scenes)) cells.push({ ...c, line: `${ENGINE_LABEL[engine]} T-1 ${c.line}` });
       for (const c of await t3Cells(target, engine, scenes, { modes: T3_MODES, fill: false })) cells.push({ ...c, line: `${ENGINE_LABEL[engine]} T-3 ${c.line}` });
     }

@@ -1,0 +1,23 @@
+2026-10-08 18:24:44 · load { 25.11 29.77 37.62 }
+HOVER-PROBE · H3-5 hover light, ΔE beside H2's count, both engines
+  target floor-froute (flavor src) · Chromium 149.0.7827.55 + Playwright WebKit 26.5 · harness H3 dcab5177e252
+  load 25.11 / 29.77 / 37.62 at start, 26.30 / 29.66 / 37.22 at end · other headless browser processes at start: 21 (waited 0.4 s) · browser lock waited 0 s
+  info-fail  Chromium f1 light #0 · H3 mean ΔE(OKLab) 0.0007 vs 0.02 → under · H2 0.00 % of pixels > 10 levels (under H2's 2 %)
+  info-fail  Chromium f1 prt #0 · H3 mean ΔE(OKLab) 0.0000 vs 0.02 → under · H2 0.00 % of pixels > 10 levels (under H2's 2 %)
+  info-pass  [migrated] Chromium f1-migrated light #0 · H3 mean ΔE(OKLab) 0.0260 vs 0.02 → clears · H2 1.70 % of pixels > 10 levels (under H2's 2 %)
+  info-fail  [migrated] Chromium f1-migrated prt #0 · H3 mean ΔE(OKLab) 0.0000 vs 0.02 → under · H2 0.00 % of pixels > 10 levels (under H2's 2 %)
+  info-pass  Chromium preset light #0 · H3 mean ΔE(OKLab) 0.0314 vs 0.02 → clears · H2 80.02 % of pixels > 10 levels (cleared H2's 2 %)
+  info-fail  Chromium preset prt #0 · H3 mean ΔE(OKLab) 0.0000 vs 0.02 → under · H2 0.00 % of pixels > 10 levels (under H2's 2 %)
+  info-pass  Chromium specimen light #0 · H3 mean ΔE(OKLab) 0.0304 vs 0.02 → clears · H2 23.27 % of pixels > 10 levels (cleared H2's 2 %)
+  info-fail  Chromium specimen prt #0 · H3 mean ΔE(OKLab) 0.0000 vs 0.02 → under · H2 0.00 % of pixels > 10 levels (under H2's 2 %)
+  info-fail  Playwright WebKit f1 light #0 · H3 mean ΔE(OKLab) 0.0005 vs 0.02 → under · H2 0.00 % of pixels > 10 levels (under H2's 2 %)
+  info-fail  Playwright WebKit f1 prt (forced level-0 path) #0 · H3 mean ΔE(OKLab) 0.0038 vs 0.02 → under · H2 2.34 % of pixels > 10 levels (cleared H2's 2 %)
+  info-pass  [migrated] Playwright WebKit f1-migrated light #0 · H3 mean ΔE(OKLab) 0.0343 vs 0.02 → clears · H2 59.14 % of pixels > 10 levels (cleared H2's 2 %)
+  info-fail  [migrated] Playwright WebKit f1-migrated prt (forced level-0 path) #0 · H3 mean ΔE(OKLab) 0.0000 vs 0.02 → under · H2 0.00 % of pixels > 10 levels (under H2's 2 %)
+  info-pass  Playwright WebKit preset light #0 · H3 mean ΔE(OKLab) 0.0374 vs 0.02 → clears · H2 83.99 % of pixels > 10 levels (cleared H2's 2 %)
+  info-fail  Playwright WebKit preset prt (forced level-0 path) #0 · H3 mean ΔE(OKLab) 0.0016 vs 0.02 → under · H2 0.12 % of pixels > 10 levels (under H2's 2 %)
+  info-pass  Playwright WebKit specimen light #0 · H3 mean ΔE(OKLab) 0.0344 vs 0.02 → clears · H2 72.33 % of pixels > 10 levels (cleared H2's 2 %)
+  info-fail  Playwright WebKit specimen prt (forced level-0 path) #0 · H3 mean ΔE(OKLab) 0.0013 vs 0.02 → under · H2 0.00 % of pixels > 10 levels (under H2's 2 %)
+HOVER-PROBE FAIL · 0/0 gating cells pass
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p3/h3/out/hp/runs/floor-froute/HOVER-PROBE-both.json
+exit 1 · 2026-10-08 18:25:27 · load { 26.30 29.66 37.22 }

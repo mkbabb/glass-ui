@@ -1,0 +1,91 @@
+{
+ "id": "W-C",
+ "title": "selection is a behaviour, not a component (D4-C)",
+ "engine": "chromium",
+ "engineLabel": "Chromium 149.0.7827.55",
+ "target": "head-src",
+ "dev": false,
+ "cells": [
+  {
+   "gating": true,
+   "pass": false,
+   "line": "exports · RED by absence: no SelectionGroup/SelectionItem in the bundle (exports seen: [none])"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "line": "card · group listbox · items option (CDP AX tree) · tab stops 4"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "line": "card stamp values at rest (role/aria-checked/tabindex, * = group-stamped; selected #-1) · option/null/0 option/null/0 option/null/0 option/null/0"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "card grid ArrowRight from #0 · focus 0 → 0 · moved false · checked true"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "card grid ArrowLeft from #1 · focus 1 → 1 · moved false · checked true"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "card grid ArrowDown from #0 · focus 0 → 0 · moved false · checked true"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "card grid ArrowUp from #2 · focus 2 → 2 · moved false · checked true"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "line": "card grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 2 · moved false · checked true"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "line": "card grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 0 · moved false · checked true"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "line": "card stamp values after the arrow commits (selected #-1) · option/null/0 option/null/0 option/null/0 option/null/0"
+  }
+ ],
+ "flavor": "src",
+ "harness": {
+  "hash": "dcab5177e252",
+  "files": 27,
+  "rev": "H3"
+ },
+ "run": {
+  "loadStart": "24.03 / 32.24 / 42.22",
+  "loadEnd": "23.38 / 31.97 / 42.06",
+  "census": {
+   "n": 25,
+   "sample": [
+    "1428 /Applications/Visual Studio Code.app/Contents/Resources/app/node_modules.asar.un",
+    "91664 bash /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh --inspecto",
+    "91670 /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/Playwright.app/Contents/M"
+   ],
+   "waitedS": 0.4
+  },
+  "lockWaitS": 0
+ },
+ "pass": false,
+ "tally": "0/8 gating cells pass [library 0/8]",
+ "arms": {
+  "library": {
+   "pass": 0,
+   "of": 8
+  }
+ }
+}

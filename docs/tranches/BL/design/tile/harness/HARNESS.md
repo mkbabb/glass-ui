@@ -1,11 +1,11 @@
-# D4 · the tile witness battery (H2, pass 2)
+# D4 · the tile witness battery (H3, pass 3)
 
 | field | value |
 |---|---|
-| seat | D4 pass 2, H2 seat. Lands REGISTRY §3.2 rows H-1..H-11 in place over the pass-1 battery (T-1..T-8, W-A..W-E) |
+| seat | D4 pass 2, H2 seat, landed REGISTRY §3.2 rows H-1..H-11 over the pass-1 battery (T-1..T-8, W-A..W-E). D4 pass 3, H3 seat, landed REGISTRY §P2-6.2 rows H3-1..H3-13 in place (§2.2) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | engines | Chromium (`channel: "chromium"`) and Playwright WebKit, from `glass-ui/node_modules/playwright`, headless, 1000×900 at DSF 2. Playwright WebKit is not Safari. Real Safari runs through `safari.mjs` (H-11), and every cell reads **UNMEASURED (owner's safaridriver checkbox)** until the owner ticks Develop ▸ Allow Remote Automation |
-| results | not here. The self-test and the HEAD baseline under H2 are recorded once, in `../pass-2/H2.md` (P-3). The pass-1 HEAD reading is in history at `04929544` (this file, §4) |
+| results | not here. The self-test and the HEAD baseline under H3 are recorded once, in `../pass-3/H3.md`; under H2, in `../pass-2/H2.md` (P-3). Every run JSON carries `harness.hash` (H3-10): two tallies compare cell for cell only when their hashes match |
 
 ## 1 · What it is
 
@@ -26,6 +26,9 @@ One scene page, built against any worktree's library, and thirteen witness scrip
 | `selftest.mjs` | every witness on the clean fixture (must exit 0) and on each plant aimed at it (must exit 1 with the planted cell among its failing lines, or exit 0 for a control), in Chromium and Playwright WebKit |
 | `route-example/` | the H-7 route contract on a real build: `preset` migrated clean (T-7 migrated PASS), `specimen` migrated with one consumer rule on the tile (T-7 migrated FAIL) |
 | `glance.mjs` | owner-glance captures. Not a witness |
+| `film.mjs` | owner-glance films of a commit across arms; `--pair` (H3-13) the stills pair, plated against flush and focused-selected against selected, each frame checked against its label. Not a witness |
+| `canon.mjs` | H3-4: the canon unit's law on 48 widened twins (size × orientation × children × state), parsed by the engine; plants A, S, H on the route's own tile spelling (`route.json` → `canon`) |
+| `appsso-probe.mjs` | H3-1: counts the AppSSO checks each navigation form makes in Playwright WebKit, from the unified log |
 
 ### 1.1 Running it
 
@@ -52,6 +55,8 @@ Every witness takes an exclusive lock (`$TMPDIR/bl-d4-tile-harness.lock`, stale 
 A browser process that dies mid-run (Chromium did, under load, during the first H2 self-test) is relaunched on the next page open, and the witness prints a note for every disconnect. T-6 keeps each segment's cells only when the segment finishes, and re-runs a segment whose engine closed once on the relaunched browser: a crash that does not reproduce is printed NOT-REPRODUCED beside the re-run's cells, and one that reproduces fails the segment loud. T-7 re-reads a crashed arm the same way. Before this fix a single crash failed every later scene with "Target page, context or browser has been closed".
 
 One level up, `run.mjs`'s `runOne` (which `selftest.mjs` and the battery both use) re-runs a witness process once when it ends in a HARNESS ERROR because its engine closed: a Playwright WebKit page died under load during the H2 self-test (`t1-coarse`, exit 2, "page.waitForTimeout: Target page, context or browser has been closed"; `../pass-2/logs/aborted-run5-selftest-driver-killed.log`). The re-run's verdict stands and the line carries `NOT-REPRODUCED: engine closed during the first run …`; a crash that repeats carries `REPRODUCED` and stays exit 2. A run that exits 0 or 1 is never re-run, and the self-test prints every re-run in its summary.
+
+**H3-1, the routed Playwright WebKit stall, root-caused.** Every http main-frame navigation in Playwright WebKit asks macOS AppSSO (`SOAuthorizationCoordinator::tryAuthorize` → `canPerformAuthorizationWithURL`) before it loads. In the boot epoch that ended 2026-10-07 14:32:54 that reply stopped arriving at the 90th or 91st navigation of one Playwright process, in every process that got that far; the page then never loads, never closes, and a fresh context in the same process stalls too. The routed T-3 was the only witness whose one browser opened 90 pages (`preset-contents (light)` was its 90th). So a WebKit browser is retired every `NAV_CAP` (60) navigations, and a stall reads the unified log for a pending AppSSO check, names it, drops the browser process and re-opens once on a new one (`../pass-3/H3.md` §H3-1). The paragraph below is the H2 history this replaced.
 
 A page load that stalls (the scene never reports ready, or `goto` times out) is re-opened once on a fresh context by `openPage` (D4-F prototype, `../pass-2/D4-F-proto.md` §6.2). The D4-F block test's F1-3 and the prototype's first routed Playwright WebKit T-3 run both died in `openPage` without naming the scene. A stall that does not reproduce is printed as a note, NOT-REPRODUCED, with its scene, mode and load; one that reproduces throws with the scene named. Like the engine-closed relaunch, it is a recovery path, not a check, and every use is printed. T-3 reads a migrated arm the route did not supply (0 items) as UNMEASURED, not FAIL (F1-4).
 
@@ -103,9 +108,12 @@ A refusal or guard cell (W-E's refusal) gates only on a `dist` flavour. On a `sr
 | `preset-tone-unresolvable` | `--selection-tone` set to an undefined custom property | T-3 | |
 | `preset-contents` | the tiles behind a `display: contents` wrapper | T-1 T-3 T-5 | |
 | `preset-input` | the first tile holds an `<input>` (`descendant`) | T-5 | |
+| `preset-consumer-aria` | consumer `role="option"` and `tabindex="0"` on every item (H3-12) | T-5 | |
+| `<state>-migrated` | `preset-invalid`, `-sibling`, `-tone-*`, `-contents` written onto the route's migrated preset markup (H3-11), when the route migrates `preset` | as the state | |
 | `single` | single-line ToggleGroup `sm` | T-2 T-5 | T-3 T-6 |
 | `vertical` | four-item vertical ToggleGroup | T-2 T-5 | |
-| `tabs` | SegmentedTabs `semantics="toggle"` | T-2 T-5 | |
+| `tabs` | SegmentedTabs `semantics="radio"` (H3-10) | T-2 T-5 | |
+| `tabs-retired` | SegmentedTabs `semantics="toggle"`, a retired value: refused under Q-5 (gates on `dist`) | T-5 | |
 | `pill-icon`, `pill-badge` | pills of an icon plus a label, a label plus a Badge (D4-F question 1: they stay pills) | T-2 | |
 | `card` | Card's selectable arm, as `demo/stories/display/card.vue` wires it | T-1 T-3 T-4 T-5 T-6 W-C | |
 | `chipcell` | selectable Chip `shape="cell"`, two lines | T-1 T-3 T-5 T-6 | |
@@ -146,6 +154,26 @@ A cell whose mode did not apply fails with `MODE NOT APPLIED`. Keyboard traversa
 ### 2.1 The planted violations (`FAULTS`)
 
 H-1: `t1`, `t1-self`, `t1-coarse`, `t1-scale`, `t1-late`, and the control `t1-ro` (which must PASS: stamped before paint). H-2: `t2`, `t2-skip`, `wd`, `wd2`. H-3: `t3`, `t3-border`, `t3-alpha`, `t3-unres`. H-6: `t4`, `t4-auto`. H-5, H-10: `t5`, `t5-cross`, `t5-stop`, `t5-reorder`, `t5-input`, `t5-deselect`, `t5-multi`, `wc`, `wc-stamp`. H-4: `t6-fade`, `t6-tabpop`, `t6-prog`, `t6-glide`, `t6-still` (the re-read must not hide a missing hover scale or press), and the controls `t6-body` (which must PASS: travel with an overshoot) and `t6-rest` (which must PASS: a selected tile that rests scaled at 1.05 and pops around that settle). H-7: `t7`. T-8: `t8`. W-A: `wa`, `t1-late`, `t1-ro`. W-B: `wb`, `t5`. W-E, H-8, H-9: `we`, `we-devonly`, `we-lh1`. Each entry in `fixtures.mjs` says what it breaks and which printed cell must fail.
+
+### 2.2 · H3 (pass 3)
+
+| row | where | what the harness now does | plants (`FAULTS`) |
+|---|---|---|---|
+| H3-1 | `lib.mjs` (`NAV_CAP`, `appssoPending`, `openPage`, `dropBrowser`), `appsso-probe.mjs` | the AppSSO stall's cause read and cured per browser process (§1.2) | `stall` (exit 2, named), control `navcap` (cap 5, PASS) |
+| H3-2 | `t8-both-engines.mjs` | T-8 reads the library arm and the route's migrated arm | `t8-migrated` |
+| H3-3 | `t2-one-line-stadium.mjs` (`oneRowCells`), `lib.mjs` (`contentRects`, `cut`, `rows`) | per gating pill scene, item 0 on three fresh pages: a `<br>` and a block `div` inside its label, a `div` beside it, after mount; FAIL when content is CUT, or STACKED and unnamed. `rows()` is now the longest chain under the midpoint test, so two lines beside an icon read two (H2's top-down clustering read one) | `t2-stack`, `t2-cut`, control `t2-named` |
+| H3-4 | `canon.mjs` | the canon law on widened twins | `canon-a`, `canon-s`, `canon-h` |
+| H3-5 | `measure.mjs` (`hoverLight`, `HOVER_DE`), `lib.mjs` (`meanDeltaE`), `t6-engagement.mjs` | hover light gates on the mean OKLab ΔE over the plate interior (ink hidden), ≥ 0.02; read at rest, PRM and PRT | `t6-faint`, `t6-prt`, control `t6-rung` |
+| H3-6 | `t2-one-line-stadium.mjs` | the one-row mutations land ≥ 1.1 s after ready | `t2-mountonly` |
+| H3-7 | `t3-selected-separates.mjs` (`containCells`), `measure.mjs` (`edgeThickness`) | the selected edge keeps its thickness under `content-visibility: auto` | `t3-cv` |
+| H3-8 | `t4-ring-whole.mjs`, `measure.mjs` (`judgeT4`) | forced colours gate the ring's reach | `t4-forced` |
+| H3-9 | `t6-engagement.mjs` (`calm`) | a programmatic commit under `[data-reorder]` clears the commit bar | `t6-calm` |
+| H3-10 | `lib.mjs` (`HARNESS`), `run.mjs`, `selftest.mjs`, `tally.mjs`, `scenes.mjs`, `t5-one-of-n-keys.mjs` | the harness hash in every run JSON and printout, tally flags MIXED hashes; `tabs` spelled `semantics="radio"`; `tabs-retired` its own cell, refused under Q-5 (gates on `dist`) | `t5-retired` |
+| H3-11 | `scenes.mjs` (`stateOnMigrated`, `migratedArm`), `lib.mjs` (`scenesFor`) | invalid, sibling, both tones and `display: contents` render on the route's migrated preset markup too, gating | `t3-migstate` |
+| H3-12 | `scenes.mjs`, `t5-one-of-n-keys.mjs` | `preset-consumer-aria`: consumer `role="option"` and `tabindex="0"` on every item, read by the ordinary ARIA, stop and arrow cells | `t5-consumer` |
+| H3-13 | `film.mjs --pair` | the glance pair stills, each frame verified against its label | the fixture's `t5-stop` (Tab lands on the port: the tool stops, exit 2) |
+
+Trace: `TILE_HARNESS_TRACE=1` prints every page step with its duration and the load, and every 5 s this process's browser processes (and Playwright WebKit's XPC services) with CPU, memory and open file descriptors.
 
 ## 3 · Notes for the route seats
 

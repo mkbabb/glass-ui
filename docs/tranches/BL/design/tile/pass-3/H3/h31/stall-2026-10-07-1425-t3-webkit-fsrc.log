@@ -1,0 +1,10 @@
+start 14:25:27 load { 16.85 28.24 42.46 }
+T-3 HARNESS ERROR Error: openPage preset-contents (light) stalled twice, REPRODUCED: page.goto: Timeout 60000ms exceeded. / page.goto: Timeout 60000ms exceeded.
+    at openPage (file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/lib.mjs:207:13)
+    at async t3Cells (file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/t3-selected-separates.mjs:19:15)
+    at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/t3-selected-separates.mjs:42:229
+    at async cli (file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/lib.mjs:613:17)
+    at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/t3-selected-separates.mjs:39:3
+node $H/t3-selected-separates.mjs --build $O/builds/f-src --out $O --engine    7.96s user 2.39s system 2% cpu 6:31.98 total
+end 14:31:59 load { 49.57 44.12 45.35 }
+killed by the seat at 14:32:01 after 6.5 min idle (node CPU 5.4 s, no client socket, Playwright WebKit idle in its run loop); load { 47.77 43.84 45.25 }
