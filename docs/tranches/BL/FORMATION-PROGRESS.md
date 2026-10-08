@@ -179,3 +179,4 @@ Outage log:
 - 2026-10-08 14:5x — formation fix 22 banked (pass 21's two cured: a parent declaration after a nested rule, planted under src/components/dock too). Critic pass 22 launched.
 
 - 2026-10-08 — Formation pass 22 banked: CLEAN, the first since the row-3 bound (all nine rows pass; FU-01/FU-02 cured; every sweep exits 0; 197 static spans, every BLOCKER span exits 1). One non-blocking hardening note H-1 (a composite the spec does not name and src does not contain). Consecutive-clean = 1. Fix 23 launched with no open findings; critic 23 decides convergence (leg 5's last pass).
+- 2026-10-08 — Formation fix 23 banked: no open finding, so no plan edit (two consecutive clean passes must read the same plan); every sweep re-run exits 0. Critic 23 launched; it decides convergence.
