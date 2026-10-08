@@ -115,6 +115,13 @@ plants its nouns require.
                        `dock/styles/layer-group.css:354-355` beside `run.css`); the plant goes into another `.css`
                        file of that directory, red where the spec holds the claim beyond the named file, green where
                        it does not
+          Pass 18 (FR-01 to FR-03) found the file kinds stop at the component's directory. One more, enumerated from
+          `src` and carried only by a plant written in that file:
+            outsheet   a stylesheet (or SFC `<style>` block) outside a component directory the span reads, whose
+                       selectors name a class the directory both styles and writes and names for itself (its folder
+                       name as a hyphenated word: `.dock-icon-button`, `.glass-dock`) (FR-01, FR-02: `.glass-dock .dock-icon-button { padding: … }` at
+                       `styles/glass/glass-capsule.css:167-169`); red where the spec holds the claim on that rule,
+                       green where it does not
           Each sibling must be carried by a plant, red if it is the defect in another spelling, green if it is not;
           the plant then runs as every other plant does, so a red sibling the gate passes is open NARROW.
 
@@ -787,6 +794,13 @@ CLAIMS = {
         R("src/components/dock/styles/run.css", ".glass-dock .dock-run[data-overflowing] > * {\n    scroll-snap-align: start;\n}", "a compound on the run"),
         R("src/components/dock/styles/run.css", ".glass-dock .dock-layer--summary > * {\n    scroll-snap-align: start;\n}", "the summary layer's children: no marker declares them, and the title claims every snap target is declared (pass 14 FN-05 SIBLING)"),
         G("src/components/dock/styles/run.css", ".dock-run[data-overflowing] [data-dock-seat] {\n    scroll-snap-align: start;\n}", "the declared targets"),
+        R("src/styles/glass/glass-capsule.css", ".glass-dock .dock-run > * {\n    scroll-snap-align: start;\n}", "a snap rule on the run's children in `glass-capsule.css` (pass 18 FR-03 SIBLING outsheet)"),
+        R("src/styles/glass/material.css", ".glass-dock .dock-run > * {\n    scroll-snap-align: start;\n}", "a snap rule on the run's children in `material.css` (pass 18 FR-03 SIBLING outsheet)"),
+        R("src/styles/glass/rim.css", ".glass-dock .dock-run > * {\n    scroll-snap-align: start;\n}", "a snap rule on the run's children in `rim.css` (pass 18 FR-03 SIBLING outsheet)"),
+        R("src/styles/utilities/a11y-overrides.css", ".glass-dock .dock-run > * {\n    scroll-snap-align: start;\n}", "a snap rule on the run's children in `a11y-overrides.css` (pass 18 FR-03 SIBLING outsheet)"),
+        R("src/styles/glass-specular-track.css", ".glass-dock .dock-run > * {\n    scroll-snap-align: start;\n}", "a snap rule on the run's children in `glass-specular-track.css` (pass 18 FR-03 SIBLING outsheet)"),
+        R("src/components/dark-mode-toggle/dark-mode-toggle.css", ".glass-dock .dock-run > * {\n    scroll-snap-align: start;\n}", "a snap rule on the run's children in `dark-mode-toggle.css` (pass 18 FR-03 SIBLING outsheet)"),
+        G("src/styles/glass/glass-capsule.css", ".dock-run[data-overflowing] [data-dock-seat] {\n    scroll-snap-align: start;\n}", "the declared targets, in a global sheet (pass 18 FR-03 SIBLING outsheet)"),
         cure=[("striphits", "git grep -n 'scroll-snap-align' -- src/components/dock/styles")]),
     ("W-I.3", "G4"): L(GONE),
     ("W-I.4", "G1"): DOCKET,
@@ -824,6 +838,15 @@ CLAIMS = {
         R("src/components/dock/GlassDock.vue", "<style>\n.glass-dock .dock-run > .dock-icon-button { transition: block-size 200ms; }\n</style>", "a seat transition in an SFC `<style>` block (pass 17 FQ-04 SIBLING sfcstyle)"),
         R("src/components/dock/styles/layers.css", ".x { --seat-transition: inline-size var(--spring-dock-duration) var(--spring-dock); transition: var(--seat-transition); }", "the carried seat transition in another dock stylesheet (pass 17 FQ-03)"),
         G("src/components/dock/styles/layer-group.css", ".dock-layer-group.vertical .dock-layer-switcher .dock-layer-tab-indicator { transition: height var(--spring-dock-duration) var(--spring-dock); }", "the switcher indicator's glide, the one size transition the dock keeps (`layer-group.css:341-358`) (pass 17 FQ-03)"),
+        R("src/styles/glass/glass-capsule.css", ".glass-dock .dock-run > .dock-icon-button { transition: inline-size var(--spring-dock-duration) var(--spring-dock); }", "a seat transition in the global sheet that pads the seat (`glass-capsule.css:167`) (pass 18 FR-02 SIBLING outsheet)"),
+        R("src/styles/glass/glass-capsule.css", "@layer components {\n    :where(.glass-dock) .x { transition-property: opacity, width; }\n}", "a zero-specificity dock rule under a layer, the size second (pass 18 FR-02 SIBLING outsheet)"),
+        R("src/styles/glass/material.css", ".glass-dock .dock-icon-button { transition: inline-size var(--spring-dock-duration) var(--spring-dock); }", "a seat transition in `material.css`, which W-I.1 §4 edits (pass 18 FR-02 SIBLING outsheet)"),
+        R("src/styles/glass/rim.css", ".dock-icon-button {\n    transition:\n        width 200ms;\n}", "the rim list's seat (`rim.css:63`), value on the next line (pass 18 FR-02 SIBLING outsheet)"),
+        R("src/styles/utilities/a11y-overrides.css", ".glass-dock .dock-icon-button { transition: background 120ms, block-size 200ms; }", "the size second in the list, in `a11y-overrides.css` (`:116`) (pass 18 FR-02 SIBLING outsheet)"),
+        R("src/styles/glass-specular-track.css", ".dock-icon-button { --seat-transition: inline-size 200ms; transition: var(--seat-transition); }", "the carried form in `glass-specular-track.css` (`:37`) (pass 18 FR-02 SIBLING outsheet)"),
+        R("src/components/dark-mode-toggle/dark-mode-toggle.css", ".glass-dock {\n    & .dark-mode-toggle-button { transition: inline-size 200ms; }\n}", "nested under `.glass-dock` in the toggle's sheet (`:57-58`) (pass 18 FR-02 SIBLING outsheet)"),
+        G("src/styles/glass/glass-capsule.css", ".glass-dock .dock-run > .dock-icon-button { transition: var(--icon-button-transition), inline-size var(--spring-dock-duration) var(--spring-dock); }", "§3 item 1's appended form in a global sheet (pass 18 FR-02 SIBLING outsheet)"),
+        G("src/styles/glass/material.css", ".glass-capsule { transition: width 200ms; }", "a size transition on a rule that names no dock class (pass 18 FR-02 SIBLING outsheet)"),
         cure=[("subre", "src/components/dock/styles/run.css", r"transition: (inline-size|block-size) var\(", r"transition: var(--icon-button-transition), \1 var("),
              ("subre", "src/components/dock/styles/run.css", r"transition: (inline-size|block-size) var\(", r"transition: var(--icon-button-transition), \1 var("),
              ("subre", "src/components/dock/styles/run.css", r"transition: (inline-size|block-size) var\(", r"transition: var(--icon-button-transition), \1 var("),
@@ -846,6 +869,15 @@ CLAIMS = {
         R("src/components/dock/GlassDock.vue", '<div class="py-[var(--dock-ring-reserve)]">x</div>', "an arbitrary padding utility (pass 16 FP-05 SIBLING utility)"),
         R("src/components/dock/styles/layers.css", ".x {\n    padding-block:\n        var(--dock-ring-reserve);\n}", "another dock stylesheet, the value on the next line"),
         R("src/components/dock/GlassDock.vue", "<style>\n.x { padding-block: var(--dock-ring-reserve); }\n</style>", "the reserve as padding in an SFC `<style>` block (pass 17 FQ-04 SIBLING sfcstyle)"),
+        R("src/styles/glass/glass-capsule.css", ".glass-dock .dock-run { padding-block: var(--dock-ring-reserve); }", "the reserve as padding on the run in a global sheet (pass 18 FR-01 SIBLING outsheet)"),
+        R("src/styles/glass/glass-capsule.css", ".glass-dock .dock-icon-button { padding: var(--dock-ring-reserve); }", "the reserve on the seat, the rule `glass-capsule.css:167-169` writes (pass 18 FR-01 SIBLING outsheet)"),
+        R("src/styles/glass/material.css", ".glass-dock .dock-run {\n    padding-inline:\n        var(--dock-ring-reserve);\n}", "in `material.css`, value on the next line (pass 18 FR-01 SIBLING outsheet)"),
+        R("src/styles/glass/rim.css", ".dock-icon-button { padding-inline-start: var(--dock-ring-reserve); }", "in `rim.css` (pass 18 FR-01 SIBLING outsheet)"),
+        R("src/styles/utilities/a11y-overrides.css", ".glass-dock .dock-run { padding: var(--dock-ring-reserve) 0; }", "in `a11y-overrides.css` (pass 18 FR-01 SIBLING outsheet)"),
+        R("src/styles/glass-specular-track.css", ".dock-icon-button { padding-block-end: var(--dock-ring-reserve); }", "in `glass-specular-track.css` (pass 18 FR-01 SIBLING outsheet)"),
+        R("src/components/dark-mode-toggle/dark-mode-toggle.css", ".glass-dock .dark-mode-toggle-button { padding: var(--dock-ring-reserve); }", "in the toggle's sheet (pass 18 FR-01 SIBLING outsheet)"),
+        G("src/styles/glass/glass-capsule.css", ".glass-dock .dock-icon-button { outline-offset: var(--dock-ring-reserve); }", "§3 item 2's offset in a global sheet (pass 18 FR-01 SIBLING outsheet)"),
+        G("src/styles/glass/glass-capsule.css", ".glass-dock .dock-icon-button { padding: var(--dock-icon-padding, var(--dock-control-safe-inset, 0)); }", "HEAD's seat padding (`glass-capsule.css:168`), not the reserve (pass 18 FR-01 SIBLING outsheet)"),
         G("src/components/dock/styles/run.css", ".x { margin-block: calc(-1 * var(--dock-ring-reserve)); }", "HEAD's margin pair (`run.css:252`), not padding"),
     ),
     # ---------------------------------------------------------------- band J
@@ -1474,6 +1506,13 @@ def _src(root):
                         for b in re.findall(r"<style[^>]*>(.*?)</style>", t, re.S)
                         for x in re.findall(r"(?:^|[{;])\s*([a-zA-Z-]+)\s*:", re.sub(r"/\*.*?\*/", "", b, flags=re.S), re.M)),
         "sheets": [f for f in ls if f.endswith(".css")],
+        # pass 18 FR-01 to FR-03: every file's style text (a stylesheet whole, an SFC's `<style>` blocks), comments
+        # out, and every quoted string a script or template writes, by file
+        "styletexts": {f: re.sub(r"/\*.*?\*/", "", open(os.path.join(root, f), encoding="utf-8").read() if f.endswith(".css")
+                                 else "\n".join(re.findall(r"<style[^>]*>(.*?)</style>", scripts[f], re.S)), flags=re.S)
+                       for f in ls if f.endswith(".css") or (f.endswith(".vue") and f in scripts and "<style" in scripts[f])},
+        "quoted": {f: set(re.findall(r"[a-z][\w-]*[a-z0-9]", " ".join(re.findall(r"""['"`]([^'"`]*)['"`]""", t))))
+                   for f, t in scripts.items()},
         "touch": set(x for t in scripts.values() for x in re.findall(TOUCH, t))
                  | set((m.group(1) or m.group(3)) for f, t in scripts.items() if re.search(TOUCH, t) and not f.endswith("index.ts")
                        for m in _SIG.finditer(t)),
@@ -1712,6 +1751,15 @@ def siblings(g, entry, spans, root):
             d = _sheetdir(x)
             if any(f != x and f.startswith(d + "/") for f in src["sheets"]):
                 out.append(("sibsheet", x, f"`{d}` holds other stylesheets beside `{x}`, the one the span names"))
+    # pass 18 FR-01 to FR-03: a stylesheet outside a component directory the span reads that styles the directory's
+    # own classes (a class the directory both styles and writes, named for it: `.dock-icon-button`, `.glass-dock`);
+    # `src` writes dock-seat rules in global sheets (`glass/glass-capsule.css:167`). A wave's §4 list is not read: it
+    # names files for every item of the wave (W-H.1 §4: 20 outside `dialog/`), and a §4 sheet that styles the
+    # component's classes is listed by the selector read already (W-I.1 §4's `glass-capsule.css`, `material.css`)
+    if fam_props and not any(x in ("src", "src/components", "src/styles") for x in scope):
+        for d in sorted({m.group(1) for x in scope for m in [re.match(r"(src/components/[^/]+)", x)] if m}):
+            for f in sorted(_outsheets(src, d)):
+                out.append(("outsheet", f, f"`{f}` styles `{d}`'s own classes outside `{d}`, the directory the span reads"))
     seen, uniq = set(), []
     for k in out:
         if (k[0], k[1]) not in seen:
@@ -1737,6 +1785,22 @@ SHAPED = {
 }
 
 
+def _outsheets(src, d):
+    """pass 18 FR-01 to FR-03: the style files outside `d` whose selectors name a class `d` both styles and writes and
+    names for itself (its folder name as a hyphenated word of the class)."""
+    base = os.path.basename(d)
+    styled, written = set(), set()
+    for f, t in src["styletexts"].items():
+        if f.startswith(d + "/"):
+            styled |= set(re.findall(r"\.([a-z][\w-]*[a-z0-9])", re.sub(r"\{[^{}]*\}", "{}", t)))
+    for f, q in src["quoted"].items():
+        if f.startswith(d + "/"):
+            written |= q
+    own = {c for c in styled & written if re.search(r"(?:^|-)" + re.escape(base) + r"(?:-|$)", c)}
+    return {f for f, t in src["styletexts"].items() if not f.startswith(d + "/")
+            and any(re.search(r"\." + re.escape(c) + r"(?![\w-])", t) for c in own)}
+
+
 def _sheetdir(x):
     """The directory a stylesheet belongs to: its component's root under `src/components`, else its own folder."""
     m = re.match(r"(src/components/[^/]+)/", x)
@@ -1751,6 +1815,8 @@ def _filed(kind, name, plants):
             continue
         if kind == "sfcstyle" and rel.startswith(name + "/") and rel.endswith(".vue") and "<style" in text:
             return True
+        if kind == "outsheet" and rel == name:
+            return True
         if kind == "sibsheet":
             d = _sheetdir(name)
             if rel != name and rel.startswith(d + "/") and rel.endswith(".css"):
@@ -1763,7 +1829,7 @@ def sibling_arm(g, entry, spans, root, where):
     res = []
     own = [p[1] for p in entry["plants"] if p[2] != "cure"]
     for kind, name, how in siblings(g, entry, spans, root):
-        if kind in ("sfcstyle", "sibsheet"):
+        if kind in ("sfcstyle", "sibsheet", "outsheet"):
             if not _filed(kind, name, entry["plants"]):
                 res.append(f"OPEN SIBLING {where}: `{name}` ({kind}: {how}) is in no plant")
             continue

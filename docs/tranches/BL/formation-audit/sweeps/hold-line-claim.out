@@ -554,3 +554,55 @@ exit=1
 ## after: the plan as fix-18 leaves it
 in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 679, open 0
 exit=0
+
+# ===== fix-19 (HEAD `b0111693`; arm extended: kind `outsheet`, pass 18 FR-01 to FR-03)
+
+## before (1): enumeration alone (the fix-19 sweep less its outsheet plants, on the HEAD plan)
+OPEN SIBLING waves/W-I.2.md:93 G10 · snap targets are declared (static): `src/components/dark-mode-toggle/dark-mode-toggle.css` (outsheet: `src/components/dark-mode-toggle/dark-mode-toggle.css` styles `src/components/dock`'s own classes outside `src/components/dock`, the directory the span reads) is in no plant
+OPEN SIBLING waves/W-I.2.md:93 G10 · snap targets are declared (static): `src/styles/glass-specular-track.css` (outsheet: `src/styles/glass-specular-track.css` styles `src/components/dock`'s own classes outside `src/components/dock`, the directory the span reads) is in no plant
+OPEN SIBLING waves/W-I.2.md:93 G10 · snap targets are declared (static): `src/styles/glass/glass-capsule.css` (outsheet: `src/styles/glass/glass-capsule.css` styles `src/components/dock`'s own classes outside `src/components/dock`, the directory the span reads) is in no plant
+OPEN SIBLING waves/W-I.2.md:93 G10 · snap targets are declared (static): `src/styles/glass/material.css` (outsheet: `src/styles/glass/material.css` styles `src/components/dock`'s own classes outside `src/components/dock`, the directory the span reads) is in no plant
+OPEN SIBLING waves/W-I.2.md:93 G10 · snap targets are declared (static): `src/styles/glass/rim.css` (outsheet: `src/styles/glass/rim.css` styles `src/components/dock`'s own classes outside `src/components/dock`, the directory the span reads) is in no plant
+OPEN SIBLING waves/W-I.2.md:93 G10 · snap targets are declared (static): `src/styles/utilities/a11y-overrides.css` (outsheet: `src/styles/utilities/a11y-overrides.css` styles `src/components/dock`'s own classes outside `src/components/dock`, the directory the span reads) is in no plant
+OPEN SIBLING waves/W-I.7.md:42 I7-G1 · seat transition: `src/components/dark-mode-toggle/dark-mode-toggle.css` (outsheet: `src/components/dark-mode-toggle/dark-mode-toggle.css` styles `src/components/dock`'s own classes outside `src/components/dock`, the directory the span reads) is in no plant
+OPEN SIBLING waves/W-I.7.md:42 I7-G1 · seat transition: `src/styles/glass-specular-track.css` (outsheet: `src/styles/glass-specular-track.css` styles `src/components/dock`'s own classes outside `src/components/dock`, the directory the span reads) is in no plant
+OPEN SIBLING waves/W-I.7.md:42 I7-G1 · seat transition: `src/styles/glass/glass-capsule.css` (outsheet: `src/styles/glass/glass-capsule.css` styles `src/components/dock`'s own classes outside `src/components/dock`, the directory the span reads) is in no plant
+OPEN SIBLING waves/W-I.7.md:42 I7-G1 · seat transition: `src/styles/glass/material.css` (outsheet: `src/styles/glass/material.css` styles `src/components/dock`'s own classes outside `src/components/dock`, the directory the span reads) is in no plant
+OPEN SIBLING waves/W-I.7.md:42 I7-G1 · seat transition: `src/styles/glass/rim.css` (outsheet: `src/styles/glass/rim.css` styles `src/components/dock`'s own classes outside `src/components/dock`, the directory the span reads) is in no plant
+OPEN SIBLING waves/W-I.7.md:42 I7-G1 · seat transition: `src/styles/utilities/a11y-overrides.css` (outsheet: `src/styles/utilities/a11y-overrides.css` styles `src/components/dock`'s own classes outside `src/components/dock`, the directory the span reads) is in no plant
+OPEN SIBLING waves/W-I.7.md:44 I7-G3 · ring reserve: `src/components/dark-mode-toggle/dark-mode-toggle.css` (outsheet: `src/components/dark-mode-toggle/dark-mode-toggle.css` styles `src/components/dock`'s own classes outside `src/components/dock`, the directory the span reads) is in no plant
+OPEN SIBLING waves/W-I.7.md:44 I7-G3 · ring reserve: `src/styles/glass-specular-track.css` (outsheet: `src/styles/glass-specular-track.css` styles `src/components/dock`'s own classes outside `src/components/dock`, the directory the span reads) is in no plant
+OPEN SIBLING waves/W-I.7.md:44 I7-G3 · ring reserve: `src/styles/glass/glass-capsule.css` (outsheet: `src/styles/glass/glass-capsule.css` styles `src/components/dock`'s own classes outside `src/components/dock`, the directory the span reads) is in no plant
+OPEN SIBLING waves/W-I.7.md:44 I7-G3 · ring reserve: `src/styles/glass/material.css` (outsheet: `src/styles/glass/material.css` styles `src/components/dock`'s own classes outside `src/components/dock`, the directory the span reads) is in no plant
+OPEN SIBLING waves/W-I.7.md:44 I7-G3 · ring reserve: `src/styles/glass/rim.css` (outsheet: `src/styles/glass/rim.css` styles `src/components/dock`'s own classes outside `src/components/dock`, the directory the span reads) is in no plant
+OPEN SIBLING waves/W-I.7.md:44 I7-G3 · ring reserve: `src/styles/utilities/a11y-overrides.css` (outsheet: `src/styles/utilities/a11y-overrides.css` styles `src/components/dock`'s own classes outside `src/components/dock`, the directory the span reads) is in no plant
+in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 679, open 18
+exit=1
+
+## before (2): the fix-19 plants on the HEAD plan (BL_ROOT = git archive HEAD)
+OPEN NARROW  waves/W-I.2.md:93 G10 · snap targets are declared (static): passes with a snap rule on the run's children in `glass-capsule.css` (pass 18 FR-03 SIBLING outsheet) planted in src/styles/glass/glass-capsule.css: '.glass-dock .dock-run > * {\n    scroll-snap-align: start;\n}'
+OPEN NARROW  waves/W-I.2.md:93 G10 · snap targets are declared (static): passes with a snap rule on the run's children in `material.css` (pass 18 FR-03 SIBLING outsheet) planted in src/styles/glass/material.css: '.glass-dock .dock-run > * {\n    scroll-snap-align: start;\n}'
+OPEN NARROW  waves/W-I.2.md:93 G10 · snap targets are declared (static): passes with a snap rule on the run's children in `rim.css` (pass 18 FR-03 SIBLING outsheet) planted in src/styles/glass/rim.css: '.glass-dock .dock-run > * {\n    scroll-snap-align: start;\n}'
+OPEN NARROW  waves/W-I.2.md:93 G10 · snap targets are declared (static): passes with a snap rule on the run's children in `a11y-overrides.css` (pass 18 FR-03 SIBLING outsheet) planted in src/styles/utilities/a11y-overrides.css: '.glass-dock .dock-run > * {\n    scroll-snap-align: start;\n}'
+OPEN NARROW  waves/W-I.2.md:93 G10 · snap targets are declared (static): passes with a snap rule on the run's children in `glass-specular-track.css` (pass 18 FR-03 SIBLING outsheet) planted in src/styles/glass-specular-track.css: '.glass-dock .dock-run > * {\n    scroll-snap-align: start;\n}'
+OPEN NARROW  waves/W-I.2.md:93 G10 · snap targets are declared (static): passes with a snap rule on the run's children in `dark-mode-toggle.css` (pass 18 FR-03 SIBLING outsheet) planted in src/components/dark-mode-toggle/dark-mode-toggle.css: '.glass-dock .dock-run > * {\n    scroll-snap-align: start;\n}'
+OPEN NARROW  waves/W-I.7.md:42 I7-G1 · seat transition: passes with a seat transition in the global sheet that pads the seat (`glass-capsule.css:167`) (pass 18 FR-02 SIBLING outsheet) planted in src/styles/glass/glass-capsule.css: '.glass-dock .dock-run > .dock-icon-button { transition: inline-size va'
+OPEN NARROW  waves/W-I.7.md:42 I7-G1 · seat transition: passes with a zero-specificity dock rule under a layer, the size second (pass 18 FR-02 SIBLING outsheet) planted in src/styles/glass/glass-capsule.css: '@layer components {\n    :where(.glass-dock) .x { transition-property: '
+OPEN NARROW  waves/W-I.7.md:42 I7-G1 · seat transition: passes with a seat transition in `material.css`, which W-I.1 §4 edits (pass 18 FR-02 SIBLING outsheet) planted in src/styles/glass/material.css: '.glass-dock .dock-icon-button { transition: inline-size var(--spring-d'
+OPEN NARROW  waves/W-I.7.md:42 I7-G1 · seat transition: passes with the rim list's seat (`rim.css:63`), value on the next line (pass 18 FR-02 SIBLING outsheet) planted in src/styles/glass/rim.css: '.dock-icon-button {\n    transition:\n        width 200ms;\n}'
+OPEN NARROW  waves/W-I.7.md:42 I7-G1 · seat transition: passes with the size second in the list, in `a11y-overrides.css` (`:116`) (pass 18 FR-02 SIBLING outsheet) planted in src/styles/utilities/a11y-overrides.css: '.glass-dock .dock-icon-button { transition: background 120ms, block-si'
+OPEN NARROW  waves/W-I.7.md:42 I7-G1 · seat transition: passes with the carried form in `glass-specular-track.css` (`:37`) (pass 18 FR-02 SIBLING outsheet) planted in src/styles/glass-specular-track.css: '.dock-icon-button { --seat-transition: inline-size 200ms; transition: '
+OPEN NARROW  waves/W-I.7.md:42 I7-G1 · seat transition: passes with nested under `.glass-dock` in the toggle's sheet (`:57-58`) (pass 18 FR-02 SIBLING outsheet) planted in src/components/dark-mode-toggle/dark-mode-toggle.css: '.glass-dock {\n    & .dark-mode-toggle-button { transition: inline-size'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with the reserve as padding on the run in a global sheet (pass 18 FR-01 SIBLING outsheet) planted in src/styles/glass/glass-capsule.css: '.glass-dock .dock-run { padding-block: var(--dock-ring-reserve); }'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with the reserve on the seat, the rule `glass-capsule.css:167-169` writes (pass 18 FR-01 SIBLING outsheet) planted in src/styles/glass/glass-capsule.css: '.glass-dock .dock-icon-button { padding: var(--dock-ring-reserve); }'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with in `material.css`, value on the next line (pass 18 FR-01 SIBLING outsheet) planted in src/styles/glass/material.css: '.glass-dock .dock-run {\n    padding-inline:\n        var(--dock-ring-re'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with in `rim.css` (pass 18 FR-01 SIBLING outsheet) planted in src/styles/glass/rim.css: '.dock-icon-button { padding-inline-start: var(--dock-ring-reserve); }'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with in `a11y-overrides.css` (pass 18 FR-01 SIBLING outsheet) planted in src/styles/utilities/a11y-overrides.css: '.glass-dock .dock-run { padding: var(--dock-ring-reserve) 0; }'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with in `glass-specular-track.css` (pass 18 FR-01 SIBLING outsheet) planted in src/styles/glass-specular-track.css: '.dock-icon-button { padding-block-end: var(--dock-ring-reserve); }'
+OPEN NARROW  waves/W-I.7.md:44 I7-G3 · ring reserve: passes with in the toggle's sheet (pass 18 FR-01 SIBLING outsheet) planted in src/components/dark-mode-toggle/dark-mode-toggle.css: '.glass-dock .dark-mode-toggle-button { padding: var(--dock-ring-reserv'
+in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 704, open 20
+exit=1
+
+## after: the plan as fix-19 leaves it
+in-scope static gates 137 (hold lines 6; S 65, L 67, H 5), plants 704, open 0
+exit=0
