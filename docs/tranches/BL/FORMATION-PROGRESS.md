@@ -335,3 +335,7 @@ Outage log:
   - Open 10/48: the owner's (M-1x, M-6, gestalt); floor v2's (M-4, M-9, O-66 G2/G3, the O-87 shadow stack, 3 W-C rows); the route's (C-7).
   - Bundle +13,343 B over floor v2. Units pass (2333). The ratchet rebind is owed.
   C″ critic launched. Its Q-1 and Q-11 inputs are still unruled, so the critic reads the defaults.
+- 2026-10-09 — D4 pass 3 D′ critique banked: ADVANCE 33/40 (0.825). The prototype claimed 34, but every prototype number reproduced cell for cell.
+  - **R-10 fails (the one route-owned row):** "is a tile" is spelled twice and the two spellings disagree in paint. The corner hangs on [data-shape="cell"] by a descendant selector, while --selection-tile drives the rest; fact-split.mjs agrees on only 8/20 cells. The in-route cure: put corner, column, pad and leading under the same --selection-tile query the perimeter uses.
+  - Open rows waiting on the owner: T-3 and E-2 (Q-10); R-1 (shipped K2 is cut by up to 24.64 px whatever Q-5 rules); R-8 (Q-5); E-4 (Safari); G (two concentric outlines when focused and selected; Q-2, Q-3).
+  F spec launched.

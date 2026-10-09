@@ -1,0 +1,45 @@
+2026-10-09 16:19:26 · load { 201.76 204.24 266.25 }
+== clean
+      Tests  1 passed | 45 skipped (46)
+== plant A: :is(.toggle-group[data-shape="cell"] .toggle-group__item) { border-radius: 12px; }
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
++   "src/components/toggle-group/zz-plant.css | :is(.toggle-group[data-shape=\"cell\"] .toggle-group__item) | 12px",
+      Tests  1 failed | 45 skipped (46)
+== plant S: .toggle-group[data-size="sm"] :is(.toggle-group[data-shape="cell"] .toggle-group__item) { border-radius: var(--radius-panel); }
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
++   "src/components/toggle-group/zz-plant.css | .toggle-group[data-size=\"sm\"] :is(.toggle-group[data-shape=\"cell\"] .toggle-group__item) | var(--radius-panel)",
+      Tests  1 failed | 45 skipped (46)
+== plant H: .toggle-group__item:has(> * + *) { border-radius: 12px; }
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
++   "src/components/toggle-group/zz-plant.css | .toggle-group__item:has(> * + *) | 12px",
+      Tests  1 failed | 45 skipped (46)
+== plant V: .toggle-group[data-orientation="vertical"] :is(.toggle-group[data-shape="cell"] .toggle-group__item) { border-radius: 12px; }
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
++   "src/components/toggle-group/zz-plant.css | .toggle-group[data-orientation=\"vertical\"] :is(.toggle-group[data-shape=\"cell\"] .toggle-group__item) | 12px",
+      Tests  1 failed | 45 skipped (46)
+== plant W: :where(.toggle-group[data-shape=cell] [data-state=on]) { border-radius: 10px; }
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
++   "src/components/toggle-group/zz-plant.css | :where(.toggle-group[data-shape=cell] [data-state=on]) | 10px",
+      Tests  1 failed | 45 skipped (46)
+== plant P: .toggle-group:not([data-shape="pill"]) .toggle-group__item { border-radius: 9999px; }
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
++   "src/components/toggle-group/zz-plant.css | .toggle-group:not([data-shape=\"pill\"]) .toggle-group__item | 9999px",
+      Tests  1 failed | 45 skipped (46)
+== plant I: the tile corner without !important
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+-   "src/components/toggle-group/styles.css | :is(.toggle-group[data-shape=\"cell\"]) .toggle-group__item | var(--radius-field) !important",
++   "src/components/toggle-group/styles.css | :is(.toggle-group[data-shape=\"cell\"]) .toggle-group__item | var(--radius-field)",
+      Tests  1 failed | 45 skipped (46)
+== clean after restore (whole suite)
+      Tests  45 passed | 1 expected fail (46)
+2026-10-09 16:20:57 · load { 204.03 209.29 262.27 }
+== gate plant G1: a background on the tile group's own rule
+1
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  1 failed | 14 skipped (15)
+== gate plant G2: the tile group pads 0 (cuts the ring's reach)
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  1 failed | 14 skipped (15)
+== gate clean after restore
+      Tests  1 passed | 14 skipped (15)
+2026-10-09 16:21:42 · load { 157.06 196.30 254.77 }

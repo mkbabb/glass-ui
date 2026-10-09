@@ -1,0 +1,74 @@
+{
+ "id": "W-E",
+ "title": "every one-of-N option is one line, and what a consumer installs refuses one that is not (D4-E)",
+ "engine": "webkit",
+ "engineLabel": "Playwright WebKit 26.5",
+ "target": "dp-dist",
+ "dev": false,
+ "cells": [
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset",
+   "line": "preset · 4 items · 0 not one line · e.g. 40.00 px tall at rung 40.00 (1.00 rungs), 1 rows"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "preset",
+   "line": "preset refusal (flavor dist) · a line added to item 0 → no refusal (no console error, no throw)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "specimen",
+   "line": "specimen · 8 items · 8 not one line · e.g. 36.00 px tall at rung 36.00 (1.00 rungs), 3 rows"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "specimen",
+   "line": "specimen refusal (flavor dist) · a line added to item 0 → no refusal (no console error, no throw)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "strip",
+   "line": "strip · 6 items · 6 not one line · e.g. 44.00 px tall at rung 44.00 (1.00 rungs), 2 rows"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "strip",
+   "line": "strip refusal (flavor dist) · a line added to item 0 → no refusal (no console error, no throw)"
+  }
+ ],
+ "flavor": "dist",
+ "harness": {
+  "hash": "9fd4983bc6b9",
+  "files": 27,
+  "rev": "H3"
+ },
+ "run": {
+  "loadStart": "199.39 / 196.15 / 173.27",
+  "loadEnd": "188.45 / 193.95 / 172.75",
+  "census": {
+   "n": 36,
+   "sample": [
+    "36291 bash /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh --inspecto",
+    "36303 /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/Playwright.app/Contents/M",
+    "37427 /Users/mkbabb/Library/Caches/ms-playwright/chromium-1228/chrome-mac-arm64/Google"
+   ],
+   "waitedS": 2.4
+  },
+  "lockWaitS": 0
+ },
+ "pass": false,
+ "tally": "1/6 gating cells pass [library 1/6]",
+ "arms": {
+  "library": {
+   "pass": 1,
+   "of": 6
+  }
+ }
+}
