@@ -1,0 +1,628 @@
+diff --git a/src/components/_shared/menu/menu.css b/src/components/_shared/menu/menu.css
+index 816ce328..529d6b52 100644
+--- a/src/components/_shared/menu/menu.css
++++ b/src/components/_shared/menu/menu.css
+@@ -4,10 +4,12 @@
+        `backdrop-filter`, no rung — because the open menu's own plate is the one backdrop
+        sample for that visual body, and a row-level filter inside it would be a plate
+        nested in a plate for the width of one line of text. (The token home used to
+-       describe the row as "the quiet tier"; it never resolved a tier.) The fill reads
+-       the quiet rung's plate colour so the row still belongs to the ladder. */
++       describe the row as "the quiet tier"; it never resolved a tier.) LIGHT: the fill
++       reads the one-ink hover rung (`--fill-hover`, tokens/color-radius.css §1.3), since
++       the light menu plate is the theme's own ground and a plate colour over it paints
++       nothing. DARK: the quiet rung's plate colour. */
+     .glass-menu-row {
+-        --menu-row-bg: var(--glass-plate-quiet);
++        --menu-row-bg: light-dark(oklch(from var(--foreground) l c h / var(--fill-hover)), var(--glass-plate-quiet));
+         --menu-row-lift: -1px;
+         min-block-size: max(2rem, var(--touch-target, 2.75rem));
+         /* THE FULL LEG SET IS LOAD-BEARING, and this rule is where it is decided.
+diff --git a/src/components/configurator/styles.css b/src/components/configurator/styles.css
+index 1e56ee93..9dbc6f85 100644
+--- a/src/components/configurator/styles.css
++++ b/src/components/configurator/styles.css
+@@ -524,9 +524,9 @@
+         border-radius: var(--radius-pill);
+     }
+     .configurator-preset-chip.is-active {
+-        /* the selected rung — re-point the capsule fill toward the quiet glass-tint
+-         * selected register via the documented override hook (NO new composite). */
+-        --glass-capsule-fill: var(--glass-plate-quiet);
++        /* the selected rung via the documented override hook (NO new composite): light,
++         * the one-ink selected fill (`--fill-selected`); dark, the quiet glass tint. */
++        --glass-capsule-fill: light-dark(oklch(from var(--foreground) l c h / var(--fill-selected)), var(--glass-plate-quiet));
+     }
+ 
+     /* 5. The SIDE FLIP — a data-attr, default RIGHT.
+diff --git a/src/components/sheet/styles.css b/src/components/sheet/styles.css
+index 45a4cb72..d0aa2653 100644
+--- a/src/components/sheet/styles.css
++++ b/src/components/sheet/styles.css
+@@ -191,12 +191,10 @@
+      * warm ink at the two joins, and only on the detented arm — a plain sheet has nothing
+      * pinned and earns no line.
+      *
+-     * THE INK IS α 0.08, the spec's own figure (CWT-2 §3.4), spelled as TWO veil steps.
+-     * `--glass-veil-step` is 0.04 and it is the register the whole plate ladder is built
+-     * from (`glass.css:58` — every rung is `base ± n·step`), so `calc(step * 2)` mints
+-     * nothing and stays true if the register ever moves. A bare `var(--glass-veil-step)`
+-     * halved the spec silently, which is a divergence with no record; parsimony never
+-     * required it, because the doubling is as token-pure as the single. */
++     * THE INK IS α 0.08, the spec's own figure (CWT-2 §3.4). LIGHT: the one-ink
++     * register's in-content rule `--ink-seam` (tokens/color-radius.css §1.2); the light
++     * veil ink is the `--card` pole, which would draw a cream line on cream. DARK: two
++     * veil steps of the dark ink (`--glass-veil-step` 0.04, tokens/dark-arm.css). */
+     :where(
+         [data-slot="sheet-content"][data-detents]
+             > [data-slot="sheet-content-region"]
+@@ -213,7 +211,10 @@
+         overflow: hidden;
+         padding-block-end: var(--space-body);
+         border-block-end: var(--sheet-seam-width) solid
+-            oklch(from var(--glass-veil-ink) l c h / calc(var(--glass-veil-step) * 2));
++            light-dark(
++                color-mix(in oklab, var(--foreground) calc(var(--ink-seam) * 100%), transparent),
++                oklch(from var(--glass-veil-ink) l c h / calc(var(--glass-veil-step) * 2))
++            );
+     }
+ 
+     :where(
+@@ -223,7 +224,10 @@
+     ) {
+         padding-block-start: var(--space-body);
+         border-block-start: var(--sheet-seam-width) solid
+-            oklch(from var(--glass-veil-ink) l c h / calc(var(--glass-veil-step) * 2));
++            light-dark(
++                color-mix(in oklab, var(--foreground) calc(var(--ink-seam) * 100%), transparent),
++                oklch(from var(--glass-veil-ink) l c h / calc(var(--glass-veil-step) * 2))
++            );
+     }
+ 
+     /* THE ✕ GUTTER — the same reservation the plate makes, on the surface that is not the
+@@ -362,10 +366,10 @@
+         pointer-events: none;
+         background: linear-gradient(
+             var(--sheet-edge-direction),
+-            color-mix(in oklab, var(--glass-plate-overlay) 10%, transparent) 0,
+-            color-mix(in oklab, var(--glass-plate-overlay) 16%, transparent) 40px,
+-            color-mix(in oklab, var(--glass-plate-overlay) 34%, transparent) 120px,
+-            color-mix(in oklab, var(--glass-plate-overlay) 34%, transparent) 100%
++            color-mix(in oklab, light-dark(var(--overlay-scrim-subtle), var(--glass-plate-overlay)) 10%, transparent) 0,
++            color-mix(in oklab, light-dark(var(--overlay-scrim-subtle), var(--glass-plate-overlay)) 16%, transparent) 40px,
++            color-mix(in oklab, light-dark(var(--overlay-scrim-subtle), var(--glass-plate-overlay)) 34%, transparent) 120px,
++            color-mix(in oklab, light-dark(var(--overlay-scrim-subtle), var(--glass-plate-overlay)) 34%, transparent) 100%
+         );
+         backdrop-filter: blur(calc(34px * var(--glass-level)))
+             saturate(var(--glass-saturate));
+diff --git a/src/components/tabs/styles/segmented.css b/src/components/tabs/styles/segmented.css
+index a822d874..7149196c 100644
+--- a/src/components/tabs/styles/segmented.css
++++ b/src/components/tabs/styles/segmented.css
+@@ -225,7 +225,7 @@
+         --eyeglass-light-clock: var(--engage-control-engage-attack);
+         background: color-mix(
+             in oklab,
+-            var(--glass-plate-quiet),
++            light-dark(oklch(from var(--foreground) l c h / var(--fill-hover)), var(--glass-plate-quiet)),
+             var(--glass-capsule-warm) var(--glass-capsule-warm-floor)
+         );
+     }
+diff --git a/src/composables/color/accent-tone-solve.ts b/src/composables/color/accent-tone-solve.ts
+index 8632b788..63252287 100644
+--- a/src/composables/color/accent-tone-solve.ts
++++ b/src/composables/color/accent-tone-solve.ts
+@@ -18,7 +18,7 @@ import type { UseAccentToneOptions } from "./useAccentTone";
+ /**
+  * The canonical resting surface the accent sits ON when the consumer does not name
+  * one — the warm-cream `--card` plate (`tokens/color-radius.css`, light
+- * ~~`hsl(36 48% 97%)`~~ `hsl(30 85% 96%)` [2026-09-22 · O-32 CT2: the shipped light card;
++ * ~~`hsl(36 48% 97%)`~~ `hsl(30 85% 97%)` [2026-09-22 · O-32 CT2, lifted by D3 (10.2.0): the shipped light card;
+  * `use-accent-tone.test.ts` binds this literal to the token file's `--card` declaration]).
+  * DOM-free + deterministic (SSR-safe): the leaf cannot read the
+  * live `--card` token without a DOM, so the band-lightness solve defaults to this
+@@ -26,7 +26,7 @@ import type { UseAccentToneOptions } from "./useAccentTone";
+  * `opts.surface`. The CSS recipe's `var(--surface, var(--card))` is the live-cascade
+  * twin (it resolves the REAL token at paint); this default is the JS-side seed.
+  */
+-const DEFAULT_SURFACE = "hsl(30 85% 96%)";
++const DEFAULT_SURFACE = "oklch(0.9799 0.011 63.36)";
+ 
+ /** AA — the body-text contrast bar the resolved ink clears over the band. */
+ const AA_CONTRAST = 4.5;
+diff --git a/src/styles/glass/glass-capsule.css b/src/styles/glass/glass-capsule.css
+index 0e6e16ee..40ac7f32 100644
+--- a/src/styles/glass/glass-capsule.css
++++ b/src/styles/glass/glass-capsule.css
+@@ -77,7 +77,9 @@
+        recess is static (a sunken channel does not pulse — never a @keyframes
+        target; `proof:no-layout-animation` holds). */
+     .glass-capsule-track {
+-        background: var(--glass-plate-quiet);
++        /* LIGHT: the one-ink hover rung, never a plate colour (the track sits on a plate
++           of the same pole, where a plate fill paints nothing). DARK: the quiet plate. */
++        background: light-dark(oklch(from var(--foreground) l c h / var(--fill-hover)), var(--glass-plate-quiet));
+         backdrop-filter: var(--glass-blur-quiet);
+         box-shadow:
+             var(--glass-rim-top),
+diff --git a/src/styles/glass/veil.css b/src/styles/glass/veil.css
+index bf24eec1..2220998a 100644
+--- a/src/styles/glass/veil.css
++++ b/src/styles/glass/veil.css
+@@ -2,9 +2,10 @@
+    The INK-VEIL register — the plate paint, composed AT the element.
+ 
+    The token home (tokens/glass.css) declares the ladder: one ink, one base, one step,
+-   five derived rungs. This file declares the ONE recipe that turns a rung into paint,
+-   plus the observer-driven refinement that lets a measured-bright backdrop earn more
+-   ink than the rung's own.
++   five derived rungs. In light the "ink" is the `--card` pole and the base is the
++   computed bound; in dark it is a warm near-black ink (tokens/dark-arm.css). This file
++   declares the ONE recipe that turns a rung into paint, plus the observer-driven
++   refinement that lets a measured-bright backdrop earn more ink than the rung's own.
+ 
+    WHY IT IS A UTILITY AND NOT A TOKEN. A `:root`-composed plate color bakes `:root`'s
+    `--glass-level` and `--glass-backdrop-luma`, so an ancestor that re-points either one
+@@ -34,10 +35,12 @@
+    at step 7). The rungs are `--z-behind` / `--z-background` / `--z-content`
+    (tokens/scheme-motion.css). Published prose: DESIGN.md §"Plate register".
+ 
+-   THE EARNED DARKEN. `--glass-veil-rung` is the tier's own ink, clamped upward by the
++   THE EARNED INK. `--glass-veil-rung` is the tier's own α, clamped upward by the
+    measured backdrop luminance: at or below the knee the clamp resolves EXACTLY the
+-   rung's own ink (the calm identity — a plate over an unknown backdrop never falsely
+-   darkens), and past the knee it earns up to TWO more rungs of ink, ceiling included.
++   rung's own α (the calm identity — a plate over an unknown backdrop never falsely
++   thickens), and past the knee it earns up to TWO more steps, ceiling included. In
++   dark that darkens toward the ink; in light it thickens the `--card` pole, so a
++   sampled-bright backdrop moves a light plate ABOVE the bound, never below it.
+    Unsampled surfaces read the registered `--glass-backdrop-luma` initial 0 and sit on
+    the floor. This is the ONE chromatic writer on the plate body: there is no second
+    tint axis mixing the same plate toward the same ink.
+diff --git a/src/styles/tokens/color-radius.css b/src/styles/tokens/color-radius.css
+index 6dbdc758..62aaa340 100644
+--- a/src/styles/tokens/color-radius.css
++++ b/src/styles/tokens/color-radius.css
+@@ -75,7 +75,14 @@
+        lifted ~~hsl(24 8% 16%)~~ [2026-09-22 · O-32 §2.2: hsl(26 22% 17%), dark-arm.css]
+        (NOT re-warmed here — the dark register is its work).
+        Bounded: the cream family, never a tinted cast (the triumvirate bar). */
+-    --card: hsl(30 85% 96%);
++    /* THE PLATE POLE (light). Authored in oklch with L as its own token: the light
++       glass bound (tokens/glass.css) derives the pole's luminance from `--card-l`, the
++       one source, as Y = L³ (exact for a neutral; +0.001 at this chroma). A plain
++       per-mode pair (the dark arm: tokens/dark-arm.css), never a light-dark() fold,
++       because a number cannot ride light-dark(). The colour is hsl(30 85% 97%),
++       #fef7f1: the lift that takes the light plate off grey over paper (O-62). */
++    --card-l: 0.9799;
++    --card: oklch(var(--card-l) 0.011 63.36);
+     --card-foreground: var(--foreground);
+     --popover: var(--card);
+     --popover-foreground: var(--foreground);
+diff --git a/src/styles/tokens/dark-arm.css b/src/styles/tokens/dark-arm.css
+index 9b573ee0..e6a3f8e4 100644
+--- a/src/styles/tokens/dark-arm.css
++++ b/src/styles/tokens/dark-arm.css
+@@ -258,25 +258,39 @@
+ 
+     /* The dark arm mints NO second alpha ladder. Nine hand-tuned dark opacities used
+        to mirror nine light ones, and the two registers could drift apart without
+-       either being wrong on its own. The ink pair above is the whole dark arm now:
+-       one ink, one base, and every rung follows.
++       either being wrong on its own. The veil's dark arm below is one ink, one base
++       and one step, and every rung follows.
+ 
+        Grain, DARK arm. A multiply blend on a near-black canvas needs LESS alpha than
+        on cream — the honest inversion the measurements force. */
+     --paper-grain-opacity: 0.16;
+ 
+     /* ── The veil's DARK arm ────────────────────────────────────────────────────
+-       Two lines carry the whole dark ladder. The INK goes DEEPER (not lighter): a dark
+-       plate that lifts toward cream flattens its own silhouette into the page, and the
+-       rung must DIM in both modes for the ladder to be one ladder. The BASE moves +1
+-       step — the measured dark resting delta — and every rung follows it, because the
+-       rungs are arithmetic on the base.
++       The dark ladder is the ink ladder: the plate DIMS toward a warm near-black INK at
++       `base ± n·step`. (The light arm is the `--card` pole at the bound,
++       tokens/glass.css; its rungs are bound arithmetic, so the dark arm declares its
++       own here rather than inheriting them.) The BASE is the measured dark resting
++       rung; every rung is arithmetic on base and step.
+ 
+        (The state veils are the exception, and they are governed elsewhere: a grasp or
+        selection veil moves AWAY from the plate, which in dark means lighter. That is a
+        STATE law, not the medium's.) */
+     --glass-veil-ink:  oklch(0.17 0.03 70);
+     --glass-veil-base: 0.18;
++    --glass-veil-step: 0.04;
++
++    --glass-veil-wash:     calc(var(--glass-veil-base) - 2 * var(--glass-veil-step));
++    --glass-veil-quiet:    calc(var(--glass-veil-base) - 1 * var(--glass-veil-step));
++    --glass-veil-resting:  var(--glass-veil-base);
++    --glass-veil-floating: calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
++    --glass-veil-overlay:  calc(var(--glass-veil-base) + 2 * var(--glass-veil-step));
++    /* The off-ladder footprints in steps off resting: dock −1, crown +1, dialog +1,
++       sheet +2, chassis −2. */
++    --glass-veil-chassis:  calc(var(--glass-veil-base) - 2 * var(--glass-veil-step));
++    --glass-veil-dock:     calc(var(--glass-veil-base) - 1 * var(--glass-veil-step));
++    --glass-veil-crown:    calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
++    --glass-veil-dialog:   calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
++    --glass-veil-sheet:    calc(var(--glass-veil-base) + 2 * var(--glass-veil-step));
+ 
+     /* The FOCUS-VEIL dim, DARK arm (glass/focus-veil.css; the light arm is the plain
+        per-mode pair in tokens/glass.css). A plain `.dark` re-declaration, never a
+diff --git a/src/styles/tokens/glass.css b/src/styles/tokens/glass.css
+index 97921d2e..e40cf771 100644
+--- a/src/styles/tokens/glass.css
++++ b/src/styles/tokens/glass.css
+@@ -5,51 +5,57 @@
+    same-selector :root{} blocks resolve identically. */
+ :root {
+     /* ═══════════════════════════════════════════════
+-       §8  GLASS — ONE medium, five thicknesses
+-
+-       THE MATERIAL LAW. Occlusion is bought with RADIUS. Legibility is bought with
+-       INK. Neither is ever bought with alpha, and brightness is not an axis. Glass is
+-       a tone compressor — `L_out = floor + g·L_in`, hue preserved; the warm-cream read
+-       arrives by TRANSMISSION of the warm field through `saturate()`, never by painted
+-       cream. A rung is a THICKNESS of the same glass, never a different material.
+-
+-         rung      radius   ink α (light/dark)   band
+-         ────────  ──────   ──────────────────   ───────
+-         wash       10px      .06 / .10          content
+-         quiet      14px      .10 / .14          content
+-         resting    16px      .14 / .18          content   (the consumer plate)
+-         floating   20px      .18 / .22          chrome
+-         overlay    22px      .22 / .26          chrome
+-
+-       The content band tops at .14/.18, both under the 0.20 ceiling the
+-       80%-structure-kept transmission target needs. The chrome band claims OCCLUSION
+-       and buys it by BLUR, never by paint.
++       §8  GLASS — ONE medium, a light pole at the bound, a dark ink ladder
++
++       THE LIGHT LAW. The light veil is the theme's own ground, `--card`, painted at α:
++       `--glass-veil-ink` IS the pole, and the plate recipe (`@utility glass-plate`,
++       glass/veil.css) paints it at the rung's α. A light surface that does not know its
++       ground paints THE BOUND: the α at which the muted ink clears its contrast target
++       over ANY input (a black ground under the dark ink). The plate never darkens
++       toward a near-black ink over paper, so it never reads grey there (O-62).
++
++       THE BOUND HAS ONE SOURCE: `--glass-bound`, computed in the `:root` block at the
++       foot of this file from the ink (`--on-glass-muted-l`), the pole (`--card-l`) and
++       the target (`--glass-ink-target`). No light α is a literal; an ink or pole retune
++       moves every light rung.
++
++         rung (light)       radius   α                 band
++         ─────────────────  ──────   ───────────────   ───────
++         wash · chassis      10px    bound             content
++         quiet               14px    bound + 1 step    content
++         resting (= card)    16px    bound + 2 steps   content
++         floating · dock ·   20px    bound             chrome
++           crown
++         overlay · sheet     22px    bound + 1 step    chrome
++         dialog              20px    1                 the room
++         opaque (level 0)      0     1
++
++       THE DARK ARM keeps the ink ladder: a warm near-black ink at `base ± n·step`
++       (tokens/dark-arm.css), the plate DIMMING toward it.
+        ═══════════════════════════════════════════════ */
+ 
+-    /* THE INK — the one chromatic writer on the plate body. A warm near-black: the
+-       plate DARKENS toward it and never lightens toward cream. Plain per-mode pair —
+-       the dark arm re-declares it deeper in tokens/dark-arm.css, so the rung DIMS in
+-       BOTH modes (`sign(ΔL*) < 0` at every rung).
+-       Band: L ∈ [0.24, 0.32], C ≤ 0.045, h = the foreground hue. */
+-    --glass-veil-ink: oklch(0.28 0.035 70);
++    /* THE LIGHT POLE. The recipe composes `oklch(from <ink> l c h / α)`, so the
++       light "ink" is the pole itself: one colour, `--card`, read by name. The dark arm
++       re-declares a near-black ink (tokens/dark-arm.css). */
++    --glass-veil-ink: var(--card);
+ 
+-    /* THE LADDER — one base, one step, five derived rungs. Every rung is
+-       `base ± n·step`; there are no hand alphas, so monotone ordering is a property of
+-       the arithmetic rather than of five values that happen to climb. The dark arm
+-       moves base alone (+0.04) and the whole ladder follows.
++    /* THE LIGHT LADDER. `base` is the bound, the thinnest rung of each band; a step is
++       a third of what the bound leaves, so a band's thickest rung stays under α 1.
++       Monotone within a band by the arithmetic. The dark arm re-declares base, step and
++       every rung (tokens/dark-arm.css).
+ 
+        THE SUBSTITUTION-VS-INHERITANCE SEAM: the composed `--glass-plate-{rung}` colors
+        below resolve at THIS `:root`, so re-pointing `--glass-veil-base` on a DESCENDANT
+        does not re-compose an inherited plate color. A per-scope retune composes the
+        plate AT the element — `@utility glass-plate` (glass/veil.css) is that seam. */
+-    --glass-veil-base: 0.14;
+-    --glass-veil-step: 0.04;
++    --glass-veil-base: var(--glass-bound);
++    --glass-veil-step: calc((1 - var(--glass-bound)) / 3);
+ 
+-    --glass-veil-wash:     calc(var(--glass-veil-base) - 2 * var(--glass-veil-step));
+-    --glass-veil-quiet:    calc(var(--glass-veil-base) - 1 * var(--glass-veil-step));
+-    --glass-veil-resting:  var(--glass-veil-base);
+-    --glass-veil-floating: calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
+-    --glass-veil-overlay:  calc(var(--glass-veil-base) + 2 * var(--glass-veil-step));
++    --glass-veil-wash:     var(--glass-veil-base);
++    --glass-veil-quiet:    calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
++    --glass-veil-resting:  calc(var(--glass-veil-base) + 2 * var(--glass-veil-step));
++    --glass-veil-floating: var(--glass-veil-base);
++    --glass-veil-overlay:  calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
+ 
+     /* THICKNESS — the rung IS the radius. The band is [10, 22]: 10px is the least
+        radius that reads as a lens, 22px the ceiling past which cost climbs faster than
+@@ -106,36 +112,33 @@
+                        half-extent; the 13rem default is the centred-modal case.
+          • `-bloom`    the transition band beyond the core out to which the frost eases
+                        to the sharp page.
+-         • `-dim`      the centre-weighted dim. Rides the `--glass-plate-overlay` mix,
+-                       NOT `--overlay-scrim`; per-mode arms (light ~50% for parity with
+-                       the dark ~40% in tokens/dark-arm.css). */
++         • `-dim`      the centre-weighted dim. Light: the scrim ink
++                       (`--overlay-scrim-ink`, tokens/glass-fx.css) at a tenth — never a
++                       plate colour, because the light plate is the theme's own ground and
++                       would brighten what it covers. Dark: the plate-overlay mix at 40%
++                       (tokens/dark-arm.css), a per-mode pair. */
+     --glass-focus-veil-blur:   var(--glass-blur-floating-radius);
+     --glass-focus-veil-core-x: 13rem;
+     --glass-focus-veil-core-y: 13rem;
+     --glass-focus-veil-bloom:  7rem;
+-    --glass-focus-veil-dim: color-mix(in oklab, var(--glass-plate-overlay) 50%, transparent);
+-
+-    /* OFF-LADDER FOOTPRINTS — integer offsets, zero raw alphas. A surface whose
+-       footprint differs from a card's declares its distance from the resting rung in
+-       STEPS, so the whole set re-tunes with base/step. Each also PAIRS a radius: an ink
+-       and a radius that disagree are two rungs pretending to be one, and any departure
+-       is a RULED exemption with its ground on the surface.
+-         dock     −1  the sharpest glass in the library — chrome over an unknown field
+-                      must let that field through. RULED EXEMPTION on the radius: the
+-                      dock plate holds resting's 16px because it is the grasp register's
+-                      calibration host (the 26px held optic is 16 × 1.625)
+-         crown    +1  the detented sheet's CONGEAL FLOOR — a sheet at its peek rung is a
+-                      crown of glass over a page that must still read, and it thickens
+-                      ONE step to the sheet rung as it commits, so the lerp has two
+-                      distinct endpoints
+-         dialog   +1  the control-centre modal: see-through, still occluding; radius
+-                      pairs at floating's 20px
+-         sheet    +2  content-bearing over a busy grid; radius pairs at overlay's 22px */
+-    --glass-veil-chassis: calc(var(--glass-veil-base) - 2 * var(--glass-veil-step));
+-    --glass-veil-dock:    calc(var(--glass-veil-base) - 1 * var(--glass-veil-step));
+-    --glass-veil-crown:   calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
+-    --glass-veil-dialog:  calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
+-    --glass-veil-sheet:   calc(var(--glass-veil-base) + 2 * var(--glass-veil-step));
++    --glass-focus-veil-dim: color-mix(in oklab, var(--overlay-scrim-ink) 10%, transparent);
++
++    /* OFF-LADDER FOOTPRINTS (light), in whole steps off the bound, zero raw alphas.
++         chassis  bound      content glass behind a page section
++         dock     bound      chrome over an unknown field. RULED EXEMPTION on the
++                             radius: the dock plate holds resting's 16px because it is
++                             the grasp register's calibration host (26px = 16 × 1.625)
++         crown    bound      the detented sheet's congeal floor, chrome at its peek rung;
++                             it thickens ONE step to the sheet rung as it commits, so
++                             the lerp has two distinct endpoints
++         sheet    +1         content-bearing chrome over a busy grid
++         dialog   α 1        the room: its plate composes over the modal scrim, and any
++                             thinner α transmits that scrim as grey */
++    --glass-veil-chassis: var(--glass-veil-base);
++    --glass-veil-dock:    var(--glass-veil-base);
++    --glass-veil-crown:   var(--glass-veil-base);
++    --glass-veil-dialog:  1;
++    --glass-veil-sheet:   calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
+ 
+     /* The dock control's foreground base — a complete `hsl()` color consumed via
+        `var()`; for the muted icon weight the control mixes it down with
+@@ -149,8 +152,9 @@
+     --dock-fg-on-aurora: var(--foreground);
+ 
+     /* THE PLATE — one flat mix per rung, zero nested color-mix. The plate is the INK at
+-       the rung's alpha, lerped against the solid `--card` escape on the ONE
+-       `--glass-level` scalar:
++       the rung's alpha (in light the ink is the `--card` pole, so the mix is `--card`
++       at α = 1 − (1 − α_rung)·level), lerped against the solid `--card` escape on the
++       ONE `--glass-level` scalar:
+          level 1   → the ink at the rung's own alpha (the glass identity)
+          level 0.3 → the firmer, mostly-solid plate `prefers-contrast: more` rides
+          level 0   → solid `--card` (the opaque escape, reduced-transparency + WHC)
+@@ -249,12 +253,59 @@
+        Input/Textarea/Select/Combobox/NumberField — so the whole control band is ONE
+        material at rest instead of a per-control fork. The register adopts the WARMER
+        rung (the no-gray choice); per-control recipes read these tokens and fork
+-       nothing. The hover lift mixes the rest fill one step toward the resting rung so
+-       every control brightens in lockstep. */
++       nothing. The hover answer: in light, the one-ink hover fill (`--fill-hover`,
++       tokens/color-radius.css §1.3) added to the rest plate, because two light plates
++       are one pole and their mix paints nothing; in dark, the rest fill mixed one step
++       toward the resting rung. */
+     --control-surface-bg:        var(--glass-plate-quiet);
+     --control-surface-border:    var(--glass-border-floating);
+     --control-surface-blur:      var(--glass-blur-quiet);
+-    --control-surface-bg-hover:  color-mix(in oklab, var(--glass-plate-quiet), var(--glass-plate-resting) 35%);
++    --control-surface-bg-hover:  light-dark(
++        color-mix(in oklab, var(--glass-plate-quiet), var(--foreground) calc(var(--fill-hover) * 100%)),
++        color-mix(in oklab, var(--glass-plate-quiet), var(--glass-plate-resting) 35%)
++    );
++
++    /* THE LIGHT BOUND's two authored inputs. The target is WCAG 4.5:1 plus 0.3 of
++       raster margin: an engine's glyph antialiasing costs up to 0.22 of ratio at a
++       solved bound, and the margin is stated in the unit it is lost in.
++       `--glass-bound-ground` is the encoded tone of the worst ground for the light
++       ink: 0, black. */
++    --glass-ink-target: 4.8;
++    --glass-bound-ground: 0;
++
++    /* ── THE LIGHT BOUND ──────────────────────────────────────────────────────────
++         Y        = L³ (OKLab; exact for a neutral)
++         need     the composite luminance the muted ink needs at the target over the
++                  worst ground (black): above the ink
++         E(y)     = 1.055·y^(1/2.4) − 0.055, the encoded tone the engines composite in
++         bound    = (E(need) − ground) / (E(pole) − ground): the α of the pole that
++                  lifts the worst ground to `need`
++       `--glass-bound` is registered `<number>` (below), so every light plate carries
++       the computed number, and an unreachable or invalid solve computes to its initial
++       value, 1: an opaque plate, legible and visibly not glass. The dark arm does not
++       read it. */
++    --glass-ink-y: pow(var(--on-glass-muted-l), 3);
++    --glass-pole-y: pow(var(--card-l), 3);
++    --glass-need-y: calc(
++        (1 - var(--glass-bound-ground)) * (var(--glass-ink-target) * (var(--glass-ink-y) + 0.05) - 0.05) +
++            var(--glass-bound-ground) * ((var(--glass-ink-y) + 0.05) / var(--glass-ink-target) - 0.05)
++    );
++    --glass-need-e: calc(1.055 * pow(var(--glass-need-y), 0.416667) - 0.055);
++    --glass-pole-e: calc(1.055 * pow(var(--glass-pole-y), 0.416667) - 0.055);
++    --glass-bound: clamp(
++        0,
++        calc(
++            (var(--glass-need-e) - var(--glass-bound-ground)) /
++                (var(--glass-pole-e) - var(--glass-bound-ground))
++        ),
++        1
++    );
++}
++
++@property --glass-bound {
++    syntax: "<number>";
++    inherits: true;
++    initial-value: 1;
+ }
+ 
+ /* The typed per-instance axes — @property no-op floors. Registered here beside the §8
+diff --git a/src/styles/tokens/light-dark.css b/src/styles/tokens/light-dark.css
+index 90e71784..bd2634d1 100644
+--- a/src/styles/tokens/light-dark.css
++++ b/src/styles/tokens/light-dark.css
+@@ -113,8 +113,10 @@
+            the light arm of the `--card` declaration below and color-radius.css]
+            (LOCKSTEP color-radius.css --card) so the light glass plate reads
+            warm-not-gray; the dark arm is UNCHANGED. */
+-        --card:                       light-dark(hsl(30 85% 96%), hsl(26 22% 17%));
+-        --popover:                    light-dark(hsl(30 85% 96%), hsl(26 22% 17%));
++        /* `--card` / `--popover` are NOT in this fold: the light pole carries its L as a
++           numeric token the light glass bound reads, and a number cannot ride
++           light-dark(). They are a plain per-mode pair (color-radius.css +
++           dark-arm.css, whose dark values this fold restated). */
+         --surface-public-data-panel:  light-dark(hsl(44 16% 96%), hsl(36 9% 18%));
+ 
+         /* The chromatic dark --primary (legendre-violet house
+diff --git a/src/styles/tokens/manifest.ts b/src/styles/tokens/manifest.ts
+index 7dddf7d1..86db25e4 100644
+--- a/src/styles/tokens/manifest.ts
++++ b/src/styles/tokens/manifest.ts
+@@ -20,6 +20,7 @@ export const semanticTokens = {
+     material: [
+         "--glass-level", "--glass-depth", "--glass-accent", "--glass-accent-strength",
+         "--glass-veil-ink", "--glass-veil-base", "--glass-veil-step",
++        "--glass-bound", "--glass-ink-target",
+         "--glass-saturate",
+     ],
+     type: [
+diff --git a/src/styles/tokens/on-glass-fg.css b/src/styles/tokens/on-glass-fg.css
+index 7841ff27..7eabf57c 100644
+--- a/src/styles/tokens/on-glass-fg.css
++++ b/src/styles/tokens/on-glass-fg.css
+@@ -32,7 +32,11 @@
+    resolution under .dark, not a single-declaration light-dark() that an inset-
+    shadow downstream could collapse — the light-dark() inset-shadow trap). */
+ :root {
+-    --on-glass-muted:        hsl(30 26% 35%);   /* the muted caption rung over the composited cream plate (5.76:1 vs plate; darker than --neutral-5 L40) */
++    /* The muted ink over glass, L as its own token: the light glass bound
++       (tokens/glass.css) solves against it, deriving Y = L³ from `--on-glass-muted-l`.
++       The colour is hsl(30 26% 35%), #705942. */
++    --on-glass-muted-l:      0.4811;
++    --on-glass-muted:        oklch(var(--on-glass-muted-l) 0.046 66.37);
+     --on-glass-muted-strong: hsl(28 28% 28%);   /* the -strong secondary rung, one step more present (7.79:1 vs plate) */
+     --input-on-glass:        hsl(36 40% 92%);   /* the form-well fill over glass — grounded warm so the input TEXT (--foreground) reads against a stable base (14.9:1) */
+     /* (`--track-well-recess` is NOT declared here. It is a HOST-RELATIVE
+diff --git a/src/styles/tokens/scale-paper.css b/src/styles/tokens/scale-paper.css
+index 21fcc740..5e974181 100644
+--- a/src/styles/tokens/scale-paper.css
++++ b/src/styles/tokens/scale-paper.css
+@@ -100,10 +100,11 @@
+ 
+        • `--control-checked-bg` — the SELECTED glass-tinted fill. The recipe is minted
+          ONCE here (the anti-paste bite: a second inline `color-mix(... --primary 88% ...)`
+-         literal on a checks atom reds — the recipe IS the token). Mirrors the
+-         glass-`--primary` over the floating tier the Checkbox already speaks, so the ring
+-         goes outline → filled glass disc (a real material step), warm-not-saturated. */
+-    --control-checked-bg: color-mix(in srgb, var(--primary) 88%, var(--glass-plate-floating));
++         literal on a checks atom reds — the recipe IS the token). `--primary` at 88%
++         over, in light, whatever the control sits on (no plate colour: the light
++         floating plate is the `--card` pole and would only pale the disc), in dark the
++         floating tier the Checkbox already speaks. */
++    --control-checked-bg: color-mix(in srgb, var(--primary) 88%, light-dark(transparent, var(--glass-plate-floating)));
+ 
+     /* ═══════════════════════════════════════════════
+        §12 PAPER TEXTURES
+diff --git a/src/styles/tokens/sizing.css b/src/styles/tokens/sizing.css
+index 2ba54adf..f14c3d1e 100644
+--- a/src/styles/tokens/sizing.css
++++ b/src/styles/tokens/sizing.css
+@@ -198,13 +198,13 @@
+     --dock-scroll-safe-inset: calc(var(--focus-ring-width, 2px) + 1px);
+     --dock-scroll-gutter: var(--dock-scroll-safe-inset);
+ 
+-    /* Both legs point at NAMED glass tiers a measurable step above the dock's own
+-       composed substrate — a same-hue `--card` mix at an adjacent alpha is a sub-1%-ΔL
+-       no-op ("nothing on hover, something on click"). Hover wakes as the 65% plate;
+-       active is the tier above it, a glass surface the substrate shows through rather
+-       than a flat ink wash. A REGISTER change, not a magnitude knob. */
+-    --dock-control-hover-bg: var(--glass-plate-resting);
+-    --dock-control-active-bg: var(--glass-plate-floating);
++    /* A per-mode pair. LIGHT: both legs read the one-ink FILL register
++       (tokens/color-radius.css §1.3); the light plates are all `--card` at α, so a
++       plate over the dock's own chrome plate is a same-hue no-op, and state is carried
++       by ink. DARK: both legs point at named glass tiers a measurable step above the
++       dock's own composed substrate (hover the resting plate, active the tier above). */
++    --dock-control-hover-bg: light-dark(oklch(from var(--foreground) l c h / var(--fill-hover)), var(--glass-plate-resting));
++    --dock-control-active-bg: light-dark(oklch(from var(--foreground) l c h / var(--fill-selected)), var(--glass-plate-floating));
+ 
+     /* A 40px dock tile is a fraction of a card's plate, so the global 36% specular
+        blooms a tile-filling disc on it. 22% wakes as a restrained edge-catch instead;
+@@ -222,7 +222,7 @@
+        derivation, where `--border` is a shadcn bridge the band walks off. */
+     --dock-hairline: var(--surface-tint-15);
+     --dock-layer-switcher-hover: color-mix(in srgb, var(--accent) 30%, transparent);
+-    --dock-layer-switcher-active: var(--glass-plate-floating);
++    --dock-layer-switcher-active: var(--dock-control-active-bg);
+     /* The switcher TAB is a compact square, distinct from the 40px dock CONTROL: at
+        control size a 3-tab column stands ~140px tall, a giant pill of dead space.
+        28px density-scaled keeps the switcher a compact column the indicator travels. */
+@@ -255,13 +255,13 @@
+        ring/accent defers so the consumer's indicator reads. */
+     --dock-ring: var(--focus-ring-shadow);
+ 
+-    /* The press DARKEN — a tier BELOW resting, read on `:active` alongside the
+-       scale-press so a press lands a brief glass-darken rather than scaling alone.
+-       Auto-flips with `--foreground` / `--glass-plate-resting`. */
+-    --dock-control-press-bg: color-mix(
+-        in oklab,
+-        var(--glass-plate-resting),
+-        var(--foreground) 7%
++    /* The press DARKEN, read on `:active` alongside the scale-press so a press lands a
++       brief darken rather than scaling alone. LIGHT: the one-ink SELECTED rung, ink over
++       the control and never a plate colour. DARK: the resting plate stepped 7% toward
++       `--foreground`. */
++    --dock-control-press-bg: light-dark(
++        oklch(from var(--foreground) l c h / var(--fill-selected)),
++        color-mix(in oklab, var(--glass-plate-resting), var(--foreground) 7%)
+     );
+ 
+     /* Dock touch-target floor. The base tracks the desktop default; the
+diff --git a/tests/composables/color/use-accent-tone.test.ts b/tests/composables/color/use-accent-tone.test.ts
+index 9229dbd6..fe4a0bd3 100644
+--- a/tests/composables/color/use-accent-tone.test.ts
++++ b/tests/composables/color/use-accent-tone.test.ts
+@@ -45,11 +45,14 @@ function wcag(a: AnyColor, b: AnyColor) {
+ 
+ // [2026-09-22 · O-32 CT2: the fixture held the struck grounds ~~hsl(36 48% 97%)~~ /
+ // ~~hsl(24 8% 16%)~~; it now reads the shipped `--card` bytes out of the token files, so
+-// the grounds cannot drift from paint again—hsl(30 85% 96%) light, hsl(26 22% 17%) dark.]
++// the grounds cannot drift from paint again—hsl(30 85% 97%) light, hsl(26 22% 17%) dark.]
+ function shippedCard(path: string): string {
+-    const match = /^\s*--card:\s*([^;]+);/m.exec(readFileSync(path, "utf8"));
++    const css = readFileSync(path, "utf8");
++    const match = /^\s*--card:\s*([^;]+);/m.exec(css);
+     if (!match) throw new Error(`no --card declaration in ${path}`);
+-    return match[1].trim();
++    // The light pole's L is its own token (`--card-l`, the light glass bound reads it).
++    const l = /^\s*--card-l:\s*([^;]+);/m.exec(css);
++    return l ? match[1].trim().replace("var(--card-l)", l[1].trim()) : match[1].trim();
+ }
+ const LIGHT_CARD = shippedCard("src/styles/tokens/color-radius.css");
+ const DARK_CARD = shippedCard("src/styles/tokens/dark-arm.css");

@@ -290,3 +290,10 @@ Outage log:
   - The MutationObserver is proved (the nosub plant fails).
   - Lunes: 0/80 corner points take a press; the nohit plant takes 80/80.
   The dock harness gains the seat's edits. G critic launched.
+- 2026-10-08 — D3 pass 3 MINOR-SPLIT banked: the 10.2.0 subset is 10.1.0 plus only floor v2's light arm. minor-split.patch: 16 files, +222/−128, applies clean, no recipe changed. Light sets --glass-veil-ink: var(--card); the card pole lifts to #fef7f1; computed bound --glass-bound 0.890991; FL-6 state fills via light-dark(); the dark arm restates 10.1.0, so its paint is unchanged.
+  W-0.1 gates in Chromium:
+  - G1 PASS 11/11; G4 PASS 108/108; G5 PASS (roster 289=289, ratchet rebind +2,355 B owed).
+  - G6 PASS: dark identical to HEAD (914/914, ΔE 0.0000). G7 PASS: 0 regressions.
+  - **G2 FAIL** (light 0.037) and **G3 FAIL** (row darkens the plate ΔL −0.033).
+  Light M-2 is red only on the held dock (FL-7 absent). M-3 light reads 2.79 at the 0.48 stroke; a 0.52 variant reaches 3.16 except two rows. Q-11 off-paper REPORTED 48/66 grey.
+  10.2.0 is not shippable from this subset until G2 and G3 pass. C″ spec launched (its critic follows; Q-1 and Q-11 still owed).

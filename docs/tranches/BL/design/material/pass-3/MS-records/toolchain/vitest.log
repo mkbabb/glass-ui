@@ -1,0 +1,1081 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p3/minor/wt
+
+(node:59718) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/components/menu/contract.test.ts (12 tests | 1 failed) 3927ms
+     × keeps the click branch to one portaled menu and restores focus on execute 724ms
+ ❯ tests/gates/boot-graph.test.ts (14 tests | 3 failed) 836ms
+     × the built demo has a dist-demo to measure 5ms
+     × the dist-demo it measures is NEWER than every source it is built from 71ms
+     × the eager graph stays under the modulepreload and byte ceilings 6ms
+ ❯ tests/styles/glass-subtlety.test.ts (36 tests | 6 failed) 29141ms
+     × declares a STRICTLY increasing ink register in BOTH modes 8ms
+     × keeps the CONTENT band under the transmission ceiling in both modes 1ms
+     × derives EVERY rung from the one base and the one step — no hand alphas 3ms
+     × moves the DARK arm by the base alone — one line, the whole ladder 5ms
+     × DIMS in both modes — the ink never inverts to a lightener 2ms
+     × PAIRS the two axes at every surface — one radius per ink 638ms
+(node:61168) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/styles/contrast-computed.test.ts (99 tests | 29 failed) 489ms
+       × --muted-foreground clears 4.5:1 on every field surface [light] 198ms
+       × the control-bit perimeter clears 3:1 on every surface a checks atom sits on [light] 4ms
+       × --success clears 3:1 on --card [light] 0ms
+       × --warning clears 3:1 on --card [light] 0ms
+       × --info clears 3:1 on --card [light] 1ms
+       × --destructive clears 3:1 on --card [light] 0ms
+       × reads as error INK over the surfaces it lands on [light] 0ms
+       × "over --card 3.30" (color-radius.css, light) 0ms
+       × "over --card 3.27" (color-radius.css, light) 0ms
+       × "4.53 over `--card`" (light-dark.css, light) 0ms
+       × "O-20 B-7: 5.02:1" (color-radius.css, light) 0ms
+       × "computes 1.87:1 on --card" (color-radius.css, light) 0ms
+       × --section-color-0 clears 4.5:1 on --card [light] 0ms
+       × --section-color-1 clears 4.5:1 on --card [light] 0ms
+       × --section-color-2 clears 4.5:1 on --card [light] 0ms
+       × --section-color-3 clears 4.5:1 on --card [light] 0ms
+       × --section-color-4 clears 4.5:1 on --card [light] 0ms
+       × --section-color-5 clears 4.5:1 on --card [light] 0ms
+       × --section-color-6 clears 4.5:1 on --card [light] 0ms
+       × --section-color-7 clears 4.5:1 on --card [light] 0ms
+       × --section-color-8 clears 4.5:1 on --card [light] 0ms
+       × --section-color-9 clears 4.5:1 on --card [light] 0ms
+       × --section-color-10 clears 4.5:1 on --card [light] 0ms
+       × --section-color-11 clears 4.5:1 on --card [light] 0ms
+       × --section-color-12 clears 4.5:1 on --card [light] 0ms
+       × the library's own tinted eyebrow reads the ramp, and that default clears the floor 2ms
+       × A-1 · the inactive pill label clears 4.5:1 over the quiet track on --card [light] 4ms
+       × A-3 · the inactive underline label clears 4.5:1 on --background and --card [light] 2ms
+       × L-4 · every Configurator muted text site clears 4.5:1 on --card [light] 0ms
+ ❯ tests/styles/focus-veil.test.ts (19 tests | 1 failed) 354ms
+     × mints the five-value --glass-focus-veil-* cohort, blur BOUND to the ladder 5ms
+(node:62075) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 40 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the built demo has a dist-demo to measure
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:566:34
+    564|
+    565|     it("the built demo has a dist-demo to measure", () => {
+    566|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    567|     });
+    568|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/40]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:570:34
+    568|
+    569|     it("the dist-demo it measures is NEWER than every source it is bui…
+    570|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    571|         const builtAt = statSync(indexHtml).mtimeMs;
+    572|         const newestSrc = newestSourceMtime();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/40]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the eager graph stays under the modulepreload and byte ceilings
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:580:34
+    578|
+    579|     it("the eager graph stays under the modulepreload and byte ceiling…
+    580|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    581|         const html = readFileSync(indexHtml, "utf8");
+    582|         const graph = measureEagerGraph(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/40]⎯
+
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §2 placeholder registers — one token, and that token computes > --muted-foreground clears 4.5:1 on every field surface [light]
+Error: unparsed colour: oklch(var(--card-l) 0.011 63.36)
+ ❯ resolveColour tests/styles/contrast-computed.test.ts:264:11
+    262|     }
+    263|
+    264|     throw new Error(`unparsed colour: ${expr}`);
+       |           ^
+    265| }
+    266|
+ ❯ resolveColour tests/styles/contrast-computed.test.ts:212:44
+ ❯ ratio tests/styles/contrast-computed.test.ts:285:16
+ ❯ tests/styles/contrast-computed.test.ts:396:38
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/40]⎯
+
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §3 control boundaries — the unchecked state is visible at all > the control-bit perimeter clears 3:1 on every surface a checks atom sits on [light]
+Error: unparsed colour: oklch(var(--card-l) 0.011 63.36)
+ ❯ resolveColour tests/styles/contrast-computed.test.ts:264:11
+    262|     }
+    263|
+    264|     throw new Error(`unparsed colour: ${expr}`);
+       |           ^
+    265| }
+    266|
+ ❯ resolveColour tests/styles/contrast-computed.test.ts:212:44
+ ❯ ratio tests/styles/contrast-computed.test.ts:285:16
+ ❯ tests/styles/contrast-computed.test.ts:452:38
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/40]⎯
+
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §3b status marks — a solitary StatusDot's tone is visible at all > --success clears 3:1 on --card [light]
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §3b status marks — a solitary StatusDot's tone is visible at all > --warning clears 3:1 on --card [light]
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §3b status marks — a solitary StatusDot's tone is visible at all > --info clears 3:1 on --card [light]
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §3b status marks — a solitary StatusDot's tone is visible at all > --destructive clears 3:1 on --card [light]
+Error: unparsed colour: oklch(var(--card-l) 0.011 63.36)
+ ❯ resolveColour tests/styles/contrast-computed.test.ts:264:11
+    262|     }
+    263|
+    264|     throw new Error(`unparsed colour: ${expr}`);
+       |           ^
+    265| }
+    266|
+ ❯ resolveColour tests/styles/contrast-computed.test.ts:212:44
+ ❯ ratio tests/styles/contrast-computed.test.ts:285:16
+ ❯ tests/styles/contrast-computed.test.ts:494:38
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/40]⎯
+
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §4 --destructive carries both of its jobs > reads as error INK over the surfaces it lands on [light]
+Error: unparsed colour: oklch(var(--card-l) 0.011 63.36)
+ ❯ resolveColour tests/styles/contrast-computed.test.ts:264:11
+    262|     }
+    263|
+    264|     throw new Error(`unparsed colour: ${expr}`);
+       |           ^
+    265| }
+    266|
+ ❯ resolveColour tests/styles/contrast-computed.test.ts:212:44
+ ❯ ratio tests/styles/contrast-computed.test.ts:285:16
+ ❯ tests/styles/contrast-computed.test.ts:525:38
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/40]⎯
+
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §5 every contrast figure a token comment claims is TRUE of the bytes > "over --card 3.30" (color-radius.css, light)
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §5 every contrast figure a token comment claims is TRUE of the bytes > "over --card 3.27" (color-radius.css, light)
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §5 every contrast figure a token comment claims is TRUE of the bytes > "4.53 over `--card`" (light-dark.css, light)
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §5 every contrast figure a token comment claims is TRUE of the bytes > "O-20 B-7: 5.02:1" (color-radius.css, light)
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §5 every contrast figure a token comment claims is TRUE of the bytes > "computes 1.87:1 on --card" (color-radius.css, light)
+Error: unparsed colour: oklch(var(--card-l) 0.011 63.36)
+ ❯ resolveColour tests/styles/contrast-computed.test.ts:264:11
+    262|     }
+    263|
+    264|     throw new Error(`unparsed colour: ${expr}`);
+       |           ^
+    265| }
+    266|
+ ❯ resolveColour tests/styles/contrast-computed.test.ts:212:44
+ ❯ ratio tests/styles/contrast-computed.test.ts:285:16
+ ❯ tests/styles/contrast-computed.test.ts:924:34
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/40]⎯
+
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §6 the 13-stop section ramp reads as text on the card it lands on > --section-color-0 clears 4.5:1 on --card [light]
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §6 the 13-stop section ramp reads as text on the card it lands on > --section-color-1 clears 4.5:1 on --card [light]
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §6 the 13-stop section ramp reads as text on the card it lands on > --section-color-2 clears 4.5:1 on --card [light]
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §6 the 13-stop section ramp reads as text on the card it lands on > --section-color-3 clears 4.5:1 on --card [light]
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §6 the 13-stop section ramp reads as text on the card it lands on > --section-color-4 clears 4.5:1 on --card [light]
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §6 the 13-stop section ramp reads as text on the card it lands on > --section-color-5 clears 4.5:1 on --card [light]
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §6 the 13-stop section ramp reads as text on the card it lands on > --section-color-6 clears 4.5:1 on --card [light]
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §6 the 13-stop section ramp reads as text on the card it lands on > --section-color-7 clears 4.5:1 on --card [light]
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §6 the 13-stop section ramp reads as text on the card it lands on > --section-color-8 clears 4.5:1 on --card [light]
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §6 the 13-stop section ramp reads as text on the card it lands on > --section-color-9 clears 4.5:1 on --card [light]
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §6 the 13-stop section ramp reads as text on the card it lands on > --section-color-10 clears 4.5:1 on --card [light]
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §6 the 13-stop section ramp reads as text on the card it lands on > --section-color-11 clears 4.5:1 on --card [light]
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §6 the 13-stop section ramp reads as text on the card it lands on > --section-color-12 clears 4.5:1 on --card [light]
+Error: unparsed colour: oklch(var(--card-l) 0.011 63.36)
+ ❯ resolveColour tests/styles/contrast-computed.test.ts:264:11
+    262|     }
+    263|
+    264|     throw new Error(`unparsed colour: ${expr}`);
+       |           ^
+    265| }
+    266|
+ ❯ resolveColour tests/styles/contrast-computed.test.ts:212:44
+ ❯ ratio tests/styles/contrast-computed.test.ts:285:16
+ ❯ tests/styles/contrast-computed.test.ts:967:34
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/40]⎯
+
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §6 the 13-stop section ramp reads as text on the card it lands on > the library's own tinted eyebrow reads the ramp, and that default clears the floor
+Error: unparsed colour: oklch(var(--card-l) 0.011 63.36)
+ ❯ resolveColour tests/styles/contrast-computed.test.ts:264:11
+    262|     }
+    263|
+    264|     throw new Error(`unparsed colour: ${expr}`);
+       |           ^
+    265| }
+    266|
+ ❯ resolveColour tests/styles/contrast-computed.test.ts:212:44
+ ❯ ratio tests/styles/contrast-computed.test.ts:285:16
+ ❯ tests/styles/contrast-computed.test.ts:993:30
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/40]⎯
+
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §8 the library's own text inks read on the grounds they paint over > A-1 · the inactive pill label clears 4.5:1 over the quiet track on --card [light]
+Error: unparsed colour: oklch(var(--card-l) 0.011 63.36)
+ ❯ resolveColour tests/styles/contrast-computed.test.ts:264:11
+    262|     }
+    263|
+    264|     throw new Error(`unparsed colour: ${expr}`);
+       |           ^
+    265| }
+    266|
+ ❯ resolveColour tests/styles/contrast-computed.test.ts:212:44
+ ❯ quietTrackOverCard tests/styles/contrast-computed.test.ts:1144:25
+ ❯ tests/styles/contrast-computed.test.ts:1176:32
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/40]⎯
+
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §8 the library's own text inks read on the grounds they paint over > A-3 · the inactive underline label clears 4.5:1 on --background and --card [light]
+Error: unparsed colour: oklch(var(--card-l) 0.011 63.36)
+ ❯ resolveColour tests/styles/contrast-computed.test.ts:264:11
+    262|     }
+    263|
+    264|     throw new Error(`unparsed colour: ${expr}`);
+       |           ^
+    265| }
+    266|
+ ❯ resolveColour tests/styles/contrast-computed.test.ts:212:44
+ ❯ ratio tests/styles/contrast-computed.test.ts:285:16
+ ❯ tests/styles/contrast-computed.test.ts:1197:38
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/40]⎯
+
+ FAIL  tests/styles/contrast-computed.test.ts > G-CONTRAST-COMPUTED — authored token pairs clear their floors, by computation > §8 the library's own text inks read on the grounds they paint over > L-4 · every Configurator muted text site clears 4.5:1 on --card [light]
+Error: unparsed colour: oklch(var(--card-l) 0.011 63.36)
+ ❯ resolveColour tests/styles/contrast-computed.test.ts:264:11
+    262|     }
+    263|
+    264|     throw new Error(`unparsed colour: ${expr}`);
+       |           ^
+    265| }
+    266|
+ ❯ resolveColour tests/styles/contrast-computed.test.ts:212:44
+ ❯ ratio tests/styles/contrast-computed.test.ts:285:16
+ ❯ tests/styles/contrast-computed.test.ts:1251:38
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/40]⎯
+
+ FAIL  tests/styles/focus-veil.test.ts > G-RUNG-ONLY · GRADIENT-BLUR arm — the primitive is token-driven > mints the five-value --glass-focus-veil-* cohort, blur BOUND to the ladder
+AssertionError: expected '\n:root {\n    \n\n    \n    --glass-…' to match /--glass-focus-veil-dim:\s*color-mix\(…/
+
+- Expected:
+/--glass-focus-veil-dim:\s*color-mix\(in oklab, var\(--glass-plate-overlay\) 50%, transparent\);/
+
++ Received:
+"
+:root {
+    
+
+    
+    --glass-veil-ink: var(--card);
+
+    
+    --glass-veil-base: var(--glass-bound);
+    --glass-veil-step: calc((1 - var(--glass-bound)) / 3);
+
+    --glass-veil-wash:     var(--glass-veil-base);
+    --glass-veil-quiet:    calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
+    --glass-veil-resting:  calc(var(--glass-veil-base) + 2 * var(--glass-veil-step));
+    --glass-veil-floating: var(--glass-veil-base);
+    --glass-veil-overlay:  calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
+
+    
+    --glass-blur-wash-radius:     10px;
+    --glass-blur-quiet-radius:    14px;
+    --glass-blur-resting-radius:  16px;
+    --glass-blur-floating-radius: 20px;
+    --glass-blur-overlay-radius:  22px;
+
+    
+    --glass-saturate: 1.5;
+    
+    --glass-saturate-grasp: 1.75;
+
+    
+    --glass-blur-wash:     blur(calc(var(--glass-blur-wash-radius) * var(--glass-level))) saturate(var(--glass-saturate));
+    --glass-blur-quiet:    blur(calc(var(--glass-blur-quiet-radius) * var(--glass-level))) saturate(var(--glass-saturate));
+    --glass-blur-resting:  blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(var(--glass-saturate));
+    --glass-blur-floating: blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(var(--glass-saturate));
+    --glass-blur-overlay:  blur(calc(var(--glass-blur-overlay-radius) * var(--glass-level))) saturate(var(--glass-saturate));
+
+    
+    --glass-focus-veil-blur:   var(--glass-blur-floating-radius);
+    --glass-focus-veil-core-x: 13rem;
+    --glass-focus-veil-core-y: 13rem;
+    --glass-focus-veil-bloom:  7rem;
+    --glass-focus-veil-dim: color-mix(in oklab, var(--overlay-scrim-ink) 10%, transparent);
+
+    
+    --glass-veil-chassis: var(--glass-veil-base);
+    --glass-veil-dock:    var(--glass-veil-base);
+    --glass-veil-crown:   var(--glass-veil-base);
+    --glass-veil-dialog:  1;
+    --glass-veil-sheet:   calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
+
+    
+    --dock-fg-on-aurora: var(--foreground);
+
+    
+    --glass-plate-wash:     color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-wash))     calc(var(--glass-level) * 100%), var(--card));
+    --glass-plate-quiet:    color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-quiet))    calc(var(--glass-level) * 100%), var(--card));
+    --glass-plate-resting:  color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-resting))  calc(var(--glass-level) * 100%), var(--card));
+    --glass-plate-floating: color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-floating)) calc(var(--glass-level) * 100%), var(--card));
+    --glass-plate-overlay:  color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-overlay))  calc(var(--glass-level) * 100%), var(--card));
+    
+    --glass-plate-chassis:  color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-chassis))  calc(var(--glass-level) * 100%), var(--card));
+    --glass-plate-dialog:   color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-dialog))   calc(var(--glass-level) * 100%), var(--card));
+
+    
+    --glass-well-tone: 8%;
+
+    
+
+    
+    --glass-fill-tinted: color-mix(
+        in oklab,
+        var(--glass-fill-tint, oklch(0.9 0.05 75 / 0)) var(--glass-fill-strength, 0%),
+        oklch(0.9 0.05 75 / 0)
+    );
+
+    
+    --glass-border-wash:     color-mix(in srgb, var(--foreground) 4%, transparent);
+    --glass-border-quiet:    color-mix(in srgb, var(--foreground) 4%, transparent);
+    --glass-border-resting:  color-mix(in srgb, var(--foreground) 4%, transparent);
+    --glass-border-floating: color-mix(in srgb, var(--foreground) 5%, transparent);
+    --glass-border-overlay:  color-mix(in srgb, var(--foreground) 5%, transparent);
+    
+    --glass-border-dock:     color-mix(in srgb, var(--foreground) 8%, transparent);
+    --glass-border:          var(--glass-border-quiet);
+
+    
+    --glass-floor-fill-max:  15%;
+    --glass-floor-fill:      color-mix(in srgb, var(--card) calc(var(--glass-definition) * var(--glass-floor-fill-max)), transparent);
+    
+    --glass-border-defined:  color-mix(in srgb, var(--foreground) calc(var(--glass-definition) * 14%), transparent);
+
+    
+    --control-surface-bg:        var(--glass-plate-quiet);
+    --control-surface-border:    var(--glass-border-floating);
+    --control-surface-blur:      var(--glass-blur-quiet);
+    --control-surface-bg-hover:  light-dark(
+        color-mix(in oklab, var(--glass-plate-quiet), var(--foreground) calc(var(--fill-hover) * 100%)),
+        color-mix(in oklab, var(--glass-plate-quiet), var(--glass-plate-resting) 35%)
+    );
+
+    
+    --glass-ink-target: 4.8;
+    --glass-bound-ground: 0;
+
+    
+    --glass-ink-y: pow(var(--on-glass-muted-l), 3);
+    --glass-pole-y: pow(var(--card-l), 3);
+    --glass-need-y: calc(
+        (1 - var(--glass-bound-ground)) * (var(--glass-ink-target) * (var(--glass-ink-y) + 0.05) - 0.05) +
+            var(--glass-bound-ground) * ((var(--glass-ink-y) + 0.05) / var(--glass-ink-target) - 0.05)
+    );
+    --glass-need-e: calc(1.055 * pow(var(--glass-need-y), 0.416667) - 0.055);
+    --glass-pole-e: calc(1.055 * pow(var(--glass-pole-y), 0.416667) - 0.055);
+    --glass-bound: clamp(
+        0,
+        calc(
+            (var(--glass-need-e) - var(--glass-bound-ground)) /
+                (var(--glass-pole-e) - var(--glass-bound-ground))
+        ),
+        1
+    );
+}
+
+@property --glass-bound {
+    syntax: \"<number>\";
+    inherits: true;
+    initial-value: 1;
+}
+
+
+
+
+@property --glass-veil-rung {
+    syntax: \"<number>\";
+    inherits: true;
+    initial-value: 0.14;
+}
+
+@property --glass-fill-tint {
+    syntax: \"<color>\";
+    inherits: true;
+    initial-value: transparent;
+}
+
+@property --glass-fill-strength {
+    syntax: \"<percentage>\";
+    inherits: true;
+    initial-value: 0%;
+}
+"
+
+ ❯ tests/styles/focus-veil.test.ts:146:29
+    144|         expect(glassTokens).toMatch(/--glass-focus-veil-core-y:\s*13re…
+    145|         expect(glassTokens).toMatch(/--glass-focus-veil-bloom:\s*7rem;…
+    146|         expect(glassTokens).toMatch(
+       |                             ^
+    147|             /--glass-focus-veil-dim:\s*color-mix\(in oklab, var\(--gla…
+    148|         );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/40]⎯
+
+ FAIL  tests/styles/glass-subtlety.test.ts > glass ink ladder — the veil climbs wash → overlay > declares a STRICTLY increasing ink register in BOTH modes
+Error: unparsed veil calc for wash: clamp( 0, calc( (calc(1.055 * pow(calc( (1 - 0) * (4.8 * (pow(0, 3) + 0.05) - 0.05) + 0 * ((pow(0, 3) + 0.05) / 4.8 - 0.05) ), 0.416667) - 0.055) - 0) / (calc(1.055 * pow(pow(0, 3), 0.416667) - 0.055) - 0) ), 1 )
+ ❯ ink tests/styles/glass-subtlety.test.ts:103:23
+    101|         }
+    102|         const m = flat.match(/calc\(\s*([\d.]+)\s*([+-])\s*(\d+)\s*\*\…
+    103|         if (!m) throw new Error(`unparsed veil calc for ${rung}: ${fla…
+       |                       ^
+    104|         return (
+    105|             Number.parseFloat(m[1]) +
+ ❯ tests/styles/glass-subtlety.test.ts:115:46
+ ❯ tests/styles/glass-subtlety.test.ts:115:32
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/40]⎯
+
+ FAIL  tests/styles/glass-subtlety.test.ts > glass ink ladder — the veil climbs wash → overlay > keeps the CONTENT band under the transmission ceiling in both modes
+Error: unparsed veil calc for wash: clamp( 0, calc( (calc(1.055 * pow(calc( (1 - 0) * (4.8 * (pow(0, 3) + 0.05) - 0.05) + 0 * ((pow(0, 3) + 0.05) / 4.8 - 0.05) ), 0.416667) - 0.055) - 0) / (calc(1.055 * pow(pow(0, 3), 0.416667) - 0.055) - 0) ), 1 )
+ ❯ ink tests/styles/glass-subtlety.test.ts:103:23
+    101|         }
+    102|         const m = flat.match(/calc\(\s*([\d.]+)\s*([+-])\s*(\d+)\s*\*\…
+    103|         if (!m) throw new Error(`unparsed veil calc for ${rung}: ${fla…
+       |                       ^
+    104|         return (
+    105|             Number.parseFloat(m[1]) +
+ ❯ tests/styles/glass-subtlety.test.ts:132:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/40]⎯
+
+ FAIL  tests/styles/glass-subtlety.test.ts > glass ink ladder — the veil climbs wash → overlay > derives EVERY rung from the one base and the one step — no hand alphas
+AssertionError: expected 'var(--glass-veil-base)' to contain 'var(--glass-veil-step)'
+
+Expected: "var(--glass-veil-step)"
+Received: "var(--glass-veil-base)"
+
+ ❯ tests/styles/glass-subtlety.test.ts:147:49
+    145|             expect(raw, `no declaration for --glass-veil-${rung}`).toB…
+    146|             expect(raw).toContain("var(--glass-veil-base)");
+    147|             if (rung !== "resting") expect(raw).toContain("var(--glass…
+       |                                                 ^
+    148|         }
+    149|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/40]⎯
+
+ FAIL  tests/styles/glass-subtlety.test.ts > glass ink ladder — the veil climbs wash → overlay > moves the DARK arm by the base alone — one line, the whole ladder
+AssertionError: expected '/* tokens/dark-arm-glass.css\n   The …' not to match /--glass-veil-(?:wash|quiet|resting|fl…/
+
+- Expected:
+/--glass-veil-(?:wash|quiet|resting|floating|overlay)\s*:/
+
++ Received:
+"/* tokens/dark-arm-glass.css
+   The .dark arm of the DEEP tier. The calm ladder has no dark arm any more: its
+   saturate is one mode-invariant value and its radii are one set, so a dark
+   re-declaration of the composed rungs would be five copies of the light recipe.
+   What differs in dark is the INK, and that is one line in tokens/dark-arm.css.
+   Its own .dark block, @import-ed by tokens.css IMMEDIATELY AFTER dark-arm.css. */
+
+/* THE DARK DEEP ARM HAD NEVER PAINTED — ANYWHERE, IN EITHER DIRECTION.
+
+   It used to be declared on the bare `.dark` root, and it read
+   `--glass-blur-deep-active-radius`, which is declared ONLY on `.glass-deep`
+   (deliberately: the LERP eager-substitutes `--glass-depth` at its declaring
+   element, so at `:root` the grade freezes at the initial value 1 and every
+   deep surface paints the ceiling). Off a deep surface the composite was
+   therefore guaranteed-INVALID; on one, `.glass-deep`'s own element-level
+   declaration beat the root by inheritance. Two exits, no paint.
+
+   The cure is to declare the arm WHERE ITS INPUTS LIVE: on `.glass-deep` under a
+   plain `.dark` ancestor (never `:global()` in a scoped block, never inside
+   `light-dark()`). The radius stays the SAME LERP — radius-only across modes;
+   what dark changes is that saturate holds at the named ceiling
+   (`--glass-saturate-deep`) instead of at a point part-way up the light arm's
+   lerp. One consumer write to that token still retunes both modes. */
+@layer components {
+    .dark .glass-deep {
+        --glass-blur-deep:
+            blur(var(--glass-blur-deep-active-radius))
+            saturate(var(--glass-saturate-deep));
+    }
+}
+
+/* tokens/dark-arm.css
+   The .dark {} dark-mode re-resolution (foreground / shadow-color / section-palette / constellation dark arm). After light-dark.css (the non-light-dark() fallback floor).
+   A partial of the tokens.css cascade; @import-ed by tokens.css in
+   cascade order. Same :root cascade context as its siblings. */
+
+/* ═══════════════════════════════════════════════
+   DARK MODE — warm dark, section palette brightened ~20% L
+
+   FALLBACK FLOOR: this class block is the SOLE non-light-dark()
+   dark path. On a `light-dark()`-supporting engine with `.dark` present,
+   `.dark { color-scheme: dark }` (§1) makes every §-1b token resolve to its
+   dark arm and these explicit dark values agree with it (kept as the floor
+   for non-supporting engines). The pure `var()`-alias re-declarations
+   (`--muted`/`--secondary`/`--accent`/`--border`/`--input`/… and the
+   `--background`/`*-foreground` aliases) are DELETED — they auto-track the
+   `--neutral-*` ladder + `--foreground` resolved above; only EXPLICIT-color
+   dark values (and the non-color overrides §2d) stay.
+
+   IDIOM-REVERSAL — one mechanism per
+   token TYPE. COLOR tokens: light-dark.css is the CANONICAL single source; the
+   `.dark {}` color values below are the fallback-floor LOCKSTEP WITNESSES —
+   they MUST byte-agree with the light-dark() dark arg, never a second value
+   (`proof:glass` clause DA1 reds a divergence). SHADOW / INSET /
+   inheritance-sensitive tokens (the rims, the specular, the cartoon/modal
+   shadows, the recess ink) are the PRIMARY residents here as plain `.dark {}`
+   arms — NEVER `light-dark()` (a `light-dark()` wrapping shadow fragments
+   computes the WHOLE box-shadow to `none`, the inset-shadow trap; `proof:glass`
+   DA2 reds a shadow-valued light-dark()). This SUPERSEDES the plain per-mode
+   pair idiom for COLOR tokens (the reversal is INTENTIONAL, recorded here).
+   ═══════════════════════════════════════════════ */
+.dark {
+    /* §1 — hard-pin native chrome to dark regardless of OS preference. §4 —
+       re-specify the inherited `accent-color` so it re-resolves to the dark
+       arm (§2b: an inherited built-in <color> set at `:root` would freeze to
+       the light shade without this re-specification). */
+    color-scheme: dark;
+    accent-color: var(--accent-color);
+
+    /* Neutral scale mirrors light-mode pattern: step UP from the background's
+       low L toward foreground. Same perceptual deltas as light. FALLBACK
+       FLOOR — kept verbatim for non-light-dark() engines (§2c); on a
+       supporting engine `color-scheme: dark` (above) drives the §-1b
+       light-dark() arms and these agree. */
+    /* The luminous-dark elevation widen. The page floor
+       deepens (L6→L4, +1 warmth-sat) and the --card plate LIFTS (L10→~~L16~~
+       [2026-09-22 · O-32 CT2: L17, hsl(26 22% 17%); card/page relL ≈ 8×, measured], below)
+       so the page↔card gap widens from a 4-L collapse (card/page relL ≈ 2.0×, a 0.003-luma
+       band) to a real iOS/Material dark elevation step (card/page relL ≈ ~~5×~~ 8×, the five glass
+       rungs composite into a perceptible ladder). LOCKSTEP light-dark.css ~~:70/80~~
+       --neutral-0 / --card [2026-09-22 · O-32 CT2: twin by token name].
+       The WARM-CHROMA FLOOR dark arm, in LOCKSTEP with light-dark.css. The
+       dark neutrals warm off the achromatic hsl-24/48 onto the warm identity (hsl 28-36,
+       OKLab C off the gray floor on the NEW dark base — chip→border C 0.0138-0.0286, muted-fg
+       C 0.0255). The --neutral-0 page (hsl 24 9% 4%) is the luminance floor —
+       KEEP (chroma-only on the rungs above it). L held — the dark AA contract preserved. */
+    --neutral-0: hsl(24 9% 4%);    /* L 4 — page surface (dark, deepened) */
+    --neutral-1: hsl(28 12% 11%);  /* L 11 — soft field (warm) */
+    --neutral-2: hsl(28 14% 16%);  /* L 16 — chip / tab-inactive (warm, C≈0.014) */
+    --neutral-3: hsl(30 18% 22%);  /* L 22 — hover / highlight (warm, C≈0.022) */
+    --neutral-4: hsl(30 16% 34%);  /* L 34 — subtle border (warm, C≈0.029) */
+    --neutral-5: hsl(34 14% 62%);  /* L 62 — muted text (warm, C≈0.026; WCAG AA: ~~7.64:1~~ 7.70:1 vs page [2026-08-05: re-derived]) */
+    /* Strong-muted text. Same principled ladder step as
+       light, mirrored: 10 L LIGHTER than muted (62→72) toward --foreground
+       (L90), the 1/3 point of the L62→L90 muted→primary gap. By-colour.
+       Re-saturated onto the warm identity (hsl 36 14% — OKLab
+       C≈0.019, warm). WCAG AA: ~~10.29:1~~ 10.25:1 vs L4 page (cf. neutral-5's
+       ~~7.64:1~~ 7.70:1) [2026-08-05: both re-derived]. */
+    --neutral-6: hsl(36 14% 72%);  /* L 72 — strong-muted text (secondary register, warm) */
+
+    /* --background / --card-foreground / --popover-foreground / --muted /
+       --muted-foreground{,-strong} / --secondary{,-foreground} /
+       --accent{,-foreground} / --border / --input are pure var()-aliases —
+       DELETED here: they auto-track the --neutral-* ladder +
+       --foreground above. Re-declaring them would be redundant. */
+    /* The dark --foreground warmed off hsl(48 10% 90%) (OKLab H95.1°,
+       the EXACT yellow-green condemned as \"a cast, not warm material\") onto the
+       no-gray warm identity hsl(30 14% 90%) (OKLab L0.926 C0.0063 H75.4° — the --foreground
+       56° warm-amber family, L held within ±0.001, chroma off the gray floor,
+       chroma-only at constant L). The contrast contract holds (the dark ink over the L4 page
+       stays ≥ the body floor). EVERY dark var(--foreground) consumer (body copy, the lifted
+       muted register, --glass-veil-ink, the cartoon shadow, the configurator divider, the
+       dock-selected-accent, the --surface-tint-* relative-color recipe below) re-resolves
+       warm in lockstep, zero per-site edit. LOCKSTEP light-dark.css ~~:92~~ --foreground
+       [2026-09-22 · O-32 CT2: twin by token name] (the §2c discipline —
+       both mode arms warm together or the FOUC/enhancement split paints two inks). */
+    --foreground: hsl(30 14% 90%);
+    /* The --card plate LIFTS L10→~~L16~~ (a warm-dark elevated
+       surface, macOS-window territory) so it ~~sits ~5×~~ sits ≈ 8× the deepened L4 page relL — a
+       clearly distinct surface the five glass rungs ladder up from. LOCKSTEP light-dark.css
+       ~~:80~~ --card [2026-09-22 · O-32 CT2: twin by token name].
+       [2026-09-22 · O-32 CT2: L17—the card ships hsl(26 22% 17%); card/page relL ≈ 8×, not
+       ~5× (measured over the L4 page hsl(24 9% 4%)).] */
+    --card: hsl(26 22% 17%);
+    --popover: hsl(26 22% 17%);
+
+    /* Dark mirror of the warm-neutral public-data panel.
+       --card's dark ~~hsl(24 8% 16%)~~ nudged one warmth step toward amber
+       ~~(24→36) + +1 sat + +2 L~~ so the dark dashboard panel lifts off the page.
+       Re-anchored L12→L18 to stay ABOVE the lifted ~~L16~~ card
+       (LOCKSTEP light-dark.css ~~:82~~ --surface-public-data-panel
+       [2026-09-22 · O-32 CT2: twin by token name]). [2026-09-22 · O-32 CT2: the
+       dark --card ships hsl(26 22% 17%) (the `--card` declaration above)—the L17
+       card; from it the panel hsl(36 9% 18%) is H 26→36, S −13, L +1, one step
+       above.] */
+    --surface-public-data-panel: hsl(36 9% 18%);
+
+    /* The chromatic dark --primary. An achromatic
+       cream hsl(48 10% 90%) (oklab chroma ≈ 0.005) paints every filled/active/selected control
+       a flat pale-grey slab, so it anchors onto the legendre-violet house identity
+       hue (--section-color-7 / --viz-legendre's oklch register — a LIBRARY-identity chroma,
+       NOT a borrowed demo preset), oklab chroma 0.134. The dark ink --primary-foreground
+       stays hsl(24 10% 10%): 7.15:1 over the violet (clears the 4.5 text + 3.0 graphic
+       floors). Critical now the disco/audacious texture retires — the accent's
+       COLOR carries the identity. LOCKSTEP light-dark.css ~~:84~~ --primary
+       [2026-09-22 · O-32 CT2: twin by token name]. */
+    --primary: oklch(0.739 0.134 318.1);
+    --primary-foreground: hsl(24 10% 10%);
+    /* The `.dark` class fallback floor, in LOCKSTEP with the light-dark()
+       enhancement arm above (§2c), so a @supports-split engine and a class-toggle
+       engine paint the SAME dark red.
+
+       THE SECOND LIFT (A11Y W3-A), and why the first one did not finish the job.
+       `--destructive` holds TWO jobs on one value: it is the error INK
+       (`Label.vue`'s required marker, `LabeledField.vue`'s error message) and it is
+       the destructive PLATE (`button/styles.css`'s tone). The previous lift to
+       `hsl(0 80% 60%)` was made for the ink job and its comment claimed 4.60:1 over
+       `--card` — but 4.60 is the ratio of the DARK INK over that red, not of that red
+       over the card. The pair it named computes 3.67:1, so the ink job never cleared
+       and the false figure sat in the record on both arms for the whole interval.
+       No other tone carries two jobs, which is why this is the only tone that MOVES
+       while the other three are cured by ink polarity alone. Measured at
+       `oklch(0.702 0.184 27.5)` — the light arm's own hue (`hsl(0 72% 50%)` is
+       oklch h 27.5), at the chroma the dark success rung already speaks:
+         as ink over --card / --popover  4.85   (floor 4.5, was 3.67)
+         as ink over the page            6.88
+         as a plate under the warm ink   6.08   (floor 4.5, was 3.07 under off-white)
+       The ink flips with the other three: a plate this luminous cannot carry
+       off-white. */
+    --destructive: oklch(0.702 0.184 27.5);
+    --destructive-foreground: hsl(24 10% 10%);
+    /* The dark arm of the house focus-accent register
+       (off the shadcn `--ring` token; the value is byte-identical to the
+       dark `--ring` mid-tone). */
+    --focus-ring-color: hsl(48 10% 70%);
+    --shadow: hsl(0 0% 5%);
+
+    /* Section palette — brightened for dark backgrounds (oklch —
+       mirrors the light-dark() dark halves above; hue preserved) */
+    --section-color-0:  oklch(0.721 0.145 354.0);
+    --section-color-1:  oklch(0.733 0.113 308.2);
+    --section-color-2:  oklch(0.718 0.107 268.4);
+    --section-color-3:  oklch(0.767 0.091 219.9);
+    --section-color-4:  oklch(0.776 0.105 172.6);
+    --section-color-5:  oklch(0.813 0.109 78.2);
+    --section-color-6:  oklch(0.693 0.151 28.1);
+    --section-color-7:  oklch(0.739 0.134 318.1);
+    --section-color-8:  oklch(0.709 0.142 2.3);
+    --section-color-9:  oklch(0.763 0.032 239.0);
+    --section-color-10: oklch(0.794 0.116 127.9);
+    --section-color-11: oklch(0.805 0.095 206.7);
+    --section-color-12: oklch(0.719 0.115 295.6);
+
+    --accent-pink: oklch(0.683 0.131 354.7);
+    --section-heading: oklch(0.711 0.123 349.3);
+    --accent-red: oklch(0.644 0.165 22.9);
+
+    --viz-fourier:   oklch(0.693 0.151 28.1);
+    --viz-chebyshev: oklch(0.718 0.107 268.4);
+    --viz-legendre:  oklch(0.739 0.134 318.1);
+
+    /* The `.dark` class fallback floor for the
+       configurator divider register, in LOCKSTEP with the `light-dark()`
+       enhancement arm minted in offsets-sizing.css (the dark halves). A
+       @supports-split engine (no `light-dark()`) and a class-toggle engine paint
+       the SAME lifted divider: off the L34 `--border` (too close to the ~~L16~~
+       [2026-09-22 · O-32 CT2: L17, hsl(26 22% 17%)] glass plate) toward the L90
+       `--foreground` warm-ink so a visible luminance step survives the dark
+       glass-floating surface. The SECTION divider runs heavier than the inter-row
+       hairline; the faint section tonal step is the 3% foreground wash. */
+    --configurator-divider: color-mix(in srgb, var(--foreground) 22%, transparent);
+    --configurator-divider-section: color-mix(in srgb, var(--foreground) 30%, transparent);
+    --configurator-section-tint: color-mix(in srgb, var(--foreground) 3%, transparent);
+    --tier-featured: oklch(0.867 0.165 88.7);
+    --tier-saved:    oklch(0.748 0.135 250.1);
+    --like:          oklch(0.690 0.162 22.2);
+    --success:       oklch(0.805 0.186 151.6);
+    --warning:       oklch(0.809 0.150 76.6);
+    --info:          oklch(0.713 0.138 259.5);
+    --delete:        oklch(0.644 0.170 23.1);
+
+    /* Semantic foregrounds. The premise this block used to carry — \"off-white over
+       dark plates\" — was FALSE OF ITS OWN ARM: the dark arm LIFTS every tone so it
+       reads against a near-black page, so a dark-arm tone is not a dark plate, it is
+       the MOST luminous plate in the library. Off-white ink on it computed 1.58
+       (success) and 2.36 (info), the two worst pairs in the tranche, while the arm's
+       own warning row had been dark-on-amber all along. Ink polarity is derived from
+       the plate (A11Y W3-A), so all four dark tones now take the warm ink — which is
+       the same literal `--primary-foreground` already speaks one screen up, over the
+       equally-lifted dark violet:
+         success  dark ink 10.21  ·  off-white 1.58
+         warning  dark ink  9.47  ·  off-white 1.70
+         info     dark ink  6.82  ·  off-white 2.36
+         destructive (lifted below) dark ink 6.08  ·  off-white 2.65
+       LOCKSTEP light-dark.css §semantic. */
+    --success-foreground: hsl(24 10% 10%);
+    --warning-foreground: hsl(24 10% 10%);
+    --info-foreground:    hsl(24 10% 10%);
+
+    /* The DRY-collapse. The dark `--cartoon-ink:` re-declaration
+       is DELETED — the `:root` in-gamut pin (shadow.css) cascades through the dark
+       `--foreground` directly. In dark, `--foreground` is near-cream (high L) so the
+       pin's `clamp(0.28, l, 0.34)` clamps L UP to its 0.34 ceiling — a warm-brown dark
+       sticker (the maroon `clamp(0.20, 1−l, 0.30) max(c, 0.11)` re-paste is retired; that
+       out-of-gamut chroma floor collapsed to `rgb(48,5,0)`, B=0). The dark pin resolves
+       ~rgb(65,54,38) at OKLab hue ~77° — warm brown (R>G>B>0) in the [45,85]° register.
+       ONLY the mode-correct alpha rungs (46/38/26% — a heavier ink for presence on the
+       dark ground than light's 32/26/18%) + the re-derived warm fallback stay here. */
+    --cartoon-ink-lead:    color-mix(in oklab, var(--cartoon-ink) 46%, transparent);
+    --cartoon-ink-mid:     color-mix(in oklab, var(--cartoon-ink) 38%, transparent);
+    --cartoon-ink-contact: color-mix(in oklab, var(--cartoon-ink) 26%, transparent);
+    /* Re-derived from the dark pin's RESOLVED sRGB at the dark `--foreground`
+       (`oklch(0.34 0.030 75°)` → ~rgb(65,54,38)); a `#5a3f28` assumption is wrong
+       (the painted L floors below nominal — a warm-brown, never gray, never maroon). */
+    --cartoon-ink-fallback: #413626;
+
+    --shadow-cartoon:       -3px 3px 0px 0px var(--cartoon-ink-lead);
+    --shadow-cartoon-hover: -4px 4px 0px 0px var(--cartoon-ink-lead);
+    --shadow-soft:     0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-elevated: 0 8px 24px rgba(0, 0, 0, 0.35);
+    --shadow-modal:
+        -4px 4px 0px 0px var(--cartoon-ink-lead),
+        0 24px 64px color-mix(in srgb, var(--foreground) 18%, transparent);
+
+    /* §5c CONSTELLATION — dark arm. The dark-mode lift: the node
+       tones step UP off the ink ground (the light arm's mid-grey would vanish on
+       L6 black), the hairline goes warm off-white, the field carries a touch more
+       presence to read at all. PLAIN-hsl literals, NEVER light-dark()/var(). */
+    --constellation-node:      hsl(42 9% 72%);
+    --constellation-node-dim:  hsl(42 8% 56%);
+    --constellation-line:      hsl(45 12% 86%);
+    /* Anomaly — brightened for the deep canvas (same neutral-default register;
+       the consumer still overrides to its brand). */
+    --constellation-accent:    hsl(20 70% 60%);
+    /* The dark hairlines lift harder over the ink ground, so the edge multipliers
+       run a touch lower than light to keep the field recessive. */
+    --constellation-edge-alpha:          0.20;
+    --constellation-edge-focus-alpha:  0.32;
+    /* §7 — the ink ground needs MORE field presence than cream to read at all, so
+       the dark alpha is modestly HIGHER than the light arm — but still BELOW the
+       slides 1.0 max-legibility reference (the recessive midpoint, not 1.0). */
+    --constellation-alpha:               0.88;
+    /* ACCENT-edge skin — dark arm. The floor stays 0 (the dark
+       ground already lifts the hairlines, so no perceptual-floor lift is needed); the
+       accent-incident multiplier runs a touch louder on the deeper ground so the
+       flagged-node tether reads (the 0.34 dark reference). */
+    --constellation-edge-floor:          0;
+    --constellation-edge-accent-alpha:   0.34;
+
+    /* The dark arm mints NO second alpha ladder. Nine hand-tuned dark opacities used
+       to mirror nine light ones, and the two registers could drift apart without
+       either being wrong on its own. The veil's dark arm below is one ink, one base
+       and one step, and every rung follows.
+
+       Grain, DARK arm. A multiply blend on a near-black canvas needs LESS alpha than
+       on cream — the honest inversion the measurements force. */
+    --paper-grain-opacity: 0.16;
+
+    /* ── The veil's DARK arm ────────────────────────────────────────────────────
+       The dark ladder is the ink ladder: the plate DIMS toward a warm near-black INK at
+       `base ± n·step`. (The light arm is the `--card` pole at the bound,
+       tokens/glass.css; its rungs are bound arithmetic, so the dark arm declares its
+       own here rather than inheriting them.) The BASE is the measured dark resting
+       rung; every rung is arithmetic on base and step.
+
+       (The state veils are the exception, and they are governed elsewhere: a grasp or
+       selection veil moves AWAY from the plate, which in dark means lighter. That is a
+       STATE law, not the medium's.) */
+    --glass-veil-ink:  oklch(0.17 0.03 70);
+    --glass-veil-base: 0.18;
+    --glass-veil-step: 0.04;
+
+    --glass-veil-wash:     calc(var(--glass-veil-base) - 2 * var(--glass-veil-step));
+    --glass-veil-quiet:    calc(var(--glass-veil-base) - 1 * var(--glass-veil-step));
+    --glass-veil-resting:  var(--glass-veil-base);
+    --glass-veil-floating: calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
+    --glass-veil-overlay:  calc(var(--glass-veil-base) + 2 * var(--glass-veil-step));
+    /* The off-ladder footprints in steps off resting: dock −1, crown +1, dialog +1,
+       sheet +2, chassis −2. */
+    --glass-veil-chassis:  calc(var(--glass-veil-base) - 2 * var(--glass-veil-step));
+    --glass-veil-dock:     calc(var(--glass-veil-base) - 1 * var(--glass-veil-step));
+    --glass-veil-crown:    calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
+    --glass-veil-dialog:   calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
+    --glass-veil-sheet:    calc(var(--glass-veil-base) + 2 * var(--glass-veil-step));
+
+    /* The FOCUS-VEIL dim, DARK arm (glass/focus-veil.css; the light arm is the plain
+       per-mode pair in tokens/glass.css). A plain `.dark` re-declaration, never a
+       `light-dark()` fold — the dim is one leg of a per-mode pair and the fold is the
+       trap that computes the whole declaration away. Dark needs LESS veil than light to
+       read the same de-emphasis over an already-dark page: 40% against light's 50%. */
+    --glass-focus-veil-dim: color-mix(in oklab, var(--glass-plate-overlay) 40%, transparent);
+
+    /* The surface-aware FOREGROUND register, DARK arm (the N13
+       whisper collapse where it bites hardest). The dark page-muted --neutral-5 (L62,
+       AA 7.70:1 vs page [2026-08-05: re-derived from ~~7.64~~]) COLLAPSES over the
+       lifted luminous-dark plate
+       (the ~~L16~~ [2026-09-22 · O-32 CT2: L17, hsl(26 22% 17%)] card
+       at the 12% --glass-veil-rung composites the bright backdrop UP — the
+       measured 1.15-3.29:1). The on-glass muted rung lifts BRIGHTER (the mirror of the
+       light arm's darkening) so it clears AA over the composited dark plate WHILE
+       staying subordinate to the L90 --foreground ink (the quiet-subordinate hierarchy
+       preserved — NOT a blanket lift to full ink, which the bright bucket already does).
+       Warm-amber (the identity), NOT the slides deck hsl(45 …) literal
+       (the deck is the REFERENCE; the library re-derives against its own --card). The
+       light arm lives in tokens/glass.css (the plain per-mode pair — the house idiom). */
+    --on-glass-muted:        hsl(34 16% 72%);   /* brighter than the collapsed --neutral-5 L62 (WCAG 7.52:1 / APCA |Lc| 61.7 vs the luminous-dark composited quiet plate; subordinate to --foreground) */
+    --on-glass-muted-strong: hsl(36 13% 81%);   /* the -strong rung, one step more present. Held at L81: at L78 the BRIGHTEST on-glass mid-tone plate (the configurator preset-label glass-capsule, composited [100,85,68] L≈0.10) drives the -strong caption to WCAG 4.33 — below AA. L81 clears the whole plate set (configurator 4.68 · shadow-stage 6.89 · texture-panel 6.47 · feedback-tone 6.74 · selected-chip 5.10) while STAYING subordinate to the L90 --foreground ink (L0.634 < L0.794). One register re-point lifts all -strong consumers in lockstep — the DRY register-level fix, NOT a per-site paste. */
+    --input-on-glass:        hsl(26 12% 22%);   /* the form-well fill — grounded warm-dark so the L90 input TEXT reads against a stable base (9.3:1) */
+    /* (the recessed meter track's dark arm RETIRED — `--track-well-recess` is one
+       derivation off `--background`, declared on `.track-well`/`.track-ground`
+       (styles/track-well.css) and NOT in this token layer, so the dark host's own
+       `--background` is what it reads and no arm is owed here. Re-declaring it in
+       this file would re-fork the law; the seam gate counts the declaration
+       across all of src/styles and holds it at ONE.) */
+
+    /* The --surface-tint-* dark arm,
+       --foreground-DERIVED. The light family is color-mix(in srgb, var(--foreground) N%,
+       transparent) — over a near-black dark card a LIGHT-ink (dark --foreground IS light
+       cream) tint composites to near-black: the 9-rung chip/hairline/divider scale is
+       INVISIBLE in dark. The dark arm re-anchors the mix ink to a BRIGHTER warm off-white
+       so a chip/hairline LIFTS off the deep card (the inverse intent of light's dark-ink
+       tint). A hardcoded hsl(48 12% 96%) literal ×12 would sit at the
+       EXACT OKLab H95.1° yellow-green — a cast, not warm
+       material — and be a per-rung literal a --foreground re-point can never reach (the
+       architectural asymmetry with the light arm + the substitution-vs-redeclaration trap
+       at the token mint); so each rung is a oklch(from var(--foreground) 0.975
+       c h) RELATIVE-COLOR derivation: the recipe extracts the (now-warmed) dark --foreground's
+       warm hue + chroma and lifts the lightness to 0.975 (so the chip
+       lift off the ~~L16~~ [2026-09-22 · O-32 CT2: L17, hsl(26 22% 17%)] card is
+       preserved) — the ink CARRIES the --foreground's warm hue
+       (OKLab H75.4°) BY DERIVATION (re-point the dark ink → every rung re-resolves warm; a
+       future re-tune reaches all 12 from ONE --foreground edit — the symmetry the light arm
+       has had). The OUTER mix STAYS color-mix(in srgb, … N%, transparent) — the
+       SAME 12-rung α ladder + the SAME in-srgb interpolation space the light arm uses (the
+       fence holds — the oklch(from …) is the INK SOURCE, not the tint mix space).
+       This re-resolves every --surface-tint-* consumer (chip backplates, the dock hairline
+       and separator, the spine) in lockstep, zero per-site edit. The 0.975 lift
+       sits well under the sRGB gamut edge (the css-relative-color book's \"browsers don't
+       gamut-map yet\" caveat does not bite — at 0.975 the small high-L chroma resolves clean;
+       lift→1.0 drifts the hue, so 0.975 is the calibrated pin). The css-relative-color
+       chronic's FIRST live consumer (the tolerant α-mix the book was waiting for). */
+    --surface-tint-4:  color-mix(in srgb, oklch(from var(--foreground) 0.975 c h)  4%, transparent);
+    --surface-tint-6:  color-mix(in srgb, oklch(from var(--foreground) 0.975 c h)  6%, transparent);
+    --surface-tint-8:  color-mix(in srgb, oklch(from var(--foreground) 0.975 c h)  8%, transparent);
+    --surface-tint-10: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 10%, transparent);
+    --surface-tint-12: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 12%, transparent);
+    --surface-tint-15: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 15%, transparent);
+    --surface-tint-18: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 18%, transparent);
+    --surface-tint-22: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 22%, transparent);
+    --surface-tint-25: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 25%, transparent);
+    --surface-tint-40: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 40%, transparent);
+    --surface-tint-70: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 70%, transparent);
+
+    /* Hairline-accent dark mirror — see light counterpart at line ~404. */
+    --hairline-catch-light: inset 0 0.5px 0 0 rgb(255 255 255 / 0.05);
+    --hairline-under-shadow: 0 0.5px 0 0 rgb(0 0 0 / 0.06);
+
+    /* No `--glass-edge-light` re-point here. The name is a pure indirection onto
+       `--glass-material-rim`, whose legs are re-declared below — so the dark rim
+       reaches it without a second per-mode write to keep in sync. */
+
+    /* The rim's DARK leg — plain per-mode pair, NEVER a `light-dark()` round an inset
+       (an inset fragment inside `light-dark()` computes the WHOLE box-shadow to `none`
+       and the rim silently vanishes).
+
+       0.08, BELOW the light arm's 0.10. This inverts the shipped dark-brighter
+       doctrine, and deliberately: the old 0.40 made the rim the brightest thing on a
+       near-black page, which is a bright ring, not a silhouette. A dark plate separates
+       because the page behind it is dark and the plate's own ink is deeper still — the
+       rim only has to say where the edge is. The under-shadow holds warm at 6%/4% and
+       does the grounding in both modes. The key sign tokens are inherited from :root,
+       not re-declared, so the lit edge agrees with the cartoon cast in both modes. Both
+       legs carry the `--glass-level` term for the same reason the light arm does: the
+       rim is the glass's edge, and the a11y brackets flatten the material through that
+       ONE knob rather than through a second list of tokens. */
+    --glass-rim-top: inset 0 var(--glass-key-lit-y) 0
+        hsl(0 0% 100% / calc(0.08 * var(--glass-level)));
+    --glass-rim-bottom:
+        inset 0 var(--glass-key-shade-y) 0
+            color-mix(in srgb, var(--foreground) calc(6% * var(--glass-level)), transparent),
+        inset var(--glass-key-shade-x) 0 0
+            color-mix(in srgb, var(--foreground) calc(4% * var(--glass-level)), transparent);
+
+    /* The `.glass-capsule-track` recess ink, DARK arm (the
+       PLAIN per-mode pair's dark leg; the light arm is in `tokens/glass-fx.css`).
+       NEVER a `light-dark()` fragment (the inset-shadow trap). Deeper on the dark
+       canvas (11%) so the sunken well still reads against the near-black page. */
+    --tab-track-recess-ink: color-mix(in srgb, var(--foreground) 11%, transparent);
+
+    /* The capsule's warm floor, DARK peer. The light arm's `oklch(0.88 0.1 75)` is a
+       near-white cream: painted on a lozenge over a near-black page it is a lamp, not a
+       warm floor, and the fill's ΔL against the field runs far past the light arm's.
+       The dark peer keeps the HUE and the chroma that make the floor a floor, at a
+       lightness that belongs on the deep canvas. */
+    --glass-capsule-warm: oklch(0.42 0.06 75);
+
+    /* The curvature sheen is genuinely SOFTER on the deep canvas (the
+       prior dark arm re-declared the overlay BYTE-IDENTICAL to light, so it read
+       HARDER over the dark substrate — an unsoftened-dark defect). The `:root`
+       `--glass-curvature-overlay` already reads `var(--glass-curvature-intensity)`,
+       so lowering just the intensity here re-resolves the SAME warm-cream recipe at
+       a softer alpha — no byte-identical re-declaration. */
+    --glass-curvature-intensity: 0.012;
+
+    /* Gold — boosted for dark (oklch) */
+    --gold: oklch(0.784 0.143 86.0);
+    --gold-light: oklch(0.898 0.182 97.4);
+    --gold-dark: oklch(0.678 0.150 63.8);
+
+    /* Silver — lifted for dark (mirrors gold's dark
+       arm: the polished metal lifts ~+0.03 L so the structure register reads on
+       the deep canvas. `--silver-deep` is mode-invariant — NOT re-declared here,
+       exactly as `--gold-deep` is omitted from this dark block). The cool hue
+       holds; the chroma stays near-achromatic. */
+    --silver: oklch(0.792 0.012 255);
+    --silver-light: oklch(0.912 0.010 255);
+    --silver-dark: oklch(0.648 0.014 255);
+
+    /* Bronze — lifted for dark (mirrors gold's dark arm: the
+       warm metal lifts ~+0.03 L so the bronze register reads on the deep canvas.
+       `--bronze-deep` is mode-invariant — NOT re-declared here, exactly as
+       `--gold-deep`/`--silver-deep` are omitted from this dark block). The warm hue
+       holds; the chroma stays above the floor. The `.dark`-class fallback
+       for engines without `light-dark()` (the §2c lockstep — the light-dark arm AND
+       this dark fallback move TOGETHER). */
+    --bronze: oklch(0.650 0.090 54.0);
+    --bronze-light: oklch(0.790 0.110 60.0);
+    --bronze-dark: oklch(0.560 0.085 50.0);
+}
+"
+
+ ❯ tests/styles/glass-subtlety.test.ts:154:29
+    152|         // The dark register is not a second ladder. A dark re-declara…
+    153|         // would fork the ordering into two sources that can drift apa…
+    154|         expect(darkArm).not.toMatch(
+       |                             ^
+    155|             /--glass-veil-(?:wash|quiet|resting|floating|overlay)\s*:/,
+    156|         );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/40]⎯
+
+ FAIL  tests/styles/glass-subtlety.test.ts > glass ink ladder — the veil climbs wash → overlay > DIMS in both modes — the ink never inverts to a lightener
+TypeError: Cannot read properties of null (reading '1')
+ ❯ inkL tests/styles/glass-subtlety.test.ts:111:83
+    109|
+    110|     const inkL = (map: Map<string, string>): number =>
+    111|         Number.parseFloat(map.get("--glass-veil-ink")!.match(/oklch\(\…
+       |                                                                                   ^
+    112|
+    113|     it("declares a STRICTLY increasing ink register in BOTH modes", ()…
+ ❯ tests/styles/glass-subtlety.test.ts:170:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/40]⎯
+
+ FAIL  tests/styles/glass-subtlety.test.ts > glass blur ladder — five in-band radii, one calibration anchor > PAIRS the two axes at every surface — one radius per ink
+AssertionError: off-diagonal ink/radius pairings:
+src/styles/glass/glass-capsule.css: quiet ink (α NaN) under the quiet kernel (14px, pairs at 22px)
+src/styles/glass/surfaces-pager.css: floating ink (α NaN) under the floating kernel (20px, pairs at 22px)
+src/styles/utilities/components.css: floating ink (α NaN) under the floating kernel (20px, pairs at 22px): expected [ …(3) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "src/styles/glass/glass-capsule.css: quiet ink (α NaN) under the quiet kernel (14px, pairs at 22px)",
++   "src/styles/glass/surfaces-pager.css: floating ink (α NaN) under the floating kernel (20px, pairs at 22px)",
++   "src/styles/utilities/components.css: floating ink (α NaN) under the floating kernel (20px, pairs at 22px)",
++ ]
+
+ ❯ tests/styles/glass-subtlety.test.ts:327:14
+    325|         }
+    326|         expect(offenders, `off-diagonal ink/radius pairings:\n${offend…
+    327|             .toEqual([]);
+       |              ^
+    328|     });
+    329| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/40]⎯
+
+ FAIL  tests/components/menu/contract.test.ts > DropdownMenu contract > keeps the click branch to one portaled menu and restores focus on execute
+AssertionError: expected <body><div data-v-app>…(1)</div></body> to be <button …(7)></button> // Object.is equality
+
+- Expected
++ Received
+
+@@ -1,5 +1,13 @@
++ <body>
++   <div
++     data-v-app=""
++   >
++     
++     
++     
++     
+      <button
+        aria-expanded="false"
+        aria-haspopup="menu"
+        class="menu__trigger"
+        data-slot="menu-trigger"
+@@ -7,5 +15,22 @@
+        id="reka-dropdown-menu-trigger-v-0"
+        type="button"
+      >
+        Open commands
+      </button>
++     <!--teleport start-->
++     <!--teleport end-->
++     
++     
++     
++     
++   </div>
++   
++   
++   
++   
++   <!---->
++   
++   
++   
++   
++ </body>
+
+ ❯ tests/components/menu/contract.test.ts:118:40
+    116|         expect((wrapper.vm as unknown as { open: boolean }).open).toBe…
+    117|         await new Promise((resolve) => setTimeout(resolve, 30));
+    118|         expect(document.activeElement).toBe(trigger.element);
+       |                                        ^
+    119|     });
+    120|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/40]⎯
+
+
+ Test Files  5 failed | 234 passed (239)
+      Tests  40 failed | 2279 passed | 10 expected fail | 1 skipped (2330)
+   Start at  21:46:48
+   Duration  78.61s (transform 85.94s, setup 80.72s, import 322.11s, tests 180.38s, environment 404.65s)
+
