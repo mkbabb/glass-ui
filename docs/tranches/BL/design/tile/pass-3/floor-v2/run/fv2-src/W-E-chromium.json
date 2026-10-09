@@ -1,0 +1,74 @@
+{
+ "id": "W-E",
+ "title": "every one-of-N option is one line, and what a consumer installs refuses one that is not (D4-E)",
+ "engine": "chromium",
+ "engineLabel": "Chromium 149.0.7827.55",
+ "target": "fv2-src",
+ "dev": false,
+ "cells": [
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset",
+   "line": "preset · 4 items · 0 not one line · e.g. 40.00 px tall at rung 40.00 (1.00 rungs), 1 rows"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset",
+   "line": "preset refusal (flavor src: a src alias build, reported, not gated) · a line added to item 0 → no refusal (no console error, no throw)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "specimen",
+   "line": "specimen · 8 items · 8 not one line · e.g. 36.00 px tall at rung 36.00 (1.00 rungs), 3 rows"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen",
+   "line": "specimen refusal (flavor src: a src alias build, reported, not gated) · a line added to item 0 → no refusal (no console error, no throw)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "strip",
+   "line": "strip · 6 items · 6 not one line · e.g. 44.00 px tall at rung 44.00 (1.00 rungs), 2 rows"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip",
+   "line": "strip refusal (flavor src: a src alias build, reported, not gated) · a line added to item 0 → no refusal (no console error, no throw)"
+  }
+ ],
+ "flavor": "src",
+ "harness": {
+  "hash": "9fd4983bc6b9",
+  "files": 27,
+  "rev": "H3"
+ },
+ "run": {
+  "loadStart": "15.76 / 26.52 / 36.15",
+  "loadEnd": "15.38 / 26.26 / 36.00",
+  "census": {
+   "n": 15,
+   "sample": [
+    "1428 /Applications/Visual Studio Code.app/Contents/Resources/app/node_modules.asar.un",
+    "61688 /Users/mkbabb/Library/Caches/ms-playwright/chromium_headless_shell-1228/chrome-h",
+    "61692 /Users/mkbabb/Library/Caches/ms-playwright/chromium_headless_shell-1228/chrome-h"
+   ],
+   "waitedS": 0.3
+  },
+  "lockWaitS": 0
+ },
+ "pass": false,
+ "tally": "1/3 gating cells pass [library 1/3]",
+ "arms": {
+  "library": {
+   "pass": 1,
+   "of": 3
+  }
+ }
+}

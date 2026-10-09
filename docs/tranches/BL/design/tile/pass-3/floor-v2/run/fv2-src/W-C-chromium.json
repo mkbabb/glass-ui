@@ -1,0 +1,91 @@
+{
+ "id": "W-C",
+ "title": "selection is a behaviour, not a component (D4-C)",
+ "engine": "chromium",
+ "engineLabel": "Chromium 149.0.7827.55",
+ "target": "fv2-src",
+ "dev": false,
+ "cells": [
+  {
+   "gating": true,
+   "pass": false,
+   "line": "exports · RED by absence: no SelectionGroup/SelectionItem in the bundle (exports seen: [none])"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "line": "card · group listbox · items generic (CDP AX tree) · tab stops 0"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "line": "card stamp values at rest (role/aria-checked/tabindex, * = group-stamped; selected #-1) · null/null/null null/null/null null/null/null null/null/null"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "card grid ArrowRight from #0 · focus body → body · moved false · checked false (the click did not focus; focus placed by script)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "card grid ArrowLeft from #1 · focus body → body · moved false · checked false (the click did not focus; focus placed by script)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "card grid ArrowDown from #0 · focus body → body · moved false · checked false (the click did not focus; focus placed by script)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "card grid ArrowUp from #2 · focus body → body · moved false · checked false (the click did not focus; focus placed by script)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "line": "card grid edge ArrowDown from #2 (no item that way; reported) · focus body → body · moved false · checked false (the click did not focus; focus placed by script)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "line": "card grid edge ArrowUp from #0 (no item that way; reported) · focus body → body · moved false · checked false (the click did not focus; focus placed by script)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "line": "card stamp values after the arrow commits (selected #-1) · null/null/null null/null/null null/null/null null/null/null"
+  }
+ ],
+ "flavor": "src",
+ "harness": {
+  "hash": "9fd4983bc6b9",
+  "files": 27,
+  "rev": "H3"
+ },
+ "run": {
+  "loadStart": "16.10 / 27.35 / 36.67",
+  "loadEnd": "15.69 / 27.07 / 36.51",
+  "census": {
+   "n": 15,
+   "sample": [
+    "1428 /Applications/Visual Studio Code.app/Contents/Resources/app/node_modules.asar.un",
+    "61688 /Users/mkbabb/Library/Caches/ms-playwright/chromium_headless_shell-1228/chrome-h",
+    "61692 /Users/mkbabb/Library/Caches/ms-playwright/chromium_headless_shell-1228/chrome-h"
+   ],
+   "waitedS": 0.2
+  },
+  "lockWaitS": 0
+ },
+ "pass": false,
+ "tally": "0/8 gating cells pass [library 0/8]",
+ "arms": {
+  "library": {
+   "pass": 0,
+   "of": 8
+  }
+ }
+}

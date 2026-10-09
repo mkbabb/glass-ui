@@ -1,0 +1,304 @@
+{
+ "id": "T-7",
+ "title": "no consumer paint on the tile (each consumer arm against its stripped twin)",
+ "engine": "webkit",
+ "engineLabel": "Playwright WebKit 26.5",
+ "target": "fv2-src",
+ "dev": false,
+ "cells": [
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset",
+   "arm": "unmigrated",
+   "line": "preset-verbatim vs its stripped twin · rest · border-top-left-radius: 9999px → 16px; border-top-right-radius: 9999px → 16px; border-bottom-right-radius: 9999px → 16px; border-bottom-left-radius: 9999px → 16px; outline-style: none → dashed; outline-width: 3px → 1px; outline-color: rgb(112, 89, 66) → rgba(0, 0, 0, 0); outline-offset: 0px → -1px; background-color: rgba(0, 0, 0, 0) → rgb(251, 250, 248); border-top-color: color(srgb 0.109804 0.098039 0.090196 / 0.14) → rgba(0, 0, 0, 0); border-right-color: color(srgb 0.109804 0.098039 0.090196 / 0.14) → rgba(0, 0, 0, 0); border-bottom-color: color(srgb 0.109804 0.098039 0.090196 / 0.14) → rgba(0, 0, 0, 0); border-left-color: color(srgb 0.109804 0.098039 0.090196 / 0.14) → rgba(0, 0, 0, 0)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset",
+   "arm": "unmigrated",
+   "line": "preset-verbatim vs its stripped twin · on · border-top-left-radius: 9999px → 16px; border-top-right-radius: 9999px → 16px; border-bottom-right-radius: 9999px → 16px; border-bottom-left-radius: 9999px → 16px; outline-style: none → dashed; outline-width: 3px → 1px; outline-color: oklch(0.216115 0.006126 56.043385) → color(srgb 0.493741 0.35136 0.798941 / 0.65); outline-offset: 0px → -1px; background-color: oklab(0.216115 0.003422 0.005081 / 0.12) → color(srgb 0.945068 0.93007 0.95866); background-image: linear-gradient(color(srgb 0.203993 0.148252 0.08296 / 0.... → none; box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srg... → none; border-top-color: color(srgb 0.109804 0.098039 0.090196 / 0.14) → rgba(0, 0, 0, 0); border-right-color: color(srgb 0.109804 0.098039 0.090196 / 0.14) → rgba(0, 0, 0, 0); border-bottom-color: color(srgb 0.109804 0.098039 0.090196 / 0.14) → rgba(0, 0, 0, 0); border-left-color: color(srgb 0.109804 0.098039 0.090196 / 0.14) → rgba(0, 0, 0, 0)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset",
+   "arm": "unmigrated",
+   "line": "preset-verbatim on content ink · rgb(28, 25, 23) 400 / rgb(112, 89, 66) 600 → rgb(28, 25, 23) 400 / rgb(112, 89, 66) 500"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset",
+   "arm": "unmigrated",
+   "line": "preset-verbatim vs its stripped twin · focus · border-top-left-radius: 9999px → 16px; border-top-right-radius: 9999px → 16px; border-bottom-right-radius: 9999px → 16px; border-bottom-left-radius: 9999px → 16px; outline-style: solid → dashed; outline-width: 2px → 1px; outline-color: oklab(0.216115 0.003422 0.005081 / 0.48) → color(srgb 0.493741 0.35136 0.798941 / 0.65); outline-offset: 2px → -1px; background-color: oklab(0.216115 0.003422 0.005081 / 0.12) → color(srgb 0.945068 0.93007 0.95866); background-image: linear-gradient(color(srgb 0.203993 0.148252 0.08296 / 0.... → none; box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srg... → none; border-top-color: color(srgb 0.109804 0.098039 0.090196 / 0.14) → rgba(0, 0, 0, 0); border-right-color: color(srgb 0.109804 0.098039 0.090196 / 0.14) → rgba(0, 0, 0, 0); border-bottom-color: color(srgb 0.109804 0.098039 0.090196 / 0.14) → rgba(0, 0, 0, 0); border-left-color: color(srgb 0.109804 0.098039 0.090196 / 0.14) → rgba(0, 0, 0, 0)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset",
+   "arm": "unmigrated",
+   "line": "preset-verbatim focus content ink · rgb(28, 25, 23) 400 / rgb(112, 89, 66) 600 → rgb(28, 25, 23) 400 / rgb(112, 89, 66) 500"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "preset",
+   "arm": "unmigrated",
+   "line": "preset-verbatim vs its stripped twin · hover · border-top-left-radius: 9999px → 16px; border-top-right-radius: 9999px → 16px; border-bottom-right-radius: 9999px → 16px; border-bottom-left-radius: 9999px → 16px; outline-style: none → dashed; outline-width: 3px → 1px; outline-color: rgb(112, 89, 66) → color(srgb 0.493741 0.35136 0.798941 / 0.35); outline-offset: 0px → -1px; background-color: rgba(0, 0, 0, 0) → color(srgb 0.954879 0.94265 0.962133); background-image: linear-gradient(color(srgb 0.109804 0.098039 0.090196 / 0... → none; border-top-color: color(srgb 0.109804 0.098039 0.090196 / 0.14) → rgba(0, 0, 0, 0); border-right-color: color(srgb 0.109804 0.098039 0.090196 / 0.14) → rgba(0, 0, 0, 0); border-bottom-color: color(srgb 0.109804 0.098039 0.090196 / 0.14) → rgba(0, 0, 0, 0); border-left-color: color(srgb 0.109804 0.098039 0.090196 / 0.14) → rgba(0, 0, 0, 0)"
+  },
+  {
+   "gating": true,
+   "pass": null,
+   "scene": "preset",
+   "arm": "migrated",
+   "line": "preset-migrated · no migration at this build (the null migration is the library arm; a self-paired read is not a measurement)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen",
+   "arm": "unmigrated",
+   "line": "specimen-verbatim vs its stripped twin · rest · border-top-left-radius: 9999px → 16px; border-top-right-radius: 9999px → 16px; border-bottom-right-radius: 9999px → 16px; border-bottom-left-radius: 9999px → 16px"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen",
+   "arm": "unmigrated",
+   "line": "specimen-verbatim vs its stripped twin · on · border-top-left-radius: 9999px → 16px; border-top-right-radius: 9999px → 16px; border-bottom-right-radius: 9999px → 16px; border-bottom-left-radius: 9999px → 16px; outline-style: none → solid; outline-width: 3px → 1.5px; outline-color: oklch(0.216115 0.006126 56.043385) → rgb(28, 25, 23); outline-offset: 0px → -1.5px; background-color: oklab(0.216115 0.003422 0.005081 / 0.12) → rgba(0, 0, 0, 0)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen",
+   "arm": "unmigrated",
+   "line": "specimen-verbatim on content ink · oklch(0.216115 0.006126 56.043385) 600 / rgb(112, 89, 66) 600 → oklch(0.216115 0.006126 56.043385) 600 / rgb(28, 25, 23) 600"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen",
+   "arm": "unmigrated",
+   "line": "specimen-verbatim vs its stripped twin · focus · border-top-left-radius: 9999px → 16px; border-top-right-radius: 9999px → 16px; border-bottom-right-radius: 9999px → 16px; border-bottom-left-radius: 9999px → 16px; outline-width: 2px → 1.5px; outline-color: oklab(0.216115 0.003422 0.005081 / 0.48) → rgb(28, 25, 23); outline-offset: 2px → -1.5px; background-color: oklab(0.216115 0.003422 0.005081 / 0.12) → rgba(0, 0, 0, 0)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen",
+   "arm": "unmigrated",
+   "line": "specimen-verbatim focus content ink · oklch(0.216115 0.006126 56.043385) 600 / rgb(112, 89, 66) 600 → oklch(0.216115 0.006126 56.043385) 600 / rgb(28, 25, 23) 600"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen",
+   "arm": "unmigrated",
+   "line": "specimen-verbatim vs its stripped twin · hover · border-top-left-radius: 9999px → 16px; border-top-right-radius: 9999px → 16px; border-bottom-right-radius: 9999px → 16px; border-bottom-left-radius: 9999px → 16px"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "specimen",
+   "arm": "unmigrated",
+   "line": "specimen-verbatim hover content ink · rgb(112, 89, 66) 500 / rgb(112, 89, 66) 500 → rgb(112, 89, 66) 500 / rgb(28, 25, 23) 500"
+  },
+  {
+   "gating": true,
+   "pass": null,
+   "scene": "specimen",
+   "arm": "migrated",
+   "line": "specimen-migrated · no migration at this build (the null migration is the library arm; a self-paired read is not a measurement)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip",
+   "arm": "unmigrated",
+   "line": "strip-verbatim vs its stripped twin · rest · no consumer paint"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip",
+   "arm": "unmigrated",
+   "line": "strip-verbatim vs its stripped twin · on · no consumer paint"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip",
+   "arm": "unmigrated",
+   "line": "strip-verbatim on content ink · rgb(91, 70, 51) 400 / rgb(91, 70, 51) 400 → rgb(91, 70, 51) 400 / rgb(28, 25, 23) 600"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip",
+   "arm": "unmigrated",
+   "line": "strip-verbatim vs its stripped twin · focus · no consumer paint"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip",
+   "arm": "unmigrated",
+   "line": "strip-verbatim vs its stripped twin · hover · no consumer paint"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip",
+   "arm": "unmigrated",
+   "line": "strip-verbatim hover content ink · rgb(91, 70, 51) 400 / rgb(91, 70, 51) 400 → rgb(91, 70, 51) 400 / rgb(28, 25, 23) 400"
+  },
+  {
+   "gating": true,
+   "pass": null,
+   "scene": "strip",
+   "arm": "migrated",
+   "line": "strip-migrated · no migration at this build (the null migration is the library arm; a self-paired read is not a measurement)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1",
+   "arm": "unmigrated",
+   "line": "f1-verbatim vs its stripped twin · rest · background-color: oklab(0.673443 0.021093 0.074662 / 0.244) → rgb(253, 245, 236); border-top-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-right-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-bottom-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-left-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1",
+   "arm": "unmigrated",
+   "line": "f1-verbatim vs its stripped twin · on · background-color: oklab(0.673443 0.021093 0.074662 / 0.244) → rgb(253, 245, 236); box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srg... → color(srgb 0.844149 0.201489 0.216932 / 0.15) 0px 0px 0px...; border-top-color: rgba(0, 0, 0, 0) → oklch(0.58 0.2 25); border-right-color: rgba(0, 0, 0, 0) → oklch(0.58 0.2 25); border-bottom-color: rgba(0, 0, 0, 0) → oklch(0.58 0.2 25); border-left-color: rgba(0, 0, 0, 0) → oklch(0.58 0.2 25)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1",
+   "arm": "unmigrated",
+   "line": "f1-verbatim on content ink · rgb(28, 25, 23) 500 / rgb(91, 70, 51) 500 → rgb(28, 25, 23) 500 / oklch(0.58 0.2 25) 600"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1",
+   "arm": "unmigrated",
+   "line": "f1-verbatim vs its stripped twin · focus · background-color: oklab(0.673443 0.021093 0.074662 / 0.244) → rgb(253, 245, 236); border-top-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-right-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-bottom-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-left-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1",
+   "arm": "unmigrated",
+   "line": "f1-verbatim vs its stripped twin · hover · background-color: oklab(0.673443 0.021093 0.074662 / 0.244) → rgb(253, 245, 236); border-top-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-right-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-bottom-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-left-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23)"
+  },
+  {
+   "gating": true,
+   "pass": null,
+   "scene": "f1",
+   "arm": "migrated",
+   "line": "f1-migrated · no migration at this build (the null migration is the library arm; a self-paired read is not a measurement)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "v2",
+   "arm": "unmigrated",
+   "line": "v2-verbatim vs its stripped twin · rest · border-top-left-radius: 0px → 16px; border-top-right-radius: 0px → 16px; border-bottom-right-radius: 0px → 16px; border-bottom-left-radius: 0px → 16px"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "v2",
+   "arm": "unmigrated",
+   "line": "v2-verbatim vs its stripped twin · on · border-top-left-radius: 0px → 16px; border-top-right-radius: 0px → 16px; border-bottom-right-radius: 0px → 16px; border-bottom-left-radius: 0px → 16px; box-shadow: none → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0p..."
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "v2",
+   "arm": "unmigrated",
+   "line": "v2-verbatim vs its stripped twin · focus · border-top-left-radius: 0px → 16px; border-top-right-radius: 0px → 16px; border-bottom-right-radius: 0px → 16px; border-bottom-left-radius: 0px → 16px; outline-style: auto → none; box-shadow: none → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0p..."
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "v2",
+   "arm": "unmigrated",
+   "line": "v2-verbatim vs its stripped twin · hover · border-top-left-radius: 0px → 16px; border-top-right-radius: 0px → 16px; border-bottom-right-radius: 0px → 16px; border-bottom-left-radius: 0px → 16px"
+  },
+  {
+   "gating": true,
+   "pass": null,
+   "scene": "v2",
+   "arm": "migrated",
+   "line": "v2-migrated · no migration at this build (the null migration is the library arm; a self-paired read is not a measurement)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "c1",
+   "arm": "unmigrated",
+   "line": "c1-verbatim vs its stripped twin · rest · border-top-left-radius: 0px → 6px; border-top-right-radius: 0px → 6px; border-bottom-right-radius: 0px → 6px; border-bottom-left-radius: 0px → 6px"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "c1",
+   "arm": "unmigrated",
+   "line": "c1-verbatim vs its stripped twin · on · border-top-left-radius: 0px → 6px; border-top-right-radius: 0px → 6px; border-bottom-right-radius: 0px → 6px; border-bottom-left-radius: 0px → 6px; background-color: rgba(0, 0, 0, 0) → rgb(246, 243, 239)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "c1",
+   "arm": "unmigrated",
+   "line": "c1-verbatim vs its stripped twin · focus · border-top-left-radius: 0px → 6px; border-top-right-radius: 0px → 6px; border-bottom-right-radius: 0px → 6px; border-bottom-left-radius: 0px → 6px; outline-style: auto → solid; outline-width: 3px → 2px; outline-color: rgb(28, 25, 23) → oklab(0.216115 0.003422 0.005081 / 0.48); outline-offset: 0px → 2px"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "c1",
+   "arm": "unmigrated",
+   "line": "c1-verbatim vs its stripped twin · hover · border-top-left-radius: 0px → 6px; border-top-right-radius: 0px → 6px; border-bottom-right-radius: 0px → 6px; border-bottom-left-radius: 0px → 6px; background-color: rgba(0, 0, 0, 0) → rgb(246, 243, 239)"
+  },
+  {
+   "gating": true,
+   "pass": null,
+   "scene": "c1",
+   "arm": "migrated",
+   "line": "c1-migrated · no migration at this build (the null migration is the library arm; a self-paired read is not a measurement)"
+  }
+ ],
+ "flavor": "src",
+ "harness": {
+  "hash": "9fd4983bc6b9",
+  "files": 27,
+  "rev": "H3"
+ },
+ "run": {
+  "loadStart": "33.36 / 34.92 / 40.59",
+  "loadEnd": "25.83 / 32.91 / 39.63",
+  "census": {
+   "n": 13,
+   "sample": [
+    "1428 /Applications/Visual Studio Code.app/Contents/Resources/app/node_modules.asar.un",
+    "61238 bash /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh --inspecto",
+    "61245 /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/Playwright.app/Contents/M"
+   ],
+   "waitedS": 0.5
+  },
+  "lockWaitS": 0
+ },
+ "pass": false,
+ "tally": "0/0 gating cells pass, 6 unmeasured [unmigrated 4/32]",
+ "arms": {
+  "unmigrated": {
+   "pass": 4,
+   "of": 32
+  }
+ }
+}

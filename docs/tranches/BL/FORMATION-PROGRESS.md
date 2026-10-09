@@ -264,3 +264,11 @@ Outage log:
   - Defect found and cured: a held plate standing down its backdrop-filter lost its stacking context, so the veil escaped. @utility glass-plate now declares isolation: isolate, and STACK reads 24/24.
   - N-3 halo attributed to the focus veil engaged by the Slider press.
   MINOR-SPLIT launched.
+- 2026-10-08 — D4 pass 3 FLOOR-V2 banked: FV-1..FV-10 as one patch. It has 33 files, +971/−262, contains floor v1, and passes apply --check at 145138f2.
+  - The one fact: a registered, inherited --selection-tile (none | flush | plated) set once on the group decides pill against tile. Every floor reader derives from it by style query, replacing v1's --selection-perimeter switch (R-10: routes lift nothing).
+  - FV-2: the row lock and a shared .pill-row.
+  - FV-3: a model-keyed kick at max(--motion-weight, 0.618), stilled under reduce.
+  - FV-4: the tone reaches edge, tint and ink.
+  - FV-5: the Q-9 exemption keyed on the component.
+  - FV-7: dev names gated by NODE_ENV.
+  D′ spec launched.
