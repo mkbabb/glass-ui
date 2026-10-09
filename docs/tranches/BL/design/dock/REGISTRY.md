@@ -774,3 +774,370 @@ This binds the next fixed checklist (the pass-3 agglomeration's pass-4 list), in
 - The witness suite is born RED in glass's own demo app, with frames at each morph step.
 
 D2's convergence now gates 10.2.0, alongside D3's.
+
+---
+---
+
+# D2 · pass 3 · REGISTRY: the two routes after pass 3
+
+Everything above this line is the record of passes 1 and 2 and the owner's rulings O-87 and O-88. It is left as written. This part closes pass 3.
+
+| field | value |
+|---|---|
+| seat | D2 pass-3 agglomeration. It closes pass 3 with each route's status on the fixed 24-row list, the open rows, the vacuous greens, the cost row under the one stall tool, the §4.5 winner rule applied, the owner's open questions, the carried obligations and the pass-4 plan with its fixed checklist |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `0e8786ae`. `src/` is identical to both critics' trees (`0eb1de5d`, `00f191d8`), so every pass-3 reading measured HEAD + `pass-3/floor-v2.patch` (sha256 `deb90ecc…`) + one route patch: B′ `f9bf42af…`, G `8c593497…` |
+| inputs, read in full | passes 1 and 2 above, O-87 and O-88; `pass-3/H3.md`, `FLOOR-V2.md`, `D2-Bp-proto.md`, `D2-Bp-critique.md`, `D2-G-proto.md`, `D2-G-critique.md`; the ST lines of both critics' `full-light.log`; the `tunable-anim.md` and `density.css` hunks of both route patches; the `handOffSizes` call sites in both patches; `FORMATION-PROGRESS.md` for rulings since pass 2 (none on Q-4, Q-12, Q-15 or Q-16) |
+| instruments | none. This seat re-measures nothing. Every number cites the report that measured it, and that report stays the source of record (P-3). The two findings marked "this seat" come from reading patches, not runs |
+| fences | no source edit, no git write; this part is the only write |
+| engines | every WebKit number is **Playwright WebKit**, unshimmed in every route and floor cell. Every real-Safari cell is **UNMEASURED (owner's safaridriver checkbox)** |
+| load | the B′ critic ran at 33-168, the G critic at 132-717 (its full light reading at 272-717). Each critic re-ran every red cell at least twice. A red seen only under load that passes on rerun is NOT-REPRODUCED in both reports |
+
+Short citations: `H3` is `pass-3/H3.md`, `FV2` is `FLOOR-V2.md`, `B′-proto` and `B′-crit` are `D2-Bp-proto.md` and `D2-Bp-critique.md`, and `G-proto` and `G-crit` likewise.
+
+---
+
+## P3-0 · In brief
+
+| route | status | convergence (the fixed 24-row list) | open rows | reason in one line |
+|---|---|---:|---|---|
+| D2-B′ | **ADVANCE** | **79 %** (19/24) | P1 (OB, Q-12), P2 (shared, F-19), P3 (OB, Q-4), B2, B3 | every route-owned mechanism row passes; the swap and posture exchange splice glyphs at a hard seam, and one stale count sits in a touched file |
+| D2-G | **ADVANCE** | **71 %** (17/24) | P1 (OB, Q-12), P2 (shared, F-19), P3 (OB, Q-4, and a route overlap), N1, R2, B2, B3 | the stall at the flip, the observer, the arc hit and the carried collapse all hold; the flow lane drifts from the compositor glass in WebKit, a retarget's fade is short in both engines, and the seam splices and snaps |
+
+**Neither route is CONVERGED, and no winner is named.** The §4.5 rule's precondition now holds: both routes were measured on one list, under H3, with one stall tool (ST). Neither of its two branches holds. Both routes have open rows, and Q-15 is unruled (P3-3).
+
+Five findings shape pass 4.
+1. **H3 cured pass 2's content defects on both routes.** The swap no longer blanks (pass 2: B′ 25/12 blank frames, G 6/2). Leaving seats leave by the gap-free rule. The open-seat exchange is no longer taken in one step (pass 2: 96 / 94.67 px). The warm collapse carries its content (F-9, open since pass 1, is met on both). The stall at the flip replays from rest on both (ST 10/10 light, both engines).
+2. **Both routes replaced the blank with a splice.** Mid-swap and mid-flip, the outgoing and incoming faces meet at one seam and form false glyphs ("Bools", "Ɛools", "P" with "1"), in both engines (B′-crit CX-1, G-crit CX-1). No H3 witness sees it. B2 fails on both for this reason.
+3. **G's admitted advantage now carries a measured defect.** G still moves the extent through a block that starts after commit (ST travel 358-380 px before the block ends, against B′'s 4-260 px). But in that same case G's main-thread flow lane stands still. The plate overlaps an in-flow neighbour by up to 62 px in Chromium and 53 px in WebKit, then the neighbour steps 266-380 px in one frame (G-crit §6, `flow-gp.json`). The same lane drifts 2.11-3.05 px at the anchored edge in WebKit with no block at all (N1).
+4. **The floor's own box resizes in one frame at the flip.** v1's H3-7 pass was vacuous, because the auto margin parked the neighbour 425 px away (FV2 §4.2). Both routes cure it in their own flow lane, B′ on the glass's clock and G off it.
+5. **The parity is incomplete.** G's critic ran four arms that postdate B′'s critique (`swaplag`, `flowblock`, `lunec`, in-page `retarget2`), and none has run on B′. B′'s 79 % was measured with fewer probes. Pass 4 runs every arm on both routes (P3-6).
+
+---
+
+## P3-1 · How pass 3 ran
+
+| step | record | what it established |
+|---|---|---|
+| H3 | `H3.md`; `H3-records/` | rows H3-1..H3-11 landed in `harness/`. Every PASS fixture and planted FAIL holds in both engines on the final harness (`selftest-final-W1-W7.log` 20/20; W3/ST/FM final plus the `snap` and corner-marker reruns). Three real faults were cured while landing: the `twoowners` fixture hand-off, the ST WebKit video scale and the FM marker. The baseline re-ran HEAD, floor v1, floor+B′ (pass 2) and floor+G (pass 2) at load 20-554 |
+| floor v2 | `FLOOR-V2.md`; `FLOOR-V2-records/final/` | N-1..N-4 landed in one 50-file patch (whole floor against HEAD). Units 245/245 files; 14 planted mutations each fail the dock suites. N-1 drift 189.83 px → 0 / 0.16-0.17 px; N-2 overflow flag false → true in both engines; N-3 `lattice` and `infanim` hold; N-4 W7 6/18 → 18/18 per engine. N-5 is OWNER-BLOCKED (Q-12). Census: 0 of 14 sibling mounts relied on the auto margin; 3 of 60 demo docks (`/dock/vertical`) move to the start their containers ask for |
+| B′ prototype → critique | `D2-Bp-proto.md` → `D2-Bp-critique.md` | 54 files, src net +155. Critic: ADVANCE 79 % |
+| G prototype → critique | `D2-G-proto.md` → `D2-G-critique.md` | 51 files, src net +945, `useDockAperture.ts` 1526 lines. Critic: ADVANCE 71 % |
+
+Both routes call the floor's `handOffSizes` from their carrier (B′ patch lines 1850 and 2252; G patch lines 1338 and 2404). FV2 §1.3's "zero call sites" therefore resolves at landing, whichever route lands. The losing route's call goes with it.
+
+One shared-harness edit was made by a route seat: G's optional `hit()` adapter read in `harness/lib.mjs` (G-proto §3.4). It is inert for adapters without the read, and the W1 self-test passes with it on both seats' runs. H4 owns its review (P3-6 H4-9).
+
+---
+
+## P3-2 · Registry, per route
+
+### 2.1 · D2-B′ · the measured scene, one integrator: ADVANCE, 79 %
+
+**What held** (B′-crit §0, §3, §4; reproduced by the critic):
+- Every swap holds ink. Retarget at 40, 80 and 120 ms gives 0 blank and 0 overlap frames ×12, and the trough is ≥ 1.0 of the lower rest (`swap-long` 1.06-1.11, `swap-short` 1.40-1.41).
+- Leaving seats leave by the scene's silhouette clip (`ghosts`: o = 1, 0 clones).
+- At the flip, the stall replays from rest (ST 10/10 light; worst step ×0.54-0.67 Chromium, ×0.67-0.82 WebKit).
+- Hit follows paint at the arc. `hit`: painted centres hit their seat, and clipped-away centres hit 0. `lune`: 0/40 corner points per engine, at rest and in flight.
+- The reversal carries velocity (0.88 / 0.61 px after the retarget).
+- The flow lane gives the layout length back on the glass's clock (`neighbour·*` green; the `noflow` plant fails it ×4).
+- Floor v2's N-1..N-4 hold under the route.
+- Ten plants, ten catches (B′-proto §7).
+
+**Open rows, with counterexamples** (B′-crit §10, source of record):
+
+| row | owner | counterexample |
+|---|---|---|
+| P1 | OWNER-BLOCKED (Q-12) | W1 `card` ×3, rest radii 27.93 / 23.93 px. Light WebKit reads FAIL, not OB (fitted r spread 3.74-3.75 px, bound 2.5, load 151-161); dark reads OB |
+| P2 | shared (F-19) | W2 `route1·long-run-v`: seats need 592 px against a budget of 536; keyboard reach 10/11, Seat 1 missing, both engines and themes; the same on floor v2 |
+| P3 | OWNER-BLOCKED (Q-4) | `window` only, each inside Q-4's lenient reading: Chromium `warm-collapse` 258.8 ms against 256.7, `reversal` 266.7 against 256.8, `anchor-end·warm-*` 258.3-259.3 against 256.8; WebKit `lead-add` 285 against 278.6, `reversal` 264 against 260.6 |
+| B2 | route | CX-1: every flip and swap paints 1-3 film tiles of glyphs spliced at the wipe's hard seam, in both engines ("A' B ols Brushes", "A B ls B", "P" fused with "1") |
+| B3 | shared (floor v2 line, route-touched file) | CX-2: `GlassDock.vue:61` says DockProps has "SIX members"; there are 7. **This seat adds**: the route rewrote the `density.css:71-84` paragraph (patch line 3406) and kept `--dock-morph-max-stretch: 1.14` standing with zero readers and process prose ("not this wave's to make"). That is the defect G-crit CX-3 counts against G. B′-crit's B3 row did not read it |
+
+**Vacuous greens found** (B′-crit §7):
+- V-1: the route's `hit` arm never sampled the corner lunes. The critic's `lune` arm closes it, and R5 still passes.
+- V-2: H3-1 and `seatOverlap` cannot see a splice. Abutting clips intersect by 0, and the paint floor accepts a 1 px sliver of the entering face.
+- V-3: the prototype's dark reading covered ST, W3, FM and W1 only. The critic ran W1, W2 and W4-W7 dark, and the results match light.
+- Two more, found by this seat. The prototype's prose sweep checked deleted names and not changed facts, so both the count and the reader-less token survived. And four of G's critic arms have not run on B′ (finding 5). That is not a vacuity, but the rows those arms judge (the window flag against the lanes, the flow under a block, the in-page retarget) are unprobed on B′.
+
+**Outside the list** (B′-proto §10): the 4× lead cost (Chromium 4×, 40 seats, p95 25.2-25.7 ms, 3-4 frames over 25 ms; the base animates no lead); the hold applies only on overflow, because a hold on every dock raised a ResizeObserver loop error in WebKit (b7), so a capped dock with a seat transition is unmeasured; unlayered consumer margin rules on `.glass-dock` would override the layered flow rules (unmeasured); a rotated ancestor falls back to integer offsets.
+
+### 2.2 · D2-G · the sliding aperture: ADVANCE, 71 %
+
+**What held** (G-crit §0, §3, §4; reproduced by the critic):
+- At the flip, the stall replays from rest (ST 10/10 light; worst step ×0.53-0.80).
+- The one observer is load-bearing (`nosub` ×8.5 / ×8.32 on `stretch·lead-add`).
+- `paintedTau` is now proven: `nopainted` fails the WebKit reversal (8.78 and 8.02 px against tol 7.83 and 7.76), which closes G-proto gap 4.
+- Hit follows paint at the arc: `lunec` 0/528 (Chromium) and 0/424 (WebKit) on every rAF frame; `nohit` takes 528/528 and 432/432.
+- No swap trough (0.915-1).
+- The warm collapse is carried and cut by the closing edge (`kept40` 0.78-0.84).
+- `vagree` ≤ 0.11 px in flight. No door seam.
+- Ten of eleven prototype plants caught; the eleventh, `nopainted`, was caught by the critic.
+
+**Open rows, with counterexamples** (G-crit §10, source of record):
+
+| row | owner | counterexample |
+|---|---|---|
+| P1 | OWNER-BLOCKED (Q-12) | W1 `card` ×3, rest radii 27.93 / 24.05 px. Chromium reads OB; light WebKit reads FAIL (fitted r spread 2.53-3.15 px against 2.5) |
+| P2 | shared (F-19) | as B′ |
+| P3 | OWNER-BLOCKED (Q-4) **and route** | (a) `window` inside Q-4's lenient reading: Chromium `warm-expand` 258.2 ms against 257.9, `reversal` 283.7 against 257.8; WebKit `reversal` 285 against 265.6-274.6. (b) Route: WebKit `neighbour·warm-expand`, the plate overlaps the in-flow neighbour by 9.63 px (load 321), 8.45 px (59) and 12.29 px (33), against 0.5. It reproduces at low load. Chromium 0 px |
+| N1 | route | WebKit `anchor-end·warm-expand` anchored-edge drift 2.11-3.05 px against 0.5, at loads 29-289; floor v2 reads 0.16-0.17. The flow is a main-thread registered-property lane on the root's margins (`shell.css:229-230`); the doors are compositor `translate` lanes |
+| R2 | route | `retarget2` (scheduled in-page): the leaving seat fades over 65.8-91.7 ms against a bound of 79.4-94.5 ms. Chromium fails 12/12 cells at 80 and 120 ms; WebKit 12/18. A WAAPI duration, so load does not set it (CX-4: 0.901 → 0.07 over 66.6 ms against ≥ 81.3) |
+| B2 | route | CX-1: the seam splices glyphs in every swap ("Ɑ", "Ɛools", "A B ɔls"). CX-2: the last seam cut ends its keyframes with 24.2 px of "Tools" uncut and snaps to identity 9-17 ms after `data-morphing` clears, in both engines (`swaplag2-gp.json`). That contradicts the prototype's own flag rule ("closes when everything that moves is within 0.5 px") |
+| B3 | route | CX-3: `docs/design/tunable-anim.md:134-135` has two rows for `--dock-expand-t` (one fact, two rows); `density.css:71-84` was rewritten and kept the reader-less `--dock-morph-max-stretch` with process prose. B′ edited the same table row in place (no duplicate) |
+
+**Vacuous greens found** (G-proto §3.4; G-crit §7):
+- The prototype's first W1 dynamic cells all passed at "adapter travel 0 px". The probe's `visibility: hidden` removed hit-testing from the hit pair, so the hover never expanded the dock. The `hit()` read cured it, and every W1 reading in both reports postdates the cure.
+- B′'s `hit` arm catches 0 in-flight frames for Chromium warm expand on G, in all five readings, so R5's Chromium per-frame evidence on G is `lunec` alone (corners, not seat centres).
+- W3 `window` is green while a seam clip is 24 px from its target. The flag reads the extent, and no H3 row reads the seam's clip.
+- B′'s `lune` gate counts 0 rows on G (R comes from the square plate). `lunec` replaces it.
+- R4's ST reads the plate's painted length only, so the flow lane's 266-380 px one-frame leap after a block passes it. In principle this applies to any route whose flow and glass part.
+- The crit `stall` arm's WebKit window holds no frame off rest. This is shared: ST is the only WebKit stall instrument on both routes.
+
+**Outside the list** (G-proto §10, G-crit §6):
+- Cost at 40 seats: the flip frame is 158.7-165.8 ms at Chromium 4×, with 5-6 frames over 25 ms; at 1× and 40 seats, p95 25.0-25.4 ms.
+- The boot graph grows by 19,623 B to 259 B under its ceiling. The critic could not re-read it on the dist config.
+- The Chromium B′ `retarget` arm loses its execution context on G only. Undiagnosed.
+- A leaving face takes no presses (6/25 painted centres in the WebKit warm expand), by design; B′'s leaving faces stay pressable. Q-7 does not decide it (Q-17 below).
+- A relabel inside a stretched run is unmeasured.
+- A one-tile, seat-wide hole while the entering seat waits for the leaving one (trough 0.87-0.90).
+
+### 2.3 · Floor v2's own shared rows, as the routes found them
+
+| fact | where | placed in |
+|---|---|---|
+| `GlassDock.vue:61` "SIX members" (floor v2 carries it; G's patch already corrects it) | B′-crit CX-2 | floor v3 N-6 |
+| `--dock-morph-max-stretch`: declared, zero readers, process prose (floor v2 carries it; both routes touched the paragraph and kept it) | G-crit CX-3; this seat for B′ | floor v3 N-7 |
+| W2 `route1·long-run-v` keyboard reach (F-19, `audit/REGISTRY.md` "Dock keyboard and ARIA ownership", wave W-DOCK-KEYBOARD) | every build since pass 1 | floor v3 N-8 |
+| the floor's box steps its full extent in one frame at the flip (H3-7) | FV2 §4.2 | route rows R8 (B′ cures it on the glass's clock; G's cure is off it) |
+| the gutter's consequences in four sibling mounts (bbnf BottomDock, chicago, slides, speedtest survey) | FV2 §2.1 | each consumer's own tranche, by a marked addendum (consumer-updates ruling); the gutter's value is the owner's glance |
+
+---
+
+## P3-3 · The cost row, side by side under the one stall tool
+
+The ST rows below are from each critic's `full-light.log`, using one tool (`stall.mjs`) on both routes. The other rows are from the reports named in the right-hand column. Loads differ: the B′ critic's ST ran at 63-81 and the G critic's at 443-492. G's prototype read ST 10/10 at load 24-60.
+
+| measure | D2-B′ | D2-G | floor v2 | same tool? |
+|---|---|---|---|---|
+| **ST verdict, five timings × two engines** | 10/10 | 10/10 | Chromium 1/5, WebKit 2/5 (FV2 §4.1) | **yes** |
+| ST worst step / bound, Chromium | ×0.54-0.67 | ×0.53-0.78 | leaps ×1.23-1.97 | yes |
+| ST worst step / bound, WebKit | ×0.67-0.82 | ×0.74-0.80 | leaps on 3 arms | yes |
+| ST travel before the block ends, `same-task` / `1raf` | 0.01-0.53 px (waits, then replays) | 0.01-0.4 px (waits, then replays) | 0 (then leaps) | yes |
+| ST travel before the block ends, `2raf` | 4.02 px (Chromium), 7.99 px (WebKit) | 373.69 px, 379.66 px | — | yes |
+| ST travel before the block ends, `100ms` | 235.49 px, 259.49 px | 379.31 px, 358.29 px | — | yes |
+| ST travel before the block ends, `mid-flight` | 121.74 px, 135.71 px | 379.07 px, 379.38 px | — | yes |
+| ST landing (RECORD), Chromium | 1440-1480 ms on every arm | 280 ms (`2raf`, `100ms`, `mid-flight`); 1480 ms (`same-task`, `1raf`) | — | yes |
+| ST landing (RECORD), WebKit | 1920-2040 ms | 2320-2600 ms, though 358-380 px of travel completes before the block ends. The reason for the late landing figure is not established in the records | — | yes |
+| in-flow neighbour under a 1.2 s block (`flowblock`) | **not run** | plate over neighbour up to 62 px (Chromium) / 53 px (WebKit); the neighbour then steps 266-380 px in one frame | 0 px overlap (nothing moves); the neighbour steps 380 px after the block | no: G only |
+| Chromium 4×, 40 seats, expand: p95 / max / frames > 25 ms / main ms per frame | 16.4 / 34.2 / 1 / 1.38 | flip frame 158.7-165.8 ms; 5-6 frames > 25; 12.71-16.42 ms | 18.0 / 41.6 / 2 / 4.01 | trace, both; loads differ |
+| Chromium 4×, 20 seats, expand | 10.1 / 17.1 / 0 / 0.76 | 10.1 / 65.6-68.1 / 1 / 1.71 | 16.9 / 25.8 / 1 / 3.35 | as above |
+| Chromium 4×, 40 seats, lead | 25.2-25.7 / 66.6-68.4 / 3-4 / 2.47-2.60 | 10.2 / 50.3 / 1 / 1.96 | 10.1 / 16.4 / 0 / 0.43 (no lead morph) | as above |
+| Chromium 4×, 20 seats, lead | 18.1-23.9 / 39.9-40.8 / 1-2 / 1.84-2.15 | 41.5 / 76.5 / 5 / 3.06 | 9.6 / 23.1 / 0 / 0.40 | as above |
+| Chromium 1×, 40 seats, expand | p95 8.7-10.0, 0 frames > 25 (0-40 seats) | p95 16.9-25.4, 0-5 frames > 25 | p95 9.4-9.8 | as above |
+| WebKit 1×, 40 seats, expand | p95 12-13, 0 frames > 25 (0-40 seats, lead) | p95 24-61, 2-6 frames > 25 | p95 12 | dt only |
+| idle | parks (240 / 196 rAF calls per 2 s, before = after) | parks | — | — |
+| source against floor v2 | src +1896 / −1741 (net +155) | src +2449 / −1504 (net +945); `useDockAperture.ts` 1526 lines | — | the same basis (patch stats) |
+| new boxes | 0; a clone for a seat that leaves the DOM | the doors, counters, caps, shades and face door counted in pass 2 (12), plus the hit pair; a clone layer | — | — |
+| boot graph | gate passes (14/14 after builds); delta not reported | +19,623 B; 259 B under the ceiling | — | no |
+| hit in flight (Q-7) | at the arc (`lune` 0/40) | at the arc (`lunec` 0/528, 0/424) | — | no: `lune` against `lunec` |
+| `DockProps` | 7 | 7 | 7 | yes |
+| unshimmed WebKit crashes | 0 | 0 | 0 | yes |
+| real Safari | UNMEASURED | UNMEASURED | UNMEASURED | — |
+
+**Reading.**
+- **The flip is no longer a tie with a leap.** Under ST, both routes wait out a block at the flip and then replay from rest. Pass 2's branch "G ties at the flip and costs 12 boxes" now reads "both pass at the flip, and G costs more".
+- **Where G still wins, measured:** travel during a block that starts after commit. Its extent finishes inside the block (Chromium lands at 280 ms), while B′ has covered 4-260 px when the block ends and then resumes.
+- **What that win comes with:** in the same case, G's glass leaves the page's layout behind (`flowblock`, up to 62 px of overlap). B′'s flow and glass share one main-thread clock, so by mechanism they freeze together. That is a prediction, not a reading: `flowblock` has not run on B′.
+- **What each pays:**
+  - **G:** a 158-166 ms flip frame at 4× with 40 seats; +945 net source lines; the boot graph to within 259 B of its ceiling.
+  - **B′:** per-frame main-thread writes, cheap at 1× (p95 ≤ 10.4 ms), and a 4× lead morph the floor never animates (3-4 frames over 25 ms at 40 seats).
+
+---
+
+## P3-4 · The §4.5 winner rule, applied
+
+| clause (REGISTRY P2-4 §4.5) | holds? | evidence |
+|---|---|---|
+| Both routes measured on this list, under H3, with the same `stall` tool | **yes** | B′-crit §3 and G-crit §3 score the same 24 rows; ST ran on both (P3-3) |
+| …then **one route converges and the other does not** | **no** | B′ has 5 open rows, G 7. Neither is at zero, and P1 and P3 are owner-blocked on both |
+| …or **the owner's Q-15 ruling makes one route dominated on the cost row** | **no** | Q-15 is unruled (FORMATION-PROGRESS has no ruling) |
+
+**No winner is named.** B′'s higher score (79 % against 71 %) does not decide: the rule names a winner by convergence or by Q-15, not by percentage.
+
+What a Q-15 ruling would do, read on pass-3 measurements:
+- **(a) "A stall delays the motion but never leaps".** Both routes meet it, and G is dominated on the cost row: ST is the same, with a heavier flip, more source and the boot-graph margin. G would RETIRE as dominated, and its compositor carrier would be banked with this re-trigger: the owner widens Q-15 to (b), or B′ fails ST.
+- **(b) "The extent keeps moving through a block that starts after commit".** B′ is dominated on recorded travel (4-260 px against 358-380 px). This seat adds a condition: (b) is defended only by a route that keeps the page's layout with its glass under that block. G fails that today (62 / 53 px overlap). So B′ is dominated under (b) only once G holds R8 (P3-6). If neither holds it, no route defends (b), and that is reported to the owner, not worked around.
+
+**The combination (P2-3) is still not earned.** Nothing in pass 3 changes its first reason: B′'s seats are main-thread writes and stand still under a block while G's plate moves.
+
+---
+
+## P3-5 · What the owner must rule
+
+### 5.1 · Questions that block convergence (critical path for 10.2.0, O-88)
+
+No route can reach zero open rows until these are ruled. The routes build on the defaults meanwhile.
+
+| id | question | what pass 3 measured | what is asked | default until ruled |
+|---|---|---|---|---|
+| **Q-4** | the landing clock | Both routes' `window` failures sit inside the lenient reading: 258-286 ms, against strict allowances of 256.7-278.6 ms. B′'s P3 has no other failure. G's P3 also carries the neighbour overlap | (a) the flag closes at the 2 % band and the sub-band tail paints after it, with a reversal's allowance measured from its release velocity; or (c) a dock-only clock of about 0.27 s. Both readings turn B′'s P3 green as measured | H3-11's lenient reading, cells OB |
+| **Q-12** | does a card dock's corner change with its posture? | Rest radii 27.93 → 23.93 / 24.05 px on both routes. Chromium reads OB; light WebKit reads FAIL on the fitted-radius spread (2.53-3.75 px against 2.5), so the OB class flips by engine and theme | (a) one radius in every frame (N-5 builds it); or (b) the lerp stays and W1's card law becomes "every frame between the two rest radii", with the fitted-spread rule re-cut to match (H4-7) | the lerp; cells OB |
+| **Q-15** | which stalls must the dock survive? | P3-3, P3-4 | (a) a stall delays but never leaps (both routes meet it), or (b) the extent keeps moving through a post-commit block, and if so whether the page's layout must move with it | none: no route dominated |
+| **Q-16** | the dock's own alignment (N-1) | landed in floor v2: 0 of 14 sibling mounts relied on the auto margin; 3 demo docks in `/dock/vertical` move to their containers' start | confirm the strike, and whether the vertical story centres its docks | as built |
+| **Q-17** (new) | does a leaving face take presses mid-morph? | G: no (`pointer-events: none` on the leaving face; 6/25 painted centres in the WebKit warm expand take no press). B′: yes. Q-7 (hit follows paint) does not decide whether paint that is leaving is pressable | (a) a leaving face is inert from the flip; or (b) whatever paints takes presses until it is gone | each route as built; recorded, not counted |
+
+### 5.2 · Confirms (built as the default on both routes, nothing measured against them)
+
+| id | as built | asked |
+|---|---|---|
+| Q-1 cut cap | (a) struck; no plate-level cue | confirm (a), or rule (c), a content-level cue on the run |
+| Q-2 overflow | (a) a native scroller in a paint gutter | confirm |
+| Q-3 props | 7 members on both routes (one grouped `scroll`) | confirm 7 |
+| Q-5 bounce | (a) on both: weight without visible bounce. D-1 asks for bounce, and B′'s ζ 0.72 lane painted 14.55 px of overshoot in pass 2. Neither pass-3 route shipped it | rule (b), a designed underdamped rung for posture morphs with its ζ, or confirm (a) |
+| Q-6 canon P5 | follows Q-15: (a) amended under B′, (b) held under G | rule with Q-15 |
+| Q-7 hit vs paint | (a) at the arc, built and measured on both routes (`lune`, `lunec`) | confirm (a) |
+| Q-8 rim | (a) decorative, opt-in plate child | confirm |
+| Q-9 retired facilities | (a) struck | confirm |
+| Q-10 collapsed face | (a) the summary is the disclosure; `#collapsed` content moves to `#persistent` by consumer addendum. O-88's "content-sized, never a bare square tile" binds the form | confirm (a), read with O-88 |
+
+**Glances, not rulings:** the gutter's value (`--dock-pad`, or one seat gap) and its consequences in four sibling mounts (FV2 §2.1); G's 1 px band edge in place of the authored 1.5 px; the rim as an opt-in seat (OW-7). **Owner action, unchanged:** tick safaridriver's "Allow remote automation". Every real-Safari cell in all three passes is UNMEASURED.
+
+---
+
+## P3-6 · The carried D2 obligations
+
+| obligation | how it stands after pass 3 | residue, and where it goes |
+|---|---|---|
+| **The harness precondition** (planted defects for every witness; the shim a harness aid; unshimmed results recorded) | **CLOSED for H3.** Every H3 row has a PASS fixture and a planted FAIL in both engines on the final harness (H3 §2). The baseline's 71 unshimmed HEAD WebKit cells all crash; every floor and route cell is unshimmed | Pass 3 found new vacuous greens (P3-2): the splice, the flag against the lanes, the flow under a block, the hit arm's empty Chromium expand window, the card verdict flipping by engine and theme, and the dark instruments. H4 closes them (P3-7) |
+| **B's §6 item 1, per-seat FLIP** (the one item left open after pass 2) | **CLOSED as specified.** The swap never blanks on B′ under H3-1 (B′-crit R1, Obligation 1) | The next defect class is the splice (B2), which is H4-1 and R6 |
+| **O-64 R-6**, promised to value-js-30 | Unchanged: refuted headless for the glass-ui scene in pass 2 (H2 §5) | keyframes' gh build, headed on a real GPU: UNMEASURED |
+| **O-65 DOCK-COLLAPSED-FORM** | **CLOSED as a witness.** W6 4/4 per engine on B′ (light and dark) and on G; floor v2 2/4 (the floor's `window`) | Folded into O-88's rows C1-C2 in pass 4 |
+| **O-66 §2**, 60 fps on a real GPU in three consumer docks | **Witness CLOSED, cells OPEN.** W8 green on both routes headless | value.js, keyframes and fourier headed on a real GPU: UNMEASURED (value.js fenced) |
+| **O-67 SIDE-DOCK-EDGE** | **CLOSED.** Floor v2 N-4: W7 18/18 per engine on the floor and both routes, light and dark (`gutter` 8-12 px, the badge shares 0 px with the glyph) | the gutter's value is the owner's glance; four sibling mounts owe consumer addenda (FV2 §2.1) |
+| **The rim's owner record** (AY B.5 against N-7) | CLOSED as specified in pass 2; W5 6/6 on the floor and both routes | the rim stays OW-7's glance |
+| **O-87 deft refinement** (binds every pass from 2026-10-06) | **NOT APPLIED in pass 3.** No pass-3 report judges either route's paint against it (no report mentions O-87). The 24-row list predates the ruling | Pass 4 row L1 (P3-7) |
+| **O-88 the collapse system in 10.2.0** (binds the pass-4 list) | Not yet a witness. Pass 3 measured the morph in the harness scenes only, not the facility list, and not in glass's own demo app | Pass 4 rows C1-C7 and H4-10 (P3-7). D2's convergence gates 10.2.0 |
+
+---
+
+## P3-7 · The pass-4 plan
+
+### 7.1 · H4: the harness revision (before any pass-4 prototype)
+
+Every row ships with a fixture PASS and a planted FAIL in both engines, as H2 and H3 did. Every row below is a class a pass-3 seat recorded. None is minted here.
+
+| id | witness | change | exposed by |
+|---|---|---|---|
+| H4-1 | W3 | **the splice.** In any moving frame, two units' clips that abut inside a glyph run fail, and so does a painted sliver of a face narrower than a minimum width (one glyph advance, from the seat's own font). Promote the film read to a gated check | B′-crit CX-1, §9; G-crit CX-1, §9 |
+| H4-2 | W3 | **the flag covers every lane.** `data-morphing` closes only when every animated value (transform, clip, opacity, registered property) is at its target, and no lane is cancelled to identity with a residue above 0.5 px. Promote `swaplag` | G-crit CX-2, §7.2, §9 |
+| H4-3 | ST | **glass and flow on one clock.** ST gains the `neighbour=1` scene at all five block timings: the plate overlaps the neighbour by no more than 0.5 px, and the neighbour takes no one-frame step above its continuity bound after the block. Promote `flowblock` | G-crit §6, §7.5, §9 |
+| H4-4 | R5 | **an in-page hit sampler** on every rAF for seat centres, as `lunec` does for corners, with R read from the element that rounds the window (the adapter's `hit()` or plate). It replaces `hit` and `lune` | G-crit §7.1, §7.3; B′-crit §7.1 |
+| H4-5 | W3 | **the retarget arm scheduled in-page** (`retarget2`), at 40, 80 and 120 ms in both engines, plus a cell for the evaluate-context loss on G, so that it is a reading, not a tool failure. Fix the `--cells` anchor filter | G-crit §4 Both-c, §7.6, §9 |
+| H4-6 | ST, FM | **theme-aware instruments**: ST's plate key and FM's trigger marker work on a dark page (today ST WebKit dark is 5/5 UM, and FM Chromium dark logs "no trigger marker" ×6) | FV2 §4.4; both critics |
+| H4-7 | W1 | **one card verdict per engine and theme.** The OB condition and the fitted-radius spread use the same rule in both engines, so a card cell cannot read OB in one engine and FAIL in the other. Re-cut it per Q-12 when ruled | B′-crit §9; G-crit P1 |
+| H4-8 | source | **prose by fact.** A gate that every custom property declared or written in the dock band has a reader (N-2's gate covers script writes only), that the DockProps count in prose matches `useDockShellProps`, and that a token has one row in `docs/design/tunable-anim.md` | B′-crit CX-2, §9; G-crit CX-3, §9; this seat |
+| H4-9 | adapters | **review the `hit()` read**, G's shared-harness edit: self-test with and without it, and the adapter law over every pass-4 adapter | G-proto §3.4, §10.12 |
+| H4-10 | O-88 | **the facility suite, born RED in glass's own demo app**, with frames at each morph step, in both engines: the rows C1-C7 below | O-88 |
+| H4-11 | O-87 | **the lighting census**: per route, the computed `box-shadow` layers, `filter` / `backdrop-filter` values and pseudo-element paint on every dock element at rest and in flight, against floor v3's; plus frames for an eyes-on read | O-87 |
+
+H4 lands, and then floor v3, B′ and G are re-run under it as the pass-4 baseline. A reading of record starts under the existing load gate. Every red cell is re-run twice, and a red seen only under load is NOT-REPRODUCED, as in pass 3.
+
+### 7.2 · Floor v3: rows added to the floor patch
+
+| row | what | from | witness |
+|---|---|---|---|
+| N-5 | the card corner, per Q-12 | P1 on both routes | W1 `card` (H4-7) |
+| N-6 | `GlassDock.vue:61`: "SEVEN members" (G's patch already has it); the count is gated by H4-8 | B′-crit CX-2 | H4-8 |
+| N-7 | strike `--dock-morph-max-stretch` and its process paragraph (`density.css:71-84`): declared, zero readers. N-2's "nothing published without a reader" extends to declared tokens | G-crit CX-3; this seat for B′ | H4-8 |
+| N-8 | **F-19's keyboard reach on the long vertical run.** Seat resolution reaches every seat beyond the snap lattice by Tab and arrows (W-DOCK-KEYBOARD, `audit/REGISTRY.md` F-19). P2 cannot close in D2 otherwise, and O-88's "keyboard open and close with focus kept" lands on the same seat model | P2 on every build since pass 1; O-88 | W2 `route1·long-run-v`; C5 |
+
+### 7.3 · Route obligations
+
+**D2-B′:**
+1. **The splice (B2).** A feathered seam, or an exclusion lane wider than one face, so that no frame reads as a false glyph (H4-1). Judge it on the filmstrips in both engines.
+2. **Run G's four arms**: `swaplag` (H4-2), `flowblock` (H4-3), in-page `retarget2` (H4-5) and `lunec` (H4-4). The flag must cover the wipe's clips.
+3. **The 4× lead cost**, recorded for Q-15: 40 seats at 4× should keep frames over 25 ms at or below the floor's expand (2), or the critic says why not.
+4. **The three unmeasured cases from B′-proto §10:** a capped dock with a seat transition (the ResizeObserver loop), unlayered consumer margin rules on `.glass-dock`, and a rotated ancestor. Each is a measured cell.
+
+**D2-G:**
+1. **N1 and the P3 neighbour (R8).** Put the flow on the glass's clock, or hold the layout length through the episode, so the anchored-edge drift is ≤ 0.5 px and the overlap ≤ 0.5 px in WebKit, with H4-3 green under all five block timings. If no in-family mechanism does this, report it with measurements. That is the case P3-4 names for Q-15 (b).
+2. **R2.** A retarget's leaving fade lasts ≥ 0.25 × the plate morph in both engines (`retarget2`, 80 and 120 ms).
+3. **B2.** The splice (H4-1), and the last seam cut eases to 0 inside the window (H4-2).
+4. **B3.** One `--dock-expand-t` row in `tunable-anim.md`.
+5. **The Chromium evaluate-context loss** on a mid-swap retarget, diagnosed under H4-5.
+6. **The 40-seat flip** (158-166 ms at 4×), reduced or recorded for Q-15, with the boot-graph delta re-read on the dist config.
+
+**Both:**
+- The O-88 facility rows C1-C7 and the O-87 row L1, in both engines.
+- Each route re-runs every arm the other route's critic ran, so the arm sets are identical. The pass-4 critics list the arm set beside their scores.
+- Real-Safari cells as soon as the checkbox is ticked. The first to run: the lens in G's doors, the extent under a block, the reversal row, the band edge at DPR 2-3, a negative plate `inset` under `backdrop-filter`, and the unshimmed mount.
+
+### 7.4 · Order
+
+0. The owner's rulings in P3-5 are requested now. Q-4 and Q-12 are on 10.2.0's critical path, because P1 and P3 cannot close without them on any route. The routes build on the defaults until the rulings arrive.
+1. H4 with its self-test, including the O-88 suite born RED in the demo app. Then the pass-4 baseline re-run.
+2. Floor v3 (N-6..N-8; N-5 on Q-12).
+3. B′ and G, each rebased on floor v3: prototype, then critique. One seat each, with harness runs serialized (one browser-owning seat at a time).
+4. The pass-4 agglomeration.
+
+### 7.5 · The pass-4 checklist (fixed now; critics may not add rows)
+
+One list for both routes, 36 rows. Its first 24 rows are pass 3's, with the witnesses re-cut by H4, so pass-3 and pass-4 percentages compare on that subset. The critics report both counts.
+
+| # | row | witness |
+|---|---|---|
+| P1-P5 | the five problems under H4, both engines, both themes | W1-W5 (with W6-W8, R6 in their problems) |
+| F1-F7 | floor rows 1-7, held under the route | as pass 2 |
+| N1-N4 | floor v2 rows N-1..N-4, held under the route | FV2 |
+| R1 | continuity and seat rows with the paint floor on every W3 cell | H3-1, H-3b |
+| R2 | leaving seats (compaction, removal, swap, retarget) by the gap-free rule | H3-3; H4-5 |
+| R3 | the reversal hands its velocity on | W3 `reversal` |
+| R4 | no one-frame leap after any of the five block timings; the travel recorded | ST |
+| R5 | hit follows paint per Q-7, every rAF, seat centres and corners | H4-4 |
+| B1 | every cell in both engines under H4 with a reviewed adapter, and the same arm set as the other route | the run logs, `adapter-law.mjs` |
+| B2 | the filmstrip gestalt in both engines against D-1 and D-2 (first expand, warm pair, swap, content change) | FM strips |
+| B3 | `DockProps` count against Q-3, and the prose sweep by fact | H4-8; source read |
+| N5 | floor v3 rows N-6..N-8, held under the route (N-5 on Q-12) | §7.2 |
+| R6 | no splice: no frame shows two faces abutting inside a glyph run or a sliver below the minimum width | H4-1 |
+| R7 | the window flag covers every lane, with no residue cancelled to identity | H4-2 |
+| R8 | glass and flow on one clock: the neighbour overlap ≤ 0.5 px and no neighbour leap, at rest-to-rest morphs and under all five block timings | H3-7, H4-3 |
+| C1 | the collapsed form is content-sized, in the same material with one edge, and its summary is anchored and legible; it is never a bare square tile with an orphan glyph | H4-10 |
+| C2 | collapse and expand are one continuous morph (size, radius and content) with no jump, flash, double render or layout pop. Reduced motion gives an instant, correct state. Rapid toggles leave no stale state | H4-10 |
+| C3 | the triggers: pointer enter and leave, focus, coarse tap, scroll-driven collapse | H4-10 |
+| C4 | `#persistent` in both postures | H4-10 |
+| C5 | keyboard open and close with focus kept; the accessible name and expanded state | H4-10 |
+| C6 | menus and popovers opened from a collapsed or an expanding dock | H4-10 |
+| C7 | the side and vertical variants; 390 px and coarse pointers | H4-10 |
+| L1 | O-87: no lighting layer added over floor v3's paint (shadows, glows, specular, inner bevels, idle shimmer); the material, its one edge and its motion kept; frames read against the ruling | H4-11 |
+
+P1 and P3 carry the OWNER-BLOCKED cells until Q-12 and Q-4 are ruled. A route is **CONVERGED** only at 0 open rows, owner-blocked rows included.
+
+The winner rule for pass 4:
+- A winner may be named only when both routes are measured on this list under H4, with the same stall tool and the same arm set.
+- Then either one route converges and the other does not, or the owner's Q-15 ruling makes one route dominated on the cost row. P3-4 sets out how each Q-15 branch applies, including the condition that (b) is defended only by a route that holds R8.
+- If both routes converge, Q-15 decides between them, and the combination question (P2-3) is re-read on pass-4 measurements.
+
+---
+
+## P3-8 · Next-pass defect classes, placed
+
+Every class the pass-3 seats recorded is placed. None is left unassigned, and none was minted into pass 3.
+
+| class | recorded in | placed in |
+|---|---|---|
+| the splice at a seam | B′-crit §9; G-crit §9 | H4-1, R6 |
+| prose by fact (counts, duplicate rows, reader-less tokens) | B′-crit §9; G-crit §9 | H4-8, N-6, N-7, B3 |
+| dark instruments (ST WebKit, FM Chromium) | FV2 §4.4; both critics | H4-6 |
+| the W1 card verdict flipping by engine and theme | B′-crit §9 | H4-7, Q-12 |
+| the 4× lead cost | B′-crit §9 | B′ obligation 3; Q-15 |
+| the window flag must cover every lane | G-crit §9 | H4-2, R7 |
+| glass and flow on one clock | G-crit §9 | H4-3, R8 |
+| the B′ `retarget` arm's context loss on G | G-crit §9 | H4-5; G obligation 5 |
+| the `hit` arm's empty Chromium expand window | G-crit §9 | H4-4 |
+| the floor's box resizing in one frame (H3-7) | FV2 §5.5 | R8 |
+| `handOffSizes` without a caller in the floor | FV2 §5.4 | resolved: both routes call it (P3-1) |
+| the `hit()` shared-harness edit | G-proto §10.12 | H4-9 |
+| the leaving face and presses | G-proto §10.6 | Q-17 |
+| O-87 not applied in pass 3 | this seat | H4-11, L1 |
+| O-88's facility list | O-88 | H4-10, C1-C7 |

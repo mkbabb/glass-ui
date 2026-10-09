@@ -318,3 +318,9 @@ Outage log:
   - B3: stale --dock-expand-t / --dock-morph-max-stretch rows and process prose in density.css.
   Shared or owner-blocked: P1 (Q-12, card radius), P2 (F-19, keyboard reach 10/11), P3 (Q-4, plus a WebKit neighbour overlap of 9.63 px against 0.5).
   D2 pass 3 agglomerate launched.
+- 2026-10-09 — **D2 pass 3 CLOSED** (run wf_fa23d12f-c4a, 7 seats, 0 errors). REGISTRY gains "D2 · pass 3" (+367 lines).
+  - Routes: B′ ADVANCE 79% (19/24); G ADVANCE 71% (17/24). No winner: §4.5 needs one route converged, or a Q-15 ruling.
+  - Agglomerate finding: B′ also kept the reader-less --dock-morph-max-stretch, which B′'s critic missed.
+  - O-87 was not applied in pass 3, and O-88's facility list was not yet a witness. Both are folded into the pass-4 list as L1 and C1-C7.
+  - The pass-4 list is fixed at 36 rows. Owner questions blocking convergence: Q-4 and Q-12 (10.2.0 critical path), Q-15, Q-16, Q-17; confirms Q-1..Q-3, Q-5..Q-10.
+  D2 pass 4 launched (bl-design-d2-pass4.js): H4 (incl. the O-88 suite born RED in the demo app and the O-87 lighting census) with the baseline re-run, then floor v3 (N-6..N-8), then B′ and G each with a fresh critic, then the agglomerate.
