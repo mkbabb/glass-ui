@@ -1,0 +1,23 @@
+node scripts/structure/seal/seal.mjs --root <r1> --json docs/tranches/BL/design/structure/pass-7/B-kit/results/p7/seal-r1.json | exit 0 | 11s | load { 29.86 34.38 47.03 }
+seal {"b0":{"f1":0,"walks":0,"computed":0},"files":1580,"filesScope":"the five zones and the root files","edges":8330,"modules":140,"required":140,"b10":{"anchored":39,"bound":["scripts/bundle-checks/files.mjs","scripts/structure/lib/classify.mjs","scripts/structure/lib/entries.mjs","scripts/structure/lib/graph/css.mjs","scripts/structure/lib/graph/graph.mjs","scripts/structure/lib/graph/playwright.mjs","scripts/structure/lib/placement.mjs","scripts/structure/lib/symbols.mjs","scripts/structure/lib/tree.mjs","src/components/aurora/runtime/frame/textureUpload.ts","src/components/aurora/runtime/frame/uniformBridge.ts"],"held":[],"counted":0},"multiDoorSymbols":0,"pin":{"modules":140,"doors":120,"names":1283,"reviewed":2}}: PASS
+18
+npx vite build | exit 0 | 22s | load { 33.27 34.86 46.90 }
+npm run verify:package | exit 0 | 54s | load { 37.61 36.07 46.62 }
+"terminal":"CLEAN"
+"ratchet":{"path":"<r1>/.bundle-ratchet","status":"PRESENT","mode":"later-coordinate","raw":"2920401\n","datum":"2920401","unpackedBytes":2920401,"equal":true,"increase":false}
+npx vue-tsc --noEmit | exit 0 | 15s | load { 41.29 36.98 46.75 }
+npx vue-tsc --noEmit -p tsconfig.test.json | exit 0 | 15s | load { 38.61 36.60 46.45 }
+npm run demo:dist:build | exit 0 | 3s | load { 40.32 36.99 46.53 }
+npx vitest run tests/gates/seal.test.ts | exit 0 | 15s | load { 41.49 37.45 46.53 }
+ Test Files  1 passed (1)
+      Tests  21 passed (21)
+npx vitest run | exit 1 | 71s | load { 60.29 43.90 48.23 }
+     × every atom combination yields a valid in-range config (TOTAL) 7479ms
+     × keeps the engage ink a 0ms step — no host rule transitions the background channel 5045ms
+ FAIL  src/components/aurora/__tests__/atoms.test.ts > resolveAtoms total-function fuzz > every atom combination yields a valid in-range config (TOTAL)
+ FAIL  tests/styles/glass-subtlety/grasp.test.ts > grasp register — the material answers the hand > keeps the engage ink a 0ms step — no host rule transitions the background channel
+ Test Files  2 failed | 273 passed (275)
+      Tests  2 failed | 2328 passed | 10 expected fail | 1 skipped (2341)
+npx vitest run <the two timed-out files> | exit 0 | load { 57.33 44.06 48.21 }
+ Test Files  2 passed (2)
+      Tests  38 passed (38)

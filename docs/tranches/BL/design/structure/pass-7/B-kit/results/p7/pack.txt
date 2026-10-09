@@ -1,0 +1,21 @@
+pack: the floor base (S1 5b14c6c7) against the chain's final tree (S70 52cca0fe), read from pack/pack-floor.json, pack/pack-route.json (npm pack contents after vite build), pack/pack-diff.json (tools/pack-diff.mjs), pack/decl-diff.json (tools/decl-diff.mjs --doors --chain)
+
+unpacked   floor 2,913,546 B over 838 files; route 2,920,401 B over 920 files; delta +6,855 (classes sum +6,855)
+HEAD       2,919,057 (the ratchet before S70); route +1,344 over HEAD; pass 6's 2,925,765 -> -5,364
+
+by class
+  MIGRATION.md          +9,338   (1 changed)
+  door declaration      +2,804   (45 added, 3 removed, 23 changed)
+  other declaration     -5,275   (124 added, 99 removed, 61 changed)
+  css door                +574   (38 added, 2 removed, 1 changed)
+  other css                +69   (71 added, 69 removed, 8 changed)
+  js                      -887   (35 added, 58 removed, 27 changed)
+  other                   +232   (1 changed)
+
+declarations by kind (552 -> 619 files, 418 same text)
+  wiring +16,913, JSDoc prose -25,161, body +5,777, total -2,471
+
+by step (a file charged to the last step that wrote or moved its source)
+  S5-1 +14,073; S71b +4,694; S71d +2,279; S64 +1,861; S39-12 -30,779 (the blob shader chunk prose)
+
+the datum rebinds once, at S70: .bundle-ratchet 2919057 -> 2920401; verify:package on r1 reads unpackedBytes 2,920,401, equal, increase false

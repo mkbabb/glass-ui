@@ -1,0 +1,100 @@
+{
+ "base": {
+  "B0": 0,
+  "B1": 0,
+  "B2": 0,
+  "B3": 0,
+  "B4": 0,
+  "B5": 0,
+  "B6": 0,
+  "B7": 0,
+  "B8": 0,
+  "B9": 0,
+  "B10": 0,
+  "B11": 0,
+  "B12": 0,
+  "B13": 0,
+  "B14": 0,
+  "B15": 0,
+  "B16": 0,
+  "B17": 0
+ },
+ "rows": [
+  {
+   "id": "PW6x-legal-chip",
+   "item": "B-10 legal",
+   "expect": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "PW6x-wrong-chip",
+   "item": "B-10 (P5-R5)",
+   "expect": "*",
+   "verdict": "CAUGHT",
+   "named": "B16",
+   "lines": {
+    "B16": [
+     "src/components/slider/__tests__/zq6xchipWrong.visual.ts (colocated in src/components/slider; its subject's home is src/components/chip (by the 1 story it opens))"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "PW6x-tv-chip",
+   "item": "B-10 (P5-R5)",
+   "expect": "*",
+   "verdict": "CAUGHT",
+   "named": "B16",
+   "lines": {
+    "B16": [
+     "tests-visual/zq6xchipTv.spec.ts (subject in src/components/chip (by the 1 story it opens): belongs in src/components/chip/__tests__/ as *.visual.ts)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "PW6x-legal-sortable",
+   "item": "B-10 legal",
+   "expect": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "PW6x-wrong-sortable",
+   "item": "B-10 (P5-R5)",
+   "expect": "*",
+   "verdict": "CAUGHT",
+   "named": "B16",
+   "lines": {
+    "B16": [
+     "src/components/slider/__tests__/zq6xsortableWrong.visual.ts (colocated in src/components/slider; its subject's home is src/components/sortable-list (by the 1 story it opens))"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "PW6x-tv-sortable",
+   "item": "B-10 (P5-R5)",
+   "expect": "*",
+   "verdict": "CAUGHT",
+   "named": "B16",
+   "lines": {
+    "B16": [
+     "tests-visual/zq6xsortableTv.spec.ts (subject in src/components/sortable-list (by the 1 story it opens): belongs in src/components/sortable-list/__tests__/ as *.visual.ts)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  }
+ ]
+}

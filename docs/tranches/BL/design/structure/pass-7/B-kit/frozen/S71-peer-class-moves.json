@@ -1,0 +1,115 @@
+{
+ "step": "B-S71 (frozen from authored/p7-peer-class-moves.json, F-9)",
+ "moves": [
+  {
+   "from": "src/composables/motion/spring/useLiquidFlex.ts",
+   "to": "src/composables/motion/core/useLiquidFlex.ts"
+  },
+  {
+   "from": "src/composables/motion/morph/useSelectionIndicator.ts",
+   "to": "src/composables/motion/selection/useSelectionIndicator.ts"
+  },
+  {
+   "from": "src/composables/motion/morph/useSelectionGroup.ts",
+   "to": "src/composables/motion/selection/useSelectionGroup.ts"
+  },
+  {
+   "from": "src/composables/motion/morph/useTabRovingFocus.ts",
+   "to": "src/composables/motion/selection/useTabRovingFocus.ts"
+  },
+  {
+   "from": "src/composables/motion/morph/eyeglass.ts",
+   "to": "src/composables/motion/selection/eyeglass.ts"
+  },
+  {
+   "from": "src/composables/motion/morph/__tests__/useSelectionIndicator.test.ts",
+   "to": "src/composables/motion/selection/__tests__/useSelectionIndicator.test.ts"
+  },
+  {
+   "from": "src/composables/motion/morph/__tests__/eyeglass.test.ts",
+   "to": "src/composables/motion/selection/__tests__/eyeglass.test.ts"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "tests/styles/typed-track-seam.test.ts",
+   "spec": "`src/${rel}`",
+   "file": "src/composables/motion/morph/__tests__/eyeglass.test.ts",
+   "reason": "S71: src/composables/motion/morph/__tests__/eyeglass.test.ts -> src/composables/motion/selection/__tests__/eyeglass.test.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/typed-track-seam.test.ts",
+   "spec": "`src/${rel}`",
+   "file": "src/composables/motion/morph/__tests__/useSelectionIndicator.test.ts",
+   "reason": "S71: src/composables/motion/morph/__tests__/useSelectionIndicator.test.ts -> src/composables/motion/selection/__tests__/useSelectionIndicator.test.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/typed-track-seam.test.ts",
+   "spec": "`src/${rel}`",
+   "file": "src/composables/motion/morph/eyeglass.ts",
+   "reason": "S71: src/composables/motion/morph/eyeglass.ts -> src/composables/motion/selection/eyeglass.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/typed-track-seam.test.ts",
+   "spec": "`src/${rel}`",
+   "file": "src/composables/motion/morph/useSelectionGroup.ts",
+   "reason": "S71: src/composables/motion/morph/useSelectionGroup.ts -> src/composables/motion/selection/useSelectionGroup.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/typed-track-seam.test.ts",
+   "spec": "`src/${rel}`",
+   "file": "src/composables/motion/morph/useSelectionIndicator.ts",
+   "reason": "S71: src/composables/motion/morph/useSelectionIndicator.ts -> src/composables/motion/selection/useSelectionIndicator.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/typed-track-seam.test.ts",
+   "spec": "`src/${rel}`",
+   "file": "src/composables/motion/morph/useTabRovingFocus.ts",
+   "reason": "S71: src/composables/motion/morph/useTabRovingFocus.ts -> src/composables/motion/selection/useTabRovingFocus.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/typed-track-seam.test.ts",
+   "spec": "`src/${rel}`",
+   "file": "src/composables/motion/spring/useLiquidFlex.ts",
+   "reason": "S71: src/composables/motion/spring/useLiquidFlex.ts -> src/composables/motion/core/useLiquidFlex.ts; the scanner's sensitivity is judged by the test run"
+  }
+ ],
+ "globDeltas": [],
+ "reasons": [
+  {
+   "from": "src/composables/motion/spring/useLiquidFlex.ts",
+   "to": "src/composables/motion/core/useLiquidFlex.ts",
+   "why": "an engine-free projection (no spring, no rAF, no element; vue only) read by the selection engine, morph's drag, spring's press and ./motion-core: it joins the engine-free core, beside writeVelocityWeight and effectiveCap, which it is read with"
+  },
+  {
+   "from": "src/composables/motion/morph/useSelectionIndicator.ts",
+   "to": "src/composables/motion/selection/useSelectionIndicator.ts",
+   "why": "the selection engine's indicator: keyframes-free (vue, the core, the kernel's selection contract, the eyeglass law)"
+  },
+  {
+   "from": "src/composables/motion/morph/useSelectionGroup.ts",
+   "to": "src/composables/motion/selection/useSelectionGroup.ts",
+   "why": "the selection engine's group, which composes the indicator and the roving focus"
+  },
+  {
+   "from": "src/composables/motion/morph/useTabRovingFocus.ts",
+   "to": "src/composables/motion/selection/useTabRovingFocus.ts",
+   "why": "the selection engine's roving focus, read by the group"
+  },
+  {
+   "from": "src/composables/motion/morph/eyeglass.ts",
+   "to": "src/composables/motion/selection/eyeglass.ts",
+   "why": "the eyeglass law the indicator projects (no imports)"
+  },
+  {
+   "from": "src/composables/motion/morph/__tests__/useSelectionIndicator.test.ts",
+   "to": "src/composables/motion/selection/__tests__/useSelectionIndicator.test.ts",
+   "why": "R-3: the indicator's test lives with it"
+  },
+  {
+   "from": "src/composables/motion/morph/__tests__/eyeglass.test.ts",
+   "to": "src/composables/motion/selection/__tests__/eyeglass.test.ts",
+   "why": "R-3: the eyeglass law's test lives with it"
+  }
+ ]
+}

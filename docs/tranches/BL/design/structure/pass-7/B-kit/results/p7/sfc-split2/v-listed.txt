@@ -1,0 +1,82 @@
+{
+ "baseline": null,
+ "verdict": "GREEN",
+ "staleListings": [],
+ "scopes": [
+  {
+   "from": "Aurora",
+   "to": "AuroraShadeA",
+   "reason": "pass-7 plant (FP6-4): the rule .aurora-canvas-layer re-homed into one of two child SFCs",
+   "now": 2,
+   "atBase": 0,
+   "fromAtBase": 20
+  },
+  {
+   "from": "Aurora",
+   "to": "AuroraShadeB",
+   "reason": "pass-7 plant (FP6-4): the rule .aurora-canvas-layer--armed re-homed into one of two child SFCs",
+   "now": 2,
+   "atBase": 0,
+   "fromAtBase": 20
+  }
+ ],
+ "scopeFindings": [],
+ "entries": [
+  {
+   "key": "./styles",
+   "identical": false,
+   "class": "reorder",
+   "rulesBase": 1970,
+   "rulesNow": 1970,
+   "onlyBase": 0,
+   "onlyNow": 0,
+   "firstDivergence": 1278,
+   "base": "@layer components :: .aurora-root[data-v-(Aurora)] {opacity:var(--aurora-ceiling-a11y,var(--aurora-ceiling,1));contain:content;content-visibility:auto;contain-intrinsic-size:auto 600px;display:grid}",
+   "now": "@layer components :: .aurora-canvas-layer[data-v-(Aurora)] {opacity:0;transition:opacity var(--duration-slow) var(--ease-standard);isolation:isolate}",
+   "listed": "pass-7 plant (FP6-4): the two-child SFC split",
+   "judged": {
+    "moved": 2,
+    "swappedPairs": 8,
+    "risks": 0,
+    "covered": 0
+   },
+   "verdict": "GREEN: listed reorder; no swapped pair shares a property on co-occurring classes",
+   "unlistedRules": 0,
+   "staleRules": 0
+  },
+  {
+   "key": "./styles/fonts",
+   "identical": true,
+   "rules": 4
+  },
+  {
+   "key": "./styles/theme",
+   "identical": true,
+   "rules": 4
+  },
+  {
+   "key": "./styles.css",
+   "identical": false,
+   "class": "reorder",
+   "rulesBase": 365,
+   "rulesNow": 365,
+   "onlyBase": 0,
+   "onlyNow": 0,
+   "firstDivergence": 22,
+   "base": "@layer components :: .aurora-root[data-v-(Aurora)] {opacity:var(--aurora-ceiling-a11y,var(--aurora-ceiling,1));contain:content;content-visibility:auto;contain-intrinsic-size:auto 600px;display:grid}",
+   "now": "@layer components :: .aurora-canvas-layer[data-v-(Aurora)] {opacity:0;transition:opacity var(--duration-slow) var(--ease-standard);isolation:isolate}",
+   "listed": "pass-7 plant (FP6-4): the two-child SFC split",
+   "judged": {
+    "moved": 2,
+    "swappedPairs": 8,
+    "risks": 0,
+    "covered": 0
+   },
+   "verdict": "GREEN: listed reorder; no swapped pair shares a property on co-occurring classes",
+   "unlistedRules": 0,
+   "staleRules": 0
+  }
+ ]
+}
+SCOPE Aurora → AuroraShadeA: 2 rule line(s) re-homed
+SCOPE Aurora → AuroraShadeB: 2 rule line(s) re-homed

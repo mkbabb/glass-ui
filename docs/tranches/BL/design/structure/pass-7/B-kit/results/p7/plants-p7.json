@@ -1,0 +1,230 @@
+{
+ "clean": {
+  "B0": 0,
+  "B1": 0,
+  "B2": 0,
+  "B3": 0,
+  "B4": 0,
+  "B5": 0,
+  "B6": 0,
+  "B7": 0,
+  "B8": 0,
+  "B9": 0,
+  "B10": 0,
+  "B11": 0,
+  "B12": 0,
+  "B13": 0,
+  "B14": 0,
+  "B15": 0,
+  "B16": 0,
+  "B17": 0
+ },
+ "plants": 17,
+ "passed": 17,
+ "results": [
+  {
+   "kind": "gate",
+   "id": "I7 ./styles imports a private dock sheet after its first real import",
+   "expect": [
+    "B3"
+   ],
+   "red": [
+    "B3"
+   ],
+   "ok": true,
+   "b3": [
+    "src/styles/index.css:201 -> src/components/dock/styles/core.css (css door src/components/dock/index.css)"
+   ]
+  },
+  {
+   "kind": "gate",
+   "id": "I7e ./styles imports a private dock sheet at its end",
+   "expect": [
+    "B3"
+   ],
+   "red": [
+    "B3"
+   ],
+   "ok": true,
+   "b3": [
+    "src/styles/index.css:273 -> src/components/dock/styles/core.css (css door src/components/dock/index.css)"
+   ]
+  },
+  {
+   "kind": "gate",
+   "id": "I7u ./styles imports it in url() form with a layer",
+   "expect": [
+    "B3"
+   ],
+   "red": [
+    "B3"
+   ],
+   "ok": true,
+   "b3": [
+    "src/styles/index.css:273 -> src/components/dock/styles/core.css (css door src/components/dock/index.css)"
+   ]
+  },
+  {
+   "kind": "gate",
+   "id": "I7c the glass kernel door imports a private dock sheet",
+   "expect": [
+    "B3",
+    "B8",
+    "B10"
+   ],
+   "red": [
+    "B3",
+    "B8",
+    "B10"
+   ],
+   "ok": true,
+   "b3": [
+    "src/styles/glass/index.css:178 -> src/components/dock/styles/core.css (css door src/components/dock/index.css)"
+   ]
+  },
+  {
+   "kind": "gate",
+   "id": "I7s a unit SFC's <style src> reads another unit's private sheet",
+   "expect": [
+    "B3",
+    "B10"
+   ],
+   "red": [
+    "B3",
+    "B10"
+   ],
+   "ok": true,
+   "b3": [
+    "src/components/button/Button.vue:198 -> src/components/dock/styles/core.css (css door src/components/dock/index.css)"
+   ]
+  },
+  {
+   "kind": "gate",
+   "id": "I7i a unit SFC's inline @import reads another unit's private sheet",
+   "expect": [
+    "B3",
+    "B10"
+   ],
+   "red": [
+    "B3",
+    "B10"
+   ],
+   "ok": true,
+   "b3": [
+    "src/components/button/Button.vue:199 -> src/components/dock/styles/core.css (css door src/components/dock/index.css)"
+   ]
+  },
+  {
+   "kind": "gate",
+   "id": "I7-pass2 the pass-2 row's plant: the @import lands inside the header comment",
+   "expect": [],
+   "red": [],
+   "ok": true,
+   "b3": []
+  },
+  {
+   "kind": "gate",
+   "id": "I7L ./styles imports the dock's door",
+   "expect": [],
+   "red": [],
+   "ok": true,
+   "b3": []
+  },
+  {
+   "kind": "gate",
+   "id": "TD the selection door publishes EYEGLASS_SPAN_MAX for a colocated tabs test (the pass-6 S67 shape)",
+   "expect": [
+    "B11"
+   ],
+   "red": [
+    "B11"
+   ],
+   "ok": true,
+   "lines": [
+    "src/composables/motion/selection/index.ts exports EYEGLASS_SPAN_MAX (no reader outside src/composables/motion/selection)",
+    "src/composables/motion/selection/index.ts +EYEGLASS_SPAN_MAX (not in the pin)"
+   ],
+   "b3": []
+  },
+  {
+   "kind": "gate",
+   "id": "TDL the same name with a library reader: only the pin's reviewed diff",
+   "expect": [
+    "B11"
+   ],
+   "red": [
+    "B11"
+   ],
+   "ok": true,
+   "lines": [
+    "src/composables/motion/selection/index.ts +EYEGLASS_SPAN_MAX (not in the pin)"
+   ],
+   "b3": []
+  },
+  {
+   "kind": "probe",
+   "id": "KF ./motion-core publishes useSpring (keyframes-bearing)",
+   "expect": "RED",
+   "verdict": "RED",
+   "exit": 1,
+   "ok": true,
+   "broken": [
+    "BROKEN ./motion-core    free of @mkbabb/keyframes.js, @vueuse/core   names 56 → peers @mkbabb/keyframes.js; dist {\"skipped\":\"overlay\"}; files 45 → peers @mkbabb/keyframes.js",
+    "BROKEN ./motion-core: introduced names @mkbabb/keyframes.js via useSpring (src/composables/motion/spring/useSpring.ts; first at src/composables/motion/spring/useSpring.ts:15); files @mkbabb/keyframes.js"
+   ]
+  },
+  {
+   "kind": "probe",
+   "id": "KF6 ./motion-core publishes springProjection (the pass-6 S64 shape)",
+   "expect": "RED",
+   "verdict": "RED",
+   "exit": 1,
+   "ok": true,
+   "broken": [
+    "BROKEN ./motion-core    free of @mkbabb/keyframes.js, @vueuse/core   names 56 → peers @mkbabb/keyframes.js; dist {\"skipped\":\"overlay\"}; files 45 → peers @mkbabb/keyframes.js",
+    "BROKEN ./motion-core: introduced names @mkbabb/keyframes.js via springProjection (src/composables/motion/spring/springProjection.ts; first at src/composables/motion/spring/springProjection.ts:6); files @mkbabb/keyframes.js"
+   ]
+  },
+  {
+   "kind": "probe",
+   "id": "KFL ./motion-core publishes a keyframes-free name (springPreset)",
+   "expect": "GREEN",
+   "verdict": "GREEN",
+   "exit": 0,
+   "ok": true,
+   "broken": []
+  },
+  {
+   "kind": "cli",
+   "id": "EXIT the clean tree",
+   "expect": 0,
+   "exit": 0,
+   "ok": true,
+   "stderr": ""
+  },
+  {
+   "kind": "cli",
+   "id": "EXIT a RED overlay (a demo import of a private file)",
+   "expect": 1,
+   "exit": 1,
+   "ok": true,
+   "stderr": ""
+  },
+  {
+   "kind": "cli",
+   "id": "EXIT an overlay that is not JSON (a crash)",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "stderr": "seal: no verdict: SyntaxError: Expected property name or '}' in JSON at position 2 (line 1 column 3)"
+  },
+  {
+   "kind": "cli",
+   "id": "EXIT a refused option (--pin)",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "stderr": "seal: no verdict: Error: seal: unknown option --pin (the pin has one path, scripts/structure/records/seal-pin.json)"
+  }
+ ]
+}

@@ -1,0 +1,2183 @@
+{
+ "root": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p7/B-proto/base",
+ "base": null,
+ "overlay": [],
+ "declared": {
+  ".": {
+   "free": [
+    "@mkbabb/keyframes.js",
+    "@vueuse/core"
+   ],
+   "source": "src/index.ts: the root barrel is vueuse-free AND keyframes.js-free"
+  },
+  "./motion-core": {
+   "free": [
+    "@mkbabb/keyframes.js",
+    "@vueuse/core"
+   ],
+   "source": "src/index.ts: @mkbabb/glass-ui/motion-core (none — keyframes-FREE + vueuse-FREE)"
+  }
+ },
+ "entries": {
+  ".": {
+   "source": "src/index.ts",
+   "declared": "free of @mkbabb/keyframes.js, @vueuse/core",
+   "runtimeNames": 143,
+   "names": {
+    "origins": 131,
+    "peers": {
+     "@mkbabb/keyframes.js": [
+      "Button (src/components/button/Button.vue; first at src/composables/motion/spring/useSpring.ts:15)",
+      "CommandDialog (src/components/command/CommandDialog.vue; first at src/composables/motion/spring/useSpring.ts:15)",
+      "DialogClose (src/components/dialog/index.ts; first at src/composables/motion/spring/useSpring.ts:15)",
+      "DialogTrigger (src/components/dialog/index.ts; first at src/composables/motion/spring/useSpring.ts:15)",
+      "DialogContent (src/components/dialog/DialogContent.vue; first at src/composables/motion/spring/useSpring.ts:15)",
+      "NumberFieldStep (src/components/number-field/NumberFieldStep.vue; first at src/composables/motion/spring/useSpring.ts:15)",
+      "SheetContent (src/components/sheet/SheetContent.vue; first at src/components/sheet/detents/use.ts:23)"
+     ],
+     "@vueuse/core": [
+      "CommandDialog (src/components/command/CommandDialog.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "CommandList (src/components/command/CommandList.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "DialogClose (src/components/dialog/index.ts; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "DialogTrigger (src/components/dialog/index.ts; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "DialogContent (src/components/dialog/DialogContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "DropdownMenuContent (src/components/menu/DropdownMenuContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "DropdownMenuSubContent (src/components/menu/DropdownMenuSubContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "Popover (src/components/popover/Popover.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "PopoverContent (src/components/popover/PopoverContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "SelectContent (src/components/select/SelectContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "SheetContent (src/components/sheet/SheetContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "Slider (src/components/slider/Slider.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "TooltipContent (src/components/tooltip/TooltipContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "Configurator (src/components/configurator/Configurator.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 76,
+    "peers": [
+     "@mkbabb/keyframes.js",
+     "@vueuse/core"
+    ]
+   },
+   "files": {
+    "files": 220,
+    "peers": {
+     "@vueuse/core": "src/composables/keyboard/useKeyboardShortcuts.ts:12",
+     "@mkbabb/keyframes.js": "src/components/sheet/detents/use.ts:23"
+    }
+   },
+   "broken": {
+    "names": [
+     "@mkbabb/keyframes.js",
+     "@vueuse/core"
+    ],
+    "dist": [
+     "@mkbabb/keyframes.js",
+     "@vueuse/core"
+    ],
+    "files": [
+     "@mkbabb/keyframes.js",
+     "@vueuse/core"
+    ]
+   },
+   "introduced": {
+    "names": [
+     "@mkbabb/keyframes.js",
+     "@vueuse/core"
+    ],
+    "dist": [
+     "@mkbabb/keyframes.js",
+     "@vueuse/core"
+    ],
+    "files": [
+     "@mkbabb/keyframes.js",
+     "@vueuse/core"
+    ]
+   },
+   "atBase": null
+  },
+  "./tokens": {
+   "source": "src/styles/tokens.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 7,
+   "names": {
+    "origins": 2,
+    "peers": {}
+   },
+   "dist": {
+    "files": 1,
+    "peers": []
+   },
+   "files": {
+    "files": 2,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./dark": {
+   "source": "src/composables/dark/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 4,
+   "names": {
+    "origins": 3,
+    "peers": {
+     "@vueuse/core": [
+      "useGlobalDark (src/composables/dark/useGlobalDark.ts; first at src/composables/dark/useGlobalDark.ts:17)",
+      "installDarkModeSync (src/composables/dark/installDarkModeSync.ts; first at src/composables/dark/useGlobalDark.ts:17)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 2,
+    "peers": [
+     "@vueuse/core"
+    ]
+   },
+   "files": {
+    "files": 4,
+    "peers": {
+     "@vueuse/core": "src/composables/dark/useGlobalDark.ts:17"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./keyboard": {
+   "source": "src/composables/keyboard/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 7,
+   "names": {
+    "origins": 1,
+    "peers": {
+     "@vueuse/core": [
+      "isMac (src/composables/keyboard/useKeyboardShortcuts.ts; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "formatComboParts (src/composables/keyboard/useKeyboardShortcuts.ts; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "formatCombo (src/composables/keyboard/useKeyboardShortcuts.ts; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "formatComboLabel (src/composables/keyboard/useKeyboardShortcuts.ts; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "registerShortcut (src/composables/keyboard/useKeyboardShortcuts.ts; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "suspendShortcuts (src/composables/keyboard/useKeyboardShortcuts.ts; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "useRegisteredShortcuts (src/composables/keyboard/useKeyboardShortcuts.ts; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 1,
+    "peers": [
+     "@vueuse/core"
+    ]
+   },
+   "files": {
+    "files": 2,
+    "peers": {
+     "@vueuse/core": "src/composables/keyboard/useKeyboardShortcuts.ts:12"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./carousel": {
+   "source": "src/components/carousel/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 12,
+   "names": {
+    "origins": 6,
+    "peers": {
+     "@mkbabb/keyframes.js": [
+      "CarouselPager (src/components/carousel/CarouselPager.vue; first at src/composables/motion/spring/useSpring.ts:15)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 16,
+    "peers": [
+     "@mkbabb/keyframes.js"
+    ]
+   },
+   "files": {
+    "files": 44,
+    "peers": {
+     "@mkbabb/keyframes.js": "src/composables/motion/spring/useSpring.ts:15"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./motion": {
+   "source": "src/composables/motion/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 29,
+   "names": {
+    "origins": 14,
+    "peers": {
+     "@mkbabb/keyframes.js": [
+      "useSpring (src/composables/motion/spring/useSpring.ts; first at src/composables/motion/spring/useSpring.ts:15)",
+      "useSpringMount (src/composables/motion/spring/useSpringMount.ts; first at src/composables/motion/spring/useSpring.ts:15)",
+      "useLiquidPress (src/composables/motion/spring/useLiquidPress.ts; first at src/composables/motion/spring/useSpring.ts:15)",
+      "useDragMorph (src/composables/motion/morph/useDragMorph.ts; first at src/composables/motion/morph/useDragMorph.ts:54)",
+      "lockSpatialTransition (src/composables/motion/morph/useElementMorph.ts; first at src/composables/motion/morph/useElementMorph.ts:4)",
+      "prefersReducedMotion (src/composables/motion/morph/useElementMorph.ts; first at src/composables/motion/morph/useElementMorph.ts:4)",
+      "useElementMorph (src/composables/motion/morph/useElementMorph.ts; first at src/composables/motion/morph/useElementMorph.ts:4)",
+      "useLiquidReveal (src/composables/motion/reveal/useLiquidReveal.ts; first at src/composables/motion/morph/useElementMorph.ts:4)",
+      "DOCK_CTA_RECEIVE_BANDS (src/composables/motion/morph/useDockCtaReceive.ts; first at src/composables/motion/morph/useElementMorph.ts:4)",
+      "useDockCtaReceive (src/composables/motion/morph/useDockCtaReceive.ts; first at src/composables/motion/morph/useElementMorph.ts:4)",
+      "useAnimatedNumber (src/composables/motion/number/useAnimatedNumber.ts; first at src/composables/motion/number/useAnimatedNumber.ts:7)",
+      "useAnimatedNumberMap (src/composables/motion/number/useAnimatedNumberMap.ts; first at src/composables/motion/number/useAnimatedNumber.ts:7)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 12,
+    "peers": [
+     "@mkbabb/keyframes.js"
+    ]
+   },
+   "files": {
+    "files": 19,
+    "peers": {
+     "@mkbabb/keyframes.js": "src/composables/motion/number/useAnimatedNumber.ts:7"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./motion-core": {
+   "source": "src/composables/motion/core/index.ts",
+   "declared": "free of @mkbabb/keyframes.js, @vueuse/core",
+   "runtimeNames": 54,
+   "names": {
+    "origins": 21,
+    "peers": {}
+   },
+   "dist": {
+    "files": 17,
+    "peers": []
+   },
+   "files": {
+    "files": 28,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./sidebar": {
+   "source": "src/composables/sidebar/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 10,
+   "names": {
+    "origins": 7,
+    "peers": {}
+   },
+   "dist": {
+    "files": 2,
+    "peers": []
+   },
+   "files": {
+    "files": 9,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./infinite-scroll": {
+   "source": "src/components/infinite-scroll/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 2,
+   "names": {
+    "origins": 2,
+    "peers": {}
+   },
+   "dist": {
+    "files": 2,
+    "peers": []
+   },
+   "files": {
+    "files": 5,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./axes": {
+   "source": "src/components/_shared/axes.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 9,
+   "names": {
+    "origins": 1,
+    "peers": {}
+   },
+   "dist": {
+    "files": 1,
+    "peers": []
+   },
+   "files": {
+    "files": 1,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./blob-config": {
+   "source": "src/components/blob/config.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 6,
+   "names": {
+    "origins": 2,
+    "peers": {}
+   },
+   "dist": {
+    "files": 2,
+    "peers": []
+   },
+   "files": {
+    "files": 3,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./color": {
+   "source": "src/composables/color/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 9,
+   "names": {
+    "origins": 2,
+    "peers": {}
+   },
+   "dist": {
+    "files": 3,
+    "peers": []
+   },
+   "files": {
+    "files": 3,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./dom": {
+   "source": "src/composables/dom/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 12,
+   "names": {
+    "origins": 10,
+    "peers": {}
+   },
+   "dist": {
+    "files": 6,
+    "peers": []
+   },
+   "files": {
+    "files": 12,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./reactive": {
+   "source": "src/composables/reactive/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 2,
+   "names": {
+    "origins": 2,
+    "peers": {}
+   },
+   "dist": {
+    "files": 2,
+    "peers": []
+   },
+   "files": {
+    "files": 3,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./fourier-math": {
+   "source": "src/components/fourier-field/math.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 8,
+   "names": {
+    "origins": 1,
+    "peers": {}
+   },
+   "dist": {
+    "files": 1,
+    "peers": []
+   },
+   "files": {
+    "files": 1,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./aurora": {
+   "source": "src/components/aurora/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 30,
+   "names": {
+    "origins": 11,
+    "peers": {}
+   },
+   "dist": {
+    "files": 14,
+    "peers": []
+   },
+   "files": {
+    "files": 57,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./badge": {
+   "source": "src/components/badge/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 3,
+   "names": {
+    "origins": 2,
+    "peers": {}
+   },
+   "dist": {
+    "files": 3,
+    "peers": []
+   },
+   "files": {
+    "files": 3,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./blob": {
+   "source": "src/components/blob/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 10,
+   "names": {
+    "origins": 6,
+    "peers": {
+     "@mkbabb/keyframes.js": [
+      "Blob (src/components/blob/Blob.vue; first at src/components/blob/composables/useBlobPointer.ts:2)",
+      "useBlobPointer (src/components/blob/composables/useBlobPointer.ts; first at src/components/blob/composables/useBlobPointer.ts:2)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 14,
+    "peers": [
+     "@mkbabb/keyframes.js"
+    ]
+   },
+   "files": {
+    "files": 56,
+    "peers": {
+     "@mkbabb/keyframes.js": "src/components/blob/composables/useBlobPointer.ts:2"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./button": {
+   "source": "src/components/button/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 1,
+   "names": {
+    "origins": 1,
+    "peers": {
+     "@mkbabb/keyframes.js": [
+      "Button (src/components/button/Button.vue; first at src/composables/motion/spring/useSpring.ts:15)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 13,
+    "peers": [
+     "@mkbabb/keyframes.js"
+    ]
+   },
+   "files": {
+    "files": 22,
+    "peers": {
+     "@mkbabb/keyframes.js": "src/composables/motion/spring/useSpring.ts:15"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./card": {
+   "source": "src/components/card/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 6,
+   "names": {
+    "origins": 6,
+    "peers": {}
+   },
+   "dist": {
+    "files": 9,
+    "peers": []
+   },
+   "files": {
+    "files": 14,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./checkbox": {
+   "source": "src/components/checkbox/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 1,
+   "names": {
+    "origins": 1,
+    "peers": {}
+   },
+   "dist": {
+    "files": 3,
+    "peers": []
+   },
+   "files": {
+    "files": 3,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./chip": {
+   "source": "src/components/chip/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 2,
+   "names": {
+    "origins": 2,
+    "peers": {}
+   },
+   "dist": {
+    "files": 3,
+    "peers": []
+   },
+   "files": {
+    "files": 5,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./collapsible": {
+   "source": "src/components/collapsible/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 3,
+   "names": {
+    "origins": 3,
+    "peers": {}
+   },
+   "dist": {
+    "files": 3,
+    "peers": []
+   },
+   "files": {
+    "files": 6,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./command": {
+   "source": "src/components/command/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 9,
+   "names": {
+    "origins": 9,
+    "peers": {
+     "@vueuse/core": [
+      "CommandDialog (src/components/command/CommandDialog.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "CommandList (src/components/command/CommandList.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)"
+     ],
+     "@mkbabb/keyframes.js": [
+      "CommandDialog (src/components/command/CommandDialog.vue; first at src/composables/motion/spring/useSpring.ts:15)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 19,
+    "peers": [
+     "@mkbabb/keyframes.js",
+     "@vueuse/core"
+    ]
+   },
+   "files": {
+    "files": 34,
+    "peers": {
+     "@vueuse/core": "src/composables/keyboard/useKeyboardShortcuts.ts:12",
+     "@mkbabb/keyframes.js": "src/composables/motion/spring/useSpring.ts:15"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./configurator": {
+   "source": "src/components/configurator/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 7,
+   "names": {
+    "origins": 5,
+    "peers": {
+     "@vueuse/core": [
+      "Configurator (src/components/configurator/Configurator.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 13,
+    "peers": [
+     "@vueuse/core"
+    ]
+   },
+   "files": {
+    "files": 23,
+    "peers": {
+     "@vueuse/core": "src/composables/keyboard/useKeyboardShortcuts.ts:12"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./constellation": {
+   "source": "src/components/constellation/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 37,
+   "names": {
+    "origins": 6,
+    "peers": {}
+   },
+   "dist": {
+    "files": 11,
+    "peers": []
+   },
+   "files": {
+    "files": 22,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./dark-mode-toggle": {
+   "source": "src/components/dark-mode-toggle/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 1,
+   "names": {
+    "origins": 1,
+    "peers": {
+     "@mkbabb/keyframes.js": [
+      "DarkModeToggle (src/components/dark-mode-toggle/DarkModeToggle.vue; first at src/composables/motion/spring/useSpring.ts:15)"
+     ],
+     "@vueuse/core": [
+      "DarkModeToggle (src/components/dark-mode-toggle/DarkModeToggle.vue; first at src/composables/dark/useGlobalDark.ts:17)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 9,
+    "peers": [
+     "@mkbabb/keyframes.js",
+     "@vueuse/core"
+    ]
+   },
+   "files": {
+    "files": 14,
+    "peers": {
+     "@mkbabb/keyframes.js": "src/composables/motion/spring/useSpring.ts:15",
+     "@vueuse/core": "src/composables/dark/useGlobalDark.ts:17"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./data-table": {
+   "source": "src/components/data-table/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 1,
+   "names": {
+    "origins": 1,
+    "peers": {}
+   },
+   "dist": {
+    "files": 7,
+    "peers": []
+   },
+   "files": {
+    "files": 30,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./deck": {
+   "source": "src/components/deck/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 19,
+   "names": {
+    "origins": 12,
+    "peers": {}
+   },
+   "dist": {
+    "files": 3,
+    "peers": []
+   },
+   "files": {
+    "files": 14,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./dialog": {
+   "source": "src/components/dialog/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 6,
+   "names": {
+    "origins": 6,
+    "peers": {
+     "@vueuse/core": [
+      "DialogContent (src/components/dialog/DialogContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)"
+     ],
+     "@mkbabb/keyframes.js": [
+      "DialogContent (src/components/dialog/DialogContent.vue; first at src/composables/motion/spring/useSpring.ts:15)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 14,
+    "peers": [
+     "@mkbabb/keyframes.js",
+     "@vueuse/core"
+    ]
+   },
+   "files": {
+    "files": 26,
+    "peers": {
+     "@vueuse/core": "src/composables/keyboard/useKeyboardShortcuts.ts:12",
+     "@mkbabb/keyframes.js": "src/composables/motion/spring/useSpring.ts:15"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./dock": {
+   "source": "src/components/dock/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 14,
+   "names": {
+    "origins": 11,
+    "peers": {
+     "@mkbabb/keyframes.js": [
+      "GlassDock (src/components/dock/GlassDock.vue; first at src/components/dock/composables/useDockSpring.ts:1)",
+      "DockLayerGroup (src/components/dock/DockLayerGroup.vue; first at src/composables/motion/morph/useDragMorph.ts:54)",
+      "DockCrossfade (src/components/dock/DockCrossfade.vue; first at src/components/dock/composables/useDockSpring.ts:1)",
+      "DockControl (src/components/dock/DockControl.vue; first at src/composables/motion/spring/useSpring.ts:15)",
+      "DockBackgroundToggle (src/components/dock/DockBackgroundToggle.vue; first at src/composables/motion/spring/useSpring.ts:15)",
+      "useDockCtaReceive (src/composables/motion/morph/useDockCtaReceive.ts; first at src/composables/motion/morph/useElementMorph.ts:4)"
+     ],
+     "@vueuse/core": [
+      "GlassDock (src/components/dock/GlassDock.vue; first at src/components/dock/composables/useDockMorph.ts:1)",
+      "DockLayerGroup (src/components/dock/DockLayerGroup.vue; first at src/components/dock/DockCrossfade.vue:2)",
+      "DockCrossfade (src/components/dock/DockCrossfade.vue; first at src/components/dock/DockCrossfade.vue:2)",
+      "useDockSearch (src/components/dock/composables/useDockSearch.ts; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 28,
+    "peers": [
+     "@mkbabb/keyframes.js",
+     "@vueuse/core"
+    ]
+   },
+   "files": {
+    "files": 80,
+    "peers": {
+     "@vueuse/core": "src/components/dock/composables/useDockMorph.ts:1",
+     "@mkbabb/keyframes.js": "src/components/dock/composables/useDockSpring.ts:1"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./easing": {
+   "source": "src/components/easing/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 3,
+   "names": {
+    "origins": 3,
+    "peers": {
+     "@mkbabb/keyframes.js": [
+      "EasingPicker (src/components/easing/EasingPicker.vue; first at src/composables/motion/morph/useDragMorph.ts:54)"
+     ],
+     "@vueuse/core": [
+      "EasingPicker (src/components/easing/EasingPicker.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 28,
+    "peers": [
+     "@mkbabb/keyframes.js"
+    ]
+   },
+   "files": {
+    "files": 69,
+    "peers": {
+     "@mkbabb/keyframes.js": "src/composables/motion/morph/useDragMorph.ts:54",
+     "@vueuse/core": "src/composables/keyboard/useKeyboardShortcuts.ts:12"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./expandable-container": {
+   "source": "src/components/expandable-container/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 1,
+   "names": {
+    "origins": 1,
+    "peers": {
+     "@vueuse/core": [
+      "ExpandableContainer (src/components/expandable-container/ExpandableContainer.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 4,
+    "peers": [
+     "@vueuse/core"
+    ]
+   },
+   "files": {
+    "files": 5,
+    "peers": {
+     "@vueuse/core": "src/composables/keyboard/useKeyboardShortcuts.ts:12"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./fading-scroll": {
+   "source": "src/components/fading-scroll/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 2,
+   "names": {
+    "origins": 2,
+    "peers": {}
+   },
+   "dist": {
+    "files": 4,
+    "peers": []
+   },
+   "files": {
+    "files": 6,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./fourier-field": {
+   "source": "src/components/fourier-field/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 10,
+   "names": {
+    "origins": 4,
+    "peers": {
+     "@vueuse/core": [
+      "FourierField (src/components/fourier-field/FourierField.vue; first at src/composables/dark/useGlobalDark.ts:17)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 15,
+    "peers": [
+     "@vueuse/core"
+    ]
+   },
+   "files": {
+    "files": 43,
+    "peers": {
+     "@vueuse/core": "src/composables/dark/useGlobalDark.ts:17"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./handmark": {
+   "source": "src/components/handmark/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 9,
+   "names": {
+    "origins": 2,
+    "peers": {}
+   },
+   "dist": {
+    "files": 4,
+    "peers": []
+   },
+   "files": {
+    "files": 5,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./input": {
+   "source": "src/components/input/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 1,
+   "names": {
+    "origins": 1,
+    "peers": {}
+   },
+   "dist": {
+    "files": 4,
+    "peers": []
+   },
+   "files": {
+    "files": 4,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./label": {
+   "source": "src/components/label/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 1,
+   "names": {
+    "origins": 1,
+    "peers": {}
+   },
+   "dist": {
+    "files": 5,
+    "peers": []
+   },
+   "files": {
+    "files": 4,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./labeled-field": {
+   "source": "src/components/labeled-field/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 4,
+   "names": {
+    "origins": 4,
+    "peers": {
+     "@vueuse/core": [
+      "LabeledSlider (src/components/labeled-field/LabeledSlider.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 18,
+    "peers": []
+   },
+   "files": {
+    "files": 35,
+    "peers": {
+     "@vueuse/core": "src/composables/keyboard/useKeyboardShortcuts.ts:12"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./menu": {
+   "source": "src/components/menu/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 14,
+   "names": {
+    "origins": 14,
+    "peers": {
+     "@vueuse/core": [
+      "DropdownMenuContent (src/components/menu/DropdownMenuContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "DropdownMenuSubContent (src/components/menu/DropdownMenuSubContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 12,
+    "peers": [
+     "@vueuse/core"
+    ]
+   },
+   "files": {
+    "files": 29,
+    "peers": {
+     "@vueuse/core": "src/composables/keyboard/useKeyboardShortcuts.ts:12"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./metric": {
+   "source": "src/components/metric/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 5,
+   "names": {
+    "origins": 4,
+    "peers": {}
+   },
+   "dist": {
+    "files": 2,
+    "peers": []
+   },
+   "files": {
+    "files": 6,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./music-staff": {
+   "source": "src/components/music-staff/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 4,
+   "names": {
+    "origins": 3,
+    "peers": {}
+   },
+   "dist": {
+    "files": 1,
+    "peers": []
+   },
+   "files": {
+    "files": 5,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./number-field": {
+   "source": "src/components/number-field/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 3,
+   "names": {
+    "origins": 3,
+    "peers": {
+     "@mkbabb/keyframes.js": [
+      "NumberFieldStep (src/components/number-field/NumberFieldStep.vue; first at src/composables/motion/spring/useSpring.ts:15)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 15,
+    "peers": [
+     "@mkbabb/keyframes.js"
+    ]
+   },
+   "files": {
+    "files": 28,
+    "peers": {
+     "@mkbabb/keyframes.js": "src/composables/motion/spring/useSpring.ts:15"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./pager-dots": {
+   "source": "src/components/pager-dots/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 5,
+   "names": {
+    "origins": 2,
+    "peers": {}
+   },
+   "dist": {
+    "files": 10,
+    "peers": []
+   },
+   "files": {
+    "files": 23,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./popover": {
+   "source": "src/components/popover/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 3,
+   "names": {
+    "origins": 3,
+    "peers": {
+     "@vueuse/core": [
+      "Popover (src/components/popover/Popover.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "PopoverContent (src/components/popover/PopoverContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 9,
+    "peers": [
+     "@vueuse/core"
+    ]
+   },
+   "files": {
+    "files": 16,
+    "peers": {
+     "@vueuse/core": "src/composables/keyboard/useKeyboardShortcuts.ts:12"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./progress": {
+   "source": "src/components/progress/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 1,
+   "names": {
+    "origins": 1,
+    "peers": {}
+   },
+   "dist": {
+    "files": 4,
+    "peers": []
+   },
+   "files": {
+    "files": 3,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./radio-group": {
+   "source": "src/components/radio-group/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 2,
+   "names": {
+    "origins": 2,
+    "peers": {}
+   },
+   "dist": {
+    "files": 4,
+    "peers": []
+   },
+   "files": {
+    "files": 5,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./scroll-progress-rim": {
+   "source": "src/components/scroll-progress-rim/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 1,
+   "names": {
+    "origins": 1,
+    "peers": {}
+   },
+   "dist": {
+    "files": 1,
+    "peers": []
+   },
+   "files": {
+    "files": 2,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./select": {
+   "source": "src/components/select/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 9,
+   "names": {
+    "origins": 9,
+    "peers": {
+     "@vueuse/core": [
+      "SelectContent (src/components/select/SelectContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 8,
+    "peers": []
+   },
+   "files": {
+    "files": 24,
+    "peers": {
+     "@vueuse/core": "src/composables/keyboard/useKeyboardShortcuts.ts:12"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./separator": {
+   "source": "src/components/separator/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 1,
+   "names": {
+    "origins": 1,
+    "peers": {}
+   },
+   "dist": {
+    "files": 5,
+    "peers": []
+   },
+   "files": {
+    "files": 4,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./sheet": {
+   "source": "src/components/sheet/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 11,
+   "names": {
+    "origins": 4,
+    "peers": {
+     "@mkbabb/keyframes.js": [
+      "SheetContent (src/components/sheet/SheetContent.vue; first at src/components/sheet/detents/use.ts:23)",
+      "useSheetDetents (src/components/sheet/detents/use.ts; first at src/components/sheet/detents/use.ts:23)"
+     ],
+     "@vueuse/core": [
+      "SheetContent (src/components/sheet/SheetContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 13,
+    "peers": [
+     "@mkbabb/keyframes.js",
+     "@vueuse/core"
+    ]
+   },
+   "files": {
+    "files": 23,
+    "peers": {
+     "@mkbabb/keyframes.js": "src/components/sheet/detents/use.ts:23",
+     "@vueuse/core": "src/composables/keyboard/useKeyboardShortcuts.ts:12"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./slider": {
+   "source": "src/components/slider/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 1,
+   "names": {
+    "origins": 1,
+    "peers": {
+     "@vueuse/core": [
+      "Slider (src/components/slider/Slider.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 10,
+    "peers": []
+   },
+   "files": {
+    "files": 21,
+    "peers": {
+     "@vueuse/core": "src/composables/keyboard/useKeyboardShortcuts.ts:12"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./sortable-list": {
+   "source": "src/components/sortable-list/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 3,
+   "names": {
+    "origins": 3,
+    "peers": {
+     "@mkbabb/keyframes.js": [
+      "SortableList (src/components/sortable-list/SortableList.vue; first at src/components/sortable-list/motion.ts:22)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 4,
+    "peers": [
+     "@mkbabb/keyframes.js"
+    ]
+   },
+   "files": {
+    "files": 14,
+    "peers": {
+     "@mkbabb/keyframes.js": "src/components/sortable-list/motion.ts:22"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./status-dot": {
+   "source": "src/components/status-dot/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 2,
+   "names": {
+    "origins": 2,
+    "peers": {}
+   },
+   "dist": {
+    "files": 4,
+    "peers": []
+   },
+   "files": {
+    "files": 4,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./surface": {
+   "source": "src/components/surface/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 1,
+   "names": {
+    "origins": 1,
+    "peers": {}
+   },
+   "dist": {
+    "files": 4,
+    "peers": []
+   },
+   "files": {
+    "files": 4,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./switch": {
+   "source": "src/components/switch/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 1,
+   "names": {
+    "origins": 1,
+    "peers": {}
+   },
+   "dist": {
+    "files": 4,
+    "peers": []
+   },
+   "files": {
+    "files": 4,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./tabs": {
+   "source": "src/components/tabs/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 1,
+   "names": {
+    "origins": 1,
+    "peers": {
+     "@mkbabb/keyframes.js": [
+      "SegmentedTabs (src/components/tabs/SegmentedTabs.vue; first at src/composables/motion/morph/useDragMorph.ts:54)"
+     ],
+     "@vueuse/core": [
+      "SegmentedTabs (src/components/tabs/SegmentedTabs.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 18,
+    "peers": [
+     "@mkbabb/keyframes.js"
+    ]
+   },
+   "files": {
+    "files": 41,
+    "peers": {
+     "@mkbabb/keyframes.js": "src/composables/motion/morph/useDragMorph.ts:54",
+     "@vueuse/core": "src/composables/keyboard/useKeyboardShortcuts.ts:12"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./textarea": {
+   "source": "src/components/textarea/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 1,
+   "names": {
+    "origins": 1,
+    "peers": {}
+   },
+   "dist": {
+    "files": 3,
+    "peers": []
+   },
+   "files": {
+    "files": 4,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./timeline": {
+   "source": "src/components/timeline/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 5,
+   "names": {
+    "origins": 2,
+    "peers": {
+     "@mkbabb/keyframes.js": [
+      "Timeline (src/components/timeline/Timeline.vue; first at src/composables/motion/spring/useSpring.ts:15)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 8,
+    "peers": [
+     "@mkbabb/keyframes.js"
+    ]
+   },
+   "files": {
+    "files": 10,
+    "peers": {
+     "@mkbabb/keyframes.js": "src/composables/motion/spring/useSpring.ts:15"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./toast": {
+   "source": "src/components/toast/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 8,
+   "names": {
+    "origins": 7,
+    "peers": {}
+   },
+   "dist": {
+    "files": 4,
+    "peers": []
+   },
+   "files": {
+    "files": 10,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./toggle-group": {
+   "source": "src/components/toggle-group/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 2,
+   "names": {
+    "origins": 2,
+    "peers": {}
+   },
+   "dist": {
+    "files": 8,
+    "peers": []
+   },
+   "files": {
+    "files": 14,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./tooltip": {
+   "source": "src/components/tooltip/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 4,
+   "names": {
+    "origins": 4,
+    "peers": {
+     "@vueuse/core": [
+      "TooltipContent (src/components/tooltip/TooltipContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)"
+     ]
+    }
+   },
+   "dist": {
+    "files": 7,
+    "peers": []
+   },
+   "files": {
+    "files": 16,
+    "peers": {
+     "@vueuse/core": "src/composables/keyboard/useKeyboardShortcuts.ts:12"
+    }
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  },
+  "./typewriter": {
+   "source": "src/components/typewriter/index.ts",
+   "declared": "may bear a peer",
+   "runtimeNames": 18,
+   "names": {
+    "origins": 7,
+    "peers": {}
+   },
+   "dist": {
+    "files": 3,
+    "peers": []
+   },
+   "files": {
+    "files": 10,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  }
+ },
+ "published": [
+  {
+   "entry": "./dock",
+   "names": [
+    "GLASS_BACKDROP_SHARED_ATTR",
+    "useDockState",
+    "useGlassBackdropLuminance",
+    "FuzzySearchState",
+    "SearchResult",
+    "SearchableItem"
+   ],
+   "declared": "may bear a peer",
+   "ownModuleBreaks": {},
+   "entryKept": true,
+   "kept": true
+  },
+  {
+   "entry": "./sidebar",
+   "names": [
+    "SectionHierarchy"
+   ],
+   "declared": "may bear a peer",
+   "ownModuleBreaks": {},
+   "entryKept": true,
+   "kept": true
+  },
+  {
+   "entry": "./motion",
+   "names": [
+    "springProjection"
+   ],
+   "declared": "may bear a peer",
+   "ownModuleBreaks": {},
+   "entryKept": true,
+   "kept": true
+  },
+  {
+   "entry": "./motion-core",
+   "names": [
+    "motionTempo"
+   ],
+   "declared": "free of @mkbabb/keyframes.js, @vueuse/core",
+   "ownModuleBreaks": {},
+   "entryKept": true,
+   "kept": true
+  },
+  {
+   "entry": ".",
+   "names": [
+    "pendingRenderer"
+   ],
+   "declared": "free of @mkbabb/keyframes.js, @vueuse/core",
+   "ownModuleBreaks": {},
+   "entryKept": false,
+   "kept": false
+  },
+  {
+   "entry": "./aurora-config",
+   "names": [
+    "isAuroraPointerEnabled"
+   ],
+   "declared": "NO SUCH ENTRY",
+   "ownModuleBreaks": {},
+   "kept": false
+  },
+  {
+   "entry": "./blob-config",
+   "names": [
+    "MAX_SATS"
+   ],
+   "declared": "may bear a peer",
+   "ownModuleBreaks": {},
+   "entryKept": true,
+   "kept": true
+  },
+  {
+   "entry": "./fourier-field",
+   "names": [
+    "FOURIER_STROKE_RUNGS"
+   ],
+   "declared": "may bear a peer",
+   "ownModuleBreaks": {},
+   "entryKept": true,
+   "kept": true
+  }
+ ],
+ "broken": [
+  ".: introduced names @mkbabb/keyframes.js, @vueuse/core via Button (src/components/button/Button.vue; first at src/composables/motion/spring/useSpring.ts:15); CommandDialog (src/components/command/CommandDialog.vue; first at src/composables/motion/spring/useSpring.ts:15); DialogClose (src/components/dialog/index.ts; first at src/composables/motion/spring/useSpring.ts:15) | CommandDialog (src/components/command/CommandDialog.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12); CommandList (src/components/command/CommandList.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12); DialogClose (src/components/dialog/index.ts; first at src/composables/keyboard/useKeyboardShortcuts.ts:12); dist @mkbabb/keyframes.js, @vueuse/core; files @mkbabb/keyframes.js, @vueuse/core"
+ ],
+ "verdict": "RED"
+}

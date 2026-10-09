@@ -1,0 +1,748 @@
+{
+ "base": {
+  "B0": 0,
+  "B1": 0,
+  "B2": 0,
+  "B3": 0,
+  "B4": 0,
+  "B5": 0,
+  "B6": 0,
+  "B7": 0,
+  "B8": 0,
+  "B9": 0,
+  "B10": 0,
+  "B11": 0,
+  "B12": 0,
+  "B13": 0,
+  "B14": 0,
+  "B15": 0,
+  "B16": 0,
+  "B17": 0
+ },
+ "rows": [
+  {
+   "id": "I1",
+   "clause": "B10",
+   "what": "global composable read by one component",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B1": [
+     "src/components/slider/plantI1.ts:1 -> src/composables/dom/useSliderThumbGlow.ts [import] (door src/composables/dom/index.ts)"
+    ],
+    "B10": [
+     "src/composables/dom/useSliderThumbGlow.ts -> src/components/slider [move] readers: src/components/slider"
+    ],
+    "B15": [
+     "src/components/slider/plantI1.ts (placeholder file name)"
+    ]
+   }
+  },
+  {
+   "id": "I2",
+   "clause": "B10",
+   "what": "I1 published through the kernel door",
+   "legal": false,
+   "any": true,
+   "inExpected": false,
+   "gained": {
+    "B11": [
+     "src/composables/dom/index.ts +useSliderThumbGlow (not in the pin)"
+    ],
+    "B15": [
+     "src/components/slider/plantI2.ts (placeholder file name)"
+    ]
+   }
+  },
+  {
+   "id": "I3",
+   "clause": "B10",
+   "what": "dock composable read only by slider",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B1": [
+     "src/components/slider/plantI3.ts:1 -> src/components/dock/composables/useDockGhost.ts [import] (door src/components/dock/index.ts)"
+    ],
+    "B6": [
+     "src/components/dock/composables/: 13 direct files > 12"
+    ],
+    "B10": [
+     "src/components/dock/composables/useDockGhost.ts -> src/components/slider [move] readers: src/components/slider"
+    ],
+    "B15": [
+     "src/components/slider/plantI3.ts (placeholder file name)"
+    ]
+   }
+  },
+  {
+   "id": "I4",
+   "clause": "B1",
+   "what": "relative deep import past dock/legibility door",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B1": [
+     "src/components/slider/plantI4.ts:1 -> src/components/dock/legibility/useGlassBackdropLuminance.ts [import] (door src/components/dock/index.ts)"
+    ],
+    "B15": [
+     "src/components/slider/plantI4.ts (placeholder file name)"
+    ]
+   }
+  },
+  {
+   "id": "I4b",
+   "clause": "B1",
+   "what": "@/ alias deep import past a door",
+   "legal": false,
+   "any": true,
+   "inExpected": false,
+   "gained": {
+    "B0": [
+     "src/components/slider/plantI4b.ts:1 unknown-bare [import] @/components/dock/legibility/useGlassBackdropLuminance"
+    ]
+   }
+  },
+  {
+   "id": "I5",
+   "clause": "B1",
+   "what": "member imports its own door",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B1": [
+     "src/components/chip/plantI5.ts:1 -> src/components/chip/index.ts (own door)"
+    ],
+    "B15": [
+     "src/components/chip/plantI5.ts (placeholder file name)"
+    ]
+   }
+  },
+  {
+   "id": "I6",
+   "clause": "B1",
+   "what": "self-name import of the package from src",
+   "legal": false,
+   "any": true,
+   "inExpected": false,
+   "gained": {
+    "B0": [
+     "src/components/chip/plantI6.ts:1 self-name-in-src [import] @mkbabb/glass-ui/badge"
+    ],
+    "B15": [
+     "src/components/chip/plantI6.ts (placeholder file name)"
+    ]
+   }
+  },
+  {
+   "id": "I7",
+   "clause": "B3",
+   "what": "style kernel @imports a private dock sheet",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B3": [
+     "src/styles/index.css:273 -> src/components/dock/styles/core.css (css door src/components/dock/index.css)"
+    ]
+   }
+  },
+  {
+   "id": "I7b",
+   "clause": "B3",
+   "what": "a kernel leaf sheet @imports a component's private sheet",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B3": [
+     "src/styles/view-transition.css:1 -> src/components/slider/styles.css (css door src/components/slider/index.css)"
+    ],
+    "B8": [
+     "src/styles/view-transition.css:1 -> src/components/slider/styles.css [css-import] (kernel reads a unit)"
+    ],
+    "B10": [
+     "src/components/slider/styles.css -> src [global] readers: src/components/slider, src/styles"
+    ]
+   }
+  },
+  {
+   "id": "I8",
+   "clause": "B6",
+   "what": "13 direct files",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B6": [
+     "src/components/chip/: 13 direct files > 12"
+    ],
+    "B15": [
+     "src/components/chip/plantI8_0.ts (placeholder file name)",
+     "src/components/chip/plantI8_1.ts (placeholder file name)",
+     "src/components/chip/plantI8_2.ts (placeholder file name)"
+    ]
+   }
+  },
+  {
+   "id": "I9",
+   "clause": "B6",
+   "what": "file > 500 lines",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B6": [
+     "src/components/chip/chipVariants.ts: 565 lines > 500"
+    ]
+   }
+  },
+  {
+   "id": "I10",
+   "clause": "B6",
+   "what": "script > 500 lines",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B6": [
+     "scripts/regen-spring-tokens.mjs: 829 lines > 500"
+    ]
+   }
+  },
+  {
+   "id": "I11",
+   "clause": "R-3",
+   "what": "test whose one subject is chip, left in tests/",
+   "legal": false,
+   "any": true,
+   "inExpected": false,
+   "gained": {
+    "B16": [
+     "tests/unit/plant-chip-only.test.ts (subject in src/components/chip: belongs in src/components/chip/__tests__/)"
+    ]
+   }
+  },
+  {
+   "id": "I11b",
+   "clause": "B2",
+   "what": "test in tests/ deep-reads chip internals",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B2": [
+     "tests/unit/plant-chip-deep.test.ts:1 -> src/components/chip/chipVariants.ts [import]"
+    ],
+    "B16": [
+     "tests/unit/plant-chip-deep.test.ts (subject in src/components/chip: belongs in src/components/chip/__tests__/)"
+    ]
+   }
+  },
+  {
+   "id": "I12",
+   "clause": "R-3",
+   "what": "test colocated in chip whose subject is slider",
+   "legal": false,
+   "any": true,
+   "inExpected": false,
+   "gained": {
+    "B16": [
+     "src/components/chip/__tests__/plant-slider-only.test.ts (colocated in src/components/chip; its subject's home is src/components/slider)"
+    ]
+   }
+  },
+  {
+   "id": "I13",
+   "clause": "B9",
+   "what": "dual door: badge door republishes Chip",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B9": [
+     "src/components/badge/index.ts:4 re-exports src/components/chip/index.ts (outside src/components/badge)",
+     "src/components/chip/Chip.vue#default on ./badge + ./chip"
+    ],
+    "B11": [
+     "src/components/badge/index.ts +Chip (not in the pin)"
+    ]
+   }
+  },
+  {
+   "id": "I14",
+   "clause": "B11",
+   "what": "alias name on a door",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B11": [
+     "src/components/chip/index.ts +Pill (not in the pin)"
+    ]
+   }
+  },
+  {
+   "id": "I15",
+   "clause": "B15",
+   "what": "part-1 module",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B7": [
+     "src/components/dock/part-1/index.ts (not in record.doors)"
+    ],
+    "B11": [
+     "src/components/dock/part-1/index.ts exports x (no reader outside src/components/dock/part-1)",
+     "module src/components/dock/part-1 (not in the pin)",
+     "src/components/dock/part-1/index.ts +x (not in the pin)"
+    ],
+    "B15": [
+     "src/components/dock/part-1 (placeholder name)"
+    ]
+   }
+  },
+  {
+   "id": "I15b",
+   "clause": "B15",
+   "what": "placeholder name utils",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B7": [
+     "src/components/dock/utils/index.ts (not in record.doors)"
+    ],
+    "B11": [
+     "src/components/dock/utils/index.ts exports x (no reader outside src/components/dock/utils)",
+     "module src/components/dock/utils (not in the pin)",
+     "src/components/dock/utils/index.ts +x (not in the pin)"
+    ],
+    "B15": [
+     "src/components/dock/utils (placeholder name)"
+    ]
+   }
+  },
+  {
+   "id": "I15c",
+   "clause": "B15",
+   "what": "placeholder name v2",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B7": [
+     "src/components/dock/v2/index.ts (not in record.doors)"
+    ],
+    "B11": [
+     "src/components/dock/v2/index.ts exports x (no reader outside src/components/dock/v2)",
+     "module src/components/dock/v2 (not in the pin)",
+     "src/components/dock/v2/index.ts +x (not in the pin)"
+    ],
+    "B15": [
+     "src/components/dock/v2 (placeholder name)"
+    ]
+   }
+  },
+  {
+   "id": "I16",
+   "clause": "B15",
+   "what": "module repeats parent",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B7": [
+     "src/components/menu/menu/index.ts (not in record.doors)"
+    ],
+    "B11": [
+     "src/components/menu/menu/index.ts exports x (no reader outside src/components/menu/menu)",
+     "module src/components/menu/menu (not in the pin)",
+     "src/components/menu/menu/index.ts +x (not in the pin)"
+    ],
+    "B15": [
+     "src/components/menu/menu (repeats its parent)"
+    ]
+   }
+  },
+  {
+   "id": "I17",
+   "clause": "B1",
+   "what": "masked fallback: dynamic-template deep import with catch",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B1": [
+     "src/components/slider/plantI17.ts:1 -> src/components/dock/composables/dockContext.ts [dynamic-template] (door src/components/dock/index.ts)",
+     "src/components/slider/plantI17.ts:1 -> src/components/dock/composables/dockCrossfadeContext.ts [dynamic-template] (door src/components/dock/index.ts)",
+     "src/components/slider/plantI17.ts:1 -> src/components/dock/composables/dockMorphMeasure.ts [dynamic-template] (door src/components/dock/index.ts)"
+    ],
+    "B10": [
+     "src/components/dock/composables/dockMorphMeasure.ts -> src/components [global] readers: src/components/dock, src/components/slider",
+     "src/components/dock/composables/dockSwitcherContext.ts -> src/components [global] readers: src/components/dock, src/components/slider",
+     "src/components/dock/composables/isTeleportedTarget.ts -> src/components [global] readers: src/components/dock, src/components/slider"
+    ],
+    "B15": [
+     "src/components/slider/plantI17.ts (placeholder file name)"
+    ],
+    "B17": [
+     "src/components/slider/plantI17.ts:1 swallows a failed module load or read (.catch without a throw)"
+    ]
+   }
+  },
+  {
+   "id": "I17b",
+   "clause": "B0",
+   "what": "masked fallback: CSS import of a missing sheet",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B0": [
+     "src/components/slider/index.css:4 unresolved [css-import] ./gone.css"
+    ]
+   }
+  },
+  {
+   "id": "I17c",
+   "clause": "B1",
+   "what": "masked fallback: try deep import, fall back to door",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B1": [
+     "src/components/slider/plantI17c.ts:1 -> src/components/dock/legibility/useGlassBackdropLuminance.ts [dynamic] (door src/components/dock/index.ts)"
+    ],
+    "B17": [
+     "src/components/slider/plantI17c.ts:1 swallows a failed module load (try/catch without a throw)"
+    ]
+   }
+  },
+  {
+   "id": "I18",
+   "clause": "B10",
+   "what": "skeleton in skeleton/ read only by data-table",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B1": [
+     "src/components/data-table/plantI18.ts:1 -> src/components/skeleton/DataTableSkeleton.vue [import] (door src/components/skeleton/index.ts)"
+    ],
+    "B10": [
+     "src/components/skeleton/DataTableSkeleton.vue -> src/components/data-table [move] readers: src/components/data-table"
+    ],
+    "B15": [
+     "src/components/data-table/plantI18.ts (placeholder file name)"
+    ]
+   }
+  },
+  {
+   "id": "I19",
+   "clause": "B10",
+   "what": "skeleton in _shared read only by data-table",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B10": [
+     "src/components/_shared/DataTableSkeleton.vue -> src/components/data-table [move] readers: src/components/data-table"
+    ],
+    "B15": [
+     "src/components/data-table/plantI19.ts (placeholder file name)"
+    ]
+   }
+  },
+  {
+   "id": "I20",
+   "clause": "B10",
+   "what": "stylesheet in style kernel loaded only by slider",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B3": [
+     "src/components/slider/index.css:4 -> src/styles/slider-thumb.css (css door src/styles/index.css)"
+    ],
+    "B10": [
+     "src/styles/slider-thumb.css -> src/components/slider [move] readers: src/components/slider"
+    ]
+   }
+  },
+  {
+   "id": "I21",
+   "clause": "B7",
+   "what": "doorless dir deep-imported",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B6": [
+     "src/components/dock/: 13 direct files > 12"
+    ],
+    "B7": [
+     "src/components/dock/ghost/ (1 direct files, no door)"
+    ],
+    "B15": [
+     "src/components/dock/plantI21.ts (placeholder file name)"
+    ]
+   }
+  },
+  {
+   "id": "I22",
+   "clause": "B8",
+   "what": "kernel type-imports a unit",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B4": [
+     "cycle @src [components/dock composables/dom] via src/components/dock/DockCrossfade.vue -> src/composables/dom/index.ts ; src/composables/dom/useBreakpoint.ts -> src/components/dock/index.ts [type]"
+    ],
+    "B8": [
+     "src/composables/dom/useBreakpoint.ts:1 -> src/components/dock/index.ts [type] [import-type] (kernel reads a unit)"
+    ],
+    "B11": [
+     "src/composables/dom/index.ts +PlantDock (not in the pin)"
+    ]
+   }
+  },
+  {
+   "id": "I23",
+   "clause": "B8",
+   "what": "src reads demo",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B8": [
+     "src/components/chip/plantI23.ts:1 -> demo/router.ts [import] (the library reads the demo zone)"
+    ],
+    "B15": [
+     "src/components/chip/plantI23.ts (placeholder file name)"
+    ]
+   }
+  },
+  {
+   "id": "I24",
+   "clause": "B4",
+   "what": "sibling cycle chip <-> badge",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B4": [
+     "cycle @src [components/chip components/badge] via src/components/chip/plantI24a.ts -> src/components/badge/index.ts ; src/components/badge/plantI24b.ts -> src/components/chip/index.ts"
+    ]
+   }
+  },
+  {
+   "id": "I25",
+   "clause": "B14",
+   "what": "code in a JS door",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B11": [
+     "src/components/chip/index.ts +CHIP_DEFAULT (not in the pin)"
+    ],
+    "B14": [
+     "src/components/chip/index.ts:4 holds 1 statement(s) that are not `export … from`, first FirstStatement"
+    ]
+   }
+  },
+  {
+   "id": "I26",
+   "clause": "B14",
+   "what": "rule in a CSS door",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B14": [
+     "src/components/dock/index.css:4 holds 1 non-door node(s), first rule .x"
+    ]
+   }
+  },
+  {
+   "id": "I27",
+   "clause": "B12",
+   "what": "legacy shim relay",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B6": [
+     "src/components/dock/: 14 direct files > 12"
+    ],
+    "B12": [
+     "src/components/dock/constants.legacy.ts:1 re-exports src/components/dock/constants.ts (relay)"
+    ],
+    "B15": [
+     "src/components/dock/plantI27.ts (placeholder file name)"
+    ]
+   }
+  },
+  {
+   "id": "I28",
+   "clause": "B5",
+   "what": "dir inside a kind slot",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B5": [
+     "src/components/dock/composables/hold (dir inside kind slot src/components/dock/composables)"
+    ],
+    "B6": [
+     "src/components/dock/: 13 direct files > 12"
+    ],
+    "B15": [
+     "src/components/dock/plantI28.ts (placeholder file name)"
+    ]
+   }
+  },
+  {
+   "id": "I29",
+   "clause": "B13",
+   "what": "bin imports a bin",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B13": [
+     "scripts/profile-bundle.mjs:1 imports the bin scripts/verify-export-types.mjs [import-side-effect]"
+    ]
+   }
+  },
+  {
+   "id": "I30",
+   "clause": "B8",
+   "what": "kernel entry re-exports a unit file",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B1": [
+     "src/composables/dom/index.ts:50 -> src/components/slider/useDockHold.ts [reexport] (door src/components/slider/index.ts)"
+    ],
+    "B4": [
+     "cycle @src [components/dock components/slider composables/dom] via src/components/dock/DockCrossfade.vue -> src/composables/dom/index.ts ; src/components/slider/Slider.vue -> src/composables/dom/index.ts ; src/components/slider/useDockHold.ts -> src/components/dock/index.ts"
+    ],
+    "B8": [
+     "src/composables/dom/index.ts:50 -> src/components/slider/useDockHold.ts [reexport] (kernel reads a unit)"
+    ],
+    "B9": [
+     "src/composables/dom/index.ts:50 re-exports src/components/slider/useDockHold.ts (outside src/composables/dom)"
+    ],
+    "B11": [
+     "src/composables/dom/index.ts +useDockHold (not in the pin)"
+    ]
+   }
+  },
+  {
+   "id": "I31",
+   "clause": "B2",
+   "what": "demo past a door",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B2": [
+     "demo/plantI31.ts:1 -> src/components/slider/useDockHold.ts [import]"
+    ],
+    "B15": [
+     "demo/plantI31.ts (placeholder file name)"
+    ]
+   }
+  },
+  {
+   "id": "I32",
+   "clause": "B0",
+   "what": "computed-path read in tests",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B0": [
+     "tests/unit/plant-walk2.test.ts:3 computed-path read src/components/<computed> [computed-read]"
+    ],
+    "B15": [
+     "tests/unit/plant-walk2.test.ts (placeholder file name)"
+    ]
+   }
+  },
+  {
+   "id": "I33",
+   "clause": "B7",
+   "what": "undeclared index.ts",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B7": [
+     "src/components/chip/extra/index.ts (not in record.doors)"
+    ],
+    "B11": [
+     "module src/components/chip/extra (not in the pin)",
+     "src/components/chip/extra/index.ts +x (not in the pin)"
+    ],
+    "B15": [
+     "src/components/chip/plantI33.ts (placeholder file name)"
+    ]
+   }
+  },
+  {
+   "id": "I34",
+   "clause": "B6",
+   "what": "13 files in a story category",
+   "legal": false,
+   "any": true,
+   "inExpected": true,
+   "gained": {
+    "B6": [
+     "demo/stories/data/: 13 direct files > 12"
+    ],
+    "B15": [
+     "demo/stories/data/plantI34_0.ts (placeholder file name)",
+     "demo/stories/data/plantI34_1.ts (placeholder file name)",
+     "demo/stories/data/plantI34_2.ts (placeholder file name)"
+    ]
+   }
+  },
+  {
+   "id": "L1",
+   "clause": null,
+   "what": "slider reads dock through its door",
+   "legal": true,
+   "any": true,
+   "inExpected": null,
+   "gained": {
+    "B15": [
+     "src/components/slider/plantL1.ts (placeholder file name)"
+    ]
+   }
+  },
+  {
+   "id": "L2",
+   "clause": null,
+   "what": "colocated slider-local composable",
+   "legal": true,
+   "any": true,
+   "inExpected": null,
+   "gained": {
+    "B15": [
+     "src/components/slider/plantL2.ts (placeholder file name)"
+    ]
+   }
+  }
+ ]
+}

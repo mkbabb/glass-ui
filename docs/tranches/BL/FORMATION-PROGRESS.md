@@ -251,3 +251,10 @@ Outage log:
   - Owner questions Q-1..Q-5 are unruled; pass 2 builds on the defaults and films both arms for Q-3 and Q-5.
   - The Sheet in-flow position is routed to BL formation as an INBOUND row (not D5's).
   D5 pass 2 launched (bl-design-d5-pass2.js), one seat at a time: H2, F5, then P-A2, P-E2 and CP, each with its fresh critic, then the agglomerate.
+- 2026-10-08 — D1 pass 7 B-proto banked: the chain re-derives to 117 steps; final digest 52cca0fe… over 1582 files. Two fresh-HEAD replays MATCH, each rerun a no-op.
+  - Landed: P6-R1 (useScrollScene to the demo, out of src), P6-R2 (the morph door keeps HEAD's names; the tabs test states its own geometry), P6-R3 (seal exits 0/1/2), P6-G3 (B3 reads @import and <style src>; I7 CAUGHT), P6-G6 (filesScope).
+  - The new tools/peer-closure.mjs probe found motion-core's closure reaching keyframes.js through the spring, morph and reveal doors, cured by S71-S71d; all three arms are now GREEN.
+  - Gate 18/18 at 0. verify:package CLEAN at the one rebound datum, 2,920,401 B. Cascade GREEN.
+  - Batteries: plants-p7 17/17, plants-p6 20/20; pass-6 regressions hold.
+  - The browser reports are committed with the kit (16M, 430 files).
+  Fresh critic B launched.

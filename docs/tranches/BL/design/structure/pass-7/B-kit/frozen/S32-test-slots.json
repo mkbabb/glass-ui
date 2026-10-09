@@ -1,0 +1,31 @@
+{
+ "step": "R-3: two more source walkers skip the __tests__ slot, as the harness does",
+ "files": {
+  "tests/styles/route-motion.test.ts": {
+   "hunks": [
+    [
+     "                if (statSync(path).isDirectory()) walk(path);\n",
+     "                if (statSync(path).isDirectory()) { if (entry !== \"__tests__\") walk(path); }\n"
+    ]
+   ]
+  },
+  "tests/components/dialog/dialog-dismiss.test.ts": {
+   "hunks": [
+    [
+     "        return statSync(full).isDirectory() ? walk(full) : [full];\n",
+     "        if (statSync(full).isDirectory()) return entry === \"__tests__\" ? [] : walk(full);\n        return [full];\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "tests/styles/route-motion.test.ts",
+   "why": "the route grammar census reads src/ source, not its test slots"
+  },
+  {
+   "file": "tests/components/dialog/dialog-dismiss.test.ts",
+   "why": "the dialog knob census reads the dialog's source, not its test slot"
+  }
+ ]
+}

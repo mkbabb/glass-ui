@@ -1,0 +1,167 @@
+{
+ "step": "B12: minify-css declares its own types; the .d.mts mirror leaves",
+ "files": {
+  "scripts/lib/minify-css.ts": {
+   "hunks": [
+    [
+     "const isWhitespace = (code) => code === 0x20 || code === 0x09 || code === 0x0a || code === 0x0d || code === 0x0c;\nconst isHex = (code) => (code >= 0x30 && code <= 0x39) || (code >= 0x41 && code <= 0x46) || (code >= 0x61 && code <= 0x66);\nconst isName = (code) =>\n",
+     "const isWhitespace = (code: number) => code === 0x20 || code === 0x09 || code === 0x0a || code === 0x0d || code === 0x0c;\nconst isHex = (code: number) => (code >= 0x30 && code <= 0x39) || (code >= 0x41 && code <= 0x46) || (code >= 0x61 && code <= 0x66);\nconst isName = (code: number) =>\n"
+    ],
+    [
+     "const isNameContinuation = (code) => code === 0x5c || isName(code);\n",
+     "const isNameContinuation = (code: number) => code === 0x5c || isName(code);\n"
+    ],
+    [
+     "function consumeEscape(css, start) {\n",
+     "function consumeEscape(css: string, start: number): { end: number; point: number; hexDigits: number; terminated: boolean } {\n"
+    ],
+    [
+     "function consumeString(css, start) {\n",
+     "function consumeString(css: string, start: number): number {\n"
+    ],
+    [
+     "function consumeComment(css, start) {\n",
+     "function consumeComment(css: string, start: number): number {\n"
+    ],
+    [
+     "function consumeName(css, start) {\n",
+     "function consumeName(css: string, start: number): { end: number; decoded: string; unterminatedHex: boolean } {\n"
+    ],
+    [
+     "            const point = css.codePointAt(end);\n",
+     "            const point = css.codePointAt(end) as number;\n"
+    ],
+    [
+     "function consumeUrl(css, start) {\n",
+     "function consumeUrl(css: string, start: number): number {\n"
+    ],
+    [
+     "function scanCss(css) {\n",
+     "function scanCss(css: string): { output: string; hasComment: boolean } {\n"
+    ],
+    [
+     "    const emit = (token, structural = false) => {\n",
+     "    const emit = (token: string, structural = false): void => {\n"
+    ],
+    [
+     "export function minifyCss(css) {\n",
+     "export function minifyCss(css: string): string {\n"
+    ],
+    [
+     "export function hasCommentOutsideString(css) {\n",
+     "export function hasCommentOutsideString(css: string): boolean {\n"
+    ]
+   ]
+  },
+  "scripts/lib/minify-css.d.mts": {
+   "remove": true,
+   "before": "export function minifyCss(css: string): string;\nexport function hasCommentOutsideString(css: string): boolean;\n"
+  },
+  "vite.style-fold.ts": {
+   "hunks": [
+    [
+     "import { minifyCss } from \"./scripts/lib/minify-css.ts\";\n",
+     "import { minifyCss } from \"./scripts/lib/minify-css\";\n"
+    ],
+    [
+     " * minify-css.mjs` `minifyCss`): the dist partials are copied RAW so they still\n",
+     " * minify-css.ts` `minifyCss`): the dist partials are copied RAW so they still\n"
+    ]
+   ]
+  },
+  "tests/styles/minify-css.test.ts": {
+   "hunks": [
+    [
+     "import { hasCommentOutsideString, minifyCss } from \"../../scripts/lib/minify-css.ts\";\n",
+     "import { hasCommentOutsideString, minifyCss } from \"../../scripts/lib/minify-css\";\n"
+    ]
+   ]
+  },
+  "tests/public-surface.spec.ts": {
+   "hunks": [
+    [
+     "    // The walker strips comments with the naive regex `scripts/lib/minify-css.mjs:18`\n",
+     "    // The walker strips comments with the naive regex `scripts/lib/minify-css.ts:18`\n"
+    ]
+   ]
+  },
+  "scripts/verify-export-types.mjs": {
+   "hunks": [
+    [
+     "        // naive comment regex `scripts/lib/minify-css.mjs:18` names as THE bug, and the\n",
+     "        // naive comment regex `scripts/lib/minify-css.ts:18` names as THE bug, and the\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "scripts/lib/minify-css.ts",
+   "why": "typed predicates"
+  },
+  {
+   "file": "scripts/lib/minify-css.ts",
+   "why": "typed"
+  },
+  {
+   "file": "scripts/lib/minify-css.ts",
+   "why": "typed"
+  },
+  {
+   "file": "scripts/lib/minify-css.ts",
+   "why": "typed"
+  },
+  {
+   "file": "scripts/lib/minify-css.ts",
+   "why": "typed"
+  },
+  {
+   "file": "scripts/lib/minify-css.ts",
+   "why": "typed; the index is in range, so the code point is defined"
+  },
+  {
+   "file": "scripts/lib/minify-css.ts",
+   "why": "typed"
+  },
+  {
+   "file": "scripts/lib/minify-css.ts",
+   "why": "typed"
+  },
+  {
+   "file": "scripts/lib/minify-css.ts",
+   "why": "typed"
+  },
+  {
+   "file": "scripts/lib/minify-css.ts",
+   "why": "typed"
+  },
+  {
+   "file": "scripts/lib/minify-css.ts",
+   "why": "typed"
+  },
+  {
+   "file": "scripts/lib/minify-css.d.mts",
+   "why": "B12: the mirror leaves"
+  },
+  {
+   "file": "vite.style-fold.ts",
+   "why": "extensionless under bundler resolution"
+  },
+  {
+   "file": "vite.style-fold.ts",
+   "why": "the comment cites the file by name"
+  },
+  {
+   "file": "tests/styles/minify-css.test.ts",
+   "why": "extensionless under bundler resolution"
+  },
+  {
+   "file": "tests/public-surface.spec.ts",
+   "why": "the comment cites the file by name"
+  },
+  {
+   "file": "scripts/verify-export-types.mjs",
+   "why": "the comment cites the file by name"
+  }
+ ]
+}

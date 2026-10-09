@@ -1,0 +1,19 @@
+{
+ "step": "R-3 / B16: the route-motion alpha test reads ROUTE_GRAMMAR from its subject module (composables/motion/route), not the parent's door, so its colocation adds no FD-2 pair",
+ "files": {
+  "tests/styles/route-motion/alpha.test.ts": {
+   "hunks": [
+    [
+     "import { ROUTE_GRAMMAR } from \"../../../src/composables/motion/motion-core\";\n",
+     "import { ROUTE_GRAMMAR } from \"../../../src/composables/motion/route\";\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "tests/styles/route-motion/alpha.test.ts",
+   "why": "the subject module's door, not composables/motion's (FD-2 on the colocation)"
+  }
+ ]
+}

@@ -1,0 +1,4 @@
+VALUE AuroraShadeB opacity: 1 -> inherit
+SPLIT src/components/aurora/Aurora.vue -> AuroraShadeA + AuroraShadeB (value) rules: .aurora-canvas-layer | .aurora-canvas-layer--armed
+SCOPES {"scopes":[{"from":"Aurora","to":"AuroraShadeA","reason":"pass-7 plant (FP6-4): the rule .aurora-canvas-layer re-homed into one of two child SFCs"},{"from":"Aurora","to":"AuroraShadeB","reason":"pass-7 plant (FP6-4): the rule .aurora-canvas-layer--armed re-homed into one of two child SFCs"}]}
+SCOPES-A {"scopes":[{"from":"Aurora","to":"AuroraShadeA","reason":"pass-7 plant (FP6-4): the rule .aurora-canvas-layer re-homed into one of two child SFCs"}]}

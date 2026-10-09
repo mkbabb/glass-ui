@@ -1,0 +1,31 @@
+{
+ "step": "R-3: the library program leaves colocated tests out, the test program takes them in",
+ "files": {
+  "tsconfig.json": {
+   "hunks": [
+    [
+     "    \"include\": [\"src/\", \"demo/\"]\n",
+     "    \"include\": [\"src/\", \"demo/\"],\n    \"exclude\": [\"src/**/__tests__\"]\n"
+    ]
+   ]
+  },
+  "tsconfig.test.json": {
+   "hunks": [
+    [
+     "    \"include\": [\"tests/\", \"src/\", \"tests/shims.d.ts\"]\n",
+     "    \"include\": [\"tests/\", \"src/\", \"tests/shims.d.ts\"],\n    \"exclude\": []\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "tsconfig.json",
+   "why": "the strict library program does not type tests"
+  },
+  {
+   "file": "tsconfig.test.json",
+   "why": "the test program types the colocated tests (the base exclude is not inherited here)"
+  }
+ ]
+}

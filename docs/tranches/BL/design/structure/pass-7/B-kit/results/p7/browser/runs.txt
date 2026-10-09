@@ -1,0 +1,32 @@
+browser runs (browser-seat/2, chromium-headless-new, 1 worker; loads from `sysctl -n vm.loadavg`)
+
+selection (re-derivable from committed bytes)
+  node tools/browser-select.mjs --root <final tree> --out results/p7/browser
+    -> moved.json (597 moves), changed.txt (717 paths); select.log, selection.json (154 specs, testDir ".", 69 bands)
+  base-specs.txt: the same 153 base specs keyed from the base's testDir "tests-visual" (the 154th, chip-accent-band.visual.ts, is a test the chain creates)
+
+base (worktree of the floor base, S1 5b14c6c7)
+  node <base>/scripts/structure/browser.mjs --root <base> --specs "$(paste -sd, base-specs.txt)" --out base.json --wait 3600
+  866 tests, 822 ran, 430 passed, 392 failed, 44 skipped; 5440 s; 21:13:48Z-22:44:30Z; load 24.8 at start, 28.9 at end, 35-50 between
+
+rekey (P6-F2): node tools/rekey.mjs base.json <r1> base-rekeyed.json -> 153 specs mapped, 0 unmapped
+
+route (r1, the replayed final tree)
+  node <r1>/scripts/structure/browser.mjs --root <r1> --moved moved.json $(--changed <each line of changed.txt>) --base-report base-rekeyed.json --out route.json --wait 3600
+  866 tests, 822 ran, 429 passed, 393 failed, 44 skipped; 5634 s; 22:44:51Z-00:18:54Z; load 26.2 at start, 85.6 peak read, 32.0 at end
+  seat verdict RED: newFailures 1 — blob/blob-config-delta.spec.ts :: D2 (shy-away shift(-0.8)=0.0082 not < lean-in shift(+0.8)=0.0072)
+  per band (route.json bands): 69 bands, 49 with browser signal, 20 with none; 15 bands each carry the one D2 key (its spec reads all of them)
+
+tally (tools/browser-tally.mjs base-rekeyed.json route.json -> tally.txt)
+  825 keys each; base-green 411, held on the route 410; base-red route-green 0
+  7 route keys with no base key: chip-accent-band (a new test, passes); the six w1-radius-redress-inputs tests the chain split
+  from w1-radius-redress, each with the same status as its base title (4 failed on both, 2 skipped on both)
+
+D2 adjudication (blob-rerun.log; each run: browser.mjs --specs <the one spec>, alternating trees)
+  base run 1  FAIL  0.0150 vs 0.0075   load 30.1
+  r1   run 1  FAIL  0.0079 vs 0.0066   load 24.4
+  base run 2  FAIL  0.0097 vs 0.0063   load 42.1
+  r1   run 2  pass                     load 39.2
+  base run 3  pass                     load 55.3
+  r1   run 3  pass                     load 52.7
+  the floor base fails D2 2 of 3, the route 1 of 3: the test does not separate the trees; its base-green mark was one pass

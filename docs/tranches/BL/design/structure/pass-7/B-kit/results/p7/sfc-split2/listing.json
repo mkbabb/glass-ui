@@ -1,0 +1,32 @@
+{
+ "scopes": [
+  {
+   "from": "Aurora",
+   "to": "AuroraShadeA",
+   "reason": "pass-7 plant (FP6-4): the rule .aurora-canvas-layer re-homed into one of two child SFCs"
+  },
+  {
+   "from": "Aurora",
+   "to": "AuroraShadeB",
+   "reason": "pass-7 plant (FP6-4): the rule .aurora-canvas-layer--armed re-homed into one of two child SFCs"
+  }
+ ],
+ "reorders": [
+  {
+   "entry": "./styles",
+   "moved": [
+    "@layer components :: .aurora-canvas-layer[data-v-(Aurora)] {opacity:0;transition:opacity var(--duration-slow) var(--ease-standard);isolation:isolate}",
+    "@layer components :: .aurora-canvas-layer--armed[data-v-(Aurora)] {opacity:1}"
+   ],
+   "reason": "pass-7 plant (FP6-4): the two-child SFC split"
+  },
+  {
+   "entry": "./styles.css",
+   "moved": [
+    "@layer components :: .aurora-canvas-layer[data-v-(Aurora)] {opacity:0;transition:opacity var(--duration-slow) var(--ease-standard);isolation:isolate}",
+    "@layer components :: .aurora-canvas-layer--armed[data-v-(Aurora)] {opacity:1}"
+   ],
+   "reason": "pass-7 plant (FP6-4): the two-child SFC split"
+  }
+ ]
+}

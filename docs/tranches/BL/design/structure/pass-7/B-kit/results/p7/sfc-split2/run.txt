@@ -1,0 +1,15 @@
+SPLIT src/components/aurora/Aurora.vue -> AuroraShadeA + AuroraShadeB (keep) rules: .aurora-canvas-layer | .aurora-canvas-layer--armed
+SCOPES {"scopes":[{"from":"Aurora","to":"AuroraShadeA","reason":"pass-7 plant (FP6-4): the rule .aurora-canvas-layer re-homed into one of two child SFCs"},{"from":"Aurora","to":"AuroraShadeB","reason":"pass-7 plant (FP6-4): the rule .aurora-canvas-layer--armed re-homed into one of two child SFCs"}]}
+SCOPES-A {"scopes":[{"from":"Aurora","to":"AuroraShadeA","reason":"pass-7 plant (FP6-4): the rule .aurora-canvas-layer re-homed into one of two child SFCs"}]}
+build keep 0
+no listing rc 1
+one child's scope rc 1
+both scopes, no rung rc 1
+listing: 2 scope(s), ./styles 2, ./styles.css 2 → /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-7/B-kit/results/p7/sfc-split2/listing.json
+full listing rc 0
+UNDO src/components/aurora/Aurora.vue, src/components/aurora/AuroraShadeA.vue, src/components/aurora/AuroraShadeB.vue
+VALUE AuroraShadeB opacity: 1 -> inherit
+build value 0
+value under the second child rc 1
+UNDO src/components/aurora/Aurora.vue, src/components/aurora/AuroraShadeA.vue, src/components/aurora/AuroraShadeB.vue
+restored rc 0

@@ -1,0 +1,325 @@
+{
+ "note": "B-S4 CSS stage, authored inputs (LAW §6). moves: the CSS carve through the floor engine (B's pass-2 kernel names; the dock sheets into the modules they style). rows: the one rung move the one-door rule forces (card/scroll.css), with its cascade reason; the accent-tone register moves into the glass module that loads it (B-08). The CSS door row itself is computed (derive/css-doors.mjs).",
+ "moves": [
+  {
+   "from": "src/components/dock/styles/search.css",
+   "to": "src/components/dock/search/search.css",
+   "why": "the search sheet joins the dock/search module it styles (S-19)"
+  },
+  {
+   "from": "src/components/dock/styles/adaptive-legibility.css",
+   "to": "src/components/dock/legibility/adaptive-legibility.css",
+   "why": "the legibility sheet joins the dock/legibility module it styles"
+  },
+  {
+   "from": "src/components/dock/styles/index.css",
+   "to": "src/components/dock/styles/core.css",
+   "why": "B5: a kind slot holds no door. The dock style root keeps its imports and its @property/@layer rules as styles/core.css; the CSS door step gives the dock unit its index.css"
+  },
+  {
+   "from": "src/components/deck/styles/index.css",
+   "to": "src/components/deck/index.css",
+   "why": "B5: the deck's pure import list leaves its styles/ slot and becomes the deck unit's CSS door"
+  },
+  {
+   "from": "src/styles/glass/material.css",
+   "to": "src/styles/glass/material/material.css",
+   "why": "R-5 (styles/glass 28 > 12): B's authored glass module material/, a consecutive run of the glass cascade"
+  },
+  {
+   "from": "src/styles/glass/veil.css",
+   "to": "src/styles/glass/material/veil.css",
+   "why": "R-5 (styles/glass 28 > 12): B's authored glass module material/, a consecutive run of the glass cascade"
+  },
+  {
+   "from": "src/styles/glass/ladder.css",
+   "to": "src/styles/glass/material/ladder.css",
+   "why": "R-5 (styles/glass 28 > 12): B's authored glass module material/, a consecutive run of the glass cascade"
+  },
+  {
+   "from": "src/styles/glass/ladder-undershadow.css",
+   "to": "src/styles/glass/material/ladder-undershadow.css",
+   "why": "R-5 (styles/glass 28 > 12): B's authored glass module material/, a consecutive run of the glass cascade"
+  },
+  {
+   "from": "src/styles/glass/surfaces.css",
+   "to": "src/styles/glass/surfaces/surfaces.css",
+   "why": "R-5 (styles/glass 28 > 12): B's authored glass module surfaces/, a consecutive run of the glass cascade"
+  },
+  {
+   "from": "src/styles/glass/surfaces-pager.css",
+   "to": "src/styles/glass/surfaces/surfaces-pager.css",
+   "why": "R-5 (styles/glass 28 > 12): B's authored glass module surfaces/, a consecutive run of the glass cascade"
+  },
+  {
+   "from": "src/styles/glass/control-surfaces.css",
+   "to": "src/styles/glass/surfaces/control-surfaces.css",
+   "why": "R-5 (styles/glass 28 > 12): B's authored glass module surfaces/, a consecutive run of the glass cascade"
+  },
+  {
+   "from": "src/styles/glass/control-bit.css",
+   "to": "src/styles/glass/surfaces/control-bit.css",
+   "why": "R-5 (styles/glass 28 > 12): B's authored glass module surfaces/, a consecutive run of the glass cascade"
+  },
+  {
+   "from": "src/styles/glass/control-edge.css",
+   "to": "src/styles/glass/surfaces/control-edge.css",
+   "why": "R-5 (styles/glass 28 > 12): B's authored glass module surfaces/, a consecutive run of the glass cascade"
+  },
+  {
+   "from": "src/styles/glass/glass-capsule.css",
+   "to": "src/styles/glass/shapes/glass-capsule.css",
+   "why": "R-5 (styles/glass 28 > 12): B's authored glass module shapes/, a consecutive run of the glass cascade"
+  },
+  {
+   "from": "src/styles/glass/glass-chip.css",
+   "to": "src/styles/glass/shapes/glass-chip.css",
+   "why": "R-5 (styles/glass 28 > 12): B's authored glass module shapes/, a consecutive run of the glass cascade"
+  },
+  {
+   "from": "src/styles/glass/glass-atom.css",
+   "to": "src/styles/glass/shapes/glass-atom.css",
+   "why": "R-5 (styles/glass 28 > 12): B's authored glass module shapes/, a consecutive run of the glass cascade"
+  },
+  {
+   "from": "src/styles/glass/mark.css",
+   "to": "src/styles/glass/shapes/mark.css",
+   "why": "R-5 (styles/glass 28 > 12): B's authored glass module shapes/, a consecutive run of the glass cascade"
+  },
+  {
+   "from": "src/styles/glass/liquid-fill.css",
+   "to": "src/styles/glass/shapes/liquid-fill.css",
+   "why": "R-5 (styles/glass 28 > 12): B's authored glass module shapes/, a consecutive run of the glass cascade"
+  },
+  {
+   "from": "src/styles/glass/value-marks.css",
+   "to": "src/styles/glass/shapes/value-marks.css",
+   "why": "R-5 (styles/glass 28 > 12): B's authored glass module shapes/, a consecutive run of the glass cascade"
+  },
+  {
+   "from": "src/styles/glass/track-flow.css",
+   "to": "src/styles/glass/shapes/track-flow.css",
+   "why": "R-5 (styles/glass 28 > 12): B's authored glass module shapes/, a consecutive run of the glass cascade"
+  },
+  {
+   "from": "src/styles/glass/reveal.css",
+   "to": "src/styles/glass/transitions/reveal.css",
+   "why": "R-5 (styles/glass 28 > 12): B's authored glass module transitions/, a consecutive run of the glass cascade"
+  },
+  {
+   "from": "src/styles/glass/liquid-enter.css",
+   "to": "src/styles/glass/transitions/liquid-enter.css",
+   "why": "R-5 (styles/glass 28 > 12): B's authored glass module transitions/, a consecutive run of the glass cascade"
+  },
+  {
+   "from": "src/styles/glass/dissolve.css",
+   "to": "src/styles/glass/transitions/dissolve.css",
+   "why": "R-5 (styles/glass 28 > 12): B's authored glass module transitions/, a consecutive run of the glass cascade"
+  },
+  {
+   "from": "src/styles/glass/deep.css",
+   "to": "src/styles/glass/decoration/deep.css",
+   "why": "R-5 (styles/glass 28 > 12): B's authored glass module decoration/, a consecutive run of the glass cascade"
+  },
+  {
+   "from": "src/styles/glass/defined.css",
+   "to": "src/styles/glass/decoration/defined.css",
+   "why": "R-5 (styles/glass 28 > 12): B's authored glass module decoration/, a consecutive run of the glass cascade"
+  },
+  {
+   "from": "src/styles/glass/squircle.css",
+   "to": "src/styles/glass/decoration/squircle.css",
+   "why": "R-5 (styles/glass 28 > 12): B's authored glass module decoration/, a consecutive run of the glass cascade"
+  },
+  {
+   "from": "src/styles/tokens/scheme-motion.css",
+   "to": "src/styles/tokens/motion/scheme-motion.css",
+   "why": "R-5 (styles/tokens 20 > 12): B's authored token module motion/, a consecutive run of the token cascade"
+  },
+  {
+   "from": "src/styles/tokens/scheme-spring.css",
+   "to": "src/styles/tokens/motion/scheme-spring.css",
+   "why": "R-5 (styles/tokens 20 > 12): B's authored token module motion/, a consecutive run of the token cascade"
+  },
+  {
+   "from": "src/styles/tokens/motion-registers.css",
+   "to": "src/styles/tokens/motion/motion-registers.css",
+   "why": "R-5 (styles/tokens 20 > 12): B's authored token module motion/, a consecutive run of the token cascade"
+  },
+  {
+   "from": "src/styles/tokens/color-radius.css",
+   "to": "src/styles/tokens/surface/color-radius.css",
+   "why": "R-5 (styles/tokens 20 > 12): B's authored token module surface/, a consecutive run of the token cascade"
+  },
+  {
+   "from": "src/styles/tokens/shadow.css",
+   "to": "src/styles/tokens/surface/shadow.css",
+   "why": "R-5 (styles/tokens 20 > 12): B's authored token module surface/, a consecutive run of the token cascade"
+  },
+  {
+   "from": "src/styles/tokens/glass.css",
+   "to": "src/styles/tokens/surface/glass.css",
+   "why": "R-5 (styles/tokens 20 > 12): B's authored token module surface/, a consecutive run of the token cascade"
+  },
+  {
+   "from": "src/styles/tokens/glass-fx.css",
+   "to": "src/styles/tokens/surface/glass-fx.css",
+   "why": "R-5 (styles/tokens 20 > 12): B's authored token module surface/, a consecutive run of the token cascade"
+  },
+  {
+   "from": "src/styles/tokens/glass-deep.css",
+   "to": "src/styles/tokens/surface/glass-deep.css",
+   "why": "R-5 (styles/tokens 20 > 12): B's authored token module surface/, a consecutive run of the token cascade"
+  },
+  {
+   "from": "src/styles/tokens/on-glass-fg.css",
+   "to": "src/styles/tokens/surface/on-glass-fg.css",
+   "why": "R-5 (styles/tokens 20 > 12): B's authored token module surface/, a consecutive run of the token cascade"
+  },
+  {
+   "from": "src/styles/tokens/offsets.css",
+   "to": "src/styles/tokens/sizing/offsets.css",
+   "why": "R-5 (styles/tokens 20 > 12): B's authored token module sizing/, a consecutive run of the token cascade"
+  },
+  {
+   "from": "src/styles/tokens/sizing.css",
+   "to": "src/styles/tokens/sizing/sizing.css",
+   "why": "R-5 (styles/tokens 20 > 12): B's authored token module sizing/, a consecutive run of the token cascade"
+  },
+  {
+   "from": "src/styles/tokens/sizing-config.css",
+   "to": "src/styles/tokens/sizing/sizing-config.css",
+   "why": "R-5 (styles/tokens 20 > 12): B's authored token module sizing/, a consecutive run of the token cascade"
+  },
+  {
+   "from": "src/styles/tokens/scale-paper.css",
+   "to": "src/styles/tokens/sizing/scale-paper.css",
+   "why": "R-5 (styles/tokens 20 > 12): B's authored token module sizing/, a consecutive run of the token cascade"
+  },
+  {
+   "from": "src/styles/tokens/scroll-tokens.css",
+   "to": "src/styles/tokens/sizing/scroll-tokens.css",
+   "why": "R-5 (styles/tokens 20 > 12): B's authored token module sizing/, a consecutive run of the token cascade"
+  },
+  {
+   "from": "src/styles/tokens/light-dark.css",
+   "to": "src/styles/tokens/scheme/light-dark.css",
+   "why": "R-5 (styles/tokens 20 > 12): B's authored token module scheme/, a consecutive run of the token cascade"
+  },
+  {
+   "from": "src/styles/tokens/dark-arm.css",
+   "to": "src/styles/tokens/scheme/dark-arm.css",
+   "why": "R-5 (styles/tokens 20 > 12): B's authored token module scheme/, a consecutive run of the token cascade"
+  },
+  {
+   "from": "src/styles/tokens/dark-arm-glass.css",
+   "to": "src/styles/tokens/scheme/dark-arm-glass.css",
+   "why": "R-5 (styles/tokens 20 > 12): B's authored token module scheme/, a consecutive run of the token cascade"
+  },
+  {
+   "from": "src/styles/tokens/property-regs.css",
+   "to": "src/styles/tokens/properties/property-regs.css",
+   "why": "R-5 (styles/tokens 20 > 12): B's authored token module properties/, a consecutive run of the token cascade"
+  },
+  {
+   "from": "src/styles/tokens/property-regs-specular.css",
+   "to": "src/styles/tokens/properties/property-regs-specular.css",
+   "why": "R-5 (styles/tokens 20 > 12): B's authored token module properties/, a consecutive run of the token cascade"
+  },
+  {
+   "from": "src/styles/track-well.css",
+   "to": "src/styles/surface/track-well.css",
+   "why": "R-5 (src/styles 19 > 12): B's authored style module surface/, a consecutive run of the ./styles cascade (scroll-chrome joins scroll/ once card/scroll.css takes the card rung)"
+  },
+  {
+   "from": "src/styles/glass-specular-track.css",
+   "to": "src/styles/surface/glass-specular-track.css",
+   "why": "R-5 (src/styles 19 > 12): B's authored style module surface/, a consecutive run of the ./styles cascade (scroll-chrome joins scroll/ once card/scroll.css takes the card rung)"
+  },
+  {
+   "from": "src/styles/paper.css",
+   "to": "src/styles/surface/paper.css",
+   "why": "R-5 (src/styles 19 > 12): B's authored style module surface/, a consecutive run of the ./styles cascade (scroll-chrome joins scroll/ once card/scroll.css takes the card rung)"
+  },
+  {
+   "from": "src/styles/transitions.css",
+   "to": "src/styles/motion/transitions.css",
+   "why": "R-5 (src/styles 19 > 12): B's authored style module motion/, a consecutive run of the ./styles cascade (scroll-chrome joins scroll/ once card/scroll.css takes the card rung)"
+  },
+  {
+   "from": "src/styles/animations.css",
+   "to": "src/styles/motion/animations.css",
+   "why": "R-5 (src/styles 19 > 12): B's authored style module motion/, a consecutive run of the ./styles cascade (scroll-chrome joins scroll/ once card/scroll.css takes the card rung)"
+  },
+  {
+   "from": "src/styles/viz-reveal.css",
+   "to": "src/styles/motion/viz-reveal.css",
+   "why": "R-5 (src/styles 19 > 12): B's authored style module motion/, a consecutive run of the ./styles cascade (scroll-chrome joins scroll/ once card/scroll.css takes the card rung)"
+  },
+  {
+   "from": "src/styles/scroll-driven.css",
+   "to": "src/styles/scroll/scroll-driven.css",
+   "why": "R-5 (src/styles 19 > 12): B's authored style module scroll/, a consecutive run of the ./styles cascade (scroll-chrome joins scroll/ once card/scroll.css takes the card rung)"
+  },
+  {
+   "from": "src/styles/scroll-choreography.css",
+   "to": "src/styles/scroll/scroll-choreography.css",
+   "why": "R-5 (src/styles 19 > 12): B's authored style module scroll/, a consecutive run of the ./styles cascade (scroll-chrome joins scroll/ once card/scroll.css takes the card rung)"
+  },
+  {
+   "from": "src/styles/scroll-chrome.css",
+   "to": "src/styles/scroll/scroll-chrome.css",
+   "why": "R-5 (src/styles 19 > 12): B's authored style module scroll/, a consecutive run of the ./styles cascade (scroll-chrome joins scroll/ once card/scroll.css takes the card rung)"
+  },
+  {
+   "from": "src/styles/glass/a11y-fallback.css",
+   "to": "src/styles/a11y-fallback.css",
+   "why": "read only by the terminal accessibility.css (F-7 on the CSS channel); it leaves the glass module, whose door is imported at another rung (B3)"
+  },
+  {
+   "from": "src/styles/utilities/responsive.css",
+   "to": "src/styles/responsive.css",
+   "why": "read only by the terminal accessibility.css; it leaves the utilities module (B3)"
+  },
+  {
+   "from": "src/styles/utilities/a11y-overrides.css",
+   "to": "src/styles/a11y-overrides.css",
+   "why": "read only by the terminal accessibility.css; it leaves the utilities module (B3)"
+  },
+  {
+   "from": "src/styles/tokens.css",
+   "to": "src/styles/tokens/index.css",
+   "why": "the tokens aggregator becomes its module's CSS door (B7, B3); a pure @import list"
+  },
+  {
+   "from": "src/styles/typography.css",
+   "to": "src/styles/typography/index.css",
+   "why": "the typography aggregator becomes its module's CSS door (B7, B3); a pure @import list"
+  },
+  {
+   "from": "src/styles/utilities.css",
+   "to": "src/styles/utilities/index.css",
+   "why": "the utilities aggregator becomes its module's CSS door (B7, B3); a pure @import list"
+  },
+  {
+   "from": "src/styles/theme.css",
+   "to": "src/styles/theme/index.css",
+   "why": "the theme aggregator becomes its module's CSS door (B7, B3); a pure @import list"
+  },
+  {
+   "from": "src/components/chip/accent-tone.css",
+   "to": "src/styles/glass/accent-tone.css",
+   "why": "B-08 (REGISTRY §P3-5, P3-R2): CSS is placed by its load edge. Its one loader is the glass sheet (after ladder-undershadow.css, before rim.css), so it lives in src/styles/glass/ and keeps its HEAD rung; the kernel then reads no unit (B8) with no reorder. Chip reads its classes, not its file"
+  },
+  {
+   "from": "src/styles/glass.css",
+   "to": "src/styles/glass/index.css",
+   "why": "the glass aggregator becomes its module's CSS door (B7, B3); a pure @import list"
+  },
+  {
+   "from": "src/styles/tokens.ts",
+   "to": "src/styles/tokens/tokens.ts",
+   "why": "the runtime token projection joins the tokens module (src/styles holds no script code at its root, B7)"
+  }
+ ]
+}

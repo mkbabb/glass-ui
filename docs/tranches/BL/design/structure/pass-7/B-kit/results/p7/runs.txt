@@ -1,0 +1,42 @@
+pass 7 B-proto runs (all under .claude/worktrees/bl/D1/p7/B-proto/{wt,r1,r2,base}; loads are `sysctl -n vm.loadavg`)
+
+replays (replay.mjs from a fresh HEAD worktree; HEAD f05d8555; `git diff 73ef2c14 f05d8555` outside docs is empty)
+  r1         MATCH  276.5 s   digest 52cca0fefd8d6b8822bbb3373641a6136e313be813baad397810d80865574aea over 1582 files   load 29.8 -> 18.5
+  r1 rerun   no-op    0.5 s   same digest (the chain is applied)                                                        load 18.3
+  r2 --twice MATCH  785.2 s   same digest; every step's "again" pass writes nothing (S1's floor rows re-apply to the same digest)   load 20 -> 47
+  logs: replay-r1.txt, replay-r2.txt
+
+gate on r1 (scripts/structure/seal/seal.mjs, record seal-r1.json)
+  18/18 clauses PASS, exit 0, 11 s, load 29.9
+  files 1580 (filesScope "the five zones and the root files"), edges 8330, modules 140/140, b10 anchored 39, held 0
+  pin modules 140, doors 120, names 1283, reviewed 2
+
+toolchain on r1 (toolchain-r1.txt)
+  vite build                 exit 0   22 s   load 33.3
+  verify:package             exit 0   54 s   load 37.6   CLEAN; unpackedBytes 2,920,401 = datum; increase false
+  vue-tsc (lib)              exit 0   15 s   load 41.3
+  vue-tsc (test program)     exit 0   15 s   load 38.6
+  demo:dist:build            exit 0    3 s   load 40.3
+  vitest seal.test.ts        exit 0   15 s   load 41.5   21/21
+  vitest (full)              exit 1   71 s   load 60.3   2 failed of 2341 (atoms fuzz 7479 ms, grasp 5045 ms: 5000 ms timeouts), 273/275 files
+  vitest (the two files)     exit 0            load 57.3   38/38
+  the pre-S71 wt full run read 275/275 files, 2330 passed
+
+cascade verify against the floor base (baseline floor-S1-5b14c6c7): GREEN on wt and r1 (cascade/verify.txt, verify-r1.txt)
+  ./styles 28 moved, risks 0; ./styles.css 10 moved, risks 0; scope Timeline -> TimelineMarks 40 rule lines
+
+peer-closure (tools/peer-closure.mjs --base peer-closure-base.json): GREEN (peer-closure.txt/.json)
+  ./motion-core  names 55 -> none; dist 5 files -> none; files 38 -> none
+  .              broken in all three arms at the floor base already (HEAD's state); nothing introduced
+
+plant batteries
+  plants-p7      17/17
+  plants-p6      20/20
+  battery-p2     36 CAUGHT, 5 OTHER, 2 FALSE+ (L1, L2 by B15), 0 MISSED; I7 CAUGHT
+  crit6-plants   89 CAUGHT, 13 CLEAN, 4 FALSE+, 1 SKIP
+  crit6-extra    4 CAUGHT, 2 CLEAN
+  crit6-regress  233 CAUGHT, 17 CLEAN, 7 FALSE+, 5 OTHER, 6 UNNAMED (identical to pass 6)
+  sfc-split2     none RED, one scope RED, both scopes without the rung RED, full listing GREEN, value RED, restored GREEN
+  fd4            /2 arm covered=true evidence=1; the pass-6 critic's probe A/G/G2/U pass
+
+browser (see browser/runs.txt)
