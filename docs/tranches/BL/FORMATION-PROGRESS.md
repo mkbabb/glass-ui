@@ -324,3 +324,8 @@ Outage log:
   - O-87 was not applied in pass 3, and O-88's facility list was not yet a witness. Both are folded into the pass-4 list as L1 and C1-C7.
   - The pass-4 list is fixed at 36 rows. Owner questions blocking convergence: Q-4 and Q-12 (10.2.0 critical path), Q-15, Q-16, Q-17; confirms Q-1..Q-3, Q-5..Q-10.
   D2 pass 4 launched (bl-design-d2-pass4.js): H4 (incl. the O-88 suite born RED in the demo app and the O-87 lighting census) with the baseline re-run, then floor v3 (N-6..N-8), then B′ and G each with a fresh critic, then the agglomerate.
+- 2026-10-09 — D4 pass 3 D′ proto banked: it implements the spec unchanged, and D4-Dp-proto.patch is byte-identical to the spec's route.patch (sha1 e7645ff2, 12 files, +342/−25). vue-tsc and build exit 0. 10 unit failures: 3 are HEAD's own boot-graph cases, and 7 did not reproduce (timeouts at load 370-470). Every new case fails its plant.
+  - H3 at load 154-500, both engines: T-1, T-2, T-4..T-8, W-D and CANON pass. T-3 reads 40/43 (Q-10). No janky frame.
+  - The R-3 kick plant fails exactly the 12 commit cells.
+  - New corner-gap.mjs probe: the perimeter edge is concentric within 0.05-0.36 px on 20/20 cells.
+  D′ critic launched.
