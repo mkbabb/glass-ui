@@ -236,3 +236,11 @@ Outage log:
   - **H3-1 root cause:** before each http page load, Playwright WebKit waits for an answer from the macOS AppSSO service. On 2026-10-07 three processes stopped getting that answer at about their 90th load. The cure restarts WebKit every 60 loads and retries a stalled page on a fresh process with the cause from the system log (the stall plant exits 2; navcap 97/97 over 29 restarts). This class likely explains earlier WebKit "page closes" (PF-1) in other loops.
   - Harness defects cured: the T-2 clean fixture; W-E's family; rows() passing two-line pills.
   FLOOR-V2 launched next.
+- 2026-10-08 — D5 pass 1 C-E banked: ADVANCE at 0.333. Open rows:
+  - The gestalt is not iOS-27 grade. Keyboard Tab frosts the world and pushes the track 10.8 px out of its column. The phone's engaged fill is paler than its idle neighbour in WebKit. The veil is still blur(20px), against O-87.
+  - MIGRATION gaps: programmatic focus() and any printable key promote and frost the world; one Escape in a Dialog releases the stage and closes the dialog.
+  - Only the switch, accordion and button are adopted.
+  - Forced-colors and reduced-transparency were never read in a browser.
+  - Inherited from A and B: FL-1, FL-2, FL-4, FL-8, H-2.
+  - Owner items: E-6 RETIRE (Q-2), X-2 and X-11 bounds, Safari.
+  The D5 pass 1 agglomerate launched.
