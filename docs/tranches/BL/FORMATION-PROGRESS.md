@@ -303,3 +303,4 @@ Outage log:
   - Q-6 (a) holds on thinned wells.
   - **C-7 fails in every form that keeps C-2**, so the spec expects C″ to drop to BANK once the prototype confirms the T reading.
   C″ proto launched.
+- 2026-10-09 — **Session restart; all five runs resumed.** Every open seat had died with the previous process. The driver removed only the dead BL seat worktrees: D1 p8 B-proto (base, r1, r2, wt), D3 Cpp-proto, D4 Dp-spec, D5 H2, and D2 G-crit (scratchpad). It verified the driver scripts were committed and unchanged, and resumed each run from its recorded id: D1 passes 8-9 wf_48ca14cd-c3d (B-proto, pass 8), D3 pass 3 wf_f41d04a8-bca (C″ proto), D4 pass 3 wf_c944ce08-d2d (D′ spec), D2 pass 3 wf_fa23d12f-c4a (G critic), D5 pass 2 wf_9b9708d5-f87 (H2). Completed seats replay from cache. Partial outputs the dead seats left under docs/ stay for the re-entered seats to overwrite. Crons stay off.
