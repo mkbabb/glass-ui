@@ -1,0 +1,6 @@
+KFP BASE rc=0 :: PEER motion-core 0 files=38 src=src/composables/motion/motion-core.ts
+KFP KF-new rc=1 :: PEER motion-core 1 files=39 src=src/composables/motion/motion-core.ts chain: src/composables/motion/motion-core.ts > src/composables/motion/core/index.ts > src/composables/motion/core/zq7KfLeak.ts > @mkbabb/keyframes.js
+KFP KF-leaf rc=1 :: PEER motion-core 1 files=38 src=src/composables/motion/motion-core.ts chain: src/composables/motion/motion-core.ts > src/composables/motion/core/index.ts > src/composables/motion/core/useRAFLoop.ts > @mkbabb/keyframes.js
+KFP KF-deep rc=1 :: PEER motion-core 1 files=39 src=src/composables/motion/motion-core.ts chain: src/composables/motion/motion-core.ts > src/composables/motion/core/index.ts > src/composables/motion/core/useRAFLoop.ts > src/composables/motion/core/zq7KfDeep.ts > @mkbabb/keyframes.js
+KFP KF-existing rc=1 :: PEER motion-core 1 files=39 src=src/composables/motion/motion-core.ts chain: src/composables/motion/motion-core.ts > src/composables/motion/core/index.ts > src/composables/motion/spring/useSpring.ts > @mkbabb/keyframes.js
+KFP RESTORED rc=0 :: PEER motion-core 0 files=38 src=src/composables/motion/motion-core.ts

@@ -1,0 +1,99 @@
+schema base=browser-seat/2 rekeyed=browser-seat/2 route=browser-seat/2; dup keys base=41 rekeyed=41 route=41
+statuses base {"unexpected":370,"expected":394,"skipped":20,"skipped,skipped":12,"expected,expected":18,"unexpected,unexpected":11} | rekeyed {"unexpected":370,"expected":394,"skipped":20,"skipped,skipped":12,"expected,expected":18,"unexpected,unexpected":11} | route {"unexpected":371,"expected":393,"skipped":20,"skipped,skipped":12,"unexpected,unexpected":11,"expected,expected":18}
+rekey preserves (title,status) multiset: true; unmapped=[]
+base-green 394; held on route 392; new failures 2
+  NEW tests-visual/blob/blob-config-delta.spec.ts :: D2 — a negative attraction SHIES relative to a positive (the sign fix) -> unexpected
+  NEW tests-visual/aurora/w38-binding.spec.ts :: W38/W47 binding — the medium LabeledSelect is the library Select + the medium axis is live -> MISSING
+base-red route-green 0
+route-only keys 7; base-only keys 7
+  ROUTE-ONLY src/components/chip/__tests__/chip-accent-band.visual.ts :: a Chip's --accent-band-strength is glass-chip's floored band, not the register's 18% -> expected | base by title: none
+  ROUTE-ONLY tests-visual/redress/w1-radius-redress-inputs.spec.ts :: tags-input — the field CONTAINER computes --radius-field (16px, NEVER 0px); the pill Chip child is 9999px, DISTINCT, and STRICTLY INSET -> unexpected | base by title: tests-visual/redress/w1-radius-redress.spec.ts=unexpected
+  ROUTE-ONLY tests-visual/redress/w1-radius-redress-inputs.spec.ts :: field census — base single-line input keeps the pill (9999px); Textarea → --radius-field (16px); dialog-nested input (F7) → --radius-field (16px) -> unexpected | base by title: tests-visual/redress/w1-radius-redress.spec.ts=unexpected
+  ROUTE-ONLY tests-visual/redress/w1-radius-redress-inputs.spec.ts :: sortable-list — the drop-indicator capsule computes --radius-pill (9999px); rest has no bar; the drag-ghost carries its gold ring -> unexpected | base by title: tests-visual/redress/w1-radius-redress.spec.ts=unexpected
+  ROUTE-ONLY tests-visual/redress/w1-radius-redress-inputs.spec.ts :: command — .command__input has NO border-radius (computed 0px); the panel owns --radius-panel (12px) -> unexpected | base by title: tests-visual/redress/w1-radius-redress.spec.ts=unexpected
+  ROUTE-ONLY tests-visual/redress/w1-radius-redress-inputs.spec.ts :: tags-input — the coarse child MEASURES a ≥44px action region (chip min-block + ::after spacer), owns its corners, and stays strictly inset -> skipped | base by title: tests-visual/redress/w1-radius-redress.spec.ts=skipped
+  ROUTE-ONLY tests-visual/redress/w1-radius-redress-inputs.spec.ts :: sortable-list — the coarse insertion capsule computes --radius-pill (9999px) -> skipped | base by title: tests-visual/redress/w1-radius-redress.spec.ts=skipped
+  BASE-ONLY tests-visual/redress/w1-radius-redress.spec.ts :: tags-input — the field CONTAINER computes --radius-field (16px, NEVER 0px); the pill Chip child is 9999px, DISTINCT, and STRICTLY INSET -> unexpected
+  BASE-ONLY tests-visual/redress/w1-radius-redress.spec.ts :: field census — base single-line input keeps the pill (9999px); Textarea → --radius-field (16px); dialog-nested input (F7) → --radius-field (16px) -> unexpected
+  BASE-ONLY tests-visual/redress/w1-radius-redress.spec.ts :: sortable-list — the drop-indicator capsule computes --radius-pill (9999px); rest has no bar; the drag-ghost carries its gold ring -> unexpected
+  BASE-ONLY tests-visual/redress/w1-radius-redress.spec.ts :: command — .command__input has NO border-radius (computed 0px); the panel owns --radius-panel (12px) -> unexpected
+  BASE-ONLY tests-visual/redress/w1-radius-redress.spec.ts :: tags-input — the coarse child MEASURES a ≥44px action region (chip min-block + ::after spacer), owns its corners, and stays strictly inset -> skipped
+  BASE-ONLY tests-visual/redress/w1-radius-redress.spec.ts :: sortable-list — the coarse insertion capsule computes --radius-pill (9999px) -> skipped
+  BASE-ONLY tests-visual/aurora/w38-binding.spec.ts :: W38/W47 binding — the medium LabeledSelect is the library Select + the medium axis is live -> expected
+bands 69: with specs 49, without 20
+  README: specs 1 base-green(own) 3 base-green(rederived) 3 new 0
+  accordion: specs 0 base-green(own) 0 base-green(rederived) 0 new 0 (no browser signal)
+  alert: specs 15 base-green(own) 37 base-green(rederived) 37 new 0
+  aurora: specs 147 base-green(own) 398 base-green(rederived) 380 new 1
+  avatar: specs 0 base-green(own) 0 base-green(rederived) 0 new 0 (no browser signal)
+  badge: specs 2 base-green(own) 2 base-green(rederived) 2 new 0
+  blob: specs 102 base-green(own) 291 base-green(rederived) 289 new 1
+  button: specs 73 base-green(own) 197 base-green(rederived) 190 new 1
+  card: specs 4 base-green(own) 3 base-green(rederived) 3 new 0
+  carousel: specs 2 base-green(own) 2 base-green(rederived) 2 new 0
+  checkbox: specs 0 base-green(own) 0 base-green(rederived) 0 new 0 (no browser signal)
+  chip: specs 8 base-green(own) 22 base-green(rederived) 22 new 0
+  collapsible: specs 0 base-green(own) 0 base-green(rederived) 0 new 0 (no browser signal)
+  color: specs 79 base-green(own) 197 base-green(rederived) 197 new 1
+  command: specs 5 base-green(own) 4 base-green(rederived) 4 new 0
+  configurator: specs 76 base-green(own) 206 base-green(rederived) 206 new 1
+  constellation: specs 49 base-green(own) 100 base-green(rederived) 100 new 1
+  context: specs 2 base-green(own) 2 base-green(rederived) 2 new 0
+  dark: specs 2 base-green(own) 10 base-green(rederived) 10 new 0
+  dark-mode-toggle: specs 140 base-green(own) 394 base-green(rederived) 376 new 1
+  data-table: specs 0 base-green(own) 0 base-green(rederived) 0 new 0 (no browser signal)
+  deck: specs 2 base-green(own) 2 base-green(rederived) 2 new 0
+  dialog: specs 42 base-green(own) 143 base-green(rederived) 143 new 0
+  dock: specs 151 base-green(own) 407 base-green(rederived) 389 new 1
+  dom: specs 0 base-green(own) 0 base-green(rederived) 0 new 0 (no browser signal)
+  easing: specs 20 base-green(own) 80 base-green(rederived) 75 new 0
+  expandable-container: specs 2 base-green(own) 4 base-green(rederived) 4 new 0
+  fading-scroll: specs 1 base-green(own) 12 base-green(rederived) 12 new 0
+  fourier-field: specs 62 base-green(own) 126 base-green(rederived) 126 new 1
+  glass: specs 15 base-green(own) 42 base-green(rederived) 42 new 0
+  handmark: specs 54 base-green(own) 195 base-green(rederived) 195 new 0
+  index: specs 2 base-green(own) 2 base-green(rederived) 2 new 0
+  infinite-scroll: specs 2 base-green(own) 2 base-green(rederived) 2 new 0
+  input: specs 6 base-green(own) 4 base-green(rederived) 4 new 0
+  keyboard: specs 0 base-green(own) 0 base-green(rederived) 0 new 0 (no browser signal)
+  label: specs 0 base-green(own) 0 base-green(rederived) 0 new 0 (no browser signal)
+  labeled-field: specs 0 base-green(own) 0 base-green(rederived) 0 new 0 (no browser signal)
+  menu: specs 4 base-green(own) 18 base-green(rederived) 13 new 0
+  metric: specs 1 base-green(own) 2 base-green(rederived) 2 new 0
+  motion: specs 83 base-green(own) 232 base-green(rederived) 230 new 1
+  music-staff: specs 13 base-green(own) 14 base-green(rederived) 14 new 0
+  number-field: specs 0 base-green(own) 0 base-green(rederived) 0 new 0 (no browser signal)
+  pager-dots: specs 78 base-green(own) 213 base-green(rederived) 211 new 1
+  popover: specs 0 base-green(own) 0 base-green(rederived) 0 new 0 (no browser signal)
+  progress: specs 16 base-green(own) 33 base-green(rederived) 33 new 0
+  radio-group: specs 0 base-green(own) 0 base-green(rederived) 0 new 0 (no browser signal)
+  reactive: specs 0 base-green(own) 0 base-green(rederived) 0 new 0 (no browser signal)
+  scroll-progress-rim: specs 2 base-green(own) 2 base-green(rederived) 2 new 0
+  search: specs 6 base-green(own) 8 base-green(rederived) 8 new 0
+  select: specs 3 base-green(own) 2 base-green(rederived) 2 new 0
+  separator: specs 0 base-green(own) 0 base-green(rederived) 0 new 0 (no browser signal)
+  shared: specs 5 base-green(own) 18 base-green(rederived) 18 new 0
+  sheet: specs 36 base-green(own) 82 base-green(rederived) 80 new 0
+  sidebar: specs 2 base-green(own) 2 base-green(rederived) 2 new 0
+  skeleton: specs 0 base-green(own) 0 base-green(rederived) 0 new 0 (no browser signal)
+  slider: specs 35 base-green(own) 69 base-green(rederived) 69 new 0
+  sortable-list: specs 66 base-green(own) 193 base-green(rederived) 193 new 1
+  status-dot: specs 0 base-green(own) 0 base-green(rederived) 0 new 0 (no browser signal)
+  styles: specs 153 base-green(own) 408 base-green(rederived) 390 new 1
+  surface: specs 85 base-green(own) 234 base-green(rederived) 232 new 1
+  switch: specs 0 base-green(own) 0 base-green(rederived) 0 new 0 (no browser signal)
+  table: specs 1 base-green(own) 3 base-green(rederived) 3 new 0
+  tabs: specs 48 base-green(own) 119 base-green(rederived) 119 new 1
+  textarea: specs 3 base-green(own) 2 base-green(rederived) 2 new 0
+  timeline: specs 32 base-green(own) 69 base-green(rederived) 67 new 0
+  toast: specs 2 base-green(own) 14 base-green(rederived) 14 new 0
+  toggle-group: specs 0 base-green(own) 0 base-green(rederived) 0 new 0 (no browser signal)
+  tooltip: specs 0 base-green(own) 0 base-green(rederived) 0 new 0 (no browser signal)
+  typewriter: specs 0 base-green(own) 0 base-green(rederived) 0 new 0 (no browser signal)
+band base-green mismatches (own vs re-derived): 13 aurora blob button dark-mode-toggle dock easing menu motion pager-dots sheet styles surface timeline
+RERUN blob-rerun-base-1.json: unexpected (tests 10, passed 8, failed 2)
+RERUN blob-rerun-base-2.json: unexpected (tests 10, passed 8, failed 2)
+RERUN blob-rerun-base-3.json: expected (tests 10, passed 9, failed 1)
+RERUN blob-rerun-r1-1.json: unexpected (tests 10, passed 8, failed 2)
+RERUN blob-rerun-r1-2.json: expected (tests 10, passed 9, failed 1)
+RERUN blob-rerun-r1-3.json: expected (tests 10, passed 9, failed 1)

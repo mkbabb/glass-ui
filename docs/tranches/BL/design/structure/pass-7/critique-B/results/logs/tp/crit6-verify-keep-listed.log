@@ -1,0 +1,61 @@
+{
+ "baseline": null,
+ "verdict": "RED",
+ "staleListings": [],
+ "scopes": [
+  {
+   "from": "Aurora",
+   "to": "AuroraShade",
+   "reason": "critic plant: one scoped rule re-homed into a child SFC",
+   "now": 2,
+   "atBase": 0,
+   "fromAtBase": 20
+  }
+ ],
+ "scopeFindings": [],
+ "entries": [
+  {
+   "key": "./styles",
+   "identical": false,
+   "class": "reorder",
+   "rulesBase": 1970,
+   "rulesNow": 1970,
+   "onlyBase": 0,
+   "onlyNow": 0,
+   "firstDivergence": 1278,
+   "base": "@layer components :: .aurora-root[data-v-(Aurora)] {opacity:var(--aurora-ceiling-a11y,var(--aurora-ceiling,1));contain:content;content-visibility:auto;contain-intrinsic-size:auto 600px;display:grid}",
+   "now": "@layer components :: .aurora-canvas-layer--armed[data-v-(Aurora)] {opacity:1}",
+   "verdict": "RED: an unlisted reorder (1 moved rule(s))",
+   "unlistedRules": 1,
+   "staleRules": 0
+  },
+  {
+   "key": "./styles/fonts",
+   "identical": true,
+   "rules": 4
+  },
+  {
+   "key": "./styles/theme",
+   "identical": true,
+   "rules": 4
+  },
+  {
+   "key": "./styles.css",
+   "identical": false,
+   "class": "reorder",
+   "rulesBase": 365,
+   "rulesNow": 365,
+   "onlyBase": 0,
+   "onlyNow": 0,
+   "firstDivergence": 22,
+   "base": "@layer components :: .aurora-root[data-v-(Aurora)] {opacity:var(--aurora-ceiling-a11y,var(--aurora-ceiling,1));contain:content;content-visibility:auto;contain-intrinsic-size:auto 600px;display:grid}",
+   "now": "@layer components :: .aurora-canvas-layer--armed[data-v-(Aurora)] {opacity:1}",
+   "verdict": "RED: an unlisted reorder (1 moved rule(s))",
+   "unlistedRules": 1,
+   "staleRules": 0
+  }
+ ]
+}
+SCOPE Aurora → AuroraShade: 2 rule line(s) re-homed
+UNLISTED ./styles "@layer components :: .aurora-canvas-layer--armed[data-v-(Aurora)] {opacity:1}"
+UNLISTED ./styles.css "@layer components :: .aurora-canvas-layer--armed[data-v-(Aurora)] {opacity:1}"

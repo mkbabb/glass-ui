@@ -1,0 +1,27 @@
+{
+ "scopes": [
+  {
+   "from": "Blob",
+   "to": "BlobShade",
+   "reason": "critic plant: a scoped rule re-homed into one of two child SFCs"
+  }
+ ],
+ "reorders": [
+  {
+   "entry": "./styles",
+   "moved": [
+    "@layer components :: .goo-blob-hit[data-v-(Blob)]:focus-visible {background:radial-gradient(circle, transparent calc(var(--blob-hit-radius) - 3px), var(--focus-ring-color) calc(var(--blob-hit-radius) - 3px), var(--focus-ring-color) var(--blob-hit-radius), transparent var(--blob-hit-radius));outline:none}",
+    "@layer components :: .goo-blob-hit[data-v-(Blob)]:disabled {cursor:default}"
+   ],
+   "reason": "critic plant: SFC split into two children"
+  },
+  {
+   "entry": "./styles.css",
+   "moved": [
+    "@layer components :: .goo-blob-hit[data-v-(Blob)]:focus-visible {background:radial-gradient(circle, transparent calc(var(--blob-hit-radius) - 3px), var(--focus-ring-color) calc(var(--blob-hit-radius) - 3px), var(--focus-ring-color) var(--blob-hit-radius), transparent var(--blob-hit-radius));outline:none}",
+    "@layer components :: .goo-blob-hit[data-v-(Blob)]:disabled {cursor:default}"
+   ],
+   "reason": "critic plant: SFC split into two children"
+  }
+ ]
+}

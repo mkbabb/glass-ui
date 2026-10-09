@@ -1,0 +1,18 @@
+kept   .                free of @mkbabb/keyframes.js, @vueuse/core   names 144 → peers @mkbabb/keyframes.js, @vueuse/core; dist {"skipped":"overlay"}; files 311 → peers @mkbabb/keyframes.js, @vueuse/core; at the floor base: names @mkbabb/keyframes.js+@vueuse/core, dist @mkbabb/keyframes.js+@vueuse/core, files @mkbabb/keyframes.js+@vueuse/core
+kept   ./motion         may bear a peer                              names 27 → peers @mkbabb/keyframes.js; dist {"skipped":"overlay"}; files 34 → peers @mkbabb/keyframes.js
+BROKEN ./motion-core    free of @mkbabb/keyframes.js, @vueuse/core   names 55 → peers @mkbabb/keyframes.js; dist {"skipped":"overlay"}; files 38 → peers @mkbabb/keyframes.js
+kept   ./sidebar        may bear a peer                              names 10 → peers @mkbabb/keyframes.js; dist {"skipped":"overlay"}; files 28 → peers @mkbabb/keyframes.js
+kept   ./blob-config    may bear a peer                              names 7 → peers none; dist {"skipped":"overlay"}; files 5 → peers none
+kept   ./aurora-config  may bear a peer                              names 19 → peers @mkbabb/keyframes.js; dist {"skipped":"overlay"}; files 104 → peers @mkbabb/keyframes.js
+kept   ./dock           may bear a peer                              names 16 → peers @mkbabb/keyframes.js, @vueuse/core; dist {"skipped":"overlay"}; files 162 → peers @mkbabb/keyframes.js, @vueuse/core
+kept   ./fourier-field  may bear a peer                              names 4 → peers @mkbabb/keyframes.js, @vueuse/core; dist {"skipped":"overlay"}; files 118 → peers @mkbabb/keyframes.js, @vueuse/core
+  ok ./dock: GLASS_BACKDROP_SHARED_ATTR, useDockState, useGlassBackdropLuminance, FuzzySearchState, SearchResult, SearchableItem
+  ok ./sidebar: SectionHierarchy
+  ok ./motion: springProjection
+  NO ./motion-core: motionTempo
+  ok .: pendingRenderer
+  ok ./aurora-config: isAuroraPointerEnabled
+  ok ./blob-config: MAX_SATS
+  ok ./fourier-field: FOURIER_STROKE_RUNGS
+BROKEN ./motion-core: introduced names @mkbabb/keyframes.js via useStagger (src/composables/motion/reveal/useStagger.ts; first at src/composables/motion/core/useRAFLoop.ts:1); useRAFLoop (src/composables/motion/core/useRAFLoop.ts; first at src/composables/motion/core/useRAFLoop.ts:1); ROUTE_WINDOW_NAME (src/composables/motion/route/useRouteTransition.ts; first at src/composables/motion/core/useRAFLoop.ts:1); files @mkbabb/keyframes.js
+peer-closure: RED

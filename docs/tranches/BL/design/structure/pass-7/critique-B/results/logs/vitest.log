@@ -1,0 +1,79 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p7/crit-B/wt
+
+ ❯ tests/gates/boot-graph/build.test.ts (3 tests | 3 failed) 8ms
+     × the built demo has a dist-demo to measure 5ms
+     × the dist-demo it measures is NEWER than every source it is built from 1ms
+     × the eager graph stays under the modulepreload and byte ceilings 2ms
+(node:3560) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:4414) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:4513) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gates/boot-graph/build.test.ts > gate:boot-graph — build arm > the built demo has a dist-demo to measure
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph/build.test.ts:27:34
+     25|
+     26|     it("the built demo has a dist-demo to measure", () => {
+     27|         expect(built, buildHint).toBe(true);
+       |                                  ^
+     28|     });
+     29|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  tests/gates/boot-graph/build.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph/build.test.ts:31:34
+     29|
+     30|     it("the dist-demo it measures is NEWER than every source it is bui…
+     31|         expect(built, buildHint).toBe(true);
+       |                                  ^
+     32|         const builtAt = artifactStat(indexHtml).mtimeMs;
+     33|         const newestSrc = newestSourceMtime();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  tests/gates/boot-graph/build.test.ts > gate:boot-graph — build arm > the eager graph stays under the modulepreload and byte ceilings
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph/build.test.ts:41:34
+     39|
+     40|     it("the eager graph stays under the modulepreload and byte ceiling…
+     41|         expect(built, buildHint).toBe(true);
+       |                                  ^
+     42|         const html = artifactText(indexHtml);
+     43|         const graph = measureEagerGraph(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed | 274 passed (275)
+      Tests  3 failed | 2327 passed | 10 expected fail | 1 skipped (2341)
+   Start at  20:58:30
+   Duration  34.96s (transform 44.25s, setup 30.59s, import 213.44s, tests 80.54s, environment 136.03s)
+

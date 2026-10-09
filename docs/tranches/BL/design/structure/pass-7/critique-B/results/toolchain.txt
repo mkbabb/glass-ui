@@ -1,0 +1,6 @@
+first full vitest (before demo:dist:build): rc=1, Test Files 1 failed | 274 passed (275); Tests 3 failed | 2327 passed | 10 expected fail | 1 skipped (2341); the 3 = tests/gates/boot-graph/build.test.ts (no dist-demo yet, P5-G5); 35 s, load 37.2
+npx vue-tsc --noEmit rc=0 8s load { 31.66 28.28 30.41 } :: 
+npx vue-tsc --noEmit -p tsconfig.test.json rc=0 8s load { 30.49 28.10 30.33 } :: 
+npm run -s demo:dist:build rc=0 3s load { 29.25 27.88 30.24 } :: 
+npm run -s verify:package rc=0 52s load { 41.19 30.96 31.22 } :: {"schema":"glass-ui-package-verification/v2","terminal":"CLEAN","package":{"name":"@mkbabb/glass-ui","version":"10.1.0"},"claims":196,"declarations":501,"css":162,"roster":{"status":"PRESENT","datum":
+npx vitest run tests/gates/boot-graph/build.test.ts tests/gates/seal.test.ts rc=0 15s load { 38.44 30.84 31.18 } ::       Tests  24 passed (24) 

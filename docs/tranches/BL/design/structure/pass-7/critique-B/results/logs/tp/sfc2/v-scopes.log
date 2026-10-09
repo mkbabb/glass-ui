@@ -1,0 +1,72 @@
+{
+ "baseline": null,
+ "verdict": "RED",
+ "staleListings": [],
+ "scopes": [
+  {
+   "from": "Blob",
+   "to": "BlobShade",
+   "reason": "critic plant: a scoped rule re-homed into one of two child SFCs",
+   "now": 2,
+   "atBase": 0,
+   "fromAtBase": 14
+  },
+  {
+   "from": "Blob",
+   "to": "BlobRim",
+   "reason": "critic plant: a scoped rule re-homed into one of two child SFCs",
+   "now": 2,
+   "atBase": 0,
+   "fromAtBase": 14
+  }
+ ],
+ "scopeFindings": [],
+ "entries": [
+  {
+   "key": "./styles",
+   "identical": false,
+   "class": "reorder",
+   "rulesBase": 1970,
+   "rulesNow": 1970,
+   "onlyBase": 0,
+   "onlyNow": 0,
+   "firstDivergence": 1288,
+   "base": "@layer components :: .goo-blob-wrapper[data-v-(Blob)] {aspect-ratio:1;z-index:var(--z-content);pointer-events:none;contain:layout style;content-visibility:auto;contain-intrinsic-size:auto none;filter:",
+   "now": "@layer components :: .goo-blob-hit[data-v-(Blob)]:disabled {cursor:default}",
+   "verdict": "RED: an unlisted reorder (2 moved rule(s))",
+   "unlistedRules": 2,
+   "staleRules": 0
+  },
+  {
+   "key": "./styles/fonts",
+   "identical": true,
+   "rules": 4
+  },
+  {
+   "key": "./styles/theme",
+   "identical": true,
+   "rules": 4
+  },
+  {
+   "key": "./styles.css",
+   "identical": false,
+   "class": "reorder",
+   "rulesBase": 365,
+   "rulesNow": 365,
+   "onlyBase": 0,
+   "onlyNow": 0,
+   "firstDivergence": 32,
+   "base": "@layer components :: .goo-blob-wrapper[data-v-(Blob)] {aspect-ratio:1;z-index:var(--z-content);pointer-events:none;contain:layout style;content-visibility:auto;contain-intrinsic-size:auto none;filter:",
+   "now": "@layer components :: .goo-blob-hit[data-v-(Blob)]:disabled {cursor:default}",
+   "verdict": "RED: an unlisted reorder (2 moved rule(s))",
+   "unlistedRules": 2,
+   "staleRules": 0
+  }
+ ]
+}
+SCOPE Blob → BlobShade: 2 rule line(s) re-homed
+SCOPE Blob → BlobRim: 2 rule line(s) re-homed
+UNLISTED ./styles "@layer components :: .goo-blob-hit[data-v-(Blob)]:focus-visible {background:radial-gradient(circle, transparent calc(var(--blob-hit-radius) - 3px), var(--focus-ring-color) calc(var(--blob-hit-radius) - 3px), var(--focus-ring-color) var(--blob-hit-radius), transparent var(--blob-hit-radius));outline:none}"
+UNLISTED ./styles "@layer components :: .goo-blob-hit[data-v-(Blob)]:disabled {cursor:default}"
+UNLISTED ./styles.css "@layer components :: .goo-blob-hit[data-v-(Blob)]:focus-visible {background:radial-gradient(circle, transparent calc(var(--blob-hit-radius) - 3px), var(--focus-ring-color) calc(var(--blob-hit-radius) - 3px), var(--focus-ring-color) var(--blob-hit-radius), transparent var(--blob-hit-radius));outline:none}"
+UNLISTED ./styles.css "@layer components :: .goo-blob-hit[data-v-(Blob)]:disabled {cursor:default}"

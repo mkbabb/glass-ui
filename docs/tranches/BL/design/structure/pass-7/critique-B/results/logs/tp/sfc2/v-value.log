@@ -1,0 +1,64 @@
+{
+ "baseline": null,
+ "verdict": "RED",
+ "staleListings": [],
+ "scopes": [
+  {
+   "from": "Blob",
+   "to": "BlobShade",
+   "reason": "critic plant: a scoped rule re-homed into one of two child SFCs",
+   "now": 2,
+   "atBase": 0,
+   "fromAtBase": 14
+  },
+  {
+   "from": "Blob",
+   "to": "BlobRim",
+   "reason": "critic plant: a scoped rule re-homed into one of two child SFCs",
+   "now": 2,
+   "atBase": 0,
+   "fromAtBase": 14
+  }
+ ],
+ "scopeFindings": [],
+ "entries": [
+  {
+   "key": "./styles",
+   "identical": false,
+   "class": "content",
+   "rulesBase": 1970,
+   "rulesNow": 1970,
+   "onlyBase": 1,
+   "onlyNow": 1,
+   "firstDivergence": 1288,
+   "base": "@layer components :: .goo-blob-wrapper[data-v-(Blob)] {aspect-ratio:1;z-index:var(--z-content);pointer-events:none;contain:layout style;content-visibility:auto;contain-intrinsic-size:auto none;filter:",
+   "now": "@layer components :: .goo-blob-hit[data-v-(Blob)]:disabled {cursor:default}",
+   "verdict": "RED: content changed"
+  },
+  {
+   "key": "./styles/fonts",
+   "identical": true,
+   "rules": 4
+  },
+  {
+   "key": "./styles/theme",
+   "identical": true,
+   "rules": 4
+  },
+  {
+   "key": "./styles.css",
+   "identical": false,
+   "class": "content",
+   "rulesBase": 365,
+   "rulesNow": 365,
+   "onlyBase": 1,
+   "onlyNow": 1,
+   "firstDivergence": 32,
+   "base": "@layer components :: .goo-blob-wrapper[data-v-(Blob)] {aspect-ratio:1;z-index:var(--z-content);pointer-events:none;contain:layout style;content-visibility:auto;contain-intrinsic-size:auto none;filter:",
+   "now": "@layer components :: .goo-blob-hit[data-v-(Blob)]:disabled {cursor:default}",
+   "verdict": "RED: content changed"
+  }
+ ]
+}
+SCOPE Blob → BlobShade: 2 rule line(s) re-homed
+SCOPE Blob → BlobRim: 2 rule line(s) re-homed

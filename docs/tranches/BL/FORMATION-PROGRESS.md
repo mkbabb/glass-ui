@@ -272,3 +272,10 @@ Outage log:
   - FV-5: the Q-9 exemption keyed on the component.
   - FV-7: dev names gated by NODE_ENV.
   D′ spec launched.
+- 2026-10-08 — D1 pass 7 critic B banked: 26/27 (0.963). S-14 is RE-OPENED on its own text: a throw during module evaluation of the gate's own imports (tree.mjs:17 reads package.json at import) escapes the CLI's try{main()} guard, and Node exits 1, the RED code, not P6-R3's 2 (battery C3 rc=1). The two-clean count restarts at 0 per §P6-8.5.
+  Outside the checklist:
+  - browser-tally drops base-green keys the route never ran (w38-binding; the critic ran it GREEN 4/4).
+  - On an unbuilt tree the peer-closure probe reads GREEN with its dist arm missing, a masking-fallback shape.
+  - No gate clause reads the keyframes peer class; only the kit probe does.
+  - A test-only name sits on an ENTRY door (chip).
+  Agglomerate launched.

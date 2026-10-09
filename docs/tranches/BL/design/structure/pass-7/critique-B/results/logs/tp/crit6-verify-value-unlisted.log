@@ -1,0 +1,45 @@
+{
+ "baseline": null,
+ "verdict": "RED",
+ "staleListings": [],
+ "scopes": [],
+ "scopeFindings": [],
+ "entries": [
+  {
+   "key": "./styles",
+   "identical": false,
+   "class": "content",
+   "rulesBase": 1970,
+   "rulesNow": 1970,
+   "onlyBase": 1,
+   "onlyNow": 1,
+   "firstDivergence": 1278,
+   "base": "@layer components :: .aurora-root[data-v-(Aurora)] {opacity:var(--aurora-ceiling-a11y,var(--aurora-ceiling,1));contain:content;content-visibility:auto;contain-intrinsic-size:auto 600px;display:grid}",
+   "now": "@layer components :: .aurora-canvas-layer--armed[data-v-(AuroraShade)] {opacity:inherit}",
+   "verdict": "RED: content changed"
+  },
+  {
+   "key": "./styles/fonts",
+   "identical": true,
+   "rules": 4
+  },
+  {
+   "key": "./styles/theme",
+   "identical": true,
+   "rules": 4
+  },
+  {
+   "key": "./styles.css",
+   "identical": false,
+   "class": "content",
+   "rulesBase": 365,
+   "rulesNow": 365,
+   "onlyBase": 1,
+   "onlyNow": 1,
+   "firstDivergence": 22,
+   "base": "@layer components :: .aurora-root[data-v-(Aurora)] {opacity:var(--aurora-ceiling-a11y,var(--aurora-ceiling,1));contain:content;content-visibility:auto;contain-intrinsic-size:auto 600px;display:grid}",
+   "now": "@layer components :: .aurora-canvas-layer--armed[data-v-(AuroraShade)] {opacity:inherit}",
+   "verdict": "RED: content changed"
+  }
+ ]
+}

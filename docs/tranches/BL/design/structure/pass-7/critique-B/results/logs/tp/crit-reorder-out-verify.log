@@ -1,0 +1,61 @@
+{
+ "baseline": null,
+ "verdict": "RED",
+ "staleListings": [],
+ "scopes": [],
+ "scopeFindings": [],
+ "entries": [
+  {
+   "key": "./styles",
+   "identical": false,
+   "class": "reorder",
+   "rulesBase": 1970,
+   "rulesNow": 1970,
+   "onlyBase": 0,
+   "onlyNow": 0,
+   "firstDivergence": 663,
+   "base": "@keyframes tooltip-in :: from {opacity:0;transform:scale(0.96)}",
+   "now": "@keyframes substrate-reveal-bloom :: from {opacity:0;filter:brightness(1) saturate(1)}",
+   "verdict": "RED: the reorder is not the listed rung (4 moved rule(s) unlisted, 18 listed rule(s) unmoved)",
+   "unlistedRules": 4,
+   "staleRules": 18
+  },
+  {
+   "key": "./styles/fonts",
+   "identical": true,
+   "rules": 4
+  },
+  {
+   "key": "./styles/theme",
+   "identical": true,
+   "rules": 4
+  },
+  {
+   "key": "./styles.css",
+   "identical": true,
+   "rules": 365
+  }
+ ]
+}
+UNLISTED ./styles "@keyframes substrate-reveal-bloom :: from {opacity:0;filter:brightness(1) saturate(1)}"
+UNLISTED ./styles "@keyframes substrate-reveal-bloom :: 55% {filter:brightness(1.08) saturate(1.05)}"
+UNLISTED ./styles "@keyframes substrate-reveal-bloom :: to {opacity:1;filter:brightness(1) saturate(1)}"
+UNLISTED ./styles "@layer components > @media (prefers-reduced-motion: no-preference) :: canvas[data-substrate-reveal] {animation:substrate-reveal-bloom var(--substrate-reveal-duration) var(--ease-out)}"
+STALE-RULE ./styles "@layer components :: .card-scroll-host {contain:layout style paint;overflow-y:auto;mask-image:linear-gradient( to bottom,black calc(100% - var(--fade-end)),transparent 100% )}"
+STALE-RULE ./styles "@layer components > @supports (animation-timeline: scroll()) :: .card-scroll-host {animation:gl-fade-end-out linear both;animation-timeline:scroll(self block);animation-range:calc(100% - var(--fade-scroll-width)) 100%}"
+STALE-RULE ./styles "@layer components :: .card-header--shrink {position:relative;isolation:isolate}"
+STALE-RULE ./styles "@layer components :: .card-header--shrink::before {content:\"\";position:absolute;inset:0 0 calc(var(--card-gap) * -1);z-index:-1;border-radius:inherit;background:var(--glass-veil);mask-image:linear-gradient( to bottom,black calc(100% - var(--card-gap)),transparent );opacity:0;pointer-events:none;transition:opacity var(--duration-normal) var(--ease-standard)}"
+STALE-RULE ./styles "@layer components :: .card-header--shrink > [data-slot=\"card-title\"] {font-size:calc(var(--type-body) * 2.058);transform-origin:0 50%}"
+STALE-RULE ./styles "@layer components :: .card-header--shrink[data-condensed=\"true\"] {padding-block-start:var(--card-gap)}"
+STALE-RULE ./styles "@layer components :: .card-header--shrink[data-condensed=\"true\"]::before {opacity:1}"
+STALE-RULE ./styles "@layer components :: .card-header--shrink[data-condensed=\"true\"] > [data-slot=\"card-title\"] {font-size:calc(var(--type-body) * 1.618)}"
+STALE-RULE ./styles "@layer components > @keyframes card-title-condense :: from {scale:1.272}"
+STALE-RULE ./styles "@layer components > @keyframes card-title-condense :: to {scale:1}"
+STALE-RULE ./styles "@layer components > @keyframes card-title-release :: from {scale:0.786151}"
+STALE-RULE ./styles "@layer components > @keyframes card-title-release :: to {scale:1}"
+STALE-RULE ./styles "@layer components :: .card-header--shrink[data-shrink-glide][data-condensed=\"true\"] > [data-slot=\"card-title\"] {animation:card-title-condense var(--duration-normal) var(--ease-standard)}"
+STALE-RULE ./styles "@layer components :: .card-header--shrink[data-shrink-glide][data-condensed=\"false\"] > [data-slot=\"card-title\"] {animation:card-title-release var(--duration-normal) var(--ease-standard)}"
+STALE-RULE ./styles "@layer components :: .card-header--shrink > [data-slot=\"card-description\"] {transition:opacity var(--duration-normal) var(--ease-standard),visibility var(--duration-normal) var(--ease-standard);transition-behavior:allow-discrete}"
+STALE-RULE ./styles "@layer components :: .card-header--shrink[data-condensed=\"true\"] > [data-slot=\"card-description\"] {visibility:hidden;opacity:0}"
+STALE-RULE ./styles "@layer components > @media (prefers-reduced-motion: reduce) :: .card-header--shrink::before,.card-header--shrink > [data-slot=\"card-description\"] {transition:none}"
+STALE-RULE ./styles "@layer components > @media (prefers-reduced-motion: reduce) :: .card-header--shrink[data-shrink-glide] > [data-slot=\"card-title\"] {animation:none}"
