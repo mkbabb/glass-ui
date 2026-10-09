@@ -1,0 +1,23 @@
+build start 16:33:50 load 114.38 132.45 181.22
+build exit 0
+capture start 16:34:44 load 103.80 126.15 175.80
+capture exit 0
+reach m2-text-contrast exit 1 :: FAIL (44 of 166 gated rows)
+reach m3-non-text exit 1 :: FAIL (43 of 83 gated rows)
+strong m2-text-contrast exit 1 :: FAIL (41 of 166 gated rows)
+lagonly m2-motion exit 1 :: FAIL (3 of 346 gated rows)
+nolift m6-separable-ladder exit 1 :: FAIL (5 of 28 gated rows)
+heldfloor m2-text-contrast exit 1 :: FAIL (54 of 106 gated rows)
+bound m2-text-contrast exit 1 :: FAIL (77 of 310 gated rows)
+rootinit m2-text-contrast exit 1 :: FAIL (120 of 292 gated rows)
+rootpage m2-text-contrast exit 1 :: FAIL (34 of 292 gated rows)
+fieldfalse m2-text-contrast exit 1 :: FAIL (46 of 208 gated rows)
+nostamp ws-claim-stamp exit 1 :: FAIL (8 of 24 gated rows)
+liestamp ws-claim-stamp exit 0 :: PASS (24 gated rows)
+lastwriter ws-claim-stamp exit 1 :: FAIL (6 of 12 gated rows)
+lastwriter m2-text-contrast exit 1 :: FAIL (40 of 40 gated rows)
+nocheck wc-ink-follows exit 1 :: FAIL (30 of 86 gated rows)
+stalepage wc-ink-follows exit 1 :: FAIL (27 of 86 gated rows)
+stalepage m6 ::   chromium dark paper: page #1c1f26 · adjacent ΔE wash→quiet 0.016, quiet→resting 0.013, resting→floating 0.004 ✗, floating→overlay 0.004 ✗ · ΔE from the page: wash #262327 0.024 ✗ ΔL +0.022, quiet #2
+liestamp computed exit 0
+end 17:07:17 load 326.27 278.57 291.07

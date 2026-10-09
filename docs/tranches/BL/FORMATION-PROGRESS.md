@@ -339,3 +339,9 @@ Outage log:
   - **R-10 fails (the one route-owned row):** "is a tile" is spelled twice and the two spellings disagree in paint. The corner hangs on [data-shape="cell"] by a descendant selector, while --selection-tile drives the rest; fact-split.mjs agrees on only 8/20 cells. The in-route cure: put corner, column, pad and leading under the same --selection-tile query the perimeter uses.
   - Open rows waiting on the owner: T-3 and E-2 (Q-10); R-1 (shipped K2 is cut by up to 24.64 px whatever Q-5 rules); R-8 (Q-5); E-4 (Safari); G (two concentric outlines when focused and selected; Q-2, Q-3).
   F spec launched.
+- 2026-10-09 — D3 pass 3 C″ critique banked: **BANK at 35/48 (0.73).** C-7 fails on re-run (×1.74/×1.76 < ×2; structurally P/(P−g) = 1.733 at the default field). Three rows the prototype scored PASS have counterexamples:
+  - C-4: a colour retune through <body> is neither followed nor refused (ΔE 0.024, stamp live, 0 warnings).
+  - FL-7: under a claim, the held dock paints α 0.5239 against the 0.8731 bound.
+  - Row 20: three touched files say chrome never moves. FL-7 and row 20 share one cause.
+  Floor v2, scored unclaimed: 34/44 (0.77). Its open rows are owner-gated (Q-1, Q-11) or its own (M-4 dark capsule +0.067, M-9 dark veil +0.006, O-66 G2/G3, the O-87 census stacked=2 / halo=2).
+  D3 pass 3 agglomerate launched.
