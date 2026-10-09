@@ -1,0 +1,16 @@
+13:14  up 1 day, 22:42, 3 users, load averages: 293.58 309.68 342.84
+BAD  W1  pass            expect: exit 0, all cells PASS  ·  got: exit 1, 42/43 PASS; failing: chromium:card·warm-expand[moves]  [121 s, load 293.37]
+OK   W1  csscarrier      expect: exit 0, all cells PASS  ·  got: exit 0, 41/41 PASS  [140 s, load 259.38]
+OK   W1  lens            expect: exit ≠ 0; corner fails in fit·rest|morph·expanded-rest|rail·rest  ·  got: exit 1, 26/30 FAIL; matching 8 (chromium+webkit)  [89 s, load 296.75]
+OK   W1  squash          expect: exit ≠ 0; corner fails in morph·first-expand|morph·warm-collapse|morph·collapsed-rest  ·  got: exit 1, 16/20 FAIL; matching 12 (chromium+webkit)  [64 s, load 307.06]
+OK   W1  cssbend         expect: exit ≠ 0; corner fails in morph·warm-expand|morph·warm-collapse  ·  got: exit 1, 12/20 FAIL; matching 8 (chromium+webkit)  [68 s, load 342.72]
+OK   W1  deadmorph       expect: exit ≠ 0; agree|moves fails in morph·warm-expand|morph·warm-collapse  ·  got: exit 1, 12/20 FAIL; matching 8 (chromium+webkit)  [70 s, load 308.13]
+OK   W1  dot             expect: exit ≠ 0; cover fails in fit·rest  ·  got: exit 1, 4/4 FAIL; matching 2 (chromium+webkit)  [43 s, load 255.83]
+OK   W1  cardlens        expect: exit ≠ 0; corner fails in card·  ·  got: exit 1, 8/10 FAIL; matching 8 (chromium+webkit)  [67 s, load 261.23]
+OK   W1  endlens         expect: exit ≠ 0; corner fails in rail·scrolled-end|rail·focus-end  ·  got: exit 1, 4/6 FAIL; matching 4 (chromium+webkit)  [39 s, load 243.77]
+OK   W1  endout          expect: exit ≠ 0; end fails in rail·scrolled-end|rail·focus-end  ·  got: exit 1, 6/6 FAIL; matching 4 (chromium+webkit)  [16 s, load 254.71]
+OK   W1  cardspread      expect: exit ≠ 0; card fails in card·warm-expand|card·warm-collapse|card·first-expand  ·  got: exit 1, 6/10 FAIL; matching 6 (chromium+webkit)  [69 s, load 249.04]
+OK   W1  cardlerp        expect: an OWNER-BLOCKED cell in card·warm-expand|card·warm-collapse|card·first-expand  ·  got: exit 1, 6/10 FAIL; matching 5 (chromium+webkit)  [74 s, load 188.02]
+SELFTEST FAIL  11/12 expectations hold
+exit 1
+13:29  up 1 day, 22:56, 3 users, load averages: 172.82 231.75 282.15

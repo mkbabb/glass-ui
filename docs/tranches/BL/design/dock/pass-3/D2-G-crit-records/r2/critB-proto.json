@@ -1,0 +1,60 @@
+{
+ "probe": "D2-Bp-probes",
+ "started": "2026-10-09T16:03:33.655Z",
+ "build": "gp@00f191d8",
+ "cells": [
+  {
+   "arm": "stretch",
+   "engine": "Chromium",
+   "runW0": 580,
+   "rootW0": 642,
+   "runW1": 580,
+   "rootW1": 642,
+   "travelPx": 48,
+   "worstStepPx": 3.35,
+   "movingFrames": 32,
+   "verdict": "glides",
+   "load": 642.27
+  },
+  {
+   "arm": "idle",
+   "engine": "Chromium",
+   "rafCallsIn2sBefore": [
+    240,
+    240
+   ],
+   "rafCallsIn2sAfterMorph": 240,
+   "noise": 0,
+   "extraOverBaseline": 0,
+   "verdict": "parks",
+   "load": 660
+  },
+  {
+   "arm": "stretch",
+   "engine": "Playwright WebKit",
+   "runW0": 580,
+   "rootW0": 642,
+   "runW1": 580,
+   "rootW1": 642,
+   "travelPx": 48,
+   "worstStepPx": 4.38,
+   "movingFrames": 27,
+   "verdict": "glides",
+   "load": 653.03
+  },
+  {
+   "arm": "idle",
+   "engine": "Playwright WebKit",
+   "rafCallsIn2sBefore": [
+    193,
+    196
+   ],
+   "rafCallsIn2sAfterMorph": 196,
+   "noise": 3,
+   "extraOverBaseline": 0,
+   "verdict": "parks",
+   "load": 632.15
+  }
+ ],
+ "finished": "2026-10-09T16:04:08.050Z"
+}

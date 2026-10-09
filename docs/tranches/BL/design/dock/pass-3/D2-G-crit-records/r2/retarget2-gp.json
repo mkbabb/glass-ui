@@ -1,0 +1,447 @@
+{
+ "probe": "D2-G-crit-probes",
+ "started": "2026-10-09T16:19:38.255Z",
+ "build": "gp@00f191d8",
+ "cells": [
+  {
+   "arm": "retarget2",
+   "engine": "Chromium",
+   "afterMs": 40,
+   "rep": 0,
+   "pass": true,
+   "frames": 87,
+   "retargetFrame": 4,
+   "blank": {
+    "ok": true,
+    "why": "0 blank of 20 moving frame(s), longest run 0 (bound 1)"
+   },
+   "overlap": {
+    "ok": true,
+    "frames": 0,
+    "first": null
+   },
+   "leaving": {
+    "ok": true,
+    "why": "2 leaving seat(s), 0 failing; tightest seat 1: ink 0.911 → 0.833 → 0.54 → 0.345 → 0.195 → 0.066 over 49.3 ms / 5 frame(s) (fade bound ≥ 3 frames and ≥ 45.5 ms), coverage deficit 1 (track bound 0.1)"
+   },
+   "vanish": {
+    "drop": 0.293,
+    "seat": 1,
+    "from": 0.833,
+    "to": 0.54,
+    "atMs": 16.1
+   },
+   "pageErrors": 0,
+   "summary": "retarget at 40 ms (frame 4): blank 0 blank of 20 moving frame(s), longest run 0 (bound 1); overlap 0 frame(s); leaving 2 leaving seat(s), 0 failing; tightest seat 1: ink 0.911 → 0.833 → 0.54 → 0.345 → 0.195 → 0.066 over 49.3 ms / 5 frame(s) (fade bound ≥ 3 frames and ≥ 45.5 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop 0.293 (seat 1 0.833 → 0.54 at +16.1 ms) (bound 0.5)",
+   "load": 516.37
+  },
+  {
+   "arm": "retarget2",
+   "engine": "Chromium",
+   "afterMs": 40,
+   "rep": 1,
+   "pass": true,
+   "frames": 76,
+   "retargetFrame": 5,
+   "blank": {
+    "ok": true,
+    "why": "0 blank of 4 moving frame(s), longest run 0 (bound 1)"
+   },
+   "overlap": {
+    "ok": true,
+    "frames": 0,
+    "first": null
+   },
+   "leaving": {
+    "ok": true,
+    "why": "2 leaving seat(s), 0 failing; tightest seat 2: ink 0.956 → 0.648 → 0.3 → 0 over 24.8 ms / 3 frame(s) (fade bound ≥ 3 frames and ≥ 16.4 ms), coverage deficit 1 (track bound 0.1)"
+   },
+   "vanish": {
+    "drop": 0.349,
+    "seat": 2,
+    "from": 0.648,
+    "to": 0.3,
+    "atMs": 36.2
+   },
+   "pageErrors": 0,
+   "summary": "retarget at 40 ms (frame 5): blank 0 blank of 4 moving frame(s), longest run 0 (bound 1); overlap 0 frame(s); leaving 2 leaving seat(s), 0 failing; tightest seat 2: ink 0.956 → 0.648 → 0.3 → 0 over 24.8 ms / 3 frame(s) (fade bound ≥ 3 frames and ≥ 16.4 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop 0.349 (seat 2 0.648 → 0.3 at +36.2 ms) (bound 0.5)",
+   "load": 516.37
+  },
+  {
+   "arm": "retarget2",
+   "engine": "Chromium",
+   "afterMs": 80,
+   "rep": 0,
+   "pass": false,
+   "frames": 121,
+   "retargetFrame": 10,
+   "blank": {
+    "ok": true,
+    "why": "0 blank of 32 moving frame(s), longest run 0 (bound 1)"
+   },
+   "overlap": {
+    "ok": false,
+    "frames": 1,
+    "first": {
+     "seats": [
+      2,
+      4
+     ],
+     "mainPx": 0.27,
+     "opacities": [
+      1,
+      0.966
+     ],
+     "atMs": 167.7
+    }
+   },
+   "leaving": {
+    "ok": false,
+    "why": "2 leaving seat(s), 1 failing; worst seat 2: ink 0.989 → 0.889 → 0.787 → 0.682 → 0.578 → 0.481 → 0.388 → 0.263 → 0.177 → 0.055 over 75.1 ms / 9 frame(s) (fade bound ≥ 3 frames and ≥ 79.4 ms), coverage deficit 1 (track bound 0.1)"
+   },
+   "vanish": {
+    "drop": 0.125,
+    "seat": 2,
+    "from": 0.388,
+    "to": 0.263,
+    "atMs": 149.9
+   },
+   "pageErrors": 0,
+   "summary": "retarget at 80 ms (frame 10): blank 0 blank of 32 moving frame(s), longest run 0 (bound 1); overlap 1 frame(s); leaving 2 leaving seat(s), 1 failing; worst seat 2: ink 0.989 → 0.889 → 0.787 → 0.682 → 0.578 → 0.481 → 0.388 → 0.263 → 0.177 → 0.055 over 75.1 ms / 9 frame(s) (fade bound ≥ 3 frames and ≥ 79.4 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop 0.125 (seat 2 0.388 → 0.263 at +149.9 ms) (bound 0.5)",
+   "load": 510.98
+  },
+  {
+   "arm": "retarget2",
+   "engine": "Chromium",
+   "afterMs": 80,
+   "rep": 1,
+   "pass": false,
+   "frames": 120,
+   "retargetFrame": 10,
+   "blank": {
+    "ok": true,
+    "why": "0 blank of 32 moving frame(s), longest run 0 (bound 1)"
+   },
+   "overlap": {
+    "ok": true,
+    "frames": 0,
+    "first": null
+   },
+   "leaving": {
+    "ok": false,
+    "why": "2 leaving seat(s), 1 failing; worst seat 2: ink 1 → 0.899 → 0.788 → 0.697 → 0.595 → 0.478 → 0.392 → 0.264 → 0.167 → 0.056 over 76.1 ms / 9 frame(s) (fade bound ≥ 3 frames and ≥ 81.3 ms), coverage deficit 1 (track bound 0.1)"
+   },
+   "vanish": {
+    "drop": 0.128,
+    "seat": 2,
+    "from": 0.392,
+    "to": 0.264,
+    "atMs": 148.8
+   },
+   "pageErrors": 0,
+   "summary": "retarget at 80 ms (frame 10): blank 0 blank of 32 moving frame(s), longest run 0 (bound 1); overlap 0 frame(s); leaving 2 leaving seat(s), 1 failing; worst seat 2: ink 1 → 0.899 → 0.788 → 0.697 → 0.595 → 0.478 → 0.392 → 0.264 → 0.167 → 0.056 over 76.1 ms / 9 frame(s) (fade bound ≥ 3 frames and ≥ 81.3 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop 0.128 (seat 2 0.392 → 0.264 at +148.8 ms) (bound 0.5)",
+   "load": 510.98
+  },
+  {
+   "arm": "retarget2",
+   "engine": "Chromium",
+   "afterMs": 120,
+   "rep": 0,
+   "pass": false,
+   "frames": 124,
+   "retargetFrame": 15,
+   "blank": {
+    "ok": true,
+    "why": "0 blank of 32 moving frame(s), longest run 0 (bound 1)"
+   },
+   "overlap": {
+    "ok": true,
+    "frames": 0,
+    "first": null
+   },
+   "leaving": {
+    "ok": false,
+    "why": "2 leaving seat(s), 1 failing; worst seat 2: ink 0.943 → 0.838 → 0.728 → 0.619 → 0.51 → 0.401 → 0.303 → 0.181 → 0.084 over 65.8 ms / 8 frame(s) (fade bound ≥ 3 frames and ≥ 91.8 ms), coverage deficit 1 (track bound 0.1)"
+   },
+   "vanish": {
+    "drop": 0.124,
+    "seat": 9,
+    "from": 0.183,
+    "to": 0.059,
+    "atMs": 86.3
+   },
+   "pageErrors": 0,
+   "summary": "retarget at 120 ms (frame 15): blank 0 blank of 32 moving frame(s), longest run 0 (bound 1); overlap 0 frame(s); leaving 2 leaving seat(s), 1 failing; worst seat 2: ink 0.943 → 0.838 → 0.728 → 0.619 → 0.51 → 0.401 → 0.303 → 0.181 → 0.084 over 65.8 ms / 8 frame(s) (fade bound ≥ 3 frames and ≥ 91.8 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop 0.124 (seat 9 0.183 → 0.059 at +86.3 ms) (bound 0.5)",
+   "load": 501.77
+  },
+  {
+   "arm": "retarget2",
+   "engine": "Chromium",
+   "afterMs": 120,
+   "rep": 1,
+   "pass": false,
+   "frames": 122,
+   "retargetFrame": 15,
+   "blank": {
+    "ok": true,
+    "why": "0 blank of 32 moving frame(s), longest run 0 (bound 1)"
+   },
+   "overlap": {
+    "ok": true,
+    "frames": 0,
+    "first": null
+   },
+   "leaving": {
+    "ok": false,
+    "why": "2 leaving seat(s), 2 failing; worst seat 1: ink 0.901 → 0.823 → 0.741 → 0.66 → 0.578 → 0.497 → 0.425 → 0.344 → 0.252 → 0.171 → 0.099 over 81.9 ms / 10 frame(s) (fade bound ≥ 3 frames and ≥ 87.5 ms), coverage deficit 1 (track bound 0.1)"
+   },
+   "vanish": {
+    "drop": 0.13,
+    "seat": 9,
+    "from": 0.503,
+    "to": 0.373,
+    "atMs": 59.4
+   },
+   "pageErrors": 0,
+   "summary": "retarget at 120 ms (frame 15): blank 0 blank of 32 moving frame(s), longest run 0 (bound 1); overlap 0 frame(s); leaving 2 leaving seat(s), 2 failing; worst seat 1: ink 0.901 → 0.823 → 0.741 → 0.66 → 0.578 → 0.497 → 0.425 → 0.344 → 0.252 → 0.171 → 0.099 over 81.9 ms / 10 frame(s) (fade bound ≥ 3 frames and ≥ 87.5 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop 0.13 (seat 9 0.503 → 0.373 at +59.4 ms) (bound 0.5)",
+   "load": 501.77
+  },
+  {
+   "arm": "retarget2",
+   "engine": "Playwright WebKit",
+   "afterMs": 40,
+   "rep": 0,
+   "pass": false,
+   "frames": 59,
+   "retargetFrame": 3,
+   "blank": {
+    "ok": true,
+    "why": "0 blank of 2 moving frame(s), longest run 0 (bound 1)"
+   },
+   "overlap": {
+    "ok": false,
+    "frames": 1,
+    "first": {
+     "seats": [
+      2,
+      4
+     ],
+     "mainPx": 0.24,
+     "opacities": [
+      1,
+      0.945
+     ],
+     "atMs": 116
+    }
+   },
+   "leaving": {
+    "ok": true,
+    "why": "2 leaving seat(s), 0 failing; tightest seat 2: ink 0.98 → 0.853 → 0.703 → 0.567 → 0.416 → 0.321 → 0.157 → 0 over 71 ms / 7 frame(s) (fade bound ≥ 3 frames and ≥ 15 ms), coverage deficit 1 (track bound 0.1)"
+   },
+   "vanish": {
+    "drop": 0.169,
+    "seat": 1,
+    "from": 0.29,
+    "to": 0.121,
+    "atMs": 67
+   },
+   "pageErrors": 0,
+   "summary": "retarget at 40 ms (frame 3): blank 0 blank of 2 moving frame(s), longest run 0 (bound 1); overlap 1 frame(s); leaving 2 leaving seat(s), 0 failing; tightest seat 2: ink 0.98 → 0.853 → 0.703 → 0.567 → 0.416 → 0.321 → 0.157 → 0 over 71 ms / 7 frame(s) (fade bound ≥ 3 frames and ≥ 15 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop 0.169 (seat 1 0.29 → 0.121 at +67 ms) (bound 0.5)",
+   "load": 497.29
+  },
+  {
+   "arm": "retarget2",
+   "engine": "Playwright WebKit",
+   "afterMs": 40,
+   "rep": 1,
+   "pass": false,
+   "frames": 59,
+   "retargetFrame": 2,
+   "blank": {
+    "ok": true,
+    "why": "0 blank of 2 moving frame(s), longest run 0 (bound 1)"
+   },
+   "overlap": {
+    "ok": true,
+    "frames": 0,
+    "first": null
+   },
+   "leaving": {
+    "ok": false,
+    "why": "2 leaving seat(s), 1 failing; worst seat 1: ink 0.951 → 0.284 → 0 over 51 ms / 2 frame(s) (fade bound ≥ 3 frames and ≥ 18.3 ms), coverage deficit 1 (track bound 0.1)"
+   },
+   "vanish": {
+    "drop": 0.667,
+    "seat": 1,
+    "from": 0.951,
+    "to": 0.284,
+    "atMs": 17
+   },
+   "pageErrors": 0,
+   "summary": "retarget at 40 ms (frame 2): blank 0 blank of 2 moving frame(s), longest run 0 (bound 1); overlap 0 frame(s); leaving 2 leaving seat(s), 1 failing; worst seat 1: ink 0.951 → 0.284 → 0 over 51 ms / 2 frame(s) (fade bound ≥ 3 frames and ≥ 18.3 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop 0.667 (seat 1 0.951 → 0.284 at +17 ms) (bound 0.5)",
+   "load": 491.98
+  },
+  {
+   "arm": "retarget2",
+   "engine": "Playwright WebKit",
+   "afterMs": 80,
+   "rep": 0,
+   "pass": false,
+   "frames": 97,
+   "retargetFrame": 8,
+   "blank": {
+    "ok": true,
+    "why": "0 blank of 25 moving frame(s), longest run 0 (bound 1)"
+   },
+   "overlap": {
+    "ok": true,
+    "frames": 0,
+    "first": null
+   },
+   "leaving": {
+    "ok": false,
+    "why": "2 leaving seat(s), 1 failing; worst seat 2: ink 0.959 → 0.847 → 0.709 → 0.609 → 0.484 → 0.346 → 0.221 → 0.08 over 69 ms / 7 frame(s) (fade bound ≥ 3 frames and ≥ 84.5 ms), coverage deficit 1 (track bound 0.1)"
+   },
+   "vanish": {
+    "drop": 0.14,
+    "seat": 2,
+    "from": 0.221,
+    "to": 0.08,
+    "atMs": 166
+   },
+   "pageErrors": 0,
+   "summary": "retarget at 80 ms (frame 8): blank 0 blank of 25 moving frame(s), longest run 0 (bound 1); overlap 0 frame(s); leaving 2 leaving seat(s), 1 failing; worst seat 2: ink 0.959 → 0.847 → 0.709 → 0.609 → 0.484 → 0.346 → 0.221 → 0.08 over 69 ms / 7 frame(s) (fade bound ≥ 3 frames and ≥ 84.5 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop 0.14 (seat 2 0.221 → 0.08 at +166 ms) (bound 0.5)",
+   "load": 491.98
+  },
+  {
+   "arm": "retarget2",
+   "engine": "Playwright WebKit",
+   "afterMs": 80,
+   "rep": 1,
+   "pass": false,
+   "frames": 96,
+   "retargetFrame": 7,
+   "blank": {
+    "ok": true,
+    "why": "0 blank of 25 moving frame(s), longest run 0 (bound 1)"
+   },
+   "overlap": {
+    "ok": false,
+    "frames": 1,
+    "first": {
+     "seats": [
+      2,
+      4
+     ],
+     "mainPx": 0.61,
+     "opacities": [
+      0.24,
+      1
+     ],
+     "atMs": 254
+    }
+   },
+   "leaving": {
+    "ok": false,
+    "why": "2 leaving seat(s), 1 failing; worst seat 2: ink 0.906 → 0.78 → 0.642 → 0.517 → 0.404 → 0.266 → 0.127 → 0.01 over 70 ms / 7 frame(s) (fade bound ≥ 3 frames and ≥ 82 ms), coverage deficit 1 (track bound 0.1)"
+   },
+   "vanish": {
+    "drop": 0.138,
+    "seat": 2,
+    "from": 0.266,
+    "to": 0.127,
+    "atMs": 164
+   },
+   "pageErrors": 0,
+   "summary": "retarget at 80 ms (frame 7): blank 0 blank of 25 moving frame(s), longest run 0 (bound 1); overlap 1 frame(s); leaving 2 leaving seat(s), 1 failing; worst seat 2: ink 0.906 → 0.78 → 0.642 → 0.517 → 0.404 → 0.266 → 0.127 → 0.01 over 70 ms / 7 frame(s) (fade bound ≥ 3 frames and ≥ 82 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop 0.138 (seat 2 0.266 → 0.127 at +164 ms) (bound 0.5)",
+   "load": 485.58
+  },
+  {
+   "arm": "retarget2",
+   "engine": "Playwright WebKit",
+   "afterMs": 120,
+   "rep": 0,
+   "pass": false,
+   "frames": 99,
+   "retargetFrame": 11,
+   "blank": {
+    "ok": true,
+    "why": "0 blank of 25 moving frame(s), longest run 0 (bound 1)"
+   },
+   "overlap": {
+    "ok": false,
+    "frames": 1,
+    "first": {
+     "seats": [
+      2,
+      4
+     ],
+     "mainPx": 0.7,
+     "opacities": [
+      1,
+      0.997
+     ],
+     "atMs": 202
+    }
+   },
+   "leaving": {
+    "ok": false,
+    "why": "2 leaving seat(s), 2 failing; worst seat 1: ink 0.98 → 0.834 → 0.794 → 0.706 → 0.608 → 0.52 → 0.403 → 0.314 → 0.216 → 0.099 over 90 ms / 9 frame(s) (fade bound ≥ 3 frames and ≥ 90.8 ms), coverage deficit 1 (track bound 0.1)"
+   },
+   "vanish": {
+    "drop": 0.249,
+    "seat": 6,
+    "from": 0.817,
+    "to": 0.568,
+    "atMs": 36
+   },
+   "pageErrors": 0,
+   "summary": "retarget at 120 ms (frame 11): blank 0 blank of 25 moving frame(s), longest run 0 (bound 1); overlap 1 frame(s); leaving 2 leaving seat(s), 2 failing; worst seat 1: ink 0.98 → 0.834 → 0.794 → 0.706 → 0.608 → 0.52 → 0.403 → 0.314 → 0.216 → 0.099 over 90 ms / 9 frame(s) (fade bound ≥ 3 frames and ≥ 90.8 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop 0.249 (seat 6 0.817 → 0.568 at +36 ms) (bound 0.5)",
+   "load": 485.58
+  },
+  {
+   "arm": "retarget2",
+   "engine": "Playwright WebKit",
+   "afterMs": 120,
+   "rep": 1,
+   "pass": false,
+   "frames": 97,
+   "retargetFrame": 10,
+   "blank": {
+    "ok": true,
+    "why": "0 blank of 26 moving frame(s), longest run 0 (bound 1)"
+   },
+   "overlap": {
+    "ok": false,
+    "frames": 1,
+    "first": {
+     "seats": [
+      2,
+      4
+     ],
+     "mainPx": 0.71,
+     "opacities": [
+      1,
+      0.994
+     ],
+     "atMs": 197
+    }
+   },
+   "leaving": {
+    "ok": false,
+    "why": "2 leaving seat(s), 1 failing; worst seat 2: ink 0.96 → 0.853 → 0.709 → 0.552 → 0.434 → 0.29 → 0.159 → 0 over 72 ms / 7 frame(s) (fade bound ≥ 3 frames and ≥ 90.5 ms), coverage deficit 1 (track bound 0.1)"
+   },
+   "vanish": {
+    "drop": 0.236,
+    "seat": 6,
+    "from": 0.777,
+    "to": 0.541,
+    "atMs": 38
+   },
+   "pageErrors": 0,
+   "summary": "retarget at 120 ms (frame 10): blank 0 blank of 26 moving frame(s), longest run 0 (bound 1); overlap 1 frame(s); leaving 2 leaving seat(s), 1 failing; worst seat 2: ink 0.96 → 0.853 → 0.709 → 0.552 → 0.434 → 0.29 → 0.159 → 0 over 72 ms / 7 frame(s) (fade bound ≥ 3 frames and ≥ 90.5 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop 0.236 (seat 6 0.777 → 0.541 at +38 ms) (bound 0.5)",
+   "load": 488.66
+  }
+ ],
+ "finished": "2026-10-09T16:20:15.710Z"
+}

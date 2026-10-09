@@ -1,0 +1,58 @@
+{
+ "probe": "D2-G-crit-probes",
+ "started": "2026-10-09T02:39:35.489Z",
+ "build": "gp@b9841d47",
+ "cells": [
+  {
+   "arm": "retdiag3",
+   "engine": "Chromium",
+   "v": {
+    "log": false,
+    "mid": false
+   },
+   "wait": "ok",
+   "alive": true,
+   "summary": "{\"v\":{\"log\":false,\"mid\":false},\"wait\":\"ok\",\"alive\":true}",
+   "load": 368.93
+  },
+  {
+   "arm": "retdiag3",
+   "engine": "Chromium",
+   "v": {
+    "log": false,
+    "mid": true
+   },
+   "wait": "ERR Error: page.evaluate: Execution context was destroyed, most likely because of a navigation.",
+   "alive": true,
+   "summary": "{\"v\":{\"log\":false,\"mid\":true},\"wait\":\"ERR Error: page.evaluate: Execution context was destroyed, most likely because of a navigation.\",\"alive\":true}",
+   "load": 350.12
+  },
+  {
+   "arm": "retdiag3",
+   "engine": "Chromium",
+   "v": {
+    "log": true,
+    "mid": false
+   },
+   "wait": "ok",
+   "alive": true,
+   "stop": "127 frames",
+   "summary": "{\"v\":{\"log\":true,\"mid\":false},\"wait\":\"ok\",\"alive\":true,\"stop\":\"127 frames\"}",
+   "load": 350.12
+  },
+  {
+   "arm": "retdiag3",
+   "engine": "Chromium",
+   "v": {
+    "log": true,
+    "mid": true
+   },
+   "wait": "ERR Error: page.evaluate: Execution context was destroyed, most likely because of a navigation.",
+   "alive": true,
+   "stop": "127 frames",
+   "summary": "{\"v\":{\"log\":true,\"mid\":true},\"wait\":\"ERR Error: page.evaluate: Execution context was destroyed, most likely because of a navigation.\",\"alive\":true,\"stop\":\"127 frames\"}",
+   "load": 350.12
+  }
+ ],
+ "finished": "2026-10-09T02:39:44.227Z"
+}

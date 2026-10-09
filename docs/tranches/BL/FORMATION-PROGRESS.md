@@ -310,3 +310,11 @@ Outage log:
   - Migrated arm, both engines: T-1, T-2, T-4..T-8, W-D, CANON, X-7, states, a11y and corner refusal all pass. T-3 reads 40/43 (C1, Q-10). The R-3 plant fails exactly the 12 commit cells.
   - Bundle 2,933,655 B (+4,133 over floor v2). Projected checklist 34/40; the 6 open rows wait on the owner.
   D′ proto launched.
+- 2026-10-09 — D2 pass 3 G critique banked: ADVANCE at 71%.
+  Route gaps:
+  - N1: Playwright WebKit anchor-end·warm-expand drifts 3.05 px against 0.5; floor v2 reads 0.16. The main-thread flow lane runs against the compositor doors.
+  - R2: the retarget leaving fade runs short in both engines (Chromium 12/12 cells fail). The prototype called this WebKit-only because its Chromium arm never ran.
+  - B2: the swap seam splices glyphs, as in B′, and its last cut persists 9-17 ms past the morph clear.
+  - B3: stale --dock-expand-t / --dock-morph-max-stretch rows and process prose in density.css.
+  Shared or owner-blocked: P1 (Q-12, card radius), P2 (F-19, keyboard reach 10/11), P3 (Q-4, plus a WebKit neighbour overlap of 9.63 px against 0.5).
+  D2 pass 3 agglomerate launched.

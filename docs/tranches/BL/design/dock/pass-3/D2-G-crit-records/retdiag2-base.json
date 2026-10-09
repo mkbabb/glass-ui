@@ -1,0 +1,162 @@
+{
+ "probe": "D2-G-crit-probes",
+ "started": "2026-10-09T02:38:59.603Z",
+ "build": "base@b9841d47",
+ "cells": [
+  {
+   "arm": "retdiag2",
+   "engine": "Chromium",
+   "variant": {
+    "three": "1",
+    "seq": [
+     "long",
+     "mid"
+    ]
+   },
+   "before": {
+    "faces": 2,
+    "url": "http://127.0.0.1:49445/?scene=swap&three=1"
+   },
+   "steps": [
+    {
+     "ms": 4,
+     "setFace": "long",
+     "err": null
+    },
+    {
+     "ms": 1667,
+     "after": "long",
+     "alive": true,
+     "dead": null,
+     "url": "http://127.0.0.1:49445/?scene=swap&three=1",
+     "probe": true
+    },
+    {
+     "ms": 1670,
+     "setFace": "mid",
+     "err": null
+    },
+    {
+     "ms": 3325,
+     "after": "mid",
+     "alive": true,
+     "dead": null,
+     "url": "http://127.0.0.1:49445/?scene=swap&three=1",
+     "probe": true
+    },
+    {
+     "ms": 3329,
+     "close": true
+    }
+   ],
+   "summary": "three=1 seq long→mid: {\"ms\":4,\"setFace\":\"long\",\"err\":null} {\"ms\":1667,\"after\":\"long\",\"alive\":true,\"dead\":null,\"url\":\"http://127.0.0.1:49445/?scene=swap&three=1\",\"probe\":true} {\"ms\":1670,\"setFace\":\"mid\",\"err\":null} {\"ms\":3325,\"after\":\"mid\",\"alive\":true,\"dead\":null,\"url\":\"http://127.0.0.1:49445/?scene=swap&three=1\",\"probe\":true}",
+   "load": 446.54
+  },
+  {
+   "arm": "retdiag2",
+   "engine": "Chromium",
+   "variant": {
+    "three": "1",
+    "seq": [
+     "long"
+    ]
+   },
+   "before": {
+    "faces": 2,
+    "url": "http://127.0.0.1:49445/?scene=swap&three=1"
+   },
+   "steps": [
+    {
+     "ms": 3,
+     "setFace": "long",
+     "err": null
+    },
+    {
+     "ms": 1658,
+     "after": "long",
+     "alive": true,
+     "dead": null,
+     "url": "http://127.0.0.1:49445/?scene=swap&three=1",
+     "probe": true
+    },
+    {
+     "ms": 1660,
+     "close": true
+    }
+   ],
+   "summary": "three=1 seq long: {\"ms\":3,\"setFace\":\"long\",\"err\":null} {\"ms\":1658,\"after\":\"long\",\"alive\":true,\"dead\":null,\"url\":\"http://127.0.0.1:49445/?scene=swap&three=1\",\"probe\":true}",
+   "load": 411.66
+  },
+  {
+   "arm": "retdiag2",
+   "engine": "Chromium",
+   "variant": {
+    "three": "0",
+    "seq": [
+     "long"
+    ]
+   },
+   "before": {
+    "faces": 2,
+    "url": "http://127.0.0.1:49445/?scene=swap"
+   },
+   "steps": [
+    {
+     "ms": 2,
+     "setFace": "long",
+     "err": null
+    },
+    {
+     "ms": 1650,
+     "after": "long",
+     "alive": true,
+     "dead": null,
+     "url": "http://127.0.0.1:49445/?scene=swap",
+     "probe": true
+    },
+    {
+     "ms": 1652,
+     "close": true
+    }
+   ],
+   "summary": "three=0 seq long: {\"ms\":2,\"setFace\":\"long\",\"err\":null} {\"ms\":1650,\"after\":\"long\",\"alive\":true,\"dead\":null,\"url\":\"http://127.0.0.1:49445/?scene=swap\",\"probe\":true}",
+   "load": 379.5
+  },
+  {
+   "arm": "retdiag2",
+   "engine": "Chromium",
+   "variant": {
+    "three": "1",
+    "seq": [
+     "mid"
+    ]
+   },
+   "before": {
+    "faces": 2,
+    "url": "http://127.0.0.1:49445/?scene=swap&three=1"
+   },
+   "steps": [
+    {
+     "ms": 2,
+     "setFace": "mid",
+     "err": null
+    },
+    {
+     "ms": 1647,
+     "after": "mid",
+     "alive": true,
+     "dead": null,
+     "url": "http://127.0.0.1:49445/?scene=swap&three=1",
+     "probe": true
+    },
+    {
+     "ms": 1649,
+     "close": true
+    }
+   ],
+   "summary": "three=1 seq mid: {\"ms\":2,\"setFace\":\"mid\",\"err\":null} {\"ms\":1647,\"after\":\"mid\",\"alive\":true,\"dead\":null,\"url\":\"http://127.0.0.1:49445/?scene=swap&three=1\",\"probe\":true}",
+   "load": 379.5
+  }
+ ],
+ "finished": "2026-10-09T02:39:12.126Z"
+}

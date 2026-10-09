@@ -1,0 +1,47 @@
+22:48  up 1 day,  8:16, 2 users, load averages: 38.09 188.52 320.03
+FAIL  W1  Chromium  vmorph·collapsed-rest  not measured: page.screenshot: Timeout 30000ms exceeded.  [load 148.59]
+FAIL  W1  Chromium  vmorph·first-expand  not measured: page.screenshot: Timeout 30000ms exceeded.  [load 148.59]
+FAIL  W1  Chromium  vmorph·expanded-rest  not measured: page.screenshot: Timeout 30000ms exceeded.  [load 148.59]
+FAIL  W1  Chromium  vmorph·warm-collapse  not measured: page.screenshot: Timeout 30000ms exceeded.  [load 148.59]
+FAIL  W1  Chromium  vmorph·warm-expand  not measured: page.screenshot: Timeout 30000ms exceeded.  [load 148.59]
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+browserType.launch: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh --inspector-pipe --headless --no-startup-window
+<launched> pid=37131
+[pid=37131][err] /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh: line 7: 37137 Abort trap: 6           DYLD_FRAMEWORK_PATH="$DYLIB_PATH" DYLD_LIBRARY_PATH="$DYLIB_PATH" "$PLAYWRIGHT" "$@"
+Call log:
+[2m  - <launching> /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh --inspector-pipe --headless --no-startup-window[22m
+[2m  - <launched> pid=37131[22m
+[2m  - [pid=37131][err] /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh: line 7: 37137 Abort trap: 6           DYLD_FRAMEWORK_PATH="$DYLIB_PATH" DYLD_LIBRARY_PATH="$DYLIB_PATH" "$PLAYWRIGHT" "$@"[22m
+[2m  - [pid=37131] <gracefully close start>[22m
+[2m  - [pid=37131] <kill>[22m
+[2m  - [pid=37131] <will force kill>[22m
+[2m  - [pid=37131] exception while trying to kill process: Error: kill EPERM[22m
+[2m  - [pid=37131] <process did exit: exitCode=134, signal=null>[22m
+[2m  - [pid=37131] starting temporary directories cleanup[22m
+[2m  - [pid=37131] finished temporary directories cleanup[22m
+[2m  - [pid=37131] <gracefully close end>[22m
+
+    at launch (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/dock/harness/lib.mjs:141:40)
+    at /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/dock/harness/w1-corner.mjs:282:27 {
+  log: [
+    '  - <launching> /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh --inspector-pipe --headless --no-startup-window',
+    '  - <launched> pid=37131',
+    '  - [pid=37131][err] /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh: line 7: 37137 Abort trap: 6           DYLD_FRAMEWORK_PATH="$DYLIB_PATH" DYLD_LIBRARY_PATH="$DYLIB_PATH" "$PLAYWRIGHT" "$@"',
+    '  - [pid=37131] <gracefully close start>',
+    '  - [pid=37131] <kill>',
+    '  - [pid=37131] <will force kill>',
+    '  - [pid=37131] exception while trying to kill process: Error: kill EPERM',
+    '  - [pid=37131] <process did exit: exitCode=134, signal=null>',
+    '  - [pid=37131] starting temporary directories cleanup',
+    '  - [pid=37131] finished temporary directories cleanup',
+    '  - [pid=37131] <gracefully close end>'
+  ]
+}
+
+Node.js v26.0.0
