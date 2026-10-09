@@ -304,3 +304,9 @@ Outage log:
   - **C-7 fails in every form that keeps C-2**, so the spec expects C″ to drop to BANK once the prototype confirms the T reading.
   C″ proto launched.
 - 2026-10-09 — **Session restart; all five runs resumed.** Every open seat had died with the previous process. The driver removed only the dead BL seat worktrees: D1 p8 B-proto (base, r1, r2, wt), D3 Cpp-proto, D4 Dp-spec, D5 H2, and D2 G-crit (scratchpad). It verified the driver scripts were committed and unchanged, and resumed each run from its recorded id: D1 passes 8-9 wf_48ca14cd-c3d (B-proto, pass 8), D3 pass 3 wf_f41d04a8-bca (C″ proto), D4 pass 3 wf_c944ce08-d2d (D′ spec), D2 pass 3 wf_fa23d12f-c4a (G critic), D5 pass 2 wf_9b9708d5-f87 (H2). Completed seats replay from cache. Partial outputs the dead seats left under docs/ stay for the re-entered seats to overwrite. Crons stay off.
+- 2026-10-09 — D4 pass 3 D′ spec banked (re-entered after the restart; it completed the dead sitting's patch and battery). route.patch on HEAD + floor v2: 12 files, +342/−25.
+  - Design: one `shape: pill|cell` prop, refused through refuseUnknown. One nested CSS block sets --selection-tile: flush plus the tile's corner, column, pad and leading. Engine attributes win over a consumer role/tabindex (H3-12). FadingScroll is a tab stop only when its content holds none (TF-6).
+  - H3-7: the perimeter moved to inset: 0, giving 2.00 px in both engines; overflow-clip-margin would cure Chromium only.
+  - Migrated arm, both engines: T-1, T-2, T-4..T-8, W-D, CANON, X-7, states, a11y and corner refusal all pass. T-3 reads 40/43 (C1, Q-10). The R-3 plant fails exactly the 12 commit cells.
+  - Bundle 2,933,655 B (+4,133 over floor v2). Projected checklist 34/40; the 6 open rows wait on the owner.
+  D′ proto launched.

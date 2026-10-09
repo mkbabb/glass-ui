@@ -1,0 +1,13 @@
+2026-10-08 21:12:36 · load { 15.37 19.29 24.72 }
+     × the built demo has a dist-demo to measure 5ms
+     × the dist-demo it measures is NEWER than every source it is built from 1ms
+     × the eager graph stays under the modulepreload and byte ceilings 0ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the built demo has a dist-demo to measure
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the eager graph stays under the modulepreload and byte ceilings
+ Test Files  1 failed | 240 passed (241)
+      Tests  3 failed | 2335 passed | 10 expected fail | 1 skipped (2349)
+vue-tsc app exit 0
+vue-tsc test exit 0
+2026-10-08 21:13:14 · load { 23.11 21.04 25.13 }

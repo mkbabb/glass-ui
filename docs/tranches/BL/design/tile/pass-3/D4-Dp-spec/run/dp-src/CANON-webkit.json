@@ -1,0 +1,59 @@
+{
+ "id": "CANON",
+ "title": "the canon unit's law on widened fixtures (size, orientation, children, state), parsed by the engine",
+ "engine": "webkit",
+ "engineLabel": "Playwright WebKit 26.5",
+ "target": "dp-src",
+ "dev": false,
+ "cells": [
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "canon",
+   "arm": "library",
+   "line": "canon tile corner · 48 twins, 138 corner rules · tile spelling «.toggle-group[data-shape=\"cell\"] .toggle-group__item» · exactly one rule reaches a tile and not its pill twin, on var(--radius-field) · 1 rule(s): «.toggle-group[data-shape=\"cell\"] .toggle-group__item» → var(--radius-field) (index-nDRk41Wt.css; 48/48 twins, first sm/horizontal/none/on)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "canon",
+   "arm": "library",
+   "line": "canon pill corner · 48 twins, 138 corner rules · tile spelling «.toggle-group[data-shape=\"cell\"] .toggle-group__item» · every group-scoped corner on a pill is var(--radius-pill) or inherit · 2 rule(s) reach a pill"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "canon",
+   "arm": "library",
+   "line": "canon unmatched · 48 twins, 138 corner rules · tile spelling «.toggle-group[data-shape=\"cell\"] .toggle-group__item» · every corner selector is matched by the engine · 0 unmatched"
+  }
+ ],
+ "flavor": "src",
+ "harness": {
+  "hash": "9fd4983bc6b9",
+  "files": 27,
+  "rev": "H3"
+ },
+ "run": {
+  "loadStart": "532.57 / 275.99 / 142.74",
+  "loadEnd": "532.57 / 275.99 / 142.74",
+  "census": {
+   "n": 16,
+   "sample": [
+    "1428 /Applications/Visual Studio Code.app/Contents/Resources/app/node_modules.asar.un",
+    "72934 /Users/mkbabb/Library/Caches/ms-playwright/chromium_headless_shell-1228/chrome-h",
+    "72959 /Users/mkbabb/Library/Caches/ms-playwright/chromium_headless_shell-1228/chrome-h"
+   ],
+   "waitedS": 3.8
+  },
+  "lockWaitS": 0
+ },
+ "pass": true,
+ "tally": "3/3 gating cells pass [library 3/3]",
+ "arms": {
+  "library": {
+   "pass": 3,
+   "of": 3
+  }
+ }
+}

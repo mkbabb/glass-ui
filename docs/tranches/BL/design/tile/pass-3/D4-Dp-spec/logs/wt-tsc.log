@@ -1,0 +1,9 @@
+2026-10-08 21:03:06 · load { 27.75 29.51 30.57 }
+vue-tsc --noEmit exit 0
+vue-tsc -p tsconfig.test.json exit 2
+tests/components/fourier-field/FourierField.smoke.test.ts(18,30): error TS2307: Cannot find module '@mkbabb/glass-ui/fourier-math' or its corresponding type declarations.
+tests/components/fourier-field/FourierField.smoke.test.ts(19,66): error TS2307: Cannot find module '@mkbabb/glass-ui/fourier-math' or its corresponding type declarations.
+2026-10-08 21:03:21 · load { 25.15 28.83 30.31 }
+2026-10-08 21:03:40 · load { 31.32 29.98 30.68 }
+vue-tsc -p tsconfig.test.json (with dist) exit 0
+2026-10-08 21:03:46 · load { 29.70 29.67 30.57 }

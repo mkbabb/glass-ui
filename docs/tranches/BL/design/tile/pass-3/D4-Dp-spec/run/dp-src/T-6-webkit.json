@@ -1,0 +1,1309 @@
+{
+ "id": "T-6",
+ "title": "engagement: hover light + scale, press, the commit bar (keyboard, programmatic, pointer), no pop on Tab entry, no coarse latch",
+ "engine": "webkit",
+ "engineLabel": "Playwright WebKit 26.5",
+ "target": "dp-src",
+ "dev": false,
+ "cells": [
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset",
+   "arm": "library",
+   "line": "preset Tab entry (Option+Tab) · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 48.45 / 39.89 / 32.86"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset",
+   "arm": "library",
+   "line": "preset commit bar, keyboard commit (ArrowRight, pointer never moved) on #2 · pop peak 1.03 at 81 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 11-194 ms; 80 frames, median 10.00 ms · load 47.45 / 39.82 / 32.88"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset",
+   "arm": "library",
+   "line": "preset commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.03 at 76 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 27-189 ms; 78 frames, median 10.00 ms · load 47.45 / 39.82 / 32.88"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset",
+   "arm": "library",
+   "line": "preset commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.03 at 80 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 8-190 ms; 80 frames, median 10.00 ms · load 47.45 / 39.82 / 32.88"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset",
+   "arm": "library",
+   "line": "preset hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0374 over the plate interior vs the bar 0.02 (reported: 84.87 % of pixels moved > 10 levels, p95 1.14:1)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset",
+   "arm": "library",
+   "line": "preset hover scale · 1.01 (1.015); median frame 10.00 ms, load 46.37 / 39.73 / 32.88"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset",
+   "arm": "library",
+   "line": "preset press · scale 0.97×0.97; median frame 10.00 ms, load 44.10 / 39.37 / 32.80"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset",
+   "arm": "library",
+   "line": "preset commit bar, pointer commit (release of the press) on #0 · pop peak 1.04 at 106 ms, trough after it 1.01, settle 1.01 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 14-190 ms; 79 frames, median 10.00 ms · load 44.10 / 39.37 / 32.80"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset",
+   "arm": "library",
+   "line": "preset commit motions at release (reported, the pass-1 cell) · 3 non-scale [CSSTransition:background-color@item 180ms, CSSTransition:color@item 180ms, CSSAnimation:toggle-group-commit@item 450ms] (all 4)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset",
+   "arm": "library",
+   "line": "preset PRM hover light channel · mean ΔE(OKLab) 0.0374 over the plate interior vs the bar 0.02 (reported: 84.87 % of pixels moved > 10 levels, p95 1.14:1)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset",
+   "arm": "library",
+   "line": "preset PRT hover light channel (prt (forced level-0 path)) · mean ΔE(OKLab) 0.0311 over the plate interior vs the bar 0.02 (reported: 62.61 % of pixels moved > 10 levels, p95 1.11:1)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset",
+   "arm": "library",
+   "line": "preset coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "line": "preset-verbatim Tab entry (Option+Tab) · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 48.81 / 40.55 / 33.29"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "line": "preset-verbatim commit bar, keyboard commit (ArrowRight, pointer never moved) on #2 · pop peak 1.03 at 80 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 9-212 ms; 80 frames, median 10.00 ms · load 48.81 / 40.55 / 33.29"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "line": "preset-verbatim commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.03 at 75 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 13-208 ms; 79 frames, median 10.00 ms · load 50.59 / 41.05 / 33.52"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "line": "preset-verbatim commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.03 at 81 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 11-204 ms; 80 frames, median 10.00 ms · load 50.59 / 41.05 / 33.52"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "line": "preset-verbatim hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0452 over the plate interior vs the bar 0.02 (reported: 86.89 % of pixels moved > 10 levels, p95 1.19:1)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "line": "preset-verbatim hover scale · 1.01 (1.015); median frame 10.00 ms, load 49.10 / 40.90 / 33.51"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "line": "preset-verbatim press · scale 0.97×0.97; median frame 10.00 ms, load 49.10 / 40.90 / 33.51"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "line": "preset-verbatim commit bar, pointer commit (release of the press) on #0 · pop peak 1.04 at 75 ms, trough after it 1.01, settle 1.01 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 15-208 ms; 79 frames, median 10.00 ms · load 49.10 / 40.90 / 33.51"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "line": "preset-verbatim commit motions at release (reported, the pass-1 cell) · 3 non-scale [CSSTransition:background-color@item 200ms, CSSTransition:outline-color@item 200ms, CSSAnimation:toggle-group-commit@item 450ms] (all 3)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "line": "preset-verbatim PRM hover light channel · mean ΔE(OKLab) 0.0452 over the plate interior vs the bar 0.02 (reported: 86.89 % of pixels moved > 10 levels, p95 1.19:1)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "line": "preset-verbatim PRT hover light channel (prt (forced level-0 path)) · mean ΔE(OKLab) 0.0238 over the plate interior vs the bar 0.02 (reported: 24.56 % of pixels moved > 10 levels, p95 1.05:1)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "line": "preset-verbatim coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset-migrated",
+   "arm": "migrated",
+   "line": "preset-migrated Tab entry (Option+Tab) · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 53.64 / 42.13 / 34.03"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset-migrated",
+   "arm": "migrated",
+   "line": "preset-migrated commit bar, keyboard commit (ArrowRight, pointer never moved) on #2 · pop peak 1.03 at 86 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 14-199 ms; 76 frames, median 10.00 ms · load 57.92 / 43.21 / 34.45"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset-migrated",
+   "arm": "migrated",
+   "line": "preset-migrated commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.03 at 74 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 24-188 ms; 78 frames, median 10.00 ms · load 57.92 / 43.21 / 34.45"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset-migrated",
+   "arm": "migrated",
+   "line": "preset-migrated commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.03 at 78 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 8-190 ms; 74 frames, median 10.00 ms · load 64.01 / 44.71 / 35.04"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset-migrated",
+   "arm": "migrated",
+   "line": "preset-migrated hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0953 over the plate interior vs the bar 0.02 (reported: 90.08 % of pixels moved > 10 levels, p95 1.37:1)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset-migrated",
+   "arm": "migrated",
+   "line": "preset-migrated hover scale · 1.01 (1.015); median frame 10.00 ms, load 63.53 / 44.93 / 35.17"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset-migrated",
+   "arm": "migrated",
+   "line": "preset-migrated press · scale 0.97×0.97; median frame 12.00 ms, load 63.53 / 44.93 / 35.17"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset-migrated",
+   "arm": "migrated",
+   "line": "preset-migrated commit bar, pointer commit (release of the press) on #0 · pop peak 1.04 at 133 ms, trough after it 1.01, settle 1.01 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 28-216 ms; 78 frames, median 10.00 ms · load 63.53 / 44.93 / 35.17"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset-migrated",
+   "arm": "migrated",
+   "line": "preset-migrated commit motions at release (reported, the pass-1 cell) · 4 non-scale [CSSTransition:background-color@item 180ms, CSSTransition:color@item 180ms, CSSTransition:opacity@item::before 60ms, CSSAnimation:toggle-group-commit@item 450ms] (all 5)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset-migrated",
+   "arm": "migrated",
+   "line": "preset-migrated PRM hover light channel · mean ΔE(OKLab) 0.0953 over the plate interior vs the bar 0.02 (reported: 90.08 % of pixels moved > 10 levels, p95 1.37:1)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset-migrated",
+   "arm": "migrated",
+   "line": "preset-migrated PRT hover light channel (prt (forced level-0 path)) · mean ΔE(OKLab) 0.0309 over the plate interior vs the bar 0.02 (reported: 68.61 % of pixels moved > 10 levels, p95 1.11:1)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset-migrated",
+   "arm": "migrated",
+   "line": "preset-migrated coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen",
+   "arm": "library",
+   "line": "specimen Tab entry (Option+Tab) · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 69.65 / 46.83 / 35.96"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen",
+   "arm": "library",
+   "line": "specimen commit bar, keyboard commit (ArrowRight, pointer never moved) on #2 · pop peak 1.03 at 89 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 16-201 ms; 79 frames, median 10.00 ms · load 69.65 / 46.83 / 35.96"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen",
+   "arm": "library",
+   "line": "specimen commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.03 at 86 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 14-188 ms; 77 frames, median 11.00 ms · load 70.00 / 47.29 / 36.18"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen",
+   "arm": "library",
+   "line": "specimen commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.03 at 83 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 6-188 ms; 81 frames, median 10.00 ms · load 70.00 / 47.29 / 36.18"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen",
+   "arm": "library",
+   "line": "specimen hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0343 over the plate interior vs the bar 0.02 (reported: 71.49 % of pixels moved > 10 levels, p95 1.13:1)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen",
+   "arm": "library",
+   "line": "specimen hover scale · 1.01 (1.015); median frame 10.00 ms, load 69.92 / 47.65 / 36.37"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen",
+   "arm": "library",
+   "line": "specimen press · scale 0.97×0.97; median frame 10.00 ms, load 69.92 / 47.65 / 36.37"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen",
+   "arm": "library",
+   "line": "specimen commit bar, pointer commit (release of the press) on #0 · pop peak 1.04 at 132 ms, trough after it 1.01, settle 1.01 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 31-211 ms; 74 frames, median 11.00 ms · load 69.92 / 47.65 / 36.37"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "specimen",
+   "arm": "library",
+   "line": "specimen commit motions at release (reported, the pass-1 cell) · 3 non-scale [CSSTransition:background-color@item 180ms, CSSTransition:color@item 180ms, CSSAnimation:toggle-group-commit@item 450ms] (all 4)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen",
+   "arm": "library",
+   "line": "specimen PRM hover light channel · mean ΔE(OKLab) 0.0343 over the plate interior vs the bar 0.02 (reported: 71.49 % of pixels moved > 10 levels, p95 1.13:1)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen",
+   "arm": "library",
+   "line": "specimen PRT hover light channel (prt (forced level-0 path)) · mean ΔE(OKLab) 0.0331 over the plate interior vs the bar 0.02 (reported: 74.30 % of pixels moved > 10 levels, p95 1.11:1)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen",
+   "arm": "library",
+   "line": "specimen coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "line": "specimen-verbatim Tab entry (Option+Tab) · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 67.22 / 47.80 / 36.56"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "line": "specimen-verbatim commit bar, keyboard commit (ArrowRight, pointer never moved) on #2 · pop peak 1.03 at 86 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 16-199 ms; 77 frames, median 10.00 ms · load 65.60 / 47.79 / 36.62"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "line": "specimen-verbatim commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.03 at 81 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 21-194 ms; 79 frames, median 10.00 ms · load 65.60 / 47.79 / 36.62"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "line": "specimen-verbatim commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.03 at 83 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 5-186 ms; 81 frames, median 10.00 ms · load 65.23 / 48.01 / 36.76"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "line": "specimen-verbatim hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0343 over the plate interior vs the bar 0.02 (reported: 72.11 % of pixels moved > 10 levels, p95 1.13:1)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "line": "specimen-verbatim hover scale · 1.01 (1.015); median frame 11.00 ms, load 63.93 / 48.03 / 36.83"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "line": "specimen-verbatim press · scale 0.97×0.97; median frame 10.00 ms, load 63.93 / 48.03 / 36.83"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "line": "specimen-verbatim commit bar, pointer commit (release of the press) on #0 · pop peak 1.04 at 113 ms, trough after it 1.01, settle 1.01 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 8-195 ms; 80 frames, median 10.00 ms · load 63.93 / 48.03 / 36.83"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "line": "specimen-verbatim commit motions at release (reported, the pass-1 cell) · 2 non-scale [CSSTransition:color@item 180ms, CSSAnimation:toggle-group-commit@item 450ms] (all 3)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "line": "specimen-verbatim PRM hover light channel · mean ΔE(OKLab) 0.0343 over the plate interior vs the bar 0.02 (reported: 72.11 % of pixels moved > 10 levels, p95 1.13:1)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "line": "specimen-verbatim PRT hover light channel (prt (forced level-0 path)) · mean ΔE(OKLab) 0.0331 over the plate interior vs the bar 0.02 (reported: 74.80 % of pixels moved > 10 levels, p95 1.11:1)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "line": "specimen-verbatim coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen-migrated",
+   "arm": "migrated",
+   "line": "specimen-migrated Tab entry (Option+Tab) · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 65.64 / 48.91 / 37.28"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen-migrated",
+   "arm": "migrated",
+   "line": "specimen-migrated commit bar, keyboard commit (ArrowRight, pointer never moved) on #2 · pop peak 1.03 at 79 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 8-191 ms; 79 frames, median 10.00 ms · load 65.64 / 48.91 / 37.28"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen-migrated",
+   "arm": "migrated",
+   "line": "specimen-migrated commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.03 at 83 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 24-207 ms; 78 frames, median 10.00 ms · load 65.18 / 49.10 / 37.41"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen-migrated",
+   "arm": "migrated",
+   "line": "specimen-migrated commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.03 at 86 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 14-198 ms; 79 frames, median 10.00 ms · load 65.18 / 49.10 / 37.41"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen-migrated",
+   "arm": "migrated",
+   "line": "specimen-migrated hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0925 over the plate interior vs the bar 0.02 (reported: 91.58 % of pixels moved > 10 levels, p95 1.35:1)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen-migrated",
+   "arm": "migrated",
+   "line": "specimen-migrated hover scale · 1.01 (1.015); median frame 10.00 ms, load 65.33 / 49.39 / 37.59"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen-migrated",
+   "arm": "migrated",
+   "line": "specimen-migrated press · scale 0.97×0.97; median frame 10.00 ms, load 65.33 / 49.39 / 37.59"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen-migrated",
+   "arm": "migrated",
+   "line": "specimen-migrated commit bar, pointer commit (release of the press) on #0 · pop peak 1.04 at 110 ms, trough after it 1.01, settle 1.01 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 11-193 ms; 80 frames, median 10.00 ms · load 62.74 / 49.12 / 37.56"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "specimen-migrated",
+   "arm": "migrated",
+   "line": "specimen-migrated commit motions at release (reported, the pass-1 cell) · 4 non-scale [CSSTransition:background-color@item 180ms, CSSTransition:color@item 180ms, CSSTransition:opacity@item::before 60ms, CSSAnimation:toggle-group-commit@item 450ms] (all 5)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen-migrated",
+   "arm": "migrated",
+   "line": "specimen-migrated PRM hover light channel · mean ΔE(OKLab) 0.0925 over the plate interior vs the bar 0.02 (reported: 91.58 % of pixels moved > 10 levels, p95 1.35:1)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen-migrated",
+   "arm": "migrated",
+   "line": "specimen-migrated PRT hover light channel (prt (forced level-0 path)) · mean ΔE(OKLab) 0.0320 over the plate interior vs the bar 0.02 (reported: 74.38 % of pixels moved > 10 levels, p95 1.11:1)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen-migrated",
+   "arm": "migrated",
+   "line": "specimen-migrated coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "f1",
+   "arm": "library",
+   "line": "f1 Tab entry (Option+Tab) · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 61.32 / 49.05 / 37.60"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "f1",
+   "arm": "library",
+   "line": "f1 commit bar, keyboard commit (ArrowRight, pointer never moved) on #-1 · the input committed nothing (no item became selected) · load 66.82 / 50.40 / 38.14"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "f1",
+   "arm": "library",
+   "line": "f1 commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.00 at 8 ms, trough after it 1.00, settle 1.00 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 17-314 ms; 79 frames, median 10.00 ms · load 66.82 / 50.40 / 38.14"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "f1",
+   "arm": "library",
+   "line": "f1 commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.00 at 0 ms, trough after it 1.00, settle 1.00 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 7-307 ms; 81 frames, median 10.00 ms · load 65.39 / 50.37 / 38.21"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "f1",
+   "arm": "library",
+   "line": "f1 hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0005 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.01:1)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "f1",
+   "arm": "library",
+   "line": "f1 hover scale · 1.01 (1.015); median frame 11.00 ms, load 64.24 / 50.38 / 38.28"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "f1",
+   "arm": "library",
+   "line": "f1 press · scale 1.02×0.96; median frame 10.00 ms, load 64.24 / 50.38 / 38.28"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "f1",
+   "arm": "library",
+   "line": "f1 commit bar, pointer commit (release of the press) on #0 · pop peak 1.02 at 25 ms, trough after it 1.01, settle 1.01 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 12-310 ms; 80 frames, median 10.00 ms · load 64.24 / 50.38 / 38.28"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "f1",
+   "arm": "library",
+   "line": "f1 commit motions at release (reported, the pass-1 cell) · 1 non-scale [CSSTransition:opacity@item::before 300ms] (all 2)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "f1",
+   "arm": "library",
+   "line": "f1 PRM hover light channel · mean ΔE(OKLab) 0.0005 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.01:1)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "f1",
+   "arm": "library",
+   "line": "f1 PRT hover light channel (prt (forced level-0 path)) · mean ΔE(OKLab) 0.0038 over the plate interior vs the bar 0.02 (reported: 2.34 % of pixels moved > 10 levels, p95 1.06:1)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "f1",
+   "arm": "library",
+   "line": "f1 coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "line": "f1-verbatim Tab entry (Option+Tab) · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 64.08 / 50.81 / 38.58"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "line": "f1-verbatim commit bar, keyboard commit (ArrowRight, pointer never moved) on #-1 · the input committed nothing (no item became selected) · load 64.08 / 50.81 / 38.58"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "line": "f1-verbatim commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.00 at 17 ms, trough after it 1.00, settle 1.00 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 26-313 ms; 78 frames, median 10.00 ms · load 65.92 / 51.41 / 38.86"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "line": "f1-verbatim commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.00 at 0 ms, trough after it 1.00, settle 1.00 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 25-328 ms; 78 frames, median 10.00 ms · load 65.92 / 51.41 / 38.86"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "line": "f1-verbatim hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0049 over the plate interior vs the bar 0.02 (reported: 16.57 % of pixels moved > 10 levels, p95 12.98:1)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "line": "f1-verbatim hover scale · 1.06 (1.015); median frame 10.00 ms, load 64.88 / 51.44 / 38.94"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "line": "f1-verbatim press · scale 0.98×0.92; median frame 9.00 ms, load 64.88 / 51.44 / 38.94"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "line": "f1-verbatim commit bar, pointer commit (release of the press) on #0 · pop peak 1.06 at 34 ms, trough after it 1.06, settle 1.06 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 12-310 ms; 79 frames, median 10.00 ms · load 64.73 / 51.63 / 39.08"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "line": "f1-verbatim commit motions at release (reported, the pass-1 cell) · 5 non-scale [CSSTransition:border-bottom-color@item 180ms, CSSTransition:border-left-color@item 180ms, CSSTransition:border-right-color@item 180ms, CSSTransition:border-top-color@item 180ms, CSSTransition:opacity@item::before 300ms] (all 6)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "line": "f1-verbatim PRM hover light channel · mean ΔE(OKLab) 0.0050 over the plate interior vs the bar 0.02 (reported: 16.58 % of pixels moved > 10 levels, p95 12.98:1)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "line": "f1-verbatim PRT hover light channel (prt (forced level-0 path)) · mean ΔE(OKLab) 0.0049 over the plate interior vs the bar 0.02 (reported: 15.60 % of pixels moved > 10 levels, p95 15.49:1)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "line": "f1-verbatim coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "f1-migrated",
+   "arm": "migrated",
+   "line": "f1-migrated Tab entry (Option+Tab) · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 64.43 / 51.79 / 39.21"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "f1-migrated",
+   "arm": "migrated",
+   "line": "f1-migrated commit bar, keyboard commit (ArrowRight, pointer never moved) on #2 · pop peak 1.03 at 90 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 9-190 ms; 79 frames, median 10.00 ms · load 63.12 / 51.72 / 39.26"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "f1-migrated",
+   "arm": "migrated",
+   "line": "f1-migrated commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.03 at 80 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 28-185 ms; 77 frames, median 10.00 ms · load 63.12 / 51.72 / 39.26"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "f1-migrated",
+   "arm": "migrated",
+   "line": "f1-migrated commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.03 at 87 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 12-192 ms; 80 frames, median 10.00 ms · load 61.43 / 51.56 / 39.28"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "f1-migrated",
+   "arm": "migrated",
+   "line": "f1-migrated hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0924 over the plate interior vs the bar 0.02 (reported: 85.61 % of pixels moved > 10 levels, p95 1.35:1)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "f1-migrated",
+   "arm": "migrated",
+   "line": "f1-migrated hover scale · 1.01 (1.015); median frame 10.00 ms, load 60.51 / 51.54 / 39.34"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "f1-migrated",
+   "arm": "migrated",
+   "line": "f1-migrated press · scale 0.97×0.97; median frame 10.00 ms, load 60.51 / 51.54 / 39.34"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "f1-migrated",
+   "arm": "migrated",
+   "line": "f1-migrated commit bar, pointer commit (release of the press) on #0 · pop peak 1.04 at 113 ms, trough after it 1.01, settle 1.01 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 11-196 ms; 79 frames, median 10.00 ms · load 60.51 / 51.54 / 39.34"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "f1-migrated",
+   "arm": "migrated",
+   "line": "f1-migrated commit motions at release (reported, the pass-1 cell) · 4 non-scale [CSSTransition:background-color@item 180ms, CSSTransition:color@item 180ms, CSSTransition:opacity@item::before 60ms, CSSAnimation:toggle-group-commit@item 450ms] (all 5)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "f1-migrated",
+   "arm": "migrated",
+   "line": "f1-migrated PRM hover light channel · mean ΔE(OKLab) 0.0924 over the plate interior vs the bar 0.02 (reported: 85.61 % of pixels moved > 10 levels, p95 1.35:1)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "f1-migrated",
+   "arm": "migrated",
+   "line": "f1-migrated PRT hover light channel (prt (forced level-0 path)) · mean ΔE(OKLab) 0.0333 over the plate interior vs the bar 0.02 (reported: 81.16 % of pixels moved > 10 levels, p95 1.11:1)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "f1-migrated",
+   "arm": "migrated",
+   "line": "f1-migrated coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "card",
+   "arm": "library",
+   "line": "card Tab entry (Option+Tab) · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 57.68 / 51.22 / 39.37"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "line": "card commit bar, keyboard commit (ArrowRight, pointer never moved) on #undefined · keyboard traversal landed on after, not an item · load 57.68 / 51.22 / 39.37"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "line": "card commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.00 at 7 ms, trough after it 1.00, settle 1.00 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved never; 79 frames, median 10.00 ms · load 59.39 / 51.68 / 39.60"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "line": "card commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.00 at 0 ms, trough after it 1.00, settle 1.00 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved never; 79 frames, median 10.00 ms · load 59.39 / 51.68 / 39.60"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "line": "card hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0003 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.01:1)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "line": "card hover scale · 1.00 (none); median frame 10.00 ms, load 57.44 / 51.40 / 39.57"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "line": "card press · scale 1.00×1.00; median frame 10.00 ms, load 57.44 / 51.40 / 39.57"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "line": "card commit bar, pointer commit (release of the press) on #0 · pop peak 1.00 at 5 ms, trough after it 1.00, settle 1.00 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 16-270 ms; 79 frames, median 10.00 ms · load 57.44 / 51.40 / 39.57"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "card",
+   "arm": "library",
+   "line": "card commit motions at release (reported, the pass-1 cell) · 1 non-scale [CSSTransition:opacity@item::before 260ms] (all 1)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "line": "card PRM hover light channel · mean ΔE(OKLab) 0.0003 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.01:1)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "line": "card PRT hover light channel (prt (forced level-0 path)) · mean ΔE(OKLab) 0.0025 over the plate interior vs the bar 0.02 (reported: 0.17 % of pixels moved > 10 levels, p95 1.04:1)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "card",
+   "arm": "library",
+   "line": "card coarse · after tapping #0 then #1: #0 scale 1.00, :hover false, paint moved 0.00 %"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "chipcell",
+   "arm": "library",
+   "line": "chipcell Tab entry (Option+Tab) · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 59.64 / 52.08 / 39.95"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "chipcell",
+   "arm": "library",
+   "line": "chipcell commit bar, keyboard commit (ArrowRight, pointer never moved) on #-1 · the input committed nothing (no item became selected) · load 60.39 / 52.36 / 40.12"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "chipcell",
+   "arm": "library",
+   "line": "chipcell commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.09 at 224 ms, trough after it 1.07, settle 1.07 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 16-366 ms; 78 frames, median 10.00 ms · load 60.39 / 52.36 / 40.12"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "chipcell",
+   "arm": "library",
+   "line": "chipcell commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.00 at 7 ms, trough after it 1.00, settle 1.00 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 18-388 ms; 79 frames, median 10.00 ms · load 64.12 / 53.27 / 40.51"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "chipcell",
+   "arm": "library",
+   "line": "chipcell hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0000 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.00:1)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "chipcell",
+   "arm": "library",
+   "line": "chipcell hover scale · 1.01 (1.015); median frame 10.00 ms, load 64.12 / 53.27 / 40.51"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "chipcell",
+   "arm": "library",
+   "line": "chipcell press · scale 0.97×0.97; median frame 10.00 ms, load 64.43 / 53.51 / 40.68"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "chipcell",
+   "arm": "library",
+   "line": "chipcell commit bar, pointer commit (release of the press) on #0 · pop peak 1.02 at 212 ms, trough after it 1.01, settle 1.01 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 15-366 ms; 79 frames, median 10.00 ms · load 64.43 / 53.51 / 40.68"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "chipcell",
+   "arm": "library",
+   "line": "chipcell commit motions at release (reported, the pass-1 cell) · 6 non-scale [CSSTransition:background-color@item 200ms, CSSTransition:border-bottom-color@item 200ms, CSSTransition:border-left-color@item 200ms, CSSTransition:border-right-color@item 200ms, CSSTransition:border-top-color@item 200ms, CSSTransition:opacity@item::after 300ms] (all 7)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "chipcell",
+   "arm": "library",
+   "line": "chipcell PRM hover light channel · mean ΔE(OKLab) 0.0000 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.00:1)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "chipcell",
+   "arm": "library",
+   "line": "chipcell PRT hover light channel (prt (forced level-0 path)) · mean ΔE(OKLab) 0.0000 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.00:1)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "chipcell",
+   "arm": "library",
+   "line": "chipcell coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip",
+   "arm": "library",
+   "line": "strip Tab entry (Option+Tab) · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 62.86 / 53.53 / 40.83"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip",
+   "arm": "library",
+   "line": "strip commit bar, keyboard commit (ArrowRight, pointer never moved) on #-1 · the input committed nothing (no item became selected) · load 62.86 / 53.53 / 40.83"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip",
+   "arm": "library",
+   "line": "strip commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.09 at 224 ms, trough after it 1.07, settle 1.07 (amplitude ok, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 28-387 ms; 78 frames, median 10.00 ms · load 62.86 / 53.53 / 40.83"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip",
+   "arm": "library",
+   "line": "strip commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.00 at 5 ms, trough after it 1.00, settle 1.00 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 11-383 ms; 74 frames, median 10.00 ms · load 61.91 / 53.49 / 40.89"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip",
+   "arm": "library",
+   "line": "strip hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0000 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.00:1)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip",
+   "arm": "library",
+   "line": "strip hover scale · 1.01 (1.015); median frame 10.00 ms, load 62.16 / 53.68 / 41.03"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip",
+   "arm": "library",
+   "line": "strip press · scale 0.96×0.96; median frame 10.00 ms, load 62.16 / 53.68 / 41.03"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip",
+   "arm": "library",
+   "line": "strip commit bar, pointer commit (release of the press) on #0 · pop peak 1.03 at 221 ms, trough after it 1.01, settle 1.01 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 26-366 ms; 79 frames, median 10.00 ms · load 62.16 / 53.68 / 41.03"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip",
+   "arm": "library",
+   "line": "strip commit motions at release (reported, the pass-1 cell) · 6 non-scale [CSSTransition:background-color@item 200ms, CSSTransition:border-bottom-color@item 200ms, CSSTransition:border-left-color@item 200ms, CSSTransition:border-right-color@item 200ms, CSSTransition:border-top-color@item 200ms, CSSTransition:opacity@item::after 300ms] (all 7)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip",
+   "arm": "library",
+   "line": "strip PRM hover light channel · mean ΔE(OKLab) 0.0000 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.00:1)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip",
+   "arm": "library",
+   "line": "strip PRT hover light channel (prt (forced level-0 path)) · mean ΔE(OKLab) 0.0000 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.00:1)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip",
+   "arm": "library",
+   "line": "strip coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip-verbatim",
+   "arm": "unmigrated",
+   "line": "strip-verbatim Tab entry (Option+Tab) · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 61.62 / 53.84 / 41.23"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip-verbatim",
+   "arm": "unmigrated",
+   "line": "strip-verbatim commit bar, keyboard commit (ArrowRight, pointer never moved) on #-1 · the input committed nothing (no item became selected) · load 61.62 / 53.84 / 41.23"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip-verbatim",
+   "arm": "unmigrated",
+   "line": "strip-verbatim commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.09 at 223 ms, trough after it 1.07, settle 1.07 (amplitude ok, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 20-378 ms; 79 frames, median 10.00 ms · load 61.17 / 53.87 / 41.32"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip-verbatim",
+   "arm": "unmigrated",
+   "line": "strip-verbatim commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.00 at 6 ms, trough after it 1.00, settle 1.00 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 15-372 ms; 79 frames, median 10.00 ms · load 61.17 / 53.87 / 41.32"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip-verbatim",
+   "arm": "unmigrated",
+   "line": "strip-verbatim hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0000 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.00:1)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip-verbatim",
+   "arm": "unmigrated",
+   "line": "strip-verbatim hover scale · 1.01 (1.015); median frame 10.00 ms, load 62.04 / 54.17 / 41.50"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip-verbatim",
+   "arm": "unmigrated",
+   "line": "strip-verbatim press · scale 0.97×0.97; median frame 10.00 ms, load 62.04 / 54.17 / 41.50"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip-verbatim",
+   "arm": "unmigrated",
+   "line": "strip-verbatim commit bar, pointer commit (release of the press) on #0 · pop peak 1.02 at 219 ms, trough after it 1.01, settle 1.01 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 15-371 ms; 80 frames, median 10.00 ms · load 62.12 / 54.32 / 41.63"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip-verbatim",
+   "arm": "unmigrated",
+   "line": "strip-verbatim commit motions at release (reported, the pass-1 cell) · 6 non-scale [CSSTransition:background-color@item 200ms, CSSTransition:border-bottom-color@item 200ms, CSSTransition:border-left-color@item 200ms, CSSTransition:border-right-color@item 200ms, CSSTransition:border-top-color@item 200ms, CSSTransition:opacity@item::after 300ms] (all 7)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip-verbatim",
+   "arm": "unmigrated",
+   "line": "strip-verbatim PRM hover light channel · mean ΔE(OKLab) 0.0000 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.00:1)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip-verbatim",
+   "arm": "unmigrated",
+   "line": "strip-verbatim PRT hover light channel (prt (forced level-0 path)) · mean ΔE(OKLab) 0.0000 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.00:1)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip-verbatim",
+   "arm": "unmigrated",
+   "line": "strip-verbatim coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip-migrated",
+   "arm": "migrated",
+   "line": "strip-migrated Tab entry (Option+Tab) · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 61.71 / 54.36 / 41.72"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip-migrated",
+   "arm": "migrated",
+   "line": "strip-migrated commit bar, keyboard commit (ArrowRight, pointer never moved) on #2 · pop peak 1.03 at 84 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 12-197 ms; 80 frames, median 10.00 ms · load 61.57 / 54.46 / 41.82"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip-migrated",
+   "arm": "migrated",
+   "line": "strip-migrated commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.03 at 80 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 19-194 ms; 79 frames, median 10.00 ms · load 61.57 / 54.46 / 41.82"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip-migrated",
+   "arm": "migrated",
+   "line": "strip-migrated commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.03 at 87 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 6-187 ms; 80 frames, median 10.00 ms · load 60.64 / 54.38 / 41.87"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip-migrated",
+   "arm": "migrated",
+   "line": "strip-migrated hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.1009 over the plate interior vs the bar 0.02 (reported: 73.37 % of pixels moved > 10 levels, p95 1.37:1)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip-migrated",
+   "arm": "migrated",
+   "line": "strip-migrated hover scale · 1.01 (1.015); median frame 10.00 ms, load 63.23 / 55.02 / 42.17"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip-migrated",
+   "arm": "migrated",
+   "line": "strip-migrated press · scale 0.97×0.97; median frame 11.00 ms, load 63.23 / 55.02 / 42.17"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip-migrated",
+   "arm": "migrated",
+   "line": "strip-migrated commit bar, pointer commit (release of the press) on #0 · pop peak 1.04 at 108 ms, trough after it 1.01, settle 1.01 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 8-189 ms; 78 frames, median 10.00 ms · load 63.23 / 55.02 / 42.17"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip-migrated",
+   "arm": "migrated",
+   "line": "strip-migrated commit motions at release (reported, the pass-1 cell) · 4 non-scale [CSSTransition:background-color@item 180ms, CSSTransition:color@item 180ms, CSSTransition:opacity@item::before 60ms, CSSAnimation:toggle-group-commit@item 450ms] (all 5)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip-migrated",
+   "arm": "migrated",
+   "line": "strip-migrated PRM hover light channel · mean ΔE(OKLab) 0.1009 over the plate interior vs the bar 0.02 (reported: 73.37 % of pixels moved > 10 levels, p95 1.37:1)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip-migrated",
+   "arm": "migrated",
+   "line": "strip-migrated PRT hover light channel (prt (forced level-0 path)) · mean ΔE(OKLab) 0.0461 over the plate interior vs the bar 0.02 (reported: 72.92 % of pixels moved > 10 levels, p95 1.15:1)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "strip-migrated",
+   "arm": "migrated",
+   "line": "strip-migrated coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "single",
+   "arm": "library",
+   "line": "single Tab entry (Option+Tab) · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 65.28 / 55.72 / 42.57"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "single",
+   "arm": "library",
+   "line": "single commit bar, keyboard commit (ArrowRight, pointer never moved) on #2 · pop peak 1.03 at 81 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 10-192 ms; 79 frames, median 10.00 ms · load 65.28 / 55.72 / 42.57"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "single",
+   "arm": "library",
+   "line": "single commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.03 at 77 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 26-189 ms; 78 frames, median 10.00 ms · load 65.50 / 55.92 / 42.71"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "single",
+   "arm": "library",
+   "line": "single commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.03 at 76 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 5-187 ms; 79 frames, median 10.00 ms · load 65.50 / 55.92 / 42.71"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "single",
+   "arm": "library",
+   "line": "single hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0395 over the plate interior vs the bar 0.02 (reported: 61.91 % of pixels moved > 10 levels, p95 1.13:1)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "single",
+   "arm": "library",
+   "line": "single hover scale · 1.01 (1.015); median frame 10.00 ms, load 65.46 / 56.07 / 42.84"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "single",
+   "arm": "library",
+   "line": "single press · scale 0.97×0.97; median frame 10.00 ms, load 65.46 / 56.07 / 42.84"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "single",
+   "arm": "library",
+   "line": "single commit bar, pointer commit (release of the press) on #0 · pop peak 1.04 at 108 ms, trough after it 1.01, settle 1.01 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 16-203 ms; 73 frames, median 11.00 ms · load 65.46 / 56.07 / 42.84"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "single",
+   "arm": "library",
+   "line": "single commit motions at release (reported, the pass-1 cell) · 3 non-scale [CSSTransition:background-color@item 180ms, CSSTransition:color@item 180ms, CSSAnimation:toggle-group-commit@item 450ms] (all 4)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "single",
+   "arm": "library",
+   "line": "single PRM hover light channel · mean ΔE(OKLab) 0.0395 over the plate interior vs the bar 0.02 (reported: 61.91 % of pixels moved > 10 levels, p95 1.13:1)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "single",
+   "arm": "library",
+   "line": "single PRT hover light channel (prt (forced level-0 path)) · mean ΔE(OKLab) 0.0332 over the plate interior vs the bar 0.02 (reported: 56.94 % of pixels moved > 10 levels, p95 1.11:1)"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "single",
+   "arm": "library",
+   "line": "single coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %"
+  }
+ ],
+ "flavor": "src",
+ "harness": {
+  "hash": "9fd4983bc6b9",
+  "files": 27,
+  "rev": "H3"
+ },
+ "run": {
+  "loadStart": "48.45 / 39.89 / 32.86",
+  "loadEnd": "69.29 / 57.23 / 43.41",
+  "census": {
+   "n": 30,
+   "sample": [
+    "1428 /Applications/Visual Studio Code.app/Contents/Resources/app/node_modules.asar.un",
+    "40628 bash /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh --inspecto",
+    "40635 /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/Playwright.app/Contents/M"
+   ],
+   "waitedS": 1.1
+  },
+  "lockWaitS": 0
+ },
+ "notes": [
+  "H3-1: Playwright WebKit browser retired and relaunched 2× at the 60-navigation cap; loads 65.92, 69.29"
+ ],
+ "pass": false,
+ "tally": "64/88 gating cells pass [library 31/55 · unmigrated 34/48 · migrated 33/33]",
+ "arms": {
+  "library": {
+   "pass": 31,
+   "of": 55
+  },
+  "unmigrated": {
+   "pass": 34,
+   "of": 48
+  },
+  "migrated": {
+   "pass": 33,
+   "of": 33
+  }
+ }
+}

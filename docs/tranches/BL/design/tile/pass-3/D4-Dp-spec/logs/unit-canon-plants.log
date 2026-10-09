@@ -1,0 +1,35 @@
+2026-10-08 21:02:10 · load { 38.74 31.76 31.40 }
+== clean
+      Tests  1 passed | 45 skipped (46)
+== plant A: :is(.toggle-group[data-shape="cell"] .toggle-group__item) { border-radius: 12px; }
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
++   "src/components/toggle-group/zz-plant.css | :is(.toggle-group[data-shape=\"cell\"] .toggle-group__item) | 12px",
+      Tests  1 failed | 45 skipped (46)
+== plant S: .toggle-group[data-size="sm"] :is(.toggle-group[data-shape="cell"] .toggle-group__item) { border-radius: var(--radius-panel); }
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
++   "src/components/toggle-group/zz-plant.css | .toggle-group[data-size=\"sm\"] :is(.toggle-group[data-shape=\"cell\"] .toggle-group__item) | var(--radius-panel)",
+      Tests  1 failed | 45 skipped (46)
+== plant H: .toggle-group__item:has(> * + *) { border-radius: 12px; }
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
++   "src/components/toggle-group/zz-plant.css | .toggle-group__item:has(> * + *) | 12px",
+      Tests  1 failed | 45 skipped (46)
+== plant V: .toggle-group[data-orientation="vertical"] :is(.toggle-group[data-shape="cell"] .toggle-group__item) { border-radius: 12px; }
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
++   "src/components/toggle-group/zz-plant.css | .toggle-group[data-orientation=\"vertical\"] :is(.toggle-group[data-shape=\"cell\"] .toggle-group__item) | 12px",
+      Tests  1 failed | 45 skipped (46)
+== plant W: :where(.toggle-group[data-shape=cell] [data-state=on]) { border-radius: 10px; }
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
++   "src/components/toggle-group/zz-plant.css | :where(.toggle-group[data-shape=cell] [data-state=on]) | 10px",
+      Tests  1 failed | 45 skipped (46)
+== plant P: .toggle-group:not([data-shape="pill"]) .toggle-group__item { border-radius: 9999px; }
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
++   "src/components/toggle-group/zz-plant.css | .toggle-group:not([data-shape=\"pill\"]) .toggle-group__item | 9999px",
+      Tests  1 failed | 45 skipped (46)
+== plant I: the tile corner without !important
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+-   "src/components/toggle-group/styles.css | :is(.toggle-group[data-shape=\"cell\"]) .toggle-group__item | var(--radius-field) !important",
++   "src/components/toggle-group/styles.css | :is(.toggle-group[data-shape=\"cell\"]) .toggle-group__item | var(--radius-field)",
+      Tests  1 failed | 45 skipped (46)
+== clean after restore (whole suite)
+      Tests  45 passed | 1 expected fail (46)
+2026-10-08 21:02:22 · load { 35.01 31.19 31.21 }

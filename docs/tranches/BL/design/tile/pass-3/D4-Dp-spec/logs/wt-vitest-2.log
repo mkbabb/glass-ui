@@ -1,0 +1,34 @@
+2026-10-08 21:05:13 · load { 26.28 28.33 29.95 } · run 1
+     × the built demo has a dist-demo to measure 3ms
+     × the dist-demo it measures is NEWER than every source it is built from 0ms
+     × the eager graph stays under the modulepreload and byte ceilings 0ms
+     × development names a pill's second row and an interactive descendant, also when they arrive late 14ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the built demo has a dist-demo to measure
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the eager graph stays under the modulepreload and byte ceilings
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+ FAIL  tests/components/ui/toggle-group/ToggleGroup.test.ts > floor v2 — the commit, the names and the tile fact > development names a pill's second row and an interactive descendant, also when they arrive late
+AssertionError: expected [] to have a length of 1 but got +0
+ Test Files  2 failed | 238 passed (240)
+      Tests  4 failed | 2334 passed | 10 expected fail | 1 skipped (2349)
+2026-10-08 21:05:28 · load { 26.64 28.29 29.91 }
+2026-10-08 21:05:28 · load { 26.64 28.29 29.91 } · run 2
+     × the built demo has a dist-demo to measure 4ms
+     × the dist-demo it measures is NEWER than every source it is built from 1ms
+     × the eager graph stays under the modulepreload and byte ceilings 0ms
+     × development names a pill's second row and an interactive descendant, also when they arrive late 9ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the built demo has a dist-demo to measure
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the eager graph stays under the modulepreload and byte ceilings
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+ FAIL  tests/components/ui/toggle-group/ToggleGroup.test.ts > floor v2 — the commit, the names and the tile fact > development names a pill's second row and an interactive descendant, also when they arrive late
+AssertionError: expected [] to have a length of 1 but got +0
+ Test Files  2 failed | 238 passed (240)
+      Tests  4 failed | 2334 passed | 10 expected fail | 1 skipped (2349)
+2026-10-08 21:05:44 · load { 29.22 28.70 30.02 }

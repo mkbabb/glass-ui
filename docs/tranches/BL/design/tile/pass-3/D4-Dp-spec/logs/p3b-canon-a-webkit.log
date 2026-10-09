@@ -1,0 +1,10 @@
+2026-10-09 11:39:55 · load { 452.10 462.76 361.60 }
+CANON · the canon unit's law on widened fixtures (size, orientation, children, state), parsed by the engine
+  target dp-src (flavor src) · Playwright WebKit 26.5 · harness H3 9fd4983bc6b9
+  load 450.81 / 462.31 / 362.03 at start, 450.81 / 462.31 / 362.03 at end · other headless browser processes at start: 31 (waited 1.4 s) · browser lock waited 0 s
+  FAIL       canon tile corner (plant A) · 48 twins, 139 corner rules · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item» · exactly one rule reaches a tile and not its pill twin, on var(--radius-field) · 2 rule(s): «:is(.toggle-group[data-shape="cell"]) .toggle-group__item» → var(--radius-field) (index-aSvlbAjZ.css; 48/48 twins, first sm/horizontal/none/on); «:is(.toggle-group[data-shape="cell"] .toggle-group__item)» → 12px (inline#1; 48/48 twins, first sm/horizontal/none/on)
+  PASS       canon pill corner (plant A) · 48 twins, 139 corner rules · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item» · every group-scoped corner on a pill is var(--radius-pill) or inherit · 2 rule(s) reach a pill
+  PASS       canon unmatched (plant A) · 48 twins, 139 corner rules · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item» · every corner selector is matched by the engine · 0 unmatched
+CANON FAIL · 2/3 gating cells pass [library 2/3]
+  json /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D4-Dp-spec/out2/plant-a/runs/dp-src/CANON-webkit.json
+exit 1 · 2026-10-09 11:40:03 · load { 450.81 462.31 362.03 }

@@ -1,0 +1,20 @@
+2026-10-08 21:06:45 · load { 22.80 27.27 29.41 }
+floor item, the floor's development-name case alone: 0 pass / 10 fail of 10
+mine item, the floor's development-name case alone: 10 pass / 0 fail of 10
+2026-10-08 21:07:03 · load { 19.35 26.29 29.02 }
+(the floor-arm row above is void: the file swap ran against a warm transform cache; not repeated)
+2026-10-08 21:07:38 · load { 18.76 25.28 28.54 } · route item, whole ToggleGroup.test.ts file: 2 pass / 8 fail of 10 (the one failing case is the floor's development-name case)
+2026-10-08 21:08:17 · load { 16.52 23.90 27.88 } · the case waiting up to five frames (settle): whole file 2 pass / 8 fail of 10
+2026-10-08 21:09:37 · load { 14.91 21.47 26.58 } · cause: the route's new attribute case mounted DETACHED; with attachTo: whole file 3 pass / 7 fail of 10
+--- clean control, 2026-10-08 21:10:32 · load { 17.76 21.07 26.10 }: three files swapped in per arm, vite cache removed before each arm
+floorfile: ToggleGroup.test.ts whole file 0 pass / 10 fail of 10 · load { 19.08 21.19 26.06 }
+mine: ToggleGroup.test.ts whole file 3 pass / 7 fail of 10 · load { 18.07 20.85 25.82 }
+floorfile: ToggleGroup.test.ts whole file 0 pass / 10 fail of 10 · load { 17.35 20.56 25.63 }
+(the two floorfile rows above are void: index.ts still exported ToggleGroupShape, which the floor's barrel case rejects; re-run counting the development-name case only)
+floorfile: the development-name case in the whole file: 10 pass / 0 fail of 10 · other failing cases: G-TOGGLE-WRAP · the deleted surface is gone from the public type too;G-TOGGLE-WRAP · the row wraps and the group paints no silhouetteG-TOGGLE-WRAP · the deleted surface is gone from the public type to · load { 17.87 20.45 25.47 }
+mine: the development-name case in the whole file: 3 pass / 7 fail of 10 · other failing cases: ; · load { 17.09 20.15 25.28 }
+2026-10-08 21:12:27 · load { 15.59 19.47 24.85 } · route, the attribute case in its own file (item-attrs.test.ts): tests/components/ui/toggle-group 10 pass / 0 fail of 10
+--- control re-run 2026-10-08 21:14:54 · load { 31.83 24.06 25.80 }: the earlier floorfile rows are VOID (built inside the checkout's tree, where git apply skipped the floor patch: they were HEAD files). Floor arm = HEAD + floor-v2.patch built in the scratchpad; route arm = this sketch with the attribute case moved out, plus (row 3) the attribute case put back into ToggleGroup.test.ts
+floor: the floor's development-name case, whole ToggleGroup.test.ts: 8 pass / 2 fail of 10 · load { 33.81 25.05 26.12 }
+route: the floor's development-name case, whole ToggleGroup.test.ts: 9 pass / 1 fail of 10 · load { 30.26 24.92 26.04 }
+route, attribute case back in the file: the floor's development-name case, whole ToggleGroup.test.ts: 5 pass / 5 fail of 10 · load { 30.79 25.32 26.16 }

@@ -1,0 +1,17 @@
+2026-10-09 11:26:47 · load { 687.43 349.75 164.06 }
+    500|         await nextTick();
+    501|         await frame();
+    502|         expect(errors.filter((e) => e.includes("asks for a second row"…
+       |                                                                           ^
+    503|         label.append(document.createElement("input"));
+    504|         await nextTick();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  2 failed | 59 passed | 1 expected fail (62)
+   Start at  11:26:50
+   Duration  5.24s (transform 2.73s, setup 1.16s, import 4.51s, tests 2.83s, environment 4.21s)
+
+exit 0 · 2026-10-09 11:26:56 · load { 698.34 363.26 171.03 }

@@ -1,0 +1,613 @@
+diff --git a/src/components/toggle-group/ToggleGroup.vue b/src/components/toggle-group/ToggleGroup.vue
+index 51a7a124..9352972b 100644
+--- a/src/components/toggle-group/ToggleGroup.vue
++++ b/src/components/toggle-group/ToggleGroup.vue
+@@ -1,5 +1,5 @@
+ <script setup lang="ts">
+-import { computed, onUpdated, ref, shallowRef, triggerRef, type HTMLAttributes } from "vue";
++import { computed, onUpdated, ref, shallowRef, triggerRef, watchEffect, type HTMLAttributes } from "vue";
+ import { cn } from "../_shared/class-names";
+ import type { Orientation } from "../_shared/axes";
+ import {
+@@ -8,6 +8,8 @@ import {
+     controlStateAttrs,
+ } from "../_shared/control";
+ import type { SelectionMode, SelectionValue } from "../_shared/selection";
++import { refuseUnknown } from "../_shared/guard";
++import { TOGGLE_GROUP_SHAPES, type ToggleGroupShape } from "./shape";
+ import { useSelectionGroup } from "../../composables/motion/morph/useSelectionGroup";
+ import { provideToggleGroupContext, type ToggleItemEntry } from "./context";
+ 
+@@ -44,6 +46,8 @@ export interface ToggleGroupProps extends ControlProps {
+     type: SelectionMode;
+     orientation?: Orientation;
+     size?: ControlSize;
++    /** `pill` — one-row options (default). `cell` — tiles that hold more than one row. */
++    shape?: ToggleGroupShape;
+     class?: HTMLAttributes["class"];
+ }
+ 
+@@ -52,8 +56,11 @@ defineOptions({ name: "ToggleGroup" });
+ const props = withDefaults(defineProps<ToggleGroupProps>(), {
+     orientation: "horizontal",
+     size: "md",
++    shape: "pill",
+ });
+ 
++watchEffect(() => refuseUnknown("ToggleGroup", "shape", props.shape, TOGGLE_GROUP_SHAPES));
++
+ /* One scalar model for both cardinalities: `single` holds one value, `multiple` an
+  * array. The engine writes it and nothing else does. */
+ const model = defineModel<SelectionValue | SelectionValue[]>();
+@@ -156,6 +163,7 @@ provideToggleGroupContext({
+         :role="selection.groupRole.value"
+         :data-type="props.type"
+         :data-size="props.size"
++        :data-shape="props.shape"
+         :data-orientation="props.orientation"
+         v-bind="controlStateAttrs(props.invalid)"
+         @keydown="selection.onKeydown"
+diff --git a/src/components/toggle-group/ToggleGroupItem.vue b/src/components/toggle-group/ToggleGroupItem.vue
+index ef1fd19c..f8f5e461 100644
+--- a/src/components/toggle-group/ToggleGroupItem.vue
++++ b/src/components/toggle-group/ToggleGroupItem.vue
+@@ -1,5 +1,5 @@
+ <script setup lang="ts">
+-import { computed, onBeforeUnmount, onMounted, ref, watch, type HTMLAttributes } from "vue";
++import { computed, onBeforeUnmount, onMounted, ref, useAttrs, watch, type HTMLAttributes } from "vue";
+ import { cn } from "../_shared/class-names";
+ import type { SelectionValue } from "../_shared/selection";
+ import { useOptionalToggleGroupContext, type ToggleItemEntry } from "./context";
+@@ -24,7 +24,12 @@ export interface ToggleGroupItemProps {
+     class?: HTMLAttributes["class"];
+ }
+ 
+-defineOptions({ name: "ToggleGroupItem" });
++/* THE ENGINE OWNS THE OPTION'S ROLE, STATE AND TAB STOP. Vue applies fall-through
++ * attributes after a component's own bindings, so a consumer `role` or `tabindex` on
++ * the item replaced the engine's: four tab stops and `option` inside a `radiogroup`
++ * (H3-12). The consumer's attributes now bind first, the engine's role and state over
++ * them, and the item's own bindings (state, tab stop) after both. */
++defineOptions({ name: "ToggleGroupItem", inheritAttrs: false });
+ 
+ const props = defineProps<ToggleGroupItemProps>();
+ 
+@@ -97,6 +102,7 @@ function onAnimationEnd(event: AnimationEvent) {
+  * consumer's bundler resolves, so a consumer's development build hears these and its
+  * production build drops them (Q-5 (d), without a `development` export condition). */
+ if (process.env.NODE_ENV !== "production") {
++    const attrs = useAttrs();
+     let watcher: MutationObserver | null = null;
+     let queued = 0;
+     const said = new Set<string>();
+@@ -123,6 +129,11 @@ if (process.env.NODE_ENV !== "production") {
+                     "asks for a second row: a pill shows its content on one row. Options that hold more than one row are tiles.",
+                 );
+         }
++        const owned = ["role", "tabindex", "aria-checked", "aria-pressed"].filter((a) => a in attrs);
++        if (owned.length)
++            name(
++                `sets ${owned.join(", ")}: the group's engine owns an option's role, state and tab stop, and its values stand.`,
++            );
+         if (b.querySelector("a[href], button, input, select, textarea, [contenteditable], [tabindex]"))
+             name(
+                 "holds an interactive descendant. The item is one button: nothing inside it takes focus or a click of its own.",
+@@ -147,6 +158,7 @@ if (process.env.NODE_ENV !== "production") {
+ 
+ <template>
+     <button
++        v-bind="{ ...$attrs, ...group?.itemAttrs(props.value) }"
+         ref="el"
+         type="button"
+         data-slot="toggle-group-item"
+@@ -160,7 +172,6 @@ if (process.env.NODE_ENV !== "production") {
+         :data-commit="committed ? '' : undefined"
+         :disabled="isDisabled || undefined"
+         :tabindex="group?.tabindex(entry) ?? 0"
+-        v-bind="group?.itemAttrs(props.value)"
+         @click="group?.select(entry)"
+         @animationend.self="onAnimationEnd"
+     >
+diff --git a/src/components/toggle-group/styles.css b/src/components/toggle-group/styles.css
+index db60f000..006c3dd8 100644
+--- a/src/components/toggle-group/styles.css
++++ b/src/components/toggle-group/styles.css
+@@ -149,7 +149,11 @@
+     .toggle-group__item::before {
+         content: "";
+         position: absolute;
+-        inset: -1px;
++        /* inside the padding box: paint containment (`content-visibility: auto` on a
++           tile, `overflow: clip` on a pill) clips there, and an edge that straddled the
++           border lost its outer half in Chromium and in Playwright WebKit (H3-7;
++           `overflow-clip-margin` would cure Chromium only, so it is not used) */
++        inset: 0;
+         border-width: 2px;
+         border-style: solid;
+         border-color: var(--selection-edge);
+@@ -252,6 +256,36 @@
+         padding-inline: 1.25rem;
+     }
+ 
++    /* THE TILE, DECLARED ONCE (`<ToggleGroup shape="cell">`). The block below is the
++       one place "this option is a tile" is spelled; its item rules nest under it. It
++       sets the tile fact on the group (`--selection-tile: flush`, utilities/base.css),
++       and every other reader derives from that: the pill's one-row law and the plate
++       stand down, the selected perimeter turns on, development stops naming a second
++       row. The item takes the field corner (a box that holds more than one row is not
++       a stadium), a column, the card pad pair and body leading. The group's layout
++       (grid, columns, gap) stays the consumer's. The corner is the refusal:
++       `!important` in this layer outranks a consumer corner utility or scoped rule, so
++       a tile cannot be made a stadium or a lozenge by a class (Q-5 (b): refused in
++       paint, in production). */
++    .toggle-group[data-shape="cell"] {
++        --selection-tile: flush;
++
++        & .toggle-group__item {
++            flex-direction: column;
++            align-items: stretch;
++            justify-content: flex-start;
++            gap: var(--space-residue);
++            padding: var(--space-atom) var(--space-body);
++            text-align: start;
++            line-height: var(--type-leading-body);
++            border-radius: var(--radius-field) !important;
++        }
++
++        &[data-size="sm"] .toggle-group__item {
++            padding: var(--space-residue) var(--space-atom);
++        }
++    }
++
+     /* THE ON-STATE CARRIES ON INK AND WEIGHT, AND ASSISTS WITH FILL. It used to be a
+        four-carrier slab: an opaque `--accent` fill, a 28%-α `--primary` border, a
+        `--shadow-sm`, and the ink. The shadow was the real defect — it tied the focus
+diff --git a/src/components/toggle-group/index.ts b/src/components/toggle-group/index.ts
+index e1b7b9d5..8943eaac 100644
+--- a/src/components/toggle-group/index.ts
++++ b/src/components/toggle-group/index.ts
+@@ -1,4 +1,5 @@
+ export { default as ToggleGroup, type ToggleGroupProps } from "./ToggleGroup.vue";
++export { type ToggleGroupShape } from "./shape";
+ export {
+     default as ToggleGroupItem,
+     type ToggleGroupItemProps,
+diff --git a/src/index.ts b/src/index.ts
+index ca7c490c..76febe13 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -371,6 +371,7 @@ export {
+     ToggleGroupItem,
+     type ToggleGroupItemProps,
+     type ToggleGroupProps,
++    type ToggleGroupShape,
+ } from "./components/toggle-group";
+ export {
+     Tooltip,
+diff --git a/src/components/fading-scroll/FadingScroll.vue b/src/components/fading-scroll/FadingScroll.vue
+index 6871d31c..58ec9782 100644
+--- a/src/components/fading-scroll/FadingScroll.vue
++++ b/src/components/fading-scroll/FadingScroll.vue
+@@ -16,7 +16,7 @@
+ //     OFF when the native timeline is supported (no double-feather).
+ // The CSS axis is selected by `data-fade-axis` (the root attr); the fallback
+ // reads the same `axis` prop.
+-import { computed, ref, toRef, watch } from "vue";
++import { computed, onBeforeUnmount, onMounted, ref, toRef, watch } from "vue";
+ import { useFadingScroll } from "./composables/useFadingScroll";
+ 
+ const props = withDefaults(
+@@ -51,6 +51,32 @@ watch(
+     () => [props.axis, props.fadeStart, props.fadeEnd],
+     fadingScroll.measure,
+ );
++
++/* THE PORT IS A TAB STOP ONLY WHEN NOTHING INSIDE IT IS. A keyboard user has to be able
++ * to scroll the port, so a port of plain content takes focus. A port whose content
++ * holds a tab stop is scrolled by moving focus through that content (the browser
++ * scrolls a focused element into view), and a stop of its own would be a second,
++ * empty stop in front of the content: a one-of-N group inside the port read two stops
++ * where it has one (TF-6). Re-read when the content's elements or tab stops change. */
++const FOCUSABLE =
++    'a[href], button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [contenteditable]:not([contenteditable="false"]), [tabindex]:not([tabindex="-1"])';
++const holdsStop = ref(false);
++let watcher: MutationObserver | null = null;
++const read = () => {
++    holdsStop.value = !!rootRef.value?.querySelector(FOCUSABLE);
++};
++onMounted(() => {
++    if (!rootRef.value) return;
++    read();
++    watcher = new MutationObserver(read);
++    watcher.observe(rootRef.value, {
++        childList: true,
++        subtree: true,
++        attributes: true,
++        attributeFilter: ["tabindex", "disabled", "href", "contenteditable"],
++    });
++});
++onBeforeUnmount(() => watcher?.disconnect());
+ </script>
+ 
+ <template>
+@@ -64,7 +90,7 @@ watch(
+         :role="namedRegion ? 'region' : undefined"
+         :aria-label="ariaLabel"
+         :aria-labelledby="ariaLabelledby"
+-        tabindex="0"
++        :tabindex="holdsStop ? undefined : 0"
+     >
+         <slot />
+     </div>
+diff --git a/MIGRATION.md b/MIGRATION.md
+index 3443ba6f..f0471fbc 100644
+--- a/MIGRATION.md
++++ b/MIGRATION.md
+@@ -23,8 +23,9 @@ _`<Chip shape="cell">` leaves, and an unknown `shape` throws_
+ The shapes are `pill` and `icon`. A chip given any other shape throws a `TypeError` naming
+ the shapes (`[Chip] shape="cell" is not one of pill, icon.`), in production as well as in
+ development; it reaches your app's error handler (the chip itself still renders, as a
+-pill). A selectable option that holds more than one line is a `ToggleGroup` item.
+-Detector: `rg 'shape="cell"'`.
++pill). A selectable option that holds more than one line is a `<ToggleGroup
++shape="cell">` item. Detector: `rg '<Chip[^>]*shape="cell"'` (a `ToggleGroup`'s
++`shape="cell"` is the new home, not a hit).
+ 
+ _`<SegmentedTabs semantics="toggle">` becomes `semantics="radio"`, and an unknown
+ `semantics` throws_
+@@ -37,6 +38,37 @@ throws `[SegmentedTabs] semantics="toggle" is not one of radio, tabs.` in produc
+ well as in development, the same refusal Chip gives an unknown `shape`; the strip still
+ renders on the default pairing. Detector: `rg 'semantics="toggle"'`, and the error.
+ 
++_A set whose options hold more than one row declares `<ToggleGroup shape="cell">`_
++
++`<ToggleGroup>` takes `shape: "pill" | "cell"` (default `pill`, exported as
++`ToggleGroupShape`). A pill holds one row (below), so an option that shows a name over a
++readout, or a picture over a name, renders on one row and clips until its group says
++`shape="cell"`. A `cell` item is a tile: the field corner (16px), a column, the card pad
++pair (`--space-atom` / `--space-body`; `sm`: `--space-residue` / `--space-atom`), body
++leading, no plate at rest, and the selected perimeter. The group's layout (grid,
++columns, gap) stays yours. Delete the item utilities the tile now supplies (`flex-col`,
++`items-start`, the pads, `leading-*`), any corner (`rounded-*`; a corner on a tile is
++refused in paint and has no effect), and any selected paint (outline, border, ring,
++fill, `[data-state="on"]` ink rules). A value other than `pill` or `cell` throws
++`[ToggleGroup] shape="…" is not one of pill, cell.` in production as in development; the
++group still renders, as pills. Detector: in development, `[ToggleGroupItem] value=… asks
++for a second row`; `rg 'ToggleGroupItem[^>]*(flex-col|rounded-)'`.
++
++_A `role` or `tabindex` on a `ToggleGroupItem` no longer replaces the group's_
++
++The group's engine owns each option's `role`, `aria-checked` / `aria-pressed` and roving
++`tabindex`; a consumer value used to win and broke the one-tab-stop radio group (four
++stops, `option` inside a `radiogroup`). Your attributes now bind first and the engine's
++after them. Delete them. Detector: in development, `[ToggleGroupItem] value=… sets
++role, tabindex: the group's engine owns …`.
++
++_`<FadingScroll>` is a tab stop only while its content holds none_
++
++The port used to be a tab stop always, so a `ToggleGroup` (or any focusable content)
++inside it read two stops: the port, then the content. The port now takes `tabindex="0"`
++only while nothing inside it is focusable, and re-reads when its content changes; a
++port of focusable content scrolls as focus moves through it. Nothing to change.
++
+ _Behaviour and paint, nothing to change_
+ 
+ - `<ToggleGroup>` pads its row by `--focus-ring-reach` (the ring's outline plus offset,
+@@ -57,8 +89,8 @@ _Behaviour and paint, nothing to change_
+   nothing. These checks read `process.env.NODE_ENV`, which your bundler resolves (Vite
+   and webpack do by default).
+ - `--selection-tile` (`none` | `flush` | `plated`, inherited) says whether a set of
+-  options are tiles. It is `none` on every `ToggleGroup`, and nothing in the library
+-  sets it yet. Under `flush` an option paints no plate, floor or blur at rest; under
++  options are tiles. It is `none` on every `ToggleGroup` and `flush` on a
++  `<ToggleGroup shape="cell">` (below). Under `flush` an option paints no plate, floor or blur at rest; under
+   either tile value it is not held to one row and paints its selected perimeter.
+ - A `ToggleGroup` item pops when it is selected, by pointer, key or a write to the
+   model: it peaks about 2.8 % over its rest (4.5 % under a loud driver,
+diff --git a/tests/styles/radius-role-canon.test.ts b/tests/styles/radius-role-canon.test.ts
+index 152af273..9d7a1411 100644
+--- a/tests/styles/radius-role-canon.test.ts
++++ b/tests/styles/radius-role-canon.test.ts
+@@ -1,5 +1,6 @@
+ import { readdirSync, readFileSync } from "node:fs";
+ import { join } from "node:path";
++import postcss from "postcss";
+ import { describe, expect, it } from "vitest";
+ import { cn } from "@glass/components/_shared/class-names";
+ 
+@@ -562,9 +563,130 @@ describe("7. this wave's role bindings", () => {
+         // …and the sentinel-producing calc goes with it, in EITHER spelling: the
+         // literal D-5 recorded and the relay #23 re-expressed it as.
+         expect(strippedSheet).not.toMatch(/var\(--radius-pill\)\s*\+/);
+-        // The segment keeps its own role rung (law B) — one stadium, one spelling.
+-        const item = rule(sheet, "\\.toggle-group__item");
+-        expect(item).toContain("border-radius: var(--radius-pill)");
++        // The segment's own rung (law B) is read on the parsed selector below.
++    });
++
++    /* D4 · THE TILE CORNER IS ONE DECLARATION, read on the PARSED selector, never on
++     * text. Every corner-declaring rule in every sheet under src/ (nesting resolved:
++     * `&` is the parent's selector) is matched by `Element.matches` against 48 twins:
++     * the same item in a `cell` group and in a `pill` group, at sm, md and lg, in both
++     * orientations, with no child, one label, two rows, or media and a label, on and
++     * off. A selector that needs a size, an orientation or a child reaches its twin,
++     * and a selector the matcher cannot parse FAILS rather than counting as no reach.
++     * The law: exactly one rule reaches a tile and not its pill twin, on the field
++     * rung; every group-scoped corner that reaches a pill is the stadium or `inherit`.
++     * The painted corner is pinned in both engines by the D4 harness (T-1, T-2, W-D,
++     * CANON). */
++    it("the tile corner is one declaration on the field rung; the pill keeps the stadium", () => {
++        const files = (dir: string): string[] =>
++            readdirSync(dir, { withFileTypes: true }).flatMap((d) =>
++                d.isDirectory()
++                    ? files(join(dir, d.name))
++                    : d.name.endsWith(".css")
++                      ? [join(dir, d.name)]
++                      : [],
++            );
++        const CHILDREN = {
++            none: "",
++            label: "<span>Gentle</span>",
++            rows: "<span>Gentle</span><span>0.5 s</span>",
++            media: '<svg viewBox="0 0 1 1"></svg><span>Gentle</span>',
++        };
++        const twins: { key: string; cell: Element; pill: Element }[] = [];
++        const mk = (shape: string, size: string, o: string, inner: string, st: string) => {
++            const g = document.createElement("div");
++            g.innerHTML = `<div class="toggle-group" data-slot="toggle-group" role="radiogroup" data-type="single" data-shape="${shape}" data-size="${size}" data-orientation="${o}"><button type="button" class="toggle-group__item pill-row control-surface glass-control-edge glass-capsule-hover tap-squish focus-ring" data-slot="toggle-group-item" role="radio" data-state="${st}">${inner}</button></div>`;
++            document.body.append(g);
++            return g.querySelector("button")!;
++        };
++        for (const size of ["sm", "md", "lg"])
++            for (const o of ["horizontal", "vertical"])
++                for (const [ck, inner] of Object.entries(CHILDREN))
++                    for (const st of ["on", "off"])
++                        twins.push({
++                            key: `${size}/${o}/${ck}/${st}`,
++                            cell: mk("cell", size, o, inner, st),
++                            pill: mk("pill", size, o, inner, st),
++                        });
++        const absolute = (r: postcss.Rule): string[] => {
++            let up = r.parent;
++            while (up && up.type !== "rule" && !(up.type === "atrule" && (up as postcss.AtRule).name === "utility") && up.type !== "root")
++                up = up.parent;
++            if (!up || up.type === "root") return r.selectors.map((one) => one.replace(/\s+/g, " "));
++            // a Tailwind `@utility <name>` is the class `.name`
++            const parent =
++                up.type === "atrule"
++                    ? `.${(up as postcss.AtRule).params.trim()}`
++                    : absolute(up as postcss.Rule).join(", ");
++            return r.selectors.map((raw) => raw.replace(/\s+/g, " ")).map((one) =>
++                one.includes("&") ? one.replaceAll("&", `:is(${parent})`) : `:is(${parent}) ${one}`,
++            );
++        };
++        const host = (one: string) =>
++            one
++                .replace(
++                    /::?(before|after|hover|active|focus-visible|focus-within|focus|marker|placeholder|backdrop)\b(\([^)]*\))?/g,
++                    "",
++                )
++                .trim() || "*";
++        /* happy-dom's matcher returns false, silently, for a complex selector inside
++         * `:is()`, `:where()` or `:not()` (`:is(.g .i)` never matches). So each such
++         * argument is resolved from the innermost out: every element that matches the
++         * argument directly is marked, and the pseudo-class is replaced by the mark.
++         * That is exact on the twins, whatever the argument holds. */
++        let mark = 0;
++        const marked: string[] = [];
++        const resolve = (sel: string): string => {
++            const innermost = /:(is|where|not)\(([^()]*)\)/;
++            let out = sel;
++            for (let m = out.match(innermost); m; m = out.match(innermost)) {
++                const attr = `data-canon-${mark++}`;
++                marked.push(attr);
++                const not = m[1] === "not";
++                for (const el of document.querySelectorAll("*")) if (el.matches(m[2]) !== not) el.setAttribute(attr, "");
++                out = out.replace(m[0], `[${attr}]`);
++            }
++            return out;
++        };
++        const unmark = () => {
++            for (const attr of marked.splice(0)) for (const el of document.querySelectorAll(`[${attr}]`)) el.removeAttribute(attr);
++        };
++        const tileOnly = new Set<string>();
++        const pillBad: string[] = [];
++        const unmatched: string[] = [];
++        for (const file of files(join(process.cwd(), "src"))) {
++            const rel = file.slice(process.cwd().length + 1);
++            postcss
++                .parse(readFileSync(file, "utf8"))
++                .walkDecls(/^border(-(top|bottom|start|end)-(left|right|start|end))?-radius$/, (d) => {
++                    if (d.parent?.type !== "rule") return;
++                    for (const one of absolute(d.parent as postcss.Rule)) {
++                        let onCell = 0;
++                        let onPill = 0;
++                        try {
++                            const sel = resolve(host(one));
++                            for (const t of twins) {
++                                if (t.cell.matches(sel) && !t.pill.matches(sel)) onCell++;
++                                if (t.pill.matches(sel)) onPill++;
++                            }
++                        } catch {
++                            unmatched.push(`${rel}: ${one}`);
++                            continue;
++                        } finally {
++                            unmark();
++                        }
++                        if (onCell) tileOnly.add(`${rel} | ${one} | ${d.value}${d.important ? " !important" : ""}`);
++                        if (onPill && /toggle-group/.test(one) && !["var(--radius-pill)", "inherit"].includes(d.value))
++                            pillBad.push(`${rel} | ${one} | ${d.value}`);
++                    }
++                });
++        }
++        document.body.replaceChildren();
++        expect(unmatched).toEqual([]);
++        expect([...tileOnly]).toEqual([
++            'src/components/toggle-group/styles.css | :is(.toggle-group[data-shape="cell"]) .toggle-group__item | var(--radius-field) !important',
++        ]);
++        expect(pillBad).toEqual([]);
+     });
+ 
+     it("mints no radius token to do any of it", () => {
+diff --git a/tests/components/ui/toggle-group/ToggleGroup.test.ts b/tests/components/ui/toggle-group/ToggleGroup.test.ts
+index c9c5af85..e279ae72 100644
+--- a/tests/components/ui/toggle-group/ToggleGroup.test.ts
++++ b/tests/components/ui/toggle-group/ToggleGroup.test.ts
+@@ -18,6 +18,7 @@
+  * them.
+  */
+ import { readFileSync } from "node:fs";
++import postcss from "postcss";
+ import { resolve } from "node:path";
+ import { mount } from "@vue/test-utils";
+ import { defineComponent, nextTick, ref } from "vue";
+@@ -345,19 +346,22 @@ describe("W-TOGGLE-ROW — the selection row", () => {
+         expect(css).not.toContain("overscroll-behavior-inline");
+         // The ONE spelling of the stadium that survives is the item's role rung.
+         expect(css).toContain("border-radius: var(--radius-pill)");
+-        // Rules whose selector ENDS at the group host — a descendant rule
+-        // (`.toggle-group[data-size="sm"] .toggle-group__item`) paints the item and
+-        // is not the group's silhouette.
+-        const groupRules =
+-            css.match(/\.toggle-group(?:\[[^\]]*\])*\s*\{[^}]*\}/g) ?? [];
++        // Rules whose selector ENDS at the group host, read on the PARSED sheet: a
++        // rule's own declarations only, so an item rule nested under the group
++        // (`& .toggle-group__item`) paints the item and is not the group's silhouette.
++        const groupRules: postcss.Rule[] = [];
++        postcss.parse(css).walkRules((r) => {
++            if (/^\.toggle-group(?:\[[^\]]*\])*$/.test(r.selector.trim())) groupRules.push(r);
++        });
+         expect(groupRules.length).toBeGreaterThan(0);
+         for (const rule of groupRules) {
+-            expect(rule, `the group may not paint: ${rule}`).not.toMatch(
+-                /background|border-radius|box-shadow|backdrop-filter/,
+-            );
+-            // the one pad the group owns is the ring's clearance, read from its token
+-            for (const pad of rule.match(/padding[^;]*;/g) ?? []) {
+-                expect(pad).toBe("padding: var(--focus-ring-reach);");
++            const own = rule.nodes.filter((n): n is postcss.Declaration => n.type === "decl");
++            for (const d of own) {
++                expect(d.prop, `the group may not paint: ${rule.selector} { ${d} }`).not.toMatch(
++                    /background|border-radius|box-shadow|backdrop-filter/,
++                );
++                // the one pad the group owns is the ring's clearance, read from its token
++                if (d.prop.startsWith("padding")) expect(`${d.prop}: ${d.value}`).toBe("padding: var(--focus-ring-reach)");
+             }
+         }
+     });
+@@ -386,9 +390,31 @@ describe("W-TOGGLE-ROW — the selection row", () => {
+             "ToggleGroupItem",
+             "ToggleGroupItemProps",
+             "ToggleGroupProps",
++            "ToggleGroupShape",
+         ]);
+     });
+ 
++    /* D4-D′ · the tile is declared once, at the group. `shape` stamps `data-shape`,
++     * which the sheet's one tile rule reads; an unknown value is refused loud through
++     * the app's error handler and the group renders as pills. */
++    it("shape stamps data-shape, defaults to pill, and refuses an unknown value", () => {
++        const make = (shape?: string) =>
++            mount(ToggleGroup, {
++                props: { type: "single", modelValue: "a", ...(shape ? { shape } : {}) } as never,
++                slots: { default: () => [] },
++            });
++        const pill = make();
++        const cell = make("cell");
++        expect(pill.attributes("data-shape")).toBe("pill");
++        expect(cell.attributes("data-shape")).toBe("cell");
++        pill.unmount();
++        cell.unmount();
++        expect(() => make("card").unmount()).toThrow(
++            new TypeError('[ToggleGroup] shape="card" is not one of pill, cell.'),
++        );
++    });
++
++
+     /* The ⊕⁷ o19 A-18 salvage: the indicator SEAT is the library's, the PAINT is the
+      * consumer's. The slot renders inside the pill, so whatever the consumer puts in
+      * it inherits the hover lift and press squish and no motion authority leaves the
+diff --git a/tests/components/fading-scroll.contract.test.ts b/tests/components/fading-scroll.contract.test.ts
+index 42cbb7af..d9f028be 100644
+--- a/tests/components/fading-scroll.contract.test.ts
++++ b/tests/components/fading-scroll.contract.test.ts
+@@ -1,4 +1,5 @@
+ import { mount } from "@vue/test-utils";
++import { nextTick } from "vue";
+ import { describe, expect, it } from "vitest";
+ import FadingScroll from "@glass/components/fading-scroll/FadingScroll.vue";
+ import { normalizeHorizontalScrollLeft } from "@glass/components/fading-scroll/composables/useFadingScroll";
+@@ -19,6 +20,24 @@ describe("FadingScroll", () => {
+         });
+     });
+ 
++    /* TF-6 · the port is a stop only while its content holds none: a group inside it
++     * is reached by Tab directly, and the port scrolls as focus moves. */
++    it("takes a tab stop only while its content holds none", async () => {
++        const plain = mount(FadingScroll, { slots: { default: "<p>text</p>" } });
++        expect(plain.attributes("tabindex")).toBe("0");
++        const held = mount(FadingScroll, {
++            slots: { default: '<button tabindex="-1">a</button><button tabindex="0">b</button>' },
++            attachTo: document.body,
++        });
++        await nextTick();
++        expect(held.attributes("tabindex")).toBeUndefined();
++        held.element.replaceChildren(document.createTextNode("emptied"));
++        await new Promise((r) => setTimeout(r, 0));
++        await nextTick();
++        expect(held.attributes("tabindex")).toBe("0");
++        held.unmount();
++    });
++
+     it("normalizes every horizontal RTL scrollLeft model from inline-start", () => {
+         expect(normalizeHorizontalScrollLeft(40, 100, "ltr", "negative")).toBe(40);
+         expect(normalizeHorizontalScrollLeft(-40, 100, "rtl", "negative")).toBe(40);
+diff --git a/src/components/toggle-group/shape.ts b/src/components/toggle-group/shape.ts
+new file mode 100644
+index 00000000..bbfd1a6a
+--- /dev/null
++++ b/src/components/toggle-group/shape.ts
+@@ -0,0 +1,7 @@
++/* THE OPTION SHAPE, declared once at the group. `pill` (the default) is a one-row
++ * option: a stadium at the control rung that lays its content out on one row. `cell`
++ * is a tile, an option that holds more than one row: the field corner, a column, the
++ * card pad pair and body leading. The declaration is the one fact; styles.css turns it
++ * into `--selection-tile`, which every other reader derives from. */
++export const TOGGLE_GROUP_SHAPES = ["pill", "cell"] as const;
++export type ToggleGroupShape = (typeof TOGGLE_GROUP_SHAPES)[number];
+diff --git a/tests/components/ui/toggle-group/item-attrs.test.ts b/tests/components/ui/toggle-group/item-attrs.test.ts
+new file mode 100644
+index 00000000..5ffdc615
+--- /dev/null
++++ b/tests/components/ui/toggle-group/item-attrs.test.ts
+@@ -0,0 +1,30 @@
++import { mount } from "@vue/test-utils";
++import { defineComponent, nextTick, ref } from "vue";
++import { expect, it } from "vitest";
++import { ToggleGroup, ToggleGroupItem } from "@glass/components/toggle-group";
++
++/* Its own file: in ToggleGroup.test.ts this mount, run before the floor's late
++ * development-name case, left that case's MutationObserver silent in happy-dom 7 runs
++ * of 10 (pass-3/D4-Dp-spec/logs/wt-devname-flake.log). The names are measured in both
++ * engines by the harness (pass-3/D4-Dp-spec.md). */
++/* H3-12 · a consumer role or tabindex on an item no longer replaces the engine's:
++ * the radio group keeps `radio`, its checked state and one tab stop. */
++it("the engine's role, state and tab stop stand over a consumer's", async () => {
++    const wrapper = mount(
++        defineComponent({
++            components: { ToggleGroup, ToggleGroupItem },
++            setup: () => ({ model: ref("b") }),
++            template: `<ToggleGroup type="single" v-model="model">
++                <ToggleGroupItem v-for="v in ['a','b','c']" :key="v" :value="v" role="option" tabindex="0" aria-checked="false" data-x="kept">{{ v }}</ToggleGroupItem>
++            </ToggleGroup>`,
++        }),
++        { attachTo: document.body },
++    );
++    await nextTick();
++    const items = wrapper.findAll("button");
++    expect(items.map((b) => b.attributes("role"))).toEqual(["radio", "radio", "radio"]);
++    expect(items.map((b) => b.attributes("aria-checked"))).toEqual(["false", "true", "false"]);
++    expect(items.map((b) => b.attributes("tabindex"))).toEqual(["-1", "0", "-1"]);
++    expect(items[0].attributes("data-x")).toBe("kept");
++    wrapper.unmount();
++});
