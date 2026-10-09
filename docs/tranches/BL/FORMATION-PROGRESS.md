@@ -244,3 +244,10 @@ Outage log:
   - Inherited from A and B: FL-1, FL-2, FL-4, FL-8, H-2.
   - Owner items: E-6 RETIRE (Q-2), X-2 and X-11 bounds, Safari.
   The D5 pass 1 agglomerate launched.
+- 2026-10-08 — **D5 pass 1 CLOSED** (run wf_8b39633d-adf, 15 seats, 0 errors). REGISTRY gains its pass-1 part.
+  - Verdicts: A ADVANCE 29% (absorbs C and D); B ADVANCE but narrowed to the commit path, 27%; E ADVANCE 33%. C and D are RETIRED, with the parts kept and the reopen conditions recorded. On the 31 rows the three critics share, every route reads 9/31.
+  - Main findings: A and B converged on the same minted 1.02 geometric crest, which springPresets forbids and which cannot be seen on 5/7 members. Every census was green over unfinished work.
+  - The pass-2 checklist is fixed at CK-01..CK-27; critics may not add rows.
+  - Owner questions Q-1..Q-5 are unruled; pass 2 builds on the defaults and films both arms for Q-3 and Q-5.
+  - The Sheet in-flow position is routed to BL formation as an INBOUND row (not D5's).
+  D5 pass 2 launched (bl-design-d5-pass2.js), one seat at a time: H2, F5, then P-A2, P-E2 and CP, each with its fresh critic, then the agglomerate.
