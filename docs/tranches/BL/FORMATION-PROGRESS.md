@@ -279,3 +279,7 @@ Outage log:
   - No gate clause reads the keyframes peer class; only the kit probe does.
   - A test-only name sits on an ENTRY door (chip).
   Agglomerate launched.
+- 2026-10-08 — **D1 pass 7 CLOSED** (run wf_f8e9275d-69c). REGISTRY gains Pass 7. B is ADVANCE at 26/27 (96.3%); the two-clean count restarts 1 → 0 on the S-14 re-open, which the agglomerate confirmed in seal.mjs (only main() is guarded at line 472; static imports at lines 12-19 evaluate first).
+  - P7-R1 and P7-R2 ruled by the driver per §P7-4 (owner may override): (a) B18 judges the peer class under npm test, and the probe's dist arm throws on a missing build; (a) base-green means it passes in every base run, with an alternating-rerun flake protocol.
+  - P7-G7 cured: the empty p7 seat dir was removed.
+  D1 passes 8-9 launched as one loop (bl-design-d1-pass8.js). It stops at convergence, or when an agglomerate owes a ruling.

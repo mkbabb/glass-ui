@@ -68,3 +68,12 @@ Ruled by the driver on 2026-10-08, before pass 7's route seat, from REGISTRY §P
 | P6-R1 | the P5-R3 residual table | **§P6-4 as written.** Every recommended row stays as landed except `useScrollScene`, which flips to (a): the demo keeps the scroll spine and the library file leaves `src`. Its S64 names, MIGRATION rows and pin rows go, and S69s's orphan-CSS row is re-derived. | P4-R2 (re-point by default); no library reader; `./motion-core` is the keyframes-free entry |
 | P6-R2 | S67's morph-door widening for the tabs-seam test | **(b).** The 11 names leave `composables/motion/morph/index.ts`; the tabs-seam test states the geometry it observes. The datum row is re-measured and P4-R3's one rebind moves to the last step that changes the bytes. | P4-R2: a door grows for its consumers, and a test is not one |
 | P6-R3 | `seal.mjs` exit codes | **(a).** 0 GREEN, 1 RED, 2 an uncaught throw; LAW states it. | S-14 fail-loud applies to the gate's own exit |
+
+## Pass-7 rulings P7-R1..P7-R2
+
+Ruled by the driver on 2026-10-08, before pass 8's route seat, from REGISTRY §P7-4. Each follows the registry's recommendation. The owner may override any row.
+
+| id | question | ruling | ground |
+|---|---|---|---|
+| P7-R1 | who judges an entry's declared peer class | **(a).** A gate clause, B18, judges each entry's names and files arms against its declared class, under `npm test` through `seal.test.ts`, with one RED and one GREEN case. The probe keeps the dist arm, which throws (exit 2) on a missing build. LAW §5 names B18 as the owner. 18 clauses become 19. | pass 6 broke the class with every gate GREEN; a judge nothing re-runs at landing does not hold it |
+| P7-R2 | when a key is base-green | **(a).** A key is base-green when it passes on the floor base in every run. A key that fails on the base under an alternating rerun (3 per tree) is flaky: recorded and kept out of the bar. LAW states the protocol. | a single-run mark cannot separate a flake from a regression |
