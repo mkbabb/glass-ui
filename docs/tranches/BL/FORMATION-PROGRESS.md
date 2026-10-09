@@ -283,3 +283,10 @@ Outage log:
   - P7-R1 and P7-R2 ruled by the driver per §P7-4 (owner may override): (a) B18 judges the peer class under npm test, and the probe's dist arm throws on a missing build; (a) base-green means it passes in every base run, with an alternating-rerun flake protocol.
   - P7-G7 cured: the empty p7 seat dir was removed.
   D1 passes 8-9 launched as one loop (bl-design-d1-pass8.js). It stops at convergence, or when an agglomerate owes a ruling.
+- 2026-10-08 — D2 pass 3 G-proto banked (the sliding aperture, on floor v2). All five D2-G obligations and the three "Both" obligations are met in Chromium and Playwright WebKit; Safari is UNMEASURED.
+  - The patch is 51 files and reproduces the tree byte for byte. Typecheck and builds exit 0; vitest passes 2339.
+  - H3 failures fall into three groups: shared with floor v2 (W2 long-run-v keyboard, W1 card radius), owner-blocked (Q-12, Q-4), or NOT-REPRODUCED under load.
+  - Stall: ST 10/10; the base leaps 102→481 px in one frame.
+  - The MutationObserver is proved (the nosub plant fails).
+  - Lunes: 0/80 corner points take a press; the nohit plant takes 80/80.
+  The dock harness gains the seat's edits. G critic launched.

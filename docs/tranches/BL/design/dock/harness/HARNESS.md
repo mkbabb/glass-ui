@@ -91,6 +91,7 @@ A witness reads the dock only through `window.__dockProbe`. For a build the adap
 | `compact()` | the opt-in compact-on-scroll rung exists | `false` |
 | `badge()` | the dock's reserved badge seat, or `null` | `null` |
 | `edge()` | optional. Elements outside the plate that carry part of the plate's edge (the D2-G edge caps). The probe's `edge` mode paints them beside the plate; an adapter without them reads the plate alone. It is a DOM read like the others (L-1..L-5) | absent |
+| `hit()` | optional. The dock's press surface when it is not the plate (the D2-G hit pair). The probe hides by `visibility`, which also removes hit-testing; the elements `hit()` names stay hit-testable in every probe mode and paint nothing, so a witness's hover or press under a probe lands as it would on the page | absent |
 
 `config.compactProps` / `config.rimProps` bind a family's API onto the scene. The token `"@source"` becomes the scene's scroll source (a getter to `window`, or an element with `source=el`), which satisfies O-55's getter-or-element contract.
 

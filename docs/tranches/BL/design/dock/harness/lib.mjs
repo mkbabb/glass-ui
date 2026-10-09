@@ -292,6 +292,10 @@ export const HP_SRC = `(() => {
 // mode "edge":  only the plate paints, in its own colours, on a mid-grey page, backdrop-filter off (O-67).
 //               An adapter whose edge is carried outside the plate (edge caps) names those
 //               elements in the optional edge() read; they paint too, in their own colours.
+// Every mode hides by `visibility`, which also takes an element out of hit-testing. An adapter
+// whose press surface is not the plate (the D2-G hit pair) names it in the optional hit()
+// read; it stays hit-testable in every mode and paints nothing, so a hover or press the
+// witness issues under a probe lands where it would on the page.
 const PROBE_CSS = `
 html[data-hp], html[data-hp] body { background: #fff !important; background-image: none !important; }
 html[data-hp="edge"], html[data-hp="edge"] body { background: #7f7f7f !important; }
@@ -316,6 +320,7 @@ html[data-hp="faces"] [data-hp-face] svg [fill]:not([fill="none"]), html[data-hp
 html[data-hp="faces"] [data-hp-face] svg [stroke]:not([stroke="none"]) { stroke: #0f0 !important; }
 html[data-hp="faces"] [data-hp-face-bg] { background: #0f0 !important; }
 html[data-hp="faces"] [data-hp-face]::before, html[data-hp="faces"] [data-hp-face]::after, html[data-hp="faces"] [data-hp-face] *::before, html[data-hp="faces"] [data-hp-face] *::after { display: none !important; }
+html[data-hp] [data-hp-hit] { visibility: visible !important; background: transparent !important; background-image: none !important; border-color: transparent !important; box-shadow: none !important; outline: none !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
 [data-hp-unclip] { overflow: visible !important; clip-path: none !important; contain: none !important; mask: none !important; -webkit-mask: none !important; }
 `;
 export async function probeMode(page, mode, { rim = "dock", els = null, faceSel = null } = {}) {
@@ -324,9 +329,10 @@ export async function probeMode(page, mode, { rim = "dock", els = null, faceSel 
             const s = document.createElement("style"); s.id = "hp-probe-css"; s.textContent = css; document.head.appendChild(s);
         }
         const P = window.__dockProbe;
-        for (const a of ["data-hp-plate", "data-hp-rim", "data-hp-face", "data-hp-face-bg", "data-hp-el", "data-hp-edge"]) document.querySelectorAll(`[${a}]`).forEach((e) => e.removeAttribute(a));
+        for (const a of ["data-hp-plate", "data-hp-rim", "data-hp-face", "data-hp-face-bg", "data-hp-el", "data-hp-edge", "data-hp-hit"]) document.querySelectorAll(`[${a}]`).forEach((e) => e.removeAttribute(a));
         if (!mode) { document.documentElement.removeAttribute("data-hp"); return; }
         P.plate()?.setAttribute("data-hp-plate", "");
+        for (const e of P.hit?.() ?? []) e.setAttribute("data-hp-hit", "");
         const rims = rim === "composed" ? [P.composedRim?.()].filter(Boolean) : (P.rim?.() ?? []);
         for (const e of rims) e.setAttribute("data-hp-rim", "");
         if (mode === "edge") for (const e of P.edge?.() ?? []) e.setAttribute("data-hp-edge", "");

@@ -1,0 +1,69 @@
+PASS  adapter-law  pass-3/adapter-G-p3.mjs  L-1..L-5 hold
+      diff against adapter-head.mjs: 49 changed line(s) (--diff prints them for the critic)
+exit 0
+--- diff vs harness/adapter-head.mjs
+1,2c1,12
+< // adapter-head.mjs: the probe contract for GlassDock as it stands at HEAD
+< // (5dd68ca9; src/ byte-identical to v10.0.1).
+---
+> // adapter-G-p3.mjs: the probe contract for GlassDock at HEAD + pass-3/floor-v2.patch +
+> // pass-3/D2-G-proto.patch (the sliding aperture on floor v2). It is pass-3/adapter-floor-v2.mjs
+> // with the four DOM reads the aperture needs, nothing else:
+> //   plate()  the plate sits inside the aperture's two doors: `:scope > .dock-aperture .dock-plate`.
+> //            extent() is unchanged in form (__hp.paintedRect folds the doors' `overflow: clip`).
+> //   rim()    follows the plate (`.dock-aperture .dock-plate > .dock-rim`).
+> //   edge()   optional: the edge caps the doors carry (`.dock-cap`), so W7's edge paint shows
+> //            the ring's arcs beside the plate's straights.
+> //   hit()    optional: the press surface, the hit pair (`.dock-hit`); the plate takes no
+> //            presses, so a probe's hover reaches the dock through these.
+> // Diffed against ../harness/adapter-head.mjs (H-6). No webkitShim: every Playwright WebKit
+> // cell is unshimmed by construction.
+25c35,36
+< // the window, an element, or an element that mounts late). HEAD has neither.
+---
+> // the window, an element, or an element that mounts late; scenes.mjs resolves it at
+> // any depth, so it binds inside the grouped `scroll` prop).
+32c43,46
+< export const config = { compactProps: null, rimProps: null };
+---
+> export const config = {
+>     compactProps: { scroll: { source: "@source", compact: true, rim: true } },
+>     rimProps: { scroll: { source: "@source", rim: true } },
+> };
+34,46d47
+< /**
+<  * Playwright WebKit 26.5 (the build Playwright 1.61.1 ships, not Safari) kills the
+<  * page on any property whose value nests two translucent color-mix() arms, e.g.
+<  *   color-mix(in srgb, color-mix(in srgb, #1c1917 8%, transparent) 50%,
+<  *                      color-mix(in srgb, #1c1917 5%, transparent))
+<  * which is what the plate border (dock.css:130-135) resolves to once
+<  * --dock-expand-t is set, so every GlassDock mount crashes there. The shim pins
+<  * the border COLOUR to one arm; the 1.5px border width and every geometry and
+<  * motion input are untouched. Witnesses apply it on WebKit only, label those
+<  * cells "+shim", and --no-webkit-shim shows the crash.
+<  */
+< export const webkitShim = ".glass-dock .dock-plate { border-color: var(--dock-plate-expanded-border) !important; }";
+< 
+60c61
+<     plate: () => P.root()?.querySelector(":scope > .dock-plate") ?? null,
+---
+>     plate: () => P.root()?.querySelector(":scope > .dock-aperture .dock-plate") ?? null,
+71c72
+<     posture: () => { const c = P.root().classList; return c.contains("pinned") ? "pinned" : c.contains("expanded") ? "expanded" : "collapsed"; },
+---
+>     posture: () => { const c = P.root().classList; return c.contains("compact") ? "compact" : c.contains("pinned") ? "pinned" : c.contains("expanded") ? "expanded" : "collapsed"; },
+77c78,79
+<       return Number.isFinite(cap) ? Math.min(cap, avail) : avail;
+---
+>       const gutter = x ? parseFloat(cs.marginLeft) + parseFloat(cs.marginRight) : parseFloat(cs.marginTop) + parseFloat(cs.marginBottom);
+>       return Number.isFinite(cap) ? Math.min(cap, avail - gutter) : avail - gutter;
+79,81c81,85
+<     rim: () => null,
+<     compact: () => false,
+<     badge: () => null,
+---
+>     rim: () => { const r = [...P.root().querySelectorAll(":scope > .dock-aperture .dock-plate > .dock-rim")]; return r.length ? r : null; },
+>     edge: () => [...P.root().querySelectorAll(":scope > .dock-aperture .dock-cap")],
+>     hit: () => [...P.root().querySelectorAll(":scope > .dock-aperture .dock-hit")],
+>     compact: () => true,
+>     badge: () => P.root().querySelector(".dock-seat-badge"),

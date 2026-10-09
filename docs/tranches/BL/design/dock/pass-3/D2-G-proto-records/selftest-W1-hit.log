@@ -1,0 +1,16 @@
+20:05  up 1 day,  5:33, 2 users, load averages: 37.28 40.51 46.98
+OK   W1  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 22/22 PASS  [23 s, load 37.28]
+OK   W1  csscarrier      expect: exit 0, all cells PASS  ·  got: exit 0, 22/22 PASS  [23 s, load 41.85]
+OK   W1  lens            expect: exit ≠ 0; corner fails in fit·rest|morph·expanded-rest|rail·rest  ·  got: exit 1, 13/15 FAIL; matching 4 (chromium)  [14 s, load 38.27]
+OK   W1  squash          expect: exit ≠ 0; corner fails in morph·first-expand|morph·warm-collapse|morph·collapsed-rest  ·  got: exit 1, 8/10 FAIL; matching 6 (chromium)  [8 s, load 35.07]
+OK   W1  cssbend         expect: exit ≠ 0; corner fails in morph·warm-expand|morph·warm-collapse  ·  got: exit 1, 6/10 FAIL; matching 4 (chromium)  [8 s, load 34.42]
+OK   W1  deadmorph       expect: exit ≠ 0; agree|moves fails in morph·warm-expand|morph·warm-collapse  ·  got: exit 1, 6/10 FAIL; matching 4 (chromium)  [8 s, load 32.59]
+OK   W1  dot             expect: exit ≠ 0; cover fails in fit·rest  ·  got: exit 1, 2/2 FAIL; matching 1 (chromium)  [4 s, load 31.58]
+OK   W1  cardlens        expect: exit ≠ 0; corner fails in card·  ·  got: exit 1, 4/5 FAIL; matching 4 (chromium)  [5 s, load 30.49]
+OK   W1  endlens         expect: exit ≠ 0; corner fails in rail·scrolled-end|rail·focus-end  ·  got: exit 1, 2/3 FAIL; matching 2 (chromium)  [4 s, load 30.21]
+OK   W1  endout          expect: exit ≠ 0; end fails in rail·scrolled-end|rail·focus-end  ·  got: exit 1, 3/3 FAIL; matching 2 (chromium)  [3 s, load 28.52]
+OK   W1  cardspread      expect: exit ≠ 0; card fails in card·warm-expand|card·warm-collapse|card·first-expand  ·  got: exit 1, 3/5 FAIL; matching 3 (chromium)  [5 s, load 28.52]
+OK   W1  cardlerp        expect: an OWNER-BLOCKED cell in card·warm-expand|card·warm-collapse|card·first-expand  ·  got: exit 0, 3/5 FAIL; matching 3 (chromium)  [5 s, load 27.75]
+SELFTEST PASS  12/12 expectations hold
+exit 0
+20:07  up 1 day,  5:35, 2 users, load averages: 26.73 36.97 44.93

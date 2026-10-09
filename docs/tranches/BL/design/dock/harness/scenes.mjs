@@ -40,6 +40,8 @@
 //   morph    &neighbour=1 (H3-7: the dock in flow in a left-aligned row, a [data-testid=neighbour]
 //            box after it, read per frame) · __scene.stretch(px) (H3-6: the root held px wider
 //            than its natural width, so a prepended seat does not change the run's size)
+//   swap     &three=1 (pass-3 D2-B′ `retarget`: a third face `mid`, so a swap can be retargeted
+//            mid-flight to a face that is neither of the two on the glass)
 export function sceneFiles(wt) {
     const nm = `${wt}/node_modules`;
     return {
@@ -96,6 +98,7 @@ const lead = ref(false);
 const wide = q.get("wide") === "1";
 const anchorEnd = q.get("anchor") === "end";
 const neighbour = q.get("neighbour") === "1";
+const three = q.get("three") === "1";
 const stretchW = ref<number | null>(null);
 const shown = ref(scene !== "hidden");
 const grow = ref(false);
@@ -210,6 +213,11 @@ const morphHost = scene === "vmorph" ? "position: fixed; left: 16px; top: 0; bot
             <DockLayer id="short" label="Short">
               <DockControl aria-label="A">A</DockControl>
               <DockControl aria-label="B">B</DockControl>
+            </DockLayer>
+            <DockLayer v-if="three" id="mid" label="Mid">
+              <DockControl aria-label="E">E</DockControl>
+              <DockControl shape="tab">Mid</DockControl>
+              <DockControl aria-label="F">F</DockControl>
             </DockLayer>
             <DockLayer id="long" label="Long">
               <DockControl aria-label="C">C</DockControl>
