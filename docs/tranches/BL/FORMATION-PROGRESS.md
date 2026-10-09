@@ -345,3 +345,9 @@ Outage log:
   - Row 20: three touched files say chrome never moves. FL-7 and row 20 share one cause.
   Floor v2, scored unclaimed: 34/44 (0.77). Its open rows are owner-gated (Q-1, Q-11) or its own (M-4 dark capsule +0.067, M-9 dark veil +0.006, O-66 G2/G3, the O-87 census stacked=2 / halo=2).
   D3 pass 3 agglomerate launched.
+- 2026-10-09 — **D3 pass 3 CLOSED** (run wf_f41d04a8-bca, 7 seats, 0 errors). REGISTRY gains "Pass 3" (+234 lines). No route is clean.
+  - Floor v2 (the null route): ADVANCE 34/44. Five open rows wait only on the owner (M-1x, M-6, gestalt, N-1, N-2: Q-1, Q-11, Q-3). Five are the floor's own, ruled on measurement as R-1..R-5 with plants: dark muted-strong at L 0.835; a dark focus-veil scrim; one field surface for the Select trigger; an accent-tint menu row; O-87's single quiet shadow (census stacked=0 halo=0).
+  - C″: BANK 35/48. C-7 fails by structure (P/(P−g) = 1.733, independent of ink).
+  - The minor split is **not shippable as 10.2.0's veil recut**: G2 and G3 fail, M-3 light is red on every row, the held dock reads 3.16, and the veil stays grey off paper.
+  - Earliest W-0.1 landing: the close of pass 5, if passes 4 and 5 are both clean, and only with Q-1 and Q-11 ruled.
+  D3 pass 4 launched (bl-design-d3-pass4.js): H4 (I-1..I-4) with the floor v2 baseline, then floor v3 (R-1..R-5 plus measured Q-1 (c) and Q-11 (b) variants), then the minor split v2, then one critic on the fixed 44 rows, then the agglomerate.
