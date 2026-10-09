@@ -1,0 +1,53 @@
+/* D3 pass 3 · C″ spec probe: the claim licence as an injection over the floor v2 specimen build
+   (`capture.mjs <fv2 dist> --inject`, with `--query claim=honest`). Source of record for its readings:
+   D3-Cpp-spec.md §2. It is the spec's mechanism (§1) reduced to CSS, minus what a probe cannot carry: the
+   publication (the field tones are a literal per run, appended by D3-Cpp-probe.sh), the claim resolver (no
+   stamp, no colour read), and Q-8 c's lag twins (no motion window reads this probe).
+
+   The licence is FL-5's own formula (tokens/glass.css:256-275 in floor v2) with its ground made a parameter:
+   the ink is `--cpp-ink-l`, defaulting to FL-5's own `--on-glass-muted-l`. The variants set it:
+     static  (unset)          the static muted ink: the C″ licence
+     strong  light 0.4096     `--on-glass-muted-strong` hsl(28 28% 28%), Y 0.0687 (Cp-crit §4.1)
+     reach   light 0.3061     C′'s reach ink, `--foreground-l` + 0.09 (Cp-spec §1.2)
+   A variant changes only the licence; every painted ink stays floor v2's static ink, so `strong` and `reach`
+   show what their licence does to the inks a plate already carries. */
+@property --glass-ground-lo { syntax: "<number>"; inherits: true; initial-value: 0; }
+@property --glass-ground-hi { syntax: "<number>"; inherits: true; initial-value: 1; }
+@property --glass-content-bound { syntax: "<number>"; inherits: true; initial-value: 1; }
+
+/* The dark lift: the least α whose composite clears the dark page by M-6's 0.05 + 0.015 (Cp-proto §1.1;
+   0.415 on the same page and pole floor v2 keeps). A literal in the probe; the spec derives it (§1.2). */
+:root { --glass-veil-lift: 0; }
+.dark { --glass-veil-lift: 0.415; }
+
+:root, .dark, [data-glass-ground] {
+    --glass-ground-e: calc(
+        (1 - var(--glass-bound-ground)) * min(var(--glass-ground-lo), var(--glass-pole-e)) +
+            var(--glass-bound-ground) * max(var(--glass-ground-hi), var(--glass-pole-e))
+    );
+    --cpp-ink-y: pow(var(--cpp-ink-l, var(--on-glass-muted-l)), 3);
+    --cpp-need-y: calc(
+        (1 - var(--glass-bound-ground)) * (var(--glass-ink-target) * (var(--cpp-ink-y) + 0.05) - 0.05) +
+            var(--glass-bound-ground) * ((var(--cpp-ink-y) + 0.05) / var(--glass-ink-target) - 0.05)
+    );
+    --cpp-need-e: calc(1.055 * pow(var(--cpp-need-y), 0.416667) - 0.055);
+    --cpp-dir: calc(1 - 2 * var(--glass-bound-ground));
+    --glass-content-bound: max(
+        var(--glass-veil-lift),
+        clamp(0, calc(var(--cpp-dir) * (var(--cpp-need-e) - var(--glass-ground-e)) /
+            max(var(--cpp-dir) * (var(--glass-pole-e) - var(--glass-ground-e)), 0.0001)), 1)
+    );
+}
+
+[data-glass-ground] {
+    --glass-veil-wash: var(--glass-content-bound);
+    --glass-veil-quiet: calc(var(--glass-content-bound) + (1 - var(--glass-content-bound)) / 3);
+    --glass-veil-resting: calc(var(--glass-content-bound) + 2 * (1 - var(--glass-content-bound)) / 3);
+}
+
+:where(.glass-wash, .glass-quiet, .glass-resting, .glass-card) { --glass-veil-floor: var(--glass-content-bound); }
+
+/* The page claim's tone, a literal here (the paper `--background`'s encoded luma, light 0.9822, dark 0.0400);
+   the spec's resolver reads it from the computed colour (§1.3). */
+html:not(.dark) [data-glass-ground="page"] { --glass-ground-lo: 0.9822; --glass-ground-hi: 0.9822; }
+html.dark [data-glass-ground="page"] { --glass-ground-lo: 0.0400; --glass-ground-hi: 0.0400; }

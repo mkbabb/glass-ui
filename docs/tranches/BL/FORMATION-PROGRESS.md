@@ -297,3 +297,9 @@ Outage log:
   - **G2 FAIL** (light 0.037) and **G3 FAIL** (row darkens the plate ΔL −0.033).
   Light M-2 is red only on the held dock (FL-7 absent). M-3 light reads 2.79 at the 0.48 stroke; a 0.52 variant reaches 3.16 except two rows. Q-11 off-paper REPORTED 48/66 grey.
   10.2.0 is not shippable from this subset until G2 and G3 pass. C″ spec launched (its critic follows; Q-1 and Q-11 still owed).
+- 2026-10-08 — D3 pass 3 C″ spec banked. The claim reuses FL-5's formula at FL-5's static muted ink, with only the ground as a parameter.
+  - C-2 holds exactly (bound 0.8910 light, 0.8731 dark, both engines).
+  - C-1 holds without a per-plate ink solve (0/820 gated M-2 rows under 4.5). The per-plate solve is struck; any other form is the owner's Q-12 lever.
+  - Q-6 (a) holds on thinned wells.
+  - **C-7 fails in every form that keeps C-2**, so the spec expects C″ to drop to BANK once the prototype confirms the T reading.
+  C″ proto launched.
