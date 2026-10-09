@@ -258,3 +258,9 @@ Outage log:
   - Batteries: plants-p7 17/17, plants-p6 20/20; pass-6 regressions hold.
   - The browser reports are committed with the kit (16M, 430 files).
   Fresh critic B launched.
+- 2026-10-08 — D3 pass 3 FLOOR-V2 banked. floor-v2.patch = floor.patch + A′ (FL-14..FL-16) + the two prose lines: 81 files, +814/−2195, 5 deleted; it passes apply --check at 05e5e1fb.
+  - Toolchain: vue-tsc 0; vitest 2318/0; builds 0. verify:package is clean except the owed ratchet rebind (2,900,254 < 2,919,057).
+  - H3 battery in Chromium, run twice: RAW, M-1, M-2, M-2m, M-3, M-5, M-7, M-8, STACK, W-A, W-S and T pass. Red: M-2h 2/68 (halo, attributed), M-4 7/168 (dark capsule -strong muted, HEAD's own row), M-6 7/30 (Q-1), M-9 1/20, O-66 5/5. M-1x REPORTED 48/66 off-paper light composites grey.
+  - Defect found and cured: a held plate standing down its backdrop-filter lost its stacking context, so the veil escaped. @utility glass-plate now declares isolation: isolate, and STACK reads 24/24.
+  - N-3 halo attributed to the focus veil engaged by the Slider press.
+  MINOR-SPLIT launched.
