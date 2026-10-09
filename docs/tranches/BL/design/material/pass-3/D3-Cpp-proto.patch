@@ -1,0 +1,1357 @@
+diff --git a/DESIGN.md b/DESIGN.md
+index 54399560..2551228e 100644
+--- a/DESIGN.md
++++ b/DESIGN.md
+@@ -506,19 +506,24 @@ The second shipped path takes no scalar at all: `.liquid-enter.is-cel > .cartoon
+ 
+ ## Glass Surfaces
+ 
+-Five tiers compose background opacity, backdrop-blur, border, shadow, grain. Dark mode boosts opacity and shifts grain blend (`overlay` → `soft-light`) for legibility. v0.8.0 renamed and extended the ladder: the prior four-rung ladder (subtle / default / medium / elevated) becomes a five-rung ladder (wash / quiet / resting / floating / overlay)—`quiet` is a new mid-low rung, `overlay` is a new modal-over-modal rung, and the others are renamed for tier semantics rather than utility-class register.
++One medium, one pole, one bound (`src/styles/tokens/glass.css`). Every rung paints the theme's own `--card` at an α and carries its own blur, border and shadow. The α is solved in CSS, not authored: `--glass-bound` is the α at which the muted ink (`--on-glass-muted-l`) clears `--glass-ink-target` (4.8) over **any** ground, computed from the ink, the pole (`--card-l`) and the target. A retune of any of the three moves every rung. Nothing samples the backdrop.
+ 
+-| Tier     | Class             | Light opacity | Dark opacity | Blur                        | Border         | Shadow                    | Use                                                         |
+-| -------- | ----------------- | ------------- | ------------ | --------------------------- | -------------- | ------------------------- | ----------------------------------------------------------- |
+-| Wash     | `.glass-wash`     | 30%           | 38%          | `blur(1px) saturate(1.05)`  | 8% foreground  | `--glass-shadow-wash`     | Dock bg, input bg, hover overlays                           |
+-| Quiet    | `.glass-quiet`    | 50%           | 58%          | `blur(3px)`                 | 10% foreground | `--glass-shadow-quiet`    | Inline workspace chrome                                     |
+-| Resting  | `.glass-resting`  | 65%           | 72%          | `blur(12px) saturate(1.05)` | 12% foreground | `--glass-shadow-resting`  | Cards and the canonical plate; **`<Surface>` default tier** |
+-| Floating | `.glass-floating` | 80%           | 88%          | `blur(16px) saturate(1.4)`  | 15% foreground | `--glass-shadow-floating` | Popovers, tooltips, dropdowns                               |
+-| Overlay  | `.glass-overlay`  | 95%           | 96%          | `blur(24px) saturate(1.5)`  | 18% foreground | `--glass-shadow-overlay`  | Dialogs, command palette, modals                            |
++| Tier     | Class             | α                       | Blur radius | Band    | Use                                                         |
++| -------- | ----------------- | ----------------------- | ----------- | ------- | ----------------------------------------------------------- |
++| Wash     | `.glass-wash`     | content bound           | 6 px        | content | the thinnest content plate                                  |
++| Quiet    | `.glass-quiet`    | content bound + 1 step  | 10 px       | content | inline workspace chrome                                     |
++| Resting  | `.glass-resting`  | content bound + 2 steps | 12 px       | content | cards and the canonical plate; **`<Surface>` default tier** |
++| Floating | `.glass-floating` | bound                   | 16 px       | chrome  | popovers, tooltips, dropdowns, the dock                     |
++| Overlay  | `.glass-overlay`  | bound + 1 step          | 18 px       | chrome  | the overlay register, sheets                                |
++| Dialog   | (`DialogContent`) | 1                       | 16 px       | room    | the dialog: a room over its scrim                           |
++
++A step is a third of what the bound leaves. Each radius carries `saturate(var(--glass-saturate))` and scales with `--glass-level`; level 0 is the opaque escape (`.glass-opaque`).
++
++**The content bound** (`--glass-content-bound`) is `--glass-bound` everywhere a consumer has not claimed the ground. Inside a claim (`claimGlassGround(el, "page" | "field" | colours)`, or `useGlassGround`), the content band solves the same formula against the claimed ground instead of the any-input pole, so it may paint thinner and carry more of what is behind it. Chrome and the dialog never move. A claim the library cannot verify paints the bound, stamps `data-glass-ground-state` (`unpublished`, `desync`) and warns once. A claim states everything painted under its scope: a library or consumer fill darker than the claimed ground inside a page claim is the consumer's to declare as a colour.
+ 
+ ### Plate register
+ 
+-`@utility glass-plate` (`src/styles/glass/veil.css`) is the plate paint, composed at the element. It reads `--glass-veil-tier` (unset resolves `resting`), clamps it upward by the measured backdrop luminance into `--glass-veil-rest` → `--glass-veil-rung`, mixes that into `--glass-veil`, and writes exactly one declaration: `background: var(--glass-veil)`. The five tier classes above apply it and add their own blur, border and shadow; `--glass-veil` is published as a nestable value token for a surface composing the plate inside a larger mix.
++`@utility glass-plate` (`src/styles/glass/veil.css`) is the plate paint, composed at the element. It reads `--glass-veil-tier` (unset resolves `resting`) into `--glass-veil-rest` → `--glass-veil-rung`, mixes that into `--glass-veil`, and writes `background: var(--glass-veil)` and `isolation: isolate`. A held plate never sheds below `--glass-veil-floor`, the content bound. The tier classes apply it and add their own blur, border and shadow; `--glass-veil` is published as a nestable value token for a surface composing the plate inside a larger mix.
+ 
+ It deliberately supplies **no position, no z-index, no radius, no size**. A plate is paint, not a box. `.dock-plate` is the worked example: it composes `glass-plate` and declares `position: absolute; inset: 0; z-index: -1` itself, because only the surface knows which box it is lining.
+ 
+@@ -526,35 +531,20 @@ That omission is the stacking contract. A plate sharing a box with an `absolute
+ 
+ ### Tokens per tier
+ 
+-For each tier, `--glass-bg-{tier}` (rgba), `--glass-blur-{tier}` (full filter string), `--glass-border-{tier}` (color-mix result), `--glass-shadow-{tier}` (box-shadow), `--glass-blur-{tier}-radius` (raw blur radius). Grain overlay:
++For each tier, `--glass-veil-{tier}` (the α), `--glass-plate-{tier}` (the plate as a colour value), `--glass-blur-{tier}` (full filter string), `--glass-border-{tier}` (color-mix result), `--glass-shadow-{tier}` (box-shadow), `--glass-blur-{tier}-radius` (raw blur radius). Grain overlay:
+ 
+ - Light mode: 3.5% opacity, blend `overlay`
+ - Dark mode: 6% opacity, blend `soft-light`
+ 
+-**Dock-specific blur**—`--glass-blur-dock` is its own token so floating and rail docks read as feather-light overlays rather than heavy blurred slabs. As of J.W3.C the radius is `0px` (compositor floor) + the `saturate()` channel is omitted; the dock's translucent register is carried by `--glass-bg-dock` (32 % card opacity) bleeding the backdrop through. `GlassDock` references `var(--glass-blur-dock, var(--glass-blur-wash))`; consumers can override the dock token at `:root` without touching the five tier blurs.
+-
+-### N7 dock-blur perceptual audit (N.W2 Lane B—NO-OP)
+-
+-User feedback at N open suggested "top dock blur is a bit much, and generally our dock blurs need to be resolved to be more subtle." Source-of-truth audit at HEAD:
+-
+-| Surface                                              | `backdrop-filter` value                       | Blur radius                       |
+-| ---------------------------------------------------- | --------------------------------------------- | --------------------------------- |
+-| `.glass-dock` (any dock; horizontal or vertical)     | `blur(var(--glass-blur-dock-radius))`         | **`0px`**                         |
+-| `.glass-wash`, `.glass-quiet`, ..., `.glass-overlay` | `blur(<tier-radius>) saturate(<tier-factor>)` | `1` / `3` / `12` / `16` / `24` px |
+-
+-The dock filter contributes ZERO blur—the compositor still emits a backdrop-filter pass (the property is set + composes the `saturate(1.05)` from `--glass-blur-wash` if the dock token is missing, but with the dock token present the `saturate` channel is also omitted), but the radius is at the floor. Any perceived dock blur visible at the page level is contributed by the **backdrop** the dock sits over (e.g., the `<Aurora>` ambient layer); the dock is purely a translucent plate of `--glass-bg-dock` (32 % opacity) admitting backdrop pixels through.
+-
+-Per N invariant 22 (audit-verdict spot-verification gate): the user's perception was real, but the source is the page-composition stacking, not the dock substrate. The right adjustment lives at the consumer site (reduce backdrop blur per-page; or lower aurora opacity; or use `<Aurora>`'s tone controls), not at the library token. The library token already holds the floor.
+-
+-NO-OP for N.W2 Lane B. No token change; no cascade adjustment. The audit lands here for posterity.
++**The dock** composes `glass-plate` on `--glass-veil-dock` (the bound) and rides `--glass-blur-resting`; it carries no private re-composition.
+ 
+ ### Canonical translucent + frosted—`<Surface>` default
+ 
+ `<Surface>` (`src/components/surface/Surface.vue`) defaults to
+ `material="elevated"` and `surface="glass"`. The material role resolves to the
+ `resting` tier and composes the `.glass-resting` recipe above:
+-**65% background opacity + 12 px backdrop-blur + 1.05 saturation + 12%
+-foreground border**. This is the canonical
++**the content bound + 2 steps, a 12 px backdrop-blur with
++`saturate(var(--glass-saturate))`, and the resting border**. This is the canonical
+ "translucent + frosted" surface; consumers asking for "the translucent
+ frosted panel" should reach for `<Surface>` (or `<Card>` for structured card
+ anatomy) without a tier override. `content`, `elevated`, `functional`, and
+diff --git a/demo/stories/substrates/glass-material.vue b/demo/stories/substrates/glass-material.vue
+index b39d84b8..4d429ea7 100644
+--- a/demo/stories/substrates/glass-material.vue
++++ b/demo/stories/substrates/glass-material.vue
+@@ -17,6 +17,7 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
+ import StorySection from "../../chassis/section/StorySection.vue";
+ import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
+ import {
++    useGlassGround,
+     useSpecularTracking,
+     Button,
+     Alert,
+@@ -36,6 +37,14 @@ import {
+ // rim); the floating/overlay rungs are the substrate Dialog/Sheet/Popover ride.
+ const rungs = ["wash", "quiet", "resting", "floating", "overlay"] as const;
+ 
++// The first frame CLAIMS its ground: the page's Aurora (StoryHero teleports it to
++// `<body>`, which carries its publication) and nothing else, since a field frame paints no
++// fill. Inside the claim the content rungs (wash, quiet, resting, card) solve the bound
++// against the field instead of the any-input pole and carry more of it; floating and
++// overlay are chrome and do not move. Every other frame on this page is unclaimed.
++const claimedFrame = useTemplateRef<InstanceType<typeof ShowcaseFrame>>("claimedFrame");
++useGlassGround(() => (claimedFrame.value?.$el as HTMLElement | undefined) ?? null, "field");
++
+ // The five alert arms, neutral first — `null` is the un-toned surface, which under the
+ // ruled identity is the same plate as the other four wearing no status ink.
+ //
+@@ -121,9 +130,9 @@ const ACCENT_STRENGTH = "48%";
+              bright painterly field — the whole point of this page (B13). -->
+         <StorySection
+             label="unified material — moving specular + rim across the band"
+-            blurb="Hover any plate and the edge gleam follows the cursor, then settles softly back into the material when you leave."
++            blurb="Hover any plate and the edge gleam follows the cursor, then settles softly back into the material when you leave. This frame claims the field under it, so its content plates are thinner than the bound and carry more of the aurora; floating and overlay are chrome and stay at the bound."
+         >
+-            <ShowcaseFrame pad="lg" tier="field">
++            <ShowcaseFrame ref="claimedFrame" pad="lg" tier="field">
+                 <div class="flex flex-wrap gap-6">
+                     <div
+                         v-for="rung in rungs"
+diff --git a/src/components/aurora/Aurora.vue b/src/components/aurora/Aurora.vue
+index 4a8c4f09..ef3b477f 100644
+--- a/src/components/aurora/Aurora.vue
++++ b/src/components/aurora/Aurora.vue
+@@ -1,5 +1,5 @@
+ <script setup lang="ts">
+-import { computed, getCurrentInstance, ref, watch } from "vue";
++import { computed, getCurrentInstance, onBeforeUnmount, onMounted, ref, watch } from "vue";
+ import { useAurora } from "./composables/useAurora";
+ import { auroraFallbackGround } from "./composables/auroraFallbackGround";
+ import type { AuroraRuntimeOptions } from "./composables/runtime";
+@@ -125,6 +125,21 @@ const resolvedRenderMode = resolveRenderMode(props.renderMode, {
+ const ceilingVar = computed(() => String(Math.max(0, Math.min(1, props.opacityCeiling))));
+ 
+ const canvasRef = ref<HTMLCanvasElement | null>(null);
++const rootRef = ref<HTMLElement | null>(null);
++
++// The ceiling the field composites at, as the page sees it: the reduced-transparency arm
++// below lifts it to 1, so the published ground follows it.
++const reducedTransparency = ref(false);
++let transparencyQuery: MediaQueryList | null = null;
++const onTransparency = (e: MediaQueryListEvent): void => {
++    reducedTransparency.value = e.matches;
++};
++onMounted(() => {
++    transparencyQuery = window.matchMedia?.("(prefers-reduced-transparency: reduce)") ?? null;
++    reducedTransparency.value = transparencyQuery?.matches ?? false;
++    transparencyQuery?.addEventListener("change", onTransparency);
++});
++onBeforeUnmount(() => transparencyQuery?.removeEventListener("change", onTransparency));
+ // Top-level `onInitError` prop wins over `runtimeOptions.onInitError` —
+ // the prop is the ergonomic surface, runtimeOptions stays the
+ // pass-through for fully-composed AuroraRuntimeOptions objects (e.g.
+@@ -149,6 +164,8 @@ const mergedRuntimeOptions: AuroraRuntimeOptions = {
+ // GPU initialization entirely.
+ const api = useAurora(canvasRef, () => props.config, mergedRuntimeOptions, {
+     renderMode: resolvedRenderMode,
++    groundHost: () => rootRef.value?.parentElement ?? null,
++    groundCeiling: () => (reducedTransparency.value ? 1 : Number(ceilingVar.value)),
+ });
+ watch(api.rendererStatus, (status) => emit("rendererStatus", status), {
+     immediate: true,
+@@ -204,6 +221,7 @@ defineExpose({
+       identical across every medium with no way to tell from the picture.
+     -->
+     <div
++        ref="rootRef"
+         class="aurora-root h-full w-full overflow-hidden"
+         :data-aurora-substrate="resolvedRenderMode"
+         :data-aurora-settled="api.isSettled.value ? '' : undefined"
+diff --git a/src/components/aurora/composables/auroraFallbackGround.ts b/src/components/aurora/composables/auroraFallbackGround.ts
+index 25613675..2cf725eb 100644
+--- a/src/components/aurora/composables/auroraFallbackGround.ts
++++ b/src/components/aurora/composables/auroraFallbackGround.ts
+@@ -40,6 +40,7 @@
+ import { oklchToLinear } from "../../../composables/color";
+ import type { OklchStop } from "../../../composables/color";
+ import type { AuroraConfig, AuroraNucleus } from "../constants/presets";
++import { glassGroundTone, type GlassGroundTones } from "../../../composables/glass/groundTone";
+ 
+ /** A linear-sRGB triple in [0,1]. */
+ type Lin = [number, number, number];
+@@ -366,3 +367,25 @@ function rasterizeField(
+         return null;
+     }
+ }
++
++/**
++ * The field's ground tones for a glass claim (`composables/glass/groundTone.ts`): the
++ * darkest luma and the brightest saturated Y-tone over the SAME static lattice the
++ * fallback ground samples, at the finest grid (16 × 16). The bound, not a decile: a claim
++ * that missed the darkest texel would thin glass over it. `null` for an image source,
++ * whose photo the CPU mirror cannot see.
++ */
++export function auroraGroundTones(config: AuroraConfig, saturate: number): GlassGroundTones | null {
++    if (config.source === "image" || !Number.isFinite(saturate)) return null;
++    const grid = 16;
++    let lo = 1;
++    let hi = 0;
++    for (let iy = 0; iy < grid; iy++) {
++        for (let ix = 0; ix < grid; ix++) {
++            const t = glassGroundTone(sampleAuroraField(config, (ix + 0.5) / grid, (iy + 0.5) / grid), { saturate });
++            lo = Math.min(lo, t.lo);
++            hi = Math.max(hi, t.hi);
++        }
++    }
++    return { lo, hi };
++}
+diff --git a/src/components/aurora/composables/useAurora.ts b/src/components/aurora/composables/useAurora.ts
+index c2025b77..56c61960 100644
+--- a/src/components/aurora/composables/useAurora.ts
++++ b/src/components/aurora/composables/useAurora.ts
+@@ -13,6 +13,12 @@ import { asGetter, type ConfigSource } from "./configSource";
+ import { useIntersectionPause } from "../../../composables/motion/core/useIntersectionPause";
+ import { useScrollProgress } from "../../../composables/motion/scroll/useScrollProgress";
+ import type { AuroraConfig } from "../constants/presets";
++import { auroraGroundTones } from "./auroraFallbackGround";
++import {
++    publishGlassField,
++    readGlassSaturate,
++    type GlassFieldPublisher,
++} from "../../../composables/glass/groundTone";
+ import {
+     cssRenderer,
+     pendingRenderer,
+@@ -32,6 +38,15 @@ export interface UseAuroraAdaptiveOptions {
+      * (default) arms the deferred GPU runtime.
+      */
+     renderMode?: "webgl" | "css";
++    /**
++     * The element the field's ground tones are published on (`--glass-field-lo/-hi/
++     * -ceiling/-live`, `composables/glass/groundTone.ts`). Glass a consumer claims inside
++     * it with `claimGlassGround(el, "field")` reads them through the cascade. Defaults to
++     * the canvas's parent. The substrate publishes; it never claims.
++     */
++    groundHost?: () => HTMLElement | null;
++    /** The field's compositing ceiling over the page (default 1). */
++    groundCeiling?: () => number;
+ }
+ 
+ /**
+@@ -179,6 +194,8 @@ export function useAurora(
+     let stopScrollWatch: (() => void) | null = null;
+     let cancelSchedule: (() => void) | null = null;
+     let intersection: ReturnType<typeof useIntersectionPause> | null = null;
++    let groundPublisher: GlassFieldPublisher | null = null;
++    let stopGroundWatch: (() => void) | null = null;
+     // Guards a single arm attempt (success OR failure both consume it).
+     let armAttempted = false;
+     // Exposed to `Aurora.vue` so it can cross-fade the canvas in over the
+@@ -294,9 +311,43 @@ export function useAurora(
+         );
+     }
+ 
++    /**
++     * Publish the field's ground tones on its host: on mount and on every config or
++     * ceiling change, never per frame (the tones are config arithmetic, the same on every
++     * renderer arm). `flush: "sync"` lands a worsening ceiling in the frame that paints it.
++     */
++    function armGroundPublication(canvas: HTMLCanvasElement): void {
++        const host = adaptiveOptions.groundHost?.() ?? canvas.parentElement;
++        if (!host) return;
++        // No glass stylesheet in the cascade: there is no glass to claim, so nothing to
++        // publish for.
++        const saturate = readGlassSaturate(host);
++        if (!Number.isFinite(saturate)) return;
++        const publisher = publishGlassField(host);
++        groundPublisher = publisher;
++        const ceiling = adaptiveOptions.groundCeiling ?? (() => 1);
++        let tones = auroraGroundTones(getCfg(), saturate);
++        const publish = (): void => publisher.set(tones && { ...tones, ceiling: ceiling() });
++        const stopTones = watch(
++            getCfg,
++            (next) => {
++                tones = auroraGroundTones(next, saturate);
++                publish();
++            },
++            { deep: true, flush: "sync" },
++        );
++        const stopCeiling = watch(ceiling, publish, { flush: "sync" });
++        publish();
++        stopGroundWatch = () => {
++            stopTones();
++            stopCeiling();
++        };
++    }
++
+     onMounted(() => {
+         const canvas = canvasRef.value;
+         if (!canvas) return;
++        armGroundPublication(canvas);
+ 
+         // Adaptive substrate `"css"`: never arm the GPU runtime. We skip runtime
+         // construction, the intersection gate, and the idle arm schedule
+@@ -392,6 +443,8 @@ export function useAurora(
+     });
+ 
+     onBeforeUnmount(() => {
++        stopGroundWatch?.();
++        groundPublisher?.dispose();
+         cancelSettle();
+         cancelSchedule?.();
+         stopArmWatch?.();
+diff --git a/src/components/aurora/index.ts b/src/components/aurora/index.ts
+index f481692f..79ad409f 100644
+--- a/src/components/aurora/index.ts
++++ b/src/components/aurora/index.ts
+@@ -94,6 +94,7 @@ export {
+ // static composite mirror the certify π measures.
+ export {
+     auroraFallbackGround,
++    auroraGroundTones,
+     sampleAuroraField,
+     nucleiFieldStatic,
+     relativeLuminance,
+diff --git a/src/composables/glass/groundClaim.ts b/src/composables/glass/groundClaim.ts
+new file mode 100644
+index 00000000..3e1e5204
+--- /dev/null
++++ b/src/composables/glass/groundClaim.ts
+@@ -0,0 +1,197 @@
++// The consumer's claim on the ground under a scope (tokens/glass.css `[data-glass-ground]`).
++//
++// A claim states what is painted between the page's substrate and the glass inside `el`.
++// Inside it the content band (wash, quiet, resting) solves FL-5's own bound against the
++// claimed ground instead of the any-input pole; chrome does not move. This function is the
++// one writer of a claim, so the knowledge it states is checked where it is written:
++//
++//   "page"      the page itself. The page tone is read from the computed `--background`
++//               COLOUR, so a colour retune of the page is followed, never a stale number.
++//   "field"     a substrate's publication on an ancestor (`publishGlassField`, written by
++//               `<Aurora>` on its parent), mixed with the page at the field's ceiling by
++//               the CSS. Read through the cascade: out of scope, `--glass-field-live` is 0
++//               and the tones are the any-input poles, so the claim paints the bound.
++//   colours     the colours painted under `el` (a consumer's palette stops); the worst of
++//               their tones is written.
++//
++// The state is stamped as `data-glass-ground-state`: `live` and `published` say the
++// knowledge is good; `unpublished` (a field claim with no publication in scope) and
++// `desync` (a number the licence reads disagrees with a colour the page paints) are
++// refusals. A refusal paints the bound and warns once. A hand-written `data-glass-ground`
++// with no claim behind it carries no page tone, so it computes the bound too.
++//
++// It re-reads on claim, on every publication change (a `glass-field` event on `document`)
++// and on one shared observer of `<html>`'s class and style and `<head>`'s children (a theme
++// switch, a retune stylesheet). It never runs per frame and reads no pixels.
++import { onBeforeUnmount, onMounted, toValue, watch, type MaybeRefOrGetter } from "vue";
++import { cssToOklch } from "../color";
++import { resolveTokenColor } from "../dom/useResolveTokenColor";
++import { GLASS_FIELD_EVENT, glassGroundTone, readGlassSaturate } from "./groundTone";
++
++/** What a claim states is painted under its scope. */
++export type GlassGroundSource = "field" | "page" | readonly string[];
++
++/** The claim's stamped state (the harness reads it as `GROUND_STATE_ATTR`). */
++const GROUND_STATE_ATTR = "data-glass-ground-state";
++export type GlassGroundState = "live" | "published" | "unpublished" | "desync";
++
++const CLAIM_ATTR = "data-glass-ground";
++const TONES = ["--glass-page-lo", "--glass-page-hi", "--glass-ground-lo", "--glass-ground-hi"] as const;
++// The resolution a computed colour is read at (8-bit channels: about 0.002 in OKLab L).
++const L_TOLERANCE = 0.005;
++// M-4's split between fg and muted, in OKLab L, signed per theme.
++const HIERARCHY = 0.08;
++
++interface Claim {
++    source: GlassGroundSource;
++    warned: Set<string>;
++}
++
++const claims = new Map<HTMLElement, Claim>();
++let observer: MutationObserver | null = null;
++let onField: (() => void) | null = null;
++
++const num = (cs: CSSStyleDeclaration, prop: string): number => parseFloat(cs.getPropertyValue(prop));
++const lightness = (css: string, el: HTMLElement): number => cssToOklch(resolveTokenColor(css, el)).L;
++
++function set(el: HTMLElement, prop: string, value: string | null): void {
++    if (value === null) {
++        if (el.style.getPropertyValue(prop) !== "") el.style.removeProperty(prop);
++    } else if (el.style.getPropertyValue(prop) !== value) {
++        el.style.setProperty(prop, value);
++    }
++}
++
++function stamp(el: HTMLElement, claim: Claim, state: GlassGroundState, why?: string): void {
++    if (el.getAttribute(GROUND_STATE_ATTR) !== state) el.setAttribute(GROUND_STATE_ATTR, state);
++    if (why && !claim.warned.has(why)) {
++        claim.warned.add(why);
++        console.warn(`[glass-ui] glass ground claim refused, glass paints the bound: ${why}`);
++    }
++}
++
++/** The numbers the licence reads, checked against the colours the page paints. */
++function incoherence(el: HTMLElement, cs: CSSStyleDeclaration): string | null {
++    const cardL = num(cs, "--card-l");
++    const mutedL = num(cs, "--on-glass-muted-l");
++    const dark = num(cs, "--glass-bound-ground") === 1;
++    let card: number;
++    let fg: number;
++    try {
++        card = lightness("var(--card)", el);
++        fg = lightness("var(--foreground)", el);
++    } catch {
++        return "--card or --foreground is not a colour this claim can read";
++    }
++    if (!Number.isFinite(cardL) || Math.abs(card - cardL) > L_TOLERANCE) {
++        return `--card paints L ${card.toFixed(3)} but --card-l is ${cardL}; retune --card-l`;
++    }
++    const split = dark ? fg - mutedL : mutedL - fg;
++    if (!Number.isFinite(mutedL) || split < HIERARCHY) {
++        return `--foreground (L ${fg.toFixed(3)}) sits within ${HIERARCHY} of --on-glass-muted-l (${mutedL}); retune --on-glass-muted-l`;
++    }
++    return null;
++}
++
++function resolve(el: HTMLElement, claim: Claim): void {
++    const { source } = claim;
++    const cs = getComputedStyle(el);
++    const saturate = readGlassSaturate(el);
++    const why = Number.isFinite(saturate) ? incoherence(el, cs) : "no glass stylesheet in the cascade";
++    if (why) {
++        for (const p of TONES) set(el, p, null);
++        stamp(el, claim, "desync", why);
++        return;
++    }
++    const page = glassGroundTone(resolveTokenColor("var(--background)", el), { saturate });
++    set(el, "--glass-page-lo", page.lo.toFixed(4));
++    set(el, "--glass-page-hi", page.hi.toFixed(4));
++    if (source === "page") {
++        stamp(el, claim, "live");
++    } else if (source === "field") {
++        const live = num(getComputedStyle(el), "--glass-field-live") === 1;
++        if (live) stamp(el, claim, "published");
++        else stamp(el, claim, "unpublished", "a field claim with no publication in scope");
++    } else {
++        let lo = 1;
++        let hi = 0;
++        for (const c of source) {
++            const t = glassGroundTone(resolveTokenColor(c, el), { saturate });
++            lo = Math.min(lo, t.lo);
++            hi = Math.max(hi, t.hi);
++        }
++        set(el, "--glass-ground-lo", lo.toFixed(4));
++        set(el, "--glass-ground-hi", hi.toFixed(4));
++        stamp(el, claim, "live");
++    }
++}
++
++function resolveAll(): void {
++    for (const [el, claim] of claims) resolve(el, claim);
++}
++
++function watchPage(doc: Document): void {
++    if (observer) return;
++    observer = new MutationObserver(resolveAll);
++    observer.observe(doc.documentElement, { attributes: true, attributeFilter: ["class", "style"] });
++    observer.observe(doc.head, { childList: true, subtree: true, characterData: true });
++    onField = resolveAll;
++    doc.addEventListener(GLASS_FIELD_EVENT, onField);
++}
++
++function unwatchPage(doc: Document): void {
++    observer?.disconnect();
++    observer = null;
++    if (onField) doc.removeEventListener(GLASS_FIELD_EVENT, onField);
++    onField = null;
++}
++
++/**
++ * Claim the ground under `el`'s glass. Returns the release, which removes the attribute,
++ * the tones and the stamp. Throws on the root element (a claim there would move
++ * `--glass-bound` itself, which chrome reads) and on an empty colour list.
++ */
++export function claimGlassGround(el: HTMLElement, source: GlassGroundSource): () => void {
++    const doc = el.ownerDocument;
++    if (el === doc.documentElement) {
++        throw new Error("[glass-ui] claimGlassGround: the root element cannot be claimed; claim a scope below it");
++    }
++    if (typeof source !== "string" && source.length === 0) {
++        throw new Error("[glass-ui] claimGlassGround: an empty colour list states no ground");
++    }
++    if (claims.has(el)) release(el);
++    const claim: Claim = { source, warned: new Set() };
++    claims.set(el, claim);
++    el.setAttribute(CLAIM_ATTR, typeof source === "string" ? source : "");
++    watchPage(doc);
++    resolve(el, claim);
++    return () => release(el);
++}
++
++function release(el: HTMLElement): void {
++    if (!claims.delete(el)) return;
++    el.removeAttribute(CLAIM_ATTR);
++    el.removeAttribute(GROUND_STATE_ATTR);
++    for (const p of TONES) set(el, p, null);
++    if (claims.size === 0) unwatchPage(el.ownerDocument);
++}
++
++/** `claimGlassGround` for a component's element: claimed on mount, re-claimed when the target changes, released on unmount. */
++export function useGlassGround(
++    target: MaybeRefOrGetter<HTMLElement | null | undefined>,
++    source: GlassGroundSource,
++): void {
++    let releaseClaim: (() => void) | null = null;
++    const claim = (el: HTMLElement | null | undefined): void => {
++        releaseClaim?.();
++        releaseClaim = el ? claimGlassGround(el, source) : null;
++    };
++    onMounted(() => {
++        claim(toValue(target));
++        watch(() => toValue(target), claim, { flush: "post" });
++    });
++    onBeforeUnmount(() => {
++        releaseClaim?.();
++        releaseClaim = null;
++    });
++}
+diff --git a/src/composables/glass/groundTone.ts b/src/composables/glass/groundTone.ts
+new file mode 100644
+index 00000000..5318733b
+--- /dev/null
++++ b/src/composables/glass/groundTone.ts
+@@ -0,0 +1,129 @@
++// The ground a glass claim reads (tokens/glass.css `[data-glass-ground]`), in the one unit
++// the CSS solve composites in: the encoded sRGB tone of the neutral that bounds the ground.
++//
++//   lo  the darkest Rec. 709 luma of the encoded channels. Under a dark (light-theme) ink
++//       it is the conservative statistic: the EOTF is convex, so a composite's Y is never
++//       below the Y of its luma tone (Jensen).
++//   hi  the brightest encoded tone of Y after `saturate(--glass-saturate)`, the filter the
++//       backdrop passes through. Under a light (dark-theme) ink it is the conservative
++//       statistic: the encoded mix with a neutral plate is concave in Y.
++//
++// A substrate publishes its tones on a host with `publishGlassField`; it never claims. A
++// consumer claims with `claimGlassGround` (groundClaim.ts), which turns colours into tones
++// here and reads a publication through the cascade. Only the consumer knows what it paints
++// between a substrate and its glass.
++import { cssToOklch, oklchToLinear } from "../color";
++
++/** An encoded (gamma) sRGB triple, each channel in [0, 1]. */
++export type EncodedRgb = readonly [number, number, number];
++
++/** The two tones a claim reads. */
++export interface GlassGroundTones {
++    lo: number;
++    hi: number;
++}
++
++const clamp01 = (v: number): number => Math.max(0, Math.min(1, v));
++const eotf = (c: number): number => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
++const oetf = (y: number): number => (y <= 0.0031308 ? 12.92 * y : 1.055 * y ** (1 / 2.4) - 0.055);
++
++function encoded(color: string | EncodedRgb): EncodedRgb {
++    if (typeof color !== "string") return color;
++    return oklchToLinear(cssToOklch(color)).map((c) => oetf(clamp01(c))) as unknown as EncodedRgb;
++}
++
++/**
++ * The tones of one colour as a ground under glass. `saturate` is the backdrop's
++ * `--glass-saturate` (read it from the cascade; it is a token, not a constant).
++ */
++export function glassGroundTone(
++    color: string | EncodedRgb,
++    { saturate }: { saturate: number },
++): GlassGroundTones {
++    const [r, g, b] = encoded(color);
++    const lo = 0.2126 * r + 0.7152 * g + 0.0722 * b;
++    // The Filter Effects saturate matrix, on the encoded channels the engines filter.
++    const s = saturate;
++    const sr = clamp01((0.213 + 0.787 * s) * r + (0.715 - 0.715 * s) * g + (0.072 - 0.072 * s) * b);
++    const sg = clamp01((0.213 - 0.213 * s) * r + (0.715 + 0.285 * s) * g + (0.072 - 0.072 * s) * b);
++    const sb = clamp01((0.213 - 0.213 * s) * r + (0.715 - 0.715 * s) * g + (0.072 + 0.928 * s) * b);
++    const y = 0.2126 * eotf(sr) + 0.7152 * eotf(sg) + 0.0722 * eotf(sb);
++    return { lo: clamp01(lo), hi: clamp01(oetf(y)) };
++}
++
++/** One substrate's publication: its tones at full presence and its opacity ceiling. */
++export interface GlassFieldPublication extends GlassGroundTones {
++    ceiling: number;
++}
++
++export interface GlassFieldPublisher {
++    /** Publish (or, with `null`, mark unpublished and warn once). Not per frame. */
++    set(publication: GlassFieldPublication | null): void;
++    /** Withdraw this substrate's tones; the host keeps the rest's. */
++    dispose(): void;
++}
++
++// One host can hold several substrates. It carries the worst of them (min lo, max hi, max
++// ceiling), so a claim's page mix stays conservative, and an unmount recomputes from the
++// rest. Nothing is document-global. `--glass-field-live` (registered, initial 0) is the one
++// statement that a publication is in force: a claim reads it through the cascade, so a
++// claim outside the host's subtree reads 0, which an attribute on the host could not say.
++// Every change is announced as a `glass-field` event on `document`, so a claim re-reads.
++const hosts = new WeakMap<HTMLElement, Map<symbol, GlassFieldPublication | null>>();
++const PROPS = ["--glass-field-lo", "--glass-field-hi", "--glass-field-ceiling", "--glass-field-live"] as const;
++
++/** The event a publication change dispatches on `document` (claims re-read on it). */
++export const GLASS_FIELD_EVENT = "glass-field";
++
++function clear(host: HTMLElement): void {
++    for (const p of PROPS) host.style.removeProperty(p);
++}
++
++function write(host: HTMLElement): void {
++    const pubs = hosts.get(host);
++    const all = pubs ? [...pubs.values()] : [];
++    if (all.length === 0) {
++        clear(host);
++        hosts.delete(host);
++    } else if (all.some((p) => p === null)) {
++        // One substrate cannot state its tones: the host publishes nothing, so a claim
++        // over it reads the any-input tones and stamps itself unpublished.
++        clear(host);
++    } else {
++        const known = all as GlassFieldPublication[];
++        host.style.setProperty("--glass-field-lo", Math.min(...known.map((p) => p.lo)).toFixed(4));
++        host.style.setProperty("--glass-field-hi", Math.max(...known.map((p) => p.hi)).toFixed(4));
++        host.style.setProperty("--glass-field-ceiling", clamp01(Math.max(...known.map((p) => p.ceiling))).toFixed(4));
++        host.style.setProperty("--glass-field-live", "1");
++    }
++    host.ownerDocument.dispatchEvent(new CustomEvent(GLASS_FIELD_EVENT));
++}
++
++/** Register one substrate's publication on `host`. */
++export function publishGlassField(host: HTMLElement): GlassFieldPublisher {
++    const id = Symbol("glass-field");
++    let warned = false;
++    return {
++        set(publication) {
++            const live = hosts.get(host) ?? new Map();
++            hosts.set(host, live);
++            if (publication === null && !warned) {
++                warned = true;
++                console.warn(
++                    "[glass-ui] a substrate could not publish its ground tones; glass claimed over it solves against the any-input tones",
++                );
++            }
++            live.set(id, publication);
++            write(host);
++        },
++        dispose() {
++            hosts.get(host)?.delete(id);
++            write(host);
++        },
++    };
++}
++
++/** The backdrop saturate a ground passes through, read once from the cascade (NaN when absent). */
++export function readGlassSaturate(el: Element): number {
++    return parseFloat(getComputedStyle(el).getPropertyValue("--glass-saturate"));
++}
+diff --git a/src/composables/glass/index.ts b/src/composables/glass/index.ts
+index c7395176..84cb8c58 100644
+--- a/src/composables/glass/index.ts
++++ b/src/composables/glass/index.ts
+@@ -36,3 +36,16 @@ export type {
+     Canvas2DOptions,
+     Canvas2DSuspendReason,
+ } from "./canvas2d";
++// The ground a glass claim reads (tokens/glass.css `[data-glass-ground]`): a consumer
++// claims a scope with `claimGlassGround` / `useGlassGround`; a substrate publishes its
++// tones on a host with `publishGlassField` (the aurora does, `useAurora`);
++// `glassGroundTone` is the tone arithmetic both share.
++export { claimGlassGround, useGlassGround } from "./groundClaim";
++export type { GlassGroundSource, GlassGroundState } from "./groundClaim";
++export { glassGroundTone, publishGlassField, readGlassSaturate } from "./groundTone";
++export type {
++    EncodedRgb,
++    GlassGroundTones,
++    GlassFieldPublication,
++    GlassFieldPublisher,
++} from "./groundTone";
+diff --git a/src/index.ts b/src/index.ts
+index ca7c490c..e13eb969 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -473,9 +473,14 @@ export {
+     type UseViewportReadyOptions,
+ } from "./composables/dom";
+ export {
++    claimGlassGround,
+     createSpecularWriter,
++    glassGroundTone,
++    publishGlassField,
++    readGlassSaturate,
+     resolveCanvasColor,
+     useCanvas2D,
++    useGlassGround,
+     useSpecularTracking,
+     vSpecular,
+     type Canvas2DFrame,
+@@ -486,6 +491,12 @@ export {
+     // `<FourierField>`, `<Aurora>`, `<Blob>` and `<Constellation>` all emit
+     // `rendererStatus`; only FourierField also exposes `backend: () => GpuBackend`. One
+     // shared door serves all four rather than four copies on four component barrels.
++    type EncodedRgb,
++    type GlassFieldPublication,
++    type GlassFieldPublisher,
++    type GlassGroundSource,
++    type GlassGroundState,
++    type GlassGroundTones,
+     type GpuBackend,
+     type RendererStatus,
+     type SpecularWriter,
+diff --git a/src/styles/glass/grasp.css b/src/styles/glass/grasp.css
+index 3db8acb6..1d3ceaf7 100644
+--- a/src/styles/glass/grasp.css
++++ b/src/styles/glass/grasp.css
+@@ -120,8 +120,9 @@
+ 
+        0.6 × the host's rest α (`--glass-veil-rest`), and NEVER BELOW THE BOUND: a
+        plate's held rung is `max(0.6 × rest, --glass-veil-floor)`, and the floor is the
+-       any-input bound (`@utility glass-plate`, glass/veil.css). A held plate still
+-       carries text, so it keeps the α that holds that text over any ground; what
++       content bound: the any-input bound, or a claim's licence over its claimed ground
++       (`@utility glass-plate`, glass/veil.css). A held plate still carries text, so it
++       keeps the α that holds that text over the ground it may sit on; what
+        comes forward under the finger is the carrier's dilated optic below. A host that
+        paints no plate declares no floor and sheds the whole band.
+ 
+diff --git a/src/styles/glass/ladder.css b/src/styles/glass/ladder.css
+index f4879044..11134800 100644
+--- a/src/styles/glass/ladder.css
++++ b/src/styles/glass/ladder.css
+@@ -49,7 +49,11 @@
+        THE CLOCK: a material with no transition snaps between states. The house
+        idiom is the PAIR — `--spring-press` is a `linear()` EASING, so it needs
+        `--spring-press-duration` beside it; a bare `var(--spring-press)` in the
+-       duration slot is invalid as written.
++       duration slot is invalid as written. Only the shadow rides it. The plate's α
++       carries no clock of its own: it moves on the claim's spring when a kinder ground
++       arrives and in the same frame when a worse one does (tokens/glass.css, Q-8 c), and
++       on the grasp register's lerp (glass/grasp.css). A background clock here would
++       delay the thickening.
+ 
+        Every rung is the SAME medium at a different THICKNESS. The plate paint comes
+        from `@utility glass-plate` (glass/veil.css) — one recipe, composed at the
+@@ -62,9 +66,7 @@
+         position: relative;
+         @apply glass-plate;
+         border-radius: var(--radius-ctx);
+-        transition:
+-            background-color var(--spring-press-duration) var(--spring-press),
+-            box-shadow var(--spring-press-duration) var(--spring-press);
++        transition: box-shadow var(--spring-press-duration) var(--spring-press);
+         backdrop-filter: var(--glass-blur-wash);
+         /* The rung border ink feeds the accent-composed
+            `--glass-border-accent` (rim group above); byte-identical at 0%. */
+@@ -88,9 +90,7 @@
+         position: relative;
+         @apply glass-plate;
+         border-radius: var(--radius-ctx);
+-        transition:
+-            background-color var(--spring-press-duration) var(--spring-press),
+-            box-shadow var(--spring-press-duration) var(--spring-press);
++        transition: box-shadow var(--spring-press-duration) var(--spring-press);
+         backdrop-filter: var(--glass-blur-quiet);
+         --glass-border-rung: var(--glass-border-quiet);
+         border: 1px solid var(--glass-border-accent);
+@@ -104,9 +104,7 @@
+         position: relative;
+         @apply glass-plate;
+         border-radius: var(--radius-ctx);
+-        transition:
+-            background-color var(--spring-press-duration) var(--spring-press),
+-            box-shadow var(--spring-press-duration) var(--spring-press);
++        transition: box-shadow var(--spring-press-duration) var(--spring-press);
+         backdrop-filter: var(--glass-blur-resting);
+         --glass-border-rung: var(--glass-border-resting);
+         border: 1px solid var(--glass-border-accent);
+@@ -125,9 +123,7 @@
+         position: relative;
+         @apply glass-plate;
+         border-radius: var(--radius-ctx);
+-        transition:
+-            background-color var(--spring-press-duration) var(--spring-press),
+-            box-shadow var(--spring-press-duration) var(--spring-press);
++        transition: box-shadow var(--spring-press-duration) var(--spring-press);
+         backdrop-filter: var(--glass-blur-floating);
+         --glass-border-rung: var(--glass-border-floating);
+         border: 1px solid var(--glass-border-accent);
+@@ -141,9 +137,7 @@
+         position: relative;
+         @apply glass-plate;
+         border-radius: var(--radius-ctx);
+-        transition:
+-            background-color var(--spring-press-duration) var(--spring-press),
+-            box-shadow var(--spring-press-duration) var(--spring-press);
++        transition: box-shadow var(--spring-press-duration) var(--spring-press);
+         backdrop-filter: var(--glass-blur-overlay);
+         --glass-border-rung: var(--glass-border-overlay);
+         border: 1px solid var(--glass-border-accent);
+diff --git a/src/styles/glass/veil.css b/src/styles/glass/veil.css
+index 29762eb0..24a51a82 100644
+--- a/src/styles/glass/veil.css
++++ b/src/styles/glass/veil.css
+@@ -34,7 +34,8 @@
+    THE RECIPE. The plate is `--card` at α = 1 − (1 − α_rung)·level: level 1 paints the
+    rung, level 0 the opaque escape (α 1), level 0.3 the firmer plate
+    `prefers-contrast: more` rides. No luma term and no clamp — nothing samples, so
+-   nothing can fail to arrive; no rung is thinner than the bound.
++   nothing can fail to arrive. No rung is thinner than the bound outside a consumer's
++   claim; inside one, the content rungs step from the claimed licence (tokens/glass.css).
+ 
+    `--glass-veil` is published as a nestable VALUE token so a consumer composing the
+    plate INSIDE a bigger mix (the capsule's warm floor, a tone-tinted feedback panel)
+@@ -43,9 +44,12 @@
+    TWO NAMES, ONE ARITHMETIC. `--glass-veil-rest` is the rung at rest;
+    `--glass-veil-rung` is what the plate PAINTS. The split exists so the grasp register
+    (glass/grasp.css) can express its band as a factor of the rest α.
+-   `--glass-veil-floor` is the α a HELD plate may not shed below: the bound. It is
+-   declared here, on the plate, so a host that is not a plate (glass/liquid-fill.css)
+-   has none and sheds its whole band.
++   `--glass-veil-floor` is the α a HELD plate may not shed below: the content bound,
++   which is `--glass-bound` outside a claim and the claimed ground's licence inside one
++   (tokens/glass.css, the ground block). That licence holds every static ink over the
++   claimed ground, so a held plate under a claim keeps its text legible on the same
++   arithmetic as at rest. It is declared here, on the plate, so a host that is not a
++   plate (glass/liquid-fill.css) has none and sheds its whole band.
+ 
+    A HELD PLATE PAINTS ITS VEIL ON ITS CARRIERS. While the grasp carriers
+    (glass/grasp.css) are mounted, the plate drops its own background and each carrier
+@@ -62,7 +66,7 @@
+    the nearest opaque ancestor (the carrier-host arm in
+    tests/styles/glass-subtlety.test.ts reds it). */
+ @utility glass-plate {
+-    --glass-veil-floor: var(--glass-bound);
++    --glass-veil-floor: var(--glass-content-bound);
+     --glass-veil-rest: var(--glass-veil-tier, var(--glass-veil-resting));
+     --glass-veil-rung: var(--glass-veil-rest);
+     --glass-veil: color-mix(
+diff --git a/src/styles/tokens/glass.css b/src/styles/tokens/glass.css
+index 9f5f8964..f09fdf0c 100644
+--- a/src/styles/tokens/glass.css
++++ b/src/styles/tokens/glass.css
+@@ -31,7 +31,11 @@
+          opaque (level 0)      0     1
+ 
+        A surface may paint THINNER than the bound only where a mechanism knows its
+-       ground. None ships here.
++       ground. One does: a consumer's CLAIM (`claimGlassGround`, composables/glass/
++       groundClaim.ts) states the ground under a scope, and inside it the content band
++       (wash, quiet, resting) solves the SAME bound against that ground instead of the
++       any-input pole (the ground block at the foot of this file). Chrome, the dock and
++       the dialog do not move.
+        ═══════════════════════════════════════════════ */
+ 
+     /* The solve's two authored inputs. The target is WCAG 4.5:1 plus 0.3 of raster
+@@ -41,6 +45,9 @@
+        dark ink, 1 (white) under a light one (tokens/dark-arm.css). */
+     --glass-ink-target: 4.8;
+     --glass-bound-ground: 0;
++    /* A claimed dark plate stays this far above the page it sits on, in OKLab L: M-6's
++       0.05 page separation plus 0.015 of paint margin (the ground block below). */
++    --glass-lift-gap: 0.065;
+ 
+     /* THICKNESS — the rung's radius. The band is [6, 18], strictly ascending, each
+        rung 4px under its 10.1.0 radius ("slightly less blur", O-87): blur is decoupled
+@@ -248,7 +255,9 @@
+ 
+    `--glass-bound` is registered `<number>` (below), so every plate carries the
+    computed number, and an unreachable or invalid solve computes to its initial value,
+-   1: an opaque plate, legible and visibly not glass. */
++   1: an opaque plate, legible and visibly not glass. The formula itself is written once,
++   with the ground as a parameter, in the ground block below: `--glass-bound` is that
++   formula at the token root, where the ground is the any-input pole. */
+ :root,
+ .dark {
+     --glass-ink-y: pow(var(--on-glass-muted-l), 3);
+@@ -259,23 +268,15 @@
+     );
+     --glass-need-e: calc(1.055 * pow(var(--glass-need-y), 0.416667) - 0.055);
+     --glass-pole-e: calc(1.055 * pow(var(--glass-pole-y), 0.416667) - 0.055);
+-    --glass-bound: clamp(
+-        0,
+-        calc(
+-            (var(--glass-need-e) - var(--glass-bound-ground)) /
+-                (var(--glass-pole-e) - var(--glass-bound-ground))
+-        ),
+-        1
+-    );
++    --glass-bound: var(--glass-content-bound);
+ 
+     /* One step: a third of what the bound leaves. Each band's thinnest rung IS the
+-       bound; thicker rungs add whole steps. The dialog is a room: its plate composes
+-       over the modal scrim, and any thinner α transmits that scrim as grey. */
++       bound; thicker rungs add whole steps. The content band (wash, quiet, resting)
++       steps from `--glass-content-bound` in the ground block below. The dialog is a
++       room: its plate composes over the modal scrim, and any thinner α transmits that
++       scrim as grey. */
+     --glass-veil-step: calc((1 - var(--glass-bound)) / 3);
+ 
+-    --glass-veil-wash:     var(--glass-bound);
+-    --glass-veil-quiet:    calc(var(--glass-bound) + 1 * var(--glass-veil-step));
+-    --glass-veil-resting:  calc(var(--glass-bound) + 2 * var(--glass-veil-step));
+     --glass-veil-floating: var(--glass-bound);
+     --glass-veil-overlay:  calc(var(--glass-bound) + 1 * var(--glass-veil-step));
+ 
+@@ -286,12 +287,125 @@
+     --glass-veil-dialog:   1;
+ }
+ 
++/* ── THE GROUND, and the content band that solves against it ──────────────────────
++   One formula, FL-5's, with the ground as a parameter:
++
++     g        the encoded tone of the worst ground under this scope: `--glass-ground-lo`
++              under a dark (light-theme) ink, `-hi` under a light one, never past the
++              pole (a plate nested in a plate composites over a tone between the two)
++     content  max(lift, (need − g) / (pole − g)), signed by the theme, clamped to [0, 1]
++
++   The ink is FL-5's own (`--on-glass-muted-l`): every claimed plate's worst composite is
++   the floor's worst composite over the any-input pole, so every ink the floor holds (fg,
++   muted, the `-strong` register, a well at any depth) holds under every claim, with no
++   ink of its own to solve. At the token root the tones are their registered initials,
++   the any-input poles, so `--glass-content-bound` there IS the bound and
++   `--glass-bound` reads it. A claim never re-declares `--glass-bound`: chrome inherits
++   the root's number unchanged.
++
++   `lift` keeps a claimed dark plate above the page it sits on by `--glass-lift-gap` in
++   L (the least α whose composite clears the page's `hi` tone); light has none.
++
++   Declared on the token roots and on every claim, in one layered rule: a claim is an
++   element below the roots, and the layer is what lets it re-derive. */
++@layer base {
++    :root,
++    .dark,
++    [data-glass-ground] {
++        --glass-ground-e: calc(
++            (1 - var(--glass-bound-ground)) *
++                min(var(--glass-ground-lo), var(--glass-ground-lo-lag), var(--glass-pole-e)) +
++                var(--glass-bound-ground) *
++                max(var(--glass-ground-hi), var(--glass-ground-hi-lag), var(--glass-pole-e))
++        );
++        --glass-page-l: pow(pow(calc((var(--glass-page-hi) + 0.055) / 1.055), 2.4), 0.333333);
++        --glass-lift-e: calc(1.055 * pow(pow(calc(var(--glass-page-l) + var(--glass-lift-gap)), 3), 0.416667) - 0.055);
++        /* Negative, so 0, when the page is lighter than the pole: no α lifts the plate
++           above it, and the content solve alone governs. */
++        --glass-veil-lift: calc(
++            var(--glass-bound-ground) *
++                clamp(0, (var(--glass-lift-e) - var(--glass-page-hi)) / (var(--glass-pole-e) - var(--glass-page-hi)), 1)
++        );
++        --glass-content-bound: max(
++            var(--glass-veil-lift),
++            clamp(
++                0,
++                calc(
++                    (1 - 2 * var(--glass-bound-ground)) * (var(--glass-need-e) - var(--glass-ground-e)) /
++                        max((1 - 2 * var(--glass-bound-ground)) * (var(--glass-pole-e) - var(--glass-ground-e)), 0.0001)
++                ),
++                1
++            )
++        );
++        --glass-content-step: calc((1 - var(--glass-content-bound)) / 3);
++        --glass-veil-wash:    var(--glass-content-bound);
++        --glass-veil-quiet:   calc(var(--glass-content-bound) + 1 * var(--glass-content-step));
++        --glass-veil-resting: calc(var(--glass-content-bound) + 2 * var(--glass-content-step));
++    }
++
++    /* ── THE CLAIM ───────────────────────────────────────────────────────────────
++       `claimGlassGround(el, source)` is the one writer: it sets the attribute, reads the
++       page's `--background` colour into `--glass-page-lo/-hi`, writes a colour list's
++       worst tones, and stamps `data-glass-ground-state`. A field claim mixes the
++       publication on an ancestor (`--glass-field-*`, `publishGlassField`) with the page
++       at the field's ceiling. Every tone registers the any-input pole as its initial and
++       does not inherit, so an attribute with no claim behind it, a publication out of
++       scope and a refused claim all compute the bound.
++
++       Q-8 (c): the lag twins carry a kinder ground in on the panel spring, while the
++       solve reads the worse of a tone and its twin, so a worsening ground thickens the
++       plate in the same frame. */
++    [data-glass-ground] {
++        --glass-ground-lo: var(--glass-page-lo);
++        --glass-ground-hi: var(--glass-page-hi);
++        --glass-ground-lo-lag: var(--glass-ground-lo);
++        --glass-ground-hi-lag: var(--glass-ground-hi);
++        transition:
++            --glass-ground-lo-lag var(--spring-panel-duration) var(--spring-panel),
++            --glass-ground-hi-lag var(--spring-panel-duration) var(--spring-panel);
++    }
++
++    [data-glass-ground="field"] {
++        --glass-ground-lo: calc(
++            var(--glass-field-ceiling) * min(var(--glass-field-lo), var(--glass-page-lo)) +
++                (1 - var(--glass-field-ceiling)) * var(--glass-page-lo)
++        );
++        --glass-ground-hi: calc(
++            var(--glass-field-ceiling) * max(var(--glass-field-hi), var(--glass-page-hi)) +
++                (1 - var(--glass-field-ceiling)) * var(--glass-page-hi)
++        );
++    }
++}
++
+ @property --glass-bound {
+     syntax: "<number>";
+     inherits: true;
+     initial-value: 1;
+ }
+ 
++/* The content band's bound: initial 1, so a dead solve paints an opaque plate. */
++@property --glass-content-bound {
++    syntax: "<number>";
++    inherits: true;
++    initial-value: 1;
++}
++/* The claim's tones (lo initial 0, hi initial 1: the any-input poles). None inherits:
++   each claim computes from its own, and a scope below it inherits only the solved
++   content bound. */
++@property --glass-page-lo { syntax: "<number>"; inherits: false; initial-value: 0; }
++@property --glass-page-hi { syntax: "<number>"; inherits: false; initial-value: 1; }
++@property --glass-ground-lo { syntax: "<number>"; inherits: false; initial-value: 0; }
++@property --glass-ground-hi { syntax: "<number>"; inherits: false; initial-value: 1; }
++@property --glass-ground-lo-lag { syntax: "<number>"; inherits: false; initial-value: 0; }
++@property --glass-ground-hi-lag { syntax: "<number>"; inherits: false; initial-value: 1; }
++/* A substrate's publication, written on its host and read by a field claim inside it.
++   The initials are the any-input tones at full presence, and `-live` 0: an absent
++   publication licenses nothing. */
++@property --glass-field-lo { syntax: "<number>"; inherits: true; initial-value: 0; }
++@property --glass-field-hi { syntax: "<number>"; inherits: true; initial-value: 1; }
++@property --glass-field-ceiling { syntax: "<number>"; inherits: true; initial-value: 1; }
++@property --glass-field-live { syntax: "<number>"; inherits: true; initial-value: 0; }
++
+ /* The typed per-instance axes — @property no-op floors. Registered here beside the §8
+    ladder they compose (the canonical @property home is tokens/property-regs.css) so the
+    foundation is one self-contained partial. Each is a `<color>` HUE + a `<percentage>`
+diff --git a/tests/composables/glass/groundClaim.test.ts b/tests/composables/glass/groundClaim.test.ts
+new file mode 100644
+index 00000000..1ba362ca
+--- /dev/null
++++ b/tests/composables/glass/groundClaim.test.ts
+@@ -0,0 +1,111 @@
++// The claim's resolver: what it writes, what it stamps, and what it refuses. The cascade is
++// stubbed (happy-dom resolves no custom properties): `getComputedStyle` reads a token
++// table, and a `var(--x)` painted on `color` resolves through the same table.
++import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
++import { claimGlassGround } from "@glass/composables/glass/groundClaim";
++import { publishGlassField } from "@glass/composables/glass/groundTone";
++
++const LIGHT: Record<string, string> = {
++    "--glass-saturate": "1.5",
++    "--glass-bound-ground": "0",
++    "--card-l": "0.9799",
++    "--card": "oklch(0.9799 0.011 63.36)",
++    "--on-glass-muted-l": "0.481",
++    "--foreground": "oklch(0.22 0.01 56)",
++    "--background": "oklch(0.985 0.004 70)",
++};
++
++let tokens: Record<string, string>;
++let fieldLive = "0";
++
++beforeEach(() => {
++    tokens = { ...LIGHT };
++    fieldLive = "0";
++    vi.spyOn(window, "getComputedStyle").mockImplementation((el: Element) => {
++        const painted = (el as HTMLElement).style.color;
++        const m = /^var\((--[\w-]+)\)$/.exec(painted);
++        return {
++            getPropertyValue: (p: string) => (p === "--glass-field-live" ? fieldLive : (tokens[p] ?? "")),
++            color: m ? (tokens[m[1]] ?? "") : painted,
++        } as unknown as CSSStyleDeclaration;
++    });
++});
++afterEach(() => vi.restoreAllMocks());
++
++const state = (el: HTMLElement) => el.getAttribute("data-glass-ground-state");
++const tone = (el: HTMLElement, p: string) => el.style.getPropertyValue(p);
++
++describe("claimGlassGround", () => {
++    it("a page claim reads the page colour into its tones and stamps live", () => {
++        const el = document.createElement("main");
++        const release = claimGlassGround(el, "page");
++        expect(el.getAttribute("data-glass-ground")).toBe("page");
++        expect(state(el)).toBe("live");
++        expect(Number(tone(el, "--glass-page-lo"))).toBeGreaterThan(0.95);
++        release();
++        expect(el.hasAttribute("data-glass-ground")).toBe(false);
++        expect(state(el)).toBeNull();
++        expect(tone(el, "--glass-page-lo")).toBe("");
++    });
++
++    it("a page colour retune is followed, not held as a stale number", () => {
++        const el = document.createElement("main");
++        claimGlassGround(el, "page");
++        const before = Number(tone(el, "--glass-page-lo"));
++        tokens["--background"] = "hsl(210 22% 70%)";
++        document.dispatchEvent(new CustomEvent("glass-field"));
++        expect(Number(tone(el, "--glass-page-lo"))).toBeLessThan(before - 0.1);
++        expect(state(el)).toBe("live");
++    });
++
++    it("a field claim with no publication in scope is stamped unpublished, once, loudly; a publication re-stamps it", () => {
++        const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
++        const el = document.createElement("main");
++        claimGlassGround(el, "field");
++        expect(state(el)).toBe("unpublished");
++        document.dispatchEvent(new CustomEvent("glass-field"));
++        expect(warn).toHaveBeenCalledTimes(1);
++        fieldLive = "1";
++        const host = document.createElement("div");
++        const pub = publishGlassField(host);
++        pub.set({ lo: 0.41, hi: 0.78, ceiling: 1 });
++        expect(state(el)).toBe("published");
++        fieldLive = "0";
++        pub.dispose();
++        expect(state(el)).toBe("unpublished");
++    });
++
++    it("a colour list writes the worst of its tones", () => {
++        const el = document.createElement("main");
++        claimGlassGround(el, ["#000000", "#ffffff"]);
++        expect(el.getAttribute("data-glass-ground")).toBe("");
++        expect(tone(el, "--glass-ground-lo")).toBe("0.0000");
++        expect(tone(el, "--glass-ground-hi")).toBe("1.0000");
++        expect(state(el)).toBe("live");
++    });
++
++    it("refuses loud when --card is written as a colour its number does not describe", () => {
++        const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
++        const el = document.createElement("main");
++        tokens["--card"] = "hsl(212 30% 60%)";
++        claimGlassGround(el, "page");
++        expect(state(el)).toBe("desync");
++        expect(tone(el, "--glass-page-lo")).toBe("");
++        expect(warn.mock.calls[0][0]).toMatch(/--card-l/);
++    });
++
++    it("refuses loud when --foreground is retuned into the muted ink's register", () => {
++        const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
++        const el = document.createElement("main");
++        tokens["--foreground"] = "oklch(0.42 0.02 56)";
++        claimGlassGround(el, ["#000000"]);
++        expect(state(el)).toBe("desync");
++        expect(tone(el, "--glass-ground-lo")).toBe("");
++        expect(warn.mock.calls[0][0]).toMatch(/--on-glass-muted-l/);
++    });
++
++    it("throws on the root element and on an empty colour list", () => {
++        expect(() => claimGlassGround(document.documentElement, "page")).toThrow(/root/);
++        expect(() => claimGlassGround(document.createElement("main"), [])).toThrow(/empty/);
++    });
++});
+diff --git a/tests/composables/glass/groundTone.test.ts b/tests/composables/glass/groundTone.test.ts
+new file mode 100644
+index 00000000..f5d9b3df
+--- /dev/null
++++ b/tests/composables/glass/groundTone.test.ts
+@@ -0,0 +1,89 @@
++// The ground a glass claim reads: the tone arithmetic and the per-host publication.
++import { afterEach, describe, expect, it, vi } from "vitest";
++import { glassGroundTone, publishGlassField } from "@glass/composables/glass/groundTone";
++import { auroraGroundTones } from "@glass/components/aurora/composables/auroraFallbackGround";
++import { DEFAULT_AURORA_CONFIG } from "@glass/components/aurora/constants/presets";
++
++const read = (el: HTMLElement) => ({
++    lo: el.style.getPropertyValue("--glass-field-lo"),
++    hi: el.style.getPropertyValue("--glass-field-hi"),
++    ceiling: el.style.getPropertyValue("--glass-field-ceiling"),
++    live: el.style.getPropertyValue("--glass-field-live"),
++});
++
++describe("glassGroundTone", () => {
++    it("reads the any-input poles at black and white", () => {
++        expect(glassGroundTone("#000000", { saturate: 1.5 })).toEqual({ lo: 0, hi: 0 });
++        const w = glassGroundTone("#ffffff", { saturate: 1.5 });
++        expect(w.lo).toBeCloseTo(1, 4);
++        expect(w.hi).toBeCloseTo(1, 4);
++    });
++
++    it("lo is the encoded luma; hi rises with the backdrop's saturate on a chromatic ground", () => {
++        const [r, g, b] = [0x76 / 255, 0x16 / 255, 0x17 / 255];
++        const t1 = glassGroundTone([r, g, b], { saturate: 1 });
++        const t15 = glassGroundTone([r, g, b], { saturate: 1.5 });
++        expect(t1.lo).toBeCloseTo(0.2126 * r + 0.7152 * g + 0.0722 * b, 6);
++        expect(t15.lo).toBeCloseTo(t1.lo, 6);
++        expect(t15.hi).toBeGreaterThan(t1.hi);
++    });
++});
++
++describe("publishGlassField", () => {
++    afterEach(() => vi.restoreAllMocks());
++
++    it("a host carries the worst of its substrates, and an unmount recomputes from the rest", () => {
++        const host = document.createElement("div");
++        const a = publishGlassField(host);
++        const b = publishGlassField(host);
++        a.set({ lo: 0.4, hi: 0.7, ceiling: 0.5 });
++        b.set({ lo: 0.6, hi: 0.9, ceiling: 1 });
++        expect(read(host)).toEqual({ lo: "0.4000", hi: "0.9000", ceiling: "1.0000", live: "1" });
++        b.dispose();
++        expect(read(host)).toEqual({ lo: "0.4000", hi: "0.7000", ceiling: "0.5000", live: "1" });
++        a.dispose();
++        expect(read(host)).toEqual({ lo: "", hi: "", ceiling: "", live: "" });
++    });
++
++    it("one substrate that cannot state its tones unpublishes the host, loudly", () => {
++        const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
++        const host = document.createElement("div");
++        const a = publishGlassField(host);
++        const b = publishGlassField(host);
++        a.set({ lo: 0.4, hi: 0.7, ceiling: 1 });
++        b.set(null);
++        expect(read(host)).toEqual({ lo: "", hi: "", ceiling: "", live: "" });
++        expect(warn).toHaveBeenCalledTimes(1);
++    });
++
++    it("announces every change on document, so a claim re-reads", () => {
++        const host = document.createElement("div");
++        const seen = vi.fn();
++        document.addEventListener("glass-field", seen);
++        const a = publishGlassField(host);
++        a.set({ lo: 0.4, hi: 0.7, ceiling: 1 });
++        a.dispose();
++        document.removeEventListener("glass-field", seen);
++        expect(seen).toHaveBeenCalledTimes(2);
++    });
++
++    it("two hosts never share a publication (nothing is document-global)", () => {
++        const h1 = document.createElement("div");
++        const h2 = document.createElement("div");
++        publishGlassField(h1).set({ lo: 0.1, hi: 0.2, ceiling: 1 });
++        publishGlassField(h2).set({ lo: 0.5, hi: 0.6, ceiling: 1 });
++        expect(read(h1).lo).toBe("0.1000");
++        expect(read(h2).lo).toBe("0.5000");
++    });
++});
++
++describe("auroraGroundTones", () => {
++    it("bounds the default field's lattice, and refuses an image source", () => {
++        const t = auroraGroundTones(DEFAULT_AURORA_CONFIG, 1.5);
++        expect(t).not.toBeNull();
++        expect(t!.lo).toBeGreaterThan(0);
++        expect(t!.lo).toBeLessThan(t!.hi);
++        expect(auroraGroundTones({ ...DEFAULT_AURORA_CONFIG, source: "image" }, 1.5)).toBeNull();
++        expect(auroraGroundTones(DEFAULT_AURORA_CONFIG, Number.NaN)).toBeNull();
++    });
++});
+diff --git a/tests/public-surface.spec.ts b/tests/public-surface.spec.ts
+index 2662fafc..c61b46aa 100644
+--- a/tests/public-surface.spec.ts
++++ b/tests/public-surface.spec.ts
+@@ -249,10 +249,14 @@ const rootRuntimeExports = [
+     "badgeVariants",
+     "blobPullMapping",
+     "cn",
++    "claimGlassGround",
+     "constellationWellMapping",
+     "createSpecularWriter",
+     "createTokenColorCache",
++    "glassGroundTone",
+     "provideConfiguratorSize",
++    "publishGlassField",
++    "readGlassSaturate",
+     "resolveCanvasColor",
+     "resolveTokenColor",
+     "snapshotField",
+@@ -265,6 +269,7 @@ const rootRuntimeExports = [
+     "useCanvas2D",
+     "useConfiguratorState",
+     "useDragVelocity",
++    "useGlassGround",
+     "useIdleReady",
+     "useLiquidFlex",
+     "useOptionalConfiguratorSize",
+diff --git a/tests/styles/glass-subtlety.test.ts b/tests/styles/glass-subtlety.test.ts
+index 3d2e2cf3..8618d10f 100644
+--- a/tests/styles/glass-subtlety.test.ts
++++ b/tests/styles/glass-subtlety.test.ts
+@@ -88,7 +88,17 @@ describe("glass veil ladder — every rung on the one computed bound", () => {
+     const FOOTPRINTS = ["chassis", "dock", "crown", "sheet", "dialog"] as const;
+     const colorRadius = declMap(read("src/styles/tokens/color-radius.css"));
+     const onGlass = declMap(read("src/styles/tokens/on-glass-fg.css"));
+-    const lightAll = new Map([...colorRadius, ...onGlass, ...light]);
++    // The token root as the cascade sees it there: the claim rules match no root, so they
++    // are dropped (a rule whose selector list also names `:root` stays), and every
++    // registered number with no root declaration sits at its initial value (the claim's
++    // tones at the any-input poles).
++    const glassCss = read("src/styles/tokens/glass.css");
++    const rootGlass = declMap(glassCss.replace(/(?<!,\s*)\[data-glass-ground[^\]]*\]\s*\{[^}]*\}/g, ""));
++    const initials = new Map<string, string>();
++    for (const m of glassCss.matchAll(/@property\s+(--[\w-]+)\s*\{[^}]*?initial-value:\s*([^;}]+);/g)) {
++        if (!rootGlass.has(m[1])) initials.set(m[1], m[2].trim());
++    }
++    const lightAll = new Map([...colorRadius, ...onGlass, ...initials, ...rootGlass]);
+     const darkAll = new Map(lightAll);
+     for (const [k, v] of declMap(darkArm)) darkAll.set(k, v);
+ 
+@@ -156,6 +166,7 @@ describe("glass veil ladder — every rung on the one computed bound", () => {
+     it("seats each band's thinnest rung ON the bound and never thins up a band", () => {
+         for (const [mode, map] of [["light", lightAll], ["dark", darkAll]] as const) {
+             const bound = evaluate(map, "--glass-bound");
++            expect(evaluate(map, "--glass-content-bound"), `${mode}: unclaimed, the content bound IS the bound`).toBe(bound);
+             for (const rung of ["wash", "floating", "chassis", "dock", "crown"]) {
+                 expect(evaluate(map, `--glass-veil-${rung}`), `${mode} ${rung}`).toBe(bound);
+             }
+@@ -170,10 +181,14 @@ describe("glass veil ladder — every rung on the one computed bound", () => {
+     });
+ 
+     it("derives EVERY rung from the bound — no hand alpha, in either mode", () => {
++        // The content band steps from the content bound (the bound, unless a claim thins
++        // it); `--glass-bound` is that one formula at the token root.
++        expect(light.get("--glass-bound")).toBe("var(--glass-content-bound)");
+         for (const rung of [...RUNGS, ...FOOTPRINTS]) {
+             const raw = light.get(`--glass-veil-${rung}`);
+             expect(raw, `no declaration for --glass-veil-${rung}`).toBeDefined();
+-            if (rung !== "dialog") expect(raw, rung).toMatch(/var\(--glass-bound\)/);
++            const content = ["wash", "quiet", "resting"].includes(rung);
++            if (rung !== "dialog") expect(raw, rung).toMatch(content ? /var\(--glass-content-bound\)/ : /var\(--glass-bound\)/);
+         }
+         expect(darkArm).not.toMatch(
+             /--glass-veil-(?:wash|quiet|resting|floating|overlay|dock|crown|sheet|chassis|dialog|step)\s*:/,
+@@ -192,12 +207,46 @@ describe("glass veil ladder — every rung on the one computed bound", () => {
+         expect(veil).not.toMatch(/--glass-backdrop-luma|clamp\(/);
+     });
+ 
++    it("solves a claim with the bound's own formula and ink: the any-input tones give the bound, a kinder ground thins only content", () => {
++        for (const [mode, map, kind, toward] of [
++            ["light", lightAll, "--glass-ground-lo", 0.4117],
++            ["dark", darkAll, "--glass-ground-hi", 0.7825],
++        ] as const) {
++            const bound = evaluate(map, "--glass-bound");
++            const claimed = new Map(map);
++            claimed.set(kind, String(toward));
++            claimed.set(`${kind}-lag`, String(toward));
++            const content = evaluate(claimed, "--glass-content-bound");
++            expect(content, `${mode}: a kinder ground licenses a thinner content plate`).toBeLessThan(bound - 0.03);
++            // The composite over the claimed ground meets the same need as the bound over the pole.
++            const ground = toward;
++            const poleE = encode(evaluate(map, "--glass-pole-y"));
++            const inkY = evaluate(map, "--glass-ink-y");
++            const compY = lin(content * poleE + (1 - content) * ground);
++            const ratio = (Math.max(compY, inkY) + 0.05) / (Math.min(compY, inkY) + 0.05);
++            expect(ratio, `${mode}: the claimed composite holds the target`).toBeGreaterThanOrEqual(
++                evaluate(map, "--glass-ink-target") - 0.01,
++            );
++            // C-2: the any-input tones written as a claim compute the bound exactly.
++            const poles = new Map(map);
++            poles.set(kind, kind.endsWith("lo") ? "0" : "1");
++            expect(evaluate(poles, "--glass-content-bound"), `${mode}: the any-input claim`).toBe(bound);
++        }
++        // Chrome reads the bound, never the claim: a claim rule declares neither the bound
++        // nor a chrome rung, so a claimed scope inherits the root's computed numbers.
++        const claimRules = [...glassCss.matchAll(/(?<!,\s*)\[data-glass-ground[^\]]*\]\s*\{([^}]*)\}/g)].map((m) => m[1]);
++        expect(claimRules.length).toBeGreaterThan(0);
++        for (const body of claimRules) {
++            expect(body).not.toMatch(/--glass-bound\s*:|--glass-veil-(?:floating|overlay|dock|chassis|crown|sheet|dialog)\s*:/);
++        }
++    });
++
+     it("never sheds a HELD plate below the bound", () => {
+         const grasp = stripCss(read("src/styles/glass/grasp.css"));
+         expect(grasp).toMatch(
+             /--glass-veil-rung:\s*max\(\s*calc\(var\(--glass-veil-rest\) \* 0\.6\),\s*var\(--glass-veil-floor, 0\)\s*\)/,
+         );
+-        expect(stripCss(read("src/styles/glass/veil.css"))).toMatch(/--glass-veil-floor:\s*var\(--glass-bound\)/);
++        expect(stripCss(read("src/styles/glass/veil.css"))).toMatch(/--glass-veil-floor:\s*var\(--glass-content-bound\)/);
+     });
+ 
+     it("paints a HELD plate's veil on its carriers, below its content", () => {

@@ -329,3 +329,9 @@ Outage log:
   - The R-3 kick plant fails exactly the 12 commit cells.
   - New corner-gap.mjs probe: the perimeter edge is concentric within 0.05-0.36 px on 20/20 cells.
   D′ critic launched.
+- 2026-10-09 — D3 pass 3 C″ proto banked: built on floor v2 and measured on full H3, claimed and unclaimed, both engines.
+  - **C-7 fails as the spec predicted.** The claimed light wash over c1 transmits ×1.74 (Chromium) and ×1.76 (WebKit) against the ×2 the row needs; dark is ×1.40. The route goes to BANK, with its claim, resolver and publication banked as a built component.
+  - C-1..C-6 and C-8 pass, each RED under its plant. The -strong run on the claimed c1 wash reads 6.30 (C′ read 3.18). The bound computes exactly. Unclaimed, the route matches floor v2 row for row.
+  - Open 10/48: the owner's (M-1x, M-6, gestalt); floor v2's (M-4, M-9, O-66 G2/G3, the O-87 shadow stack, 3 W-C rows); the route's (C-7).
+  - Bundle +13,343 B over floor v2. Units pass (2333). The ratchet rebind is owed.
+  C″ critic launched. Its Q-1 and Q-11 inputs are still unruled, so the critic reads the defaults.
