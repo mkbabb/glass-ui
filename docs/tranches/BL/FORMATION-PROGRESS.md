@@ -351,3 +351,7 @@ Outage log:
   - The minor split is **not shippable as 10.2.0's veil recut**: G2 and G3 fail, M-3 light is red on every row, the held dock reads 3.16, and the veil stays grey off paper.
   - Earliest W-0.1 landing: the close of pass 5, if passes 4 and 5 are both clean, and only with Q-1 and Q-11 ruled.
   D3 pass 4 launched (bl-design-d3-pass4.js): H4 (I-1..I-4) with the floor v2 baseline, then floor v3 (R-1..R-5 plus measured Q-1 (c) and Q-11 (b) variants), then the minor split v2, then one critic on the fixed 44 rows, then the agglomerate.
+- 2026-10-13 — **Session restart (second); all five runs resumed.** Every open seat died with the previous process. The driver removed only the dead BL seat worktrees: D1 p8 B-proto (base, r2, wt), D2 p4 H4, D3 p4 H4, D4 p3 D4-F-spec, D5 p2 H2. Driver scripts were committed and unchanged. Resumed by run id: D1 passes 8-9 wf_48ca14cd-c3d (B-proto, pass 8), D2 pass 4 wf_5ac042a6-599 (H4), D3 pass 4 wf_e61cdcbc-023 (H4), D4 pass 3 wf_c944ce08-d2d (F spec), D5 pass 2 wf_9b9708d5-f87 (H2). Completed seats replay from cache.
+  - D1 B-proto, D2 H4 and D5 H2 have now died twice without banking a result. Their partial outputs under docs/ (structure/pass-8/, dock/pass-4/ and four dock harness files, engagement/pass-2/ and its harness files, tile/pass-3/D4-F-spec/) stay uncommitted for the re-entered seats to finish or overwrite.
+  - Machine load at resume: 9.8, against 200-535 through the last sitting.
+  Crons stay off.
