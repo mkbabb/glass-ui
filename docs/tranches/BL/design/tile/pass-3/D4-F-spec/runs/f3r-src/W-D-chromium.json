@@ -1,0 +1,86 @@
+{
+ "id": "W-D",
+ "title": "the tile is declared once, at the group, and only where declared (D4-D)",
+ "engine": "chromium",
+ "engineLabel": "Chromium 149.0.7827.55",
+ "target": "f3r-src",
+ "dev": false,
+ "cells": [
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "family-d",
+   "line": "family-d #0 · corner 9999px→20.00 (--radius-field 16.00) · row · line-height 15.30 vs body 22.95 · rows 1"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "family-d",
+   "line": "family-d #1 · corner 9999px→20.00 (--radius-field 16.00) · row · line-height 15.30 vs body 22.95 · rows 1"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "family-d",
+   "line": "family-d #2 · corner 9999px→20.00 (--radius-field 16.00) · row · line-height 15.30 vs body 22.95 · rows 1"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "family-d",
+   "line": "family-d #3 · corner 9999px→20.00 (--radius-field 16.00) · row · line-height 15.30 vs body 22.95 · rows 1"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "family-d-undeclared",
+   "line": "family-d-undeclared #0 (undeclared pair) · 195.28×40.00 rung 40.00 · corner 9999px→20.00 (÷h/2 1.00) · rows 1"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "family-d-undeclared",
+   "line": "family-d-undeclared #1 (undeclared pair) · 232.92×40.00 rung 40.00 · corner 9999px→20.00 (÷h/2 1.00) · rows 1"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "family-d-undeclared",
+   "line": "family-d-undeclared #2 (undeclared pair) · 212.77×40.00 rung 40.00 · corner 9999px→20.00 (÷h/2 1.00) · rows 1"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "family-d-undeclared",
+   "line": "family-d-undeclared #3 (undeclared pair) · 216.14×40.00 rung 40.00 · corner 9999px→20.00 (÷h/2 1.00) · rows 1"
+  }
+ ],
+ "flavor": "src",
+ "harness": {
+  "hash": "9fd4983bc6b9",
+  "files": 27,
+  "rev": "H3"
+ },
+ "run": {
+  "loadStart": "120.94 / 144.40 / 165.58",
+  "loadEnd": "120.94 / 144.40 / 165.58",
+  "census": {
+   "n": 40,
+   "sample": [
+    "1280 /Applications/Visual Studio Code.app/Contents/Resources/app/node_modules.asar.un",
+    "86957 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-tri",
+    "86973 /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.fram"
+   ],
+   "waitedS": 1
+  },
+  "lockWaitS": 0
+ },
+ "pass": false,
+ "tally": "4/8 gating cells pass [library 4/8]",
+ "arms": {
+  "library": {
+   "pass": 4,
+   "of": 8
+  }
+ }
+}

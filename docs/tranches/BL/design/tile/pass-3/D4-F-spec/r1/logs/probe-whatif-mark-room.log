@@ -1,0 +1,32 @@
+2026-10-13 14:58:41 · load { 70.02 73.01 51.27 }
+D4-F p3 spec probe · f3-src (d6f68b88, flavor src) · lock waited 244.3s · load 168.72 / 116.90 / 74.98 at start
+inject: .toggle-group__item::after { inline-size: min(var(--selection-mark), max(0px, (100% - 4 * var(--selection-mark)) * 9999)) !important; block-size: auto !important; aspect-ratio: 1; }
+
+Chromium 149.0.7827.55 · load 168.72 / 116.90 / 74.98
+ [mark] load 168.72 / 116.90 / 74.98
+  PASS mark · preset-migrated light · md tile 204×70.58 · mark 18px opacity 1 scale 1 · overlaps nothing
+  PASS mark · preset-migrated dark · md tile 204×70.58 · mark 18px opacity 1 scale 1 · overlaps nothing
+  PASS mark · specimen-migrated light · sm tile 205×98.16 · mark 14px opacity 1 scale 1 · overlaps span.tile-stage
+  PASS mark · specimen-migrated dark · sm tile 205×98.16 · mark 14px opacity 1 scale 1 · overlaps span.tile-stage
+  FAIL mark · strip-migrated light · sm tile 40×58.8 · mark 0px opacity 1 scale 1 · overlaps nothing
+  FAIL mark · strip-migrated dark · sm tile 40×58.8 · mark 0px opacity 1 scale 1 · overlaps nothing
+  FAIL mark · f1-migrated light · md tile 74×118.42 · mark 0px opacity 1 scale 1 · overlaps nothing
+  FAIL mark · f1-migrated dark · md tile 74×118.42 · mark 0px opacity 1 scale 1 · overlaps nothing
+  PASS mark · v2-migrated light · md tile 452×106.34 · mark 18px opacity 1 scale 1 · overlaps span.tx-v2-strip
+  PASS mark · v2-migrated dark · md tile 452×106.34 · mark 18px opacity 1 scale 1 · overlaps span.tx-v2-strip
+
+Playwright WebKit 26.5 · load 152.89 / 116.70 / 75.89
+ [mark] load 152.89 / 116.70 / 75.89
+  PASS mark · preset-migrated light · md tile 204×70.59 · mark 18px opacity 1 scale 1 · overlaps nothing
+  PASS mark · preset-migrated dark · md tile 204×70.59 · mark 18px opacity 1 scale 1 · overlaps nothing
+  PASS mark · specimen-migrated light · sm tile 205×98.16 · mark 14px opacity 1 scale 1 · overlaps span.tile-stage
+  PASS mark · specimen-migrated dark · sm tile 205×98.16 · mark 14px opacity 1 scale 1 · overlaps span.tile-stage
+  FAIL mark · strip-migrated light · sm tile 40×58.8 · mark 0px opacity 1 scale 1 · overlaps nothing
+  FAIL mark · strip-migrated dark · sm tile 40×58.8 · mark 0px opacity 1 scale 1 · overlaps nothing
+  FAIL mark · f1-migrated light · md tile 74×118.42 · mark 0px opacity 1 scale 1 · overlaps nothing
+  FAIL mark · f1-migrated dark · md tile 74×118.42 · mark 0px opacity 1 scale 1 · overlaps nothing
+  PASS mark · v2-migrated light · md tile 452×106.34 · mark 18px opacity 1 scale 1 · overlaps span.tx-v2-strip
+  PASS mark · v2-migrated dark · md tile 452×106.34 · mark 18px opacity 1 scale 1 · overlaps span.tx-v2-strip
+
+D4-F p3 spec probe · gating 12/20 · load 143.16 / 116.30 / 76.45 at end
+exit 0 · 2026-10-13 15:03:22 · load { 143.16 116.30 76.45 }

@@ -1,0 +1,1249 @@
+{
+ "id": "T-5",
+ "title": "one-of-N ARIA, one tab stop, all four arrows move and check (Q-4 b), no selection, reorder, descendants, N-of-M",
+ "engine": "chromium",
+ "engineLabel": "Chromium 149.0.7827.55",
+ "target": "f3r-src",
+ "dev": false,
+ "cells": [
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset",
+   "arm": "library",
+   "line": "preset ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset",
+   "arm": "library",
+   "line": "preset tab stops · 1 stop(s) between the sentinels, 1 of them items [1]"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "preset grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true",
+   "scene": "preset",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "preset grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true",
+   "scene": "preset",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "preset grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true",
+   "scene": "preset",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "preset grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true",
+   "scene": "preset",
+   "arm": "library"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "preset grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 3 · moved true · checked true",
+   "scene": "preset",
+   "arm": "library"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "preset grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 3 · moved true · checked true",
+   "scene": "preset",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset",
+   "arm": "library",
+   "line": "preset no selection (Q-6 a) · checked falsefalsefalsefalse · stops [0] (want nothing checked and one stop, the first item)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset",
+   "arm": "library",
+   "line": "preset keyed reorder · ArrowRight from DOM #0 · focus 0 → 1 (want 1, the new order's next) · checked true"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset",
+   "arm": "library",
+   "line": "preset keyed reorder · ArrowDown from DOM #3 (no item below: the linear step) · focus 3 → 0 (want 0) · checked true"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "line": "preset-verbatim ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "preset-verbatim",
+   "arm": "unmigrated",
+   "line": "preset-verbatim tab stops · 1 stop(s) between the sentinels, 1 of them items [1]"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "preset-verbatim grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true",
+   "scene": "preset-verbatim",
+   "arm": "unmigrated"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "preset-verbatim grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true",
+   "scene": "preset-verbatim",
+   "arm": "unmigrated"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "preset-verbatim grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true",
+   "scene": "preset-verbatim",
+   "arm": "unmigrated"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "preset-verbatim grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true",
+   "scene": "preset-verbatim",
+   "arm": "unmigrated"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "preset-verbatim grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 3 · moved true · checked true",
+   "scene": "preset-verbatim",
+   "arm": "unmigrated"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "preset-verbatim grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 3 · moved true · checked true",
+   "scene": "preset-verbatim",
+   "arm": "unmigrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset-migrated",
+   "arm": "migrated",
+   "line": "preset-migrated ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset-migrated",
+   "arm": "migrated",
+   "line": "preset-migrated tab stops · 1 stop(s) between the sentinels, 1 of them items [1]"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "preset-migrated grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true",
+   "scene": "preset-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "preset-migrated grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true",
+   "scene": "preset-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "preset-migrated grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true",
+   "scene": "preset-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "preset-migrated grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true",
+   "scene": "preset-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "preset-migrated grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 3 · moved true · checked true",
+   "scene": "preset-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "preset-migrated grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 3 · moved true · checked true",
+   "scene": "preset-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen",
+   "arm": "library",
+   "line": "specimen ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalsefalsefalsefalsefalse · pressed -------- · selected --------"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen",
+   "arm": "library",
+   "line": "specimen tab stops · 1 stop(s) between the sentinels, 1 of them items [1]"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "specimen grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true",
+   "scene": "specimen",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "specimen grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true",
+   "scene": "specimen",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "specimen grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true",
+   "scene": "specimen",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "specimen grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true",
+   "scene": "specimen",
+   "arm": "library"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "specimen grid edge ArrowDown from #6 (no item that way; reported) · focus 6 → 7 · moved true · checked true",
+   "scene": "specimen",
+   "arm": "library"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "specimen grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 7 · moved true · checked true",
+   "scene": "specimen",
+   "arm": "library"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "line": "specimen-verbatim ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalsefalsefalsefalsefalse · pressed -------- · selected --------"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated",
+   "line": "specimen-verbatim tab stops · 1 stop(s) between the sentinels, 1 of them items [1]"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "specimen-verbatim grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true",
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "specimen-verbatim grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true",
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "specimen-verbatim grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true",
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "specimen-verbatim grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true",
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "specimen-verbatim grid edge ArrowDown from #6 (no item that way; reported) · focus 6 → 7 · moved true · checked true",
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "specimen-verbatim grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 7 · moved true · checked true",
+   "scene": "specimen-verbatim",
+   "arm": "unmigrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen-migrated",
+   "arm": "migrated",
+   "line": "specimen-migrated ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalsefalsefalsefalsefalse · pressed -------- · selected --------"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "specimen-migrated",
+   "arm": "migrated",
+   "line": "specimen-migrated tab stops · 1 stop(s) between the sentinels, 1 of them items [1]"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "specimen-migrated grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true",
+   "scene": "specimen-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "specimen-migrated grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true",
+   "scene": "specimen-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "specimen-migrated grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true",
+   "scene": "specimen-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "specimen-migrated grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true",
+   "scene": "specimen-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "specimen-migrated grid edge ArrowDown from #6 (no item that way; reported) · focus 6 → 7 · moved true · checked true (the click did not focus; focus placed by script)",
+   "scene": "specimen-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "specimen-migrated grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 7 · moved true · checked true (the click did not focus; focus placed by script)",
+   "scene": "specimen-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "strip",
+   "arm": "library",
+   "line": "strip ARIA (CDP AX tree) · group group · items button · checked ------ · pressed falsetruefalsefalsefalsefalse · selected ------"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "strip",
+   "arm": "library",
+   "line": "strip tab stops · 6 stop(s) between the sentinels, 6 of them items [0 → 1 → 2 → 3 → 4 → 5]"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "strip row ArrowRight from #0 · focus 0 → 0 · moved false · checked true",
+   "scene": "strip",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "strip row ArrowLeft from #1 · focus 1 → 1 · moved false · checked true",
+   "scene": "strip",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "strip row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true",
+   "scene": "strip",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "strip row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 5 · moved false · checked true",
+   "scene": "strip",
+   "arm": "library"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip-verbatim",
+   "arm": "unmigrated",
+   "line": "strip-verbatim ARIA (CDP AX tree) · group group · items button · checked ------ · pressed falsetruefalsefalsefalsefalse · selected ------"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "strip-verbatim",
+   "arm": "unmigrated",
+   "line": "strip-verbatim tab stops · 6 stop(s) between the sentinels, 6 of them items [0 → 1 → 2 → 3 → 4 → 5]"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "line": "strip-verbatim row ArrowRight from #0 · focus 0 → 0 · moved false · checked true",
+   "scene": "strip-verbatim",
+   "arm": "unmigrated"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "line": "strip-verbatim row ArrowLeft from #1 · focus 1 → 1 · moved false · checked true",
+   "scene": "strip-verbatim",
+   "arm": "unmigrated"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "line": "strip-verbatim row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true",
+   "scene": "strip-verbatim",
+   "arm": "unmigrated"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "line": "strip-verbatim row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 5 · moved false · checked true",
+   "scene": "strip-verbatim",
+   "arm": "unmigrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "strip-migrated",
+   "arm": "migrated",
+   "line": "strip-migrated ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalsefalsefalse · pressed ------ · selected ------"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "strip-migrated",
+   "arm": "migrated",
+   "line": "strip-migrated tab stops · 1 stop(s) between the sentinels, 1 of them items [1]"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "strip-migrated row ArrowRight from #0 · focus 0 → 1 · moved true · checked true",
+   "scene": "strip-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "strip-migrated row ArrowLeft from #1 · focus 1 → 0 · moved true · checked true",
+   "scene": "strip-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "strip-migrated row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 1 · moved true · checked true",
+   "scene": "strip-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "strip-migrated row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 4 · moved true · checked true",
+   "scene": "strip-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "f1",
+   "arm": "library",
+   "line": "f1 ARIA (CDP AX tree) · group generic · items button · checked ------ · pressed ------ · selected ------"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "f1",
+   "arm": "library",
+   "line": "f1 tab stops · 6 stop(s) between the sentinels, 6 of them items [0 → 1 → 2 → 3 → 4 → 5]"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "f1 row ArrowRight from #0 · focus 0 → 0 · moved false · checked true",
+   "scene": "f1",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "f1 row ArrowLeft from #1 · focus 1 → 1 · moved false · checked true",
+   "scene": "f1",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "f1 row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true",
+   "scene": "f1",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "f1 row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 5 · moved false · checked false (the click did not focus; focus placed by script)",
+   "scene": "f1",
+   "arm": "library"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "line": "f1-verbatim ARIA (CDP AX tree) · group generic · items button · checked ------ · pressed ------ · selected ------"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "f1-verbatim",
+   "arm": "unmigrated",
+   "line": "f1-verbatim tab stops · 6 stop(s) between the sentinels, 6 of them items [0 → 1 → 2 → 3 → 4 → 5]"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "line": "f1-verbatim row ArrowRight from #0 · focus 0 → 0 · moved false · checked true",
+   "scene": "f1-verbatim",
+   "arm": "unmigrated"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "line": "f1-verbatim row ArrowLeft from #1 · focus 1 → 1 · moved false · checked false",
+   "scene": "f1-verbatim",
+   "arm": "unmigrated"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "line": "f1-verbatim row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true",
+   "scene": "f1-verbatim",
+   "arm": "unmigrated"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "line": "f1-verbatim row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 5 · moved false · checked false (the click did not focus; focus placed by script)",
+   "scene": "f1-verbatim",
+   "arm": "unmigrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "f1-migrated",
+   "arm": "migrated",
+   "line": "f1-migrated ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalsefalsefalse · pressed ------ · selected ------"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "f1-migrated",
+   "arm": "migrated",
+   "line": "f1-migrated tab stops · 1 stop(s) between the sentinels, 1 of them items [1]"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "f1-migrated row ArrowRight from #0 · focus 0 → 1 · moved true · checked true",
+   "scene": "f1-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "f1-migrated row ArrowLeft from #1 · focus 1 → 0 · moved true · checked true",
+   "scene": "f1-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "f1-migrated row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 1 · moved true · checked true",
+   "scene": "f1-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "f1-migrated row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 4 · moved true · checked true (the click did not focus; focus placed by script)",
+   "scene": "f1-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "v2",
+   "arm": "library",
+   "line": "v2 N-of-M ARIA (CDP AX tree) · group none · items button · pressed falsetruefalsefalse · checked ----"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "v2",
+   "arm": "library",
+   "line": "v2 N-of-M Space toggles #0 · false → true → false"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "v2",
+   "arm": "library",
+   "line": "v2 N-of-M tab stops (reported) · 4 [0 → 1 → 2 → 3]"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "v2-verbatim",
+   "arm": "unmigrated",
+   "line": "v2-verbatim N-of-M ARIA (CDP AX tree) · group none · items button · pressed falsetruefalsefalse · checked ----"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "v2-verbatim",
+   "arm": "unmigrated",
+   "line": "v2-verbatim N-of-M Space toggles #0 · false → true → false"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "v2-verbatim",
+   "arm": "unmigrated",
+   "line": "v2-verbatim N-of-M tab stops (reported) · 4 [0 → 1 → 2 → 3]"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "v2-migrated",
+   "arm": "migrated",
+   "line": "v2-migrated N-of-M ARIA (CDP AX tree) · group group · items button · pressed falsetruefalsefalse · checked ----"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "v2-migrated",
+   "arm": "migrated",
+   "line": "v2-migrated N-of-M Space toggles #0 · false → true → false"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "v2-migrated",
+   "arm": "migrated",
+   "line": "v2-migrated N-of-M tab stops (reported) · 1 [1]"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "c1",
+   "arm": "library",
+   "line": "c1 ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalsefalse · pressed ----- · selected -----"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "c1",
+   "arm": "library",
+   "line": "c1 tab stops · 5 stop(s) between the sentinels, 5 of them items [0 → 1 → 2 → 3 → 4]"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "c1 column ArrowRight from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true",
+   "scene": "c1",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "c1 column ArrowLeft from #4 (linear step, Q-4 b) · focus 4 → 4 · moved false · checked true",
+   "scene": "c1",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "c1 column ArrowDown from #0 · focus 0 → 0 · moved false · checked true",
+   "scene": "c1",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "c1 column ArrowUp from #1 · focus 1 → 1 · moved false · checked true",
+   "scene": "c1",
+   "arm": "library"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "c1-verbatim",
+   "arm": "unmigrated",
+   "line": "c1-verbatim ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalsefalse · pressed ----- · selected -----"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "scene": "c1-verbatim",
+   "arm": "unmigrated",
+   "line": "c1-verbatim tab stops · 5 stop(s) between the sentinels, 5 of them items [0 → 1 → 2 → 3 → 4]"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "line": "c1-verbatim column ArrowRight from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true",
+   "scene": "c1-verbatim",
+   "arm": "unmigrated"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "line": "c1-verbatim column ArrowLeft from #4 (linear step, Q-4 b) · focus 4 → 4 · moved false · checked true",
+   "scene": "c1-verbatim",
+   "arm": "unmigrated"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "line": "c1-verbatim column ArrowDown from #0 · focus 0 → 0 · moved false · checked true",
+   "scene": "c1-verbatim",
+   "arm": "unmigrated"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "line": "c1-verbatim column ArrowUp from #1 · focus 1 → 1 · moved false · checked true",
+   "scene": "c1-verbatim",
+   "arm": "unmigrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "c1-migrated",
+   "arm": "migrated",
+   "line": "c1-migrated ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalsefalse · pressed ----- · selected -----"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "c1-migrated",
+   "arm": "migrated",
+   "line": "c1-migrated tab stops · 1 stop(s) between the sentinels, 1 of them items [1]"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "c1-migrated column ArrowRight from #0 (linear step, Q-4 b) · focus 0 → 1 · moved true · checked true",
+   "scene": "c1-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "c1-migrated column ArrowLeft from #4 (linear step, Q-4 b) · focus 4 → 3 · moved true · checked true",
+   "scene": "c1-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "c1-migrated column ArrowDown from #0 · focus 0 → 1 · moved true · checked true",
+   "scene": "c1-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "c1-migrated column ArrowUp from #1 · focus 1 → 0 · moved true · checked true",
+   "scene": "c1-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset-contents",
+   "arm": "library",
+   "line": "preset-contents ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset-contents",
+   "arm": "library",
+   "line": "preset-contents tab stops · 1 stop(s) between the sentinels, 1 of them items [1]"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "preset-contents grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true",
+   "scene": "preset-contents",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "preset-contents grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true",
+   "scene": "preset-contents",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "preset-contents grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true",
+   "scene": "preset-contents",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "preset-contents grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true",
+   "scene": "preset-contents",
+   "arm": "library"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "preset-contents grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 3 · moved true · checked true",
+   "scene": "preset-contents",
+   "arm": "library"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "preset-contents grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 3 · moved true · checked true",
+   "scene": "preset-contents",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset-contents-migrated",
+   "arm": "migrated",
+   "line": "preset-contents-migrated ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset-contents-migrated",
+   "arm": "migrated",
+   "line": "preset-contents-migrated tab stops · 1 stop(s) between the sentinels, 1 of them items [1]"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "preset-contents-migrated grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true",
+   "scene": "preset-contents-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "preset-contents-migrated grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true",
+   "scene": "preset-contents-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "preset-contents-migrated grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true",
+   "scene": "preset-contents-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "preset-contents-migrated grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true",
+   "scene": "preset-contents-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "preset-contents-migrated grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 3 · moved true · checked true",
+   "scene": "preset-contents-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "preset-contents-migrated grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 3 · moved true · checked true",
+   "scene": "preset-contents-migrated",
+   "arm": "migrated"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset-input",
+   "line": "preset-input interactive descendant (flavor src) · ArrowRight typed in the <input> · focus inside:0 → inside:0 · selection \"snappy\" → \"snappy\""
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset-consumer-aria",
+   "arm": "library",
+   "line": "preset-consumer-aria ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "preset-consumer-aria",
+   "arm": "library",
+   "line": "preset-consumer-aria tab stops · 1 stop(s) between the sentinels, 1 of them items [1]"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "preset-consumer-aria grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true",
+   "scene": "preset-consumer-aria",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "preset-consumer-aria grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true",
+   "scene": "preset-consumer-aria",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "preset-consumer-aria grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true",
+   "scene": "preset-consumer-aria",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "preset-consumer-aria grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true",
+   "scene": "preset-consumer-aria",
+   "arm": "library"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "preset-consumer-aria grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 3 · moved true · checked true",
+   "scene": "preset-consumer-aria",
+   "arm": "library"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "line": "preset-consumer-aria grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 3 · moved true · checked true",
+   "scene": "preset-consumer-aria",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "single",
+   "arm": "library",
+   "line": "single ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "single",
+   "arm": "library",
+   "line": "single tab stops · 1 stop(s) between the sentinels, 1 of them items [1]"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "single row ArrowRight from #0 · focus 0 → 1 · moved true · checked true",
+   "scene": "single",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "single row ArrowLeft from #1 · focus 1 → 0 · moved true · checked true",
+   "scene": "single",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "single row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 1 · moved true · checked true",
+   "scene": "single",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "single row ArrowUp from #3 (linear step, Q-4 b) · focus 3 → 2 · moved true · checked true",
+   "scene": "single",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "vertical",
+   "arm": "library",
+   "line": "vertical ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "vertical",
+   "arm": "library",
+   "line": "vertical tab stops · 1 stop(s) between the sentinels, 1 of them items [1]"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "vertical column ArrowRight from #0 (linear step, Q-4 b) · focus 0 → 1 · moved true · checked true",
+   "scene": "vertical",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "vertical column ArrowLeft from #3 (linear step, Q-4 b) · focus 3 → 2 · moved true · checked true",
+   "scene": "vertical",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "vertical column ArrowDown from #0 · focus 0 → 1 · moved true · checked true",
+   "scene": "vertical",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "vertical column ArrowUp from #1 · focus 1 → 0 · moved true · checked true",
+   "scene": "vertical",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "tabs",
+   "arm": "library",
+   "line": "tabs ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "tabs",
+   "arm": "library",
+   "line": "tabs tab stops · 1 stop(s) between the sentinels, 1 of them items [1]"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "tabs row ArrowRight from #0 · focus 0 → 1 · moved true · checked true",
+   "scene": "tabs",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "tabs row ArrowLeft from #1 · focus 1 → 0 · moved true · checked true (the click did not focus; focus placed by script)",
+   "scene": "tabs",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "tabs row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 1 · moved true · checked true (the click did not focus; focus placed by script)",
+   "scene": "tabs",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "line": "tabs row ArrowUp from #3 (linear step, Q-4 b) · focus 3 → 2 · moved true · checked true",
+   "scene": "tabs",
+   "arm": "library"
+  },
+  {
+   "gating": false,
+   "pass": true,
+   "scene": "tabs-retired",
+   "arm": "library",
+   "line": "tabs-retired retired value semantics=\"toggle\" (flavor src: a src alias build, reported, not gated) · refused: [tile] app error https://vuejs.org/error-reference/#runtime-3 TypeError: [SegmentedTabs] semantics=\"toggle\" is not one o"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "line": "card ARIA (CDP AX tree) · group listbox · items generic · checked ---- · pressed ---- · selected ----"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "arm": "library",
+   "line": "card tab stops · 0 stop(s) between the sentinels, 0 of them items []"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "card grid ArrowRight from #0 · focus body → body · moved false · checked false (the click did not focus; focus placed by script)",
+   "scene": "card",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "card grid ArrowLeft from #1 · focus body → body · moved false · checked false (the click did not focus; focus placed by script)",
+   "scene": "card",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "card grid ArrowDown from #0 · focus body → body · moved false · checked false (the click did not focus; focus placed by script)",
+   "scene": "card",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "card grid ArrowUp from #2 · focus body → body · moved false · checked false (the click did not focus; focus placed by script)",
+   "scene": "card",
+   "arm": "library"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "line": "card grid edge ArrowDown from #2 (no item that way; reported) · focus body → body · moved false · checked false (the click did not focus; focus placed by script)",
+   "scene": "card",
+   "arm": "library"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "line": "card grid edge ArrowUp from #0 (no item that way; reported) · focus body → body · moved false · checked false (the click did not focus; focus placed by script)",
+   "scene": "card",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "chipcell",
+   "arm": "library",
+   "line": "chipcell ARIA (CDP AX tree) · group group · items button · checked ---- · pressed falsetruefalsefalse · selected ----"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "chipcell",
+   "arm": "library",
+   "line": "chipcell tab stops · 4 stop(s) between the sentinels, 4 of them items [0 → 1 → 2 → 3]"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "chipcell row ArrowRight from #0 · focus 0 → 0 · moved false · checked true",
+   "scene": "chipcell",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "chipcell row ArrowLeft from #1 · focus 1 → 1 · moved false · checked true",
+   "scene": "chipcell",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "chipcell row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true",
+   "scene": "chipcell",
+   "arm": "library"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "chipcell row ArrowUp from #3 (linear step, Q-4 b) · focus 3 → 3 · moved false · checked true",
+   "scene": "chipcell",
+   "arm": "library"
+  }
+ ],
+ "flavor": "src",
+ "harness": {
+  "hash": "9fd4983bc6b9",
+  "files": 27,
+  "rev": "H3"
+ },
+ "run": {
+  "loadStart": "241.86 / 215.89 / 169.10",
+  "loadEnd": "216.54 / 215.94 / 174.81",
+  "census": {
+   "n": 16,
+   "sample": [
+    "1280 /Applications/Visual Studio Code.app/Contents/Resources/app/node_modules.asar.un",
+    "39358 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-tri",
+    "39359 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-tri"
+   ],
+   "waitedS": 0.4
+  },
+  "lockWaitS": 0
+ },
+ "pass": false,
+ "tally": "87/116 gating cells pass [library 49/78 · unmigrated 20/37 · migrated 38/38]",
+ "arms": {
+  "library": {
+   "pass": 49,
+   "of": 78
+  },
+  "unmigrated": {
+   "pass": 20,
+   "of": 37
+  },
+  "migrated": {
+   "pass": 38,
+   "of": 38
+  }
+ }
+}

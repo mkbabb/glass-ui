@@ -1,0 +1,389 @@
+diff --git a/src/components/toggle-group/ToggleGroupItem.vue b/src/components/toggle-group/ToggleGroupItem.vue
+index ef1fd19c..d07898ec 100644
+--- a/src/components/toggle-group/ToggleGroupItem.vue
++++ b/src/components/toggle-group/ToggleGroupItem.vue
+@@ -1,5 +1,5 @@
+ <script setup lang="ts">
+-import { computed, onBeforeUnmount, onMounted, ref, watch, type HTMLAttributes } from "vue";
++import { computed, onBeforeUnmount, onMounted, ref, useAttrs, watch, type HTMLAttributes } from "vue";
+ import { cn } from "../_shared/class-names";
+ import type { SelectionValue } from "../_shared/selection";
+ import { useOptionalToggleGroupContext, type ToggleItemEntry } from "./context";
+@@ -24,7 +24,11 @@ export interface ToggleGroupItemProps {
+     class?: HTMLAttributes["class"];
+ }
+ 
+-defineOptions({ name: "ToggleGroupItem" });
++/* THE ENGINE'S ATTRIBUTES ARE THE LAST WORD. Fall-through attributes are bound by
++ * hand (`bound`, below), under the roving `tabindex` and the engine's `role` /
++ * `aria-checked` / `aria-pressed`, so a consumer `role` or `tabindex` on an item cannot
++ * turn a radio back into N tab stops (H3-12). */
++defineOptions({ name: "ToggleGroupItem", inheritAttrs: false });
+ 
+ const props = defineProps<ToggleGroupItemProps>();
+ 
+@@ -35,6 +39,10 @@ const props = defineProps<ToggleGroupItemProps>();
+  * in: this is a slot, not a travelling mark. */
+ defineSlots<{
+     default?: () => unknown;
++    /** A row above the label: a glyph, a thumbnail, a stage. A group with one is a set of tiles. */
++    media?: () => unknown;
++    /** A row below the label: a readout, a description. A group with one is a set of tiles. */
++    meta?: () => unknown;
+     indicator?: (props: { selected: boolean }) => unknown;
+ }>();
+ 
+@@ -71,6 +79,12 @@ onMounted(() => {
+ onBeforeUnmount(() => group?.unregister(entry));
+ 
+ const selected = computed(() => group?.isSelected(props.value) ?? false);
++const attrs = useAttrs();
++const bound = computed(() => ({
++    ...attrs,
++    tabindex: group?.tabindex(entry) ?? 0,
++    ...group?.itemAttrs(props.value),
++}));
+ const isDisabled = computed(() => entry.disabled());
+ 
+ /* THE COMMIT. The kick (styles.css) is keyed on the MODEL, not on focus and not on the
+@@ -147,6 +161,7 @@ if (process.env.NODE_ENV !== "production") {
+ 
+ <template>
+     <button
++        v-bind="bound"
+         ref="el"
+         type="button"
+         data-slot="toggle-group-item"
+@@ -159,13 +174,13 @@ if (process.env.NODE_ENV !== "production") {
+         :data-state="selected ? 'on' : 'off'"
+         :data-commit="committed ? '' : undefined"
+         :disabled="isDisabled || undefined"
+-        :tabindex="group?.tabindex(entry) ?? 0"
+-        v-bind="group?.itemAttrs(props.value)"
+         @click="group?.select(entry)"
+         @animationend.self="onAnimationEnd"
+     >
+         <slot name="indicator" :selected="selected" />
++        <span v-if="$slots.media" class="toggle-group__media"><slot name="media" /></span>
+         <slot />
++        <span v-if="$slots.meta" class="toggle-group__meta"><slot name="meta" /></span>
+     </button>
+ </template>
+ 
+diff --git a/src/components/toggle-group/styles.css b/src/components/toggle-group/styles.css
+index db60f000..ec75a50b 100644
+--- a/src/components/toggle-group/styles.css
++++ b/src/components/toggle-group/styles.css
+@@ -146,10 +146,14 @@
+        colour is a longhand: an unresolvable tone leaves `currentColor`, the item's own
+        ink, instead of dropping the whole border. The layer carries its own transition,
+        so the item's transition list (the capsule hover's) stays whole. */
++    /* (D4-F) The layer fills the padding box, inside the item's own 1 px border, not
++       straddling it: paint containment (`content-visibility: auto`, which a consumer
++       tile keeps for X-3) clips to the padding box and cut a straddling band to 1 px
++       (H3-7). */
+     .toggle-group__item::before {
+         content: "";
+         position: absolute;
+-        inset: -1px;
++        inset: 0;
+         border-width: 2px;
+         border-style: solid;
+         border-color: var(--selection-edge);
+@@ -252,6 +256,85 @@
+         padding-inline: 1.25rem;
+     }
+ 
++    /* THE ANATOMY DECLARES THE TILE (D4-F). An item that fills `#media` (a row above
++       its label) or `#meta` (a row below it) makes its group a set of tiles; nothing
++       else does, and nothing is declared. This selector is the ONE spelling of "is a
++       tile". It sets the tile fact (`--selection-tile`, utilities/base.css), and every
++       other reader derives from that fact: the pill's one-row law and its development
++       name stand down, the selected perimeter switches on, the plate goes flush
++       (Q-2 (b)). The rule itself owns what only a tile has: the field corner, a
++       column, body leading, the pad, one height per row, and the mark. A one-row
++       option in a tile group is a shorter card's worth of content at the card's
++       corner, never a stadium beside a card. */
++    .toggle-group:has(.toggle-group__item > :is(.toggle-group__media, .toggle-group__meta)) {
++        --selection-tile: flush;
++        align-items: stretch;
++
++        & .toggle-group__item {
++            border-radius: var(--radius-field);
++            flex-direction: column;
++            align-items: flex-start;
++            justify-content: flex-start;
++            gap: 0.25rem;
++            line-height: var(--type-leading-body);
++            padding-block: 0.625rem;
++            text-align: start;
++            --selection-mark: 1.125rem;
++            --selection-mark-inset: 0.375rem;
++        }
++
++        &[data-size="sm"] .toggle-group__item {
++            --selection-mark: 0.875rem;
++            --selection-mark-inset: 0.25rem;
++        }
++
++        /* THE MARK: a disc of the edge ink with a check cut through it, in the tile's
++           inline-end corner, at every size. It is the carrier that is neither a colour
++           nor an outline, so a selected tile does not read as a focused one, at `sm` as
++           at `md`. Over a media row it sits ON the media, as a badge: the disc is
++           opaque, so it reads over a glyph, a stage or a thumbnail without a halo. It
++           lives on `::after` (the perimeter holds `::before`) and springs in on the
++           press curve. */
++        & .toggle-group__item::after {
++            content: "";
++            position: absolute;
++            inset-block-start: var(--selection-mark-inset);
++            inset-inline-end: var(--selection-mark-inset);
++            inline-size: var(--selection-mark);
++            block-size: var(--selection-mark);
++            background: var(--selection-edge);
++            mask:
++                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='12'/%3E%3C/svg%3E")
++                    center / contain no-repeat,
++                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 8.5 10.25 15.5 7 12.25'/%3E%3C/svg%3E")
++                    center / contain no-repeat;
++            mask-composite: exclude;
++            opacity: 0;
++            scale: 0.4;
++            pointer-events: none;
++            transition:
++                opacity var(--engage-control-engage-release) var(--ease-standard),
++                scale var(--spring-press-duration) var(--spring-press);
++        }
++
++        & .toggle-group__item[data-state="on"]::after {
++            opacity: 1;
++            scale: 1;
++        }
++    }
++
++    /* the rows: a media row spans the tile, a meta row is the secondary line. Both
++       inherit the item's ink (`--selection-ink`), so a stroke of `currentColor` and the
++       readout follow the state with no `[data-state="on"]` rule of the consumer's */
++    .toggle-group__media {
++        display: flex;
++        align-self: stretch;
++    }
++
++    .toggle-group__meta {
++        font-weight: 400;
++    }
++
+     /* THE ON-STATE CARRIES ON INK AND WEIGHT, AND ASSISTS WITH FILL. It used to be a
+        four-carrier slab: an opaque `--accent` fill, a 28%-α `--primary` border, a
+        `--shadow-sm`, and the ink. The shadow was the real defect — it tied the focus
+@@ -328,5 +411,12 @@
+         .toggle-group__item::before {
+             border-color: Highlight;
+         }
++
++        /* the mark is a mask over a fill: forced colours would repaint the fill as
++           Canvas and erase it */
++        .toggle-group__item::after {
++            forced-color-adjust: none;
++            background: Highlight;
++        }
+     }
+ }
+diff --git a/src/components/fading-scroll/FadingScroll.vue b/src/components/fading-scroll/FadingScroll.vue
+index 6871d31c..4203e77e 100644
+--- a/src/components/fading-scroll/FadingScroll.vue
++++ b/src/components/fading-scroll/FadingScroll.vue
+@@ -16,7 +16,7 @@
+ //     OFF when the native timeline is supported (no double-feather).
+ // The CSS axis is selected by `data-fade-axis` (the root attr); the fallback
+ // reads the same `axis` prop.
+-import { computed, ref, toRef, watch } from "vue";
++import { computed, onBeforeUnmount, onMounted, ref, toRef, watch } from "vue";
+ import { useFadingScroll } from "./composables/useFadingScroll";
+ 
+ const props = withDefaults(
+@@ -51,6 +51,30 @@ watch(
+     () => [props.axis, props.fadeStart, props.fadeEnd],
+     fadingScroll.measure,
+ );
++
++/* THE PORT IS A TAB STOP ONLY WHEN NOTHING INSIDE IS. A keyboard user must reach a
++ * scroll port, so an empty-of-controls port takes `tabindex="0"`; a port that holds a
++ * focusable control is reached through it (focus scrolls the control into view), and
++ * a stop of its own would put one more stop, ringed by the UA, in front of every set
++ * it holds (a radiogroup's one stop becomes two). */
++const FOCUSABLE = "a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [contenteditable], [tabindex]";
++const holdsFocusable = ref(false);
++let watcher: MutationObserver | null = null;
++const read = () => {
++    holdsFocusable.value = rootRef.value?.querySelector(FOCUSABLE) != null;
++};
++onMounted(() => {
++    read();
++    watcher = new MutationObserver(read);
++    if (rootRef.value)
++        watcher.observe(rootRef.value, {
++            childList: true,
++            subtree: true,
++            attributes: true,
++            attributeFilter: ["tabindex", "disabled", "href", "contenteditable"],
++        });
++});
++onBeforeUnmount(() => watcher?.disconnect());
+ </script>
+ 
+ <template>
+@@ -64,7 +88,7 @@ watch(
+         :role="namedRegion ? 'region' : undefined"
+         :aria-label="ariaLabel"
+         :aria-labelledby="ariaLabelledby"
+-        tabindex="0"
++        :tabindex="holdsFocusable ? undefined : 0"
+     >
+         <slot />
+     </div>
+diff --git a/tests/components/ui/toggle-group/ToggleGroup.test.ts b/tests/components/ui/toggle-group/ToggleGroup.test.ts
+index c9c5af85..8fc0ef6d 100644
+--- a/tests/components/ui/toggle-group/ToggleGroup.test.ts
++++ b/tests/components/ui/toggle-group/ToggleGroup.test.ts
+@@ -18,6 +18,7 @@
+  * them.
+  */
+ import { readFileSync } from "node:fs";
++import type { Rule as CssRule } from "postcss";
+ import { resolve } from "node:path";
+ import { mount } from "@vue/test-utils";
+ import { defineComponent, nextTick, ref } from "vue";
+@@ -542,3 +543,100 @@ describe("floor v2 — the commit, the names and the tile fact", () => {
+         expect(peak).toContain("max(var(--motion-weight), 0.618)");
+     });
+ });
++
++/* D4-F · THE ANATOMY DECLARES THE TILE. The item's `#media` and `#meta` rows are the
++ * only thing that makes a group a set of tiles; nothing is declared. These cases pin
++ * the DOM half (the library-marked rows; the engine's attributes over a consumer's)
++ * and the sheet's one spelling, read through a CSS parser. The paint half (16 px, a
++ * column, the perimeter, the mark) is the tile harness's: happy-dom resolves no
++ * `:has()` and lays nothing out. */
++describe("D4-F — the anatomy declares the tile", () => {
++    it("#media and #meta render in library-marked rows only when filled", () => {
++        const wrapper = mount(ToggleGroup, {
++            props: { type: "single", modelValue: "a" },
++            slots: {
++                default: `
++                    <ToggleGroupItem value="a">
++                        <template #media><svg data-x="glyph" /></template>
++                        A
++                        <template #meta><span data-x="readout">0.5 s</span></template>
++                    </ToggleGroupItem>
++                    <ToggleGroupItem value="b">B</ToggleGroupItem>`,
++            },
++            global: { components: { ToggleGroupItem } },
++        });
++        const [a, b] = wrapper.findAll("button");
++        expect([...a!.element.children].map((c) => c.className)).toEqual([
++            "toggle-group__media",
++            "toggle-group__meta",
++        ]);
++        expect(a!.find(".toggle-group__media [data-x='glyph']").exists()).toBe(true);
++        expect(a!.get(".toggle-group__meta [data-x='readout']").text()).toBe("0.5 s");
++        expect(b!.find(".toggle-group__media, .toggle-group__meta").exists()).toBe(false);
++        // one item, two content models: the same element, classes and ARIA
++        expect(a!.attributes("class")).toBe(b!.attributes("class"));
++        expect(a!.attributes("role")).toBe(b!.attributes("role"));
++        wrapper.unmount();
++    });
++
++    it("a consumer role or tabindex on an item does not outrank the engine's", async () => {
++        const wrapper = mount(ToggleGroup, {
++            props: { type: "single", modelValue: "b" },
++            slots: {
++                default: `
++                    <ToggleGroupItem value="a" role="option" tabindex="0" data-x="a" title="A">A</ToggleGroupItem>
++                    <ToggleGroupItem value="b" role="option" tabindex="0">B</ToggleGroupItem>`,
++            },
++            global: { components: { ToggleGroupItem } },
++            attachTo: document.body,
++        });
++        await nextTick(); // the items register on mount; the roving stop follows
++        const [a, b] = wrapper.findAll("button");
++        expect([a!.attributes("role"), b!.attributes("role")]).toEqual(["radio", "radio"]);
++        expect([a!.attributes("tabindex"), b!.attributes("tabindex")]).toEqual(["-1", "0"]);
++        // the rest of the consumer's attributes still land on the button
++        expect(a!.attributes("data-x")).toBe("a");
++        expect(a!.attributes("title")).toBe("A");
++        wrapper.unmount();
++    });
++
++    it("the sheet spells 'is a tile' once, and that rule sets the tile fact and the corner", async () => {
++        const postcss = (await import("postcss")).default;
++        const root = postcss.parse(read(LANE_SHEET));
++        const ANATOMY = /toggle-group__(media|meta)/;
++        const reading: string[] = [];
++        root.walkRules((r) => {
++            const parent = r.parent as { type: string; selector?: string } | undefined;
++            if (parent?.type === "rule") return; // nested: it inherits the parent's spelling
++            if (r.selectors.some((s) => s.includes(":has(") && ANATOMY.test(s))) reading.push(r.selector);
++        });
++        expect(reading).toEqual([
++            ".toggle-group:has(.toggle-group__item > :is(.toggle-group__media, .toggle-group__meta))",
++        ]);
++        let tile: CssRule | undefined;
++        root.walkRules((r) => {
++            if (r.selector === reading[0]) tile = r;
++        });
++        const own: Record<string, string> = {};
++        tile!.each((n) => {
++            if (n.type === "decl") own[n.prop] = n.value;
++        });
++        expect(own["--selection-tile"]).toBe("flush");
++        const item: Record<string, string> = {};
++        tile!.walkRules("& .toggle-group__item", (r) =>
++            r.walkDecls((d) => {
++                item[d.prop] = d.value;
++            }),
++        );
++        expect(item).toMatchObject({
++            "border-radius": "var(--radius-field)",
++            "flex-direction": "column",
++        });
++        // no other rule in the sheet writes the field corner
++        const field: string[] = [];
++        root.walkDecls("border-radius", (d) => {
++            if (d.value === "var(--radius-field)") field.push((d.parent as CssRule).selector);
++        });
++        expect(field).toEqual(["& .toggle-group__item"]);
++    });
++});
+diff --git a/tests/components/fading-scroll.contract.test.ts b/tests/components/fading-scroll.contract.test.ts
+index 42cbb7af..c91ef17e 100644
+--- a/tests/components/fading-scroll.contract.test.ts
++++ b/tests/components/fading-scroll.contract.test.ts
+@@ -1,5 +1,6 @@
+ import { mount } from "@vue/test-utils";
+ import { describe, expect, it } from "vitest";
++import { nextTick } from "vue";
+ import FadingScroll from "@glass/components/fading-scroll/FadingScroll.vue";
+ import { normalizeHorizontalScrollLeft } from "@glass/components/fading-scroll/composables/useFadingScroll";
+ 
+@@ -19,6 +20,20 @@ describe("FadingScroll", () => {
+         });
+     });
+ 
++    it("is a tab stop only while nothing inside it is one", async () => {
++        const holding = mount(FadingScroll, {
++            slots: { default: "<button>a</button><button>b</button>" },
++            attachTo: document.body,
++        });
++        await nextTick();
++        expect(holding.attributes("tabindex")).toBeUndefined();
++        holding.findAll("button").forEach((b) => b.element.remove());
++        await new Promise((r) => setTimeout(r, 0)); // the observer's turn
++        await nextTick();
++        expect(holding.attributes("tabindex")).toBe("0");
++        holding.unmount();
++    });
++
+     it("normalizes every horizontal RTL scrollLeft model from inline-start", () => {
+         expect(normalizeHorizontalScrollLeft(40, 100, "ltr", "negative")).toBe(40);
+         expect(normalizeHorizontalScrollLeft(-40, 100, "rtl", "negative")).toBe(40);
