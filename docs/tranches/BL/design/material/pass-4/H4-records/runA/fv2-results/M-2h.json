@@ -1,0 +1,29 @@
+{
+ "id": "M-2h",
+ "title": "the held windows (the release frames keep every held ink ≥ 4.5; the held dock's α per column stays within 0.02 of the resting dock's)",
+ "pass": false,
+ "gateRows": 68,
+ "gateFails": 2,
+ "infoRows": 68,
+ "infoFails": 0,
+ "lines": [
+  "release chromium light black held (34 frames, -137…1227 ms): 11/11 inks ≥ 4.5 in every frame · worst dock-held·muted-tab 4.79 at -137 ms",
+  "release chromium light white held (33 frames, -135…1217 ms): 11/11 inks ≥ 4.5 in every frame · worst wash-held·well-muted 5.27 at -135 ms",
+  "release chromium light aurora held (49 frames, -449…1310 ms): 11/11 inks ≥ 4.5 in every frame · worst wash-held·well-muted 5.19 at -449 ms",
+  "release chromium dark black held (33 frames, -138…1232 ms): 11/11 inks ≥ 4.5 in every frame · worst dock-held·muted-tab 7.21 at 14 ms",
+  "release chromium dark white held (33 frames, -133…1229 ms): 11/11 inks ≥ 4.5 in every frame · worst dock-held·muted-tab 4.76 at 189 ms",
+  "release chromium dark aurora held (67 frames, -436…1389 ms): 11/11 inks ≥ 4.5 in every frame · worst dock-held·muted-tab 6.21 at 220 ms",
+  "release webkit+shim light black held [info] (36 frames, -140…1186 ms): 11/11 inks ≥ 4.5 in every frame · worst wash-held·muted 4.62 at -140 ms",
+  "release webkit+shim light white held [info] (34 frames, -101…1186 ms): 11/11 inks ≥ 4.5 in every frame · worst wash-held·well-muted 5.03 at -101 ms",
+  "release webkit+shim light aurora held [info] (14 frames, -101…1184 ms): 11/11 inks ≥ 4.5 in every frame · worst wash-held·well-muted 5.02 at -101 ms",
+  "release webkit+shim dark black held [info] (31 frames, -109…1185 ms): 11/11 inks ≥ 4.5 in every frame · worst dock-held·muted-tab 7.11 at 6 ms",
+  "release webkit+shim dark white held [info] (35 frames, -110…1184 ms): 11/11 inks ≥ 4.5 in every frame · worst dock-held·muted-tab 4.76 at -110 ms",
+  "release webkit+shim dark aurora held [info] (12 frames, -119…1132 ms): 11/11 inks ≥ 4.5 in every frame · worst dock-held·muted 6.24 at 670 ms",
+  "halo chromium light: resting dock α 0.890 · held dock α per column 0.815 (x 411) … 0.894 (x 278) over 134 columns · floor 0.870 · the held host lets the ground through (a halo) ✗",
+  "halo chromium dark: resting dock α 0.875 · held dock α per column 0.802 (x 411) … 0.878 (x 278) over 134 columns · floor 0.855 · the held host lets the ground through (a halo) ✗",
+  "halo webkit light [info]: resting dock α 0.890 · held dock α per column 0.890 (x 278) … 0.898 (x 393) over 134 columns · floor 0.870",
+  "halo webkit dark [info]: resting dock α 0.875 · held dock α per column 0.875 (x 278) … 0.885 (x 404) over 134 columns · floor 0.855"
+ ],
+ "extra": [],
+ "verdict": "FAIL (2 of 68 gated rows)"
+}

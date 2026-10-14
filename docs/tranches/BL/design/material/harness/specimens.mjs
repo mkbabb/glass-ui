@@ -20,7 +20,9 @@
 //   window.__harness.setCeiling(v)   steps the field's opacity ceiling (W-B's step, M-2m's ground step)
 //   [data-glass-ground]  a consumer's claim on the ground under a scope (D3 C′, tokens/glass.css); written under
 //                        ?claim= and, always, in the claim and field-claim scenes (H3-6, H3-7); inert on a build whose
-//                        library has no claim
+//                        library has no claim. Where the library ships a claim resolver (C″'s `claimGlassGround`,
+//                        composables/glass/groundClaim.ts), every claimed <main> is claimed THROUGH it, as a consumer
+//                        would: the page writes no tone itself, and the resolver's stamp is what W-S reads
 //   [data-probe="<id>"]  an O-66 §1 probe (H3-9): trigger-paper, input-paper, trigger-pane, input-pane, row-0, row-2
 //   [data-focus]         the element the capture focuses after resting the pointer (the highlighted menu row, H3-9)
 // H3-2: every content plate carries a "muted-strong" run (--muted-foreground-strong, which every rung re-points), and
@@ -42,6 +44,8 @@ export function specimenApp(wt) {
   const nm = `${CHECKOUT}/node_modules`;
   // The claim's tone function, where the worktree's library has one; a library without it gets no tones.
   const hasTone = fs.existsSync(`${wt}/src/composables/glass/groundTone.ts`);
+  // The claim's resolver (C″), where the library has one: the page then claims through it and writes no tone.
+  const hasClaim = fs.existsSync(`${wt}/src/composables/glass/groundClaim.ts`);
   const indexHtml = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=1280, initial-scale=1">
 <title>D3 material specimens</title>
 <script>const q=new URLSearchParams(location.search); if(q.get('theme')==='dark'){document.documentElement.classList.add('dark');}</script>
@@ -67,6 +71,7 @@ import { Slider } from "@glass/components/slider";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@glass/components/select";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@glass/components/menu";
 ${hasTone ? 'import { glassGroundTone, readGlassSaturate } from "@glass/composables/glass/groundTone";' : "const glassGroundTone = null as any, readGlassSaturate = null as any;"}
+${hasClaim ? 'import { claimGlassGround } from "@glass/composables/glass/groundClaim";' : "const claimGlassGround = null as any;"}
 
 const q = new URLSearchParams(location.search);
 const ground = q.get("ground") ?? "paper";
@@ -117,7 +122,11 @@ const HALO = ["wash", "quiet", "resting", "card"].map((id, i) => ({ id, cls: "gl
 
 onMounted(() => {
   if (claim === "root-page") document.documentElement.setAttribute("data-glass-ground", "page");
-  if (claimColors && glassGroundTone) {
+  if (claimGlassGround && claimMode !== undefined) {
+    // Through the library's resolver: the colours for a stand or the hostile band, else the mode itself.
+    const source = claimMode === "" ? claimColors : claimMode;
+    if (source) document.querySelectorAll<HTMLElement>("main[data-glass-ground]").forEach((el) => claimGlassGround(el, source));
+  } else if (claimColors && glassGroundTone) {
     const saturate = readGlassSaturate(document.documentElement);
     let lo = 1, hi = 0;
     for (const c of claimColors) { const t = glassGroundTone(c, { saturate }); lo = Math.min(lo, t.lo); hi = Math.max(hi, t.hi); }

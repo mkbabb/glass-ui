@@ -6,7 +6,10 @@
 // H2: every check runs in BOTH engines, once gated on Chromium (--gate chromium) and once gated on Playwright WebKit
 // (--gate webkit), on the same captures. H3 (pass 3) adds M-1x, M-2h, O-66, STACK and W-S, changes M-2 (the -strong
 // run, the declared-graspable held rungs, the claim cell), M-2m (the 100 s drift leg), M-4 (signed), M-9 (the dark veil),
-// W-C (band [4.5, ∞), three colour retunes) and GLANCE (--story-claim); each ships a fixture PASS and a planted FAIL. The four pass-1 family witnesses that H2 left alone (W-B, W-C, W-E, W-F) and
+// W-C (band [4.5, ∞), three colour retunes) and GLANCE (--story-claim); each ships a fixture PASS and a planted FAIL.
+// H4 (pass 4) changes four checks, each with a fixture PASS and a planted FAIL in both engines: GLANCE reads paint apart
+// from layout (H4-1), M-1x gains its hue term and reads cream as the plate's own paper reading under Q-11's text (H4-2),
+// M-6 reads every variant (H4-3), W-C's loud arm counts only messages naming a glass token (H4-4). The four pass-1 family witnesses that H2 left alone (W-B, W-C, W-E, W-F) and
 // W-D keep their pass-1 Chromium test. A planted capture holds only the cells its plant touches, and its witness run
 // is restricted to them with --cells (the fixture PASS runs read every cell unrestricted).
 //   node selftest.mjs [--fields <HEAD capdir>] [--only M-1,W-B] [--skip-capture] [--reuse-green]
@@ -38,8 +41,9 @@ async function cap(name, fixtureDir, opts) {
     if (inject != null) { const f = path.join(ROOT, `${name}.inject.css`); fs.writeFileSync(f, inject); inject = f; }
     const t0 = Date.now();
     await capture(fixtureDir, { ...FAST, engines: BOTH.join(","), ...opts, out, inject, label: name });
+    // H4-3: opts.retuneCss is planted in the retuned cells only (the base cells keep the fixture as built).
     if (opts.retune) for (const [variant, css] of Object.entries(RETUNES)) {
-      const f = path.join(ROOT, `${name}.${variant}.css`); fs.writeFileSync(f, css + "\n" + (opts.injectCss || ""));
+      const f = path.join(ROOT, `${name}.${variant}.css`); fs.writeFileSync(f, css + "\n" + (opts.injectCss || "") + "\n" + (opts.retuneCss || ""));
       await capture(fixtureDir, { ...FAST, engines: opts.engines || BOTH.join(","), themes: opts.themes, out, grounds: "paper", scenes: "ladder,dialog", variant, inject: f, label: name });
     }
     // H3-7: the field-claim scenes' unclaimed reference.
@@ -120,7 +124,10 @@ const M = [
 ];
 let greenCap = null;
 if (M.some(([id]) => want(id)) || want("W-D")) {
-  greenCap = await cap("green", green, { grounds: ALLG + ",red,deep", live: true, motion: true, drift: true, probeUnshimmed: true });
+  // The windows are captured only when a wanted check reads them (M-5 and W-A's leg 1 the live windows, M-2m the motion
+  // and drift windows, W-D the whole battery); the retune variants ride the green capture for M-6 (H4-3).
+  const win = (...ids) => ids.some(want) || want("W-D");
+  greenCap = await cap("green", green, { grounds: ALLG + ",red,deep", live: win("M-5"), motion: win("M-2m"), drift: win("M-2m"), probeUnshimmed: true, retune: true });
   for (const [id, script, , args = []] of M) if (want(id)) witness(id, script, greenCap, "PASS", args, "green fixture" + (args.length ? " (" + args.join(" ") + ")" : ""));
   for (const [id, script, plants, args = []] of M) if (want(id)) for (const [k, [sel, re, css, note]] of plants.entries()) {
     const c = await cap(`green-${id}-${k}`, green, { ...sel, injectCss: css });
@@ -129,6 +136,22 @@ if (M.some(([id]) => want(id)) || want("W-D")) {
   // H3-1: REPORTED until Q-11 is ruled: the same grey plant exits 0 with no ruling and under ruling (a).
   if (want("M-1x")) for (const r of [[], ["--q11", "a"]]) witness("M-1x", "m1x-off-paper", path.join(ROOT, "caps", "green-M-1x-0"), "PASS", r, `H3-1: REPORTED (${r.length ? "Q-11 ruled (a)" : "Q-11 unruled"}): the bound's grey over black prints and does not gate`);
   // H3-5: a held rung the library does not declare graspable (a backdrop-root former standing) is not read, even shed.
+  // H4-2 (I-2): the hue term. Floating at 15% over the deep canvas reads the canvas's blue (C ≥ 0.02 at the ground's
+  // hue), which H3's colour clause passed; gated under (b) (floating is chrome), read on the deep cells only.
+  if (want("M-1x")) {
+    const sel = { themes: "light", grounds: "paper,deep", scenes: "ladder,dialog" };
+    witness("M-1x", "m1x-off-paper", await cap("green-M-1x-hue", green, { ...sel, injectCss: `html:not(.dark) [data-spec="floating"] { background: color-mix(in srgb, #fef7f2 15%, transparent) !important; }` }), "FAIL", ["--q11", "b", ...cells("light deep")], "H4-2: floating transmits the deep canvas (its hue, not the plate's): no longer passes the colour clause");
+    // The cream clause: the opaque escape at HEAD's #fdf5ec, 0.0014 under M-1's L floor against paper, paints the same
+    // over every ground. H3 redded it here as well as in M-1; H4 reads it as its own paper reading, and M-1 keeps the row.
+    const crm = await cap("green-M-1x-cream", green, { themes: "light", grounds: "paper,black,checker,deep", scenes: "ladder,dialog", injectCss: `html:not(.dark) [data-spec="opaque"] { background: #fdf5ec !important; }` });
+    witness("M-1x", "m1x-off-paper", crm, "PASS", ["--q11", "b"], "H4-2: the opaque escape at #fdf5ec holds its paper reading off paper (H3 read it grey by 0.0014 in L)");
+    witness("M-1", "m1-no-grey", crm, "FAIL", [], "H4-2's counterpart: the same #fdf5ec escape stays M-1's row over paper (P-3)");
+    // (b)'s text gates chrome and the escape; a grey content rung is reported and named, not gated.
+    const cg = await cap("green-M-1x-content", green, { themes: "light", grounds: "paper,black,checker,deep", scenes: "ladder,dialog", injectCss: `html:not(.dark) [data-spec="wash"] { background: color-mix(in srgb, #fef7f2 89.1%, transparent) !important; }` });
+    witness("M-1x", "m1x-off-paper", cg, "PASS", ["--q11", "b"], "H4-2: under (b)'s text a grey content rung (wash at the bound) is reported and named, not gated");
+  }
+  // H4-3 (I-3): every dark plate falls to the page colour in the retuned cells only; the base cells keep the lift.
+  if (want("M-6")) witness("M-6", "m6-separable-ladder", await cap("green-M-6-retune", green, { grounds: "paper", scenes: "ladder,dialog", retune: true, retuneCss: `html.dark [data-spec] { background: var(--page) !important; }` }), "FAIL", [], "H4-3: under each colour retune every dark plate paints the page (base cells untouched): H3 read base only");
   if (want("M-2")) witness("M-2", "m2-text-contrast", await cap("green-M-2-undeclared", green, { grounds: "black,white,aurora", scenes: "held", injectCss: `[data-spec="wash-held"] { contain: paint !important; background: transparent !important; }` }), "PASS", cells("held$"), "H3-5: wash-held sheds its plate under contain: paint (not declared graspable): not read");
 }
 
@@ -199,6 +222,30 @@ if (want("GLANCE")) {
     results.push({ id: "GLANCE", engine, expect, exit: r.status, ok, verdict, capdir: path.join(dir, `${engine}-${expect}`), note, fails: [] });
     console.log(`${ok ? "ok  " : "BAD "} GLANCE ${engine.padEnd(8)} expect ${expect.padEnd(4)} exit ${r.status} · ${verdict} · ${note}`);
   }
+  // H4-1 (I-1): a route that only MOVES the dock, the floating plate and the Dialog 70 px down (no paint change). H3 read
+  // the union crop and passed it on the layout alone.
+  const movedCss = path.join(ROOT, "glance-moved.css");
+  fs.writeFileSync(movedCss, `[data-spec="dock"], [data-spec="floating"], [data-spec="dialog"] { margin-top: 70px !important; }`);
+  for (const engine of BOTH) {
+    const o = path.join(dir, `${engine}-moved-FAIL`);
+    const r = spawnSync(process.execPath, [path.join(HERE, "glance.mjs"), "--base", green, "--overlay", movedCss, "--out", o, "--name", "moved", "--engine", engine, "--require-delta"], { encoding: "utf8", maxBuffer: 64 << 20 });
+    const out = (r.stdout || "") + (r.stderr || ""), verdict = out.trim().split("\n").pop(), ok = r.status === 1;
+    fs.mkdirSync(o, { recursive: true }); fs.writeFileSync(path.join(o, "selftest.log"), out);
+    results.push({ id: "GLANCE", engine, expect: "FAIL", exit: r.status, ok, verdict, capdir: o, note: "H4-1: the route moves the plates 70 px and repaints nothing", fails: [] });
+    console.log(`${ok ? "ok  " : "BAD "} GLANCE ${engine.padEnd(8)} expect FAIL exit ${r.status} · ${verdict} · H4-1: plates moved 70 px, no paint change`);
+  }
+  // H4-1 on the story pair (C-8's case): three caption lines push the card 72 px down. Copy alone: FAIL; copy and a
+  // repainted card: PASS, with the move reported as layout.
+  const sPlain = writeStoryFixture(path.join(ROOT, "fx", "story-plain"), { claim: false }), sCopy = writeStoryFixture(path.join(ROOT, "fx", "story-copy"), { claim: false, copy: 3 });
+  const sTint = writeStoryFixture(path.join(ROOT, "fx", "story-copy-tint"), { claim: false, copy: 3, tint: true });
+  for (const engine of BOTH) for (const [expect, route, note] of [["FAIL", sCopy, "H4-1: story copy moves the card 72 px, no paint change"], ["PASS", sTint, "H4-1: story copy moves the card and the card is repainted"]]) {
+    const o = path.join(dir, `${engine}-storycopy-${expect}`);
+    const r = spawnSync(process.execPath, [path.join(HERE, "glance.mjs"), "--base", green, "--route", green, "--ids", "none", "--story-base", sPlain, "--story-route", route, "--require-delta", "--out", o, "--name", "copy", "--engine", engine], { encoding: "utf8", maxBuffer: 64 << 20 });
+    const out = (r.stdout || "") + (r.stderr || ""), verdict = out.trim().split("\n").pop(), ok = expect === "PASS" ? r.status === 0 : r.status === 1;
+    fs.mkdirSync(o, { recursive: true }); fs.writeFileSync(path.join(o, "selftest.log"), out);
+    results.push({ id: "GLANCE", engine, expect, exit: r.status, ok, verdict, capdir: o, note, fails: [] });
+    console.log(`${ok ? "ok  " : "BAD "} GLANCE ${engine.padEnd(8)} expect ${expect.padEnd(4)} exit ${r.status} · ${verdict} · ${note}`);
+  }
   // H3-10: --story-claim reds a route story that claims no region.
   const sBase = writeStoryFixture(path.join(ROOT, "fx", "story-base"), { claim: false }), sClaim = writeStoryFixture(path.join(ROOT, "fx", "story-claim"), { claim: true });
   for (const engine of BOTH) for (const [expect, route, note] of [["PASS", sClaim, "H3-10: the route story claims one region"], ["FAIL", sBase, "H3-10: the route story claims nothing"]]) {
@@ -227,7 +274,8 @@ if (want("W-C")) {
 html.dark [data-spec] .fx-muted, html.dark [data-spec] .fx-muted *, html.dark [data-spec] .fx-mutedtab, html.dark [data-spec] .fx-mutedtab *, html.dark [data-spec] .fx-well::placeholder { color: #b0b0b0 !important; }`;
   const rsel = { themes: "light", grounds: "paper", scenes: "ladder,dialog", retune: true };
   witness("W-C", "wc-ink-follows", await cap("C-frozen", fx, { ...rsel, injectCss: frozen }), "FAIL", cells("light paper"), "muted frozen at #3a3a3a: under --foreground oklch(0.42) the hierarchy inverts with no word (a silent desync)");
-  witness("W-C", "wc-ink-follows", await cap("C-loud", fx, { ...rsel, injectCss: frozen + "\n:root { --fx-warn-retune: 1; }" }), "PASS", cells("light paper"), "the same frozen ink, but the page refuses the --foreground retune loud (console.warn)");
+  witness("W-C", "wc-ink-follows", await cap("C-loud", fx, { ...rsel, injectCss: frozen + "\n:root { --fx-warn-retune: 1; }" }), "PASS", cells("light paper"), "the same frozen ink, but the page refuses the --foreground retune loud (console.warn naming --foreground)");
+  witness("W-C", "wc-ink-follows", await cap("C-unrelated", fx, { ...rsel, injectCss: frozen + "\n:root { --fx-warn-retune: unrelated; }" }), "FAIL", cells("light paper"), "H4-4: the same frozen ink, and an unrelated console.warn in the retuned cell (names no glass token): a silent desync");
 }
 if (want("W-D")) {
   const mk = (name, committed) => {

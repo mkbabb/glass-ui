@@ -9,7 +9,7 @@
 //          an ancestor) that tells a reader the pole went flat. A silent flat plate is a FAIL. The stamp does not
 //          excuse a plate outside an isolated group.
 //   node wg-hue-through.mjs <capdir> [--gate chromium[,webkit]] [--verbose]
-import { cli, loadCapture, gateEngines, report, composite, region, mean3, lch, gamutMaxC, hueDiff, hex, f, tag, THEMES, SCENE_GROUNDS, FLAT_ATTR } from "./lib.mjs";
+import { cli, loadCapture, gateEngines, report, composite, rawUnder, lch, gamutMaxC, hueDiff, hex, f, tag, HUE_THROUGH, THEMES, SCENE_GROUNDS, FLAT_ATTR } from "./lib.mjs";
 import { need, tally, inkRows } from "./rows.mjs";
 
 const IDS = ["wash", "quiet", "resting", "card", "dock"];
@@ -23,9 +23,9 @@ for (const scene of ["ladder", "isolated"]) {
     for (const id of IDS) {
       const s = cell.specs.find((x) => x.id === id);
       if (!s) { if (id !== "dock" || !cell.nodock) { t.add(gated, false); parts.push(`${id} not painted ✗`); } continue; }
-      const comp = composite(cap, cell, s), raw = mean3(region(cap.img(cell, "raw"), s.sample));
+      const comp = composite(cap, cell, s), raw = rawUnder(cap, cell, s);
       const [L, C, h] = lch(comp), [, Cr, hr] = lch(raw), Cmax = gamutMaxC(L, h);
-      const dh = hueDiff(h, hr), hueOk = dh <= 10, chromaOk = C >= 0.5 * Cmax;
+      const dh = hueDiff(h, hr), hueOk = dh <= HUE_THROUGH, chromaOk = C >= 0.5 * Cmax;
       const inks = rows.filter((r) => r.spec === id), m2 = inks.length > 0 && inks.every((r) => r.p05 >= 4.5 && r.p05r3 >= 4.5);
       const worst = inks.reduce((x, y) => (Math.min(y.p05 ?? 0, y.p05r3 ?? 0) < Math.min(x.p05 ?? 0, x.p05r3 ?? 0) ? y : x), inks[0] || {});
       const through = hueOk && chromaOk && m2;

@@ -1,41 +1,55 @@
 #!/usr/bin/env node
 // M-1x · No grey off paper (H3-1; O-62's frame read where M-1 cannot see: the light veil over black, the 16 px checker
-// and the glass-material story's deep canvas #193b59). Light theme, ladder and dialog. A plate composite reads "not grey"
-// when it holds M-1's paper predicate against the page's own paper (L ≥ L_paper − 0.01 and ΔE_OK ≤ 0.02: a cream card
-// everywhere) OR carries colour (OKLCh C ≥ 0.02, the floor W-0.1 G3 uses for an accent tint). A composite that is
-// neither is grey: the bound's 0.11 transmission over a dark ground pulls L to 0.90 at C ≈ 0.01 (pass 2: #e2dcd7 over
-// black, #e3e3e3 C 0.000 over the deep canvas).
-// The paper reference is the light paper ladder cell's raw bare region (the page the owner's O-62 frame names).
-// REPORTED until the owner rules Q-11 (REGISTRY P2-5): without --q11 every row prints and the check exits 0.
-//   --q11 a   O-62 is a paper ruling; off-paper grey is accepted: rows print, exit 0 (REPORTED, ruled)
-//   --q11 b   the light chrome and content go opaque off paper: every row gated
-//   --q11 c   only plates under a claim that knows the ground are gated (cell specs carrying a claim; none at HEAD)
-//   --q11 d   a new pole, unresearched: the check refuses (exit 2) until the harness is revised for it
+// and the glass-material story's deep canvas #193b59). Light theme, ladder and dialog.
+// Q-11's text (REGISTRY P2-5): "Must the light veil not read grey over dark grounds too?" H4-2 (I-2) reads it so:
+//   cream    the plate holds its own paper reading off paper: M-1's predicate (L ≥ L_ref − 0.01 and ΔE_OK ≤ 0.02) with
+//            the reference the SAME plate's composite in the light paper cell. Whether that paper reading is itself
+//            grey is M-1's row (P-3), so an opaque card a hair under M-1's L floor no longer reds here as well (H3 read
+//            the opaque escape #fdf5ec 0.001 under, in every cell).
+//   colour   OKLCh C ≥ 0.02 (W-0.1 G3's accent floor) AND the colour is the plate's: the raw ground under the same
+//            sample is achromatic (C < 0.02), or the composite's hue sits more than HUE_THROUGH (10°, W-G's number) from
+//            the ground's. A plate that only transmits a coloured ground (HEAD's wash #0d3c66 over the deep canvas
+//            #193b59) carries the ground's hue, not its own, and no longer passes (H3 had no hue term).
+// A composite that is neither is grey (C < 0.02) or the ground showing through (C ≥ 0.02 at the ground's hue).
+// The gate follows the ruling's text; with no ruling the default (a) applies (REGISTRY P3-4.1):
+//   (none), --q11 a   "O-62 is a paper ruling: off paper, the bound's grey over dark grounds is accepted for chrome."
+//                     Every row prints; a grey chrome row prints "accepted for chrome (Q-11 a)"; exit 0 (REPORTED)
+//   --q11 b           "the light chrome goes opaque, a card everywhere": the chrome rows and the opaque escape are
+//                     gated; content rows print, and the tally names the content rungs still grey off paper
+//   --q11 c           chrome thins only where a claim knows the ground: the plates under a claim are gated
+//   --q11 d           a new pole, unresearched: the check refuses (exit 2) until the harness is revised for it
 //   node m1x-off-paper.mjs <capdir> [--gate chromium[,webkit]] [--q11 a|b|c]
-import { cli, loadCapture, gateEngines, report, composite, bare, lch, dE, hex, f, tag, pick, OFF_PAPER } from "./lib.mjs";
+import { cli, loadCapture, gateEngines, report, composite, rawUnder, lch, dE, hueDiff, hex, f, tag, pick, OFF_PAPER, HUE_THROUGH } from "./lib.mjs";
 import { need, tally } from "./rows.mjs";
 
 const a = cli({ q11: { type: "string" } }), cap = loadCapture(a._[0]), gate = gateEngines(a);
-const ruling = a.q11 || null;
+const ruling = a.q11 || null, text = ruling || "a";
 if (ruling === "d" || (ruling && !["a", "b", "c"].includes(ruling))) { console.log(`M-1x · Q-11 ruling "${ruling}" is not built into this check: revise the harness first`); process.exit(2); }
-const gatedBy = (spec) => ruling === "b" || (ruling === "c" && !!spec.claim);
+const gatedBy = (spec) => (text === "b" && spec.band !== "content") || (text === "c" && !!spec.claim);
 const { have, lines, missing } = need(cap, gate, { themes: ["light"], grounds: OFF_PAPER, scenes: ["ladder", "dialog"] });
 const t = tally(); t.add(true, false, missing);
-let would = 0, rowsN = 0;
+let would = 0, rowsN = 0, acceptedN = 0;
+const greyContent = new Set();
 for (const { cell, gated } of have) {
-  const ref = pick(cap, { engine: cell.engine, theme: "light", ground: "paper", scene: "ladder", variant: "base" })[0];
-  if (!ref || ref.crashed) { t.add(gated, false); lines.push(`${tag(cell)}: no light paper ladder cell for the paper reference ✗`); continue; }
-  const paper = bare(cap, ref), Lp = lch(paper)[0], ground = bare(cap, cell);
+  const ref = pick(cap, { engine: cell.engine, theme: "light", ground: "paper", scene: cell.scene, variant: cell.variant || "base" })[0];
+  if (!ref || ref.crashed) { t.add(gated, false); lines.push(`${tag(cell)}: no light paper ${cell.scene} cell for the plates' paper reading ✗`); continue; }
   const parts = cell.specs.filter((s) => s.sample).map((s) => {
-    const c = composite(cap, cell, s), [L, C] = lch(c), d = dE(c, paper);
-    const cream = L >= Lp - 0.01 && d <= 0.02, colour = C >= 0.02, ok = cream || colour;
-    rowsN++; if (!ok) would++;
+    const rs = ref.specs.find((x) => x.id === s.id);
+    if (!rs?.sample) { if (gatedBy(s)) t.add(gated, false); return `${s.id}: no paper reading for this plate ✗`; }
+    const c = composite(cap, cell, s), own = composite(cap, ref, rs), g = rawUnder(cap, cell, s);
+    const [L, C, h] = lch(c), [Lo] = lch(own), [, Cg, hg] = lch(g), d = dE(c, own), dh = hueDiff(h, hg);
+    const cream = L >= Lo - 0.01 && d <= 0.02, own_colour = C >= 0.02 && (Cg < 0.02 || dh > HUE_THROUGH), ok = cream || own_colour;
+    rowsN++; if (!ok) { would++; if (s.band === "content") greyContent.add(s.id); }
+    const accepted = !ok && text === "a" && s.band === "chrome"; if (accepted) acceptedN++;
     if (gatedBy(s)) t.add(gated, ok);
-    return `${s.id} ${hex(c)} L ${f(L, 3)} C ${f(C, 4)} ΔE paper ${f(d, 3)}${ok ? (cream ? "" : " (colour)") : " grey ✗"}`;
+    const why = ok ? (cream ? "" : ` (colour, Δh ${f(dh, 0)}° from the ground)`) : C >= 0.02 ? ` the ground's hue (Δh ${f(dh, 0)}° ≤ ${HUE_THROUGH}°)` : " grey";
+    return `${s.id} [${s.band}] ${hex(c)} L ${f(L, 3)} C ${f(C, 4)} · on paper ${hex(own)} ΔE ${f(d, 3)} · ground ${hex(g)}${why}${ok ? "" : accepted ? ": accepted for chrome (Q-11 a)" : " ✗"}`;
   });
-  lines.push(`${tag(cell)}${gated ? "" : " [info]"}: ground ${hex(ground)} · paper ${hex(paper)} L ${f(Lp, 3)}`);
+  lines.push(`${tag(cell)}${gated ? "" : " [info]"}:`);
   for (const p of parts) lines.push("    " + p);
 }
-const reported = !ruling || ruling === "a" || (ruling === "c" && t.gateRows === 0);
-if (reported) { lines.push(`REPORTED (Q-11 ${ruling ? "ruled (" + ruling + ")" : "unruled"}): ${would} of ${rowsN} off-paper light composites read grey`); t.gateRows = Math.max(1, missing); t.gateFails = missing; }
-report(cap, { id: "M-1x", title: `no grey off paper (light, over black, checker and the deep canvas: cream (M-1's predicate against paper) or C ≥ 0.02)${reported ? "; REPORTED until Q-11" : `; gated under Q-11 (${ruling})`}`, lines, ...t, gate });
+const reported = text === "a" || (text === "c" && t.gateRows === 0);
+const tallyLine = `${would} of ${rowsN} off-paper light composites read grey or the ground's hue (${acceptedN} chrome, accepted under (a)'s text); content rungs grey off paper: ${[...greyContent].join(", ") || "none"}`;
+if (reported) { lines.push(`REPORTED (Q-11 ${ruling ? "ruled (" + ruling + ")" : "unruled: the default (a)"}): ${tallyLine}`); t.gateRows = Math.max(1, missing); t.gateFails = missing; }
+else lines.push(`Q-11 (${ruling}): ${tallyLine}`);
+report(cap, { id: "M-1x", title: `no grey off paper (light, over black, checker and the deep canvas: the plate keeps its paper reading, or carries a colour that is not the ground's)${reported ? "; REPORTED until Q-11" : `; gated under Q-11 (${ruling})`}`, lines, ...t, gate });

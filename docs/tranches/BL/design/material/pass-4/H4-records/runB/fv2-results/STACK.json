@@ -1,0 +1,25 @@
+{
+ "id": "STACK",
+ "title": "every grasp host forms a stacking context (computed, in the held cells; a z-index digit alone is not one)",
+ "pass": true,
+ "gateRows": 24,
+ "gateFails": 0,
+ "infoRows": 24,
+ "infoFails": 0,
+ "lines": [
+  "chromium light black held: wash-held host .hx-plate.glass-wash: forms (isolation) · floating-held host .hx-plate.glass-floating: forms (isolation) · dock-held host .dock-plate: forms (positioned z-index -1, flex/grid item z-index -1) · dock-held host .slider-range.glass-liquid-fill: forms (transform)",
+  "chromium light white held: wash-held host .hx-plate.glass-wash: forms (isolation) · floating-held host .hx-plate.glass-floating: forms (isolation) · dock-held host .dock-plate: forms (positioned z-index -1, flex/grid item z-index -1) · dock-held host .slider-range.glass-liquid-fill: forms (transform)",
+  "chromium light aurora held: wash-held host .hx-plate.glass-wash: forms (isolation) · floating-held host .hx-plate.glass-floating: forms (isolation) · dock-held host .dock-plate: forms (positioned z-index -1, flex/grid item z-index -1) · dock-held host .slider-range.glass-liquid-fill: forms (transform)",
+  "chromium dark black held: wash-held host .hx-plate.glass-wash: forms (isolation) · floating-held host .hx-plate.glass-floating: forms (isolation) · dock-held host .dock-plate: forms (positioned z-index -1, flex/grid item z-index -1) · dock-held host .slider-range.glass-liquid-fill: forms (transform)",
+  "chromium dark white held: wash-held host .hx-plate.glass-wash: forms (isolation) · floating-held host .hx-plate.glass-floating: forms (isolation) · dock-held host .dock-plate: forms (positioned z-index -1, flex/grid item z-index -1) · dock-held host .slider-range.glass-liquid-fill: forms (transform)",
+  "chromium dark aurora held: wash-held host .hx-plate.glass-wash: forms (isolation) · floating-held host .hx-plate.glass-floating: forms (isolation) · dock-held host .dock-plate: forms (positioned z-index -1, flex/grid item z-index -1) · dock-held host .slider-range.glass-liquid-fill: forms (transform)",
+  "webkit+shim light black held [info]: wash-held host .hx-plate.glass-wash: forms (isolation) · floating-held host .hx-plate.glass-floating: forms (isolation) · dock-held host .dock-plate: forms (positioned z-index -1, flex/grid item z-index -1) · dock-held host .slider-range.glass-liquid-fill: forms (transform)",
+  "webkit+shim light white held [info]: wash-held host .hx-plate.glass-wash: forms (isolation) · floating-held host .hx-plate.glass-floating: forms (isolation) · dock-held host .dock-plate: forms (positioned z-index -1, flex/grid item z-index -1) · dock-held host .slider-range.glass-liquid-fill: forms (transform)",
+  "webkit+shim light aurora held [info]: wash-held host .hx-plate.glass-wash: forms (isolation) · floating-held host .hx-plate.glass-floating: forms (isolation) · dock-held host .dock-plate: forms (positioned z-index -1, flex/grid item z-index -1) · dock-held host .slider-range.glass-liquid-fill: forms (transform)",
+  "webkit+shim dark black held [info]: wash-held host .hx-plate.glass-wash: forms (isolation) · floating-held host .hx-plate.glass-floating: forms (isolation) · dock-held host .dock-plate: forms (positioned z-index -1, flex/grid item z-index -1) · dock-held host .slider-range.glass-liquid-fill: forms (transform)",
+  "webkit+shim dark white held [info]: wash-held host .hx-plate.glass-wash: forms (isolation) · floating-held host .hx-plate.glass-floating: forms (isolation) · dock-held host .dock-plate: forms (positioned z-index -1, flex/grid item z-index -1) · dock-held host .slider-range.glass-liquid-fill: forms (transform)",
+  "webkit+shim dark aurora held [info]: wash-held host .hx-plate.glass-wash: forms (isolation) · floating-held host .hx-plate.glass-floating: forms (isolation) · dock-held host .dock-plate: forms (positioned z-index -1, flex/grid item z-index -1) · dock-held host .slider-range.glass-liquid-fill: forms (transform)"
+ ],
+ "extra": [],
+ "verdict": "PASS (24 gated rows)"
+}

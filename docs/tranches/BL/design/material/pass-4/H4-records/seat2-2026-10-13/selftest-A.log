@@ -1,0 +1,152 @@
+== selftest start 15:47:45 load { 130.64 165.30 176.50 }
+     captured green in 1361 s (load 509.2 399.0 262.6)
+ok   RAW  chromium expect PASS exit 0 · PASS (48 gated rows) · green fixture
+ok   RAW  webkit   expect PASS exit 0 · PASS (48 gated rows) · green fixture
+ok   M-1  chromium expect PASS exit 0 · PASS (11 gated rows) · green fixture
+ok   M-1  webkit   expect PASS exit 0 · PASS (11 gated rows) · green fixture
+ok   M-1x chromium expect PASS exit 0 · PASS (21 gated rows) · green fixture (--q11 b)
+ok   M-1x webkit   expect PASS exit 0 · PASS (21 gated rows) · green fixture (--q11 b)
+ok   M-2  chromium expect PASS exit 0 · PASS (944 gated rows) · green fixture
+ok   M-2  webkit   expect PASS exit 0 · PASS (944 gated rows) · green fixture
+ok   M-2m chromium expect PASS exit 0 · PASS (430 gated rows) · green fixture
+ok   M-2m webkit   expect PASS exit 0 · PASS (430 gated rows) · green fixture
+ok   M-2h chromium expect PASS exit 0 · PASS (74 gated rows) · green fixture
+ok   M-2h webkit   expect PASS exit 0 · PASS (74 gated rows) · green fixture
+ok   M-3  chromium expect PASS exit 0 · PASS (354 gated rows) · green fixture
+ok   M-3  webkit   expect PASS exit 0 · PASS (354 gated rows) · green fixture
+ok   M-4  chromium expect PASS exit 0 · PASS (168 gated rows) · green fixture
+ok   M-4  webkit   expect PASS exit 0 · PASS (168 gated rows) · green fixture
+ok   M-5  chromium expect PASS exit 0 · PASS (20 gated rows) · green fixture
+ok   M-5  webkit   expect PASS exit 0 · PASS (20 gated rows) · green fixture
+ok   M-6  chromium expect PASS exit 0 · PASS (120 gated rows) · green fixture
+ok   M-6  webkit   expect PASS exit 0 · PASS (120 gated rows) · green fixture
+ok   M-7  chromium expect PASS exit 0 · PASS (8 gated rows) · green fixture
+ok   M-7  webkit   expect PASS exit 0 · PASS (8 gated rows) · green fixture
+ok   M-8  chromium expect PASS exit 0 · PASS (8 gated rows) · green fixture
+ok   M-8  webkit   expect PASS exit 0 · PASS (8 gated rows) · green fixture
+ok   M-9  chromium expect PASS exit 0 · PASS (20 gated rows) · green fixture
+ok   M-9  webkit   expect PASS exit 0 · PASS (20 gated rows) · green fixture
+ok   O-66 chromium expect PASS exit 0 · PASS (5 gated rows) · green fixture
+ok   O-66 webkit   expect PASS exit 0 · PASS (5 gated rows) · green fixture
+ok   STACK chromium expect PASS exit 0 · PASS (18 gated rows) · green fixture
+ok   STACK webkit   expect PASS exit 0 · PASS (18 gated rows) · green fixture
+     captured green-RAW-0 in 84 s (load 535.6 370.2 296.6)
+ok   RAW  chromium expect FAIL exit 1 · FAIL (4 of 48 gated rows) · a dock tab paints through its hidden surface in raw (S-10)
+        chromium light black: ground #000000 · 10/11 surfaces leave the ground bare · dock 2116/18512 px off the ground (11.43%), e.g. #040303 ✗
+        chromium light white: ground #ffffff · 10/11 surfaces leave the ground bare · dock 2184/18512 px off the ground (11.80%), e.g. #f4f3f3 ✗
+        chromium dark black: ground #000000 · 10/11 surfaces leave the ground bare · dock 2184/18512 px off the ground (11.80%), e.g. #0c0c0c ✗
+        chromium dark white: ground #ffffff · 10/11 surfaces leave the ground bare · dock 2100/18512 px off the ground (11.34%), e.g. #fdfcfb ✗
+ok   RAW  webkit   expect FAIL exit 1 · FAIL (4 of 48 gated rows) · a dock tab paints through its hidden surface in raw (S-10)
+        webkit+shim light black: ground #000000 · 10/11 surfaces leave the ground bare · dock 2116/18512 px off the ground (11.43%), e.g. #040403 ✗
+        webkit+shim light white: ground #ffffff · 10/11 surfaces leave the ground bare · dock 2184/18512 px off the ground (11.80%), e.g. #f3f3f3 ✗
+        webkit+shim dark black: ground #000000 · 10/11 surfaces leave the ground bare · dock 2184/18512 px off the ground (11.80%), e.g. #0c0c0b ✗
+        webkit+shim dark white: ground #ffffff · 10/11 surfaces leave the ground bare · dock 2124/18512 px off the ground (11.47%), e.g. #fdfcfb ✗
+     captured green-M-1-0 in 45 s (load 506.9 387.2 307.0)
+ok   M-1  chromium expect FAIL exit 1 · FAIL (1 of 11 gated rows) · floating painted HEAD's grey composite #d7d4ce
+        floating #d7d4ce L 0.871 C 0.0088 ΔE 0.115 ✗
+        floating #d7d4ce L 0.871 C 0.0088 ΔE 0.115 ✗
+ok   M-1  webkit   expect FAIL exit 1 · FAIL (1 of 11 gated rows) · floating painted HEAD's grey composite #d7d4ce
+        floating #d7d4ce L 0.871 C 0.0088 ΔE 0.115 ✗
+        floating #d7d4ce L 0.871 C 0.0088 ΔE 0.115 ✗
+     captured green-M-1x-0 in 85 s (load 463.3 405.7 322.3)
+ok   M-1x chromium expect FAIL exit 1 · FAIL (3 of 21 gated rows) · H3-1: floating at the floor's light bound (#fef7f2 at α 0.891): #e2dcd7 over black
+        floating [chrome] #e2dcd8 L 0.898 C 0.0085 · on paper #fef7f3 ΔE 0.082 · ground #000000 grey ✗
+        floating [chrome] #f0eae6 L 0.941 C 0.0085 · on paper #fef7f3 ΔE 0.040 · ground #808080 grey ✗
+        floating [chrome] #e5e2e2 L 0.915 C 0.0033 · on paper #fef7f3 ΔE 0.066 · ground #193b59 grey ✗
+        floating [chrome] #e2dcd8 L 0.898 C 0.0085 · on paper #fef7f3 ΔE 0.082 · ground #000000 grey ✗
+ok   M-1x webkit   expect FAIL exit 1 · FAIL (3 of 21 gated rows) · H3-1: floating at the floor's light bound (#fef7f2 at α 0.891): #e2dcd7 over black
+        floating [chrome] #e2dcd8 L 0.898 C 0.0085 · on paper #fef7f3 ΔE 0.082 · ground #000000 grey ✗
+        floating [chrome] #f0eae6 L 0.941 C 0.0085 · on paper #fef7f3 ΔE 0.040 · ground #808080 grey ✗
+        floating [chrome] #e5e2e2 L 0.915 C 0.0033 · on paper #fef7f3 ΔE 0.066 · ground #193b59 grey ✗
+        floating [chrome] #e2dcd8 L 0.898 C 0.0085 · on paper #fef7f3 ΔE 0.082 · ground #000000 grey ✗
+     captured green-M-2-0 in 72 s (load 345.6 385.8 322.5)
+ok   M-2  chromium expect FAIL exit 1 · FAIL (34 of 94 gated rows) · muted ink moved toward the plate
+        rows: 188 (68 under 4.5; 0 of them pass at R 1 and fail only at R 3)
+ok   M-2  webkit   expect FAIL exit 1 · FAIL (34 of 94 gated rows) · muted ink moved toward the plate
+        rows: 188 (68 under 4.5; 0 of them pass at R 1 and fail only at R 3)
+     captured green-M-2-1 in 14 s (load 295.4 371.8 318.9)
+ok   M-2  chromium expect FAIL exit 1 · FAIL (43 of 43 gated rows) · H-8: no plate, a 5 px card stroke under every glyph (E's sticker geometry, sized to the R 1 ring): R 1 reads the stroke, R 3 the black ground
+        rows: 86 (86 under 4.5; 86 of them pass at R 1 and fail only at R 3)
+ok   M-2  webkit   expect FAIL exit 1 · FAIL (43 of 43 gated rows) · H-8: no plate, a 5 px card stroke under every glyph (E's sticker geometry, sized to the R 1 ring): R 1 reads the stroke, R 3 the black ground
+        rows: 86 (86 under 4.5; 86 of them pass at R 1 and fail only at R 3)
+     captured green-M-2-2 in 80 s (load 163.2 312.1 300.9)
+ok   M-2  chromium expect FAIL exit 1 · FAIL (48 of 78 gated rows) · H-5: the held register sheds the whole plate
+        rows: 156 (96 under 4.5; 0 of them pass at R 1 and fail only at R 3)
+ok   M-2  webkit   expect FAIL exit 1 · FAIL (48 of 78 gated rows) · H-5: the held register sheds the whole plate
+        rows: 156 (96 under 4.5; 0 of them pass at R 1 and fail only at R 3)
+     captured green-M-2-3 in 62 s (load 124.3 267.2 284.8)
+ok   M-2  chromium expect FAIL exit 1 · FAIL (114 of 172 gated rows) · H-10: surfaces thin in the hostile cells (a thin arm that misses the interposed band)
+        rows: 344 (229 under 4.5; 0 of them pass at R 1 and fail only at R 3)
+ok   M-2  webkit   expect FAIL exit 1 · FAIL (115 of 172 gated rows) · H-10: surfaces thin in the hostile cells (a thin arm that misses the interposed band)
+        rows: 344 (229 under 4.5; 0 of them pass at R 1 and fail only at R 3)
+     captured green-M-2-4 in 30 s (load 130.3 244.0 275.0)
+ok   M-2  chromium expect FAIL exit 1 · FAIL (10 of 86 gated rows) · H3-2: the -strong run and the capsule's muted run moved toward the plate
+        rows: 172 (20 under 4.5; 0 of them pass at R 1 and fail only at R 3)
+ok   M-2  webkit   expect FAIL exit 1 · FAIL (10 of 86 gated rows) · H3-2: the -strong run and the capsule's muted run moved toward the plate
+        rows: 172 (20 under 4.5; 0 of them pass at R 1 and fail only at R 3)
+     captured green-M-2-5 in 8 s (load 138.1 236.7 271.5)
+ok   M-2  chromium expect FAIL exit 1 · FAIL (8 of 18 gated rows) · H3-6: the page claim thins every plate over the --secondary tray and inside the opaque card
+        rows: 36 (16 under 4.5; 0 of them pass at R 1 and fail only at R 3)
+ok   M-2  webkit   expect FAIL exit 1 · FAIL (8 of 18 gated rows) · H3-6: the page claim thins every plate over the --secondary tray and inside the opaque card
+        rows: 36 (16 under 4.5; 0 of them pass at R 1 and fail only at R 3)
+     captured green-M-2m-0 in 116 s (load 138.1 206.6 254.9)
+ok   M-2m chromium expect FAIL exit 1 · FAIL (279 of 346 gated rows) · H-11: every surface goes transparent for 300 ms of every 600 ms while the field moves
+        motion chromium light aurora (12 frames, -3005…-292 ms): 8/43 inks ≥ 4.5 in every frame · worst wash·well-muted 1.47 at -3005 ms · under: wash·fg 4.26, wash·muted 1.47, wash·muted-strong 1.47, wash·well-fg 4.25, wash·wel
+        step chromium light aurora (51 frames, -117…1483 ms, ceiling → 0.5): 11/43 inks ≥ 4.5 in every frame · worst wash·well-muted 1.47 at -17 ms · under: wash·fg 4.31, wash·muted 1.68, wash·muted-strong 1.48, wash·well-muted 
+        motion chromium light aurora50 (12 frames, -3005…-223 ms): 19/43 inks ≥ 4.5 in every frame · worst wash·muted-strong 2.92 at -3005 ms · under: wash·muted 2.92, wash·muted-strong 2.92, wash·well-muted 2.92, quiet·muted 2.
+        step chromium light aurora50 (40 frames, -198…1476 ms, ceiling → 1): 11/43 inks ≥ 4.5 in every frame · worst wash·muted-strong 1.47 at 39 ms · under: wash·fg 4.31, wash·muted 1.75, wash·muted-strong 1.47, wash·well-muted
+ok   M-2m webkit   expect FAIL exit 1 · FAIL (277 of 346 gated rows) · H-11: every surface goes transparent for 300 ms of every 600 ms while the field moves
+        motion webkit+shim light aurora (12 frames, -3000…13 ms): 8/43 inks ≥ 4.5 in every frame · worst wash·muted-strong 1.47 at 13 ms · under: wash·fg 4.26, wash·muted 1.48, wash·muted-strong 1.47, wash·well-fg 4.26, wash·wel
+        step webkit+shim light aurora (17 frames, -271…1440 ms, ceiling → 0.5): 12/43 inks ≥ 4.5 in every frame · worst wash·muted-strong 1.48 at -131 ms · under: wash·muted 1.84, wash·muted-strong 1.48, wash·well-muted 1.49, qu
+        motion webkit+shim light aurora50 (12 frames, -3000…-147 ms): 19/43 inks ≥ 4.5 in every frame · worst wash·muted-strong 2.81 at -3000 ms · under: wash·muted 2.87, wash·muted-strong 2.81, wash·well-muted 2.91, quiet·muted
+        step webkit+shim light aurora50 (13 frames, -390…1394 ms, ceiling → 1): 12/43 inks ≥ 4.5 in every frame · worst wash·muted-strong 1.46 at 41 ms · under: wash·muted 1.78, wash·muted-strong 1.46, wash·well-muted 1.48, quie
+     captured green-M-2m-1 in 126 s (load 858.0 454.2 336.3)
+ok   M-2m chromium expect FAIL exit 1 · FAIL (101 of 346 gated rows) · H-11: every surface dips transparent for 400 ms on the ceiling step (a symmetric spring)
+        step chromium light aurora50 (41 frames, -195…1679 ms, ceiling → 1): 12/43 inks ≥ 4.5 in every frame · worst wash·well-muted 1.47 at 253 ms · under: wash·muted 1.85, wash·muted-strong 1.48, wash·well-muted 1.47, quiet·fg
+        step chromium dark aurora (66 frames, -186…1512 ms, ceiling → 0.5): 18/43 inks ≥ 4.5 in every frame · worst dock·muted-tab 2.46 at 68 ms · under: wash·muted 3.55, wash·muted-strong 3.85, wash·well-muted 3.44, quiet·muted
+        step chromium dark aurora50 (44 frames, -199…1477 ms, ceiling → 1): 0/43 inks ≥ 4.5 in every frame · worst opaque·well-muted 1.01 at 407 ms · under: wash·fg 2.60, wash·muted 1.29, wash·muted-strong 1.52, wash·well-fg 2.1
+        drift chromium light aurora: MISSING (capture with --drift) ✗
+ok   M-2m webkit   expect FAIL exit 1 · FAIL (126 of 346 gated rows) · H-11: every surface dips transparent for 400 ms on the ceiling step (a symmetric spring)
+        step webkit+shim light aurora (20 frames, -220…1438 ms, ceiling → 0.5): 19/43 inks ≥ 4.5 in every frame · worst wash·muted-strong 2.81 at 77 ms · under: wash·muted 3.21, wash·muted-strong 2.81, wash·well-muted 2.91, quie
+        step webkit+shim light aurora50 (23 frames, -245…1478 ms, ceiling → 1): 11/43 inks ≥ 4.5 in every frame · worst wash·muted-strong 1.46 at 248 ms · under: wash·fg 4.36, wash·muted 1.82, wash·muted-strong 1.46, wash·well-m
+        step webkit+shim dark aurora (11 frames, -390…1373 ms, ceiling → 0.5): 18/43 inks ≥ 4.5 in every frame · worst floating·muted 2.49 at 131 ms · under: wash·muted 3.58, wash·muted-strong 3.73, wash·well-muted 3.44, quiet·m
+        step webkit+shim dark aurora50 (16 frames, -479…1495 ms, ceiling → 1): 0/43 inks ≥ 4.5 in every frame · worst opaque·well-muted 1.01 at 185 ms · under: wash·fg 2.60, wash·muted 1.30, wash·muted-strong 1.36, wash·well-fg 
+     captured green-M-2m-2 in 235 s (load 691.7 771.7 566.1)
+ok   M-2m chromium expect FAIL exit 1 · FAIL (42 of 129 gated rows) · H3-12: every surface goes transparent 70 s after load (an erosion a 60 s window misses)
+        drift chromium light aurora (51 frames over 100.0 s, load at end 930.5 818.6 548.6): 1/43 inks ≥ 4.5 in every frame · worst wash·well-muted 1.47 at 96.0 s · under: wash·fg 4.26 at 96.0 s, wash·muted 1.47 at 96.0 s, wash·
+ok   M-2m webkit   expect FAIL exit 1 · FAIL (42 of 129 gated rows) · H3-12: every surface goes transparent 70 s after load (an erosion a 60 s window misses)
+        drift webkit+shim light aurora (51 frames over 100.0 s, load at end 691.7 771.7 566.1): 1/43 inks ≥ 4.5 in every frame · worst wash·muted-strong 1.47 at 98.0 s · under: wash·fg 4.28 at 92.0 s, wash·muted 1.48 at 98.0 s, 
+     captured green-M-2h-0 in 180 s (load 563.0 667.5 565.4)
+ok   M-2h chromium expect FAIL exit 1 · FAIL (12 of 74 gated rows) · H3-5: the held dock goes transparent for 600 ms on the release
+        release chromium light black held (4 frames, -144…1211 ms): 9/12 inks ≥ 4.5 in every frame · worst dock-held·fg 1.19 at 13 ms · under: dock-held·fg 1.19 at 13 ms, dock-held·muted-tab 3.52 at 13 ms, dock-held·muted 3.52 a
+        release chromium light aurora held (4 frames, -419…1213 ms): 9/12 inks ≥ 4.5 in every frame · worst dock-held·muted-tab 1.51 at 14 ms · under: dock-held·fg 3.48 at 14 ms, dock-held·muted-tab 1.51 at 14 ms, dock-held·mute
+        release chromium dark white held (5 frames, -126…1205 ms): 9/12 inks ≥ 4.5 in every frame · worst dock-held·fg 1.16 at 9 ms · under: dock-held·fg 1.16 at 9 ms, dock-held·muted-tab 2.20 at 9 ms, dock-held·muted 2.22 at 9 
+        release chromium dark aurora held (4 frames, -412…1227 ms): 9/12 inks ≥ 4.5 in every frame · worst dock-held·muted 1.71 at 29 ms · under: dock-held·fg 2.81 at 29 ms, dock-held·muted-tab 1.72 at 29 ms, dock-held·muted 1.7
+ok   M-2h webkit   expect FAIL exit 1 · FAIL (12 of 74 gated rows) · H3-5: the held dock goes transparent for 600 ms on the release
+        release webkit+shim light black held (48 frames, -100…1193 ms): 9/12 inks ≥ 4.5 in every frame · worst dock-held·fg 1.19 at 38 ms · under: dock-held·fg 1.19 at 38 ms, dock-held·muted-tab 3.46 at 38 ms, dock-held·muted 3.
+        release webkit+shim light aurora held (15 frames, -127…1181 ms): 9/12 inks ≥ 4.5 in every frame · worst dock-held·muted-tab 1.52 at 2 ms · under: dock-held·fg 3.50 at 2 ms, dock-held·muted-tab 1.52 at 2 ms, dock-held·mut
+        release webkit+shim dark white held (40 frames, -115…1193 ms): 9/12 inks ≥ 4.5 in every frame · worst dock-held·fg 1.15 at 4 ms · under: dock-held·fg 1.15 at 4 ms, dock-held·muted-tab 2.20 at 4 ms, dock-held·muted 2.20 a
+        release webkit+shim dark aurora held (18 frames, -139…1197 ms): 9/12 inks ≥ 4.5 in every frame · worst dock-held·muted 1.71 at 15 ms · under: dock-held·fg 2.80 at 15 ms, dock-held·muted-tab 1.73 at 15 ms, dock-held·muted
+     captured green-M-2h-1 in 181 s (load 168.9 345.3 813.2)
+ok   M-2h chromium expect FAIL exit 1 · FAIL (2 of 74 gated rows) · H3-5: the held dock's right half lets the ground through (a halo)
+        halo chromium light: resting dock α 1.000 · held dock α per column 0.765 (x 368) … 1.000 (x 235) over 134 columns · floor 0.980 · the held host lets the ground through (a halo) ✗
+        halo chromium dark: resting dock α 1.000 · held dock α per column 0.765 (x 368) … 1.000 (x 235) over 134 columns · floor 0.980 · the held host lets the ground through (a halo) ✗
+ok   M-2h webkit   expect FAIL exit 1 · FAIL (2 of 74 gated rows) · H3-5: the held dock's right half lets the ground through (a halo)
+        halo webkit light: resting dock α 1.000 · held dock α per column 0.766 (x 368) … 0.997 (x 235) over 134 columns · floor 0.980 · the held host lets the ground through (a halo) ✗
+        halo webkit dark: resting dock α 1.000 · held dock α per column 0.766 (x 368) … 0.997 (x 235) over 134 columns · floor 0.980 · the held host lets the ground through (a halo) ✗
+     captured green-M-3-0 in 57 s (load 673.5 1007.6 1011.9)
+ok   M-3  chromium expect FAIL exit 1 · FAIL (18 of 38 gated rows) · well perimeter faded to 1.3-1.6:1
+ok   M-3  webkit   expect FAIL exit 1 · FAIL (18 of 38 gated rows) · well perimeter faded to 1.3-1.6:1
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+browserContext.newPage: Target page, context or browser has been closed
+    at newPage (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/harness/capture.mjs:216:28)
+    at async capture (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/harness/capture.mjs:272:29)
+    at async cap (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/harness/selftest.mjs:43:5)
+    at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/harness/selftest.mjs:133:15 {
+  log: []
+}
+
+Node.js v26.0.0

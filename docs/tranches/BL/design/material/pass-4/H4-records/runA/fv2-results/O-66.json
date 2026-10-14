@@ -1,0 +1,21 @@
+{
+ "id": "O-66",
+ "title": "O-66 §1 (W-0.1 G2: trigger and Input composites within ΔE_OK 0.01, light and dark, paper and pane; G3: the light highlighted row tints (C ≥ 0.02) or does not darken (ΔL ≥ −0.005))",
+ "pass": false,
+ "gateRows": 5,
+ "gateFails": 5,
+ "infoRows": 5,
+ "infoFails": 4,
+ "lines": [
+  "G2 chromium light paper o66field: paper: trigger #fff8f1 L 0.983 · Input #ece5e0 L 0.926 · ΔE 0.057 ✗ · pane: trigger #fff8f1 L 0.983 · Input #ece5e0 L 0.926 · ΔE 0.057 ✗",
+  "G2 chromium dark paper o66field: paper: trigger #332820 L 0.287 · Input #2c231d L 0.265 · ΔE 0.023 ✗ · pane: trigger #362a21 L 0.296 · Input #312720 L 0.282 · ΔE 0.015 ✗",
+  "G2 webkit+shim light paper o66field [info]: paper: trigger #fef8f2 L 0.981 · Input #ece5e0 L 0.926 · ΔE 0.055 ✗ · pane: trigger #fef8f1 L 0.981 · Input #ece5e0 L 0.926 · ΔE 0.055 ✗",
+  "G2 webkit+shim dark paper o66field [info]: paper: trigger #322720 L 0.283 · Input #2c231d L 0.265 · ΔE 0.019 ✗ · pane: trigger #342921 L 0.291 · Input #312720 L 0.282 · ΔE 0.009",
+  "G3 chromium light paper o66menu: row #f3ece7 L 0.947 C 0.0101 · plate #fef7f2 L 0.980 · ΔL -0.0330 · ΔE 0.033 (grey: darkens the plate, no tint) ✗",
+  "G3 chromium dark paper o66menu [dark: recorded]: row #383029 L 0.315 C 0.0168 · plate #2f261f L 0.277 · ΔL +0.0390 · ΔE 0.039",
+  "G3 webkit+shim light paper o66menu [info]: row #f2ece7 L 0.946 C 0.0093 · plate #fef7f2 L 0.980 · ΔL -0.0338 · ΔE 0.034 (grey: darkens the plate, no tint) ✗",
+  "G3 webkit+shim dark paper o66menu [info]: row #392f28 L 0.314 C 0.0190 · plate #2f261f L 0.277 · ΔL +0.0373 · ΔE 0.037"
+ ],
+ "extra": [],
+ "verdict": "FAIL (5 of 5 gated rows)"
+}

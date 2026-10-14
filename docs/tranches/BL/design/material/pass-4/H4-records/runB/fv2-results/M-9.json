@@ -1,0 +1,21 @@
+{
+ "id": "M-9",
+ "title": "state registers (active, hover, checked and selected fills differ from their surface by ΔE_OK ≥ 0.02; the focus veil dims, both themes)",
+ "pass": false,
+ "gateRows": 20,
+ "gateFails": 1,
+ "infoRows": 20,
+ "infoFails": 1,
+ "lines": [
+  "chromium light paper state: active #e2dcd8 on #fcf6f1 ΔE 0.078 · hover #f2ebe7 on #fef7f2 ΔE 0.035 · checked #65605c on #fef7f1 ΔE 0.488 · selected #bcb1a5 on #f8f0e9 ΔE 0.193 · focus veil #fbfaf8 → #e4e3e0 ΔL -0.070 (dims ≥ 0.02)",
+  "chromium light aurora state: active #e2cac2 on #fad7cd ΔE 0.051 · hover #f2d9d0 on #fee4da ΔE 0.033 · checked #645d5a on #fef0e9 ΔE 0.479 · selected #bcb1a5 on #f8ece4 ΔE 0.183 · focus veil #e87237 → #e86010 ΔL -0.029 (dims ≥ 0.02)",
+  "chromium dark paper state: active #463e37 on #2f261f ΔE 0.096 · hover #3a3129 on #30261f ΔE 0.042 · checked #9d6fa5 on #332821 ΔE 0.335 · selected #786e65 on #3c3027 ΔE 0.227 · focus veil #0b0a09 → #0d0b09 ΔL +0.006 (dims ≥ 0.02) brightens ✗",
+  "chromium dark aurora state: active #62453a on #593225 ΔE 0.060 · hover #57392b on #4e2e21 ΔE 0.037 · checked #a170a5 on #3e2b22 ΔE 0.319 · selected #786e65 on #433128 ΔE 0.214 · focus veil #e87237 → #e86010 ΔL -0.029 (dims ≥ 0.02)",
+  "webkit+shim light paper state [info]: active #e2dcd8 on #fcf6f1 ΔE 0.079 · hover #f2ebe7 on #fef7f2 ΔE 0.036 · checked #65605d on #fef7f1 ΔE 0.487 · selected #bbb0a5 on #f8f1eb ΔE 0.199 · focus veil #fbfaf8 → #e4e4e1 ΔL -0.067 (dims ≥ 0.02)",
+  "webkit+shim light aurora state [info]: active #dfccc5 on #f7d9d0 ΔE 0.050 · hover #eedad3 on #fae5dd ΔE 0.034 · checked #655e5a on #fdf1ea ΔE 0.478 · selected #bbafa4 on #f7ebe4 ΔE 0.187 · focus veil #e87237 → #d36934 ΔL -0.043 (dims ≥ 0.02)",
+  "webkit+shim dark paper state [info]: active #463e37 on #2e251f ΔE 0.098 · hover #3a3029 on #2f261f ΔE 0.040 · checked #9d6fa4 on #332821 ΔE 0.335 · selected #776d64 on #3a2f28 ΔE 0.228 · focus veil #0b0a09 → #0d0c0a ΔL +0.009 (dims ≥ 0.02) brightens ✗",
+  "webkit+shim dark aurora state [info]: active #5e463d on #563327 ΔE 0.061 · hover #53392f on #4a2f25 ΔE 0.035 · checked #a06fa5 on #3d2b23 ΔE 0.319 · selected #786d64 on #43322a ΔE 0.209 · focus veil #e87237 → #d36934 ΔL -0.043 (dims ≥ 0.02)"
+ ],
+ "extra": [],
+ "verdict": "FAIL (1 of 20 gated rows)"
+}

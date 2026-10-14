@@ -21,6 +21,9 @@ export async function playwright() {
   return _pw;
 }
 export const OUT = process.env.D3_OUT || path.join(os.tmpdir(), "d3-material-harness");
+// Page loads per Playwright WebKit browser process before capture.mjs retires and relaunches it (tile pass-3 H3-1: macOS
+// AppSSO stops answering at about the 90th navigation of one process). D3_NAV_CAP overrides it (the self-test's control).
+export const NAV_CAP = +(process.env.D3_NAV_CAP || 60);
 
 export const GROUNDS = ["paper", "aurora", "aurora50", "black", "white", "checker", "stripes"];
 export const FIELD_GROUNDS = ["aurora", "aurora50"];
@@ -155,6 +158,11 @@ export function pick(cap, q) {
 // The composite: the mean painted colour of a spec's empty sample region.
 export const composite = (cap, cell, spec) => mean3(region(cap.img(cell, "full"), spec.sample));
 export const bare = (cap, cell) => mean3(region(cap.img(cell, "raw"), cell.bare));
+// The raw ground under a spec's own sample region (W-G's hue reference, M-1x's hue term).
+export const rawUnder = (cap, cell, spec) => mean3(region(cap.img(cell, "raw"), spec.sample));
+// Hue through (W-G): a composite whose OKLCh hue sits within this many degrees of the raw ground's under the same sample
+// carries the ground's hue. W-G requires it; M-1x's colour clause (H4-2) refuses it as the plate's own colour.
+export const HUE_THROUGH = 10;
 
 // Rendered glyph contrast. Glyph coverage comes from two mask captures (fill #00ff00 and #ff00ff, strokes and
 // shadows off), so it is independent of the ink and the ground: c = (−ΔR + ΔG − ΔB) / 765. The ink is the
@@ -287,3 +295,13 @@ export const RETUNES = {
   "retune-fg": `html:root:not(.dark) { --foreground: oklch(0.42 0.02 56); } html.dark:root { --foreground: oklch(0.86 0.01 68); }`,
   "retune-card": `html:root:not(.dark) { --card: hsl(212 30% 98%); } html.dark:root { --card: hsl(222 14% 23%); }`,
 };
+// H4-4 (I-4): a refusal is loud only when it names what it refuses. A console message names a glass token when it carries
+// the custom property the retune wrote (--background, --foreground or --card; read from RETUNES, one source) or one of
+// its numeric twins (--foreground-l: the stale twin a library may name), or any
+// property with a `glass` segment (--glass-*, --on-glass-*). W-C counts only those messages; an unrelated warning
+// (a failed image, a framework notice) in the retuned cell no longer passes the loud arm.
+export const RETUNED_TOKENS = Object.fromEntries(Object.entries(RETUNES).map(([v, css]) => [v, [...new Set(css.match(/--[\w-]+(?=\s*:)/g))]]));
+export function namesGlassToken(text, variant) {
+  const names = String(text).match(/--[\w-]+/g) || [];
+  return names.some((n) => /(^|-)glass(-|$)/.test(n.slice(2)) || (RETUNED_TOKENS[variant] || []).some((t) => n === t || n.startsWith(t + "-")));
+}

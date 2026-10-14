@@ -8,11 +8,12 @@
 //          colour; variants retune-bg, retune-fg, retune-card). Per cell the retune is FOLLOWED when every fg and muted
 //          run keeps p05 ≥ 4.5 at R 1 and every plate keeps the signed hierarchy (M-4: muted lighter than fg in light,
 //          darker in dark, ΔL_OK ≥ 0.08), or REFUSED LOUD when the retuned cell logged more console errors or warnings
-//          than the base paper cell. Otherwise it is a silent desync (C′ critique §4.3: a colour write to --background
+//          that NAME A GLASS TOKEN than the base paper cell (H4-4: lib.mjs namesGlassToken, the token the retune wrote or
+//          a --glass-* / --on-glass-* property; an unrelated warning is not a refusal). Otherwise it is a silent desync (C′ critique §4.3: a colour write to --background
 //          left --background-l stale, claimed light paper wash muted 4.37; §6.2: --foreground as a colour inverted the
 //          hierarchy at |ΔL| 0.114).
 //   node wc-ink-follows.mjs <capdir> [--gate chromium[,webkit]]
-import { cli, loadCapture, gateEngines, report, f, tag, lch, pick, GROUNDS, THEMES, RETUNES } from "./lib.mjs";
+import { cli, loadCapture, gateEngines, report, f, tag, lch, pick, namesGlassToken, GROUNDS, THEMES, RETUNES } from "./lib.mjs";
 import { need, tally, inkRows, span } from "./rows.mjs";
 
 const a = cli(), cap = loadCapture(a._[0]), gate = gateEngines(a);
@@ -37,10 +38,12 @@ for (const variant of Object.keys(RETUNES)) {
       if (dL < 0.08) inverted.push(`${s.id} ${dL >= 0 ? "+" : ""}${f(dL, 3)}`);
     }
     const base = pick(cap, { engine: cell.engine, theme: cell.theme, ground: "paper", scene: cell.scene, variant: "base" })[0];
-    const loud = (x) => (x?.console ? x.console.error + x.console.warning : 0);
+    // A capture without message texts (pre-H4) names no token: its loud arm reads 0.
+    const named = (x) => (x?.console?.texts || []).filter((m) => namesGlassToken(m, variant)), loud = (x) => named(x).length;
+    const all = (x) => (x?.console ? x.console.error + x.console.warning : 0);
     const followed = !low.length && !inverted.length, refused = base && loud(cell) > loud(base), ok = followed || refused;
     t.add(gated, ok);
-    lines.push(`${variant} ${tag(cell)}${gated ? "" : " [info]"}: ${followed ? "followed" : refused ? `refused loud (${loud(cell)} console errors/warnings against ${loud(base)}: ${cell.console.sample[0] || ""})` : "silent desync"} · ${rows.length - low.length}/${rows.length} runs ≥ 4.5${low.length ? ` (under: ${low.slice(0, 4).map((r) => `${r.spec}·${r.ink} ${f(r.p05)}`).join(", ")})` : ""} · hierarchy ${inverted.length ? `under 0.08 signed on ${inverted.slice(0, 4).join(", ")}` : "kept on every plate"}${ok ? "" : " ✗"}`);
+    lines.push(`${variant} ${tag(cell)}${gated ? "" : " [info]"}: ${followed ? "followed" : refused ? `refused loud (${loud(cell)} console errors/warnings naming a glass token against ${loud(base)}: ${named(cell)[0]})` : `silent desync${all(cell) > all(base) ? ` (${all(cell) - all(base)} more console errors/warnings than the base cell, none naming a glass token: ${(cell.console.texts || [])[0] || ""})` : ""}`} · ${rows.length - low.length}/${rows.length} runs ≥ 4.5${low.length ? ` (under: ${low.slice(0, 4).map((r) => `${r.spec}·${r.ink} ${f(r.p05)}`).join(", ")})` : ""} · hierarchy ${inverted.length ? `under 0.08 signed on ${inverted.slice(0, 4).join(", ")}` : "kept on every plate"}${ok ? "" : " ✗"}`);
   }
 }
-report(cap, { id: "W-C", title: "C″ · ink holds (muted p05 ≥ 4.5 everywhere) and a colour retune of --background, --foreground or --card is followed or refused loud", lines, ...t, gate });
+report(cap, { id: "W-C", title: "C″ · ink holds (muted p05 ≥ 4.5 everywhere) and a colour retune of --background, --foreground or --card is followed or refused loud (a message naming a glass token)", lines, ...t, gate });

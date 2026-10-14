@@ -1,0 +1,109 @@
+     captured green in 827 s (load 46.4 48.2 55.8)
+ok   M-1  chromium expect PASS exit 0 · PASS (11 gated rows) · green fixture
+ok   M-1  webkit   expect PASS exit 0 · PASS (11 gated rows) · green fixture
+ok   M-1x chromium expect PASS exit 0 · PASS (21 gated rows) · green fixture (--q11 b)
+ok   M-1x webkit   expect PASS exit 0 · PASS (21 gated rows) · green fixture (--q11 b)
+ok   M-6  chromium expect PASS exit 0 · PASS (120 gated rows) · green fixture
+ok   M-6  webkit   expect PASS exit 0 · PASS (120 gated rows) · green fixture
+     captured green-M-1-0 in 20 s (load 51.5 49.3 56.0)
+ok   M-1  chromium expect FAIL exit 1 · FAIL (1 of 11 gated rows) · floating painted HEAD's grey composite #d7d4ce
+        floating #d7d4ce L 0.871 C 0.0088 ΔE 0.115 ✗
+        floating #d7d4ce L 0.871 C 0.0088 ΔE 0.115 ✗
+ok   M-1  webkit   expect FAIL exit 1 · FAIL (1 of 11 gated rows) · floating painted HEAD's grey composite #d7d4ce
+        floating #d7d4ce L 0.871 C 0.0088 ΔE 0.115 ✗
+        floating #d7d4ce L 0.871 C 0.0088 ΔE 0.115 ✗
+     captured green-M-1x-0 in 78 s (load 86.8 60.3 59.6)
+ok   M-1x chromium expect FAIL exit 1 · FAIL (3 of 21 gated rows) · H3-1: floating at the floor's light bound (#fef7f2 at α 0.891): #e2dcd7 over black
+        floating [chrome] #e2dcd8 L 0.898 C 0.0085 · on paper #fef7f3 ΔE 0.082 · ground #000000 grey ✗
+        floating [chrome] #f0eae6 L 0.941 C 0.0085 · on paper #fef7f3 ΔE 0.040 · ground #808080 grey ✗
+        floating [chrome] #e5e2e2 L 0.915 C 0.0033 · on paper #fef7f3 ΔE 0.066 · ground #193b59 grey ✗
+        floating [chrome] #e2dcd8 L 0.898 C 0.0085 · on paper #fef7f3 ΔE 0.082 · ground #000000 grey ✗
+ok   M-1x webkit   expect FAIL exit 1 · FAIL (3 of 21 gated rows) · H3-1: floating at the floor's light bound (#fef7f2 at α 0.891): #e2dcd7 over black
+        floating [chrome] #e2dcd8 L 0.898 C 0.0085 · on paper #fef7f3 ΔE 0.082 · ground #000000 grey ✗
+        floating [chrome] #f0eae6 L 0.941 C 0.0085 · on paper #fef7f3 ΔE 0.040 · ground #808080 grey ✗
+        floating [chrome] #e5e2e2 L 0.915 C 0.0033 · on paper #fef7f3 ΔE 0.066 · ground #193b59 grey ✗
+        floating [chrome] #e2dcd8 L 0.898 C 0.0085 · on paper #fef7f3 ΔE 0.082 · ground #000000 grey ✗
+     captured green-M-6-0 in 39 s (load 101.7 67.6 62.3)
+ok   M-6  chromium expect FAIL exit 1 · FAIL (15 of 30 gated rows) · every dark plate painted HEAD's page-coloured composite
+        chromium dark paper: page #0b0a09 · adjacent ΔE wash→quiet 0.000 ✗, quiet→resting 0.000 ✗, resting→floating 0.000 ✗, floating→overlay 0.000 ✗ · ΔE from the page: wash #0e0b09 0.008 ✗ ΔL +0.007, quiet #0e0b09 0.008 ✗ ΔL +
+        chromium dark paper dialog: page #0b0a09 · ΔE from the page: dialog #0e0b09 0.008 ✗ ΔL +0.007
+ok   M-6  webkit   expect FAIL exit 1 · FAIL (15 of 30 gated rows) · every dark plate painted HEAD's page-coloured composite
+        webkit+shim dark paper: page #0b0a09 · adjacent ΔE wash→quiet 0.000 ✗, quiet→resting 0.000 ✗, resting→floating 0.000 ✗, floating→overlay 0.000 ✗ · ΔE from the page: wash #0e0b09 0.008 ✗ ΔL +0.007, quiet #0e0b09 0.008 ✗ Δ
+        webkit+shim dark paper dialog: page #0b0a09 · ΔE from the page: dialog #0e0b09 0.008 ✗ ΔL +0.007
+     captured green-M-6-1 in 40 s (load 100.1 71.8 64.0)
+ok   M-6  chromium expect FAIL exit 1 · FAIL (11 of 30 gated rows) · H-9: every dark plate sinks below the page (L 0.000-0.106 against 0.147), adjacent ΔE 0.063-0.083 and ΔE from the page ≥ 0.053: green unsigned
+        chromium dark paper: page #0b0a09 · adjacent ΔE wash→quiet 0.083, quiet→resting 0.069, resting→floating 0.082, floating→overlay 0.079 · ΔE from the page: wash #000000 0.146 ΔL -0.146 (below the page) ✗, quiet #060000 0.0
+        chromium dark paper dialog: page #0b0a09 · ΔE from the page: dialog #000000 0.146 ΔL -0.146 (below the page) ✗
+ok   M-6  webkit   expect FAIL exit 1 · FAIL (11 of 30 gated rows) · H-9: every dark plate sinks below the page (L 0.000-0.106 against 0.147), adjacent ΔE 0.063-0.083 and ΔE from the page ≥ 0.053: green unsigned
+        webkit+shim dark paper: page #0b0a09 · adjacent ΔE wash→quiet 0.083, quiet→resting 0.069, resting→floating 0.082, floating→overlay 0.079 · ΔE from the page: wash #000000 0.146 ΔL -0.146 (below the page) ✗, quiet #060000 
+        webkit+shim dark paper dialog: page #0b0a09 · ΔE from the page: dialog #000000 0.146 ΔL -0.146 (below the page) ✗
+ok   M-1x chromium expect PASS exit 0 · PASS (1 gated rows) · H3-1: REPORTED (Q-11 unruled): the bound's grey over black prints and does not gate
+ok   M-1x webkit   expect PASS exit 0 · PASS (1 gated rows) · H3-1: REPORTED (Q-11 unruled): the bound's grey over black prints and does not gate
+ok   M-1x chromium expect PASS exit 0 · PASS (1 gated rows) · H3-1: REPORTED (Q-11 ruled (a)): the bound's grey over black prints and does not gate
+ok   M-1x webkit   expect PASS exit 0 · PASS (1 gated rows) · H3-1: REPORTED (Q-11 ruled (a)): the bound's grey over black prints and does not gate
+     captured green-M-1x-hue in 44 s (load 114.3 79.6 67.4)
+ok   M-1x chromium expect FAIL exit 1 · FAIL (1 of 7 gated rows) · H4-2: floating transmits the deep canvas (its hue, not the plate's): no longer passes the colour clause
+        floating [chrome] #3b5770 L 0.445 C 0.0532 · on paper #fcfaf7 ΔE 0.544 · ground #193b59 the ground's hue (Δh 1° ≤ 10°) ✗
+        floating [chrome] #3b5770 L 0.445 C 0.0532 · on paper #fcfaf7 ΔE 0.544 · ground #193b59 the ground's hue (Δh 1° ≤ 10°) ✗
+ok   M-1x webkit   expect FAIL exit 1 · FAIL (1 of 7 gated rows) · H4-2: floating transmits the deep canvas (its hue, not the plate's): no longer passes the colour clause
+        floating [chrome] #3b5770 L 0.445 C 0.0532 · on paper #fcfaf7 ΔE 0.544 · ground #193b59 the ground's hue (Δh 1° ≤ 10°) ✗
+        floating [chrome] #3b5770 L 0.445 C 0.0532 · on paper #fcfaf7 ΔE 0.544 · ground #193b59 the ground's hue (Δh 1° ≤ 10°) ✗
+     captured green-M-1x-cream in 79 s (load 117.8 87.5 71.4)
+ok   M-1x chromium expect PASS exit 0 · PASS (21 gated rows) · H4-2: the opaque escape at #fdf5ec holds its paper reading off paper (H3 read it grey by 0.0014 in L)
+ok   M-1x webkit   expect PASS exit 0 · PASS (21 gated rows) · H4-2: the opaque escape at #fdf5ec holds its paper reading off paper (H3 read it grey by 0.0014 in L)
+ok   M-1  chromium expect FAIL exit 1 · FAIL (1 of 11 gated rows) · H4-2's counterpart: the same #fdf5ec escape stays M-1's row over paper (P-3)
+        opaque #fdf5ec L 0.974 C 0.0147 ΔE 0.017 ✗
+        opaque #fdf5ec L 0.974 C 0.0147 ΔE 0.017 ✗
+ok   M-1  webkit   expect FAIL exit 1 · FAIL (1 of 11 gated rows) · H4-2's counterpart: the same #fdf5ec escape stays M-1's row over paper (P-3)
+        opaque #fdf5ec L 0.974 C 0.0147 ΔE 0.017 ✗
+        opaque #fdf5ec L 0.974 C 0.0147 ΔE 0.017 ✗
+     captured green-M-1x-content in 81 s (load 120.5 96.0 76.2)
+ok   M-1x chromium expect PASS exit 0 · PASS (21 gated rows) · H4-2: under (b)'s text a grey content rung (wash at the bound) is reported and named, not gated
+ok   M-1x webkit   expect PASS exit 0 · PASS (21 gated rows) · H4-2: under (b)'s text a grey content rung (wash at the bound) is reported and named, not gated
+     captured green-M-6-retune in 185 s (load 121.2 107.8 85.1)
+ok   M-6  chromium expect FAIL exit 1 · FAIL (45 of 120 gated rows) · H4-3: under each colour retune every dark plate paints the page (base cells untouched): H3 read base only
+        chromium dark paper [retune-bg]: page #0b0a09 · adjacent ΔE wash→quiet 0.000 ✗, quiet→resting 0.000 ✗, resting→floating 0.000 ✗, floating→overlay 0.000 ✗ · ΔE from the page: wash #0b0a09 0.000 ✗ ΔL +0.000, quiet #0b0a09 
+        chromium dark paper dialog [retune-bg]: page #0b0a09 · ΔE from the page: dialog #0b0a09 0.000 ✗ ΔL +0.000
+        chromium dark paper [retune-fg]: page #0b0a09 · adjacent ΔE wash→quiet 0.000 ✗, quiet→resting 0.000 ✗, resting→floating 0.000 ✗, floating→overlay 0.000 ✗ · ΔE from the page: wash #0b0a09 0.000 ✗ ΔL +0.000, quiet #0b0a09 
+        chromium dark paper dialog [retune-fg]: page #0b0a09 · ΔE from the page: dialog #0b0a09 0.000 ✗ ΔL +0.000
+ok   M-6  webkit   expect FAIL exit 1 · FAIL (45 of 120 gated rows) · H4-3: under each colour retune every dark plate paints the page (base cells untouched): H3 read base only
+        webkit+shim dark paper [retune-bg]: page #0b0a09 · adjacent ΔE wash→quiet 0.000 ✗, quiet→resting 0.000 ✗, resting→floating 0.000 ✗, floating→overlay 0.000 ✗ · ΔE from the page: wash #0b0a09 0.000 ✗ ΔL +0.000, quiet #0b0a
+        webkit+shim dark paper dialog [retune-bg]: page #0b0a09 · ΔE from the page: dialog #0b0a09 0.000 ✗ ΔL +0.000
+        webkit+shim dark paper [retune-fg]: page #0b0a09 · adjacent ΔE wash→quiet 0.000 ✗, quiet→resting 0.000 ✗, resting→floating 0.000 ✗, floating→overlay 0.000 ✗ · ΔE from the page: wash #0b0a09 0.000 ✗ ΔL +0.000, quiet #0b0a
+        webkit+shim dark paper dialog [retune-fg]: page #0b0a09 · ΔE from the page: dialog #0b0a09 0.000 ✗ ΔL +0.000
+ok   GLANCE chromium expect PASS exit 0 · GLANCE PASS: 6 pairs, each with a visible paint delta · base against a route that repaints every plate
+ok   GLANCE chromium expect FAIL exit 1 · GLANCE FAIL: 6 of 6 pairs show no paint delta or failed (light dock, light dialog, light floating, dark dock, dark dialog, dark floating) · base against itself (no delta)
+ok   GLANCE webkit   expect PASS exit 0 · GLANCE PASS: 6 pairs, each with a visible paint delta · base against a route that repaints every plate
+ok   GLANCE webkit   expect FAIL exit 1 · GLANCE FAIL: 6 of 6 pairs show no paint delta or failed (light dock, light dialog, light floating, dark dock, dark dialog, dark floating) · base against itself (no delta)
+ok   GLANCE chromium expect FAIL exit 1 · GLANCE FAIL: 6 of 6 pairs show no paint delta or failed (light dock [layout only], light dialog [layout only], light floating [layout only], dark dock [layout only], dark dialog [layout only], dark floating [layout only]) · H4-1: plates moved 70 px, no paint change
+ok   GLANCE webkit   expect FAIL exit 1 · GLANCE FAIL: 6 of 6 pairs show no paint delta or failed (light dock [layout only], light dialog [layout only], light floating [layout only], dark dock [layout only], dark dialog [layout only], dark floating [layout only]) · H4-1: plates moved 70 px, no paint change
+ok   GLANCE chromium expect FAIL exit 1 · GLANCE FAIL: 2 of 2 pairs show no paint delta or failed (light story [layout only], dark story [layout only]) · H4-1: story copy moves the card 72 px, no paint change
+ok   GLANCE chromium expect PASS exit 0 · GLANCE PASS: 2 pairs, each with a visible paint delta · H4-1: story copy moves the card and the card is repainted
+ok   GLANCE webkit   expect FAIL exit 1 · GLANCE FAIL: 2 of 2 pairs show no paint delta or failed (light story [layout only], dark story [layout only]) · H4-1: story copy moves the card 72 px, no paint change
+ok   GLANCE webkit   expect PASS exit 0 · GLANCE PASS: 2 pairs, each with a visible paint delta · H4-1: story copy moves the card and the card is repainted
+ok   GLANCE chromium expect PASS exit 0 · GLANCE PASS: every story pair shows a claimed region · H3-10: the route story claims one region
+ok   GLANCE chromium expect FAIL exit 1 · GLANCE FAIL: 2 story pairs with no claimed region · H3-10: the route story claims nothing
+ok   GLANCE webkit   expect PASS exit 0 · GLANCE PASS: every story pair shows a claimed region · H3-10: the route story claims one region
+ok   GLANCE webkit   expect FAIL exit 1 · GLANCE FAIL: 2 story pairs with no claimed region · H3-10: the route story claims nothing
+     captured C in 406 s (load 35.8 54.4 69.6)
+ok   W-C  chromium expect PASS exit 0 · PASS (362 gated rows) · RCS solve at 5.0:1 against each plate, fg read from --foreground: every retune followed
+ok   W-C  webkit   expect PASS exit 0 · PASS (362 gated rows) · RCS solve at 5.0:1 against each plate, fg read from --foreground: every retune followed
+     captured C-frozen in 83 s (load 59.2 56.7 68.7)
+ok   W-C  chromium expect FAIL exit 1 · FAIL (2 of 31 gated rows) · muted frozen at #3a3a3a: under --foreground oklch(0.42) the hierarchy inverts with no word (a silent desync)
+        retune-fg chromium light paper [retune-fg]: silent desync · 43/43 runs ≥ 4.5 · hierarchy under 0.08 signed on wash -0.071, quiet -0.071, resting -0.071, card -0.071 ✗
+        retune-fg chromium light paper dialog [retune-fg]: silent desync · 4/4 runs ≥ 4.5 · hierarchy under 0.08 signed on dialog -0.071 ✗
+ok   W-C  webkit   expect FAIL exit 1 · FAIL (2 of 31 gated rows) · muted frozen at #3a3a3a: under --foreground oklch(0.42) the hierarchy inverts with no word (a silent desync)
+        retune-fg webkit+shim light paper [retune-fg]: silent desync · 43/43 runs ≥ 4.5 · hierarchy under 0.08 signed on wash -0.050, quiet -0.050, resting -0.050, card -0.050 ✗
+        retune-fg webkit+shim light paper dialog [retune-fg]: silent desync · 4/4 runs ≥ 4.5 · hierarchy under 0.08 signed on dialog -0.050 ✗
+     captured C-loud in 81 s (load 52.0 54.8 66.8)
+ok   W-C  chromium expect PASS exit 0 · PASS (31 gated rows) · the same frozen ink, but the page refuses the --foreground retune loud (console.warn naming --foreground)
+ok   W-C  webkit   expect PASS exit 0 · PASS (31 gated rows) · the same frozen ink, but the page refuses the --foreground retune loud (console.warn naming --foreground)
+     captured C-unrelated in 80 s (load 33.9 47.6 62.9)
+ok   W-C  chromium expect FAIL exit 1 · FAIL (2 of 31 gated rows) · H4-4: the same frozen ink, and an unrelated console.warn in the retuned cell (names no glass token): a silent desync
+        retune-fg chromium light paper [retune-fg]: silent desync (1 more console errors/warnings than the base cell, none naming a glass token: [fixture] hero.avif failed to decode; showing the placeholder) · 43/43 runs ≥ 4.5 ·
+        retune-fg chromium light paper dialog [retune-fg]: silent desync (1 more console errors/warnings than the base cell, none naming a glass token: [fixture] hero.avif failed to decode; showing the placeholder) · 4/4 runs ≥ 
+ok   W-C  webkit   expect FAIL exit 1 · FAIL (2 of 31 gated rows) · H4-4: the same frozen ink, and an unrelated console.warn in the retuned cell (names no glass token): a silent desync
+        retune-fg webkit+shim light paper [retune-fg]: silent desync (1 more console errors/warnings than the base cell, none naming a glass token: [fixture] hero.avif failed to decode; showing the placeholder) · 43/43 runs ≥ 4.
+        retune-fg webkit+shim light paper dialog [retune-fg]: silent desync (1 more console errors/warnings than the base cell, none naming a glass token: [fixture] hero.avif failed to decode; showing the placeholder) · 4/4 runs
+SELFTEST PASS: 50 expectations met
+end 12:41:10 load { 32.25 47.05 62.63 }

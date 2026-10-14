@@ -34,13 +34,27 @@
 // H3-12: the drift pass (--drift; both engines; the ladder over the c1 aurora; both themes; motion on) samples one whole
 // frame every --drift-every ms for --drift-ms (100 s). Each frame is written to disk as it is taken and nothing is held
 // in memory, so the window's heap is one frame (pass 2's 90 s screencast window exhausted the node heap by keeping all).
-// Every cell also records its console error and warning counts (H3-8: a colour retune refused loud).
+// Every cell also records its console errors and warnings, counted and as text (H3-8: a colour retune refused loud; H4-4:
+// W-C counts only the messages that name a glass token, so it needs the text, not a count).
+// Playwright WebKit is retired and relaunched every NAV_CAP (60) page loads of one browser process: macOS AppSSO stops
+// answering at about the 90th navigation (tile pass-3 H3-1). Each relaunch is recorded in meta.navRetired.
+// The same class can strike below the cap when the machine is saturated (H4: one page open sat unanswered for 45 min at
+// load 500-1000, with no timeout to end it). So every Playwright WebKit page open, cell and context close runs under a
+// deadline (OPEN_MS, CELL_MS, CLOSE_MS); past it the browser is killed and relaunched, and the page open or the cell is
+// tried once more. Each is recorded in meta.navStalled and printed; a cell that stalls twice is a CRASH row, as before.
 // The live WebGPU field is observed only by screenshot.
 import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
-import { OUT, GROUNDS, EXTRA_GROUNDS, FIELD_GROUNDS, SCENES, SCENE_GROUNDS, THEMES, ENGINES, VIEW, CHROMIUM_ARGS, BOUND_PROP, FLAT_ATTR, GROUND_STATE_ATTR, WEBKIT_SHIM, cli, list, playwright, serve, cellKey, readPng, region, mean3, Y } from "./lib.mjs";
+import { execFileSync } from "node:child_process";
+import { OUT, GROUNDS, EXTRA_GROUNDS, FIELD_GROUNDS, SCENES, SCENE_GROUNDS, THEMES, ENGINES, VIEW, CHROMIUM_ARGS, NAV_CAP, BOUND_PROP, FLAT_ATTR, GROUND_STATE_ATTR, WEBKIT_SHIM, cli, list, playwright, serve, cellKey, readPng, region, mean3, Y } from "./lib.mjs";
 
+const OPEN_MS = +(process.env.D3_OPEN_MS || 90000), CELL_MS = +(process.env.D3_CELL_MS || 600000), CLOSE_MS = 30000;
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const deadline = (p, ms, what) => { let t; return Promise.race([p, new Promise((_, rej) => { t = setTimeout(() => rej(new Error(`STALL: ${what} unanswered after ${ms / 1000} s`)), ms); })]).finally(() => clearTimeout(t)); };
+// A stalled Playwright WebKit does not answer close() either: kill this process's pw_run.sh children and theirs.
+const killWebkit = () => { try { for (const pid of execFileSync("pgrep", ["-P", String(process.pid), "-f", "pw_run.sh"], { encoding: "utf8" }).split("\n").filter(Boolean)) {
+  try { execFileSync("pkill", ["-9", "-P", pid]); } catch {} try { process.kill(+pid, "SIGKILL"); } catch {} } } catch {} };
 const COUNTER = `(() => { const S = window.__hx = { readbacks: 0, gid: 0, rp: 0, url: 0, alphas: [], ms: [], frame: 0, writes: {}, wframes: {}, lastW: {} };
   const wrap = (P, name, kind) => { if (!P || !P[name]) return; const o = P[name]; P[name] = function (...a) { const t = performance.now(); const r = o.apply(this, a);
     S.ms.push(+(performance.now() - t).toFixed(2)); S.readbacks++; S[kind]++;
@@ -203,7 +217,7 @@ export async function capture(target, o = {}) {
   const qs = o.query ? "&" + String(o.query).replace(/^[&?]/, "") : "";
   const pw = await playwright();
   const server = await serve(target);
-  const cells = [], live = [], motion = [], drift = [], versions = {}, unshimmed = {};
+  const cells = [], live = [], motion = [], drift = [], versions = {}, unshimmed = {}, navRetired = {}, navStalled = {};
   const t0 = Date.now();
   const log = (s) => { if (!o.quiet) console.log(s); };
   const newPage = async (browser, engine, theme, reducedMotion) => {
@@ -254,18 +268,30 @@ export async function capture(target, o = {}) {
     return frames;
   };
   for (const engine of engines) {
-    const browser = await pw[engine].launch({ headless: true, args: engine === "chromium" ? CHROMIUM_ARGS : [] });
-    versions[engine] = browser.version();
+    const launch = () => pw[engine].launch({ headless: true, args: engine === "chromium" ? CHROMIUM_ARGS : [] });
+    let browser = await launch(), navs = 0;
+    versions[engine] = browser.version(); navRetired[engine] = 0; navStalled[engine] = 0;
+    // Every page load goes through fresh(): past NAV_CAP loads, Playwright WebKit's browser is closed and relaunched.
+    const fresh = async () => {
+      if (engine === "webkit" && navs >= NAV_CAP) { await browser.close().catch(() => {}); browser = await launch(); navs = 0; navRetired[engine]++; log(`webkit browser retired and relaunched after ${NAV_CAP} page loads (${navRetired[engine]}×)`); }
+      navs++; return browser;
+    };
+    const retire = async (why) => { await Promise.race([browser.close().catch(() => {}), sleep(5000)]); killWebkit(); browser = await launch(); navs = 0; navStalled[engine]++; log(`webkit browser killed and relaunched (${why})`); };
+    const open = async (theme, reducedMotion) => { for (let k = 0; ; k++) {
+      try { return await deadline(newPage(await fresh(), engine, theme, reducedMotion), OPEN_MS, "page open"); }
+      catch (e) { if (engine !== "webkit" || k >= 2 || !/^STALL/.test(e.message)) throw e; await retire(e.message); } } };
+    const shut = async (ctx) => { try { await deadline(ctx.close().catch(() => {}), CLOSE_MS, "context close"); } catch (e) { if (engine === "webkit") await retire(e.message); else log(`${engine}: ${e.message}`); } };
     for (const theme of themes) for (const ground of grounds) for (const scene of scenes) {
       if (!(SCENE_GROUNDS[scene] || []).includes(ground)) continue;
+      for (let attempt = 0; attempt < 2; attempt++) {
       const base = { engine, theme, ground, scene, variant, shim: engine === "webkit" && shim, nodock: engine === "webkit" && !shim, files: {} };
       const stem = `${engine}-${theme}-${ground}-${scene}-${variant}`;
-      const { ctx, page } = await newPage(browser, engine, theme, "reduce");
-      const errs = [], consoleN = { error: 0, warning: 0, sample: [] }; let crashed = false;
+      const { ctx, page } = await open(theme, "reduce");
+      const errs = [], consoleN = { error: 0, warning: 0, texts: [] }; let crashed = false;
       page.on("pageerror", (e) => errs.push(String(e).slice(0, 200)));
-      page.on("console", (m) => { const k = m.type() === "warning" || m.type() === "warn" ? "warning" : m.type() === "error" ? "error" : null; if (!k) return; consoleN[k]++; if (consoleN.sample.length < 4) consoleN.sample.push(m.text().slice(0, 160)); });
+      page.on("console", (m) => { const k = m.type() === "warning" || m.type() === "warn" ? "warning" : m.type() === "error" ? "error" : null; if (!k) return; consoleN[k]++; if (consoleN.texts.length < 64) consoleN.texts.push(m.text().slice(0, 300)); });
       page.on("crash", () => { crashed = true; });
-      try {
+      try { await deadline((async () => {
         await page.goto(`${server.url}index.html?scene=${scene}&ground=${ground}&theme=${theme}${base.nodock ? "&nodock=1" : ""}${qs}`, { waitUntil: "load", timeout: 120000 });
         await page.addStyleTag({ content: MODE_CSS + inject });
         await page.evaluate(() => document.fonts.ready);
@@ -313,27 +339,31 @@ export async function capture(target, o = {}) {
           }
         }
         Object.assign(base, { specs: geom.specs, bare: geom.bare, halo: geom.halo, veil: geom.veil, probes: geom.probes, pressRect: geom.pressRect, heldAfter: geom.heldAfter || null, substrate: geom.substrate, appErrors: geom.errors, signals, rings, errs, console: consoleN, crashed });
-      } catch (e) {
+      })(), CELL_MS, "cell"); } catch (e) {
         Object.assign(base, { crashed: true, error: String(e).split("\n")[0].slice(0, 240), errs });
       }
+      // A Playwright WebKit stall or page close is the AppSSO class first: the browser is replaced and the cell tried once more.
+      if (engine === "webkit" && attempt === 0 && base.crashed && /STALL|has been closed/.test(base.error || "")) { await retire(`${stem}: ${base.error}`); continue; }
       cells.push(base);
       log(`${stem}${base.shim ? " +shim" : ""}: ${base.crashed ? "CRASH " + (base.error || "") : `${base.specs.length} specs, ${base.rings.length} rings, pointer ${base.pointer}, readbacks ${base.signals.readbacks}${errs.length ? `, ${errs.length} page errors` : ""}`}`);
-      await ctx.close().catch(() => {});
+      await shut(ctx);
+      break;
+      }
     }
     // H-14: does the unshimmed dock still crash Playwright WebKit? Recorded beside the shimmed cells, never hidden.
     if (engine === "webkit" && o.probeUnshimmed) for (const theme of themes) {
-      const ctx = await browser.newContext({ viewport: VIEW, deviceScaleFactor: 1, colorScheme: theme, reducedMotion: "reduce" });
+      const ctx = await (await fresh()).newContext({ viewport: VIEW, deviceScaleFactor: 1, colorScheme: theme, reducedMotion: "reduce" });
       const page = await ctx.newPage(); let crashed = false; page.on("crash", () => { crashed = true; });
       let error = null;
       try { await page.goto(`${server.url}index.html?scene=ladder&ground=paper&theme=${theme}${qs}`, { waitUntil: "load", timeout: 60000 }); await page.waitForTimeout(2500); await page.evaluate(() => 1); }
       catch (e) { error = String(e).split("\n")[0].slice(0, 160); crashed = true; }
       unshimmed[theme] = { crashed, error };
       log(`webkit ${theme} ladder paper UNSHIMMED: ${crashed ? "CRASH " + (error || "") : "no crash"}`);
-      await ctx.close().catch(() => {});
+      await shut(ctx);
     }
     if (o.live) {
       for (const theme of themes) for (const ground of grounds.filter((g) => FIELD_GROUNDS.includes(g))) {
-        const { ctx, page } = await newPage(browser, engine, theme, "no-preference");
+        const { ctx, page } = await open(theme, "no-preference");
         const rec = { engine, theme, ground, variant, liveMs };
         try {
           await page.goto(`${server.url}index.html?scene=ladder&ground=${ground}&theme=${theme}${qs}`, { waitUntil: "load", timeout: 120000 });
@@ -362,12 +392,12 @@ export async function capture(target, o = {}) {
         live.push(rec);
         const top = Object.entries(rec.wframes || {}).sort((x, y) => y[1] - x[1]).slice(0, 3).map(([k, v]) => `${k}×${v}`).join(" ");
         log(`live ${engine} ${theme} ${ground}: readbacks ${rec.readbacks} (getImageData ${rec.getImageData}, readPixels ${rec.readPixels}, toDataURL ${rec.toDataURL}), frames ${rec.frames}, custom-property writes in frames: ${top || "none"}${rec.error ? " ERROR " + rec.error : ""}`);
-        await ctx.close().catch(() => {});
+        await shut(ctx);
       }
     }
     // H-11: the motion windows. Whole frames of the moving field (motion) and of a ceiling step (step).
     if (o.motion) for (const theme of themes) for (const ground of grounds.filter((g) => FIELD_GROUNDS.includes(g))) {
-      const { ctx, page } = await newPage(browser, engine, theme, "no-preference");
+      const { ctx, page } = await open(theme, "no-preference");
       const rec = { engine, theme, ground, variant, shim: engine === "webkit" && shim, motionMs, stepMs, frames: [], source: engine === "chromium" ? "CDP Page.startScreencast (png, every frame)" : "page.screenshot loop" };
       const stem = `motion-${engine}-${theme}-${ground}-${variant}`;
       try {
@@ -407,11 +437,11 @@ export async function capture(target, o = {}) {
       } catch (e) { rec.error = String(e).split("\n")[0].slice(0, 240); }
       motion.push(rec);
       log(`motion ${engine}${rec.shim ? "+shim" : ""} ${theme} ${ground}: ${rec.frames.filter((f) => f.kind === "motion").length} motion frames, ${rec.frames.filter((f) => f.kind === "step").length} step frames${rec.screencastFrames != null ? ` (of ${rec.screencastFrames} screencast frames)` : ""}${rec.error ? " ERROR " + rec.error : ""}`);
-      await ctx.close().catch(() => {});
+      await shut(ctx);
     }
     // H3-12: the drift window. One frame every driftEvery ms for driftMs over the moving c1 field, streamed to disk.
     if (o.drift) for (const theme of themes) for (const ground of grounds.filter((g) => g === "aurora")) {
-      const { ctx, page } = await newPage(browser, engine, theme, "no-preference");
+      const { ctx, page } = await open(theme, "no-preference");
       const rec = { engine, theme, ground, variant, shim: engine === "webkit" && shim, driftMs, driftEvery, frames: [], source: "page.screenshot every " + driftEvery + " ms" };
       const stem = `drift-${engine}-${theme}-${ground}-${variant}`;
       try {
@@ -433,7 +463,7 @@ export async function capture(target, o = {}) {
       } catch (e) { rec.error = String(e).split("\n")[0].slice(0, 240); }
       drift.push(rec);
       log(`drift ${engine}${rec.shim ? "+shim" : ""} ${theme} ${ground}: ${rec.frames.length} frames over ${rec.frames.length ? (rec.frames[rec.frames.length - 1].t / 1000).toFixed(1) : 0} s${rec.error ? " ERROR " + rec.error : ""}`);
-      await ctx.close().catch(() => {});
+      await shut(ctx);
     }
     await browser.close();
   }
@@ -442,7 +472,7 @@ export async function capture(target, o = {}) {
   const liveKey = (r) => [r.engine, r.theme, r.ground, r.variant].join("/");
   const doc = {
     meta: { ...(prev.meta || {}), target, label, worktree: o.worktree || buildMeta.worktree || prev.meta?.worktree || null, sha: buildMeta.sha || prev.meta?.sha || null,
-      versions: { ...(prev.meta?.versions || {}), ...versions }, webkitShim: shim ? WEBKIT_SHIM : null,
+      versions: { ...(prev.meta?.versions || {}), ...versions }, navCap: NAV_CAP, navStalled: Object.fromEntries([...new Set([...Object.keys(prev.meta?.navStalled || {}), ...Object.keys(navStalled)])].map((e) => [e, (prev.meta?.navStalled?.[e] || 0) + (navStalled[e] || 0)])), navRetired: Object.fromEntries([...new Set([...Object.keys(prev.meta?.navRetired || {}), ...Object.keys(navRetired)])].map((e) => [e, (prev.meta?.navRetired?.[e] || 0) + (navRetired[e] || 0)])), webkitShim: shim ? WEBKIT_SHIM : null,
       webkitUnshimmed: { ...(prev.meta?.webkitUnshimmed || {}), ...unshimmed },
       captured: new Date().toISOString(), query: o.query || null, load: os.loadavg().map((v) => +v.toFixed(1)), seconds: +((Date.now() - t0) / 1000).toFixed(1) },
     cells: keep(prev.cells || [], cells, cellKey), live: keep(prev.live || [], live, liveKey), motion: keep(prev.motion || [], motion, liveKey), drift: keep(prev.drift || [], drift, liveKey) };

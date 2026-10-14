@@ -35,7 +35,9 @@
 //   --fx-drift-thin: <ms>     with motion on, every surface goes transparent once <ms> have passed since load (M-2m
 //                             drift leg, H3-12: an erosion only a window longer than pass 2's 60 s sees)
 //   --fx-release-dip: 1       on the pointer's release, the held dock goes transparent for 600 ms (M-2h, H3-5)
-//   --fx-warn-retune: 1       the page logs one console.warn when --foreground is retuned (W-C leg 2: refused loud)
+//   --fx-warn-retune: 1       the page logs one console.warn naming --foreground when it is retuned (W-C leg 2: refused loud)
+//   --fx-warn-retune: unrelated   the page logs one console.warn under the same retune that names no glass token (H4-4's
+//                             plant: an unrelated warning in the retuned cell, which H3's loud arm counted as a refusal)
 //   --fx-stamp: <value>|none  the field-claim scenes' stamp on <main> (H3-7); default: "unpublished" (fieldout,
 //                             fieldgone) or "ambiguous" (fieldtwo); "none" removes it
 // H3 scenes the fixture lays out as the specimen app does: claim (a page claim over a --secondary tray and an opaque
@@ -355,7 +357,8 @@ const loop = () => { const now = performance.now(); n++;
     if (!thinned) { thinned = true; for (const id of CONTENT_IDS) { const e = document.querySelector('[data-spec="' + id + '"]'); if (e) { const m = getComputedStyle(e).backgroundColor.match(/[0-9.]+/g); e.style.backgroundColor = "rgb(" + m[0] + " " + m[1] + " " + m[2] + " / 0.85)"; } } }
   }
   // --fx-warn-retune: 1 · the page refuses a colour retune of --foreground loud (one console.warn), W-C leg 2's other arm.
-  if (!warned && cssVar("--fx-warn-retune") === "1" && cssVar("--foreground") && cssVar("--foreground") !== cssVar("--fg")) { warned = true; console.warn("[fixture] --foreground written as a colour: retune refused"); }
+  const wr = cssVar("--fx-warn-retune");
+  if (!warned && (wr === "1" || wr === "unrelated") && cssVar("--foreground") && cssVar("--foreground") !== cssVar("--fg")) { warned = true; console.warn(wr === "1" ? "[fixture] --foreground written as a colour: retune refused" : "[fixture] hero.avif failed to decode; showing the placeholder"); }
   // The plant styles arrive after load (capture.mjs injects them), so the silent-flat plant is read per frame.
   if (PROFILE === "G" && scene === "isolated" && cssVar("--fx-g-nostamp") === "1") root.removeAttribute("data-glass-flat");
   requestAnimationFrame(loop); };
@@ -385,13 +388,19 @@ export function writeFixture(profile, o = {}) {
 
 // H3-10: a stand-in for a demo build's glass-material story (glance.mjs --story-claim): it answers the demo's capture
 // boot (`?capture=…&mode=<theme>` → html[data-capture-ready]) and paints a page with or without one claimed region.
-export function writeStoryFixture(out, { claim }) {
+// The stand-in story page for GLANCE (H3-10 --story-claim; H4-1 paint against layout). The card is a plate: it carries a
+// glass-* class, the contract glance.mjs matches story plates by. `copy` adds that many 24 px caption lines above the
+// card, which push it down (C-8's case: copy that moves plates, no paint change); `tint` repaints the card.
+export function writeStoryFixture(out, { claim, copy = 0, tint = false }) {
   const dir = path.resolve(out); fs.rmSync(dir, { recursive: true, force: true }); fs.mkdirSync(dir, { recursive: true });
+  const lines = Array.from({ length: copy }, (_, i) => `<p class="copy">caption line ${i + 1}</p>`).join("");
   fs.writeFileSync(path.join(dir, "index.html"), `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>D3 story fixture</title>
-<style>html, body { margin: 0; min-height: 100vh; } body { background: #193b59; font: 15px/20px system-ui, sans-serif; }
-html.dark body { background: #0b0a09; } .card { position: absolute; left: 80px; top: 80px; width: 480px; height: 240px; border-radius: 24px; background: rgb(253 245 236 / ${claim ? "0.55" : "0.9"}); padding: 20px; box-sizing: border-box; }</style>
+<style>html, body { margin: 0; min-height: 100vh; } body { background: #193b59; font: 15px/20px system-ui, sans-serif; padding-top: 60px; }
+html.dark body { background: #0b0a09; } .copy { margin: 0 0 0 60px; height: 24px; color: #fdf5ec; }
+main { position: relative; margin-left: 60px; width: 520px; height: 280px; }
+.card { position: absolute; left: 20px; top: 20px; width: 480px; height: 240px; border-radius: 24px; background: ${tint ? "rgb(214 228 248 / 0.9)" : `rgb(253 245 236 / ${claim ? "0.55" : "0.9"})`}; padding: 20px; box-sizing: border-box; }</style>
 <script>const q = new URLSearchParams(location.search); if (q.get("mode") === "dark") document.documentElement.classList.add("dark");</script></head>
-<body><main style="position: absolute; left: 60px; top: 60px; width: 520px; height: 280px"${claim ? ' data-glass-ground="field"' : ""}><section class="card" style="left: 20px; top: 20px">story card</section></main>
+<body>${lines}<main${claim ? ' data-glass-ground="field"' : ""}><section class="card glass-resting">story card</section></main>
 <script>requestAnimationFrame(() => document.documentElement.setAttribute("data-capture-ready", ""));</script></body></html>
 `);
   return dir;

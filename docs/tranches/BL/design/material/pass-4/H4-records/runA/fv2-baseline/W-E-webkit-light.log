@@ -1,0 +1,23 @@
+W-E · D3-E · every ink carries its ground (muted ≥ 4.5 over black/white/checker/aurora at α ≤ 0.30; indicators ≥ 3:1)
+capture /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/caps/fv2-baseline · target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/builds/fv2/dist · worktree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/wt @ d6f68b88 · gate webkit · cells restricted to /^webkit light /
+  webkit+shim light black: muted 4.62–6.52 (min floating·muted) · indicators 3.10–3.31 (min wash·well) · ok
+  webkit+shim light black dialog: muted 5.82–5.82 (min dialog·muted) · indicators 3.07–3.31 (min dialog·close) · ok
+  webkit+shim light white: muted 5.03–7.85 (min quiet·well-muted) · indicators 3.14–3.34 (min dialog-rung·well) · ok
+  webkit+shim light white dialog: muted 5.82–5.82 (min dialog·muted) · indicators 3.07–3.31 (min dialog·close) · ok
+  webkit+shim light checker: muted 4.57–6.52 (min floating·muted) · indicators 2.83–3.31 (min floating·well) · ✗
+  webkit+shim light checker dialog: muted 5.82–5.82 (min dialog·muted) · indicators 3.07–3.31 (min dialog·close) · ok
+  webkit+shim light aurora: muted 4.99–7.07 (min overlay·well-muted) · indicators 3.14–3.31 (min dialog-rung·well) · ok
+  webkit+shim light aurora dialog: muted 5.82–5.82 (min dialog·muted) · indicators 3.07–3.31 (min dialog·close) · ok
+  webkit+shim light aurora50: muted 4.99–7.46 (min quiet·well-muted) · indicators 3.14–3.31 (min quiet·well) · ok
+  webkit+shim light aurora50 dialog: muted 5.82–5.82 (min dialog·muted) · indicators 3.07–3.31 (min dialog·close) · ok
+  painted α chromium light ladder [info]: wash 0.890 ✗ · quiet 0.925 ✗ · resting 0.965 ✗ · card 0.965 ✗ · floating 0.890 ✗ · overlay 0.925 ✗ · dialog-rung 1.000 ✗ · dock 0.890 ✗ · popover 0.890 ✗
+  painted α chromium light dialog [info]: dialog 1.000 ✗
+  painted α chromium dark ladder [info]: wash 0.875 ✗ · quiet 0.914 ✗ · resting 0.957 ✗ · card 0.957 ✗ · floating 0.875 ✗ · overlay 0.914 ✗ · dialog-rung 1.000 ✗ · dock 0.875 ✗ · popover 0.875 ✗
+  painted α chromium dark dialog [info]: dialog 1.000 ✗
+  painted α webkit light ladder: wash 0.890 ✗ · quiet 0.925 ✗ · resting 0.965 ✗ · card 0.965 ✗ · floating 0.890 ✗ · overlay 0.925 ✗ · dialog-rung 1.000 ✗ · dock 0.890 ✗ · popover 0.890 ✗
+  painted α webkit light dialog: dialog 1.000 ✗
+  painted α webkit dark ladder: wash 0.875 ✗ · quiet 0.914 ✗ · resting 0.957 ✗ · card 0.957 ✗ · floating 0.875 ✗ · overlay 0.914 ✗ · dialog-rung 1.000 ✗ · dock 0.875 ✗ · popover 0.875 ✗
+  painted α webkit dark dialog: dialog 1.000 ✗
+Playwright WebKit (paint-only: headless paints no backdrop-filter; dock rows +shim): FAIL on 20 of 20 rows [informational]
+real Safari: UNMEASURED (owner's safaridriver checkbox)
+FAIL (22 of 220 gated rows)

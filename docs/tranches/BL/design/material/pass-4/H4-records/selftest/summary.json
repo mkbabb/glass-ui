@@ -1,0 +1,624 @@
+[
+ {
+  "id": "M-1",
+  "engine": "chromium",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "PASS (11 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green",
+  "note": "green fixture",
+  "fails": []
+ },
+ {
+  "id": "M-1",
+  "engine": "webkit",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "PASS (11 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green",
+  "note": "green fixture",
+  "fails": []
+ },
+ {
+  "id": "M-1x",
+  "engine": "chromium",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "PASS (21 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green",
+  "note": "green fixture (--q11 b)",
+  "fails": []
+ },
+ {
+  "id": "M-1x",
+  "engine": "webkit",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "PASS (21 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green",
+  "note": "green fixture (--q11 b)",
+  "fails": []
+ },
+ {
+  "id": "M-6",
+  "engine": "chromium",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "PASS (120 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green",
+  "note": "green fixture",
+  "fails": []
+ },
+ {
+  "id": "M-6",
+  "engine": "webkit",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "PASS (120 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green",
+  "note": "green fixture",
+  "fails": []
+ },
+ {
+  "id": "M-1",
+  "engine": "chromium",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "FAIL (1 of 11 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green-M-1-0",
+  "note": "floating painted HEAD's grey composite #d7d4ce",
+  "fails": [
+   "floating #d7d4ce L 0.871 C 0.0088 ΔE 0.115 ✗",
+   "floating #d7d4ce L 0.871 C 0.0088 ΔE 0.115 ✗"
+  ]
+ },
+ {
+  "id": "M-1",
+  "engine": "webkit",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "FAIL (1 of 11 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green-M-1-0",
+  "note": "floating painted HEAD's grey composite #d7d4ce",
+  "fails": [
+   "floating #d7d4ce L 0.871 C 0.0088 ΔE 0.115 ✗",
+   "floating #d7d4ce L 0.871 C 0.0088 ΔE 0.115 ✗"
+  ]
+ },
+ {
+  "id": "M-1x",
+  "engine": "chromium",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "FAIL (3 of 21 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green-M-1x-0",
+  "note": "H3-1: floating at the floor's light bound (#fef7f2 at α 0.891): #e2dcd7 over black",
+  "fails": [
+   "floating [chrome] #e2dcd8 L 0.898 C 0.0085 · on paper #fef7f3 ΔE 0.082 · ground #000000 grey ✗",
+   "floating [chrome] #f0eae6 L 0.941 C 0.0085 · on paper #fef7f3 ΔE 0.040 · ground #808080 grey ✗",
+   "floating [chrome] #e5e2e2 L 0.915 C 0.0033 · on paper #fef7f3 ΔE 0.066 · ground #193b59 grey ✗",
+   "floating [chrome] #e2dcd8 L 0.898 C 0.0085 · on paper #fef7f3 ΔE 0.082 · ground #000000 grey ✗"
+  ]
+ },
+ {
+  "id": "M-1x",
+  "engine": "webkit",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "FAIL (3 of 21 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green-M-1x-0",
+  "note": "H3-1: floating at the floor's light bound (#fef7f2 at α 0.891): #e2dcd7 over black",
+  "fails": [
+   "floating [chrome] #e2dcd8 L 0.898 C 0.0085 · on paper #fef7f3 ΔE 0.082 · ground #000000 grey ✗",
+   "floating [chrome] #f0eae6 L 0.941 C 0.0085 · on paper #fef7f3 ΔE 0.040 · ground #808080 grey ✗",
+   "floating [chrome] #e5e2e2 L 0.915 C 0.0033 · on paper #fef7f3 ΔE 0.066 · ground #193b59 grey ✗",
+   "floating [chrome] #e2dcd8 L 0.898 C 0.0085 · on paper #fef7f3 ΔE 0.082 · ground #000000 grey ✗"
+  ]
+ },
+ {
+  "id": "M-6",
+  "engine": "chromium",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "FAIL (15 of 30 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green-M-6-0",
+  "note": "every dark plate painted HEAD's page-coloured composite",
+  "fails": [
+   "chromium dark paper: page #0b0a09 · adjacent ΔE wash→quiet 0.000 ✗, quiet→resting 0.000 ✗, resting→floating 0.000 ✗, floating→overlay 0.000 ✗ · ΔE from the page: wash #0e0b09 0.008 ✗ ΔL +0.007, quiet #0e0b09 0.008 ✗ ΔL +0.007, resting #0e0b09 0.008 ✗ ΔL +0.007, card #0e0b09 0.008 ✗ ΔL +0.007, floating #0e0b09 0.008 ✗ ΔL +0.007, overlay #0e0b09 0.008 ✗ ΔL +0.007, dialog-rung #0e0b09 0.008 ✗ ΔL +0.007, opaque #0e0b09 0.008 ✗ ΔL +0.007, dock #0e0b09 0.008 ✗ ΔL +0.007, popover #0e0b09 0.008 ✗ ΔL +0.007",
+   "chromium dark paper dialog: page #0b0a09 · ΔE from the page: dialog #0e0b09 0.008 ✗ ΔL +0.007"
+  ]
+ },
+ {
+  "id": "M-6",
+  "engine": "webkit",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "FAIL (15 of 30 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green-M-6-0",
+  "note": "every dark plate painted HEAD's page-coloured composite",
+  "fails": [
+   "webkit+shim dark paper: page #0b0a09 · adjacent ΔE wash→quiet 0.000 ✗, quiet→resting 0.000 ✗, resting→floating 0.000 ✗, floating→overlay 0.000 ✗ · ΔE from the page: wash #0e0b09 0.008 ✗ ΔL +0.007, quiet #0e0b09 0.008 ✗ ΔL +0.007, resting #0e0b09 0.008 ✗ ΔL +0.007, card #0e0b09 0.008 ✗ ΔL +0.007, floating #0e0b09 0.008 ✗ ΔL +0.007, overlay #0e0b09 0.008 ✗ ΔL +0.007, dialog-rung #0e0b09 0.008 ✗ ΔL +0.007, opaque #0e0b09 0.008 ✗ ΔL +0.007, dock #0e0b09 0.008 ✗ ΔL +0.007, popover #0e0b09 0.008 ✗ ΔL +0.007",
+   "webkit+shim dark paper dialog: page #0b0a09 · ΔE from the page: dialog #0e0b09 0.008 ✗ ΔL +0.007"
+  ]
+ },
+ {
+  "id": "M-6",
+  "engine": "chromium",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "FAIL (11 of 30 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green-M-6-1",
+  "note": "H-9: every dark plate sinks below the page (L 0.000-0.106 against 0.147), adjacent ΔE 0.063-0.083 and ΔE from the page ≥ 0.053: green unsigned",
+  "fails": [
+   "chromium dark paper: page #0b0a09 · adjacent ΔE wash→quiet 0.083, quiet→resting 0.069, resting→floating 0.082, floating→overlay 0.079 · ΔE from the page: wash #000000 0.146 ΔL -0.146 (below the page) ✗, quiet #060000 0.075 ΔL -0.069 (below the page) ✗, resting #00000a 0.093 ΔL -0.080 (below the page) ✗, card #060008 0.072 ΔL -0.057 (below the page) ✗, floating #000600 0.053 ΔL -0.040 (below the page) ✗, overlay #030006 0.081 ΔL -0.072 (below the page) ✗, dialog-rung #00000a 0.093 ΔL -0.080 (below the page) ✗, opaque #030006 0.081 ΔL -0.072 (below the page) ✗, dock #060000 0.075 ΔL -0.069 (below the page) ✗, popover #060008 0.072 ΔL -0.057 (below the page) ✗",
+   "chromium dark paper dialog: page #0b0a09 · ΔE from the page: dialog #000000 0.146 ΔL -0.146 (below the page) ✗"
+  ]
+ },
+ {
+  "id": "M-6",
+  "engine": "webkit",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "FAIL (11 of 30 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green-M-6-1",
+  "note": "H-9: every dark plate sinks below the page (L 0.000-0.106 against 0.147), adjacent ΔE 0.063-0.083 and ΔE from the page ≥ 0.053: green unsigned",
+  "fails": [
+   "webkit+shim dark paper: page #0b0a09 · adjacent ΔE wash→quiet 0.083, quiet→resting 0.069, resting→floating 0.082, floating→overlay 0.079 · ΔE from the page: wash #000000 0.146 ΔL -0.146 (below the page) ✗, quiet #060000 0.075 ΔL -0.069 (below the page) ✗, resting #00000a 0.093 ΔL -0.080 (below the page) ✗, card #060008 0.072 ΔL -0.057 (below the page) ✗, floating #000600 0.053 ΔL -0.040 (below the page) ✗, overlay #030006 0.081 ΔL -0.072 (below the page) ✗, dialog-rung #00000a 0.093 ΔL -0.080 (below the page) ✗, opaque #030006 0.081 ΔL -0.072 (below the page) ✗, dock #060000 0.075 ΔL -0.069 (below the page) ✗, popover #060008 0.072 ΔL -0.057 (below the page) ✗",
+   "webkit+shim dark paper dialog: page #0b0a09 · ΔE from the page: dialog #000000 0.146 ΔL -0.146 (below the page) ✗"
+  ]
+ },
+ {
+  "id": "M-1x",
+  "engine": "chromium",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "PASS (1 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green-M-1x-0",
+  "note": "H3-1: REPORTED (Q-11 unruled): the bound's grey over black prints and does not gate",
+  "fails": []
+ },
+ {
+  "id": "M-1x",
+  "engine": "webkit",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "PASS (1 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green-M-1x-0",
+  "note": "H3-1: REPORTED (Q-11 unruled): the bound's grey over black prints and does not gate",
+  "fails": []
+ },
+ {
+  "id": "M-1x",
+  "engine": "chromium",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "PASS (1 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green-M-1x-0",
+  "note": "H3-1: REPORTED (Q-11 ruled (a)): the bound's grey over black prints and does not gate",
+  "fails": []
+ },
+ {
+  "id": "M-1x",
+  "engine": "webkit",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "PASS (1 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green-M-1x-0",
+  "note": "H3-1: REPORTED (Q-11 ruled (a)): the bound's grey over black prints and does not gate",
+  "fails": []
+ },
+ {
+  "id": "M-1x",
+  "engine": "chromium",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "FAIL (1 of 7 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green-M-1x-hue",
+  "note": "H4-2: floating transmits the deep canvas (its hue, not the plate's): no longer passes the colour clause",
+  "fails": [
+   "floating [chrome] #3b5770 L 0.445 C 0.0532 · on paper #fcfaf7 ΔE 0.544 · ground #193b59 the ground's hue (Δh 1° ≤ 10°) ✗",
+   "floating [chrome] #3b5770 L 0.445 C 0.0532 · on paper #fcfaf7 ΔE 0.544 · ground #193b59 the ground's hue (Δh 1° ≤ 10°) ✗"
+  ]
+ },
+ {
+  "id": "M-1x",
+  "engine": "webkit",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "FAIL (1 of 7 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green-M-1x-hue",
+  "note": "H4-2: floating transmits the deep canvas (its hue, not the plate's): no longer passes the colour clause",
+  "fails": [
+   "floating [chrome] #3b5770 L 0.445 C 0.0532 · on paper #fcfaf7 ΔE 0.544 · ground #193b59 the ground's hue (Δh 1° ≤ 10°) ✗",
+   "floating [chrome] #3b5770 L 0.445 C 0.0532 · on paper #fcfaf7 ΔE 0.544 · ground #193b59 the ground's hue (Δh 1° ≤ 10°) ✗"
+  ]
+ },
+ {
+  "id": "M-1x",
+  "engine": "chromium",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "PASS (21 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green-M-1x-cream",
+  "note": "H4-2: the opaque escape at #fdf5ec holds its paper reading off paper (H3 read it grey by 0.0014 in L)",
+  "fails": []
+ },
+ {
+  "id": "M-1x",
+  "engine": "webkit",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "PASS (21 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green-M-1x-cream",
+  "note": "H4-2: the opaque escape at #fdf5ec holds its paper reading off paper (H3 read it grey by 0.0014 in L)",
+  "fails": []
+ },
+ {
+  "id": "M-1",
+  "engine": "chromium",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "FAIL (1 of 11 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green-M-1x-cream",
+  "note": "H4-2's counterpart: the same #fdf5ec escape stays M-1's row over paper (P-3)",
+  "fails": [
+   "opaque #fdf5ec L 0.974 C 0.0147 ΔE 0.017 ✗",
+   "opaque #fdf5ec L 0.974 C 0.0147 ΔE 0.017 ✗"
+  ]
+ },
+ {
+  "id": "M-1",
+  "engine": "webkit",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "FAIL (1 of 11 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green-M-1x-cream",
+  "note": "H4-2's counterpart: the same #fdf5ec escape stays M-1's row over paper (P-3)",
+  "fails": [
+   "opaque #fdf5ec L 0.974 C 0.0147 ΔE 0.017 ✗",
+   "opaque #fdf5ec L 0.974 C 0.0147 ΔE 0.017 ✗"
+  ]
+ },
+ {
+  "id": "M-1x",
+  "engine": "chromium",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "PASS (21 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green-M-1x-content",
+  "note": "H4-2: under (b)'s text a grey content rung (wash at the bound) is reported and named, not gated",
+  "fails": [
+   "wash [content] #e2dcd8 L 0.898 C 0.0085 · on paper #fef7f3 ΔE 0.082 · ground #000000 grey ✗",
+   "wash [content] #f0eae6 L 0.941 C 0.0085 · on paper #fef7f3 ΔE 0.040 · ground #7f7f7f grey ✗",
+   "wash [content] #e5e2e2 L 0.915 C 0.0033 · on paper #fef7f3 ΔE 0.066 · ground #193b59 grey ✗",
+   "wash [content] #e2dcd8 L 0.898 C 0.0085 · on paper #fef7f3 ΔE 0.082 · ground #000000 grey ✗"
+  ]
+ },
+ {
+  "id": "M-1x",
+  "engine": "webkit",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "PASS (21 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green-M-1x-content",
+  "note": "H4-2: under (b)'s text a grey content rung (wash at the bound) is reported and named, not gated",
+  "fails": [
+   "wash [content] #e2dcd8 L 0.898 C 0.0085 · on paper #fef7f3 ΔE 0.082 · ground #000000 grey ✗",
+   "wash [content] #f0eae6 L 0.941 C 0.0085 · on paper #fef7f3 ΔE 0.040 · ground #7f7f7f grey ✗",
+   "wash [content] #e5e2e2 L 0.915 C 0.0033 · on paper #fef7f3 ΔE 0.066 · ground #193b59 grey ✗",
+   "wash [content] #e2dcd8 L 0.898 C 0.0085 · on paper #fef7f3 ΔE 0.082 · ground #000000 grey ✗"
+  ]
+ },
+ {
+  "id": "M-6",
+  "engine": "chromium",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "FAIL (45 of 120 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green-M-6-retune",
+  "note": "H4-3: under each colour retune every dark plate paints the page (base cells untouched): H3 read base only",
+  "fails": [
+   "chromium dark paper [retune-bg]: page #0b0a09 · adjacent ΔE wash→quiet 0.000 ✗, quiet→resting 0.000 ✗, resting→floating 0.000 ✗, floating→overlay 0.000 ✗ · ΔE from the page: wash #0b0a09 0.000 ✗ ΔL +0.000, quiet #0b0a09 0.000 ✗ ΔL +0.000, resting #0b0a09 0.000 ✗ ΔL +0.000, card #0b0a09 0.000 ✗ ΔL +0.000, floating #0b0a09 0.000 ✗ ΔL +0.000, overlay #0b0a09 0.000 ✗ ΔL +0.000, dialog-rung #0b0a09 0.000 ✗ ΔL +0.000, opaque #0b0a09 0.000 ✗ ΔL +0.000, dock #0b0a09 0.000 ✗ ΔL +0.000, popover #0b0a09 0.000 ✗ ΔL +0.000",
+   "chromium dark paper dialog [retune-bg]: page #0b0a09 · ΔE from the page: dialog #0b0a09 0.000 ✗ ΔL +0.000",
+   "chromium dark paper [retune-fg]: page #0b0a09 · adjacent ΔE wash→quiet 0.000 ✗, quiet→resting 0.000 ✗, resting→floating 0.000 ✗, floating→overlay 0.000 ✗ · ΔE from the page: wash #0b0a09 0.000 ✗ ΔL +0.000, quiet #0b0a09 0.000 ✗ ΔL +0.000, resting #0b0a09 0.000 ✗ ΔL +0.000, card #0b0a09 0.000 ✗ ΔL +0.000, floating #0b0a09 0.000 ✗ ΔL +0.000, overlay #0b0a09 0.000 ✗ ΔL +0.000, dialog-rung #0b0a09 0.000 ✗ ΔL +0.000, opaque #0b0a09 0.000 ✗ ΔL +0.000, dock #0b0a09 0.000 ✗ ΔL +0.000, popover #0b0a09 0.000 ✗ ΔL +0.000",
+   "chromium dark paper dialog [retune-fg]: page #0b0a09 · ΔE from the page: dialog #0b0a09 0.000 ✗ ΔL +0.000"
+  ]
+ },
+ {
+  "id": "M-6",
+  "engine": "webkit",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "FAIL (45 of 120 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/green-M-6-retune",
+  "note": "H4-3: under each colour retune every dark plate paints the page (base cells untouched): H3 read base only",
+  "fails": [
+   "webkit+shim dark paper [retune-bg]: page #0b0a09 · adjacent ΔE wash→quiet 0.000 ✗, quiet→resting 0.000 ✗, resting→floating 0.000 ✗, floating→overlay 0.000 ✗ · ΔE from the page: wash #0b0a09 0.000 ✗ ΔL +0.000, quiet #0b0a09 0.000 ✗ ΔL +0.000, resting #0b0a09 0.000 ✗ ΔL +0.000, card #0b0a09 0.000 ✗ ΔL +0.000, floating #0b0a09 0.000 ✗ ΔL +0.000, overlay #0b0a09 0.000 ✗ ΔL +0.000, dialog-rung #0b0a09 0.000 ✗ ΔL +0.000, opaque #0b0a09 0.000 ✗ ΔL +0.000, dock #0b0a09 0.000 ✗ ΔL +0.000, popover #0b0a09 0.000 ✗ ΔL +0.000",
+   "webkit+shim dark paper dialog [retune-bg]: page #0b0a09 · ΔE from the page: dialog #0b0a09 0.000 ✗ ΔL +0.000",
+   "webkit+shim dark paper [retune-fg]: page #0b0a09 · adjacent ΔE wash→quiet 0.000 ✗, quiet→resting 0.000 ✗, resting→floating 0.000 ✗, floating→overlay 0.000 ✗ · ΔE from the page: wash #0b0a09 0.000 ✗ ΔL +0.000, quiet #0b0a09 0.000 ✗ ΔL +0.000, resting #0b0a09 0.000 ✗ ΔL +0.000, card #0b0a09 0.000 ✗ ΔL +0.000, floating #0b0a09 0.000 ✗ ΔL +0.000, overlay #0b0a09 0.000 ✗ ΔL +0.000, dialog-rung #0b0a09 0.000 ✗ ΔL +0.000, opaque #0b0a09 0.000 ✗ ΔL +0.000, dock #0b0a09 0.000 ✗ ΔL +0.000, popover #0b0a09 0.000 ✗ ΔL +0.000",
+   "webkit+shim dark paper dialog [retune-fg]: page #0b0a09 · ΔE from the page: dialog #0b0a09 0.000 ✗ ΔL +0.000"
+  ]
+ },
+ {
+  "id": "GLANCE",
+  "engine": "chromium",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "GLANCE PASS: 6 pairs, each with a visible paint delta",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/glance/chromium-PASS",
+  "note": "base against a route that repaints every plate",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "chromium",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "GLANCE FAIL: 6 of 6 pairs show no paint delta or failed (light dock, light dialog, light floating, dark dock, dark dialog, dark floating)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/glance/chromium-FAIL",
+  "note": "base against itself (no delta)",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "webkit",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "GLANCE PASS: 6 pairs, each with a visible paint delta",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/glance/webkit-PASS",
+  "note": "base against a route that repaints every plate",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "webkit",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "GLANCE FAIL: 6 of 6 pairs show no paint delta or failed (light dock, light dialog, light floating, dark dock, dark dialog, dark floating)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/glance/webkit-FAIL",
+  "note": "base against itself (no delta)",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "chromium",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "GLANCE FAIL: 6 of 6 pairs show no paint delta or failed (light dock [layout only], light dialog [layout only], light floating [layout only], dark dock [layout only], dark dialog [layout only], dark floating [layout only])",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/glance/chromium-moved-FAIL",
+  "note": "H4-1: the route moves the plates 70 px and repaints nothing",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "webkit",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "GLANCE FAIL: 6 of 6 pairs show no paint delta or failed (light dock [layout only], light dialog [layout only], light floating [layout only], dark dock [layout only], dark dialog [layout only], dark floating [layout only])",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/glance/webkit-moved-FAIL",
+  "note": "H4-1: the route moves the plates 70 px and repaints nothing",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "chromium",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "GLANCE FAIL: 2 of 2 pairs show no paint delta or failed (light story [layout only], dark story [layout only])",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/glance/chromium-storycopy-FAIL",
+  "note": "H4-1: story copy moves the card 72 px, no paint change",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "chromium",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "GLANCE PASS: 2 pairs, each with a visible paint delta",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/glance/chromium-storycopy-PASS",
+  "note": "H4-1: story copy moves the card and the card is repainted",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "webkit",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "GLANCE FAIL: 2 of 2 pairs show no paint delta or failed (light story [layout only], dark story [layout only])",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/glance/webkit-storycopy-FAIL",
+  "note": "H4-1: story copy moves the card 72 px, no paint change",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "webkit",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "GLANCE PASS: 2 pairs, each with a visible paint delta",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/glance/webkit-storycopy-PASS",
+  "note": "H4-1: story copy moves the card and the card is repainted",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "chromium",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "GLANCE PASS: every story pair shows a claimed region",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/glance/chromium-story-PASS",
+  "note": "H3-10: the route story claims one region",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "chromium",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "GLANCE FAIL: 2 story pairs with no claimed region",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/glance/chromium-story-FAIL",
+  "note": "H3-10: the route story claims nothing",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "webkit",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "GLANCE PASS: every story pair shows a claimed region",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/glance/webkit-story-PASS",
+  "note": "H3-10: the route story claims one region",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "webkit",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "GLANCE FAIL: 2 story pairs with no claimed region",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/glance/webkit-story-FAIL",
+  "note": "H3-10: the route story claims nothing",
+  "fails": []
+ },
+ {
+  "id": "W-C",
+  "engine": "chromium",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "PASS (362 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/C",
+  "note": "RCS solve at 5.0:1 against each plate, fg read from --foreground: every retune followed",
+  "fails": []
+ },
+ {
+  "id": "W-C",
+  "engine": "webkit",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "PASS (362 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/C",
+  "note": "RCS solve at 5.0:1 against each plate, fg read from --foreground: every retune followed",
+  "fails": []
+ },
+ {
+  "id": "W-C",
+  "engine": "chromium",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "FAIL (2 of 31 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/C-frozen",
+  "note": "muted frozen at #3a3a3a: under --foreground oklch(0.42) the hierarchy inverts with no word (a silent desync)",
+  "fails": [
+   "retune-fg chromium light paper [retune-fg]: silent desync · 43/43 runs ≥ 4.5 · hierarchy under 0.08 signed on wash -0.071, quiet -0.071, resting -0.071, card -0.071 ✗",
+   "retune-fg chromium light paper dialog [retune-fg]: silent desync · 4/4 runs ≥ 4.5 · hierarchy under 0.08 signed on dialog -0.071 ✗"
+  ]
+ },
+ {
+  "id": "W-C",
+  "engine": "webkit",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "FAIL (2 of 31 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/C-frozen",
+  "note": "muted frozen at #3a3a3a: under --foreground oklch(0.42) the hierarchy inverts with no word (a silent desync)",
+  "fails": [
+   "retune-fg webkit+shim light paper [retune-fg]: silent desync · 43/43 runs ≥ 4.5 · hierarchy under 0.08 signed on wash -0.050, quiet -0.050, resting -0.050, card -0.050 ✗",
+   "retune-fg webkit+shim light paper dialog [retune-fg]: silent desync · 4/4 runs ≥ 4.5 · hierarchy under 0.08 signed on dialog -0.050 ✗"
+  ]
+ },
+ {
+  "id": "W-C",
+  "engine": "chromium",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "PASS (31 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/C-loud",
+  "note": "the same frozen ink, but the page refuses the --foreground retune loud (console.warn naming --foreground)",
+  "fails": []
+ },
+ {
+  "id": "W-C",
+  "engine": "webkit",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "PASS (31 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/C-loud",
+  "note": "the same frozen ink, but the page refuses the --foreground retune loud (console.warn naming --foreground)",
+  "fails": []
+ },
+ {
+  "id": "W-C",
+  "engine": "chromium",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "FAIL (2 of 31 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/C-unrelated",
+  "note": "H4-4: the same frozen ink, and an unrelated console.warn in the retuned cell (names no glass token): a silent desync",
+  "fails": [
+   "retune-fg chromium light paper [retune-fg]: silent desync (1 more console errors/warnings than the base cell, none naming a glass token: [fixture] hero.avif failed to decode; showing the placeholder) · 43/43 runs ≥ 4.5 · hierarchy under 0.08 signed on wash -0.071, quiet -0.071, resting -0.071, card -0.071 ✗",
+   "retune-fg chromium light paper dialog [retune-fg]: silent desync (1 more console errors/warnings than the base cell, none naming a glass token: [fixture] hero.avif failed to decode; showing the placeholder) · 4/4 runs ≥ 4.5 · hierarchy under 0.08 signed on dialog -0.071 ✗"
+  ]
+ },
+ {
+  "id": "W-C",
+  "engine": "webkit",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "FAIL (2 of 31 gated rows)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/selftest/caps/C-unrelated",
+  "note": "H4-4: the same frozen ink, and an unrelated console.warn in the retuned cell (names no glass token): a silent desync",
+  "fails": [
+   "retune-fg webkit+shim light paper [retune-fg]: silent desync (1 more console errors/warnings than the base cell, none naming a glass token: [fixture] hero.avif failed to decode; showing the placeholder) · 43/43 runs ≥ 4.5 · hierarchy under 0.08 signed on wash -0.050, quiet -0.050, resting -0.050, card -0.050 ✗",
+   "retune-fg webkit+shim light paper dialog [retune-fg]: silent desync (1 more console errors/warnings than the base cell, none naming a glass token: [fixture] hero.avif failed to decode; showing the placeholder) · 4/4 runs ≥ 4.5 · hierarchy under 0.08 signed on dialog -0.050 ✗"
+  ]
+ }
+]

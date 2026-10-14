@@ -1,0 +1,21 @@
+M-2h · the held windows (the release frames keep every held ink ≥ 4.5; the held dock's α per column stays within 0.02 of the resting dock's)
+capture /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/caps/fv2 · target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/out/builds/fv2/dist · worktree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/H4/wt @ 2e22ae10 · gate chromium
+  release chromium light black held (33 frames, -126…1228 ms): 11/11 inks ≥ 4.5 in every frame · worst dock-held·muted-tab 4.79 at -126 ms
+  release chromium light white held (32 frames, -127…1231 ms): 11/11 inks ≥ 4.5 in every frame · worst wash-held·well-muted 5.27 at -127 ms
+  release chromium light aurora held (84 frames, -343…1342 ms): 11/11 inks ≥ 4.5 in every frame · worst wash-held·well-muted 5.19 at -343 ms
+  release chromium dark black held (33 frames, -130…1216 ms): 11/11 inks ≥ 4.5 in every frame · worst dock-held·muted-tab 7.21 at 9 ms
+  release chromium dark white held (33 frames, -131…1213 ms): 11/11 inks ≥ 4.5 in every frame · worst dock-held·muted-tab 4.76 at 182 ms
+  release chromium dark aurora held (78 frames, -376…1380 ms): 11/11 inks ≥ 4.5 in every frame · worst dock-held·muted-tab 6.21 at 185 ms
+  release webkit+shim light black held [info] (37 frames, -144…1169 ms): 11/11 inks ≥ 4.5 in every frame · worst wash-held·muted 4.62 at -144 ms
+  release webkit+shim light white held [info] (40 frames, -134…1199 ms): 11/11 inks ≥ 4.5 in every frame · worst wash-held·well-muted 5.03 at -134 ms
+  release webkit+shim light aurora held [info] (14 frames, -102…1111 ms): 11/11 inks ≥ 4.5 in every frame · worst wash-held·well-muted 5.02 at -102 ms
+  release webkit+shim dark black held [info] (40 frames, -118…1177 ms): 11/11 inks ≥ 4.5 in every frame · worst dock-held·muted-tab 7.11 at 5 ms
+  release webkit+shim dark white held [info] (39 frames, -115…1181 ms): 11/11 inks ≥ 4.5 in every frame · worst dock-held·muted-tab 4.76 at -115 ms
+  release webkit+shim dark aurora held [info] (14 frames, -107…1158 ms): 11/11 inks ≥ 4.5 in every frame · worst dock-held·muted 6.24 at 650 ms
+  halo chromium light: resting dock α 0.890 · held dock α per column 0.815 (x 411) … 0.894 (x 278) over 134 columns · floor 0.870 · the held host lets the ground through (a halo) ✗
+  halo chromium dark: resting dock α 0.875 · held dock α per column 0.802 (x 411) … 0.878 (x 278) over 134 columns · floor 0.855 · the held host lets the ground through (a halo) ✗
+  halo webkit light [info]: resting dock α 0.890 · held dock α per column 0.890 (x 278) … 0.898 (x 393) over 134 columns · floor 0.870
+  halo webkit dark [info]: resting dock α 0.875 · held dock α per column 0.875 (x 278) … 0.885 (x 404) over 134 columns · floor 0.855
+Playwright WebKit (paint-only: headless paints no backdrop-filter; dock rows +shim): PASS on 68 rows [informational]
+real Safari: UNMEASURED (owner's safaridriver checkbox)
+FAIL (2 of 68 gated rows)
