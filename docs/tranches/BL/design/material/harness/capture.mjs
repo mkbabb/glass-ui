@@ -43,6 +43,7 @@
 // deadline (OPEN_MS, CELL_MS, CLOSE_MS); past it the browser is killed and relaunched, and the page open or the cell is
 // tried once more. Each is recorded in meta.navStalled and printed; a cell that stalls twice is a CRASH row, as before.
 // The live WebGPU field is observed only by screenshot.
+import { holdWebkit } from "../../../driver/webkit-lock.mjs";
 import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
@@ -269,7 +270,9 @@ export async function capture(target, o = {}) {
   };
   for (const engine of engines) {
     const launch = () => pw[engine].launch({ headless: true, args: engine === "chromium" ? CHROMIUM_ARGS : [] });
+    if (engine === "webkit") await holdWebkit();
     let browser = await launch(), navs = 0;
+    try {
     versions[engine] = browser.version(); navRetired[engine] = 0; navStalled[engine] = 0;
     // Every page load goes through fresh(): past NAV_CAP loads, Playwright WebKit's browser is closed and relaunched.
     const fresh = async () => {
@@ -465,7 +468,7 @@ export async function capture(target, o = {}) {
       log(`drift ${engine}${rec.shim ? "+shim" : ""} ${theme} ${ground}: ${rec.frames.length} frames over ${rec.frames.length ? (rec.frames[rec.frames.length - 1].t / 1000).toFixed(1) : 0} s${rec.error ? " ERROR " + rec.error : ""}`);
       await shut(ctx);
     }
-    await browser.close();
+    } finally { await browser.close().catch(() => {}); }
   }
   server.close();
   const keep = (arr, fresh, key) => { const ks = new Set(fresh.map(key)); return [...arr.filter((c) => !ks.has(key(c))), ...fresh]; };

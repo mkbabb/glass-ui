@@ -5,6 +5,7 @@
 // engine build Playwright ships; it is not Safari, and every WebKit number the
 // harness prints is labelled "Playwright WebKit". Real Safari is reached only
 // through safari.mjs (H-11), and only once the owner enables remote automation.
+import { holdWebkit } from "../../../driver/webkit-lock.mjs";
 import { createRequire } from "node:module";
 import http from "node:http";
 import fs from "node:fs";
@@ -218,6 +219,7 @@ export const engineClosed = (e) => /has been closed|crashed|disconnected|Target 
 export async function browser(engine) {
   if (browsers[engine] && !browsers[engine].isConnected()) { disconnects.push({ engine, load: load() }); delete browsers[engine]; }
   if (!browsers[engine]) {
+    if (engine === "webkit") await holdWebkit();
     browsers[engine] = engine === "webkit" ? await pw.webkit.launch() : await pw.chromium.launch({ channel: "chromium" });
   }
   return browsers[engine];

@@ -14,6 +14,7 @@
 //        CARD_SCREENCAST_PX and FACE_DOM_SCREENCAST; a moving stadium (1 s linear) shows the
 //        screencast sees in-flight widths.
 // Every number is printed with the 1-minute load average and written to <out>/calibrate.json.
+import { holdWebkit } from "../../../driver/webkit-lock.mjs";
 import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
@@ -45,6 +46,7 @@ function cropCov(img, x0, y0, w, h) {
 }
 
 for (const engine of engines(args)) {
+    if (engine === "webkit") await holdWebkit();
     const b = await playwright[engine].launch({ headless: true });
     try {
         // PF-1
