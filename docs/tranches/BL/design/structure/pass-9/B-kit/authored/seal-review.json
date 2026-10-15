@@ -1,0 +1,44 @@
+{
+ "note": "AUTHORED input to derive/land-gate.mjs: the reviewed half of the seal pin. The gate computes modules and doors from the tree; names, holds and peerHolds are reviewed here, each with its reason (B11, B15, B10, B18).",
+ "names": {
+  "src/components/blob/composables/easing.ts": "the blob's own quadratic easing curves (PRIVATE to /blob, header D7); 'easing' names the maths, not the easing unit",
+  "src/components/slider/useDockHold.ts": "the slider's host-native dock hold: published by no entry and read only by slider, so F-7 places it there (R-2 as clarified by X-10); it is named for what it holds open"
+ },
+ "holds": {},
+ "peerHolds": {
+  ".": {
+   "names": {
+    "@mkbabb/keyframes.js": [
+     "Button",
+     "CommandDialog",
+     "DialogClose",
+     "DialogContent",
+     "DialogTrigger",
+     "NumberFieldStep",
+     "SheetContent"
+    ],
+    "@vueuse/core": [
+     "CommandDialog",
+     "CommandList",
+     "Configurator",
+     "DialogClose",
+     "DialogContent",
+     "DialogTrigger",
+     "DropdownMenuContent",
+     "DropdownMenuSubContent",
+     "Popover",
+     "PopoverContent",
+     "SelectContent",
+     "SheetContent",
+     "Slider",
+     "TooltipContent"
+    ]
+   },
+   "files": [
+    "@mkbabb/keyframes.js",
+    "@vueuse/core"
+   ],
+   "reason": "P7-G5 (outside D1): the root's declared class (src/README.md's table: vueuse-free AND keyframes.js-free) is broken on the floor base already, in all three arms, by HEAD's own root surface: these 7 names reach keyframes.js (Button through useAnimatedNumber, the dialog and sheet family through useSheetDetents, NumberFieldStep) and these 14 reach @vueuse/core (the command, dialog, menu, popover, select, sheet, tooltip family and Slider through useKeyboardShortcuts and the overlay kernel), name for name the floor base's own report (results/p8/peer-closure-base.json). Curing it moves names off the root, a surface change no D1 ruling covers; it is on the tranche cursor. B18 holds exactly these names, so a root name the chain makes reach a peer is a violation (S73-S73c cure the one the chain had made: Slider → keyframes.js), and so is a held name that heals"
+  }
+ }
+}

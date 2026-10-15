@@ -1,0 +1,25 @@
+{
+ "why": "B-S14 (P5-R3, LAW §9): a test whose subject is one unit (or the kernel container's own files) lives in that unit's __tests__ slot, where it reads the unit's inside and B2 does not reach. Splits and the three page-driving specs P5-R5 homes in a unit land by row in S67 (the engine's image reads tsconfig.test.json's include without its exclude)",
+ "moves": [
+  {
+   "from": "tests/components/avatar.contract.test.ts",
+   "to": "src/components/avatar/__tests__/avatar.contract.test.ts",
+   "why": "its subject is the avatar unit (the unit publishes no entry, so a consumer zone cannot read it); it reads status-dot through that unit's door"
+  },
+  {
+   "from": "tests/components/_shared/public-contracts.test-d.ts",
+   "to": "src/components/_shared/__tests__/public-contracts.test-d.ts",
+   "why": "its subject is the kernel container's own files (axes, interaction, primitive, selection) against reka-ui's contracts; LAW §9 (pass 6) homes their tests in _shared/__tests__"
+  },
+  {
+   "from": "tests/components/ui/_shared/useMotionAxis.test.ts",
+   "to": "src/components/_shared/__tests__/useMotionAxis.test.ts",
+   "why": "its subject is _shared/useMotionAxis.ts, a file of the kernel container itself (LAW §9, pass 6)"
+  },
+  {
+   "from": "tests/gates/tabs-seam.test.ts",
+   "to": "src/components/tabs/__tests__/tabs-seam.test.ts",
+   "why": "its subject is the tabs unit (its sheets and SegmentedTabs); the eyeglass law it checks the sheets against is a kernel dependency, read through the motion door"
+  }
+ ]
+}

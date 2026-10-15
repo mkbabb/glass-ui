@@ -1,0 +1,12 @@
+{
+ "why": "§P6-8.4 (pass 7): every name ./motion-core publishes keeps the entry's declared class (keyframes-free, vueuse-free) in its static closure. Two doors mixed the classes, so a keyframes-free reader that crossed them evaluated keyframes.js, which HEAD's direct leaf imports did not: the spring door carries useSpring and useSpringMount beside useLiquidFlex (vue only), and the morph door carries useElementMorph and useDragMorph beside the selection engine (useSelectionIndicator, useSelectionGroup, useTabRovingFocus and the eyeglass law, vue only). useLiquidFlex owns no spring, no rAF and no element, so it joins the engine-free core; the selection engine, the library's one (tabs/README.md), becomes its own module, so ./motion-core reads it through a door that carries no peer. The colocated tests move with their subjects (R-3)",
+ "moves": [
+  { "from": "src/composables/motion/spring/useLiquidFlex.ts", "to": "src/composables/motion/core/useLiquidFlex.ts", "why": "an engine-free projection (no spring, no rAF, no element; vue only) read by the selection engine, morph's drag, spring's press and ./motion-core: it joins the engine-free core, beside writeVelocityWeight and effectiveCap, which it is read with" },
+  { "from": "src/composables/motion/morph/useSelectionIndicator.ts", "to": "src/composables/motion/selection/useSelectionIndicator.ts", "why": "the selection engine's indicator: keyframes-free (vue, the core, the kernel's selection contract, the eyeglass law)" },
+  { "from": "src/composables/motion/morph/useSelectionGroup.ts", "to": "src/composables/motion/selection/useSelectionGroup.ts", "why": "the selection engine's group, which composes the indicator and the roving focus" },
+  { "from": "src/composables/motion/morph/useTabRovingFocus.ts", "to": "src/composables/motion/selection/useTabRovingFocus.ts", "why": "the selection engine's roving focus, read by the group" },
+  { "from": "src/composables/motion/morph/eyeglass.ts", "to": "src/composables/motion/selection/eyeglass.ts", "why": "the eyeglass law the indicator projects (no imports)" },
+  { "from": "src/composables/motion/morph/__tests__/useSelectionIndicator.test.ts", "to": "src/composables/motion/selection/__tests__/useSelectionIndicator.test.ts", "why": "R-3: the indicator's test lives with it" },
+  { "from": "src/composables/motion/morph/__tests__/eyeglass.test.ts", "to": "src/composables/motion/selection/__tests__/eyeglass.test.ts", "why": "R-3: the eyeglass law's test lives with it" }
+ ]
+}

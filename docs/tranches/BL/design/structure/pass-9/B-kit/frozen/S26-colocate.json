@@ -1,0 +1,216 @@
+{
+ "step": "S26 R-3 colocation of the tests the gate's B16 still homes elsewhere (frozen from its reading, F-9)",
+ "moves": [
+  {
+   "from": "tests/components/badge.contract.test.ts",
+   "to": "src/components/badge/__tests__/badge.contract.test.ts"
+  },
+  {
+   "from": "tests/components/button/Button.test.ts",
+   "to": "src/components/button/__tests__/Button.test.ts"
+  },
+  {
+   "from": "tests/components/custom/aurora/atoms.test.ts",
+   "to": "src/components/aurora/__tests__/atoms.test.ts"
+  },
+  {
+   "from": "tests/components/custom/aurora/color-equivalence.test.ts",
+   "to": "src/components/aurora/config/__tests__/color-equivalence.test.ts"
+  },
+  {
+   "from": "tests/components/custom/aurora/derive-aurora.test.ts",
+   "to": "src/components/aurora/config/__tests__/derive-aurora.test.ts"
+  },
+  {
+   "from": "tests/components/custom/aurora/interaction-prm.test.ts",
+   "to": "src/components/aurora/__tests__/interaction-prm.test.ts"
+  },
+  {
+   "from": "tests/components/custom/aurora/presentation.test.ts",
+   "to": "src/components/aurora/__tests__/presentation.test.ts"
+  },
+  {
+   "from": "tests/components/custom/aurora/runtime-failure.test.ts",
+   "to": "src/components/aurora/__tests__/runtime-failure.test.ts"
+  },
+  {
+   "from": "tests/components/custom/constellation/Constellation.palette-lifecycle.test.ts",
+   "to": "src/components/constellation/__tests__/Constellation.palette-lifecycle.test.ts"
+  },
+  {
+   "from": "tests/components/custom/constellation/constellationField.test.ts",
+   "to": "src/components/constellation/__tests__/constellationField.test.ts"
+  },
+  {
+   "from": "tests/components/custom/timeline/timeline.contract.test.ts",
+   "to": "src/components/timeline/__tests__/timeline.contract.test.ts"
+  },
+  {
+   "from": "tests/components/dark-mode-toggle.contract.test.ts",
+   "to": "src/components/dark-mode-toggle/__tests__/dark-mode-toggle.contract.test.ts"
+  },
+  {
+   "from": "tests/components/dialog/ModalOverlay.test.ts",
+   "to": "src/components/dialog/__tests__/ModalOverlay.test.ts"
+  },
+  {
+   "from": "tests/components/dialog/dialog-focus-return.test.ts",
+   "to": "src/components/dialog/__tests__/dialog-focus-return.test.ts"
+  },
+  {
+   "from": "tests/components/dialog/dialog-room.test.ts",
+   "to": "src/components/dialog/__tests__/dialog-room.test.ts"
+  },
+  {
+   "from": "tests/components/dialog/dialog-spring.test.ts",
+   "to": "src/components/dialog/__tests__/dialog-spring.test.ts"
+  },
+  {
+   "from": "tests/components/select.contract.test.ts",
+   "to": "src/components/select/__tests__/select.contract.test.ts"
+  },
+  {
+   "from": "tests/components/sheet/sheet-gesture.test.ts",
+   "to": "src/components/sheet/__tests__/sheet-gesture.test.ts"
+  },
+  {
+   "from": "tests/components/slider.size-tokens.test.ts",
+   "to": "src/components/slider/__tests__/slider.size-tokens.test.ts"
+  },
+  {
+   "from": "tests/components/toast.queue.test.ts",
+   "to": "src/components/toast/__tests__/toast.queue.test.ts"
+  },
+  {
+   "from": "tests/components/ui/surface/Surface.test.ts",
+   "to": "src/components/surface/__tests__/Surface.test.ts"
+  },
+  {
+   "from": "tests/composables/color/warm-catch-light.test.ts",
+   "to": "src/components/aurora/runtime/frame/__tests__/warm-catch-light.test.ts"
+  },
+  {
+   "from": "tests/styles/typography.test.ts",
+   "to": "src/components/alert/__tests__/typography.test.ts"
+  }
+ ],
+ "scanDeltas": [],
+ "reasons": [
+  {
+   "from": "tests/components/badge.contract.test.ts",
+   "to": "src/components/badge/__tests__/badge.contract.test.ts",
+   "why": "R-3: its subject is src/components/badge"
+  },
+  {
+   "from": "tests/components/button/Button.test.ts",
+   "to": "src/components/button/__tests__/Button.test.ts",
+   "why": "R-3: its subject is src/components/button"
+  },
+  {
+   "from": "tests/components/custom/aurora/atoms.test.ts",
+   "to": "src/components/aurora/__tests__/atoms.test.ts",
+   "why": "R-3: its subject is src/components/aurora"
+  },
+  {
+   "from": "tests/components/custom/aurora/color-equivalence.test.ts",
+   "to": "src/components/aurora/config/__tests__/color-equivalence.test.ts",
+   "why": "R-3: its subject is src/components/aurora/config"
+  },
+  {
+   "from": "tests/components/custom/aurora/derive-aurora.test.ts",
+   "to": "src/components/aurora/config/__tests__/derive-aurora.test.ts",
+   "why": "R-3: its subject is src/components/aurora/config"
+  },
+  {
+   "from": "tests/components/custom/aurora/interaction-prm.test.ts",
+   "to": "src/components/aurora/__tests__/interaction-prm.test.ts",
+   "why": "R-3: its subject is src/components/aurora"
+  },
+  {
+   "from": "tests/components/custom/aurora/presentation.test.ts",
+   "to": "src/components/aurora/__tests__/presentation.test.ts",
+   "why": "R-3: its subject is src/components/aurora"
+  },
+  {
+   "from": "tests/components/custom/aurora/runtime-failure.test.ts",
+   "to": "src/components/aurora/__tests__/runtime-failure.test.ts",
+   "why": "R-3: its subject is src/components/aurora"
+  },
+  {
+   "from": "tests/components/custom/constellation/Constellation.palette-lifecycle.test.ts",
+   "to": "src/components/constellation/__tests__/Constellation.palette-lifecycle.test.ts",
+   "why": "R-3: its subject is src/components/constellation"
+  },
+  {
+   "from": "tests/components/custom/constellation/constellationField.test.ts",
+   "to": "src/components/constellation/__tests__/constellationField.test.ts",
+   "why": "R-3: its subject is src/components/constellation"
+  },
+  {
+   "from": "tests/components/custom/timeline/timeline.contract.test.ts",
+   "to": "src/components/timeline/__tests__/timeline.contract.test.ts",
+   "why": "R-3: its subject is src/components/timeline"
+  },
+  {
+   "from": "tests/components/dark-mode-toggle.contract.test.ts",
+   "to": "src/components/dark-mode-toggle/__tests__/dark-mode-toggle.contract.test.ts",
+   "why": "R-3: its subject is src/components/dark-mode-toggle"
+  },
+  {
+   "from": "tests/components/dialog/ModalOverlay.test.ts",
+   "to": "src/components/dialog/__tests__/ModalOverlay.test.ts",
+   "why": "R-3: its subject is src/components/dialog"
+  },
+  {
+   "from": "tests/components/dialog/dialog-focus-return.test.ts",
+   "to": "src/components/dialog/__tests__/dialog-focus-return.test.ts",
+   "why": "R-3: its subject is src/components/dialog"
+  },
+  {
+   "from": "tests/components/dialog/dialog-room.test.ts",
+   "to": "src/components/dialog/__tests__/dialog-room.test.ts",
+   "why": "R-3: its subject is src/components/dialog"
+  },
+  {
+   "from": "tests/components/dialog/dialog-spring.test.ts",
+   "to": "src/components/dialog/__tests__/dialog-spring.test.ts",
+   "why": "R-3: its subject is src/components/dialog"
+  },
+  {
+   "from": "tests/components/select.contract.test.ts",
+   "to": "src/components/select/__tests__/select.contract.test.ts",
+   "why": "R-3: its subject is src/components/select"
+  },
+  {
+   "from": "tests/components/sheet/sheet-gesture.test.ts",
+   "to": "src/components/sheet/__tests__/sheet-gesture.test.ts",
+   "why": "R-3: its subject is src/components/sheet"
+  },
+  {
+   "from": "tests/components/slider.size-tokens.test.ts",
+   "to": "src/components/slider/__tests__/slider.size-tokens.test.ts",
+   "why": "R-3: its subject is src/components/slider"
+  },
+  {
+   "from": "tests/components/toast.queue.test.ts",
+   "to": "src/components/toast/__tests__/toast.queue.test.ts",
+   "why": "R-3: its subject is src/components/toast"
+  },
+  {
+   "from": "tests/components/ui/surface/Surface.test.ts",
+   "to": "src/components/surface/__tests__/Surface.test.ts",
+   "why": "R-3: its subject is src/components/surface"
+  },
+  {
+   "from": "tests/composables/color/warm-catch-light.test.ts",
+   "to": "src/components/aurora/runtime/frame/__tests__/warm-catch-light.test.ts",
+   "why": "R-3: its subject is src/components/aurora/runtime/frame"
+  },
+  {
+   "from": "tests/styles/typography.test.ts",
+   "to": "src/components/alert/__tests__/typography.test.ts",
+   "why": "R-3: its subject is src/components/alert"
+  }
+ ],
+ "stays": []
+}

@@ -1,0 +1,76 @@
+{
+ "note": "B-S16 (R-5): tests/styles held 18 direct files and tests/demo 16 after the B-S11 splits (P3-R3: every dir bounded by 12). Each moves a named family into a module of its own; the floor engine rewrites every reference.",
+ "why": "B-S16 (R-5): tests/styles 18 \u2192 11 (emission/, motion/) and tests/demo 16 \u2192 9 (router/, a11y/), named by what each family reads",
+ "moves": [
+  {
+   "from": "tests/styles/backdrop-prefix-normalization.test.ts",
+   "to": "tests/styles/emission/backdrop-prefix-normalization.test.ts",
+   "why": "the emitted-CSS syntax canon: each reads what the build or a sheet emits and judges its spelling"
+  },
+  {
+   "from": "tests/styles/color-mix-endpoints.test.ts",
+   "to": "tests/styles/emission/color-mix-endpoints.test.ts",
+   "why": "the emitted-CSS syntax canon: each reads what the build or a sheet emits and judges its spelling"
+  },
+  {
+   "from": "tests/styles/emitted-utility-vars.test.ts",
+   "to": "tests/styles/emission/emitted-utility-vars.test.ts",
+   "why": "the emitted-CSS syntax canon: each reads what the build or a sheet emits and judges its spelling"
+  },
+  {
+   "from": "tests/styles/material-css-syntax.test.ts",
+   "to": "tests/styles/emission/material-css-syntax.test.ts",
+   "why": "the emitted-CSS syntax canon: each reads what the build or a sheet emits and judges its spelling"
+  },
+  {
+   "from": "tests/styles/stacked-url-filter.test.ts",
+   "to": "tests/styles/emission/stacked-url-filter.test.ts",
+   "why": "the emitted-CSS syntax canon: each reads what the build or a sheet emits and judges its spelling"
+  },
+  {
+   "from": "tests/styles/feedback-motion.test.ts",
+   "to": "tests/styles/motion/feedback-motion.test.ts",
+   "why": "the motion registers of the style layer: spring authority and the feedback motion pins"
+  },
+  {
+   "from": "tests/styles/spring-authority.test.ts",
+   "to": "tests/styles/motion/spring-authority.test.ts",
+   "why": "the motion registers of the style layer: spring authority and the feedback motion pins"
+  },
+  {
+   "from": "tests/demo/router.test.ts",
+   "to": "tests/demo/router/router.test.ts",
+   "why": "the demo's router: its routes, the field it owns, the route transition and the lazy story chunks"
+  },
+  {
+   "from": "tests/demo/router-field-ownership.test.ts",
+   "to": "tests/demo/router/router-field-ownership.test.ts",
+   "why": "the demo's router: its routes, the field it owns, the route transition and the lazy story chunks"
+  },
+  {
+   "from": "tests/demo/route-transition.test.ts",
+   "to": "tests/demo/router/route-transition.test.ts",
+   "why": "the demo's router: its routes, the field it owns, the route transition and the lazy story chunks"
+  },
+  {
+   "from": "tests/demo/story-lazy.test.ts",
+   "to": "tests/demo/router/story-lazy.test.ts",
+   "why": "the demo's router: its routes, the field it owns, the route transition and the lazy story chunks"
+  },
+  {
+   "from": "tests/demo/shortcut-kbd-a11y.test.ts",
+   "to": "tests/demo/a11y/shortcut-kbd-a11y.test.ts",
+   "why": "the demo shell's accessibility pins: the skip link, the sidebar landmark, the shortcut kbd"
+  },
+  {
+   "from": "tests/demo/sidebar-nav-landmark.a11y.test.ts",
+   "to": "tests/demo/a11y/sidebar-nav-landmark.a11y.test.ts",
+   "why": "the demo shell's accessibility pins: the skip link, the sidebar landmark, the shortcut kbd"
+  },
+  {
+   "from": "tests/demo/skip-link.a11y.test.ts",
+   "to": "tests/demo/a11y/skip-link.a11y.test.ts",
+   "why": "the demo shell's accessibility pins: the skip link, the sidebar landmark, the shortcut kbd"
+  }
+ ]
+}

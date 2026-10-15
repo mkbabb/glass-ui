@@ -1,0 +1,217 @@
+# tests-visual split seat, D1 pass 5 — commands and filtered output (2026-09-26)
+# S = the seat's scratch (…/scratchpad/D1/p5/split-tests-visual); K = this directory.
+# arm C = the route's pass-4 tree (5e278aa7 + pass-4 chain, replay.mjs, digest 6618df1f…8685c), snapshot S/snapC
+# arm F = HEAD 7cd975eb + the P5 floor rows (floor/rows/apply.mjs), snapshot S/snapF
+
+## arm C: rsync snapC -> wtc; sh K/verify.sh S/wtc S/wtm S/outC2 --gate   (exit 0)
+coverage: 177 direct files; stay 7, delete 1, slot 1, module 168 in 21 modules
+  tests-visual                                   9 files after the splits
+  tests-visual/aurora                           11 files after the splits
+  tests-visual/aurora/probes                     6 files after the splits
+  tests-visual/blob                              9 files after the splits
+  tests-visual/captures                          8 files after the splits
+  tests-visual/color                             7 files after the splits
+  tests-visual/components/collections            5 files after the splits
+  tests-visual/components/controls              11 files after the splits
+  tests-visual/components/surfaces              12 files after the splits
+  tests-visual/constellation                     5 files after the splits
+  tests-visual/dock                             11 files after the splits
+  tests-visual/dock/morph                        4 files after the splits
+  tests-visual/fixtures                          6 files after the splits
+  tests-visual/glass                            12 files after the splits
+  tests-visual/glass/contrast                    6 files after the splits
+  tests-visual/goo                               4 files after the splits
+  tests-visual/motion                           12 files after the splits
+  tests-visual/paint                             5 files after the splits
+  tests-visual/redress                           7 files after the splits
+  tests-visual/storybook                        12 files after the splits
+  tests-visual/storybook/configurator            7 files after the splits
+  tests-visual/substrate                        10 files after the splits
+  tests-visual/typography                        7 files after the splits
+  tests-visual/viz                               8 files after the splits
+residue: 40 edges in 35 files {"unrewritable-path write":16,"mode-tscan write":2,"unrewritable-path path-literal":22}; engine list 133 moves, row 35 moves
+row: 35 moves, 71 files, 30 engine edits, 33 re-based new URL literals, 40 residue edges the literals must carry
+ },
+tests-visual/substrate-paints-color.spec.ts (776 lines, 3 test declarations) -> tests-visual/
+  substrate-paints-color-plants.ts          126 lines  helper
+  substrate-paints-color-readback.ts        379 lines  helper
+  substrate-paints-color.spec.ts            301 lines  part, 3 tests
+tests-visual/substrate/substrate-cohesion.spec.ts (510 lines, 3 test declarations) -> tests-visual/substrate/
+  substrate-cohesion-readback.ts            242 lines  helper
+  substrate-cohesion.spec.ts                287 lines  part, 3 tests
+tests-visual/glass/contrast/adaptive-glass.spec.ts (555 lines, 5 test declarations) -> tests-visual/glass/contrast/
+  adaptive-glass-readback.ts                209 lines  helper
+  adaptive-glass.spec.ts                    358 lines  part, 5 tests
+tests-visual/blob/blob-render.spec.ts (742 lines, 3 test declarations) -> tests-visual/blob/
+  blob-render-readback.ts                   352 lines  helper
+  blob-render.spec.ts                       421 lines  part, 3 tests
+tests-visual/redress/w2-blur-redress.spec.ts (595 lines, 5 test declarations) -> tests-visual/redress/
+  w2-blur-redress-probes.ts                 278 lines  helper
+  w2-blur-redress.spec.ts                   339 lines  part, 5 tests
+tests-visual/redress/w1-radius-redress.spec.ts (784 lines, 11 test declarations) -> tests-visual/redress/
+  w1-radius-redress-ledger.ts                85 lines  helper
+  w1-radius-redress.spec.ts                 380 lines  part, 5 tests
+  w1-radius-redress-inputs.spec.ts          378 lines  part, 6 tests
+tests-visual/paint/paint-arm.mjs (579 lines) -> tests-visual/paint/
+  paint-arm.mjs                             348 lines  source
+  apca.mjs                                  236 lines  part
+tests-visual/paint/reflect-capture-verify.mjs (582 lines) -> tests-visual/paint/
+  reflect-capture-verify.mjs                157 lines  source
+  png-region.mjs                            432 lines  part
+applied: 18 written, 0 already in place
+conserved tests-visual/substrate-paints-color.spec.ts: 725 non-import lines into 3 outputs
+conserved tests-visual/substrate/substrate-cohesion.spec.ts: 479 non-import lines into 2 outputs
+conserved tests-visual/glass/contrast/adaptive-glass.spec.ts: 517 non-import lines into 2 outputs
+conserved tests-visual/blob/blob-render.spec.ts: 707 non-import lines into 2 outputs
+conserved tests-visual/redress/w2-blur-redress.spec.ts: 554 non-import lines into 2 outputs
+conserved tests-visual/redress/w1-radius-redress.spec.ts: 705 non-import lines into 3 outputs
+conserved tests-visual/paint/paint-arm.mjs: 557 non-import lines into 2 outputs
+conserved tests-visual/paint/reflect-capture-verify.mjs: 548 non-import lines into 2 outputs
+Total: 1989 tests in 168 files
+a5a167351805248278a73671b71ec3b1c29895160eacfca2249d5f7c70cdd074  program-row.json
+5c19f46675531099bf66e744cca602d4f0cd587b255d61f252c0756aafa5cdf5  moves-engine.json
+27f11b79f789739f27962c05618d90fb57343663fc24a50aac1edf2618a2d2c9  moves-row.json
+10e7f7f7a25e206614d466a221a33a5e4a5b13dbda82973091c8c4c8be16d755  rebase-row.json
+1e11918abbc7fb45d918b383508bd217f663132d48201401359525a614ae3bc7  split-row.json
+df367fa68c6ce1b889e0af8ca6bcd8de440367f0205f1160ed5d4c15ffa46313  cite-row.json
+0c11943fba6021cb3c23b1a1fa5497ba90bb80e7b5886df0bd8cb010cdf917e9  cite-shipped-row.json
+--- rebase check (outC2/rebase-check.log)
+{
+ "edgesBefore": 7976,
+ "edgesAfter": 7976,
+ "lost": 0,
+ "gained": 0,
+ "violations": 0,
+ "classified": {
+  "move-only": 36
+ },
+ "unclassified": []
+}
+
+## arm C, after the chain: npx vue-tsc --noEmit; npx vue-tsc --noEmit -p tsconfig.test.json
+app exit 0; test exit 0
+## arm C: node scripts/structure/seal/seal.mjs --json (nonzero clauses)
+seal-base-c {"B0":444,"B2":67,"B6":62}
+seal-after-c {"B0":445,"B2":59,"B6":53,"B16":1}
+seal-C2 {"B0":444,"B2":59,"B6":53}
+  (seal-base-c = snapC before the chain; seal-after-c = the chain without gate.json; seal-C2 = the chain with gate.json)
+## arm C: node scripts/structure/bounds.mjs | grep tests-visual
+  "tests-visual": 0,
+  "tests-visual": 0,
+## arm C: playwright test --list, (project, title) with the file:line stripped, sorted
+base 1989 tests in 167 files; after 1989 tests in 168 files; diff lines: 0
+
+## arm C browser seat: node scripts/structure/browser.mjs --specs <the 7 split/slotted specs> (base on snapC in wtb, after on wtc)
+pw-base-c.json RED {"startTime":"2026-09-26T07:01:07.622Z","duration":328531.895,"expected":18,"skipped":2,"unexpected":16,"flaky":0}
+pw-after-c.json RED {"startTime":"2026-09-26T07:06:44.944Z","duration":297122.821,"expected":18,"skipped":2,"unexpected":16,"flaky":0}
+--- node S/pwcmp.mjs base after (keyed by title; spec paths change with the carve)
+base: 36 tests (18 passed, 16 failed, 2 skipped); after: 36 (18 passed, 16 failed, 2 skipped)
+titles only in base: 0; only after: 0
+status changed: 0
+
+## arm F: rsync snapF -> wtfb; SPLITS=S/splits-F-specs.json sh K/verify.sh S/wtfb S/wtm S/outF2   (exit 0)
+## (splits-F-specs.json = splits.json without the two paint/ module splits; §5.3 of the report)
+coverage: 177 direct files; stay 7, delete 1, slot 1, module 168 in 21 modules
+  tests-visual                                   9 files after the splits
+residue: 40 edges in 35 files {"unrewritable-path write":16,"mode-tscan write":2,"unrewritable-path path-literal":22}; engine list 133 moves, row 35 moves
+row: 35 moves, 71 files, 30 engine edits, 33 re-based new URL literals, 40 residue edges the literals must carry
+ },
+tests-visual/substrate-paints-color.spec.ts (776 lines, 3 test declarations) -> tests-visual/
+  substrate-paints-color-plants.ts          126 lines  helper
+  substrate-paints-color-readback.ts        379 lines  helper
+  substrate-paints-color.spec.ts            301 lines  part, 3 tests
+tests-visual/substrate/substrate-cohesion.spec.ts (510 lines, 3 test declarations) -> tests-visual/substrate/
+  substrate-cohesion-readback.ts            242 lines  helper
+  substrate-cohesion.spec.ts                287 lines  part, 3 tests
+tests-visual/glass/contrast/adaptive-glass.spec.ts (555 lines, 5 test declarations) -> tests-visual/glass/contrast/
+  adaptive-glass-readback.ts                209 lines  helper
+  adaptive-glass.spec.ts                    358 lines  part, 5 tests
+tests-visual/blob/blob-render.spec.ts (742 lines, 3 test declarations) -> tests-visual/blob/
+  blob-render-readback.ts                   352 lines  helper
+  blob-render.spec.ts                       421 lines  part, 3 tests
+tests-visual/redress/w2-blur-redress.spec.ts (595 lines, 5 test declarations) -> tests-visual/redress/
+  w2-blur-redress-probes.ts                 278 lines  helper
+  w2-blur-redress.spec.ts                   339 lines  part, 5 tests
+tests-visual/redress/w1-radius-redress.spec.ts (784 lines, 11 test declarations) -> tests-visual/redress/
+  w1-radius-redress-ledger.ts                85 lines  helper
+  w1-radius-redress.spec.ts                 380 lines  part, 5 tests
+  w1-radius-redress-inputs.spec.ts          378 lines  part, 6 tests
+applied: 14 written, 0 already in place
+conserved tests-visual/substrate-paints-color.spec.ts: 725 non-import lines into 3 outputs
+conserved tests-visual/substrate/substrate-cohesion.spec.ts: 479 non-import lines into 2 outputs
+conserved tests-visual/glass/contrast/adaptive-glass.spec.ts: 517 non-import lines into 2 outputs
+conserved tests-visual/blob/blob-render.spec.ts: 707 non-import lines into 2 outputs
+conserved tests-visual/redress/w2-blur-redress.spec.ts: 554 non-import lines into 2 outputs
+conserved tests-visual/redress/w1-radius-redress.spec.ts: 705 non-import lines into 3 outputs
+Total: 1989 tests in 168 files
+ba0341444fd269cbe6606d273eb9c7875e79fc6d449afbfcb49329c299e30f42  program-row.json
+5c19f46675531099bf66e744cca602d4f0cd587b255d61f252c0756aafa5cdf5  moves-engine.json
+27f11b79f789739f27962c05618d90fb57343663fc24a50aac1edf2618a2d2c9  moves-row.json
+552b150fc949f4a82fbd17f3a83ed315c93504207f88ae57167f9773b3629773  rebase-row.json
+10cbb4949576f8f63bba2a6371db0e7991ab836913266dab99dbb62db1ccb4b6  split-row.json
+090c2f3063533a6aa5a914b1e8b8f9cfe5d2a8f2e41f6fb12ebf92afecbc016c  cite-row.json
+7a5f35316637fc981d4c0fdf427896be239adcf116fba4c11d9ff2a60216e05e  cite-shipped-row.json
+--- rebase check
+{
+ "edgesBefore": 7605,
+ "edgesAfter": 7605,
+ "lost": 0,
+ "gained": 0,
+ "violations": 0,
+ "classified": {
+  "move-only": 36
+ },
+ "unclassified": []
+}
+
+## plants: node K/plants.mjs --tools S/plants --root S/wtb --phase carve   (arm C, before the carve)
+T0   clean                  control: carve.json as authored
+       coverage: 177 direct files; stay 7, delete 1, slot 1, module 168 in 21 modules
+T1   RED (caught)           a module named with a placeholder (goo -> utils)
+       placeholder name utils
+T2   RED (caught)           glass/ given two more files (14)
+       tests-visual/glass: 14 files after the carve and splits > 12
+T3   RED (caught)           a file of tests-visual/ named by no module
+       named by no stay, delete, slot or module
+4/4 as expected
+## plants: node K/plants.mjs --tools S/plants --root S/wtfb --phase split --splits S/splits-F-specs.json   (arm F, carved, unsplit)
+T4   RED (caught)           w1's `command` block named by no part
+       block "command — .command__input has NO border-radius (computed 0px); the pan" is named by 0 parts
+T5   RED (caught)           adaptive-glass split with its helper taken away (one part keeps all)
+       adaptive-glass.spec.ts: 556 lines > 500
+T6c  clean                  control: the split row as derived
+       6 sources conserved
+T6   RED (caught)           the split row with one line of an output dropped (EDGE_RING_W)
+       MISSING   tests-visual/blob/blob-render.spec.ts: 707 non-import lines into 2 outputs
+  117: const EDGE_RING_W
+4/4 as expected
+## plants: node K/plants.mjs --seal S/wtc --scratch S/plants   (arm C, the chain with gate.json)
+G0   clean                  control: the carved, split tree, no overlay
+       {"B0":444,"B1":0,"B2":59,"B3":0,"B4":0,"B5":0,"B6":53,"B7":0,"B8":0,"B9":0,"B10":0,"B11":0,"B12":0,"B13":0,"B14":0,"B15":0,"B16":0,"B17":0}
+G1   RED (caught)           css-critical slotted into chip, a unit it does not read
+       B16 0 -> 1: src/components/chip/__tests__/css-critical.visual.ts (colocated in src/components/chip; its subject's home is the harness (several units))
+G2   RED (caught)           a split's new file named helpers.ts
+       B15 0 -> 1: tests-visual/blob/helpers.ts (placeholder file name)
+G3   RED (caught)           glass/ at 13 files
+       B6 53 -> 54: tests-visual/glass/: 13 direct files > 12
+G4   RED (caught)           blob-render.spec.ts over 500 lines
+       B6 53 -> 54: tests-visual/blob/blob-render.spec.ts: 775 lines > 500
+5/5 as expected
+
+## banked earlier this session on the same rows (split, rebase, cite and move-list sha256 equal to the fresh run;
+## the program row then lacked only the tsconfig.test.json exclude, which reaches neither vitest nor the build)
+vitest-base-c.json tests 2331 failed 6 failed files: tests/gates/boot-graph.test.ts, tests/gates/seal.test.ts
+vitest-after-c.json tests 2331 failed 7 failed files: tests/gates/boot-graph.test.ts, tests/gates/seal.test.ts, src/components/aurora/__tests__/atoms.test.ts
+vitest-base-f.json tests 2313 failed 3 failed files: tests/gates/boot-graph.test.ts
+vitest-after-f.json tests 2313 failed 5 failed files: tests/components/slider.size-tokens.test.ts, tests/gates/boot-graph.test.ts, tests/components/menu/contract.test.ts, tests/components/custom/blob/gl-excise.test.ts, tests/components/custom/dock/GlassDock.stagger.test.ts
+dist sha256 lists (build): arm C base vs after identical (890 files); arm F identical (834 files)
+vp-base-c:     if (!firstAdoption && candidate > datum) throw new Error(`G-BUNDLE-RATCHET: bundle ratchet increase forbidden: ${unpackedBytes} > ${datum}`);
+vp-after-c:     if (!firstAdoption && candidate > datum) throw new Error(`G-BUNDLE-RATCHET: bundle ratchet increase forbidden: ${unpackedBytes} > ${datum}`);
+vp-base-f:     if (!firstAdoption && candidate < datum) throw new Error(`G-BUNDLE-RATCHET: bundle ratchet shrink — rebind down deliberately: ${unpackedBytes} < ${datum}`);
+vp-after-f:     if (!firstAdoption && candidate < datum) throw new Error(`G-BUNDLE-RATCHET: bundle ratchet shrink — rebind down deliberately: ${unpackedBytes} < ${datum}`);
+--- arm F after, the non-passing files: slider.size-tokens and GlassDock.stagger are hook timeouts (10 s, 0 failed assertions),
+    menu/contract 1 failed, gl-excise 1 failed, boot-graph 3 failed (base red). Isolation rerun on the arm F tree after the chain:
+    npx vitest run slider.size-tokens GlassDock.stagger menu/contract  ->  Test Files 3 passed (3), Tests 24 passed (24)
+    gl-excise: its walker reads src/components/blob/__tests__/, which now holds the slotted .visual.ts; at HEAD it lacks
+    pass-4 S16's __tests__ skip (arm C has it). With that one edit it passed (4 passed, 1 expected fail), measured earlier.
+--- arm C after: aurora atoms.test.ts timed out at load (28 files in flight); isolated 24/24 twice, measured earlier.

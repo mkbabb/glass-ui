@@ -1,0 +1,19 @@
+{
+ "step": "B-S16 citations: comments that cite a carved file by its old path",
+ "files": {
+  "tests-visual/paint/reflect-capture-verify.mjs": {
+   "hunks": [
+    [
+     "tests-visual/_cohere-debug.spec.ts",
+     "tests-visual/substrate/_cohere-debug.spec.ts"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "tests-visual/paint/reflect-capture-verify.mjs",
+   "why": "cites the cohere calibration capture, now in tests-visual/substrate/"
+  }
+ ]
+}

@@ -1,0 +1,423 @@
+{
+ "step": "S24 R-3 colocation of the tests the gate's B16 still homes elsewhere (frozen from its reading, F-9)",
+ "moves": [
+  {
+   "from": "tests/components/_shared/menu/rowClass.test.ts",
+   "to": "src/components/_shared/menu/__tests__/rowClass.test.ts"
+  },
+  {
+   "from": "tests/components/chip.public-contracts.test-d.ts",
+   "to": "src/components/chip/__tests__/chip.public-contracts.test-d.ts"
+  },
+  {
+   "from": "tests/components/command.public-contracts.test-d.ts",
+   "to": "src/components/command/__tests__/command.public-contracts.test-d.ts"
+  },
+  {
+   "from": "tests/components/custom/blob/blob-color-equivalence.test.ts",
+   "to": "src/composables/color/__tests__/blob-color-equivalence.test.ts"
+  },
+  {
+   "from": "tests/components/custom/blob/metaball-color.glsl-port.ts",
+   "to": "src/composables/color/__tests__/metaball-color.glsl-port.ts"
+  },
+  {
+   "from": "tests/components/custom/dock/dockCrossfadeContext.readonly.test-d.ts",
+   "to": "src/components/dock/__tests__/dockCrossfadeContext.readonly.test-d.ts"
+  },
+  {
+   "from": "tests/components/custom/dock/dockMorphMeasure.test.ts",
+   "to": "src/components/dock/__tests__/dockMorphMeasure.test.ts"
+  },
+  {
+   "from": "tests/components/custom/handmark/g-hm-layer.test.ts",
+   "to": "src/components/handmark/__tests__/g-hm-layer.test.ts"
+  },
+  {
+   "from": "tests/components/custom/scroll-progress-rim/ScrollProgressRim.test.ts",
+   "to": "src/components/scroll-progress-rim/__tests__/ScrollProgressRim.test.ts"
+  },
+  {
+   "from": "tests/components/infinite-scroll.contract.test.ts",
+   "to": "src/components/infinite-scroll/__tests__/infinite-scroll.contract.test.ts"
+  },
+  {
+   "from": "tests/components/input.contract.test.ts",
+   "to": "src/components/input/__tests__/input.contract.test.ts"
+  },
+  {
+   "from": "tests/components/menu/public-contracts.test-d.ts",
+   "to": "src/components/menu/__tests__/public-contracts.test-d.ts"
+  },
+  {
+   "from": "tests/components/music-staff.contract.test.ts",
+   "to": "src/components/music-staff/__tests__/music-staff.contract.test.ts"
+  },
+  {
+   "from": "tests/components/music-staff.public-contracts.test-d.ts",
+   "to": "src/components/music-staff/__tests__/music-staff.public-contracts.test-d.ts"
+  },
+  {
+   "from": "tests/components/sheet/sheet-reach.test.ts",
+   "to": "src/components/sheet/__tests__/sheet-reach.test.ts"
+  },
+  {
+   "from": "tests/components/status-dot.contract.test.ts",
+   "to": "src/components/status-dot/__tests__/status-dot.contract.test.ts"
+  },
+  {
+   "from": "tests/components/toast.public-contracts.test-d.ts",
+   "to": "src/components/toast/__tests__/toast.public-contracts.test-d.ts"
+  },
+  {
+   "from": "tests/components/ui/skeleton/Skeleton.test.ts",
+   "to": "src/components/skeleton/__tests__/Skeleton.test.ts"
+  },
+  {
+   "from": "tests/components/ui/slider/attrs-pointerdown-channel.test.ts",
+   "to": "src/components/slider/__tests__/attrs-pointerdown-channel.test.ts"
+  },
+  {
+   "from": "tests/components/ui/toggle-group/ToggleGroup.test.ts",
+   "to": "src/components/toggle-group/__tests__/ToggleGroup.test.ts"
+  },
+  {
+   "from": "tests/composables/motion/press.test.ts",
+   "to": "src/composables/motion/spring/__tests__/press.test.ts"
+  },
+  {
+   "from": "tests/composables/motion/useDockCtaReceive.test.ts",
+   "to": "src/composables/motion/__tests__/useDockCtaReceive.test.ts"
+  },
+  {
+   "from": "tests/composables/motion/useElementMorph.test.ts",
+   "to": "src/composables/motion/morph/__tests__/useElementMorph.test.ts"
+  },
+  {
+   "from": "tests/composables/motion/usePointerVelocityField.test.ts",
+   "to": "src/composables/motion/pointer/__tests__/usePointerVelocityField.test.ts"
+  },
+  {
+   "from": "tests/composables/motion/useReducedMotion.test.ts",
+   "to": "src/composables/motion/core/__tests__/useReducedMotion.test.ts"
+  },
+  {
+   "from": "tests/composables/motion/useScrollChrome.test.ts",
+   "to": "src/composables/motion/scroll/__tests__/useScrollChrome.test.ts"
+  },
+  {
+   "from": "tests/composables/motion/useScrollTrigger.test.ts",
+   "to": "src/composables/motion/scroll/__tests__/useScrollTrigger.test.ts"
+  },
+  {
+   "from": "tests/composables/motion/useSelectionIndicator.test.ts",
+   "to": "src/composables/motion/morph/__tests__/useSelectionIndicator.test.ts"
+  },
+  {
+   "from": "tests/composables/motion/useStagger.test.ts",
+   "to": "src/composables/motion/reveal/__tests__/useStagger.test.ts"
+  },
+  {
+   "from": "tests/composables/sidebar/useLazyLoader.test.ts",
+   "to": "src/composables/sidebar/__tests__/useLazyLoader.test.ts"
+  },
+  {
+   "from": "tests/composables/sidebar/useScrollTracker.test.ts",
+   "to": "src/composables/sidebar/__tests__/useScrollTracker.test.ts"
+  },
+  {
+   "from": "tests/composables/sidebar/useSidebarFollow.test.ts",
+   "to": "src/composables/sidebar/__tests__/useSidebarFollow.test.ts"
+  },
+  {
+   "from": "tests/composables/useAnimatedNumber.test.ts",
+   "to": "src/composables/motion/__tests__/useAnimatedNumber.test.ts"
+  },
+  {
+   "from": "tests/composables/useIntersectionPause.test.ts",
+   "to": "src/composables/motion/core/__tests__/useIntersectionPause.test.ts"
+  },
+  {
+   "from": "tests/composables/useRAFLoop.test.ts",
+   "to": "src/composables/motion/core/__tests__/useRAFLoop.test.ts"
+  },
+  {
+   "from": "tests/composables/useRouteTransition.test.ts",
+   "to": "src/composables/motion/route/__tests__/useRouteTransition.test.ts"
+  },
+  {
+   "from": "tests/composables/useSpring.test.ts",
+   "to": "src/composables/motion/spring/__tests__/useSpring.test.ts"
+  },
+  {
+   "from": "tests/composables/useSpringMount.test.ts",
+   "to": "src/composables/motion/spring/__tests__/useSpringMount.test.ts"
+  },
+  {
+   "from": "tests/composables/useTokenColor.test.ts",
+   "to": "src/composables/dom/__tests__/useTokenColor.resolve.test.ts"
+  },
+  {
+   "from": "tests/composables/useViewTransition.test.ts",
+   "to": "src/composables/motion/core/__tests__/useViewTransition.test.ts"
+  },
+  {
+   "from": "tests/composables/useYieldToMain.test.ts",
+   "to": "src/composables/motion/core/__tests__/useYieldToMain.test.ts"
+  },
+  {
+   "from": "tests/composables/vReveal.test.ts",
+   "to": "src/composables/motion/reveal/__tests__/vReveal.test.ts"
+  },
+  {
+   "from": "tests/styles/minify-css.test.ts",
+   "to": "scripts/minify/__tests__/minify-css.test.ts"
+  },
+  {
+   "from": "tests/styles/overlay-plate-available-height.test.ts",
+   "to": "src/styles/glass/__tests__/overlay-plate-available-height.test.ts"
+  },
+  {
+   "from": "tests/styles/prm-no-resurrection.test.ts",
+   "to": "src/styles/__tests__/prm-no-resurrection.test.ts"
+  },
+  {
+   "from": "tests/styles/slider-cursor-affordance.test.ts",
+   "to": "src/components/slider/__tests__/slider-cursor-affordance.test.ts"
+  }
+ ],
+ "scanDeltas": [],
+ "reasons": [
+  {
+   "from": "tests/components/_shared/menu/rowClass.test.ts",
+   "to": "src/components/_shared/menu/__tests__/rowClass.test.ts",
+   "why": "R-3: its subject is src/components/_shared/menu"
+  },
+  {
+   "from": "tests/components/chip.public-contracts.test-d.ts",
+   "to": "src/components/chip/__tests__/chip.public-contracts.test-d.ts",
+   "why": "R-3: its subject is src/components/chip"
+  },
+  {
+   "from": "tests/components/command.public-contracts.test-d.ts",
+   "to": "src/components/command/__tests__/command.public-contracts.test-d.ts",
+   "why": "R-3: its subject is src/components/command"
+  },
+  {
+   "from": "tests/components/custom/blob/blob-color-equivalence.test.ts",
+   "to": "src/composables/color/__tests__/blob-color-equivalence.test.ts",
+   "why": "R-3: its subject is src/composables/color"
+  },
+  {
+   "from": "tests/components/custom/blob/metaball-color.glsl-port.ts",
+   "to": "src/composables/color/__tests__/metaball-color.glsl-port.ts",
+   "why": "the helper only blob-color-equivalence.test.ts reads travels with it"
+  },
+  {
+   "from": "tests/components/custom/dock/dockCrossfadeContext.readonly.test-d.ts",
+   "to": "src/components/dock/__tests__/dockCrossfadeContext.readonly.test-d.ts",
+   "why": "R-3: its subject is src/components/dock"
+  },
+  {
+   "from": "tests/components/custom/dock/dockMorphMeasure.test.ts",
+   "to": "src/components/dock/__tests__/dockMorphMeasure.test.ts",
+   "why": "R-3: its subject is src/components/dock"
+  },
+  {
+   "from": "tests/components/custom/handmark/g-hm-layer.test.ts",
+   "to": "src/components/handmark/__tests__/g-hm-layer.test.ts",
+   "why": "R-3: its subject is src/components/handmark"
+  },
+  {
+   "from": "tests/components/custom/scroll-progress-rim/ScrollProgressRim.test.ts",
+   "to": "src/components/scroll-progress-rim/__tests__/ScrollProgressRim.test.ts",
+   "why": "R-3: its subject is src/components/scroll-progress-rim"
+  },
+  {
+   "from": "tests/components/infinite-scroll.contract.test.ts",
+   "to": "src/components/infinite-scroll/__tests__/infinite-scroll.contract.test.ts",
+   "why": "R-3: its subject is src/components/infinite-scroll"
+  },
+  {
+   "from": "tests/components/input.contract.test.ts",
+   "to": "src/components/input/__tests__/input.contract.test.ts",
+   "why": "R-3: its subject is src/components/input"
+  },
+  {
+   "from": "tests/components/menu/public-contracts.test-d.ts",
+   "to": "src/components/menu/__tests__/public-contracts.test-d.ts",
+   "why": "R-3: its subject is src/components/menu"
+  },
+  {
+   "from": "tests/components/music-staff.contract.test.ts",
+   "to": "src/components/music-staff/__tests__/music-staff.contract.test.ts",
+   "why": "R-3: its subject is src/components/music-staff"
+  },
+  {
+   "from": "tests/components/music-staff.public-contracts.test-d.ts",
+   "to": "src/components/music-staff/__tests__/music-staff.public-contracts.test-d.ts",
+   "why": "R-3: its subject is src/components/music-staff"
+  },
+  {
+   "from": "tests/components/sheet/sheet-reach.test.ts",
+   "to": "src/components/sheet/__tests__/sheet-reach.test.ts",
+   "why": "R-3: its subject is src/components/sheet"
+  },
+  {
+   "from": "tests/components/status-dot.contract.test.ts",
+   "to": "src/components/status-dot/__tests__/status-dot.contract.test.ts",
+   "why": "R-3: its subject is src/components/status-dot"
+  },
+  {
+   "from": "tests/components/toast.public-contracts.test-d.ts",
+   "to": "src/components/toast/__tests__/toast.public-contracts.test-d.ts",
+   "why": "R-3: its subject is src/components/toast"
+  },
+  {
+   "from": "tests/components/ui/skeleton/Skeleton.test.ts",
+   "to": "src/components/skeleton/__tests__/Skeleton.test.ts",
+   "why": "R-3: its subject is src/components/skeleton"
+  },
+  {
+   "from": "tests/components/ui/slider/attrs-pointerdown-channel.test.ts",
+   "to": "src/components/slider/__tests__/attrs-pointerdown-channel.test.ts",
+   "why": "R-3: its subject is src/components/slider"
+  },
+  {
+   "from": "tests/components/ui/toggle-group/ToggleGroup.test.ts",
+   "to": "src/components/toggle-group/__tests__/ToggleGroup.test.ts",
+   "why": "R-3: its subject is src/components/toggle-group"
+  },
+  {
+   "from": "tests/composables/motion/press.test.ts",
+   "to": "src/composables/motion/spring/__tests__/press.test.ts",
+   "why": "R-3: its subject is src/composables/motion/spring"
+  },
+  {
+   "from": "tests/composables/motion/useDockCtaReceive.test.ts",
+   "to": "src/composables/motion/__tests__/useDockCtaReceive.test.ts",
+   "why": "R-3: its subject is src/composables/motion"
+  },
+  {
+   "from": "tests/composables/motion/useElementMorph.test.ts",
+   "to": "src/composables/motion/morph/__tests__/useElementMorph.test.ts",
+   "why": "R-3: its subject is src/composables/motion/morph"
+  },
+  {
+   "from": "tests/composables/motion/usePointerVelocityField.test.ts",
+   "to": "src/composables/motion/pointer/__tests__/usePointerVelocityField.test.ts",
+   "why": "R-3: its subject is src/composables/motion/pointer"
+  },
+  {
+   "from": "tests/composables/motion/useReducedMotion.test.ts",
+   "to": "src/composables/motion/core/__tests__/useReducedMotion.test.ts",
+   "why": "R-3: its subject is src/composables/motion/core"
+  },
+  {
+   "from": "tests/composables/motion/useScrollChrome.test.ts",
+   "to": "src/composables/motion/scroll/__tests__/useScrollChrome.test.ts",
+   "why": "R-3: its subject is src/composables/motion/scroll"
+  },
+  {
+   "from": "tests/composables/motion/useScrollTrigger.test.ts",
+   "to": "src/composables/motion/scroll/__tests__/useScrollTrigger.test.ts",
+   "why": "R-3: its subject is src/composables/motion/scroll"
+  },
+  {
+   "from": "tests/composables/motion/useSelectionIndicator.test.ts",
+   "to": "src/composables/motion/morph/__tests__/useSelectionIndicator.test.ts",
+   "why": "R-3: its subject is src/composables/motion/morph"
+  },
+  {
+   "from": "tests/composables/motion/useStagger.test.ts",
+   "to": "src/composables/motion/reveal/__tests__/useStagger.test.ts",
+   "why": "R-3: its subject is src/composables/motion/reveal"
+  },
+  {
+   "from": "tests/composables/sidebar/useLazyLoader.test.ts",
+   "to": "src/composables/sidebar/__tests__/useLazyLoader.test.ts",
+   "why": "R-3: its subject is src/composables/sidebar"
+  },
+  {
+   "from": "tests/composables/sidebar/useScrollTracker.test.ts",
+   "to": "src/composables/sidebar/__tests__/useScrollTracker.test.ts",
+   "why": "R-3: its subject is src/composables/sidebar"
+  },
+  {
+   "from": "tests/composables/sidebar/useSidebarFollow.test.ts",
+   "to": "src/composables/sidebar/__tests__/useSidebarFollow.test.ts",
+   "why": "R-3: its subject is src/composables/sidebar"
+  },
+  {
+   "from": "tests/composables/useAnimatedNumber.test.ts",
+   "to": "src/composables/motion/__tests__/useAnimatedNumber.test.ts",
+   "why": "R-3: its subject is src/composables/motion"
+  },
+  {
+   "from": "tests/composables/useIntersectionPause.test.ts",
+   "to": "src/composables/motion/core/__tests__/useIntersectionPause.test.ts",
+   "why": "R-3: its subject is src/composables/motion/core"
+  },
+  {
+   "from": "tests/composables/useRAFLoop.test.ts",
+   "to": "src/composables/motion/core/__tests__/useRAFLoop.test.ts",
+   "why": "R-3: its subject is src/composables/motion/core"
+  },
+  {
+   "from": "tests/composables/useRouteTransition.test.ts",
+   "to": "src/composables/motion/route/__tests__/useRouteTransition.test.ts",
+   "why": "R-3: its subject is src/composables/motion/route"
+  },
+  {
+   "from": "tests/composables/useSpring.test.ts",
+   "to": "src/composables/motion/spring/__tests__/useSpring.test.ts",
+   "why": "R-3: its subject is src/composables/motion/spring"
+  },
+  {
+   "from": "tests/composables/useSpringMount.test.ts",
+   "to": "src/composables/motion/spring/__tests__/useSpringMount.test.ts",
+   "why": "R-3: its subject is src/composables/motion/spring"
+  },
+  {
+   "from": "tests/composables/useTokenColor.test.ts",
+   "to": "src/composables/dom/__tests__/useTokenColor.resolve.test.ts",
+   "why": "R-3: its subject is src/composables/dom"
+  },
+  {
+   "from": "tests/composables/useViewTransition.test.ts",
+   "to": "src/composables/motion/core/__tests__/useViewTransition.test.ts",
+   "why": "R-3: its subject is src/composables/motion/core"
+  },
+  {
+   "from": "tests/composables/useYieldToMain.test.ts",
+   "to": "src/composables/motion/core/__tests__/useYieldToMain.test.ts",
+   "why": "R-3: its subject is src/composables/motion/core"
+  },
+  {
+   "from": "tests/composables/vReveal.test.ts",
+   "to": "src/composables/motion/reveal/__tests__/vReveal.test.ts",
+   "why": "R-3: its subject is src/composables/motion/reveal"
+  },
+  {
+   "from": "tests/styles/minify-css.test.ts",
+   "to": "scripts/minify/__tests__/minify-css.test.ts",
+   "why": "R-3: its subject is scripts/minify"
+  },
+  {
+   "from": "tests/styles/overlay-plate-available-height.test.ts",
+   "to": "src/styles/glass/__tests__/overlay-plate-available-height.test.ts",
+   "why": "R-3: its subject is src/styles/glass"
+  },
+  {
+   "from": "tests/styles/prm-no-resurrection.test.ts",
+   "to": "src/styles/__tests__/prm-no-resurrection.test.ts",
+   "why": "R-3: its subject is src/styles"
+  },
+  {
+   "from": "tests/styles/slider-cursor-affordance.test.ts",
+   "to": "src/components/slider/__tests__/slider-cursor-affordance.test.ts",
+   "why": "R-3: its subject is src/components/slider"
+  }
+ ],
+ "stays": []
+}

@@ -1,0 +1,44 @@
+c3953aabe194ad0fece6ad01adf0c03f70e58be5d1248a96117e94575382adb6
+crash8 (pass-8 critic's hashed battery, unmodified) on the unbuilt pass-9 tree start 2026-10-15T23:48:10Z load { 25.62 28.66 26.05 }
+CRASH C0-green PASS rc=0 expect=0 :: 
+CRASH C1-red PASS rc=1 expect=1 :: 
+CRASH M1-pkg-not-json PASS rc=2 expect=2 :: seal: no verdict: SyntaxError: Expected double-quoted property name in JSON at position 30 (line 1 column 31)
+CRASH M2-pkg-missing PASS rc=2 expect=2 :: seal: no verdict: Error: entry-record: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p9/B-proto/unbuilt has no .claude/worktrees/bl/D1/p9/B-proto/unbuilt/scripts/structure/records/entry-r
+CRASH M3-pkg-empty PASS rc=2 expect=2 :: seal: no verdict: SyntaxError: Unexpected end of JSON input
+CRASH M4.1-throw:scripts/structure/seal/seal.mjs INFO rc=1 :: throw new Error("zq8 module-scope throw in scripts/structure/seal/seal.mjs");
+CRASH M4.2-throw:scripts/structure/seal/clauses.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/seal/clauses.mjs
+CRASH M4.3-throw:scripts/structure/lib/index.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/index.mjs
+CRASH M4.4-throw:scripts/structure/seal/law.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/seal/law.mjs
+CRASH M4.5-throw:scripts/structure/seal/fallbacks.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/seal/fallbacks.mjs
+CRASH M4.6-throw:scripts/structure/seal/walks.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/seal/walks.mjs
+CRASH M4.7-throw:scripts/structure/seal/peer.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/seal/peer.mjs
+CRASH M4.8-throw:scripts/structure/lib/classify.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/classify.mjs
+CRASH M4.9-throw:scripts/structure/lib/entries.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/entries.mjs
+CRASH M4.10-throw:scripts/structure/lib/graph/index.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/graph/index.mjs
+CRASH M4.11-throw:scripts/structure/lib/move.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/move.mjs
+CRASH M4.12-throw:scripts/structure/lib/placement.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/placement.mjs
+CRASH M4.13-throw:scripts/structure/lib/recipes.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/recipes.mjs
+CRASH M4.14-throw:scripts/structure/lib/symbols.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/symbols.mjs
+CRASH M4.15-throw:scripts/structure/lib/tree.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/tree.mjs
+CRASH M4.16-throw:scripts/structure/lib/plan.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/plan.mjs
+CRASH M4.17-throw:scripts/structure/lib/graph/css.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/graph/css.mjs
+CRASH M4.18-throw:scripts/structure/lib/graph/graph.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/graph/graph.mjs
+CRASH M4.19-throw:scripts/structure/lib/graph/playwright.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/graph/playwright.mjs
+CRASH M4.20-throw:scripts/structure/lib/resolve.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/resolve.mjs
+CRASH M4.21-throw:scripts/structure/lib/syntax.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/syntax.mjs
+CRASH M4.22-throw:scripts/structure/lib/graph/evaluate.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/graph/evaluate.mjs
+CRASH M4.23-throw:scripts/structure/lib/graph/script.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/graph/script.mjs
+CRASH M4.24-throw:scripts/structure/lib/graph/text.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/graph/text.mjs
+CRASH M4.25-throw:scripts/structure/lib/graph/vue.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/graph/vue.mjs
+CRASH M4 modules planted: 25
+CRASH M5-unhandled-rejection:scripts/structure/seal/clauses.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 unhandled rejection in scripts/structure/seal/clauses.mjs
+CRASH M6-deferred-throw:scripts/structure/seal/clauses.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 deferred throw in scripts/structure/seal/clauses.mjs
+CRASH R1-ledger-missing PASS rc=2 expect=2 :: seal: no verdict: Error: graph: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p9/B-proto/unbuilt has no scripts/structure/records/opaque-ledger.json; the opaque ledger is a floor record (
+CRASH R2-ledger-not-json PASS rc=2 expect=2 :: seal: no verdict: Error: graph: scripts/structure/records/opaque-ledger.json does not parse (Unexpected end of JSON input); the opaque ledger cannot be read
+CRASH R3-noroot PASS rc=2 expect=2 :: seal: no verdict: Error: seal: the pin /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p9/B-proto/crit-tmp/crash8.83533/does-not-exist/scripts/structure/records/seal-pin.json is missing; th
+CRASH R4-unparsable INFO rc=0 :: 
+CRASH W1-json-under-file PASS rc=2 expect=2 :: seal: no verdict: Error: ENOTDIR: not a directory, open '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p9/B-proto/unbuilt/package.json/v.json'
+CRASH W2-json-readonly-dir PASS rc=2 expect=2 :: seal: no verdict: Error: EACCES: permission denied, open '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p9/B-proto/crit-tmp/crash8.83533/ro/v.json'
+CRASH C9-green-again PASS rc=0 expect=0 :: 
+CRASH SUMMARY pass=37 fail=0
+exit 0 end 2026-10-15T23:48:55Z load { 30.34 29.24 26.38 }

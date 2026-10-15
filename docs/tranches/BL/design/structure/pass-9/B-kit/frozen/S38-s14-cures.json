@@ -1,0 +1,115 @@
+{
+ "step": "S-14 (LAW §10, pass 5): the nine masking fallbacks the widened B17 names on the tree, each cured at its cause; a missing file or a failed load fails loud",
+ "files": {
+  "demo/router.ts": {
+   "hunks": [
+    [
+     "    await Promise.all(comps.map((c) => c().catch(() => undefined)));\n",
+     "    await Promise.all(comps.map((c) => c()));\n"
+    ]
+   ]
+  },
+  "scripts/profile-bundle.mjs": {
+   "hunks": [
+    [
+     "    const indexPath = resolve(stylesDir, \"index.css\");\n    let css = readFileSync(indexPath, \"utf-8\");\n    // One-level resolve: ./*.css siblings + ../glass-ui.css both resolve under stylesDir.\n    css = css.replace(/@import\\s+[\"']([^\"']+\\.css)[\"'];?/g, (m, ref) => {\n        const target = resolve(stylesDir, ref);\n        return existsSync(target) ? `\\n${readFileSync(target, \"utf-8\")}\\n` : m;\n    });\n",
+     "    // Every relative `@import` is inlined, recursively and each sheet once: a CSS door\n    // (`theme/index.css`) imports its partials, so the draw is the whole closure. A sheet an\n    // import names that is not in dist fails the read.\n    const seen = new Set();\n    const inline = (file) => {\n        if (seen.has(file)) return \"\";\n        seen.add(file);\n        return readFileSync(file, \"utf-8\").replace(/@import\\s+[\"']([^\"']+\\.css)[\"'];?/g, (_m, ref) => `\\n${inline(resolve(dirname(file), ref))}\\n`);\n    };\n    const css = inline(resolve(stylesDir, \"index.css\"));\n"
+    ]
+   ]
+  },
+  "scripts/verify-export-types.mjs": {
+   "hunks": [
+    [
+     "    const migration = existsSync(migrationPath) ? readFileSync(migrationPath, \"utf8\") : \"\";\n",
+     "    const migration = readFileSync(migrationPath, \"utf8\");\n"
+    ]
+   ]
+  },
+  "tests-visual/paint/reflect-capture-verify.mjs": {
+   "hunks": [
+    [
+     "    try {\n        const bytes = readFileSync(path);\n        if (bytes.length < 24 || bytes.subarray(12, 16).toString(\"ascii\") !== \"IHDR\") return null;\n        return { w: bytes.readUInt32BE(16), h: bytes.readUInt32BE(20) };\n    } catch {\n        return null;\n    }\n",
+     "    const bytes = readFileSync(path);\n    if (bytes.length < 24 || bytes.subarray(12, 16).toString(\"ascii\") !== \"IHDR\") return null;\n    return { w: bytes.readUInt32BE(16), h: bytes.readUInt32BE(20) };\n"
+    ],
+    [
+     "    let fd;\n    try {\n        fd = readFileSync(absPath);\n    } catch {\n        return null;\n    }\n",
+     "    const fd = readFileSync(absPath);\n"
+    ]
+   ]
+  },
+  "tests/demo/page-chrome-shrink.test.ts": {
+   "hunks": [
+    [
+     "const read = (rel: string): string => {\n    try {\n        return readFileSync(join(process.cwd(), rel), \"utf8\");\n    } catch {\n        return \"\";\n    }\n};\n",
+     "const read = (rel: string): string => readFileSync(join(process.cwd(), rel), \"utf8\");\n"
+    ]
+   ]
+  },
+  "tests/styles/layout-canon.test.ts": {
+   "hunks": [
+    [
+     "/**\n * A missing sheet is a MISSING LAW, not a broken harness. Reading it as empty is\n * what lets each case name the law it could not find; an unguarded `readFileSync`\n * throws at module load and the whole file reports \"0 tests\", which is the least\n * informative possible answer to \"is the layout canon on disk\". It is also what\n * makes the born-RED run legible: at the pre-cut bytes `demo/chassis/layout.css`\n * does not exist, and every measure/ladder case has to say so out loud.\n */\nconst read = (rel: string): string => {\n    try {\n        return readFileSync(join(process.cwd(), rel), \"utf8\");\n    } catch {\n        return \"\";\n    }\n};\n",
+     "/** A missing sheet is a missing law: its read fails, and the suite fails with it. */\nconst read = (rel: string): string => readFileSync(join(process.cwd(), rel), \"utf8\");\n"
+    ]
+   ]
+  },
+  "tests/styles/focus-veil.test.ts": {
+   "hunks": [
+    [
+     "// The subject file is read TOLERANTLY on purpose. A module-level throw would make the\n// whole suite fail to load, and a suite that cannot load reports ZERO tests — ABSENT\n// under the ⊕²⁵ status vocabulary, which is precisely the reading this register refuses\n// to accept as a gate result. Reading an absent primitive as empty content makes every\n// arm below RED on its own terms, which is what \"born-RED\" has to mean to be evidence.\n",
+     "// The subject file is read, not probed: an absent primitive fails the suite with the\n// read's error, which is a failure, never an empty pass.\n"
+    ],
+    [
+     "const veil = existsSync(join(process.cwd(), VEIL_PATH))\n    ? stripComments(read(VEIL_PATH))\n    : \"\";\n",
+     "const veil = stripComments(read(VEIL_PATH));\n"
+    ]
+   ]
+  },
+  "tests/gates/overfit-structure.test.ts": {
+   "hunks": [
+    [
+     "    text.get(f) ?? (existsSync(f) ? readFileSync(f, \"utf8\") : \"\");\n",
+     "    text.get(f) ?? readFileSync(f, \"utf8\");\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "demo/router.ts",
+   "why": "a loader bound to a name: a failed route chunk rejects the navigation instead of resolving to nothing"
+  },
+  {
+   "file": "scripts/profile-bundle.mjs",
+   "why": "the ternary fallback leaves; the draw reads the whole @import closure (CSS doors nest), and a missing sheet fails the read"
+  },
+  {
+   "file": "scripts/verify-export-types.mjs",
+   "why": "the ratchet reads MIGRATION.md; an absent one fails the read instead of naming every removal unnamed"
+  },
+  {
+   "file": "tests-visual/paint/reflect-capture-verify.mjs",
+   "why": "a missing capture fails the read; only a file that is not a PNG reads null"
+  },
+  {
+   "file": "tests-visual/paint/reflect-capture-verify.mjs",
+   "why": "a missing capture fails the read; only a file that is not a PNG reads null"
+  },
+  {
+   "file": "tests/demo/page-chrome-shrink.test.ts",
+   "why": "a missing subject fails the read, loud, instead of reading as empty"
+  },
+  {
+   "file": "tests/styles/layout-canon.test.ts",
+   "why": "a missing sheet fails the read, loud: the suite fails on the read's error rather than passing on empty text"
+  },
+  {
+   "file": "tests/styles/focus-veil.test.ts",
+   "why": "the subject is read; a missing primitive fails the suite on the read's error"
+  },
+  {
+   "file": "tests/gates/overfit-structure.test.ts",
+   "why": "a file the census names is read; an absent one fails the read"
+  }
+ ]
+}

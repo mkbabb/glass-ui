@@ -1,0 +1,25 @@
+{
+ "step": "B-S71c (frozen from authored/p7-reveal-move.json, F-9)",
+ "moves": [
+  {
+   "from": "src/composables/motion/reveal/useLiquidReveal.ts",
+   "to": "src/composables/motion/morph/useLiquidReveal.ts"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "tests/styles/typed-track-seam.test.ts",
+   "spec": "`src/${rel}`",
+   "file": "src/composables/motion/reveal/useLiquidReveal.ts",
+   "reason": "S71c: src/composables/motion/reveal/useLiquidReveal.ts -> src/composables/motion/morph/useLiquidReveal.ts; the scanner's sensitivity is judged by the test run"
+  }
+ ],
+ "globDeltas": [],
+ "reasons": [
+  {
+   "from": "src/composables/motion/reveal/useLiquidReveal.ts",
+   "to": "src/composables/motion/morph/useLiquidReveal.ts",
+   "why": "the element morph's bloom leaf: it composes useElementMorph and is read by ./motion only"
+  }
+ ]
+}

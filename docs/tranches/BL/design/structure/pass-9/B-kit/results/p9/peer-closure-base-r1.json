@@ -1,0 +1,136 @@
+{
+ "root": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p9/B-proto/base",
+ "table": "src/index.ts",
+ "floorBase": true,
+ "base": null,
+ "overlay": [],
+ "declared": {
+  "heavy": [
+   "@mkbabb/keyframes.js",
+   "@vueuse/core"
+  ],
+  "free": {
+   ".": [
+    "@mkbabb/keyframes.js",
+    "@vueuse/core"
+   ],
+   "./motion-core": [
+    "@mkbabb/keyframes.js",
+    "@vueuse/core"
+   ]
+  }
+ },
+ "entries": {
+  ".": {
+   "source": "src/index.ts",
+   "declared": "free of @mkbabb/keyframes.js, @vueuse/core",
+   "runtimeNames": 143,
+   "names": {
+    "origins": 131,
+    "peers": {
+     "@mkbabb/keyframes.js": {
+      "Button": "Button (src/components/button/Button.vue; first at src/composables/motion/spring/useSpring.ts:15)",
+      "CommandDialog": "CommandDialog (src/components/command/CommandDialog.vue; first at src/composables/motion/spring/useSpring.ts:15)",
+      "DialogClose": "DialogClose (src/components/dialog/index.ts; first at src/composables/motion/spring/useSpring.ts:15)",
+      "DialogTrigger": "DialogTrigger (src/components/dialog/index.ts; first at src/composables/motion/spring/useSpring.ts:15)",
+      "DialogContent": "DialogContent (src/components/dialog/DialogContent.vue; first at src/composables/motion/spring/useSpring.ts:15)",
+      "NumberFieldStep": "NumberFieldStep (src/components/number-field/NumberFieldStep.vue; first at src/composables/motion/spring/useSpring.ts:15)",
+      "SheetContent": "SheetContent (src/components/sheet/SheetContent.vue; first at src/components/sheet/detents/use.ts:23)"
+     },
+     "@vueuse/core": {
+      "CommandDialog": "CommandDialog (src/components/command/CommandDialog.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "CommandList": "CommandList (src/components/command/CommandList.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "DialogClose": "DialogClose (src/components/dialog/index.ts; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "DialogTrigger": "DialogTrigger (src/components/dialog/index.ts; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "DialogContent": "DialogContent (src/components/dialog/DialogContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "DropdownMenuContent": "DropdownMenuContent (src/components/menu/DropdownMenuContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "DropdownMenuSubContent": "DropdownMenuSubContent (src/components/menu/DropdownMenuSubContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "Popover": "Popover (src/components/popover/Popover.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "PopoverContent": "PopoverContent (src/components/popover/PopoverContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "SelectContent": "SelectContent (src/components/select/SelectContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "SheetContent": "SheetContent (src/components/sheet/SheetContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "Slider": "Slider (src/components/slider/Slider.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "TooltipContent": "TooltipContent (src/components/tooltip/TooltipContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "Configurator": "Configurator (src/components/configurator/Configurator.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)"
+     }
+    }
+   },
+   "dist": {
+    "files": 76,
+    "peers": [
+     "@mkbabb/keyframes.js",
+     "@vueuse/core"
+    ]
+   },
+   "files": {
+    "files": 220,
+    "peers": {
+     "@vueuse/core": "src/index.ts → … first at src/composables/keyboard/useKeyboardShortcuts.ts:12",
+     "@mkbabb/keyframes.js": "src/index.ts → … first at src/components/sheet/detents/use.ts:23"
+    }
+   },
+   "broken": {
+    "names": [
+     "@mkbabb/keyframes.js",
+     "@vueuse/core"
+    ],
+    "dist": [
+     "@mkbabb/keyframes.js",
+     "@vueuse/core"
+    ],
+    "files": [
+     "@vueuse/core",
+     "@mkbabb/keyframes.js"
+    ]
+   },
+   "introduced": {
+    "names": [
+     "@mkbabb/keyframes.js",
+     "@vueuse/core"
+    ],
+    "dist": [
+     "@mkbabb/keyframes.js",
+     "@vueuse/core"
+    ],
+    "files": [
+     "@vueuse/core",
+     "@mkbabb/keyframes.js"
+    ]
+   },
+   "atBase": null
+  },
+  "./motion-core": {
+   "source": "src/composables/motion/core/index.ts",
+   "declared": "free of @mkbabb/keyframes.js, @vueuse/core",
+   "runtimeNames": 54,
+   "names": {
+    "origins": 21,
+    "peers": {}
+   },
+   "dist": {
+    "files": 17,
+    "peers": []
+   },
+   "files": {
+    "files": 28,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": null
+  }
+ },
+ "published": [],
+ "broken": [
+  ".: introduced names @mkbabb/keyframes.js, @vueuse/core; dist @mkbabb/keyframes.js, @vueuse/core; files @vueuse/core, @mkbabb/keyframes.js"
+ ],
+ "verdict": "RED"
+}

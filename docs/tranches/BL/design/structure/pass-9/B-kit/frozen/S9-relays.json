@@ -1,0 +1,83 @@
+{
+ "step": "B12: the paint-arm and tokens relays leave; B11: ten internal-door names nothing outside reads leave their doors",
+ "files": {
+  "scripts/lib/paint-arm.mjs": {
+   "hunks": [
+    [
+     "\nexport { oklabFromRgb } from \"./reflect-capture-verify.mjs\";\n\n// BG.W-COMPOSITED-GESTALT-GATE — the paint-arm color probe gains the DOMINANT-HUE mode.\n",
+     "\n// BG.W-COMPOSITED-GESTALT-GATE — the paint-arm color probe gains the DOMINANT-HUE mode.\n"
+    ],
+    [
+     "// no import cycle); paint-arm RE-EXPORTS them so the probe surface is one place, and adds\n// warmIdentityVerdict (the widened-predicate band, the twin of paintBand) below.\nexport {\n    hueFamily,\n    dominantHue,\n    pngRegionHueHistogram,\n} from \"./reflect-capture-verify.mjs\";\n",
+     "// no import cycle), and are read from there; paint-arm adds warmIdentityVerdict (the\n// widened-predicate band, the twin of paintBand) below.\n"
+    ]
+   ]
+  },
+  "src/styles/tokens/tokens.ts": {
+   "hunks": [
+    [
+     "} as const;\n\nexport * from \"./manifest\";\n",
+     "} as const;\n"
+    ]
+   ]
+  },
+  "src/styles/tokens/index.ts": {
+   "hunks": [
+    [
+     "export * from \"./tokens\";\n",
+     "export * from \"./tokens\";\nexport * from \"./manifest\";\n"
+    ]
+   ]
+  },
+  "src/components/_shared/overlay/index.ts": {
+   "hunks": [
+    [
+     "export { overlayContentAttrs, type OverlayAttrs, type OverlayRole } from \"./content\";\nexport {\n    useDockParticipation,\n    useHoldToken,\n    type DockParticipation,\n    type DockPortalAttrs,\n    type HoldTarget,\n    type HoldToken,\n} from \"./participation\";\nexport type {\n    FloatingAlign,\n    FloatingPlacementProps,\n    FloatingSide,\n} from \"./placement\";\n",
+     "export { overlayContentAttrs } from \"./content\";\nexport { useDockParticipation, useHoldToken } from \"./participation\";\nexport type { FloatingPlacementProps } from \"./placement\";\n"
+    ]
+   ]
+  },
+  "src/composables/context/index.ts": {
+   "hunks": [
+    [
+     "export {\n    createStrictContext,\n    createOptionalContext,\n    type StrictContext,\n    type OptionalContext,\n} from \"./createContext\";\n",
+     "export { createStrictContext, createOptionalContext } from \"./createContext\";\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "scripts/lib/paint-arm.mjs",
+   "why": "B12: no reader takes oklabFromRgb through paint-arm"
+  },
+  {
+   "file": "scripts/lib/paint-arm.mjs",
+   "why": "B12: no reader takes the hue helpers through paint-arm; they are read from their home"
+  },
+  {
+   "file": "src/styles/tokens/tokens.ts",
+   "why": "B12: the relay leaves the leaf"
+  },
+  {
+   "file": "src/styles/tokens/index.ts",
+   "why": "B12: the door publishes the manifest beside the projection"
+  },
+  {
+   "file": "src/components/_shared/overlay/index.ts",
+   "why": "B11: OverlayAttrs and OverlayRole have no reader outside overlay"
+  },
+  {
+   "file": "src/components/_shared/overlay/index.ts",
+   "why": "B11: four participation types have no reader outside overlay"
+  },
+  {
+   "file": "src/components/_shared/overlay/index.ts",
+   "why": "B11: FloatingAlign and FloatingSide have no reader outside overlay"
+  },
+  {
+   "file": "src/composables/context/index.ts",
+   "why": "B11: the two context types have no reader outside context"
+  }
+ ]
+}

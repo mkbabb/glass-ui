@@ -1,0 +1,91 @@
+{
+ "step": "B-S39-02m (frozen from authored/splits/src/02-dock-styles.moves.json, F-9)",
+ "moves": [
+  {
+   "from": "src/components/dock/styles/layers.css",
+   "to": "src/components/dock/layers/layers.css"
+  },
+  {
+   "from": "src/components/dock/styles/layer-group.css",
+   "to": "src/components/dock/layers/layer-group.css"
+  },
+  {
+   "from": "src/components/dock/styles/crossfade.css",
+   "to": "src/components/dock/layers/crossfade.css"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/styles/crossfade.css",
+   "reason": "S39-02m: src/components/dock/styles/crossfade.css -> src/components/dock/layers/crossfade.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/styles/layer-group.css",
+   "reason": "S39-02m: src/components/dock/styles/layer-group.css -> src/components/dock/layers/layer-group.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/components/dock/styles/layers.css",
+   "reason": "S39-02m: src/components/dock/styles/layers.css -> src/components/dock/layers/layers.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/styles/crossfade.css",
+   "reason": "S39-02m: src/components/dock/styles/crossfade.css -> src/components/dock/layers/crossfade.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/styles/layer-group.css",
+   "reason": "S39-02m: src/components/dock/styles/layer-group.css -> src/components/dock/layers/layer-group.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, entry)",
+   "file": "src/components/dock/styles/layers.css",
+   "reason": "S39-02m: src/components/dock/styles/layers.css -> src/components/dock/layers/layers.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/styles/crossfade.css",
+   "reason": "S39-02m: src/components/dock/styles/crossfade.css -> src/components/dock/layers/crossfade.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/styles/layer-group.css",
+   "reason": "S39-02m: src/components/dock/styles/layer-group.css -> src/components/dock/layers/layer-group.css; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "join(COMPONENTS, name)",
+   "file": "src/components/dock/styles/layers.css",
+   "reason": "S39-02m: src/components/dock/styles/layers.css -> src/components/dock/layers/layers.css; the scanner's sensitivity is judged by the test run"
+  }
+ ],
+ "globDeltas": [],
+ "reasons": [
+  {
+   "from": "src/components/dock/styles/layers.css",
+   "to": "src/components/dock/layers/layers.css",
+   "why": "the .dock-layer crossfade, hit-test and reveal-stagger contract (DockLayer); first of the three consecutive layer partials in core.css"
+  },
+  {
+   "from": "src/components/dock/styles/layer-group.css",
+   "to": "src/components/dock/layers/layer-group.css",
+   "why": "the .dock-layer-group switcher and stack (DockLayerGroup); imported directly after layers.css"
+  },
+  {
+   "from": "src/components/dock/styles/crossfade.css",
+   "to": "src/components/dock/layers/crossfade.css",
+   "why": "the one crossfade-slot rule DockLayerGroup composes (DockCrossfade); imported directly after layer-group.css"
+  }
+ ]
+}

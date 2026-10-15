@@ -1,0 +1,102 @@
+D1 pass 5 · B-S11 zone demo · commands run by the SPLIT-AUTHOR seat (claude-opus-5-5), 2026-09-26
+Scratch: $S = /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/D1/p5/split-demo
+$D = docs/tranches/BL/design/structure/pass-5/B-kit/authored/splits/demo
+
+== Arms
+arm F: $S/wt  = git worktree at f5bc31bd (HEAD at seat start) + pass-5 floor rows (floor/rows/apply.mjs); snapshot $S/before
+arm C: $S/wt-c = git worktree at 5e278aa7 + pass-4 chain, replayed from kit-home $S/wt-kit4 (5e278aa7); snapshot $S/beforeC
+  node $WK/docs/tranches/BL/design/structure/pass-4/B-kit/replay.mjs --root $WC
+  -> replay done in 115.7 s; code digest 6618df1f7d2f5a0c… over 1437 files; chain final MATCH
+  (the checkout's pass-4 kit stops at S1: the P5 floor changed the S1 digest; hence the 5e278aa7 kit home)
+Playwright base: $S/wt-base = git worktree at e00fb901 + floor rows (docs-only commits past f5bc31bd)
+
+== Sources (wc -l, arm F / arm C)
+demo/stories/manifest.ts                    1098 / 1098
+demo/stories/substrates/blob.vue             785 /  785
+demo/stories/substrates/aurora/presets.ts    740 /  740
+demo/stories/dock/overview.vue               674 /  674
+demo/stories/data/search.vue                 632 /  632
+demo/stories/motion/springs.vue              541 /  541
+demo/stories/substrates/fourier-field.vue    531 /  533
+demo/stories/substrates/constellation.vue    514 /  514
+
+== Derive (anchor-based; same script both arms)
+for s in manifest aurora-presets blob dock-overview search springs fourier-field constellation; do node $D/tools/author/$s.mjs --root <tree>; done
+Re-derive from a copy of each before-snapshot, diff -rq vs the worktree (demo, tests, tests-visual):
+  before  -> wt   : 0 differences
+  beforeC -> wt-c : 0 differences
+
+== Outputs (wc -l, arm F; arm C identical but where noted)
+demo/stories/manifest.ts 303; manifest/types.ts 140; manifest/row.ts 16;
+  manifest/categories/{foundations 85, substrates 89, forms 69, display 50, containers 91, navigation 36,
+  dock 75, data 70, feedback 35, motion 64, compositions 69}
+substrates/aurora/presets.ts 106; aurora/mediums/preset.ts 18; mediums/smooth.ts 218; mediums/painterly.ts 430
+substrates/blob.vue 440; blob/presets.ts 218; blob/useBlobStage.ts 146
+dock/overview.vue 421; dock/overview/TriggerSection.vue 157; dock/overview/PopoverSection.vue 122
+data/search.vue 225; data/search/catalogue.ts 411
+motion/springs.vue 38; springs/preview.ts 65 (C 62); springs/NamedRegisters.vue 178; springs/CustomAuthoring.vue 307
+substrates/fourier-field.vue 376 (C 378); fourier-field/presets.ts 128; fourier-field/sources.ts 36 (C 35)
+substrates/constellation.vue 415; constellation/overlays.ts 114
+tests-visual/pi-manifest.ts 253 (edited); tests-visual/blob-page.spec.ts 249 (edited)
+largest output: 430 (mediums/painterly.ts)
+
+== Rows
+node $D/tools/gen-row.mjs --before beforeC --root wt-c                 (rows $D/0N-*.mjs)
+node $D/tools/gen-row.mjs --before before  --root wt --out $D/arm-f     (rows $D/arm-f/0N-*.mjs)
+  changed files: 37 (arm C), 37 (arm F); every one claimed by exactly one row
+  arm C create/hunk: 01 13c/13h  02 3c/5h  03 2c/9h  04 2c/1h  05 1c/1h  06 3c/5h  07 2c/5h  08 1c/4h
+  arm F create/hunk: 01 13c/13h  02 3c/5h  03 2c/9h  04 2c/1h  05 1c/1h  06 3c/5h  07 2c/4h  08 1c/4h
+  (04: hunksOf yields one whole-file hunk for overview.vue)
+node $D/tools/apply.mjs --root <copy of before> --rows $D/arm-f --check wt
+  -> {"check":"wt","files":651,"differ":0}
+node $D/tools/apply.mjs --root <copy of beforeC> --check wt-c
+  -> {"check":"wt-c","files":502,"differ":0}
+second apply on the applied copy: "01-manifest: stopped" (a from no longer matches) on both arms
+
+== Conservation (node $D/tools/conserve.mjs; non-blank source lines absent verbatim from the outputs)
+arm F: 01 22, 02 1, 03 8, 04 4, 05 0, 06 6, 07 2, 08 10
+arm C: 01 22, 02 1, 03 8, 04 4, 05 0, 06 9, 07 3, 08 10
+every absent line is an import statement or specifier (re-based or regrouped), a rewritten header
+sentence, a category-array brace, the `): Story {` signature of the renamed resolver, the overview
+tile note/rule (now :deep()), or a constellation painter wrapper / `.value` read (now a getter)
+
+== Arm F checks ($S/wt)
+bounds.mjs: demo files > 500: 8 -> 0 ; demo dirs > 12: 2 -> 2 (containers 13, foundations 13; B-S14)
+npm run build          exit 0
+npm run build:demo     exit 0 (✓ built in 2.46s)
+npm run typecheck      exit 0 (vue-tsc, both programs)
+F-1 graph: 7,549 edges, 0 violations, census 519 (baseline 7,436 / 518)
+vitest (whole suite): 2,313 tests, 2,312 passed, 0 failed, 1 skipped
+  touched specs: springs-story 5, search-contracts 7, story-preview-card 68, FourierField.smoke 30,
+  landing 3, router-field-ownership 3, story-lazy 2, aurora-stage-affordance 5, route-transition 2 — all pass
+pi scenes (tests-visual/pi-manifest.ts): 80 before, 80 after, lists byte-identical
+aurora preset keys (sourcePresetKeys): md5 identical before/after
+blob witness (blob-page.spec.ts): orbitRadius 0.3 > bodyRadius 0.22, read from blob/presets.ts
+B15-shaped name check over the 36 new/changed demo paths: 0 hits
+reach.mjs (@glass/... to non-entry src): 15 -> 22
+
+== Arm C checks ($S/wt-c)
+seal.mjs counts before -> after:
+  B0 444 -> 445   (+1: tests-visual/pi-manifest.ts:47 computed path read of the category files)
+  B2  67 ->  70   (+3: search/catalogue.ts type import; springProjection + motionTempo read in both springs sections)
+  B6  62 ->  54   (-8: exactly the 8 demo files)
+  B1 B3 B4 B5 B7..B17: 0 -> 0
+  remaining demo B6: demo/stories/containers/ 13, demo/stories/foundations/ 13 (B-S14)
+npm run build 0 ; build:demo 0 (✓ built in 1.87s) ; typecheck 0
+F-1 graph: 7,934 edges, 0 violations, census 502
+vitest: 2,331 tests, 2,327 passed, 3 failed, 1 skipped
+  the 3: tests/gates/seal.test.ts B0, B2, B6 — red before the split as well
+pi scenes: 80 before, 80 after, byte-identical
+
+== Playwright (chromium-headless-new, 15 specs, 51 tests; GLASS_UI_DEMO_URL per arm)
+specs: dock-with-slider-live dock-morph-family blob-page blob-studio blob-pause-seam aurora-vibrancy
+  aurora-studio viz-fourier-ribbon constellation-warp-live constellation-gen-live constellation-egg-live
+  constellation-refit-live search tunable-anim motion-demo
+base  (wt-base, port 5242): 26 passed, 25 failed  (pi-base.json stats: expected 26, unexpected 25)
+  the 25: aurora-studio:132, aurora-vibrancy:200 x2, blob-page:191, dock-morph-family x4,
+  dock-with-slider-live x4, motion-demo x5, tunable-anim x8
+after (hand version of arm F, port 5241): 26 passed, 25 failed, same 25
+after (final derived arm F tree $S/wt, port 5241): 26 passed, 25 failed (12.1m)
+per-test comparison (pi-base.json vs pi-after2.json, last result per test):
+  base 26 expected / 25 unexpected ; after 26 / 25 ; tests 51 / 51 ; differing outcomes 0
+  same comparison vs the hand-version run (pi-after.json): differing outcomes 0
