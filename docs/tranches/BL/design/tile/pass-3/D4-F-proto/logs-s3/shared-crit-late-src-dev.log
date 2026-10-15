@@ -1,0 +1,12 @@
+2026-10-15 14:09:45 · load { 11.10 9.23 11.20 }
+D4-F critic probe · part late · f3p-src-dev (flavor src-dev) · load 11.10 / 9.23 / 11.20 at start
+engine Chromium 149.0.7827.55
+  FAIL chromium late single [src-dev] · rung 36.00 · item 98.63×36.00 9999px row · label 30.94 px tall, text rows 3, rows painted inside the plate 3 (NOT refused: two rows paint inside the pill) · [ToggleGroupItem] errors 1 («[ToggleGroupItem] value="All" asks for a second row: a pill shows its content on one row. ») · load 11.57 / 9.36 / 11.23
+  FAIL chromium late pill-badge [src-dev] · rung 40.00 · item 146.22×40.00 9999px row · label 35.16 px tall, text rows 3, rows painted inside the plate 3 (NOT refused: two rows paint inside the pill) · [ToggleGroupItem] errors 1 («[ToggleGroupItem] value="Inbox" asks for a second row: a pill shows its content on one row») · load 11.57 / 9.36 / 11.23
+  INFO chromium late preset-migrated [src-dev] · rung 40.00 · item 204.00×90.75 16px column · label 38.34 px tall, text rows 3, rows painted inside the plate 3 (NOT refused: two rows paint inside the pill) · [ToggleGroupItem] errors 0 · load 11.04 / 9.29 / 11.19
+engine Playwright WebKit 26.5
+  FAIL webkit late single [src-dev] · rung 36.00 · item 98.67×36.00 9999px row · label 30.91 px tall, text rows 3, rows painted inside the plate 3 (NOT refused: two rows paint inside the pill) · [ToggleGroupItem] errors 1 («[ToggleGroupItem] value="All" asks for a second row: a pill shows its content on one row. ») · load 11.04 / 9.29 / 11.19
+  FAIL webkit late pill-badge [src-dev] · rung 40.00 · item 146.36×40.00 9999px row · label 35.13 px tall, text rows 3, rows painted inside the plate 3 (NOT refused: two rows paint inside the pill) · [ToggleGroupItem] errors 1 («[ToggleGroupItem] value="Inbox" asks for a second row: a pill shows its content on one row») · load 11.04 / 9.32 / 11.19
+  INFO webkit late preset-migrated [src-dev] · rung 40.00 · item 204.00×90.77 16px column · label 38.54 px tall, text rows 3, rows painted inside the plate 3 (NOT refused: two rows paint inside the pill) · [ToggleGroupItem] errors 0 · load 11.04 / 9.32 / 11.19
+2/6 cells pass · load 11.04 / 9.32 / 11.19 at end
+exit 0 · 2026-10-15 14:09:59 · load { 11.04 9.32 11.19 }

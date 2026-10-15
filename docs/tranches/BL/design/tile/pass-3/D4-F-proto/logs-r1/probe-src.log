@@ -1,0 +1,87 @@
+2026-10-14 12:26:00 · load { 87.39 109.28 91.18 }
+D4-F p3 spec probe · f3p-src (2e22ae10, flavor src) · lock waited 0s · load 87.39 / 109.28 / 91.18 at start
+
+Chromium 149.0.7827.55 · load 87.39 / 109.28 / 91.18
+ [flip] load 87.39 / 109.28 / 91.18
+  PASS flip · rest: pill 4/4 · selected 58.44×36 18px tile=none perim= ::before 0 ::after null
+  PASS flip · row appended: tile 4/4, heights 66.34 · selected 58.44×66.34 16px tile=flush perim=1 ::before 1 ::after 1
+  PASS flip · row removed: pill 4/4 · selected 58.44×36 18px tile=none perim= ::before 0 ::after null
+ [mark] load 84.39 / 108.29 / 90.94
+  PASS mark · preset-migrated light · md tile 204×70.58 · padding box 202px vs 3.5 marks 63.0px · mark 18px (expected 18px) opacity 1 scale 1 · overlaps nothing
+  PASS mark · preset-migrated dark · md tile 204×70.58 · padding box 202px vs 3.5 marks 63.0px · mark 18px (expected 18px) opacity 1 scale 1 · overlaps nothing
+  PASS mark · specimen-migrated light · sm tile 205×98.16 · padding box 203px vs 3.5 marks 49.0px · mark 14px (expected 14px) opacity 1 scale 1 · overlaps span.tile-stage
+  PASS mark · specimen-migrated dark · sm tile 205×98.16 · padding box 203px vs 3.5 marks 49.0px · mark 14px (expected 14px) opacity 1 scale 1 · overlaps span.tile-stage
+  PASS mark · strip-migrated light · sm tile 40×58.8 · padding box 38px vs 3.5 marks 49.0px · mark 0px (expected 0px) opacity 1 scale 1 · overlaps n/a (no mark)
+  PASS mark · strip-migrated dark · sm tile 40×58.8 · padding box 38px vs 3.5 marks 49.0px · mark 0px (expected 0px) opacity 1 scale 1 · overlaps n/a (no mark)
+  PASS mark · f1-migrated light · md tile 74×118.42 · padding box 72px vs 3.5 marks 63.0px · mark 18px (expected 18px) opacity 1 scale 1 · overlaps svg.grid-svg
+  PASS mark · f1-migrated dark · md tile 74×118.42 · padding box 72px vs 3.5 marks 63.0px · mark 18px (expected 18px) opacity 1 scale 1 · overlaps svg.grid-svg
+  PASS mark · v2-migrated light · md tile 452×106.34 · padding box 450px vs 3.5 marks 63.0px · mark 18px (expected 18px) opacity 1 scale 1 · overlaps span.tx-v2-strip
+  PASS mark · v2-migrated dark · md tile 452×106.34 · padding box 450px vs 3.5 marks 63.0px · mark 18px (expected 18px) opacity 1 scale 1 · overlaps span.tx-v2-strip
+ [nest] load 75.70 / 105.66 / 90.21
+  INFO nest · outer pill group with a tile group inside a wrapper: outer items tile 4/4 (tile fact flush)
+ [unmig] load 75.70 / 105.66 / 90.21
+  INFO unmig · preset · item 0 204×40 tile=none · items with content past the plate 0/4 · items whose row is clipped or ellipsized inline 3/4 · [ToggleGroupItem] lines 0
+  INFO unmig · preset-verbatim · item 0 208×40 tile=none · items with content past the plate 0/4 · items whose row is clipped or ellipsized inline 2/4 · [ToggleGroupItem] lines 0
+  INFO unmig · specimen · item 0 207×36 tile=none · items with content past the plate 8/8 (up to 50.92 px) · items whose row is clipped or ellipsized inline 0/8 · [ToggleGroupItem] lines 0
+  INFO unmig · specimen-verbatim · item 0 207×36 tile=none · items with content past the plate 8/8 (up to 50.92 px) · items whose row is clipped or ellipsized inline 0/8 · [ToggleGroupItem] lines 0
+ [ring] load 70.84 / 104.15 / 89.77
+  INFO ring · preset-migrated · focused-selected: ring solid 2px offset 2px oklab(0.216114 0.00343135 0.00508514 / 0.48); perimeter 2px at inset 0px oklch(0.216114 0.00613456 55.9893)
+  INFO ring · specimen-migrated · focused-selected: ring solid 2px offset 2px oklab(0.216114 0.00343135 0.00508514 / 0.48); perimeter 2px at inset 0px oklch(0.216114 0.00613456 55.9893)
+ [occlude] load 66.85 / 102.77 / 89.36
+  INFO occlude · preset-migrated light · tile 204×70.58 · a 18px disc at 6px covers content ink: block-start/inline-end 0.0 % · block-end/inline-end 0.0 %
+  INFO occlude · preset-migrated dark · tile 204×70.58 · a 18px disc at 6px covers content ink: block-start/inline-end 0.0 % · block-end/inline-end 0.0 %
+  INFO occlude · specimen-migrated light · tile 205×98.16 · a 14px disc at 4px covers content ink: block-start/inline-end 10.8 % · block-end/inline-end 8.3 %
+  INFO occlude · specimen-migrated dark · tile 205×98.16 · a 14px disc at 4px covers content ink: block-start/inline-end 11.4 % · block-end/inline-end 9.0 %
+  INFO occlude · f1-migrated light · tile 74×118.42 · a 18px disc at 6px covers content ink: block-start/inline-end 0.0 % · block-end/inline-end 0.0 %
+  INFO occlude · f1-migrated dark · tile 74×118.42 · a 18px disc at 6px covers content ink: block-start/inline-end 0.0 % · block-end/inline-end 0.0 %
+  INFO occlude · v2-migrated light · tile 452×106.34 · a 18px disc at 6px covers content ink: block-start/inline-end 48.6 % · block-end/inline-end 0.0 %
+  INFO occlude · v2-migrated dark · tile 452×106.34 · a 18px disc at 6px covers content ink: block-start/inline-end 49.5 % · block-end/inline-end 0.0 %
+ [rest] load 63.42 / 101.47 / 88.98
+  INFO rest · preset-migrated light · tile=flush · blur none · border 1px color(srgb 0.109804 0.0980392 0.0901961 / 0.14) · host 230,229,224 · unselected plate 230,229,224 (ΔE vs host 0.0000, 1.00:1) · selected plate 205,204,200 (ΔE vs host 0.0764, vs unselected 0.0764, 1.27:1)
+  INFO rest · preset-migrated dark · tile=flush · blur none · border 1px color(srgb 0.913725 0.901961 0.886275 / 0.14) · host 12,11,7 · unselected plate 12,11,7 (ΔE vs host 0.0000, 1.00:1) · selected plate 39,38,33 (ΔE vs host 0.1188, vs unselected 0.1188, 1.30:1)
+  INFO rest · specimen-migrated light · tile=flush · blur none · border 1px color(srgb 0.109804 0.0980392 0.0901961 / 0.14) · host 223,220,215 · unselected plate 223,220,215 (ΔE vs host 0.0000, 1.00:1) · selected plate 177,174,171 (ΔE vs host 0.1438, vs unselected 0.1438, 1.62:1)
+  INFO rest · specimen-migrated dark · tile=flush · blur none · border 1px color(srgb 0.913725 0.901961 0.886275 / 0.14) · host 13,10,7 · unselected plate 13,10,7 (ΔE vs host 0.0000, 1.00:1) · selected plate 64,61,57 (ΔE vs host 0.2148, vs unselected 0.2148, 1.83:1)
+
+Playwright WebKit 26.5 · load 62.42 / 100.63 / 88.76
+ [flip] load 62.42 / 100.63 / 88.76
+  PASS flip · rest: pill 4/4 · selected 58.47×36 18px tile=none perim= ::before 0 ::after null
+  PASS flip · row appended: tile 4/4, heights 66.34 · selected 58.47×66.34 16px tile=flush perim=1 ::before 1 ::after 1
+  PASS flip · row removed: pill 4/4 · selected 58.47×36 18px tile=none perim= ::before 0 ::after null
+ [mark] load 58.94 / 99.27 / 88.35
+  PASS mark · preset-migrated light · md tile 204×70.59 · padding box 202px vs 3.5 marks 63.0px · mark 18px (expected 18px) opacity 1 scale 1 · overlaps nothing
+  PASS mark · preset-migrated dark · md tile 204×70.59 · padding box 202px vs 3.5 marks 63.0px · mark 18px (expected 18px) opacity 1 scale 1 · overlaps nothing
+  PASS mark · specimen-migrated light · sm tile 205×98.16 · padding box 203px vs 3.5 marks 49.0px · mark 14px (expected 14px) opacity 1 scale 1 · overlaps span.tile-stage
+  PASS mark · specimen-migrated dark · sm tile 205×98.16 · padding box 203px vs 3.5 marks 49.0px · mark 14px (expected 14px) opacity 1 scale 1 · overlaps span.tile-stage
+  PASS mark · strip-migrated light · sm tile 40×58.8 · padding box 38px vs 3.5 marks 49.0px · mark 0px (expected 0px) opacity 1 scale 1 · overlaps n/a (no mark)
+  PASS mark · strip-migrated dark · sm tile 40×58.8 · padding box 38px vs 3.5 marks 49.0px · mark 0px (expected 0px) opacity 1 scale 1 · overlaps n/a (no mark)
+  PASS mark · f1-migrated light · md tile 74×118.42 · padding box 72px vs 3.5 marks 63.0px · mark 18px (expected 18px) opacity 1 scale 1 · overlaps svg.grid-svg
+  PASS mark · f1-migrated dark · md tile 74×118.42 · padding box 72px vs 3.5 marks 63.0px · mark 18px (expected 18px) opacity 1 scale 1 · overlaps svg.grid-svg
+  PASS mark · v2-migrated light · md tile 452×106.34 · padding box 450px vs 3.5 marks 63.0px · mark 18px (expected 18px) opacity 1 scale 1 · overlaps span.tx-v2-strip
+  PASS mark · v2-migrated dark · md tile 452×106.34 · padding box 450px vs 3.5 marks 63.0px · mark 18px (expected 18px) opacity 1 scale 1 · overlaps span.tx-v2-strip
+ [nest] load 62.37 / 98.72 / 88.28
+  INFO nest · outer pill group with a tile group inside a wrapper: outer items tile 4/4 (tile fact flush)
+ [unmig] load 62.10 / 98.06 / 88.11
+  INFO unmig · preset · item 0 204×40 tile=none · items with content past the plate 0/4 · items whose row is clipped or ellipsized inline 3/4 · [ToggleGroupItem] lines 0
+  INFO unmig · preset-verbatim · item 0 208×40 tile=none · items with content past the plate 0/4 · items whose row is clipped or ellipsized inline 2/4 · [ToggleGroupItem] lines 0
+  INFO unmig · specimen · item 0 207×36 tile=none · items with content past the plate 8/8 (up to 51.14 px) · items whose row is clipped or ellipsized inline 0/8 · [ToggleGroupItem] lines 0
+  INFO unmig · specimen-verbatim · item 0 207×36 tile=none · items with content past the plate 8/8 (up to 51.14 px) · items whose row is clipped or ellipsized inline 0/8 · [ToggleGroupItem] lines 0
+ [ring] load 65.29 / 98.13 / 88.19
+  INFO ring · preset-migrated · focused-selected: ring solid 2px offset 2px oklab(0.216115 0.003422 0.005081 / 0.48); perimeter 2px at inset 0px oklch(0.216115 0.006126 56.043385)
+  INFO ring · specimen-migrated · focused-selected: ring solid 2px offset 2px oklab(0.216115 0.003422 0.005081 / 0.48); perimeter 2px at inset 0px oklch(0.216115 0.006126 56.043385)
+ [occlude] load 65.29 / 98.13 / 88.19
+  INFO occlude · preset-migrated light · tile 204×70.59 · a 18px disc at 6px covers content ink: block-start/inline-end 0.0 % · block-end/inline-end 0.0 %
+  INFO occlude · preset-migrated dark · tile 204×70.59 · a 18px disc at 6px covers content ink: block-start/inline-end 0.0 % · block-end/inline-end 0.0 %
+  INFO occlude · specimen-migrated light · tile 205×98.16 · a 14px disc at 4px covers content ink: block-start/inline-end 8.3 % · block-end/inline-end 10.8 %
+  INFO occlude · specimen-migrated dark · tile 205×98.16 · a 14px disc at 4px covers content ink: block-start/inline-end 9.0 % · block-end/inline-end 11.4 %
+  INFO occlude · f1-migrated light · tile 74×118.42 · a 18px disc at 6px covers content ink: block-start/inline-end 0.0 % · block-end/inline-end 0.0 %
+  INFO occlude · f1-migrated dark · tile 74×118.42 · a 18px disc at 6px covers content ink: block-start/inline-end 0.0 % · block-end/inline-end 0.0 %
+  INFO occlude · v2-migrated light · tile 452×106.34 · a 18px disc at 6px covers content ink: block-start/inline-end 46.7 % · block-end/inline-end 0.0 %
+  INFO occlude · v2-migrated dark · tile 452×106.34 · a 18px disc at 6px covers content ink: block-start/inline-end 47.6 % · block-end/inline-end 0.0 %
+ [rest] load 66.96 / 97.40 / 88.05
+  INFO rest · preset-migrated light · tile=flush · blur none · border 1px color(srgb 0.109804 0.098039 0.090196 / 0.14) · host 230,229,225 · unselected plate 230,229,225 (ΔE vs host 0.0000, 1.00:1) · selected plate 205,204,200 (ΔE vs host 0.0767, vs unselected 0.0767, 1.28:1)
+  INFO rest · preset-migrated dark · tile=flush · blur none · border 1px color(srgb 0.913725 0.901961 0.886275 / 0.14) · host 12,11,8 · unselected plate 12,11,8 (ΔE vs host 0.0000, 1.00:1) · selected plate 39,38,34 (ΔE vs host 0.1187, vs unselected 0.1187, 1.30:1)
+  INFO rest · specimen-migrated light · tile=flush · blur none · border 1px color(srgb 0.109804 0.098039 0.090196 / 0.14) · host 223,220,216 · unselected plate 223,220,216 (ΔE vs host 0.0000, 1.00:1) · selected plate 198,195,193 (ΔE vs host 0.0768, vs unselected 0.0768, 1.28:1)
+  INFO rest · specimen-migrated dark · tile=flush · blur none · border 1px color(srgb 0.913725 0.901961 0.886275 / 0.14) · host 13,10,7 · unselected plate 13,10,7 (ΔE vs host 0.0000, 1.00:1) · selected plate 40,37,33 (ΔE vs host 0.1189, vs unselected 0.1189, 1.29:1)
+
+D4-F p3 spec probe · gating 26/26 · load 66.64 / 96.83 / 87.90 at end
+exit 0 · 2026-10-14 12:27:16 · load { 66.64 96.83 87.90 }

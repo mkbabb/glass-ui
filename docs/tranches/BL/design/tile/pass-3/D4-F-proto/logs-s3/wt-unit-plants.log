@@ -1,0 +1,47 @@
+2026-10-15 12:16:56 · load { 13.01 45.41 68.54 }
+== plant clean · 12:16:56 load { 13.01 45.41 68.54 }
+      Tests  21 passed (21)
+== plant no-meta-row · 12:16:57 load { 13.01 45.41 68.54 }
+     × #media and #meta render in library-marked rows only when filled 5ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/components/ui/toggle-group/ToggleGroup.test.ts > D4-F — the anatomy declares the tile > #media and #meta render in library-marked rows only when filled
+      Tests  1 failed | 20 passed (21)
+== plant consumer-attrs-last · 12:16:58 load { 13.01 45.41 68.54 }
+     × a consumer role or tabindex on an item does not outrank the engine's 6ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/components/ui/toggle-group/ToggleGroup.test.ts > D4-F — the anatomy declares the tile > a consumer role or tabindex on an item does not outrank the engine's
+      Tests  1 failed | 20 passed (21)
+== plant second-spelling · 12:17:00 load { 13.01 45.41 68.54 }
+     × the sheet spells 'is a tile' once, and that rule sets the tile fact and the corner 8ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/components/ui/toggle-group/ToggleGroup.test.ts > D4-F — the anatomy declares the tile > the sheet spells 'is a tile' once, and that rule sets the tile fact and the corner
+      Tests  1 failed | 20 passed (21)
+== plant port-always-a-stop · 12:17:01 load { 13.09 44.89 68.22 }
+     × is a tab stop only while nothing inside it is one 11ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/components/fading-scroll.contract.test.ts > FadingScroll > is a tab stop only while nothing inside it is one
+      Tests  1 failed | 20 passed (21)
+== plant parked-counts-as-a-stop · 12:17:02 load { 13.09 44.89 68.22 }
+     × is a tab stop only while nothing inside it is one 17ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/components/fading-scroll.contract.test.ts > FadingScroll > is a tab stop only while nothing inside it is one
+      Tests  1 failed | 20 passed (21)
+== plant stacked-rows-unnamed · 12:17:03 load { 13.09 44.89 68.22 }
+     × development names text stacked inside the rung, which nothing cuts 1011ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/components/ui/toggle-group/ToggleGroup.test.ts > floor v2 — the commit, the names and the tile fact > development names text stacked inside the rung, which nothing cuts
+      Tests  1 failed | 20 passed (21)
+== plant weak-helper · 12:17:06 load { 12.76 44.29 67.87 }
+      Tests  21 passed (21)
+== plant weak-helper-gc · 12:17:06 load { 12.76 44.29 67.87 }
+     × is a tab stop only while nothing inside it is one 31ms
+     × development names a pill's second row and an interactive descendant, also when they arrive late 1027ms
+     × development names text stacked inside the rung, which nothing cuts 1021ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/components/fading-scroll.contract.test.ts > FadingScroll > is a tab stop only while nothing inside it is one
+ FAIL  tests/components/ui/toggle-group/ToggleGroup.test.ts > floor v2 — the commit, the names and the tile fact > development names a pill's second row and an interactive descendant, also when they arrive late
+ FAIL  tests/components/ui/toggle-group/ToggleGroup.test.ts > floor v2 — the commit, the names and the tile fact > development names text stacked inside the rung, which nothing cuts
+      Tests  3 failed | 18 passed (21)
+== plant restored · 12:17:09 load { 12.76 44.29 67.87 }
+      Tests  21 passed (21)
+exit 0 · 2026-10-15 12:17:11 · load { 12.06 43.63 67.49 }

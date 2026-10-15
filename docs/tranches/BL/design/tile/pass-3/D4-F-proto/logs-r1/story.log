@@ -1,0 +1,33 @@
+2026-10-14 12:41:48 · load { 42.19 47.59 62.18 }
+D4-F p3 proto story · /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p3/D4-F-proto/wt · lock waited 0s · load 42.41 / 47.54 / 62.08 at start
+  PASS Chromium light · "Text styles" (group, md) · fact none · 3 items 42×40 · corner 20 px (h/2) · pills
+  PASS Chromium light · "Text alignment" (radiogroup, md) · fact none · 3 items 42×40 · corner 20 px (h/2) · pills
+  PASS Chromium light · "Interface density" (radiogroup, md) · fact none · 5 items 91.31×40 · corner 20 px (h/2) · pills
+  PASS Chromium light · "Spring preset" (radiogroup, md) · fact flush · 4 items 216×102.08 · corner 16 px (field 16) · selected 1: perimeter 1, mark 18px@1
+  PASS Chromium light · "Mix sources" (group, sm) · fact flush · 3 items 141.33×67 · corner 16 px (field 16) · selected 1: perimeter 1, mark 14px@1
+  PASS Chromium light · "Deployment region" (radiogroup, md) · fact none · 3 items 48.67×40 · corner 20 px (h/2) · pills
+  PASS Chromium light · "Frozen" (radiogroup, md) · fact none · 2 items 94.06×40 · corner 20 px (h/2) · pills
+  INFO Chromium light · console errors naming ToggleGroup: 0 (of 0 page errors) · load 42.22 / 47.42 / 61.95
+  PASS Chromium dark · "Text styles" (group, md) · fact none · 3 items 42×40 · corner 20 px (h/2) · pills
+  PASS Chromium dark · "Text alignment" (radiogroup, md) · fact none · 3 items 42×40 · corner 20 px (h/2) · pills
+  PASS Chromium dark · "Interface density" (radiogroup, md) · fact none · 5 items 91.31×40 · corner 20 px (h/2) · pills
+  PASS Chromium dark · "Spring preset" (radiogroup, md) · fact flush · 4 items 216×102.08 · corner 16 px (field 16) · selected 1: perimeter 1, mark 18px@1
+  PASS Chromium dark · "Mix sources" (group, sm) · fact flush · 3 items 141.33×67 · corner 16 px (field 16) · selected 1: perimeter 1, mark 14px@1
+  PASS Chromium dark · "Deployment region" (radiogroup, md) · fact none · 3 items 48.67×40 · corner 20 px (h/2) · pills
+  PASS Chromium dark · "Frozen" (radiogroup, md) · fact none · 2 items 94.06×40 · corner 20 px (h/2) · pills
+  INFO Chromium dark · console errors naming ToggleGroup: 0 (of 0 page errors) · load 42.22 / 47.42 / 61.95
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.waitForSelector: Page crashed
+Call log:
+[2m  - waiting for locator('.toggle-group') to be visible[22m
+
+    at /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-3/D4-F-proto/probes/story.mjs:37:18 {
+  log: [ "  - waiting for locator('.toggle-group') to be visible" ],
+  name: 'Error'
+}
+
+Node.js v26.0.0
+exit 1 · 2026-10-14 12:41:58 · load { 50.93 49.14 62.47 }

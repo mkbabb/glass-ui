@@ -1,0 +1,660 @@
+{
+ "build": "f3p-src",
+ "meta": {
+  "label": "f3p-src",
+  "worktree": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p3/D4-F-proto/wt",
+  "sha": "a36fe2be",
+  "srcDirtyFiles": 22,
+  "flavor": "src",
+  "dev": false,
+  "distBuilt": null,
+  "developmentConditions": null,
+  "route": "/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-3/D4-F-spec/route",
+  "migration": {
+   "label": "D4-F",
+   "sites": [
+    "preset",
+    "specimen",
+    "strip",
+    "f1",
+    "v2",
+    "c1"
+   ]
+  },
+  "familyModules": [],
+  "built": "2026-10-15T16:12:28.480Z",
+  "seconds": 0.6
+ },
+ "engines": {
+  "chromium": {
+   "version": "Chromium 149.0.7827.55",
+   "loadStart": "6.61 / 11.29 / 17.03",
+   "q2": [
+    {
+     "ok": true,
+     "gating": true,
+     "line": "K1 migrated, #meta removed from items 1 and 3 (a one-row item beside a two-row one) → cell 4/4; heights [70.58, 70.58, 70.58, 70.58]; #0 204×70.58 rung 40 16px→16 column perim 1 | #1 204×70.58 rung 40 16px→16 column perim 1"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "mixed 2×2 walk (Q-4 b) 0R→1 0L→3 0D→2 0U→3 1R→2 1L→0 1D→3 1U→0 2R→3 2L→1 2D→3 2U→0 3R→0 3L→2 3D→0 3U→1"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "the same row centred by the consumer (unequal heights): 1D→3 (h 70.6,43.4,70.6,43.4) 3U→1 (h 70.6,43.4,70.6,43.4) 0D→2 (h 70.6,43.4,70.6,43.4) 2U→0 (h 70.6,43.4,70.6,43.4)"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "single (no anatomy) → pill 4/4; group align-items center; #0 36×36 rung 36 9999px→18 row perim "
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "vertical (no anatomy) → pill 4/4; group align-items stretch; #0 56×40 rung 40 9999px→20 row perim "
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "pill-icon (no anatomy) → pill 3/3; group align-items center; #0 80.14×40 rung 40 9999px→20 row perim "
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "pill-badge (no anatomy) → pill 3/3; group align-items center; #0 95.34×40 rung 40 9999px→20 row perim "
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "family-d-undeclared (no anatomy) → pill 4/4; group align-items center; #0 195.28×40 rung 40 9999px→20 row perim "
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "live flip, a #meta row appended to item 0 of 'single' then removed · before 36×36.0 9999px | 58×36.0 9999px | 49×36.0 9999px | 60×36.0 9999px · added 57×66.3 16px | 58×66.3 16px | 49×66.3 16px | 60×66.3 16px · removed 36×36.0 9999px | 58×36.0 9999px | 49×36.0 9999px | 60×36.0 9999px"
+    }
+   ],
+   "q3": [
+    {
+     "ok": true,
+     "gating": true,
+     "line": "preset-migrated · rows present → cell 4/4 (#0 204×70.58 rung 40 16px→16 column perim 1) · rows removed → pill 4/4 (#0 204×40 rung 40 9999px→20 row perim ) · attributes of the group and 4 items identical"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "specimen-migrated · rows present → cell 8/8 (#0 205×98.16 rung 36 16px→16 column perim 1) · rows removed → pill 8/8 (#0 205×36 rung 36 9999px→18 row perim ) · attributes of the group and 8 items identical"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "strip-migrated · rows present → cell 6/6 (#0 40×58.8 rung 36 16px→16 column perim 1) · rows removed → pill 6/6 (#0 36×36 rung 36 9999px→18 row perim ) · attributes of the group and 6 items identical"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "f1-migrated · rows present → cell 6/6 (#0 74×118.42 rung 40 16px→16 column perim 1) · rows removed → pill 6/6 (#0 50.86×40 rung 40 9999px→20 row perim ) · attributes of the group and 6 items identical"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "v2-migrated · rows present → cell 4/4 (#0 452×106.34 rung 40 16px→16 column perim 1) · rows removed → pill 4/4 (#0 452×40 rung 40 9999px→20 row perim ) · attributes of the group and 4 items identical"
+    }
+   ],
+   "q5": [
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 preset-migrated fine · rung 40 · 204.00×70.58 16px→16.00 (÷h/2 0.45) | 204.00×93.75 16px→16.00 (÷h/2 0.34) | 204.00×116.92 16px→16.00 (÷h/2 0.27) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 specimen-migrated fine · rung 36 · 205.00×98.16 16px→16.00 (÷h/2 0.33) | 205.00×116.31 16px→16.00 (÷h/2 0.28) | 205.00×134.47 16px→16.00 (÷h/2 0.24) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 strip-migrated fine · rung 36 · 40.00×58.80 16px→16.00 (÷h/2 0.54) | 90.00×69.59 16px→16.00 (÷h/2 0.46) | 90.00×80.39 16px→16.00 (÷h/2 0.40) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 f1-migrated fine · rung 40 · 74.00×118.42 16px→16.00 (÷h/2 0.27) | 133.69×135.91 16px→16.00 (÷h/2 0.24) | 133.69×153.39 16px→16.00 (÷h/2 0.21) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 v2-migrated fine · rung 40 · 452.00×106.34 16px→16.00 (÷h/2 0.30) | 452.00×129.28 16px→16.00 (÷h/2 0.25) | 452.00×152.22 16px→16.00 (÷h/2 0.21) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 preset-migrated coarse · rung 60 · 204.00×81.83 16px→16.00 (÷h/2 0.39) | 204.00×116.25 16px→16.00 (÷h/2 0.28) | 204.00×150.67 16px→16.00 (÷h/2 0.21) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 specimen-migrated coarse · rung 54 · 205.00×98.16 16px→16.00 (÷h/2 0.33) | 205.00×116.31 16px→16.00 (÷h/2 0.28) | 205.00×134.47 16px→16.00 (÷h/2 0.24) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 strip-migrated coarse · rung 54 · 54.00×58.80 16px→16.00 (÷h/2 0.54) | 90.00×69.59 16px→16.00 (÷h/2 0.46) | 90.00×80.39 16px→16.00 (÷h/2 0.40) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 f1-migrated coarse · rung 60 · 74.00×129.91 16px→16.00 (÷h/2 0.25) | 133.69×147.39 16px→16.00 (÷h/2 0.22) | 133.69×164.88 16px→16.00 (÷h/2 0.19) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 v2-migrated coarse · rung 60 · 452.00×117.83 16px→16.00 (÷h/2 0.27) | 452.00×152.25 16px→16.00 (÷h/2 0.21) | 452.00×186.67 16px→16.00 (÷h/2 0.17) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 preset-migrated ui-scale 1.25 · rung 50 · 204.00×76.09 16px→16.00 (÷h/2 0.42) | 204.00×104.78 16px→16.00 (÷h/2 0.31) | 204.00×133.47 16px→16.00 (÷h/2 0.24) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 specimen-migrated ui-scale 1.25 · rung 45 · 205.00×98.16 16px→16.00 (÷h/2 0.33) | 205.00×116.31 16px→16.00 (÷h/2 0.28) | 205.00×134.47 16px→16.00 (÷h/2 0.24) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 strip-migrated ui-scale 1.25 · rung 45 · 45.00×58.80 16px→16.00 (÷h/2 0.54) | 90.00×69.59 16px→16.00 (÷h/2 0.46) | 90.00×80.39 16px→16.00 (÷h/2 0.40) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 f1-migrated ui-scale 1.25 · rung 50 · 74.00×124.17 16px→16.00 (÷h/2 0.26) | 133.69×141.66 16px→16.00 (÷h/2 0.23) | 133.69×159.14 16px→16.00 (÷h/2 0.20) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 v2-migrated ui-scale 1.25 · rung 50 · 452.00×112.09 16px→16.00 (÷h/2 0.29) | 452.00×140.78 16px→16.00 (÷h/2 0.23) | 452.00×169.47 16px→16.00 (÷h/2 0.19) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "pill single coarse → pill 4/4; #0 54×54 rung 54 9999px→27 row perim "
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "pill pill-icon coarse → pill 3/3; #0 93.09×60 rung 60 9999px→30 row perim "
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "pill pill-badge coarse → pill 3/3; #0 111.91×60 rung 60 9999px→30 row perim "
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "pill c1-migrated coarse → pill 5/5; #0 209.94×60 rung 60 9999px→30 row perim "
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "pill single ui-scale 1.25 → pill 4/4; #0 45×45 rung 45 9999px→22.5 row perim "
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "pill pill-icon ui-scale 1.25 → pill 3/3; #0 86.73×50 rung 50 9999px→25 row perim "
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "pill pill-badge ui-scale 1.25 → pill 3/3; #0 103.86×50 rung 50 9999px→25 row perim "
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "pill c1-migrated ui-scale 1.25 → pill 5/5; #0 184×50 rung 50 9999px→25 row perim "
+    }
+   ],
+   "hover": [
+    {
+     "ok": true,
+     "gating": true,
+     "line": "preset-migrated light hover light on unselected #0 · 91.48 % of pixels move (scale pinned)"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "preset-migrated light selected #1 vs HOVERED unselected #0 (:hover true) · ≥3:1 area 1236.25 px² (band 958.00, interior 278.25) vs the bar 274 px²"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "specimen-migrated light hover light on unselected #0 · 92.34 % of pixels move (scale pinned)"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "specimen-migrated light selected #1 vs HOVERED unselected #0 (:hover true) · ≥3:1 area 1258.25 px² (band 1061.50, interior 196.75) vs the bar 303 px²"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "preset-migrated dark hover light on unselected #0 · 91.52 % of pixels move (scale pinned)"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "preset-migrated dark selected #1 vs HOVERED unselected #0 (:hover true) · ≥3:1 area 1247.75 px² (band 961.25, interior 286.50) vs the bar 274 px²"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "specimen-migrated dark hover light on unselected #0 · 92.36 % of pixels move (scale pinned)"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "specimen-migrated dark selected #1 vs HOVERED unselected #0 (:hover true) · ≥3:1 area 1268.25 px² (band 1064.00, interior 204.25) vs the bar 303 px²"
+    }
+   ],
+   "ink": [
+    {
+     "ok": true,
+     "gating": true,
+     "line": "specimen-migrated · media stroke on oklch(0.216114 0.00613456 55.9893) / off rgb(112, 89, 66) · edge oklch(0.216114 0.00613456 55.9893) · tint oklab(0.216114 0.00343135 0.00508514 / 0.12) (off rgba(0, 0, 0, 0)) · consumer [data-state] rules in the migrated arm 0"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "specimen-migrated with --selection-tone: oklch(0.62 0.2 300) on the group · media stroke on oklch(0.42 0.2 300) / off rgb(112, 89, 66) · edge oklch(0.42 0.2 300) · tint oklab(0.62 0.1 -0.173205 / 0.12) (off rgba(0, 0, 0, 0)) · consumer [data-state] rules in the migrated arm 0"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "strip-migrated · media stroke on oklch(0.216114 0.00613456 55.9893) / off rgb(124, 102, 80) · edge oklch(0.216114 0.00613456 55.9893) · tint oklab(0.216114 0.00343135 0.00508514 / 0.12) (off rgba(0, 0, 0, 0)) · consumer [data-state] rules in the migrated arm 0"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "strip-migrated with --selection-tone: oklch(0.62 0.2 300) on the group · media stroke on oklch(0.42 0.2 300) / off rgb(124, 102, 80) · edge oklch(0.42 0.2 300) · tint oklab(0.62 0.1 -0.173205 / 0.12) (off rgba(0, 0, 0, 0)) · consumer [data-state] rules in the migrated arm 0"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "f1-migrated · media stroke on oklch(0.216114 0.00613456 55.9893) / off rgb(112, 89, 66) · edge oklch(0.216114 0.00613456 55.9893) · tint oklab(0.216114 0.00343135 0.00508514 / 0.12) (off rgba(0, 0, 0, 0)) · consumer [data-state] rules in the migrated arm 0"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "f1-migrated with --selection-tone: oklch(0.62 0.2 300) on the group · media stroke on oklch(0.42 0.2 300) / off rgb(112, 89, 66) · edge oklch(0.42 0.2 300) · tint oklab(0.62 0.1 -0.173205 / 0.12) (off rgba(0, 0, 0, 0)) · consumer [data-state] rules in the migrated arm 0"
+    }
+   ],
+   "double": [
+    {
+     "ok": true,
+     "gating": true,
+     "line": "preset-migrated #0 on, #1 on, #0 on again (selects landed at 760 / 913 / 1065 ms) · kicks on #0: 2 [1.028@84ms, 1.028@384ms] · settle 1.000 · median frame 8.3 ms · load 5.07 / 9.82 / 15.99"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "single #0 on, #1 on, #0 on again (selects landed at 748 / 901 / 1053 ms) · kicks on #0: 2 [1.028@84ms, 1.028@384ms] · settle 1.000 · median frame 8.3 ms · load 5.07 / 9.82 / 15.99"
+    }
+   ],
+   "contrast": [
+    {
+     "ok": true,
+     "gating": true,
+     "line": "preset-migrated contrast-more · selected border 1px, content at +13,+11, perimeter opacity 1 · unselected border 1px, content at +13,+11"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "preset-migrated forced · selected border 1px, content at +13,+11, perimeter opacity 1 · unselected border 1px, content at +13,+11"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "specimen-migrated contrast-more · selected border 1px, content at +9,+11, perimeter opacity 1 · unselected border 1px, content at +9,+11"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "specimen-migrated forced · selected border 1px, content at +9,+11, perimeter opacity 1 · unselected border 1px, content at +9,+11"
+    },
+    {
+     "ok": true,
+     "gating": false,
+     "line": "single contrast-more · selected border 1px, content at +9,+9.25, perimeter opacity 1 · unselected border 1px, content at +9.89,+9.25 (a pill: the 2 px border is its contrast carrier, reported)"
+    },
+    {
+     "ok": true,
+     "gating": false,
+     "line": "single forced · selected border 1px, content at +9,+9.25, perimeter opacity 1 · unselected border 1px, content at +9.89,+9.25 (a pill: the 2 px border is its contrast carrier, reported)"
+    }
+   ],
+   "loadEnd": "5.15 / 9.75 / 15.93"
+  },
+  "webkit": {
+   "version": "Playwright WebKit 26.5",
+   "loadStart": "10.42 / 10.60 / 15.56",
+   "q2": [
+    {
+     "ok": true,
+     "gating": true,
+     "line": "K1 migrated, #meta removed from items 1 and 3 (a one-row item beside a two-row one) → cell 4/4; heights [70.59, 70.59, 70.59, 70.59]; #0 204×70.59 rung 40 16px→16 column perim 1 | #1 204×70.59 rung 40 16px→16 column perim 1"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "mixed 2×2 walk (Q-4 b) 0R→1 0L→3 0D→2 0U→3 1R→2 1L→0 1D→3 1U→0 2R→3 2L→1 2D→3 2U→0 3R→0 3L→2 3D→0 3U→1"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "the same row centred by the consumer (unequal heights): 1D→3 (h 70.6,43.4,70.6,43.4) 3U→1 (h 70.6,43.4,70.6,43.4) 0D→2 (h 70.6,43.4,70.6,43.4) 2U→0 (h 70.6,43.4,70.6,43.4)"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "single (no anatomy) → pill 4/4; group align-items center; #0 36×36 rung 36 9999px→18 row perim "
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "vertical (no anatomy) → pill 4/4; group align-items stretch; #0 56×40 rung 40 9999px→20 row perim "
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "pill-icon (no anatomy) → pill 3/3; group align-items center; #0 80.16×40 rung 40 9999px→20 row perim "
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "pill-badge (no anatomy) → pill 3/3; group align-items center; #0 95.45×40 rung 40 9999px→20 row perim "
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "family-d-undeclared (no anatomy) → pill 4/4; group align-items center; #0 195.28×40 rung 40 9999px→20 row perim "
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "live flip, a #meta row appended to item 0 of 'single' then removed · before 36×36.0 9999px | 58×36.0 9999px | 49×36.0 9999px | 60×36.0 9999px · added 57×66.3 16px | 58×66.3 16px | 49×66.3 16px | 60×66.3 16px · removed 36×36.0 9999px | 58×36.0 9999px | 49×36.0 9999px | 60×36.0 9999px"
+    }
+   ],
+   "q3": [
+    {
+     "ok": true,
+     "gating": true,
+     "line": "preset-migrated · rows present → cell 4/4 (#0 204×70.59 rung 40 16px→16 column perim 1) · rows removed → pill 4/4 (#0 204×40 rung 40 9999px→20 row perim ) · attributes of the group and 4 items identical"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "specimen-migrated · rows present → cell 8/8 (#0 205×98.16 rung 36 16px→16 column perim 1) · rows removed → pill 8/8 (#0 205×36 rung 36 9999px→18 row perim ) · attributes of the group and 8 items identical"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "strip-migrated · rows present → cell 6/6 (#0 40×58.8 rung 36 16px→16 column perim 1) · rows removed → pill 6/6 (#0 36×36 rung 36 9999px→18 row perim ) · attributes of the group and 6 items identical"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "f1-migrated · rows present → cell 6/6 (#0 74×118.42 rung 40 16px→16 column perim 1) · rows removed → pill 6/6 (#0 50.86×40 rung 40 9999px→20 row perim ) · attributes of the group and 6 items identical"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "v2-migrated · rows present → cell 4/4 (#0 452×106.34 rung 40 16px→16 column perim 1) · rows removed → pill 4/4 (#0 452×40 rung 40 9999px→20 row perim ) · attributes of the group and 4 items identical"
+    }
+   ],
+   "q5": [
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 preset-migrated fine · rung 40 · 204.00×70.59 16px→16.00 (÷h/2 0.45) | 204.00×93.80 16px→16.00 (÷h/2 0.34) | 204.00×116.98 16px→16.00 (÷h/2 0.27) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 specimen-migrated fine · rung 36 · 205.00×98.16 16px→16.00 (÷h/2 0.33) | 205.00×116.31 16px→16.00 (÷h/2 0.28) | 205.00×134.47 16px→16.00 (÷h/2 0.24) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 strip-migrated fine · rung 36 · 40.00×58.80 16px→16.00 (÷h/2 0.54) | 90.00×69.59 16px→16.00 (÷h/2 0.46) | 90.00×80.39 16px→16.00 (÷h/2 0.40) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 f1-migrated fine · rung 40 · 74.00×118.42 16px→16.00 (÷h/2 0.27) | 133.69×135.91 16px→16.00 (÷h/2 0.24) | 133.69×153.39 16px→16.00 (÷h/2 0.21) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 v2-migrated fine · rung 40 · 452.00×106.34 16px→16.00 (÷h/2 0.30) | 452.00×129.28 16px→16.00 (÷h/2 0.25) | 452.00×152.22 16px→16.00 (÷h/2 0.21) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 preset-migrated coarse · rung 60 · 204.00×81.81 16px→16.00 (÷h/2 0.39) | 204.00×116.22 16px→16.00 (÷h/2 0.28) | 204.00×150.63 16px→16.00 (÷h/2 0.21) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 specimen-migrated coarse · rung 54 · 205.00×98.16 16px→16.00 (÷h/2 0.33) | 205.00×116.31 16px→16.00 (÷h/2 0.28) | 205.00×134.47 16px→16.00 (÷h/2 0.24) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 strip-migrated coarse · rung 54 · 54.00×58.80 16px→16.00 (÷h/2 0.54) | 90.00×69.59 16px→16.00 (÷h/2 0.46) | 90.00×80.39 16px→16.00 (÷h/2 0.40) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 f1-migrated coarse · rung 60 · 74.00×129.89 16px→16.00 (÷h/2 0.25) | 133.69×147.38 16px→16.00 (÷h/2 0.22) | 133.69×164.86 16px→16.00 (÷h/2 0.19) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 v2-migrated coarse · rung 60 · 452.00×117.81 16px→16.00 (÷h/2 0.27) | 452.00×152.22 16px→16.00 (÷h/2 0.21) | 452.00×186.63 16px→16.00 (÷h/2 0.17) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 preset-migrated ui-scale 1.25 · rung 50 · 204.00×76.09 16px→16.00 (÷h/2 0.42) | 204.00×104.78 16px→16.00 (÷h/2 0.31) | 204.00×133.47 16px→16.00 (÷h/2 0.24) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 specimen-migrated ui-scale 1.25 · rung 45 · 205.00×98.16 16px→16.00 (÷h/2 0.33) | 205.00×116.31 16px→16.00 (÷h/2 0.28) | 205.00×134.47 16px→16.00 (÷h/2 0.24) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 strip-migrated ui-scale 1.25 · rung 45 · 45.00×58.80 16px→16.00 (÷h/2 0.54) | 90.00×69.59 16px→16.00 (÷h/2 0.46) | 90.00×80.39 16px→16.00 (÷h/2 0.40) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 f1-migrated ui-scale 1.25 · rung 50 · 74.00×124.17 16px→16.00 (÷h/2 0.26) | 133.69×141.66 16px→16.00 (÷h/2 0.23) | 133.69×159.14 16px→16.00 (÷h/2 0.20) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "T-1 v2-migrated ui-scale 1.25 · rung 50 · 452.00×112.09 16px→16.00 (÷h/2 0.29) | 452.00×140.78 16px→16.00 (÷h/2 0.23) | 452.00×169.47 16px→16.00 (÷h/2 0.19) · bound root --radius-field = 16.00"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "pill single coarse → pill 4/4; #0 54×54 rung 54 9999px→27 row perim "
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "pill pill-icon coarse → pill 3/3; #0 93.13×60 rung 60 9999px→30 row perim "
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "pill pill-badge coarse → pill 3/3; #0 112.05×60 rung 60 9999px→30 row perim "
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "pill c1-migrated coarse → pill 5/5; #0 210.06×60 rung 60 9999px→30 row perim "
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "pill single ui-scale 1.25 → pill 4/4; #0 45×45 rung 45 9999px→22.5 row perim "
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "pill pill-icon ui-scale 1.25 → pill 3/3; #0 86.77×50 rung 50 9999px→25 row perim "
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "pill pill-badge ui-scale 1.25 → pill 3/3; #0 104×50 rung 50 9999px→25 row perim "
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "pill c1-migrated ui-scale 1.25 → pill 5/5; #0 184×50 rung 50 9999px→25 row perim "
+    }
+   ],
+   "hover": [
+    {
+     "ok": true,
+     "gating": true,
+     "line": "preset-migrated light hover light on unselected #0 · 90.83 % of pixels move (scale pinned)"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "preset-migrated light selected #1 vs HOVERED unselected #0 (:hover true) · ≥3:1 area 1236.00 px² (band 951.50, interior 284.50) vs the bar 274 px²"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "specimen-migrated light hover light on unselected #0 · 92.34 % of pixels move (scale pinned)"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "specimen-migrated light selected #1 vs HOVERED unselected #0 (:hover true) · ≥3:1 area 1261.25 px² (band 1060.25, interior 201.00) vs the bar 303 px²"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "preset-migrated dark hover light on unselected #0 · 90.86 % of pixels move (scale pinned)"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "preset-migrated dark selected #1 vs HOVERED unselected #0 (:hover true) · ≥3:1 area 1242.50 px² (band 954.25, interior 288.25) vs the bar 274 px²"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "specimen-migrated dark hover light on unselected #0 · 92.36 % of pixels move (scale pinned)"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "specimen-migrated dark selected #1 vs HOVERED unselected #0 (:hover true) · ≥3:1 area 1267.00 px² (band 1063.00, interior 204.00) vs the bar 303 px²"
+    }
+   ],
+   "ink": [
+    {
+     "ok": true,
+     "gating": true,
+     "line": "specimen-migrated · media stroke on oklch(0.216115 0.006126 56.043385) / off rgb(112, 89, 66) · edge oklch(0.216115 0.006126 56.043385) · tint oklab(0.216115 0.003422 0.005081 / 0.12) (off rgba(0, 0, 0, 0)) · consumer [data-state] rules in the migrated arm 0"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "specimen-migrated with --selection-tone: oklch(0.62 0.2 300) on the group · media stroke on oklch(0.42 0.2 300) / off rgb(112, 89, 66) · edge oklch(0.42 0.2 300) · tint oklab(0.62 0.1 -0.173205 / 0.12) (off rgba(0, 0, 0, 0)) · consumer [data-state] rules in the migrated arm 0"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "strip-migrated · media stroke on oklch(0.216115 0.006126 56.043385) / off rgb(124, 102, 80) · edge oklch(0.216115 0.006126 56.043385) · tint oklab(0.216115 0.003422 0.005081 / 0.12) (off rgba(0, 0, 0, 0)) · consumer [data-state] rules in the migrated arm 0"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "strip-migrated with --selection-tone: oklch(0.62 0.2 300) on the group · media stroke on oklch(0.42 0.2 300) / off rgb(124, 102, 80) · edge oklch(0.42 0.2 300) · tint oklab(0.62 0.1 -0.173205 / 0.12) (off rgba(0, 0, 0, 0)) · consumer [data-state] rules in the migrated arm 0"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "f1-migrated · media stroke on oklch(0.216115 0.006126 56.043385) / off rgb(112, 89, 66) · edge oklch(0.216115 0.006126 56.043385) · tint oklab(0.216115 0.003422 0.005081 / 0.12) (off rgba(0, 0, 0, 0)) · consumer [data-state] rules in the migrated arm 0"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "f1-migrated with --selection-tone: oklch(0.62 0.2 300) on the group · media stroke on oklch(0.42 0.2 300) / off rgb(112, 89, 66) · edge oklch(0.42 0.2 300) · tint oklab(0.62 0.1 -0.173205 / 0.12) (off rgba(0, 0, 0, 0)) · consumer [data-state] rules in the migrated arm 0"
+    }
+   ],
+   "double": [
+    {
+     "ok": true,
+     "gating": true,
+     "line": "preset-migrated #0 on, #1 on, #0 on again (selects landed at 764 / 921 / 1074 ms) · kicks on #0: 2 [1.027@77ms, 1.027@410ms] · settle 1.000 · median frame 17.0 ms · load 7.86 / 9.95 / 14.88"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "single #0 on, #1 on, #0 on again (selects landed at 746 / 899 / 1052 ms) · kicks on #0: 2 [1.028@80ms, 1.027@397ms] · settle 1.000 · median frame 17.0 ms · load 7.86 / 9.95 / 14.88"
+    }
+   ],
+   "contrast": [
+    {
+     "ok": true,
+     "gating": true,
+     "line": "preset-migrated contrast-more · selected border 1px, content at +13,+11, perimeter opacity 1 · unselected border 1px, content at +13,+11"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "preset-migrated forced · selected border 1px, content at +13,+11, perimeter opacity 1 · unselected border 1px, content at +13,+11"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "specimen-migrated contrast-more · selected border 1px, content at +9,+11, perimeter opacity 1 · unselected border 1px, content at +9,+11"
+    },
+    {
+     "ok": true,
+     "gating": true,
+     "line": "specimen-migrated forced · selected border 1px, content at +9,+11, perimeter opacity 1 · unselected border 1px, content at +9,+11"
+    },
+    {
+     "ok": true,
+     "gating": false,
+     "line": "single contrast-more · selected border 1px, content at +9,+9.27, perimeter opacity 1 · unselected border 1px, content at +9.89,+9.27 (a pill: the 2 px border is its contrast carrier, reported)"
+    },
+    {
+     "ok": true,
+     "gating": false,
+     "line": "single forced · selected border 1px, content at +9,+9.27, perimeter opacity 1 · unselected border 1px, content at +9.89,+9.27 (a pill: the 2 px border is its contrast carrier, reported)"
+    }
+   ],
+   "loadEnd": "8.43 / 10.03 / 14.88"
+  }
+ },
+ "pass": 114,
+ "n": 114
+}

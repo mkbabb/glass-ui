@@ -1,0 +1,62 @@
+2026-10-13 16:21:52 · load { 504.59 388.67 307.99 }
+- Expected
++ Received
+- true
++ false
+ ❯ tests/gates/boot-graph.test.ts:580:34
+    578|
+    579|     it("the eager graph stays under the modulepreload and byte ceiling…
+    580|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    581|         const html = readFileSync(indexHtml, "utf8");
+    582|         const graph = measureEagerGraph(
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+ FAIL  tests/styles/glass-subtlety.test.ts > grasp register — the material answers the hand > DISCOVERS its hosts from the mounts — no hard-coded pair
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/styles/glass-subtlety.test.ts:949:5
+    947|     };
+    948|
+    949|     it("DISCOVERS its hosts from the mounts — no hard-coded pair", () …
+       |     ^
+    950|         // The list this replaces named two files. An arm that names i…
+    951|         // only ever certify the subjects someone remembered, which is…
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+ FAIL  tests/styles/glass-subtlety.test.ts > grasp register — the material answers the hand > stands DOWN every backdrop root on every mounted host, under the same gate
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/styles/glass-subtlety.test.ts:982:5
+    980|     });
+    981|
+    982|     it("stands DOWN every backdrop root on every mounted host, under t…
+       |     ^
+    983|         // The register's one precondition, and the one that fails sil…
+    984|         // `backdrop-filter` samples only as far back as its BACKDROP …
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/7]⎯
+ FAIL  tests/styles/glass-subtlety.test.ts > grasp register — the material answers the hand > moves REAL INK on every mounted host — §5.4's band is falsifiable on BOTH
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/styles/glass-subtlety.test.ts:1035:5
+    1033|     });
+    1034|
+    1035|     it("moves REAL INK on every mounted host — §5.4's band is falsifia…
+       |     ^
+    1036|         // The band `[0.6·α_rest, α_rest]` was written for a plate, an…
+    1037|         // was a structural no-op: the fill never read `--glass-veil-r…
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/7]⎯
+ FAIL  tests/components/custom/aurora/atoms.test.ts > resolveAtoms total-function fuzz > every atom combination yields a valid in-range config (TOTAL)
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/components/custom/aurora/atoms.test.ts:141:5
+    139|     // deriveAurora call is the per-iteration cost). Together they exc…
+    140|     // floor and exercise every atom field including the out-of-range …
+    141|     it("every atom combination yields a valid in-range config (TOTAL)"…
+       |     ^
+    142|         const violations: string[] = [];
+    143|         let count = 0;
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/7]⎯
+ Test Files  3 failed | 237 passed (240)
+      Tests  7 failed | 2332 passed | 10 expected fail | 1 skipped (2350)
+   Start at  16:21:53
+   Duration  65.21s (transform 97.41s, setup 67.10s, import 312.76s, tests 148.85s, environment 334.23s)
+2026-10-13 16:22:58 · load { 474.62 403.68 319.64 }
