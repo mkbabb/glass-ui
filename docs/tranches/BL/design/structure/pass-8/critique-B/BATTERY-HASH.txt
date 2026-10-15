@@ -1,0 +1,31 @@
+critique-B pass 8 · battery hash · seat claude-opus-5-5 · 2026-10-15T16:19:19Z
+Recorded BEFORE reading pass-8/B-kit/ or pass-8/B-proto.md.
+Method: cd pass-8/critique-B/battery && cat $(ls | sort) | shasum -a 256   (files sorted by name, concatenated)
+
+c3953aabe194ad0fece6ad01adf0c03f70e58be5d1248a96117e94575382adb6   battery (concatenated, sorted)
+
+f98e8d3daca4d04d1f1c61cf01c698651d87fbb390c1e6d1d84df8b3f6577068  ITEMS.md
+c5c5d3c753fbfb8a3c27e9603c56d2fa2370c6836ee5e89b11ff5fe7a7c5d68d  adapter.mjs
+61c34b149587f741326fa28c48099d59cd49b1c2895e874c8d9d203b8dcb7822  browser-plants.mjs
+0cdae5a6dccca99f2be2b9174ae3abe8b540df5b074af3385b29c972c3a75f5d  crash8.sh
+cb8e2b02e525b13183d1b18d85da6e6e93c58b8a85716f499949c9389ae4f784  flake-cases.mjs
+52f6d04cd7f1e0879b2ccadf2950737b2550a6f34d16f7f1b41ed9bf4d3c6046  gate-modules.mjs
+ae0f58b27cdb96feae8e5374a5607f87d8a23488bff7e2f1cd28dc1c319c59ab  peer-unbuilt.sh
+dc0d56310eee892662a4377edac32764d1cd8a70f4c11b29de7e4628df2304b8  plants.mjs
+40f05fdd428d17730d5ae1fbe65853287e2360013d1dfdaaa669daae027112a1  regress.mjs
+d4bcb1c6ba14f64dd16b955f926fe8a0aef8acdfe893bbe0f9b43a766992bc5d  run-plants.mjs
+292d97e628263550304301c10ab3c03b0637c4a036031329d11a707708acabae  tree-probes.sh
+
+Imported or run by path (committed):
+de8f95ace9523ef91a8a3cd48cfd299065f29672cda494acb62ffe47a0d08d0b  pass-7/critique-B/battery/plants.mjs
+5760854c9a4b18b5a7918df779147b165293fdc0b80435b8e0da8afec20ef37e  pass-7/critique-B/battery/regress.mjs
+232eee678396a5a9e4074eb600bf0b35ed3953976f133cd8d03b68c21d10c638  pass-7/critique-B/tools/extra-plants.mjs
+31932dd5214b523441dbd57f53a2d65471ca4d947c4358073904b00612ffed6a  pass-7/critique-B/battery/tree-probes.sh
+eb56ebb4b4f8fdb8f46c0a0a0ddb33fcc6515bed7309f961607ab7d466e1d662  pass-7/critique-B/battery/crash.sh
+c817128975b17eb351c504a334b78ee33e5c80b206356172537888efe9f2bbed  pass-7/critique-B/battery/peer-closure.mjs
+6659d48218561793f028d2e61346c8ce519c1337adb50476b768085501ccb374  pass-7/critique-B/battery/sfc2.sh
+7dd5ee8e5c9eefa8ceaed7a2963cc787704b5c8cfebca17c48c47266c580de3f  pass-7/critique-B/battery/sfc-split2.mjs
+d83e521f8e106708e3f0518e038df64c5ca9f6c43b7047f29f2fdb5b4f42c1ce  pass-6/critique-B/battery/plants.mjs
+ac2142f599b5dc96a50dfa5ab8523bf76b2c4f774c5de9ea4ddef8b37ef9786d  pass-6/critique-B/battery/regress.mjs
+e44b8745fb848eea7196d5831030973c5237f451b5ca20c0e041b0d06d57d6e1  pass-6/critique-B/tools/extra-plants.mjs
+969b53c2b601798101b9318f89eb5781b3f0d68bd39e38871846bd9c83a728da  pass-6/critique-B/battery/tree-probes.sh

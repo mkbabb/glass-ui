@@ -1,0 +1,127 @@
+{
+ "base": {
+  "B0": 0,
+  "B1": 0,
+  "B2": 0,
+  "B3": 0,
+  "B4": 0,
+  "B5": 0,
+  "B6": 0,
+  "B7": 0,
+  "B8": 0,
+  "B9": 0,
+  "B10": 0,
+  "B11": 0,
+  "B12": 0,
+  "B13": 0,
+  "B14": 0,
+  "B15": 0,
+  "B16": 0,
+  "B17": 0,
+  "B18": 0
+ },
+ "rows": [
+  {
+   "id": "XR-drop",
+   "item": "peer class (declared set)",
+   "expect": "*?",
+   "contrast": null,
+   "verdict": "MISSED-RECORD",
+   "named": "",
+   "lines": {},
+   "gainedCount": {},
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "XR-drop-KF",
+   "item": "peer class (declared set)",
+   "expect": "*?",
+   "contrast": null,
+   "verdict": "RECORDED",
+   "named": "B11,B18",
+   "lines": {
+    "B11": [
+     "src/composables/motion/core/index.ts exports zq8xKfLeak (no reader outside src/composables/motion/core)",
+     "src/composables/motion/core/index.ts +zq8xKfLeak (not in the pin)"
+    ],
+    "B18": [
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/zq8xKf.ts:1)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/zq8xKf.ts:1)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ToggleGroup (src/components/toggle-group/ToggleGroup.vue; first at src/composables/motion/core/zq8xKf.ts:1)"
+    ]
+   },
+   "gainedCount": {
+    "B11": 2,
+    "B18": 10
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "XR-drop-leaf",
+   "item": "peer class (declared set)",
+   "expect": "*?",
+   "contrast": null,
+   "verdict": "RECORDED",
+   "named": "B18",
+   "lines": {
+    "B18": [
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/useRAFLoop.ts:1)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/useRAFLoop.ts:1)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ToggleGroup (src/components/toggle-group/ToggleGroup.vue; first at src/composables/motion/core/useRAFLoop.ts:1)"
+    ]
+   },
+   "gainedCount": {
+    "B18": 10
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "XR-edit-leaf",
+   "item": "peer class (declared set)",
+   "expect": "*?",
+   "contrast": null,
+   "verdict": "RECORDED",
+   "named": "B18",
+   "lines": {
+    "B18": [
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/useRAFLoop.ts:1)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/useRAFLoop.ts:1)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ToggleGroup (src/components/toggle-group/ToggleGroup.vue; first at src/composables/motion/core/useRAFLoop.ts:1)"
+    ]
+   },
+   "gainedCount": {
+    "B18": 10
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "XR-edit-KF",
+   "item": "peer class (declared set)",
+   "expect": "*?",
+   "contrast": null,
+   "verdict": "RECORDED",
+   "named": "B11,B18",
+   "lines": {
+    "B11": [
+     "src/composables/motion/core/index.ts exports zq8xKfLeak (no reader outside src/composables/motion/core)",
+     "src/composables/motion/core/index.ts +zq8xKfLeak (not in the pin)"
+    ],
+    "B18": [
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/zq8xKf.ts:1)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/zq8xKf.ts:1)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ToggleGroup (src/components/toggle-group/ToggleGroup.vue; first at src/composables/motion/core/zq8xKf.ts:1)"
+    ]
+   },
+   "gainedCount": {
+    "B11": 2,
+    "B18": 10
+   },
+   "err": null,
+   "grouped": false
+  }
+ ]
+}

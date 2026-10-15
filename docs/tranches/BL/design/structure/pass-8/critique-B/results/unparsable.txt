@@ -1,0 +1,16 @@
+R4 follow-up (critic, after the hash): an unparsable source, and an unparsable source carrying a door crossing; load { 11.35 12.57 13.58 }
+unparsable alone: rc=0 0 lines naming it
+unparsable + private-file import across the dock door: rc=1
+FAIL B0 1
+   src/components/chip/zq8Unparsable.ts:1 unresolved [import] ../dock/composables/useDockHold
+control, parsable + the same import: rc=1
+FAIL B0 1
+restored: rc=0
+-- retry with a real private dock file: src/components/dock/composables/dockCrossfadeContext.ts
+unparsable + private-file import across the dock door: rc=1
+FAIL B1 1
+   src/components/chip/zq8Unparsable.ts:1 -> src/components/dock/composables/dockCrossfadeContext.ts [import] (door src/components/dock/index.ts)
+control, parsable + the same import: rc=1
+FAIL B1 1
+   src/components/chip/zq8Unparsable.ts:1 -> src/components/dock/composables/dockCrossfadeContext.ts [import] (door src/components/dock/index.ts)
+restored: rc=0

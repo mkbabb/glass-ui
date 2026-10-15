@@ -1,0 +1,14 @@
+load { 10.50 22.60 50.03 }
+FLAKE cases 8 written to /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/flake
+tally rc=1
+base keys 8, route keys 7; base runs 4, route runs 4
+base-green 5; held 1; NOT HELD 4 (failed 3, absent 1); flaky (out of the bar) 2; base-red route-green 0
+NEW tests-visual/zq8/flake.spec.ts :: F1 #1 | base expected,expected,expected,expected | route unexpected,unexpected,unexpected,unexpected
+NEW tests-visual/zq8/flake.spec.ts :: F6 #1 | base expected,expected,expected,expected | route unexpected,expected,expected,expected
+NEW tests-visual/zq8/flake.spec.ts :: F7 #1 | base expected | route unexpected
+ABSENT tests-visual/zq8/flake.spec.ts :: F8 #1 (base-green; no route run reports it)
+FLAKY tests-visual/zq8/flake.spec.ts :: F2 #1 | base expected,expected,unexpected,expected | route unexpected,unexpected,unexpected,unexpected
+FLAKY tests-visual/zq8/flake.spec.ts :: F3 #1 | base expected,unexpected,unexpected,unexpected | route unexpected,unexpected,unexpected,unexpected
+BAND zq8: specs 1, base-green 5, not held 4
+verdict: RED (5 base-green keys, every one accounted: 1 held + 3 failed + 1 absent)
+EXPECT {"F1":{"baseGreen":true,"inBar":true,"newFailure":true,"flaky":false},"F2":{"baseGreen":false,"inBar":false,"newFailure":false,"flaky":true},"F3":{"baseGreen":false,"inBar":false,"newFailure":false,"flaky":true},"F4":{"baseGreen":false,"inBar":false,"newFailure":false,"flaky":false},"F5":{"baseGreen":true,"inBar":true,"newFailure":false,"flaky":false},"F6":{"baseGreen":true,"inBar":true,"newFailure":"RECORD","flaky":false},"F7":{"baseGreen":"RECORD","inBar":"RECORD","newFailure":"NOT-HELD","flaky":"RECORD"},"F8":{"baseGreen":true,"inBar":true,"newFailure":true,"flaky":false}}

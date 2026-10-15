@@ -1,0 +1,7 @@
+peer-unbuilt re-run with the kit's documented --base (critic, after the hash). The hashed script's ${PEER_CMD:-…{ROOT}} default appends a stray '}' to any PEER_CMD, so PEER_CMD ends in '--root {ROOT' and the appended brace completes it; load { 10.44 12.58 13.63 }
+PEERU U0-built PASS rc=0 expect=0 :: peer-closure: GREEN
+PEERU U1-no-dist PASS rc=2 expect=2 ::     at main (file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-8/B-kit/tools/peer-closure.mjs:61:42)
+PEERU U2-empty-dist PASS rc=2 expect=2 ::     at main (file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-8/B-kit/tools/peer-closure.mjs:61:42)
+PEERU U3-no-motion-core PASS rc=2 expect=2 ::     at main (file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-8/B-kit/tools/peer-closure.mjs:61:42)
+PEERU U4-empty-entry INFO rc=0 :: peer-closure: GREEN
+PEERU U5-built-again PASS rc=0 expect=0 :: peer-closure: GREEN
