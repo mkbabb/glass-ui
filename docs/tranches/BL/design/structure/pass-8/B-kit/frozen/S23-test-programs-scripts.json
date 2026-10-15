@@ -1,0 +1,31 @@
+{
+ "step": "R-3 for the scripts zone: the test program and vitest collect scripts/**/__tests__ as they collect src's",
+ "files": {
+  "vitest.config.ts": {
+   "hunks": [
+    [
+     "        include: [\"tests/**/*.{test,spec}.{ts,tsx}\", \"src/**/__tests__/*.test.ts\"],\n",
+     "        include: [\"tests/**/*.{test,spec}.{ts,tsx}\", \"src/**/__tests__/*.test.ts\", \"scripts/**/__tests__/*.test.ts\"],\n"
+    ]
+   ]
+  },
+  "tsconfig.test.json": {
+   "hunks": [
+    [
+     "    \"include\": [\"tests/\", \"src/\", \"tests/shims.d.ts\"],\n",
+     "    \"include\": [\"tests/\", \"src/\", \"scripts/**/__tests__\", \"tests/shims.d.ts\"],\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "vitest.config.ts",
+   "why": "vitest collects a scripts module's colocated tests"
+  },
+  {
+   "file": "tsconfig.test.json",
+   "why": "the test program types a scripts module's colocated tests"
+  }
+ ]
+}

@@ -1,0 +1,309 @@
+{
+ "step": "B-S4c CSS doors, pass 1 (LAW §6)",
+ "files": {
+  "src/components/accordion/Accordion.vue": {
+   "hunks": [
+    [
+     "<style src=\"../_shared/disclosure/disclosure.css\"></style>\n",
+     "<style src=\"../_shared/disclosure/index.css\"></style>\n"
+    ]
+   ]
+  },
+  "src/components/collapsible/Collapsible.vue": {
+   "hunks": [
+    [
+     "<style src=\"../_shared/disclosure/disclosure.css\"></style>\n",
+     "<style src=\"../_shared/disclosure/index.css\"></style>\n"
+    ]
+   ]
+  },
+  "src/components/dock/styles/core.css": {
+   "hunks": [
+    [
+     "@import \"../legibility/adaptive-legibility.css\";\n",
+     "@import \"../legibility/index.css\";\n"
+    ],
+    [
+     "@import \"../search/search.css\";\n",
+     "@import \"../search/index.css\";\n"
+    ]
+   ]
+  },
+  "src/components/input/Input.vue": {
+   "hunks": [
+    [
+     "<style src=\"../_shared/field/control.css\"></style>\n",
+     "<style src=\"../_shared/field/index.css\"></style>\n"
+    ]
+   ]
+  },
+  "src/components/number-field/NumberFieldInput.vue": {
+   "hunks": [
+    [
+     "<style src=\"../_shared/field/control.css\"></style>\n",
+     "<style src=\"../_shared/field/index.css\"></style>\n"
+    ]
+   ]
+  },
+  "src/components/textarea/Textarea.vue": {
+   "hunks": [
+    [
+     "<style src=\"../_shared/field/control.css\"></style>\n",
+     "<style src=\"../_shared/field/index.css\"></style>\n"
+    ]
+   ]
+  },
+  "src/styles/glass/index.css": {
+   "hunks": [
+    [
+     "@import \"./material/material.css\";\n",
+     "@import \"./material/index.css\";\n"
+    ],
+    [
+     "   apply. BEFORE ladder.css: the rungs `@apply glass-plate`. */\n@import \"./material/veil.css\";\n@import \"./material/ladder.css\";\n/* The .glass-opaque level-0 escape + the content-aware under-shadow\n",
+     "   apply. BEFORE ladder.css: the rungs `@apply glass-plate`. */\n/* The .glass-opaque level-0 escape + the content-aware under-shadow\n"
+    ],
+    [
+     "   grain-overlay.css (the ladder @layer tail, unique selectors, source-order-after). */\n@import \"./material/ladder-undershadow.css\";\n/* (the glass-tier paper-grain `::after` overlay is RETIRED — K1. It painted a\n",
+     "   grain-overlay.css (the ladder @layer tail, unique selectors, source-order-after). */\n/* (the glass-tier paper-grain `::after` overlay is RETIRED — K1. It painted a\n"
+    ],
+    [
+     "@import \"./surfaces/surfaces.css\";\n",
+     "@import \"./surfaces/index.css\";\n"
+    ],
+    [
+     "   source-order-after). */\n@import \"./surfaces/surfaces-pager.css\";\n/* The .input-pill / .control-surface form-control REST register\n",
+     "   source-order-after). */\n/* The .input-pill / .control-surface form-control REST register\n"
+    ],
+    [
+     "   source order — the dist is byte-isomorphic). */\n@import \"./surfaces/control-surfaces.css\";\n/* The ONE binary-control register (`.control-bit` + its face/mark) the\n",
+     "   source order — the dist is byte-isomorphic). */\n/* The ONE binary-control register (`.control-bit` + its face/mark) the\n"
+    ],
+    [
+     "   at equal specificity by source order. */\n@import \"./surfaces/control-bit.css\";\n/* The keyed two-stop control RIM (`.glass-control-edge`) the field register, the\n",
+     "   at equal specificity by source order. */\n/* The keyed two-stop control RIM (`.glass-control-edge`) the field register, the\n"
+    ],
+    [
+     "   file. */\n@import \"./surfaces/control-edge.css\";\n/* The ONE shared glassy register (`.glass-capsule` +\n",
+     "   file. */\n/* The ONE shared glassy register (`.glass-capsule` +\n"
+    ],
+    [
+     "@import \"./shapes/glass-capsule.css\";\n",
+     "@import \"./shapes/index.css\";\n"
+    ],
+    [
+     "   `.cartoon-cast`). */\n@import \"./shapes/glass-chip.css\";\n@import \"./shapes/glass-atom.css\";\n/* The INERT-MARK register (`mark.css`) — the ONE declaration set the six inert\n",
+     "   `.cartoon-cast`). */\n/* The INERT-MARK register (`mark.css`) — the ONE declaration set the six inert\n"
+    ],
+    [
+     "   own channel — the register states the floor, never the answer. */\n@import \"./shapes/mark.css\";\n/* The ONE shared liquid-fill register (`.glass-liquid-fill`):\n",
+     "   own channel — the register states the floor, never the answer. */\n/* The ONE shared liquid-fill register (`.glass-liquid-fill`):\n"
+    ],
+    [
+     "   slider/progress recipes. */\n@import \"./shapes/liquid-fill.css\";\n/* The shared MARK register — `.glass-value-marks`/`.glass-value-mark` own the\n",
+     "   slider/progress recipes. */\n/* The shared MARK register — `.glass-value-marks`/`.glass-value-mark` own the\n"
+    ],
+    [
+     "   light channel, so it stays here as `glass/track-flow.css`. */\n@import \"./shapes/value-marks.css\";\n/* The indeterminate FLOW band — one specular sweep on `--duration-shimmer-fast`,\n",
+     "   light channel, so it stays here as `glass/track-flow.css`. */\n/* The indeterminate FLOW band — one specular sweep on `--duration-shimmer-fast`,\n"
+    ],
+    [
+     "   @import-ed IMMEDIATELY AFTER value-marks.css (same `@layer components`). */\n@import \"./shapes/track-flow.css\";\n@import \"./surface-axis.css\";\n",
+     "   @import-ed IMMEDIATELY AFTER value-marks.css (same `@layer components`). */\n@import \"./surface-axis.css\";\n"
+    ],
+    [
+     "@import \"./transitions/reveal.css\";\n",
+     "@import \"./transitions/index.css\";\n"
+    ],
+    [
+     "   `--lq-enter-*` channel substrate the `.glass-reveal` TRANSITION floor speaks). */\n@import \"./transitions/liquid-enter.css\";\n/* The `.glass-vaporize` DISMISSAL + the corner-affordance family (BK #30 W-DISSOLVE).\n",
+     "   `--lq-enter-*` channel substrate the `.glass-reveal` TRANSITION floor speaks). */\n/* The `.glass-vaporize` DISMISSAL + the corner-affordance family (BK #30 W-DISSOLVE).\n"
+    ],
+    [
+     "@import \"./transitions/dissolve.css\";\n@import \"./decoration/deep.css\";\n",
+     "@import \"./decoration/index.css\";\n"
+    ],
+    [
+     "   squircle override. */\n@import \"./decoration/defined.css\";\n@import \"./decoration/squircle.css\";\n",
+     "   squircle override. */\n"
+    ]
+   ]
+  },
+  "src/styles/index.css": {
+   "hunks": [
+    [
+     "@import \"./surface/track-well.css\";\n@import \"./surface/glass-specular-track.css\";\n@import \"./surface/paper.css\";\n@import \"../components/dark-mode-toggle/dark-mode-toggle.css\";\n@import \"../components/dock/styles/core.css\";\n@import \"../components/dock/controls/controls.css\";\n@import \"../components/card/styles.css\";\n",
+     "@import \"./surface/index.css\";\n@import \"../components/dark-mode-toggle/index.css\";\n@import \"../components/dock/index.css\";\n@import \"../components/card/index.css\";\n"
+    ],
+    [
+     "@import \"../components/card/scroll.css\";\n@import \"../components/_shared/feedback/feedback-tone.css\";\n@import \"../components/_shared/feedback/dot-ring.css\";\n@import \"./motion/transitions.css\";\n@import \"./motion/animations.css\";\n@import \"./motion/viz-reveal.css\";\n@import \"./scroll/scroll-driven.css\";\n@import \"./scroll/scroll-choreography.css\";\n@import \"./scroll/scroll-chrome.css\";\n",
+     "@import \"../components/_shared/feedback/index.css\";\n@import \"./motion/index.css\";\n@import \"./scroll/index.css\";\n"
+    ],
+    [
+     "@import \"../components/_shared/menu/menu.css\";\n@import \"../components/button/styles.css\";\n@import \"../components/configurator/styles.css\";\n",
+     "@import \"../components/_shared/menu/index.css\";\n@import \"../components/button/index.css\";\n@import \"../components/configurator/index.css\";\n"
+    ],
+    [
+     "@import \"../components/tabs/styles/segmented.css\";\n",
+     "@import \"../components/tabs/index.css\";\n"
+    ],
+    [
+     "   selectors, source-order-after — byte-isomorphic). */\n@import \"../components/tabs/styles/drag.css\";\n/* The side sheet's structural positioning + per-edge graded material, precompiled: a\n",
+     "   selectors, source-order-after — byte-isomorphic). */\n/* The side sheet's structural positioning + per-edge graded material, precompiled: a\n"
+    ],
+    [
+     "@import \"../components/sheet/styles.css\";\n",
+     "@import \"../components/sheet/index.css\";\n"
+    ],
+    [
+     "@import \"../components/dialog/styles.css\";\n",
+     "@import \"../components/dialog/index.css\";\n"
+    ],
+    [
+     "@import \"../components/slider/styles.css\";\n",
+     "@import \"../components/slider/index.css\";\n"
+    ],
+    [
+     "@import \"../components/metric/styles.css\";\n",
+     "@import \"../components/metric/index.css\";\n"
+    ],
+    [
+     "@import \"../components/music-staff/styles.css\";\n",
+     "@import \"../components/music-staff/index.css\";\n"
+    ],
+    [
+     "@import \"../components/scroll-progress-rim/styles.css\";\n",
+     "@import \"../components/scroll-progress-rim/index.css\";\n"
+    ],
+    [
+     "@import \"../components/carousel/styles.css\";\n",
+     "@import \"../components/carousel/index.css\";\n"
+    ]
+   ]
+  },
+  "src/styles/tokens/index.css": {
+   "hunks": [
+    [
+     "@import \"./motion/scheme-motion.css\";\n",
+     "@import \"./motion/index.css\";\n"
+    ],
+    [
+     "   blocks at the same cascade slot — the spring/easing tokens resolve in order). */\n@import \"./motion/scheme-spring.css\";\n/* The named motion registers (enter-overlay/menu/tooltip\n",
+     "   blocks at the same cascade slot — the spring/easing tokens resolve in order). */\n/* The named motion registers (enter-overlay/menu/tooltip\n"
+    ],
+    [
+     "@import \"./motion/motion-registers.css\";\n@import \"./surface/color-radius.css\";\n@import \"./surface/shadow.css\";\n@import \"./surface/glass.css\";\n@import \"./surface/glass-fx.css\";\n@import \"./surface/glass-deep.css\";\n@import \"./surface/on-glass-fg.css\";\n@import \"./sizing/offsets.css\";\n@import \"./sizing/sizing.css\";\n",
+     "@import \"./surface/index.css\";\n@import \"./sizing/index.css\";\n"
+    ],
+    [
+     "@import \"./sizing/sizing-config.css\";\n@import \"./sizing/scale-paper.css\";\n@import \"./sizing/scroll-tokens.css\";\n@import \"./scheme/light-dark.css\";\n@import \"./scheme/dark-arm.css\";\n",
+     "@import \"./scheme/index.css\";\n"
+    ],
+    [
+     "@import \"./scheme/dark-arm-glass.css\";\n@import \"./properties/property-regs.css\";\n",
+     "@import \"./properties/index.css\";\n"
+    ],
+    [
+     "   registrations + the sole-writer specular :root/.dark cohort → byte-isomorphic). */\n@import \"./properties/property-regs-specular.css\";\n",
+     "   registrations + the sole-writer specular :root/.dark cohort → byte-isomorphic). */\n"
+    ]
+   ]
+  },
+  "src/components/_shared/disclosure/index.css": {
+   "create": "/* components/_shared/disclosure — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./disclosure.css\";\n"
+  },
+  "src/components/dock/legibility/index.css": {
+   "create": "/* components/dock/legibility — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./adaptive-legibility.css\";\n"
+  },
+  "src/components/dock/search/index.css": {
+   "create": "/* components/dock/search — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./search.css\";\n"
+  },
+  "src/components/_shared/field/index.css": {
+   "create": "/* components/_shared/field — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./control.css\";\n"
+  },
+  "src/styles/glass/material/index.css": {
+   "create": "/* styles/glass/material — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./material.css\";\n@import \"./veil.css\";\n@import \"./ladder.css\";\n@import \"./ladder-undershadow.css\";\n"
+  },
+  "src/styles/glass/surfaces/index.css": {
+   "create": "/* styles/glass/surfaces — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./surfaces.css\";\n@import \"./surfaces-pager.css\";\n@import \"./control-surfaces.css\";\n@import \"./control-bit.css\";\n@import \"./control-edge.css\";\n"
+  },
+  "src/styles/glass/shapes/index.css": {
+   "create": "/* styles/glass/shapes — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./glass-capsule.css\";\n@import \"./glass-chip.css\";\n@import \"./glass-atom.css\";\n@import \"./mark.css\";\n@import \"./liquid-fill.css\";\n@import \"./value-marks.css\";\n@import \"./track-flow.css\";\n"
+  },
+  "src/styles/glass/transitions/index.css": {
+   "create": "/* styles/glass/transitions — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./reveal.css\";\n@import \"./liquid-enter.css\";\n@import \"./dissolve.css\";\n"
+  },
+  "src/styles/glass/decoration/index.css": {
+   "create": "/* styles/glass/decoration — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./deep.css\";\n@import \"./defined.css\";\n@import \"./squircle.css\";\n"
+  },
+  "src/styles/surface/index.css": {
+   "create": "/* styles/surface — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./track-well.css\";\n@import \"./glass-specular-track.css\";\n@import \"./paper.css\";\n"
+  },
+  "src/components/dark-mode-toggle/index.css": {
+   "create": "/* components/dark-mode-toggle — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./dark-mode-toggle.css\";\n"
+  },
+  "src/components/dock/index.css": {
+   "create": "/* components/dock — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./styles/core.css\";\n@import \"./controls/controls.css\";\n"
+  },
+  "src/components/card/index.css": {
+   "create": "/* components/card — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./styles.css\";\n@import \"./scroll.css\";\n"
+  },
+  "src/components/_shared/feedback/index.css": {
+   "create": "/* components/_shared/feedback — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./feedback-tone.css\";\n@import \"./dot-ring.css\";\n"
+  },
+  "src/styles/motion/index.css": {
+   "create": "/* styles/motion — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./transitions.css\";\n@import \"./animations.css\";\n@import \"./viz-reveal.css\";\n"
+  },
+  "src/styles/scroll/index.css": {
+   "create": "/* styles/scroll — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./scroll-driven.css\";\n@import \"./scroll-choreography.css\";\n@import \"./scroll-chrome.css\";\n"
+  },
+  "src/components/_shared/menu/index.css": {
+   "create": "/* components/_shared/menu — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./menu.css\";\n"
+  },
+  "src/components/button/index.css": {
+   "create": "/* components/button — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./styles.css\";\n"
+  },
+  "src/components/configurator/index.css": {
+   "create": "/* components/configurator — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./styles.css\";\n"
+  },
+  "src/components/tabs/index.css": {
+   "create": "/* components/tabs — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./styles/segmented.css\";\n@import \"./styles/drag.css\";\n"
+  },
+  "src/components/sheet/index.css": {
+   "create": "/* components/sheet — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./styles.css\";\n"
+  },
+  "src/components/dialog/index.css": {
+   "create": "/* components/dialog — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./styles.css\";\n"
+  },
+  "src/components/slider/index.css": {
+   "create": "/* components/slider — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./styles.css\";\n"
+  },
+  "src/components/metric/index.css": {
+   "create": "/* components/metric — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./styles.css\";\n"
+  },
+  "src/components/music-staff/index.css": {
+   "create": "/* components/music-staff — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./styles.css\";\n"
+  },
+  "src/components/scroll-progress-rim/index.css": {
+   "create": "/* components/scroll-progress-rim — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./styles.css\";\n"
+  },
+  "src/components/carousel/index.css": {
+   "create": "/* components/carousel — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./styles.css\";\n"
+  },
+  "src/styles/tokens/motion/index.css": {
+   "create": "/* styles/tokens/motion — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./scheme-motion.css\";\n@import \"./scheme-spring.css\";\n@import \"./motion-registers.css\";\n"
+  },
+  "src/styles/tokens/surface/index.css": {
+   "create": "/* styles/tokens/surface — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./color-radius.css\";\n@import \"./shadow.css\";\n@import \"./glass.css\";\n@import \"./glass-fx.css\";\n@import \"./glass-deep.css\";\n@import \"./on-glass-fg.css\";\n"
+  },
+  "src/styles/tokens/sizing/index.css": {
+   "create": "/* styles/tokens/sizing — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./offsets.css\";\n@import \"./sizing.css\";\n@import \"./sizing-config.css\";\n@import \"./scale-paper.css\";\n@import \"./scroll-tokens.css\";\n"
+  },
+  "src/styles/tokens/scheme/index.css": {
+   "create": "/* styles/tokens/scheme — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./light-dark.css\";\n@import \"./dark-arm.css\";\n@import \"./dark-arm-glass.css\";\n"
+  },
+  "src/styles/tokens/properties/index.css": {
+   "create": "/* styles/tokens/properties — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./property-regs.css\";\n@import \"./property-regs-specular.css\";\n"
+  }
+ }
+}

@@ -1,0 +1,16 @@
+{
+ "why": "P4-R5, re-measured after the GlassDock split (B6, P3-R3): src/components/dock/__tests__ held 17 direct files. A kind slot takes no sub-directory (B5) and the dock/shell carve is refused at FD-2 (splits/src.md §5), so the slot is bounded by its own files: eight single-concern files merge into three by what they test, 17 to 12. Every describe and assertion is kept as written; the merged files share one import block; no file carries a module mock or a browser, so a merge changes no test's environment (the two that do, backdrop-mode and stagger, stay alone). 140 tests before and after",
+ "files": {
+  "src/components/dock/__tests__/GlassDock.press.test.ts": "new: GlassDock under a press: the click-integrity and press-origin keepalive files, each kept whole under its own section",
+  "src/components/dock/__tests__/GlassDock.click-integrity.test.ts": "merged into GlassDock.press.test.ts",
+  "src/components/dock/__tests__/GlassDock.press-keepalive.test.ts": "merged into GlassDock.press.test.ts",
+  "src/components/dock/__tests__/GlassDock.motion.test.ts": "new: GlassDock in motion: the spring-settle source, the vertical collapse and the view-transition names, each kept whole under its own section",
+  "src/components/dock/__tests__/GlassDock.motion-parity.test.ts": "merged into GlassDock.motion.test.ts",
+  "src/components/dock/__tests__/GlassDock.vertical-collapse.test.ts": "merged into GlassDock.motion.test.ts",
+  "src/components/dock/__tests__/GlassDock.vt-names.test.ts": "merged into GlassDock.motion.test.ts",
+  "src/components/dock/__tests__/controls.a11y.test.ts": "new: the dock controls' accessible contract: DockControl's pressed and disabled states, the pause toggle and the native-title strike, each kept whole; the title strike's source reads go through the harness",
+  "src/components/dock/__tests__/DockControl.a11y.test.ts": "merged into controls.a11y.test.ts",
+  "src/components/dock/__tests__/DockBackgroundToggle.a11y.test.ts": "merged into controls.a11y.test.ts",
+  "src/components/dock/__tests__/native-title.test.ts": "merged into controls.a11y.test.ts"
+ }
+}

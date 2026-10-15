@@ -1,0 +1,37 @@
+toolchain on r4 (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p8/B-proto/r2) 2026-10-13T19:36:34Z; node v26.0.0, vite/8.1.5 darwin-arm64 node-v26.0.0, vue-tsc Version 6.0.3, vitest/4.1.10 darwin-arm64 node-v26.0.0, typescript Version 6.0.3, playwright Version 1.61.1, macOS 26.4.1
+code digest 05aaa6edbe0f8f242f0ffe5f37a4e46f9e880ec237e30a3d4293f8f9a451e1b3 over 1585 files
+seal (unbuilt) | exit 0 | 10 s | load { 142.76 189.54 178.35 } -> { 149.35 189.35 178.42 }
+peer probe on the unbuilt tree (expect 2) | exit 2 | 9 s | load { 149.35 189.35 178.42 } -> { 165.45 191.50 179.30 }
+base vite-build | exit 0 | 33 s | load { 165.45 191.50 179.30 } -> { 186.75 194.65 180.89 }
+base cascade snapshot | exit 0 | 3 s | load { 186.75 194.65 180.89 } -> { 186.85 194.54 180.94 }
+baseline styles.seq: identical to the committed baseline
+baseline styles_css.seq: identical to the committed baseline
+baseline styles_fonts.seq: identical to the committed baseline
+baseline styles_theme.seq: identical to the committed baseline
+base peer probe (expect 1: the root is broken at the base) | exit 1 | 10 s | load { 186.85 194.54 180.94 } -> { 189.37 194.82 181.19 }
+base pack list | exit 0 | 8 s | load { 189.37 194.82 181.19 } -> { 192.95 195.47 181.50 }
+vite-build | exit 0 | 54 s | load { 192.95 195.47 181.50 } -> { 220.14 201.50 184.55 }
+verify-package | exit 0 | 148 s | load { 220.14 201.50 184.55 } -> { 192.43 201.56 187.69 }
+verify-package: terminal CLEAN; claims 196, declarations 502, css 162; ratchet {"status":"PRESENT","mode":"later-coordinate","datum":"2920391","unpackedBytes":2920391,"equal":true,"increase":false} (the full record: logs/r4-verify-package.log)
+vue-tsc | exit 0 | 31 s | load { 192.43 201.56 187.69 } -> { 188.29 199.58 187.44 }
+vue-tsc-test | exit 0 | 28 s | load { 188.29 199.58 187.44 } -> { 182.40 197.13 186.98 }
+demo-dist-build | exit 0 | 4 s | load { 182.40 197.13 186.98 } -> { 182.40 197.13 186.98 }
+cascade verify against the floor base | exit 0 | 2 s | load { 182.40 197.13 186.98 } -> { 183.73 197.16 187.05 }
+peer probe (built) | exit 0 | 5 s | load { 183.73 197.16 187.05 } -> { 181.43 196.46 186.86 }
+pack list | exit 0 | 5 s | load { 181.43 196.46 186.86 } -> { 184.12 196.77 187.03 }
+pack diff exit 0
+seal-test | exit 0 | 40 s | load { 184.12 196.77 187.03 } -> { 181.83 194.50 186.64 }
+ Test Files  1 passed (1)
+      Tests  24 passed (24)
+vitest-full | exit 1 | 61 s | load { 181.83 194.50 186.64 } -> { 190.24 194.18 187.02 }
+ Test Files  1 failed | 274 passed (275)
+      Tests  2333 passed | 10 expected fail | 1 skipped (2344)
+failed files: src/components/dock/__tests__/GlassDock.stagger.test.ts
+vitest-failed-alone | exit 1 | 14 s | load { 190.24 194.18 187.02 } -> { 178.90 191.45 186.17 }
+ Test Files  1 failed (1)
+      Tests  9 passed (9)
+the same tests on the floor base: tests/components/custom/dock/GlassDock.stagger.test.ts  
+vitest-failed-base | exit 1 | 13 s | load { 178.90 191.45 186.17 } -> { 185.52 192.27 186.55 }
+ Test Files  1 failed (1)
+      Tests  9 passed (9)
+toolchain end 2026-10-13T19:44:41Z load { 185.52 192.27 186.55 }

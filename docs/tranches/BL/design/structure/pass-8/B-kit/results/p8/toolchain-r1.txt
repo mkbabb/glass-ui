@@ -1,0 +1,22 @@
+toolchain on r1 (wt, digest 05aaa6ed…); node v26.0.0, vite/8.1.5 darwin-arm64 node-v26.0.0, vue-tsc Version 6.0.3, vitest/4.1.10 darwin-arm64 node-v26.0.0, typescript Version 6.0.3, playwright Version 1.61.1, macOS 26.4.1
+vite-build | exit 0 | 43 s | load { 473.68 469.87 383.58 } -> { 467.72 468.88 387.66 }
+verify-package | exit 0 | 150 s | load { 467.72 468.88 387.66 } -> { 417.57 448.70 392.66 }
+vue-tsc | exit 0 | 48 s | load { 417.57 448.70 392.66 } -> { 404.84 440.85 392.65 }
+vue-tsc-test | exit 0 | 139 s | load { 404.84 440.85 392.65 } -> { 435.54 439.57 399.39 }
+demo-dist-build | exit 0 | 19 s | load { 435.54 439.57 399.39 } -> { 451.21 442.87 401.50 }
+seal-test | exit 0 | 198 s | load { 451.21 442.87 401.50 } -> { 471.56 458.43 416.60 }
+vitest-full | exit 1 | 248 s | load { 471.56 458.43 416.60 } -> { 607.62 516.57 450.27 }
+verify-package: terminal CLEAN {"path":"/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p8/B-proto/wt/.bundle-ratchet","status":"PRESENT","mode":"later-coordinate","raw":"2920391\n","datum":"2920391","unpackedBytes":2920391,"equal":true,"increase":false}
+logs/seal-test.log: Test Files  1 passed (1)
+logs/seal-test.log:      Tests  24 passed (24)
+logs/vitest-full.log:⎯⎯⎯⎯⎯⎯ Failed Tests 11 ⎯⎯⎯⎯⎯⎯⎯
+logs/vitest-full.log: Test Files  9 failed | 266 passed (275)
+logs/vitest-full.log:      Tests  11 failed | 2322 passed | 10 expected fail | 1 skipped (2344)
+vitest-failed-alone (9 files) | exit 1 | 71 s | load { 575.83 522.85 456.44 } -> { 565.17 528.14 463.52 }
+vitest-failed-alone: ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+vitest-failed-alone:  Test Files  6 failed | 3 passed (9)
+vitest-failed-alone:       Tests  9 failed | 76 passed | 1 expected fail (86)
+vitest-failed-base (the same tests on the floor base: 7 base files, tools/base-paths.mjs) | exit 1 | 59 s | load { 587.52 546.48 477.47 } -> { 588.30 553.24 484.29 }
+vitest-failed-base: ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+vitest-failed-base:  Test Files  5 failed | 2 passed (7)
+vitest-failed-base:       Tests  4 failed | 64 passed | 1 expected fail (69)

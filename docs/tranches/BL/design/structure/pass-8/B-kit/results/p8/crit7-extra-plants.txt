@@ -1,0 +1,16 @@
+load { 465.11 400.02 365.00 } start 12:59:16
+BASE {"B0":0,"B1":0,"B2":0,"B3":0,"B4":0,"B5":0,"B6":0,"B7":0,"B8":0,"B9":0,"B10":0,"B11":0,"B12":0,"B13":0,"B14":0,"B15":0,"B16":0,"B17":0,"B18":0}
+RECORDED XDT-CTL-lib [B-10 control (P6-R2)] control: EYEGLASS_SPAN_MAX on the selection door, read by a library file in tabs :: named=B11 gained={"B11":1}
+        B11: src/composables/motion/selection/index.ts +EYEGLASS_SPAN_MAX (not in the pin)
+SAME-AS-CTL XDT-tabs-test [B-10 (P6-R2)] EYEGLASS_SPAN_MAX on the selection door, its one outside reader a test in tabs' slot (the S67 shape) :: named=B11 ctl(XDT-CTL-lib)=B11 gained={"B11":2,"B16":1}
+        B11: src/composables/motion/selection/index.ts exports EYEGLASS_SPAN_MAX (no reader outside src/composables/motion/selection)
+        B11: src/composables/motion/selection/index.ts +EYEGLASS_SPAN_MAX (not in the pin)
+SAME-AS-CTL XDT-slider-test [B-10 (P6-R2)] the same name, its one outside reader a test in slider's slot :: named=B11 ctl(XDT-CTL-lib)=B11 gained={"B11":2,"B16":1}
+        B11: src/composables/motion/selection/index.ts exports EYEGLASS_SPAN_MAX (no reader outside src/composables/motion/selection)
+        B11: src/composables/motion/selection/index.ts +EYEGLASS_SPAN_MAX (not in the pin)
+SAME-AS-CTL XDT-noreader [B-10 (B11)] the same name on the selection door with no outside reader :: named=B11 ctl(XDT-CTL-lib)=B11 gained={"B11":2}
+        B11: src/composables/motion/selection/index.ts exports EYEGLASS_SPAN_MAX (no reader outside src/composables/motion/selection)
+        B11: src/composables/motion/selection/index.ts +EYEGLASS_SPAN_MAX (not in the pin)
+RESTORED base judgement unchanged
+TALLY {"RECORDED":1,"SAME-AS-CTL":3}
+crit7-extra-plants exit 0 221 s load { 465.11 400.02 365.00 } -> { 500.27 438.18 389.09 }

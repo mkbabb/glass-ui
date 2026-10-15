@@ -1,0 +1,593 @@
+{
+ "step": "B-S10 / P3-R5: the ./aurora-config entry lands (a leaf at the aurora unit root, mirroring ./blob-config); ./aurora drops the config module's names and the first-paint ground (R-6, P3-R4), each a MIGRATION row; every consumer that took one through ./aurora is split onto the new entry",
+ "files": {
+  "src/components/aurora/index.ts": {
+   "hunks": [
+    [
+     "export { default as Aurora } from \"./Aurora.vue\";\n// Adaptive render substrate. `AuroraRenderMode` is the public prop\n// type; `resolveRenderMode` is the device-tier resolver (testable in isolation).\n// `ResolveRenderModeOptions` carries the\n// `forceWebGLUnderSoftwareRaster` escape; `isSoftwareWebGLRenderer` is the shared\n// software-raster predicate (the runtime wedge catch + the resolver consume ONE\n// detector — no second probe context).\nexport {\n    resolveRenderMode,\n    isSoftwareWebGLRenderer,\n    type AuroraRenderMode,\n    type ResolveRenderModeOptions,\n} from \"./config\";\n// `AURORA_SETTLE_MS` is the settle beacon's entrance budget — a capture consumer that\n",
+     "export { default as Aurora } from \"./Aurora.vue\";\n// `AURORA_SETTLE_MS` is the settle beacon's entrance budget — a capture consumer that\n"
+    ],
+    [
+     "export type { AuroraRuntimeMode, AuroraRuntimeOptions } from \"./runtime\";\n// `isAuroraDriftLive` + `AURORA_DRIFT_FLOOR` are deliberately NOT re-exported here.\n// They are the render loops' own demand gate — three internal consumers, no consumer\n// question they answer — and a published export nobody outside can name a use for is\n// the surface bloat the overfit sweep exists to catch.\nexport {\n    DEFAULT_AURORA_CONFIG,\n    PAPER_WASH_GROUND,\n    // The chroma-floor identity, composed by consumers\n    // these by name, no magic number).\n    DEFAULT_VIVIDNESS,\n    VIVID_TARGET,\n    // Image-source axis defaults and types.\n    IMAGE_BLUR_MIN_DEFAULT,\n    IMAGE_BLUR_MAX_DEFAULT,\n    MAX_NUCLEI,\n    MAX_STOPS,\n    type AuroraConfig,\n    type AuroraCursorApi,\n    type AuroraFlow,\n    type AuroraInstance,\n    type AuroraInteractivity,\n    type AuroraMedium,\n    type AuroraNucleus,\n    type AuroraSource,\n    type AuroraImageSource,\n    type AuroraImageBlur,\n    type FlowPattern,\n    type StrokeMode,\n    type StrokeOrient,\n    type WarpMode,\n} from \"./config\";\n// The resolveAtoms ≤7-atom door is the consumer surface (the full\n",
+     "export type { AuroraRuntimeMode, AuroraRuntimeOptions } from \"./runtime\";\n// The resolveAtoms ≤7-atom door is the consumer surface (the full\n"
+    ],
+    [
+     "} from \"./composables/atoms-fields\";\nexport {\n    deriveAurora,\n    flattenPalette,\n    hexToOklchStop,\n    paletteToCssGradient,\n} from \"./config\";\n// The luminance-faithful headless fallback ground (the\n// field-sampled nuclei-glow surface for the software-raster / capture substrate;\n// reuses oklchToLinear — ONE color source). `sampleAuroraField` is the per-pixel\n// static composite mirror the certify π measures.\nexport {\n    auroraFallbackGround,\n    sampleAuroraField,\n    nucleiFieldStatic,\n    relativeLuminance,\n    type AuroraFallbackGround,\n    type AuroraFallbackGroundOptions,\n    type AuroraGroundMetrics,\n} from \"./composables/auroraFallbackGround\";\n// D10b — the seed-one-color → N-stop palette producer (composes the shipped\n// value.js OKLab/gamut core). T6 wires it into the Palette configurator tab.\n// The derive-color superset: more harmonies + easing + temperature.\nexport type {\n    AuroraHarmony,\n    DeriveAuroraOptions,\n    DeriveEasing,\n} from \"./config\";\n// The value.js HueInterpolationMethod alias for the palette hue-arc atom.\nexport type { AuroraHuePath } from \"./config\";\n",
+     "} from \"./composables/atoms-fields\";\n"
+    ]
+   ]
+  },
+  "scripts/structure/records/entry-record.json": {
+   "hunks": [
+    [
+     "        [\"aurora\",\"src/components/aurora/index.ts\"],\n        [\"badge\",\"src/components/badge/index.ts\"],\n",
+     "        [\"aurora\",\"src/components/aurora/index.ts\"],\n        [\"aurora-config\",\"src/components/aurora/aurora-config.ts\"],\n        [\"badge\",\"src/components/badge/index.ts\"],\n"
+    ]
+   ]
+  },
+  "MIGRATION.md": {
+   "hunks": [
+    [
+     "| `SurfaceTier` | `@mkbabb/glass-ui/surface` | `@mkbabb/glass-ui/axes` |\n\n",
+     "| `SurfaceTier` | `@mkbabb/glass-ui/surface` | `@mkbabb/glass-ui/axes` |\n| `resolveRenderMode` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `isSoftwareWebGLRenderer` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `DEFAULT_AURORA_CONFIG` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `PAPER_WASH_GROUND` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `DEFAULT_VIVIDNESS` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `VIVID_TARGET` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `IMAGE_BLUR_MIN_DEFAULT` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `IMAGE_BLUR_MAX_DEFAULT` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `MAX_NUCLEI` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `MAX_STOPS` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `deriveAurora` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `flattenPalette` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `hexToOklchStop` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `paletteToCssGradient` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `AuroraRenderMode` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `ResolveRenderModeOptions` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `AuroraConfig` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `AuroraCursorApi` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `AuroraFlow` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `AuroraInstance` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `AuroraInteractivity` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `AuroraMedium` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `AuroraNucleus` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `AuroraSource` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `AuroraImageSource` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `AuroraImageBlur` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `FlowPattern` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `StrokeMode` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `StrokeOrient` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `WarpMode` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `AuroraHarmony` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `DeriveAuroraOptions` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `DeriveEasing` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `AuroraHuePath` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `auroraFallbackGround` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `sampleAuroraField` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `nucleiFieldStatic` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `relativeLuminance` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `AuroraFallbackGround` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `AuroraFallbackGroundOptions` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n| `AuroraGroundMetrics` | `@mkbabb/glass-ui/aurora` | `@mkbabb/glass-ui/aurora-config` |\n\n_A new entry: `@mkbabb/glass-ui/aurora-config`_\n\nThe aurora configuration, beside `/aurora` as `/blob-config` sits beside `/blob`: the\nconfiguration schema and defaults, the palette derivation, the render-mode resolver and the\nfirst-paint ground (`auroraFallbackGround`), without the component or either renderer. The\nnames in the table above whose new home is `/aurora-config` leave `/aurora`.\n\n"
+    ]
+   ]
+  },
+  "demo/shell/AppShell.vue": {
+   "hunks": [
+    [
+     "// chunk resolves is a first-paint regression, not a diet. Its deps\n// (`composables/color`, the type-only `aurora/constants/presets`) are already eager.\nimport { auroraFallbackGround } from \"@glass/components/aurora/composables/auroraFallbackGround\";\n",
+     "// chunk resolves is a first-paint regression, not a diet. Its entry, `./aurora-config`,\n// reaches the config module and the colour kernel only, both already eager.\nimport { auroraFallbackGround } from \"@glass/components/aurora/aurora-config\";\n"
+    ],
+    [
+     "// shader sets was still eager. The direct component path is imported rather than the\n// aurora barrel so the async chunk carries the component, not the whole export surface.\n",
+     "// shader sets was still eager. The boundary loads the public `./aurora` entry (R-10): the\n// component, its composables and the atoms; the configuration rides `./aurora-config`.\n"
+    ],
+    [
+     "    loader: () => import(\"@glass/components/aurora/Aurora.vue\"),\n",
+     "    loader: () => import(\"@glass/components/aurora\").then((m) => m.Aurora),\n"
+    ]
+   ]
+  },
+  "tests/gates/boot-graph.test.ts": {
+   "hunks": [
+    [
+     "        [\"Aurora\", \"@glass/components/aurora/Aurora.vue\"],\n",
+     "        [\"Aurora\", \"@glass/components/aurora\"],\n"
+    ],
+    [
+     "            binding.module === \"@glass/components/aurora/composables/auroraFallbackGround\",\n",
+     "            binding.module === \"@glass/components/aurora/aurora-config\",\n"
+    ],
+    [
+     "                .replace('import(\"@glass/components/aurora/Aurora.vue\")', 'import(\"./configurator/PresetEditor.vue\")')\n                .replace('import(\"__C19_SWAP__\")', 'import(\"@glass/components/aurora/Aurora.vue\")'),\n",
+     "                .replace('import(\"@glass/components/aurora\")', 'import(\"./configurator/PresetEditor.vue\")')\n                .replace('import(\"__C19_SWAP__\")', 'import(\"@glass/components/aurora\")'),\n"
+    ],
+    [
+     "            source.replace(\"@glass/components/aurora/composables/auroraFallbackGround\", \"./wrong-ground\"),\n",
+     "            source.replace(\"@glass/components/aurora/aurora-config\", \"./wrong-ground\"),\n"
+    ]
+   ]
+  },
+  "demo/chassis/hero/aurora-hero.ts": {
+   "hunks": [
+    [
+     "// The config factory reads the plain-object default from the leaf that DEFINES it, not\n// from the aurora barrel: the barrel's first line re-exports `Aurora.vue`, so a barrel\n// import here would statically re-drag the component into the eager graph and undo the\n// shell's async boundary.\nimport type { AuroraConfig } from \"@glass/components/aurora/config/presets\";\nimport { DEFAULT_AURORA_CONFIG } from \"@glass/components/aurora/config/presets\";\n",
+     "// The config factory reads the plain-object default from `./aurora-config`, not from the\n// aurora barrel: the barrel's first line re-exports `Aurora.vue`, so a barrel import here\n// would statically re-drag the component into the eager graph and undo the shell's async\n// boundary.\nimport type { AuroraConfig } from \"@glass/components/aurora/aurora-config\";\nimport { DEFAULT_AURORA_CONFIG } from \"@glass/components/aurora/aurora-config\";\n"
+    ]
+   ]
+  },
+  "src/components/aurora/README.md": {
+   "hunks": [
+    [
+     "# Aurora\n\nAurora is a full-bleed procedural color field with smooth, watercolor, pastel,\noil, crayon, Van Gogh, oil-pastel, and Kuwahara registers. It prefers WebGPU and\nuses its supported WebGL2 implementation when WebGPU acquisition cannot start.\nA CSS palette ground remains available as an explicit static product mode.\n\n```vue\n<script setup lang=\"ts\">\nimport {\n    Aurora,\n    DEFAULT_AURORA_CONFIG,\n    deriveAurora,\n} from \"@mkbabb/glass-ui/aurora\";\n\nconst config = {\n    ...DEFAULT_AURORA_CONFIG,\n    palette: deriveAurora(\"#4f46e5\", {\n        harmony: \"analogous\",\n        stopCount: 5,\n    }),\n};\n</script>\n\n<template>\n    <Aurora :config=\"config\" />\n</template>\n```\n\n## Runtime contract\n\n`Aurora.vue` resolves the public animated/static product mode. The animated\nruntime composes `createGpuSubstrate`; both GPU engines share the same\nconfiguration, pointer field, palette semantics, timing, resize policy,\nreduced-motion state, suspension reasons, and `RendererStatus` channel.\n\nThe shared lifecycle owns:\n\n- backing-store sizing and DPR policy;\n- tab, offscreen, content-visibility, manual, and reduced-motion parking;\n- one demand-driven frame schedule;\n- engine recovery and disposal.\n\nAurora therefore does not expose a setter for reduced motion. The live\n`prefers-reduced-motion` query is the sole authority. Under reduce, the field\npaints a stable frame and interaction motion remains suppressed. Long-running\nbackground consumers should also expose the public `pause()` / `resume()` seam.\n\nInitialization is deferred by default so device/context setup and shader work do\nnot occupy first paint. Capture consumers use `armAsync()` before `renderAt()`;\nthe promise covers WebGPU device acquisition and resolves immediately for the\nWebGL2 path. Setup and pipeline failures are reported rather than disguised as a\ndifferent successful renderer.\n\n## Public surface\n\n```ts\nimport {\n    Aurora,\n    createAurora,\n    useAurora,\n    resolveAtoms,\n    deriveAurora,\n    resolveRenderMode,\n    DEFAULT_AURORA_CONFIG,\n} from \"@mkbabb/glass-ui/aurora\";\n\nimport type {\n    AuroraConfig,\n    AuroraInstance,\n    AuroraRuntimeOptions,\n} from \"@mkbabb/glass-ui/aurora\";\n```\n\nThe imperative instance is intentionally small:\n\n```ts\ninterface AuroraInstance {\n    arm(): void;\n    armAsync(): Promise<void>;\n    update(config: AuroraConfig): void;\n    setCursor(x: number, y: number, strength?: number): void;\n    clearCursor(): void;\n    setCursorRadius(radius: number): void;\n    renderAt(timeSeconds: number): void;\n    pause(): void;\n    resume(): void;\n    dispose(): void;\n}\n```\n\n`resolveAtoms()` is the concise authoring door for ordinary consumers. Direct\n`AuroraConfig` remains available to preset and studio authors. Presets belong in\nconsumers; the library owns the neutral warm identity and the renderer.\n\n## Color and media\n\nCPU palette derivation uses the shared color composables. GPU color conversion,\nOKLab/OKLCh interpolation, sRGB transfer, and shared noise constants live in the\nneutral procedural shader leaves:\n\n- `src/composables/glass/procedural/color.glsl.ts`\n- `src/composables/glass/procedural/color.wgsl.ts`\n\nThe explicit GLSL and WGSL translations stay separate because each shader\nlanguage has a different type and binding model. The semantic source, numeric\nconstants, palette meaning, and output encoding remain shared.\n\nPainterly media are selected by configuration, not separate components. The\nWebGL2 path carries the complete established media catalogue; the WebGPU path\nuses the supported Aurora shader contract. Engine identity is available through\n`RendererStatus`, so a consumer never needs to infer it from the route or mode\nname.\n\n## Accessibility and performance\n\n- Respect the static CSS mode chosen by `resolveRenderMode()`.\n- Wire `pause()` / `resume()` for continuously moving backgrounds.\n- Do not add a second media-query listener around Aurora.\n- Keep pointer input on the shared velocity field; it is already parked with the\n  renderer.\n- Use `renderAt()` only for deterministic draw requests, not as a second frame\n  loop.\n\nSee [DESIGN.md](./DESIGN.md) for the durable architecture and invariants.\n",
+     "# Aurora\n\nAurora is a full-bleed procedural color field with smooth, watercolor, pastel,\noil, crayon, Van Gogh, oil-pastel, and Kuwahara registers. It prefers WebGPU and\nuses its supported WebGL2 implementation when WebGPU acquisition cannot start.\nA CSS palette ground remains available as an explicit static product mode.\n\n```vue\n<script setup lang=\"ts\">\nimport { Aurora } from \"@mkbabb/glass-ui/aurora\";\nimport { DEFAULT_AURORA_CONFIG, deriveAurora } from \"@mkbabb/glass-ui/aurora-config\";\n\nconst config = {\n    ...DEFAULT_AURORA_CONFIG,\n    palette: deriveAurora(\"#4f46e5\", {\n        harmony: \"analogous\",\n        stopCount: 5,\n    }),\n};\n</script>\n\n<template>\n    <Aurora :config=\"config\" />\n</template>\n```\n\n## Runtime contract\n\n`Aurora.vue` resolves the public animated/static product mode. The animated\nruntime composes `createGpuSubstrate`; both GPU engines share the same\nconfiguration, pointer field, palette semantics, timing, resize policy,\nreduced-motion state, suspension reasons, and `RendererStatus` channel.\n\nThe shared lifecycle owns:\n\n- backing-store sizing and DPR policy;\n- tab, offscreen, content-visibility, manual, and reduced-motion parking;\n- one demand-driven frame schedule;\n- engine recovery and disposal.\n\nAurora therefore does not expose a setter for reduced motion. The live\n`prefers-reduced-motion` query is the sole authority. Under reduce, the field\npaints a stable frame and interaction motion remains suppressed. Long-running\nbackground consumers should also expose the public `pause()` / `resume()` seam.\n\nInitialization is deferred by default so device/context setup and shader work do\nnot occupy first paint. Capture consumers use `armAsync()` before `renderAt()`;\nthe promise covers WebGPU device acquisition and resolves immediately for the\nWebGL2 path. Setup and pipeline failures are reported rather than disguised as a\ndifferent successful renderer.\n\n## Public surface\n\n```ts\nimport {\n    Aurora,\n    createAurora,\n    useAurora,\n    resolveAtoms,\n} from \"@mkbabb/glass-ui/aurora\";\nimport { deriveAurora, resolveRenderMode, DEFAULT_AURORA_CONFIG } from \"@mkbabb/glass-ui/aurora-config\";\n\nimport type { AuroraRuntimeOptions } from \"@mkbabb/glass-ui/aurora\";\nimport type { AuroraConfig, AuroraInstance } from \"@mkbabb/glass-ui/aurora-config\";\n```\n\nThe imperative instance is intentionally small:\n\n```ts\ninterface AuroraInstance {\n    arm(): void;\n    armAsync(): Promise<void>;\n    update(config: AuroraConfig): void;\n    setCursor(x: number, y: number, strength?: number): void;\n    clearCursor(): void;\n    setCursorRadius(radius: number): void;\n    renderAt(timeSeconds: number): void;\n    pause(): void;\n    resume(): void;\n    dispose(): void;\n}\n```\n\n`resolveAtoms()` is the concise authoring door for ordinary consumers. Direct\n`AuroraConfig` remains available to preset and studio authors. Presets belong in\nconsumers; the library owns the neutral warm identity and the renderer.\n\n## Color and media\n\nCPU palette derivation uses the shared color composables. GPU color conversion,\nOKLab/OKLCh interpolation, sRGB transfer, and shared noise constants live in the\nneutral procedural shader leaves:\n\n- `src/composables/glass/procedural/color.glsl.ts`\n- `src/composables/glass/procedural/color.wgsl.ts`\n\nThe explicit GLSL and WGSL translations stay separate because each shader\nlanguage has a different type and binding model. The semantic source, numeric\nconstants, palette meaning, and output encoding remain shared.\n\nPainterly media are selected by configuration, not separate components. The\nWebGL2 path carries the complete established media catalogue; the WebGPU path\nuses the supported Aurora shader contract. Engine identity is available through\n`RendererStatus`, so a consumer never needs to infer it from the route or mode\nname.\n\n## Accessibility and performance\n\n- Respect the static CSS mode chosen by `resolveRenderMode()`.\n- Wire `pause()` / `resume()` for continuously moving backgrounds.\n- Do not add a second media-query listener around Aurora.\n- Keep pointer input on the shared velocity field; it is already parked with the\n  renderer.\n- Use `renderAt()` only for deterministic draw requests, not as a second frame\n  loop.\n\nSee [DESIGN.md](./DESIGN.md) for the durable architecture and invariants.\n"
+    ]
+   ]
+  },
+  "src/components/aurora/aurora-config.ts": {
+   "create": "// @mkbabb/glass-ui/aurora-config — the aurora configuration, without the component.\n//\n// The configuration schema and its defaults, the palette derivation, the render-mode\n// resolver, and the first-paint ground a shell paints before `Aurora` resolves. None of\n// them reaches `Aurora.vue` or either renderer, so a consumer that reads configuration, or\n// paints the eager ground, never pulls the component onto its first-paint path.\n// `/aurora` publishes the component, its composables and the atom surface; the\n// `/blob-config` leaf beside `/blob` is the same construction.\n//\n// `isAuroraDriftLive` and `AURORA_DRIFT_FLOOR` are deliberately not published: they are\n// the render loops' own demand gate, with no consumer question they answer.\nexport {\n    DEFAULT_AURORA_CONFIG,\n    DEFAULT_VIVIDNESS,\n    deriveAurora,\n    flattenPalette,\n    hexToOklchStop,\n    IMAGE_BLUR_MAX_DEFAULT,\n    IMAGE_BLUR_MIN_DEFAULT,\n    isSoftwareWebGLRenderer,\n    MAX_NUCLEI,\n    MAX_STOPS,\n    PAPER_WASH_GROUND,\n    paletteToCssGradient,\n    resolveRenderMode,\n    VIVID_TARGET,\n} from \"./config\";\nexport type {\n    AuroraConfig,\n    AuroraCursorApi,\n    AuroraFlow,\n    AuroraHarmony,\n    AuroraHuePath,\n    AuroraImageBlur,\n    AuroraImageSource,\n    AuroraInstance,\n    AuroraInteractivity,\n    AuroraMedium,\n    AuroraNucleus,\n    AuroraRenderMode,\n    AuroraSource,\n    DeriveAuroraOptions,\n    DeriveEasing,\n    FlowPattern,\n    ResolveRenderModeOptions,\n    StrokeMode,\n    StrokeOrient,\n    WarpMode,\n} from \"./config\";\n// The luminance-faithful fallback ground: the field-sampled nuclei-glow surface for the\n// software-raster and capture substrate, and the eager shell's frame-0 wash.\n// `sampleAuroraField` is the per-pixel static composite the certify π measures.\nexport {\n    auroraFallbackGround,\n    nucleiFieldStatic,\n    relativeLuminance,\n    sampleAuroraField,\n    type AuroraFallbackGround,\n    type AuroraFallbackGroundOptions,\n    type AuroraGroundMetrics,\n} from \"./composables/auroraFallbackGround\";\n"
+  },
+  "demo/stories/dock/_frame/DockStage.vue": {
+   "hunks": [
+    [
+     "import { Aurora, type AuroraConfig } from \"@glass/components/aurora\";\n",
+     "import { Aurora } from \"@glass/components/aurora\";\nimport { type AuroraConfig } from \"@glass/components/aurora/aurora-config\";\n"
+    ]
+   ]
+  },
+  "demo/stories/dock/vertical.vue": {
+   "hunks": [
+    [
+     "import { DEFAULT_AURORA_CONFIG } from \"@glass/components/aurora\";\n",
+     "import { DEFAULT_AURORA_CONFIG } from \"@glass/components/aurora/aurora-config\";\n"
+    ]
+   ]
+  },
+  "demo/stories/forms/slider.vue": {
+   "hunks": [
+    [
+     "import { auroraFallbackGround } from \"@glass/components/aurora\";\n",
+     "import { auroraFallbackGround } from \"@glass/components/aurora/aurora-config\";\n"
+    ]
+   ]
+  },
+  "demo/stories/navigation/tabs.vue": {
+   "hunks": [
+    [
+     "import { auroraFallbackGround } from \"@glass/components/aurora\";\n",
+     "import { auroraFallbackGround } from \"@glass/components/aurora/aurora-config\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/aurora.vue": {
+   "hunks": [
+    [
+     "import type { AuroraConfig } from \"@glass/components/aurora\";\n",
+     "import type { AuroraConfig } from \"@glass/components/aurora/aurora-config\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/aurora/AuroraConfigDock.vue": {
+   "hunks": [
+    [
+     "import {\n    resolveAtoms,\n    configToAtoms,\n    type AuroraConfig,\n    type AuroraAtoms,\n} from \"@glass/components/aurora\";\n",
+     "import { resolveAtoms, configToAtoms, type AuroraAtoms } from \"@glass/components/aurora\";\nimport { type AuroraConfig } from \"@glass/components/aurora/aurora-config\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/aurora/AuroraStage.vue": {
+   "hunks": [
+    [
+     "import type { AuroraConfig } from \"@glass/components/aurora\";\n",
+     "import type { AuroraConfig } from \"@glass/components/aurora/aurora-config\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/aurora/NucleiOverlay.vue": {
+   "hunks": [
+    [
+     "import type { AuroraNucleus } from \"@glass/components/aurora\";\n",
+     "import type { AuroraNucleus } from \"@glass/components/aurora/aurora-config\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/aurora/OklchStopRow.vue": {
+   "hunks": [
+    [
+     "import { hexToOklchStop } from \"@glass/components/aurora\";\n",
+     "import { hexToOklchStop } from \"@glass/components/aurora/aurora-config\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/aurora/config/CompositionLayer.vue": {
+   "hunks": [
+    [
+     "import type {\n    AuroraConfig,\n    AuroraSource,\n    WarpMode,\n} from \"@glass/components/aurora\";\n",
+     "import type { AuroraConfig, AuroraSource, WarpMode } from \"@glass/components/aurora/aurora-config\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/aurora/config/FlowLayer.vue": {
+   "hunks": [
+    [
+     "import type { AuroraConfig, FlowPattern } from \"@glass/components/aurora\";\n",
+     "import type { AuroraConfig, FlowPattern } from \"@glass/components/aurora/aurora-config\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/aurora/config/NucleiLayer.vue": {
+   "hunks": [
+    [
+     "import type { AuroraConfig } from \"@glass/components/aurora\";\nimport { MAX_NUCLEI } from \"@glass/components/aurora\";\n",
+     "import type { AuroraConfig } from \"@glass/components/aurora/aurora-config\";\nimport { MAX_NUCLEI } from \"@glass/components/aurora/aurora-config\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/aurora/config/TextureLayer.vue": {
+   "hunks": [
+    [
+     "import type {\n    AuroraConfig,\n    StrokeMode,\n} from \"@glass/components/aurora\";\n",
+     "import type { AuroraConfig, StrokeMode } from \"@glass/components/aurora/aurora-config\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/aurora/config/options.ts": {
+   "hunks": [
+    [
+     "} from \"@glass/components/aurora\";\n",
+     "} from \"@glass/components/aurora/aurora-config\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/aurora/config/usePaletteStops.ts": {
+   "hunks": [
+    [
+     "import type { AuroraConfig } from \"@glass/components/aurora\";\n",
+     "import type { AuroraConfig } from \"@glass/components/aurora/aurora-config\";\n"
+    ],
+    [
+     "import { MAX_STOPS } from \"@glass/components/aurora\";\n",
+     "import { MAX_STOPS } from \"@glass/components/aurora/aurora-config\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/aurora/presets.ts": {
+   "hunks": [
+    [
+     "import type { AuroraConfig, AuroraMedium } from \"@glass/components/aurora\";\nimport { DEFAULT_AURORA_CONFIG } from \"@glass/components/aurora\";\n",
+     "import type { AuroraConfig, AuroraMedium } from \"@glass/components/aurora/aurora-config\";\nimport { DEFAULT_AURORA_CONFIG } from \"@glass/components/aurora/aurora-config\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/aurora/sections/AuroraColorSection.vue": {
+   "hunks": [
+    [
+     "import type {\n    AuroraAtoms,\n    AuroraConfig,\n    AuroraHarmony,\n} from \"@glass/components/aurora\";\nimport {\n    MAX_STOPS,\n    deriveAurora,\n} from \"@glass/components/aurora\";\n",
+     "import type { AuroraAtoms } from \"@glass/components/aurora\";\nimport type { AuroraConfig, AuroraHarmony } from \"@glass/components/aurora/aurora-config\";\nimport { MAX_STOPS, deriveAurora } from \"@glass/components/aurora/aurora-config\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/aurora/sections/AuroraCompositionSection.vue": {
+   "hunks": [
+    [
+     "import {\n    MAX_NUCLEI,\n    type AuroraAtoms,\n    type AuroraMedium,\n    type AuroraZoneArrangement,\n} from \"@glass/components/aurora\";\n",
+     "import { type AuroraAtoms, type AuroraZoneArrangement } from \"@glass/components/aurora\";\nimport { MAX_NUCLEI, type AuroraMedium } from \"@glass/components/aurora/aurora-config\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/aurora/sections/AuroraMotionSection.vue": {
+   "hunks": [
+    [
+     "    AuroraAtoms,\n    AuroraConfig,\n    AuroraInteractivityAtom,\n",
+     "    AuroraAtoms,\n    AuroraInteractivityAtom,\n"
+    ],
+    [
+     "} from \"@glass/components/aurora\";\n\n",
+     "} from \"@glass/components/aurora\";\nimport type { AuroraConfig } from \"@glass/components/aurora/aurora-config\";\n\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/aurora/usePresetThumbnails.ts": {
+   "hunks": [
+    [
+     "import {\n    auroraFallbackGround,\n    type AuroraConfig,\n} from \"@glass/components/aurora\";\n",
+     "import { auroraFallbackGround, type AuroraConfig } from \"@glass/components/aurora/aurora-config\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/glass-panel.vue": {
+   "hunks": [
+    [
+     "import { Aurora, DEFAULT_AURORA_CONFIG } from \"@glass/components/aurora\";\n",
+     "import { Aurora } from \"@glass/components/aurora\";\nimport { DEFAULT_AURORA_CONFIG } from \"@glass/components/aurora/aurora-config\";\n"
+    ]
+   ]
+  },
+  "tests/demo/aurora-stage-affordance.test.ts": {
+   "hunks": [
+    [
+     "import { Aurora, configToAtoms, DEFAULT_AURORA_CONFIG } from \"@glass/components/aurora\";\n",
+     "import { Aurora, configToAtoms } from \"@glass/components/aurora\";\nimport { DEFAULT_AURORA_CONFIG } from \"@glass/components/aurora/aurora-config\";\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "src/components/aurora/index.ts",
+   "why": "R-6: the render-mode names ship from ./aurora-config"
+  },
+  {
+   "file": "src/components/aurora/index.ts",
+   "why": "R-6: the config defaults and types ship from ./aurora-config (the drift-gate note moves with them)"
+  },
+  {
+   "file": "src/components/aurora/index.ts",
+   "why": "R-6: the palette derivation ships from ./aurora-config"
+  },
+  {
+   "file": "src/components/aurora/index.ts",
+   "why": "R-6 / P3-R5: the first-paint ground ships from ./aurora-config"
+  },
+  {
+   "file": "src/components/aurora/index.ts",
+   "why": "R-6: the derive-colour types ship from ./aurora-config"
+  },
+  {
+   "file": "scripts/structure/records/entry-record.json",
+   "why": "P3-R5: one new export key"
+  },
+  {
+   "file": "MIGRATION.md",
+   "why": "E-6: a removal row per name, first cell the name; P3-R5: the added entry"
+  },
+  {
+   "file": "demo/shell/AppShell.vue",
+   "why": "R-10: the eager ground through its entry (the hold S29 froze)"
+  },
+  {
+   "file": "demo/shell/AppShell.vue",
+   "why": "the comment names the ground's eager deps as they now are"
+  },
+  {
+   "file": "demo/shell/AppShell.vue",
+   "why": "R-10: a deliberate async boundary imports the public subpath dynamically (B2: a consumer reaches src through an entry)"
+  },
+  {
+   "file": "demo/shell/AppShell.vue",
+   "why": "the comment names what the async chunk now loads"
+  },
+  {
+   "file": "tests/gates/boot-graph.test.ts",
+   "why": "the async boundary's pinned target is the public entry (R-10)"
+  },
+  {
+   "file": "tests/gates/boot-graph.test.ts",
+   "why": "the swap mutation plants on the boundary's text as it now reads"
+  },
+  {
+   "file": "tests/gates/boot-graph.test.ts",
+   "why": "the ground mutation plants on the specifier as it now reads"
+  },
+  {
+   "file": "demo/chassis/hero/aurora-hero.ts",
+   "why": "R-10: the config defaults through ./aurora-config, which carries no component (the hold S29 froze)"
+  },
+  {
+   "file": "tests/gates/boot-graph.test.ts",
+   "why": "the source arm pins the ground's barrel-free specifier, now its entry"
+  },
+  {
+   "file": "src/components/aurora/README.md",
+   "why": "the documented import takes the config names from ./aurora-config"
+  },
+  {
+   "file": "src/components/aurora/README.md",
+   "why": "the documented runtime import takes the config names from ./aurora-config"
+  }
+ ],
+ "splits": [
+  {
+   "file": "demo/stories/dock/_frame/DockStage.vue",
+   "line": 21,
+   "moved": [
+    "AuroraConfig"
+   ],
+   "kept": [
+    "Aurora"
+   ]
+  },
+  {
+   "file": "demo/stories/dock/vertical.vue",
+   "line": 23,
+   "moved": [
+    "DEFAULT_AURORA_CONFIG"
+   ],
+   "kept": []
+  },
+  {
+   "file": "demo/stories/forms/slider.vue",
+   "line": 13,
+   "moved": [
+    "auroraFallbackGround"
+   ],
+   "kept": []
+  },
+  {
+   "file": "demo/stories/navigation/tabs.vue",
+   "line": 12,
+   "moved": [
+    "auroraFallbackGround"
+   ],
+   "kept": []
+  },
+  {
+   "file": "demo/stories/substrates/aurora.vue",
+   "line": 9,
+   "moved": [
+    "AuroraConfig"
+   ],
+   "kept": []
+  },
+  {
+   "file": "demo/stories/substrates/aurora/AuroraConfigDock.vue",
+   "line": 7,
+   "moved": [
+    "AuroraConfig"
+   ],
+   "kept": [
+    "resolveAtoms",
+    "configToAtoms",
+    "AuroraAtoms"
+   ]
+  },
+  {
+   "file": "demo/stories/substrates/aurora/AuroraStage.vue",
+   "line": 4,
+   "moved": [
+    "AuroraConfig"
+   ],
+   "kept": []
+  },
+  {
+   "file": "demo/stories/substrates/aurora/NucleiOverlay.vue",
+   "line": 3,
+   "moved": [
+    "AuroraNucleus"
+   ],
+   "kept": []
+  },
+  {
+   "file": "demo/stories/substrates/aurora/OklchStopRow.vue",
+   "line": 5,
+   "moved": [
+    "hexToOklchStop"
+   ],
+   "kept": []
+  },
+  {
+   "file": "demo/stories/substrates/aurora/config/CompositionLayer.vue",
+   "line": 4,
+   "moved": [
+    "AuroraConfig",
+    "AuroraSource",
+    "WarpMode"
+   ],
+   "kept": []
+  },
+  {
+   "file": "demo/stories/substrates/aurora/config/FlowLayer.vue",
+   "line": 5,
+   "moved": [
+    "AuroraConfig",
+    "FlowPattern"
+   ],
+   "kept": []
+  },
+  {
+   "file": "demo/stories/substrates/aurora/config/NucleiLayer.vue",
+   "line": 5,
+   "moved": [
+    "AuroraConfig"
+   ],
+   "kept": []
+  },
+  {
+   "file": "demo/stories/substrates/aurora/config/NucleiLayer.vue",
+   "line": 6,
+   "moved": [
+    "MAX_NUCLEI"
+   ],
+   "kept": []
+  },
+  {
+   "file": "demo/stories/substrates/aurora/config/TextureLayer.vue",
+   "line": 5,
+   "moved": [
+    "AuroraConfig",
+    "StrokeMode"
+   ],
+   "kept": []
+  },
+  {
+   "file": "demo/stories/substrates/aurora/config/options.ts",
+   "line": 1,
+   "moved": [
+    "AuroraMedium",
+    "AuroraSource",
+    "FlowPattern",
+    "StrokeMode",
+    "WarpMode"
+   ],
+   "kept": []
+  },
+  {
+   "file": "demo/stories/substrates/aurora/config/usePaletteStops.ts",
+   "line": 2,
+   "moved": [
+    "AuroraConfig"
+   ],
+   "kept": []
+  },
+  {
+   "file": "demo/stories/substrates/aurora/config/usePaletteStops.ts",
+   "line": 4,
+   "moved": [
+    "MAX_STOPS"
+   ],
+   "kept": []
+  },
+  {
+   "file": "demo/stories/substrates/aurora/presets.ts",
+   "line": 13,
+   "moved": [
+    "AuroraConfig",
+    "AuroraMedium"
+   ],
+   "kept": []
+  },
+  {
+   "file": "demo/stories/substrates/aurora/presets.ts",
+   "line": 14,
+   "moved": [
+    "DEFAULT_AURORA_CONFIG"
+   ],
+   "kept": []
+  },
+  {
+   "file": "demo/stories/substrates/aurora/sections/AuroraColorSection.vue",
+   "line": 12,
+   "moved": [
+    "AuroraConfig",
+    "AuroraHarmony"
+   ],
+   "kept": [
+    "AuroraAtoms"
+   ]
+  },
+  {
+   "file": "demo/stories/substrates/aurora/sections/AuroraColorSection.vue",
+   "line": 17,
+   "moved": [
+    "MAX_STOPS",
+    "deriveAurora"
+   ],
+   "kept": []
+  },
+  {
+   "file": "demo/stories/substrates/aurora/sections/AuroraCompositionSection.vue",
+   "line": 5,
+   "moved": [
+    "MAX_NUCLEI",
+    "AuroraMedium"
+   ],
+   "kept": [
+    "AuroraAtoms",
+    "AuroraZoneArrangement"
+   ]
+  },
+  {
+   "file": "demo/stories/substrates/aurora/sections/AuroraMotionSection.vue",
+   "line": 8,
+   "moved": [
+    "AuroraConfig"
+   ],
+   "kept": [
+    "AuroraAtoms",
+    "AuroraInteractivityAtom",
+    "AuroraMotionAtom"
+   ]
+  },
+  {
+   "file": "demo/stories/substrates/aurora/usePresetThumbnails.ts",
+   "line": 2,
+   "moved": [
+    "auroraFallbackGround",
+    "AuroraConfig"
+   ],
+   "kept": []
+  },
+  {
+   "file": "demo/stories/substrates/glass-panel.vue",
+   "line": 17,
+   "moved": [
+    "DEFAULT_AURORA_CONFIG"
+   ],
+   "kept": [
+    "Aurora"
+   ]
+  },
+  {
+   "file": "tests/demo/aurora-stage-affordance.test.ts",
+   "line": 5,
+   "moved": [
+    "DEFAULT_AURORA_CONFIG"
+   ],
+   "kept": [
+    "Aurora",
+    "configToAtoms"
+   ]
+  }
+ ]
+}

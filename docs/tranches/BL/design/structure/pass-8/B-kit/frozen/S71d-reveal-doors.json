@@ -1,0 +1,55 @@
+{
+ "step": "§P6-8.4 (pass 7, LAW §5): useLiquidReveal is read through the morph door; the reveal door keeps useStagger and vReveal, so ./motion-core reads no door that carries keyframes.js",
+ "files": {
+  "src/composables/motion/reveal/index.ts": {
+   "hunks": [
+    [
+     "// composables/motion/reveal — module door: the names read from outside this module.\nexport type { LiquidRevealPreset, UseLiquidRevealOptions, UseLiquidRevealReturn } from \"../morph/useLiquidReveal\";\nexport { useLiquidReveal } from \"../morph/useLiquidReveal\";\nexport type { UseStaggerControls, UseStaggerOptions } from \"./useStagger\";\n",
+     "// composables/motion/reveal — module door: the names read from outside this module.\nexport type { UseStaggerControls, UseStaggerOptions } from \"./useStagger\";\n"
+    ]
+   ]
+  },
+  "src/composables/motion/morph/index.ts": {
+   "hunks": [
+    [
+     "export { trailOffset, useLeadTrail } from \"./useLeadTrail\";\n",
+     "export { trailOffset, useLeadTrail } from \"./useLeadTrail\";\nexport type { LiquidRevealPreset, UseLiquidRevealOptions, UseLiquidRevealReturn } from \"./useLiquidReveal\";\nexport { useLiquidReveal } from \"./useLiquidReveal\";\n"
+    ]
+   ]
+  },
+  "src/composables/motion/morph/useLiquidReveal.ts": {
+   "hunks": [
+    [
+     "import { useElementMorph, type ElementMorphPreset } from \"./\";\n",
+     "import { useElementMorph, type ElementMorphPreset } from \"./useElementMorph\";\n"
+    ]
+   ]
+  },
+  "src/composables/motion/index.ts": {
+   "hunks": [
+    [
+     "export { useLiquidReveal } from \"./reveal\";\nexport type { LiquidRevealPreset, UseLiquidRevealOptions, UseLiquidRevealReturn } from \"./reveal\";\n",
+     "export { useLiquidReveal } from \"./morph\";\nexport type { LiquidRevealPreset, UseLiquidRevealOptions, UseLiquidRevealReturn } from \"./morph\";\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "src/composables/motion/reveal/index.ts",
+   "why": "the reveal door carries only its module's names (B9): useLiquidReveal left at S71c"
+  },
+  {
+   "file": "src/composables/motion/morph/index.ts",
+   "why": "the morph door carries useLiquidReveal, which ./motion reads"
+  },
+  {
+   "file": "src/composables/motion/morph/useLiquidReveal.ts",
+   "why": "a member reads its sibling, never its own door (B1)"
+  },
+  {
+   "file": "src/composables/motion/index.ts",
+   "why": "./motion takes useLiquidReveal from morph"
+  }
+ ]
+}

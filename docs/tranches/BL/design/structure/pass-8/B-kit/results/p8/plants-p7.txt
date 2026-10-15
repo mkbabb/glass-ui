@@ -1,0 +1,19 @@
+PASS I7 ./styles imports a private dock sheet after its first real import: expect [B3] red [B3]
+PASS I7e ./styles imports a private dock sheet at its end: expect [B3] red [B3]
+PASS I7u ./styles imports it in url() form with a layer: expect [B3] red [B3]
+PASS I7c the glass kernel door imports a private dock sheet: expect [B3,B8,B10] red [B3,B8,B10]
+PASS I7s a unit SFC's <style src> reads another unit's private sheet: expect [B3,B10] red [B3,B10]
+PASS I7i a unit SFC's inline @import reads another unit's private sheet: expect [B3,B10] red [B3,B10]
+PASS I7-pass2 the pass-2 row's plant: the @import lands inside the header comment: expect [] red []
+PASS I7L ./styles imports the dock's door: expect [] red []
+PASS TD the selection door publishes EYEGLASS_SPAN_MAX for a colocated tabs test (the pass-6 S67 shape): expect [B11] red [B11]
+PASS TDL the same name with a library reader: only the pin's reviewed diff: expect [B11] red [B11]
+PASS KF ./motion-core publishes useSpring (keyframes-bearing): expect RED read RED (exit 1) · BROKEN ./motion-core    free of @mkbabb/keyframes.js, @vueuse/core   names 56 → peers @mkbabb/keyframes.js; dist 5 files → peers none; files 45 → peers @mkbabb/keyframes.js · BROKEN ./motion-core: introduced names @mkbab
+PASS KF6 ./motion-core publishes springProjection (the pass-6 S64 shape): expect RED read RED (exit 1) · BROKEN ./motion-core    free of @mkbabb/keyframes.js, @vueuse/core   names 56 → peers @mkbabb/keyframes.js; dist 5 files → peers none; files 45 → peers @mkbabb/keyframes.js · BROKEN ./motion-core: introduced names @mkbab
+PASS KFL ./motion-core publishes a keyframes-free name (springPreset): expect GREEN read GREEN (exit 0)
+PASS EXIT the clean tree: expect exit 0 read 0
+PASS EXIT a RED overlay (a demo import of a private file): expect exit 1 read 1
+PASS EXIT an overlay that is not JSON (a crash): expect exit 2 read 2 · seal: no verdict: SyntaxError: Expected property name or '}' in JSON at position 2 (line 1 column 3)
+PASS EXIT a refused option (--pin): expect exit 2 read 2 · seal: no verdict: Error: seal: unknown option --pin (the pin has one path, scripts/structure/records/seal-pin.json)
+battery 17/17
+plants-p7 exit 0 631 s load { 595.31 558.79 489.08 } -> { 385.94 446.36 474.21 }

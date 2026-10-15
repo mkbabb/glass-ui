@@ -1,0 +1,84 @@
+{
+ "step": "the law's pass-3 amendments land (LAW §1 scripts TS door, §5 B2 on module references, §9 B8's test arm and B16's kernel-as-dependency homing and slot helpers) with the pin the gate computes after S17-S24 and the resolve.mjs hold",
+ "files": {
+  "scripts/structure/seal/seal.mjs": {
+   "hunks": [
+    [
+     "// Lands at scripts/structure/seal.mjs beside the floor runtime (FD-11).\n",
+     "// Lands at scripts/structure/seal/seal.mjs, a module of the floor runtime (FD-11, S19).\n"
+    ],
+    [
+     "//   node scripts/structure/seal.mjs [--root R] [--verbose] [--json out] [--overlay plants.json]\n",
+     "//   node scripts/structure/seal/seal.mjs [--root R] [--verbose] [--json out] [--overlay plants.json]\n"
+    ],
+    [
+     "// the route's law, stated once (B-kit/lib/law.mjs, landed beside the gate as seal-law.mjs)\n",
+     "// the route's law, stated once (B-kit/lib/law.mjs, landed beside the gate as law.mjs)\n"
+    ],
+    [
+     "export const zoneOf = (f) => { const t = f.split(\"/\")[0]; return ZONES5.includes(t) ? t : !f.includes(\"/\") ? \"root\" : \"other\"; };\nexport const isTest = (f) => /(^|\\/)__tests__\\//.test(f) || /\\.(test|spec|test-d)\\.(ts|tsx|mts)$/.test(f) || /\\.visual\\.ts$/.test(f);\n",
+     "export const zoneOf = (f) => { const t = f.split(\"/\")[0]; return ZONES5.includes(t) ? t : !f.includes(\"/\") ? \"root\" : \"other\"; };\nconst TEST_FILE = /\\.(test|spec|test-d)\\.(ts|tsx|mts)$/;\nexport const isTest = (f) => /(^|\\/)__tests__\\//.test(f) || /\\.(test|spec|test-d)\\.(ts|tsx|mts)$/.test(f) || /\\.visual\\.ts$/.test(f);\n"
+    ],
+    [
+     "    const jsDoor = (m) => (m.startsWith(\"scripts\") ? `${m}/index.mjs` : `${m}/index.ts`);\n",
+     "    // LAW §1: a src module's JS door is index.ts; a scripts module's is index.mjs, or index.ts\n    // when its own code is TypeScript (\"befitting their languages\")\n    const tsScripts = (m) => { const own = (filesIn.get(m) ?? []).filter((f) => /\\.(ts|mts|mjs|js)$/.test(f) && !isTest(f) && !/\\.d\\.m?ts$/.test(f) && !DOOR_BASENAMES.includes(posix.basename(f))); return own.length > 0 && own.every((f) => /\\.m?ts$/.test(f)); };\n    const jsDoor = (m) => (m.startsWith(\"scripts\") ? `${m}/index.${tsScripts(m) ? \"ts\" : \"mjs\"}` : `${m}/index.ts`);\n"
+    ],
+    [
+     "        if (zf === \"src\" && zt !== \"src\") { put(\"B8\", `${e.from}:${e.line} -> ${e.to} [${e.kind}] (the library reads the ${zt} zone)`); continue; }\n",
+     "        // LAW §9 (B8's test arm): a colocated test is not library code; it may read the test\n        // harness (the tests zone: helpers, setup) and the repo root, never a consumer zone\n        if (zf === \"src\" && zt !== \"src\" && !(isTest(e.from) && (zt === \"tests\" || zt === \"root\"))) { put(\"B8\", `${e.from}:${e.line} -> ${e.to} [${e.kind}] (the library reads the ${zt} zone)`); continue; }\n        if (zf === \"src\" && zt !== \"src\") continue;\n"
+    ],
+    [
+     "        if (zt === \"src\" && zf !== \"src\") { if (!HARNESS.test(e.from) && !PUB.has(e.to)) put(\"B2\", `${e.from}:${e.line} -> ${e.to} [${e.kind}]`); continue; }\n",
+     "        // B2 (R-10, LAW §5): a consumer module reference into src targets an entry source. A text\n        // read (READ_KINDS) is not consumption: R-3 keeps the library-wide scans in tests/, B0\n        // keeps their reads visible to the graph and B16 homes a single-subject reader\n        if (zt === \"src\" && zf !== \"src\") { if (!HARNESS.test(e.from) && !PUB.has(e.to) && MODULE_KINDS.has(e.kind)) put(\"B2\", `${e.from}:${e.line} -> ${e.to} [${e.kind}]`); continue; }\n"
+    ],
+    [
+     "    //      to (by symbol through doors; path reads counted). Home: the deepest module or unit\n    //      holding every subject; none when the subject spans a container, a zone or a dir.\n",
+     "    //      to (by symbol through doors; path reads counted), less the kernel when it reads a\n    //      unit: a unit test uses the kernel as a unit file does, a rank below it (B8), so the\n    //      kernel is its subject only when it reads nothing else. Home: the deepest module or\n    //      unit holding every subject; none when the subject spans a container, a zone or a dir.\n    //      A test is a `*.test.ts`, `*.test-d.ts` or `*.spec.ts`; any other file in a slot is a\n    //      helper, read only by the tests of that slot.\n"
+    ],
+    [
+     "        if (!isTest(t) || !/\\.(ts|tsx|mts)$/.test(t) || /\\.visual\\.ts$/.test(t) || zoneOf(t) === \"tests-visual\" || HARNESS.test(t)) continue;\n",
+     "        if (!TEST_FILE.test(t) || zoneOf(t) === \"tests-visual\" || HARNESS.test(t)) continue;\n"
+    ],
+    [
+     "        const subj = [...reads].filter((f) => SEALED.includes(zoneOf(f)) && !isTest(f) && !under(f, \"scripts/structure\"));\n",
+     "        const sealedReads = [...reads].filter((f) => SEALED.includes(zoneOf(f)) && !isTest(f) && !under(f, \"scripts/structure\"));\n        const above = sealedReads.filter((f) => !KERNEL(f));\n        const subj = above.length ? above : sealedReads;\n"
+    ],
+    [
+     "        else if (slot !== null && home !== slot) put(\"B16\", `${t} (colocated in ${slot}; its subject's home is ${home ?? \"the harness (several units)\"})`);\n    }\n",
+     "        else if (slot !== null && home !== slot) put(\"B16\", `${t} (colocated in ${slot}; its subject's home is ${home ?? \"the harness (several units)\"})`);\n    }\n    for (const h of T.files) {\n        const slot = /^(.*\\/__tests__)\\/[^/]+$/.exec(h)?.[1];\n        if (!slot || TEST_FILE.test(h) || !SEALED.includes(zoneOf(h))) continue;\n        const readers = [...new Set(g.edges.filter((e) => e.to === h && e.from !== h).map((e) => e.from))];\n        if (!readers.length || readers.some((r) => dirOf(r) !== slot || !TEST_FILE.test(r))) put(\"B16\", `${h} (a helper in ${slot}/ read by ${readers.filter((r) => dirOf(r) !== slot || !TEST_FILE.test(r)).join(\", \") || \"nothing\"})`);\n    }\n"
+    ]
+   ]
+  },
+  "scripts/structure/records/seal-pin.json": {
+   "hunks": [
+    [
+     " \"modules\": [\n  \"src/components/_shared/disclosure\",\n",
+     " \"modules\": [\n  \"scripts/minify\",\n  \"scripts/structure\",\n  \"scripts/structure/lib\",\n  \"scripts/structure/lib/graph\",\n  \"scripts/structure/seal\",\n  \"src/components/_shared/disclosure\",\n"
+    ],
+    [
+     " \"doors\": {\n  \"src/styles/tokens/index.ts\": [\n",
+     " \"doors\": {\n  \"scripts/minify/index.ts\": [\n   \"hasCommentOutsideString\",\n   \"minifyCss\"\n  ],\n  \"scripts/structure/index.mjs\": [\n   \"buildGraph\",\n   \"declarationProgram\",\n   \"diskRecord\",\n   \"libraryEntryMap\",\n   \"openTree\",\n   \"recordCssTargets\",\n   \"recordEntries\",\n   \"recordInputs\",\n   \"recordTerminal\",\n   \"runGates\",\n   \"scanCss\",\n   \"seal\"\n  ],\n  \"src/styles/tokens/index.ts\": [\n"
+    ],
+    [
+     "  ],\n  \"src/components/aurora/index.ts\": [\n",
+     "  ],\n  \"scripts/structure/lib/index.mjs\": [\n   \"CONTAINERS\",\n   \"DEFAULT_ROOT\",\n   \"VALUE_KINDS\",\n   \"ZONES\",\n   \"buildGraph\",\n   \"classOwners\",\n   \"classRecipes\",\n   \"classesOf\",\n   \"classifyStep\",\n   \"coOccurrence\",\n   \"compareToPackage\",\n   \"countBy\",\n   \"declarationProgram\",\n   \"dirUnits\",\n   \"diskRecord\",\n   \"impliedBy\",\n   \"isSlot\",\n   \"libraryEntryMap\",\n   \"loadRecord\",\n   \"makeOrigins\",\n   \"openTree\",\n   \"pinPath\",\n   \"placeAll\",\n   \"proposedPath\",\n   \"publicationAnchor\",\n   \"readJson\",\n   \"recordCssTargets\",\n   \"recordEntries\",\n   \"recordInputs\",\n   \"recordPath\",\n   \"recordTerminal\",\n   \"runMoves\",\n   \"scanCss\",\n   \"sccGrowth\",\n   \"validateRecord\",\n   \"valueSccs\",\n   \"zoneOf\"\n  ],\n  \"src/components/aurora/index.ts\": [\n"
+    ],
+    [
+     "  ],\n  \"src/components/command/index.ts\": [\n",
+     "  ],\n  \"scripts/structure/seal/index.mjs\": [\n   \"seal\"\n  ],\n  \"src/components/command/index.ts\": [\n"
+    ],
+    [
+     "   \"RadioGroupProps\"\n  ],\n",
+     "   \"RadioGroupProps\"\n  ],\n  \"scripts/structure/lib/graph/index.mjs\": [\n   \"VALUE_KINDS\",\n   \"buildGraph\",\n   \"countBy\",\n   \"loadDeps\",\n   \"moduleSccs\",\n   \"scanCss\",\n   \"valueSccs\"\n  ],\n"
+    ]
+   ]
+  }
+ },
+ "pin": {
+  "modules": 135,
+  "doors": 116,
+  "names": 1291,
+  "reviewed": 2,
+  "holds": 0
+ }
+}

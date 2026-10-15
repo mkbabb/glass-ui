@@ -1,0 +1,10 @@
+load { 85.49 110.72 139.36 } start 15:58:49 (r4 tree, 2026-10-13)
+CRASH C0-green PASS rc=0 expect=0 :: 
+CRASH C1-red PASS rc=1 expect=1 :: 
+CRASH C2-ledger PASS rc=2 expect=2 :: seal: no verdict: Error: graph: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p8/B-proto/r2 has no scripts/structure/records/opaque-ledger.json; the opaque ledger is a floor record (a lan
+CRASH C3-pkgjson PASS rc=2 expect=2 :: seal: no verdict: SyntaxError: Expected double-quoted property name in JSON at position 30 (line 1 column 31)
+CRASH C4-noroot PASS rc=2 expect=2 :: seal: no verdict: Error: seal: the pin /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p8/B-proto/crit-tmp/crash7.23963/does-not-exist/scripts/structure/records/seal-pin.json is missing; th
+CRASH C5-jsonpath PASS rc=2 expect=2 :: seal: no verdict: Error: ENOTDIR: not a directory, open '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p8/B-proto/r2/package.json/v.json'
+CRASH C6-unparsable INFO rc=0 :: 
+CRASH C7-green-again PASS rc=0 expect=0 :: 
+crit7-crash exit 0 59 s load { 85.49 110.72 139.36 } -> { 92.37 108.28 136.50 }

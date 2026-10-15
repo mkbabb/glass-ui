@@ -1,0 +1,151 @@
+{
+ "step": "B-S11 (R-5, tests zone): comments in shipped src files that cite a split test file by path now cite the module that holds the arm",
+ "files": {
+  "src/components/dock/controls/icon-button.css": {
+   "hunks": [
+    [
+     "(`g-dock-lattice.test.ts` MATERIAL docblock)",
+     "(`tests/components/custom/dock/lattice/material.test.ts` MATERIAL docblock)"
+    ]
+   ]
+  },
+  "src/styles/tokens/surface/color-radius.css": {
+   "hunks": [
+    [
+     "`tests/styles/contrast-computed.test.ts`, which",
+     "`tests/styles/contrast/claims.test.ts`, which"
+    ]
+   ]
+  },
+  "src/styles/glass/grasp.css": {
+   "hunks": [
+    [
+     "The arm in tests/styles/glass-subtlety.test.ts DISCOVERS",
+     "The arm in tests/styles/glass-subtlety/grasp.test.ts DISCOVERS"
+    ]
+   ]
+  },
+  "src/styles/glass/material/material.css": {
+   "hunks": [
+    [
+     "every Vue source file (tests/styles/glass-subtlety.test.ts)",
+     "every Vue source file (tests/styles/glass-subtlety/material.test.ts)"
+    ],
+    [
+     "the discovery arm in\n       tests/styles/glass-subtlety.test.ts reds",
+     "the discovery arm in\n       tests/styles/glass-subtlety/grasp.test.ts reds"
+    ]
+   ]
+  },
+  "src/styles/tokens/scheme/light-dark.css": {
+   "hunks": [
+    [
+     "`glass-subtlety.test.ts` REDs",
+     "`glass-subtlety/ladders.test.ts` REDs"
+    ]
+   ]
+  },
+  "src/styles/theme/radius.css": {
+   "hunks": [
+    [
+     "`radius-role-canon.test.ts` case",
+     "`tests/styles/radius-role/` case"
+    ]
+   ]
+  },
+  "src/composables/motion/route/routeGrammar.ts": {
+   "hunks": [
+    [
+     "// `tests/styles/route-motion.test.ts` censuses",
+     "// `tests/styles/route-motion/` censuses"
+    ],
+    [
+     " * census: `route-motion.test.ts` reads",
+     " * census: `tests/styles/route-motion/` reads"
+    ]
+   ]
+  },
+  "src/styles/tokens/motion/motion-registers.css": {
+   "hunks": [
+    [
+     "register — `tests/styles/route-motion.test.ts` derives",
+     "register — `tests/styles/route-motion/` derives"
+    ],
+    [
+     "`route-motion.test.ts` censuses",
+     "`tests/styles/route-motion/` censuses"
+    ]
+   ]
+  },
+  "src/styles/view-transition.css": {
+   "hunks": [
+    [
+     "`route-motion.test.ts` binds",
+     "`tests/styles/route-motion/` binds"
+    ]
+   ]
+  },
+  "src/styles/motion/animations.css": {
+   "hunks": [
+    [
+     "`tests/styles/dissolve.test.ts` reds",
+     "`tests/styles/dissolve/vaporize.test.ts` reds"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "src/components/dock/controls/icon-button.css",
+   "why": "cites tests/components/custom/dock/g-dock-lattice.test.ts; now (`tests/components/custom/dock/lattice/material.test.ts` MATERIAL docblock)"
+  },
+  {
+   "file": "src/styles/tokens/surface/color-radius.css",
+   "why": "cites tests/styles/contrast-computed.test.ts; now `tests/styles/contrast/claims.test.ts`, which"
+  },
+  {
+   "file": "src/styles/glass/grasp.css",
+   "why": "cites tests/styles/glass-subtlety.test.ts; now The arm in tests/styles/glass-subtlety/grasp.test.ts DISCOVERS"
+  },
+  {
+   "file": "src/styles/glass/material/material.css",
+   "why": "cites tests/styles/glass-subtlety.test.ts; now every Vue source file (tests/styles/glass-subtlety/material.test.ts)"
+  },
+  {
+   "file": "src/styles/glass/material/material.css",
+   "why": "cites tests/styles/glass-subtlety.test.ts; now the discovery arm in\n       tests/styles/glass-subtlety/grasp.test.ts reds"
+  },
+  {
+   "file": "src/styles/tokens/scheme/light-dark.css",
+   "why": "cites tests/styles/glass-subtlety.test.ts; now `glass-subtlety/ladders.test.ts` REDs"
+  },
+  {
+   "file": "src/styles/theme/radius.css",
+   "why": "cites tests/styles/radius-role-canon.test.ts; now `tests/styles/radius-role/` case"
+  },
+  {
+   "file": "src/composables/motion/route/routeGrammar.ts",
+   "why": "cites tests/styles/route-motion.test.ts; now // `tests/styles/route-motion/` censuses"
+  },
+  {
+   "file": "src/composables/motion/route/routeGrammar.ts",
+   "why": "cites tests/styles/route-motion.test.ts; now  * census: `tests/styles/route-motion/` reads"
+  },
+  {
+   "file": "src/styles/tokens/motion/motion-registers.css",
+   "why": "cites tests/styles/route-motion.test.ts; now register — `tests/styles/route-motion/` derives"
+  },
+  {
+   "file": "src/styles/tokens/motion/motion-registers.css",
+   "why": "cites tests/styles/route-motion.test.ts; now `tests/styles/route-motion/` censuses"
+  },
+  {
+   "file": "src/styles/view-transition.css",
+   "why": "cites tests/styles/route-motion.test.ts; now `tests/styles/route-motion/` binds"
+  },
+  {
+   "file": "src/styles/motion/animations.css",
+   "why": "cites tests/styles/dissolve.test.ts; now `tests/styles/dissolve/vaporize.test.ts` reds"
+  }
+ ]
+}

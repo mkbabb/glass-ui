@@ -1,0 +1,112 @@
+{
+ "step": "B-S11 (R-5): EasingPicker.vue 626 → 477 lines by extracting useEasingModel, useEasingSweep and useEasingCopy into the unit",
+ "files": {
+  "src/components/easing/EasingPicker.vue": {
+   "hunks": [
+    [
+     "import { SegmentedTabs, type SegmentedTabOption } from \"../tabs\";\nimport { useClipboard } from \"../../composables/dom\";\nimport EasingCurve, { type EasingStroke } from \"./EasingCurve.vue\";\n",
+     "import { SegmentedTabs, type SegmentedTabOption } from \"../tabs\";\nimport EasingCurve, { type EasingStroke } from \"./EasingCurve.vue\";\n"
+    ],
+    [
+     "import EasingCurve, { type EasingStroke } from \"./EasingCurve.vue\";\nimport { useEasingPicker, type EasingPickerValue, type JumpTerm } from \"./usePicker\";\n",
+     "import EasingCurve, { type EasingStroke } from \"./EasingCurve.vue\";\nimport { useEasingCopy } from \"./useEasingCopy\";\nimport { useEasingModel } from \"./useEasingModel\";\nimport { useEasingSweep } from \"./useEasingSweep\";\nimport { useEasingPicker, type EasingPickerValue, type JumpTerm } from \"./usePicker\";\n"
+    ],
+    [
+     "import {\n    COPY_ATTEMPT_TIMEOUT_MS,\n    COPY_FEEDBACK_MS,\n    CUSTOM_PRESET,\n",
+     "import {\n    CUSTOM_PRESET,\n"
+    ],
+    [
+     "function sameValue(\n    left: EasingPickerValue | undefined,\n    right: EasingPickerValue,\n): boolean {\n    return !!left\n        && Array.isArray(left.points)\n        && left.points.length === 4\n        && left.mode === right.mode\n        && left.css === right.css\n        && left.fn === right.fn\n        && left.steps === right.steps\n        && left.term === right.term\n        && left.points.every((point, index) => point === right.points[index]);\n}\n",
+     "// v-model is a genuine two-way authoring surface (useEasingModel): raw authoring\n// fields flow in; css and fn always flow back from the canonical value.js state.\nuseEasingModel(model, picker);\n"
+    ],
+    [
+     "\nlet lastWritten: EasingPickerValue | undefined;\n\nfunction writeModel(next: EasingPickerValue): void {\n    if (sameValue(model.value, next) || sameValue(lastWritten, next)) return;\n    lastWritten = next;\n    model.value = next;\n}\n\nfunction applyModel(next: EasingPickerValue | undefined): void {\n    if (!next) return;\n    if (sameValue(lastWritten, next)) {\n        lastWritten = undefined;\n        return;\n    }\n\n    mode.value = next.mode === \"steps\" ? \"steps\" : \"bezier\";\n    if (\n        Array.isArray(next.points)\n        && next.points.length === 4\n        && next.points.every(Number.isFinite)\n        && next.points.some((point, index) => point !== points.value[index])\n    ) {\n        setHandle(0, next.points[0]!, next.points[1]!);\n        setHandle(1, next.points[2]!, next.points[3]!);\n    }\n    if (Number.isFinite(next.steps)) {\n        steps.value = Math.max(\n            STEP_COUNT_MIN,\n            Math.min(STEP_COUNT_MAX, Math.round(next.steps)),\n        );\n    }\n    if (terms.includes(next.term)) term.value = next.term;\n\n    const canonical = value.value;\n    if (!sameValue(next, canonical)) writeModel(canonical);\n}\n\n// v-model is a genuine two-way authoring surface. Raw authoring fields flow in;\n// css and fn always flow back from the canonical value.js-derived state.\nwatch(model, applyModel, { deep: true, immediate: true });\nwatch(value, writeModel, { immediate: true });\n\n// ── the plot ──────────────────────────────────────────────────────────────────\n",
+     "\n// ── the plot ──────────────────────────────────────────────────────────────────\n"
+    ],
+    [
+     "// ── the draw-on sweep — a new curve INKS ITSELF IN rather than teleporting ─────\n// The plot's engagement affordance, and the reason it is not decoration: this editor\n// redraws the same square for every curve it is asked to show, so without the sweep a\n// preset change and a no-op are the same event to the eye. `EasingCurve` owns the\n// mechanism (a `clip-path` wipe — see the measurement in that file for why the\n// dashoffset arm is dead under `vector-effect`); this owns the CLOCK, because only the\n// editor knows the difference between a new curve arriving and a curve being edited.\n//\n// PRM, the arm that matters: no sweep is armed at all. `drawn` never leaves `true`,\n// so a reduced-motion reader gets the finished plot on the SAME frame the curve\n// changes — one frame, no spatial travel — instead of a fast version of the travel.\nconst drawn = ref(true);\nlet drawFrame = 0;\n",
+     "// The draw-on sweep — a new curve inks itself in (useEasingSweep); a drag re-inks nothing.\nconst { drawn } = useEasingSweep({ reducedMotion, dragIndex, watched: [mode, preset, steps, term] });\n"
+    ],
+    [
+     "\nfunction sweep(): void {\n    if (drawFrame) cancelAnimationFrame(drawFrame);\n    drawFrame = 0;\n    if (reducedMotion.value) {\n        drawn.value = true;\n        return;\n    }\n    drawn.value = false;\n    // TWO frames, and the second one is not padding. A transition interpolates from\n    // the last COMMITTED computed style, and rAF callbacks run BEFORE style\n    // recalculation — so flipping back on the very next callback lands the un-drawn\n    // and drawn states in one recalculation and the browser has nothing to sweep\n    // from. Measured, not reasoned: the first cut of this did exactly that and\n    // painted a dead 0px → 0px while `data-drawing` flickered correctly for one\n    // frame. The intervening paint is what makes the sweep exist.\n    drawFrame = requestAnimationFrame(() => {\n        drawFrame = requestAnimationFrame(() => {\n            drawFrame = 0;\n            drawn.value = true;\n        });\n    });\n}\n\nwatch([mode, preset, steps, term], () => {\n    // A drag is a continuous edit of ONE curve, not the arrival of a new one, and the\n    // first pointermove of every drag writes `custom` to `preset`. Re-inking under the\n    // finger would fight the gesture it is supposed to answer.\n    if (dragIndex.value !== null) return;\n    sweep();\n});\n\nfunction onHandleKeydown(index: 0 | 1, ev: KeyboardEvent): void {\n",
+     "\nfunction onHandleKeydown(index: 0 | 1, ev: KeyboardEvent): void {\n"
+    ],
+    [
+     "// ── the literal chip (THE copy control — the one print) ───────────────────────\nconst readoutEl = useTemplateRef<HTMLElement>(\"readoutEl\");\nconst { status: copyStatus, copy: writeLiteral } = useClipboard({\n    resetMs: COPY_FEEDBACK_MS,\n    timeoutMs: COPY_ATTEMPT_TIMEOUT_MS,\n});\n",
+     "// The literal chip — THE copy control, the one print (useEasingCopy).\nconst { copyState, copy, selectLiteral, copyMessage, copyLabel } = useEasingCopy(readoutLiteral);\n"
+    ],
+    [
+     "\ntype CopyState = \"idle\" | \"pending\" | \"copied\" | \"failed\";\nconst copyState = computed<CopyState>(() => {\n    switch (copyStatus.value) {\n        case \"success\":\n            return \"copied\";\n        case \"failure\":\n            return \"failed\";\n        default:\n            return copyStatus.value;\n    }\n});\n\nfunction copy(): void {\n    if (copyStatus.value === \"pending\") return;\n    void writeLiteral(readoutLiteral.value);\n}\n\nfunction selectLiteral(): void {\n    const el = readoutEl.value;\n    const selection = window.getSelection();\n    if (!el || !selection) return;\n    const range = document.createRange();\n    range.selectNodeContents(el);\n    selection.removeAllRanges();\n    selection.addRange(range);\n}\n\nconst copyMessage = computed(() => ({\n    idle: \"\",\n    pending: \"Copying curve literal…\",\n    copied: \"Copied curve literal.\",\n    failed: \"Clipboard unavailable. Select the full literal to copy manually.\",\n})[copyState.value]);\n\nconst copyLabel = computed(() => {\n    switch (copyState.value) {\n        case \"failed\":\n            return \"Retry copy curve literal\";\n        case \"copied\":\n            return \"Copied\";\n        case \"pending\":\n            return \"Copying curve literal\";\n        default:\n            return \"Copy curve literal\";\n    }\n});\n\n// ── the transport — ONE vocabulary, ONE source ────────────────────────────────\n",
+     "\n// ── the transport — ONE vocabulary, ONE source ────────────────────────────────\n"
+    ],
+    [
+     "onUnmounted(() => {\n    stopTravel();\n    if (drawFrame) cancelAnimationFrame(drawFrame);\n});\n",
+     "onUnmounted(stopTravel);\n"
+    ]
+   ]
+  },
+  "src/components/easing/useEasingCopy.ts": {
+   "create": "import { computed, useTemplateRef, type Ref } from \"vue\";\nimport { useClipboard } from \"../../composables/dom\";\nimport { COPY_ATTEMPT_TIMEOUT_MS, COPY_FEEDBACK_MS } from \"./constants\";\n\n/**\n * The literal chip: THE copy control and the one print of the curve literal. Copy\n * through the clipboard with a bounded attempt; on failure, select the literal so it\n * can be copied by hand. The chip's element is the `readoutEl` template ref.\n */\nexport function useEasingCopy(readoutLiteral: Readonly<Ref<string>>) {\n    // ── the literal chip (THE copy control — the one print) ───────────────────────\n    const readoutEl = useTemplateRef<HTMLElement>(\"readoutEl\");\n    const { status: copyStatus, copy: writeLiteral } = useClipboard({\n        resetMs: COPY_FEEDBACK_MS,\n        timeoutMs: COPY_ATTEMPT_TIMEOUT_MS,\n    });\n\n    type CopyState = \"idle\" | \"pending\" | \"copied\" | \"failed\";\n    const copyState = computed<CopyState>(() => {\n        switch (copyStatus.value) {\n            case \"success\":\n                return \"copied\";\n            case \"failure\":\n                return \"failed\";\n            default:\n                return copyStatus.value;\n        }\n    });\n\n    function copy(): void {\n        if (copyStatus.value === \"pending\") return;\n        void writeLiteral(readoutLiteral.value);\n    }\n\n    function selectLiteral(): void {\n        const el = readoutEl.value;\n        const selection = window.getSelection();\n        if (!el || !selection) return;\n        const range = document.createRange();\n        range.selectNodeContents(el);\n        selection.removeAllRanges();\n        selection.addRange(range);\n    }\n\n    const copyMessage = computed(() => ({\n        idle: \"\",\n        pending: \"Copying curve literal…\",\n        copied: \"Copied curve literal.\",\n        failed: \"Clipboard unavailable. Select the full literal to copy manually.\",\n    })[copyState.value]);\n\n    const copyLabel = computed(() => {\n        switch (copyState.value) {\n            case \"failed\":\n                return \"Retry copy curve literal\";\n            case \"copied\":\n                return \"Copied\";\n            case \"pending\":\n                return \"Copying curve literal\";\n            default:\n                return \"Copy curve literal\";\n        }\n    });\n\n    return { copyState, copy, selectLiteral, copyMessage, copyLabel };\n}\n"
+  },
+  "src/components/easing/useEasingModel.ts": {
+   "create": "import { watch, type Ref } from \"vue\";\nimport { STEP_COUNT_MAX, STEP_COUNT_MIN } from \"./constants\";\nimport type { EasingPickerValue, UseEasingPickerReturn } from \"./usePicker\";\n\n/**\n * The picker's v-model as a genuine two-way authoring surface. Raw authoring fields\n * (mode, the four control points, the step count and jump term) flow in from the\n * model; `css` and `fn` always flow back from the canonical value.js-derived state.\n * A write the picker made itself is recognised on its way back in and not re-applied.\n */\nexport function useEasingModel(\n    model: Ref<EasingPickerValue | undefined>,\n    picker: UseEasingPickerReturn,\n): void {\n    const { mode, points, setHandle, steps, term, terms, value } = picker;\n\n    function sameValue(\n        left: EasingPickerValue | undefined,\n        right: EasingPickerValue,\n    ): boolean {\n        return !!left\n            && Array.isArray(left.points)\n            && left.points.length === 4\n            && left.mode === right.mode\n            && left.css === right.css\n            && left.fn === right.fn\n            && left.steps === right.steps\n            && left.term === right.term\n            && left.points.every((point, index) => point === right.points[index]);\n    }\n\n    let lastWritten: EasingPickerValue | undefined;\n\n    function writeModel(next: EasingPickerValue): void {\n        if (sameValue(model.value, next) || sameValue(lastWritten, next)) return;\n        lastWritten = next;\n        model.value = next;\n    }\n\n    function applyModel(next: EasingPickerValue | undefined): void {\n        if (!next) return;\n        if (sameValue(lastWritten, next)) {\n            lastWritten = undefined;\n            return;\n        }\n\n        mode.value = next.mode === \"steps\" ? \"steps\" : \"bezier\";\n        if (\n            Array.isArray(next.points)\n            && next.points.length === 4\n            && next.points.every(Number.isFinite)\n            && next.points.some((point, index) => point !== points.value[index])\n        ) {\n            setHandle(0, next.points[0]!, next.points[1]!);\n            setHandle(1, next.points[2]!, next.points[3]!);\n        }\n        if (Number.isFinite(next.steps)) {\n            steps.value = Math.max(\n                STEP_COUNT_MIN,\n                Math.min(STEP_COUNT_MAX, Math.round(next.steps)),\n            );\n        }\n        if (terms.includes(next.term)) term.value = next.term;\n\n        const canonical = value.value;\n        if (!sameValue(next, canonical)) writeModel(canonical);\n    }\n\n    watch(model, applyModel, { deep: true, immediate: true });\n    watch(value, writeModel, { immediate: true });\n}\n"
+  },
+  "src/components/easing/useEasingSweep.ts": {
+   "create": "import { onUnmounted, ref, watch, type Ref, type WatchSource } from \"vue\";\n\nexport interface UseEasingSweepOptions {\n    /** Under reduced motion no sweep is armed: the plot is drawn on the same frame. */\n    reducedMotion: Readonly<Ref<boolean>>;\n    /** The handle being dragged, if any: a drag is an edit, not a new curve. */\n    dragIndex: Readonly<Ref<0 | 1 | null>>;\n    /** What makes a NEW curve arrive: mode, preset, step count, jump term. */\n    watched: WatchSource[];\n}\n\n/** The clock of the plot's draw-on sweep; `EasingCurve` owns the mechanism. */\nexport function useEasingSweep({ reducedMotion, dragIndex, watched }: UseEasingSweepOptions) {\n    // ── the draw-on sweep — a new curve INKS ITSELF IN rather than teleporting ─────\n    // The plot's engagement affordance, and the reason it is not decoration: this editor\n    // redraws the same square for every curve it is asked to show, so without the sweep a\n    // preset change and a no-op are the same event to the eye. `EasingCurve` owns the\n    // mechanism (a `clip-path` wipe — see the measurement in that file for why the\n    // dashoffset arm is dead under `vector-effect`); this owns the CLOCK, because only the\n    // editor knows the difference between a new curve arriving and a curve being edited.\n    //\n    // PRM, the arm that matters: no sweep is armed at all. `drawn` never leaves `true`,\n    // so a reduced-motion reader gets the finished plot on the SAME frame the curve\n    // changes — one frame, no spatial travel — instead of a fast version of the travel.\n    const drawn = ref(true);\n    let drawFrame = 0;\n\n    function sweep(): void {\n        if (drawFrame) cancelAnimationFrame(drawFrame);\n        drawFrame = 0;\n        if (reducedMotion.value) {\n            drawn.value = true;\n            return;\n        }\n        drawn.value = false;\n        // TWO frames, and the second one is not padding. A transition interpolates from\n        // the last COMMITTED computed style, and rAF callbacks run BEFORE style\n        // recalculation — so flipping back on the very next callback lands the un-drawn\n        // and drawn states in one recalculation and the browser has nothing to sweep\n        // from. Measured, not reasoned: the first cut of this did exactly that and\n        // painted a dead 0px → 0px while `data-drawing` flickered correctly for one\n        // frame. The intervening paint is what makes the sweep exist.\n        drawFrame = requestAnimationFrame(() => {\n            drawFrame = requestAnimationFrame(() => {\n                drawFrame = 0;\n                drawn.value = true;\n            });\n        });\n    }\n\n    watch(watched, () => {\n        // A drag is a continuous edit of ONE curve, not the arrival of a new one, and the\n        // first pointermove of every drag writes `custom` to `preset`. Re-inking under the\n        // finger would fight the gesture it is supposed to answer.\n        if (dragIndex.value !== null) return;\n        sweep();\n    });\n\n    onUnmounted(() => {\n        if (drawFrame) cancelAnimationFrame(drawFrame);\n    });\n\n    return { drawn };\n}\n"
+  }
+ },
+ "reasons": [
+  {
+   "file": "src/components/easing/EasingPicker.vue",
+   "why": "R-5: 626 → 477 lines; the v-model sync, the draw-on sweep's clock and the literal chip leave for three named composables in the unit; the handle overlay stays, since its pointer arithmetic is asserted in this SFC's own text"
+  },
+  {
+   "file": "src/components/easing/EasingPicker.vue",
+   "why": "R-5: 626 → 477 lines; the v-model sync, the draw-on sweep's clock and the literal chip leave for three named composables in the unit; the handle overlay stays, since its pointer arithmetic is asserted in this SFC's own text"
+  },
+  {
+   "file": "src/components/easing/EasingPicker.vue",
+   "why": "R-5: 626 → 477 lines; the v-model sync, the draw-on sweep's clock and the literal chip leave for three named composables in the unit; the handle overlay stays, since its pointer arithmetic is asserted in this SFC's own text"
+  },
+  {
+   "file": "src/components/easing/EasingPicker.vue",
+   "why": "R-5: 626 → 477 lines; the v-model sync, the draw-on sweep's clock and the literal chip leave for three named composables in the unit; the handle overlay stays, since its pointer arithmetic is asserted in this SFC's own text"
+  },
+  {
+   "file": "src/components/easing/EasingPicker.vue",
+   "why": "R-5: 626 → 477 lines; the v-model sync, the draw-on sweep's clock and the literal chip leave for three named composables in the unit; the handle overlay stays, since its pointer arithmetic is asserted in this SFC's own text"
+  },
+  {
+   "file": "src/components/easing/EasingPicker.vue",
+   "why": "R-5: 626 → 477 lines; the v-model sync, the draw-on sweep's clock and the literal chip leave for three named composables in the unit; the handle overlay stays, since its pointer arithmetic is asserted in this SFC's own text"
+  },
+  {
+   "file": "src/components/easing/EasingPicker.vue",
+   "why": "R-5: 626 → 477 lines; the v-model sync, the draw-on sweep's clock and the literal chip leave for three named composables in the unit; the handle overlay stays, since its pointer arithmetic is asserted in this SFC's own text"
+  },
+  {
+   "file": "src/components/easing/EasingPicker.vue",
+   "why": "R-5: 626 → 477 lines; the v-model sync, the draw-on sweep's clock and the literal chip leave for three named composables in the unit; the handle overlay stays, since its pointer arithmetic is asserted in this SFC's own text"
+  },
+  {
+   "file": "src/components/easing/EasingPicker.vue",
+   "why": "R-5: 626 → 477 lines; the v-model sync, the draw-on sweep's clock and the literal chip leave for three named composables in the unit; the handle overlay stays, since its pointer arithmetic is asserted in this SFC's own text"
+  },
+  {
+   "file": "src/components/easing/EasingPicker.vue",
+   "why": "R-5: 626 → 477 lines; the v-model sync, the draw-on sweep's clock and the literal chip leave for three named composables in the unit; the handle overlay stays, since its pointer arithmetic is asserted in this SFC's own text"
+  },
+  {
+   "file": "src/components/easing/useEasingCopy.ts",
+   "why": "the literal chip's copy control, its state vocabulary and the manual-selection fallback, moved verbatim out of EasingPicker.vue"
+  },
+  {
+   "file": "src/components/easing/useEasingModel.ts",
+   "why": "the picker's two-way v-model (raw authoring fields in, canonical css/fn out), moved verbatim out of EasingPicker.vue"
+  },
+  {
+   "file": "src/components/easing/useEasingSweep.ts",
+   "why": "the clock of the plot's draw-on sweep (two-frame arm, PRM no-arm, drag exclusion, frame cleanup on unmount), moved verbatim out of EasingPicker.vue"
+  }
+ ]
+}

@@ -1,0 +1,106 @@
+{
+    "about": "B-S11 (R-5), zone demo: the eight demo files over 500 lines, one row each. Each row names the files it writes and why. tools/gen-row.mjs derives NN-<name>.mjs from the tree before and after the split; tools/apply.mjs re-applies them in this order and checks the after tree byte for byte. The rows are independent of each other: any order applies.",
+    "rows": [
+        {
+            "id": "01-manifest",
+            "source": "demo/stories/manifest.ts",
+            "author": "tools/author/manifest.mjs",
+            "why": "B-S11 (R-5): demo/stories/manifest.ts 1,098 → 303 lines. The eleven category blocks move to manifest/categories/<id>.ts (one file per category, the rows verbatim), the Story/Category vocabulary to manifest/types.ts, the row factory s() to manifest/row.ts; the manifest keeps the globs, the background and landing maps, the row resolver, the depth ladder, the assembly, the act order and the lookups. The pi lane re-sources its scenes from the category files the manifest imports.",
+            "files": {
+                "demo/stories/manifest.ts": "R-5: 1,098 → 303 lines; the rows and the types leave, the resolver story(row) takes the old s() body verbatim, and CATEGORIES assembles the eleven imported category rows in the literal's old order before the act-order sort",
+                "demo/stories/manifest/types.ts": "the manifest's types (HeroScale, StoryDepth, Story, Category, SectionLanding) verbatim, StoryOptions now exported, and the two authored row shapes StoryRow and CategoryRow",
+                "demo/stories/manifest/row.ts": "s(cat, id, title, blurb?, opts?) as a category file authors it: it returns the row, and the manifest resolves the row into a Story",
+                "demo/stories/manifest/categories/foundations.ts": "the foundations category block, verbatim",
+                "demo/stories/manifest/categories/substrates.ts": "the substrates category block, verbatim",
+                "demo/stories/manifest/categories/forms.ts": "the forms category block, verbatim",
+                "demo/stories/manifest/categories/display.ts": "the display category block, verbatim",
+                "demo/stories/manifest/categories/containers.ts": "the containers category block, verbatim",
+                "demo/stories/manifest/categories/navigation.ts": "the navigation category block, verbatim",
+                "demo/stories/manifest/categories/dock.ts": "the dock category block, verbatim",
+                "demo/stories/manifest/categories/data.ts": "the data category block, verbatim",
+                "demo/stories/manifest/categories/feedback.ts": "the feedback category block, verbatim",
+                "demo/stories/manifest/categories/motion.ts": "the motion category block, verbatim",
+                "demo/stories/manifest/categories/compositions.ts": "the compositions category block, verbatim",
+                "tests-visual/pi-manifest.ts": "the scene re-source follows the rows: it reads the category files manifest.ts imports (the same 80 scenes, in the same order) and fails loud when the manifest imports none"
+            }
+        },
+        {
+            "id": "02-aurora-presets",
+            "source": "demo/stories/substrates/aurora/presets.ts",
+            "author": "tools/author/aurora-presets.mjs",
+            "why": "B-S11 (R-5): demo/stories/substrates/aurora/presets.ts 740 → 106 lines. The seventeen preset configurations move verbatim to aurora/mediums/smooth.ts (medium \"smooth\") and aurora/mediums/painterly.ts (every stroke medium), their shared builder cfg() to aurora/mediums/preset.ts. presets.ts keeps the table, its keys and its metadata, so every reader and both pi specs that read it by path are unchanged.",
+            "files": {
+                "demo/stories/substrates/aurora/presets.ts": "R-5: 740 → 106 lines; the table (PRESETS, PresetKey, PRESET_META, PRESET_KEYS) stays, its values imported by medium",
+                "demo/stories/substrates/aurora/mediums/preset.ts": "cfg(overrides): the one builder every authored preset goes through, verbatim",
+                "demo/stories/substrates/aurora/mediums/smooth.ts": "the six smooth-medium presets, verbatim: sky, dawn, speedtest and the three setting-sun candidates",
+                "demo/stories/substrates/aurora/mediums/painterly.ts": "the eleven stroke-medium presets, verbatim: watercolor, pastel, oil, van Gogh, oil pastel, crayon, metal"
+            }
+        },
+        {
+            "id": "03-blob",
+            "source": "demo/stories/substrates/blob.vue",
+            "author": "tools/author/blob.mjs",
+            "why": "B-S11 (R-5): demo/stories/substrates/blob.vue 785 → 440 lines. The studio's data (BlobStudioCfg, the option lists, the chroma ceiling, the geometry base, the five emotion presets) moves to blob/presets.ts; the live stage (palette ramp, lean register, reactive BlobConfig, the watch threading every edit onto it) to the composable blob/useBlobStage.ts, called where its code stood. The page keeps the template, the plain blob and the pause seam. The blob-page source witness reads the geometry base where it now lives.",
+            "files": {
+                "demo/stories/substrates/blob.vue": "R-5: 785 → 440 lines; the studio data and the live stage leave, the page wires them",
+                "demo/stories/substrates/blob/presets.ts": "the blob studio's data, verbatim, its names exported",
+                "demo/stories/substrates/blob/useBlobStage.ts": "the blob studio's live stage, verbatim inside useBlobStage(studio), returning the palette stops and the stage config the template reads",
+                "tests-visual/blob-page.spec.ts": "the orbitRadius source witness reads blob/presets.ts, where the studio geometry base (orbit 0.3) now lives; left on blob.vue it would silently read the plain blob's literal instead"
+            }
+        },
+        {
+            "id": "04-dock-overview",
+            "source": "demo/stories/dock/overview.vue",
+            "author": "tools/author/dock-overview.mjs",
+            "why": "B-S11 (R-5): demo/stories/dock/overview.vue 674 → 421 lines. The \"Select and dropdown triggers\" section leaves with its view/command state for dock/overview/TriggerSection.vue, and \"With popover triggers\" with its track list for dock/overview/PopoverSection.vue, which writes the page's track through v-model:track (the transport section prints it). The page's tile rule reaches the sections' tiles through :deep() at the same specificity.",
+            "files": {
+                "demo/stories/dock/overview.vue": "R-5: 674 → 421 lines; two sections leave, the page composes them, its imports narrow to what it still renders, and .dock-stage-tile becomes :deep(.dock-stage-tile) so one rule serves every tile",
+                "demo/stories/dock/overview/TriggerSection.vue": "the select/dropdown/popover trigger section and its state, verbatim",
+                "demo/stories/dock/overview/PopoverSection.vue": "the keep-dock-open popover section, verbatim; its track is the page's, bound by defineModel"
+            }
+        },
+        {
+            "id": "05-search",
+            "source": "demo/stories/data/search.vue",
+            "author": "tools/author/search.mjs",
+            "why": "B-S11 (R-5): demo/stories/data/search.vue 632 → 225 lines. The 200-row catalogue the route ranks (the row type, the curated seeds, the procedural extension) moves verbatim to data/search/catalogue.ts; the route keeps the engine wiring, the combobox and the result cards.",
+            "files": {
+                "demo/stories/data/search.vue": "R-5: 632 → 225 lines; the catalogue leaves",
+                "demo/stories/data/search/catalogue.ts": "the search catalogue, verbatim, exporting searchItems and StorySearchItem"
+            }
+        },
+        {
+            "id": "06-springs",
+            "source": "demo/stories/motion/springs.vue",
+            "author": "tools/author/springs.mjs",
+            "why": "B-S11 (R-5): demo/stories/motion/springs.vue 541 → 38 lines. Its two sections become motion/springs/NamedRegisters.vue and motion/springs/CustomAuthoring.vue, each with its own state; the preset rows, the managed preview and the responsive travel both use move to motion/springs/preview.ts. The page keeps the masthead and composes the two.",
+            "files": {
+                "demo/stories/motion/springs.vue": "R-5: 541 → 38 lines; the page keeps the masthead and composes its two sections",
+                "demo/stories/motion/springs/preview.ts": "the preset rows, useManagedPreview and the responsive travel, verbatim, exported for both sections",
+                "demo/stories/motion/springs/NamedRegisters.vue": "the named-registers section and its state, verbatim",
+                "demo/stories/motion/springs/CustomAuthoring.vue": "the custom-authoring configurator, its state and its copy feedback, verbatim"
+            }
+        },
+        {
+            "id": "07-fourier-field",
+            "source": "demo/stories/substrates/fourier-field.vue",
+            "author": "tools/author/fourier-field.mjs",
+            "why": "B-S11 (R-5): demo/stories/substrates/fourier-field.vue 531 → 376 lines at HEAD (533 → 378 on the route's tree). The view model, its colour choices and its five presets move to fourier-field/presets.ts, the source minting (figure labels, elliptic seed, mintFor) to fourier-field/sources.ts, beside the fourier-paths.ts it reads. The story keeps the studio wiring, the transport, the ramp and the template.",
+            "files": {
+                "demo/stories/substrates/fourier-field.vue": "R-5: 531 → 376 lines at HEAD (533 → 378 on the route's tree); the presets and the minting leave",
+                "demo/stories/substrates/fourier-field/presets.ts": "FourierViewCfg, COLOR_OPTIONS and the five presets, verbatim",
+                "demo/stories/substrates/fourier-field/sources.ts": "FIGURE_LABELS, the elliptic seed and mintFor, verbatim"
+            }
+        },
+        {
+            "id": "08-constellation",
+            "source": "demo/stories/substrates/constellation.vue",
+            "author": "tools/author/constellation.mjs",
+            "why": "B-S11 (R-5): demo/stories/substrates/constellation.vue 514 → 415 lines. The three drawOverlay painters move to constellation/overlays.ts as builders that take their colour as a getter, so each still reads its token's live value per frame; their bodies are verbatim but for that read. The story keeps the tokens, refs, pi-lane seams and template.",
+            "files": {
+                "demo/stories/substrates/constellation.vue": "R-5: 514 → 415 lines; each painter is now computed(() => builder(() => token.value))",
+                "demo/stories/substrates/constellation/overlays.ts": "focalPainter, warpFocalPainter, pinnedAnomalyPainter: the three painter bodies, verbatim but for the colour read"
+            }
+        }
+    ]
+}

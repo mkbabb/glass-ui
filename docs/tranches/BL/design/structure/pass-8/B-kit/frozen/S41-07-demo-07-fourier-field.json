@@ -1,0 +1,65 @@
+{
+ "step": "B-S11 (R-5): demo/stories/substrates/fourier-field.vue 531 → 376 lines at HEAD (533 → 378 on the route's tree). The view model, its colour choices and its five presets move to fourier-field/presets.ts, the source minting (figure labels, elliptic seed, mintFor) to fourier-field/sources.ts, beside the fourier-paths.ts it reads. The story keeps the studio wiring, the transport, the ramp and the template.",
+ "files": {
+  "demo/stories/substrates/fourier-field.vue": {
+   "hunks": [
+    [
+     "import {\n    makeEllipticSpectrum,\n    makeHarmonicFigure,\n    FOURIER_FIGURES,\n    FOURIER_FIGURE_KEYS,\n",
+     "import {\n    FOURIER_FIGURE_KEYS,\n"
+    ],
+    [
+     "    FourierField,\n    mintSpectrum,\n    DEFAULT_FOURIER_CONFIG,\n",
+     "    FourierField,\n    DEFAULT_FOURIER_CONFIG,\n"
+    ],
+    [
+     "import { FOURIER_STROKE_RUNGS } from \"@glass/components/fourier-field/register/constants\";\nimport { mulberry32, hashString } from \"@glass/composables/glass/procedural/prng\";\nimport { cssToOklch, type OklchStop } from \"@glass/composables/color\";\n",
+     "import { FOURIER_STROKE_RUNGS } from \"@glass/components/fourier-field/register/constants\";\nimport { cssToOklch, type OklchStop } from \"@glass/composables/color\";\n"
+    ],
+    [
+     "    useConfiguratorState,\n    type ConfiguratorPreset,\n} from \"@glass/components/configurator\";\n",
+     "    useConfiguratorState,\n} from \"@glass/components/configurator\";\n"
+    ],
+    [
+     "import { FOURIER_SHAPES, getFourierShape } from \"./fourier-field/fourier-paths\";\n\n/** The view model. Every field is a control, and every control changes the picture. */\ninterface FourierViewCfg {\n    source: string;\n    harmonics: number;\n    showMachine: boolean;\n    rainbowChain: boolean;\n    interactive: boolean;\n    trailArc: number;\n    markStroke: number;\n    inkOffset: number;\n    squash: number;\n    glow: number;\n    intensity: number;\n    richness: number;\n    color: string;\n}\n\nconst COLOR_OPTIONS = [\n    { label: \"Fourier (warm)\", value: \"var(--viz-fourier)\" },\n    { label: \"Chebyshev (cool)\", value: \"var(--viz-chebyshev)\" },\n    { label: \"Legendre (violet)\", value: \"var(--viz-legendre)\" },\n];\n\nconst FIGURE_LABELS: Record<string, string> = {\n    trefoil: \"Trefoil\",\n    quatrefoil: \"Quatrefoil\",\n    pentafoil: \"Pentafoil\",\n    hexafoil: \"Hexafoil\",\n    spiro: \"Spirograph\",\n};\n\nconst ELLIPTIC_SEED = \"fourier-studio\";\n\n/** Mint every source once, so the picker can state each one's honest term count. */\nfunction mintFor(key: string, richness: number): MintedSpectrum {\n    if (key === \"elliptic\") {\n        return mintSpectrum(\n            makeEllipticSpectrum(mulberry32(hashString(`fourier-field/${ELLIPTIC_SEED}`)), richness),\n        );\n    }\n    if (key in FOURIER_FIGURES) {\n        return mintSpectrum(\n            makeHarmonicFigure(FOURIER_FIGURES[key as keyof typeof FOURIER_FIGURES]),\n        );\n    }\n    return mintSpectrum(getFourierShape(key).spectrum);\n}\n\nconst presets: readonly ConfiguratorPreset<FourierViewCfg>[] = [\n    {\n        key: \"studio\",\n        label: \"Studio\",\n        sub: \"the machine, running\",\n        config: {\n            source: \"elliptic\",\n            harmonics: 6,\n            showMachine: true,\n            rainbowChain: true,\n            interactive: true,\n            trailArc: 0.43,\n            markStroke: 8,\n            inkOffset: 0.7,\n            squash: 0.55,\n            glow: 0.14,\n            intensity: 1,\n            richness: 0.5,\n            color: \"var(--viz-fourier)\",\n        },\n    },\n    {\n        key: \"teaching\",\n        label: \"Teaching\",\n        sub: \"one term, quarter speed\",\n        config: {\n            source: \"f-mark\",\n            harmonics: 1,\n            showMachine: true,\n            rainbowChain: false,\n            interactive: true,\n            trailArc: 1,\n            markStroke: 8,\n            inkOffset: 0.7,\n            squash: 0.3,\n            glow: 0.1,\n            intensity: 1,\n            richness: 0.5,\n            color: \"var(--viz-fourier)\",\n        },\n    },\n    {\n        key: \"ambient\",\n        label: \"Ambient\",\n        sub: \"curve only, calm\",\n        config: {\n            source: \"pentafoil\",\n            harmonics: 2,\n            showMachine: false,\n            rainbowChain: false,\n            interactive: true,\n            trailArc: 0.72,\n            markStroke: 4,\n            inkOffset: 0.55,\n            squash: 0.4,\n            glow: 0.08,\n            intensity: 0.85,\n            richness: 0.5,\n            color: \"var(--viz-chebyshev)\",\n        },\n    },\n    {\n        key: \"technicolor\",\n        label: \"Technicolor\",\n        sub: \"ink detached, chain swept\",\n        config: {\n            source: \"star\",\n            harmonics: 18,\n            showMachine: true,\n            rainbowChain: true,\n            interactive: true,\n            trailArc: 0.6,\n            markStroke: 12,\n            inkOffset: 1,\n            squash: 0.8,\n            glow: 0.24,\n            intensity: 1.2,\n            richness: 0.5,\n            color: \"var(--viz-legendre)\",\n        },\n    },\n    {\n        key: \"frozen\",\n        label: \"Frozen\",\n        sub: \"the clock held\",\n        config: {\n            source: \"heart\",\n            harmonics: 8,\n            showMachine: true,\n            rainbowChain: true,\n            interactive: false,\n            trailArc: 1,\n            markStroke: 8,\n            inkOffset: 0.7,\n            squash: 0,\n            glow: 0.14,\n            intensity: 1,\n            richness: 0.5,\n            color: \"var(--viz-fourier)\",\n        },\n    },\n];\n",
+     "import { FOURIER_SHAPES } from \"./fourier-field/fourier-paths\";\nimport { COLOR_OPTIONS, presets, type FourierViewCfg } from \"./fourier-field/presets\";\nimport { FIGURE_LABELS, mintFor } from \"./fourier-field/sources\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/fourier-field/presets.ts": {
+   "create": "// The Fourier studio's view model, its colour choices and its five presets.\nimport type { ConfiguratorPreset } from \"@glass/components/configurator\";\n\n/** The view model. Every field is a control, and every control changes the picture. */\nexport interface FourierViewCfg {\n    source: string;\n    harmonics: number;\n    showMachine: boolean;\n    rainbowChain: boolean;\n    interactive: boolean;\n    trailArc: number;\n    markStroke: number;\n    inkOffset: number;\n    squash: number;\n    glow: number;\n    intensity: number;\n    richness: number;\n    color: string;\n}\n\nexport const COLOR_OPTIONS = [\n    { label: \"Fourier (warm)\", value: \"var(--viz-fourier)\" },\n    { label: \"Chebyshev (cool)\", value: \"var(--viz-chebyshev)\" },\n    { label: \"Legendre (violet)\", value: \"var(--viz-legendre)\" },\n];\n\nexport const presets: readonly ConfiguratorPreset<FourierViewCfg>[] = [\n    {\n        key: \"studio\",\n        label: \"Studio\",\n        sub: \"the machine, running\",\n        config: {\n            source: \"elliptic\",\n            harmonics: 6,\n            showMachine: true,\n            rainbowChain: true,\n            interactive: true,\n            trailArc: 0.43,\n            markStroke: 8,\n            inkOffset: 0.7,\n            squash: 0.55,\n            glow: 0.14,\n            intensity: 1,\n            richness: 0.5,\n            color: \"var(--viz-fourier)\",\n        },\n    },\n    {\n        key: \"teaching\",\n        label: \"Teaching\",\n        sub: \"one term, quarter speed\",\n        config: {\n            source: \"f-mark\",\n            harmonics: 1,\n            showMachine: true,\n            rainbowChain: false,\n            interactive: true,\n            trailArc: 1,\n            markStroke: 8,\n            inkOffset: 0.7,\n            squash: 0.3,\n            glow: 0.1,\n            intensity: 1,\n            richness: 0.5,\n            color: \"var(--viz-fourier)\",\n        },\n    },\n    {\n        key: \"ambient\",\n        label: \"Ambient\",\n        sub: \"curve only, calm\",\n        config: {\n            source: \"pentafoil\",\n            harmonics: 2,\n            showMachine: false,\n            rainbowChain: false,\n            interactive: true,\n            trailArc: 0.72,\n            markStroke: 4,\n            inkOffset: 0.55,\n            squash: 0.4,\n            glow: 0.08,\n            intensity: 0.85,\n            richness: 0.5,\n            color: \"var(--viz-chebyshev)\",\n        },\n    },\n    {\n        key: \"technicolor\",\n        label: \"Technicolor\",\n        sub: \"ink detached, chain swept\",\n        config: {\n            source: \"star\",\n            harmonics: 18,\n            showMachine: true,\n            rainbowChain: true,\n            interactive: true,\n            trailArc: 0.6,\n            markStroke: 12,\n            inkOffset: 1,\n            squash: 0.8,\n            glow: 0.24,\n            intensity: 1.2,\n            richness: 0.5,\n            color: \"var(--viz-legendre)\",\n        },\n    },\n    {\n        key: \"frozen\",\n        label: \"Frozen\",\n        sub: \"the clock held\",\n        config: {\n            source: \"heart\",\n            harmonics: 8,\n            showMachine: true,\n            rainbowChain: true,\n            interactive: false,\n            trailArc: 1,\n            markStroke: 8,\n            inkOffset: 0.7,\n            squash: 0,\n            glow: 0.14,\n            intensity: 1,\n            richness: 0.5,\n            color: \"var(--viz-fourier)\",\n        },\n    },\n];\n"
+  },
+  "demo/stories/substrates/fourier-field/sources.ts": {
+   "create": "// The Fourier studio's sources: the figure labels, the elliptic seed, and the one mint\n// every source goes through.\nimport {\n    makeEllipticSpectrum,\n    makeHarmonicFigure,\n    FOURIER_FIGURES,\n} from \"@glass/components/fourier-field/math\";\nimport { mintSpectrum, type MintedSpectrum } from \"@glass/components/fourier-field\";\nimport { mulberry32, hashString } from \"@glass/composables/glass/procedural/prng\";\nimport { getFourierShape } from \"./fourier-paths\";\n\nexport const FIGURE_LABELS: Record<string, string> = {\n    trefoil: \"Trefoil\",\n    quatrefoil: \"Quatrefoil\",\n    pentafoil: \"Pentafoil\",\n    hexafoil: \"Hexafoil\",\n    spiro: \"Spirograph\",\n};\n\nconst ELLIPTIC_SEED = \"fourier-studio\";\n\n/** Mint every source once, so the picker can state each one's honest term count. */\nexport function mintFor(key: string, richness: number): MintedSpectrum {\n    if (key === \"elliptic\") {\n        return mintSpectrum(\n            makeEllipticSpectrum(mulberry32(hashString(`fourier-field/${ELLIPTIC_SEED}`)), richness),\n        );\n    }\n    if (key in FOURIER_FIGURES) {\n        return mintSpectrum(\n            makeHarmonicFigure(FOURIER_FIGURES[key as keyof typeof FOURIER_FIGURES]),\n        );\n    }\n    return mintSpectrum(getFourierShape(key).spectrum);\n}\n"
+  }
+ },
+ "reasons": [
+  {
+   "file": "demo/stories/substrates/fourier-field.vue",
+   "why": "R-5: 531 → 376 lines at HEAD (533 → 378 on the route's tree); the presets and the minting leave"
+  },
+  {
+   "file": "demo/stories/substrates/fourier-field.vue",
+   "why": "R-5: 531 → 376 lines at HEAD (533 → 378 on the route's tree); the presets and the minting leave"
+  },
+  {
+   "file": "demo/stories/substrates/fourier-field.vue",
+   "why": "R-5: 531 → 376 lines at HEAD (533 → 378 on the route's tree); the presets and the minting leave"
+  },
+  {
+   "file": "demo/stories/substrates/fourier-field.vue",
+   "why": "R-5: 531 → 376 lines at HEAD (533 → 378 on the route's tree); the presets and the minting leave"
+  },
+  {
+   "file": "demo/stories/substrates/fourier-field.vue",
+   "why": "R-5: 531 → 376 lines at HEAD (533 → 378 on the route's tree); the presets and the minting leave"
+  },
+  {
+   "file": "demo/stories/substrates/fourier-field/presets.ts",
+   "why": "FourierViewCfg, COLOR_OPTIONS and the five presets, verbatim"
+  },
+  {
+   "file": "demo/stories/substrates/fourier-field/sources.ts",
+   "why": "FIGURE_LABELS, the elliptic seed and mintFor, verbatim"
+  }
+ ]
+}

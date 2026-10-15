@@ -1,0 +1,306 @@
+{
+ "base": {
+  "B0": 0,
+  "B1": 0,
+  "B2": 0,
+  "B3": 0,
+  "B4": 0,
+  "B5": 0,
+  "B6": 0,
+  "B7": 0,
+  "B8": 0,
+  "B9": 0,
+  "B10": 0,
+  "B11": 0,
+  "B12": 0,
+  "B13": 0,
+  "B14": 0,
+  "B15": 0,
+  "B16": 0,
+  "B17": 0,
+  "B18": 0
+ },
+ "rows": [
+  {
+   "id": "DT-eyeglass",
+   "item": "B-10",
+   "verdict": "SKIP",
+   "why": "morph door src/composables/motion/morph/index.ts, eyeglass source src/composables/motion/selection/eyeglass.ts, tabs null, or the name already on the door"
+  },
+  {
+   "id": "DT-CTL-src",
+   "item": "B-10 control (P6-R2)",
+   "expect": "*?",
+   "contrast": null,
+   "verdict": "RECORDED",
+   "named": "B11",
+   "lines": {
+    "B11": [
+     "src/components/chip/index.ts +zq7TestOnly (not in the pin)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "I7-agg",
+   "item": "B-01 (I7)",
+   "expect": "B3",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B3",
+   "lines": {
+    "B3": [
+     "src/styles/index.css:273 -> src/components/dock/styles/core.css (css door src/components/dock/index.css)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "I7-agg-url",
+   "item": "B-01 (I7)",
+   "expect": "B3",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B3",
+   "lines": {
+    "B3": [
+     "src/styles/index.css:273 -> src/components/dock/styles/core.css (css door src/components/dock/index.css)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "I7-agg-layer",
+   "item": "B-01 (I7)",
+   "expect": "B3",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B3",
+   "lines": {
+    "B3": [
+     "src/styles/index.css:273 -> src/components/dock/styles/core.css (css door src/components/dock/index.css)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "I7-glass",
+   "item": "B-01 (I7)",
+   "expect": "B3",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B3,B8,B10",
+   "lines": {
+    "B3": [
+     "src/styles/glass/index.css:172 -> src/components/dock/styles/core.css (css door src/components/dock/index.css)"
+    ],
+    "B8": [
+     "src/styles/glass/index.css:172 -> src/components/dock/styles/core.css [css-import] (kernel reads a unit)"
+    ],
+    "B10": [
+     "src/components/dock/styles/core.css -> src [global] readers: src/components/dock, src/styles/glass"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "I7-stylesrc",
+   "item": "B-01 (I7)",
+   "expect": "B3",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B3,B10",
+   "lines": {
+    "B3": [
+     "src/components/chip/Chip.vue:155 -> src/components/dock/styles/core.css (css door src/components/dock/index.css)"
+    ],
+    "B10": [
+     "src/components/dock/styles/core.css -> src/components [global] readers: src/components/chip, src/components/dock"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "I7-CTL-own",
+   "item": "B-01 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "I7-leaf",
+   "item": "B-01 (I7b)",
+   "expect": "B3",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B3,B8,B10",
+   "lines": {
+    "B3": [
+     "src/styles/view-transition.css:1 -> src/components/slider/loupe.css (css door src/components/slider/index.css)"
+    ],
+    "B8": [
+     "src/styles/view-transition.css:1 -> src/components/slider/loupe.css [css-import] (kernel reads a unit)"
+    ],
+    "B10": [
+     "src/components/slider/loupe.css -> src [global] readers: src/components/slider, src/styles"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "KF-new",
+   "item": "peer class (§P6-8.4)",
+   "expect": "*?",
+   "contrast": null,
+   "verdict": "RECORDED",
+   "named": "B11,B18",
+   "lines": {
+    "B11": [
+     "src/composables/motion/core/index.ts exports zq7KfLeak (no reader outside src/composables/motion/core)",
+     "src/composables/motion/core/index.ts +zq7KfLeak (not in the pin)"
+    ],
+    "B18": [
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/zq7KfLeak.ts:1)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/zq7KfLeak.ts:1)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ToggleGroup (src/components/toggle-group/ToggleGroup.vue; first at src/composables/motion/core/zq7KfLeak.ts:1)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "KF-leaf",
+   "item": "peer class (§P6-8.4)",
+   "expect": "*?",
+   "contrast": null,
+   "verdict": "RECORDED",
+   "named": "B18",
+   "lines": {
+    "B18": [
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/useRAFLoop.ts:1)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/useRAFLoop.ts:1)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ToggleGroup (src/components/toggle-group/ToggleGroup.vue; first at src/composables/motion/core/useRAFLoop.ts:1)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "KF-deep",
+   "item": "peer class (§P6-8.4)",
+   "expect": "*?",
+   "contrast": null,
+   "verdict": "RECORDED",
+   "named": "B18",
+   "lines": {
+    "B18": [
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/zq7KfDeep.ts:1)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/zq7KfDeep.ts:1)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ToggleGroup (src/components/toggle-group/ToggleGroup.vue; first at src/composables/motion/core/zq7KfDeep.ts:1)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "KF-existing",
+   "item": "peer class (§P6-8.4)",
+   "expect": "*?",
+   "contrast": null,
+   "verdict": "RECORDED",
+   "named": "B1,B4,B9,B11,B18",
+   "lines": {
+    "B1": [
+     "src/composables/motion/core/index.ts:17 -> src/composables/motion/spring/useSpring.ts [reexport] (door src/composables/motion/spring/index.ts)"
+    ],
+    "B4": [
+     "cycle @src/composables/motion [spring core] via src/composables/motion/spring/useLiquidPress.ts -> src/composables/motion/core/index.ts ; src/composables/motion/core/index.ts -> src/composables/motion/spring/useSpring.ts"
+    ],
+    "B9": [
+     "src/composables/motion/core/index.ts:17 re-exports src/composables/motion/spring/useSpring.ts (outside src/composables/motion/core)"
+    ],
+    "B11": [
+     "src/composables/motion/core/index.ts +useSpring (not in the pin)"
+    ],
+    "B18": [
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/spring/useSpring.ts:15)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/spring/useSpring.ts:15)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ToggleGroup (src/components/toggle-group/ToggleGroup.vue; first at src/composables/motion/spring/useSpring.ts:15)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "DT-xunit-test",
+   "item": "B-10 (P6-R2)",
+   "expect": "*",
+   "contrast": "DT-CTL-src",
+   "verdict": "SAME-AS-CTL",
+   "named": "B11",
+   "lines": {
+    "B11": [
+     "src/components/chip/index.ts +zq7TestOnly (not in the pin)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "DT-own-test",
+   "item": "B-10 (P6-R2)",
+   "expect": "*",
+   "contrast": "DT-CTL-src",
+   "verdict": "SAME-AS-CTL",
+   "named": "B11",
+   "lines": {
+    "B11": [
+     "src/components/chip/index.ts +zq7TestOnly (not in the pin)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "DT-harness-test",
+   "item": "B-10 (P6-R2)",
+   "expect": "*",
+   "contrast": "DT-CTL-src",
+   "verdict": "SAME-AS-CTL",
+   "named": "B11",
+   "lines": {
+    "B11": [
+     "src/components/chip/index.ts +zq7TestOnly (not in the pin)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "DT-noreader",
+   "item": "B-10 (B11)",
+   "expect": "*",
+   "contrast": "DT-CTL-src",
+   "verdict": "SAME-AS-CTL",
+   "named": "B11",
+   "lines": {
+    "B11": [
+     "src/components/chip/index.ts +zq7TestOnly (not in the pin)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  }
+ ]
+}

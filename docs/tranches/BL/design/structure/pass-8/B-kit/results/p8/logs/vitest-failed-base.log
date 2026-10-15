@@ -1,0 +1,130 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p8/B-proto/base
+
+ ❯ tests/gates/comment-ratio.test.ts (15 tests | 1 failed) 23771ms
+     × the COMMITTED figure is derivable at a named revision, free of lane dirt 12691ms
+ ❯ tests/components/menu/contract.test.ts (12 tests | 1 failed) 9039ms
+     × keeps the click branch to one portaled menu and restores focus on execute 1357ms
+ ❯ tests/components/custom/dock/GlassDock.stagger.test.ts (9 tests) 12738ms
+ ❯ tests/components/custom/aurora/atoms.test.ts (24 tests | 1 failed) 23002ms
+     × every atom combination yields a valid in-range config (TOTAL) 22991ms
+ ❯ tests/demo/aurora-stage-affordance.test.ts (5 tests | 1 failed) 11823ms
+     × keeps textured cursor light through a pointer-amplitude atom edit 11177ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/custom/dock/GlassDock.stagger.test.ts [ tests/components/custom/dock/GlassDock.stagger.test.ts ]
+Error: Hook timed out in 10000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".
+ ❯ tests/components/custom/dock/GlassDock.stagger.test.ts:68:1
+     66| }, 60_000);
+     67|
+     68| afterAll(async () => {
+       | ^
+     69|     await browser?.close();
+     70| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/demo/aurora-stage-affordance.test.ts > Aurora demo pointer affordance > keeps textured cursor light through a pointer-amplitude atom edit
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/demo/aurora-stage-affordance.test.ts:106:5
+    104|     });
+    105|
+    106|     it("keeps textured cursor light through a pointer-amplitude atom e…
+       |     ^
+    107|         const config = reactive({
+    108|             ...PRESETS.OIL_IMPASTO,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/gates/comment-ratio.test.ts > G-COMMENT-RATIO — source is not a tranche document (BK #17) > the COMMITTED figure is derivable at a named revision, free of lane dirt
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/gates/comment-ratio.test.ts:195:5
+    193|     });
+    194|
+    195|     it("the COMMITTED figure is derivable at a named revision, free of…
+       |     ^
+    196|         // ⊕⁷⁴'s L-1: a figure measured on a four-lane shared working …
+    197|         // whichever lane last saved. Two reads of the same commit mus…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  tests/components/menu/contract.test.ts > DropdownMenu contract > keeps the click branch to one portaled menu and restores focus on execute
+AssertionError: expected <body><div data-v-app>…(1)</div></body> to be <button …(7)></button> // Object.is equality
+
+- Expected
++ Received
+
+@@ -1,5 +1,13 @@
++ <body>
++   <div
++     data-v-app=""
++   >
++     
++     
++     
++     
+      <button
+        aria-expanded="false"
+        aria-haspopup="menu"
+        class="menu__trigger"
+        data-slot="menu-trigger"
+@@ -7,5 +15,22 @@
+        id="reka-dropdown-menu-trigger-v-0"
+        type="button"
+      >
+        Open commands
+      </button>
++     <!--teleport start-->
++     <!--teleport end-->
++     
++     
++     
++     
++   </div>
++   
++   
++   
++   
++   <!---->
++   
++   
++   
++   
++ </body>
+
+ ❯ tests/components/menu/contract.test.ts:118:40
+    116|         expect((wrapper.vm as unknown as { open: boolean }).open).toBe…
+    117|         await new Promise((resolve) => setTimeout(resolve, 30));
+    118|         expect(document.activeElement).toBe(trigger.element);
+       |                                        ^
+    119|     });
+    120|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  tests/components/custom/aurora/atoms.test.ts > resolveAtoms total-function fuzz > every atom combination yields a valid in-range config (TOTAL)
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/components/custom/aurora/atoms.test.ts:141:5
+    139|     // deriveAurora call is the per-iteration cost). Together they exc…
+    140|     // floor and exercise every atom field including the out-of-range …
+    141|     it("every atom combination yields a valid in-range config (TOTAL)"…
+       |     ^
+    142|         const violations: string[] = [];
+    143|         let count = 0;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  5 failed | 2 passed (7)
+      Tests  4 failed | 64 passed | 1 expected fail (69)
+   Start at  12:00:40
+   Duration  45.91s (transform 37.40s, setup 3.53s, import 66.82s, tests 83.64s, environment 26.97s)
+

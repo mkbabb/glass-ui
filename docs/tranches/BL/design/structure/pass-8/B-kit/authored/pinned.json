@@ -1,0 +1,22 @@
+{
+ "note": "Files the floor's own rows edit by path (floor/rows/*.mjs). A whole-chain replay re-runs those rows, and a row reads its applied state at the path it names, so a route that moves one of these files, or rewrites a span a row wrote, breaks the replay (rows/lib.mjs: 'does not exist'). B never moves them; a module whose law needs one moved is declined and reported (LAW §7).",
+ "files": [
+  "src/components/_shared/overlay/participation.ts",
+  "src/components/dock/composables/dockContext.ts",
+  "src/components/dock/composables/useDockState.ts",
+  "src/composables/motion/morph/useTabRovingFocus.ts",
+  "tests/components/easing.contract.test.ts",
+  "tests/components/sortable-list/battery.test.ts",
+  "tests/gates/floor.test.ts",
+  "tests/gates/orphan-css-partial.test.ts",
+  "tests/gates/overfit-structure.test.ts",
+  "tests/harness/source.ts",
+  "scripts/flatten-subpath-types.mjs",
+  "demo/demo.css",
+  "vite.library.ts",
+  "vite.style-fold.ts",
+  "vite.style-assets.ts",
+  "vite.utility-emit.ts",
+  "vitest.config.ts"
+ ]
+}

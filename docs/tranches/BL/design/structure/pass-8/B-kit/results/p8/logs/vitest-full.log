@@ -1,0 +1,251 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p8/B-proto/wt
+
+ ❯ tests/styles/emission/color-mix-endpoints.test.ts (1 test | 1 failed) 6926ms
+     × rejects literal nested endpoints across executable CSS and CSS Vue style blocks 6785ms
+ ❯ tests/gates/boot-graph/build.test.ts (3 tests | 1 failed) 5102ms
+     × the dist-demo it measures is NEWER than every source it is built from 5090ms
+ ❯ src/components/menu/__tests__/contract.test.ts (12 tests | 1 failed) 7186ms
+     × keeps the click branch to one portaled menu and restores focus on execute 2732ms
+ ❯ tests/gates/comment-ratio.test.ts (15 tests | 2 failed) 20392ms
+     × the census is internally consistent — comment + code = non-blank 6962ms
+     × the COMMITTED figure is derivable at a named revision, free of lane dirt 6299ms
+ ❯ src/components/aurora/__tests__/atoms.test.ts (24 tests | 1 failed) 13477ms
+     × every atom combination yields a valid in-range config (TOTAL) 13460ms
+ ❯ tests/demo/aurora-stage-affordance.test.ts (5 tests | 1 failed) 5389ms
+     × keeps textured cursor light through a pointer-amplitude atom edit 5266ms
+ ❯ tests/styles/glass-subtlety/grasp.test.ts (14 tests | 4 failed) 30795ms
+     × DISCOVERS its hosts from the mounts — no hard-coded pair 9700ms
+     × keeps the engage ink a 0ms step — no host rule transitions the background channel 7081ms
+     × stands DOWN every backdrop root on every mounted host, under the same gate 6971ms
+     × moves REAL INK on every mounted host — §5.4's band is falsifiable on BOTH 7011ms
+ ❯ src/components/dock/__tests__/GlassDock.stagger.test.ts (9 tests) 11305ms
+(node:85367) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ src/components/slider/__tests__/slider.size-tokens.test.ts (3 tests) 10516ms
+(node:85899) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:86289) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/dock/__tests__/GlassDock.stagger.test.ts [ src/components/dock/__tests__/GlassDock.stagger.test.ts ]
+Error: Hook timed out in 10000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".
+ ❯ src/components/dock/__tests__/GlassDock.stagger.test.ts:68:1
+     66| }, 60_000);
+     67|
+     68| afterAll(async () => {
+       | ^
+     69|     await browser?.close();
+     70| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/13]⎯
+
+ FAIL  src/components/slider/__tests__/slider.size-tokens.test.ts [ src/components/slider/__tests__/slider.size-tokens.test.ts ]
+Error: Hook timed out in 10000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".
+ ❯ src/components/slider/__tests__/slider.size-tokens.test.ts:52:1
+     50| }, 60_000);
+     51|
+     52| afterAll(async () => {
+       | ^
+     53|     await browser?.close();
+     54| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/13]⎯
+
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 11 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/demo/aurora-stage-affordance.test.ts > Aurora demo pointer affordance > keeps textured cursor light through a pointer-amplitude atom edit
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/demo/aurora-stage-affordance.test.ts:107:5
+    105|     });
+    106|
+    107|     it("keeps textured cursor light through a pointer-amplitude atom e…
+       |     ^
+    108|         const config = reactive({
+    109|             ...PRESETS.OIL_IMPASTO,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/13]⎯
+
+ FAIL  tests/gates/comment-ratio.test.ts > G-COMMENT-RATIO — source is not a tranche document (BK #17) > the census is internally consistent — comment + code = non-blank
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/gates/comment-ratio.test.ts:186:5
+    184|     // ── The corpus figures ─────────────────────────────────────────…
+    185|
+    186|     it("the census is internally consistent — comment + code = non-bla…
+       |     ^
+    187|         const result = census("src");
+    188|         expect(result.comment + result.code).toBe(result.nonBlank);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/13]⎯
+
+ FAIL  tests/gates/comment-ratio.test.ts > G-COMMENT-RATIO — source is not a tranche document (BK #17) > the COMMITTED figure is derivable at a named revision, free of lane dirt
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/gates/comment-ratio.test.ts:195:5
+    193|     });
+    194|
+    195|     it("the COMMITTED figure is derivable at a named revision, free of…
+       |     ^
+    196|         // ⊕⁷⁴'s L-1: a figure measured on a four-lane shared working …
+    197|         // whichever lane last saved. Two reads of the same commit mus…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/13]⎯
+
+ FAIL  tests/gates/boot-graph/build.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/gates/boot-graph/build.test.ts:30:5
+     28|     });
+     29|
+     30|     it("the dist-demo it measures is NEWER than every source it is bui…
+       |     ^
+     31|         expect(built, buildHint).toBe(true);
+     32|         const builtAt = artifactStat(indexHtml).mtimeMs;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/13]⎯
+
+ FAIL  tests/styles/glass-subtlety/grasp.test.ts > grasp register — the material answers the hand > DISCOVERS its hosts from the mounts — no hard-coded pair
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/styles/glass-subtlety/grasp.test.ts:290:5
+    288|     };
+    289|
+    290|     it("DISCOVERS its hosts from the mounts — no hard-coded pair", () …
+       |     ^
+    291|         // The list this replaces named two files. An arm that names i…
+    292|         // only ever certify the subjects someone remembered, which is…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/13]⎯
+
+ FAIL  tests/styles/glass-subtlety/grasp.test.ts > grasp register — the material answers the hand > keeps the engage ink a 0ms step — no host rule transitions the background channel
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/styles/glass-subtlety/grasp.test.ts:306:5
+    304|     });
+    305|
+    306|     it("keeps the engage ink a 0ms step — no host rule transitions the…
+       |     ^
+    307|         // The ink rides `--glass-veil-rung` alone: engage is the regi…
+    308|         // step and release lerps the RUNG on the register's clock (gr…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/13]⎯
+
+ FAIL  tests/styles/glass-subtlety/grasp.test.ts > grasp register — the material answers the hand > stands DOWN every backdrop root on every mounted host, under the same gate
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/styles/glass-subtlety/grasp.test.ts:323:5
+    321|     });
+    322|
+    323|     it("stands DOWN every backdrop root on every mounted host, under t…
+       |     ^
+    324|         // The register's one precondition, and the one that fails sil…
+    325|         // `backdrop-filter` samples only as far back as its BACKDROP …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/13]⎯
+
+ FAIL  tests/styles/glass-subtlety/grasp.test.ts > grasp register — the material answers the hand > moves REAL INK on every mounted host — §5.4's band is falsifiable on BOTH
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/styles/glass-subtlety/grasp.test.ts:376:5
+    374|     });
+    375|
+    376|     it("moves REAL INK on every mounted host — §5.4's band is falsifia…
+       |     ^
+    377|         // The band `[0.6·α_rest, α_rest]` was written for a plate, an…
+    378|         // was a structural no-op: the fill never read `--glass-veil-r…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/13]⎯
+
+ FAIL  tests/styles/emission/color-mix-endpoints.test.ts > gate:G-WK-COLORMIX-BUDGET — color-mix endpoint structure > rejects literal nested endpoints across executable CSS and CSS Vue style blocks
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/styles/emission/color-mix-endpoints.test.ts:118:5
+    116|
+    117| describe("gate:G-WK-COLORMIX-BUDGET — color-mix endpoint structure", (…
+    118|     it("rejects literal nested endpoints across executable CSS and CSS…
+       |     ^
+    119|         const styles = collectStyles(files(root));
+    120|         expect(styles.some(({ id }) => id.includes(".vue#style-"))).to…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/13]⎯
+
+ FAIL  src/components/aurora/__tests__/atoms.test.ts > resolveAtoms total-function fuzz > every atom combination yields a valid in-range config (TOTAL)
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/aurora/__tests__/atoms.test.ts:140:5
+    138|     // deriveAurora call is the per-iteration cost). Together they exc…
+    139|     // floor and exercise every atom field including the out-of-range …
+    140|     it("every atom combination yields a valid in-range config (TOTAL)"…
+       |     ^
+    141|         const violations: string[] = [];
+    142|         let count = 0;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/13]⎯
+
+ FAIL  src/components/menu/__tests__/contract.test.ts > DropdownMenu contract > keeps the click branch to one portaled menu and restores focus on execute
+AssertionError: expected <body><div data-v-app>…(1)</div></body> to be <button …(7)></button> // Object.is equality
+
+- Expected
++ Received
+
+@@ -1,5 +1,13 @@
++ <body>
++   <div
++     data-v-app=""
++   >
++     
++     
++     
++     
+      <button
+        aria-expanded="false"
+        aria-haspopup="menu"
+        class="menu__trigger"
+        data-slot="menu-trigger"
+@@ -7,5 +15,22 @@
+        id="reka-dropdown-menu-trigger-v-0"
+        type="button"
+      >
+        Open commands
+      </button>
++     <!--teleport start-->
++     <!--teleport end-->
++     
++     
++     
++     
++   </div>
++   
++   
++   
++   
++   <!---->
++   
++   
++   
++   
++ </body>
+
+ ❯ src/components/menu/__tests__/contract.test.ts:118:40
+    116|         expect((wrapper.vm as unknown as { open: boolean }).open).toBe…
+    117|         await new Promise((resolve) => setTimeout(resolve, 30));
+    118|         expect(document.activeElement).toBe(trigger.element);
+       |                                        ^
+    119|     });
+    120|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/13]⎯
+
+
+ Test Files  9 failed | 266 passed (275)
+      Tests  11 failed | 2322 passed | 10 expected fail | 1 skipped (2344)
+   Start at  11:52:55
+   Duration  240.21s (transform 323.79s, setup 119.33s, import 954.92s, tests 495.14s, environment 555.72s)
+

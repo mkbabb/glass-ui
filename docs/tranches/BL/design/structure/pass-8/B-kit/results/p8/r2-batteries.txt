@@ -1,0 +1,18 @@
+r2 build start load { 175.46 202.03 300.60 }
+r2 build exit 0
+crit7-crash exit 0 170 s load { 200.69 203.72 293.95 } -> { 271.76 234.93 290.53 }
+crit7-plants exit 0 939 s load { 271.76 234.93 290.53 } -> { 465.11 400.02 365.00 }
+crit7-extra-plants exit 0 221 s load { 465.11 400.02 365.00 } -> { 500.27 438.18 389.09 }
+crit7-regress exit 0 731 s load { 500.27 438.18 389.09 } -> { 290.14 308.43 342.02 }
+sfc-split2-run exit 0 263 s load { 290.14 308.43 342.02 } -> { 290.46 288.07 322.94 }
+ M .bundle-ratchet
+ M DESIGN.md
+ M MIGRATION.md
+ M demo/chassis/code/Code.vue
+ M demo/chassis/code/CodeBlock.vue
+ M demo/chassis/code/useCodeHighlight.ts
+ M demo/chassis/hero/StoryHeader.vue
+ M demo/chassis/hero/StoryHero.vue
+ M demo/chassis/hero/aurora-hero.ts
+ M demo/chassis/landing/CatalogLanding.vue
+replay done in 1.3 s; code digest 05aaa6edbe0f8f242f0ffe5f37a4e46f9e880ec237e30a3d4293f8f9a451e1b3 over 1585 files; chain final MATCH

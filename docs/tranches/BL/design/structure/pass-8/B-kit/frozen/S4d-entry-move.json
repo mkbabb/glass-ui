@@ -1,0 +1,25 @@
+{
+ "step": "B-S4d (frozen from authored/entry-moves.json, F-9)",
+ "moves": [
+  {
+   "from": "src/composables/motion/core/index.ts",
+   "to": "src/composables/motion/motion-core.ts"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "tests/gates/orphan-css-partial.test.ts",
+   "spec": "resolve(SRC, spec.slice(\"@glass/\".length))",
+   "file": "src/composables/motion/core/index.ts",
+   "reason": "S4d: src/composables/motion/core/index.ts -> src/composables/motion/motion-core.ts; the scanner's sensitivity is judged by the test run"
+  }
+ ],
+ "globDeltas": [],
+ "reasons": [
+  {
+   "from": "src/composables/motion/core/index.ts",
+   "to": "src/composables/motion/motion-core.ts",
+   "why": "LAW §1: an entry that aggregates its module's siblings is a door of the parent module; B4: core <-> sibling cycle"
+  }
+ ]
+}

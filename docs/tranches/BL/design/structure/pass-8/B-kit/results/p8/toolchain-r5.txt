@@ -1,0 +1,29 @@
+toolchain on r5 (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p8/B-proto/wt) 2026-10-14T15:27:33Z; node v26.0.0, vite/8.1.5 darwin-arm64 node-v26.0.0, vue-tsc Version 6.0.3, vitest/4.1.10 darwin-arm64 node-v26.0.0, typescript Version 6.0.3, playwright Version 1.61.1, macOS 26.4.1
+code digest 05aaa6edbe0f8f242f0ffe5f37a4e46f9e880ec237e30a3d4293f8f9a451e1b3 over 1585 files
+seal (unbuilt) | exit 0 | 18 s | load { 95.43 86.64 98.58 } -> { 106.55 89.52 99.40 }
+peer probe on the unbuilt tree (expect 2) | exit 2 | 7 s | load { 106.55 89.52 99.40 } -> { 106.42 90.06 99.48 }
+base vite-build | exit 0 | 34 s | load { 106.42 90.06 99.48 } -> { 152.67 102.94 103.76 }
+base cascade snapshot | exit 0 | 1 s | load { 152.67 102.94 103.76 } -> { 152.67 102.94 103.76 }
+baseline styles.seq: identical to the committed baseline
+baseline styles_css.seq: identical to the committed baseline
+baseline styles_fonts.seq: identical to the committed baseline
+baseline styles_theme.seq: identical to the committed baseline
+base peer probe (expect 1: the root is broken at the base) | exit 1 | 4 s | load { 152.67 102.94 103.76 } -> { 163.27 105.97 104.82 }
+base pack list | exit 0 | 2 s | load { 163.27 105.97 104.82 } -> { 163.27 105.97 104.82 }
+vite-build | exit 0 | 29 s | load { 163.27 105.97 104.82 } -> { 186.05 117.46 109.06 }
+verify-package | exit 0 | 86 s | load { 186.05 117.46 109.06 } -> { 153.80 124.53 112.61 }
+verify-package: terminal CLEAN; claims 196, declarations 502, css 162; ratchet {"status":"PRESENT","mode":"later-coordinate","datum":"2920391","unpackedBytes":2920391,"equal":true,"increase":false} (the full record: logs/r5-verify-package.log)
+vue-tsc | exit 0 | 25 s | load { 153.80 124.53 112.61 } -> { 135.83 122.63 112.26 }
+vue-tsc-test | exit 0 | 30 s | load { 135.83 122.63 112.26 } -> { 115.84 119.35 111.45 }
+demo-dist-build | exit 0 | 7 s | load { 115.84 119.35 111.45 } -> { 110.73 118.13 111.11 }
+cascade verify against the floor base | exit 0 | 3 s | load { 110.73 118.13 111.11 } -> { 110.73 118.13 111.11 }
+peer probe (built) | exit 0 | 4 s | load { 110.73 118.13 111.11 } -> { 110.35 117.93 111.08 }
+pack list | exit 0 | 1 s | load { 110.35 117.93 111.08 } -> { 110.35 117.93 111.08 }
+pack diff exit 0
+seal-test | exit 0 | 27 s | load { 110.35 117.93 111.08 } -> { 85.32 111.19 108.88 }
+ Test Files  1 passed (1)
+      Tests  24 passed (24)
+vitest-full | exit 0 | 56 s | load { 85.32 111.19 108.88 } -> { 84.06 106.77 107.39 }
+ Test Files  275 passed (275)
+      Tests  2333 passed | 10 expected fail | 1 skipped (2344)
+toolchain end 2026-10-14T15:33:20Z load { 84.06 106.77 107.39 }

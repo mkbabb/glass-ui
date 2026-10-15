@@ -1,0 +1,70 @@
+base floor rows start 2026-10-13T18:51:06Z HEAD d6f68b88 load { 98.95 58.38 29.96 }
+row r1-register-retire: R-1: gate-register and its test retired with the register (W-REGISTER-COLLAPSE's retire) (2 file(s))
+row f3-entry-record: 7 readers on the record; subpath-policy.mjs and regen-exports.mjs deleted (9 file(s))
+row f4-terminal-role: terminalImportIndex resolves the declared terminal by file and throws on a miss; the path regex and @source fallback are gone (2 file(s))
+row m02-overlay-host: participation owns OverlayHost + DockHoldKind; dock provides it; dockContext stays in dock (3 file(s))
+{
+ "ok": true,
+ "moves": 1,
+ "expanded": 1,
+ "pending": 1,
+ "alreadyApplied": 0,
+ "filesEdited": 4,
+ "rewrites": 4,
+ "byKind": {
+  "import-type": 2,
+  "import": 1,
+  "path-literal": 1
+ },
+ "byVia": {
+  "relative": 3,
+  "root-relative": 1
+ },
+ "dirsMoved": 0,
+ "pruned": 0,
+ "digest": "ae02670107894eda0c03f0438048ca3599bc70f615857d14f6a69bcef464e690",
+ "ms": 51498,
+ "scc": {
+  "before": {
+   "sccs": 4,
+   "members": 18
+  },
+  "after": {
+   "sccs": 4,
+   "members": 14
+  },
+  "addedPairs": 0,
+  "refused": false
+ },
+ "residue": 0,
+ "scanDeltas": {
+  "total": 6,
+  "declared": 6,
+  "undeclared": 0,
+  "stale": 0
+ },
+ "globDeltas": {
+  "total": 0,
+  "declared": 0,
+  "undeclared": 0,
+  "stale": 0
+ },
+ "classified": {
+  "counts": {
+   "move-only": 4
+  },
+  "failed": 0
+ },
+ "lost": 0,
+ "gained": 0,
+ "violations": 0
+}
+row f9-wire: tests/gates/floor.test.ts runs the floor gates under npm test (1 file(s))
+row fd6-harness: tests/harness/source.ts reads F-1's file set; easing.contract and the sortable-list battery read through it (3 file(s))
+row fd7-programs: declarations rooted at the entry record; vitest collects __tests__ slots; @source excludes them; tsconfig.build.json deleted (4 file(s))
+row fd11-land: floor runtime (31 files) landed at scripts/structure; 8 readers re-pointed; scripts/import-dag.mjs deleted (71 file(s))
+floor rows applied: r1-register-retire, f3-entry-record, f4-terminal-role, m02-overlay-host, m03-roving-move, f9-wire, fd6-harness, fd7-programs, fd11-land
+tree digest 8a2940313499caec23fb8786df3dcff877519ea1bbde8473a9610bf857155061
+exit 0
+end load { 103.40 75.18 39.92 }
+code digest 5b14c6c7ce4e36f092263a90a269d842a0bccf9a131012fe03889d0bf705402f files 1354

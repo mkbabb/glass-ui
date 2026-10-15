@@ -1,0 +1,202 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p8/B-proto/wt
+
+ ❯ src/components/menu/__tests__/contract.test.ts (12 tests | 1 failed) 6060ms
+     × keeps the context branch to one pointer-anchored portal 1004ms
+ ❯ src/components/dock/__tests__/GlassDock.stagger.test.ts (9 tests) 11867ms
+ ❯ src/components/aurora/__tests__/atoms.test.ts (24 tests | 1 failed) 20489ms
+     × every atom combination yields a valid in-range config (TOTAL) 20476ms
+ ❯ tests/gates/comment-ratio.test.ts (15 tests | 2 failed) 24822ms
+     × the COMMITTED figure is derivable at a named revision, free of lane dirt 7014ms
+     × src carries ZERO commented-out declarations 6888ms
+ ❯ tests/demo/aurora-stage-affordance.test.ts (5 tests | 1 failed) 11668ms
+     × keeps textured cursor light through a pointer-amplitude atom edit 11052ms
+ ❯ tests/styles/glass-subtlety/grasp.test.ts (14 tests | 4 failed) 48438ms
+     × DISCOVERS its hosts from the mounts — no hard-coded pair 9887ms
+     × keeps the engage ink a 0ms step — no host rule transitions the background channel 13195ms
+     × stands DOWN every backdrop root on every mounted host, under the same gate 11119ms
+     × moves REAL INK on every mounted host — §5.4's band is falsifiable on BOTH 14212ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/dock/__tests__/GlassDock.stagger.test.ts [ src/components/dock/__tests__/GlassDock.stagger.test.ts ]
+Error: Hook timed out in 10000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".
+ ❯ src/components/dock/__tests__/GlassDock.stagger.test.ts:68:1
+     66| }, 60_000);
+     67|
+     68| afterAll(async () => {
+       | ^
+     69|     await browser?.close();
+     70| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/10]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/demo/aurora-stage-affordance.test.ts > Aurora demo pointer affordance > keeps textured cursor light through a pointer-amplitude atom edit
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/demo/aurora-stage-affordance.test.ts:107:5
+    105|     });
+    106|
+    107|     it("keeps textured cursor light through a pointer-amplitude atom e…
+       |     ^
+    108|         const config = reactive({
+    109|             ...PRESETS.OIL_IMPASTO,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/10]⎯
+
+ FAIL  tests/gates/comment-ratio.test.ts > G-COMMENT-RATIO — source is not a tranche document (BK #17) > the COMMITTED figure is derivable at a named revision, free of lane dirt
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/gates/comment-ratio.test.ts:195:5
+    193|     });
+    194|
+    195|     it("the COMMITTED figure is derivable at a named revision, free of…
+       |     ^
+    196|         // ⊕⁷⁴'s L-1: a figure measured on a four-lane shared working …
+    197|         // whichever lane last saved. Two reads of the same commit mus…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/10]⎯
+
+ FAIL  tests/gates/comment-ratio.test.ts > G-MUTATION-BITE · DETECTOR-BLIND arm — prose cannot defeat a detector > src carries ZERO commented-out declarations
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/gates/comment-ratio.test.ts:247:5
+    245|     });
+    246|
+    247|     it("src carries ZERO commented-out declarations", () => {
+       |     ^
+    248|         // NOT BORN-RED, and saying otherwise would be the inflation t…
+    249|         // striking: the class already read 0 at HEAD. `WAVES.md:847` …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/10]⎯
+
+ FAIL  tests/styles/glass-subtlety/grasp.test.ts > grasp register — the material answers the hand > DISCOVERS its hosts from the mounts — no hard-coded pair
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/styles/glass-subtlety/grasp.test.ts:290:5
+    288|     };
+    289|
+    290|     it("DISCOVERS its hosts from the mounts — no hard-coded pair", () …
+       |     ^
+    291|         // The list this replaces named two files. An arm that names i…
+    292|         // only ever certify the subjects someone remembered, which is…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/10]⎯
+
+ FAIL  tests/styles/glass-subtlety/grasp.test.ts > grasp register — the material answers the hand > keeps the engage ink a 0ms step — no host rule transitions the background channel
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/styles/glass-subtlety/grasp.test.ts:306:5
+    304|     });
+    305|
+    306|     it("keeps the engage ink a 0ms step — no host rule transitions the…
+       |     ^
+    307|         // The ink rides `--glass-veil-rung` alone: engage is the regi…
+    308|         // step and release lerps the RUNG on the register's clock (gr…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/10]⎯
+
+ FAIL  tests/styles/glass-subtlety/grasp.test.ts > grasp register — the material answers the hand > stands DOWN every backdrop root on every mounted host, under the same gate
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/styles/glass-subtlety/grasp.test.ts:323:5
+    321|     });
+    322|
+    323|     it("stands DOWN every backdrop root on every mounted host, under t…
+       |     ^
+    324|         // The register's one precondition, and the one that fails sil…
+    325|         // `backdrop-filter` samples only as far back as its BACKDROP …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/10]⎯
+
+ FAIL  tests/styles/glass-subtlety/grasp.test.ts > grasp register — the material answers the hand > moves REAL INK on every mounted host — §5.4's band is falsifiable on BOTH
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/styles/glass-subtlety/grasp.test.ts:376:5
+    374|     });
+    375|
+    376|     it("moves REAL INK on every mounted host — §5.4's band is falsifia…
+       |     ^
+    377|         // The band `[0.6·α_rest, α_rest]` was written for a plate, an…
+    378|         // was a structural no-op: the fill never read `--glass-veil-r…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/10]⎯
+
+ FAIL  src/components/aurora/__tests__/atoms.test.ts > resolveAtoms total-function fuzz > every atom combination yields a valid in-range config (TOTAL)
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/aurora/__tests__/atoms.test.ts:140:5
+    138|     // deriveAurora call is the per-iteration cost). Together they exc…
+    139|     // floor and exercise every atom field including the out-of-range …
+    140|     it("every atom combination yields a valid in-range config (TOTAL)"…
+       |     ^
+    141|         const violations: string[] = [];
+    142|         let count = 0;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/10]⎯
+
+ FAIL  src/components/menu/__tests__/contract.test.ts > DropdownMenu contract > keeps the context branch to one pointer-anchored portal
+AssertionError: expected <body><div data-v-app>…(1)</div></body> to be <button …(5)></button> // Object.is equality
+
+- Expected
++ Received
+
++ <body>
++   <div
++     data-v-app=""
++   >
++     
++     
++     
++     
++     
++     
++     
+      <button
+        class="menu__trigger"
+        data-slot="menu-trigger"
+        data-state="closed"
+        style="pointer-events: auto;"
+        type="button"
+      >
+        Open commands
+      </button>
++     
++     <!--teleport start-->
++     <!--teleport end-->
++     
++     
++     
++     
++   </div>
++   
++   
++   
++   
++   <!---->
++   
++   
++   
++   
++ </body>
+
+ ❯ src/components/menu/__tests__/contract.test.ts:149:40
+    147|         expect((wrapper.vm as unknown as { open: boolean }).open).toBe…
+    148|         await new Promise((resolve) => setTimeout(resolve, 30));
+    149|         expect(document.activeElement).toBe(trigger.element);
+       |                                        ^
+    150|     });
+    151|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/10]⎯
+
+
+ Test Files  6 failed | 3 passed (9)
+      Tests  9 failed | 76 passed | 1 expected fail (86)
+   Start at  11:57:53
+   Duration  62.18s (transform 68.97s, setup 3.37s, import 99.87s, tests 138.24s, environment 22.28s)
+

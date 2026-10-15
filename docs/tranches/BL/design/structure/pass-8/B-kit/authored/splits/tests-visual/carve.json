@@ -1,0 +1,378 @@
+{
+ "why": "B-S16 (R-3, R-5): tests-visual carved. A visual spec whose subject is one unit (LAW §9: every sealed file it reads lies in that unit, and it reads no consumer zone) moves into the unit's __tests__/ slot as *.visual.ts; every other file joins a named module of the workspace by the surface it reads back. The Playwright program is edited first (carve.mjs's program row), so no spec leaves it.",
+ "stay": {
+  "why": "The workspace root keeps its program and its shared harness: the Playwright config, the workspace package.json and its .gitignore; pi-manifest.ts (the scene table, read by 45 specs across modules) and served-app-sentinel.ts (read by 7 across modules), whose nearest common owner is the root; pi-gate-verify.mjs, the pixel floor's verdict authority, and the pixel floor itself (substrate-paints-color.spec.ts), the one spec the workspace's own package scripts, CI, release.sh and the floor's browser seat name. Its two split helpers join it at the root (splits.json).",
+  "files": [
+   "playwright.config.ts",
+   "package.json",
+   "pi-manifest.ts",
+   "served-app-sentinel.ts",
+   "pi-gate-verify.mjs",
+   "substrate-paints-color.spec.ts",
+   ".gitignore"
+  ]
+ },
+ "delete": [
+  {
+   "file": "pi-runner-manifest.mjs",
+   "why": "R-8 / E-7: no reader in the tree (F-1 counts 0 edges into it, HEAD and the route's tree alike), and it is no published symbol. Its discovery reads the workspace root with one flat readdirSync, so after the carve it would enrol 1 spec where the program holds 167: kept, it would be a silent wrong answer, not a stale one."
+  }
+ ],
+ "citations": [
+  {
+   "file": "coherence-congruence.spec.ts",
+   "from": "`--run pi` set (pi-runner-manifest.mjs PI_EXCLUDE) and invoked explicitly at the close.",
+   "to": "`--run pi` set and invoked explicitly at the close.",
+   "why": "the one text that cites pi-runner-manifest.mjs, which the same row deletes"
+  }
+ ],
+ "slots": [
+  {
+   "file": "blob-painted-component.spec.ts",
+   "to": "src/components/blob/__tests__/blob-painted-component.visual.ts",
+   "why": "R-3: the one visual spec whose subject is one unit. Every sealed file it reads is blob's (8 dynamic imports, each under src/components/blob/), and it reads no consumer zone, so LAW §9 homes it in blob. Colocated, those 8 reads are the unit's own (a test in M/__tests__ reads M's subtree), so the 8 B2 lines they raise from tests-visual go."
+  }
+ ],
+ "modules": [
+  {
+   "dir": "aurora",
+   "why": "the aurora substrate's render gates: painterly metrics, per-atom change, entrance, mediums, studio, the software-raster and vibrancy arms, and the W38/W47 binding checks",
+   "files": [
+    "aurora-arresting.spec.ts",
+    "aurora-arresting-readback.ts",
+    "aurora-atoms-render.spec.ts",
+    "aurora-entrance.spec.ts",
+    "aurora-mediums-substrate.spec.ts",
+    "aurora-painterly-statistics.spec.ts",
+    "aurora-studio.spec.ts",
+    "aurora-swraster.spec.ts",
+    "aurora-vibrancy.spec.ts",
+    "w38-binding.spec.ts",
+    "w38-w47-verify.spec.ts"
+   ]
+  },
+  {
+   "dir": "aurora/probes",
+   "why": "the aurora lane's audit probes (the four reflection captures pi's evidence plan excludes) and the standalone van Gogh harness page with its script; none is a binding readback",
+   "files": [
+    "reflect-aurora.spec.ts",
+    "reflect-aurora-selects.spec.ts",
+    "reflect-medium.spec.ts",
+    "reflect-medium2.spec.ts",
+    "_aur-vangogh-harness.ts",
+    "_aur-vangogh-harness.html"
+   ]
+  },
+  {
+   "dir": "blob",
+   "why": "the blob substrate's gates on the live page: render (split, splits.json), config delta, mood persistence, page, pause seam, studio, warm default and the interaction capture",
+   "files": [
+    "blob-render.spec.ts",
+    "blob-config-delta.spec.ts",
+    "blob-mood-live.spec.ts",
+    "blob-page.spec.ts",
+    "blob-pause-seam.spec.ts",
+    "blob-studio.spec.ts",
+    "blob-warm-default.spec.ts",
+    "blob3-interaction-capture.spec.ts"
+   ]
+  },
+  {
+   "dir": "goo",
+   "why": "the goo renderer's readbacks: the goo studio, the goo+dot hybrid, and the plain and lit gooblob stages",
+   "files": [
+    "goo-dot.spec.ts",
+    "goo-redress.spec.ts",
+    "gooblob-meatball.spec.ts",
+    "gooblob-plain.spec.ts"
+   ]
+  },
+  {
+   "dir": "constellation",
+   "why": "the constellation field's render gates: the binding readback and the egg, generalization, refit and warp live arms",
+   "files": [
+    "constellation.spec.ts",
+    "constellation-egg-live.spec.ts",
+    "constellation-gen-live.spec.ts",
+    "constellation-refit-live.spec.ts",
+    "constellation-warp-live.spec.ts"
+   ]
+  },
+  {
+   "dir": "viz",
+   "why": "the procedural visualizations and their GPU runtime: configurator suite, fourier ribbon, interaction, paint records, WebGPU everywhere, the stage field clamp, the per-frame producer readback and the cross-engine WebKit context-churn readback",
+   "files": [
+    "viz-configurator-suite.spec.ts",
+    "viz-fourier-ribbon.spec.ts",
+    "viz-interaction.spec.ts",
+    "viz-paint-records.spec.ts",
+    "webgpu-everywhere.spec.ts",
+    "stage-field-clamp.spec.ts",
+    "perf-producer.spec.ts",
+    "safari-webgl.spec.ts"
+   ]
+  },
+  {
+   "dir": "dock",
+   "why": "the dock on the live shell: animation, cockpit preset, items lag, luma share, plate clearance, rail cohesion, sections, slider hold, nav fix, the iOS register and the context capture",
+   "files": [
+    "dock-animation-live.spec.ts",
+    "dock-cockpit.spec.ts",
+    "dock-items-lag-capture.spec.ts",
+    "dock-luma-share.spec.ts",
+    "dock-plate-clearance.spec.ts",
+    "dock-rail-cohesion.spec.ts",
+    "dock-sections.spec.ts",
+    "dock-with-slider-live.spec.ts",
+    "nav-dock-fix.spec.ts",
+    "register-ios.spec.ts",
+    "_dock-context-capture.spec.ts"
+   ]
+  },
+  {
+   "dir": "dock/morph",
+   "why": "the dock's morphs: the morph family, the in-situ V/H morph, the CTA landing seat and the drag morph",
+   "files": [
+    "dock-morph-family.spec.ts",
+    "dock-morph-insitu.spec.ts",
+    "dockmorph-cta.spec.ts",
+    "drag-morph.spec.ts"
+   ]
+  },
+  {
+   "dir": "glass",
+   "why": "the glass material read back on the live cascade: accent, calibration, cohesion, depth, identity, legibility, the material demo, backdrop nesting, specular coalescing, liquid hover and reveal, squircle corners",
+   "files": [
+    "glass-accent.spec.ts",
+    "glass-cal.spec.ts",
+    "glass-cohesion.spec.ts",
+    "glass-depth.spec.ts",
+    "glass-identity.spec.ts",
+    "glass-legibility.spec.ts",
+    "glass-material-demo.spec.ts",
+    "nested-backdrop-budget.spec.ts",
+    "specular-coalesce.spec.ts",
+    "liquid-hover.spec.ts",
+    "liquid-reveal.spec.ts",
+    "squircle-language.spec.ts"
+   ]
+  },
+  {
+   "dir": "glass/contrast",
+   "why": "contrast over glass: the adaptive darken (split, splits.json) and its in-situ arm, foreground on glass, the gold CTA hover and the dark semantic tokens",
+   "files": [
+    "adaptive-glass.spec.ts",
+    "adaptive-glass-live.spec.ts",
+    "on-glass-fg.spec.ts",
+    "affordance-contrast-gold.spec.ts",
+    "dark-semantic-contrast.spec.ts"
+   ]
+  },
+  {
+   "dir": "substrate",
+   "why": "the substrate set as a whole and the stage behind it: cohesion (split, splits.json) with its three calibration captures, the cross-page congruence sweep, the stage, edge fades, the paper grid and the auth-shell ground",
+   "files": [
+    "substrate-cohesion.spec.ts",
+    "_cohere-capture.spec.ts",
+    "_cohere-debug.spec.ts",
+    "_cohere-shadow-debug.spec.ts",
+    "coherence-congruence.spec.ts",
+    "stage.spec.ts",
+    "fading-scroll.spec.ts",
+    "paper-grid.spec.ts",
+    "auth-shell-bg.spec.ts"
+   ]
+  },
+  {
+   "dir": "motion",
+   "why": "motion as painted: the animate readback, deck slide, easing family, liquid weight, the motion axis, suite, one clock and second suite, scroll motion and rim, springs and tunable motion",
+   "files": [
+    "ba-animate.spec.ts",
+    "deck-slide.spec.ts",
+    "easing-primitive.spec.ts",
+    "liquid-weight-default.spec.ts",
+    "motion-axis.spec.ts",
+    "motion-demo.spec.ts",
+    "motion-one-clock.spec.ts",
+    "motion2.spec.ts",
+    "scroll-motion.spec.ts",
+    "scroll-progress-rim.spec.ts",
+    "spring-ease.spec.ts",
+    "tunable-anim.spec.ts"
+   ]
+  },
+  {
+   "dir": "redress",
+   "why": "the BJ radius and blur redress proofs, each with its WebKit arm: W1 radius (split, splits.json) and W2 blur (split, splits.json)",
+   "files": [
+    "w1-radius-redress.spec.ts",
+    "w1-radius-redress.webkit.spec.ts",
+    "w2-blur-redress.spec.ts",
+    "w2-blur-redress.webkit.spec.ts"
+   ]
+  },
+  {
+   "dir": "color",
+   "why": "library-wide colour readbacks: dark material, no grey, the teal/navy purge, forced colours, emission, the no-shadcn default and the FOUC-safe critical CSS",
+   "files": [
+    "dark-material.spec.ts",
+    "no-gray.spec.ts",
+    "teal-navy-purge.spec.ts",
+    "forced-colors-skin.spec.ts",
+    "emission.spec.ts",
+    "no-shadcn-default.spec.ts",
+    "css-critical.spec.ts"
+   ]
+  },
+  {
+   "dir": "typography",
+   "why": "library-wide type readbacks: eyebrows, the font cascade, desktop fluid type, display tracking, heading and page hierarchy, and split characters' ARIA",
+   "files": [
+    "eyebrow-union.spec.ts",
+    "font-cascade-live.spec.ts",
+    "desktop-fluid-type.spec.ts",
+    "display-tracking.spec.ts",
+    "hierarchy.spec.ts",
+    "page-hierarchy.spec.ts",
+    "a11y-splitchars.spec.ts"
+   ]
+  },
+  {
+   "dir": "storybook",
+   "why": "the demo storybook's own chrome on the live shell: shell config, hold and identity, the atlas flip, page chassis, storybook meta, demo affordances, control wiring and design, the affordance map, and the two storybook-stage captures",
+   "files": [
+    "shell-config.spec.ts",
+    "shell-hold.spec.ts",
+    "shell-identity.spec.ts",
+    "atlas-flip.spec.ts",
+    "page-chassis.spec.ts",
+    "storybook-meta.spec.ts",
+    "demo-affordances.spec.ts",
+    "demo-control-live.spec.ts",
+    "demo-design.spec.ts",
+    "affordance-map.spec.ts",
+    "_sb-stage-capture.spec.ts",
+    "_sb1-capture.spec.ts"
+   ]
+  },
+  {
+   "dir": "storybook/configurator",
+   "why": "the storybook's configurator panel: chassis, in-sheet and right-hand hosts, code blocks, the customizability census and the two suffuse readbacks",
+   "files": [
+    "config-chassis.spec.ts",
+    "config-in-sheet.spec.ts",
+    "config-right.spec.ts",
+    "code-blocks.spec.ts",
+    "customizability.spec.ts",
+    "suffuse.spec.ts",
+    "suffuse2.spec.ts"
+   ]
+  },
+  {
+   "dir": "captures",
+   "why": "one-shot own-surface capture helpers (the `_` prefix: outside pi's evidence plan, run by hand): the CSS union, configurator readback, empty-state eggs, dark fix, primitive polish, the R4 shell config, the veil plate and the owed-delta backfill",
+   "files": [
+    "_capture_css.spec.ts",
+    "_cfg-readback.spec.ts",
+    "_egg-capture.spec.ts",
+    "_fix-glassui-dark-capture.spec.ts",
+    "_prim-polish-capture.spec.ts",
+    "_r4-shell-config-capture.spec.ts",
+    "_veil-capture.spec.ts",
+    "_wdelta0-capture.spec.ts"
+   ]
+  },
+  {
+   "dir": "components/controls",
+   "why": "single controls read back on their story pages: slider name and spectrum, the glass button, ghost dashed, metal shimmer, press, tabs and their orientation, search, the hand mark and progress",
+   "files": [
+    "a11y-slider.spec.ts",
+    "slider-spectrum-fallback.spec.ts",
+    "button-glass.spec.ts",
+    "ghost-dashed.spec.ts",
+    "metal-shimmer.spec.ts",
+    "press-unify.spec.ts",
+    "tabs-std.spec.ts",
+    "aria-orientation.spec.ts",
+    "search.spec.ts",
+    "handmark.spec.ts",
+    "progress-gradient.spec.ts"
+   ]
+  },
+  {
+   "dir": "components/surfaces",
+   "why": "containers and surfaces read back on their story pages: card composite and padding, dialog and menu glass, sheet inset and radius, the shadow grammar, the surface axis, the selection card, the expandable container, the Escape stack and the disclosure rotation",
+   "files": [
+    "card-composite.spec.ts",
+    "card-padding.spec.ts",
+    "dialog-glass.spec.ts",
+    "menu-glass.spec.ts",
+    "sheet-inset.spec.ts",
+    "sheet-radius.spec.ts",
+    "shadow-grammar.spec.ts",
+    "surface-axis.spec.ts",
+    "selection-card.spec.ts",
+    "expandable-container.spec.ts",
+    "esc-stack.spec.ts",
+    "disclosure-rotate.spec.ts"
+   ]
+  },
+  {
+   "dir": "components/collections",
+   "why": "components that lay out a sequence: the carousel, the pager ring and worm, the sortable list and the music staff",
+   "files": [
+    "carousel-rebuild.spec.ts",
+    "pager-ring.spec.ts",
+    "pager-worm.spec.ts",
+    "sortable-list.contract.spec.ts",
+    "music-staff.spec.ts"
+   ]
+  }
+ ],
+ "rowMoves": {
+  "why": "the floor engine (F-2) applies these moves but its image check refuses them (phase image, rolled back): it respells an evaluated write path whose base is a `new URL(…, import.meta.url)` literal, and the respelled text names another file (the concatenated `${VISUAL_DIR}${name}` writes read `visual../visualW-…`; the dock morphs' `ground` dir lands under tests-visual/dock/; the `.cache` write reads `.cache../.cache…`). They move in rebase.mjs's row with the residue moves, where a moved file's `new URL` literals are re-based and its write edges are not respelled.",
+  "files": [
+   "desktop-fluid-type.spec.ts",
+   "dock-morph-family.spec.ts",
+   "dock-morph-insitu.spec.ts",
+   "nested-backdrop-budget.spec.ts",
+   "shell-config.spec.ts",
+   "shell-identity.spec.ts",
+   "dock-animation-live.spec.ts"
+  ]
+ },
+ "inbound": [
+  {
+   "file": "tests-visual/package.json",
+   "from": "\"test:dock\": \"playwright test dock-animation-live.spec.ts\",",
+   "to": "\"test:dock\": \"playwright test tests-visual/dock/dock-animation-live.spec.ts\",",
+   "why": "the script names its spec by path. The engine respells the token package-relative (`dock/…`), which F-1's command scanner does not read as a path (a token is zone-rooted or a bare file name), so the edge is lost; the row spells it zone-rooted, which F-1 reads and Playwright takes as the same path filter"
+  }
+ ],
+ "walkers": [
+  {
+   "file": "tests/components/fourier-field/wgsl-splice-contract.test.ts",
+   "from": "        if (statSync(path).isDirectory()) walk(path, out);\n        else if (/\\.ts$/.test(entry)) out.push(path);",
+   "to": "        if (statSync(path).isDirectory()) { if (entry !== \"__tests__\") walk(path, out); }\n        else if (/\\.ts$/.test(entry)) out.push(path);",
+   "why": "R-3: the shader census reads the library's source, not its test slots (tests/harness/source.ts: \"a unit's __tests__ slots are not its source\"; pass 4's test-slots.mjs cured three walkers the same way). The slotted blob visual spec creates a shader module in its page-side probe, which the walk read as a sixth, unlabelled site"
+  }
+ ],
+ "citationsAfter": [
+  {
+   "from": "tests-visual/no-gray.spec.ts",
+   "to": "tests-visual/color/no-gray.spec.ts",
+   "at": [
+    "src/styles/tokens/color-radius.css"
+   ],
+   "why": "cites the no-gray spec, now in tests-visual/color/"
+  },
+  {
+   "from": "tests-visual/_cohere-debug.spec.ts",
+   "to": "tests-visual/substrate/_cohere-debug.spec.ts",
+   "at": [
+    "scripts/reflect-capture-verify.mjs"
+   ],
+   "why": "cites the cohere calibration capture, now in tests-visual/substrate/"
+  }
+ ]
+}

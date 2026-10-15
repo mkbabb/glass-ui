@@ -1,0 +1,5997 @@
+{
+ "base": {
+  "B0": 0,
+  "B1": 0,
+  "B2": 0,
+  "B3": 0,
+  "B4": 0,
+  "B5": 0,
+  "B6": 0,
+  "B7": 0,
+  "B8": 0,
+  "B9": 0,
+  "B10": 0,
+  "B11": 0,
+  "B12": 0,
+  "B13": 0,
+  "B14": 0,
+  "B15": 0,
+  "B16": 0,
+  "B17": 0,
+  "B18": 0
+ },
+ "rows": [
+  {
+   "id": "P6-PW6-unit",
+   "item": "B-10",
+   "verdict": "SKIP",
+   "why": "no goto naming chip found on the tree"
+  },
+  {
+   "id": "P6-X6-src-LDARG-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "src/components/slider/zq6srcLDARGlit.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-src-LDARG-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "src/components/slider/zq6srcLDARGpar.ts:1 opaque [dynamic] _k"
+    ],
+    "B17": [
+     "src/components/slider/zq6srcLDARGpar.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-src-LDARGN-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "src/components/slider/zq6srcLDARGNlit.ts:3 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-src-LDARGN-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "src/components/slider/zq6srcLDARGNpar.ts:1 opaque [dynamic] _k"
+    ],
+    "B17": [
+     "src/components/slider/zq6srcLDARGNpar.ts:3 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-src-TREERET-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "src/components/slider/zq6srcTREERETlit.ts:2 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-src-TREERET-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "src/components/slider/zq6srcTREERETpar.ts:2 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-src-TREEEMPTY-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "src/components/slider/zq6srcTREEEMPTYlit.ts:3 swallows a failed read (try/catch that drops the error)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-src-TREEEMPTY-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "src/components/slider/zq6srcTREEEMPTYpar.ts:3 swallows a failed read (try/catch that drops the error)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-src-TREAD-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "src/components/slider/zq6srcTREADlit.ts:2 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-src-TREAD-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "src/components/slider/zq6srcTREADpar.ts:2 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-src-PROMISE-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B8,B17",
+   "lines": {
+    "B8": [
+     "src/components/slider/zq6srcPROMISElit.ts:2 -> package.json [path-literal] (the library reads the root zone)"
+    ],
+    "B17": [
+     "src/components/slider/zq6srcPROMISElit.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-src-PROMISE-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "src/components/slider/zq6srcPROMISEpar.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-src-PROMISEE-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B8,B17",
+   "lines": {
+    "B8": [
+     "src/components/slider/zq6srcPROMISEElit.ts:2 -> package.json [path-literal] (the library reads the root zone)"
+    ],
+    "B17": [
+     "src/components/slider/zq6srcPROMISEElit.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-src-PROMISEE-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "src/components/slider/zq6srcPROMISEEpar.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-src-CTL-loader",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-src-CTL-tree",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-src-CTL-promise",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-demo-LDARG-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zq6demoLDARGlit.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-demo-LDARG-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "demo/zq6demoLDARGpar.ts:1 opaque [dynamic] _k"
+    ],
+    "B17": [
+     "demo/zq6demoLDARGpar.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-demo-LDARGN-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zq6demoLDARGNlit.ts:3 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-demo-LDARGN-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "demo/zq6demoLDARGNpar.ts:1 opaque [dynamic] _k"
+    ],
+    "B17": [
+     "demo/zq6demoLDARGNpar.ts:3 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-demo-TREERET-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zq6demoTREERETlit.ts:2 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-demo-TREERET-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zq6demoTREERETpar.ts:2 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-demo-TREEEMPTY-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zq6demoTREEEMPTYlit.ts:3 swallows a failed read (try/catch that drops the error)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-demo-TREEEMPTY-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zq6demoTREEEMPTYpar.ts:3 swallows a failed read (try/catch that drops the error)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-demo-TREAD-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zq6demoTREADlit.ts:2 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-demo-TREAD-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zq6demoTREADpar.ts:2 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-demo-PROMISE-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zq6demoPROMISElit.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-demo-PROMISE-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zq6demoPROMISEpar.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-demo-PROMISEE-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zq6demoPROMISEElit.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-demo-PROMISEE-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zq6demoPROMISEEpar.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-demo-CTL-loader",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-demo-CTL-tree",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-demo-CTL-promise",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-scripts-LDARG-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zq6scriptsLDARGlit.mjs:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-scripts-LDARG-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "scripts/zq6scriptsLDARGpar.mjs:1 opaque [dynamic] _k"
+    ],
+    "B17": [
+     "scripts/zq6scriptsLDARGpar.mjs:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-scripts-LDARGN-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zq6scriptsLDARGNlit.mjs:3 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-scripts-LDARGN-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "scripts/zq6scriptsLDARGNpar.mjs:1 opaque [dynamic] _k"
+    ],
+    "B17": [
+     "scripts/zq6scriptsLDARGNpar.mjs:3 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-scripts-TREERET-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zq6scriptsTREERETlit.mjs:2 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-scripts-TREERET-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zq6scriptsTREERETpar.mjs:2 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-scripts-TREEEMPTY-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zq6scriptsTREEEMPTYlit.mjs:3 swallows a failed read (try/catch that drops the error)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-scripts-TREEEMPTY-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zq6scriptsTREEEMPTYpar.mjs:3 swallows a failed read (try/catch that drops the error)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-scripts-TREAD-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zq6scriptsTREADlit.mjs:2 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-scripts-TREAD-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zq6scriptsTREADpar.mjs:2 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-scripts-PROMISE-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zq6scriptsPROMISElit.mjs:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-scripts-PROMISE-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "scripts/zq6scriptsPROMISEpar.mjs:2 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "scripts/zq6scriptsPROMISEpar.mjs:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-scripts-PROMISEE-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zq6scriptsPROMISEElit.mjs:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-scripts-PROMISEE-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "scripts/zq6scriptsPROMISEEpar.mjs:2 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "scripts/zq6scriptsPROMISEEpar.mjs:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-scripts-CTL-loader",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-scripts-CTL-tree",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-scripts-CTL-promise",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "FALSE+",
+   "named": "B0",
+   "lines": {
+    "B0": [
+     "scripts/zq6scriptsCtlPromise.mjs:2 computed-path read p [fs-read]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-LDARG-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zq6testsLDARGlit.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-LDARG-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests/zq6testsLDARGpar.ts:1 opaque [dynamic] _k"
+    ],
+    "B17": [
+     "tests/zq6testsLDARGpar.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-LDARGN-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zq6testsLDARGNlit.ts:3 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-LDARGN-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests/zq6testsLDARGNpar.ts:1 opaque [dynamic] _k"
+    ],
+    "B17": [
+     "tests/zq6testsLDARGNpar.ts:3 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-TREERET-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zq6testsTREERETlit.ts:2 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-TREERET-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zq6testsTREERETpar.ts:2 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-TREEEMPTY-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zq6testsTREEEMPTYlit.ts:3 swallows a failed read (try/catch that drops the error)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-TREEEMPTY-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zq6testsTREEEMPTYpar.ts:3 swallows a failed read (try/catch that drops the error)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-TREAD-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zq6testsTREADlit.ts:2 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-TREAD-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zq6testsTREADpar.ts:2 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-PROMISE-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zq6testsPROMISElit.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-PROMISE-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests/zq6testsPROMISEpar.ts:2 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "tests/zq6testsPROMISEpar.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-PROMISEE-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zq6testsPROMISEElit.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-PROMISEE-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests/zq6testsPROMISEEpar.ts:2 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "tests/zq6testsPROMISEEpar.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-CTL-loader",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-CTL-tree",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-CTL-promise",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "FALSE+",
+   "named": "B0",
+   "lines": {
+    "B0": [
+     "tests/zq6testsCtlPromise.ts:2 computed-path read p [fs-read]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-visual-LDARG-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zq6testsvisualLDARGlit.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-visual-LDARG-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests-visual/zq6testsvisualLDARGpar.ts:1 opaque [dynamic] _k"
+    ],
+    "B17": [
+     "tests-visual/zq6testsvisualLDARGpar.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-visual-LDARGN-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zq6testsvisualLDARGNlit.ts:3 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-visual-LDARGN-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests-visual/zq6testsvisualLDARGNpar.ts:1 opaque [dynamic] _k"
+    ],
+    "B17": [
+     "tests-visual/zq6testsvisualLDARGNpar.ts:3 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-visual-TREERET-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zq6testsvisualTREERETlit.ts:2 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-visual-TREERET-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zq6testsvisualTREERETpar.ts:2 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-visual-TREEEMPTY-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zq6testsvisualTREEEMPTYlit.ts:3 swallows a failed read (try/catch that drops the error)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-visual-TREEEMPTY-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zq6testsvisualTREEEMPTYpar.ts:3 swallows a failed read (try/catch that drops the error)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-visual-TREAD-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zq6testsvisualTREADlit.ts:2 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-visual-TREAD-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zq6testsvisualTREADpar.ts:2 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-visual-PROMISE-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zq6testsvisualPROMISElit.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-visual-PROMISE-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests-visual/zq6testsvisualPROMISEpar.ts:2 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "tests-visual/zq6testsvisualPROMISEpar.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-visual-PROMISEE-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zq6testsvisualPROMISEElit.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-visual-PROMISEE-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests-visual/zq6testsvisualPROMISEEpar.ts:2 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "tests-visual/zq6testsvisualPROMISEEpar.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-visual-CTL-loader",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-visual-CTL-tree",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-X6-tests-visual-CTL-promise",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "FALSE+",
+   "named": "B0",
+   "lines": {
+    "B0": [
+     "tests-visual/zq6testsvisualCtlPromise.ts:2 computed-path read p [fs-read]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-PH6-scripts/structure/part-1.mjs",
+   "item": "B-07",
+   "expect": "B15",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "scripts/structure/part-1.mjs (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-PH6-demo/shell/GlassDock2.ts",
+   "item": "B-07",
+   "expect": "B15",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "demo/shell/GlassDock2.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-PH6-tests/styles/bs11.ts",
+   "item": "B-07",
+   "expect": "B15",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "tests/styles/bs11.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-PH6-tests-visual/glass/GlassDockSplit.ts",
+   "item": "B-07",
+   "expect": "B15",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "tests-visual/glass/GlassDockSplit.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-PHT6-src/components/chip/__tests__/Chip2.test.ts",
+   "item": "B-07",
+   "expect": "B15",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15,B16",
+   "lines": {
+    "B15": [
+     "src/components/chip/__tests__/Chip2.test.ts (placeholder file name)"
+    ],
+    "B16": [
+     "src/components/chip/__tests__/Chip2.test.ts (colocated in src/components/chip; its subject's home is the harness (several units))"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-PHT6-src/components/chip/__tests__/part-1.test.ts",
+   "item": "B-07",
+   "expect": "B15",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15,B16",
+   "lines": {
+    "B15": [
+     "src/components/chip/__tests__/part-1.test.ts (placeholder file name)"
+    ],
+    "B16": [
+     "src/components/chip/__tests__/part-1.test.ts (colocated in src/components/chip; its subject's home is the harness (several units))"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-PHT6-src/components/slider/__tests__/SliderSplit.test.ts",
+   "item": "B-07",
+   "expect": "B15",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15,B16",
+   "lines": {
+    "B15": [
+     "src/components/slider/__tests__/SliderSplit.test.ts (placeholder file name)"
+    ],
+    "B16": [
+     "src/components/slider/__tests__/SliderSplit.test.ts (colocated in src/components/slider; its subject's home is the harness (several units))"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-PHT6-tests/styles/bs11.test.ts",
+   "item": "B-07",
+   "expect": "B15",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "tests/styles/bs11.test.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-PHT6-src/components/dock/__tests__/GlassDock-2.test.ts",
+   "item": "B-07",
+   "expect": "B15",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15,B16",
+   "lines": {
+    "B15": [
+     "src/components/dock/__tests__/GlassDock-2.test.ts (placeholder file name)"
+    ],
+    "B16": [
+     "src/components/dock/__tests__/GlassDock-2.test.ts (colocated in src/components/dock; its subject's home is the harness (several units))"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-PHT6-tests-visual/aurora/aurora-arresting7.spec.ts",
+   "item": "B-07",
+   "expect": "B15",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "tests-visual/aurora/aurora-arresting7.spec.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-PH6-CTL-src",
+   "item": "B-07 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-PH6-CTL-test",
+   "item": "B-07 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "FALSE+",
+   "named": "B16",
+   "lines": {
+    "B16": [
+     "src/components/chip/__tests__/zqChipToneRamp.test.ts (colocated in src/components/chip; its subject's home is the harness (several units))"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-PW6-out-tv",
+   "item": "B-10 (B-S16)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B16",
+   "lines": {
+    "B16": [
+     "tests-visual/zq6PwOutside.ts (declares Playwright tests outside the program tests-visual/playwright.config.ts: it never runs)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-PW6-out-unit",
+   "item": "B-10 (B-S16)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B16",
+   "lines": {
+    "B16": [
+     "src/components/chip/__tests__/zq6PwUnitOut.vis.ts (declares Playwright tests outside the program tests-visual/playwright.config.ts: it never runs)",
+     "src/components/chip/__tests__/zq6PwUnitOut.vis.ts (a helper in src/components/chip/__tests__/ read by nothing)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-PW6-out-demo",
+   "item": "B-10 (B-S16)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B16",
+   "lines": {
+    "B16": [
+     "demo/zq6PwDemo.spec.ts (declares Playwright tests outside the program tests-visual/playwright.config.ts: it never runs)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6x-PW6x-legal-chip",
+   "item": "B-10 legal",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6x-PW6x-wrong-chip",
+   "item": "B-10 (P5-R5)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B16",
+   "lines": {
+    "B16": [
+     "src/components/slider/__tests__/zq6xchipWrong.visual.ts (colocated in src/components/slider; its subject's home is src/components/chip (by the 1 story it opens))"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6x-PW6x-tv-chip",
+   "item": "B-10 (P5-R5)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B16",
+   "lines": {
+    "B16": [
+     "tests-visual/zq6xchipTv.spec.ts (subject in src/components/chip (by the 1 story it opens): belongs in src/components/chip/__tests__/ as *.visual.ts)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6x-PW6x-legal-sortable",
+   "item": "B-10 legal",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6x-PW6x-wrong-sortable",
+   "item": "B-10 (P5-R5)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B16",
+   "lines": {
+    "B16": [
+     "src/components/slider/__tests__/zq6xsortableWrong.visual.ts (colocated in src/components/slider; its subject's home is src/components/sortable-list (by the 1 story it opens))"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6x-PW6x-tv-sortable",
+   "item": "B-10 (P5-R5)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B16",
+   "lines": {
+    "B16": [
+     "tests-visual/zq6xsortableTv.spec.ts (subject in src/components/sortable-list (by the 1 story it opens): belongs in src/components/sortable-list/__tests__/ as *.visual.ts)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-FS-RET-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B8,B17",
+   "lines": {
+    "B8": [
+     "src/components/slider/zqsrcFsRETlit.ts:3 -> package.json [path-literal] (the library reads the root zone)",
+     "src/components/slider/zqsrcFsRETlit.ts:4 -> package.json [path-literal] (the library reads the root zone)"
+    ],
+    "B17": [
+     "src/components/slider/zqsrcFsRETlit.ts:3 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-FS-RET-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "src/components/slider/zqsrcFsRETpar.ts:3 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-FS-RETN-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B8,B17",
+   "lines": {
+    "B8": [
+     "src/components/slider/zqsrcFsRETNlit.ts:2 -> package.json [path-literal] (the library reads the root zone)",
+     "src/components/slider/zqsrcFsRETNlit.ts:2 -> package.json [path-literal] (the library reads the root zone)"
+    ],
+    "B17": [
+     "src/components/slider/zqsrcFsRETNlit.ts:2 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-FS-RETN-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "src/components/slider/zqsrcFsRETNpar.ts:2 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-FS-TERN-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B8,B17",
+   "lines": {
+    "B8": [
+     "src/components/slider/zqsrcFsTERNlit.ts:2 -> package.json [path-literal] (the library reads the root zone)",
+     "src/components/slider/zqsrcFsTERNlit.ts:2 -> package.json [path-literal] (the library reads the root zone)"
+    ],
+    "B17": [
+     "src/components/slider/zqsrcFsTERNlit.ts:2 falls back to an empty value when a file is missing (a ternary masking fallback)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-FS-TERN-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "src/components/slider/zqsrcFsTERNpar.ts:2 falls back to an empty value when a file is missing (a ternary masking fallback)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-FS-POS-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B8,B17",
+   "lines": {
+    "B8": [
+     "src/components/slider/zqsrcFsPOSlit.ts:3 -> package.json [path-literal] (the library reads the root zone)",
+     "src/components/slider/zqsrcFsPOSlit.ts:3 -> package.json [path-literal] (the library reads the root zone)"
+    ],
+    "B17": [
+     "src/components/slider/zqsrcFsPOSlit.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-FS-POS-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "src/components/slider/zqsrcFsPOSpar.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-FS-POSB-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B8,B17",
+   "lines": {
+    "B8": [
+     "src/components/slider/zqsrcFsPOSBlit.ts:3 -> package.json [path-literal] (the library reads the root zone)",
+     "src/components/slider/zqsrcFsPOSBlit.ts:4 -> package.json [path-literal] (the library reads the root zone)"
+    ],
+    "B17": [
+     "src/components/slider/zqsrcFsPOSBlit.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-FS-POSB-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "src/components/slider/zqsrcFsPOSBpar.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-FS-TRY-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B8,B17",
+   "lines": {
+    "B8": [
+     "src/components/slider/zqsrcFsTRYlit.ts:4 -> package.json [path-literal] (the library reads the root zone)"
+    ],
+    "B17": [
+     "src/components/slider/zqsrcFsTRYlit.ts:3 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-FS-TRY-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "src/components/slider/zqsrcFsTRYpar.ts:3 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-FS-TRYE-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B8,B17",
+   "lines": {
+    "B8": [
+     "src/components/slider/zqsrcFsTRYElit.ts:4 -> package.json [path-literal] (the library reads the root zone)"
+    ],
+    "B17": [
+     "src/components/slider/zqsrcFsTRYElit.ts:4 swallows a failed read (try/catch that drops the error)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-FS-TRYE-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "src/components/slider/zqsrcFsTRYEpar.ts:4 swallows a failed read (try/catch that drops the error)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-FS-ASYNC-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B8,B17",
+   "lines": {
+    "B8": [
+     "src/components/slider/zqsrcFsASYNClit.ts:2 -> package.json [path-literal] (the library reads the root zone)"
+    ],
+    "B17": [
+     "src/components/slider/zqsrcFsASYNClit.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-FS-ASYNC-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "src/components/slider/zqsrcFsASYNCpar.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-LD-CATCH-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "src/components/slider/zqsrcLdCATCHlit.ts:1 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-LD-CATCH-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "src/components/slider/zqsrcLdCATCHpar.ts:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "src/components/slider/zqsrcLdCATCHpar.ts:1 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-LD-CATCHU-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "src/components/slider/zqsrcLdCATCHUlit.ts:1 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-LD-CATCHU-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "src/components/slider/zqsrcLdCATCHUpar.ts:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "src/components/slider/zqsrcLdCATCHUpar.ts:1 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-LD-THEN2-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "src/components/slider/zqsrcLdTHEN2lit.ts:1 swallows a failed module load or read (.then with a rejection handler that does not throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-LD-THEN2-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "src/components/slider/zqsrcLdTHEN2par.ts:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "src/components/slider/zqsrcLdTHEN2par.ts:1 swallows a failed module load or read (.then with a rejection handler that does not throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-LD-FNVAL-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "src/components/slider/zqsrcLdFNVALlit.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-LD-FNVAL-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "src/components/slider/zqsrcLdFNVALpar.ts:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "src/components/slider/zqsrcLdFNVALpar.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-LD-FNMAP-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "src/components/slider/zqsrcLdFNMAPlit.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-LD-FNMAP-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "src/components/slider/zqsrcLdFNMAPpar.ts:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "src/components/slider/zqsrcLdFNMAPpar.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-LD-TRYAW-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "src/components/slider/zqsrcLdTRYAWlit.ts:2 swallows a failed module load (try/catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-LD-TRYAW-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "src/components/slider/zqsrcLdTRYAWpar.ts:3 opaque [dynamic] p"
+    ],
+    "B17": [
+     "src/components/slider/zqsrcLdTRYAWpar.ts:2 swallows a failed module load (try/catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-CTL-read",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-CTL-load",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-src-CTL-rethrow",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-FS-RET-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zqdemoFsRETlit.ts:3 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-FS-RET-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zqdemoFsRETpar.ts:3 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-FS-RETN-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zqdemoFsRETNlit.ts:2 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-FS-RETN-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zqdemoFsRETNpar.ts:2 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-FS-TERN-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zqdemoFsTERNlit.ts:2 falls back to an empty value when a file is missing (a ternary masking fallback)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-FS-TERN-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zqdemoFsTERNpar.ts:2 falls back to an empty value when a file is missing (a ternary masking fallback)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-FS-POS-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zqdemoFsPOSlit.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-FS-POS-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zqdemoFsPOSpar.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-FS-POSB-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zqdemoFsPOSBlit.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-FS-POSB-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zqdemoFsPOSBpar.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-FS-TRY-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zqdemoFsTRYlit.ts:3 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-FS-TRY-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zqdemoFsTRYpar.ts:3 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-FS-TRYE-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zqdemoFsTRYElit.ts:4 swallows a failed read (try/catch that drops the error)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-FS-TRYE-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zqdemoFsTRYEpar.ts:4 swallows a failed read (try/catch that drops the error)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-FS-ASYNC-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zqdemoFsASYNClit.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-FS-ASYNC-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zqdemoFsASYNCpar.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-LD-CATCH-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zqdemoLdCATCHlit.ts:1 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-LD-CATCH-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "demo/zqdemoLdCATCHpar.ts:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "demo/zqdemoLdCATCHpar.ts:1 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-LD-CATCHU-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zqdemoLdCATCHUlit.ts:1 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-LD-CATCHU-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "demo/zqdemoLdCATCHUpar.ts:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "demo/zqdemoLdCATCHUpar.ts:1 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-LD-THEN2-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zqdemoLdTHEN2lit.ts:1 swallows a failed module load or read (.then with a rejection handler that does not throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-LD-THEN2-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "demo/zqdemoLdTHEN2par.ts:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "demo/zqdemoLdTHEN2par.ts:1 swallows a failed module load or read (.then with a rejection handler that does not throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-LD-FNVAL-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zqdemoLdFNVALlit.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-LD-FNVAL-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "demo/zqdemoLdFNVALpar.ts:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "demo/zqdemoLdFNVALpar.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-LD-FNMAP-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zqdemoLdFNMAPlit.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-LD-FNMAP-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "demo/zqdemoLdFNMAPpar.ts:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "demo/zqdemoLdFNMAPpar.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-LD-TRYAW-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zqdemoLdTRYAWlit.ts:2 swallows a failed module load (try/catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-LD-TRYAW-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "demo/zqdemoLdTRYAWpar.ts:3 opaque [dynamic] p"
+    ],
+    "B17": [
+     "demo/zqdemoLdTRYAWpar.ts:2 swallows a failed module load (try/catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-CTL-read",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-CTL-load",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-demo-CTL-rethrow",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-FS-RET-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zqscriptsFsRETlit.mjs:3 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-FS-RET-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "scripts/zqscriptsFsRETpar.mjs:3 computed-path read p [fs-read]",
+     "scripts/zqscriptsFsRETpar.mjs:4 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "scripts/zqscriptsFsRETpar.mjs:3 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-FS-RETN-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zqscriptsFsRETNlit.mjs:2 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-FS-RETN-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "scripts/zqscriptsFsRETNpar.mjs:2 computed-path read p [fs-read]",
+     "scripts/zqscriptsFsRETNpar.mjs:2 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "scripts/zqscriptsFsRETNpar.mjs:2 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-FS-TERN-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zqscriptsFsTERNlit.mjs:2 falls back to an empty value when a file is missing (a ternary masking fallback)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-FS-TERN-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "scripts/zqscriptsFsTERNpar.mjs:2 computed-path read p [fs-read]",
+     "scripts/zqscriptsFsTERNpar.mjs:2 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "scripts/zqscriptsFsTERNpar.mjs:2 falls back to an empty value when a file is missing (a ternary masking fallback)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-FS-POS-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zqscriptsFsPOSlit.mjs:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-FS-POS-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "scripts/zqscriptsFsPOSpar.mjs:3 computed-path read p [fs-read]",
+     "scripts/zqscriptsFsPOSpar.mjs:3 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "scripts/zqscriptsFsPOSpar.mjs:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-FS-POSB-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zqscriptsFsPOSBlit.mjs:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-FS-POSB-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "scripts/zqscriptsFsPOSBpar.mjs:3 computed-path read p [fs-read]",
+     "scripts/zqscriptsFsPOSBpar.mjs:4 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "scripts/zqscriptsFsPOSBpar.mjs:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-FS-TRY-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zqscriptsFsTRYlit.mjs:3 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-FS-TRY-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "scripts/zqscriptsFsTRYpar.mjs:4 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "scripts/zqscriptsFsTRYpar.mjs:3 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-FS-TRYE-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zqscriptsFsTRYElit.mjs:4 swallows a failed read (try/catch that drops the error)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-FS-TRYE-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "scripts/zqscriptsFsTRYEpar.mjs:4 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "scripts/zqscriptsFsTRYEpar.mjs:4 swallows a failed read (try/catch that drops the error)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-FS-ASYNC-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zqscriptsFsASYNClit.mjs:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-FS-ASYNC-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "scripts/zqscriptsFsASYNCpar.mjs:2 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "scripts/zqscriptsFsASYNCpar.mjs:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-LD-CATCH-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zqscriptsLdCATCHlit.mjs:1 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-LD-CATCH-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "scripts/zqscriptsLdCATCHpar.mjs:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "scripts/zqscriptsLdCATCHpar.mjs:1 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-LD-CATCHU-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zqscriptsLdCATCHUlit.mjs:1 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-LD-CATCHU-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "scripts/zqscriptsLdCATCHUpar.mjs:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "scripts/zqscriptsLdCATCHUpar.mjs:1 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-LD-THEN2-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zqscriptsLdTHEN2lit.mjs:1 swallows a failed module load or read (.then with a rejection handler that does not throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-LD-THEN2-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "scripts/zqscriptsLdTHEN2par.mjs:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "scripts/zqscriptsLdTHEN2par.mjs:1 swallows a failed module load or read (.then with a rejection handler that does not throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-LD-FNVAL-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zqscriptsLdFNVALlit.mjs:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-LD-FNVAL-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "scripts/zqscriptsLdFNVALpar.mjs:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "scripts/zqscriptsLdFNVALpar.mjs:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-LD-FNMAP-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zqscriptsLdFNMAPlit.mjs:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-LD-FNMAP-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "scripts/zqscriptsLdFNMAPpar.mjs:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "scripts/zqscriptsLdFNMAPpar.mjs:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-LD-TRYAW-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zqscriptsLdTRYAWlit.mjs:2 swallows a failed module load (try/catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-LD-TRYAW-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "scripts/zqscriptsLdTRYAWpar.mjs:3 opaque [dynamic] p"
+    ],
+    "B17": [
+     "scripts/zqscriptsLdTRYAWpar.mjs:2 swallows a failed module load (try/catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-CTL-read",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "FALSE+",
+   "named": "B0",
+   "lines": {
+    "B0": [
+     "scripts/zqscriptsCtlRead.mjs:2 computed-path read p [fs-read]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-CTL-load",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-scripts-CTL-rethrow",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "FALSE+",
+   "named": "B0",
+   "lines": {
+    "B0": [
+     "scripts/zqscriptsCtlRethrow.mjs:4 computed-path read p [fs-read]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-FS-RET-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zqtestsFsRETlit.ts:3 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-FS-RET-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests/zqtestsFsRETpar.ts:3 computed-path read p [fs-read]",
+     "tests/zqtestsFsRETpar.ts:4 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "tests/zqtestsFsRETpar.ts:3 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-FS-RETN-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zqtestsFsRETNlit.ts:2 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-FS-RETN-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests/zqtestsFsRETNpar.ts:2 computed-path read p [fs-read]",
+     "tests/zqtestsFsRETNpar.ts:2 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "tests/zqtestsFsRETNpar.ts:2 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-FS-TERN-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zqtestsFsTERNlit.ts:2 falls back to an empty value when a file is missing (a ternary masking fallback)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-FS-TERN-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests/zqtestsFsTERNpar.ts:2 computed-path read p [fs-read]",
+     "tests/zqtestsFsTERNpar.ts:2 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "tests/zqtestsFsTERNpar.ts:2 falls back to an empty value when a file is missing (a ternary masking fallback)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-FS-POS-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zqtestsFsPOSlit.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-FS-POS-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests/zqtestsFsPOSpar.ts:3 computed-path read p [fs-read]",
+     "tests/zqtestsFsPOSpar.ts:3 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "tests/zqtestsFsPOSpar.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-FS-POSB-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zqtestsFsPOSBlit.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-FS-POSB-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests/zqtestsFsPOSBpar.ts:3 computed-path read p [fs-read]",
+     "tests/zqtestsFsPOSBpar.ts:4 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "tests/zqtestsFsPOSBpar.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-FS-TRY-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zqtestsFsTRYlit.ts:3 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-FS-TRY-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests/zqtestsFsTRYpar.ts:4 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "tests/zqtestsFsTRYpar.ts:3 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-FS-TRYE-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zqtestsFsTRYElit.ts:4 swallows a failed read (try/catch that drops the error)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-FS-TRYE-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests/zqtestsFsTRYEpar.ts:4 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "tests/zqtestsFsTRYEpar.ts:4 swallows a failed read (try/catch that drops the error)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-FS-ASYNC-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zqtestsFsASYNClit.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-FS-ASYNC-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests/zqtestsFsASYNCpar.ts:2 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "tests/zqtestsFsASYNCpar.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-LD-CATCH-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zqtestsLdCATCHlit.ts:1 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-LD-CATCH-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests/zqtestsLdCATCHpar.ts:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "tests/zqtestsLdCATCHpar.ts:1 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-LD-CATCHU-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zqtestsLdCATCHUlit.ts:1 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-LD-CATCHU-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests/zqtestsLdCATCHUpar.ts:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "tests/zqtestsLdCATCHUpar.ts:1 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-LD-THEN2-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zqtestsLdTHEN2lit.ts:1 swallows a failed module load or read (.then with a rejection handler that does not throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-LD-THEN2-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests/zqtestsLdTHEN2par.ts:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "tests/zqtestsLdTHEN2par.ts:1 swallows a failed module load or read (.then with a rejection handler that does not throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-LD-FNVAL-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zqtestsLdFNVALlit.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-LD-FNVAL-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests/zqtestsLdFNVALpar.ts:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "tests/zqtestsLdFNVALpar.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-LD-FNMAP-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zqtestsLdFNMAPlit.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-LD-FNMAP-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests/zqtestsLdFNMAPpar.ts:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "tests/zqtestsLdFNMAPpar.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-LD-TRYAW-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zqtestsLdTRYAWlit.ts:2 swallows a failed module load (try/catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-LD-TRYAW-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests/zqtestsLdTRYAWpar.ts:3 opaque [dynamic] p"
+    ],
+    "B17": [
+     "tests/zqtestsLdTRYAWpar.ts:2 swallows a failed module load (try/catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-CTL-read",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "FALSE+",
+   "named": "B0",
+   "lines": {
+    "B0": [
+     "tests/zqtestsCtlRead.ts:2 computed-path read p [fs-read]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-CTL-load",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-CTL-rethrow",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "FALSE+",
+   "named": "B0",
+   "lines": {
+    "B0": [
+     "tests/zqtestsCtlRethrow.ts:4 computed-path read p [fs-read]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-FS-RET-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zqtestsvisualFsRETlit.ts:3 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-FS-RET-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests-visual/zqtestsvisualFsRETpar.ts:3 computed-path read p [fs-read]",
+     "tests-visual/zqtestsvisualFsRETpar.ts:4 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "tests-visual/zqtestsvisualFsRETpar.ts:3 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-FS-RETN-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zqtestsvisualFsRETNlit.ts:2 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-FS-RETN-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests-visual/zqtestsvisualFsRETNpar.ts:2 computed-path read p [fs-read]",
+     "tests-visual/zqtestsvisualFsRETNpar.ts:2 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "tests-visual/zqtestsvisualFsRETNpar.ts:2 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-FS-TERN-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zqtestsvisualFsTERNlit.ts:2 falls back to an empty value when a file is missing (a ternary masking fallback)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-FS-TERN-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests-visual/zqtestsvisualFsTERNpar.ts:2 computed-path read p [fs-read]",
+     "tests-visual/zqtestsvisualFsTERNpar.ts:2 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "tests-visual/zqtestsvisualFsTERNpar.ts:2 falls back to an empty value when a file is missing (a ternary masking fallback)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-FS-POS-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zqtestsvisualFsPOSlit.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-FS-POS-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests-visual/zqtestsvisualFsPOSpar.ts:3 computed-path read p [fs-read]",
+     "tests-visual/zqtestsvisualFsPOSpar.ts:3 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "tests-visual/zqtestsvisualFsPOSpar.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-FS-POSB-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zqtestsvisualFsPOSBlit.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-FS-POSB-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests-visual/zqtestsvisualFsPOSBpar.ts:3 computed-path read p [fs-read]",
+     "tests-visual/zqtestsvisualFsPOSBpar.ts:4 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "tests-visual/zqtestsvisualFsPOSBpar.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-FS-TRY-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zqtestsvisualFsTRYlit.ts:3 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-FS-TRY-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests-visual/zqtestsvisualFsTRYpar.ts:4 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "tests-visual/zqtestsvisualFsTRYpar.ts:3 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-FS-TRYE-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zqtestsvisualFsTRYElit.ts:4 swallows a failed read (try/catch that drops the error)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-FS-TRYE-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests-visual/zqtestsvisualFsTRYEpar.ts:4 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "tests-visual/zqtestsvisualFsTRYEpar.ts:4 swallows a failed read (try/catch that drops the error)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-FS-ASYNC-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zqtestsvisualFsASYNClit.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-FS-ASYNC-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests-visual/zqtestsvisualFsASYNCpar.ts:2 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "tests-visual/zqtestsvisualFsASYNCpar.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-LD-CATCH-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zqtestsvisualLdCATCHlit.ts:1 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-LD-CATCH-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests-visual/zqtestsvisualLdCATCHpar.ts:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "tests-visual/zqtestsvisualLdCATCHpar.ts:1 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-LD-CATCHU-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zqtestsvisualLdCATCHUlit.ts:1 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-LD-CATCHU-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests-visual/zqtestsvisualLdCATCHUpar.ts:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "tests-visual/zqtestsvisualLdCATCHUpar.ts:1 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-LD-THEN2-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zqtestsvisualLdTHEN2lit.ts:1 swallows a failed module load or read (.then with a rejection handler that does not throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-LD-THEN2-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests-visual/zqtestsvisualLdTHEN2par.ts:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "tests-visual/zqtestsvisualLdTHEN2par.ts:1 swallows a failed module load or read (.then with a rejection handler that does not throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-LD-FNVAL-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zqtestsvisualLdFNVALlit.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-LD-FNVAL-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests-visual/zqtestsvisualLdFNVALpar.ts:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "tests-visual/zqtestsvisualLdFNVALpar.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-LD-FNMAP-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zqtestsvisualLdFNMAPlit.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-LD-FNMAP-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests-visual/zqtestsvisualLdFNMAPpar.ts:1 opaque [dynamic] p"
+    ],
+    "B17": [
+     "tests-visual/zqtestsvisualLdFNMAPpar.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-LD-TRYAW-lit",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zqtestsvisualLdTRYAWlit.ts:2 swallows a failed module load (try/catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-LD-TRYAW-par",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "tests-visual/zqtestsvisualLdTRYAWpar.ts:3 opaque [dynamic] p"
+    ],
+    "B17": [
+     "tests-visual/zqtestsvisualLdTRYAWpar.ts:2 swallows a failed module load (try/catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-CTL-read",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "FALSE+",
+   "named": "B0",
+   "lines": {
+    "B0": [
+     "tests-visual/zqtestsvisualCtlRead.ts:2 computed-path read p [fs-read]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-CTL-load",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-S14-tests-visual-CTL-rethrow",
+   "item": "S-14 control",
+   "expect": null,
+   "contrast": null,
+   "verdict": "FALSE+",
+   "named": "B0",
+   "lines": {
+    "B0": [
+     "tests-visual/zqtestsvisualCtlRethrow.ts:4 computed-path read p [fs-read]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-PH5-src/components/dock/helpers.ts",
+   "item": "B-07/B-10",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "src/components/dock/helpers.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-PH5-src/components/dock/utils.ts",
+   "item": "B-07/B-10",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "src/components/dock/utils.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-PH5-src/components/dock/misc.ts",
+   "item": "B-07/B-10",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "src/components/dock/misc.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-PH5-src/components/dock/common.ts",
+   "item": "B-07/B-10",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "src/components/dock/common.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-PH5-tests/styles/part-2.test.ts",
+   "item": "B-07/B-10",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "tests/styles/part-2.test.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-PH5-tests/styles/helpers3.ts",
+   "item": "B-07/B-10",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "tests/styles/helpers3.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-PH5-demo/shell/misc2.ts",
+   "item": "B-07/B-10",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "demo/shell/misc2.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-PH5-demo/shell/utils.ts",
+   "item": "B-07/B-10",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "demo/shell/utils.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-PH5-dir-src/components/dock/part2",
+   "item": "B-07/B-10",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B7,B11,B15",
+   "lines": {
+    "B7": [
+     "src/components/dock/part2/index.ts (not in record.doors)"
+    ],
+    "B11": [
+     "src/components/dock/part2/index.ts exports zqPartTwo (no reader outside src/components/dock/part2)",
+     "module src/components/dock/part2 (not in the pin)",
+     "src/components/dock/part2/index.ts +zqPartTwo (not in the pin)"
+    ],
+    "B15": [
+     "src/components/dock/part2 (placeholder name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-VIS-out-name",
+   "item": "B-10 (B-S16)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B16",
+   "lines": {
+    "B16": [
+     "src/components/chip/__tests__/zqCarveOut.vis.ts (declares Playwright tests outside the program tests-visual/playwright.config.ts: it never runs)",
+     "src/components/chip/__tests__/zqCarveOut.vis.ts (a helper in src/components/chip/__tests__/ read by nothing)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-VIS-out-slot",
+   "item": "B-10 (B-S16)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2,B16",
+   "lines": {
+    "B2": [
+     "demo/zqB2demoGlob.ts:1 -> src/components/chip/zqCarveRoot.visual.ts [glob]"
+    ],
+    "B16": [
+     "src/components/chip/zqCarveRoot.visual.ts (declares Playwright tests outside the program tests-visual/playwright.config.ts: it never runs)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-VIS-orphan",
+   "item": "B-10 (B-S16)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B16",
+   "lines": {
+    "B16": [
+     "tests-visual/zqCarveOrphan.ts (declares Playwright tests outside the program tests-visual/playwright.config.ts: it never runs)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-VIS-in-L",
+   "item": "legal",
+   "expect": null,
+   "contrast": null,
+   "verdict": "FALSE+",
+   "named": "B16",
+   "lines": {
+    "B16": [
+     "src/components/chip/__tests__/zqCarveIn.visual.ts (colocated in src/components/chip; its subject's home is the harness (several units) (by the 0 stories it opens))"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-DIR13-src",
+   "item": "B-01/B-10 (B6)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B6,B15",
+   "lines": {
+    "B6": [
+     "src/components/command/: 13 direct files > 12"
+    ],
+    "B15": [
+     "src/components/command/zqFillsrc0.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-DIR13-demo",
+   "item": "B-01/B-10 (B6)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B6,B15",
+   "lines": {
+    "B6": [
+     "demo/stories/display/: 13 direct files > 12"
+    ],
+    "B15": [
+     "demo/stories/display/zqFilldemo0.ts (placeholder file name)",
+     "demo/stories/display/zqFilldemo1.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-DIR13-scripts",
+   "item": "B-01/B-10 (B6)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B1,B6,B10,B15",
+   "lines": {
+    "B1": [
+     "scripts/minify/plantXscrUse.ts:2 -> scripts/structure/lib/plantXscr.mjs [import] (door scripts/structure/index.mjs)"
+    ],
+    "B6": [
+     "scripts/structure/: 14 direct files > 12"
+    ],
+    "B10": [
+     "scripts/structure/lib/plantXscr.mjs -> scripts/minify [move] readers: scripts/minify"
+    ],
+    "B15": [
+     "scripts/structure/part-1.mjs (placeholder file name)",
+     "scripts/structure/zqFillscripts0.mjs (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-DIR13-tests",
+   "item": "B-01/B-10 (B6)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B6,B15",
+   "lines": {
+    "B6": [
+     "tests/demo/: 13 direct files > 12"
+    ],
+    "B15": [
+     "tests/demo/zqFilltests0.ts (placeholder file name)",
+     "tests/demo/zqFilltests1.ts (placeholder file name)",
+     "tests/demo/zqFilltests2.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-DIR13-tests-visual",
+   "item": "B-01/B-10 (B6)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B6,B15",
+   "lines": {
+    "B6": [
+     "tests-visual/glass/: 14 direct files > 12"
+    ],
+    "B15": [
+     "tests-visual/glass/GlassDockSplit.ts (placeholder file name)",
+     "tests-visual/glass/zqFilltestsvisual0.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-DIR13-dock",
+   "item": "B-01/B-10 (B6)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B1,B2,B6,B7,B11,B15,B16",
+   "lines": {
+    "B1": [
+     "src/components/dock/legibility/plantNint.ts:1 -> src/components/dock/context/dockContext.ts [import] (door src/components/dock/context/index.ts)"
+    ],
+    "B2": [
+     "demo/zqB2demoNest.ts:1 -> src/components/dock/context/index.ts [import]",
+     "scripts/zqB2scriptsNest.mjs:1 -> src/components/dock/context/index.ts [import]",
+     "tests-visual/zqB2testsvisualNest.ts:1 -> src/components/dock/context/index.ts [import]"
+    ],
+    "B6": [
+     "src/components/dock/: 19 direct files > 12",
+     "src/components/dock/__tests__/: 14 direct files > 12",
+     "src/components/dock/composables/plantSlotLong.ts: 520 lines > 500"
+    ],
+    "B7": [
+     "src/components/dock/misc/index.ts (not in record.doors)",
+     "src/components/dock/part2/index.ts (not in record.doors)"
+    ],
+    "B11": [
+     "src/components/dock/misc/index.ts exports x (no reader outside src/components/dock/misc)",
+     "src/components/dock/part2/index.ts exports zqPartTwo (no reader outside src/components/dock/part2)",
+     "module src/components/dock/misc (not in the pin)"
+    ],
+    "B15": [
+     "src/components/dock/misc (placeholder name)",
+     "src/components/dock/part2 (placeholder name)",
+     "src/components/dock/__tests__/GlassDock-2.test.ts (placeholder file name)"
+    ],
+    "B16": [
+     "src/components/dock/__tests__/GlassDock-2.test.ts (colocated in src/components/dock; its subject's home is the harness (several units))",
+     "src/components/dock/__tests__/zqSlot0.test.ts (colocated in src/components/dock; its subject's home is the harness (several units))"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-SLOT13-dock",
+   "item": "S-03 (P3-R3/P4-R5)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B6,B15,B16",
+   "lines": {
+    "B6": [
+     "src/components/dock/__tests__/: 14 direct files > 12"
+    ],
+    "B15": [
+     "src/components/dock/__tests__/GlassDock-2.test.ts (placeholder file name)",
+     "src/components/dock/__tests__/zqSlot0.test.ts (placeholder file name)"
+    ],
+    "B16": [
+     "src/components/dock/__tests__/GlassDock-2.test.ts (colocated in src/components/dock; its subject's home is the harness (several units))",
+     "src/components/dock/__tests__/zqSlot0.test.ts (colocated in src/components/dock; its subject's home is the harness (several units))"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-demo-rel",
+   "item": "B-01 (B2, P4-R1/R2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2",
+   "lines": {
+    "B2": [
+     "demo/zqB2demoRel.ts:1 -> src/components/chip/chipVariants.ts [import]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-demo-type",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2",
+   "lines": {
+    "B2": [
+     "demo/zqB2demoType.ts:1 -> src/components/chip/chipVariants.ts [import-type]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-demo-dyn",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2",
+   "lines": {
+    "B2": [
+     "demo/zqB2demoDyn.ts:1 -> src/components/chip/chipVariants.ts [dynamic]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-demo-reex",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2",
+   "lines": {
+    "B2": [
+     "demo/zqB2demoReex.ts:1 -> src/components/chip/chipVariants.ts [reexport-star]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-demo-raw",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2",
+   "lines": {
+    "B2": [
+     "demo/zqB2demoRaw.ts:1 -> src/components/chip/chipVariants.ts [import]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-demo-nested",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2",
+   "lines": {
+    "B2": [
+     "demo/zqB2demoNest.ts:1 -> src/components/dock/context/index.ts [import]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-demo-deep",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "OTHER",
+   "named": "B0",
+   "lines": {
+    "B0": [
+     "demo/zqB2demoDeep.ts:1 unknown-subpath [import] @mkbabb/glass-ui/src/components/chip/chipVariants"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-demo-entry-L",
+   "item": "legal",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-tests-rel",
+   "item": "B-01 (B2, P4-R1/R2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2",
+   "lines": {
+    "B2": [
+     "tests/zqB2testsRel.ts:1 -> src/components/chip/chipVariants.ts [import]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-tests-type",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2",
+   "lines": {
+    "B2": [
+     "tests/zqB2testsType.ts:1 -> src/components/chip/chipVariants.ts [import-type]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-tests-dyn",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2",
+   "lines": {
+    "B2": [
+     "tests/zqB2testsDyn.ts:1 -> src/components/chip/chipVariants.ts [dynamic]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-tests-reex",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2",
+   "lines": {
+    "B2": [
+     "tests/zqB2testsReex.ts:1 -> src/components/chip/chipVariants.ts [reexport-star]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-tests-raw",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2",
+   "lines": {
+    "B2": [
+     "tests/zqB2testsRaw.ts:1 -> src/components/chip/chipVariants.ts [import]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-tests-nested",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2",
+   "lines": {
+    "B2": [
+     "tests/zqB2testsNest.ts:1 -> src/components/dock/context/index.ts [import]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-tests-deep",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "OTHER",
+   "named": "B0",
+   "lines": {
+    "B0": [
+     "tests/zqB2testsDeep.ts:1 unknown-subpath [import] @mkbabb/glass-ui/src/components/chip/chipVariants"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-tests-entry-L",
+   "item": "legal",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-tests-visual-rel",
+   "item": "B-01 (B2, P4-R1/R2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2",
+   "lines": {
+    "B2": [
+     "tests-visual/zqB2testsvisualRel.ts:1 -> src/components/chip/chipVariants.ts [import]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-tests-visual-type",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2",
+   "lines": {
+    "B2": [
+     "tests-visual/zqB2testsvisualType.ts:1 -> src/components/chip/chipVariants.ts [import-type]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-tests-visual-dyn",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2",
+   "lines": {
+    "B2": [
+     "tests-visual/zqB2testsvisualDyn.ts:1 -> src/components/chip/chipVariants.ts [dynamic]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-tests-visual-reex",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2",
+   "lines": {
+    "B2": [
+     "tests-visual/zqB2testsvisualReex.ts:1 -> src/components/chip/chipVariants.ts [reexport-star]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-tests-visual-raw",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2",
+   "lines": {
+    "B2": [
+     "tests-visual/zqB2testsvisualRaw.ts:1 -> src/components/chip/chipVariants.ts [import]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-tests-visual-nested",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2",
+   "lines": {
+    "B2": [
+     "tests-visual/zqB2testsvisualNest.ts:1 -> src/components/dock/context/index.ts [import]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-tests-visual-deep",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "OTHER",
+   "named": "B0",
+   "lines": {
+    "B0": [
+     "tests-visual/zqB2testsvisualDeep.ts:1 unknown-subpath [import] @mkbabb/glass-ui/src/components/chip/chipVariants"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-tests-visual-entry-L",
+   "item": "legal",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-scripts-rel",
+   "item": "B-01 (B2, P4-R1/R2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2",
+   "lines": {
+    "B2": [
+     "scripts/zqB2scriptsRel.mjs:1 -> src/components/chip/chipVariants.ts [import]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-scripts-type",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2",
+   "lines": {
+    "B2": [
+     "scripts/zqB2scriptsType.ts:1 -> src/components/chip/chipVariants.ts [import-type]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-scripts-dyn",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2",
+   "lines": {
+    "B2": [
+     "scripts/zqB2scriptsDyn.mjs:1 -> src/components/chip/chipVariants.ts [dynamic]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-scripts-reex",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2,B12",
+   "lines": {
+    "B2": [
+     "scripts/zqB2scriptsReex.mjs:1 -> src/components/chip/chipVariants.ts [reexport-star]"
+    ],
+    "B12": [
+     "scripts/zqB2scriptsReex.mjs:1 re-exports src/components/chip/chipVariants.ts (relay)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-scripts-raw",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2",
+   "lines": {
+    "B2": [
+     "scripts/zqB2scriptsRaw.mjs:1 -> src/components/chip/chipVariants.ts [import]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-scripts-nested",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2",
+   "lines": {
+    "B2": [
+     "scripts/zqB2scriptsNest.mjs:1 -> src/components/dock/context/index.ts [import]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-scripts-deep",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "OTHER",
+   "named": "B0",
+   "lines": {
+    "B0": [
+     "scripts/zqB2scriptsDeep.mjs:1 unknown-subpath [import] @mkbabb/glass-ui/src/components/chip/chipVariants"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-scripts-entry-L",
+   "item": "legal",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-tests-mock",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "OTHER",
+   "named": "B16",
+   "lines": {
+    "B16": [
+     "tests/zqB2testsMock.test.ts (subject in src/components/chip: belongs in src/components/chip/__tests__/)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-demo-glob",
+   "item": "B-01 (B2)",
+   "expect": "B2",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2",
+   "lines": {
+    "B2": [
+     "demo/zqB2demoGlob.ts:1 -> src/components/chip/chipVariants.ts [glob]",
+     "demo/zqB2demoGlob.ts:1 -> src/components/chip/plantLong.ts [glob]",
+     "demo/zqB2demoGlob.ts:1 -> src/components/chip/plantSelf.ts [glob]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5-B2-unit-test-L",
+   "item": "legal",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-K-INT",
+   "item": "B-01/B-12 door ruling",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B1",
+   "lines": {
+    "B1": [
+     "src/components/slider/plantKint.ts:1 -> src/composables/dom/useBreakpoint.ts [import] (door src/composables/dom/index.ts)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-K-INT-T",
+   "item": "B-01/B-12 door ruling",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B1",
+   "lines": {
+    "B1": [
+     "src/components/slider/plantKintT.ts:1 -> src/composables/dom/useBreakpoint.ts [type] [import-type] (door src/composables/dom/index.ts)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-K-DOOR-L",
+   "item": "legal",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-N-INT",
+   "item": "B-01/B-12 door ruling",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B1",
+   "lines": {
+    "B1": [
+     "src/components/dock/legibility/plantNint.ts:1 -> src/components/dock/context/dockContext.ts [import] (door src/components/dock/context/index.ts)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-F-CYC",
+   "item": "B-01 (same-dir cycle)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "UNNAMED",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-F-CYC-T",
+   "item": "B-01 (same-dir cycle)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "UNNAMED",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-MASK-RETN",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "scripts/plantMaskRetN.mjs:2 computed-path read p [fs-read]",
+     "scripts/plantMaskRetN.mjs:2 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "scripts/plantMaskRetN.mjs:2 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-MASK-CATCH",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B1,B17",
+   "lines": {
+    "B1": [
+     "src/components/slider/plantMaskCatch.ts:1 -> src/components/chip/chipVariants.ts [dynamic] (door src/components/chip/index.ts)"
+    ],
+    "B17": [
+     "src/components/slider/plantMaskCatch.ts:1 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-MASK-CATCH-D",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/plantMaskCatchD.ts:1 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-MASK-TRY",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "scripts/plantMaskTry.mjs:2 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "scripts/plantMaskTry.mjs:2 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-PH-tests",
+   "item": "B-07",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "tests/utils (placeholder name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-PH-demo",
+   "item": "B-07",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "demo/misc (placeholder name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-PH-visual",
+   "item": "B-07",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "tests-visual/v2 (placeholder name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-PH-tests-helpers",
+   "item": "B-07",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "tests/helpers2 (placeholder name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-PH-src",
+   "item": "B-07 control",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B7,B11,B15",
+   "lines": {
+    "B7": [
+     "src/components/dock/misc/index.ts (not in record.doors)"
+    ],
+    "B11": [
+     "src/components/dock/misc/index.ts exports x (no reader outside src/components/dock/misc)",
+     "module src/components/dock/misc (not in the pin)",
+     "src/components/dock/misc/index.ts +x (not in the pin)"
+    ],
+    "B15": [
+     "src/components/dock/misc (placeholder name)",
+     "src/components/dock/misc.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-PH-file",
+   "item": "B-07",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "tests/use.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-SELF",
+   "item": "S-06/B-03",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B2",
+   "lines": {
+    "B0": [
+     "src/components/chip/plantSelf.ts:1 self-name-in-src [import] @mkbabb/glass-ui/badge"
+    ],
+    "B2": [
+     "demo/zqB2demoGlob.ts:1 -> src/components/chip/plantSelf.ts [glob]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-WALK",
+   "item": "S-07",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0",
+   "lines": {
+    "B0": [
+     "tests/plant-walk.test.ts:4 computed-path read src/components/<computed> [computed-read]"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-T-OUT",
+   "item": "B-04",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B16",
+   "lines": {
+    "B16": [
+     "tests/plant-chip-out.test.ts (subject in src/components/chip: belongs in src/components/chip/__tests__/)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-T-WRONG",
+   "item": "B-04",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B16",
+   "lines": {
+    "B16": [
+     "src/components/chip/__tests__/plant-slider-in-chip.test.ts (colocated in src/components/chip; its subject's home is src/components/slider)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-T-OWN-L",
+   "item": "legal",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-B-13F",
+   "item": "B-01 (bounds)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "UNNAMED",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-B-501",
+   "item": "B-01 (bounds)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B2,B6",
+   "lines": {
+    "B2": [
+     "demo/zqB2demoGlob.ts:1 -> src/components/chip/plantLong.ts [glob]"
+    ],
+    "B6": [
+     "src/components/chip/plantLong.ts: 520 lines > 500"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-SLOT-13",
+   "item": "S-03 (P3-R3)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B6,B15,B16",
+   "lines": {
+    "B6": [
+     "src/components/badge/__tests__/: 14 direct files > 12",
+     "src/components/chip/__tests__/: 13 direct files > 12",
+     "src/components/dock/__tests__/: 14 direct files > 12"
+    ],
+    "B15": [
+     "src/components/badge/__tests__/plantSlot0.test.ts (placeholder file name)",
+     "src/components/badge/__tests__/plantSlot1.test.ts (placeholder file name)",
+     "src/components/badge/__tests__/plantSlot10.test.ts (placeholder file name)"
+    ],
+    "B16": [
+     "src/components/badge/__tests__/plantSlot0.test.ts (colocated in src/components/badge; its subject's home is the harness (several units))",
+     "src/components/badge/__tests__/plantSlot1.test.ts (colocated in src/components/badge; its subject's home is the harness (several units))",
+     "src/components/badge/__tests__/plantSlot10.test.ts (colocated in src/components/badge; its subject's home is the harness (several units))"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-SLOT-501",
+   "item": "S-03 (P3-R3)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B6",
+   "lines": {
+    "B6": [
+     "src/components/dock/composables/plantSlotLong.ts: 520 lines > 500"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4-LOCAL-L",
+   "item": "legal",
+   "expect": null,
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4x-X-TERN",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "scripts/plantXtern.mjs:2 computed-path read p [fs-read]",
+     "scripts/plantXtern.mjs:2 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "scripts/plantXtern.mjs:2 falls back to an empty value when a file is missing (a ternary masking fallback)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4x-X-TRYREAD",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "scripts/plantXtryread.mjs:2 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "scripts/plantXtryread.mjs:2 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4x-X-THEN2",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B1,B15,B17",
+   "lines": {
+    "B1": [
+     "src/components/slider/plantXthen2.ts:1 -> src/components/chip/chipVariants.ts [dynamic] (door src/components/chip/index.ts)"
+    ],
+    "B15": [
+     "src/components/slider/plantXthen2.ts (placeholder file name)"
+    ],
+    "B17": [
+     "src/components/slider/plantXthen2.ts:1 swallows a failed module load or read (.then with a rejection handler that does not throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4x-X-FNVAL",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B1,B17",
+   "lines": {
+    "B1": [
+     "src/components/slider/plantXfnval.ts:1 -> src/components/chip/chipVariants.ts [dynamic] (door src/components/chip/index.ts)"
+    ],
+    "B17": [
+     "src/components/slider/plantXfnval.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4x-X-TRYAWAIT",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B1,B17",
+   "lines": {
+    "B1": [
+     "src/components/slider/plantXtryawait.ts:1 -> src/components/chip/chipVariants.ts [dynamic] (door src/components/chip/index.ts)"
+    ],
+    "B17": [
+     "src/components/slider/plantXtryawait.ts:1 swallows a failed module load (try/catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4x-X-ELSE",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B0,B17",
+   "lines": {
+    "B0": [
+     "scripts/plantXelse.mjs:2 computed-path read p [fs-read]",
+     "scripts/plantXelse.mjs:2 computed-path read p [fs-read]"
+    ],
+    "B17": [
+     "scripts/plantXelse.mjs:2 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4x-X-FOREIGN",
+   "item": "B-07",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "src/components/slider/useChipGlow.ts (named for the unit chip, lives in slider; not in the pin's reviewed names)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4x-X-SCR",
+   "item": "B-05",
+   "expect": "B10",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B1,B10",
+   "lines": {
+    "B1": [
+     "scripts/minify/plantXscrUse.ts:2 -> scripts/structure/lib/plantXscr.mjs [import] (door scripts/structure/index.mjs)"
+    ],
+    "B10": [
+     "scripts/structure/lib/plantXscr.mjs -> scripts/minify [move] readers: scripts/minify"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4x-X-TERN-LIT",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/plantXternLit.mjs:2 falls back to an empty value when a file is missing (a ternary masking fallback)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5r-P4x-X-FNVAL-D",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/plantXfnvalD.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5x-X5-LOADER-ARG-demo",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "demo/zqXdemoLoaderArg.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5x-X5-LOADER-ARG-tests",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests/zqXtestsLoaderArg.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5x-X5-LOADER-ARG-tests-visual",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "tests-visual/zqXtestsvisualLoaderArg.ts:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5x-X5-LOADER-ARG-scripts",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zqXscriptsLoaderArg.mjs:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5x-X5-TREEREAD-ret",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zqXtreeReadRet.mjs:1 swallows a failed read (try/catch that hands back an empty value)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5x-X5-TREEREAD-empty",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zqXtreeReadEmpty.mjs:1 swallows a failed read (try/catch that drops the error)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6r-P5x-X5-FSREAD-literal-promise",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "scripts/zqXpromiseRead.mjs:2 swallows a failed module load or read (.catch without a throw)"
+    ]
+   },
+   "err": null,
+   "grouped": true
+  },
+  {
+   "id": "P6-PH6-src/components/dock/part-1.ts",
+   "item": "B-07",
+   "expect": "B15",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "src/components/dock/part-1.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "P6-PH6-src/components/dock/GlassDock-2.ts",
+   "item": "B-07",
+   "expect": "B15",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "src/components/dock/GlassDock-2.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "P6-PH6-src/components/dock/GlassDock2.ts",
+   "item": "B-07",
+   "expect": "B15",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "src/components/dock/GlassDock2.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "P6-PH6-src/components/dock/GlassDockPart2.ts",
+   "item": "B-07",
+   "expect": "B15",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "src/components/dock/GlassDockPart2.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "P6-PH6-src/components/dock/bs11.ts",
+   "item": "B-07",
+   "expect": "B15",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "src/components/dock/bs11.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "P6-PH6-src/components/dock/GlassDockSplit.ts",
+   "item": "B-07",
+   "expect": "B15",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "src/components/dock/GlassDockSplit.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "P6r-P5-PH5-src/components/dock/GlassDock-2.ts",
+   "item": "B-07/B-10",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "src/components/dock/GlassDock-2.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "P6r-P5-PH5-src/components/dock/part-1.ts",
+   "item": "B-07/B-10",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "src/components/dock/part-1.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "P6r-P5-PH5-src/components/dock/GlassDockPart2.ts",
+   "item": "B-07/B-10",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "src/components/dock/GlassDockPart2.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "P6r-P5-PH5-src/components/dock/GlassDock2.ts",
+   "item": "B-07/B-10",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "src/components/dock/GlassDock2.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "P6r-P5-PH5-src/components/dock/bs11.ts",
+   "item": "B-07/B-10",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "src/components/dock/bs11.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "P6r-P5-PH5-src/components/dock/GlassDockSplit.ts",
+   "item": "B-07/B-10",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B15",
+   "lines": {
+    "B15": [
+     "src/components/dock/GlassDockSplit.ts (placeholder file name)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "P6r-P5r-P4-T-CYC-N",
+   "item": "B-01 (B4)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "UNNAMED",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "P6r-P5r-P4-T-CYC",
+   "item": "B-01 (B4)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "UNNAMED",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "P6r-P5r-P4-V-CYC",
+   "item": "B-01 (B4)",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "UNNAMED",
+   "named": "",
+   "lines": {},
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "P6r-P5r-P4-MASK-RET",
+   "item": "S-14",
+   "expect": "B17",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B17",
+   "lines": {
+    "B17": [
+     "plantMaskRet.ts:3 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "P6r-P5r-P4-K-REEX",
+   "item": "B-02",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B11",
+   "lines": {
+    "B11": [
+     "src/composables/dom/index.ts +PlantSliderK (not in the pin)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "P6r-P5r-P4-G-RULE",
+   "item": "B-09",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B14",
+   "lines": {
+    "B14": [
+     "src/styles/glass/index.css:178 holds 1 non-door node(s), first rule .plant-door-rule"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "P6r-P5r-P4-TH-RULE",
+   "item": "B-09",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B14",
+   "lines": {
+    "B14": [
+     "src/styles/theme/index.css:34 holds 1 non-door node(s), first rule .plant-door-rule"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "P6r-P5r-P4-D-CODE",
+   "item": "B-01",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B11",
+   "lines": {
+    "B11": [
+     "src/components/chip/index.ts +PLANT_DOOR_CODE (not in the pin)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "P6r-P5r-P4-D-DUAL",
+   "item": "B-01/B-02",
+   "expect": "*",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B9,B11",
+   "lines": {
+    "B9": [
+     "src/components/chip/Chip.vue#default on ./badge + ./chip"
+    ],
+    "B11": [
+     "src/components/badge/index.ts +Chip (not in the pin)"
+    ]
+   },
+   "err": null,
+   "grouped": false
+  }
+ ]
+}

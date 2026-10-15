@@ -1,0 +1,6 @@
+{
+ "why": "§P6-8.4 (pass 7): the reveal door carries useLiquidReveal (useElementMorph's room-sized bloom, keyframes.js through the morph door) beside useStagger and vReveal, which ./motion-core publishes and which import vue only, so ./motion-core's static closure reached keyframes.js through it. useLiquidReveal is a leaf of the element morph it activates (useElementMorph.ts names it so) and its one reader is ./motion: it joins morph, and the reveal door carries no peer",
+ "moves": [
+  { "from": "src/composables/motion/reveal/useLiquidReveal.ts", "to": "src/composables/motion/morph/useLiquidReveal.ts", "why": "the element morph's bloom leaf: it composes useElementMorph and is read by ./motion only" }
+ ]
+}

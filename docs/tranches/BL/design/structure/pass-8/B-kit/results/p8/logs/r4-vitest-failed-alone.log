@@ -1,0 +1,26 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p8/B-proto/r2
+
+ ❯ src/components/dock/__tests__/GlassDock.stagger.test.ts (9 tests) 10333ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/dock/__tests__/GlassDock.stagger.test.ts [ src/components/dock/__tests__/GlassDock.stagger.test.ts ]
+Error: Hook timed out in 10000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".
+ ❯ src/components/dock/__tests__/GlassDock.stagger.test.ts:68:1
+     66| }, 60_000);
+     67|
+     68| afterAll(async () => {
+       | ^
+     69|     await browser?.close();
+     70| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  9 passed (9)
+   Start at  15:44:13
+   Duration  12.87s (transform 1.29s, setup 69ms, import 1.98s, tests 10.33s, environment 251ms)
+
