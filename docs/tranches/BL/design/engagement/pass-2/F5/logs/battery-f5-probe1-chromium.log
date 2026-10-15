@@ -1,0 +1,19 @@
+# F5 battery chromium start 2026-10-15 14:42:57 load { 11.48 12.44 13.39 }
+E-3 chromium exit 1 · E-3 chromium FAIL · 16 pass, 6 fail, 0 unmeasured of 22 gating cells (0 reported) · load 11.9/12.5/13.4 at start, 10.1/12.1/13.2 at end · 23 s, load at start 11.9/12.5/13.4
+    FAIL       E-3 slider desk pointer-held light · rest 360.0 px → held 360.0 px (×1.000; [data-engaged] 3) · bound ×1.03 sustained at 450 ms · load 11.9/12.5/13.4
+    FAIL       E-3 slider desk keyboard-focused light · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1.03 · load 11.9/12.5/13.4
+    FAIL       E-3 slider phone touch-held light · 390×844 coarse · rest 358.0 × 24.0 px → touch-held 358.0 × 24.0 px (inline ×1.000, block ×1.000; [data-engaged] 3) · bound ×1.03 on either axis · load 11.7/12.5/13.4
+    FAIL       E-3 slider desk pointer-held dark · rest 360.0 px → held 360.0 px (×1.000; [data-engaged] 3) · bound ×1.03 sustained at 450 ms · load 11.0/12.3/13.3
+    FAIL       E-3 slider desk keyboard-focused dark · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1.03 · load 11.0/12.3/13.3
+    FAIL       E-3 slider phone touch-held dark · 390×844 coarse · rest 358.0 × 24.0 px → touch-held 358.0 × 24.0 px (inline ×1.000, block ×1.000; [data-engaged] 3) · bound ×1.03 on either axis · load 10.1/12.1/13.2
+E-4 chromium exit 1 · E-4 chromium FAIL · 12 pass, 2 fail, 4 unmeasured of 18 gating cells (1 reported) · load 10.1/12.1/13.2 at start, 9.8/11.7/13.0 at end · 60 s, load at start 10.1/12.1/13.2
+    FAIL       E-4 tabsdrag release PRM · NOT DRIVEN under reduce: the drag moved the body 0.0 px (bound ≥ 20 px) · load 10.9/12.1/13.2
+    UNMEASURED E-4 sheet fling carries velocity · the surface paints in flow ([role="dialog"] computes position: relative): UNMEASURED until its owner cures its position (REGISTRY §P1-7) · load 10.3/12.0/13.2
+    UNMEASURED E-4 sheet release continuity · in flow (above) · load 10.3/12.0/13.2
+    UNMEASURED E-4 sheet repeat landing · the surface is not read in this engine (above) · load 10.3/12.0/13.2
+    UNMEASURED E-4 sheet release PRM · the surface is not driven or not read in this engine (above) · load 10.3/12.0/13.2
+    FAIL       E-4 sortable release continuity · largest one-frame move on release: fling 75.1 px, still 2.7 px · during the drive: fling 40.0 px, still 40.0 px (bound ≤ drive × 1.5 + 2 = 62.0 px) · load 10.2/11.9/13.1
+E-7 chromium exit 1 · E-7 chromium FAIL · 5 pass, 2 fail, 0 unmeasured of 7 gating cells (0 reported) · load 9.8/11.7/13.0 at start, 10.8/11.9/13.1 at end · 4 s, load at start 9.8/11.7/13.0
+    FAIL       E-7 writers data-held (static) · 2 writer file(s): src/components/dock/GlassDock.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/F5/wt · load 9.8/11.7/13.0
+    FAIL       E-7 writers data-press (static) · 2 writer file(s): src/components/pager-dots/PagerDots.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/F5/wt · load 9.8/11.7/13.0
+# F5 battery chromium end exit 1 2026-10-15 14:44:28 load { 10.37 11.75 13.02 }

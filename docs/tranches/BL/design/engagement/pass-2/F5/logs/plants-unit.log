@@ -1,0 +1,24 @@
+# door unit plants 2026-10-15 14:31:47 load { 12.22 14.60 14.32 }
+plant: s/keyed.value = !pointed \&\& keysDown.size > 0;/keyed.value = !pointed;/
+     × a script focus() with no key down engages nothing 6ms
+     × a modifier alone, or a key the control does not act on, engages nothing 2ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  2 failed | 6 passed (8)
+plant: s/else if (keys.has(k)) keyed.value = true;/else if (k !== "Tab") keyed.value = true;/
+     × a modifier alone, or a key the control does not act on, engages nothing 5ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  1 failed | 7 passed (8)
+plant: s/filter((k) => k !== "scale" || !reduced())/filter(() => true)/
+     × writes --press-t and scale while pressed, and only --press-t under reduce 18ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  1 failed | 7 passed (8)
+plant: s/x?.toggleAttribute("data-engaged", engaged)/x?.toggleAttribute("data-engaged", engaged); el?.toggleAttribute("data-held", engaged)/
+     × a Tab's focus engages; data-held stays absent; Escape and leaving disengage 13ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  1 failed | 7 passed (8)
+plant: s/=== "a" ? "b" : "a"/=== "a" ? "a" : "a"/
+     × stamps the parity at mount and flips it on every activation 5ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  1 failed | 7 passed (8)
+restored:
+      Tests  8 passed (8)

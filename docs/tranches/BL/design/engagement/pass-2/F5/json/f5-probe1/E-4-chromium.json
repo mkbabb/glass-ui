@@ -1,0 +1,127 @@
+{
+ "id": "E-4",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/F5/wt/.f5-out/builds/f5"
+ },
+ "loadStart": "10.1/12.1/13.2",
+ "loadEnd": "9.8/11.7/13.0",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-4 slider fling carries velocity",
+   "status": "PASS",
+   "line": "axis x, leading edge, page frame · fling: carry 6.60 px, settles 0.00 px past release · still: carry 0.07 px, settles -2.23 px · difference: carry 6.52 px, settle 2.23 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 240 frames, median 8.3 ms",
+   "load": "10.7/12.1/13.2"
+  },
+  {
+   "name": "E-4 slider release continuity",
+   "status": "PASS",
+   "line": "largest one-frame move on release: fling 7.0 px, still 2.2 px · during the drive: fling 41.0 px, still 41.0 px (bound ≤ drive × 1.5 + 2 = 63.5 px)",
+   "load": "10.7/12.1/13.2"
+  },
+  {
+   "name": "E-4 slider release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 79.2 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px",
+   "load": "10.7/12.1/13.2"
+  },
+  {
+   "name": "E-4 tabsdrag fling carries velocity",
+   "status": "PASS",
+   "line": "axis x, page frame · fling: carry 39.17 px, settles 36.63 px past release · still: carry 0.00 px, settles 0.00 px · difference: carry 39.17 px, settle 36.63 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 240 frames, median 8.3 ms",
+   "load": "10.8/12.1/13.2"
+  },
+  {
+   "name": "E-4 tabsdrag release continuity",
+   "status": "PASS",
+   "line": "largest one-frame move on release: fling 14.8 px, still 29.5 px · during the drive: fling 43.7 px, still 43.7 px (bound ≤ drive × 1.5 + 2 = 67.5 px)",
+   "load": "10.8/12.1/13.2"
+  },
+  {
+   "name": "E-4 tabsdrag repeat landing",
+   "status": "PASS",
+   "line": "3 fling runs, the same drive, land at 247.8, 247.8, 247.8 px (page frame, signed) · spread 0.00 px (bound ≤ 2 px: the same detent)",
+   "load": "10.9/12.1/13.2"
+  },
+  {
+   "name": "E-4 tabsdrag release PRM",
+   "status": "FAIL",
+   "line": "NOT DRIVEN under reduce: the drag moved the body 0.0 px (bound ≥ 20 px)",
+   "load": "10.9/12.1/13.2"
+  },
+  {
+   "name": "E-4 sheet fling carries velocity",
+   "status": "UNMEASURED",
+   "line": "the surface paints in flow ([role=\"dialog\"] computes position: relative): UNMEASURED until its owner cures its position (REGISTRY §P1-7)",
+   "load": "10.3/12.0/13.2"
+  },
+  {
+   "name": "E-4 sheet release continuity",
+   "status": "UNMEASURED",
+   "line": "in flow (above)",
+   "load": "10.3/12.0/13.2"
+  },
+  {
+   "name": "E-4 sheet repeat landing",
+   "status": "UNMEASURED",
+   "line": "the surface is not read in this engine (above)",
+   "load": "10.3/12.0/13.2"
+  },
+  {
+   "name": "E-4 sheet release PRM",
+   "status": "UNMEASURED",
+   "line": "the surface is not driven or not read in this engine (above)",
+   "load": "10.3/12.0/13.2"
+  },
+  {
+   "name": "E-4 sortable fling carries velocity",
+   "status": "PASS",
+   "line": "axis y, page frame · fling: carry 15.91 px, settles -36.69 px past release · still: carry 0.00 px, settles -36.69 px · difference: carry 15.91 px, settle 0.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 0.026 · 240 frames, median 8.3 ms",
+   "load": "10.2/11.9/13.1"
+  },
+  {
+   "name": "E-4 sortable release continuity",
+   "status": "FAIL",
+   "line": "largest one-frame move on release: fling 75.1 px, still 2.7 px · during the drive: fling 40.0 px, still 40.0 px (bound ≤ drive × 1.5 + 2 = 62.0 px)",
+   "load": "10.2/11.9/13.1"
+  },
+  {
+   "name": "E-4 sortable repeat landing",
+   "status": "PASS",
+   "line": "3 fling runs, the same drive, land at 201.7, 201.7, 201.7 px (page frame, signed) · spread 0.00 px (bound ≤ 2 px: the same detent)",
+   "load": "9.8/11.8/13.1"
+  },
+  {
+   "name": "E-4 sortable release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 83.8 px · fling: carry 0.00 px, settles -0.50 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 36.2 px",
+   "load": "9.5/11.7/13.0"
+  },
+  {
+   "name": "E-4 carousel fling carries velocity",
+   "status": "PASS",
+   "line": "axis x, dir −1, touch, page frame · fling: carry 491.00 px, settles 491.00 px past release · still: carry 0.00 px, settles -121.00 px · difference: carry 491.00 px, settle 612.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 241 frames, median 8.3 ms",
+   "load": "10.7/11.9/13.1"
+  },
+  {
+   "name": "E-4 carousel release continuity",
+   "status": "REPORT",
+   "line": "the platform's own scroll fling (CK-18: the Carousel is the platform's, stated), reported not gated · largest one-frame move on release: fling 49.0 px, still 9.0 px · during the drive: fling 56.0 px, still 56.0 px (bound ≤ drive × 1.5 + 2 = 86.0 px)",
+   "load": "10.7/11.9/13.1"
+  },
+  {
+   "name": "E-4 carousel repeat landing",
+   "status": "PASS",
+   "line": "3 fling runs, the same drive, land at 264.0, 264.0, 264.0 px (page frame, signed) · spread 0.00 px (bound ≤ 2 px: the same detent)",
+   "load": "10.4/11.8/13.1"
+  },
+  {
+   "name": "E-4 carousel release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 121.0 px · fling: carry 491.00 px, settles 491.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 49.0 px",
+   "load": "9.8/11.7/13.0"
+  }
+ ]
+}
