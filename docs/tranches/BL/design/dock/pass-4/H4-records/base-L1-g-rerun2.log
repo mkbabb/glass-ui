@@ -1,0 +1,17 @@
+load gate: waited 0s (of a 7200s budget for the whole script, 0s spent), load 57.23 (max 150)
+12:56  up 4 days, 17:59, 2 users, load averages: 57.23 65.25 64.25
+FAIL  L1  Chromium  l1·light·collapsed  shadow 14 (ref 1), gradient 8 (ref 8), pseudo 12 (ref 8); blur 16 px (ref 16) (RECORD); idle infinite animations 0; frame frame-chromium-light-collapsed.png  ⟶ FAILED: added  [load 61.86]
+FAIL  L1  Chromium  l1·light·expanded  shadow 14 (ref 4), gradient 8 (ref 8), pseudo 12 (ref 8); blur 16 px (ref 16) (RECORD); idle infinite animations 0; frame frame-chromium-light-expanded.png  ⟶ FAILED: added  [load 57.87]
+FAIL  L1  Chromium  l1·light·inflight  shadow 14 (ref 4), gradient 8 (ref 8), pseudo 12 (ref 8); blur 16 px (ref 16) (RECORD); idle infinite animations not judged in flight; frame frame-chromium-light-inflight.png  ⟶ FAILED: added  [load 65.01]
+FAIL  L1  Chromium  l1·dark·collapsed  shadow 14 (ref 1), gradient 8 (ref 8), pseudo 12 (ref 8); blur 16 px (ref 16) (RECORD); idle infinite animations 0; frame frame-chromium-dark-collapsed.png  ⟶ FAILED: added  [load 65.01]
+FAIL  L1  Chromium  l1·dark·expanded  shadow 14 (ref 4), gradient 8 (ref 8), pseudo 12 (ref 8); blur 16 px (ref 16) (RECORD); idle infinite animations 0; frame frame-chromium-dark-expanded.png  ⟶ FAILED: added  [load 69.9]
+FAIL  L1  Chromium  l1·dark·inflight  shadow 14 (ref 4), gradient 8 (ref 8), pseudo 12 (ref 8); blur 16 px (ref 16) (RECORD); idle infinite animations not judged in flight; frame frame-chromium-dark-inflight.png  ⟶ FAILED: added  [load 77.91]
+FAIL  L1  Playwright WebKit  l1·light·collapsed  shadow 14 (ref 1), gradient 8 (ref 8), pseudo 12 (ref 8); blur 16 px (ref 16) (RECORD); idle infinite animations 0; frame frame-webkit-light-collapsed.png  ⟶ FAILED: added  [load 78.24]
+FAIL  L1  Playwright WebKit  l1·light·expanded  shadow 14 (ref 4), gradient 8 (ref 8), pseudo 12 (ref 8); blur 16 px (ref 16) (RECORD); idle infinite animations 0; frame frame-webkit-light-expanded.png  ⟶ FAILED: added  [load 80.46]
+FAIL  L1  Playwright WebKit  l1·light·inflight  shadow 14 (ref 4), gradient 8 (ref 8), pseudo 12 (ref 8); blur 16 px (ref 16) (RECORD); idle infinite animations not judged in flight; frame frame-webkit-light-inflight.png  ⟶ FAILED: added  [load 82.97]
+FAIL  L1  Playwright WebKit  l1·dark·collapsed  shadow 14 (ref 1), gradient 8 (ref 8), pseudo 12 (ref 8); blur 16 px (ref 16) (RECORD); idle infinite animations 0; frame frame-webkit-dark-collapsed.png  ⟶ FAILED: added  [load 82.97]
+FAIL  L1  Playwright WebKit  l1·dark·expanded  shadow 14 (ref 4), gradient 8 (ref 8), pseudo 12 (ref 8); blur 16 px (ref 16) (RECORD); idle infinite animations 0; frame frame-webkit-dark-expanded.png  ⟶ FAILED: added  [load 83.46]
+FAIL  L1  Playwright WebKit  l1·dark·inflight  shadow 14 (ref 4), gradient 8 (ref 8), pseudo 12 (ref 8); blur 16 px (ref 16) (RECORD); idle infinite animations not judged in flight; frame frame-webkit-dark-inflight.png  ⟶ FAILED: added  [load 100.16]
+FAIL  L1  g@2e22ae10  0/12 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p4/H4/wt/.h4out/rerun2/runs/L1-g/L1.json)
+exit 1
+12:57  up 4 days, 18 hrs, 2 users, load averages: 100.16 75.09 67.96

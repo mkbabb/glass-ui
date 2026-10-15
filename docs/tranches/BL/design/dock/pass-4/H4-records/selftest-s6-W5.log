@@ -1,0 +1,9 @@
+load gate: waited 0s, load 99.38 (max 150)
+11:38  up 4 days, 16:40, 2 users, load averages: 99.38 102.68 104.87
+OK   W5  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 12/12 PASS  [37 s, load 99.38]
+OK   W5  rimout          expect: exit ≠ 0; inside fails in expanded|collapsed  ·  got: exit 1, 10/10 FAIL; matching 10 (chromium+webkit)  [36 s, load 100.58]
+OK   W5  deadfill        expect: exit ≠ 0; fill fails in h·expanded|v·expanded  ·  got: exit 1, 6/6 FAIL; matching 6 (chromium+webkit)  [20 s, load 113.16]
+OK   W5  rimshift        expect: exit ≠ 0; whole fails in expanded|collapsed  ·  got: exit 1, 10/10 FAIL; matching 10 (chromium+webkit)  [33 s, load 112.85]
+OK   W5  winonly         expect: exit ≠ 0; fill fails in el-source  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [9 s, load 114.95]
+SELFTEST PASS  5/5 expectations hold
+11:40  up 4 days, 16:43, 2 users, load averages: 113.91 107.12 106.28

@@ -1,0 +1,8 @@
+load gate: waited 0s, load 84.69 (max 150)
+14:50  up 3 days, 19:53, 3 users, load averages: 84.69 53.07 27.46
+OK   L1  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 12/12 PASS  [33 s, load 90.08]
+OK   L1  glowhalo        expect: exit ≠ 0; added fails in ^l1·  ·  got: exit 1, 12/12 FAIL; matching 12 (chromium+webkit)  [61 s, load 122.53]
+OK   L1  gleam           expect: exit ≠ 0; added fails in ^l1·  ·  got: exit 1, 12/12 FAIL; matching 12 (chromium+webkit)  [61 s, load 115.26]
+OK   L1  shimmer         expect: exit ≠ 0; idle fails in ^l1·(light|dark)·(collapsed|expanded)  ·  got: exit 1, 8/8 FAIL; matching 8 (chromium+webkit)  [36 s, load 96.16]
+SELFTEST PASS  4/4 expectations hold
+14:54  up 3 days, 19:56, 3 users, load averages: 92.99 77.74 43.83

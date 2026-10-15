@@ -1,0 +1,12 @@
+load gate: waited 0s, load 130.64 (max 150)
+15:47  up 3 days, 20:50, 3 users, load averages: 130.64 165.30 176.50
+OK   W1  lens            expect: exit ≠ 0; corner fails in fit·rest|morph·expanded-rest|rail·rest  ·  got: exit 1, 8/8 FAIL; matching 8 (chromium+webkit)  [53 s, load 130.64]
+OK   W1  squash          expect: exit ≠ 0; corner fails in morph·first-expand|morph·warm-collapse|morph·collapsed-rest  ·  got: exit 1, 12/12 FAIL; matching 12 (chromium+webkit)  [28 s, load 109.34]
+OK   W1  cssbend         expect: exit ≠ 0; corner fails in morph·warm-expand|morph·warm-collapse  ·  got: exit 1, 8/8 FAIL; matching 8 (chromium+webkit)  [36 s, load 103.97]
+OK   W1  deadmorph       expect: exit ≠ 0; agree|moves fails in morph·warm-expand|morph·warm-collapse  ·  got: exit 1, 8/8 FAIL; matching 8 (chromium+webkit)  [39 s, load 125.6]
+OK   W1  dot             expect: exit ≠ 0; cover fails in fit·rest  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [9 s, load 123.89]
+OK   W1  cardlens        expect: exit ≠ 0; corner fails in card·  ·  got: exit 1, 8/10 FAIL; matching 8 (chromium+webkit)  [29 s, load 121.19]
+OK   W1  endlens         expect: exit ≠ 0; corner fails in rail·scrolled-end|rail·focus-end  ·  got: exit 1, 4/4 FAIL; matching 4 (chromium+webkit)  [9 s, load 118.73]
+OK   W1  endout          expect: exit ≠ 0; end fails in rail·scrolled-end|rail·focus-end  ·  got: exit 1, 4/4 FAIL; matching 4 (chromium+webkit)  [9 s, load 113.77]
+SELFTEST PASS  8/8 expectations hold
+15:51  up 3 days, 20:53, 3 users, load averages: 110.85 138.57 162.34

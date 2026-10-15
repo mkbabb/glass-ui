@@ -39,11 +39,25 @@
 //   H3-11 a cell whose ONLY failure is `window`, and whose window holds under Q-4's lenient
 //         reading (lib.mjs Q4_DOCK_CLOCK_MS), is OWNER-BLOCKED (Q-4), not FAIL
 //
+// H4 (pass-4/H4.md):
+//   H4-1  `splice` on every strip cell with seats (lib.mjs spliceRow): no two cut edges meet inside one
+//         glyph advance, no face clip leaves a sliver under one advance (R6)
+//   H4-2  `lanes` on every strip cell whose window opened (lib.mjs lanesRow): from the frame the flag
+//         closes, every clip, translation, scale and opacity under the root is at its final value (R7)
+//   H4-5  `retarget·{40,80,120}` (scene swap&three=1): the swap to `long` retargeted to `mid`, the
+//         retarget SCHEDULED IN THE PAGE (setTimeout, fire and forget) and its time read back; `blank`
+//         from the frame before the retarget, `seatOverlap`, `leaving`, `vanish` (no seat painting
+//         ≥ 0.5 at the retarget drops > 0.5 of its ink in one frame), `splice`, `errors`. And
+//         `retarget·context`: the awaited form (one evaluate that awaits 80 ms in the page, then
+//         retargets), with a liveness ping every 25 ms for 1.5 s and a main-frame navigation watch:
+//         an evaluate context that is destroyed is the cell's reading (`context`), not a tool crash.
+//         The --cells filter now records only the cells it names (lib.mjs makeReport)
+//
 // Bounds: lib.mjs analyseMorph (continuity, landing, window on the pinned clock,
 // trajectory, terminal, owners, seat row, blank, leaving) and FACES_PX / FACES_PX_SCREENCAST below.
 import fs from "node:fs";
 import path from "node:path";
-import { parseArgs, engines, openTarget, launch, openScene, makeReport, outDir, engineTag, startLog, stopLog, mark, waitRest, dockCenter, extentNow, probeMode, shoot, facesRead, FACE_DOM_SCREENCAST, screencast, readFrame, interiorGreen, pinnedRung, analyseMorph, morphChecks, morphSummary, springSpec, r2, K_JITTER, STEP_SLACK_PX, magentaCoverage, scrollSource, blankRow, leavingRow } from "./lib.mjs";
+import { parseArgs, engines, openTarget, launch, openScene, makeReport, outDir, engineTag, startLog, stopLog, mark, waitRest, dockCenter, extentNow, probeMode, shoot, facesRead, FACE_DOM_SCREENCAST, screencast, readFrame, interiorGreen, pinnedRung, analyseMorph, morphChecks, morphSummary, springSpec, r2, K_JITTER, STEP_SLACK_PX, magentaCoverage, scrollSource, blankRow, leavingRow, seatRow, spliceRow } from "./lib.mjs";
 
 /** Faces: 0.5 px (W-7) plus one device pixel of edge anti-aliasing at DSF 2. */
 export const FACES_PX = 1.0;
@@ -59,7 +73,7 @@ export const STRETCH_PX = 160;
 /** H3-7 · the plate may not paint over the in-flow neighbour (anti-aliasing allowance). */
 export const NB_OVERLAP_PX = 0.5;
 /** the strip options every seat-bearing W3 cell logs (H3-1, H3-3 read the ink leaves) */
-const STRIP = { seats: true, owners: true, ink: true };
+const STRIP = { seats: true, owners: true, ink: true, lanes: true };   // H4-2 adds the lanes
 const args = parseArgs();
 const target = await openTarget(args);
 const out = outDir(args, "W3");
@@ -106,6 +120,7 @@ function segment(frames, names, name) {
     const i0 = frames.findIndex((f) => names(f.mk) === name);
     const fr = frames.filter((f) => names(f.mk) === name);
     if (i0 > 0) fr.unshift(frames[i0 - 1]);
+    fr.laneLabels = frames.laneLabels;
     return fr;
 }
 function dump(engine, name, fr, ax) {
@@ -531,6 +546,62 @@ for (const engine of engines(args)) {
             await step(s.page, "wide·warm-expand", () => s.page.mouse.move(c.x, c.y, { steps: 3 }), segs);
             const fr = segment(await stopLog(s.page), (m) => m, "wide·warm-expand");
             rep.cells.push({ engine, cell: "__wide-strip", strip: analyseMorph(fr, RUNG, { ax }) });
+            await s.close();
+        });
+        // H4-5 · the retarget arm, scheduled in the page
+        await rep.guard(engine, [40, 80, 120].map((ms) => `retarget·${ms}` + tag), async () => {
+            for (const after of [40, 80, 120]) {
+                const s = await openScene(browser, target, "swap", { query: { three: "1" } });
+                const ax = await s.page.evaluate(() => window.__dockProbe.axis());
+                await startLog(s.page, { seats: true, ink: true }); await s.page.waitForTimeout(150);
+                await mark(s.page, "r");
+                await s.page.evaluate((ms) => { window.__scene.setFace("long"); setTimeout(() => { window.__hpRetarget = performance.now(); window.__scene.setFace("mid"); }, ms); }, after);
+                await s.page.waitForTimeout(after + 60);
+                await waitRest(s.page, { quiet: 500, cap: 7000 });
+                const tRetarget = await s.page.evaluate(() => window.__hpRetarget ?? null);
+                const fr = segment(await stopLog(s.page), (m) => m, "r");   // with the rest frame before the trigger
+                const i0 = tRetarget == null ? -1 : fr.findIndex((f) => f.t >= tRetarget);
+                const blank = blankRow(i0 > 0 ? fr.slice(i0 - 1) : fr, ax);
+                const seat = seatRow(fr, ax, SPEC);
+                const moving = fr.filter((f, i) => i && (Math.abs(f.e[0] - fr[i - 1].e[0]) > 0.25 || Math.abs(f.e[2] - fr[i - 1].e[2]) > 0.25));
+                const lengthMs = moving.length ? moving.at(-1).t - fr[0].t : SPEC.settleS * 1000;
+                const leave = leavingRow(fr, lengthMs);
+                const splice = spliceRow(fr, ax);
+                const area4 = (l, t, r, b) => Math.max(0, r - l) * Math.max(0, b - t);
+                const isect4 = (a, b) => [Math.max(a[0], b[0]), Math.max(a[1], b[1]), Math.min(a[2], b[2]), Math.min(a[3], b[3])];
+                const inkOwn = (q, e) => { const bb = area4(q[1], q[2], q[3], q[4]); return bb < 1 ? 0 : q[9] * area4(...isect4([q[5], q[6], q[7], q[8]], e)) / bb; };
+                let vanish = { drop: 0 };
+                if (i0 > 0) {
+                    for (const q0 of fr[i0 - 1].s ?? []) {
+                        const ink0 = inkOwn(q0, fr[i0 - 1].e); if (ink0 < 0.5) continue;
+                        let prev = ink0;
+                        for (let i = i0; i < fr.length; i++) { const q = (fr[i].s ?? []).find((x) => x[0] === q0[0]); const ink = q ? inkOwn(q, fr[i].e) : 0; if (prev - ink > vanish.drop) vanish = { drop: r2(prev - ink), seat: q0[0], from: r2(prev), to: r2(ink), atMs: r2(fr[i].t - tRetarget) }; prev = ink; }
+                    }
+                }
+                const checks = { retarget: i0 > 0, blank: blank.ok, seatOverlap: seat.overlap.ok, leaving: leave.ok, vanish: vanish.drop <= 0.5, splice: splice.ok, errors: s.errors.length === 0 };
+                const failed = Object.entries(checks).filter(([, v]) => !v).map(([k]) => k);
+                rep.add({ engine, cell: `retarget·${after}` + tag, pass: !failed.length, failed, frames: fr.length, retargetFrame: i0, blank, overlap: seat.overlap, leaving: leave, splice, vanish, pageErrors: s.errors.slice(0, 3),
+                    summary: `swap to long retargeted to mid ${after} ms later (scheduled in the page; frame ${i0}): blank ${blank.why}; seat overlap ${seat.overlap.frames} frame(s); leaving ${leave.why}; vanish worst one-frame drop ${vanish.drop}${vanish.seat ? ` (seat ${vanish.seat} ${vanish.from} → ${vanish.to} at +${vanish.atMs} ms)` : ""} (bound 0.5); splice ${splice.why}; page errors ${s.errors.length}${failed.length ? "  ⟶ FAILED: " + failed.join(", ") : ""}` });
+                await s.close();
+            }
+        });
+        // H4-5 · the evaluate-context cell: the awaited retarget, read as a cell
+        await rep.guard(engine, ["retarget·context" + tag], async () => {
+            const s = await openScene(browser, target, "swap", { query: { three: "1" } });
+            const ev = [];
+            const t0 = Date.now();
+            s.page.on("framenavigated", (fm) => { if (fm === s.page.mainFrame()) ev.push({ ms: Date.now() - t0, navigated: fm.url().slice(-60) }); });
+            s.page.on("crash", () => ev.push({ ms: Date.now() - t0, crash: true }));
+            let err = null, dead = null;
+            try {
+                await s.page.evaluate(() => window.__scene.setFace("long"));
+                await s.page.evaluate(async () => { await new Promise((f) => setTimeout(f, 80)); window.__scene.setFace("mid"); return 1; });
+            } catch (e) { err = String(e?.message ?? e).split("\n")[0].slice(0, 160); }
+            for (let i = 0; i < 60 && !dead; i++) { try { await s.page.evaluate(() => 1); } catch (e) { dead = { atMs: i * 25, err: String(e?.message ?? e).split("\n")[0].slice(0, 120) }; } await new Promise((r) => setTimeout(r, 25)); }
+            const probe = await s.page.evaluate(() => !!window.__dockProbe?.root?.()).catch(() => false);
+            const lost = !!err || !!dead || ev.some((x) => x.navigated || x.crash) || !probe;
+            rep.add({ engine, cell: "retarget·context" + tag, pass: !lost, failed: lost ? ["context"] : [], error: err, dead, events: ev, probeAfter: probe,
+                summary: `the awaited retarget (setFace long; one evaluate awaits 80 ms in the page, then setFace mid): evaluate ${err ? "REJECTED (" + err + ")" : "returned"}; liveness pings ${dead ? "LOST at " + dead.atMs + " ms (" + dead.err + ")" : "60/60"}; main-frame navigations ${ev.filter((x) => x.navigated).length}; the probe ${probe ? "present" : "GONE"} after${lost ? "  ⟶ FAILED: context (the page's evaluate context did not survive the retarget)" : ""}` });
             await s.close();
         });
         // ── pass 2 · faces from pixels ──────────────────────────────────────

@@ -1,0 +1,27 @@
+load gate: waited 90s (of a 7200s budget for the whole script, 90s spent), load 145.27 (max 150)
+15:03  up 3 days, 20:05, 3 users, load averages: 145.27 116.25 76.20
+FAIL  CF  Chromium  c1·shape·h  collapsed 56×56 px (main×cross), corner R 9999 px (stadium ≥ 27), painting seats' span 40 px (hug bound 64); disclosure div#glass-dock-v-14-summary.dock-layer.dock-layer--summary.is-active "Expand dock" aria-expanded=false (does not paint); plate opacity 1 collapsed, 1 expanded (expanded); frame chromium-c1-h-collapsed.png  ⟶ FAILED: square, summary  [load 143.16]
+FAIL  CF  Chromium  c2·morph·v  first expand: travel 213 px, largest one-frame step 178 px (bound 95.85), 62 frame(s) between the rests, flash 0, root cross drift 0 px, the extent first moves 105 ms after the hover; collapse: travel 213 px, largest one-frame step 75.1 px (bound 95.85), 29 frame(s) between the rests, flash 0, root cross drift 0 px; warm expand: travel 213 px, largest one-frame step 178 px (bound 95.85), 66 frame(s) between the rests, flash 0, root cross drift 0 px; frames 8 (frames/chromium-c2_morph_v-expand, warm)  ⟶ FAILED: continuous  [load 140.96]
+FAIL  CF  Chromium  c3·scroll  expanded yes; wheel 240 px scrolled the page 240 px; did NOT collapse within 1.5 s (the dwell is 3.6 s)  ⟶ FAILED: collapses  [load 138.64]
+FAIL  CF  Chromium  c5·keyboard  Tab ×1 → button.dock-icon-button.glass-specular-track.glass-capsule-hover with the dock expanded; Escape then Enter. Collapsed disclosure: NONE. Enter: expanded, focus button.dock-icon-button.glass-specular-track.glass-capsule-hover; Escape: did NOT collapse, focus button.dock-icon-button.glass-specular-track.glass-capsule-hover (in the dock)  ⟶ FAILED: disclosure, escape  [load 136.91]
+FAIL  CF  Chromium  c6·menu  absent: the collapsible dock carries no menu trigger ([aria-haspopup]) in either posture; O-88's menu-from-a-collapsed-dock has nothing to open  ⟶ FAILED: menu  [load 136.91]
+FAIL  CF  Chromium  c7·coarse-tap  tap at the collapsed dock's centre (coarse, 390 px): did NOT expand; elements activated none (not counted: button.dock-icon-button.glass-specular-track.glass-capsule-hover, the disclosure's or a persistent element's own)  ⟶ FAILED: opens  [load 137.2]
+FAIL  CF  Playwright WebKit  c1·shape·h  collapsed 56×56 px (main×cross), corner R 9999 px (stadium ≥ 27), painting seats' span 40 px (hug bound 64); disclosure div#glass-dock-v-14-summary.dock-layer.dock-layer--summary.is-active "Expand dock" aria-expanded=false (does not paint); plate opacity 1 collapsed, 1 expanded (expanded); frame webkit-c1-h-collapsed.png  ⟶ FAILED: square, summary  [load 138.14]
+FAIL  CF  Playwright WebKit  c2·morph·v  first expand: travel 213 px, largest one-frame step 178 px (bound 95.85), 53 frame(s) between the rests, flash 0, root cross drift 0 px, the extent first moves 98 ms after the hover; collapse: travel 213 px, largest one-frame step 70.8 px (bound 95.85), 22 frame(s) between the rests, flash 0, root cross drift 0 px; warm expand: travel 213 px, largest one-frame step 178 px (bound 95.85), 54 frame(s) between the rests, flash 0, root cross drift 0 px; frames 8 (frames/webkit-c2_morph_v-expand, warm)  ⟶ FAILED: continuous  [load 136.9]
+FAIL  CF  Playwright WebKit  c3·scroll  expanded yes; wheel 240 px scrolled the page 240 px; did NOT collapse within 1.5 s (the dwell is 3.6 s)  ⟶ FAILED: collapses  [load 136.18]
+FAIL  CF  Playwright WebKit  c5·keyboard  Alt+Tab ×4 → button.dock-icon-button.glass-specular-track.glass-capsule-hover with the dock expanded; Escape then Enter. Collapsed disclosure: NONE. Enter: expanded, focus button.dock-icon-button.glass-specular-track.glass-capsule-hover; Escape: did NOT collapse, focus button.dock-icon-button.glass-specular-track.glass-capsule-hover (in the dock)  ⟶ FAILED: disclosure, escape  [load 131.81]
+FAIL  CF  Playwright WebKit  c6·menu  absent: the collapsible dock carries no menu trigger ([aria-haspopup]) in either posture; O-88's menu-from-a-collapsed-dock has nothing to open  ⟶ FAILED: menu  [load 131.81]
+FAIL  CF  Playwright WebKit  c7·coarse-tap  tap at the collapsed dock's centre (coarse, 390 px): did NOT expand; elements activated none (not counted: button.dock-icon-button.glass-specular-track.glass-capsule-hover, the disclosure's or a persistent element's own)  ⟶ FAILED: opens  [load 129.95]
+ROW  CF  chromium  C1  FAIL  (c1·shape·h FAIL)
+ROW  CF  chromium  C3  FAIL  (c3·scroll FAIL, c7·coarse-tap FAIL)
+ROW  CF  chromium  C5  FAIL  (c5·keyboard FAIL)
+ROW  CF  chromium  C6  FAIL  (c6·menu FAIL)
+ROW  CF  chromium  C7  FAIL  (c2·morph·v FAIL, c7·coarse-tap FAIL)
+ROW  CF  webkit  C1  FAIL  (c1·shape·h FAIL)
+ROW  CF  webkit  C3  FAIL  (c3·scroll FAIL, c7·coarse-tap FAIL)
+ROW  CF  webkit  C5  FAIL  (c5·keyboard FAIL)
+ROW  CF  webkit  C6  FAIL  (c6·menu FAIL)
+ROW  CF  webkit  C7  FAIL  (c2·morph·v FAIL, c7·coarse-tap FAIL)
+FAIL  CF  fv2@d6f68b88  0/12 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p4/H4/wt/.h4out/rerun1/runs/CF-fv2/CF.json)
+exit 1
+15:04  up 3 days, 20:07, 3 users, load averages: 129.95 118.91 81.06

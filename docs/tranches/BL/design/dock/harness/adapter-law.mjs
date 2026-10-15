@@ -17,6 +17,11 @@
 //       declaration is a *-color or border-color, never geometry or motion
 //   L-5 the contract is complete: root plate axis extent seats paintingSeats morphing rung
 //       posture budget rim compact badge
+//   L-6 (H4-9, pass-4/H4.md) hit() and edge(), when present, name elements and nothing else: they
+//       select under P.root() (a querySelector off root(), never document), read no custom property,
+//       and never refer to extent() or paintingSeats() (a box computed from the family's own reading is
+//       not the element that takes the press). The runtime half is W1 `ran` (the hit() element moves with
+//       the morph) and R5 `corner` (R is read off the elements hit() names)
 import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
@@ -46,10 +51,16 @@ for (const f of files) {
     if (/\.setProperty\(|\.setAttribute\(|classList\.(add|remove|toggle)|\.style\.[a-zA-Z]+\s*=|\.appendChild\(|\.append\(/.test(writes)) fails.push("L-3 the probe writes into the page");
     if (mod.webkitShim) { const decls = mod.webkitShim.replace(/[^{]*\{([^}]*)\}/g, "$1;").split(";").map((d) => d.trim()).filter(Boolean); const geo = decls.filter((d) => !/^[a-z-]*color\s*:/.test(d.split(":")[0] + ":")); if (geo.length) fails.push(`L-4 webkitShim sets more than colour: ${geo.join("; ")}`); }
     const missing = READS.filter((k) => member(src, k) == null); if (missing.length) fails.push(`L-5 the contract lacks ${missing.join(", ")}`);
+    for (const k of ["hit", "edge"]) {
+        const b = member(src, k); if (b == null) continue;
+        if (/getPropertyValue\(\s*["']--|var\(--/.test(b)) fails.push(`L-6 ${k}() reads a custom property`);
+        if (/\bextent\(|\bpaintingSeats\(/.test(b)) fails.push(`L-6 ${k}() refers to extent()/paintingSeats()`);
+        if (/document\.(querySelector|getElementsBy|elementsFromPoint|elementFromPoint)/.test(b) || !/root\(\)/.test(b)) fails.push(`L-6 ${k}() does not select under P.root()`);
+    }
     let diff = "";
     const head = path.join(HERE, "adapter-head.mjs");
     if (path.resolve(f) !== head) { try { execFileSync("diff", ["-u", head, path.resolve(f)]); diff = "(identical to adapter-head.mjs)"; } catch (e) { diff = String(e.stdout ?? ""); } }
-    console.log(`${fails.length ? "FAIL" : "PASS"}  adapter-law  ${path.relative(process.cwd(), path.resolve(f))}  ${fails.length ? fails.join(" · ") : "L-1..L-5 hold"}`);
+    console.log(`${fails.length ? "FAIL" : "PASS"}  adapter-law  ${path.relative(process.cwd(), path.resolve(f))}  ${fails.length ? fails.join(" · ") : `L-1..L-5${["hit", "edge"].some((k) => member(src, k) != null) ? ", L-6" : ""} hold`}`);
     if (diff && process.argv.includes("--diff")) console.log(diff);
     else if (diff) console.log(`      diff against adapter-head.mjs: ${diff.split("\n").filter((l) => /^[+-][^+-]/.test(l)).length} changed line(s) (--diff prints them for the critic)`);
     if (fails.length) bad++;

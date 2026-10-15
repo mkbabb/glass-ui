@@ -11,6 +11,9 @@
 // H3-11: an expectation whose check is "OWNER-BLOCKED" requires a matching cell reported
 // OWNER-BLOCKED (not PASS, not FAIL) in every engine run: the reading that waits on an owner
 // ruling is itself proven, and the plants beside it (late, slowclock, cardspread) still FAIL.
+// H4 (pass-4/H4.md) adds R5 (r5-hit.mjs), CF (c-facility.mjs), L1 (l1-light.mjs) and PR (prose.mjs,
+// engine "source"), their plants, the W3/W1/ST plants of H4-1..H4-7, the L-6 adapter plant, and theme
+// variants: a fixture written "pass@dark" runs the pass fixture with DOCK_HARNESS_THEME=dark.
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
@@ -35,6 +38,8 @@ const EXPECT = [
     ["W1", "endout", /rail·scrolled-end|rail·focus-end/, ["end"]],
     ["W1", "cardspread", /card·warm-expand|card·warm-collapse|card·first-expand/, ["card"]],
     ["W1", "cardlerp", /card·warm-expand|card·warm-collapse|card·first-expand/, [OB]],   // H3-11 · Q-12
+    ["W1", "cardstep", /card·warm-expand|card·warm-collapse|card·first-expand/, [OB]],   // H4-7 · one step between the rests: Q-12's, in both engines
+    ["W1", "hitpairunnamed", /morph·warm-expand|morph·warm-collapse/, ["ran"]],           // H4-9 · a hit layer the adapter does not name
     ["W2", "scroller", /route2|route3|route4/, ["scroller"]],
     ["W2", "ringclip", /route1/, ["ring"]],
     ["W2", "noring", /route1|route4/, ["paint"]],
@@ -77,6 +82,12 @@ const EXPECT = [
     ["W3", "twoowners", /^seat-transition/, ["owners"]],
     ["W3", "adapterclip", /^warm-expand/, ["faces"]],
     ["W3", "wrongrung", /^warm-expand/, ["rung"]],
+    ["W3", "splice", /^swap-/, ["splice"]],                            // H4-1
+    ["W3", "sliver", /^swap-|^lead-remove/, ["splice"]],               // H4-1
+    ["W3", "lanesnap", /^swap-long/, ["lanes"]],                       // H4-2
+    ["W3", "lanecancel", /^swap-long/, ["lanes"]],                     // H4-2 (cancelled to identity)
+    ["W3", "retargetpop", /^retarget·(40|80|120)/, ["leaving", "vanish"]],   // H4-5
+    ["W3", "ctxloss", /^retarget·context/, ["context"]],               // H4-5
     ["W4", "nohyst", /no-threshold-bounce/, null],
     ["W4", "latch", /no-hover-latch/, null],
     ["W4", "menucollapse", /menu-holds/, null],
@@ -112,18 +123,39 @@ const EXPECT = [
     ["W8", "jank", /^expand|^collapse/, ["pacing"]],
     ["R6", "backdropmotion", /ring·static/, null],
     ["ST", "leap", /^stall·/, ["leap"]],                               // H3-4
+    ["ST", "nbjump", /^stall·nb·/, ["neighbour"]],                     // H4-3
+    ["ST", "nboverlap", /^stall·nb·/, ["overlap"]],                    // H4-3
     ["FM", "deadhooks", /^film·/, ["tiles"]],                          // H3-8
+    ["R5", "nohit", /^hit·/, ["corner"]],                              // H4-4
+    ["R5", "seatmiss", /^hit·warm-/, ["seat"]],                        // H4-4
+    ["R5", "ghosthit", /^hit·warm-/, ["ghost"]],                       // H4-4
+    ["CF", "tilesq", /^c1·shape·h/, ["square", "summary"]],            // H4-10 · C1
+    ["CF", "morphsnap", /^c2·morph·/, ["continuous"]],                 // C2
+    ["CF", "nofocus", /^c3·focus/, ["opens"]],                         // C3
+    ["CF", "noscroll", /^c3·scroll/, ["collapses"]],                   // C3
+    ["CF", "persistentinert", /^c4·persistent/, ["live"]],             // C4
+    ["CF", "focuslost", /^c5·keyboard/, ["escape"]],                   // C5
+    ["CF", "menucollapse", /^c6·menu/, ["holds"]],                     // C6
+    ["CF", "narrowover", /^c7·narrow/, ["inside", "noscroll"]],        // C7
+    ["CF", "tapthrough", /^c7·coarse-tap/, ["opens", "swallowed"]],     // C3 + C7 (coarse)
+    ["L1", "glowhalo", /^l1·/, ["added"]],                             // H4-11
+    ["L1", "gleam", /^l1·/, ["added"]],                                // H4-11
+    ["L1", "shimmer", /^l1·(light|dark)·(collapsed|expanded)/, ["idle"]],   // H4-11
+    ["PR", "noreader", /^prose·readers/, ["readers"]],                 // H4-8
+    ["PR", "count", /^prose·count/, ["count"]],                        // H4-8
+    ["PR", "duprow", /^prose·rows/, ["rows"]],                         // H4-8
 ];
-const PASS_VARIANTS = [["W1", "csscarrier"], ["W7", "splitcaps"]];
-const SCRIPT = { W1: "w1-corner.mjs", W2: "w2-run.mjs", W3: "w3-morph.mjs", W4: "w4-state.mjs", W5: "w5-rim.mjs", W6: "w6-collapsed-form.mjs", W7: "w7-edge.mjs", W8: "w8-motion.mjs", R6: "r6-probe.mjs", ST: "stall.mjs", FM: "film.mjs" };
+const PASS_VARIANTS = [["W1", "csscarrier"], ["W7", "splitcaps"], ["W1", "hitpair"], ["ST", "pass@dark"], ["FM", "pass@dark"], ["W1", "pass@dark"]];
+const SCRIPT = { W1: "w1-corner.mjs", W2: "w2-run.mjs", W3: "w3-morph.mjs", W4: "w4-state.mjs", W5: "w5-rim.mjs", W6: "w6-collapsed-form.mjs", W7: "w7-edge.mjs", W8: "w8-motion.mjs", R6: "r6-probe.mjs", ST: "stall.mjs", FM: "film.mjs", R5: "r5-hit.mjs", CF: "c-facility.mjs", L1: "l1-light.mjs", PR: "prose.mjs" };
 
 const rows = [];
-function run(w, fixture, cells = null) {
+function run(w, fixtureArg, cells = null) {
+    const [fixture, theme] = fixtureArg.split("@");
     const argv = [path.join(HERE, SCRIPT[w]), "--fixture", fixture, "--engine", want.join(",")];
     if (outRoot) argv.push("--out", outRoot);
     if (cells) argv.push("--cells", cells);
     const t0 = Date.now(), load = loadAvg();
-    const r = spawnSync(process.execPath, argv, { encoding: "utf8", maxBuffer: 1 << 26 });
+    const r = spawnSync(process.execPath, argv, { encoding: "utf8", maxBuffer: 1 << 26, env: theme ? { ...process.env, DOCK_HARNESS_THEME: theme } : process.env });
     const dir = outDir({ out: outRoot, fixture }, w);
     let cellsOut = [];
     try { cellsOut = JSON.parse(fs.readFileSync(path.join(dir, `${w}.json`), "utf8")).cells; } catch { }
@@ -140,7 +172,7 @@ for (const w of Object.keys(SCRIPT)) {
         const p = run(w, fx);
         const cs = counted(p.cells);
         const engs = new Set(cs.map((c) => c.engine));
-        const ok = p.code === 0 && cs.length > 0 && cs.every((c) => c.pass) && want.every((e) => engs.has(e));
+        const ok = p.code === 0 && cs.length > 0 && cs.every((c) => c.pass) && (w === "PR" ? ["source"] : want).every((e) => engs.has(e));
         log({ witness: w, fixture: fx, expect: "exit 0, all cells PASS", got: `exit ${p.code}, ${cs.filter((c) => c.pass).length}/${cs.length} PASS${ok ? "" : "; failing: " + cs.filter((c) => !c.pass).map((c) => `${c.engine}:${c.cell}${c.failed ? "[" + c.failed.join(",") + "]" : ""}`).slice(0, 6).join(" ")}${p.err && !cs.length ? " · " + p.err : ""}`, ok, ms: p.ms, load: p.load });
     }
     for (const [ew, fault, pat, check] of EXPECT) {
@@ -151,7 +183,7 @@ for (const w of Object.keys(SCRIPT)) {
         const hit = ob ? f.cells.filter((c) => pat.test(c.cell) && !c.pass && c.ownerBlocked)
             : f.cells.filter((c) => pat.test(c.cell) && !c.pass && !c.unmeasured && !c.record && !c.ownerBlocked && (!check || check.some((k) => (c.failed ?? []).includes(k))));
         const engs = new Set(hit.map((c) => c.engine));
-        const ok = (ob || f.code !== 0) && want.every((e) => engs.has(e));
+        const ok = (ob || f.code !== 0) && (w === "PR" ? ["source"] : want).every((e) => engs.has(e));
         log({ witness: w, fixture: fault, expect: ob ? `an OWNER-BLOCKED cell in ${pat.source}` : `exit ≠ 0; ${check ? check.join("|") + " fails in " : ""}${pat.source}`, got: `exit ${f.code}, ${f.cells.filter((c) => !c.pass).length}/${f.cells.length} FAIL; matching ${hit.length} (${[...engs].join("+") || "none"})${ok ? "" : f.err ? " · " + f.err : ""}`, ok, ms: f.ms, load: f.load });
     }
 }
@@ -161,6 +193,11 @@ if (!only || only.includes("H6")) {
     log({ witness: "H6", fixture: "adapter-head", expect: "the law holds (exit 0)", got: `exit ${a.status}: ${a.stdout.trim().split("\n")[0]}`, ok: a.status === 0, ms: Date.now() - t0, load: loadAvg() });
     const b = spawnSync(process.execPath, [path.join(HERE, "adapter-law.mjs"), path.join(HERE, "plants", "adapter-preclip.mjs")], { encoding: "utf8" });
     log({ witness: "H6", fixture: "adapter-preclip", expect: "L-1, L-2 and L-3 fail (exit ≠ 0)", got: `exit ${b.status}: ${b.stdout.trim().split("\n")[0]}`, ok: b.status !== 0 && /L-1/.test(b.stdout) && /L-2/.test(b.stdout) && /L-3/.test(b.stdout), ms: Date.now() - t0, load: loadAvg() });
+    // H4-9 · L-6 on hit()/edge(): the G adapter (which names both) passes; the plant fails
+    const g = spawnSync(process.execPath, [path.join(HERE, "adapter-law.mjs"), path.join(HERE, "..", "pass-3", "adapter-G-p3.mjs")], { encoding: "utf8" });
+    log({ witness: "H6", fixture: "adapter-G-p3", expect: "L-1..L-6 hold (exit 0)", got: `exit ${g.status}: ${g.stdout.trim().split("\n")[0]}`, ok: g.status === 0 && /L-6/.test(g.stdout), ms: Date.now() - t0, load: loadAvg() });
+    const h = spawnSync(process.execPath, [path.join(HERE, "adapter-law.mjs"), path.join(HERE, "..", "pass-4", "H4-records", "adapter-plant-l6.mjs")], { encoding: "utf8" });
+    log({ witness: "H6", fixture: "adapter-plant-l6", expect: "L-6 fails for hit() and edge() (exit ≠ 0)", got: `exit ${h.status}: ${h.stdout.trim().split("\n")[0]}`, ok: h.status !== 0 && /L-6 hit/.test(h.stdout) && /L-6 edge/.test(h.stdout), ms: Date.now() - t0, load: loadAvg() });
 }
 if (!only || only.includes("H8")) {
     const t0 = Date.now();

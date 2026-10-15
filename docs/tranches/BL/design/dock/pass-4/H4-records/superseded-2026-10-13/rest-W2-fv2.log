@@ -1,0 +1,13 @@
+load gate: waited 0s (of 7200s for the script, 0s spent), load 117.25 (max 150)
+17:25  up 3 days, 22:28, 3 users, load averages: 117.25 205.44 288.96
+PASS  W2  Chromium  route1·long-run-h  seats need 680 px vs budget 360 (EXCEED: scrolling allowed); scroller frames 14/14; ring reach clipped 4.25/4.25 vs free 4.25/4.25 px → cut 0/0 (bound 0.5); focus-visible true, hovered true, selected true; reach 14 seats: pointer 14/14, keyboard (Tab, arrows) 14/14, AT 14/14  [load 92.89]
+FAIL  W2  Chromium  route1·long-run-v  seats need 592 px vs budget 536 (EXCEED: scrolling allowed); scroller frames 33/33; ring reach clipped 4.25/4.25 vs free 4.25/4.25 px → cut 0/0 (bound 0.5); focus-visible true, hovered true, selected true; reach 11 seats: pointer 11/11, keyboard (Tab, arrows) 10/11 (missing Seat 1), AT 11/11  ⟶ FAILED: keyboard  [load 146.32]
+PASS  W2  Chromium  route2·collapsed-layer  seats need 465.66 px vs budget 1424 (fit); frames with a seat scroll container 0/61, with range > 0.5px 0 (max 0px); none  [load 149.87]
+PASS  W2  Chromium  route3·aria-current  seats need 434.88 px vs budget 1424 (fit); frames with a seat scroll container 0/273, with range 0 (max 0px); none  [load 144.04]
+PASS  W2  Chromium  route4·hover-scale  seats need 376.47 px vs budget 1424 (fit); frames with a seat scroll container 0/196, with range 0 (max 0px) ; ring reach clipped 4.35/4.35 vs free 4.35/4.35 px → cut 0/0 (bound 0.5); focus-visible true, hovered true, selected true  [load 107.15]
+PASS  W2  Chromium  route5·consumer-width  consumer width 240 px: seats need 392 px vs the scene's budget 240 (exceed); plate outside the root 0 px (bound 0.5); face ink beyond the plate 0 px (bound 1); reach 8 seats: pointer 8/8, keyboard (Tab, arrows) 8/8, AT 8/8  [load 86.48]
+PASS  W2  Chromium  route6·depth  seats at depth need 214.3 px vs budget 1424 (fit); scroller frames 0/147 (none); reach 4 seats: pointer 4/4, keyboard (Tab, arrows) 4/4, AT 4/4  [load 96.87]
+PASS  W2  Chromium  route7·nested-scroller  plate 360 px under a 360 px budget (bound: fits); face ink beyond the plate 0 px (bound 1); reach 4 seats: pointer 4/4, keyboard (Tab, arrows) 4/4, AT 4/4  [load 114.38]
+FAIL  W2  fv2@d6f68b88  7/8 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p4/H4/wt/.h4out/rest/runs/W2-fv2/W2.json)
+exit 1
+18:15  up 3 days, 23:17, 3 users, load averages: 138.98 86.06 83.54

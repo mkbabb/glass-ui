@@ -31,6 +31,14 @@
 //          whose every frame's fitted radius lies between them (± the bound) is OWNER-BLOCKED
 //          (Q-12: does a card's corner change with its posture?), never FAIL; a radius outside
 //          the two rests fails
+// H4 (pass-4/H4.md):
+//   H4-7   one card rule in both engines (judgeMorph): every frame's fitted r between the two rests read by
+//          the cell's own instrument ± its bound; `card` needs the lossless rests to agree; OB (Q-12) when
+//          they differ and every frame lies between them. Plant `cardstep` (26 → 16 px in one step at mid
+//          extent) reads OWNER-BLOCKED in both engines
+//   H4-9   `ran`: a dynamic cell's extent must travel ≥ 20 px (the hover reached the dock). Fixture PASS
+//          variant `hitpair` (the press surface is a hit element the adapter names in hit()) passes; plant
+//          `hitpairunnamed` (the same page, hit() not named: the probe hides the press surface) fails `ran`
 import fs from "node:fs";
 import path from "node:path";
 import { parseArgs, engines, openTarget, launch, openScene, probeMode, shoot, magentaCoverage, cornerRead, makeReport, outDir, engineTag, waitRest, dockCenter, extentNow, screencast, readFrame, interiorGreen, startLog, stopLog, r2 } from "./lib.mjs";
@@ -104,9 +112,8 @@ function staticEnds(ok, ax) {
     const end = (fr) => { if (!fr.length) return null; const L0 = mainLen(fr[0], ax); const run = []; for (const s of fr) { if (Math.abs(mainLen(s, ax) - L0) > 0.5) break; run.push(s); } return run.length >= 2 ? { L: L0, err: med(run.map((s) => s.maxErr)), r: med(run.map((s) => s.rExpected)) } : null; };
     return { head: end(ok), tail: end([...ok].reverse()) };
 }
-const lerpAt = (a, b, L, k) => { if (!a) return b?.[k]; if (!b) return a[k]; if (Math.abs(b.L - a.L) < 1) return Math.max(a[k], b[k]); const u = Math.min(1, Math.max(0, (L - a.L) / (b.L - a.L))); return a[k] + (b[k] - a[k]) * u; };
 
-function judgeMorph(engine, name, samples, { bound, fitR, restR = null, restPairR = null, adapterRange = null, endpoints = null, how, restTrue = null, logInflight = null, videoScale = null, headOffset = null }) {
+function judgeMorph(engine, name, samples, { bound, fitR, restR = null, restPairR = null, adapterRange = null, endpoints = null, how, restTrue = null, logInflight = null, videoScale = null, headOffset = null, mustMove = true }) {
     const ok = samples.filter((s) => !s.empty);
     const ax = samples[0]?.ax ?? "x";
     // H3-5: the screencast's static-rest offset (painted − extent() at the rest before the trigger)
@@ -140,12 +147,27 @@ function judgeMorph(engine, name, samples, { bound, fitR, restR = null, restPair
     // (restTrue.rc, restTrue.re) or `card` fails: a card whose radius changes with its size cannot
     // hide in the interpolation.
     let restPair = null;
-    if (fitR && how === "screencast") {
-        if (restTrue?.rc != null && restTrue?.re != null) restPair = Math.abs(restTrue.rc - restTrue.re);
-        if (!ends?.head && !ends?.tail) unjudged.push("card");
-    }
-    const rRef = (s) => (fitR && how === "screencast" ? lerpAt(ends?.head, ends?.tail, mainLen(s, ax), "r") : restR);
-    const rSpread = fitR ? Math.max(0, ...ok.map((s) => { const R = rRef(s); return R == null ? 0 : Math.abs(s.rExpected - R); })) : 0;
+    if (fitR && how === "screencast" && restTrue?.rc != null && restTrue?.re != null) restPair = Math.abs(restTrue.rc - restTrue.re);
+    if (fitR && how !== "screencast" && restPairR && restPairR.every((v) => v != null)) restPair = Math.abs(restPairR[0] - restPairR[1]);
+    // H4-7 · ONE card rule in both engines. The rests are read by the cell's own instrument: Chromium's
+    // lossless rest radii; Playwright WebKit's trusted static head and tail of the same video (the codec's
+    // fitted-r bias grows with width, H2.md §1, so a video frame is compared with that video's rests, never
+    // a lossless one). `between`: every frame's fitted r within [min, max] of those two ± the instrument's
+    // bound. `card` = the two LOSSLESS rest radii agree (≤ BOUND_PX) and `between`. OWNER-BLOCKED (Q-12) =
+    // `card` is the only failure, the lossless rests differ, and `between` holds. Same rule, same verdict
+    // class in both engines (pass 3: B′ light read OB in Chromium and FAIL in Playwright WebKit).
+    const lossPair = how === "screencast" ? [restTrue?.rc, restTrue?.re] : restPairR;
+    // the rests: the screencast's own trusted rest frames; where a video rest is untrusted, the lossless rest
+    // pair (restTrue) joins them (the union, so a biased video rest and the true rest both bound the frames)
+    const vidRests = [ends?.head?.r, ends?.tail?.r];
+    const instRests = how === "screencast" ? [...vidRests.filter((v) => v != null), ...(vidRests.some((v) => v == null) ? (lossPair ?? []).filter((v) => v != null) : [])] : (restPairR ?? []).filter((v) => v != null);
+    const cardBoundI = how === "screencast" ? CARD_SCREENCAST_PX : bound;
+    const rLo = instRests.length ? Math.min(...instRests) - cardBoundI : null, rHi = instRests.length ? Math.max(...instRests) + cardBoundI : null;
+    const rOut = (s) => (rLo == null ? 0 : s.rExpected < rLo ? rLo - s.rExpected : s.rExpected > rHi ? s.rExpected - rHi : 0);
+    const rSpread = fitR ? Math.max(0, ...ok.map(rOut)) : 0;
+    const between = fitR && instRests.length > 0 && rSpread <= 0;
+    if (fitR && !instRests.length) unjudged.push("card");
+    if (fitR && how !== "screencast" && (!restPairR || restPairR.some((v) => v == null))) unjudged.push("card");
     // moves: judged only when the sampler saw the morph in flight. A screenshot sample is in flight
     // when its bracketing adapter reads lie strictly between the endpoints. Under load a screenshot
     // can take longer than the whole morph (a first sample at 452 ms of a 278 ms spring, load 31):
@@ -153,28 +175,29 @@ function judgeMorph(engine, name, samples, { bound, fitR, restR = null, restPair
     const inflight = how === "screenshot" && endpoints ? ok.filter((s) => { const lo = Math.min(...endpoints) + 0.5, hi = Math.max(...endpoints) - 0.5; return [s.pre, s.post].some((v) => v > lo && v < hi); }).length : null;
     // starved = the rAF log shows the extent in flight on ≥ 2 frames, yet < 2 shots caught it; a
     // log with < 2 in-between frames is a jump, and `moves` is judged (and fails) on it
-    const movesJudged = travel < 20 || how !== "screenshot" || inflight >= INFLIGHT_MIN || distinct >= MOVES_MIN || (logInflight ?? Infinity) < INFLIGHT_MIN;
+    // H4 (pass-4/H4.md §2.3): three distinct painted extents can be demanded only of a sampler that took
+    // three shots in flight. Two bracketing reads in flight with two distinct extents is a starved sampler
+    // (Chromium `card·first-expand`, 5 shots, 2 in flight, load 89-145, 2 of 3 runs), not a dead morph.
+    const movesJudged = travel < 20 || how !== "screenshot" || inflight >= MOVES_MIN || distinct >= MOVES_MIN || (logInflight ?? Infinity) < INFLIGHT_MIN;
     if (!movesJudged) unjudged.push("moves");
+    // H4-9 · `ran`: a cell that asked for a posture change must see the extent travel ≥ 20 px. A hover
+    // that never reached the dock (a probe that hid its press surface: G-proto §3.4, every W1 dynamic cell
+    // green at "adapter travel 0 px") is a FAIL, never a vacuous pass of `moves`
     const checks = { corner: (ok.length > 0 && ok.every((s) => s.maxErr <= boundAt(s))), agree: worstDis <= 0, moves: !movesJudged || travel < 20 || distinct >= MOVES_MIN };
-    const cardBound = how === "screencast" ? CARD_SCREENCAST_PX : bound;
-    if (fitR) checks.card = unjudged.includes("card") || (rSpread <= cardBound && (restPair == null || restPair <= BOUND_PX));
+    if (mustMove) checks.ran = travel >= 20;
+    const cardBound = cardBoundI;
+    if (fitR) checks.card = unjudged.includes("card") || (between && restPair != null && restPair <= BOUND_PX);
     const failed = Object.entries(checks).filter(([, v]) => !v).map(([k]) => k);
     const unmeasured = failed.length === 0 && unjudged.length > 0;
     // H3-11 · Q-12: the card corner moves between its two rest radii and nowhere else
-    const pair = fitR ? (how === "screencast" ? [restTrue?.rc, restTrue?.re] : restPairR) : null;
+    const pair = fitR ? lossPair : null;
     let ownerBlocked;
-    if (failed.length === 1 && failed[0] === "card" && pair && pair.every((v) => v != null)) {
-        const lo = Math.min(...pair) - bound, hi = Math.max(...pair) + bound;
-        // lossless frames: every fitted radius between the rests; screencast frames: the spread from the
-        // video's own head→tail lerp (the codec's width-dependent bias cancels there) within its bound
-        const between = how === "screencast" ? rSpread <= CARD_SCREENCAST_PX : ok.every((x) => x.rExpected >= lo && x.rExpected <= hi);
-        if (Math.abs(pair[0] - pair[1]) > BOUND_PX && between) ownerBlocked = "Q-12";   // the rests differ by more than the lossless bound
-    }
+    if (failed.length === 1 && failed[0] === "card" && pair && pair.every((v) => v != null) && Math.abs(pair[0] - pair[1]) > BOUND_PX && between) ownerBlocked = "Q-12";
     const calNote = how === "screencast" && headOffset != null ? `; static-rest offset ${r2(headOffset)} px${cal ? " (calibrated)" : " (not calibrated: beyond the bound)"}` : "";
     const liftNote = how === "screencast" && ends ? `; video static ends head ${ends.head ? r2(ends.head.err) : "untrusted"} / tail ${ends.tail ? r2(ends.tail.err) : "untrusted"} px; video scale ${videoScale != null ? videoScale.toFixed(4) : "-"}` : "";
     rep.add({ engine, cell: name + engineTag(target, engine), pass: failed.length === 0 && !unmeasured, unmeasured, ownerBlocked, restPairR: pair ?? undefined, headOffsetPx: headOffset != null ? r2(headOffset) : undefined, failed, unjudged, videoScale: videoScale != null ? +videoScale.toFixed(4) : undefined, samples: ok.length, how, distinctExtents: distinct, inflight, logInflight, adapterTravelPx: r2(travel), worst: worst && { maxErr: worst.maxErr, bound: r2(boundAt(worst)), corner: worst.worstCorner, w: worst.w, h: worst.h, rExpected: worst.rExpected }, disagreePx: r2(worstDis), rSpread: r2(rSpread), restPairPx: restPair != null ? r2(restPair) : undefined, noise: ends ? { head: ends.head, tail: ends.tail } : undefined,
         frames: ok.map((s) => ({ t: s.tMs, w: s.w, h: s.h, maxErr: s.maxErr, r: s.rExpected, pre: s.pre != null ? r2(s.pre) : undefined, post: s.post != null ? r2(s.post) : undefined })),
-        summary: `${unmeasured ? "UNMEASURED " + unjudged.join(", ") + ": " : ""}${ok.length} ${how} sample(s)${inflight != null ? ` (${inflight} in flight; rAF log ${logInflight ?? "-"} frames in flight)` : ""}, ${distinct} distinct painted extents over an adapter travel of ${r2(travel)} px (moves: ≥ ${MOVES_MIN} when ≥ 20 px); worst corner ${worst?.maxErr ?? "n/a"} px at ${worst?.worstCorner ?? "-"} (plate ${worst?.w}x${worst?.h}, r ${worst?.rExpected}; bound ${worst ? r2(boundAt(worst)) : bound})${liftNote}; silhouette outside the adapter's extent by ${r2(worstDis)} px${calNote}${fitR ? `; fitted r spread ${r2(rSpread)} px from the reference (bound ${cardBound})${restPair != null ? `, lossless rest radii differ by ${r2(restPair)} px (bound ${BOUND_PX})` : ""}` : ""}${failed.length ? `  ⟶ ${ownerBlocked ? "OWNER-BLOCKED (" + ownerBlocked + ", rest radii " + pair.map(r2).join(" / ") + " px)" : "FAILED"}: ` + failed.join(", ") : ""}` });
+        summary: `${unmeasured ? "UNMEASURED " + unjudged.join(", ") + ": " : ""}${ok.length} ${how} sample(s)${inflight != null ? ` (${inflight} in flight; rAF log ${logInflight ?? "-"} frames in flight)` : ""}, ${distinct} distinct painted extents over an adapter travel of ${r2(travel)} px (moves: ≥ ${MOVES_MIN} when ≥ 20 px); worst corner ${worst?.maxErr ?? "n/a"} px at ${worst?.worstCorner ?? "-"} (plate ${worst?.w}x${worst?.h}, r ${worst?.rExpected}; bound ${worst ? r2(boundAt(worst)) : bound})${liftNote}; silhouette outside the adapter's extent by ${r2(worstDis)} px${calNote}${fitR ? `; fitted r outside the rests' range [${rLo != null ? r2(rLo) : "-"}, ${rHi != null ? r2(rHi) : "-"}] by ${r2(rSpread)} px (rests ${instRests.map(r2).join(" / ")} by this instrument ± ${cardBound})${restPair != null ? `, lossless rest radii differ by ${r2(restPair)} px (bound ${BOUND_PX})` : ""}` : ""}${failed.length ? `  ⟶ ${ownerBlocked ? "OWNER-BLOCKED (" + ownerBlocked + ", rest radii " + pair.map(r2).join(" / ") + " px)" : "FAILED"}: ` + failed.join(", ") : ""}` });
 }
 
 /** Chromium: screenshot continuously from the trigger until the plate is still, bracketing each shot with adapter reads. */

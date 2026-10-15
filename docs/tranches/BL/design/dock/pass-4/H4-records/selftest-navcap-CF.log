@@ -1,0 +1,50 @@
+11:13  up 4 days, 16:16, 2 users, load averages: 36.27 89.18 137.87
+PASS  CF  Playwright WebKit  c1·shape·h  collapsed 175×56 px (main×cross), corner R 28 px (stadium ≥ 27), painting seats' span 162.52 px (hug bound 186.52); disclosure button.seat.tab "Now playing" aria-expanded=false; plate opacity 1 collapsed, 1 expanded (expanded); frame webkit-c1-h-collapsed.png  [load 36.72]
+PASS  CF  Playwright WebKit  c2·morph·h  first expand: travel 318 px, largest one-frame step 41.78 px (bound 143.1), 16 frame(s) between the rests, flash 0, root cross drift 0 px, the extent first moves 28 ms after the hover; collapse: travel 318 px, largest one-frame step 43.46 px (bound 143.1), 16 frame(s) between the rests, flash 0, root cross drift 0 px; warm expand: travel 318 px, largest one-frame step 49.11 px (bound 143.1), 17 frame(s) between the rests, flash 0, root cross drift 0 px; frames 8 (frames/webkit-c2_morph_h-expand, warm)  [load 34.03]
+PASS  CF  Playwright WebKit  c1·shape·v  collapsed 108×56 px (main×cross), corner R 28 px (stadium ≥ 27), painting seats' span 96 px (hug bound 120); disclosure button.seat "Now playing" aria-expanded=false; plate opacity 1 collapsed, 1 expanded (expanded); frame webkit-c1-v-collapsed.png  [load 34.03]
+  (Playwright WebKit browser retired after 3 page loads and relaunched, 1×)
+PASS  CF  Playwright WebKit  c2·morph·v  first expand: travel 260 px, largest one-frame step 34.02 px (bound 117), 16 frame(s) between the rests, flash 0, root cross drift 0 px, the extent first moves 33 ms after the hover; collapse: travel 259.92 px, largest one-frame step 34.02 px (bound 116.96), 16 frame(s) between the rests, flash 0, root cross drift 0 px; warm expand: travel 260 px, largest one-frame step 35.72 px (bound 117), 16 frame(s) between the rests, flash 0, root cross drift 0 px; frames 8 (frames/webkit-c2_morph_v-expand, warm)  [load 30.25]
+PASS  CF  Playwright WebKit  c2·prm  reduced motion: 175 → 493 px; the extent lands 0 frame(s) after its first change (bound ≤ 3)  [load 30.25]
+PASS  CF  Playwright WebKit  c2·rapid  five toggles 70 ms apart ending on Enter: rests pinned at 493 px (expanded rest 493 px); disclosure aria-expanded true; focus button.seat.tab  [load 28.87]
+  (Playwright WebKit browser retired after 6 page loads and relaunched, 2×)
+PASS  CF  Playwright WebKit  c3·hover  hover: expanded after 3 ms; leave: collapsed after 3627 ms  [load 28.88]
+PASS  CF  Playwright WebKit  c3·focus  Alt+Tab ×1: focus on button.seat (in the dock); after 1.2 s the dock is expanded  [load 29.85]
+PASS  CF  Playwright WebKit  c3·scroll  expanded yes; wheel 240 px scrolled the page 240 px; collapsed after 87 ms  [load 29.85]
+  (Playwright WebKit browser retired after 9 page loads and relaunched, 3×)
+PASS  CF  Playwright WebKit  c4·persistent  1 persistent element(s) collapsed, 1 expanded; failing: none  [load 30.42]
+PASS  CF  Playwright WebKit  c5·keyboard  Alt+Tab ×1 → button.seat with the dock expanded; Escape then Enter. Collapsed disclosure: button.seat.tab "Now playing" aria-expanded=false. Enter: expanded, focus button.seat.tab; Escape: collapsed, focus button.seat.tab (the disclosure)  [load 30.42]
+PASS  CF  Playwright WebKit  c6·menu  trigger button.seat.tab: menu open after 3 ms; 4.5 s later (past the dwell, pointer on the menu) menu open, dock expanded; Escape: menu closed, focus button.seat.tab (the trigger)  [load 32.06]
+  (Playwright WebKit browser retired after 12 page loads and relaunched, 4×)
+PASS  CF  Playwright WebKit  c7·narrow  390 px: expanded extent 16..374 px in a 390 px viewport; document scrollWidth 390; frame webkit-c7-narrow-expanded.png  [load 31.09]
+PASS  CF  Playwright WebKit  c7·coarse-tap  tap at the collapsed dock's disclosure (coarse, 390 px): expanded after 685 ms; elements activated none  [load 31.09]
+PASS  CF  Chromium  c1·shape·h  collapsed 175×56 px (main×cross), corner R 28 px (stadium ≥ 27), painting seats' span 162.52 px (hug bound 186.52); disclosure button.seat.tab "Now playing" aria-expanded=false; plate opacity 1 collapsed, 1 expanded (expanded); frame chromium-c1-h-collapsed.png  [load 30.29]
+PASS  CF  Chromium  c2·morph·h  first expand: travel 318 px, largest one-frame step 22.11 px (bound 143.1), 33 frame(s) between the rests, flash 0, root cross drift 0 px, the extent first moves 24 ms after the hover; collapse: travel 318 px, largest one-frame step 21.53 px (bound 143.1), 33 frame(s) between the rests, flash 0, root cross drift 0 px; warm expand: travel 318 px, largest one-frame step 20.72 px (bound 143.1), 33 frame(s) between the rests, flash 0, root cross drift 0 px; frames 8 (frames/chromium-c2_morph_h-expand, warm)  [load 31.38]
+PASS  CF  Chromium  c1·shape·v  collapsed 108×56 px (main×cross), corner R 28 px (stadium ≥ 27), painting seats' span 96 px (hug bound 120); disclosure button.seat "Now playing" aria-expanded=false; plate opacity 1 collapsed, 1 expanded (expanded); frame chromium-c1-v-collapsed.png  [load 31.38]
+PASS  CF  Chromium  c2·morph·v  first expand: travel 260 px, largest one-frame step 16.74 px (bound 117), 32 frame(s) between the rests, flash 0, root cross drift 0 px, the extent first moves 23 ms after the hover; collapse: travel 260 px, largest one-frame step 18.68 px (bound 117), 32 frame(s) between the rests, flash 0, root cross drift 0 px; warm expand: travel 260 px, largest one-frame step 18.25 px (bound 117), 33 frame(s) between the rests, flash 0, root cross drift 0 px; frames 8 (frames/chromium-c2_morph_v-expand, warm)  [load 33.08]
+PASS  CF  Chromium  c2·prm  reduced motion: 175 → 493 px; the extent lands 0 frame(s) after its first change (bound ≤ 3)  [load 33.23]
+PASS  CF  Chromium  c2·rapid  five toggles 70 ms apart ending on Enter: rests pinned at 493 px (expanded rest 493 px); disclosure aria-expanded true; focus button.seat.tab  [load 34.33]
+PASS  CF  Chromium  c3·hover  hover: expanded after 2 ms; leave: collapsed after 3674 ms  [load 35.67]
+PASS  CF  Chromium  c3·focus  Tab ×1: focus on button.seat (in the dock); after 1.2 s the dock is expanded  [load 35.67]
+PASS  CF  Chromium  c3·scroll  expanded yes; wheel 240 px scrolled the page 240 px; collapsed after 85 ms  [load 35.13]
+PASS  CF  Chromium  c4·persistent  1 persistent element(s) collapsed, 1 expanded; failing: none  [load 35.13]
+PASS  CF  Chromium  c5·keyboard  Tab ×1 → button.seat with the dock expanded; Escape then Enter. Collapsed disclosure: button.seat.tab "Now playing" aria-expanded=false. Enter: expanded, focus button.seat.tab; Escape: collapsed, focus button.seat.tab (the disclosure)  [load 36.08]
+PASS  CF  Chromium  c6·menu  trigger button.seat.tab: menu open after 2 ms; 4.5 s later (past the dwell, pointer on the menu) menu open, dock expanded; Escape: menu closed, focus button.seat.tab (the trigger)  [load 36.24]
+PASS  CF  Chromium  c7·narrow  390 px: expanded extent 16..374 px in a 390 px viewport; document scrollWidth 390; frame chromium-c7-narrow-expanded.png  [load 37.18]
+PASS  CF  Chromium  c7·coarse-tap  tap at the collapsed dock's disclosure (coarse, 390 px): expanded after 759 ms; elements activated none  [load 37.18]
+ROW  CF  webkit  C1  PASS  (c1·shape·h pass)
+ROW  CF  webkit  C2  PASS  (c2·morph·h pass, c2·prm pass, c2·rapid pass)
+ROW  CF  webkit  C3  PASS  (c3·hover pass, c3·focus pass, c3·scroll pass, c7·coarse-tap pass)
+ROW  CF  webkit  C4  PASS  (c4·persistent pass)
+ROW  CF  webkit  C5  PASS  (c5·keyboard pass)
+ROW  CF  webkit  C6  PASS  (c6·menu pass)
+ROW  CF  webkit  C7  PASS  (c1·shape·v pass, c2·morph·v pass, c7·narrow pass, c7·coarse-tap pass)
+ROW  CF  chromium  C1  PASS  (c1·shape·h pass)
+ROW  CF  chromium  C2  PASS  (c2·morph·h pass, c2·prm pass, c2·rapid pass)
+ROW  CF  chromium  C3  PASS  (c3·hover pass, c3·focus pass, c3·scroll pass, c7·coarse-tap pass)
+ROW  CF  chromium  C4  PASS  (c4·persistent pass)
+ROW  CF  chromium  C5  PASS  (c5·keyboard pass)
+ROW  CF  chromium  C6  PASS  (c6·menu pass)
+ROW  CF  chromium  C7  PASS  (c1·shape·v pass, c2·morph·v pass, c7·narrow pass, c7·coarse-tap pass)
+PASS  CF  fixture:pass  28/28 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p4/H4/wt/.h4out/navcap/runs/CF-fixture-pass/CF.json)
+exit 0
+11:15  up 4 days, 16:18, 2 users, load averages: 37.18 70.32 123.60

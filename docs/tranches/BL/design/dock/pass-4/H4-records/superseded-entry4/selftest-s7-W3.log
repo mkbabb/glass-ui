@@ -1,0 +1,7 @@
+load gate: waited 0s, load 3.17 (max 150)
+13:56  up 4 days, 18:58, 1 user, load averages: 3.17 3.06 9.09
+BAD  W3  pass            expect: exit 0, all cells PASS  ·  got: exit 1, 0/0 PASS; failing:  ·  Node.js v26.0.0  [0 s, load 3.17]
+BAD  W3  lanesnap        expect: exit ≠ 0; lanes fails in ^swap-long  ·  got: exit 1, 0/0 FAIL; matching 0 (none) ·  Node.js v26.0.0  [0 s, load 3.17]
+BAD  W3  lanecancel      expect: exit ≠ 0; lanes fails in ^swap-long  ·  got: exit 1, 0/0 FAIL; matching 0 (none) ·  Node.js v26.0.0  [0 s, load 3.17]
+SELFTEST FAIL  0/3 expectations hold
+13:56  up 4 days, 18:58, 1 user, load averages: 3.17 3.06 9.09

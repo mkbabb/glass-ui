@@ -1,0 +1,153 @@
+{
+ "when": "2026-10-09T21:18:20.155Z",
+ "engines": [
+  "chromium",
+  "webkit"
+ ],
+ "rows": [
+  {
+   "witness": "W1",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 1, 39/40 PASS; failing: webkit:card·warm-collapse[card]",
+   "ok": false,
+   "ms": 243160,
+   "load": 110.58
+  },
+  {
+   "witness": "W1",
+   "fixture": "csscarrier",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 1, 37/38 PASS; failing: chromium:morph·warm-expand[moves]",
+   "ok": false,
+   "ms": 328092,
+   "load": 114.67
+  },
+  {
+   "witness": "W1",
+   "fixture": "hitpair",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 1, 36/40 PASS; failing: chromium:morph·warm-expand[moves] chromium:vmorph·first-expand[moves] chromium:vmorph·warm-collapse[moves] webkit:morph·warm-expand[agree]",
+   "ok": false,
+   "ms": 383121,
+   "load": 122.91
+  },
+  {
+   "witness": "W1",
+   "fixture": "pass@dark",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 37/37 PASS",
+   "ok": true,
+   "ms": 380011,
+   "load": 733.09
+  },
+  {
+   "witness": "W1",
+   "fixture": "lens",
+   "expect": "exit ≠ 0; corner fails in fit·rest|morph·expanded-rest|rail·rest",
+   "got": "exit 1, 8/8 FAIL; matching 8 (chromium+webkit)",
+   "ok": true,
+   "ms": 254736,
+   "load": 222.1
+  },
+  {
+   "witness": "W1",
+   "fixture": "squash",
+   "expect": "exit ≠ 0; corner fails in morph·first-expand|morph·warm-collapse|morph·collapsed-rest",
+   "got": "exit 1, 12/12 FAIL; matching 11 (chromium+webkit)",
+   "ok": true,
+   "ms": 145041,
+   "load": 163.48
+  },
+  {
+   "witness": "W1",
+   "fixture": "cssbend",
+   "expect": "exit ≠ 0; corner fails in morph·warm-expand|morph·warm-collapse",
+   "got": "exit 1, 8/8 FAIL; matching 5 (chromium+webkit)",
+   "ok": true,
+   "ms": 241579,
+   "load": 240.98
+  },
+  {
+   "witness": "W1",
+   "fixture": "deadmorph",
+   "expect": "exit ≠ 0; agree|moves fails in morph·warm-expand|morph·warm-collapse",
+   "got": "exit 1, 8/8 FAIL; matching 5 (chromium+webkit)",
+   "ok": true,
+   "ms": 263742,
+   "load": 349.73
+  },
+  {
+   "witness": "W1",
+   "fixture": "dot",
+   "expect": "exit ≠ 0; cover fails in fit·rest",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 16001,
+   "load": 250.76
+  },
+  {
+   "witness": "W1",
+   "fixture": "cardlens",
+   "expect": "exit ≠ 0; corner fails in card·",
+   "got": "exit 1, 8/10 FAIL; matching 8 (chromium+webkit)",
+   "ok": true,
+   "ms": 149398,
+   "load": 221.03
+  },
+  {
+   "witness": "W1",
+   "fixture": "endlens",
+   "expect": "exit ≠ 0; corner fails in rail·scrolled-end|rail·focus-end",
+   "got": "exit 1, 4/4 FAIL; matching 4 (chromium+webkit)",
+   "ok": true,
+   "ms": 21755,
+   "load": 178.52
+  },
+  {
+   "witness": "W1",
+   "fixture": "endout",
+   "expect": "exit ≠ 0; end fails in rail·scrolled-end|rail·focus-end",
+   "got": "exit 1, 4/4 FAIL; matching 4 (chromium+webkit)",
+   "ok": true,
+   "ms": 18455,
+   "load": 178.61
+  },
+  {
+   "witness": "W1",
+   "fixture": "cardspread",
+   "expect": "exit ≠ 0; card fails in card·warm-expand|card·warm-collapse|card·first-expand",
+   "got": "exit 1, 6/6 FAIL; matching 6 (chromium+webkit)",
+   "ok": true,
+   "ms": 150927,
+   "load": 161.9
+  },
+  {
+   "witness": "W1",
+   "fixture": "cardlerp",
+   "expect": "an OWNER-BLOCKED cell in card·warm-expand|card·warm-collapse|card·first-expand",
+   "got": "exit 0, 6/6 FAIL; matching 6 (chromium+webkit)",
+   "ok": true,
+   "ms": 118306,
+   "load": 345.6
+  },
+  {
+   "witness": "W1",
+   "fixture": "cardstep",
+   "expect": "an OWNER-BLOCKED cell in card·warm-expand|card·warm-collapse|card·first-expand",
+   "got": "exit 1, 6/6 FAIL; matching 3 (chromium)",
+   "ok": false,
+   "ms": 128843,
+   "load": 402.63
+  },
+  {
+   "witness": "W1",
+   "fixture": "hitpairunnamed",
+   "expect": "exit ≠ 0; ran fails in morph·warm-expand|morph·warm-collapse",
+   "got": "exit 1, 7/8 FAIL; matching 6 (chromium+webkit)",
+   "ok": true,
+   "ms": 448024,
+   "load": 321.81
+  }
+ ]
+}

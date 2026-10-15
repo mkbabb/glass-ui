@@ -1,0 +1,171 @@
+{
+ "when": "2026-10-09T18:52:34.986Z",
+ "engines": [
+  "chromium",
+  "webkit"
+ ],
+ "rows": [
+  {
+   "witness": "CF",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 28/28 PASS",
+   "ok": true,
+   "ms": 142432,
+   "load": 168.75
+  },
+  {
+   "witness": "CF",
+   "fixture": "tilesq",
+   "expect": "exit ≠ 0; square|summary fails in ^c1·shape·h",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 19772,
+   "load": 121.15
+  },
+  {
+   "witness": "CF",
+   "fixture": "morphsnap",
+   "expect": "exit ≠ 0; continuous fails in ^c2·morph·",
+   "got": "exit 1, 4/4 FAIL; matching 4 (chromium+webkit)",
+   "ok": true,
+   "ms": 66823,
+   "load": 137.09
+  },
+  {
+   "witness": "CF",
+   "fixture": "nofocus",
+   "expect": "exit ≠ 0; opens fails in ^c3·focus",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 26524,
+   "load": 145.18
+  },
+  {
+   "witness": "CF",
+   "fixture": "noscroll",
+   "expect": "exit ≠ 0; collapses fails in ^c3·scroll",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 25056,
+   "load": 155.04
+  },
+  {
+   "witness": "CF",
+   "fixture": "persistentinert",
+   "expect": "exit ≠ 0; live fails in ^c4·persistent",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 22993,
+   "load": 165.27
+  },
+  {
+   "witness": "CF",
+   "fixture": "focuslost",
+   "expect": "exit ≠ 0; escape fails in ^c5·keyboard",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 25802,
+   "load": 170.02
+  },
+  {
+   "witness": "CF",
+   "fixture": "menucollapse",
+   "expect": "exit ≠ 0; holds fails in ^c6·menu",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 25830,
+   "load": 163.02
+  },
+  {
+   "witness": "CF",
+   "fixture": "narrowover",
+   "expect": "exit ≠ 0; inside|noscroll fails in ^c7·narrow",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 17278,
+   "load": 148.03
+  },
+  {
+   "witness": "CF",
+   "fixture": "tapthrough",
+   "expect": "exit ≠ 0; opens|swallowed fails in ^c7·coarse-tap",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 20199,
+   "load": 138.86
+  },
+  {
+   "witness": "PR",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 3/3 PASS",
+   "ok": true,
+   "ms": 5150,
+   "load": 136.14
+  },
+  {
+   "witness": "PR",
+   "fixture": "noreader",
+   "expect": "exit ≠ 0; readers fails in ^prose·readers",
+   "got": "exit 1, 1/3 FAIL; matching 1 (source)",
+   "ok": true,
+   "ms": 5593,
+   "load": 133.56
+  },
+  {
+   "witness": "PR",
+   "fixture": "count",
+   "expect": "exit ≠ 0; count fails in ^prose·count",
+   "got": "exit 1, 1/3 FAIL; matching 1 (source)",
+   "ok": true,
+   "ms": 10641,
+   "load": 132.8
+  },
+  {
+   "witness": "PR",
+   "fixture": "duprow",
+   "expect": "exit ≠ 0; rows fails in ^prose·rows",
+   "got": "exit 1, 1/3 FAIL; matching 1 (source)",
+   "ok": true,
+   "ms": 10054,
+   "load": 140.7
+  },
+  {
+   "witness": "H6",
+   "fixture": "adapter-head",
+   "expect": "the law holds (exit 0)",
+   "got": "exit 0: PASS  adapter-law  adapter-head.mjs  L-1..L-5 hold",
+   "ok": true,
+   "ms": 10266,
+   "load": 142.97
+  },
+  {
+   "witness": "H6",
+   "fixture": "adapter-preclip",
+   "expect": "L-1, L-2 and L-3 fail (exit ≠ 0)",
+   "got": "exit 1: FAIL  adapter-law  plants/adapter-preclip.mjs  L-1 extent() reads a custom property · L-2 paintingSeats() refers to extent()/plate() (a pre-clip) · L-3 the probe writes into the page",
+   "ok": true,
+   "ms": 18412,
+   "load": 141.13
+  },
+  {
+   "witness": "H6",
+   "fixture": "adapter-G-p3",
+   "expect": "L-1..L-6 hold (exit 0)",
+   "got": "exit 0: PASS  adapter-law  ../pass-3/adapter-G-p3.mjs  L-1..L-5, L-6 hold",
+   "ok": true,
+   "ms": 25686,
+   "load": 137.91
+  },
+  {
+   "witness": "H6",
+   "fixture": "adapter-plant-l6",
+   "expect": "L-6 fails for hit() and edge() (exit ≠ 0)",
+   "got": "exit 1: FAIL  adapter-law  ../pass-4/H4-records/adapter-plant-l6.mjs  L-6 hit() does not select under P.root() · L-6 edge() refers to extent()/paintingSeats()",
+   "ok": true,
+   "ms": 39373,
+   "load": 144.92
+  }
+ ]
+}

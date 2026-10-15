@@ -1,0 +1,12 @@
+load gate: waited 150s, load 133.75 (max 150)
+15:18  up 3 days, 20:20, 3 users, load averages: 133.75 149.21 124.46
+OK   W1  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 44/44 PASS  [91 s, load 133.29]
+OK   W1  csscarrier      expect: exit 0, all cells PASS  ·  got: exit 0, 44/44 PASS  [85 s, load 97.74]
+BAD  W1  hitpair         expect: exit 0, all cells PASS  ·  got: exit 1, 42/44 PASS; failing: chromium:card·first-expand[moves] webkit:morph·warm-expand[agree]  [100 s, load 88.96]
+OK   W1  pass@dark       expect: exit 0, all cells PASS  ·  got: exit 0, 44/44 PASS  [99 s, load 189]
+OK   W1  cardspread      expect: exit ≠ 0; card fails in card·warm-expand|card·warm-collapse|card·first-expand  ·  got: exit 1, 6/6 FAIL; matching 6 (chromium+webkit)  [38 s, load 257.19]
+OK   W1  cardlerp        expect: an OWNER-BLOCKED cell in card·warm-expand|card·warm-collapse|card·first-expand  ·  got: exit 1, 6/6 FAIL; matching 5 (chromium+webkit)  [53 s, load 233.82]
+OK   W1  cardstep        expect: an OWNER-BLOCKED cell in card·warm-expand|card·warm-collapse|card·first-expand  ·  got: exit 0, 6/6 FAIL; matching 6 (chromium+webkit)  [23 s, load 243.66]
+OK   W1  hitpairunnamed  expect: exit ≠ 0; ran fails in morph·warm-expand|morph·warm-collapse  ·  got: exit 1, 7/8 FAIL; matching 7 (chromium+webkit)  [152 s, load 225.18]
+SELFTEST FAIL  7/8 expectations hold
+15:28  up 3 days, 20:31, 3 users, load averages: 282.30 219.60 168.68

@@ -1,0 +1,6 @@
+load gate: waited 0s, load 80.87 (max 150)
+11:51  up 4 days, 16:53, 2 users, load averages: 80.87 67.86 81.80
+OK   R6  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 2/2 PASS  [11 s, load 80.87]
+OK   R6  backdropmotion  expect: exit ≠ 0; ring·static  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [11 s, load 80.47]
+SELFTEST PASS  2/2 expectations hold
+11:51  up 4 days, 16:54, 2 users, load averages: 80.24 68.71 81.71

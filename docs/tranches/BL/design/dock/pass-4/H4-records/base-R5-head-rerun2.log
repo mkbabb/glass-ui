@@ -1,0 +1,7 @@
+load gate: waited 0s (of a 7200s budget for the whole script, 0s spent), load 50.19 (max 150)
+11:55  up 4 days, 16:58, 2 users, load averages: 50.19 58.94 74.12
+FAIL  R5  Chromium  hit·warm-expand  70 sample(s), 65 with the window open (bound ≥ 2); painted seat centres that miss their seat 5/428 (first: Home → div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run); leaving seats that take no press 0 (Q-17, recorded); clipped-away centres that hit their seat 14/69 (first: One → button.dock-icon-button.glass-specular-track.glass-capsule-hover); corner points outside the arc that hit the dock 64/560 (first 673.1,824.1 → div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run); R 28 px; the centre misses the dock on 0 sample(s)  ⟶ FAILED: seat, ghost, corner  [load 50.09]
+FAIL  R5  Chromium  hit·warm-collapse  70 sample(s), 65 with the window open (bound ≥ 2); painted seat centres that miss their seat 52/126 (first: Home → div.dock-layers); leaving seats that take no press 56 (Q-17, recorded); clipped-away centres that hit their seat 0/295; corner points outside the arc that hit the dock 208/560 (first 625.2,824.1 → div.dock-plate); R 28 px; the centre misses the dock on 0 sample(s)  ⟶ FAILED: seat, corner  [load 51.36]
+FAIL  R5  head@2e22ae10  0/2 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p4/H4/wt/.h4out/rerun2/runs/R5-head/R5.json)
+exit 1
+11:55  up 4 days, 16:58, 2 users, load averages: 50.45 58.58 73.73

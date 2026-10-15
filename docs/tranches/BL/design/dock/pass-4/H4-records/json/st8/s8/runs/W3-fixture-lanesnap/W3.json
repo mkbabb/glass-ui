@@ -1,0 +1,402 @@
+{
+ "witness": "W3",
+ "target": "fixture:lanesnap",
+ "when": "2026-10-15T16:17:38.625Z",
+ "load": 11.63,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "swap-long",
+   "pass": false,
+   "failed": [
+    "lanes"
+   ],
+   "D": 244,
+   "start": 108,
+   "target": 352,
+   "frames": 120,
+   "travelMs": 266.7,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.66,
+    "step": 15.91,
+    "bound": 24.19,
+    "atMs": 58.4,
+    "dt": 8.4
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": true,
+    "why": "",
+    "open": 8.199999999999818,
+    "close": 290.79999999999995,
+    "land": 283.29999999999995,
+    "motionStart": 16.59999999999991,
+    "clockMs": 278.5,
+    "frameMs": 16.7,
+    "duration": 282.6,
+    "allowMs": 321.3,
+    "closeMinusLandFrames": 1
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 4.42,
+    "tol": 10.76,
+    "frac": 0.02,
+    "atMs": 283.3,
+    "why": "worst 4.42 px (1.81 % of D) from the rung's analytic spring (tol 10.76)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.48,
+    "prev": 0.95,
+    "bound": 1.79,
+    "why": "last step 0.48 px after 0.95 px (bound 1.79)"
+   },
+   "spec": {
+    "vmaxNorm": 7.7,
+    "M": 0,
+    "band": 0.02,
+    "clockMs": 278.5
+   },
+   "seats": {
+    "step": {
+     "ok": true,
+     "ratio": 0.12,
+     "step": 7.95,
+     "bound": 67.87,
+     "seat": 1,
+     "atMs": 58.4
+    },
+    "overlap": {
+     "ok": true,
+     "frames": 0,
+     "first": null
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 5,
+    "movingFrames": 34,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 34 moving frame(s), longest run 0 (bound 1)"
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 2,
+    "failing": 0,
+    "lengthMs": 266.7,
+    "rows": [
+     {
+      "seat": 1,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 116.7,
+      "spanFrames": 14,
+      "path": [
+       1,
+       0.582,
+       0.572,
+       0.552,
+       0.519,
+       0.485,
+       0.448,
+       0.41,
+       0.373,
+       0.337,
+       0.303,
+       0.273,
+       0.241,
+       0.214,
+       0
+      ]
+     },
+     {
+      "seat": 2,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 116.7,
+      "spanFrames": 14,
+      "path": [
+       1,
+       0.582,
+       0.572,
+       0.552,
+       0.519,
+       0.485,
+       0.448,
+       0.41,
+       0.373,
+       0.337,
+       0.303,
+       0.273,
+       0.241,
+       0.214,
+       0
+      ]
+     }
+    ],
+    "why": "2 leaving seat(s), 0 failing; tightest seat 1: ink 1 → 0.582 → 0.572 → 0.552 → 0.519 → 0.485 → 0.448 → 0.41 → 0.373 → 0.337 → 0.303 → 0.273 → 0.241 → 0.214 → 0 over 116.7 ms / 14 frame(s) (fade bound ≥ 3 frames and ≥ 66.7 ms), coverage deficit 1 (track bound 0.1)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "lanes": {
+    "ok": false,
+    "judged": true,
+    "flagClosedMs": 290.8,
+    "lanes": 1,
+    "worst": {
+     "ratio": 42.52,
+     "lane": "button.seat.tab clip",
+     "residue": 21.26,
+     "bound": 0.5,
+     "atMs": 0,
+     "value": [
+      0,
+      21.26,
+      0,
+      0
+     ],
+     "final": [
+      0,
+      0,
+      0,
+      0
+     ]
+    },
+    "cancels": [
+     {
+      "lane": "button.seat.tab clip",
+      "residue": 21.26,
+      "step": 0,
+      "atMs": 325.1
+     }
+    ],
+    "why": "button.seat.tab clip is [0,21.26,0,0] 0 ms after the flag closed (final [0,0,0,0]; residue 21.26, bound 0.5); 1 lane(s) cancelled to identity, the largest button.seat.tab clip from 21.26 px in one frame (previous step 0 px) at 325.1 ms"
+   },
+   "summary": "D 244 px (108→352); step ×0.66; dead; window 282.6 ms (allow 321.3, clock 278.5); trajectory worst 4.42 px (1.81 % of D) from the rung's analytic spring (tol 10.76); terminal last step 0.48 px after 0.95 px (bound 1.79); owners 0; seat step ×0.12 (7.95 px), seat overlap 0 frame(s); blank 0 blank of 34 moving frame(s), longest run 0 (bound 1); leaving 2 leaving seat(s), 0 failing; tightest seat 1: ink 1 → 0.582 → 0.572 → 0.552 → 0.519 → 0.485 → 0.448 → 0.41 → 0.373 → 0.337 → 0.303 → 0.273 → 0.241 → 0.214 → 0 over 116.7 ms / 14 frame(s) (fade bound ≥ 3 frames and ≥ 66.7 ms), coverage deficit 1 (track bound 0.1); splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); lanes button.seat.tab clip is [0,21.26,0,0] 0 ms after the flag closed (final [0,0,0,0]; residue 21.26, bound 0.5); 1 lane(s) cancelled to identity, the largest button.seat.tab clip from 21.26 px in one frame (previous step 0 px) at 325.1 ms  ⟶ FAILED: lanes; faces 0 px of face ink beyond the plate over 14 screenshot sample(s) (10 in flight) (bound 1)",
+   "load": 13.97,
+   "faces": {
+    "ok": true,
+    "max": 0,
+    "n": 14,
+    "inflight": 10,
+    "travel": 244,
+    "bound": 1,
+    "how": "screenshot",
+    "why": "0 px of face ink beyond the plate over 14 screenshot sample(s) (10 in flight) (bound 1)"
+   }
+  },
+  {
+   "engine": "webkit",
+   "cell": "swap-long",
+   "pass": false,
+   "failed": [
+    "lanes"
+   ],
+   "D": 244,
+   "start": 108,
+   "target": 352,
+   "frames": 61,
+   "travelMs": 284,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.66,
+    "step": 30.11,
+    "bound": 45.62,
+    "atMs": 66,
+    "dt": 16
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": true,
+    "why": "",
+    "open": 16,
+    "close": 300,
+    "land": 300,
+    "motionStart": 16,
+    "clockMs": 278.5,
+    "frameMs": 17,
+    "duration": 284,
+    "allowMs": 329.5,
+    "closeMinusLandFrames": 0
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 3.73,
+    "tol": 10.76,
+    "frac": 0.02,
+    "atMs": 283,
+    "why": "worst 3.73 px (1.53 % of D) from the rung's analytic spring (tol 10.76)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 1.2,
+    "prev": 2.05,
+    "bound": 3.57,
+    "why": "last step 1.2 px after 2.05 px (bound 3.57)"
+   },
+   "spec": {
+    "vmaxNorm": 7.7,
+    "M": 0,
+    "band": 0.02,
+    "clockMs": 278.5
+   },
+   "seats": {
+    "step": {
+     "ok": true,
+     "ratio": 0.12,
+     "step": 15.05,
+     "bound": 128.83,
+     "seat": 1,
+     "atMs": 66
+    },
+    "overlap": {
+     "ok": true,
+     "frames": 0,
+     "first": null
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 5,
+    "movingFrames": 18,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 18 moving frame(s), longest run 0 (bound 1)"
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 2,
+    "failing": 0,
+    "lengthMs": 284,
+    "rows": [
+     {
+      "seat": 1,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 116,
+      "spanFrames": 7,
+      "path": [
+       1,
+       0.571,
+       0.517,
+       0.444,
+       0.372,
+       0.3,
+       0.238,
+       0
+      ]
+     },
+     {
+      "seat": 2,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 116,
+      "spanFrames": 7,
+      "path": [
+       1,
+       0.571,
+       0.517,
+       0.444,
+       0.372,
+       0.3,
+       0.238,
+       0
+      ]
+     }
+    ],
+    "why": "2 leaving seat(s), 0 failing; tightest seat 1: ink 1 → 0.571 → 0.517 → 0.444 → 0.372 → 0.3 → 0.238 → 0 over 116 ms / 7 frame(s) (fade bound ≥ 3 frames and ≥ 71 ms), coverage deficit 1 (track bound 0.1)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "lanes": {
+    "ok": false,
+    "judged": true,
+    "flagClosedMs": 300,
+    "lanes": 1,
+    "worst": {
+     "ratio": 35.1,
+     "lane": "button.seat.tab clip",
+     "residue": 17.55,
+     "bound": 0.5,
+     "atMs": 0,
+     "value": [
+      0,
+      17.55,
+      0,
+      0
+     ],
+     "final": [
+      0,
+      0,
+      0,
+      0
+     ]
+    },
+    "cancels": [
+     {
+      "lane": "button.seat.tab clip",
+      "residue": 17.55,
+      "step": 0,
+      "atMs": 333
+     }
+    ],
+    "why": "button.seat.tab clip is [0,17.55,0,0] 0 ms after the flag closed (final [0,0,0,0]; residue 17.55, bound 0.5); 1 lane(s) cancelled to identity, the largest button.seat.tab clip from 17.55 px in one frame (previous step 0 px) at 333 ms"
+   },
+   "summary": "D 244 px (108→352); step ×0.66; dead; window 284 ms (allow 329.5, clock 278.5); trajectory worst 3.73 px (1.53 % of D) from the rung's analytic spring (tol 10.76); terminal last step 1.2 px after 2.05 px (bound 3.57); owners 0; seat step ×0.12 (15.05 px), seat overlap 0 frame(s); blank 0 blank of 18 moving frame(s), longest run 0 (bound 1); leaving 2 leaving seat(s), 0 failing; tightest seat 1: ink 1 → 0.571 → 0.517 → 0.444 → 0.372 → 0.3 → 0.238 → 0 over 116 ms / 7 frame(s) (fade bound ≥ 3 frames and ≥ 71 ms), coverage deficit 1 (track bound 0.1); splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); lanes button.seat.tab clip is [0,17.55,0,0] 0 ms after the flag closed (final [0,0,0,0]; residue 17.55, bound 0.5); 1 lane(s) cancelled to identity, the largest button.seat.tab clip from 17.55 px in one frame (previous step 0 px) at 333 ms  ⟶ FAILED: lanes; faces 0 px of face ink beyond the plate over 27 screencast sample(s) (bound 2)",
+   "load": 12.06,
+   "faces": {
+    "ok": true,
+    "max": 0,
+    "n": 27,
+    "inflight": null,
+    "travel": null,
+    "bound": 2,
+    "how": "screencast",
+    "why": "0 px of face ink beyond the plate over 27 screencast sample(s) (bound 2)"
+   }
+  }
+ ]
+}

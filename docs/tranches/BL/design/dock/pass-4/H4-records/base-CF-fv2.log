@@ -1,0 +1,47 @@
+load gate: waited 0s (of a 7200s budget for the whole script, 0s spent), load 91.21 (max 150)
+12:59  up 4 days, 18:01, 2 users, load averages: 91.21 80.61 70.92
+FAIL  CF  Chromium  c1·shape·h  collapsed 56×56 px (main×cross), corner R 9999 px (stadium ≥ 27), painting seats' span 40 px (hug bound 64); disclosure div#glass-dock-v-14-summary.dock-layer.dock-layer--summary.is-active "Expand dock" aria-expanded=false (does not paint); plate opacity 1 collapsed, 1 expanded (expanded); frame chromium-c1-h-collapsed.png  ⟶ FAILED: square, summary  [load 86.55]
+PASS  CF  Chromium  c2·morph·h  first expand: travel 163 px, largest one-frame step 27.27 px (bound 73.35), 63 frame(s) between the rests, flash 0, root cross drift 0 px, the extent first moves 103 ms after the hover; collapse: travel 163 px, largest one-frame step 12.28 px (bound 73.35), 65 frame(s) between the rests, flash 0, root cross drift 0 px; warm expand: travel 163 px, largest one-frame step 11.63 px (bound 73.35), 65 frame(s) between the rests, flash 0, root cross drift 0 px; frames 8 (frames/chromium-c2_morph_h-expand, warm)  [load 77.33]
+PASS  CF  Chromium  c1·shape·v  collapsed 116×64 px (main×cross), corner R 9999 px (stadium ≥ 31), painting seats' span 92 px (hug bound 116); disclosure div#glass-dock-v-24-summary.dock-layer.dock-layer--summary.is-active "Expand dock" aria-expanded=false; plate opacity 1 collapsed, 1 expanded (expanded); frame chromium-c1-v-collapsed.png  [load 75.62]
+FAIL  CF  Chromium  c2·morph·v  first expand: travel 213 px, largest one-frame step 178 px (bound 95.85), 64 frame(s) between the rests, flash 0, root cross drift 0 px, the extent first moves 107 ms after the hover; collapse: travel 213 px, largest one-frame step 74.06 px (bound 95.85), 29 frame(s) between the rests, flash 0, root cross drift 0 px; warm expand: travel 213 px, largest one-frame step 178 px (bound 95.85), 65 frame(s) between the rests, flash 0, root cross drift 0 px; frames 8 (frames/chromium-c2_morph_v-expand, warm)  ⟶ FAILED: continuous  [load 72.39]
+PASS  CF  Chromium  c2·prm  reduced motion: 56 → 219 px; the extent lands 0 frame(s) after its first change (bound ≤ 3)  [load 68.92]
+PASS  CF  Chromium  c2·rapid  five toggles 70 ms apart ending on Enter: rests expanded at 219 px (expanded rest 219 px); disclosure aria-expanded (none); focus button.dock-icon-button.glass-specular-track.glass-capsule-hover  [load 68.42]
+PASS  CF  Chromium  c3·hover  hover: expanded after 93 ms; leave: collapsed after 3656 ms  [load 67.51]
+PASS  CF  Chromium  c3·focus  Tab ×1: focus on button.dock-icon-button.glass-specular-track.glass-capsule-hover (in the dock); after 1.2 s the dock is expanded  [load 64.26]
+FAIL  CF  Chromium  c3·scroll  expanded yes; wheel 240 px scrolled the page 240 px; did NOT collapse within 1.5 s (the dwell is 3.6 s)  ⟶ FAILED: collapses  [load 62.4]
+PASS  CF  Chromium  c4·persistent  1 persistent element(s) collapsed, 1 expanded; failing: none  [load 62.4]
+FAIL  CF  Chromium  c5·keyboard  Tab ×1 → button.dock-icon-button.glass-specular-track.glass-capsule-hover with the dock expanded; Escape then Enter. Collapsed disclosure: NONE. Enter: expanded, focus button.dock-icon-button.glass-specular-track.glass-capsule-hover; Escape: did NOT collapse, focus button.dock-icon-button.glass-specular-track.glass-capsule-hover (in the dock)  ⟶ FAILED: disclosure, escape  [load 56.42]
+FAIL  CF  Chromium  c6·menu  absent: the collapsible dock carries no menu trigger ([aria-haspopup]) in either posture; O-88's menu-from-a-collapsed-dock has nothing to open  ⟶ FAILED: menu  [load 56.42]
+PASS  CF  Chromium  c7·narrow  390 px: expanded extent 85.5..304.5 px in a 390 px viewport; document scrollWidth 390; frame chromium-c7-narrow-expanded.png  [load 56.14]
+FAIL  CF  Chromium  c7·coarse-tap  tap at the collapsed dock's centre (coarse, 390 px): did NOT expand; elements activated none (not counted: button.dock-icon-button.glass-specular-track.glass-capsule-hover, the disclosure's or a persistent element's own)  ⟶ FAILED: opens  [load 54.61]
+FAIL  CF  Playwright WebKit  c1·shape·h  collapsed 56×56 px (main×cross), corner R 9999 px (stadium ≥ 27), painting seats' span 40 px (hug bound 64); disclosure div#glass-dock-v-14-summary.dock-layer.dock-layer--summary.is-active "Expand dock" aria-expanded=false (does not paint); plate opacity 1 collapsed, 1 expanded (expanded); frame webkit-c1-h-collapsed.png  ⟶ FAILED: square, summary  [load 58.32]
+PASS  CF  Playwright WebKit  c2·morph·h  first expand: travel 163 px, largest one-frame step 21.94 px (bound 73.35), 14 frame(s) between the rests, flash 0, root cross drift 0 px, the extent first moves 100 ms after the hover; collapse: travel 163 px, largest one-frame step 46.37 px (bound 73.35), 15 frame(s) between the rests, flash 0, root cross drift 0 px; warm expand: travel 163 px, largest one-frame step 22.01 px (bound 73.35), 16 frame(s) between the rests, flash 0, root cross drift 0 px; frames 5 (frames/webkit-c2_morph_h-expand, warm)  [load 59.91]
+PASS  CF  Playwright WebKit  c1·shape·v  collapsed 116×64 px (main×cross), corner R 9999 px (stadium ≥ 31), painting seats' span 92 px (hug bound 116); disclosure div#glass-dock-v-24-summary.dock-layer.dock-layer--summary.is-active "Expand dock" aria-expanded=false; plate opacity 1 collapsed, 1 expanded (expanded); frame webkit-c1-v-collapsed.png  [load 64.4]
+FAIL  CF  Playwright WebKit  c2·morph·v  first expand: travel 213 px, largest one-frame step 178 px (bound 95.85), 33 frame(s) between the rests, flash 0, root cross drift 0 px, the extent first moves 90 ms after the hover; collapse: travel 213 px, largest one-frame step 70.8 px (bound 95.85), 15 frame(s) between the rests, flash 0, root cross drift 0 px; warm expand: travel 213 px, largest one-frame step 178 px (bound 95.85), 33 frame(s) between the rests, flash 0, root cross drift 0 px; frames 8 (frames/webkit-c2_morph_v-expand, warm)  ⟶ FAILED: continuous  [load 68.52]
+PASS  CF  Playwright WebKit  c2·prm  reduced motion: 56 → 219 px; the extent lands 0 frame(s) after its first change (bound ≤ 3)  [load 65.44]
+PASS  CF  Playwright WebKit  c2·rapid  five toggles 70 ms apart ending on Enter: rests expanded at 219 px (expanded rest 219 px); disclosure aria-expanded (none); focus button.dock-icon-button.glass-specular-track.glass-capsule-hover  [load 65.83]
+PASS  CF  Playwright WebKit  c3·hover  hover: expanded after 87 ms; leave: collapsed after 3601 ms  [load 70.42]
+PASS  CF  Playwright WebKit  c3·focus  Alt+Tab ×4: focus on button.dock-icon-button.glass-specular-track.glass-capsule-hover (in the dock); after 1.2 s the dock is expanded  [load 68.87]
+FAIL  CF  Playwright WebKit  c3·scroll  expanded yes; wheel 240 px scrolled the page 240 px; did NOT collapse within 1.5 s (the dwell is 3.6 s)  ⟶ FAILED: collapses  [load 67.35]
+PASS  CF  Playwright WebKit  c4·persistent  1 persistent element(s) collapsed, 1 expanded; failing: none  [load 65.96]
+FAIL  CF  Playwright WebKit  c5·keyboard  Alt+Tab ×4 → button.dock-icon-button.glass-specular-track.glass-capsule-hover with the dock expanded; Escape then Enter. Collapsed disclosure: NONE. Enter: expanded, focus button.dock-icon-button.glass-specular-track.glass-capsule-hover; Escape: did NOT collapse, focus button.dock-icon-button.glass-specular-track.glass-capsule-hover (in the dock)  ⟶ FAILED: disclosure, escape  [load 65.36]
+FAIL  CF  Playwright WebKit  c6·menu  absent: the collapsible dock carries no menu trigger ([aria-haspopup]) in either posture; O-88's menu-from-a-collapsed-dock has nothing to open  ⟶ FAILED: menu  [load 65.36]
+PASS  CF  Playwright WebKit  c7·narrow  390 px: expanded extent 85.5..304.5 px in a 390 px viewport; document scrollWidth 390; frame webkit-c7-narrow-expanded.png  [load 63.09]
+FAIL  CF  Playwright WebKit  c7·coarse-tap  tap at the collapsed dock's centre (coarse, 390 px): did NOT expand; elements activated none (not counted: button.dock-icon-button.glass-specular-track.glass-capsule-hover, the disclosure's or a persistent element's own)  ⟶ FAILED: opens  [load 59.64]
+ROW  CF  chromium  C1  FAIL  (c1·shape·h FAIL)
+ROW  CF  chromium  C2  PASS  (c2·morph·h pass, c2·prm pass, c2·rapid pass)
+ROW  CF  chromium  C3  FAIL  (c3·hover pass, c3·focus pass, c3·scroll FAIL, c7·coarse-tap FAIL)
+ROW  CF  chromium  C4  PASS  (c4·persistent pass)
+ROW  CF  chromium  C5  FAIL  (c5·keyboard FAIL)
+ROW  CF  chromium  C6  FAIL  (c6·menu FAIL)
+ROW  CF  chromium  C7  FAIL  (c1·shape·v pass, c2·morph·v FAIL, c7·narrow pass, c7·coarse-tap FAIL)
+ROW  CF  webkit  C1  FAIL  (c1·shape·h FAIL)
+ROW  CF  webkit  C2  PASS  (c2·morph·h pass, c2·prm pass, c2·rapid pass)
+ROW  CF  webkit  C3  FAIL  (c3·hover pass, c3·focus pass, c3·scroll FAIL, c7·coarse-tap FAIL)
+ROW  CF  webkit  C4  PASS  (c4·persistent pass)
+ROW  CF  webkit  C5  FAIL  (c5·keyboard FAIL)
+ROW  CF  webkit  C6  FAIL  (c6·menu FAIL)
+ROW  CF  webkit  C7  FAIL  (c1·shape·v pass, c2·morph·v FAIL, c7·narrow pass, c7·coarse-tap FAIL)
+FAIL  CF  fv2@2e22ae10  16/28 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p4/H4/wt/.h4out/runs/CF-fv2/CF.json)
+exit 1
+13:02  up 4 days, 18:04, 2 users, load averages: 63.99 70.68 68.45

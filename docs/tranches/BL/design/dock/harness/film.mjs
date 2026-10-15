@@ -22,6 +22,11 @@
 //           (the trigger did nothing) and fails, so it is re-run, never read.
 // RECORD: the strip PNG (<out>/runs/FM-*/strip-<engine>-<seq>.png), the tiles that differ, the
 // motion span in frames.
+// H4-6 (pass-4/H4.md): theme-aware. The marker square is placed RED when the page has settled and turns
+// black in the trigger's task; the strip starts at the first black frame after a red one. A dark page
+// never paints the corner light, so the pass-3 rule (light corner, then black) found no trigger there
+// (Chromium dark 6/6 "no trigger marker"); and a white armed state is not enough, because Playwright
+// WebKit's video opens on white frames before the page paints dark. Pure red is neither.
 import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
@@ -43,7 +48,9 @@ const rep = makeReport("FM", target);
 /** pixels that differ by > 30 (sum of RGB), outside the rect `skip` ({x, y, w, h} in frame px) */
 const diff = (a, b, skip = null) => { let n = 0; for (let y = 0; y < a.h; y++) for (let x = 0; x < a.w; x++) { if (skip && x >= skip.x && x < skip.x + skip.w && y >= skip.y && y < skip.y + skip.h) continue; const i = (y * a.w + x) * 4; if (Math.abs(a.data[i] - b.data[i]) + Math.abs(a.data[i + 1] - b.data[i + 1]) + Math.abs(a.data[i + 2] - b.data[i + 2]) > 30) n++; } return n; };
 /** the marker shows: its square's mean luminance is dark */
-const marked = (img, m) => { let sum = 0, n = 0; for (let y = m.y + 2; y < m.y + m.h - 2; y++) for (let x = m.x + 2; x < m.x + m.w - 2; x++) { const i = (y * img.w + x) * 4; sum += (img.data[i] + img.data[i + 1] + img.data[i + 2]) / 3; n++; } return n > 0 && sum / n < 60; };
+const lum = (img, m) => { let sum = 0, n = 0; for (let y = m.y + 2; y < m.y + m.h - 2; y++) for (let x = m.x + 2; x < m.x + m.w - 2; x++) { const i = (y * img.w + x) * 4; sum += (img.data[i] + img.data[i + 1] + img.data[i + 2]) / 3; n++; } return n > 0 ? sum / n : 0; };
+const marked = (img, m) => lum(img, m) < 60;
+const armed = (img, m) => { let r = 0, g = 0, b = 0, n = 0; for (let y = m.y + 2; y < m.y + m.h - 2; y++) for (let x = m.x + 2; x < m.x + m.w - 2; x++) { const i = (y * img.w + x) * 4; r += img.data[i]; g += img.data[i + 1]; b += img.data[i + 2]; n++; } return n > 0 && r / n > 180 && g / n < 80 && b / n < 80; };
 const hook = (page, [fn, a]) => page.evaluate(([fn, a]) => window.__scene[fn](a), [fn, a]);   // the pre hooks; the go hooks run in the marker's task
 
 for (const engine of engines(args)) {
@@ -59,10 +66,10 @@ for (const engine of engines(args)) {
                     await page.waitForTimeout(400);
                     const e0 = await extentNow(page);
                     mk = { x: 0, y: 0 };
-                    await page.evaluate(({ x, y, s }) => { const m = document.createElement("div"); m.id = "hp-film-mark"; m.style.cssText = `position:fixed;left:${x}px;top:${y}px;width:${s}px;height:${s}px;background:#000;z-index:2147483647;pointer-events:none;visibility:hidden;`; document.body.appendChild(m); }, { ...mk, s: MARK_PX });
-                    await page.waitForTimeout(200);
+                    await page.evaluate(({ x, y, s }) => { const m = document.createElement("div"); m.id = "hp-film-mark"; m.style.cssText = `position:fixed;left:${x}px;top:${y}px;width:${s}px;height:${s}px;background:#f00;z-index:2147483647;pointer-events:none;`; document.body.appendChild(m); }, { ...mk, s: MARK_PX });
+                    await page.waitForTimeout(300);
                     mark("go");
-                    await page.evaluate((go) => { document.getElementById("hp-film-mark").style.setProperty("visibility", "visible", "important"); for (const [fn, a] of go) window.__scene[fn](a); }, q.go);
+                    await page.evaluate((go) => { document.getElementById("hp-film-mark").style.setProperty("background", "#000", "important"); for (const [fn, a] of go) window.__scene[fn](a); }, q.go);
                     await page.waitForTimeout(1200); await waitRest(page, { quiet: 400, cap: 7000 });
                     const e1 = await extentNow(page);
                     const vp = page.viewportSize();
@@ -78,8 +85,8 @@ for (const engine of engines(args)) {
                 if (mk_.length !== imgs.length) throw new Error(`the marker decode has ${mk_.length} frames against ${imgs.length}`);
                 const m = { x: 0, y: 0, w: MARK_PX, h: MARK_PX };
                 const skip = null;
-                // a video opens on black frames before the first paint: the marker counts only after the page has painted its place light
-                const lit = mk_.findIndex((img) => !marked(img, m));
+                // the marker counts only after its own red (armed) state has painted (H4-6: in any theme)
+                const lit = mk_.findIndex((img) => armed(img, m));
                 const start = lit < 0 ? -1 : mk_.findIndex((img, i) => i > lit && marked(img, m));
                 if (start < 0) throw new Error("the video shows no trigger marker");
                 const s0 = Math.max(0, start - 1);

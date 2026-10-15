@@ -1,0 +1,9 @@
+OK   R5  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 8/8 PASS  [38 s, load 131.58]
+OK   R5  nohit           expect: exit ≠ 0; corner fails in ^hit·  ·  got: exit 1, 8/8 FAIL; matching 8 (chromium+webkit)  [43 s, load 128.02]
+OK   R5  seatmiss        expect: exit ≠ 0; seat fails in ^hit·warm-  ·  got: exit 1, 4/4 FAIL; matching 4 (chromium+webkit)  [23 s, load 127.11]
+OK   R5  ghosthit        expect: exit ≠ 0; ghost fails in ^hit·warm-  ·  got: exit 1, 4/4 FAIL; matching 4 (chromium+webkit)  [23 s, load 124.19]
+OK   L1  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 12/12 PASS  [44 s, load 117.43]
+OK   L1  glowhalo        expect: exit ≠ 0; added fails in ^l1·  ·  got: exit 1, 12/12 FAIL; matching 12 (chromium+webkit)  [80 s, load 126.31]
+OK   L1  gleam           expect: exit ≠ 0; added fails in ^l1·  ·  got: exit 1, 12/12 FAIL; matching 12 (chromium+webkit)  [78 s, load 143.23]
+OK   L1  shimmer         expect: exit ≠ 0; idle fails in ^l1·(light|dark)·(collapsed|expanded)  ·  got: exit 1, 8/8 FAIL; matching 8 (chromium+webkit)  [55 s, load 119.49]
+SELFTEST PASS  8/8 expectations hold

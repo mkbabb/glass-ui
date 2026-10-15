@@ -1,0 +1,12 @@
+load gate: waited 0s, load 62.78 (max 150)
+11:43  up 4 days, 16:46, 2 users, load averages: 62.78 87.30 98.19
+OK   W7  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 36/36 PASS  [67 s, load 62.78]
+OK   W7  splitcaps       expect: exit 0, all cells PASS  ·  got: exit 0, 36/36 PASS  [69 s, load 56.62]
+OK   W7  edgecut         expect: exit ≠ 0; whole fails in ^(top|side|canvas)·  ·  got: exit 1, 36/36 FAIL; matching 36 (chromium+webkit)  [62 s, load 53.5]
+OK   W7  sideedge        expect: exit ≠ 0; same fails in ^side·  ·  got: exit 1, 12/12 FAIL; matching 12 (chromium+webkit)  [41 s, load 37.38]
+OK   W7  gutterless      expect: exit ≠ 0; gutter fails in ^(side|canvas)·  ·  got: exit 1, 24/24 FAIL; matching 24 (chromium+webkit)  [62 s, load 35.37]
+OK   W7  badgeover       expect: exit ≠ 0; badge fails in ^side·  ·  got: exit 1, 6/12 FAIL; matching 6 (chromium+webkit)  [42 s, load 50.61]
+OK   W7  lens            expect: exit ≠ 0; radius fails in ^(top|side)·  ·  got: exit 1, 24/24 FAIL; matching 24 (chromium+webkit)  [43 s, load 64.38]
+OK   W7  nocaps          expect: exit ≠ 0; whole fails in ^(top|side|canvas)·dark·dpr2  ·  got: exit 1, 6/6 FAIL; matching 6 (chromium+webkit)  [12 s, load 66.56]
+SELFTEST PASS  8/8 expectations hold
+11:50  up 4 days, 16:53, 2 users, load averages: 65.27 63.54 81.23

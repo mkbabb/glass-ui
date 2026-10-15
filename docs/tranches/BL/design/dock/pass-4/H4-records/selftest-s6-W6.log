@@ -1,0 +1,12 @@
+load gate: waited 0s, load 113.91 (max 150)
+11:40  up 4 days, 16:43, 2 users, load averages: 113.91 107.12 106.28
+OK   W6  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 8/8 PASS  [24 s, load 112.07]
+OK   W6  formout         expect: exit ≠ 0; wraps fails in form·collapsed-rest  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [26 s, load 101.72]
+OK   W6  dismissout      expect: exit ≠ 0; wraps fails in form·collapsed-rest  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [23 s, load 92.61]
+OK   W6  twoplates       expect: exit ≠ 0; onePlate fails in form·collapsed-rest  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [22 s, load 86.83]
+OK   W6  formgone        expect: exit ≠ 0; present fails in form·collapsed-rest  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [21 s, load 77.22]
+OK   W6  dismissspan     expect: exit ≠ 0; dismissSeat fails in form·collapsed-rest  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [26 s, load 74.07]
+OK   W6  plateswap       expect: exit ≠ 0; samePlate fails in form·expanded-rest  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [26 s, load 69.05]
+OK   W6  jump            expect: exit ≠ 0; continuity fails in form·expand  ·  got: exit 1, 2/4 FAIL; matching 2 (chromium+webkit)  [21 s, load 68.71]
+SELFTEST PASS  8/8 expectations hold
+11:43  up 4 days, 16:46, 2 users, load averages: 62.78 87.30 98.19

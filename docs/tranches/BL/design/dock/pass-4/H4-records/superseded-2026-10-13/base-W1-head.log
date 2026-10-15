@@ -1,0 +1,30 @@
+load gate: waited 0s (of a 7200s budget for the whole script, 4080s spent), load 122.54 (max 150)
+17:39  up 3 days, 22:42, 3 users, load averages: 122.54 143.34 205.94
+FAIL  W1  Chromium  morph·warm-collapse  4 screenshot sample(s) (1 in flight; rAF log 25 frames in flight), 1 distinct painted extents over an adapter travel of 387.66 px (moves: ≥ 3 when ≥ 20 px); worst corner 6.266 px at tl (plate 102x56, r 28; bound 1); silhouette outside the adapter's extent by 0 px  ⟶ FAILED: corner  [load 103.83]
+FAIL  W1  Chromium  morph·warm-expand  4 screenshot sample(s) (1 in flight; rAF log 6 frames in flight), 2 distinct painted extents over an adapter travel of 387.66 px (moves: ≥ 3 when ≥ 20 px); worst corner 5.02 px at tr (plate 218.05x56, r 28; bound 1); silhouette outside the adapter's extent by 0 px  ⟶ FAILED: corner  [load 96.48]
+FAIL  W1  Chromium  card·collapsed-rest  plate 102x56, r 17.18 (fitted), worst 2.829 px at bl (bound 1); silhouette vs extent() Δ 0 px (bound 1); root outside the silhouette 0 px, seats 0 px (bound 1)  ⟶ FAILED: corner  [load 89.71]
+PASS  W1  Chromium  card·expanded-rest  plate 490x56, r 23.93 (fitted), worst 0.086 px at bl (bound 1); silhouette vs extent() Δ 0.34 px (bound 1); root outside the silhouette 0 px, seats 0 px (bound 1)  [load 77.63]
+FAIL  W1  Chromium  card·first-expand  3 screenshot sample(s) (0 in flight; rAF log 0 frames in flight), 2 distinct painted extents over an adapter travel of 387.66 px (moves: ≥ 3 when ≥ 20 px); worst corner 2.829 px at bl (plate 102x56, r 17.18; bound 1); silhouette outside the adapter's extent by 0 px; fitted r outside the rests' range [16.18, 24.93] by 0 px (rests 17.18 / 23.93 by this instrument ± 1), lossless rest radii differ by 6.75 px (bound 1)  ⟶ FAILED: corner, moves, card  [load 77.63]
+FAIL  W1  Chromium  card·warm-collapse  3 screenshot sample(s) (0 in flight; rAF log 5 frames in flight), 1 distinct painted extents over an adapter travel of 387.66 px (moves: ≥ 3 when ≥ 20 px); worst corner 2.829 px at bl (plate 102x56, r 17.18; bound 1); silhouette outside the adapter's extent by 0 px; fitted r outside the rests' range [16.18, 24.93] by 0 px (rests 17.18 / 23.93 by this instrument ± 1), lossless rest radii differ by 6.75 px (bound 1)  ⟶ FAILED: corner, card  [load 95.13]
+FAIL  W1  Chromium  card·warm-expand  3 screenshot sample(s) (1 in flight; rAF log 8 frames in flight), 2 distinct painted extents over an adapter travel of 387.66 px (moves: ≥ 3 when ≥ 20 px); worst corner 0.611 px at bl (plate 398.92x56, r 25.55; bound 1); silhouette outside the adapter's extent by 0 px; fitted r outside the rests' range [16.18, 24.93] by 0.62 px (rests 17.18 / 23.93 by this instrument ± 1), lossless rest radii differ by 6.75 px (bound 1)  ⟶ FAILED: card  [load 116.58]
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+browserType.launch: Timeout 180000ms exceeded.
+Call log:
+[2m  - <launching> /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh --inspector-pipe --headless --no-startup-window[22m
+[2m  - <launched> pid=9834[22m
+
+    at launch (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/dock/harness/lib.mjs:142:40)
+    at /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/dock/harness/w1-corner.mjs:305:27 {
+  log: [
+    '  - <launching> /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh --inspector-pipe --headless --no-startup-window',
+    '  - <launched> pid=9834'
+  ],
+  name: 'TimeoutError'
+}
+
+Node.js v26.0.0
+exit 1
+17:44  up 3 days, 22:46, 3 users, load averages: 230.42 152.12 190.94

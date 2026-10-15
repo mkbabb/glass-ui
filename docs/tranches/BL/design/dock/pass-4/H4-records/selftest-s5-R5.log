@@ -1,0 +1,8 @@
+load gate: waited 0s, load 94.53 (max 150)
+15:59  up 3 days, 21:02, 3 users, load averages: 94.53 108.21 136.14
+OK   R5  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 8/8 PASS  [29 s, load 94.53]
+OK   R5  nohit           expect: exit ≠ 0; corner fails in ^hit·  ·  got: exit 1, 8/8 FAIL; matching 8 (chromium+webkit)  [30 s, load 104.25]
+OK   R5  seatmiss        expect: exit ≠ 0; seat fails in ^hit·warm-  ·  got: exit 1, 4/4 FAIL; matching 4 (chromium+webkit)  [39 s, load 150.52]
+OK   R5  ghosthit        expect: exit ≠ 0; ghost fails in ^hit·warm-  ·  got: exit 1, 4/4 FAIL; matching 4 (chromium+webkit)  [16 s, load 149.73]
+SELFTEST PASS  4/4 expectations hold
+16:01  up 3 days, 21:04, 3 users, load averages: 136.87 121.63 137.97

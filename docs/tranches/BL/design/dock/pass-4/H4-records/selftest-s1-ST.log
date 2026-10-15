@@ -1,0 +1,9 @@
+load gate: waited 0s, load 73.83 (max 150)
+14:58  up 3 days, 20:01, 3 users, load averages: 73.83 73.71 51.77
+OK   ST  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 20/20 PASS  [219 s, load 73.83]
+OK   ST  pass@dark       expect: exit 0, all cells PASS  ·  got: exit 0, 20/20 PASS  [207 s, load 184.71]
+OK   ST  leap            expect: exit ≠ 0; leap fails in ^stall·  ·  got: exit 1, 16/20 FAIL; matching 8 (chromium+webkit)  [182 s, load 136.51]
+OK   ST  nbjump          expect: exit ≠ 0; neighbour fails in ^stall·nb·  ·  got: exit 1, 6/10 FAIL; matching 6 (chromium+webkit)  [87 s, load 174.58]
+OK   ST  nboverlap       expect: exit ≠ 0; overlap fails in ^stall·nb·  ·  got: exit 1, 6/10 FAIL; matching 3 (chromium+webkit)  [83 s, load 153.9]
+SELFTEST PASS  5/5 expectations hold
+15:11  up 3 days, 20:14, 3 users, load averages: 138.41 142.15 108.05

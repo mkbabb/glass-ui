@@ -1,0 +1,11 @@
+BAD  W3  pass            expect: exit 0, all cells PASS  ·  got: exit 1, 48/57 PASS; failing: chromium:lead-add[lanes] chromium:lead-remove[window] chromium:stretch·lead-add[lanes] webkit:first-expand[trajectory,lanes] webkit:warm-expand[lanes] webkit:content-add[lanes]  [451 s, load 481.87]
+OK   W3  blankswap       expect: exit ≠ 0; blank fails in ^swap-long|^swap-short  ·  got: exit 1, 4/4 FAIL; matching 4 (chromium+webkit)  [284 s, load 379.49]
+OK   W3  pop             expect: exit ≠ 0; leaving fails in ^content-remove|^lead-remove  ·  got: exit 1, 4/4 FAIL; matching 4 (chromium+webkit)  [347 s, load 481.28]
+OK   W3  slipfade        expect: exit ≠ 0; leaving fails in ^content-remove|^lead-remove  ·  got: exit 1, 4/4 FAIL; matching 4 (chromium+webkit)  [231 s, load 314.44]
+OK   W3  splice          expect: exit ≠ 0; splice fails in ^swap-  ·  got: exit 1, 4/4 FAIL; matching 4 (chromium+webkit)  [236 s, load 199.29]
+OK   W3  sliver          expect: exit ≠ 0; splice fails in ^swap-|^lead-remove  ·  got: exit 1, 6/6 FAIL; matching 6 (chromium+webkit)  [173 s, load 158.57]
+OK   W3  lanesnap        expect: exit ≠ 0; lanes fails in ^swap-long  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [162 s, load 200.07]
+BAD  W3  lanecancel      expect: exit ≠ 0; lanes fails in ^swap-long  ·  got: exit 0, 0/2 FAIL; matching 0 (none)  [178 s, load 233.23]
+OK   W3  retargetpop     expect: exit ≠ 0; leaving|vanish fails in ^retarget·(40|80|120)  ·  got: exit 1, 6/6 FAIL; matching 6 (chromium+webkit)  [20 s, load 120.85]
+OK   W3  ctxloss         expect: exit ≠ 0; context fails in ^retarget·context  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [11 s, load 111.58]
+SELFTEST FAIL  8/10 expectations hold

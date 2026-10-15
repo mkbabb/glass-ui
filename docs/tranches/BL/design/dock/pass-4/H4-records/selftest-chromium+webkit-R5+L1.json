@@ -1,0 +1,81 @@
+{
+ "when": "2026-10-09T18:59:14.659Z",
+ "engines": [
+  "chromium",
+  "webkit"
+ ],
+ "rows": [
+  {
+   "witness": "R5",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 8/8 PASS",
+   "ok": true,
+   "ms": 37880,
+   "load": 131.58
+  },
+  {
+   "witness": "R5",
+   "fixture": "nohit",
+   "expect": "exit ≠ 0; corner fails in ^hit·",
+   "got": "exit 1, 8/8 FAIL; matching 8 (chromium+webkit)",
+   "ok": true,
+   "ms": 42666,
+   "load": 128.02
+  },
+  {
+   "witness": "R5",
+   "fixture": "seatmiss",
+   "expect": "exit ≠ 0; seat fails in ^hit·warm-",
+   "got": "exit 1, 4/4 FAIL; matching 4 (chromium+webkit)",
+   "ok": true,
+   "ms": 22892,
+   "load": 127.11
+  },
+  {
+   "witness": "R5",
+   "fixture": "ghosthit",
+   "expect": "exit ≠ 0; ghost fails in ^hit·warm-",
+   "got": "exit 1, 4/4 FAIL; matching 4 (chromium+webkit)",
+   "ok": true,
+   "ms": 22897,
+   "load": 124.19
+  },
+  {
+   "witness": "L1",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 12/12 PASS",
+   "ok": true,
+   "ms": 43818,
+   "load": 117.43
+  },
+  {
+   "witness": "L1",
+   "fixture": "glowhalo",
+   "expect": "exit ≠ 0; added fails in ^l1·",
+   "got": "exit 1, 12/12 FAIL; matching 12 (chromium+webkit)",
+   "ok": true,
+   "ms": 79804,
+   "load": 126.31
+  },
+  {
+   "witness": "L1",
+   "fixture": "gleam",
+   "expect": "exit ≠ 0; added fails in ^l1·",
+   "got": "exit 1, 12/12 FAIL; matching 12 (chromium+webkit)",
+   "ok": true,
+   "ms": 77572,
+   "load": 143.23
+  },
+  {
+   "witness": "L1",
+   "fixture": "shimmer",
+   "expect": "exit ≠ 0; idle fails in ^l1·(light|dark)·(collapsed|expanded)",
+   "got": "exit 1, 8/8 FAIL; matching 8 (chromium+webkit)",
+   "ok": true,
+   "ms": 54552,
+   "load": 119.49
+  }
+ ]
+}

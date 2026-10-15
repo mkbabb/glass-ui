@@ -1,0 +1,20 @@
+load gate: waited 0s, load 44.90 (max 150)
+11:16  up 4 days, 16:19, 2 users, load averages: 44.90 65.67 117.63
+OK   W1  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 44/44 PASS  [84 s, load 45.87]
+OK   W1  csscarrier      expect: exit 0, all cells PASS  ·  got: exit 0, 42/42 PASS  [80 s, load 46.84]
+OK   W1  hitpair         expect: exit 0, all cells PASS  ·  got: exit 0, 44/44 PASS  [85 s, load 48.8]
+OK   W1  pass@dark       expect: exit 0, all cells PASS  ·  got: exit 0, 42/42 PASS  [84 s, load 50.84]
+OK   W1  lens            expect: exit ≠ 0; corner fails in fit·rest|morph·expanded-rest|rail·rest  ·  got: exit 1, 8/8 FAIL; matching 8 (chromium+webkit)  [58 s, load 58.61]
+OK   W1  squash          expect: exit ≠ 0; corner fails in morph·first-expand|morph·warm-collapse|morph·collapsed-rest  ·  got: exit 1, 12/12 FAIL; matching 12 (chromium+webkit)  [57 s, load 79]
+OK   W1  cssbend         expect: exit ≠ 0; corner fails in morph·warm-expand|morph·warm-collapse  ·  got: exit 1, 8/8 FAIL; matching 8 (chromium+webkit)  [37 s, load 114.56]
+OK   W1  deadmorph       expect: exit ≠ 0; agree|moves fails in morph·warm-expand|morph·warm-collapse  ·  got: exit 1, 8/8 FAIL; matching 8 (chromium+webkit)  [50 s, load 115.03]
+OK   W1  dot             expect: exit ≠ 0; cover fails in fit·rest  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [9 s, load 108.18]
+OK   W1  cardlens        expect: exit ≠ 0; corner fails in card·  ·  got: exit 1, 8/10 FAIL; matching 8 (chromium+webkit)  [27 s, load 109.28]
+OK   W1  endlens         expect: exit ≠ 0; corner fails in rail·scrolled-end|rail·focus-end  ·  got: exit 1, 4/4 FAIL; matching 4 (chromium+webkit)  [10 s, load 102.37]
+OK   W1  endout          expect: exit ≠ 0; end fails in rail·scrolled-end|rail·focus-end  ·  got: exit 1, 4/4 FAIL; matching 4 (chromium+webkit)  [12 s, load 102.74]
+OK   W1  cardspread      expect: exit ≠ 0; card fails in card·warm-expand|card·warm-collapse|card·first-expand  ·  got: exit 1, 6/6 FAIL; matching 6 (chromium+webkit)  [30 s, load 100.16]
+OK   W1  cardlerp        expect: an OWNER-BLOCKED cell in card·warm-expand|card·warm-collapse|card·first-expand  ·  got: exit 0, 6/6 FAIL; matching 6 (chromium+webkit)  [36 s, load 84.33]
+OK   W1  cardstep        expect: an OWNER-BLOCKED cell in card·warm-expand|card·warm-collapse|card·first-expand  ·  got: exit 0, 6/6 FAIL; matching 6 (chromium+webkit)  [35 s, load 100.28]
+OK   W1  hitpairunnamed  expect: exit ≠ 0; ran fails in morph·warm-expand|morph·warm-collapse  ·  got: exit 1, 6/8 FAIL; matching 6 (chromium+webkit)  [159 s, load 129.06]
+SELFTEST PASS  16/16 expectations hold
+11:31  up 4 days, 16:33, 2 users, load averages: 138.34 122.89 112.29

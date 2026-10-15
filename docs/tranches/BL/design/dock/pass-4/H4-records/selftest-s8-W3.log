@@ -1,0 +1,7 @@
+load gate: waited 0s, load 12.78 (max 150)
+12:13  up 5 days, 17:15, 2 users, load averages: 12.78 81.15 85.14
+OK   W3  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 66/66 PASS  [220 s, load 12.78]
+OK   W3  lanesnap        expect: exit ≠ 0; lanes fails in ^swap-long  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [46 s, load 13.97]
+OK   W3  lanecancel      expect: exit ≠ 0; lanes fails in ^swap-long  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [46 s, load 11.63]
+SELFTEST PASS  3/3 expectations hold
+12:18  up 5 days, 17:21, 2 users, load averages: 13.11 36.78 62.87

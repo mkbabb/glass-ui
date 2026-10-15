@@ -1,0 +1,26 @@
+load gate: waited 510s (of a 7200s budget for the whole script, 1590s spent), load 138.17 (max 150)
+15:46  up 3 days, 20:48, 3 users, load averages: 138.17 178.15 181.85
+FAIL  CF  Playwright WebKit  c1·shape·h-unshimmed  not measured: page.waitForFunction: Target page, context or browser has been closed  [load 138.17]
+FAIL  CF  Playwright WebKit  c2·morph·h-unshimmed  not measured: page.waitForFunction: Target page, context or browser has been closed  [load 144.96]
+FAIL  CF  Playwright WebKit  c1·shape·v-unshimmed  not measured: page.waitForFunction: Target page, context or browser has been closed  [load 144.96]
+FAIL  CF  Playwright WebKit  c2·morph·v-unshimmed  not measured: page.waitForFunction: Target page, context or browser has been closed  [load 144.96]
+FAIL  CF  Playwright WebKit  c2·prm-unshimmed  not measured: page.waitForFunction: Target page, context or browser has been closed  [load 144.96]
+FAIL  CF  Playwright WebKit  c2·rapid-unshimmed  not measured: page.waitForFunction: Target page, context or browser has been closed  [load 144.96]
+FAIL  CF  Playwright WebKit  c3·hover-unshimmed  not measured: page.waitForFunction: Target page, context or browser has been closed  [load 144.96]
+FAIL  CF  Playwright WebKit  c3·focus-unshimmed  not measured: page.waitForFunction: Target page, context or browser has been closed  [load 144.96]
+FAIL  CF  Playwright WebKit  c3·scroll-unshimmed  not measured: page.waitForFunction: Target page, context or browser has been closed  [load 144.96]
+FAIL  CF  Playwright WebKit  c4·persistent-unshimmed  not measured: page.waitForFunction: Target page, context or browser has been closed  [load 144.96]
+FAIL  CF  Playwright WebKit  c5·keyboard-unshimmed  not measured: page.waitForFunction: Target page, context or browser has been closed  [load 144.96]
+FAIL  CF  Playwright WebKit  c6·menu-unshimmed  not measured: page.waitForFunction: Target page, context or browser has been closed  [load 144.96]
+FAIL  CF  Playwright WebKit  c7·narrow-unshimmed  not measured: page.waitForFunction: Target page, context or browser has been closed  [load 144.88]
+FAIL  CF  Playwright WebKit  c7·coarse-tap-unshimmed  not measured: page.waitForFunction: Target page, context or browser has been closed  [load 144.88]
+ROW  CF  webkit  C1  FAIL  (c1·shape·h-unshimmed FAIL)
+ROW  CF  webkit  C2  FAIL  (c2·morph·h-unshimmed FAIL, c2·prm-unshimmed FAIL, c2·rapid-unshimmed FAIL)
+ROW  CF  webkit  C3  FAIL  (c3·hover-unshimmed FAIL, c3·focus-unshimmed FAIL, c3·scroll-unshimmed FAIL, c7·coarse-tap-unshimmed FAIL)
+ROW  CF  webkit  C4  FAIL  (c4·persistent-unshimmed FAIL)
+ROW  CF  webkit  C5  FAIL  (c5·keyboard-unshimmed FAIL)
+ROW  CF  webkit  C6  FAIL  (c6·menu-unshimmed FAIL)
+ROW  CF  webkit  C7  FAIL  (c1·shape·v-unshimmed FAIL, c2·morph·v-unshimmed FAIL, c7·narrow-unshimmed FAIL, c7·coarse-tap-unshimmed FAIL)
+FAIL  CF  head@d6f68b88  0/14 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p4/H4/wt/.h4out/runs/CF-head-unshimmed/CF.json)
+exit 1
+15:46  up 3 days, 20:48, 3 users, load averages: 144.88 178.32 181.87

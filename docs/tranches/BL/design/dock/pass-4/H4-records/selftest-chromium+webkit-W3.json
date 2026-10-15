@@ -1,0 +1,99 @@
+{
+ "when": "2026-10-09T20:23:26.684Z",
+ "engines": [
+  "chromium",
+  "webkit"
+ ],
+ "rows": [
+  {
+   "witness": "W3",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 1, 48/57 PASS; failing: chromium:lead-add[lanes] chromium:lead-remove[window] chromium:stretch·lead-add[lanes] webkit:first-expand[trajectory,lanes] webkit:warm-expand[lanes] webkit:content-add[lanes]",
+   "ok": false,
+   "ms": 451103,
+   "load": 481.87
+  },
+  {
+   "witness": "W3",
+   "fixture": "blankswap",
+   "expect": "exit ≠ 0; blank fails in ^swap-long|^swap-short",
+   "got": "exit 1, 4/4 FAIL; matching 4 (chromium+webkit)",
+   "ok": true,
+   "ms": 283929,
+   "load": 379.49
+  },
+  {
+   "witness": "W3",
+   "fixture": "pop",
+   "expect": "exit ≠ 0; leaving fails in ^content-remove|^lead-remove",
+   "got": "exit 1, 4/4 FAIL; matching 4 (chromium+webkit)",
+   "ok": true,
+   "ms": 347491,
+   "load": 481.28
+  },
+  {
+   "witness": "W3",
+   "fixture": "slipfade",
+   "expect": "exit ≠ 0; leaving fails in ^content-remove|^lead-remove",
+   "got": "exit 1, 4/4 FAIL; matching 4 (chromium+webkit)",
+   "ok": true,
+   "ms": 230620,
+   "load": 314.44
+  },
+  {
+   "witness": "W3",
+   "fixture": "splice",
+   "expect": "exit ≠ 0; splice fails in ^swap-",
+   "got": "exit 1, 4/4 FAIL; matching 4 (chromium+webkit)",
+   "ok": true,
+   "ms": 236247,
+   "load": 199.29
+  },
+  {
+   "witness": "W3",
+   "fixture": "sliver",
+   "expect": "exit ≠ 0; splice fails in ^swap-|^lead-remove",
+   "got": "exit 1, 6/6 FAIL; matching 6 (chromium+webkit)",
+   "ok": true,
+   "ms": 173005,
+   "load": 158.57
+  },
+  {
+   "witness": "W3",
+   "fixture": "lanesnap",
+   "expect": "exit ≠ 0; lanes fails in ^swap-long",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 161930,
+   "load": 200.07
+  },
+  {
+   "witness": "W3",
+   "fixture": "lanecancel",
+   "expect": "exit ≠ 0; lanes fails in ^swap-long",
+   "got": "exit 0, 0/2 FAIL; matching 0 (none)",
+   "ok": false,
+   "ms": 178499,
+   "load": 233.23
+  },
+  {
+   "witness": "W3",
+   "fixture": "retargetpop",
+   "expect": "exit ≠ 0; leaving|vanish fails in ^retarget·(40|80|120)",
+   "got": "exit 1, 6/6 FAIL; matching 6 (chromium+webkit)",
+   "ok": true,
+   "ms": 19623,
+   "load": 120.85
+  },
+  {
+   "witness": "W3",
+   "fixture": "ctxloss",
+   "expect": "exit ≠ 0; context fails in ^retarget·context",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium+webkit)",
+   "ok": true,
+   "ms": 11154,
+   "load": 111.58
+  }
+ ]
+}

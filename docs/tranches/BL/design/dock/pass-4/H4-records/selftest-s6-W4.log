@@ -1,0 +1,19 @@
+load gate: waited 0s, load 138.34 (max 150)
+11:31  up 4 days, 16:33, 2 users, load averages: 138.34 122.89 112.29
+OK   W4  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 26/26 PASS  [107 s, load 135.83]
+OK   W4  nohyst          expect: exit ≠ 0; no-threshold-bounce  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [30 s, load 89.66]
+OK   W4  latch           expect: exit ≠ 0; no-hover-latch  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [8 s, load 80.69]
+OK   W4  menucollapse    expect: exit ≠ 0; menu-holds  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [20 s, load 72.41]
+OK   W4  noprm           expect: exit ≠ 0; prm·posture-morph|prm·compact  ·  got: exit 1, 4/4 FAIL; matching 4 (chromium+webkit)  [26 s, load 69.08]
+OK   W4  tapthrough      expect: exit ≠ 0; tap-pins  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [19 s, load 73.15]
+OK   W4  ungatedafter    expect: exit ≠ 0; no-hover-latch  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [12 s, load 90.85]
+OK   W4  pressgate       expect: exit ≠ 0; press-then-scroll  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [9 s, load 99.09]
+OK   W4  lategetter      expect: exit ≠ 0; late-getter  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [11 s, load 93.11]
+OK   W4  norefcount      expect: exit ≠ 0; shared-scroller  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [20 s, load 92.47]
+OK   W4  seatshrink      expect: exit ≠ 0; seat-scale  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [32 s, load 100.59]
+OK   W4  prmscrub        expect: exit ≠ 0; prm·compact  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [39 s, load 95.5]
+OK   W4  compactjump     expect: exit ≠ 0; non-first-current  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [37 s, load 101]
+OK   W4  nocompact       expect: exit ≠ 0; compact·compacts  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [34 s, load 123.94]
+OK   W4  noengage        expect: exit ≠ 0; engagement-expands  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [28 s, load 105.77]
+SELFTEST PASS  15/15 expectations hold
+11:38  up 4 days, 16:40, 2 users, load averages: 99.38 102.68 104.87

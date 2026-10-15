@@ -1,0 +1,8 @@
+load gate: waited 0s, load 74.55 (max 150)
+14:48  up 3 days, 19:51, 3 users, load averages: 74.55 38.39 19.29
+OK   PR  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 3/3 PASS  [2 s, load 74.55]
+OK   PR  noreader        expect: exit ≠ 0; readers fails in ^prose·readers  ·  got: exit 1, 1/3 FAIL; matching 1 (source)  [1 s, load 74.75]
+OK   PR  count           expect: exit ≠ 0; count fails in ^prose·count  ·  got: exit 1, 1/3 FAIL; matching 1 (source)  [2 s, load 74.75]
+OK   PR  duprow          expect: exit ≠ 0; rows fails in ^prose·rows  ·  got: exit 1, 1/3 FAIL; matching 1 (source)  [1 s, load 74.75]
+SELFTEST PASS  4/4 expectations hold
+14:48  up 3 days, 19:51, 3 users, load averages: 74.75 39.03 19.63

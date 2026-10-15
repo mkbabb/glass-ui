@@ -5,6 +5,7 @@
 // adapter and fixture modules. Everything here is engine-agnostic: the same code
 // drives headless Chromium and Playwright WebKit (which is not Safari). The
 // safaridriver target (H-8) lives in safari.mjs and is reached through launch().
+import { holdWebkit } from "../../../driver/webkit-lock.mjs";
 import { createRequire } from "node:module";
 import http from "node:http";
 import fs from "node:fs";
@@ -122,6 +123,7 @@ export async function openTarget(args) {
         kind: "build",
         label: `${meta.label}@${meta.head.slice(0, 8)}`,
         meta,
+        demoUrl: (route) => (demo ? demo.url + route : null),   // H4-10 · the demo app's own routes
         url: (name, q = {}) => {
             if (name === "sidebar") {
                 if (!demo) throw new Error("the build has no demo (rebuild without --no-demo)");
@@ -136,11 +138,29 @@ export async function openTarget(args) {
 }
 
 // ── engines + pages ───────────────────────────────────────────────────────────
+// Playwright WebKit stalls when macOS AppSSO stops answering at about the 90th page load of one browser
+// process (../../tile/pass-3/H3.md, H3-1). A WebKit browser is retired after NAV_CAP page loads (every
+// load is one newContext in openScene) and the next context opens on a new process; a retired process
+// closes once its last context has closed. DOCK_HARNESS_NAV_CAP overrides (the self-test control sets 3).
+export const NAV_CAP = Number(process.env.DOCK_HARNESS_NAV_CAP) || 60;
 export async function launch(engine) {
     if (engine === "safari") return (await import("./safari.mjs")).launchSafari();
-    const b = await playwright[engine].launch({ headless: true });
-    b.__engine = engine;
-    return b;
+    if (engine !== "webkit") { const b = await playwright[engine].launch({ headless: true }); b.__engine = engine; return b; }
+    await holdWebkit();
+    let b = await playwright.webkit.launch({ headless: true }), loads = 0;
+    const retired = [];
+    const sweep = () => { for (const r of retired.splice(0)) { if (r.contexts().length) retired.push(r); else r.close().catch(() => { }); } };
+    const h = {
+        __engine: engine, relaunched: 0,
+        async newContext(o) {
+            sweep();
+            if (loads > 0 && loads % NAV_CAP === 0) { retired.push(b); b = await playwright.webkit.launch({ headless: true }); h.relaunched++; console.log(`  (Playwright WebKit browser retired after ${loads} page loads and relaunched, ${h.relaunched}×)`); sweep(); }
+            loads++;
+            return b.newContext(o);
+        },
+        async close() { await Promise.all([b, ...retired.splice(0)].map((x) => x.close().catch(() => { }))); },
+    };
+    return h;
 }
 /** The cell label suffix for an engine on a target ("+shim" when the WebKit crash shim is on). */
 export function engineTag(target, engine) {
@@ -516,6 +536,28 @@ export async function startLog(page, opts = {}) {
         const ids = new WeakMap(); let nid = 0; const idOf = (e) => { if (!ids.has(e)) ids.set(e, ++nid); return ids.get(e); };
         const kebab = (s) => s.startsWith("--") ? s : s.replace(/[A-Z]/g, (m) => "-" + m.toLowerCase());
         const kfCache = new WeakMap();
+        // H4-1 · one glyph advance ("0") in the element's own computed font, CSS px (canvas measure: no page write)
+        const advCache = new WeakMap(); const cv = document.createElement("canvas").getContext("2d");
+        const advOf = (el) => { if (advCache.has(el)) return advCache.get(el); const cs = getComputedStyle(el); cv.font = cs.fontStyle + " " + cs.fontWeight + " " + cs.fontSize + " " + cs.fontFamily; const a = +cv.measureText("0").width.toFixed(2); advCache.set(el, a); return a; };
+        // H4-2 · the lanes: per element under the root, the animated values that paint (clip-path inset, translate +
+        // transform translation, scale, opacity). Only non-identity lanes are stored; an absent lane is identity.
+        const laneLabels = {}, laneEls = new Map();
+        const laneOf = (el) => {
+            const cs = getComputedStyle(el); const v = [];
+            const cp = cs.clipPath || "none";
+            // a clip lane is what the inset cuts from the box: a negative inset (an outset, e.g. inset(-8px -7px -8px
+            // -100000px)) cuts only overflow paint, so it reads as 0 here. An outset that snaps to none is outside
+            // this lane's reach (H4 entry 4: pass-3 G's dock-layers outset read as a 100000 px "residue")
+            if (cp !== "none") { const ins = hp.insetOf(el, el.offsetWidth || 0, el.offsetHeight || 0); if (ins) { const c = ins.map((x) => +Math.max(0, x).toFixed(2)); if (c.some((x) => x > 0.01)) v.push(["clip", c]); } else v.push(["clipS", cp.slice(0, 80)]); }
+            let tx = 0, ty = 0, sc = 1;
+            if (cs.translate && cs.translate !== "none") { const p = cs.translate.split(" ").map((x) => parseFloat(x) || 0); tx += p[0] || 0; ty += p[1] || 0; }
+            if (cs.transform && cs.transform !== "none") { const m = cs.transform.match(/matrix(3d)?\(([^)]*)\)/); if (m) { const n = m[2].split(",").map((x) => parseFloat(x)); if (m[1]) { tx += n[12]; ty += n[13]; sc *= Math.hypot(n[0], n[1]); } else { tx += n[4]; ty += n[5]; sc *= Math.hypot(n[0], n[1]); } } }
+            if (cs.scale && cs.scale !== "none") sc *= parseFloat(cs.scale.split(" ")[0]) || 1;
+            if (Math.abs(tx) > 0.01 || Math.abs(ty) > 0.01) v.push(["tr", [+tx.toFixed(2), +ty.toFixed(2)]]);
+            if (Math.abs(sc - 1) > 1e-3) v.push(["sc", +sc.toFixed(4)]);
+            const o = parseFloat(cs.opacity); if (o < 0.999) v.push(["op", +o.toFixed(3)]);
+            return v;
+        };
         const propsOf = (a) => {
             if (a.transitionProperty) return [a.transitionProperty];
             if (kfCache.has(a)) return kfCache.get(a);
@@ -556,7 +598,7 @@ export async function startLog(page, opts = {}) {
             const f = { t: ts, mk: L.mark, e: [e.l, e.t, e.r, e.b].map((v) => +v.toFixed(3)), m: !!P.morphing(), p: P.posture?.() ?? "" };
             if (opts.seats || opts.sharp || opts.ink) {
                 const ss = P.seats({ all: true });
-                if (opts.seats) f.s = ss.map((el) => { const q = el.getBoundingClientRect(); const c = hp.paintedRect(el); return [idOf(el), +q.left.toFixed(2), +q.top.toFixed(2), +q.right.toFixed(2), +q.bottom.toFixed(2), +c.l.toFixed(2), +c.t.toFixed(2), +c.r.toFixed(2), +c.b.toFixed(2), +hp.visibleOpacity(el).toFixed(3)]; });
+                if (opts.seats) f.s = ss.map((el) => { const q = el.getBoundingClientRect(); const c = hp.paintedRect(el); return [idOf(el), +q.left.toFixed(2), +q.top.toFixed(2), +q.right.toFixed(2), +q.bottom.toFixed(2), +c.l.toFixed(2), +c.t.toFixed(2), +c.r.toFixed(2), +c.b.toFixed(2), +hp.visibleOpacity(el).toFixed(3), advOf(el)]; });
                 if (opts.sharp) { let n = 0, who = ""; for (const el of ss) { if (hp.visibleOpacity(el) <= 0.05) continue; const u = hp.unsharp(el); if (u) { n++; who = who || u; } } f.us = n; if (who) f.usWho = who; }
                 // H3-3 · ink leaves the adapter does not call seats (a carrier's clones, a face drawn
                 // elsewhere): every element under the root that paints a glyph (a direct text node or an
@@ -574,7 +616,8 @@ export async function startLog(page, opts = {}) {
                         const o = hp.visibleOpacity(el); if (o <= 0.05) continue;
                         const q = el.getBoundingClientRect(); if (q.width * q.height < 1) continue;
                         const c = hp.paintedRect(el);
-                        ks.push([+c.l.toFixed(2), +c.t.toFixed(2), +c.r.toFixed(2), +c.b.toFixed(2), +o.toFixed(3), +(q.width * q.height).toFixed(2)]);
+                        // H4-1 appends the leaf's own box and its font's glyph advance: [.., bl, bt, br, bb, adv]
+                        ks.push([+c.l.toFixed(2), +c.t.toFixed(2), +c.r.toFixed(2), +c.b.toFixed(2), +o.toFixed(3), +(q.width * q.height).toFixed(2), +q.left.toFixed(2), +q.top.toFixed(2), +q.right.toFixed(2), +q.bottom.toFixed(2), advOf(el)]);
                     }
                     f.k = ks;
                 }
@@ -589,9 +632,44 @@ export async function startLog(page, opts = {}) {
                     const q = c.getBoundingClientRect(); return +(ax === "y" ? q.height : q.width).toFixed(3);
                 });
             }
+            // H4-10 · the dock root's own layout box per frame (a layout pop is a one-frame step of it)
+            if (opts.rootBox) { const q = root.getBoundingClientRect(); f.rb = [+q.left.toFixed(3), +q.top.toFixed(3), +q.right.toFixed(3), +q.bottom.toFixed(3)]; }
             // H3-7 · an in-flow neighbour beside the dock ([data-testid=neighbour]): its rect per frame
             if (opts.neighbour) { const nb = document.querySelector("[data-testid=neighbour]"); if (nb) { const q = nb.getBoundingClientRect(); f.nb = [+q.left.toFixed(3), +q.top.toFixed(3), +q.right.toFixed(3), +q.bottom.toFixed(3)]; } }
             if (opts.scrollers) f.sc = hp.seatScrollers(root, P.seats({ all: true }));
+            // H4-2 · lanes. A seat's engagement is exempt: inside a seat that matches :hover or :active, the
+            // scale and translation lanes are D-2's (W2, W4, W8 judge them); its clip and opacity are judged
+            if (opts.lanes) {
+                const seatEls = P.seats({ all: true });
+                const engaged = (el) => seatEls.some((s) => s.contains(el) && s.matches(":hover, :active"));
+                const ln = {};
+                for (const el of [root, ...root.querySelectorAll("*")]) {
+                    if (el instanceof SVGElement && el.tagName.toLowerCase() !== "svg") continue;
+                    let v = laneOf(el); if (!v.length) continue;
+                    if (engaged(el)) { v = v.filter((x) => x[0] !== "sc" && x[0] !== "tr"); if (!v.length) continue; }
+                    // a seat's own engagement easing back (a running `scale` transition on it or inside it, after
+                    // :hover / :active has ended) is the seat's lane, not the morph's: its scale is not recorded
+                    else if (seatEls.some((s) => s.contains(el)) && el.getAnimations().some((a) => a.transitionProperty === "scale")) { v = v.filter((x) => x[0] !== "sc"); if (!v.length) continue; }
+                    const id = idOf(el); if (!laneLabels[id]) laneLabels[id] = hp.label(el); ln[id] = v; laneEls.set(id, el);
+                }
+                // H4-2 · a geometric lane (clip, translate) CANCELLED to identity: present last frame with a residue
+                // above 0.5 px, absent now, on an element still painting in the dock, in a step more than twice its
+                // previous one (a spring's or a wipe's own tail eases in; a cancel jumps)
+                const lc = [], P1 = L.ln1 || {}, P2 = L.ln2 || {};
+                const dist = (a, b) => Math.max(...a.map((x, j) => Math.abs(x - b[j])));
+                for (const id of Object.keys(P1)) for (const [k, v] of P1[id]) {
+                    if (k !== "clip" && k !== "tr") continue;
+                    const I = k === "clip" ? [0, 0, 0, 0] : [0, 0];
+                    const cur = ln[id] && ln[id].find((x) => x[0] === k); if (cur && dist(cur[1], I) > 0.01) continue;   // still off identity (an inset(0) clip is identity)
+                    const el = laneEls.get(+id); if (!el || !el.isConnected || !root.contains(el) || engaged(el) || hp.visibleOpacity(el) <= 0.05 || !el.getClientRects().length) continue;
+                    const res = dist(v, I); if (res <= 0.5) continue;
+                    const v2 = P2[id] && P2[id].find((x) => x[0] === k); const step = v2 ? dist(v, v2[1]) : 0;
+                    if (res > 2 * step) lc.push([+id, k, +res.toFixed(2), +step.toFixed(2)]);
+                }
+                if (lc.length) f.lc = lc;
+                L.ln2 = P1; L.ln1 = ln;
+                f.ln = ln; L.laneLabels = laneLabels;
+            }
             if (opts.owners) {
                 const own = new Map(); let sizeAnim = "";
                 for (const a of document.getAnimations()) {
@@ -620,8 +698,9 @@ export async function startLog(page, opts = {}) {
 }
 export async function mark(page, name) { await page.evaluate((n) => { window.__hpLog.mark = n; }, name); }
 export async function stopLog(page) {
-    const r = await page.evaluate(() => { window.__hpLog.stop = true; return { frames: window.__hpLog.frames, dropped: window.__hpLog.dropped }; });
+    const r = await page.evaluate(() => { window.__hpLog.stop = true; return { frames: window.__hpLog.frames, dropped: window.__hpLog.dropped, laneLabels: window.__hpLog.laneLabels ?? null }; });
     r.frames.dropped = r.dropped;
+    if (r.laneLabels) r.frames.laneLabels = r.laneLabels;
     return r.frames;
 }
 
@@ -846,21 +925,127 @@ export function leavingRow(frames, lengthMs) {
         why: rows.length ? `${rows.length} leaving seat(s), ${bad.length} failing${w ? `; ${bad.length ? "worst" : "tightest"} seat ${w.seat}: ink ${w.path.join(" → ")} over ${w.spanMs} ms / ${w.spanFrames} frame(s) (fade bound ≥ ${LEAVE_MIN_FRAMES} frames and ≥ ${bound} ms), coverage deficit ${w.deficit} (track bound ${LEAVE_TRACK_TOL})` : ""}` : "no seat leaves" };
 }
 
+// ── H4-1 · the splice ─────────────────────────────────────────────────────────
+/**
+ * A unit is a seat (frames[i].s) or a non-seat ink leaf (frames[i].k): its transform-aware box, its
+ * clipped (painted) rect, its opacity and one glyph advance of its own font ("0", canvas-measured).
+ * On the main axis a unit is CUT at an edge when its painted edge lies more than CUT_PX inside its
+ * box. In every frame after the strip's first (the rest before the trigger):
+ *   splice  two painting units overlap on the cross axis, face each other with a cut edge each, and
+ *           the gap between those two edges is under one glyph advance (the larger of theirs) less
+ *           CUT_PX: two faces meeting at a seam inside a glyph run read as a false glyph (B′-crit
+ *           CX-1 "A' B ols Brushes", G-crit CX-1 "Ɛools"). A negative gap (the two overlap) counts.
+ *   sliver  a painting unit whose box is at least one advance long paints less than one advance
+ *           (less CUT_PX), cut at an edge that lies inside the plate (more than CUT_PX from the
+ *           plate's own edge). The plate's closing edge taking a seat is the leaving rule's (H3-3),
+ *           never a sliver; a face clip that leaves a 1 px strip of glyph is (B′-crit V-2).
+ * The gate: 0 splice frames and 0 sliver frames.
+ */
+export const CUT_PX = 0.5;
+export function spliceRow(frames, ax) {
+    const units = (f) => {
+        const u = [];
+        for (const q of f.s ?? []) u.push({ id: "s" + q[0], b: [q[1], q[2], q[3], q[4]], c: [q[5], q[6], q[7], q[8]], o: q[9], adv: q[10] ?? 0 });
+        for (const [i, k] of (f.k ?? []).entries()) if (k.length >= 11) u.push({ id: "k" + i, b: [k[6], k[7], k[8], k[9]], c: [k[0], k[1], k[2], k[3]], o: k[4], adv: k[10] });
+        return u.filter((x) => x.o > 0.05 && x.c[2] - x.c[0] > 0.5 && x.c[3] - x.c[1] > 0.5);
+    };
+    const M0 = ax === "y" ? 1 : 0, M1 = ax === "y" ? 3 : 2, C0 = ax === "y" ? 0 : 1, C1 = ax === "y" ? 2 : 3;
+    let spliceFrames = 0, sliverFrames = 0, firstSplice = null, firstSliver = null, worstGap = Infinity;
+    for (let i = 1; i < frames.length; i++) {
+        const f = frames[i], us = units(f);
+        const startCut = (x) => x.c[M0] > x.b[M0] + CUT_PX, endCut = (x) => x.c[M1] < x.b[M1] - CUT_PX;
+        let sp = null, sl = null;
+        for (let a = 0; a < us.length && !sp; a++) for (let b = 0; b < us.length && !sp; b++) {
+            if (a === b) continue;
+            const u = us[a], v = us[b];
+            if (u.c[M0] > v.c[M0]) continue;   // u is the one that starts first
+            if (Math.min(u.c[C1], v.c[C1]) - Math.max(u.c[C0], v.c[C0]) <= 0.5) continue;
+            if (!endCut(u) || !startCut(v)) continue;
+            const gap = v.c[M0] - u.c[M1], adv = Math.max(u.adv, v.adv);
+            if (gap < adv - CUT_PX) { sp = { units: [u.id, v.id], gapPx: +gap.toFixed(2), advPx: adv, atMs: +(f.t - frames[0].t).toFixed(1) }; worstGap = Math.min(worstGap, gap); }
+        }
+        const e = f.e, pm0 = ax === "y" ? e[1] : e[0], pm1 = ax === "y" ? e[3] : e[2];
+        for (const x of us) {
+            if (sl) break;
+            const len = x.c[M1] - x.c[M0], box = x.b[M1] - x.b[M0];
+            if (box < x.adv || len >= x.adv - CUT_PX) continue;
+            const inner = (startCut(x) && x.c[M0] > pm0 + CUT_PX) || (endCut(x) && x.c[M1] < pm1 - CUT_PX);
+            if (inner) sl = { unit: x.id, paintsPx: +len.toFixed(2), advPx: x.adv, boxPx: +box.toFixed(2), atMs: +(f.t - frames[0].t).toFixed(1) };
+        }
+        if (sp) { spliceFrames++; if (!firstSplice) firstSplice = sp; }
+        if (sl) { sliverFrames++; if (!firstSliver) firstSliver = sl; }
+    }
+    const ok = spliceFrames === 0 && sliverFrames === 0;
+    return { ok, spliceFrames, sliverFrames, firstSplice, firstSliver,
+        why: `${spliceFrames} splice frame(s)${firstSplice ? ` (first at ${firstSplice.atMs} ms: units ${firstSplice.units.join("|")} meet at a ${firstSplice.gapPx} px gap, one advance ${firstSplice.advPx} px)` : ""}, ${sliverFrames} sliver frame(s)${firstSliver ? ` (first at ${firstSliver.atMs} ms: unit ${firstSliver.unit} paints ${firstSliver.paintsPx} px of a ${firstSliver.boxPx} px box, one advance ${firstSliver.advPx} px)` : ""} (bound 0 each)` };
+}
+
+// ── H4-2 · the window flag covers every lane ─────────────────────────────────
+/**
+ * frames[i].ln = { elementId: [[kind, value], …] } for every element under the root with a
+ * non-identity clip-path, translate/transform translation, scale or opacity (lib.mjs startLog
+ * `lanes`); an element absent from a frame is at identity. The flag (`data-morphing`, the adapter's
+ * morphing()) closes at the first frame after it was open that reads closed. From that frame on,
+ * every lane must already be at its final value (the strip's last frame): within LANE_PX for a clip
+ * inset or a translation, LANE_SCALE for a scale, LANE_OPACITY for opacity, and an unparsed clip
+ * string equal. A lane still easing after the flag closed (G-crit CX-2: a seam cut 24.2 px from
+ * identity that snaps 9-17 ms after the flag clears) fails; so does one cancelled to identity in a
+ * single frame from a residue above LANE_PX after the flag. A strip whose flag never opened is not
+ * judged here (W3 `window` judges it).
+ */
+export const LANE_PX = 0.5, LANE_SCALE = 0.005, LANE_OPACITY = 0.02;
+export function lanesRow(frames, labels = {}) {
+    if (!frames.some((f) => f.ln)) return null;
+    const iOpen = frames.findIndex((f) => f.m);
+    const iClose = iOpen < 0 ? -1 : frames.findIndex((f, i) => i > iOpen && !f.m);
+    if (iClose < 0) return { ok: true, judged: false, why: iOpen < 0 ? "the flag never opened (judged by window)" : "the flag never closed (judged by window)" };
+    const ident = { clip: [0, 0, 0, 0], tr: [0, 0], sc: 1, op: 1, clipS: "none" };
+    const val = (f, id, kind) => { const v = f.ln?.[id]?.find((x) => x[0] === kind); return v ? v[1] : ident[kind]; };
+    const fin = frames.at(-1);
+    // a lane cancelled to identity inside the window (or after it), with its residue
+    const cancels = frames.slice(Math.max(0, iOpen)).flatMap((f) => (f.lc ?? []).map(([id, k, res, step]) => ({ lane: `${labels[id] ?? id} ${k}`, residue: res, step, atMs: +(f.t - frames[iOpen].t).toFixed(1) })));
+    const ids = new Set(); for (const f of frames.slice(iClose)) for (const id of Object.keys(f.ln ?? {})) ids.add(id);
+    for (const id of Object.keys(fin.ln ?? {})) ids.add(id);
+    let worst = null;
+    for (let i = iClose; i < frames.length; i++) {
+        const f = frames[i];
+        for (const id of ids) for (const kind of ["clip", "tr", "sc", "op", "clipS"]) {
+            const a = val(f, id, kind), b = val(fin, id, kind);
+            let res, bound;
+            if (kind === "clipS") { res = a === b ? 0 : 1; bound = 0; }
+            else if (Array.isArray(a)) { res = Math.max(...a.map((x, k) => Math.abs(x - b[k]))); bound = LANE_PX; }
+            else { res = Math.abs(a - b); bound = kind === "sc" ? LANE_SCALE : LANE_OPACITY; }
+            if (res > bound && (!worst || res / Math.max(bound, 1e-3) > worst.ratio)) worst = { ratio: res / Math.max(bound, 1e-3), lane: `${labels[id] ?? id} ${kind}`, residue: +res.toFixed(3), bound, atMs: +(f.t - frames[iClose].t).toFixed(1), value: a, final: b };
+        }
+    }
+    const c0 = cancels.sort((a, b) => b.residue - a.residue)[0];
+    return { ok: !worst && !cancels.length, judged: true, flagClosedMs: +(frames[iClose].t - frames[0].t).toFixed(1), lanes: ids.size, worst, cancels: cancels.slice(0, 4),
+        why: (worst ? `${worst.lane} is ${JSON.stringify(worst.value)} ${worst.atMs} ms after the flag closed (final ${JSON.stringify(worst.final)}; residue ${worst.residue}, bound ${worst.bound})` : `every lane (${ids.size}) at its final value from the frame the flag closed`)
+            + (cancels.length ? `; ${cancels.length} lane(s) cancelled to identity, the largest ${c0.lane} from ${c0.residue} px in one frame (previous step ${c0.step} px) at ${c0.atMs} ms` : "; no lane cancelled to identity") };
+}
+
 // ── reporting ────────────────────────────────────────────────────────────────
 export function makeReport(witness, target) {
     const cells = [];
     const only = parseArgs().cells ? new RegExp(String(parseArgs().cells)) : null;   // --cells <regex>: run only the blocks that record a matching cell
     const rep = {
         cells,
-        add(cell) { cell.load = loadAvg(); cells.push(cell); const tag = cell.record ? "RECORD" : cell.pass ? "PASS" : cell.unmeasured ? "UNMEASURED" : cell.ownerBlocked ? "OWNER-BLOCKED" : "FAIL"; console.log(`${tag}  ${witness}  ${ENGINE_LABEL[cell.engine] ?? cell.engine}  ${cell.cell}  ${cell.summary}  [load ${cell.load}]`); },
+        // H4-5 · the --cells filter: a block runs whole, but only the cells the filter names are recorded
+        // (G-crit §7.6: an anchored filter ran the block and reported every cell in it). The engine tag
+        // is stripped before the test, so '^reversal$' names `reversal+shim` too.
+        add(cell) { if (only && !only.test(cell.cell) && !only.test(cell.cell.replace(/(\+shim|-unshimmed)$/, ""))) return; cell.load = loadAvg(); cells.push(cell); const tag = cell.record ? "RECORD" : cell.pass ? "PASS" : cell.unmeasured ? "UNMEASURED" : cell.ownerBlocked ? "OWNER-BLOCKED" : "FAIL"; console.log(`${tag}  ${witness}  ${ENGINE_LABEL[cell.engine] ?? cell.engine}  ${cell.cell}  ${cell.summary}  [load ${cell.load}]`); },
         /**
          * Run one scene's block; if it throws (a page crash, a missing hook), every
          * named cell it did not record FAILS with the error, so an unshimmed WebKit
          * crash is recorded per cell instead of aborting the witness.
          */
         async guard(engine, names, fn) {
-            if (only && !names.some((n) => only.test(n))) return;
-            const before = new Set(cells.map((c) => c.cell));
+            // H4 entry 5: the skip test strips the engine tag as add() does; an anchored re-run of a
+            // `-unshimmed` cell skipped its block and recorded 0/0 (base-R5-head-unshimmed-rerun1.log)
+            if (only && !names.some((n) => only.test(n) || only.test(n.replace(/(\+shim|-unshimmed)$/, "")))) return;
+            // per engine: a name the other engine already recorded must not hide this engine's error (H4 entry 4:
+            // every Playwright WebKit block error on an untagged build was dropped silently, the cell absent)
+            const before = new Set(cells.filter((c) => c.engine === engine).map((c) => c.cell));
             // DOCK_HARNESS_BLOCK_TIMEOUT_MS: a block that has not returned by then is abandoned and its
             // unrecorded cells are UNMEASURED (the harness hung, the dock was not read). Headless
             // Chromium's rAF was seen to stop for 30 s and more at load averages near 400 (pass-3/H3.md §3.0)
@@ -921,7 +1106,7 @@ export const TRAJ_TOL = 0.04;
  *  allowance measured from its release velocity. A window that fails the pinned clock but holds
  *  under this reading is OWNER-BLOCKED (Q-4), never a route defect; one that fails both is FAIL. */
 export const Q4_DOCK_CLOCK_MS = 270;
-export function analyseMorph(frames, rung, { ax = "x", reversal = null, seats = true, paintFloor = false } = {}) {
+export function analyseMorph(frames, rung, { ax = "x", reversal = null, seats = true, paintFloor = false, laneLabels = null } = {}) {
     const spec = springSpec(rung);
     const clockMs = spec.settleS * 1000;
     const len = (f) => ax === "y" ? f.e[3] - f.e[1] : f.e[2] - f.e[0];
@@ -1051,7 +1236,10 @@ export function analyseMorph(frames, rung, { ax = "x", reversal = null, seats = 
     if (paintFloor && frames.some((f) => f.s)) {
         out.blank = blankRow(frames, ax);
         out.leaving = leavingRow(frames, out.travelMs != null && D >= 0.5 ? out.travelMs : clockMs);
+        out.splice = spliceRow(frames, ax);   // H4-1
     }
+    const ln = lanesRow(frames, laneLabels ?? frames.laneLabels ?? {});   // H4-2
+    if (ln?.judged) out.lanes = ln;
     return out;
 }
 export function morphChecks(a) {
@@ -1059,6 +1247,8 @@ export function morphChecks(a) {
     if (a.seats) { c.seatStep = a.seats.step.ok; c.seatOverlap = a.seats.overlap.ok; }
     if (a.blank) c.blank = a.blank.ok;
     if (a.leaving) c.leaving = a.leaving.ok;
+    if (a.splice) c.splice = a.splice.ok;
+    if (a.lanes) c.lanes = a.lanes.ok;
     if (a.faces) c.faces = a.faces.ok;
     return c;
 }
@@ -1069,6 +1259,8 @@ export function morphSummary(a) {
     if (a.seats) s.push(`seat step ×${a.seats.step.ratio ?? 0}${a.seats.step.step != null ? ` (${a.seats.step.step} px)` : ""}, seat overlap ${a.seats.overlap.frames} frame(s)`);
     if (a.blank) s.push(`blank ${a.blank.why}`);
     if (a.leaving) s.push(`leaving ${a.leaving.why}`);
+    if (a.splice) s.push(`splice ${a.splice.why}`);
+    if (a.lanes) s.push(`lanes ${a.lanes.why}`);
     if (a.window.q4 != null) s.push(`Q-4 lenient window ${a.window.q4 ? "holds" : "fails"} (allow ${a.window.q4AllowMs} ms)`);
     if (a.faces) s.push(`faces ${a.faces.why}`);
     return s.join("; ");

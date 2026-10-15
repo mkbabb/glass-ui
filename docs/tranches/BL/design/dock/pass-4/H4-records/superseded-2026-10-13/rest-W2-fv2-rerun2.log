@@ -1,0 +1,24 @@
+load gate: waited 0s (of 7200s for the script, 0s spent), load 22.69 (max 150)
+18:24  up 3 days, 23:27, 3 users, load averages: 21.43 47.86 67.46
+FAIL  W2  Chromium  route1·long-run-v  seats need 592 px vs budget 536 (EXCEED: scrolling allowed); scroller frames 44/44; ring reach clipped 4.25/4.25 vs free 4.25/4.25 px → cut 0/0 (bound 0.5); focus-visible true, hovered true, selected true; reach 11 seats: pointer 11/11, keyboard (Tab, arrows) 10/11 (missing Seat 1), AT 11/11  ⟶ FAILED: keyboard  [load 111.28]
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+browserType.launch: Timeout 180000ms exceeded.
+Call log:
+[2m  - <launching> /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh --inspector-pipe --headless --no-startup-window[22m
+[2m  - <launched> pid=77856[22m
+
+    at launch (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/dock/harness/lib.mjs:142:40)
+    at /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/dock/harness/w2-run.mjs:170:27 {
+  log: [
+    '  - <launching> /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh --inspector-pipe --headless --no-startup-window',
+    '  - <launched> pid=77856'
+  ],
+  name: 'TimeoutError'
+}
+
+Node.js v26.0.0
+exit 1
+18:31  up 3 days, 23:34, 3 users, load averages: 31.52 53.53 63.62

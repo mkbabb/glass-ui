@@ -1,0 +1,45 @@
+load gate: waited 0s (of a 7200s budget for the whole script, 0s spent), load 2.83 (max 150)
+13:56  up 4 days, 18:59, 1 user, load averages: 2.83 2.99 8.92
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+browserType.launch: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh --inspector-pipe --headless --no-startup-window
+<launched> pid=72998
+[pid=72998][err] /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh: line 7: 73004 Abort trap: 6           DYLD_FRAMEWORK_PATH="$DYLIB_PATH" DYLD_LIBRARY_PATH="$DYLIB_PATH" "$PLAYWRIGHT" "$@"
+Call log:
+[2m  - <launching> /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh --inspector-pipe --headless --no-startup-window[22m
+[2m  - <launched> pid=72998[22m
+[2m  - [pid=72998][err] /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh: line 7: 73004 Abort trap: 6           DYLD_FRAMEWORK_PATH="$DYLIB_PATH" DYLD_LIBRARY_PATH="$DYLIB_PATH" "$PLAYWRIGHT" "$@"[22m
+[2m  - [pid=72998] <gracefully close start>[22m
+[2m  - [pid=72998] <kill>[22m
+[2m  - [pid=72998] <will force kill>[22m
+[2m  - [pid=72998] exception while trying to kill process: Error: kill ESRCH[22m
+[2m  - [pid=72998] <process did exit: exitCode=134, signal=null>[22m
+[2m  - [pid=72998] starting temporary directories cleanup[22m
+[2m  - [pid=72998] finished temporary directories cleanup[22m
+[2m  - [pid=72998] <gracefully close end>[22m
+
+    at launch (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/dock/harness/lib.mjs:148:37)
+    at /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/dock/harness/w3-morph.mjs:264:27 {
+  log: [
+    '  - <launching> /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh --inspector-pipe --headless --no-startup-window',
+    '  - <launched> pid=72998',
+    '  - [pid=72998][err] /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh: line 7: 73004 Abort trap: 6           DYLD_FRAMEWORK_PATH="$DYLIB_PATH" DYLD_LIBRARY_PATH="$DYLIB_PATH" "$PLAYWRIGHT" "$@"',
+    '  - [pid=72998] <gracefully close start>',
+    '  - [pid=72998] <kill>',
+    '  - [pid=72998] <will force kill>',
+    '  - [pid=72998] exception while trying to kill process: Error: kill ESRCH',
+    '  - [pid=72998] <process did exit: exitCode=134, signal=null>',
+    '  - [pid=72998] starting temporary directories cleanup',
+    '  - [pid=72998] finished temporary directories cleanup',
+    '  - [pid=72998] <gracefully close end>'
+  ]
+}
+
+Node.js v26.0.0
+exit 1
+13:56  up 4 days, 18:59, 1 user, load averages: 2.69 2.96 8.87

@@ -1,0 +1,8 @@
+load gate: waited 0s, load 74.75 (max 150)
+14:48  up 3 days, 19:51, 3 users, load averages: 74.75 39.03 19.63
+OK   H6  adapter-head    expect: the law holds (exit 0)  ·  got: exit 0: PASS  adapter-law  ../harness/adapter-head.mjs  L-1..L-5 hold  [1 s, load 75.41]
+OK   H6  adapter-preclip  expect: L-1, L-2 and L-3 fail (exit ≠ 0)  ·  got: exit 1: FAIL  adapter-law  ../harness/plants/adapter-preclip.mjs  L-1 extent() reads a custom property · L-2 paintingSeats() refers to extent()/plate() (a pre-clip) · L-3 the probe writes into the page  [3 s, load 75.41]
+OK   H6  adapter-G-p3    expect: L-1..L-6 hold (exit 0)  ·  got: exit 0: PASS  adapter-law  ../pass-3/adapter-G-p3.mjs  L-1..L-5, L-6 hold  [4 s, load 75.41]
+OK   H6  adapter-plant-l6  expect: L-6 fails for hit() and edge() (exit ≠ 0)  ·  got: exit 1: FAIL  adapter-law  H4-records/adapter-plant-l6.mjs  L-6 hit() does not select under P.root() · L-6 edge() refers to extent()/paintingSeats()  [5 s, load 75.62]
+SELFTEST PASS  4/4 expectations hold
+14:49  up 3 days, 19:51, 3 users, load averages: 75.62 40.40 20.34

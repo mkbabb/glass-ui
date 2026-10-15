@@ -1,0 +1,14 @@
+load gate: waited 0s, load 92.99 (max 150)
+14:54  up 3 days, 19:56, 3 users, load averages: 92.99 77.74 43.83
+OK   CF  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 28/28 PASS  [126 s, load 92.99]
+OK   CF  tilesq          expect: exit ≠ 0; square|summary fails in ^c1·shape·h  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [6 s, load 76.42]
+OK   CF  morphsnap       expect: exit ≠ 0; continuous fails in ^c2·morph·  ·  got: exit 1, 4/4 FAIL; matching 4 (chromium+webkit)  [44 s, load 79.47]
+OK   CF  nofocus         expect: exit ≠ 0; opens fails in ^c3·focus  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [7 s, load 67.49]
+OK   CF  noscroll        expect: exit ≠ 0; collapses fails in ^c3·scroll  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [9 s, load 66.88]
+OK   CF  persistentinert  expect: exit ≠ 0; live fails in ^c4·persistent  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [6 s, load 64.32]
+OK   CF  focuslost       expect: exit ≠ 0; escape fails in ^c5·keyboard  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [13 s, load 62.61]
+OK   CF  menucollapse    expect: exit ≠ 0; holds fails in ^c6·menu  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [17 s, load 60.4]
+OK   CF  narrowover      expect: exit ≠ 0; inside|noscroll fails in ^c7·narrow  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [6 s, load 60.49]
+OK   CF  tapthrough      expect: exit ≠ 0; opens|swallowed fails in ^c7·coarse-tap  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [11 s, load 70.22]
+SELFTEST PASS  10/10 expectations hold
+14:58  up 3 days, 20 hrs, 3 users, load averages: 69.55 73.02 50.34

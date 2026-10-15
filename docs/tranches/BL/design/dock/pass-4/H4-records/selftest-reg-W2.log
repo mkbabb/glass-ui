@@ -1,0 +1,14 @@
+load gate: waited 990s, load 47.26 (max 150)
+16:54  up 3 days, 21:56, 3 users, load averages: 47.26 930.38 985.56
+OK   W2  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 16/16 PASS  [76 s, load 47.26]
+OK   W2  scroller        expect: exit ≠ 0; scroller fails in route2|route3|route4  ·  got: exit 1, 6/6 FAIL; matching 6 (chromium+webkit)  [39 s, load 893.68]
+OK   W2  ringclip        expect: exit ≠ 0; ring fails in route1  ·  got: exit 1, 4/4 FAIL; matching 4 (chromium+webkit)  [25 s, load 681.71]
+OK   W2  noring          expect: exit ≠ 0; paint fails in route1|route4  ·  got: exit 1, 6/6 FAIL; matching 6 (chromium+webkit)  [47 s, load 20.75]
+OK   W2  foldtail        expect: exit ≠ 0; pointer|keyboard|at fails in route1  ·  got: exit 1, 4/4 FAIL; matching 4 (chromium+webkit)  [25 s, load 912.11]
+OK   W2  notab           expect: exit ≠ 0; keyboard fails in route1|route5|route6|route7  ·  got: exit 1, 10/10 FAIL; matching 10 (chromium+webkit)  [39 s, load 278.35]
+OK   W2  noname          expect: exit ≠ 0; at fails in route1|route5|route6|route7  ·  got: exit 1, 10/10 FAIL; matching 10 (chromium+webkit)  [63 s, load 944.11]
+OK   W2  cwidth          expect: exit ≠ 0; plateOut fails in route5  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [22 s, load 874.64]
+OK   W2  depthscroll     expect: exit ≠ 0; scroller fails in route6  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [48 s, load 299.49]
+OK   W2  nestgrow        expect: exit ≠ 0; fits|faces|pointer fails in route7  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [26 s, load 200]
+SELFTEST PASS  10/10 expectations hold
+17:01  up 3 days, 22:03, 3 users, load averages: 775.94 507.94 619.25

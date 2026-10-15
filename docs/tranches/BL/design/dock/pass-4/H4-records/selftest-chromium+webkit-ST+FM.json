@@ -1,0 +1,81 @@
+{
+ "when": "2026-10-09T19:48:30.092Z",
+ "engines": [
+  "chromium",
+  "webkit"
+ ],
+ "rows": [
+  {
+   "witness": "ST",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 1, 17/18 PASS; failing: webkit:stall·same-task[leap]",
+   "ok": false,
+   "ms": 670169,
+   "load": 155.06
+  },
+  {
+   "witness": "ST",
+   "fixture": "pass@dark",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 1, 16/19 PASS; failing: webkit:stall·same-task[leap] webkit:stall·1raf[leap] webkit:stall·nb·same-task[neighbour]",
+   "ok": false,
+   "ms": 733394,
+   "load": 156.52
+  },
+  {
+   "witness": "ST",
+   "fixture": "leap",
+   "expect": "exit ≠ 0; leap fails in ^stall·",
+   "got": "exit 1, 16/20 FAIL; matching 8 (chromium+webkit)",
+   "ok": true,
+   "ms": 481429,
+   "load": 120.44
+  },
+  {
+   "witness": "ST",
+   "fixture": "nbjump",
+   "expect": "exit ≠ 0; neighbour fails in ^stall·nb·",
+   "got": "exit 1, 7/10 FAIL; matching 7 (chromium+webkit)",
+   "ok": true,
+   "ms": 217528,
+   "load": 245.74
+  },
+  {
+   "witness": "ST",
+   "fixture": "nboverlap",
+   "expect": "exit ≠ 0; overlap fails in ^stall·nb·",
+   "got": "exit 1, 9/10 FAIL; matching 8 (chromium+webkit)",
+   "ok": true,
+   "ms": 401292,
+   "load": 208.06
+  },
+  {
+   "witness": "FM",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 12/12 PASS",
+   "ok": true,
+   "ms": 182245,
+   "load": 468.44
+  },
+  {
+   "witness": "FM",
+   "fixture": "pass@dark",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 12/12 PASS",
+   "ok": true,
+   "ms": 143128,
+   "load": 412.43
+  },
+  {
+   "witness": "FM",
+   "fixture": "deadhooks",
+   "expect": "exit ≠ 0; tiles fails in ^film·",
+   "got": "exit 1, 12/12 FAIL; matching 12 (chromium+webkit)",
+   "ok": true,
+   "ms": 121464,
+   "load": 435.39
+  }
+ ]
+}

@@ -1,0 +1,3621 @@
+{
+ "witness": "ST",
+ "target": "fv2@a36fe2be",
+ "when": "2026-10-15T18:46:59.705Z",
+ "load": 9.28,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "stall·same-task",
+   "pass": false,
+   "failed": [
+    "leap"
+   ],
+   "videoScale": 1.0022,
+   "D": 379.2,
+   "rests": [
+    101.87,
+    481.07
+   ],
+   "restsDom": [
+    102,
+    481.66
+   ],
+   "blockMs": 1200,
+   "callToBlockMs": 0,
+   "blockEndMs": 1240,
+   "firstMoveMs": 1240,
+   "landMs": 1240,
+   "travelInBlockPx": 0.01,
+   "worstStepPx": 379.2,
+   "worstStepAtMs": 1240,
+   "worstStepDtMs": 40,
+   "boundPx": 192.47,
+   "ratio": 1.97,
+   "trace": [
+    [
+     -80,
+     101.87
+    ],
+    [
+     -40,
+     101.87
+    ],
+    [
+     0,
+     101.89
+    ],
+    [
+     40,
+     101.9
+    ],
+    [
+     80,
+     101.9
+    ],
+    [
+     120,
+     101.9
+    ],
+    [
+     160,
+     101.9
+    ],
+    [
+     200,
+     101.9
+    ],
+    [
+     240,
+     101.9
+    ],
+    [
+     280,
+     101.9
+    ],
+    [
+     320,
+     101.9
+    ],
+    [
+     360,
+     101.9
+    ],
+    [
+     400,
+     101.9
+    ],
+    [
+     440,
+     101.9
+    ],
+    [
+     480,
+     101.9
+    ],
+    [
+     520,
+     101.9
+    ],
+    [
+     560,
+     101.9
+    ],
+    [
+     600,
+     101.9
+    ],
+    [
+     640,
+     101.9
+    ],
+    [
+     680,
+     101.9
+    ],
+    [
+     720,
+     101.9
+    ],
+    [
+     760,
+     101.9
+    ],
+    [
+     800,
+     101.9
+    ],
+    [
+     840,
+     101.9
+    ],
+    [
+     880,
+     101.9
+    ],
+    [
+     920,
+     101.9
+    ],
+    [
+     960,
+     101.9
+    ],
+    [
+     1000,
+     101.9
+    ],
+    [
+     1040,
+     101.9
+    ],
+    [
+     1080,
+     101.9
+    ],
+    [
+     1120,
+     101.9
+    ],
+    [
+     1160,
+     101.9
+    ],
+    [
+     1200,
+     101.9
+    ],
+    [
+     1240,
+     481.09
+    ],
+    [
+     1280,
+     481.12
+    ],
+    [
+     1320,
+     481.15
+    ]
+   ],
+   "summary": "same-task: a 1200 ms block 0 ms after the flip (video: trigger marker → block-end marker 1240 ms); D 379.2 px (101.87 → 481.07); first leaves its rest at 1240 ms, travels 0.01 px before the block-end marker, lands at 1240 ms (RECORD; video scale 1.002); worst one-frame step 379.2 px at 1240 ms (dt 40 ms) vs bound 192.47 px (×1.97)  ⟶ FAILED: leap",
+   "load": 9.19
+  },
+  {
+   "engine": "chromium",
+   "cell": "stall·1raf",
+   "pass": false,
+   "failed": [
+    "leap"
+   ],
+   "videoScale": 1.0022,
+   "D": 379.2,
+   "rests": [
+    101.87,
+    481.07
+   ],
+   "restsDom": [
+    102,
+    481.66
+   ],
+   "blockMs": 1200,
+   "callToBlockMs": 7.4,
+   "blockEndMs": 1240,
+   "firstMoveMs": 1240,
+   "landMs": 1240,
+   "travelInBlockPx": 0.01,
+   "worstStepPx": 379.2,
+   "worstStepAtMs": 1240,
+   "worstStepDtMs": 40,
+   "boundPx": 192.47,
+   "ratio": 1.97,
+   "trace": [
+    [
+     -80,
+     101.87
+    ],
+    [
+     -40,
+     101.87
+    ],
+    [
+     0,
+     101.89
+    ],
+    [
+     40,
+     101.9
+    ],
+    [
+     80,
+     101.9
+    ],
+    [
+     120,
+     101.9
+    ],
+    [
+     160,
+     101.9
+    ],
+    [
+     200,
+     101.9
+    ],
+    [
+     240,
+     101.9
+    ],
+    [
+     280,
+     101.9
+    ],
+    [
+     320,
+     101.9
+    ],
+    [
+     360,
+     101.9
+    ],
+    [
+     400,
+     101.9
+    ],
+    [
+     440,
+     101.9
+    ],
+    [
+     480,
+     101.9
+    ],
+    [
+     520,
+     101.9
+    ],
+    [
+     560,
+     101.9
+    ],
+    [
+     600,
+     101.9
+    ],
+    [
+     640,
+     101.9
+    ],
+    [
+     680,
+     101.9
+    ],
+    [
+     720,
+     101.9
+    ],
+    [
+     760,
+     101.9
+    ],
+    [
+     800,
+     101.9
+    ],
+    [
+     840,
+     101.9
+    ],
+    [
+     880,
+     101.9
+    ],
+    [
+     920,
+     101.9
+    ],
+    [
+     960,
+     101.9
+    ],
+    [
+     1000,
+     101.9
+    ],
+    [
+     1040,
+     101.9
+    ],
+    [
+     1080,
+     101.9
+    ],
+    [
+     1120,
+     101.9
+    ],
+    [
+     1160,
+     101.9
+    ],
+    [
+     1200,
+     101.9
+    ],
+    [
+     1240,
+     481.09
+    ],
+    [
+     1280,
+     481.12
+    ],
+    [
+     1320,
+     481.15
+    ]
+   ],
+   "summary": "1raf: a 1200 ms block 7.4 ms after the flip (video: trigger marker → block-end marker 1240 ms); D 379.2 px (101.87 → 481.07); first leaves its rest at 1240 ms, travels 0.01 px before the block-end marker, lands at 1240 ms (RECORD; video scale 1.002); worst one-frame step 379.2 px at 1240 ms (dt 40 ms) vs bound 192.47 px (×1.97)  ⟶ FAILED: leap",
+   "load": 9.1
+  },
+  {
+   "engine": "chromium",
+   "cell": "stall·2raf",
+   "pass": false,
+   "failed": [
+    "leap"
+   ],
+   "videoScale": 1.0022,
+   "D": 379.2,
+   "rests": [
+    101.87,
+    481.07
+   ],
+   "restsDom": [
+    102,
+    481.66
+   ],
+   "blockMs": 1200,
+   "callToBlockMs": 15.6,
+   "blockEndMs": 1240,
+   "firstMoveMs": 40,
+   "landMs": 1240,
+   "travelInBlockPx": 18.79,
+   "worstStepPx": 360.42,
+   "worstStepAtMs": 1240,
+   "worstStepDtMs": 40,
+   "boundPx": 192.47,
+   "ratio": 1.87,
+   "trace": [
+    [
+     -80,
+     101.87
+    ],
+    [
+     -40,
+     101.87
+    ],
+    [
+     0,
+     101.89
+    ],
+    [
+     40,
+     120.67
+    ],
+    [
+     80,
+     120.67
+    ],
+    [
+     120,
+     120.67
+    ],
+    [
+     160,
+     120.67
+    ],
+    [
+     200,
+     120.67
+    ],
+    [
+     240,
+     120.67
+    ],
+    [
+     280,
+     120.67
+    ],
+    [
+     320,
+     120.67
+    ],
+    [
+     360,
+     120.67
+    ],
+    [
+     400,
+     120.67
+    ],
+    [
+     440,
+     120.67
+    ],
+    [
+     480,
+     120.67
+    ],
+    [
+     520,
+     120.67
+    ],
+    [
+     560,
+     120.67
+    ],
+    [
+     600,
+     120.67
+    ],
+    [
+     640,
+     120.67
+    ],
+    [
+     680,
+     120.67
+    ],
+    [
+     720,
+     120.67
+    ],
+    [
+     760,
+     120.67
+    ],
+    [
+     800,
+     120.67
+    ],
+    [
+     840,
+     120.67
+    ],
+    [
+     880,
+     120.67
+    ],
+    [
+     920,
+     120.67
+    ],
+    [
+     960,
+     120.67
+    ],
+    [
+     1000,
+     120.67
+    ],
+    [
+     1040,
+     120.67
+    ],
+    [
+     1080,
+     120.67
+    ],
+    [
+     1120,
+     120.67
+    ],
+    [
+     1160,
+     120.67
+    ],
+    [
+     1200,
+     120.67
+    ],
+    [
+     1240,
+     481.09
+    ],
+    [
+     1280,
+     481.12
+    ],
+    [
+     1320,
+     481.15
+    ]
+   ],
+   "summary": "2raf: a 1200 ms block 15.6 ms after the flip (video: trigger marker → block-end marker 1240 ms); D 379.2 px (101.87 → 481.07); first leaves its rest at 40 ms, travels 18.79 px before the block-end marker, lands at 1240 ms (RECORD; video scale 1.002); worst one-frame step 360.42 px at 1240 ms (dt 40 ms) vs bound 192.47 px (×1.87)  ⟶ FAILED: leap",
+   "load": 9.8
+  },
+  {
+   "engine": "chromium",
+   "cell": "stall·mid-flight",
+   "pass": false,
+   "failed": [
+    "leap"
+   ],
+   "videoScale": 1.0024,
+   "D": 379.14,
+   "rests": [
+    101.86,
+    481
+   ],
+   "restsDom": [
+    102,
+    481.66
+   ],
+   "blockMs": 1200,
+   "callToBlockMs": 57.5,
+   "blockEndMs": 1280,
+   "firstMoveMs": 40,
+   "landMs": 1280,
+   "travelInBlockPx": 120.51,
+   "worstStepPx": 239.87,
+   "worstStepAtMs": 1280,
+   "worstStepDtMs": 40,
+   "boundPx": 192.45,
+   "ratio": 1.25,
+   "trace": [
+    [
+     -80,
+     101.86
+    ],
+    [
+     -40,
+     101.86
+    ],
+    [
+     0,
+     120.64
+    ],
+    [
+     40,
+     241.14
+    ],
+    [
+     80,
+     241.15
+    ],
+    [
+     120,
+     241.15
+    ],
+    [
+     160,
+     241.16
+    ],
+    [
+     200,
+     241.16
+    ],
+    [
+     240,
+     241.16
+    ],
+    [
+     280,
+     241.16
+    ],
+    [
+     320,
+     241.16
+    ],
+    [
+     360,
+     241.16
+    ],
+    [
+     400,
+     241.16
+    ],
+    [
+     440,
+     241.16
+    ],
+    [
+     480,
+     241.16
+    ],
+    [
+     520,
+     241.16
+    ],
+    [
+     560,
+     241.16
+    ],
+    [
+     600,
+     241.16
+    ],
+    [
+     640,
+     241.16
+    ],
+    [
+     680,
+     241.16
+    ],
+    [
+     720,
+     241.16
+    ],
+    [
+     760,
+     241.16
+    ],
+    [
+     800,
+     241.16
+    ],
+    [
+     840,
+     241.16
+    ],
+    [
+     880,
+     241.16
+    ],
+    [
+     920,
+     241.16
+    ],
+    [
+     960,
+     241.16
+    ],
+    [
+     1000,
+     241.16
+    ],
+    [
+     1040,
+     241.16
+    ],
+    [
+     1080,
+     241.16
+    ],
+    [
+     1120,
+     241.16
+    ],
+    [
+     1160,
+     241.16
+    ],
+    [
+     1200,
+     241.16
+    ],
+    [
+     1240,
+     241.16
+    ],
+    [
+     1280,
+     481.03
+    ],
+    [
+     1320,
+     481.05
+    ],
+    [
+     1360,
+     481.08
+    ]
+   ],
+   "summary": "mid-flight: a 1200 ms block 57.5 ms after the flip (video: trigger marker → block-end marker 1280 ms); D 379.14 px (101.86 → 481); first leaves its rest at 40 ms, travels 120.51 px before the block-end marker, lands at 1280 ms (RECORD; video scale 1.002); worst one-frame step 239.87 px at 1280 ms (dt 40 ms) vs bound 192.45 px (×1.25)  ⟶ FAILED: leap",
+   "load": 9.42
+  },
+  {
+   "engine": "chromium",
+   "cell": "stall·nb·same-task",
+   "nb": {
+    "frames": 33,
+    "Dnb": 378.62,
+    "worstOverlapPx": -19.64,
+    "overlapAtMs": 1200,
+    "worstStepPx": 378.62,
+    "stepBoundPx": 192.18,
+    "stepRatio": 1.97,
+    "stepAtMs": 1200,
+    "restOk": true
+   },
+   "pass": false,
+   "failed": [
+    "neighbour"
+   ],
+   "videoScale": 1.0036,
+   "D": 378.51,
+   "rests": [
+    101.62,
+    480.13
+   ],
+   "restsDom": [
+    102,
+    481.66
+   ],
+   "blockMs": 1200,
+   "callToBlockMs": 0.1,
+   "blockEndMs": 1200,
+   "firstMoveMs": 1200,
+   "landMs": 1200,
+   "travelInBlockPx": 0,
+   "worstStepPx": 378.47,
+   "worstStepAtMs": 1200,
+   "worstStepDtMs": 40,
+   "boundPx": 192.13,
+   "ratio": 1.97,
+   "trace": [
+    [
+     -80,
+     101.62
+    ],
+    [
+     -40,
+     101.62
+    ],
+    [
+     0,
+     101.65
+    ],
+    [
+     40,
+     101.64
+    ],
+    [
+     80,
+     101.64
+    ],
+    [
+     120,
+     101.64
+    ],
+    [
+     160,
+     101.64
+    ],
+    [
+     200,
+     101.64
+    ],
+    [
+     240,
+     101.64
+    ],
+    [
+     280,
+     101.64
+    ],
+    [
+     320,
+     101.64
+    ],
+    [
+     360,
+     101.64
+    ],
+    [
+     400,
+     101.64
+    ],
+    [
+     440,
+     101.64
+    ],
+    [
+     480,
+     101.64
+    ],
+    [
+     520,
+     101.64
+    ],
+    [
+     560,
+     101.64
+    ],
+    [
+     600,
+     101.64
+    ],
+    [
+     640,
+     101.64
+    ],
+    [
+     680,
+     101.64
+    ],
+    [
+     720,
+     101.64
+    ],
+    [
+     760,
+     101.64
+    ],
+    [
+     800,
+     101.64
+    ],
+    [
+     840,
+     101.64
+    ],
+    [
+     880,
+     101.64
+    ],
+    [
+     920,
+     101.64
+    ],
+    [
+     960,
+     101.64
+    ],
+    [
+     1000,
+     101.64
+    ],
+    [
+     1040,
+     101.64
+    ],
+    [
+     1080,
+     101.64
+    ],
+    [
+     1120,
+     101.64
+    ],
+    [
+     1160,
+     101.64
+    ],
+    [
+     1200,
+     480.11
+    ],
+    [
+     1240,
+     480.11
+    ],
+    [
+     1280,
+     480.11
+    ]
+   ],
+   "summary": "the neighbour: 33 frame(s) read; the plate over its box at worst -19.64 px at 1200 ms (bound 0.5); it travels 378.62 px, worst one-frame step 378.62 px at 1200 ms vs bound 192.18 px (×1.97) · same-task: a 1200 ms block 0.1 ms after the flip (video: trigger marker → block-end marker 1200 ms); D 378.51 px (101.62 → 480.13); first leaves its rest at 1200 ms, travels 0 px before the block-end marker, lands at 1200 ms (RECORD; video scale 1.004); worst one-frame step 378.47 px at 1200 ms (dt 40 ms) vs bound 192.13 px (×1.97)  ⟶ FAILED: neighbour",
+   "load": 9.52
+  },
+  {
+   "engine": "chromium",
+   "cell": "stall·nb·1raf",
+   "nb": {
+    "frames": 34,
+    "Dnb": 378.91,
+    "worstOverlapPx": -19.71,
+    "overlapAtMs": 0,
+    "worstStepPx": 378.91,
+    "stepBoundPx": 192.33,
+    "stepRatio": 1.97,
+    "stepAtMs": 1200,
+    "restOk": true
+   },
+   "pass": false,
+   "failed": [
+    "neighbour"
+   ],
+   "videoScale": 1.0029,
+   "D": 378.81,
+   "rests": [
+    101.69,
+    480.5
+   ],
+   "restsDom": [
+    102,
+    481.66
+   ],
+   "blockMs": 1200,
+   "callToBlockMs": 7.4,
+   "blockEndMs": 1200,
+   "firstMoveMs": 1200,
+   "landMs": 1240,
+   "travelInBlockPx": 0,
+   "worstStepPx": 359.54,
+   "worstStepAtMs": 1240,
+   "worstStepDtMs": 40,
+   "boundPx": 192.28,
+   "ratio": 1.87,
+   "trace": [
+    [
+     -80,
+     101.69
+    ],
+    [
+     -40,
+     101.69
+    ],
+    [
+     0,
+     101.72
+    ],
+    [
+     40,
+     101.71
+    ],
+    [
+     80,
+     101.71
+    ],
+    [
+     120,
+     101.71
+    ],
+    [
+     160,
+     101.71
+    ],
+    [
+     200,
+     101.71
+    ],
+    [
+     240,
+     101.71
+    ],
+    [
+     280,
+     101.71
+    ],
+    [
+     320,
+     101.71
+    ],
+    [
+     360,
+     101.71
+    ],
+    [
+     400,
+     101.71
+    ],
+    [
+     440,
+     101.71
+    ],
+    [
+     480,
+     101.71
+    ],
+    [
+     520,
+     101.71
+    ],
+    [
+     560,
+     101.71
+    ],
+    [
+     600,
+     101.71
+    ],
+    [
+     640,
+     101.71
+    ],
+    [
+     680,
+     101.71
+    ],
+    [
+     720,
+     101.71
+    ],
+    [
+     760,
+     101.71
+    ],
+    [
+     800,
+     101.71
+    ],
+    [
+     840,
+     101.71
+    ],
+    [
+     880,
+     101.71
+    ],
+    [
+     920,
+     101.71
+    ],
+    [
+     960,
+     101.71
+    ],
+    [
+     1000,
+     101.71
+    ],
+    [
+     1040,
+     101.71
+    ],
+    [
+     1080,
+     101.71
+    ],
+    [
+     1120,
+     101.71
+    ],
+    [
+     1160,
+     101.71
+    ],
+    [
+     1200,
+     121
+    ],
+    [
+     1240,
+     480.53
+    ],
+    [
+     1280,
+     480.53
+    ],
+    [
+     1320,
+     480.52
+    ]
+   ],
+   "summary": "the neighbour: 34 frame(s) read; the plate over its box at worst -19.71 px at 0 ms (bound 0.5); it travels 378.91 px, worst one-frame step 378.91 px at 1200 ms vs bound 192.33 px (×1.97) · 1raf: a 1200 ms block 7.4 ms after the flip (video: trigger marker → block-end marker 1200 ms); D 378.81 px (101.69 → 480.5); first leaves its rest at 1200 ms, travels 0 px before the block-end marker, lands at 1240 ms (RECORD; video scale 1.003); worst one-frame step 359.54 px at 1240 ms (dt 40 ms) vs bound 192.28 px (×1.87)  ⟶ FAILED: neighbour",
+   "load": 9.56
+  },
+  {
+   "engine": "chromium",
+   "cell": "stall·nb·2raf",
+   "nb": {
+    "frames": 34,
+    "Dnb": 378.91,
+    "worstOverlapPx": -19.71,
+    "overlapAtMs": 0,
+    "worstStepPx": 378.91,
+    "stepBoundPx": 192.33,
+    "stepRatio": 1.97,
+    "stepAtMs": 40,
+    "restOk": true
+   },
+   "pass": false,
+   "failed": [
+    "neighbour"
+   ],
+   "videoScale": 1.0029,
+   "D": 378.81,
+   "rests": [
+    101.69,
+    480.5
+   ],
+   "restsDom": [
+    102,
+    481.66
+   ],
+   "blockMs": 1200,
+   "callToBlockMs": 33.5,
+   "blockEndMs": 1240,
+   "firstMoveMs": 40,
+   "landMs": 1240,
+   "travelInBlockPx": 19.14,
+   "worstStepPx": 359.68,
+   "worstStepAtMs": 1240,
+   "worstStepDtMs": 40,
+   "boundPx": 192.28,
+   "ratio": 1.87,
+   "trace": [
+    [
+     -80,
+     101.69
+    ],
+    [
+     -40,
+     101.69
+    ],
+    [
+     0,
+     101.72
+    ],
+    [
+     40,
+     120.79
+    ],
+    [
+     80,
+     120.86
+    ],
+    [
+     120,
+     120.86
+    ],
+    [
+     160,
+     120.86
+    ],
+    [
+     200,
+     120.86
+    ],
+    [
+     240,
+     120.86
+    ],
+    [
+     280,
+     120.86
+    ],
+    [
+     320,
+     120.86
+    ],
+    [
+     360,
+     120.86
+    ],
+    [
+     400,
+     120.86
+    ],
+    [
+     440,
+     120.86
+    ],
+    [
+     480,
+     120.86
+    ],
+    [
+     520,
+     120.86
+    ],
+    [
+     560,
+     120.86
+    ],
+    [
+     600,
+     120.86
+    ],
+    [
+     640,
+     120.86
+    ],
+    [
+     680,
+     120.86
+    ],
+    [
+     720,
+     120.86
+    ],
+    [
+     760,
+     120.86
+    ],
+    [
+     800,
+     120.86
+    ],
+    [
+     840,
+     120.86
+    ],
+    [
+     880,
+     120.86
+    ],
+    [
+     920,
+     120.86
+    ],
+    [
+     960,
+     120.86
+    ],
+    [
+     1000,
+     120.86
+    ],
+    [
+     1040,
+     120.86
+    ],
+    [
+     1080,
+     120.86
+    ],
+    [
+     1120,
+     120.86
+    ],
+    [
+     1160,
+     120.86
+    ],
+    [
+     1200,
+     120.86
+    ],
+    [
+     1240,
+     480.53
+    ],
+    [
+     1280,
+     480.51
+    ],
+    [
+     1320,
+     480.52
+    ]
+   ],
+   "summary": "the neighbour: 34 frame(s) read; the plate over its box at worst -19.71 px at 0 ms (bound 0.5); it travels 378.91 px, worst one-frame step 378.91 px at 40 ms vs bound 192.33 px (×1.97) · 2raf: a 1200 ms block 33.5 ms after the flip (video: trigger marker → block-end marker 1240 ms); D 378.81 px (101.69 → 480.5); first leaves its rest at 40 ms, travels 19.14 px before the block-end marker, lands at 1240 ms (RECORD; video scale 1.003); worst one-frame step 359.68 px at 1240 ms (dt 40 ms) vs bound 192.28 px (×1.87)  ⟶ FAILED: neighbour",
+   "load": 9.19
+  },
+  {
+   "engine": "chromium",
+   "cell": "stall·nb·100ms",
+   "nb": {
+    "frames": 36,
+    "Dnb": 379.02,
+    "worstOverlapPx": -19.74,
+    "overlapAtMs": 1320,
+    "worstStepPx": 379.02,
+    "stepBoundPx": 192.38,
+    "stepRatio": 1.97,
+    "stepAtMs": 40,
+    "restOk": true
+   },
+   "pass": false,
+   "failed": [
+    "neighbour"
+   ],
+   "videoScale": 1.0026,
+   "D": 378.91,
+   "rests": [
+    101.72,
+    480.63
+   ],
+   "restsDom": [
+    102,
+    481.66
+   ],
+   "blockMs": 1200,
+   "callToBlockMs": 100.9,
+   "blockEndMs": 1320,
+   "firstMoveMs": 40,
+   "landMs": 1320,
+   "travelInBlockPx": 270.37,
+   "worstStepPx": 125.63,
+   "worstStepAtMs": 80,
+   "worstStepDtMs": 40,
+   "boundPx": 192.33,
+   "ratio": 0.65,
+   "trace": [
+    [
+     -80,
+     101.72
+    ],
+    [
+     -40,
+     101.72
+    ],
+    [
+     0,
+     101.75
+    ],
+    [
+     40,
+     188.61
+    ],
+    [
+     80,
+     314.24
+    ],
+    [
+     120,
+     372.12
+    ],
+    [
+     160,
+     372.11
+    ],
+    [
+     200,
+     372.11
+    ],
+    [
+     240,
+     372.11
+    ],
+    [
+     280,
+     372.11
+    ],
+    [
+     320,
+     372.11
+    ],
+    [
+     360,
+     372.11
+    ],
+    [
+     400,
+     372.11
+    ],
+    [
+     440,
+     372.11
+    ],
+    [
+     480,
+     372.11
+    ],
+    [
+     520,
+     372.11
+    ],
+    [
+     560,
+     372.11
+    ],
+    [
+     600,
+     372.11
+    ],
+    [
+     640,
+     372.11
+    ],
+    [
+     680,
+     372.11
+    ],
+    [
+     720,
+     372.11
+    ],
+    [
+     760,
+     372.11
+    ],
+    [
+     800,
+     372.11
+    ],
+    [
+     840,
+     372.11
+    ],
+    [
+     880,
+     372.11
+    ],
+    [
+     920,
+     372.11
+    ],
+    [
+     960,
+     372.11
+    ],
+    [
+     1000,
+     372.11
+    ],
+    [
+     1040,
+     372.11
+    ],
+    [
+     1080,
+     372.11
+    ],
+    [
+     1120,
+     372.11
+    ],
+    [
+     1160,
+     372.11
+    ],
+    [
+     1200,
+     372.11
+    ],
+    [
+     1240,
+     372.11
+    ],
+    [
+     1280,
+     372.11
+    ],
+    [
+     1320,
+     480.68
+    ],
+    [
+     1360,
+     480.67
+    ],
+    [
+     1400,
+     480.66
+    ]
+   ],
+   "summary": "the neighbour: 36 frame(s) read; the plate over its box at worst -19.74 px at 1320 ms (bound 0.5); it travels 379.02 px, worst one-frame step 379.02 px at 40 ms vs bound 192.38 px (×1.97) · 100ms: a 1200 ms block 100.9 ms after the flip (video: trigger marker → block-end marker 1320 ms); D 378.91 px (101.72 → 480.63); first leaves its rest at 40 ms, travels 270.37 px before the block-end marker, lands at 1320 ms (RECORD; video scale 1.003); worst one-frame step 125.63 px at 80 ms (dt 40 ms) vs bound 192.33 px (×0.65)  ⟶ FAILED: neighbour",
+   "load": 9.5
+  },
+  {
+   "engine": "chromium",
+   "cell": "stall·nb·mid-flight",
+   "nb": {
+    "frames": 35,
+    "Dnb": 379.12,
+    "worstOverlapPx": -19.77,
+    "overlapAtMs": 1280,
+    "worstStepPx": 0,
+    "stepBoundPx": 2,
+    "stepRatio": 0,
+    "stepAtMs": null,
+    "restOk": true
+   },
+   "pass": true,
+   "failed": [],
+   "videoScale": 1.0023,
+   "D": 379.01,
+   "rests": [
+    101.75,
+    480.77
+   ],
+   "restsDom": [
+    102,
+    481.66
+   ],
+   "blockMs": 1200,
+   "callToBlockMs": 57.5,
+   "blockEndMs": 1280,
+   "firstMoveMs": 40,
+   "landMs": 1280,
+   "travelInBlockPx": 122.71,
+   "worstStepPx": 237.28,
+   "worstStepAtMs": 1280,
+   "worstStepDtMs": 40,
+   "boundPx": 192.38,
+   "ratio": 1.23,
+   "trace": [
+    [
+     -80,
+     101.75
+    ],
+    [
+     -40,
+     101.75
+    ],
+    [
+     0,
+     120.86
+    ],
+    [
+     40,
+     243.57
+    ],
+    [
+     80,
+     243.54
+    ],
+    [
+     120,
+     243.54
+    ],
+    [
+     160,
+     243.54
+    ],
+    [
+     200,
+     243.54
+    ],
+    [
+     240,
+     243.54
+    ],
+    [
+     280,
+     243.54
+    ],
+    [
+     320,
+     243.54
+    ],
+    [
+     360,
+     243.54
+    ],
+    [
+     400,
+     243.54
+    ],
+    [
+     440,
+     243.54
+    ],
+    [
+     480,
+     243.54
+    ],
+    [
+     520,
+     243.54
+    ],
+    [
+     560,
+     243.54
+    ],
+    [
+     600,
+     243.54
+    ],
+    [
+     640,
+     243.54
+    ],
+    [
+     680,
+     243.54
+    ],
+    [
+     720,
+     243.54
+    ],
+    [
+     760,
+     243.54
+    ],
+    [
+     800,
+     243.54
+    ],
+    [
+     840,
+     243.54
+    ],
+    [
+     880,
+     243.54
+    ],
+    [
+     920,
+     243.54
+    ],
+    [
+     960,
+     243.54
+    ],
+    [
+     1000,
+     243.54
+    ],
+    [
+     1040,
+     243.54
+    ],
+    [
+     1080,
+     243.54
+    ],
+    [
+     1120,
+     243.54
+    ],
+    [
+     1160,
+     243.54
+    ],
+    [
+     1200,
+     243.54
+    ],
+    [
+     1240,
+     243.54
+    ],
+    [
+     1280,
+     480.83
+    ],
+    [
+     1320,
+     480.8
+    ],
+    [
+     1360,
+     480.8
+    ]
+   ],
+   "summary": "the neighbour: 35 frame(s) read; the plate over its box at worst -19.77 px at 1280 ms (bound 0.5); it travels 379.12 px, worst one-frame step 0 px at - ms vs bound 2 px (×0) · mid-flight: a 1200 ms block 57.5 ms after the flip (video: trigger marker → block-end marker 1280 ms); D 379.01 px (101.75 → 480.77); first leaves its rest at 40 ms, travels 122.71 px before the block-end marker, lands at 1280 ms (RECORD; video scale 1.002); worst one-frame step 237.28 px at 1280 ms (dt 40 ms) vs bound 192.38 px (×1.23)",
+   "load": 9.14
+  },
+  {
+   "engine": "webkit",
+   "cell": "stall·same-task",
+   "pass": true,
+   "failed": [],
+   "videoScale": 1.002,
+   "D": 379.23,
+   "rests": [
+    101.76,
+    480.99
+   ],
+   "restsDom": [
+    102,
+    481.72
+   ],
+   "blockMs": 1200,
+   "callToBlockMs": 1,
+   "blockEndMs": 1200,
+   "firstMoveMs": 1200,
+   "landMs": 1440,
+   "travelInBlockPx": 0.3,
+   "worstStepPx": 130.16,
+   "worstStepAtMs": 1280,
+   "worstStepDtMs": 40,
+   "boundPx": 192.49,
+   "ratio": 0.68,
+   "trace": [
+    [
+     -80,
+     101.73
+    ],
+    [
+     -40,
+     101.78
+    ],
+    [
+     0,
+     101.76
+    ],
+    [
+     40,
+     101.8
+    ],
+    [
+     80,
+     101.75
+    ],
+    [
+     120,
+     101.8
+    ],
+    [
+     160,
+     101.75
+    ],
+    [
+     200,
+     101.8
+    ],
+    [
+     240,
+     101.75
+    ],
+    [
+     280,
+     101.8
+    ],
+    [
+     320,
+     101.75
+    ],
+    [
+     360,
+     101.8
+    ],
+    [
+     400,
+     101.75
+    ],
+    [
+     440,
+     101.8
+    ],
+    [
+     480,
+     101.75
+    ],
+    [
+     520,
+     101.8
+    ],
+    [
+     560,
+     101.75
+    ],
+    [
+     600,
+     101.8
+    ],
+    [
+     640,
+     101.75
+    ],
+    [
+     680,
+     101.8
+    ],
+    [
+     720,
+     101.75
+    ],
+    [
+     760,
+     101.8
+    ],
+    [
+     800,
+     101.75
+    ],
+    [
+     840,
+     101.8
+    ],
+    [
+     880,
+     101.75
+    ],
+    [
+     920,
+     101.8
+    ],
+    [
+     960,
+     101.75
+    ],
+    [
+     1000,
+     101.69
+    ],
+    [
+     1040,
+     101.99
+    ],
+    [
+     1080,
+     101.99
+    ],
+    [
+     1120,
+     101.99
+    ],
+    [
+     1160,
+     101.99
+    ],
+    [
+     1200,
+     120.58
+    ],
+    [
+     1240,
+     245.16
+    ],
+    [
+     1280,
+     375.32
+    ],
+    [
+     1320,
+     375.35
+    ],
+    [
+     1360,
+     443.46
+    ],
+    [
+     1400,
+     466.28
+    ],
+    [
+     1440,
+     481.39
+    ],
+    [
+     1480,
+     481.32
+    ],
+    [
+     1520,
+     480.88
+    ]
+   ],
+   "summary": "same-task: a 1200 ms block 1 ms after the flip (video: trigger marker → block-end marker 1200 ms); D 379.23 px (101.76 → 480.99); first leaves its rest at 1200 ms, travels 0.3 px before the block-end marker, lands at 1440 ms (RECORD; video scale 1.002); worst one-frame step 130.16 px at 1280 ms (dt 40 ms) vs bound 192.49 px (×0.68)",
+   "load": 8.82
+  },
+  {
+   "engine": "webkit",
+   "cell": "stall·1raf",
+   "pass": false,
+   "failed": [
+    "leap"
+   ],
+   "videoScale": 1.0029,
+   "D": 379.38,
+   "rests": [
+    101.67,
+    481.05
+   ],
+   "restsDom": [
+    102,
+    481.72
+   ],
+   "blockMs": 1200,
+   "callToBlockMs": 16,
+   "blockEndMs": 1200,
+   "firstMoveMs": 1200,
+   "landMs": 1560,
+   "travelInBlockPx": 0.31,
+   "worstStepPx": 360.51,
+   "worstStepAtMs": 1240,
+   "worstStepDtMs": 40,
+   "boundPx": 192.57,
+   "ratio": 1.87,
+   "trace": [
+    [
+     -80,
+     101.64
+    ],
+    [
+     -40,
+     101.69
+    ],
+    [
+     0,
+     101.67
+    ],
+    [
+     40,
+     101.71
+    ],
+    [
+     80,
+     101.66
+    ],
+    [
+     120,
+     101.71
+    ],
+    [
+     160,
+     101.66
+    ],
+    [
+     200,
+     101.71
+    ],
+    [
+     240,
+     101.66
+    ],
+    [
+     280,
+     101.71
+    ],
+    [
+     320,
+     101.66
+    ],
+    [
+     360,
+     101.71
+    ],
+    [
+     400,
+     101.66
+    ],
+    [
+     440,
+     101.71
+    ],
+    [
+     480,
+     101.66
+    ],
+    [
+     520,
+     101.71
+    ],
+    [
+     560,
+     101.66
+    ],
+    [
+     600,
+     101.71
+    ],
+    [
+     640,
+     101.66
+    ],
+    [
+     680,
+     101.71
+    ],
+    [
+     720,
+     101.66
+    ],
+    [
+     760,
+     101.71
+    ],
+    [
+     800,
+     101.66
+    ],
+    [
+     840,
+     101.71
+    ],
+    [
+     880,
+     101.66
+    ],
+    [
+     920,
+     101.71
+    ],
+    [
+     960,
+     101.58
+    ],
+    [
+     1000,
+     101.78
+    ],
+    [
+     1040,
+     101.89
+    ],
+    [
+     1080,
+     101.86
+    ],
+    [
+     1120,
+     101.86
+    ],
+    [
+     1160,
+     101.86
+    ],
+    [
+     1200,
+     120.42
+    ],
+    [
+     1240,
+     480.93
+    ],
+    [
+     1280,
+     480.85
+    ],
+    [
+     1320,
+     480.93
+    ],
+    [
+     1360,
+     480.86
+    ],
+    [
+     1400,
+     480.87
+    ],
+    [
+     1440,
+     480.87
+    ],
+    [
+     1480,
+     480.87
+    ],
+    [
+     1520,
+     482.3
+    ],
+    [
+     1560,
+     480.95
+    ],
+    [
+     1600,
+     480.92
+    ],
+    [
+     1640,
+     480.6
+    ]
+   ],
+   "summary": "1raf: a 1200 ms block 16 ms after the flip (video: trigger marker → block-end marker 1200 ms); D 379.38 px (101.67 → 481.05); first leaves its rest at 1200 ms, travels 0.31 px before the block-end marker, lands at 1560 ms (RECORD; video scale 1.003); worst one-frame step 360.51 px at 1240 ms (dt 40 ms) vs bound 192.57 px (×1.87)  ⟶ FAILED: leap",
+   "load": 9.08
+  },
+  {
+   "engine": "webkit",
+   "cell": "stall·2raf",
+   "pass": false,
+   "failed": [
+    "leap"
+   ],
+   "videoScale": 1.0018,
+   "D": 379.79,
+   "rests": [
+    101.81,
+    481.6
+   ],
+   "restsDom": [
+    102,
+    481.72
+   ],
+   "blockMs": 1200,
+   "callToBlockMs": 33,
+   "blockEndMs": 1280,
+   "firstMoveMs": 40,
+   "landMs": 1560,
+   "travelInBlockPx": 18.98,
+   "worstStepPx": 360.91,
+   "worstStepAtMs": 1280,
+   "worstStepDtMs": 40,
+   "boundPx": 192.77,
+   "ratio": 1.87,
+   "trace": [
+    [
+     -80,
+     101.81
+    ],
+    [
+     -40,
+     101.75
+    ],
+    [
+     0,
+     101.84
+    ],
+    [
+     40,
+     120.48
+    ],
+    [
+     80,
+     120.5
+    ],
+    [
+     120,
+     120.5
+    ],
+    [
+     160,
+     120.5
+    ],
+    [
+     200,
+     120.5
+    ],
+    [
+     240,
+     120.5
+    ],
+    [
+     280,
+     120.5
+    ],
+    [
+     320,
+     120.5
+    ],
+    [
+     360,
+     120.5
+    ],
+    [
+     400,
+     120.5
+    ],
+    [
+     440,
+     120.5
+    ],
+    [
+     480,
+     120.5
+    ],
+    [
+     520,
+     120.5
+    ],
+    [
+     560,
+     120.5
+    ],
+    [
+     600,
+     120.5
+    ],
+    [
+     640,
+     120.5
+    ],
+    [
+     680,
+     120.5
+    ],
+    [
+     720,
+     120.5
+    ],
+    [
+     760,
+     120.5
+    ],
+    [
+     800,
+     120.5
+    ],
+    [
+     840,
+     120.5
+    ],
+    [
+     880,
+     120.5
+    ],
+    [
+     920,
+     120.5
+    ],
+    [
+     960,
+     120.5
+    ],
+    [
+     1000,
+     120.5
+    ],
+    [
+     1040,
+     120.82
+    ],
+    [
+     1080,
+     120.57
+    ],
+    [
+     1120,
+     120.56
+    ],
+    [
+     1160,
+     120.57
+    ],
+    [
+     1200,
+     120.57
+    ],
+    [
+     1240,
+     120.57
+    ],
+    [
+     1280,
+     481.49
+    ],
+    [
+     1320,
+     481.41
+    ],
+    [
+     1360,
+     481.49
+    ],
+    [
+     1400,
+     481.41
+    ],
+    [
+     1440,
+     481.42
+    ],
+    [
+     1480,
+     481.42
+    ],
+    [
+     1520,
+     482.86
+    ],
+    [
+     1560,
+     481.51
+    ],
+    [
+     1600,
+     481.47
+    ],
+    [
+     1640,
+     481.15
+    ]
+   ],
+   "summary": "2raf: a 1200 ms block 33 ms after the flip (video: trigger marker → block-end marker 1280 ms); D 379.79 px (101.81 → 481.6); first leaves its rest at 40 ms, travels 18.98 px before the block-end marker, lands at 1560 ms (RECORD; video scale 1.002); worst one-frame step 360.91 px at 1280 ms (dt 40 ms) vs bound 192.77 px (×1.87)  ⟶ FAILED: leap",
+   "load": 8.98
+  },
+  {
+   "engine": "webkit",
+   "cell": "stall·mid-flight",
+   "pass": false,
+   "failed": [
+    "leap"
+   ],
+   "videoScale": 1.0023,
+   "D": 379.61,
+   "rests": [
+    101.72,
+    481.34
+   ],
+   "restsDom": [
+    102,
+    481.72
+   ],
+   "blockMs": 1200,
+   "callToBlockMs": 83,
+   "blockEndMs": 1280,
+   "firstMoveMs": 40,
+   "landMs": 1520,
+   "travelInBlockPx": 149.59,
+   "worstStepPx": 211.58,
+   "worstStepAtMs": 1280,
+   "worstStepDtMs": 40,
+   "boundPx": 192.68,
+   "ratio": 1.1,
+   "trace": [
+    [
+     -80,
+     101.72
+    ],
+    [
+     -40,
+     101.66
+    ],
+    [
+     0,
+     120.37
+    ],
+    [
+     40,
+     269.67
+    ],
+    [
+     80,
+     269.65
+    ],
+    [
+     120,
+     269.65
+    ],
+    [
+     160,
+     269.65
+    ],
+    [
+     200,
+     269.65
+    ],
+    [
+     240,
+     269.65
+    ],
+    [
+     280,
+     269.65
+    ],
+    [
+     320,
+     269.65
+    ],
+    [
+     360,
+     269.65
+    ],
+    [
+     400,
+     269.65
+    ],
+    [
+     440,
+     269.65
+    ],
+    [
+     480,
+     269.65
+    ],
+    [
+     520,
+     269.65
+    ],
+    [
+     560,
+     269.65
+    ],
+    [
+     600,
+     269.65
+    ],
+    [
+     640,
+     269.65
+    ],
+    [
+     680,
+     269.65
+    ],
+    [
+     720,
+     269.65
+    ],
+    [
+     760,
+     269.65
+    ],
+    [
+     800,
+     269.65
+    ],
+    [
+     840,
+     269.65
+    ],
+    [
+     880,
+     269.65
+    ],
+    [
+     920,
+     269.65
+    ],
+    [
+     960,
+     269.65
+    ],
+    [
+     1000,
+     269.65
+    ],
+    [
+     1040,
+     269.97
+    ],
+    [
+     1080,
+     269.72
+    ],
+    [
+     1120,
+     269.71
+    ],
+    [
+     1160,
+     269.68
+    ],
+    [
+     1200,
+     269.68
+    ],
+    [
+     1240,
+     269.68
+    ],
+    [
+     1280,
+     481.25
+    ],
+    [
+     1320,
+     481.16
+    ],
+    [
+     1360,
+     481.15
+    ],
+    [
+     1400,
+     481.15
+    ],
+    [
+     1440,
+     481.15
+    ],
+    [
+     1480,
+     482.6
+    ],
+    [
+     1520,
+     481.25
+    ],
+    [
+     1560,
+     481.21
+    ],
+    [
+     1600,
+     480.89
+    ]
+   ],
+   "summary": "mid-flight: a 1200 ms block 83 ms after the flip (video: trigger marker → block-end marker 1280 ms); D 379.61 px (101.72 → 481.34); first leaves its rest at 40 ms, travels 149.59 px before the block-end marker, lands at 1520 ms (RECORD; video scale 1.002); worst one-frame step 211.58 px at 1280 ms (dt 40 ms) vs bound 192.68 px (×1.1)  ⟶ FAILED: leap",
+   "load": 8.82
+  },
+  {
+   "engine": "webkit",
+   "cell": "stall·nb·same-task",
+   "nb": {
+    "frames": 40,
+    "Dnb": 379.6,
+    "worstOverlapPx": -19.9,
+    "overlapAtMs": 1480,
+    "worstStepPx": 379.6,
+    "stepBoundPx": 192.68,
+    "stepRatio": 1.97,
+    "stepAtMs": 1240,
+    "restOk": true
+   },
+   "pass": false,
+   "failed": [
+    "neighbour"
+   ],
+   "videoScale": 1.0011,
+   "D": 379.47,
+   "rests": [
+    101.92,
+    481.39
+   ],
+   "restsDom": [
+    102,
+    481.72
+   ],
+   "blockMs": 1200,
+   "callToBlockMs": 0,
+   "blockEndMs": 1240,
+   "firstMoveMs": 1240,
+   "landMs": 1480,
+   "travelInBlockPx": 0.29,
+   "worstStepPx": 106.76,
+   "worstStepAtMs": 1320,
+   "worstStepDtMs": 40,
+   "boundPx": 192.61,
+   "ratio": 0.55,
+   "trace": [
+    [
+     -80,
+     101.92
+    ],
+    [
+     -40,
+     101.92
+    ],
+    [
+     0,
+     101.95
+    ],
+    [
+     40,
+     101.96
+    ],
+    [
+     80,
+     101.96
+    ],
+    [
+     120,
+     101.96
+    ],
+    [
+     160,
+     101.96
+    ],
+    [
+     200,
+     101.96
+    ],
+    [
+     240,
+     101.96
+    ],
+    [
+     280,
+     101.96
+    ],
+    [
+     320,
+     101.96
+    ],
+    [
+     360,
+     101.96
+    ],
+    [
+     400,
+     101.96
+    ],
+    [
+     440,
+     101.96
+    ],
+    [
+     480,
+     101.96
+    ],
+    [
+     520,
+     101.96
+    ],
+    [
+     560,
+     101.96
+    ],
+    [
+     600,
+     101.96
+    ],
+    [
+     640,
+     101.96
+    ],
+    [
+     680,
+     101.96
+    ],
+    [
+     720,
+     101.96
+    ],
+    [
+     760,
+     101.96
+    ],
+    [
+     800,
+     101.96
+    ],
+    [
+     840,
+     101.96
+    ],
+    [
+     880,
+     101.96
+    ],
+    [
+     920,
+     101.96
+    ],
+    [
+     960,
+     101.96
+    ],
+    [
+     1000,
+     102.24
+    ],
+    [
+     1040,
+     102.01
+    ],
+    [
+     1080,
+     101.98
+    ],
+    [
+     1120,
+     101.99
+    ],
+    [
+     1160,
+     101.99
+    ],
+    [
+     1200,
+     101.99
+    ],
+    [
+     1240,
+     204.98
+    ],
+    [
+     1280,
+     304.82
+    ],
+    [
+     1320,
+     411.58
+    ],
+    [
+     1360,
+     411.58
+    ],
+    [
+     1400,
+     459.51
+    ],
+    [
+     1440,
+     477.67
+    ],
+    [
+     1480,
+     481.61
+    ],
+    [
+     1520,
+     481.33
+    ],
+    [
+     1560,
+     481.65
+    ]
+   ],
+   "summary": "the neighbour: 40 frame(s) read; the plate over its box at worst -19.9 px at 1480 ms (bound 0.5); it travels 379.6 px, worst one-frame step 379.6 px at 1240 ms vs bound 192.68 px (×1.97) · same-task: a 1200 ms block 0 ms after the flip (video: trigger marker → block-end marker 1240 ms); D 379.47 px (101.92 → 481.39); first leaves its rest at 1240 ms, travels 0.29 px before the block-end marker, lands at 1480 ms (RECORD; video scale 1.001); worst one-frame step 106.76 px at 1320 ms (dt 40 ms) vs bound 192.61 px (×0.55)  ⟶ FAILED: neighbour",
+   "load": 8.55
+  },
+  {
+   "engine": "webkit",
+   "cell": "stall·nb·1raf",
+   "nb": {
+    "frames": 34,
+    "Dnb": 379.5,
+    "worstOverlapPx": -19.87,
+    "overlapAtMs": 0,
+    "worstStepPx": 379.5,
+    "stepBoundPx": 192.63,
+    "stepRatio": 1.97,
+    "stepAtMs": 1240,
+    "restOk": true
+   },
+   "pass": false,
+   "failed": [
+    "neighbour"
+   ],
+   "videoScale": 1.0013,
+   "D": 379.68,
+   "rests": [
+    101.9,
+    481.57
+   ],
+   "restsDom": [
+    102,
+    481.72
+   ],
+   "blockMs": 1200,
+   "callToBlockMs": 15,
+   "blockEndMs": 1240,
+   "firstMoveMs": 1240,
+   "landMs": 1240,
+   "travelInBlockPx": 0.29,
+   "worstStepPx": 379.62,
+   "worstStepAtMs": 1240,
+   "worstStepDtMs": 40,
+   "boundPx": 192.71,
+   "ratio": 1.97,
+   "trace": [
+    [
+     -80,
+     101.9
+    ],
+    [
+     -40,
+     101.9
+    ],
+    [
+     0,
+     101.92
+    ],
+    [
+     40,
+     101.93
+    ],
+    [
+     80,
+     101.93
+    ],
+    [
+     120,
+     101.93
+    ],
+    [
+     160,
+     101.93
+    ],
+    [
+     200,
+     101.93
+    ],
+    [
+     240,
+     101.93
+    ],
+    [
+     280,
+     101.93
+    ],
+    [
+     320,
+     101.93
+    ],
+    [
+     360,
+     101.93
+    ],
+    [
+     400,
+     101.93
+    ],
+    [
+     440,
+     101.93
+    ],
+    [
+     480,
+     101.93
+    ],
+    [
+     520,
+     101.93
+    ],
+    [
+     560,
+     101.93
+    ],
+    [
+     600,
+     101.93
+    ],
+    [
+     640,
+     101.93
+    ],
+    [
+     680,
+     101.93
+    ],
+    [
+     720,
+     101.93
+    ],
+    [
+     760,
+     101.93
+    ],
+    [
+     800,
+     101.93
+    ],
+    [
+     840,
+     101.93
+    ],
+    [
+     880,
+     101.93
+    ],
+    [
+     920,
+     101.93
+    ],
+    [
+     960,
+     101.93
+    ],
+    [
+     1000,
+     102.21
+    ],
+    [
+     1040,
+     101.98
+    ],
+    [
+     1080,
+     101.97
+    ],
+    [
+     1120,
+     101.95
+    ],
+    [
+     1160,
+     101.95
+    ],
+    [
+     1200,
+     101.95
+    ],
+    [
+     1240,
+     481.57
+    ],
+    [
+     1280,
+     481.56
+    ],
+    [
+     1320,
+     481.56
+    ]
+   ],
+   "summary": "the neighbour: 34 frame(s) read; the plate over its box at worst -19.87 px at 0 ms (bound 0.5); it travels 379.5 px, worst one-frame step 379.5 px at 1240 ms vs bound 192.63 px (×1.97) · 1raf: a 1200 ms block 15 ms after the flip (video: trigger marker → block-end marker 1240 ms); D 379.68 px (101.9 → 481.57); first leaves its rest at 1240 ms, travels 0.29 px before the block-end marker, lands at 1240 ms (RECORD; video scale 1.001); worst one-frame step 379.62 px at 1240 ms (dt 40 ms) vs bound 192.71 px (×1.97)  ⟶ FAILED: neighbour",
+   "load": 8.91
+  },
+  {
+   "engine": "webkit",
+   "cell": "stall·nb·2raf",
+   "nb": {
+    "frames": 33,
+    "Dnb": 379.34,
+    "worstOverlapPx": -19.83,
+    "overlapAtMs": 1200,
+    "worstStepPx": 0,
+    "stepBoundPx": 2,
+    "stepRatio": 0,
+    "stepAtMs": null,
+    "restOk": true
+   },
+   "pass": true,
+   "failed": [],
+   "videoScale": 1.0018,
+   "D": 379.2,
+   "rests": [
+    101.85,
+    481.05
+   ],
+   "restsDom": [
+    102,
+    481.72
+   ],
+   "blockMs": 1200,
+   "callToBlockMs": 32,
+   "blockEndMs": 1200,
+   "firstMoveMs": 40,
+   "landMs": 1200,
+   "travelInBlockPx": 2.75,
+   "worstStepPx": 360.59,
+   "worstStepAtMs": 1200,
+   "worstStepDtMs": 40,
+   "boundPx": 192.48,
+   "ratio": 1.87,
+   "trace": [
+    [
+     -80,
+     101.85
+    ],
+    [
+     -40,
+     101.85
+    ],
+    [
+     0,
+     120.95
+    ],
+    [
+     40,
+     121.03
+    ],
+    [
+     80,
+     121.03
+    ],
+    [
+     120,
+     121.05
+    ],
+    [
+     160,
+     121.01
+    ],
+    [
+     200,
+     121.02
+    ],
+    [
+     240,
+     121.01
+    ],
+    [
+     280,
+     121.02
+    ],
+    [
+     320,
+     121.01
+    ],
+    [
+     360,
+     121.02
+    ],
+    [
+     400,
+     121.01
+    ],
+    [
+     440,
+     121.02
+    ],
+    [
+     480,
+     121.01
+    ],
+    [
+     520,
+     121.02
+    ],
+    [
+     560,
+     121.01
+    ],
+    [
+     600,
+     121.02
+    ],
+    [
+     640,
+     121.01
+    ],
+    [
+     680,
+     121.02
+    ],
+    [
+     720,
+     121.01
+    ],
+    [
+     760,
+     121.02
+    ],
+    [
+     800,
+     121.01
+    ],
+    [
+     840,
+     121.02
+    ],
+    [
+     880,
+     121.01
+    ],
+    [
+     920,
+     121.02
+    ],
+    [
+     960,
+     121.01
+    ],
+    [
+     1000,
+     123.53
+    ],
+    [
+     1040,
+     120.86
+    ],
+    [
+     1080,
+     120.93
+    ],
+    [
+     1120,
+     120.97
+    ],
+    [
+     1160,
+     120.78
+    ],
+    [
+     1200,
+     481.37
+    ],
+    [
+     1240,
+     481.4
+    ],
+    [
+     1280,
+     481.4
+    ]
+   ],
+   "summary": "the neighbour: 33 frame(s) read; the plate over its box at worst -19.83 px at 1200 ms (bound 0.5); it travels 379.34 px, worst one-frame step 0 px at - ms vs bound 2 px (×0) · 2raf: a 1200 ms block 32 ms after the flip (video: trigger marker → block-end marker 1200 ms); D 379.2 px (101.85 → 481.05); first leaves its rest at 40 ms, travels 2.75 px before the block-end marker, lands at 1200 ms (RECORD; video scale 1.002); worst one-frame step 360.59 px at 1200 ms (dt 40 ms) vs bound 192.48 px (×1.87)",
+   "load": 8.53
+  },
+  {
+   "engine": "webkit",
+   "cell": "stall·nb·100ms",
+   "nb": {
+    "frames": 41,
+    "Dnb": 379.4,
+    "worstOverlapPx": -19.84,
+    "overlapAtMs": 0,
+    "worstStepPx": 379.4,
+    "stepBoundPx": 192.58,
+    "stepRatio": 1.97,
+    "stepAtMs": 40,
+    "restOk": true
+   },
+   "pass": false,
+   "failed": [
+    "neighbour"
+   ],
+   "videoScale": 1.0016,
+   "D": 379.58,
+   "rests": [
+    101.87,
+    481.44
+   ],
+   "restsDom": [
+    102,
+    481.72
+   ],
+   "blockMs": 1200,
+   "callToBlockMs": 100,
+   "blockEndMs": 1320,
+   "firstMoveMs": 40,
+   "landMs": 1520,
+   "travelInBlockPx": 250.64,
+   "worstStepPx": 143.19,
+   "worstStepAtMs": 80,
+   "worstStepDtMs": 40,
+   "boundPx": 192.66,
+   "ratio": 0.74,
+   "trace": [
+    [
+     -80,
+     101.87
+    ],
+    [
+     -40,
+     101.87
+    ],
+    [
+     0,
+     101.89
+    ],
+    [
+     40,
+     121
+    ],
+    [
+     80,
+     264.19
+    ],
+    [
+     120,
+     264.24
+    ],
+    [
+     160,
+     352.5
+    ],
+    [
+     200,
+     352.52
+    ],
+    [
+     240,
+     352.54
+    ],
+    [
+     280,
+     352.53
+    ],
+    [
+     320,
+     352.53
+    ],
+    [
+     360,
+     352.53
+    ],
+    [
+     400,
+     352.53
+    ],
+    [
+     440,
+     352.53
+    ],
+    [
+     480,
+     352.53
+    ],
+    [
+     520,
+     352.53
+    ],
+    [
+     560,
+     352.53
+    ],
+    [
+     600,
+     352.53
+    ],
+    [
+     640,
+     352.53
+    ],
+    [
+     680,
+     352.53
+    ],
+    [
+     720,
+     352.53
+    ],
+    [
+     760,
+     352.53
+    ],
+    [
+     800,
+     352.53
+    ],
+    [
+     840,
+     352.53
+    ],
+    [
+     880,
+     352.53
+    ],
+    [
+     920,
+     352.53
+    ],
+    [
+     960,
+     352.53
+    ],
+    [
+     1000,
+     352.53
+    ],
+    [
+     1040,
+     352.53
+    ],
+    [
+     1080,
+     352.53
+    ],
+    [
+     1120,
+     352.53
+    ],
+    [
+     1160,
+     352.51
+    ],
+    [
+     1200,
+     352.48
+    ],
+    [
+     1240,
+     352.5
+    ],
+    [
+     1280,
+     352.5
+    ],
+    [
+     1320,
+     481.36
+    ],
+    [
+     1360,
+     481.46
+    ],
+    [
+     1400,
+     479.98
+    ],
+    [
+     1440,
+     479.98
+    ],
+    [
+     1480,
+     479.98
+    ],
+    [
+     1520,
+     481.07
+    ],
+    [
+     1560,
+     481.4
+    ],
+    [
+     1600,
+     481.19
+    ]
+   ],
+   "summary": "the neighbour: 41 frame(s) read; the plate over its box at worst -19.84 px at 0 ms (bound 0.5); it travels 379.4 px, worst one-frame step 379.4 px at 40 ms vs bound 192.58 px (×1.97) · 100ms: a 1200 ms block 100 ms after the flip (video: trigger marker → block-end marker 1320 ms); D 379.58 px (101.87 → 481.44); first leaves its rest at 40 ms, travels 250.64 px before the block-end marker, lands at 1520 ms (RECORD; video scale 1.002); worst one-frame step 143.19 px at 80 ms (dt 40 ms) vs bound 192.66 px (×0.74)  ⟶ FAILED: neighbour",
+   "load": 10.25
+  },
+  {
+   "engine": "webkit",
+   "cell": "stall·nb·mid-flight",
+   "nb": {
+    "frames": 69,
+    "Dnb": 379.27,
+    "worstOverlapPx": -19.81,
+    "overlapAtMs": 1320,
+    "worstStepPx": 0,
+    "stepBoundPx": 2,
+    "stepRatio": 0,
+    "stepAtMs": null,
+    "restOk": true
+   },
+   "pass": false,
+   "unmeasured": true,
+   "failed": [],
+   "videoScale": 1.0019,
+   "D": 101.83,
+   "rests": [
+    101.83,
+    0
+   ],
+   "restsDom": [
+    102,
+    481.72
+   ],
+   "blockMs": 1200,
+   "callToBlockMs": 82,
+   "blockEndMs": 1320,
+   "firstMoveMs": 40,
+   "landMs": 2760,
+   "travelInBlockPx": 146.46,
+   "worstStepPx": 481.28,
+   "worstStepAtMs": 2760,
+   "worstStepDtMs": 40,
+   "boundPx": 53.15,
+   "ratio": 9.05,
+   "trace": [
+    [
+     -80,
+     101.83
+    ],
+    [
+     -40,
+     101.83
+    ],
+    [
+     0,
+     120.92
+    ],
+    [
+     40,
+     121.01
+    ],
+    [
+     80,
+     267.25
+    ],
+    [
+     120,
+     267.24
+    ],
+    [
+     160,
+     267.24
+    ],
+    [
+     200,
+     267.24
+    ],
+    [
+     240,
+     267.24
+    ],
+    [
+     280,
+     267.24
+    ],
+    [
+     320,
+     267.24
+    ],
+    [
+     360,
+     267.24
+    ],
+    [
+     400,
+     267.24
+    ],
+    [
+     440,
+     267.24
+    ],
+    [
+     480,
+     267.24
+    ],
+    [
+     520,
+     267.24
+    ],
+    [
+     560,
+     267.24
+    ],
+    [
+     600,
+     267.24
+    ],
+    [
+     640,
+     267.24
+    ],
+    [
+     680,
+     267.24
+    ],
+    [
+     720,
+     267.24
+    ],
+    [
+     760,
+     267.24
+    ],
+    [
+     800,
+     267.24
+    ],
+    [
+     840,
+     267.24
+    ],
+    [
+     880,
+     267.24
+    ],
+    [
+     920,
+     267.24
+    ],
+    [
+     960,
+     267.24
+    ],
+    [
+     1000,
+     267.24
+    ],
+    [
+     1040,
+     267.24
+    ],
+    [
+     1080,
+     267.38
+    ],
+    [
+     1120,
+     267.19
+    ],
+    [
+     1160,
+     267.16
+    ],
+    [
+     1200,
+     267.15
+    ],
+    [
+     1240,
+     267.15
+    ],
+    [
+     1280,
+     267.15
+    ],
+    [
+     1320,
+     481.23
+    ],
+    [
+     1360,
+     481.24
+    ],
+    [
+     1400,
+     481.24
+    ],
+    [
+     1440,
+     481.25
+    ],
+    [
+     1480,
+     481.25
+    ],
+    [
+     1520,
+     480.9
+    ],
+    [
+     1560,
+     481.23
+    ],
+    [
+     1600,
+     481.02
+    ],
+    [
+     1640,
+     481.01
+    ],
+    [
+     1680,
+     481.01
+    ],
+    [
+     1720,
+     481.01
+    ],
+    [
+     1760,
+     481.01
+    ],
+    [
+     1800,
+     481.01
+    ],
+    [
+     1840,
+     481.01
+    ],
+    [
+     1880,
+     481.01
+    ],
+    [
+     1920,
+     481.01
+    ],
+    [
+     1960,
+     481.01
+    ],
+    [
+     2000,
+     481.01
+    ],
+    [
+     2040,
+     481.01
+    ],
+    [
+     2080,
+     481.01
+    ],
+    [
+     2120,
+     481.01
+    ],
+    [
+     2160,
+     481.01
+    ],
+    [
+     2200,
+     481.01
+    ],
+    [
+     2240,
+     481.01
+    ],
+    [
+     2280,
+     481.01
+    ],
+    [
+     2320,
+     481.64
+    ],
+    [
+     2360,
+     481.02
+    ],
+    [
+     2400,
+     481.29
+    ],
+    [
+     2440,
+     480.97
+    ],
+    [
+     2480,
+     481.28
+    ],
+    [
+     2520,
+     480.97
+    ],
+    [
+     2560,
+     481.28
+    ],
+    [
+     2600,
+     480.97
+    ],
+    [
+     2640,
+     481.28
+    ],
+    [
+     2680,
+     481.28
+    ],
+    [
+     2720,
+     481.28
+    ],
+    [
+     2760,
+     0
+    ],
+    [
+     2800,
+     0
+    ],
+    [
+     2840,
+     0
+    ]
+   ],
+   "summary": "the neighbour: 69 frame(s) read; the plate over its box at worst -19.81 px at 1320 ms (bound 0.5); it travels 379.27 px, worst one-frame step 0 px at - ms vs bound 2 px (×0) · UNMEASURED (the video's rests 101.83 / 0 px against the DOM's 102 / 481.72 px, scale 1.002: re-run) · mid-flight: a 1200 ms block 82 ms after the flip (video: trigger marker → block-end marker 1320 ms); D 101.83 px (101.83 → 0); first leaves its rest at 40 ms, travels 146.46 px before the block-end marker, lands at 2760 ms (RECORD; video scale 1.002); worst one-frame step 481.28 px at 2760 ms (dt 40 ms) vs bound 53.15 px (×9.05)",
+   "load": 9.28
+  }
+ ]
+}

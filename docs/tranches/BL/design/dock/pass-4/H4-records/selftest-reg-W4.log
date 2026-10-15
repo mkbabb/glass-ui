@@ -1,0 +1,15 @@
+load gate: waited 150s, load 61.80 (max 150)
+17:03  up 3 days, 22:06, 3 users, load averages: 61.80 147.58 843.91
+OK   W4  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 26/26 PASS  [148 s, load 61.8]
+OK   W4  nohyst          expect: exit ≠ 0; no-threshold-bounce  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [35 s, load 563.36]
+OK   W4  latch           expect: exit ≠ 0; no-hover-latch  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [20 s, load 873.1]
+OK   W4  menucollapse    expect: exit ≠ 0; menu-holds  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [51 s, load 960.49]
+OK   W4  noprm           expect: exit ≠ 0; prm·posture-morph|prm·compact  ·  got: exit 1, 4/4 FAIL; matching 4 (chromium+webkit)  [60 s, load 966.32]
+OK   W4  tapthrough      expect: exit ≠ 0; tap-pins  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [32 s, load 631.04]
+OK   W4  ungatedafter    expect: exit ≠ 0; no-hover-latch  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [19 s, load 903.4]
+OK   W4  pressgate       expect: exit ≠ 0; press-then-scroll  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [28 s, load 983.31]
+BAD  W4  lategetter      expect: exit ≠ 0; late-getter  ·  got: exit 1, 0/0 FAIL; matching 0 (none) ·  Node.js v26.0.0  [219 s, load 999.67]
+OK   W4  norefcount      expect: exit ≠ 0; shared-scroller  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [27 s, load 313.51]
+BAD  W4  seatshrink      expect: exit ≠ 0; seat-scale  ·  got: exit 1, 0/0 FAIL; matching 0 (none) ·  Node.js v26.0.0  [204 s, load 621.79]
+BAD  W4  prmscrub        expect: exit ≠ 0; prm·compact  ·  got: exit 1, 0/0 FAIL; matching 0 (none) ·  Node.js v26.0.0  [3434 s, load 117.75]
+OK   W4  compactjump     expect: exit ≠ 0; non-first-current  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium+webkit)  [33 s, load 150.12]

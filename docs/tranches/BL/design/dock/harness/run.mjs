@@ -18,7 +18,7 @@ import { HERE, parseArgs, outDir, loadAvg, counts } from "./lib.mjs";
 
 const args = parseArgs();
 if (!args.build) { console.error("usage: node run.mjs --build <dir> [--adapter <file>] [--out <dir>] [--only W1,W2] [--no-unshimmed] [--safari]"); process.exit(2); }
-const SCRIPT = { W1: "w1-corner.mjs", W2: "w2-run.mjs", W3: "w3-morph.mjs", W4: "w4-state.mjs", W5: "w5-rim.mjs", W6: "w6-collapsed-form.mjs", W7: "w7-edge.mjs", W8: "w8-motion.mjs", R6: "r6-probe.mjs", ST: "stall.mjs", FM: "film.mjs" };
+const SCRIPT = { W1: "w1-corner.mjs", W2: "w2-run.mjs", W3: "w3-morph.mjs", W4: "w4-state.mjs", W5: "w5-rim.mjs", W6: "w6-collapsed-form.mjs", W7: "w7-edge.mjs", W8: "w8-motion.mjs", R6: "r6-probe.mjs", ST: "stall.mjs", FM: "film.mjs", R5: "r5-hit.mjs", CF: "c-facility.mjs", L1: "l1-light.mjs" };   // H4: PR (prose.mjs) reads a source tree, not a build: pass-4/H4-baseline.sh runs it
 const only = args.only ? String(args.only).split(",") : Object.keys(SCRIPT);
 const adapterFile = args.adapter ?? path.join(HERE, "adapter-head.mjs");
 const law = spawnSync(process.execPath, [path.join(HERE, "adapter-law.mjs"), adapterFile], { encoding: "utf8" });
