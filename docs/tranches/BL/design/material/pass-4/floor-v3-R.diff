@@ -1,0 +1,319 @@
+diff --git a/src/components/_shared/field/control.css b/src/components/_shared/field/control.css
+index 49c021d8a..58a5078d7 100644
+--- a/src/components/_shared/field/control.css
++++ b/src/components/_shared/field/control.css
+@@ -71,10 +71,10 @@
+             );
+ 
+         /* ── THE FILL ──
+-           The shared control REST register handle: the field well, `--glass-well`
+-           (tokens/glass.css) — the pole one tone toward the recess, at the chrome
+-           α, transmissive. */
+-        --control-surface-bg: var(--glass-well);
++           The shared control REST register, `--control-surface-bg` (tokens/glass.css):
++           the field well, the pole one tone toward the recess at the bound,
++           transmissive. Read, never redeclared here, so the Select trigger and the
++           Input are one surface. */
+ 
+         /* ── THE CLOCK ──
+            Liquid weight on every channel the field can change. `--spring-press`
+diff --git a/src/components/_shared/menu/menu.css b/src/components/_shared/menu/menu.css
+index 29aded774..1038922a9 100644
+--- a/src/components/_shared/menu/menu.css
++++ b/src/components/_shared/menu/menu.css
+@@ -3,11 +3,16 @@
+     /* A menu ROW is not a lens. It carries a hover FILL and nothing else — no
+        `backdrop-filter`, no rung — because the open menu's own plate is the one backdrop
+        sample for that visual body, and a row-level filter inside it would be a plate
+-       nested in a plate for the width of one line of text. The fill reads the one-ink
+-       hover rung (`--fill-hover`, tokens/color-radius.css §1.3): the menu's plate is the
+-       theme's own ground, so a plate colour over it would paint nothing. */
++       nested in a plate for the width of one line of text. The fill is an ACCENT TINT:
++       the warm accent ink (`--section-color-5`, the amber) at the selected fill alpha
++       (`--fill-selected`, tokens/color-radius.css §1.3). The menu's plate is the
++       theme's own ground, so a plate colour over it would paint nothing, and the ink
++       fill darkened the cream row with no hue (C 0.010), which reads grey. The
++       highlighted row is the menu's one current item, so it takes the selected alpha:
++       at the hover alpha no in-gamut accent at this lightness reaches C 0.02 on the
++       cream plate. Light, on the menu plate: `#f2e6d5`, C 0.026. */
+     .glass-menu-row {
+-        --menu-row-bg: oklch(from var(--foreground) l c h / var(--fill-hover));
++        --menu-row-bg: oklch(from var(--section-color-5) l c h / var(--fill-selected));
+         --menu-row-lift: -1px;
+         min-block-size: max(2rem, var(--touch-target, 2.75rem));
+         /* THE FULL LEG SET IS LOAD-BEARING, and this rule is where it is decided.
+diff --git a/src/components/dock/styles/dock.css b/src/components/dock/styles/dock.css
+index fe45c93ec..2d90af4a5 100644
+--- a/src/components/dock/styles/dock.css
++++ b/src/components/dock/styles/dock.css
+@@ -14,7 +14,7 @@
+  *        composed through `@utility glass-plate` AT THE ELEMENT, on the bound at both
+  *        endpoints — one chromatic writer, no second tint layer. The shell + adaptive-legibility partials re-point
+  *        the inheriting `--dock-surface-blur`/`--glass-veil-*` tokens on `.glass-dock`,
+- *        so the dark-arm glow reaches the layers via inheritance, ZERO
++ *        so the dark arm reaches the layers via inheritance, ZERO
+  *        re-author. Its VISIBLE
+  *        EXTENT morphs via `clip-path: inset(… )` off the ONE plate-scoped `@property
+  *        --dock-t` (paint-only, compositor-composited, ZERO endpoint measurement — self-
+@@ -69,7 +69,7 @@
+         border-radius: inherit;
+         /* The backdrop lens — reads the dock-scoped resolved blur the shell composes
+            (`--dock-surface-blur: var(--glass-blur-resting)`, the 16px calibration-host
+-           radius + its saturate companion; the `.dark .glass-dock` glow arm + the
++           radius + its saturate companion; the dark arm + the
+            `prefers-reduced-transparency` → `--glass-level: 0` bracket both reach it via
+            the inheriting token). ONE backdrop-filter in the dock — the box no longer
+            carries it (no double-blur). */
+diff --git a/src/components/dock/styles/shape.css b/src/components/dock/styles/shape.css
+index 19f52468a..846f47153 100644
+--- a/src/components/dock/styles/shape.css
++++ b/src/components/dock/styles/shape.css
+@@ -153,7 +153,7 @@
+     /* ── The dock cast
+        is RETIRED ───────────────────────────────────────────────────────────────
+        The kinetic `.cartoon-cast` offset-shadow CHILD is GONE from the dock; the
+-       dock's elevation is carried by `--shadow-dock` (the omni drop-shadow painted
++       dock's elevation is carried by `--shadow-dock` (the one quiet floating cast, tokens/shadow.css, painted
+        from the dock box, so it escapes the radius correctly + in-gamut) +
+        `--glass-key` (the cel rim) — both KEPT. The shared `.cartoon-cast` base rule
+        (cards.css) + its glass-atom consumers are untouched — only the
+diff --git a/src/components/dock/styles/shell.css b/src/components/dock/styles/shell.css
+index 728918542..c02aca0a6 100644
+--- a/src/components/dock/styles/shell.css
++++ b/src/components/dock/styles/shell.css
+@@ -181,7 +181,7 @@
+            the ONE backdrop lens + its `clip-path` visible-extent morph. The box is now
+            STRUCTURAL (layout + the drop-shadow elevation below); the plate is the surface.
+            The `--dock-surface-blur` + `--glass-veil-*` tokens declared on `.glass-dock`
+-           INHERIT to the plate, so the dark-arm glow and the morph's rung endpoints
++           INHERIT to the plate, so the dark arm and the morph's rung endpoints
+            reach it with ZERO re-author (the earned darken composes at the plate). The
+            collapsed↔expanded surface INTERP is retargeted onto `.dock-plate` in
+            morph.css. No `backdrop-filter` on the box → ONE lens, no double-blur. */
+diff --git a/src/styles/glass/control-surfaces.css b/src/styles/glass/control-surfaces.css
+index 7472e9298..1d8279fc7 100644
+--- a/src/styles/glass/control-surfaces.css
++++ b/src/styles/glass/control-surfaces.css
+@@ -38,15 +38,11 @@
+            ONE material at rest (the input rung was the warmer of the two; Select rode
+            the `glass-wash` gray — the no-gray control-family seam). The register reads
+            the same `--glass-*` ladder, so `--glass-level` retunes
+-           the whole form family in lockstep (--control-surface-border defaults to the
+-           `--glass-border-floating` 15%α rung, --control-surface-bg to `--glass-plate-quiet`,
+-           --control-surface-blur to `--glass-blur-quiet`). */
++           the whole form family in lockstep (--control-surface-border is the
++           `--glass-border-floating` rung, --control-surface-bg the field well
++           `--glass-well`, tokens/glass.css). */
+         border: 1.5px solid var(--control-surface-border);
+         background: var(--control-surface-bg);
+-        /* The control's REAL glass blur — the shared register's quiet-tier radius
+-           (the same `--control-surface-blur` pairs with `--control-surface-bg`); the
+-           `--glass-level` knob clarifies it in lockstep with every surface. */
+-        backdrop-filter: var(--control-surface-blur);
+         padding: 0 calc(1rem * var(--ui-scale));
+         /* The font reads the `--control-pill-text` seam,
+            DEFAULTING to `--control-text` (byte-identical at unset). The `sm` rung
+@@ -72,13 +68,12 @@
+        NOT compose `.input-pill` but want the SAME resting material read this — so
+        the whole form band is ONE register at rest (the Select default rode the
+        lighter `glass-wash` gray before; this is the no-gray control-family seam).
+-       It carries the bg/border/blur ONLY (each control owns its own height/radius/
++       It carries the bg/border ONLY (each control owns its own height/radius/
+        padding/font), so a non-pill control composes `.control-surface` + its own
+-       geometry. The hover lift brightens the fill one step toward the resting rung. */
++       geometry. The hover answer adds the one-ink hover fill to the well. */
+     .control-surface {
+         background: var(--control-surface-bg);
+         border: 1px solid var(--control-surface-border);
+-        backdrop-filter: var(--control-surface-blur);
+     }
+     .control-surface:hover:not(:disabled, [data-disabled]) {
+         background: var(--control-surface-bg-hover);
+@@ -118,7 +113,7 @@
+        a long valid form is not a wall of green. */
+     .input-pill:where(:user-invalid, [aria-invalid="true"]) {
+         border-color: var(--destructive);
+-        background: color-mix(in srgb, var(--destructive) 8%, var(--glass-plate-quiet));
++        background: color-mix(in srgb, var(--destructive) 8%, var(--control-surface-bg));
+     }
+     .input-pill:where(:user-valid) {
+         border-color: var(--success);
+diff --git a/src/styles/tokens/dark-arm.css b/src/styles/tokens/dark-arm.css
+index 64343c042..e63ae804d 100644
+--- a/src/styles/tokens/dark-arm.css
++++ b/src/styles/tokens/dark-arm.css
+@@ -230,9 +230,6 @@
+     --shadow-cartoon-hover: -4px 4px 0px 0px var(--cartoon-ink-lead);
+     --shadow-soft:     0 4px 12px rgba(0, 0, 0, 0.3);
+     --shadow-elevated: 0 8px 24px rgba(0, 0, 0, 0.35);
+-    --shadow-modal:
+-        -4px 4px 0px 0px var(--cartoon-ink-lead),
+-        0 24px 64px color-mix(in srgb, var(--foreground) 18%, transparent);
+ 
+     /* §5c CONSTELLATION — dark arm. The dark-mode lift: the node
+        tones step UP off the ink ground (the light arm's mid-grey would vanish on
+@@ -289,6 +286,13 @@
+     --ink-edge:      0.1846;
+     --ink-perimeter: 0.60;
+ 
++    /* The focus veil's dim, dark arm. The light declaration (tokens/glass.css) mixes the
++       scrim ink at a tenth, and the scrim ink (L 0.216) is lighter than the dark page
++       (`#0b0a09`, L 0.146), so over it the veil brightened: +0.006 measured. Here the
++       dim is black at the least mix that reads OKLab L at least 0.02 under the dark
++       page: 40% reads -0.022 over it, where 35% reads -0.018. */
++    --glass-focus-veil-dim: color-mix(in oklab, #000 40%, transparent);
++
+ 
+     /* The surface-aware FOREGROUND register, DARK arm (the N13
+        whisper collapse where it bites hardest). The dark page-muted --neutral-5 (L62,
+@@ -305,7 +309,15 @@
+        light arm lives in tokens/glass.css (the plain per-mode pair — the house idiom). */
+     --on-glass-muted-l:      0.7904;   /* the dark muted ink's L (the light arm and the reason: on-glass-fg.css); the colour is hsl(34 16% 72%), #c3b9ac */
+     --on-glass-muted:        oklch(var(--on-glass-muted-l) 0.0213 74.62);
+-    --on-glass-muted-strong: hsl(36 13% 81%);   /* the -strong rung, one step more present. Held at L81: at L78 the BRIGHTEST on-glass mid-tone plate (the configurator preset-label glass-capsule, composited [100,85,68] L≈0.10) drives the -strong caption to WCAG 4.33 — below AA. L81 clears the whole plate set (configurator 4.68 · shadow-stage 6.89 · texture-panel 6.47 · feedback-tone 6.74 · selected-chip 5.10) while STAYING subordinate to the L90 --foreground ink (L0.634 < L0.794). One register re-point lifts all -strong consumers in lockstep — the DRY register-level fix, NOT a per-site paste. */
++    /* The -strong rung, one step more present than the muted ink and still under the
++       fg: OKLab L 0.835 sits between the muted (0.790) and the fg (`#e9e6e2`, 0.926),
++       so fg - strong is 0.091 against M-4's 0.08 and strong - muted is 0.045. Its
++       legibility needs no plate set of its own: every plate carries the bound, which
++       is solved at the darker muted ink (tokens/glass.css), so an ink lighter than the
++       muted clears it wherever the muted does. The value it replaces, hsl(36 13% 81%)
++       (L 0.859, #d5d0c8), was held at L81 for the thin capsule plates the bound has
++       since retired; at the bound it left fg - strong at 0.067. The colour is #cdc8c1. */
++    --on-glass-muted-strong: oklch(0.835 0.0117 78.27);
+     /* (the recessed meter track's dark arm RETIRED — `--track-well-recess` is one
+        derivation off `--background`, declared on `.track-well`/`.track-ground`
+        (styles/track-well.css) and NOT in this token layer, so the dark host's own
+diff --git a/src/styles/tokens/glass.css b/src/styles/tokens/glass.css
+index 9f5f89644..c96cd1b49 100644
+--- a/src/styles/tokens/glass.css
++++ b/src/styles/tokens/glass.css
+@@ -100,9 +100,10 @@
+          • `-bloom`    the transition band beyond the core out to which the frost eases
+                        to the sharp page.
+          • `-dim`      the centre-weighted dim: the scrim ink (`--overlay-scrim-ink`,
+-                       tokens/glass-fx.css) at a tenth, one declaration for both modes.
+-                       It reads the scrim ink and never a plate colour, because a plate
+-                       is the theme's own ground and would brighten what it covers. */
++                       tokens/glass-fx.css) at a tenth. It reads the scrim ink and never
++                       a plate colour, because a plate is the theme's own ground and
++                       would brighten what it covers. The dark page is darker than the
++                       scrim ink, so the dark arm (tokens/dark-arm.css) dims with black. */
+     --glass-focus-veil-blur:   var(--glass-blur-floating-radius);
+     --glass-focus-veil-core-x: 13rem;
+     --glass-focus-veil-core-y: 13rem;
+@@ -221,17 +222,17 @@
+        from the ≤5% content hairline above. */
+     --glass-border-defined:  color-mix(in srgb, var(--foreground) calc(var(--glass-definition) * 14%), transparent);
+ 
+-    /* The control REST register: ONE shared resting surface for the FORM family —
+-       Input/Textarea/Select/Combobox/NumberField — so the whole control band is ONE
+-       material at rest instead of a per-control fork. The register adopts the WARMER
+-       rung (the no-gray choice); per-control recipes read these tokens and fork
+-       nothing. The hover answer adds the one-ink hover fill (`--fill-hover`,
+-       tokens/color-radius.css §1.3) to the rest plate, so every control answers in
+-       lockstep and state is carried by ink, never by a second plate. */
+-    --control-surface-bg:        var(--glass-plate-quiet);
++    /* The control REST register: ONE field surface for the FORM family —
++       Input/Textarea/Select/Combobox/NumberField and the toggle items — and it is the
++       field well, `--glass-well`, read by name. A Select trigger holding a value and an
++       Input holding one are the same surface (O-66 G2: ΔE 0 by construction). Like the
++       well, it carries no `backdrop-filter`: a field sits inside a plate, whose filter
++       is the backdrop root. The hover answer adds the one-ink hover fill
++       (`--fill-hover`, tokens/color-radius.css §1.3) to the well, so every control
++       answers in lockstep and state is carried by ink, never by a second plate. */
++    --control-surface-bg:        var(--glass-well);
+     --control-surface-border:    var(--glass-border-floating);
+-    --control-surface-blur:      var(--glass-blur-quiet);
+-    --control-surface-bg-hover:  color-mix(in oklab, var(--glass-plate-quiet), var(--foreground) calc(var(--fill-hover) * 100%));
++    --control-surface-bg-hover:  color-mix(in oklab, var(--glass-well), var(--foreground) calc(var(--fill-hover) * 100%));
+ }
+ 
+ /* ── THE BOUND, and every rung that derives from it ───────────────────────────────
+diff --git a/src/styles/tokens/shadow.css b/src/styles/tokens/shadow.css
+index a32f73499..0f9f16570 100644
+--- a/src/styles/tokens/shadow.css
++++ b/src/styles/tokens/shadow.css
+@@ -6,17 +6,20 @@
+     /* ═══════════════════════════════════════════════
+        §7  SHADOWS — cartoon offset is the signature
+        ═══════════════════════════════════════════════ */
+-    /* The cartoon and modal planes use the warm `--cartoon-ink-lead`
+-       (0-blur down-LEFT, the cel family coherence — no neutral `--foreground` gray
+-       smudge). `--cartoon-ink-lead` is defined below in this same :root block (custom
+-       properties resolve order-independently). */
++    /* The cartoon plane uses the warm `--cartoon-ink-lead` (0-blur down-LEFT, the cel
++       family coherence). `--cartoon-ink-lead` is defined below in this same :root block
++       (custom properties resolve order-independently). */
+     --shadow-cartoon:       -3px 3px 0px 0px var(--cartoon-ink-lead);
+     --shadow-cartoon-hover: -4px 4px 0px 0px var(--cartoon-ink-lead);
+     --shadow-soft:          0 4px 12px rgba(0, 0, 0, 0.1);
+     --shadow-elevated:      0 8px 24px rgba(0, 0, 0, 0.12);
+-    --shadow-modal:
+-        -4px 4px 0px 0px var(--cartoon-ink-lead),
+-        0 24px 64px color-mix(in srgb, var(--foreground) 12%, transparent);
++    /* THE FLOATING CAST (O-87: at most one quiet neutral shadow, only on truly floating
++       surfaces). One layer, a soft cast in the scrim's neutral dark ink
++       (`--overlay-scrim-ink`, tokens/glass-fx.css), one declaration for both modes: a
++       shadow is a dark ink in a dark room too, never the light `--foreground`. The modal
++       is the highest floating surface; the dock is the same cast at its own lower
++       elevation, offset down so it casts and never rings the pill. */
++    --shadow-modal: 0 24px 64px color-mix(in srgb, var(--overlay-scrim-ink) 12%, transparent);
+ 
+     /* Elevation scale */
+     --shadow-sm: 0 2px 8px color-mix(in srgb, var(--shadow-color) 6%, transparent);
+@@ -29,10 +32,10 @@
+        separate offset-stamp token. */
+     --shadow-card: var(--shadow-md);
+ 
+-    /* Dock pills use an omnidirectional glow; instances can retune it through
+-       the dock's local override seam. */
+-    --shadow-dock:           0 0 20px color-mix(in srgb, var(--shadow-color) 14%, transparent);
+-    --shadow-dock-collapsed: 0 0 12px color-mix(in srgb, var(--shadow-color) 12%, transparent);
++    /* The dock's cast: the floating cast above at the dock's elevation, expanded and
++       collapsed. Instances can retune it through the dock's local override seam. */
++    --shadow-dock:           0 6px 20px color-mix(in srgb, var(--overlay-scrim-ink) 12%, transparent);
++    --shadow-dock-collapsed: 0 4px 12px color-mix(in srgb, var(--overlay-scrim-ink) 12%, transparent);
+ 
+     /* `--glass-material-rim` is NOT declared here. It was — as a non-inset dark 0.5px
+        ring — while glass/rim.css declared the same name as the directional inset
+diff --git a/tests/components/field/forms-seam.test.ts b/tests/components/field/forms-seam.test.ts
+index 382ae6751..95424f028 100644
+--- a/tests/components/field/forms-seam.test.ts
++++ b/tests/components/field/forms-seam.test.ts
+@@ -103,9 +103,14 @@ describe("W-FIELD — the forms-seam lane battery", () => {
+         expect(register).toMatch(/--field-control-well:\s*var\(--ink-edge\)/);
+         expect(register).toMatch(/--control-edge-inner:\s*inset/);
+ 
+-        // The fill resolves the field well, the chrome rung of the veil ladder
+-        // (tokens/glass.css), un-forked.
+-        expect(register).toMatch(/--control-surface-bg:\s*var\(--glass-well\)/);
++        // The fill is the ONE field surface: the register in tokens/glass.css is the
++        // field well, and the Input reads it without redeclaring it, so the Select
++        // trigger (`.control-surface`) and the Input paint one surface.
++        expect(strip(read("src/styles/tokens/glass.css"))).toMatch(
++            /--control-surface-bg:\s*var\(--glass-well\)/,
++        );
++        expect(register).not.toMatch(/--control-surface-bg:\s*var\(/);
++        expect(register).toMatch(/background-color:\s*var\(--control-surface-bg\)/);
+         // The well is a rung with no filter of its own: its backdrop is its host plate's paint.
+         expect(register).not.toMatch(/backdrop-filter\s*:/);
+     });
+diff --git a/tests/styles/focus-veil.test.ts b/tests/styles/focus-veil.test.ts
+index fdcb068e1..39ddac2fe 100644
+--- a/tests/styles/focus-veil.test.ts
++++ b/tests/styles/focus-veil.test.ts
+@@ -150,9 +150,12 @@ describe("G-RUNG-ONLY · GRADIENT-BLUR arm — the primitive is token-driven", (
+         expect(glassTokens).not.toContain("--glass-halo-");
+     });
+ 
+-    it("dims with the scrim ink in BOTH modes — one declaration, no plate colour, no dark arm", () => {
++    it("dims in both modes — the scrim ink in light, black in dark, never a plate colour", () => {
+         expect(glassTokens).not.toMatch(/--glass-focus-veil-dim:[^;]*--glass-plate-/);
+-        expect(darkArm).not.toMatch(/--glass-focus-veil-dim\s*:/);
++        // The dark page is darker than the scrim ink, so the dark arm dims with black.
++        expect(darkArm).toMatch(
++            /--glass-focus-veil-dim:\s*color-mix\(in oklab, #000 40%, transparent\);/,
++        );
+     });
+ 
+     it("registers the live centre so it interpolates instead of snapping", () => {

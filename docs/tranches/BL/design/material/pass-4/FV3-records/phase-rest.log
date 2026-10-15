@@ -1,0 +1,275 @@
+== rest start 17:32:05 load { 119.57 104.14 75.54 }
+[guarded] waiting for headroom (load 97 > 36)
+== glance start 18:51:25 load { 34.70 66.03 71.09 }
+glance fv2->fv3 chromium exit 1 18:52:41 load { 38.20 60.28 68.49 } · GLANCE FAIL: 5 of 8 pairs show no paint delta or failed (light dock, light dialog, light floating, dark dialog, dark floating)
+glance fv2->fv3 webkit exit 1 18:54:06 load { 43.89 56.31 66.16 } · GLANCE FAIL: 5 of 8 pairs show no paint delta or failed (light dock, light dialog, light floating, dark dialog, dark floating)
+glance head->fv3 chromium exit 0 18:55:28 load { 48.69 53.70 64.15 } · GLANCE PASS: 8 pairs, each with a visible paint delta
+glance head->fv3 webkit exit 0 18:56:49 load { 48.76 54.04 63.44 } · GLANCE PASS: 8 pairs, each with a visible paint delta
+== glance end 18:56:49 load { 48.76 54.04 63.44 }
+== rerun start 18:56:49 load { 48.76 54.04 63.44 }
+chromium-light-aurora-held-base: 4 specs, 2 rings, pointer press, readbacks 1
+chromium-light-black-held-base: 4 specs, 2 rings, pointer press, readbacks 0
+chromium-light-white-held-base: 4 specs, 2 rings, pointer press, readbacks 0
+chromium-dark-aurora-held-base: 4 specs, 2 rings, pointer press, readbacks 1
+chromium-dark-black-held-base: 4 specs, 2 rings, pointer press, readbacks 0
+chromium-dark-white-held-base: 4 specs, 2 rings, pointer press, readbacks 0
+captured 6 cells, 0 live windows, 0 motion windows and 0 drift windows in 56.4s (load 36.9 49.8 61.3) → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/floor3/wt/.d3out/caps/rerun1
+rerun 1 18:57:52 load { 34.90 49.22 61.00 } ·   halo chromium light: held or ladder black/white cell missing ✗   halo chromium dark: held or ladder black/white cell missing ✗  · FAIL (2 of 68 gated rows)
+chromium-light-aurora-held-base: 4 specs, 2 rings, pointer press, readbacks 1
+chromium-light-black-held-base: 4 specs, 2 rings, pointer press, readbacks 0
+chromium-light-white-held-base: 4 specs, 2 rings, pointer press, readbacks 0
+chromium-dark-aurora-held-base: 4 specs, 2 rings, pointer press, readbacks 1
+chromium-dark-black-held-base: 4 specs, 2 rings, pointer press, readbacks 0
+chromium-dark-white-held-base: 4 specs, 2 rings, pointer press, readbacks 0
+captured 6 cells, 0 live windows, 0 motion windows and 0 drift windows in 57s (load 31.7 45.4 58.8) → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/floor3/wt/.d3out/caps/rerun2
+rerun 2 18:58:56 load { 32.94 45.44 58.69 } ·   halo chromium light: held or ladder black/white cell missing ✗   halo chromium dark: held or ladder black/white cell missing ✗  · FAIL (2 of 68 gated rows)
+== rerun end 18:58:56 load { 32.94 45.44 58.69 }
+== toolchain start 18:58:56 load { 32.94 45.44 58.69 }
+typecheck app exit 0 18:59:05 load { 39.49 46.42 58.88 }
+tests/components/fourier-field/FourierField.smoke.test.ts(18,30): error TS2307: Cannot find module '@mkbabb/glass-ui/fourier-math' or its corresponding type declarations.
+tests/components/fourier-field/FourierField.smoke.test.ts(19,66): error TS2307: Cannot find module '@mkbabb/glass-ui/fourier-math' or its corresponding type declarations.
+typecheck tests exit 2 18:59:14 load { 43.07 46.99 58.94 }
+vite v8.1.5 building client environment for production...
+[2Ktransforming...✓ 642 modules transformed.
+rendering chunks...
+computing gzip size...
+.glass-generation-Liyx9z/glass-ui.css                                                   42.10 kB │ gzip:  8.14 kB
+.glass-generation-Liyx9z/input.js                                                        0.06 kB │ gzip:  0.08 kB
+.glass-generation-Liyx9z/label.js                                                        0.06 kB │ gzip:  0.08 kB
+.glass-generation-Liyx9z/button.js                                                       0.07 kB │ gzip:  0.08 kB
+.glass-generation-Liyx9z/slider.js                                                       0.07 kB │ gzip:  0.08 kB
+.glass-generation-Liyx9z/switch.js                                                       0.07 kB │ gzip:  0.08 kB
+.glass-generation-Liyx9z/surface.js                                                      0.07 kB │ gzip:  0.08 kB
+.glass-generation-Liyx9z/checkbox.js                                                     0.07 kB │ gzip:  0.08 kB
+.glass-generation-Liyx9z/progress.js                                                     0.07 kB │ gzip:  0.08 kB
+.glass-generation-Liyx9z/tabs.js                                                         0.07 kB │ gzip:  0.08 kB
+.glass-generation-Liyx9z/separator.js                                                    0.07 kB │ gzip:  0.08 kB
+.glass-generation-Liyx9z/data-table.js                                                   0.07 kB │ gzip:  0.08 kB
+.glass-generation-Liyx9z/expandable-container.js                                         0.09 kB │ gzip:  0.09 kB
+.glass-generation-Liyx9z/radio-group.js                                                  0.10 kB │ gzip:  0.10 kB
+.glass-generation-Liyx9z/status-dot.js                                                   0.10 kB │ gzip:  0.10 kB
+.glass-generation-Liyx9z/toggle-group.js                                                 0.10 kB │ gzip:  0.10 kB
+.glass-generation-Liyx9z/fading-scroll.js                                                0.10 kB │ gzip:  0.10 kB
+.glass-generation-Liyx9z/badge.js                                                        0.13 kB │ gzip:  0.12 kB
+.glass-generation-Liyx9z/popover.js                                                      0.13 kB │ gzip:  0.11 kB
+.glass-generation-Liyx9z/number-field.js                                                 0.14 kB │ gzip:  0.11 kB
+.glass-generation-Liyx9z/collapsible.js                                                  0.14 kB │ gzip:  0.12 kB
+.glass-generation-Liyx9z/selection-DqIULxRG.js                                           0.15 kB │ gzip:  0.13 kB
+.glass-generation-Liyx9z/control-DJp15L4U.js                                             0.15 kB │ gzip:  0.13 kB
+.glass-generation-Liyx9z/tooltip.js                                                      0.16 kB │ gzip:  0.13 kB
+.glass-generation-Liyx9z/resolve-DdrNvBby.js                                             0.16 kB │ gzip:  0.14 kB
+.glass-generation-Liyx9z/_plugin-vue_export-helper-B3ysoDQm.js                           0.16 kB │ gzip:  0.15 kB
+.glass-generation-Liyx9z/dark.js                                                         0.17 kB │ gzip:  0.15 kB
+.glass-generation-Liyx9z/card.js                                                         0.19 kB │ gzip:  0.15 kB
+.glass-generation-Liyx9z/asElement-CRnm6A2v.js                                           0.22 kB │ gzip:  0.16 kB
+.glass-generation-Liyx9z/primitive-B2t2jdqM.js                                           0.23 kB │ gzip:  0.20 kB
+.glass-generation-Liyx9z/toast.js                                                        0.24 kB │ gzip:  0.16 kB
+.glass-generation-Liyx9z/constants-Dk96HZHu.js                                           0.24 kB │ gzip:  0.17 kB
+.glass-generation-Liyx9z/blob-config.js                                                  0.24 kB │ gzip:  0.19 kB
+.glass-generation-Liyx9z/select.js                                                       0.28 kB │ gzip:  0.18 kB
+.glass-generation-Liyx9z/command.js                                                      0.29 kB │ gzip:  0.18 kB
+.glass-generation-Liyx9z/configurator.js                                                 0.29 kB │ gzip:  0.19 kB
+.glass-generation-Liyx9z/focus-Duf7EpUu.js                                               0.29 kB │ gzip:  0.20 kB
+.glass-generation-Liyx9z/motionTempo-tscp92Nm.js                                         0.30 kB │ gzip:  0.23 kB
+.glass-generation-Liyx9z/dialog.js                                                       0.30 kB │ gzip:  0.19 kB
+.glass-generation-Liyx9z/shortcuts-DGGWNRNe.js                                           0.33 kB │ gzip:  0.24 kB
+.glass-generation-Liyx9z/sheet.js                                                        0.40 kB │ gzip:  0.25 kB
+.glass-generation-Liyx9z/content-So3j6SOe.js                                             0.41 kB │ gzip:  0.28 kB
+.glass-generation-Liyx9z/prng-2uS6J_A1.js                                                0.41 kB │ gzip:  0.29 kB
+.glass-generation-Liyx9z/supportsCssTimeline-Di9gzleG.js                                 0.42 kB │ gzip:  0.24 kB
+.glass-generation-Liyx9z/createContext-BhkE9mLH.js                                       0.44 kB │ gzip:  0.26 kB
+.glass-generation-Liyx9z/valueDomain-DXRzfc8l.js                                         0.50 kB │ gzip:  0.30 kB
+.glass-generation-Liyx9z/useTimer-C3yfti4C.js                                            0.54 kB │ gzip:  0.33 kB
+.glass-generation-Liyx9z/control.css_vue_type_style_index_0_src_true_lang-BIdufaDG.js    0.57 kB │ gzip:  0.34 kB
+.glass-generation-Liyx9z/menu.js                                                         0.57 kB │ gzip:  0.26 kB
+.glass-generation-Liyx9z/reactive.js                                                     0.58 kB │ gzip:  0.36 kB
+.glass-generation-Liyx9z/deck.js                                                         0.59 kB │ gzip:  0.33 kB
+.glass-generation-Liyx9z/useMotionAxis-D-rtIhca.js                                       0.59 kB │ gzip:  0.35 kB
+.glass-generation-Liyx9z/rowClass-DYOXwxhO.js                                            0.61 kB │ gzip:  0.28 kB
+.glass-generation-Liyx9z/axes.js                                                         0.61 kB │ gzip:  0.38 kB
+.glass-generation-Liyx9z/accent-tone-solve-CKssz_JD.js                                   0.68 kB │ gzip:  0.41 kB
+.glass-generation-Liyx9z/writeVelocityWeight-DoGOCW3e.js                                 0.73 kB │ gzip:  0.39 kB
+.glass-generation-Liyx9z/DotRing-Blh4Mc3Q.js                                             0.74 kB │ gzip:  0.46 kB
+.glass-generation-Liyx9z/value-DMhh2R94.js                                               0.87 kB │ gzip:  0.47 kB
+.glass-generation-Liyx9z/rendererStatus-BxUlBLVy.js                                      0.99 kB │ gzip:  0.55 kB
+.glass-generation-Liyx9z/useReducedMotion-vCXA_vyM.js                                    1.09 kB │ gzip:  0.55 kB
+.glass-generation-Liyx9z/scrollReader-Brf5cQNo.js                                        1.10 kB │ gzip:  0.50 kB
+.glass-generation-Liyx9z/Surface-1nPoabc3.js                                             1.13 kB │ gzip:  0.62 kB
+.glass-generation-Liyx9z/useLiquidFlex-TJZmRqyY.js                                       1.19 kB │ gzip:  0.57 kB
+.glass-generation-Liyx9z/useResizeObserver-CdUlm2QZ.js                                   1.21 kB │ gzip:  0.62 kB
+.glass-generation-Liyx9z/pointerFieldMappings-DXwlU5uj.js                                1.29 kB │ gzip:  0.56 kB
+.glass-generation-Liyx9z/vReveal-B5WYGofz.js                                             1.29 kB │ gzip:  0.58 kB
+.glass-generation-Liyx9z/useClipboard-D36OTaeT.js                                        1.32 kB │ gzip:  0.64 kB
+.glass-generation-Liyx9z/useSpring-9u2_shxV.js                                           1.33 kB │ gzip:  0.65 kB
+.glass-generation-Liyx9z/useRoutePointer-B8itM7Ka.js                                     1.40 kB │ gzip:  0.70 kB
+.glass-generation-Liyx9z/useAccentTone-Btu9uAbT.js                                       1.40 kB │ gzip:  0.72 kB
+.glass-generation-Liyx9z/switch-BYUZ6g9G.js                                              1.41 kB │ gzip:  0.76 kB
+.glass-generation-Liyx9z/participation-Di4UHbzk.js                                       1.44 kB │ gzip:  0.77 kB
+.glass-generation-Liyx9z/status-dot-W4LFiJps.js                                          1.46 kB │ gzip:  0.75 kB
+.glass-generation-Liyx9z/input-eLZ_AU7l.js                                               1.49 kB │ gzip:  0.79 kB
+.glass-generation-Liyx9z/springPresets-Cbe0Voqg.js                                       1.52 kB │ gzip:  0.72 kB
+.glass-generation-Liyx9z/presets-5myqNv59.js                                             1.58 kB │ gzip:  0.79 kB
+.glass-generation-Liyx9z/motion-BvV1_24p.js                                              1.63 kB │ gzip:  0.84 kB
+.glass-generation-Liyx9z/label-CE03H1KL.js                                               1.64 kB │ gzip:  0.85 kB
+.glass-generation-Liyx9z/textarea.js                                                     1.69 kB │ gzip:  0.88 kB
+.glass-generation-Liyx9z/dialog-BZoFG0j8.js                                              1.74 kB │ gzip:  0.58 kB
+.glass-generation-Liyx9z/checkbox-B1qn65se.js                                            1.74 kB │ gzip:  0.86 kB
+.glass-generation-Liyx9z/useCanvas2D-CQRElMyE.js                                         1.79 kB │ gzip:  0.88 kB
+.glass-generation-Liyx9z/vSpecular-DMJo8pfD.js                                           1.86 kB │ gzip:  0.83 kB
+.glass-generation-Liyx9z/dark-mode-toggle.js                                             1.89 kB │ gzip:  1.03 kB
+.glass-generation-Liyx9z/useLeadTrail-DQWdpFN1.js                                        2.03 kB │ gzip:  1.00 kB
+.glass-generation-Liyx9z/tokens.js                                                       2.08 kB │ gzip:  0.81 kB
+.glass-generation-Liyx9z/useSpringMount-OA-0mTNv.js                                      2.11 kB │ gzip:  0.94 kB
+.glass-generation-Liyx9z/badge-BO6BC4G5.js                                               2.13 kB │ gzip:  0.98 kB
+.glass-generation-Liyx9z/radio-group-B58Bz16F.js                                         2.14 kB │ gzip:  0.89 kB
+.glass-generation-Liyx9z/useScrollChrome-DMP6kDI9.js                                     2.16 kB │ gzip:  1.06 kB
+.glass-generation-Liyx9z/useDragVelocity-C5BkKiNf.js                                     2.18 kB │ gzip:  0.94 kB
+.glass-generation-Liyx9z/separator-D4EZM10u.js                                           2.19 kB │ gzip:  0.97 kB
+.glass-generation-Liyx9z/infinite-scroll.js                                              2.63 kB │ gzip:  1.24 kB
+.glass-generation-Liyx9z/scroll-progress-rim.js                                          2.63 kB │ gzip:  1.15 kB
+.glass-generation-Liyx9z/fourier-math.js                                                 2.65 kB │ gzip:  1.03 kB
+.glass-generation-Liyx9z/dark-pONY3x93.js                                                2.65 kB │ gzip:  1.24 kB
+.glass-generation-Liyx9z/useLiquidPress-h1scrPtP.js                                      2.71 kB │ gzip:  1.11 kB
+.glass-generation-Liyx9z/useScrollTrigger-Abe5dEeO.js                                    2.76 kB │ gzip:  1.26 kB
+.glass-generation-Liyx9z/color.js                                                        2.84 kB │ gzip:  1.31 kB
+.glass-generation-Liyx9z/useIntersectionPause-Dpz4GaN5.js                                3.09 kB │ gzip:  1.27 kB
+.glass-generation-Liyx9z/DropdownMenuTrigger-CKRnhDSQ.js                                 3.10 kB │ gzip:  1.36 kB
+.glass-generation-Liyx9z/progress-eVa-mc7J.js                                            3.17 kB │ gzip:  1.36 kB
+.glass-generation-Liyx9z/usePointerVelocityField-Lx26_Yap.js                             3.23 kB │ gzip:  1.41 kB
+.glass-generation-Liyx9z/button-BOFTUPyU.js                                              3.30 kB │ gzip:  1.31 kB
+.glass-generation-Liyx9z/fading-scroll-CTeW3KNS.js                                       3.30 kB │ gzip:  1.48 kB
+.glass-generation-Liyx9z/tooltip-DhTHhtJN.js                                             3.34 kB │ gzip:  1.20 kB
+.glass-generation-Liyx9z/number-field-RP89046a.js                                        3.41 kB │ gzip:  1.38 kB
+.glass-generation-Liyx9z/collapsible-DFzK29Oh.js                                         3.55 kB │ gzip:  1.19 kB
+.glass-generation-Liyx9z/useDockCtaReceive-BSSgD6mu.js                                   3.62 kB │ gzip:  1.35 kB
+.glass-generation-Liyx9z/toggle-group-CC5b3o1R.js                                        3.74 kB │ gzip:  1.61 kB
+.glass-generation-Liyx9z/metric.js                                                       4.17 kB │ gzip:  1.55 kB
+.glass-generation-Liyx9z/card-ByyqRBvK.js                                                4.26 kB │ gzip:  1.44 kB
+.glass-generation-Liyx9z/expandable-container-CZUj9BzY.js                                4.48 kB │ gzip:  1.75 kB
+.glass-generation-Liyx9z/chip.js                                                         4.69 kB │ gzip:  1.79 kB
+.glass-generation-Liyx9z/keyboard.js                                                     4.81 kB │ gzip:  1.92 kB
+.glass-generation-Liyx9z/DialogContent-CwIBvou_.js                                       4.91 kB │ gzip:  2.05 kB
+.glass-generation-Liyx9z/popover-DA87hFBx.js                                             5.06 kB │ gzip:  1.78 kB
+.glass-generation-Liyx9z/class-names-FlXcvRRT.js                                         5.39 kB │ gzip:  2.05 kB
+.glass-generation-Liyx9z/motion.js                                                       6.55 kB │ gzip:  2.61 kB
+.glass-generation-Liyx9z/createCanvasLifecycle-hJHobVTn.js                               6.84 kB │ gzip:  2.45 kB
+.glass-generation-Liyx9z/dom.js                                                          7.27 kB │ gzip:  2.52 kB
+.glass-generation-Liyx9z/carousel.js                                                     7.58 kB │ gzip:  2.79 kB
+.glass-generation-Liyx9z/labeled-field.js                                                7.64 kB │ gzip:  1.95 kB
+.glass-generation-Liyx9z/toast-DVOwo6GB.js                                               7.77 kB │ gzip:  2.77 kB
+.glass-generation-Liyx9z/command-C-5xSEJ2.js                                             8.35 kB │ gzip:  2.23 kB
+.glass-generation-Liyx9z/timeline.js                                                     8.45 kB │ gzip:  3.31 kB
+.glass-generation-Liyx9z/slider-5ChjjWSR.js                                              8.48 kB │ gzip:  2.92 kB
+.glass-generation-Liyx9z/tabs-rdRXKXxd.js                                                8.51 kB │ gzip:  3.41 kB
+.glass-generation-Liyx9z/useDragMorph-B363RUbF.js                                        8.61 kB │ gzip:  3.18 kB
+.glass-generation-Liyx9z/select-fy3vtArm.js                                              8.80 kB │ gzip:  2.78 kB
+.glass-generation-Liyx9z/color.glsl-DTJhdekG.js                                          9.15 kB │ gzip:  3.69 kB
+.glass-generation-Liyx9z/useSelectionGroup-zsEwitF6.js                                   9.33 kB │ gzip:  3.42 kB
+.glass-generation-Liyx9z/pager-dots.js                                                  10.55 kB │ gzip:  4.00 kB
+.glass-generation-Liyx9z/sheet-BQJyER59.js                                              11.55 kB │ gzip:  4.34 kB
+.glass-generation-Liyx9z/sidebar.js                                                     12.02 kB │ gzip:  3.76 kB
+.glass-generation-Liyx9z/handmark.js                                                    12.24 kB │ gzip:  4.91 kB
+.glass-generation-Liyx9z/motion-core.js                                                 12.52 kB │ gzip:  5.19 kB
+.glass-generation-Liyx9z/menu-BnmCOa3y.js                                               12.58 kB │ gzip:  2.78 kB
+.glass-generation-Liyx9z/deck-Cm_VmyNL.js                                               12.70 kB │ gzip:  4.48 kB
+.glass-generation-Liyx9z/configurator-CPxIo3q2.js                                       12.78 kB │ gzip:  4.37 kB
+.glass-generation-Liyx9z/color.wgsl-BTszLY39.js                                         15.67 kB │ gzip:  5.14 kB
+.glass-generation-Liyx9z/glass-ui.js                                                    16.44 kB │ gzip:  5.34 kB
+.glass-generation-Liyx9z/data-table-Ba_uTfPc.js                                         16.51 kB │ gzip:  4.81 kB
+.glass-generation-Liyx9z/sortable-list.js                                               17.27 kB │ gzip:  5.91 kB
+.glass-generation-Liyx9z/typewriter.js                                                  18.89 kB │ gzip:  5.68 kB
+.glass-generation-Liyx9z/constellation.js                                               21.14 kB │ gzip:  7.68 kB
+.glass-generation-Liyx9z/easing.js                                                      23.08 kB │ gzip:  7.53 kB
+.glass-generation-Liyx9z/music-staff.js                                                 28.14 kB │ gzip:  9.46 kB
+.glass-generation-Liyx9z/fourier-field.js                                               31.35 kB │ gzip: 11.45 kB
+.glass-generation-Liyx9z/dock.js                                                        39.21 kB │ gzip: 12.40 kB
+.glass-generation-Liyx9z/blob.js                                                       102.99 kB │ gzip: 35.77 kB
+.glass-generation-Liyx9z/aurora.js                                                     203.45 kB │ gzip: 65.41 kB
+
+✓ built in 854ms
+declaration entries: projected 63 public entries
+gen-component-styles: wrote /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/floor3/wt/.glass-generation-Liyx9z/component-styles.css
+{"type":"glass-ui:ready","generation":"4ccf5a57a98711b0d3811e4ee6ccee503827f15f1a2de544b58b80cece61353a","output":"/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/floor3/wt/dist","tuple":"js/sfc-css/declarations/relays/styles/fonts/utilities/component-styles"}
+library build exit 0 18:59:22 load { 42.19 46.74 58.78 }
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/floor3/wt
+
+ ❯ tests/gates/boot-graph.test.ts (14 tests | 3 failed) 84ms
+     × the built demo has a dist-demo to measure 4ms
+     × the dist-demo it measures is NEWER than every source it is built from 0ms
+     × the eager graph stays under the modulepreload and byte ceilings 0ms
+(node:6550) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:9830) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:10225) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the built demo has a dist-demo to measure
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:566:34
+    564|
+    565|     it("the built demo has a dist-demo to measure", () => {
+    566|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    567|     });
+    568|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:570:34
+    568|
+    569|     it("the dist-demo it measures is NEWER than every source it is bui…
+    570|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    571|         const builtAt = statSync(indexHtml).mtimeMs;
+    572|         const newestSrc = newestSourceMtime();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the eager graph stays under the modulepreload and byte ceilings
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:580:34
+    578|
+    579|     it("the eager graph stays under the modulepreload and byte ceiling…
+    580|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    581|         const html = readFileSync(indexHtml, "utf8");
+    582|         const graph = measureEagerGraph(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed | 236 passed (237)
+      Tests  3 failed | 2315 passed | 10 expected fail | 1 skipped (2329)
+   Start at  18:59:23
+   Duration  70.15s (transform 5.71s, setup 9.29s, import 32.52s, tests 24.22s, environment 41.03s)
+
+vitest exit 1 19:00:33 load { 37.75 44.59 56.96 }
+== toolchain end 19:00:33 load { 37.75 44.59 56.96 }
+== rest end 19:00:38 load { 36.25 44.17 56.74 }

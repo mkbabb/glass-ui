@@ -1,0 +1,44 @@
+== rest2 start 19:00:52 load { 33.17 43.24 56.26 }
+[guarded] waiting for headroom (load 48 > 36)
+== rerun start 19:03:03 load { 34.53 42.18 54.09 }
+chromium-light-black-held-base: 4 specs, 2 rings, pointer press, readbacks 0
+chromium-light-black-ladder-base: 11 specs, 8 rings, pointer rest, readbacks 0
+chromium-light-white-held-base: 4 specs, 2 rings, pointer press, readbacks 0
+chromium-light-white-ladder-base: 11 specs, 8 rings, pointer rest, readbacks 0
+chromium-light-aurora-held-base: 4 specs, 2 rings, pointer press, readbacks 1
+chromium-light-aurora-ladder-base: 11 specs, 8 rings, pointer rest, readbacks 1
+chromium-dark-black-held-base: 4 specs, 2 rings, pointer press, readbacks 0
+chromium-dark-black-ladder-base: 11 specs, 8 rings, pointer rest, readbacks 0
+chromium-dark-white-held-base: 4 specs, 2 rings, pointer press, readbacks 0
+chromium-dark-white-ladder-base: 11 specs, 8 rings, pointer rest, readbacks 0
+chromium-dark-aurora-held-base: 4 specs, 2 rings, pointer press, readbacks 1
+chromium-dark-aurora-ladder-base: 11 specs, 8 rings, pointer rest, readbacks 1
+captured 12 cells, 0 live windows, 0 motion windows and 0 drift windows in 112.7s (load 16.8 33.4 49.1) → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/floor3/wt/.d3out/caps/rerun1
+rerun 1 19:05:02 load { 16.18 33.00 48.88 } ·   halo chromium light: resting dock α 0.890 · held dock α per column 0.814 (x 411) … 0.894 (x 278) over 134 columns · floor 0.870 · the held host lets the ground through (a halo) ✗   halo chromium dark: resting dock α 0.875 · held dock α per column 0.859 (x 410) … 0.878 (x 278) over 134 columns · floor 0.855  · FAIL (1 of 68 gated rows)
+chromium-light-black-held-base: 4 specs, 2 rings, pointer press, readbacks 0
+chromium-light-black-ladder-base: 11 specs, 8 rings, pointer rest, readbacks 0
+chromium-light-white-held-base: 4 specs, 2 rings, pointer press, readbacks 0
+chromium-light-white-ladder-base: 11 specs, 8 rings, pointer rest, readbacks 0
+chromium-light-aurora-held-base: 4 specs, 2 rings, pointer press, readbacks 1
+chromium-light-aurora-ladder-base: 11 specs, 8 rings, pointer rest, readbacks 1
+chromium-dark-black-held-base: 4 specs, 2 rings, pointer press, readbacks 0
+chromium-dark-black-ladder-base: 11 specs, 8 rings, pointer rest, readbacks 0
+chromium-dark-white-held-base: 4 specs, 2 rings, pointer press, readbacks 0
+chromium-dark-white-ladder-base: 11 specs, 8 rings, pointer rest, readbacks 0
+chromium-dark-aurora-held-base: 4 specs, 2 rings, pointer press, readbacks 1
+chromium-dark-aurora-ladder-base: 11 specs, 8 rings, pointer rest, readbacks 1
+captured 12 cells, 0 live windows, 0 motion windows and 0 drift windows in 112.6s (load 13.9 26.8 44.4) → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/floor3/wt/.d3out/caps/rerun2
+rerun 2 19:07:01 load { 13.60 26.52 44.22 } ·   halo chromium light: resting dock α 0.890 · held dock α per column 0.814 (x 411) … 0.894 (x 278) over 134 columns · floor 0.870 · the held host lets the ground through (a halo) ✗   halo chromium dark: resting dock α 0.875 · held dock α per column 0.859 (x 410) … 0.878 (x 278) over 134 columns · floor 0.855  · FAIL (1 of 68 gated rows)
+== rerun end 19:07:01 load { 13.60 26.52 44.22 }
+== toolchain2 start 19:07:01 load { 13.60 26.52 44.22 }
+typecheck tests (after dist/) exit 0 19:07:09 load { 13.89 26.15 43.88 }
+dist-demo exit 0 19:07:10 load { 13.89 26.15 43.88 }
+
+ Test Files  1 passed (1)
+      Tests  14 passed (14)
+   Start at  19:07:11
+   Duration  763ms (transform 74ms, setup 63ms, import 249ms, tests 129ms, environment 211ms)
+
+boot-graph exit 0 19:07:12 load { 13.89 26.15 43.88 }
+== toolchain2 end 19:07:12 load { 13.89 26.15 43.88 }
+== rest2 end 19:07:15 load { 13.42 25.85 43.67 }

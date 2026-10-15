@@ -1,0 +1,24 @@
+diff --git a/src/styles/tokens/glass.css b/src/styles/tokens/glass.css
+index c96cd1b4..8d555b10 100644
+--- a/src/styles/tokens/glass.css
++++ b/src/styles/tokens/glass.css
+@@ -287,6 +287,19 @@
+     --glass-veil-dialog:   1;
+ }
+ 
++/* THE LIGHT CHROME IS A CARD (Q-11 (b)). O-62 holds off paper too: a light chrome plate
++   at the bound reads grey over a dark ground (`#e2dcd7` over black), so in light every
++   chrome rung is opaque, the card everywhere. Content keeps the bound; the dark arm is
++   unchanged. */
++:root:not(.dark) {
++    --glass-veil-floating: 1;
++    --glass-veil-overlay:  1;
++    --glass-veil-chassis:  1;
++    --glass-veil-dock:     1;
++    --glass-veil-crown:    1;
++    --glass-veil-sheet:    1;
++}
++
+ @property --glass-bound {
+     syntax: "<number>";
+     inherits: true;

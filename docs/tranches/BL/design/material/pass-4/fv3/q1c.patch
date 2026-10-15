@@ -1,0 +1,47 @@
+diff --git a/src/styles/tokens/glass.css b/src/styles/tokens/glass.css
+index c96cd1b4..da59318f 100644
+--- a/src/styles/tokens/glass.css
++++ b/src/styles/tokens/glass.css
+@@ -269,21 +269,20 @@
+         1
+     );
+ 
+-    /* One step: a third of what the bound leaves. Each band's thinnest rung IS the
+-       bound; thicker rungs add whole steps. The dialog is a room: its plate composes
+-       over the modal scrim, and any thinner α transmits that scrim as grey. */
+-    --glass-veil-step: calc((1 - var(--glass-bound)) / 3);
+-
++    /* Three materials (Q-1 (c)): content and chrome each sit on the bound, the room is
++       opaque. No rung steps above its band's bound: a step the eye cannot read off
++       paper is not a level. The dialog is a room: its plate composes over the modal
++       scrim, and any thinner α transmits that scrim as grey. */
+     --glass-veil-wash:     var(--glass-bound);
+-    --glass-veil-quiet:    calc(var(--glass-bound) + 1 * var(--glass-veil-step));
+-    --glass-veil-resting:  calc(var(--glass-bound) + 2 * var(--glass-veil-step));
++    --glass-veil-quiet:    var(--glass-bound);
++    --glass-veil-resting:  var(--glass-bound);
+     --glass-veil-floating: var(--glass-bound);
+-    --glass-veil-overlay:  calc(var(--glass-bound) + 1 * var(--glass-veil-step));
++    --glass-veil-overlay:  var(--glass-bound);
+ 
+     --glass-veil-chassis:  var(--glass-bound);
+     --glass-veil-dock:     var(--glass-bound);
+     --glass-veil-crown:    var(--glass-bound);
+-    --glass-veil-sheet:    calc(var(--glass-bound) + 1 * var(--glass-veil-step));
++    --glass-veil-sheet:    var(--glass-bound);
+     --glass-veil-dialog:   1;
+ }
+ 
+diff --git a/src/styles/tokens/manifest.ts b/src/styles/tokens/manifest.ts
+index d97b8f6a..12abba51 100644
+--- a/src/styles/tokens/manifest.ts
++++ b/src/styles/tokens/manifest.ts
+@@ -19,7 +19,7 @@ export const semanticTokens = {
+     ],
+     material: [
+         "--glass-level", "--glass-depth", "--glass-accent", "--glass-accent-strength",
+-        "--glass-bound", "--glass-ink-target", "--glass-veil-step",
++        "--glass-bound", "--glass-ink-target",
+         "--glass-well",
+         "--glass-saturate",
+     ],
