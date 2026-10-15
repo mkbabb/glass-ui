@@ -2359,3 +2359,209 @@ Floor gaps: FP6-4 is **closed** (two-children splits judged on both seats). FP6-
 **Held with the bank.** G-01..G-12 and D′'s gaps, unchanged.
 
 No route converged in pass 7. D1-B's convergence record waits on two consecutive clean critiques, pass 8's and pass 9's.
+
+---
+
+# D1 · pass 8 · REGISTRY: the route after pass 8
+
+| field | value |
+|---|---|
+| seat | D1 pass-8 agglomeration. Closes pass 8 with B's status and convergence, the two-clean-passes count, G's re-trigger, the rulings owed, the open gaps and the pass-9 plan. Passes 1-7 above are kept intact |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `27f6371d`. `git diff 6154d6ec HEAD -- . ':!docs'` is empty: the route and the critic judged 10.1.0's code. The kit is committed at `b0900969` (558 tracked files under `pass-8/`). The critique (`pass-8/critique-B.md`, `pass-8/critique-B/`) is **untracked** at this seat |
+| inputs, read in full | `pass-8/B-proto.md`, `pass-8/critique-B.md`, `critique-B/BATTERY-HASH.txt`, `critique-B/results/{select-plant,peer-unbuilt-base,extra-plants}.txt`; this file §P2-6.5, §P2-7, §P3-9 (S-14's text), §P7-0..§P7-7; `RULINGS.md` through P7-R2; `waves/W-D.1.md`, `waves/INDEX.md`. The kit's other files and the critic's other results were read at the lines the two reports cite, not re-run |
+| instruments | none re-run. Read-only checks: `git log`, `git ls-files pass-8`, the empty code diff; `B-kit/gate/seal.mjs` lines 1-40 (guard first, gate by dynamic import); `B-kit/lib/floor.mjs:30-41` (the `_` filter); `B-kit/tools/browser-tally.mjs:21,26,28,36,79` (header "2 on a throw", top-level throws, no guard); `B-kit/LAW.md` §13; `B-kit/derive/land-gate.mjs:3-11` (what lands); `tsconfig.test.json` (`tests-visual/` not included); `ls .claude/worktrees/bl/D1/p8/` |
+| fences | no source edit, no git write; this part is the only write |
+
+Short citations: `Bp8` is `pass-8/B-proto.md`, `cB8` is `pass-8/critique-B.md`, `cB8-R` is `pass-8/critique-B/results/`.
+
+---
+
+## P8-0 · In brief
+
+| id | route | status | conv. (critic) | critic's verdict | re-opened by the critic | reason in one line |
+|---|---|---|---:|---|---|---|
+| D1-B | sealed modules, flat | **ADVANCE** | 27/27 = 100% | ADVANCE | **0** | exact replay from committed bytes (`05aaa6ed…a451e1b3`, 1,585 files, 121 steps), 19/19, CLEAN at the one rebound datum (2,920,391), cascade GREEN, 428/428 base-green held; S-14 closed at cause (crash8 37/37, every module the gate loads) |
+| D1-G | eponymous closures | BANK (unchanged) | 44% (pass 3) | — | — | re-trigger not fired (§P8-3) |
+
+**The two-clean-passes count for B advances: 0 → 1.** The pass-8 critique re-opens nothing, and none of its five outside findings maps to an edict clause the list leaves out (cB8 §5, §6; ruled in §P8-2 below). **This is the first clean pass. No convergence record is written.** D1-B converges at the pass-9 agglomeration at the earliest, and only if the pass-9 critique also re-opens nothing.
+
+Three findings shape pass 9.
+
+1. **S-14 closed at its cause.** `seal.mjs` imports only `node:fs` and `node:path`, installs the `uncaughtException` guard as its first statement, and loads the gate by `await import("./clauses.mjs")` under it (read at `B-kit/gate/seal.mjs:15-28`). The critic planted a module-scope throw in each of the 24 modules the gate loads, plus the pass-7 C3, an unhandled rejection and a deferred throw: every one exits 2 (cB8 §1). B18 throws on a missing table, the peer probe on a missing build.
+2. **Two kit judges still carry the S-14 defect class, outside the gate.** `browser-tally.mjs` declares "2 on a throw" (line 21) but throws at top level with no guard (lines 26, 28, 36), so Node exits 1, its RED code (cB8 O-2). The probe's dist arm reads an emptied `dist/motion-core.js` GREEN (cB8 O-4, `cB8-R/peer-unbuilt-base.txt` U4). Neither passes a missing input as a verdict on the gate; both are the closest calls this registry rules (§P8-2).
+3. **The selection drops 14 `_*` capture specs by an unstated rule.** `lib/floor.mjs:39` filters them, its own comment says so, and LAW §13 says the opposite ("every spec of the final tree's Playwright program that a move or a row touches"). S43b/S43c move all 14. No base-green key exists for them, so 428/428 stands, but `tsconfig.test.json` does not include `tests-visual/`, so a capture spec broken by its move is read by nothing (cB8 O-1).
+
+---
+
+## P8-1 · Registry
+
+| id | unit set declared by | enforced between units | status | conv. | re-trigger / refutation | pass-9 role |
+|---|---|---|---|---:|---|---|
+| D1-B | a module is a code dir in `src` or `scripts` with a door (B7), recursively; containers and kind slots excepted | privacy: the recursive door seal, kernel and CSS edges included (B1, B3); direction (B8); sibling acyclicity (B4); no masking fallback (B17); names (B15); Playwright-program membership and visual subject (B16); the peer class (B18) | ADVANCE | 100% | — | the one live route; the second of two clean passes |
+| D1-G | first-level component units; eponymous roots | B1 into component units only | BANK | 44% | not fired (§P8-3) | none |
+| D1-D′ | — | — | BANK (unchanged) | 7% | not fired | none |
+| D1-A | — | — | BLOCK (unchanged) | 35% | — | none |
+| D1-C, D1-E, D1-F | — | — | BANK (unchanged) | 40/35/30% | no trigger fired | none |
+
+---
+
+## P8-2 · D1-B · Sealed modules, flat: ADVANCE, 100%
+
+**What ran** (Bp8 §0-§6, confirmed by cB8 §0-§4).
+
+| item | result |
+|---|---|
+| chain | 121 steps from base `35f7b831…` through the floor (S1 `5b14c6c7…`) to S70. New: S72 (P7-G6, the scroll spine's citation), S73, S73b, S73c (the dock context's label, sub-module and door, forced by B18's names arm). Re-derived: S69 (the gate re-land), S69s (pin), S70 (datum) |
+| replay | digest `05aaa6edbe0f8f242f0ffe5f37a4e46f9e880ec237e30a3d4293f8f9a451e1b3` over 1,585 files. Route: six replays across three HEADs, r5 904.0 s and r6 `--twice` 1,430.9 s MATCH. Critic: 338.4 s from `b0900969`'s committed kit in a fresh worktree, rerun 0.9 s no-op, unchanged after every battery |
+| floor base | `5b14c6c7…705402f` over 1,354 files, re-derived by the critic |
+| gate | 19/19, every clause 0, exit 0. `files` 1,583, modules 141/141, pin 141 / 121 doors / 1,289 names / 2 reviewed; peer held 23 (the root's base-state breaks, P7-G5) |
+| toolchain | build 0; `vue-tsc` ×2 0; demo build 0; `seal.test.ts` 24/24; vitest 2,333 passed, 0 failed (`demo:dist:build` first) on both seats |
+| package | verify:package CLEAN at 2,920,391, rebound once at S70 after S73c. +6,845 B over the floor; −10 B against pass 7 |
+| cascade | GREEN against the floor base (`./styles` 28 moved, `./styles.css` 10 moved, risks 0); RED with an empty listing (critic) |
+| browser | 428 base-green, 428 held, 0 failed, 0 absent; D2 flaky under P7-R2 (base P/FFF), outside the bar. Critic re-derived from the committed `/2` reports with no route tool: same. Tally plants T1-T5 PASS; flake fixtures 8/8 |
+| peer class | `./motion-core` keyframes-free on names (55), dist (5 files) and files (38). B18 catches KF-new, KF-leaf, KF-deep, KF-existing, KF-side, KF-reexport, VU-leaf; silent on the three controls; KF-dyn unread, as LAW §5 states |
+| S-14 | crash8 37/37; C3 (non-JSON `package.json`) now 2; peer probe 2 on U1-U3; B18 2 on a missing heading, file or peer |
+| plants | route p8 27/27, p7 17/17, p6 PASS; critic's 381 regression rows reproduced row for row, 0 differ; I7 6/6 by B3 |
+
+**The critic's items** (cB8 §6): **27 CLOSED, 0 OPEN, 0 re-opened.** S-14 moves OPEN → CLOSED; it entered pass 8 open, so its closure is not a re-opening of anything.
+
+**This registry's reading.** It agrees with every verdict. S73-S73c, route work outside the plan, are judged by the critic as cures at the cause (cB8 §6 B-10): the chain had routed `Slider` to keyframes.js through the dock context; the label moves into the context and the context gets its own door. That is the edict's encapsulation, not a workaround, and it changes no ruled arm.
+
+**The critic's outside findings** (cB8 §5), read under §P2-6.5. Each is ruled on the frozen text of the item it touches, as §P7-2 did for S-14 ("re-opened on the item, not on its neighbour").
+
+| # | finding | nearest item, frozen text | does it re-open? | effect |
+|---|---|---|---|---|
+| O-1 | the selection drops the 14 `_*` capture specs the chain moves; LAW §13 states the opposite | S-12 (§P2-7: "π and Playwright executed"); held by "every base-green key accounted for" (§P7-7) | **No.** No base-green key is unaccounted for: the capture specs run on neither tree, so the bar's set is unchanged and 428/428 is exact. The defect is a LAW sentence the tool contradicts, and a moved capture spec no instrument reads | P8-R1 owed; pass-9 route work |
+| O-2 | `browser-tally.mjs` exits 1 on every throw, against its own header | S-14 (§P3-9: "the gate catches a silent return on a missing file and a swallowed load of a live target"); P6-R3 binds `seal.mjs` | **No.** The tally is a kit tool, not the gate, and P6-R3 names `seal.mjs`. Its throw reads RED, so it never passes a missing input: fail-closed, not masking. It is the same defect class, so it is cured before pass 9's critic reads it | P8-R2 owed; pass-9 route work |
+| O-3 | removing `./motion-core`'s row from `src/README.md` reads GREEN on every clause | B-10 (the peer class held by its owner, P7-R1) | **No.** A removed row is a withdrawn declaration, not a missing input: B18 throws on a missing table, file or peer (cB8-R `b18-inputs.txt`), and withdrawal is a reviewed edit of `src/README.md`. A keyframes leak into motion-core still reads RED through the root's class (`extra-plants.txt` XR-drop-KF, XR-drop-leaf: B18 10) | P8-R3 owed |
+| O-4 | the dist arm reads an emptied `dist/motion-core.js` GREEN | S-14's hold column ("no judge passes on a missing input"); B-10 | **No, on the narrowest margin.** The class's owner is B18 over the source arms (P7-R1); the dist arm is the probe's supplement. A build never emits an empty entry, so no real state is masked. But the hold text reads on it literally, so it is cured in pass 9 | pass-9 route work, under P8-R2 |
+| O-5 | `.claude/worktrees/bl/D1/p8/B-proto/` is still present (confirmed by `ls`) | — | No | driver housekeeping, as P7-G7 |
+
+**No finding maps to an edict clause the list leaves out. No item is added; the checklist stays at 27.** The count advances under §P2-6.5 (3).
+
+**The closest calls, stated for the pass-9 critic.** O-2 and O-4 are the S-14 class in tools outside the gate; O-1 is a LAW sentence that the tool contradicts. This registry rules them not re-opens on the frozen texts. If the pass-9 critic finds any of them *uncured* after pass 9's route work, that is a re-open of S-14 or S-12 under the pass-9 plan's hold column, and the count restarts.
+
+---
+
+## P8-3 · G's re-trigger: not fired
+
+- **The first arm fails again.** The pass 4-7 door plants regress on the pass-8 tree as before (cB8 §4, 0 differ). G's law has no kernel seal, no module-grain cycle clause, no CSS door and no peer clause.
+- **The second arm has no ruling.** No ruling calls the door bytes too high; the datum moved −10 B.
+
+G stays banked.
+
+---
+
+## P8-4 · Rulings: P8-R1..P8-R3, owed
+
+P7-R1 and P7-R2 were ruled on 2026-10-08 and landed whole (cB8 §6 S-03). Three rulings are owed. None needs a chain step if each goes to its recommended arm, so the digest `05aaa6ed…` can stand into pass 9.
+
+| id | question | arms | evidence | recommendation |
+|---|---|---|---|---|
+| **P8-R1** | the `_*` capture specs in the browser selection | (a) excluded, stated: LAW §13 names the exclusion and its reason (a capture spec writes into `docs/` and asserts no product behaviour), the selection prints the excluded moved specs, and one instrument reads a moved capture spec's imports (B16 or the floor graph resolving every `tests-visual/` import); (b) included: the run takes the 14 with their outputs redirected, and their keys enter the bar | `lib/floor.mjs:39`; LAW §13; `cB8-R/select-plant.txt` (169 program, 155 selected, 14 moved by S43b/S43c, none in `base-specs.txt`); `tsconfig.test.json` include has no `tests-visual/` | **(a).** A capture spec is a recording tool, and running it rewrites tranche records (the repo has clobbered tranche PNGs this way before). The defect is the unstated rule and the unread move, and (a) cures both without a browser re-run. The import check is the one part that might need a chain step: if B16 already reads unresolved `tests-visual/` imports, it is a LAW sentence and a plant; if not, it is a clause widening (S69 re-derived) |
+| **P8-R2** | does P6-R3's exit law bind every kit judge | (a) yes: every kit judge (`browser-tally`, `browser-select`, `rekey`, `peer-closure`) exits 0/1/2 with the `seal.mjs` guard, and a degenerate input (an empty dist entry, an empty report) throws; LAW states it once; (b) `seal.mjs` only, the tools' exits recorded as they are | `browser-tally.mjs:21` vs `:26,28,36` (cB8 O-2); U4 (cB8 O-4) | **(a).** A judge whose crash reads as its own RED is the defect pass 7 re-opened in the gate. Kit tools do not land in `src` or `scripts` (`derive/land-gate.mjs` lands only `seal/` and the pin), so the cure changes no chain step and no digest |
+| **P8-R3** | is the declared peer-class set pinned | (a) the pin carries each entry's declared peers, so withdrawing a class is a pin diff B11 reads; (b) `src/README.md`'s table stays the one record: a withdrawal is a reviewed source edit, B18 throws on a missing table, file or peer, and LAW §5 says so | cB8 O-3; `cB8-R/extra-plants.txt` (XR-drop GREEN; XR-drop-KF and XR-drop-leaf RED via the root, B18 10) | **(b).** The declared set is authored, not measured; the pin records what the gate measures. Pinning it puts one fact in two records, which a two-clean loop cannot converge over (one source of record, cited). A leak into motion-core still reads RED through the root's class |
+
+---
+
+## P8-5 · Open gaps
+
+| id | gap | source | pass-9 disposition |
+|---|---|---|---|
+| P8-G1 | the critique is untracked | `git status` at this seat | the driver commits `pass-8/critique-B.md`, `pass-8/critique-B/` and this part before any pass-9 seat (S-01) |
+| P8-G2 | the capture specs' exclusion is unstated, and a moved capture spec is read by nothing | cB8 O-1 | route, per P8-R1 |
+| P8-G3 | `browser-tally.mjs` exits 1 on a throw | cB8 O-2 | route, per P8-R2 |
+| P8-G4 | the dist arm reads an empty entry GREEN | cB8 O-4 | route, per P8-R2 |
+| P8-G5 | the declared peer set is unpinned | cB8 O-3 | per P8-R3; under (b), one LAW §5 sentence |
+| P8-G6 | the empty seat dir `.claude/worktrees/bl/D1/p8/B-proto/` (with `crit-tmp/`) | Bp8 §8 gap 4; `ls` | the driver removes it |
+| P8-G7 | W-D.1 §0 lists five items its §5 gates require at 0 (the `fourier-field` ↔ `renderer` value cycle, `Surface` naming two symbols, bare type aliases, the `UNRELEASED` MIGRATION heading, `chartHeights`/`chartMargin`/`chartColors` in `./tokens`) that sit outside D1's frozen checklist; none is measured on the pass-8 tree in either report | `waves/W-D.1.md` §0 | the pass-9 route measures each on its tree and reports it; it adds no checklist item. An item at non-zero is W-D.1's landing work or a pass-9 ruling, stated in the convergence record |
+| P7-G5 | the root's peer class is broken at the floor base (23 reviewed holds) | pass 7 | outside D1; on the tranche cursor |
+| P5-G3, P5-G5, P5-G8 | renderer and page-operation swallows; no `pretest` for `dist-demo`; common browser failures | pass 5 | outside D1; on the tranche cursor |
+
+Floor: no floor work is owed for pass 9. FP6-1..FP6-3, FP6-7, FP5-3, FP5-4, FP5-7 stay declared limits.
+
+---
+
+## P8-6 · Pass-9 plan
+
+### P8-6.1 Routes
+
+| route | status | pass-9 work |
+|---|---|---|
+| D1-B | ADVANCE | land P8-R1..P8-R3 in the kit; cure P8-G2..G5; measure P8-G7; hold all 27 items. The pass-9 critique is the second clean pass |
+| D1-G, D1-D′, D1-A, D1-C, D1-E, D1-F | unchanged | none; triggers watched |
+
+### P8-6.2 Order
+
+1. **Commit** the pass-8 critique and this part (P8-G1); remove the seat dir (P8-G6).
+2. **Rulings.** P8-R1..P8-R3 ruled into `RULINGS.md` as one list, before the route seat.
+3. **Floor.** None owed.
+4. **Route.** Kit-only where the rulings allow. If P8-R1 (a) needs a clause widening, S69 and S69s are re-derived once and S69 stays the last gate step; otherwise the chain is untouched and the digest must re-read `05aaa6ed…a451e1b3`. The browser run is not repeated unless the chain changes; the tally is re-run from the committed pass-8 reports under the guarded tool. The kit and every result are committed before the critic launches (S-01).
+5. **Critique.** A fresh critic who authored nothing in passes 2-9, the pass-6, -7 and -8 critics included, writes and hashes the battery before reading the kit.
+6. **Pass-9 agglomeration.** If the critique re-opens nothing and maps nothing outside the list, the count reaches 2 and it writes the convergence record (§P8-6.6).
+
+### P8-6.3 Route work
+
+| id | build | closes or holds |
+|---|---|---|
+| route · capture | per P8-R1 (a): LAW §13 states the `_*` exclusion and its reason; `browser-select.mjs` prints the excluded moved specs; a moved capture spec's imports are read (B16 or the graph); if a clause widens, `seal.test.ts` carries the RED case | S-12 |
+| route · exits | per P8-R2 (a): `browser-tally`, `browser-select`, `rekey` and `peer-closure` install the `seal.mjs` guard first and load their work after it; 0/1/2 in LAW once; the dist arm and the tally throw on an empty entry or an empty report | S-14 |
+| route · peer set | per P8-R3 (b): LAW §5 states that `src/README.md`'s table is the one record of declared classes and that withdrawal is a reviewed source edit | B-10 |
+| route · W-D.1 | measure P8-G7's five items on the pass-9 tree and report each (count, file:line) | none (formation input) |
+
+### P8-6.4 What pass 9 must prove
+
+§P7-6.4's bar, re-met: the chain replays to one digest (`05aaa6ed…` if unchanged), rerun a no-op; 19 clauses at 0 (or 19 with the widened one at 0); verify:package CLEAN at 2,920,391 (or rebound once if a gate step changes shipped bytes, which `scripts/` does not); cascade GREEN against the floor base; 428/428 base-green held, re-derived from committed reports; `./motion-core` keyframes-free on all three arms.
+
+**The battery must plant:**
+- a throw in each kit judge (missing, non-JSON and wrong-schema inputs; no arguments): each exits 2;
+- an emptied dist entry and an empty route report: each exits 2;
+- a moved `_*` capture spec with a broken import: read RED (P8-R1 (a));
+- the declared-row withdrawal (XR-drop) and its two leak variants, read as P8-R3 rules;
+- crash8's 37 and the 24-module closure re-run against pass 9's `seal/`;
+- regressions: the pass-8 critic's battery (`c3953aab…`), the 381 rows, and pass 4-8's batteries.
+
+### P8-6.5 Convergence criterion
+
+§P2-6.5 unchanged. The checklist is §P3-9's 27 items, frozen. **B's two-clean-passes count is 1.** The pass-9 critique moves it to 2, and D1-B converges, if it re-opens nothing and maps no finding to an edict clause the list leaves out. Any re-open restarts the count at 0. The hold column of §P8-7 states what the pass-9 critic reads; an uncured P8-G2..G4 after pass 9's route work is a re-open.
+
+### P8-6.6 What the convergence record will carry (written at pass 9 if the count reaches 2)
+
+- **the converged route:** D1-B, sealed modules, flat, with LAW, gate (19 clauses), pin and floor rows as committed in pass 9's kit;
+- **its chain digest:** the pass-9 replay's (expected `05aaa6ed…a451e1b3`);
+- **the one rebound datum:** `.bundle-ratchet` 2,920,391 (S70), unless pass 9 rebinds it;
+- **the rulings it rests on:** R-1..R-10 as amended, X-10, P3-R1..P3-R9 (P3-R9 as P4-R3), P4-R1..P4-R5, P5-R1..P5-R5, P6-R1..P6-R3, P7-R1..P7-R2, P8-R1..P8-R3;
+- **what passes to wave formation:** W-D.1 (W-COLOCATION and the placement seal, F-55..F-59, `waves/W-D.1.md`) lands the converged kit by replay; W-D.2 (W-PERIPHERY, F-60, `waves/W-D.2.md`) follows on the shape W-D.1 fixes; W-D.1 §0's five items with pass 9's measurements (P8-G7). `waves/INDEX.md:47` names W-D.1 as D1's one loop wave; its stale citations (`pass-4/B-kit/LAW.md`, digest `472cf493…`) re-point to pass 9's kit;
+- **what stays held:** D1-G, D1-D′, D1-C/E/F banked and D1-A blocked, with G-01..G-12 and D′'s gaps; P7-G5 (the root's peer class), P5-G3, P5-G5, P5-G8 on the tranche cursor; the declared limits FP6-1..3, FP6-7, FP5-3/4/7.
+
+---
+
+## P8-7 · Open gaps, enumerated (the pass-9 checklist)
+
+§P3-9's list carries forward with its text frozen. No item is added in pass 8.
+
+| item | pass-8 critic | entering pass 9 | what holds it closed |
+|---|---|---|---|
+| S-01 | CLOSED | CLOSED | the pass-8 critique committed (P8-G1); the pass-9 kit and results committed before judgment |
+| S-02 | CLOSED | CLOSED | B8 0, B9 0 |
+| S-03 | CLOSED | CLOSED | P6-R1..P7-R2 on their arms; P8-R1..P8-R3 ruled and landed; the datum rebound once |
+| S-04..S-08 | CLOSED | CLOSED | gate at 0 on every clause |
+| S-09 | CLOSED | CLOSED | replay idempotent, rerun a no-op |
+| S-10 | CLOSED | CLOSED | cascade GREEN listed, RED unlisted |
+| S-11 | CLOSED | CLOSED | vitest 0 failed |
+| S-12 | CLOSED | CLOSED | every base-green key accounted for; the capture exclusion stated and a moved capture spec read (P8-R1) |
+| S-13 | CLOSED | CLOSED | — |
+| S-14 | **CLOSED (was OPEN)** | CLOSED | B17 0; every gate throw exits 2, import time included; every kit judge exits 2 on a throw or a degenerate input (P8-R2) |
+| B-01 | CLOSED | CLOSED | every clause 0, B2 0; I7 caught |
+| B-02..B-06 | CLOSED | CLOSED | regressions identical |
+| B-07 | CLOSED | CLOSED | B15 over every stem |
+| B-08, B-09 | CLOSED | CLOSED | — |
+| B-10 | CLOSED | CLOSED | residual names on the ruled arms; the peer class owned by B18, its declared set ruled (P8-R3) |
+| B-11..B-13 | CLOSED | CLOSED | — |
+
+**Count entering pass 9:** 27 items, 27 closed, 0 open. Two-clean-passes count: **1**.
+
+**Held with the bank.** G-01..G-12 and D′'s gaps, unchanged.
+
+No route converged in pass 8. D1-B converges at the pass-9 agglomeration if the pass-9 critique re-opens nothing.

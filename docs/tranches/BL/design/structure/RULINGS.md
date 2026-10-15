@@ -77,3 +77,13 @@ Ruled by the driver on 2026-10-08, before pass 8's route seat, from REGISTRY §P
 |---|---|---|---|
 | P7-R1 | who judges an entry's declared peer class | **(a).** A gate clause, B18, judges each entry's names and files arms against its declared class, under `npm test` through `seal.test.ts`, with one RED and one GREEN case. The probe keeps the dist arm, which throws (exit 2) on a missing build. LAW §5 names B18 as the owner. 18 clauses become 19. | pass 6 broke the class with every gate GREEN; a judge nothing re-runs at landing does not hold it |
 | P7-R2 | when a key is base-green | **(a).** A key is base-green when it passes on the floor base in every run. A key that fails on the base under an alternating rerun (3 per tree) is flaky: recorded and kept out of the bar. LAW states the protocol. | a single-run mark cannot separate a flake from a regression |
+
+## Pass-8 rulings P8-R1..P8-R3
+
+Ruled by the driver on 2026-10-15, each at the registry's recommended arm (REGISTRY §P8-4). The owner may override any of them.
+
+| id | question | ruling | ground |
+|---|---|---|---|
+| P8-R1 | the `_*` capture specs in the browser selection | **(a).** Excluded, stated: LAW §13 names the exclusion and its reason (a capture spec writes into `docs/` and asserts no product behaviour); `browser-select.mjs` prints the excluded moved specs; one instrument reads a moved capture spec's imports (B16 or the floor graph resolving every `tests-visual/` import). If that needs a clause widening, S69 and S69s are re-derived once and `seal.test.ts` carries the RED case. | running a capture spec rewrites tranche records; the defect was the unstated rule and the unread move, and (a) cures both without a browser re-run |
+| P8-R2 | does P6-R3's exit law bind every kit judge | **(a).** Yes. `browser-tally`, `browser-select`, `rekey` and `peer-closure` install the `seal.mjs` guard first and load their work after it; 0 GREEN, 1 RED, 2 on any throw; a degenerate input (an empty dist entry, an empty report) throws. LAW states it once. | a judge whose crash reads as its own RED is the defect pass 7 re-opened in the gate; kit tools do not land in src or scripts, so no chain step and no digest change |
+| P8-R3 | is the declared peer-class set pinned | **(b).** No. `src/README.md`'s table stays the one record of declared classes; withdrawing a class is a reviewed source edit; B18 throws on a missing table, file or peer; LAW §5 says so. | the declared set is authored, not measured; pinning it puts one fact in two records, which a two-clean loop cannot converge over |
