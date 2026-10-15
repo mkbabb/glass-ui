@@ -1,0 +1,74 @@
+{
+ "id": "E-4",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e4-inflow"
+ },
+ "loadStart": "192.5/361.8/340.2",
+ "loadEnd": "242.5/353.0/337.9",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-4 slider fling carries velocity",
+   "status": "PASS",
+   "line": "axis x, page frame · fling: carry 48.07 px, settles 47.08 px past release · still: carry 0.00 px, settles -5.04 px · difference: carry 48.07 px, settle 52.13 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 254 frames, median 7.9 ms",
+   "load": "204.8/356.2/338.5"
+  },
+  {
+   "name": "E-4 slider release continuity",
+   "status": "PASS",
+   "line": "largest one-frame move on release: fling 4.1 px, still 0.5 px · during the drive: fling 42.4 px, still 42.4 px (bound ≤ drive × 1.5 + 2 = 65.6 px)",
+   "load": "204.8/356.2/338.5"
+  },
+  {
+   "name": "E-4 slider release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 120.0 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px",
+   "load": "213.9/355.5/338.4"
+  },
+  {
+   "name": "E-4 vsheet fling carries velocity",
+   "status": "UNMEASURED",
+   "line": "the surface paints in flow (.fx-sheet computes position: relative): UNMEASURED until its owner cures its position (REGISTRY §P1-7)",
+   "load": "227.8/356.0/338.7"
+  },
+  {
+   "name": "E-4 vsheet release continuity",
+   "status": "UNMEASURED",
+   "line": "in flow (above)",
+   "load": "227.8/356.0/338.7"
+  },
+  {
+   "name": "E-4 vsheet repeat landing",
+   "status": "UNMEASURED",
+   "line": "the surface is not read in this engine (above)",
+   "load": "227.8/356.0/338.7"
+  },
+  {
+   "name": "E-4 vsheet release PRM",
+   "status": "UNMEASURED",
+   "line": "the surface is not driven or not read in this engine (above)",
+   "load": "227.8/356.0/338.7"
+  },
+  {
+   "name": "E-4 strip fling carries velocity",
+   "status": "FAIL",
+   "line": "axis x, dir −1, touch, page frame · fling: carry 0.00 px, settles -121.00 px past release · still: carry 0.00 px, settles -91.00 px · difference: carry 0.00 px, settle -30.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 265 frames, median 7.8 ms",
+   "load": "234.4/355.3/338.5"
+  },
+  {
+   "name": "E-4 strip release continuity",
+   "status": "REPORT",
+   "line": "the platform's own scroll fling (CK-18: the Carousel is the platform's, stated), reported not gated · largest one-frame move on release: fling 8.0 px, still 8.0 px · during the drive: fling 96.0 px, still 66.0 px (bound ≤ drive × 1.5 + 2 = 146.0 px)",
+   "load": "234.4/355.3/338.5"
+  },
+  {
+   "name": "E-4 strip release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 121.0 px · fling: carry 479.00 px, settles 479.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 39.0 px",
+   "load": "237.3/353.9/338.1"
+  }
+ ]
+}

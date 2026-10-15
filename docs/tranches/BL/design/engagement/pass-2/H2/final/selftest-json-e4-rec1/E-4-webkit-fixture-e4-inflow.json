@@ -1,0 +1,74 @@
+{
+ "id": "E-4",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e4-inflow"
+ },
+ "loadStart": "165.6/152.3/199.5",
+ "loadEnd": "164.9/153.2/198.2",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "E-4 slider fling carries velocity",
+   "status": "PASS",
+   "line": "axis x, page frame · fling: carry 92.48 px, settles 90.99 px past release · still: carry 0.00 px, settles -5.04 px · difference: carry 92.48 px, settle 96.03 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 195 frames, median 10.0 ms",
+   "load": "161.0/151.8/198.8"
+  },
+  {
+   "name": "E-4 slider release continuity",
+   "status": "PASS",
+   "line": "largest one-frame move on release: fling 12.7 px, still 0.5 px · during the drive: fling 42.5 px, still 42.5 px (bound ≤ drive × 1.5 + 2 = 65.8 px)",
+   "load": "161.0/151.8/198.8"
+  },
+  {
+   "name": "E-4 slider release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 120.0 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px",
+   "load": "160.5/151.8/198.5"
+  },
+  {
+   "name": "E-4 vsheet fling carries velocity",
+   "status": "UNMEASURED",
+   "line": "the surface paints in flow (.fx-sheet computes position: relative): UNMEASURED until its owner cures its position (REGISTRY §P1-7)",
+   "load": "160.5/151.8/198.5"
+  },
+  {
+   "name": "E-4 vsheet release continuity",
+   "status": "UNMEASURED",
+   "line": "in flow (above)",
+   "load": "160.5/151.8/198.5"
+  },
+  {
+   "name": "E-4 vsheet repeat landing",
+   "status": "UNMEASURED",
+   "line": "the surface is not read in this engine (above)",
+   "load": "160.5/151.8/198.5"
+  },
+  {
+   "name": "E-4 vsheet release PRM",
+   "status": "UNMEASURED",
+   "line": "the surface is not driven or not read in this engine (above)",
+   "load": "160.5/151.8/198.5"
+  },
+  {
+   "name": "E-4 strip fling carries velocity",
+   "status": "UNMEASURED",
+   "line": "the touch drag moved the body 0.0 px (fling) and 0.0 px (still), bound ≥ 20 px: macOS WebKit has no touch scrolling, so a touch drag cannot drive this surface (H-4); real Safari UNMEASURED (owner's safaridriver checkbox)",
+   "load": "164.9/153.2/198.2"
+  },
+  {
+   "name": "E-4 strip release continuity",
+   "status": "UNMEASURED",
+   "line": "not driven in this engine (above)",
+   "load": "164.9/153.2/198.2"
+  },
+  {
+   "name": "E-4 strip release PRM",
+   "status": "UNMEASURED",
+   "line": "the surface is not driven or not read in this engine (above)",
+   "load": "164.9/153.2/198.2"
+  }
+ ]
+}

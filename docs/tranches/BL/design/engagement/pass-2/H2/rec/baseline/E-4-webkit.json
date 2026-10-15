@@ -1,0 +1,115 @@
+{
+ "id": "E-4",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/H2/wt/.h2-out/builds/head"
+ },
+ "loadStart": "530.5/395.0/258.0",
+ "loadEnd": "498.5/406.7/270.1",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-4 slider fling carries velocity",
+   "status": "FAIL",
+   "line": "axis x, leading edge, page frame · fling: carry 0.00 px, settles -8.04 px past release · still: carry 0.08 px, settles -2.23 px · difference: carry -0.08 px, settle -5.80 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 121 frames, median 17.0 ms",
+   "load": "521.7/397.6/260.5"
+  },
+  {
+   "name": "E-4 slider release continuity",
+   "status": "PASS",
+   "line": "largest one-frame move on release: fling 4.0 px, still 2.2 px · during the drive: fling 41.6 px, still 41.7 px (bound ≤ drive × 1.5 + 2 = 64.5 px)",
+   "load": "521.7/397.6/260.5"
+  },
+  {
+   "name": "E-4 slider release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 79.2 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px",
+   "load": "513.5/398.0/261.5"
+  },
+  {
+   "name": "E-4 tabsdrag fling carries velocity",
+   "status": "FAIL",
+   "line": "axis x, page frame · fling: carry 38.64 px, settles -54.34 px past release · still: carry 36.93 px, settles -54.34 px · difference: carry 1.71 px, settle 0.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 120 frames, median 17.0 ms",
+   "load": "503.6/399.7/263.7"
+  },
+  {
+   "name": "E-4 tabsdrag release continuity",
+   "status": "FAIL",
+   "line": "largest one-frame move on release: fling 240.5 px, still 239.7 px · during the drive: fling 91.0 px, still 91.0 px (bound ≤ drive × 1.5 + 2 = 138.5 px)",
+   "load": "503.6/399.7/263.7"
+  },
+  {
+   "name": "E-4 tabsdrag release PRM",
+   "status": "FAIL",
+   "line": "NOT DRIVEN under reduce: the drag moved the body 0.0 px (bound ≥ 20 px)",
+   "load": "503.6/399.7/263.7"
+  },
+  {
+   "name": "E-4 sheet fling carries velocity",
+   "status": "UNMEASURED",
+   "line": "the surface paints in flow ([role=\"dialog\"] computes position: relative): UNMEASURED until its owner cures its position (REGISTRY §P1-7)",
+   "load": "500.7/400.8/264.9"
+  },
+  {
+   "name": "E-4 sheet release continuity",
+   "status": "UNMEASURED",
+   "line": "in flow (above)",
+   "load": "500.7/400.8/264.9"
+  },
+  {
+   "name": "E-4 sheet repeat landing",
+   "status": "UNMEASURED",
+   "line": "the surface is not read in this engine (above)",
+   "load": "500.7/400.8/264.9"
+  },
+  {
+   "name": "E-4 sheet release PRM",
+   "status": "UNMEASURED",
+   "line": "the surface is not driven or not read in this engine (above)",
+   "load": "500.7/400.8/264.9"
+  },
+  {
+   "name": "E-4 sortable fling carries velocity",
+   "status": "FAIL",
+   "line": "axis y, page frame · fling: carry 15.57 px, settles -36.69 px past release · still: carry 37.37 px, settles -36.69 px · difference: carry -21.79 px, settle 0.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 0.020 · 120 frames, median 17.0 ms",
+   "load": "497.2/401.7/266.0"
+  },
+  {
+   "name": "E-4 sortable release continuity",
+   "status": "FAIL",
+   "line": "largest one-frame move on release: fling 77.1 px, still 28.1 px · during the drive: fling 40.0 px, still 40.0 px (bound ≤ drive × 1.5 + 2 = 62.0 px)",
+   "load": "497.2/401.7/266.0"
+  },
+  {
+   "name": "E-4 sortable release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 120.0 px · fling: carry 0.00 px, settles -36.69 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 36.2 px",
+   "load": "497.3/403.3/267.3"
+  },
+  {
+   "name": "E-4 carousel fling carries velocity",
+   "status": "UNMEASURED",
+   "line": "the touch drag moved the body 0.0 px (fling) and 0.0 px (still), bound ≥ 20 px: macOS WebKit has no touch scrolling, so a touch drag cannot drive this surface (H-4); real Safari UNMEASURED (owner's safaridriver checkbox)",
+   "load": "498.5/406.7/270.1"
+  },
+  {
+   "name": "E-4 carousel release continuity",
+   "status": "UNMEASURED",
+   "line": "not driven in this engine (above)",
+   "load": "498.5/406.7/270.1"
+  },
+  {
+   "name": "E-4 carousel repeat landing",
+   "status": "UNMEASURED",
+   "line": "the surface is not read in this engine (above)",
+   "load": "498.5/406.7/270.1"
+  },
+  {
+   "name": "E-4 carousel release PRM",
+   "status": "UNMEASURED",
+   "line": "the surface is not driven or not read in this engine (above)",
+   "load": "498.5/406.7/270.1"
+  }
+ ]
+}

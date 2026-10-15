@@ -1,0 +1,81 @@
+# HEAD E-4 run 1 start 2026-10-15 12:15:23 load { 15.60 57.85 75.20 }
+E-4 chromium exit 1 · E-4 chromium FAIL · 6 pass, 6 fail, 4 unmeasured of 16 gating cells (1 reported) · load 11.5/42.5/66.8 at start, 11.3/37.7/63.7 at end · 49 s, load at start 11.5/42.5/66.8
+    FAIL       E-4 slider fling carries velocity · axis x, leading edge, page frame · fling: carry 0.10 px, settles -3.70 px past release · still: carry 0.07 px, settles -2.23 px · difference: carry 0.03 px, settle -1.47 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 238 frames, median 8.3 ms · load 11.7/41.5/66.2
+    FAIL       E-4 tabsdrag fling carries velocity · axis x, page frame · fling: carry 39.89 px, settles -54.53 px past release · still: carry 36.73 px, settles -54.53 px · difference: carry 3.16 px, settle 0.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 240 frames, median 8.3 ms · load 12.1/40.6/65.6
+    FAIL       E-4 tabsdrag release continuity · largest one-frame move on release: fling 245.6 px, still 245.6 px · during the drive: fling 91.2 px, still 91.2 px (bound ≤ drive × 1.5 + 2 = 138.7 px) · load 12.1/40.6/65.6
+    FAIL       E-4 tabsdrag release PRM · NOT DRIVEN under reduce: the drag moved the body 0.0 px (bound ≥ 20 px) · load 12.1/40.6/65.6
+    UNMEASURED E-4 sheet fling carries velocity · the surface paints in flow ([role="dialog"] computes position: relative): UNMEASURED until its owner cures its position (REGISTRY §P1-7) · load 13.3/40.4/65.3
+    UNMEASURED E-4 sheet release continuity · in flow (above) · load 13.3/40.4/65.3
+    UNMEASURED E-4 sheet repeat landing · the surface is not read in this engine (above) · load 13.3/40.4/65.3
+    UNMEASURED E-4 sheet release PRM · the surface is not driven or not read in this engine (above) · load 13.3/40.4/65.3
+    FAIL       E-4 sortable fling carries velocity · axis y, page frame · fling: carry 20.94 px, settles -36.69 px past release · still: carry 37.42 px, settles -36.69 px · difference: carry -16.48 px, settle 0.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 0.026 · 240 frames, median 8.3 ms · load 13.1/39.9/65.0
+    FAIL       E-4 sortable release continuity · largest one-frame move on release: fling 75.1 px, still 27.9 px · during the drive: fling 40.0 px, still 40.0 px (bound ≤ drive × 1.5 + 2 = 62.0 px) · load 13.1/39.9/65.0
+E-4 webkit   exit 1 · E-4 webkit FAIL · 4 pass, 5 fail, 8 unmeasured of 17 gating cells (0 reported) · load 11.3/37.7/63.7 at start, 11.7/33.1/60.2 at end · 59 s, load at start 11.3/37.7/63.7
+    FAIL       E-4 slider fling carries velocity · axis x, leading edge, page frame · fling: carry 0.12 px, settles -3.43 px past release · still: carry 0.08 px, settles -2.23 px · difference: carry 0.05 px, settle -1.19 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 120 frames, median 17.0 ms · load 12.5/36.3/62.5
+    FAIL       E-4 tabsdrag release continuity · largest one-frame move on release: fling 240.5 px, still 240.5 px · during the drive: fling 91.0 px, still 91.0 px (bound ≤ drive × 1.5 + 2 = 138.5 px) · load 12.3/35.4/61.9
+    FAIL       E-4 tabsdrag release PRM · NOT DRIVEN under reduce: the drag moved the body 0.0 px (bound ≥ 20 px) · load 12.3/35.0/61.6
+    UNMEASURED E-4 sheet fling carries velocity · the surface paints in flow ([role="dialog"] computes position: relative): UNMEASURED until its owner cures its position (REGISTRY §P1-7) · load 12.3/35.0/61.6
+    UNMEASURED E-4 sheet release continuity · in flow (above) · load 12.3/35.0/61.6
+    UNMEASURED E-4 sheet repeat landing · the surface is not read in this engine (above) · load 12.3/35.0/61.6
+    UNMEASURED E-4 sheet release PRM · the surface is not driven or not read in this engine (above) · load 12.3/35.0/61.6
+    FAIL       E-4 sortable fling carries velocity · axis y, page frame · fling: carry 32.87 px, settles -36.69 px past release · still: carry 43.61 px, settles -36.69 px · difference: carry -10.75 px, settle 0.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 0.025 · 120 frames, median 17.0 ms · load 12.1/34.3/61.0
+    FAIL       E-4 sortable release continuity · largest one-frame move on release: fling 79.4 px, still 32.3 px · during the drive: fling 40.0 px, still 40.0 px (bound ≤ drive × 1.5 + 2 = 62.0 px) · load 12.1/34.3/61.0
+    UNMEASURED E-4 carousel fling carries velocity · the touch drag moved the body 0.0 px (fling) and 0.0 px (still), bound ≥ 20 px: macOS WebKit has no touch scrolling, so a touch drag cannot drive this surface (H-4); real Safari UNMEASURED (owner's safaridriver checkbox) · load 11.7/33.1/60.2
+    UNMEASURED E-4 carousel release continuity · not driven in this engine (above) · load 11.7/33.1/60.2
+    UNMEASURED E-4 carousel repeat landing · the surface is not read in this engine (above) · load 11.7/33.1/60.2
+    UNMEASURED E-4 carousel release PRM · the surface is not driven or not read in this engine (above) · load 11.7/33.1/60.2
+# HEAD E-4 run 1 end exit 1 2026-10-15 12:19:15 load { 11.73 33.10 60.17 }
+# HEAD E-9 button chromium run 1 start 2026-10-15 12:19:15 load { 11.73 33.10 60.17 }
+# E-9 · the PRM arm
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/H2/wt/.h2-out/builds/head · engine chromium · lock wait 0.0 s · other headless processes: chromium 11, webkit 0 · load 11.7/33.1/60.2 at start
+# chromium 149.0.7827.55
+# narrowed to scenes button
+  PASS       E-9 button press-spatial light · scale range while pressed 0.000 over 38 frames (bound < 0.002) · load 11.8/32.7/59.9
+  PASS       E-9 button press-light light · press-only paint changes [::before opacity] (bound ≥ 1) · load 11.8/32.7/59.9
+  PASS       E-9 button commit-spatial light · commit(Space): scale range 0.030 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 73 frames · load 11.8/32.7/59.9
+  PASS       E-9 button press-spatial dark · scale range while pressed 0.000 over 37 frames (bound < 0.002) · load 11.8/32.4/59.6
+  PASS       E-9 button press-light dark · press-only paint changes [::before opacity] (bound ≥ 1) · load 11.8/32.4/59.6
+  FAIL       E-9 button commit-spatial dark · commit(Space): scale range 0.030 with 10 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 74 frames · load 11.8/32.4/59.6
+E-9 chromium FAIL · 5 pass, 1 fail, 0 unmeasured of 6 gating cells (0 reported) · load 11.7/33.1/60.2 at start, 11.8/32.4/59.6 at end
+# HEAD E-9 button chromium run 1 end exit 1 2026-10-15 12:19:25 load { 11.77 32.40 59.60 }
+# HEAD E-9 button webkit run 1 start 2026-10-15 12:19:25 load { 11.77 32.40 59.60 }
+# E-9 · the PRM arm
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/H2/wt/.h2-out/builds/head · engine webkit · lock wait 0.0 s · other headless processes: chromium 11, webkit 0 · load 15.1/32.7/59.6 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# narrowed to scenes button
+  FAIL       E-9 button press-spatial light · scale range while pressed 0.030 over 20 frames (bound < 0.002) · load 15.7/32.6/59.4
+  PASS       E-9 button press-light light · press-only paint changes [::before opacity] (bound ≥ 1) · load 15.7/32.6/59.4
+  FAIL       E-9 button commit-spatial light · commit(Space): scale range 0.030 with 5 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 38 frames · load 15.7/32.6/59.4
+  FAIL       E-9 button press-spatial dark · scale range while pressed 0.030 over 20 frames (bound < 0.002) · load 15.5/32.3/59.1
+  PASS       E-9 button press-light dark · press-only paint changes [::before opacity] (bound ≥ 1) · load 15.5/32.3/59.1
+  FAIL       E-9 button commit-spatial dark · commit(Space): scale range 0.030 with 5 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 38 frames · load 15.5/32.3/59.1
+E-9 webkit FAIL · 2 pass, 4 fail, 0 unmeasured of 6 gating cells (0 reported) · load 15.1/32.7/59.6 at start, 15.5/32.3/59.1 at end
+# HEAD E-9 button webkit run 1 end exit 1 2026-10-15 12:19:40 load { 15.49 32.26 59.08 }
+# HEAD E-4 run 2 start 2026-10-15 12:19:40 load { 15.49 32.26 59.08 }
+E-4 chromium exit 1 · E-4 chromium FAIL · 6 pass, 6 fail, 4 unmeasured of 16 gating cells (1 reported) · load 15.5/32.3/59.1 at start, 12.0/28.7/56.2 at end · 49 s, load at start 15.5/32.3/59.1
+    FAIL       E-4 slider fling carries velocity · axis x, leading edge, page frame · fling: carry 0.11 px, settles -3.69 px past release · still: carry 0.08 px, settles -2.23 px · difference: carry 0.03 px, settle -1.45 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 240 frames, median 8.3 ms · load 14.3/31.4/58.5
+    FAIL       E-4 tabsdrag fling carries velocity · axis x, page frame · fling: carry 40.09 px, settles -54.53 px past release · still: carry 36.73 px, settles -54.53 px · difference: carry 3.35 px, settle 0.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 240 frames, median 8.3 ms · load 12.7/30.5/57.8
+    FAIL       E-4 tabsdrag release continuity · largest one-frame move on release: fling 245.9 px, still 245.6 px · during the drive: fling 91.2 px, still 91.2 px (bound ≤ drive × 1.5 + 2 = 138.7 px) · load 12.7/30.5/57.8
+    FAIL       E-4 tabsdrag release PRM · NOT DRIVEN under reduce: the drag moved the body 0.0 px (bound ≥ 20 px) · load 12.3/30.2/57.5
+    UNMEASURED E-4 sheet fling carries velocity · the surface paints in flow ([role="dialog"] computes position: relative): UNMEASURED until its owner cures its position (REGISTRY §P1-7) · load 12.3/30.2/57.5
+    UNMEASURED E-4 sheet release continuity · in flow (above) · load 12.3/30.2/57.5
+    UNMEASURED E-4 sheet repeat landing · the surface is not read in this engine (above) · load 12.3/30.2/57.5
+    UNMEASURED E-4 sheet release PRM · the surface is not driven or not read in this engine (above) · load 12.3/30.2/57.5
+    FAIL       E-4 sortable fling carries velocity · axis y, page frame · fling: carry 26.40 px, settles -36.69 px past release · still: carry 37.33 px, settles -36.69 px · difference: carry -10.94 px, settle 0.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 0.026 · 240 frames, median 8.3 ms · load 11.8/29.8/57.2
+    FAIL       E-4 sortable release continuity · largest one-frame move on release: fling 75.2 px, still 27.8 px · during the drive: fling 40.0 px, still 40.0 px (bound ≤ drive × 1.5 + 2 = 62.0 px) · load 11.8/29.8/57.2
+E-4 webkit   exit 1 · E-4 webkit FAIL · 4 pass, 5 fail, 8 unmeasured of 17 gating cells (0 reported) · load 12.0/28.7/56.2 at start, 10.8/25.8/53.6 at end · 47 s, load at start 12.0/28.7/56.2
+    FAIL       E-4 slider fling carries velocity · axis x, leading edge, page frame · fling: carry 0.11 px, settles -3.31 px past release · still: carry 0.08 px, settles -2.23 px · difference: carry 0.03 px, settle -1.08 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 120 frames, median 17.0 ms · load 11.5/28.0/55.7
+    FAIL       E-4 tabsdrag release continuity · largest one-frame move on release: fling 241.3 px, still 240.5 px · during the drive: fling 91.0 px, still 91.0 px (bound ≤ drive × 1.5 + 2 = 138.5 px) · load 11.8/27.5/55.2
+    FAIL       E-4 tabsdrag release PRM · NOT DRIVEN under reduce: the drag moved the body 0.0 px (bound ≥ 20 px) · load 12.3/27.4/54.9
+    UNMEASURED E-4 sheet fling carries velocity · the surface paints in flow ([role="dialog"] computes position: relative): UNMEASURED until its owner cures its position (REGISTRY §P1-7) · load 12.3/27.4/54.9
+    UNMEASURED E-4 sheet release continuity · in flow (above) · load 12.3/27.4/54.9
+    UNMEASURED E-4 sheet repeat landing · the surface is not read in this engine (above) · load 12.3/27.4/54.9
+    UNMEASURED E-4 sheet release PRM · the surface is not driven or not read in this engine (above) · load 12.3/27.4/54.9
+    FAIL       E-4 sortable fling carries velocity · axis y, page frame · fling: carry 37.84 px, settles -36.69 px past release · still: carry 48.40 px, settles -36.69 px · difference: carry -10.56 px, settle 0.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 0.028 · 120 frames, median 17.0 ms · load 11.7/26.7/54.4
+    FAIL       E-4 sortable release continuity · largest one-frame move on release: fling 83.3 px, still 35.7 px · during the drive: fling 40.0 px, still 40.0 px (bound ≤ drive × 1.5 + 2 = 62.0 px) · load 11.7/26.7/54.4
+    UNMEASURED E-4 carousel fling carries velocity · the touch drag moved the body 0.0 px (fling) and 0.0 px (still), bound ≥ 20 px: macOS WebKit has no touch scrolling, so a touch drag cannot drive this surface (H-4); real Safari UNMEASURED (owner's safaridriver checkbox) · load 10.8/25.8/53.6
+    UNMEASURED E-4 carousel release continuity · not driven in this engine (above) · load 10.8/25.8/53.6
+    UNMEASURED E-4 carousel repeat landing · the surface is not read in this engine (above) · load 10.8/25.8/53.6
+    UNMEASURED E-4 carousel release PRM · the surface is not driven or not read in this engine (above) · load 10.8/25.8/53.6
+# HEAD E-4 run 2 end exit 1 2026-10-15 12:21:21 load { 10.35 25.45 53.29 }
+# HEAD E-9 button chromium run 2 start 2026-10-15 12:21:21 load { 10.35 25.45 53.29 }

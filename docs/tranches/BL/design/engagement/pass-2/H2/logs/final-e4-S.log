@@ -1,0 +1,9 @@
+# E-4 self-test x2 both engines, final fixture (e4-snap one past the nearest) start 2026-10-09 18:39:55 load { 197.47 203.19 223.83 }
+OK     E-4 chromium clean exit 0 · E-4 chromium PASS · 9 pass, 0 fail, 0 unmeasured of 9 gating cells (1 reported) · load 196.7/201.6/222.3 at start, 243.5/213.0/225.3 at end
+OK     E-4 chromium fault   e4-drop (the release drops the drag velocity: the thumb stops where the pointer let go) exit 1
+         first planted FAIL: FAIL       E-4 slider fling carries velocity · axis x, page frame · fling: carry 0.00 px, settles -4.87 px past release · still: carry 0.00 px, settles -5.04 px · difference: carry 0.00 px, settle 0.17 px (bound: either ≥ 4, both at rest) ·
+OK     E-4 chromium fault   e4-hold (the release holds in place (750 ms after a fling, 600 ms after a still release), then springs to the SAME nearest detent: the velocity picks nothing) exit 1
+         first planted FAIL: FAIL       E-4 slider fling carries velocity · axis x, page frame · fling: carry 0.00 px, settles -28.73 px past release · still: carry 0.00 px, settles -29.04 px · difference: carry 0.00 px, settle 0.31 px (bound: either ≥ 4, both at rest)
+OK     E-4 chromium control e4-snap (CONTROL, must PASS: the release snaps to a detent and the release velocity picks the detent) exit 0
+OK     E-4 chromium fault   e4-vdrop (the vertical detent sheet resolves its release by position alone: a fling lands on the detent a still release lands on (H-7)) exit 1
+         first planted FAIL: FAIL       E-4 vsheet fling carries velocity · axis y, dir −1, page frame · fling: carry 0.00 px, settles -20.00 px past release · still: carry 0.00 px, settles -20.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both 

@@ -1,0 +1,20 @@
+{
+ "id": "E-11",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e11-noise"
+ },
+ "loadStart": "14.0/100.8/91.9",
+ "loadEnd": "13.4/99.2/91.3",
+ "verdict": "UNMEASURED",
+ "cells": [
+  {
+   "name": "E-11 slider fail-loud --fx-scale-engage (kbd)",
+   "status": "UNMEASURED",
+   "line": "no degradation, no error: the token is not read on this path · --fx-scale-engage: \"nonsense\" on the root · clean {\"s\":1.0599999321831597,\"veil\":1,\"n\":1} {\"s\":1.0609998914930556,\"veil\":1,\"n\":1} {\"s\":1.054000006781684,\"veil\":1,\"n\":1} · planted {\"s\":1.066000027126736,\"veil\":1,\"n\":1} {\"s\":1.0599999321831597,\"veil\":1,\"n\":1} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 0",
+   "load": "13.4/99.2/91.3"
+  }
+ ]
+}

@@ -1,0 +1,32 @@
+# E-10 re-run after the per-16.7-ms step normalization start 2026-10-09 12:52:34 load { 351.70 381.16 351.86 }
+OK     E-10 chromium clean exit 0 · E-10 chromium PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (1 reported) · load 294.4/348.4/342.5 at start, 293.3/344.5/341.2 at end
+OK     E-10 chromium fault   e10-snap (CK-20: Tab from slider A to slider B drops A to rest in one frame (C-E r32)) exit 1
+         first planted FAIL: FAIL       E-10 slider2 hand-off drop · Tab A → B (focus on ProbeB): A ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0600 (bound ≤ A's own release 0.0081 + 0.002) · B ×1.000 → ×1.060 · load 475.4/445.7/396.0
+OK     E-10 chromium fault   e10-veildip (CK-20: the shared veil is torn down at A's release and re-ramps from 0 for B (C-E r32)) exit 1
+         first planted FAIL: FAIL       E-10 slider2 hand-off veil · veil 1.00 before the Tab, minimum 0.00 across the hand-off, 1.00 at the end (bound ≥ 0.1× its level: it does not re-ramp from 0) · load 473.7/449.7/400.3
+OK     E-10 chromium fault   e10-escsnap (CK-20: Escape releases the keyboard engagement in one frame) exit 1
+         first planted FAIL: FAIL       E-10 slider escape release · Escape: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0600 (bound ≤ own release 0.0082 + 0.002) · load 419.2/440.4/399.5
+OK     E-10 chromium fault   e10-rerender (CK-20: the held slider is pinned out of flow; a sibling inserted during the hold makes the release land in its new slot in one frame (P-E/rerender-probe.md)) exit 1
+         first planted FAIL: FAIL       E-10 slider re-render landing · a sibling inserted during the hold, then release: the root's largest one-frame move per 16.7 ms 40.0 px (without the insert 1.6 px; bound ≤ that + 1 px) · load 321.8/407.6/390.6
+selftest: 5 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+OK     E-10 webkit   clean exit 0 · E-10 webkit PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (1 reported) · load 265.4/377.5/380.5 at start, 261.8/369.4/377.5 at end
+OK     E-10 webkit   fault   e10-snap (CK-20: Tab from slider A to slider B drops A to rest in one frame (C-E r32)) exit 1
+         first planted FAIL: FAIL       E-10 slider2 hand-off drop · Tab A → B (focus on ProbeB): A ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0600 (bound ≤ A's own release 0.0071 + 0.002) · B ×1.000 → ×1.060 · load 260.1/342.3/366.3
+OK     E-10 webkit   fault   e10-veildip (CK-20: the shared veil is torn down at A's release and re-ramps from 0 for B (C-E r32)) exit 1
+         first planted FAIL: FAIL       E-10 slider2 hand-off veil · veil 1.00 before the Tab, minimum 0.00 across the hand-off, 1.00 at the end (bound ≥ 0.1× its level: it does not re-ramp from 0) · load 276.4/294.4/317.3
+OK     E-10 webkit   fault   e10-escsnap (CK-20: Escape releases the keyboard engagement in one frame) exit 1
+         first planted FAIL: FAIL       E-10 slider escape release · Escape: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0600 (bound ≤ own release 0.0065 + 0.002) · load 255.8/288.7/314.8
+OK     E-10 webkit   fault   e10-rerender (CK-20: the held slider is pinned out of flow; a sibling inserted during the hold makes the release land in its new slot in one frame (P-E/rerender-probe.md)) exit 1
+         first planted FAIL: FAIL       E-10 slider re-render landing · a sibling inserted during the hold, then release: the root's largest one-frame move per 16.7 ms 40.0 px (without the insert 1.3 px; bound ≤ that + 1 px) · load 263.3/287.6/313.6
+selftest: 5 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+OK     E-10 webkit   clean exit 0 · E-10 webkit PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (1 reported) · load 264.8/286.8/312.9 at start, 256.8/283.9/311.4 at end
+OK     E-10 webkit   fault   e10-snap (CK-20: Tab from slider A to slider B drops A to rest in one frame (C-E r32)) exit 1
+         first planted FAIL: FAIL       E-10 slider2 hand-off drop · Tab A → B (focus on ProbeB): A ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0600 (bound ≤ A's own release 0.0060 + 0.002) · B ×1.000 → ×1.060 · load 260.1/283.0/310.4
+OK     E-10 webkit   fault   e10-veildip (CK-20: the shared veil is torn down at A's release and re-ramps from 0 for B (C-E r32)) exit 1
+         first planted FAIL: FAIL       E-10 slider2 hand-off veil · veil 1.00 before the Tab, minimum 0.00 across the hand-off, 1.00 at the end (bound ≥ 0.1× its level: it does not re-ramp from 0) · load 250.1/275.5/305.8
+OK     E-10 webkit   fault   e10-escsnap (CK-20: Escape releases the keyboard engagement in one frame) exit 1
+         first planted FAIL: FAIL       E-10 slider escape release · Escape: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0600 (bound ≤ own release 0.0065 + 0.002) · load 277.5/242.2/266.1
+OK     E-10 webkit   fault   e10-rerender (CK-20: the held slider is pinned out of flow; a sibling inserted during the hold makes the release land in its new slot in one frame (P-E/rerender-probe.md)) exit 1
+         first planted FAIL: FAIL       E-10 slider re-render landing · a sibling inserted during the hold, then release: the root's largest one-frame move per 16.7 ms 40.0 px (without the insert 1.3 px; bound ≤ that + 1 px) · load 229.6/233.8/260.5
+selftest: 5 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# end 2026-10-09 13:36:41 load { 231.50 234.08 260.42 }

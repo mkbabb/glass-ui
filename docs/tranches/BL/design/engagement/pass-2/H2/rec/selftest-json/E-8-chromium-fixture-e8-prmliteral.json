@@ -1,0 +1,56 @@
+{
+ "id": "E-8",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e8-prmliteral"
+ },
+ "loadStart": "137.5/150.4/124.6",
+ "loadEnd": "133.8/149.2/124.5",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-8 mirror",
+   "status": "PASS",
+   "line": "2 rows, 4 --engage-* tokens on :root · drift [] · orphans []",
+   "load": "137.5/150.4/124.6"
+  },
+  {
+   "name": "E-8 literal pop",
+   "status": "PASS",
+   "line": "10 animation(s) ran [background-color@55ms, scale@350ms, script@60ms, script@180ms] against 5 clock tokens · minted []",
+   "load": "137.5/150.4/124.6"
+  },
+  {
+   "name": "E-8 literal pop PRM",
+   "status": "FAIL",
+   "line": "8 animation(s) ran [background-color@100ms, script@60ms, script@180ms] against 5 clock tokens · minted [CSSTransition background-color 100ms on ctl engage-pressed]",
+   "load": "136.0/149.9/124.6"
+  },
+  {
+   "name": "E-8 literal travel",
+   "status": "PASS",
+   "line": "8 animation(s) ran [background-color@55ms, scale@350ms, script@350ms] against 5 clock tokens · minted []",
+   "load": "136.0/149.9/124.6"
+  },
+  {
+   "name": "E-8 literal travel PRM",
+   "status": "FAIL",
+   "line": "4 animation(s) ran [background-color@100ms] against 5 clock tokens · minted [CSSTransition background-color 100ms on seg engage-pressed]",
+   "load": "133.8/149.2/124.5"
+  },
+  {
+   "name": "E-8 literal rest",
+   "status": "PASS",
+   "line": "11 animation(s) ran [background-color@55ms, scale@350ms, script@60ms, script@180ms] against 5 clock tokens · minted []",
+   "load": "133.8/149.2/124.5"
+  },
+  {
+   "name": "E-8 literal rest PRM",
+   "status": "FAIL",
+   "line": "8 animation(s) ran [background-color@100ms, script@60ms, script@180ms] against 5 clock tokens · minted [CSSTransition background-color 100ms on ctl engage-pressed]",
+   "load": "133.8/149.2/124.5"
+  }
+ ]
+}

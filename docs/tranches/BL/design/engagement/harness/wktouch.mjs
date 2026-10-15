@@ -13,6 +13,7 @@
 //     Emulation.setDeviceMetricsOverride, Target.sendMessageToTarget (wraps a page-target message)
 //   page target: Page.setTouchEmulationEnabled, Page.overrideUserPreference (PrefersReducedMotion,
 //     PrefersColorScheme), Page.getResourceTree, Runtime.evaluate
+import { holdWebkit } from "../../../driver/webkit-lock.mjs";
 import { spawn } from "node:child_process";
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -22,6 +23,7 @@ export class WkTouch {
   get alive() { return !!this.p && !this.dead; }
   async launch() {
     if (this.alive) return;
+    await holdWebkit();
     this.dead = null; this.events = []; this.pend = new Map();
     const p = spawn(this.exe, ["--inspector-pipe", "--headless", "--no-startup-window"], { stdio: ["ignore", "ignore", "ignore", "pipe", "pipe"] });
     this.p = p; let buf = "";
@@ -99,6 +101,8 @@ export class WkTouch {
     return {
       pp, page: { evaluate, waitForTimeout: wait },
       touch: (type, x, y) => this.send("Input.dispatchTouchEvent", { type, modifiers: 0, touchPoints: [{ x: Math.round(x), y: Math.round(y) }] }, { pageProxyId: pp }),
+      // H2 (CK-25's coarse frames in WebKit): a viewport-space snapshot of a clip, PNG bytes, from the page target
+      shot: async (c) => { const r = await this.tsend(pp, t, "Page.snapshotRect", { x: Math.round(c.x), y: Math.round(c.y), width: Math.round(c.width), height: Math.round(c.height), coordinateSystem: "Viewport" }); return Buffer.from(String(r.dataURL).split(",")[1], "base64"); },
       mouseMove: (x, y) => this.send("Input.dispatchMouseEvent", { type: "move", x: Math.round(x), y: Math.round(y), modifiers: 0, button: "none", buttons: 0, clickCount: 0 }, { pageProxyId: pp }),
       close: () => this.send("Playwright.deleteContext", { browserContextId: bc }).catch(() => {}),
     };

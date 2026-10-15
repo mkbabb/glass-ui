@@ -12,7 +12,7 @@
 //                   flight (> 1 px from both its start and its landing) on ≤ 1 frame: a state change lands (a new
 //                   resting scale may jump), it does not glide or pop
 //   node e9-prm.mjs --build <dir> | --fixture [--fault e9-scale|e9-dark|e9-glide] [--engine webkit]
-import { witness, openPage, scenesFor, center, quiet, paintDiff, tabKey, f, BOUNCE } from "./lib.mjs";
+import { witness, openPage, scenesFor, center, quiet, paintDiff, tabKey, f, BOUNCE, KEY_DWELL } from "./lib.mjs";
 
 await witness("E-9", "the PRM arm", async ({ E, T, cell, guard, idx, engine }) => {
   for (const [sc, m] of scenesFor(idx, "E-9")) {
@@ -38,7 +38,7 @@ await witness("E-9", "the PRM arm", async ({ E, T, cell, guard, idx, engine }) =
             try {
               await Q.page.focus('[data-sentinel="before"]'); await Q.page.keyboard.press(tabKey(engine)); await Q.page.waitForTimeout(200);
               const pr2 = Q.page.evaluate(() => window.__sample('[data-e~="target"]', '[data-e~="body"]', 600));
-              await Q.page.keyboard.press(m.key); commit = quiet(await pr2);
+              await Q.page.keyboard.press(m.key, KEY_DWELL); commit = quiet(await pr2);
             } finally { await Q.close(); }
           }
           return { press: quiet(fr), light, commit };

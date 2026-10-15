@@ -1,0 +1,26 @@
+# HEAD E-9 button chromium run 3 start 2026-10-15 12:37:34 load { 17.74 17.73 29.16 }
+# E-9 · the PRM arm
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/H2/wt/.h2-out/builds/head · engine chromium · lock wait 0.0 s · other headless processes: chromium 7, webkit 2 · load 17.7/17.7/29.2 at start
+# chromium 149.0.7827.55
+# narrowed to scenes button
+  FAIL       E-9 button press-spatial light · scale range while pressed 0.030 over 37 frames (bound < 0.002) · load 19.0/18.0/29.2
+  PASS       E-9 button press-light light · press-only paint changes [::before opacity] (bound ≥ 1) · load 19.0/18.0/29.2
+  FAIL       E-9 button commit-spatial light · commit(Space): scale range 0.030 with 9 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 73 frames · load 19.0/18.0/29.2
+  PASS       E-9 button press-spatial dark · scale range while pressed 0.000 over 37 frames (bound < 0.002) · load 19.1/18.0/29.1
+  PASS       E-9 button press-light dark · press-only paint changes [::before opacity] (bound ≥ 1) · load 19.1/18.0/29.1
+  PASS       E-9 button commit-spatial dark · commit(Space): scale range 0.030 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 73 frames · load 19.1/18.0/29.1
+E-9 chromium FAIL · 4 pass, 2 fail, 0 unmeasured of 6 gating cells (0 reported) · load 17.7/17.7/29.2 at start, 19.1/18.0/29.1 at end
+# HEAD E-9 button chromium run 3 end exit 1 2026-10-15 12:37:46 load { 19.67 18.17 29.12 }
+# HEAD E-9 button webkit run 3 start 2026-10-15 12:37:46 load { 19.67 18.17 29.12 }
+# E-9 · the PRM arm
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/H2/wt/.h2-out/builds/head · engine webkit · lock wait 0.0 s · other headless processes: chromium 7, webkit 2 · load 19.7/18.2/29.1 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# narrowed to scenes button
+  PASS       E-9 button press-spatial light · scale range while pressed 0.000 over 20 frames (bound < 0.002) · load 20.2/18.3/29.1
+  PASS       E-9 button press-light light · press-only paint changes [::before opacity] (bound ≥ 1) · load 20.2/18.3/29.1
+  FAIL       E-9 button commit-spatial light · commit(Space): scale range 0.030 with 5 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 38 frames · load 20.2/18.3/29.1
+  FAIL       E-9 button press-spatial dark · scale range while pressed 0.030 over 20 frames (bound < 0.002) · load 20.2/18.3/29.1
+  PASS       E-9 button press-light dark · press-only paint changes [::before opacity] (bound ≥ 1) · load 20.2/18.3/29.1
+  PASS       E-9 button commit-spatial dark · commit(Space): scale range 0.030 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 38 frames · load 20.2/18.3/29.1
+E-9 webkit FAIL · 4 pass, 2 fail, 0 unmeasured of 6 gating cells (0 reported) · load 19.7/18.2/29.1 at start, 20.2/18.3/29.1 at end
+# HEAD E-9 button webkit run 3 end exit 1 2026-10-15 12:37:59 load { 20.48 18.39 29.07 }

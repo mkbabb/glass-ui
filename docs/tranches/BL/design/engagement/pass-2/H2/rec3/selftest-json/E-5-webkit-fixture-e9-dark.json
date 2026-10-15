@@ -1,0 +1,62 @@
+{
+ "id": "E-5",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e9-dark"
+ },
+ "loadStart": "53.5/49.9/56.1",
+ "loadEnd": "65.6/52.8/57.0",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-5 pop sustain light",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-color]: +200 ms 0.185 → +1200 ms 0.185 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "57.5/50.9/56.4"
+  },
+  {
+   "name": "E-5 pop press light",
+   "status": "PASS",
+   "line": ":active true · Δscale -0.040 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color]",
+   "load": "57.5/50.9/56.4"
+  },
+  {
+   "name": "E-5 pop sustain(PRM) light",
+   "status": "FAIL",
+   "line": "NOT DRIVEN: no press-only property at +200 ms (the hold paints nothing to sustain)",
+   "load": "57.5/50.9/56.4"
+  },
+  {
+   "name": "E-5 pop press-light(PRM) light",
+   "status": "FAIL",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce)",
+   "load": "57.5/50.9/56.4"
+  },
+  {
+   "name": "E-5 pop sustain dark",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-color]: +200 ms 0.179 → +1200 ms 0.179 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "65.6/52.8/57.0"
+  },
+  {
+   "name": "E-5 pop press dark",
+   "status": "PASS",
+   "line": ":active true · Δscale -0.040 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color]",
+   "load": "65.6/52.8/57.0"
+  },
+  {
+   "name": "E-5 pop sustain(PRM) dark",
+   "status": "FAIL",
+   "line": "NOT DRIVEN: no press-only property at +200 ms (the hold paints nothing to sustain)",
+   "load": "65.6/52.8/57.0"
+  },
+  {
+   "name": "E-5 pop press-light(PRM) dark",
+   "status": "FAIL",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce)",
+   "load": "65.6/52.8/57.0"
+  }
+ ]
+}

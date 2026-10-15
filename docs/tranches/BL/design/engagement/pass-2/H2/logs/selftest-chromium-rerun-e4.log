@@ -1,0 +1,24 @@
+# selftest chromium E-4 re-run (after the fixture sheet's deterministic detent and the platform row) start 2026-10-08 21:30:46 load { 20.44 25.70 27.15 }
+OK     E-4 chromium clean exit 0 · E-4 chromium PASS · 9 pass, 0 fail, 0 unmeasured of 9 gating cells (1 reported) · load 19.9/25.1/26.9 at start, 16.8/23.8/26.3 at end
+OK     E-4 chromium fault   e4-drop (the release drops the drag velocity: the thumb stops where the pointer let go) exit 1
+         first planted FAIL: FAIL       E-4 slider fling carries velocity · axis x, page frame · fling: carry 0.00 px, settles -4.82 px past release · still: carry 0.00 px, settles -5.04 px · difference: carry 0.00 px, settle 0.22 px (bound: either ≥ 4, both at rest) ·
+OK     E-4 chromium fault   e4-hold (the release holds in place (750 ms after a fling, 600 ms after a still release), then springs to the SAME nearest detent: the velocity picks nothing) exit 1
+         first planted FAIL: FAIL       E-4 slider fling carries velocity · axis x, page frame · fling: carry 0.00 px, settles -29.20 px past release · still: carry 0.00 px, settles -29.04 px · difference: carry 0.00 px, settle -0.16 px (bound: either ≥ 4, both at rest
+BROKEN E-4 chromium control e4-snap (CONTROL, must PASS: the release snaps to a detent and the release velocity picks the detent) exit 1
+         FAIL       E-4 strip fling carries velocity · axis x, dir −1, touch, page frame · fling: carry 0.00 px, settles -105.00 px past release · still: carry 0.00 px, settles -105.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.00 · 241 frames, median 8.3 ms · load 27.7/25.2/26.4
+OK     E-4 chromium fault   e4-vdrop (the vertical detent sheet resolves its release by position alone: a fling lands on the detent a still release lands on (H-7)) exit 1
+         first planted FAIL: FAIL       E-4 vsheet fling carries velocity · axis y, dir −1, page frame · fling: carry 5.06 px, settles 5.00 px past release · still: carry 5.06 px, settles 5.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both at r
+OK     E-4 chromium fault   e4-stripstop (the scroll-snap strip kills the platform fling at touchend and snaps to the nearest member (H-7)) exit 1
+         first planted FAIL: FAIL       E-4 strip fling carries velocity · axis x, dir −1, touch, page frame · fling: carry 0.00 px, settles -120.00 px past release · still: carry 0.00 px, settles -120.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 
+OK     E-4 chromium fault   e4-prmbounce (under reduced motion the slider's release keeps its velocity spring and overshoots its rest (H-9)) exit 1
+         first planted FAIL: FAIL       E-4 slider release PRM · reduce · moved 120.0 px · fling: carry 99.44 px, settles 96.00 px past release, overshoot past its rest 3.44 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 1
+OK     E-4 chromium fault   e4-ghostbody (CK-05: the body the witness reads is invisible (opacity 0, the reka thumb C-B r24 carried)) exit 1
+         first planted FAIL: FAIL       E-4 slider fling carries velocity · INVISIBLE body: 649 frame(s) read a body with effective opacity 0.00 or a zero box (bound: opacity > 0 and a non-zero box on every frame, C-B r24) · load 30.0/27.7/27.2
+OK     E-4 chromium fault   e4-teleport (CK-05: the release holds, then lands on its projected point in one frame (the sortable and tabs teleports)) exit 1
+         first planted FAIL: FAIL       E-4 slider release continuity · largest one-frame move on release: fling 96.0 px, still 0.4 px · during the drive: fling 42.5 px, still 42.5 px (bound ≤ drive × 1.5 + 2 = 65.8 px) · load 35.9/29.3/27.8
+OK     E-4 chromium fault   e4-flaky (CK-05: the same drive lands on another detent on another run (C-B §1: 130 or 255 px)) exit 1
+         first planted FAIL: FAIL       E-4 vsheet repeat landing · 3 fling runs, the same drive, land at -264.0, -389.0, -264.0 px (page frame, signed) · spread 125.00 px (bound ≤ 2 px: the same detent) · load 35.4/31.7/28.9
+OK     E-4 chromium unmeas  e4-inflow (CK-05: the sheet paints in flow (the P1-7 .glass-floating row); its cell must read UNMEASURED until its owner cures it) exit 0
+         planted UNMEASURED: UNMEASURED E-4 vsheet fling carries velocity · the surface paints in flow (.fx-sheet computes position: relative): UNMEASURED until its owner cures its position (REGISTRY §P1-7) · load 30.2/31.0/28.8
+selftest: 1 of 11 runs BROKEN (0 N/A)
+# end 2026-10-08 21:40:37 load { 31.38 31.18 28.88 } exit 0

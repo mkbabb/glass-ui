@@ -1,0 +1,48 @@
+# selftest chromium E-2,E-4 re-run (after the lightRise channel fix and the continuity bound) start 2026-10-08 21:04:13 load { 28.35 29.36 30.43 }
+OK     E-2 chromium clean exit 0 · E-2 chromium PASS · 36 pass, 0 fail, 0 unmeasured of 36 gating cells (0 reported) · load 24.8/28.5/30.1 at start, 27.3/28.6/30.0 at end
+OK     E-2 chromium fault   e2-fade (the commit is a 120 ms linear fade-in (light that rises TO its rest, not above it); the selection body jumps: no arm) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·keyboard(Space) light · state "off" → "on" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 76.5 px = 0.00 px (bound > 0.8) · (iii) light rise 0.
+OK     E-2 chromium fault   e2-tabpop (the commit's light also fires when Tab enters the control) exit 1
+         first planted FAIL: FAIL       E-2 pop Tab-entry light · scale range 0.000 body moved 0.00 px light rise 0.0957 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on switch · load 17.8/25.5/28.7
+OK     E-2 chromium fault   e2-prog (the commit fires from pointer and key handlers only: a programmatic model change commits with none) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·programmatic light · state "off" → "on" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 76.5 px = 0.00 px (bound > 0.8) · (iii) light rise 0.000
+OK     E-2 chromium fault   e2-glide (the selection body glides on a linear path and lands without overshoot (travel with no weight)) exit 1
+         first planted FAIL: FAIL       E-2 travel commit·keyboard(ArrowRight) light · state 0 → 1 · arm none of [i,iii] · (i) body travel 78.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 78.0 px = 0.00 px (bound > 0.8) · (iii) light rise 
+OK     E-2 chromium fault   e2-mountpop (a control that mounts already committed fires its commit light on mount (H-8)) exit 1
+         first planted FAIL: FAIL       E-2 pop mount(committed) light · after mount: scale range 0.000 body moved 0.00 px light rise 0.1817 over 97 of 97 frames with the target present · load 17.0/20.1/25.2
+OK     E-2 chromium fault   e2-nocoarse (the commit is keyed on mouse events: a touch tap commits with none) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·tap(coarse) light · state "off" → "on" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.002 trough 1.000 settle 1.000 on 76.5 px = 0.19 px (bound > 0.8) · (iii) light rise 0.0000
+OK     E-2 chromium fault   e2-notdriven (CK-02 precondition: the scene's key does not change the state (X-5); the cell must read NOT DRIVEN, never PASS) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·keyboard(Space) light · NOT DRIVEN: the scene's state did not change ("off"); a commit that never happened is not graded · load 21.9/20.9/25.0
+OK     E-2 chromium fault   e2-fillonly (CK-02 arm iii: the commit is the committed state's own fill change and nothing else) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·keyboard(Space) light · state "off" → "on" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 76.5 px = 0.00 px (bound > 0.8) · (iii) light rise 0.
+OK     E-2 chromium fault   e2-literalflash (CK-02 arm iii: the commit's light rises and decays on 300 ms, a clock no ENGAGE_ENVELOPES row carries) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·keyboard(Space) light · state "off" → "on" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 76.5 px = 0.00 px (bound > 0.8) · (iii) light rise 0.
+OK     E-2 chromium fault   e2-geompop (CK-02 arm ii unadmitted: the commit is a geometric pop alone (1.08 crest), which the default arms (i, iii) do not admit) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·keyboard(Space) light · state "off" → "on" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.076 trough 0.867 settle 1.000 on 76.5 px = 5.84 px (bound > 0.8) · (iii) light rise 0.
+OK     E-2 chromium control e2-bigpop (CONTROL, must PASS with arm ii admitted (--commit-arms i,ii,iii): the 1.08 geometric pop clears 0.8 px on the face with a bounce) exit 0
+OK     E-2 chromium fault   e2-smallpop (CK-02 arm ii admitted: a 1.004 crest moves the painted face 0.4 px (C-A r26's pop), under the 0.8 px floor) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·keyboard(Space) light · state "off" → "on" · arm none of [i,ii,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.004 trough 0.993 settle 1.000 on 76.5 px = 0.29 px (bound > 0.8) · (iii) light rise
+BROKEN E-4 chromium clean exit 1 · E-4 chromium FAIL · 9 pass, 1 fail, 0 unmeasured of 10 gating cells (0 reported) · load 20.1/22.5/24.8 at start, 35.1/25.7/25.9 at end
+         FAIL       E-4 vsheet repeat landing · 3 fling runs, the same drive, land at -14.0, -139.0, -264.0 px (page frame, signed) · spread 250.00 px (bound ≤ 2 px: the same detent) · load 27.2/23.9/25.3
+OK     E-4 chromium fault   e4-drop (the release drops the drag velocity: the thumb stops where the pointer let go) exit 1
+         first planted FAIL: FAIL       E-4 slider fling carries velocity · axis x, page frame · fling: carry 0.00 px, settles -4.85 px past release · still: carry 0.00 px, settles -5.04 px · difference: carry 0.00 px, settle 0.19 px (bound: either ≥ 4, both at rest) ·
+OK     E-4 chromium fault   e4-hold (the release holds in place (750 ms after a fling, 600 ms after a still release), then springs to the SAME nearest detent: the velocity picks nothing) exit 1
+         first planted FAIL: FAIL       E-4 slider fling carries velocity · axis x, page frame · fling: carry 0.00 px, settles -28.76 px past release · still: carry 0.00 px, settles -29.04 px · difference: carry 0.00 px, settle 0.28 px (bound: either ≥ 4, both at rest)
+OK     E-4 chromium control e4-snap (CONTROL, must PASS: the release snaps to a detent and the release velocity picks the detent) exit 0
+OK     E-4 chromium fault   e4-vdrop (the vertical detent sheet resolves its release by position alone: a fling lands on the detent a still release lands on (H-7)) exit 1
+         first planted FAIL: FAIL       E-4 vsheet fling carries velocity · axis y, dir −1, page frame · fling: carry 5.06 px, settles 5.00 px past release · still: carry 5.06 px, settles 5.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both at r
+OK     E-4 chromium fault   e4-stripstop (the scroll-snap strip kills the platform fling at touchend and snaps to the nearest member (H-7)) exit 1
+         first planted FAIL: FAIL       E-4 strip fling carries velocity · axis x, dir −1, touch, page frame · fling: carry 0.00 px, settles -120.00 px past release · still: carry 0.00 px, settles -120.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 
+OK     E-4 chromium fault   e4-prmbounce (under reduced motion the slider's release keeps its velocity spring and overshoots its rest (H-9)) exit 1
+         first planted FAIL: FAIL       E-4 slider release PRM · reduce · moved 120.0 px · fling: carry 99.41 px, settles 96.00 px past release, overshoot past its rest 3.41 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 1
+OK     E-4 chromium fault   e4-ghostbody (CK-05: the body the witness reads is invisible (opacity 0, the reka thumb C-B r24 carried)) exit 1
+         first planted FAIL: FAIL       E-4 slider fling carries velocity · INVISIBLE body: 650 frame(s) read a body with effective opacity 0.00 or a zero box (bound: opacity > 0 and a non-zero box on every frame, C-B r24) · load 39.9/33.3/29.3
+OK     E-4 chromium fault   e4-teleport (CK-05: the release holds, then lands on its projected point in one frame (the sortable and tabs teleports)) exit 1
+         first planted FAIL: FAIL       E-4 slider release continuity · largest one-frame move on release: fling 96.0 px, still 0.4 px · during the drive: fling 42.5 px, still 42.5 px (bound ≤ drive × 1.5 + 2 = 65.8 px) · load 35.4/32.9/29.3
+OK     E-4 chromium fault   e4-flaky (CK-05: the same drive lands on another detent on another run (C-B §1: 130 or 255 px)) exit 1
+         first planted FAIL: FAIL       E-4 vsheet repeat landing · 3 fling runs, the same drive, land at -14.0, -139.0, -14.0 px (page frame, signed) · spread 125.00 px (bound ≤ 2 px: the same detent) · load 26.5/30.8/28.7
+OK     E-4 chromium unmeas  e4-inflow (CK-05: the sheet paints in flow (the P1-7 .glass-floating row); its cell must read UNMEASURED until its owner cures it) exit 0
+         planted UNMEASURED: UNMEASURED E-4 vsheet fling carries velocity · the surface paints in flow (.fx-sheet computes position: relative): UNMEASURED until its owner cures its position (REGISTRY §P1-7) · load 26.1/30.4/28.6
+selftest: 1 of 24 runs BROKEN (0 N/A)
+# end 2026-10-08 21:25:11 load { 25.52 30.10 28.52 } exit 0

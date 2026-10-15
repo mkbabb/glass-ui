@@ -1,0 +1,55 @@
+{
+ "id": "E-7",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/H2/wt/.h2-out/builds/head"
+ },
+ "loadStart": "51.1/54.0/60.4",
+ "loadEnd": "51.1/54.0/60.4",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-7 writers data-engaged (static)",
+   "status": "FAIL",
+   "line": "2 writer file(s): src/components/dialog/ModalOverlay.vue, src/components/slider/Slider.vue · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/H2/wt",
+   "load": "51.1/54.0/60.4"
+  },
+  {
+   "name": "E-7 writers data-held (static)",
+   "status": "FAIL",
+   "line": "2 writer file(s): src/components/dock/GlassDock.vue, src/components/slider/Slider.vue · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/H2/wt",
+   "load": "51.1/54.0/60.4"
+  },
+  {
+   "name": "E-7 writers data-press (static)",
+   "status": "FAIL",
+   "line": "1 writer file(s): src/components/pager-dots/PagerDots.vue · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/H2/wt",
+   "load": "51.1/54.0/60.4"
+  },
+  {
+   "name": "E-7 writers data-commit (static)",
+   "status": "PASS",
+   "line": "0 writer file(s): none · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/H2/wt",
+   "load": "51.1/54.0/60.4"
+  },
+  {
+   "name": "E-7 slider held",
+   "status": "PASS",
+   "line": "[data-engaged] nodes while pointer-held 2 · bound ≥ 1",
+   "load": "51.1/54.0/60.4"
+  },
+  {
+   "name": "E-7 slider held PRM",
+   "status": "PASS",
+   "line": "reduce · [data-engaged] nodes while pointer-held 2 · bound ≥ 1",
+   "load": "51.1/54.0/60.4"
+  },
+  {
+   "name": "E-7 modal open, nothing held",
+   "status": "FAIL",
+   "line": "dialog open true · veil nodes 1 · [data-engaged] nodes 1 (glass-focus-veil) · bound 0",
+   "load": "51.1/54.0/60.4"
+  }
+ ]
+}

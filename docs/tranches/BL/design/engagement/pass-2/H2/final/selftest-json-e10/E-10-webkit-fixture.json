@@ -1,0 +1,44 @@
+{
+ "id": "E-10",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": null
+ },
+ "loadStart": "265.4/377.5/380.5",
+ "loadEnd": "261.8/369.4/377.5",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "E-10 slider own release",
+   "status": "REPORT",
+   "line": "Tab out of the engaged slider: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0065 (the reference for the hand-off and Escape bounds)",
+   "load": "262.0/373.1/378.9"
+  },
+  {
+   "name": "E-10 slider escape release",
+   "status": "PASS",
+   "line": "Escape: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0065 (bound ≤ own release 0.0065 + 0.002)",
+   "load": "262.0/373.1/378.9"
+  },
+  {
+   "name": "E-10 slider re-render landing",
+   "status": "PASS",
+   "line": "a sibling inserted during the hold, then release: the root's largest one-frame move per 16.7 ms 1.5 px (without the insert 1.2 px; bound ≤ that + 1 px)",
+   "load": "263.0/371.4/378.3"
+  },
+  {
+   "name": "E-10 slider2 hand-off drop",
+   "status": "PASS",
+   "line": "Tab A → B (focus on ProbeB): A ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0065 (bound ≤ A's own release 0.0065 + 0.002) · B ×1.000 → ×1.060",
+   "load": "261.8/369.4/377.5"
+  },
+  {
+   "name": "E-10 slider2 hand-off veil",
+   "status": "PASS",
+   "line": "veil 1.00 before the Tab, minimum 1.00 across the hand-off, 1.00 at the end (bound ≥ 0.1× its level: it does not re-ramp from 0)",
+   "load": "261.8/369.4/377.5"
+  }
+ ]
+}

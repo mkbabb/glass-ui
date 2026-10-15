@@ -1,0 +1,56 @@
+{
+ "id": "E-7",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e7-veil"
+ },
+ "loadStart": "162.0/154.5/122.3",
+ "loadEnd": "160.5/154.4/122.7",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-7 writers data-engaged (static)",
+   "status": "PASS",
+   "line": "1 writer file(s): src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree fixtures/e7/clean",
+   "load": "162.0/154.5/122.3"
+  },
+  {
+   "name": "E-7 writers data-held (static)",
+   "status": "PASS",
+   "line": "1 writer file(s): src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree fixtures/e7/clean",
+   "load": "162.0/154.5/122.3"
+  },
+  {
+   "name": "E-7 writers data-press (static)",
+   "status": "PASS",
+   "line": "1 writer file(s): src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree fixtures/e7/clean",
+   "load": "162.0/154.5/122.3"
+  },
+  {
+   "name": "E-7 writers data-commit (static)",
+   "status": "PASS",
+   "line": "1 writer file(s): src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree fixtures/e7/clean",
+   "load": "162.0/154.5/122.3"
+  },
+  {
+   "name": "E-7 slider held",
+   "status": "PASS",
+   "line": "[data-engaged] nodes while pointer-held 1 · bound ≥ 1",
+   "load": "161.5/154.5/122.5"
+  },
+  {
+   "name": "E-7 slider held PRM",
+   "status": "PASS",
+   "line": "reduce · [data-engaged] nodes while pointer-held 1 · bound ≥ 1",
+   "load": "161.5/154.5/122.5"
+  },
+  {
+   "name": "E-7 modal open, nothing held",
+   "status": "FAIL",
+   "line": "dialog open true · veil nodes 1 · [data-engaged] nodes 1 (fx-scrim) · bound 0",
+   "load": "161.5/154.5/122.5"
+  }
+ ]
+}

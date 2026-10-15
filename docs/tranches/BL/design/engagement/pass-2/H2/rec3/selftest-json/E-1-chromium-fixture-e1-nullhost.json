@@ -1,0 +1,146 @@
+{
+ "id": "E-1",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e1-nullhost"
+ },
+ "loadStart": "40.0/92.6/139.9",
+ "loadEnd": "38.7/90.5/138.6",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-1 declaration present",
+   "status": "PASS",
+   "line": "6 members, 5 classes (pressed, held, field, ambient, static)",
+   "load": "40.0/92.6/139.9"
+  },
+  {
+   "name": "E-1 denominator declared",
+   "status": "PASS",
+   "line": "6 of 6 directories declared",
+   "load": "40.0/92.6/139.9"
+  },
+  {
+   "name": "E-1 no stray member",
+   "status": "PASS",
+   "line": "every member is a directory of a declared class",
+   "load": "40.0/92.6/139.9"
+  },
+  {
+   "name": "E-1 class carries a rung",
+   "status": "PASS",
+   "line": "members per class: pressed 1, held 1, field 1, ambient 1, static 2 · ladder rungs rest/hover/press/engaged/modal",
+   "load": "40.0/92.6/139.9"
+  },
+  {
+   "name": "E-1 adoption alpha",
+   "status": "PASS",
+   "line": "declared pressed · 3 instance(s) in 3 scene(s) · pop: div[role=switch].ctl.engage-pressed computes [pressed] (div[role=switch].ctl.engage-pressed=pressed)",
+   "load": "38.7/91.4/139.2"
+  },
+  {
+   "name": "E-1 adoption beta",
+   "status": "FAIL",
+   "line": "declared held · 3 instance(s) in 2 scene(s) · NOT ADOPTED: slider: div.fx-slider computes [unclassed] · slider2: div.fx-slider computes [unclassed] · slider2: div.fx-slider computes [unclassed]",
+   "load": "38.7/91.4/139.2"
+  },
+  {
+   "name": "E-1 adoption delta",
+   "status": "PASS",
+   "line": "declared static · 1 instance(s) in 1 scene(s) · passive: div.card.engage-static computes [static] (div.card.engage-static=static)",
+   "load": "38.7/91.4/139.2"
+  },
+  {
+   "name": "E-1 adoption eta",
+   "status": "PASS",
+   "line": "declared field · 1 instance(s) in 1 scene(s) · field: input.fx-field.engage-field computes [field] (input.fx-field.engage-field=field)",
+   "load": "38.7/91.4/139.2"
+  },
+  {
+   "name": "E-1 adoption gamma",
+   "status": "PASS",
+   "line": "declared static · 1 instance(s) in 1 scene(s) · passive: hr.engage-static computes [static] (hr.engage-static=static)",
+   "load": "38.7/91.4/139.2"
+  },
+  {
+   "name": "E-1 adoption theta",
+   "status": "PASS",
+   "line": "declared ambient · 1 instance(s) in 1 scene(s) · ambient: div.fx-amb.engage-ambient computes [ambient] (div.fx-amb.engage-ambient=ambient)",
+   "load": "38.7/91.4/139.2"
+  },
+  {
+   "name": "E-1 single",
+   "status": "PASS",
+   "line": "no element composes more than one engage-* class (12 scenes)",
+   "load": "38.7/91.4/139.2"
+  },
+  {
+   "name": "E-1 static-inert delta",
+   "status": "PASS",
+   "line": "1 instance(s): the root is not focusable, has no interactive role and no handler",
+   "load": "38.7/91.4/139.2"
+  },
+  {
+   "name": "E-1 static-inert gamma",
+   "status": "PASS",
+   "line": "1 instance(s): the root is not focusable, has no interactive role and no handler",
+   "load": "38.7/91.4/139.2"
+  },
+  {
+   "name": "E-1 adoption latch",
+   "status": "FAIL",
+   "line": "5 of 6 declared members seen adopting their recipe; unproven (not rendered by any scene, or not adopted): beta",
+   "load": "38.7/91.4/139.2"
+  },
+  {
+   "name": "E-1 runtime pressed (alpha)",
+   "status": "PASS",
+   "line": "scene pop, rung press · press: Δscale -0.040 · press-only paint [background-color] (bound |Δscale| ≥ 0.01 or ≥ 1 property)",
+   "load": "38.7/91.4/139.2"
+  },
+  {
+   "name": "E-1 runtime pressed (alpha) PRM press-light",
+   "status": "PASS",
+   "line": "scene pop, reduce · press: Δscale 0.000 · press-only paint [background-color] (bound |Δscale| ≥ 0.01 or ≥ 1 property)",
+   "load": "38.7/91.4/139.2"
+  },
+  {
+   "name": "E-1 runtime held (beta)",
+   "status": "PASS",
+   "line": "scene slider, rung engaged · press: Δscale 0.060 · press-only paint [child0 shadow] (bound |Δscale| ≥ 0.01 or ≥ 1 property)",
+   "load": "38.7/90.5/138.6"
+  },
+  {
+   "name": "E-1 runtime held (beta) PRM press-light",
+   "status": "PASS",
+   "line": "scene slider, reduce · press: Δscale 0.000 · press-only paint [child0 shadow] (bound |Δscale| ≥ 0.01 or ≥ 1 property)",
+   "load": "38.7/90.5/138.6"
+  },
+  {
+   "name": "E-1 runtime field (eta)",
+   "status": "PASS",
+   "line": "scene field, rung hover · hover: Δscale 0.000 · paint [background-color, border-top-color] (bound ≥ 1 property or |Δscale| ≥ 0.01)",
+   "load": "38.7/90.5/138.6"
+  },
+  {
+   "name": "E-1 runtime field (eta) PRM press-light",
+   "status": "PASS",
+   "line": "scene field, reduce · hover: Δscale 0.000 · paint [background-color, border-top-color] (bound ≥ 1 property or |Δscale| ≥ 0.01)",
+   "load": "38.7/90.5/138.6"
+  },
+  {
+   "name": "E-1 runtime ambient (theta)",
+   "status": "PASS",
+   "line": "scene ambient, rung rest · pointer moved across: mean pixel change 49.56 levels against 0.00 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift)",
+   "load": "38.7/90.5/138.6"
+  },
+  {
+   "name": "E-1 runtime ambient (theta) PRM press-light",
+   "status": "PASS",
+   "line": "scene ambient, reduce · pointer moved across: mean pixel change 49.56 levels against 0.00 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift)",
+   "load": "38.7/90.5/138.6"
+  }
+ ]
+}

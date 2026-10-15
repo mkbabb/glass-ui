@@ -1,0 +1,98 @@
+{
+ "id": "E-6",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e6-dim"
+ },
+ "loadStart": "111.7/139.2/162.7",
+ "loadEnd": "114.7/138.9/162.3",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-6 s6 present light",
+   "status": "PASS",
+   "line": "1 running infinite animation(s) at rest: fx-dim[opacity on the subject, 4000 ms]",
+   "load": "110.8/138.6/162.3"
+  },
+  {
+   "name": "E-6 s6 channel light",
+   "status": "FAIL",
+   "line": "disallowed: opacity on the subject (dims its ink) (breathing channels: scale, a scale transform, opacity on a pseudo-element)",
+   "load": "110.8/138.6/162.3"
+  },
+  {
+   "name": "E-6 s6 shape light",
+   "status": "PASS",
+   "line": "continuous at the seam, eased (ease-in-out)",
+   "load": "110.8/138.6/162.3"
+  },
+  {
+   "name": "E-6 s6 amplitude light",
+   "status": "PASS",
+   "line": "opacity 0.100 (≥ 0.05)",
+   "load": "110.8/138.6/162.3"
+  },
+  {
+   "name": "E-6 s6 period light",
+   "status": "PASS",
+   "line": "iteration 4000 ms (bound 2400..8000 ms)",
+   "load": "110.8/138.6/162.3"
+  },
+  {
+   "name": "E-6 s6 layouts/s light",
+   "status": "REPORT",
+   "line": "n/a: Playwright WebKit exposes no layout counter",
+   "load": "110.8/138.6/162.3"
+  },
+  {
+   "name": "E-6 s6 PRM light",
+   "status": "PASS",
+   "line": "0 idle animation(s) under reduced motion, 0 spatial",
+   "load": "110.8/138.6/162.3"
+  },
+  {
+   "name": "E-6 s6 present dark",
+   "status": "PASS",
+   "line": "1 running infinite animation(s) at rest: fx-dim[opacity on the subject, 4000 ms]",
+   "load": "114.7/138.9/162.3"
+  },
+  {
+   "name": "E-6 s6 channel dark",
+   "status": "FAIL",
+   "line": "disallowed: opacity on the subject (dims its ink) (breathing channels: scale, a scale transform, opacity on a pseudo-element)",
+   "load": "114.7/138.9/162.3"
+  },
+  {
+   "name": "E-6 s6 shape dark",
+   "status": "PASS",
+   "line": "continuous at the seam, eased (ease-in-out)",
+   "load": "114.7/138.9/162.3"
+  },
+  {
+   "name": "E-6 s6 amplitude dark",
+   "status": "PASS",
+   "line": "opacity 0.100 (≥ 0.05)",
+   "load": "114.7/138.9/162.3"
+  },
+  {
+   "name": "E-6 s6 period dark",
+   "status": "PASS",
+   "line": "iteration 4000 ms (bound 2400..8000 ms)",
+   "load": "114.7/138.9/162.3"
+  },
+  {
+   "name": "E-6 s6 layouts/s dark",
+   "status": "REPORT",
+   "line": "n/a: Playwright WebKit exposes no layout counter",
+   "load": "114.7/138.9/162.3"
+  },
+  {
+   "name": "E-6 s6 PRM dark",
+   "status": "PASS",
+   "line": "0 idle animation(s) under reduced motion, 0 spatial",
+   "load": "114.7/138.9/162.3"
+  }
+ ]
+}

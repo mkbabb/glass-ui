@@ -7,6 +7,9 @@
 //   decl.ts  the register's class declaration, imported from the built library at `@glass/<subpath>` by name
 //            (default composables/motion#ENGAGE_DECLARATION); null when the export does not exist. A route whose
 //            declaration lives elsewhere passes --decl. Its contract is HARNESS.md §2 E-1.
+//   members.ts  CK-01 (pass 2): every value each directory's index exports, mapped to that directory (the first
+//            directory in name order wins a value two export), so the scene app attributes a rendered component to its
+//            directory by identity, not by name. A directory without an index.ts exports nothing to map.
 import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
@@ -28,6 +31,13 @@ const C = path.join(wt, "src", "components");
 const dirs = fs.readdirSync(C).filter((e) => e !== "_shared" && fs.statSync(path.join(C, e)).isDirectory()).sort();
 fs.writeFileSync(path.join(work, "dirs.ts"), `export default ${JSON.stringify(dirs)} as string[];\n`);
 fs.writeFileSync(path.join(work, "decl.ts"), `import * as M from "@glass/${declPath}";\nexport default ((M as Record<string, unknown>)[${JSON.stringify(declName)}] ?? null) as unknown;\n`);
+const withIndex = dirs.filter((x) => fs.existsSync(path.join(C, x, "index.ts")));
+fs.writeFileSync(path.join(work, "members.ts"), `${withIndex.map((x, i) => `import * as m${i} from "@glass/components/${x}";`).join("\n")}
+const M = new Map<unknown, string>();
+for (const [d, mod] of [${withIndex.map((x, i) => `[${JSON.stringify(x)}, m${i}]`).join(", ")}] as [string, Record<string, unknown>][])
+  for (const v of Object.values(mod)) if (v && (typeof v === "object" || typeof v === "function") && !M.has(v)) M.set(v, d);
+export default M;
+`);
 fs.writeFileSync(path.join(work, "index.html"), `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>D5 battery</title></head><body><div id="app"></div><script type="module" src="./main.ts"></script></body></html>`);
 fs.writeFileSync(path.join(work, "main.ts"), `import "./h.css";\nimport { createApp } from "vue";\nimport App from "./App.vue";\nif (new URLSearchParams(location.search).get("theme") === "dark") document.documentElement.classList.add("dark");\ncreateApp(App).mount("#app");\n`);
 fs.writeFileSync(path.join(work, "h.css"), `@import "${nm}/tailwindcss/index.css" source("./");\n@source "${wt}/src/components/**/*.vue";\n@source "${wt}/src/components/_shared/**/*.ts";\n@source "${wt}/src/components/**/index.ts";\n@import "${nm}/tw-animate-css/dist/tw-animate.css";\n@import "${wt}/src/styles/index.css";\nbody { min-height: 100vh; margin: 0; }\n`);
@@ -38,4 +48,4 @@ await vite.build({
   resolve: { alias: [{ find: "@glass", replacement: path.join(wt, "src") }, { find: /^vue$/, replacement: path.join(nm, "vue/dist/vue.runtime.esm-bundler.js") }] },
   build: { outDir, emptyOutDir: true, reportCompressedSize: false, chunkSizeWarningLimit: 1e9 },
 });
-console.log(`${outDir} · ${dirs.length} component directories · declaration ${declPath}#${declName}`);
+console.log(`${outDir} · ${dirs.length} component directories (${withIndex.length} with an index.ts mapped for the member walk) · declaration ${declPath}#${declName}`);

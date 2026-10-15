@@ -14,7 +14,7 @@
 //             transition) reads a clock token too.
 // Light only: clocks do not change with the theme.
 //   node e8-clock.mjs --build <dir> | --fixture [--fault e8-drift|e8-literal] [--engine webkit]
-import { witness, openPage, scenesFor, center, tabKey } from "./lib.mjs";
+import { witness, openPage, scenesFor, center, tabKey, KEY_DWELL } from "./lib.mjs";
 
 const COLLECT = () => {
   window.__anims = new Map();
@@ -69,7 +69,7 @@ await witness("E-8", "one clock authority; no rung literal", async ({ E, T, cell
         const c = await center(P.page, '[data-e~="target"]');
         await P.page.mouse.move(c.x, c.y); await P.page.mouse.down(); await P.page.waitForTimeout(250); await P.page.mouse.up(); await P.page.waitForTimeout(500);
         await P.page.mouse.move(2, 2); await P.page.focus('[data-sentinel="before"]'); await P.page.keyboard.press(tabKey(engine)); await P.page.waitForTimeout(150);
-        await P.page.keyboard.press(m.key); await P.page.waitForTimeout(700);
+        await P.page.keyboard.press(m.key, KEY_DWELL); await P.page.waitForTimeout(700);
         const anims = await P.page.evaluate(() => { window.__collecting = false; return [...window.__anims.values()]; });
         return { env, ck, anims };
       } finally { await P.close(); }

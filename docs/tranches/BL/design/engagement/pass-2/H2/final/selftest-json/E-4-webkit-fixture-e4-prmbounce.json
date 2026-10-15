@@ -1,0 +1,74 @@
+{
+ "id": "E-4",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e4-prmbounce"
+ },
+ "loadStart": "189.5/210.8/321.6",
+ "loadEnd": "217.3/216.0/318.5",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-4 slider fling carries velocity",
+   "status": "PASS",
+   "line": "axis x, page frame · fling: carry 92.92 px, settles 90.76 px past release · still: carry 0.00 px, settles -5.04 px · difference: carry 92.92 px, settle 95.80 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.00 · 196 frames, median 10.0 ms",
+   "load": "203.0/213.0/321.1"
+  },
+  {
+   "name": "E-4 slider release continuity",
+   "status": "PASS",
+   "line": "largest one-frame move on release: fling 17.2 px, still 0.6 px · during the drive: fling 42.5 px, still 42.5 px (bound ≤ drive × 1.5 + 2 = 65.8 px)",
+   "load": "203.0/213.0/321.1"
+  },
+  {
+   "name": "E-4 slider release PRM",
+   "status": "FAIL",
+   "line": "reduce · moved 120.0 px · fling: carry 98.20 px, settles 96.00 px past release, overshoot past its rest 2.20 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 12.7 px",
+   "load": "218.5/216.0/321.5"
+  },
+  {
+   "name": "E-4 vsheet fling carries velocity",
+   "status": "PASS",
+   "line": "axis y, dir −1, page frame · fling: carry 26.05 px, settles 5.00 px past release · still: carry 5.05 px, settles 5.00 px · difference: carry 21.00 px, settle 0.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.00 · 196 frames, median 10.0 ms",
+   "load": "222.1/216.8/321.2"
+  },
+  {
+   "name": "E-4 vsheet release continuity",
+   "status": "PASS",
+   "line": "largest one-frame move on release: fling 7.9 px, still 0.5 px · during the drive: fling 40.0 px, still 40.0 px (bound ≤ drive × 1.5 + 2 = 62.0 px)",
+   "load": "222.1/216.8/321.2"
+  },
+  {
+   "name": "E-4 vsheet repeat landing",
+   "status": "PASS",
+   "line": "3 fling runs, the same drive, land at -264.0, -264.0, -264.0 px (page frame, signed) · spread 0.00 px (bound ≤ 2 px: the same detent)",
+   "load": "219.6/216.4/320.4"
+  },
+  {
+   "name": "E-4 vsheet release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 120.0 px · fling: carry 5.00 px, settles 5.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 5.0 px",
+   "load": "215.6/215.6/319.5"
+  },
+  {
+   "name": "E-4 strip fling carries velocity",
+   "status": "UNMEASURED",
+   "line": "the touch drag moved the body 0.0 px (fling) and 0.0 px (still), bound ≥ 20 px: macOS WebKit has no touch scrolling, so a touch drag cannot drive this surface (H-4); real Safari UNMEASURED (owner's safaridriver checkbox)",
+   "load": "217.3/216.0/318.5"
+  },
+  {
+   "name": "E-4 strip release continuity",
+   "status": "UNMEASURED",
+   "line": "not driven in this engine (above)",
+   "load": "217.3/216.0/318.5"
+  },
+  {
+   "name": "E-4 strip release PRM",
+   "status": "UNMEASURED",
+   "line": "the surface is not driven or not read in this engine (above)",
+   "load": "217.3/216.0/318.5"
+  }
+ ]
+}

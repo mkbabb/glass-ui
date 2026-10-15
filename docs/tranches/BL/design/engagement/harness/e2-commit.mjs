@@ -1,34 +1,54 @@
 #!/usr/bin/env node
-// E-2 · the commit bar, generalized (D4 T-6 / H-4 carried component-wide; PORTFOLIO §1.1).
-// Per scene gated "E-2", light and dark, sampled every frame for 800 ms on the committed element:
-//   commit bar     a pop that peaks ≥ 0.015 above its settle (the last sampled scale) and bounces ≥ 0.002 below
-//                  it, or a [data-e=body] that travels ≥ 4 px and overshoots its landing by ≥ 0.5 px
-//                  (tile/harness/measure.mjs:403, unchanged). Four commits, each gating: keyboard (Tab in from the
-//                  sentinel, then the scene's key; the pointer never moves), programmatic (__e.commit() with focus
-//                  parked on the after-sentinel), pointer (press 150 ms, read from the release) and tap (coarse:
-//                  hasTouch, isMobile in Chromium, verified (hover: none) and (pointer: coarse)).
-//   Tab entry      Tab from the sentinel into the scene: scale range < 0.002 and no body moves ≥ 1 px.
-//   mount (H-8)    the scene mounted already committed (?on=1&defer=1, sampled across __e.mount()): scale range
-//                  < 0.002 and no body moves ≥ 1 px. A component that mounts in its committed state pops nothing.
-// A commit that fails on janky frames (median interval > 20 ms) is re-read twice; a failure that does not
-// reproduce prints NOT-REPRODUCED and passes. An engine that closes or hangs (PF-1) is relaunched and the cell re-run
-// once (H-3); a crash that reproduces fails loud.
+// E-2 · CK-02: the commit, by one of three arms, on a commit that happened (pass 2; REGISTRY §P1-6 CK-02).
+// Per scene gated "E-2", light and dark, filmed every frame for 800 ms (lib.mjs __film: the target, the body
+// [data-e~=body], the painted face [data-e~=face] (default the target) and the face's light):
+//   precondition   the scene's state (window.__e.state(), the model the scene binds) changed across the commit; a
+//                  commit that changed nothing is NOT DRIVEN and FAILS, never passes (X-5: a radio's ArrowDown that
+//                  moves focus without selecting graded a commit that never happened)
+//   commit         passes by ONE admitted arm (lib.mjs commitArms): (i) a body's travel with an overshoot; (ii) a
+//                  geometric pop whose excursion on the painted face exceeds 0.8 px, with a bounce; (iii) a light
+//                  commit: the face's luminance rises above its committed rest and decays to it on an
+//                  ENGAGE_ENVELOPES row's clock. Admitted arms default to i,iii: (ii) waits on the owner's Q-5 ruling
+//                  (`--commit-arms i,ii,iii` admits it; every line prints all three readings either way). Paths, each
+//                  gating: keyboard (Tab in from the sentinel, then the scene's key or keys; the pointer never moves),
+//                  programmatic (__e.commit() with focus parked after), pointer (press 150 ms, read from the release),
+//                  tap on a coarse pointer
+//   Tab entry      Tab from the sentinel into the scene: scale range < 0.002, no body moves ≥ 1 px, no light rise
+//                  ≥ 0.01, and the state unchanged
+//   mount (H-8)    mounted already committed (?on=1&defer=1, filmed across __e.mount()): scale range < 0.002, no body
+//                  moves ≥ 1 px, the light at rest (no rise ≥ 0.01)
+// A commit that fails on janky frames (median interval > 20 ms) is re-read twice; a failure that does not reproduce
+// prints NOT-REPRODUCED and passes. An engine that closes or hangs (PF-1) is relaunched and the cell re-run once (H-3).
 //   node e2-commit.mjs --build <dir> | --fixture [--fault e2-prog] [--engine webkit] [--scenes a,b] [--themes light]
-import { witness, openPage, scenesFor, commitBar, quiet, medianDt, tabKey, center, BOUNCE } from "./lib.mjs";
+//                      [--commit-arms i,ii,iii]
+import { witness, openPage, scenesFor, commitArms, quiet, medianDt, tabKey, center, BOUNCE, LIGHT_RISE, DEFAULT_ARMS, KEY_DWELL, f } from "./lib.mjs";
 
 const JANK = 20;
-await witness("E-2", "the commit bar, generalized", async ({ a, T, E, cell, guard, idx, engine }) => {
+// A film the machine starved (under half its nominal frames, or one gap over 100 ms) is janky whatever its median reads:
+// at load 264-1000 a control's 800 ms film came back with 19, 47 and 62 frames and a 2-frame mount (../pass-2/H2.md §2.3).
+const starved = (fr, ms = 800) => fr.length < ms / 16.7 / 2 || fr.slice(1).some((x, k) => x.t - fr[k].t > 100);
+const jank = (fl) => (starved(fl.fr) ? Infinity : medianDt(fl.fr));
+await witness("E-2", "CK-02 the commit, by one arm, on a commit that happened", async ({ a, T, E, cell, guard, idx, engine }) => {
   const only = typeof a.scenes === "string" ? a.scenes.split(",") : null;
   const themes = typeof a.themes === "string" ? a.themes.split(",") : ["light", "dark"];
-  const SEL = ['[data-e~="target"]', '[data-e~="body"]'];
-  const sample = (P, ms = 800) => P.page.evaluate(([t, b, ms]) => window.__sample(t, b, ms), [...SEL, ms]);
+  const arms = typeof a["commit-arms"] === "string" ? a["commit-arms"].split(",") : DEFAULT_ARMS;
+  console.log(`# admitted commit arms: ${arms.join(",")}${arms.includes("ii") ? " (arm ii admitted: the owner's Q-5 ruling must be cited by the run)" : " (arm ii printed, not admitted: Q-5 unruled, springPresets.ts:55-57 stands)"}`);
+  const film = (P, m, ms = 800) => P.page.evaluate(([o]) => window.__film(o), [{ target: '[data-e~="target"]', body: '[data-e~="body"]', face: m.face ? '[data-e~="face"]' : '[data-e~="target"]', ms }]);
+  const state = (P) => P.page.evaluate(() => JSON.stringify(window.__e.state?.() ?? null));
+  const env = (P) => P.page.evaluate(() => window.__e.envelopes ?? []);
   const reread = async (fn) => {
     let r = await fn();
-    if (r.pass || r.med <= JANK) return r;
-    for (let k = 0; k < 2; k++) { const again = await fn(); if (again.pass) return { ...again, line: `${again.line} · NOT-REPRODUCED: first read failed on janky frames (median ${r.med.toFixed(1)} ms): ${r.line}` }; r = again; }
+    if (r.pass || r.notDriven || r.med <= JANK) return r;
+    for (let k = 0; k < 2; k++) { const again = await fn(); if (again.pass) return { ...again, line: `${again.line} · NOT-REPRODUCED: first read failed on janky frames (${Number.isFinite(r.med) ? `median ${r.med.toFixed(1)} ms` : "a starved film"}): ${r.line}` }; r = again; }
     return r;
   };
+  // the commit's verdict: NOT DRIVEN when the state did not change, else the arms
+  const judge = (s0, s1, fl, en) => {
+    if (s0 === s1) return { pass: false, notDriven: true, med: jank(fl), line: `NOT DRIVEN: the scene's state did not change (${String(s0).slice(0, 80)}); a commit that never happened is not graded` };
+    const r = commitArms(fl, arms, en); return { ...r, med: jank(fl), line: `state ${String(s0).slice(0, 40)} → ${String(s1).slice(0, 40)} · ${r.line}` };
+  };
   const emit = (name, r) => cell(name, r.crashed ? "FAIL" : r.unmeasured ? "UNMEASURED" : r.pass ? "PASS" : "FAIL", `${r.line}${r.note ? ` · ${r.note}` : ""}`);
+  const keys = (m) => (Array.isArray(m.keys) ? m.keys : [m.key]);
   for (const [sc, m] of scenesFor(idx, "E-2")) {
     if (only && !only.includes(sc)) continue;
     for (const theme of themes) {
@@ -37,32 +57,38 @@ await witness("E-2", "the commit bar, generalized", async ({ a, T, E, cell, guar
       const kb = await guard(`${sc} keyboard`, () => reread(async () => {
         const P = await openPage(E, T, sc, { theme });
         try {
+          const en = await env(P);
           await P.page.focus('[data-sentinel="before"]');
-          const pr = sample(P, 700); await P.page.keyboard.press(tabKey(engine)); const fr = await pr;
-          const q = quiet(fr); tabEntry = { pass: q.range < BOUNCE && q.moved < 1, line: `scale range ${q.range.toFixed(3)} body moved ${q.moved.toFixed(2)} px · focus on ${await P.page.evaluate(() => document.activeElement?.getAttribute("role") ?? document.activeElement?.tagName)}` };
-          const pr2 = sample(P); await P.page.keyboard.press(m.key); const fr2 = await pr2;
-          return { ...commitBar(fr2), med: medianDt(fr2) };
+          const s0 = await state(P);
+          const pr = film(P, m, 700); await P.page.keyboard.press(tabKey(engine)); const fl = await pr;
+          const s1 = await state(P);
+          const q = quiet(fl.fr); const lightQuiet = !(q.rise >= LIGHT_RISE);
+          tabEntry = { pass: q.range < BOUNCE && q.moved < 1 && lightQuiet && s0 === s1, line: `scale range ${q.range.toFixed(3)} body moved ${q.moved.toFixed(2)} px light rise ${f(q.rise, 4)} (bounds < ${BOUNCE}, < 1 px, < ${LIGHT_RISE}) · state ${s0 === s1 ? "unchanged" : "CHANGED"} · focus on ${await P.page.evaluate(() => document.activeElement?.getAttribute("role") ?? document.activeElement?.tagName)}` };
+          const pr2 = film(P, m); for (const k of keys(m)) await P.page.keyboard.press(k, KEY_DWELL); const fl2 = await pr2;
+          return judge(s1, await state(P), fl2, en);
         } finally { await P.close(); }
       }), 45000);
       if (tabEntry && !kb.crashed) emit(`E-2 ${sc} Tab-entry ${theme}`, tabEntry);
-      emit(`E-2 ${sc} commit·keyboard(${m.key}) ${theme}`, kb);
+      emit(`E-2 ${sc} commit·keyboard(${keys(m).join("+")}) ${theme}`, kb);
       // programmatic: focus parked on the after-sentinel, the model changes
       emit(`E-2 ${sc} commit·programmatic ${theme}`, await guard(`${sc} programmatic`, () => reread(async () => {
         const P = await openPage(E, T, sc, { theme });
         try {
-          await P.page.focus('[data-sentinel="after"]');
-          const pr = sample(P); await P.page.evaluate(() => window.__e.commit()); const fr = await pr;
-          return { ...commitBar(fr), med: medianDt(fr) };
+          const en = await env(P);
+          await P.page.focus('[data-sentinel="after"]'); const s0 = await state(P);
+          const pr = film(P, m); await P.page.evaluate(() => window.__e.commit()); const fl = await pr;
+          return judge(s0, await state(P), fl, en);
         } finally { await P.close(); }
       }), 45000));
       // pointer: press 150 ms, release; read from the release
       emit(`E-2 ${sc} commit·pointer ${theme}`, await guard(`${sc} pointer`, () => reread(async () => {
         const P = await openPage(E, T, sc, { theme });
         try {
-          const c = await center(P.page, SEL[0]);
+          const en = await env(P);
+          const c = await center(P.page, '[data-e~="target"]'); const s0 = await state(P);
           await P.page.mouse.move(c.x, c.y); await P.page.mouse.down(); await P.page.waitForTimeout(150);
-          const pr = sample(P); await P.page.mouse.up(); const fr = await pr;
-          return { ...commitBar(fr), med: medianDt(fr) };
+          const pr = film(P, m); await P.page.mouse.up(); const fl = await pr;
+          return judge(s0, await state(P), fl, en);
         } finally { await P.close(); }
       }), 45000));
       // tap on a coarse pointer
@@ -70,20 +96,21 @@ await witness("E-2", "the commit bar, generalized", async ({ a, T, E, cell, guar
         const P = await openPage(E, T, sc, { theme, coarse: true });
         try {
           if (!P.modeOk) return { unmeasured: true, pass: false, med: 0, line: `MODE NOT APPLIED (${P.modeLine}): Playwright ${engine} gives no coarse pointer here` };
-          const c = await center(P.page, SEL[0]);
-          const pr = sample(P); await P.page.touchscreen.tap(c.x, c.y); const fr = await pr;
-          return { ...commitBar(fr), med: medianDt(fr) };
+          const en = await env(P);
+          const c = await center(P.page, '[data-e~="target"]'); const s0 = await state(P);
+          const pr = film(P, m); await P.page.touchscreen.tap(c.x, c.y); const fl = await pr;
+          return judge(s0, await state(P), fl, en);
         } finally { await P.close(); }
       }), 45000));
       // the mount case (H-8)
-      emit(`E-2 ${sc} mount(committed) ${theme}`, await guard(`${sc} mount`, async () => {
+      emit(`E-2 ${sc} mount(committed) ${theme}`, await guard(`${sc} mount`, () => reread(async () => {
         const P = await openPage(E, T, sc, { theme, q: { on: "1", defer: "1" } });
         try {
-          const fr = await P.page.evaluate(async ([t, b]) => { const p = window.__sample(t, b, 800); await window.__e.mount(); return p; }, SEL);
-          const q = quiet(fr); const present = fr.filter((x) => x.a).length;
-          return { pass: present > 10 && q.range < BOUNCE && q.moved < 1, line: `after mount: scale range ${Number.isFinite(q.range) ? q.range.toFixed(3) : "n/a"} body moved ${Number.isFinite(q.moved) ? q.moved.toFixed(2) : "n/a"} px over ${present} of ${fr.length} frames with the target present` };
+          const fl = await P.page.evaluate(async ([o]) => { const p = window.__film(o); await window.__e.mount(); return p; }, [{ target: '[data-e~="target"]', body: '[data-e~="body"]', face: m.face ? '[data-e~="face"]' : '[data-e~="target"]', ms: 800 }]);
+          const q = quiet(fl.fr); const present = fl.fr.filter((x) => x.a).length;
+          return { med: jank(fl), pass: present > 10 && q.range < BOUNCE && q.moved < 1 && !(q.rise >= LIGHT_RISE), line: `after mount: scale range ${Number.isFinite(q.range) ? q.range.toFixed(3) : "n/a"} body moved ${Number.isFinite(q.moved) ? q.moved.toFixed(2) : "n/a"} px light rise ${f(q.rise, 4)} over ${present} of ${fl.fr.length} frames with the target present` };
         } finally { await P.close(); }
-      }, 45000));
+      }), 45000));
     }
   }
 });

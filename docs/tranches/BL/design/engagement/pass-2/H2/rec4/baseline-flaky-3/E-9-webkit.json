@@ -1,0 +1,49 @@
+{
+ "id": "E-9",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/H2/wt/.h2-out/builds/head"
+ },
+ "loadStart": "19.7/18.2/29.1",
+ "loadEnd": "20.2/18.3/29.1",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-9 button press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 20 frames (bound < 0.002)",
+   "load": "20.2/18.3/29.1"
+  },
+  {
+   "name": "E-9 button press-light light",
+   "status": "PASS",
+   "line": "press-only paint changes [::before opacity] (bound ≥ 1)",
+   "load": "20.2/18.3/29.1"
+  },
+  {
+   "name": "E-9 button commit-spatial light",
+   "status": "FAIL",
+   "line": "commit(Space): scale range 0.030 with 5 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 38 frames",
+   "load": "20.2/18.3/29.1"
+  },
+  {
+   "name": "E-9 button press-spatial dark",
+   "status": "FAIL",
+   "line": "scale range while pressed 0.030 over 20 frames (bound < 0.002)",
+   "load": "20.2/18.3/29.1"
+  },
+  {
+   "name": "E-9 button press-light dark",
+   "status": "PASS",
+   "line": "press-only paint changes [::before opacity] (bound ≥ 1)",
+   "load": "20.2/18.3/29.1"
+  },
+  {
+   "name": "E-9 button commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.030 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 38 frames",
+   "load": "20.2/18.3/29.1"
+  }
+ ]
+}

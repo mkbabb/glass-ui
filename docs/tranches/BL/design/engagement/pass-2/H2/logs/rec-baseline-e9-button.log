@@ -1,0 +1,55 @@
+# HEAD E-9 button chromium run 1 start 2026-10-13 16:53:16 load { 405.40 615.42 886.34 }
+# narrowed to scenes button
+  PASS       E-9 button press-spatial light · scale range while pressed 0.000 over 37 frames (bound < 0.002) · load 936.6/722.7/918.5
+  PASS       E-9 button press-light light · press-only paint changes [::before opacity] (bound ≥ 1) · load 936.6/722.7/918.5
+  PASS       E-9 button commit-spatial light · commit(Space): scale range 0.030 with 1 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 74 frames · load 936.6/722.7/918.5
+  PASS       E-9 button press-spatial dark · scale range while pressed 0.000 over 37 frames (bound < 0.002) · load 24.6/749.4/926.8
+  PASS       E-9 button press-light dark · press-only paint changes [::before opacity] (bound ≥ 1) · load 24.6/749.4/926.8
+  PASS       E-9 button commit-spatial dark · commit(Space): scale range 0.030 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 73 frames · load 24.6/749.4/926.8
+E-9 chromium PASS · 6 pass, 0 fail, 0 unmeasured of 6 gating cells (0 reported) · load 405.4/615.4/886.3 at start, 206.5/775.1/934.8 at end
+# HEAD E-9 button webkit run 1 start 2026-10-13 16:53:45 load { 206.53 775.13 934.82 }
+# narrowed to scenes button
+  FAIL       E-9 button press-spatial light · scale range while pressed 0.030 over 30 frames (bound < 0.002) · load 47.3/930.4/985.6
+  PASS       E-9 button press-light light · press-only paint changes [::before opacity] (bound ≥ 1) · load 47.3/930.4/985.6
+  PASS       E-9 button commit-spatial light · commit(Space): scale range 0.030 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 59 frames · load 47.3/930.4/985.6
+  PASS       E-9 button press-spatial dark · scale range while pressed 0.000 over 30 frames (bound < 0.002) · load 47.3/930.4/985.6
+  PASS       E-9 button press-light dark · press-only paint changes [::before opacity] (bound ≥ 1) · load 47.3/930.4/985.6
+  PASS       E-9 button commit-spatial dark · commit(Space): scale range 0.030 with 1 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 61 frames · load 47.3/930.4/985.6
+E-9 webkit FAIL · 5 pass, 1 fail, 0 unmeasured of 6 gating cells (0 reported) · load 206.5/775.1/934.8 at start, 47.3/930.4/985.6 at end
+# HEAD E-9 button chromium run 2 start 2026-10-13 16:54:18 load { 47.26 930.38 985.56 }
+# narrowed to scenes button
+  FAIL       E-9 button press-spatial light · scale range while pressed 0.030 over 38 frames (bound < 0.002) · load 356.3/967.5/998.1
+  PASS       E-9 button press-light light · press-only paint changes [::before opacity] (bound ≥ 1) · load 356.3/967.5/998.1
+  PASS       E-9 button commit-spatial light · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 73 frames · load 356.3/967.5/998.1
+  PASS       E-9 button press-spatial dark · scale range while pressed 0.000 over 37 frames (bound < 0.002) · load 469.6/980.8/1002.6
+  PASS       E-9 button press-light dark · press-only paint changes [::before opacity] (bound ≥ 1) · load 469.6/980.8/1002.6
+  PASS       E-9 button commit-spatial dark · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 73 frames · load 469.6/980.8/1002.6
+E-9 chromium FAIL · 5 pass, 1 fail, 0 unmeasured of 6 gating cells (0 reported) · load 205.3/948.5/991.6 at start, 573.7/993.9/1007.1 at end
+# HEAD E-9 button webkit run 2 start 2026-10-13 16:54:36 load { 573.73 993.89 1007.09 }
+# narrowed to scenes button
+  FAIL       E-9 button press-spatial light · scale range while pressed 0.030 over 32 frames (bound < 0.002) · load 754.5/1018.9/1015.8
+  PASS       E-9 button press-light light · press-only paint changes [::before opacity] (bound ≥ 1) · load 754.5/1018.9/1015.8
+  PASS       E-9 button commit-spatial light · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 20 frames · load 754.5/1018.9/1015.8
+  PASS       E-9 button press-spatial dark · scale range while pressed 0.000 over 30 frames (bound < 0.002) · load 834.7/7.1/1020.1
+  PASS       E-9 button press-light dark · press-only paint changes [::before opacity] (bound ≥ 1) · load 834.7/7.1/1020.1
+  PASS       E-9 button commit-spatial dark · commit(Space): scale range 0.030 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 60 frames · load 834.7/7.1/1020.1
+E-9 webkit FAIL · 5 pass, 1 fail, 0 unmeasured of 6 gating cells (0 reported) · load 573.7/993.9/1007.1 at start, 834.7/7.1/1020.1 at end
+# HEAD E-9 button chromium run 3 start 2026-10-13 16:54:50 load { 834.72 7.09 1020.13 }
+# narrowed to scenes button
+  FAIL       E-9 button press-spatial light · scale range while pressed 0.030 over 37 frames (bound < 0.002) · load 1012.9/72.5/13.5
+  PASS       E-9 button press-light light · press-only paint changes [::before opacity] (bound ≥ 1) · load 1012.9/72.5/13.5
+  PASS       E-9 button commit-spatial light · commit(Space): scale range 0.030 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 73 frames · load 1012.9/72.5/13.5
+  PASS       E-9 button press-spatial dark · scale range while pressed 0.000 over 37 frames (bound < 0.002) · load 78.8/106.8/25.9
+  PASS       E-9 button press-light dark · press-only paint changes [::before opacity] (bound ≥ 1) · load 78.8/106.8/25.9
+  PASS       E-9 button commit-spatial dark · commit(Space): scale range 0.030 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 73 frames · load 78.8/106.8/25.9
+E-9 chromium FAIL · 5 pass, 1 fail, 0 unmeasured of 6 gating cells (0 reported) · load 834.7/7.1/1020.1 at start, 241.1/139.9/38.1 at end
+# HEAD E-9 button webkit run 3 start 2026-10-13 16:55:11 load { 241.08 139.93 38.12 }
+# narrowed to scenes button
+  FAIL       E-9 button press-spatial light · scale range while pressed 0.030 over 30 frames (bound < 0.002) · load 663.7/238.3/75.0
+  PASS       E-9 button press-light light · press-only paint changes [::before opacity] (bound ≥ 1) · load 663.7/238.3/75.0
+  PASS       E-9 button commit-spatial light · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 58 frames · load 663.7/238.3/75.0
+  PASS       E-9 button press-spatial dark · scale range while pressed 0.000 over 30 frames (bound < 0.002) · load 663.7/238.3/75.0
+  PASS       E-9 button press-light dark · press-only paint changes [::before opacity] (bound ≥ 1) · load 663.7/238.3/75.0
+  PASS       E-9 button commit-spatial dark · commit(Space): scale range 0.030 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 57 frames · load 663.7/238.3/75.0
+E-9 webkit FAIL · 5 pass, 1 fail, 0 unmeasured of 6 gating cells (0 reported) · load 241.1/139.9/38.1 at start, 663.7/238.3/75.0 at end
+# end 2026-10-13 16:55:29 load { 663.65 238.32 75.00 }

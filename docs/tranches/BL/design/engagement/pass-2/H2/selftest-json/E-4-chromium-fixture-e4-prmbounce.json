@@ -1,0 +1,74 @@
+{
+ "id": "E-4",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e4-prmbounce"
+ },
+ "loadStart": "68.1/414.7/402.0",
+ "loadEnd": "47.6/371.3/386.7",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-4 slider fling carries velocity",
+   "status": "PASS",
+   "line": "axis x, page frame · fling: carry 94.24 px, settles 91.17 px past release · still: carry 0.00 px, settles -5.04 px · difference: carry 94.24 px, settle 96.21 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.00 · 240 frames, median 8.3 ms",
+   "load": "61.9/402.0/397.7"
+  },
+  {
+   "name": "E-4 slider release continuity",
+   "status": "PASS",
+   "line": "largest one-frame move on release: fling 12.6 px, still 0.4 px · during the drive: fling 42.5 px, still 42.5 px (bound ≤ drive × 1.5 + 2 = 65.8 px)",
+   "load": "61.9/402.0/397.7"
+  },
+  {
+   "name": "E-4 slider release PRM",
+   "status": "FAIL",
+   "line": "reduce · moved 120.0 px · fling: carry 99.50 px, settles 96.00 px past release, overshoot past its rest 3.50 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 12.0 px",
+   "load": "61.9/402.0/397.7"
+  },
+  {
+   "name": "E-4 vsheet fling carries velocity",
+   "status": "PASS",
+   "line": "axis y, dir −1, page frame · fling: carry 34.02 px, settles 5.00 px past release · still: carry 5.06 px, settles 5.00 px · difference: carry 28.95 px, settle 0.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.00 · 240 frames, median 8.3 ms",
+   "load": "58.3/395.5/395.4"
+  },
+  {
+   "name": "E-4 vsheet release continuity",
+   "status": "PASS",
+   "line": "largest one-frame move on release: fling 9.0 px, still 0.3 px · during the drive: fling 40.0 px, still 40.0 px (bound ≤ drive × 1.5 + 2 = 62.0 px)",
+   "load": "58.3/395.5/395.4"
+  },
+  {
+   "name": "E-4 vsheet repeat landing",
+   "status": "PASS",
+   "line": "3 fling runs, the same drive, land at -264.0, -264.0, -264.0 px (page frame, signed) · spread 0.00 px (bound ≤ 2 px: the same detent)",
+   "load": "52.5/383.2/391.0"
+  },
+  {
+   "name": "E-4 vsheet release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 125.0 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 5.0 px",
+   "load": "52.5/383.2/391.0"
+  },
+  {
+   "name": "E-4 strip fling carries velocity",
+   "status": "PASS",
+   "line": "axis x, dir −1, touch, page frame · fling: carry 495.00 px, settles 495.00 px past release · still: carry 0.00 px, settles -105.00 px · difference: carry 495.00 px, settle 600.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.00 · 241 frames, median 8.3 ms",
+   "load": "50.4/377.3/388.9"
+  },
+  {
+   "name": "E-4 strip release continuity",
+   "status": "REPORT",
+   "line": "the platform's own scroll fling (CK-18: the Carousel is the platform's, stated), reported not gated · largest one-frame move on release: fling 40.0 px, still 8.0 px · during the drive: fling 40.0 px, still 40.0 px (bound ≤ drive × 1.5 + 2 = 62.0 px)",
+   "load": "50.4/377.3/388.9"
+  },
+  {
+   "name": "E-4 strip release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 105.0 px · fling: carry 495.00 px, settles 495.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 40.0 px",
+   "load": "47.6/371.3/386.7"
+  }
+ ]
+}

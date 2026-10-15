@@ -1,0 +1,62 @@
+{
+ "id": "E-5",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": null
+ },
+ "loadStart": "212.3/254.6/296.3",
+ "loadEnd": "232.1/256.5/296.0",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "E-5 pop sustain light",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-color]: +200 ms 0.059 → +1200 ms 0.185 (×3.11; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "224.4/255.8/296.3"
+  },
+  {
+   "name": "E-5 pop press light",
+   "status": "PASS",
+   "line": ":active true · Δscale -0.042 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color]",
+   "load": "224.4/255.8/296.3"
+  },
+  {
+   "name": "E-5 pop sustain(PRM) light",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-color]: +200 ms 0.094 → +1200 ms 0.185 (×1.97; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "224.4/255.8/296.3"
+  },
+  {
+   "name": "E-5 pop press-light(PRM) light",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color] (bound ≥ 1 press-only property under reduce)",
+   "load": "224.4/255.8/296.3"
+  },
+  {
+   "name": "E-5 pop sustain dark",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-color]: +200 ms 0.082 → +1200 ms 0.179 (×2.20; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "229.1/256.3/296.2"
+  },
+  {
+   "name": "E-5 pop press dark",
+   "status": "PASS",
+   "line": ":active true · Δscale -0.042 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color]",
+   "load": "229.1/256.3/296.2"
+  },
+  {
+   "name": "E-5 pop sustain(PRM) dark",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-color]: +200 ms 0.098 → +1200 ms 0.179 (×1.84; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "229.1/256.3/296.2"
+  },
+  {
+   "name": "E-5 pop press-light(PRM) dark",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color] (bound ≥ 1 press-only property under reduce)",
+   "load": "229.1/256.3/296.2"
+  }
+ ]
+}

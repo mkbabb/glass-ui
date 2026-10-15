@@ -1,0 +1,6 @@
+# E-4 self-test x2 both engines on the final fixture (teleport to the far end, prmbounce seeded 1500 px/s) start 2026-10-09 17:40:04 load { 304.62 214.34 210.87 }
+OK     E-4 chromium clean exit 0 · E-4 chromium PASS · 9 pass, 0 fail, 0 unmeasured of 9 gating cells (1 reported) · load 288.7/216.7/211.8 at start, 254.9/219.2/213.1 at end
+OK     E-4 chromium fault   e4-drop (the release drops the drag velocity: the thumb stops where the pointer let go) exit 1
+         first planted FAIL: FAIL       E-4 slider fling carries velocity · axis x, page frame · fling: carry 0.00 px, settles -5.04 px past release · still: carry 0.00 px, settles -5.04 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both at rest) ·
+OK     E-4 chromium fault   e4-hold (the release holds in place (750 ms after a fling, 600 ms after a still release), then springs to the SAME nearest detent: the velocity picks nothing) exit 1
+         first planted FAIL: FAIL       E-4 slider fling carries velocity · axis x, page frame · fling: carry 0.00 px, settles -29.04 px past release · still: carry 0.00 px, settles -29.04 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both at rest)

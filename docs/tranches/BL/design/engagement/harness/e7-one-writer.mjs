@@ -1,51 +1,63 @@
 #!/usr/bin/env node
-// E-7 · one writer of `data-engaged`, and it means held (W-J.2 §3.2 item 2, G2).
-//   writers (static)  the source files of <worktree>/src that WRITE the attribute, comments stripped: a `.vue`
-//                     template attribute (bare or bound), or a script `dataset.engaged` / `setAttribute`,
-//                     `toggleAttribute` or `removeAttribute("data-engaged")`. CSS readers and `<style>` blocks are not
-//                     writers. PASS when there is at most one, and it lives in the register's owner,
-//                     src/composables/motion/engage/. (G2's own command counts `.vue` files only; this reads `.ts` too,
-//                     so a second writer cannot hide in a composable.) The worktree is --wt, or the build's
-//                     source; under --fixture it is fixtures/e7/clean, or fixtures/e7/two-writers for the fault e7-two.
+// E-7 · CK-08: one writer per engagement attribute (W-J.2 §3.2 item 2, G2; pass 2 restates it per attribute).
+//   writers <attr> (static)  per attribute (data-engaged, data-held, data-press, data-commit), the source files of
+//                     <worktree>/src that WRITE it, comments stripped: a `.vue` template attribute (bare or bound),
+//                     a script assignment `dataset.<name> =` / `dataset["<name>"] =` / `delete …dataset.<name>`, a
+//                     `setAttribute`, `toggleAttribute` or `removeAttribute("data-<name>")`, and (X-6) an object key
+//                     `"data-<name>":` (the bag a `v-bind="obj"` spread or a render function writes through). Reads are
+//                     not writes: a selector string, `dataset.held !== undefined`, a `<style>` block. PASS when there
+//                     is at most one writer file, under src/composables/motion/engage/. A route whose charter names an
+//                     attribute it does not own passes `--unowned data-press,…`: that attribute's cell prints REPORT.
+//                     The worktree is --wt; under --fixture it is fixtures/e7/clean, or the tree a fault names.
 //   modal (runtime)   a modal open with nothing held ([data-e=modal] present): 0 [data-engaged] nodes. The veil
 //                     keys on the overlay's own open state.
 //   held (runtime)    the slider pointer-held 450 ms: ≥ 1 [data-engaged] node (the held meaning survives the split).
 //   held PRM          H-9: the same under reduced motion. Held is a state, not a motion: reduce does not retire it.
 // Light only: the reads are attributes, not paint.
-//   node e7-one-writer.mjs --build <dir> --wt <worktree> | --fixture [--fault e7-veil|e7-two] [--engine webkit]
+//   node e7-one-writer.mjs --build <dir> --wt <worktree> [--unowned data-press] | --fixture [--fault e7-veil|e7-two|e7-spread|e7-held] [--engine webkit]
 import fs from "node:fs";
 import path from "node:path";
 import { witness, openPage, scenesFor, center, HERE } from "./lib.mjs";
 
 const OWNER = "src/composables/motion/engage/";
+export const ATTRS = ["engaged", "held", "press", "commit"];
+const TREES = { "e7-two": "two-writers", "e7-spread": "spread", "e7-held": "held-two" };
+/** { attr: [files that write data-<attr>] } over <wt>/src */
 export function writers(wt) {
-  const out = [];
-  const walk = (d) => { for (const e of fs.readdirSync(d)) { const p = path.join(d, e); const st = fs.statSync(p); if (st.isDirectory()) walk(p); else if (/\.(vue|ts|tsx|js|mjs)$/.test(e)) out.push(p); } };
+  const files = [];
+  const walk = (d) => { for (const e of fs.readdirSync(d)) { const p = path.join(d, e); const st = fs.statSync(p); if (st.isDirectory()) walk(p); else if (/\.(vue|ts|tsx|js|mjs)$/.test(e)) files.push(p); } };
   walk(path.join(wt, "src"));
-  const found = [];
-  for (const p of out) {
-    let t = fs.readFileSync(p, "utf8");
-    let hit = false;
+  const found = Object.fromEntries(ATTRS.map((x) => [x, []]));
+  for (const p of files) {
+    let t = fs.readFileSync(p, "utf8"); let tpl = "";
     if (p.endsWith(".vue")) {
       const s = t.indexOf("<template"), z = t.lastIndexOf("</template>");
-      const tpl = s >= 0 && z > s ? t.slice(s, z).replace(/<!--[\s\S]*?-->/g, "") : "";
-      if (/[\s:]data-engaged(?=[\s=/>])/.test(tpl)) hit = true;
+      tpl = s >= 0 && z > s ? t.slice(s, z).replace(/<!--[\s\S]*?-->/g, "") : "";
       t = t.replace(/<template[\s\S]*<\/template>/, "").replace(/<style[\s\S]*?<\/style>/g, "");
     }
     const code = t.replace(/\/\*[\s\S]*?\*\//g, "").replace(/(^|[^:"'`\\])\/\/.*$/gm, "$1");
-    if (/dataset\.engaged\b|dataset\[\s*["']engaged["']\s*\]|(?:set|toggle|remove)Attribute\(\s*["']data-engaged["']/.test(code)) hit = true;
-    if (hit) found.push(path.relative(wt, p));
+    for (const x of ATTRS) {
+      const A = `data-${x}`;
+      const hit = new RegExp(`(^|[\\s:])(v-bind:)?${A}(?=[\\s=/>])`).test(tpl)
+        || new RegExp(`dataset\\.${x}\\s*=(?!=)|delete\\s+[\\w$.?]*dataset\\.${x}\\b|dataset\\[\\s*["'\`]${x}["'\`]\\s*\\]\\s*=(?!=)|(?:set|toggle|remove)Attribute\\(\\s*["'\`]${A}["'\`]|["'\`]${A}["'\`]\\s*:`).test(code + "\n" + tpl.match(/v-bind="[^"]*\{[^"]*\}"/g)?.join("\n"));
+      if (hit) found[x].push(path.relative(wt, p));
+    }
   }
   return found;
 }
 
 await witness("E-7", "one writer of data-engaged, meaning held", async ({ a, E, T, cell, guard, idx }) => {
-  const wt = a.fixture ? path.join(HERE, "fixtures", "e7", a.fault === "e7-two" ? "two-writers" : "clean") : typeof a.wt === "string" ? path.resolve(a.wt) : null;
-  if (!wt) cell("E-7 writers (static)", "UNMEASURED", "no --wt given: the static arm reads a source tree");
+  const wt = a.fixture ? path.join(HERE, "fixtures", "e7", TREES[a.fault] ?? "clean") : typeof a.wt === "string" ? path.resolve(a.wt) : null;
+  const unowned = new Set(typeof a.unowned === "string" ? a.unowned.split(",") : []);
+  if (!wt) for (const x of ATTRS) cell(`E-7 writers data-${x} (static)`, "UNMEASURED", "no --wt given: the static arm reads a source tree");
   else {
     const W = writers(wt);
-    const ok = W.length <= 1 && W.every((p) => p.startsWith(OWNER));
-    cell("E-7 writers (static)", ok ? "PASS" : "FAIL", `${W.length} writer file(s): ${W.join(", ") || "none"} · bound ≤ 1, under ${OWNER} · tree ${a.fixture ? path.relative(HERE, wt) : wt}`);
+    for (const x of ATTRS) {
+      const files = W[x]; const ok = files.length <= 1 && files.every((p) => p.startsWith(OWNER));
+      const line = `${files.length} writer file(s): ${files.join(", ") || "none"} · bound ≤ 1, under ${OWNER} · tree ${a.fixture ? path.relative(HERE, wt) : wt}`;
+      if (unowned.has(`data-${x}`)) cell(`E-7 writers data-${x} (static)`, "REPORT", `not owned by this route (--unowned, its charter's words) · ${line}`);
+      else cell(`E-7 writers data-${x} (static)`, ok ? "PASS" : "FAIL", line);
+    }
   }
   for (const [sc] of scenesFor(idx, "E-7")) {
     if (sc === "modal") {

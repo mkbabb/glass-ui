@@ -2,57 +2,60 @@
 
 | field | value |
 |---|---|
-| seat | D5 pass 1, R-H (the harness rows H-1..H-9; the account is `../pass-1/RH.md`) |
+| seat | D5 pass 2, H2 (the restated witnesses, REGISTRY §P1-6; the account is `../pass-2/H2.md`). Pass 1's reading (R-H, 98 runs, 2026-10-06) is superseded; its record stays in `logs/` and `../pass-1/RH.md` |
 | model | `claude-opus-5-5`, asserted from own system identity |
-| harness | this directory (`HARNESS.md`): the witnesses E-1..E-9, `fixtures.mjs` (the clean page and `FAULTS`), `fixtures/e7/`, `wktouch.mjs` (WebKit touch, H-4) |
+| harness | this directory (`HARNESS.md`): E-1..E-11, `fixtures.mjs` (the clean page and 74 `FAULTS`, 36 of them pass 2's), `fixtures/e7/`, `wktouch.mjs`, `capture.mjs` |
 | engines | Chromium 149.0.7827.55 and Playwright WebKit 26.5, headless, from `glass-ui/node_modules/playwright`. **Playwright WebKit is not Safari.** Real Safari: **UNMEASURED (owner's safaridriver checkbox)** |
-| date | 2026-10-06. Full run 13:05:32-16:44:46 local (`logs/selftest.log:1,174`); the two load-broken runs re-run twice each, 16:53:05-17:09:53 (`logs/selftest-rerun.log`) |
-| load | 34.45/45.98/37.24 at the start; the machine then climbed to 400-650 (1-minute) under other seats' runs (`logs/selftest.log:136` reads 436.8). Every cell line in `logs/selftest-cells.log` carries its own load |
-| verdict | **GREEN.** 98 runs: 95 OK, 1 N/A, 2 BROKEN by load, both re-run twice and OK 2/2 (below) |
+| date | E-1..E-10: 2026-10-14 (rec3, one uninterrupted sequence); E-11: 2026-10-15 (rec4, on its final rule). Logs and JSON under `../pass-2/H2/logs/` (`rec3-selftest-*.log`, `rec4-selftest-e11.log`) and `../pass-2/H2/rec3/`, `../pass-2/H2/rec4/` |
+| load | 13-185 (1-minute): D1-D4 seats' browsers shared the machine. Every cell line carries its own load |
+| verdict | **GREEN in both engines**: 174 runs, 173 OK, 1 N/A (`e4-stripstop` in WebKit), 0 BROKEN, 0 UNREAD |
 
 ## 1 · What was run
 
 ```sh
 H=docs/tranches/BL/design/engagement/harness
-node $H/selftest.mjs --out <scratch>/out/selftest                           # every witness, both engines (98 runs)
-node $H/selftest.mjs --only E-7 --engines webkit --out …                    # the re-runs, twice each
-node $H/selftest.mjs --only E-8 --engines webkit --faults e8-units --out …
+node $H/selftest.mjs --engines chromium --out <dir>      # every witness, one engine (87 runs)
+node $H/selftest.mjs --engines webkit --out <dir>
+node $H/selftest.mjs --only E-4 --out <dir>               # one witness, both engines
 ```
 
-A run is OK when the clean fixture exits 0, each fault aimed at the witness exits 1 **with the planted cell among its FAIL lines**, and each control exits 0. `logs/selftest-cells.log` is every cell of every run (the per-run JSON flattened, one line per cell with its load).
+A run is OK when the clean fixture exits 0, each fault aimed at the witness exits 1 **with the planted cell among its FAIL lines**, each control exits 0, and each `expect: "unmeasured"` fault leaves its cell UNMEASURED with nothing failing. N/A: a fault whose input the engine lacks (`e4-stripstop` in WebKit: no touch scrolling). UNREAD: a fault whose planted cell failed only as an engine close (`ENGINE CLOSED`, `CELL TIMEOUT`) in three runs; it is not OK, because an engine close is no reading of the plant (`../pass-2/H2.md` §2.3).
 
-## 2 · The table
+## 2 · The reading of record
 
-| witness | clean fixture, both engines | plants (each FAILs its planted cell, both engines unless noted) | controls | log lines |
-|---|---|---|---|---|
-| E-1 | PASS 8/8 (adds `runtime … PRM press-light` per class) | `e1-undeclared`, `e1-norung`, `e1-dead`, **`e9-dark`** | `e1-stale` | `:2-21` |
-| E-2 | PASS 36/36 | `e2-fade`, `e2-tabpop`, `e2-prog`, `e2-glide`, `e2-mountpop` (H-8), `e2-nocoarse` | `travel`, `rest` scenes | `:22-47` |
-| E-3 | PASS 12/12 in **both** engines (the phone arm now reads in WebKit, H-4) | `e3-still`, `e3-kbd`, `e3-gutter` (**now WebKit too**), **`e3-prmgrow`** (`keyboard-focused PRM`: ×1.060) | — | `:48-65` |
-| E-4 | Chromium PASS 6/6; WebKit PASS 4/6, 2 UNMEASURED (the strip: no touch scrolling) | `e4-drop`, `e4-hold`, **`e4-vdrop`**, **`e4-prmbounce`**, **`e4-stripstop`** (Chromium; N/A in WebKit, `:88`) | `e4-snap` | `:66-88` |
-| E-5 | PASS 4/4 in **both** engines (H-4) | `e5-hover` (**now WebKit too**), **`e9-dark`** (`press-light(PRM)`) | — | `:89-98` |
-| E-6 | Chromium PASS 14/14; WebKit PASS 12/12 (layouts/s REPORT) | `e6-absent`, `e6-dim`, `e6-layout`, `e6-prm`, `e6-fast`, **`e6-spin`** (`channel`: rotate), **`e6-saw`** (`shape`: seam 1 → 1.012, linear) | — | `:99-128` |
-| E-7 | PASS 4/4 (Chromium `:129`; WebKit in the re-runs) | `e7-veil`, `e7-two`, **`e7-prm`** (`held PRM`: 0 nodes) | — | `:129-142` |
-| E-8 | PASS 7/7 | `e8-drift`, `e8-literal`, **`e8-prmliteral`** (`literal pop PRM`: 100 ms) | `e8-units` (Chromium `:146`; WebKit in the re-runs) | `:143-158` |
-| E-9 | PASS 24/24 | `e9-scale`, `e9-dark`, `e9-glide` | — | `:159-172` |
+The harness changed as readings exposed faults (`../pass-2/H2.md` §2.1, §2.3). Each witness's record is its last run on its final code: E-1..E-10 rec3 (their files byte-identical to `../pass-2/H2/rec3-harness.sha1`), E-11 rec4. `tabulate.mjs selftest` on those logs:
 
-New in pass 1 in bold. The planted FAIL line for each is printed under its OK line in the log.
+| witness | engine | clean fixture (gating cells) | plants FAIL on the planted cell | controls PASS | UNMEASURED plants | N/A | BROKEN | load (1-min) |
+|---|---|---|---|---|---|---|---|---|
+| E-1 | chromium | 22 pass, 0 fail, 0 unmeasured of 22 | 13/13 | 1/1 | - | - | 0 | 30-36 |
+| E-2 | chromium | 36 pass, 0 fail, 0 unmeasured of 36 | 11/11 | 1/1 | - | - | 0 | 35-52 |
+| E-3 | chromium | 22 pass, 0 fail, 0 unmeasured of 22 | 10/10 | 1/1 | - | - | 0 | 86-163 |
+| E-4 | chromium | 9 pass, 0 fail, 0 unmeasured of 9 | 8/8 | 1/1 | 1/1 | - | 0 | 69-185 |
+| E-5 | chromium | 8 pass, 0 fail, 0 unmeasured of 8 | 3/3 | - | - | - | 0 | 94-105 |
+| E-6 | chromium | 14 pass, 0 fail, 0 unmeasured of 14 | 7/7 | - | - | - | 0 | 99-124 |
+| E-7 | chromium | 7 pass, 0 fail, 0 unmeasured of 7 | 5/5 | - | - | - | 0 | 98-102 |
+| E-8 | chromium | 7 pass, 0 fail, 0 unmeasured of 7 | 3/3 | 1/1 | - | - | 0 | 102-117 |
+| E-9 | chromium | 24 pass, 0 fail, 0 unmeasured of 24 | 3/3 | - | - | - | 0 | 86-114 |
+| E-10 | chromium | 4 pass, 0 fail, 0 unmeasured of 4 | 4/4 | - | - | - | 0 | 68-80 |
+| E-11 | chromium | 1 pass, 0 fail, 0 unmeasured of 1 | 1/1 | - | 2/2 | - | 0 | 15-15 |
+| E-1 | webkit | 22 pass, 0 fail, 0 unmeasured of 22 | 13/13 | 1/1 | - | - | 0 | 35-69 |
+| E-2 | webkit | 36 pass, 0 fail, 0 unmeasured of 36 | 11/11 | 1/1 | - | - | 0 | 35-80 |
+| E-3 | webkit | 22 pass, 0 fail, 0 unmeasured of 22 | 10/10 | 1/1 | - | - | 0 | 42-72 |
+| E-4 | webkit | 7 pass, 0 fail, 3 unmeasured of 10 | 7/7 | 1/1 | 1/1 | e4-stripstop | 0 | 31-70 |
+| E-5 | webkit | 8 pass, 0 fail, 0 unmeasured of 8 | 3/3 | - | - | - | 0 | 50-58 |
+| E-6 | webkit | 12 pass, 0 fail, 0 unmeasured of 12 | 7/7 | - | - | - | 0 | 66-85 |
+| E-7 | webkit | 7 pass, 0 fail, 0 unmeasured of 7 | 5/5 | - | - | - | 0 | 87-91 |
+| E-8 | webkit | 7 pass, 0 fail, 0 unmeasured of 7 | 3/3 | 1/1 | - | - | 0 | 93-102 |
+| E-9 | webkit | 24 pass, 0 fail, 0 unmeasured of 24 | 3/3 | - | - | - | 0 | 103-114 |
+| E-10 | webkit | 4 pass, 0 fail, 0 unmeasured of 4 | 4/4 | - | - | - | 0 | 104-124 |
+| E-11 | webkit | 1 pass, 0 fail, 0 unmeasured of 1 | 1/1 | - | 2/2 | - | 0 | 13-13 |
 
-### 2.1 The two BROKEN runs
+total 174 runs: 173 OK, 1 N/A, 0 BROKEN, 0 UNREAD (E-1..E-10 rec3: 166 runs, 165 OK, 1 N/A; E-11 rec4: 8 runs, 8 OK)
 
-Both are harness errors under load, not verdicts: `E-7 webkit clean` exit 2, `page.waitForFunction: Timeout 20000ms exceeded` at load 436.8 (`:136`); `E-8 webkit control e8-units` exit 2 (`:154`). Neither is a witness reading the wrong way. Re-run twice each at load 233-285: OK 2/2 and OK 2/2 (`logs/selftest-rerun.log`). The rule (`HARNESS.md` §1.2): a failure seen only under load is NOT-REPRODUCED. The harness was hardened after this run: the page-ready wait is 60 s, and a ready or navigation timeout counts as an engine close (relaunch, re-run once), as does any raw-WebKit transport error.
-
-## 3 · The plants that had to be rebuilt
-
-Two first cuts of the new plants passed their witness. The witness was right both times (`../pass-1/rh/plants-first-cut.log`, `plants-second-cut.log`):
-
-- `e4-vdrop` first picked the detent by position alone but still seeded the settle spring with the release velocity. The fling overshot the detent, which **is** velocity carried into the settle, so E-4 passed it correctly. The plant now drops the velocity entirely: FAIL, difference 0.00 px.
-- `e4-stripstop` first tried to stop the platform fling by toggling `overflow-x` at touchend. Chromium's fling ran on anyway and landed one member on (`largest one-frame jump 540 px`). The plant now takes the gesture (`touch-action: none`), follows the finger itself and snaps to the nearest member at touchend: FAIL, both releases settle −120 px.
-
-The E-4 PRM cell's first overshoot read counted a surface returning toward its start as an overshoot (the strip plant read 120 px). It now measures only how far the surface passes its rest in the direction it travelled.
-
-## 4 · What the self-test does not prove
+## 3 · What the self-test does not prove
 
 - Real Safari: no cell. UNMEASURED (owner's safaridriver checkbox).
-- A touch drag in WebKit: macOS WebKit dispatches the touch events but does not scroll, so E-4's touch surfaces read UNMEASURED there (`../pass-1/rh/h4-probe.log`).
-- The fixture's scenes are the contract's shapes, not the library's components. Whether a library scene exercises a witness is shown by the HEAD run (`../BASELINE.md`).
-- The harness edits made after this run (bounded engine close, sub-millisecond instants in E-8, `--scenes` on every witness) were re-checked on the witnesses they touch, both engines: `--only E-5,E-8`, 16 runs, 15 OK at load 300-650; the one BROKEN run is `e8-units` in Chromium, `ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s)` at load 393, re-run twice at load 228-242 and OK 2/2 (`logs/selftest-post.log`). The other witnesses were not re-run after these edits; the edits change no cell they read.
+- A touch drag in WebKit: macOS WebKit does not scroll on touch, so E-4's touch surfaces read UNMEASURED there.
+- The fixture's scenes are the contract's shapes, not the library's components. Whether a library scene exercises a witness is shown by the HEAD run (`../pass-2/H2.md` §3).
+- Platform flings (the fixture strip, the library Carousel) are Chromium's compositor's own. At loads above ~150 the platform's fling can land short of the still release (`../pass-2/H2.md` §2.1); the touch drive's moves are clocked, but the compositor's pacing is not the harness's to fix.
+- An N/A run is not read for unrelated failures.

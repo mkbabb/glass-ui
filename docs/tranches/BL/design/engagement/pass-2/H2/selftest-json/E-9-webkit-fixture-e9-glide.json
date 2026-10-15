@@ -1,0 +1,158 @@
+{
+ "id": "E-9",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e9-glide"
+ },
+ "loadStart": "494.2/456.9/431.9",
+ "loadEnd": "593.2/482.8/441.9",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-9 pop press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 31 frames (bound < 0.002)",
+   "load": "512.6/461.3/433.6"
+  },
+  {
+   "name": "E-9 pop press-light light",
+   "status": "PASS",
+   "line": "press-only paint changes [background-color] (bound ≥ 1)",
+   "load": "512.6/461.3/433.6"
+  },
+  {
+   "name": "E-9 pop commit-spatial light",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 55 frames",
+   "load": "512.6/461.3/433.6"
+  },
+  {
+   "name": "E-9 pop press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 32 frames (bound < 0.002)",
+   "load": "512.6/461.3/433.6"
+  },
+  {
+   "name": "E-9 pop press-light dark",
+   "status": "PASS",
+   "line": "press-only paint changes [background-color] (bound ≥ 1)",
+   "load": "512.6/461.3/433.6"
+  },
+  {
+   "name": "E-9 pop commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 58 frames",
+   "load": "512.6/461.3/433.6"
+  },
+  {
+   "name": "E-9 travel press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 30 frames (bound < 0.002)",
+   "load": "533.6/466.5/435.6"
+  },
+  {
+   "name": "E-9 travel press-light light",
+   "status": "PASS",
+   "line": "press-only paint changes [background-color] (bound ≥ 1)",
+   "load": "533.6/466.5/435.6"
+  },
+  {
+   "name": "E-9 travel commit-spatial light",
+   "status": "FAIL",
+   "line": "commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 77.29 px with 16 frame(s) in flight (bound ≤ 1 frame each) · 55 frames",
+   "load": "533.6/466.5/435.6"
+  },
+  {
+   "name": "E-9 travel press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 31 frames (bound < 0.002)",
+   "load": "546.6/470.3/437.1"
+  },
+  {
+   "name": "E-9 travel press-light dark",
+   "status": "PASS",
+   "line": "press-only paint changes [background-color] (bound ≥ 1)",
+   "load": "546.6/470.3/437.1"
+  },
+  {
+   "name": "E-9 travel commit-spatial dark",
+   "status": "FAIL",
+   "line": "commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 77.29 px with 21 frame(s) in flight (bound ≤ 1 frame each) · 60 frames",
+   "load": "546.6/470.3/437.1"
+  },
+  {
+   "name": "E-9 rest press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 31 frames (bound < 0.002)",
+   "load": "546.6/470.3/437.1"
+  },
+  {
+   "name": "E-9 rest press-light light",
+   "status": "PASS",
+   "line": "press-only paint changes [background-color] (bound ≥ 1)",
+   "load": "546.6/470.3/437.1"
+  },
+  {
+   "name": "E-9 rest commit-spatial light",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 57 frames",
+   "load": "546.6/470.3/437.1"
+  },
+  {
+   "name": "E-9 rest press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 28 frames (bound < 0.002)",
+   "load": "572.8/477.0/439.7"
+  },
+  {
+   "name": "E-9 rest press-light dark",
+   "status": "PASS",
+   "line": "press-only paint changes [background-color] (bound ≥ 1)",
+   "load": "572.8/477.0/439.7"
+  },
+  {
+   "name": "E-9 rest commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 56 frames",
+   "load": "572.8/477.0/439.7"
+  },
+  {
+   "name": "E-9 slider press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 30 frames (bound < 0.002)",
+   "load": "593.2/482.8/441.9"
+  },
+  {
+   "name": "E-9 slider press-light light",
+   "status": "PASS",
+   "line": "press-only paint changes [child0 shadow, thumb box-shadow] (bound ≥ 1)",
+   "load": "593.2/482.8/441.9"
+  },
+  {
+   "name": "E-9 slider commit-spatial light",
+   "status": "PASS",
+   "line": "commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 60 frames",
+   "load": "593.2/482.8/441.9"
+  },
+  {
+   "name": "E-9 slider press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 30 frames (bound < 0.002)",
+   "load": "593.2/482.8/441.9"
+  },
+  {
+   "name": "E-9 slider press-light dark",
+   "status": "PASS",
+   "line": "press-only paint changes [child0 shadow, thumb box-shadow] (bound ≥ 1)",
+   "load": "593.2/482.8/441.9"
+  },
+  {
+   "name": "E-9 slider commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 58 frames",
+   "load": "593.2/482.8/441.9"
+  }
+ ]
+}

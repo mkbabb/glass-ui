@@ -1,0 +1,106 @@
+# full self-test on the final harness, webkit, start 2026-10-09 17:21:49 load { 163.41 287.83 296.30 }
+OK     E-1 webkit   clean exit 0 · E-1 webkit PASS · 22 pass, 0 fail, 0 unmeasured of 22 gating cells (0 reported) · load 134.1/263.0/286.7 at start, 126.6/250.7/281.6 at end
+OK     E-1 webkit   fault   e1-undeclared (a component directory (delta) has no class row) exit 1
+         first planted FAIL: FAIL       E-1 denominator declared · 5 of 6 directories declared; undeclared: delta · load 137.6/230.4/271.7
+OK     E-1 webkit   fault   e1-norung (the static class names no rung and gives no reason) exit 1
+         first planted FAIL: FAIL       E-1 class carries a rung · failing: static (rung none, no reason) · members per class: pressed 1, held 1, field 1, ambient 1, static 2 · ladder rungs rest/hover/press/engaged/modal · load 112.5/198.7/255.6
+OK     E-1 webkit   fault   e1-dead (the pressed class's exemplar (alpha → pop) answers a press with nothing: the declaration holds on paper only) exit 1
+         first planted FAIL: FAIL       E-1 runtime pressed (alpha) · scene pop, rung press · press: Δscale 0.000 · press-only paint [] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 136.7/182.2/243.1
+OK     E-1 webkit   control e1-stale (CONTROL, must PASS: the declaration lists the directories in another order and carries a comment field; order and extra fields are not the census) exit 0
+OK     E-1 webkit   fault   e1-unadopted (CK-01: alpha's control composes no recipe (its engage-pressed class deleted, C-A r26): declared, classified, not adopted) exit 1
+         first planted FAIL: FAIL       E-1 adoption alpha · declared pressed · 3 instance(s) in 3 scene(s) · NOT ADOPTED: pop: div[role=switch].ctl computes [unclassed] · travel: div[role=radiogroup].segs computes [unclassed] · rest: div[role=switch].ctl computes [unc
+OK     E-1 webkit   fault   e1-nullhost (CK-01: beta's recipe is stamped through a host getter that resolves to null (C-B r26): the slider renders unclassed) exit 1
+         first planted FAIL: FAIL       E-1 adoption beta · declared held · 3 instance(s) in 2 scene(s) · NOT ADOPTED: slider: div.fx-slider computes [unclassed] · slider2: div.fx-slider computes [unclassed] · slider2: div.fx-slider computes [unclassed] · load 171.0/15
+OK     E-1 webkit   fault   e1-wrongclass (CK-01: alpha's control composes engage-chosen against its declared pressed (C-A r1's drift)) exit 1
+         first planted FAIL: FAIL       E-1 adoption alpha · declared pressed · 3 instance(s) in 3 scene(s) · NOT ADOPTED: pop: div[role=switch].ctl.engage-chosen computes [chosen] (div[role=switch].ctl.engage-chosen=chosen) · travel: div[role=radiogroup].segs computes
+OK     E-1 webkit   fault   e1-double (CK-01: alpha's control composes two engage-* classes (a computed read sees only the later one)) exit 1
+         first planted FAIL: FAIL       E-1 single · elements composing more than one engage-* class: pop: div[role=switch].ctl.engage-pressed.engage-chosen: engage-pressed+engage-chosen · travel: div[role=radio].seg.engage-pressed.engage-chosen: engage-pressed+engage-
+OK     E-1 webkit   fault   e1-staticfocus (CK-01: the static card (delta) renders role="option" tabindex="0" and a click handler (Card.vue:66-67 at HEAD)) exit 1
+         first planted FAIL: FAIL       E-1 static-inert delta · live static elements: passive: root div[role=option].card.engage-static (tabIndex 0, role option, handler) · passive: div[role=option].card.engage-static (tabIndex 0, role option, handler) · load 196.8/17
+OK     E-1 webkit   fault   e1-latch (CK-01's RED latch: a declared member (epsilon) is rendered by no scene, so its adoption is unproven) exit 1
+         first planted FAIL: FAIL       E-1 adoption latch · 6 of 7 declared members seen adopting their recipe; unproven (not rendered by any scene, or not adopted): epsilon · load 301.5/216.7/211.7
+OK     E-1 webkit   fault   e1-absent (CK-01: the pressed class's exemplar scene renders no target; E-1 must FAIL that cell, never throw) exit 1
+         first planted FAIL: FAIL       E-1 runtime pressed (alpha) · scene pop, rung press: no target ([data-e~="target"] absent): the exemplar renders nothing to probe · load 252.7/220.9/213.8
+OK     E-1 webkit   fault   e1-fielddead (CK-19: the field's exemplar (eta) answers hover with nothing) exit 1
+         first planted FAIL: FAIL       E-1 runtime field (eta) · scene field, rung hover · hover: Δscale 0.000 · paint [] (bound ≥ 1 property or |Δscale| ≥ 0.01) · load 212.3/216.6/212.9
+OK     E-1 webkit   fault   e1-ambientdead (CK-19: the ambient cell's exemplar (theta) does not follow the pointer) exit 1
+         first planted FAIL: FAIL       E-1 runtime ambient (theta) · scene ambient, rung rest · pointer moved across: mean pixel change 0.00 levels against 0.00 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift) · load 302.1/242.8/223.4
+OK     E-1 webkit   fault   e9-dark (under reduced motion the press retires its scale and keeps no light answer (its press paints the hover value): E-9's press, E-1's exemplar under reduce and E-5's held touch under reduce all read it (H-9)) exit 1
+         first planted FAIL: FAIL       E-1 runtime pressed (alpha) PRM press-light · scene pop, reduce · press: Δscale 0.000 · press-only paint [] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 333.0/305.0/253.6
+OK     E-2 webkit   clean exit 0 · E-2 webkit PASS · 36 pass, 0 fail, 0 unmeasured of 36 gating cells (0 reported) · load 240.1/281.5/248.4 at start, 241.8/273.1/248.0 at end
+OK     E-2 webkit   fault   e2-fade (the commit is a 120 ms linear fade-in (light that rises TO its rest, not above it); the selection body jumps: no arm) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·keyboard(Space) light · state "off" → "on" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 76.5 px = 0.00 px (bound > 0.8) · (iii) light rise 0.
+OK     E-2 webkit   fault   e2-tabpop (the commit's light also fires when Tab enters the control) exit 1
+         first planted FAIL: FAIL       E-2 pop Tab-entry light · scale range 0.000 body moved 0.00 px light rise 0.0910 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on switch · load 211.3/246.9/241.2
+OK     E-2 webkit   fault   e2-prog (the commit fires from pointer and key handlers only: a programmatic model change commits with none) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·programmatic light · state "off" → "on" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 76.5 px = 0.00 px (bound > 0.8) · (iii) light rise 0.000
+OK     E-2 webkit   fault   e2-glide (the selection body glides on a linear path and lands without overshoot (travel with no weight)) exit 1
+         first planted FAIL: FAIL       E-2 travel commit·keyboard(ArrowRight) light · state 0 → 1 · arm none of [i,iii] · (i) body travel 78.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 78.0 px = 0.00 px (bound > 0.8) · (iii) light rise 
+OK     E-2 webkit   fault   e2-mountpop (a control that mounts already committed fires its commit light on mount (H-8)) exit 1
+         first planted FAIL: FAIL       E-2 pop mount(committed) light · after mount: scale range 0.000 body moved 0.00 px light rise 0.1817 over 77 of 77 frames with the target present · load 240.2/217.2/226.4
+OK     E-2 webkit   fault   e2-nocoarse (the commit is keyed on mouse events: a touch tap commits with none) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·tap(coarse) light · state "off" → "on" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 76.5 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0000
+OK     E-2 webkit   fault   e2-notdriven (CK-02 precondition: the scene's key does not change the state (X-5); the cell must read NOT DRIVEN, never PASS) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·keyboard(Space) light · NOT DRIVEN: the scene's state did not change ("off"); a commit that never happened is not graded · load 267.8/258.6/243.9
+OK     E-2 webkit   fault   e2-fillonly (CK-02 arm iii: the commit is the committed state's own fill change and nothing else) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·keyboard(Space) light · state "off" → "on" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 76.5 px = 0.00 px (bound > 0.8) · (iii) light rise 0.
+OK     E-2 webkit   fault   e2-literalflash (CK-02 arm iii: the commit's light rises and decays on 300 ms, a clock no ENGAGE_ENVELOPES row carries) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·keyboard(Space) light · state "off" → "on" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 76.5 px = 0.00 px (bound > 0.8) · (iii) light rise 0.
+OK     E-2 webkit   fault   e2-geompop (CK-02 arm ii unadmitted: the commit is a geometric pop alone (1.08 crest), which the default arms (i, iii) do not admit) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·keyboard(Space) light · state "off" → "on" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.076 trough 0.860 settle 1.000 on 76.5 px = 5.83 px (bound > 0.8) · (iii) light rise 0.
+OK     E-2 webkit   control e2-bigpop (CONTROL, must PASS with arm ii admitted (--commit-arms i,ii,iii): the 1.08 geometric pop clears 0.8 px on the face with a bounce) exit 0
+OK     E-2 webkit   fault   e2-smallpop (CK-02 arm ii admitted: a 1.004 crest moves the painted face 0.4 px (C-A r26's pop), under the 0.8 px floor) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·keyboard(Space) light · state "off" → "on" · arm none of [i,ii,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.004 trough 0.993 settle 1.000 on 76.5 px = 0.30 px (bound > 0.8) · (iii) light rise
+OK     E-3 webkit   clean exit 0 · E-3 webkit PASS · 22 pass, 0 fail, 0 unmeasured of 22 gating cells (0 reported) · load 228.9/240.5/241.3 at start, 305.3/259.7/248.3 at end
+OK     E-3 webkit   fault   e3-still (the slider never grows) exit 1
+         first planted FAIL: FAIL       E-3 slider desk pointer-held light · rest 360.0 px → held 360.0 px (×1.000; [data-engaged] 1) · bound ×1.03 sustained at 450 ms · load 342.2/277.7/255.8
+OK     E-3 webkit   fault   e3-kbd (the slider grows under the pointer only; keyboard engagement leaves it at rest) exit 1
+         first planted FAIL: FAIL       E-3 slider desk keyboard-focused light · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1.03 · load 306.3/290.4/263.6
+OK     E-3 webkit   fault   e3-gutter (the phone slider is full width and grows ×1.06 in place, past the 16 px gutter) exit 1
+         first planted FAIL: FAIL       E-3 slider phone gutter light · engaged box 5.3..384.7 px in a 390 px viewport · bound 16..374 px · load 215.0/265.8/257.2
+OK     E-3 webkit   fault   e3-tabhand (CK-04: Tab paints the hand's register: data-held and cursor grabbing on keyboard focus (C-B §0 item 1)) exit 1
+         first planted FAIL: FAIL       E-3 slider desk keyboard register light · Tab-engaged: [data-held] 1 · cursor grabbing true · root height ×1.060 body height ×1.060 (bound: no data-held, no grabbing, no squish < ×0.99: the hand's register is the pointer's) · loa
+OK     E-3 webkit   fault   e3-latch (CK-04 (X-1): after a pointer drag and release the slider stays engaged (the S-8 :has(:focus-visible) latch)) exit 1
+         first planted FAIL: FAIL       E-3 slider afterdrag light · a pointer drag and release, +600 ms: ×1.060 × 1.060 · [data-held] 0 · veil 1 (bound ×1 ± 0.002, X-1) · load 287.8/272.0/260.7
+OK     E-3 webkit   fault   e3-modifier (CK-04: any keydown engages, a lone modifier included (C-B §0 item 2)) exit 1
+         first planted FAIL: FAIL       E-3 slider modifier light · after a drag (focus on slider), each held alone 400 ms: Shift ×1.060 × 1.060 held 0 · Meta ×1.060 × 1.060 held 0 · Control ×1.060 × 1.060 held 0 · Alt ×1.060 × 1.060 held 0 (bound ×1 ± 0.002, no data-h
+OK     E-3 webkit   fault   e3-charkey (CK-04: a character key the slider does not act on engages (useEngage.ts:108's leading `.`, C-E r33)) exit 1
+         first planted FAIL: FAIL       E-3 slider unacted key light · after a drag, "k" +450 ms: ×1.060 × 1.060 · veil 1 (bound ×1 ± 0.002, no veil: a key the control does not act on engages nothing) · load 255.5/271.4/263.0
+OK     E-3 webkit   fault   e3-scriptfocus (CK-04: a script focus() with no key event engages (C-E §0 item 3)) exit 1
+         first planted FAIL: FAIL       E-3 slider script focus light · element.focus() with no key event (focus on slider), +450 ms: ×1.060 × 1.060 · veil 1 (bound ×1 ± 0.002, no veil) · load 247.1/265.9/261.7
+OK     E-3 webkit   control e3-blockgrow (CONTROL, must PASS: the phone slider grows ×1.06 on the block axis only, inside the gutter (CK-04's block reading, R-E's)) exit 0
+OK     E-3 webkit   fault   e3-prmdark (CK-04: under reduced motion the touch-held phone slider paints nothing (the light leg dropped with the grow)) exit 1
+         first planted FAIL: FAIL       E-3 slider phone touch-held PRM light · reduce · rest → touch-held ×1.000 × 1.000 · light leg [] (bound ×1 ± 0.002 on both axes and ≥ 1 paint property) · load 257.9/254.0/256.9
+OK     E-3 webkit   fault   e3-prmgrow (under reduced motion the slider still grows, on its spring (H-9)) exit 1
+         first planted FAIL: FAIL       E-3 slider keyboard-focused PRM light · reduce · rest → focused ×1.060 × 1.060 (focus on slider) · bound ×1 ± 0.002 · load 211.1/242.9/252.5
+OK     E-4 webkit   clean exit 0 · E-4 webkit PASS · 7 pass, 0 fail, 3 unmeasured of 10 gating cells (0 reported) · load 170.0/225.0/245.1 at start, 171.9/216.4/240.7 at end
+OK     E-4 webkit   fault   e4-drop (the release drops the drag velocity: the thumb stops where the pointer let go) exit 1
+         first planted FAIL: FAIL       E-4 slider fling carries velocity · axis x, page frame · fling: carry 0.00 px, settles -5.04 px past release · still: carry 0.00 px, settles -5.04 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both at rest) ·
+OK     E-4 webkit   fault   e4-hold (the release holds in place (750 ms after a fling, 600 ms after a still release), then springs to the SAME nearest detent: the velocity picks nothing) exit 1
+         first planted FAIL: FAIL       E-4 slider fling carries velocity · axis x, page frame · fling: carry 0.00 px, settles -29.04 px past release · still: carry 0.00 px, settles -29.04 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both at rest)
+BROKEN E-4 webkit   control e4-snap (CONTROL, must PASS: the release snaps to a detent and the release velocity picks the detent) exit 1
+         FAIL       E-4 slider fling carries velocity · axis x, page frame · fling: carry 3.25 px, settles 0.96 px past release · still: carry 1.05 px, settles 0.96 px · difference: carry 2.20 px, settle 0.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 182 frames, median 10.0 ms · load 180.0/208.9/231.0
+         UNMEASURED E-4 strip fling carries velocity · the touch drag moved the body 0.0 px (fling) and 0.0 px (still), bound ≥ 20 px: macOS WebKit has no touch scrolling, so a touch drag cannot drive this surface (H-4); real Safari UNMEASURED (owner's safaridriver checkbox) · load 194.6/208.7/230.0
+         UNMEASURED E-4 strip release continuity · not driven in this engine (above) · load 194.6/208.7/230.0
+         UNMEASURED E-4 strip release PRM · the surface is not driven or not read in this engine (above) · load 194.6/208.7/230.0
+OK     E-4 webkit   fault   e4-vdrop (the vertical detent sheet resolves its release by position alone: a fling lands on the detent a still release lands on (H-7)) exit 1
+         first planted FAIL: FAIL       E-4 vsheet fling carries velocity · axis y, dir −1, page frame · fling: carry 0.00 px, settles -20.00 px past release · still: carry 0.00 px, settles -20.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both 
+N/A    E-4 webkit   fault   e4-stripstop exit 1: the planted cell has no input in Playwright webkit (FAULTS engines) · E-4 webkit FAIL · 7 pass, 2 fail, 0 unmeasured of 9 gating cells (1 reported) · load 203.2/204.7/224.8 at start, 196.7/201.6/222.3 at end
+OK     E-4 webkit   fault   e4-prmbounce (under reduced motion the slider's release keeps its velocity spring and overshoots its rest (H-9)) exit 1
+         first planted FAIL: FAIL       E-4 slider release PRM · reduce · moved 120.0 px · fling: carry 98.91 px, settles 96.00 px past release, overshoot past its rest 2.91 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 1
+OK     E-4 webkit   fault   e4-ghostbody (CK-05: the body the witness reads is invisible (opacity 0, the reka thumb C-B r24 carried)) exit 1
+         first planted FAIL: FAIL       E-4 slider fling carries velocity · INVISIBLE body: 561 frame(s) read a body with effective opacity 0.00 or a zero box (bound: opacity > 0 and a non-zero box on every frame, C-B r24) · load 191.3/202.5/219.6
+OK     E-4 webkit   fault   e4-teleport (CK-05: the release holds, then lands on its projected point in one frame (the sortable and tabs teleports)) exit 1
+         first planted FAIL: FAIL       E-4 slider release continuity · largest one-frame move on release: fling 264.1 px, still 264.1 px · during the drive: fling 42.5 px, still 42.5 px (bound ≤ drive × 1.5 + 2 = 65.8 px) · load 180.5/198.7/216.4
+OK     E-4 webkit   fault   e4-flaky (CK-05: the same drive lands on another detent on another run (C-B §1: 130 or 255 px)) exit 1
+         first planted FAIL: FAIL       E-4 vsheet repeat landing · 3 fling runs, the same drive, land at -139.0, -289.0, -139.0 px (page frame, signed) · spread 150.00 px (bound ≤ 2 px: the same detent) · load 181.0/192.3/211.8
+OK     E-4 webkit   unmeas  e4-inflow (CK-05: the sheet paints in flow (the P1-7 .glass-floating row); its cell must read UNMEASURED until its owner cures it) exit 0
+         planted UNMEASURED: UNMEASURED E-4 vsheet fling carries velocity · the surface paints in flow (.fx-sheet computes position: relative): UNMEASURED until its owner cures its position (REGISTRY §P1-7) · load 134.8/174.5/203.1
+OK     E-5 webkit   clean exit 0 · E-5 webkit PASS · 8 pass, 0 fail, 0 unmeasured of 8 gating cells (0 reported) · load 142.1/166.4/196.5 at start, 136.6/163.2/194.5 at end
+OK     E-5 webkit   fault   e5-hover (a held touch answers only through the hover background, leaked by sticky touch hover (the accordion trigger at HEAD)) exit 1
+         first planted FAIL: FAIL       E-5 pop press light · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] · load 219.1/184.2/195.9
+OK     E-5 webkit   fault   e5-decay (CK-06: the held press light decays back toward rest within 500 ms while the touch is still held) exit 1
+         first planted FAIL: FAIL       E-5 pop sustain light · the press light's distance from rest over [background-color]: +200 ms 0.075 → +1200 ms 0.000 (×0.00; bound ≥ ×0.95) · :active at +1200 ms true · load 165.7/176.2/192.1
+OK     E-5 webkit   fault   e9-dark (under reduced motion the press retires its scale and keeps no light answer (its press paints the hover value): E-9's press, E-1's exemplar under reduce and E-5's held touch under reduce all read it (H-9)) exit 1
+         first planted FAIL: FAIL       E-5 pop press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce) · load 146.4/167.9/187.6
+OK     E-6 webkit   clean exit 0 · E-6 webkit PASS · 12 pass, 0 fail, 0 unmeasured of 12 gating cells (2 reported) · load 150.0/165.6/185.6 at start, 144.6/164.0/184.8 at end

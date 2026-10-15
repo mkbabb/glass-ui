@@ -1,0 +1,20 @@
+{
+ "id": "E-11",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e11-silent"
+ },
+ "loadStart": "14.6/102.4/92.4",
+ "loadEnd": "14.0/100.8/91.9",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-11 slider fail-loud --fx-scale-engage (kbd)",
+   "status": "FAIL",
+   "line": "SILENT DEGRADATION · --fx-scale-engage: \"nonsense\" on the root · clean {\"s\":1.0599999321831597,\"veil\":1,\"n\":1} {\"s\":1.0599999321831597,\"veil\":1,\"n\":1} {\"s\":1.0599999321831597,\"veil\":1,\"n\":1} · planted {\"s\":1,\"veil\":1,\"n\":1} {\"s\":1,\"veil\":1,\"n\":1} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 0",
+   "load": "14.0/100.8/91.9"
+  }
+ ]
+}
