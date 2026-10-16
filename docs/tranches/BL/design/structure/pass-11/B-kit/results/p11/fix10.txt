@@ -1,0 +1,94 @@
+fix10 start 2026-10-16T09:17:46Z load { 15.89 21.09 22.93 }
+fix10 start 2026-10-16T09:17:46Z load { 15.89 21.09 22.93 }
+== F1 plants10b
+BASE {"B0":0,"B1":0,"B2":0,"B3":0,"B4":0,"B5":0,"B6":0,"B7":0,"B8":0,"B9":0,"B10":0,"B11":0,"B12":0,"B13":0,"B14":0,"B15":0,"B16":0,"B17":0,"B18":0}
+CAUGHT  PD-val-1 [S-03 (P9-R1 (a)), corrected: the reverse edge through the parent's door] src/components/aurora/index.ts → ./runtime (existing); new src/components/aurora/runtime/zq10k.ts → src/components/aurora/zq10b.ts (value) :: named=B4,B10 gained={"B4":1,"B10":1}
+        B4: value SCC at module grain [src/components/aurora src/components/aurora/runtime] (parent<->child) via src/components/aurora/runtime/zq10k.ts:1 -> src/components/aurora/zq10b.ts ; src/components/aurora/aurora-config.ts:51 -> src/components/au
+        B10: src/components/aurora/zq10b.ts -> src/components/aurora/runtime [move] readers: src/components/aurora/runtime
+CLEAN   PD-type-1 [S-03 (P9-R1 (a)), corrected: the reverse edge through the parent's door (type-only)] src/components/aurora/index.ts → ./runtime (existing); new src/components/aurora/runtime/zq10k.ts → src/components/aurora/zq10b.ts (import type) :: named=B10 gained={"B10":1}
+CAUGHT  PD-val-2 [S-03 (P9-R1 (a)), corrected: the reverse edge through the parent's door] src/components/dock/index.ts → ./search (existing); new src/components/dock/search/zq10k.ts → src/components/dock/zq10b.ts (value) :: named=B4,B6,B10 gained={"B4":1,"B6":1,"B10":1}
+        B4: value SCC at module grain [src/components/dock src/components/dock/search] (parent<->child) via src/components/dock/search/zq10k.ts:1 -> src/components/dock/zq10b.ts ; src/components/dock/index.ts:92 -> src/components/dock/search/index.ts
+        B6: src/components/dock/: 13 direct files > 12
+        B10: src/components/dock/zq10b.ts -> src/components/dock/search [move] readers: src/components/dock/search
+CLEAN   PD-type-2 [S-03 (P9-R1 (a)), corrected: the reverse edge through the parent's door (type-only)] src/components/dock/index.ts → ./search (existing); new src/components/dock/search/zq10k.ts → src/components/dock/zq10b.ts (import type) :: named=B6,B10 gained={"B6":1,"B10":1}
+CAUGHT  PD-val-3 [S-03 (P9-R1 (a)), corrected: the reverse edge through the parent's door] src/components/menu/index.ts → ./items (existing); new src/components/menu/items/zq10k.ts → src/components/menu/zq10b.ts (value) :: named=B4,B10 gained={"B4":1,"B10":1}
+        B4: value SCC at module grain [src/components/menu src/components/menu/items] (parent<->child) via src/components/menu/items/zq10k.ts:1 -> src/components/menu/zq10b.ts ; src/components/menu/index.ts:21 -> src/components/menu/items/index.ts
+        B10: src/components/menu/zq10b.ts -> src/components/menu/items [move] readers: src/components/menu/items
+CLEAN   PD-type-3 [S-03 (P9-R1 (a)), corrected: the reverse edge through the parent's door (type-only)] src/components/menu/index.ts → ./items (existing); new src/components/menu/items/zq10k.ts → src/components/menu/zq10b.ts (import type) :: named=B10 gained={"B10":1}
+RESTORED base judgement unchanged
+TALLY {"CAUGHT":3,"CLEAN":3}
+ROW PD-val-1 PASS verdict=CAUGHT B4=["value SCC at module grain [src/components/aurora src/components/aurora/runtime] (parent<->child) via src/components/aurora/runtime/zq10k.ts:1 -> src/components/aurora/zq10b.ts ; src/components/auror
+ROW PD-type-1 PASS verdict=CLEAN B4=[]
+ROW PD-val-2 PASS verdict=CAUGHT B4=["value SCC at module grain [src/components/dock src/components/dock/search] (parent<->child) via src/components/dock/search/zq10k.ts:1 -> src/components/dock/zq10b.ts ; src/components/dock/index.ts:9
+ROW PD-type-2 PASS verdict=CLEAN B4=[]
+ROW PD-val-3 PASS verdict=CAUGHT B4=["value SCC at module grain [src/components/menu src/components/menu/items] (parent<->child) via src/components/menu/items/zq10k.ts:1 -> src/components/menu/zq10b.ts ; src/components/menu/index.ts:21 
+ROW PD-type-3 PASS verdict=CLEAN B4=[]
+F1 ROWS pass 6 fail 0
+== F2 migration detectors, corrected
+F2 maxBuffer lines patched: 1
+F2 section 8..127; route: rc=1 node:fs:436
+F2 MG1 C2-G1 hits in the section: 0 (expect 0)
+F2 MG4 META hits in MIGRATION.md: route 0, HEAD 0, delta 0 (expect <= 0)
+F2 MGP-row-ref 'The structure cut lands as BL #10.' → C2-G1 hits in the section: 0
+F2 MGP-wave-id 'Carried by BL.W3.' → C2-G1 hits in the section: 0
+F2 MGP-wave-id2 'Carried by W-STRUCTURE-CUT.' → C2-G1 hits in the section: 0
+F2 MGP-dated '[2026-10-16 · structure cut]' → C2-G1 hits in the section: 0
+F2 MGP-bl-bare 'The structure cut (BL).' → C2-G1 hits in the section: 0
+F2 MGP-tranche-word 'This tranche moves files.' → C2-G1 hits in the section: 0
+F2 MG3 migration-shape: 1 headings · 0 misses
+F2 MG3 
+F2 MG3 rc=0
+F2 MGP-heading migration-shape: 1 headings · 1 misses
+F2 MGP-heading heading is not a bare version: "11.0.0 — the structure cut (BL)"
+== F3 BW6 recount
+F3 specs selected now and not by pass 9: 0; left: 0
+== F4 fd4-probe re-pointed
+21c21
+< const T = await import(S("lib/tree.mjs"));
+---
+> const T = await import(S("lib/tree/tree.mjs"));
+FD4 A PASS {"covered":true,"evidence":1,"refuted":0}
+FD4 G PASS {"threw":"FD-4: the browser report of /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p11/B-proto/wt2 names spec src/components/chip/__tests__/chip-accent-band.visual.ts, at src/
+FD4 G2 PASS {"threw":"FD-4: the browser report of /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p11/B-proto/wt2 names spec src/components/chip/__tests__/chip-accent-band.visual.ts, at src
+FD4 U PASS {"threw":"FD-4: the browser report of /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p11/B-proto/wt2 is unversioned; the coverage arm reads browser-seat/2 (specs keyed by their 
+FD4 RESTORE PASS src/components/chip/__tests__/chip-accent-band.visual.ts
+== F5 tally with the pass-10 touched-spec pair
+base keys 866, route keys 867; base runs 5, route runs 5
+base-green 428; held 428; NOT HELD 0 (failed 0, absent 0); flaky (out of the bar) 1; base-red route-green 1
+verdict: GREEN (428 base-green keys, every one accounted: 428 held + 0 failed + 0 absent)
+F5 kit rc=0
+reports: base 866 {"unexpected":393,"expected":429,"skipped":44} testDir .; route 867 {"unexpected":393,"expected":430,"skipped":44} testDir .; base reruns 4, route reruns 4
+base-green 428; held 428; failed 0; absent 0; flaky 1
+ACCOUNTED base-green 428 = held 428 + failed 0 + absent 0 : yes
+F5 tally10 rc=0
+== F6 wrong-kind masking
+F6 flipped: src/components/expandable-container/__tests__/expandable-container.visual.ts :: (a) inline renders real canvas + NO body-teleport @ mobile light
+F6 right base, failing route: rc=1 :: verdict: RED (429 base-green keys, every one accounted: 427 held + 2 failed + 0 absent)
+F6 the failing route report as --base: rc=2 :: browser-tally: no verdict: Error: browser-tally: --base /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p11/B-proto/scratch/fix10-run2/fx/route-fail.json is not a re-keyed base (rekeyedFrom undefined): a route run or rerun read as the base is no verdict
+F6 rekey fed the failing route report: rc=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-11/B-kit/tools/rekey.mjs:49:37
+node:fs:556
+  return binding.open(
+                 ^
+
+Error: ENOENT: no such file or directory, open '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p11/B-proto/scratch/fix10-run2/fx/rk-route.json'
+    at Object.openSync (node:fs:556:18)
+    at Object.readFileSync (node:fs:440:35)
+    at [eval]:1:34
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:483:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:481:60)
+    at evalFunction (node:internal/process/execution:315:30)
+    at evalTypeScript (node:internal/process/execution:327:3)
+    at node:internal/main/eval_string:71:3 {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p11/B-proto/scratch/fix10-run2/fx/rk-route.json'
+}
+
+Node.js v26.0.0
+F6 that output as --base, the failing route as --route: rc=2 :: browser-tally: no verdict: Error: ENOENT: no such file or directory, open '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p11/B-proto/scratch/fix10-run2/fx/rk-route.json'
+after fix10: digest 6fdd4ec7bd259630d38a466a444e45b2b18f71b4cbf2259d258a4c6177996bbf over 1587 files
+fix10 end 2026-10-16T09:18:22Z load { 14.58 20.18 22.52 }
+fix10 rc=0 end 2026-10-16T09:18:22Z load { 14.58 20.18 22.52 }

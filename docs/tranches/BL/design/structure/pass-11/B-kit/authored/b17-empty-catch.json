@@ -1,0 +1,8 @@
+{
+ "why": "S-14 (LAW §10, pass 5): B17 also reads `try { read } catch {}`, a handler that drops the error and runs on as if the read had found nothing. The four sites on the tree are cured at their cause: a present file is read and a malformed one fails; the browser seat's lock is created with its owner inside it, so no reader meets a half-written lock and the release reads nothing",
+ "files": {
+  "scripts/bundle-checks/drift.mjs": "a present D5 baseline is parsed and a malformed one fails the run; only an absent baseline reads as no baseline (every entry NEW), as the comment states",
+  "scripts/structure/lib/tree.mjs": "the repo-root search passes an ancestor with no package.json and reads one that has it; a malformed manifest fails instead of reading as 'not the library'",
+  "scripts/structure/browser.mjs": "the machine lock is renamed into place with its owner file already in it (atomic), so the owner read cannot meet a half-written lock and needs no swallowing handler; release removes the lock only when this process acquired it, with no read"
+ }
+}

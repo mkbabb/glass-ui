@@ -1,0 +1,207 @@
+{
+ "note": "AUTHORED input to split.mjs (B-S11, tests zone, D1 pass 5). Every file of the tests zone over R-5's 500 lines becomes a named module of files at or under 500: its test blocks split by title into parts, the declarations two parts read into one shared helper, the rest into the part that reads them. Blocks are named by title prefix, never by line, so the route's earlier edits to these files do not stale the spec. A module is a directory (tests/styles, tests/demo, tests/gates, tests/components and the dock dir are each over 12 files, and a split must not add to them); a file that already sits alone in its own directory splits in place.",
+ "why": "B-S11 (R-5, tests zone): 15 test files over 500 lines split into named modules; every block kept, none run twice; citations of the old paths follow",
+ "whyShipped": "B-S11 (R-5, tests zone): comments in shipped src files that cite a split test file by path now cite the module that holds the arm",
+ "records": ["docs/", "CHANGELOG.md", "MIGRATION.md"],
+ "splits": [
+  {
+   "source": "tests/styles/contrast-computed.test.ts",
+   "dir": "tests/styles/contrast",
+   "why": "one gate (G-CONTRAST-COMPUTED), one describe of nine sections: the colour engine and the token scopes are the module's shared reads; the sections split three ways under the gate's own title",
+   "within": "G-CONTRAST-COMPUTED",
+   "shared": "engine.ts",
+   "sharedWhy": "G-CONTRAST-COMPUTED's engine: the token scopes, the colour conversions and the contrast arithmetic its three parts share.",
+   "parts": [
+    { "file": "pairs.test.ts", "why": "G-CONTRAST-COMPUTED §1-§4: tone/ink plates, placeholder registers, control boundaries, status marks and --destructive's two jobs. The engine and the gate's account are in ./engine.ts.", "blocks": ["§1 ", "§2 ", "§3 ", "§3b ", "§4 "] },
+    { "file": "claims.test.ts", "why": "G-CONTRAST-COMPUTED §5: every contrast figure a token comment claims is true of the bytes. The engine and the gate's account are in ./engine.ts.", "blocks": ["§5 "] },
+    { "file": "grounds.test.ts", "why": "G-CONTRAST-COMPUTED §6-§8: the section ramp on its card, the engine's own checks, and the library's text inks on the grounds they paint over. The engine and the gate's account are in ./engine.ts.", "blocks": ["§6 ", "§7 ", "§8 "] }
+   ]
+  },
+  {
+   "source": "tests/styles/glass-subtlety.test.ts",
+   "dir": "tests/styles/glass-subtlety",
+   "why": "four describes, one per register: the two ladders together, the material and the grasp register each alone; the stylesheet readers are shared",
+   "shared": "sheets.ts",
+   "sharedWhy": "Glass subtlety's stylesheet readers: the style files, the declaration map and the light and dark token maps its three parts share.",
+   "parts": [
+    { "file": "ladders.test.ts", "why": "Glass subtlety: the ink ladder and the blur ladder. The stylesheet readers are in ./sheets.ts.", "blocks": ["glass ink ladder", "glass blur ladder"] },
+    { "file": "material.test.ts", "why": "Glass subtlety: the material's structural invariants. The stylesheet readers are in ./sheets.ts.", "blocks": ["glass material"] },
+    { "file": "grasp.test.ts", "why": "Glass subtlety: the grasp register, the material answering the hand. The stylesheet readers are in ./sheets.ts.", "blocks": ["grasp register"] }
+   ]
+  },
+  {
+   "source": "tests/public-surface.spec.ts",
+   "dir": "tests/public-surface",
+   "why": "three describes: the runtime surface reads the export tables, which are data and move to their own module; the package falsifiers and the built-artifact acceptance each stand alone",
+   "shared": "exports.ts",
+   "sharedWhy": "The public surface's export tables and the verifier probe: the tables are read by ./runtime.spec.ts, the probe by the falsifier and built-artifact arms. The two import assertions (a `@ts-expect-error` each) are held here.",
+   "share": ["uiRuntimeExports", "composableRuntimeExports", "rootRuntimeExports", "subpathRuntimeExports"],
+   "parts": [
+    { "file": "runtime.spec.ts", "why": "The public runtime surface: every entry's runtime exports equal the tables in ./exports.ts.", "blocks": ["public runtime surface"] },
+    { "file": "falsifiers.spec.ts", "why": "Row 8 package falsifiers: the verifier's roster and ratchet arms, each planted.", "blocks": ["Row 8 package falsifiers"] },
+    { "file": "built.spec.ts", "why": "Row 8 built-artifact acceptance: reads dist/ and fails loud when it is absent.", "blocks": ["Row 8 built-artifact acceptance"] }
+   ]
+  },
+  {
+   "source": "tests/components/custom/dock/g-dock-lattice.test.ts",
+   "dir": "tests/components/custom/dock/lattice",
+   "why": "seven G-DOCK gates: the run's budget and detents, the reach and the morph, the material with its proportion and state; the band-CSS readers are shared",
+   "shared": "bands.ts",
+   "sharedWhy": "The G-DOCK lattice's band readers: the dock's paths, its declaration reader and its band CSS, shared by its three parts.",
+   "parts": [
+    { "file": "run.test.ts", "why": "G-DOCK-BUDGET and G-DOCK-RUN: the run is the sole flexible member and the platform is its detent engine. The band readers are in ./bands.ts.", "blocks": ["G-DOCK-BUDGET", "G-DOCK-RUN"] },
+    { "file": "reach.test.ts", "why": "G-DOCK-REACH and G-DOCK-MORPH: the anchor is closed-form and a morph never starts against an unmeasured target. The band readers are in ./bands.ts.", "blocks": ["G-DOCK-REACH", "G-DOCK-MORPH"] },
+    { "file": "material.test.ts", "why": "G-DOCK-MATERIAL, G-DOCK-PROPORTION and G-DOCK-STATE: the focus ring composes, the run's gap is its own, and one selected seat is carried on two channels. The band readers are in ./bands.ts.", "blocks": ["G-DOCK-MATERIAL", "G-DOCK-PROPORTION", "G-DOCK-STATE"] }
+   ]
+  },
+  {
+   "source": "tests/components/easing.contract.test.ts",
+   "dir": "tests/components/easing",
+   "why": "the picker's product contract, the frame and geometry gates, and the ink, seam and speech gates; the source reads and mount helpers are shared, and the timer reset runs in each part",
+   "shared": "picker.ts",
+   "sharedWhy": "The easing picker's rig: its source reads, its mount and a curve value, shared by its three parts.",
+   "parts": [
+    { "file": "product.test.ts", "why": "EasingPicker's product contract. The mount helpers are in ./picker.ts.", "blocks": ["EasingPicker product contract"] },
+    { "file": "frame.test.ts", "why": "G-E1, G-E3, G-E5 and G-E6: the frame is a constant, one column and one plot, a pixel hit target, an addressable display unit. The mount helpers are in ./picker.ts.", "blocks": ["G-E1 ", "G-E3 ", "G-E5 ", "G-E6 "] },
+    { "file": "ink.test.ts", "why": "G-E9, G-E10 and G-E11: whole-pixel ink and a focus indicator on every focusable, one published seam, one transport vocabulary. The mount helpers are in ./picker.ts.", "blocks": ["G-E9 ", "G-E10 ", "G-E11 "] }
+   ]
+  },
+  {
+   "source": "tests/demo/story-preview-card.test.ts",
+   "dir": "tests/demo/story-card",
+   "why": "thirteen describes over the story cards: the tile detectors and coverage, the one-name and proportion arms, and the lead card, TOC and frozen still; the demo source reads are shared",
+   "shared": "sources.ts",
+   "sharedWhy": "The story cards' source reads: the demo SFCs and modules its three parts inspect.",
+   "parts": [
+    { "file": "tiles.test.ts", "why": "Story tiles: the four detectors, declared coverage, no duplicate title, one ladder and the above-fold exemption. The demo source reads are in ./sources.ts.", "blocks": ["BK #58", "G-TILE-COVERAGE", "G-NO-DUP-TITLE", "ONE LADDER", "the above-fold exemption"] },
+    { "file": "names.test.ts", "why": "Story names and proportion: one hero-title definition, a page prints its name once, zero bespoke pages, and the catalog's D0 surface. The demo source reads are in ./sources.ts.", "blocks": ["W-STORY-PROPORTION", "G-ONE-NAME", "W-STORY-TAXONOMY"] },
+    { "file": "still.test.ts", "why": "The lead card, the TOC menu's clean break, and the frozen still's dark arm. The demo source reads are in ./sources.ts.", "blocks": ["the lead card", "TOC-MENU-GLASS", "D6 "] }
+   ]
+  },
+  {
+   "source": "tests/components/sortable-list/battery.test.ts",
+   "dir": "tests/components/sortable-list",
+   "why": "eleven G gates over one list rig: the lift, part and settle; the receive and no-line pair; and the standing, guard, registration, aria, surface and keyboard arms. The rig is shared; the directory already holds only this file",
+   "shared": "rig.ts",
+   "sharedWhy": "The sortable-list rig: list and pair mounts, the row geometry and the ghost query its three parts share.",
+   "parts": [
+    { "file": "lift.test.ts", "why": "Sortable-list G-1, G-2 and G-3: the ghost paints alone, the gap opens by one row, the drop lands. The list rig is in ./rig.ts.", "blocks": ["G-1 ", "G-2 ", "G-3 "] },
+    { "file": "receive.test.ts", "why": "Sortable-list G-4 and G-5: a receiving list is a visible target, and nothing is drawn (G-5 is valid only with G-2, in ./lift.test.ts). The list rig is in ./rig.ts.", "blocks": ["G-4 ", "G-5 "] },
+    { "file": "guard.test.ts", "why": "Sortable-list G-7, G-9, G-10, G-11, G-12 and G-13: the row at rest, the gesture guard, fresh registration, the consumer's label, the surface names and the keyboard lift. The list rig is in ./rig.ts.", "blocks": ["G-7 ", "G-9 ", "G-10 ", "G-11 ", "G-12 ", "G-13 "] }
+   ]
+  },
+  {
+   "source": "tests/gates/boot-graph.test.ts",
+   "dir": "tests/gates/boot-graph",
+   "why": "the scanners serve the source arm and its self-test, which share one part; the budgets and the eager-graph measure are the module's shared reads, used by the source and build arms",
+   "shared": "scan.ts",
+   "sharedWhy": "gate:boot-graph's shared reads: the repo root, the two budgets and the eager-graph measure its source and build arms both use.",
+   "parts": [
+    { "file": "source.test.ts", "why": "gate:boot-graph, the source arm and the scanners' self-test, with the scanners they share. The budgets, the eager-graph measure and the gate's account are in ./scan.ts.", "blocks": ["gate:boot-graph — source arm", "gate:boot-graph — self-test"] },
+    { "file": "build.test.ts", "why": "gate:boot-graph, the build arm: the demo's eager graph measured off dist-demo, failing loud when it is absent. The budgets, the eager-graph measure and the gate's account are in ./scan.ts.", "blocks": ["gate:boot-graph — build arm"] }
+   ]
+  },
+  {
+   "source": "tests/composables/dark/darkModeSyncScript.test.ts",
+   "dir": "tests/composables/dark",
+   "why": "the sync script's own describe and the G-NO-FLASH parse-time stamp; the host rig is shared; the directory already holds only this file",
+   "shared": "host.ts",
+   "sharedWhy": "The dark-mode sync script's host rig: a stubbed document and storage, and the script run against it.",
+   "parts": [
+    { "file": "sync-script.test.ts", "why": "darkModeSyncScript: the inline script's contract on a host. The host rig is in ./host.ts.", "blocks": ["darkModeSyncScript"] },
+    { "file": "no-flash.test.ts", "why": "G-NO-FLASH: the parse-time stamp's precedence, determinism and write-back, and the stamp plugin in both vite configs. The host rig is in ./host.ts.", "blocks": ["G-NO-FLASH"] }
+   ]
+  },
+  {
+   "source": "tests/styles/dissolve.test.ts",
+   "dir": "tests/styles/dissolve",
+   "why": "the vaporize's three describes, and the corner affordance, backdrop census and dialect table; the parsed sheets and rule readers are shared",
+   "shared": "rules.ts",
+   "sharedWhy": "The dissolve's parsed sheets and rule readers: the dissolve and animation sheets, their rules and keyframes, shared by its two parts.",
+   "parts": [
+    { "file": "vaporize.test.ts", "why": "The vaporize: three channels on three clocks, TR#30's four amendments, and its composition with the reveal. The parsed sheets are in ./rules.ts.", "blocks": ["the vaporize"] },
+    { "file": "exits.test.ts", "why": "The corner affordance, the census of who releases a backdrop, and the dialect table of exits. The parsed sheets are in ./rules.ts.", "blocks": ["the corner affordance", "the census", "the dialect table"] }
+   ]
+  },
+  {
+   "source": "tests/styles/radius-role-canon.test.ts",
+   "dir": "tests/styles/radius-role",
+   "why": "G-RADIUS-ROLE's first five sections (vocabulary, clean break, W1 bindings, canon truth, residue) and its last four (role spine, role bindings, O-7, U-29); the token readers are shared",
+   "shared": "tokens.ts",
+   "sharedWhy": "G-RADIUS-ROLE's token readers: the radius sheet, its declaration and rule reads, and the role inventory both parts check.",
+   "parts": [
+    { "file": "canon.test.ts", "why": "G-RADIUS-ROLE 1-5: every rung classified, the dead names gone, the W1 bindings, the inventory against DESIGN.md, the residue flip. The token readers and the gate's account are in ./tokens.ts.", "blocks": ["G-RADIUS-ROLE 1.", "2. ", "3. ", "4. ", "5. "] },
+    { "file": "roles.test.ts", "why": "G-RADIUS-ROLE 6-9: the role spine, this wave's role bindings, O-7's silent no-op, and U-29's squircle fork. The token readers are in ./tokens.ts.", "blocks": ["6. ", "7. ", "8. ", "9. "] }
+   ]
+  },
+  {
+   "source": "tests/styles/route-motion.test.ts",
+   "dir": "tests/styles/route-motion",
+   "why": "G-NO-FLASH's alpha conservation, and the route grammar's three describes; the parsed view-transition sheet and the alpha-stop reader are shared",
+   "shared": "grammar.ts",
+   "sharedWhy": "The route grammar's parsed view-transition sheet, its keyframes and rules, and the alpha-stop reader its two parts share.",
+   "parts": [
+    { "file": "alpha.test.ts", "why": "G-NO-FLASH: the route grammar conserves alpha. The parsed sheet and the alpha-stop reader are in ./grammar.ts.", "blocks": ["G-NO-FLASH"] },
+    { "file": "registers.test.ts", "why": "The route grammar: the CSS registers mirror the table, the world outlives the foreground, and non-dock with one window at a time. The parsed sheet and the alpha-stop reader are in ./grammar.ts.", "blocks": ["the route grammar"] }
+   ]
+  },
+  {
+   "source": "tests/gates/overfit-structure.test.ts",
+   "dir": "tests/gates/overfit",
+   "why": "G-OVERFIT's four arms: export reach alone, and the three seam arms together; the source census is shared",
+   "shared": "census.ts",
+   "sharedWhy": "gate:G-OVERFIT's source census: the walked source and census files, their texts and the export-name reader its arms share.",
+   "parts": [
+    { "file": "export-reach.test.ts", "why": "gate:G-OVERFIT, the EXPORT-REACH arm. The source census and the gate's account are in ./census.ts.", "blocks": ["gate:G-OVERFIT — EXPORT-REACH"] },
+    { "file": "seams.test.ts", "why": "gate:G-OVERFIT, the NO-SHIM, ONE-SELECTION and OVERLAY-SEAM arms. The source census and the gate's account are in ./census.ts.", "blocks": ["gate:G-OVERFIT — NO-SHIM", "gate:G-OVERFIT — ONE-SELECTION", "gate:G-OVERFIT — OVERLAY-SEAM"] }
+   ]
+  },
+  {
+   "source": "tests/components/fourier-field/FourierField.smoke.test.ts",
+   "dir": "tests/components/fourier-field",
+   "why": "six describes: the renderer law, the mint, the rings and the clock; and the surface with the /fourier-math leaf. The one declaration both read is the demo root, a line each part carries. The directory holds two files",
+   "parts": [
+    { "file": "field.smoke.test.ts", "why": "fourier-field: one renderer and no ceiling, the mint's axis maxima, the rings, and the clock.", "blocks": ["fourier-field — ONE LAW", "fourier-field — THE MINT", "fourier-field — THE RINGS", "fourier-field — THE CLOCK"] },
+    { "file": "surface.smoke.test.ts", "why": "fourier-field: the surface, and the /fourier-math leaf a consumer reads. The suite's account heads ./field.smoke.test.ts.", "blocks": ["fourier-field — THE SURFACE", "/fourier-math leaf"] }
+   ],
+   "copy": ["DEMO"]
+  },
+  {
+   "source": "tests/gates/orphan-css-partial.test.ts",
+   "dir": "tests/gates/orphan-css",
+   "why": "one describe over two computed tables: the reachability walk and the layer scan move to the module's helper; the describe stays whole (505 lines on the route's tree, 492 at HEAD). The two root constants are a line each in both files, so the floor's graph reads the test's planted path expressions against its own roots as before, and the ledger entries for them follow unchanged",
+   "shareAll": true,
+   "shared": "partials.ts",
+   "sharedWhy": "gate:orphan-CSS-partial's two tables: the reachability walk from every public root, and the layer scan of every partial.",
+   "parts": [
+    { "file": "partial.test.ts", "why": "gate:orphan-CSS-partial: every src/ partial is reachable from a public root and every rule sits in a layer. The reachability walk, the layer scan and the gate's account are in ./partials.ts.", "blocks": ["gate:orphan-CSS-partial"] }
+   ],
+   "copy": ["REPO_ROOT", "SRC"]
+  }
+ ],
+ "citations": [
+  { "for": "tests/components/easing.contract.test.ts", "from": "`tests/components/easing.contract.test.ts`", "to": "`tests/components/easing/`", "at": ["tests-visual/easing-primitive.spec.ts"] },
+  { "for": "tests/components/easing.contract.test.ts", "from": "(`easing.contract.test.ts:695`/`:727`)", "to": "(G-E9 in `tests/components/easing/ink.test.ts`)", "at": ["tests/styles/emitted-utility-vars.test.ts"] },
+  { "for": "tests/components/custom/dock/g-dock-lattice.test.ts", "from": "(`g-dock-lattice.test.ts` MATERIAL docblock)", "to": "(`tests/components/custom/dock/lattice/material.test.ts` MATERIAL docblock)", "at": ["src/components/dock/styles/controls/icon-button.css"] },
+  { "for": "tests/composables/dark/darkModeSyncScript.test.ts", "from": "`tests/composables/dark/darkModeSyncScript.test.ts`\n", "to": "`tests/composables/dark/no-flash.test.ts`\n", "at": ["vite.dark-stamp.ts"] },
+  { "for": "tests/composables/dark/darkModeSyncScript.test.ts", "from": "`tests/composables/dark/darkModeSyncScript.test.ts`'s", "to": "`tests/composables/dark/no-flash.test.ts`'s", "at": ["tests/public-surface.spec.ts"] },
+  { "for": "tests/gates/boot-graph.test.ts", "from": "(`tests/gates/boot-graph.test.ts`,", "to": "(`tests/gates/boot-graph/build.test.ts`,", "at": ["tests/public-surface.spec.ts"] },
+  { "for": "tests/styles/contrast-computed.test.ts", "from": "`tests/styles/contrast-computed.test.ts`, which", "to": "`tests/styles/contrast/claims.test.ts`, which", "at": ["src/styles/tokens/color-radius.css"] },
+  { "for": "tests/styles/glass-subtlety.test.ts", "from": "The arm in tests/styles/glass-subtlety.test.ts DISCOVERS", "to": "The arm in tests/styles/glass-subtlety/grasp.test.ts DISCOVERS", "at": ["src/styles/glass/grasp.css"] },
+  { "for": "tests/styles/glass-subtlety.test.ts", "from": "every Vue source file (tests/styles/glass-subtlety.test.ts)", "to": "every Vue source file (tests/styles/glass-subtlety/material.test.ts)", "at": ["src/styles/glass/material.css"] },
+  { "for": "tests/styles/glass-subtlety.test.ts", "from": "the discovery arm in\n       tests/styles/glass-subtlety.test.ts reds", "to": "the discovery arm in\n       tests/styles/glass-subtlety/grasp.test.ts reds", "at": ["src/styles/glass/material.css"] },
+  { "for": "tests/styles/glass-subtlety.test.ts", "from": "`glass-subtlety.test.ts` REDs", "to": "`glass-subtlety/ladders.test.ts` REDs", "at": ["src/styles/tokens/light-dark.css"] },
+  { "for": "tests/styles/radius-role-canon.test.ts", "from": "`tests/styles/radius-role-canon.test.ts` (every", "to": "`tests/styles/radius-role/canon.test.ts` (every", "at": ["DESIGN.md"] },
+  { "for": "tests/styles/radius-role-canon.test.ts", "from": "`radius-role-canon.test.ts` case", "to": "`tests/styles/radius-role/` case", "at": ["src/styles/theme/radius.css"] },
+  { "for": ["tests/gates/orphan-css-partial.test.ts", "tests/styles/radius-role-canon.test.ts"], "from": "`orphan-css-partial.test.ts:68`, `radius-role-canon.test.ts:29`", "to": "`tests/gates/orphan-css/partials.ts`, `tests/styles/radius-role/tokens.ts`", "at": ["tests/gates/tabs-seam.test.ts"] },
+  { "for": "tests/styles/radius-role-canon.test.ts", "from": "(radius-role-canon.test.ts:6 documents", "to": "(the header of tests/styles/radius-role/tokens.ts documents", "at": ["tests/styles/proportion-register.test.ts"] },
+  { "for": "tests/styles/route-motion.test.ts", "from": "// `tests/styles/route-motion.test.ts` censuses", "to": "// `tests/styles/route-motion/` censuses", "at": ["src/composables/motion/route/routeGrammar.ts"] },
+  { "for": "tests/styles/route-motion.test.ts", "from": " * census: `route-motion.test.ts` reads", "to": " * census: `tests/styles/route-motion/` reads", "at": ["src/composables/motion/route/routeGrammar.ts"] },
+  { "for": "tests/styles/route-motion.test.ts", "from": "register — `tests/styles/route-motion.test.ts` derives", "to": "register — `tests/styles/route-motion/` derives", "at": ["src/styles/tokens/motion-registers.css"] },
+  { "for": "tests/styles/route-motion.test.ts", "from": "`route-motion.test.ts` censuses", "to": "`tests/styles/route-motion/` censuses", "at": ["src/styles/tokens/motion-registers.css"] },
+  { "for": "tests/styles/route-motion.test.ts", "from": "`route-motion.test.ts` binds", "to": "`tests/styles/route-motion/` binds", "at": ["src/styles/view-transition.css"] },
+  { "for": "tests/styles/route-motion.test.ts", "from": "`route-motion.test.ts` holds", "to": "`tests/styles/route-motion/alpha.test.ts` holds", "at": ["tests/composables/dark/darkModeSyncScript.test.ts"] },
+  { "for": "tests/styles/route-motion.test.ts", "from": "The CSS half lives at `tests/styles/route-motion.test.ts`", "to": "The CSS half lives at `tests/styles/route-motion/`", "at": ["tests/composables/useRouteTransition.test.ts"] },
+  { "for": "tests/styles/dissolve.test.ts", "from": "`tests/styles/dissolve.test.ts` reds", "to": "`tests/styles/dissolve/vaporize.test.ts` reds", "at": ["src/styles/animations.css"] }
+ ]
+}

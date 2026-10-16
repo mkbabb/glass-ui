@@ -1,0 +1,10 @@
+the old floor (HEAD's docs floor, uncured) cut by the same script, for the comparison:
+tree digest d00b7a21c011506ff8f0cedbe46646d5c7798d95cd25b967ec8839359c9a34c6
+old cut code digest 5b14c6c7ce4e36f092263a90a269d842a0bccf9a131012fe03889d0bf705402f over 1354 files
+diff -rq old-cut new-cut (docs, node_modules, .git out):
+Files /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p11/B-proto/old/scripts/structure/lib/move.mjs and /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p11/B-proto/base/scripts/structure/lib/move.mjs differ
+diff rc=1
+168c168
+<             const lead = e.via === "root-absolute" ? "/" : (bare.match(/^(\.\.\/)*/)?.[0] ?? "");
+---
+>             const lead = e.via === "root-absolute" ? "/" : (bare.match(/^(?:\.\/|(?:\.\.\/)*)/)?.[0] ?? "");

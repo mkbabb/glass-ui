@@ -1,0 +1,35 @@
+{
+ "step": "P4-R2: the exact runtime surfaces the public-surface spec states carry the names S64 published on the root (pendingRenderer) and on ./dock (useDockState, GLASS_BACKDROP_SHARED_ATTR, useGlassBackdropLuminance)",
+ "files": {
+  "tests/public-surface/exports.ts": {
+   "hunks": [
+    [
+     "    \"createTokenColorCache\",\n    \"provideConfiguratorSize\",\n",
+     "    \"createTokenColorCache\",\n    \"pendingRenderer\",\n    \"provideConfiguratorSize\",\n"
+    ]
+   ]
+  },
+  "tests/public-surface/runtime.spec.ts": {
+   "hunks": [
+    [
+     "            // The dock-as-native-dynamic-search-bar seam.\n",
+     "            // The dock-as-native-dynamic-search-bar seam, and the state machine it composes.\n"
+    ],
+    [
+     "            \"useDockSearch\",\n            \"provideDockContext\",\n",
+     "            \"useDockSearch\",\n            \"useDockState\",\n            // The adaptive-legibility sampler and the attribute a shared backdrop carries.\n            \"GLASS_BACKDROP_SHARED_ATTR\",\n            \"useGlassBackdropLuminance\",\n            \"provideDockContext\",\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "tests/public-surface/exports.ts",
+   "why": "the root publishes pendingRenderer (S64)"
+  },
+  {
+   "file": "tests/public-surface/runtime.spec.ts",
+   "why": "./dock publishes the state machine useDockSearch composes and the backdrop-luminance pair (S64)"
+  }
+ ]
+}

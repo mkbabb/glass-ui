@@ -165,7 +165,7 @@ export function computeEdits(graph, M, deps) {
         }
         if (e.mode === "path" && (e.via === "root-relative" || e.via === "root-absolute" || e.via === "write")) {
             if (e.via === "write" && !toMoved) continue; // an output path relative to the root does not move with its writer
-            const lead = e.via === "root-absolute" ? "/" : (bare.match(/^(\.\.\/)*/)?.[0] ?? "");
+            const lead = e.via === "root-absolute" ? "/" : (bare.match(/^(?:\.\/|(?:\.\.\/)*)/)?.[0] ?? "");
             replaceOne(`${lead}${toNew}${bare.endsWith("/") ? "/" : ""}${query}`);
             continue;
         }

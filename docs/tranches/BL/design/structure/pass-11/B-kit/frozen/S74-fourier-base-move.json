@@ -1,0 +1,31 @@
+{
+ "step": "B-S74 (frozen from authored/p10-fourier-base-move.json, F-9)",
+ "moves": [
+  {
+   "from": "src/components/fourier-field/math.ts",
+   "to": "src/components/fourier-field/register/math.ts"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "`${COMPONENTS}/${name}`",
+   "file": "src/components/fourier-field/math.ts",
+   "reason": "S74: src/components/fourier-field/math.ts -> src/components/fourier-field/register/math.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/typed-track-seam.test.ts",
+   "spec": "`src/${rel}`",
+   "file": "src/components/fourier-field/math.ts",
+   "reason": "S74: src/components/fourier-field/math.ts -> src/components/fourier-field/register/math.ts; the scanner's sensitivity is judged by the test run"
+  }
+ ],
+ "globDeltas": [],
+ "reasons": [
+  {
+   "from": "src/components/fourier-field/math.ts",
+   "to": "src/components/fourier-field/register/math.ts",
+   "why": "the base of fourier-field: the pure Fourier maths, read by the parent (the unit door), by renderer/mint.ts and by register/constants.ts (a type); the ./fourier-math entry source"
+  }
+ ]
+}

@@ -1,0 +1,6 @@
+{
+ "why": "B12: minify-css becomes TypeScript so it declares its own types; the .d.mts mirror then leaves (S11)",
+ "moves": [
+  { "from": "scripts/lib/minify-css.mjs", "to": "scripts/lib/minify-css.ts", "why": "its one typed reader (vite.style-fold.ts, main program) and its test read it; no node bin runs it, so it can be TypeScript and carry its own types" }
+ ]
+}

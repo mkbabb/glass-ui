@@ -1,0 +1,10 @@
+{
+ "why": "P9-R1 (a), LAW §4's base rule, in the scripts zone: B4's module arm reads a second parent<->child value SCC on the chain's tree, scripts/structure/lib <-> scripts/structure/lib/graph. The child graph/ value-reads four parent-level files (graph/graph.mjs: tree.mjs, placement.mjs, entries.mjs, resolve.mjs) while the parent reads graph/ through its door (classify.mjs, move.mjs, index.mjs). Those four and their value-read closure (symbols.mjs, read by placement.mjs) are the tree model the graph is built on: the file set and zones, the entry record, how a reference resolves, units and placement, symbol origins. They move to one sibling module, lib/tree/, the base of lib; none of them reads graph/, move.mjs, classify.mjs, plan.mjs, recipes.mjs or syntax.mjs, so the closure is these five",
+ "moves": [
+  { "from": "scripts/structure/lib/tree.mjs", "to": "scripts/structure/lib/tree/tree.mjs", "why": "the file set, the zones and the floor's own home; read by graph/graph.mjs, placement.mjs, entries.mjs and the lib door" },
+  { "from": "scripts/structure/lib/entries.mjs", "to": "scripts/structure/lib/tree/entries.mjs", "why": "the entry record; read by graph/graph.mjs, resolve.mjs and the lib door" },
+  { "from": "scripts/structure/lib/resolve.mjs", "to": "scripts/structure/lib/tree/resolve.mjs", "why": "module resolution; read by graph/graph.mjs, move.mjs and the lib door" },
+  { "from": "scripts/structure/lib/placement.mjs", "to": "scripts/structure/lib/tree/placement.mjs", "why": "units and placement; read by graph/graph.mjs and the lib door" },
+  { "from": "scripts/structure/lib/symbols.mjs", "to": "scripts/structure/lib/tree/symbols.mjs", "why": "symbol origins; the value-read closure of placement.mjs" }
+ ]
+}

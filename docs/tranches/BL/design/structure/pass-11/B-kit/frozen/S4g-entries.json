@@ -1,0 +1,13 @@
+{
+ "step": "F-3 (P5-F2, P4-R4 arm (a)): the ./styles/theme entry source moved to styles/theme/index.css at S4a, so its export key targets the real dist path ./dist/styles/theme/index.css; no forwarding file, and a consumer importing dist/styles/theme.css by path gets a MIGRATION row",
+ "files": {
+  "package.json": {
+   "hunks": [
+    [
+     "        \"./styles/theme\": \"./dist/styles/theme.css\",\n",
+     "        \"./styles/theme\": \"./dist/styles/theme/index.css\",\n"
+    ]
+   ]
+  }
+ }
+}

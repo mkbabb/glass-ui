@@ -1,0 +1,2510 @@
+{
+ "step": "B-S12 (R-3, LAW §9, B0): every directory walk and computed-path read in tests/, tests-visual/ and scripts/ goes onto F-1's file set. Two readers, one rule each: tests/harness/source.ts reads source (F-1's file set; a path the set does not hold fails the read), and tests/harness/artifacts.ts reads everything that is not source (a build output, a run's output, a path outside the repository) and refuses a code file in a zone, so a non-source read can never hide a reference into the tree. A script that reads source reads the floor door's openTree (the same file set). F-1 itself is corrected where it counted a write as a read. Dead readers are deleted, not converted",
+ "files": {
+  "scripts/bundle-checks/budgets.mjs": {
+   "hunks": [
+    [
+     "// `dist/styles/index.css` draw the CSS ceiling measures.\nimport { readFileSync } from \"node:fs\";\nimport { gzipSync } from \"node:zlib\";\n",
+     "// `dist/styles/index.css` draw the CSS ceiling measures.\nimport { gzipSync } from \"node:zlib\";\n"
+    ],
+    [
+     "import { dirname, resolve } from \"node:path\";\n\n",
+     "import { dirname, resolve } from \"node:path\";\nimport { artifactText } from \"../../tests/harness/artifacts.ts\";\n\n"
+    ],
+    [
+     "        return readFileSync(file, \"utf-8\").replace(/@import\\s+[\"']([^\"']+\\.css)[\"'];?/g, (_m, ref) => `\\n${inline(resolve(dirname(file), ref))}\\n`);\n",
+     "        return artifactText(file).replace(/@import\\s+[\"']([^\"']+\\.css)[\"'];?/g, (_m, ref) => `\\n${inline(resolve(dirname(file), ref))}\\n`);\n"
+    ]
+   ]
+  },
+  "scripts/bundle-checks/critical-path.mjs": {
+   "hunks": [
+    [
+     "// critical-path.mjs — the built root barrel's eager payload and Aurora's medium tail.\nimport { existsSync, readFileSync } from \"node:fs\";\nimport { resolve } from \"node:path\";\n",
+     "// critical-path.mjs — the built root barrel's eager payload and Aurora's medium tail.\nimport { resolve } from \"node:path\";\n"
+    ],
+    [
+     "import { walk } from \"./files.mjs\";\n",
+     "import { artifactExists, artifactFiles, artifactText } from \"../../tests/harness/artifacts.ts\";\n"
+    ],
+    [
+     "    if (existsSync(distGlassUi)) {\n",
+     "    if (artifactExists(distGlassUi)) {\n"
+    ],
+    [
+     "            readFileSync(distGlassUi, \"utf8\").match(CRIT_DIST_FLOOR_RE) ?? []\n",
+     "            artifactText(distGlassUi).match(CRIT_DIST_FLOOR_RE) ?? []\n"
+    ],
+    [
+     "    if (existsSync(distAurora)) {\n        const src = readFileSync(distAurora, \"utf8\");\n",
+     "    if (artifactExists(distAurora)) {\n        const src = artifactText(distAurora);\n"
+    ],
+    [
+     "        const lazyChunk = walk(distRootDir).some((f) =>\n",
+     "        const lazyChunk = artifactFiles({ under: distRootDir }).some((f) =>\n"
+    ]
+   ]
+  },
+  "scripts/bundle-checks/drift.mjs": {
+   "hunks": [
+    [
+     "import { existsSync, readFileSync } from \"node:fs\";\n",
+     "import { artifactExists, artifactText } from \"../../tests/harness/artifacts.ts\";\n"
+    ],
+    [
+     "    if (existsSync(baselinePath)) {\n        const baseline = JSON.parse(readFileSync(baselinePath, \"utf8\"));\n",
+     "    if (artifactExists(baselinePath)) {\n        const baseline = JSON.parse(artifactText(baselinePath));\n"
+    ]
+   ]
+  },
+  "scripts/bundle-checks/files.mjs": {
+   "hunks": [
+    [
+     "// files.mjs — the recursive file walk and a dist chunk's name relative to `dist/`.\nimport { readdirSync } from \"node:fs\";\nimport { join } from \"node:path\";\n\nexport function walk(dir) {\n    return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {\n        const full = join(dir, entry.name);\n        if (entry.isDirectory()) return walk(full);\n        if (entry.isFile()) return [full];\n        return [];\n    });\n}\n",
+     "// files.mjs — a dist chunk's name relative to `dist/`.\n"
+    ]
+   ]
+  },
+  "scripts/bundle-checks/index.mjs": {
+   "hunks": [
+    [
+     "export { distName, walk } from \"./files.mjs\";\n",
+     "export { distName } from \"./files.mjs\";\n"
+    ]
+   ]
+  },
+  "scripts/bundle-checks/value-capabilities.mjs": {
+   "hunks": [
+    [
+     "import { readFileSync } from \"node:fs\";\nimport { resolve } from \"node:path\";\nimport { walk } from \"./files.mjs\";\n",
+     "import { openTree } from \"../structure/index.mjs\";\n"
+    ],
+    [
+     "    const sourceRoot = resolve(root, \"src\");\n    const sourceFiles = walk(sourceRoot).filter((file) =>\n        /\\.(?:[cm]?[jt]sx?|vue)$/.test(file),\n",
+     "    // the library source is the tree's file set under src/ (F-1, R-3), never a directory walk\n    const tree = openTree(root);\n    const sourceFiles = tree.files.filter((file) =>\n        file.startsWith(\"src/\") && /\\.(?:[cm]?[jt]sx?|vue)$/.test(file),\n"
+    ],
+    [
+     "        const source = readFileSync(file, \"utf8\");\n",
+     "        const source = tree.read(file);\n"
+    ],
+    [
+     "                    file: file.slice(root.length + 1),\n",
+     "                    file,\n"
+    ]
+   ]
+  },
+  "scripts/comments/census.mjs": {
+   "hunks": [
+    [
+     "// seam the gate's fixtures drive), and the roll-up by directory prefix.\nimport { existsSync, readFileSync } from \"node:fs\";\nimport { extname } from \"node:path\";\n",
+     "// seam the gate's fixtures drive), and the roll-up by directory prefix.\nimport { extname } from \"node:path\";\n"
+    ],
+    [
+     "import { extname } from \"node:path\";\nimport { tracked, readAtRev } from \"./corpus.mjs\";\n",
+     "import { extname } from \"node:path\";\nimport { openTree } from \"../structure/index.mjs\";\nimport { tracked, readAtRev } from \"./corpus.mjs\";\n"
+    ],
+    [
+     "    const blobs = rev ? readAtRev(rev, files) : null;\n    const perFile = [];\n",
+     "    const blobs = rev ? readAtRev(rev, files) : null;\n    // the working tree is read through its file set (F-1, R-3): a tracked path absent from\n    // the working tree is not in it\n    const tree = rev ? null : openTree();\n    const perFile = [];\n"
+    ],
+    [
+     "        if (blobs ? !blobs.has(file) : !existsSync(file)) {\n",
+     "        if (blobs ? !blobs.has(file) : !tree.isFile(file)) {\n"
+    ],
+    [
+     "        const text = blobs ? blobs.get(file) : readFileSync(file, \"utf8\");\n",
+     "        const text = blobs ? blobs.get(file) : tree.read(file);\n"
+    ]
+   ]
+  },
+  "scripts/flatten-subpath-types.mjs": {
+   "hunks": [
+    [
+     "import {\n    readdirSync,\n    readFileSync,\n    rmSync,\n    statSync,\n    writeFileSync,\n} from \"node:fs\";\n",
+     "import { rmSync, writeFileSync } from \"node:fs\";\n"
+    ],
+    [
+     "import { recordEntries } from \"../scripts/structure/index.mjs\";\n\n",
+     "import { recordEntries } from \"../scripts/structure/index.mjs\";\nimport { artifactExists, artifactFiles, artifactText } from \"../tests/harness/artifacts.ts\";\n\n"
+    ],
+    [
+     "    return candidates.find((candidate) => candidate.startsWith(`${outputRoot}/`) && statExists(candidate)) ?? false;\n",
+     "    return candidates.find((candidate) => candidate.startsWith(`${outputRoot}/`) && artifactExists(candidate)) ?? false;\n"
+    ],
+    [
+     "function statExists(path) {\n    try {\n        return statSync(path).isFile();\n    } catch {\n        return false;\n    }\n}\n\nfunction pathExists(path) {\n    try {\n        statSync(path);\n        return true;\n    } catch {\n        return false;\n    }\n}\n\n",
+     "/** The declaration output's files (a build artifact; a missing output root fails the read). */\n"
+    ],
+    [
+     "    const files = [];\n    const visit = (directory) => {\n        for (const name of readdirSync(directory)) {\n            const path = resolve(directory, name);\n            if (statSync(path).isDirectory()) visit(path);\n            else if (declarationFilePattern.test(name)) files.push(path);\n        }\n    };\n    if (pathExists(outputRoot)) visit(outputRoot);\n    return files.sort();\n",
+     "    return artifactFiles({ under: outputRoot, suffix: declarationFilePattern });\n"
+    ],
+    [
+     "        const source = readFileSync(file, \"utf8\");\n",
+     "        const source = artifactText(file);\n"
+    ]
+   ]
+  },
+  "scripts/gen-component-styles.mjs": {
+   "hunks": [
+    [
+     "import { existsSync, readFileSync, writeFileSync } from \"node:fs\";\n",
+     "import { readFileSync, writeFileSync } from \"node:fs\";\n"
+    ],
+    [
+     "import { fileURLToPath } from \"node:url\";\n\n",
+     "import { fileURLToPath } from \"node:url\";\nimport { openTree } from \"./structure/index.mjs\";\nimport { artifactExists, artifactText } from \"../tests/harness/artifacts.ts\";\n\n"
+    ],
+    [
+     "\n/* The shared component-structure registers a consumer loses if it imports the raw\n",
+     "\n/* A closure member's text: a source sheet from the tree's file set (F-1, R-3), an emitted\n   one as a build artifact. */\nlet tree = null;\nfunction sheetText(path) {\n    tree ??= openTree(REPO_ROOT);\n    const rel = relative(REPO_ROOT, path);\n    return tree.isFile(rel) ? tree.read(rel) : artifactText(path);\n}\n\n/* The shared component-structure registers a consumer loses if it imports the raw\n"
+    ],
+    [
+     "        readFileSync(path, \"utf8\").replace(/\\/\\*[\\s\\S]*?\\*\\//g, \"\"),\n",
+     "        sheetText(path).replace(/\\/\\*[\\s\\S]*?\\*\\//g, \"\"),\n"
+    ],
+    [
+     "        .filter((member) => !existsSync(resolve(outputRoot, member)));\n",
+     "        .filter((member) => !artifactExists(resolve(outputRoot, member)));\n"
+    ]
+   ]
+  },
+  "scripts/package-verify/closure.mjs": {
+   "hunks": [
+    [
+     "import { readFileSync } from \"node:fs\";\n",
+     "import { artifact, artifactText } from \"../../tests/harness/artifacts.ts\";\n"
+    ],
+    [
+     "        const imports = ts.preProcessFile(readFileSync(resolve(artifactRoot, file), \"utf8\"), true, true);\n",
+     "        const imports = ts.preProcessFile(artifactText(resolve(artifactRoot, file)), true, true);\n"
+    ],
+    [
+     "        const raw = readFileSync(resolve(artifactRoot, file));\n",
+     "        const raw = artifact(resolve(artifactRoot, file));\n"
+    ]
+   ]
+  },
+  "scripts/package-verify/install.mjs": {
+   "hunks": [
+    [
+     "import {\n    existsSync,\n    lstatSync,\n    realpathSync,\n    readFileSync,\n    mkdtempSync,\n    rmSync,\n    writeFileSync,\n} from \"node:fs\";\n",
+     "import { realpathSync, mkdtempSync, rmSync, writeFileSync } from \"node:fs\";\n"
+    ],
+    [
+     "import { flattenTargets, listFiles } from \"./references.mjs\";\n",
+     "import { artifactExists, artifactFiles, artifactStat, artifactText } from \"../../tests/harness/artifacts.ts\";\nimport { flattenTargets } from \"./references.mjs\";\n"
+    ],
+    [
+     "        if (!existsSync(keyframes) || lstatSync(keyframes).isSymbolicLink()) {\n",
+     "        if (!artifactExists(keyframes) || artifactStat(keyframes).isLink) {\n"
+    ],
+    [
+     "        const keyframesPackage = JSON.parse(readFileSync(resolve(keyframes, \"package.json\"), \"utf8\"));\n",
+     "        const keyframesPackage = JSON.parse(artifactText(resolve(keyframes, \"package.json\")));\n"
+    ],
+    [
+     "        ].find((path) => existsSync(path));\n",
+     "        ].find((path) => artifactExists(path));\n"
+    ],
+    [
+     "        if (lstatSync(valuePackageDirectory).isSymbolicLink()) {\n",
+     "        if (artifactStat(valuePackageDirectory).isLink) {\n"
+    ],
+    [
+     "        const valuePackage = JSON.parse(readFileSync(valuePackagePath, \"utf8\"));\n",
+     "        const valuePackage = JSON.parse(artifactText(valuePackagePath));\n"
+    ],
+    [
+     "    const files = new Set(listFiles(installed));\n",
+     "    const files = new Set(artifactFiles({ under: installed }).map((file) => file.slice(installed.replace(/\\/$/, \"\").length + 1)));\n"
+    ],
+    [
+     "                if (!existsSync(path)) throw new Error(`installed CSS target missing: ${subpath} -> ${target}`);\n",
+     "                if (!artifactExists(path)) throw new Error(`installed CSS target missing: ${subpath} -> ${target}`);\n"
+    ]
+   ]
+  },
+  "scripts/package-verify/pack.mjs": {
+   "hunks": [
+    [
+     "import { existsSync, lstatSync, readFileSync, mkdtempSync, rmSync } from \"node:fs\";\n",
+     "import { mkdtempSync, rmSync } from \"node:fs\";\nimport { artifact, artifactExists, artifactStat, artifactText } from \"../../tests/harness/artifacts.ts\";\n"
+    ],
+    [
+     "    const bytes = readFileSync(path);\n",
+     "    const bytes = artifact(path);\n"
+    ],
+    [
+     "        if (!existsSync(path) || !lstatSync(path).isFile() || lstatSync(path).isSymbolicLink()) {\n",
+     "        if (!artifactExists(path) || !artifactStat(path).isFile || artifactStat(path).isLink) {\n"
+    ],
+    [
+     "    if (!existsSync(path)) {\n",
+     "    if (!artifactExists(path)) {\n"
+    ],
+    [
+     "    const raw = readFileSync(path, \"utf8\");\n",
+     "    const raw = artifactText(path);\n"
+    ]
+   ]
+  },
+  "scripts/package-verify/references.mjs": {
+   "hunks": [
+    [
+     "// CSS references, each resolved against the file set the package actually holds.\nimport { readdirSync } from \"node:fs\";\nimport { isBuiltin } from \"node:module\";\n",
+     "// CSS references, each resolved against the file set the package actually holds.\nimport { isBuiltin } from \"node:module\";\n"
+    ],
+    [
+     "import { join, posix } from \"node:path\";\n",
+     "import { posix } from \"node:path\";\n"
+    ],
+    [
+     "    );\n}\n\nexport function listFiles(directory, prefix = \"\") {\n    return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {\n        const path = join(directory, entry.name);\n        const name = prefix ? `${prefix}/${entry.name}` : entry.name;\n        return entry.isDirectory() ? listFiles(path, name) : [name];\n    });\n}\n",
+     "    );\n}\n"
+    ]
+   ]
+  },
+  "scripts/package-verify/roster.mjs": {
+   "hunks": [
+    [
+     "import { existsSync, readFileSync } from \"node:fs\";\n",
+     "import { artifactExists, artifactText } from \"../../tests/harness/artifacts.ts\";\n"
+    ],
+    [
+     "        const source = stripCssComments(readFileSync(resolve(artifactRoot, file), \"utf8\"));\n",
+     "        const source = stripCssComments(artifactText(resolve(artifactRoot, file)));\n"
+    ],
+    [
+     "    if (!existsSync(datumPath)) {\n",
+     "    if (!artifactExists(datumPath)) {\n"
+    ],
+    [
+     "    const datum = rosterDatumLines(readFileSync(datumPath, \"utf8\"));\n",
+     "    const datum = rosterDatumLines(artifactText(datumPath));\n"
+    ],
+    [
+     "    const migration = readFileSync(migrationPath, \"utf8\");\n",
+     "    const migration = artifactText(migrationPath);\n"
+    ]
+   ]
+  },
+  "scripts/package-verify/type-resolution.mjs": {
+   "hunks": [
+    [
+     "import { readFileSync, writeFileSync } from \"node:fs\";\n",
+     "import { writeFileSync } from \"node:fs\";\n"
+    ],
+    [
+     "import ts from \"typescript\";\n\n",
+     "import ts from \"typescript\";\nimport { openTree } from \"../structure/index.mjs\";\n\n"
+    ],
+    [
+     "export function sourceRootSurface(repositoryRoot) {\n    const path = resolve(repositoryRoot, \"src/index.ts\");\n",
+     "export function sourceRootSurface(repositoryRoot) {\n    // the source root is read from the repository's file set (F-1, R-3)\n    const path = resolve(repositoryRoot, \"src/index.ts\");\n"
+    ],
+    [
+     "    const sourceFile = ts.createSourceFile(path, readFileSync(path, \"utf8\"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);\n",
+     "    const sourceFile = ts.createSourceFile(path, openTree(repositoryRoot).read(\"src/index.ts\"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);\n"
+    ]
+   ]
+  },
+  "scripts/package-verify/verify.mjs": {
+   "hunks": [
+    [
+     "import { lstatSync, readFileSync, rmSync } from \"node:fs\";\n",
+     "import { rmSync } from \"node:fs\";\nimport { artifactFiles, artifactStat, artifactText } from \"../../tests/harness/artifacts.ts\";\n"
+    ],
+    [
+     "} from \"./pack.mjs\";\nimport { listFiles } from \"./references.mjs\";\nimport { publishedRoster, rosterRatchetFailures } from \"./roster.mjs\";\n",
+     "} from \"./pack.mjs\";\nimport { publishedRoster, rosterRatchetFailures } from \"./roster.mjs\";\n"
+    ],
+    [
+     "    const pkg = JSON.parse(\n        readFileSync(\n            repositoryRoot === root\n                ? new URL(\"../../package.json\", import.meta.url)\n                : resolve(repositoryRoot, \"package.json\"),\n            \"utf8\",\n        ),\n    );\n    const packageLock = JSON.parse(\n        readFileSync(\n            repositoryRoot === root\n                ? new URL(\"../../package-lock.json\", import.meta.url)\n                : resolve(repositoryRoot, \"package-lock.json\"),\n            \"utf8\",\n        ),\n    );\n",
+     "    const pkg = JSON.parse(artifactText(resolve(repositoryRoot, \"package.json\")));\n    const packageLock = JSON.parse(artifactText(resolve(repositoryRoot, \"package-lock.json\")));\n"
+    ],
+    [
+     "    const files = new Set(listFiles(artifactRoot));\n",
+     "    const files = new Set(artifactFiles({ under: artifactRoot }).map((file) => file.slice(artifactRoot.replace(/\\/$/, \"\").length + 1)));\n"
+    ],
+    [
+     "                if (!lstatSync(packEvidence.path).isFile() || lstatSync(packEvidence.path).isSymbolicLink()) {\n",
+     "                if (!artifactStat(packEvidence.path).isFile || artifactStat(packEvidence.path).isLink) {\n"
+    ]
+   ]
+  },
+  "scripts/profile-bundle.mjs": {
+   "hunks": [
+    [
+     "import { mkdirSync, readFileSync, statSync, writeFileSync } from \"node:fs\";\n",
+     "import { mkdirSync, readFileSync, writeFileSync } from \"node:fs\";\n"
+    ],
+    [
+     "import { fileURLToPath } from \"node:url\";\nimport {\n",
+     "import { fileURLToPath } from \"node:url\";\nimport { artifact, artifactFiles, artifactStat } from \"../tests/harness/artifacts.ts\";\nimport {\n"
+    ],
+    [
+     "    MIN_GATED_GZIP,\n    walk,\n} from \"./bundle-checks/index.mjs\";\n",
+     "    MIN_GATED_GZIP,\n} from \"./bundle-checks/index.mjs\";\n"
+    ],
+    [
+     "const files = walk(distRoot)\n",
+     "const files = artifactFiles({ under: distRoot })\n"
+    ],
+    [
+     "        const contents = readFileSync(file);\n",
+     "        const contents = artifact(file);\n"
+    ],
+    [
+     "            bytes: statSync(file).size,\n",
+     "            bytes: artifactStat(file).size,\n"
+    ]
+   ]
+  },
+  "scripts/structure/cascade.mjs": {
+   "hunks": [
+    [
+     "const isMain = import.meta.url === pathToFileURL(process.argv[1]).href;\n",
+     "const isMain = !!process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href; // `node -e` importers have no argv[1]\n"
+    ]
+   ]
+  },
+  "scripts/structure/lib/graph/script.mjs": {
+   "hunks": [
+    [
+     "            } else push({ kind: \"path-helper\", mode: \"census\", spec: `${node.expression.text}(${a.getText(sf)})`, ...at(a) });\n",
+     "            } else {\n                // a computed output path is a write, not a read: the helper writes it, or the\n                // call stands where a write takes its path (`screenshot({ path: frame(…) })`)\n                const write = h.write || writePosition(node);\n                push({ kind: write ? \"write\" : \"path-helper\", mode: \"census\", spec: `${node.expression.text}(${a.getText(sf)})`, ...at(a), write });\n            }\n"
+    ]
+   ]
+  },
+  "scripts/structure/surface.mjs": {
+   "hunks": [
+    [
+     "const isMain = import.meta.url === pathToFileURL(process.argv[1]).href;\n",
+     "const isMain = !!process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href; // `node -e` importers have no argv[1]\n"
+    ]
+   ]
+  },
+  "src/components/dock/__tests__/reach.test.ts": {
+   "hunks": [
+    [
+     "import { DOCK, STYLES, read, declarations, bandCss } from \"../../../../tests/components/custom/dock/lattice/bands\";\n",
+     "import { read } from \"../../../../tests/harness/source\";\nimport { DOCK, STYLES, declarations, bandCss } from \"../../../../tests/components/custom/dock/lattice/bands\";\n"
+    ]
+   ]
+  },
+  "tests-visual/dock/dock-items-lag-capture.spec.ts": {
+   "hunks": [
+    [
+     "import { test, expect } from \"@playwright/test\";\nimport { existsSync } from \"node:fs\";\nimport { resolve } from \"node:path\";\n",
+     "import { test, expect } from \"@playwright/test\";\nimport { resolve } from \"node:path\";\n"
+    ],
+    [
+     "                    await page.screenshot({ path: pngPath });\n                    expect(existsSync(pngPath), `${pngName} did not land on disk`).toBe(true);\n",
+     "                    const png = await page.screenshot({ path: pngPath }); // writes the file or throws\n                    expect(png.byteLength, `${pngName} captured no bytes`).toBeGreaterThan(0);\n"
+    ]
+   ]
+  },
+  "tests-visual/dock/dock-with-slider-live.spec.ts": {
+   "hunks": [
+    [
+     "import { test, expect } from \"@playwright/test\";\nimport { existsSync } from \"node:fs\";\nimport { resolve } from \"node:path\";\n",
+     "import { test, expect } from \"@playwright/test\";\nimport { resolve } from \"node:path\";\n"
+    ],
+    [
+     "                await page.screenshot({ path: heldPng });\n                expect(existsSync(heldPng), `${heldPng} did not land on disk`).toBe(true);\n",
+     "                const heldPngBytes = await page.screenshot({ path: heldPng }); // writes the file or throws\n                expect(heldPngBytes.byteLength, `${heldPng} captured no bytes`).toBeGreaterThan(0);\n"
+    ],
+    [
+     "                await page.screenshot({ path: releasedPng });\n                expect(existsSync(releasedPng), `${releasedPng} did not land on disk`).toBe(true);\n",
+     "                const releasedPngBytes = await page.screenshot({ path: releasedPng }); // writes the file or throws\n                expect(releasedPngBytes.byteLength, `${releasedPng} captured no bytes`).toBeGreaterThan(0);\n"
+    ]
+   ]
+  },
+  "tests-visual/paint/png-region.mjs": {
+   "hunks": [
+    [
+     "\nimport { readFileSync } from \"node:fs\";\nimport { inflateSync } from \"node:zlib\";\n",
+     "\nimport { inflateSync } from \"node:zlib\";\n"
+    ],
+    [
+     "import { pngDimensions, oklabFromRgb } from \"./reflect-capture-verify.mjs\";\n",
+     "import { artifact } from \"../../tests/harness/artifacts.ts\";\nimport { oklabFromRgb } from \"./reflect-capture-verify.mjs\";\n"
+    ],
+    [
+     "// PNG pixel decoder in the tree — it REUSES the ledger's pngDimensions IHDR read\n// (no second IHDR parse) and decodes the IDAT via zlib inflate + the 5-filter\n",
+     "// PNG pixel decoder in the tree — it reads the IHDR once, from the bytes it decodes,\n// and decodes the IDAT via zlib inflate + the 5-filter\n"
+    ],
+    [
+     "    const fd = readFileSync(absPath);\n",
+     "    const fd = artifact(absPath); // a run's capture: a missing PNG fails the read\n"
+    ],
+    [
+     "    const dims = pngDimensions(absPath); // the ledger's IHDR read (no second parse)\n    if (!dims || dims.w <= 0 || dims.h <= 0) return null;\n",
+     "    if (fd.length < 24 || fd.subarray(12, 16).toString(\"ascii\") !== \"IHDR\") return null;\n    const dims = { w: fd.readUInt32BE(16), h: fd.readUInt32BE(20) };\n    if (dims.w <= 0 || dims.h <= 0) return null;\n"
+    ]
+   ]
+  },
+  "tests-visual/paint/reflect-capture-verify.mjs": {
+   "hunks": [
+    [
+     "// Shared capture evidence primitives: PNG authenticity/dimensions, viewport\n// fidelity, source-byte freshness, region statistics, and OKLab decomposition.\n//\n// BC.W-GESTALT-FIRST adds the PIXEL reader: `pngRegionStats(path, region) →\n// {meanL, meanChroma, meanAlpha}` — the ONE PNG-decoder leaf (zlib IDAT inflate +\n// scanline unfilter, reusing the ledger's IHDR read for dimensions; NO second\n// decoder/hash). The OKLab decompose `oklabFromRgb` lives HERE, exported — it is\n// the single color-math source BC.W-PAINT-GATE's `scripts/lib/paint-arm.mjs`\n// imports for its live computed-style probe (the gate reads the LIVE surface, the\n// gestalt reads the captured PNG; both share the OKLab decompose — one math\n// source, the canvas-unify single-source discipline applied to colour).\n//\n\nimport { createHash } from \"node:crypto\";\nimport { existsSync, readFileSync, statSync } from \"node:fs\";\nimport { dirname, join, resolve } from \"node:path\";\nimport { fileURLToPath } from \"node:url\";\n\nconst ROOT = resolve(dirname(fileURLToPath(import.meta.url)), \"../..\");\n\nconst PNG_MAGIC = Buffer.from([0x89, 0x50, 0x4e, 0x47]);\n\nexport function isRealPng(path) {\n    try {\n        if (!existsSync(path) || !statSync(path).isFile()) return false;\n        const bytes = readFileSync(path);\n        return bytes.length > 1024 && bytes.subarray(0, 4).equals(PNG_MAGIC);\n    } catch {\n        return false;\n    }\n}\n\nexport function pngDimensions(path) {\n    const bytes = readFileSync(path);\n    if (bytes.length < 24 || bytes.subarray(12, 16).toString(\"ascii\") !== \"IHDR\") return null;\n    return { w: bytes.readUInt32BE(16), h: bytes.readUInt32BE(20) };\n}\n\nexport const FABRICATED_MOBILE_WIDTH = 1000;\n\nexport function viewportFidelityVerdict(basename, dimensions) {\n    if (!/-mobile-/.test(basename) || !dimensions) return { ok: true };\n    if (dimensions.w < FABRICATED_MOBILE_WIDTH) return { ok: true };\n    return {\n        ok: false,\n        reason: `${basename} declares a mobile viewport but its IHDR is ${dimensions.w}×${dimensions.h}`,\n    };\n}\n\nexport function baseName(reference) {\n    const index = reference.lastIndexOf(\"/\");\n    return index === -1 ? reference : reference.slice(index + 1);\n}\n\nexport function surfaceHash(root, surfacePaths) {\n    const chunks = [];\n    for (const path of surfacePaths) {\n        const absolute = join(root, path);\n        chunks.push(readFileSync(absolute));\n    }\n    return createHash(\"sha256\").update(chunks.join(\"\\n\")).digest(\"hex\");\n}\n\nexport function freshnessVerdict(document, root = ROOT) {\n    const pathsHeader = document.match(/<!--\\s*surface-paths:\\s*([^>]*?)\\s*-->/);\n    const hashHeader = document.match(/<!--\\s*surface-hash:\\s*([0-9a-fA-F]{64})\\s*-->/);\n    if (!pathsHeader?.[1]?.trim() || !hashHeader) return { state: \"no-header\" };\n    const paths = pathsHeader[1].split(\",\").map((path) => path.trim()).filter(Boolean);\n    for (const path of paths) {\n        if (!existsSync(join(root, path))) {\n            return { state: \"stale\", reason: `surface path ${path} no longer exists` };\n        }\n    }\n    const declared = hashHeader[1].toLowerCase();\n    const current = surfaceHash(root, paths);\n    if (current === declared) return { state: \"fresh\" };\n    return {\n        state: \"stale\",\n        reason: `surface ${paths.join(\",\")} changed since capture (${declared.slice(0, 12)} → ${current.slice(0, 12)})`,\n    };\n}\n\n// The desktop full-viewport floor: a `-desktop-` basename whose IHDR width is\n// BELOW this is a non-desktop crop mislabeled desktop (the symmetric fabrication\n// the gestalt gate's WEAK-2/G2 clause applies). 1280 is the CAPTURE-PROTOCOL\n// desktop floor; a real desktop full-page capture is ≥ it (the BA reflect captures\n// are 2880px @2× = comfortably above). It sits ABOVE FABRICATED_MOBILE_WIDTH (1000)\n// so the two verdicts never overlap on a single capture.\nexport const DESKTOP_FULL_WIDTH = 1280;\n\n/**\n * The GESTALT-gate fabricated-viewport verdict — the ledger's `-mobile-`-only\n * verdict PLUS the symmetric `-desktop-`-below-floor arm (G2). A `-mobile-` basename\n * with a desktop-class IHDR width REDs; a `-desktop-` basename below the desktop\n * floor REDs symmetrically. PURE over a {basename, dims} pair so the gate's self-test\n * can exercise both arms deterministically with no on-disk fixture.\n *\n * @param {string} basename\n * @param {{w:number, h:number} | null} dims\n * @param {(b:string, d:object|null)=>{ok:boolean,reason?:string}} mobileVerdict the\n *   shared `-mobile-` verdict (injected so the ledger's exported source is the ONE\n *   mobile-fidelity authority — no re-implementation of the mobile arm here).\n * @returns {{ok:true} | {ok:false, reason:string}}\n */\nexport function viewportFidelityVerdictBoth(basename, dims, mobileVerdict) {\n    if (/-mobile-/.test(basename)) return mobileVerdict(basename, dims);\n    if (/-desktop-/.test(basename)) {\n        if (!dims) return { ok: true }; // unreadable IHDR ≠ fabrication; the real-PNG bar already held\n        if (dims.w < DESKTOP_FULL_WIDTH)\n            return {\n                ok: false,\n                reason: `${basename} carries the -desktop- viewport token but its IHDR is ${dims.w}×${dims.h} — below the desktop full-viewport floor (${DESKTOP_FULL_WIDTH}px) — a crop/mobile mislabeled desktop`,\n            };\n        return { ok: true };\n    }\n    return { ok: true };\n}\n",
+     "// The OKLab decompose: the one colour-math source the capture readers share. The PNG\n// region reader (png-region.mjs) and the live computed-style probe (paint-arm.mjs) both\n// decompose through `oklabFromRgb`, so a captured pixel and a live surface read the same\n// way.\n"
+    ]
+   ]
+  },
+  "tests-visual/pi-gate-verify.mjs": {
+   "hunks": [
+    [
+     "import { readFileSync } from \"node:fs\";\n",
+     "import { fileURLToPath } from \"node:url\";\nimport { artifactText } from \"../tests/harness/artifacts.ts\";\n"
+    ],
+    [
+     "    report = JSON.parse(readFileSync(REPORT, \"utf8\"));\n",
+     "    report = JSON.parse(artifactText(fileURLToPath(REPORT)));\n"
+    ]
+   ]
+  },
+  "tests-visual/pi-manifest.ts": {
+   "hunks": [
+    [
+     "import { readFileSync } from \"node:fs\";\nimport { fileURLToPath } from \"node:url\";\n",
+     "import { edges, read } from \"../tests/harness/source\";\n"
+    ],
+    [
+     "const LIBRARY_ROOT = fileURLToPath(new URL(\"..\", import.meta.url));\nconst MANIFEST_PATH = `${LIBRARY_ROOT}demo/stories/manifest.ts`;\nconst PRESETS_PATH = `${LIBRARY_ROOT}demo/stories/substrates/aurora/presets.ts`;\n",
+     "const MANIFEST_PATH = \"demo/stories/manifest.ts\";\nconst PRESETS_PATH = \"demo/stories/substrates/aurora/presets.ts\";\nconst ROWS = \"demo/stories/manifest/categories/\";\n"
+    ],
+    [
+     "    // The rows live one file per category; the manifest's own imports name those files,\n    // so a category file the manifest does not assemble is not a scene either.\n    const manifest = readFileSync(MANIFEST_PATH, \"utf8\");\n",
+     "    // The rows live one file per category; the manifest's own imports name those files\n    // (F-1's resolved edges), so a category file the manifest does not assemble is not a\n    // scene either.\n"
+    ],
+    [
+     "        ...manifest.matchAll(/from \"\\.\\/(manifest\\/categories\\/[a-z0-9-]+)\"/g),\n    ].map((m) => `${LIBRARY_ROOT}demo/stories/${m[1]!}.ts`);\n",
+     "        ...new Set(edges({ from: MANIFEST_PATH }).map((e) => e.to).filter((to): to is string => !!to?.startsWith(ROWS))),\n    ];\n"
+    ],
+    [
+     "    const src = rowFiles.map((file) => readFileSync(file, \"utf8\")).join(\"\\n\");\n",
+     "    const src = rowFiles.map(read).join(\"\\n\");\n"
+    ],
+    [
+     "    const src = readFileSync(PRESETS_PATH, \"utf8\");\n",
+     "    const src = read(PRESETS_PATH);\n"
+    ]
+   ]
+  },
+  "tests/components/a11y/focus-visible.test.ts": {
+   "hunks": [
+    [
+     "\nimport { readFileSync } from \"node:fs\";\nimport { describe, expect, it } from \"vitest\";\n",
+     "\nimport { describe, expect, it } from \"vitest\";\n"
+    ],
+    [
+     "\nconst read = (path: string): string => readFileSync(path, \"utf8\");\n",
+     "import { read } from \"../../harness/source\";\n"
+    ]
+   ]
+  },
+  "tests/components/control-bit/binary-triad.test.ts": {
+   "hunks": [
+    [
+     " */\nimport { readFileSync } from \"node:fs\";\nimport { resolve } from \"node:path\";\nimport { mount } from \"@vue/test-utils\";\n",
+     " */\nimport { mount } from \"@vue/test-utils\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\nimport { Checkbox } from \"@glass/components/checkbox\";\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { read } from \"../../harness/source\";\nimport { Checkbox } from \"@glass/components/checkbox\";\n"
+    ],
+    [
+     "const ROOT = process.cwd();\nconst read = (p: string) => readFileSync(resolve(ROOT, p), \"utf8\");\n",
+     "// every source read goes through the harness (F-1's file set, R-3)\n"
+    ]
+   ]
+  },
+  "tests/components/custom/aurora/harness.test.ts": {
+   "hunks": [
+    [
+     "\nimport { readFileSync } from \"node:fs\";\nimport { join } from \"node:path\";\n\nimport { flushPromises, mount, shallowMount, type VueWrapper } from \"@vue/test-utils\";\n",
+     "\nimport { flushPromises, mount, shallowMount, type VueWrapper } from \"@vue/test-utils\";\n"
+    ],
+    [
+     "import { afterEach, beforeEach, describe, expect, it, vi } from \"vitest\";\nimport { nextTick } from \"vue\";\n",
+     "import { afterEach, beforeEach, describe, expect, it, vi } from \"vitest\";\nimport { read } from \"../../../harness/source\";\nimport { nextTick } from \"vue\";\n"
+    ],
+    [
+     "\nconst repoFile = (rel: string): string =>\n    readFileSync(join(process.cwd(), rel), \"utf8\");\n\n/** The three render loops that own a demand gate — the WebGL2 loop and both WGSL ones. */\n",
+     "\n/** The three render loops that own a demand gate — the WebGL2 loop and both WGSL ones. */\n"
+    ],
+    [
+     "            const src = repoFile(rel);\n",
+     "            const src = read(rel);\n"
+    ],
+    [
+     "        expect(repoFile(\"src/styles/tokens/motion/scheme-motion.css\")).toContain(\n",
+     "        expect(read(\"src/styles/tokens/motion/scheme-motion.css\")).toContain(\n"
+    ],
+    [
+     "        expect(repoFile(\"src/components/aurora/Aurora.vue\")).toContain(\n",
+     "        expect(read(\"src/components/aurora/Aurora.vue\")).toContain(\n"
+    ],
+    [
+     "        const stageSrc = repoFile(\"demo/stories/substrates/aurora/AuroraStage.vue\");\n",
+     "        const stageSrc = read(\"demo/stories/substrates/aurora/AuroraStage.vue\");\n"
+    ],
+    [
+     "        const storySrc = repoFile(\"demo/stories/substrates/aurora.vue\");\n",
+     "        const storySrc = read(\"demo/stories/substrates/aurora.vue\");\n"
+    ]
+   ]
+  },
+  "tests/components/custom/blob/gl-excise.test.ts": {
+   "hunks": [
+    [
+     "\nimport { readFileSync, readdirSync, statSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport { describe, expect, it } from \"vitest\";\n",
+     "\nimport { describe, expect, it } from \"vitest\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { files, read } from \"../../../harness/source\";\n\n"
+    ],
+    [
+     "const BLOB = join(process.cwd(), \"src/components/blob\");\n",
+     "const BLOB = \"src/components/blob\";\n"
+    ],
+    [
+     "\nfunction walk(dir: string, out: string[] = []): string[] {\n    for (const entry of readdirSync(dir)) {\n        const abs = join(dir, entry);\n        if (statSync(abs).isDirectory()) { if (entry !== \"__tests__\") walk(abs, out); }\n        else out.push(abs);\n    }\n    return out;\n}\n\n/**\n",
+     "\n/**\n"
+    ],
+    [
+     " * A missing component directory is a missing LAW, not an empty census. Reading it as\n * zero files would report the seat GREEN on the day someone moved the folder, which is\n * the one direction a register gate may never be wrong in.\n",
+     " * A missing component directory is a missing LAW, not an empty census. The unit's files\n * come from F-1's file set (R-3; its `__tests__/` slot left out), and the census below\n * asserts the set is non-empty and holds Blob.vue, so a moved folder reds the seat.\n"
+    ],
+    [
+     "const FILES = (() => {\n    try {\n        return walk(BLOB).map((abs) => abs.slice(process.cwd().length + 1));\n    } catch {\n        return [];\n    }\n})();\n",
+     "const FILES = files({ under: BLOB });\n"
+    ],
+    [
+     "    readFileSync(join(process.cwd(), rel), \"utf8\")\n",
+     "    read(rel)\n"
+    ],
+    [
+     "    for (const line of readFileSync(join(process.cwd(), rel), \"utf8\").split(\"\\n\")) {\n",
+     "    for (const line of read(rel).split(\"\\n\")) {\n"
+    ]
+   ]
+  },
+  "tests/components/custom/dock/lattice/bands.ts": {
+   "hunks": [
+    [
+     "import { readFileSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport { files } from \"../../../../harness/source\";\n",
+     "import { files, read } from \"../../../../harness/source\";\n"
+    ],
+    [
+     "export const STYLES = `${DOCK}/styles`;\n\nexport const read = (rel: string): string => readFileSync(join(process.cwd(), rel), \"utf8\");\n\n",
+     "export const STYLES = `${DOCK}/styles`;\n\n"
+    ]
+   ]
+  },
+  "tests/components/custom/dock/lattice/material.test.ts": {
+   "hunks": [
+    [
+     "import { DOCK, STYLES, read, declarations, bandCss } from \"./bands\";\n",
+     "import { read } from \"../../../../harness/source\";\nimport { DOCK, STYLES, declarations, bandCss } from \"./bands\";\n"
+    ]
+   ]
+  },
+  "tests/components/custom/dock/lattice/run.test.ts": {
+   "hunks": [
+    [
+     "\nimport { readdirSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport { describe, expect, it } from \"vitest\";\n",
+     "\nimport { describe, expect, it } from \"vitest\";\n"
+    ],
+    [
+     "import { DOCK, STYLES, read, declarations, bandCss } from \"./bands\";\n",
+     "import { files, read } from \"../../../../harness/source\";\nimport { DOCK, STYLES, declarations, bandCss } from \"./bands\";\n"
+    ],
+    [
+     "            const live = readdirSync(join(process.cwd(), `${DOCK}/composables`))\n                .concat(readdirSync(join(process.cwd(), DOCK)))\n                .filter((f) => /\\.(ts|vue)$/.test(f));\n",
+     "            const live = files({ under: DOCK, suffix: /\\.(ts|vue)$/ })\n                .map((f) => f.slice(f.lastIndexOf(\"/\") + 1));\n"
+    ]
+   ]
+  },
+  "tests/components/dialog/dialog-dismiss.test.ts": {
+   "hunks": [
+    [
+     "\nimport { readdirSync, readFileSync, statSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport { describe, expect, it } from \"vitest\";\n",
+     "\nimport { describe, expect, it } from \"vitest\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { files, read } from \"../../harness/source\";\n\n"
+    ],
+    [
+     "const walk = (dir: string): string[] =>\n    readdirSync(dir).flatMap((entry) => {\n        const full = join(dir, entry);\n        if (statSync(full).isDirectory()) return entry === \"__tests__\" ? [] : walk(full);\n        return [full];\n    });\n",
+     "// F-1's file set (R-3: never a directory walk; the harness leaves `__tests__/` out)\nconst walk = (dir: string): string[] => files({ under: dir });\n"
+    ],
+    [
+     "            readFileSync(\"src/components/dialog/DialogContent.vue\", \"utf8\");\n",
+     "            read(\"src/components/dialog/DialogContent.vue\");\n"
+    ],
+    [
+     "                expect(readFileSync(file, \"utf8\"), `${knob} in ${file}`).not.toMatch(\n",
+     "                expect(read(file), `${knob} in ${file}`).not.toMatch(\n"
+    ],
+    [
+     "            expect(readFileSync(file, \"utf8\"), file).not.toMatch(\n",
+     "            expect(read(file), file).not.toMatch(\n"
+    ],
+    [
+     "        const offenders = demoFiles().filter((f) =>\n            DISMISS_INTENTS.test(readFileSync(f, \"utf8\")),\n        );\n",
+     "        const offenders = demoFiles().filter((f) =>\n            DISMISS_INTENTS.test(read(f)),\n        );\n"
+    ],
+    [
+     "        const binders = dialogFiles().filter((f) =>\n            DISMISS_INTENTS.test(readFileSync(f, \"utf8\")),\n        );\n",
+     "        const binders = dialogFiles().filter((f) =>\n            DISMISS_INTENTS.test(read(f)),\n        );\n"
+    ],
+    [
+     "        readFileSync(\"src/components/dialog/DialogContent.vue\", \"utf8\");\n    const css = () => readFileSync(\"src/components/dialog/styles.css\", \"utf8\");\n",
+     "        read(\"src/components/dialog/DialogContent.vue\");\n    const css = () => read(\"src/components/dialog/styles.css\");\n"
+    ]
+   ]
+  },
+  "tests/components/easing/frame.test.ts": {
+   "hunks": [
+    [
+     "\nimport { readFileSync, existsSync, readdirSync } from \"node:fs\";\nimport { resolve } from \"node:path\";\nimport { mount } from \"@vue/test-utils\";\n",
+     "\nimport { mount } from \"@vue/test-utils\";\n"
+    ],
+    [
+     "import { read } from \"../../harness/source\";\n",
+     "import { files, read } from \"../../harness/source\";\n"
+    ],
+    [
+     "/** A dependency-free recursive grep over a source tree, files only. */\n",
+     "/** The files of a zone (F-1's file set, tests included) whose text names `needle`. */\n"
+    ],
+    [
+     "    const hits: string[] = [];\n    const walk = (dir: string): void => {\n        for (const entry of readdirSync(dir, { withFileTypes: true })) {\n            if (entry.name === \"node_modules\" || entry.name.startsWith(\".\")) continue;\n            const path = resolve(dir, entry.name);\n            if (entry.isDirectory()) walk(path);\n            else if (/\\.(ts|vue|css|md)$/.test(entry.name)) {\n                if (readFileSync(path, \"utf-8\").includes(needle)) hits.push(path);\n            }\n        }\n    };\n    walk(root);\n    return hits;\n",
+     "    return files({ under: root, suffix: /\\.(ts|vue|css|md)$/, tests: true }).filter((file) => read(file).includes(needle));\n"
+    ],
+    [
+     "        const story = readFileSync(\n            resolve(__dirname, \"../../../demo/stories/motion/curve-gallery.vue\"),\n            \"utf-8\",\n        );\n",
+     "        const story = read(\"demo/stories/motion/curve-gallery.vue\");\n"
+    ],
+    [
+     "        expect(existsSync(resolve(EASING_DIR, \"EasingCurve.vue\"))).toBe(true);\n",
+     "        expect(files({ under: EASING_DIR })).toContain(`${EASING_DIR}/EasingCurve.vue`);\n"
+    ],
+    [
+     "        expect(existsSync(resolve(EASING_DIR, \"EasingConfigurator.vue\"))).toBe(false);\n        expect(existsSync(resolve(EASING_DIR, \"composables\"))).toBe(false);\n",
+     "        expect(files({ under: EASING_DIR, tests: true })).not.toContain(`${EASING_DIR}/EasingConfigurator.vue`);\n        expect(files({ under: `${EASING_DIR}/composables`, tests: true })).toEqual([]);\n"
+    ],
+    [
+     "            const hits = grepTree(resolve(__dirname, \"../../..\", dir), \"EasingConfigurator\");\n",
+     "            const hits = grepTree(dir, \"EasingConfigurator\");\n"
+    ]
+   ]
+  },
+  "tests/components/easing/picker.ts": {
+   "hunks": [
+    [
+     "\nimport { readFileSync } from \"node:fs\";\nimport { resolve } from \"node:path\";\nimport { mount } from \"@vue/test-utils\";\n",
+     "\nimport { mount } from \"@vue/test-utils\";\n"
+    ],
+    [
+     "export const EASING_DIR = resolve(__dirname, \"../../../src/components/easing\");\nexport const source = (file: string): string => readFileSync(resolve(EASING_DIR, file), \"utf-8\");\n",
+     "export const EASING_DIR = \"src/components/easing\";\nexport const source = (file: string): string => read(`${EASING_DIR}/${file}`);\n"
+    ]
+   ]
+  },
+  "tests/components/field/forms-seam.test.ts": {
+   "hunks": [
+    [
+     " */\nimport { readFileSync } from \"node:fs\";\nimport { resolve } from \"node:path\";\nimport { mount } from \"@vue/test-utils\";\n",
+     " */\nimport { mount } from \"@vue/test-utils\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\nimport { cssOrder } from \"../../harness/source\";\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { read } from \"../../harness/source\";\nimport { cssOrder } from \"../../harness/source\";\n"
+    ],
+    [
+     "const ROOT = process.cwd();\nconst read = (p: string) => readFileSync(resolve(ROOT, p), \"utf8\");\n",
+     "// every source read goes through the harness (F-1's file set, R-3)\n"
+    ]
+   ]
+  },
+  "tests/components/fourier-field/field.smoke.test.ts": {
+   "hunks": [
+    [
+     "import { readFileSync, readdirSync, statSync } from \"node:fs\";\nimport { join } from \"node:path\";\n",
+     "import { files, read } from \"../../harness/source\";\n"
+    ],
+    [
+     "const SRC = join(process.cwd(), \"src\");\nconst DEMO = join(process.cwd(), \"demo\");\n",
+     "// F-1's file set (R-3: never a directory walk; slots kept, as the census always read them)\nconst walk = (dir: string): string[] => files({ under: dir, suffix: /\\.(ts|vue|mjs)$/, tests: true });\n"
+    ],
+    [
+     "\nfunction walk(dir: string, out: string[] = []): string[] {\n    for (const entry of readdirSync(dir)) {\n        const path = join(dir, entry);\n        if (statSync(path).isDirectory()) walk(path, out);\n        else if (/\\.(ts|vue|mjs)$/.test(entry)) out.push(path);\n    }\n    return out;\n}\n\nconst shape = (key: string): MintedSpectrum =>\n",
+     "\nconst shape = (key: string): MintedSpectrum =>\n"
+    ],
+    [
+     "    const sources = [...walk(SRC), ...walk(DEMO)];\n",
+     "    const sources = [...walk(\"src\"), ...walk(\"demo\")];\n"
+    ],
+    [
+     "            const text = readFileSync(path, \"utf8\");\n",
+     "            const text = read(path);\n"
+    ],
+    [
+     "        const wgpu = readFileSync(\n            join(SRC, \"components/fourier-field/renderer/wgpu.ts\"),\n            \"utf8\",\n        );\n",
+     "        const wgpu = read(\"src/components/fourier-field/renderer/wgpu.ts\");\n"
+    ],
+    [
+     "        const use = readFileSync(\n            join(SRC, \"components/fourier-field/useFourierField.ts\"),\n            \"utf8\",\n        );\n",
+     "        const use = read(\"src/components/fourier-field/useFourierField.ts\");\n"
+    ],
+    [
+     "        const mappings = readFileSync(\n            join(SRC, \"composables/motion/pointer/pointerFieldMappings.ts\"),\n            \"utf8\",\n        );\n",
+     "        const mappings = read(\"src/composables/motion/pointer/pointerFieldMappings.ts\");\n"
+    ],
+    [
+     "        expect(readFileSync(join(SRC, \"index.ts\"), \"utf8\")).not.toContain(\"fourierLean\");\n",
+     "        expect(read(\"src/index.ts\")).not.toContain(\"fourierLean\");\n"
+    ],
+    [
+     "        for (const file of [\"clock.ts\", \"useFourierField.ts\"]) {\n            const text = readFileSync(join(SRC, \"components/fourier-field\", file), \"utf8\");\n",
+     "        for (const file of [\"src/components/fourier-field/clock.ts\", \"src/components/fourier-field/useFourierField.ts\"]) {\n            const text = read(file);\n"
+    ]
+   ]
+  },
+  "tests/components/fourier-field/wgsl-splice-contract.test.ts": {
+   "hunks": [
+    [
+     "import { readFileSync, readdirSync, statSync } from \"node:fs\";\nimport { join, relative } from \"node:path\";\n",
+     "import { files, read } from \"../../harness/source\";\n"
+    ],
+    [
+     "\nconst SRC = join(process.cwd(), \"src\");\n\n",
+     "\n\n"
+    ],
+    [
+     "/** Every `.ts` file under `src/` — which is where all five shader sites live today. A\n *  `.vue` SFC or a hand-written `.js` that called `createShaderModule` would escape this\n *  walk. That is KNOWN RESIDUE, noted rather than built: widening the walk with no site to\n *  cover would be speculation, and this file's job is the class that EXISTS. */\nfunction walk(dir: string, out: string[] = []): string[] {\n    for (const entry of readdirSync(dir)) {\n        const path = join(dir, entry);\n        if (statSync(path).isDirectory()) { if (entry !== \"__tests__\") walk(path, out); }\n        else if (/\\.ts$/.test(entry)) out.push(path);\n    }\n    return out;\n}\n",
+     "/** Every `.ts` file under `src/` in the resolved file set (tests aside) — which is where\n *  all five shader sites live today. A `.vue` SFC or a hand-written `.js` that called\n *  `createShaderModule` would escape this census. That is KNOWN RESIDUE, noted rather than\n *  built: widening it with no site to cover would be speculation, and this file's job is\n *  the class that EXISTS. */\nconst SOURCES = files({ under: \"src\", suffix: \".ts\" });\n"
+    ],
+    [
+     "    for (const file of walk(SRC)) {\n        for (const call of readFileSync(file, \"utf8\").matchAll(CALL_SITE)) {\n",
+     "    for (const file of SOURCES) {\n        for (const call of read(file).matchAll(CALL_SITE)) {\n"
+    ],
+    [
+     "                file: relative(SRC, file),\n",
+     "                file: file.slice(\"src/\".length),\n"
+    ]
+   ]
+  },
+  "tests/components/select/picker-lane.test.ts": {
+   "hunks": [
+    [
+     " */\nimport { readdirSync, readFileSync } from \"node:fs\";\nimport { relative, resolve } from \"node:path\";\nimport { describe, expect, it } from \"vitest\";\n",
+     " */\nimport { describe, expect, it } from \"vitest\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { files, read } from \"../../harness/source\";\n\n"
+    ],
+    [
+     "const ROOT = process.cwd();\nconst read = (p: string) => readFileSync(resolve(ROOT, p), \"utf8\");\n",
+     "/* The file set is F-1's (the harness, R-3): git's tracked AND untracked-not-ignored\n * files, each confirmed on disk. A bare `git ls-files` answer would be wrong in both\n * directions on a working tree (it names deleted files and misses added ones); the\n * harness reads both lists and keeps only what is on disk, so the gate reads the code,\n * not the staging state. The slots are kept, as the census always read them. */\nconst walk = (dir: string, match: RegExp): string[] =>\n    files({ under: dir, tests: true }).filter((f) => match.test(f.slice(f.lastIndexOf(\"/\") + 1)));\n"
+    ],
+    [
+     "\n/* The file set is WALKED, never listed and never asked of git. A `git ls-files`\n * answer is wrong in both directions on a working tree: it names files that have\n * been deleted and misses files that have been added, so a gate reading it passes\n * or fails on staging state rather than on the code. */\nfunction walk(dir: string, match: RegExp): string[] {\n    const out: string[] = [];\n    for (const entry of readdirSync(resolve(ROOT, dir), { withFileTypes: true })) {\n        const rel = `${dir}/${entry.name}`;\n        if (entry.isDirectory()) {\n            if (entry.name === \"node_modules\" || entry.name.startsWith(\".\")) continue;\n            out.push(...walk(rel, match));\n        } else if (match.test(entry.name)) {\n            out.push(rel);\n        }\n    }\n    return out;\n}\n\nconst SRC_VUE = walk(\"src\", /\\.vue$/);\n",
+     "\nconst SRC_VUE = walk(\"src\", /\\.vue$/);\n"
+    ],
+    [
+     "]);\nvoid relative;\n\n",
+     "]);\n\n"
+    ]
+   ]
+  },
+  "tests/components/sortable-list/rig.ts": {
+   "hunks": [
+    [
+     "import { readFileSync } from \"node:fs\";\nimport { files } from \"../../harness/source\";\n",
+     "import { files, read as sourceText } from \"../../harness/source\";\n"
+    ],
+    [
+     "    return readFileSync(hit[0], \"utf8\");\n",
+     "    return sourceText(hit[0]);\n"
+    ]
+   ]
+  },
+  "tests/composables/color/use-accent-tone.test.ts": {
+   "hunks": [
+    [
+     "\nimport { readFileSync } from \"node:fs\";\nimport { describe, expect, it, vi } from \"vitest\";\n",
+     "\nimport { describe, expect, it, vi } from \"vitest\";\n"
+    ],
+    [
+     "import { describe, expect, it, vi } from \"vitest\";\nimport { useAccentTone } from \"@glass/composables/color\";\n",
+     "import { describe, expect, it, vi } from \"vitest\";\nimport { read } from \"../../harness/source\";\nimport { useAccentTone } from \"@glass/composables/color\";\n"
+    ],
+    [
+     "    const match = /^\\s*--card:\\s*([^;]+);/m.exec(readFileSync(path, \"utf8\"));\n",
+     "    const match = /^\\s*--card:\\s*([^;]+);/m.exec(read(path));\n"
+    ],
+    [
+     "        const source = readFileSync(\"src/composables/color/accent-tone-solve.ts\", \"utf8\");\n",
+     "        const source = read(\"src/composables/color/accent-tone-solve.ts\");\n"
+    ]
+   ]
+  },
+  "tests/demo/page-chrome-shrink.test.ts": {
+   "hunks": [
+    [
+     "import { readFileSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport { describe, expect, it } from \"vitest\";\n",
+     "import { describe, expect, it } from \"vitest\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { read } from \"../harness/source\";\n\n"
+    ],
+    [
+     "\nconst read = (rel: string): string => readFileSync(join(process.cwd(), rel), \"utf8\");\n\n",
+     "\n\n"
+    ]
+   ]
+  },
+  "tests/demo/router-field-ownership.test.ts": {
+   "hunks": [
+    [
+     "import { readFileSync, readdirSync } from \"node:fs\";\nimport { join, resolve } from \"node:path\";\nimport { afterEach, describe, expect, it } from \"vitest\";\n",
+     "import { afterEach, describe, expect, it } from \"vitest\";\n"
+    ],
+    [
+     "import { afterEach, describe, expect, it } from \"vitest\";\nimport { router } from \"../../demo/router\";\n",
+     "import { afterEach, describe, expect, it } from \"vitest\";\nimport { files, read } from \"../harness/source\";\nimport { router } from \"../../demo/router\";\n"
+    ],
+    [
+     "const SHELL = resolve(__dirname, \"../../demo/shell\");\n",
+     "const SHELL = \"demo/shell\";\n"
+    ],
+    [
+     "        const walk = (dir: string): void => {\n            for (const entry of readdirSync(dir, { withFileTypes: true })) {\n                const path = join(dir, entry.name);\n                if (entry.isDirectory()) {\n                    walk(path);\n                    continue;\n                }\n                if (!/\\.(ts|vue)$/.test(entry.name)) continue;\n                // Matches `\"../router\"`, `\"../../router\"`, the alternate climb\n                // `\"../../demo/router\"`, an explicit `\".ts\"` suffix, and the dynamic\n                // `import(\"../router\")` form as well as `from`; a same-directory\n                // `./router` would be a different file and is deliberately not matched.\n                const text = readFileSync(path, \"utf8\");\n                for (const m of text.matchAll(\n                    /\\b(?:from|import)\\s*\\(?\\s*[\"']((?:\\.\\.\\/)+(?:demo\\/)?router(?:\\.ts)?)[\"']/g,\n                )) {\n                    offenders.push(`${path.slice(SHELL.length + 1)} → ${m[1]}`);\n                }\n",
+     "        for (const path of files({ under: SHELL, suffix: /\\.(ts|vue)$/, tests: true })) {\n            // Matches `\"../router\"`, `\"../../router\"`, the alternate climb\n            // `\"../../demo/router\"`, an explicit `\".ts\"` suffix, and the dynamic\n            // `import(\"../router\")` form as well as `from`; a same-directory\n            // `./router` would be a different file and is deliberately not matched.\n            const text = read(path);\n            for (const m of text.matchAll(\n                /\\b(?:from|import)\\s*\\(?\\s*[\"']((?:\\.\\.\\/)+(?:demo\\/)?router(?:\\.ts)?)[\"']/g,\n            )) {\n                offenders.push(`${path.slice(SHELL.length + 1)} → ${m[1]}`);\n"
+    ],
+    [
+     "        };\n        walk(SHELL);\n",
+     "        }\n"
+    ]
+   ]
+  },
+  "tests/demo/skip-link.a11y.test.ts": {
+   "hunks": [
+    [
+     "\nimport { readFileSync } from \"node:fs\";\nimport { describe, expect, it } from \"vitest\";\n",
+     "\nimport { describe, expect, it } from \"vitest\";\n"
+    ],
+    [
+     "\nconst read = (path: string): string => readFileSync(path, \"utf8\");\n",
+     "import { read } from \"../harness/source\";\nimport { storyFile } from \"./story-card/sources\";\n"
+    ],
+    [
+     "            const source = read(`demo/stories/compositions/${name}.vue`);\n",
+     "            const source = read(storyFile(\"compositions\", name));\n"
+    ],
+    [
+     "            const body = read(`demo/stories/compositions/${name}.vue`)\n",
+     "            const body = read(storyFile(\"compositions\", name))\n"
+    ]
+   ]
+  },
+  "tests/design/drive-tokens.test.ts": {
+   "hunks": [
+    [
+     "import { readFileSync, readdirSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport { describe, expect, it } from \"vitest\";\n",
+     "import { describe, expect, it } from \"vitest\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { files, read } from \"../harness/source\";\n\n"
+    ],
+    [
+     "\nconst read = (rel: string): string => readFileSync(join(process.cwd(), rel), \"utf8\");\n\n",
+     "\n\n"
+    ],
+    [
+     "    readdirSync(join(process.cwd(), root), { recursive: true, withFileTypes: true })\n        .filter((e) => e.isFile() && SOURCE_EXT.test(e.name))\n        .map((e) => readFileSync(join(e.parentPath, e.name), \"utf8\"))\n        .join(\"\\n\");\n",
+     "    files({ under: root, suffix: SOURCE_EXT, tests: true }).map(read).join(\"\\n\");\n"
+    ]
+   ]
+  },
+  "tests/design/plate-register.test.ts": {
+   "hunks": [
+    [
+     "import { readFileSync, readdirSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport { describe, expect, it } from \"vitest\";\n",
+     "import { describe, expect, it } from \"vitest\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { files, read } from \"../harness/source\";\n\n"
+    ],
+    [
+     "\nconst read = (rel: string): string => readFileSync(join(process.cwd(), rel), \"utf8\");\n\n",
+     "\n\n"
+    ],
+    [
+     "    readdirSync(join(process.cwd(), dir), { recursive: true, withFileTypes: true })\n        .filter((e) => e.isFile() && e.name.endsWith(\".css\"))\n        .flatMap((e) => {\n            const path = join(e.parentPath, e.name);\n            return readFileSync(path, \"utf8\")\n",
+     "    files({ under: dir, suffix: \".css\", tests: true })\n        .flatMap((path) => {\n            return read(path)\n"
+    ],
+    [
+     "                    return m ? [{ name: m[1], where: `${e.name}:${i + 1}` }] : [];\n",
+     "                    return m ? [{ name: m[1], where: `${path.slice(path.lastIndexOf(\"/\") + 1)}:${i + 1}` }] : [];\n"
+    ]
+   ]
+  },
+  "tests/design/token-bridges.test.ts": {
+   "hunks": [
+    [
+     "import { readFileSync, readdirSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport { describe, expect, it } from \"vitest\";\n",
+     "import { describe, expect, it } from \"vitest\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { files, read } from \"../harness/source\";\n\n"
+    ],
+    [
+     "\nconst read = (rel: string): string => readFileSync(join(process.cwd(), rel), \"utf8\");\n\n",
+     "\n\n"
+    ],
+    [
+     "    readdirSync(join(process.cwd(), root), { recursive: true, withFileTypes: true })\n        .filter((e) => e.isFile() && SOURCE_EXT.test(e.name))\n        .map((e) => ({\n            path: join(e.parentPath, e.name),\n            text: readFileSync(join(e.parentPath, e.name), \"utf8\"),\n        }));\n",
+     "    files({ under: root, suffix: SOURCE_EXT, tests: true }).map((path) => ({ path, text: read(path) }));\n"
+    ],
+    [
+     "                if (path === join(process.cwd(), BRIDGES)) continue;\n",
+     "                if (path === BRIDGES) continue;\n"
+    ]
+   ]
+  },
+  "tests/docs/consumer-paths-exist.test.ts": {
+   "hunks": [
+    [
+     "\nimport { existsSync, readFileSync } from \"node:fs\";\nimport { resolve } from \"node:path\";\n\nimport { describe, expect, it } from \"vitest\";\n",
+     "\nimport { describe, expect, it } from \"vitest\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { read } from \"../harness/source\";\nimport { artifactExists } from \"../harness/artifacts\";\n\n"
+    ],
+    [
+     "const repoRoot = process.cwd();\nconst auditPath = resolve(repoRoot, \"docs/audits/overfitting-audit.md\");\nconst auditSource = readFileSync(auditPath, \"utf8\");\n",
+     "const auditSource = read(\"docs/audits/overfitting-audit.md\");\n"
+    ],
+    [
+     "            if (!existsSync(resolve(repoRoot, root))) {\n",
+     "            if (!artifactExists(root)) {\n"
+    ],
+    [
+     "            if (!existsSync(resolve(repoRoot, stem))) missing.push(stem);\n",
+     "            if (!artifactExists(stem)) missing.push(stem);\n"
+    ]
+   ]
+  },
+  "tests/gates/boot-graph/build.test.ts": {
+   "hunks": [
+    [
+     "\nimport { existsSync, readFileSync, readdirSync, statSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport { describe, expect, it } from \"vitest\";\n",
+     "\nimport { describe, expect, it } from \"vitest\";\n"
+    ],
+    [
+     "import { REPO_ROOT, MAX_MODULEPRELOADS, MAX_EAGER_JS_BYTES, walk, measureEagerGraph } from \"./scan\";\n",
+     "import { files, sourceStat } from \"../../harness/source\";\nimport { artifactExists, artifactStat, artifactText } from \"../../harness/artifacts\";\nimport { MAX_MODULEPRELOADS, MAX_EAGER_JS_BYTES, measureEagerGraph } from \"./scan\";\n"
+    ],
+    [
+     "\nconst DIST_DEMO = join(REPO_ROOT, \"dist-demo\");\n\n/**\n",
+     "\n/**\n"
+    ],
+    [
+     "    let newest = 0;\n    const walk = (dir: string): void => {\n        for (const entry of readdirSync(dir, { withFileTypes: true })) {\n            if (entry.name === \"node_modules\" || entry.name.startsWith(\".\")) continue;\n            const full = join(dir, entry.name);\n            if (entry.isDirectory()) walk(full);\n            else newest = Math.max(newest, statSync(full).mtimeMs);\n        }\n    };\n    [join(REPO_ROOT, \"demo\"), join(REPO_ROOT, \"src\")].forEach(walk);\n    return newest;\n",
+     "    // every source file the demo build reads, from F-1's file set (slots included: the\n    // build's own __tests__ exclusion is not this gate's to assume)\n    return Math.max(...[\"demo\", \"src\"].flatMap((under) => files({ under, tests: true })).map((f) => sourceStat(f).mtimeMs));\n"
+    ],
+    [
+     "    const indexHtml = join(DIST_DEMO, \"index.html\");\n",
+     "    const indexHtml = \"dist-demo/index.html\";\n"
+    ],
+    [
+     "    const built = existsSync(indexHtml);\n",
+     "    const built = artifactExists(indexHtml);\n"
+    ],
+    [
+     "        const builtAt = statSync(indexHtml).mtimeMs;\n",
+     "        const builtAt = artifactStat(indexHtml).mtimeMs;\n"
+    ],
+    [
+     "        const html = readFileSync(indexHtml, \"utf8\");\n",
+     "        const html = artifactText(indexHtml);\n"
+    ],
+    [
+     "            (href) => statSync(join(DIST_DEMO, href.replace(/^\\//, \"\"))).size,\n",
+     "            (href) => artifactStat(`dist-demo/${href.replace(/^\\//, \"\")}`).size,\n"
+    ]
+   ]
+  },
+  "tests/gates/boot-graph/source.test.ts": {
+   "hunks": [
+    [
+     "\nimport { readFileSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport { parse as parseSfc } from \"@vue/compiler-sfc\";\n",
+     "\nimport { parse as parseSfc } from \"@vue/compiler-sfc\";\n"
+    ],
+    [
+     "import { REPO_ROOT, MAX_MODULEPRELOADS, MAX_EAGER_JS_BYTES, walk, measureEagerGraph } from \"./scan\";\n",
+     "import { read } from \"../../harness/source\";\nimport { MAX_MODULEPRELOADS, MAX_EAGER_JS_BYTES, walk, measureEagerGraph } from \"./scan\";\n"
+    ],
+    [
+     "const APP_SHELL = join(REPO_ROOT, \"demo\", \"shell\", \"AppShell.vue\");\nconst AURORA_HERO = join(REPO_ROOT, \"demo\", \"chassis\", \"hero\", \"aurora-hero.ts\");\n",
+     "const APP_SHELL = \"demo/shell/AppShell.vue\";\nconst AURORA_HERO = \"demo/chassis/hero/aurora-hero.ts\";\n"
+    ],
+    [
+     "    it(\"AppShell reaches Aurora and PresetEditor through defineAsyncComponent\", () => {\n        const source = readFileSync(APP_SHELL, \"utf8\");\n        const violations = scanStaticShellImports(source);\n",
+     "    it(\"AppShell reaches Aurora and PresetEditor through defineAsyncComponent\", () => {\n        const source = read(APP_SHELL);\n        const violations = scanStaticShellImports(source);\n"
+    ],
+    [
+     "    it(\"AppShell actually declares the async boundaries\", () => {\n        const source = readFileSync(APP_SHELL, \"utf8\");\n        expect(scanAsyncShellDeclarations(source)).toEqual([]);\n",
+     "    it(\"AppShell actually declares the async boundaries\", () => {\n        const source = read(APP_SHELL);\n        expect(scanAsyncShellDeclarations(source)).toEqual([]);\n"
+    ],
+    [
+     "    it(\"the shell field's frame-0 ground is EAGER, not inside the async chunk\", () => {\n        const source = readFileSync(APP_SHELL, \"utf8\");\n        expect(scanFrame0Ground(source)).toEqual([]);\n",
+     "    it(\"the shell field's frame-0 ground is EAGER, not inside the async chunk\", () => {\n        const source = read(APP_SHELL);\n        expect(scanFrame0Ground(source)).toEqual([]);\n"
+    ],
+    [
+     "        const source = readFileSync(AURORA_HERO, \"utf8\");\n",
+     "        const source = read(AURORA_HERO);\n"
+    ],
+    [
+     "                readFileSync(join(REPO_ROOT, rel), \"utf8\"),\n",
+     "                read(rel),\n"
+    ]
+   ]
+  },
+  "tests/gates/feedback-tint-seam.test.ts": {
+   "hunks": [
+    [
+     "\nimport { readFileSync, readdirSync, statSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport { describe, expect, it } from \"vitest\";\n",
+     "\nimport { describe, expect, it } from \"vitest\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { files, read } from \"../harness/source\";\n\n"
+    ],
+    [
+     "const SRC = join(process.cwd(), \"src\");\nconst TONE_CSS = join(SRC, \"components/_shared/feedback/feedback-tone.css\");\n",
+     "const TONE_CSS = \"src/components/_shared/feedback/feedback-tone.css\";\n"
+    ],
+    [
+     "function walk(dir: string, out: string[] = []): string[] {\n    for (const entry of readdirSync(dir)) {\n        const full = join(dir, entry);\n        if (statSync(full).isDirectory()) walk(full, out);\n        else if (SCAN_EXTS.some((e) => entry.endsWith(e))) out.push(full);\n    }\n    return out;\n}\n",
+     "/** The library source this seam scans, from F-1's file set (R-3: never a directory walk). */\nconst sources = (): string[] => files({ under: \"src\" }).filter((f) => SCAN_EXTS.some((e) => f.endsWith(e)));\n"
+    ],
+    [
+     "    const css = strip(readFileSync(TONE_CSS, \"utf8\"));\n",
+     "    const css = strip(read(TONE_CSS));\n"
+    ],
+    [
+     "    for (const file of walk(SRC)) {\n        const text = strip(readFileSync(file, \"utf8\"));\n",
+     "    for (const file of sources()) {\n        const text = strip(read(file));\n"
+    ],
+    [
+     "            hits.push(`${file.slice(SRC.length + 1)}`);\n",
+     "            hits.push(file.slice(\"src/\".length));\n"
+    ]
+   ]
+  },
+  "tests/gates/orphan-css/partial.test.ts": {
+   "hunks": [
+    [
+     "\nimport { existsSync } from \"node:fs\";\nimport { join, relative } from \"node:path\";\n",
+     "\nimport { join, relative } from \"node:path\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\nimport {\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { read } from \"../../harness/source\";\nimport {\n"
+    ],
+    [
+     "        for (const root of roots) expect(existsSync(root)).toBe(true);\n",
+     "        for (const root of roots) expect(read(root).length).toBeGreaterThan(0); // a root the file set does not hold fails the read\n"
+    ],
+    [
+     "        // not trivially satisfied by a fabricated path (`publicJsReach` `continue`s on `!existsSync`,\n",
+     "        // not trivially satisfied by a fabricated path (`publicJsReach` `continue`s on a file the set does not hold,\n"
+    ],
+    [
+     "        expect(existsSync(deadSfc), \"the referrer must genuinely exist on disk\").toBe(true);\n",
+     "        expect(read(deadSfc).length, \"the referrer must genuinely exist in the tree\").toBeGreaterThan(0);\n"
+    ]
+   ]
+  },
+  "tests/gates/orphan-css/partials.ts": {
+   "hunks": [
+    [
+     "\nimport { existsSync, readFileSync, readdirSync, statSync } from \"node:fs\";\nimport { dirname, join, relative, resolve } from \"node:path\";\n",
+     "\nimport { dirname, join, relative, resolve } from \"node:path\";\n"
+    ],
+    [
+     "import { libraryEntryMap } from \"../../../scripts/structure/index.mjs\";\n\n",
+     "import { libraryEntryMap } from \"../../../scripts/structure/index.mjs\";\nimport { edges, files as fileSet, read } from \"../../harness/source\";\n\n"
+    ],
+    [
+     "const REPO_ROOT = process.cwd();\nconst SRC = join(REPO_ROOT, \"src\");\n\n",
+     "const REPO_ROOT = process.cwd();\n\n"
+    ],
+    [
+     "export const walk = (dir: string): string[] =>\n    readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {\n        const path = join(dir, entry.name);\n        return entry.isDirectory() ? walk(path) : [path];\n    });\n",
+     "/** Every file under `src/` (the `__tests__/` slots too: a slot may hold CSS a reach names),\n *  absolute, from F-1's file set (R-3: never a directory walk). Existence below is\n *  membership in this set, never a stat. */\nconst SRC_FILES = fileSet({ under: \"src\", tests: true }).map((f) => join(REPO_ROOT, f));\nconst KNOWN = new Set(SRC_FILES);\nconst isFile = (path: string): boolean => KNOWN.has(path);\n"
+    ],
+    [
+     "export const JS_EXTS = [\".ts\", \".tsx\", \".mjs\", \".js\", \".vue\"];\n",
+     "/** The module kinds of F-1's edges a JS reach follows: static, type-only, side-effect and\n *  dynamic imports and re-exports. */\nconst JS_IMPORT = new Set([\"import\", \"import-type\", \"import-side-effect\", \"dynamic\", \"reexport\", \"reexport-star\"]);\nconst JS_MODULE = /\\.(?:ts|tsx|mjs|js|vue)$/;\n\n/** The JS/TS/Vue modules `file` imports, as F-1 resolves them (R-3: the graph's own\n *  resolution, never a second resolver beside it). A bare package specifier has no repo\n *  target and is not followed. */\nconst importsOf = (file: string): string[] =>\n    edges({ from: relative(REPO_ROOT, file) })\n        .filter((e) => JS_IMPORT.has(e.kind) && e.to !== null && JS_MODULE.test(e.to))\n        .map((e) => join(REPO_ROOT, e.to as string));\n"
+    ],
+    [
+     "    while (queue.length > 0) {\n        const file = queue.pop() as string;\n        if (seen.has(file) || !existsSync(file)) continue;\n        seen.add(file);\n\n",
+     "    while (queue.length > 0) {\n        const file = queue.pop() as string;\n        if (seen.has(file) || !isFile(file)) continue;\n        seen.add(file);\n\n"
+    ],
+    [
+     "        const css = stripComments(readFileSync(file, \"utf8\"));\n",
+     "        const css = stripComments(read(file));\n"
+    ],
+    [
+     "\n/** Resolve a JS/TS/Vue import specifier from `fromFile` to an on-disk path (or null). */\nexport const resolveJsImport = (fromFile: string, spec: string): string | null => {\n    let base: string;\n    if (spec.startsWith(\".\")) base = resolve(dirname(fromFile), spec);\n    else if (spec.startsWith(\"@glass/\")) base = resolve(SRC, spec.slice(\"@glass/\".length));\n    else return null; // bare package specifier — not a repo module\n\n    if (existsSync(base) && statSync(base).isFile()) return base;\n    for (const ext of JS_EXTS) if (existsSync(base + ext)) return base + ext;\n    if (existsSync(base) && statSync(base).isDirectory())\n        for (const ext of JS_EXTS) {\n            const idx = join(base, \"index\" + ext);\n            if (existsSync(idx)) return idx;\n        }\n    return null;\n};\n\n/** The non-CSS JS/TS import specifiers a module (incl. a `.vue` file's script) declares. */\nexport const jsImportSpecs = (text: string): string[] => {\n    const specs: string[] = [];\n    const re =\n        /(?:import|export)\\b[^;'\"]*?from\\s*[\"']([^\"']+)[\"']|import\\s*[\"']([^\"']+)[\"']|import\\(\\s*[\"']([^\"']+)[\"']\\s*\\)/g;\n    let match: RegExpExecArray | null;\n    while ((match = re.exec(text))) {\n        const spec = match[1] ?? match[2] ?? match[3];\n        if (spec && !spec.endsWith(\".css\")) specs.push(spec);\n    }\n    return specs;\n};\n\n/**\n",
+     "\n/**\n"
+    ],
+    [
+     "    while (queue.length > 0) {\n        const file = queue.pop() as string;\n        if (seen.has(file) || !existsSync(file)) continue;\n        seen.add(file);\n        if (!/\\.(?:ts|tsx|mjs|js|vue)$/.test(file)) continue;\n",
+     "    while (queue.length > 0) {\n        const file = queue.pop() as string;\n        if (seen.has(file) || !isFile(file)) continue;\n        seen.add(file);\n        if (!/\\.(?:ts|tsx|mjs|js|vue)$/.test(file)) continue;\n"
+    ],
+    [
+     "        for (const spec of jsImportSpecs(readFileSync(file, \"utf8\"))) {\n            const resolved = resolveJsImport(file, spec);\n            if (resolved) queue.push(resolved);\n        }\n",
+     "        queue.push(...importsOf(file));\n"
+    ],
+    [
+     "    for (const file of files.filter((f) => /\\.(?:vue|ts|tsx|js|mjs)$/.test(f))) {\n        const text = readFileSync(file, \"utf8\");\n        for (const match of text.matchAll(/<style[^>]*\\ssrc=[\"']([^\"']+)[\"']/g))\n",
+     "    for (const file of files.filter((f) => /\\.(?:vue|ts|tsx|js|mjs)$/.test(f))) {\n        const text = read(file);\n        for (const match of text.matchAll(/<style[^>]*\\ssrc=[\"']([^\"']+)[\"']/g))\n"
+    ],
+    [
+     "export const pkg = JSON.parse(readFileSync(join(REPO_ROOT, \"package.json\"), \"utf8\"));\nexport const files = walk(SRC);\n",
+     "export const pkg = JSON.parse(read(\"package.json\"));\nexport const files = SRC_FILES;\n"
+    ],
+    [
+     "    .flatMap((file) => {\n        const text = readFileSync(file, \"utf8\");\n        const sheets = file.endsWith(\".vue\") ? sfcStyleBlocks(text) : [text];\n",
+     "    .flatMap((file) => {\n        const text = read(file);\n        const sheets = file.endsWith(\".vue\") ? sfcStyleBlocks(text) : [text];\n"
+    ]
+   ]
+  },
+  "tests/gates/overfit/census.ts": {
+   "hunks": [
+    [
+     "\nimport { readFileSync, readdirSync, statSync } from \"node:fs\";\nimport { join } from \"node:path\";\n",
+     "\nimport { join } from \"node:path\";\n"
+    ],
+    [
+     "import { join } from \"node:path\";\n\n",
+     "import { join } from \"node:path\";\nimport { files, read as readSource } from \"../../harness/source\";\n\n"
+    ],
+    [
+     "export function walk(dir: string, out: string[] = [], slots = false): string[] {\n    for (const entry of readdirSync(dir)) {\n        const full = join(dir, entry);\n        if (statSync(full).isDirectory()) { if (slots || entry !== \"__tests__\") walk(full, out, slots); }\n        else if (CODE_RE.test(entry) && !entry.endsWith(\".d.ts\")) out.push(full);\n    }\n    return out;\n",
+     "/** The code files under a zone dir, from F-1's file set (R-3: never a directory walk),\n *  absolute; `slots` takes the `__tests__/` slots in too. */\nexport function codeFiles(under: string, slots = false): string[] {\n    return files({ under, tests: slots })\n        .filter((f) => CODE_RE.test(f) && !f.endsWith(\".d.ts\"))\n        .map((f) => join(REPO_ROOT, f));\n"
+    ],
+    [
+     "export const srcFiles = walk(SRC);\n",
+     "export const srcFiles = codeFiles(\"src\");\n"
+    ],
+    [
+     "    ...walk(join(REPO_ROOT, \"demo\")),\n    ...walk(join(REPO_ROOT, \"tests\")),\n    ...walk(SRC, [], true).filter((f) => f.includes(\"/__tests__/\")),\n    ...walk(join(REPO_ROOT, \"scripts\")),\n",
+     "    ...codeFiles(\"demo\"),\n    ...codeFiles(\"tests\"),\n    ...codeFiles(\"src\", true).filter((f) => f.includes(\"/__tests__/\")),\n    ...codeFiles(\"scripts\"),\n"
+    ],
+    [
+     "];\nexport const text = new Map<string, string>();\n",
+     "];\n/** Every library file a relative specifier can name, for the resolver's existence test. */\nexport const srcSet = new Set(files({ under: \"src\", tests: true }).map((f) => join(REPO_ROOT, f)));\nexport const text = new Map<string, string>();\n"
+    ],
+    [
+     "for (const f of censusFiles) text.set(f, readFileSync(f, \"utf8\"));\n",
+     "for (const f of censusFiles) text.set(f, readSource(f));\n"
+    ],
+    [
+     "    text.get(f) ?? readFileSync(f, \"utf8\");\n",
+     "    text.get(f) ?? readSource(f);\n"
+    ]
+   ]
+  },
+  "tests/gates/overfit/export-reach.test.ts": {
+   "hunks": [
+    [
+     "\nimport { existsSync, statSync } from \"node:fs\";\nimport { dirname, join, relative, resolve } from \"node:path\";\n",
+     "\nimport { dirname, join, relative, resolve } from \"node:path\";\n"
+    ],
+    [
+     "import { REPO_ROOT, srcFiles, censusFiles, read, BRACE_RE, braceNames } from \"./census\";\n",
+     "import { REPO_ROOT, srcFiles, srcSet, censusFiles, read, BRACE_RE, braceNames } from \"./census\";\n"
+    ],
+    [
+     "        if (existsSync(candidate) && statSync(candidate).isFile()) return candidate;\n",
+     "        if (srcSet.has(candidate)) return candidate;\n"
+    ]
+   ]
+  },
+  "tests/gates/tabs-seam.test.ts": {
+   "hunks": [
+    [
+     "import { readFileSync, readdirSync } from \"node:fs\";\nimport { join } from \"node:path\";\n",
+     "import { files, read } from \"../harness/source\";\n"
+    ],
+    [
+     "const TABS_STYLES = join(process.cwd(), \"src/components/tabs/styles\");\nconst SEGMENTED = join(TABS_STYLES, \"segmented.css\");\n",
+     "const TABS_STYLES = \"src/components/tabs/styles\";\nconst SEGMENTED = \"src/components/tabs/styles/segmented.css\";\n"
+    ],
+    [
+     "    readdirSync(TABS_STYLES)\n        .filter((f) => f.endsWith(\".css\"))\n",
+     "    files({ under: TABS_STYLES, suffix: \".css\" })\n        .filter((f) => !f.slice(TABS_STYLES.length + 1).includes(\"/\"))\n"
+    ],
+    [
+     "            name: f,\n            code: stripComments(readFileSync(join(TABS_STYLES, f), \"utf8\")),\n",
+     "            name: f.slice(TABS_STYLES.length + 1),\n            code: stripComments(read(f)),\n"
+    ],
+    [
+     "            const source = readFileSync(\n                join(process.cwd(), \"src/components/tabs/segmented-tabs/SegmentedTabs.vue\"),\n                \"utf8\",\n            );\n",
+     "            const source = read(\"src/components/tabs/segmented-tabs/SegmentedTabs.vue\");\n"
+    ],
+    [
+     "        const raw = readFileSync(SEGMENTED, \"utf8\");\n",
+     "        const raw = read(SEGMENTED);\n"
+    ],
+    [
+     "        const css = stripComments(readFileSync(SEGMENTED, \"utf8\"));\n",
+     "        const css = stripComments(read(SEGMENTED));\n"
+    ],
+    [
+     "                readFileSync(\n                    join(process.cwd(), \"src/components/tabs/segmented-tabs/SegmentedTabs.vue\"),\n                    \"utf8\",\n                ),\n",
+     "                read(\"src/components/tabs/segmented-tabs/SegmentedTabs.vue\"),\n"
+    ],
+    [
+     "        const sfc = readFileSync(\n            join(process.cwd(), \"src/components/tabs/segmented-tabs/SegmentedTabs.vue\"),\n            \"utf8\",\n        );\n",
+     "        const sfc = read(\"src/components/tabs/segmented-tabs/SegmentedTabs.vue\");\n"
+    ]
+   ]
+  },
+  "tests/gates/token-hygiene.test.ts": {
+   "hunks": [
+    [
+     "\nimport { readFileSync, readdirSync } from \"node:fs\";\nimport { join, relative, sep } from \"node:path\";\nimport { parse as parseSfc } from \"@vue/compiler-sfc\";\n",
+     "\nimport { parse as parseSfc } from \"@vue/compiler-sfc\";\n"
+    ],
+    [
+     "\nimport { VAR_FUNCTION, asciiLowerCase } from \"./cssSyntax\";\n",
+     "\nimport { files, read } from \"../harness/source\";\nimport { VAR_FUNCTION, asciiLowerCase } from \"./cssSyntax\";\n"
+    ],
+    [
+     "\n// The vitest root is the repo root (`vitest.config.ts` sits there); happy-dom leaves\n// `import.meta.url` non-file, so `process.cwd()` is the house idiom (token-graph.test.ts).\nconst REPO_ROOT = process.cwd();\nconst SRC = join(REPO_ROOT, \"src\");\n\n// Ladder-source files: they mint the rungs, so they hold the literals by definition.\n",
+     "\n// Ladder-source files: they mint the rungs, so they hold the literals by definition.\n"
+    ],
+    [
+     "    join(\"src\", \"styles\", \"theme\") + sep,\n    join(\"src\", \"styles\", \"tokens\") + sep,\n    join(\"src/styles/tokens/index.css\"),\n",
+     "    \"src/styles/theme/\",\n    \"src/styles/tokens/\",\n    \"src/styles/tokens/index.css\",\n"
+    ],
+    [
+     "const sourceFiles = (dir: string): string[] =>\n    readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {\n        const path = join(dir, entry.name);\n        if (entry.isDirectory()) return sourceFiles(path);\n        return /\\.(?:css|vue)$/.test(path) ? [path] : [];\n    });\n",
+     "// The library's CSS and SFC source, from F-1's file set (R-3: never a directory walk).\nconst sourceFiles = (): string[] => files({ under: \"src\", suffix: /\\.(?:css|vue)$/ });\n"
+    ],
+    [
+     "const scanned = sourceFiles(SRC)\n    .map((path) => relative(REPO_ROOT, path))\n",
+     "const scanned = sourceFiles()\n"
+    ],
+    [
+     "    .flatMap((rel) => scanTokenHygiene(rel, readFileSync(join(REPO_ROOT, rel), \"utf8\")));\n",
+     "    .flatMap((rel) => scanTokenHygiene(rel, read(rel)));\n"
+    ],
+    [
+     "            readFileSync(join(REPO_ROOT, rel), \"utf8\")\n",
+     "            read(rel)\n"
+    ],
+    [
+     "        const sources = sourceFiles(SRC).map((path) => relative(REPO_ROOT, path));\n",
+     "        const sources = sourceFiles();\n"
+    ],
+    [
+     "        const ladder = readFileSync(join(SRC, \"styles/tokens/surface/color-radius.css\"), \"utf8\");\n",
+     "        const ladder = read(\"src/styles/tokens/surface/color-radius.css\");\n"
+    ],
+    [
+     "            expect(readFileSync(join(REPO_ROOT, rel), \"utf8\")).toContain(\n",
+     "            expect(read(rel)).toContain(\n"
+    ]
+   ]
+  },
+  "tests/gates/trap-gates.test.ts": {
+   "hunks": [
+    [
+     "\nimport { readFileSync, readdirSync } from \"node:fs\";\nimport { join, relative } from \"node:path\";\nimport { parse as parseSfc } from \"@vue/compiler-sfc\";\n",
+     "\nimport { parse as parseSfc } from \"@vue/compiler-sfc\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { files, read } from \"../harness/source\";\n\n"
+    ],
+    [
+     "\nconst REPO_ROOT = process.cwd();\nconst SRC = join(REPO_ROOT, \"src\");\n\nexport interface TrapViolation {\n",
+     "\nexport interface TrapViolation {\n"
+    ],
+    [
+     "\nconst walk = (dir: string): string[] =>\n    readdirSync(dir, { withFileTypes: true }).flatMap((entry) =>\n        entry.isDirectory()\n            ? walk(join(dir, entry.name))\n            : [join(dir, entry.name)],\n    );\n\n",
+     "\n\n"
+    ],
+    [
+     "    for (const file of walk(SRC)) {\n        const rel = relative(REPO_ROOT, file);\n",
+     "    // the library source from F-1's file set (R-3), every path repo-relative\n    for (const file of files({ under: \"src\" })) {\n        const rel = file;\n"
+    ],
+    [
+     "            postcss.parse(readFileSync(file, \"utf8\"), { from: file }).walkDecls((decl) => {\n",
+     "            postcss.parse(read(file), { from: file }).walkDecls((decl) => {\n"
+    ],
+    [
+     "        const source = readFileSync(file, \"utf8\");\n",
+     "        const source = read(file);\n"
+    ]
+   ]
+  },
+  "tests/gates/type-hygiene.test.ts": {
+   "hunks": [
+    [
+     "\nimport { readFileSync, readdirSync } from \"node:fs\";\nimport { join, relative } from \"node:path\";\nimport postcss from \"postcss\";\n",
+     "\nimport postcss from \"postcss\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { files, read } from \"../harness/source\";\n\n"
+    ],
+    [
+     "\nconst REPO_ROOT = process.cwd();\n\n// ── Utility-class arm ──────────────────────────────────────────────────────\n",
+     "\n// ── Utility-class arm ──────────────────────────────────────────────────────\n"
+    ],
+    [
+     "// ── Tree walk ──────────────────────────────────────────────────────────────\n",
+     "// ── The file set (F-1's, R-3: never a directory walk) ─────────────────────────\n"
+    ],
+    [
+     "const walk = (dir: string, test: (path: string) => boolean): string[] =>\n    readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {\n        const path = join(dir, entry.name);\n        if (entry.isDirectory()) return walk(path, test);\n        return test(path) ? [path] : [];\n    });\n\nconst read = (rel: string): string => readFileSync(join(REPO_ROOT, rel), \"utf8\");\n\nconst utilityFiles = [\"src\", \"demo\"].flatMap((root) =>\n    walk(join(REPO_ROOT, root), (p) => /\\.(?:vue|ts)$/.test(p)).map((p) => relative(REPO_ROOT, p)),\n);\n",
+     "const utilityFiles = [\"src\", \"demo\"].flatMap((root) => files({ under: root, suffix: /\\.(?:vue|ts)$/ }));\n"
+    ],
+    [
+     "const componentCssFiles = walk(join(REPO_ROOT, \"src\", \"components\"), (p) => p.endsWith(\".css\")).map(\n    (p) => relative(REPO_ROOT, p),\n);\n",
+     "const componentCssFiles = files({ under: \"src/components\", suffix: \".css\" });\n"
+    ],
+    [
+     "const srcCssFiles = walk(join(REPO_ROOT, \"src\"), (p) => p.endsWith(\".css\")).map((p) =>\n    relative(REPO_ROOT, p),\n);\n",
+     "const srcCssFiles = files({ under: \"src\", suffix: \".css\" });\n"
+    ]
+   ]
+  },
+  "tests/harness/source.ts": {
+   "hunks": [
+    [
+     "// tests/harness/source.ts — FD-6: the one way a whole-library suite reads source. R-3:\n// \"a suite that scans source reads the resolved graph, never a directory walk\". The file\n// set is F-1's (git's tracked and untracked files), so a `__tests__/` slot, a nested\n// module or a moved file never meets a walker as a surprise directory.\nimport { readFileSync } from \"node:fs\";\nimport { posix, resolve } from \"node:path\";\n",
+     "// tests/harness/source.ts — FD-6: the one way a suite reads the tree. R-3: \"a suite that\n// scans source reads the resolved graph, never a directory walk\". The file set is F-1's\n// (git's tracked and untracked files), so a `__tests__/` slot, a nested module or a moved\n// file never meets a walker as a surprise directory. B-S12 (B0): every source read a suite\n// makes comes through `files`/`read`, and `read` refuses a path the file set does not\n// hold, so a read that names a moved or missing file fails here instead of reading\n// nothing. What is not source (a build output, a run's output, a path outside the\n// repository) is read through ./output.ts.\nimport { readFileSync, statSync } from \"node:fs\";\nimport { dirname, isAbsolute, posix, relative, resolve } from \"node:path\";\nimport { fileURLToPath } from \"node:url\";\n"
+    ],
+    [
+     "const ROOT = resolve(__dirname, \"../..\");\n",
+     "const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), \"../..\");\n"
+    ],
+    [
+     "let fileSet: string[] | null = null;\nlet edgeSet: SourceEdge[] | null = null;\n",
+     "let fileSet: string[] | null = null;\nlet members: Set<string> | null = null;\nlet edgeSet: SourceEdge[] | null = null;\n"
+    ],
+    [
+     "\n/** Repo-relative files at or under `under`, sorted. A unit's `__tests__/` slots are not\n",
+     "\n/** A path as the file set spells it: repo-relative, normalized. An absolute path inside\n *  the repo is taken relative to it; one outside is refused. */\nconst repoPath = (file: string): string => {\n    const r = isAbsolute(file) ? relative(ROOT, file) : posix.normalize(file);\n    if (r.startsWith(\"..\") || isAbsolute(r)) throw new Error(`harness: ${file} is outside the repository`);\n    return r.split(\"\\\\\").join(\"/\");\n};\n\n/** Repo-relative files at or under `under`, sorted. A unit's `__tests__/` slots are not\n"
+    ],
+    [
+     "/** A repo-relative file's text. */\n",
+     "/** A file's text, by its repo path. The file must be one F-1's file set holds: a read of\n *  any other path fails, so a suite never reads a moved or absent file as empty. */\n"
+    ],
+    [
+     "    return readFileSync(resolve(ROOT, file), \"utf8\");\n",
+     "    const r = repoPath(file);\n    fileSet ??= (openTree(ROOT) as { files: string[] }).files;\n    members ??= new Set(fileSet);\n    if (!members.has(r)) throw new Error(`harness: ${r} is not in the file set (F-1); a source read names a file the tree holds`);\n    return readFileSync(resolve(ROOT, r), \"utf8\");\n}\n\n/** A file-set member's size and modification time (the same membership rule as `read`). */\nexport function sourceStat(file: string): { size: number; mtimeMs: number } {\n    const r = repoPath(file);\n    fileSet ??= (openTree(ROOT) as { files: string[] }).files;\n    members ??= new Set(fileSet);\n    if (!members.has(r)) throw new Error(`harness: ${r} is not in the file set (F-1)`);\n    const s = statSync(resolve(ROOT, r));\n    return { size: s.size, mtimeMs: s.mtimeMs };\n"
+    ]
+   ]
+  },
+  "tests/public-surface/built.spec.ts": {
+   "hunks": [
+    [
+     "import { describe, expect, it } from \"vitest\";\nimport { existsSync, readdirSync } from \"node:fs\";\nimport { relative, resolve } from \"node:path\";\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { relative, resolve } from \"node:path\";\n"
+    ],
+    [
+     "import { runVerifierProbe } from \"./exports\";\n\n",
+     "import { runVerifierProbe } from \"./exports\";\nimport { artifactExists, artifactFiles } from \"../harness/artifacts\";\n\n"
+    ],
+    [
+     "    const built = existsSync(\"dist\");\n",
+     "    const built = artifactExists(\"dist\");\n"
+    ],
+    [
+     "    const filesUnder = (directory: string, prefix = \"\"): string[] =>\n        readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {\n            const name = prefix ? `${prefix}/${entry.name}` : entry.name;\n            return entry.isDirectory()\n                ? filesUnder(resolve(directory, entry.name), name)\n                : [name];\n        });\n",
+     "    /** The build's files under a dist directory, relative to it (the harness reads dist). */\n    const filesUnder = (directory: string): string[] =>\n        artifactFiles({ under: directory }).map((f) => f.slice(directory.length + 1));\n"
+    ],
+    [
+     "        const verifier = pathToFileURL(resolve(\"scripts/package-verify/pack.mjs\")).href;\n        const probe = `\n",
+     "        const verifier = pathToFileURL(resolve(\"scripts/package-verify/pack.mjs\")).href;\n        // the built CSS set is read here, through the harness, and handed to the probe\n        const artifactList = artifactFiles({ under: \"dist\", suffix: \".css\" }).map((file) => file.slice(\"dist/\".length));\n        const probe = `\n"
+    ],
+    [
+     "        const probe = `\n            import { readdirSync } from \"node:fs\";\n            import { join } from \"node:path\";\n            import { packedCssSetFailures } from ${JSON.stringify(verifier)};\n",
+     "        const probe = `\n            import { packedCssSetFailures } from ${JSON.stringify(verifier)};\n"
+    ],
+    [
+     "            const filesUnder = (directory, prefix = \"\") => readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {\n                const path = join(directory, entry.name);\n                const name = prefix ? [prefix, entry.name].join(\"/\") : entry.name;\n                return entry.isDirectory() ? filesUnder(path, name) : [name];\n            });\n            const artifactCss = new Set(filesUnder(\"dist\").filter((file) => file.endsWith(\".css\")));\n",
+     "            const artifactCss = new Set(${JSON.stringify(artifactList)});\n"
+    ]
+   ]
+  },
+  "tests/scripts/profile-bundle-value-js.test.ts": {
+   "hunks": [
+    [
+     "import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from \"node:fs\";\n",
+     "import { execFileSync } from \"node:child_process\";\nimport { mkdtempSync, mkdirSync, rmSync, writeFileSync } from \"node:fs\";\n"
+    ],
+    [
+     "import { afterEach, describe, expect, it, vi } from \"vitest\";\n\n",
+     "import { afterEach, describe, expect, it, vi } from \"vitest\";\nimport { artifactText } from \"../harness/artifacts\";\n\n"
+    ],
+    [
+     "    roots.push(root);\n    mkdirSync(join(root, \"src\"), { recursive: true });\n",
+     "    roots.push(root);\n    // the census reads the root's file set (git's tracked and untracked files), as on the repo\n    execFileSync(\"git\", [\"init\", \"-q\"], { cwd: root });\n    mkdirSync(join(root, \"src\"), { recursive: true });\n"
+    ],
+    [
+     "    const profile = JSON.parse(readFileSync(artifact, \"utf8\"));\n",
+     "    const profile = JSON.parse(artifactText(artifact)); // the profile this run wrote in its temp root\n"
+    ]
+   ]
+  },
+  "tests/styles/backdrop-prefix-normalization.test.ts": {
+   "hunks": [
+    [
+     "\nimport { existsSync, readFileSync, readdirSync } from \"node:fs\";\nimport { join } from \"node:path\";\n\n",
+     "\n\n"
+    ],
+    [
+     "import { normalizeBackdropFilterPairs } from \"../../vite.style-fold\";\n\n",
+     "import { normalizeBackdropFilterPairs } from \"../../vite.style-fold\";\nimport { artifactExists, artifactFiles, artifactText } from \"../harness/artifacts\";\n\n"
+    ],
+    [
+     "\nconst DIST = join(process.cwd(), \"dist\");\n\n",
+     "\n\n"
+    ],
+    [
+     "\nfunction distCssFiles(dir: string): string[] {\n    return readdirSync(dir, { withFileTypes: true }).flatMap((entry) =>\n        entry.isDirectory()\n            ? distCssFiles(join(dir, entry.name))\n            : entry.name.endsWith(\".css\")\n              ? [join(dir, entry.name)]\n              : [],\n    );\n}\n\nfunction unpairedIn(css: string, file: string): string[] {\n",
+     "\nfunction unpairedIn(css: string, file: string): string[] {\n"
+    ],
+    [
+     "    const built = existsSync(DIST);\n",
+     "    const built = artifactExists(\"dist\");\n"
+    ],
+    [
+     "        const files = distCssFiles(DIST);\n",
+     "        const files = artifactFiles({ under: \"dist\", suffix: \".css\" });\n"
+    ],
+    [
+     "        const unpaired = files.flatMap((file) => unpairedIn(readFileSync(file, \"utf-8\"), file));\n",
+     "        const unpaired = files.flatMap((file) => unpairedIn(artifactText(file), file));\n"
+    ]
+   ]
+  },
+  "tests/styles/color-mix-endpoints.test.ts": {
+   "hunks": [
+    [
+     "import { readFileSync, readdirSync } from \"node:fs\";\nimport { join } from \"node:path\";\n",
+     "import { join, relative } from \"node:path\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { files as fileSet, read } from \"../harness/source\";\n\n"
+    ],
+    [
+     "const files = (dir: string): string[] =>\n    readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {\n        const path = join(dir, entry.name);\n        return entry.isDirectory() ? files(path) : [path];\n    });\n",
+     "/** The files under a source dir, absolute, from F-1's file set (R-3: never a directory walk). */\nconst files = (dir: string): string[] => fileSet({ under: relative(process.cwd(), dir) }).map((f) => join(process.cwd(), f));\n"
+    ],
+    [
+     "        const source = readFileSync(file, \"utf8\");\n",
+     "        const source = read(file);\n"
+    ]
+   ]
+  },
+  "tests/styles/contrast/engine.ts": {
+   "hunks": [
+    [
+     "import { readFileSync } from \"node:fs\";\n",
+     "import { read } from \"../../harness/source\";\n"
+    ],
+    [
+     "export const read = (path: string): string => readFileSync(path, \"utf8\");\n",
+     "export { read };\n"
+    ]
+   ]
+  },
+  "tests/styles/dissolve/exits.test.ts": {
+   "hunks": [
+    [
+     "\nimport { readFileSync, readdirSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport postcss from \"postcss\";\n",
+     "\nimport postcss from \"postcss\";\n"
+    ],
+    [
+     "import { REPO_ROOT, DISSOLVE_CSS, ruleFor, declOf } from \"./rules\";\n",
+     "import { files } from \"../../harness/source\";\nimport { read, DISSOLVE_CSS, ruleFor, declOf } from \"./rules\";\n"
+    ],
+    [
+     "const allCssUnderSrc = (): Array<{ path: string; css: string }> => {\n    const walk = (dir: string): string[] =>\n        readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {\n            const path = join(dir, entry.name);\n            return entry.isDirectory() ? walk(path) : path.endsWith(\".css\") ? [path] : [];\n        });\n    return walk(join(REPO_ROOT, \"src\")).map((path) => ({\n        path: path.slice(REPO_ROOT.length + 1),\n        css: readFileSync(path, \"utf8\"),\n    }));\n};\n",
+     "const allCssUnderSrc = (): Array<{ path: string; css: string }> =>\n    // the library's sheets, from F-1's file set (R-3: never a directory walk)\n    files({ under: \"src\", suffix: \".css\" }).map((path) => ({ path, css: read(path) }));\n"
+    ]
+   ]
+  },
+  "tests/styles/dissolve/rules.ts": {
+   "hunks": [
+    [
+     "\nimport { readFileSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport postcss, { type AtRule, type Rule } from \"postcss\";\n",
+     "\nimport postcss, { type AtRule, type Rule } from \"postcss\";\n"
+    ],
+    [
+     "import postcss, { type AtRule, type Rule } from \"postcss\";\n\n",
+     "import postcss, { type AtRule, type Rule } from \"postcss\";\nimport { read } from \"../../harness/source\";\n\n"
+    ],
+    [
+     "export const REPO_ROOT = process.cwd();\nexport const read = (rel: string): string => readFileSync(join(REPO_ROOT, rel), \"utf8\");\nexport const readStyle = (rel: string): string => read(join(\"src/styles\", rel));\n",
+     "export { read };\nexport const readStyle = (rel: string): string => read(`src/styles/${rel}`);\n"
+    ]
+   ]
+  },
+  "tests/styles/dock-name-canon.test.ts": {
+   "hunks": [
+    [
+     "import { readFileSync, readdirSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport { mount } from \"@vue/test-utils\";\n",
+     "import { mount } from \"@vue/test-utils\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { files, read } from \"../harness/source\";\n\n"
+    ],
+    [
+     "const read = (rel: string): string => readFileSync(join(process.cwd(), rel), \"utf8\");\n\n/** Every file under `rel`, recursively. */\nfunction walk(rel: string): string[] {\n    const out: string[] = [];\n    for (const e of readdirSync(join(process.cwd(), rel), { withFileTypes: true })) {\n        const child = `${rel}/${e.name}`;\n        if (e.isDirectory()) { if (e.name !== \"__tests__\") out.push(...walk(child)); }\n        else out.push(child);\n    }\n    return out.sort();\n}\n",
+     "/** Every file under `rel`, from F-1's file set (R-3: never a directory walk; slots out). */\nconst walk = (rel: string): string[] => files({ under: rel });\n"
+    ]
+   ]
+  },
+  "tests/styles/emitted-utility-vars.test.ts": {
+   "hunks": [
+    [
+     "\nimport { existsSync, readFileSync, readdirSync } from \"node:fs\";\nimport { join } from \"node:path\";\n\n",
+     "\n\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { artifactExists, artifactFiles, artifactText } from \"../harness/artifacts\";\n\n"
+    ],
+    [
+     "const DIST = join(process.cwd(), \"dist\");\nconst COMPONENTS = join(DIST, \"styles/components.css\");\n",
+     "const COMPONENTS = \"dist/styles/components.css\";\n"
+    ],
+    [
+     "\nfunction cssFilesUnder(directory: string): string[] {\n    return readdirSync(directory, { withFileTypes: true }).flatMap((entry) =>\n        entry.isDirectory()\n            ? cssFilesUnder(join(directory, entry.name))\n            : entry.name.endsWith(\".css\")\n              ? [join(directory, entry.name)]\n              : [],\n    );\n}\n\n/** Every `var(--x[, fallback])` reference, nested bodies included. */\n",
+     "\n/** Every `var(--x[, fallback])` reference, nested bodies included. */\n"
+    ],
+    [
+     "    for (const file of cssFilesUnder(DIST)) {\n        const parsed = postcss.parse(readFileSync(file, \"utf-8\"));\n",
+     "    for (const file of artifactFiles({ under: \"dist\", suffix: \".css\" })) {\n        const parsed = postcss.parse(artifactText(file));\n"
+    ],
+    [
+     "describe.skipIf(!existsSync(COMPONENTS))(\"emitted component utilities\", () => {\n",
+     "// Build ACCEPTANCE fails loud: with no build there is nothing to accept, and a skipped\n// suite reads as a pass (B17). `npm run build` precedes the suite.\ndescribe(\"emitted component utilities\", () => {\n    it(\"has a built components sheet to accept\", () => {\n        expect(artifactExists(COMPONENTS), `${COMPONENTS} is absent — run \\`npm run build\\` first`).toBe(true);\n    });\n\n"
+    ],
+    [
+     "        const references = varReferences(readFileSync(COMPONENTS, \"utf-8\"));\n",
+     "        const references = varReferences(artifactText(COMPONENTS));\n"
+    ],
+    [
+     "        [...readFileSync(COMPONENTS, \"utf-8\").matchAll(/transition-duration:([^;}]*)/g)]\n",
+     "        [...artifactText(COMPONENTS).matchAll(/transition-duration:([^;}]*)/g)]\n"
+    ],
+    [
+     "        const root = postcss.parse(readFileSync(COMPONENTS, \"utf-8\"));\n",
+     "        const root = postcss.parse(artifactText(COMPONENTS));\n"
+    ]
+   ]
+  },
+  "tests/styles/engage-ladder.test.ts": {
+   "hunks": [
+    [
+     "import { readFileSync, readdirSync, statSync } from \"node:fs\";\nimport { join } from \"node:path\";\n",
+     "import { files, read } from \"../harness/source\";\n"
+    ],
+    [
+     "\nconst read = (rel: string): string => readFileSync(join(process.cwd(), rel), \"utf8\");\n\n",
+     "\n\n"
+    ],
+    [
+     "const COMPONENTS = join(process.cwd(), \"src\", \"components\");\n",
+     "const COMPONENTS = \"src/components\";\n\n// The component tree from F-1's file set (R-3: never a directory walk). The census has always\n// read a unit's whole subtree, its `__tests__/` slot included, so `tests` stays on.\nconst COMPONENT_FILES = files({ under: COMPONENTS, tests: true });\n"
+    ],
+    [
+     "const COMPONENT_DIRS = readdirSync(COMPONENTS)\n",
+     "const COMPONENT_DIRS = [...new Set(COMPONENT_FILES.map((f) => f.split(\"/\")).filter((p) => p.length > 3).map((p) => p[2]))]\n"
+    ],
+    [
+     "    .filter((entry) => statSync(join(COMPONENTS, entry)).isDirectory());\n",
+     "    .sort();\n"
+    ],
+    [
+     "function readDirText(dir: string, out: string[] = []): string[] {\n    for (const entry of readdirSync(dir)) {\n        const path = join(dir, entry);\n        if (statSync(path).isDirectory()) readDirText(path, out);\n        else if (/\\.(css|vue|ts)$/.test(entry)) out.push(readFileSync(path, \"utf8\"));\n    }\n    return out;\n}\n",
+     "const readDirText = (dir: string): string[] =>\n    COMPONENT_FILES.filter((f) => f.startsWith(`${dir}/`) && /\\.(css|vue|ts)$/.test(f)).map(read);\n"
+    ],
+    [
+     "    readDirText(join(COMPONENTS, name)).some((text) => RUNG_BEYOND_HOVER.test(text)),\n",
+     "    readDirText(`${COMPONENTS}/${name}`).some((text) => RUNG_BEYOND_HOVER.test(text)),\n"
+    ]
+   ]
+  },
+  "tests/styles/feedback-motion.test.ts": {
+   "hunks": [
+    [
+     "import { readFileSync } from \"node:fs\";\nimport { resolve } from \"node:path\";\n\n",
+     "\n"
+    ],
+    [
+     "import { cssOrder } from \"../harness/source\";\n",
+     "import { cssOrder, files, read } from \"../harness/source\";\n"
+    ],
+    [
+     "const SRC = resolve(process.cwd(), \"src\");\nconst REGISTER_PATH = resolve(SRC, \"components/_shared/feedback/dot-ring.css\");\nconst REGISTER = readFileSync(REGISTER_PATH, \"utf8\");\nconst COMPONENT = readFileSync(\n    resolve(SRC, \"components/_shared/feedback/DotRing.vue\"),\n    \"utf8\",\n);\nconst MOTION_TOKENS = readFileSync(\n    resolve(SRC, \"styles/tokens/motion/scheme-motion.css\"),\n    \"utf8\",\n);\nconst PROPERTY_REGS = readFileSync(\n    resolve(SRC, \"styles/tokens/properties/property-regs.css\"),\n    \"utf8\",\n);\nconst STYLE_ENTRY = readFileSync(resolve(SRC, \"styles/index.css\"), \"utf8\");\n",
+     "const REGISTER_PATH = \"src/components/_shared/feedback/dot-ring.css\";\nconst REGISTER = read(REGISTER_PATH);\nconst COMPONENT = read(\"src/components/_shared/feedback/DotRing.vue\");\nconst MOTION_TOKENS = read(\"src/styles/tokens/motion/scheme-motion.css\");\nconst PROPERTY_REGS = read(\"src/styles/tokens/properties/property-regs.css\");\nconst STYLE_ENTRY = read(\"src/styles/index.css\");\n"
+    ],
+    [
+     "    const { execFileSync } = require(\"node:child_process\") as typeof import(\"node:child_process\");\n    // `/usr/bin/grep` is PINNED, not `grep`: the login shell aliases it to `ugrep`,\n    // whose flag semantics differ — #26 lost three seats to exactly that drift. `-e`\n    // is mandatory, or a pattern that opens with `-` is read as a flag.\n    let out = \"\";\n    try {\n        out = execFileSync(\n            \"/usr/bin/grep\",\n            [\"-rlE\", \"-e\", pattern.source, \"src\"],\n            { cwd: process.cwd(), encoding: \"utf8\", env: { ...process.env, LC_ALL: \"C\" } },\n        ).trim();\n    } catch (error) {\n        // grep exits 1 on \"no match\" — the expected clean case, not a failure.\n        const status = (error as { status?: number }).status;\n        if (status !== 1) throw error;\n    }\n    if (out === \"\") return [];\n    // grep names the CANDIDATES cheaply; the verdict is taken on comment-stripped\n    // bytes, so a file that only ever mentions the pattern in prose drops out.\n    const { readFileSync } = require(\"node:fs\") as typeof import(\"node:fs\");\n    return out.split(\"\\n\").filter((file) => {\n        const live = readFileSync(file, \"utf8\")\n",
+     "    // The candidates are the library's files from F-1's file set (R-3: never a directory\n    // walk, and never a subprocess one); the verdict is taken on comment-stripped bytes, so\n    // a file that only ever mentions the pattern in prose drops out.\n    const live = (file: string): string =>\n        read(file)\n"
+    ],
+    [
+     "        return new RegExp(pattern.source, pattern.flags.replace(\"g\", \"\")).test(live);\n    });\n",
+     "    const test = new RegExp(pattern.source, pattern.flags.replace(\"g\", \"\"));\n    return files({ under: \"src\", tests: true }).filter((file) => test.test(live(file)));\n"
+    ]
+   ]
+  },
+  "tests/styles/focus-veil.test.ts": {
+   "hunks": [
+    [
+     "\nimport { existsSync, readFileSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport { mount } from \"@vue/test-utils\";\n",
+     "\nimport { mount } from \"@vue/test-utils\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { read } from \"../harness/source\";\n\n"
+    ],
+    [
+     "\nconst read = (rel: string): string => readFileSync(join(process.cwd(), rel), \"utf8\");\nconst stripComments = (css: string): string => css.replace(/\\/\\*[\\s\\S]*?\\*\\//g, \"\");\n",
+     "\nconst stripComments = (css: string): string => css.replace(/\\/\\*[\\s\\S]*?\\*\\//g, \"\");\n"
+    ],
+    [
+     "        expect(existsSync(join(process.cwd(), VEIL_PATH))).toBe(true);\n",
+     "        expect(read(VEIL_PATH).length).toBeGreaterThan(0); // a file the set does not hold fails the read\n"
+    ]
+   ]
+  },
+  "tests/styles/font-serif-math-dist.test.ts": {
+   "hunks": [
+    [
+     "\nimport { existsSync, readFileSync, readdirSync } from \"node:fs\";\nimport { readFile } from \"node:fs/promises\";\nimport { dirname, join, resolve } from \"node:path\";\n",
+     "\nimport { dirname, join, resolve } from \"node:path\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { artifactExists, artifactFiles, artifactText } from \"../harness/artifacts\";\n\n"
+    ],
+    [
+     "function cssFilesUnder(directory: string): string[] {\n    return readdirSync(directory, { withFileTypes: true }).flatMap((entry) =>\n        entry.isDirectory()\n            ? cssFilesUnder(join(directory, entry.name))\n            : entry.name.endsWith(\".css\")\n              ? [join(directory, entry.name)]\n              : [],\n    );\n}\n",
+     "/** The shipped sheets under dist/styles, absolute (the harness reads the build). */\nconst cssFilesUnder = (directory: string): string[] =>\n    artifactFiles({ under: directory.slice(process.cwd().length + 1), suffix: \".css\" }).map((f) => join(process.cwd(), f));\n"
+    ],
+    [
+     "        '@import \"./theme.css\";\\n@import \"./typography/utilities.css\";\\n@tailwind utilities;',\n",
+     "        '@import \"./theme/index.css\";\\n@import \"./typography/utilities.css\";\\n@tailwind utilities;',\n"
+    ],
+    [
+     "                    content: await readFile(path, \"utf8\"),\n",
+     "                    content: artifactText(path),\n"
+    ],
+    [
+     "describe.skipIf(!existsSync(join(STYLES, \"theme.css\")))(\"the math-serif seam\", () => {\n",
+     "// Build ACCEPTANCE fails loud: a suite skipped for want of a build reads as a pass (B17).\n// The theme entry ships at its source's mirror path, `dist/styles/theme/index.css` (P5-F2).\ndescribe(\"the math-serif seam\", () => {\n    it(\"has a built theme to compile against\", () => {\n        expect(artifactExists(\"dist/styles/theme/index.css\"), \"dist/styles/theme/index.css is absent — run `npm run build` first\").toBe(true);\n    });\n\n"
+    ],
+    [
+     "            readFileSync(file, \"utf8\").includes(\"cm-serif\"),\n",
+     "            artifactText(file).includes(\"cm-serif\"),\n"
+    ],
+    [
+     "            readFileSync(file, \"utf8\").includes(\"--font-serif-math:\"),\n",
+     "            artifactText(file).includes(\"--font-serif-math:\"),\n"
+    ],
+    [
+     "        const literals = readFileSync(join(STYLES, \"theme/literals.css\"), \"utf8\");\n",
+     "        const literals = artifactText(\"dist/styles/theme/literals.css\");\n"
+    ]
+   ]
+  },
+  "tests/styles/glass-subtlety/grasp.test.ts": {
+   "hunks": [
+    [
+     "\nimport { readFileSync } from \"node:fs\";\nimport { describe, expect, it } from \"vitest\";\n",
+     "\nimport { describe, expect, it } from \"vitest\";\n"
+    ],
+    [
+     "            const source = readFileSync(file, \"utf8\");\n",
+     "            const source = read(file);\n"
+    ],
+    [
+     "            const css = stripComments(readFileSync(file, \"utf8\"));\n",
+     "            const css = stripComments(read(file));\n"
+    ]
+   ]
+  },
+  "tests/styles/glass-subtlety/ladders.test.ts": {
+   "hunks": [
+    [
+     "\nimport { readFileSync } from \"node:fs\";\nimport { describe, expect, it } from \"vitest\";\n",
+     "\nimport { describe, expect, it } from \"vitest\";\n"
+    ],
+    [
+     "            const css = stripComments(readFileSync(file, \"utf8\"));\n",
+     "            const css = stripComments(read(file));\n"
+    ]
+   ]
+  },
+  "tests/styles/glass-subtlety/material.test.ts": {
+   "hunks": [
+    [
+     "\nimport { readFileSync } from \"node:fs\";\nimport { describe, expect, it } from \"vitest\";\n",
+     "\nimport { describe, expect, it } from \"vitest\";\n"
+    ],
+    [
+     "            expect(\n                stripComments(readFileSync(file, \"utf8\")),\n                `${file} resurrects the nested-cell blanket`,\n",
+     "            expect(\n                stripComments(read(file)),\n                `${file} resurrects the nested-cell blanket`,\n"
+    ],
+    [
+     "            const hits = stripComments(readFileSync(file, \"utf8\")).match(\n",
+     "            const hits = stripComments(read(file)).match(\n"
+    ],
+    [
+     "                    stripComments(readFileSync(file, \"utf8\")),\n",
+     "                    stripComments(read(file)),\n"
+    ],
+    [
+     "            const css = stripComments(readFileSync(file, \"utf8\"));\n",
+     "            const css = stripComments(read(file));\n"
+    ],
+    [
+     "            .map((f) => stripComments(readFileSync(f, \"utf8\")))\n",
+     "            .map((f) => stripComments(read(f)))\n"
+    ],
+    [
+     "            const source = stripSfc(readFileSync(file, \"utf8\"));\n",
+     "            const source = stripSfc(read(file));\n"
+    ],
+    [
+     "                readFileSync(file, \"utf8\"),\n",
+     "                read(file),\n"
+    ]
+   ]
+  },
+  "tests/styles/glass-subtlety/sheets.ts": {
+   "hunks": [
+    [
+     "\nimport { readFileSync, readdirSync } from \"node:fs\";\nimport { join } from \"node:path\";\n",
+     "\nimport { join } from \"node:path\";\n"
+    ],
+    [
+     "import { join } from \"node:path\";\n\n",
+     "import { join } from \"node:path\";\nimport { files, read } from \"../../harness/source\";\n\n"
+    ],
+    [
+     "export const read = (rel: string): string => readFileSync(join(process.cwd(), rel), \"utf8\");\n",
+     "export { read };\n"
+    ],
+    [
+     "export const styleFiles = (): string[] => {\n    const walk = (dir: string): string[] =>\n        readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {\n            const path = join(dir, entry.name);\n            return entry.isDirectory()\n                ? walk(path)\n                : /\\.(?:css|vue)$/.test(path)\n                  ? [path]\n                  : [];\n        });\n    return walk(join(process.cwd(), \"src\"));\n};\n",
+     "// Read from F-1's file set (R-3: never a directory walk), absolute as the arms report them.\nexport const styleFiles = (): string[] =>\n    files({ under: \"src\", suffix: /\\.(?:css|vue)$/, tests: true }).map((f) => join(process.cwd(), f));\n"
+    ]
+   ]
+  },
+  "tests/styles/layout-canon.test.ts": {
+   "hunks": [
+    [
+     "import { readFileSync, readdirSync, statSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport { describe, expect, it } from \"vitest\";\n",
+     "import { describe, expect, it } from \"vitest\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { files, read } from \"../harness/source\";\n\n"
+    ],
+    [
+     "/** A missing sheet is a missing law: its read fails, and the suite fails with it. */\nconst read = (rel: string): string => readFileSync(join(process.cwd(), rel), \"utf8\");\n",
+     "// A missing sheet is a missing law: the harness read fails, and the suite fails with it.\n"
+    ],
+    [
+     "function walk(dir: string, out: string[] = []): string[] {\n    for (const entry of readdirSync(dir)) {\n        const abs = join(dir, entry);\n        if (statSync(abs).isDirectory()) walk(abs, out);\n        else if (/\\.(vue|ts|css)$/.test(entry)) out.push(abs);\n    }\n    return out;\n}\n\nconst DEMO_FILES = walk(join(process.cwd(), \"demo\")).map((abs) =>\n    abs.slice(process.cwd().length + 1),\n);\n",
+     "// the demo's source, from F-1's file set (R-3: never a directory walk)\nconst DEMO_FILES = files({ under: \"demo\", suffix: /\\.(vue|ts|css)$/ });\n"
+    ]
+   ]
+  },
+  "tests/styles/mark-register.test.ts": {
+   "hunks": [
+    [
+     "import { readFileSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport { describe, expect, it } from \"vitest\";\n",
+     "import { describe, expect, it } from \"vitest\";\n"
+    ],
+    [
+     "import { cssOrder } from \"../harness/source\";\n",
+     "import { cssOrder, read as readSource } from \"../harness/source\";\n"
+    ],
+    [
+     "\nconst REPO_ROOT = process.cwd();\n\n",
+     "\n\n"
+    ],
+    [
+     "const read = (rel: string): string =>\n    stripComments(readFileSync(join(REPO_ROOT, rel), \"utf8\"));\n",
+     "const read = (rel: string): string => stripComments(readSource(rel));\n"
+    ]
+   ]
+  },
+  "tests/styles/proportion-register.test.ts": {
+   "hunks": [
+    [
+     "import { readFileSync, readdirSync } from \"node:fs\";\nimport { join, relative } from \"node:path\";\n",
+     "import { relative } from \"node:path\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { files, read } from \"../harness/source\";\n\n"
+    ],
+    [
+     "\nconst root = process.cwd();\nconst read = (rel: string): string => readFileSync(join(root, rel), \"utf8\");\nconst strip = (css: string): string => css.replace(/\\/\\*[\\s\\S]*?\\*\\//g, \"\");\n",
+     "\nconst strip = (css: string): string => css.replace(/\\/\\*[\\s\\S]*?\\*\\//g, \"\");\n"
+    ],
+    [
+     "/** Every `.css` under a directory, recursively. */\nconst cssFiles = (dir: string): string[] =>\n    readdirSync(join(root, dir), { withFileTypes: true }).flatMap((entry) => {\n        const rel = join(dir, entry.name);\n        return entry.isDirectory() ? cssFiles(rel) : rel.endsWith(\".css\") ? [rel] : [];\n    });\n",
+     "/** Every `.css` under a directory, from F-1's file set (R-3; slots included, as the census always read them). */\nconst cssFiles = (dir: string): string[] => files({ under: dir, suffix: \".css\", tests: true });\n"
+    ],
+    [
+     "    .map((file) => strip(readFileSync(join(root, file), \"utf8\")))\n",
+     "    .map((file) => strip(read(file)))\n"
+    ],
+    [
+     "            const preludes = strip(readFileSync(join(root, file), \"utf8\")).matchAll(/@media([^{]*)\\{/g);\n",
+     "            const preludes = strip(read(file)).matchAll(/@media([^{]*)\\{/g);\n"
+    ],
+    [
+     "        .flatMap((dir) => cssFiles(dir).map((file) => readFileSync(join(root, file), \"utf8\")))\n",
+     "        .flatMap((dir) => cssFiles(dir).map((file) => read(file)))\n"
+    ],
+    [
+     "                .flatMap((dir) => cssFiles(dir).map((file) => [file, readFileSync(join(root, file), \"utf8\")] as const))\n",
+     "                .flatMap((dir) => cssFiles(dir).map((file) => [file, read(file)] as const))\n"
+    ]
+   ]
+  },
+  "tests/styles/radius-dialog-bind.test.ts": {
+   "hunks": [
+    [
+     "import { readFileSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport { describe, expect, it } from \"vitest\";\n",
+     "import { describe, expect, it } from \"vitest\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { read } from \"../harness/source\";\n\n"
+    ],
+    [
+     "\nconst read = (rel: string): string => readFileSync(join(process.cwd(), rel), \"utf8\");\n\n",
+     "\n\n"
+    ]
+   ]
+  },
+  "tests/styles/radius-role/roles.test.ts": {
+   "hunks": [
+    [
+     "\nimport { readdirSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport { describe, expect, it } from \"vitest\";\n",
+     "\nimport { describe, expect, it } from \"vitest\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\nimport { cn } from \"@glass/index\";\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { files } from \"../../harness/source\";\nimport { cn } from \"@glass/index\";\n"
+    ],
+    [
+     "const srcFiles = (dir = \"src\", out: string[] = []): string[] => {\n    for (const entry of readdirSync(join(process.cwd(), dir), { withFileTypes: true })) {\n        const rel = `${dir}/${entry.name}`;\n        if (entry.isDirectory()) srcFiles(rel, out);\n        else if (/\\.(css|vue|ts)$/.test(entry.name)) out.push(rel);\n    }\n    return out;\n};\n",
+     "const srcFiles = (): string[] => files({ under: \"src\", suffix: /\\.(css|vue|ts)$/ }); // F-1's file set (R-3)\n"
+    ]
+   ]
+  },
+  "tests/styles/radius-role/tokens.ts": {
+   "hunks": [
+    [
+     "import { readFileSync } from \"node:fs\";\nimport { join } from \"node:path\";\n",
+     "import { read } from \"../../harness/source\";\n"
+    ],
+    [
+     "export const read = (rel: string): string => readFileSync(join(process.cwd(), rel), \"utf8\");\n",
+     "export { read };\n"
+    ]
+   ]
+  },
+  "tests/styles/route-motion/grammar.ts": {
+   "hunks": [
+    [
+     "\nimport { readFileSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport postcss, { type AtRule, type Rule } from \"postcss\";\n",
+     "\nimport postcss, { type AtRule, type Rule } from \"postcss\";\n"
+    ],
+    [
+     "import postcss, { type AtRule, type Rule } from \"postcss\";\n\n",
+     "import postcss, { type AtRule, type Rule } from \"postcss\";\nimport { read } from \"../../harness/source\";\n\n"
+    ],
+    [
+     "export const REPO_ROOT = process.cwd();\nexport const readCss = (rel: string): string =>\n    readFileSync(join(REPO_ROOT, \"src/styles\", rel), \"utf8\");\n",
+     "export const readCss = (rel: string): string => read(`src/styles/${rel}`);\n"
+    ]
+   ]
+  },
+  "tests/styles/route-motion/registers.test.ts": {
+   "hunks": [
+    [
+     "\nimport { readFileSync, readdirSync, statSync } from \"node:fs\";\nimport { join, relative } from \"node:path\";\nimport { describe, expect, it } from \"vitest\";\n",
+     "\nimport { describe, expect, it } from \"vitest\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\nimport {\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { files as fileSet, read } from \"../../harness/source\";\nimport {\n"
+    ],
+    [
+     "import { REPO_ROOT, readCss, vtRoot, keyframes, rules, declOf, alphaStops } from \"./grammar\";\n",
+     "import { readCss, vtRoot, keyframes, rules, declOf, alphaStops } from \"./grammar\";\n"
+    ],
+    [
+     "        const files: string[] = [];\n        const walk = (dir: string): void => {\n            for (const entry of readdirSync(dir)) {\n                const path = join(dir, entry);\n                if (statSync(path).isDirectory()) { if (entry !== \"__tests__\") walk(path); }\n                else if (/\\.(ts|css|vue)$/.test(entry)) files.push(path);\n            }\n        };\n        walk(join(REPO_ROOT, \"src\"));\n",
+     "        // the library source, from F-1's file set (R-3; the harness leaves __tests__ out)\n        const files = fileSet({ under: \"src\", suffix: /\\.(ts|css|vue)$/ });\n"
+    ],
+    [
+     "                  file.startsWith(join(REPO_ROOT, \"src/composables/motion\"));\n",
+     "                  file.startsWith(\"src/composables/motion/\");\n"
+    ],
+    [
+     "            const text = valueText(readFileSync(file, \"utf8\"));\n            const rel = relative(REPO_ROOT, file);\n",
+     "            const text = valueText(read(file));\n            const rel = file;\n"
+    ]
+   ]
+  },
+  "tests/styles/spring-authority.test.ts": {
+   "hunks": [
+    [
+     "\nimport { readFileSync, readdirSync, statSync } from \"node:fs\";\nimport { join } from \"node:path\";\n",
+     "\nimport { join } from \"node:path\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { files, read } from \"../harness/source\";\n\n"
+    ],
+    [
+     "\nconst SRC = join(process.cwd(), \"src\");\n/** The generator's own output — figures live here BY CONSTRUCTION, gated elsewhere. */\n",
+     "\n/** The generator's own output — figures live here BY CONSTRUCTION, gated elsewhere. */\n"
+    ],
+    [
+     "function walk(dir: string, out: string[] = []): string[] {\n    for (const entry of readdirSync(dir)) {\n        const path = join(dir, entry);\n        if (statSync(path).isDirectory()) walk(path, out);\n        else if (/\\.(css|vue|ts|md)$/.test(entry)) out.push(path);\n    }\n    return out;\n}\n\nconst SOURCES = walk(SRC).map((path) => ({\n    path: path.slice(process.cwd().length + 1),\n    text: readFileSync(path, \"utf8\"),\n",
+     "// The library source, from F-1's file set (R-3: never a directory walk; tests are not source).\nconst SOURCES = files({ under: \"src\", suffix: /\\.(css|vue|ts|md)$/ }).map((path) => ({\n    path,\n    text: read(path),\n"
+    ]
+   ]
+  },
+  "tests/styles/stacked-url-filter.test.ts": {
+   "hunks": [
+    [
+     "import { readFileSync, readdirSync } from \"node:fs\";\nimport { join, relative } from \"node:path\";\n",
+     "import { join, relative } from \"node:path\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { files as fileSet, read } from \"../harness/source\";\n\n"
+    ],
+    [
+     "const files = (dir: string): string[] =>\n    readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {\n        const path = join(dir, entry.name);\n        return entry.isDirectory() ? files(path) : [path];\n    });\n",
+     "/** The files under a source dir, absolute, from F-1's file set (R-3: never a directory walk). */\nconst files = (dir: string): string[] => fileSet({ under: relative(process.cwd(), dir) }).map((f) => join(process.cwd(), f));\n"
+    ],
+    [
+     "    .map((file) => ({ file, source: readFileSync(file, \"utf8\") }));\n",
+     "    .map((file) => ({ file, source: read(file) }));\n"
+    ],
+    [
+     "            walkFilters(file, readFileSync(file, \"utf8\"), (decl) => {\n",
+     "            walkFilters(file, read(file), (decl) => {\n"
+    ]
+   ]
+  },
+  "tests/styles/token-graph.test.ts": {
+   "hunks": [
+    [
+     "import { readFileSync, readdirSync } from \"node:fs\";\nimport { join } from \"node:path\";\nimport { describe, expect, it } from \"vitest\";\n",
+     "import { describe, expect, it } from \"vitest\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\nimport { semanticTokens, tokenDomains } from \"../../src/styles/tokens/index\";\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { files, read } from \"../harness/source\";\nimport { semanticTokens, tokenDomains } from \"../../src/styles/tokens/index\";\n"
+    ],
+    [
+     "const sourceFiles = (dir: string): string[] => readdirSync(dir, { withFileTypes: true })\n    .flatMap((entry) => {\n        const path = join(dir, entry.name);\n        return entry.isDirectory()\n            ? sourceFiles(path)\n            : /\\.(?:css|ts|vue)$/.test(path) ? [path] : [];\n    });\n",
+     "// The library source, from F-1's file set (R-3: never a directory walk; tests are not source).\nconst sourceFiles = (): string[] => files({ under: \"src\", suffix: /\\.(?:css|ts|vue)$/ });\n"
+    ],
+    [
+     "const source = sourceFiles(join(process.cwd(), \"src\"))\n    .map((file) => readFileSync(file, \"utf8\"))\n",
+     "const source = sourceFiles()\n    .map(read)\n"
+    ],
+    [
+     "const css = sourceFiles(join(process.cwd(), \"src\"))\n",
+     "const css = sourceFiles()\n"
+    ],
+    [
+     "    .filter((file) => file.endsWith(\".css\"))\n    .map((file) => readFileSync(file, \"utf8\"))\n    .join(\"\\n\")\n",
+     "    .filter((file) => file.endsWith(\".css\"))\n    .map(read)\n    .join(\"\\n\")\n"
+    ]
+   ]
+  },
+  "tests/styles/typed-track-seam.test.ts": {
+   "hunks": [
+    [
+     "import { existsSync, readdirSync, readFileSync, statSync } from \"node:fs\";\nimport { resolve } from \"node:path\";\n",
+     "import { resolve } from \"node:path\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { files, read, sourceStat } from \"../harness/source\";\nimport { artifactExists, artifactStat, artifactText } from \"../harness/artifacts\";\n\n"
+    ],
+    [
+     "const src = (rel: string) => readFileSync(resolve(ROOT, \"src\", rel), \"utf8\");\n",
+     "const src = (rel: string) => read(`src/${rel}`);\n"
+    ],
+    [
+     "/** Every `.css` file under `src/styles`, recursively — the seam gate's census scope. */\nfunction cssFiles(dir: string): string[] {\n    return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {\n        const path = resolve(dir, entry.name);\n        if (entry.isDirectory()) return cssFiles(path);\n        return entry.name.endsWith(\".css\") ? [path] : [];\n    });\n}\nconst STYLE_FILES = cssFiles(resolve(ROOT, \"src/styles\"));\n",
+     "/** Every `.css` file under `src/styles`, absolute, from F-1's file set — the seam gate's census scope. */\nconst STYLE_FILES = files({ under: \"src/styles\", suffix: \".css\" }).map((f) => resolve(ROOT, f));\n"
+    ],
+    [
+     "        expect(src(rel)).not.toMatch(/--track-bg/);\n",
+     "        expect(read(`src/${rel}`)).not.toMatch(/--track-bg/);\n"
+    ],
+    [
+     "            const vue = src(rel);\n",
+     "            const vue = read(`src/${rel}`);\n"
+    ],
+    [
+     "    const pkg = JSON.parse(readFileSync(resolve(ROOT, \"package.json\"), \"utf8\"));\n",
+     "    const pkg = JSON.parse(read(\"package.json\"));\n"
+    ],
+    [
+     "    it(\"the generated manifest folds both register partials BEFORE the SFC bundle\", () => {\n        const manifest = resolve(ROOT, \"dist/component-styles.css\");\n        const generator = resolve(ROOT, \"scripts/gen-component-styles.mjs\");\n        /* dist is a build artifact, and it is only evidence when it is NEWER than the\n",
+     "    it(\"the generated manifest folds both register partials BEFORE the SFC bundle\", () => {\n        const manifest = \"dist/component-styles.css\";\n        const generator = \"scripts/gen-component-styles.mjs\";\n        /* dist is a build artifact, and it is only evidence when it is NEWER than the\n"
+    ],
+    [
+     "        expect(existsSync(manifest), \"dist/component-styles.css is absent: build first\").toBe(true);\n        expect(statSync(manifest).mtimeMs >= statSync(generator).mtimeMs, \"dist/component-styles.css is older than its generator: rebuild\").toBe(true);\n        const body = readFileSync(manifest, \"utf8\");\n",
+     "        expect(artifactExists(manifest), \"dist/component-styles.css is absent: build first\").toBe(true);\n        expect(artifactStat(manifest).mtimeMs >= sourceStat(generator).mtimeMs, \"dist/component-styles.css is older than its generator: rebuild\").toBe(true);\n        const body = artifactText(manifest);\n"
+    ],
+    [
+     "        const manifest = resolve(ROOT, \"dist/component-styles.css\");\n        const generator = resolve(ROOT, \"scripts/gen-component-styles.mjs\");\n        expect(existsSync(manifest), \"dist/component-styles.css is absent: build first\").toBe(true);\n        expect(statSync(manifest).mtimeMs >= statSync(generator).mtimeMs, \"dist/component-styles.css is older than its generator: rebuild\").toBe(true);\n",
+     "        const manifest = \"dist/component-styles.css\";\n        const generator = \"scripts/gen-component-styles.mjs\";\n        expect(artifactExists(manifest), \"dist/component-styles.css is absent: build first\").toBe(true);\n        expect(artifactStat(manifest).mtimeMs >= sourceStat(generator).mtimeMs, \"dist/component-styles.css is older than its generator: rebuild\").toBe(true);\n"
+    ],
+    [
+     "        const declared = readFileSync(resolve(ROOT, \"src/styles/index.css\"), \"utf8\").match(\n",
+     "        const declared = read(\"src/styles/index.css\").match(\n"
+    ],
+    [
+     "        expect(readFileSync(manifest, \"utf8\").trimStart().startsWith(declared as string)).toBe(true);\n",
+     "        expect(artifactText(manifest).trimStart().startsWith(declared as string)).toBe(true);\n"
+    ],
+    [
+     "        .map((rel) => src(rel))\n",
+     "        .map((rel) => read(`src/${rel}`))\n"
+    ],
+    [
+     "            [...readFileSync(file, \"utf8\").matchAll(/--track-well-recess\\s*:/g)].map(\n",
+     "            [...read(file).matchAll(/--track-well-recess\\s*:/g)].map(\n"
+    ],
+    [
+     "        const story = readFileSync(\n            resolve(ROOT, \"demo/stories/feedback/progress.vue\"),\n            \"utf8\",\n        );\n",
+     "        const story = read(\"demo/stories/feedback/progress.vue\");\n"
+    ]
+   ]
+  },
+  "tests/harness/artifacts.ts": {
+   "create": "// tests/harness/artifacts.ts — every read that is not a source read. R-3 and B0 (B-S12):\n// source is read through ./source.ts, F-1's file set. What else a suite or a script reads is\n// an artifact: a build output (`dist/`, `dist-demo/`), a run's output (a capture, a report,\n// a baseline), or a file outside the repository (a temp root, an unpacked tarball, an\n// installed package, a sibling checkout, a build's staging directory). An artifact read\n// refuses a source file (a code file in one of the five zones, or a root config), so it\n// can never hide a reference into the tree. A missing artifact fails every read; `artifactExists` is for an absence the caller\n// reports. Kept free of the graph, so a script loads it without building F-1.\nimport { existsSync, lstatSync, readdirSync, readFileSync } from \"node:fs\";\nimport { dirname, isAbsolute, join, relative, resolve } from \"node:path\";\nimport { fileURLToPath } from \"node:url\";\n\nconst ROOT = resolve(dirname(fileURLToPath(import.meta.url)), \"../..\");\nconst CODE = /\\.(ts|tsx|mts|cts|js|jsx|mjs|cjs|vue|css)$/;\nconst ZONE = /^(src|demo|tests|tests-visual|scripts)\\//; // F-1's zones (R-5)\n\n/** An artifact's absolute path. Relative paths are taken from the repository root. */\nconst artifactPath = (path: string): string => {\n    const abs = resolve(ROOT, path);\n    const r = relative(ROOT, abs).split(\"\\\\\").join(\"/\");\n    const inside = !r.startsWith(\"..\") && !isAbsolute(r);\n    if (inside && CODE.test(r) && (ZONE.test(r) || !r.includes(\"/\")))\n        throw new Error(`harness: ${path} is source; read it through tests/harness/source.ts`);\n    return abs;\n};\n\n/** An artifact's bytes. */\nexport function artifact(path: string): Buffer {\n    return readFileSync(artifactPath(path));\n}\n\n/** An artifact's text. */\nexport function artifactText(path: string): string {\n    return readFileSync(artifactPath(path), \"utf8\");\n}\n\n/** Whether an artifact exists: the predicate a caller asks before it says \"build first\". */\nexport function artifactExists(path: string): boolean {\n    return existsSync(artifactPath(path));\n}\n\n/** An artifact's size, modification time and kind, read without following a link (an\n *  installed or packed file must be a real file, not a link to one). */\nexport function artifactStat(path: string): { size: number; mtimeMs: number; isFile: boolean; isLink: boolean } {\n    const s = lstatSync(artifactPath(path));\n    return { size: s.size, mtimeMs: s.mtimeMs, isFile: s.isFile(), isLink: s.isSymbolicLink() };\n}\n\n/** The files at or under an artifact directory, sorted and filtered by `suffix`, each\n *  spelled as `under` joined with its path below it (`dist` → `dist/styles/index.css`). */\nexport function artifactFiles({ under, suffix }: { under: string; suffix?: string | RegExp }): string[] {\n    const out: string[] = [];\n    const walk = (abs: string, spelled: string): void => {\n        for (const entry of readdirSync(abs, { withFileTypes: true })) {\n            if (entry.isDirectory()) walk(join(abs, entry.name), `${spelled}/${entry.name}`);\n            else out.push(`${spelled}/${entry.name}`);\n        }\n    };\n    walk(artifactPath(under), under.replace(/\\/$/, \"\"));\n    return out.sort().filter((f) => suffix === undefined || (typeof suffix === \"string\" ? f.endsWith(suffix) : suffix.test(f)));\n}\n"
+  }
+ },
+ "reasons": [
+  {
+   "file": "scripts/bundle-checks/budgets.mjs",
+   "why": "the /styles draw reads dist sheets through artifactText"
+  },
+  {
+   "file": "scripts/bundle-checks/critical-path.mjs",
+   "why": "the built root and Aurora chunks are read through artifactExists/artifactText; the lazy-chunk check lists dist through artifactFiles"
+  },
+  {
+   "file": "scripts/bundle-checks/drift.mjs",
+   "why": "the D5 baseline is read through artifactExists/artifactText; an absent baseline still reads as no baseline, a malformed one fails"
+  },
+  {
+   "file": "scripts/bundle-checks/files.mjs",
+   "why": "the dist walk is deleted (artifactFiles reads the build); distName stays"
+  },
+  {
+   "file": "scripts/bundle-checks/index.mjs",
+   "why": "the door no longer exports the deleted walk"
+  },
+  {
+   "file": "scripts/bundle-checks/value-capabilities.mjs",
+   "why": "the value.js capability census reads the root's source from its file set (openTree), not a walk of src/"
+  },
+  {
+   "file": "scripts/comments/census.mjs",
+   "why": "the working-tree census reads through the file set (openTree): a tracked path absent from the tree is not in it and is reported missing, as before"
+  },
+  {
+   "file": "scripts/flatten-subpath-types.mjs",
+   "why": "the declaration output is listed and read through artifactFiles/artifactText; the two try/catch stat probes are gone, and a missing output root fails the read"
+  },
+  {
+   "file": "scripts/gen-component-styles.mjs",
+   "why": "a closure member is read from the file set when it is source and through artifactText when it is emitted; the output-member check uses artifactExists"
+  },
+  {
+   "file": "scripts/package-verify/closure.mjs",
+   "why": "declaration and CSS artifacts are read through artifact/artifactText"
+  },
+  {
+   "file": "scripts/package-verify/install.mjs",
+   "why": "the installed consumer's files are read and listed through the artifact reader; the symlink checks read artifactStat"
+  },
+  {
+   "file": "scripts/package-verify/pack.mjs",
+   "why": "the tarball, its lstat checks and .bundle-ratchet are read through the artifact reader"
+  },
+  {
+   "file": "scripts/package-verify/references.mjs",
+   "why": "listFiles (a directory walk) is deleted; callers list through artifactFiles"
+  },
+  {
+   "file": "scripts/package-verify/roster.mjs",
+   "why": "published sheets, .published-roster and MIGRATION.md are read through the artifact reader"
+  },
+  {
+   "file": "scripts/package-verify/type-resolution.mjs",
+   "why": "the source root surface reads src/index.ts from the repository's file set (openTree)"
+  },
+  {
+   "file": "scripts/package-verify/verify.mjs",
+   "why": "package.json and the lock are read through artifactText at the repository root (one spelling, not a URL ternary); the artifact root is listed through artifactFiles; the tarball check reads artifactStat"
+  },
+  {
+   "file": "scripts/profile-bundle.mjs",
+   "why": "the dist census reads through artifactFiles/artifact/artifactStat"
+  },
+  {
+   "file": "scripts/structure/cascade.mjs",
+   "why": "isMain no longer throws when an importer runs under `node -e` (no argv[1]); importing the floor door from a probe crashed here"
+  },
+  {
+   "file": "scripts/structure/lib/graph/script.mjs",
+   "why": "F-1: a path helper called with a computed argument is a write when the helper writes or the call stands where a write takes its path (`screenshot({ path: frame(…) })`); it was counted as a computed read"
+  },
+  {
+   "file": "scripts/structure/surface.mjs",
+   "why": "the same isMain guard as cascade.mjs"
+  },
+  {
+   "file": "src/components/dock/__tests__/reach.test.ts",
+   "why": "reads source through the harness `read` (bands.ts no longer exports its own reader)"
+  },
+  {
+   "file": "tests-visual/dock/dock-items-lag-capture.spec.ts",
+   "why": "the post-screenshot disk check is the screenshot's own bytes (page.screenshot writes the file or throws); no computed read of the output"
+  },
+  {
+   "file": "tests-visual/dock/dock-with-slider-live.spec.ts",
+   "why": "the same: both post-screenshot disk checks read the returned bytes"
+  },
+  {
+   "file": "tests-visual/paint/png-region.mjs",
+   "why": "a capture PNG is read through the artifact reader; the IHDR is read from the bytes it decodes (one read, not two)"
+  },
+  {
+   "file": "tests-visual/paint/reflect-capture-verify.mjs",
+   "why": "the file holds only its live export, oklabFromRgb; the PNG, freshness and viewport readers no file imports are deleted"
+  },
+  {
+   "file": "tests-visual/pi-gate-verify.mjs",
+   "why": "the machine report is read through artifactText; a missing report still fails the gate"
+  },
+  {
+   "file": "tests-visual/pi-manifest.ts",
+   "why": "the manifest's category rows are F-1's resolved edges from demo/stories/manifest.ts, read through the harness; the presets file is a harness read"
+  },
+  {
+   "file": "tests/components/a11y/focus-visible.test.ts",
+   "why": "source reads through the harness `read`"
+  },
+  {
+   "file": "tests/components/control-bit/binary-triad.test.ts",
+   "why": "source reads through the harness `read`/`files`"
+  },
+  {
+   "file": "tests/components/custom/aurora/harness.test.ts",
+   "why": "source reads through the harness `read`"
+  },
+  {
+   "file": "tests/components/custom/blob/gl-excise.test.ts",
+   "why": "the source census is the harness file set; the try/catch that returned an empty list is gone"
+  },
+  {
+   "file": "tests/components/custom/dock/lattice/bands.ts",
+   "why": "the band reads the harness `read`; its own readFileSync reader is deleted"
+  },
+  {
+   "file": "tests/components/custom/dock/lattice/material.test.ts",
+   "why": "imports `read` from the harness"
+  },
+  {
+   "file": "tests/components/custom/dock/lattice/run.test.ts",
+   "why": "the deleted-owner check lists the dock unit from the file set (recursively) instead of two readdirSync calls"
+  },
+  {
+   "file": "tests/components/dialog/dialog-dismiss.test.ts",
+   "why": "source reads and the census through the harness"
+  },
+  {
+   "file": "tests/components/easing/frame.test.ts",
+   "why": "the recursive grep is the file set filtered by text; existence checks are file-set membership; the story read is a zone-rooted harness read"
+  },
+  {
+   "file": "tests/components/easing/picker.ts",
+   "why": "the easing source reader reads through the harness"
+  },
+  {
+   "file": "tests/components/field/forms-seam.test.ts",
+   "why": "source reads through the harness"
+  },
+  {
+   "file": "tests/components/fourier-field/field.smoke.test.ts",
+   "why": "source reads through the harness"
+  },
+  {
+   "file": "tests/components/fourier-field/wgsl-splice-contract.test.ts",
+   "why": "the shader-site census is the file set's src/ .ts files, not a walk"
+  },
+  {
+   "file": "tests/components/select/picker-lane.test.ts",
+   "why": "the lane census is the file set; a leftover `void relative` is removed"
+  },
+  {
+   "file": "tests/components/sortable-list/rig.ts",
+   "why": "the located file is read through the harness"
+  },
+  {
+   "file": "tests/composables/color/use-accent-tone.test.ts",
+   "why": "token and solver reads through the harness"
+  },
+  {
+   "file": "tests/demo/page-chrome-shrink.test.ts",
+   "why": "demo reads through the harness"
+  },
+  {
+   "file": "tests/demo/router-field-ownership.test.ts",
+   "why": "the demo/shell tripwire reads the file set under demo/shell, not a walk"
+  },
+  {
+   "file": "tests/demo/skip-link.a11y.test.ts",
+   "why": "composition reads resolve through storyFile (the manifest's rule), so no template path names a story directory"
+  },
+  {
+   "file": "tests/design/drive-tokens.test.ts",
+   "why": "the token census is the file set, not a recursive readdirSync"
+  },
+  {
+   "file": "tests/design/plate-register.test.ts",
+   "why": "the glass utility census is the file set, not a recursive readdirSync"
+  },
+  {
+   "file": "tests/design/token-bridges.test.ts",
+   "why": "the bridge-read census is the file set, not a recursive readdirSync"
+  },
+  {
+   "file": "tests/docs/consumer-paths-exist.test.ts",
+   "why": "sibling paths are checked through artifactExists (outside the repository)"
+  },
+  {
+   "file": "tests/gates/boot-graph/build.test.ts",
+   "why": "dist-demo is read through the artifact reader; source mtimes through sourceStat over the file set"
+  },
+  {
+   "file": "tests/gates/boot-graph/source.test.ts",
+   "why": "source reads through the harness"
+  },
+  {
+   "file": "tests/gates/feedback-tint-seam.test.ts",
+   "why": "source reads through the harness"
+  },
+  {
+   "file": "tests/gates/orphan-css/partial.test.ts",
+   "why": "planted reads go through the harness; the existence probe is a read"
+  },
+  {
+   "file": "tests/gates/orphan-css/partials.ts",
+   "why": "the JS reach follows F-1's resolved import edges; the hand resolver (a scan of src/) and its specifier regex are deleted"
+  },
+  {
+   "file": "tests/gates/overfit/census.ts",
+   "why": "the code-file census is the file set"
+  },
+  {
+   "file": "tests/gates/overfit/export-reach.test.ts",
+   "why": "source reads through the harness"
+  },
+  {
+   "file": "tests/gates/tabs-seam.test.ts",
+   "why": "source reads through the harness"
+  },
+  {
+   "file": "tests/gates/token-hygiene.test.ts",
+   "why": "source reads and the census through the harness"
+  },
+  {
+   "file": "tests/gates/trap-gates.test.ts",
+   "why": "source reads and the census through the harness"
+  },
+  {
+   "file": "tests/gates/type-hygiene.test.ts",
+   "why": "source reads and the census through the harness"
+  },
+  {
+   "file": "tests/harness/artifacts.ts",
+   "why": "new: the one non-source reader (artifact, artifactText, artifactExists, artifactStat, artifactFiles); it refuses a code file in one of the five zones or a root config, and a missing artifact fails every read"
+  },
+  {
+   "file": "tests/harness/source.ts",
+   "why": "the source reader: files/read/sourceStat over F-1's file set, edges, cssOrder; `stat` is renamed sourceStat (an fs name read as an fs call by F-1); the root is derived from import.meta.url so a Playwright spec and a node script load it; the non-source readers move to artifacts.ts"
+  },
+  {
+   "file": "tests/public-surface/built.spec.ts",
+   "why": "dist is listed through artifactFiles; the subprocess probe is handed the built CSS list instead of walking dist itself"
+  },
+  {
+   "file": "tests/scripts/profile-bundle-value-js.test.ts",
+   "why": "the temp root is a git root, so the census reads its file set as on the repository; the written profile is read through artifactText"
+  },
+  {
+   "file": "tests/styles/backdrop-prefix-normalization.test.ts",
+   "why": "dist sheets through the artifact reader"
+  },
+  {
+   "file": "tests/styles/color-mix-endpoints.test.ts",
+   "why": "source reads through the harness"
+  },
+  {
+   "file": "tests/styles/contrast/engine.ts",
+   "why": "source reads through the harness"
+  },
+  {
+   "file": "tests/styles/dissolve/exits.test.ts",
+   "why": "source reads through the harness"
+  },
+  {
+   "file": "tests/styles/dissolve/rules.ts",
+   "why": "source reads and the census through the harness"
+  },
+  {
+   "file": "tests/styles/dock-name-canon.test.ts",
+   "why": "source reads through the harness"
+  },
+  {
+   "file": "tests/styles/emitted-utility-vars.test.ts",
+   "why": "dist sheets through the artifact reader; a missing build fails instead of skipping"
+  },
+  {
+   "file": "tests/styles/engage-ladder.test.ts",
+   "why": "the component census is the file set (slots included, as the walk did)"
+  },
+  {
+   "file": "tests/styles/feedback-motion.test.ts",
+   "why": "the source grep is the file set filtered by text; the grep subprocess is gone"
+  },
+  {
+   "file": "tests/styles/focus-veil.test.ts",
+   "why": "source reads through the harness"
+  },
+  {
+   "file": "tests/styles/font-serif-math-dist.test.ts",
+   "why": "the dist arm reads dist/styles/theme/literals.css through the artifact reader and fails when the build is absent (it was skipped on a moved path)"
+  },
+  {
+   "file": "tests/styles/glass-subtlety/grasp.test.ts",
+   "why": "source reads through the harness"
+  },
+  {
+   "file": "tests/styles/glass-subtlety/ladders.test.ts",
+   "why": "source reads through the harness"
+  },
+  {
+   "file": "tests/styles/glass-subtlety/material.test.ts",
+   "why": "source reads through the harness"
+  },
+  {
+   "file": "tests/styles/glass-subtlety/sheets.ts",
+   "why": "source reads and the census through the harness"
+  },
+  {
+   "file": "tests/styles/layout-canon.test.ts",
+   "why": "source reads and the census through the harness"
+  },
+  {
+   "file": "tests/styles/mark-register.test.ts",
+   "why": "source reads through the harness"
+  },
+  {
+   "file": "tests/styles/proportion-register.test.ts",
+   "why": "the census is the file set (slots included, as the walk did)"
+  },
+  {
+   "file": "tests/styles/radius-dialog-bind.test.ts",
+   "why": "source reads through the harness"
+  },
+  {
+   "file": "tests/styles/radius-role/roles.test.ts",
+   "why": "source reads through the harness"
+  },
+  {
+   "file": "tests/styles/radius-role/tokens.ts",
+   "why": "source reads and the census through the harness"
+  },
+  {
+   "file": "tests/styles/route-motion/grammar.ts",
+   "why": "source reads and the census through the harness"
+  },
+  {
+   "file": "tests/styles/route-motion/registers.test.ts",
+   "why": "source reads through the harness"
+  },
+  {
+   "file": "tests/styles/spring-authority.test.ts",
+   "why": "source reads through the harness"
+  },
+  {
+   "file": "tests/styles/stacked-url-filter.test.ts",
+   "why": "source reads and the census through the harness"
+  },
+  {
+   "file": "tests/styles/token-graph.test.ts",
+   "why": "source reads and the census through the harness"
+  },
+  {
+   "file": "tests/styles/typed-track-seam.test.ts",
+   "why": "dist reads through the artifact reader; generator mtime through sourceStat; the two-match replacement is applied at both sites"
+  }
+ ]
+}

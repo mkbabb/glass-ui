@@ -1,0 +1,55 @@
+critic9x start 2026-10-16T09:01:17Z load { 29.11 24.94 23.36 }
+extra9 start 2026-10-16T09:01:17Z load { 29.11 24.94 23.36 }
+== XR (P8-R3) with the whitespace-table locator
+BASE {"B0":0,"B1":0,"B2":0,"B3":0,"B4":0,"B5":0,"B6":0,"B7":0,"B8":0,"B9":0,"B10":0,"B11":0,"B12":0,"B13":0,"B14":0,"B15":0,"B16":0,"B17":0,"B18":0}
+MISSED-RECORD XR-drop [B-10 (P8-R3 (b))] the ./motion-core row withdrawn from src/README.md :: named=- gained={}
+CAUGHT  XR-drop-KF [B-10 (P8-R3 (b))] row withdrawn + a keyframes.js leaf published on ./motion-core :: named=B11,B18 gained={"B11":2,"B18":10}
+        B11: src/composables/motion/core/index.ts exports zq9xKfLeak (no reader outside src/composables/motion/core)
+        B11: src/composables/motion/core/index.ts +zq9xKfLeak (not in the pin)
+        B18: . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/zq9xKf.ts:1)
+        B18: . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/zq9xKf.ts:1)
+CAUGHT  XR-drop-leaf [B-10 (P8-R3 (b))] row withdrawn + an existing motion-core leaf gains a keyframes.js value import :: named=B18 gained={"B18":10}
+        B18: . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/useRAFLoop.ts:1)
+        B18: . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/useRAFLoop.ts:1)
+RESTORED base judgement unchanged
+TALLY {"MISSED-RECORD":1,"CAUGHT":2}
+ROW XR-drop PASS verdict=MISSED-RECORD expect=CLEAN|RECORDED|MISSED-RECORD named=-
+ROW XR-drop-KF PASS verdict=CAUGHT expect=CAUGHT named=B11,B18
+ROW XR-drop-leaf PASS verdict=CAUGHT expect=CAUGHT named=B18
+ROWS pass 3 fail 0 skip 0
+== BI3: the motion-core row's peer cell removed (a row with no peer), expect 2
+row now: useScrollProgress, useRAFLoop,             @mkbabb/glass-ui/motion-core
+B18IN BI3-fixed PASS rc=2 expect=2 :: seal: no verdict: Error: peer: src/README.md: the row for @mkbabb/glass-ui/motion-core has an empty Peer cell
+B18IN BI5-row-names-unpublished-entry PASS rc=2 expect=2 (LAW §5: a declared entry the record does not publish stays a throw) :: seal: no verdict: Error: peer: src/README.md declares ./zq9-unpublished, which the entry record does not publish
+README restored
+== flake (P7-R2) with testDir "." added to pass-8's fixtures
+flake tally rc=2
+FLAKE DIFFERS
+1,6d0
+< NEW tests-visual/zq8/flake.spec.ts :: F1 #1 | base expected,expected,expected,expected | route unexpected,unexpected,unexpected,unexpected
+< NEW tests-visual/zq8/flake.spec.ts :: F6 #1 | base expected,expected,expected,expected | route unexpected,expected,expected,expected
+< NEW tests-visual/zq8/flake.spec.ts :: F7 #1 | base expected | route unexpected
+< ABSENT tests-visual/zq8/flake.spec.ts :: F8 #1 (base-green; no route run reports it)
+< FLAKY tests-visual/zq8/flake.spec.ts :: F2 #1 | base expected,expected,unexpected,expected | route unexpected,unexpected,unexpected,unexpected
+< FLAKY tests-visual/zq8/flake.spec.ts :: F3 #1 | base expected,unexpected,unexpected,unexpected | route unexpected,unexpected,unexpected,unexpected
+== peer-unbuilt U0-U5 with the probe's --base (the pass-8 critic's invocation)
+PEERU U0-built PASS rc=0 expect=0 :: peer-closure: GREEN
+PEERU U1-no-dist PASS rc=2 expect=2 ::     at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-11/B-kit/tools/peer-closure.mjs:165:1
+PEERU U2-empty-dist PASS rc=2 expect=2 ::     at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-11/B-kit/tools/peer-closure.mjs:165:1
+PEERU U3-no-motion-core PASS rc=2 expect=2 ::     at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-11/B-kit/tools/peer-closure.mjs:165:1
+PEERU U4-empty-entry INFO rc=2 ::     at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-11/B-kit/tools/peer-closure.mjs:165:1
+PEERU U5-built-again PASS rc=0 expect=0 :: peer-closure: GREEN
+== probe past the hashed set
+PX empty-root-entry dist/glass-ui.js rc=2 expect=2 :: peer-closure: no verdict: Error: peer-closure: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p11/B-proto/wt2/dist/glass-ui.js is empty; the dist arm reads no closure from an empty build f
+PX base-{} rc=2 (LAW §14: a report of another schema is a throw) ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-11/B-kit/tools/peer-closure.mjs:165:7
+PX base-entries-{} rc=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-11/B-kit/tools/peer-closure.mjs:165:7
+PX base-[] rc=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-11/B-kit/tools/peer-closure.mjs:165:7
+PX base=a-browser-report rc=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-11/B-kit/tools/peer-closure.mjs:165:7
+PX leak vs floor base rc=1 :: BROKEN ./motion-core    free of @mkbabb/keyframes.js, @vueuse/core   names 55 → peers @mkbabb/keyframes.js; dist 5 files → peers none; files 38 → peers @mkbabb/keyframes.js
+PX leak vs its own report as --base (floorBase:false) rc=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-11/B-kit/tools/peer-closure.mjs:165:7 :: 
+PX leak, the gate rc=1 :: FAIL B18 27 
+raf restored
+PX throw in authored/p6-publish.mjs (computed dynamic import) rc=2 expect=2 :: peer-closure: no verdict: Error: zq9 throw in p6-publish
+after extra9: digest 6fdd4ec7bd259630d38a466a444e45b2b18f71b4cbf2259d258a4c6177996bbf over 1587 files
+extra9 end 2026-10-16T09:02:34Z load { 32.61 27.15 24.35 }
+critic9x rc=0 end 2026-10-16T09:02:34Z load { 32.61 27.15 24.35 }

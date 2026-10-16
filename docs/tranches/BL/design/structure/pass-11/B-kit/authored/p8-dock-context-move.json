@@ -1,0 +1,6 @@
+{
+ "why": "P7-R1 (B18, the names arm, LAW §5): the root publishes Slider, and the chain made Slider's own module reach @mkbabb/keyframes.js, which the floor base's Slider does not. S15 moved useDockHold beside its one reader (slider) and B1 routed its dock-context read through the dock entry's door, which carries the dock's keyframes-bearing names (DockCrossfade → useDockSpring); the context also read dock/constants.ts, which reads springPreset through the motion door. The dock context is a concept of its own (the typed provide/inject the dock and the controls that render in it share): it becomes the dock's sub-module context/, whose door carries no heavy peer, and a reader outside the dock reads it there",
+ "moves": [
+  { "from": "src/components/dock/composables/dockContext.ts", "to": "src/components/dock/context/dockContext.ts", "why": "the dock context's own module: read by GlassDock, DockSeparator, DockLayerGroup, the dock entry and the slider's dock hold" }
+ ]
+}

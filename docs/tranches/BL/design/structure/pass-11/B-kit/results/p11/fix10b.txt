@@ -1,0 +1,21 @@
+fix10b start 2026-10-16T09:01:10Z load { 28.95 24.84 23.31 }
+F2b patch 16c16
+F2b patch < const tracked = execFileSync("git", ["ls-files"], { cwd: root, encoding: "utf8" }).split("\n").filter(Boolean);
+F2b patch ---
+F2b patch > const tracked = execFileSync("git", ["ls-files"], { cwd: root, encoding: "utf8", maxBuffer: 1 << 28 }).split("\n").filter(Boolean);
+F2b patch 19c19
+F2b patch < let files = tracked.filter(inScope);
+F2b patch ---
+F2b patch > let files = tracked.filter(inScope).filter((f) => fs.existsSync(path.join(root, f)));
+F2b section 8..127; route rc=1 :: no-meta: META 2402 hits in 213 files (src 530, demo 166, tests 180, tests-visual 44, scripts 29, dist 51, MIGRATION 634, other 768) · STYLE 2132 hits in 32 files
+F2b MG1 C2-G1 hits in the section: 0 (expect 0)
+F2b HEAD text rc=1
+F2b MG4 META hits in MIGRATION.md: route 1648, HEAD 1648, delta 0 (expect <= 0)
+F2b MGP-row-ref 'The structure cut lands as BL #10.' → C2-G1 hits in the section: 1
+F2b MGP-wave-id 'Carried by BL.W3.' → C2-G1 hits in the section: 1
+F2b MGP-wave-id2 'Carried by W-STRUCTURE-CUT.' → C2-G1 hits in the section: 1
+F2b MGP-dated '[2026-10-16 · structure cut]' → C2-G1 hits in the section: 1
+F2b MGP-bl-bare 'The structure cut (BL).' → C2-G1 hits in the section: 0
+F2b MGP-tranche-word 'This tranche moves files.' → C2-G1 hits in the section: 0
+after fix10b: digest 6fdd4ec7bd259630d38a466a444e45b2b18f71b4cbf2259d258a4c6177996bbf over 1587 files
+fix10b rc=0 end 2026-10-16T09:01:16Z load { 29.11 24.94 23.36 }

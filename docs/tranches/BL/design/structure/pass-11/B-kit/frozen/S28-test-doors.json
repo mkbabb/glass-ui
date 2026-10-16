@@ -1,0 +1,143 @@
+{
+ "step": "S28 B1: colocated tests cross other modules through their doors (frozen from the gate's B1 reading, F-9)",
+ "files": {
+  "src/components/aurora/__tests__/atoms.test.ts": {
+   "hunks": [
+    [
+     "import { AV_MAX_COLORS } from \"@glass/composables/glass/budget\";\n",
+     "import { AV_MAX_COLORS } from \"@glass/composables/glass\";\n"
+    ]
+   ]
+  },
+  "src/components/aurora/__tests__/interaction-prm.test.ts": {
+   "hunks": [
+    [
+     "import { usePointerVelocityField } from \"@glass/composables/motion/pointer/usePointerVelocityField\";\n",
+     "import { usePointerVelocityField } from \"@glass/composables/motion/motion-core\";\n"
+    ],
+    [
+     "} from \"@glass/composables/motion/pointer/pointerFieldMappings\";\n",
+     "} from \"@glass/composables/motion/motion-core\";\n"
+    ]
+   ]
+  },
+  "src/components/constellation/__tests__/constellationField.test.ts": {
+   "hunks": [
+    [
+     "import { mulberry32 } from \"@glass/composables/glass/procedural/prng\";\n",
+     "import { mulberry32 } from \"@glass/composables/glass\";\n"
+    ]
+   ]
+  },
+  "src/components/dark-mode-toggle/__tests__/dark-mode-toggle.contract.test.ts": {
+   "hunks": [
+    [
+     "import { useGlobalDark } from \"@glass/composables/dark/useGlobalDark\";\n",
+     "import { useGlobalDark } from \"@glass/composables/dark\";\n"
+    ]
+   ]
+  },
+  "src/components/dialog/__tests__/ModalOverlay.test.ts": {
+   "hunks": [
+    [
+     "import ModalOverlay from \"@glass/components/_shared/overlay/ModalOverlay.vue\";\n",
+     "import { ModalOverlay } from \"@glass/components/_shared/overlay\";\n"
+    ]
+   ]
+  },
+  "src/components/dialog/__tests__/dialog-spring.test.ts": {
+   "hunks": [
+    [
+     "import * as springMountModule from \"@glass/composables/motion/spring/useSpringMount\";\n",
+     "import * as springMountModule from \"@glass/composables/motion\";\n"
+    ]
+   ]
+  },
+  "src/components/sheet/__tests__/sheet-gesture.test.ts": {
+   "hunks": [
+    [
+     "import { springPreset } from \"@glass/composables/motion/spring/springPresets\";\n",
+     "import { springPreset } from \"@glass/composables/motion\";\n"
+    ]
+   ]
+  },
+  "src/components/surface/__tests__/Surface.test.ts": {
+   "hunks": [
+    [
+     "import { surfaceClass } from \"@glass/components/_shared/surface/resolve\";\n",
+     "import { surfaceClass } from \"@glass/components/_shared/surface\";\n"
+    ]
+   ]
+  },
+  "src/components/timeline/__tests__/timeline.contract.test.ts": {
+   "hunks": [
+    [
+     "import { useLiquidFlex } from \"@glass/composables/motion/spring/useLiquidFlex\";\n",
+     "import { useLiquidFlex } from \"@glass/composables/motion/motion-core\";\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "src/components/aurora/__tests__/atoms.test.ts",
+   "from": "import { AV_MAX_COLORS } from \"@glass/composables/glass/budget\";",
+   "to": "import { AV_MAX_COLORS } from \"@glass/composables/glass\";",
+   "why": "B1: src/composables/glass/budget.ts is inside src/composables/glass; the test reads it through src/composables/glass/index.ts"
+  },
+  {
+   "file": "src/components/aurora/__tests__/interaction-prm.test.ts",
+   "from": "import { usePointerVelocityField } from \"@glass/composables/motion/pointer/usePointerVelocityField\";",
+   "to": "import { usePointerVelocityField } from \"@glass/composables/motion/motion-core\";",
+   "why": "B1: src/composables/motion/pointer/usePointerVelocityField.ts is inside src/composables/motion; the test reads it through src/composables/motion/motion-core.ts"
+  },
+  {
+   "file": "src/components/aurora/__tests__/interaction-prm.test.ts",
+   "from": "import {\n    auroraCursorMapping,\n    snapshotField,\n} from \"@glass/composables/motion/pointer/pointerFieldMappings\";",
+   "to": "import {\n    auroraCursorMapping,\n    snapshotField,\n} from \"@glass/composables/motion/motion-core\";",
+   "why": "B1: src/composables/motion/pointer/pointerFieldMappings.ts is inside src/composables/motion; the test reads it through src/composables/motion/motion-core.ts"
+  },
+  {
+   "file": "src/components/constellation/__tests__/constellationField.test.ts",
+   "from": "import { mulberry32 } from \"@glass/composables/glass/procedural/prng\";",
+   "to": "import { mulberry32 } from \"@glass/composables/glass\";",
+   "why": "B1: src/composables/glass/procedural/prng.ts is inside src/composables/glass; the test reads it through src/composables/glass/index.ts"
+  },
+  {
+   "file": "src/components/dark-mode-toggle/__tests__/dark-mode-toggle.contract.test.ts",
+   "from": "import { useGlobalDark } from \"@glass/composables/dark/useGlobalDark\";",
+   "to": "import { useGlobalDark } from \"@glass/composables/dark\";",
+   "why": "B1: src/composables/dark/useGlobalDark.ts is inside src/composables/dark; the test reads it through src/composables/dark/index.ts"
+  },
+  {
+   "file": "src/components/dialog/__tests__/ModalOverlay.test.ts",
+   "from": "import ModalOverlay from \"@glass/components/_shared/overlay/ModalOverlay.vue\";",
+   "to": "import { ModalOverlay } from \"@glass/components/_shared/overlay\";",
+   "why": "B1: src/components/_shared/overlay/ModalOverlay.vue is inside src/components/_shared/overlay; the test reads it through src/components/_shared/overlay/index.ts"
+  },
+  {
+   "file": "src/components/dialog/__tests__/dialog-spring.test.ts",
+   "from": "import * as springMountModule from \"@glass/composables/motion/spring/useSpringMount\";",
+   "to": "import * as springMountModule from \"@glass/composables/motion\";",
+   "why": "B1: src/composables/motion/spring/useSpringMount.ts is inside src/composables/motion; the test reads it through src/composables/motion/index.ts"
+  },
+  {
+   "file": "src/components/sheet/__tests__/sheet-gesture.test.ts",
+   "from": "import { springPreset } from \"@glass/composables/motion/spring/springPresets\";",
+   "to": "import { springPreset } from \"@glass/composables/motion\";",
+   "why": "B1: src/composables/motion/spring/springPresets.ts is inside src/composables/motion; the test reads it through src/composables/motion/index.ts"
+  },
+  {
+   "file": "src/components/surface/__tests__/Surface.test.ts",
+   "from": "import { surfaceClass } from \"@glass/components/_shared/surface/resolve\";",
+   "to": "import { surfaceClass } from \"@glass/components/_shared/surface\";",
+   "why": "B1: src/components/_shared/surface/resolve.ts is inside src/components/_shared/surface; the test reads it through src/components/_shared/surface/index.ts"
+  },
+  {
+   "file": "src/components/timeline/__tests__/timeline.contract.test.ts",
+   "from": "import { useLiquidFlex } from \"@glass/composables/motion/spring/useLiquidFlex\";",
+   "to": "import { useLiquidFlex } from \"@glass/composables/motion/motion-core\";",
+   "why": "B1: src/composables/motion/spring/useLiquidFlex.ts is inside src/composables/motion; the test reads it through src/composables/motion/motion-core.ts"
+  }
+ ]
+}

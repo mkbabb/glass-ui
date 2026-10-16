@@ -1,0 +1,743 @@
+[browser-seat 2026-10-16T06:37:40.313Z] seat acquired after 0.0s: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2
+[browser-seat 2026-10-16T06:37:41.382Z] demo server http://localhost:55437 (pid 41695, cwd /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2); 8 spec(s): tests-visual/storybook/configurator/config-right.spec.ts, tests-visual/substrate-paints-color.spec.ts, tests-visual/substrate/substrate-cohesion.spec.ts, tests-visual/typography/hierarchy.spec.ts, tests-visual/viz/viz-configurator-suite.spec.ts, tests-visual/viz/viz-fourier-ribbon.spec.ts, tests-visual/viz/viz-interaction.spec.ts, tests-visual/viz/webgpu-everywhere.spec.ts
+
+Running 63 tests using 1 worker
+
+  ✘   1 [chromium-headless-new] › storybook/configurator/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › aurora light: two-column, aside right, rounded, DOM stage→aside (2.3s)
+  ✘   2 [chromium-headless-new] › storybook/configurator/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › aurora dark: two-column, aside right, rounded, DOM stage→aside (1.9s)
+  ✘   3 [chromium-headless-new] › storybook/configurator/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › blob light: two-column, aside right, rounded, DOM stage→aside (1.9s)
+  ✘   4 [chromium-headless-new] › storybook/configurator/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › blob dark: two-column, aside right, rounded, DOM stage→aside (1.9s)
+  ✘   5 [chromium-headless-new] › storybook/configurator/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › fourier-field light: two-column, aside right, rounded, DOM stage→aside (1.9s)
+  ✘   6 [chromium-headless-new] › storybook/configurator/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › fourier-field dark: two-column, aside right, rounded, DOM stage→aside (1.9s)
+  ✘   7 [chromium-headless-new] › storybook/configurator/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › configurator light: two-column, aside right, rounded, DOM stage→aside (1.8s)
+  ✘   8 [chromium-headless-new] › storybook/configurator/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › configurator dark: two-column, aside right, rounded, DOM stage→aside (1.7s)
+  ✓   9 [chromium-headless-new] › storybook/configurator/config-right.spec.ts:218:9 › narrow — the single-column stack (stage above controls below lg) › aurora: ≤900px resolves ONE column, stage above aside (1.6s)
+  ✓  10 [chromium-headless-new] › storybook/configurator/config-right.spec.ts:218:9 › narrow — the single-column stack (stage above controls below lg) › blob: ≤900px resolves ONE column, stage above aside (1.5s)
+  ✓  11 [chromium-headless-new] › storybook/configurator/config-right.spec.ts:218:9 › narrow — the single-column stack (stage above controls below lg) › fourier-field: ≤900px resolves ONE column, stage above aside (1.5s)
+  ✓  12 [chromium-headless-new] › storybook/configurator/config-right.spec.ts:218:9 › narrow — the single-column stack (stage above controls below lg) › configurator: ≤900px resolves ONE column, stage above aside (1.4s)
+  ✓  13 [chromium-headless-new] › substrate/substrate-cohesion.spec.ts:87:5 › substrate-cohesion: G-ACCENT (ONE accent family) › the blob MOOD bead chroma sits in the warm-register band the FourierField comet occupies (13.6s)
+  ✘  14 [chromium-headless-new] › substrate/substrate-cohesion.spec.ts:184:5 › substrate-cohesion: G-RECESSION (ONE recession contract) › a <Constellation :opacity-ceiling=0.4> paints ~0.4x the ink of the :opacity-ceiling=1 instance (2.4s)
+  ✘  15 [chromium-headless-new] › substrate/substrate-cohesion.spec.ts:253:5 › substrate-cohesion: G-SHADOW (ambient, not the cartoon stamp) › the blob cast shadow is SOFT + ambient-tinted (not 80%-near-black) — the gel bead, not the Memphis stamp (6.4s)
+PI aurora DEFAULT meanChannel=230.7 floor=8
+PI aurora SETTING_SUN meanChannel=231.3 floor=8
+PI aurora DUSK meanChannel=230.1 floor=8
+PI aurora VIVID_SETTING_SUN meanChannel=233.0 floor=8
+PI aurora OPENAI_SKY meanChannel=231.4 floor=8
+PI aurora OPENAI_DAWN meanChannel=229.4 floor=8
+PI aurora OPENAI_MEADOW meanChannel=205.9 floor=8
+PI aurora DELIBERATIVE meanChannel=235.0 floor=8
+PI aurora DAY9_YELLOW meanChannel=229.2 floor=8
+PI aurora OIL_IMPASTO meanChannel=194.0 floor=8
+PI aurora OIL_GESTURAL meanChannel=217.7 floor=8
+PI aurora VANGOGH meanChannel=101.6 floor=8
+PI aurora OILPASTEL_SUNSET meanChannel=200.0 floor=8
+PI aurora OILPASTEL_RAINBOW meanChannel=217.7 floor=8
+PI aurora OILPASTEL_OCEAN meanChannel=146.6 floor=8
+PI aurora CRAYON meanChannel=166.7 floor=8
+PI aurora METAL meanChannel=206.7 floor=8
+PI aurora SPEEDTEST meanChannel=176.2 floor=8
+  ✓  16 [chromium-headless-new] › substrate-paints-color.spec.ts:100:5 › substrate-paints-color (π lane — fail-CLOSED) › aurora paints a non-black interior on DEFAULT + every preset at t=1 (26.9s)
+PI blob paintable=[0.188,0.188]-[0.813,0.702] paintableShareOfInterior=0.557
+PI blob baseline groundMotion=0.000
+PI blob coverage=0.161 floor=0.1 · paintedShare=0.289 ceil=0.7
+  ✓  17 [chromium-headless-new] › substrate-paints-color.spec.ts:284:5 › substrate-paints-color (π lane — fail-CLOSED) › blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS (7.4s)
+PI blob paintable=[0.188,0.188]-[0.813,0.702] paintableShareOfInterior=0.557
+PI blob baseline groundMotion=0.000
+PI blob coverage=0.161 floor=0.1 · paintedShare=0.289 ceil=0.7
+  ✓  18 [chromium-headless-new] › substrate-paints-color.spec.ts:292:5 › substrate-paints-color (π lane — fail-CLOSED) › blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS (7.2s)
+  ✘  19 [chromium-headless-new] › typography/hierarchy.spec.ts:61:5 › AZ.W-HIERARCHY — the canonical section rung + Configurator vocabulary (π) › H1+H2 — every section <h2> resolves to 20.4px; no child <h3> > parent <h2> (3.4s)
+  ✘  20 [chromium-headless-new] › typography/hierarchy.spec.ts:148:5 › AZ.W-HIERARCHY — the canonical section rung + Configurator vocabulary (π) › H3 — Configurator section label > row label; preset-row block-padding > body-row's (1.4s)
+  ✓  21 [chromium-headless-new] › typography/hierarchy.spec.ts:235:5 › BB.W-HIERARCHY2 — the StoryHeader cluster (reading order + GRAVITY entrance + gutter) (π) › H2-ORDER — the cluster renders eyebrow→title→blurb top-to-bottom, one dominant focal (4.0s)
+  ✓  22 [chromium-headless-new] › typography/hierarchy.spec.ts:307:5 › BB.W-HIERARCHY2 — the StoryHeader cluster (reading order + GRAVITY entrance + gutter) (π) › H2-GRAVITY — the title arrives NO-overshoot (translateY monotone to 0, never past) (1.2s)
+  ✓  23 [chromium-headless-new] › typography/hierarchy.spec.ts:350:5 › BB.W-HIERARCHY2 — the StoryHeader cluster (reading order + GRAVITY entrance + gutter) (π) › H2-PRM — under reduce the cluster paints its static terminal (no rise) (640ms)
+  ✘  24 [chromium-headless-new] › typography/hierarchy.spec.ts:398:5 › BB.W-HIERARCHY2 — the StoryHeader cluster (reading order + GRAVITY entrance + gutter) (π) › H2-GUTTER — the <main> reserves the --dock-content-safe-inset gutter (752ms)
+  ✘  25 [chromium-headless-new] › viz/viz-configurator-suite.spec.ts:161:13 › the finished viz studio — controls RIGHT, rounded, ONE card › aurora light: controls RIGHT, rounded panel + canvas, ONE card (2.0s)
+  ✘  26 [chromium-headless-new] › viz/viz-configurator-suite.spec.ts:161:13 › the finished viz studio — controls RIGHT, rounded, ONE card › aurora dark: controls RIGHT, rounded panel + canvas, ONE card (2.1s)
+  ✘  27 [chromium-headless-new] › viz/viz-configurator-suite.spec.ts:161:13 › the finished viz studio — controls RIGHT, rounded, ONE card › blob light: controls RIGHT, rounded panel + canvas, ONE card (1.9s)
+  ✘  28 [chromium-headless-new] › viz/viz-configurator-suite.spec.ts:161:13 › the finished viz studio — controls RIGHT, rounded, ONE card › blob dark: controls RIGHT, rounded panel + canvas, ONE card (2.1s)
+  ✘  29 [chromium-headless-new] › viz/viz-configurator-suite.spec.ts:161:13 › the finished viz studio — controls RIGHT, rounded, ONE card › fourier-field light: controls RIGHT, rounded panel + canvas, ONE card (1.9s)
+  ✘  30 [chromium-headless-new] › viz/viz-configurator-suite.spec.ts:161:13 › the finished viz studio — controls RIGHT, rounded, ONE card › fourier-field dark: controls RIGHT, rounded panel + canvas, ONE card (2.1s)
+  ✓  31 [chromium-headless-new] › viz/viz-configurator-suite.spec.ts:217:9 › narrow — the single-column stack below lg › aurora: ≤900px resolves ONE column, stage above aside (1.6s)
+  ✓  32 [chromium-headless-new] › viz/viz-configurator-suite.spec.ts:217:9 › narrow — the single-column stack below lg › blob: ≤900px resolves ONE column, stage above aside (1.5s)
+  ✓  33 [chromium-headless-new] › viz/viz-configurator-suite.spec.ts:217:9 › narrow — the single-column stack below lg › fourier-field: ≤900px resolves ONE column, stage above aside (1.5s)
+  ✘  34 [chromium-headless-new] › viz/viz-configurator-suite.spec.ts:245:9 › real preview — the preset thumbnails are baked (no dead cards) › aurora: the preset thumbnail reads meanLum > 0 (the dead-card fix) (3.2s)
+  ✓  35 [chromium-headless-new] › viz/viz-fourier-ribbon.spec.ts:104:5 › fourier ribbon paints as a chromatic stroke — light (2.1s)
+  ✓  36 [chromium-headless-new] › viz/viz-fourier-ribbon.spec.ts:104:5 › fourier ribbon paints as a chromatic stroke — dark (2.1s)
+  ✓  37 [chromium-headless-new] › viz/viz-fourier-ribbon.spec.ts:133:1 › PRM freezes the ribbon to one static frame (2.6s)
+  ✘  38 [chromium-headless-new] › viz/viz-interaction.spec.ts:162:9 › aurora reacts to cursor velocity AND acceleration (light) (2.3s)
+  ✘  39 [chromium-headless-new] › viz/viz-interaction.spec.ts:236:9 › aurora PRM-freezes — sweep + flick produce NO reactive change (light) (2.1s)
+  ✘  40 [chromium-headless-new] › viz/viz-interaction.spec.ts:162:9 › blob reacts to cursor velocity AND acceleration (light) (2.8s)
+  ✓  41 [chromium-headless-new] › viz/viz-interaction.spec.ts:236:9 › blob PRM-freezes — sweep + flick produce NO reactive change (light) (2.1s)
+  ✘  42 [chromium-headless-new] › viz/viz-interaction.spec.ts:162:9 › constellation reacts to cursor velocity AND acceleration (light) (2.7s)
+  ✓  43 [chromium-headless-new] › viz/viz-interaction.spec.ts:236:9 › constellation PRM-freezes — sweep + flick produce NO reactive change (light) (2.1s)
+  ✘  44 [chromium-headless-new] › viz/viz-interaction.spec.ts:162:9 › fourier-field reacts to cursor velocity AND acceleration (light) (2.8s)
+  ✓  45 [chromium-headless-new] › viz/viz-interaction.spec.ts:236:9 › fourier-field PRM-freezes — sweep + flick produce NO reactive change (light) (2.1s)
+  ✘  46 [chromium-headless-new] › viz/viz-interaction.spec.ts:162:9 › aurora reacts to cursor velocity AND acceleration (dark) (2.3s)
+  ✘  47 [chromium-headless-new] › viz/viz-interaction.spec.ts:236:9 › aurora PRM-freezes — sweep + flick produce NO reactive change (dark) (2.2s)
+  ✘  48 [chromium-headless-new] › viz/viz-interaction.spec.ts:162:9 › blob reacts to cursor velocity AND acceleration (dark) (3.3s)
+  ✓  49 [chromium-headless-new] › viz/viz-interaction.spec.ts:236:9 › blob PRM-freezes — sweep + flick produce NO reactive change (dark) (2.4s)
+  ✘  50 [chromium-headless-new] › viz/viz-interaction.spec.ts:162:9 › constellation reacts to cursor velocity AND acceleration (dark) (2.9s)
+  ✓  51 [chromium-headless-new] › viz/viz-interaction.spec.ts:236:9 › constellation PRM-freezes — sweep + flick produce NO reactive change (dark) (2.3s)
+  ✘  52 [chromium-headless-new] › viz/viz-interaction.spec.ts:162:9 › fourier-field reacts to cursor velocity AND acceleration (dark) (3.1s)
+  ✓  53 [chromium-headless-new] › viz/viz-interaction.spec.ts:236:9 › fourier-field PRM-freezes — sweep + flick produce NO reactive change (dark) (2.4s)
+  ✓  54 [chromium-headless-new] › viz/webgpu-everywhere.spec.ts:120:13 › BC.W-WEBGPU-EVERYWHERE — every substrate PAINTS, on every host › aurora paints a non-blank field with no adapter-error spew (light) (3.0s)
+  ✓  55 [chromium-headless-new] › viz/webgpu-everywhere.spec.ts:120:13 › BC.W-WEBGPU-EVERYWHERE — every substrate PAINTS, on every host › blob paints a non-blank field with no adapter-error spew (light) (2.1s)
+  ✓  56 [chromium-headless-new] › viz/webgpu-everywhere.spec.ts:120:13 › BC.W-WEBGPU-EVERYWHERE — every substrate PAINTS, on every host › constellation paints a non-blank field with no adapter-error spew (light) (2.2s)
+  ✓  57 [chromium-headless-new] › viz/webgpu-everywhere.spec.ts:120:13 › BC.W-WEBGPU-EVERYWHERE — every substrate PAINTS, on every host › fourier-field paints a non-blank field with no adapter-error spew (light) (2.1s)
+  ✓  58 [chromium-headless-new] › viz/webgpu-everywhere.spec.ts:120:13 › BC.W-WEBGPU-EVERYWHERE — every substrate PAINTS, on every host › aurora paints a non-blank field with no adapter-error spew (dark) (3.0s)
+  ✓  59 [chromium-headless-new] › viz/webgpu-everywhere.spec.ts:120:13 › BC.W-WEBGPU-EVERYWHERE — every substrate PAINTS, on every host › blob paints a non-blank field with no adapter-error spew (dark) (2.2s)
+  ✓  60 [chromium-headless-new] › viz/webgpu-everywhere.spec.ts:120:13 › BC.W-WEBGPU-EVERYWHERE — every substrate PAINTS, on every host › constellation paints a non-blank field with no adapter-error spew (dark) (2.1s)
+  ✓  61 [chromium-headless-new] › viz/webgpu-everywhere.spec.ts:120:13 › BC.W-WEBGPU-EVERYWHERE — every substrate PAINTS, on every host › fourier-field paints a non-blank field with no adapter-error spew (dark) (2.2s)
+  ✓  62 [chromium-headless-new] › viz/webgpu-everywhere.spec.ts:162:5 › BC.W-WEBGPU-EVERYWHERE — every substrate PAINTS, on every host › every WGSL primary compiles with NO reserved-keyword error on real Metal (310ms)
+  ✓  63 [chromium-headless-new] › viz/webgpu-everywhere.spec.ts:224:5 › BC.W-WEBGPU-EVERYWHERE — every substrate PAINTS, on every host › the offscreen-park attaches ZERO frames (the demand-gate, made a number) (2.8s)
+
+
+  1) [chromium-headless-new] › storybook/configurator/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › aurora light: two-column, aside right, rounded, DOM stage→aside 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 380
+    Received:    400
+
+      175 |                     `${studio.id}: the aside width sits in the 280-360px band`,
+      176 |                 ).toBeGreaterThanOrEqual(270);
+    > 177 |                 expect(L.aside.width).toBeLessThanOrEqual(380);
+          |                                       ^
+      178 |
+      179 |                 // controls on the RIGHT: the aside's left edge is right of the stage's.
+      180 |                 expect(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/storybook/configurator/config-right.spec.ts:177:39
+
+    Error Context: test-results/tests-visual-storybook-con-ace27-ght-rounded-DOM-stage→aside-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › storybook/configurator/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › aurora dark: two-column, aside right, rounded, DOM stage→aside 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 380
+    Received:    400
+
+      175 |                     `${studio.id}: the aside width sits in the 280-360px band`,
+      176 |                 ).toBeGreaterThanOrEqual(270);
+    > 177 |                 expect(L.aside.width).toBeLessThanOrEqual(380);
+          |                                       ^
+      178 |
+      179 |                 // controls on the RIGHT: the aside's left edge is right of the stage's.
+      180 |                 expect(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/storybook/configurator/config-right.spec.ts:177:39
+
+    Error Context: test-results/tests-visual-storybook-con-b918e-ght-rounded-DOM-stage→aside-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › storybook/configurator/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › blob light: two-column, aside right, rounded, DOM stage→aside 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 380
+    Received:    400
+
+      175 |                     `${studio.id}: the aside width sits in the 280-360px band`,
+      176 |                 ).toBeGreaterThanOrEqual(270);
+    > 177 |                 expect(L.aside.width).toBeLessThanOrEqual(380);
+          |                                       ^
+      178 |
+      179 |                 // controls on the RIGHT: the aside's left edge is right of the stage's.
+      180 |                 expect(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/storybook/configurator/config-right.spec.ts:177:39
+
+    Error Context: test-results/tests-visual-storybook-con-be6cb-ght-rounded-DOM-stage→aside-chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › storybook/configurator/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › blob dark: two-column, aside right, rounded, DOM stage→aside 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 380
+    Received:    400
+
+      175 |                     `${studio.id}: the aside width sits in the 280-360px band`,
+      176 |                 ).toBeGreaterThanOrEqual(270);
+    > 177 |                 expect(L.aside.width).toBeLessThanOrEqual(380);
+          |                                       ^
+      178 |
+      179 |                 // controls on the RIGHT: the aside's left edge is right of the stage's.
+      180 |                 expect(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/storybook/configurator/config-right.spec.ts:177:39
+
+    Error Context: test-results/tests-visual-storybook-con-a0e5b-ght-rounded-DOM-stage→aside-chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › storybook/configurator/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › fourier-field light: two-column, aside right, rounded, DOM stage→aside 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 380
+    Received:    400
+
+      175 |                     `${studio.id}: the aside width sits in the 280-360px band`,
+      176 |                 ).toBeGreaterThanOrEqual(270);
+    > 177 |                 expect(L.aside.width).toBeLessThanOrEqual(380);
+          |                                       ^
+      178 |
+      179 |                 // controls on the RIGHT: the aside's left edge is right of the stage's.
+      180 |                 expect(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/storybook/configurator/config-right.spec.ts:177:39
+
+    Error Context: test-results/tests-visual-storybook-con-a346c-ght-rounded-DOM-stage→aside-chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › storybook/configurator/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › fourier-field dark: two-column, aside right, rounded, DOM stage→aside 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 380
+    Received:    400
+
+      175 |                     `${studio.id}: the aside width sits in the 280-360px band`,
+      176 |                 ).toBeGreaterThanOrEqual(270);
+    > 177 |                 expect(L.aside.width).toBeLessThanOrEqual(380);
+          |                                       ^
+      178 |
+      179 |                 // controls on the RIGHT: the aside's left edge is right of the stage's.
+      180 |                 expect(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/storybook/configurator/config-right.spec.ts:177:39
+
+    Error Context: test-results/tests-visual-storybook-con-29ada-ght-rounded-DOM-stage→aside-chromium-headless-new/error-context.md
+
+  7) [chromium-headless-new] › storybook/configurator/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › configurator light: two-column, aside right, rounded, DOM stage→aside 
+
+    Error: configurator: desktop grid-template-columns must resolve TWO tracks (was "492px")
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2
+    Received: 1
+
+      165 |                     L.trackCount,
+      166 |                     `${studio.id}: desktop grid-template-columns must resolve TWO tracks (was "${L.gridTemplateColumns}")`,
+    > 167 |                 ).toBe(2);
+          |                   ^
+      168 |
+      169 |                 // The aside track is in the 280-360px band (the --configurator-aside-{min,max}).
+      170 |                 expect(L.aside, `${studio.id}: aside must render`).not.toBeNull();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/storybook/configurator/config-right.spec.ts:167:19
+
+    Error Context: test-results/tests-visual-storybook-con-7513a-ght-rounded-DOM-stage→aside-chromium-headless-new/error-context.md
+
+  8) [chromium-headless-new] › storybook/configurator/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › configurator dark: two-column, aside right, rounded, DOM stage→aside 
+
+    Error: configurator: desktop grid-template-columns must resolve TWO tracks (was "492px")
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2
+    Received: 1
+
+      165 |                     L.trackCount,
+      166 |                     `${studio.id}: desktop grid-template-columns must resolve TWO tracks (was "${L.gridTemplateColumns}")`,
+    > 167 |                 ).toBe(2);
+          |                   ^
+      168 |
+      169 |                 // The aside track is in the 280-360px band (the --configurator-aside-{min,max}).
+      170 |                 expect(L.aside, `${studio.id}: aside must render`).not.toBeNull();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/storybook/configurator/config-right.spec.ts:167:19
+
+    Error Context: test-results/tests-visual-storybook-con-1bd9c-ght-rounded-DOM-stage→aside-chromium-headless-new/error-context.md
+
+  9) [chromium-headless-new] › substrate/substrate-cohesion.spec.ts:184:5 › substrate-cohesion: G-RECESSION (ONE recession contract) › a <Constellation :opacity-ceiling=0.4> paints ~0.4x the ink of the :opacity-ceiling=1 instance 
+
+    Error: the 0.4-ceiling constellation paints 88% of the full field's ink — the opacityCeiling recession prop does NOT bite (a ratio near 1.0 means the recession is not painting). Expected <= 0.62.
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.62
+    Received:    0.8776361378370634
+
+      223 |             ratio,
+      224 |             `the 0.4-ceiling constellation paints ${(ratio * 100).toFixed(0)}% of the full field's ink — the opacityCeiling recession prop does NOT bite (a ratio near 1.0 means the recession is not painting). Expected <= ${RECESSION_RATIO_MAX}.`,
+    > 225 |         ).toBeLessThanOrEqual(RECESSION_RATIO_MAX);
+          |           ^
+      226 |         // ...but still paints SOMETHING (the field recedes, it does not vanish).
+      227 |         expect(
+      228 |             ratio,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/substrate/substrate-cohesion.spec.ts:225:11
+
+    Error Context: test-results/tests-visual-substrate-sub-acb55--opacity-ceiling-1-instance-chromium-headless-new/error-context.md
+
+  10) [chromium-headless-new] › substrate/substrate-cohesion.spec.ts:253:5 › substrate-cohesion: G-SHADOW (ambient, not the cartoon stamp) › the blob cast shadow is SOFT + ambient-tinted (not 80%-near-black) — the gel bead, not the Memphis stamp 
+
+    Error: the blob cast shadow's mean-darkest-5% OKLCh-L = 0.161 is BELOW the ambient floor 0.58 — the cast shade is a near-black HARD offset-stamp, not a soft ambient-tinted contact shadow. FIX: the W-COHERE --blob-shadow ambient token (E2 — the cartoon stamp belongs on <Card surface="cartoon">, not the gel bead).
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 0.58
+    Received:    0.16117672107682646
+
+      283 |             darkestL,
+      284 |             `the blob cast shadow's mean-darkest-5% OKLCh-L = ${darkestL.toFixed(3)} is BELOW the ambient floor ${SHADOW_MIN_DARKEST_L} — the cast shade is a near-black HARD offset-stamp, not a soft ambient-tinted contact shadow. FIX: the W-COHERE --blob-shadow ambient token (E2 — the cartoon stamp belongs on <Card surface="cartoon">, not the gel bead).`,
+    > 285 |         ).toBeGreaterThanOrEqual(SHADOW_MIN_DARKEST_L);
+          |           ^
+      286 |     });
+      287 | });
+      288 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/substrate/substrate-cohesion.spec.ts:285:11
+
+    Error Context: test-results/tests-visual-substrate-sub-ccf98--bead-not-the-Memphis-stamp-chromium-headless-new/error-context.md
+
+  11) [chromium-headless-new] › typography/hierarchy.spec.ts:61:5 › AZ.W-HIERARCHY — the canonical section rung + Configurator vocabulary (π) › H1+H2 — every section <h2> resolves to 20.4px; no child <h3> > parent <h2> 
+
+    Error: /display/card largest child <h3> (37.41px) must NOT exceed the smallest section <h2> (20.35px) — D1-2 inverted-scale guard
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 20.950000000000003
+    Received:    37.41
+
+      139 |                     maxH3,
+      140 |                     `${route} largest child <h3> (${maxH3}px) must NOT exceed the smallest section <h2> (${minH2}px) — D1-2 inverted-scale guard`,
+    > 141 |                 ).toBeLessThanOrEqual(minH2 + TOL);
+          |                   ^
+      142 |             }
+      143 |         }
+      144 |         paired.routes = perRoute;
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/typography/hierarchy.spec.ts:141:19
+
+    Error Context: test-results/tests-visual-typography-hi-18e4e--4px-no-child-h3-parent-h2--chromium-headless-new/error-context.md
+
+  12) [chromium-headless-new] › typography/hierarchy.spec.ts:148:5 › AZ.W-HIERARCHY — the canonical section rung + Configurator vocabulary (π) › H3 — Configurator section label > row label; preset-row block-padding > body-row's 
+
+    Error: row label resolved
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      185 |         // The section label resolves ABOVE the control-row body label rung.
+      186 |         expect(cfg.sectionLabelFs, "section label resolved").not.toBeNull();
+    > 187 |         expect(cfg.rowLabelFs, "row label resolved").not.toBeNull();
+          |                                                          ^
+      188 |         expect(
+      189 |             cfg.sectionLabelFs!,
+      190 |             `Configurator section label (${cfg.sectionLabelFs}px) must resolve ABOVE the row body label (${cfg.rowLabelFs}px) — the D6-3 register differentiation`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/typography/hierarchy.spec.ts:187:58
+
+    Error Context: test-results/tests-visual-typography-hi-83db5-ow-block-padding-body-row-s-chromium-headless-new/error-context.md
+
+  13) [chromium-headless-new] › typography/hierarchy.spec.ts:398:5 › BB.W-HIERARCHY2 — the StoryHeader cluster (reading order + GRAVITY entrance + gutter) (π) › H2-GUTTER — the <main> reserves the --dock-content-safe-inset gutter 
+
+    Error: the <main> reserves a non-zero --dock-content-safe-inset block-start gutter (got NaNpx)
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   NaN
+
+      426 |             g.scrollPaddingBlockStart,
+      427 |             `the <main> reserves a non-zero --dock-content-safe-inset block-start gutter (got ${g.scrollPaddingBlockStart}px)`,
+    > 428 |         ).toBeGreaterThan(0);
+          |           ^
+      429 |         expect(
+      430 |             g.scrollPaddingInlineStart,
+      431 |             `the <main> reserves a non-zero --dock-content-safe-inset inline-start gutter (got ${g.scrollPaddingInlineStart}px)`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/typography/hierarchy.spec.ts:428:11
+
+    Error Context: test-results/tests-visual-typography-hi-850c0-k-content-safe-inset-gutter-chromium-headless-new/error-context.md
+
+  14) [chromium-headless-new] › viz/viz-configurator-suite.spec.ts:161:13 › the finished viz studio — controls RIGHT, rounded, ONE card › aurora light: controls RIGHT, rounded panel + canvas, ONE card 
+
+    Error: aurora: the studio root reads a rounded corner (--radius-panel); was 0px
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 8
+    Received:    0
+
+      198 |                     radius,
+      199 |                     `${studio.id}: the studio root reads a rounded corner (--radius-panel); was ${L.borderRadius}`,
+    > 200 |                 ).toBeGreaterThanOrEqual(8);
+          |                   ^
+      201 |                 expect(
+      202 |                     L.overflow,
+      203 |                     `${studio.id}: the root clips so the canvas does not overrun the corner`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/viz/viz-configurator-suite.spec.ts:200:19
+
+    Error Context: test-results/tests-visual-viz-viz-confi-b5d85-unded-panel-canvas-ONE-card-chromium-headless-new/error-context.md
+
+  15) [chromium-headless-new] › viz/viz-configurator-suite.spec.ts:161:13 › the finished viz studio — controls RIGHT, rounded, ONE card › aurora dark: controls RIGHT, rounded panel + canvas, ONE card 
+
+    Error: aurora: the studio root reads a rounded corner (--radius-panel); was 0px
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 8
+    Received:    0
+
+      198 |                     radius,
+      199 |                     `${studio.id}: the studio root reads a rounded corner (--radius-panel); was ${L.borderRadius}`,
+    > 200 |                 ).toBeGreaterThanOrEqual(8);
+          |                   ^
+      201 |                 expect(
+      202 |                     L.overflow,
+      203 |                     `${studio.id}: the root clips so the canvas does not overrun the corner`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/viz/viz-configurator-suite.spec.ts:200:19
+
+    Error Context: test-results/tests-visual-viz-viz-confi-76cbf-unded-panel-canvas-ONE-card-chromium-headless-new/error-context.md
+
+  16) [chromium-headless-new] › viz/viz-configurator-suite.spec.ts:161:13 › the finished viz studio — controls RIGHT, rounded, ONE card › blob light: controls RIGHT, rounded panel + canvas, ONE card 
+
+    Error: blob: stage + aside on the SAME ROW
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 50
+    Received:   74.75
+
+      191 |                     Math.abs(L.stage.top - L.aside.top),
+      192 |                     `${studio.id}: stage + aside on the SAME ROW`,
+    > 193 |                 ).toBeLessThan(50);
+          |                   ^
+      194 |
+      195 |                 // (b) rounded panel + canvas.
+      196 |                 const radius = parseFloat(L.borderRadius);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/viz/viz-configurator-suite.spec.ts:193:19
+
+    Error Context: test-results/tests-visual-viz-viz-confi-52b32-unded-panel-canvas-ONE-card-chromium-headless-new/error-context.md
+
+  17) [chromium-headless-new] › viz/viz-configurator-suite.spec.ts:161:13 › the finished viz studio — controls RIGHT, rounded, ONE card › blob dark: controls RIGHT, rounded panel + canvas, ONE card 
+
+    Error: blob: stage + aside on the SAME ROW
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 50
+    Received:   74.75
+
+      191 |                     Math.abs(L.stage.top - L.aside.top),
+      192 |                     `${studio.id}: stage + aside on the SAME ROW`,
+    > 193 |                 ).toBeLessThan(50);
+          |                   ^
+      194 |
+      195 |                 // (b) rounded panel + canvas.
+      196 |                 const radius = parseFloat(L.borderRadius);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/viz/viz-configurator-suite.spec.ts:193:19
+
+    Error Context: test-results/tests-visual-viz-viz-confi-c1864-unded-panel-canvas-ONE-card-chromium-headless-new/error-context.md
+
+  18) [chromium-headless-new] › viz/viz-configurator-suite.spec.ts:161:13 › the finished viz studio — controls RIGHT, rounded, ONE card › fourier-field light: controls RIGHT, rounded panel + canvas, ONE card 
+
+    Error: fourier-field: the studio root reads a rounded corner (--radius-panel); was 0px
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 8
+    Received:    0
+
+      198 |                     radius,
+      199 |                     `${studio.id}: the studio root reads a rounded corner (--radius-panel); was ${L.borderRadius}`,
+    > 200 |                 ).toBeGreaterThanOrEqual(8);
+          |                   ^
+      201 |                 expect(
+      202 |                     L.overflow,
+      203 |                     `${studio.id}: the root clips so the canvas does not overrun the corner`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/viz/viz-configurator-suite.spec.ts:200:19
+
+    Error Context: test-results/tests-visual-viz-viz-confi-12203-unded-panel-canvas-ONE-card-chromium-headless-new/error-context.md
+
+  19) [chromium-headless-new] › viz/viz-configurator-suite.spec.ts:161:13 › the finished viz studio — controls RIGHT, rounded, ONE card › fourier-field dark: controls RIGHT, rounded panel + canvas, ONE card 
+
+    Error: fourier-field: the studio root reads a rounded corner (--radius-panel); was 0px
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 8
+    Received:    0
+
+      198 |                     radius,
+      199 |                     `${studio.id}: the studio root reads a rounded corner (--radius-panel); was ${L.borderRadius}`,
+    > 200 |                 ).toBeGreaterThanOrEqual(8);
+          |                   ^
+      201 |                 expect(
+      202 |                     L.overflow,
+      203 |                     `${studio.id}: the root clips so the canvas does not overrun the corner`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/viz/viz-configurator-suite.spec.ts:200:19
+
+    Error Context: test-results/tests-visual-viz-viz-confi-c7801-unded-panel-canvas-ONE-card-chromium-headless-new/error-context.md
+
+  20) [chromium-headless-new] › viz/viz-configurator-suite.spec.ts:245:9 › real preview — the preset thumbnails are baked (no dead cards) › aurora: the preset thumbnail reads meanLum > 0 (the dead-card fix) 
+
+    Error: aurora: a baked preset thumbnail must be present
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      255 |                 meanLum,
+      256 |                 `${studio.id}: a baked preset thumbnail must be present`,
+    > 257 |             ).not.toBeNull();
+          |                   ^
+      258 |             if (meanLum == null) return;
+      259 |             await shot(page, `W-VIZ-CONFIGURATOR-SUITE-${studio.id}-thumbnails`);
+      260 |             expect(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/viz/viz-configurator-suite.spec.ts:257:19
+
+    Error Context: test-results/tests-visual-viz-viz-confi-9d79c-eanLum-0-the-dead-card-fix--chromium-headless-new/error-context.md
+
+  21) [chromium-headless-new] › viz/viz-interaction.spec.ts:162:9 › aurora reacts to cursor velocity AND acceleration (light) 
+
+    Error: aurora (light): the SWEEP did not move the surface above ambient — sweepDiff 0.4916 vs ambient 0.6502 + floor 0.01 (the velocity response must paint)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      209 |                     velocityReacted,
+      210 |                     `${id} (${scheme}): the SWEEP did not move the surface above ambient — sweepDiff ${sweepDiff.toFixed(4)} vs ambient ${ambientDiff.toFixed(4)} + floor ${REACT_DIFF_FLOOR} (the velocity response must paint)`,
+    > 211 |                 ).toBe(true);
+          |                   ^
+      212 |                 expect(
+      213 |                     accelReacted,
+      214 |                     `${id} (${scheme}): the FLICK fired no distinct burst — flickDiff ${flickDiff.toFixed(4)} ≤ floor ${REACT_DIFF_FLOOR} (the acceleration/burst response must paint a DISTINCT frame — the user's velocity-AND-acceleration ask)`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/viz/viz-interaction.spec.ts:211:19
+
+    Error Context: test-results/tests-visual-viz-viz-inter-5ca7e-ity-AND-acceleration-light--chromium-headless-new/error-context.md
+
+  22) [chromium-headless-new] › viz/viz-interaction.spec.ts:236:9 › aurora PRM-freezes — sweep + flick produce NO reactive change (light) 
+
+    Error: aurora (light): under prefers-reduced-motion the cursor STILL moved the surface — prmDiff 0.7712 (the field must freeze to a still frame, the reactivity inert — accessibility absolute)
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 0.01
+    Received:   0.7711765846094204
+
+      263 |                     prmDiff,
+      264 |                     `${id} (${scheme}): under prefers-reduced-motion the cursor STILL moved the surface — prmDiff ${prmDiff.toFixed(4)} (the field must freeze to a still frame, the reactivity inert — accessibility absolute)`,
+    > 265 |                 ).toBeLessThan(REACT_DIFF_FLOOR);
+          |                   ^
+      266 |             }
+      267 |         });
+      268 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/viz/viz-interaction.spec.ts:265:19
+
+    Error Context: test-results/tests-visual-viz-viz-inter-cf6b7-e-NO-reactive-change-light--chromium-headless-new/error-context.md
+
+  23) [chromium-headless-new] › viz/viz-interaction.spec.ts:162:9 › blob reacts to cursor velocity AND acceleration (light) 
+
+    Error: blob (light): the SWEEP did not move the surface above ambient — sweepDiff 0.0000 vs ambient 0.0000 + floor 0.01 (the velocity response must paint)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      209 |                     velocityReacted,
+      210 |                     `${id} (${scheme}): the SWEEP did not move the surface above ambient — sweepDiff ${sweepDiff.toFixed(4)} vs ambient ${ambientDiff.toFixed(4)} + floor ${REACT_DIFF_FLOOR} (the velocity response must paint)`,
+    > 211 |                 ).toBe(true);
+          |                   ^
+      212 |                 expect(
+      213 |                     accelReacted,
+      214 |                     `${id} (${scheme}): the FLICK fired no distinct burst — flickDiff ${flickDiff.toFixed(4)} ≤ floor ${REACT_DIFF_FLOOR} (the acceleration/burst response must paint a DISTINCT frame — the user's velocity-AND-acceleration ask)`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/viz/viz-interaction.spec.ts:211:19
+
+    Error Context: test-results/tests-visual-viz-viz-inter-53078-ity-AND-acceleration-light--chromium-headless-new/error-context.md
+
+  24) [chromium-headless-new] › viz/viz-interaction.spec.ts:162:9 › constellation reacts to cursor velocity AND acceleration (light) 
+
+    Error: constellation (light): the SWEEP did not move the surface above ambient — sweepDiff 0.0107 vs ambient 0.0097 + floor 0.01 (the velocity response must paint)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      209 |                     velocityReacted,
+      210 |                     `${id} (${scheme}): the SWEEP did not move the surface above ambient — sweepDiff ${sweepDiff.toFixed(4)} vs ambient ${ambientDiff.toFixed(4)} + floor ${REACT_DIFF_FLOOR} (the velocity response must paint)`,
+    > 211 |                 ).toBe(true);
+          |                   ^
+      212 |                 expect(
+      213 |                     accelReacted,
+      214 |                     `${id} (${scheme}): the FLICK fired no distinct burst — flickDiff ${flickDiff.toFixed(4)} ≤ floor ${REACT_DIFF_FLOOR} (the acceleration/burst response must paint a DISTINCT frame — the user's velocity-AND-acceleration ask)`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/viz/viz-interaction.spec.ts:211:19
+
+    Error Context: test-results/tests-visual-viz-viz-inter-1e8c5-ity-AND-acceleration-light--chromium-headless-new/error-context.md
+
+  25) [chromium-headless-new] › viz/viz-interaction.spec.ts:162:9 › fourier-field reacts to cursor velocity AND acceleration (light) 
+
+    Error: fourier-field (light): the SWEEP did not move the surface above ambient — sweepDiff 0.0000 vs ambient 0.0000 + floor 0.01 (the velocity response must paint)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      209 |                     velocityReacted,
+      210 |                     `${id} (${scheme}): the SWEEP did not move the surface above ambient — sweepDiff ${sweepDiff.toFixed(4)} vs ambient ${ambientDiff.toFixed(4)} + floor ${REACT_DIFF_FLOOR} (the velocity response must paint)`,
+    > 211 |                 ).toBe(true);
+          |                   ^
+      212 |                 expect(
+      213 |                     accelReacted,
+      214 |                     `${id} (${scheme}): the FLICK fired no distinct burst — flickDiff ${flickDiff.toFixed(4)} ≤ floor ${REACT_DIFF_FLOOR} (the acceleration/burst response must paint a DISTINCT frame — the user's velocity-AND-acceleration ask)`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/viz/viz-interaction.spec.ts:211:19
+
+    Error Context: test-results/tests-visual-viz-viz-inter-28913-ity-AND-acceleration-light--chromium-headless-new/error-context.md
+
+  26) [chromium-headless-new] › viz/viz-interaction.spec.ts:162:9 › aurora reacts to cursor velocity AND acceleration (dark) 
+
+    Error: aurora (dark): the SWEEP did not move the surface above ambient — sweepDiff 0.4500 vs ambient 0.6665 + floor 0.01 (the velocity response must paint)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      209 |                     velocityReacted,
+      210 |                     `${id} (${scheme}): the SWEEP did not move the surface above ambient — sweepDiff ${sweepDiff.toFixed(4)} vs ambient ${ambientDiff.toFixed(4)} + floor ${REACT_DIFF_FLOOR} (the velocity response must paint)`,
+    > 211 |                 ).toBe(true);
+          |                   ^
+      212 |                 expect(
+      213 |                     accelReacted,
+      214 |                     `${id} (${scheme}): the FLICK fired no distinct burst — flickDiff ${flickDiff.toFixed(4)} ≤ floor ${REACT_DIFF_FLOOR} (the acceleration/burst response must paint a DISTINCT frame — the user's velocity-AND-acceleration ask)`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/viz/viz-interaction.spec.ts:211:19
+
+    Error Context: test-results/tests-visual-viz-viz-inter-33903-city-AND-acceleration-dark--chromium-headless-new/error-context.md
+
+  27) [chromium-headless-new] › viz/viz-interaction.spec.ts:236:9 › aurora PRM-freezes — sweep + flick produce NO reactive change (dark) 
+
+    Error: aurora (dark): under prefers-reduced-motion the cursor STILL moved the surface — prmDiff 0.7713 (the field must freeze to a still frame, the reactivity inert — accessibility absolute)
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 0.01
+    Received:   0.7712638108160497
+
+      263 |                     prmDiff,
+      264 |                     `${id} (${scheme}): under prefers-reduced-motion the cursor STILL moved the surface — prmDiff ${prmDiff.toFixed(4)} (the field must freeze to a still frame, the reactivity inert — accessibility absolute)`,
+    > 265 |                 ).toBeLessThan(REACT_DIFF_FLOOR);
+          |                   ^
+      266 |             }
+      267 |         });
+      268 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/viz/viz-interaction.spec.ts:265:19
+
+    Error Context: test-results/tests-visual-viz-viz-inter-357b5-ce-NO-reactive-change-dark--chromium-headless-new/error-context.md
+
+  28) [chromium-headless-new] › viz/viz-interaction.spec.ts:162:9 › blob reacts to cursor velocity AND acceleration (dark) 
+
+    Error: blob (dark): the SWEEP did not move the surface above ambient — sweepDiff 0.0000 vs ambient 0.0000 + floor 0.01 (the velocity response must paint)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      209 |                     velocityReacted,
+      210 |                     `${id} (${scheme}): the SWEEP did not move the surface above ambient — sweepDiff ${sweepDiff.toFixed(4)} vs ambient ${ambientDiff.toFixed(4)} + floor ${REACT_DIFF_FLOOR} (the velocity response must paint)`,
+    > 211 |                 ).toBe(true);
+          |                   ^
+      212 |                 expect(
+      213 |                     accelReacted,
+      214 |                     `${id} (${scheme}): the FLICK fired no distinct burst — flickDiff ${flickDiff.toFixed(4)} ≤ floor ${REACT_DIFF_FLOOR} (the acceleration/burst response must paint a DISTINCT frame — the user's velocity-AND-acceleration ask)`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/viz/viz-interaction.spec.ts:211:19
+
+    Error Context: test-results/tests-visual-viz-viz-inter-acce4-city-AND-acceleration-dark--chromium-headless-new/error-context.md
+
+  29) [chromium-headless-new] › viz/viz-interaction.spec.ts:162:9 › constellation reacts to cursor velocity AND acceleration (dark) 
+
+    Error: constellation (dark): the SWEEP did not move the surface above ambient — sweepDiff 0.0108 vs ambient 0.0101 + floor 0.01 (the velocity response must paint)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      209 |                     velocityReacted,
+      210 |                     `${id} (${scheme}): the SWEEP did not move the surface above ambient — sweepDiff ${sweepDiff.toFixed(4)} vs ambient ${ambientDiff.toFixed(4)} + floor ${REACT_DIFF_FLOOR} (the velocity response must paint)`,
+    > 211 |                 ).toBe(true);
+          |                   ^
+      212 |                 expect(
+      213 |                     accelReacted,
+      214 |                     `${id} (${scheme}): the FLICK fired no distinct burst — flickDiff ${flickDiff.toFixed(4)} ≤ floor ${REACT_DIFF_FLOOR} (the acceleration/burst response must paint a DISTINCT frame — the user's velocity-AND-acceleration ask)`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/viz/viz-interaction.spec.ts:211:19
+
+    Error Context: test-results/tests-visual-viz-viz-inter-b72ff-city-AND-acceleration-dark--chromium-headless-new/error-context.md
+
+  30) [chromium-headless-new] › viz/viz-interaction.spec.ts:162:9 › fourier-field reacts to cursor velocity AND acceleration (dark) 
+
+    Error: fourier-field (dark): the SWEEP did not move the surface above ambient — sweepDiff 0.0000 vs ambient 0.0000 + floor 0.01 (the velocity response must paint)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      209 |                     velocityReacted,
+      210 |                     `${id} (${scheme}): the SWEEP did not move the surface above ambient — sweepDiff ${sweepDiff.toFixed(4)} vs ambient ${ambientDiff.toFixed(4)} + floor ${REACT_DIFF_FLOOR} (the velocity response must paint)`,
+    > 211 |                 ).toBe(true);
+          |                   ^
+      212 |                 expect(
+      213 |                     accelReacted,
+      214 |                     `${id} (${scheme}): the FLICK fired no distinct burst — flickDiff ${flickDiff.toFixed(4)} ≤ floor ${REACT_DIFF_FLOOR} (the acceleration/burst response must paint a DISTINCT frame — the user's velocity-AND-acceleration ask)`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/viz/viz-interaction.spec.ts:211:19
+
+    Error Context: test-results/tests-visual-viz-viz-inter-bcfd2-city-AND-acceleration-dark--chromium-headless-new/error-context.md
+
+  30 failed
+    [chromium-headless-new] › storybook/configurator/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › aurora light: two-column, aside right, rounded, DOM stage→aside 
+    [chromium-headless-new] › storybook/configurator/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › aurora dark: two-column, aside right, rounded, DOM stage→aside 
+    [chromium-headless-new] › storybook/configurator/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › blob light: two-column, aside right, rounded, DOM stage→aside 
+    [chromium-headless-new] › storybook/configurator/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › blob dark: two-column, aside right, rounded, DOM stage→aside 
+    [chromium-headless-new] › storybook/configurator/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › fourier-field light: two-column, aside right, rounded, DOM stage→aside 
+    [chromium-headless-new] › storybook/configurator/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › fourier-field dark: two-column, aside right, rounded, DOM stage→aside 
+    [chromium-headless-new] › storybook/configurator/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › configurator light: two-column, aside right, rounded, DOM stage→aside 
+    [chromium-headless-new] › storybook/configurator/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › configurator dark: two-column, aside right, rounded, DOM stage→aside 
+    [chromium-headless-new] › substrate/substrate-cohesion.spec.ts:184:5 › substrate-cohesion: G-RECESSION (ONE recession contract) › a <Constellation :opacity-ceiling=0.4> paints ~0.4x the ink of the :opacity-ceiling=1 instance 
+    [chromium-headless-new] › substrate/substrate-cohesion.spec.ts:253:5 › substrate-cohesion: G-SHADOW (ambient, not the cartoon stamp) › the blob cast shadow is SOFT + ambient-tinted (not 80%-near-black) — the gel bead, not the Memphis stamp 
+    [chromium-headless-new] › typography/hierarchy.spec.ts:61:5 › AZ.W-HIERARCHY — the canonical section rung + Configurator vocabulary (π) › H1+H2 — every section <h2> resolves to 20.4px; no child <h3> > parent <h2> 
+    [chromium-headless-new] › typography/hierarchy.spec.ts:148:5 › AZ.W-HIERARCHY — the canonical section rung + Configurator vocabulary (π) › H3 — Configurator section label > row label; preset-row block-padding > body-row's 
+    [chromium-headless-new] › typography/hierarchy.spec.ts:398:5 › BB.W-HIERARCHY2 — the StoryHeader cluster (reading order + GRAVITY entrance + gutter) (π) › H2-GUTTER — the <main> reserves the --dock-content-safe-inset gutter 
+    [chromium-headless-new] › viz/viz-configurator-suite.spec.ts:161:13 › the finished viz studio — controls RIGHT, rounded, ONE card › aurora light: controls RIGHT, rounded panel + canvas, ONE card 
+    [chromium-headless-new] › viz/viz-configurator-suite.spec.ts:161:13 › the finished viz studio — controls RIGHT, rounded, ONE card › aurora dark: controls RIGHT, rounded panel + canvas, ONE card 
+    [chromium-headless-new] › viz/viz-configurator-suite.spec.ts:161:13 › the finished viz studio — controls RIGHT, rounded, ONE card › blob light: controls RIGHT, rounded panel + canvas, ONE card 
+    [chromium-headless-new] › viz/viz-configurator-suite.spec.ts:161:13 › the finished viz studio — controls RIGHT, rounded, ONE card › blob dark: controls RIGHT, rounded panel + canvas, ONE card 
+    [chromium-headless-new] › viz/viz-configurator-suite.spec.ts:161:13 › the finished viz studio — controls RIGHT, rounded, ONE card › fourier-field light: controls RIGHT, rounded panel + canvas, ONE card 
+    [chromium-headless-new] › viz/viz-configurator-suite.spec.ts:161:13 › the finished viz studio — controls RIGHT, rounded, ONE card › fourier-field dark: controls RIGHT, rounded panel + canvas, ONE card 
+    [chromium-headless-new] › viz/viz-configurator-suite.spec.ts:245:9 › real preview — the preset thumbnails are baked (no dead cards) › aurora: the preset thumbnail reads meanLum > 0 (the dead-card fix) 
+    [chromium-headless-new] › viz/viz-interaction.spec.ts:162:9 › aurora reacts to cursor velocity AND acceleration (light) 
+    [chromium-headless-new] › viz/viz-interaction.spec.ts:236:9 › aurora PRM-freezes — sweep + flick produce NO reactive change (light) 
+    [chromium-headless-new] › viz/viz-interaction.spec.ts:162:9 › blob reacts to cursor velocity AND acceleration (light) 
+    [chromium-headless-new] › viz/viz-interaction.spec.ts:162:9 › constellation reacts to cursor velocity AND acceleration (light) 
+    [chromium-headless-new] › viz/viz-interaction.spec.ts:162:9 › fourier-field reacts to cursor velocity AND acceleration (light) 
+    [chromium-headless-new] › viz/viz-interaction.spec.ts:162:9 › aurora reacts to cursor velocity AND acceleration (dark) 
+    [chromium-headless-new] › viz/viz-interaction.spec.ts:236:9 › aurora PRM-freezes — sweep + flick produce NO reactive change (dark) 
+    [chromium-headless-new] › viz/viz-interaction.spec.ts:162:9 › blob reacts to cursor velocity AND acceleration (dark) 
+    [chromium-headless-new] › viz/viz-interaction.spec.ts:162:9 › constellation reacts to cursor velocity AND acceleration (dark) 
+    [chromium-headless-new] › viz/viz-interaction.spec.ts:162:9 › fourier-field reacts to cursor velocity AND acceleration (dark) 
+  33 passed (3.4m)
+[browser-seat 2026-10-16T06:41:06.794Z] GREEN: 33/63 passed, 30 failed, 0 skipped in 206s → /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/results/p10/browser/p10-steps/route.json
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/storybook/configurator/config-right.spec.ts :: aurora light: two-column, aside right, rounded, DOM stage→aside
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/storybook/configurator/config-right.spec.ts :: aurora dark: two-column, aside right, rounded, DOM stage→aside
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/storybook/configurator/config-right.spec.ts :: blob light: two-column, aside right, rounded, DOM stage→aside
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/storybook/configurator/config-right.spec.ts :: blob dark: two-column, aside right, rounded, DOM stage→aside
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/storybook/configurator/config-right.spec.ts :: fourier-field light: two-column, aside right, rounded, DOM stage→aside
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/storybook/configurator/config-right.spec.ts :: fourier-field dark: two-column, aside right, rounded, DOM stage→aside
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/storybook/configurator/config-right.spec.ts :: configurator light: two-column, aside right, rounded, DOM stage→aside
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/storybook/configurator/config-right.spec.ts :: configurator dark: two-column, aside right, rounded, DOM stage→aside
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/substrate/substrate-cohesion.spec.ts :: a <Constellation :opacity-ceiling=0.4> paints ~0.4x the ink of the :opacity-ceiling=1 instance
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/substrate/substrate-cohesion.spec.ts :: the blob cast shadow is SOFT + ambient-tinted (not 80%-near-black) — the gel bead, not the Memphis stamp
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/typography/hierarchy.spec.ts :: H1+H2 — every section <h2> resolves to 20.4px; no child <h3> > parent <h2>
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/typography/hierarchy.spec.ts :: H3 — Configurator section label > row label; preset-row block-padding > body-row's
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/typography/hierarchy.spec.ts :: H2-GUTTER — the <main> reserves the --dock-content-safe-inset gutter
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/viz/viz-configurator-suite.spec.ts :: aurora light: controls RIGHT, rounded panel + canvas, ONE card
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/viz/viz-configurator-suite.spec.ts :: aurora dark: controls RIGHT, rounded panel + canvas, ONE card
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/viz/viz-configurator-suite.spec.ts :: blob light: controls RIGHT, rounded panel + canvas, ONE card
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/viz/viz-configurator-suite.spec.ts :: blob dark: controls RIGHT, rounded panel + canvas, ONE card
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/viz/viz-configurator-suite.spec.ts :: fourier-field light: controls RIGHT, rounded panel + canvas, ONE card
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/viz/viz-configurator-suite.spec.ts :: fourier-field dark: controls RIGHT, rounded panel + canvas, ONE card
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/viz/viz-configurator-suite.spec.ts :: aurora: the preset thumbnail reads meanLum > 0 (the dead-card fix)
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/viz/viz-interaction.spec.ts :: aurora reacts to cursor velocity AND acceleration (light)
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/viz/viz-interaction.spec.ts :: aurora PRM-freezes — sweep + flick produce NO reactive change (light)
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/viz/viz-interaction.spec.ts :: blob reacts to cursor velocity AND acceleration (light)
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/viz/viz-interaction.spec.ts :: constellation reacts to cursor velocity AND acceleration (light)
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/viz/viz-interaction.spec.ts :: fourier-field reacts to cursor velocity AND acceleration (light)
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/viz/viz-interaction.spec.ts :: aurora reacts to cursor velocity AND acceleration (dark)
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/viz/viz-interaction.spec.ts :: aurora PRM-freezes — sweep + flick produce NO reactive change (dark)
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/viz/viz-interaction.spec.ts :: blob reacts to cursor velocity AND acceleration (dark)
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/viz/viz-interaction.spec.ts :: constellation reacts to cursor velocity AND acceleration (dark)
+[browser-seat 2026-10-16T06:41:06.794Z]   FAILED tests-visual/viz/viz-interaction.spec.ts :: fourier-field reacts to cursor velocity AND acceleration (dark)

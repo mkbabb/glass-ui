@@ -1,0 +1,58 @@
+{
+ "$schema": "browser-seat/2",
+ "root": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p11/B-proto/wt2",
+ "testDir": ".",
+ "project": "chromium-headless-new",
+ "plant": null,
+ "specs": [
+  "tests-visual/substrate-paints-color.spec.ts"
+ ],
+ "selection": [
+  {
+   "spec": "tests-visual/substrate-paints-color.spec.ts",
+   "bands": [],
+   "reasons": [
+    "named",
+    "the π pixel floor (every call)"
+   ]
+  }
+ ],
+ "bands": [],
+ "url": "http://localhost:53906",
+ "waitedS": 0.001,
+ "ranS": 41.186,
+ "stats": {
+  "startTime": "2026-10-16T09:19:07.017Z",
+  "duration": 40203.214,
+  "expected": 3,
+  "skipped": 0,
+  "unexpected": 0,
+  "flaky": 0
+ },
+ "tests": 3,
+ "ran": 3,
+ "passed": 3,
+ "failed": 0,
+ "skipped": 0,
+ "verdict": "GREEN",
+ "baseReport": "/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-11/B-kit/results/p11/browser/p11-steps/base.rekeyed.json",
+ "newFailures": [],
+ "failures": [],
+ "results": [
+  {
+   "spec": "tests-visual/substrate-paints-color.spec.ts",
+   "title": "aurora paints a non-black interior on DEFAULT + every preset at t=1",
+   "status": "expected"
+  },
+  {
+   "spec": "tests-visual/substrate-paints-color.spec.ts",
+   "title": "blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS",
+   "status": "expected"
+  },
+  {
+   "spec": "tests-visual/substrate-paints-color.spec.ts",
+   "title": "blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS",
+   "status": "expected"
+  }
+ ]
+}
