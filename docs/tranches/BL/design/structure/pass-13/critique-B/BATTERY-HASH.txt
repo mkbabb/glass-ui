@@ -1,0 +1,21 @@
+critique-B pass 13 · battery hash · seat claude-opus-5-5 · 2026-10-16T15:36:03Z (load 5.11 10.30 13.89)
+Recorded BEFORE reading pass-13/B-kit/ or pass-13/B-proto.md.
+Method: cd pass-13/critique-B/battery && cat $(ls | sort) | shasum -a 256   (files sorted by name, concatenated)
+
+8cf445d0ad9ad40ad3d7970798e0d8c7b71f16131f099363d5088d23195ea53d  battery (concatenated, sorted)
+
+Per file (sha256, first 16):
+c8f0b66fd1cf02be  ITEMS.md
+0c8b360ef7d65175  extent13.sh
+fb7421ab701fef97  judges13.sh
+8c1b9f36188e408a  phase1-13.sh
+740f5fc37d391b68  run13.sh
+
+Earlier batteries run by path (re-hashed by the same method at the same time; each equals its own BATTERY-HASH.txt):
+c6fdf555f8206a37d4b63961e7bdb91d0b13b113908988f2c4519e7df7ace9c1  pass-12/critique-B/battery
+317fd849f3775f39111abae1cf90d71fa87ee959bdf3f1317618792f2c023bdd  pass-11/critique-B/battery
+7b7b5303893a05e7d0df90c8f0d9b63364c36be960ef225807b8bf69d61499f6  pass-10/critique-B/battery
+748826fb8a2739b37e043ae993b26a1eed6ee377ec3cf0b4306c65b4d0579035  pass-9/critique-B/battery
+4353aec4b0a0171b  pass-11/critique-B/tools/f7.sh
+
+Kit and B-proto.md last committed at 6a80458ca (2026-10-16T15:30:59Z), before this hash. HEAD 6a80458ca.

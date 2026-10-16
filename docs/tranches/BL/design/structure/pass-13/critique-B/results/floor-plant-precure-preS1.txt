@@ -1,0 +1,10 @@
+FL11 pre-cure-engine-preS1 H-ctl KEPT :: move rc=0 lost=0 moved-file=present ::   "refused": false |  "residue": 0,
+FL11 pre-cure-engine-preS1 H-dot-read LOST :: move rc=0 lost=0 moved-file=present literal "./dist/index.d.ts" not found now: "dist/index.d.ts" ::   "refused": false |  "residue": 0,
+FL11 pre-cure-engine-preS1 H-dot-exst LOST :: move rc=0 lost=0 moved-file=present literal "./dist/glass-ui.js" not found now: "dist/glass-ui.js" ::   "refused": false |  "residue": 0,
+FL11 pre-cure-engine-preS1 H-dot-obj LOST :: move rc=1 lost=1 moved-file=absent literal "./dist/index.d.ts" not found ::  "residue": 0, |  "lost": 1,
+FL11 pre-cure-engine-preS1 H-dot-q LOST :: move rc=0 lost=0 moved-file=present literal "./dist/x.css?raw" not found now: "dist/x.css?raw" ::   "refused": false |  "residue": 0,
+FL11 pre-cure-engine-preS1 H-bare KEPT :: move rc=0 lost=0 moved-file=present literal "dist/index.d.ts" kept ::   "refused": false |  "residue": 0,
+FL11 pre-cure-engine-preS1 H-up KEPT :: move rc=0 lost=0 moved-file=present literal "../dist/index.d.ts" kept ::   "refused": false |  "residue": 0,
+FL11 pre-cure-engine-preS1 DISCRIMINATES PASS :: pre-cure engine loses H-dot-read,H-dot-exst,H-dot-obj,H-dot-q
+FL11 pre-cure-engine-preS1 RESTORE PASS :: git status identical to before the plant
+FL11 pre-cure-engine-preS1 SUMMARY pass=5 fail=0 dot-kept=- dot-lost=H-dot-read,H-dot-exst,H-dot-obj,H-dot-q

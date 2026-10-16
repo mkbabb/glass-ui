@@ -1,0 +1,15 @@
+queued 2026-10-16T15:36:40Z load { 7.83 10.26 13.71 }
+heavy queue held 30 min (15:36:40Z-16:06:46Z, load at release { 11.15 10.36 10.34 }); queued run withdrawn; switching to --light --rss-gb 8 per the task
+light phase1 start 2026-10-16T16:07:04Z load { 10.61 10.27 10.31 }
+light phase1 rc=127 end 2026-10-16T16:07:04Z load { 10.61 10.27 10.31 }
+light toolchain start 2026-10-16T16:07:04Z load { 10.61 10.27 10.31 }
+light toolchain rc=127 end 2026-10-16T16:07:04Z load { 10.61 10.27 10.31 }
+light run13 start 2026-10-16T16:07:04Z load { 10.61 10.27 10.31 }
+light run13 rc=127 end 2026-10-16T16:07:04Z load { 10.61 10.27 10.31 }
+(the three rc=127 lines above: a zsh word-split slip, the guard never started; nothing ran)
+light phase1 start 2026-10-16T16:07:17Z load { 9.82 10.12 10.25 }
+light phase1 rc=0 end 2026-10-16T16:17:12Z load { 13.23 12.38 11.55 }
+light toolchain start 2026-10-16T16:17:12Z load { 13.23 12.38 11.55 }
+light toolchain rc=0 end 2026-10-16T16:20:10Z load { 12.66 12.67 11.84 }
+light run13 start 2026-10-16T16:20:10Z load { 12.66 12.67 11.84 }
+light run13 rc=0 end 2026-10-16T16:50:15Z load { 16.53 14.54 13.90 }

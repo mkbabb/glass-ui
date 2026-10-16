@@ -1,0 +1,88 @@
+route-batt-INFO start 2026-10-16T16:33:28Z load { 16.51 15.31 13.66 }
+route runner tools/batteries-p13.sh
+#!/usr/bin/env bash
+# batteries-p13.sh <built replayed tree> <unbuilt replayed tree> <floor-base tree, built> <scratch> — pass 13's plant
+# batteries in one sequential run (REGISTRY §P12-6.4), so the seat holds one queue slot. The same four-argument
+route runner rc=0
+== the kit's results after the route's runner, against the committed bytes
+ .../p11-regress/p10-regress/digest-after.txt       |   2 +-
+ .../critic12/p11-regress/p10-regress/judges10.txt  | 286 ++++++++---------
+ .../p11-regress/p10-regress/migration10.txt        |   4 +-
+ .../p11-regress/p10-regress/p9-battery.txt         |   4 +-
+ .../p10-regress/p9-regress/b18-inputs.txt          |   6 +-
+ .../p10-regress/p9-regress/browser-plants.txt      |   4 +-
+ .../p10-regress/p9-regress/digest-after.txt        |   2 +-
+ .../p11-regress/p10-regress/p9-regress/flake9.txt  |   8 +-
+ .../p10-regress/p9-regress/judge-throws.txt        | 114 +++----
+ .../p10-regress/p9-regress/p8-plants.txt           |   4 +-
+ .../p11-regress/p10-regress/p9-regress/plants9.txt |   4 +-
+ .../p11-regress/p10-regress/p9-regress/regress.txt |   4 +-
+ .../p10-regress/p9-regress/select-capture.txt      |   4 +-
+ .../p10-regress/p9-regress/tree-probes.txt         |  34 +-
+ .../critic12/p11-regress/p10-regress/plants10.txt  |   4 +-
+ .../B-kit/results/p13/critic12/route-batt-INFO.txt |   4 +-
+ .../pass-13/B-kit/results/p13/critic9x.txt         |  28 +-
+ .../B-kit/results/p13/digest-after-batteries.txt   |   2 +-
+ .../structure/pass-13/B-kit/results/p13/f7.txt     |  28 +-
+ .../structure/pass-13/B-kit/results/p13/fd4.txt    |  10 +-
+ .../structure/pass-13/B-kit/results/p13/fix10.txt  |  24 +-
+ .../pass-13/B-kit/results/p13/floor-lost.txt       |   4 +-
+ .../structure/pass-13/B-kit/results/p13/floor.txt  |   4 +-
+ .../pass-13/B-kit/results/p13/plants-p10.json      | 124 +++----
+ .../pass-13/B-kit/results/p13/plants-p10.txt       | 128 ++++----
+ .../pass-13/B-kit/results/p13/plants-p11.json      |  96 +++---
+ .../pass-13/B-kit/results/p13/plants-p11.txt       | 100 +++---
+ .../pass-13/B-kit/results/p13/plants-p12.json      | 208 ++++++------
+ .../pass-13/B-kit/results/p13/plants-p12.txt       | 212 ++++++------
+ .../pass-13/B-kit/results/p13/plants-p6.txt        |   4 +-
+ .../pass-13/B-kit/results/p13/plants-p7.txt        |   4 +-
+ .../pass-13/B-kit/results/p13/plants-p8.json       |   8 +-
+ .../pass-13/B-kit/results/p13/plants-p8.txt        |  12 +-
+ .../pass-13/B-kit/results/p13/plants-p9.json       |  26 +-
+ .../pass-13/B-kit/results/p13/plants-p9.txt        |  30 +-
+ .../results/p13/plants/base-no-failing-key.json    |   2 +-
+ .../B-kit/results/p13/plants/base-no-key.json      |   2 +-
+ .../B-kit/results/p13/plants/base-no-spec.json     |   2 +-
+ .../pass-13/B-kit/results/p13/plants/rk.json       |   2 +-
+ 52 files changed, 1180 insertions(+), 1171 deletions(-)
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/browser12.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/digest-after.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/judges12.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/p11-battery.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/p11-post.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/p11-regress/browser11.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/p11-regress/digest-after.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/p11-regress/floor-landed.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/p11-regress/judges11.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/p11-regress/p10-battery.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/p11-regress/p10-post.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/p11-regress/p10-regress/browser10.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/p11-regress/p10-regress/digest-after.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/p11-regress/p10-regress/judges10.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/p11-regress/p10-regress/migration10.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/p11-regress/p10-regress/p9-battery.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/p11-regress/p10-regress/p9-regress/b18-inputs.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/p11-regress/p10-regress/p9-regress/browser-plants.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/p11-regress/p10-regress/p9-regress/digest-after.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/p11-regress/p10-regress/p9-regress/flake9.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/p11-regress/p10-regress/p9-regress/judge-throws.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/p11-regress/p10-regress/p9-regress/p8-plants.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/p11-regress/p10-regress/p9-regress/plants9.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/p11-regress/p10-regress/p9-regress/regress.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/p11-regress/p10-regress/p9-regress/select-capture.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/p11-regress/p10-regress/p9-regress/tree-probes.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/p11-regress/p10-regress/plants10.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic12/route-batt-INFO.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/critic9x.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/digest-after-batteries.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/f7.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/fd4.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/fix10.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/floor-lost.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/floor.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/plants-p10.json
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/plants-p10.txt
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/plants-p11.json
+ M docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/plants-p11.txt
+route-batt-INFO rc=0 end 2026-10-16T16:50:10Z load { 17.45 14.69 13.94 }

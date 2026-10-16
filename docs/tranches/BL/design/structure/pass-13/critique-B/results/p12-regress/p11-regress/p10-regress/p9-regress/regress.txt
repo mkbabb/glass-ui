@@ -1,0 +1,964 @@
+regress start 2026-10-16T16:28:13Z load { 13.72 13.24 12.51 }
+BASE {"B0":0,"B1":0,"B2":0,"B3":0,"B4":0,"B5":0,"B6":0,"B7":0,"B8":0,"B9":0,"B10":0,"B11":0,"B12":0,"B13":0,"B14":0,"B15":0,"B16":0,"B17":0,"B18":0}
+SKIP    P7-DT-eyeglass [B-10] morph door src/composables/motion/morph/index.ts, eyeglass source src/composables/motion/selection/eyeglass.ts, tabs null, or the name already on the door
+SKIP    P7r-P6-PW6-unit [B-10] no goto naming chip found on the tree
+GROUP of 359 co-planted plants judged once
+CAUGHT  P7r-P6-X6-src-LDARG-lit [S-14] src: LDARG on a literal target :: named=B17 namedLines={"B17":1}
+        B17: src/components/slider/zq6srcLDARGlit.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-src-LDARG-par [S-14] src: LDARG on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: src/components/slider/zq6srcLDARGpar.ts:1 opaque [dynamic] _k
+        B17: src/components/slider/zq6srcLDARGpar.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-src-LDARGN-lit [S-14] src: LDARGN on a literal target :: named=B17 namedLines={"B17":1}
+        B17: src/components/slider/zq6srcLDARGNlit.ts:3 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-src-LDARGN-par [S-14] src: LDARGN on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: src/components/slider/zq6srcLDARGNpar.ts:1 opaque [dynamic] _k
+        B17: src/components/slider/zq6srcLDARGNpar.ts:3 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-src-TREERET-lit [S-14] src: TREERET on a literal path :: named=B17 namedLines={"B17":1}
+        B17: src/components/slider/zq6srcTREERETlit.ts:2 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6-X6-src-TREERET-par [S-14] src: TREERET on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: src/components/slider/zq6srcTREERETpar.ts:2 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6-X6-src-TREEEMPTY-lit [S-14] src: TREEEMPTY on a literal path :: named=B17 namedLines={"B17":1}
+        B17: src/components/slider/zq6srcTREEEMPTYlit.ts:3 swallows a failed read (try/catch that drops the error)
+CAUGHT  P7r-P6-X6-src-TREEEMPTY-par [S-14] src: TREEEMPTY on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: src/components/slider/zq6srcTREEEMPTYpar.ts:3 swallows a failed read (try/catch that drops the error)
+CAUGHT  P7r-P6-X6-src-TREAD-lit [S-14] src: TREAD on a literal path :: named=B17 namedLines={"B17":1}
+        B17: src/components/slider/zq6srcTREADlit.ts:2 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6-X6-src-TREAD-par [S-14] src: TREAD on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: src/components/slider/zq6srcTREADpar.ts:2 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6-X6-src-PROMISE-lit [S-14] src: PROMISE on a literal path :: named=B8,B17 namedLines={"B8":1,"B17":1}
+        B8: src/components/slider/zq6srcPROMISElit.ts:2 -> package.json [path-literal] (the library reads the root zone)
+        B17: src/components/slider/zq6srcPROMISElit.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-src-PROMISE-par [S-14] src: PROMISE on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: src/components/slider/zq6srcPROMISEpar.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-src-PROMISEE-lit [S-14] src: PROMISEE on a literal path :: named=B8,B17 namedLines={"B8":1,"B17":1}
+        B8: src/components/slider/zq6srcPROMISEElit.ts:2 -> package.json [path-literal] (the library reads the root zone)
+        B17: src/components/slider/zq6srcPROMISEElit.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-src-PROMISEE-par [S-14] src: PROMISEE on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: src/components/slider/zq6srcPROMISEEpar.ts:2 swallows a failed module load or read (.catch without a throw)
+CLEAN   P7r-P6-X6-src-CTL-loader [S-14 control] src: legal named loader called with an argument, no catch :: named=- namedLines={}
+CLEAN   P7r-P6-X6-src-CTL-tree [S-14 control] src: legal tree.read with no catch :: named=- namedLines={}
+CLEAN   P7r-P6-X6-src-CTL-promise [S-14 control] src: legal readFile(...).catch that rethrows with context :: named=- namedLines={}
+CAUGHT  P7r-P6-X6-demo-LDARG-lit [S-14] demo: LDARG on a literal target :: named=B17 namedLines={"B17":1}
+        B17: demo/zq6demoLDARGlit.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-demo-LDARG-par [S-14] demo: LDARG on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: demo/zq6demoLDARGpar.ts:1 opaque [dynamic] _k
+        B17: demo/zq6demoLDARGpar.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-demo-LDARGN-lit [S-14] demo: LDARGN on a literal target :: named=B17 namedLines={"B17":1}
+        B17: demo/zq6demoLDARGNlit.ts:3 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-demo-LDARGN-par [S-14] demo: LDARGN on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: demo/zq6demoLDARGNpar.ts:1 opaque [dynamic] _k
+        B17: demo/zq6demoLDARGNpar.ts:3 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-demo-TREERET-lit [S-14] demo: TREERET on a literal path :: named=B17 namedLines={"B17":1}
+        B17: demo/zq6demoTREERETlit.ts:2 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6-X6-demo-TREERET-par [S-14] demo: TREERET on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: demo/zq6demoTREERETpar.ts:2 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6-X6-demo-TREEEMPTY-lit [S-14] demo: TREEEMPTY on a literal path :: named=B17 namedLines={"B17":1}
+        B17: demo/zq6demoTREEEMPTYlit.ts:3 swallows a failed read (try/catch that drops the error)
+CAUGHT  P7r-P6-X6-demo-TREEEMPTY-par [S-14] demo: TREEEMPTY on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: demo/zq6demoTREEEMPTYpar.ts:3 swallows a failed read (try/catch that drops the error)
+CAUGHT  P7r-P6-X6-demo-TREAD-lit [S-14] demo: TREAD on a literal path :: named=B17 namedLines={"B17":1}
+        B17: demo/zq6demoTREADlit.ts:2 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6-X6-demo-TREAD-par [S-14] demo: TREAD on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: demo/zq6demoTREADpar.ts:2 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6-X6-demo-PROMISE-lit [S-14] demo: PROMISE on a literal path :: named=B17 namedLines={"B17":1}
+        B17: demo/zq6demoPROMISElit.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-demo-PROMISE-par [S-14] demo: PROMISE on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: demo/zq6demoPROMISEpar.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-demo-PROMISEE-lit [S-14] demo: PROMISEE on a literal path :: named=B17 namedLines={"B17":1}
+        B17: demo/zq6demoPROMISEElit.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-demo-PROMISEE-par [S-14] demo: PROMISEE on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: demo/zq6demoPROMISEEpar.ts:2 swallows a failed module load or read (.catch without a throw)
+CLEAN   P7r-P6-X6-demo-CTL-loader [S-14 control] demo: legal named loader called with an argument, no catch :: named=- namedLines={}
+CLEAN   P7r-P6-X6-demo-CTL-tree [S-14 control] demo: legal tree.read with no catch :: named=- namedLines={}
+CLEAN   P7r-P6-X6-demo-CTL-promise [S-14 control] demo: legal readFile(...).catch that rethrows with context :: named=- namedLines={}
+CAUGHT  P7r-P6-X6-scripts-LDARG-lit [S-14] scripts: LDARG on a literal target :: named=B17 namedLines={"B17":1}
+        B17: scripts/zq6scriptsLDARGlit.mjs:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-scripts-LDARG-par [S-14] scripts: LDARG on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: scripts/zq6scriptsLDARGpar.mjs:1 opaque [dynamic] _k
+        B17: scripts/zq6scriptsLDARGpar.mjs:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-scripts-LDARGN-lit [S-14] scripts: LDARGN on a literal target :: named=B17 namedLines={"B17":1}
+        B17: scripts/zq6scriptsLDARGNlit.mjs:3 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-scripts-LDARGN-par [S-14] scripts: LDARGN on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: scripts/zq6scriptsLDARGNpar.mjs:1 opaque [dynamic] _k
+        B17: scripts/zq6scriptsLDARGNpar.mjs:3 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-scripts-TREERET-lit [S-14] scripts: TREERET on a literal path :: named=B17 namedLines={"B17":1}
+        B17: scripts/zq6scriptsTREERETlit.mjs:2 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6-X6-scripts-TREERET-par [S-14] scripts: TREERET on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: scripts/zq6scriptsTREERETpar.mjs:2 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6-X6-scripts-TREEEMPTY-lit [S-14] scripts: TREEEMPTY on a literal path :: named=B17 namedLines={"B17":1}
+        B17: scripts/zq6scriptsTREEEMPTYlit.mjs:3 swallows a failed read (try/catch that drops the error)
+CAUGHT  P7r-P6-X6-scripts-TREEEMPTY-par [S-14] scripts: TREEEMPTY on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: scripts/zq6scriptsTREEEMPTYpar.mjs:3 swallows a failed read (try/catch that drops the error)
+CAUGHT  P7r-P6-X6-scripts-TREAD-lit [S-14] scripts: TREAD on a literal path :: named=B17 namedLines={"B17":1}
+        B17: scripts/zq6scriptsTREADlit.mjs:2 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6-X6-scripts-TREAD-par [S-14] scripts: TREAD on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: scripts/zq6scriptsTREADpar.mjs:2 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6-X6-scripts-PROMISE-lit [S-14] scripts: PROMISE on a literal path :: named=B17 namedLines={"B17":1}
+        B17: scripts/zq6scriptsPROMISElit.mjs:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-scripts-PROMISE-par [S-14] scripts: PROMISE on a parameter path :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: scripts/zq6scriptsPROMISEpar.mjs:2 computed-path read p [fs-read]
+        B17: scripts/zq6scriptsPROMISEpar.mjs:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-scripts-PROMISEE-lit [S-14] scripts: PROMISEE on a literal path :: named=B17 namedLines={"B17":1}
+        B17: scripts/zq6scriptsPROMISEElit.mjs:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-scripts-PROMISEE-par [S-14] scripts: PROMISEE on a parameter path :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: scripts/zq6scriptsPROMISEEpar.mjs:2 computed-path read p [fs-read]
+        B17: scripts/zq6scriptsPROMISEEpar.mjs:2 swallows a failed module load or read (.catch without a throw)
+CLEAN   P7r-P6-X6-scripts-CTL-loader [S-14 control] scripts: legal named loader called with an argument, no catch :: named=- namedLines={}
+CLEAN   P7r-P6-X6-scripts-CTL-tree [S-14 control] scripts: legal tree.read with no catch :: named=- namedLines={}
+FALSE+  P7r-P6-X6-scripts-CTL-promise [S-14 control] scripts: legal readFile(...).catch that rethrows with context :: named=B0 namedLines={"B0":1}
+        B0: scripts/zq6scriptsCtlPromise.mjs:2 computed-path read p [fs-read]
+CAUGHT  P7r-P6-X6-tests-LDARG-lit [S-14] tests: LDARG on a literal target :: named=B17 namedLines={"B17":1}
+        B17: tests/zq6testsLDARGlit.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-tests-LDARG-par [S-14] tests: LDARG on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests/zq6testsLDARGpar.ts:1 opaque [dynamic] _k
+        B17: tests/zq6testsLDARGpar.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-tests-LDARGN-lit [S-14] tests: LDARGN on a literal target :: named=B17 namedLines={"B17":1}
+        B17: tests/zq6testsLDARGNlit.ts:3 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-tests-LDARGN-par [S-14] tests: LDARGN on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests/zq6testsLDARGNpar.ts:1 opaque [dynamic] _k
+        B17: tests/zq6testsLDARGNpar.ts:3 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-tests-TREERET-lit [S-14] tests: TREERET on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests/zq6testsTREERETlit.ts:2 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6-X6-tests-TREERET-par [S-14] tests: TREERET on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: tests/zq6testsTREERETpar.ts:2 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6-X6-tests-TREEEMPTY-lit [S-14] tests: TREEEMPTY on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests/zq6testsTREEEMPTYlit.ts:3 swallows a failed read (try/catch that drops the error)
+CAUGHT  P7r-P6-X6-tests-TREEEMPTY-par [S-14] tests: TREEEMPTY on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: tests/zq6testsTREEEMPTYpar.ts:3 swallows a failed read (try/catch that drops the error)
+CAUGHT  P7r-P6-X6-tests-TREAD-lit [S-14] tests: TREAD on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests/zq6testsTREADlit.ts:2 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6-X6-tests-TREAD-par [S-14] tests: TREAD on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: tests/zq6testsTREADpar.ts:2 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6-X6-tests-PROMISE-lit [S-14] tests: PROMISE on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests/zq6testsPROMISElit.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-tests-PROMISE-par [S-14] tests: PROMISE on a parameter path :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests/zq6testsPROMISEpar.ts:2 computed-path read p [fs-read]
+        B17: tests/zq6testsPROMISEpar.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-tests-PROMISEE-lit [S-14] tests: PROMISEE on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests/zq6testsPROMISEElit.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-tests-PROMISEE-par [S-14] tests: PROMISEE on a parameter path :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests/zq6testsPROMISEEpar.ts:2 computed-path read p [fs-read]
+        B17: tests/zq6testsPROMISEEpar.ts:2 swallows a failed module load or read (.catch without a throw)
+CLEAN   P7r-P6-X6-tests-CTL-loader [S-14 control] tests: legal named loader called with an argument, no catch :: named=- namedLines={}
+CLEAN   P7r-P6-X6-tests-CTL-tree [S-14 control] tests: legal tree.read with no catch :: named=- namedLines={}
+FALSE+  P7r-P6-X6-tests-CTL-promise [S-14 control] tests: legal readFile(...).catch that rethrows with context :: named=B0 namedLines={"B0":1}
+        B0: tests/zq6testsCtlPromise.ts:2 computed-path read p [fs-read]
+CAUGHT  P7r-P6-X6-tests-visual-LDARG-lit [S-14] tests-visual: LDARG on a literal target :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zq6testsvisualLDARGlit.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-tests-visual-LDARG-par [S-14] tests-visual: LDARG on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests-visual/zq6testsvisualLDARGpar.ts:1 opaque [dynamic] _k
+        B17: tests-visual/zq6testsvisualLDARGpar.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-tests-visual-LDARGN-lit [S-14] tests-visual: LDARGN on a literal target :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zq6testsvisualLDARGNlit.ts:3 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-tests-visual-LDARGN-par [S-14] tests-visual: LDARGN on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests-visual/zq6testsvisualLDARGNpar.ts:1 opaque [dynamic] _k
+        B17: tests-visual/zq6testsvisualLDARGNpar.ts:3 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-tests-visual-TREERET-lit [S-14] tests-visual: TREERET on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zq6testsvisualTREERETlit.ts:2 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6-X6-tests-visual-TREERET-par [S-14] tests-visual: TREERET on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zq6testsvisualTREERETpar.ts:2 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6-X6-tests-visual-TREEEMPTY-lit [S-14] tests-visual: TREEEMPTY on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zq6testsvisualTREEEMPTYlit.ts:3 swallows a failed read (try/catch that drops the error)
+CAUGHT  P7r-P6-X6-tests-visual-TREEEMPTY-par [S-14] tests-visual: TREEEMPTY on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zq6testsvisualTREEEMPTYpar.ts:3 swallows a failed read (try/catch that drops the error)
+CAUGHT  P7r-P6-X6-tests-visual-TREAD-lit [S-14] tests-visual: TREAD on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zq6testsvisualTREADlit.ts:2 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6-X6-tests-visual-TREAD-par [S-14] tests-visual: TREAD on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zq6testsvisualTREADpar.ts:2 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6-X6-tests-visual-PROMISE-lit [S-14] tests-visual: PROMISE on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zq6testsvisualPROMISElit.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-tests-visual-PROMISE-par [S-14] tests-visual: PROMISE on a parameter path :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests-visual/zq6testsvisualPROMISEpar.ts:2 computed-path read p [fs-read]
+        B17: tests-visual/zq6testsvisualPROMISEpar.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-tests-visual-PROMISEE-lit [S-14] tests-visual: PROMISEE on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zq6testsvisualPROMISEElit.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6-X6-tests-visual-PROMISEE-par [S-14] tests-visual: PROMISEE on a parameter path :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests-visual/zq6testsvisualPROMISEEpar.ts:2 computed-path read p [fs-read]
+        B17: tests-visual/zq6testsvisualPROMISEEpar.ts:2 swallows a failed module load or read (.catch without a throw)
+CLEAN   P7r-P6-X6-tests-visual-CTL-loader [S-14 control] tests-visual: legal named loader called with an argument, no catch :: named=- namedLines={}
+CLEAN   P7r-P6-X6-tests-visual-CTL-tree [S-14 control] tests-visual: legal tree.read with no catch :: named=- namedLines={}
+FALSE+  P7r-P6-X6-tests-visual-CTL-promise [S-14 control] tests-visual: legal readFile(...).catch that rethrows with context :: named=B0 namedLines={"B0":1}
+        B0: tests-visual/zq6testsvisualCtlPromise.ts:2 computed-path read p [fs-read]
+CAUGHT  P7r-P6-PH6-scripts/structure/part-1.mjs [B-07] scripts: placeholder name part-1.mjs :: named=B15 namedLines={"B15":1}
+        B15: scripts/structure/part-1.mjs (placeholder file name)
+CAUGHT  P7r-P6-PH6-demo/shell/GlassDock2.ts [B-07] demo: placeholder name GlassDock2.ts :: named=B15 namedLines={"B15":1}
+        B15: demo/shell/GlassDock2.ts (placeholder file name)
+CAUGHT  P7r-P6-PH6-tests/styles/bs11.ts [B-07] tests: placeholder name bs11.ts :: named=B15 namedLines={"B15":1}
+        B15: tests/styles/bs11.ts (placeholder file name)
+CAUGHT  P7r-P6-PH6-tests-visual/glass/GlassDockSplit.ts [B-07] tests-visual: placeholder name GlassDockSplit.ts :: named=B15 namedLines={"B15":1}
+        B15: tests-visual/glass/GlassDockSplit.ts (placeholder file name)
+CAUGHT  P7r-P6-PHT6-src/components/chip/__tests__/Chip2.test.ts [B-07] placeholder test stem Chip2.test.ts :: named=B15,B16 namedLines={"B15":1,"B16":1}
+        B15: src/components/chip/__tests__/Chip2.test.ts (placeholder file name)
+        B16: src/components/chip/__tests__/Chip2.test.ts (colocated in src/components/chip; its subject's home is the harness (several units))
+CAUGHT  P7r-P6-PHT6-src/components/chip/__tests__/part-1.test.ts [B-07] placeholder test stem part-1.test.ts :: named=B15,B16 namedLines={"B15":1,"B16":1}
+        B15: src/components/chip/__tests__/part-1.test.ts (placeholder file name)
+        B16: src/components/chip/__tests__/part-1.test.ts (colocated in src/components/chip; its subject's home is the harness (several units))
+CAUGHT  P7r-P6-PHT6-src/components/slider/__tests__/SliderSplit.test.ts [B-07] placeholder test stem SliderSplit.test.ts :: named=B15,B16 namedLines={"B15":1,"B16":1}
+        B15: src/components/slider/__tests__/SliderSplit.test.ts (placeholder file name)
+        B16: src/components/slider/__tests__/SliderSplit.test.ts (colocated in src/components/slider; its subject's home is the harness (several units))
+CAUGHT  P7r-P6-PHT6-tests/styles/bs11.test.ts [B-07] placeholder test stem bs11.test.ts :: named=B15 namedLines={"B15":1}
+        B15: tests/styles/bs11.test.ts (placeholder file name)
+CAUGHT  P7r-P6-PHT6-src/components/dock/__tests__/GlassDock-2.test.ts [B-07] placeholder test stem GlassDock-2.test.ts :: named=B15,B16 namedLines={"B15":1,"B16":1}
+        B15: src/components/dock/__tests__/GlassDock-2.test.ts (placeholder file name)
+        B16: src/components/dock/__tests__/GlassDock-2.test.ts (colocated in src/components/dock; its subject's home is the harness (several units))
+CAUGHT  P7r-P6-PHT6-tests-visual/aurora/aurora-arresting7.spec.ts [B-07] Playwright spec stem aurora-arresting7 beside aurora-arresting.spec.ts :: named=B15 namedLines={"B15":1}
+        B15: tests-visual/aurora/aurora-arresting7.spec.ts (placeholder file name)
+CLEAN   P7r-P6-PH6-CTL-src [B-07 control] legal: a concept-named split module :: named=- namedLines={}
+FALSE+  P7r-P6-PH6-CTL-test [B-07 control] legal: a concept-named unit test :: named=B16 namedLines={"B16":1}
+        B16: src/components/chip/__tests__/zqChipToneRamp.test.ts (colocated in src/components/chip; its subject's home is the harness (several units))
+CAUGHT  P7r-P6-PW6-out-tv [B-10 (B-S16)] a Playwright test file in tests-visual whose name the program does not match :: named=B16 namedLines={"B16":1}
+        B16: tests-visual/zq6PwOutside.ts (declares Playwright tests outside the program tests-visual/playwright.config.ts: it never runs)
+CAUGHT  P7r-P6-PW6-out-unit [B-10 (B-S16)] a Playwright test file in chip's slot under a name the program does not match :: named=B16 namedLines={"B16":2}
+        B16: src/components/chip/__tests__/zq6PwUnitOut.vis.ts (declares Playwright tests outside the program tests-visual/playwright.config.ts: it never runs)
+        B16: src/components/chip/__tests__/zq6PwUnitOut.vis.ts (a helper in src/components/chip/__tests__/ read by nothing)
+CAUGHT  P7r-P6-PW6-out-demo [B-10 (B-S16)] a Playwright spec in the demo zone :: named=B16 namedLines={"B16":1}
+        B16: demo/zq6PwDemo.spec.ts (declares Playwright tests outside the program tests-visual/playwright.config.ts: it never runs)
+CLEAN   P7r-P6x-PW6x-legal-chip [B-10 legal] legal: a page-driving chip visual spec in its unit's slot ("/forms/chip") :: named=- namedLines={}
+CAUGHT  P7r-P6x-PW6x-wrong-chip [B-10 (P5-R5)] a visual spec driving chip's story in slider's slot :: named=B16 namedLines={"B16":1}
+        B16: src/components/slider/__tests__/zq6xchipWrong.visual.ts (colocated in src/components/slider; its subject's home is src/components/chip (by the 1 story it opens))
+CAUGHT  P7r-P6x-PW6x-tv-chip [B-10 (P5-R5)] a tests-visual spec whose one subject is chip :: named=B16 namedLines={"B16":1}
+        B16: tests-visual/zq6xchipTv.spec.ts (subject in src/components/chip (by the 1 story it opens): belongs in src/components/chip/__tests__/ as *.visual.ts)
+CLEAN   P7r-P6x-PW6x-legal-sortable [B-10 legal] legal: a page-driving sortable visual spec in its unit's slot ("/data/sortable-list") :: named=- namedLines={}
+CAUGHT  P7r-P6x-PW6x-wrong-sortable [B-10 (P5-R5)] a visual spec driving sortable's story in slider's slot :: named=B16 namedLines={"B16":1}
+        B16: src/components/slider/__tests__/zq6xsortableWrong.visual.ts (colocated in src/components/slider; its subject's home is src/components/sortable-list (by the 1 story it opens))
+CAUGHT  P7r-P6x-PW6x-tv-sortable [B-10 (P5-R5)] a tests-visual spec whose one subject is sortable :: named=B16 namedLines={"B16":1}
+        B16: tests-visual/zq6xsortableTv.spec.ts (subject in src/components/sortable-list (by the 1 story it opens): belongs in src/components/sortable-list/__tests__/ as *.visual.ts)
+CAUGHT  P7r-P6r-P5-S14-src-FS-RET-lit [S-14] src: RET on a literal path :: named=B8,B17 namedLines={"B8":2,"B17":1}
+        B8: src/components/slider/zqsrcFsRETlit.ts:3 -> package.json [path-literal] (the library reads the root zone)
+        B8: src/components/slider/zqsrcFsRETlit.ts:4 -> package.json [path-literal] (the library reads the root zone)
+        B17: src/components/slider/zqsrcFsRETlit.ts:3 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-src-FS-RET-par [S-14] src: RET on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: src/components/slider/zqsrcFsRETpar.ts:3 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-src-FS-RETN-lit [S-14] src: RETN on a literal path :: named=B8,B17 namedLines={"B8":2,"B17":1}
+        B8: src/components/slider/zqsrcFsRETNlit.ts:2 -> package.json [path-literal] (the library reads the root zone)
+        B8: src/components/slider/zqsrcFsRETNlit.ts:2 -> package.json [path-literal] (the library reads the root zone)
+        B17: src/components/slider/zqsrcFsRETNlit.ts:2 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-src-FS-RETN-par [S-14] src: RETN on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: src/components/slider/zqsrcFsRETNpar.ts:2 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-src-FS-TERN-lit [S-14] src: TERN on a literal path :: named=B8,B17 namedLines={"B8":2,"B17":1}
+        B8: src/components/slider/zqsrcFsTERNlit.ts:2 -> package.json [path-literal] (the library reads the root zone)
+        B8: src/components/slider/zqsrcFsTERNlit.ts:2 -> package.json [path-literal] (the library reads the root zone)
+        B17: src/components/slider/zqsrcFsTERNlit.ts:2 falls back to an empty value when a file is missing (a ternary masking fallback)
+CAUGHT  P7r-P6r-P5-S14-src-FS-TERN-par [S-14] src: TERN on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: src/components/slider/zqsrcFsTERNpar.ts:2 falls back to an empty value when a file is missing (a ternary masking fallback)
+CAUGHT  P7r-P6r-P5-S14-src-FS-POS-lit [S-14] src: POS on a literal path :: named=B8,B17 namedLines={"B8":2,"B17":1}
+        B8: src/components/slider/zqsrcFsPOSlit.ts:3 -> package.json [path-literal] (the library reads the root zone)
+        B8: src/components/slider/zqsrcFsPOSlit.ts:3 -> package.json [path-literal] (the library reads the root zone)
+        B17: src/components/slider/zqsrcFsPOSlit.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-src-FS-POS-par [S-14] src: POS on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: src/components/slider/zqsrcFsPOSpar.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-src-FS-POSB-lit [S-14] src: POSB on a literal path :: named=B8,B17 namedLines={"B8":2,"B17":1}
+        B8: src/components/slider/zqsrcFsPOSBlit.ts:3 -> package.json [path-literal] (the library reads the root zone)
+        B8: src/components/slider/zqsrcFsPOSBlit.ts:4 -> package.json [path-literal] (the library reads the root zone)
+        B17: src/components/slider/zqsrcFsPOSBlit.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-src-FS-POSB-par [S-14] src: POSB on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: src/components/slider/zqsrcFsPOSBpar.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-src-FS-TRY-lit [S-14] src: TRY on a literal path :: named=B8,B17 namedLines={"B8":1,"B17":1}
+        B8: src/components/slider/zqsrcFsTRYlit.ts:4 -> package.json [path-literal] (the library reads the root zone)
+        B17: src/components/slider/zqsrcFsTRYlit.ts:3 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6r-P5-S14-src-FS-TRY-par [S-14] src: TRY on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: src/components/slider/zqsrcFsTRYpar.ts:3 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6r-P5-S14-src-FS-TRYE-lit [S-14] src: TRYE on a literal path :: named=B8,B17 namedLines={"B8":1,"B17":1}
+        B8: src/components/slider/zqsrcFsTRYElit.ts:4 -> package.json [path-literal] (the library reads the root zone)
+        B17: src/components/slider/zqsrcFsTRYElit.ts:4 swallows a failed read (try/catch that drops the error)
+CAUGHT  P7r-P6r-P5-S14-src-FS-TRYE-par [S-14] src: TRYE on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: src/components/slider/zqsrcFsTRYEpar.ts:4 swallows a failed read (try/catch that drops the error)
+CAUGHT  P7r-P6r-P5-S14-src-FS-ASYNC-lit [S-14] src: ASYNC on a literal path :: named=B8,B17 namedLines={"B8":1,"B17":1}
+        B8: src/components/slider/zqsrcFsASYNClit.ts:2 -> package.json [path-literal] (the library reads the root zone)
+        B17: src/components/slider/zqsrcFsASYNClit.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-src-FS-ASYNC-par [S-14] src: ASYNC on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: src/components/slider/zqsrcFsASYNCpar.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-src-LD-CATCH-lit [S-14] src: CATCH load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: src/components/slider/zqsrcLdCATCHlit.ts:1 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-src-LD-CATCH-par [S-14] src: CATCH load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: src/components/slider/zqsrcLdCATCHpar.ts:1 opaque [dynamic] p
+        B17: src/components/slider/zqsrcLdCATCHpar.ts:1 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-src-LD-CATCHU-lit [S-14] src: CATCHU load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: src/components/slider/zqsrcLdCATCHUlit.ts:1 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-src-LD-CATCHU-par [S-14] src: CATCHU load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: src/components/slider/zqsrcLdCATCHUpar.ts:1 opaque [dynamic] p
+        B17: src/components/slider/zqsrcLdCATCHUpar.ts:1 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-src-LD-THEN2-lit [S-14] src: THEN2 load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: src/components/slider/zqsrcLdTHEN2lit.ts:1 swallows a failed module load or read (.then with a rejection handler that does not throw)
+CAUGHT  P7r-P6r-P5-S14-src-LD-THEN2-par [S-14] src: THEN2 load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: src/components/slider/zqsrcLdTHEN2par.ts:1 opaque [dynamic] p
+        B17: src/components/slider/zqsrcLdTHEN2par.ts:1 swallows a failed module load or read (.then with a rejection handler that does not throw)
+CAUGHT  P7r-P6r-P5-S14-src-LD-FNVAL-lit [S-14] src: FNVAL load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: src/components/slider/zqsrcLdFNVALlit.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-src-LD-FNVAL-par [S-14] src: FNVAL load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: src/components/slider/zqsrcLdFNVALpar.ts:1 opaque [dynamic] p
+        B17: src/components/slider/zqsrcLdFNVALpar.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-src-LD-FNMAP-lit [S-14] src: FNMAP load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: src/components/slider/zqsrcLdFNMAPlit.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-src-LD-FNMAP-par [S-14] src: FNMAP load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: src/components/slider/zqsrcLdFNMAPpar.ts:1 opaque [dynamic] p
+        B17: src/components/slider/zqsrcLdFNMAPpar.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-src-LD-TRYAW-lit [S-14] src: TRYAW load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: src/components/slider/zqsrcLdTRYAWlit.ts:2 swallows a failed module load (try/catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-src-LD-TRYAW-par [S-14] src: TRYAW load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: src/components/slider/zqsrcLdTRYAWpar.ts:3 opaque [dynamic] p
+        B17: src/components/slider/zqsrcLdTRYAWpar.ts:2 swallows a failed module load (try/catch without a throw)
+CLEAN   P7r-P6r-P5-S14-src-CTL-read [S-14 control] src: legal plain read :: named=- namedLines={}
+CLEAN   P7r-P6r-P5-S14-src-CTL-load [S-14 control] src: legal plain load :: named=- namedLines={}
+CLEAN   P7r-P6r-P5-S14-src-CTL-rethrow [S-14 control] src: legal try/catch that rethrows with context :: named=- namedLines={}
+CAUGHT  P7r-P6r-P5-S14-demo-FS-RET-lit [S-14] demo: RET on a literal path :: named=B17 namedLines={"B17":1}
+        B17: demo/zqdemoFsRETlit.ts:3 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-demo-FS-RET-par [S-14] demo: RET on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: demo/zqdemoFsRETpar.ts:3 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-demo-FS-RETN-lit [S-14] demo: RETN on a literal path :: named=B17 namedLines={"B17":1}
+        B17: demo/zqdemoFsRETNlit.ts:2 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-demo-FS-RETN-par [S-14] demo: RETN on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: demo/zqdemoFsRETNpar.ts:2 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-demo-FS-TERN-lit [S-14] demo: TERN on a literal path :: named=B17 namedLines={"B17":1}
+        B17: demo/zqdemoFsTERNlit.ts:2 falls back to an empty value when a file is missing (a ternary masking fallback)
+CAUGHT  P7r-P6r-P5-S14-demo-FS-TERN-par [S-14] demo: TERN on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: demo/zqdemoFsTERNpar.ts:2 falls back to an empty value when a file is missing (a ternary masking fallback)
+CAUGHT  P7r-P6r-P5-S14-demo-FS-POS-lit [S-14] demo: POS on a literal path :: named=B17 namedLines={"B17":1}
+        B17: demo/zqdemoFsPOSlit.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-demo-FS-POS-par [S-14] demo: POS on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: demo/zqdemoFsPOSpar.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-demo-FS-POSB-lit [S-14] demo: POSB on a literal path :: named=B17 namedLines={"B17":1}
+        B17: demo/zqdemoFsPOSBlit.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-demo-FS-POSB-par [S-14] demo: POSB on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: demo/zqdemoFsPOSBpar.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-demo-FS-TRY-lit [S-14] demo: TRY on a literal path :: named=B17 namedLines={"B17":1}
+        B17: demo/zqdemoFsTRYlit.ts:3 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6r-P5-S14-demo-FS-TRY-par [S-14] demo: TRY on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: demo/zqdemoFsTRYpar.ts:3 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6r-P5-S14-demo-FS-TRYE-lit [S-14] demo: TRYE on a literal path :: named=B17 namedLines={"B17":1}
+        B17: demo/zqdemoFsTRYElit.ts:4 swallows a failed read (try/catch that drops the error)
+CAUGHT  P7r-P6r-P5-S14-demo-FS-TRYE-par [S-14] demo: TRYE on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: demo/zqdemoFsTRYEpar.ts:4 swallows a failed read (try/catch that drops the error)
+CAUGHT  P7r-P6r-P5-S14-demo-FS-ASYNC-lit [S-14] demo: ASYNC on a literal path :: named=B17 namedLines={"B17":1}
+        B17: demo/zqdemoFsASYNClit.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-demo-FS-ASYNC-par [S-14] demo: ASYNC on a parameter path :: named=B17 namedLines={"B17":1}
+        B17: demo/zqdemoFsASYNCpar.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-demo-LD-CATCH-lit [S-14] demo: CATCH load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: demo/zqdemoLdCATCHlit.ts:1 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-demo-LD-CATCH-par [S-14] demo: CATCH load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: demo/zqdemoLdCATCHpar.ts:1 opaque [dynamic] p
+        B17: demo/zqdemoLdCATCHpar.ts:1 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-demo-LD-CATCHU-lit [S-14] demo: CATCHU load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: demo/zqdemoLdCATCHUlit.ts:1 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-demo-LD-CATCHU-par [S-14] demo: CATCHU load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: demo/zqdemoLdCATCHUpar.ts:1 opaque [dynamic] p
+        B17: demo/zqdemoLdCATCHUpar.ts:1 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-demo-LD-THEN2-lit [S-14] demo: THEN2 load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: demo/zqdemoLdTHEN2lit.ts:1 swallows a failed module load or read (.then with a rejection handler that does not throw)
+CAUGHT  P7r-P6r-P5-S14-demo-LD-THEN2-par [S-14] demo: THEN2 load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: demo/zqdemoLdTHEN2par.ts:1 opaque [dynamic] p
+        B17: demo/zqdemoLdTHEN2par.ts:1 swallows a failed module load or read (.then with a rejection handler that does not throw)
+CAUGHT  P7r-P6r-P5-S14-demo-LD-FNVAL-lit [S-14] demo: FNVAL load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: demo/zqdemoLdFNVALlit.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-demo-LD-FNVAL-par [S-14] demo: FNVAL load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: demo/zqdemoLdFNVALpar.ts:1 opaque [dynamic] p
+        B17: demo/zqdemoLdFNVALpar.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-demo-LD-FNMAP-lit [S-14] demo: FNMAP load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: demo/zqdemoLdFNMAPlit.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-demo-LD-FNMAP-par [S-14] demo: FNMAP load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: demo/zqdemoLdFNMAPpar.ts:1 opaque [dynamic] p
+        B17: demo/zqdemoLdFNMAPpar.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-demo-LD-TRYAW-lit [S-14] demo: TRYAW load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: demo/zqdemoLdTRYAWlit.ts:2 swallows a failed module load (try/catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-demo-LD-TRYAW-par [S-14] demo: TRYAW load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: demo/zqdemoLdTRYAWpar.ts:3 opaque [dynamic] p
+        B17: demo/zqdemoLdTRYAWpar.ts:2 swallows a failed module load (try/catch without a throw)
+CLEAN   P7r-P6r-P5-S14-demo-CTL-read [S-14 control] demo: legal plain read :: named=- namedLines={}
+CLEAN   P7r-P6r-P5-S14-demo-CTL-load [S-14 control] demo: legal plain load :: named=- namedLines={}
+CLEAN   P7r-P6r-P5-S14-demo-CTL-rethrow [S-14 control] demo: legal try/catch that rethrows with context :: named=- namedLines={}
+CAUGHT  P7r-P6r-P5-S14-scripts-FS-RET-lit [S-14] scripts: RET on a literal path :: named=B17 namedLines={"B17":1}
+        B17: scripts/zqscriptsFsRETlit.mjs:3 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-scripts-FS-RET-par [S-14] scripts: RET on a parameter path :: named=B0,B17 namedLines={"B0":2,"B17":1}
+        B0: scripts/zqscriptsFsRETpar.mjs:3 computed-path read p [fs-read]
+        B0: scripts/zqscriptsFsRETpar.mjs:4 computed-path read p [fs-read]
+        B17: scripts/zqscriptsFsRETpar.mjs:3 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-scripts-FS-RETN-lit [S-14] scripts: RETN on a literal path :: named=B17 namedLines={"B17":1}
+        B17: scripts/zqscriptsFsRETNlit.mjs:2 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-scripts-FS-RETN-par [S-14] scripts: RETN on a parameter path :: named=B0,B17 namedLines={"B0":2,"B17":1}
+        B0: scripts/zqscriptsFsRETNpar.mjs:2 computed-path read p [fs-read]
+        B0: scripts/zqscriptsFsRETNpar.mjs:2 computed-path read p [fs-read]
+        B17: scripts/zqscriptsFsRETNpar.mjs:2 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-scripts-FS-TERN-lit [S-14] scripts: TERN on a literal path :: named=B17 namedLines={"B17":1}
+        B17: scripts/zqscriptsFsTERNlit.mjs:2 falls back to an empty value when a file is missing (a ternary masking fallback)
+CAUGHT  P7r-P6r-P5-S14-scripts-FS-TERN-par [S-14] scripts: TERN on a parameter path :: named=B0,B17 namedLines={"B0":2,"B17":1}
+        B0: scripts/zqscriptsFsTERNpar.mjs:2 computed-path read p [fs-read]
+        B0: scripts/zqscriptsFsTERNpar.mjs:2 computed-path read p [fs-read]
+        B17: scripts/zqscriptsFsTERNpar.mjs:2 falls back to an empty value when a file is missing (a ternary masking fallback)
+CAUGHT  P7r-P6r-P5-S14-scripts-FS-POS-lit [S-14] scripts: POS on a literal path :: named=B17 namedLines={"B17":1}
+        B17: scripts/zqscriptsFsPOSlit.mjs:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-scripts-FS-POS-par [S-14] scripts: POS on a parameter path :: named=B0,B17 namedLines={"B0":2,"B17":1}
+        B0: scripts/zqscriptsFsPOSpar.mjs:3 computed-path read p [fs-read]
+        B0: scripts/zqscriptsFsPOSpar.mjs:3 computed-path read p [fs-read]
+        B17: scripts/zqscriptsFsPOSpar.mjs:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-scripts-FS-POSB-lit [S-14] scripts: POSB on a literal path :: named=B17 namedLines={"B17":1}
+        B17: scripts/zqscriptsFsPOSBlit.mjs:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-scripts-FS-POSB-par [S-14] scripts: POSB on a parameter path :: named=B0,B17 namedLines={"B0":2,"B17":1}
+        B0: scripts/zqscriptsFsPOSBpar.mjs:3 computed-path read p [fs-read]
+        B0: scripts/zqscriptsFsPOSBpar.mjs:4 computed-path read p [fs-read]
+        B17: scripts/zqscriptsFsPOSBpar.mjs:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-scripts-FS-TRY-lit [S-14] scripts: TRY on a literal path :: named=B17 namedLines={"B17":1}
+        B17: scripts/zqscriptsFsTRYlit.mjs:3 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6r-P5-S14-scripts-FS-TRY-par [S-14] scripts: TRY on a parameter path :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: scripts/zqscriptsFsTRYpar.mjs:4 computed-path read p [fs-read]
+        B17: scripts/zqscriptsFsTRYpar.mjs:3 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6r-P5-S14-scripts-FS-TRYE-lit [S-14] scripts: TRYE on a literal path :: named=B17 namedLines={"B17":1}
+        B17: scripts/zqscriptsFsTRYElit.mjs:4 swallows a failed read (try/catch that drops the error)
+CAUGHT  P7r-P6r-P5-S14-scripts-FS-TRYE-par [S-14] scripts: TRYE on a parameter path :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: scripts/zqscriptsFsTRYEpar.mjs:4 computed-path read p [fs-read]
+        B17: scripts/zqscriptsFsTRYEpar.mjs:4 swallows a failed read (try/catch that drops the error)
+CAUGHT  P7r-P6r-P5-S14-scripts-FS-ASYNC-lit [S-14] scripts: ASYNC on a literal path :: named=B17 namedLines={"B17":1}
+        B17: scripts/zqscriptsFsASYNClit.mjs:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-scripts-FS-ASYNC-par [S-14] scripts: ASYNC on a parameter path :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: scripts/zqscriptsFsASYNCpar.mjs:2 computed-path read p [fs-read]
+        B17: scripts/zqscriptsFsASYNCpar.mjs:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-scripts-LD-CATCH-lit [S-14] scripts: CATCH load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: scripts/zqscriptsLdCATCHlit.mjs:1 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-scripts-LD-CATCH-par [S-14] scripts: CATCH load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: scripts/zqscriptsLdCATCHpar.mjs:1 opaque [dynamic] p
+        B17: scripts/zqscriptsLdCATCHpar.mjs:1 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-scripts-LD-CATCHU-lit [S-14] scripts: CATCHU load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: scripts/zqscriptsLdCATCHUlit.mjs:1 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-scripts-LD-CATCHU-par [S-14] scripts: CATCHU load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: scripts/zqscriptsLdCATCHUpar.mjs:1 opaque [dynamic] p
+        B17: scripts/zqscriptsLdCATCHUpar.mjs:1 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-scripts-LD-THEN2-lit [S-14] scripts: THEN2 load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: scripts/zqscriptsLdTHEN2lit.mjs:1 swallows a failed module load or read (.then with a rejection handler that does not throw)
+CAUGHT  P7r-P6r-P5-S14-scripts-LD-THEN2-par [S-14] scripts: THEN2 load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: scripts/zqscriptsLdTHEN2par.mjs:1 opaque [dynamic] p
+        B17: scripts/zqscriptsLdTHEN2par.mjs:1 swallows a failed module load or read (.then with a rejection handler that does not throw)
+CAUGHT  P7r-P6r-P5-S14-scripts-LD-FNVAL-lit [S-14] scripts: FNVAL load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: scripts/zqscriptsLdFNVALlit.mjs:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-scripts-LD-FNVAL-par [S-14] scripts: FNVAL load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: scripts/zqscriptsLdFNVALpar.mjs:1 opaque [dynamic] p
+        B17: scripts/zqscriptsLdFNVALpar.mjs:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-scripts-LD-FNMAP-lit [S-14] scripts: FNMAP load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: scripts/zqscriptsLdFNMAPlit.mjs:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-scripts-LD-FNMAP-par [S-14] scripts: FNMAP load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: scripts/zqscriptsLdFNMAPpar.mjs:1 opaque [dynamic] p
+        B17: scripts/zqscriptsLdFNMAPpar.mjs:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-scripts-LD-TRYAW-lit [S-14] scripts: TRYAW load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: scripts/zqscriptsLdTRYAWlit.mjs:2 swallows a failed module load (try/catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-scripts-LD-TRYAW-par [S-14] scripts: TRYAW load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: scripts/zqscriptsLdTRYAWpar.mjs:3 opaque [dynamic] p
+        B17: scripts/zqscriptsLdTRYAWpar.mjs:2 swallows a failed module load (try/catch without a throw)
+FALSE+  P7r-P6r-P5-S14-scripts-CTL-read [S-14 control] scripts: legal plain read :: named=B0 namedLines={"B0":1}
+        B0: scripts/zqscriptsCtlRead.mjs:2 computed-path read p [fs-read]
+CLEAN   P7r-P6r-P5-S14-scripts-CTL-load [S-14 control] scripts: legal plain load :: named=- namedLines={}
+FALSE+  P7r-P6r-P5-S14-scripts-CTL-rethrow [S-14 control] scripts: legal try/catch that rethrows with context :: named=B0 namedLines={"B0":1}
+        B0: scripts/zqscriptsCtlRethrow.mjs:4 computed-path read p [fs-read]
+CAUGHT  P7r-P6r-P5-S14-tests-FS-RET-lit [S-14] tests: RET on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests/zqtestsFsRETlit.ts:3 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-tests-FS-RET-par [S-14] tests: RET on a parameter path :: named=B0,B17 namedLines={"B0":2,"B17":1}
+        B0: tests/zqtestsFsRETpar.ts:3 computed-path read p [fs-read]
+        B0: tests/zqtestsFsRETpar.ts:4 computed-path read p [fs-read]
+        B17: tests/zqtestsFsRETpar.ts:3 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-tests-FS-RETN-lit [S-14] tests: RETN on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests/zqtestsFsRETNlit.ts:2 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-tests-FS-RETN-par [S-14] tests: RETN on a parameter path :: named=B0,B17 namedLines={"B0":2,"B17":1}
+        B0: tests/zqtestsFsRETNpar.ts:2 computed-path read p [fs-read]
+        B0: tests/zqtestsFsRETNpar.ts:2 computed-path read p [fs-read]
+        B17: tests/zqtestsFsRETNpar.ts:2 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-tests-FS-TERN-lit [S-14] tests: TERN on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests/zqtestsFsTERNlit.ts:2 falls back to an empty value when a file is missing (a ternary masking fallback)
+CAUGHT  P7r-P6r-P5-S14-tests-FS-TERN-par [S-14] tests: TERN on a parameter path :: named=B0,B17 namedLines={"B0":2,"B17":1}
+        B0: tests/zqtestsFsTERNpar.ts:2 computed-path read p [fs-read]
+        B0: tests/zqtestsFsTERNpar.ts:2 computed-path read p [fs-read]
+        B17: tests/zqtestsFsTERNpar.ts:2 falls back to an empty value when a file is missing (a ternary masking fallback)
+CAUGHT  P7r-P6r-P5-S14-tests-FS-POS-lit [S-14] tests: POS on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests/zqtestsFsPOSlit.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-tests-FS-POS-par [S-14] tests: POS on a parameter path :: named=B0,B17 namedLines={"B0":2,"B17":1}
+        B0: tests/zqtestsFsPOSpar.ts:3 computed-path read p [fs-read]
+        B0: tests/zqtestsFsPOSpar.ts:3 computed-path read p [fs-read]
+        B17: tests/zqtestsFsPOSpar.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-tests-FS-POSB-lit [S-14] tests: POSB on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests/zqtestsFsPOSBlit.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-tests-FS-POSB-par [S-14] tests: POSB on a parameter path :: named=B0,B17 namedLines={"B0":2,"B17":1}
+        B0: tests/zqtestsFsPOSBpar.ts:3 computed-path read p [fs-read]
+        B0: tests/zqtestsFsPOSBpar.ts:4 computed-path read p [fs-read]
+        B17: tests/zqtestsFsPOSBpar.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-tests-FS-TRY-lit [S-14] tests: TRY on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests/zqtestsFsTRYlit.ts:3 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6r-P5-S14-tests-FS-TRY-par [S-14] tests: TRY on a parameter path :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests/zqtestsFsTRYpar.ts:4 computed-path read p [fs-read]
+        B17: tests/zqtestsFsTRYpar.ts:3 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6r-P5-S14-tests-FS-TRYE-lit [S-14] tests: TRYE on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests/zqtestsFsTRYElit.ts:4 swallows a failed read (try/catch that drops the error)
+CAUGHT  P7r-P6r-P5-S14-tests-FS-TRYE-par [S-14] tests: TRYE on a parameter path :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests/zqtestsFsTRYEpar.ts:4 computed-path read p [fs-read]
+        B17: tests/zqtestsFsTRYEpar.ts:4 swallows a failed read (try/catch that drops the error)
+CAUGHT  P7r-P6r-P5-S14-tests-FS-ASYNC-lit [S-14] tests: ASYNC on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests/zqtestsFsASYNClit.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-tests-FS-ASYNC-par [S-14] tests: ASYNC on a parameter path :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests/zqtestsFsASYNCpar.ts:2 computed-path read p [fs-read]
+        B17: tests/zqtestsFsASYNCpar.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-tests-LD-CATCH-lit [S-14] tests: CATCH load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: tests/zqtestsLdCATCHlit.ts:1 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-tests-LD-CATCH-par [S-14] tests: CATCH load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests/zqtestsLdCATCHpar.ts:1 opaque [dynamic] p
+        B17: tests/zqtestsLdCATCHpar.ts:1 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-tests-LD-CATCHU-lit [S-14] tests: CATCHU load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: tests/zqtestsLdCATCHUlit.ts:1 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-tests-LD-CATCHU-par [S-14] tests: CATCHU load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests/zqtestsLdCATCHUpar.ts:1 opaque [dynamic] p
+        B17: tests/zqtestsLdCATCHUpar.ts:1 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-tests-LD-THEN2-lit [S-14] tests: THEN2 load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: tests/zqtestsLdTHEN2lit.ts:1 swallows a failed module load or read (.then with a rejection handler that does not throw)
+CAUGHT  P7r-P6r-P5-S14-tests-LD-THEN2-par [S-14] tests: THEN2 load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests/zqtestsLdTHEN2par.ts:1 opaque [dynamic] p
+        B17: tests/zqtestsLdTHEN2par.ts:1 swallows a failed module load or read (.then with a rejection handler that does not throw)
+CAUGHT  P7r-P6r-P5-S14-tests-LD-FNVAL-lit [S-14] tests: FNVAL load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: tests/zqtestsLdFNVALlit.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-tests-LD-FNVAL-par [S-14] tests: FNVAL load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests/zqtestsLdFNVALpar.ts:1 opaque [dynamic] p
+        B17: tests/zqtestsLdFNVALpar.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-tests-LD-FNMAP-lit [S-14] tests: FNMAP load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: tests/zqtestsLdFNMAPlit.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-tests-LD-FNMAP-par [S-14] tests: FNMAP load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests/zqtestsLdFNMAPpar.ts:1 opaque [dynamic] p
+        B17: tests/zqtestsLdFNMAPpar.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-tests-LD-TRYAW-lit [S-14] tests: TRYAW load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: tests/zqtestsLdTRYAWlit.ts:2 swallows a failed module load (try/catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-tests-LD-TRYAW-par [S-14] tests: TRYAW load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests/zqtestsLdTRYAWpar.ts:3 opaque [dynamic] p
+        B17: tests/zqtestsLdTRYAWpar.ts:2 swallows a failed module load (try/catch without a throw)
+FALSE+  P7r-P6r-P5-S14-tests-CTL-read [S-14 control] tests: legal plain read :: named=B0 namedLines={"B0":1}
+        B0: tests/zqtestsCtlRead.ts:2 computed-path read p [fs-read]
+CLEAN   P7r-P6r-P5-S14-tests-CTL-load [S-14 control] tests: legal plain load :: named=- namedLines={}
+FALSE+  P7r-P6r-P5-S14-tests-CTL-rethrow [S-14 control] tests: legal try/catch that rethrows with context :: named=B0 namedLines={"B0":1}
+        B0: tests/zqtestsCtlRethrow.ts:4 computed-path read p [fs-read]
+CAUGHT  P7r-P6r-P5-S14-tests-visual-FS-RET-lit [S-14] tests-visual: RET on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zqtestsvisualFsRETlit.ts:3 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-FS-RET-par [S-14] tests-visual: RET on a parameter path :: named=B0,B17 namedLines={"B0":2,"B17":1}
+        B0: tests-visual/zqtestsvisualFsRETpar.ts:3 computed-path read p [fs-read]
+        B0: tests-visual/zqtestsvisualFsRETpar.ts:4 computed-path read p [fs-read]
+        B17: tests-visual/zqtestsvisualFsRETpar.ts:3 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-FS-RETN-lit [S-14] tests-visual: RETN on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zqtestsvisualFsRETNlit.ts:2 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-FS-RETN-par [S-14] tests-visual: RETN on a parameter path :: named=B0,B17 namedLines={"B0":2,"B17":1}
+        B0: tests-visual/zqtestsvisualFsRETNpar.ts:2 computed-path read p [fs-read]
+        B0: tests-visual/zqtestsvisualFsRETNpar.ts:2 computed-path read p [fs-read]
+        B17: tests-visual/zqtestsvisualFsRETNpar.ts:2 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-FS-TERN-lit [S-14] tests-visual: TERN on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zqtestsvisualFsTERNlit.ts:2 falls back to an empty value when a file is missing (a ternary masking fallback)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-FS-TERN-par [S-14] tests-visual: TERN on a parameter path :: named=B0,B17 namedLines={"B0":2,"B17":1}
+        B0: tests-visual/zqtestsvisualFsTERNpar.ts:2 computed-path read p [fs-read]
+        B0: tests-visual/zqtestsvisualFsTERNpar.ts:2 computed-path read p [fs-read]
+        B17: tests-visual/zqtestsvisualFsTERNpar.ts:2 falls back to an empty value when a file is missing (a ternary masking fallback)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-FS-POS-lit [S-14] tests-visual: POS on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zqtestsvisualFsPOSlit.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-FS-POS-par [S-14] tests-visual: POS on a parameter path :: named=B0,B17 namedLines={"B0":2,"B17":1}
+        B0: tests-visual/zqtestsvisualFsPOSpar.ts:3 computed-path read p [fs-read]
+        B0: tests-visual/zqtestsvisualFsPOSpar.ts:3 computed-path read p [fs-read]
+        B17: tests-visual/zqtestsvisualFsPOSpar.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-FS-POSB-lit [S-14] tests-visual: POSB on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zqtestsvisualFsPOSBlit.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-FS-POSB-par [S-14] tests-visual: POSB on a parameter path :: named=B0,B17 namedLines={"B0":2,"B17":1}
+        B0: tests-visual/zqtestsvisualFsPOSBpar.ts:3 computed-path read p [fs-read]
+        B0: tests-visual/zqtestsvisualFsPOSBpar.ts:4 computed-path read p [fs-read]
+        B17: tests-visual/zqtestsvisualFsPOSBpar.ts:3 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-FS-TRY-lit [S-14] tests-visual: TRY on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zqtestsvisualFsTRYlit.ts:3 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-FS-TRY-par [S-14] tests-visual: TRY on a parameter path :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests-visual/zqtestsvisualFsTRYpar.ts:4 computed-path read p [fs-read]
+        B17: tests-visual/zqtestsvisualFsTRYpar.ts:3 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-FS-TRYE-lit [S-14] tests-visual: TRYE on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zqtestsvisualFsTRYElit.ts:4 swallows a failed read (try/catch that drops the error)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-FS-TRYE-par [S-14] tests-visual: TRYE on a parameter path :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests-visual/zqtestsvisualFsTRYEpar.ts:4 computed-path read p [fs-read]
+        B17: tests-visual/zqtestsvisualFsTRYEpar.ts:4 swallows a failed read (try/catch that drops the error)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-FS-ASYNC-lit [S-14] tests-visual: ASYNC on a literal path :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zqtestsvisualFsASYNClit.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-FS-ASYNC-par [S-14] tests-visual: ASYNC on a parameter path :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests-visual/zqtestsvisualFsASYNCpar.ts:2 computed-path read p [fs-read]
+        B17: tests-visual/zqtestsvisualFsASYNCpar.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-LD-CATCH-lit [S-14] tests-visual: CATCH load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zqtestsvisualLdCATCHlit.ts:1 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-LD-CATCH-par [S-14] tests-visual: CATCH load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests-visual/zqtestsvisualLdCATCHpar.ts:1 opaque [dynamic] p
+        B17: tests-visual/zqtestsvisualLdCATCHpar.ts:1 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-LD-CATCHU-lit [S-14] tests-visual: CATCHU load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zqtestsvisualLdCATCHUlit.ts:1 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-LD-CATCHU-par [S-14] tests-visual: CATCHU load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests-visual/zqtestsvisualLdCATCHUpar.ts:1 opaque [dynamic] p
+        B17: tests-visual/zqtestsvisualLdCATCHUpar.ts:1 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-LD-THEN2-lit [S-14] tests-visual: THEN2 load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zqtestsvisualLdTHEN2lit.ts:1 swallows a failed module load or read (.then with a rejection handler that does not throw)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-LD-THEN2-par [S-14] tests-visual: THEN2 load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests-visual/zqtestsvisualLdTHEN2par.ts:1 opaque [dynamic] p
+        B17: tests-visual/zqtestsvisualLdTHEN2par.ts:1 swallows a failed module load or read (.then with a rejection handler that does not throw)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-LD-FNVAL-lit [S-14] tests-visual: FNVAL load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zqtestsvisualLdFNVALlit.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-LD-FNVAL-par [S-14] tests-visual: FNVAL load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests-visual/zqtestsvisualLdFNVALpar.ts:1 opaque [dynamic] p
+        B17: tests-visual/zqtestsvisualLdFNVALpar.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-LD-FNMAP-lit [S-14] tests-visual: FNMAP load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zqtestsvisualLdFNMAPlit.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-LD-FNMAP-par [S-14] tests-visual: FNMAP load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests-visual/zqtestsvisualLdFNMAPpar.ts:1 opaque [dynamic] p
+        B17: tests-visual/zqtestsvisualLdFNMAPpar.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-LD-TRYAW-lit [S-14] tests-visual: TRYAW load on a literal target :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zqtestsvisualLdTRYAWlit.ts:2 swallows a failed module load (try/catch without a throw)
+CAUGHT  P7r-P6r-P5-S14-tests-visual-LD-TRYAW-par [S-14] tests-visual: TRYAW load on a parameter target :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: tests-visual/zqtestsvisualLdTRYAWpar.ts:3 opaque [dynamic] p
+        B17: tests-visual/zqtestsvisualLdTRYAWpar.ts:2 swallows a failed module load (try/catch without a throw)
+FALSE+  P7r-P6r-P5-S14-tests-visual-CTL-read [S-14 control] tests-visual: legal plain read :: named=B0 namedLines={"B0":1}
+        B0: tests-visual/zqtestsvisualCtlRead.ts:2 computed-path read p [fs-read]
+CLEAN   P7r-P6r-P5-S14-tests-visual-CTL-load [S-14 control] tests-visual: legal plain load :: named=- namedLines={}
+FALSE+  P7r-P6r-P5-S14-tests-visual-CTL-rethrow [S-14 control] tests-visual: legal try/catch that rethrows with context :: named=B0 namedLines={"B0":1}
+        B0: tests-visual/zqtestsvisualCtlRethrow.ts:4 computed-path read p [fs-read]
+CAUGHT  P7r-P6r-P5-PH5-src/components/dock/helpers.ts [B-07/B-10] split module given placeholder name src/components/dock/helpers.ts :: named=B15 namedLines={"B15":1}
+        B15: src/components/dock/helpers.ts (placeholder file name)
+CAUGHT  P7r-P6r-P5-PH5-src/components/dock/utils.ts [B-07/B-10] split module given placeholder name src/components/dock/utils.ts :: named=B15 namedLines={"B15":1}
+        B15: src/components/dock/utils.ts (placeholder file name)
+CAUGHT  P7r-P6r-P5-PH5-src/components/dock/misc.ts [B-07/B-10] split module given placeholder name src/components/dock/misc.ts :: named=B15 namedLines={"B15":1}
+        B15: src/components/dock/misc.ts (placeholder file name)
+CAUGHT  P7r-P6r-P5-PH5-src/components/dock/common.ts [B-07/B-10] split module given placeholder name src/components/dock/common.ts :: named=B15 namedLines={"B15":1}
+        B15: src/components/dock/common.ts (placeholder file name)
+CAUGHT  P7r-P6r-P5-PH5-tests/styles/part-2.test.ts [B-07/B-10] split module given placeholder name tests/styles/part-2.test.ts :: named=B15 namedLines={"B15":1}
+        B15: tests/styles/part-2.test.ts (placeholder file name)
+CAUGHT  P7r-P6r-P5-PH5-tests/styles/helpers3.ts [B-07/B-10] split module given placeholder name tests/styles/helpers3.ts :: named=B15 namedLines={"B15":1}
+        B15: tests/styles/helpers3.ts (placeholder file name)
+CAUGHT  P7r-P6r-P5-PH5-demo/shell/misc2.ts [B-07/B-10] split module given placeholder name demo/shell/misc2.ts :: named=B15 namedLines={"B15":1}
+        B15: demo/shell/misc2.ts (placeholder file name)
+CAUGHT  P7r-P6r-P5-PH5-demo/shell/utils.ts [B-07/B-10] split module given placeholder name demo/shell/utils.ts :: named=B15 namedLines={"B15":1}
+        B15: demo/shell/utils.ts (placeholder file name)
+CAUGHT  P7r-P6r-P5-PH5-dir-src/components/dock/part2 [B-07/B-10] split module dir with a placeholder name :: named=B7,B11,B15 namedLines={"B7":1,"B11":3,"B15":1}
+        B7: src/components/dock/part2/index.ts (not in record.doors)
+        B11: src/components/dock/part2/index.ts exports zqPartTwo (no reader outside src/components/dock/part2)
+        B11: module src/components/dock/part2 (not in the pin)
+        B15: src/components/dock/part2 (placeholder name)
+CAUGHT  P7r-P6r-P5-VIS-out-name [B-10 (B-S16)] unit visual spec with a name outside the program's match :: named=B16 namedLines={"B16":2}
+        B16: src/components/chip/__tests__/zqCarveOut.vis.ts (declares Playwright tests outside the program tests-visual/playwright.config.ts: it never runs)
+        B16: src/components/chip/__tests__/zqCarveOut.vis.ts (a helper in src/components/chip/__tests__/ read by nothing)
+CAUGHT  P7r-P6r-P5-VIS-out-slot [B-10 (B-S16)] unit visual spec outside its __tests__ slot :: named=B2,B16 namedLines={"B2":1,"B16":1}
+        B2: demo/zqB2demoGlob.ts:1 -> src/components/chip/zqCarveRoot.visual.ts [glob]
+        B16: src/components/chip/zqCarveRoot.visual.ts (declares Playwright tests outside the program tests-visual/playwright.config.ts: it never runs)
+CAUGHT  P7r-P6r-P5-VIS-orphan [B-10 (B-S16)] Playwright test file in tests-visual with a non-spec name :: named=B16 namedLines={"B16":1}
+        B16: tests-visual/zqCarveOrphan.ts (declares Playwright tests outside the program tests-visual/playwright.config.ts: it never runs)
+FALSE+  P7r-P6r-P5-VIS-in-L [legal] legal: unit visual spec in its slot by the route's convention :: named=B16 namedLines={"B16":1}
+        B16: src/components/chip/__tests__/zqCarveIn.visual.ts (colocated in src/components/chip; its subject's home is the harness (several units) (by the 0 stories it opens))
+CAUGHT  P7r-P6r-P5-DIR13-src [B-01/B-10 (B6)] src/components/command filled from 12 to 13 direct files :: named=B6,B15 namedLines={"B6":1,"B15":1}
+        B6: src/components/command/: 13 direct files > 12
+        B15: src/components/command/zqFillsrc0.ts (placeholder file name)
+CAUGHT  P7r-P6r-P5-DIR13-demo [B-01/B-10 (B6)] demo/stories/display filled from 11 to 13 direct files :: named=B6,B15 namedLines={"B6":1,"B15":2}
+        B6: demo/stories/display/: 13 direct files > 12
+        B15: demo/stories/display/zqFilldemo0.ts (placeholder file name)
+        B15: demo/stories/display/zqFilldemo1.ts (placeholder file name)
+CAUGHT  P7r-P6r-P5-DIR13-scripts [B-01/B-10 (B6)] scripts/structure filled from 12 to 13 direct files :: named=B1,B6,B10,B15 namedLines={"B1":1,"B6":1,"B10":1,"B15":2}
+        B1: scripts/minify/plantXscrUse.ts:2 -> scripts/structure/lib/plantXscr.mjs [import] (door scripts/structure/index.mjs)
+        B6: scripts/structure/: 14 direct files > 12
+        B10: scripts/structure/lib/plantXscr.mjs -> scripts/minify [move] readers: scripts/minify
+        B15: scripts/structure/part-1.mjs (placeholder file name)
+        B15: scripts/structure/zqFillscripts0.mjs (placeholder file name)
+CAUGHT  P7r-P6r-P5-DIR13-tests [B-01/B-10 (B6)] tests/demo filled from 9 to 13 direct files :: named=B6,B15 namedLines={"B6":1,"B15":4}
+        B6: tests/demo/: 13 direct files > 12
+        B15: tests/demo/zqFilltests0.ts (placeholder file name)
+        B15: tests/demo/zqFilltests1.ts (placeholder file name)
+CAUGHT  P7r-P6r-P5-DIR13-tests-visual [B-01/B-10 (B6)] tests-visual/glass filled from 12 to 13 direct files :: named=B6,B15 namedLines={"B6":1,"B15":2}
+        B6: tests-visual/glass/: 14 direct files > 12
+        B15: tests-visual/glass/GlassDockSplit.ts (placeholder file name)
+        B15: tests-visual/glass/zqFilltestsvisual0.ts (placeholder file name)
+CAUGHT  P7r-P6r-P5-DIR13-dock [B-01/B-10 (B6)] GlassDock's dir filled to 13 after the split :: named=B1,B2,B6,B7,B11,B15,B16 namedLines={"B1":1,"B2":4,"B6":3,"B7":2,"B11":6,"B15":9,"B16":2}
+        B1: src/components/dock/legibility/plantNint.ts:1 -> src/components/dock/context/dockContext.ts [import] (door src/components/dock/context/index.ts)
+        B2: demo/zqB2demoNest.ts:1 -> src/components/dock/context/index.ts [import]
+        B2: scripts/zqB2scriptsNest.mjs:1 -> src/components/dock/context/index.ts [import]
+        B6: src/components/dock/: 19 direct files > 12
+        B6: src/components/dock/__tests__/: 14 direct files > 12
+        B7: src/components/dock/misc/index.ts (not in record.doors)
+        B7: src/components/dock/part2/index.ts (not in record.doors)
+        B11: src/components/dock/misc/index.ts exports x (no reader outside src/components/dock/misc)
+        B11: src/components/dock/part2/index.ts exports zqPartTwo (no reader outside src/components/dock/part2)
+        B15: src/components/dock/misc (placeholder name)
+        B15: src/components/dock/part2 (placeholder name)
+        B16: src/components/dock/__tests__/GlassDock-2.test.ts (colocated in src/components/dock; its subject's home is the harness (several units))
+        B16: src/components/dock/__tests__/zqSlot0.test.ts (colocated in src/components/dock; its subject's home is the harness (several units))
+CAUGHT  P7r-P6r-P5-SLOT13-dock [S-03 (P3-R3/P4-R5)] src/components/dock/__tests__ filled to 13 :: named=B6,B15,B16 namedLines={"B6":1,"B15":2,"B16":2}
+        B6: src/components/dock/__tests__/: 14 direct files > 12
+        B15: src/components/dock/__tests__/GlassDock-2.test.ts (placeholder file name)
+        B15: src/components/dock/__tests__/zqSlot0.test.ts (placeholder file name)
+        B16: src/components/dock/__tests__/GlassDock-2.test.ts (colocated in src/components/dock; its subject's home is the harness (several units))
+        B16: src/components/dock/__tests__/zqSlot0.test.ts (colocated in src/components/dock; its subject's home is the harness (several units))
+CAUGHT  P7r-P6r-P5-B2-demo-rel [B-01 (B2, P4-R1/R2)] demo imports a chip private by a relative path :: named=B2 namedLines={"B2":1}
+        B2: demo/zqB2demoRel.ts:1 -> src/components/chip/chipVariants.ts [import]
+CAUGHT  P7r-P6r-P5-B2-demo-type [B-01 (B2)] demo type-only import of a chip private :: named=B2 namedLines={"B2":1}
+        B2: demo/zqB2demoType.ts:1 -> src/components/chip/chipVariants.ts [import-type]
+CAUGHT  P7r-P6r-P5-B2-demo-dyn [B-01 (B2)] demo dynamic import of a chip private :: named=B2 namedLines={"B2":1}
+        B2: demo/zqB2demoDyn.ts:1 -> src/components/chip/chipVariants.ts [dynamic]
+CAUGHT  P7r-P6r-P5-B2-demo-reex [B-01 (B2)] demo re-exports a chip private :: named=B2 namedLines={"B2":1}
+        B2: demo/zqB2demoReex.ts:1 -> src/components/chip/chipVariants.ts [reexport-star]
+CAUGHT  P7r-P6r-P5-B2-demo-raw [B-01 (B2)] demo ?raw import of a chip private :: named=B2 namedLines={"B2":1}
+        B2: demo/zqB2demoRaw.ts:1 -> src/components/chip/chipVariants.ts [import]
+CAUGHT  P7r-P6r-P5-B2-demo-nested [B-01 (B2)] demo reaches a nested door no entry publishes :: named=B2 namedLines={"B2":1}
+        B2: demo/zqB2demoNest.ts:1 -> src/components/dock/context/index.ts [import]
+OTHER   P7r-P6r-P5-B2-demo-deep [B-01 (B2)] demo imports a private by a package deep path :: named=B0 namedLines={"B0":1}
+        B0: demo/zqB2demoDeep.ts:1 unknown-subpath [import] @mkbabb/glass-ui/src/components/chip/chipVariants
+CLEAN   P7r-P6r-P5-B2-demo-entry-L [legal] legal: demo imports the public chip entry :: named=- namedLines={}
+CAUGHT  P7r-P6r-P5-B2-tests-rel [B-01 (B2, P4-R1/R2)] tests imports a chip private by a relative path :: named=B2 namedLines={"B2":1}
+        B2: tests/zqB2testsRel.ts:1 -> src/components/chip/chipVariants.ts [import]
+CAUGHT  P7r-P6r-P5-B2-tests-type [B-01 (B2)] tests type-only import of a chip private :: named=B2 namedLines={"B2":1}
+        B2: tests/zqB2testsType.ts:1 -> src/components/chip/chipVariants.ts [import-type]
+CAUGHT  P7r-P6r-P5-B2-tests-dyn [B-01 (B2)] tests dynamic import of a chip private :: named=B2 namedLines={"B2":1}
+        B2: tests/zqB2testsDyn.ts:1 -> src/components/chip/chipVariants.ts [dynamic]
+CAUGHT  P7r-P6r-P5-B2-tests-reex [B-01 (B2)] tests re-exports a chip private :: named=B2 namedLines={"B2":1}
+        B2: tests/zqB2testsReex.ts:1 -> src/components/chip/chipVariants.ts [reexport-star]
+CAUGHT  P7r-P6r-P5-B2-tests-raw [B-01 (B2)] tests ?raw import of a chip private :: named=B2 namedLines={"B2":1}
+        B2: tests/zqB2testsRaw.ts:1 -> src/components/chip/chipVariants.ts [import]
+CAUGHT  P7r-P6r-P5-B2-tests-nested [B-01 (B2)] tests reaches a nested door no entry publishes :: named=B2 namedLines={"B2":1}
+        B2: tests/zqB2testsNest.ts:1 -> src/components/dock/context/index.ts [import]
+OTHER   P7r-P6r-P5-B2-tests-deep [B-01 (B2)] tests imports a private by a package deep path :: named=B0 namedLines={"B0":1}
+        B0: tests/zqB2testsDeep.ts:1 unknown-subpath [import] @mkbabb/glass-ui/src/components/chip/chipVariants
+CLEAN   P7r-P6r-P5-B2-tests-entry-L [legal] legal: tests imports the public chip entry :: named=- namedLines={}
+CAUGHT  P7r-P6r-P5-B2-tests-visual-rel [B-01 (B2, P4-R1/R2)] tests-visual imports a chip private by a relative path :: named=B2 namedLines={"B2":1}
+        B2: tests-visual/zqB2testsvisualRel.ts:1 -> src/components/chip/chipVariants.ts [import]
+CAUGHT  P7r-P6r-P5-B2-tests-visual-type [B-01 (B2)] tests-visual type-only import of a chip private :: named=B2 namedLines={"B2":1}
+        B2: tests-visual/zqB2testsvisualType.ts:1 -> src/components/chip/chipVariants.ts [import-type]
+CAUGHT  P7r-P6r-P5-B2-tests-visual-dyn [B-01 (B2)] tests-visual dynamic import of a chip private :: named=B2 namedLines={"B2":1}
+        B2: tests-visual/zqB2testsvisualDyn.ts:1 -> src/components/chip/chipVariants.ts [dynamic]
+CAUGHT  P7r-P6r-P5-B2-tests-visual-reex [B-01 (B2)] tests-visual re-exports a chip private :: named=B2 namedLines={"B2":1}
+        B2: tests-visual/zqB2testsvisualReex.ts:1 -> src/components/chip/chipVariants.ts [reexport-star]
+CAUGHT  P7r-P6r-P5-B2-tests-visual-raw [B-01 (B2)] tests-visual ?raw import of a chip private :: named=B2 namedLines={"B2":1}
+        B2: tests-visual/zqB2testsvisualRaw.ts:1 -> src/components/chip/chipVariants.ts [import]
+CAUGHT  P7r-P6r-P5-B2-tests-visual-nested [B-01 (B2)] tests-visual reaches a nested door no entry publishes :: named=B2 namedLines={"B2":1}
+        B2: tests-visual/zqB2testsvisualNest.ts:1 -> src/components/dock/context/index.ts [import]
+OTHER   P7r-P6r-P5-B2-tests-visual-deep [B-01 (B2)] tests-visual imports a private by a package deep path :: named=B0 namedLines={"B0":1}
+        B0: tests-visual/zqB2testsvisualDeep.ts:1 unknown-subpath [import] @mkbabb/glass-ui/src/components/chip/chipVariants
+CLEAN   P7r-P6r-P5-B2-tests-visual-entry-L [legal] legal: tests-visual imports the public chip entry :: named=- namedLines={}
+CAUGHT  P7r-P6r-P5-B2-scripts-rel [B-01 (B2, P4-R1/R2)] scripts imports a chip private by a relative path :: named=B2 namedLines={"B2":1}
+        B2: scripts/zqB2scriptsRel.mjs:1 -> src/components/chip/chipVariants.ts [import]
+CAUGHT  P7r-P6r-P5-B2-scripts-type [B-01 (B2)] scripts type-only import of a chip private :: named=B2 namedLines={"B2":1}
+        B2: scripts/zqB2scriptsType.ts:1 -> src/components/chip/chipVariants.ts [import-type]
+CAUGHT  P7r-P6r-P5-B2-scripts-dyn [B-01 (B2)] scripts dynamic import of a chip private :: named=B2 namedLines={"B2":1}
+        B2: scripts/zqB2scriptsDyn.mjs:1 -> src/components/chip/chipVariants.ts [dynamic]
+CAUGHT  P7r-P6r-P5-B2-scripts-reex [B-01 (B2)] scripts re-exports a chip private :: named=B2,B12 namedLines={"B2":1,"B12":1}
+        B2: scripts/zqB2scriptsReex.mjs:1 -> src/components/chip/chipVariants.ts [reexport-star]
+        B12: scripts/zqB2scriptsReex.mjs:1 re-exports src/components/chip/chipVariants.ts (relay)
+CAUGHT  P7r-P6r-P5-B2-scripts-raw [B-01 (B2)] scripts ?raw import of a chip private :: named=B2 namedLines={"B2":1}
+        B2: scripts/zqB2scriptsRaw.mjs:1 -> src/components/chip/chipVariants.ts [import]
+CAUGHT  P7r-P6r-P5-B2-scripts-nested [B-01 (B2)] scripts reaches a nested door no entry publishes :: named=B2 namedLines={"B2":1}
+        B2: scripts/zqB2scriptsNest.mjs:1 -> src/components/dock/context/index.ts [import]
+OTHER   P7r-P6r-P5-B2-scripts-deep [B-01 (B2)] scripts imports a private by a package deep path :: named=B0 namedLines={"B0":1}
+        B0: scripts/zqB2scriptsDeep.mjs:1 unknown-subpath [import] @mkbabb/glass-ui/src/components/chip/chipVariants
+CLEAN   P7r-P6r-P5-B2-scripts-entry-L [legal] legal: scripts imports the public chip entry :: named=- namedLines={}
+OTHER   P7r-P6r-P5-B2-tests-mock [B-01 (B2)] a test outside the unit vi.mock()s a chip private :: named=B16 namedLines={"B16":1}
+        B16: tests/zqB2testsMock.test.ts (subject in src/components/chip: belongs in src/components/chip/__tests__/)
+CAUGHT  P7r-P6r-P5-B2-demo-glob [B-01 (B2)] demo import.meta.glob over a unit's privates :: named=B2 namedLines={"B2":18}
+        B2: demo/zqB2demoGlob.ts:1 -> src/components/chip/chipVariants.ts [glob]
+        B2: demo/zqB2demoGlob.ts:1 -> src/components/chip/plantLong.ts [glob]
+CLEAN   P7r-P6r-P5-B2-unit-test-L [legal] legal: chip/__tests__ reads a chip private (inside its unit) :: named=- namedLines={}
+CAUGHT  P7r-P6r-P5r-P4-K-INT [B-01/B-12 door ruling] slider reads a kernel module's interior file past its door :: named=B1 namedLines={"B1":1}
+        B1: src/components/slider/plantKint.ts:1 -> src/composables/dom/useBreakpoint.ts [import] (door src/composables/dom/index.ts)
+CAUGHT  P7r-P6r-P5r-P4-K-INT-T [B-01/B-12 door ruling] type-only read of a kernel interior past its door :: named=B1 namedLines={"B1":1}
+        B1: src/components/slider/plantKintT.ts:1 -> src/composables/dom/useBreakpoint.ts [type] [import-type] (door src/composables/dom/index.ts)
+CLEAN   P7r-P6r-P5r-P4-K-DOOR-L [legal] legal: slider reads the kernel module through its door :: named=- namedLines={}
+CAUGHT  P7r-P6r-P5r-P4-N-INT [B-01/B-12 door ruling] nested legibility reads context's interior dockContext.ts :: named=B1 namedLines={"B1":1}
+        B1: src/components/dock/legibility/plantNint.ts:1 -> src/components/dock/context/dockContext.ts [import] (door src/components/dock/context/index.ts)
+UNNAMED P7r-P6r-P5r-P4-F-CYC [B-01 (same-dir cycle)] a.ts <-> b.ts value cycle in one dir (slider) :: named=- namedLines={}
+UNNAMED P7r-P6r-P5r-P4-F-CYC-T [B-01 (same-dir cycle)] type-only a.ts <-> b.ts cycle in one dir (slider) :: named=- namedLines={}
+CAUGHT  P7r-P6r-P5r-P4-MASK-RETN [S-14] a scripts helper returns null on a missing file (early-return form) :: named=B0,B17 namedLines={"B0":2,"B17":1}
+        B0: scripts/plantMaskRetN.mjs:2 computed-path read p [fs-read]
+        B0: scripts/plantMaskRetN.mjs:2 computed-path read p [fs-read]
+        B17: scripts/plantMaskRetN.mjs:2 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5r-P4-MASK-CATCH [S-14] .catch(() => null) on a dynamic import of a live target :: named=B1,B17 namedLines={"B1":1,"B17":1}
+        B1: src/components/slider/plantMaskCatch.ts:1 -> src/components/chip/chipVariants.ts [dynamic] (door src/components/chip/index.ts)
+        B17: src/components/slider/plantMaskCatch.ts:1 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5r-P4-MASK-CATCH-D [S-14] .catch(() => null) on a demo import of a live public entry :: named=B17 namedLines={"B17":1}
+        B17: demo/plantMaskCatchD.ts:1 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5r-P4-MASK-TRY [S-14] try { readFileSync } catch { return null } swallowing a load :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: scripts/plantMaskTry.mjs:2 computed-path read p [fs-read]
+        B17: scripts/plantMaskTry.mjs:2 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6r-P5r-P4-PH-tests [B-07] placeholder dir tests/utils :: named=B15 namedLines={"B15":1}
+        B15: tests/utils (placeholder name)
+CAUGHT  P7r-P6r-P5r-P4-PH-demo [B-07] placeholder dir demo/misc :: named=B15 namedLines={"B15":1}
+        B15: demo/misc (placeholder name)
+CAUGHT  P7r-P6r-P5r-P4-PH-visual [B-07] placeholder dir tests-visual/v2 :: named=B15 namedLines={"B15":1}
+        B15: tests-visual/v2 (placeholder name)
+CAUGHT  P7r-P6r-P5r-P4-PH-tests-helpers [B-07] placeholder dir tests/helpers2 :: named=B15 namedLines={"B15":1}
+        B15: tests/helpers2 (placeholder name)
+CAUGHT  P7r-P6r-P5r-P4-PH-src [B-07 control] placeholder dir in src (control) :: named=B7,B11,B15 namedLines={"B7":1,"B11":3,"B15":2}
+        B7: src/components/dock/misc/index.ts (not in record.doors)
+        B11: src/components/dock/misc/index.ts exports x (no reader outside src/components/dock/misc)
+        B11: module src/components/dock/misc (not in the pin)
+        B15: src/components/dock/misc (placeholder name)
+        B15: src/components/dock/misc.ts (placeholder file name)
+CAUGHT  P7r-P6r-P5r-P4-PH-file [B-07] file named only use.ts in tests :: named=B15 namedLines={"B15":1}
+        B15: tests/use.ts (placeholder file name)
+CAUGHT  P7r-P6r-P5r-P4-SELF [S-06/B-03] src imports the package by its own name :: named=B0,B2 namedLines={"B0":1,"B2":1}
+        B0: src/components/chip/plantSelf.ts:1 self-name-in-src [import] @mkbabb/glass-ui/badge
+        B2: demo/zqB2demoGlob.ts:1 -> src/components/chip/plantSelf.ts [glob]
+CAUGHT  P7r-P6r-P5r-P4-WALK [S-07] test reads src through a computed path :: named=B0 namedLines={"B0":1}
+        B0: tests/plant-walk.test.ts:4 computed-path read src/components/<computed> [computed-read]
+CAUGHT  P7r-P6r-P5r-P4-T-OUT [B-04] single-subject chip test outside its unit :: named=B16 namedLines={"B16":1}
+        B16: tests/plant-chip-out.test.ts (subject in src/components/chip: belongs in src/components/chip/__tests__/)
+CAUGHT  P7r-P6r-P5r-P4-T-WRONG [B-04] test in chip/__tests__ whose one subject is slider :: named=B16 namedLines={"B16":1}
+        B16: src/components/chip/__tests__/plant-slider-in-chip.test.ts (colocated in src/components/chip; its subject's home is src/components/slider)
+CLEAN   P7r-P6r-P5r-P4-T-OWN-L [legal] legal: chip test in chip/__tests__ :: named=- namedLines={}
+UNNAMED P7r-P6r-P5r-P4-B-13F [B-01 (bounds)] 13 new direct files in chip :: named=- namedLines={}
+CAUGHT  P7r-P6r-P5r-P4-B-501 [B-01 (bounds)] a hand-written file of 501+ lines :: named=B2,B6 namedLines={"B2":1,"B6":1}
+        B2: demo/zqB2demoGlob.ts:1 -> src/components/chip/plantLong.ts [glob]
+        B6: src/components/chip/plantLong.ts: 520 lines > 500
+CAUGHT  P7r-P6r-P5r-P4-SLOT-13 [S-03 (P3-R3)] 13 new tests in a kind slot (slot bound 12) :: named=B6,B15,B16 namedLines={"B6":3,"B15":18,"B16":31}
+        B6: src/components/badge/__tests__/: 14 direct files > 12
+        B6: src/components/chip/__tests__/: 13 direct files > 12
+        B15: src/components/badge/__tests__/plantSlot0.test.ts (placeholder file name)
+        B15: src/components/badge/__tests__/plantSlot1.test.ts (placeholder file name)
+        B16: src/components/badge/__tests__/plantSlot0.test.ts (colocated in src/components/badge; its subject's home is the harness (several units))
+        B16: src/components/badge/__tests__/plantSlot1.test.ts (colocated in src/components/badge; its subject's home is the harness (several units))
+CAUGHT  P7r-P6r-P5r-P4-SLOT-501 [S-03 (P3-R3)] a 501+ line file in a composables slot :: named=B6 namedLines={"B6":1}
+        B6: src/components/dock/composables/plantSlotLong.ts: 520 lines > 500
+CLEAN   P7r-P6r-P5r-P4-LOCAL-L [legal] legal: slider-local helper read by slider :: named=- namedLines={}
+CAUGHT  P7r-P6r-P5r-P4x-X-TERN [S-14] existsSync(p) ? readFileSync(p) : "" (ternary silent fallback) :: named=B0,B17 namedLines={"B0":2,"B17":1}
+        B0: scripts/plantXtern.mjs:2 computed-path read p [fs-read]
+        B0: scripts/plantXtern.mjs:2 computed-path read p [fs-read]
+        B17: scripts/plantXtern.mjs:2 falls back to an empty value when a file is missing (a ternary masking fallback)
+CAUGHT  P7r-P6r-P5r-P4x-X-TRYREAD [S-14] try { readFileSync } catch { return "" } :: named=B0,B17 namedLines={"B0":1,"B17":1}
+        B0: scripts/plantXtryread.mjs:2 computed-path read p [fs-read]
+        B17: scripts/plantXtryread.mjs:2 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6r-P5r-P4x-X-THEN2 [S-14] import(live).then(ok, () => null) :: named=B1,B15,B17 namedLines={"B1":1,"B15":1,"B17":1}
+        B1: src/components/slider/plantXthen2.ts:1 -> src/components/chip/chipVariants.ts [dynamic] (door src/components/chip/index.ts)
+        B15: src/components/slider/plantXthen2.ts (placeholder file name)
+        B17: src/components/slider/plantXthen2.ts:1 swallows a failed module load or read (.then with a rejection handler that does not throw)
+CAUGHT  P7r-P6r-P5r-P4x-X-FNVAL [S-14] const c = () => import(live); c().catch(() => null) :: named=B1,B17 namedLines={"B1":1,"B17":1}
+        B1: src/components/slider/plantXfnval.ts:1 -> src/components/chip/chipVariants.ts [dynamic] (door src/components/chip/index.ts)
+        B17: src/components/slider/plantXfnval.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5r-P4x-X-TRYAWAIT [S-14] try { await import(live) } catch { return null } :: named=B1,B17 namedLines={"B1":1,"B17":1}
+        B1: src/components/slider/plantXtryawait.ts:1 -> src/components/chip/chipVariants.ts [dynamic] (door src/components/chip/index.ts)
+        B17: src/components/slider/plantXtryawait.ts:1 swallows a failed module load (try/catch without a throw)
+CAUGHT  P7r-P6r-P5r-P4x-X-ELSE [S-14] if (existsSync(p)) { return read } return null (positive-guard form) :: named=B0,B17 namedLines={"B0":2,"B17":1}
+        B0: scripts/plantXelse.mjs:2 computed-path read p [fs-read]
+        B0: scripts/plantXelse.mjs:2 computed-path read p [fs-read]
+        B17: scripts/plantXelse.mjs:2 reads a file only when it exists and returns an empty value otherwise (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5r-P4x-X-FOREIGN [B-07] slider file named for another unit (chip), not reviewed :: named=B15 namedLines={"B15":1}
+        B15: src/components/slider/useChipGlow.ts (named for the unit chip, lives in slider; not in the pin's reviewed names)
+CAUGHT  P7r-P6r-P5r-P4x-X-SCR [B-05] scripts/structure/lib file read only by scripts/minify :: named=B1,B10 namedLines={"B1":1,"B10":1}
+        B1: scripts/minify/plantXscrUse.ts:2 -> scripts/structure/lib/plantXscr.mjs [import] (door scripts/structure/index.mjs)
+        B10: scripts/structure/lib/plantXscr.mjs -> scripts/minify [move] readers: scripts/minify
+CAUGHT  P7r-P6r-P5r-P4x-X-TERN-LIT [S-14] existsSync(<literal>) ? readFileSync(<literal>) : "" over a present file :: named=B17 namedLines={"B17":1}
+        B17: scripts/plantXternLit.mjs:2 falls back to an empty value when a file is missing (a ternary masking fallback)
+CAUGHT  P7r-P6r-P5r-P4x-X-FNVAL-D [S-14] demo: const c = () => import(public entry); c().catch(() => undefined) :: named=B17 namedLines={"B17":1}
+        B17: demo/plantXfnvalD.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5x-X5-LOADER-ARG-demo [S-14] demo: const load = (k) => import(<public entry>); load(k).catch(() => undefined) :: named=B17 namedLines={"B17":1}
+        B17: demo/zqXdemoLoaderArg.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5x-X5-LOADER-ARG-tests [S-14] tests: const load = (k) => import(<public entry>); load(k).catch(() => undefined) :: named=B17 namedLines={"B17":1}
+        B17: tests/zqXtestsLoaderArg.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5x-X5-LOADER-ARG-tests-visual [S-14] tests-visual: const load = (k) => import(<public entry>); load(k).catch(() => undefined) :: named=B17 namedLines={"B17":1}
+        B17: tests-visual/zqXtestsvisualLoaderArg.ts:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5x-X5-LOADER-ARG-scripts [S-14] scripts: a named loader of a literal target called with an argument :: named=B17 namedLines={"B17":1}
+        B17: scripts/zqXscriptsLoaderArg.mjs:2 swallows a failed module load or read (.catch without a throw)
+CAUGHT  P7r-P6r-P5x-X5-TREEREAD-ret [S-14] try { return tree.read(p) } catch { return "" } (cascade.mjs:219's shape) :: named=B17 namedLines={"B17":1}
+        B17: scripts/zqXtreeReadRet.mjs:1 swallows a failed read (try/catch that hands back an empty value)
+CAUGHT  P7r-P6r-P5x-X5-TREEREAD-empty [S-14] try { x = JSON.parse(tree.read(p)) } catch { /* absent = empty */ } (graph.mjs:37's shape) :: named=B17 namedLines={"B17":1}
+        B17: scripts/zqXtreeReadEmpty.mjs:1 swallows a failed read (try/catch that drops the error)
+CAUGHT  P7r-P6r-P5x-X5-FSREAD-literal-promise [S-14] readFile(<literal>).catch(() => "") in scripts :: named=B17 namedLines={"B17":1}
+        B17: scripts/zqXpromiseRead.mjs:2 swallows a failed module load or read (.catch without a throw)
+RECORDED P7-DT-CTL-src [B-10 control (P6-R2)] control: the same new chip door name read by a library file in slider :: named=B11 gained={"B11":1}
+        B11: src/components/chip/index.ts +zq7TestOnly (not in the pin)
+RECORDED P7x-XDT-CTL-lib [B-10 control (P6-R2)] control: EYEGLASS_SPAN_MAX on the selection door, read by a library file in tabs :: named=B11 gained={"B11":1}
+        B11: src/composables/motion/selection/index.ts +EYEGLASS_SPAN_MAX (not in the pin)
+CAUGHT  P7-I7-agg [B-01 (I7)] the style kernel aggregate src/styles/index.css @imports dock's private src/components/dock/styles/core.css :: named=B3 gained={"B3":1}
+        B3: src/styles/index.css:273 -> src/components/dock/styles/core.css (css door src/components/dock/index.css)
+CAUGHT  P7-I7-agg-url [B-01 (I7)] the aggregate @imports url("…core.css") :: named=B3 gained={"B3":1}
+        B3: src/styles/index.css:273 -> src/components/dock/styles/core.css (css door src/components/dock/index.css)
+CAUGHT  P7-I7-agg-layer [B-01 (I7)] the aggregate @imports …core.css layer(components) :: named=B3 gained={"B3":1}
+        B3: src/styles/index.css:273 -> src/components/dock/styles/core.css (css door src/components/dock/index.css)
+CAUGHT  P7-I7-glass [B-01 (I7)] the glass kernel sheet src/styles/glass/index.css @imports …core.css :: named=B3,B8,B10 gained={"B3":1,"B8":1,"B10":1}
+        B3: src/styles/glass/index.css:172 -> src/components/dock/styles/core.css (css door src/components/dock/index.css)
+        B8: src/styles/glass/index.css:172 -> src/components/dock/styles/core.css [css-import] (kernel reads a unit)
+        B10: src/components/dock/styles/core.css -> src [global] readers: src/components/dock, src/styles/glass
+CAUGHT  P7-I7-stylesrc [B-01 (I7)] Chip.vue gains <style src> of dock's private …core.css :: named=B3,B10 gained={"B3":1,"B10":1}
+        B3: src/components/chip/Chip.vue:155 -> src/components/dock/styles/core.css (css door src/components/dock/index.css)
+        B10: src/components/dock/styles/core.css -> src/components [global] readers: src/components/chip, src/components/dock
+CLEAN   P7-I7-CTL-own [B-01 control] legal: dock's src/components/dock/controls/tab-button.css @imports dock's own …core.css :: named=- gained={}
+CAUGHT  P7-I7-leaf [B-01 (I7b)] kernel leaf src/styles/view-transition.css @imports src/components/slider/loupe.css :: named=B3,B8,B10 gained={"B3":1,"B8":1,"B10":1}
+        B3: src/styles/view-transition.css:1 -> src/components/slider/loupe.css (css door src/components/slider/index.css)
+        B8: src/styles/view-transition.css:1 -> src/components/slider/loupe.css [css-import] (kernel reads a unit)
+        B10: src/components/slider/loupe.css -> src [global] readers: src/components/slider, src/styles
+CAUGHT  P7-KF-new [peer class (§P6-8.4)] a new leaf importing @mkbabb/keyframes.js, exported on the motion-core door src/composables/motion/core/index.ts :: named=B11,B18 gained={"B11":2,"B18":26}
+        B11: src/composables/motion/core/index.ts exports zq7KfLeak (no reader outside src/composables/motion/core)
+        B11: src/composables/motion/core/index.ts +zq7KfLeak (not in the pin)
+        B18: . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/zq7KfLeak.ts:1)
+        B18: . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/zq7KfLeak.ts:1)
+CAUGHT  P7-KF-leaf [peer class (§P6-8.4)] an existing motion-core leaf src/composables/motion/core/useRAFLoop.ts gains a value import of @mkbabb/keyframes.js (no new name) :: named=B18 gained={"B18":27}
+        B18: . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/useRAFLoop.ts:1)
+        B18: . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/useRAFLoop.ts:1)
+CAUGHT  P7-KF-deep [peer class (§P6-8.4)] a motion-core leaf imports a new sibling that imports @mkbabb/keyframes.js (transitive) :: named=B18 gained={"B18":27}
+        B18: . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/zq7KfDeep.ts:1)
+        B18: . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/zq7KfDeep.ts:1)
+CAUGHT  P7-KF-existing [peer class (§P6-8.4)] the motion-core door re-exports the keyframes-bearing useSpring (src/composables/motion/spring/useSpring.ts) :: named=B1,B4,B9,B11,B18 gained={"B1":1,"B4":1,"B9":1,"B11":1,"B18":26}
+        B1: src/composables/motion/core/index.ts:17 -> src/composables/motion/spring/useSpring.ts [reexport] (door src/composables/motion/spring/index.ts)
+        B4: cycle @src/composables/motion [spring core] via src/composables/motion/spring/useLiquidPress.ts -> src/composables/motion/core/index.ts ; src/composables/motion/core/index.ts -> src/composables/motion/spring/useSpring.ts
+        B9: src/composables/motion/core/index.ts:17 re-exports src/composables/motion/spring/useSpring.ts (outside src/composables/motion/core)
+        B11: src/composables/motion/core/index.ts +useSpring (not in the pin)
+        B18: . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/spring/useSpring.ts:15)
+        B18: . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/spring/useSpring.ts:15)
+SAME-AS-CTL P7-DT-xunit-test [B-10 (P6-R2)] a chip door name whose one reader is a test in slider's slot :: named=B11 ctl(P7-DT-CTL-src)=B11 gained={"B11":1,"B16":1}
+        B11: src/components/chip/index.ts +zq7TestOnly (not in the pin)
+SAME-AS-CTL P7-DT-own-test [B-10 (P6-R2)] a chip door name whose one reader is chip's own colocated test, through the door :: named=B11 ctl(P7-DT-CTL-src)=B11 gained={"B11":1}
+        B11: src/components/chip/index.ts +zq7TestOnly (not in the pin)
+SAME-AS-CTL P7-DT-harness-test [B-10 (P6-R2)] a chip door name whose one reader is a harness test through the public subpath :: named=B11 ctl(P7-DT-CTL-src)=B11 gained={"B11":1,"B16":1}
+        B11: src/components/chip/index.ts +zq7TestOnly (not in the pin)
+SAME-AS-CTL P7-DT-noreader [B-10 (B11)] a chip door name with no reader at all :: named=B11 ctl(P7-DT-CTL-src)=B11 gained={"B11":1}
+        B11: src/components/chip/index.ts +zq7TestOnly (not in the pin)
+SAME-AS-CTL P7x-XDT-tabs-test [B-10 (P6-R2)] EYEGLASS_SPAN_MAX on the selection door, its one outside reader a test in tabs' slot (the S67 shape) :: named=B11 ctl(P7x-XDT-CTL-lib)=B11 gained={"B11":2,"B16":1}
+        B11: src/composables/motion/selection/index.ts exports EYEGLASS_SPAN_MAX (no reader outside src/composables/motion/selection)
+        B11: src/composables/motion/selection/index.ts +EYEGLASS_SPAN_MAX (not in the pin)
+SAME-AS-CTL P7x-XDT-slider-test [B-10 (P6-R2)] the same name, its one outside reader a test in slider's slot :: named=B11 ctl(P7x-XDT-CTL-lib)=B11 gained={"B11":2,"B16":1}
+        B11: src/composables/motion/selection/index.ts exports EYEGLASS_SPAN_MAX (no reader outside src/composables/motion/selection)
+        B11: src/composables/motion/selection/index.ts +EYEGLASS_SPAN_MAX (not in the pin)
+SAME-AS-CTL P7x-XDT-noreader [B-10 (B11)] the same name on the selection door with no outside reader :: named=B11 ctl(P7x-XDT-CTL-lib)=B11 gained={"B11":2}
+        B11: src/composables/motion/selection/index.ts exports EYEGLASS_SPAN_MAX (no reader outside src/composables/motion/selection)
+        B11: src/composables/motion/selection/index.ts +EYEGLASS_SPAN_MAX (not in the pin)
+CAUGHT  P7r-P6-PH6-src/components/dock/part-1.ts [B-07] split module given placeholder name part-1.ts :: named=B15 gained={"B6":1,"B15":1}
+        B15: src/components/dock/part-1.ts (placeholder file name)
+CAUGHT  P7r-P6-PH6-src/components/dock/GlassDock-2.ts [B-07] split module given placeholder name GlassDock-2.ts :: named=B15 gained={"B6":1,"B15":1}
+        B15: src/components/dock/GlassDock-2.ts (placeholder file name)
+CAUGHT  P7r-P6-PH6-src/components/dock/GlassDock2.ts [B-07] split module given placeholder name GlassDock2.ts :: named=B15 gained={"B6":1,"B15":1}
+        B15: src/components/dock/GlassDock2.ts (placeholder file name)
+CAUGHT  P7r-P6-PH6-src/components/dock/GlassDockPart2.ts [B-07] split module given placeholder name GlassDockPart2.ts :: named=B15 gained={"B6":1,"B15":1}
+        B15: src/components/dock/GlassDockPart2.ts (placeholder file name)
+CAUGHT  P7r-P6-PH6-src/components/dock/bs11.ts [B-07] split module given placeholder name bs11.ts :: named=B15 gained={"B6":1,"B15":1}
+        B15: src/components/dock/bs11.ts (placeholder file name)
+CAUGHT  P7r-P6-PH6-src/components/dock/GlassDockSplit.ts [B-07] split module given placeholder name GlassDockSplit.ts :: named=B15 gained={"B6":1,"B15":1}
+        B15: src/components/dock/GlassDockSplit.ts (placeholder file name)
+CAUGHT  P7r-P6r-P5-PH5-src/components/dock/GlassDock-2.ts [B-07/B-10] split module given placeholder name src/components/dock/GlassDock-2.ts :: named=B15 gained={"B6":1,"B15":1}
+        B15: src/components/dock/GlassDock-2.ts (placeholder file name)
+CAUGHT  P7r-P6r-P5-PH5-src/components/dock/part-1.ts [B-07/B-10] split module given placeholder name src/components/dock/part-1.ts :: named=B15 gained={"B6":1,"B15":1}
+        B15: src/components/dock/part-1.ts (placeholder file name)
+CAUGHT  P7r-P6r-P5-PH5-src/components/dock/GlassDockPart2.ts [B-07/B-10] split module given placeholder name src/components/dock/GlassDockPart2.ts :: named=B15 gained={"B6":1,"B15":1}
+        B15: src/components/dock/GlassDockPart2.ts (placeholder file name)
+CAUGHT  P7r-P6r-P5-PH5-src/components/dock/GlassDock2.ts [B-07/B-10] split module given placeholder name src/components/dock/GlassDock2.ts :: named=B15 gained={"B6":1,"B15":1}
+        B15: src/components/dock/GlassDock2.ts (placeholder file name)
+CAUGHT  P7r-P6r-P5-PH5-src/components/dock/bs11.ts [B-07/B-10] split module given placeholder name src/components/dock/bs11.ts :: named=B15 gained={"B6":1,"B15":1}
+        B15: src/components/dock/bs11.ts (placeholder file name)
+CAUGHT  P7r-P6r-P5-PH5-src/components/dock/GlassDockSplit.ts [B-07/B-10] split module given placeholder name src/components/dock/GlassDockSplit.ts :: named=B15 gained={"B6":1,"B15":1}
+        B15: src/components/dock/GlassDockSplit.ts (placeholder file name)
+UNNAMED P7r-P6r-P5r-P4-T-CYC-N [B-01 (B4)] type-only cycle legibility <-> context through doors :: named=- gained={"B4":1,"B10":2,"B11":4}
+        B4: cycle @src/components/dock [legibility context] (type-only) via src/components/dock/legibility/plantTcycNa.ts -> src/components/dock/context/index.ts [type] ; src/components/dock/context/plantTcycNb.ts -> src/components/dock/legibility/inde
+        B10: src/components/dock/context/plantTcycNb.ts -> src/components/dock/legibility [move] readers: src/components/dock/legibility
+        B10: src/components/dock/legibility/plantTcycNa.ts -> src/components/dock/context [move] readers: src/components/dock/context
+        B11: src/components/dock/context/index.ts exports PlantTcycNb (no reader outside src/components/dock/context)
+        B11: src/components/dock/legibility/index.ts exports PlantTcycNa (no reader outside src/components/dock/legibility)
+UNNAMED P7r-P6r-P5r-P4-T-CYC [B-01 (B4)] type-only cycle chip <-> badge through their doors :: named=- gained={"B4":1,"B11":2}
+        B4: cycle @src [components/chip components/badge] (type-only) via src/components/chip/plantTcycA.ts -> src/components/badge/index.ts [type] ; src/components/badge/plantTcycB.ts -> src/components/chip/index.ts [type]
+        B11: src/components/chip/index.ts +PlantTcycA (not in the pin)
+        B11: src/components/badge/index.ts +PlantTcycB (not in the pin)
+UNNAMED P7r-P6r-P5r-P4-V-CYC [B-01 (B4)] value cycle chip <-> badge through their doors (tooth) :: named=- gained={"B4":1,"B11":2}
+        B4: cycle @src [components/chip components/badge] via src/components/chip/plantVcycA.ts -> src/components/badge/index.ts ; src/components/badge/plantVcycB.ts -> src/components/chip/index.ts
+        B11: src/components/chip/index.ts +plantVcycA (not in the pin)
+        B11: src/components/badge/index.ts +plantVcycB (not in the pin)
+CAUGHT  P7r-P6r-P5r-P4-MASK-RET [S-14] a build helper returns silently when its input file is missing :: named=B17 gained={"B17":1}
+        B17: plantMaskRet.ts:3 returns when a file is missing (a masking fallback: read it and let the read fail, or throw)
+CAUGHT  P7r-P6r-P5r-P4-K-REEX [B-02] kernel door re-exports a unit :: named=B11 gained={"B4":1,"B8":1,"B9":2,"B11":1,"B18":1}
+        B11: src/composables/dom/index.ts +PlantSliderK (not in the pin)
+CAUGHT  P7r-P6r-P5r-P4-G-RULE [B-09] a paint rule inside the glass CSS door :: named=B14 gained={"B14":1}
+        B14: src/styles/glass/index.css:178 holds 1 non-door node(s), first rule .plant-door-rule
+CAUGHT  P7r-P6r-P5r-P4-TH-RULE [B-09] a paint rule inside the theme CSS door :: named=B14 gained={"B14":1}
+        B14: src/styles/theme/index.css:34 holds 1 non-door node(s), first rule .plant-door-rule
+CAUGHT  P7r-P6r-P5r-P4-D-CODE [B-01] code in a JS door :: named=B11 gained={"B11":1,"B14":1}
+        B11: src/components/chip/index.ts +PLANT_DOOR_CODE (not in the pin)
+CAUGHT  P7r-P6r-P5r-P4-D-DUAL [B-01/B-02] badge door republishes Chip :: named=B9,B11 gained={"B9":2,"B11":1}
+        B9: src/components/chip/Chip.vue#default on ./badge + ./chip
+        B11: src/components/badge/index.ts +Chip (not in the pin)
+RESTORED base judgement unchanged
+TALLY {"SKIP":2,"CAUGHT":336,"CLEAN":33,"FALSE+":11,"OTHER":5,"UNNAMED":6,"RECORDED":2,"SAME-AS-CTL":7}
+COMPARE rows 402 same 402 differ 0 missing 0 extra 0
+regress rc=0 end 2026-10-16T16:30:27Z load { 13.69 13.81 12.87 }

@@ -1,0 +1,30 @@
+browser11 start 2026-10-16T16:24:24Z load { 11.83 12.89 12.19 }
+BW committed reports: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p13/crit-B/wt/docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/browser
+BW inputs: 16 arguments
+BW   kit[full]: base-green 428; held 428; NOT HELD 0 (failed 0, absent 0); flaky (out of the bar) 1; base-red route-green 1
+BW   kit[full]: verdict: GREEN (428 base-green keys, every one accounted: 428 held + 0 failed + 0 absent)
+BW   mine[full]: base-green 428; held 428; failed 0; absent 0; flaky 1
+BW   mine[full]: ACCOUNTED base-green 428 = held 428 + failed 0 + absent 0 : yes
+0 0 428 428 1 428 428 1
+BW BW1 PASS :: kit tally rc=0
+BW BW2 PASS :: mine rc=0; base-green kit 428 / mine 428; held 428 / 428; flaky 1 / 1
+BW BW3 PASS :: ACCOUNTED base-green 428 = held 428 + failed 0 + absent 0 : yes
+BW BW4 PASS :: base-green 428, held 428 (bar 428)
+BW BW5 PASS :: with 2 touched-spec pair(s): kit rc=0 428/428, mine rc=0 428/428, flaky 1/1
+BW   select rc=0 :: {"moves":604,"changed":723,"specs":155,"programSpecs":155,"captures":14,"excludedTouched":14}
+BW BW6 PASS :: re-derived 155 specs vs /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p13/crit-B/wt/docs/tranches/BL/design/structure/pass-13/B-kit/results/p13/browser/specs.txt: new 0, left 0; captures excluded 14
+BW7 INFO base.json identical to pass 10's
+BW7 INFO base-rekeyed.json DIFFERS from pass 10's
+BW7 INFO route.json identical to pass 10's
+BW7 INFO base-1-1.json identical to pass 10's
+BW7 INFO base-1-1.rekeyed.json DIFFERS from pass 10's
+BW7 INFO base-1-2.json identical to pass 10's
+BW7 INFO base-1-2.rekeyed.json DIFFERS from pass 10's
+BW7 INFO base-1-3.json identical to pass 10's
+BW7 INFO base-1-3.rekeyed.json DIFFERS from pass 10's
+BW7 INFO plan.json identical to pass 10's
+BW7 INFO route-1-1.json identical to pass 10's
+BW7 INFO route-1-2.json identical to pass 10's
+BW7 INFO route-1-3.json identical to pass 10's
+BW SUMMARY pass=6 fail=0
+browser11 rc=0 end 2026-10-16T16:24:26Z load { 11.68 12.84 12.18 }
