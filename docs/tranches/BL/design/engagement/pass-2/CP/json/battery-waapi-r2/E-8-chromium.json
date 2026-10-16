@@ -1,0 +1,55 @@
+{
+ "id": "E-8",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/CP/wt/.cp-out/builds/waapi"
+ },
+ "loadStart": "20.8/18.7/17.8",
+ "loadEnd": "21.4/18.9/17.9",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-8 mirror",
+   "status": "PASS",
+   "line": "4 rows, 8 --engage-* tokens on :root · drift [] · orphans []",
+   "load": "21.6/18.9/17.9"
+  },
+  {
+   "name": "E-8 literal switch",
+   "status": "PASS",
+   "line": "21 animation(s) ran [background-color@200ms, border-bottom-color@200ms, border-left-color@200ms, border-right-color@200ms, border-top-color@200ms, translate@210ms, script@60ms, script@180ms, outline-color@200ms] against 54 clock tokens · minted []",
+   "load": "21.6/18.9/17.9"
+  },
+  {
+   "name": "E-8 literal switch PRM",
+   "status": "FAIL",
+   "line": "4 animation(s) ran [script@60ms, script@180ms] against 0 clock tokens · minted [Animation script 60ms on control-bit__light; Animation script 180ms on control-bit__light]",
+   "load": "21.6/18.9/17.9"
+  },
+  {
+   "name": "E-8 literal accordion",
+   "status": "PASS",
+   "line": "11 animation(s) ran [background-color@120ms, rotate@200ms, disclosure-open@200ms, script@60ms, script@180ms, box-shadow@120ms, disclosure-close@200ms] against 54 clock tokens · minted []",
+   "load": "21.6/18.9/17.9"
+  },
+  {
+   "name": "E-8 literal accordion PRM",
+   "status": "FAIL",
+   "line": "6 animation(s) ran [disclosure-open@0ms, script@60ms, script@180ms, disclosure-close@0ms] against 0 clock tokens · minted [Animation script 60ms on disclosure-trigger disclosure-group-trig; Animation script 180ms on disclosure-trigger disclosure-group-trig]",
+   "load": "21.6/18.9/17.9"
+  },
+  {
+   "name": "E-8 literal button",
+   "status": "PASS",
+   "line": "66 animation(s) ran [opacity@60ms, script@60ms, script@180ms, opacity@180ms] against 54 clock tokens · minted []",
+   "load": "21.4/18.9/17.9"
+  },
+  {
+   "name": "E-8 literal button PRM",
+   "status": "FAIL",
+   "line": "4 animation(s) ran [script@60ms, script@180ms] against 0 clock tokens · minted [Animation script 60ms on button engage-pressed focus-ring glass-c; Animation script 180ms on button engage-pressed focus-ring glass-c]",
+   "load": "21.4/18.9/17.9"
+  }
+ ]
+}

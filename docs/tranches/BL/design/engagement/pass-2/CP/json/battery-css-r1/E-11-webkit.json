@@ -1,0 +1,37 @@
+{
+ "id": "E-11",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/CP/wt/.cp-out/builds/css"
+ },
+ "loadStart": "19.9/19.7/20.2",
+ "loadEnd": "21.7/20.2/20.3",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "E-11 switch fail-loud --scale-commit-pop=1 (commit)",
+   "status": "UNMEASURED",
+   "line": "no degradation, no error: the token is not read on this path · --scale-commit-pop: \"1\" on the root · clean {\"peak\":0,\"rise\":0.004746949207705575} {\"peak\":0,\"rise\":0.005319765677746613} · planted {\"peak\":0,\"rise\":0.006149115853897658} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 0",
+   "load": "21.8/20.1/20.3"
+  },
+  {
+   "name": "E-11 slider fail-loud --space-section (kbd)",
+   "status": "PASS",
+   "line": "fails loud · --space-section: \"nonsense\" on the root · clean {\"s\":1,\"veil\":0,\"n\":1} {\"s\":1,\"veil\":0,\"n\":1} · planted {\"s\":1,\"veil\":0,\"n\":1} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 1: [glass-ui] useEngage: --scale-engage is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui",
+   "load": "20.7/19.9/20.3"
+  },
+  {
+   "name": "E-11 slider fail-loud --scale-engage (kbd)",
+   "status": "PASS",
+   "line": "fails loud · --scale-engage: \"nonsense\" on the root · clean {\"s\":1,\"veil\":0,\"n\":1} {\"s\":1,\"veil\":0,\"n\":1} · planted {\"s\":1,\"veil\":0,\"n\":1} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 1: [glass-ui] useEngage: --scale-engage is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui",
+   "load": "20.7/19.9/20.3"
+  },
+  {
+   "name": "E-11 slider fail-loud --spring-dock-settle (fling)",
+   "status": "PASS",
+   "line": "fails loud · --spring-dock-settle: \"nonsense\" on the root · clean {\"x\":286.31986236572266} {\"x\":287.0093002319336} · planted {\"x\":278.3810729980469} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 2: [glass-ui] useEngage: --scale-engage is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui",
+   "load": "21.7/20.2/20.3"
+  }
+ ]
+}

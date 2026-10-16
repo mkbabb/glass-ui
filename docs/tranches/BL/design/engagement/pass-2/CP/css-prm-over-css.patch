@@ -1,0 +1,30 @@
+diff --git a/src/styles/utilities/engage.css b/src/styles/utilities/engage.css
+--- a/src/styles/utilities/engage.css
++++ b/src/styles/utilities/engage.css
+@@ -138,3 +138,26 @@
+             background-color var(--engage-control-engage-release) var(--ease-standard);
+     }
+ }
++
++/* PRM-AUTHORIZED (side arm, not CP-css): the commit light is light, so it keeps its
++   envelope clocks under reduced motion. The library's PRM fallback zeroes every
++   transition (`*, *::after { transition-duration: 0s !important }`, utilities/
++   a11y-overrides.css, `@layer components`); an authorization outranks it there by
++   specificity, as the transitions.css fade rows do. */
++@layer components {
++    @media (prefers-reduced-motion: reduce) {
++        .engage-chosen [data-engage-light],
++        .engage-disclosed::after,
++        .engage-pressed::after {
++            transition-duration:
++                var(--engage-control-engage-release), var(--engage-control-engage-attack) !important;
++        }
++
++        .engage-chosen[data-state="checked"] [data-engage-light],
++        .engage-disclosed[data-state="open"]::after,
++        .engage-pressed[data-commit="b"]::after {
++            transition-duration:
++                var(--engage-control-engage-attack), var(--engage-control-engage-release) !important;
++        }
++    }
++}

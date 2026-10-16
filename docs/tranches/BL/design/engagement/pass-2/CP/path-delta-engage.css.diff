@@ -1,0 +1,44 @@
+diff --git a/css/src/styles/utilities/engage.css b/waapi/src/styles/utilities/engage.css
+index 6234c17..53a90c8 100644
+--- a/css/src/styles/utilities/engage.css
++++ b/waapi/src/styles/utilities/engage.css
+@@ -107,34 +107,14 @@
+ 
+ /* ── THE COMMIT PATH ─────────────────────────────────────────────────────────────── */
+ @layer components {
+-    /* A REGISTERED PHASE, from transitions alone. The two states swap which leg is
+-       fast, so the product rises and falls on EVERY edge:
+-         · committed  (state checked or open, or the parity "b"): the gate opens
+-           (opacity 0 → 1, attack) over a charge that drains (light → none, release);
+-         · released   (state unchecked or closed, or the parity "a"): the charge
+-           returns (none → light, attack) under a gate that closes (1 → 0, release).
+-       A member that MOUNTS committed shows nothing (an inserted element has no
+-       before-change style), and a second commit mid-flight retargets both legs. */
++    /* FIRED FROM THE DOOR. The seat rests with its gate open and its charge empty
++       (product zero); on every commit edge the door (`useEngage`, `fireCommit`) plays
++       the two legs as Web Animations on the seat: the gate 0 → 1 on the attack and the
++       charge light → none on the release, read from the same tokens. A second commit
++       mid-flight restarts both legs (one light per seat, never two summed). */
+     :where(.engage-chosen, .engage-pressed, .engage-disclosed):not(:has([data-engage-face]))::after,
+     :where(.engage-chosen, .engage-pressed, .engage-disclosed) [data-engage-light] {
+-        background-color: color-mix(
+-            in oklab,
+-            var(--rung-light) calc(var(--fill-selected) * 100%),
+-            transparent
+-        );
+-        opacity: 0;
+-        transition:
+-            opacity var(--engage-control-engage-release) var(--ease-standard),
+-            background-color var(--engage-control-engage-attack) var(--ease-standard);
+-    }
+-
+-    :where(.engage-chosen, .engage-disclosed):is([data-state="checked"], [data-state="open"]):not(:has([data-engage-face]))::after,
+-    :where(.engage-chosen, .engage-disclosed):is([data-state="checked"], [data-state="open"]) [data-engage-light],
+-    :where(.engage-pressed)[data-commit="b"]::after {
+         background-color: color-mix(in oklab, var(--rung-light) 0%, transparent);
+         opacity: 1;
+-        transition:
+-            opacity var(--engage-control-engage-attack) var(--ease-standard),
+-            background-color var(--engage-control-engage-release) var(--ease-standard);
+     }
+ }

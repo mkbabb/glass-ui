@@ -1,0 +1,169 @@
+{
+ "id": "E-1",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/CP/wt/.cp-out/builds/css"
+ },
+ "loadStart": "25.9/21.4/20.9",
+ "loadEnd": "25.3/21.7/21.0",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-1 declaration present",
+   "status": "PASS",
+   "line": "55 members, 9 classes (pressed, chosen, held, dragged, disclosed, presented, field, ambient, static)",
+   "load": "26.4/21.6/21.0"
+  },
+  {
+   "name": "E-1 denominator declared",
+   "status": "PASS",
+   "line": "55 of 55 directories declared",
+   "load": "26.4/21.6/21.0"
+  },
+  {
+   "name": "E-1 no stray member",
+   "status": "PASS",
+   "line": "every member is a directory of a declared class",
+   "load": "26.4/21.6/21.0"
+  },
+  {
+   "name": "E-1 class carries a rung",
+   "status": "PASS",
+   "line": "members per class: pressed 1, chosen 9, held 4, dragged 5, disclosed 6, presented 4, field 3, ambient 5, static 18 · ladder rungs rest/hover/press/engaged/modal",
+   "load": "26.4/21.6/21.0"
+  },
+  {
+   "name": "E-1 adoption accordion",
+   "status": "PASS",
+   "line": "declared disclosed · 1 instance(s) in 1 scene(s) · accordion: div.disclosure computes [disclosed] (button.disclosure-trigger.disclosure-group-trigger.engage-disclosed=disclosed)",
+   "load": "26.4/21.6/21.0"
+  },
+  {
+   "name": "E-1 adoption button",
+   "status": "PASS",
+   "line": "declared pressed · 1 instance(s) in 1 scene(s) · button: button.button.engage-pressed.focus-ring computes [pressed] (button.button.engage-pressed.focus-ring=pressed)",
+   "load": "26.4/21.6/21.0"
+  },
+  {
+   "name": "E-1 adoption slider",
+   "status": "PASS",
+   "line": "declared held · 1 instance(s) in 1 scene(s) · slider: span.glass-slider.engage-held computes [held] (span.glass-slider.engage-held=held)",
+   "load": "26.4/21.6/21.0"
+  },
+  {
+   "name": "E-1 adoption switch",
+   "status": "PASS",
+   "line": "declared chosen · 1 instance(s) in 1 scene(s) · switch: button[role=switch].switch.control-bit.engage-chosen computes [chosen] (button[role=switch].switch.control-bit.engage-chosen=chosen)",
+   "load": "26.4/21.6/21.0"
+  },
+  {
+   "name": "E-1 single",
+   "status": "PASS",
+   "line": "no element composes more than one engage-* class (4 scenes)",
+   "load": "26.4/21.6/21.0"
+  },
+  {
+   "name": "E-1 adoption latch",
+   "status": "FAIL",
+   "line": "4 of 55 declared members seen adopting their recipe; unproven (not rendered by any scene, or not adopted): alert aurora avatar badge blob card carousel checkbox chip collapsible command configurator constellation dark-mode-toggle data-table deck dialog dock easing expandable-container fading-scroll fourier-field handmark infinite-scroll input label labeled-field menu metric music-staff number-field pager-dots popover progress radio-group scroll-progress-rim select separator sheet skeleton sortable-list status-dot surface table tabs textarea timeline toast toggle-group tooltip typewriter",
+   "load": "26.4/21.6/21.0"
+  },
+  {
+   "name": "E-1 runtime pressed (button)",
+   "status": "PASS",
+   "line": "scene button, rung press · press: Δscale 0.033 · press-only paint [::before opacity] (bound |Δscale| ≥ 0.01 or ≥ 1 property)",
+   "load": "27.2/21.8/21.1"
+  },
+  {
+   "name": "E-1 runtime pressed (button) PRM press-light",
+   "status": "PASS",
+   "line": "scene button, reduce · press: Δscale 0.000 · press-only paint [::before opacity] (bound |Δscale| ≥ 0.01 or ≥ 1 property)",
+   "load": "27.2/21.8/21.1"
+  },
+  {
+   "name": "E-1 runtime chosen (switch)",
+   "status": "PASS",
+   "line": "scene switch, rung press · press: Δscale 0.000 · press-only paint [child0 bg] (bound |Δscale| ≥ 0.01 or ≥ 1 property)",
+   "load": "27.2/21.8/21.1"
+  },
+  {
+   "name": "E-1 runtime chosen (switch) PRM press-light",
+   "status": "PASS",
+   "line": "scene switch, reduce · press: Δscale 0.000 · press-only paint [child0 bg] (bound |Δscale| ≥ 0.01 or ≥ 1 property)",
+   "load": "27.2/21.8/21.1"
+  },
+  {
+   "name": "E-1 runtime held (slider)",
+   "status": "PASS",
+   "line": "scene slider, rung engaged · press: Δscale 0.000 · press-only paint [child1 bg] (bound |Δscale| ≥ 0.01 or ≥ 1 property)",
+   "load": "25.7/21.6/21.0"
+  },
+  {
+   "name": "E-1 runtime held (slider) PRM press-light",
+   "status": "PASS",
+   "line": "scene slider, reduce · press: Δscale 0.000 · press-only paint [child1 bg] (bound |Δscale| ≥ 0.01 or ≥ 1 property)",
+   "load": "25.7/21.6/21.0"
+  },
+  {
+   "name": "E-1 runtime dragged (sortable-list)",
+   "status": "FAIL",
+   "line": "scene sortable, rung press · press: Δscale 0.000 · press-only paint [] (bound |Δscale| ≥ 0.01 or ≥ 1 property)",
+   "load": "25.7/21.6/21.0"
+  },
+  {
+   "name": "E-1 runtime dragged (sortable-list) PRM press-light",
+   "status": "FAIL",
+   "line": "scene sortable, reduce · press: Δscale 0.000 · press-only paint [] (bound |Δscale| ≥ 0.01 or ≥ 1 property)",
+   "load": "25.7/21.6/21.0"
+  },
+  {
+   "name": "E-1 runtime disclosed (accordion)",
+   "status": "FAIL",
+   "line": "scene accordion, rung press · press: Δscale 0.000 · press-only paint [] (bound |Δscale| ≥ 0.01 or ≥ 1 property)",
+   "load": "25.1/21.6/21.0"
+  },
+  {
+   "name": "E-1 runtime disclosed (accordion) PRM press-light",
+   "status": "FAIL",
+   "line": "scene accordion, reduce · press: Δscale 0.000 · press-only paint [] (bound |Δscale| ≥ 0.01 or ≥ 1 property)",
+   "load": "25.1/21.6/21.0"
+  },
+  {
+   "name": "E-1 runtime presented (sheet)",
+   "status": "PASS",
+   "line": "scene sheet, rung modal · press: Δscale 0.000 · press-only paint [child0 opacity] (bound |Δscale| ≥ 0.01 or ≥ 1 property)",
+   "load": "25.1/21.6/21.0"
+  },
+  {
+   "name": "E-1 runtime presented (sheet) PRM press-light",
+   "status": "FAIL",
+   "line": "scene sheet: no target while pressed",
+   "load": "25.7/21.7/21.1"
+  },
+  {
+   "name": "E-1 runtime field (input)",
+   "status": "PASS",
+   "line": "scene field, rung hover · hover: Δscale 0.000 · paint [box-shadow, backdrop-filter] (bound ≥ 1 property or |Δscale| ≥ 0.01)",
+   "load": "25.7/21.7/21.1"
+  },
+  {
+   "name": "E-1 runtime field (input) PRM press-light",
+   "status": "PASS",
+   "line": "scene field, reduce · hover: Δscale 0.000 · paint [box-shadow, backdrop-filter] (bound ≥ 1 property or |Δscale| ≥ 0.01)",
+   "load": "25.7/21.7/21.1"
+  },
+  {
+   "name": "E-1 runtime ambient (aurora)",
+   "status": "FAIL",
+   "line": "scene ambient, rung rest · pointer moved across: mean pixel change 1.17 levels against 1.13 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift)",
+   "load": "25.7/21.7/21.1"
+  },
+  {
+   "name": "E-1 runtime ambient (aurora) PRM press-light",
+   "status": "FAIL",
+   "line": "scene ambient, reduce · pointer moved across: mean pixel change 0.00 levels against 0.00 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift)",
+   "load": "25.3/21.7/21.0"
+  }
+ ]
+}

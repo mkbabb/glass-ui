@@ -1,0 +1,55 @@
+{
+ "id": "E-7",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/CP/wt/.cp-out/builds/css"
+ },
+ "loadStart": "16.0/20.3/20.8",
+ "loadEnd": "16.4/20.3/20.8",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-7 writers data-engaged (static)",
+   "status": "PASS",
+   "line": "1 writer file(s): src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/CP/wt",
+   "load": "16.0/20.3/20.8"
+  },
+  {
+   "name": "E-7 writers data-held (static)",
+   "status": "FAIL",
+   "line": "2 writer file(s): src/components/dock/GlassDock.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/CP/wt",
+   "load": "16.0/20.3/20.8"
+  },
+  {
+   "name": "E-7 writers data-press (static)",
+   "status": "FAIL",
+   "line": "2 writer file(s): src/components/pager-dots/PagerDots.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/CP/wt",
+   "load": "16.0/20.3/20.8"
+  },
+  {
+   "name": "E-7 writers data-commit (static)",
+   "status": "PASS",
+   "line": "1 writer file(s): src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/CP/wt",
+   "load": "16.0/20.3/20.8"
+  },
+  {
+   "name": "E-7 slider held",
+   "status": "PASS",
+   "line": "[data-engaged] nodes while pointer-held 3 · bound ≥ 1",
+   "load": "16.4/20.3/20.8"
+  },
+  {
+   "name": "E-7 slider held PRM",
+   "status": "PASS",
+   "line": "reduce · [data-engaged] nodes while pointer-held 3 · bound ≥ 1",
+   "load": "16.4/20.3/20.8"
+  },
+  {
+   "name": "E-7 modal open, nothing held",
+   "status": "PASS",
+   "line": "dialog open true · veil nodes 1 · [data-engaged] nodes 0 · bound 0",
+   "load": "16.4/20.3/20.8"
+  }
+ ]
+}

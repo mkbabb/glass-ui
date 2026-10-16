@@ -1,0 +1,157 @@
+{
+ "id": "E-5",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/CP/wt/.cp-out/builds/waapi"
+ },
+ "loadStart": "20.2/17.9/17.5",
+ "loadEnd": "21.8/18.6/17.8",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-5 accordion sustain light",
+   "status": "FAIL",
+   "line": "NOT DRIVEN: no press-only property at +200 ms (the hold paints nothing to sustain)",
+   "load": "20.9/18.1/17.5"
+  },
+  {
+   "name": "E-5 accordion press light",
+   "status": "FAIL",
+   "line": ":active true · Δscale 0.000 · touch-changed [] · hover-changed [background-color] · press-only []",
+   "load": "20.9/18.1/17.5"
+  },
+  {
+   "name": "E-5 accordion sustain(PRM) light",
+   "status": "FAIL",
+   "line": "NOT DRIVEN: no press-only property at +200 ms (the hold paints nothing to sustain)",
+   "load": "20.9/18.1/17.5"
+  },
+  {
+   "name": "E-5 accordion press-light(PRM) light",
+   "status": "FAIL",
+   "line": ":active true · Δscale 0.000 · touch-changed [] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce)",
+   "load": "20.9/18.1/17.5"
+  },
+  {
+   "name": "E-5 accordion sustain dark",
+   "status": "FAIL",
+   "line": "NOT DRIVEN: no press-only property at +200 ms (the hold paints nothing to sustain)",
+   "load": "20.8/18.2/17.6"
+  },
+  {
+   "name": "E-5 accordion press dark",
+   "status": "FAIL",
+   "line": ":active true · Δscale 0.000 · touch-changed [] · hover-changed [background-color] · press-only []",
+   "load": "20.8/18.2/17.6"
+  },
+  {
+   "name": "E-5 accordion sustain(PRM) dark",
+   "status": "FAIL",
+   "line": "NOT DRIVEN: no press-only property at +200 ms (the hold paints nothing to sustain)",
+   "load": "20.8/18.2/17.6"
+  },
+  {
+   "name": "E-5 accordion press-light(PRM) dark",
+   "status": "FAIL",
+   "line": ":active true · Δscale 0.000 · touch-changed [] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce)",
+   "load": "20.8/18.2/17.6"
+  },
+  {
+   "name": "E-5 button sustain light",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [::before opacity]: +200 ms 0.031 → +1200 ms 0.160 (×5.09; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "21.3/18.3/17.6"
+  },
+  {
+   "name": "E-5 button press light",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.033 · touch-changed [::before opacity] · hover-changed [::before opacity] · press-only [::before opacity]",
+   "load": "21.3/18.3/17.6"
+  },
+  {
+   "name": "E-5 button sustain(PRM) light",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [::before opacity]: +200 ms 0.160 → +1200 ms 0.160 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "21.3/18.3/17.6"
+  },
+  {
+   "name": "E-5 button press-light(PRM) light",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [::before opacity] · hover-changed [::before opacity] · press-only [::before opacity] (bound ≥ 1 press-only property under reduce)",
+   "load": "21.3/18.3/17.6"
+  },
+  {
+   "name": "E-5 button sustain dark",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [::before opacity]: +200 ms 0.028 → +1200 ms 0.120 (×4.34; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "22.0/18.6/17.7"
+  },
+  {
+   "name": "E-5 button press dark",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.033 · touch-changed [::before opacity] · hover-changed [::before opacity] · press-only [::before opacity]",
+   "load": "22.0/18.6/17.7"
+  },
+  {
+   "name": "E-5 button sustain(PRM) dark",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [::before opacity]: +200 ms 0.120 → +1200 ms 0.120 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "22.0/18.6/17.7"
+  },
+  {
+   "name": "E-5 button press-light(PRM) dark",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [::before opacity] · hover-changed [::before opacity] · press-only [::before opacity] (bound ≥ 1 press-only property under reduce)",
+   "load": "22.0/18.6/17.7"
+  },
+  {
+   "name": "E-5 press_switch sustain light",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [child0 bg]: +200 ms 1.000 → +1200 ms 1.000 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "22.7/18.7/17.8"
+  },
+  {
+   "name": "E-5 press_switch press light",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg]",
+   "load": "22.7/18.7/17.8"
+  },
+  {
+   "name": "E-5 press_switch sustain(PRM) light",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [child0 bg]: +200 ms 1.000 → +1200 ms 1.000 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "22.7/18.7/17.8"
+  },
+  {
+   "name": "E-5 press_switch press-light(PRM) light",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce)",
+   "load": "22.7/18.7/17.8"
+  },
+  {
+   "name": "E-5 press_switch sustain dark",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [child0 bg]: +200 ms 1.000 → +1200 ms 1.000 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "21.8/18.6/17.8"
+  },
+  {
+   "name": "E-5 press_switch press dark",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg]",
+   "load": "21.8/18.6/17.8"
+  },
+  {
+   "name": "E-5 press_switch sustain(PRM) dark",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [child0 bg]: +200 ms 1.000 → +1200 ms 1.000 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "21.8/18.6/17.8"
+  },
+  {
+   "name": "E-5 press_switch press-light(PRM) dark",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce)",
+   "load": "21.8/18.6/17.8"
+  }
+ ]
+}

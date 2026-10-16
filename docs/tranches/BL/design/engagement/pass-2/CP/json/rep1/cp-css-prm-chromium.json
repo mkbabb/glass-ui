@@ -1,0 +1,117 @@
+{
+ "label": "css-prm",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "cells": [
+  {
+   "name": "c4 light switch PRM keyboard commit",
+   "status": "FAIL",
+   "line": "state false → true · arm iii false · light rise (own read) 0.0064 · light animations [CSSTransition:background-color@180, CSSTransition:opacity@60] · target scale range 0.0000 face 0.0000 (bound < 0.002) · E-2 arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 44.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0064 on the layers channel (peak 0.9288 → rest 0.92",
+   "load": "22.6/20.3/20.5",
+   "scene": "switch",
+   "theme": "light",
+   "cellId": "c4",
+   "driven": true,
+   "iii": false,
+   "rise": 0.006397906261557229,
+   "anims": [
+    "CSSTransition:background-color@180",
+    "CSSTransition:opacity@60"
+   ],
+   "sRange": 0,
+   "fRange": 0
+  },
+  {
+   "name": "c4 light accordion PRM keyboard commit",
+   "status": "FAIL",
+   "line": "state null → \"one\" · arm iii false · light rise (own read) 0.0064 · light animations [CSSTransition:background-color::after@180, CSSTransition:opacity::after@60, CSSAnimation:opacity@0] · target scale range 0.0000 face 0.0000 (bound < 0.002) · E-2 arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 320.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 1.0000 → rest 1.0",
+   "load": "23.1/20.4/20.6",
+   "scene": "accordion",
+   "theme": "light",
+   "cellId": "c4",
+   "driven": true,
+   "iii": false,
+   "rise": 0.006443665271872456,
+   "anims": [
+    "CSSTransition:background-color::after@180",
+    "CSSTransition:opacity::after@60",
+    "CSSAnimation:opacity@0"
+   ],
+   "sRange": 0,
+   "fRange": 0
+  },
+  {
+   "name": "c4 light button PRM keyboard commit",
+   "status": "PASS",
+   "line": "state 0 → 1 · arm iii true · light rise (own read) 0.0173 · light animations [CSSTransition:background-color::after@180, CSSTransition:opacity::after@60] · target scale range 0.0000 face 0.0000 (bound < 0.002) · E-2 arm iii of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 74.8 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0173 on the layers channel (peak 0.8019 → rest 0.784",
+   "load": "23.1/20.4/20.6",
+   "scene": "button",
+   "theme": "light",
+   "cellId": "c4",
+   "driven": true,
+   "iii": true,
+   "rise": 0.017278493605298206,
+   "anims": [
+    "CSSTransition:background-color::after@180",
+    "CSSTransition:opacity::after@60"
+   ],
+   "sRange": 0,
+   "fRange": 0
+  },
+  {
+   "name": "c4 dark switch PRM keyboard commit",
+   "status": "PASS",
+   "line": "state false → true · arm iii true · light rise (own read) 0.0208 · light animations [CSSTransition:background-color@180, CSSTransition:opacity@60] · target scale range 0.0000 face 0.0000 (bound < 0.002) · E-2 arm iii of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 44.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0208 on the layers channel (peak 0.0461 → rest 0.025",
+   "load": "23.1/20.4/20.6",
+   "scene": "switch",
+   "theme": "dark",
+   "cellId": "c4",
+   "driven": true,
+   "iii": true,
+   "rise": 0.0208066659078737,
+   "anims": [
+    "CSSTransition:background-color@180",
+    "CSSTransition:opacity@60"
+   ],
+   "sRange": 0,
+   "fRange": 0
+  },
+  {
+   "name": "c4 dark accordion PRM keyboard commit",
+   "status": "FAIL",
+   "line": "state null → \"one\" · arm iii false · light rise (own read) 0.0222 · light animations [CSSTransition:background-color::after@180, CSSTransition:opacity::after@60, CSSAnimation:opacity@0] · target scale range 0.0000 face 0.0000 (bound < 0.002) · E-2 arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 320.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 1.0000 → rest 1.0",
+   "load": "23.9/20.6/20.6",
+   "scene": "accordion",
+   "theme": "dark",
+   "cellId": "c4",
+   "driven": true,
+   "iii": false,
+   "rise": 0.022170377974447875,
+   "anims": [
+    "CSSTransition:background-color::after@180",
+    "CSSTransition:opacity::after@60",
+    "CSSAnimation:opacity@0"
+   ],
+   "sRange": 0,
+   "fRange": 0
+  },
+  {
+   "name": "c4 dark button PRM keyboard commit",
+   "status": "PASS",
+   "line": "state 0 → 1 · arm iii true · light rise (own read) 0.0202 · light animations [CSSTransition:background-color::after@180, CSSTransition:opacity::after@60] · target scale range 0.0000 face 0.0000 (bound < 0.002) · E-2 arm iii of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 74.8 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0202 on the layers channel (peak 0.5829 → rest 0.562",
+   "load": "23.9/20.6/20.6",
+   "scene": "button",
+   "theme": "dark",
+   "cellId": "c4",
+   "driven": true,
+   "iii": true,
+   "rise": 0.020247498926826202,
+   "anims": [
+    "CSSTransition:background-color::after@180",
+    "CSSTransition:opacity::after@60"
+   ],
+   "sRange": 0,
+   "fRange": 0
+  }
+ ]
+}

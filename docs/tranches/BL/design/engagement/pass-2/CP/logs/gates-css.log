@@ -1,0 +1,26 @@
+# gates css 2026-10-16 08:55:51 load { 27.67 23.75 19.32 } patch sha1 71373a3c0ba7
+build exit 1 08:57:10 load { 22.33 22.96 19.41 }
+> @mkbabb/glass-ui@10.1.0 typecheck
+> vue-tsc --noEmit && vue-tsc --noEmit -p tsconfig.test.json
+
+tests/components/fourier-field/FourierField.smoke.test.ts(18,30): error TS2307: Cannot find module '@mkbabb/glass-ui/fourier-math' or its corresponding type declarations.
+tests/components/fourier-field/FourierField.smoke.test.ts(19,66): error TS2307: Cannot find module '@mkbabb/glass-ui/fourier-math' or its corresponding type declarations.
+typecheck exit 2 08:57:43 load { 27.03 24.01 19.93 }
+demo:dist:build exit 0
+# gates css (with roster) 2026-10-16 09:24:53 load { 21.01 19.36 20.12 } patch sha1 91986123bbeb
+build exit 0 09:25:20 load { 30.23 21.68 20.93 }
+
+> @mkbabb/glass-ui@10.1.0 typecheck
+> vue-tsc --noEmit && vue-tsc --noEmit -p tsconfig.test.json
+
+typecheck exit 0 09:25:46 load { 25.90 21.43 20.87 }
+# vitest css 2026-10-16 09:25:50 load { 24.31 21.17 20.78 }
+     × reflects typed paint axes without utility-generated root classes 34ms
+     × names only tokens that exist in src/ — a doc-only token is an inert contract 94ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/design/drive-tokens.test.ts > tunable-anim.md Kind-5 drive table > names only tokens that exist in src/ — a doc-only token is an inert contract
+ FAIL  tests/components/slider.contract.test.ts > Slider > reflects typed paint axes without utility-generated root classes
+ Test Files  2 failed | 238 passed (240)
+      Tests  2 failed | 2328 passed | 10 expected fail | 1 skipped (2341)
+vitest exit 1 09:28:07 load { 25.58 22.95 21.55 }
+# drive-tokens + slider.contract after the two hunks: 2 files 11 tests passed 09:29:51 load { 22.65 22.21 21.39 }

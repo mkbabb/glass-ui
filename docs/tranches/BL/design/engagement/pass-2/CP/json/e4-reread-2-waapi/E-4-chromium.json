@@ -1,0 +1,31 @@
+{
+ "id": "E-4",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/CP/wt/.cp-out/builds/waapi"
+ },
+ "loadStart": "15.0/9.6/8.9",
+ "loadEnd": "15.1/9.8/9.0",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "E-4 slider fling carries velocity",
+   "status": "PASS",
+   "line": "axis x, leading edge, page frame · fling: carry 4.94 px, settles -2.44 px past release · still: carry 0.00 px, settles -7.32 px · difference: carry 4.94 px, settle 4.89 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 224 frames, median 9.0 ms",
+   "load": "16.0/9.9/9.0"
+  },
+  {
+   "name": "E-4 slider release continuity",
+   "status": "PASS",
+   "line": "largest one-frame move on release: fling 7.9 px, still 2.4 px · during the drive: fling 43.3 px, still 43.6 px (bound ≤ drive × 1.5 + 2 = 67.3 px)",
+   "load": "16.0/9.9/9.0"
+  },
+  {
+   "name": "E-4 slider release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 79.2 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px",
+   "load": "15.1/9.8/9.0"
+  }
+ ]
+}
