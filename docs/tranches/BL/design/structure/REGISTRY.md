@@ -2988,3 +2988,213 @@ As §P9-6.6, with: the converged chain's digest (`6fdd4ec7…` under P10-R1 (b)/
 **Held with the bank.** G-01..G-12 and D′'s gaps, unchanged.
 
 No route converged in pass 10. D1-B converges at the pass-12 agglomeration at the earliest.
+
+---
+
+# D1 · pass 11 · REGISTRY: the route after pass 11
+
+| field | value |
+|---|---|
+| seat | D1 pass-11 agglomeration. Closes pass 11 with B's status and convergence, the two-clean-passes count, the rulings owed, the open gaps and the pass-12 plan. Passes 1-10 above are kept intact |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `4a17cbcb` (the critique, 10:30:45Z). `git diff 6154d6ec HEAD -- . ':!docs'` is empty: the route and the critic judged 10.1.0's code. The kit, the floor row and `B-proto.md` were committed at `8af2de6f` (09:23:47Z), before the critic's battery hash (09:30:08Z); between `8af2de6f` and HEAD nothing under `structure/` changed except `pass-11/critique-B*` (648 tracked files under `pass-11/`) |
+| inputs, read in full | `pass-11/B-proto.md`, `pass-11/critique-B.md`, `critique-B/BATTERY-HASH.txt`; `K11/LAW.md` §14; this file §P2-6.5 and the pass-10 part (§P10-0..§P10-7); `RULINGS.md` through P10-R1. The kit's other files and the critic's other results were read at the lines the reports cite, not re-run |
+| instruments | none re-run. Read-only checks: `git log`, `git diff --name-only`, the empty code diff; `K11/tools/browser-tally.mjs:40-75` (`BASE_SLOT` tests `rekeyedFrom` and its `testDir`, nothing of coverage); the top-level fields of every committed `browser-seat/2` report under `K11/results/p11/browser/` (below); `waves/INDEX.md:47` |
+| fences | no source edit, no git write; this part is the only write |
+
+Short citations: `Bp11` is `pass-11/B-proto.md`, `cB11` is `pass-11/critique-B.md`, `cB11-R` is `pass-11/critique-B/results/`, `K11` is `pass-11/B-kit/`.
+
+---
+
+## P11-0 · In brief
+
+| id | route | status | conv. (critic) | critic's verdict | re-opened by the critic | re-opened by this registry | reason in one line |
+|---|---|---|---:|---|---|---|---|
+| D1-B | sealed modules, flat | **ADVANCE** | 26/27 = 96.3% | S-14 OPEN, the rest CLOSED | 0 (S-14 was open entering) | 0 | every other bar item re-met from committed bytes (`6fdd4ec7…`, 126 steps, 19/19, CLEAN at 2,920,386, cascade GREEN, 428/428, `seal.test.ts` 26/26); P10-R1 (a), P10-G1, P10-G2 and P10-G4 landed and measured; but `browser-tally --base` accepts a **partial** re-keyed base (a base rerun, a touched-spec pair's base) and reads a failing route GREEN |
+| D1-G | eponymous closures | BANK (unchanged) | 44% (pass 3) | — | — | — | re-trigger not fired (§P11-3) |
+
+**The two-clean-passes count for B stays at 0.** No convergence record is written. The earliest convergence is the pass-13 agglomeration: a clean pass-12 critique moves the count to 1, a clean pass-13 critique to 2.
+
+Why the count does not advance. The rule reads "advances by 1 iff the pass-11 critique re-opens nothing and maps no finding to an edict clause the list leaves out". The critique re-opened no item that entered closed, but S-14 entered open, the route claimed it closed (Bp11 §9), and the critic's measurement refutes the claim on the text §P10-6.4 wrote for it: "every committed report kind in every slot: … **a base rerun (raw and re-keyed)** …; each wrong one exits 2" and "F6 … through every wrong-kind `--base` … path, never 0". §P2-6.5's condition 1 (zero items open) fails at the end of pass 11, and its third bullet restarts the count on a finding that maps to a listed item. The count was 0 and restarts at 0.
+
+Three findings shape pass 12.
+
+1. **S-14's last hole is partiality, not kind.** P10-G1 landed as §P10-6.3 specified it: `rekeyedFrom` separates base from route in every slot, `rekey` refuses route runs and reruns, F6 reads never 0 through every base↔route swap (cB11 §1, 22/22), and every value-taking flag throws on a missing value (FLAG 23/23). But §P10-6.3's discriminant was one field, and LAW §14 (pass 11) then wrote "a full run and a rerun of one kind carry the same fields; the caller names which is which by the slot". A partial base in `--base` judges only the keys it holds, so F6's failing route reads **GREEN, exit 0** through 10 of 10 committed partial bases (`cB11-R/f7.txt`: `reruns/base-1-{1,2,3}.rekeyed.json` over 8 keys, `p10-steps/base.rekeyed.json` over 33, `p11-steps/base.rekeyed.json` over 3). That is pass 10's O-1 again, through the kind the plan enumerated. The route planted it and read the GREEN as "a verdict" (Bp11 §6 KIND); the registry's plan, which this registry wrote, set a discriminant that could not separate the two, so the defect is shared between §P10-6.3 and the route. The cure is kit-only and changes no digest (§P11-6.3).
+2. **No field in the committed reports separates a full run from a rerun; coverage does.** Checked here: `base-rekeyed.json` (selection 153, 866 results), `reruns/base-1-*.rekeyed.json` (selection 2, 10 results), `p10-steps/base.rekeyed.json` (8, 63), `p11-steps/base.rekeyed.json` (1, 3) carry the same field set; `baseReport` is `null` on all. The touched-spec bases are legitimately the `--base` of their own pairs (each pair's route names its re-keyed base in `baseReport`), so "a touched-spec base is always wrong in `--base`" would be false. What is wrong is a base that does not cover the route it is judged against. §P11-6.3 sets the cure on coverage of the route's base-origin specs, read through the chain's own move map.
+3. **P10-R1 (a) closed with no new digest.** The floor row is one line (`floor/lib/move.mjs:168`, docs = landed, `ee305d6f…`); the floor base re-cut to `6773b4ec1217ab41…532f2cadb`, which with that line reverted reads exactly pass 10's `5b14c6c7…` (cB11 FB5); S74c left the chain (126 steps); S74b now lands at pass 10's post-S74c digest, so the chain still ends at **`6fdd4ec7…`** (Bp11 §3, G-2). P10-R1's predicted "new digest" did not occur and needs no ruling: the convergence record carries `6fdd4ec7…` and the re-cut floor base.
+
+---
+
+## P11-1 · Registry
+
+| id | unit set declared by | enforced between units | status | conv. | re-trigger / refutation | pass-12 role |
+|---|---|---|---|---:|---|---|
+| D1-B | a module is a code dir in `src` or `scripts` with a door (B7), recursively; containers and kind slots excepted | privacy: the recursive door seal, kernel and CSS edges included (B1, B3); direction (B8); acyclicity: sibling, and every module-grain value SCC parent↔child included (B4, P9-R1); no masking fallback (B17); names (B15); Playwright-program membership and visual subject (B16); the peer class (B18) | ADVANCE | 26/27 by its critic and by this registry | — | the one live route; close S-14 (coverage), then the first of two clean passes |
+| D1-G | first-level component units; eponymous roots | B1 into component units only | BANK | 44% | not fired (§P11-3) | none |
+| D1-D′ | — | — | BANK (unchanged) | 7% | not fired | none |
+| D1-A | — | — | BLOCK (unchanged) | 35% | — | none |
+| D1-C, D1-E, D1-F | — | — | BANK (unchanged) | 40/35/30% | no trigger fired | none |
+
+---
+
+## P11-2 · D1-B · Sealed modules, flat: ADVANCE
+
+**What ran** (Bp11 §0-§9, confirmed by cB11 §0-§4).
+
+| item | result |
+|---|---|
+| floor row (P10-R1 (a)) | `floor/lib/move.mjs:168` takes the `./`-lead cure; FLOOR.md F-2 gains P11-F1. Route plant LOST → KEPT on the docs engine and the landed one; the critic's own 7-shape plant (`battery/floor11.mjs`) KEPT on every engine with the cure, LOST on all four `./`-lead shapes with line 168 reverted, controls kept (cB11 §0, §7 item 2) |
+| floor base | re-cut by S1's script: `6773b4ec1217ab416eea2e5ec1b79d39587c4201a70871d347e919d532f2cadb` over 1,354 files, both seats; the one-line revert reads `5b14c6c7…` exactly (cB11 FB5) |
+| chain | 127 → 126 steps; S74c and its authored/frozen files deleted; S1→S74b re-recorded; S74b lands at pass 10's S74c digest `1da6d092…`; S74d→S70 equal to pass 10's; S69 the last gate step, S70 the one rebind |
+| replay | `6fdd4ec7bd259630d38a466a444e45b2b18f71b4cbf2259d258a4c6177996bbf` over 1,587 files. Route: r1 `--twice` 547.4 s, r2 417.8 s, both MATCH from fresh worktrees, rerun no-op 0.4 s. Critic: 474 s from committed bytes in a fresh worktree, MATCH, rerun 0.7 s, unchanged after every battery family |
+| gate | 19/19 at 0, exit 0; files 1,585, edges 8,350, modules 142/142, pin 142/122/1,320/2, B10 anchored 39, peer held 23 |
+| toolchain | build 0; `vue-tsc` ×2 0; demo build 0; `seal.test.ts` 26/26; vitest 2,335 passed, 0 failed, `--maxWorkers=2`, both seats |
+| package | verify:package CLEAN at 2,920,386, `equal: true`; only S70 writes `.bundle-ratchet` |
+| cascade | GREEN against the floor base (listed), both the committed baseline and the re-cut base's own snapshot; RED unlisted (critic) |
+| browser | selection 155 specs, 14 captures excluded, byte-identical to pass 10's; pass 11's one code line selects 1 spec (the π floor), run on both trees, 3/3, 0 new failures; tally 428 base-green, 428 held, 0 failed, 0 absent through the cured tally and the critic's own reader (`tally11.mjs`), with and without both touched-spec pairs; blob D2 flaky out of the bar. The full 155-spec run was not repeated (Bp11 G-1; §P10-6.2 step 4 did not require it; the route tree is byte-identical to the one the committed full runs judged) |
+| P10-G1 | the kind discriminant on `rekeyedFrom`: KIND 46/46 (route), tally slots × 16 kinds, `rekey` 14/14, peer/overlay/select 48/48 (critic); F6 never 0 through every base↔route swap (route 13/13, critic 22/22). **Partial bases in `--base` read GREEN** (O-1 below) |
+| P10-G2 | `lib/argv.mjs` in all four judges and `arg` in `lib/floor.mjs`: FLAG 50/50 (route), 23/23 (critic); DUP 2/2; pass 10's seven failing rows now PASS (judges10 145/0) |
+| P10-G4 | `pass-6/…/fd4-probe.mjs:21` and `pass-3/…/probes.mjs:77,119` re-pointed by diff; fd4 A, G, G2, U, RESTORE PASS; the critic's census matches the route's list |
+| P9-R1 (a), P9-R2 (a), P8-R3 | PD 6/6; fix10b MIGRATION (C2-G1 0 META, four tranche-id plants 1 each); PR 6/6 |
+| regressions | the 402 rows 0 differ; pass 8's 11 peer plants 0 differ; judge-throws 52/0 (the three new kit modules add 7 rows, each 2); crash8 39/39; pass 10's critic battery 145/0 with every other verdict line identical to its own run; tree-probe FAIL lines identical |
+| W-D.1 §0 | 0 / 1 / 5 / cured / 3, as pass 10 |
+
+**The critic's items** (cB11 §6): 26 CLOSED, S-14 OPEN, 0 re-opened.
+
+**The critic's findings** (cB11 §5), read under §P2-6.5.
+
+| # | finding | item it maps to, and the text that decides | effect |
+|---|---|---|---|
+| O-1 | `browser-tally --base` accepts a re-keyed base **rerun** or a touched-spec pair's re-keyed base against the full route and reads F6's failing route GREEN (exit 0) over the 3-33 keys that partial base holds (`cB11-R/f7.txt` 10/10; `judges11.txt` KM-tally-base-rekeyed-base-rerun, KM-tally-base-steps-rekeyed-base) | **S-14**: §P10-7 hold "a wrong-schema or wrong-kind report in every slot … no judge reads a malformed input as an all-clear"; §P10-6.4 "a base rerun (raw and re-keyed) …; each wrong one exits 2" and "F6 … through every wrong-kind `--base` … path, never 0" | **S-14 stays OPEN.** Route work under P8-R2 as ruled (P11-G1); no ruling. The decisive rows are hashed KIND rows the battery classed INFO, which the critic discloses (cB11 §7); `f7.sh` only makes the masking concrete against F6, which §P10-6.4 asks of every wrong-kind `--base` path |
+| O-2 | the route's `tools/batteries.sh` takes three trees and a scratch dir, unlike pass 10's `run10.sh` | none | none (INFO); the next critic is told its signature (§P11-6.4) |
+
+**The route's own gaps** (Bp11 §10), dispositions.
+
+| Bp11 | disposition |
+|---|---|
+| G-1 | **None owed.** §P10-6.2 step 4 is the binding instruction (no `src` file moves; the committed reports stand). The convergence record states that the full runs are pass 8's, carried by the byte-identical route tree and selection, with each later pass's touched-spec pair |
+| G-2 | **None owed.** P10-R1 (a) predicted a new digest; the chain ends at `6fdd4ec7…` because S74b now lands where S74c did. The ruling's substance (one engine, S74c out, the floor base re-cut) is met |
+| G-3 | closed: the driver committed the floor row at `8af2de6f`; `P11-F1.patch` is now a record |
+| G-4 | **A declared limit, kept.** A forged `rekeyedFrom` on a route report is a hand-written field, not a committed report; the critic did not count it. The coverage cure (§P11-6.3) narrows it: a forged report must also cover the route |
+| G-5 | none; the pass-3 battery left the regression lists at pass 4 |
+| G-6 | W-D.1 §0 items 2, 3, 5 (1 / 5 / 3): W-D.1 §3 steps 5 and 7, its own edits (§P9-4) |
+| G-7 | none; each critic writes its own battery |
+| G-8 | outside D1 (§P11-5) |
+| G-9 | P11-G3: FLOOR.md changes only by a floor row, so the stale symlink line goes in the next floor row if one is owed; otherwise the convergence record lists it as FLOOR.md's one stale line |
+
+**The critic's own defects** (cB11 §7): four, each re-run post-hash with the expectation unchanged (a `set -u` brace; the docs-engine plant run after S1 moved the floor runtime; four control rows that omitted the base reruns and so read the flaky key RED, which the kit reads rightly; BW6 compared against the byte-identical pass-11 `specs.txt`). This registry accepts them.
+
+**No finding maps to an edict clause the list leaves out. No item is added; the checklist stays at 27.**
+
+---
+
+## P11-3 · G's re-trigger: not fired
+
+- **The first arm fails again.** The pass 4-10 plants regress on the pass-11 tree with 0 differ (cB11 §4); G's law still has no clause for B4's module-grain parent↔child arm.
+- **The second arm has no ruling.** The datum did not move (S70 rebinds once, unchanged at 2,920,386); no ruling reopened G.
+
+G stays banked.
+
+---
+
+## P11-4 · Rulings: none owed
+
+P10-R1 was ruled on 2026-10-16 and landed (§P11-2); its digest prediction is answered under Bp11 G-2 without a ruling. S-14's remaining work (O-1) sits under P8-R2 as ruled ("a degenerate input throws") and §P10-6.4's battery text, which already names the base rerun in every slot; the discriminant is route work set in §P11-6.3, as §P10-6.3 set pass 11's. Bp11 G-1 and G-4 are dispositioned above.
+
+One point the driver may choose to rule, with this registry's recommendation that it is not needed:
+
+| id | question | arms | evidence | recommendation |
+|---|---|---|---|---|
+| (optional) P11-R1 | how `browser-tally` refuses a partial base in `--base` | (a) **coverage through the chain's map**: every spec of the route's selection that the chain carries from a base-program spec (the map `rekey` already reads from `frozen/SEQUENCE.json`) must have results in `--base`; else a throw. Reruns stay partial in `--base-rerun`; a touched-spec pair judged on its own passes. (b) **a recorded kind field**: the seat (and `rekey`) stamp `run: "full" \| "rerun"`; the committed reports are re-stamped. (c) **a required `--selection`**: the tally takes `browser-select`'s committed selection and requires `--base` and `--route` to cover it | `K11/tools/browser-tally.mjs:58-71` (`BASE_SLOT`); the field census in §P11-0 item 2 (no field separates full from rerun); `cB11-R/f7.txt`; LAW §14 (pass 11) "the caller names which is which by the slot" | **(a), and no ruling.** It reads only what is committed, re-stamps nothing, binds the base to the route it judges rather than to a label a caller writes, and admits each touched-spec pair where it is right. (b) rewrites committed reports and is a label, the same weakness as G-4; (c) adds a required input the critic would then have to plant in every kind |
+
+---
+
+## P11-5 · Open gaps
+
+| id | gap | source | pass-12 disposition |
+|---|---|---|---|
+| P11-G1 | **S-14:** `browser-tally --base` accepts a partial re-keyed base (a base rerun, a touched-spec pair's base) against a fuller route, and reads a failing route GREEN | cB11 O-1, F7; `K11/tools/browser-tally.mjs:63-67`; LAW §14 (pass 11) | route, kit-only (§P11-6.3) |
+| P11-G2 | the sweep that missed it: pass 11's §1 sweep listed every place a judge reads an input's **kind** and **presence**, not its **extent**. A judge that compares two inputs must state what each must cover of the other | Bp11 §1 | route (§P11-6.3, the extent sweep) |
+| P11-G3 | FLOOR.md's worktree recipe names the `tests-visual/node_modules` symlink the checkout lacks | Bp11 G-9 (P10-G7) | the next floor row if one is owed; otherwise listed in the convergence record as a stale recipe line |
+| P9-G6 | W-D.1 and `waves/INDEX.md:47` cite the pass-4 kit and digest `472cf493…`; W-D.1's D1-G3 VALUE-SCC reads `src` only | §P8-6.6; Bp10 G-2 | re-pointed when D1 converges, to the converged kit and `6fdd4ec7…`, VALUE-SCC over `src` and `scripts` |
+| P10-G5 | W-C.2's appendix A: ENOBUFS on `git ls-files`, ENOENT on an uncommitted migrated tree, a META grammar that reads a bare `(BL)` and "tranche" as 0 | cB10 O-3, O-4; cB11 §2 (unchanged) | outside D1: formation input for W-C.2, on the tranche cursor |
+| P7-G5 | the root's peer class broken at the floor base (23 reviewed holds) | pass 7 | outside D1; on the tranche cursor |
+| P5-G3, P5-G5, P5-G8 | renderer and page-operation swallows; no `pretest` for `dist-demo`; common browser failures | pass 5 | outside D1; on the tranche cursor |
+
+P10-G1, P10-G2, P10-G3 (P10-R1 (a)), P10-G4, P10-G6 and P10-G7 (task text) are closed. FP6-1..FP6-3, FP6-7, FP5-3, FP5-4, FP5-7 stay declared limits; Bp11 G-4 (a forged `rekeyedFrom`) joins them.
+
+---
+
+## P11-6 · Pass-12 plan
+
+### P11-6.1 Routes
+
+| route | status | pass-12 work |
+|---|---|---|
+| D1-B | ADVANCE | close S-14 (P11-G1, P11-G2), kit-only, no digest change. The pass-12 critique is the first of two clean passes |
+| D1-G, D1-D′, D1-A, D1-C, D1-E, D1-F | unchanged | none; triggers watched |
+
+### P11-6.2 Order
+
+1. **Housekeeping.** This part is committed by the driver before any pass-12 seat (S-01). `.claude/worktrees/bl/D1/p11/` is checked empty (both seats report removal).
+2. **Route.** Kit only: `K12` = `K11` without `results/`, plus `results/p12/`. The chain, the floor and the frozen files are untouched; `6fdd4ec7…` is replayed from two fresh HEAD worktrees, one `--twice`. **Browser:** no `src` file moves and no code line changes; the committed reports stand and the tally is re-run through the cured judge. The kit and every result are committed before the critic launches.
+3. **Critique.** A fresh critic who authored nothing in passes 2-12, the pass-6..11 critics included, writes and hashes the battery before reading the kit.
+4. **Pass-12 agglomeration.** If S-14 closes on the critic's measurement and the critique re-opens nothing and maps nothing outside the list, the count reaches 1.
+
+### P11-6.3 Route work
+
+| id | build | closes or holds |
+|---|---|---|
+| route · coverage | P11-G1. `browser-tally` reads the chain's base→route spec map (the one `rekey` reads, through `lib/sequence.mjs`) and requires `--base` to hold results for **every spec of the route's results that the map carries from a base-program spec**; a route spec with a base origin and no `--base` result is a throw ("a partial base judged against a fuller route"). `--base-rerun` and `--route-rerun` stay partial by design (P7-R2) and are unchanged. A route spec with no base origin is a new spec, as now. The touched-spec pairs pass when judged as their own pair and when added as reruns. LAW §14 drops "the caller names which is which by the slot" and states the coverage rule. **Not** a kind field (§P11-4 (b)) | S-14 |
+| route · extent sweep | P11-G2. Bp12 lists, for each judge that compares two inputs (`browser-tally` base/route/reruns, `peer-closure` base/route, `rekey` base/tree, `browser-select` root/sequence), what each input must cover of the other, and the throw or stated reading when it does not | S-14 |
+| route · F6 and F7 | F6 (one base-green key of the full route failing) read through **every committed `browser-seat/2` report in every slot**, partial ones included: never 0. F7's ten rows exit 2 | S-14 |
+
+### P11-6.4 What pass 12 must prove
+
+§P10-6.4's bar, re-met: `6fdd4ec7…` replayed, rerun a no-op; 19 clauses at 0; verify:package CLEAN at 2,920,386; cascade GREEN against the floor base `6773b4ec…`; 428/428 base-green held through the cured tally; `./motion-core` keyframes-free on all three arms; `seal.test.ts` 26/26 or more.
+
+**The battery must plant:**
+- for `browser-tally`'s four slots and `rekey`'s base: every committed `browser-seat/2` report, **full and partial**: the full base raw and re-keyed, each base rerun raw and re-keyed, each touched-spec base raw and re-keyed (p10, p11), the full route, each route rerun, each touched-spec route; each one the slot refuses exits 2, and **no report other than the right full base reads 0 in `--base` against the full route**;
+- F6 through every row above, never 0; F7's ten rows (`cB11-R/f7.txt`), each 2;
+- the touched-spec pairs judged on their own (p10, p11): a verdict, not a throw, and F6's analogue on each pair RED;
+- a re-keyed base with one base-origin spec's results deleted, against the full route: 2;
+- regressions: the pass-11 critic's battery (`317fd849…`) with its post-hash tools, the pass-10 critic's (`7b7b5303…`), the pass-9 critic's (`748826fb…`), the 402 rows, crash8, passes 4-11's route batteries (the pass-11 route's `tools/batteries.sh` takes three trees, built, unbuilt and floor base, and a scratch dir), P9-R1's PC/PCG/PCX/PD plants, P9-R2's MIGRATION plants, P10-R1's floor plants (`pass-11/plants/p11-floor-plant.mjs`, `cB11` `battery/floor11.mjs`).
+
+### P11-6.5 Convergence criterion
+
+§P2-6.5 unchanged; the checklist is §P3-9's 27 items, frozen. **B's two-clean-passes count is 0.** The pass-12 critique moves it to 1 if S-14 closes on the critic's measurement and the critique re-opens nothing and maps no finding to a listed item left open or to an edict clause the list leaves out; the pass-13 critique moves it to 2 on the same terms. A closed item whose §P11-7 hold column fails on the critic's measurement is re-opened.
+
+### P11-6.6 What the convergence record will carry (at pass 13 at the earliest)
+
+As §P10-6.6, with: the converged chain's digest `6fdd4ec7bd259630d38a466a444e45b2b18f71b4cbf2259d258a4c6177996bbf` (126 steps) and its replays; the floor base `6773b4ec…` (P10-R1 (a), P11-F1); the one datum S70 rebinds, 2,920,386; the rulings R-1..R-10 as amended, X-10, P3-R1..P10-R1; the second module-grain SCC cured under P9-R1 (a); W-D.1 §0's five items (items 2, 3, 5 at 1 / 5 / 3 for W-D.1 §3 steps 5 and 7); the version bump as the landing's (Bp10 G-4); the full browser runs as pass 8's carried by byte-identical trees (Bp11 G-1); W-C.2's appendix-A defects as that wave's formation input (P10-G5); P9-G6's re-pointing of `waves/W-D.1.md` and `waves/INDEX.md:47` (W-D.1, F-55..F-59, the one wave D1 feeds); FLOOR.md's stale recipe line (P11-G3); held with the bank: G-01..G-12 and D′'s gaps.
+
+---
+
+## P11-7 · Open gaps, enumerated (the pass-12 checklist)
+
+§P3-9's list carries forward with its text frozen. No item is added in pass 11.
+
+| item | pass-11 critic | entering pass 12 | what holds it closed |
+|---|---|---|---|
+| S-01 | CLOSED | CLOSED | this part committed; the pass-12 kit and results committed before judgment |
+| S-02 | CLOSED | CLOSED | B8 0, B9 0 |
+| S-03 | CLOSED | CLOSED | P6-R1..P10-R1 on their arms, landed and measured; the datum rebound once |
+| S-04..S-08 | CLOSED | CLOSED | gate at 0 on every clause; the floor row planted (P11-F1) |
+| S-09 | CLOSED | CLOSED | `6fdd4ec7…` replayed idempotently, rerun a no-op |
+| S-10 | CLOSED | CLOSED | cascade GREEN listed, RED unlisted, against `6773b4ec…` |
+| S-11 | CLOSED | CLOSED | vitest 0 failed |
+| S-12 | CLOSED | CLOSED | every base-green key accounted for through the cured tally; capture exclusion stated, printed, and a moved capture spec read by B0 |
+| S-13 | CLOSED | CLOSED | regressions identical, every earlier battery runnable on the pass-12 tree |
+| S-14 | **OPEN** | **OPEN** | B17 0; every gate throw exits 2, import time included; every kit judge exits 2 on a throw or a degenerate input on every input argument: a wrong-schema or wrong-kind report in every slot, a flag with no value, and **a partial report where a full one is required** included; no judge reads a malformed input as an all-clear: F6 never 0 through every committed report in every slot |
+| B-01 | CLOSED | CLOSED | every clause 0, B2 0; I7 caught |
+| B-02..B-06 | CLOSED | CLOSED | regressions identical |
+| B-07 | CLOSED | CLOSED | B15 over every stem |
+| B-08, B-09 | CLOSED | CLOSED | — |
+| B-10 | CLOSED | CLOSED | B18 owns the class; its reader throws on a peer-less, whitespace-only and subpath-less row |
+| B-11..B-13 | CLOSED | CLOSED | — |
+
+**Count entering pass 12:** 27 items, 26 closed, 1 open (S-14). Two-clean-passes count: **0**.
+
+**Held with the bank.** G-01..G-12 and D′'s gaps, unchanged.
+
+No route converged in pass 11. D1-B converges at the pass-13 agglomeration at the earliest.

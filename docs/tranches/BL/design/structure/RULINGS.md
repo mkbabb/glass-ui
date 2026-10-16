@@ -104,3 +104,11 @@ Ruled by the driver on 2026-10-16 at the registry's recommended arm (REGISTRY §
 | id | question | ruling | ground |
 |---|---|---|---|
 | P10-R1 | where the move engine's `./`-lead cure lives | **(a).** The floor row: `floor/lib/move.mjs:168` takes the one-line cure with a floor plant that moves a holder of `"./dist/x"` and reads the spelling kept; the floor base is re-cut; S74c leaves the chain; S1b→S70 re-derive and replay to a new digest; S70's datum is unchanged (the engine does not ship). | one engine, one record: FLOOR.md F-2 / P4-F3 already state the kept spelling, so the docs floor carries the cure instead of a chain step patching its own landed copy |
+
+## Pass-11 ruling P11-R1
+
+Ruled by the driver on 2026-10-16 at the registry's recommended arm (REGISTRY §P11-4; listed there as optional). The owner may override it.
+
+| id | question | ruling | ground |
+|---|---|---|---|
+| P11-R1 | how `browser-tally` refuses a partial base in `--base` | **(a).** Coverage through the chain's map: every spec of the route's selection that the chain carries from a base-program spec (the map `rekey` already reads from `frozen/SEQUENCE.json`) must have results in `--base`, or the tally throws (exit 2). | one map already exists and is the record of base-to-route correspondence; a stamped kind field or a required selection input adds a second record |
