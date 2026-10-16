@@ -7,7 +7,7 @@
 // other cell than the planted one, is BROKEN; exit 1 if any is. A run whose engine closed under load is re-run
 // once by runOne (NOT-REPRODUCED or REPRODUCED, printed on its line and counted at the end).
 import { parseArgs, HARNESS } from "./lib.mjs";
-import { WITNESSES, runOne } from "./run.mjs";
+import { WITNESSES, runOne, familyOf } from "./run.mjs";
 import { FAULTS } from "./fixtures.mjs";
 
 const a = parseArgs();
@@ -18,12 +18,12 @@ const out = typeof a.out === "string" ? ["--out", a.out] : [];
 let broken = 0, runs = 0; const retried = [];
 console.log(`selftest · harness ${HARNESS.rev} ${HARNESS.hash} (${HARNESS.files} files)`);
 const failLines = (o) => o.split("\n").filter((l) => /^\s+FAIL\s/.test(l));
-for (const [id, file, generic] of WITNESSES) {
+for (const [id, file, generic, opts = {}] of WITNESSES) {
   if (only && !only.has(id)) continue;
   for (const engine of generic ? engines : ["both"]) {
     const eng = engine === "webkit" ? ["--engine", "webkit"] : [];
     const tag = `${id.padEnd(4)} ${engine.padEnd(8)}`;
-    const cleanFamily = id === "W-E" ? ["--family", "e"] : [];
+    const fam0 = familyOf(id, opts), cleanFamily = fam0 ? ["--family", fam0] : [];
     if (!onlyFaults) {
       const clean = runOne(file, ["--fixture", ...cleanFamily, ...eng, ...out]); runs++;
       if (clean.retried) retried.push(`${tag.trim()} clean: ${clean.retried}`);
@@ -35,7 +35,8 @@ for (const [id, file, generic] of WITNESSES) {
     for (const [name, f] of Object.entries(FAULTS)) {
       if (!f.witnesses.includes(id) || (onlyFaults && !onlyFaults.has(name))) continue;
       const fam = f.family ? ["--family", f.family] : cleanFamily;
-      const r = runOne(file, ["--fixture", ...fam, "--fault", name, ...eng, ...out], f.env ?? {}); runs++;
+      const flv = f.flavor ? ["--flavor", f.flavor] : []; // H4-1: a plant that gates only on a development flavour
+      const r = runOne(file, ["--fixture", ...fam, "--fault", name, ...flv, ...eng, ...out], f.env ?? {}); runs++;
       if (r.retried) retried.push(`${tag.trim()} ${name}: ${r.retried}`);
       const expectPass = f.expect === "pass";
       // H3-1: `expect: "error"` plants a stall: the witness must stop loud (exit 2) with the planted line in its output

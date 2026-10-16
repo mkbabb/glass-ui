@@ -1,0 +1,12 @@
+2026-10-16 08:56:52 · load { 22.79 23.08 19.39 }
+in WebKit batch rest2 (one lock hold)
+selftest · harness H4 e40bfd8801ef (39 files)
+OK     W-E  webkit   clean exit 0 · W-E PASS · 6/6 gating cells pass [library 6/6]
+OK     W-E  webkit   fault   we (the one-line guard is absent) exit 1 · W-E FAIL · 3/6 gating cells pass [library 3/6]
+         first planted FAIL: FAIL       preset refusal (flavor dist) · a line added to item 0 → no refusal (no console error, no throw)
+OK     W-E  webkit   fault   we-devonly (the one-line guard is DEV-only, so what a consumer installs refuses nothing) exit 1 · W-E FAIL · 3/6 gating cells pass [library 3/6]
+         first planted FAIL: FAIL       preset refusal (flavor dist) · a line added to item 0 → no refusal (no console error, no throw)
+OK     W-E  webkit   fault   we-lh1 (an option stacks two lines at line-height 1 inside its rung (the midpoint row test must count 2)) exit 1 · W-E FAIL · 4/6 gating cells pass [library 4/6]
+         first planted FAIL: FAIL       preset · 4 items · 1 not one line · e.g. 40.00 px tall at rung 40.00 (1.00 rungs), 2 rows
+selftest: 4 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0 · 2026-10-16 08:57:20 · load { 21.82 22.83 19.41 }

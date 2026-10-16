@@ -1,0 +1,11 @@
+2026-10-16 03:47:52 · load { 22.20 20.96 20.88 }
+light path (the heavy queue held an earlier run 30 min, selftest-FACT-chromium at 2026-10-16 00:45:20 · load { 27.38 25.51 23.52 } (held 00:15:17 → 00:45:20)) · 2026-10-16 03:47:52 · load { 22.20 20.96 20.88 }
+admitted (light, rss 8 GB) · 2026-10-16 03:47:53 · load { 22.20 20.96 20.88 }
+selftest · harness H4 e40bfd8801ef (39 files)
+OK     W-B  chromium clean exit 0 · W-B PASS · 25/25 gating cells pass [library 25/25]
+OK     W-B  chromium fault   t5 (ArrowUp and ArrowDown are dead (the tablist model), so grid arrows do not move) exit 1 · W-B FAIL · 19/25 gating cells pass [library 19/25]
+         first planted FAIL: FAIL       preset arrows grid ArrowDown from #0 · focus 0 → 0 · moved false · checked true
+OK     W-B  chromium fault   wb (no choice-card slot and no ChoiceGroup/ChoiceCard export) exit 1 · W-B FAIL · 21/25 gating cells pass [library 21/25]
+         first planted FAIL: FAIL       exports · RED by absence: no ChoiceGroup/ChoiceCard in the bundle (exports seen: [SelectionGroup, SelectionItem])
+selftest: 3 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0 · 2026-10-16 03:49:15 · load { 23.79 21.33 21.01 }

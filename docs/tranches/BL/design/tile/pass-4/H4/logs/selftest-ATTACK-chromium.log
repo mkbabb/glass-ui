@@ -1,0 +1,14 @@
+2026-10-16 00:58:34 · load { 21.24 21.98 22.54 }
+light path (the heavy queue held an earlier run 30 min, selftest-FACT-chromium at 2026-10-16 00:45:20 · load { 27.38 25.51 23.52 } (held 00:15:17 → 00:45:20)) · 2026-10-16 00:58:34 · load { 21.24 21.98 22.54 }
+admitted (light, rss 8 GB) · 2026-10-16 00:58:34 · load { 21.24 21.98 22.54 }
+selftest · harness H4 e40bfd8801ef (39 files)
+OK     ATTACK chromium clean exit 0 · ATTACK PASS · 3/3 gating cells pass [library 3/3]
+OK     ATTACK chromium fault   atk-empty (H4-1 empty-anatomy plant: an anatomy slot that renders nothing still declares the tile (`:has(> .it > .meta)`, no `:not(:empty)`)) exit 1 · ATTACK FAIL · 1/3 gating cells pass [library 1/3]
+         first planted FAIL: FAIL       empty · c1-migrated light · group fact flush, item fact flush · item 0 220.00×41.00 16px → used 16.00 (h/2 20.50), column · anatomy rows rendered 2, empty 2 · want a pill (no tile fact, h/2)
+OK     ATTACK chromium fault   atk-attrs (H4-1 consumer-attributes plant: the consumer's role=option and tabindex=0 stand over the engine's) exit 1 · ATTACK FAIL · 2/3 gating cells pass [library 2/3]
+         first planted FAIL: FAIL       attrs · preset-migrated · pointer click on item 0: consumer @click ran 1× (want 1), aria-checked true, role option (want radio), class true, style --atk-style "7", data-consumer yes, aria-label "preset smooth"
+OK     ATTACK chromium fault   atk-sup (H4-1 superscript plant (development flavour): the namer counts a <sup> as a second row and names a one-row pill) exit 1 · ATTACK FAIL · 3/4 gating cells pass [library 3/4]
+         first planted FAIL: FAIL       sup · strip-migrated [src-dev] · pill 40.00 px, used 20.00 · console errors 6 over 6 one-row pills (want 0) «[fixture] a pill asks for a second row»
+OK     ATTACK chromium control atk-sup-dev (CONTROL, must PASS: the clean page on a development flavour, where the `sup` cell gates: 0 names on one-row pills) exit 0 · ATTACK PASS · 4/4 gating cells pass [library 4/4]
+selftest: 5 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0 · 2026-10-16 00:59:16 · load { 29.60 23.86 23.19 }

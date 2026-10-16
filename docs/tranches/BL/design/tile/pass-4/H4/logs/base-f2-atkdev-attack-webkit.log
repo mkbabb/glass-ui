@@ -1,0 +1,12 @@
+2026-10-16 06:10:33 · load { 61.37 37.95 30.44 }
+in WebKit batch base-f2 (one lock hold)
+ATTACK · empty anatomy is pills, consumer attributes land under the engine, a superscript is not a second row (H4-1; E-3, R-2, R-9)
+  target f2-atk-src-dev (flavor src-dev, DEV) · Playwright WebKit 26.5 · harness H4 e40bfd8801ef
+  load 61.37 / 37.95 / 30.44 at start, 57.82 / 37.60 / 30.36 at end · other headless browser processes at start: 3 (waited 0.1 s) · browser lock waited 0 s
+  PASS       empty · c1-migrated light · group fact none, item fact none · item 0 184.00×40.00 9999px → used 20.00 (h/2 20.00), row · anatomy rows rendered 0, empty 0 · want a pill (no tile fact, h/2)
+  PASS       empty · c1-migrated dark · group fact none, item fact none · item 0 184.00×40.00 9999px → used 20.00 (h/2 20.00), row · anatomy rows rendered 0, empty 0 · want a pill (no tile fact, h/2)
+  FAIL       attrs · preset-migrated · element.click() (PF-1) on item 0: consumer @click ran 1× (want 1), aria-checked true, role option (want radio), class true, style --atk-style "7", data-consumer yes, aria-label "preset smooth", tab stops 4 (want 1)
+  PASS       sup · strip-migrated [src-dev] · pill 40.00 px, used 20.00 · console errors 0 over 6 one-row pills (want 0)
+ATTACK FAIL · 3/4 gating cells pass [library 3/4]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p4/h4/out4/runs/f2-atk-src-dev/ATTACK-webkit.json
+exit 1 · 2026-10-16 06:10:40 · load { 57.82 37.60 30.36 }

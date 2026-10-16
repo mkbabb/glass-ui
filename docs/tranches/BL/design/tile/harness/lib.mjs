@@ -25,15 +25,23 @@ const { PNG } = requireNM("pngjs");
 export { PNG };
 
 /**
- * H3-10 · the harness hash: sha256 over every `*.mjs` file in this directory, by name in order (name, NUL, bytes,
- * NUL), cut to 12 hex. Every run JSON records it (`harness.hash`), so two routes' tallies are comparable only when
- * their hashes match. Printed by every witness, by run.mjs and by tally.mjs.
+ * H3-10, H4-4 · the harness hash: sha256 over every file the harness executes, by relative path in order (path, NUL,
+ * bytes, NUL), cut to 12 hex. That is every `*.mjs`, `*.json` and `*.ts` under this directory, its subdirectories
+ * included (the shared attack compositions in `attack-route/`, the unit driver's vitest config), plus the BL WebKit
+ * lock this file imports (`../../../driver/webkit-lock.mjs`): pass 3 ran two hashes because the lock landed in
+ * `lib.mjs` mid-pass (REGISTRY §P3-0), and a lock edit now moves the hash. Every run JSON records it
+ * (`harness.hash`), so two routes' tallies are comparable only when their hashes match. Printed by every witness,
+ * by run.mjs and by tally.mjs; `HARNESS.files` counts the files hashed.
  */
+export const HASHED = (() => {
+  const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(path.join(d, e.name))
+    : /\.(mjs|json|ts)$/.test(e.name) ? [path.relative(HERE, path.join(d, e.name))] : []));
+  return [...walk(HERE), "../../../driver/webkit-lock.mjs"].sort();
+})();
 export const HARNESS = (() => {
   const h = createHash("sha256");
-  const files = fs.readdirSync(HERE).filter((f) => f.endsWith(".mjs")).sort();
-  for (const f of files) { h.update(f); h.update("\0"); h.update(fs.readFileSync(path.join(HERE, f))); h.update("\0"); }
-  return { hash: h.digest("hex").slice(0, 12), files: files.length, rev: "H3" };
+  for (const f of HASHED) { h.update(f); h.update("\0"); h.update(fs.readFileSync(path.join(HERE, f))); h.update("\0"); }
+  return { hash: h.digest("hex").slice(0, 12), files: HASHED.length, rev: "H4" };
 })();
 
 export const DSF = 2;

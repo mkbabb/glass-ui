@@ -1,0 +1,21 @@
+2026-10-16 06:42:15 · load { 33.30 33.03 29.49 }
+in WebKit batch rest1 (one lock hold)
+selftest · harness H4 e40bfd8801ef (39 files)
+OK     T-3  webkit   clean exit 0 · T-3 PASS · 97/97 gating cells pass [library 51/51 · unmigrated 18/48 · migrated 43/43]
+OK     T-3  webkit   fault   t3 (selection is a faint fill only (no perimeter edge): < 3:1 and no second carrier) exit 1 · T-3 FAIL · 0/75 gating cells pass, 22 unmeasured [library 0/39 · unmigrated 0/48 · migrated 0/33]
+         first planted FAIL: FAIL       preset light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 292.00 px²; fill 1.07:1; p95 1.07; items 1/0 226×66
+OK     T-3  webkit   fault   t3-border (the carrier is the tile's own border-color, which the invalid grammar, a sibling state and the consumer's border erase) exit 1 · T-3 FAIL · 78/93 gating cells pass, 4 unmeasured [library 43/49 · unmigrated 0/48 · migrated 35/41]
+         first planted FAIL: FAIL       [unmigrated] preset-verbatim light · carrier ≥3:1 area 216.75 px² (perimeter band 216.75, interior 0.00) vs the bar 292.00 px²; fill 1.19:1; p95 1.19; items 1/0 226×66
+OK     T-3  webkit   fault   t3-alpha (the carrier takes the tone as given: a translucent tone paints a translucent edge) exit 1 · T-3 FAIL · 89/95 gating cells pass, 2 unmeasured [library 47/50 · unmigrated 18/48 · migrated 39/42]
+         first planted FAIL: FAIL       preset-tone-translucent light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 292.00 px²; fill 1.19:1; p95 1.91; items 1/0 226×66
+OK     T-3  webkit   fault   t3-unres (the carrier falls back to transparent when the tone does not resolve (no signal)) exit 1 · T-3 FAIL · 89/95 gating cells pass, 2 unmeasured [library 47/50 · unmigrated 18/48 · migrated 39/42]
+         first planted FAIL: FAIL       preset-tone-unresolvable light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 292.00 px²; fill 1.19:1; p95 1.19; items 1/0 226×66
+OK     T-3  webkit   fault   t3-migstate (H3-11: the migrated arm carries selection on the tile's own border (the erasable carrier); the library arm keeps the perimeter) exit 1 · T-3 FAIL · 89/95 gating cells pass, 2 unmeasured [library 51/51 · unmigrated 18/48 · migrated 35/41]
+         first planted FAIL: FAIL       [migrated] preset-invalid-migrated light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 292.00 px²; fill 1.19:1; p95 1.19; items 1/0 226×66
+OK     T-3  webkit   fault   t3-cv (H3-7: the perimeter straddles the border box, so paint containment (content-visibility: auto) cuts it) exit 1 · T-3 FAIL · 69/95 gating cells pass, 2 unmeasured [library 36/50 · unmigrated 18/48 · migrated 30/42]
+         first planted FAIL: FAIL       preset paint containment (light) · selected edge uncontained 2.00 px (top 2.00, right 2.00, bottom 2.00, left 2.00) · under content-visibility: auto 0.00 px (top 0.00, right 0.00, bottom 0.00, left 0.00)
+OK     T-3  webkit   fault   stall (H3-1 plant: the server never answers preset-contents' page (a navigation that never loads, the AppSSO stall's symptom): the witness stops loud (exit 2), names the scene, re-opens on a new browser process, and reads the unified log (AppSSO answered: not the AppSSO stall)) exit 2 · T-3 HARNESS ERROR Error: openPage preset-contents (light) stalled twice, the second time on a new browser process, REPRODUCED: page.goto: Timeout 60000ms exceeded. / page.goto: Timeout 60000ms exceeded. · first stall: AppSSO answered (46/46 in 3 min): not the AppSSO stall
+         first planted FAIL: T-3 HARNESS ERROR Error: openPage preset-contents (light) stalled twice, the second time on a new browser process, REPRODUCED: page.goto: Timeout 60000ms exceeded. / page.goto: Timeout 60000ms exceeded. · first stall: Ap
+OK     T-3  webkit   control navcap (H3-1 CONTROL, must PASS: TILE_HARNESS_NAV_CAP=5 retires the Playwright WebKit browser every 5 navigations and every cell still reads) exit 0 · note present: retired and relaunched 29× · T-3 PASS · 97/97 gating cells pass [library 51/51 · unmigrated 18/48 · migrated 43/43]
+selftest: 9 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0 · 2026-10-16 07:14:53 · load { 25.69 17.73 17.68 }

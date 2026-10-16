@@ -1,0 +1,11 @@
+2026-10-16 00:57:50 · load { 23.35 22.34 22.69 }
+light path (the heavy queue held an earlier run 30 min, selftest-FACT-chromium at 2026-10-16 00:45:20 · load { 27.38 25.51 23.52 } (held 00:15:17 → 00:45:20)) · 2026-10-16 00:57:50 · load { 23.35 22.34 22.69 }
+admitted (light, rss 8 GB) · 2026-10-16 00:57:50 · load { 23.35 22.34 22.69 }
+selftest · harness H4 e40bfd8801ef (39 files)
+OK     FACT chromium clean exit 0 · FACT PASS · 12/12 gating cells pass [library 12/12]
+OK     FACT chromium fault   atk-split (H4-1 fact-split plant: the tile geometry is a descendant selector on the declaration (`[data-tile] .it`), not a reader of the fact: a pill group nested in a tile group wears the tile corner, and a fact written without the declaration keeps the stadium) exit 1 · FACT FAIL · 6/12 gating cells pass [library 6/12]
+         first planted FAIL: FAIL       pill-in-tile light · want pill · a pill fact, but the item does not wear a one-row stadium: a declaration's geometry reached it · fact none · 87.41×41.00 · 16px → used 16.00 (0.78×h/2) · 1 row(s) · column
+OK     FACT chromium fault   atk-nest (H4-1 nesting-reach plant: the anatomy is matched through a descendant `:has()`, so a pill group holding a tile group turns into tiles) exit 1 · FACT FAIL · 10/12 gating cells pass [library 10/12]
+         first planted FAIL: FAIL       tile-in-pill light · want pill · a tile fact reached a pill group's item · fact flush · 60.67×41.00 · 16px → used 16.00 (0.78×h/2) · 1 row(s) · column
+selftest: 3 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0 · 2026-10-16 00:58:34 · load { 21.24 21.98 22.54 }

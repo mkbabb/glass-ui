@@ -1,0 +1,18 @@
+2026-10-16 01:40:14 · load { 35.26 24.01 21.50 }
+light path (the heavy queue held an earlier run 30 min, selftest-FACT-chromium at 2026-10-16 00:45:20 · load { 27.38 25.51 23.52 } (held 00:15:17 → 00:45:20)) · 2026-10-16 01:40:14 · load { 35.26 24.01 21.50 }
+admitted (light, rss 8 GB) · 2026-10-16 01:40:15 · load { 35.26 24.01 21.50 }
+selftest · harness H4 e40bfd8801ef (39 files)
+OK     T-1  chromium clean exit 0 · T-1 PASS · 45/45 gating cells pass [library 30/30 · unmigrated 0/15 · migrated 15/15]
+OK     T-1  chromium fault   t1 (tiles wear the stadium (border-radius 9999px), so the corner grows with every line) exit 1 · T-1 FAIL · 9/45 gating cells pass [library 9/30 · unmigrated 0/15 · migrated 0/15]
+         first planted FAIL: FAIL       preset light #0 choice-card (tile) rung 40.0 · 226.00×66.00 9999px→33.00 (÷h/2 1.00) | 226.00×87.00 9999px→43.50 (÷h/2 1.00) | 226.00×108.00 9999px→54.00 (÷h/2 1.00) · bound root --radius-field = 16.00: missed
+OK     T-1  chromium fault   t1-self (tiles take a role the tile itself declares (rung/2 = 20 px): the per-element role names its own corner) exit 1 · T-1 FAIL · 9/45 gating cells pass [library 9/30 · unmigrated 0/15 · migrated 0/15]
+         first planted FAIL: FAIL       preset light #0 choice-card (tile) rung 40.0 · 226.00×66.00 20px→20.00 (÷h/2 0.61) | 226.00×87.00 20px→20.00 (÷h/2 0.46) | 226.00×108.00 20px→20.00 (÷h/2 0.37) · bound root --radius-field = 16.00: missed; root
+OK     T-1  chromium fault   t1-coarse (under a coarse pointer the tiles take rung/2 (30 px): the lozenge the owner rejected) exit 1 · T-1 FAIL · 33/45 gating cells pass [library 23/30 · unmigrated 0/15 · migrated 10/15]
+         first planted FAIL: FAIL       preset light coarse #0 choice-card (tile) rung 60.0 · 226.00×66.00 30px→30.00 (÷h/2 0.91) | 226.00×87.00 30px→30.00 (÷h/2 0.69) | 226.00×108.00 30px→30.00 (÷h/2 0.56) · bound root --radius-field = 16.00: misse
+OK     T-1  chromium fault   t1-scale (the tile corner rides --ui-scale (16 px × 1.25 = 20 px)) exit 1 · T-1 FAIL · 21/45 gating cells pass [library 16/30 · unmigrated 0/15 · migrated 5/15]
+         first planted FAIL: FAIL       preset light --ui-scale 1.25 #0 choice-card (tile) rung 50.0 · 226.00×66.00 20px→20.00 (÷h/2 0.61) | 226.00×87.00 20px→20.00 (÷h/2 0.46) | 226.00×108.00 20px→20.00 (÷h/2 0.37) · bound root --radius-field = 16.
+OK     T-1  chromium fault   t1-late (the control corner is stamped 300 ms after the content changes (painted frames show the stadium)) exit 1 · T-1 FAIL · 36/45 gating cells pass [library 21/30 · unmigrated 0/15 · migrated 15/15]
+         first planted FAIL: FAIL       wrap light #0 ToggleGroupItem (control) rung 40.0 · 71.73×40.00 9999px→20.00 (÷h/2 1.00) | 110.00×80.00 9999px→40.00 (÷h/2 1.00) | 110.00×120.00 9999px→55.00 (÷h/2 0.92) · bound rung/2 = 20.00: missed; root na
+OK     T-1  chromium control t1-ro (CONTROL, must PASS: the control corner is stamped by a ResizeObserver before paint; a synchronous read sees the stadium, the framed read the stamp) exit 0 · T-1 PASS · 45/45 gating cells pass [library 30/30 · unmigrated 0/15 · migrated 15/15]
+selftest: 7 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0 · 2026-10-16 01:48:21 · load { 29.11 28.81 25.53 }

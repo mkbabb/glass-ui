@@ -1,0 +1,10 @@
+2026-10-16 04:19:58 · load { 36.74 33.28 27.10 }
+in WebKit batch cells (one lock hold)
+selftest · harness H4 e40bfd8801ef (39 files)
+OK     REPORT webkit   clean exit 0 · REPORT PASS · 2/2 gating cells pass [library 2/2]
+OK     REPORT webkit   fault   h46-kick (H4-6 plant: the commit pop peaks at 1.035, so a 300 px tile pushes 5.25 px into a 4 px neighbour gap) exit 1 · REPORT FAIL · 1/2 gating cells pass [library 1/2]
+         first planted FAIL: FAIL       kick · preset-migrated forced to two 300 px columns at a 4 px gap · item 1 300.00×66.00, rest gap 4.00 px · programmatic commit (checked true), 79 frames · peak scale 1.0343 · deepest push into a neighbour 1.1
+OK     REPORT webkit   fault   h46-mark (H4-6 plant: in dark the selection mark is near-white over the pale swatch (Fc §2.4's washed-out check)) exit 1 · REPORT FAIL · 1/2 gating cells pass [library 1/2]
+         first planted FAIL: FAIL       mark · v2-migrated dark · the mark #f5f5f4 over #ecfccb beneath it, 732 device px · 1.01:1 (want ≥ 3:1)
+selftest: 3 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0 · 2026-10-16 04:20:22 · load { 40.07 34.30 27.64 }

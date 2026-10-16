@@ -1,0 +1,14 @@
+2026-10-16 05:48:17 · load { 42.44 30.46 26.00 }
+in WebKit batch base-head (one lock hold)
+W-E · every one-of-N option is one line, and what a consumer installs refuses one that is not (D4-E)
+  target head-src (flavor src) · Playwright WebKit 26.5 · harness H4 e40bfd8801ef
+  load 42.44 / 30.46 / 26.00 at start, 43.01 / 30.98 / 26.23 at end · other headless browser processes at start: 6 (waited 0.5 s) · browser lock waited 0 s
+  FAIL       preset · 4 items · 4 not one line · e.g. 61.58 px tall at rung 40.00 (1.54 rungs), 2 rows
+  info-fail  preset refusal (flavor src: a src alias build, reported, not gated) · a line added to item 0 → no refusal (no console error, no throw)
+  FAIL       specimen · 8 items · 8 not one line · e.g. 100.16 px tall at rung 36.00 (2.78 rungs), 3 rows
+  info-fail  specimen refusal (flavor src: a src alias build, reported, not gated) · a line added to item 0 → no refusal (no console error, no throw)
+  FAIL       strip · 6 items · 6 not one line · e.g. 44.00 px tall at rung 44.00 (1.00 rungs), 2 rows
+  info-fail  strip refusal (flavor src: a src alias build, reported, not gated) · a line added to item 0 → no refusal (no console error, no throw)
+W-E FAIL · 0/3 gating cells pass [library 0/3]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p4/h4/out4/runs/head-src/W-E-webkit.json
+exit 1 · 2026-10-16 05:48:25 · load { 43.01 30.98 26.23 }

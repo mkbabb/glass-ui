@@ -1,0 +1,8 @@
+2026-10-16 04:19:41 · load { 36.76 33.12 26.94 }
+in WebKit batch cells (one lock hold)
+selftest · harness H4 e40bfd8801ef (39 files)
+OK     CORNER webkit   clean exit 0 · CORNER PASS · 5/5 gating cells pass [library 5/5]
+OK     CORNER webkit   fault   atk-corner (H4-1 corner-refusal plant: the tile corner is a plain layered declaration, so a consumer utility, a scoped rule, an unlayered !important and an inline style each re-round the tile) exit 1 · CORNER FAIL · 1/5 gating cells pass [library 1/5]
+         first planted FAIL: FAIL       preset-migrated utility · computed 9999px · used 31.50 on 226.00×63.00 · want the field corner kept (16px)
+selftest: 2 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0 · 2026-10-16 04:19:58 · load { 36.74 33.28 27.10 }

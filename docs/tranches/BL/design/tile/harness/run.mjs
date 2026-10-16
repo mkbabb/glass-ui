@@ -2,9 +2,12 @@
 // run.mjs · run the whole battery against one build (or the fixture) and print one line per witness.
 //   node run.mjs --build <dir> [--out <dir>] [--only T-1,W-A] [--webkit] [--wait-quiet <s>]
 //   node run.mjs --fixture [--family e] [--fault <id>] [--flavor <f>]
+//   node run.mjs --build <dir> --attack <dir> [--webkit]   H4-1: the shared attack set reads a second build of the same
+//                                                          worktree, made with --route <harness>/attack-route
 // Each witness runs as its own process (its own exit code), serialized: one browser process at a time on this
 // machine through lib's lock (H-11). --webkit re-runs every engine-generic witness in Playwright WebKit as well;
-// T-8 runs both engines (and real Safari once enabled) itself. Exit 0 only when every witness run exits 0.
+// T-8 runs both engines (and real Safari once enabled) itself. Exit 0 only when every gating witness run exits 0:
+// REPORT (H4-6) is printed with its exit and left out of the battery's exit.
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { HERE, HARNESS, parseArgs, engineClosed, load } from "./lib.mjs";
@@ -16,7 +19,13 @@ export const WITNESSES = [
   ["W-A", "wa-curvature-content.mjs", true], ["W-B", "wb-choice-card.mjs", true], ["W-C", "wc-selection-behaviour.mjs", true],
   ["W-D", "wd-declared-cell.mjs", true], ["W-E", "we-one-line.mjs", true],
   ["CANON", "canon.mjs", true], // H3-4
-]; // [id, file, engine-generic]
+  ["FACT", "fact-split.mjs", true, { family: "atk", attack: true }], // H4-1
+  ["ATTACK", "attack.mjs", true, { family: "atk", attack: true }], // H4-1
+  ["CORNER", "corner-refusal.mjs", true, { family: "atk", attack: true }], // H4-1
+  ["REPORT", "report-h46.mjs", true, { family: "h46", reported: true }], // H4-6
+]; // [id, file, engine-generic, { family: the clean fixture's family, attack: reads the attack build, reported: not gating }]
+/** The clean fixture's family per witness: W-E's one-line arm, the H4 attack and report families. */
+export const familyOf = (id, opts = {}) => opts.family ?? (id === "W-E" ? "e" : "");
 
 function spawnWitness(file, argv, env = {}) {
   const r = spawnSync(process.execPath, [path.join(HERE, file), ...argv], { encoding: "utf8", maxBuffer: 64 << 20, env: { ...process.env, ...env } });
@@ -43,18 +52,20 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const a = parseArgs();
   const only = typeof a.only === "string" ? new Set(a.only.split(",")) : null;
   const pass = [];
-  for (const k of ["build", "out", "family", "fault", "flavor", "wait-quiet"]) if (typeof a[k] === "string") pass.push(`--${k}`, a[k]);
+  for (const k of ["out", "family", "fault", "flavor", "wait-quiet"]) if (typeof a[k] === "string") pass.push(`--${k}`, a[k]);
   if (a.fixture) pass.push("--fixture");
   let bad = 0;
   console.log(`harness ${HARNESS.rev} ${HARNESS.hash} (${HARNESS.files} files)`);
-  for (const [id, file, generic] of WITNESSES) {
+  for (const [id, file, generic, opts = {}] of WITNESSES) {
     if (only && !only.has(id)) continue;
+    const build = opts.attack ? a.attack : a.build;
+    if (!a.fixture && typeof build !== "string") { console.log(`${id.padEnd(4)} skipped · ${opts.attack ? "needs --attack <build made with --route <harness>/attack-route>" : "needs --build"}`); if (!opts.reported) bad++; continue; }
     for (const engine of a.webkit && generic ? ["chromium", "webkit"] : ["chromium"]) {
       const t0 = Date.now();
-      const r = runOne(file, [...pass, ...(engine === "webkit" ? ["--engine", "webkit"] : [])]);
-      if (r.code !== 0) bad++;
+      const r = runOne(file, [...pass, ...(a.fixture ? [] : ["--build", build]), ...(engine === "webkit" ? ["--engine", "webkit"] : [])]);
+      if (r.code !== 0 && !opts.reported) bad++;
       const load = (r.out.match(/load ([\d. /]+) at start/) ?? [])[1] ?? "?";
-      console.log(`${id.padEnd(4)} ${engine.padEnd(8)} exit ${r.code} · ${r.last} · ${((Date.now() - t0) / 1000).toFixed(0)} s, load at start ${load}`);
+      console.log(`${id.padEnd(4)} ${engine.padEnd(8)} exit ${r.code}${opts.reported ? " (reported, not gating)" : ""} · ${r.last} · ${((Date.now() - t0) / 1000).toFixed(0)} s, load at start ${load}`);
     }
   }
   process.exit(bad ? 1 : 0);

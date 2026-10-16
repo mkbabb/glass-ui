@@ -1,0 +1,21 @@
+2026-10-16 01:39:20 · load { 28.06 20.90 20.31 }
+light path (the heavy queue held an earlier run 30 min, selftest-FACT-chromium at 2026-10-16 00:45:20 · load { 27.38 25.51 23.52 } (held 00:15:17 → 00:45:20)) · 2026-10-16 01:39:20 · load { 28.06 20.90 20.31 }
+admitted (light, rss 8 GB) · 2026-10-16 01:39:21 · load { 28.06 20.90 20.31 }
+FACT · is a tile has one spelling: the fact and the tile geometry agree under nesting and a written fact (H4-1; R-10, R-2)
+  target f2-atk-dist (flavor dist) · Chromium 149.0.7827.55 · harness H4 e40bfd8801ef
+  load 28.06 / 20.90 / 20.31 at start, 29.43 / 21.54 / 20.55 at end · other headless browser processes at start: 10 (waited 0.3 s) · browser lock waited 0 s
+  FAIL       declared light · want tile · NOT a tile on the field corner · fact none · 95.94×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       pill-in-tile light · want pill · a pill at h/2 on one row · fact none · 92.78×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       pill-beside-tile light · want pill · a pill at h/2 on one row · fact none · 92.78×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       tile-in-pill light · want pill · a pill at h/2 on one row · fact none · 63.03×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  FAIL       fact-plated light · --selection-tile: plated written on the group · want agree · the written fact and the geometry DISAGREE: a LOZENGE · fact plated · 204.00×61.58 · 9999px → used 30.79 (1.00×h/2) · 2 row(s) · column
+  FAIL       fact-flush light · --selection-tile: flush written on the group · want agree · the written fact and the geometry DISAGREE: a LOZENGE · fact flush · 204.00×61.58 · 9999px → used 30.79 (1.00×h/2) · 2 row(s) · column
+  FAIL       declared dark · want tile · NOT a tile on the field corner · fact none · 95.94×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       pill-in-tile dark · want pill · a pill at h/2 on one row · fact none · 92.78×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       pill-beside-tile dark · want pill · a pill at h/2 on one row · fact none · 92.78×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       tile-in-pill dark · want pill · a pill at h/2 on one row · fact none · 63.03×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  FAIL       fact-plated dark · --selection-tile: plated written on the group · want agree · the written fact and the geometry DISAGREE: a LOZENGE · fact plated · 204.00×61.58 · 9999px → used 30.79 (1.00×h/2) · 2 row(s) · column
+  FAIL       fact-flush dark · --selection-tile: flush written on the group · want agree · the written fact and the geometry DISAGREE: a LOZENGE · fact flush · 204.00×61.58 · 9999px → used 30.79 (1.00×h/2) · 2 row(s) · column
+FACT FAIL · 6/12 gating cells pass [library 6/12]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p4/h4/out4/runs/f2-atk-dist/FACT-chromium.json
+exit 1 · 2026-10-16 01:39:39 · load { 29.40 21.66 20.60 }

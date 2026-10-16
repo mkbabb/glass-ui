@@ -1,0 +1,18 @@
+2026-10-16 05:48:03 · load { 36.93 28.84 25.36 }
+in WebKit batch base-head (one lock hold)
+W-C · selection is a behaviour, not a component (D4-C)
+  target head-src (flavor src) · Playwright WebKit 26.5 · harness H4 e40bfd8801ef
+  load 36.93 / 28.84 / 25.36 at start, 41.35 / 30.05 / 25.83 at end · other headless browser processes at start: 7 (waited 0.3 s) · browser lock waited 0 s
+  FAIL       exports · RED by absence: no SelectionGroup/SelectionItem in the bundle (exports seen: [none])
+  FAIL       card · group listbox · items option (Playwright aria snapshot + DOM states) · tab stops 4
+  FAIL       card stamp values at rest (role/aria-checked/tabindex, * = group-stamped; selected #-1) · option/null/0 option/null/0 option/null/0 option/null/0
+  FAIL       card grid ArrowRight from #0 · focus 0 → 0 · moved false · checked true (started by focus + Space: PF-1)
+  FAIL       card grid ArrowLeft from #1 · focus 1 → 1 · moved false · checked true (started by focus + Space: PF-1)
+  FAIL       card grid ArrowDown from #0 · focus 0 → 0 · moved false · checked true (started by focus + Space: PF-1)
+  FAIL       card grid ArrowUp from #2 · focus 2 → 2 · moved false · checked true (started by focus + Space: PF-1)
+  info-fail  card grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 2 · moved false · checked true (started by focus + Space: PF-1)
+  info-fail  card grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 0 · moved false · checked true (started by focus + Space: PF-1)
+  FAIL       card stamp values after the arrow commits (selected #-1) · option/null/0 option/null/0 option/null/0 option/null/0
+W-C FAIL · 0/8 gating cells pass [library 0/8]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p4/h4/out4/runs/head-src/W-C-webkit.json
+exit 1 · 2026-10-16 05:48:11 · load { 41.35 30.05 25.83 }

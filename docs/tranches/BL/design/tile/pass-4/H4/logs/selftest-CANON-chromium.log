@@ -1,0 +1,13 @@
+2026-10-16 03:50:24 · load { 16.43 19.73 20.43 }
+light path (the heavy queue held an earlier run 30 min, selftest-FACT-chromium at 2026-10-16 00:45:20 · load { 27.38 25.51 23.52 } (held 00:15:17 → 00:45:20)) · 2026-10-16 03:50:25 · load { 16.43 19.73 20.43 }
+admitted (light, rss 8 GB) · 2026-10-16 03:50:25 · load { 16.43 19.73 20.43 }
+selftest · harness H4 e40bfd8801ef (39 files)
+OK     CANON chromium clean exit 0 · CANON PASS · 3/3 gating cells pass [library 3/3]
+OK     CANON chromium fault   canon-a (H3-4 plant A: the tile corner re-spelled in a second sheet (`:is(<tile>)`, 12 px): two rules decide the tile) exit 1 · CANON FAIL · 2/3 gating cells pass [library 2/3]
+         first planted FAIL: FAIL       canon tile corner (plant A) · 48 twins, 4 corner rules · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item» · exactly one rule reaches a tile and not its pill twin, on var(--radius-field) · 2
+OK     CANON chromium fault   canon-s (H3-4 plant S: a size arm on the tile (`[data-size="sm"]`) on --radius-panel, which a one-md-item fixture never reaches) exit 1 · CANON FAIL · 2/3 gating cells pass [library 2/3]
+         first planted FAIL: FAIL       canon tile corner (plant S) · 48 twins, 4 corner rules · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item» · exactly one rule reaches a tile and not its pill twin, on var(--radius-field) · 2
+OK     CANON chromium fault   canon-h (H3-4 plant H: a structural re-spelling (`.toggle-group__item:has(> * + *)`, 12 px), which a childless fixture never reaches) exit 1 · CANON FAIL · 2/3 gating cells pass [library 2/3]
+         first planted FAIL: FAIL       canon pill corner (plant H) · 48 twins, 4 corner rules · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item» · every group-scoped corner on a pill is var(--radius-pill) or inherit · 3 rule(s) 
+selftest: 4 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0 · 2026-10-16 03:50:37 · load { 19.20 20.22 20.60 }

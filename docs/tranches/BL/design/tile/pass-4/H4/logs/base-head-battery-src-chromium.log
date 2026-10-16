@@ -1,0 +1,22 @@
+2026-10-16 01:08:44 · load { 29.63 28.97 26.09 }
+light path (the heavy queue held an earlier run 30 min, selftest-FACT-chromium at 2026-10-16 00:45:20 · load { 27.38 25.51 23.52 } (held 00:15:17 → 00:45:20)) · 2026-10-16 01:08:44 · load { 29.63 28.97 26.09 }
+admitted (light, rss 8 GB) · 2026-10-16 01:08:44 · load { 29.63 28.97 26.09 }
+harness H4 e40bfd8801ef (39 files)
+T-1  chromium exit 1 · T-1 FAIL · 10/32 gating cells pass [library 10/32 · unmigrated 9/12] · 49 s, load at start 29.63 / 28.97 / 26.09
+T-2  chromium exit 1 · T-2 FAIL · 28/52 gating cells pass [library 28/52] · 64 s, load at start 28.35 / 28.74 / 26.17
+T-3  chromium exit 1 · T-3 FAIL · 2/42 gating cells pass, 12 unmeasured [library 2/39 · unmigrated 12/48] · 129 s, load at start 19.08 / 26.07 / 25.36
+T-4  chromium exit 1 · T-4 FAIL · 18/30 gating cells pass [library 18/30 · unmigrated 3/24] · 78 s, load at start 12.40 / 21.46 / 23.64
+T-5  chromium exit 1 · T-5 FAIL · 28/78 gating cells pass [library 28/78 · unmigrated 11/37] · 70 s, load at start 14.02 / 19.82 / 22.82
+T-6  chromium exit 1 · T-6 FAIL · 23/55 gating cells pass [library 23/55 · unmigrated 23/48] · 231 s, load at start 13.94 / 18.33 / 21.99
+T-7  chromium exit 1 · T-7 FAIL · 0/0 gating cells pass, 6 unmeasured [unmigrated 4/32] · 34 s, load at start 52.22 / 33.29 / 27.27
+W-A  chromium exit 1 · W-A FAIL · 2/9 gating cells pass [library 2/9] · 5 s, load at start 43.23 / 33.10 / 27.44
+W-B  chromium exit 1 · W-B FAIL · 5/25 gating cells pass [library 5/25] · 26 s, load at start 42.41 / 33.09 / 27.47
+W-C  chromium exit 1 · W-C FAIL · 0/8 gating cells pass [library 0/8] · 7 s, load at start 38.98 / 33.02 / 27.61
+W-D  chromium exit 1 · W-D FAIL · 4/8 gating cells pass [library 4/8] · 4 s, load at start 35.51 / 32.48 / 27.48
+W-E  chromium exit 1 · W-E FAIL · 0/3 gating cells pass [library 0/3] · 7 s, load at start 35.51 / 32.48 / 27.48
+CANON chromium exit 1 · CANON FAIL · 2/3 gating cells pass [library 2/3] · 2 s, load at start 37.37 / 32.99 / 27.72
+FACT chromium exit 1 · FACT FAIL · 6/12 gating cells pass [library 6/12] · 13 s, load at start 37.37 / 32.99 / 27.72
+ATTACK chromium exit 1 · ATTACK FAIL · 2/3 gating cells pass [library 2/3] · 7 s, load at start 33.64 / 32.39 / 27.60
+CORNER chromium exit 1 · CORNER FAIL · 1/5 gating cells pass [library 1/5] · 7 s, load at start 33.03 / 32.29 / 27.59
+REPORT chromium exit 0 (reported, not gating) · REPORT PASS · 1/1 gating cells pass, 1 unmeasured [library 1/1] · 7 s, load at start 30.94 / 31.87 / 27.49
+exit 1 · 2026-10-16 01:21:10 · load { 28.03 31.21 27.31 }

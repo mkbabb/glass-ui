@@ -1,0 +1,9 @@
+2026-10-16 00:59:16 · load { 29.60 23.86 23.19 }
+light path (the heavy queue held an earlier run 30 min, selftest-FACT-chromium at 2026-10-16 00:45:20 · load { 27.38 25.51 23.52 } (held 00:15:17 → 00:45:20)) · 2026-10-16 00:59:16 · load { 29.60 23.86 23.19 }
+admitted (light, rss 8 GB) · 2026-10-16 00:59:17 · load { 29.60 23.86 23.19 }
+selftest · harness H4 e40bfd8801ef (39 files)
+OK     CORNER chromium clean exit 0 · CORNER PASS · 5/5 gating cells pass [library 5/5]
+OK     CORNER chromium fault   atk-corner (H4-1 corner-refusal plant: the tile corner is a plain layered declaration, so a consumer utility, a scoped rule, an unlayered !important and an inline style each re-round the tile) exit 1 · CORNER FAIL · 1/5 gating cells pass [library 1/5]
+         first planted FAIL: FAIL       preset-migrated utility · computed 9999px · used 31.50 on 226.00×63.00 · want the field corner kept (16px)
+selftest: 2 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0 · 2026-10-16 00:59:37 · load { 31.76 24.75 23.53 }

@@ -13,7 +13,10 @@
 //   --fixture --fault <id>      the same page with one planted violation (FAULTS below)
 //   --fixture --flavor <f>      the build flavour it emulates (dist by default): its DEV-only code runs only
 //                               under src-dev, as a library build strips import.meta.env.DEV branches (H-9)
+//   --fixture --family atk      H4-1: the shared attack compositions in fixture markup (fixture-attack.mjs)
+//   --fixture --family h46      H4-6: the clean page plus a selection mark over pale media and a quieter commit pop
 import { SCENES, SITES } from "./scenes.mjs";
+import { ATTACK_FAULTS, attackFixturePage } from "./fixture-attack.mjs";
 
 /**
  * The planted violations. Each names the witnesses it plants against, whether the witness must FAIL (the
@@ -55,6 +58,8 @@ export const FAULTS = {
   "t2-cut": { why: "H3-3: each pill label is a 1lh block that clips (max-block-size 20px, overflow hidden): a second row is cut, unnamed", witnesses: ["T-2"], cell: /one-row law .*CUT/ },
   "t2-named": { why: "CONTROL, must PASS: no one-row law, but an observer names every stacked pill (a console error), late content included", witnesses: ["T-2"], expect: "pass" },
   "t2-mountonly": { why: "H3-6: the stacked pill is named only at mount; a row added after mount is never named", witnesses: ["T-2"], cell: /one-row law .*STACKED/ },
+  // H4 (pass 4)
+  "t2-selfblock": { why: "H4-2: the one-row law is a zero-specificity rule in a layer below the utilities (floor v2's `:where()` form): a label child that sets its own display: block, by inline style or by a utility class, stacks a second row, unnamed; the UA block div and the <br> stay on the row", witnesses: ["T-2"], cell: /one-row law · a span inside the label that sets its own display: block .*STACKED/ },
   "t3-migstate": { why: "H3-11: the migrated arm carries selection on the tile's own border (the erasable carrier); the library arm keeps the perimeter", witnesses: ["T-3"], cell: /preset-(invalid|sibling)-migrated/ },
   "t3-cv": { why: "H3-7: the perimeter straddles the border box, so paint containment (content-visibility: auto) cuts it", witnesses: ["T-3"], cell: /paint containment/ },
   "t4-forced": { why: "H3-8: in forced colours the specimen port pads 1 px, so the ring is cut on one side", witnesses: ["T-4"], cell: /forced/ },
@@ -69,6 +74,10 @@ export const FAULTS = {
   "canon-a": { why: "H3-4 plant A: the tile corner re-spelled in a second sheet (`:is(<tile>)`, 12 px): two rules decide the tile", witnesses: ["CANON"], cell: /canon tile corner/ },
   "canon-s": { why: "H3-4 plant S: a size arm on the tile (`[data-size=\"sm\"]`) on --radius-panel, which a one-md-item fixture never reaches", witnesses: ["CANON"], cell: /canon tile corner/ },
   "canon-h": { why: "H3-4 plant H: a structural re-spelling (`.toggle-group__item:has(> * + *)`, 12 px), which a childless fixture never reaches", witnesses: ["CANON"], cell: /canon pill corner/ },
+  // H4-6 (reported, not gating; family h46)
+  "h46-kick": { why: "H4-6 plant: the commit pop peaks at 1.035, so a 300 px tile pushes 5.25 px into a 4 px neighbour gap", witnesses: ["REPORT"], family: "h46", cell: /kick ·/ },
+  "h46-mark": { why: "H4-6 plant: in dark the selection mark is near-white over the pale swatch (Fc §2.4's washed-out check)", witnesses: ["REPORT"], family: "h46", cell: /mark .*dark/ },
+  ...ATTACK_FAULTS,
   "t8-migrated": { why: "H3-2: a WebKit-only rule turns the MIGRATED tiles back into stadiums (the library arm and Chromium stay green)", witnesses: ["T-8"], cell: /Playwright WebKit T-1 .*-migrated/ },
 
   t8: { why: "a WebKit-only rule turns the tiles back into stadiums (Chromium stays green)", witnesses: ["T-8"], cell: /Playwright WebKit T-1/ },
@@ -91,7 +100,9 @@ const PALETTES = ["Dusk", "Moss", "Tide", "Clay"];
 const STATUSES = [["Any status", ""], ["Messaged", "12"], ["Not messaged", "30"], ["Seen", "7"], ["Not seen", "35"]];
 
 export function fixturePage(params, fault = "", family = "", flavor = "dist") {
+  if (family === "atk") return attackFixturePage(params, fault, flavor);
   const scene = params.get("scene") ?? "__index";
+  const h46 = family === "h46";
   if (fault === "stall" && scene === "preset-contents") return null; // H3-1 plant: lib.serve holds a null page
   const armMatch = scene.match(/-(verbatim|migrated)(-stripped)?$/);
   const arm = armMatch ? (armMatch[2] ? "stripped" : armMatch[1]) : "library";
@@ -143,6 +154,7 @@ export function fixturePage(params, fault = "", family = "", flavor = "dist") {
 
   const late = fault === "t1-late" || fault === "t1-ro";
   const css = `
+@layer base, utilities;
 :root { color-scheme: light; --bg: #ffffff; --fg: #1c1917; --seam: #d6d3d1; --edge-on: #1c1917; --fill-on: #ecebea; --hover: #f0efee; --ring: #1d4ed8;
   --ui-scale: 1; --control-rung: calc(40px * var(--ui-scale)); --radius-control: calc(var(--control-rung) / 2); --radius-field: 16px; --radius-pill: 9999px; --type-leading-body: 1.5;
   ${fault === "t3-unres" ? "--selection-tone: var(--edge-on);" : ""} }
@@ -172,7 +184,9 @@ ${fault === "t4-forced" ? "@media (forced-colors: active) { .port { padding: 1px
 /* H3-3 · the pill's one-row law: a break, a block child or an appended row inside a pill lays out in its one row */
 ${oneLine /* not on the W-E family: its guard refuses a second line */ || fault === "t2-stack" || fault === "t2-named" || fault === "t2-mountonly" ? "" : fault === "t2-cut"
   ? ".it:not(.tile):not(.holder):not(.row) [data-ink] { display: block; max-block-size: 20px; overflow: hidden; }"
-  : ".it:not(.tile):not(.holder):not(.row) [data-ink] br { display: none; } .it:not(.tile):not(.holder):not(.row) [data-ink], .it:not(.tile):not(.holder):not(.row) [data-ink] * { display: inline; }"}
+  : fault === "t2-selfblock" /* H4-2 plant: floor v2's form, a zero-specificity law under the utilities layer */
+  ? "@layer base { :where(.it:not(.tile):not(.holder):not(.row)) :where([data-ink] br) { display: none; } :where(.it:not(.tile):not(.holder):not(.row)) :where([data-ink], [data-ink] *) { display: inline; } }"
+  : /* H4-2: the law holds against a child that sets its own display (inline style, a utility) */ ".it:not(.tile):not(.holder):not(.row) [data-ink] br { display: none !important; } .it:not(.tile):not(.holder):not(.row) [data-ink], .it:not(.tile):not(.holder):not(.row) [data-ink] :not(br) { display: inline !important; }"}
 ${fault === "t2" ? ".it:not(.tile):not(.holder):not(.row) { border-radius: 12px; }" : ""}
 @media (hover: hover) { .it:hover { ${fault === "t6-still" ? "" : "scale: 1.015; "}background: ${fault === "t6-faint" ? "color-mix(in srgb, var(--fg) 1%, var(--bg))" : fault === "t6-rung" ? "color-mix(in oklab, var(--fg) 5%, var(--bg))" : fault === "t6-prt" ? "color-mix(in srgb, var(--hover) calc(var(--glass-level, 1) * 100%), var(--bg))" : "var(--hover)"}; } }
 ${fault === "t6-still" ? "" : ".it:active { scale: 0.97; }"}
@@ -219,6 +233,10 @@ ${fault === "t7" ? '[data-arm="migrated"] .c-cell { outline: 1px dashed transpar
 /* the commit: a spring pop on the committed tile (overshoot, bounce, settle) */
 @keyframes pop { 0% { scale: 1; } 45% { scale: 1.035; } 70% { scale: 0.99; } 85% { scale: 1.003; } 100% { scale: 1; } }
 .it.pop { animation: pop 420ms linear; }
+${h46 && fault !== "h46-kick" ? "@keyframes pop { 0% { scale: 1; } 45% { scale: 1.02; } 70% { scale: 0.994; } 85% { scale: 1.002; } 100% { scale: 1; } }" : ""}
+${h46 ? `.t-strip i, .t-strip i:nth-child(2n) { background: #ecfccb; }
+.it[aria-pressed="true"]::after { content: ""; position: absolute; top: 12px; right: 18px; width: 16px; height: 16px; border-radius: 50%; background: #1c1917; pointer-events: none; }
+${fault === "h46-mark" ? ':root.dark .it[aria-pressed="true"]::after { background: #f5f5f4; }' : ""}` : ""}
 ${fault === "t6-calm" ? "[data-reorder] .it.pop { animation: none; }" : ""}
 ${fault === "t6-rest" ? '.it[aria-checked="true"], .it[aria-pressed="true"] { scale: 1.05; } @keyframes pop-rest { 0% { scale: 1; } 45% { scale: 1.085; } 70% { scale: 1.04; } 85% { scale: 1.053; } 100% { scale: 1.05; } } .it.pop { animation-name: pop-rest; }' : ""}
 .sentinel { font: 12px system-ui; padding: 2px 6px; }

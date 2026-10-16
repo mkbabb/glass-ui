@@ -1,0 +1,12 @@
+2026-10-16 08:57:21 · load { 21.82 22.83 19.41 }
+in WebKit batch rest2 (one lock hold)
+selftest · harness H4 e40bfd8801ef (39 files)
+OK     CANON webkit   clean exit 0 · CANON PASS · 3/3 gating cells pass [library 3/3]
+OK     CANON webkit   fault   canon-a (H3-4 plant A: the tile corner re-spelled in a second sheet (`:is(<tile>)`, 12 px): two rules decide the tile) exit 1 · CANON FAIL · 2/3 gating cells pass [library 2/3]
+         first planted FAIL: FAIL       canon tile corner (plant A) · 48 twins, 4 corner rules · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item» · exactly one rule reaches a tile and not its pill twin, on var(--radius-field) · 2
+OK     CANON webkit   fault   canon-s (H3-4 plant S: a size arm on the tile (`[data-size="sm"]`) on --radius-panel, which a one-md-item fixture never reaches) exit 1 · CANON FAIL · 2/3 gating cells pass [library 2/3]
+         first planted FAIL: FAIL       canon tile corner (plant S) · 48 twins, 4 corner rules · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item» · exactly one rule reaches a tile and not its pill twin, on var(--radius-field) · 2
+OK     CANON webkit   fault   canon-h (H3-4 plant H: a structural re-spelling (`.toggle-group__item:has(> * + *)`, 12 px), which a childless fixture never reaches) exit 1 · CANON FAIL · 2/3 gating cells pass [library 2/3]
+         first planted FAIL: FAIL       canon pill corner (plant H) · 48 twins, 4 corner rules · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item» · every group-scoped corner on a pill is var(--radius-pill) or inherit · 3 rule(s) 
+selftest: 4 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0 · 2026-10-16 08:57:31 · load { 24.07 23.29 19.61 }

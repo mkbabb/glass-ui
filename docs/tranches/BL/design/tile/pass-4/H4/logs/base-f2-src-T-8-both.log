@@ -1,0 +1,33 @@
+2026-10-16 06:06:25 · load { 15.68 21.66 24.79 }
+in WebKit batch base-f2 (one lock hold)
+T-8 · T-1 and T-3 hold in both engines (and in real Safari once enabled)
+  target f2-src (flavor src) · Chromium 149.0.7827.55 + Playwright WebKit 26.5 · harness H4 e40bfd8801ef
+  load 15.68 / 21.66 / 24.79 at start, 13.52 / 20.59 / 24.29 at end · other headless browser processes at start: 1 (waited 0.1 s) · browser lock waited 0 s
+  UNMEASURED Chromium T-1 preset light #0 toggle-group-item (tile) rung 40.0 · 204.00×40.00 9999px→20.00 (÷h/2 1.00) | 204.00×40.00 9999px→20.00 (÷h/2 1.00) | 204.00×40.00 9999px→20.00 (÷h/2 1.00) · never past its rung
+  UNMEASURED Chromium T-1 preset light coarse #0 toggle-group-item (tile) rung 60.0 · 204.00×60.00 9999px→30.00 (÷h/2 1.00) | 204.00×60.00 9999px→30.00 (÷h/2 1.00) | 204.00×60.00 9999px→30.00 (÷h/2 1.00) · never past its rung
+  UNMEASURED Chromium T-1 preset light --ui-scale 1.25 #0 toggle-group-item (tile) rung 50.0 · 204.00×50.00 9999px→25.00 (÷h/2 1.00) | 204.00×50.00 9999px→25.00 (÷h/2 1.00) | 204.00×50.00 9999px→25.00 (÷h/2 1.00) · never past its rung
+  UNMEASURED Chromium T-1 specimen light #0 toggle-group-item (tile) rung 36.0 · 207.00×36.00 9999px→18.00 (÷h/2 1.00) | 207.00×36.00 9999px→18.00 (÷h/2 1.00) | 207.00×36.00 9999px→18.00 (÷h/2 1.00) · never past its rung
+  UNMEASURED Chromium T-1 specimen light coarse #0 toggle-group-item (tile) rung 54.0 · 207.00×54.00 9999px→27.00 (÷h/2 1.00) | 207.00×54.00 9999px→27.00 (÷h/2 1.00) | 207.00×54.00 9999px→27.00 (÷h/2 1.00) · never past its rung
+  UNMEASURED Chromium T-1 specimen light --ui-scale 1.25 #0 toggle-group-item (tile) rung 45.0 · 207.00×45.00 9999px→22.50 (÷h/2 1.00) | 207.00×45.00 9999px→22.50 (÷h/2 1.00) | 207.00×45.00 9999px→22.50 (÷h/2 1.00) · never past its rung
+  FAIL       Chromium T-3 preset light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.20:1; p95 1.20; items 1/0 204×40
+  FAIL       Chromium T-3 preset dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.23:1; p95 1.28; items 1/0 204×40
+  FAIL       Chromium T-3 preset prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.00:1; p95 1.00; items 1/0 204×40
+  FAIL       Chromium T-3 specimen light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.19:1; p95 1.19; items 1/0 207×36
+  FAIL       Chromium T-3 specimen dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.22:1; p95 1.29; items 1/0 207×36
+  FAIL       Chromium T-3 specimen prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.00:1; p95 1.00; items 1/0 207×36
+  UNMEASURED Playwright WebKit T-1 preset light #0 toggle-group-item (tile) rung 40.0 · 204.00×40.00 9999px→20.00 (÷h/2 1.00) | 204.00×40.00 9999px→20.00 (÷h/2 1.00) | 204.00×40.00 9999px→20.00 (÷h/2 1.00) · never past its rung
+  UNMEASURED Playwright WebKit T-1 preset light coarse #0 toggle-group-item (tile) rung 60.0 · 204.00×60.00 9999px→30.00 (÷h/2 1.00) | 204.00×60.00 9999px→30.00 (÷h/2 1.00) | 204.00×60.00 9999px→30.00 (÷h/2 1.00) · never past its rung
+  UNMEASURED Playwright WebKit T-1 preset light --ui-scale 1.25 #0 toggle-group-item (tile) rung 50.0 · 204.00×50.00 9999px→25.00 (÷h/2 1.00) | 204.00×50.00 9999px→25.00 (÷h/2 1.00) | 204.00×50.00 9999px→25.00 (÷h/2 1.00) · never past its rung
+  UNMEASURED Playwright WebKit T-1 specimen light #0 toggle-group-item (tile) rung 36.0 · 207.00×36.00 9999px→18.00 (÷h/2 1.00) | 207.00×36.00 9999px→18.00 (÷h/2 1.00) | 207.00×36.00 9999px→18.00 (÷h/2 1.00) · never past its rung
+  UNMEASURED Playwright WebKit T-1 specimen light coarse #0 toggle-group-item (tile) rung 54.0 · 207.00×54.00 9999px→27.00 (÷h/2 1.00) | 207.00×54.00 9999px→27.00 (÷h/2 1.00) | 207.00×54.00 9999px→27.00 (÷h/2 1.00) · never past its rung
+  UNMEASURED Playwright WebKit T-1 specimen light --ui-scale 1.25 #0 toggle-group-item (tile) rung 45.0 · 207.00×45.00 9999px→22.50 (÷h/2 1.00) | 207.00×45.00 9999px→22.50 (÷h/2 1.00) | 207.00×45.00 9999px→22.50 (÷h/2 1.00) · never past its rung
+  FAIL       Playwright WebKit T-3 preset light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.21:1; p95 1.23; items 1/0 204×40
+  FAIL       Playwright WebKit T-3 preset dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.20:1; p95 1.27; items 1/0 204×40
+  FAIL       Playwright WebKit T-3 preset prt (forced level-0 path) · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.00:1; p95 1.01; items 1/0 204×40
+  FAIL       Playwright WebKit T-3 specimen light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.20:1; p95 1.23; items 1/0 207×36
+  FAIL       Playwright WebKit T-3 specimen dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.20:1; p95 1.26; items 1/0 207×36
+  FAIL       Playwright WebKit T-3 specimen prt (forced level-0 path) · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.00:1; p95 1.01; items 1/0 207×36
+  UNMEASURED real Safari: UNMEASURED (owner's safaridriver checkbox) · safaridriver: Could not create a session: You must enable 'Allow remote automation' in the Developer section of Safari Settings to control Safari via WebDriver.
+T-8 FAIL · 0/12 gating cells pass, 13 unmeasured [library 0/12]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p4/h4/out4/runs/f2-src/T-8-both.json
+exit 1 · 2026-10-16 06:06:59 · load { 13.52 20.59 24.29 }

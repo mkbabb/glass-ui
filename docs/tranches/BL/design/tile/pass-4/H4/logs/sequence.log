@@ -1,0 +1,144 @@
+start build-f2 · 2026-10-15 23:52:25 · load { 28.62 30.31 33.93 }
+end build-f2 · exit 0 · 2026-10-15 23:54:27 · load { 38.16 32.46 34.23 }
+start unit-f2 · 2026-10-15 23:54:27 · load { 38.16 32.46 34.23 }
+stopped unit-f2 after 20 min in the heavy queue; driver amended (unit --light; browser runs fall back to --light --rss-gb 8 after 30 min) · 2026-10-16 00:15:03 · load { 21.70 19.07 23.86 }
+start unit-f2 · 2026-10-16 00:15:04 · load { 21.70 19.07 23.86 }
+end unit-f2 · exit 1 · 2026-10-16 00:15:17 · load { 21.30 19.07 23.80 }
+start selftest FACT chromium · 2026-10-16 00:15:17 · load { 21.30 19.07 23.80 }
+end selftest FACT chromium · exit 2 · 2026-10-16 00:45:20 · load { 27.38 25.51 23.52 }
+start selftest FACT webkit · 2026-10-16 00:45:20 · load { 27.38 25.51 23.52 }
+stopped: FACT chromium held 30 min in the heavy queue, then its light relaunch failed (run-h4.sh was rewritten while zsh was reading it); FACT webkit stopped in the queue. From here every browser run goes --light --rss-gb 8 (logs/HELD) · 2026-10-16 00:46:21 · load { 32.48 27.28 24.32 }
+start selftest FACT chromium · 2026-10-16 00:46:24 · load { 31.16 27.10 24.28 }
+end selftest FACT chromium · exit 0 · 2026-10-16 00:47:07 · load { 27.79 26.69 24.25 }
+start selftest FACT webkit · 2026-10-16 00:47:07 · load { 27.79 26.69 24.25 }
+stopped FACT webkit after 10 min waiting for the machine-wide webkit lock (held by another seat); re-ordered: every Chromium run first, then every Playwright WebKit run · 2026-10-16 00:57:24 · load { 21.99 22.10 22.63 }
+start selftest FACT chromium · 2026-10-16 00:57:50 · load { 23.35 22.34 22.69 }
+end selftest FACT chromium · exit 0 · 2026-10-16 00:58:34 · load { 21.24 21.98 22.54 }
+start selftest ATTACK chromium · 2026-10-16 00:58:34 · load { 21.24 21.98 22.54 }
+end selftest ATTACK chromium · exit 0 · 2026-10-16 00:59:16 · load { 29.60 23.86 23.19 }
+start selftest CORNER chromium · 2026-10-16 00:59:16 · load { 29.60 23.86 23.19 }
+end selftest CORNER chromium · exit 0 · 2026-10-16 00:59:38 · load { 31.76 24.75 23.53 }
+start selftest REPORT chromium · 2026-10-16 00:59:38 · load { 31.76 24.75 23.53 }
+end selftest REPORT chromium · exit 0 · 2026-10-16 01:00:06 · load { 26.39 24.12 23.34 }
+start selftest T-2 chromium · 2026-10-16 01:00:06 · load { 26.39 24.12 23.34 }
+end selftest T-2 chromium · exit 0 · 2026-10-16 01:08:44 · load { 29.63 28.97 26.09 }
+start baseline head chromium · 2026-10-16 01:08:44 · load { 29.63 28.97 26.09 }
+end baseline head chromium · exit 1 · 2026-10-16 01:24:30 · load { 12.51 22.09 24.23 }
+start baseline f2 chromium · 2026-10-16 01:24:30 · load { 12.51 22.09 24.23 }
+end baseline f2 chromium · exit 1 · 2026-10-16 01:40:14 · load { 35.26 24.01 21.50 }
+start selftest T-1 chromium 180 · 2026-10-16 01:40:14 · load { 35.26 24.01 21.50 }
+end selftest T-1 chromium 180 · exit 0 · 2026-10-16 01:48:21 · load { 29.11 28.81 25.53 }
+start selftest T-3 chromium 180 · 2026-10-16 01:48:21 · load { 29.11 28.81 25.53 }
+end selftest T-3 chromium 180 · exit 0 · 2026-10-16 02:20:47 · load { 31.07 32.36 32.17 }
+start selftest T-4 chromium 180 · 2026-10-16 02:20:47 · load { 31.07 32.36 32.17 }
+end selftest T-4 chromium 180 · exit 0 · 2026-10-16 02:28:13 · load { 23.13 26.63 29.48 }
+start selftest T-5 chromium 180 · 2026-10-16 02:28:13 · load { 23.13 26.63 29.48 }
+end selftest T-5 chromium 180 · exit 0 · 2026-10-16 02:44:06 · load { 34.48 34.60 31.93 }
+start selftest T-6 chromium 180 · 2026-10-16 02:44:06 · load { 34.48 34.60 31.93 }
+end selftest T-6 chromium 180 · exit 0 · 2026-10-16 03:45:16 · load { 19.63 20.72 20.82 }
+start selftest T-7 chromium 180 · 2026-10-16 03:45:16 · load { 19.63 20.72 20.82 }
+end selftest T-7 chromium 180 · exit 0 · 2026-10-16 03:47:26 · load { 18.15 20.16 20.61 }
+start selftest W-A chromium 180 · 2026-10-16 03:47:26 · load { 18.15 20.16 20.61 }
+end selftest W-A chromium 180 · exit 0 · 2026-10-16 03:47:52 · load { 22.20 20.96 20.88 }
+start selftest W-B chromium 180 · 2026-10-16 03:47:52 · load { 22.20 20.96 20.88 }
+end selftest W-B chromium 180 · exit 0 · 2026-10-16 03:49:15 · load { 23.79 21.33 21.01 }
+start selftest W-C chromium 180 · 2026-10-16 03:49:15 · load { 23.79 21.33 21.01 }
+end selftest W-C chromium 180 · exit 0 · 2026-10-16 03:49:40 · load { 20.83 20.89 20.86 }
+start selftest W-D chromium 180 · 2026-10-16 03:49:40 · load { 20.83 20.89 20.86 }
+end selftest W-D chromium 180 · exit 0 · 2026-10-16 03:49:55 · load { 18.84 20.47 20.71 }
+start selftest W-E chromium 180 · 2026-10-16 03:49:55 · load { 18.84 20.47 20.71 }
+end selftest W-E chromium 180 · exit 0 · 2026-10-16 03:50:24 · load { 16.43 19.73 20.43 }
+start selftest CANON chromium 180 · 2026-10-16 03:50:24 · load { 16.43 19.73 20.43 }
+end selftest CANON chromium 180 · exit 0 · 2026-10-16 03:50:37 · load { 19.20 20.22 20.60 }
+start selftest FACT webkit · 2026-10-16 03:50:37 · load { 19.20 20.22 20.60 }
+end selftest FACT webkit · exit 0 · 2026-10-16 04:14:31 · load { 23.80 24.30 21.89 }
+start selftest ATTACK webkit · 2026-10-16 04:14:31 · load { 23.80 24.30 21.89 }
+stopped ATTACK webkit in the WebKit-lock queue (FACT webkit waited 23.9 min for the lock); the rest of the WebKit stage runs in five batches, one lock hold each (run-h4-wk.sh) · 2026-10-16 04:15:15 · load { 41.53 29.01 23.75 }
+queue WebKit batch cells · 2026-10-16 04:15:18 · load { 41.53 29.01 23.75 }
+start WebKit batch cells (lock held) · 2026-10-16 04:19:02 · load { 33.35 31.95 26.24 }
+  step selftest-ATTACK-webkit · exit 0 · 2026-10-16 04:19:41 · load { 36.76 33.12 26.94 }
+  step selftest-CORNER-webkit · exit 0 · 2026-10-16 04:19:58 · load { 36.74 33.28 27.10 }
+  step selftest-REPORT-webkit · exit 0 · 2026-10-16 04:20:23 · load { 40.07 34.30 27.64 }
+  step selftest-T-2-webkit · exit 0 · 2026-10-16 04:29:18 · load { 22.88 26.25 26.64 }
+end WebKit batch cells · 2026-10-16 04:29:18 · load { 22.88 26.25 26.64 }
+guard returned for WebKit batch cells · exit 0 · 2026-10-16 04:29:21 · load { 22.57 26.13 26.59 }
+queue WebKit batch base-head · 2026-10-16 04:29:21 · load { 22.57 26.13 26.59 }
+start WebKit batch base-head (lock held) · 2026-10-16 05:24:10 · load { 8.27 12.75 18.27 }
+  step base-head-src-T-1-webkit · exit 1 · 2026-10-16 05:25:11 · load { 15.54 13.86 18.30 }
+  step base-head-src-T-2-webkit · exit 1 · 2026-10-16 05:26:21 · load { 21.34 15.66 18.61 }
+  step base-head-src-T-3-webkit · exit 1 · 2026-10-16 05:28:40 · load { 14.27 14.84 17.83 }
+  step base-head-src-T-4-webkit · exit 1 · 2026-10-16 05:30:05 · load { 22.62 16.90 18.30 }
+  step base-head-src-T-5-webkit · exit 1 · 2026-10-16 05:31:23 · load { 22.54 18.16 18.66 }
+  step base-head-src-T-6-webkit · exit 1 · 2026-10-16 05:42:30 · load { 23.93 26.83 23.85 }
+  step base-head-src-T-7-webkit · exit 1 · 2026-10-16 05:47:27 · load { 32.21 27.17 24.65 }
+  step base-head-src-W-A-webkit · exit 1 · 2026-10-16 05:47:33 · load { 33.48 27.52 24.79 }
+  step base-head-src-W-B-webkit · exit 1 · 2026-10-16 05:48:03 · load { 36.93 28.84 25.36 }
+  step base-head-src-W-C-webkit · exit 1 · 2026-10-16 05:48:11 · load { 41.35 30.05 25.83 }
+  step base-head-src-W-D-webkit · exit 1 · 2026-10-16 05:48:17 · load { 42.44 30.46 26.00 }
+  step base-head-src-W-E-webkit · exit 1 · 2026-10-16 05:48:25 · load { 43.01 30.98 26.23 }
+  step base-head-src-CANON-webkit · exit 1 · 2026-10-16 05:48:28 · load { 43.01 30.98 26.23 }
+  step base-head-src-FACT-webkit · exit 1 · 2026-10-16 05:48:44 · load { 43.17 31.60 26.53 }
+  step base-head-src-ATTACK-webkit · exit 1 · 2026-10-16 05:48:54 · load { 42.90 31.92 26.71 }
+  step base-head-src-CORNER-webkit · exit 1 · 2026-10-16 05:49:03 · load { 45.56 32.86 27.10 }
+  step base-head-src-REPORT-webkit · exit 0 · 2026-10-16 05:49:12 · load { 46.80 33.55 27.42 }
+  step base-head-src-T-8-both · exit 1 · 2026-10-16 05:49:55 · load { 46.78 35.49 28.45 }
+  step base-head-dist-t2-one-line-stadium-webkit · exit 1 · 2026-10-16 05:51:06 · load { 38.42 35.39 28.97 }
+  step base-head-dist-t5-one-of-n-keys-webkit · exit 1 · 2026-10-16 05:52:26 · load { 33.15 34.50 29.21 }
+  step base-head-dist-we-one-line-webkit · exit 1 · 2026-10-16 05:52:34 · load { 33.54 34.56 29.26 }
+  step base-head-atkdist-fact-split-webkit · exit 1 · 2026-10-16 05:52:49 · load { 35.49 34.94 29.49 }
+  step base-head-atkdist-attack-webkit · exit 1 · 2026-10-16 05:52:57 · load { 36.52 35.17 29.63 }
+  step base-head-atkdist-corner-refusal-webkit · exit 1 · 2026-10-16 05:53:05 · load { 37.81 35.47 29.80 }
+  step base-head-atkdev-attack-webkit · exit 1 · 2026-10-16 05:53:12 · load { 35.98 35.13 29.71 }
+end WebKit batch base-head · 2026-10-16 05:53:12 · load { 35.98 35.13 29.71 }
+guard returned for WebKit batch base-head · exit 0 · 2026-10-16 05:53:17 · load { 34.14 34.76 29.62 }
+queue WebKit batch base-f2 · 2026-10-16 05:53:17 · load { 34.14 34.76 29.62 }
+start WebKit batch base-f2 (lock held) · 2026-10-16 05:53:17 · load { 34.14 34.76 29.62 }
+  step base-f2-src-T-1-webkit · exit 1 · 2026-10-16 05:54:18 · load { 26.42 32.38 29.07 }
+  step base-f2-src-T-2-webkit · exit 1 · 2026-10-16 05:55:26 · load { 24.25 30.56 28.65 }
+  step base-f2-src-T-3-webkit · exit 1 · 2026-10-16 05:57:44 · load { 23.93 28.12 27.94 }
+  step base-f2-src-T-4-webkit · exit 1 · 2026-10-16 05:59:09 · load { 23.27 26.90 27.49 }
+  step base-f2-src-T-5-webkit · exit 1 · 2026-10-16 06:00:27 · load { 19.44 25.03 26.73 }
+  step base-f2-src-T-6-webkit · exit 1 · 2026-10-16 06:04:21 · load { 27.22 25.05 26.29 }
+  step base-f2-src-T-7-webkit · exit 1 · 2026-10-16 06:04:56 · load { 22.77 24.17 25.92 }
+  step base-f2-src-W-A-webkit · exit 1 · 2026-10-16 06:05:02 · load { 22.79 24.15 25.90 }
+  step base-f2-src-W-B-webkit · exit 1 · 2026-10-16 06:05:29 · load { 20.48 23.55 25.64 }
+  step base-f2-src-W-C-webkit · exit 1 · 2026-10-16 06:05:37 · load { 19.09 23.15 25.47 }
+  step base-f2-src-W-D-webkit · exit 1 · 2026-10-16 06:05:41 · load { 19.08 23.08 25.43 }
+  step base-f2-src-W-E-webkit · exit 1 · 2026-10-16 06:05:47 · load { 18.67 22.93 25.36 }
+  step base-f2-src-CANON-webkit · exit 1 · 2026-10-16 06:05:49 · load { 18.67 22.93 25.36 }
+  step base-f2-src-FACT-webkit · exit 1 · 2026-10-16 06:06:03 · load { 18.13 22.58 25.19 }
+  step base-f2-src-ATTACK-webkit · exit 1 · 2026-10-16 06:06:10 · load { 17.23 22.25 25.05 }
+  step base-f2-src-CORNER-webkit · exit 1 · 2026-10-16 06:06:18 · load { 16.73 22.06 24.96 }
+  step base-f2-src-REPORT-webkit · exit 1 · 2026-10-16 06:06:25 · load { 15.68 21.66 24.79 }
+  step base-f2-src-T-8-both · exit 1 · 2026-10-16 06:06:59 · load { 13.52 20.59 24.29 }
+  step base-f2-dist-t2-one-line-stadium-webkit · exit 1 · 2026-10-16 06:08:11 · load { 22.75 21.28 24.20 }
+  step base-f2-dist-t5-one-of-n-keys-webkit · exit 1 · 2026-10-16 06:09:58 · load { 54.41 32.41 28.16 }
+  step base-f2-dist-we-one-line-webkit · exit 1 · 2026-10-16 06:10:05 · load { 84.86 39.80 30.84 }
+  step base-f2-atkdist-fact-split-webkit · exit 1 · 2026-10-16 06:10:18 · load { 76.18 39.42 30.81 }
+  step base-f2-atkdist-attack-webkit · exit 1 · 2026-10-16 06:10:25 · load { 65.84 38.42 30.56 }
+  step base-f2-atkdist-corner-refusal-webkit · exit 1 · 2026-10-16 06:10:33 · load { 61.37 37.95 30.44 }
+  step base-f2-atkdev-attack-webkit · exit 1 · 2026-10-16 06:10:40 · load { 57.82 37.60 30.36 }
+end WebKit batch base-f2 · 2026-10-16 06:10:40 · load { 57.82 37.60 30.36 }
+guard returned for WebKit batch base-f2 · exit 0 · 2026-10-16 06:10:43 · load { 55.99 37.56 30.38 }
+queue WebKit batch rest1 · 2026-10-16 06:10:43 · load { 55.99 37.56 30.38 }
+start WebKit batch rest1 (lock held) · 2026-10-16 06:33:01 · load { 33.61 27.98 25.31 }
+  step selftest-T-1-webkit · exit 0 · 2026-10-16 06:42:15 · load { 33.30 33.03 29.49 }
+  step selftest-T-3-webkit · exit 0 · 2026-10-16 07:14:53 · load { 25.69 17.73 17.68 }
+  step selftest-T-4-webkit · exit 0 · 2026-10-16 07:22:30 · load { 28.20 25.02 21.26 }
+  step selftest-T-5-webkit · exit 0 · 2026-10-16 07:39:01 · load { 26.89 22.57 21.37 }
+end WebKit batch rest1 · 2026-10-16 07:39:01 · load { 26.89 22.57 21.37 }
+guard returned for WebKit batch rest1 · exit 0 · 2026-10-16 07:39:07 · load { 26.90 22.64 21.40 }
+queue WebKit batch rest2 · 2026-10-16 07:39:07 · load { 26.90 22.64 21.40 }
+start WebKit batch rest2 (lock held) · 2026-10-16 07:50:51 · load { 16.48 18.49 20.49 }
+  step selftest-T-6-webkit · exit 0 · 2026-10-16 08:52:25 · load { 24.77 22.40 17.88 }
+  step selftest-T-7-webkit · exit 0 · 2026-10-16 08:54:34 · load { 22.17 21.94 18.32 }
+  step selftest-W-A-webkit · exit 0 · 2026-10-16 08:54:57 · load { 26.89 23.05 18.83 }
+  step selftest-W-B-webkit · exit 0 · 2026-10-16 08:56:18 · load { 22.87 22.97 19.19 }
+  step selftest-W-C-webkit · exit 0 · 2026-10-16 08:56:40 · load { 24.51 23.42 19.45 }
+  step selftest-W-D-webkit · exit 0 · 2026-10-16 08:56:52 · load { 22.79 23.08 19.39 }
+  step selftest-W-E-webkit · exit 0 · 2026-10-16 08:57:20 · load { 21.82 22.83 19.41 }
+  step selftest-CANON-webkit · exit 0 · 2026-10-16 08:57:31 · load { 24.07 23.29 19.61 }
+  step selftest-T-8-both · exit 0 · 2026-10-16 09:00:53 · load { 26.38 25.03 21.10 }
+end WebKit batch rest2 · 2026-10-16 09:00:53 · load { 26.38 25.03 21.10 }
+guard returned for WebKit batch rest2 · exit 0 · 2026-10-16 09:00:58 · load { 25.79 24.93 21.08 }
+WebKit stage done · 2026-10-16 09:00:58

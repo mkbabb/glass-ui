@@ -1,0 +1,61 @@
+2026-10-16 01:36:39 · load { 21.27 16.73 19.04 }
+light path (the heavy queue held an earlier run 30 min, selftest-FACT-chromium at 2026-10-16 00:45:20 · load { 27.38 25.51 23.52 } (held 00:15:17 → 00:45:20)) · 2026-10-16 01:36:39 · load { 21.27 16.73 19.04 }
+admitted (light, rss 8 GB) · 2026-10-16 01:36:40 · load { 21.27 16.73 19.04 }
+T-2 · a one-line item stays a stadium, and a gated pill never leaves its rung
+  target f2-dist (flavor dist) · Chromium 149.0.7827.55 · harness H4 e40bfd8801ef
+  load 21.27 / 16.73 / 19.04 at start, 22.59 / 17.94 / 19.32 at end · other headless browser processes at start: 12 (waited 0.4 s) · browser lock waited 0 s
+  PASS       single #0 36.00×36.00 rung 36.00 9999px→18.00 (÷h/2 1.00), 1 row(s)
+  PASS       single #1 58.44×36.00 rung 36.00 9999px→18.00 (÷h/2 1.00), 1 row(s)
+  PASS       single #2 49.41×36.00 rung 36.00 9999px→18.00 (÷h/2 1.00), 1 row(s)
+  PASS       single #3 60.03×36.00 rung 36.00 9999px→18.00 (÷h/2 1.00), 1 row(s)
+  PASS       single #0 one-row law · <br> inside the label, after mount · 36.00 px at rung 36.00 · nothing cut; one row
+  PASS       single #0 one-row law · a block child (div) inside the label, after mount · 36.00 px at rung 36.00 · nothing cut; one row
+  PASS       single #0 one-row law · a div appended to the item, beside the label, after mount · 36.00 px at rung 36.00 · nothing cut; one row
+  FAIL       single #0 one-row law · a span inside the label that sets its own display: block by inline style, after mount · 36.00 px at rung 36.00 · the child computes display: block · nothing cut; STACKED: 2 rows, unnamed
+  FAIL       single #0 one-row law · a span inside the label that sets its own display: block by a utility class (@layer utilities), after mount · 36.00 px at rung 36.00 · the child computes display: block · nothing cut; STACKED: 2 rows, unnamed
+  PASS       vertical #0 56.00×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       vertical #1 56.00×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       vertical #2 56.00×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       vertical #3 56.00×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       vertical #0 one-row law · <br> inside the label, after mount · 40.00 px at rung 40.00 · nothing cut; one row
+  PASS       vertical #0 one-row law · a block child (div) inside the label, after mount · 40.00 px at rung 40.00 · nothing cut; one row
+  PASS       vertical #0 one-row law · a div appended to the item, beside the label, after mount · 40.00 px at rung 40.00 · nothing cut; one row
+  FAIL       vertical #0 one-row law · a span inside the label that sets its own display: block by inline style, after mount · 40.00 px at rung 40.00 · the child computes display: block · nothing cut; STACKED: 2 rows, unnamed
+  FAIL       vertical #0 one-row law · a span inside the label that sets its own display: block by a utility class (@layer utilities), after mount · 40.00 px at rung 40.00 · the child computes display: block · nothing cut; STACKED: 2 rows, unnamed
+  PASS       tabs #0 69.47×32.94 rung 32.94 9999px→16.47 (÷h/2 1.00), 1 row(s)
+  PASS       tabs #1 69.47×32.94 rung 32.94 9999px→16.47 (÷h/2 1.00), 1 row(s)
+  PASS       tabs #2 69.47×32.94 rung 32.94 9999px→16.47 (÷h/2 1.00), 1 row(s)
+  PASS       tabs #3 69.47×32.94 rung 32.94 9999px→16.47 (÷h/2 1.00), 1 row(s)
+  PASS       tabs #0 one-row law · <br> inside the label, after mount · 32.94 px at rung 0.00 · nothing cut; one row
+  PASS       tabs #0 one-row law · a block child (div) inside the label, after mount · 32.94 px at rung 0.00 · nothing cut; one row
+  PASS       tabs #0 one-row law · a div appended to the item, beside the label, after mount · 32.94 px at rung 0.00 · nothing cut; one row
+  FAIL       tabs #0 one-row law · a span inside the label that sets its own display: block by inline style, after mount · 55.88 px at rung 0.00 · the child computes display: block · nothing cut; STACKED: 2 rows, unnamed
+  FAIL       tabs #0 one-row law · a span inside the label that sets its own display: block by a utility class (@layer utilities), after mount · 55.88 px at rung 0.00 · the child computes display: block · nothing cut; STACKED: 2 rows, unnamed
+  PASS       pill-icon #0 80.14×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       pill-icon #1 76.59×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       pill-icon #2 92.27×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       pill-icon #0 one-row law · <br> inside the label, after mount · 40.00 px at rung 40.00 · nothing cut; one row
+  PASS       pill-icon #0 one-row law · a block child (div) inside the label, after mount · 40.00 px at rung 40.00 · nothing cut; one row
+  PASS       pill-icon #0 one-row law · a div appended to the item, beside the label, after mount · 40.00 px at rung 40.00 · nothing cut; one row
+  FAIL       pill-icon #0 one-row law · a span inside the label that sets its own display: block by inline style, after mount · 40.00 px at rung 40.00 · the child computes display: block · nothing cut; STACKED: 2 rows, unnamed
+  FAIL       pill-icon #0 one-row law · a span inside the label that sets its own display: block by a utility class (@layer utilities), after mount · 40.00 px at rung 40.00 · the child computes display: block · nothing cut; STACKED: 2 rows, unnamed
+  PASS       pill-badge #0 95.34×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       pill-badge #1 90.36×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       pill-badge #2 100.80×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       pill-badge #0 one-row law · <br> inside the label, after mount · 40.00 px at rung 40.00 · nothing cut; one row
+  PASS       pill-badge #0 one-row law · a block child (div) inside the label, after mount · 40.00 px at rung 40.00 · nothing cut; one row
+  PASS       pill-badge #0 one-row law · a div appended to the item, beside the label, after mount · 40.00 px at rung 40.00 · nothing cut; one row
+  FAIL       pill-badge #0 one-row law · a span inside the label that sets its own display: block by inline style, after mount · 40.00 px at rung 40.00 · the child computes display: block · nothing cut; STACKED: 2 rows, unnamed
+  FAIL       pill-badge #0 one-row law · a span inside the label that sets its own display: block by a utility class (@layer utilities), after mount · 40.00 px at rung 40.00 · the child computes display: block · nothing cut; STACKED: 2 rows, unnamed
+  PASS       family-d-undeclared #0 195.28×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       family-d-undeclared #1 232.92×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       family-d-undeclared #2 212.77×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       family-d-undeclared #3 216.14×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       family-d-undeclared #0 one-row law · <br> inside the label, after mount · 40.00 px at rung 40.00 · nothing cut; one row
+  PASS       family-d-undeclared #0 one-row law · a block child (div) inside the label, after mount · 40.00 px at rung 40.00 · nothing cut; one row
+  PASS       family-d-undeclared #0 one-row law · a div appended to the item, beside the label, after mount · 40.00 px at rung 40.00 · nothing cut; one row
+  FAIL       family-d-undeclared #0 one-row law · a span inside the label that sets its own display: block by inline style, after mount · 40.00 px at rung 40.00 · the child computes display: block · nothing cut; STACKED: 2 rows, unnamed
+  FAIL       family-d-undeclared #0 one-row law · a span inside the label that sets its own display: block by a utility class (@layer utilities), after mount · 40.00 px at rung 40.00 · the child computes display: block · nothing cut; STACKED: 2 rows, unnamed
+T-2 FAIL · 40/52 gating cells pass [library 40/52]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p4/h4/out4/runs/f2-dist/T-2-chromium.json
+exit 1 · 2026-10-16 01:37:49 · load { 22.94 18.09 19.37 }

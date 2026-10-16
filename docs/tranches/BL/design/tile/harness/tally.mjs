@@ -11,12 +11,12 @@ import { parseArgs } from "./lib.mjs";
 const a = parseArgs();
 const dir = a.positional[0];
 if (!dir || !fs.existsSync(dir)) { console.error("usage: node tally.mjs <out>/runs/<label> [--scenes] [--fails]"); process.exit(2); }
-const order = ["T-1", "T-2", "T-3", "T-4", "T-5", "T-6", "T-7", "T-8", "W-A", "W-B", "W-C", "W-D", "W-E"];
+const order = ["T-1", "T-2", "T-3", "T-4", "T-5", "T-6", "T-7", "T-8", "W-A", "W-B", "W-C", "W-D", "W-E", "CANON", "FACT", "ATTACK", "CORNER", "REPORT"]; // H4: the attack set and H4-6's reported witness
 const files = fs.readdirSync(dir).filter((f) => f.endsWith(".json"))
   .map((f) => JSON.parse(fs.readFileSync(path.join(dir, f), "utf8")))
   .sort((x, y) => order.indexOf(x.id) - order.indexOf(y.id) || String(x.engine).localeCompare(String(y.engine)));
 const hashes = [...new Set(files.map((r) => r.harness?.hash ?? "none (pre-H3)"))];
-console.log(`harness ${hashes.join(", ")}${hashes.length > 1 ? " · MIXED: these runs are not comparable cell for cell (H3-10)" : ""}\n`);
+console.log(`harness ${hashes.join(", ")}${hashes.length > 1 ? " · MIXED: these runs are not comparable cell for cell (H3-10, H4-4)" : ""}\n`);
 console.log("| witness | engine | verdict | tally | load at start / end | harness |");
 console.log("|---|---|---|---|---|---|");
 for (const r of files) console.log(`| ${r.id} | ${r.engineLabel} | ${r.pass ? "PASS" : "FAIL"} | ${r.tally} | ${r.run?.loadStart ?? "?"} → ${r.run?.loadEnd ?? "?"} | ${r.harness?.hash ?? "—"} |`);

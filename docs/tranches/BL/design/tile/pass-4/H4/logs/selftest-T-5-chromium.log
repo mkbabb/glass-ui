@@ -1,0 +1,25 @@
+2026-10-16 02:28:13 · load { 23.13 26.63 29.48 }
+light path (the heavy queue held an earlier run 30 min, selftest-FACT-chromium at 2026-10-16 00:45:20 · load { 27.38 25.51 23.52 } (held 00:15:17 → 00:45:20)) · 2026-10-16 02:28:13 · load { 23.13 26.63 29.48 }
+admitted (light, rss 8 GB) · 2026-10-16 02:28:13 · load { 23.13 26.63 29.48 }
+selftest · harness H4 e40bfd8801ef (39 files)
+OK     T-5  chromium clean exit 0 · T-5 PASS · 117/117 gating cells pass [library 79/79 · unmigrated 37/37 · migrated 38/38]
+OK     T-5  chromium fault   t5 (ArrowUp and ArrowDown are dead (the tablist model), so grid arrows do not move) exit 1 · T-5 FAIL · 80/117 gating cells pass [library 54/79 · unmigrated 23/37 · migrated 26/38]
+         first planted FAIL: FAIL       preset grid ArrowDown from #0 · focus 0 → 0 · moved false · checked true
+OK     T-5  chromium fault   t5-cross (no linear step: the cross axis of a one-line row or column is dead) exit 1 · T-5 FAIL · 96/117 gating cells pass [library 64/79 · unmigrated 28/37 · migrated 32/38]
+         first planted FAIL: FAIL       preset keyed reorder · ArrowDown from DOM #3 (no item below: the linear step) · focus 3 → 3 (want 0) · checked true
+OK     T-5  chromium fault   t5-stop (the scroll port is its own tab stop in front of the set) exit 1 · T-5 FAIL · 115/117 gating cells pass [library 78/79 · unmigrated 36/37 · migrated 37/38]
+         first planted FAIL: FAIL       specimen tab stops · 2 stop(s) between the sentinels, 1 of them items [other:div.port → 1]
+OK     T-5  chromium fault   t5-reorder (the roving order is captured at mount and goes stale after a keyed reorder) exit 1 · T-5 FAIL · 116/117 gating cells pass [library 78/79 · unmigrated 37/37 · migrated 38/38]
+         first planted FAIL: FAIL       preset keyed reorder · ArrowDown from DOM #3 (no item below: the linear step) · focus 3 → 2 (want 0) · checked true
+OK     T-5  chromium fault   t5-input (keys typed in an editable descendant move the group's selection) exit 1 · T-5 FAIL · 116/117 gating cells pass [library 78/79 · unmigrated 37/37 · migrated 38/38]
+         first planted FAIL: FAIL       preset-input interactive descendant (flavor dist) · ArrowRight typed in the <input> · focus inside:0 → 1 · selection 1 → 1
+OK     T-5  chromium fault   t5-deselect (a single group whose model matches no value checks the first item (a false choice)) exit 1 · T-5 FAIL · 116/117 gating cells pass [library 78/79 · unmigrated 37/37 · migrated 38/38]
+         first planted FAIL: FAIL       preset no selection (Q-6 a) · checked truefalsefalsefalse · stops [0] (want nothing checked and one stop, the first item)
+OK     T-5  chromium fault   t5-multi (N-of-M: Space on a focused tile does not toggle it) exit 1 · T-5 FAIL · 115/117 gating cells pass [library 78/79 · unmigrated 36/37 · migrated 37/38]
+         first planted FAIL: FAIL       v2 N-of-M Space toggles #0 · false → false → false
+OK     T-5  chromium fault   t5-consumer (H3-12: a consumer role=option and tabindex=0 on every item override the engine: no radio, N tab stops) exit 1 · T-5 FAIL · 115/117 gating cells pass [library 77/79 · unmigrated 37/37 · migrated 38/38]
+         first planted FAIL: FAIL       preset-consumer-aria ARIA (CDP AX tree) · group radiogroup · items option · checked falsetruefalsefalse · pressed ---- · selected ----
+OK     T-5  chromium fault   t5-retired (H3-10: semantics="toggle" falls through to the default with no signal) exit 1 · T-5 FAIL · 116/117 gating cells pass [library 78/79 · unmigrated 37/37 · migrated 38/38]
+         first planted FAIL: FAIL       tabs-retired retired value semantics="toggle" (flavor dist) · not refused (no console error, no throw): a silent fall-through
+selftest: 10 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0 · 2026-10-16 02:44:06 · load { 34.48 34.60 31.93 }

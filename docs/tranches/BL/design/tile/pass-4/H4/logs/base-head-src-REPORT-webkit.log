@@ -1,0 +1,12 @@
+2026-10-16 05:49:03 · load { 45.56 32.86 27.10 }
+in WebKit batch base-head (one lock hold)
+REPORT · H4-6, reported: the commit on wide tiles against a 4 px gap; the selection mark over light media
+  target head-atk-src (flavor src) · Playwright WebKit 26.5 · harness H4 e40bfd8801ef
+  load 45.56 / 32.86 / 27.10 at start, 46.80 / 33.55 / 27.42 at end · other headless browser processes at start: 7 (waited 0.4 s) · browser lock waited 0 s
+  PASS       kick · preset forced to two 300 px columns at a 4 px gap · item 1 300.00×61.58, rest gap 4.00 px · programmatic commit (checked true), 79 frames · peak scale 1.0000 · deepest push into a neighbour 0.00 px (want ≤ 0.05)
+  info-pass  kick · preset at the scene's own geometry · item 1 208.00×61.58, rest gap 8.00 px · peak scale 1.0000 · deepest push 0.00 px
+  UNMEASURED mark · v2 dark · UNMEASURED: no mark painted (0 device px change with ::after hidden; FV3-6 is built only if Q-3 rules (b))
+  UNMEASURED mark · v2 light · UNMEASURED: no mark painted (0 device px change with ::after hidden; FV3-6 is built only if Q-3 rules (b))
+REPORT PASS · 1/1 gating cells pass, 1 unmeasured [library 1/1]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p4/h4/out4/runs/head-atk-src/REPORT-webkit.json
+exit 0 · 2026-10-16 05:49:12 · load { 46.80 33.55 27.42 }

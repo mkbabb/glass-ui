@@ -1,0 +1,10 @@
+2026-10-16 08:54:57 · load { 26.89 23.05 18.83 }
+in WebKit batch rest2 (one lock hold)
+selftest · harness H4 e40bfd8801ef (39 files)
+OK     W-B  webkit   clean exit 0 · W-B PASS · 25/25 gating cells pass [library 25/25]
+OK     W-B  webkit   fault   t5 (ArrowUp and ArrowDown are dead (the tablist model), so grid arrows do not move) exit 1 · W-B FAIL · 19/25 gating cells pass [library 19/25]
+         first planted FAIL: FAIL       preset arrows grid ArrowDown from #0 · focus 0 → 0 · moved false · checked true (started by focus + Space: PF-1)
+OK     W-B  webkit   fault   wb (no choice-card slot and no ChoiceGroup/ChoiceCard export) exit 1 · W-B FAIL · 21/25 gating cells pass [library 21/25]
+         first planted FAIL: FAIL       exports · RED by absence: no ChoiceGroup/ChoiceCard in the bundle (exports seen: [SelectionGroup, SelectionItem])
+selftest: 3 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0 · 2026-10-16 08:56:18 · load { 22.87 22.97 19.19 }
