@@ -1,0 +1,182 @@
+2026-10-16 15:57:11 · load { 20.28 22.50 19.96 }
+in one WebKit-lock hold
+T-5 · one-of-N ARIA, one tab stop, all four arrows move and check (Q-4 b), no selection, reorder, descendants, N-of-M
+  target dp-src (flavor src) · Playwright WebKit 26.5 · harness H4 a26206b6a740
+  load 20.28 / 22.50 / 19.96 at start, 19.97 / 21.62 / 19.89 at end · other headless browser processes at start: 13 (waited 0.2 s) · browser lock waited 0 s
+  PASS       preset ARIA (Playwright aria snapshot + DOM states) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----
+  PASS       preset tab stops · 1 stop(s) between the sentinels, 1 of them items [1] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  PASS       preset grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       preset grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       preset grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       preset grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  preset grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 3 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  preset grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 3 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       preset no selection (Q-6 a) · checked falsefalsefalsefalse · stops [0] (want nothing checked and one stop, the first item)
+  PASS       preset keyed reorder · ArrowRight from DOM #0 · focus 0 → 1 (want 1, the new order's next) · checked true
+  PASS       preset keyed reorder · ArrowDown from DOM #3 (no item below: the linear step) · focus 3 → 0 (want 0) · checked true
+  info-pass  [unmigrated] preset-verbatim ARIA (Playwright aria snapshot + DOM states) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----
+  info-pass  [unmigrated] preset-verbatim tab stops · 1 stop(s) between the sentinels, 1 of them items [1] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  info-pass  [unmigrated] preset-verbatim grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  [unmigrated] preset-verbatim grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  [unmigrated] preset-verbatim grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  [unmigrated] preset-verbatim grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  [unmigrated] preset-verbatim grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 3 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  [unmigrated] preset-verbatim grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 3 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       [migrated] preset-migrated ARIA (Playwright aria snapshot + DOM states) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----
+  PASS       [migrated] preset-migrated tab stops · 1 stop(s) between the sentinels, 1 of them items [1] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  PASS       [migrated] preset-migrated grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       [migrated] preset-migrated grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       [migrated] preset-migrated grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       [migrated] preset-migrated grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  [migrated] preset-migrated grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 3 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  [migrated] preset-migrated grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 3 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       specimen ARIA (Playwright aria snapshot + DOM states) · group radiogroup · items radio · checked falsetruefalsefalsefalsefalsefalsefalse · pressed -------- · selected --------
+  PASS       specimen tab stops · 1 stop(s) between the sentinels, 1 of them items [1] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  PASS       specimen grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       specimen grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       specimen grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       specimen grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  specimen grid edge ArrowDown from #6 (no item that way; reported) · focus 6 → 7 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  specimen grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 7 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  [unmigrated] specimen-verbatim ARIA (Playwright aria snapshot + DOM states) · group radiogroup · items radio · checked falsetruefalsefalsefalsefalsefalsefalse · pressed -------- · selected --------
+  info-pass  [unmigrated] specimen-verbatim tab stops · 1 stop(s) between the sentinels, 1 of them items [1] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  info-pass  [unmigrated] specimen-verbatim grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  [unmigrated] specimen-verbatim grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  [unmigrated] specimen-verbatim grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  [unmigrated] specimen-verbatim grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  [unmigrated] specimen-verbatim grid edge ArrowDown from #6 (no item that way; reported) · focus 6 → 7 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  [unmigrated] specimen-verbatim grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 7 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       [migrated] specimen-migrated ARIA (Playwright aria snapshot + DOM states) · group radiogroup · items radio · checked falsetruefalsefalsefalsefalsefalsefalse · pressed -------- · selected --------
+  PASS       [migrated] specimen-migrated tab stops · 1 stop(s) between the sentinels, 1 of them items [1] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  PASS       [migrated] specimen-migrated grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       [migrated] specimen-migrated grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       [migrated] specimen-migrated grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       [migrated] specimen-migrated grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  [migrated] specimen-migrated grid edge ArrowDown from #6 (no item that way; reported) · focus 6 → 7 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  [migrated] specimen-migrated grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 7 · moved true · checked true (started by focus + Space: PF-1)
+  FAIL       strip ARIA (Playwright aria snapshot + DOM states) · group group · items button · checked ------ · pressed falsetruefalsefalsefalsefalse · selected ------
+  FAIL       strip tab stops · 6 stop(s) between the sentinels, 6 of them items [0 → 1 → 2 → 3 → 4 → 5] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  FAIL       strip row ArrowRight from #0 · focus 0 → 0 · moved false · checked true (started by focus + Space: PF-1)
+  FAIL       strip row ArrowLeft from #1 · focus 1 → 1 · moved false · checked true (started by focus + Space: PF-1)
+  FAIL       strip row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true (started by focus + Space: PF-1)
+  FAIL       strip row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 5 · moved false · checked true (started by focus + Space: PF-1)
+  info-fail  [unmigrated] strip-verbatim ARIA (Playwright aria snapshot + DOM states) · group group · items button · checked ------ · pressed falsetruefalsefalsefalsefalse · selected ------
+  info-fail  [unmigrated] strip-verbatim tab stops · 6 stop(s) between the sentinels, 6 of them items [0 → 1 → 2 → 3 → 4 → 5] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  info-fail  [unmigrated] strip-verbatim row ArrowRight from #0 · focus 0 → 0 · moved false · checked true (started by focus + Space: PF-1)
+  info-fail  [unmigrated] strip-verbatim row ArrowLeft from #1 · focus 1 → 1 · moved false · checked true (started by focus + Space: PF-1)
+  info-fail  [unmigrated] strip-verbatim row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true (started by focus + Space: PF-1)
+  info-fail  [unmigrated] strip-verbatim row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 5 · moved false · checked true (started by focus + Space: PF-1)
+  PASS       [migrated] strip-migrated ARIA (Playwright aria snapshot + DOM states) · group radiogroup · items radio · checked falsetruefalsefalsefalsefalse · pressed ------ · selected ------
+  PASS       [migrated] strip-migrated tab stops · 1 stop(s) between the sentinels, 1 of them items [1] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  PASS       [migrated] strip-migrated row ArrowRight from #0 · focus 0 → 1 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       [migrated] strip-migrated row ArrowLeft from #1 · focus 1 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       [migrated] strip-migrated row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 1 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       [migrated] strip-migrated row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 4 · moved true · checked true (started by focus + Space: PF-1)
+  FAIL       f1 ARIA (Playwright aria snapshot + DOM states) · group button · items button · checked ------ · pressed ------ · selected ------
+  FAIL       f1 tab stops · 6 stop(s) between the sentinels, 6 of them items [0 → 1 → 2 → 3 → 4 → 5] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  FAIL       f1 row ArrowRight from #0 · focus 0 → 0 · moved false · checked true (started by focus + Space: PF-1)
+  FAIL       f1 row ArrowLeft from #1 · focus 1 → 1 · moved false · checked true (started by focus + Space: PF-1)
+  FAIL       f1 row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true (started by focus + Space: PF-1)
+  FAIL       f1 row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 5 · moved false · checked true (started by focus + Space: PF-1)
+  info-fail  [unmigrated] f1-verbatim ARIA (Playwright aria snapshot + DOM states) · group button · items button · checked ------ · pressed ------ · selected ------
+  info-fail  [unmigrated] f1-verbatim tab stops · 6 stop(s) between the sentinels, 6 of them items [0 → 1 → 2 → 3 → 4 → 5] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  info-fail  [unmigrated] f1-verbatim row ArrowRight from #0 · focus 0 → 0 · moved false · checked true (started by focus + Space: PF-1)
+  info-fail  [unmigrated] f1-verbatim row ArrowLeft from #1 · focus 1 → 1 · moved false · checked true (started by focus + Space: PF-1)
+  info-fail  [unmigrated] f1-verbatim row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true (started by focus + Space: PF-1)
+  info-fail  [unmigrated] f1-verbatim row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 5 · moved false · checked true (started by focus + Space: PF-1)
+  PASS       [migrated] f1-migrated ARIA (Playwright aria snapshot + DOM states) · group radiogroup · items radio · checked falsetruefalsefalsefalsefalse · pressed ------ · selected ------
+  PASS       [migrated] f1-migrated tab stops · 1 stop(s) between the sentinels, 1 of them items [1] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  PASS       [migrated] f1-migrated grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       [migrated] f1-migrated grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       [migrated] f1-migrated grid ArrowDown from #0 · focus 0 → 5 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       [migrated] f1-migrated grid ArrowUp from #5 · focus 5 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  [migrated] f1-migrated grid edge ArrowDown from #1 (no item that way; reported) · focus 1 → 5 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  [migrated] f1-migrated grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 5 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       v2 N-of-M ARIA (Playwright aria snapshot + DOM states) · group button · items button · pressed falsetruefalsefalse · checked ----
+  PASS       v2 N-of-M Space toggles #0 · false → true → false
+  info-pass  v2 N-of-M tab stops (reported) · 4 [0 → 1 → 2 → 3] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  info-pass  [unmigrated] v2-verbatim N-of-M ARIA (Playwright aria snapshot + DOM states) · group button · items button · pressed falsetruefalsefalse · checked ----
+  info-pass  [unmigrated] v2-verbatim N-of-M Space toggles #0 · false → true → false
+  info-pass  [unmigrated] v2-verbatim N-of-M tab stops (reported) · 4 [0 → 1 → 2 → 3] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  PASS       [migrated] v2-migrated N-of-M ARIA (Playwright aria snapshot + DOM states) · group group · items button · pressed falsetruefalsefalse · checked ----
+  PASS       [migrated] v2-migrated N-of-M Space toggles #0 · false → true → false
+  info-pass  [migrated] v2-migrated N-of-M tab stops (reported) · 1 [1] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  PASS       c1 ARIA (Playwright aria snapshot + DOM states) · group radiogroup · items radio · checked falsetruefalsefalsefalse · pressed ----- · selected -----
+  FAIL       c1 tab stops · 5 stop(s) between the sentinels, 5 of them items [0 → 1 → 2 → 3 → 4] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  FAIL       c1 column ArrowRight from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true (started by focus + Space: PF-1)
+  FAIL       c1 column ArrowLeft from #4 (linear step, Q-4 b) · focus 4 → 4 · moved false · checked true (started by focus + Space: PF-1)
+  FAIL       c1 column ArrowDown from #0 · focus 0 → 0 · moved false · checked true (started by focus + Space: PF-1)
+  FAIL       c1 column ArrowUp from #1 · focus 1 → 1 · moved false · checked true (started by focus + Space: PF-1)
+  info-pass  [unmigrated] c1-verbatim ARIA (Playwright aria snapshot + DOM states) · group radiogroup · items radio · checked falsetruefalsefalsefalse · pressed ----- · selected -----
+  info-fail  [unmigrated] c1-verbatim tab stops · 5 stop(s) between the sentinels, 5 of them items [0 → 1 → 2 → 3 → 4] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  info-fail  [unmigrated] c1-verbatim column ArrowRight from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true (started by focus + Space: PF-1)
+  info-fail  [unmigrated] c1-verbatim column ArrowLeft from #4 (linear step, Q-4 b) · focus 4 → 4 · moved false · checked true (started by focus + Space: PF-1)
+  info-fail  [unmigrated] c1-verbatim column ArrowDown from #0 · focus 0 → 0 · moved false · checked true (started by focus + Space: PF-1)
+  info-fail  [unmigrated] c1-verbatim column ArrowUp from #1 · focus 1 → 1 · moved false · checked true (started by focus + Space: PF-1)
+  PASS       [migrated] c1-migrated ARIA (Playwright aria snapshot + DOM states) · group radiogroup · items radio · checked falsetruefalsefalsefalse · pressed ----- · selected -----
+  PASS       [migrated] c1-migrated tab stops · 1 stop(s) between the sentinels, 1 of them items [1] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  PASS       [migrated] c1-migrated column ArrowRight from #0 (linear step, Q-4 b) · focus 0 → 1 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       [migrated] c1-migrated column ArrowLeft from #4 (linear step, Q-4 b) · focus 4 → 3 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       [migrated] c1-migrated column ArrowDown from #0 · focus 0 → 1 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       [migrated] c1-migrated column ArrowUp from #1 · focus 1 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       preset-contents ARIA (Playwright aria snapshot + DOM states) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----
+  PASS       preset-contents tab stops · 1 stop(s) between the sentinels, 1 of them items [1] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  PASS       preset-contents grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       preset-contents grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       preset-contents grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       preset-contents grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  preset-contents grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 3 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  preset-contents grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 3 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       [migrated] preset-contents-migrated ARIA (Playwright aria snapshot + DOM states) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----
+  PASS       [migrated] preset-contents-migrated tab stops · 1 stop(s) between the sentinels, 1 of them items [1] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  PASS       [migrated] preset-contents-migrated grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       [migrated] preset-contents-migrated grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       [migrated] preset-contents-migrated grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       [migrated] preset-contents-migrated grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  [migrated] preset-contents-migrated grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 3 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  [migrated] preset-contents-migrated grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 3 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       preset-input interactive descendant (flavor src) · ArrowRight typed in the <input> · focus inside:0 → inside:0 · selection "snappy" → "snappy"
+  PASS       preset-consumer-aria ARIA (Playwright aria snapshot + DOM states) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----
+  PASS       preset-consumer-aria tab stops · 1 stop(s) between the sentinels, 1 of them items [1] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  PASS       preset-consumer-aria grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       preset-consumer-aria grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       preset-consumer-aria grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       preset-consumer-aria grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  preset-consumer-aria grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 3 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  preset-consumer-aria grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 3 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       single ARIA (Playwright aria snapshot + DOM states) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----
+  PASS       single tab stops · 1 stop(s) between the sentinels, 1 of them items [1] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  PASS       single row ArrowRight from #0 · focus 0 → 1 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       single row ArrowLeft from #1 · focus 1 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       single row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 1 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       single row ArrowUp from #3 (linear step, Q-4 b) · focus 3 → 2 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       vertical ARIA (Playwright aria snapshot + DOM states) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----
+  PASS       vertical tab stops · 1 stop(s) between the sentinels, 1 of them items [1] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  PASS       vertical column ArrowRight from #0 (linear step, Q-4 b) · focus 0 → 1 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       vertical column ArrowLeft from #3 (linear step, Q-4 b) · focus 3 → 2 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       vertical column ArrowDown from #0 · focus 0 → 1 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       vertical column ArrowUp from #1 · focus 1 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       tabs ARIA (Playwright aria snapshot + DOM states) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----
+  PASS       tabs tab stops · 1 stop(s) between the sentinels, 1 of them items [1] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  PASS       tabs row ArrowRight from #0 · focus 0 → 1 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       tabs row ArrowLeft from #1 · focus 1 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       tabs row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 1 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       tabs row ArrowUp from #3 (linear step, Q-4 b) · focus 3 → 2 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  tabs-retired retired value semantics="toggle" (flavor src: a src alias build, reported, not gated) · refused: [tile] app error https://vuejs.org/error-reference/#runtime-3 TypeError: [SegmentedTabs] semantics="toggle" is not one o
+  FAIL       card ARIA (Playwright aria snapshot + DOM states) · group listbox · items heading · checked ---- · pressed ---- · selected ----
+  FAIL       card tab stops · 0 stop(s) between the sentinels, 0 of them items [] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  FAIL       card grid ArrowRight from #0 · focus body → body · moved false · checked false (started by focus + Space: PF-1)
+  FAIL       card grid ArrowLeft from #1 · focus body → body · moved false · checked false (started by focus + Space: PF-1)
+  FAIL       card grid ArrowDown from #0 · focus body → body · moved false · checked false (started by focus + Space: PF-1)
+  FAIL       card grid ArrowUp from #2 · focus body → body · moved false · checked false (started by focus + Space: PF-1)
+  info-fail  card grid edge ArrowDown from #2 (no item that way; reported) · focus body → body · moved false · checked false (started by focus + Space: PF-1)
+  info-fail  card grid edge ArrowUp from #0 (no item that way; reported) · focus body → body · moved false · checked false (started by focus + Space: PF-1)
+  FAIL       chipcell ARIA (Playwright aria snapshot + DOM states) · group group · items button · checked ---- · pressed falsetruefalsefalse · selected ----
+  FAIL       chipcell tab stops · 4 stop(s) between the sentinels, 4 of them items [0 → 1 → 2 → 3] (Option+Tab: Playwright WebKit's Tab skips buttons)
+  FAIL       chipcell row ArrowRight from #0 · focus 0 → 0 · moved false · checked true (started by focus + Space: PF-1)
+  FAIL       chipcell row ArrowLeft from #1 · focus 1 → 1 · moved false · checked true (started by focus + Space: PF-1)
+  FAIL       chipcell row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true (started by focus + Space: PF-1)
+  FAIL       chipcell row ArrowUp from #3 (linear step, Q-4 b) · focus 3 → 3 · moved false · checked true (started by focus + Space: PF-1)
+T-5 FAIL · 87/116 gating cells pass [library 49/78 · unmigrated 20/37 · migrated 38/38]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p4/D4-Dp-spec/out/runs/dp-src/T-5-webkit.json
+exit 1 · 2026-10-16 15:58:54 · load { 19.97 21.62 19.89 }

@@ -1,0 +1,11 @@
+2026-10-16 15:31:17 · load { 10.13 10.55 10.43 }
+CANON-FACT · CANON's law with each container condition evaluated on the twin's fact (route probe; F3-1)
+  target dp-src (flavor src) · Chromium 149.0.7827.55 · harness H4 a26206b6a740
+  load 10.13 / 10.55 / 10.43 at start, 10.13 / 10.55 / 10.43 at end · other headless browser processes at start: 5 (waited 0.1 s) · browser lock waited 0 s
+  PASS       canon-fact twin facts (plant A) · every tile twin's group computes flush and every pill twin's none · read flush/none
+  FAIL       canon-fact tile corner (plant A) · 48 twins, 139 corner rules (1 inside a container query, each evaluated on the twin's fact) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item» · exactly one rule reaches a tile and not its pill twin, on var(--radius-field) · 2 rule(s): «.toggle-group__item @container not style(--selection-tile: none)» → var(--radius-field) (index-DZaKWff3.css; 48/48 twins, first sm/horizontal/none/on); «:is(.toggle-group[data-shape="cell"] .toggle-group__item)» → 12px (inline#1; 48/48 twins, first sm/horizontal/none/on)
+  PASS       canon-fact pill corner (plant A) · 48 twins, 139 corner rules (1 inside a container query, each evaluated on the twin's fact) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item» · every group-scoped corner on a pill is var(--radius-pill) or inherit · 2 rule(s) reach a pill
+  PASS       canon-fact unmatched (plant A) · 48 twins, 139 corner rules (1 inside a container query, each evaluated on the twin's fact) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item» · every corner selector is matched by the engine · 0 unmatched
+CANON-FACT FAIL · 3/4 gating cells pass [library 3/4]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p4/D4-Dp-spec/out/runs/dp-src/CANON-FACT-chromium.json
+exit 1 · 2026-10-16 15:31:18 · load { 10.13 10.55 10.43 }

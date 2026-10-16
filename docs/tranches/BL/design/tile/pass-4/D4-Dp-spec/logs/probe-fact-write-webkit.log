@@ -1,0 +1,19 @@
+2026-10-16 16:11:42 · load { 20.86 20.33 19.99 }
+FACT-WRITE · the MIGRATION claim on writing --selection-tile over shape="cell" (E-3)
+  target dp-atk-src (flavor src) · Playwright WebKit 26.5 · harness H4 a26206b6a740
+  load 20.86 / 20.33 / 19.99 at start, 20.01 / 20.17 / 19.93 at end · other headless browser processes at start: 7 (waited 0.3 s) · browser lock waited 0 s
+  PASS       [migrated] control light · want tile (fact flush) · a tile on the field corner · fact flush · 95.97×40.00 · 16px → used 16.00 (0.80×h/2) · 1 row(s) · column
+  PASS       [migrated] declared-none-inline light · want pill · a pill at h/2 on one row · fact none · 95.97×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       [migrated] declared-none-rule light · want pill · a pill at h/2 on one row · fact none · 95.97×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       [migrated] declared-plated-rule light · want tile (fact plated) · a tile on the field corner · fact plated · 95.97×40.00 · 16px → used 16.00 (0.80×h/2) · 1 row(s) · column
+  PASS       [migrated] ancestor-plated light · want tile (fact flush) · a tile on the field corner · fact flush · 95.97×40.00 · 16px → used 16.00 (0.80×h/2) · 1 row(s) · column
+  PASS       [migrated] ancestor-flush-on-pill light · want pill · a pill at h/2 on one row · fact none · 92.81×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       [migrated] control dark · want tile (fact flush) · a tile on the field corner · fact flush · 95.97×40.00 · 16px → used 16.00 (0.80×h/2) · 1 row(s) · column
+  PASS       [migrated] declared-none-inline dark · want pill · a pill at h/2 on one row · fact none · 95.97×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       [migrated] declared-none-rule dark · want pill · a pill at h/2 on one row · fact none · 95.97×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       [migrated] declared-plated-rule dark · want tile (fact plated) · a tile on the field corner · fact plated · 95.97×40.00 · 16px → used 16.00 (0.80×h/2) · 1 row(s) · column
+  PASS       [migrated] ancestor-plated dark · want tile (fact flush) · a tile on the field corner · fact flush · 95.97×40.00 · 16px → used 16.00 (0.80×h/2) · 1 row(s) · column
+  PASS       [migrated] ancestor-flush-on-pill dark · want pill · a pill at h/2 on one row · fact none · 92.81×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+FACT-WRITE PASS · 12/12 gating cells pass [migrated 12/12]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p4/D4-Dp-spec/out/runs/dp-atk-src/FACT-WRITE-webkit.json
+exit 0 · 2026-10-16 16:11:56 · load { 20.01 20.17 19.93 }
