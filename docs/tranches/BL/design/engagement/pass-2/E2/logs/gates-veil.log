@@ -1,0 +1,21 @@
+# gates veil start 2026-10-15 23:44:49 load { 24.34 27.13 35.27 }
+build exit 0
+demo:dist:build exit 0
+typecheck exit 2
+# end 2026-10-15 23:45:31 load { 26.76 27.19 34.91 }
+# typecheck exit 0 (re-run after the test typing fix) 2026-10-15 23:46:30
+# vitest veil start 2026-10-15 23:46:30 load { 38.42 31.26 35.96 }
+     × every runtime export is reachable — no export leaks (zero external site AND unpublished) 8ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/gates/overfit-structure.test.ts > gate:G-OVERFIT — EXPORT-REACH arm (the TS twin of orphan-css-partial) > every runtime export is reachable — no export leaks (zero external site AND unpublished)
+ Test Files  1 failed | 240 passed (241)
+      Tests  1 failed | 2337 passed | 10 expected fail | 1 skipped (2349)
+   Duration  83.11s (transform 6.69s, setup 10.70s, import 38.98s, tests 28.63s, environment 50.20s)
+# vitest end 2026-10-15 23:50:16 load { 20.83 28.36 33.80 }
+# after making engageStage/releaseStage module-private: 2026-10-15 23:50:35 load { 32.70 30.52 34.44 }
+typecheck exit 0
+     × the dist-demo it measures is NEWER than every source it is built from 21ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ Test Files  1 failed | 51 passed (52)
+      Tests  1 failed | 649 passed | 6 expected fail (656)
+build exit 0

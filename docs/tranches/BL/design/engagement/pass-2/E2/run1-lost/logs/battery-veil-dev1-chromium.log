@@ -1,0 +1,7 @@
+# battery veil chromium start 2026-10-15 21:10:48 load { 10.34 10.10 13.06 }
+E-3 chromium exit 0 · E-3 chromium PASS · 22 pass, 0 fail, 0 unmeasured of 22 gating cells (0 reported) · load 10.3/10.1/13.1 at start, 11.0/10.3/13.0 at end · 23 s, load at start 10.3/10.1/13.1
+E-10 chromium exit 1 · E-10 chromium FAIL · 3 pass, 1 fail, 0 unmeasured of 4 gating cells (1 reported) · load 11.0/10.3/13.0 at start, 10.9/10.3/13.0 at end · 11 s, load at start 11.0/10.3/13.0
+    FAIL       E-10 slider escape release · Escape: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0120 (bound ≤ own release 0.0076 + 0.002) · load 11.3/10.3/13.0
+E-11 chromium exit 0 · E-11 chromium PASS · 3 pass, 0 fail, 1 unmeasured of 4 gating cells (0 reported) · load 10.9/10.3/13.0 at start, 19.1/12.2/13.6 at end · 18 s, load at start 10.9/10.3/13.0
+    UNMEASURED E-11 switch fail-loud --scale-commit-pop=1 (commit) · no degradation, no error: the token is not read on this path · --scale-commit-pop: "1" on the root · clean {"peak":0,"rise":0} {"peak":0,"rise":0} · planted {"peak":0,"rise":0} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 0 · load 11.1/10.3/13.0
+# battery veil chromium end exit 1 2026-10-15 21:11:46 load { 18.73 12.28 13.65 }

@@ -1,0 +1,10 @@
+# battery noveil chromium start 2026-10-16 02:16:50 load { 26.45 28.28 30.75 }
+[guarded] waiting for headroom (load 43 > 36)
+E-3 chromium exit 0 · E-3 chromium PASS · 22 pass, 0 fail, 0 unmeasured of 22 gating cells (0 reported) · load 34.8/34.7/32.0 at start, 36.9/35.1/32.2 at end · 24 s, load at start 34.8/34.7/32.0
+E-7 chromium exit 1 · E-7 chromium FAIL · 5 pass, 2 fail, 0 unmeasured of 7 gating cells (0 reported) · load 36.9/35.1/32.2 at start, 36.9/35.1/32.2 at end · 4 s, load at start 36.9/35.1/32.2
+    FAIL       E-7 writers data-held (static) · 2 writer file(s): src/components/dock/GlassDock.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/E2/wtn · load 36.9/35.1/32.2
+    FAIL       E-7 writers data-press (static) · 2 writer file(s): src/components/pager-dots/PagerDots.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/E2/wtn · load 36.9/35.1/32.2
+E-10 chromium exit 0 · E-10 chromium PASS · 3 pass, 0 fail, 0 unmeasured of 3 gating cells (2 reported) · load 37.2/35.2/32.2 at start, 47.5/37.5/33.1 at end · 12 s, load at start 37.2/35.2/32.2
+E-11 chromium exit 0 · E-11 chromium PASS · 3 pass, 0 fail, 1 unmeasured of 4 gating cells (0 reported) · load 47.5/37.5/33.1 at start, 54.7/39.7/34.0 at end · 20 s, load at start 47.5/37.5/33.1
+    UNMEASURED E-11 switch fail-loud --scale-commit-pop=1 (commit) · no degradation, no error: the token is not read on this path · --scale-commit-pop: "1" on the root · clean {"peak":0,"rise":0.006024467225619778} {"peak":0,"rise":0.00604722445135486} · planted {"peak":0,"rise":0.006000043433303737} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 0 · load 47.8/37.7/33.2
+# battery noveil chromium end exit 1 2026-10-16 02:45:14 load { 56.77 40.40 34.27 }

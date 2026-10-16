@@ -1,0 +1,13 @@
+# probe noveil chromium start 2026-10-16 02:11:20 load { 18.03 31.45 32.64 }
+P-E2 probe noveil · chromium · load 30.7/30.6/31.3 at start
+  PASS       numfield click · 4 px of travel: popover false, engaged false, value 50 (50), focus on the field true, footprints 0 · load 30.7/30.6/31.3
+  PASS       numfield scrub · 60 px of travel: popover true, engaged true, scale ×1.060, veil 1.00, value 50 → 57 (7 steps; trunc(60/8) = 7) · load 30.8/30.6/31.3
+  PASS       numfield value kept · fling: 65 at release → 65; still: 65 → 65; off the stage true, footprints 0 · load 30.8/30.6/31.3
+  FAIL       numfield carry · leading edge past its rest, page frame: fling 9.25 px, still 6.60 px, differential 2.65 px (bound ≥ 4); largest one-frame move on release 1.4 px · load 30.8/30.6/31.3
+  PASS       numfield PRM · under reduce, scrubbing: scale ×1.000, veil 1.00 (the light leg), promoted true · load 30.8/30.6/31.3
+  PASS       between landing · a keyed insert before the held slider: footprint re-seated true (the inserted node now precedes the footprint); release, largest one-frame move 2.2 px (without the insert 2.1 px; bound ≤ that + 1 px); during the hold the control moved with its slot, largest one-frame move 4.9 px · load 30.7/30.6/31.3
+  PASS       dialog escape · 1 Tab(s) to the thumb: engaged true (stage veil 0.00); first Escape: engaged false, Dialog open true; second Escape: Dialog open false · load 30.7/30.6/31.3
+  PASS       keyfocus · "k" focuses the thumb by script: focus slider, engaged false, promoted false, scale ×1.000 · load 30.7/30.6/31.3
+  PASS       keyfocus then acting key · ArrowRight after it engages (the control acts on it): true · load 30.7/30.6/31.3
+P-E2 probe noveil chromium · 8 pass, 1 fail · load 29.5/30.3/31.2 at end
+# probe noveil chromium end exit 1 2026-10-16 02:25:23 load { 29.77 30.38 31.23 }

@@ -1,0 +1,16 @@
+# probe veil chromium start 2026-10-15 21:14:10 load { 15.31 13.25 13.81 }
+P-E2 probe veil · chromium · load 15.3/13.2/13.8 at start
+  PASS       numfield click · 4 px of travel: popover false, engaged false, value 50 (50), focus on the field true, footprints 0 · load 15.3/13.2/13.8
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.evaluate: Execution context was destroyed, most likely because of a navigation.
+    at scrub (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-2/E2/probe/probe.mjs:70:23)
+    at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-2/E2/probe/probe.mjs:79:16 {
+  log: [],
+  name: 'Error'
+}
+
+Node.js v26.0.0
+# probe veil chromium end exit 1 2026-10-15 21:14:47 load { 14.98 13.37 13.83 }

@@ -1,0 +1,27 @@
+## plant snap-handoff (load { 26.63 27.71 36.34 })
+      Tests  19 passed (19)
+## plant veil-dip (load { 26.02 27.57 36.23 })
+      Tests  19 passed (19)
+## plant anykey-focus (load { 27.82 27.90 36.25 })
+     × a printable key whose handler focuses the control by script engages nothing 6ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  1 failed | 18 passed (19)
+## plant escape-double (load { 32.88 28.94 36.57 })
+     × an Escape that disengages is spent (default prevented); the next one is not 6ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  1 failed | 18 passed (19)
+## plant no-reseat (load { 30.19 28.50 36.32 })
+     × a node inserted between the footprint and the control: the footprint is re-seated 9ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  1 failed | 18 passed (19)
+(css initial 1 is a CSS plant; read in the browser by E-11)
+## plant snap-handoff-v2 (load { 24.88 27.41 35.75 })
+     × Tab A → B: A leaves on its own exit still promoted, B engages, the veil never drops 24ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  1 failed | 10 passed (11)
+## plant veil-dip-v2 (load { 23.80 27.10 35.54 })
+     × Tab A → B: A leaves on its own exit still promoted, B engages, the veil never drops 25ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  1 failed | 10 passed (11)
+## clean (load { 29.43 28.21 35.89 })
+      Tests  11 passed (11)
