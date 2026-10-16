@@ -1,0 +1,355 @@
+{
+ "source_read": {
+  "useLeadTrail.ts": "dock row (springPresets.ts:84-90) 0.3 / 0.88; SUBSTEPS 8; MAX_DT_MS 40; tau 0.08; trailOffset clamp(v*tau, +-ceil)",
+  "worm.ts": "ceil = elongationCeil(span, pitch); span = c - worm.lead.value on every drive (driveActive)"
+ },
+ "retarget:r1": {
+  "load": [
+   "{ 11.26 15.79 18.75 }",
+   "{ 11.08 15.60 18.64 }"
+  ],
+  "origin_px": 265.33,
+  "pitch": 28.0,
+  "launch_frame_ms_after_click2": 24.0,
+  "retarget_frame_ms_after_click4": 14.6,
+  "head_sim_vs_measured_max_err_px": 5.036,
+  "head_sim_vs_measured_median_err_px": 0.522,
+  "measured": {
+   "launch_first_mid_step_px": -9.14,
+   "largest_backward_mid_step_px": 9.14,
+   "backward_mid_frames": 5,
+   "body_outside_chain_span_px": 21.47,
+   "retarget_trail_body_steps_px": [
+    -13.05,
+    -7.93,
+    -3.38,
+    4.6
+   ],
+   "retarget_mid_steps_px": [
+    -6.08,
+    -2.9,
+    -0.21,
+    4.6
+   ],
+   "retarget_backward_px_total": -9.19
+  },
+  "head_sim_worst_err_at_ms_after_click2": 95.1,
+  "head": {
+   "launch_first_mid_step_px": -9.14,
+   "largest_backward_mid_step_px": 9.14,
+   "backward_mid_frames": 5,
+   "body_outside_chain_span_px": 24.65,
+   "retarget_trail_body_steps_px": [
+    -13.25,
+    -7.71,
+    -2.16,
+    4.02
+   ],
+   "retarget_mid_steps_px": [
+    -6.15,
+    -2.78,
+    0.92,
+    4.02
+   ],
+   "retarget_backward_px_total": -8.94
+  },
+  "head_fixed_ceil": {
+   "launch_first_mid_step_px": -9.14,
+   "largest_backward_mid_step_px": 9.14,
+   "backward_mid_frames": 5,
+   "body_outside_chain_span_px": 24.65,
+   "retarget_trail_body_steps_px": [
+    -13.25,
+    -7.71,
+    -2.15,
+    4.02
+   ],
+   "retarget_mid_steps_px": [
+    -6.15,
+    -2.78,
+    0.92,
+    4.02
+   ],
+   "retarget_backward_px_total": -8.94
+  },
+  "chain_origin": {
+   "launch_first_mid_step_px": 1.59,
+   "largest_backward_mid_step_px": 6.15,
+   "backward_mid_frames": 3,
+   "body_outside_chain_span_px": 0.11,
+   "retarget_trail_body_steps_px": [
+    -13.25,
+    -7.71,
+    -2.16,
+    4.02
+   ],
+   "retarget_mid_steps_px": [
+    -6.15,
+    -2.78,
+    0.92,
+    4.02
+   ],
+   "retarget_backward_px_total": -8.94
+  },
+  "hop_origin": {
+   "launch_first_mid_step_px": 1.59,
+   "largest_backward_mid_step_px": 0.03,
+   "backward_mid_frames": 1,
+   "body_outside_chain_span_px": 0.11,
+   "retarget_trail_body_steps_px": [
+    0.62,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "retarget_mid_steps_px": [
+    0.78,
+    1.07,
+    2.0,
+    2.01
+   ],
+   "retarget_backward_px_total": 0
+  },
+  "chain_origin_monotone": {
+   "launch_first_mid_step_px": 1.59,
+   "largest_backward_mid_step_px": 0.03,
+   "backward_mid_frames": 1,
+   "body_outside_chain_span_px": 0.11,
+   "retarget_trail_body_steps_px": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "retarget_mid_steps_px": [
+    0.47,
+    1.07,
+    2.0,
+    2.01
+   ],
+   "retarget_backward_px_total": 0
+  }
+ },
+ "retarget:r2": {
+  "load": [
+   "{ 10.36 13.35 17.04 }",
+   "{ 10.21 13.22 16.95 }"
+  ],
+  "origin_px": 265.33,
+  "pitch": 28.0,
+  "launch_frame_ms_after_click2": 21.5,
+  "retarget_frame_ms_after_click4": 14.9,
+  "head_sim_vs_measured_max_err_px": 6.958,
+  "head_sim_vs_measured_median_err_px": 0.623,
+  "measured": {
+   "launch_first_mid_step_px": -9.14,
+   "largest_backward_mid_step_px": 9.14,
+   "backward_mid_frames": 5,
+   "body_outside_chain_span_px": 21.47,
+   "retarget_trail_body_steps_px": [
+    -14.0,
+    -6.84,
+    -3.44,
+    3.43
+   ],
+   "retarget_mid_steps_px": [
+    -6.46,
+    -2.44,
+    -0.26,
+    3.43
+   ],
+   "retarget_backward_px_total": -9.16
+  },
+  "head_sim_worst_err_at_ms_after_click2": 94.2,
+  "head": {
+   "launch_first_mid_step_px": -9.14,
+   "largest_backward_mid_step_px": 9.14,
+   "backward_mid_frames": 5,
+   "body_outside_chain_span_px": 24.31,
+   "retarget_trail_body_steps_px": [
+    -12.06,
+    -8.12,
+    -3.98,
+    2.84
+   ],
+   "retarget_mid_steps_px": [
+    -5.64,
+    -3.05,
+    -0.56,
+    2.96
+   ],
+   "retarget_backward_px_total": -9.26
+  },
+  "head_fixed_ceil": {
+   "launch_first_mid_step_px": -9.14,
+   "largest_backward_mid_step_px": 9.14,
+   "backward_mid_frames": 5,
+   "body_outside_chain_span_px": 24.31,
+   "retarget_trail_body_steps_px": [
+    -12.06,
+    -8.12,
+    -3.98,
+    2.88
+   ],
+   "retarget_mid_steps_px": [
+    -5.64,
+    -3.05,
+    -0.56,
+    2.99
+   ],
+   "retarget_backward_px_total": -9.26
+  },
+  "chain_origin": {
+   "launch_first_mid_step_px": 1.59,
+   "largest_backward_mid_step_px": 5.64,
+   "backward_mid_frames": 3,
+   "body_outside_chain_span_px": 0.1,
+   "retarget_trail_body_steps_px": [
+    -12.06,
+    -8.12,
+    -3.98,
+    2.84
+   ],
+   "retarget_mid_steps_px": [
+    -5.64,
+    -3.05,
+    -0.56,
+    2.96
+   ],
+   "retarget_backward_px_total": -9.26
+  },
+  "hop_origin": {
+   "launch_first_mid_step_px": 1.59,
+   "largest_backward_mid_step_px": 0.0,
+   "backward_mid_frames": 0,
+   "body_outside_chain_span_px": 0.1,
+   "retarget_trail_body_steps_px": [
+    0.79,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "retarget_mid_steps_px": [
+    0.78,
+    1.01,
+    1.43,
+    1.55
+   ],
+   "retarget_backward_px_total": 0
+  },
+  "chain_origin_monotone": {
+   "launch_first_mid_step_px": 1.59,
+   "largest_backward_mid_step_px": 0.0,
+   "backward_mid_frames": 0,
+   "body_outside_chain_span_px": 0.1,
+   "retarget_trail_body_steps_px": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "retarget_mid_steps_px": [
+    0.39,
+    1.01,
+    1.43,
+    1.55
+   ],
+   "retarget_backward_px_total": 0
+  }
+ },
+ "fps-hops": {
+  "load": [
+   "{ 16.71 45.98 48.83 }",
+   "{ 17.17 45.11 48.48 }"
+  ],
+  "hops": [
+   {
+    "hop": "click1",
+    "dist_px": 40.0,
+    "head_sim_vs_measured_max_err_px": 0.576,
+    "head": {
+     "launch_first_mid_step_px": -6.53,
+     "largest_backward_mid_step_px": 6.53,
+     "backward_mid_frames": 2,
+     "body_outside_chain_span_px": 18.2
+    },
+    "chain_origin": {
+     "launch_first_mid_step_px": 1.14,
+     "largest_backward_mid_step_px": 0.0,
+     "backward_mid_frames": 0,
+     "body_outside_chain_span_px": 0.06
+    },
+    "hop_origin": {
+     "launch_first_mid_step_px": 1.14,
+     "largest_backward_mid_step_px": 0.0,
+     "backward_mid_frames": 0,
+     "body_outside_chain_span_px": 0.06
+    },
+    "chain_origin_monotone": {
+     "launch_first_mid_step_px": 1.14,
+     "largest_backward_mid_step_px": 0.0,
+     "backward_mid_frames": 0,
+     "body_outside_chain_span_px": 0.06
+    }
+   },
+   {
+    "hop": "click4",
+    "dist_px": 120.0,
+    "head_sim_vs_measured_max_err_px": 1.971,
+    "head": {
+     "launch_first_mid_step_px": -19.59,
+     "largest_backward_mid_step_px": 19.59,
+     "backward_mid_frames": 2,
+     "body_outside_chain_span_px": 51.69
+    },
+    "chain_origin": {
+     "launch_first_mid_step_px": 3.42,
+     "largest_backward_mid_step_px": 0.17,
+     "backward_mid_frames": 1,
+     "body_outside_chain_span_px": 0.26
+    },
+    "hop_origin": {
+     "launch_first_mid_step_px": 3.42,
+     "largest_backward_mid_step_px": 0.17,
+     "backward_mid_frames": 1,
+     "body_outside_chain_span_px": 0.26
+    },
+    "chain_origin_monotone": {
+     "launch_first_mid_step_px": 3.42,
+     "largest_backward_mid_step_px": 0.17,
+     "backward_mid_frames": 1,
+     "body_outside_chain_span_px": 0.26
+    }
+   },
+   {
+    "hop": "click0",
+    "dist_px": -160.0,
+    "head_sim_vs_measured_max_err_px": 2.17,
+    "head": {
+     "launch_first_mid_step_px": 26.12,
+     "largest_backward_mid_step_px": 26.12,
+     "backward_mid_frames": 12,
+     "body_outside_chain_span_px": 69.26
+    },
+    "chain_origin": {
+     "launch_first_mid_step_px": -4.56,
+     "largest_backward_mid_step_px": 0.2,
+     "backward_mid_frames": 11,
+     "body_outside_chain_span_px": 0.53
+    },
+    "hop_origin": {
+     "launch_first_mid_step_px": -4.56,
+     "largest_backward_mid_step_px": 0.2,
+     "backward_mid_frames": 11,
+     "body_outside_chain_span_px": 0.53
+    },
+    "chain_origin_monotone": {
+     "launch_first_mid_step_px": -4.56,
+     "largest_backward_mid_step_px": 0.32,
+     "backward_mid_frames": 11,
+     "body_outside_chain_span_px": 0.53
+    }
+   }
+  ]
+ }
+}
