@@ -81,3 +81,7 @@ W-D.2 §3 item 9 (B10 takes `demo` on the seal W-D.1 lands), W-C.1 item 4 (D1's 
 7. §5 D2-G2's converged cell and the "Can each fail?" line read the converged tree. §6's demo bullet reads the placement's moves on W-D.1's landed tree.
 
 `waves/INDEX.md` W-D.1 row and `design/structure/floor/FLOOR.md`: unchanged this round (C-1 and C-5 passed in round 1; the row cites no kit or digest, and FLOOR.md:9 links `<repo>/node_modules` alone).
+
+## Driver cure after critique 2
+
+- C-6: W-D.2 §3 item 9 now reads "the 9 unrouted stories" on the converged tree (the chain routes `demo/stories/foundations/paper-texture.vue`; 10 is the HEAD count, which §2's demo paragraph keeps). Critique 2's unscored note (item 8 and §4 give HEAD's lexer and helper counts, 50 and 51 files, where the converged tree reads 57 and 24) is left for round 3's critic to check under C-6.
