@@ -1,0 +1,153 @@
+{
+ "base": {
+  "B0": 0,
+  "B1": 0,
+  "B2": 0,
+  "B3": 0,
+  "B4": 0,
+  "B5": 0,
+  "B6": 0,
+  "B7": 0,
+  "B8": 0,
+  "B9": 0,
+  "B10": 0,
+  "B11": 0,
+  "B12": 0,
+  "B13": 0,
+  "B14": 0,
+  "B15": 0,
+  "B16": 0,
+  "B17": 0,
+  "B18": 0
+ },
+ "rows": [
+  {
+   "id": "PD-val-1",
+   "item": "S-03 (P9-R1 (a)), corrected: the reverse edge through the parent's door",
+   "expect": "B4",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B4,B10",
+   "lines": {
+    "B4": [
+     "value SCC at module grain [src/components/aurora src/components/aurora/runtime] (parent<->child) via src/components/aurora/runtime/zq10k.ts:1 -> src/components/aurora/zq10b.ts ; src/components/aurora/aurora-config.ts:51 -> src/components/aurora/runtime/index.ts"
+    ],
+    "B10": [
+     "src/components/aurora/zq10b.ts -> src/components/aurora/runtime [move] readers: src/components/aurora/runtime"
+    ]
+   },
+   "gainedCount": {
+    "B4": 1,
+    "B10": 1
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "PD-type-1",
+   "item": "S-03 (P9-R1 (a)), corrected: the reverse edge through the parent's door (type-only)",
+   "expect": "-B4",
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "B10",
+   "lines": {
+    "B10": [
+     "src/components/aurora/zq10b.ts -> src/components/aurora/runtime [move] readers: src/components/aurora/runtime"
+    ]
+   },
+   "gainedCount": {
+    "B10": 1
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "PD-val-2",
+   "item": "S-03 (P9-R1 (a)), corrected: the reverse edge through the parent's door",
+   "expect": "B4",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B4,B6,B10",
+   "lines": {
+    "B4": [
+     "value SCC at module grain [src/components/dock src/components/dock/search] (parent<->child) via src/components/dock/search/zq10k.ts:1 -> src/components/dock/zq10b.ts ; src/components/dock/index.ts:92 -> src/components/dock/search/index.ts"
+    ],
+    "B6": [
+     "src/components/dock/: 13 direct files > 12"
+    ],
+    "B10": [
+     "src/components/dock/zq10b.ts -> src/components/dock/search [move] readers: src/components/dock/search"
+    ]
+   },
+   "gainedCount": {
+    "B4": 1,
+    "B6": 1,
+    "B10": 1
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "PD-type-2",
+   "item": "S-03 (P9-R1 (a)), corrected: the reverse edge through the parent's door (type-only)",
+   "expect": "-B4",
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "B6,B10",
+   "lines": {
+    "B6": [
+     "src/components/dock/: 13 direct files > 12"
+    ],
+    "B10": [
+     "src/components/dock/zq10b.ts -> src/components/dock/search [move] readers: src/components/dock/search"
+    ]
+   },
+   "gainedCount": {
+    "B6": 1,
+    "B10": 1
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "PD-val-3",
+   "item": "S-03 (P9-R1 (a)), corrected: the reverse edge through the parent's door",
+   "expect": "B4",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B4,B10",
+   "lines": {
+    "B4": [
+     "value SCC at module grain [src/components/menu src/components/menu/items] (parent<->child) via src/components/menu/items/zq10k.ts:1 -> src/components/menu/zq10b.ts ; src/components/menu/index.ts:21 -> src/components/menu/items/index.ts"
+    ],
+    "B10": [
+     "src/components/menu/zq10b.ts -> src/components/menu/items [move] readers: src/components/menu/items"
+    ]
+   },
+   "gainedCount": {
+    "B4": 1,
+    "B10": 1
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "PD-type-3",
+   "item": "S-03 (P9-R1 (a)), corrected: the reverse edge through the parent's door (type-only)",
+   "expect": "-B4",
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "B10",
+   "lines": {
+    "B10": [
+     "src/components/menu/zq10b.ts -> src/components/menu/items [move] readers: src/components/menu/items"
+    ]
+   },
+   "gainedCount": {
+    "B10": 1
+   },
+   "err": null,
+   "grouped": false
+  }
+ ]
+}

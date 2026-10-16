@@ -1,0 +1,90 @@
+plants10 start 2026-10-16T13:51:48Z load { 25.48 21.74 20.46 }
+BASE {"B0":0,"B1":0,"B2":0,"B3":0,"B4":0,"B5":0,"B6":0,"B7":0,"B8":0,"B9":0,"B10":0,"B11":0,"B12":0,"B13":0,"B14":0,"B15":0,"B16":0,"B17":0,"B18":0}
+THROWS  PR-free-nopeer [B-10 / S-14 (P8-R3, P9-G2: a peer-less row throws)] the ./motion-core row, Peer cell removed: "useScrollProgress, useRAFLoop,             @mkbabb/glass-ui/motion-core" :: named=- gained={} :: seal exited 2 (uncaught throw)
+THROWS  PR-free-ws [B-10 / S-14 (P8-R3, P9-G2: a peer-less row throws)] the ./motion-core row, Peer cell whitespace only: "useScrollProgress, useRAFLoop,             @mkbabb/glass-ui/motion-core" :: named=- gained={} :: seal exited 2 (uncaught throw)
+THROWS  PR-free-nosub [B-10 / S-14 (P8-R3, P9-G2: a peer-less row throws)] the ./motion-core row, subpath blanked: "useScrollProgress, useRAFLoop,                                            (none — keyframes-FREE + vueuse-FREE)" :: named=- gained={} :: seal exited 2 (uncaught throw)
+CLEAN   PR-ctl [B-10 / S-14 (P8-R3, P9-G2: a peer-less row throws) control] the ./motion-core row re-spaced, same tokens :: named=- gained={}
+THROWS  PR-heavy-nopeer [B-10 / S-14 (P8-R3, P9-G2: a peer-less row throws)] the @mkbabb/glass-ui/input row, Peer cell removed: "Input                                      @mkbabb/glass-ui/input" :: named=- gained={} :: seal exited 2 (uncaught throw)
+THROWS  PR-heavy-ws [B-10 / S-14 (P8-R3, P9-G2: a peer-less row throws)] the @mkbabb/glass-ui/input row, Peer cell whitespace only: "Input                                      @mkbabb/glass-ui/input" :: named=- gained={} :: seal exited 2 (uncaught throw)
+THROWS  PR-heavy-nosub [B-10 / S-14 (P8-R3, P9-G2: a peer-less row throws)] the @mkbabb/glass-ui/input row, subpath blanked: "Input                                                                     @vueuse/core" :: named=- gained={} :: seal exited 2 (uncaught throw)
+CAUGHT  PC-val-1 [S-03 / B-01 (P9-R1 (a): B4 judges every module-grain value SCC, parent↔child included)] src/components/aurora ↔ src/components/aurora/config: parent → child door, child → parent-level file (value) :: named=B4,B10,B11 gained={"B4":2,"B10":3,"B11":1}
+        B4: cycle @src/components/aurora [zq10p.ts config] via src/components/aurora/zq10p.ts -> src/components/aurora/config/index.ts ; src/components/aurora/config/zq10c.ts -> src/components/aurora/zq10p.ts
+        B4: value SCC at module grain [src/components/aurora src/components/aurora/config src/components/aurora/runtime src/components/aurora/runtime/frame src/components/aurora/runtime/webgl src/components/aurora/runtime/webgpu] (parent<->child) via s
+        B10: src/components/aurora/runtime/frame/textureUpload.ts -> src/components/aurora/runtime [move] readers: src/components/aurora/runtime/frame, src/components/aurora/runtime/webgpu
+        B10: src/components/aurora/runtime/frame/uniformBridge.ts -> src/components/aurora/runtime [move] readers: src/components/aurora/runtime/frame, src/components/aurora/runtime/webgl, src/components/aurora/runtime/webgpu
+        B11: src/components/aurora/config/index.ts +zq10C (not in the pin)
+FALSE+  PC-type-1 [S-03 / B-01 (P9-R1 (a): B4 judges every module-grain value SCC, parent↔child included) (type-only reverse)] src/components/aurora ↔ src/components/aurora/config: the reverse edge type-only :: named=B4,B10,B11 gained={"B4":1,"B10":1,"B11":1}
+        B4: cycle @src/components/aurora [zq10p.ts config] via src/components/aurora/zq10p.ts -> src/components/aurora/config/index.ts ; src/components/aurora/config/zq10c.ts -> src/components/aurora/zq10p.ts [type]
+        B10: src/components/aurora/zq10p.ts -> src/components/aurora/config [move] readers: src/components/aurora/config
+        B11: src/components/aurora/config/index.ts +zq10C (not in the pin)
+CAUGHT  PC-val-2 [S-03 / B-01 (P9-R1 (a): B4 judges every module-grain value SCC, parent↔child included)] src/components/blob ↔ src/components/blob/mood: parent → child door, child → parent-level file (value) :: named=B4,B10,B11 gained={"B4":2,"B10":1,"B11":1}
+        B4: cycle @src/components/blob [zq10p.ts mood] via src/components/blob/zq10p.ts -> src/components/blob/mood/index.ts ; src/components/blob/mood/zq10c.ts -> src/components/blob/zq10p.ts
+        B4: value SCC at module grain [src/components/blob src/components/blob/mood src/components/blob/renderer src/components/blob/renderer/webgl src/components/blob/renderer/webgpu] (parent<->child) via src/components/blob/renderer/webgpu/uniformBri
+        B10: src/components/blob/zq10p.ts -> src/components/blob/mood [move] readers: src/components/blob/mood
+        B11: src/components/blob/mood/index.ts +zq10C (not in the pin)
+FALSE+  PC-type-2 [S-03 / B-01 (P9-R1 (a): B4 judges every module-grain value SCC, parent↔child included) (type-only reverse)] src/components/blob ↔ src/components/blob/mood: the reverse edge type-only :: named=B4,B10,B11 gained={"B4":1,"B10":1,"B11":1}
+        B4: cycle @src/components/blob [zq10p.ts mood] via src/components/blob/zq10p.ts -> src/components/blob/mood/index.ts ; src/components/blob/mood/zq10c.ts -> src/components/blob/zq10p.ts [type]
+        B10: src/components/blob/zq10p.ts -> src/components/blob/mood [move] readers: src/components/blob/mood
+        B11: src/components/blob/mood/index.ts +zq10C (not in the pin)
+CAUGHT  PC-val-3 [S-03 / B-01 (P9-R1 (a): B4 judges every module-grain value SCC, parent↔child included)] src/components/dock ↔ src/components/dock/context: parent → child door, child → parent-level file (value) :: named=B4,B6,B10,B11 gained={"B4":2,"B6":1,"B10":1,"B11":1}
+        B4: cycle @src/components/dock [zq10p.ts context] via src/components/dock/zq10p.ts -> src/components/dock/context/index.ts ; src/components/dock/context/zq10c.ts -> src/components/dock/zq10p.ts
+        B4: value SCC at module grain [src/components/dock src/components/dock/context] (parent<->child) via src/components/dock/context/zq10c.ts:1 -> src/components/dock/zq10p.ts ; src/components/dock/DockLayerGroup.vue:15 -> src/components/dock/conte
+        B6: src/components/dock/: 13 direct files > 12
+        B10: src/components/dock/zq10p.ts -> src/components/dock/context [move] readers: src/components/dock/context
+        B11: src/components/dock/context/index.ts +zq10C (not in the pin)
+FALSE+  PC-type-3 [S-03 / B-01 (P9-R1 (a): B4 judges every module-grain value SCC, parent↔child included) (type-only reverse)] src/components/dock ↔ src/components/dock/context: the reverse edge type-only :: named=B4,B6,B10,B11 gained={"B4":1,"B6":1,"B10":1,"B11":1}
+        B4: cycle @src/components/dock [zq10p.ts context] via src/components/dock/zq10p.ts -> src/components/dock/context/index.ts ; src/components/dock/context/zq10c.ts -> src/components/dock/zq10p.ts [type]
+        B6: src/components/dock/: 13 direct files > 12
+        B10: src/components/dock/zq10p.ts -> src/components/dock/context [move] readers: src/components/dock/context
+        B11: src/components/dock/context/index.ts +zq10C (not in the pin)
+CAUGHT  PCG-val [S-03 / B-01 (P9-R1 (a): B4 judges every module-grain value SCC, parent↔child included)] src/components/aurora → src/components/aurora/runtime (door) … src/components/aurora/runtime/frame → src/components/aurora/zq10g.ts (value) :: named=B4,B10,B11 gained={"B4":2,"B10":3,"B11":2}
+        B4: cycle @src/components/aurora [zq10g.ts runtime] via src/components/aurora/zq10g.ts -> src/components/aurora/runtime/index.ts ; src/components/aurora/runtime/frame/zq10gc.ts -> src/components/aurora/zq10g.ts
+        B4: value SCC at module grain [src/components/aurora src/components/aurora/runtime src/components/aurora/runtime/frame src/components/aurora/runtime/webgl src/components/aurora/runtime/webgpu] (parent<->child) via src/components/aurora/runtime/
+        B10: src/components/aurora/runtime/frame/textureUpload.ts -> src/components/aurora/runtime [move] readers: src/components/aurora/runtime/frame, src/components/aurora/runtime/webgpu
+        B10: src/components/aurora/runtime/frame/uniformBridge.ts -> src/components/aurora/runtime [move] readers: src/components/aurora/runtime/frame, src/components/aurora/runtime/webgl, src/components/aurora/runtime/webgpu
+        B11: src/components/aurora/runtime/index.ts +zq10GC (not in the pin)
+        B11: src/components/aurora/runtime/frame/index.ts +zq10GC (not in the pin)
+CAUGHT  PCX-val-1 [S-03 / B-01 (P9-R1 (a): B4 judges every module-grain value SCC, parent↔child included)] existing src/components/aurora/aurora-config.ts → src/components/aurora/config; new src/components/aurora/config/zq10x.ts → src/components/aurora/aurora-config.ts (value, namespace) :: named=B4,B10 gained={"B4":2,"B10":2}
+        B4: cycle @src/components/aurora [composables/auroraFallbackGround.ts aurora-config.ts config runtime] via src/components/aurora/composables/auroraFallbackGround.ts -> src/components/aurora/config/index.ts [type] ; src/components/aurora/aurora-
+        B4: value SCC at module grain [src/components/aurora src/components/aurora/config src/components/aurora/runtime src/components/aurora/runtime/frame src/components/aurora/runtime/webgl src/components/aurora/runtime/webgpu] (parent<->child) via s
+        B10: src/components/aurora/runtime/frame/textureUpload.ts -> src/components/aurora/runtime [move] readers: src/components/aurora/runtime/frame, src/components/aurora/runtime/webgpu
+        B10: src/components/aurora/runtime/frame/uniformBridge.ts -> src/components/aurora/runtime [move] readers: src/components/aurora/runtime/frame, src/components/aurora/runtime/webgl, src/components/aurora/runtime/webgpu
+FALSE+  PCX-type-1 [S-03 / B-01 (P9-R1 (a): B4 judges every module-grain value SCC, parent↔child included) (type-only reverse)] existing src/components/aurora/aurora-config.ts → src/components/aurora/config; new src/components/aurora/config/zq10x.ts → src/components/aurora/aurora-config.ts (import type) :: named=B4 gained={"B4":1}
+        B4: cycle @src/components/aurora [composables/auroraFallbackGround.ts aurora-config.ts config runtime] via src/components/aurora/composables/auroraFallbackGround.ts -> src/components/aurora/config/index.ts [type] ; src/components/aurora/aurora-
+CAUGHT  PCX-val-2 [S-03 / B-01 (P9-R1 (a): B4 judges every module-grain value SCC, parent↔child included)] existing src/components/aurora/runtime/runtime.ts → src/components/aurora/runtime/frame; new src/components/aurora/runtime/frame/zq10x.ts → src/components/aurora/runtime/runtime.ts (value, namespace) :: named=B4,B10 gained={"B4":2,"B10":2}
+        B4: cycle @src/components/aurora/runtime [webgpu webgl runtime.ts frame] via src/components/aurora/runtime/webgpu/uniformBridgeWGPU.ts -> src/components/aurora/runtime/frame/index.ts ; src/components/aurora/runtime/webgl/glSetup.ts -> src/compo
+        B4: value SCC at module grain [src/components/aurora/runtime src/components/aurora/runtime/frame src/components/aurora/runtime/webgl src/components/aurora/runtime/webgpu] (parent<->child) via src/components/aurora/runtime/webgpu/uniformBridgeWG
+        B10: src/components/aurora/runtime/frame/textureUpload.ts -> src/components/aurora/runtime [move] readers: src/components/aurora/runtime/frame, src/components/aurora/runtime/webgpu
+        B10: src/components/aurora/runtime/frame/uniformBridge.ts -> src/components/aurora/runtime [move] readers: src/components/aurora/runtime/frame, src/components/aurora/runtime/webgl, src/components/aurora/runtime/webgpu
+FALSE+  PCX-type-2 [S-03 / B-01 (P9-R1 (a): B4 judges every module-grain value SCC, parent↔child included) (type-only reverse)] existing src/components/aurora/runtime/runtime.ts → src/components/aurora/runtime/frame; new src/components/aurora/runtime/frame/zq10x.ts → src/components/aurora/runtime/runtime.ts (import type) :: named=B4 gained={"B4":1}
+        B4: cycle @src/components/aurora/runtime [webgpu webgl runtime.ts frame] via src/components/aurora/runtime/webgpu/uniformBridgeWGPU.ts -> src/components/aurora/runtime/frame/index.ts ; src/components/aurora/runtime/webgl/glSetup.ts -> src/compo
+CAUGHT  SIB-val [S-03 / B-01 (P9-R1 (a): B4 judges every module-grain value SCC, parent↔child included) (sibling regression)] src/components/aurora/config ↔ src/components/aurora/runtime value cycle through both doors :: named=B4,B10,B11 gained={"B4":2,"B10":4,"B11":2}
+        B4: cycle @src/components/aurora [config runtime] via src/components/aurora/config/zq10sa.ts -> src/components/aurora/runtime/index.ts ; src/components/aurora/runtime/contract.ts -> src/components/aurora/config/index.ts [type]
+        B4: value SCC at module grain [src/components/aurora/config src/components/aurora/runtime src/components/aurora/runtime/frame src/components/aurora/runtime/webgl src/components/aurora/runtime/webgpu] (parent<->child) via src/components/aurora/r
+        B10: src/components/aurora/config/zq10sa.ts -> src/components/aurora/runtime [move] readers: src/components/aurora/runtime
+        B10: src/components/aurora/runtime/frame/textureUpload.ts -> src/components/aurora/runtime [move] readers: src/components/aurora/runtime/frame, src/components/aurora/runtime/webgpu
+        B11: src/components/aurora/config/index.ts +zq10SA (not in the pin)
+        B11: src/components/aurora/runtime/index.ts +zq10SB (not in the pin)
+RESTORED base judgement unchanged
+TALLY {"THROWS":6,"CLEAN":1,"CAUGHT":7,"FALSE+":5}
+ROW PR-free-nopeer PASS verdict=THROWS expect=THROWS named=-
+ROW PR-free-ws PASS verdict=THROWS expect=THROWS named=-
+ROW PR-free-nosub PASS verdict=THROWS expect=THROWS named=-
+ROW PR-ctl PASS verdict=CLEAN expect=CLEAN named=-
+ROW PR-heavy-nopeer PASS verdict=THROWS expect=THROWS named=-
+ROW PR-heavy-ws PASS verdict=THROWS expect=THROWS named=-
+ROW PR-heavy-nosub PASS verdict=THROWS expect=THROWS named=-
+ROW PC-val-1 PASS verdict=CAUGHT expect=CAUGHT named=B4,B10,B11
+ROW PC-type-1 FAIL verdict=FALSE+ expect=CLEAN named=B4,B10,B11
+ROW PC-val-2 PASS verdict=CAUGHT expect=CAUGHT named=B4,B10,B11
+ROW PC-type-2 FAIL verdict=FALSE+ expect=CLEAN named=B4,B10,B11
+ROW PC-val-3 PASS verdict=CAUGHT expect=CAUGHT named=B4,B6,B10,B11
+ROW PC-type-3 FAIL verdict=FALSE+ expect=CLEAN named=B4,B6,B10,B11
+ROW PCG-val PASS verdict=CAUGHT expect=CAUGHT named=B4,B10,B11
+ROW PCX-val-1 PASS verdict=CAUGHT expect=CAUGHT named=B4,B10
+ROW PCX-type-1 FAIL verdict=FALSE+ expect=CLEAN named=B4
+ROW PCX-val-2 PASS verdict=CAUGHT expect=CAUGHT named=B4,B10
+ROW PCX-type-2 FAIL verdict=FALSE+ expect=CLEAN named=B4
+ROW SIB-val PASS verdict=CAUGHT expect=CAUGHT named=B4,B10,B11
+ROWS pass 14 fail 5 skip 0
+plants10 rc=1 end 2026-10-16T13:53:35Z load { 26.19 23.44 21.28 }
