@@ -1,0 +1,366 @@
+{
+ "witness": "CF",
+ "target": "fv3@349e1cdd",
+ "when": "2026-10-16T00:07:30.308Z",
+ "load": 18.66,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "c1·shape·h",
+   "pass": false,
+   "failed": [
+    "square",
+    "summary"
+   ],
+   "unjudged": [],
+   "collapsed": {
+    "t": 2413.5,
+    "m": false,
+    "posture": "collapsed",
+    "main": 56,
+    "cross": 56,
+    "e": [
+     443,
+     380.1,
+     499,
+     436.1
+    ],
+    "rootCross": 56,
+    "R": 9999,
+    "span": 40,
+    "nPaint": 1,
+    "plateO": 1,
+    "plateW": 56,
+    "disc": {
+     "name": "Expand dock",
+     "exp": "false",
+     "paints": false,
+     "c": [
+      491,
+      408.109375
+     ],
+     "label": "div#glass-dock-v-14-summary.dock-layer.dock-layer--summary.is-active"
+    },
+    "pers": [
+     {
+      "label": "button.dock-icon-button.glass-specular-track.glass-capsule-hover",
+      "o": 1,
+      "w": 40,
+      "h": 40,
+      "inert": false,
+      "tab": 0,
+      "press": true,
+      "got": "path"
+     }
+    ],
+    "active": "body",
+    "activeIn": false,
+    "activeIsDisc": false,
+    "triggers": 0,
+    "menuOpen": false,
+    "vw": 1440,
+    "sw": 1440,
+    "sy": 148,
+    "persC": [
+     [
+      451,
+      388.109375,
+      491,
+      428.109375
+     ]
+    ]
+   },
+   "frame": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p4/floor3/wt/.fv3out/main/rerun2/runs/CF-fv3/frames/chromium-c1-h-collapsed.png",
+   "summary": "collapsed 56×56 px (main×cross), corner R 9999 px (stadium ≥ 27), painting seats' span 40 px (hug bound 64); disclosure div#glass-dock-v-14-summary.dock-layer.dock-layer--summary.is-active \"Expand dock\" aria-expanded=false (does not paint); plate opacity 1 collapsed, 1 expanded (expanded); frame chromium-c1-h-collapsed.png  ⟶ FAILED: square, summary",
+   "load": 20.68
+  },
+  {
+   "engine": "chromium",
+   "cell": "c2·morph·v",
+   "pass": false,
+   "failed": [
+    "continuous"
+   ],
+   "unjudged": [],
+   "up": {
+    "travel": 213,
+    "step": 178,
+    "between": 63,
+    "flash": 0,
+    "pop": 0,
+    "checks": {
+     "moved": true,
+     "continuous": false,
+     "flash": true,
+     "pop": true
+    }
+   },
+   "down": {
+    "travel": 213,
+    "step": 75.1,
+    "between": 30,
+    "flash": 0,
+    "pop": 0,
+    "checks": {
+     "moved": true,
+     "continuous": true,
+     "flash": true,
+     "pop": true
+    }
+   },
+   "warm": {
+    "travel": 213,
+    "step": 178,
+    "between": 68,
+    "flash": 0,
+    "pop": 0,
+    "checks": {
+     "moved": true,
+     "continuous": false,
+     "flash": true,
+     "pop": true
+    }
+   },
+   "stallMs": 97,
+   "frames": {
+    "dir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p4/floor3/wt/.fv3out/main/rerun2/runs/CF-fv3/frames/chromium-c2_morph_v-expand",
+    "shots": [
+     "step-00-8-53ms.png",
+     "step-01-55-83ms.png",
+     "step-02-84-129ms.png",
+     "step-03-131-175ms.png",
+     "step-04-177-224ms.png",
+     "step-05-226-265ms.png",
+     "step-06-266-314ms.png",
+     "step-07-316-355ms.png"
+    ]
+   },
+   "summary": "first expand: travel 213 px, largest one-frame step 178 px (bound 95.85), 63 frame(s) between the rests, flash 0, root cross drift 0 px, the extent first moves 97 ms after the hover; collapse: travel 213 px, largest one-frame step 75.1 px (bound 95.85), 30 frame(s) between the rests, flash 0, root cross drift 0 px; warm expand: travel 213 px, largest one-frame step 178 px (bound 95.85), 68 frame(s) between the rests, flash 0, root cross drift 0 px; frames 8 (frames/chromium-c2_morph_v-expand, warm)  ⟶ FAILED: continuous",
+   "load": 19.04
+  },
+  {
+   "engine": "chromium",
+   "cell": "c3·scroll",
+   "pass": false,
+   "failed": [
+    "collapses"
+   ],
+   "unjudged": [],
+   "summary": "expanded yes; wheel 240 px scrolled the page 240 px; did NOT collapse within 1.5 s (the dwell is 3.6 s)  ⟶ FAILED: collapses",
+   "load": 18.96
+  },
+  {
+   "engine": "chromium",
+   "cell": "c5·keyboard",
+   "pass": false,
+   "failed": [
+    "disclosure",
+    "escape"
+   ],
+   "unjudged": [],
+   "summary": "Tab ×1 → button.dock-icon-button.glass-specular-track.glass-capsule-hover with the dock expanded; Escape then Enter. Collapsed disclosure: NONE. Enter: expanded, focus button.dock-icon-button.glass-specular-track.glass-capsule-hover; Escape: did NOT collapse, focus button.dock-icon-button.glass-specular-track.glass-capsule-hover (in the dock)  ⟶ FAILED: disclosure, escape",
+   "load": 19.38
+  },
+  {
+   "engine": "chromium",
+   "cell": "c6·menu",
+   "pass": false,
+   "failed": [
+    "menu"
+   ],
+   "unjudged": [],
+   "summary": "absent: the collapsible dock carries no menu trigger ([aria-haspopup]) in either posture; O-88's menu-from-a-collapsed-dock has nothing to open  ⟶ FAILED: menu",
+   "load": 19.38
+  },
+  {
+   "engine": "chromium",
+   "cell": "c7·coarse-tap",
+   "pass": false,
+   "failed": [
+    "opens"
+   ],
+   "unjudged": [],
+   "summary": "tap at the collapsed dock's centre (coarse, 390 px): did NOT expand; elements activated none (not counted: button.dock-icon-button.glass-specular-track.glass-capsule-hover, the disclosure's or a persistent element's own)  ⟶ FAILED: opens",
+   "load": 18.63
+  },
+  {
+   "engine": "webkit",
+   "cell": "c1·shape·h",
+   "pass": false,
+   "failed": [
+    "square",
+    "summary"
+   ],
+   "unjudged": [],
+   "collapsed": {
+    "t": 2769,
+    "m": false,
+    "posture": "collapsed",
+    "main": 56,
+    "cross": 56,
+    "e": [
+     443,
+     380.3,
+     499,
+     436.3
+    ],
+    "rootCross": 56,
+    "R": 9999,
+    "span": 40,
+    "nPaint": 1,
+    "plateO": 1,
+    "plateW": 56,
+    "disc": {
+     "name": "Expand dock",
+     "exp": "false",
+     "paints": false,
+     "c": [
+      491,
+      408.296875
+     ],
+     "label": "div#glass-dock-v-14-summary.dock-layer.dock-layer--summary.is-active"
+    },
+    "pers": [
+     {
+      "label": "button.dock-icon-button.glass-specular-track.glass-capsule-hover",
+      "o": 1,
+      "w": 40,
+      "h": 40,
+      "inert": false,
+      "tab": 0,
+      "press": true,
+      "got": "path"
+     }
+    ],
+    "active": "body",
+    "activeIn": false,
+    "activeIsDisc": false,
+    "triggers": 0,
+    "menuOpen": false,
+    "vw": 1440,
+    "sw": 1440,
+    "sy": 101,
+    "persC": [
+     [
+      451,
+      388.296875,
+      491,
+      428.296875
+     ]
+    ]
+   },
+   "frame": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p4/floor3/wt/.fv3out/main/rerun2/runs/CF-fv3/frames/webkit-c1-h-collapsed.png",
+   "summary": "collapsed 56×56 px (main×cross), corner R 9999 px (stadium ≥ 27), painting seats' span 40 px (hug bound 64); disclosure div#glass-dock-v-14-summary.dock-layer.dock-layer--summary.is-active \"Expand dock\" aria-expanded=false (does not paint); plate opacity 1 collapsed, 1 expanded (expanded); frame webkit-c1-h-collapsed.png  ⟶ FAILED: square, summary",
+   "load": 19.88
+  },
+  {
+   "engine": "webkit",
+   "cell": "c2·morph·v",
+   "pass": false,
+   "failed": [
+    "continuous"
+   ],
+   "unjudged": [],
+   "up": {
+    "travel": 213,
+    "step": 178,
+    "between": 53,
+    "flash": 0,
+    "pop": 0,
+    "checks": {
+     "moved": true,
+     "continuous": false,
+     "flash": true,
+     "pop": true
+    }
+   },
+   "down": {
+    "travel": 213,
+    "step": 72.35,
+    "between": 24,
+    "flash": 0,
+    "pop": 0,
+    "checks": {
+     "moved": true,
+     "continuous": true,
+     "flash": true,
+     "pop": true
+    }
+   },
+   "warm": {
+    "travel": 213,
+    "step": 178,
+    "between": 54,
+    "flash": 0,
+    "pop": 0,
+    "checks": {
+     "moved": true,
+     "continuous": false,
+     "flash": true,
+     "pop": true
+    }
+   },
+   "stallMs": 85,
+   "frames": {
+    "dir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p4/floor3/wt/.fv3out/main/rerun2/runs/CF-fv3/frames/webkit-c2_morph_v-expand",
+    "shots": [
+     "step-00-10-101ms.png",
+     "step-01-110-180ms.png",
+     "step-02-183-253ms.png",
+     "step-03-257-326ms.png",
+     "step-04-329-401ms.png",
+     "step-05-404-480ms.png",
+     "step-06-484-563ms.png",
+     "step-07-566-644ms.png"
+    ]
+   },
+   "summary": "first expand: travel 213 px, largest one-frame step 178 px (bound 95.85), 53 frame(s) between the rests, flash 0, root cross drift 0 px, the extent first moves 85 ms after the hover; collapse: travel 213 px, largest one-frame step 72.35 px (bound 95.85), 24 frame(s) between the rests, flash 0, root cross drift 0 px; warm expand: travel 213 px, largest one-frame step 178 px (bound 95.85), 54 frame(s) between the rests, flash 0, root cross drift 0 px; frames 8 (frames/webkit-c2_morph_v-expand, warm)  ⟶ FAILED: continuous",
+   "load": 21.65
+  },
+  {
+   "engine": "webkit",
+   "cell": "c3·scroll",
+   "pass": false,
+   "failed": [
+    "collapses"
+   ],
+   "unjudged": [],
+   "summary": "expanded yes; wheel 240 px scrolled the page 240 px; did NOT collapse within 1.5 s (the dwell is 3.6 s)  ⟶ FAILED: collapses",
+   "load": 21.03
+  },
+  {
+   "engine": "webkit",
+   "cell": "c5·keyboard",
+   "pass": false,
+   "failed": [
+    "disclosure",
+    "escape"
+   ],
+   "unjudged": [],
+   "summary": "Alt+Tab ×4 → button.dock-icon-button.glass-specular-track.glass-capsule-hover with the dock expanded; Escape then Enter. Collapsed disclosure: NONE. Enter: expanded, focus button.dock-icon-button.glass-specular-track.glass-capsule-hover; Escape: did NOT collapse, focus button.dock-icon-button.glass-specular-track.glass-capsule-hover (in the dock)  ⟶ FAILED: disclosure, escape",
+   "load": 20.25
+  },
+  {
+   "engine": "webkit",
+   "cell": "c6·menu",
+   "pass": false,
+   "failed": [
+    "menu"
+   ],
+   "unjudged": [],
+   "summary": "absent: the collapsible dock carries no menu trigger ([aria-haspopup]) in either posture; O-88's menu-from-a-collapsed-dock has nothing to open  ⟶ FAILED: menu",
+   "load": 19.59
+  },
+  {
+   "engine": "webkit",
+   "cell": "c7·coarse-tap",
+   "pass": false,
+   "failed": [
+    "opens"
+   ],
+   "unjudged": [],
+   "summary": "tap at the collapsed dock's centre (coarse, 390 px): did NOT expand; elements activated none (not counted: button.dock-icon-button.glass-specular-track.glass-capsule-hover, the disclosure's or a persistent element's own)  ⟶ FAILED: opens",
+   "load": 18.66
+  }
+ ]
+}

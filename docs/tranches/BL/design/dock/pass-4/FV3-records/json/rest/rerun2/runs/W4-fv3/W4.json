@@ -1,0 +1,52 @@
+{
+ "witness": "W4",
+ "target": "fv3@349e1cdd",
+ "when": "2026-10-16T00:20:25.553Z",
+ "load": 20.65,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "compact·non-first-current",
+   "pass": false,
+   "seats": {
+    "step": {
+     "ok": false,
+     "ratio": 12.03,
+     "step": 18.79,
+     "bound": 1.56,
+     "seat": 2,
+     "atMs": 102.1
+    },
+    "overlap": {
+     "ok": true,
+     "frames": 0,
+     "first": null
+    }
+   },
+   "summary": "compaction with the second seat current: worst seat step ×12.03 (18.79 px vs 1.56), overlap frames 0",
+   "load": 19.58
+  },
+  {
+   "engine": "webkit",
+   "cell": "compact·non-first-current",
+   "pass": false,
+   "seats": {
+    "step": {
+     "ok": false,
+     "ratio": 5.64,
+     "step": 18.81,
+     "bound": 3.33,
+     "seat": 2,
+     "atMs": 112
+    },
+    "overlap": {
+     "ok": true,
+     "frames": 0,
+     "first": null
+    }
+   },
+   "summary": "compaction with the second seat current: worst seat step ×5.64 (18.81 px vs 3.33), overlap frames 0",
+   "load": 20.65
+  }
+ ]
+}

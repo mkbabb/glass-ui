@@ -1,0 +1,101 @@
+diff -ru a/src/components/dock/DockCrossfade.vue b/src/components/dock/DockCrossfade.vue
+--- a/src/components/dock/DockCrossfade.vue	2026-10-15 20:59:35
++++ b/src/components/dock/DockCrossfade.vue	2026-10-15 20:59:35
+@@ -98,10 +98,7 @@
+ 
+ const reserveStyle = computed<Record<string, string> | undefined>(() =>
+     peak.value > 0
+-        ? {
+-              [reserveProp.value]: `${peak.value}px`,
+-              "--dock-crossfade-peak": `${peak.value}px`,
+-          }
++        ? { [reserveProp.value]: `${peak.value}px` }
+         : undefined,
+ );
+ 
+diff -ru a/src/components/dock/GlassDock.vue b/src/components/dock/GlassDock.vue
+--- a/src/components/dock/GlassDock.vue	2026-10-15 20:59:35
++++ b/src/components/dock/GlassDock.vue	2026-10-15 20:59:35
+@@ -66,7 +66,7 @@
+    as written here, a device for keeping a wrapper transparent. */
+ defineOptions({ inheritAttrs: false });
+ 
+-/* The prop contract is ONE shape (DockProps, in useDockShellProps): SIX members, no
++/* The prop contract is ONE shape (DockProps, in useDockShellProps): SEVEN members, no
+    `variant` discriminant, "vertical" is `orientation="vertical"` alone, and
+    collapse↔expand applies on BOTH orientations off the one `collapse` member.
+    Defaults resolve at each read site via `?? default`.
+diff -ru a/src/components/dock/styles/density.css b/src/components/dock/styles/density.css
+--- a/src/components/dock/styles/density.css	2026-10-15 20:59:35
++++ b/src/components/dock/styles/density.css	2026-10-15 20:59:35
+@@ -63,25 +63,6 @@
+        with zero setters has no consumer to migrate, in this repo or the constellation.
+        An arbitrary silhouette returns as a designed facility with paint behind it, not
+        as a resurrected knob. */
+-
+-    /* ~~The squish cap — the LOW volume-preserving `--stretch` ceiling for the
+-       shape-morph deformation… a fast morph swells the plate then caps, a gooey settle,
+-       never a taffy-pull.~~ — [2026-08-25 · BK #47 W5 CUT] TRUTHED, NOT STRUCK, and the
+-       distinction is deliberate.
+-
+-       The prose above described a live deformation channel. There is none: the
+-       `--stretch` squish this token capped is DEFINITION-ABSENT (shape.css records its
+-       retirement — the dock morph carries ONE deformation-free box scale off
+-       `--dock-size-scale`), and this token has ZERO readers in `src/` — measured, the
+-       only occurrences in the tree were this declaration and the sentence describing it.
+-
+-       It is left STANDING because striking it is not this wave's to make. The #47 STRIKE
+-       list names the four `--dock-shape-*` vars specifically and does not name this one,
+-       and minting an extra deletion because it sits in the same block is how a wave's
+-       scope quietly becomes whatever the seat noticed. ROUTED as a measured-dead
+-       sibling for the seat that owns it. What is fixed here is only the falsehood: a
+-       comment promising a squish register the engine cannot produce. */
+-    --dock-morph-max-stretch: 1.14;
+ }
+ 
+ @layer components {
+@@ -279,8 +260,7 @@
+                                              in `src/components/dock/**`
+          `grep -rn "containerName|container-name" src demo tests` → 8 hits, every one
+                                              PROSE; `DockProps` (useDockShellProps.ts)
+-                                             enumerates 14 members and `containerName`
+-                                             is NOT among them
++                                             does not carry `containerName`
+ 
+        A `@container <name>` consumer matches only against an ancestor carrying BOTH
+        `container-name: dock` and a `container-type`. The prose above names the producer
+diff -ru a/src/components/dock/styles/index.css b/src/components/dock/styles/index.css
+--- a/src/components/dock/styles/index.css	2026-10-15 20:59:35
++++ b/src/components/dock/styles/index.css	2026-10-15 20:59:35
+@@ -230,17 +230,6 @@
+         --dock-ring-width: var(--focus-ring-width);
+         --dock-ring-offset: var(--focus-ring-width);
+         --dock-ring-color: color-mix(in srgb, var(--focus-ring-color) 48%, transparent);
+-
+-        /* [2026-08-28 · BK π-CURE · R2 · owner #47 W8 MATERIAL + W3 LATTICE] THE RING'S
+-           OUTER EXTENT, as a length any box that must contain the ring can reserve.
+-           `outline-offset` seats the ring OUTSIDE the control box, so the paint reaches
+-           offset + width beyond it — 4px at the house geometry. That is a fact about the
+-           ring, derived from the two terms directly above rather than restated as a
+-           literal, so a retune of either moves the reservation with it. `run.css` is its
+-           one consumer today (the scroll port is the box that was cutting the ring off);
+-           it lives HERE, with the terms it is computed from, because a reserve that
+-           drifts from the ring it reserves for is worse than none. */
+-        --dock-ring-reserve: calc(var(--dock-ring-width) + var(--dock-ring-offset));
+     }
+ 
+     /* Shared four-state contract — the focus-visible ring + disabled paint are
+diff -ru a/src/components/dock/styles/run.css b/src/components/dock/styles/run.css
+--- a/src/components/dock/styles/run.css	2026-10-15 20:59:35
++++ b/src/components/dock/styles/run.css	2026-10-15 20:59:35
+@@ -133,8 +133,8 @@
+         /* The gutter an OVERFLOWING run scrolls inside: the room the dock's own padding
+            leaves between the run and the plate edge (`--dock-pad`, shell.css, the one
+            pad on every side), so a clipped ring is impossible without the port reaching
+-           past the plate. It holds the ring's outer extent (`--dock-ring-reserve`, 4px
+-           at the house geometry) with room to spare. */
++           past the plate. It holds the ring's outer extent (`--dock-ring-width` +
++           `--dock-ring-offset`, 4px at the house geometry) with room to spare. */
+         --dock-run-gutter: var(--dock-pad);
+     }
+ 

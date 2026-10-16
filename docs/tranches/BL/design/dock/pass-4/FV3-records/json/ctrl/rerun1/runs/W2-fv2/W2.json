@@ -1,0 +1,108 @@
+{
+ "witness": "W2",
+ "target": "fv2@ba7c38ce",
+ "when": "2026-10-16T03:43:32.193Z",
+ "load": 26.42,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "route1·long-run-v",
+   "pass": false,
+   "failed": [
+    "keyboard"
+   ],
+   "genuine": {
+    "needed": 592,
+    "budget": 536,
+    "exceeds": true,
+    "run": "div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run"
+   },
+   "frames": {
+    "frames": 36,
+    "framesWithScroller": 36,
+    "framesWithRange": 36,
+    "maxRange": 56,
+    "who": [
+     "div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run(hidden/auto)"
+    ]
+   },
+   "ring": {
+    "cutA": 0,
+    "cutB": 0,
+    "painted": true,
+    "clipped": [
+     4.25,
+     4.25
+    ],
+    "free": [
+     4.25,
+     4.25
+    ]
+   },
+   "reach": {
+    "n": 11,
+    "ok": false,
+    "miss": {
+     "pointer": [],
+     "keyboard": [
+      "Seat 1"
+     ],
+     "at": []
+    },
+    "tab": "Tab"
+   },
+   "summary": "seats need 592 px vs budget 536 (EXCEED: scrolling allowed); scroller frames 36/36; ring reach clipped 4.25/4.25 vs free 4.25/4.25 px → cut 0/0 (bound 0.5); focus-visible true, hovered true, selected true; reach 11 seats: pointer 11/11, keyboard (Tab, arrows) 10/11 (missing Seat 1), AT 11/11  ⟶ FAILED: keyboard",
+   "load": 26.02
+  },
+  {
+   "engine": "webkit",
+   "cell": "route1·long-run-v",
+   "pass": false,
+   "failed": [
+    "keyboard"
+   ],
+   "genuine": {
+    "needed": 592,
+    "budget": 536,
+    "exceeds": true,
+    "run": "div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run"
+   },
+   "frames": {
+    "frames": 29,
+    "framesWithScroller": 29,
+    "framesWithRange": 29,
+    "maxRange": 56,
+    "who": [
+     "div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run(hidden/auto)"
+    ]
+   },
+   "ring": {
+    "cutA": 0,
+    "cutB": 0,
+    "painted": true,
+    "clipped": [
+     4.25,
+     4.25
+    ],
+    "free": [
+     4.25,
+     4.25
+    ]
+   },
+   "reach": {
+    "n": 11,
+    "ok": false,
+    "miss": {
+     "pointer": [],
+     "keyboard": [
+      "Seat 1"
+     ],
+     "at": []
+    },
+    "tab": "Alt+Tab"
+   },
+   "summary": "seats need 592 px vs budget 536 (EXCEED: scrolling allowed); scroller frames 29/29; ring reach clipped 4.25/4.25 vs free 4.25/4.25 px → cut 0/0 (bound 0.5); focus-visible true, hovered true, selected true; reach 11 seats: pointer 11/11, keyboard (Alt+Tab, arrows) 10/11 (missing Seat 1), AT 11/11  ⟶ FAILED: keyboard",
+   "load": 26.42
+  }
+ ]
+}
