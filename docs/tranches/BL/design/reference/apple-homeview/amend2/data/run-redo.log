@@ -1,0 +1,28 @@
+== node aprobe.mjs sticky r2
+{"wrote":"/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/reference/apple-homeview/amend2/data/apple/sticky-r2-1440.json.gz","frames":920,"load":["{ 29.50 28.55 37.52 }","{ 26.37 27.90 37.08 }"],"frameDt":{"n":919,"p50":8.3,"p95":10.1,"max":25.8}}
+== node gprobe.mjs sticky r2 1440 500
+{"wrote":"/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/reference/apple-homeview/amend2/data/gui/sticky-r2-1440.json.gz","rows":1095,"load":["{ 27.38 28.08 37.09 }","{ 28.45 28.30 37.06 }"],"frameDt":{"n":1094,"p50":8.3,"p95":9.9,"max":15.9},"errors":0}
+== env PLANT=fixed node gprobe.mjs sticky r2 1440 500
+{"wrote":"/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/reference/apple-homeview/amend2/data/gui/sticky-r2-1440-plant-fixed.json.gz","rows":1094,"load":["{ 27.85 28.18 36.97 }","{ 26.87 27.95 36.73 }"],"frameDt":{"n":1093,"p50":8.3,"p95":9.8,"max":18.1},"errors":0}
+== env PLANT=sticky node gprobe.mjs sticky r2 1440 500
+{"wrote":"/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/reference/apple-homeview/amend2/data/gui/sticky-r2-1440-plant-sticky.json.gz","rows":1095,"load":["{ 25.52 27.65 36.57 }","{ 24.73 27.38 36.32 }"],"frameDt":{"n":1094,"p50":8.3,"p95":9.8,"max":16.7},"errors":0}
+== node gprobe.mjs enter2 r2
+{"wrote":"/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/reference/apple-homeview/amend2/data/gui/enter2-r2-1440.json.gz","rows":452,"load":["{ 26.51 27.71 36.39 }","{ 26.63 27.71 36.34 }"],"frameDt":{"n":451,"p50":8.3,"p95":10.1,"max":16.7},"errors":0}
+== env PLANT=fade node gprobe.mjs enter2 r2
+{"wrote":"/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/reference/apple-homeview/amend2/data/gui/enter2-r2-1440-plant-fade.json.gz","rows":451,"load":["{ 26.02 27.57 36.23 }","{ 27.82 27.90 36.25 }"],"frameDt":{"n":450,"p50":8.3,"p95":9.9,"max":24},"errors":0}
+== env PLANT=scale node gprobe.mjs enter2 r2
+{"wrote":"/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/reference/apple-homeview/amend2/data/gui/enter2-r2-1440-plant-scale.json.gz","rows":451,"load":["{ 32.88 28.94 36.57 }","{ 31.69 28.76 36.46 }"],"frameDt":{"n":450,"p50":8.3,"p95":10,"max":24.5},"errors":0}
+== node gprobe.mjs enter2 jump2
+{"wrote":"/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/reference/apple-homeview/amend2/data/gui/enter2-jump2-1440.json.gz","rows":299,"load":["{ 30.19 28.50 36.32 }","{ 28.74 28.23 36.18 }"],"frameDt":{"n":298,"p50":8.3,"p95":9.8,"max":16.7},"errors":0}
+== env PLANT=fade node gprobe.mjs enter2 jump2
+{"wrote":"/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/reference/apple-homeview/amend2/data/gui/enter2-jump2-1440-plant-fade.json.gz","rows":299,"load":["{ 27.88 28.06 36.07 }","{ 26.53 27.77 35.93 }"],"frameDt":{"n":298,"p50":8.3,"p95":9.7,"max":17.4},"errors":0}
+== env PLANT=scale node gprobe.mjs enter2 jump2
+{"wrote":"/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/reference/apple-homeview/amend2/data/gui/enter2-jump2-1440-plant-scale.json.gz","rows":299,"load":["{ 24.88 27.41 35.75 }","{ 24.57 27.30 35.66 }"],"frameDt":{"n":298,"p50":8.3,"p95":10,"max":26.5},"errors":0}
+== webkit wk-cells (full log)
+rc=1
+  log: [
+    '  - navigating to "http://127.0.0.1:61985/navigation/carousel", waiting until "networkidle"'
+  ],
+  name: 'Error'
+}
+REDO-DONE
