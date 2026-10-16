@@ -1,0 +1,27 @@
+{
+ "step": "B-S16 gate (proposed to the route seat): the seal gate reads R-3's visual-spec form as a test, and a Playwright program's patterns as the runner's collection, not a walk",
+ "files": {
+  "scripts/structure/seal/seal.mjs": {
+   "hunks": [
+    [
+     "const TEST_FILE = /\\.(test|spec|test-d)\\.(ts|tsx|mts)$/;",
+     "const TEST_FILE = /\\.(test|spec|test-d)\\.(ts|tsx|mts)$|\\.visual\\.ts$/; // R-3: a one-unit visual spec is `*.visual.ts` in its unit's slot"
+    ],
+    [
+     "        if (!walk || !e.to || HARNESS.test(e.from) || zoneOf(e.from) === \"root\" || zoneOf(e.from) === \"other\") continue;",
+     "        if (!walk || !e.to || HARNESS.test(e.from) || zoneOf(e.from) === \"root\" || zoneOf(e.from) === \"other\") continue;\n        if (PLAYWRIGHT_PROGRAM.test(e.from)) continue; // a Playwright config's patterns are its runner's collection, as a root config's vitest include is"
+    ],
+    [
+     "const HARNESS = /^tests\\/harness\\//;",
+     "const PLAYWRIGHT_PROGRAM = /(^|\\/)playwright[^/]*\\.config\\.(ts|mts|js|mjs)$/; // F-1's test-program holder (scan/playwright.mjs)\nconst HARNESS = /^tests\\/harness\\//;"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "scripts/structure/seal/seal.mjs",
+   "why": "B16's TEST_FILE omitted R-3's `*.visual.ts`, so a slotted visual spec read as a slot helper whose reader is the Playwright config (B16 +1); B0 counted the program's `src/**/__tests__/*.visual.ts` pattern as a walk of src (B0 +1), where the same pattern in a root vitest config is exempt as the root zone"
+  }
+ ]
+}

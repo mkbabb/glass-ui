@@ -1,0 +1,73 @@
+{
+ "baseline": "floor-S1-6773b4ec",
+ "verdict": "GREEN",
+ "staleListings": [],
+ "scopes": [
+  {
+   "from": "Timeline",
+   "to": "TimelineMarks",
+   "reason": "S39-03 (B6, the 500-line bound) splits Timeline.vue: its marks render in TimelineMarks.vue, which carries the marks rules in its own scoped block; the rules are the same text under the new component scope",
+   "now": 40,
+   "atBase": 0,
+   "fromAtBase": 64
+  }
+ ],
+ "scopeFindings": [],
+ "entries": [
+  {
+   "key": "./styles",
+   "identical": false,
+   "class": "reorder",
+   "rulesBase": 1970,
+   "rulesNow": 1970,
+   "onlyBase": 0,
+   "onlyNow": 0,
+   "firstDivergence": 610,
+   "base": "@layer components :: :root {--feedback-tone-strength:18%;--feedback-tone-rung:var(--glass-plate-floating);--feedback-tone-border-strength:40%}",
+   "now": "@layer components :: .card-scroll-host {contain:layout style paint;overflow-y:auto;mask-image:linear-gradient( to bottom,black calc(100% - var(--fade-end)),transparent 100% )}",
+   "listed": "S4b (LAW §6, B3): card/scroll.css joins card's own rung, one door per unit: its 18 rules (.card-scroll-host and the .card-header--shrink family, their @supports/@media arms and two @keyframes) now precede the feedback-tone register instead of following the sheet rung. Written from the floor baseline's own rule lines (cascade-floor styles.seq 712-729), the moved set the verifier's longest kept order yields. Also in this entry: S39-03 (B6, the 500-line bound): Timeline.vue renders its marks through TimelineMarks.vue, a child component whose scoped block the build emits before its parent's, so Timeline's own ten rules (.tl, .tl__track, .tl__span, .tl__fill, .tl__cap, .tl__detail and their arms) now follow the marks rules instead of preceding them. The marks rules declare pointer-events, block size, margin, padding, list-style and position on the marks elements; the one Timeline rule that also selects .tl__marks declares grid-area and align-self, so no swapped pair shares a declared property (FD-4 judges each pair)",
+   "judged": {
+    "moved": 28,
+    "swappedPairs": 1950,
+    "risks": 0,
+    "covered": 0
+   },
+   "verdict": "GREEN: listed reorder; no swapped pair shares a property on co-occurring classes",
+   "unlistedRules": 0,
+   "staleRules": 0
+  },
+  {
+   "key": "./styles/fonts",
+   "identical": true,
+   "rules": 4
+  },
+  {
+   "key": "./styles/theme",
+   "identical": true,
+   "rules": 4
+  },
+  {
+   "key": "./styles.css",
+   "identical": false,
+   "class": "reorder",
+   "rulesBase": 365,
+   "rulesNow": 365,
+   "onlyBase": 0,
+   "onlyNow": 0,
+   "firstDivergence": 310,
+   "base": "@layer components :: .tl[data-v-(Timeline)] {row-gap:var(--space-body);grid-template-columns:100%;display:grid;position:relative}",
+   "now": "@layer components :: .tl__marks[data-v-(Timeline)] {pointer-events:none;min-block-size:1.5rem;margin:0;padding:0;list-style:none;position:relative}",
+   "listed": "S39-03 (B6, the 500-line bound): Timeline.vue renders its marks through TimelineMarks.vue, a child component whose scoped block the build emits before its parent's, so Timeline's own ten rules (.tl, .tl__track, .tl__span, .tl__fill, .tl__cap, .tl__detail and their arms) now follow the marks rules instead of preceding them. The marks rules declare pointer-events, block size, margin, padding, list-style and position on the marks elements; the one Timeline rule that also selects .tl__marks declares grid-area and align-self, so no swapped pair shares a declared property (FD-4 judges each pair)",
+   "judged": {
+    "moved": 10,
+    "swappedPairs": 132,
+    "risks": 0,
+    "covered": 0
+   },
+   "verdict": "GREEN: listed reorder; no swapped pair shares a property on co-occurring classes",
+   "unlistedRules": 0,
+   "staleRules": 0
+  }
+ ]
+}
+SCOPE Timeline → TimelineMarks: 40 rule line(s) re-homed

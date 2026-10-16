@@ -1,0 +1,35 @@
+[browser-seat 2026-10-16T09:19:06.052Z] seat acquired after 0.0s: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p11/B-proto/wt2
+[browser-seat 2026-10-16T09:19:06.623Z] demo server http://localhost:53906 (pid 72652, cwd /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p11/B-proto/wt2); 1 spec(s): tests-visual/substrate-paints-color.spec.ts
+
+Running 3 tests using 1 worker
+
+PI aurora DEFAULT meanChannel=230.7 floor=8
+PI aurora SETTING_SUN meanChannel=231.2 floor=8
+PI aurora DUSK meanChannel=230.1 floor=8
+PI aurora VIVID_SETTING_SUN meanChannel=233.0 floor=8
+PI aurora OPENAI_SKY meanChannel=231.5 floor=8
+PI aurora OPENAI_DAWN meanChannel=229.4 floor=8
+PI aurora OPENAI_MEADOW meanChannel=205.7 floor=8
+PI aurora DELIBERATIVE meanChannel=235.0 floor=8
+PI aurora DAY9_YELLOW meanChannel=229.2 floor=8
+PI aurora OIL_IMPASTO meanChannel=194.0 floor=8
+PI aurora OIL_GESTURAL meanChannel=217.7 floor=8
+PI aurora VANGOGH meanChannel=101.6 floor=8
+PI aurora OILPASTEL_SUNSET meanChannel=200.3 floor=8
+PI aurora OILPASTEL_RAINBOW meanChannel=218.0 floor=8
+PI aurora OILPASTEL_OCEAN meanChannel=145.8 floor=8
+PI aurora CRAYON meanChannel=167.7 floor=8
+PI aurora METAL meanChannel=206.6 floor=8
+PI aurora SPEEDTEST meanChannel=175.9 floor=8
+  ✓  1 [chromium-headless-new] › substrate-paints-color.spec.ts:100:5 › substrate-paints-color (π lane — fail-CLOSED) › aurora paints a non-black interior on DEFAULT + every preset at t=1 (25.5s)
+PI blob paintable=[0.188,0.188]-[0.813,0.702] paintableShareOfInterior=0.557
+PI blob baseline groundMotion=0.000
+PI blob coverage=0.160 floor=0.1 · paintedShare=0.288 ceil=0.7
+  ✓  2 [chromium-headless-new] › substrate-paints-color.spec.ts:284:5 › substrate-paints-color (π lane — fail-CLOSED) › blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS (6.7s)
+PI blob paintable=[0.188,0.188]-[0.813,0.702] paintableShareOfInterior=0.557
+PI blob baseline groundMotion=0.000
+PI blob coverage=0.162 floor=0.1 · paintedShare=0.290 ceil=0.7
+  ✓  3 [chromium-headless-new] › substrate-paints-color.spec.ts:292:5 › substrate-paints-color (π lane — fail-CLOSED) › blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS (6.8s)
+
+  3 passed (40.2s)
+[browser-seat 2026-10-16T09:19:47.239Z] GREEN: 3/3 passed, 0 failed, 0 skipped in 41s → /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-11/B-kit/results/p11/browser/p11-steps/route.json

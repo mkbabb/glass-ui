@@ -1,0 +1,201 @@
+judges11 start 2026-10-16T12:30:30Z load { 11.69 10.81 11.50 }
+J11 fixtures: browser /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/results/p12/browser; steps /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/results/p12/browser/p11-steps; peer base /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/results/p12/peer-closure-base.json
+J11 kind raw-base = /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/results/p12/browser/base.json :: schema browser-seat/2 testDir tests-visual rekeyedFrom no baseReport null results 866
+J11 kind rekeyed-base = /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/results/p12/browser/base-rekeyed.json :: schema browser-seat/2 testDir . rekeyedFrom yes baseReport null results 866
+J11 kind route = /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/results/p12/browser/route.json :: schema browser-seat/2 testDir . rekeyedFrom no baseReport set results 867
+J11 kind raw-base-rerun = /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/results/p12/browser/reruns/base-1-1.json :: schema browser-seat/2 testDir tests-visual rekeyedFrom no baseReport null results 10
+J11 kind rekeyed-base-rerun = /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/results/p12/browser/reruns/base-1-1.rekeyed.json :: schema browser-seat/2 testDir . rekeyedFrom yes baseReport null results 10
+J11 kind route-rerun = /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/results/p12/browser/reruns/route-1-1.json :: schema browser-seat/2 testDir . rekeyedFrom no baseReport null results 10
+J11 kind steps-raw-base = /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/results/p12/browser/p11-steps/base.json :: schema browser-seat/2 testDir tests-visual rekeyedFrom no baseReport null results 3
+J11 kind steps-rekeyed-base = /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/results/p12/browser/p11-steps/base.rekeyed.json :: schema browser-seat/2 testDir . rekeyedFrom yes baseReport null results 3
+J11 kind steps-route = /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/results/p12/browser/p11-steps/route.json :: schema browser-seat/2 testDir . rekeyedFrom no baseReport set results 3
+J11 kind probe-floor = /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/results/p12/peer-closure-base.json :: schema - testDir - rekeyedFrom no baseReport absent results -
+J11 kind probe-clean = /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p12/B-proto/scratch/critic11/j11/probe-clean.json :: schema - testDir - rekeyedFrom no baseReport absent results -
+J11 kind selection = /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/results/p12/browser/selection.json :: schema browser-seat-selection/2 testDir . rekeyedFrom no baseReport absent results -
+J11 kind moved = /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/results/p12/browser/moved.json :: schema - testDir - rekeyedFrom no baseReport absent results -
+J11 kind plan = /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/results/p12/browser/reruns/plan.json :: schema - testDir - rekeyedFrom no baseReport absent results -
+J11 kind seal = /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p12/B-proto/scratch/critic11/j11/seal.json :: schema - testDir - rekeyedFrom no baseReport absent results -
+J11 kind sequence = /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p12/B-proto/scratch/critic11/j11/sequence.json :: schema - testDir - rekeyedFrom no baseReport absent results -
+J11 T-ctl PASS rc=0 expect=0 :: verdict: GREEN (428 base-green keys, every one accounted: 428 held + 0 failed + 0 absent)
+J11 T-ctl-min FAIL rc=1 expect=0 :: verdict: RED (429 base-green keys, every one accounted: 428 held + 1 failed + 0 absent)
+J11 KM-tally-base-raw-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:87:14
+J11 KM-tally-base-rekeyed-base FAIL rc=1 expect=0 :: verdict: RED (429 base-green keys, every one accounted: 428 held + 1 failed + 0 absent)
+J11 KM-tally-base-route PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:87:14
+J11 KM-tally-base-raw-base-rerun PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:87:14
+J11 KM-tally-base-rekeyed-base-rerun INFO rc=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:109:29
+J11 KM-tally-base-route-rerun PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:87:14
+J11 KM-tally-base-steps-raw-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:87:14
+J11 KM-tally-base-steps-rekeyed-base INFO rc=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:109:29
+J11 KM-tally-base-steps-route PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:87:14
+J11 KM-tally-base-probe-floor PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:87:24
+J11 KM-tally-base-probe-clean PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:87:24
+J11 KM-tally-base-selection PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:87:24
+J11 KM-tally-base-moved PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:87:24
+J11 KM-tally-base-plan PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:87:24
+J11 KM-tally-base-seal PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:87:24
+J11 KM-tally-base-sequence PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:87:24
+J11 KM-tally-route-raw-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:87:14
+J11 KM-tally-route-rekeyed-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:86:15
+J11 KM-tally-route-route FAIL rc=1 expect=0 :: verdict: RED (429 base-green keys, every one accounted: 428 held + 1 failed + 0 absent)
+J11 KM-tally-route-raw-base-rerun PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:87:14
+J11 KM-tally-route-rekeyed-base-rerun PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:86:15
+J11 KM-tally-route-route-rerun INFO rc=1 :: verdict: RED (429 base-green keys, every one accounted: 8 held + 1 failed + 420 absent)
+J11 KM-tally-route-steps-raw-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:87:14
+J11 KM-tally-route-steps-rekeyed-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:86:15
+J11 KM-tally-route-steps-route INFO rc=1 :: verdict: RED (429 base-green keys, every one accounted: 3 held + 0 failed + 426 absent)
+J11 KM-tally-route-probe-floor PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:86:26
+J11 KM-tally-route-probe-clean PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:86:26
+J11 KM-tally-route-selection PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:86:26
+J11 KM-tally-route-moved PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:86:26
+J11 KM-tally-route-plan PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:86:26
+J11 KM-tally-route-seal PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:86:26
+J11 KM-tally-route-sequence PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:86:26
+J11 KM-tally-base-rerun-raw-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:124:48
+J11 KM-tally-base-rerun-rekeyed-base INFO rc=1 :: verdict: RED (429 base-green keys, every one accounted: 428 held + 1 failed + 0 absent)
+J11 KM-tally-base-rerun-route PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:124:48
+J11 KM-tally-base-rerun-raw-base-rerun PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:124:48
+J11 KM-tally-base-rerun-rekeyed-base-rerun PASS rc=0 expect=0 :: verdict: GREEN (428 base-green keys, every one accounted: 428 held + 0 failed + 0 absent)
+J11 KM-tally-base-rerun-route-rerun PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:124:48
+J11 KM-tally-base-rerun-steps-raw-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:124:48
+J11 KM-tally-base-rerun-steps-rekeyed-base INFO rc=1 :: verdict: RED (429 base-green keys, every one accounted: 428 held + 1 failed + 0 absent)
+J11 KM-tally-base-rerun-steps-route PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:124:48
+J11 KM-tally-base-rerun-probe-floor PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:124:48
+J11 KM-tally-base-rerun-probe-clean PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:124:48
+J11 KM-tally-base-rerun-selection PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:124:48
+J11 KM-tally-base-rerun-moved PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:124:48
+J11 KM-tally-base-rerun-plan PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:124:48
+J11 KM-tally-base-rerun-seal PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:124:48
+J11 KM-tally-base-rerun-sequence PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:124:48
+J11 KM-tally-route-rerun-raw-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:125:50
+J11 KM-tally-route-rerun-rekeyed-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:125:50
+J11 KM-tally-route-rerun-route INFO rc=1 :: verdict: RED (429 base-green keys, every one accounted: 428 held + 1 failed + 0 absent)
+J11 KM-tally-route-rerun-raw-base-rerun PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:125:50
+J11 KM-tally-route-rerun-rekeyed-base-rerun PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:125:50
+J11 KM-tally-route-rerun-route-rerun FAIL rc=1 expect=0 :: verdict: RED (429 base-green keys, every one accounted: 428 held + 1 failed + 0 absent)
+J11 KM-tally-route-rerun-steps-raw-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:125:50
+J11 KM-tally-route-rerun-steps-rekeyed-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:125:50
+J11 KM-tally-route-rerun-steps-route INFO rc=1 :: verdict: RED (429 base-green keys, every one accounted: 428 held + 1 failed + 0 absent)
+J11 KM-tally-route-rerun-probe-floor PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:125:50
+J11 KM-tally-route-rerun-probe-clean PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:125:50
+J11 KM-tally-route-rerun-selection PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:125:50
+J11 KM-tally-route-rerun-moved PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:125:50
+J11 KM-tally-route-rerun-plan PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:125:50
+J11 KM-tally-route-rerun-seal PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:125:50
+J11 KM-tally-route-rerun-sequence PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:125:50
+J11 KM-rekey-base-raw-base PASS rc=0 expect=0 :: {"specs":153,"moved":["tests-visual/a11y-slider.spec.ts -> tests-visual/components/controls/a11y-slider.spec.ts","tests-visual/a11y-splitchars.spec.ts -> tests-visual/typography/a11y-splitchars.spec.ts","tests-visual/ada
+J11 KM-rekey-base-rekeyed-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/rekey.mjs:47:34
+J11 KM-rekey-base-route PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/rekey.mjs:49:37
+J11 KM-rekey-base-raw-base-rerun INFO rc=0 :: {"specs":2,"moved":["tests-visual/blob-config-delta.spec.ts -> tests-visual/blob/blob-config-delta.spec.ts"],"unmapped":[],"results":10}
+J11 KM-rekey-base-rekeyed-base-rerun PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/rekey.mjs:47:34
+J11 KM-rekey-base-route-rerun PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/rekey.mjs:49:37
+J11 KM-rekey-base-steps-raw-base INFO rc=0 :: {"specs":1,"moved":[],"unmapped":[],"results":3}
+J11 KM-rekey-base-steps-rekeyed-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/rekey.mjs:47:34
+J11 KM-rekey-base-steps-route PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/rekey.mjs:49:37
+J11 KM-rekey-base-probe-floor PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/rekey.mjs:42:47
+J11 KM-rekey-base-probe-clean PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/rekey.mjs:42:47
+J11 KM-rekey-base-selection PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/rekey.mjs:42:47
+J11 KM-rekey-base-moved PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/rekey.mjs:42:47
+J11 KM-rekey-base-plan PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/rekey.mjs:42:47
+J11 KM-rekey-base-seal PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/rekey.mjs:42:47
+J11 KM-rekey-base-sequence PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/rekey.mjs:42:47
+J11 KM-peer-base-raw-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-base-rekeyed-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-base-route PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-base-raw-base-rerun PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-base-rekeyed-base-rerun PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-base-route-rerun PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-base-steps-raw-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-base-steps-rekeyed-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-base-steps-route PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-base-probe-floor PASS rc=0 expect=0 :: peer-closure: GREEN
+J11 KM-peer-base-probe-clean PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-base-selection PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-base-moved PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-base-plan PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-base-seal PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-base-sequence PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-overlay-raw-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-overlay-rekeyed-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-overlay-route PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-overlay-raw-base-rerun PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-overlay-rekeyed-base-rerun PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-overlay-route-rerun PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-overlay-steps-raw-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-overlay-steps-rekeyed-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-overlay-steps-route PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-overlay-probe-floor PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-overlay-probe-clean PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-overlay-selection PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-overlay-moved PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-overlay-plan PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-overlay-seal PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-peer-overlay-sequence PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 KM-select-seq-raw-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-select.mjs:46:30
+J11 KM-select-seq-rekeyed-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-select.mjs:46:30
+J11 KM-select-seq-route PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-select.mjs:46:30
+J11 KM-select-seq-raw-base-rerun PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-select.mjs:46:30
+J11 KM-select-seq-rekeyed-base-rerun PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-select.mjs:46:30
+J11 KM-select-seq-route-rerun PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-select.mjs:46:30
+J11 KM-select-seq-steps-raw-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-select.mjs:46:30
+J11 KM-select-seq-steps-rekeyed-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-select.mjs:46:30
+J11 KM-select-seq-steps-route PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-select.mjs:46:30
+J11 KM-select-seq-probe-floor PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-select.mjs:46:30
+J11 KM-select-seq-probe-clean PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-select.mjs:46:30
+J11 KM-select-seq-selection PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-select.mjs:46:30
+J11 KM-select-seq-moved PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-select.mjs:46:30
+J11 KM-select-seq-plan PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-select.mjs:46:30
+J11 KM-select-seq-seal PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-select.mjs:46:30
+J11 KM-select-ctl PASS rc=0 expect=0 :: {"moves":604,"changed":723,"specs":155,"programSpecs":155,"captures":14,"excludedTouched":14}
+J11 F6 route flipped: src/components/expandable-container/__tests__/expandable-container.visual.ts :: (a) inline renders real canvas + NO body-teleport @ mobile light
+J11 F6 route rerun flipped: tests-visual/blob/blob-config-delta.spec.ts :: capture studio desktop/light
+J11 F6-ctl PASS rc=1 expect=1 :: verdict: RED (429 base-green keys, every one accounted: 427 held + 2 failed + 0 absent)
+J11 F6-ctl-rr PASS rc=1 expect=1 :: verdict: RED (428 base-green keys, every one accounted: 427 held + 1 failed + 0 absent)
+J11 F6-base-is-failroute PASS rc=2 expect=never-0 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:87:14
+J11 F6-base-is-route PASS rc=2 expect=never-0 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:87:14
+J11 F6-base-is-route-rerun PASS rc=2 expect=never-0 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:87:14
+J11 F6-base-is-raw PASS rc=2 expect=never-0 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:87:14
+J11 F6-base-is-steps-route PASS rc=2 expect=never-0 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:87:14
+J11 F6-baserr-is-failroute PASS rc=2 expect=never-0 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:124:48
+J11 F6-baserr-is-route PASS rc=2 expect=never-0 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:124:48
+J11 F6-baserr-is-route-rerun PASS rc=2 expect=never-0 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:124:48
+J11 F6-baserr-is-failrouterr PASS rc=2 expect=never-0 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:124:48
+J11 F6-baserr-is-raw-rerun PASS rc=2 expect=never-0 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:124:48
+J11 F6-routerr-is-base PASS rc=2 expect=never-0 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:125:50
+J11 F6-routerr-is-base-rerun PASS rc=2 expect=never-0 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:125:50
+J11 F6-rekey-failroute PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/rekey.mjs:49:37
+J11 F6-rekey-route PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/rekey.mjs:49:37
+J11 F6-rekey-route-rerun PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/rekey.mjs:49:37
+J11 F6-rekey-failrouterr PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/rekey.mjs:49:37
+J11 F6-rekey-rekeyed-base PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/rekey.mjs:47:34
+J11 F6-dup-route-fail-last PASS rc=2 expect=never-0 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:53:11
+J11 F6-dup-route-fail-first PASS rc=2 expect=never-0 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:53:11
+J11 F6-dup-base PASS rc=2 expect=never-0 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:53:11
+J11 DUP-route-INFO INFO rc=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:53:11
+J11 DUP-peer-base-INFO INFO rc=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 FL-tally-base-last PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:53:11
+J11 FL-tally-base-flag PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:53:11
+J11 FL-tally-route-last PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:53:11
+J11 FL-tally-route-flag PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:53:11
+J11 FL-tally-baserr-last PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:53:11
+J11 FL-tally-baserr-flag PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:53:11
+J11 FL-tally-routerr-last PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:53:11
+J11 FL-tally-routerr-flag PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:53:11
+J11 FL-tally-baserr-flag-fail PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-tally.mjs:53:11
+J11 FL-select-root-last PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-select.mjs:42:11
+J11 FL-select-root-flag PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-select.mjs:42:11
+J11 FL-select-out-last PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-select.mjs:42:11
+J11 FL-select-out-flag PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/browser-select.mjs:42:11
+J11 FL-peer-root-last PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 FL-peer-root-flag PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 FL-peer-base-last PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 FL-peer-base-flag PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 FL-peer-overlay-last PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 FL-peer-overlay-flag PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 FL-peer-table-last PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 FL-peer-table-flag PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 FL-peer-json-last PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 FL-peer-json-flag PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 FLX-browser-tally--plan-last-INFO INFO rc=0 :: {"rerun":["tests-visual/blob/blob-config-delta.spec.ts"],"perTree":3,"order":"alternating, base first"}
+J11 FLX-peer-closure--floor-base-last-INFO INFO rc=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:7
+J11 SUMMARY pass=161 fail=4
+judges11 rc=0 end 2026-10-16T12:30:58Z load { 9.86 10.43 11.34 }

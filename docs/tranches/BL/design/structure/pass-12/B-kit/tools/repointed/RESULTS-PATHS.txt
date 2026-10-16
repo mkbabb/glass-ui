@@ -1,0 +1,34 @@
+# regression tools whose committed-input path names this kit's results dir: re-pointed results/p10 -> results/p11 (the same committed files, copied), nothing else
+## diff pass-10/B-kit/tools/plants-p10.mjs pass-11/B-kit/tools/plants-p10.mjs
+65c65
+<     const PBASE = join(KIT, "results/p10/peer-closure-base.json");
+---
+>     const PBASE = join(KIT, "results/p11/peer-closure-base.json");
+## diff pass-10/B-kit/tools/plants-p8.mjs pass-11/B-kit/tools/plants-p8.mjs
+107c107
+<     const PROBE = join(KIT, "tools/peer-closure.mjs"), BASE = join(KIT, "results/p10/peer-closure-base.json");
+---
+>     const PROBE = join(KIT, "tools/peer-closure.mjs"), BASE = join(KIT, "results/p11/peer-closure-base.json");
+## diff pass-10/B-kit/tools/plants-p7.mjs pass-11/B-kit/tools/plants-p7.mjs
+92c92
+< const BASE = join(KIT, "results/p10/peer-closure-base.json"); // pass 10: this kit's base report
+---
+> const BASE = join(KIT, "results/p11/peer-closure-base.json"); // pass 10: this kit's base report
+## diff pass-10/B-kit/tools/plants-p9.mjs pass-11/B-kit/tools/plants-p9.mjs
+102c102
+<     const PROBE = T("peer-closure.mjs"), PBASE = join(KIT, "results/p10/peer-closure-base.json");
+---
+>     const PROBE = T("peer-closure.mjs"), PBASE = join(KIT, "results/p11/peer-closure-base.json");
+## diff pass-10/B-kit/tools/critic9-extra.sh pass-11/B-kit/tools/critic9-extra.sh
+3c3
+< # HERE resolves to that critic's tools/ dir, and the probe base is this kit's results/p10/peer-closure-base.json.
+---
+> # HERE resolves to that critic's tools/ dir, and the probe base is this kit's results/p11/peer-closure-base.json.
+13c13
+< PB="$K/results/p10/peer-closure-base.json"
+---
+> PB="$K/results/p11/peer-closure-base.json"
+43c43
+< rc=$(run node "$K/tools/peer-closure.mjs" --root "$T" --base "$K/results/p9/browser/route.json"); echo "PX base=a-browser-report rc=$rc :: $(tail -1 "$X/p.log")"
+---
+> rc=$(run node "$K/tools/peer-closure.mjs" --root "$T" --base "$K/results/p11/browser/route.json"); echo "PX base=a-browser-report rc=$rc :: $(tail -1 "$X/p.log")"

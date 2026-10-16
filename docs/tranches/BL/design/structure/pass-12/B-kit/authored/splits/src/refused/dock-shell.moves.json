@@ -1,0 +1,11 @@
+{
+ "note": "REFUSED, not a row. The first design for GlassDock.vue (545 lines): the SFC leaves the dock root for its own module dock/shell/ with the five hooks only it reads, so its four single-subject tests (click-integrity, motion-parity, press-keepalive, scroll-overflow) and dockMorphMeasure.test.ts could follow it and dock/__tests__ would fall from 16 to 11 (P4-R5). The floor engine refused it at FD-2 on the chained tree (digest 6618df1f…): `node scripts/structure/move.mjs refused/dock-shell.moves.json --root <wt> --dry` → addedPairs 1, refused true, `FD-2 CO-CYCLIC (new) src/components/dock ↔ src/components/dock/shell`, residue 0, 18 undeclared scan deltas (tests/gates/orphan-css-partial.test.ts:131, tests/styles/engage-ladder.test.ts:97,127). The dock door reads the child (it publishes GlassDock), and GlassDock reads dock-level files (constants.ts, composables/dockContext.ts, composables/useDockState.ts, and useDockSpring.ts through useDockMorph/useDockRun). LAW §4's base rule would move those parent-level files into a sibling base module, which re-carves the whole dock rather than splitting one file. Row 01 splits GlassDock in place instead (01-dock-glassdock.mjs).",
+ "moves": [
+  { "from": "src/components/dock/GlassDock.vue", "to": "src/components/dock/shell/GlassDock.vue" },
+  { "from": "src/components/dock/composables/useDockShellProps.ts", "to": "src/components/dock/shell/composables/useDockShellProps.ts" },
+  { "from": "src/components/dock/composables/useDockRun.ts", "to": "src/components/dock/shell/composables/useDockRun.ts" },
+  { "from": "src/components/dock/composables/useDockClickIntegrity.ts", "to": "src/components/dock/shell/composables/useDockClickIntegrity.ts" },
+  { "from": "src/components/dock/composables/useDockMorph.ts", "to": "src/components/dock/shell/composables/useDockMorph.ts" },
+  { "from": "src/components/dock/composables/dockMorphMeasure.ts", "to": "src/components/dock/shell/composables/dockMorphMeasure.ts" }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "scopes": [
+  {
+   "from": "Timeline",
+   "to": "TimelineMarks",
+   "reason": "S39-03 (B6, the 500-line bound) splits Timeline.vue: its marks render in TimelineMarks.vue, which carries the marks rules in its own scoped block; the rules are the same text under the new component scope"
+  }
+ ],
+ "reorders": [
+  {
+   "entry": "./styles",
+   "moved": [
+    "@layer components :: .card-scroll-host {contain:layout style paint;overflow-y:auto;mask-image:linear-gradient( to bottom,black calc(100% - var(--fade-end)),transparent 100% )}",
+    "@layer components > @supports (animation-timeline: scroll()) :: .card-scroll-host {animation:gl-fade-end-out linear both;animation-timeline:scroll(self block);animation-range:calc(100% - var(--fade-scroll-width)) 100%}",
+    "@layer components :: .card-header--shrink {position:relative;isolation:isolate}",
+    "@layer components :: .card-header--shrink::before {content:\"\";position:absolute;inset:0 0 calc(var(--card-gap) * -1);z-index:-1;border-radius:inherit;background:var(--glass-veil);mask-image:linear-gradient( to bottom,black calc(100% - var(--card-gap)),transparent );opacity:0;pointer-events:none;transition:opacity var(--duration-normal) var(--ease-standard)}",
+    "@layer components :: .card-header--shrink > [data-slot=\"card-title\"] {font-size:calc(var(--type-body) * 2.058);transform-origin:0 50%}",
+    "@layer components :: .card-header--shrink[data-condensed=\"true\"] {padding-block-start:var(--card-gap)}",
+    "@layer components :: .card-header--shrink[data-condensed=\"true\"]::before {opacity:1}",
+    "@layer components :: .card-header--shrink[data-condensed=\"true\"] > [data-slot=\"card-title\"] {font-size:calc(var(--type-body) * 1.618)}",
+    "@layer components > @keyframes card-title-condense :: from {scale:1.272}",
+    "@layer components > @keyframes card-title-condense :: to {scale:1}",
+    "@layer components > @keyframes card-title-release :: from {scale:0.786151}",
+    "@layer components > @keyframes card-title-release :: to {scale:1}",
+    "@layer components :: .card-header--shrink[data-shrink-glide][data-condensed=\"true\"] > [data-slot=\"card-title\"] {animation:card-title-condense var(--duration-normal) var(--ease-standard)}",
+    "@layer components :: .card-header--shrink[data-shrink-glide][data-condensed=\"false\"] > [data-slot=\"card-title\"] {animation:card-title-release var(--duration-normal) var(--ease-standard)}",
+    "@layer components :: .card-header--shrink > [data-slot=\"card-description\"] {transition:opacity var(--duration-normal) var(--ease-standard),visibility var(--duration-normal) var(--ease-standard);transition-behavior:allow-discrete}",
+    "@layer components :: .card-header--shrink[data-condensed=\"true\"] > [data-slot=\"card-description\"] {visibility:hidden;opacity:0}",
+    "@layer components > @media (prefers-reduced-motion: reduce) :: .card-header--shrink::before,.card-header--shrink > [data-slot=\"card-description\"] {transition:none}",
+    "@layer components > @media (prefers-reduced-motion: reduce) :: .card-header--shrink[data-shrink-glide] > [data-slot=\"card-title\"] {animation:none}",
+    "@layer components :: .tl[data-v-(Timeline)] {row-gap:var(--space-body);grid-template-columns:100%;display:grid;position:relative}",
+    "@layer components :: .tl__track[data-v-(Timeline)],.tl__marks[data-v-(Timeline)] {grid-area:1/1;align-self:center}",
+    "@layer components :: .tl__track[data-v-(Timeline)] {block-size:var(--timeline-track-h);background:oklch(from var(--card) calc(l - .04) c h)}",
+    "@layer components :: .tl__span[data-v-(Timeline)] {inset-block:0;left:calc(var(--tl-l) * 100%);width:calc(var(--tl-w) * 100%);position:absolute;overflow:hidden}",
+    "@layer components :: .tl__fill[data-v-(Timeline)] {background:var(--tl-accent);transform:translateX(calc((var(--tl-f) - 1) * 100%));position:absolute;inset:0}",
+    "@layer components :: .tl__track[data-advancing] .tl__fill[data-v-(Timeline)] {will-change:transform}",
+    "@layer components :: .tl__cap[data-v-(Timeline)] {inset-block:0;inline-size:var(--timeline-track-h);border-radius:var(--radius-pill);background:var(--tl-accent);box-shadow:var(--glass-rim-top);transform:scaleX(var(--stretch,1)) scaleY(calc(1 / var(--stretch,1)));pointer-events:none;position:absolute;right:0}",
+    "@layer components :: .tl .track-flow[data-v-(Timeline)] {--track-flow-peak:var(--fill-selected)}",
+    "@layer components :: .tl__detail[data-v-(Timeline)] {animation:tl-detail-(Timeline) var(--spring-dock-duration) var(--spring-dock) both;grid-area:2/1}",
+    "@layer components > @media (prefers-reduced-motion:reduce) :: .tl__detail[data-v-(Timeline)] {animation-duration:.01ms}"
+   ],
+   "reason": "S4b (LAW §6, B3): card/scroll.css joins card's own rung, one door per unit: its 18 rules (.card-scroll-host and the .card-header--shrink family, their @supports/@media arms and two @keyframes) now precede the feedback-tone register instead of following the sheet rung. Written from the floor baseline's own rule lines (cascade-floor styles.seq 712-729), the moved set the verifier's longest kept order yields. Also in this entry: S39-03 (B6, the 500-line bound): Timeline.vue renders its marks through TimelineMarks.vue, a child component whose scoped block the build emits before its parent's, so Timeline's own ten rules (.tl, .tl__track, .tl__span, .tl__fill, .tl__cap, .tl__detail and their arms) now follow the marks rules instead of preceding them. The marks rules declare pointer-events, block size, margin, padding, list-style and position on the marks elements; the one Timeline rule that also selects .tl__marks declares grid-area and align-self, so no swapped pair shares a declared property (FD-4 judges each pair)"
+  },
+  {
+   "entry": "./styles.css",
+   "moved": [
+    "@layer components :: .tl[data-v-(Timeline)] {row-gap:var(--space-body);grid-template-columns:100%;display:grid;position:relative}",
+    "@layer components :: .tl__track[data-v-(Timeline)],.tl__marks[data-v-(Timeline)] {grid-area:1/1;align-self:center}",
+    "@layer components :: .tl__track[data-v-(Timeline)] {block-size:var(--timeline-track-h);background:oklch(from var(--card) calc(l - .04) c h)}",
+    "@layer components :: .tl__span[data-v-(Timeline)] {inset-block:0;left:calc(var(--tl-l) * 100%);width:calc(var(--tl-w) * 100%);position:absolute;overflow:hidden}",
+    "@layer components :: .tl__fill[data-v-(Timeline)] {background:var(--tl-accent);transform:translateX(calc((var(--tl-f) - 1) * 100%));position:absolute;inset:0}",
+    "@layer components :: .tl__track[data-advancing] .tl__fill[data-v-(Timeline)] {will-change:transform}",
+    "@layer components :: .tl__cap[data-v-(Timeline)] {inset-block:0;inline-size:var(--timeline-track-h);border-radius:var(--radius-pill);background:var(--tl-accent);box-shadow:var(--glass-rim-top);transform:scaleX(var(--stretch,1)) scaleY(calc(1 / var(--stretch,1)));pointer-events:none;position:absolute;right:0}",
+    "@layer components :: .tl .track-flow[data-v-(Timeline)] {--track-flow-peak:var(--fill-selected)}",
+    "@layer components :: .tl__detail[data-v-(Timeline)] {animation:tl-detail-(Timeline) var(--spring-dock-duration) var(--spring-dock) both;grid-area:2/1}",
+    "@layer components > @media (prefers-reduced-motion:reduce) :: .tl__detail[data-v-(Timeline)] {animation-duration:.01ms}"
+   ],
+   "reason": "S39-03 (B6, the 500-line bound): Timeline.vue renders its marks through TimelineMarks.vue, a child component whose scoped block the build emits before its parent's, so Timeline's own ten rules (.tl, .tl__track, .tl__span, .tl__fill, .tl__cap, .tl__detail and their arms) now follow the marks rules instead of preceding them. The marks rules declare pointer-events, block size, margin, padding, list-style and position on the marks elements; the one Timeline rule that also selects .tl__marks declares grid-area and align-self, so no swapped pair shares a declared property (FD-4 judges each pair)"
+  }
+ ]
+}

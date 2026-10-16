@@ -1,0 +1,83 @@
+[browser-seat 2026-10-14T17:11:40.611Z] seat acquired after 0.0s: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p8/B-proto/base
+[browser-seat 2026-10-14T17:11:41.689Z] demo server http://localhost:58192 (pid 30355, cwd /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p8/B-proto/base); 2 spec(s): blob-config-delta.spec.ts, substrate-paints-color.spec.ts
+
+Running 10 tests using 1 worker
+
+  ✓   1 [chromium-headless-new] › blob-config-delta.spec.ts:105:13 › blob-config DELTA (AY.W-BLOB-CONFIG — the four fixes, own-surface capture) › capture studio desktop/light (3.8s)
+  ✓   2 [chromium-headless-new] › blob-config-delta.spec.ts:105:13 › blob-config DELTA (AY.W-BLOB-CONFIG — the four fixes, own-surface capture) › capture studio desktop/dark (1.8s)
+  ✓   3 [chromium-headless-new] › blob-config-delta.spec.ts:105:13 › blob-config DELTA (AY.W-BLOB-CONFIG — the four fixes, own-surface capture) › capture studio mobile/light (1.4s)
+  ✓   4 [chromium-headless-new] › blob-config-delta.spec.ts:105:13 › blob-config DELTA (AY.W-BLOB-CONFIG — the four fixes, own-surface capture) › capture studio mobile/dark (1.5s)
+  ✘   5 [chromium-headless-new] › blob-config-delta.spec.ts:126:5 › blob-config DELTA (AY.W-BLOB-CONFIG — the four fixes, own-surface capture) › D1 — a seed change RE-PAINTS the hero body (the dead-feed fix) (1.7s)
+[W-BLOB-CONFIG-π] D2 shift(+0.8 Excited)=0.0064 shift(-0.8 Shy)=0.0134 (lean-in must exceed shy-away)
+  ✘   6 [chromium-headless-new] › blob-config-delta.spec.ts:153:5 › blob-config DELTA (AY.W-BLOB-CONFIG — the four fixes, own-surface capture) › D2 — a negative attraction SHIES relative to a positive (the sign fix) (8.7s)
+[W-BLOB-CONFIG-π] D4 covRun=0.509 covResume=0.418 covAfter=0.411 (resume must be the resting band, not a flooded slab)
+  ✓   7 [chromium-headless-new] › blob-config-delta.spec.ts:187:5 › blob-config DELTA (AY.W-BLOB-CONFIG — the four fixes, own-surface capture) › D4 — the paused-prop resume produces a CLEAN canvas (the SEVERE fix) (9.9s)
+PI aurora DEFAULT meanChannel=230.7 floor=8
+PI aurora SETTING_SUN meanChannel=231.3 floor=8
+PI aurora DUSK meanChannel=230.2 floor=8
+PI aurora VIVID_SETTING_SUN meanChannel=233.0 floor=8
+PI aurora OPENAI_SKY meanChannel=231.3 floor=8
+PI aurora OPENAI_DAWN meanChannel=229.4 floor=8
+PI aurora OPENAI_MEADOW meanChannel=206.3 floor=8
+PI aurora DELIBERATIVE meanChannel=235.1 floor=8
+PI aurora DAY9_YELLOW meanChannel=229.3 floor=8
+PI aurora OIL_IMPASTO meanChannel=194.0 floor=8
+PI aurora OIL_GESTURAL meanChannel=217.7 floor=8
+PI aurora VANGOGH meanChannel=101.5 floor=8
+PI aurora OILPASTEL_SUNSET meanChannel=199.8 floor=8
+PI aurora OILPASTEL_RAINBOW meanChannel=217.5 floor=8
+PI aurora OILPASTEL_OCEAN meanChannel=147.4 floor=8
+PI aurora CRAYON meanChannel=166.3 floor=8
+PI aurora METAL meanChannel=206.7 floor=8
+PI aurora SPEEDTEST meanChannel=176.7 floor=8
+  ✓   8 [chromium-headless-new] › substrate-paints-color.spec.ts:575:5 › substrate-paints-color (π lane — fail-CLOSED) › aurora paints a non-black interior on DEFAULT + every preset at t=1 (24.3s)
+PI blob paintable=[0.188,0.188]-[0.813,0.702] paintableShareOfInterior=0.557
+PI blob baseline groundMotion=0.000
+PI blob coverage=0.162 floor=0.1 · paintedShare=0.290 ceil=0.7
+  ✓   9 [chromium-headless-new] › substrate-paints-color.spec.ts:759:5 › substrate-paints-color (π lane — fail-CLOSED) › blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS (7.4s)
+PI blob paintable=[0.188,0.188]-[0.813,0.702] paintableShareOfInterior=0.557
+PI blob baseline groundMotion=0.000
+PI blob coverage=0.161 floor=0.1 · paintedShare=0.289 ceil=0.7
+  ✓  10 [chromium-headless-new] › substrate-paints-color.spec.ts:767:5 › substrate-paints-color (π lane — fail-CLOSED) › blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS (7.4s)
+
+
+  1) [chromium-headless-new] › blob-config-delta.spec.ts:126:5 › blob-config DELTA (AY.W-BLOB-CONFIG — the four fixes, own-surface capture) › D1 — a seed change RE-PAINTS the hero body (the dead-feed fix) 
+
+    Error: page.evaluate: TypeError: Illegal invocation
+        at eval (eval at evaluate (:303:30), <anonymous>:7:14)
+        at UtilityScript.evaluate (<anonymous>:305:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at eval (eval at evaluate (:303:30), <anonymous>:7:14)
+        at UtilityScript.evaluate (<anonymous>:305:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p8/B-proto/base/tests-visual/blob-config-delta.spec.ts:133:20
+
+    Error Context: test-results/blob-config-delta-blob-con-42281-ero-body-the-dead-feed-fix--chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › blob-config-delta.spec.ts:153:5 › blob-config DELTA (AY.W-BLOB-CONFIG — the four fixes, own-surface capture) › D2 — a negative attraction SHIES relative to a positive (the sign fix) 
+
+    Error: shy-away shift(-0.8)=0.0134 is NOT less than lean-in shift(+0.8)=0.0064 — the sign is still dropped (a negative attraction lunges toward)
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 0.006437783165624822
+    Received:   0.013427411031809722
+
+      181 |         // (-0.8). At HEAD the order was INVERTED (a negative attraction lunged HARDER). The
+      182 |         // shader sign flip + the reach-gated pseudopod restore the correct ordering.
+    > 183 |         expect(shiftNeg, `shy-away shift(-0.8)=${shiftNeg.toFixed(4)} is NOT less than lean-in shift(+0.8)=${shiftPos.toFixed(4)} — the sign is still dropped (a negative attraction lunges toward)`).toBeLessThan(shiftPos);
+          |                                                                                                                                                                                                       ^
+      184 |     });
+      185 |
+      186 |     // ── D4 — the paused-prop resume is CLEAN (no charcoal-slab wreck) ──
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p8/B-proto/base/tests-visual/blob-config-delta.spec.ts:183:199
+
+    Error Context: test-results/blob-config-delta-blob-con-e4b86-to-a-positive-the-sign-fix--chromium-headless-new/error-context.md
+
+  2 failed
+    [chromium-headless-new] › blob-config-delta.spec.ts:126:5 › blob-config DELTA (AY.W-BLOB-CONFIG — the four fixes, own-surface capture) › D1 — a seed change RE-PAINTS the hero body (the dead-feed fix) 
+    [chromium-headless-new] › blob-config-delta.spec.ts:153:5 › blob-config DELTA (AY.W-BLOB-CONFIG — the four fixes, own-surface capture) › D2 — a negative attraction SHIES relative to a positive (the sign fix) 
+  8 passed (1.2m)
+[browser-seat 2026-10-14T17:12:54.295Z] RED: 8/10 passed, 2 failed, 0 skipped in 74s → /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-8/B-kit/results/p8/browser/reruns/base-1-1.json
+[browser-seat 2026-10-14T17:12:54.295Z]   FAILED blob-config-delta.spec.ts :: D1 — a seed change RE-PAINTS the hero body (the dead-feed fix)
+[browser-seat 2026-10-14T17:12:54.295Z]   FAILED blob-config-delta.spec.ts :: D2 — a negative attraction SHIES relative to a positive (the sign fix)

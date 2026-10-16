@@ -1,0 +1,31 @@
+{
+ "step": "B-07: the renamed specs' header comments name the file they are in",
+ "files": {
+  "tests-visual/storybook/configurator/category-color-identity.spec.ts": {
+   "hunks": [
+    [
+     "// BA.W-SUFFUSE2 — suffuse2.spec.ts, the π getComputedStyle readback of the\n",
+     "// BA.W-SUFFUSE2 — category-color-identity.spec.ts, the π getComputedStyle readback of the\n"
+    ]
+   ]
+  },
+  "tests-visual/motion/curve-gallery-render.spec.ts": {
+   "hunks": [
+    [
+     "// AZ.W-MOTION2 (R7) — motion2.spec.ts, the painted browser half of the motion\n",
+     "// AZ.W-MOTION2 (R7) — curve-gallery-render.spec.ts, the painted browser half of the motion\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "tests-visual/storybook/configurator/category-color-identity.spec.ts",
+   "why": "the header names this file"
+  },
+  {
+   "file": "tests-visual/motion/curve-gallery-render.spec.ts",
+   "why": "the header names this file"
+  }
+ ]
+}

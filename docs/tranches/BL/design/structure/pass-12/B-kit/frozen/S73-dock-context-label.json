@@ -1,0 +1,39 @@
+{
+ "step": "P7-R1 (B18, LAW §5, §8): the dock context's injection label moves from dock/constants.ts into dockContext.ts, its one reader, so the context reads no dock-root file and stops loading the motion door through constants.ts",
+ "files": {
+  "src/components/dock/constants.ts": {
+   "hunks": [
+    [
+     "\n/** `Symbol()` label for the `DockContext` injection key (`dockContext.ts`). */\nexport const DOCK_CONTEXT_LABEL = \"glass-ui:dock-context\";\n\n/** `Symbol()` label for the `DockCrossfadeContext` injection key (`dockCrossfadeContext.ts`). */\n",
+     "\n/** `Symbol()` label for the `DockCrossfadeContext` injection key (`dockCrossfadeContext.ts`). */\n"
+    ]
+   ]
+  },
+  "src/components/dock/composables/dockContext.ts": {
+   "hunks": [
+    [
+     "import { createStrictContext } from \"../../../composables/context\";\nimport { DOCK_CONTEXT_LABEL } from \"../constants\";\nimport { provideOverlayHost, type DockHoldKind } from \"../../_shared/overlay\";\n",
+     "import { createStrictContext } from \"../../../composables/context\";\nimport { provideOverlayHost, type DockHoldKind } from \"../../_shared/overlay\";\n"
+    ],
+    [
+     "    held: ComputedRef<boolean>;\n}\n\n// Strict and optional access share one key: `<GlassDock>` provides; descendants\n",
+     "    held: ComputedRef<boolean>;\n}\n\n/** `Symbol()` label for the `DockContext` injection key. */\nconst DOCK_CONTEXT_LABEL = \"glass-ui:dock-context\";\n\n// Strict and optional access share one key: `<GlassDock>` provides; descendants\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "src/components/dock/constants.ts",
+   "why": "the label leaves for its one reader"
+  },
+  {
+   "file": "src/components/dock/composables/dockContext.ts",
+   "why": "the context reads no dock-root file"
+  },
+  {
+   "file": "src/components/dock/composables/dockContext.ts",
+   "why": "the label lives with the key it names"
+  }
+ ]
+}

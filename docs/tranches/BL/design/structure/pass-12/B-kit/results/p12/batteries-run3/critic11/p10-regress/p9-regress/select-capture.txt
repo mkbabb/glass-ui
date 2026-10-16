@@ -1,0 +1,14 @@
+select-capture start 2026-10-16T12:34:13Z load { 10.99 10.30 11.06 }
+SC1 PASS rc=0 :: {"moves":604,"changed":723,"specs":155,"programSpecs":155,"captures":14,"excludedTouched":14}
+SC capture specs on the tree 14; touched by the chain's moves 14
+SC2 PASS capture specs in specs.txt: 0; specs.txt lines 155
+SC3 PASS touched capture specs not named as excluded: 0 of 14
+SC4 LAW lines naming the capture exclusion:
+SC4   408:  with `_` (`tests-visual/captures/_veil-capture.spec.ts`) is a capture spec: a recording tool
+SC4   411:  exists for it (`lib/floor.mjs` `loadProgram`: `specs` without them, `captures` naming them).
+SC4   412:  The selection states what it leaves out: `browser-select.mjs` prints every capture spec of the
+SC4   414:  `captures.txt`. A moved capture spec is still read: B0 judges every reference the floor graph
+SC4   415:  parses in `tests-visual/`, so an import of a moved capture spec that resolves to nothing is an
+SC4   491:`tests-visual/**/*.spec.ts` at the chain's `baseSha`, read from committed bytes with git, capture specs
+SC4   496:base-green test: it is printed `UNKEYED` and judged for nothing. A capture spec in `--route` is a throw (no run
+select-capture rc=0 end 2026-10-16T12:34:15Z load { 10.99 10.30 11.06 }

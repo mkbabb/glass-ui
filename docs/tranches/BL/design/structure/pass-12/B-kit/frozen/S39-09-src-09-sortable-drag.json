@@ -1,0 +1,137 @@
+{
+ "step": "B-S11 (R-5): sortable-list/drag/drag.ts 631 → 472 lines by extracting the vacancy and the landing into their own leaves of the drag module",
+ "files": {
+  "src/components/sortable-list/drag/drag.ts": {
+   "hunks": [
+    [
+     "import { createGhost, type Ghost } from \"./ghost\";\nimport {\n",
+     "import { createGhost, type Ghost } from \"./ghost\";\nimport { createLanding } from \"./landing\";\nimport { ACTIVATION_HOLD_MS, ACTIVATION_SLOP_PX, VelocitySampler } from \"./motion\";\nimport { createVacancy, type Origin } from \"./vacancy\";\nimport {\n"
+    ],
+    [
+     "import {\n    ACTIVATION_HOLD_MS,\n    ACTIVATION_SLOP_PX,\n    VelocitySampler,\n    flyProgress,\n    type Flight,\n} from \"./motion\";\nimport {\n    findForeignTarget,\n",
+     "import {\n    findForeignTarget,\n"
+    ],
+    [
+     "const LIFTED_ATTR = \"data-sortable-lifted\";\nconst ARMED_ATTR = \"data-sortable-armed\";\n/** The reversal clock: a cancel is not a proposal, so the vacancy closes on `press`. */\n",
+     "const LIFTED_ATTR = \"data-sortable-lifted\";\n/** The reversal clock: a cancel is not a proposal, so the vacancy closes on `press`. */\n"
+    ],
+    [
+     "const CLOSING_ATTR = \"data-sortable-closing\";\nconst VACANCY_BLOCK_PROP = \"--sortable-vacancy-block\";\nconst FLOATING_CLASS = \"glass-floating\";\n",
+     "const CLOSING_ATTR = \"data-sortable-closing\";\nconst FLOATING_CLASS = \"glass-floating\";\n"
+    ],
+    [
+     "\n/** A viewport top-left — where a plate is, or where it is going. */\ninterface Origin {\n    x: number;\n    y: number;\n}\n\n/**\n * A receiving list's resting geometry, taken when its arm OPENS — before a single row\n * of it carries a parting transform. Held as an OFFSET from the container box rather\n * than in viewport coordinates: the container never carries a transform, so re-reading\n * it at release survives a scroll AND cannot pick up a row's mid-transition position,\n * which is the same reason the source snapshots its own rows once at lift (E4).\n */\ninterface Arrival {\n    dx: number;\n    dy: number;\n    /** This list's own row pitch — the arriving subject's block is a separate figure. */\n    pitch: number;\n}\n\ninterface Pending {\n",
+     "\ninterface Pending {\n"
+    ],
+    [
+     "    let rects: ListRects | null = null;\n    let arrival: Arrival | null = null;\n    let flight: Flight | null = null;\n    /** The detached plate, held ONLY so an unmount mid-flight can take it with it. */\n    let flying: Ghost | null = null;\n    let closeTimer: ReturnType<typeof setTimeout> | null = null;\n",
+     "    let rects: ListRects | null = null;\n    let closeTimer: ReturnType<typeof setTimeout> | null = null;\n"
+    ],
+    [
+     "    const sampler = new VelocitySampler();\n\n",
+     "    const sampler = new VelocitySampler();\n    const landing = createLanding(sampler);\n\n"
+    ],
+    [
+     "    /** Write one row's parting offset. `0` clears the write entirely. */\n    function shiftRow(id: SortableId, dy: number): void {\n        const el = deps.elements.get(id);\n        if (!(el instanceof HTMLElement)) return;\n        if (dy === 0) el.style.removeProperty(\"transform\");\n        else el.style.transform = `translate3d(0, ${dy}px, 0)`;\n    }\n",
+     "    // The parting offsets and the receiving arm live in vacancy.ts; this transaction\n    // only says which rows part and when.\n    const { clearShifts, partLocal, partLeaving, partForExternal, vacancyOrigin } = createVacancy({\n        elements: deps.elements,\n        container,\n        order,\n        rects: () => rects,\n    });\n"
+    ],
+    [
+     "\n    function clearShifts(): void {\n        for (const el of deps.elements.values()) {\n            if (el instanceof HTMLElement) el.style.removeProperty(\"transform\");\n        }\n    }\n\n    /**\n",
+     "\n    /**\n"
+    ],
+    [
+     "    /**\n     * Open the vacancy at `final` for a subject lifted from `source`. Rows between the\n     * two travel one pitch toward the source's old slot; the subject's own slot travels\n     * to the vacancy. Compositor-only — every write is a transform.\n     */\n    function partLocal(source: number, final: number): void {\n        if (!rects) return;\n        const pitch = rects.pitch;\n        const ids = order();\n        for (let i = 0; i < ids.length; i++) {\n            const id = ids[i]!;\n            if (i === source) shiftRow(id, (final - source) * pitch);\n            else if (final > source && i > source && i <= final) shiftRow(id, -pitch);\n            else if (final < source && i >= final && i < source) shiftRow(id, pitch);\n            else shiftRow(id, 0);\n        }\n    }\n\n    /** The subject has left for a sibling list: this list closes behind it. */\n    function partLeaving(source: number): void {\n        if (!rects) return;\n        const ids = order();\n        for (let i = 0; i < ids.length; i++) {\n            shiftRow(ids[i]!, i > source ? -rects.pitch : 0);\n        }\n    }\n\n    /**\n     * Part THIS list for a subject arriving from a sibling instance — and, when the\n     * list is empty, BE the vacancy: the container's own min-block-size springs to the\n     * subject's block size, so an empty column stops being an invisible target that\n     * silently accepts the drop.\n     */\n    function partForExternal(index: number | null, block: number | null): void {\n        const host = container();\n        if (!host) return;\n        if (index === null) {\n            clearShifts();\n            arrival = null;\n            host.removeAttribute(ARMED_ATTR);\n            host.style.removeProperty(VACANCY_BLOCK_PROP);\n            return;\n        }\n        // The anchor is taken ONCE, on the frame the arm opens, while this list is\n        // still at rest. Every later call moves the gap within the same geometry.\n        if (arrival === null) {\n            const resting = snapshotRows(deps.elements, order());\n            const first = resting.rows[0];\n            const hostBox = host.getBoundingClientRect();\n            arrival = first\n                ? {\n                      dx: first.left - hostBox.left,\n                      dy: first.top - hostBox.top,\n                      pitch: resting.pitch,\n                  }\n                : // An EMPTY list has no rows to offset from: it IS the vacancy, and\n                  // its own box is where the subject lands.\n                  { dx: 0, dy: 0, pitch: 0 };\n        }\n        const pitch = block ?? rects?.pitch ?? 0;\n        host.setAttribute(ARMED_ATTR, \"\");\n        host.style.setProperty(VACANCY_BLOCK_PROP, `${pitch}px`);\n        const ids = order();\n        for (let i = 0; i < ids.length; i++) shiftRow(ids[i]!, i >= index ? pitch : 0);\n    }\n\n    /**\n     * Where a subject arriving at `index` comes to rest, in viewport coordinates. The\n     * RECEIVER answers this because the receiver owns the gap: the releasing list has\n     * closed behind the subject, so its own rows say nothing about where the row went.\n     * One formula spans the whole range — `index` runs 0…rows.length, and the last of\n     * those is the append slot immediately after the final row.\n     */\n    function vacancyOrigin(index: number): Origin | null {\n        const host = container();\n        if (!host || !arrival) return null;\n        const hostBox = host.getBoundingClientRect();\n        return {\n            x: hostBox.left + arrival.dx,\n            y: hostBox.top + arrival.dy + index * arrival.pitch,\n        };\n    }\n\n    /**\n     * Re-take the resting snapshot when the viewport moves under a live drag. Rows are\n",
+     "    /**\n     * Re-take the resting snapshot when the viewport moves under a live drag. Rows are\n"
+    ],
+    [
+     "    /**\n     * Detach the ghost and fly it, on `dock`, to a measured rect carrying the gesture's\n     * release velocity. The ghost outlives the transaction on purpose: the 7.0.0 ghost\n     * was destroyed synchronously inside cleanup, which is why a 95px drop teleported\n     * with ΔY 0.00 over 250ms.\n     */\n",
+     "    /** Detach the ghost and fly it home (landing.ts); the transaction lets go of it here. */\n"
+    ],
+    [
+     "        if (!plate) return;\n        flight?.stop();\n        flying?.destroy();\n        flying = plate;\n        const from = plate.position();\n        // An UNMEASURABLE endpoint still retires the plate — it dissolves where it is.\n        // The alternative is the plate outliving the gesture on `document.body`, which\n        // is what an early return out of `commit()` used to leave behind.\n        const dest = to ?? from;\n        const dx = dest.x - from.x;\n        const dy = dest.y - from.y;\n        const distance = Math.hypot(dx, dy);\n        const v = sampler.velocity();\n        const along = distance === 0 ? 0 : (v.x * dx + v.y * dy) / distance;\n        plate.land();\n        const retire = (): void => {\n            plate.destroy();\n            if (flying === plate) flying = null;\n        };\n        flight = flyProgress(\n            \"dock\",\n            distance,\n            along,\n            (t) => plate.follow(from.x + dx * t, from.y + dy * t),\n            () => {\n                plate.plate.dataset.done = \"\";\n                // Removal is the dissolve clock's END, never a synchronous destroy. The\n                // timeout is a LEAK FENCE, not a fallback path: both routes run the same\n                // `retire`, and the class that needs it is an element detached before\n                // its transition can fire.\n                plate.plate.addEventListener(\"transitionend\", retire, { once: true });\n                setTimeout(retire, 400);\n            },\n        );\n",
+     "        if (plate) landing.fly(plate, to);\n"
+    ],
+    [
+     "        if (closeTimer !== null) clearTimeout(closeTimer);\n        flight?.stop();\n        ghost?.destroy();\n",
+     "        if (closeTimer !== null) clearTimeout(closeTimer);\n        ghost?.destroy();\n"
+    ],
+    [
+     "        // A plate still in the air when the list unmounts leaves with it — the flight's\n        // own retirement can no longer run once its spring is stopped.\n        flying?.destroy();\n        flying = null;\n",
+     "        landing.dispose();\n"
+    ]
+   ]
+  },
+  "src/components/sortable-list/drag/landing.ts": {
+   "create": "/**\n * The landing — the detached ghost's flight home. A released plate flies on `dock` to\n * a measured origin carrying the gesture's release velocity, then dissolves on its own\n * transition clock. The plate outlives the transaction on purpose, and one still in the\n * air when the list unmounts leaves with it.\n */\nimport type { Ghost } from \"./ghost\";\nimport { flyProgress, type Flight, type VelocitySampler } from \"./motion\";\nimport type { Origin } from \"./vacancy\";\n\nexport function createLanding(sampler: VelocitySampler) {\n    let flight: Flight | null = null;\n    /** The detached plate, held ONLY so an unmount mid-flight can take it with it. */\n    let flying: Ghost | null = null;\n\n    /**\n     * Detach the ghost and fly it, on `dock`, to a measured rect carrying the gesture's\n     * release velocity. The ghost outlives the transaction on purpose: the 7.0.0 ghost\n     * was destroyed synchronously inside cleanup, which is why a 95px drop teleported\n     * with ΔY 0.00 over 250ms.\n     */\n    function fly(plate: Ghost, to: Origin | null): void {\n        flight?.stop();\n        flying?.destroy();\n        flying = plate;\n        const from = plate.position();\n        // An UNMEASURABLE endpoint still retires the plate — it dissolves where it is.\n        // The alternative is the plate outliving the gesture on `document.body`, which\n        // is what an early return out of `commit()` used to leave behind.\n        const dest = to ?? from;\n        const dx = dest.x - from.x;\n        const dy = dest.y - from.y;\n        const distance = Math.hypot(dx, dy);\n        const v = sampler.velocity();\n        const along = distance === 0 ? 0 : (v.x * dx + v.y * dy) / distance;\n        plate.land();\n        const retire = (): void => {\n            plate.destroy();\n            if (flying === plate) flying = null;\n        };\n        flight = flyProgress(\n            \"dock\",\n            distance,\n            along,\n            (t) => plate.follow(from.x + dx * t, from.y + dy * t),\n            () => {\n                plate.plate.dataset.done = \"\";\n                // Removal is the dissolve clock's END, never a synchronous destroy. The\n                // timeout is a LEAK FENCE, not a fallback path: both routes run the same\n                // `retire`, and the class that needs it is an element detached before\n                // its transition can fire.\n                plate.plate.addEventListener(\"transitionend\", retire, { once: true });\n                setTimeout(retire, 400);\n            },\n        );\n    }\n\n    function dispose(): void {\n        flight?.stop();\n        // A plate still in the air when the list unmounts leaves with it — the flight's\n        // own retirement can no longer run once its spring is stopped.\n        flying?.destroy();\n        flying = null;\n    }\n\n    return { fly, dispose };\n}\n"
+  },
+  "src/components/sortable-list/drag/vacancy.ts": {
+   "create": "/**\n * The vacancy — the sortable list's indicator. The rows between the source and the\n * proposed position translate by one row's pitch, which opens a gap exactly where the\n * row would land; a list receiving from a sibling parts for the arriving subject, and\n * an EMPTY list becomes the vacancy itself. Every write is a transform or one custom\n * property, so the whole account is compositor-only.\n */\nimport { snapshotRows, type ListRects } from \"../drop\";\nimport type { SortableId } from \"../types\";\n\nconst ARMED_ATTR = \"data-sortable-armed\";\nconst VACANCY_BLOCK_PROP = \"--sortable-vacancy-block\";\n\n/** A viewport top-left — where a plate is, or where it is going. */\nexport interface Origin {\n    x: number;\n    y: number;\n}\n\n/**\n * A receiving list's resting geometry, taken when its arm OPENS — before a single row\n * of it carries a parting transform. Held as an OFFSET from the container box rather\n * than in viewport coordinates: the container never carries a transform, so re-reading\n * it at release survives a scroll AND cannot pick up a row's mid-transition position,\n * which is the same reason the source snapshots its own rows once at lift (E4).\n */\ninterface Arrival {\n    dx: number;\n    dy: number;\n    /** This list's own row pitch — the arriving subject's block is a separate figure. */\n    pitch: number;\n}\n\nexport interface VacancyDeps {\n    elements: Map<SortableId, Element | null>;\n    /** The list's own container box, which never carries a transform. */\n    container: () => HTMLElement | null;\n    /** The list's ids in their current order. */\n    order: () => SortableId[];\n    /** The source list's resting snapshot, taken at lift; null outside a drag. */\n    rects: () => ListRects | null;\n}\n\nexport function createVacancy({ elements, container, order, rects: listRects }: VacancyDeps) {\n    let arrival: Arrival | null = null;\n\n    /** Write one row's parting offset. `0` clears the write entirely. */\n    function shiftRow(id: SortableId, dy: number): void {\n        const el = elements.get(id);\n        if (!(el instanceof HTMLElement)) return;\n        if (dy === 0) el.style.removeProperty(\"transform\");\n        else el.style.transform = `translate3d(0, ${dy}px, 0)`;\n    }\n\n    function clearShifts(): void {\n        for (const el of elements.values()) {\n            if (el instanceof HTMLElement) el.style.removeProperty(\"transform\");\n        }\n    }\n\n    /**\n     * Open the vacancy at `final` for a subject lifted from `source`. Rows between the\n     * two travel one pitch toward the source's old slot; the subject's own slot travels\n     * to the vacancy. Compositor-only — every write is a transform.\n     */\n    function partLocal(source: number, final: number): void {\n        const rects = listRects();\n        if (!rects) return;\n        const pitch = rects.pitch;\n        const ids = order();\n        for (let i = 0; i < ids.length; i++) {\n            const id = ids[i]!;\n            if (i === source) shiftRow(id, (final - source) * pitch);\n            else if (final > source && i > source && i <= final) shiftRow(id, -pitch);\n            else if (final < source && i >= final && i < source) shiftRow(id, pitch);\n            else shiftRow(id, 0);\n        }\n    }\n\n    /** The subject has left for a sibling list: this list closes behind it. */\n    function partLeaving(source: number): void {\n        const rects = listRects();\n        if (!rects) return;\n        const ids = order();\n        for (let i = 0; i < ids.length; i++) {\n            shiftRow(ids[i]!, i > source ? -rects.pitch : 0);\n        }\n    }\n\n    /**\n     * Part THIS list for a subject arriving from a sibling instance — and, when the\n     * list is empty, BE the vacancy: the container's own min-block-size springs to the\n     * subject's block size, so an empty column stops being an invisible target that\n     * silently accepts the drop.\n     */\n    function partForExternal(index: number | null, block: number | null): void {\n        const host = container();\n        if (!host) return;\n        if (index === null) {\n            clearShifts();\n            arrival = null;\n            host.removeAttribute(ARMED_ATTR);\n            host.style.removeProperty(VACANCY_BLOCK_PROP);\n            return;\n        }\n        // The anchor is taken ONCE, on the frame the arm opens, while this list is\n        // still at rest. Every later call moves the gap within the same geometry.\n        if (arrival === null) {\n            const resting = snapshotRows(elements, order());\n            const first = resting.rows[0];\n            const hostBox = host.getBoundingClientRect();\n            arrival = first\n                ? {\n                      dx: first.left - hostBox.left,\n                      dy: first.top - hostBox.top,\n                      pitch: resting.pitch,\n                  }\n                : // An EMPTY list has no rows to offset from: it IS the vacancy, and\n                  // its own box is where the subject lands.\n                  { dx: 0, dy: 0, pitch: 0 };\n        }\n        const pitch = block ?? listRects()?.pitch ?? 0;\n        host.setAttribute(ARMED_ATTR, \"\");\n        host.style.setProperty(VACANCY_BLOCK_PROP, `${pitch}px`);\n        const ids = order();\n        for (let i = 0; i < ids.length; i++) shiftRow(ids[i]!, i >= index ? pitch : 0);\n    }\n\n    /**\n     * Where a subject arriving at `index` comes to rest, in viewport coordinates. The\n     * RECEIVER answers this because the receiver owns the gap: the releasing list has\n     * closed behind the subject, so its own rows say nothing about where the row went.\n     * One formula spans the whole range — `index` runs 0…rows.length, and the last of\n     * those is the append slot immediately after the final row.\n     */\n    function vacancyOrigin(index: number): Origin | null {\n        const host = container();\n        if (!host || !arrival) return null;\n        const hostBox = host.getBoundingClientRect();\n        return {\n            x: hostBox.left + arrival.dx,\n            y: hostBox.top + arrival.dy + index * arrival.pitch,\n        };\n    }\n\n    return { clearShifts, partLocal, partLeaving, partForExternal, vacancyOrigin };\n}\n"
+  }
+ },
+ "reasons": [
+  {
+   "file": "src/components/sortable-list/drag/drag.ts",
+   "why": "R-5: 631 → 472 lines; the vacancy (parting offsets, the receiving arm, the arrival origin) and the landing (the released ghost's flight and retirement) leave for two named leaves of the drag module; the transaction keeps propose/commit/cancel, activation and both input paths"
+  },
+  {
+   "file": "src/components/sortable-list/drag/drag.ts",
+   "why": "R-5: 631 → 472 lines; the vacancy (parting offsets, the receiving arm, the arrival origin) and the landing (the released ghost's flight and retirement) leave for two named leaves of the drag module; the transaction keeps propose/commit/cancel, activation and both input paths"
+  },
+  {
+   "file": "src/components/sortable-list/drag/drag.ts",
+   "why": "R-5: 631 → 472 lines; the vacancy (parting offsets, the receiving arm, the arrival origin) and the landing (the released ghost's flight and retirement) leave for two named leaves of the drag module; the transaction keeps propose/commit/cancel, activation and both input paths"
+  },
+  {
+   "file": "src/components/sortable-list/drag/drag.ts",
+   "why": "R-5: 631 → 472 lines; the vacancy (parting offsets, the receiving arm, the arrival origin) and the landing (the released ghost's flight and retirement) leave for two named leaves of the drag module; the transaction keeps propose/commit/cancel, activation and both input paths"
+  },
+  {
+   "file": "src/components/sortable-list/drag/drag.ts",
+   "why": "R-5: 631 → 472 lines; the vacancy (parting offsets, the receiving arm, the arrival origin) and the landing (the released ghost's flight and retirement) leave for two named leaves of the drag module; the transaction keeps propose/commit/cancel, activation and both input paths"
+  },
+  {
+   "file": "src/components/sortable-list/drag/drag.ts",
+   "why": "R-5: 631 → 472 lines; the vacancy (parting offsets, the receiving arm, the arrival origin) and the landing (the released ghost's flight and retirement) leave for two named leaves of the drag module; the transaction keeps propose/commit/cancel, activation and both input paths"
+  },
+  {
+   "file": "src/components/sortable-list/drag/drag.ts",
+   "why": "R-5: 631 → 472 lines; the vacancy (parting offsets, the receiving arm, the arrival origin) and the landing (the released ghost's flight and retirement) leave for two named leaves of the drag module; the transaction keeps propose/commit/cancel, activation and both input paths"
+  },
+  {
+   "file": "src/components/sortable-list/drag/drag.ts",
+   "why": "R-5: 631 → 472 lines; the vacancy (parting offsets, the receiving arm, the arrival origin) and the landing (the released ghost's flight and retirement) leave for two named leaves of the drag module; the transaction keeps propose/commit/cancel, activation and both input paths"
+  },
+  {
+   "file": "src/components/sortable-list/drag/drag.ts",
+   "why": "R-5: 631 → 472 lines; the vacancy (parting offsets, the receiving arm, the arrival origin) and the landing (the released ghost's flight and retirement) leave for two named leaves of the drag module; the transaction keeps propose/commit/cancel, activation and both input paths"
+  },
+  {
+   "file": "src/components/sortable-list/drag/drag.ts",
+   "why": "R-5: 631 → 472 lines; the vacancy (parting offsets, the receiving arm, the arrival origin) and the landing (the released ghost's flight and retirement) leave for two named leaves of the drag module; the transaction keeps propose/commit/cancel, activation and both input paths"
+  },
+  {
+   "file": "src/components/sortable-list/drag/drag.ts",
+   "why": "R-5: 631 → 472 lines; the vacancy (parting offsets, the receiving arm, the arrival origin) and the landing (the released ghost's flight and retirement) leave for two named leaves of the drag module; the transaction keeps propose/commit/cancel, activation and both input paths"
+  },
+  {
+   "file": "src/components/sortable-list/drag/drag.ts",
+   "why": "R-5: 631 → 472 lines; the vacancy (parting offsets, the receiving arm, the arrival origin) and the landing (the released ghost's flight and retirement) leave for two named leaves of the drag module; the transaction keeps propose/commit/cancel, activation and both input paths"
+  },
+  {
+   "file": "src/components/sortable-list/drag/drag.ts",
+   "why": "R-5: 631 → 472 lines; the vacancy (parting offsets, the receiving arm, the arrival origin) and the landing (the released ghost's flight and retirement) leave for two named leaves of the drag module; the transaction keeps propose/commit/cancel, activation and both input paths"
+  },
+  {
+   "file": "src/components/sortable-list/drag/drag.ts",
+   "why": "R-5: 631 → 472 lines; the vacancy (parting offsets, the receiving arm, the arrival origin) and the landing (the released ghost's flight and retirement) leave for two named leaves of the drag module; the transaction keeps propose/commit/cancel, activation and both input paths"
+  },
+  {
+   "file": "src/components/sortable-list/drag/landing.ts",
+   "why": "the ghost's flight home, moved verbatim out of drag.ts with the state only it owns (the flight and the plate in the air); dispose takes a mid-flight plate with the list"
+  },
+  {
+   "file": "src/components/sortable-list/drag/vacancy.ts",
+   "why": "the vacancy, moved verbatim out of drag.ts with the state only it owns (the arrival anchor) and its two constants; it reads the resting snapshot through a getter"
+  }
+ ]
+}

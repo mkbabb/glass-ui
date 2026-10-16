@@ -1,0 +1,241 @@
+{
+ "base": {
+  "B0": 0,
+  "B1": 0,
+  "B2": 0,
+  "B3": 0,
+  "B4": 0,
+  "B5": 0,
+  "B6": 0,
+  "B7": 0,
+  "B8": 0,
+  "B9": 0,
+  "B10": 0,
+  "B11": 0,
+  "B12": 0,
+  "B13": 0,
+  "B14": 0,
+  "B15": 0,
+  "B16": 0,
+  "B17": 0,
+  "B18": 0
+ },
+ "rows": [
+  {
+   "id": "KF-new",
+   "item": "B-10 / S-14 (P7-R1 peer class)",
+   "expect": "B18",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B11,B18",
+   "lines": {
+    "B11": [
+     "src/composables/motion/core/index.ts exports zq8KfLeak (no reader outside src/composables/motion/core)",
+     "src/composables/motion/core/index.ts +zq8KfLeak (not in the pin)"
+    ],
+    "B18": [
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/zq8KfLeak.ts:1)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/zq8KfLeak.ts:1)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ToggleGroup (src/components/toggle-group/ToggleGroup.vue; first at src/composables/motion/core/zq8KfLeak.ts:1)"
+    ]
+   },
+   "gainedCount": {
+    "B11": 2,
+    "B18": 26
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "KF-leaf",
+   "item": "B-10 / S-14 (P7-R1 peer class)",
+   "expect": "B18",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B18",
+   "lines": {
+    "B18": [
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/useRAFLoop.ts:1)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/useRAFLoop.ts:1)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ToggleGroup (src/components/toggle-group/ToggleGroup.vue; first at src/composables/motion/core/useRAFLoop.ts:1)"
+    ]
+   },
+   "gainedCount": {
+    "B18": 27
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "KF-deep",
+   "item": "B-10 / S-14 (P7-R1 peer class)",
+   "expect": "B18",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B18",
+   "lines": {
+    "B18": [
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/zq8KfDeep.ts:1)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/zq8KfDeep.ts:1)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ToggleGroup (src/components/toggle-group/ToggleGroup.vue; first at src/composables/motion/core/zq8KfDeep.ts:1)"
+    ]
+   },
+   "gainedCount": {
+    "B18": 27
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "KF-existing",
+   "item": "B-10 / S-14 (P7-R1 peer class)",
+   "expect": "B18",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B1,B4,B9,B11,B18",
+   "lines": {
+    "B1": [
+     "src/composables/motion/core/index.ts:17 -> src/composables/motion/spring/useSpring.ts [reexport] (door src/composables/motion/spring/index.ts)"
+    ],
+    "B4": [
+     "cycle @src/composables/motion [spring core] via src/composables/motion/spring/useLiquidPress.ts -> src/composables/motion/core/index.ts ; src/composables/motion/core/index.ts -> src/composables/motion/spring/useSpring.ts"
+    ],
+    "B9": [
+     "src/composables/motion/core/index.ts:17 re-exports src/composables/motion/spring/useSpring.ts (outside src/composables/motion/core)"
+    ],
+    "B11": [
+     "src/composables/motion/core/index.ts +useSpring (not in the pin)"
+    ],
+    "B18": [
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/spring/useSpring.ts:15)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/spring/useSpring.ts:15)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ToggleGroup (src/components/toggle-group/ToggleGroup.vue; first at src/composables/motion/spring/useSpring.ts:15)"
+    ]
+   },
+   "gainedCount": {
+    "B1": 1,
+    "B4": 1,
+    "B9": 1,
+    "B11": 1,
+    "B18": 26
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "KF-side",
+   "item": "B-10 / S-14 (P7-R1 peer class)",
+   "expect": "B18",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B18",
+   "lines": {
+    "B18": [
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/useRAFLoop.ts:1)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/useRAFLoop.ts:1)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ToggleGroup (src/components/toggle-group/ToggleGroup.vue; first at src/composables/motion/core/useRAFLoop.ts:1)"
+    ]
+   },
+   "gainedCount": {
+    "B18": 27
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "KF-reexport",
+   "item": "B-10 / S-14 (P7-R1 peer class)",
+   "expect": "B18",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B18",
+   "lines": {
+    "B18": [
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/useRAFLoop.ts:263)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/useRAFLoop.ts:263)",
+     ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ToggleGroup (src/components/toggle-group/ToggleGroup.vue; first at src/composables/motion/core/useRAFLoop.ts:263)"
+    ]
+   },
+   "gainedCount": {
+    "B18": 27
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "VU-leaf",
+   "item": "B-10 / S-14 (P7-R1 peer class)",
+   "expect": "B18",
+   "contrast": null,
+   "verdict": "CAUGHT",
+   "named": "B18",
+   "lines": {
+    "B18": [
+     ". (declared free of @vueuse/core) publishes a name whose module reaches it: Button (src/components/button/Button.vue; first at src/composables/motion/core/useRAFLoop.ts:1)",
+     ". (declared free of @vueuse/core) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/useRAFLoop.ts:1)",
+     ". (declared free of @vueuse/core) publishes a name whose module reaches it: NumberFieldStep (src/components/number-field/NumberFieldStep.vue; first at src/composables/motion/core/useRAFLoop.ts:1)"
+    ]
+   },
+   "gainedCount": {
+    "B18": 27
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "KF-dyn",
+   "item": "B-10 / S-14 (P7-R1 peer class)",
+   "expect": "*?",
+   "contrast": null,
+   "verdict": "MISSED-RECORD",
+   "named": "",
+   "lines": {},
+   "gainedCount": {},
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "CTL-free",
+   "item": "B-10 / S-14 (P7-R1 peer class) control",
+   "expect": "-B18",
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "B11",
+   "lines": {
+    "B11": [
+     "src/composables/motion/core/index.ts exports zq8Free (no reader outside src/composables/motion/core)",
+     "src/composables/motion/core/index.ts +zq8Free (not in the pin)"
+    ]
+   },
+   "gainedCount": {
+    "B11": 2
+   },
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "CTL-type",
+   "item": "B-10 / S-14 (P7-R1 peer class) control",
+   "expect": "-B18",
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "gainedCount": {},
+   "err": null,
+   "grouped": false
+  },
+  {
+   "id": "CTL-other",
+   "item": "B-10 / S-14 (P7-R1 peer class) control",
+   "expect": "-B18",
+   "contrast": null,
+   "verdict": "CLEAN",
+   "named": "",
+   "lines": {},
+   "gainedCount": {},
+   "err": null,
+   "grouped": false
+  }
+ ]
+}

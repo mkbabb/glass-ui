@@ -1,0 +1,392 @@
+tree-probes start 2026-10-16T13:08:25Z load { 17.91 22.19 21.43 }
+== crash8 (S-14 / P6-R3 / P7-G1: every phase)
+CRASH C0-green PASS rc=0 expect=0 :: 
+CRASH C1-red PASS rc=1 expect=1 :: 
+CRASH M1-pkg-not-json PASS rc=2 expect=2 :: seal: no verdict: SyntaxError: Expected double-quoted property name in JSON at position 30 (line 1 column 31)
+CRASH M2-pkg-missing PASS rc=2 expect=2 :: seal: no verdict: Error: entry-record: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p12/B-proto/wt has no .claude/worktrees/bl/D1/p12/B-proto/wt/scripts/structure/records/entry-record.js
+CRASH M3-pkg-empty PASS rc=2 expect=2 :: seal: no verdict: SyntaxError: Unexpected end of JSON input
+CRASH M4.1-throw:scripts/structure/seal/seal.mjs INFO rc=1 :: throw new Error("zq8 module-scope throw in scripts/structure/seal/seal.mjs");
+CRASH M4.2-throw:scripts/structure/seal/clauses.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/seal/clauses.mjs
+CRASH M4.3-throw:scripts/structure/lib/index.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/index.mjs
+CRASH M4.4-throw:scripts/structure/seal/law.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/seal/law.mjs
+CRASH M4.5-throw:scripts/structure/seal/fallbacks.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/seal/fallbacks.mjs
+CRASH M4.6-throw:scripts/structure/seal/walks.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/seal/walks.mjs
+CRASH M4.7-throw:scripts/structure/seal/peer.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/seal/peer.mjs
+CRASH M4.8-throw:scripts/structure/seal/cycles.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/seal/cycles.mjs
+CRASH M4.9-throw:scripts/structure/lib/classify.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/classify.mjs
+CRASH M4.10-throw:scripts/structure/lib/tree/index.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/tree/index.mjs
+CRASH M4.11-throw:scripts/structure/lib/graph/index.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/graph/index.mjs
+CRASH M4.12-throw:scripts/structure/lib/move.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/move.mjs
+CRASH M4.13-throw:scripts/structure/lib/recipes.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/recipes.mjs
+CRASH M4.14-throw:scripts/structure/lib/plan.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/plan.mjs
+CRASH M4.15-throw:scripts/structure/lib/tree/entries.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/tree/entries.mjs
+CRASH M4.16-throw:scripts/structure/lib/tree/placement.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/tree/placement.mjs
+CRASH M4.17-throw:scripts/structure/lib/tree/resolve.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/tree/resolve.mjs
+CRASH M4.18-throw:scripts/structure/lib/tree/symbols.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/tree/symbols.mjs
+CRASH M4.19-throw:scripts/structure/lib/tree/tree.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/tree/tree.mjs
+CRASH M4.20-throw:scripts/structure/lib/graph/css.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/graph/css.mjs
+CRASH M4.21-throw:scripts/structure/lib/graph/graph.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/graph/graph.mjs
+CRASH M4.22-throw:scripts/structure/lib/graph/playwright.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/graph/playwright.mjs
+CRASH M4.23-throw:scripts/structure/lib/syntax.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/syntax.mjs
+CRASH M4.24-throw:scripts/structure/lib/graph/evaluate.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/graph/evaluate.mjs
+CRASH M4.25-throw:scripts/structure/lib/graph/script.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/graph/script.mjs
+CRASH M4.26-throw:scripts/structure/lib/graph/text.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/graph/text.mjs
+CRASH M4.27-throw:scripts/structure/lib/graph/vue.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 module-scope throw in scripts/structure/lib/graph/vue.mjs
+CRASH M4 modules planted: 27
+CRASH M5-unhandled-rejection:scripts/structure/seal/clauses.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 unhandled rejection in scripts/structure/seal/clauses.mjs
+CRASH M6-deferred-throw:scripts/structure/seal/clauses.mjs PASS rc=2 expect=2 :: seal: no verdict: Error: zq8 deferred throw in scripts/structure/seal/clauses.mjs
+CRASH R1-ledger-missing PASS rc=2 expect=2 :: seal: no verdict: Error: graph: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p12/B-proto/wt has no scripts/structure/records/opaque-ledger.json; the opaque ledger is a floor record (a la
+CRASH R2-ledger-not-json PASS rc=2 expect=2 :: seal: no verdict: Error: graph: scripts/structure/records/opaque-ledger.json does not parse (Unexpected end of JSON input); the opaque ledger cannot be read
+CRASH R3-noroot PASS rc=2 expect=2 :: seal: no verdict: Error: seal: the pin /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p12/B-proto/scratch/critic11/p10/p9/tp/crash8.18030/does-not-exist/scripts/structure/records/seal-pin.
+CRASH R4-unparsable INFO rc=0 :: 
+CRASH W1-json-under-file PASS rc=2 expect=2 :: seal: no verdict: Error: ENOTDIR: not a directory, open '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p12/B-proto/wt/package.json/v.json'
+CRASH W2-json-readonly-dir PASS rc=2 expect=2 :: seal: no verdict: Error: EACCES: permission denied, open '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p12/B-proto/scratch/critic11/p10/p9/tp/crash8.18030/ro/v.json'
+CRASH C9-green-again PASS rc=0 expect=0 :: 
+CRASH SUMMARY pass=39 fail=0
+== peer probe on an unbuilt tree (P7-G4)
+PEERU U0-built FAIL rc=1 expect=0 :: peer-closure: RED
+PEERU U1-no-dist PASS rc=2 expect=2 ::     at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:1
+PEERU U2-empty-dist PASS rc=2 expect=2 ::     at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:1
+PEERU U3-no-motion-core PASS rc=2 expect=2 ::     at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:1
+PEERU U4-empty-entry INFO rc=2 ::     at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/tools/peer-closure.mjs:165:1
+PEERU U5-built-again FAIL rc=1 expect=0 :: peer-closure: RED
+== pass 7 tree-probes (regression)
+P7:== crash (S-14 / P6-R3)
+P7:CRASH C0-green PASS rc=0 expect=0 :: 
+P7:CRASH C1-red PASS rc=1 expect=1 :: 
+P7:CRASH C2-ledger PASS rc=2 expect=2 :: seal: no verdict: Error: graph: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p12/B-proto/wt has no scripts/structure/records/opaque-ledger.json; the opaque ledger is a floor record (a la
+P7:CRASH C3-pkgjson PASS rc=2 expect=2 :: seal: no verdict: SyntaxError: Expected double-quoted property name in JSON at position 30 (line 1 column 31)
+P7:CRASH C4-noroot PASS rc=2 expect=2 :: seal: no verdict: Error: seal: the pin /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p12/B-proto/scratch/critic11/p10/p9/tp/p7/crash7.21587/does-not-exist/scripts/structure/records/seal-p
+P7:CRASH C5-jsonpath PASS rc=2 expect=2 :: seal: no verdict: Error: ENOTDIR: not a directory, open '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p12/B-proto/wt/package.json/v.json'
+P7:CRASH C6-unparsable INFO rc=0 :: 
+P7:CRASH C7-green-again PASS rc=0 expect=0 :: 
+P7:== peer closure (§P6-8.4)
+P7:PEER motion-core 0 files=38 src=src/composables/motion/motion-core.ts
+P7:PEER-ALL keyframes-bearing entries: index carousel motion blob button command dark-mode-toggle dialog dock easing fourier-field number-field pager-dots sheet sortable-list tabs timeline
+P7:PEER-ALL keyframes-free entries: tokens dark keyboard motion-core sidebar infinite-scroll axes blob-config color dom reactive fourier-math aurora aurora-config badge card checkbox chip collapsible configurator constellation data-table deck expandable-container fading-scroll handmark input label labeled-field menu metric music-staff popover progress radio-group scroll-progress-rim select separator slider status-dot surface switch textarea toast toggle-group tooltip typewriter
+P7:PEER rc=0
+P7:== SFC split into two children (FP6-4, S-10)
+P7:SPLIT2 src/components/blob/Blob.vue -> BlobShade.vue (.goo-blob-hit:disabled), BlobRim.vue (.goo-blob-hit:focus-visible) (keep)
+P7:SFC2 build-keep rc=0
+P7:SFC2 none PASS rc=1 ::  1 "verdict": "RED"; 2 "verdict": "RED: content changed";
+P7:SFC2 scopes-only PASS rc=1 ::  1 "verdict": "RED"; 2 "verdict": "RED: an unlisted reorder (2 moved rule(s))";
+P7:   SCOPE Blob → BlobShade: 2 rule line(s) re-homed
+P7:   SCOPE Blob → BlobRim: 2 rule line(s) re-homed
+P7:   UNLISTED ./styles "@layer components :: .goo-blob-hit[data-v-(Blob)]:focus-visible {background:radial-gradient(circle, transparent calc(var(--blob-hit-radius) - 3px), var(--focus-ring-color) calc(var(--blob-hit-radius) - 3px), var(--focus-ring-color) var(--blob-hit-radius), transparent var(--blob-hit-radius));outline:none}"
+P7:   UNLISTED ./styles "@layer components :: .goo-blob-hit[data-v-(Blob)]:disabled {cursor:default}"
+P7:   UNLISTED ./styles.css "@layer components :: .goo-blob-hit[data-v-(Blob)]:focus-visible {background:radial-gradient(circle, transparent calc(var(--blob-hit-radius) - 3px), var(--focus-ring-color) calc(var(--blob-hit-radius) - 3px), var(--focus-ring-color) var(--blob-hit-radius), transparent var(--blob-hit-radius));outline:none}"
+P7:   UNLISTED ./styles.css "@layer components :: .goo-blob-hit[data-v-(Blob)]:disabled {cursor:default}"
+P7:   listing: 2 scope(s), ./styles 2, ./styles.css 2 → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p12/B-proto/scratch/critic11/p10/p9/tp/p7/sfc2/listing.json
+P7:SFC2 listed PASS rc=0 ::  1 "verdict": "GREEN"; 2 "verdict": "GREEN: listed reorder; no swapped pair shares a property on co-occurring classes";
+P7:   SCOPE Blob → BlobShade: 2 rule line(s) re-homed
+P7:   SCOPE Blob → BlobRim: 2 rule line(s) re-homed
+P7:SFC2 one-scope-listed PASS rc=1 ::  1 "verdict": "RED"; 2 "verdict": "RED: content changed";
+P7:VALUE BlobRim outline: none -> inherit
+P7:SPLIT2 src/components/blob/Blob.vue -> BlobShade.vue (.goo-blob-hit:disabled), BlobRim.vue (.goo-blob-hit:focus-visible) (value)
+P7:SFC2 value-listed PASS rc=1 ::  1 "verdict": "RED"; 2 "verdict": "RED: content changed";
+P7:SFC2 restore PASS rc=0 ::  1 "verdict": "GREEN";
+P7:== pass 6 tree-probes (regression)
+P7:TPROBE P6:P5:PIN-OPT B-11 PASS --pin refused rc=2
+P7:TPROBE P6:P5:NOPIN B-11 PASS --no-pin refused rc=2
+P7:TPROBE P6:P5:OFFSWITCH B-11 INFO source lines naming a pin or seal off switch: 0
+P7:TPROBE P6:P5:GATE-PURE S-09 PASS gate rc=0, tree unchanged
+P7:   PASS B0 0
+P7:   PASS B1 0
+P7:   PASS B2 0
+P7:   PASS B3 0
+P7:   PASS B4 0
+P7:   PASS B5 0
+P7:   PASS B6 0
+P7:   PASS B7 0
+P7:   PASS B8 0
+P7:   PASS B9 0
+P7:   PASS B10 0
+P7:   PASS B11 0
+P7:   PASS B12 0
+P7:   PASS B13 0
+P7:   PASS B14 0
+P7:   PASS B15 0
+P7:   PASS B16 0
+P7:   PASS B17 0
+P7:   PASS B18 0
+P7:   seal {"b0":{"f1":0,"walks":0,"computed":0},"files":1585,"filesScope":"the five zones and the root files","edges":8350,"modules":142,"required":142,"b10":{"anchored":39,"bound":["scripts/bundle-checks/files.mjs","scripts/structure/lib/classify.mjs","scripts/structure/lib/graph/css.mjs","scripts/structure/lib/graph/graph.mjs","scripts/structure/lib/graph/playwright.mjs","scripts/structure/lib/tree/entries.mjs","scripts/structure/lib/tree/placement.mjs","scripts/structure/lib/tree/symbols.mjs","scripts/structure/lib/tree/tree.mjs","src/components/aurora/runtime/frame/textureUpload.ts","src/components/aurora/runtime/frame/uniformBridge.ts"],"held":[],"counted":0},"multiDoorSymbols":0,"peer":{"entries":[".","./motion-core"],"heavy":["@mkbabb/keyframes.js","@vueuse/core"],"held":23},"pin":{"modules":142,"doors":122,"names":1320,"reviewed":2}}: PASS
+P7:TPROBE P6:P5:CSS-DIST S-08/P4-R4 FAIL css export keys=4 missing=0 pure-@import dist files=38
+P7:   FORWARDER dist/components/_shared/feedback/index.css 55B
+P7:   FORWARDER dist/components/_shared/menu/index.css 21B
+P7:   FORWARDER dist/components/button/index.css 23B
+P7:   FORWARDER dist/components/card/index.css 46B
+P7:   FORWARDER dist/components/carousel/index.css 23B
+P7:   FORWARDER dist/components/configurator/index.css 73B
+P7:   FORWARDER dist/components/dark-mode-toggle/index.css 33B
+P7:   FORWARDER dist/components/deck/index.css 118B
+P7:   FORWARDER dist/components/dialog/index.css 23B
+P7:   FORWARDER dist/components/dock/controls/index.css 25B
+P7:   PWCONFIG tests-visual/playwright.config.ts files=169
+P7:   PWPROBE in-program=169 test-files=169 missing=0
+P7:TPROBE P6:P5:PW-PROGRAM B-10 PASS missing 0
+P7:MOVED in src/styles/glass/index.css: @import "./accent-tone.css";  after  @import "./shapes/index.css";
+P7:TPROBE P6:P5:REORDER-acc S-10/B-08 PASS build rc=0, verify RED rc=1:  "verdict": "RED",    "verdict": "RED: content changed"    "verdict": "RED: content changed" 
+P7:UNDO src/styles/glass/index.css
+P7:SWAPPED in src/styles/motion/index.css: @import "./animations.css"; <-> @import "./viz-reveal.css"; (first selectors: @keyframes tooltip-in | @keyframes substrate-reveal-bloom)
+P7:TPROBE P6:P5:REORDER-out S-10/B-08 PASS build rc=0, verify RED rc=1:  "verdict": "RED",    "verdict": "RED: content changed"    "verdict": "RED: content changed" 
+P7:UNDO src/styles/motion/index.css
+P7:TPROBE P6:P5:CASCADE-RESTORE S-10 FAIL restored tree rc=1
+P7:TPROBE P6:P5:RATCHET S-03/P4-R3 INFO verify:package rc=0: {"schema":"glass-ui-package-verification/v2","terminal":"CLEAN","package":{"name":"@mkbabb/glass-ui","version":"10.1.0"},"claims":196,"declarations":502,"css":162,"roster":{"status":"PRESENT","datum":
+P7:   SPLIT src/components/aurora/Aurora.vue -> src/components/aurora/AuroraShade.vue (keep) rule: .aurora-canvas-layer--armed
+P7:   SCOPES {"scopes":[{"from":"Aurora","to":"AuroraShade","reason":"critic plant: one scoped rule re-homed into a child SFC"}]}
+P7:   listing 1 scope(s), 
+P7:   SCOPE Aurora → AuroraShade: 2 rule line(s) re-homed
+P7:TPROBE P6:SFC-keep S-10 FAIL build rc=0; unlisted rc=1, listed rc=1 ::    1 "verdict": "RED"    2 "verdict": "RED: an unlisted reorder (1 moved rule(s))" 
+P7:UNDO src/components/aurora/Aurora.vue, src/components/aurora/AuroraShade.vue
+P7:   VALUE opacity: 1 -> inherit
+P7:   SPLIT src/components/aurora/Aurora.vue -> src/components/aurora/AuroraShade.vue (value) rule: .aurora-canvas-layer--armed
+P7:   SCOPES {"scopes":[{"from":"Aurora","to":"AuroraShade","reason":"critic plant: one scoped rule re-homed into a child SFC"}]}
+P7:   listing 1 scope(s), 
+P7:   SCOPE Aurora → AuroraShade: 2 rule line(s) re-homed
+P7:TPROBE P6:SFC-value S-10 PASS build rc=0; listed rc=1 content changed
+P7:UNDO src/components/aurora/Aurora.vue, src/components/aurora/AuroraShade.vue
+P7:TPROBE P6:SFC-RESTORE S-10 PASS restored tree verifies against its own snapshot
+P7:   node:internal/modules/esm/resolve:271
+P7:       throw new ERR_MODULE_NOT_FOUND(
+P7:             ^
+P7:   
+P7:   Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p12/B-proto/wt/scripts/structure/lib/tree.mjs' imported from /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-6/critique-B/battery/fd4-probe.mjs
+P7:       at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+P7:       at moduleResolve (node:internal/modules/esm/resolve:861:10)
+P7:       at defaultResolve (node:internal/modules/esm/resolve:988:11)
+P7:       at #cachedDefaultResolve (node:internal/modules/esm/loader:700:20)
+P7:       at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:717:38)
+P7:       at ModuleLoader.resolveSync (node:internal/modules/esm/loader:749:52)
+P7:       at #resolve (node:internal/modules/esm/loader:682:17)
+P7:       at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:602:35)
+P7:       at onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:631:32)
+P7:       at TracingChannel.tracePromise (node:diagnostics_channel:363:22) {
+P7:     code: 'ERR_MODULE_NOT_FOUND',
+P7:     url: 'file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p12/B-proto/wt/scripts/structure/lib/tree.mjs'
+P7:   }
+P7:   
+P7:   Node.js v26.0.0
+P7:TPROBE P6:FD4 S-10 FAIL see arms above
+P7:PROBE P5:BOUNDS-DIR B-01/B-10 0 
+P7:PROBE P5:BOUNDS-LOC B-01/B-10 0 
+P7:PROBE P5:BOUNDS-LOC-GEN B-01/B-10 info 0 
+P7:PROBE P5:PH-NAMES B-07 4 (review list; a digit in a real concept name is legitimate)
+P7:   src/components/dock/styles/core.css
+P7:   src/styles/utilities/base.css
+P7:   src/composables/motion/core
+P7:   scripts/structure/lib
+P7:PROBE P5:MASK S-14 198 (candidate sites; each is judged by reading it, not by the regex alone)
+P7:   src/components/aurora/runtime/runtime.ts:281 catch-fn :: void canvasHandle.armAsync().catch(() => undefined);
+P7:   src/components/blob/renderer/useMetaballRenderer.ts:238 catch-fn :: void canvasHandle.armAsync().catch(() => undefined);
+P7:   src/components/fourier-field/useFourierField.ts:204 catch-fn :: void handle.armAsync().catch(() => undefined);
+P7:   src/composables/dark/darkModeSyncScript.ts:135 catch-return :: // (quota, privacy mode, a sandboxed origin), and the `catch(_){}` below swallows
+P7:   src/composables/dark/darkModeSyncScript.ts:146 catch-return :: // fail-explicit: befitting — the EMITTED inline `<head>` script's `catch(_){}`
+P7:   src/composables/dark/darkModeSyncScript.ts:162 catch-return :: )})}catch(_){}var d=m==="${DARK_CLASS}"||(${fallback});${queryArm}var e=document.documentElement;e.classList.toggle("${DARK_CLASS}",d);e.sty
+P7:   src/composables/motion/core/useViewTransition.ts:168 catch-fn :: vt.ready?.catch(() => {});
+P7:   src/composables/motion/core/useViewTransition.ts:168 catch-noop :: vt.ready?.catch(() => {});
+P7:   scripts/structure/browser.mjs:145 catch-return :: const alive = (pid) => { try { process.kill(pid, 0); return true; } catch { return false; } };
+P7:   scripts/structure/browser.mjs:180 catch-return :: try { const r = await fetch(url); if (r.ok) return true; } catch { /* not yet */ }
+P7:   scripts/structure/browser.mjs:188 catch-return :: const stop = () => { if (server && server.exitCode === null) { try { process.kill(-server.pid, "SIGTERM"); } catch { /* gone */ } } release(
+P7:   scripts/structure/browser.mjs:209 catch-return :: } catch { /* the verdict is the report's, never the exit code */ }
+P7:   scripts/structure/lib/graph/css.mjs:7 catch-return :: try { rootNode = postcss.parse(code, { from: file }); } catch (e) { return { refs: [{ kind: "css-parse-error", mode: "error", spec: String(e
+P7:   scripts/structure/lib/move.mjs:439 positive-guard :: for (const m of plan.pending) { const dest = join(root, m.to); if (existsSync(dest)) unlinkSync(dest); }
+P7:   scripts/structure/lib/syntax.mjs:20 catch-return :: try { postcss.parse(text, { from: file }); return null; } catch (e) { return String(e.reason ?? e.message).slice(0, 160) + (e.line ? ` at ${
+P7:   scripts/structure/lib/syntax.mjs:53 catch-return :: try { JSON.parse(text); return null; } catch (e) { return String(e.message).slice(0, 160); }
+P7:   scripts/structure/lib/tree/entries.mjs:151 ternary :: const stat = (p) => (existsSync(join(root, p)) ? statSync(join(root, p)) : null);
+P7:   scripts/structure/lib/tree/tree.mjs:17 positive-guard :: if (existsSync(join(d, "package.json")) && JSON.parse(readFileSync(join(d, "package.json"), "utf8")).name === "@mkbabb/glass-ui") return d;
+P7:   scripts/structure/seal/fallbacks.mjs:19 early-return :: //      (`if (!existsSync(p)) return x`), the positive guard (`if (existsSync(p)) return read(p);
+P7:   scripts/structure/seal/fallbacks.mjs:19 positive-guard :: //      (`if (!existsSync(p)) return x`), the positive guard (`if (existsSync(p)) return read(p);
+P7:   scripts/structure/seal/fallbacks.mjs:21 positive-guard :: //      `undefined` at a function's end), the conditional read (`if (existsSync(p)) { …read(p)… }`
+P7:   scripts/structure/seal/fallbacks.mjs:23 positive-guard :: //      (`if (existsSync(p)) paths.push(p)`: a missing input drops out of the list it would
+P7:   scripts/structure/seal/fallbacks.mjs:25 ternary :: //      (`existsSync(p) ? read(p) : x`). The value is silent when it is nothing, a nullish or
+P7:   scripts/structure/seal/fallbacks.mjs:29 catch-return :: //  (b) a swallowed read: `try { read } catch { return x }` whose handler is that one silent
+P7:   scripts/structure/seal/fallbacks.mjs:30 catch-return :: //      return, or `try { read } catch {}` whose handler is empty (comments are not statements:
+P7:   scripts/structure/seal/fallbacks.mjs:34 catch-fn :: //      throws, on a chain that starts at `import(…)`, at a read (`readFile(p).catch(() => "")`),
+P7:   scripts/structure/surface.mjs:24 ternary :: if (!existsSync(js) || !existsSync(dts)) throw new Error(`surface: ${key} missing ${existsSync(js) ? dts : js}`);
+P7:   tests/composables/dark/no-flash.test.ts:232 catch-return :: // The emitted `catch(_){}` swallows, so everything emitted after a throwing
+P7:   tests-visual/aurora/aurora-swraster.spec.ts:164 catch-fn :: await im.decode().catch(() => {});
+P7:   tests-visual/aurora/aurora-swraster.spec.ts:164 catch-noop :: await im.decode().catch(() => {});
+P7:   tests-visual/aurora/probes/reflect-aurora-selects.spec.ts:35 catch-fn :: await trigger.scrollIntoViewIfNeeded().catch(() => {});
+P7:   tests-visual/aurora/probes/reflect-aurora-selects.spec.ts:35 catch-noop :: await trigger.scrollIntoViewIfNeeded().catch(() => {});
+P7:   tests-visual/aurora/probes/reflect-aurora-selects.spec.ts:50 catch-fn :: await page.keyboard.press("Escape").catch(() => {});
+P7:   tests-visual/aurora/probes/reflect-aurora-selects.spec.ts:50 catch-noop :: await page.keyboard.press("Escape").catch(() => {});
+P7:   tests-visual/aurora/probes/reflect-aurora.spec.ts:115 catch-return :: } catch { /* taken */ }
+P7:   tests-visual/aurora/probes/reflect-aurora.spec.ts:157 catch-fn :: await page.keyboard.press("Escape").catch(() => {});
+P7:   tests-visual/aurora/probes/reflect-aurora.spec.ts:157 catch-noop :: await page.keyboard.press("Escape").catch(() => {});
+P7:   tests-visual/aurora/probes/reflect-aurora.spec.ts:209 catch-fn :: const mobileCanvasVisible = await mcanvas.isVisible().catch(() => false);
+P7:   tests-visual/captures/_egg-capture.spec.ts:38 catch-fn :: .catch(() => false);
+P7:   tests-visual/captures/_fix-glassui-dark-capture.spec.ts:38 catch-fn :: await page.waitForSelector(s.sel, { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/captures/_fix-glassui-dark-capture.spec.ts:38 catch-noop :: await page.waitForSelector(s.sel, { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/captures/_prim-polish-capture.spec.ts:142 catch-fn :: await page.keyboard.press("Escape").catch(() => {});
+P7:   tests-visual/captures/_prim-polish-capture.spec.ts:142 catch-noop :: await page.keyboard.press("Escape").catch(() => {});
+P7:   tests-visual/captures/_wdelta0-capture.spec.ts:55 catch-fn :: await page.keyboard.press("Escape").catch(() => {});
+P7:   tests-visual/captures/_wdelta0-capture.spec.ts:55 catch-noop :: await page.keyboard.press("Escape").catch(() => {});
+P7:   tests-visual/captures/_wdelta0-capture.spec.ts:67 catch-fn :: await page.keyboard.press("Escape").catch(() => {});
+P7:   tests-visual/captures/_wdelta0-capture.spec.ts:67 catch-noop :: await page.keyboard.press("Escape").catch(() => {});
+P7:   tests-visual/captures/_wdelta0-capture.spec.ts:79 catch-fn :: await cardDock.scrollIntoViewIfNeeded().catch(() => {});
+P7:   tests-visual/captures/_wdelta0-capture.spec.ts:79 catch-noop :: await cardDock.scrollIntoViewIfNeeded().catch(() => {});
+P7:   tests-visual/captures/_wdelta0-capture.spec.ts:134 catch-fn :: await page.keyboard.press("Escape").catch(() => {});
+P7:   tests-visual/captures/_wdelta0-capture.spec.ts:134 catch-noop :: await page.keyboard.press("Escape").catch(() => {});
+P7:   tests-visual/captures/_wdelta0-capture.spec.ts:141 catch-fn :: await page.keyboard.press("Escape").catch(() => {});
+P7:   tests-visual/captures/_wdelta0-capture.spec.ts:141 catch-noop :: await page.keyboard.press("Escape").catch(() => {});
+P7:   tests-visual/captures/_wdelta0-capture.spec.ts:148 catch-fn :: await cardDock.scrollIntoViewIfNeeded().catch(() => {});
+P7:   tests-visual/captures/_wdelta0-capture.spec.ts:148 catch-noop :: await cardDock.scrollIntoViewIfNeeded().catch(() => {});
+P7:   tests-visual/captures/_wdelta0-capture.spec.ts:212 catch-fn :: await poke.click().catch(() => {});
+P7:   tests-visual/captures/_wdelta0-capture.spec.ts:212 catch-noop :: await poke.click().catch(() => {});
+P7:   tests-visual/captures/_wdelta0-capture.spec.ts:226 catch-fn :: await page.mouse.click(vp.w / 2, vp.h / 2).catch(() => {});
+P7:   tests-visual/captures/_wdelta0-capture.spec.ts:226 catch-noop :: await page.mouse.click(vp.w / 2, vp.h / 2).catch(() => {});
+P7:   tests-visual/captures/_wdelta0-capture.spec.ts:271 catch-fn :: await target.scrollIntoViewIfNeeded().catch(() => {});
+P7:   tests-visual/captures/_wdelta0-capture.spec.ts:271 catch-noop :: await target.scrollIntoViewIfNeeded().catch(() => {});
+P7:   tests-visual/captures/_wdelta0-capture.spec.ts:289 catch-fn :: await target.hover().catch(() => {});
+P7:   tests-visual/captures/_wdelta0-capture.spec.ts:289 catch-noop :: await target.hover().catch(() => {});
+P7:   tests-visual/components/controls/metal-shimmer.spec.ts:163 catch-fn :: await page.goto(ROUTE, { waitUntil: "networkidle" }).catch(() => {});
+P7:   tests-visual/components/controls/metal-shimmer.spec.ts:163 catch-noop :: await page.goto(ROUTE, { waitUntil: "networkidle" }).catch(() => {});
+P7:   tests-visual/components/controls/metal-shimmer.spec.ts:165 catch-fn :: const present = await triad.count().catch(() => 0);
+P7:   tests-visual/components/controls/metal-shimmer.spec.ts:214 catch-fn :: await page.goto(ROUTE, { waitUntil: "networkidle" }).catch(() => {});
+P7:   tests-visual/components/controls/metal-shimmer.spec.ts:214 catch-noop :: await page.goto(ROUTE, { waitUntil: "networkidle" }).catch(() => {});
+P7:   tests-visual/components/controls/metal-shimmer.spec.ts:216 catch-fn :: const present = await border.count().catch(() => 0);
+P7:   tests-visual/components/controls/metal-shimmer.spec.ts:262 catch-fn :: await page.goto(ROUTE, { waitUntil: "networkidle" }).catch(() => {});
+P7:   tests-visual/components/controls/metal-shimmer.spec.ts:262 catch-noop :: await page.goto(ROUTE, { waitUntil: "networkidle" }).catch(() => {});
+P7:   tests-visual/components/controls/metal-shimmer.spec.ts:264 catch-fn :: const present = await triad.count().catch(() => 0);
+P7:   tests-visual/components/controls/metal-shimmer.spec.ts:307 catch-fn :: await page.goto(ROUTE, { waitUntil: "networkidle" }).catch(() => {});
+P7:   tests-visual/components/controls/metal-shimmer.spec.ts:307 catch-noop :: await page.goto(ROUTE, { waitUntil: "networkidle" }).catch(() => {});
+P7:   tests-visual/components/controls/metal-shimmer.spec.ts:309 catch-fn :: const present = await triad.count().catch(() => 0);
+P7:   tests-visual/components/controls/metal-shimmer.spec.ts:356 catch-fn :: await page.goto(ROUTE, { waitUntil: "networkidle" }).catch(() => {});
+P7:   tests-visual/components/controls/metal-shimmer.spec.ts:356 catch-noop :: await page.goto(ROUTE, { waitUntil: "networkidle" }).catch(() => {});
+P7:   tests-visual/components/controls/metal-shimmer.spec.ts:358 catch-fn :: const present = await triad.count().catch(() => 0);
+P7:   tests-visual/components/surfaces/card-padding.spec.ts:262 catch-fn :: .catch(() => {});
+P7:   tests-visual/components/surfaces/card-padding.spec.ts:262 catch-noop :: .catch(() => {});
+P7:   tests-visual/components/surfaces/disclosure-rotate.spec.ts:105 catch-fn :: await trigger.click({ trial: false }).catch(() => {});
+P7:   tests-visual/components/surfaces/disclosure-rotate.spec.ts:105 catch-noop :: await trigger.click({ trial: false }).catch(() => {});
+P7:   tests-visual/components/surfaces/disclosure-rotate.spec.ts:142 catch-fn :: await page.keyboard.press("Escape").catch(() => {});
+P7:   tests-visual/components/surfaces/disclosure-rotate.spec.ts:142 catch-noop :: await page.keyboard.press("Escape").catch(() => {});
+P7:   tests-visual/components/surfaces/disclosure-rotate.spec.ts:145 catch-fn :: }).catch(() => {});
+P7:   tests-visual/components/surfaces/disclosure-rotate.spec.ts:145 catch-noop :: }).catch(() => {});
+P7:   tests-visual/components/surfaces/menu-glass.spec.ts:125 catch-fn :: await page.keyboard.press("Escape").catch(() => {});
+P7:   tests-visual/components/surfaces/menu-glass.spec.ts:125 catch-noop :: await page.keyboard.press("Escape").catch(() => {});
+P7:   tests-visual/components/surfaces/menu-glass.spec.ts:334 catch-fn :: await page.keyboard.press("Escape").catch(() => {});
+P7:   tests-visual/components/surfaces/menu-glass.spec.ts:334 catch-noop :: await page.keyboard.press("Escape").catch(() => {});
+P7:   tests-visual/dock/dock-luma-share.spec.ts:61 catch-fn :: .catch(() => {}); // fail-open on the wait; the assertions below are the truth
+P7:   tests-visual/dock/dock-luma-share.spec.ts:61 catch-noop :: .catch(() => {}); // fail-open on the wait; the assertions below are the truth
+P7:   tests-visual/glass/contrast/dark-semantic-contrast.spec.ts:241 catch-fn :: const axe = await runAxeColorContrast(page).catch(() => null);
+P7:   tests-visual/glass/glass-accent.spec.ts:240 catch-fn :: await page.goto("/substrates/glass-material", { waitUntil: "networkidle" }).catch(() => {});
+P7:   tests-visual/glass/glass-accent.spec.ts:240 catch-noop :: await page.goto("/substrates/glass-material", { waitUntil: "networkidle" }).catch(() => {});
+P7:   tests-visual/glass/glass-legibility.spec.ts:276 catch-fn :: await trigger.click().catch(() => {});
+P7:   tests-visual/glass/glass-legibility.spec.ts:276 catch-noop :: await trigger.click().catch(() => {});
+P7:   tests-visual/goo/gooblob-meatball.spec.ts:258 catch-fn :: await canvas.scrollIntoViewIfNeeded().catch(() => {});
+P7:   tests-visual/goo/gooblob-meatball.spec.ts:258 catch-noop :: await canvas.scrollIntoViewIfNeeded().catch(() => {});
+P7:   tests-visual/motion/spring-ease.spec.ts:279 catch-fn :: await trigger.click({ timeout: 3000 }).catch(() => {});
+P7:   tests-visual/motion/spring-ease.spec.ts:279 catch-noop :: await trigger.click({ timeout: 3000 }).catch(() => {});
+P7:   tests-visual/motion/spring-ease.spec.ts:283 catch-fn :: await row.hover({ timeout: 3000 }).catch(() => {});
+P7:   tests-visual/motion/spring-ease.spec.ts:283 catch-noop :: await row.hover({ timeout: 3000 }).catch(() => {});
+P7:   tests-visual/redress/w1-radius-redress-inputs.spec.ts:219 catch-fn :: await page.keyboard.press("ArrowDown").catch(() => {});
+P7:   tests-visual/redress/w1-radius-redress-inputs.spec.ts:219 catch-noop :: await page.keyboard.press("ArrowDown").catch(() => {});
+P7:   tests-visual/redress/w2-blur-redress.spec.ts:325 catch-fn :: if (await trigger.count()) await trigger.click().catch(() => {});
+P7:   tests-visual/redress/w2-blur-redress.spec.ts:325 catch-noop :: if (await trigger.count()) await trigger.click().catch(() => {});
+P7:   tests-visual/served-app-sentinel.ts:49 catch-fn :: const title = await page.title().catch(() => "");
+P7:   tests-visual/storybook/configurator/category-color-identity.spec.ts:289 catch-fn :: .catch(() => "");
+P7:   tests-visual/storybook/configurator/code-blocks.spec.ts:73 catch-fn :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/configurator/code-blocks.spec.ts:73 catch-noop :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/configurator/code-blocks.spec.ts:225 catch-fn :: .catch(() => {});
+P7:   tests-visual/storybook/configurator/code-blocks.spec.ts:225 catch-noop :: .catch(() => {});
+P7:   tests-visual/storybook/configurator/customizability.spec.ts:155 catch-fn :: await trigger.click({ timeout: 5000 }).catch(() => {});
+P7:   tests-visual/storybook/configurator/customizability.spec.ts:155 catch-noop :: await trigger.click({ timeout: 5000 }).catch(() => {});
+P7:   tests-visual/storybook/configurator/customizability.spec.ts:331 catch-fn :: await page.goto("/containers/hover-card", { waitUntil: "networkidle" }).catch(() => {});
+P7:   tests-visual/storybook/configurator/customizability.spec.ts:331 catch-noop :: await page.goto("/containers/hover-card", { waitUntil: "networkidle" }).catch(() => {});
+P7:   tests-visual/storybook/configurator/customizability.spec.ts:337 catch-fn :: await trigger.hover({ timeout: 5000 }).catch(() => {});
+P7:   tests-visual/storybook/configurator/customizability.spec.ts:337 catch-noop :: await trigger.hover({ timeout: 5000 }).catch(() => {});
+P7:   tests-visual/storybook/configurator/customizability.spec.ts:376 catch-fn :: await page.goto("/", { waitUntil: "networkidle" }).catch(() => {});
+P7:   tests-visual/storybook/configurator/customizability.spec.ts:376 catch-noop :: await page.goto("/", { waitUntil: "networkidle" }).catch(() => {});
+P7:   tests-visual/storybook/configurator/suffuse.spec.ts:123 catch-fn :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/configurator/suffuse.spec.ts:123 catch-noop :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/configurator/suffuse.spec.ts:178 catch-fn :: .catch(() => "");
+P7:   tests-visual/storybook/demo-design.spec.ts:77 catch-fn :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/demo-design.spec.ts:77 catch-noop :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/demo-design.spec.ts:110 catch-fn :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/demo-design.spec.ts:110 catch-noop :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/demo-design.spec.ts:149 catch-fn :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/demo-design.spec.ts:149 catch-noop :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/demo-design.spec.ts:191 catch-fn :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/demo-design.spec.ts:191 catch-noop :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/demo-design.spec.ts:228 catch-fn :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/demo-design.spec.ts:228 catch-noop :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/page-chassis.spec.ts:72 catch-fn :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/page-chassis.spec.ts:72 catch-noop :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/page-chassis.spec.ts:105 catch-fn :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/page-chassis.spec.ts:105 catch-noop :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/page-chassis.spec.ts:164 catch-fn :: .catch(() => {});
+P7:   tests-visual/storybook/page-chassis.spec.ts:164 catch-noop :: .catch(() => {});
+P7:   tests-visual/storybook/page-chassis.spec.ts:225 catch-fn :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/page-chassis.spec.ts:225 catch-noop :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/page-chassis.spec.ts:244 catch-fn :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/page-chassis.spec.ts:244 catch-noop :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/page-chassis.spec.ts:273 catch-fn :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/page-chassis.spec.ts:273 catch-noop :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/page-chassis.spec.ts:301 catch-fn :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/page-chassis.spec.ts:301 catch-noop :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/storybook-meta.spec.ts:87 catch-fn :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/storybook-meta.spec.ts:87 catch-noop :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/storybook-meta.spec.ts:120 catch-fn :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/storybook-meta.spec.ts:120 catch-noop :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/storybook-meta.spec.ts:148 catch-fn :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/storybook-meta.spec.ts:148 catch-noop :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/storybook-meta.spec.ts:196 catch-fn :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/storybook-meta.spec.ts:196 catch-noop :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/storybook-meta.spec.ts:207 catch-fn :: }).catch(() => {});
+P7:   tests-visual/storybook/storybook-meta.spec.ts:207 catch-noop :: }).catch(() => {});
+P7:   tests-visual/storybook/storybook-meta.spec.ts:254 catch-fn :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/storybook/storybook-meta.spec.ts:254 catch-noop :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/substrate/_cohere-capture.spec.ts:50 catch-fn :: await page.goto(sub.path, { waitUntil: "networkidle" }).catch(() => {});
+P7:   tests-visual/substrate/_cohere-capture.spec.ts:50 catch-noop :: await page.goto(sub.path, { waitUntil: "networkidle" }).catch(() => {});
+P7:   tests-visual/substrate/_cohere-capture.spec.ts:57 catch-fn :: .catch(() => false);
+P7:   tests-visual/substrate/auth-shell-bg.spec.ts:104 catch-fn :: await page.waitForSelector("#auth-email", { timeout: 10_000 }).catch(() => {});
+P7:   tests-visual/substrate/auth-shell-bg.spec.ts:104 catch-noop :: await page.waitForSelector("#auth-email", { timeout: 10_000 }).catch(() => {});
+P7:   tests-visual/substrate/coherence-congruence.spec.ts:121 catch-fn :: .catch(() => undefined); // ready flag is best-effort; the load wait is the floor
+P7:   tests-visual/typography/display-tracking.spec.ts:108 catch-fn :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/typography/display-tracking.spec.ts:108 catch-noop :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/typography/display-tracking.spec.ts:147 catch-fn :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/typography/display-tracking.spec.ts:147 catch-noop :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/typography/hierarchy.spec.ts:67 catch-fn :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/typography/hierarchy.spec.ts:67 catch-noop :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/typography/hierarchy.spec.ts:156 catch-fn :: .catch(() => {});
+P7:   tests-visual/typography/hierarchy.spec.ts:156 catch-noop :: .catch(() => {});
+P7:   tests-visual/typography/hierarchy.spec.ts:243 catch-fn :: .catch(() => {});
+P7:   tests-visual/typography/hierarchy.spec.ts:243 catch-noop :: .catch(() => {});
+P7:   tests-visual/typography/hierarchy.spec.ts:359 catch-fn :: .catch(() => {});
+P7:   tests-visual/typography/hierarchy.spec.ts:359 catch-noop :: .catch(() => {});
+P7:   tests-visual/typography/hierarchy.spec.ts:402 catch-fn :: await page.waitForSelector(".demo-main-scroller", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/typography/hierarchy.spec.ts:402 catch-noop :: await page.waitForSelector(".demo-main-scroller", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/typography/page-hierarchy.spec.ts:71 catch-fn :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/typography/page-hierarchy.spec.ts:71 catch-noop :: await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
+P7:   tests-visual/viz/safari-webgl.spec.ts:126 catch-fn :: .catch(() => false);
+P7:   tests-visual/viz/safari-webgl.spec.ts:174 catch-fn :: .catch(() => false);
+P7:   tests-visual/viz/safari-webgl.spec.ts:209 catch-fn :: .catch(() => false);
+P7:   tests-visual/viz/viz-interaction.spec.ts:135 catch-fn :: await page.touchscreen.tap(x0, y).catch(() => {});
+P7:   tests-visual/viz/viz-interaction.spec.ts:135 catch-noop :: await page.touchscreen.tap(x0, y).catch(() => {});
+P7:   tests-visual/viz/viz-interaction.spec.ts:167 catch-fn :: await canvas.waitFor({ timeout: 8000 }).catch(() => {});
+P7:   tests-visual/viz/viz-interaction.spec.ts:167 catch-noop :: await canvas.waitFor({ timeout: 8000 }).catch(() => {});
+P7:   tests-visual/viz/viz-interaction.spec.ts:242 catch-fn :: await canvas.waitFor({ timeout: 8000 }).catch(() => {});
+P7:   tests-visual/viz/viz-interaction.spec.ts:242 catch-noop :: await canvas.waitFor({ timeout: 8000 }).catch(() => {});
+P7:   tests-visual/viz/viz-paint-records.spec.ts:188 catch-fn :: await canvas.scrollIntoViewIfNeeded().catch(() => {});
+P7:   tests-visual/viz/viz-paint-records.spec.ts:188 catch-noop :: await canvas.scrollIntoViewIfNeeded().catch(() => {});
+P7:   vite.style-assets.ts:117 positive-guard :: if (existsSync(backup)) rmSync(backup, { recursive: true, force: true });
+P7:   vite.style-assets.ts:118 positive-guard :: if (existsSync(oldDist)) renameSync(oldDist, backup);
+P7:   vite.style-assets.ts:121 positive-guard :: if (existsSync(backup)) rmSync(backup, { recursive: true, force: true });
+P7:   vite.style-assets.ts:123 positive-guard :: if (existsSync(oldDist)) rmSync(oldDist, { recursive: true, force: true });
+P7:   vite.style-assets.ts:124 positive-guard :: if (existsSync(backup)) renameSync(backup, oldDist);
+P7:PROBE P5:B2-REACH B-01 9 (consumer-zone imports into src/ not through a package entry)
+P7:   scripts/regen-spring-tokens.mjs -> ../src/composables/motion/index.ts
+P7:   tests/styles/dissolve/exits.test.ts -> ../../../src/composables/motion/motion-core
+P7:   tests/styles/dissolve/vaporize.test.ts -> ../../../src/composables/motion/motion-core
+P7:   tests/styles/dissolve/vaporize.test.ts -> ../../../src/composables/motion/motion-core
+P7:   tests/styles/route-motion/registers.test.ts -> ../../../src/composables/motion/motion-core
+P7:   tests/styles/token-graph.test.ts -> ../../src/styles/tokens/index
+P7:   tests-visual/aurora/probes/_aur-vangogh-harness.ts -> ../../../src/components/aurora/index
+P7:   tests-visual/aurora/probes/_aur-vangogh-harness.ts -> ../../../src/components/aurora/index
+P7:   vite.dark-stamp.ts -> ./src/composables/dark/index
+P7:PROBE PH6-NAMES B-07 0 (review list: a digit in a real concept name such as vec3 or h1 is legitimate)
+P7:PROBE MASK6 S-14 1 (candidate sites; each is judged by reading it)
+P7:   scripts/structure/seal/fallbacks.mjs:34 promise/loader-catch :: //      throws, on a chain that starts at `import(…)`, at a read (`readFile(p).catch(() => "")`),
+P7:PROBE PW-STEMS B-10 1 
+P7:   174 spec/visual files; tests-visual 164, src 5
+tree-probes rc=0 end 2026-10-16T13:12:54Z load { 30.82 22.55 21.45 }

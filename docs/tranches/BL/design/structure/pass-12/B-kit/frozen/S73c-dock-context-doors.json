@@ -1,0 +1,86 @@
+{
+ "step": "P7-R1 (B18, LAW §5): the dock context's door carries the context's names; the dock entry, GlassDock, DockSeparator, DockLayerGroup and the slider's dock hold read it there, so Slider (on the root) no longer evaluates the dock entry and its keyframes-bearing names",
+ "files": {
+  "src/components/dock/context/index.ts": {
+   "create": "// components/dock/context — module door: the dock's typed provide/inject, read by the dock and\n// by the controls that render inside it (the slider's dock hold).\nexport type { DockContext, DockOrientation } from \"./dockContext\";\nexport { DOCK_CONTEXT_KEY, provideDockContext, useDockContext, useOptionalDockContext } from \"./dockContext\";\n"
+  },
+  "scripts/structure/records/entry-record.json": {
+   "hunks": [
+    [
+     "        \"src/components/blob/renderer/webgpu/index.ts\",\n        \"src/components/dock/legibility/index.ts\",\n",
+     "        \"src/components/blob/renderer/webgpu/index.ts\",\n        \"src/components/dock/context/index.ts\",\n        \"src/components/dock/legibility/index.ts\",\n"
+    ]
+   ]
+  },
+  "src/components/dock/index.ts": {
+   "hunks": [
+    [
+     "} from \"./context/dockContext\";\n",
+     "} from \"./context\";\n"
+    ]
+   ]
+  },
+  "src/components/dock/GlassDock.vue": {
+   "hunks": [
+    [
+     "import { provideDockContext } from \"./context/dockContext\";\n",
+     "import { provideDockContext } from \"./context\";\n"
+    ]
+   ]
+  },
+  "src/components/dock/DockSeparator.vue": {
+   "hunks": [
+    [
+     "import { useOptionalDockContext } from \"./context/dockContext\";\n",
+     "import { useOptionalDockContext } from \"./context\";\n"
+    ]
+   ]
+  },
+  "src/components/dock/DockLayerGroup.vue": {
+   "hunks": [
+    [
+     "import { useOptionalDockContext } from \"./context/dockContext\";\n",
+     "import { useOptionalDockContext } from \"./context\";\n"
+    ]
+   ]
+  },
+  "src/components/slider/useDockHold.ts": {
+   "hunks": [
+    [
+     "import { useOptionalDockContext } from \"../dock\";\n",
+     "import { useOptionalDockContext } from \"../dock/context\";\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "src/components/dock/context/index.ts",
+   "why": "the context module's door (B7)"
+  },
+  {
+   "file": "scripts/structure/records/entry-record.json",
+   "why": "the entry record lists every src door (B7)"
+  },
+  {
+   "file": "src/components/dock/index.ts",
+   "why": "the dock entry takes the context's names through its door (B1)"
+  },
+  {
+   "file": "src/components/dock/GlassDock.vue",
+   "why": "a crossing into the context goes through its door (B1)"
+  },
+  {
+   "file": "src/components/dock/DockSeparator.vue",
+   "why": "a crossing into the context goes through its door (B1)"
+  },
+  {
+   "file": "src/components/dock/DockLayerGroup.vue",
+   "why": "a crossing into the context goes through its door (B1)"
+  },
+  {
+   "file": "src/components/slider/useDockHold.ts",
+   "why": "the dock hold reads the context through the context's door, not the dock entry's (B1: the door of the module that holds the name; the entry's door carries the dock's keyframes-bearing names)"
+  }
+ ]
+}

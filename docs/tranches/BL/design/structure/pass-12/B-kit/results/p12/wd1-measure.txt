@@ -1,0 +1,59 @@
+load { 19.43 24.29 22.89 }
+## 1 · value SCCs at module grain (Appendix A, VALUE-SCC)
+PASS VALUE-SCC 0 :: 
+
+## 2 · one public name, one symbol (Appendix C)
+one-name: 1 names denote a runtime symbol on one entry and a type on another
+  Surface: runtime on ./surface; type-only on . ./axes
+  declarations and re-exports naming Surface: 2
+    src/components/_shared/axes.ts:23
+    src/index.ts:486
+  one-door (Appendix B):
+    one-door: 1 names on two or more entries
+      1  ./axes + ./surface
+
+## 3 · bare type aliases of library types (Appendix A, ALIAS-TYPE)
+FAIL ALIAS-TYPE 5
+    src/components/aurora/config/color.ts:96: AuroraHarmony = ColorHarmony
+    src/components/progress/types.ts:7: ProgressOrientation = Orientation
+    src/components/scroll-progress-rim/types.ts:4: ScrollProgressRimOrientation = Orientation
+    src/components/surface/Surface.vue:11: SurfaceDecoration = SurfaceAxis
+    src/components/tabs/types.ts:34: SegmentedTabsActivation = TabActivation
+
+## 4 · MIGRATION.md section headings
+  34 headings; not a bare version: 26
+    MIGRATION.md:128  ## 10.0.0 — ~~UNRELEASED~~ [2026-09-22 · LIVE: tag `v10.0.0` at `dcb0f711`, published with provenance by `release.yml` run 35804200390 attempt 1, `latest` on the registry, unpacked 2,915,902 B = the ratchet datum]
+    MIGRATION.md:496  ## 9.0.0 — ~~UNRELEASED (in flight; not on the registry)~~ [2026-09-17 · LIVE: tag `v9.0.0` at `d4f7b24f`, published with provenance by `release.yml` run 33273556530 attempt 3, `latest` on the registry]
+    MIGRATION.md:700  ## 8.1.0 — ~~UNRELEASED (in flight; not on the registry)~~ [2026-08-10 · BK #21: superseded
+    MIGRATION.md:1636  ## 7.0.0 (2026-07-17)
+    MIGRATION.md:3308  ## 2.0.0 (AI.W1 R3) — motion subpath surgery
+    MIGRATION.md:3337  ## At a glance
+    MIGRATION.md:3362  ## Before you migrate
+    MIGRATION.md:3378  ## Breaking changes
+    MIGRATION.md:3724  ## New surfaces in v1.0
+    MIGRATION.md:3781  ## v2.0.0—Motion subpath surgery (AI.W1 R3)
+    MIGRATION.md:3910  ## v3.0.0—`/motion-core` engine-free carve (AP.W3 R0G-7)
+    MIGRATION.md:3989  ## v1.2.1—Aurora init fail-explicit (O.W1 Lane A)
+    MIGRATION.md:4074  ## v1.3.0—`avatarVariant` → `avatarVariants` (O.W4 Lane C)
+    MIGRATION.md:4097  ## v1.3.0—`useDarkModeSync` → `installDarkModeSync` (O.W4 Lane B)
+    MIGRATION.md:4121  ## Metric consolidation — BI.W-P117
+    MIGRATION.md:4139  ## Recommended new surfaces (best-practice, not strict migration)
+    MIGRATION.md:4347  ## Cohabitation note—v0.9.4 stays supported
+    MIGRATION.md:4366  ## Worked example—speedtest re-link
+    MIGRATION.md:4394  ## Production demo build—formal retire (per L.W5 Lane B Option B)
+    MIGRATION.md:4419  ## Verification checklist
+    MIGRATION.md:4452  ## reka-ui 2.x — Combobox `searchTerm` → `ComboboxInput` v-model (AW.W26)
+    MIGRATION.md:4485  ## Reference
+    MIGRATION.md:4500  ## 3.13.0 — the constellation kVis floor (R5-8, additive)
+    MIGRATION.md:4512  ## BA — the d6-lineage A/B reconciliation (the Connectivity Atlas fold)
+    MIGRATION.md:4564  ## BA → 4.0.0 — the dark-register-rebuilt cut (the clean breaks)
+    MIGRATION.md:4830  ## BG — the glass standardization cut (clean breaks)
+  lines naming a tranche id (BL) or "tranche": 0
+
+## 5 · chartHeights / chartMargin / chartColors in ./tokens
+  dist/tokens.js exports 3 of 3: chartHeights, chartMargin, chartColors (D1-G7 RED exit 1)
+    src/styles/tokens/tokens.ts:12
+    src/styles/tokens/tokens.ts:19
+    src/styles/tokens/tokens.ts:26
+  readers in src, demo, tests, tests-visual other than the declarations: 0
+rc=0

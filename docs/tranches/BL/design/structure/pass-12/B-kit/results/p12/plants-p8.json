@@ -1,0 +1,341 @@
+{
+ "plants": 27,
+ "passed": 27,
+ "results": [
+  {
+   "kind": "EXIT",
+   "id": "clean tree",
+   "expect": 0,
+   "exit": 0,
+   "ok": true,
+   "read": "exit 0 (expect 0)"
+  },
+  {
+   "kind": "EXIT",
+   "id": "a RED overlay (a demo import of a private file)",
+   "expect": 1,
+   "exit": 1,
+   "ok": true,
+   "read": "exit 1 (expect 1)"
+  },
+  {
+   "kind": "EXIT",
+   "id": "import: package.json does not parse",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · seal: no verdict: SyntaxError: Expected double-quoted property name in JSON at position 30 (line 1 column 31)"
+  },
+  {
+   "kind": "EXIT",
+   "id": "import: a floor module throws as it loads (lib/tree/tree.mjs; pass 10: S74d moved it from lib/tree.mjs)",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · seal: no verdict: Error: zq8: the floor throws as it loads"
+  },
+  {
+   "kind": "EXIT",
+   "id": "import: the clause module throws as it loads",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · seal: no verdict: Error: zq8: clauses throw as they load"
+  },
+  {
+   "kind": "EXIT",
+   "id": "import: B18's reader throws as it loads",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · seal: no verdict: Error: zq8: peer throws as it loads"
+  },
+  {
+   "kind": "EXIT",
+   "id": "run: an overlay that is not JSON",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · seal: no verdict: SyntaxError: Expected property name or '}' in JSON at position 2 (line 1 column 3)"
+  },
+  {
+   "kind": "EXIT",
+   "id": "run: a refused option (--pin)",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · seal: no verdict: Error: seal: unknown option --pin (the pin has one path, scripts/structure/records/seal-pin.json)"
+  },
+  {
+   "kind": "EXIT",
+   "id": "run: --root names nothing",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · seal: no verdict: Error: seal: the pin /var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p8-plants-tYLSVP/does-not-exist/scripts/structure/re"
+  },
+  {
+   "kind": "EXIT",
+   "id": "run: the pin is missing",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · seal: no verdict: Error: seal: the pin /var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p8-plants-tYLSVP/nopin/scripts/structure/records/sea"
+  },
+  {
+   "kind": "EXIT",
+   "id": "run: B18's table is gone from src/README.md",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · seal: no verdict: Error: peer: src/README.md holds no \"Heavy-peer exclusions\" table; B18 has no declared class to judge"
+  },
+  {
+   "kind": "EXIT",
+   "id": "record write: --json under a regular file",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · seal: no verdict: Error: ENOTDIR: not a directory, open '/var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p8-plants-tYLSVP/bad.json/v.json'"
+  },
+  {
+   "kind": "EXIT",
+   "id": "record write: --write-pin under a regular file",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · seal: no verdict: Error: ENOTDIR: not a directory, open '/var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p8-plants-tYLSVP/bad.json/pin.json"
+  },
+  {
+   "kind": "KF",
+   "id": "KF-new: ./motion-core publishes a new keyframes.js leaf",
+   "red": [
+    "B1",
+    "B18"
+   ],
+   "b18": [
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/zqKf.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/zqKf.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ToggleGroup (src/components/toggle-group/ToggleGroup.vue; first at src/composables/motion/core/zqKf.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: createSpecularWriter (src/composables/glass/useSpecularTracking.ts; first at src/composables/motion/core/zqKf.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useSpecularTracking (src/composables/glass/useSpecularTracking.ts; first at src/composables/motion/core/zqKf.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useCanvas2D (src/composables/glass/canvas2d/useCanvas2D.ts; first at src/composables/motion/core/zqKf.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: vSpecular (src/composables/glass/vSpecular.ts; first at src/composables/motion/core/zqKf.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: zqKf (src/composables/motion/core/zqKf.ts; first at src/composables/motion/core/zqKf.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) reaches it through its doors: src/composables/motion/motion-core.ts → … first at src/composables/motion/core/zqKf.ts:1"
+   ],
+   "ok": true,
+   "read": "red [B1,B18] · . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/compo"
+  },
+  {
+   "kind": "KF",
+   "id": "KF-existing: ./motion-core publishes useSpring",
+   "red": [
+    "B9",
+    "B18"
+   ],
+   "b18": [
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/spring/useSpring.ts:15)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/spring/useSpring.ts:15)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ToggleGroup (src/components/toggle-group/ToggleGroup.vue; first at src/composables/motion/spring/useSpring.ts:15)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: createSpecularWriter (src/composables/glass/useSpecularTracking.ts; first at src/composables/motion/spring/useSpring.ts:15)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useSpecularTracking (src/composables/glass/useSpecularTracking.ts; first at src/composables/motion/spring/useSpring.ts:15)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useCanvas2D (src/composables/glass/canvas2d/useCanvas2D.ts; first at src/composables/motion/spring/useSpring.ts:15)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: vSpecular (src/composables/glass/vSpecular.ts; first at src/composables/motion/spring/useSpring.ts:15)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useSpring (src/composables/motion/spring/useSpring.ts; first at src/composables/motion/spring/useSpring.ts:15)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) reaches it through its doors: src/composables/motion/motion-core.ts → … first at src/composables/motion/spring/useSpring.ts:15"
+   ],
+   "ok": true,
+   "read": "red [B9,B18] · . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/compo"
+  },
+  {
+   "kind": "KF",
+   "id": "KF-leaf: a leaf ./motion-core publishes gains a keyframes.js import",
+   "red": [
+    "B18"
+   ],
+   "b18": [
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ToggleGroup (src/components/toggle-group/ToggleGroup.vue; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Configurator (src/components/configurator/Configurator.vue; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: createSpecularWriter (src/composables/glass/useSpecularTracking.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useSpecularTracking (src/composables/glass/useSpecularTracking.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useCanvas2D (src/composables/glass/canvas2d/useCanvas2D.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: vSpecular (src/composables/glass/vSpecular.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: usePointerVelocityField (src/composables/motion/pointer/usePointerVelocityField.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useRoutePointer (src/composables/motion/pointer/useRoutePointer.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useStagger (src/composables/motion/reveal/useStagger.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useRAFLoop (src/composables/motion/core/useRAFLoop.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: yieldToMain (src/composables/motion/core/useYieldToMain.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useYieldToMain (src/composables/motion/core/useYieldToMain.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ROUTE_WINDOW_NAME (src/composables/motion/route/useRouteTransition.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ROUTE_LABEL_NAME (src/composables/motion/route/useRouteTransition.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ROUTE_WINDOW_ATTR (src/composables/motion/route/useRouteTransition.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ROUTE_LABEL_ATTR (src/composables/motion/route/useRouteTransition.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ROUTE_DIRECTION_PROP (src/composables/motion/route/useRouteTransition.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: routeTransition (src/composables/motion/route/useRouteTransition.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: usePointerVelocityField (src/composables/motion/pointer/usePointerVelocityField.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useRoutePointer (src/composables/motion/pointer/useRoutePointer.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useScrollTrigger (src/composables/motion/scroll/useScrollTrigger.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useScrollChrome (src/composables/motion/scroll/useScrollChrome.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: DEFAULT_INDICATOR_MAX_STRETCH (src/composables/motion/selection/useSelectionIndicator.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: INDICATOR_RELEASE_AT_ARRIVAL (src/composables/motion/selection/useSelectionIndicator.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useSelectionIndicator (src/composables/motion/selection/useSelectionIndicator.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useSelectionGroup (src/composables/motion/selection/useSelectionGroup.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) reaches it through its doors: src/composables/motion/motion-core.ts → … first at src/composables/motion/core/useYieldToMain.ts:1"
+   ],
+   "ok": true,
+   "read": "red [B18] · . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/compo"
+  },
+  {
+   "kind": "KF",
+   "id": "KF-deep: that leaf imports a new file that imports keyframes.js",
+   "red": [
+    "B18"
+   ],
+   "b18": [
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/zqDeep.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/zqDeep.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ToggleGroup (src/components/toggle-group/ToggleGroup.vue; first at src/composables/motion/core/zqDeep.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Configurator (src/components/configurator/Configurator.vue; first at src/composables/motion/core/zqDeep.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: createSpecularWriter (src/composables/glass/useSpecularTracking.ts; first at src/composables/motion/core/zqDeep.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useSpecularTracking (src/composables/glass/useSpecularTracking.ts; first at src/composables/motion/core/zqDeep.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useCanvas2D (src/composables/glass/canvas2d/useCanvas2D.ts; first at src/composables/motion/core/zqDeep.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: vSpecular (src/composables/glass/vSpecular.ts; first at src/composables/motion/core/zqDeep.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: usePointerVelocityField (src/composables/motion/pointer/usePointerVelocityField.ts; first at src/composables/motion/core/zqDeep.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useRoutePointer (src/composables/motion/pointer/useRoutePointer.ts; first at src/composables/motion/core/zqDeep.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useStagger (src/composables/motion/reveal/useStagger.ts; first at src/composables/motion/core/zqDeep.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useRAFLoop (src/composables/motion/core/useRAFLoop.ts; first at src/composables/motion/core/zqDeep.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: yieldToMain (src/composables/motion/core/useYieldToMain.ts; first at src/composables/motion/core/zqDeep.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useYieldToMain (src/composables/motion/core/useYieldToMain.ts; first at src/composables/motion/core/zqDeep.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ROUTE_WINDOW_NAME (src/composables/motion/route/useRouteTransition.ts; first at src/composables/motion/core/zqDeep.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ROUTE_LABEL_NAME (src/composables/motion/route/useRouteTransition.ts; first at src/composables/motion/core/zqDeep.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ROUTE_WINDOW_ATTR (src/composables/motion/route/useRouteTransition.ts; first at src/composables/motion/core/zqDeep.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ROUTE_LABEL_ATTR (src/composables/motion/route/useRouteTransition.ts; first at src/composables/motion/core/zqDeep.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: ROUTE_DIRECTION_PROP (src/composables/motion/route/useRouteTransition.ts; first at src/composables/motion/core/zqDeep.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: routeTransition (src/composables/motion/route/useRouteTransition.ts; first at src/composables/motion/core/zqDeep.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: usePointerVelocityField (src/composables/motion/pointer/usePointerVelocityField.ts; first at src/composables/motion/core/zqDeep.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useRoutePointer (src/composables/motion/pointer/useRoutePointer.ts; first at src/composables/motion/core/zqDeep.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useScrollTrigger (src/composables/motion/scroll/useScrollTrigger.ts; first at src/composables/motion/core/zqDeep.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useScrollChrome (src/composables/motion/scroll/useScrollChrome.ts; first at src/composables/motion/core/zqDeep.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: DEFAULT_INDICATOR_MAX_STRETCH (src/composables/motion/selection/useSelectionIndicator.ts; first at src/composables/motion/core/zqDeep.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: INDICATOR_RELEASE_AT_ARRIVAL (src/composables/motion/selection/useSelectionIndicator.ts; first at src/composables/motion/core/zqDeep.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useSelectionIndicator (src/composables/motion/selection/useSelectionIndicator.ts; first at src/composables/motion/core/zqDeep.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: useSelectionGroup (src/composables/motion/selection/useSelectionGroup.ts; first at src/composables/motion/core/zqDeep.ts:1)",
+    "./motion-core (declared free of @mkbabb/keyframes.js) reaches it through its doors: src/composables/motion/motion-core.ts → … first at src/composables/motion/core/zqDeep.ts:1"
+   ],
+   "ok": true,
+   "read": "red [B18] · . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/compo"
+  },
+  {
+   "kind": "KF",
+   "id": "KF-root: Badge, on the root, gains a keyframes.js import (the root's holds do not hide a new name)",
+   "red": [
+    "B18"
+   ],
+   "b18": [
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Badge (src/components/badge/Badge.vue; first at src/components/badge/badgeVariants.ts:1)",
+    ". (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: badgeVariants (src/components/badge/badgeVariants.ts; first at src/components/badge/badgeVariants.ts:1)"
+   ],
+   "ok": true,
+   "read": "red [B18] · . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Badge (src/components/badge/Badge.vue; first at src/components/bad"
+  },
+  {
+   "kind": "KF",
+   "id": "KF-vueuse: a ./motion-core leaf gains @vueuse/core",
+   "red": [
+    "B18"
+   ],
+   "b18": [
+    ". (declared free of @vueuse/core) publishes a name whose module reaches it: Button (src/components/button/Button.vue; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    ". (declared free of @vueuse/core) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    ". (declared free of @vueuse/core) publishes a name whose module reaches it: NumberFieldStep (src/components/number-field/NumberFieldStep.vue; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    ". (declared free of @vueuse/core) publishes a name whose module reaches it: ToggleGroup (src/components/toggle-group/ToggleGroup.vue; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    ". (declared free of @vueuse/core) publishes a name whose module reaches it: createSpecularWriter (src/composables/glass/useSpecularTracking.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    ". (declared free of @vueuse/core) publishes a name whose module reaches it: useSpecularTracking (src/composables/glass/useSpecularTracking.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    ". (declared free of @vueuse/core) publishes a name whose module reaches it: useCanvas2D (src/composables/glass/canvas2d/useCanvas2D.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    ". (declared free of @vueuse/core) publishes a name whose module reaches it: vSpecular (src/composables/glass/vSpecular.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    ". (declared free of @vueuse/core) publishes a name whose module reaches it: usePointerVelocityField (src/composables/motion/pointer/usePointerVelocityField.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    ". (declared free of @vueuse/core) publishes a name whose module reaches it: useRoutePointer (src/composables/motion/pointer/useRoutePointer.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @vueuse/core) publishes a name whose module reaches it: useStagger (src/composables/motion/reveal/useStagger.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @vueuse/core) publishes a name whose module reaches it: useRAFLoop (src/composables/motion/core/useRAFLoop.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @vueuse/core) publishes a name whose module reaches it: yieldToMain (src/composables/motion/core/useYieldToMain.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @vueuse/core) publishes a name whose module reaches it: useYieldToMain (src/composables/motion/core/useYieldToMain.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @vueuse/core) publishes a name whose module reaches it: ROUTE_WINDOW_NAME (src/composables/motion/route/useRouteTransition.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @vueuse/core) publishes a name whose module reaches it: ROUTE_LABEL_NAME (src/composables/motion/route/useRouteTransition.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @vueuse/core) publishes a name whose module reaches it: ROUTE_WINDOW_ATTR (src/composables/motion/route/useRouteTransition.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @vueuse/core) publishes a name whose module reaches it: ROUTE_LABEL_ATTR (src/composables/motion/route/useRouteTransition.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @vueuse/core) publishes a name whose module reaches it: ROUTE_DIRECTION_PROP (src/composables/motion/route/useRouteTransition.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @vueuse/core) publishes a name whose module reaches it: routeTransition (src/composables/motion/route/useRouteTransition.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @vueuse/core) publishes a name whose module reaches it: usePointerVelocityField (src/composables/motion/pointer/usePointerVelocityField.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @vueuse/core) publishes a name whose module reaches it: useRoutePointer (src/composables/motion/pointer/useRoutePointer.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @vueuse/core) publishes a name whose module reaches it: useScrollTrigger (src/composables/motion/scroll/useScrollTrigger.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @vueuse/core) publishes a name whose module reaches it: useScrollChrome (src/composables/motion/scroll/useScrollChrome.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @vueuse/core) publishes a name whose module reaches it: DEFAULT_INDICATOR_MAX_STRETCH (src/composables/motion/selection/useSelectionIndicator.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @vueuse/core) publishes a name whose module reaches it: INDICATOR_RELEASE_AT_ARRIVAL (src/composables/motion/selection/useSelectionIndicator.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @vueuse/core) publishes a name whose module reaches it: useSelectionIndicator (src/composables/motion/selection/useSelectionIndicator.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @vueuse/core) publishes a name whose module reaches it: useSelectionGroup (src/composables/motion/selection/useSelectionGroup.ts; first at src/composables/motion/core/useYieldToMain.ts:1)",
+    "./motion-core (declared free of @vueuse/core) reaches it through its doors: src/composables/motion/motion-core.ts → … first at src/composables/motion/core/useYieldToMain.ts:1"
+   ],
+   "ok": true,
+   "read": "red [B18] · . (declared free of @vueuse/core) publishes a name whose module reaches it: Button (src/components/button/Button.vue; first at src/composables/motion/"
+  },
+  {
+   "kind": "KF",
+   "id": "KF-CTL: the same leaf loads vue only",
+   "red": [],
+   "b18": [],
+   "ok": true,
+   "read": "red []"
+  },
+  {
+   "kind": "PROBE",
+   "id": "the probe on an unbuilt tree",
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 · peer-closure: no verdict: Error: peer-closure: the build is missing (./dist/glass-ui.js); the dist arm reads the shipped file, so run `vite build` first"
+  },
+  {
+   "kind": "PROBE",
+   "id": "the probe on the built tree",
+   "exit": 0,
+   "ok": true,
+   "read": "exit 0 · peer-closure: GREEN"
+  },
+  {
+   "kind": "TALLY",
+   "id": "a base-green key removed from the route report",
+   "exit": 1,
+   "ok": true,
+   "read": "exit 1 · ABSENT tests-visual/components/controls/a11y-slider.spec.ts :: configurator — LabeledSlider forwards the field label to the thumb #1 (base-green; no route run reports it)"
+  },
+  {
+   "kind": "TALLY",
+   "id": "a key that fails a base rerun is flaky, out of the bar",
+   "exit": 1,
+   "ok": true,
+   "read": "exit 1 · FLAKY tests-visual/glass/contrast/adaptive-glass.spec.ts :: bright bucket clears AA over #fff @ mobile (dark) #1 | base expected,expected,unexpected | route unexpected,unexpected,unexpected"
+  },
+  {
+   "kind": "TALLY",
+   "id": "a key the base passes in every run and the route fails is new",
+   "exit": 1,
+   "ok": true,
+   "read": "exit 1 · NEW tests-visual/glass/contrast/adaptive-glass.spec.ts :: bright bucket clears AA over #fff @ mobile (dark) #1 | base expected,expected,expected | route unexpected,unexpected,unexpected"
+  },
+  {
+   "kind": "TALLY",
+   "id": "the committed reports as they are",
+   "exit": 1,
+   "ok": true,
+   "read": "exit 1 · verdict: RED (429 base-green keys, every one accounted: 428 held + 1 failed + 0 absent)"
+  },
+  {
+   "kind": "SELECT",
+   "id": "a moved spec no band selects is selected by name",
+   "ok": true,
+   "read": "bands alone select 154; by name 155; selected only by name 1: tests-visual/aurora/w38-binding.spec.ts"
+  }
+ ]
+}

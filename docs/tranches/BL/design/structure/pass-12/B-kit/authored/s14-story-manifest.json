@@ -1,0 +1,11 @@
+{
+ "why": "B-S14 (R-5, §P4-4 'settled by text'): the story manifest reads nested story directories, so a category over twelve files can move a family into a named group. A story is the one `<id>.vue` under its category at any depth; story ids are kebab-case, so a story's own PascalCase components are keys no row names. The story-card tests read the same rule through the harness (R-3, B-S12): their story and chassis reads are zone-rooted literals F-1 resolves, and the story universe is F-1's file set",
+ "files": {
+  "demo/stories/manifest.ts": "the route glob keys every SFC at any depth under the stories (`./**/*.vue`; F-1's glob grammar has no character class, and the id lookup alone separates a story from a component) and the tile glob `./**/*.tile.vue`; both are looked up by the story's file name under its category, so the flat layout and a group directory read the same way",
+  "demo/stories/manifest/lazy.ts": "storyKey: the one module key under `./<category>/` whose file is `<id>.vue`; none is a missing story, several is an error, never a choice",
+  "tests/demo/story-card/sources.ts": "the demo reads go through the harness (F-1's file set, R-3) by repo path; storyFile resolves a row's SFC by the manifest's rule; storySfcs is the routable universe (kebab-case SFCs under a category, tiles aside) read from the file set, not a directory walk",
+  "tests/demo/story-card/names.test.ts": "the story SFC census and every story read use storyFile/storySfcs (a nested story is found where the manifest finds it); chassis reads name their repo path",
+  "tests/demo/story-card/tiles.test.ts": "the storyTile reads name their repo path (harness read, F-1 resolves the literal)",
+  "tests/demo/story-card/still.test.ts": "the toc and still reads name their repo path (harness read, F-1 resolves the literal)"
+ }
+}

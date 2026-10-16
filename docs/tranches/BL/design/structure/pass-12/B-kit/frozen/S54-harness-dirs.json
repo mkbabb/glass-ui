@@ -1,0 +1,135 @@
+{
+ "step": "B-S54 (frozen from authored/harness-dirs.json, F-9)",
+ "moves": [
+  {
+   "from": "tests/styles/backdrop-prefix-normalization.test.ts",
+   "to": "tests/styles/emission/backdrop-prefix-normalization.test.ts"
+  },
+  {
+   "from": "tests/styles/color-mix-endpoints.test.ts",
+   "to": "tests/styles/emission/color-mix-endpoints.test.ts"
+  },
+  {
+   "from": "tests/styles/emitted-utility-vars.test.ts",
+   "to": "tests/styles/emission/emitted-utility-vars.test.ts"
+  },
+  {
+   "from": "tests/styles/material-css-syntax.test.ts",
+   "to": "tests/styles/emission/material-css-syntax.test.ts"
+  },
+  {
+   "from": "tests/styles/stacked-url-filter.test.ts",
+   "to": "tests/styles/emission/stacked-url-filter.test.ts"
+  },
+  {
+   "from": "tests/styles/feedback-motion.test.ts",
+   "to": "tests/styles/motion/feedback-motion.test.ts"
+  },
+  {
+   "from": "tests/styles/spring-authority.test.ts",
+   "to": "tests/styles/motion/spring-authority.test.ts"
+  },
+  {
+   "from": "tests/demo/router.test.ts",
+   "to": "tests/demo/router/router.test.ts"
+  },
+  {
+   "from": "tests/demo/router-field-ownership.test.ts",
+   "to": "tests/demo/router/router-field-ownership.test.ts"
+  },
+  {
+   "from": "tests/demo/route-transition.test.ts",
+   "to": "tests/demo/router/route-transition.test.ts"
+  },
+  {
+   "from": "tests/demo/story-lazy.test.ts",
+   "to": "tests/demo/router/story-lazy.test.ts"
+  },
+  {
+   "from": "tests/demo/shortcut-kbd-a11y.test.ts",
+   "to": "tests/demo/a11y/shortcut-kbd-a11y.test.ts"
+  },
+  {
+   "from": "tests/demo/sidebar-nav-landmark.a11y.test.ts",
+   "to": "tests/demo/a11y/sidebar-nav-landmark.a11y.test.ts"
+  },
+  {
+   "from": "tests/demo/skip-link.a11y.test.ts",
+   "to": "tests/demo/a11y/skip-link.a11y.test.ts"
+  }
+ ],
+ "scanDeltas": [],
+ "globDeltas": [],
+ "reasons": [
+  {
+   "from": "tests/styles/backdrop-prefix-normalization.test.ts",
+   "to": "tests/styles/emission/backdrop-prefix-normalization.test.ts",
+   "why": "the emitted-CSS syntax canon: each reads what the build or a sheet emits and judges its spelling"
+  },
+  {
+   "from": "tests/styles/color-mix-endpoints.test.ts",
+   "to": "tests/styles/emission/color-mix-endpoints.test.ts",
+   "why": "the emitted-CSS syntax canon: each reads what the build or a sheet emits and judges its spelling"
+  },
+  {
+   "from": "tests/styles/emitted-utility-vars.test.ts",
+   "to": "tests/styles/emission/emitted-utility-vars.test.ts",
+   "why": "the emitted-CSS syntax canon: each reads what the build or a sheet emits and judges its spelling"
+  },
+  {
+   "from": "tests/styles/material-css-syntax.test.ts",
+   "to": "tests/styles/emission/material-css-syntax.test.ts",
+   "why": "the emitted-CSS syntax canon: each reads what the build or a sheet emits and judges its spelling"
+  },
+  {
+   "from": "tests/styles/stacked-url-filter.test.ts",
+   "to": "tests/styles/emission/stacked-url-filter.test.ts",
+   "why": "the emitted-CSS syntax canon: each reads what the build or a sheet emits and judges its spelling"
+  },
+  {
+   "from": "tests/styles/feedback-motion.test.ts",
+   "to": "tests/styles/motion/feedback-motion.test.ts",
+   "why": "the motion registers of the style layer: spring authority and the feedback motion pins"
+  },
+  {
+   "from": "tests/styles/spring-authority.test.ts",
+   "to": "tests/styles/motion/spring-authority.test.ts",
+   "why": "the motion registers of the style layer: spring authority and the feedback motion pins"
+  },
+  {
+   "from": "tests/demo/router.test.ts",
+   "to": "tests/demo/router/router.test.ts",
+   "why": "the demo's router: its routes, the field it owns, the route transition and the lazy story chunks"
+  },
+  {
+   "from": "tests/demo/router-field-ownership.test.ts",
+   "to": "tests/demo/router/router-field-ownership.test.ts",
+   "why": "the demo's router: its routes, the field it owns, the route transition and the lazy story chunks"
+  },
+  {
+   "from": "tests/demo/route-transition.test.ts",
+   "to": "tests/demo/router/route-transition.test.ts",
+   "why": "the demo's router: its routes, the field it owns, the route transition and the lazy story chunks"
+  },
+  {
+   "from": "tests/demo/story-lazy.test.ts",
+   "to": "tests/demo/router/story-lazy.test.ts",
+   "why": "the demo's router: its routes, the field it owns, the route transition and the lazy story chunks"
+  },
+  {
+   "from": "tests/demo/shortcut-kbd-a11y.test.ts",
+   "to": "tests/demo/a11y/shortcut-kbd-a11y.test.ts",
+   "why": "the demo shell's accessibility pins: the skip link, the sidebar landmark, the shortcut kbd"
+  },
+  {
+   "from": "tests/demo/sidebar-nav-landmark.a11y.test.ts",
+   "to": "tests/demo/a11y/sidebar-nav-landmark.a11y.test.ts",
+   "why": "the demo shell's accessibility pins: the skip link, the sidebar landmark, the shortcut kbd"
+  },
+  {
+   "from": "tests/demo/skip-link.a11y.test.ts",
+   "to": "tests/demo/a11y/skip-link.a11y.test.ts",
+   "why": "the demo shell's accessibility pins: the skip link, the sidebar landmark, the shortcut kbd"
+  }
+ ]
+}

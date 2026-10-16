@@ -1,0 +1,97 @@
+{
+ "step": "B-S4f type homes: two aurora sibling type cycles (LAW §8, B4)",
+ "files": {
+  "src/components/aurora/runtime/webgl/glSetup.ts": {
+   "hunks": [
+    [
+     " * The `UNIFORM_NAMES` const-assertion is the single source of truth for the\n * shader-uniform boundary: a NEW uniform name must be added here, and the cache is\n * keyed off it, so a fresh uniform always gets a location slot.\n",
+     " * The `UNIFORM_NAMES` const-assertion (frame/uniformBridge.ts, beside the bridge that\n * uploads by name) is the single source of truth for the shader-uniform boundary: a NEW\n * uniform name is added there, and the cache is keyed off it, so a fresh uniform always\n * gets a location slot.\n"
+    ],
+    [
+     "import { createUniformBridge } from \"../frame/uniformBridge\";\n",
+     "import { createUniformBridge, UNIFORM_NAMES, type UniformLocations } from \"../frame/uniformBridge\";\n"
+    ],
+    [
+     "const AURORA_LABEL = \"[Aurora]\";\n\nexport const UNIFORM_NAMES = [\n    \"uTime\",\n    \"uPalette\",\n    \"uStopCount\",\n    \"uNucleiCount\",\n    \"uNucleiPos\",\n    \"uNucleiRadius\",\n    \"uNucleiPaletteBias\",\n    \"uNucleiValueBias\",\n    \"uNucleiDriftRadius\",\n    \"uNucleiDriftPhase\",\n    \"uNucleiElong\",\n    \"uNucleiAngle\",\n    \"uSoftmaxBeta\",\n    \"uValueVariance\",\n    \"uWarpAmount\",\n    \"uWarpScale\",\n    \"uWarpDrift\",\n    \"uWarpMode\",\n    \"uNoiseOctaves\",\n    \"uMedium\",\n    \"uHuePath\",\n    \"uFlowPattern\",\n    \"uFlowFocal\",\n    \"uFlowAngle\",\n    \"uFlowCurl\",\n    \"uCursor\",\n    \"uCursorStrength\",\n    \"uCursorRadius\",\n    \"uStrokeAmount\",\n    \"uStrokeScale\",\n    \"uStrokeAnisotropy\",\n    \"uStrokeLayers\",\n    \"uStrokeMode\",\n    // Stroke-orientation source (flow | tensor).\n    \"uStrokeOrient\",\n    // The movable impasto relight axis (cursor as light).\n    \"uLightDir\",\n    \"uLightColor\",\n    \"uWetEdge\",\n    \"uGranulation\",\n    \"uImpasto\",\n    \"uBrokenColor\",\n    \"uCanvasGrain\",\n    // Metal-medium knobs (uMedium==8/9).\n    \"uMetalPolish\",\n    \"uMetalHeightScale\",\n    \"uNucleiDrift\",\n    \"uPaletteDrift\",\n    \"uBreathDepth\",\n    \"uBreathPeriod\",\n    \"uSaturation\",\n    \"uPaperGrain\",\n    \"uAlpha\",\n    // Chroma-floor strength.\n    \"uVividness\",\n    // The image program's own uniform lane (the sampler + the\n    // blur band + the aspect). On the PALETTE program these resolve to null locations\n    // (the palette fragment declares none of them), so uploading them is a silent no-op —\n    // the palette-default render is byte-identical. Only the separate image program (a\n    // construction-time permutation) actually reads them.\n    \"uImage\",\n    \"uBlurMin\",\n    \"uBlurMax\",\n    \"uImageAspect\",\n] as const;\n\nexport type UniformName = (typeof UNIFORM_NAMES)[number];\n\nexport type UniformLocations = Record<UniformName, WebGLUniformLocation | null>;\n\n",
+     "const AURORA_LABEL = \"[Aurora]\";\n\n"
+    ]
+   ]
+  },
+  "src/components/aurora/runtime/frame/uniformBridge.ts": {
+   "hunks": [
+    [
+     "import type { OklchStop } from \"../../../../composables/color\";\nimport type { UniformLocations } from \"../webgl/glSetup\";\n\n",
+     "import type { OklchStop } from \"../../../../composables/color\";\n\n"
+    ],
+    [
+     "} from \"../../config/presets\";\n\n",
+     "} from \"../../config/presets\";\n\n/** The shader-uniform boundary: every name the aurora programs declare, one location slot each. */\nexport const UNIFORM_NAMES = [\n    \"uTime\",\n    \"uPalette\",\n    \"uStopCount\",\n    \"uNucleiCount\",\n    \"uNucleiPos\",\n    \"uNucleiRadius\",\n    \"uNucleiPaletteBias\",\n    \"uNucleiValueBias\",\n    \"uNucleiDriftRadius\",\n    \"uNucleiDriftPhase\",\n    \"uNucleiElong\",\n    \"uNucleiAngle\",\n    \"uSoftmaxBeta\",\n    \"uValueVariance\",\n    \"uWarpAmount\",\n    \"uWarpScale\",\n    \"uWarpDrift\",\n    \"uWarpMode\",\n    \"uNoiseOctaves\",\n    \"uMedium\",\n    \"uHuePath\",\n    \"uFlowPattern\",\n    \"uFlowFocal\",\n    \"uFlowAngle\",\n    \"uFlowCurl\",\n    \"uCursor\",\n    \"uCursorStrength\",\n    \"uCursorRadius\",\n    \"uStrokeAmount\",\n    \"uStrokeScale\",\n    \"uStrokeAnisotropy\",\n    \"uStrokeLayers\",\n    \"uStrokeMode\",\n    // Stroke-orientation source (flow | tensor).\n    \"uStrokeOrient\",\n    // The movable impasto relight axis (cursor as light).\n    \"uLightDir\",\n    \"uLightColor\",\n    \"uWetEdge\",\n    \"uGranulation\",\n    \"uImpasto\",\n    \"uBrokenColor\",\n    \"uCanvasGrain\",\n    // Metal-medium knobs (uMedium==8/9).\n    \"uMetalPolish\",\n    \"uMetalHeightScale\",\n    \"uNucleiDrift\",\n    \"uPaletteDrift\",\n    \"uBreathDepth\",\n    \"uBreathPeriod\",\n    \"uSaturation\",\n    \"uPaperGrain\",\n    \"uAlpha\",\n    // Chroma-floor strength.\n    \"uVividness\",\n    // The image program's own uniform lane (the sampler + the\n    // blur band + the aspect). On the PALETTE program these resolve to null locations\n    // (the palette fragment declares none of them), so uploading them is a silent no-op —\n    // the palette-default render is byte-identical. Only the separate image program (a\n    // construction-time permutation) actually reads them.\n    \"uImage\",\n    \"uBlurMin\",\n    \"uBlurMax\",\n    \"uImageAspect\",\n] as const;\n\nexport type UniformName = (typeof UNIFORM_NAMES)[number];\n\nexport type UniformLocations = Record<UniformName, WebGLUniformLocation | null>;\n\n"
+    ]
+   ]
+  },
+  "src/components/aurora/runtime/frame/frameLoop.ts": {
+   "hunks": [
+    [
+     "import type { UniformLocations } from \"../webgl/glSetup\";\n",
+     "import type { UniformLocations } from \"./uniformBridge\";\n"
+    ]
+   ]
+  },
+  "tests/components/custom/aurora/uniform-packing.test.ts": {
+   "hunks": [
+    [
+     "import type { UniformLocations } from \"@glass/components/aurora/runtime/webgl/glSetup\";\n",
+     "import type { UniformLocations } from \"@glass/components/aurora/runtime/frame/uniformBridge\";\n"
+    ]
+   ]
+  },
+  "src/components/aurora/runtime/frame/textureUpload.ts": {
+   "hunks": [
+    [
+     "\n/** The shared decode options — the ONE normalised `createImageBitmap` flag set. */\n",
+     "\nimport type { ImageInputSource, UploadableImageSource } from \"../../config/presets\";\n\n/** The shared decode options — the ONE normalised `createImageBitmap` flag set. */\n"
+    ],
+    [
+     "};\n\n/**\n * An already-uploadable image source — a decoded bitmap or a live DOM raster that\n * both `gl.texImage2D` and `queue.copyExternalImageToTexture` accept directly.\n */\nexport type UploadableImageSource =\n    | ImageBitmap\n    | HTMLImageElement\n    | HTMLCanvasElement\n    | OffscreenCanvas\n    | ImageData;\n\n/**\n * Anything a consumer may hand the axis: a URL string, `Blob` (needs a decode) OR an\n * already-uploadable source (passed straight through). `resolveImageSource` normalises\n * every form to an {@link UploadableImageSource} via the shared decode contract.\n */\nexport type ImageInputSource = UploadableImageSource | Blob | string;\n\n",
+     "};\n\n"
+    ]
+   ]
+  },
+  "src/components/aurora/config/presets.ts": {
+   "hunks": [
+    [
+     "import type { ImageInputSource } from \"../runtime/frame/textureUpload\";\n",
+     "/**\n * An already-uploadable image source — a decoded bitmap or a live DOM raster that\n * both `gl.texImage2D` and `queue.copyExternalImageToTexture` accept directly.\n */\nexport type UploadableImageSource =\n    | ImageBitmap\n    | HTMLImageElement\n    | HTMLCanvasElement\n    | OffscreenCanvas\n    | ImageData;\n\n/**\n * Anything a consumer may hand the axis: a URL string, `Blob` (needs a decode) OR an\n * already-uploadable source (passed straight through). `resolveImageSource` normalises\n * every form to an {@link UploadableImageSource} via the shared decode contract.\n */\nexport type ImageInputSource = UploadableImageSource | Blob | string;\n"
+    ],
+    [
+     "export type AuroraImageSource = ImageInputSource;\nexport type { ImageInputSource };\n\n",
+     "export type AuroraImageSource = ImageInputSource;\n\n"
+    ]
+   ]
+  },
+  "src/components/aurora/runtime/frame/auroraImageSource.ts": {
+   "hunks": [
+    [
+     "    uploadImageTextureWebGL2,\n    type UploadableImageSource,\n} from \"./textureUpload\";\n",
+     "    uploadImageTextureWebGL2,\n} from \"./textureUpload\";\n"
+    ],
+    [
+     "} from \"./textureUpload\";\nimport type { AuroraConfig } from \"../../config/presets\";\n",
+     "} from \"./textureUpload\";\nimport type { UploadableImageSource } from \"../../config/presets\";\nimport type { AuroraConfig } from \"../../config/presets\";\n"
+    ]
+   ]
+  },
+  "src/components/aurora/runtime/webgpu/wgpuSetup.ts": {
+   "hunks": [
+    [
+     "    uploadImageTextureWebGPU,\n    type UploadableImageSource,\n} from \"../frame/textureUpload\";\n",
+     "    uploadImageTextureWebGPU,\n} from \"../frame/textureUpload\";\n"
+    ],
+    [
+     "} from \"../frame/textureUpload\";\nimport { isAuroraDriftLive, type AuroraConfig } from \"../../config/presets\";\n",
+     "} from \"../frame/textureUpload\";\nimport type { UploadableImageSource } from \"../../config/presets\";\nimport { isAuroraDriftLive, type AuroraConfig } from \"../../config/presets\";\n"
+    ]
+   ]
+  }
+ }
+}

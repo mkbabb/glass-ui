@@ -1,0 +1,16 @@
+{
+ "step": "B-S4e the tokens module door is the ./tokens entry source (LAW §5, B7)",
+ "files": {
+  "src/styles/tokens/index.ts": {
+   "create": "// styles/tokens — module door and the ./tokens entry source: the runtime token projection.\nexport * from \"./tokens\";\n"
+  },
+  "scripts/structure/records/entry-record.json": {
+   "hunks": [
+    [
+     "        [\"tokens\",\"src/styles/tokens/tokens.ts\"],\n",
+     "        [\"tokens\",\"src/styles/tokens/index.ts\"],\n"
+    ]
+   ]
+  }
+ }
+}

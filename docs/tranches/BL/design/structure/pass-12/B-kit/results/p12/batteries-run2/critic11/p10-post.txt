@@ -1,0 +1,62 @@
+p10-post start 2026-10-16T12:10:09Z load { 12.96 13.23 15.62 }
+== plants10b (P9-R1 PD-*)
+BASE {"B0":0,"B1":0,"B2":0,"B3":0,"B4":0,"B5":0,"B6":0,"B7":0,"B8":0,"B9":0,"B10":0,"B11":0,"B12":0,"B13":0,"B14":0,"B15":0,"B16":0,"B17":0,"B18":0}
+CAUGHT  PD-val-1 [S-03 (P9-R1 (a)), corrected: the reverse edge through the parent's door] src/components/aurora/index.ts → ./runtime (existing); new src/components/aurora/runtime/zq10k.ts → src/components/aurora/zq10b.ts (value) :: named=B4,B10 gained={"B4":1,"B10":1}
+        B4: value SCC at module grain [src/components/aurora src/components/aurora/runtime] (parent<->child) via src/components/aurora/runtime/zq10k.ts:1 -> src/components/aurora/zq10b.ts ; src/components/aurora/aurora-config.ts:51 -> src/components/au
+        B10: src/components/aurora/zq10b.ts -> src/components/aurora/runtime [move] readers: src/components/aurora/runtime
+CLEAN   PD-type-1 [S-03 (P9-R1 (a)), corrected: the reverse edge through the parent's door (type-only)] src/components/aurora/index.ts → ./runtime (existing); new src/components/aurora/runtime/zq10k.ts → src/components/aurora/zq10b.ts (import type) :: named=B10 gained={"B10":1}
+CAUGHT  PD-val-2 [S-03 (P9-R1 (a)), corrected: the reverse edge through the parent's door] src/components/dock/index.ts → ./search (existing); new src/components/dock/search/zq10k.ts → src/components/dock/zq10b.ts (value) :: named=B4,B6,B10 gained={"B4":1,"B6":1,"B10":1}
+        B4: value SCC at module grain [src/components/dock src/components/dock/search] (parent<->child) via src/components/dock/search/zq10k.ts:1 -> src/components/dock/zq10b.ts ; src/components/dock/index.ts:92 -> src/components/dock/search/index.ts
+        B6: src/components/dock/: 13 direct files > 12
+        B10: src/components/dock/zq10b.ts -> src/components/dock/search [move] readers: src/components/dock/search
+CLEAN   PD-type-2 [S-03 (P9-R1 (a)), corrected: the reverse edge through the parent's door (type-only)] src/components/dock/index.ts → ./search (existing); new src/components/dock/search/zq10k.ts → src/components/dock/zq10b.ts (import type) :: named=B6,B10 gained={"B6":1,"B10":1}
+CAUGHT  PD-val-3 [S-03 (P9-R1 (a)), corrected: the reverse edge through the parent's door] src/components/menu/index.ts → ./items (existing); new src/components/menu/items/zq10k.ts → src/components/menu/zq10b.ts (value) :: named=B4,B10 gained={"B4":1,"B10":1}
+        B4: value SCC at module grain [src/components/menu src/components/menu/items] (parent<->child) via src/components/menu/items/zq10k.ts:1 -> src/components/menu/zq10b.ts ; src/components/menu/index.ts:21 -> src/components/menu/items/index.ts
+        B10: src/components/menu/zq10b.ts -> src/components/menu/items [move] readers: src/components/menu/items
+CLEAN   PD-type-3 [S-03 (P9-R1 (a)), corrected: the reverse edge through the parent's door (type-only)] src/components/menu/index.ts → ./items (existing); new src/components/menu/items/zq10k.ts → src/components/menu/zq10b.ts (import type) :: named=B10 gained={"B10":1}
+RESTORED base judgement unchanged
+TALLY {"CAUGHT":3,"CLEAN":3}
+ROW PD-val-1 PASS verdict=CAUGHT B4=["value SCC at module grain [src/components/aurora src/components/aurora/runtime] (parent<->child) via src/components/aurora/runtime/zq10k.ts:1 -> src/components/aurora/zq10b.ts ; src/components/auror
+ROW PD-type-1 PASS verdict=CLEAN B4=[]
+ROW PD-val-2 PASS verdict=CAUGHT B4=["value SCC at module grain [src/components/dock src/components/dock/search] (parent<->child) via src/components/dock/search/zq10k.ts:1 -> src/components/dock/zq10b.ts ; src/components/dock/index.ts:9
+ROW PD-type-2 PASS verdict=CLEAN B4=[]
+ROW PD-val-3 PASS verdict=CAUGHT B4=["value SCC at module grain [src/components/menu src/components/menu/items] (parent<->child) via src/components/menu/items/zq10k.ts:1 -> src/components/menu/zq10b.ts ; src/components/menu/index.ts:21 
+ROW PD-type-3 PASS verdict=CLEAN B4=[]
+PD ROWS pass 6 fail 0
+== fix10b (P9-R2 MIGRATION, W-C.2 appendices)
+F2b patch 16c16
+F2b patch < const tracked = execFileSync("git", ["ls-files"], { cwd: root, encoding: "utf8" }).split("\n").filter(Boolean);
+F2b patch ---
+F2b patch > const tracked = execFileSync("git", ["ls-files"], { cwd: root, encoding: "utf8", maxBuffer: 1 << 28 }).split("\n").filter(Boolean);
+F2b patch 19c19
+F2b patch < let files = tracked.filter(inScope);
+F2b patch ---
+F2b patch > let files = tracked.filter(inScope).filter((f) => fs.existsSync(path.join(root, f)));
+F2b section 8..127; route rc=1 :: no-meta: META 2402 hits in 213 files (src 530, demo 166, tests 180, tests-visual 44, scripts 29, dist 51, MIGRATION 634, other 768) · STYLE 2132 hits in 32 files
+F2b MG1 C2-G1 hits in the section: 0 (expect 0)
+F2b HEAD text rc=1
+F2b MG4 META hits in MIGRATION.md: route 1648, HEAD 1648, delta 0 (expect <= 0)
+F2b MGP-row-ref 'The structure cut lands as BL #10.' → C2-G1 hits in the section: 1
+F2b MGP-wave-id 'Carried by BL.W3.' → C2-G1 hits in the section: 1
+F2b MGP-wave-id2 'Carried by W-STRUCTURE-CUT.' → C2-G1 hits in the section: 1
+F2b MGP-dated '[2026-10-16 · structure cut]' → C2-G1 hits in the section: 1
+F2b MGP-bl-bare 'The structure cut (BL).' → C2-G1 hits in the section: 0
+F2b MGP-tranche-word 'This tranche moves files.' → C2-G1 hits in the section: 0
+after fix10b: digest 6fdd4ec7bd259630d38a466a444e45b2b18f71b4cbf2259d258a4c6177996bbf over 1587 files
+== fd4-probe re-pointed (S74d)
+21c21
+< const T = await import(S("lib/tree.mjs"));
+---
+> const T = await import(S("lib/tree/tree.mjs"));
+FD4 A PASS {"covered":true,"evidence":1,"refuted":0}
+FD4 G PASS {"threw":"FD-4: the browser report of /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p12/B-proto/wt names spec src/components/chip/__tests__/chip-accent-band.visual.ts, at src/c
+FD4 G2 PASS {"threw":"FD-4: the browser report of /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p12/B-proto/wt names spec src/components/chip/__tests__/chip-accent-band.visual.ts, at src/
+FD4 U PASS {"threw":"FD-4: the browser report of /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p12/B-proto/wt is unversioned; the coverage arm reads browser-seat/2 (specs keyed by their p
+FD4 RESTORE PASS src/components/chip/__tests__/chip-accent-band.visual.ts
+== every earlier critic battery file naming a path S74d moved (lib/{tree,symbols,placement,...}.mjs directly under scripts/structure/lib)
+pass-11/critique-B/battery/run11.sh:39:  mkdir -p "$S/p10post"; sed 's#S("lib/tree.mjs")#S("lib/tree/tree.mjs")#' "$ST/pass-6/critique-B/battery/fd4-probe.mjs" > "$S/p10post/fd4-probe.mjs"
+pass-3/critique-B/battery/probes.mjs:77:    const n = sh("grep -c anchor scripts/structure/lib/placement.mjs").trim();
+pass-3/critique-B/battery/probes.mjs:119:    const slotUse = sh("grep -l 'isSlot' scripts/structure/lib/placement.mjs scripts/structure/bounds.mjs | wc -l").trim();
+pass-3/critique-B/battery/seat-2/ITEMS.md:21:| S-04 | `scripts/structure/lib/placement.mjs` (or the floor home) has an `anchor` parameter; placement with the publication anchor yields anchored rows | 
+pass-6/critique-B/battery/fd4-probe.mjs:21:const T = await import(S("lib/tree.mjs"));
+p10-post rc=0 end 2026-10-16T12:10:42Z load { 11.74 12.94 15.42 }

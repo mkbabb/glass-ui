@@ -1,0 +1,206 @@
+{
+ "step": "§P6-8.4 (pass 7, LAW §5): useLiquidFlex is read through the engine-free core's door and the selection engine through its own; the spring and morph doors keep only their modules' names, so no name ./motion-core publishes evaluates keyframes.js through a door",
+ "files": {
+  "src/composables/motion/spring/index.ts": {
+   "hunks": [
+    [
+     "export { springProjection } from \"./springProjection\";\nexport type { LiquidFlexAxis, UseLiquidFlexParams, UseLiquidFlexReturn } from \"../core/useLiquidFlex\";\nexport { useLiquidFlex } from \"../core/useLiquidFlex\";\nexport type { UseLiquidPressOptions, UseLiquidPressReturn } from \"./useLiquidPress\";\n",
+     "export { springProjection } from \"./springProjection\";\nexport type { UseLiquidPressOptions, UseLiquidPressReturn } from \"./useLiquidPress\";\n"
+    ]
+   ]
+  },
+  "src/composables/motion/core/index.ts": {
+   "hunks": [
+    [
+     "export { useIntersectionPause } from \"./useIntersectionPause\";\nexport type { RAFLoopCallback, RAFLoopControls, RAFLoopTiming, UseRAFLoopOptions } from \"./useRAFLoop\";\n",
+     "export { useIntersectionPause } from \"./useIntersectionPause\";\nexport type { LiquidFlexAxis, UseLiquidFlexParams, UseLiquidFlexReturn } from \"./useLiquidFlex\";\nexport { useLiquidFlex } from \"./useLiquidFlex\";\nexport type { RAFLoopCallback, RAFLoopControls, RAFLoopTiming, UseRAFLoopOptions } from \"./useRAFLoop\";\n"
+    ]
+   ]
+  },
+  "src/composables/motion/morph/index.ts": {
+   "hunks": [
+    [
+     "export { trailOffset, useLeadTrail } from \"./useLeadTrail\";\nexport type { SelectionMode, SelectionRole, UseSelectionGroupParams, UseSelectionGroupReturn } from \"../selection/useSelectionGroup\";\nexport { useSelectionGroup } from \"../selection/useSelectionGroup\";\nexport type { SelectionDeform, SelectionOption, UseSelectionIndicatorParams, UseSelectionIndicatorReturn } from \"../selection/useSelectionIndicator\";\nexport { DEFAULT_INDICATOR_MAX_STRETCH, INDICATOR_RELEASE_AT_ARRIVAL, useSelectionIndicator } from \"../selection/useSelectionIndicator\";\nexport type { TabActivation } from \"../selection/useTabRovingFocus\";\n",
+     "export { trailOffset, useLeadTrail } from \"./useLeadTrail\";\n"
+    ]
+   ]
+  },
+  "src/composables/motion/selection/index.ts": {
+   "create": "// composables/motion/selection — module door: the names read from outside this module.\nexport type { SelectionMode, SelectionRole, UseSelectionGroupParams, UseSelectionGroupReturn } from \"./useSelectionGroup\";\nexport { useSelectionGroup } from \"./useSelectionGroup\";\nexport type { SelectionDeform, SelectionOption, UseSelectionIndicatorParams, UseSelectionIndicatorReturn } from \"./useSelectionIndicator\";\nexport { DEFAULT_INDICATOR_MAX_STRETCH, INDICATOR_RELEASE_AT_ARRIVAL, useSelectionIndicator } from \"./useSelectionIndicator\";\nexport type { TabActivation } from \"./useTabRovingFocus\";\n"
+  },
+  "scripts/structure/records/entry-record.json": {
+   "hunks": [
+    [
+     "        \"src/composables/motion/scroll/index.ts\",\n        \"src/composables/motion/spring/index.ts\"\n",
+     "        \"src/composables/motion/scroll/index.ts\",\n        \"src/composables/motion/selection/index.ts\",\n        \"src/composables/motion/spring/index.ts\"\n"
+    ]
+   ]
+  },
+  "src/composables/motion/spring/useLiquidPress.ts": {
+   "hunks": [
+    [
+     "import { useLiquidFlex } from \"../core/useLiquidFlex\";\n",
+     "import { useLiquidFlex } from \"../core\";\n"
+    ]
+   ]
+  },
+  "src/composables/motion/selection/useSelectionIndicator.ts": {
+   "hunks": [
+    [
+     "import { useLiquidFlex } from \"../spring\";\nimport { effectiveCap, writeVelocityWeight } from \"../core\";\n",
+     "import { effectiveCap, useLiquidFlex, writeVelocityWeight } from \"../core\";\n"
+    ]
+   ]
+  },
+  "src/composables/motion/morph/useDragMorph.ts": {
+   "hunks": [
+    [
+     "import { useLiquidFlex } from \"../spring\";\n",
+     "import { useLiquidFlex } from \"../core\";\n"
+    ]
+   ]
+  },
+  "src/composables/motion/motion-core.ts": {
+   "hunks": [
+    [
+     "export { useLiquidFlex } from \"./spring\";\nexport type { LiquidFlexAxis, UseLiquidFlexParams, UseLiquidFlexReturn } from \"./spring\";\n",
+     "export { useLiquidFlex } from \"./core\";\nexport type { LiquidFlexAxis, UseLiquidFlexParams, UseLiquidFlexReturn } from \"./core\";\n"
+    ],
+    [
+     "export { DEFAULT_INDICATOR_MAX_STRETCH, INDICATOR_RELEASE_AT_ARRIVAL, useSelectionIndicator } from \"./morph\";\nexport type { SelectionOption, SelectionDeform, UseSelectionIndicatorParams, UseSelectionIndicatorReturn } from \"./morph\";\nexport { useSelectionGroup } from \"./morph\";\nexport type { SelectionMode, SelectionRole, UseSelectionGroupParams, UseSelectionGroupReturn } from \"./morph\";\n",
+     "export { DEFAULT_INDICATOR_MAX_STRETCH, INDICATOR_RELEASE_AT_ARRIVAL, useSelectionIndicator } from \"./selection\";\nexport type { SelectionOption, SelectionDeform, UseSelectionIndicatorParams, UseSelectionIndicatorReturn } from \"./selection\";\nexport { useSelectionGroup } from \"./selection\";\nexport type { SelectionMode, SelectionRole, UseSelectionGroupParams, UseSelectionGroupReturn } from \"./selection\";\n"
+    ]
+   ]
+  },
+  "src/components/tabs/types.ts": {
+   "hunks": [
+    [
+     "import type { TabActivation } from \"../../composables/motion/morph\";\n",
+     "import type { TabActivation } from \"../../composables/motion/selection\";\n"
+    ]
+   ]
+  },
+  "src/styles/tokens/sizing/scale-paper.css": {
+   "hunks": [
+    [
+     "       `composables/motion/morph/eyeglass.ts`. */\n",
+     "       `composables/motion/selection/eyeglass.ts`. */\n"
+    ]
+   ]
+  },
+  "src/components/tabs/styles/segmented.css": {
+   "hunks": [
+    [
+     "       `composables/motion/morph/eyeglass.ts`, which owns every one of them and states\n",
+     "       `composables/motion/selection/eyeglass.ts`, which owns every one of them and states\n"
+    ],
+    [
+     "           `composables/motion/morph/eyeglass.ts` holds the ranks and the conversion;\n",
+     "           `composables/motion/selection/eyeglass.ts` holds the ranks and the conversion;\n"
+    ]
+   ]
+  },
+  "src/components/tabs/README.md": {
+   "hunks": [
+    [
+     "  `composables/motion/morph/eyeglass.ts`, which states where each was measured.\n",
+     "  `composables/motion/selection/eyeglass.ts`, which states where each was measured.\n"
+    ],
+    [
+     "`composables/motion/morph/eyeglass.ts`; the engine is the library-wide\n",
+     "`composables/motion/selection/eyeglass.ts`; the engine is the library-wide\n"
+    ],
+    [
+     "  (`src/composables/motion/morph/`) — the library's ONE selection engine and its ONE\n",
+     "  (`src/composables/motion/selection/`) — the library's ONE selection engine and its ONE\n"
+    ]
+   ]
+  },
+  "src/components/tabs/__tests__/tabs-seam.test.ts": {
+   "hunks": [
+    [
+     "// The law's own arms pin the same three numbers on motion/morph/eyeglass.ts:\n// src/composables/motion/morph/__tests__/eyeglass.test.ts.\n",
+     "// The law's own arms pin the same three numbers on motion/selection/eyeglass.ts:\n// src/composables/motion/selection/__tests__/eyeglass.test.ts.\n"
+    ]
+   ]
+  },
+  "src/composables/motion/README.md": {
+   "hunks": [
+    [
+     "`reveal/`, `pointer/`, `morph/`, and `core/`. Those directories are internal;\n",
+     "`reveal/`, `pointer/`, `morph/`, `selection/`, and `core/`. Those directories are internal;\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "src/composables/motion/spring/index.ts",
+   "why": "the spring door carries only its module's names (B9): useLiquidFlex left at S71"
+  },
+  {
+   "file": "src/composables/motion/core/index.ts",
+   "why": "the core door carries useLiquidFlex and its types, read by the selection engine, morph's drag, spring's press and ./motion-core"
+  },
+  {
+   "file": "src/composables/motion/morph/index.ts",
+   "why": "the morph door carries only its module's names (B9): the selection engine left at S71"
+  },
+  {
+   "file": "src/composables/motion/selection/index.ts",
+   "why": "the selection module's door: the names ./motion-core and the tabs unit read from it (B7, B11)"
+  },
+  {
+   "file": "scripts/structure/records/entry-record.json",
+   "why": "the entry record lists every src door (B7)"
+  },
+  {
+   "file": "src/composables/motion/spring/useLiquidPress.ts",
+   "why": "a crossing into the core goes through its door (B1)"
+  },
+  {
+   "file": "src/composables/motion/selection/useSelectionIndicator.ts",
+   "why": "useLiquidFlex is the core's: the spring door's keyframes-bearing names stay out of the engine's closure"
+  },
+  {
+   "file": "src/composables/motion/morph/useDragMorph.ts",
+   "why": "useLiquidFlex is the core's"
+  },
+  {
+   "file": "src/composables/motion/motion-core.ts",
+   "why": "./motion-core takes useLiquidFlex from the core, the keyframes-free module it already reads"
+  },
+  {
+   "file": "src/composables/motion/motion-core.ts",
+   "why": "./motion-core takes the selection engine from its own module, whose door carries no peer"
+  },
+  {
+   "file": "src/components/tabs/types.ts",
+   "why": "TabActivation is the selection module's"
+  },
+  {
+   "file": "src/styles/tokens/sizing/scale-paper.css",
+   "why": "the eyeglass law moved at S71"
+  },
+  {
+   "file": "src/components/tabs/styles/segmented.css",
+   "why": "the eyeglass law moved at S71"
+  },
+  {
+   "file": "src/components/tabs/README.md",
+   "why": "the eyeglass law moved at S71"
+  },
+  {
+   "file": "src/components/tabs/README.md",
+   "why": "the selection engine is its own module since S71"
+  },
+  {
+   "file": "src/components/tabs/__tests__/tabs-seam.test.ts",
+   "why": "the eyeglass law and its test moved at S71"
+  },
+  {
+   "file": "src/composables/motion/README.md",
+   "why": "the selection engine is a mechanism group of its own since S71"
+  }
+ ]
+}

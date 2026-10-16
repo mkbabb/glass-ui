@@ -1,0 +1,329 @@
+{
+ "why": "B-S11 (R-5), tests-visual: every file of the zone over 500 lines split into named files of its module; runs after the carve (carve.mjs), in place",
+ "splits": [
+  {
+   "source": "tests-visual/substrate-paints-color.spec.ts",
+   "kind": "spec",
+   "why": "the pixel floor keeps its file, its name (the name the workspace scripts, CI, release.sh and the floor's browser seat run) and its one describe; the planted self-test bites and the region readback machinery leave for two named helpers",
+   "header": "substrate-paints-color.spec.ts",
+   "parts": [
+    {
+     "file": "substrate-paints-color.spec.ts",
+     "why": "",
+     "blocks": [
+      "substrate-paints-color"
+     ]
+    }
+   ],
+   "helpers": [
+    {
+     "file": "substrate-paints-color-plants.ts",
+     "why": "The pixel floor's planted self-test bites (BJ.W-PIXEL-FLOOR-CI): PI_PLANT and one plant per floor its readback can see, each with the account of what it bites and of the plants rejected. substrate-paints-color.spec.ts runs them.",
+     "names": [
+      "Plant",
+      "PI_PLANT",
+      "planted",
+      "plantBlackAurora",
+      "plantBlankBlob",
+      "FLOOD_PLANT_COLOR",
+      "plantFloodBlob"
+     ]
+    },
+    {
+     "file": "substrate-paints-color-readback.ts",
+     "why": "The pixel floor's readback: the named regions, the canvas-hidden baseline, the WebGL floor path and the coverage arithmetic substrate-paints-color.spec.ts judges.",
+     "names": [
+      "Region",
+      "insetRegion",
+      "intersectRegion",
+      "regionArea",
+      "unclippedRegion",
+      "BLOB_BASELINE_STYLE_ID",
+      "BLOB_GROUND_QUIET_EPSILON",
+      "BLOB_GROUND_QUIET_TIMEOUT_MS",
+      "grabBlobBaseline",
+      "PI_FORCE_WEBGL",
+      "forceWebGLFloorPath",
+      "assertLiveWebGLPath",
+      "median",
+      "grab",
+      "interiorMeanChannel",
+      "coverageDiff",
+      "BLOB_INTERIOR",
+      "COLOR_DIFF_THRESHOLD",
+      "BLOB_INTERIOR_INSET"
+     ]
+    }
+   ]
+  },
+  {
+   "source": "tests-visual/substrate/substrate-cohesion.spec.ts",
+   "kind": "spec",
+   "why": "the set-level readback keeps its file and its three gates; the OKLCh and ink arithmetic they share leaves for a named helper",
+   "header": "substrate-cohesion.spec.ts",
+   "parts": [
+    {
+     "file": "substrate-cohesion.spec.ts",
+     "why": "",
+     "blocks": [
+      "substrate-cohesion"
+     ]
+    }
+   ],
+   "helpers": [
+    {
+     "file": "substrate-cohesion-readback.ts",
+     "why": "substrate-cohesion's readback: element capture, the modal ground, OKLCh body and peak chroma, ink coverage and cast-shadow darkness.",
+     "names": [
+      "median",
+      "grab",
+      "modalBackground",
+      "diffFromBg",
+      "srgbToLinear",
+      "oklab",
+      "oklch",
+      "bodyMeanOklch",
+      "peakChromaOklch",
+      "inkCoverage",
+      "castShadowDarkness",
+      "INTERIOR_INSET",
+      "COLOR_DIFF_THRESHOLD",
+      "INK_DIFF_THRESHOLD"
+     ]
+    }
+   ]
+  },
+  {
+   "source": "tests-visual/glass/contrast/adaptive-glass.spec.ts",
+   "kind": "spec",
+   "why": "the contrast readback keeps its file and its one describe; the colour arithmetic and the surface reader leave for a named helper",
+   "header": "adaptive-glass.spec.ts",
+   "parts": [
+    {
+     "file": "adaptive-glass.spec.ts",
+     "why": "",
+     "blocks": [
+      "adaptive-glass"
+     ]
+    }
+   ],
+   "helpers": [
+    {
+     "file": "adaptive-glass-readback.ts",
+     "why": "adaptive-glass's readback: the OKLab/sRGB conversions, WCAG contrast, the dark toggle and the injected-surface reader.",
+     "names": [
+      "gammaEncode",
+      "oklabToRgba",
+      "parseColor",
+      "composite",
+      "linearize",
+      "relLuminance",
+      "contrastRatio",
+      "setDark",
+      "SurfaceReadout",
+      "readSurface",
+      "effectiveOverWhite"
+     ]
+    }
+   ]
+  },
+  {
+   "source": "tests-visual/blob/blob-render.spec.ts",
+   "kind": "spec",
+   "why": "the blob's closing gate keeps its file and its one describe; the pixel metrics and their bands leave for a named helper",
+   "header": "blob-render.spec.ts",
+   "parts": [
+    {
+     "file": "blob-render.spec.ts",
+     "why": "",
+     "blocks": [
+      "blob-render"
+     ]
+    }
+   ],
+   "helpers": [
+    {
+     "file": "blob-render-readback.ts",
+     "why": "blob-render's readback: canvas capture, the modal ground, and the coverage, gradient, corner, margin, dome, highlight, silhouette and lean metrics with the bands each is judged by. The account of every band is in blob-render.spec.ts.",
+     "names": [
+      "median",
+      "grab",
+      "modalBackground",
+      "diffFromBg",
+      "interiorCoverage",
+      "lumaBox",
+      "centreVsCornerDelta",
+      "cornerEmptyFraction",
+      "worstSideMargin",
+      "domeLumaStd",
+      "worstPaintedLuma",
+      "paintedShape",
+      "hoverFlick",
+      "INTERIOR_INSET",
+      "EDGE_RING_W",
+      "FOOTPRINT_INSET"
+     ]
+    }
+   ],
+   "unread": [
+    {
+     "name": "GRADIENT_MIN_DELTA",
+     "file": "blob-render.spec.ts",
+     "why": "read by no statement at HEAD: its comment keeps it as a recorded fact (the retired centre-vs-corner floor), beside the bands it was retired for"
+    }
+   ]
+  },
+  {
+   "source": "tests-visual/redress/w2-blur-redress.spec.ts",
+   "kind": "spec",
+   "why": "the W2 proof keeps its file and its three describes; the plate, overlay and scrim probes leave for a named helper",
+   "header": "w2-blur-redress.spec.ts",
+   "parts": [
+    {
+     "file": "w2-blur-redress.spec.ts",
+     "why": "",
+     "blocks": [
+      "W2 blur redress"
+     ]
+    }
+   ],
+   "helpers": [
+    {
+     "file": "w2-blur-redress-probes.ts",
+     "why": "W2 blur redress's probes: the filter parser, the per-engine ledger, the injected calm plates, the overlay at 2 dppx and the immersive scrim readback.",
+     "names": [
+      "EVIDENCE_DIR",
+      "FilterReadout",
+      "parseFilter",
+      "engineOf",
+      "ledger",
+      "record",
+      "settleFrames",
+      "shot",
+      "readCalmPlates",
+      "readOverlayRadius",
+      "proveOverlayAt2Dppx",
+      "SCRIM",
+      "probeScrim",
+      "assertScrim",
+      "IMMERSIVE_BASE_BLUR",
+      "DEMO_URL"
+     ]
+    }
+   ]
+  },
+  {
+   "source": "tests-visual/redress/w1-radius-redress.spec.ts",
+   "kind": "spec",
+   "why": "the W1 proof's fine-pointer receiver matrix is one describe of 518 lines; it splits by receiver into two files that re-open it, the coarse describe joins the inputs half, and the ledger and readiness gates they share leave for a named helper",
+   "header": "w1-radius-redress.spec.ts",
+   "within": "W1 radius redress — computed receivers",
+   "parts": [
+    {
+     "file": "w1-radius-redress.spec.ts",
+     "why": "W1 radius redress, the controls: tabs, search, skeleton, the infinite-scroll reset and the avatar atoms. The inputs, the sortable list, the command panel and the coarse arms are in w1-radius-redress-inputs.spec.ts; the ledger both write is in w1-radius-redress-ledger.ts.",
+     "blocks": [
+      "tabs",
+      "search",
+      "skeleton",
+      "infinite-scroll",
+      "atoms"
+     ]
+    },
+    {
+     "file": "w1-radius-redress-inputs.spec.ts",
+     "why": "W1 radius redress, the inputs: tags-input, the field census, the sortable list and the command panel, fine and coarse. The account of the proof is in w1-radius-redress.spec.ts; the ledger both write is in w1-radius-redress-ledger.ts.",
+     "blocks": [
+      "tags-input",
+      "field census",
+      "sortable-list",
+      "command",
+      "W1 radius redress — coarse"
+     ]
+    }
+   ],
+   "helpers": [
+    {
+     "file": "w1-radius-redress-ledger.ts",
+     "why": "W1 radius redress's shared half: the evidence dir, the viewport matrix and tolerances, the one per-engine ledger both spec files append to (one module instance per worker, as in the one file), and the readiness gates.",
+     "names": [
+      "EVIDENCE_DIR",
+      "VIEWPORTS",
+      "EPS",
+      "Ledger",
+      "ledger",
+      "parsePx",
+      "engineOf",
+      "setDark",
+      "waitForReceiver",
+      "settleFrames",
+      "shot",
+      "record"
+     ]
+    }
+   ]
+  },
+  {
+   "source": "tests-visual/paint/paint-arm.mjs",
+   "kind": "module",
+   "why": "the paint arm keeps its OKLab probe and bands; the APCA contrast metric, a separate metric with its own constants, leaves for its own leaf",
+   "parts": [
+    {
+     "file": "apca.mjs",
+     "why": "APCA-W3 contrast over the composited plate (F8.8), beside paint-arm.mjs's OKLab probe: the locked constants, the luminance and Lc, alpha-over compositing, the verdict and the live probe.",
+     "names": [
+      "APCA_TRC",
+      "APCA_RCO",
+      "APCA_GCO",
+      "APCA_BCO",
+      "APCA_NORM_BG",
+      "APCA_NORM_TXT",
+      "APCA_REV_TXT",
+      "APCA_REV_BG",
+      "APCA_BLK_THRS",
+      "APCA_BLK_CLMP",
+      "APCA_SCALE_BOW",
+      "APCA_SCALE_WOB",
+      "APCA_LO_BOW_OFFSET",
+      "APCA_LO_WOB_OFFSET",
+      "APCA_DELTA_Y_MIN",
+      "APCA_LO_CLIP",
+      "APCA_LC_BODY",
+      "APCA_LC_SMALL",
+      "apcaLuminance",
+      "apcaContrastLc",
+      "compositeOver",
+      "apcaLcFromResolved",
+      "colorToRgb",
+      "apcaVerdict",
+      "apcaProbe"
+     ]
+    }
+   ]
+  },
+  {
+   "source": "tests-visual/paint/reflect-capture-verify.mjs",
+   "kind": "module",
+   "why": "the capture verifier keeps its file checks, viewport fidelity, freshness and the OKLab decompose; the PNG decoder and the region statistics built on it leave for their own leaf",
+   "parts": [
+    {
+     "file": "png-region.mjs",
+     "why": "The PNG region reader: one decoder (IDAT inflate + scanline unfilter) and the region statistics, deltas and hue histograms read through it, over reflect-capture-verify.mjs's OKLab decompose.",
+     "names": [
+      "PNG_SIG",
+      "paeth",
+      "decodePngRgba",
+      "pngRegionStats",
+      "regionStatsDelta",
+      "pngRegionDelta",
+      "hueFamily",
+      "dominantHue",
+      "pngRegionHueHistogram",
+      "hueDivergent",
+      "pngRegionHueDivergence"
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,43 @@
+{
+ "step": "B11/P3-R6: the overlay door drops the isTeleportedTarget re-export no reader uses, so S2 places the file by its one reader (dock) with no FD-2 growth; the two comments naming its place follow it",
+ "files": {
+  "src/components/_shared/overlay/index.ts": {
+   "hunks": [
+    [
+     "export { overlayContentAttrs, type OverlayAttrs, type OverlayRole } from \"./content\";\nexport { isTeleportedTarget } from \"./isTeleportedTarget\";\nexport {\n",
+     "export { overlayContentAttrs, type OverlayAttrs, type OverlayRole } from \"./content\";\nexport {\n"
+    ]
+   ]
+  },
+  "src/components/_shared/overlay/participation.ts": {
+   "hunks": [
+    [
+     " * `isTeleportedTarget()` (beside this file) is the reader. Ten hand-written\n",
+     " * `isTeleportedTarget()` (in dock, beside its one caller) is the reader. Ten hand-written\n"
+    ]
+   ]
+  },
+  "src/components/_shared/overlay/isTeleportedTarget.ts": {
+   "hunks": [
+    [
+     " * It lives HERE, beside `overlayContentAttrs()`, because this predicate and that\n * writer are two halves of one contract: the reader parsed an attribute pair\n * that five hand-written call sites in five different files were each spelling\n * for themselves. Sitting in `dock/` it was a reader with no visible writer.\n",
+     " * It is the reader half of the contract whose writer is `overlayContentAttrs()`\n * in `_shared/overlay/`, and it lives with its one caller, the dock (P3-R6: a\n * file is placed by its readers).\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "src/components/_shared/overlay/index.ts",
+   "why": "B11: no file reads isTeleportedTarget through this door; the relay would close overlay↔dock under FD-2 once P3-R6 places the file"
+  },
+  {
+   "file": "src/components/_shared/overlay/participation.ts",
+   "why": "the comment names the reader's place; F-7 puts it with its one caller in dock"
+  },
+  {
+   "file": "src/components/_shared/overlay/isTeleportedTarget.ts",
+   "why": "the comment claimed a placement the law does not give it (P3-R6: placed by its readers)"
+  }
+ ]
+}

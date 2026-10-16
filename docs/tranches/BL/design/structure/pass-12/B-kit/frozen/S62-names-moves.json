@@ -1,0 +1,36 @@
+{
+ "step": "B-S62 (frozen from authored/p6-names-moves.json, F-9)",
+ "moves": [
+  {
+   "from": "tests-visual/storybook/configurator/suffuse2.spec.ts",
+   "to": "tests-visual/storybook/configurator/category-color-identity.spec.ts"
+  },
+  {
+   "from": "tests-visual/motion/motion2.spec.ts",
+   "to": "tests-visual/motion/curve-gallery-render.spec.ts"
+  },
+  {
+   "from": "tests-visual/aurora/probes/reflect-medium2.spec.ts",
+   "to": "tests-visual/aurora/probes/reflect-medium-select.spec.ts"
+  }
+ ],
+ "scanDeltas": [],
+ "globDeltas": [],
+ "reasons": [
+  {
+   "from": "tests-visual/storybook/configurator/suffuse2.spec.ts",
+   "to": "tests-visual/storybook/configurator/category-color-identity.spec.ts",
+   "why": "it reads back the per-category colour identity (eyebrow and rail on one section hue, the heading rung, the motion band's violet); `suffuse.spec.ts` beside it is the source half"
+  },
+  {
+   "from": "tests-visual/motion/motion2.spec.ts",
+   "to": "tests-visual/motion/curve-gallery-render.spec.ts",
+   "why": "it reads back the curve gallery's painted render (stroke weight, the picker register, the substrate, the violet accent, the canon families)"
+  },
+  {
+   "from": "tests-visual/aurora/probes/reflect-medium2.spec.ts",
+   "to": "tests-visual/aurora/probes/reflect-medium-select.spec.ts",
+   "why": "it opens the aurora studio's Medium select and records its options; `reflect-medium.spec.ts` beside it reflects the medium itself"
+  }
+ ]
+}

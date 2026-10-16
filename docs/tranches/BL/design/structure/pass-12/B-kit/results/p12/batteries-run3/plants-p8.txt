@@ -1,0 +1,30 @@
+plants-p8 start 2026-10-16T12:27:24Z load { 10.13 8.97 11.12 }
+PASS EXIT clean tree: exit 0 (expect 0)
+PASS EXIT a RED overlay (a demo import of a private file): exit 1 (expect 1)
+PASS EXIT import: package.json does not parse: exit 2 (expect 2) · seal: no verdict: SyntaxError: Expected double-quoted property name in JSON at position 30 (line 1 column 31)
+PASS EXIT import: a floor module throws as it loads (lib/tree/tree.mjs; pass 10: S74d moved it from lib/tree.mjs): exit 2 (expect 2) · seal: no verdict: Error: zq8: the floor throws as it loads
+PASS EXIT import: the clause module throws as it loads: exit 2 (expect 2) · seal: no verdict: Error: zq8: clauses throw as they load
+PASS EXIT import: B18's reader throws as it loads: exit 2 (expect 2) · seal: no verdict: Error: zq8: peer throws as it loads
+PASS EXIT run: an overlay that is not JSON: exit 2 (expect 2) · seal: no verdict: SyntaxError: Expected property name or '}' in JSON at position 2 (line 1 column 3)
+PASS EXIT run: a refused option (--pin): exit 2 (expect 2) · seal: no verdict: Error: seal: unknown option --pin (the pin has one path, scripts/structure/records/seal-pin.json)
+PASS EXIT run: --root names nothing: exit 2 (expect 2) · seal: no verdict: Error: seal: the pin /var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p8-plants-8sdo1J/does-not-exist/scripts/structure/re
+PASS EXIT run: the pin is missing: exit 2 (expect 2) · seal: no verdict: Error: seal: the pin /var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p8-plants-8sdo1J/nopin/scripts/structure/records/sea
+PASS EXIT run: B18's table is gone from src/README.md: exit 2 (expect 2) · seal: no verdict: Error: peer: src/README.md holds no "Heavy-peer exclusions" table; B18 has no declared class to judge
+PASS EXIT record write: --json under a regular file: exit 2 (expect 2) · seal: no verdict: Error: ENOTDIR: not a directory, open '/var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p8-plants-8sdo1J/bad.json/v.json'
+PASS EXIT record write: --write-pin under a regular file: exit 2 (expect 2) · seal: no verdict: Error: ENOTDIR: not a directory, open '/var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p8-plants-8sdo1J/bad.json/pin.json
+PASS KF KF-new: ./motion-core publishes a new keyframes.js leaf: red [B1,B18] · . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/compo
+PASS KF KF-existing: ./motion-core publishes useSpring: red [B9,B18] · . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/compo
+PASS KF KF-leaf: a leaf ./motion-core publishes gains a keyframes.js import: red [B18] · . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/compo
+PASS KF KF-deep: that leaf imports a new file that imports keyframes.js: red [B18] · . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/compo
+PASS KF KF-root: Badge, on the root, gains a keyframes.js import (the root's holds do not hide a new name): red [B18] · . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Badge (src/components/badge/Badge.vue; first at src/components/bad
+PASS KF KF-vueuse: a ./motion-core leaf gains @vueuse/core: red [B18] · . (declared free of @vueuse/core) publishes a name whose module reaches it: Button (src/components/button/Button.vue; first at src/composables/motion/
+PASS KF KF-CTL: the same leaf loads vue only: red []
+PASS PROBE the probe on an unbuilt tree: exit 2 · peer-closure: no verdict: Error: peer-closure: the build is missing (./dist/glass-ui.js); the dist arm reads the shipped file, so run `vite build` first
+PASS PROBE the probe on the built tree: exit 0 · peer-closure: GREEN
+PASS TALLY a base-green key removed from the route report: exit 1 · ABSENT tests-visual/components/controls/a11y-slider.spec.ts :: configurator — LabeledSlider forwards the field label to the thumb #1 (base-green; no route run reports it)
+PASS TALLY a key that fails a base rerun is flaky, out of the bar: exit 1 · FLAKY tests-visual/glass/contrast/adaptive-glass.spec.ts :: bright bucket clears AA over #fff @ mobile (dark) #1 | base expected,expected,unexpected | route unexpected,unexpected,unexpected
+PASS TALLY a key the base passes in every run and the route fails is new: exit 1 · NEW tests-visual/glass/contrast/adaptive-glass.spec.ts :: bright bucket clears AA over #fff @ mobile (dark) #1 | base expected,expected,expected | route unexpected,unexpected,unexpected
+PASS TALLY the committed reports as they are: exit 1 · verdict: RED (429 base-green keys, every one accounted: 428 held + 1 failed + 0 absent)
+PASS SELECT a moved spec no band selects is selected by name: bands alone select 154; by name 155; selected only by name 1: tests-visual/aurora/w38-binding.spec.ts
+battery 27/27
+plants-p8 rc=0 end 2026-10-16T12:28:28Z load { 12.00 9.74 11.25 }

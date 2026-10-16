@@ -1,0 +1,85 @@
+{
+ "step": "B-S52 (frozen from authored/story-groups.json, F-9)",
+ "moves": [
+  {
+   "from": "demo/stories/containers/command.vue",
+   "to": "demo/stories/containers/menus/command.vue"
+  },
+  {
+   "from": "demo/stories/containers/context-menu.vue",
+   "to": "demo/stories/containers/menus/context-menu.vue"
+  },
+  {
+   "from": "demo/stories/containers/dropdown-menu.vue",
+   "to": "demo/stories/containers/menus/dropdown-menu.vue"
+  },
+  {
+   "from": "demo/stories/foundations/paper-glass.vue",
+   "to": "demo/stories/foundations/paper/paper-glass.vue"
+  },
+  {
+   "from": "demo/stories/foundations/paper-texture.vue",
+   "to": "demo/stories/foundations/paper/paper-texture.vue"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "tests-visual/pi-manifest.ts",
+   "spec": "`${LIBRARY_ROOT}demo/stories/${m[1]!}.ts`",
+   "file": "demo/stories/containers/command.vue",
+   "reason": "S52: demo/stories/containers/command.vue -> demo/stories/containers/menus/command.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests-visual/pi-manifest.ts",
+   "spec": "`${LIBRARY_ROOT}demo/stories/${m[1]!}.ts`",
+   "file": "demo/stories/containers/context-menu.vue",
+   "reason": "S52: demo/stories/containers/context-menu.vue -> demo/stories/containers/menus/context-menu.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests-visual/pi-manifest.ts",
+   "spec": "`${LIBRARY_ROOT}demo/stories/${m[1]!}.ts`",
+   "file": "demo/stories/containers/dropdown-menu.vue",
+   "reason": "S52: demo/stories/containers/dropdown-menu.vue -> demo/stories/containers/menus/dropdown-menu.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests-visual/pi-manifest.ts",
+   "spec": "`${LIBRARY_ROOT}demo/stories/${m[1]!}.ts`",
+   "file": "demo/stories/foundations/paper-glass.vue",
+   "reason": "S52: demo/stories/foundations/paper-glass.vue -> demo/stories/foundations/paper/paper-glass.vue; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests-visual/pi-manifest.ts",
+   "spec": "`${LIBRARY_ROOT}demo/stories/${m[1]!}.ts`",
+   "file": "demo/stories/foundations/paper-texture.vue",
+   "reason": "S52: demo/stories/foundations/paper-texture.vue -> demo/stories/foundations/paper/paper-texture.vue; the scanner's sensitivity is judged by the test run"
+  }
+ ],
+ "globDeltas": [],
+ "reasons": [
+  {
+   "from": "demo/stories/containers/command.vue",
+   "to": "demo/stories/containers/menus/command.vue",
+   "why": "the menu family: command palette, dropdown and context menus share the _shared/menu machinery and are one group"
+  },
+  {
+   "from": "demo/stories/containers/context-menu.vue",
+   "to": "demo/stories/containers/menus/context-menu.vue",
+   "why": "the menu family (pointer-positioned menu)"
+  },
+  {
+   "from": "demo/stories/containers/dropdown-menu.vue",
+   "to": "demo/stories/containers/menus/dropdown-menu.vue",
+   "why": "the menu family (trigger-anchored menu)"
+  },
+  {
+   "from": "demo/stories/foundations/paper-glass.vue",
+   "to": "demo/stories/foundations/paper/paper-glass.vue",
+   "why": "the paper family: the paper-glass register and the paper texture are one material group"
+  },
+  {
+   "from": "demo/stories/foundations/paper-texture.vue",
+   "to": "demo/stories/foundations/paper/paper-texture.vue",
+   "why": "the paper family (the texture under the paper-glass register)"
+  }
+ ]
+}

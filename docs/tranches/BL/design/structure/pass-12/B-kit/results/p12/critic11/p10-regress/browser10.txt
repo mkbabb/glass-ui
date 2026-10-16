@@ -1,0 +1,64 @@
+browser10 start 2026-10-16T13:01:08Z load { 25.61 24.93 21.13 }
+BW committed reports: /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-12/B-kit/results/p12/browser
+BW inputs: 16 arguments
+BW   kit: base-green 428; held 428; NOT HELD 0 (failed 0, absent 0); flaky (out of the bar) 1; base-red route-green 1
+BW   kit: verdict: GREEN (428 base-green keys, every one accounted: 428 held + 0 failed + 0 absent)
+BW BW1 PASS :: kit tally rc=0
+BW   mine: reports: base 866 {"unexpected":393,"expected":429,"skipped":44} testDir .; route 867 {"unexpected":393,"expected":430,"skipped":44} testDir .; base reruns 3, route reruns 3
+BW   mine: FLAKY tests-visual/blob/blob-config-delta.spec.ts :: D2 — a negative attraction SHIES relative to a positive (the sign fix) #1
+BW   mine: base keys 866; route keys 867; route keys the base lacks 7
+BW   mine: base-green 428; held 428; failed 0; absent 0; flaky 1
+BW   mine: ACCOUNTED base-green 428 = held 428 + failed 0 + absent 0 : yes
+BW BW2 PASS :: mine rc=0; base-green kit 428 / mine 428; held kit 428 / mine 428; flaky kit 1 / mine 1
+BW BW3 PASS :: ACCOUNTED base-green 428 = held 428 + failed 0 + absent 0 : yes
+BW BW4 PASS :: base-green 428, held 428 (pass-9 bar 428)
+BW   select rc=0 :: {"moves":604,"changed":723,"specs":155,"programSpecs":155,"captures":14,"excludedTouched":14}
+BW BW5 PASS :: re-derived specs.txt equals the committed one (155 specs)
+BW BW6 FAIL :: 0 specs selected now and not in pass 9's selection; unrun by the committed route reports: 6
+0
+BW7 INFO base.json identical to pass 9's
+BW7 INFO base-rekeyed.json DIFFERS from pass 9's
+BW7 INFO route.json identical to pass 9's
+BW7 INFO base-1-1.json identical to pass 9's
+BW7 INFO base-1-1.rekeyed.json DIFFERS from pass 9's
+BW7 INFO base-1-2.json identical to pass 9's
+BW7 INFO base-1-2.rekeyed.json DIFFERS from pass 9's
+BW7 INFO base-1-3.json identical to pass 9's
+BW7 INFO base-1-3.rekeyed.json DIFFERS from pass 9's
+BW7 INFO plan.json identical to pass 9's
+BW7 INFO route-1-1.json identical to pass 9's
+BW7 INFO route-1-2.json identical to pass 9's
+BW7 INFO route-1-3.json identical to pass 9's
+== pass-8 browser-plants through the pass-10 tally (RD, T0-T5)
+T0 rc=0 held=428 :: base keys 866, route keys 867; base runs 4, route runs 4
+T1 PASS rc=1 held=427 (T0 428) removed: tests-visual/components/controls/a11y-slider.spec.ts :: configurator — LabeledSlider forwards the field label to the thumb :: ABSENT tests-visual/components/controls/a11y-slider.spec.ts :: configurator — LabeledSlider forwards the field label to the thumb #1 (base-green; no route run reports it)
+T2 PASS rc=1 held=420 spec tests-visual/glass/contrast/adaptive-glass.spec.ts removed (8 base-green keys); unnamed 0
+T3 PASS rc=1 held=427 removed tests-visual/glass/contrast/adaptive-glass.spec.ts :: bright bucket clears AA over #fff @ mobile (dark), same title added under another spec :: ABSENT tests-visual/glass/contrast/adaptive-glass.spec.ts :: bright bucket clears AA over #fff @ mobile (dark) #1 (base-green; no route run reports it) | UNKEYED src/components/blob/__tests__/blob-painted-component-zq8.visual.ts :: bright bucket clears AA over #fff @ mobile (dark) #1 -> expected | b
+T4 PASS rc=1 held=427 flipped tests-visual/glass/contrast/adaptive-glass.spec.ts :: bright bucket clears AA over #fff @ desktop (dark)
+T5 RECORD NAMED rc=1 held=427 one of 2 rows of tests-visual/substrate/coherence-congruence.spec.ts :: display · /display/atoms removed
+S1 FAIL selection 155 specs; specs the chain moves or creates (to) 173; not selected 21; old paths 172 (not judged)
+S1 NOT-SELECTED tests/public-surface.spec.ts
+S1 NOT-SELECTED tests-visual/aurora/probes/reflect-medium2.spec.ts
+S1 NOT-SELECTED tests-visual/dock/_dock-context-capture.spec.ts
+S1 NOT-SELECTED tests-visual/substrate/_cohere-capture.spec.ts
+S1 NOT-SELECTED tests-visual/substrate/_cohere-debug.spec.ts
+S1 NOT-SELECTED tests-visual/substrate/_cohere-shadow-debug.spec.ts
+S1 NOT-SELECTED tests-visual/motion/motion2.spec.ts
+S1 NOT-SELECTED tests-visual/storybook/_sb-stage-capture.spec.ts
+S1 NOT-SELECTED tests-visual/storybook/_sb1-capture.spec.ts
+S1 NOT-SELECTED tests-visual/storybook/configurator/suffuse2.spec.ts
+S1 NOT-SELECTED tests-visual/captures/_capture_css.spec.ts
+S1 NOT-SELECTED tests-visual/captures/_cfg-readback.spec.ts
+S1 NOT-SELECTED tests-visual/captures/_egg-capture.spec.ts
+S1 NOT-SELECTED tests-visual/captures/_fix-glassui-dark-capture.spec.ts
+S1 NOT-SELECTED tests-visual/captures/_prim-polish-capture.spec.ts
+S1 NOT-SELECTED tests-visual/captures/_wdelta0-capture.spec.ts
+S1 NOT-SELECTED tests-visual/components/surfaces/expandable-container.spec.ts
+S1 NOT-SELECTED tests-visual/components/surfaces/esc-stack.spec.ts
+S1 NOT-SELECTED tests-visual/components/collections/sortable-list.contract.spec.ts
+S1 NOT-SELECTED tests-visual/captures/_r4-shell-config-capture.spec.ts
+S1 NOT-SELECTED tests-visual/captures/_veil-capture.spec.ts
+S2 SKIP no --select-cmd/--root
+BPLANTS {"T0":{"rc":0,"held":428},"T1":"PASS","T2":"PASS","T3":"PASS","T4":"PASS","T5":"NAMED","S1":"FAIL","S2":"SKIP"}
+BW SUMMARY pass=5 fail=1
+browser10 rc=0 end 2026-10-16T13:01:13Z load { 24.52 24.71 21.07 }
