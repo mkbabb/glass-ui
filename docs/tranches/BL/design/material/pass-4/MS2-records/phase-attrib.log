@@ -1,0 +1,46 @@
+capture dark-head-shadow exit 0 02:25:49 load { 26.37 29.48 30.87 }
+-- dark-head-shadow against HEAD:
+chromium dark white dialog | dialog·fg: head 4.51 → route 4.46
+webkit dark white dialog | dialog·fg-description
+webkit dark white dialog | dialog·well-fg
+G7 m2: head PASS rows 68; regressed 1; head-PASS rows absent in route 1054; rows FAIL at head now PASS 0
+chromium dark paper | dock #0f0d0a → #0f0c09 ΔE 0.0038
+G6 dark composites compared 13, worst ΔE_OK 0.0038, over 0.002: 1
+capture dark-head-blur exit 0 02:26:15 load { 25.83 29.06 30.68 }
+-- dark-head-blur against HEAD:
+webkit dark white dialog | dialog·fg-description
+webkit dark white dialog | dialog·well-fg
+G7 m2: head PASS rows 68; regressed 0; head-PASS rows absent in route 1054; rows FAIL at head now PASS 0
+chromium dark paper | dock #0f0d0a → #0f0c09 ΔE 0.0038
+G6 dark composites compared 13, worst ΔE_OK 0.0038, over 0.002: 1
+rerun 1 capture exit 0 02:29:15 load { 19.17 24.67 28.54 }
+chromium dark white dialog | dialog·fg: head 4.51 → route 4.46
+webkit dark white dialog | dialog·fg-description
+webkit dark white dialog | dialog·well-fg
+G7 m2: head PASS rows 286; regressed 1; head-PASS rows absent in route 836; rows FAIL at head now PASS 67
+chromium dark paper | dock #0f0d0a → #0f0c09 ΔE 0.0038
+G6 dark composites compared 13, worst ΔE_OK 0.0038, over 0.002: 1
+  chromium light black: perimeter 2.96–3.16 (min wash·well) · ring 3.13–3.35 (min wash·well) · 2/16 under 3.0
+  chromium light black held: wash-held not declared graspable (host hx-plate.glass-wash: contain paint standing): not read
+  chromium light black held: perimeter 2.50–2.50 (min floating-held·well) · ring 3.00–3.00 (min floating-held·well) · 1/2 under 3.0
+  release chromium light black held (33 frames, -128…1213 ms): 5/7 inks ≥ 4.5 in every frame · worst floating-held·fg — at -128 ms · not read: wash-held (not declared graspable) · under: floating-held
+  release chromium light white held (33 frames, -137…1218 ms): 5/7 inks ≥ 4.5 in every frame · worst floating-held·fg — at -137 ms · not read: wash-held (not declared graspable) · under: floating-held
+  release chromium light aurora held (94 frames, -318…1306 ms): 5/7 inks ≥ 4.5 in every frame · worst floating-held·fg — at -318 ms · not read: wash-held (not declared graspable) · under: floating-hel
+  halo chromium light: resting dock α 0.890 · held dock α per column 0.827 (x 411) … 0.899 (x 278) over 134 columns · floor 0.870 · the held host lets the ground through (a halo) ✗
+  halo chromium dark: resting dock α 0.145 · held dock α per column 0.122 (x 278) … 0.206 (x 411) over 134 columns · floor 0.125 · the held host lets the ground through (a halo) ✗
+rerun 2 capture exit 0 02:32:25 load { 31.82 27.28 28.77 }
+chromium dark white dialog | dialog·fg: head 4.51 → route 4.46
+webkit dark white dialog | dialog·fg-description
+webkit dark white dialog | dialog·well-fg
+G7 m2: head PASS rows 286; regressed 1; head-PASS rows absent in route 836; rows FAIL at head now PASS 67
+chromium dark paper | dock #0f0d0a → #0f0c09 ΔE 0.0038
+G6 dark composites compared 13, worst ΔE_OK 0.0038, over 0.002: 1
+  chromium light black: perimeter 2.96–3.16 (min wash·well) · ring 3.13–3.35 (min wash·well) · 2/16 under 3.0
+  chromium light black held: wash-held not declared graspable (host hx-plate.glass-wash: contain paint standing): not read
+  chromium light black held: perimeter 2.50–2.50 (min floating-held·well) · ring 3.00–3.00 (min floating-held·well) · 1/2 under 3.0
+  release chromium light black held (33 frames, -123…1212 ms): 5/7 inks ≥ 4.5 in every frame · worst floating-held·fg — at -123 ms · not read: wash-held (not declared graspable) · under: floating-held
+  release chromium light white held (33 frames, -129…1214 ms): 5/7 inks ≥ 4.5 in every frame · worst floating-held·fg — at -129 ms · not read: wash-held (not declared graspable) · under: floating-held
+  release chromium light aurora held (89 frames, -382…1315 ms): 5/7 inks ≥ 4.5 in every frame · worst floating-held·fg — at -382 ms · not read: wash-held (not declared graspable) · under: floating-hel
+  halo chromium light: resting dock α 0.890 · held dock α per column 0.827 (x 411) … 0.899 (x 278) over 134 columns · floor 0.870 · the held host lets the ground through (a halo) ✗
+  halo chromium dark: resting dock α 0.145 · held dock α per column 0.122 (x 278) … 0.206 (x 411) over 134 columns · floor 0.125 · the held host lets the ground through (a halo) ✗
+attrib exit 0 02:32:41 load { 31.60 27.46 28.81 }

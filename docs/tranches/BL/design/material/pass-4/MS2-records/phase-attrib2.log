@@ -1,0 +1,16 @@
+[guarded] waiting for headroom (load 47 > 36)
+capture dark-head-perim exit 0 02:44:41 load { 37.17 35.19 32.25 }
+-- dark-head-perim against HEAD:
+chromium dark white dialog | dialog·fg: head 4.51 → route 4.46
+webkit dark white dialog | dialog·fg-description
+webkit dark white dialog | dialog·well-fg
+G7 m2: head PASS rows 68; regressed 1; head-PASS rows absent in route 1054; rows FAIL at head now PASS 0
+chromium dark paper | dock #0f0d0a → #0f0c09 ΔE 0.0038
+G6 dark composites compared 13, worst ΔE_OK 0.0038, over 0.002: 1
+capture dark-head-all exit 0 02:45:09 load { 54.74 39.73 34.00 }
+-- dark-head-all against HEAD:
+webkit dark white dialog | dialog·fg-description
+webkit dark white dialog | dialog·well-fg
+G7 m2: head PASS rows 68; regressed 0; head-PASS rows absent in route 1054; rows FAIL at head now PASS 0
+
+G6 dark composites compared 13, worst ΔE_OK 0.0000, over 0.002: 0

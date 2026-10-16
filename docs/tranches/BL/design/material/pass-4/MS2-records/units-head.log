@@ -1,0 +1,27 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/minor2/wt
+
+(node:97028) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/gates/boot-graph.test.ts (14 tests | 1 failed) 125ms
+     × the dist-demo it measures is NEWER than every source it is built from 28ms
+(node:98802) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:99346) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from
+AssertionError: dist-demo/index.html is STALE (built 2026-10-16T05:18:00.390Z, newest source 2026-10-16T05:19:33.896Z) — run `npm run demo:dist:build`; a stale build greens a regressed graph: expected 1792127880390.919 to be greater than 1792127973896.5237
+ ❯ tests/gates/boot-graph.test.ts:576:11
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 238 passed (239)
+      Tests  1 failed | 2318 passed | 10 expected fail | 1 skipped (2330)
+   Start at  01:19:43
+   Duration  74.60s (transform 6.52s, setup 9.45s, import 35.99s, tests 25.65s, environment 43.74s)
+

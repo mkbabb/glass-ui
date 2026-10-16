@@ -1,0 +1,9 @@
+file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/harness/build.mjs:17
+    if (!fs.existsSync(path.join(wt, need))) throw new Error(`${wt} lacks ${need} (a glass-ui worktree with node_modules is required)`);
+                                                   ^
+
+Error: /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/harness/run.mjs lacks src/styles/index.css (a glass-ui worktree with node_modules is required)
+    at buildSpecimens (file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/harness/build.mjs:17:52)
+    at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/harness/run.mjs:45:50
+
+Node.js v26.0.0

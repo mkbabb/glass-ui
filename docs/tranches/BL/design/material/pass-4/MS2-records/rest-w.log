@@ -1,0 +1,172 @@
+[guarded] waiting for the 'webkit' lock
+== battery-webkit start 01:34:32 load { 13.43 13.37 18.40 }
+exit 0 01:54:17 load { 24.79 30.05 27.69 }
+webkit-dark-aurora-fieldgone-noclaim +shim: 11 specs, 8 rings, pointer rest, readbacks 1
+captured 6 cells, 0 live windows, 0 motion windows and 0 drift windows in 83s (load 32.7 32.5 28.1) → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/minor2/wt/.d3out/caps/minor2
+RAW  exit 0 · PASS (48 gated rows)
+M-1  exit 0 · PASS (11 gated rows)
+M-1x exit 0 · PASS (1 gated rows)
+M-2  exit 1 · FAIL (168 of 914 gated rows)
+M-2m exit 1 · FAIL (98 of 430 gated rows)
+M-2h exit 1 · FAIL (20 of 44 gated rows)
+M-3  exit 1 · FAIL (136 of 342 gated rows)
+M-4  exit 1 · FAIL (21 of 168 gated rows)
+M-5  exit 1 · FAIL (2 of 20 gated rows)
+M-6  exit 1 · FAIL (81 of 120 gated rows)
+M-7  exit 1 · FAIL (8 of 8 gated rows)
+M-8  exit 1 · FAIL (4 of 8 gated rows)
+M-9  exit 1 · FAIL (3 of 20 gated rows)
+O-66 exit 0 · PASS (5 gated rows)
+STACK exit 1 · FAIL (6 of 24 gated rows)
+W-A  exit 1 · FAIL (27 of 216 gated rows)
+W-S  exit 1 · FAIL (4 of 24 gated rows)
+W-B  exit 1 · FAIL (12 of 16 gated rows)
+W-C  exit 1 · FAIL (72 of 362 gated rows)
+W-D  exit 1 · FAIL (8 of 9 gated rows)
+W-E  exit 1 · FAIL (131 of 420 gated rows)
+W-F  exit 1 · FAIL (76 of 176 gated rows)
+W-G  exit 1 · FAIL (24 of 40 gated rows)
+T    exit 0 · PASS (1 gated rows)
+== battery-webkit end 01:54:17 load { 24.79 30.05 27.69 }
+== head-cells start 01:54:17 load { 24.79 30.05 27.69 }
+exit 0 02:01:38 load { 22.56 21.53 23.60 }
+webkit-dark-deep-ladder-base +shim: 11 specs, 8 rings, pointer rest, readbacks 0
+webkit-dark-deep-dialog-base +shim: 1 specs, 2 rings, pointer rest, readbacks 0
+captured 56 cells, 0 live windows, 0 motion windows and 0 drift windows in 440.4s (load 22.3 21.5 23.6) → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p4/minor2/wt/.d3out/caps/head
+== head-cells end 02:01:38 load { 22.56 21.53 23.60 }
+== island start 02:01:38 load { 22.56 21.53 23.60 }
+island head webkit exit 0 02:01:44 load { 21.56 21.34 23.52 }
+island minor2 webkit exit 0 02:01:50 load { 21.67 21.36 23.52 }
+== island end 02:01:50 load { 21.67 21.36 23.52 }
+== glance start 02:01:50 load { 21.67 21.36 23.52 }
+glance head->minor2 webkit exit 1 02:03:13 load { 23.29 21.81 23.47 } · GLANCE FAIL: 1 of 8 pairs show no paint delta or failed (dark floating)
+== glance end 02:03:13 load { 23.29 21.81 23.47 }
+== witnesses start 02:03:13 load { 23.29 21.81 23.47 }
+file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/harness/build.mjs:17
+    if (!fs.existsSync(path.join(wt, need))) throw new Error(`${wt} lacks ${need} (a glass-ui worktree with node_modules is required)`);
+                                                   ^
+
+Error: /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/harness/run.mjs lacks src/styles/index.css (a glass-ui worktree with node_modules is required)
+    at buildSpecimens (file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/harness/build.mjs:17:52)
+    at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/harness/run.mjs:45:50
+
+Node.js v26.0.0
+RAW chromium light: PASS (24 gated rows)
+RAW chromium dark: PASS (24 gated rows)
+RAW webkit light: PASS (24 gated rows)
+RAW webkit dark: PASS (24 gated rows)
+M-1 chromium light: PASS (11 gated rows)
+M-1 chromium dark: FAIL (no gated rows measured: incomplete capture)
+M-1 webkit light: PASS (11 gated rows)
+M-1 webkit dark: FAIL (no gated rows measured: incomplete capture)
+M-1x chromium light: PASS (1 gated rows)
+M-1x chromium dark: PASS (1 gated rows)
+M-1x webkit light: PASS (1 gated rows)
+M-1x webkit dark: PASS (1 gated rows)
+M-2 chromium light: FAIL (9 of 457 gated rows)
+M-2 chromium dark: FAIL (159 of 457 gated rows)
+M-2 webkit light: FAIL (3 of 457 gated rows)
+M-2 webkit dark: FAIL (159 of 457 gated rows)
+M-2m chromium light: PASS (215 gated rows)
+M-2m chromium dark: FAIL (98 of 215 gated rows)
+M-2m webkit light: PASS (215 gated rows)
+M-2m webkit dark: FAIL (89 of 215 gated rows)
+M-2h chromium light: FAIL (7 of 22 gated rows)
+M-2h chromium dark: FAIL (13 of 22 gated rows)
+M-2h webkit light: PASS (22 gated rows)
+M-2h webkit dark: FAIL (10 of 22 gated rows)
+M-3 chromium light: FAIL (4 of 171 gated rows)
+M-3 chromium dark: FAIL (132 of 171 gated rows)
+M-3 webkit light: FAIL (7 of 171 gated rows)
+M-3 webkit dark: FAIL (126 of 171 gated rows)
+M-4 chromium light: FAIL (7 of 84 gated rows)
+M-4 chromium dark: FAIL (14 of 84 gated rows)
+M-4 webkit light: FAIL (7 of 84 gated rows)
+M-4 webkit dark: FAIL (14 of 84 gated rows)
+M-5 chromium light: PASS (10 gated rows)
+M-5 chromium dark: FAIL (2 of 10 gated rows)
+M-5 webkit light: PASS (10 gated rows)
+M-5 webkit dark: FAIL (1 of 10 gated rows)
+M-6 chromium light: FAIL (16 of 16 gated rows)
+M-6 chromium dark: FAIL (65 of 104 gated rows)
+M-6 webkit light: FAIL (16 of 16 gated rows)
+M-6 webkit dark: FAIL (66 of 104 gated rows)
+M-7 chromium light: FAIL (4 of 4 gated rows)
+M-7 chromium dark: FAIL (4 of 4 gated rows)
+M-7 webkit light: FAIL (4 of 4 gated rows)
+M-7 webkit dark: FAIL (4 of 4 gated rows)
+M-8 chromium light: PASS (4 gated rows)
+M-8 chromium dark: FAIL (4 of 4 gated rows)
+M-8 webkit light: PASS (4 gated rows)
+M-8 webkit dark: FAIL (4 of 4 gated rows)
+M-9 chromium light: PASS (10 gated rows)
+M-9 chromium dark: FAIL (3 of 10 gated rows)
+M-9 webkit light: PASS (10 gated rows)
+M-9 webkit dark: FAIL (3 of 10 gated rows)
+O-66 chromium light: PASS (3 gated rows)
+O-66 chromium dark: PASS (2 gated rows)
+O-66 webkit light: PASS (3 gated rows)
+O-66 webkit dark: PASS (2 gated rows)
+STACK chromium light: FAIL (3 of 12 gated rows)
+STACK chromium dark: FAIL (3 of 12 gated rows)
+STACK webkit light: FAIL (3 of 12 gated rows)
+STACK webkit dark: FAIL (3 of 12 gated rows)
+W-A chromium light: PASS (108 gated rows)
+W-A chromium dark: FAIL (27 of 108 gated rows)
+W-A webkit light: PASS (108 gated rows)
+W-A webkit dark: FAIL (27 of 108 gated rows)
+W-S chromium light: PASS (12 gated rows)
+W-S chromium dark: FAIL (4 of 12 gated rows)
+W-S webkit light: PASS (12 gated rows)
+W-S webkit dark: FAIL (4 of 12 gated rows)
+W-B chromium light: FAIL (6 of 10 gated rows)
+W-B chromium dark: FAIL (6 of 10 gated rows)
+W-B webkit light: FAIL (6 of 10 gated rows)
+W-B webkit dark: FAIL (6 of 10 gated rows)
+W-C chromium light: FAIL (4 of 181 gated rows)
+W-C chromium dark: FAIL (68 of 181 gated rows)
+W-C webkit light: FAIL (4 of 181 gated rows)
+W-C webkit dark: FAIL (67 of 181 gated rows)
+W-D chromium light: FAIL (8 of 9 gated rows)
+W-D chromium dark: FAIL (8 of 9 gated rows)
+W-D webkit light: FAIL (8 of 9 gated rows)
+W-D webkit dark: FAIL (8 of 9 gated rows)
+W-E chromium light: FAIL (13 of 220 gated rows)
+W-E chromium dark: FAIL (129 of 220 gated rows)
+W-E webkit light: FAIL (17 of 220 gated rows)
+W-E webkit dark: FAIL (124 of 220 gated rows)
+W-F chromium light: FAIL (21 of 44 gated rows)
+W-F chromium dark: FAIL (17 of 44 gated rows)
+W-F webkit light: FAIL (21 of 44 gated rows)
+W-F webkit dark: FAIL (17 of 44 gated rows)
+W-G chromium light: FAIL (14 of 20 gated rows)
+W-G chromium dark: FAIL (10 of 20 gated rows)
+W-G webkit light: FAIL (16 of 20 gated rows)
+W-G webkit dark: FAIL (10 of 20 gated rows)
+T chromium light: PASS (1 gated rows)
+T chromium dark: PASS (1 gated rows)
+T webkit light: PASS (1 gated rows)
+T webkit dark: PASS (1 gated rows)
+baseline exit 0
+== witnesses end 02:06:19 load { 48.06 54.74 38.82 }
+== verbose start 02:06:19 load { 48.06 54.74 38.82 }
+head: FAIL (706 of 1828 gated rows) | FAIL (614 of 684 gated rows) | FAIL (28 of 60 gated rows)
+minor2: FAIL (330 of 1828 gated rows) | FAIL (269 of 684 gated rows) | FAIL (163 of 240 gated rows)
+== verbose end 02:07:23 load { 29.30 47.82 37.39 }
+== g67 start 02:07:23 load { 29.30 47.82 37.39 }
+chromium dark white dialog | dialog·fg: head 4.51 → route 4.46
+G7 m2: head PASS rows 1122; regressed 1; head-PASS rows absent in route 0; rows FAIL at head now PASS 379
+
+G7 m3: head PASS rows 72; regressed 0; head-PASS rows absent in route 0; rows FAIL at head now PASS 344
+G6 dark composites compared 26, worst ΔE_OK 0.0038, over 0.002: 1
+== g67 end 02:07:24 load { 29.30 47.82 37.39 }
+== roster start 02:07:24 load { 29.30 47.82 37.39 }
+worktree = minor-split-v2.patch
+verifier (minor2, datum 2921397 in the worktree) exit 0 02:07:53 load { 25.82 45.13 36.77 }
+"terminal":"CLEAN"
+"claims":193
+"declarations":454
+"css":124
+"roster":{"status":"PRESENT","datum":289,"emitted":289}
+== roster end 02:07:53 load { 25.82 45.13 36.77 }
+rest-w exit 0 02:07:59 load { 26.15 44.88 36.73 }
