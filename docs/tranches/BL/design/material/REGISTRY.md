@@ -1118,3 +1118,243 @@ If the owner has not ruled Q-1 and Q-11 by pass 4's critic, pass 4 cannot be cle
 - **Floor v3 converges** once Q-1 and Q-11 are ruled and built, after two consecutive clean passes. It is then D3's converged specification: W-0.1's light arm (through the minor split v2) in 10.2.0, and the rest (FL-1, FL-16, the dark arm, FL-14) in the W-H landing.
 - **C″ stays banked** unless a re-trigger fires. If one does, it re-enters as a route on the same 48 rows, with C-4 and the chrome held floor owed first.
 - No other route is open. If the owner rules against the floor's centre (Q-3 (c), all chrome transmits), every banked family's re-trigger is re-read, and pass 5 opens whichever fires.
+
+---
+
+# D3 · pass 4 · REGISTRY: the routes after pass 4
+
+| field | value |
+|---|---|
+| seat | D3 pass-4 agglomeration. It closes pass 4 with floor v3's status and rows on the fixed checklist (the same 44 rows as P2-6.3 and P3-1.1), whether the pass is clean, the minor split v2's W-0.1 reading, what the owner must rule, where each next-pass defect class goes, and the pass-5 plan. The text of passes 1-3 above stays as the record |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `d24aa8c8`. `git diff --stat d7d4fcdc HEAD -- src demo tests package.json scripts` (d7d4fcdc is the critic's HEAD) prints nothing, and every pass-4 seat measured a base whose diff from the published 10.1.0 source is empty. So every number below is the 10.1.0 source plus the named patch |
+| inputs, read in full | this registry (passes 1-3 and the O-87 section); `pass-4/H4.md`, `FLOOR-V3.md`, `MINOR-SPLIT-v2.md`, `D3-critique.md`; `waves/W-0.1.md` (§3, §5 G1-G7) and `waves/W-0.11.md` (§3, §5, §6); `audit/INBOUND.md` up to its last row; the D3 lines of `FORMATION-PROGRESS.md` |
+| owner rulings | **none on Q-1, Q-3, Q-11, Q-12 or Q-13.** INBOUND ends at O-97. O-90..O-94 are toast focus, dock outside-press, the focus register, alert and skeleton subpaths, and the easing catalogue. O-95 is the apple-homeview carousel study (a dock reference), O-96 is a PopoverAnchor export and O-97 an easing glyph. None of them answers a D3 question. `FORMATION-PROGRESS.md` records no D3 ruling through the critic's bank line (2026-10-16). Every pass-4 seat built the P3-4.1 defaults: Q-1 (a), Q-3 (a), Q-11 (a), Q-12 (a), Q-13 (a) |
+| instruments | none. This seat re-measures nothing. Each number cites the report that measured it, and that report stays the source of record (P-3). Where the critic and a seat disagree, the critic's re-run is cited, because it reproduced every seat number (both baselines `diff`-identical) and added counterexamples. The one source read is a check of the critic's A-2 citation against the tree: `color-radius.css:157` (the `--fill-selected` comment; the critic cites it as `:161` on the patched tree), `card/styles.css:164`, and `menu.css`'s `@media (hover: hover)` block, which paints `var(--menu-row-bg)` on `:hover`. All three read as the critic quotes them |
+| engines | Chromium 149 gated. **Playwright WebKit 26.5** paint-only (no `backdrop-filter`, dock rows `+shim`). **Every real-Safari cell: UNMEASURED (owner's safaridriver checkbox)** |
+| fences | no source edit, no git write. This part is the only write |
+
+Short citations: `H4`, `FV3` (`FLOOR-V3.md`), `MS2` (`MINOR-SPLIT-v2.md`), `Crit` (`D3-critique.md`). `§n` after them is their section.
+
+---
+
+## P4-0 · In brief
+
+| route or build | status | rows | clean? | reason in one line |
+|---|---|---:|---|---|
+| **floor v3** = floor v2 + R-1..R-5 | **ADVANCE**, the one advancing route | **37/44 = 0.841** (pass 3: 34/44) | **no** | R-1..R-5 close rows 7, 12, 15, 16 and 22, each with a plant that reds it in both engines. R-4 re-opens rows 20 and FL-12 (one cause). Five rows wait only on the owner |
+| **the minor split v2** (a build) | the shape of 10.2.0's veil recut, **not shippable yet** | G1-G5 PASS, G6 FAIL, G7 FAIL; M-3 light FAIL 4/171 | — | each red has a value or a reading named below (P4-3); the entry gate is 0 of 2 clean passes |
+| C″ | BANK, unchanged | — | — | no re-trigger fired: Q-12 and Q-11 are unruled, and the aurora ceiling has not moved |
+| D3-G | BLOCK, unchanged | — | — | Q-13 is unruled and no engine shipped the primitive |
+| D3-BF, D3-D | BANK, unchanged | — | — | no re-trigger fired |
+| D3-E | RETIRE, unchanged | — | — | — |
+
+**Pass 4 is not clean** (7 rows open; clean means 0). **The two-clean count stays at 0 of 2.** Pass 5 can be the first clean pass only if the owner rules Q-1 and Q-11 (Q-3 with Q-11 for row 23) before pass 5's critic runs, **and** R-6 (P4-2.2) closes rows 20 and FL-12. The 10.2.0 veil recut (W-0.1) and the lighting tokens (W-0.11) then land no earlier than the close of **pass 6**.
+
+Four findings shape pass 5.
+
+1. **Under the defaults, the floor already reads green on every row that waits on the owner.** M-6 under `--q1 a` is PASS 88/88 in both engines and all four variants (FV3 §2, Crit §1). M-1x is REPORTED under Q-11 (a), and (a)'s text accepts grey chrome off paper. If the owner confirms Q-1 (a), Q-3 (a) and Q-11 (a), rows 9, N-1, 3 and N-2 close by selection, with no build. Row 23 then rests on the owner's own eye on the frames (P4-4). The alternatives do not close their rows as built: Q-1 (c) reads 2/96 red (the `retune-bg` dark room is 0.009 against 0.01), and Q-11 (b) closes rows 3 and N-2 but reds W-A's chrome leg by construction (FV3 §4, Crit §1).
+2. **Q-11 is wider than its (a) text.** In every build and under every option measured, the *content* rungs (wash, quiet, resting, card) read grey off paper: over the deep canvas wash `#e3e3e3` C 0.0000, quiet `#eee9e6`, resting and card `#f6f0eb` (FV3 §4.2, MS2 §2.4). Q-11 (a) as written accepts this for chrome only, and (b) makes the chrome opaque but leaves the content grey. So the owner's ruling must also say whether grey content off paper is accepted (P4-4.1).
+3. **One cure re-opened two rows.** R-4 paints the menu row with `--fill-selected`, and `menu.css` paints that fill on a bare pointer `:hover`. The register text in two touched files says hover cannot mint that rung (Crit A-2). The fix is two comments and one selector (R-6).
+4. **The minor split v2 is one value, one reading and one search away from its gates.** The perimeter wants 0.54, not 0.52. G6's single dark row is W-0.11's dark cast and blur by attribution, which needs a scope reading. G7's single row is the lower blur on a dark Dialog over white, and it reds W-0.11's own G6 as well, so it needs a radius search before any reading (P4-3).
+
+---
+
+## P4-1 · Per route
+
+### P4-1.1 · Floor v3 · ADVANCE, 0.841 (37/44)
+
+**Proved by running.** FV3 §1-§6 and Crit §1. The critic re-ran the full battery in both engines and its `baseline-fv3.md` is `diff`-identical to the seat's. It re-captured every R plant, and every one reds. It re-captured on floor v3 the floor plants FV3 §9 had carried from floor v2, and each count equals H4 §4's, bar `plant-bound` (+1 row per engine). `diag-held-noveil` still reads the held dock flat, so N-3's attribution holds.
+- Chromium whole run: RAW 48, M-1 11, M-2 938, M-2m 430, M-3 354, **M-4 168**, M-5 20, M-7 8, M-8 8, **M-9 20**, **O-66 5**, STACK 24, W-A 216, W-S 24, T all PASS. M-6 reads FAIL 27/120 under the stepped text (Q-1's row). M-2h reads FAIL 1/68 on the light halo leg (N-3, attributed).
+- Toolchain: vue-tsc exit 0 on both projects; library build exit 0; dist-demo exit 0; **units 2318 passed, 0 failed** (Crit §1). The removals read 0 in `src` (`fl-static.log`).
+- **R-2 has one side effect, and it moves a row toward green:** the dark held halo goes from 0.802 to 0.859 against a floor of 0.855. Margin 0.004, stable to the third decimal over three captures (FV3 §3).
+- Cost: specimen CSS 391,167 B, −545 B raw against floor v2. `--control-surface-blur` is deleted, a W-H removal that needs a MIGRATION row (FV3 §7).
+
+**The R rows** (FV3 §1; re-read by Crit §1):
+
+| R | row | value built | reading | plant |
+|---|---|---|---|---|
+| R-1 | 7 · M-4 | dark `--on-glass-muted-strong` `#cdc8c1`, OKLab L 0.8348; the L81 rationale rewritten as history | capsule +0.091; M-4 168/168. Crit A-1 attacked the rationale on the hosts that swap in `-strong`, and paint refuted the attack: 11 runs in 9 dark stories, minimum **6.20** | `hsl(36 13% 81%)` reds 7/84 at +0.067 |
+| R-2 | 12 · M-9 | dark `--glass-focus-veil-dim`: black at 40% | ΔL **−0.022** in both engines; 35% reads −0.018, so 40% is the least 5% step | a black mix at a tenth reds at +0.006 / +0.009 |
+| R-3 | 15 · O-66 G2 | `--control-surface-bg: var(--glass-well)`; controls drop `backdrop-filter`; the Input's local redeclaration deleted | ΔE **0.003** light (paper and pane), dark 0.005 / 0.001. The residual is the trigger's own 1 px border | trigger back on `--glass-plate-quiet` reds at 0.057 |
+| R-4 | 16 · O-66 G3 | `--menu-row-bg: oklch(from var(--section-color-5) l c h / var(--fill-selected))` | row `#f2e6d5`, **C 0.0261**, ΔL −0.0503 | FL-6's ink fill reds at C 0.0101 |
+| R-5 | 22 · O-87 | `--shadow-modal` one layer, one declaration for both modes; the dock casts lose their zero-offset glow | census `stacked=0 halo=0 blur=0 open=0`, exit 0. Frames: the dark dock sits with no ring, and the dark Dialog carries one quiet dark cast (Crit §5) | the 10.1.0 tokens read `stacked=2 halo=2 blur=5 open=9`, exit 1 |
+
+**The fixed checklist** (Crit §3.1 is the source of record for each status):
+
+| # | row | status | evidence or counterexample | waits on |
+|---|---|---|---|---|
+| 1, 2, 4-8, 10-19, 21, 22, 24 | RAW, M-1, M-2, M-2m, M-3, **M-4**, M-5, M-7, M-8, **M-9**, T, release, **O-66 G2**, **O-66 G3**, W-A, engines, plants, FL-13, **O-87**, STACK | **PASS** (20) | Crit §1, §3.1. The bold rows closed in pass 4 | — |
+| 3 | M-1x | OPEN | REPORTED under (a): 48/66 off-paper light composites grey. Under (b) on `var-q11b`: PASS 21/21 in both engines | **owner, Q-11** |
+| 9 | M-6 | OPEN | stepped 27/120; `--q1 a` **PASS 88/88**; `--q1 c` FAIL 2/96 (`retune-bg` room 0.009 / 0.007) | **owner, Q-1** |
+| 20 | prose sweep | **OPEN (re-opened)** | `color-radius.css` "`--fill-selected` … persistent state — hover cannot mint it" and `card/styles.css:164` are false under R-4, since `menu.css`'s `:hover` block paints `--menu-row-bg` | route: R-6 (P4-2.2) |
+| 23 | gestalt, O-62 frame | OPEN | light story: cream cards; wash, quiet and resting cannot be told apart (Q-1); the deep-canvas card's chrome reads light grey (Q-11). Dark: O-87 met by eye (Crit §5) | **owner, Q-11 (and Q-3)** |
+| FL-1..FL-11, FL-13..FL-16 | the floor | **PASS 15** | Crit §1: witnesses, re-captured floor plants, removals 0, toolchain green | — |
+| FL-12 | prose sweep of every touched file | **OPEN (re-opened)** | the same counterexample as row 20 | route: R-6 |
+| N-1 | Q-1's ruling built | OPEN | (a) built; (c) measured as a variant | **owner, Q-1** |
+| N-2 | Q-11's ruling built | OPEN | (a) built; (b) measured as a variant | **owner, Q-11** |
+| N-3 | the dock's held halo | **PASS (attributed)** | `diag-held-noveil` reads flat on floor v3 (0.894 / 0.878) | — |
+| N-4 | the minor split's W-0.1 reading | **PASS** | measured and re-measured (P4-3) | — |
+
+**Count: 37 PASS, 7 OPEN.** The seat scored 39. The critic's 37 stands, because its counterexample is in the tree. **Rows closed this pass: 7, 12, 15, 16, 22 (five). Rows re-opened: 20, FL-12 (two, one cause).** **Waiting only on the owner: 5** (rows 3, 9, 23, N-1, N-2; rulings Q-1, Q-11, Q-3). **Route-owned: 2** (rows 20, FL-12), ruled in P4-2.2.
+
+### P4-1.2 · The owner options, measured over floor v3 (FV3 §4, Crit §1)
+
+| ruling | rows it closes by selection, as built | what it leaves or costs |
+|---|---|---|
+| **Q-1 (a)**, the default | **9, N-1** (M-6 `--q1 a` 88/88 in both engines, every variant) | the light ladder stays one paint to the eye (row 23's frame) |
+| Q-1 (c), three materials | none | `retune-bg` dark room 0.009 · 0.007 against 0.01. Content against chrome reads 0.000, so (c) separates only the room. Closing it would take a ruling that M-6 under (c) reads the room only, **plus** a new room value that survives `retune-bg`. Neither is built |
+| **Q-11 (a)**, the default | **3, N-2**, by (a)'s text (grey chrome off paper accepted) | **content** wash, quiet, resting and card stay grey off paper. (a)'s text does not cover them (P4-4.1) |
+| Q-11 (b), light chrome opaque | 3, N-2 (M-1x `--q11 b` 21/21) | content stays grey off paper. W-A's chrome α leg reds by construction (floating α 1.000 against bound 0.891) unless W-A follows the ruling's text, as M-1x does (H5-4) |
+| Q-3 | row 23, ruled together with Q-11 | — |
+
+### P4-1.3 · Banked and retired, re-checked
+
+- **C″:** BANK. None of the three re-triggers in P3-1.2 fired (Q-12 (b), Q-11 (c), a default ceiling with g ≥ 0.487). Owed before re-entry, unchanged: C-4's follow mechanism, the chrome held floor, and the I-5 instrument items.
+- **D3-G:** BLOCK. **D3-BF**, **D3-D:** not fired. **D3-E:** retired.
+
+---
+
+## P4-2 · The harness after pass 4, and the rulings on measurement
+
+### P4-2.1 · H4
+
+- **H4-1..H4-4 landed** (I-1..I-4), with 50 of 50 new self-test expectations met in both engines and H3 against H4 read on the same planted captures (H4 §2). No witness changed its gate: M-1x stays REPORTED under Q-11 (a), and W-C stays C″'s witness. Floor v2 re-ran under H4 twice (runs A and B, `diff`-identical verdicts) and scored 34/44, pass 3's count exactly (H4 §5).
+- **The WebKit deadline and retire path** (`NAV_CAP` 60, per-open deadlines) ran on every pass-4 battery, with 0 stalls and 0 crash cells (Crit header).
+- **Not done in pass 4:** the full 142-expectation H3 self-test was not re-run under the final `capture.mjs` (H4 §6). This is H5-5.
+
+### P4-2.2 · Rulings on measurement for floor v3's own open rows
+
+| id | rows | ruling | evidence | plant |
+|---|---|---|---|---|
+| **R-6** | 20 · FL-12 | **Keep R-4 and narrow the register** (Crit §3.2 option 1, the one that keeps both 10.2.0 and the floor name-stable). (i) `--fill-selected` is the persistent-state alpha **and** the menu's one highlighted row, an accent tint and not the one ink. The comment in `color-radius.css` and the `card/styles.css:164` comment say so. (ii) In `menu.css`'s `@media (hover: hover)` block, `.glass-menu-row:hover` drops its `background` and `color` legs and keeps its pointer lift. The fill then reaches paint only through `[data-highlighted]`, which reka sets and clears on pointer movement, so a pointer still gets the engaged fill (D-2 unchanged). Before building, the seat confirms that every composer of `.glass-menu-row` (`rowClass.ts`, the four DropdownMenu items, CommandItem) receives `[data-highlighted]` on pointer movement. A composer that does not receive it keeps a hover leg on the `--fill-hover` alpha, and the seat records which one | Crit A-2, A-3; the three lines read at HEAD (header) | **R-4 as built** (a `:hover` that paints `--menu-row-bg`) reds H5-3 and the prose sweep. Options 2 and 3 (a lighter accent at the hover alpha, a dedicated rung) each add a token, which W-0.1 does not allow, so they are not taken |
+
+R-6 is the only route-owned row left on floor v3. The minor split carries R-4, so it carries R-6 in the same files (P4-3).
+
+---
+
+## P4-3 · The minor split v2, measured against W-0.1 G1-G7
+
+The build (MS2 §1): 10.1.0 with nothing removed, plus pass 3's light arm, plus R-3 and R-4 in minor names, the perimeter at 0.52, FL-10's Close-ring routing, FL-7's held floor, and W-0.11's blur ladder 6/10/12/16/18 and one-layer shadows. 38 files, +523 / −386. Census `stacked=0 halo=0 blur=0 open=0`. The critic reproduced every number to the digit, with a `diff`-identical `baseline-minor2.md`, and each red cell re-captured twice (Crit §4).
+
+| gate | Chromium | Playwright WebKit | HEAD | verdict |
+|---|---|---|---|---|
+| **G1** M-1 no grey | 11/11: plates `#fef7f1`-`#fff8f1`, ΔE 0.009-0.010 from paper | 11/11 | FAIL 22/22 | **PASS** over paper. Off paper (Q-11 applied): below |
+| **G2** O-66 field | trigger = Input `#f3ece2`, ΔE **0.000** paper and pane; dark `#3f3731` 0.000 / 0.000 | PASS | 0.028 / 0.192; dark 0.175 / 0.167 | **PASS** |
+| **G3** O-66 row | `#f2e6d5` C 0.0261, ΔL −0.0503 | PASS | C 0.0094, ΔL −0.0551 | **PASS** (R-6 applies: the minor's `color-radius.css` keeps "hover cannot mint it") |
+| **G4** W-A light | 108/108 | 108/108 | 39/108 red | **PASS** |
+| **G5** scope | roster 289 = 289; `terminal CLEAN` with the datum rebound in the worktree; **+2,340 B ratchet** unrebound | — | CLEAN | **PASS** (rebind owed at landing) |
+| **G6** dark untouched | **1/26** over 0.002: dark paper dock `#0f0d0a → #0f0c09`, ΔE **0.0038** | counted | — | **FAIL** as written |
+| **G7** no row regresses | M-2: 1,122 HEAD-PASS, **1 regresses** (dark Dialog over white, fg p05 4.51 → **4.46**); M-3: 72 HEAD-PASS, 0 regress | counted | — | **FAIL** as written |
+
+Beside the gates: **M-2 light** green on every read row (the 9 red are unread runs, unread at HEAD too). **M-2h** held dock ≥ 4.5 in every frame, minimum 7.58 over black (pass 3: 3.16), so FL-7 holds. **M-3 light** FAIL 4/171: the wash and floating wells over black read **2.96** at 0.52 (**3.13 at 0.54**, seat-only), and the held floating well over black reads **2.50**. That well's host, HEAD's `glass-floating`, forms no stacking context (STACK 3/12), so its carriers escape: it is FL-14's. The `.dark` island now matches the dark page exactly (ΔE 0, against HEAD's 0.003-0.012). **Units 2320 passed, 0 failed** with the 36 pinned arms rewritten to the light law (MS2 §3-§4).
+
+**G1 with Q-11 applied to its off-paper reading.** Off paper the minor reads 48/66 light composites grey, the same hex as floor v3. Under Q-11 (a)'s text the 24 chrome rows are accepted. The content rows (wash, quiet, resting, card) are grey, and (a) is silent on them. Under (b) the minor would need opaque light chrome, which it does not carry, and the content would stay grey anyway. **So G1 off paper is not green under any reading measured until the owner rules the content clause of Q-11** (P4-4.1).
+
+**Attribution of G6 and G7** (MS2 §2.3, not re-run by the critic, unrefuted): injecting HEAD's dark shadow **and** blur back returns G6 to 0.0000 and G7 to 4.51. The blur alone returns G7. The perimeter takes no part.
+
+### P4-3.1 · Rulings for the minor split v3
+
+| id | gate or row | ruling | plant |
+|---|---|---|---|
+| **R-7** | M-3 light | `--ink-perimeter: 0.54` (the least 0.02 step that reads ≥ 3.0 on every resting row: 0.52 reads 2.96 over black, 0.54 reads 3.13; MS2 §2.4). One value, read by both modes (`color-radius.css` §1.2). G6 and G7 are re-read at 0.54 because the dark arm inherits it | 0.52 reds the black wash well at 2.96 |
+| **R-8** | G7's one row, which is also W-0.11's G6 | **A radius search before any reading.** W-0.11 §5 G6 asks that no M-2 row passing on the W-0.1 tree fail on the W-0.11 tree, so admitting the row by a scope reading would just move the red into W-0.11. The minor v3 measures `--glass-blur-floating-radius` at 17, 18 and 19 px, with overlay at floating + 2 and wash, quiet and resting at 6/10/12, so each radius stays below its 10.1.0 value and the ladder stays strictly ascending. It picks the least radius at which the dark Dialog over white reads p05 ≥ 4.5. Floor v4 then takes the same ladder (one ladder) and re-reads its M-2 and M-8. **If no radius ≤ 19 holds**, the row goes to the owner under Q-9 (blur against legibility) as the cost of "slightly less blur", and is not admitted by a seat | floating 16 reds the row at 4.46 |
+| **R-9** | G6's one row | **G6 reads "the dark *veil* untouched"**: each dark composite with W-0.11's dark values injected back to HEAD's must be within ΔE 0.002 of HEAD's (measured 0.0000, MS2 §2.3), and the raw G6 prints beside it. The reason: O-87 names the dark dock's zero-offset glow as slop, and W-0.11 removes it in the same band, so a gate that forbids any change to the dark dock forbids the ruling itself. This is a reading of W-0.1 §5 G6 that W-0.1's text must take when W-0.1 and W-0.11 land together. The owner may override it | the raw G6 still bites: any dark-veil change outside W-0.11's tokens reds the injected reading |
+| **R-6** | G3's register | as floor v3: the minor's `color-radius.css` comment and `menu.css` hover legs, in the minor's own names | as floor v3 |
+| — | M-3 held floating well 2.50 | **Not a minor value.** It is FL-14 (`isolation: isolate` on the held plate's host). The minor v3 measures FL-14's one declaration as an injected variant (STACK, M-3 held, G1-G7). If the variant greens STACK and the held well and holds G1-G7 with the roster unchanged, the split table may assign it to 10.2.0 as a composite-recipe change. Otherwise it stays W-H's, a known red that HEAD also fails (2.79 over black) | `plant-noisolation` (FV2) |
+| — | demo copy | the glass-material story's "earned darken" copy and its live-canvas card (MS2 §6) are rewritten to the light law in the minor v3. That is demo prose, with no published name | — |
+
+**Can W-0.1 ship from the minor v2 in 10.2.0? No.** (1) The entry gate is 0 of 2 clean passes. (2) G6 and G7 fail as written. (3) M-3 light is red at the ordered 0.52. (4) The register prose that R-6 cures is false in the minor too. (5) With Q-11 applied, G1's off-paper reading is unresolved for content. Items 2-4 have a value, a reading or a search ruled above (R-6..R-9), and the minor v3 measures them in pass 5. Item 5 is the owner's. Item 1 is arithmetic: W-0.1 and W-0.11 land at pass 6's close at the earliest. 10.2.0 is also gated on D2 converging (O-88).
+
+---
+
+## P4-4 · What the owner must rule
+
+### P4-4.1 · Owner questions, with pass-4 measurements
+
+| id | question (short) | pass-4 measurements | blocks | pass-5 default |
+|---|---|---|---|---|
+| **Q-1** | ladder separation | (a) **PASS 88/88** on floor v3, both engines, all four variants; signed leg 0.132-0.150 from the page (`retune-bg` 0.057-0.065). (c) FAIL 2/96: the room separates by 0.018-0.024 except under `retune-bg` (0.009 / 0.007), and content against chrome is 0.000 | rows 9, N-1 | (a). (c) needs both a reading (room only) and a new room value, neither built |
+| **Q-3** | chrome: a card or glass | unchanged: every chrome surface at the bound, T 0.110 light / 0.125 dark | row 23 (with Q-11) | (a) |
+| **Q-11** | O-62 off paper, **sharpened** | 48/66 off-paper light composites grey in floor v3 and the minor v2, to the hex. (b) makes the chrome opaque (M-1x 21/21) and costs W-A's chrome leg. **Content (wash, quiet, resting, card) is grey off paper in every build and every option measured**, over black `#e2dcd7` and over the deep canvas `#e3e3e3`. The owner rules two clauses: **chrome** (a) accepted / (b) opaque / (c) claimed / (d) a new pole; and **content**: accept the bound's grey off paper (the floor's centre, any-input legibility), or not. "Not" has no measured candidate: (c) is the banked C″, whose re-trigger it fires, and (d) is unresearched | rows 3, 23, N-2; G1's off-paper reading for W-0.1 | (a) for chrome; content REPORTED |
+| Q-12 | the ink lever | no new data | none (C″'s re-trigger) | (a) |
+| Q-13 | luminosity family | no new data | none | (a); G stays BLOCK |
+| Q-9 | blur against legibility | only if R-8 finds no floating radius ≤ 19 px that holds the dark Dialog over white at p05 ≥ 4.5 | G7 / W-0.11 G6, conditional | (a) under O-87 |
+
+**The shortest path:** if the owner confirms Q-1 (a), Q-3 (a) and Q-11 (a) for chrome **and** content, floor v3 closes rows 3, 9, N-1 and N-2 by selection, and row 23 on the owner's word over the frames below. With R-6 built, pass 5 can then be clean.
+
+**Owner glance pairs for pass 4** (each folder is the source of record):
+
+| look at | file | shows |
+|---|---|---|
+| HEAD → floor v3, dark dock | `pass-4/glance-fv3/glance-chromium-dark-dock-base-vs-head-vs-fv3.png` | the zero-offset ring gone; a warm-brown pill flat on the page (O-87, R-5) |
+| floor v2 → floor v3, dark Dialog | `pass-4/glance-fv3/glance-chromium-dark-dialog-base-vs-fv2-vs-fv3.png` | the pale `--foreground` halo replaced by one quiet dark cast |
+| HEAD → floor v3, light Dialog | `pass-4/glance-fv3/glance-chromium-light-dialog-base-vs-head-vs-fv3.png` | the grey-brown room becomes cream (O-62 over paper) |
+| HEAD → floor v3, light story | `pass-4/glance-fv3/glance-chromium-light-story-base-vs-head-vs-fv3.png` | cream cards; wash, quiet and resting one paint (Q-1); the deep-canvas plates grey (Q-11) |
+| HEAD → the minor v2 | `pass-4/glance-minor2/glance-chromium-{light,dark}-{dock,dialog,floating,story}-base-vs-minor2.png` | what 10.2.0's veil recut and lighting tokens would show; dark floating 0.00% (G6 holding) |
+| the dark focus veil over the aurora (Crit A-4) | **not on disk**: `chromium-dark-aurora-state-base-full.png` lived in the critic's removed worktree | the dark dim at 40% black takes the aurora's focus spot `#e87237 → #993f09` (ΔL −0.199), a brown bruise by eye. H5-1 banks the frame in pass 5 |
+
+**Owner actions, not rulings.** The safaridriver checkbox (every Safari cell UNMEASURED, now including R-3's controls without `backdrop-filter` and the minor's element-level re-resolution). The in-session go for the 10.2.0 tag.
+
+---
+
+## P4-5 · Next-pass defect classes, placed
+
+The checklist stays at 44 rows. Each class below goes either to the pass-5 instrument list (H5), to a ruled value (R-6..R-9), to the owner, or to another wave or loop.
+
+| id | class | found by | placed |
+|---|---|---|---|
+| **H5-1** | M-9 bounds the dim only from below, and only on the page. R-2's dark dim is solved on the dark page and applied on every ground: −0.022 on the page, **−0.199** on the aurora's focus spot | Crit A-4 | **instrument:** M-9 also reads the dim over every ground in the `state` scene, REPORTED and not gated (a gate would need a bound the owner has not given), and banks the frame. The owner judges it under row 23 with the frames; a value change is a later R if the owner rejects the frame |
+| **H5-2** | `lighting-census.mjs` reads `--shadow-*` tokens only. Literal glows escape it: `card/styles.css:160-161` (a zero-offset `0 0 8px` focus glow beside the outline ring), two chained `drop-shadow()`s in `Blob.vue:355,360`, and any small-offset token (`0 2px 30px`) | Crit A-5 | **instrument:** a separate `lighting-literals` witness, REPORTED, plus W-0.11 §6's frame-read halo leg (the luma ring at 4, 8 and 16 px). It is separate because W-0.11 G4 pins appendix A's exact summary line on the 10.1.0 tokens, and extending the census would break that bite. The findings are inherited, not added, so row 22 stays PASS. The card focus glow is relayed to W-H.2 or D4 (the tile), and the Blob drop-shadows to the loop that owns the blob, through the cursor. Neither is a D3 row |
+| **H5-3** | a ruled value can land in a register rung that the register's prose reserves, and the prose sweep found the conflict only by hand | Crit A-2 | **instrument:** a static check that no `:hover` rule paints a value built on `--fill-selected`. It reds R-4 as built and greens R-6 |
+| **H5-4** | W-A's chrome α leg does not follow Q-11's text, the same defect H4-2 cured in M-1x | FV3 §4.2, Crit §1 | **instrument:** W-A reads `--q11`. Under (b) the light chrome leg gates α = 1, and under (a) it stays on the bound. Built now, so a (b) ruling closes rows by selection |
+| **H5-5** | the full H3 self-test (142 expectations) has not run under the final `capture.mjs` | H4 §6 | **instrument:** re-run in both engines under `guarded --exclusive webkit` |
+| — | the R-4 alpha has no accent rung at the hover alpha (α 0.05 reaches C 0.0182 at most with existing tokens; a light yellow `#f5f000` reaches 0.0236) | FV3 §1, Crit A-3 | **closed by R-6**: the menu row is state, on `--fill-selected`. A hover accent rung would add a name, which is W-H's if ever wanted |
+| — | G6 and G7 are written for the veil wave alone, but the same band's O-87 values move dark paint | MS2 §2.3, Crit §4 | **R-8, R-9** |
+| — | M-3 light at 0.52 | MS2 §2.4 | **R-7** |
+| — | the held floating well 2.50 (FL-14 absent from the minor) | MS2 §2.4 | the minor v3 variant (P4-3.1) |
+| — | the pointer-following "edge gleam" in the story copy and paint ("Hover any plate and the edge gleam follows the cursor") | Crit §5 | row 22's frame evidence in pass 5. The critic judges it against O-87: one quiet edge that carries the pointer (kept, D-2), or specular excess (cut). Inherited, not added |
+| — | Q-11's content clause | P4-0 finding 2 | **owner** (P4-4.1) |
+| — | Q-1 (c)'s room value and reading | FV3 §4.1 | **owner**, only if (c) is ruled |
+| — | the `boot-graph` freshness arm fails on a dist-demo built from another tree (MS2 §4, HEAD run) | MS2 §8 | a run-ordering artefact, not a defect. Seats build dist-demo from the tree under test before units |
+| — | the critic left an empty `.claude/worktrees/bl/D3/p4/crit/` (rmdir refused by the permission system) | Crit header | driver housekeeping at the next restart, not D3's |
+| I-5 | the two-ground α estimator under per-stand claims; W-S blind to a lie on an inert claim | P3-2 | C″'s bank entry, unchanged |
+
+---
+
+## P4-6 · Pass-5 plan
+
+### P4-6.1 · Routes
+
+| route | centre | judged on |
+|---|---|---|
+| **floor v4** = floor v3 + R-6 (+ R-8's ladder if it moves) + whatever the owner has ruled, selected from the variants | the bound, static ink, FL-1..FL-16 | **the same 44 rows** (24 core + FL-1..FL-16 + N-1..N-4). No row is added, struck or renamed |
+| **the minor split v3** (a build, not a route) | minor v2 + R-6 (minor names) + R-7 (0.54) + R-8's ladder + the demo copy; FL-14 as an injected variant | W-0.1 G1-G7 (G6 read per R-9, raw beside it), M-2, M-3, M-2h, H3-1 off paper under whatever Q-11 text has arrived; and W-0.11 G1-G6 on the same tree, since both land in one band |
+| C″ | BANK | not run unless a re-trigger fires (Q-11 content clause "not" fires (c)) |
+| D3-G | BLOCK | not run unless Q-13 (b) or an engine ships the primitive |
+
+### P4-6.2 · Order (browser seats serialized; every WebKit run under `guarded --exclusive webkit`)
+
+1. **H5, the instrument fixes H5-1..H5-5**, each with a fixture PASS and a planted FAIL in both engines. Then floor v3 re-runs under H5 as the baseline. No witness changes its gate except where an owner ruling has arrived (H5-4 follows Q-11's text).
+2. **Floor v4.** Build R-6 on `floor-v3.patch`, and confirm the `[data-highlighted]` coverage of every `.glass-menu-row` composer before the build. Run the full battery once, both engines, with R-6's plant. Select any ruled owner option from the pass-4 variants (`fv3/q1c.*`, `fv3/q11b.*`); build a ruling only if it names something no variant carries. If R-8 moves the ladder (step 3 runs its search first, or a shared seat does), floor v4 takes it and re-reads M-2, M-8 and T.
+3. **The minor split v3.** Build R-6, R-7, R-8 (the search) and the demo copy. Measure once under H5 against G1-G7, with G6 read per R-9 and the raw value beside it. Also measure M-2, M-3 (light green on every resting row is the aim), M-2h, H3-1, and W-0.11 G1-G6. Add the FL-14 variant. Re-read the `.dark` island only if R-7 or R-8 moves a dark composite.
+4. **The critic**, one seat, adversarial, on floor v4 and the minor v3. It re-captures the minor's perimeter and radius values itself (pass 4's critic took the 0.54 and 0.56 numbers from the seat), and it judges the edge gleam and H5-1's frames under O-87. It may not add rows. A new defect class goes to the pass-6 instrument list.
+5. **Agglomeration**, reading any owner rulings that have arrived.
+
+### P4-6.3 · What would make pass 5 clean
+
+Floor v4 is clean at **0 open rows of 44**:
+- rows 20 and FL-12 close on R-6, with R-4-as-built red under H5-3 and the prose sweep (seat-closable);
+- rows 9 and N-1 close when the owner rules Q-1. Under (a) they close by selection (88/88 is already measured); under (c) they need the room ruling and value;
+- rows 3 and N-2 close when the owner rules Q-11's chrome clause. Under (a) by its text; under (b) by `var-q11b` with H5-4;
+- row 23 closes when the owner rules Q-11's content clause and Q-3 and accepts the gestalt frames (including H5-1's bruise frame).
+
+If the owner has not ruled Q-1 and Q-11 by pass 5's critic, pass 5 cannot be clean, whatever the build reads. Those five rows remain D3's whole critical path to 10.2.0. Each pass that closes unruled moves the earliest landing out by one pass.
+
+**W-0.1's entry gate after pass 4.** 0 of 2 clean passes. Earliest landing: the close of pass 6, if passes 5 and 6 are both clean. W-0.1 ships from the minor split v3, never from floor v4 (the removals, the dark arm and, unless the variant earns it, FL-14 are W-H's). It ships only once G1-G7 are green (G6 per R-9) with Q-11's ruling applied to G1's off-paper reading. W-0.11 ships from the same tree with its G1-G6 green, R-8's ladder included. 10.2.0 is also gated on D2 converging (O-88).
+
+### P4-6.4 · What would end the loop
+
+- **Floor v4 converges** once Q-1 and Q-11 (both clauses) are ruled and selected or built, after two consecutive clean passes. It is then D3's converged specification: W-0.1's light arm and W-0.11's tokens (through the minor split v3) in 10.2.0, and the rest (FL-1, FL-16, the dark arm, FL-14 unless the variant moves it, R-1, R-2, R-3's `--control-surface-blur` removal) in the W-H landing.
+- **C″ stays banked** unless a re-trigger fires. The live one is Q-11's content clause ruled "not accepted", which is the (c) re-trigger. It would re-enter on the same 48 rows, with C-4 and the chrome held floor owed first.
+- If the owner rules against the floor's centre (Q-3 (c), all chrome transmits), every banked family's re-trigger is re-read, and pass 6 opens whichever fires.
