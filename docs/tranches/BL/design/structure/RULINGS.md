@@ -96,3 +96,11 @@ Ruled by the driver on 2026-10-15, each at the registry's recommended arm (REGIS
 |---|---|---|---|
 | P9-R1 | who cures the `fourier-field` ↔ `fourier-field/renderer` parent↔child value cycle | **(a).** The loop. B4 widens from siblings to every module-grain value SCC, parent↔child included; a chain step applies LAW §4's base rule (the parent-level file the child value-reads, `fourier-field/math.ts`, moves into a sibling module inside the `./fourier-math` anchor); `seal.test.ts` carries the RED case and a type-only reverse edge reads clean. | the seal lands as G-42 and enforces the edict after the wave; a seal that passes a parent↔child cycle cannot hold F-59 |
 | P9-R2 | who writes the chain's MIGRATION heading | **(a).** The chain. The MIGRATION row writes `## 11.0.0` in W-C.2's form with no tranche id, and the 9 `BL`/"tranche" lines go in the same row; `MIGRATION.md` ships, so S70's datum is re-measured and rebound once (P4-R3). | the chain authors shipped text; W-D.1 step 1 forbids hand edits, so a tranche id in the chain's text would hand the wave a gate it fails by construction |
+
+## Pass-10 ruling P10-R1
+
+Ruled by the driver on 2026-10-16 at the registry's recommended arm (REGISTRY §P10-4). The owner may override it.
+
+| id | question | ruling | ground |
+|---|---|---|---|
+| P10-R1 | where the move engine's `./`-lead cure lives | **(a).** The floor row: `floor/lib/move.mjs:168` takes the one-line cure with a floor plant that moves a holder of `"./dist/x"` and reads the spelling kept; the floor base is re-cut; S74c leaves the chain; S1b→S70 re-derive and replay to a new digest; S70's datum is unchanged (the engine does not ship). | one engine, one record: FLOOR.md F-2 / P4-F3 already state the kept spelling, so the docs floor carries the cure instead of a chain step patching its own landed copy |

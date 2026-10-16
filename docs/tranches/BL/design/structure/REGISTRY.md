@@ -2768,3 +2768,223 @@ As §P8-6.6, with: the digest of the pass-10 chain (and pass 11's replay of it);
 **Held with the bank.** G-01..G-12 and D′'s gaps, unchanged.
 
 No route converged in pass 9. D1-B converges at the pass-11 agglomeration at the earliest.
+
+---
+
+# D1 · pass 10 · REGISTRY: the route after pass 10
+
+| field | value |
+|---|---|
+| seat | D1 pass-10 agglomeration. Closes pass 10 with B's status and convergence, the two-clean-passes count, the rulings owed, the open gaps and the pass-11 plan. Passes 1-9 above are kept intact |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `1d0f542c`. `git diff 6154d6ec HEAD -- . ':!docs'` is empty: the route and the critic judged 10.1.0's code. The kit was committed at `aa46420a` (06:44:48Z), before the critic's battery hash (06:52:45Z); the critique is committed at `1d0f542c` (625 tracked files under `pass-10/`). Between `aa46420a` and `1d0f542c` nothing under `structure/` changed except `pass-10/critique-B*` |
+| inputs, read in full | `pass-10/B-proto.md`, `pass-10/critique-B.md`, `critique-B/BATTERY-HASH.txt`; this file §P2-6.5 and the pass-9 part (§P9-0..§P9-7); `RULINGS.md` through P9-R2. The kit's other files and the critic's other results were read at the lines the two reports cite, not re-run |
+| instruments | none re-run. Read-only checks: `git log`, `git ls-files`, the empty code diff; `critique-B/results/judges10.txt:33,35,55,56,70,117,130` (the seven FAIL rows); `K10/tools/browser-tally.mjs:40,56,68` (the only kind test is `testDir` equality); `K10/tools/rekey.mjs:31,34,48` (it refuses `rekeyedFrom`, nothing else of kind); `K10/lib/floor.mjs:27` (`arg` returns `args[i+1]`, `undefined` for a trailing flag); `K10/tools/peer-closure.mjs:72-76,133`; the kind fields of every committed browser report under `K10/results/p10/browser*` (below); `K10/authored/p10-engine-dot-lead.mjs`; `floor/lib/move.mjs:168`; `waves/W-D.1.md:92,144-219`, `waves/INDEX.md:47`; `ls .claude/worktrees/bl/D1/` |
+| fences | no source edit, no git write; this part is the only write |
+
+Short citations: `Bp10` is `pass-10/B-proto.md`, `cB10` is `pass-10/critique-B.md`, `cB10-R` is `pass-10/critique-B/results/`, `K10` is `pass-10/B-kit/`.
+
+---
+
+## P10-0 · In brief
+
+| id | route | status | conv. (critic) | critic's verdict | re-opened by the critic | re-opened by this registry | reason in one line |
+|---|---|---|---:|---|---|---|---|
+| D1-B | sealed modules, flat | **ADVANCE** | 26/27 = 96.3% | S-14 OPEN, the rest CLOSED | 0 (S-14 was open entering) | 0 | every other bar item re-met from committed bytes (`6fdd4ec7…`, 127 steps, 19/19, CLEAN at 2,920,386, cascade GREEN, 428/428, `seal.test.ts` 26/26); P9-G1, P9-G2, P9-R1 (a), P9-R2 (a) landed and measured; but `browser-tally` and `rekey` accept wrong-kind reports, two of them as an all-clear |
+| D1-G | eponymous closures | BANK (unchanged) | 44% (pass 3) | — | — | — | re-trigger not fired (§P10-3) |
+
+**The two-clean-passes count for B stays at 0.** No convergence record is written. The earliest convergence is the pass-12 agglomeration: a clean pass-11 critique moves the count to 1, a clean pass-12 critique to 2.
+
+Why the count does not advance. The task's rule reads "advances by 1 iff the pass-10 critique re-opens nothing and maps no finding to an edict clause the list leaves out". The critique re-opened no item that entered closed, but it did not leave S-14 closed: the route claimed S-14 closed (Bp10 §8) and the critic's measurement refutes the claim on the hold column §P9-7 wrote for it. §P2-6.5 decides the reading in two places. Its convergence condition 1 ("zero items remain open, each closed by a committed, replayable measurement") fails at the end of pass 10, and its third bullet says a finding that "maps to a listed item … re-opens convergence … and the two-clean-passes count restarts". O-1 and O-2 map to S-14. A pass that ends with an open item cannot be the first of two clean passes. The count was 0 and restarts at 0.
+
+Three findings shape pass 11.
+
+1. **P9-G1 is cured; S-14's hold is wider than P9-G1.** The probe's `--base` contract holds on 18 forms and the leak reads never 0 on 20 (cB10 §1). The hold also names "a wrong-kind report" on every input argument of every judge, and §P9-6.4 put it in the battery. `browser-tally --base <a route report>` exits 0 GREEN, `--route <the re-keyed base>` exits 0 GREEN, and `rekey <a route report>` exits 0 and writes a "re-keyed base" that the tally then reads GREEN against a failing route (cB10 §1 F6: RED with 2 failed against the real base, GREEN with 0 failed through either wrong-kind path). That is pass 9's O-1 again, in the other two judges. The cure is kit-only and changes no digest.
+2. **The critic's proposed discriminant is half right, and the committed reports say which half.** A route report records `baseReport`, but a route **rerun** does not: `browser-p9/reruns/route-1-{1,2,3}.json` carry `baseReport: null` and `testDir "."`, the same as a re-keyed base apart from `rekeyedFrom`. Only `rekeyedFrom` separates the kinds in every committed report: present on every re-keyed base (`base-rekeyed.json`, `base-1-*.rekeyed.json`, `p10-steps/base.rekeyed.json`), absent on every route run and rerun. A `baseReport` test would refuse nothing on the rerun arguments. §P10-6.3 sets the cure on `rekeyedFrom` and `testDir`.
+3. **S74c changes the landed floor engine; the docs floor keeps the old line** (Bp10 G-1, cB10 O-5). The two copies of the move engine disagree, and FLOOR.md F-2 agrees with the landed one. It maps to no checklist item and to no edict clause (the docs floor is a record, not shipped code), so it does not touch the count. Where the cure sits changes the floor base digest, so it is a ruling (P10-R1).
+
+---
+
+## P10-1 · Registry
+
+| id | unit set declared by | enforced between units | status | conv. | re-trigger / refutation | pass-11 role |
+|---|---|---|---|---:|---|---|
+| D1-B | a module is a code dir in `src` or `scripts` with a door (B7), recursively; containers and kind slots excepted | privacy: the recursive door seal, kernel and CSS edges included (B1, B3); direction (B8); acyclicity: sibling, and every module-grain value SCC parent↔child included (B4, P9-R1); no masking fallback (B17); names (B15); Playwright-program membership and visual subject (B16); the peer class (B18) | ADVANCE | 26/27 by its critic and by this registry | — | the one live route; close S-14, then the first of two clean passes |
+| D1-G | first-level component units; eponymous roots | B1 into component units only | BANK | 44% | not fired (§P10-3) | none |
+| D1-D′ | — | — | BANK (unchanged) | 7% | not fired | none |
+| D1-A | — | — | BLOCK (unchanged) | 35% | — | none |
+| D1-C, D1-E, D1-F | — | — | BANK (unchanged) | 40/35/30% | no trigger fired | none |
+
+---
+
+## P10-2 · D1-B · Sealed modules, flat: ADVANCE
+
+**What ran** (Bp10 §0-§9, confirmed by cB10 §0-§4).
+
+| item | result |
+|---|---|
+| chain | 121 → 127 steps. S74 (P9-R1 (a): `fourier-field/math.ts` → `fourier-field/register/math.ts`); S74b-S74e (the second module-grain SCC, `scripts/structure/lib` ↔ `lib/graph`: S74b an F-1 self-path respelling, S74c the landed engine's `./` lead, S74d five `lib/*` files → `lib/tree/`, S74e its door); S75 (P9-R2 (a): `## 11.0.0`, the 8 other tranche lines re-worded); S69 re-landed (B4's reader `seal/cycles.mjs`, `peer.mjs`, `clauses.mjs`, `seal.test.ts` 26 cases, the pin 142/122/1,320/2); S69s re-recorded; S70 rebinds once |
+| replay | `6fdd4ec7bd259630d38a466a444e45b2b18f71b4cbf2259d258a4c6177996bbf` over 1,587 files. Route: r1 `--twice` 637.0 s, r2 430.1 s, both MATCH from fresh HEAD worktrees, rerun no-op 1.0 s. Critic: 348 s from committed bytes in a fresh worktree (floor by S1's own script, then S1b→S70), MATCH, rerun 0.4 s no-op, unchanged after every battery |
+| floor base | `5b14c6c7…705402f` over 1,354 files, both seats, pass 9's |
+| gate | 19/19 at 0, exit 0; files 1,585, edges 8,350, modules 142/142, peer held 23 |
+| toolchain | build 0; `vue-tsc` ×2 0; demo build 0; `seal.test.ts` 26/26; vitest 2,335 passed, 0 failed, `--maxWorkers=2`, both seats |
+| package | verify:package CLEAN at 2,920,386; only S70 writes `.bundle-ratchet` (2,919,057 → 2,920,386) |
+| cascade | GREEN against the floor base (listed); RED unlisted (critic) |
+| browser | selection 155 specs = pass 9's, 14 captures excluded; the 8 specs pass 10's steps touch ran on both trees (63 tests each, identical statuses, 0 new failures); tally 428 base-green, 428 held, 0 failed, 0 absent, by the kit tally and by the critic's own reader, with and without the pass-10 pair; blob D2 flaky out of the bar |
+| P9-R1 (a) | B4 module arm: parent↔child, grandparent↔grandchild, an existing parent→child edge closed by one child file, and the parent's door already reading the child, each RED; the type-only reverse edge clean (critic PD-type 3/3, route CYCLE 4/4); the tree B4 0; W-D.1's `d1-probe` VALUE-SCC 0 |
+| P9-R2 (a) | `MIGRATION.md:8` is `## 11.0.0`; W-C.2's C2-G1 0 META in the chain's section, C2-G4 0 misses; four tranche-id plants RED (critic, by W-C.2's own appendices extracted from the committed wave) |
+| P8-R3 / P9-G2 | a peer-less row, a whitespace Peer cell and a subpath-less row throw (critic 6/6, route ROW 13/13, BI3-fixed rc 2) |
+| P8-R2 / P9-G1 | the probe's `--base` 18/18 exit 2; the leak 20/20 never 0; `--overlay`, `--table`, `--root` 15/15; `browser-tally` 48/48 on schema-level inputs; `rekey` 17/17; `browser-select` 16/16; gate import-time throws crash8 39/39 |
+| `./motion-core` | keyframes-free on names 55, dist 5 files, files 38 |
+| regressions | the 402 rows 0 differ; pass 8's 11 peer plants 0 differ; pass 9's hashed judge-throws 45/45 (pass 9: 44/45); pass 7's tree probes identical once pass 6's `fd4-probe.mjs` is re-pointed at `lib/tree/tree.mjs` (S74d moved its import; cB10 §4 F4, all arms PASS) |
+
+**The critic's items** (cB10 §6): 26 CLOSED, S-14 OPEN, 0 re-opened.
+
+**The critic's findings** (cB10 §5), read under §P2-6.5.
+
+| # | finding | item it maps to, and the text that decides | effect |
+|---|---|---|---|
+| O-1 | `browser-tally` reads a route report as `--base` (430 held, GREEN) and the re-keyed base as `--route` (429 held, GREEN); a route rerun as `--base-rerun` reads as a verdict (0) and a re-keyed base rerun as `--route-rerun` reads as a verdict (1); `rekey` takes a route report as its base and writes a "re-keyed base" (exit 0). F6: a route with one base-green test failing reads GREEN through either path | **S-14**: §P9-7 hold "a wrong-schema or wrong-kind report included; no judge reads a malformed input as an all-clear"; §P9-6.4 battery "a report of the right schema but the wrong kind … each exits 2" for every input argument of every judge | **S-14 stays OPEN.** Route work under P8-R2 as ruled (P10-G1); no ruling. The route's INPUT group planted the tally's wrong kind only as a `testDir` mismatch (Bp10 §5), which the tally already refuses; the right-schema, same-`testDir`, wrong-kind case was not planted |
+| O-2 | `peer-closure --base` with no value exits 1 (read as no `--base`); `--table` with no value exits 0 (falls through `?? PEER_TABLE`) | **S-14** ("every input argument") | part of S-14's open state (P10-G2). By `K10/tools/peer-closure.mjs:76,133` the same reading covers `--overlay` (no value → no overlay) and `--json` (no value → no write); neither is planted yet. The route's §1 sweep listed `?? PEER_TABLE` as "an absent option's stated default"; the option here is present and its value is missing, which the sweep did not separate |
+| O-3 | W-C.2's C2-G1 grammar reads a bare `(BL)` and the word "tranche" as 0 | none of the 27; the chain's text carries neither (critic MG2 0, route 0 lines) | none. Formation input for W-C.2 (P10-G5). The route's own `tools/wc2/chain-text.mjs` reads a bare `(BL)` RED (Bp10 §5 MIGR), so the two detectors differ on it |
+| O-4 | W-C.2's appendix A dies on this repo: `git ls-files` exceeds `execFileSync`'s default 1 MB buffer (ENOBUFS, `waves/W-C.2.md:114`), and on an uncommitted migrated tree it reads paths the chain moved away (ENOENT) | none of the 27; W-C.2's gate | none. Formation input for W-C.2 (P10-G5) |
+| O-5 | S74c edits the landed engine (`scripts/structure/lib/move.mjs:168`); `floor/lib/move.mjs:168` keeps the old line | none of the 27 (S-08's hold, the gate at 0, is met); no edict clause (a record) | none on the count; **P10-R1** |
+| O-6 | `.claude/worktrees/bl/D1/p8/B-proto/` (P9-G5, still present), `p9/` (empty), `p10/B-proto/` (5.4 GB of snapshots, Bp10 G-11) | — | driver housekeeping (P10-G6) |
+
+**The route's own gaps** (Bp10 §9), dispositions.
+
+| Bp10 | disposition |
+|---|---|
+| G-1 | P10-R1 |
+| G-2 | **Confirmed under P9-R1 (a); no new ruling.** The ruled text is "B4 widens … to every module-grain value SCC", and LAW §1 seals `scripts` as well as `src`; the `scripts/structure/lib` ↔ `lib/graph` SCC is one such SCC, cured by the same base rule. A cure narrowed to `src` would leave a RED arm or an exemption the ruling does not grant. S74b (a self-path F-1 edge the engine could not move) and S74e (the new module's door, B7/B14) are the steps the base rule needs on that tree. W-D.1's D1-G3 VALUE-SCC reads `src` only (`waves/W-D.1.md:151`); when it is re-pointed (P9-G6) it reads both sealed zones |
+| G-3 | **None owed.** §P9-6.2 step 4 is the binding instruction for a pass that moves a `src` file: the touched specs run on the route tree and the tally re-derives against the committed base report. The route did that plus a fresh base run of the same specs, and the critic's independent reader agrees (cB10 §3) |
+| G-4 | the landing's version bump (W-D.1 / the release). The chain does not edit `package.json`'s version; C2-G4's published-version arm reads one miss until then. Carried into the convergence record |
+| G-5 | none; each critic writes its own battery |
+| G-6 | the driver drops the `tests-visual/node_modules` symlink from the seat task text (the checkout has no such directory) |
+| G-7 | W-D.1 §0 items 2, 3, 5 (1 / 5 / 3): W-D.1 §3 steps 5 and 7, its own edits (§P9-4) |
+| G-8 | outside D1 (P5-G8) |
+| G-9 | none |
+| G-10 | carried (§P10-5) |
+| G-11 | P10-G6 |
+
+**The critic's own defects** (cB10 §7): five, each re-run post-hash with the expectation unchanged (the PC-type/PCX-type plants closed a sibling cycle LAW §8 already counts, the route's run 1 hit the same trap; `migration10.sh` ran into O-4; a grep counted its own marker; pass 6's moved import; `--overlay {}` marked INFO where the kit is stricter). This registry accepts them: O-1's decisive rows (`T-base-is-route`, `T-route-is-rekeyed-base`, `R-base-is-route`) are hashed battery rows, and F6 only makes the masking concrete.
+
+**No finding maps to an edict clause the list leaves out. No item is added; the checklist stays at 27.**
+
+---
+
+## P10-3 · G's re-trigger: not fired
+
+- **The first arm fails again.** The pass 4-9 plants regress on the pass-10 tree with 0 differ (cB10 §4), and pass 10 adds a module-grain parent↔child arm to B4 that G's law has no clause for.
+- **The second arm has no ruling.** The datum moved by S70's one rebind, under P9-R2 (a); no ruling reopened G.
+
+G stays banked.
+
+---
+
+## P10-4 · Rulings: P10-R1, owed
+
+P9-R1 and P9-R2 were ruled on 2026-10-15 and landed in full (§P10-2). S-14's remaining work (O-1, O-2) sits under P8-R2 as ruled ("a degenerate input throws"; LAW §14 already lists "a report of another schema" and has `rekey` refuse a re-keyed report) and needs no ruling. Bp10 G-2 sits under P9-R1 (a) (§P10-2). One ruling is owed.
+
+| id | question | arms | evidence | recommendation |
+|---|---|---|---|---|
+| **P10-R1** | where the move engine's `./`-lead cure lives: the docs floor that S1 lands, or a chain step that patches the landed copy | (a) **floor row:** `floor/lib/move.mjs:168` takes the one-line cure, with a floor plant that moves a holder of `"./dist/x"` and reads the spelling kept; the floor base is re-cut (its digest moves; `src`, `dist`, the cascade baseline, the base peer report and the browser base reports do not, since the line touches only `scripts/structure/lib/move.mjs`); S74c leaves the chain; S1b→S70 re-derive and replay to a new digest; S70's datum unchanged (the engine does not ship). (b) **chain step:** S74c stays; FLOOR.md gains one line naming S74c as the landed cure; the docs engine keeps the defect as a record; the digest `6fdd4ec7…` stands. (c) **as is:** S74c stays, nothing recorded; the two engines and FLOOR.md F-2 disagree silently | `K10/authored/p10-engine-dot-lead.mjs` (the `from`/`to` regex); `floor/lib/move.mjs:168` (the old `(\.\.\/)*` lead); FLOOR.md F-2 / P4-F3 ("a root-relative spelling is kept verbatim"); Bp10 §2 (`"./dist/index.d.ts"` at `entries.mjs:71` became `"dist/index.d.ts"`, and the image check refused S74d with 2 edges lost); cB10 O-5; P4-F rows as the precedent for floor rows inside the loop | **(a).** The defect is the floor's: the floor engine contradicts the floor's own sentence, and the chain is patching the floor it lands. Curing it at the cause leaves one engine and one record, which is the clean-break rule, and costs one re-cut plus a replay that pass 11 can carry while the count is 0. (b) keeps two engines that disagree in the record the wave cites; (c) hides it. If the driver prefers no digest change while S-14 closes, (b) is the fallback, and the convergence record states it |
+
+---
+
+## P10-5 · Open gaps
+
+| id | gap | source | pass-11 disposition |
+|---|---|---|---|
+| P10-G1 | **S-14:** `browser-tally` and `rekey` accept right-schema, wrong-kind reports, two as an all-clear | cB10 O-1; `K10/tools/browser-tally.mjs:56,68`, `rekey.mjs:34`; `cB10-R/judges10.txt:33,35,55,56,70` | route, kit-only (§P10-6.3) |
+| P10-G2 | **S-14:** a value-taking flag that is present with no value reads as absent (`--base` → RED, `--table` → GREEN; by code `--overlay`, `--json` likewise) | cB10 O-2; `K10/lib/floor.mjs:27`; `cB10-R/judges10.txt:117,130` | route, kit-only (§P10-6.3) |
+| P10-G3 | the docs floor and the landed engine disagree on the `./` lead | Bp10 G-1, cB10 O-5 | per P10-R1 |
+| P10-G4 | pass 6's `fd4-probe.mjs` imports `scripts/structure/lib/tree.mjs`, which S74d moved; the route's run of the pass-7 tree probes shows the FAIL (`K10/results/p10/critic9/tree-probes.txt:169`) and Bp10 §5 does not list it | cB10 §4 | the pass-11 route re-points it (the critic's F4 line) and lists every earlier battery file that names a path S74d moved |
+| P10-G5 | W-C.2's appendix A: ENOBUFS on `git ls-files`, ENOENT on an uncommitted migrated tree, and a META grammar that reads a bare `(BL)` and "tranche" as 0 | cB10 O-3, O-4 | outside D1: formation input for W-C.2, on the tranche cursor. D1's own MIGRATION check keeps both readers (appendix A as fixed by the critic, and the route's `chain-text.mjs`) |
+| P10-G6 | `.claude/worktrees/bl/D1/p8/B-proto/` (P8-G6, P9-G5, still present), the empty `p9/`, and `p10/B-proto/` (5.4 GB: `snap-S73c/`, `snap-S74/`, `scratch/`, `SEQ-S74.json`; the seat's recursive removal was denied) | cB10 O-6, Bp10 G-11 | the driver removes all three before the pass-11 route seat |
+| P10-G7 | the seat task text names a `tests-visual/node_modules` symlink the checkout lacks | Bp10 G-6 | the driver drops it from the task text |
+| P9-G6 | W-D.1 and `waves/INDEX.md:47` cite the pass-4 kit and digest `472cf493…`; W-D.1's D1-G3 VALUE-SCC reads `src` only | §P8-6.6; Bp10 G-2 | re-pointed when D1 converges, to the converged kit and digest, VALUE-SCC over both sealed zones |
+| P7-G5 | the root's peer class broken at the floor base (23 reviewed holds) | pass 7 | outside D1; on the tranche cursor |
+| P5-G3, P5-G5, P5-G8 | renderer and page-operation swallows; no `pretest` for `dist-demo`; common browser failures (the 30 base-red keys among the 8 touched specs, Bp10 G-8) | pass 5 | outside D1; on the tranche cursor |
+
+Floor: P10-R1 (a) owes one floor row. FP6-1..FP6-3, FP6-7, FP5-3, FP5-4, FP5-7 stay declared limits.
+
+---
+
+## P10-6 · Pass-11 plan
+
+### P10-6.1 Routes
+
+| route | status | pass-11 work |
+|---|---|---|
+| D1-B | ADVANCE | close S-14 (P10-G1, P10-G2); land P10-R1 on its ruled arm; re-point the moved battery imports (P10-G4). The pass-11 critique is the first of two clean passes |
+| D1-G, D1-D′, D1-A, D1-C, D1-E, D1-F | unchanged | none; triggers watched |
+
+### P10-6.2 Order
+
+1. **Housekeeping** (P10-G6, P10-G7). This part is committed by the driver before any pass-11 seat (S-01).
+2. **Ruling.** P10-R1 ruled into `RULINGS.md` before the route seat.
+3. **Floor.** Under P10-R1 (a): the floor row and its plant; the floor base re-cut by S1's own script, its digest recorded. Under (b): the FLOOR.md line. Under (c): nothing.
+4. **Route.** Kit first (P10-G1, P10-G2, P10-G4; no digest change). Then, under P10-R1 (a) only, the chain: S74c removed, S1b→S70 re-derived, S69 still the last gate step, S70 the one rebind (expected unchanged at 2,920,386), the new digest replayed from three fresh worktrees, one `--twice`. Under (b) or (c) the chain is untouched and `6fdd4ec7…` is replayed from two fresh worktrees, one `--twice`. **Browser:** no `src` file moves in either arm; the committed reports stand and the tally is re-run through the cured judges. The kit and every result are committed before the critic launches.
+5. **Critique.** A fresh critic who authored nothing in passes 2-11, the pass-6..10 critics included, writes and hashes the battery before reading the kit.
+6. **Pass-11 agglomeration.** If S-14 closes and the critique re-opens nothing and maps nothing outside the list, the count reaches 1.
+
+### P10-6.3 Route work
+
+| id | build | closes or holds |
+|---|---|---|
+| route · report kind | P10-G1. `browser-tally`: `--base` and every `--base-rerun` must carry `rekeyedFrom` as an object whose `testDir` differs from the route's; `--route` and every `--route-rerun` must carry no `rekeyedFrom`; else a throw. `rekey`: its base must carry `testDir` other than the migrated program's (`"."`) and no `rekeyedFrom`; a route run or route rerun is refused. **Not** `baseReport`: the committed route reruns record `baseReport: null` (§P10-0 item 2). LAW §14 names the kinds (base run, re-keyed base, route run) and the field that tells them apart | S-14 |
+| route · flag values | P10-G2. `arg` (`lib/floor.mjs:27`) throws when a flag is present and its value is missing or is another flag; every value-taking flag of the four judges is listed in Bp11 with its reading (absent → stated default or throw; present-empty → throw) | S-14 |
+| route · sweep | the §1 sweep repeated over argument parsing as well as report fields: every place a judge reads an input's kind or presence, each a throw or a stated, planted reading | S-14 |
+| route · P10-R1 | per its ruled arm (§P10-6.2 steps 3-4) | S-08, S-09 |
+| route · batteries | P10-G4: pass 6's `fd4-probe.mjs` re-pointed; every earlier battery file naming a path S74d moved listed and re-pointed by `diff` | S-13 |
+
+### P10-6.4 What pass 11 must prove
+
+§P9-6.4's bar, re-met: the chain replays to one digest (`6fdd4ec7…`, or the re-derived one under P10-R1 (a)), rerun a no-op; 19 clauses at 0; verify:package CLEAN at the one datum; cascade GREEN against the floor base; 428/428 base-green held through the cured tally; `./motion-core` keyframes-free on all three arms; `seal.test.ts` 26/26 or more.
+
+**The battery must plant:**
+- for every input argument of every kit judge: missing, non-JSON, wrong-schema, and **every committed report kind in every slot**: the base run, a re-keyed base, a route run, a base rerun (raw and re-keyed), a route rerun (with `baseReport: null`), a probe report; each wrong one exits 2;
+- F6 as a hashed row: a route with one base-green test failing, read through every wrong-kind `--base`, `--base-rerun` and `rekey` path, never 0;
+- every value-taking flag of every judge present with no value, and followed by another flag: each exits 2;
+- under P10-R1 (a): the floor plant (a holder of `"./dist/x"` moved, the spelling kept) and the floor base digest re-cut by S1's script;
+- regressions: the pass-10 critic's battery (`7b7b5303…`) with its post-hash corrections, the pass-9 critic's (`748826fb…`), the 402 rows, crash8, passes 4-10's route batteries, P9-R1's PC/PCG/PCX/PD plants and P9-R2's MIGRATION plants.
+
+### P10-6.5 Convergence criterion
+
+§P2-6.5 unchanged; the checklist is §P3-9's 27 items, frozen. **B's two-clean-passes count is 0.** The pass-11 critique moves it to 1 if S-14 closes on the critic's measurement and the critique re-opens nothing and maps no finding to a listed item left open or to an edict clause the list leaves out; the pass-12 critique moves it to 2 on the same terms. A closed item whose §P10-7 hold column fails on the critic's measurement is re-opened.
+
+### P10-6.6 What the convergence record will carry (at pass 12 at the earliest)
+
+As §P9-6.6, with: the converged chain's digest (`6fdd4ec7…` under P10-R1 (b)/(c), the re-derived one under (a)) and its replays; the one datum S70 rebinds (2,920,386 unless a later step changes the package bytes); the rulings through P10-R1; the second module-grain SCC cured under P9-R1 (a) (Bp10 G-2); W-D.1 §0's five items with the last measurement (item 1 0 and item 4 cured by the chain; items 2, 3, 5 as W-D.1 §3 steps 5 and 7, at 1 / 5 / 3 on the pass-10 tree); the version bump as the landing's (Bp10 G-4); W-C.2's appendix-A defects as that wave's formation input (P10-G5); P9-G6's re-pointing of W-D.1 (`waves/W-D.1.md`, D1-G3 VALUE-SCC over `src` and `scripts`) and `waves/INDEX.md:47`.
+
+---
+
+## P10-7 · Open gaps, enumerated (the pass-11 checklist)
+
+§P3-9's list carries forward with its text frozen. No item is added in pass 10.
+
+| item | pass-10 critic | entering pass 11 | what holds it closed |
+|---|---|---|---|
+| S-01 | CLOSED | CLOSED | this part committed; the pass-11 kit and results committed before judgment |
+| S-02 | CLOSED | CLOSED | B8 0, B9 0 |
+| S-03 | CLOSED | CLOSED | P6-R1..P9-R2 on their arms, landed and measured; P10-R1 ruled and landed; the datum rebound once |
+| S-04..S-08 | CLOSED | CLOSED | gate at 0 on every clause; under P10-R1 (a), the floor row planted |
+| S-09 | CLOSED | CLOSED | the digest replayed idempotently, rerun a no-op |
+| S-10 | CLOSED | CLOSED | cascade GREEN listed, RED unlisted |
+| S-11 | CLOSED | CLOSED | vitest 0 failed |
+| S-12 | CLOSED | CLOSED | every base-green key accounted for through the cured tally; capture exclusion stated, printed, and a moved capture spec read by B0 |
+| S-13 | CLOSED | CLOSED | regressions identical, every earlier battery runnable on the pass-11 tree (P10-G4) |
+| S-14 | **OPEN** | **OPEN** | B17 0; every gate throw exits 2, import time included; every kit judge exits 2 on a throw or a degenerate input on every input argument, a wrong-schema or **wrong-kind report in every slot** and **a flag with no value** included; no judge reads a malformed input as an all-clear |
+| B-01 | CLOSED | CLOSED | every clause 0, B2 0; I7 caught |
+| B-02..B-06 | CLOSED | CLOSED | regressions identical |
+| B-07 | CLOSED | CLOSED | B15 over every stem |
+| B-08, B-09 | CLOSED | CLOSED | — |
+| B-10 | CLOSED | CLOSED | B18 owns the class; its reader throws on a peer-less, whitespace-only and subpath-less row |
+| B-11..B-13 | CLOSED | CLOSED | — |
+
+**Count entering pass 11:** 27 items, 26 closed, 1 open (S-14). Two-clean-passes count: **0**.
+
+**Held with the bank.** G-01..G-12 and D′'s gaps, unchanged.
+
+No route converged in pass 10. D1-B converges at the pass-12 agglomeration at the earliest.
