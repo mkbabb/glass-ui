@@ -1,0 +1,88 @@
+{
+ "control_none_pass": true,
+ "crosscheck": {
+  "block 45": {
+   "clamp5_witness_form": 40,
+   "runtime6": 40
+  },
+  "block 150": {
+   "clamp5_witness_form": 140,
+   "runtime6": 140
+  },
+  "block 400": {
+   "clamp5_witness_form": 200,
+   "runtime6": 200
+  },
+  "stall": {
+   "clamp5": 48,
+   "runtime6": 48
+  }
+ },
+ "clamp": {
+  "passing": [
+   200,
+   225,
+   250,
+   300,
+   400,
+   500,
+   1000
+  ],
+  "blind_from": 200
+ },
+ "drop": {
+  "passing": [
+   401,
+   410,
+   450,
+   500,
+   1000
+  ],
+  "blind_from": 401
+ },
+ "rebase": {
+  "passing": [
+   401,
+   410,
+   450,
+   500,
+   1000
+  ],
+  "blind_from": 401
+ },
+ "soft": {
+  "passing": [
+   2000,
+   3000,
+   5000,
+   7500,
+   10000,
+   20000,
+   50000,
+   100000
+  ],
+  "blind_from": 2000
+ },
+ "timer": {
+  "50": [
+   true,
+   false,
+   0
+  ],
+  "100": [
+   true,
+   false,
+   0
+  ],
+  "250": [
+   false,
+   false,
+   2
+  ],
+  "500": [
+   false,
+   false,
+   3
+  ]
+ }
+}
