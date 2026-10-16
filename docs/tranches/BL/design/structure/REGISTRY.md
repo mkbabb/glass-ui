@@ -3403,3 +3403,181 @@ P11-G1 and P11-G2 are closed. **Declared limits:** FP6-1..FP6-3, FP6-7, FP5-3, F
 **Held with the bank.** G-01..G-12 and D′'s gaps, unchanged.
 
 No route converged in pass 12. D1-B converges at the pass-13 agglomeration if the pass-13 critique is clean.
+
+---
+
+# D1 · pass 13 · REGISTRY: the route after pass 13 · CONVERGED
+
+| field | value |
+|---|---|
+| seat | D1 pass-13 agglomeration. Closes pass 13 with B's status and convergence, the two-clean-passes count and, since it reaches 2, the convergence record. Passes 1-12 above are kept intact |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `6a80458ca` (the pass-13 route commit, 15:30:59Z). The kit and `B-proto.md` were committed there, before the critic's battery hash (15:36:03Z). The critique (`pass-13/critique-B.md`, `pass-13/critique-B/`) is untracked at this seat; the driver commits it with this part. `git worktree list` shows 0 `bl/D1` entries |
+| inputs, read in full | `pass-13/B-proto.md`, `pass-13/critique-B.md`, `critique-B/BATTERY-HASH.txt`; this file §P2-6.5 and the pass-12 part (§P12-0..§P12-7); `RULINGS.md` through P11-R1; `waves/INDEX.md:47,112`; `waves/W-D.1.md` §0 and its gate table. The kit and the critic's results were read at the lines the reports cite, not re-run |
+| instruments | none re-run. Read-only checks: the critic's battery re-hashed by its stated method, `8cf445d0…195ea53d` = `BATTERY-HASH.txt`; `critique-B/results/judges13.txt` tail (`J13 SUMMARY pass=207 fail=0`); `results/p12-regress/judges12.txt` (`J12 SUMMARY pass=233 fail=0`); `results/extent13.txt` (`E13 SUMMARY pass=54 fail=1`, the one FAIL `SEQ-missing-peer rc=0`); `K13/tools/peer-closure.mjs:84-90` (`readSeq()` called only under `--floor-base`); `.claude/worktrees/bl/D1/p13/B-proto/scratch/` present (22 MB) |
+| fences | no source edit, no git write; this part is the only write |
+
+Short citations: `Bp13` is `pass-13/B-proto.md`, `cB13` is `pass-13/critique-B.md`, `cB13-R` is `pass-13/critique-B/results/`, `K13` is `pass-13/B-kit/`.
+
+---
+
+## P13-0 · In brief
+
+| id | route | status | conv. (critic) | critic's verdict | re-opened by the critic | re-opened by this registry | reason in one line |
+|---|---|---|---:|---|---|---|---|
+| D1-B | sealed modules, flat | **CONVERGED (second clean pass)** | **27/27 = 100%** | all 27 CLOSED | 0 | 0 | the frozen kit (`K13` = `K12` in code: 355 files 0 differ by the route, 16 path lines 0 unpaired by the critic) re-met the whole bar from committed bytes on both seats: `6fdd4ec7…` replayed, rerun a no-op; floor base `6773b4ec…`; 19/19 at 0; CLEAN at 2,920,386; cascade GREEN; 428/428/0/0, 0 unbased, three readers; `seal.test.ts` 26/26; vitest 0 failed; floor plant KEPT/LOST; P12-G1's premise HELD (0 floor paths under `tests-visual`, 153 = 153 = 153) |
+| D1-G | eponymous closures | BANK (unchanged) | 44% (pass 3) | — | — | — | re-trigger not fired (§P13-3) |
+
+**The two-clean-passes count for B moves from 1 to 2.** The rule (§P12-6.5): the count advances iff the pass-13 critique re-opens nothing and maps no finding to a listed item or to an edict clause the list leaves out.
+
+1. **Nothing re-opened.** All 27 items close on the critic's own measurement, each against its §P12-7 hold column (cB13 §6). This registry re-opens nothing (§P13-2).
+2. **No finding maps to a listed item's text.** F-1 is the one battery row that failed its hashed expectation; it maps to S-14's clause and does not fail S-14's hold text (§P13-2). I-2..I-4 map to no item.
+3. **No finding maps to an edict clause the list leaves out.** F-1 sits under "no masking fallbacks", which S-14 already carries; I-2..I-4 are a label, a tree the probe refuses, and a runner's output path.
+
+**§P2-6.5 holds in all three conditions:** (1) zero items open, each closed by a committed, replayable measurement (the pass-13 kit and results at `6a80458ca`, the critique's results under `pass-13/critique-B/`); (2) a fresh adversarial audit re-opened none (cB13: authored nothing in passes 2-13; battery hashed before reading the kit); (3) two consecutive clean critiques, pass 12 (cB12, 27/27) and pass 13 (cB13, 27/27). W-D.1 §0's "at least three full passes" is met thirteen times over. **D1 converges on route B.**
+
+---
+
+## P13-1 · Registry
+
+| id | unit set declared by | enforced between units | status | conv. | re-trigger / refutation | after pass 13 |
+|---|---|---|---|---:|---|---|
+| D1-B | a module is a code dir in `src` or `scripts` with a door (B7), recursively; containers and kind slots excepted | privacy: the recursive door seal, kernel and CSS edges included (B1, B3); direction (B8); acyclicity: sibling, and every module-grain value SCC parent↔child included (B4, P9-R1); no masking fallback (B17); names (B15); Playwright-program membership and visual subject (B16); the peer class (B18) | **CONVERGED** | 27/27, count 2 | — | passes to W-D.1 (§P13-6) |
+| D1-G | first-level component units; eponymous roots | B1 into component units only | BANK | 44% | not fired (§P13-3) | closed with the loop; its gaps held (§P13-6.5) |
+| D1-D′ | — | — | BANK (unchanged) | 7% | not fired | closed with the loop |
+| D1-A | — | — | BLOCK (unchanged) | 35% | — | closed with the loop |
+| D1-C, D1-E, D1-F | — | — | BANK (unchanged) | 40/35/30% | no trigger fired | closed with the loop |
+
+---
+
+## P13-2 · D1-B · Sealed modules, flat: CONVERGED
+
+**What ran** (Bp13 §0-§9, confirmed by cB13 §0-§6).
+
+| item | route (Bp13) | critic (cB13) |
+|---|---|---|
+| frozen kit | `diff -r` excluding results and run scripts: six files, each `results/p12` → `results/p13` (`RESULTS-PATHS-p13.txt`); 355 files of `lib/`, `gate/`, `frozen/`, `authored/`, `derive/`, `LAW.md`, root scripts and the four judges, 0 differ, hashed after the batteries | 16 lines in 6 files, each a `p12` → `p13` pair, 0 unpaired; no diff in the frozen parts |
+| P12-G1 | 100 per-row paths, 0 under `tests-visual`; per-row cut `6773b4ec…`; `baseProgram()` 153 = floor base's 153, 0 / 0; HELD | 88 distinct paths (= the route's distinct set, diff 0), 0 under `tests-visual`; 153 by `ls-tree`, by the floor base, by `baseProgram()` |
+| replay | `6fdd4ec7…` over 1,587 files from two fresh HEAD worktrees; r1 `--twice` 126/126 idempotent; rerun 0.3 s | fresh worktree, MATCH, rerun 0.4 s; the digest unchanged after every battery family |
+| floor base | `6773b4ec…` over 1,354 files | FB1 = FB2 = `6773b4ec…`; FB5 the pre-cure text reads `5b14c6c7…` |
+| gate | 19/19 at 0; 1,585 / 8,350 / 142/142; pin 142/122/1,320/2 | the same (`seal-wt.txt`) |
+| toolchain | build, `vue-tsc` ×2, demo build 0; `seal.test.ts` 26/26; vitest 2,335 passed, 0 failed | the same |
+| package | CLEAN at 2,920,386, `equal: true` | the same |
+| cascade | GREEN against the floor base, committed baseline and fresh snapshot | GREEN listed, RED on an empty listing; all four `.seq` identical |
+| `./motion-core` | keyframes-free on all three arms | the same, against the kit's base and its own |
+| browser | selection 155/14 byte-identical; re-key 153/866, results equal; tally 428/428/0/0, 0 unbased; pairs 33/33, 3/3; no browser run (§P12-6.2 step 2) | kit tally, `tally12.mjs` and the independent post-hash `tally13.mjs`: 428/428/0/0, 0 unbased, flaky 1 |
+| S-14 plants | plants-p12 148/148; F7 10/10 at 2 | judges13 207/0 (18 reports discovered; every slot; F6′ on the last eligible key; **DELALL: each of the 153 base-origin specs deleted in turn, 153/153 exit 2**); judges12 233/0; extent13 54/1 (`rekey`, `browser-select`, `peer-closure` off-extent rows 2) |
+| regressions | p6-p11 identical; the pass-12 critic's battery by path 233/0, 7/0; through it pass 11's, 10's, 9's | the same by path: verdict lines identical in 22 of 23 files (the 23rd paths only); regress 402 rows 0 differ; crash8 39/39; judge-throws 55/0 |
+| W-D.1 §0 | 0 / 1 / 5 / cured / 3 | equal |
+
+**The critic's findings** (cB13 §3), read under §P2-6.5.
+
+| # | finding | item it maps to, and the text that decides | effect |
+|---|---|---|---|
+| F-1 | `peer-closure` without `--floor-base` with `SEQUENCE.json` deleted exits 0 GREEN; the hashed row expected 2, copied from Bp12 §1's row listing `peer-closure` among the judges that throw on an absent `SEQUENCE.json` | **S-14's clause, not its text.** The hold column asks every kit judge to exit 2 "on a throw or a degenerate input **on every input argument**: … an absent or degenerate `SEQUENCE.json`". Confirmed at `K13/tools/peer-closure.mjs:84-90`: `readSeq()` is called only under `--floor-base`; the non-floor verdict reads the tree, the table, `--base` and the overlay, none of the chain. A file the mode does not read is not one of its input arguments, so its absence masks nothing. Where the probe takes the file (`--floor-base`), the critic's SEQ-missing-peer-fb row exits 2. The defect is in Bp12 §1's table row, which omits the mode qualifier | none (INFO). The convergence record carries the qualifier: "`peer-closure`: under `--floor-base`" (§P13-6.1) |
+| I-2 | Bp13 §2's "100 paths touched" is a per-row sum; 88 distinct | none: the premise needs the count under `tests-visual`, 0 either way | none (INFO) |
+| I-3 | `peer-closure --root <floor base> --base <kit base>` (an off-chain tree in the non-floor mode) exits 2 | none: Bp12 §1 states no digest check for the non-floor mode; the one off-chain tree tried does not read GREEN | none (INFO) |
+| I-4 | `batteries-p13.sh` rewrites result files in the kit it runs from | none: a record-writing runner run in a disposable worktree; verdict lines equal the committed ones | none (INFO) |
+
+**The critic's own defects** (cB13 §7): F-1's expectation (judged above); a `ls ~/.claude/guard/` fragment that printed nothing; a zsh word-split that exited 127 before the guard started and was relaunched; a failed redirect into an existing `/tmp/x` directory; two post-hash files carrying no scored expectation. None changes a hashed expectation for a judge under test. This registry accepts them.
+
+**The route's own gaps** (Bp13 §10), dispositions.
+
+| Bp13 | disposition |
+|---|---|
+| G-1 | **None owed.** §P12-6.2 step 2 binds; both critics re-derived the selection on a byte-identical tree. The full `/2` browser runs are pass 8's, carried by byte-identical route trees and selection with the p10 and p11 pairs (§P13-6.1) |
+| G-2 | none; the critic ran `batteries-p13.sh` with the four arguments (cB13 §4) |
+| G-3 | housekeeping: `.claude/worktrees/bl/D1/p13/B-proto/scratch/` (22 MB) remains, measured at this seat; the driver removes `.claude/worktrees/bl/D1/p13/` |
+| G-4 | disclosed; no number rests on either slip |
+| G-5 | W-D.1 §3 steps 5 and 7 (§P13-6.4) |
+| G-6 | outside D1; carried (§P13-6.5) |
+
+**No finding maps to an edict clause the list leaves out. No item is added; the checklist stays at 27, all closed.**
+
+---
+
+## P13-3 · G's re-trigger: not fired
+
+- **The first arm fails again.** The pass 4-12 plants regress on the pass-13 tree with 0 differ (cB13 §4); G's law has no clause for B4's module-grain parent↔child arm.
+- **The second arm has no ruling.** The datum did not move; no ruling reopened G.
+
+G stays banked, and with D1 converged the bank closes with the loop.
+
+---
+
+## P13-4 · Rulings: none owed
+
+No finding asks for a ruling: F-1 is decided by S-14's own text, I-2..I-4 map to no item, Bp13 G-1 is decided by §P12-6.2 step 2. The convergence rests on rulings already made (§P13-6.1).
+
+---
+
+## P13-5 · Open gaps
+
+None is a D1 checklist item. Each is carried to the record that owns it (§P13-6.4, §P13-6.5).
+
+| id | gap | owner after convergence |
+|---|---|---|
+| P9-G6 | W-D.1 and `waves/INDEX.md:47` cite the pass-4 kit and digest `472cf493…`; W-D.1's D1-G3 VALUE-SCC reads `src` only; W-D.1 §0 still reads "State at this seat: entering pass 4" | W-D.1's re-pointing at formation (§P13-6.4) |
+| P11-G3 | FLOOR.md's worktree recipe names the `tests-visual/node_modules` symlink the checkout lacks | W-D.1's landing (FLOOR.md's one stale recipe line) |
+| P13-G1 | Bp12 §1's extent row lists `peer-closure` among the `SEQUENCE.json` readers without the `--floor-base` qualifier (cB13 F-1) | carried as a qualifier in the convergence record; the pass-12 record itself is not rewritten |
+| P13-G2 | `.claude/worktrees/bl/D1/p13/B-proto/scratch/` (22 MB) left by a denied `rm -rf` | the driver (housekeeping) |
+| P10-G5 | W-C.2's appendix A (ENOBUFS, ENOENT on an uncommitted tree, the META grammar) | W-C.2 formation input |
+| P7-G5 | the root's peer class broken at the floor base (23 reviewed holds) | tranche cursor |
+| P5-G3, P5-G5, P5-G8 | renderer and page-operation swallows; no `pretest` for `dist-demo`; common browser failures | tranche cursor |
+
+**Declared limits** (unchanged, carried): FP6-1..FP6-3, FP6-7, FP5-3, FP5-4, FP5-7; Bp11 G-4 (a forged `rekeyedFrom`) with cB12 I-1 (a hand-edited skipped status) and I-2 (an unread `rekeyedFrom.report`); Bp12 G-2 (key grain is a verdict, UNBASED, RED). Bp12 G-3 (the base-program premise) is no longer a stated premise: it is a measured fact on both seats (Bp13 §2, cB13 §2).
+
+---
+
+## P13-6 · CONVERGENCE RECORD · D1 structure
+
+### P13-6.1 The converged route
+
+- **Route:** D1-B, sealed modules, flat. The kit is `pass-13/B-kit/` (`K13`; in code = `K12` = the kit both clean critiques judged): `LAW.md` §1-§14, the seal B0-B18 (19 clauses), the pin (142 modules / 122 / 1,320 reviewed / 2), the nine floor rows (`structure/floor/`), the four judges (`browser-tally`, `rekey`, `browser-select`, `peer-closure`) and `lib/`.
+- **The chain:** 126 steps (`K13/frozen/SEQUENCE.json`), S1 the floor rows, S69 the last gate step, S70 the one rebind; the MIGRATION rows under `## 11.0.0` with no tranche id (P9-R2 (a)).
+- **Chain digest:** `6fdd4ec7bd259630d38a466a444e45b2b18f71b4cbf2259d258a4c6177996bbf` over 1,587 files. Replayed from fresh HEAD worktrees in passes 11, 12 and 13, by route and critic; idempotent (`--twice`, 126/126), rerun a no-op. Base code: 10.1.0 (`git diff 6154d6ec HEAD -- . ':!docs'` empty).
+- **Floor base:** `6773b4ec1217ab416eea2e5ec1b79d39587c4201a70871d347e919d532f2cadb` over 1,354 files, cut by `floor/rows/apply.mjs` (P10-R1 (a), P11-F1); its nine rows touch 88 distinct paths, 0 under `tests-visual`.
+- **The one rebound datum:** S70's `.bundle-ratchet`, **2,920,386** (floor 2,913,546, +6,840; files 838 → 921), verify:package CLEAN, `equal: true`.
+- **The bar it meets:** 19/19 clauses at 0 (1,585 files, 8,350 edges); cascade GREEN against the floor base (SCOPE Timeline → TimelineMarks 40, risks 0); 428/428 base-green keys held, 0 failed, 0 absent, 0 unbased (flaky 1 out of the bar); `./motion-core` keyframes-free on names, dist and files; `seal.test.ts` 26/26; vitest 2,335 passed, 0 failed; the floor plant KEPT on the landed engine, LOST with `move.mjs:168` reverted; W-D.1 §0 VALUE-SCC 0 and MIGRATION cured.
+- **Its browser evidence:** the full `/2` runs are pass 8's (`base.json`, `route.json` and the reruns, byte-identical through passes 8-13), carried by a byte-identical route tree and selection (155 specs, 14 captures excluded, LAW §13), with the p10 (33/33) and p11 (3/3) touched-spec pairs. No pass after 8 moved a file a browser spec reads.
+- **Extent qualifier (P13-G1):** `peer-closure` reads `SEQUENCE.json` under `--floor-base` only; in that mode an absent file exits 2.
+- **The two clean critiques:** pass 12 (`pass-12/critique-B.md`, battery `c6fdf555…`) and pass 13 (`pass-13/critique-B.md`, battery `8cf445d0…`), each 27/27, re-opened 0.
+
+### P13-6.2 The rulings it rests on
+
+R-1..R-10 as amended, X-10; P3-R1..P3-R9 (P3-R9 as re-worded by P4-R3); P4-R1..P4-R5; P5-R1..P5-R5; P6-R1..P6-R3; P7-R1..P7-R2; P8-R1..P8-R3 (the `_*` capture specs out of the browser selection, stated in LAW §13; every kit judge exits 0/1/2 under the seal.mjs guard and throws on a degenerate input; `src/README.md`'s table the one record of declared peer classes); P9-R1..P9-R2 (B4 judges every module-grain value SCC, parent↔child included, cured by the `fourier-field/math.ts` base-rule move; MIGRATION under `## 11.0.0`, S70 rebinds once); P10-R1 (the `./`-lead cure as a floor row); P11-R1 (`--base` covers the route through the chain's map). All in `RULINGS.md`.
+
+### P13-6.3 The edict, as the route answers it
+
+| edict clause (CHARTER.md, last four paragraphs) | how the converged route holds it |
+|---|---|
+| recursive colocation of every component with its sub-components, composables, skeletons, constants and styles | every code dir in `src` and `scripts` is a module with a door, recursively (B7); placement by the authored carve (B10); tests in their home's slot (B16) |
+| only module-level or global composables in a `composables/` dir | placement (B10) moves single-owner composables beside their owner; the kernel publishes no component interior (P3-R1, B8) |
+| long-running dirs broken into encapsulated common modules | R-5 bounds (B6: 12 direct files, 500 lines); privacy through the door seal (B1, B3) |
+| the same for backend files, befitting their languages | `scripts` is a zone under the same seal (B7, B10) |
+| clean breaks: no aliases, shims, dual paths, masking fallbacks | B9 (one door per name), B12 (no relays or mirrors), B14 (door purity), B17 (no masking fallback), the judges' 0/1/2 exits (P8-R2) |
+
+### P13-6.4 What passes to wave formation
+
+- **W-D.1** (`waves/W-D.1.md`; `waves/INDEX.md:47`, families F-55..F-59; `INDEX.md:112` counts it as D1's one loop wave). Its §0 entry gate is met by this record. Formation re-points it (P9-G6): the kit `pass-4/B-kit` → `pass-13/B-kit`; digest `472cf493…` → `6fdd4ec7…`; `LAW §n` cites to `pass-13/B-kit/LAW.md`; §0's "State at this seat" to this part; D1-G3's VALUE-SCC over `src` and `scripts`; §0 item 1 (the `fourier-field` parent↔child cycle) cured by P9-R1 and measured 0.
+- **W-D.1 §0's five items:** 0 / 1 / 5 / cured / 3. Items 2 (`Surface` names two symbols) and 3 (five bare type aliases) are W-D.1 §3 step 5; item 5 (three consumer presets in `./tokens`) is §3 step 7. These are the wave's own edits, outside the chain.
+- **The landing's own:** the version bump (Bp10 G-4; the chain writes `## 11.0.0`); FLOOR.md's stale `tests-visual/node_modules` recipe line (P11-G3).
+- **Waves that read what W-D.1 lands:** W-D.2 (`waves/W-D.2.md` §3 item 9: B10 takes `demo` as a third zone on the seal W-D.1 puts in the tree); W-C.1 (`waves/W-C.1.md` item 4: the loop's kit moves from `design/structure/` to `scripts/loops/structure/` with its last reading wave); W-L.8 (G-L8-14: no loop tooling tracked at the close); W-C.2 (P10-G5, appendix A's defects as formation input).
+
+### P13-6.5 What stays held
+
+- **With the banked routes:** G-01..G-12 and D′'s gaps (the bank closes with the loop; G-12's question is answered on B by P9-R1).
+- **On the tranche cursor:** P7-G5, P5-G3, P5-G5, P5-G8.
+- **Declared limits** (§P13-5): FP6-1..FP6-3, FP6-7, FP5-3, FP5-4, FP5-7; Bp11 G-4 with cB12 I-1, I-2; Bp12 G-2.
+- **Housekeeping:** P13-G2, the driver's.
+
+---
+
+## P13-7 · The checklist, closed
+
+| item | pass-12 critic | pass-13 critic | final |
+|---|---|---|---|
+| S-01..S-14 | CLOSED | CLOSED | CLOSED |
+| B-01..B-13 | CLOSED | CLOSED | CLOSED |
+
+**27 items, 27 closed, 0 open. Two-clean-passes count: 2. D1 converged on route B at the pass-13 agglomeration; no pass 14 is planned.**
