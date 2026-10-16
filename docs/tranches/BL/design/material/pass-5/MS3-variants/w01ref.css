@@ -1,0 +1,16 @@
+/* The W-0.1 tree for W-0.11 G6 ("no M-2 or M-3 row that passes on the W-0.1 tree fails here"): the minor v3 build with
+   W-0.11's values backed out, i.e. 10.1.0's blur ladder and shadow tokens in BOTH modes. A reference, not a design. */
+:root {
+  --glass-blur-wash-radius: 10px; --glass-blur-quiet-radius: 14px; --glass-blur-resting-radius: 16px;
+  --glass-blur-floating-radius: 20px; --glass-blur-overlay-radius: 22px;
+  --shadow-modal: -4px 4px 0px 0px var(--cartoon-ink-lead), 0 24px 64px color-mix(in srgb, var(--foreground) 12%, transparent);
+  --shadow-dock: 0 0 20px color-mix(in srgb, var(--shadow-color) 14%, transparent);
+  --shadow-dock-collapsed: 0 0 12px color-mix(in srgb, var(--shadow-color) 12%, transparent);
+}
+:root.dark {
+  --glass-blur-wash-radius: 10px; --glass-blur-quiet-radius: 14px; --glass-blur-resting-radius: 16px;
+  --glass-blur-floating-radius: 20px; --glass-blur-overlay-radius: 22px;
+  --shadow-modal: -4px 4px 0px 0px var(--cartoon-ink-lead), 0 24px 64px color-mix(in srgb, var(--foreground) 18%, transparent);
+  --shadow-dock: 0 0 20px color-mix(in srgb, var(--shadow-color) 14%, transparent);
+  --shadow-dock-collapsed: 0 0 12px color-mix(in srgb, var(--shadow-color) 12%, transparent);
+}

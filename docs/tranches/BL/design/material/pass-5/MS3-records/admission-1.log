@@ -1,0 +1,41 @@
+== builds start 17:10:30 load { 24.18 22.65 20.64 }
+worktree = minor-split-v3.patch
+
+a:b referenced in a:b didn't resolve at build time, it will remain unchanged to be resolved at runtime
+built minor3 from /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p5/minor3/wt @ 19ac57b1 (src dirty files: 33) in 1.1s → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p5/minor3/wt/.d3out/builds/minor3/dist
+
+a:b referenced in a:b didn't resolve at build time, it will remain unchanged to be resolved at runtime
+built the demo → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p5/minor3/wt/.d3out/builds/minor3/demo
+minor3 built 17:10:33 load { 25.12 22.87 20.73 }
+worktree = HEAD
+
+a:b referenced in a:b didn't resolve at build time, it will remain unchanged to be resolved at runtime
+built head from /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p5/minor3/wt @ 19ac57b1 (src dirty files: 0) in 0.9s → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p5/minor3/wt/.d3out/builds/head/dist
+
+a:b referenced in a:b didn't resolve at build time, it will remain unchanged to be resolved at runtime
+built the demo → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p5/minor3/wt/.d3out/builds/head/demo
+head built 17:10:36 load { 25.12 22.87 20.73 }
+worktree = minor-split-v3.patch
+== builds end 17:10:36 load { 24.79 22.84 20.73 }
+== search start 17:10:36 load { 24.79 22.84 20.73 }
+capture w01ref exit 0 17:16:46 load { 16.27 17.24 18.63 }
+capture r16 exit 0 17:22:54 load { 11.12 14.11 16.80 }
+capture r17 exit 0 17:28:59 load { 7.57 10.71 14.29 }
+capture r18 exit 0 17:35:07 load { 15.49 13.98 14.45 }
+capture r19 exit 0 17:41:18 load { 15.06 16.15 15.58 }
+== search end 17:41:18 load { 15.06 16.15 15.58 }
+== search-read start 17:41:18 load { 15.06 16.15 15.58 }
+-- w01ref: PASS (11 gated rows) | fg 4.51–4.53
+-- r16: PASS (11 gated rows) | fg 4.46–4.54
+   W-0.11 G6 m2: G7 m2: head PASS rows 716; regressed 1; head-PASS rows absent in route 0; rows FAIL at head now PASS 3
+   W-0.11 G6 m3: G7 m3: head PASS rows 211; regressed 0; head-PASS rows absent in route 0; rows FAIL at head now PASS 0
+-- r17: PASS (11 gated rows) | fg 4.46–4.54
+   W-0.11 G6 m2: G7 m2: head PASS rows 716; regressed 1; head-PASS rows absent in route 0; rows FAIL at head now PASS 3
+   W-0.11 G6 m3: G7 m3: head PASS rows 211; regressed 0; head-PASS rows absent in route 0; rows FAIL at head now PASS 0
+-- r18: PASS (11 gated rows) | fg 4.51–4.53
+   W-0.11 G6 m2: G7 m2: head PASS rows 716; regressed 0; head-PASS rows absent in route 0; rows FAIL at head now PASS 1
+   W-0.11 G6 m3: G7 m3: head PASS rows 211; regressed 0; head-PASS rows absent in route 0; rows FAIL at head now PASS 0
+-- r19: PASS (11 gated rows) | fg 4.51–4.53
+   W-0.11 G6 m2: G7 m2: head PASS rows 716; regressed 0; head-PASS rows absent in route 0; rows FAIL at head now PASS 1
+   W-0.11 G6 m3: G7 m3: head PASS rows 211; regressed 0; head-PASS rows absent in route 0; rows FAIL at head now PASS 0
+== search-read end 17:41:39 load { 14.93 16.10 15.57 }

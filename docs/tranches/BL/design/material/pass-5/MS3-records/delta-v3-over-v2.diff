@@ -1,0 +1,539 @@
+diff -ru scratch/minor2/src/components/_shared/menu/menu.css wt/src/components/_shared/menu/menu.css
+--- scratch/minor2/src/components/_shared/menu/menu.css	2026-10-16 17:10:01
++++ wt/src/components/_shared/menu/menu.css	2026-10-16 19:17:13
+@@ -1,6 +1,6 @@
+ /* Imported after utilities.css so menu state wins at equal specificity. */
+ @layer components {
+-    /* A menu ROW is not a lens. It carries a hover FILL and nothing else — no
++    /* A menu ROW is not a lens. It carries a highlight FILL and nothing else — no
+        `backdrop-filter`, no rung — because the open menu's own plate is the one backdrop
+        sample for that visual body, and a row-level filter inside it would be a plate
+        nested in a plate for the width of one line of text. (The token home used to
+@@ -11,7 +11,9 @@
+        darkens the cream row with no hue (C 0.010), which reads grey. The highlighted
+        row is the menu's one current item, so it takes the selected alpha: at the hover
+        alpha no in-gamut accent at this lightness reaches C 0.02 on the cream plate.
+-       DARK: the quiet rung's plate colour. */
++       DARK: the quiet rung's plate colour. The fill is STATE in both modes, so it
++       paints only through the engaged group below (`[data-highlighted]`, `:focus`, an
++       open sub-trigger); a bare `:hover` lifts the row and mints no fill. */
+     .glass-menu-row {
+         --menu-row-bg: light-dark(oklch(from var(--section-color-5) l c h / var(--fill-selected)), var(--glass-plate-quiet));
+         --menu-row-lift: -1px;
+@@ -43,35 +45,23 @@
+         translate: 0 0;
+     }
+ 
+-    /* The NON-POINTER engaged states. Keyboard highlight changes paint without
+-       restarting the pointer lift, so these carry no `translate` value of their own —
+-       only the ATTACK clock, because this is the state they land IN. */
+-    .glass-menu-row:focus:not([data-disabled]),
+-    .glass-menu-row[data-highlighted]:not([data-disabled]),
+-    .glass-menu-row[data-state="open"]:not([data-disabled]) {
+-        background: var(--menu-row-bg);
+-        color: var(--accent-foreground);
+-        transition:
+-            background-color var(--engage-control-engage-attack) var(--ease-standard),
+-            color var(--engage-control-engage-attack) var(--ease-standard),
+-            border-color var(--engage-control-engage-attack) var(--ease-standard),
+-            box-shadow var(--engage-control-engage-attack) var(--ease-standard),
+-            translate var(--spring-dock-duration) var(--spring-dock),
+-            scale var(--spring-press-duration) var(--transition-liquid-spatial);
+-    }
+-
+     /* G7 HOVER GUARD at the menu-row seat. `:hover` latches on a coarse pointer and
+-       stays latched until something else is tapped, so an unguarded hover rung paints a
+-       tapped row as permanently pointed-at. The touch answer here is `[data-highlighted]`
+-       above — reka sets and CLEARS it on pointer interaction, so a touch still gets the
+-       fill and never keeps it. (It is NOT `.tap-squish:active`: not one of the six rows
+-       that compose `.interactive-item` composes `.tap-squish`.) The lift is pointer-only
+-       by the same law, and lives here rather than in the group above so a keyboard
+-       highlight never moves the row. */
++       stays latched until something else is tapped, so a hover leg would mark a tapped
++       row as permanently pointed-at. The pointer's fill is `[data-highlighted]` below:
++       reka sets it on pointer movement and CLEARS it on leave, on every composer
++       (rowClass.ts, the four DropdownMenu items, CommandItem), so a pointer still gets
++       the engaged fill and a touch never keeps it. (It is NOT `.tap-squish:active`: not
++       one of the six rows that compose `.interactive-item` composes `.tap-squish`.)
++       Hover itself carries only the lift, pointer-only by the same law, and apart from
++       the engaged group so a keyboard highlight never moves the row. Its background
++       stays at rest: every row here also composes `.interactive-item`, whose own
++       `:hover` paints `--accent` at 50% in the same layer, and that grey would reach a
++       row the pointer rests on while the keyboard highlights another. The rule sits
++       BEFORE the engaged group, so at equal specificity a highlighted row under the
++       pointer takes the state fill. */
+     @media (hover: hover) {
+         .glass-menu-row:hover:not([data-disabled]) {
+-            background: var(--menu-row-bg);
+-            color: var(--accent-foreground);
++            background-color: transparent;
+             translate: 0 var(--menu-row-lift);
+             transition:
+                 background-color var(--engage-control-engage-attack)
+@@ -82,6 +72,24 @@
+                 translate var(--spring-dock-duration) var(--spring-dock),
+                 scale var(--spring-press-duration) var(--transition-liquid-spatial);
+         }
++    }
++
++    /* The ENGAGED states, pointer and keyboard alike: reka's highlight, focus, an open
++       sub-trigger. A keyboard highlight changes paint without restarting the pointer
++       lift, so these carry no `translate` value of their own, only the ATTACK clock,
++       because this is the state they land IN. */
++    .glass-menu-row:focus:not([data-disabled]),
++    .glass-menu-row[data-highlighted]:not([data-disabled]),
++    .glass-menu-row[data-state="open"]:not([data-disabled]) {
++        background: var(--menu-row-bg);
++        color: var(--accent-foreground);
++        transition:
++            background-color var(--engage-control-engage-attack) var(--ease-standard),
++            color var(--engage-control-engage-attack) var(--ease-standard),
++            border-color var(--engage-control-engage-attack) var(--ease-standard),
++            box-shadow var(--engage-control-engage-attack) var(--ease-standard),
++            translate var(--spring-dock-duration) var(--spring-dock),
++            scale var(--spring-press-duration) var(--transition-liquid-spatial);
+     }
+ 
+     @media (prefers-reduced-motion: reduce) {
+diff -ru scratch/minor2/src/components/card/styles.css wt/src/components/card/styles.css
+--- scratch/minor2/src/components/card/styles.css	2026-10-16 17:10:01
++++ wt/src/components/card/styles.css	2026-10-16 19:17:13
+@@ -161,7 +161,8 @@
+         box-shadow: var(--card-cast), 0 0 8px oklch(from var(--foreground) l c h / 0.15);
+     }
+ 
+-    /* Persistent state. `--fill-selected` (0.12) is a rung hover cannot mint. */
++    /* Persistent state. `--fill-selected` (0.12) is the state rung: a bare hover
++       cannot mint it (its one other reader, the menu's highlighted row, is state too). */
+     .card[role="option"][data-selected="true"] {
+         --card-fill: oklch(from var(--foreground) l c h / var(--fill-selected));
+     }
+diff -ru scratch/minor2/src/components/dock/styles/dock.css wt/src/components/dock/styles/dock.css
+--- scratch/minor2/src/components/dock/styles/dock.css	2026-10-16 17:10:01
++++ wt/src/components/dock/styles/dock.css	2026-10-16 19:17:13
+@@ -12,7 +12,7 @@
+  *        INK lerps between the collapsed/expanded rungs on `--dock-expand-t` (never a
+  *        two-layer opacity crossfade — that composites `a + b − ab` and sags mid-morph),
+  *        composed through `@utility glass-plate` AT THE ELEMENT so the observer's
+- *        measured backdrop luminance reaches it — the earned darken, one chromatic
++ *        measured backdrop luminance reaches it — the earned ink, one chromatic
+  *        writer, no second tint layer. The shell + adaptive-legibility partials re-point
+  *        the inheriting `--dock-surface-blur`/`--glass-veil-*` tokens on `.glass-dock`,
+  *        so the dark-arm glow reaches the layers via inheritance, ZERO
+@@ -99,7 +99,7 @@
+            invisible at both settled endpoints; lerping the ink is exact at t=0 and t=1
+            and monotone between, with one border and nothing stacked.
+ 
+-           WHY THE INK AND NOT THE COLOUR — this is the dock's earned darken. The
++           WHY THE INK AND NOT THE COLOUR — this is the dock's earned ink. The
+            `--glass-plate-{rung}` tokens are composed at `:root`, so they bake `:root`'s
+            `--glass-backdrop-luma`: a plate painted from them cannot see the luminance
+            THIS dock's own observer writes on THIS dock's root
+diff -ru scratch/minor2/src/components/dock/styles/search.css wt/src/components/dock/styles/search.css
+--- scratch/minor2/src/components/dock/styles/search.css	2026-10-16 17:07:24
++++ wt/src/components/dock/styles/search.css	2026-10-16 19:17:13
+@@ -11,10 +11,10 @@
+  * struck for exactly that reason, tokens/glass.css). Over a calm or
+  * unsampled backdrop the clamp resolves exactly the tier's own ink (the honest calm
+  * identity); past the knee it earns up to two more rungs of it. The dock's own L0 plate
+- * takes the SAME path (dock/dock.css), so field and plate darken in lockstep by
++ * takes the SAME path (dock/dock.css), so field and plate earn their ink in lockstep by
+  * construction rather than by two recipes agreeing.
+  *
+- * The result rows ride `.glass-menu-row` (the glass-quiet hover-lift, CONSUMED
++ * The result rows ride `.glass-menu-row` (the highlight fill and hover lift, CONSUMED
+  * here; the glassify is this partial's). The customization-surface axes
+  * (size/surface/variant) are this partial's — it only seats the field +
+  * the legibility seam. The morph itself is the dock's OWN `--dock-morph-t` + the
+@@ -61,8 +61,8 @@
+         color: var(--on-glass-muted);
+     }
+ 
+-    /* The dropdown result rows ride the shared `.glass-menu-row` glass-quiet hover-lift
+-       CONSUMED, not re-authored). The dock-search list applies
++    /* The dropdown result rows ride the shared `.glass-menu-row` highlight fill and hover
++       lift (CONSUMED, not re-authored). The dock-search list applies
+        `.glass-menu-row` per row; this rule reaches the selected/highlighted row through
+        the SAME register the menu families use (no flat `bg-accent`/`bg-muted` fork). The
+        active result reads the data-highlighted state the menu recipe already paints. */
+diff -ru scratch/minor2/src/styles/glass/control-bit.css wt/src/styles/glass/control-bit.css
+--- scratch/minor2/src/styles/glass/control-bit.css	2026-10-16 17:10:01
++++ wt/src/styles/glass/control-bit.css	2026-10-16 19:17:13
+@@ -117,7 +117,7 @@
+            THE HEADROOM DELTA, MEASURED RATHER THAN ABSORBED. #31 W-A11Y re-derived
+            that alpha to 50% on 2026-08-05 — arithmetic floor 48%, next even rung for
+            headroom. The perimeter rung was then 0.48, the floor itself, so reading it
+-           gave some of that back (it is 0.52 since the light veil moved to the bound,
++           gave some of that back (it is 0.54 since the light veil moved to the bound,
+            tokens/color-radius.css §1.2). Both inks re-composited at 0.48 over all five
+            surfaces a checks atom sits on, in both arms, by G-CONTRAST-COMPUTED's own resolver:
+              light  background 3.322→3.132 · card/popover 3.291→3.105 ·
+diff -ru scratch/minor2/src/styles/glass/deep.css wt/src/styles/glass/deep.css
+--- scratch/minor2/src/styles/glass/deep.css	2026-10-16 17:10:01
++++ wt/src/styles/glass/deep.css	2026-10-16 19:17:13
+@@ -60,7 +60,7 @@
+        AND `--glass-blur-tier-radius` per tier ON THE BASE RUNG the `.glass-deep`
+        decoration composes with (same element), so declared here both resolve to the
+        element's LIVE rung and the ladder PAINTS:
+-       7.75 < 11.75 < 13.75 < 19.5 < 23px.
++       7.75 < 11.75 < 13.75 < 21.5 < 25px.
+ 
+        The `* var(--glass-level)` clarity scale is unchanged (so the opaque escape +
+        the a11y brackets reach the deep plate through the ONE level path; at
+@@ -76,7 +76,7 @@
+            overlay 16.0). An absolute depth-1 endpoint cannot express "thicker than
+            whatever this rung is"; a BOOST can. Additive, so `deep ≥ plain` holds on
+            all five rungs by construction and the grade orders WITH prominence:
+-           7.75 / 11.75 / 13.75 / 19.5 / 23px. */
++           7.75 / 11.75 / 13.75 / 21.5 / 25px. */
+         --glass-blur-deep-active-radius:
+             calc(
+                 (
+@@ -120,14 +120,14 @@
+ 
+        The resolved ladder, `tier + 5px x depth`:
+          wash      6 + 1.75 =  7.75   quiet   10 + 1.75 = 11.75
+-         resting  12 + 1.75 = 13.75   floating 16 + 3.5 = 19.5
+-         overlay  18 + 5    = 23
++         resting  12 + 1.75 = 13.75   floating 18 + 3.5 = 21.5
++         overlay  20 + 5    = 25
+        — deep ≥ plain on every rung, monotone WITH prominence. (`.glass-card` takes
+        the `:where(.glass-deep)` default above, which is the resting radius it paints.)
+ 
+        No rung reads var(--glass-blur-deep) here — the grade and the radius only DRIVE
+        the deep composition, so a NON-deep tier surface is BYTE-UNCHANGED (a plain
+-       overlay stays the calm 18px; the calm ladder never reads --glass-depth) and only
++       overlay stays the calm 20px; the calm ladder never reads --glass-depth) and only
+        a `.glass-deep`-composed surface consumes them.
+ 
+        SUBSTITUTION-vs-INHERITANCE (the recorded seam): zero-specificity :where() so
+diff -ru scratch/minor2/src/styles/glass/ladder.css wt/src/styles/glass/ladder.css
+--- scratch/minor2/src/styles/glass/ladder.css	2026-10-16 17:10:01
++++ wt/src/styles/glass/ladder.css	2026-10-16 19:17:13
+@@ -11,8 +11,8 @@
+          wash       6px   content
+          quiet     10px   content
+          resting   12px   content (the consumer plate)
+-         floating  16px   chrome
+-         overlay   18px   chrome */
++         floating  18px   chrome
++         overlay   20px   chrome */
+ 
+     /* The five-rung surface ladder declares the unprefixed
+        `backdrop-filter` only IN SOURCE. Authoring both forms manually here
+diff -ru scratch/minor2/src/styles/tokens/color-radius.css wt/src/styles/tokens/color-radius.css
+--- scratch/minor2/src/styles/tokens/color-radius.css	2026-10-16 17:10:01
++++ wt/src/styles/tokens/color-radius.css	2026-10-16 19:17:13
+@@ -114,7 +114,7 @@
+        PROPORTION §1.2: the divider ink is the warm `rgb(28,25,23)` (== --foreground,
+        `hsl(24 10% 10%)`) at EVERY rung. 1px always — 277 of 277 borders in one
+        category are already 1px; no second weight is minted. What varies is α, and it
+-       varies on ONE ratio: seam : edge : perimeter = 1 : 2 : 6.5.
++       varies on ONE ratio: seam : edge : perimeter = 1 : 2 : 6.75.
+ 
+        These are BARE α SCALARS (<number>), never pre-composed colors. §1.2 names one
+        ink at three alphas, so composition is the reader's job —
+@@ -132,8 +132,8 @@
+ 
+        DERIVATIONS, NOT MEMBERS (do NOT mint a token for either — §6 is 6 net):
+          · the "both" fill rung = --fill-hover + --fill-selected = 0.17
+-         · the *indicator* = 2px @ 0.26 — the perimeter rung spread over 2px: same ink
+-           mass (2 × 0.26 == 0.52), twice the height, because it must be findable
++         · the *indicator* = 2px @ 0.27 — the perimeter rung spread over 2px: same ink
++           mass (2 × 0.27 == 0.54), twice the height, because it must be findable
+            along a 1288px run.
+ 
+        `--border` RETIRES as a divider ink (it stays a SURFACE token above). Tan at
+@@ -151,7 +151,7 @@
+        against no measurement. */
+     --ink-seam: 0.08;      /* in-content rule · group ↔ group · a FLUSH plate's own edge (break-even 0.0705) */
+     --ink-edge: 0.16;      /* a FLOATING plate's boundary — where a drop shadow sits outside it */
+-    --ink-perimeter: 0.52; /* a control's own edge · the focus ring · the selection indicator — 3.0:1 against the light plate at the bound (0.48 read 2.79) */
++    --ink-perimeter: 0.54; /* a control's own edge · the focus ring · the selection indicator — ≥ 3.0:1 on every resting light plate at the bound, the wash well over black the lowest (0.52 read 2.96 there, 0.48 read 2.79) */
+ 
+     /* §1.3 FILL — the channel the stroke ladder does not cover. Same ink.
+        Where a glyph or a stroke CO-carries the state, these two rungs suffice. Where
+@@ -161,7 +161,9 @@
+        — BELOW the divider beside it at 1.140:1; selected table row `ink/0.08`,
+        byte-equal to hover. */
+     --fill-hover: 0.05;    /* transient pointer answer */
+-    --fill-selected: 0.12; /* persistent state — hover cannot mint it */
++    --fill-selected: 0.12; /* state: persistent selection, and the menu's one highlighted
++                              row (_shared/menu/menu.css, an accent tint at this alpha, not
++                              the ink) — a bare :hover cannot mint it */
+ 
+     --primary: hsl(24 10% 10%);
+     --primary-foreground: var(--neutral-0);
+diff -ru scratch/minor2/src/styles/tokens/glass-deep.css wt/src/styles/tokens/glass-deep.css
+--- scratch/minor2/src/styles/tokens/glass-deep.css	2026-10-16 17:10:01
++++ wt/src/styles/tokens/glass-deep.css	2026-10-16 19:17:13
+@@ -14,7 +14,7 @@
+  * thickness graded BACKWARDS with prominence. The +5px delta is what the family
+  * always encoded, so the delta is what the token now holds:
+  *   deep(tier) = tier_radius + 5px * --glass-depth
+- * -> 7.75 / 11.75 / 13.75 / 19.5 / 23px across wash..overlay. Thicker than plain
++ * -> 7.75 / 11.75 / 13.75 / 21.5 / 25px across wash..overlay. Thicker than plain
+  * on every rung, monotone WITH prominence, and immune to a calm-ladder retune.
+  *
+  * The per-frame cost fence still binds, but it binds the CALM ladder that sets the
+@@ -39,7 +39,7 @@
+  * ── The Apple-range derivation (DELTA cross-ref) ───────────────────────────
+  * Apple home nav:        saturate(1.8) blur(20px)  (the canonical measure)
+  * Apple product tiers:   blur(14-20px)             (the band)
+- * glass-ui calm ladder:  6/10/12/16/18px / saturate 1.5 (tokens/glass.css)
++ * glass-ui calm ladder:  6/10/12/18/20px / saturate 1.5 (tokens/glass.css)
+  * glass-ui DEEP (ship):  calm rung + 5px x depth / saturate 1.8 — STRICTLY deeper
+  *                        blur and richer saturate than the rung it decorates, on
+  *                        every rung, by construction rather than by literal.
+@@ -57,7 +57,7 @@
+        overlay 16.0). The +5px DELTA is what the family always encoded; it is now
+        what the token says, and it survives any calm-ladder retune by construction.
+        ONE variable, five rungs: `deep(tier) = tier + 5px x depth`, so
+-       7.75 / 11.75 / 13.75 / 19.5 / 23px — thicker than plain on every rung and
++       7.75 / 11.75 / 13.75 / 21.5 / 25px — thicker than plain on every rung and
+        monotone WITH prominence.
+ 
+        (The `blur(20px)` Apple push stays retired on its own per-frame grounds; the
+@@ -84,7 +84,7 @@
+        `--glass-blur-tier-radius` PER TIER on the base rung; the composition must
+        therefore be declared on `.glass-deep` — the SAME element, at/below the tier-grade
+        site — so both resolve to the element's LIVE rung and the ladder PAINTS
+-       (7.75 < 11.75 < 13.75 < 19.5 < 23px). Only the BOOST + GRADES stay here (they are
++       (7.75 < 11.75 < 13.75 < 21.5 < 25px). Only the BOOST + GRADES stay here (they are
+        literals — no registered-`@property` read — so their `:root` declaration is safe);
+        the COMPOSITION moves to the consuming element. */
+ 
+@@ -102,7 +102,7 @@
+        family, no new @property, no new compositing seam. The three grades scale the ONE
+        +5px boost: content +1.75px, popover +3.5px, menu +5px — so a deep content
+        control clears its own plain rung (6 → 7.75, 10 → 11.75, 12 → 13.75) and only
+-       the menu/overlay rung takes the full boost (18 → 23), saturate 1.61 < 1.71 < 1.8.
++       the menu/overlay rung takes the full boost (20 → 25), saturate 1.61 < 1.71 < 1.8.
+ 
+        The grades are NAMED (not magic literals) so a consumer retunes a WHOLE BAND
+        from ONE ancestor override (`--glass-depth-popover: …`) — the per-band twin of
+diff -ru scratch/minor2/src/styles/tokens/glass.css wt/src/styles/tokens/glass.css
+--- scratch/minor2/src/styles/tokens/glass.css	2026-10-16 17:10:01
++++ wt/src/styles/tokens/glass.css	2026-10-16 19:17:13
+@@ -24,10 +24,10 @@
+          wash · chassis       6px    bound             content
+          quiet               10px    bound + 1 step    content
+          resting (= card)    12px    bound + 2 steps   content
+-         floating · dock ·   16px    bound             chrome
++         floating · dock ·   18px    bound             chrome
+            crown
+-         overlay · sheet     18px    bound + 1 step    chrome
+-         dialog              16px    1                 the room
++         overlay · sheet     20px    bound + 1 step    chrome
++         dialog              18px    1                 the room
+          opaque (level 0)      0     1
+ 
+        THE DARK ARM keeps the ink ladder: a warm near-black ink at `base ± n·step`
+@@ -57,8 +57,11 @@
+     --glass-veil-floating: var(--glass-veil-base);
+     --glass-veil-overlay:  calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
+ 
+-    /* THICKNESS — the rung's radius. The band is [6, 18], strictly ascending, each
+-       rung 4px under the radius it had before ("slightly less blur", O-87): legibility
++    /* THICKNESS — the rung's radius. The band is [6, 20], strictly ascending, each
++       rung under the radius it had before ("slightly less blur", O-87): wash, quiet and
++       resting 4px under, floating and overlay 2px under. Floating stops at 18px because
++       16px cost the dark Dialog's text over a white ground its 4.5:1 (p05 4.46; 17px
++       the same, 18px 4.51, D3 pass 5 R-8); overlay rides floating + 2. Legibility
+        rides the α, so the radius buys only calm, at the least cost (`backdrop-filter`
+        is the library's most expensive idiom and radius is its dominant cost).
+        `resting` is the calibration host of the grasp register (glass/grasp.css), which
+@@ -76,8 +79,8 @@
+     --glass-blur-wash-radius:      6px;
+     --glass-blur-quiet-radius:    10px;
+     --glass-blur-resting-radius:  12px;
+-    --glass-blur-floating-radius: 16px;
+-    --glass-blur-overlay-radius:  18px;
++    --glass-blur-floating-radius: 18px;
++    --glass-blur-overlay-radius:  20px;
+ 
+     /* CHROMA — ONE value, mode-invariant. Saturation is a property of the MEDIUM, not
+        of the rung or the mode: a thicker plate does not de-saturate what passes through
+diff -ru scratch/minor2/tests/components/ui/surface/Surface.test.ts wt/tests/components/ui/surface/Surface.test.ts
+--- scratch/minor2/tests/components/ui/surface/Surface.test.ts	2026-10-16 17:10:01
++++ wt/tests/components/ui/surface/Surface.test.ts	2026-10-16 19:17:13
+@@ -205,7 +205,7 @@
+         }
+         const deeps = resolved.map((r) => r.deep);
+         expect(deeps).toEqual([...deeps].sort((a, b) => a - b));
+-        expect(deeps).toEqual([7.75, 11.75, 13.75, 19.5, 23]);
++        expect(deeps).toEqual([7.75, 11.75, 13.75, 21.5, 25]);
+     });
+ 
+     it("veil and opaque withhold the depth IN PAINT, not in script", () => {
+diff -ru scratch/minor2/tests/styles/engage-ladder.test.ts wt/tests/styles/engage-ladder.test.ts
+--- scratch/minor2/tests/styles/engage-ladder.test.ts	2026-10-16 17:07:24
++++ wt/tests/styles/engage-ladder.test.ts	2026-10-16 19:17:13
+@@ -434,8 +434,9 @@
+         const guarded = braceBlock(base, base.indexOf("@media (hover: hover)"));
+         expect(guarded).toContain(".interactive-item:hover");
+ 
+-        // The menu row is the rule that actually paints the hover fill and lift on all
+-        // six consumers (0-3-0, later import). Left unguarded, the coarse-pointer latch
++        // The menu row is the rule that decides the hover paint on all six consumers
++        // (0-3-0, later import): the lift, with the fill held at rest (the fill is
++        // state, `[data-highlighted]`). Left unguarded, the coarse-pointer latch
+         // the base.css guard exists to prevent stays fully live, and NONE of the six
+         // composes `.tap-squish`, so the press rung is not their touch answer either.
+         const menu = decomment(MENU);
+diff -ru scratch/minor2/tests/styles/glass-subtlety.test.ts wt/tests/styles/glass-subtlety.test.ts
+--- scratch/minor2/tests/styles/glass-subtlety.test.ts	2026-10-16 17:10:01
++++ wt/tests/styles/glass-subtlety.test.ts	2026-10-16 19:17:13
+@@ -205,14 +205,14 @@
+         expect(blurRadius(light, "--glass-blur-wash")).toBe(6);
+         expect(blurRadius(light, "--glass-blur-quiet")).toBe(10);
+         expect(blurRadius(light, "--glass-blur-resting")).toBe(12);
+-        expect(blurRadius(light, "--glass-blur-floating")).toBe(16);
+-        expect(blurRadius(light, "--glass-blur-overlay")).toBe(18);
++        expect(blurRadius(light, "--glass-blur-floating")).toBe(18);
++        expect(blurRadius(light, "--glass-blur-overlay")).toBe(20);
+     });
+ 
+     it("climbs STRICTLY and stays inside the calm band at every rung", () => {
+         // The thickness axis may never plateau: two rungs at one radius are two names
+         // for one material. Blur buys calm, not legibility (α carries that), and every
+-        // rung sits 4px under its 10.1.0 radius (O-87, "slightly less blur"): [6, 18] px.
++        // rung sits under its 10.1.0 radius (O-87, "slightly less blur"): [6, 20] px.
+         const band = RUNGS.map((rung) => blurRadius(light, `--glass-blur-${rung}`));
+         for (let i = 1; i < band.length; i += 1) {
+             expect(band[i], `${RUNGS[i]} must exceed ${RUNGS[i - 1]}`).toBeGreaterThan(
+@@ -221,7 +221,7 @@
+         }
+         for (const radius of band) {
+             expect(radius).toBeGreaterThanOrEqual(6);
+-            expect(radius).toBeLessThanOrEqual(18);
++            expect(radius).toBeLessThanOrEqual(20);
+         }
+     });
+ 
+@@ -264,7 +264,7 @@
+         const raw = read("src/styles/tokens/light-dark.css").replace(/\/\*[\s\S]*?\*\//g, "");
+         expect(raw).not.toMatch(/min-resolution/);
+         expect(raw).not.toMatch(/--glass-blur-overlay-radius/);
+-        expect(blurRadius(light, "--glass-blur-overlay")).toBe(18);
++        expect(blurRadius(light, "--glass-blur-overlay")).toBe(20);
+     });
+ 
+     it("keeps the content and overlay tiers distinct after the pull", () => {
+diff -ru scratch/minor2/tests/styles/proportion-register.test.ts wt/tests/styles/proportion-register.test.ts
+--- scratch/minor2/tests/styles/proportion-register.test.ts	2026-10-16 17:10:01
++++ wt/tests/styles/proportion-register.test.ts	2026-10-16 19:17:13
+@@ -82,7 +82,7 @@
+     .map((file) => strip(readFileSync(join(root, file), "utf8")))
+     .join("\n");
+ 
+-const INK = { seam: 0.08, edge: 0.16, perimeter: 0.52 } as const;
++const INK = { seam: 0.08, edge: 0.16, perimeter: 0.54 } as const;
+ const FILL = { hover: 0.05, selected: 0.12 } as const;
+ 
+ // §1.1: 4 · 8 · 12 · 20 · 32 · 52, named by RANK (see sizing.css for why not px and
+@@ -120,21 +120,21 @@
+         expect(forked, "α rung is not a bare <number> — the ink has forked").toEqual([]);
+     });
+ 
+-    it("holds the §1.2 stroke ratio seam : edge : perimeter = 1 : 2 : 6.5, by computation", () => {
++    it("holds the §1.2 stroke ratio seam : edge : perimeter = 1 : 2 : 6.75, by computation", () => {
+         const seam = num(decl(colorRadius, "--ink-seam"));
+         const edge = num(decl(colorRadius, "--ink-edge"));
+         const perimeter = num(decl(colorRadius, "--ink-perimeter"));
+ 
+         expect(close(edge / seam, 2), `edge : seam = ${edge / seam}, not 2`).toBe(true);
+-        expect(close(perimeter / seam, 6.5), `perimeter : seam = ${perimeter / seam}, not 6.5`).toBe(true);
++        expect(close(perimeter / seam, 6.75), `perimeter : seam = ${perimeter / seam}, not 6.75`).toBe(true);
+     });
+ 
+-    it("holds the §1.2 indicator mass identity — 2px @ 0.26 == the 1px perimeter", () => {
++    it("holds the §1.2 indicator mass identity — 2px @ 0.27 == the 1px perimeter", () => {
+         // The indicator is a DERIVATION, not a member: the perimeter rung spread over
+         // 2px. Same ink mass, twice the height, because it must be findable along a
+         // 1288px run. This arm is why no seventh token is minted for it.
+         const perimeter = num(decl(colorRadius, "--ink-perimeter"));
+-        expect(close(2 * 0.26, perimeter), `2px @ 0.26 = ${2 * 0.26}, not ${perimeter}`).toBe(true);
++        expect(close(2 * 0.27, perimeter), `2px @ 0.27 = ${2 * 0.27}, not ${perimeter}`).toBe(true);
+     });
+ 
+     it("derives --control-label from --control-text at φ^(−1/4), minting no literal", () => {
+@@ -157,7 +157,7 @@
+     });
+ 
+     it("mints NO seventh token for the two derivations §6 excludes", () => {
+-        // §6 is "6 net". The "both" fill rung (0.05 + 0.12 = 0.16) and the 2px @ 0.26
++        // §6 is "6 net". The "both" fill rung (0.05 + 0.12 = 0.16) and the 2px @ 0.27
+         // indicator are arithmetic products of stated laws, so they are legal VALUES
+         // and illegal NAMES.
+         const family = Array.from(tokenLayer.matchAll(/^\s*(--(?:ink|fill)[a-z0-9-]*)\s*:/gm), (m) => m[1]).sort();
+diff -ru scratch/minor2/demo/stories/dock/dock-search.vue wt/demo/stories/dock/dock-search.vue
+--- scratch/minor2/demo/stories/dock/dock-search.vue	2026-10-16 17:07:24
++++ wt/demo/stories/dock/dock-search.vue	2026-10-16 19:17:13
+@@ -365,6 +365,16 @@
+     cursor: pointer;
+ }
+ 
++/* This composer is not reka's: `data-highlighted` follows the keyboard's selected
++   index, not the pointer, so the menu row's state fill never reaches a pointed-at
++   result. The pointer keeps its own leg on the transient rung (`--fill-hover`), in
++   the menu's accent; the highlighted result keeps the state fill. */
++@media (hover: hover) {
++    .dock-search-result:hover:not([data-highlighted]) {
++        background: oklch(from var(--section-color-5) l c h / var(--fill-hover));
++    }
++}
++
+ .dock-search-match {
+     color: var(--primary);
+     font-weight: 600;
+diff -ru scratch/minor2/demo/stories/manifest.ts wt/demo/stories/manifest.ts
+--- scratch/minor2/demo/stories/manifest.ts	2026-10-16 17:07:24
++++ wt/demo/stories/manifest.ts	2026-10-16 19:17:13
+@@ -507,7 +507,7 @@
+                 "substrates",
+                 "glass-material",
+                 "Glass Material",
+-                "The unified glass-material grammar — one ink veil, five rung radii, one saturate, one key-driven rim — plus the squircle fold and the observer-driven earned darken.",
++                "The unified glass-material grammar — one ink veil, five rung radii, one saturate, one key-driven rim — plus the squircle fold and the observer-driven earned ink.",
+                 {
+                     background: "aurora",
+                     hero: true,
+diff -ru scratch/minor2/demo/stories/substrates/glass-material.vue wt/demo/stories/substrates/glass-material.vue
+--- scratch/minor2/demo/stories/substrates/glass-material.vue	2026-10-16 17:07:24
++++ wt/demo/stories/substrates/glass-material.vue	2026-10-16 19:17:13
+@@ -28,7 +28,7 @@
+ // (path B: demo-private — the composable is OFF the public glass barrel, imported
+ // directly here as the content-glass DEMO mount that exercises the live sampling path;
+ // the binary consumer is the dock). It writes `--glass-backdrop-luma` + the bucket on a
+-// glass-card over the page's live Aurora substrate so the dynamic darken TRACKS the
++// glass-card over the page's live Aurora substrate so the earned ink TRACKS the
+ // painted backdrop (the iOS-27 register). A demo mount is NOT a binary consumer (the
+ // own-story exclusion: it exercises the composable, it does not by
+ // itself clear the public ≥2-binary bar.
+@@ -227,14 +227,14 @@
+              from a 7px one and reads any material change as "no change needed". This
+              page stages the live Aurora field and is the one place the sampled-luminance
+              observer is wired outside the dock, so it is where the alert's rung and its
+-             earned-darken clamp can actually be photographed.
++             earned-ink clamp can actually be photographed.
+ 
+              Five arms, one plate: under the ruled Alert identity the tone is carried by
+              the glyph and the ink, and every tone rides the SAME neutral quiet rung — so
+              these five specimens should differ in ink and in nothing else. -->
+         <StorySection
+             label="alert on a busy substrate — one neutral rung, five status inks"
+-            blurb="Every tone shares one neutral quiet plate; the colour is the glyph and the ink. Watch the plate darken as the painterly field brightens behind it — the tint is earned from the measured backdrop, not declared per tone."
++            blurb="Every tone shares one neutral quiet plate; the colour is the glyph and the ink. Watch the plate thicken as the painterly field brightens behind it: in light it frosts toward cream, in dark it deepens. The ink is earned from the measured backdrop, not declared per tone."
+         >
+             <ShowcaseFrame pad="lg" tier="field">
+                 <div class="flex flex-col gap-4">
+@@ -380,7 +380,7 @@
+ 
+         <StorySection
+             label="the plate ink — one chromatic writer"
+-            blurb="A plate has exactly one chromatic writer on its body: the veil ink. Re-point --glass-veil-ink and the whole rung follows, at every level and under the earned-darken clamp. There is no second tint axis mixing the same plate toward the same place, and no painted fringe at the edge — chroma at the rim is what saturate() delivers through a real radius."
++            blurb="A plate has exactly one chromatic writer on its body: the veil ink. Re-point --glass-veil-ink and the whole rung follows, at every level and under the earned-ink clamp. There is no second tint axis mixing the same plate toward the same place, and no painted fringe at the edge — chroma at the rim is what saturate() delivers through a real radius."
+         >
+             <ShowcaseFrame pad="lg" tier="field">
+                 <div class="mb-4 flex flex-wrap items-center gap-2">

@@ -1,0 +1,6 @@
+/* FL-14's one declaration as an injected variant (REGISTRY P4-3.1): `isolation: isolate` on every element that composes
+   `@utility glass-plate` (glass/veil.css) in the minor: the five rungs (ladder.css), the card and the capsule/indicator
+   (surfaces.css), the veil surface axis (surface-axis.css), the pager plate (surfaces-pager.css) and the dock-search field.
+   A stacking context that is not a backdrop root. Not a build. */
+.glass-wash, .glass-quiet, .glass-resting, .glass-floating, .glass-overlay, .glass-card,
+.segmented-indicator, .glass-capsule, [data-surface="veil"], .glass-dock .dock-search-field .input-bar { isolation: isolate; }

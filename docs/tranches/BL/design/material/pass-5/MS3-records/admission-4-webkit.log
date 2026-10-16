@@ -1,0 +1,47 @@
+[guarded] waiting for the 'webkit' lock
+== battery-wk start 18:23:47 load { 12.88 13.89 13.52 }
+worktree = minor-split-v3.patch
+exit 0 18:43:04 load { 10.89 12.54 12.62 }
+RAW  exit 0 · PASS (48 gated rows)
+M-1  exit 0 · PASS (11 gated rows)
+M-1x exit 0 · PASS (1 gated rows)
+M-2  exit 1 · FAIL (167 of 914 gated rows)
+M-2m exit 1 · FAIL (98 of 430 gated rows)
+M-2h exit 1 · FAIL (20 of 44 gated rows)
+M-3  exit 1 · FAIL (131 of 342 gated rows)
+M-4  exit 1 · FAIL (21 of 168 gated rows)
+M-5  exit 1 · FAIL (2 of 20 gated rows)
+M-6  exit 1 · FAIL (81 of 120 gated rows)
+M-7  exit 1 · FAIL (8 of 8 gated rows)
+M-8  exit 1 · FAIL (4 of 8 gated rows)
+M-9  exit 1 · FAIL (3 of 20 gated rows)
+O-66 exit 0 · PASS (5 gated rows)
+STACK exit 1 · FAIL (6 of 24 gated rows)
+W-A  exit 1 · FAIL (26 of 216 gated rows)
+W-S  exit 1 · FAIL (4 of 24 gated rows)
+W-B  exit 1 · FAIL (12 of 16 gated rows)
+W-C  exit 1 · FAIL (72 of 362 gated rows)
+W-D  exit 1 · FAIL (8 of 9 gated rows)
+W-E  exit 1 · FAIL (126 of 420 gated rows)
+W-F  exit 1 · FAIL (76 of 176 gated rows)
+W-G  exit 1 · FAIL (24 of 40 gated rows)
+T    exit 0 · PASS (1 gated rows)
+LIT  exit 0 · PASS (1 gated rows)
+HOV  exit 0 · PASS (58 gated rows)
+== battery-wk end 18:43:04 load { 10.89 12.54 12.62 }
+== head-cells start 18:43:04 load { 10.89 12.54 12.62 }
+exit 0 18:50:18 load { 12.76 11.18 11.74 }
+webkit-dark-deep-ladder-base +shim: 11 specs, 8 rings, pointer rest, readbacks 0
+webkit-dark-deep-dialog-base +shim: 1 specs, 2 rings, pointer rest, readbacks 0
+captured 56 cells, 0 live windows, 0 motion windows and 0 drift windows in 433.5s (load 12.8 11.2 11.7) → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p5/minor3/wt/.d3out/caps/head
+== head-cells end 18:50:18 load { 12.76 11.18 11.74 }
+== search start 18:50:18 load { 12.76 11.18 11.74 }
+capture w01ref exit 0 18:56:34 load { 10.06 10.33 11.06 }
+== search end 18:56:34 load { 10.06 10.33 11.06 }
+== island start 18:56:34 load { 10.06 10.33 11.06 }
+island head webkit exit 0 18:56:40 load { 9.97 10.30 11.05 }
+island minor3 webkit exit 0 18:56:46 load { 9.65 10.23 11.02 }
+== island end 18:56:46 load { 9.65 10.23 11.02 }
+== glance start 18:56:46 load { 9.65 10.23 11.02 }
+glance head->minor3 webkit exit 0 18:58:06 load { 9.16 9.89 10.81 } · GLANCE PASS: 8 pairs, each with a visible paint delta
+== glance end 18:58:06 load { 9.16 9.89 10.81 }
