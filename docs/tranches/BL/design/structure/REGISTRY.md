@@ -2565,3 +2565,206 @@ Floor: no floor work is owed for pass 9. FP6-1..FP6-3, FP6-7, FP5-3, FP5-4, FP5-
 **Held with the bank.** G-01..G-12 and D′'s gaps, unchanged.
 
 No route converged in pass 8. D1-B converges at the pass-9 agglomeration if the pass-9 critique re-opens nothing.
+
+---
+
+# D1 · pass 9 · REGISTRY: the route after pass 9
+
+| field | value |
+|---|---|
+| seat | D1 pass-9 agglomeration. Closes pass 9 with B's status and convergence, the two-clean-passes count, G's re-trigger, the rulings owed, the open gaps and the pass-10 plan. Passes 1-8 above are kept intact |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `6120c12f`. `git diff 6154d6ec HEAD -- . ':!docs'` is empty: the route and the critic judged 10.1.0's code. The kit was committed at `b06cacc3` before the critic's battery hash; the critique is committed at `6120c12f` (524 tracked files under `pass-9/`). `pass-9/B-kit/gate/` is byte-identical to pass 8's (`diff -rq`) |
+| inputs, read in full | `pass-9/B-proto.md`, `pass-9/critique-B.md`, `critique-B/BATTERY-HASH.txt`; this file §P2-6.5, §P2-7, §P3-9 (S-14's text), §P8-0..§P8-7; `RULINGS.md` through P8-R3; `waves/W-D.1.md` §0-§5, `waves/INDEX.md:47`. The kit's other files and the critic's other results were read at the lines the two reports cite, not re-run |
+| instruments | none re-run. Read-only checks: `git log`, `git ls-files pass-9`, the empty code diff; `B-kit/tools/peer-closure.mjs:45,77-78` (the `--base` read and its `??` default); `B-kit/gate/peer.mjs:24-41` (`declaredClasses`: a line with no token after the subpath is skipped by `continue`); `B-kit/LAW.md:168-170` (§5: "a row with no peer … is a throw") and `:403-413` (§14: "a report of another schema" is a throw); `cB9-R/extra9.txt:43-52` (PX lines) and `:19-21` (BI3-fixed rc 0); `ls .claude/worktrees/bl/D1/{p8,p9}/` |
+| fences | no source edit, no git write; this part is the only write |
+
+Short citations: `Bp9` is `pass-9/B-proto.md`, `cB9` is `pass-9/critique-B.md`, `cB9-R` is `pass-9/critique-B/results/`, `K9` is `pass-9/B-kit/`.
+
+---
+
+## P9-0 · In brief
+
+| id | route | status | conv. (critic) | critic's verdict | re-opened by the critic | re-opened by this registry | reason in one line |
+|---|---|---|---:|---|---|---|---|
+| D1-B | sealed modules, flat | **ADVANCE** | 27/27 = 100% | ADVANCE (second clean pass) | 0 | **1 (S-14)** | every §P8-6.4 bar item re-met from committed bytes (`05aaa6ed…a451e1b3`, 19/19, CLEAN at 2,920,391, cascade GREEN, 428/428); P8-G2..G4 cured; but S-14's hold column fails on one kit judge, which reads a leak GREEN through a `??` default |
+| D1-G | eponymous closures | BANK (unchanged) | 44% (pass 3) | — | — | — | re-trigger not fired (§P9-3) |
+
+**The two-clean-passes count for B restarts: 1 → 0.** This registry re-opens S-14 on cB9 O-1 (§P9-2). **No convergence record is written.** The earliest convergence is the pass-11 agglomeration: a clean pass-10 critique, then a clean pass-11 critique.
+
+Why this registry departs from the critic's verdict, in one paragraph. The critic applied the task's rule "re-open only on its own text" and left the call to this seat (cB9 §5, "the closest calls"). §P8-6.5 named the §P8-7 hold column as "what the pass-9 critic reads", and S-14's hold column reads "every kit judge exits 2 on a throw or a degenerate input (P8-R2)". §P8-6.4's battery named the input in advance: "missing, non-JSON and **wrong-schema** inputs" for each kit judge. The route planted wrong-schema on two of the four judges (Bp9 §1, §5 JUDGE). The critic planted it on the third: `peer-closure.mjs` exits 1 on `--base {}`, and exits **0 GREEN on a tree that leaks keyframes.js into `./motion-core`** when its own non-floor report is passed back as `--base` (`cB9-R/extra9.txt:49`; the gate reads the same tree B18 27, `:50`). The cause is `K9/tools/peer-closure.mjs:77`, `base?.entries?.[key]?.broken ?? { names: [], dist: [], files: [] }`: a fallback that turns a malformed base into "no breaks at the base". That is S-14's own title, "No masking fallback", in a judge the hold column names, on an input the plan named. It is a measured hold failure, not an item a critic minted. §P2-6.5 (1) requires each item closed by a measurement; S-14's is not.
+
+Three findings shape pass 10.
+
+1. **P8-R2 landed short by one input, and LAW §14 says otherwise.** The probe's `--base` is read without a schema check (O-1). LAW §14 lists "a report of another schema" as a throw. The cure is kit-only and changes no digest.
+2. **B18 reads a peer-less declaration row as no row** (cB9 O-2). `gate/peer.mjs`'s row regex needs a token after the subpath, so the line falls through `continue`. LAW §5 (`K9/LAW.md:168-170`) and P8-R3's ruled text say a row with no peer is a throw. The effect equals a withdrawal, which P8-R3 (b) accepts, and a leak still reads RED through the root's class, so it re-opens nothing on its own (pass-8 precedent for a LAW sentence the reader contradicts). It is cured in pass 10 under P8-R3 as ruled; the cure is in `gate/`, so S69 and S69s are re-derived.
+3. **W-D.1 §0's five items are all non-zero on the pass-9 tree** (Bp9 §6). Three are W-D.1's own named edits (§P9-5). Two are attributed by W-D.1 to the chain itself: the `fourier-field` ↔ `renderer` cycle (W-D.1 §3 step 4: "cured by the base rule") and the chain's `## UNRELEASED — the structure cut (BL)` heading (W-D.1 D1-G10: "RED on the chain's own text"). The converged chain cannot hand W-D.1 a gate it fails by construction. Two rulings are owed (P9-R1, P9-R2).
+
+---
+
+## P9-1 · Registry
+
+| id | unit set declared by | enforced between units | status | conv. | re-trigger / refutation | pass-10 role |
+|---|---|---|---|---:|---|---|
+| D1-B | a module is a code dir in `src` or `scripts` with a door (B7), recursively; containers and kind slots excepted | privacy: the recursive door seal, kernel and CSS edges included (B1, B3); direction (B8); sibling acyclicity (B4); no masking fallback (B17); names (B15); Playwright-program membership and visual subject (B16); the peer class (B18) | ADVANCE | 100% by its critic; 26/27 by this registry (S-14 re-opened) | — | the one live route; first of two clean passes |
+| D1-G | first-level component units; eponymous roots | B1 into component units only | BANK | 44% | not fired (§P9-3) | none |
+| D1-D′ | — | — | BANK (unchanged) | 7% | not fired | none |
+| D1-A | — | — | BLOCK (unchanged) | 35% | — | none |
+| D1-C, D1-E, D1-F | — | — | BANK (unchanged) | 40/35/30% | no trigger fired | none |
+
+---
+
+## P9-2 · D1-B · Sealed modules, flat: ADVANCE
+
+**What ran** (Bp9 §0-§8, confirmed by cB9 §0-§4).
+
+| item | result |
+|---|---|
+| chain | untouched: `frozen/`, `gate/`, `derive/`, `authored/` byte-identical to pass 8's. No clause widened; P8-R1's import read is B0's existing arm. S69 stays the last gate step; S70 not rebound |
+| replay | `05aaa6edbe0f8f242f0ffe5f37a4e46f9e880ec237e30a3d4293f8f9a451e1b3` over 1,585 files. Route: r1 (resumed from S2-3's recorded digest after a guard timeout), r2 `--twice` 469.1 s, r3 300.0 s, all MATCH. Critic: 313.8 s from `b06cacc3` in a fresh worktree (floor by S1's own script, then S1b→S70), rerun 0.5 s no-op, unchanged after every battery |
+| floor base | `5b14c6c7…705402f` over 1,354 files, both seats |
+| gate | 19/19 at 0, exit 0; files 1,583, edges 8,347, modules 141/141, pin 141/121/1,289/2, peer held 23 |
+| toolchain | build 0; `vue-tsc` ×2 0; demo build 0; `seal.test.ts` 24/24; vitest 2,333 passed, 0 failed, `--maxWorkers=2`, both seats |
+| package | verify:package CLEAN at 2,920,391, not rebound |
+| cascade | GREEN against the floor base (`./styles` 28 moved, `./styles.css` 10); RED unlisted (critic) |
+| browser | not re-run (chain unchanged, §P8-6.2 step 4). 428 base-green, 428 held, 0 failed, 0 absent, re-derived from committed reports by both seats; the pass-9 tally byte-identical to pass 8's; blob D2 flaky out of the bar. T1-T4 PASS; P7-R2 case lines identical (with `testDir "."` added to pass 8's fixtures, which the pass-9 tally rightly refuses without it) |
+| capture specs (P8-R1 (a)) | LAW §13 states the exclusion and reason; `browser-select` prints all 14 touched capture specs `EXCLUDED`; B0 reads a moved capture spec's broken import RED, 14/14 plus a stale-path plant, controls clean (cB9 §2) |
+| kit exits (P8-R2 (a)) | four judges guarded; 44 PASS / 1 FAIL hashed (cB9 §1): `browser-tally` 11/11, `rekey` 6/6, `browser-select` 5/5, `peer-closure` 7/8 (wrong-schema `--base` exits 1). Import-time throws 11/11 exit 2. U4 (an emptied `dist/motion-core.js`) now 2: P8-G4 cured |
+| peer set (P8-R3 (b)) | LAW §5 sentence landed; XR-drop reads a withdrawal; XR-drop-KF B18 10 + B11 2; XR-drop-leaf B18 10. A blank Peer cell reads 0 (O-2) |
+| `./motion-core` | keyframes-free on names 55, dist 5 files, files 38 |
+| regressions | the pass-8 critic's 402 rows (381 plants with controls, passes 4-7 inside): 0 differ. crash8 37/37 on pass 9's `seal/`; pass-8 peer plants 11/11; pass-7 tree probes identical |
+
+**The critic's items** (cB9 §6): 27 CLOSED, 0 re-opened.
+
+**The critic's outside findings** (cB9 §5), read under §P2-6.5 and §P8-6.5.
+
+| # | finding | item it maps to, and the text that decides | does it re-open? | effect |
+|---|---|---|---|---|
+| O-1 | `peer-closure.mjs --base` takes any JSON: `{}`, `[]`, `{"entries":{}}` or a browser report exit 1; the probe's own non-floor report as `--base` reads a leaking tree GREEN, exit 0 | **S-14**, title "No masking fallback"; §P8-7 hold "every kit judge exits 2 on a throw or a degenerate input (P8-R2)", which §P8-6.5 named as what the pass-9 critic reads; §P8-6.4 battery "wrong-schema inputs" for each kit judge; LAW §14 "a report of another schema" | **Yes.** The hold fails on an input named before the pass, in a judge the hold names, by a `??` default that converts a malformed input into an all-clear. The critic's three reasons for not re-opening are answered: the own-text rule decides whether a *new* finding adds an item, while a closed item's hold column decides whether it is still held, and §P8-6.5 made that column binding for this pass; the "uncured P8-G2..G4" sentence names one sufficient trigger, not the only one; "no caller passes a wrong-kind base" is the argument a masking fallback always rests on, and the item exists to refuse it | **S-14 re-opened; the count restarts at 0.** Route work under P8-R2, no new ruling |
+| O-2 | B18 reads a row with a blank Peer cell as no row, seal exit 0 | B-10's hold (P8-R3); LAW §5 `:168-170` | **No.** Its effect equals XR-drop, which P8-R3 (b) rules acceptable as a reviewed edit, and a leak still reads RED through the root's class (XR-drop-leaf). It is pass 8 O-1's shape (a LAW sentence the reader contradicts), which pass 8 ruled not a re-open on first sighting | route work under P8-R3 as ruled (the reader throws); `gate/peer.mjs` changes, so S69 and S69s are re-derived and `seal.test.ts` carries the RED case. If the pass-10 critic finds it uncured, B-10 re-opens |
+| O-3 | W-D.1 §0's five items all non-zero | none of the 27; W-D.1 §0 and §5 gates; the clean-break "no aliases" (covered at the door grain by B-02, R-6) | **No.** §P8-5 ruled them formation input with no checklist item | disposition per item, §P9-5; P9-R1, P9-R2 owed |
+| O-4 | `.claude/worktrees/bl/D1/p8/B-proto/` still present (P8-G6 not done); `p9/` empty | — | No | driver housekeeping (P9-G5) |
+
+**The critic's own defects** (cB9 §7): four battery locator or invocation errors (XR and BI3 cell locator, an unset `PEER_CMD`, fixtures without `testDir`, the root entry's file name), each re-run post-hash with the expectation unchanged. This registry accepts the post-hash re-runs: none changes a hashed expectation, and O-1's decisive lines (`extra9.txt:44-50`) are additions the hashed `judge-throws.sh` P-base-schema row already showed in kind (exit 1 on `{}`).
+
+**No finding maps to an edict clause the list leaves out. No item is added; the checklist stays at 27.**
+
+---
+
+## P9-3 · G's re-trigger: not fired
+
+- **The first arm fails again.** The pass 4-8 plants regress on the pass-9 tree with 0 differ (cB9 §4). G's law has no kernel seal, module-grain cycle clause, CSS door or peer clause.
+- **The second arm has no ruling.** The datum did not move.
+
+G stays banked.
+
+---
+
+## P9-4 · Rulings: P9-R1..P9-R2, owed
+
+P8-R1..P8-R3 were ruled on 2026-10-15 and landed, P8-R2 short by O-1 and P8-R3 short by O-2; both shortfalls are cured under the existing rulings, so neither needs a new one. Two rulings are owed, both from W-D.1 §0 items the wave attributes to the chain. Pass 10 changes the chain anyway (O-2's gate cure), so either can land in the same re-derivation.
+
+| id | question | arms | evidence | recommendation |
+|---|---|---|---|---|
+| **P9-R1** | who cures the `fourier-field` ↔ `fourier-field/renderer` parent↔child value cycle | (a) the loop: B4 widens from siblings to every module-grain value SCC, parent↔child included, and a chain step applies LAW §4's base rule (the parent-level file the child value-reads, `fourier-field/math.ts`, moves into a sibling module inside the `./fourier-math` anchor); `seal.test.ts` carries the RED case; (b) W-D.1: its §3 step 4 is re-worded as a named edit beyond the chain, and the seal stays sibling-only; (c) held with G-12 in G's bank, and W-D.1's D1-G3 `VALUE-SCC 0` gate is amended to except it | Bp9 §6 item 1 (`renderer/mint.ts:21` → `fourier-field/math.ts`; reverse `FourierField.vue:14`, `useFourierField.ts:31`, `index.ts:2`); W-D.1 §1 F-59 ("value-SCC count to 0 at module grain, parent↔child included"), §3 step 4 ("cured by the base rule"); LAW §8 (B4 judges siblings only) | **(a).** The seal lands as G-42 and is the edict's enforcement after the wave. A seal that passes a parent↔child cycle cannot hold F-59 after landing, so W-D.1's gate would be held by a probe nothing re-runs, the defect P7-R1 cured for the peer class. One clause widening and one move, inside the re-derivation pass 10 already owes |
+| **P9-R2** | who writes the chain's MIGRATION heading | (a) the chain: the MIGRATION row writes `## 11.0.0` in W-C.2's form, no tranche id; `MIGRATION.md` ships, so S70's datum is re-measured and rebound once (P4-R3); (b) W-D.1 rewrites the heading at landing, and its D1-G10 stays RED on the converged chain's own text until then | Bp9 §6 item 4 (`MIGRATION.md:8`, the one heading the chain adds; 9 lines name `BL` or "tranche"); W-D.1 §4 (`MIGRATION.md`: one `## 11.0.0` section), D1-G10, §3 step 1 ("nothing is edited by hand"); `package.json` `files` includes `MIGRATION.md` | **(a).** The chain authors shipped text; a converged chain that writes a tranche id into a shipped file hands the wave a gate it fails by construction and a hand edit its step 1 forbids. The 9 `BL`/"tranche" lines go in the same row |
+
+**Items 2, 3 and 5 need no ruling.** W-D.1 names each as its own edit beyond the chain (§3 step 5: `Surface` means the component, the axis type is `SurfaceDecoration`, the 5 bare aliases deleted; §3 step 7: the chart preset leaves `./tokens`; §4 lists the files). The convergence record carries them as W-D.1's landing work with pass 9's counts.
+
+---
+
+## P9-5 · Open gaps
+
+| id | gap | source | pass-10 disposition |
+|---|---|---|---|
+| P9-G1 | **S-14 re-opened:** the probe reads a degenerate `--base` as a verdict, and GREEN over a leak under a wrong-kind base | cB9 O-1; `K9/tools/peer-closure.mjs:45,77-78` | route: `--base` must be the probe's own floor-base report (`floorBase === true`, `entries` an object holding every declared entry), else throw; the two `??` defaults go. A sweep of all four judges for any `??`/`||` default over a report field, each found one a throw or a stated, planted reason |
+| P9-G2 | B18 skips a peer-less declaration row | cB9 O-2; `K9/gate/peer.mjs:31-32` | route under P8-R3: a line naming a `@mkbabb/glass-ui/<sub>` in the table block with no peer token throws; S69, S69s re-derived; `seal.test.ts` RED case |
+| P9-G3 | the parent↔child value cycle | Bp9 §6 item 1 | per P9-R1 |
+| P9-G4 | the chain's `UNRELEASED`/`BL` MIGRATION heading | Bp9 §6 item 4 | per P9-R2 |
+| P9-G5 | `.claude/worktrees/bl/D1/p8/B-proto/` (P8-G6, not done) and the empty `p9/` | cB9 O-4; `ls` at this seat | the driver removes both before the pass-10 route seat |
+| P9-G6 | W-D.1 and `waves/INDEX.md:47` cite the pass-4 kit and digest `472cf493…` | §P8-6.6 | re-pointed when D1 converges, to the converged pass's kit and digest |
+| P7-G5 | the root's peer class broken at the floor base (23 reviewed holds) | pass 7 | outside D1; on the tranche cursor |
+| P5-G3, P5-G5, P5-G8 | renderer and page-operation swallows; no `pretest` for `dist-demo`; common browser failures | pass 5 | outside D1; on the tranche cursor |
+
+Floor: none owed. FP6-1..FP6-3, FP6-7, FP5-3, FP5-4, FP5-7 stay declared limits.
+
+---
+
+## P9-6 · Pass-10 plan
+
+### P9-6.1 Routes
+
+| route | status | pass-10 work |
+|---|---|---|
+| D1-B | ADVANCE | close S-14 (P9-G1); land P8-R3's reader (P9-G2); land P9-R1 and P9-R2 on their ruled arms; re-derive S69, S69s and, under P9-R2 (a), S70. The pass-10 critique is the first of two clean passes |
+| D1-G, D1-D′, D1-A, D1-C, D1-E, D1-F | unchanged | none; triggers watched |
+
+### P9-6.2 Order
+
+1. **Housekeeping** (P9-G5). This part is committed by the driver before any pass-10 seat (S-01).
+2. **Rulings.** P9-R1 and P9-R2 ruled into `RULINGS.md` as one list, before the route seat.
+3. **Floor.** None owed.
+4. **Route.** Kit first (P9-G1, no digest change), then the chain: the P9-R1 move step (if (a)) where the base rule places it, the P9-R2 MIGRATION row (if (a)), `gate/peer.mjs` and the B4 widening landed by S69, S69s re-pinned, S70 re-measured. S69 stays the last gate step and S70 the one rebind. The new digest is replayed from three fresh worktrees, one `--twice`. **Browser:** if P9-R1 (a) moves a `src` file, `browser-select` re-derives the selection; every selected spec whose closure the move touches runs on the route tree under the guard (`--workers=1`) and the tally re-derives 428 against the committed base report; if no selected spec is touched, the committed reports stand and the tally is re-run. The kit and every result are committed before the critic launches.
+5. **Critique.** A fresh critic who authored nothing in passes 2-10, the pass-6..9 critics included, writes and hashes the battery before reading the kit.
+6. **Pass-10 agglomeration.** If the critique re-opens nothing and maps nothing outside the list, the count reaches 1.
+
+### P9-6.3 Route work
+
+| id | build | closes or holds |
+|---|---|---|
+| route · base schema | P9-G1: the probe's `--base` contract checked before use; the `??` defaults at `:77-78` removed; LAW §14 unchanged in substance (it already says so); the four judges swept for report-field defaults, each result listed in Bp10 | S-14 |
+| route · peer-less row | P9-G2: B18 throws on a peer-less row; LAW §5 unchanged in substance; `seal.test.ts` gains the RED case | B-10, S-14 |
+| route · parent↔child | P9-R1 on its ruled arm; under (a), B4's text in LAW §8 widens, the SCC reads 0, and W-D.1's `d1-probe.mjs` VALUE-SCC reads 0 on the route tree | S-03 (ruled and landed) |
+| route · MIGRATION | P9-R2 on its ruled arm; under (a), W-C.2's C2-G1 and C2-G4 run over the route tree's `MIGRATION.md` and read 0 | S-03 |
+| route · W-D.1 | re-measure W-D.1 §0's five items on the pass-10 tree (`tools/wd1/measure.mjs`), with file:line | none (formation input) |
+
+### P9-6.4 What pass 10 must prove
+
+§P8-6.4's bar, re-met on the new chain: the chain replays to one new digest, rerun a no-op; 19 clauses at 0 (B4 widened under P9-R1 (a)); verify:package CLEAN at the datum rebound once at S70; cascade GREEN against the floor base; 428/428 base-green held; `./motion-core` keyframes-free on all three arms; `seal.test.ts` with the new RED cases.
+
+**The battery must plant:**
+- for every input argument of every kit judge: missing, non-JSON, wrong-schema (`{}`, `[]`, an object of another report kind), and a report of the right schema but the wrong kind (a non-floor report as `--base`): each exits 2;
+- a leak in `./motion-core` with each degenerate `--base`: never 0;
+- a peer-less declaration row, a whitespace-only Peer cell, and a row naming no subpath: each exits 2;
+- under P9-R1 (a): a parent↔child value cycle in another unit read B4 RED, a type-only reverse edge read clean;
+- under P9-R2 (a): a tranche id written into the chain's MIGRATION text read RED by C2-G1;
+- regressions: the pass-9 critic's battery (`748826fb…`), the 402 rows, crash8, and passes 4-9's batteries.
+
+### P9-6.5 Convergence criterion
+
+§P2-6.5 unchanged; the checklist is §P3-9's 27 items, frozen. **B's two-clean-passes count is 0.** The pass-10 critique moves it to 1 and the pass-11 critique to 2 if each re-opens nothing and maps no finding to an edict clause the list leaves out. A closed item whose §P9-7 hold column fails on the critic's measurement is re-opened, as S-14 was here.
+
+### P9-6.6 What the convergence record will carry (written at pass 11 if the count reaches 2)
+
+As §P8-6.6, with: the digest of the pass-10 chain (and pass 11's replay of it); the datum S70 rebinds under P9-R2 (a); the rulings through P9-R2; W-D.1 §0's five items with the last measurement and their dispositions (items 1 and 4 per P9-R1 and P9-R2, items 2, 3 and 5 as W-D.1 §3 steps 5 and 7); P9-G6's re-pointing of W-D.1 and `waves/INDEX.md:47`.
+
+---
+
+## P9-7 · Open gaps, enumerated (the pass-10 checklist)
+
+§P3-9's list carries forward with its text frozen. No item is added in pass 9.
+
+| item | pass-9 critic | entering pass 10 | what holds it closed |
+|---|---|---|---|
+| S-01 | CLOSED | CLOSED | this part committed; the pass-10 kit and results committed before judgment |
+| S-02 | CLOSED | CLOSED | B8 0, B9 0 |
+| S-03 | CLOSED | CLOSED | P6-R1..P8-R3 on their arms, P8-R2 and P8-R3 landed in full (P9-G1, P9-G2); P9-R1, P9-R2 ruled and landed; the datum rebound once |
+| S-04..S-08 | CLOSED | CLOSED | gate at 0 on every clause |
+| S-09 | CLOSED | CLOSED | the new digest replayed idempotently, rerun a no-op |
+| S-10 | CLOSED | CLOSED | cascade GREEN listed, RED unlisted |
+| S-11 | CLOSED | CLOSED | vitest 0 failed |
+| S-12 | CLOSED | CLOSED | every base-green key accounted for; capture exclusion stated, printed, and a moved capture spec read by B0 |
+| S-13 | CLOSED | CLOSED | — |
+| S-14 | CLOSED | **OPEN (re-opened by this registry)** | B17 0; every gate throw exits 2, import time included; every kit judge exits 2 on a throw or a degenerate input on **every input argument**, a wrong-schema or wrong-kind report included; no judge reads a malformed input as an all-clear |
+| B-01 | CLOSED | CLOSED | every clause 0, B2 0; I7 caught |
+| B-02..B-06 | CLOSED | CLOSED | regressions identical |
+| B-07 | CLOSED | CLOSED | B15 over every stem |
+| B-08, B-09 | CLOSED | CLOSED | — |
+| B-10 | CLOSED | CLOSED | the peer class owned by B18; its declared set ruled (P8-R3) and its reader throwing on a peer-less row (P9-G2) |
+| B-11..B-13 | CLOSED | CLOSED | — |
+
+**Count entering pass 10:** 27 items, 26 closed, 1 open (S-14). Two-clean-passes count: **0**.
+
+**Held with the bank.** G-01..G-12 and D′'s gaps, unchanged.
+
+No route converged in pass 9. D1-B converges at the pass-11 agglomeration at the earliest.
