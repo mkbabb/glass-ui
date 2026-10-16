@@ -1,0 +1,60 @@
+{
+ "runtime6_sha256": "474521a89bab2cbaede42597af0ef974c8d583cde6885438a6402adbbebcaab4",
+ "lines_execd": "1-203",
+ "claim": "GAP M-08: fails clamp < 200, drop/rebase T <= 400, soft S <= 1500",
+ "policies": {
+  "clamp": {
+   "n_params": 1900,
+   "lo": 10.0,
+   "hi": 199.9,
+   "step": 0.1,
+   "passing_inside_claimed_band": [
+    199.3,
+    199.4,
+    199.5,
+    199.6,
+    199.7,
+    199.8,
+    199.9
+   ]
+  },
+  "drop": {
+   "n_params": 3801,
+   "lo": 20.0,
+   "hi": 400.0,
+   "step": 0.1,
+   "passing_inside_claimed_band": []
+  },
+  "rebase": {
+   "n_params": 3801,
+   "lo": 20.0,
+   "hi": 400.0,
+   "step": 0.1,
+   "passing_inside_claimed_band": []
+  },
+  "soft": {
+   "n_params": 1451,
+   "lo": 50.0,
+   "hi": 1500.0,
+   "step": 1.0,
+   "passing_inside_claimed_band": []
+  }
+ },
+ "stall_only_clamp": {
+  "lo": 10.0,
+  "hi": 48.0,
+  "stall_pass": [
+   47.2,
+   47.3,
+   47.4,
+   47.5,
+   47.6,
+   47.7,
+   47.8,
+   47.9,
+   48.0
+  ]
+ },
+ "seconds": 32.7,
+ "load_1min_end": 54.22509765625
+}

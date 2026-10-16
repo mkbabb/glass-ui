@@ -1,0 +1,208 @@
+{
+ "head_gate_pass": false,
+ "head_rows": [
+  {
+   "file": "src/components/blob/composables/useBlobPointer.ts",
+   "pass": false,
+   "why": [
+    "159 call Math.min(…)",
+    "159 call Math.min(…)",
+    "hand 184"
+   ]
+  },
+  {
+   "file": "src/components/constellation/constellationInteraction.ts",
+   "pass": false,
+   "why": [
+    "hand 164",
+    "hand 165"
+   ]
+  },
+  {
+   "file": "src/components/fourier-field/clock.ts",
+   "pass": false,
+   "why": [
+    "hand 73"
+   ]
+  },
+  {
+   "file": "src/composables/motion/morph/useLeadTrail.ts",
+   "pass": false,
+   "why": [
+    "hand 213"
+   ]
+  },
+  {
+   "file": "src/composables/motion/pointer/usePointerVelocityField.ts",
+   "pass": false,
+   "why": [
+    "hand 396",
+    "hand 397"
+   ]
+  },
+  {
+   "file": "src/composables/motion/spring/springProjection.ts",
+   "pass": true,
+   "why": []
+  }
+ ],
+ "head_review": [
+  "src/components/aurora/composables/auroraFallbackGround.ts:146 Math.exp in a file with no SpringProgress step: a hand-written closed form (r02) steps on its own clock here",
+  "src/components/aurora/composables/useAurora.ts:125 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/components/aurora/composables/useAurora.ts:127 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/components/aurora/composables/useAurora.ts:209 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/components/aurora/composables/useAurora.ts:215 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/components/aurora/composables/useCursorInteraction.ts:98 Math.exp in a file with no SpringProgress step: a hand-written closed form (r02) steps on its own clock here",
+  "src/components/deck/composables/useDeckCapture.ts:69 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/components/dock/composables/useDockState.ts:391 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/components/easing/EasingPicker.vue:276 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/components/easing/EasingPicker.vue:277 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/components/easing/usePicker.ts:425 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/components/easing/usePicker.ts:431 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/components/fading-scroll/composables/useFadingScroll.ts:150 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/components/pager-dots/PagerDots.vue:176 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/components/sortable-list/ghost.ts:78 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/dark/installDarkModeSync.ts:29 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/dark/useGlobalDark.ts:108 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/dark/useGlobalDark.ts:150 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/dom/useDragVelocity.ts:166 Math.exp in a file with no SpringProgress step: a hand-written closed form (r02) steps on its own clock here",
+  "src/composables/dom/useDragVelocity.ts:170 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/dom/useDragVelocity.ts:197 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/dom/useResizeObserver.ts:98 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/glass/useSpecularTracking.ts:101 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/glass/webgl/createCanvasLifecycle.ts:232 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/glass/webgl/createCanvasLifecycle.ts:238 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/glass/webgl/createCanvasLifecycle.ts:409 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/glass/webgl/visibility.ts:175 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/glass/webgl/visibility.ts:179 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/glass/webgl/visibility.ts:277 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/motion/morph/useLeadTrail.ts:230 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/motion/morph/useLeadTrail.ts:240 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/motion/scroll/scrollReader.ts:97 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/motion/scroll/useScrollProgress.ts:64 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/sidebar/useLazyLoader.ts:43 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/sidebar/useScrollTo.ts:65 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/sidebar/useScrollTo.ts:86 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/sidebar/useScrollTo.ts:89 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/sidebar/useSidebarFollow.ts:85 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/sidebar/useSidebarFollow.ts:110 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/sidebar/useSidebarFollow.ts:134 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+  "src/composables/sidebar/useSidebarFollow.ts:144 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)"
+ ],
+ "plants": {
+  "m01-clamp-199-5.ts": [
+   "FAIL",
+   "gate FAIL",
+   "ok",
+   [
+    "5 call Math.min(…)"
+   ]
+  ],
+  "m02-clamp-47-5-stall.ts": [
+   "FAIL",
+   "gate FAIL",
+   "ok",
+   [
+    "5 call Math.min(…)"
+   ]
+  ],
+  "n01-window-prop-same-file.ts": [
+   "RESIDUAL",
+   "gate FAIL",
+   "UNEXPECTED",
+   [
+    "5 call Math.min(…)"
+   ]
+  ],
+  "n02-paren-string-key.ts": [
+   "RESIDUAL",
+   "gate PASS",
+   "ok",
+   []
+  ],
+  "k01-object-destructuring-default.ts": [
+   "FAIL",
+   "gate PASS",
+   "UNEXPECTED",
+   []
+  ],
+  "k01c-array-destructuring-default.ts": [
+   "FAIL",
+   "gate FAIL",
+   "ok",
+   [
+    "6 call Math.min(…)"
+   ]
+  ],
+  "k01d-object-destructuring-renamed-default.ts": [
+   "FAIL",
+   "gate FAIL",
+   "ok",
+   [
+    "6 call Math.min(…)"
+   ]
+  ],
+  "k03-handrolled-two-point-zero.ts": [
+   "FAIL",
+   "gate PASS",
+   "UNEXPECTED",
+   []
+  ],
+  "k03c-handrolled-two.ts": [
+   "FAIL",
+   "gate FAIL",
+   "ok",
+   [
+    "hand 7"
+   ]
+  ],
+  "k04-template-key-sink.ts": [
+   "FAIL",
+   "gate PASS",
+   "UNEXPECTED",
+   []
+  ],
+  "k04c-string-key-sink.ts": [
+   "FAIL",
+   "gate FAIL",
+   "ok",
+   [
+    "5 indirect sink reference lead[\"tickDt\"]"
+   ]
+  ],
+  "k05-exported-clock-object.ts": [
+   "RESIDUAL",
+   "gate PASS",
+   "ok",
+   []
+  ]
+ },
+ "providers": {
+  "critique7/plants/k05-provider.ts": {
+   "head": "provider for k05 (not scored): writes a clamped dt into the stepper file's exported object",
+   "gate_pass": true,
+   "sinks": 0
+  }
+ },
+ "tally": {
+  "plants": 12,
+  "as_expected": 8,
+  "by_class": {
+   "PASS": {
+    "n": 0,
+    "gate_pass": 0
+   },
+   "FAIL": {
+    "n": 9,
+    "gate_pass": 3
+   },
+   "RESIDUAL": {
+    "n": 3,
+    "gate_pass": 2
+   }
+  },
+  "F1_G4_passes": 12,
+  "residual_with_review_hit": 1,
+  "pass_plants_with_review_hit": []
+ }
+}
