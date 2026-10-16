@@ -1,0 +1,12 @@
+# start 2026-10-16 06:06:45 load { 15.10 21.24 24.58 }
+[guarded] waiting for the 'webkit' lock
+C-E2 probe veil · webkit · load 33.0/27.4/25.1 at start
+  FAIL       handoff pin fwd (Tab A → B) · rest tops A 171 B 239 px · frames 71, both promoted in 12 · outgoing A: promoted 17 frames, largest gap from its own footprint 68.0 px, largest one-frame move 68.0 px · incoming B: promoted 66 frames, gap 0.0 px, move 6.4 px (bounds gap ≤ 1, move ≤ 4 per 16.7 ms) · load 34.7/27.9/25.2
+  REPORT     handoff pin fwd (Tab A → B) frames · t 46 ms: A y 238.2 gap 68.0 pop true · B y 238.7 gap 0.0 pop true | t 56 ms: A y 238.2 gap 68.0 pop true · B y 238.7 gap 0.0 pop true | t 66 ms: A y 238.3 gap 68.0 pop true · B y 238.6 gap 0.0 pop true | t 77 ms: A y 238.4 gap 68.0 pop true · B y 238.6 gap 0.0 pop true · load 34.7/27.9/25.2
+  FAIL       handoff pin rev (Shift+Tab B → A) · rest tops A 171 B 239 px · frames 71, both promoted in 13 · outgoing B: promoted 18 frames, largest gap from its own footprint 0.0 px, largest one-frame move 2.8 px · incoming A: promoted 66 frames, gap 68.0 px, move 68.0 px (bounds gap ≤ 1, move ≤ 4 per 16.7 ms) · load 34.7/27.9/25.2
+  REPORT     handoff pin rev (Shift+Tab B → A) frames · t 44 ms: B y 238.1 gap 0.0 pop true · A y 238.7 gap 68.0 pop true | t 54 ms: B y 238.1 gap 0.0 pop true · A y 238.7 gap 68.0 pop true | t 64 ms: B y 238.2 gap 0.0 pop true · A y 238.7 gap 68.0 pop true | t 74 ms: B y 238.3 gap 0.0 pop true · A y 238.6 gap 68.0 pop true · load 34.7/27.9/25.2
+  FAIL       hand over keys (Tab A, press B) · rest tops A 171 B 239 px · frames 72, both promoted in 13 · outgoing A: promoted 20 frames, largest gap from its own footprint 68.0 px, largest one-frame move 68.0 px · incoming B: promoted 65 frames, gap 0.0 px, move 1.1 px (bounds gap ≤ 1, move ≤ 4 per 16.7 ms) · load 34.7/27.9/25.2
+  REPORT     hand over keys (Tab A, press B) frames · t 53 ms: A y 238.1 gap 68.0 pop true · B y 238.7 gap 0.0 pop true | t 65 ms: A y 238.2 gap 68.0 pop true · B y 238.7 gap 0.0 pop true | t 73 ms: A y 238.2 gap 68.0 pop true · B y 238.7 gap 0.0 pop true | t 85 ms: A y 238.3 gap 68.0 pop true · B y 238.6 gap 0.0 pop true · load 34.7/27.9/25.2
+  REPORT     keyboard veil state · Tab into A: A promoted true ×1.060 · veil popover open true, data-engaged true, display block, opacity 1, backdrop-filter blur(20px) saturate(1.5) · load 34.2/27.9/25.3
+C-E2 probe veil · webkit · done · load 34.2/27.9/25.3
+# end exit 0 2026-10-16 06:33:01 load { 33.61 27.98 25.31 }

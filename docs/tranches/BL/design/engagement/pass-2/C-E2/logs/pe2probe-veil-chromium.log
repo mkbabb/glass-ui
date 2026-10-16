@@ -1,0 +1,13 @@
+# start 2026-10-16 07:15:51 load { 22.78 18.33 17.91 }
+P-E2 probe pe2-veil · chromium · load 28.0/24.7/22.4 at start
+  PASS       numfield click · 4 px of travel: popover false, engaged false, value 50 (50), focus on the field true, footprints 0 · load 27.7/24.7/22.4
+  PASS       numfield scrub · 60 px of travel: popover true, engaged true, scale ×1.060, veil 1.00, value 50 → 57 (7 steps; trunc(60/8) = 7) · load 27.9/24.8/22.4
+  PASS       numfield value kept · fling: 65 at release → 65; still: 65 → 65; off the stage true, footprints 0 · load 27.9/24.8/22.4
+  PASS       numfield carry · leading edge past its rest, page frame: fling 10.80 px, still 6.60 px, differential 4.20 px (bound ≥ 4); largest one-frame move on release 2.0 px · load 27.9/24.8/22.4
+  PASS       numfield PRM · under reduce, scrubbing: scale ×1.000, veil 1.00 (the light leg), promoted true · load 27.9/24.8/22.4
+  PASS       between landing · a keyed insert before the held slider: footprint re-seated true (the inserted node now precedes the footprint); release, largest one-frame move 1.9 px (without the insert 2.1 px; bound ≤ that + 1 px); during the hold the control moved with its slot, largest one-frame move 5.8 px · load 27.8/24.8/22.5
+  PASS       dialog escape · 1 Tab(s) to the thumb: engaged true (stage veil 1.00); first Escape: engaged false, Dialog open true; second Escape: Dialog open false · load 27.8/24.8/22.5
+  PASS       keyfocus · "k" focuses the thumb by script: focus slider, engaged false, promoted false, scale ×1.000 · load 27.8/24.8/22.5
+  PASS       keyfocus then acting key · ArrowRight after it engages (the control acts on it): true · load 27.8/24.8/22.5
+P-E2 probe pe2-veil chromium · 9 pass, 0 fail · load 28.4/25.0/22.5 at end
+# end exit 0 2026-10-16 07:41:20 load { 29.45 25.27 22.65 }

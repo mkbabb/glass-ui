@@ -1,0 +1,13 @@
+# build start 2026-10-16 06:15:41 load { 22.10 25.25 26.58 }
+a:b referenced in a:b didn't resolve at build time, it will remain unchanged to be resolved at runtime
+/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/C-E2/wtx/.ce2-out/builds/ctl-probe · 55 component directories (55 with an index.ts mapped for the member walk) · declaration composables/motion#ENGAGE_DECLARATION
+# probe start 2026-10-16 06:15:46 load { 21.37 25.05 26.50 }
+C-E2 probe ctl-anchor · chromium · load 33.5/27.9/25.3 at start
+  PASS       handoff pin fwd (Tab A → B) · rest tops A 171 B 239 px · frames 85, both promoted in 14 · outgoing A: promoted 18 frames, largest gap from its own footprint 0.0 px, largest one-frame move 1.5 px · incoming B: promoted 81 frames, gap 0.0 px, move 1.2 px (bounds gap ≤ 1, move ≤ 4 per 16.7 ms) · load 33.5/27.9/25.3
+  PASS       handoff pin rev (Shift+Tab B → A) · rest tops A 171 B 239 px · frames 87, both promoted in 12 · outgoing B: promoted 17 frames, largest gap from its own footprint 0.0 px, largest one-frame move 1.7 px · incoming A: promoted 82 frames, gap 0.0 px, move 1.2 px (bounds gap ≤ 1, move ≤ 4 per 16.7 ms) · load 33.5/27.9/25.3
+  PASS       hand over keys (Tab A, press B) · rest tops A 171 B 239 px · frames 81, both promoted in 13 · outgoing A: promoted 20 frames, largest gap from its own footprint 0.0 px, largest one-frame move 1.7 px · incoming B: promoted 74 frames, gap 0.0 px, move 1.2 px (bounds gap ≤ 1, move ≤ 4 per 16.7 ms) · load 33.6/28.0/25.3
+  REPORT     keyboard veil state · Tab into A: A promoted true ×1.060 · veil popover open true, data-engaged true, display block, opacity 1, backdrop-filter blur(20px) saturate(1.5) · load 33.6/28.0/25.3
+  REPORT     forced-colors held · media applied fc true prt false · pointer-held A: promoted true ×1.060, background rgba(255, 255, 255, 0), forced-color-adjust auto · veil open true, display none, opacity 1, backdrop-filter blur(20px) saturate(1.5) · load 33.6/28.0/25.3
+  REPORT     reduced-transparency held · media applied fc false prt true · pointer-held A: promoted true ×1.060, background rgba(0, 0, 0, 0), forced-color-adjust auto · veil open true, display none, opacity 1, backdrop-filter blur(20px) saturate(1.5) · load 33.6/28.0/25.3
+C-E2 probe ctl-anchor · chromium · done · load 33.6/28.0/25.3
+# end exit 0 2026-10-16 06:33:13 load { 32.99 28.01 25.35 }
