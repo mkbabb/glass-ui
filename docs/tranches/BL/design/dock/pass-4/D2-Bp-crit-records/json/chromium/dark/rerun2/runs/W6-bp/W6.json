@@ -1,0 +1,82 @@
+{
+ "witness": "W6",
+ "target": "bp@5f948236",
+ "when": "2026-10-16T19:57:02.944Z",
+ "load": 22.61,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "form·collapse",
+   "pass": false,
+   "unmeasured": false,
+   "unjudged": [],
+   "failed": [
+    "window"
+   ],
+   "D": 142.19,
+   "start": 333.06,
+   "target": 190.88,
+   "frames": 612,
+   "travelMs": 244,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.64,
+    "step": 9.38,
+    "bound": 14.61,
+    "atMs": 3652.9,
+    "dt": 7.9
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": false,
+    "why": "window 261.4 ms > clock 214.2 + 2×16.7 + stall 9.5 = 257.1 ms (O-64 R-4, H-3d)",
+    "open": 3607.9,
+    "close": 3869.2999999999997,
+    "land": 3851.9,
+    "motionStart": 3607.9,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 261.4,
+    "allowMs": 257.1,
+    "q4": true,
+    "q4AllowMs": 312.9
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 0.49,
+    "tol": 6.69,
+    "frac": 0,
+    "atMs": 3851.9,
+    "why": "worst 0.49 px (0.34 % of D) from the rung's analytic spring (tol 6.69)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.77,
+    "prev": 0.41,
+    "bound": 1.07,
+    "why": "last step 0.77 px after 0.41 px (bound 1.07)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "faces": {
+    "ok": true,
+    "why": "0 px of form ink beyond the plate over 47 screenshot sample(s) (0 in flight) (bound 1)"
+   },
+   "summary": "D 142.19 px (333.06→190.88); step ×0.64; dead; window 261.4 ms (allow 257.1, clock 214.2) — window 261.4 ms > clock 214.2 + 2×16.7 + stall 9.5 = 257.1 ms (O-64 R-4, H-3d); trajectory worst 0.49 px (0.34 % of D) from the rung's analytic spring (tol 6.69); terminal last step 0.77 px after 0.41 px (bound 1.07); owners 0; Q-4 lenient window holds (allow 312.9 ms); faces 0 px of form ink beyond the plate over 47 screenshot sample(s) (0 in flight) (bound 1)  ⟶ FAILED: window",
+   "load": 22.61
+  }
+ ]
+}

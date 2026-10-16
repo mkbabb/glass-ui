@@ -1,0 +1,58 @@
+{
+ "witness": "CASES",
+ "target": "bp@5f948236",
+ "when": "2026-10-16T20:41:41.933Z",
+ "load": 19.22,
+ "cells": [
+  {
+   "engine": "webkit",
+   "cell": "case·capped·seat-transition",
+   "pass": true,
+   "failed": [],
+   "summary": "cap 150 px, run overflowing true; grow and shrink a seat's own width transition: page errors 0, window error events 0; plate travel 0 px, largest one-frame step 0 px; flag at rest closed; webkit-case_capped_seat-transition.json",
+   "load": 21.31
+  },
+  {
+   "engine": "webkit",
+   "cell": "case·capped·morph",
+   "pass": true,
+   "failed": [],
+   "summary": "cap 300 px: expand (run overflowing true), add a seat, collapse: page errors 0, window error events 0; plate travel 198 px, largest one-frame step 19.81 px; flag at rest closed; webkit-case_capped_morph.json",
+   "load": 20.65
+  },
+  {
+   "engine": "webkit",
+   "cell": "case·consumer-margin",
+   "pass": true,
+   "failed": [],
+   "summary": "unlayered \".glass-dock { margin-inline: 20px; }\" (computed margin-left at rest 20px): expand, collapse; plate end edge past the neighbour by at most -31.98 px (bound 0.5); neighbour travel 379.72 px, largest one-frame step 34.88 px against the plate edge's 35.97 px (+1); webkit-case_consumer-margin.json",
+   "load": 20.65
+  },
+  {
+   "engine": "webkit",
+   "cell": "case·consumer-margin·control",
+   "pass": true,
+   "failed": [],
+   "summary": "no consumer rule (computed margin-left at rest 8px): expand, collapse; plate end edge past the neighbour by at most -19.98 px (bound 0.5); neighbour travel 379.72 px, largest one-frame step 37.73 px against the plate edge's 37.73 px (+1); webkit-case_consumer-margin_control.json",
+   "load": 20.19
+  },
+  {
+   "engine": "webkit",
+   "cell": "case·rotated·control",
+   "pass": true,
+   "failed": [],
+   "summary": "host rotate(0deg): expand, collapse; seats' largest second difference 5.99 px/frame²; largest one-frame seat move after the window closed 0.4 px (bound 0.5); webkit-case_rotated_control.json",
+   "load": 20.19
+  },
+  {
+   "engine": "webkit",
+   "cell": "case·rotated",
+   "pass": false,
+   "failed": [
+    "jerk"
+   ],
+   "summary": "host rotate(2deg): expand, collapse; seats' largest second difference 9.26 px/frame² (control 5.99, bound +1); largest one-frame seat move after the window closed 0.36 px (bound 0.5); webkit-case_rotated.json  ⟶ FAILED: jerk",
+   "load": 19.22
+  }
+ ]
+}

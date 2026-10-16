@@ -1,0 +1,58 @@
+{
+ "witness": "W2",
+ "target": "bp@5f948236",
+ "when": "2026-10-16T19:45:25.683Z",
+ "load": 26.96,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "route1·long-run-v",
+   "pass": false,
+   "failed": [
+    "keyboard"
+   ],
+   "genuine": {
+    "needed": 568,
+    "budget": 536,
+    "exceeds": true,
+    "run": "div.dock-layers"
+   },
+   "frames": {
+    "frames": 41,
+    "framesWithScroller": 41,
+    "framesWithRange": 41,
+    "maxRange": 56,
+    "who": [
+     "div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run(hidden/auto)"
+    ]
+   },
+   "ring": {
+    "cutA": 0,
+    "cutB": 0,
+    "painted": true,
+    "clipped": [
+     4.25,
+     4.25
+    ],
+    "free": [
+     4.25,
+     4.25
+    ]
+   },
+   "reach": {
+    "n": 11,
+    "ok": false,
+    "miss": {
+     "pointer": [],
+     "keyboard": [
+      "Seat 1"
+     ],
+     "at": []
+    },
+    "tab": "Tab"
+   },
+   "summary": "seats need 568 px vs budget 536 (EXCEED: scrolling allowed); scroller frames 41/41; ring reach clipped 4.25/4.25 vs free 4.25/4.25 px → cut 0/0 (bound 0.5); focus-visible true, hovered true, selected true; reach 11 seats: pointer 11/11, keyboard (Tab, arrows) 10/11 (missing Seat 1), AT 11/11  ⟶ FAILED: keyboard",
+   "load": 26.96
+  }
+ ]
+}

@@ -1,0 +1,79 @@
+{
+ "witness": "W6",
+ "target": "bp@5f948236",
+ "when": "2026-10-16T19:47:29.744Z",
+ "load": 22.87,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "form·collapse",
+   "pass": true,
+   "unmeasured": false,
+   "unjudged": [],
+   "failed": [],
+   "D": 142.19,
+   "start": 333.06,
+   "target": 190.88,
+   "frames": 612,
+   "travelMs": 241.6,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.64,
+    "step": 9.14,
+    "bound": 14.25,
+    "atMs": 3661.3,
+    "dt": 7.7
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": true,
+    "why": "",
+    "open": 3616.0999999999995,
+    "close": 3871.7,
+    "land": 3857.7,
+    "motionStart": 3616.0999999999995,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 255.6,
+    "allowMs": 256.9,
+    "closeMinusLandFrames": 2
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 0.47,
+    "tol": 6.69,
+    "frac": 0,
+    "atMs": 3857.7,
+    "why": "worst 0.47 px (0.33 % of D) from the rung's analytic spring (tol 6.69)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.81,
+    "prev": 0.45,
+    "bound": 1.16,
+    "why": "last step 0.81 px after 0.45 px (bound 1.16)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "faces": {
+    "ok": true,
+    "why": "0 px of form ink beyond the plate over 47 screenshot sample(s) (0 in flight) (bound 1)"
+   },
+   "summary": "D 142.19 px (333.06→190.88); step ×0.64; dead; window 255.6 ms (allow 256.9, clock 214.2); trajectory worst 0.47 px (0.33 % of D) from the rung's analytic spring (tol 6.69); terminal last step 0.81 px after 0.45 px (bound 1.16); owners 0; faces 0 px of form ink beyond the plate over 47 screenshot sample(s) (0 in flight) (bound 1)",
+   "load": 22.87
+  }
+ ]
+}
