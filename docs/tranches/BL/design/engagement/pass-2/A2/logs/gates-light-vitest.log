@@ -1,0 +1,708 @@
+# build light (again, after the seat edits) 2026-10-15 19:00:32 load { 37.20 44.60 57.04 }
+build exit 0
+# vitest light 2026-10-15 19:00:44 load { 34.14 43.60 56.47 }
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/A2/wt
+
+ ❯ tests/components/ui/toggle-group/ToggleGroup.test.ts (10 tests | 1 failed) 65ms
+     × G-TOGGLE-REGISTER · the lane declares no register-owned material 5ms
+ ❯ tests/styles/color-mix-endpoints.test.ts (1 test | 1 failed) 88ms
+     × rejects literal nested endpoints across executable CSS and CSS Vue style blocks 87ms
+ ❯ tests/components/easing.contract.test.ts (33 tests | 4 failed) 460ms
+     × shows pending and copied states, then cancels the reset timer on unmount 17ms
+     × owns truthful transport state and completes immediately when PRM flips on 10ms
+     × stays idle under initial PRM and completes only after a requested preview 9ms
+     × inks a new curve ON, and never arms the sweep under reduced motion 12ms
+(node:13285) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/components/control-bit/binary-triad.test.ts (5 tests | 1 failed) 61ms
+     × declares each control law exactly once, and no transition targets a host 7ms
+ ❯ tests/components/textarea.contract.test.ts (11 tests | 4 failed) 31ms
+     × expresses the vertical resize mode without utility classes 5ms
+     × expresses the horizontal resize mode without utility classes 2ms
+     × expresses the both resize mode without utility classes 1ms
+     × expresses the none resize mode without utility classes 1ms
+ ❯ tests/gates/boot-graph.test.ts (14 tests | 3 failed) 88ms
+     × the built demo has a dist-demo to measure 4ms
+     × the dist-demo it measures is NEWER than every source it is built from 1ms
+     × the eager graph stays under the modulepreload and byte ceilings 1ms
+ ❯ tests/components/field/forms-seam.test.ts (6 tests | 1 failed) 52ms
+     × G-F6 · GEOMETRY + SURFACE HYGIENE — series padding, a declared ceiling, no misfiled sheet, ARIA off the role-less root 12ms
+(node:14764) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/components/labeled-field.contract.test.ts (7 tests | 1 failed) 113ms
+     × passes explicit state to the field and underlying control 10ms
+stderr | tests/components/button/Button.test.ts > Button — the command contract > preserves an asChild link and suppresses disabled activation
+[Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+  at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+  at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+  at <Button as-child="" > 
+  at <Anonymous ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+
+ ❯ tests/components/button/Button.test.ts (24 tests | 2 failed) 142ms
+     × preserves an asChild link and suppresses disabled activation 7ms
+     × the surface cross-fade survives reduced motion 1ms
+ ❯ tests/styles/engage-ladder.test.ts (27 tests | 1 failed) 49ms
+     × a mode-split member lists its primary class first, and only declared classes 4ms
+(node:16979) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/design/drive-tokens.test.ts (4 tests | 1 failed) 24ms
+     × names only tokens that exist in src/ — a doc-only token is an inert contract 19ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 20 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/easing.contract.test.ts > EasingPicker product contract > shows pending and copied states, then cancels the reset timer on unmount
+AssertionError: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/components/easing.contract.test.ts:192:36
+    190|
+    191|         wrapper.unmount();
+    192|         expect(vi.getTimerCount()).toBe(0);
+       |                                    ^
+    193|     });
+    194|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/20]⎯
+
+ FAIL  tests/components/easing.contract.test.ts > EasingPicker product contract > owns truthful transport state and completes immediately when PRM flips on
+AssertionError: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/components/easing.contract.test.ts:317:29
+    315|         expect(wrapper.attributes("data-playback-state")).toBe("idle");
+    316|         staleFrame(600);
+    317|         expect(frames.size).toBe(0);
+       |                             ^
+    318|
+    319|         await transport().trigger("click");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/20]⎯
+
+ FAIL  tests/components/easing.contract.test.ts > EasingPicker product contract > stays idle under initial PRM and completes only after a requested preview
+AssertionError: expected "vi.fn()" to not be called at all, but actually been called 1 times
+
+Received:
+
+  1st vi.fn() call:
+
+    Array [
+      [Function anonymous],
+    ]
+
+
+Number of calls: 1
+
+ ❯ tests/components/easing.contract.test.ts:362:34
+    360|         expect(wrapper.attributes("data-playback-state")).toBe("comple…
+    361|         expect(wrapper.find('[data-slot="easing-curve-travel"]').exist…
+    362|         expect(requestFrame).not.toHaveBeenCalled();
+       |                                  ^
+    363|         wrapper.unmount();
+    364|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/20]⎯
+
+ FAIL  tests/components/easing.contract.test.ts > G-E9 STROKE+FOCUS — whole-pixel ink, and an indicator on every focusable > inks a new curve ON, and never arms the sweep under reduced motion
+AssertionError: the sweep is armed on the frame the curve changes: expected [ [Function], [Function] ] to have a length of 1 but got 2
+
+- Expected
++ Received
+
+- 1
++ 2
+
+ ❯ tests/components/easing.contract.test.ts:716:76
+    714|         // two frames, and the second one is the mechanism, not paddin…
+    715|         const first = frames.splice(0);
+    716|         expect(first, "the sweep is armed on the frame the curve chang…
+       |                                                                            ^
+    717|         first[0]!(0);
+    718|         expect(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/20]⎯
+
+ FAIL  tests/components/labeled-field.contract.test.ts > LabeledField contract > passes explicit state to the field and underlying control
+AssertionError: expected { 'data-v-0bdd247f': '', …(6) } to match object { …(4) }
+(3 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "class": "labeled-field field-grid-cell",
++   "class": "labeled-field engage-static field-grid-cell",
+    "data-atom": "organization",
+    "data-disabled": "true",
+    "data-invalid": "true",
+  }
+
+ ❯ tests/components/labeled-field.contract.test.ts:131:73
+    129|         });
+    130|
+    131|         expect(wrapper.get('[data-slot="labeled-field"]').attributes()…
+       |                                                                         ^
+    132|             class: "labeled-field field-grid-cell",
+    133|             "data-atom": "organization",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/20]⎯
+
+ FAIL  tests/components/textarea.contract.test.ts > Textarea contract > expresses the vertical resize mode without utility classes
+ FAIL  tests/components/textarea.contract.test.ts > Textarea contract > expresses the horizontal resize mode without utility classes
+ FAIL  tests/components/textarea.contract.test.ts > Textarea contract > expresses the both resize mode without utility classes
+ FAIL  tests/components/textarea.contract.test.ts > Textarea contract > expresses the none resize mode without utility classes
+AssertionError: expected [ 'field-control', …(2) ] to deeply equal [ 'field-control', …(1) ]
+
+- Expected
++ Received
+
+  [
+    "field-control",
+    "glass-control-edge",
++   "engage-field",
+  ]
+
+ ❯ tests/components/textarea.contract.test.ts:93:39
+     91|             const wrapper = mount(Textarea, { props: { resize } });
+     92|             expect(wrapper.attributes("data-resize")).toBe(resize);
+     93|             expect(wrapper.classes()).toEqual([
+       |                                       ^
+     94|                 "field-control",
+     95|                 "glass-control-edge",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/20]⎯
+
+ FAIL  tests/design/drive-tokens.test.ts > tunable-anim.md Kind-5 drive table > names only tokens that exist in src/ — a doc-only token is an inert contract
+AssertionError: Kind-5 rows naming a token with no registration, declaration or read in src/: expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "button press → --glass-btn-press-t",
++ ]
+
+ ❯ tests/design/drive-tokens.test.ts:89:11
+     87|             ghosts.map((g) => `${g.drive} → ${g.token}`),
+     88|             "Kind-5 rows naming a token with no registration, declarat…
+     89|         ).toEqual([]);
+       |           ^
+     90|     });
+     91|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/20]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the built demo has a dist-demo to measure
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:566:34
+    564|
+    565|     it("the built demo has a dist-demo to measure", () => {
+    566|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    567|     });
+    568|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/20]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:570:34
+    568|
+    569|     it("the dist-demo it measures is NEWER than every source it is bui…
+    570|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    571|         const builtAt = statSync(indexHtml).mtimeMs;
+    572|         const newestSrc = newestSourceMtime();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/20]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the eager graph stays under the modulepreload and byte ceilings
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:580:34
+    578|
+    579|     it("the eager graph stays under the modulepreload and byte ceiling…
+    580|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    581|         const html = readFileSync(indexHtml, "utf8");
+    582|         const graph = measureEagerGraph(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/20]⎯
+
+ FAIL  tests/styles/color-mix-endpoints.test.ts > gate:G-WK-COLORMIX-BUDGET — color-mix endpoint structure > rejects literal nested endpoints across executable CSS and CSS Vue style blocks
+AssertionError: expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/A2/wt/src/components/toggle-group/styles.css:background-color endpoint 2",
++ ]
+
+ ❯ tests/styles/color-mix-endpoints.test.ts:126:38
+    124|
+    125|         const report = analyze(styles);
+    126|         expect(report.literalNested).toEqual([]);
+       |                                      ^
+    127|
+    128|         // BK #39 (2026-08-06): `components/drawer/styles.css` struck …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/20]⎯
+
+ FAIL  tests/styles/engage-ladder.test.ts > G-ENGAGE-RUNG — every component directory is declared, and adopts its class > a mode-split member lists its primary class first, and only declared classes
+AssertionError: expected [ Array(4) ] to deeply equal [ 'card', 'chip' ]
+
+- Expected
++ Received
+
+  [
+    "card",
+    "chip",
++   "configurator",
++   "surface",
+  ]
+
+ ❯ tests/styles/engage-ladder.test.ts:131:43
+    129|
+    130|     it("a mode-split member lists its primary class first, and only de…
+    131|         expect(Object.keys(modes).sort()).toEqual(["card", "chip"]);
+       |                                           ^
+    132|         for (const [dir, list] of Object.entries(modes)) {
+    133|             expect(list[0]).toBe(members[dir]);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/20]⎯
+
+ FAIL  tests/components/control-bit/binary-triad.test.ts > W-CONTROL-BIT — the binary triad > declares each control law exactly once, and no transition targets a host
+Error: host transition in src/styles/glass/control-bit.css: .control-bit:is([data-state="checked"]
+ ❯ tests/components/control-bit/binary-triad.test.ts:146:27
+    144|                     !/^\.radio-group\b/.test(target);
+    145|                 if (isHost && /(^|;|\s)transition\s*:/.test(body)) {
+    146|                     throw new Error(`host transition in ${path}: ${tar…
+       |                           ^
+    147|                 }
+    148|             }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/20]⎯
+
+ FAIL  tests/components/button/Button.test.ts > Button — the command contract > preserves an asChild link and suppresses disabled activation
+AssertionError: expected [ 'button', 'engage-pressed', …(3) ] to include 'glass-capsule-hover'
+ ❯ tests/components/button/Button.test.ts:117:32
+    115|         expect(link.attributes("data-slot")).toBe("button");
+    116|         expect(link.attributes("type")).toBeUndefined();
+    117|         expect(link.classes()).toContain("glass-capsule-hover");
+       |                                ^
+    118|
+    119|         const disabled = mount({
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/20]⎯
+
+ FAIL  tests/components/button/Button.test.ts > Button §5 STATE — three states that differ > the surface cross-fade survives reduced motion
+AssertionError: expected '\n@layer components {\n    .button {\…' not to match /transition:/
+
+- Expected:
+/transition:/
+
++ Received:
+"
+@layer components {
+    .button {
+        --button-size: var(--control-h-md);
+        
+        --button-tone: var(--foreground);
+        --button-accent: var(--primary);
+        --button-quiet-ink: var(--muted-foreground);
+        --button-ink: var(--button-tone);
+        --button-edge: transparent;
+        display: inline-flex;
+        min-inline-size: 0;
+        max-inline-size: 100%;
+        min-block-size: var(--button-size);
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-atom);
+        padding-inline: calc(var(--button-size) / 2 - var(--space-residue));
+        
+        border: 1px solid var(--button-edge);
+        
+        border-radius: calc(var(--button-size) / 2);
+        color: var(--button-ink);
+        font: inherit;
+        font-size: var(--control-text);
+        font-weight: 500;
+        line-height: 1.1;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        appearance: none;
+        touch-action: manipulation;
+        user-select: none;
+        
+        --scale-press: var(--scale-press-sm);
+        transition:
+            background-color var(--engage-control-engage-release) var(--ease-standard),
+            border-color var(--engage-control-engage-release) var(--ease-standard),
+            box-shadow var(--engage-control-engage-release) var(--ease-standard),
+            color var(--engage-control-engage-release) var(--ease-standard),
+            opacity var(--engage-control-engage-release) var(--ease-standard);
+    }
+
+    .button > svg {
+        flex: none;
+        pointer-events: none;
+    }
+
+    .button > svg:not([class*=\"size-\"]) {
+        inline-size: var(--ui-glyph);
+        block-size: var(--ui-glyph);
+    }
+
+    
+    .button > .button-mark {
+        flex: none;
+        inline-size: var(--ui-glyph);
+    }
+
+    
+    .button[data-emphasis=\"primary\"] {
+        --glass-depth: var(--glass-depth-content);
+        font-weight: 600;
+    }
+
+    .button[data-emphasis=\"secondary\"] {
+        --glass-veil-tier: var(--glass-veil-quiet);
+        --glass-blur-floating: var(--glass-blur-quiet);
+    }
+
+    
+    .button[data-tone=\"destructive\"] {
+        --button-tone: var(--destructive);
+        --button-accent: var(--destructive);
+        --button-quiet-ink: var(--destructive);
+        --button-edge: color-mix(
+            in oklab,
+            var(--destructive) calc(var(--ink-perimeter) * 100%),
+            transparent
+        );
+        --glass-capsule-fill: color-mix(
+            in oklab,
+            var(--glass-veil),
+            var(--destructive) var(--feedback-tone-strength)
+        );
+    }
+
+    
+    .button[data-emphasis=\"quiet\"],
+    .button[data-emphasis=\"text\"] {
+        --button-edge: transparent;
+        --button-ink: var(--button-quiet-ink);
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .button[data-emphasis=\"text\"] {
+        --button-ink: var(--button-accent);
+        padding-inline: var(--space-residue);
+        text-underline-offset: 0.25em;
+    }
+
+    
+    @media (hover: hover) {
+        .button[data-emphasis=\"quiet\"]:hover:not(:disabled, [aria-disabled=\"true\"]) {
+            --button-ink: var(--button-tone);
+            background: color-mix(
+                in oklab,
+                var(--button-tone) calc(var(--fill-hover) * 100%),
+                transparent
+            );
+        }
+
+        .button[data-emphasis=\"text\"]:hover:not(:disabled, [aria-disabled=\"true\"]) {
+            text-decoration: underline;
+        }
+    }
+
+    
+    .button[data-emphasis=\"quiet\"]:active:not(:disabled, [aria-disabled=\"true\"]) {
+        background: color-mix(
+            in oklab,
+            var(--button-tone) calc(var(--fill-selected) * 100%),
+            transparent
+        );
+    }
+
+    .button[data-emphasis=\"text\"]:active:not(:disabled, [aria-disabled=\"true\"]) {
+        background: color-mix(
+            in oklab,
+            var(--button-accent) calc(var(--fill-hover) * 100%),
+            transparent
+        );
+    }
+
+    
+    .button[data-size=\"xs\"] {
+        --button-size: var(--control-h-xs);
+        gap: var(--space-residue);
+        font-size: var(--control-text-sm);
+    }
+
+    .button[data-size=\"sm\"] {
+        --button-size: var(--control-h-sm);
+        gap: var(--space-residue);
+        font-size: var(--control-text-sm);
+    }
+
+    .button[data-size=\"lg\"] {
+        --button-size: var(--control-h-lg);
+        
+        font-size: var(--type-body);
+    }
+
+    .button[data-icon-only] {
+        inline-size: var(--button-size);
+        block-size: var(--button-size);
+        min-block-size: var(--button-size);
+        padding: 0;
+    }
+
+    
+    .button:disabled,
+    .button[aria-disabled=\"true\"] {
+        --button-ink: oklch(from var(--foreground) l 0 h / var(--opacity-disabled));
+        cursor: not-allowed;
+    }
+
+    
+    .button[data-loading] {
+        cursor: progress;
+    }
+
+    
+    .button.glass-specular-track::before {
+        transition:
+            --specular-x var(--duration-fast) var(--ease-standard),
+            --specular-y var(--duration-fast) var(--ease-standard),
+            opacity var(--engage-control-engage-release) var(--ease-standard);
+    }
+
+    .button.glass-specular-track:is(:hover, :active)::before {
+        transition-duration:
+            var(--duration-fast), var(--duration-fast),
+            var(--engage-control-engage-attack);
+    }
+
+    
+    .button.glass-specular-track:active::before {
+        --specular-intensity: calc(
+            var(--glass-specular-intensity-hover) +
+                (
+                    var(--glass-specular-intensity-active) -
+                        var(--glass-specular-intensity-hover)
+                ) *
+                var(--press-t)
+        );
+    }
+}
+"
+
+ ❯ tests/components/button/Button.test.ts:270:34
+    268|         // ride it, and its reduce arm retires the spatial channels on…
+    269|         expect(live(STYLES)).not.toMatch(/prefers-reduced-motion/);
+    270|         expect(live(STYLES)).not.toMatch(/transition:/);
+       |                                  ^
+    271|         const engage = live("src/styles/utilities/engage.css");
+    272|         const pressed = engage.slice(engage.indexOf("@utility engage-p…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/20]⎯
+
+ FAIL  tests/components/field/forms-seam.test.ts > W-FIELD — the forms-seam lane battery > G-F6 · GEOMETRY + SURFACE HYGIENE — series padding, a declared ceiling, no misfiled sheet, ARIA off the role-less root
+AssertionError: expected [ 'field-control', …(2) ] to deeply equal [ 'field-control', …(1) ]
+
+- Expected
++ Received
+
+  [
+    "field-control",
+    "glass-control-edge",
++   "engage-field",
+  ]
+
+ ❯ tests/components/field/forms-seam.test.ts:298:43
+    296|             "engage-field",
+    297|         ]);
+    298|         expect(mount(Textarea).classes()).toEqual([
+       |                                           ^
+    299|             "field-control",
+    300|             "glass-control-edge",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/20]⎯
+
+ FAIL  tests/components/ui/toggle-group/ToggleGroup.test.ts > W-TOGGLE-ROW — the selection row > G-TOGGLE-REGISTER · the lane declares no register-owned material
+AssertionError: --control-surface- is the register's to declare, not this lane's: expected '@layer components {\n    \n    .toggl…' not to contain '--control-surface-'
+
+- Expected
++ Received
+
+- --control-surface-
++ @layer components {
++     
++     .toggle-group {
++         display: flex;
++         flex-wrap: wrap;
++         inline-size: fit-content;
++         max-inline-size: 100%;
++         align-items: center;
++         
++         gap: 8px;
++     }
++
++     @media (width <= 768px) {
++         .toggle-group {
++             gap: 4px;
++         }
++     }
++
++     .toggle-group[data-orientation="vertical"] {
++         flex-direction: column;
++         align-items: stretch;
++     }
++
++     
++     .toggle-group__item {
++         --toggle-group-item-size: var(--control-h-md);
++
++         display: inline-flex;
++         flex: none;
++         min-inline-size: var(--toggle-group-item-size);
++         min-block-size: var(--toggle-group-item-size);
++         align-items: center;
++         justify-content: center;
++         gap: 0.5rem;
++         padding-inline: 0.75rem;
++         
++         border-radius: var(--radius-pill);
++         color: var(--muted-foreground);
++         font: inherit;
++         font-size: var(--control-text);
++         font-weight: 500;
++         line-height: 1;
++         cursor: pointer;
++         appearance: none;
++         touch-action: manipulation;
++         user-select: none;
++         transition:
++             background-color var(--engage-press-drain-release) var(--ease-standard),
++             color var(--engage-control-engage-release) var(--ease-standard);
++     }
++
++     
++     .toggle-group__item:not(:disabled, [data-disabled]):active {
++         background-color: color-mix(
++             in oklab,
++             var(--foreground) calc(var(--fill-selected) * 100%),
++             var(--control-surface-bg)
++         );
++         transition-duration: var(--engage-press-drain-attack),
++             var(--engage-control-engage-release);
++     }
++
++     .toggle-group[data-size="sm"] .toggle-group__item {
++         --toggle-group-item-size: var(--control-h-sm);
++         padding-inline: 0.5rem;
++         font-size: var(--control-text-sm);
++     }
++
++     .toggle-group[data-size="lg"] .toggle-group__item {
++         --toggle-group-item-size: var(--control-h-lg);
++         padding-inline: 1.25rem;
++     }
++
++     
++     .toggle-group__item[data-state="on"] {
++         background-color: color-mix(in oklab, var(--foreground) 12%, transparent);
++         color: var(--foreground);
++         font-weight: 600;
++     }
++
++     .toggle-group__item[data-state="on"]:not(:disabled, [data-disabled]):active {
++         background-color: color-mix(
++             in oklab,
++             var(--foreground) calc(var(--fill-selected) * 100%),
++             color-mix(in oklab, var(--foreground) 12%, transparent)
++         );
++     }
++
++     .toggle-group__item[data-state="on"]:hover:not(:disabled) {
++         background-color: color-mix(in oklab, var(--foreground) 16%, transparent);
++     }
++
++     .toggle-group__item:disabled {
++         opacity: var(--opacity-disabled);
++         cursor: not-allowed;
++         pointer-events: none;
++     }
++
++     
++     .toggle-group[data-invalid] .toggle-group__item {
++         border-color: var(--destructive);
++     }
++
++     .toggle-group__item > svg {
++         flex: none;
++         pointer-events: none;
++     }
++
++     
++ }
++
+
+ ❯ tests/components/ui/toggle-group/ToggleGroup.test.ts:252:19
+    250|                 css,
+    251|                 `${owned} is the register's to declare, not this lane'…
+    252|             ).not.toContain(owned);
+       |                   ^
+    253|         }
+    254|         // This lane authors ZERO border values (both foremen, ratifie…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/20]⎯
+
+
+ Test Files  11 failed | 229 passed (240)
+      Tests  20 failed | 2307 passed | 10 expected fail | 1 skipped (2338)
+   Start at  19:00:55
+   Duration  83.98s (transform 7.54s, setup 10.85s, import 41.29s, tests 27.41s, environment 50.29s)
+
+exit 1
+# end 19:02:24 load { 46.88 44.91 55.50 }

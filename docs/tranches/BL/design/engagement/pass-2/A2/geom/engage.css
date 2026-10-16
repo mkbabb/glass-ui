@@ -1,0 +1,198 @@
+/* utilities/engage.css — ONE RECIPE PER ENGAGEMENT CLASS.
+ *
+ * `ENGAGE_DECLARATION` (composables/motion/engage/engageClasses.ts) says what each
+ * component directory is; this file says what each class does. A member composes its
+ * class's utility on the element it paints, and every utility stamps its class as the
+ * registered `--rung-class` (tokens/property-regs.css), which the runtime census reads
+ * to prove the member composes the recipe its row declares. Where a class's answer
+ * belongs to a substrate that already paints the member (the field's focus paint, the
+ * sortable row's fill, the modal veil), the substrate keeps it and the utility stamps.
+ *
+ * THE PRESS IS NEVER A CLASS'S GEOMETRY. A member presses in LIGHT on its own paint,
+ * or by script where the engage door owns the press (`useEngage`: the Button's squish
+ * on the one `--press-t` drive). No recipe here writes `scale` for a press, and none
+ * sets `scale: none` to silence another class: the press-snap and hover lift that used
+ * to ride `.tap-squish`, `.interactive-item` and `.glass-capsule-hover` are retired at
+ * their source, not overridden here.
+ *
+ * THE COMMIT IS A GEOMETRIC POP (CK-02 arm ii: this build answers Q-5 the other way,
+ * and is admissible only on the owner's ruling, which amends the spring table's law,
+ * springPresets.ts). `c` (`--rung-commit`) rides the `panel` spring from 0 to 1 on the
+ * commit edge (state on, open, or the parity "b") and back on the release edge; the face
+ * scales by `1 + (crest − 1)·sin(π·c)`: a crest at c = ½, rest at c = 1, and a rebound
+ * below rest while `panel` overshoots c past 1. Registered numbers, not keyframes, so a
+ * member that MOUNTS committed pops nothing and a re-commit mid-flight retargets. The
+ * pop rides `transform` and the door's press rides `scale`, so neither masks the other.
+ * The crest is a scale-register row: `--scale-commit-pop` on a wide face, and
+ * `--scale-commit-pop-bit` on the 20 px control bit, whose excursion must clear the
+ * scale channel's 0.8 px legible floor (glass/control-bit.css). Under reduced motion
+ * the pop retires (it is geometry) and the commit keeps the member's state fill.
+ *
+ * Clocks: geometry on the spring table's generated tokens, light on the envelope
+ * table's (`--engage-*`). */
+
+@property --rung-commit {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 0;
+}
+
+@property --rung-grow {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 0;
+}
+
+/* PRESSED — an action with no state (button, action chip). The press is the member's
+   light or the door's script press; the commit edge is the door's parity
+   (`data-commit` "a" ↔ "b", `useEngage` `commit: "call"`). */
+@utility engage-pressed {
+    --rung-class: pressed;
+    --rung-crest: var(--scale-commit-pop);
+    transform: scale(calc(1 + (var(--rung-crest) - 1) * sin(var(--rung-commit) * 180deg)));
+    transform-origin: center;
+    /* the class's one list: the commit leg and the member's surface legs (a utility
+       outranks the member's components-layer list, so it carries the coherent set) */
+    transition:
+        --rung-commit var(--spring-panel-duration) var(--spring-panel),
+        background-color var(--engage-control-engage-release) var(--ease-standard),
+        border-color var(--engage-control-engage-release) var(--ease-standard),
+        box-shadow var(--engage-control-engage-release) var(--ease-standard),
+        color var(--engage-control-engage-release) var(--ease-standard),
+        opacity var(--engage-control-engage-release) var(--ease-standard);
+
+    &[data-commit="b"] {
+        --rung-commit: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        transform: none;
+    }
+}
+
+/* CHOSEN — a control with a committed state (switch, checkbox, radio, selectable chip,
+   toggle item, segmented tabs). The press is LIGHT on the member's own paint; the
+   commit is the light below, or, where the member has a travelling body (the tabs'
+   indicator), that body's travel on its own row. */
+@utility engage-chosen {
+    --rung-class: chosen;
+    --rung-crest: var(--scale-commit-pop);
+    transform: scale(calc(1 + (var(--rung-crest) - 1) * sin(var(--rung-commit) * 180deg)));
+    transform-origin: center;
+    transition:
+        --rung-commit var(--spring-panel-duration) var(--spring-panel),
+        background-color var(--engage-control-engage-release) var(--ease-standard),
+        border-color var(--engage-control-engage-release) var(--ease-standard),
+        box-shadow var(--engage-control-engage-release) var(--ease-standard),
+        color var(--engage-control-engage-release) var(--ease-standard),
+        opacity var(--engage-control-engage-release) var(--ease-standard);
+
+    &.control-bit {
+        --rung-crest: var(--scale-commit-pop-bit);
+    }
+
+    &:is([data-state="checked"], [data-state="on"]) {
+        --rung-commit: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        transform: none;
+    }
+}
+
+/* DISCLOSED — a trigger that opens a region (accordion, collapsible, popover, select,
+   menu). A row-width target answers a press in LIGHT only (a full-width squish reads
+   as the row collapsing), on the press envelope's attack; it commits in light when the
+   region opens and when it closes. Its hover is the substrate's
+   (components/_shared/disclosure/disclosure.css), under `(hover: hover)`. */
+@utility engage-disclosed {
+    --rung-class: disclosed;
+    --rung-crest: var(--scale-commit-pop);
+    transform: scale(calc(1 + (var(--rung-crest) - 1) * sin(var(--rung-commit) * 180deg)));
+    transform-origin: center;
+    transition:
+        --rung-commit var(--spring-panel-duration) var(--spring-panel),
+        background-color var(--engage-press-drain-release) var(--ease-standard),
+        color var(--duration-control) var(--ease-standard),
+        box-shadow var(--duration-control) var(--ease-standard);
+
+    &:active:not(:disabled, [data-disabled]) {
+        background-color: color-mix(
+            in oklab,
+            var(--foreground) calc(var(--fill-selected) * 100%),
+            transparent
+        );
+        transition-duration:
+            var(--spring-panel-duration), var(--engage-press-drain-attack),
+            var(--duration-control), var(--duration-control);
+    }
+
+    &[data-state="open"] {
+        --rung-commit: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        transform: none;
+    }
+}
+
+/* HELD — a control the hand holds (slider, number-field scrub, timeline, the dock's
+   controls). The ENGAGED rung in place on a fine pointer: the host grows to
+   `--scale-engage` on the `dock` row while the door marks it engaged (`data-engaged`:
+   the hand is down, or a key brought the focus or acts on it), and leaves on the row's
+   exit clock. On a coarse pointer it does not grow in place: the rung there is a
+   promotion this class does not own (Q-3 (c)). */
+@utility engage-held {
+    --rung-class: held;
+    scale: calc(1 + (var(--scale-engage) - 1) * var(--rung-grow));
+    transform-origin: center;
+    /* the host's ink leg rides with the grow: the slider lane (unlayered) declares no
+       transition of its own, so this list is the host's one */
+    transition:
+        --rung-grow var(--spring-dock-exit-duration) var(--spring-dock),
+        color var(--duration-fast) var(--ease-standard);
+
+    @media (hover: hover) and (pointer: fine) {
+        &[data-engaged] {
+            --rung-grow: 1;
+            transition-duration: var(--spring-dock-duration), var(--duration-fast);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        scale: none;
+    }
+}
+
+/* DRAGGED — a surface the hand moves, whose job is momentum (the door's release rule).
+   Its press is the substrate's light rule; the utility stamps the class. */
+@utility engage-dragged {
+    --rung-class: dragged;
+}
+
+/* PRESENTED — a surface raised over the page (dialog, sheet, toast, tooltip). Its rung
+   is the modal one, and its paint is the veil's: the scrim keys on its overlay's open
+   state (glass/focus-veil.css), never on `data-engaged`. The utility stamps the class
+   on the presented plate. */
+@utility engage-presented {
+    --rung-class: presented;
+}
+
+/* FIELD — text entry. Its engagement is focus, painted by the field substrate
+   (components/_shared/field/control.css); the utility stamps the class. */
+@utility engage-field {
+    --rung-class: field;
+}
+
+/* AMBIENT — a field that answers the pointer's presence (aurora, blob, constellation,
+   the fourier field, the staff). Its rung is REST: the member's own field moves with
+   the pointer, and the utility stamps the class on the field's root. */
+@utility engage-ambient {
+    --rung-class: ambient;
+}
+
+/* STATIC — no input of its own. The class carries no rung; composing it is the
+   member's declaration that it was classified, read at runtime like any other. */
+@utility engage-static {
+    --rung-class: static;
+}

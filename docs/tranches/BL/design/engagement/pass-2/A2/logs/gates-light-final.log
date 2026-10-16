@@ -1,0 +1,15 @@
+# build light final 2026-10-15 19:39:11 load { 20.37 22.31 22.68 }
+build exit 0
+# demo:dist:build 19:39:24 load { 22.38 22.71 22.81 }
+demo:dist:build exit 0
+# typecheck 19:39:30 load { 21.47 22.52 22.74 }
+
+> @mkbabb/glass-ui@10.1.0 typecheck
+> vue-tsc --noEmit && vue-tsc --noEmit -p tsconfig.test.json
+
+typecheck exit 0
+# vitest 19:39:52 load { 21.11 22.35 22.68 }
+ Test Files  240 passed (240)
+      Tests  2327 passed | 10 expected fail | 1 skipped (2338)
+vitest exit 0
+# end 19:41:17 load { 29.02 24.11 23.29 }

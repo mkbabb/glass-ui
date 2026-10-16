@@ -1,0 +1,25 @@
+# build geom 2026-10-15 19:41:57 load { 28.88 24.71 23.55 }
+build exit 0
+# typecheck 19:42:10 load { 27.24 24.56 23.51 }
+> @mkbabb/glass-ui@10.1.0 typecheck
+> vue-tsc --noEmit && vue-tsc --noEmit -p tsconfig.test.json
+
+typecheck exit 0
+# vitest 19:42:33 load { 25.86 24.43 23.49 }
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the built demo has a dist-demo to measure
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the eager graph stays under the modulepreload and byte ceilings
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+ Test Files  1 failed | 239 passed (240)
+      Tests  3 failed | 2324 passed | 10 expected fail | 1 skipped (2338)
+vitest exit 1
+# end 19:44:02 load { 39.63 28.28 25.00 }
+# demo:dist:build then boot-graph 19:44:06 load { 38.94 28.32 25.04 }
+demo:dist:build exit 0
+ Test Files  1 passed (1)
+      Tests  14 passed (14)
+boot-graph exit 0
+# end 19:44:17 load { 36.96 28.26 25.05 }
