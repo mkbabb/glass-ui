@@ -1,0 +1,91 @@
+{
+ "id": "W-C",
+ "title": "selection is a behaviour, not a component (D4-C)",
+ "engine": "webkit",
+ "engineLabel": "Playwright WebKit 26.5",
+ "target": "f3c-src",
+ "dev": false,
+ "cells": [
+  {
+   "gating": true,
+   "pass": false,
+   "line": "exports · RED by absence: no SelectionGroup/SelectionItem in the bundle (exports seen: [none])"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "line": "card · group listbox · items heading (Playwright aria snapshot + DOM states) · tab stops 0"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "line": "card stamp values at rest (role/aria-checked/tabindex, * = group-stamped; selected #-1) · null/null/null null/null/null null/null/null null/null/null"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "card grid ArrowRight from #0 · focus body → body · moved false · checked false (started by focus + Space: PF-1)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "card grid ArrowLeft from #1 · focus body → body · moved false · checked false (started by focus + Space: PF-1)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "card grid ArrowDown from #0 · focus body → body · moved false · checked false (started by focus + Space: PF-1)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "line": "card grid ArrowUp from #2 · focus body → body · moved false · checked false (started by focus + Space: PF-1)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "line": "card grid edge ArrowDown from #2 (no item that way; reported) · focus body → body · moved false · checked false (started by focus + Space: PF-1)"
+  },
+  {
+   "gating": false,
+   "pass": false,
+   "line": "card grid edge ArrowUp from #0 (no item that way; reported) · focus body → body · moved false · checked false (started by focus + Space: PF-1)"
+  },
+  {
+   "gating": true,
+   "pass": false,
+   "scene": "card",
+   "line": "card stamp values after the arrow commits (selected #-1) · null/null/null null/null/null null/null/null null/null/null"
+  }
+ ],
+ "flavor": "src",
+ "harness": {
+  "hash": "24182288e414",
+  "files": 27,
+  "rev": "H3"
+ },
+ "run": {
+  "loadStart": "35.84 / 30.77 / 26.52",
+  "loadEnd": "31.95 / 30.10 / 26.34",
+  "census": {
+   "n": 13,
+   "sample": [
+    "56882 /Applications/Visual Studio Code.app/Contents/Resources/app/node_modules.asar.un",
+    "63916 bash /Users/mkbabb/Library/Caches/ms-playwright/webkit-2287/pw_run.sh --inspecto",
+    "63923 /Users/mkbabb/Library/Caches/ms-playwright/webkit-2287/Playwright.app/Contents/M"
+   ],
+   "waitedS": 0.1
+  },
+  "lockWaitS": 0
+ },
+ "pass": false,
+ "tally": "0/8 gating cells pass [library 0/8]",
+ "arms": {
+  "library": {
+   "pass": 0,
+   "of": 8
+  }
+ }
+}

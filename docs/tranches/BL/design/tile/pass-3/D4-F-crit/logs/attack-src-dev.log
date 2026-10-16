@@ -1,0 +1,19 @@
+2026-10-15 19:03:46 · load { 21.54 37.71 51.83 }
+D4-F p3 critic attack · f3c-atk-src-dev (flavor src-dev, dev true) · lock waited 0s · load 21.54 / 37.71 / 51.83 at start
+
+Chromium 149.0.7827.55 · load 21.54 / 37.71 / 51.83
+  FAIL empty · c1-migrated light · 5 .toggle-group__meta rendered, 5 empty and 0 px tall · group --selection-tile flush · item 184.00×48.94, corner 16.00 px (h/2 24.47), flex-direction column · selected perimeter opacity 1, mark opacity 1 · heights [48.94, 48.94, 48.94, 48.94, 48.94] · want pills (none, h/2) · load 21.54 / 37.71 / 51.83
+  FAIL empty · c1-migrated dark · 5 .toggle-group__meta rendered, 5 empty and 0 px tall · group --selection-tile flush · item 184.00×48.94, corner 16.00 px (h/2 24.47), flex-direction column · selected perimeter opacity 1, mark opacity 1 · heights [48.94, 48.94, 48.94, 48.94, 48.94] · want pills (none, h/2) · load 26.38 / 38.45 / 52.01
+  PASS attrs · preset-migrated · pointer click on item 0: consumer @click ran 1× (want 1), aria-checked true, role radio (want radio), class true, style --atk-style "7", data-consumer yes, aria-label "preset smooth", tab stops 1 (want 1) · load 26.38 / 38.45 / 52.01
+  INFO nest · v2-migrated · outer pill group (4 items, no anatomy) --selection-tile flush, item corner 16.00 px at h 79.88 (h/2 39.94), flex-direction column · inner tile group flush · load 26.38 / 38.45 / 52.01
+  PASS sup · strip-migrated [src-dev] · pill 40.00 px, corner 9999.00, tile none · text boxes m 73.34–91.34, 2 71.61–84.61, quad-in 73.34–91.34 · "asks for a second row" names 0 over 6 items (want 0) · load 26.03 / 38.18 / 51.83
+
+Playwright WebKit 26.5 · load 26.03 / 38.18 / 51.83
+  FAIL empty · c1-migrated light · 5 .toggle-group__meta rendered, 5 empty and 0 px tall · group --selection-tile flush · item 184.00×48.94, corner 16.00 px (h/2 24.47), flex-direction column · selected perimeter opacity 1, mark opacity 1 · heights [48.94, 48.94, 48.94, 48.94, 48.94] · want pills (none, h/2) · load 26.03 / 38.18 / 51.83
+  FAIL empty · c1-migrated dark · 5 .toggle-group__meta rendered, 5 empty and 0 px tall · group --selection-tile flush · item 184.00×48.94, corner 16.00 px (h/2 24.47), flex-direction column · selected perimeter opacity 1, mark opacity 1 · heights [48.94, 48.94, 48.94, 48.94, 48.94] · want pills (none, h/2) · load 26.03 / 38.18 / 51.83
+  PASS attrs · preset-migrated · pointer click on item 0: consumer @click ran 1× (want 1), aria-checked true, role radio (want radio), class true, style --atk-style "7", data-consumer yes, aria-label "preset smooth", tab stops 1 (want 1) · load 25.39 / 37.84 / 51.63
+  INFO nest · v2-migrated · outer pill group (4 items, no anatomy) --selection-tile flush, item corner 16.00 px at h 79.88 (h/2 39.94), flex-direction column · inner tile group flush · load 25.39 / 37.84 / 51.63
+  PASS sup · strip-migrated [src-dev] · pill 40.00 px, corner 9999.00, tile none · text boxes m 73.98–92, 2 71.95–85.46, quad-in 73.98–92 · "asks for a second row" names 0 over 6 items (want 0) · load 24.24 / 37.39 / 51.39
+
+attack · 4 failing cell(s) · load 24.24 / 37.39 / 51.39 at end
+exit 0 · 2026-10-15 19:04:03 · load { 24.24 37.39 51.39 }

@@ -1,0 +1,59 @@
+{
+ "id": "CANON",
+ "title": "the canon unit's law on widened fixtures (size, orientation, children, state), parsed by the engine",
+ "engine": "chromium",
+ "engineLabel": "Chromium 149.0.7827.55",
+ "target": "f3c-src",
+ "dev": false,
+ "cells": [
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "canon",
+   "arm": "library",
+   "line": "canon tile corner · 48 twins, 138 corner rules · tile spelling «.toggle-group:has(.toggle-group__item > :is(.toggle-group__media, .toggle-group__meta)) .toggle-group__item» · exactly one rule reaches a tile and not its pill twin, on var(--radius-field) · 1 rule(s): «:is(.toggle-group:has(.toggle-group__item > :is(.toggle-group__media, .toggle-group__meta))) .toggle-group__item» → var(--radius-field) (index-CT75dIEp.css; 48/48 twins, first sm/horizontal/none/on)"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "canon",
+   "arm": "library",
+   "line": "canon pill corner · 48 twins, 138 corner rules · tile spelling «.toggle-group:has(.toggle-group__item > :is(.toggle-group__media, .toggle-group__meta)) .toggle-group__item» · every group-scoped corner on a pill is var(--radius-pill) or inherit · 2 rule(s) reach a pill"
+  },
+  {
+   "gating": true,
+   "pass": true,
+   "scene": "canon",
+   "arm": "library",
+   "line": "canon unmatched · 48 twins, 138 corner rules · tile spelling «.toggle-group:has(.toggle-group__item > :is(.toggle-group__media, .toggle-group__meta)) .toggle-group__item» · every corner selector is matched by the engine · 0 unmatched"
+  }
+ ],
+ "flavor": "src",
+ "harness": {
+  "hash": "24182288e414",
+  "files": 27,
+  "rev": "H3"
+ },
+ "run": {
+  "loadStart": "30.89 / 29.33 / 26.40",
+  "loadEnd": "30.89 / 29.33 / 26.40",
+  "census": {
+   "n": 17,
+   "sample": [
+    "56882 /Applications/Visual Studio Code.app/Contents/Resources/app/node_modules.asar.un",
+    "79820 /Users/mkbabb/Library/Caches/ms-playwright/chromium_headless_shell-1223/chrome-h",
+    "79836 /Users/mkbabb/Library/Caches/ms-playwright/chromium_headless_shell-1223/chrome-h"
+   ],
+   "waitedS": 0.2
+  },
+  "lockWaitS": 0
+ },
+ "pass": true,
+ "tally": "3/3 gating cells pass [library 3/3]",
+ "arms": {
+  "library": {
+   "pass": 3,
+   "of": 3
+  }
+ }
+}
