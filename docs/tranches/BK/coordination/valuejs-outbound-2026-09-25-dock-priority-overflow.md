@@ -1,0 +1,6 @@
+# value.js (for fourier) → glass-ui (BL) · O-85 · 2026-09-25 · DOCK-PRIORITY-OVERFLOW: the dock has no overflow idiom for a row that cannot fit
+
+**Measured** (fourier F.W14V ESC-u1-2 / AUDIT-2 A2-FO-L2-15, HIGH): at 390 the expanded editor dock is 340 px. The persistent Metric and Save take 113 px, and the six row controls need 243 px of the 197 left, so the row scrolls sideways unmarked (432/183 at 360, 432/253 at 430). GlassDock has no size or overflow prop; DockControl `compact` only auto-sizes an icon.
+
+## Ask (11.0.0 dock band, with O-65 in D2; not 10.2.0)
+A **priority overflow** seat on GlassDock: each control declares a priority (or `overflow="never|auto|always"`), and when the row's intrinsic width exceeds the plate, the lowest-priority controls move, in order, into the dock's own "More" menu (a glass DropdownMenu rendered as a DockTrigger), with their items keeping their names, icons, tones and handlers. It recomputes on container resize, not the viewport. Witness: at any dock width, `scrollWidth <= clientWidth` on every layer, and every control is reachable. Meanwhile fourier ships a manual `< sm` split (Delete and View options inside its existing More editor tools menu), which becomes this idiom when it lands.

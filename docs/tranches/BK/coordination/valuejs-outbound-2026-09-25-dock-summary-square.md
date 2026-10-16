@@ -1,0 +1,15 @@
+# value.js (for fourier) → glass-ui (BL) · O-84 · 2026-09-25 · DOCK-SUMMARY-SQUARE: the collapsed summary is locked to a 40 px square, so a wider summary runs off the plate (measures O-65's root)
+
+**Owner, verbatim (2026-09-25):** *"this dock is still wrong and has floating elements"*. Frame: value.js `docs/tranches/X/fourier/evidence/W14V/owner-2026-09-25/playback-dock-floating.png` (fourier `/visualize`, `AnimationControls.vue`, dark, collapsed): the Play/Pause face and the track sit on the pill; the speed readout `1` and its `×` float on the canvas.
+Evidence: value.js `docs/tranches/X/fourier/evidence/W14V/pd/` (frames at 1440/1024/390, light and dark, both postures; `RECEIPT.md`). Falsifier: fourier `web/e2e/f-w14v-pd.spec.ts`.
+
+## The element and the rule (glass v10.1.0 dist; unchanged at HEAD `67ec885d`)
+- `src/components/dock/styles/morph.css:180-198`: `.glass-dock .dock-layer--summary { min-width: var(--dock-collapsed-summary-min-size, 40px); block-size: …; height: …; aspect-ratio: 1; }`.
+- **Cause:** with the block size fixed and the inline size `auto`, `aspect-ratio: 1` resolves the inline size to the block size (40 px). The explicit `min-width` turns off the content-based automatic minimum. So the summary is a 40 px square whatever its content. The root, and the plate with it, is sized from that square: fourier's 1440 collapsed dock is 102 px (8 + 40 persistent + 6 + 40 summary + 8). The summary's 48 px track overruns the square, and the `Metric` (`1×`, 44 px) lies wholly outside it (`metric__value` 552–582 against the plate's 451–553). Same shape at 1024 and 390, light and dark.
+- This is the mechanism behind O-65 DOCK-COLLAPSED-FORM. BL's INBOUND-MAP row for O-65 guessed the absolute `inset: 0` inactive layer; the measurement puts the fault in the summary's square lock. The comment's own words say it: "guarantees 1:1 even if a consumer's collapsed-slot content is wider than the floor".
+- **Consumer half measured clean.** Only this one rule, content-sized (`aspect-ratio: auto; inline-size: max-content`) in the page, puts every element on the plate at all 6 cells. `--dock-collapsed-px` follows, since `dockMorphMeasure.ts` reads the root's border box. No consumer byte changed.
+
+## Ask (root cure)
+1. The summary's floor stays a circle for a single glyph and grows along the inline axis for wider content. Keep `min-width`/`min-block-size` at the token, drop `aspect-ratio: 1`, and let the inline size be the content's (`inline-size: max-content`, or `auto` with the automatic minimum restored). A one-glyph summary still reads as a circle, and a readout summary reads as a stadium that wraps its seats.
+2. Please fold this into D2 with O-65 (the W6 `w6-collapsed-form.mjs` `wraps` witness is the right gate). fourier's `f-w14v-pd.spec.ts` is a consumer witness: it goes GREEN when only this rule changes.
+3. fourier holds **DOCK-SUMMARY-SQUARE honest-RED** (6 collapsed cells RED, 6 expanded GREEN) with no consumer override, and re-reads it at the repin that ships the cure.
