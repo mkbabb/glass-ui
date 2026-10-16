@@ -41,3 +41,43 @@
 ## C-6 (read-only)
 
 W-D.2 §3 item 9 (B10 takes `demo` on the seal W-D.1 lands), W-C.1 item 4 (D1's kits move to `scripts/loops/structure/` and go with W-D.1), W-L.8 G-L8-14 and W-D.2:21 (the chain deletes `canon-doc.mjs` and moves `paint-arm.mjs` and `reflect-capture-verify.mjs` to `tests-visual/paint/`, both read on `wt`) agree with the re-pointed text. W-C.2 does not cite W-D.1. W-D.2's own base still names the pass-4 kit (`LAW §n` → `pass-4/B-kit/LAW.md`) and `wt2` readings (digest `472cf493…`, header line 7; §2 line 62; D2-G2's last cell); that is W-D.2's re-point, outside this seat's files.
+
+# W-D.1 re-point, round 2: change list
+
+| field | value |
+|---|---|
+| seat | W-D.1 re-point seat, round 2 (BL formation), curing `W-D.1-CRITIQUE-1.md` (C-4, C-6 refuted) |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `3e8f99f9b`; `git diff 6154d6ec HEAD -- . ':!docs'` prints nothing |
+| machine | every run through `~/.claude/guard/guarded`. The heavy replay launch waited from 14:47 ET at 1,599-1,624 processes and was stopped before it started anything; the runs went as `--light --rss-gb 8` (they too queued on headroom). No browser. Nothing left running; both worktrees removed |
+
+## Measurements (worktrees under `.claude/worktrees/bl/formation/wd1-repoint2/`, removed)
+
+| tree | reading |
+|---|---|
+| `base` at HEAD | appendix A over `floor/lib/graph.mjs`: `VALUE-SCC 4` (incl. `[2] scripts, scripts/lib`), `CROSS-JS 11`, `CROSS-CSS 18`, `DEAD-BARREL 1`, `ALIAS-TYPE 6`, exit 1; `scripts/import-dag.mjs`: `module SCCs full 3 · value 3`; `scripts/structure` and `tests/gates/seal.test.ts` absent; build 0; one-door 41 (20/8/4/4/3/2) exit 1; one-name `Surface` exit 1; D1-G7 exit 1; D1-G8 exit 1; floor `bounds.mjs` 18 / 58; doors 76 files, 152,920 B |
+| `base` cut to the floor base | `floor/rows/apply.mjs` nine rows; `codeDigest` `6773b4ec1217ab41…` over 1,354 files; gates 4 PASS (F-1 7,435 edges, F-3 68 keys, F-9 pinned equal); `bounds.mjs` 18 / 55; cascade snapshot exit 0, self-verify exit 0, four entries identical (1,970 / 4 / 4 / 365); four `.seq` byte-equal to `K13/results/p13/cascade/baseline/`; `K13`'s gate staged: `seal: no verdict: … Cannot find module …/scripts/structure/lib/index.mjs`, exit 2; demo placement `"move": 40` |
+| `wt`, chain replayed | `K13/replay.mjs --twice`: 400.7 s, `code digest 6fdd4ec7bd259630… over 1587 files; chain final MATCH`; rerun 0.3 s, "the chain is applied"; `SEQUENCE.json` 126 steps, S1 … S70. Build 0; seal CLI exit 0, B0-B18 each 0, 1,585 files, 8,350 edges, 142/142; `seal.test.ts` (`--maxWorkers=2`) 26 passed; gates 4 PASS (F-1 8,350 edges, F-3 69 keys); appendix A over `scripts/structure/lib/graph/index.mjs` (VALUE-SCC over `src` and `scripts`): `VALUE-SCC 0`, `CROSS-JS 0`, `CROSS-CSS 0`, `DEAD-BARREL 0`, `ALIAS-TYPE 5`, exit 1; one-door 1 (`./axes + ./surface`); one-name `Surface`; D1-G6 `0 0` exit 0; D1-G7 exit 1; D1-G8 exit 0; D1-G9 plain exit 1 `RED: content changed`; with `--reorders K13/authored/p6-listed-reorders.json` exit 0 GREEN: `./styles` reorder `moved 28`, `firstDivergence 610`, risks 0; `./styles.css` reorder `moved 10`, `firstDivergence 310`, risks 0; scope Timeline → TimelineMarks 40; `unlistedRules 0`, `staleRules 0`; `chain-text.mjs` GREEN; `MIGRATION.md:8` `## 11.0.0`; doors 164 files, 137,285 B; `clauses.mjs:20` `SEALED = ["src", "scripts"]`, B10 at `:239`; `law.mjs:98` `FD2_ZONES = ["src", "scripts", "demo"]`; W-D.2's appendix A (with `maxBuffer` raised on its `git ls-files`, which overflows on the uncommitted tree): `ROOT-CONFIG 8`, `TSCONFIG 1`, `ALIAS 3`, `DEAD-CONDITION 1`, `PREPARE 1`, `ONE-VERIFY 7`, `GATE-LITERALS 24` (6 files), `BROWSER-IN-VITEST 2`, `DEMO-UNROUTED 9`, `RELAY 1`, `ONE-LEXER 68` (57 files), `HELPERS 24`; demo placement `"move": 60`; `vite.style-fold.ts` 318 lines, `vite.style-closure.ts` 286 lines (untracked, added by the chain) |
+
+## Changes
+
+`waves/W-D.1.md`:
+
+1. Header: round 2, HEAD `3e8f99f9b`, this seat's two worktrees and replay timings.
+2. Short cites: the unused `CUR:n` removed.
+3. §2's converged-tree paragraph: the cascade reads GREEN under `K13`'s listing, its three admissions each risks 0 (C-4).
+4. §3 step 3: the sealed zones are the one `SEALED` constant (`clauses.mjs:20`), read by B10 (`:239`) and the other structural clauses; `law.mjs:98`'s `FD2_ZONES` is a different list (C-6, the fact W-D.2 reads).
+5. §5 D1-G9 converged cell: the listing's three admissions named (the `./styles` reorder of 28 with the S4b card-scroll move, the `./styles.css` reorder of 10, the Timeline scope of 40), each risks 0; the bite without `--reorders` (C-4). The "Can each fail" line reads "the listing".
+6. §6 cascade bullet: the same three admissions as the only admitted divergence (C-4). Paired captures add a card with `.card-scroll-host` and `.card-header--shrink` (condensed and expanded) and the timeline; paired π adds the Card's `mask-image`, `overflow-y` and the condensed title's `font-size` (C-4).
+
+`waves/W-D.2.md` (C-6, the lines the round-1 critic named):
+
+1. Header: the converged tree (`6fdd4ec7…`, `K13`) replaces `wt2` and `472cf493…`.
+2. Short cites: `K13` added; `LAW §n` → `K13/LAW.md`.
+3. §2's loop-tree paragraph: the converged tree's readings (above), with the ENOBUFS note.
+4. §3 item 1: the chain's split of `vite.style-fold.ts` into `vite.style-fold.ts` and `vite.style-closure.ts`, both moving into `scripts/build/`.
+5. §3 item 9: B10 reads `SEALED` at `clauses.mjs:20`; B10 takes `demo` through its own zone list so the other clauses keep `src` and `scripts`; its moves are 60 on the converged tree.
+6. §4: `scripts/structure/seal/clauses.mjs` (B10's zone list beside `SEALED`) replaces `law.mjs`.
+7. §5 D2-G2's converged cell and the "Can each fail?" line read the converged tree. §6's demo bullet reads the placement's moves on W-D.1's landed tree.
+
+`waves/INDEX.md` W-D.1 row and `design/structure/floor/FLOOR.md`: unchanged this round (C-1 and C-5 passed in round 1; the row cites no kit or digest, and FLOOR.md:9 links `<repo>/node_modules` alone).
