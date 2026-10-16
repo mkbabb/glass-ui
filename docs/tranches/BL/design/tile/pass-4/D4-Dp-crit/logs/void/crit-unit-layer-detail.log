@@ -1,0 +1,22 @@
+2026-10-16 17:47:49 load { 12.34 14.36 14.96 }
+     × the tile corner is one declaration on the field rung; the pill keeps the stadium 1342ms
+ FAIL  tests/styles/radius-role-canon.test.ts > 7. this wave's role bindings > the tile corner is one declaration on the field rung; the pill keeps the stadium
+AssertionError: expected [ …(3) ] to deeply equal [ Array(1) ]
+- Expected
++ Received
+    751|         expect(unmatched).toEqual([]);
+    752|         expect(new Set(facts48)).toEqual(new Set(["flush/none"]));
+    753|         expect([...tileOnly]).toEqual([
+restored
+- Expected
++ Received
+
+  [
+-   "src/components/toggle-group/styles.css | .toggle-group__item @container not style(--selection-tile: none) | var(--radius-field) !important",
++   "src/components/toggle-group/styles.css | .toggle-group[data-size=\"sm\"] :is(.toggle-group[data-shape=\"cell\"] .toggle-group__item) | var(--radius-panel)",
++   "src/components/toggle-group/styles.css | :is(.toggle-group[data-shape=\"cell\"] .toggle-group__item) | 12px",
++   "src/components/toggle-group/styles.css | .toggle-group__item @container not style(--selection-tile: none) | var(--radius-field)",
+  ]
+
+ ❯ tests/styles/radius-role-canon.test.ts:753:31
+restored

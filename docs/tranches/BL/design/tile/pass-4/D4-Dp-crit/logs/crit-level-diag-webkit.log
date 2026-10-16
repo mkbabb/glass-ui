@@ -1,0 +1,11 @@
+2026-10-16 19:25:56 · load { 15.64 16.80 17.30 }
+in one WebKit-lock hold
+CRIT-LEVEL-DIAG · what an item-level `--selection-tile: none` changes inside a declared tile (critic diagnostic)
+  target dp-src (flavor src) · Playwright WebKit 26.5 · harness H4 a26206b6a740
+  load 15.64 / 16.80 / 17.30 at start, 14.79 / 16.61 / 17.23 at end · other headless browser processes at start: 7 (waited 0.1 s) · browser lock waited 0 s
+  FAIL       item 0 63.58 → 72.17 px tall · 2 of 2 descendants changed
+  UNMEASURED   <span class="text-small capitalize"> display block → block · 178.00×21.41 at y 86.00 → 178.00×25.97 at y 86.00
+  UNMEASURED   <span class="text-mono-caption text-muted-foreground "> display block → block · 178.00×20.17 at y 111.41 → 178.00×24.20 at y 115.97
+CRIT-LEVEL-DIAG FAIL · 0/1 gating cells pass [library 0/1]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p4/D4-Dp-crit/out/runs/dp-src/CRIT-LEVEL-DIAG-webkit.json
+exit 1 · 2026-10-16 19:25:58 · load { 14.79 16.61 17.23 }

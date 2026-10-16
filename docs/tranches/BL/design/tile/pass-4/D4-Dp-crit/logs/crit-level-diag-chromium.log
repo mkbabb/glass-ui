@@ -1,0 +1,10 @@
+2026-10-16 18:23:46 · load { 12.26 13.78 13.49 }
+CRIT-LEVEL-DIAG · what an item-level `--selection-tile: none` changes inside a declared tile (critic diagnostic)
+  target dp-src (flavor src) · Chromium 149.0.7827.55 · harness H4 a26206b6a740
+  load 12.26 / 13.78 / 13.49 at start, 12.88 / 13.89 / 13.52 at end · other headless browser processes at start: 13 (waited 0.2 s) · browser lock waited 0 s
+  FAIL       item 0 63.58 → 72.17 px tall · 2 of 2 descendants changed
+  UNMEASURED   <span class="text-small capitalize"> display block → block · 178.00×21.41 at y 86.00 → 178.00×25.97 at y 86.00
+  UNMEASURED   <span class="text-mono-caption text-muted-foreground "> display block → block · 178.00×20.17 at y 111.41 → 178.00×24.20 at y 115.97
+CRIT-LEVEL-DIAG FAIL · 0/1 gating cells pass [library 0/1]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p4/D4-Dp-crit/out/runs/dp-src/CRIT-LEVEL-DIAG-chromium.json
+exit 1 · 2026-10-16 18:23:52 · load { 13.05 13.90 13.53 }
