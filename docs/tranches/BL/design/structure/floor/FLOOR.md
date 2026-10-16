@@ -6,8 +6,7 @@ A route's worktree starts from the same cut:
 
 ```sh
 git worktree add <wt> HEAD            # never the main checkout: move.mjs, fixpoint.mjs and rows refuse it
-ln -s <repo>/node_modules <wt>/node_modules
-ln -s <repo>/tests-visual/node_modules <wt>/tests-visual/node_modules
+ln -s <repo>/node_modules <wt>/node_modules      # the one link: the workspace hoists tests-visual's dependencies here
 node <repo>/docs/tranches/BL/design/structure/floor/rows/apply.mjs --root <wt>
                                       # r1, f3, f4, m02, m03, f9, fd6, fd7, fd11, in order, fail-fast; prints the tree digest
 cd <wt> && npx vite build
