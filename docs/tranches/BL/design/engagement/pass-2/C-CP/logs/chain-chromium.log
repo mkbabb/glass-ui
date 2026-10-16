@@ -1,0 +1,431 @@
+# cc css start 2026-10-16 14:04:46 load { 33.04 21.85 18.01 }
+# C-CP cc css · engine chromium · plant none · lock wait 0.0 s · other headless processes: chromium 8, webkit 2 · load 33.0/21.8/18.0 at start
+# chromium 149.0.7827.55
+  PASS      c1 r1 light switch +45 · single: peak P 0.0915 own largest drop 0.0154 · pair: P at edge 2 (46.2 ms) 0.0899 · cut in 40 ms 0.04 · largest drop after edge 2 0.0157 (bound 0.0174) · rise after edge 2 0.0278 (0.30× single) · end P 0.0000 · 95 frames · load 33.0/21.8/18.0
+  PASS      c1 r1 light switch +100 · single: peak P 0.0915 own largest drop 0.0154 · pair: P at edge 2 (100.4 ms) 0.0189 · cut in 40 ms 0.15 · largest drop after edge 2 0.0118 (bound 0.0174) · rise after edge 2 0.0813 (0.89× single) · end P 0.0000 · 92 frames · load 32.4/21.9/18.0
+  FAIL      c1 r1 light accordion +45 · single: peak P 0.0906 own largest drop 0.0157 · pair: P at edge 2 (46.1 ms) 0.0827 · cut in 40 ms -0.29 · largest drop after edge 2 0.0244 (bound 0.0177) · rise after edge 2 0.0110 (0.12× single) · end P 0.0000 · 89 frames · load 32.4/21.9/18.0
+  PASS      c1 r1 light accordion +100 · single: peak P 0.0906 own largest drop 0.0157 · pair: P at edge 2 (102.6 ms) 0.0348 · cut in 40 ms -0.29 · largest drop after edge 2 0.0157 (bound 0.0177) · rise after edge 2 0.0647 (0.71× single) · end P 0.0000 · 93 frames · load 32.4/21.9/18.0
+  PASS      c1 r1 light button +45 · single: peak P 0.0927 own largest drop 0.0272 · pair: P at edge 2 (46.3 ms) 0.0887 · cut in 40 ms 0.10 · largest drop after edge 2 0.0157 (bound 0.0292) · rise after edge 2 0.0336 (0.36× single) · end P 0.0000 · 92 frames · load 32.0/22.0/18.1
+  PASS      c1 r1 light button +100 · single: peak P 0.0927 own largest drop 0.0272 · pair: P at edge 2 (101.2 ms) 0.0393 · cut in 40 ms 0.38 · largest drop after edge 2 0.0157 (bound 0.0292) · rise after edge 2 0.0777 (0.84× single) · end P 0.0000 · 91 frames · load 32.0/22.0/18.1
+  PAINTS    c3 r1 light switch clone · in-app peak P 0.0912 · clone peak P 0.0888 = 0.97× · 81 frames · load 34.4/22.6/18.4
+  PAINTS    c3 r1 light accordion clone · in-app peak P 0.0909 · clone peak P 0.0920 = 1.01× · 80 frames · load 34.4/22.6/18.4
+  PAINTS    c3 r1 light button clone · in-app peak P 0.0911 · clone peak P 0.0912 = 1.00× · 81 frames · load 33.5/22.7/18.4
+  NONE      c4 r1 light switch PRM · state unchecked→checked · peak P 0.0000 · max animations 0 · load 33.5/22.7/18.4
+  NONE      c4 r1 light accordion PRM · state closed→open · peak P 0.0000 · max animations 1 · load 33.5/22.7/18.4
+  NONE      c4 r1 light button PRM · state a→b · peak P 0.0000 · max animations 0 · load 32.5/22.6/18.4
+  QUIET     aba r1 light switch A→B→A one task · state back to unchecked · peak P 0.0000 · max animations 0 · load 32.5/22.6/18.4
+  QUIET     aba r1 light accordion A→B→A one task · state back to closed · peak P 0.0000 · max animations 0 · load 32.5/22.6/18.4
+  PASS      c1 r1 dark switch +45 · single: peak P 0.0917 own largest drop 0.0144 · pair: P at edge 2 (46.3 ms) 0.0892 · cut in 40 ms 0.10 · largest drop after edge 2 0.0157 (bound 0.0164) · rise after edge 2 0.0334 (0.36× single) · end P 0.0000 · 94 frames · load 31.5/22.6/18.4
+  PASS      c1 r1 dark switch +100 · single: peak P 0.0917 own largest drop 0.0144 · pair: P at edge 2 (102.1 ms) 0.0228 · cut in 40 ms 0.26 · largest drop after edge 2 0.0157 (bound 0.0164) · rise after edge 2 0.0797 (0.87× single) · end P 0.0000 · 95 frames · load 31.5/22.6/18.4
+  PASS      c1 r1 dark accordion +45 · single: peak P 0.0927 own largest drop 0.0154 · pair: P at edge 2 (46.2 ms) 0.0874 · cut in 40 ms -0.21 · largest drop after edge 2 0.0157 (bound 0.0174) · rise after edge 2 0.0055 (0.06× single) · end P 0.0000 · 95 frames · load 31.5/22.6/18.4
+  PASS      c1 r1 dark accordion +100 · single: peak P 0.0927 own largest drop 0.0154 · pair: P at edge 2 (102.0 ms) 0.0210 · cut in 40 ms -0.50 · largest drop after edge 2 0.0157 (bound 0.0174) · rise after edge 2 0.0773 (0.83× single) · end P 0.0000 · 96 frames · load 29.6/22.3/18.3
+  PASS      c1 r1 dark button +45 · single: peak P 0.0910 own largest drop 0.0157 · pair: P at edge 2 (46.8 ms) 0.0845 · cut in 40 ms 0.14 · largest drop after edge 2 0.0157 (bound 0.0177) · rise after edge 2 0.0436 (0.48× single) · end P 0.0000 · 95 frames · load 29.6/22.3/18.3
+  PASS      c1 r1 dark button +100 · single: peak P 0.0910 own largest drop 0.0157 · pair: P at edge 2 (100.2 ms) 0.0197 · cut in 40 ms 0.22 · largest drop after edge 2 0.0157 (bound 0.0177) · rise after edge 2 0.0807 (0.89× single) · end P 0.0000 · 93 frames · load 29.6/22.3/18.3
+  PAINTS    c3 r1 dark switch clone · in-app peak P 0.0899 · clone peak P 0.0927 = 1.03× · 79 frames · load 28.6/22.3/18.3
+  PAINTS    c3 r1 dark accordion clone · in-app peak P 0.0898 · clone peak P 0.0892 = 0.99× · 78 frames · load 27.9/22.2/18.3
+  PAINTS    c3 r1 dark button clone · in-app peak P 0.0919 · clone peak P 0.0918 = 1.00× · 79 frames · load 27.9/22.2/18.3
+  NONE      c4 r1 dark switch PRM · state unchecked→checked · peak P 0.0000 · max animations 0 · load 27.9/22.2/18.3
+  NONE      c4 r1 dark accordion PRM · state closed→open · peak P 0.0000 · max animations 1 · load 27.9/22.3/18.4
+  NONE      c4 r1 dark button PRM · state a→b · peak P 0.0000 · max animations 0 · load 27.9/22.3/18.4
+  QUIET     aba r1 dark switch A→B→A one task · state back to unchecked · peak P 0.0000 · max animations 0 · load 27.9/22.3/18.4
+  QUIET     aba r1 dark accordion A→B→A one task · state back to closed · peak P 0.0000 · max animations 0 · load 27.9/22.3/18.4
+  PASS      c1 r2 light switch +45 · single: peak P 0.0908 own largest drop 0.0150 · pair: P at edge 2 (45.6 ms) 0.0804 · cut in 40 ms -0.07 · largest drop after edge 2 0.0157 (bound 0.0170) · rise after edge 2 0.0096 (0.11× single) · end P 0.0000 · 92 frames · load 26.1/22.0/18.3
+  PASS      c1 r2 light switch +100 · single: peak P 0.0908 own largest drop 0.0150 · pair: P at edge 2 (101.5 ms) 0.0234 · cut in 40 ms 0.22 · largest drop after edge 2 0.0156 (bound 0.0170) · rise after edge 2 0.0803 (0.89× single) · end P 0.0000 · 93 frames · load 26.1/22.0/18.3
+  PASS      c1 r2 light accordion +45 · single: peak P 0.0902 own largest drop 0.0153 · pair: P at edge 2 (46.0 ms) 0.0896 · cut in 40 ms -0.18 · largest drop after edge 2 0.0157 (bound 0.0173) · rise after edge 2 0.0013 (0.01× single) · end P 0.0000 · 96 frames · load 24.7/21.8/18.3
+  FAIL      c1 r2 light accordion +100 · single: peak P 0.0902 own largest drop 0.0153 · pair: P at edge 2 (100.9 ms) 0.0241 · cut in 40 ms -0.23 · largest drop after edge 2 0.0196 (bound 0.0173) · rise after edge 2 0.0760 (0.84× single) · end P 0.0000 · 93 frames · load 24.7/21.8/18.3
+  PASS      c1 r2 light button +45 · single: peak P 0.0900 own largest drop 0.0186 · pair: P at edge 2 (46.8 ms) 0.0815 · cut in 40 ms 0.15 · largest drop after edge 2 0.0196 (bound 0.0206) · rise after edge 2 0.0445 (0.49× single) · end P 0.0000 · 94 frames · load 24.9/21.9/18.3
+  PASS      c1 r2 light button +100 · single: peak P 0.0900 own largest drop 0.0186 · pair: P at edge 2 (101.1 ms) 0.0189 · cut in 40 ms 0.26 · largest drop after edge 2 0.0157 (bound 0.0206) · rise after edge 2 0.0850 (0.94× single) · end P 0.0000 · 93 frames · load 24.9/21.9/18.3
+  PAINTS    c3 r2 light switch clone · in-app peak P 0.0897 · clone peak P 0.0911 = 1.02× · 82 frames · load 24.9/21.9/18.3
+  PAINTS    c3 r2 light accordion clone · in-app peak P 0.0915 · clone peak P 0.0902 = 0.99× · 80 frames · load 23.4/21.6/18.3
+  PAINTS    c3 r2 light button clone · in-app peak P 0.0927 · clone peak P 0.0928 = 1.00× · 81 frames · load 23.4/21.6/18.3
+  NONE      c4 r2 light switch PRM · state unchecked→checked · peak P 0.0000 · max animations 0 · load 22.2/21.4/18.2
+  NONE      c4 r2 light accordion PRM · state closed→open · peak P 0.0000 · max animations 1 · load 22.2/21.4/18.2
+  NONE      c4 r2 light button PRM · state a→b · peak P 0.0000 · max animations 0 · load 22.2/21.4/18.2
+  QUIET     aba r2 light switch A→B→A one task · state back to unchecked · peak P 0.0000 · max animations 0 · load 22.2/21.4/18.2
+  QUIET     aba r2 light accordion A→B→A one task · state back to closed · peak P 0.0000 · max animations 0 · load 20.7/21.1/18.1
+  PASS      c1 r2 dark switch +45 · single: peak P 0.0907 own largest drop 0.0157 · pair: P at edge 2 (46.0 ms) 0.0900 · cut in 40 ms 0.02 · largest drop after edge 2 0.0157 (bound 0.0177) · rise after edge 2 0.0246 (0.27× single) · end P 0.0000 · 95 frames · load 20.7/21.1/18.1
+  PASS      c1 r2 dark switch +100 · single: peak P 0.0907 own largest drop 0.0157 · pair: P at edge 2 (101.4 ms) 0.0301 · cut in 40 ms 0.14 · largest drop after edge 2 0.0157 (bound 0.0177) · rise after edge 2 0.0752 (0.83× single) · end P 0.0000 · 94 frames · load 20.7/21.1/18.1
+  PASS      c1 r2 dark accordion +45 · single: peak P 0.0909 own largest drop 0.0150 · pair: P at edge 2 (46.1 ms) 0.0868 · cut in 40 ms -0.22 · largest drop after edge 2 0.0118 (bound 0.0170) · rise after edge 2 0.0021 (0.02× single) · end P 0.0000 · 96 frames · load 20.3/21.0/18.1
+  PASS      c1 r2 dark accordion +100 · single: peak P 0.0909 own largest drop 0.0150 · pair: P at edge 2 (100.5 ms) 0.0254 · cut in 40 ms -0.19 · largest drop after edge 2 0.0157 (bound 0.0170) · rise after edge 2 0.0770 (0.85× single) · end P 0.0000 · 95 frames · load 20.3/21.0/18.1
+  PASS      c1 r2 dark button +45 · single: peak P 0.0909 own largest drop 0.0152 · pair: P at edge 2 (46.0 ms) 0.0899 · cut in 40 ms 0.08 · largest drop after edge 2 0.0157 (bound 0.0172) · rise after edge 2 0.0327 (0.36× single) · end P 0.0000 · 96 frames · load 19.5/20.8/18.0
+  PASS      c1 r2 dark button +100 · single: peak P 0.0909 own largest drop 0.0152 · pair: P at edge 2 (102.1 ms) 0.0360 · cut in 40 ms 0.25 · largest drop after edge 2 0.0157 (bound 0.0172) · rise after edge 2 0.0735 (0.81× single) · end P 0.0000 · 94 frames · load 19.5/20.8/18.0
+  PAINTS    c3 r2 dark switch clone · in-app peak P 0.0917 · clone peak P 0.0911 = 0.99× · 82 frames · load 19.5/20.8/18.0
+  PAINTS    c3 r2 dark accordion clone · in-app peak P 0.0926 · clone peak P 0.0923 = 1.00× · 82 frames · load 18.8/20.7/18.0
+  PAINTS    c3 r2 dark button clone · in-app peak P 0.0922 · clone peak P 0.0917 = 0.99× · 78 frames · load 19.6/20.8/18.1
+  NONE      c4 r2 dark switch PRM · state unchecked→checked · peak P 0.0000 · max animations 0 · load 19.6/20.8/18.1
+  NONE      c4 r2 dark accordion PRM · state closed→open · peak P 0.0000 · max animations 1 · load 19.6/20.8/18.1
+  NONE      c4 r2 dark button PRM · state a→b · peak P 0.0000 · max animations 0 · load 19.6/20.8/18.1
+  QUIET     aba r2 dark switch A→B→A one task · state back to unchecked · peak P 0.0000 · max animations 0 · load 19.1/20.7/18.0
+  QUIET     aba r2 dark accordion A→B→A one task · state back to closed · peak P 0.0000 · max animations 0 · load 19.1/20.7/18.0
+  PASS      c1 r3 light switch +45 · single: peak P 0.0910 own largest drop 0.0151 · pair: P at edge 2 (45.6 ms) 0.0908 · cut in 40 ms 0.09 · largest drop after edge 2 0.0157 (bound 0.0171) · rise after edge 2 0.0142 (0.16× single) · end P 0.0000 · 93 frames · load 19.1/20.7/18.0
+  PASS      c1 r3 light switch +100 · single: peak P 0.0910 own largest drop 0.0151 · pair: P at edge 2 (102.4 ms) 0.0219 · cut in 40 ms 0.25 · largest drop after edge 2 0.0157 (bound 0.0171) · rise after edge 2 0.0810 (0.89× single) · end P 0.0000 · 94 frames · load 19.3/20.7/18.1
+  PASS      c1 r3 light accordion +45 · single: peak P 0.0918 own largest drop 0.0157 · pair: P at edge 2 (45.6 ms) 0.0887 · cut in 40 ms -0.15 · largest drop after edge 2 0.0157 (bound 0.0177) · rise after edge 2 0.0034 (0.04× single) · end P 0.0000 · 94 frames · load 19.3/20.7/18.1
+  PASS      c1 r3 light accordion +100 · single: peak P 0.0918 own largest drop 0.0157 · pair: P at edge 2 (101.3 ms) 0.0203 · cut in 40 ms -0.41 · largest drop after edge 2 0.0157 (bound 0.0177) · rise after edge 2 0.0768 (0.84× single) · end P 0.0000 · 93 frames · load 19.3/20.7/18.1
+  FAIL      c1 r3 light button +45 · single: peak P 0.0911 own largest drop 0.0148 · pair: P at edge 2 (46.8 ms) 0.0914 · cut in 40 ms 0.07 · largest drop after edge 2 0.0196 (bound 0.0168) · rise after edge 2 0.0301 (0.33× single) · end P 0.0000 · 89 frames · load 18.2/20.5/18.0
+  PASS      c1 r3 light button +100 · single: peak P 0.0911 own largest drop 0.0148 · pair: P at edge 2 (101.1 ms) 0.0201 · cut in 40 ms 0.24 · largest drop after edge 2 0.0157 (bound 0.0168) · rise after edge 2 0.0828 (0.91× single) · end P 0.0000 · 94 frames · load 18.2/20.5/18.0
+  PAINTS    c3 r3 light switch clone · in-app peak P 0.0927 · clone peak P 0.0915 = 0.99× · 82 frames · load 17.4/20.3/17.9
+  PAINTS    c3 r3 light accordion clone · in-app peak P 0.0898 · clone peak P 0.0895 = 1.00× · 80 frames · load 17.4/20.3/17.9
+  PAINTS    c3 r3 light button clone · in-app peak P 0.0900 · clone peak P 0.0909 = 1.01× · 79 frames · load 16.8/20.1/17.9
+  NONE      c4 r3 light switch PRM · state unchecked→checked · peak P 0.0000 · max animations 0 · load 16.8/20.1/17.9
+  NONE      c4 r3 light accordion PRM · state closed→open · peak P 0.0000 · max animations 1 · load 16.8/20.1/17.9
+  NONE      c4 r3 light button PRM · state a→b · peak P 0.0000 · max animations 0 · load 15.8/19.8/17.8
+  QUIET     aba r3 light switch A→B→A one task · state back to unchecked · peak P 0.0000 · max animations 0 · load 15.8/19.8/17.8
+  QUIET     aba r3 light accordion A→B→A one task · state back to closed · peak P 0.0000 · max animations 0 · load 15.8/19.8/17.8
+  FAIL      c1 r3 dark switch +45 · single: peak P 0.0917 own largest drop 0.0118 · pair: P at edge 2 (46.2 ms) 0.0805 · cut in 40 ms 0.16 · largest drop after edge 2 0.0157 (bound 0.0138) · rise after edge 2 0.0463 (0.50× single) · end P 0.0000 · 92 frames · load 15.8/19.8/17.8
+  FAIL      c1 r3 dark switch +100 · single: peak P 0.0917 own largest drop 0.0118 · pair: P at edge 2 (101.2 ms) 0.0206 · cut in 40 ms 0.25 · largest drop after edge 2 0.0157 (bound 0.0138) · rise after edge 2 0.0826 (0.90× single) · end P 0.0000 · 93 frames · load 15.8/19.8/17.8
+  PASS      c1 r3 dark accordion +45 · single: peak P 0.0914 own largest drop 0.0156 · pair: P at edge 2 (47.1 ms) 0.0863 · cut in 40 ms -0.18 · largest drop after edge 2 0.0157 (bound 0.0176) · rise after edge 2 0.0038 (0.04× single) · end P 0.0000 · 93 frames · load 15.8/19.8/17.8
+  PASS      c1 r3 dark accordion +100 · single: peak P 0.0914 own largest drop 0.0156 · pair: P at edge 2 (102.0 ms) 0.0287 · cut in 40 ms -0.36 · largest drop after edge 2 0.0157 (bound 0.0176) · rise after edge 2 0.0689 (0.75× single) · end P 0.0000 · 90 frames · load 14.6/19.4/17.7
+  PASS      c1 r3 dark button +45 · single: peak P 0.0909 own largest drop 0.0156 · pair: P at edge 2 (45.7 ms) 0.0905 · cut in 40 ms 0.09 · largest drop after edge 2 0.0157 (bound 0.0176) · rise after edge 2 0.0309 (0.34× single) · end P 0.0000 · 94 frames · load 14.6/19.4/17.7
+  PASS      c1 r3 dark button +100 · single: peak P 0.0909 own largest drop 0.0156 · pair: P at edge 2 (101.2 ms) 0.0185 · cut in 40 ms 0.17 · largest drop after edge 2 0.0151 (bound 0.0176) · rise after edge 2 0.0806 (0.89× single) · end P 0.0000 · 94 frames · load 14.6/19.4/17.7
+  PAINTS    c3 r3 dark switch clone · in-app peak P 0.0911 · clone peak P 0.0905 = 0.99× · 82 frames · load 15.5/19.6/17.7
+  PAINTS    c3 r3 dark accordion clone · in-app peak P 0.0897 · clone peak P 0.0906 = 1.01× · 81 frames · load 15.5/19.6/17.7
+  PAINTS    c3 r3 dark button clone · in-app peak P 0.0904 · clone peak P 0.0917 = 1.01× · 78 frames · load 14.8/19.3/17.7
+  NONE      c4 r3 dark switch PRM · state unchecked→checked · peak P 0.0000 · max animations 0 · load 14.8/19.3/17.7
+  NONE      c4 r3 dark accordion PRM · state closed→open · peak P 0.0000 · max animations 1 · load 14.0/19.1/17.6
+  NONE      c4 r3 dark button PRM · state a→b · peak P 0.0000 · max animations 0 · load 14.0/19.1/17.6
+  QUIET     aba r3 dark switch A→B→A one task · state back to unchecked · peak P 0.0000 · max animations 0 · load 14.0/19.1/17.6
+  QUIET     aba r3 dark accordion A→B→A one task · state back to closed · peak P 0.0000 · max animations 0 · load 14.0/19.1/17.6
+# end · load 14.0/19.1/17.6
+# cc css end exit 0 2026-10-16 14:07:33 load { 13.18 18.75 17.50 }
+# cc waapi start 2026-10-16 14:07:33 load { 13.18 18.75 17.50 }
+# C-CP cc waapi · engine chromium · plant none · lock wait 0.0 s · other headless processes: chromium 4, webkit 2 · load 13.2/18.8/17.5 at start
+# chromium 149.0.7827.55
+  FAIL      c1 r1 light switch +45 · single: peak P 0.0902 own largest drop 0.0157 · pair: P at edge 2 (46.9 ms) 0.0913 · cut in 40 ms 1.00 · largest drop after edge 2 0.0913 (bound 0.0177) · rise after edge 2 0.0913 (1.01× single) · end P 0.0000 · 95 frames · load 12.7/18.6/17.4
+  PASS      c1 r1 light switch +100 · single: peak P 0.0902 own largest drop 0.0157 · pair: P at edge 2 (101.0 ms) 0.0157 · cut in 40 ms 1.00 · largest drop after edge 2 0.0157 (bound 0.0177) · rise after edge 2 0.0915 (1.01× single) · end P 0.0000 · 94 frames · load 12.7/18.6/17.4
+  FAIL      c1 r1 light accordion +45 · single: peak P 0.0910 own largest drop 0.0135 · pair: P at edge 2 (46.0 ms) 0.0845 · cut in 40 ms 1.00 · largest drop after edge 2 0.0845 (bound 0.0155) · rise after edge 2 0.0899 (0.99× single) · end P 0.0000 · 94 frames · load 12.7/18.6/17.4
+  FAIL      c1 r1 light accordion +100 · single: peak P 0.0910 own largest drop 0.0135 · pair: P at edge 2 (101.3 ms) 0.0275 · cut in 40 ms 1.00 · largest drop after edge 2 0.0275 (bound 0.0155) · rise after edge 2 0.0902 (0.99× single) · end P 0.0000 · 95 frames · load 18.7/19.7/17.8
+  FAIL      c1 r1 light button +45 · single: peak P 0.0916 own largest drop 0.0153 · pair: P at edge 2 (47.1 ms) 0.0870 · cut in 40 ms 1.00 · largest drop after edge 2 0.0870 (bound 0.0173) · rise after edge 2 0.0888 (0.97× single) · end P 0.0000 · 95 frames · load 18.7/19.7/17.8
+  PASS      c1 r1 light button +100 · single: peak P 0.0916 own largest drop 0.0153 · pair: P at edge 2 (101.4 ms) 0.0157 · cut in 40 ms 1.00 · largest drop after edge 2 0.0157 (bound 0.0173) · rise after edge 2 0.0910 (0.99× single) · end P 0.0000 · 95 frames · load 18.2/19.6/17.8
+  SILENT    c3 r1 light switch clone · in-app peak P 0.0920 · clone peak P 0.0000 = 0.00× · 82 frames · load 18.2/19.6/17.8
+  SILENT    c3 r1 light accordion clone · in-app peak P 0.0927 · clone peak P 0.0000 = 0.00× · 79 frames · load 17.2/19.4/17.7
+  SILENT    c3 r1 light button clone · in-app peak P 0.0900 · clone peak P 0.0000 = 0.00× · 81 frames · load 17.2/19.4/17.7
+  LIGHT     c4 r1 light switch PRM · state unchecked→checked · peak P 0.0923 · max animations 2 · load 17.2/19.4/17.7
+  LIGHT     c4 r1 light accordion PRM · state closed→open · peak P 0.0918 · max animations 3 · load 16.2/19.1/17.7
+  LIGHT     c4 r1 light button PRM · state a→b · peak P 0.0903 · max animations 2 · load 16.2/19.1/17.7
+  LIT       aba r1 light switch A→B→A one task · state back to unchecked · peak P 0.0917 · max animations 2 · load 16.2/19.1/17.7
+  LIT       aba r1 light accordion A→B→A one task · state back to closed · peak P 0.0907 · max animations 2 · load 16.2/19.1/17.7
+  FAIL      c1 r1 dark switch +45 · single: peak P 0.0930 own largest drop 0.0157 · pair: P at edge 2 (46.7 ms) 0.0733 · cut in 40 ms 1.00 · largest drop after edge 2 0.0733 (bound 0.0177) · rise after edge 2 0.0914 (0.98× single) · end P 0.0000 · 94 frames · load 15.6/18.9/17.6
+  PASS      c1 r1 dark switch +100 · single: peak P 0.0930 own largest drop 0.0157 · pair: P at edge 2 (101.7 ms) 0.0157 · cut in 40 ms 1.00 · largest drop after edge 2 0.0157 (bound 0.0177) · rise after edge 2 0.0909 (0.98× single) · end P 0.0000 · 95 frames · load 15.6/18.9/17.6
+  FAIL      c1 r1 dark accordion +45 · single: peak P 0.0910 own largest drop 0.0157 · pair: P at edge 2 (45.5 ms) 0.0871 · cut in 40 ms 1.00 · largest drop after edge 2 0.0871 (bound 0.0177) · rise after edge 2 0.0923 (1.01× single) · end P 0.0000 · 94 frames · load 14.6/18.7/17.5
+  FAIL      c1 r1 dark accordion +100 · single: peak P 0.0910 own largest drop 0.0157 · pair: P at edge 2 (101.2 ms) 0.0196 · cut in 40 ms 1.00 · largest drop after edge 2 0.0196 (bound 0.0177) · rise after edge 2 0.0919 (1.01× single) · end P 0.0000 · 94 frames · load 14.6/18.7/17.5
+  FAIL      c1 r1 dark button +45 · single: peak P 0.0908 own largest drop 0.0152 · pair: P at edge 2 (46.3 ms) 0.0808 · cut in 40 ms 1.00 · largest drop after edge 2 0.0808 (bound 0.0172) · rise after edge 2 0.0906 (1.00× single) · end P 0.0000 · 95 frames · load 14.6/18.7/17.5
+  FAIL      c1 r1 dark button +100 · single: peak P 0.0908 own largest drop 0.0152 · pair: P at edge 2 (100.6 ms) 0.0196 · cut in 40 ms 1.00 · largest drop after edge 2 0.0196 (bound 0.0172) · rise after edge 2 0.0908 (1.00× single) · end P 0.0000 · 95 frames · load 13.6/18.4/17.4
+  SILENT    c3 r1 dark switch clone · in-app peak P 0.0912 · clone peak P 0.0000 = 0.00× · 81 frames · load 13.6/18.4/17.4
+  SILENT    c3 r1 dark accordion clone · in-app peak P 0.0898 · clone peak P 0.0000 = 0.00× · 82 frames · load 13.9/18.4/17.4
+  SILENT    c3 r1 dark button clone · in-app peak P 0.0909 · clone peak P 0.0000 = 0.00× · 81 frames · load 13.9/18.4/17.4
+  LIGHT     c4 r1 dark switch PRM · state unchecked→checked · peak P 0.0931 · max animations 2 · load 14.5/18.4/17.5
+  LIGHT     c4 r1 dark accordion PRM · state closed→open · peak P 0.0914 · max animations 3 · load 14.5/18.4/17.5
+  LIGHT     c4 r1 dark button PRM · state a→b · peak P 0.0915 · max animations 2 · load 14.5/18.4/17.5
+  LIT       aba r1 dark switch A→B→A one task · state back to unchecked · peak P 0.0919 · max animations 2 · load 14.5/18.4/17.5
+  LIT       aba r1 dark accordion A→B→A one task · state back to closed · peak P 0.0907 · max animations 2 · load 14.8/18.4/17.5
+  FAIL      c1 r2 light switch +45 · single: peak P 0.0925 own largest drop 0.0129 · pair: P at edge 2 (46.7 ms) 0.0818 · cut in 40 ms 1.00 · largest drop after edge 2 0.0818 (bound 0.0149) · rise after edge 2 0.0914 (0.99× single) · end P 0.0000 · 94 frames · load 14.8/18.4/17.5
+  FAIL      c1 r2 light switch +100 · single: peak P 0.0925 own largest drop 0.0129 · pair: P at edge 2 (101.8 ms) 0.0275 · cut in 40 ms 1.00 · largest drop after edge 2 0.0275 (bound 0.0149) · rise after edge 2 0.0922 (1.00× single) · end P 0.0000 · 96 frames · load 14.8/18.4/17.5
+  FAIL      c1 r2 light accordion +45 · single: peak P 0.0918 own largest drop 0.0157 · pair: P at edge 2 (46.0 ms) 0.0900 · cut in 40 ms 1.00 · largest drop after edge 2 0.0900 (bound 0.0177) · rise after edge 2 0.0907 (0.99× single) · end P 0.0000 · 94 frames · load 13.9/18.2/17.4
+  FAIL      c1 r2 light accordion +100 · single: peak P 0.0918 own largest drop 0.0157 · pair: P at edge 2 (101.9 ms) 0.0314 · cut in 40 ms 1.00 · largest drop after edge 2 0.0314 (bound 0.0177) · rise after edge 2 0.0918 (1.00× single) · end P 0.0000 · 94 frames · load 13.9/18.2/17.4
+  FAIL      c1 r2 light button +45 · single: peak P 0.0899 own largest drop 0.0147 · pair: P at edge 2 (46.4 ms) 0.0893 · cut in 40 ms 1.00 · largest drop after edge 2 0.0893 (bound 0.0167) · rise after edge 2 0.0899 (1.00× single) · end P 0.0000 · 95 frames · load 13.6/18.0/17.3
+  PASS      c1 r2 light button +100 · single: peak P 0.0899 own largest drop 0.0147 · pair: P at edge 2 (102.7 ms) 0.0157 · cut in 40 ms 1.00 · largest drop after edge 2 0.0157 (bound 0.0167) · rise after edge 2 0.0909 (1.01× single) · end P 0.0000 · 95 frames · load 13.6/18.0/17.3
+  SILENT    c3 r2 light switch clone · in-app peak P 0.0911 · clone peak P 0.0000 = 0.00× · 82 frames · load 13.6/18.0/17.3
+  SILENT    c3 r2 light accordion clone · in-app peak P 0.0909 · clone peak P 0.0000 = 0.00× · 82 frames · load 14.1/18.1/17.4
+  SILENT    c3 r2 light button clone · in-app peak P 0.0921 · clone peak P 0.0000 = 0.00× · 81 frames · load 13.4/17.9/17.3
+  LIGHT     c4 r2 light switch PRM · state unchecked→checked · peak P 0.0906 · max animations 2 · load 13.4/17.9/17.3
+  LIGHT     c4 r2 light accordion PRM · state closed→open · peak P 0.0913 · max animations 3 · load 13.4/17.9/17.3
+  LIGHT     c4 r2 light button PRM · state a→b · peak P 0.0896 · max animations 2 · load 13.4/17.9/17.3
+  LIT       aba r2 light switch A→B→A one task · state back to unchecked · peak P 0.0910 · max animations 2 · load 12.7/17.6/17.2
+  LIT       aba r2 light accordion A→B→A one task · state back to closed · peak P 0.0916 · max animations 2 · load 12.7/17.6/17.2
+  FAIL      c1 r2 dark switch +45 · single: peak P 0.0899 own largest drop 0.0158 · pair: P at edge 2 (45.7 ms) 0.0813 · cut in 40 ms 1.00 · largest drop after edge 2 0.0813 (bound 0.0178) · rise after edge 2 0.0902 (1.00× single) · end P 0.0000 · 93 frames · load 12.7/17.6/17.2
+  FAIL      c1 r2 dark switch +100 · single: peak P 0.0899 own largest drop 0.0158 · pair: P at edge 2 (101.0 ms) 0.0196 · cut in 40 ms 1.00 · largest drop after edge 2 0.0196 (bound 0.0178) · rise after edge 2 0.0903 (1.00× single) · end P 0.0000 · 95 frames · load 12.1/17.4/17.1
+  FAIL      c1 r2 dark accordion +45 · single: peak P 0.0927 own largest drop 0.0154 · pair: P at edge 2 (46.3 ms) 0.0908 · cut in 40 ms 1.00 · largest drop after edge 2 0.0908 (bound 0.0174) · rise after edge 2 0.0910 (0.98× single) · end P 0.0000 · 94 frames · load 12.1/17.4/17.1
+  FAIL      c1 r2 dark accordion +100 · single: peak P 0.0927 own largest drop 0.0154 · pair: P at edge 2 (100.6 ms) 0.0196 · cut in 40 ms 1.00 · largest drop after edge 2 0.0196 (bound 0.0174) · rise after edge 2 0.0901 (0.97× single) · end P 0.0000 · 96 frames · load 12.1/17.4/17.1
+  FAIL      c1 r2 dark button +45 · single: peak P 0.0898 own largest drop 0.0157 · pair: P at edge 2 (46.6 ms) 0.0888 · cut in 40 ms 1.00 · largest drop after edge 2 0.0888 (bound 0.0177) · rise after edge 2 0.0924 (1.03× single) · end P 0.0000 · 95 frames · load 12.7/17.5/17.2
+  FAIL      c1 r2 dark button +100 · single: peak P 0.0898 own largest drop 0.0157 · pair: P at edge 2 (101.5 ms) 0.0196 · cut in 40 ms 1.00 · largest drop after edge 2 0.0196 (bound 0.0177) · rise after edge 2 0.0911 (1.01× single) · end P 0.0000 · 94 frames · load 12.7/17.5/17.2
+  SILENT    c3 r2 dark switch clone · in-app peak P 0.0926 · clone peak P 0.0000 = 0.00× · 80 frames · load 12.5/17.4/17.1
+  SILENT    c3 r2 dark accordion clone · in-app peak P 0.0909 · clone peak P 0.0000 = 0.00× · 81 frames · load 12.5/17.4/17.1
+  SILENT    c3 r2 dark button clone · in-app peak P 0.0903 · clone peak P 0.0000 = 0.00× · 81 frames · load 12.1/17.2/17.1
+  LIGHT     c4 r2 dark switch PRM · state unchecked→checked · peak P 0.0915 · max animations 2 · load 12.1/17.2/17.1
+  LIGHT     c4 r2 dark accordion PRM · state closed→open · peak P 0.0896 · max animations 3 · load 12.1/17.2/17.1
+  LIGHT     c4 r2 dark button PRM · state a→b · peak P 0.0895 · max animations 2 · load 12.0/17.1/17.0
+  LIT       aba r2 dark switch A→B→A one task · state back to unchecked · peak P 0.0915 · max animations 2 · load 12.0/17.1/17.0
+  LIT       aba r2 dark accordion A→B→A one task · state back to closed · peak P 0.0917 · max animations 2 · load 12.0/17.1/17.0
+  FAIL      c1 r3 light switch +45 · single: peak P 0.0912 own largest drop 0.0156 · pair: P at edge 2 (46.3 ms) 0.0812 · cut in 40 ms 1.00 · largest drop after edge 2 0.0812 (bound 0.0176) · rise after edge 2 0.0919 (1.01× single) · end P 0.0000 · 95 frames · load 11.3/16.9/16.9
+  FAIL      c1 r3 light switch +100 · single: peak P 0.0912 own largest drop 0.0156 · pair: P at edge 2 (101.0 ms) 0.0196 · cut in 40 ms 1.00 · largest drop after edge 2 0.0196 (bound 0.0176) · rise after edge 2 0.0908 (1.00× single) · end P 0.0000 · 95 frames · load 11.3/16.9/16.9
+  FAIL      c1 r3 light accordion +45 · single: peak P 0.0905 own largest drop 0.0156 · pair: P at edge 2 (45.6 ms) 0.0869 · cut in 40 ms 1.00 · largest drop after edge 2 0.0869 (bound 0.0176) · rise after edge 2 0.0915 (1.01× single) · end P 0.0000 · 94 frames · load 11.3/16.9/16.9
+  FAIL      c1 r3 light accordion +100 · single: peak P 0.0905 own largest drop 0.0156 · pair: P at edge 2 (101.0 ms) 0.0314 · cut in 40 ms 1.00 · largest drop after edge 2 0.0314 (bound 0.0176) · rise after edge 2 0.0924 (1.02× single) · end P 0.0000 · 94 frames · load 11.0/16.7/16.9
+  FAIL      c1 r3 light button +45 · single: peak P 0.0899 own largest drop 0.0156 · pair: P at edge 2 (46.2 ms) 0.0844 · cut in 40 ms 1.00 · largest drop after edge 2 0.0844 (bound 0.0176) · rise after edge 2 0.0898 (1.00× single) · end P 0.0000 · 94 frames · load 11.0/16.7/16.9
+  FAIL      c1 r3 light button +100 · single: peak P 0.0899 own largest drop 0.0156 · pair: P at edge 2 (101.6 ms) 0.0235 · cut in 40 ms 1.00 · largest drop after edge 2 0.0235 (bound 0.0176) · rise after edge 2 0.0904 (1.01× single) · end P 0.0000 · 94 frames · load 11.0/16.7/16.9
+  SILENT    c3 r3 light switch clone · in-app peak P 0.0899 · clone peak P 0.0000 = 0.00× · 82 frames · load 10.8/16.6/16.8
+  SILENT    c3 r3 light accordion clone · in-app peak P 0.0900 · clone peak P 0.0000 = 0.00× · 81 frames · load 10.8/16.6/16.8
+  SILENT    c3 r3 light button clone · in-app peak P 0.0904 · clone peak P 0.0000 = 0.00× · 80 frames · load 11.2/16.5/16.8
+  LIGHT     c4 r3 light switch PRM · state unchecked→checked · peak P 0.0918 · max animations 2 · load 11.2/16.5/16.8
+  LIGHT     c4 r3 light accordion PRM · state closed→open · peak P 0.0920 · max animations 3 · load 11.2/16.5/16.8
+  LIGHT     c4 r3 light button PRM · state a→b · peak P 0.0916 · max animations 2 · load 12.0/16.6/16.9
+  LIT       aba r3 light switch A→B→A one task · state back to unchecked · peak P 0.0912 · max animations 2 · load 12.0/16.6/16.9
+  LIT       aba r3 light accordion A→B→A one task · state back to closed · peak P 0.0927 · max animations 2 · load 12.0/16.6/16.9
+  FAIL      c1 r3 dark switch +45 · single: peak P 0.0916 own largest drop 0.0157 · pair: P at edge 2 (46.6 ms) 0.0899 · cut in 40 ms 1.00 · largest drop after edge 2 0.0899 (bound 0.0177) · rise after edge 2 0.0927 (1.01× single) · end P 0.0000 · 94 frames · load 11.3/16.4/16.8
+  FAIL      c1 r3 dark switch +100 · single: peak P 0.0916 own largest drop 0.0157 · pair: P at edge 2 (101.4 ms) 0.0275 · cut in 40 ms 1.00 · largest drop after edge 2 0.0275 (bound 0.0177) · rise after edge 2 0.0907 (0.99× single) · end P 0.0000 · 96 frames · load 11.3/16.4/16.8
+  FAIL      c1 r3 dark accordion +45 · single: peak P 0.0897 own largest drop 0.0157 · pair: P at edge 2 (46.9 ms) 0.0839 · cut in 40 ms 1.00 · largest drop after edge 2 0.0839 (bound 0.0177) · rise after edge 2 0.0910 (1.01× single) · end P 0.0000 · 95 frames · load 11.3/16.4/16.8
+  FAIL      c1 r3 dark accordion +100 · single: peak P 0.0897 own largest drop 0.0157 · pair: P at edge 2 (100.8 ms) 0.0275 · cut in 40 ms 1.00 · largest drop after edge 2 0.0275 (bound 0.0177) · rise after edge 2 0.0921 (1.03× single) · end P 0.0000 · 94 frames · load 11.0/16.2/16.7
+  FAIL      c1 r3 dark button +45 · single: peak P 0.0914 own largest drop 0.0156 · pair: P at edge 2 (45.9 ms) 0.0869 · cut in 40 ms 1.00 · largest drop after edge 2 0.0869 (bound 0.0176) · rise after edge 2 0.0909 (1.00× single) · end P 0.0000 · 93 frames · load 11.0/16.2/16.7
+  PASS      c1 r3 dark button +100 · single: peak P 0.0914 own largest drop 0.0156 · pair: P at edge 2 (101.7 ms) 0.0157 · cut in 40 ms 1.00 · largest drop after edge 2 0.0157 (bound 0.0176) · rise after edge 2 0.0904 (0.99× single) · end P 0.0000 · 94 frames · load 10.4/16.0/16.6
+  SILENT    c3 r3 dark switch clone · in-app peak P 0.0907 · clone peak P 0.0000 = 0.00× · 82 frames · load 10.4/16.0/16.6
+  SILENT    c3 r3 dark accordion clone · in-app peak P 0.0899 · clone peak P 0.0000 = 0.00× · 81 frames · load 10.8/16.0/16.6
+  SILENT    c3 r3 dark button clone · in-app peak P 0.0917 · clone peak P 0.0000 = 0.00× · 81 frames · load 10.8/16.0/16.6
+  LIGHT     c4 r3 dark switch PRM · state unchecked→checked · peak P 0.0906 · max animations 2 · load 10.8/16.0/16.6
+  LIGHT     c4 r3 dark accordion PRM · state closed→open · peak P 0.0912 · max animations 3 · load 10.7/15.9/16.6
+  LIGHT     c4 r3 dark button PRM · state a→b · peak P 0.0915 · max animations 2 · load 10.7/15.9/16.6
+  LIT       aba r3 dark switch A→B→A one task · state back to unchecked · peak P 0.0900 · max animations 2 · load 10.7/15.9/16.6
+  LIT       aba r3 dark accordion A→B→A one task · state back to closed · peak P 0.0931 · max animations 2 · load 10.7/15.9/16.6
+# end · load 10.7/15.9/16.6
+# cc waapi end exit 0 2026-10-16 14:10:18 load { 9.98 15.60 16.47 }
+# cc css-prm start 2026-10-16 14:10:18 load { 9.98 15.60 16.47 }
+# C-CP cc css-prm · engine chromium · plant none · lock wait 0.0 s · other headless processes: chromium 4, webkit 2 · load 10.0/15.6/16.5 at start
+# chromium 149.0.7827.55
+  LIGHT     c4 r1 light switch PRM · state unchecked→checked · peak P 0.0916 · max animations 2 · load 10.0/15.5/16.4
+  LIGHT     c4 r1 light accordion PRM · state closed→open · peak P 0.0914 · max animations 3 · load 10.0/15.5/16.4
+  LIGHT     c4 r1 light button PRM · state a→b · peak P 0.0902 · max animations 2 · load 10.0/15.5/16.4
+  LIGHT     c4 r1 dark switch PRM · state unchecked→checked · peak P 0.0903 · max animations 2 · load 10.0/15.5/16.4
+  LIGHT     c4 r1 dark accordion PRM · state closed→open · peak P 0.0904 · max animations 3 · load 10.9/15.6/16.5
+  LIGHT     c4 r1 dark button PRM · state a→b · peak P 0.0913 · max animations 2 · load 10.9/15.6/16.5
+  LIGHT     c4 r2 light switch PRM · state unchecked→checked · peak P 0.0911 · max animations 2 · load 10.9/15.6/16.5
+  LIGHT     c4 r2 light accordion PRM · state closed→open · peak P 0.0898 · max animations 3 · load 10.9/15.6/16.5
+  LIGHT     c4 r2 light button PRM · state a→b · peak P 0.0915 · max animations 2 · load 10.3/15.4/16.4
+  LIGHT     c4 r2 dark switch PRM · state unchecked→checked · peak P 0.0925 · max animations 2 · load 10.3/15.4/16.4
+  LIGHT     c4 r2 dark accordion PRM · state closed→open · peak P 0.0915 · max animations 3 · load 10.3/15.4/16.4
+  LIGHT     c4 r2 dark button PRM · state a→b · peak P 0.0925 · max animations 2 · load 10.3/15.4/16.4
+# end · load 10.3/15.4/16.4
+# cc css-prm end exit 0 2026-10-16 14:10:45 load { 10.76 15.33 16.34 }
+# plant cut css start 2026-10-16 14:10:45 load { 10.76 15.33 16.34 }
+# C-CP cc css · engine chromium · plant cut · lock wait 0.0 s · other headless processes: chromium 4, webkit 2 · load 10.1/15.1/16.3 at start
+# chromium 149.0.7827.55
+  FAIL      c1 r1 dark switch +45 · single: peak P 0.0914 own largest drop 0.0127 · pair: P at edge 2 (46.5 ms) 0.0929 · cut in 40 ms 1.00 · largest drop after edge 2 0.0929 (bound 0.0147) · rise after edge 2 0.0913 (1.00× single) · end P 0.0000 · 95 frames · load 10.1/15.1/16.3
+  FAIL      c1 r1 dark switch +100 · single: peak P 0.0914 own largest drop 0.0127 · pair: P at edge 2 (101.0 ms) 0.0180 · cut in 40 ms 1.00 · largest drop after edge 2 0.0180 (bound 0.0147) · rise after edge 2 0.0921 (1.01× single) · end P 0.0000 · 95 frames · load 10.1/15.1/16.3
+  FAIL      c1 r1 dark accordion +45 · single: peak P 0.0914 own largest drop 0.0156 · pair: P at edge 2 (46.2 ms) 0.0770 · cut in 40 ms 1.00 · largest drop after edge 2 0.0770 (bound 0.0176) · rise after edge 2 0.0899 (0.98× single) · end P 0.0000 · 94 frames · load 9.8/15.0/16.2
+  FAIL      c1 r1 dark accordion +100 · single: peak P 0.0914 own largest drop 0.0156 · pair: P at edge 2 (102.0 ms) 0.0236 · cut in 40 ms 1.00 · largest drop after edge 2 0.0236 (bound 0.0176) · rise after edge 2 0.0901 (0.99× single) · end P 0.0000 · 95 frames · load 9.8/15.0/16.2
+  FAIL      c1 r1 dark button +45 · single: peak P 0.0916 own largest drop 0.0145 · pair: P at edge 2 (46.2 ms) 0.0859 · cut in 40 ms 1.00 · largest drop after edge 2 0.0859 (bound 0.0165) · rise after edge 2 0.0000 (0.00× single) · end P 0.0000 · 93 frames · load 11.6/15.3/16.3
+  FAIL      c1 r1 dark button +100 · single: peak P 0.0916 own largest drop 0.0145 · pair: P at edge 2 (102.4 ms) 0.0194 · cut in 40 ms 1.00 · largest drop after edge 2 0.0194 (bound 0.0165) · rise after edge 2 0.0000 (0.00× single) · end P 0.0000 · 95 frames · load 11.6/15.3/16.3
+# end · load 11.6/15.3/16.3
+# plant cut css end exit 0 2026-10-16 14:11:08 load { 11.51 15.13 16.24 }
+# plant strip css start 2026-10-16 14:11:08 load { 11.51 15.13 16.24 }
+# C-CP cc css · engine chromium · plant strip · lock wait 0.0 s · other headless processes: chromium 0, webkit 2 · load 11.5/15.1/16.2 at start
+# chromium 149.0.7827.55
+  SILENT    c3 r1 light switch clone · in-app peak P 0.0913 · clone peak P 0.0000 = 0.00× · 80 frames · load 11.2/15.0/16.2
+  SILENT    c3 r1 light accordion clone · in-app peak P 0.0904 · clone peak P 0.0000 = 0.00× · 81 frames · load 11.2/15.0/16.2
+  SILENT    c3 r1 light button clone · in-app peak P 0.0895 · clone peak P 0.0000 = 0.00× · 80 frames · load 10.8/14.9/16.1
+  SILENT    c3 r1 dark switch clone · in-app peak P 0.0922 · clone peak P 0.0000 = 0.00× · 82 frames · load 10.8/14.9/16.1
+  SILENT    c3 r1 dark accordion clone · in-app peak P 0.0929 · clone peak P 0.0000 = 0.00× · 80 frames · load 10.3/14.7/16.1
+  SILENT    c3 r1 dark button clone · in-app peak P 0.0903 · clone peak P 0.0000 = 0.00× · 81 frames · load 10.3/14.7/16.1
+# end · load 10.3/14.7/16.1
+# plant strip css end exit 0 2026-10-16 14:11:35 load { 10.56 14.59 16.01 }
+# cp c2 css start 2026-10-16 14:11:35 load { 10.56 14.59 16.01 }
+# CP css · engine chromium · lock wait 0.0 s · other headless processes: chromium 4, webkit 2 · load 10.1/14.4/15.9 at start
+# chromium 149.0.7827.55
+  PASS      c2 light button press 160 ms + commit · press floor ×1.0000 · largest one-frame scale step 0.0043 · light rise 0.0169 at rest true · largest light drop 0.0024 · E-2 arm iii of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.033 trough 1.000 settle 1.000 on 74.8 px = 2.44 px (bound > 0.8) · (iii) light rise 0.0169 on the layers channel (peak 0.8015 → rest 0.784 · load 10.1/14.4/15.9
+  PASS      c2 light button re-press during the commit light · re-press 43 ms after the first release · light peak 0.8020 · largest one-frame light drop 0.0030 at 339 ms (bound: a lone click's own 0.0037 + 0.002) · scale floor ×1.0000 · largest scale step 0.0049 · at rest true · 32 light animations · load 9.6/14.3/15.9
+  PASS      c2 dark button press 160 ms + commit · press floor ×1.0000 · largest one-frame scale step 0.0050 · light rise 0.0192 at rest true · largest light drop 0.0043 · E-2 arm iii of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.033 trough 1.000 settle 1.000 on 74.8 px = 2.43 px (bound > 0.8) · (iii) light rise 0.0192 on the layers channel (peak 0.5819 → rest 0.562 · load 9.6/14.3/15.9
+  PASS      c2 dark button re-press during the commit light · re-press 43 ms after the first release · light peak 0.5820 · largest one-frame light drop 0.0046 at 162 ms (bound: a lone click's own 0.0029 + 0.002) · scale floor ×1.0000 · largest scale step 0.0047 · at rest true · 33 light animations · load 9.4/14.1/15.8
+# CP css chromium done · load 9.4/14.1/15.8
+# cp c2 css end exit 0 2026-10-16 14:11:51 load { 9.22 14.02 15.77 }
+# cp c2 waapi start 2026-10-16 14:11:51 load { 9.22 14.02 15.77 }
+# CP waapi · engine chromium · lock wait 0.0 s · other headless processes: chromium 0, webkit 2 · load 9.2/14.0/15.8 at start
+# chromium 149.0.7827.55
+  PASS      c2 light button press 160 ms + commit · press floor ×1.0000 · largest one-frame scale step 0.0047 · light rise 0.0169 at rest true · largest light drop 0.0025 · E-2 arm iii of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.033 trough 1.000 settle 1.000 on 74.8 px = 2.45 px (bound > 0.8) · (iii) light rise 0.0169 on the layers channel (peak 0.8015 → rest 0.784 · load 9.2/14.0/15.8
+  PASS      c2 light button re-press during the commit light · re-press 43 ms after the first release · light peak 0.8021 · largest one-frame light drop 0.0026 at 167 ms (bound: a lone click's own 0.0025 + 0.002) · scale floor ×1.0000 · largest scale step 0.0047 · at rest true · 32 light animations · load 8.8/13.9/15.7
+  PASS      c2 dark button press 160 ms + commit · press floor ×1.0000 · largest one-frame scale step 0.0043 · light rise 0.0204 at rest true · largest light drop 0.0043 · E-2 arm iii of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.033 trough 1.000 settle 1.000 on 74.8 px = 2.43 px (bound > 0.8) · (iii) light rise 0.0204 on the layers channel (peak 0.5831 → rest 0.562 · load 8.8/13.9/15.7
+  PASS      c2 dark button re-press during the commit light · re-press 43 ms after the first release · light peak 0.5838 · largest one-frame light drop 0.0046 at 159 ms (bound: a lone click's own 0.0058 + 0.002) · scale floor ×1.0000 · largest scale step 0.0046 · at rest true · 31 light animations · load 9.8/14.0/15.7
+# CP waapi chromium done · load 9.8/14.0/15.7
+# cp c2 waapi end exit 0 2026-10-16 14:12:06 load { 9.39 13.82 15.67 }
+# failloud css start 2026-10-16 14:12:06 load { 9.39 13.82 15.67 }
+# fail-loud css · engine chromium · lock wait 0.0 s · other headless processes: chromium 0, webkit 2 · load 9.4/13.8/15.7 at start
+  CLEAN    switch (clean) · light rise 0.0215 · 0 console error(s) · load 9.4/13.8/15.7
+  SILENT   switch --engage-control-engage-attack · light rise 0.0000 · 0 console error(s) · load 9.3/13.7/15.6
+  SILENT   switch --engage-control-engage-release · light rise 0.0000 · 0 console error(s) · load 9.3/13.7/15.6
+  SILENT   switch --ease-standard · light rise 0.0000 · 0 console error(s) · load 9.3/13.7/15.6
+  SILENT   switch --rung-light · light rise 0.0000 · 0 console error(s) · load 9.3/13.7/15.6
+  SILENT   switch --fill-selected · light rise 0.0000 · 0 console error(s) · load 10.0/13.8/15.6
+  CLEAN    button (clean) · light rise 0.0194 · 0 console error(s) · load 10.0/13.8/15.6
+  SILENT   button --engage-control-engage-attack · light rise 0.0000 · 0 console error(s) · load 10.0/13.8/15.6
+  SILENT   button --engage-control-engage-release · light rise 0.0000 · 0 console error(s) · load 10.1/13.7/15.6
+  SILENT   button --ease-standard · light rise 0.0000 · 0 console error(s) · load 10.1/13.7/15.6
+  SILENT   button --rung-light · light rise 0.0000 · 0 console error(s) · load 10.1/13.7/15.6
+  SILENT   button --fill-selected · light rise 0.0000 · 0 console error(s) · load 9.9/13.7/15.6
+# failloud css end exit 0 2026-10-16 14:12:31 load { 9.50 13.51 15.50 }
+# failloud waapi start 2026-10-16 14:12:31 load { 9.50 13.51 15.50 }
+# fail-loud waapi · engine chromium · lock wait 0.0 s · other headless processes: chromium 4, webkit 2 · load 9.5/13.5/15.5 at start
+  CLEAN    switch (clean) · light rise 0.0207 · 0 console error(s) · load 9.5/13.5/15.5
+  LOUD     switch --engage-control-engage-attack · light rise 0.0000 · 1 console error(s): [glass-ui] useEngage: --engage-control-engage-attack is unreadable on the host; the engagement it drives paint · load 9.5/13.5/15.5
+  LOUD     switch --engage-control-engage-release · light rise 0.0000 · 1 console error(s): [glass-ui] useEngage: --engage-control-engage-release is unreadable on the host; the engagement it drives pain · load 9.0/13.3/15.4
+  LOUD     switch --ease-standard · light rise 0.0000 · 1 console error(s): pageerror: Failed to execute 'animate' on 'Element': 'nonsense' is not a valid value for easing · load 9.0/13.3/15.4
+  SILENT   switch --rung-light · light rise 0.0000 · 0 console error(s) · load 9.0/13.3/15.4
+  LOUD     switch --fill-selected · light rise 0.0000 · 1 console error(s): [glass-ui] useEngage: --fill-selected is unreadable on the host; the engagement it drives paints nothing. Is t · load 9.1/13.3/15.4
+  CLEAN    button (clean) · light rise 0.0194 · 0 console error(s) · load 9.1/13.3/15.4
+  LOUD     button --engage-control-engage-attack · light rise 0.0000 · 1 console error(s): [glass-ui] useEngage: --engage-control-engage-attack is unreadable on the host; the engagement it drives paint · load 9.1/13.3/15.4
+  LOUD     button --engage-control-engage-release · light rise 0.0000 · 1 console error(s): [glass-ui] useEngage: --engage-control-engage-release is unreadable on the host; the engagement it drives pain · load 10.2/13.4/15.4
+  LOUD     button --ease-standard · light rise 0.0000 · 1 console error(s): TypeError: Failed to execute 'animate' on 'Element': 'nonsense' is not a valid value for easing
+    at _C (htt · load 10.2/13.4/15.4
+  SILENT   button --rung-light · light rise 0.0000 · 0 console error(s) · load 10.2/13.4/15.4
+  LOUD     button --fill-selected · light rise 0.0000 · 1 console error(s): [glass-ui] useEngage: --fill-selected is unreadable on the host; the engagement it drives paints nothing. Is t · load 10.0/13.3/15.4
+# failloud waapi end exit 0 2026-10-16 14:12:56 load { 9.60 13.21 15.34 }
+# battery E-1 css start 2026-10-16 14:12:56 load { 9.60 13.21 15.34 }
+E-1 chromium exit 1 · E-1 chromium FAIL · 18 pass, 8 fail, 0 unmeasured of 26 gating cells (0 reported) · load 9.6/13.2/15.3 at start, 8.0/12.6/15.1 at end · 21 s, load at start 9.6/13.2/15.3
+    FAIL       E-1 adoption latch · 4 of 55 declared members seen adopting their recipe; unproven (not rendered by any scene, or not adopted): alert aurora avatar badge blob card carousel checkbox chip collapsible command configurator constellation dark-mode-toggle data-table deck dialog dock easing expandable-container fading-scroll fourier-field handmark infinite-scroll input label labeled-field menu metric music-staff number-field pager-dots popover progress radio-group scroll-progress-rim select separator sheet skeleton sortable-list status-dot surface table tabs textarea timeline toast toggle-group tooltip typewriter · load 9.6/13.2/15.3
+    FAIL       E-1 runtime dragged (sortable-list) · scene sortable, rung press · press: Δscale 0.000 · press-only paint [] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 8.7/12.9/15.2
+    FAIL       E-1 runtime dragged (sortable-list) PRM press-light · scene sortable, reduce · press: Δscale 0.000 · press-only paint [] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 8.7/12.9/15.2
+    FAIL       E-1 runtime disclosed (accordion) · scene accordion, rung press · press: Δscale 0.000 · press-only paint [] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 8.7/12.9/15.2
+    FAIL       E-1 runtime disclosed (accordion) PRM press-light · scene accordion, reduce · press: Δscale 0.000 · press-only paint [] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 8.7/12.9/15.2
+    FAIL       E-1 runtime presented (sheet) PRM press-light · scene sheet: no target while pressed · load 8.3/12.7/15.1
+    FAIL       E-1 runtime ambient (aurora) · scene ambient, rung rest · pointer moved across: mean pixel change 0.00 levels against 0.00 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift) · load 8.0/12.6/15.1
+    FAIL       E-1 runtime ambient (aurora) PRM press-light · scene ambient, reduce · pointer moved across: mean pixel change 0.00 levels against 0.00 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift) · load 8.0/12.6/15.1
+# battery E-1 css end exit 1 2026-10-16 14:13:20 load { 7.78 12.49 15.01 }
+# battery E-2 css start 2026-10-16 14:13:20 load { 7.78 12.49 15.01 }
+E-2 chromium exit 1 · E-2 chromium FAIL · 23 pass, 13 fail, 0 unmeasured of 36 gating cells (0 reported) · load 8.2/12.5/15.0 at start, 7.7/11.8/14.6 at end · 48 s, load at start 8.2/12.5/15.0
+    FAIL       E-2 switch commit·keyboard(Space) light · state false → true · arm none of [i,iii] · (i) body travel 20.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 44.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0060 on the layers channel (peak 0.9284 → rest 0.9224, at rest true; bound ≥ 0.01) on envelope clocks [180,60] of the channel's [180,60] ms; light anims [background-color@200ms, border-top-color@200ms, background-color@180ms, opacity@60ms] · 110 frames, median 7.7 ms · load 8.2/12.5/15.0
+    FAIL       E-2 switch commit·programmatic light · state false → true · arm none of [i,iii] · (i) body travel 20.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 44.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0061 on the layers channel (peak 0.9286 → rest 0.9224, at rest true; bound ≥ 0.01) on envelope clocks [180,60] of the channel's [180,60] ms; light anims [background-color@200ms, border-top-color@200ms, background-color@180ms, opacity@60ms] · 108 frames, median 7.8 ms · load 8.2/12.4/15.0
+    FAIL       E-2 switch commit·pointer light · state false → true · arm none of [i,iii] · (i) body travel 20.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 44.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0061 on the layers channel (peak 0.9286 → rest 0.9224, at rest true; bound ≥ 0.01) on envelope clocks [180,60] of the channel's [180,60] ms; light anims [background-color@200ms, border-top-color@200ms, background-color@180ms, opacity@60ms] · 107 frames, median 7.8 ms · load 8.2/12.4/15.0
+    FAIL       E-2 switch commit·tap(coarse) light · state false → true · arm none of [i,iii] · (i) body travel 20.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 44.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0060 on the layers channel (peak 0.9284 → rest 0.9224, at rest true; bound ≥ 0.01) on envelope clocks [180,60] of the channel's [180,60] ms; light anims [background-color@200ms, border-top-color@200ms, background-color@180ms, opacity@60ms] · 108 frames, median 7.6 ms · load 8.2/12.4/15.0
+    FAIL       E-2 accordion commit·keyboard(Enter) light · state null → "one" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 320.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 1.0000 → rest 1.0000, at rest true; bound ≥ 0.01) on envelope clocks [180,60] of the channel's [180,60] ms; light anims [background-color::after@180ms, opacity::after@60ms, opacity@200ms] · 107 frames, median 7.7 ms · load 7.7/12.2/14.8
+    FAIL       E-2 accordion commit·programmatic light · state null → "one" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 320.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 1.0000 → rest 1.0000, at rest true; bound ≥ 0.01) on envelope clocks [180,60] of the channel's [180,60] ms; light anims [background-color::after@180ms, opacity::after@60ms, opacity@200ms] · 109 frames, median 7.7 ms · load 7.7/12.2/14.8
+    FAIL       E-2 accordion commit·tap(coarse) light · state null → "one" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 320.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 1.0000 → rest 1.0000, at rest true; bound ≥ 0.01) on envelope clocks [180,60] of the channel's [180,60] ms; light anims [background-color::after@180ms, opacity::after@60ms, opacity@200ms] · 109 frames, median 7.8 ms · load 7.6/12.1/14.8
+    FAIL       E-2 accordion commit·keyboard(Enter) dark · state null → "one" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 320.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 1.0000 → rest 1.0000, at rest true; bound ≥ 0.01) on envelope clocks [180,60] of the channel's [180,60] ms; light anims [background-color::after@180ms, opacity::after@60ms, opacity@200ms] · 108 frames, median 7.7 ms · load 8.5/12.2/14.8
+    FAIL       E-2 accordion commit·programmatic dark · state null → "one" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 320.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 1.0000 → rest 1.0000, at rest true; bound ≥ 0.01) on envelope clocks [180,60] of the channel's [180,60] ms; light anims [background-color::after@180ms, opacity::after@60ms, opacity@200ms] · 107 frames, median 7.8 ms · load 8.5/12.2/14.8
+    FAIL       E-2 accordion commit·pointer dark · state null → "one" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 320.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0007 on the layers channel (peak 0.9580 → rest 0.9573, at rest true; bound ≥ 0.01) on envelope clocks [180,60] of the channel's [180,60] ms; light anims [background-color::after@180ms, opacity::after@60ms, opacity@200ms] · 107 frames, median 7.7 ms · load 8.5/12.2/14.8
+    FAIL       E-2 accordion commit·tap(coarse) dark · state null → "one" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 320.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 1.0000 → rest 1.0000, at rest true; bound ≥ 0.01) on envelope clocks [180,60] of the channel's [180,60] ms; light anims [background-color::after@180ms, opacity::after@60ms, opacity@200ms] · 107 frames, median 7.9 ms · load 8.5/12.2/14.8
+    FAIL       E-2 button commit·programmatic light · state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 74.8 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.7846 → rest 0.7846, at rest true; bound ≥ 0.01) on envelope clocks [] of the channel's [] ms; light anims [] · 107 frames, median 7.9 ms · load 8.2/12.1/14.8
+    FAIL       E-2 button commit·programmatic dark · state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 74.8 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.5627 → rest 0.5627, at rest true; bound ≥ 0.01) on envelope clocks [] of the channel's [] ms; light anims [] · 108 frames, median 7.8 ms · load 7.7/11.8/14.6
+# battery E-2 css end exit 1 2026-10-16 14:14:14 load { 7.26 11.67 14.57 }
+# battery E-3 css start 2026-10-16 14:14:14 load { 7.26 11.67 14.57 }
+E-3 chromium exit 1 · E-3 chromium FAIL · 20 pass, 2 fail, 0 unmeasured of 22 gating cells (0 reported) · load 7.2/11.6/14.5 at start, 6.9/11.2/14.3 at end · 25 s, load at start 7.2/11.6/14.5
+    FAIL       E-3 slider phone touch-held light · 390×844 coarse · rest 358.0 × 24.0 px → touch-held 358.0 × 24.0 px (inline ×1.000, block ×1.000; [data-engaged] 3) · bound ×1.03 on either axis · load 7.1/11.4/14.4
+    FAIL       E-3 slider phone touch-held dark · 390×844 coarse · rest 358.0 × 24.0 px → touch-held 358.0 × 24.0 px (inline ×1.000, block ×1.000; [data-engaged] 3) · bound ×1.03 on either axis · load 6.9/11.2/14.3
+# battery E-3 css end exit 1 2026-10-16 14:14:43 load { 6.81 11.14 14.28 }
+# battery E-4 css start 2026-10-16 14:14:43 load { 6.81 11.14 14.28 }
+E-4 chromium exit 0 · E-4 chromium PASS · 3 pass, 0 fail, 0 unmeasured of 3 gating cells (0 reported) · load 6.8/11.1/14.3 at start, 6.7/11.0/14.2 at end · 11 s, load at start 6.8/11.1/14.3
+# battery E-4 css end exit 0 2026-10-16 14:14:59 load { 8.56 11.29 14.27 }
+# battery E-5 css start 2026-10-16 14:14:59 load { 8.56 11.29 14.27 }
+E-5 chromium exit 1 · E-5 chromium FAIL · 16 pass, 8 fail, 0 unmeasured of 24 gating cells (0 reported) · load 8.6/11.3/14.3 at start, 7.8/10.8/13.9 at end · 37 s, load at start 8.6/11.3/14.3
+    FAIL       E-5 accordion sustain light · NOT DRIVEN: no press-only property at +200 ms (the hold paints nothing to sustain) · load 8.8/11.2/14.2
+    FAIL       E-5 accordion press light · :active true · Δscale 0.000 · touch-changed [] · hover-changed [background-color] · press-only [] · load 8.8/11.2/14.2
+    FAIL       E-5 accordion sustain(PRM) light · NOT DRIVEN: no press-only property at +200 ms (the hold paints nothing to sustain) · load 8.8/11.2/14.2
+    FAIL       E-5 accordion press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce) · load 8.8/11.2/14.2
+    FAIL       E-5 accordion sustain dark · NOT DRIVEN: no press-only property at +200 ms (the hold paints nothing to sustain) · load 8.4/11.1/14.2
+    FAIL       E-5 accordion press dark · :active true · Δscale 0.000 · touch-changed [] · hover-changed [background-color] · press-only [] · load 8.4/11.1/14.2
+    FAIL       E-5 accordion sustain(PRM) dark · NOT DRIVEN: no press-only property at +200 ms (the hold paints nothing to sustain) · load 8.4/11.1/14.2
+    FAIL       E-5 accordion press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce) · load 8.4/11.1/14.2
+# battery E-5 css end exit 1 2026-10-16 14:15:41 load { 7.77 10.70 13.90 }
+# battery E-6 css start 2026-10-16 14:15:41 load { 7.77 10.70 13.90 }
+E-6 chromium exit 1 · E-6 chromium FAIL · 4 pass, 2 fail, 8 unmeasured of 14 gating cells (0 reported) · load 7.8/10.7/13.9 at start, 7.7/10.6/13.8 at end · 10 s, load at start 7.8/10.7/13.9
+    FAIL       E-6 s6 present light · 0 running infinite animation(s) at rest · load 7.6/10.6/13.9
+    UNMEASURED E-6 s6 channel light · no idle animation to read · load 7.6/10.6/13.9
+    UNMEASURED E-6 s6 shape light · no idle animation to read · load 7.6/10.6/13.9
+    UNMEASURED E-6 s6 amplitude light · no idle animation to read · load 7.6/10.6/13.9
+    UNMEASURED E-6 s6 period light · no idle animation to read · load 7.6/10.6/13.9
+    FAIL       E-6 s6 present dark · 0 running infinite animation(s) at rest · load 7.7/10.6/13.8
+    UNMEASURED E-6 s6 channel dark · no idle animation to read · load 7.7/10.6/13.8
+    UNMEASURED E-6 s6 shape dark · no idle animation to read · load 7.7/10.6/13.8
+    UNMEASURED E-6 s6 amplitude dark · no idle animation to read · load 7.7/10.6/13.8
+    UNMEASURED E-6 s6 period dark · no idle animation to read · load 7.7/10.6/13.8
+# battery E-6 css end exit 1 2026-10-16 14:15:57 load { 7.92 10.58 13.80 }
+# battery E-7 css start 2026-10-16 14:15:57 load { 7.92 10.58 13.80 }
+E-7 chromium exit 1 · E-7 chromium FAIL · 5 pass, 2 fail, 0 unmeasured of 7 gating cells (0 reported) · load 7.9/10.6/13.8 at start, 7.4/10.4/13.7 at end · 4 s, load at start 7.9/10.6/13.8
+    FAIL       E-7 writers data-held (static) · 2 writer file(s): src/components/dock/GlassDock.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/C-CP/wt/.trees/css · load 7.9/10.6/13.8
+    FAIL       E-7 writers data-press (static) · 2 writer file(s): src/components/pager-dots/PagerDots.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/C-CP/wt/.trees/css · load 7.9/10.6/13.8
+# battery E-7 css end exit 1 2026-10-16 14:16:06 load { 7.33 10.37 13.69 }
+# battery E-8 css start 2026-10-16 14:16:06 load { 7.33 10.37 13.69 }
+E-8 chromium exit 0 · E-8 chromium PASS · 7 pass, 0 fail, 0 unmeasured of 7 gating cells (0 reported) · load 7.3/10.4/13.7 at start, 7.1/10.2/13.6 at end · 14 s, load at start 7.3/10.4/13.7
+# battery E-8 css end exit 0 2026-10-16 14:16:24 load { 6.86 10.12 13.54 }
+# battery E-9 css start 2026-10-16 14:16:24 load { 6.86 10.12 13.54 }
+E-9 chromium exit 1 · E-9 chromium FAIL · 22 pass, 2 fail, 0 unmeasured of 24 gating cells (0 reported) · load 6.9/10.1/13.5 at start, 8.2/10.2/13.5 at end · 22 s, load at start 6.9/10.1/13.5
+    FAIL       E-9 accordion press-light light · press-only paint changes [] (bound ≥ 1) · load 9.2/10.5/13.6
+    FAIL       E-9 accordion press-light dark · press-only paint changes [] (bound ≥ 1) · load 9.0/10.5/13.6
+# battery E-9 css end exit 1 2026-10-16 14:16:50 load { 7.92 10.14 13.43 }
+# battery E-10 css start 2026-10-16 14:16:50 load { 7.92 10.14 13.43 }
+E-10 chromium exit 0 · E-10 chromium PASS · 3 pass, 0 fail, 0 unmeasured of 3 gating cells (2 reported) · load 7.9/10.1/13.4 at start, 7.5/10.0/13.3 at end · 10 s, load at start 7.9/10.1/13.4
+# battery E-10 css end exit 0 2026-10-16 14:17:06 load { 7.67 9.97 13.31 }
+# battery E-11 css start 2026-10-16 14:17:06 load { 7.67 9.97 13.31 }
+E-11 chromium exit 0 · E-11 chromium PASS · 2 pass, 0 fail, 2 unmeasured of 4 gating cells (0 reported) · load 7.7/10.0/13.3 at start, 7.1/9.7/13.2 at end · 18 s, load at start 7.7/10.0/13.3
+    UNMEASURED E-11 switch fail-loud --scale-commit-pop=1 (commit) · no degradation, no error: the token is not read on this path · --scale-commit-pop: "1" on the root · clean {"peak":0,"rise":0.006113490090945084} {"peak":0,"rise":0.006360387443359317} · planted {"peak":0,"rise":0.005985721505510022} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 0 · load 7.4/9.9/13.3
+    UNMEASURED E-11 slider fail-loud --space-section (kbd) · no degradation, no error: the token is not read on this path · --space-section: "nonsense" on the root · clean {"s":1.0599999321831597,"veil":0,"n":1} {"s":1.0599999321831597,"veil":0,"n":1} · planted {"s":1.0599999321831597,"veil":0,"n":1} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 0 · load 7.4/9.9/13.3
+# battery E-11 css end exit 0 2026-10-16 14:17:29 load { 6.84 9.63 13.11 }
+# battery E-1 waapi start 2026-10-16 14:17:29 load { 6.84 9.63 13.11 }
+E-1 chromium exit 1 · E-1 chromium FAIL · 18 pass, 8 fail, 0 unmeasured of 26 gating cells (0 reported) · load 6.8/9.6/13.1 at start, 6.3/9.3/12.9 at end · 21 s, load at start 6.8/9.6/13.1
+    FAIL       E-1 adoption latch · 4 of 55 declared members seen adopting their recipe; unproven (not rendered by any scene, or not adopted): alert aurora avatar badge blob card carousel checkbox chip collapsible command configurator constellation dark-mode-toggle data-table deck dialog dock easing expandable-container fading-scroll fourier-field handmark infinite-scroll input label labeled-field menu metric music-staff number-field pager-dots popover progress radio-group scroll-progress-rim select separator sheet skeleton sortable-list status-dot surface table tabs textarea timeline toast toggle-group tooltip typewriter · load 6.7/9.6/13.1
+    FAIL       E-1 runtime dragged (sortable-list) · scene sortable, rung press · press: Δscale 0.000 · press-only paint [] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 6.6/9.5/13.0
+    FAIL       E-1 runtime dragged (sortable-list) PRM press-light · scene sortable, reduce · press: Δscale 0.000 · press-only paint [] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 6.5/9.4/13.0
+    FAIL       E-1 runtime disclosed (accordion) · scene accordion, rung press · press: Δscale 0.000 · press-only paint [] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 6.5/9.4/13.0
+    FAIL       E-1 runtime disclosed (accordion) PRM press-light · scene accordion, reduce · press: Δscale 0.000 · press-only paint [] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 6.5/9.4/13.0
+    FAIL       E-1 runtime presented (sheet) PRM press-light · scene sheet: no target while pressed · load 6.3/9.3/12.9
+    FAIL       E-1 runtime ambient (aurora) · scene ambient, rung rest · pointer moved across: mean pixel change 0.00 levels against 0.00 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift) · load 6.3/9.3/12.9
+    FAIL       E-1 runtime ambient (aurora) PRM press-light · scene ambient, reduce · pointer moved across: mean pixel change 0.00 levels against 0.00 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift) · load 6.3/9.3/12.9
+# battery E-1 waapi end exit 1 2026-10-16 14:17:54 load { 6.20 9.25 12.88 }
+# battery E-2 waapi start 2026-10-16 14:17:54 load { 6.20 9.25 12.88 }
+E-2 chromium exit 1 · E-2 chromium FAIL · 23 pass, 13 fail, 0 unmeasured of 36 gating cells (0 reported) · load 6.2/9.3/12.9 at start, 5.9/8.8/12.5 at end · 42 s, load at start 6.2/9.3/12.9
+    FAIL       E-2 switch commit·keyboard(Space) light · state false → true · arm none of [i,iii] · (i) body travel 20.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 44.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0060 on the layers channel (peak 0.9285 → rest 0.9224, at rest true; bound ≥ 0.01) on envelope clocks [60,180] of the channel's [60,180] ms; light anims [background-color@200ms, border-top-color@200ms, opacity@60ms, backgroundColor@180ms] · 107 frames, median 7.8 ms · load 6.5/9.3/12.9
+    FAIL       E-2 switch commit·programmatic light · state false → true · arm none of [i,iii] · (i) body travel 20.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 44.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0060 on the layers channel (peak 0.9284 → rest 0.9224, at rest true; bound ≥ 0.01) on envelope clocks [60,180] of the channel's [60,180] ms; light anims [background-color@200ms, border-top-color@200ms, opacity@60ms, backgroundColor@180ms] · 108 frames, median 7.8 ms · load 6.5/9.3/12.9
+    FAIL       E-2 switch commit·pointer light · state false → true · arm none of [i,iii] · (i) body travel 20.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 44.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0062 on the layers channel (peak 0.9287 → rest 0.9224, at rest true; bound ≥ 0.01) on envelope clocks [60,180] of the channel's [60,180] ms; light anims [background-color@200ms, border-top-color@200ms, opacity@60ms, backgroundColor@180ms] · 105 frames, median 7.7 ms · load 6.5/9.3/12.9
+    FAIL       E-2 switch commit·tap(coarse) light · state false → true · arm none of [i,iii] · (i) body travel 20.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 44.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0061 on the layers channel (peak 0.9286 → rest 0.9224, at rest true; bound ≥ 0.01) on envelope clocks [60,180] of the channel's [60,180] ms; light anims [background-color@200ms, border-top-color@200ms, opacity@60ms, backgroundColor@180ms] · 109 frames, median 7.7 ms · load 6.4/9.2/12.8
+    FAIL       E-2 accordion commit·keyboard(Enter) light · state null → "one" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 320.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 1.0000 → rest 1.0000, at rest true; bound ≥ 0.01) on envelope clocks [60,180] of the channel's [60,180] ms; light anims [opacity@200ms, opacity::after@60ms, backgroundColor::after@180ms] · 106 frames, median 7.8 ms · load 6.7/9.2/12.8
+    FAIL       E-2 accordion commit·programmatic light · state null → "one" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 320.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 1.0000 → rest 1.0000, at rest true; bound ≥ 0.01) on envelope clocks [60,180] of the channel's [60,180] ms; light anims [opacity@200ms, opacity::after@60ms, backgroundColor::after@180ms] · 109 frames, median 7.8 ms · load 6.7/9.2/12.8
+    FAIL       E-2 accordion commit·tap(coarse) light · state null → "one" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 320.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 1.0000 → rest 1.0000, at rest true; bound ≥ 0.01) on envelope clocks [60,180] of the channel's [60,180] ms; light anims [opacity@200ms, opacity::after@60ms, backgroundColor::after@180ms] · 109 frames, median 7.7 ms · load 6.7/9.2/12.8
+    FAIL       E-2 accordion commit·keyboard(Enter) dark · state null → "one" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 320.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 1.0000 → rest 1.0000, at rest true; bound ≥ 0.01) on envelope clocks [60,180] of the channel's [60,180] ms; light anims [opacity@200ms, opacity::after@60ms, backgroundColor::after@180ms] · 110 frames, median 7.7 ms · load 6.3/9.1/12.7
+    FAIL       E-2 accordion commit·programmatic dark · state null → "one" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 320.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 1.0000 → rest 1.0000, at rest true; bound ≥ 0.01) on envelope clocks [60,180] of the channel's [60,180] ms; light anims [opacity@200ms, opacity::after@60ms, backgroundColor::after@180ms] · 108 frames, median 7.7 ms · load 6.3/9.1/12.7
+    FAIL       E-2 accordion commit·pointer dark · state null → "one" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 320.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0007 on the layers channel (peak 0.9580 → rest 0.9573, at rest true; bound ≥ 0.01) on envelope clocks [60,180] of the channel's [60,180] ms; light anims [opacity@200ms, opacity::after@60ms, backgroundColor::after@180ms] · 108 frames, median 7.9 ms · load 6.3/9.1/12.7
+    FAIL       E-2 accordion commit·tap(coarse) dark · state null → "one" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 320.0 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 1.0000 → rest 1.0000, at rest true; bound ≥ 0.01) on envelope clocks [60,180] of the channel's [60,180] ms; light anims [opacity@200ms, opacity::after@60ms, backgroundColor::after@180ms] · 110 frames, median 7.9 ms · load 6.3/9.0/12.7
+    FAIL       E-2 button commit·programmatic light · state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 74.8 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.7846 → rest 0.7846, at rest true; bound ≥ 0.01) on envelope clocks [] of the channel's [] ms; light anims [] · 107 frames, median 7.7 ms · load 6.2/8.9/12.6
+    FAIL       E-2 button commit·programmatic dark · state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 74.8 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.5627 → rest 0.5627, at rest true; bound ≥ 0.01) on envelope clocks [] of the channel's [] ms; light anims [] · 108 frames, median 7.1 ms · load 6.1/8.9/12.6
+# battery E-2 waapi end exit 1 2026-10-16 14:18:40 load { 5.91 8.79 12.52 }
+# battery E-3 waapi start 2026-10-16 14:18:40 load { 5.91 8.79 12.52 }
+[guarded] waiting for headroom (1599 processes)
+E-3 chromium exit 1 · E-3 chromium FAIL · 20 pass, 2 fail, 0 unmeasured of 22 gating cells (0 reported) · load 7.8/8.7/12.2 at start, 7.0/8.4/12.0 at end · 23 s, load at start 7.8/8.7/12.2
+    FAIL       E-3 slider phone touch-held light · 390×844 coarse · rest 358.0 × 24.0 px → touch-held 358.0 × 24.0 px (inline ×1.000, block ×1.000; [data-engaged] 3) · bound ×1.03 on either axis · load 7.4/8.5/12.1
+    FAIL       E-3 slider phone touch-held dark · 390×844 coarse · rest 358.0 × 24.0 px → touch-held 358.0 × 24.0 px (inline ×1.000, block ×1.000; [data-engaged] 3) · bound ×1.03 on either axis · load 7.0/8.4/12.0
+# battery E-3 waapi end exit 1 2026-10-16 14:20:08 load { 7.24 8.45 12.01 }
+# battery E-4 waapi start 2026-10-16 14:20:08 load { 7.24 8.45 12.01 }
+E-4 chromium exit 0 · E-4 chromium PASS · 3 pass, 0 fail, 0 unmeasured of 3 gating cells (0 reported) · load 7.2/8.5/12.0 at start, 7.6/8.5/12.0 at end · 11 s, load at start 7.2/8.5/12.0
+# battery E-4 waapi end exit 0 2026-10-16 14:20:23 load { 7.45 8.45 11.95 }
+# battery E-5 waapi start 2026-10-16 14:20:23 load { 7.45 8.45 11.95 }
+E-5 chromium exit 1 · E-5 chromium FAIL · 16 pass, 8 fail, 0 unmeasured of 24 gating cells (0 reported) · load 7.5/8.4/11.9 at start, 6.8/8.1/11.7 at end · 37 s, load at start 7.5/8.4/11.9
+    FAIL       E-5 accordion sustain light · NOT DRIVEN: no press-only property at +200 ms (the hold paints nothing to sustain) · load 7.2/8.3/11.9
+    FAIL       E-5 accordion press light · :active true · Δscale 0.000 · touch-changed [] · hover-changed [background-color] · press-only [] · load 7.2/8.3/11.9
+    FAIL       E-5 accordion sustain(PRM) light · NOT DRIVEN: no press-only property at +200 ms (the hold paints nothing to sustain) · load 7.2/8.3/11.9
+    FAIL       E-5 accordion press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce) · load 7.2/8.3/11.9
+    FAIL       E-5 accordion sustain dark · NOT DRIVEN: no press-only property at +200 ms (the hold paints nothing to sustain) · load 7.1/8.3/11.8
+    FAIL       E-5 accordion press dark · :active true · Δscale 0.000 · touch-changed [] · hover-changed [background-color] · press-only [] · load 7.1/8.3/11.8
+    FAIL       E-5 accordion sustain(PRM) dark · NOT DRIVEN: no press-only property at +200 ms (the hold paints nothing to sustain) · load 7.1/8.3/11.8
+    FAIL       E-5 accordion press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce) · load 7.1/8.3/11.8
+# battery E-5 waapi end exit 1 2026-10-16 14:21:06 load { 6.71 8.10 11.64 }
+# battery E-6 waapi start 2026-10-16 14:21:06 load { 6.71 8.10 11.64 }
+E-6 chromium exit 1 · E-6 chromium FAIL · 4 pass, 2 fail, 8 unmeasured of 14 gating cells (0 reported) · load 6.7/8.1/11.6 at start, 6.5/8.0/11.6 at end · 10 s, load at start 6.7/8.1/11.6
+    FAIL       E-6 s6 present light · 0 running infinite animation(s) at rest · load 6.5/8.0/11.6
+    UNMEASURED E-6 s6 channel light · no idle animation to read · load 6.5/8.0/11.6
+    UNMEASURED E-6 s6 shape light · no idle animation to read · load 6.5/8.0/11.6
+    UNMEASURED E-6 s6 amplitude light · no idle animation to read · load 6.5/8.0/11.6
+    UNMEASURED E-6 s6 period light · no idle animation to read · load 6.5/8.0/11.6
+    FAIL       E-6 s6 present dark · 0 running infinite animation(s) at rest · load 6.5/8.0/11.6
+    UNMEASURED E-6 s6 channel dark · no idle animation to read · load 6.5/8.0/11.6
+    UNMEASURED E-6 s6 shape dark · no idle animation to read · load 6.5/8.0/11.6
+    UNMEASURED E-6 s6 amplitude dark · no idle animation to read · load 6.5/8.0/11.6
+    UNMEASURED E-6 s6 period dark · no idle animation to read · load 6.5/8.0/11.6
+# battery E-6 waapi end exit 1 2026-10-16 14:21:22 load { 7.06 8.10 11.57 }
+# battery E-7 waapi start 2026-10-16 14:21:22 load { 7.06 8.10 11.57 }
+E-7 chromium exit 1 · E-7 chromium FAIL · 5 pass, 2 fail, 0 unmeasured of 7 gating cells (0 reported) · load 7.1/8.1/11.6 at start, 6.9/8.0/11.5 at end · 4 s, load at start 7.1/8.1/11.6
+    FAIL       E-7 writers data-held (static) · 2 writer file(s): src/components/dock/GlassDock.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/C-CP/wt/.trees/waapi · load 7.1/8.1/11.6
+    FAIL       E-7 writers data-press (static) · 2 writer file(s): src/components/pager-dots/PagerDots.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/C-CP/wt/.trees/waapi · load 7.1/8.1/11.6
+# battery E-7 waapi end exit 1 2026-10-16 14:21:30 load { 6.89 8.05 11.54 }
+# battery E-8 waapi start 2026-10-16 14:21:30 load { 6.89 8.05 11.54 }
+E-8 chromium exit 1 · E-8 chromium FAIL · 4 pass, 3 fail, 0 unmeasured of 7 gating cells (0 reported) · load 6.8/8.0/11.5 at start, 6.6/7.9/11.4 at end · 13 s, load at start 6.8/8.0/11.5
+    FAIL       E-8 literal switch PRM · 4 animation(s) ran [script@60ms, script@180ms] against 0 clock tokens · minted [Animation script 60ms on control-bit__light; Animation script 180ms on control-bit__light] · load 6.7/8.0/11.5
+    FAIL       E-8 literal accordion PRM · 6 animation(s) ran [disclosure-open@0ms, script@60ms, script@180ms, disclosure-close@0ms] against 0 clock tokens · minted [Animation script 60ms on disclosure-trigger disclosure-group-trig; Animation script 180ms on disclosure-trigger disclosure-group-trig] · load 6.7/8.0/11.5
+    FAIL       E-8 literal button PRM · 4 animation(s) ran [script@60ms, script@180ms] against 0 clock tokens · minted [Animation script 60ms on button engage-pressed focus-ring glass-c; Animation script 180ms on button engage-pressed focus-ring glass-c] · load 6.6/7.9/11.4
+# battery E-8 waapi end exit 1 2026-10-16 14:21:49 load { 6.57 7.90 11.40 }
+# battery E-9 waapi start 2026-10-16 14:21:49 load { 6.57 7.90 11.40 }
+E-9 chromium exit 1 · E-9 chromium FAIL · 22 pass, 2 fail, 0 unmeasured of 24 gating cells (0 reported) · load 6.6/7.9/11.4 at start, 6.2/7.7/11.2 at end · 22 s, load at start 6.6/7.9/11.4
+    FAIL       E-9 accordion press-light light · press-only paint changes [] (bound ≥ 1) · load 6.6/7.9/11.3
+    FAIL       E-9 accordion press-light dark · press-only paint changes [] (bound ≥ 1) · load 6.4/7.8/11.3
+# battery E-9 waapi end exit 1 2026-10-16 14:22:16 load { 6.13 7.67 11.19 }
+# battery E-10 waapi start 2026-10-16 14:22:16 load { 6.13 7.67 11.19 }
+E-10 chromium exit 0 · E-10 chromium PASS · 3 pass, 0 fail, 0 unmeasured of 3 gating cells (2 reported) · load 6.1/7.7/11.2 at start, 6.3/7.7/11.2 at end · 10 s, load at start 6.1/7.7/11.2
+# battery E-10 waapi end exit 0 2026-10-16 14:22:32 load { 6.15 7.60 11.11 }
+# battery E-11 waapi start 2026-10-16 14:22:32 load { 6.15 7.60 11.11 }
+E-11 chromium exit 0 · E-11 chromium PASS · 2 pass, 0 fail, 2 unmeasured of 4 gating cells (0 reported) · load 6.1/7.6/11.1 at start, 6.6/7.6/11.1 at end · 18 s, load at start 6.1/7.6/11.1
+    UNMEASURED E-11 switch fail-loud --scale-commit-pop=1 (commit) · no degradation, no error: the token is not read on this path · --scale-commit-pop: "1" on the root · clean {"peak":0,"rise":0.0057372452258835915} {"peak":0,"rise":0.006400240526132528} · planted {"peak":0,"rise":0.006288077131583858} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 0 · load 6.1/7.6/11.1
+    UNMEASURED E-11 slider fail-loud --space-section (kbd) · no degradation, no error: the token is not read on this path · --space-section: "nonsense" on the root · clean {"s":1.0599999321831597,"veil":0,"n":1} {"s":1.0599999321831597,"veil":0,"n":1} · planted {"s":1.0599999321831597,"veil":0,"n":1} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 0 · load 6.1/7.6/11.1
+# battery E-11 waapi end exit 0 2026-10-16 14:22:54 load { 6.61 7.61 11.03 }
+CHAIN-chromium-DONE

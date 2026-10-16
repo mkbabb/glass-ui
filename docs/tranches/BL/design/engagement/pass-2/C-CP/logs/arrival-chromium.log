@@ -1,0 +1,70 @@
+[guarded] waiting for headroom (1610 processes)
+  PASS  css chromium light switch pre  · state checked · seat peak P 0.0000 · lights 0 (want 0) · load 15.8/13.3/11.6
+  PASS  css chromium light switch own  · state checked · seat peak P 0.0000 · lights 0 (want 0) · load 15.2/13.2/11.6
+  PASS  css chromium light switch late · state checked · seat peak P 0.0909 · lights 1 (want 1) · load 15.2/13.2/11.6
+  PASS  css chromium light accordion pre  · state open · seat peak P 0.0000 · lights 0 (want 0) · load 15.2/13.2/11.6
+  FAIL  css chromium light accordion own  · state open · seat peak P 0.0918 · lights 1 (want 0) · load 15.2/13.2/11.6
+  PASS  css chromium light accordion late · state open · seat peak P 0.0906 · lights 1 (want 1) · load 15.2/13.2/11.6
+  PASS  css chromium dark switch pre  · state checked · seat peak P 0.0000 · lights 0 (want 0) · load 14.4/13.0/11.5
+  PASS  css chromium dark switch own  · state checked · seat peak P 0.0000 · lights 0 (want 0) · load 14.4/13.0/11.5
+  PASS  css chromium dark switch late · state checked · seat peak P 0.0900 · lights 1 (want 1) · load 14.4/13.0/11.5
+  PASS  css chromium dark accordion pre  · state open · seat peak P 0.0000 · lights 0 (want 0) · load 14.4/13.0/11.5
+  FAIL  css chromium dark accordion own  · state open · seat peak P 0.0896 · lights 1 (want 0) · load 14.4/13.0/11.5
+  PASS  css chromium dark accordion late · state open · seat peak P 0.0926 · lights 1 (want 1) · load 13.9/13.0/11.5
+[guarded] waiting for headroom (1611 processes)
+  PASS  waapi chromium light switch pre  · state checked · seat peak P 0.0000 · lights 0 (want 0) · load 16.5/13.9/12.0
+  PASS  waapi chromium light switch own  · state checked · seat peak P 0.0000 · lights 0 (want 0) · load 16.5/13.9/12.0
+  PASS  waapi chromium light switch late · state checked · seat peak P 0.0916 · lights 1 (want 1) · load 15.9/13.9/12.0
+  PASS  waapi chromium light accordion pre  · state open · seat peak P 0.0000 · lights 0 (want 0) · load 15.9/13.9/12.0
+  PASS  waapi chromium light accordion own  · state open · seat peak P 0.0000 · lights 0 (want 0) · load 15.9/13.9/12.0
+  PASS  waapi chromium light accordion late · state open · seat peak P 0.0896 · lights 1 (want 1) · load 15.9/13.9/12.0
+  PASS  waapi chromium dark switch pre  · state checked · seat peak P 0.0000 · lights 0 (want 0) · load 15.9/13.9/12.0
+  PASS  waapi chromium dark switch own  · state checked · seat peak P 0.0000 · lights 0 (want 0) · load 15.4/13.8/12.0
+  PASS  waapi chromium dark switch late · state checked · seat peak P 0.0914 · lights 1 (want 1) · load 15.4/13.8/12.0
+  PASS  waapi chromium dark accordion pre  · state open · seat peak P 0.0000 · lights 0 (want 0) · load 15.4/13.8/12.0
+  PASS  waapi chromium dark accordion own  · state open · seat peak P 0.0000 · lights 0 (want 0) · load 15.4/13.8/12.0
+  PASS  waapi chromium dark accordion late · state open · seat peak P 0.0911 · lights 1 (want 1) · load 15.4/13.8/12.0
+  PASS  css-rerun1 chromium light accordion pre  · state open · seat peak P 0.0000 · lights 0 (want 0) · load 15.5/14.0/12.1
+  FAIL  css-rerun1 chromium light accordion own  · state open · seat peak P 0.0919 · lights 1 (want 0) · load 15.5/14.0/12.1
+  PASS  css-rerun1 chromium light accordion late · state open · seat peak P 0.0913 · lights 1 (want 1) · load 15.5/14.0/12.1
+  PASS  css-rerun1 chromium dark accordion pre  · state open · seat peak P 0.0000 · lights 0 (want 0) · load 15.0/13.9/12.1
+  FAIL  css-rerun1 chromium dark accordion own  · state open · seat peak P 0.0911 · lights 1 (want 0) · load 15.0/13.9/12.1
+  PASS  css-rerun1 chromium dark accordion late · state open · seat peak P 0.0905 · lights 1 (want 1) · load 15.0/13.9/12.1
+  PASS  css-rerun2 chromium light accordion pre  · state open · seat peak P 0.0000 · lights 0 (want 0) · load 14.2/13.8/12.1
+  FAIL  css-rerun2 chromium light accordion own  · state open · seat peak P 0.0896 · lights 1 (want 0) · load 14.2/13.8/12.1
+  PASS  css-rerun2 chromium light accordion late · state open · seat peak P 0.0910 · lights 1 (want 1) · load 14.6/13.8/12.1
+  PASS  css-rerun2 chromium dark accordion pre  · state open · seat peak P 0.0000 · lights 0 (want 0) · load 14.6/13.8/12.1
+  FAIL  css-rerun2 chromium dark accordion own  · state open · seat peak P 0.0911 · lights 1 (want 0) · load 15.0/13.9/12.2
+  PASS  css-rerun2 chromium dark accordion late · state open · seat peak P 0.0926 · lights 1 (want 1) · load 15.0/13.9/12.2
+file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-2/C-CP/probe/arrival.mjs:27
+    console.log(`  ${(got === want ? "PASS" : "FAIL").padEnd(5)} ${a.label} ${engine} ${theme} ${scene} ${mode.padEnd(4)} · state ${r.st} · seat peak P ${f(r.pk, 4)} · lights ${got} (want ${want}) · load ${load()}`);
+                      ^
+
+ReferenceError: got is not defined
+    at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-2/C-CP/probe/arrival.mjs:27:23
+
+Node.js v26.0.0
+file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-2/C-CP/probe/arrival.mjs:27
+    console.log(`  ${(got === want ? "PASS" : "FAIL").padEnd(5)} ${a.label} ${engine} ${theme} ${scene} ${mode.padEnd(4)} · state ${r.st} · seat peak P ${f(r.pk, 4)} · lights ${got} (want ${want}) · load ${load()}`);
+                      ^
+
+ReferenceError: got is not defined
+    at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-2/C-CP/probe/arrival.mjs:27:23
+
+Node.js v26.0.0
+  PASS  css-ctl chromium light switch own  · state checked · seat peak P 0.0000 · lights 0 (want 0) · load 8.6/11.4/11.6
+  FAIL  css-ctl chromium light switch ownflush · state checked · seat peak P 0.0904 · lights 1 (want 0) · load 8.6/11.4/11.6
+  FAIL  css-ctl chromium light accordion own  · state open · seat peak P 0.0908 · lights 1 (want 0) · load 8.2/11.3/11.6
+  FAIL  css-ctl chromium light accordion ownflush · state open · seat peak P 0.0900 · lights 1 (want 0) · load 8.2/11.3/11.6
+  PASS  css-ctl chromium dark switch own  · state checked · seat peak P 0.0000 · lights 0 (want 0) · load 8.2/11.3/11.6
+  FAIL  css-ctl chromium dark switch ownflush · state checked · seat peak P 0.0897 · lights 1 (want 0) · load 8.2/11.3/11.6
+  FAIL  css-ctl chromium dark accordion own  · state open · seat peak P 0.0910 · lights 1 (want 0) · load 8.2/11.3/11.6
+  FAIL  css-ctl chromium dark accordion ownflush · state open · seat peak P 0.0910 · lights 1 (want 0) · load 8.2/11.3/11.6
+  PASS  waapi-ctl chromium light switch own  · state checked · seat peak P 0.0000 · lights 0 (want 0) · load 8.8/9.4/10.2
+  PASS  waapi-ctl chromium light switch ownflush · state checked · seat peak P 0.0000 · lights 0 (want 0) · load 8.8/9.4/10.2
+  PASS  waapi-ctl chromium light accordion own  · state open · seat peak P 0.0000 · lights 0 (want 0) · load 8.8/9.4/10.2
+  PASS  waapi-ctl chromium light accordion ownflush · state open · seat peak P 0.0000 · lights 0 (want 0) · load 9.2/9.4/10.2
+  PASS  waapi-ctl chromium dark switch own  · state checked · seat peak P 0.0000 · lights 0 (want 0) · load 9.2/9.4/10.2
+  PASS  waapi-ctl chromium dark switch ownflush · state checked · seat peak P 0.0000 · lights 0 (want 0) · load 9.2/9.4/10.2
+  PASS  waapi-ctl chromium dark accordion own  · state open · seat peak P 0.0000 · lights 0 (want 0) · load 9.2/9.4/10.2
+  PASS  waapi-ctl chromium dark accordion ownflush · state open · seat peak P 0.0000 · lights 0 (want 0) · load 9.2/9.4/10.2
