@@ -85,3 +85,7 @@ W-D.2 §3 item 9 (B10 takes `demo` on the seal W-D.1 lands), W-C.1 item 4 (D1's 
 ## Driver cure after critique 2
 
 - C-6: W-D.2 §3 item 9 now reads "the 9 unrouted stories" on the converged tree (the chain routes `demo/stories/foundations/paper-texture.vue`; 10 is the HEAD count, which §2's demo paragraph keeps). Critique 2's unscored note (item 8 and §4 give HEAD's lexer and helper counts, 50 and 51 files, where the converged tree reads 57 and 24) is left for round 3's critic to check under C-6.
+
+## Driver cure after critique 3
+
+- C-6: W-D.2 §3 item 8 (:75) and §4 (:80) now state the converged-tree counts the wave edits, the ones §2 already records (:62): `ONE-LEXER 68` in 57 files and `HELPERS 24`. The HEAD probe block (:47-48, 50 and 51 files) stays labelled HEAD.
