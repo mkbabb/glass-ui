@@ -1,0 +1,312 @@
+{
+ "head_gate_pass": false,
+ "head_rows": [
+  {
+   "file": "src/components/blob/composables/useBlobPointer.ts",
+   "pass": false,
+   "hand": [
+    184
+   ],
+   "sinks": [
+    [
+     174,
+     false,
+     [
+      "159 call Math.min(…)"
+     ],
+     []
+    ],
+    [
+     175,
+     false,
+     [
+      "159 call Math.min(…)"
+     ],
+     []
+    ]
+   ]
+  },
+  {
+   "file": "src/components/constellation/constellationInteraction.ts",
+   "pass": false,
+   "hand": [
+    164,
+    165
+   ],
+   "sinks": []
+  },
+  {
+   "file": "src/components/fourier-field/clock.ts",
+   "pass": false,
+   "hand": [
+    73
+   ],
+   "sinks": []
+  },
+  {
+   "file": "src/composables/motion/morph/useLeadTrail.ts",
+   "pass": false,
+   "hand": [
+    213
+   ],
+   "sinks": []
+  },
+  {
+   "file": "src/composables/motion/pointer/usePointerVelocityField.ts",
+   "pass": false,
+   "hand": [
+    396,
+    397
+   ],
+   "sinks": []
+  },
+  {
+   "file": "src/composables/motion/spring/springProjection.ts",
+   "pass": true,
+   "hand": [],
+   "sinks": [
+    [
+     39,
+     true,
+     [],
+     []
+    ]
+   ]
+  }
+ ],
+ "F1_G4_head_sites": 9,
+ "plants": {
+  "p01-cured-raf.ts": {
+   "expect": "EXPECT PASS: the cure as W-F.1 item 2 states it, the frame dt from rAF, a null check on the first frame",
+   "gate": true,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": []
+  },
+  "p02-cured-units.ts": {
+   "expect": "EXPECT PASS: the true dt through a unit change (s and back) and an alias",
+   "gate": true,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": []
+  },
+  "p03-cured-helper.ts": {
+   "expect": "EXPECT PASS: the true dt handed through a same-file helper (the call site is resolved)",
+   "gate": true,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": []
+  },
+  "p04-cured-visibility.ts": {
+   "expect": "EXPECT PASS: hidden time is not elapsed time (W-F.1 item 2), by visibility, not by a dt threshold",
+   "gate": true,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": []
+  },
+  "p05-cured-accumulator.ts": {
+   "expect": "EXPECT PASS: a fixed-step accumulator that carries its remainder loses no time",
+   "gate": true,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": []
+  },
+  "p06-renamed-const.ts": {
+   "expect": "EXPECT FAIL: CRITIQUE-4 §3, a clamp kept under a new name (STEP_CAP_MS = 500)",
+   "gate": false,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": [
+    "call Math.min(…)"
+   ]
+  },
+  "p07-inline-literal.ts": {
+   "expect": "EXPECT FAIL: CRITIQUE-4 §3, tickDt(Math.min(dt, 0.5)) in seconds-then-ms form",
+   "gate": false,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": [
+    "call Math.min(…)"
+   ]
+  },
+  "p08-ternary.ts": {
+   "expect": "EXPECT FAIL: a comparing ternary, no Math call and no clamp-like name",
+   "gate": false,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": [
+    "comparison raw > CEILING"
+   ]
+  },
+  "p09-if-assign.ts": {
+   "expect": "EXPECT FAIL: if (dt > LIMIT) dt = LIMIT",
+   "gate": false,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": [
+    "comparison dt > LIMIT"
+   ]
+  },
+  "p10-local-helper.ts": {
+   "expect": "EXPECT FAIL: a bound inside a helper with an innocent name",
+   "gate": false,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": [
+    "call tame(…)"
+   ]
+  },
+  "p11-imported-helper.ts": {
+   "expect": "EXPECT FAIL: a bound imported from another module (any call but performance.now is refused)",
+   "gate": false,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": [
+    "call settleDt(…)"
+   ]
+  },
+  "p12-clock-clamp.ts": {
+   "expect": "EXPECT FAIL: the clamp moved into the clock (last pulled forward so now - last never exceeds the cap)",
+   "gate": false,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": [
+    "call Math.max(…)"
+   ]
+  },
+  "p13-callsite-clamp.ts": {
+   "expect": "EXPECT FAIL: the clamp at the call site of a same-file helper",
+   "gate": false,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": [
+    "call Math.min(…)"
+   ]
+  },
+  "p14-capped-accumulator.ts": {
+   "expect": "EXPECT FAIL: a fixed-step accumulator whose total is capped (the step is a constant, the cap is on the loop)",
+   "gate": false,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": [
+    "call Math.min(…)"
+   ]
+  },
+  "p15-skip-long-frame.ts": {
+   "expect": "EXPECT FAIL: a long frame dropped by threshold (time lost without a min/max)",
+   "gate": false,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": [
+    "comparison dt < LONG"
+   ]
+  },
+  "p16-reset-on-gap.ts": {
+   "expect": "EXPECT FAIL: a dt threshold that forgets the gap (hidden time judged by size, not by visibility)",
+   "gate": false,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": [
+    "comparison now - last > GAP"
+   ]
+  },
+  "p17-floor.ts": {
+   "expect": "EXPECT FAIL: Math.max(0, dt), the HEAD aurora frameLoop form (W-F.1 §4: the loop passes dt unchanged)",
+   "gate": false,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": [
+    "call Math.max(…)"
+   ]
+  },
+  "p18-state-object.ts": {
+   "expect": "EXPECT FAIL: the clamp on a state object property",
+   "gate": false,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": [
+    "call Math.min(…)"
+   ]
+  },
+  "p19-handrolled-renamed.ts": {
+   "expect": "EXPECT FAIL: a hand-rolled Euler whose stiffness is not called omega (F1-G1 passes it), with no clamp at all",
+   "gate": false,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": [
+    "hand-rolled -w0 * w0 * (x - target) - 2 * z * w0 * v"
+   ]
+  },
+  "p20-provider-outside.ts": {
+   "expect": "EXPECT FAIL: dt arrives from a frame-loop provider in another file (UNRESOLVED until the provider is in scope)",
+   "gate": false,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": [
+    "parameter dtMs of an anonymous function: provider outside this file"
+   ]
+  },
+  "p21-shrink-loop.ts": {
+   "expect": "EXPECT FAIL: a loop that shrinks dt below a cap before the step (a bound without min/max or a ternary)",
+   "gate": false,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": [
+    "comparison d > CAP"
+   ]
+  },
+  "p22-engine-driven.ts": {
+   "expect": "EXPECT PASS: the engine's own loop drives the spring (keyframes.js playback passes now - lastFrameT unclamped); no dt in src",
+   "gate": true,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": []
+  },
+  "e01-early-return.ts": {
+   "expect": "EXPECT FAIL: a long frame dropped by an early return before the sink (time lost; the guard is a sibling, not an ancestor)",
+   "gate": true,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": []
+  },
+  "e02-destructured.ts": {
+   "expect": "EXPECT FAIL: the clamp kept on a frame record, the dt destructured out of it",
+   "gate": true,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": []
+  },
+  "e03-imported-clock.ts": {
+   "expect": "EXPECT FAIL: dt read from a shared clock module whose clamp lives in that module (an imported binding, not a parameter)",
+   "gate": true,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": []
+  },
+  "e04-indexed.ts": {
+   "expect": "EXPECT FAIL: the clamp stored through an element write",
+   "gate": true,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": []
+  },
+  "e05-continue.ts": {
+   "expect": "EXPECT FAIL: a substep loop that stops at a fixed count and drops the remainder (a cap with no comparison on dt)",
+   "gate": false,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": [
+    "comparison i < MAX_SUBSTEPS",
+    "comparison acc >= SUB_MS"
+   ]
+  },
+  "e06-early-return-500.ts": {
+   "expect": "EXPECT FAIL: e01 with the skip threshold raised to 500 ms, above every block the A4 runtime arm runs (45 / 150 / 400 ms)",
+   "gate": true,
+   "F1_G4": true,
+   "F1_G1": true,
+   "why": []
+  }
+ },
+ "plants_as_expected": false
+}

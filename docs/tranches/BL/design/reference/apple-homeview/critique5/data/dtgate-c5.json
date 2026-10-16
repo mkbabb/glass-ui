@@ -1,0 +1,777 @@
+{
+ "F1_G4_regex_from_wave": "\\bMAX_DT_MS\\b|\\bWARP_DT_CLAMP\\b|Math\\.min\\(dtMs, 50\\)|Math\\.min\\(Math\\.max\\(input\\.dt, 0\\), 0\\.05\\)",
+ "wave_line": 185,
+ "head": {
+  "files_scanned": 494,
+  "rows": [
+   {
+    "file": "src/components/blob/composables/useBlobPointer.ts",
+    "sinks": [
+     {
+      "line": 174,
+      "call": "springX.tickDt(dtClampedMs)",
+      "pass": false,
+      "violations": [
+       {
+        "line": 159,
+        "what": "call Math.min(…)",
+        "via": "dtClampedMs = … at :159"
+       }
+      ],
+      "unresolved": []
+     },
+     {
+      "line": 175,
+      "call": "springY.tickDt(dtClampedMs)",
+      "pass": false,
+      "violations": [
+       {
+        "line": 159,
+        "what": "call Math.min(…)",
+        "via": "dtClampedMs = … at :159"
+       }
+      ],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [
+     {
+      "line": 184,
+      "text": "-PULSE_OMEGA * PULSE_OMEGA * pulse - 2 * PULSE_ZETA * PULSE_OMEGA * pulseVel"
+     }
+    ],
+    "pass": false
+   },
+   {
+    "file": "src/components/constellation/constellationInteraction.ts",
+    "sinks": [],
+    "hand_rolled": [
+     {
+      "line": 164,
+      "text": "-2 * zeta * omega * warp.vx - omega * omega * (warp.x - target.x)"
+     },
+     {
+      "line": 165,
+      "text": "-2 * zeta * omega * warp.vy - omega * omega * (warp.y - target.y)"
+     }
+    ],
+    "pass": false
+   },
+   {
+    "file": "src/components/fourier-field/clock.ts",
+    "sinks": [],
+    "hand_rolled": [
+     {
+      "line": 73,
+      "text": "-OMEGA * OMEGA * momentum - 2 * ZETA * OMEGA * momentumVel"
+     }
+    ],
+    "pass": false
+   },
+   {
+    "file": "src/composables/motion/morph/useLeadTrail.ts",
+    "sinks": [],
+    "hand_rolled": [
+     {
+      "line": 213,
+      "text": "-omega * omega * (x - target) - 2 * damping * omega * v"
+     }
+    ],
+    "pass": false
+   },
+   {
+    "file": "src/composables/motion/pointer/usePointerVelocityField.ts",
+    "sinks": [],
+    "hand_rolled": [
+     {
+      "line": 396,
+      "text": "-omega * omega * (ap.x - tgtX) - 2 * zeta * omega * av.x"
+     },
+     {
+      "line": 397,
+      "text": "-omega * omega * (ap.y - tgtY) - 2 * zeta * omega * av.y"
+     }
+    ],
+    "pass": false
+   },
+   {
+    "file": "src/composables/motion/spring/springProjection.ts",
+    "sinks": [
+     {
+      "line": 39,
+      "call": "spring.tickToTime(t)",
+      "pass": true,
+      "violations": [],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": true
+   }
+  ],
+  "F1_G4_sites": [
+   "src/components/blob/composables/useBlobPointer.ts:159",
+   "src/components/blob/composables/useBlobPointer.ts:164",
+   "src/components/constellation/constellationInteraction.ts:98",
+   "src/components/constellation/constellationInteraction.ts:136",
+   "src/components/constellation/constellationInteraction.ts:155",
+   "src/components/constellation/constellationWell.ts:57",
+   "src/components/fourier-field/clock.ts:95",
+   "src/composables/motion/morph/useLeadTrail.ts:67",
+   "src/composables/motion/morph/useLeadTrail.ts:207"
+  ],
+  "gate_pass": false
+ },
+ "plants": {
+  "p01-cured-raf.ts": {
+   "expect": "EXPECT PASS: the cure as W-F.1 item 2 states it, the frame dt from rAF, a null check on the first frame",
+   "gate_pass": true,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "amend5/plants/p01-cured-raf.ts",
+    "sinks": [
+     {
+      "line": 8,
+      "call": "lead.tickDt(dt)",
+      "pass": true,
+      "violations": [],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": true
+   }
+  },
+  "p02-cured-units.ts": {
+   "expect": "EXPECT PASS: the true dt through a unit change (s and back) and an alias",
+   "gate_pass": true,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "amend5/plants/p02-cured-units.ts",
+    "sinks": [
+     {
+      "line": 9,
+      "call": "lead.tickDt(ms)",
+      "pass": true,
+      "violations": [],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": true
+   }
+  },
+  "p03-cured-helper.ts": {
+   "expect": "EXPECT PASS: the true dt handed through a same-file helper (the call site is resolved)",
+   "gate_pass": true,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "amend5/plants/p03-cured-helper.ts",
+    "sinks": [
+     {
+      "line": 6,
+      "call": "lead.tickDt(dt)",
+      "pass": true,
+      "violations": [],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": true
+   }
+  },
+  "p04-cured-visibility.ts": {
+   "expect": "EXPECT PASS: hidden time is not elapsed time (W-F.1 item 2), by visibility, not by a dt threshold",
+   "gate_pass": true,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "amend5/plants/p04-cured-visibility.ts",
+    "sinks": [
+     {
+      "line": 11,
+      "call": "lead.tickDt(dt)",
+      "pass": true,
+      "violations": [],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": true
+   }
+  },
+  "p05-cured-accumulator.ts": {
+   "expect": "EXPECT PASS: a fixed-step accumulator that carries its remainder loses no time",
+   "gate_pass": true,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "amend5/plants/p05-cured-accumulator.ts",
+    "sinks": [
+     {
+      "line": 11,
+      "call": "lead.tickDt(STEP)",
+      "pass": true,
+      "violations": [],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": true
+   }
+  },
+  "p06-renamed-const.ts": {
+   "expect": "EXPECT FAIL: CRITIQUE-4 §3, a clamp kept under a new name (STEP_CAP_MS = 500)",
+   "gate_pass": false,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "amend5/plants/p06-renamed-const.ts",
+    "sinks": [
+     {
+      "line": 7,
+      "call": "lead.tickDt(Math.min(now - last, STEP_CAP_MS))",
+      "pass": false,
+      "violations": [
+       {
+        "line": 7,
+        "what": "call Math.min(…)",
+        "via": "sink argument"
+       }
+      ],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": false
+   }
+  },
+  "p07-inline-literal.ts": {
+   "expect": "EXPECT FAIL: CRITIQUE-4 §3, tickDt(Math.min(dt, 0.5)) in seconds-then-ms form",
+   "gate_pass": false,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "amend5/plants/p07-inline-literal.ts",
+    "sinks": [
+     {
+      "line": 8,
+      "call": "lead.tickDt(Math.min(dt, 0.5) * 1000)",
+      "pass": false,
+      "violations": [
+       {
+        "line": 8,
+        "what": "call Math.min(…)",
+        "via": "sink argument"
+       }
+      ],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": false
+   }
+  },
+  "p08-ternary.ts": {
+   "expect": "EXPECT FAIL: a comparing ternary, no Math call and no clamp-like name",
+   "gate_pass": false,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "amend5/plants/p08-ternary.ts",
+    "sinks": [
+     {
+      "line": 10,
+      "call": "lead.tickDt(d)",
+      "pass": false,
+      "violations": [
+       {
+        "line": 8,
+        "what": "comparison raw > CEILING",
+        "via": "d = … at :8"
+       }
+      ],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": false
+   }
+  },
+  "p09-if-assign.ts": {
+   "expect": "EXPECT FAIL: if (dt > LIMIT) dt = LIMIT",
+   "gate_pass": false,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "amend5/plants/p09-if-assign.ts",
+    "sinks": [
+     {
+      "line": 10,
+      "call": "lead.tickDt(dt)",
+      "pass": false,
+      "violations": [
+       {
+        "line": 8,
+        "what": "comparison dt > LIMIT",
+        "via": "guard of dt at :8"
+       }
+      ],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": false
+   }
+  },
+  "p10-local-helper.ts": {
+   "expect": "EXPECT FAIL: a bound inside a helper with an innocent name",
+   "gate_pass": false,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "amend5/plants/p10-local-helper.ts",
+    "sinks": [
+     {
+      "line": 9,
+      "call": "lead.tickDt(tame(dt))",
+      "pass": false,
+      "violations": [
+       {
+        "line": 9,
+        "what": "call tame(…)",
+        "via": "sink argument"
+       }
+      ],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": false
+   }
+  },
+  "p11-imported-helper.ts": {
+   "expect": "EXPECT FAIL: a bound imported from another module (any call but performance.now is refused)",
+   "gate_pass": false,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "amend5/plants/p11-imported-helper.ts",
+    "sinks": [
+     {
+      "line": 9,
+      "call": "lead.tickDt(settleDt(dt))",
+      "pass": false,
+      "violations": [
+       {
+        "line": 9,
+        "what": "call settleDt(…)",
+        "via": "sink argument"
+       }
+      ],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": false
+   }
+  },
+  "p12-clock-clamp.ts": {
+   "expect": "EXPECT FAIL: the clamp moved into the clock (last pulled forward so now - last never exceeds the cap)",
+   "gate_pass": false,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "amend5/plants/p12-clock-clamp.ts",
+    "sinks": [
+     {
+      "line": 10,
+      "call": "lead.tickDt(dt)",
+      "pass": false,
+      "violations": [
+       {
+        "line": 7,
+        "what": "call Math.max(…)",
+        "via": "last = … at :7"
+       }
+      ],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": false
+   }
+  },
+  "p13-callsite-clamp.ts": {
+   "expect": "EXPECT FAIL: the clamp at the call site of a same-file helper",
+   "gate_pass": false,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "amend5/plants/p13-callsite-clamp.ts",
+    "sinks": [
+     {
+      "line": 7,
+      "call": "lead.tickDt(dt)",
+      "pass": false,
+      "violations": [
+       {
+        "line": 10,
+        "what": "call Math.min(…)",
+        "via": "dt <- call advance() at :10"
+       }
+      ],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": false
+   }
+  },
+  "p14-capped-accumulator.ts": {
+   "expect": "EXPECT FAIL: a fixed-step accumulator whose total is capped (the step is a constant, the cap is on the loop)",
+   "gate_pass": false,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "amend5/plants/p14-capped-accumulator.ts",
+    "sinks": [
+     {
+      "line": 12,
+      "call": "lead.tickDt(STEP)",
+      "pass": false,
+      "violations": [
+       {
+        "line": 9,
+        "what": "call Math.min(…)",
+        "via": "acc = … at :9"
+       }
+      ],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": false
+   }
+  },
+  "p15-skip-long-frame.ts": {
+   "expect": "EXPECT FAIL: a long frame dropped by threshold (time lost without a min/max)",
+   "gate_pass": false,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "amend5/plants/p15-skip-long-frame.ts",
+    "sinks": [
+     {
+      "line": 9,
+      "call": "lead.tickDt(dt)",
+      "pass": false,
+      "violations": [
+       {
+        "line": 9,
+        "what": "comparison dt < LONG",
+        "via": "guard of the sink at :9"
+       }
+      ],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": false
+   }
+  },
+  "p16-reset-on-gap.ts": {
+   "expect": "EXPECT FAIL: a dt threshold that forgets the gap (hidden time judged by size, not by visibility)",
+   "gate_pass": false,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "amend5/plants/p16-reset-on-gap.ts",
+    "sinks": [
+     {
+      "line": 10,
+      "call": "lead.tickDt(dt)",
+      "pass": false,
+      "violations": [
+       {
+        "line": 7,
+        "what": "comparison now - last > GAP",
+        "via": "guard of last at :7"
+       }
+      ],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": false
+   }
+  },
+  "p17-floor.ts": {
+   "expect": "EXPECT FAIL: Math.max(0, dt), the HEAD aurora frameLoop form (W-F.1 §4: the loop passes dt unchanged)",
+   "gate_pass": false,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "amend5/plants/p17-floor.ts",
+    "sinks": [
+     {
+      "line": 6,
+      "call": "lead.tickDt(Math.max(0, now - last))",
+      "pass": false,
+      "violations": [
+       {
+        "line": 6,
+        "what": "call Math.max(…)",
+        "via": "sink argument"
+       }
+      ],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": false
+   }
+  },
+  "p18-state-object.ts": {
+   "expect": "EXPECT FAIL: the clamp on a state object property",
+   "gate_pass": false,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "amend5/plants/p18-state-object.ts",
+    "sinks": [
+     {
+      "line": 9,
+      "call": "lead.tickDt(state.dt)",
+      "pass": false,
+      "violations": [
+       {
+        "line": 7,
+        "what": "call Math.min(…)",
+        "via": ".dt = … at :7"
+       }
+      ],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": false
+   }
+  },
+  "p19-handrolled-renamed.ts": {
+   "expect": "EXPECT FAIL: a hand-rolled Euler whose stiffness is not called omega (F1-G1 passes it), with no clamp at all",
+   "gate_pass": false,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "amend5/plants/p19-handrolled-renamed.ts",
+    "sinks": [],
+    "hand_rolled": [
+     {
+      "line": 10,
+      "text": "-w0 * w0 * (x - target) - 2 * z * w0 * v"
+     }
+    ],
+    "pass": false
+   }
+  },
+  "p20-provider-outside.ts": {
+   "expect": "EXPECT FAIL: dt arrives from a frame-loop provider in another file (UNRESOLVED until the provider is in scope)",
+   "gate_pass": false,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "amend5/plants/p20-provider-outside.ts",
+    "sinks": [
+     {
+      "line": 7,
+      "call": "lead.tickDt(dtMs)",
+      "pass": false,
+      "violations": [],
+      "unresolved": [
+       {
+        "line": 6,
+        "what": "parameter dtMs of an anonymous function: provider outside this file"
+       }
+      ]
+     }
+    ],
+    "hand_rolled": [],
+    "pass": false
+   }
+  },
+  "p21-shrink-loop.ts": {
+   "expect": "EXPECT FAIL: a loop that shrinks dt below a cap before the step (a bound without min/max or a ternary)",
+   "gate_pass": false,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "amend5/plants/p21-shrink-loop.ts",
+    "sinks": [
+     {
+      "line": 9,
+      "call": "lead.tickDt(d)",
+      "pass": false,
+      "violations": [
+       {
+        "line": 8,
+        "what": "comparison d > CAP",
+        "via": "guard of d at :8"
+       }
+      ],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": false
+   }
+  },
+  "p22-engine-driven.ts": {
+   "expect": "EXPECT PASS: the engine's own loop drives the spring (keyframes.js playback passes now - lastFrameT unclamped); no dt in src",
+   "gate_pass": true,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "amend5/plants/p22-engine-driven.ts",
+    "sinks": [],
+    "hand_rolled": [],
+    "pass": true
+   }
+  },
+  "e01-early-return.ts": {
+   "expect": "EXPECT FAIL: a long frame dropped by an early return before the sink (time lost; the guard is a sibling, not an ancestor)",
+   "gate_pass": true,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "critique5/plants/e01-early-return.ts",
+    "sinks": [
+     {
+      "line": 11,
+      "call": "lead.tickDt(dt)",
+      "pass": true,
+      "violations": [],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": true
+   }
+  },
+  "e02-destructured.ts": {
+   "expect": "EXPECT FAIL: the clamp kept on a frame record, the dt destructured out of it",
+   "gate_pass": true,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "critique5/plants/e02-destructured.ts",
+    "sinks": [
+     {
+      "line": 9,
+      "call": "lead.tickDt(dt)",
+      "pass": true,
+      "violations": [],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": true
+   }
+  },
+  "e03-imported-clock.ts": {
+   "expect": "EXPECT FAIL: dt read from a shared clock module whose clamp lives in that module (an imported binding, not a parameter)",
+   "gate_pass": true,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "critique5/plants/e03-imported-clock.ts",
+    "sinks": [
+     {
+      "line": 5,
+      "call": "lead.tickDt(frameClock.dt)",
+      "pass": true,
+      "violations": [],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": true
+   }
+  },
+  "e04-indexed.ts": {
+   "expect": "EXPECT FAIL: the clamp stored through an element write",
+   "gate_pass": true,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "critique5/plants/e04-indexed.ts",
+    "sinks": [
+     {
+      "line": 9,
+      "call": "lead.tickDt(slot[0])",
+      "pass": true,
+      "violations": [],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": true
+   }
+  },
+  "e05-continue.ts": {
+   "expect": "EXPECT FAIL: a substep loop that stops at a fixed count and drops the remainder (a cap with no comparison on dt)",
+   "gate_pass": false,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "critique5/plants/e05-continue.ts",
+    "sinks": [
+     {
+      "line": 11,
+      "call": "lead.tickDt(SUB_MS)",
+      "pass": false,
+      "violations": [
+       {
+        "line": 10,
+        "what": "comparison i < MAX_SUBSTEPS",
+        "via": "guard of the sink at :10"
+       },
+       {
+        "line": 10,
+        "what": "comparison acc >= SUB_MS",
+        "via": "guard of the sink at :10"
+       }
+      ],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": false
+   }
+  },
+  "e06-early-return-500.ts": {
+   "expect": "EXPECT FAIL: e01 with the skip threshold raised to 500 ms, above every block the A4 runtime arm runs (45 / 150 / 400 ms)",
+   "gate_pass": true,
+   "F1_G4_pass": true,
+   "F1_G1_pass": true,
+   "detail": {
+    "file": "critique5/plants/e06-early-return-500.ts",
+    "sinks": [
+     {
+      "line": 11,
+      "call": "lead.tickDt(dt)",
+      "pass": true,
+      "violations": [],
+      "unresolved": []
+     }
+    ],
+    "hand_rolled": [],
+    "pass": true
+   }
+  }
+ },
+ "plants_as_expected": false
+}
