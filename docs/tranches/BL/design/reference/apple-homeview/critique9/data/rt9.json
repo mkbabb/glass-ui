@@ -1,0 +1,77 @@
+{
+ "runtime6_sha256": "474521a89bab2cbaede42597af0ef974c8d583cde6885438a6402adbbebcaab4",
+ "lines_execd": "1-203",
+ "load_1min_start": 26.888671875,
+ "intervals": {
+  "distinct": 238,
+  "max": 400.5,
+  "min": 4.100000000000364,
+  "breakpoints_tested": 237
+ },
+ "drop_exact_0_to_400": {
+  "n": 237,
+  "passing": []
+ },
+ "drop_blind_side": {
+  "400.5": true,
+  "401": true,
+  "450": true,
+  "500": true,
+  "1000": true,
+  "5000": true
+ },
+ "rebase_exact_0_to_400": {
+  "n": 237,
+  "passing": []
+ },
+ "rebase_blind_side": {
+  "400.5": true,
+  "401": true,
+  "450": true,
+  "500": true,
+  "1000": true,
+  "5000": true
+ },
+ "clamp_0.1_to_10": {
+  "n": 100,
+  "arm_passing": [],
+  "stall_alone_passing": []
+ },
+ "clamp_random_offgrid_0_to_199.2": {
+  "n": 4000,
+  "seed": 9,
+  "arm_passing": []
+ },
+ "stall_clamp_random_offgrid_0_to_47.1": {
+  "n": 1500,
+  "stall_alone_passing": []
+ },
+ "clamp_blind_side_199.3_to_1000": {
+  "n": 8008,
+  "failing": []
+ },
+ "soft_0.1_to_50": {
+  "n": 500,
+  "passing": []
+ },
+ "soft_random_offgrid_0_to_1500": {
+  "n": 2000,
+  "passing": []
+ },
+ "soft_blind_side_2000_to_20000": {
+  "n": 361,
+  "failing": []
+ },
+ "timer_phase_0.5ms": {
+  "50": {
+   "phases": 100,
+   "passing_phases": []
+  },
+  "100": {
+   "phases": 200,
+   "passing_phases": []
+  }
+ },
+ "seconds": 51.3,
+ "load_1min_end": 24.265625
+}
