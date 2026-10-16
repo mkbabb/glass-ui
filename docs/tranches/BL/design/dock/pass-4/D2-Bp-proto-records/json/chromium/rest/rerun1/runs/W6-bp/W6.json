@@ -1,0 +1,82 @@
+{
+ "witness": "W6",
+ "target": "bp@3266a071",
+ "when": "2026-10-16T11:54:40.215Z",
+ "load": 18.91,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "form·collapse",
+   "pass": false,
+   "unmeasured": false,
+   "unjudged": [],
+   "failed": [
+    "window"
+   ],
+   "D": 142.19,
+   "start": 333.06,
+   "target": 190.88,
+   "frames": 612,
+   "travelMs": 245.3,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.64,
+    "step": 9.39,
+    "bound": 14.61,
+    "atMs": 3661.3,
+    "dt": 7.9
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": false,
+    "why": "window 258.6 ms > clock 214.2 + 2×16.7 + stall 9.8 = 257.4 ms (O-64 R-4, H-3d)",
+    "open": 3616.0000000000005,
+    "close": 3874.6,
+    "land": 3861.2999999999997,
+    "motionStart": 3616.0000000000005,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 258.6,
+    "allowMs": 257.4,
+    "q4": true,
+    "q4AllowMs": 313.2
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 0.42,
+    "tol": 6.69,
+    "frac": 0,
+    "atMs": 3928.1,
+    "why": "worst 0.42 px (0.3 % of D) from the rung's analytic spring (tol 6.69)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.64,
+    "prev": 0.41,
+    "bound": 1.12,
+    "why": "last step 0.64 px after 0.41 px (bound 1.12)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "faces": {
+    "ok": true,
+    "why": "0 px of form ink beyond the plate over 51 screenshot sample(s) (0 in flight) (bound 1)"
+   },
+   "summary": "D 142.19 px (333.06→190.88); step ×0.64; dead; window 258.6 ms (allow 257.4, clock 214.2) — window 258.6 ms > clock 214.2 + 2×16.7 + stall 9.8 = 257.4 ms (O-64 R-4, H-3d); trajectory worst 0.42 px (0.3 % of D) from the rung's analytic spring (tol 6.69); terminal last step 0.64 px after 0.41 px (bound 1.12); owners 0; Q-4 lenient window holds (allow 313.2 ms); faces 0 px of form ink beyond the plate over 51 screenshot sample(s) (0 in flight) (bound 1)  ⟶ FAILED: window",
+   "load": 18.91
+  }
+ ]
+}

@@ -1,0 +1,468 @@
+{
+ "witness": "W3",
+ "target": "bp@3266a071",
+ "when": "2026-10-16T13:24:09.807Z",
+ "load": 20.9,
+ "cells": [
+  {
+   "engine": "webkit",
+   "cell": "swap-long",
+   "pass": false,
+   "failed": [
+    "splice"
+   ],
+   "D": 245.06,
+   "start": 102,
+   "target": 347.06,
+   "frames": 95,
+   "travelMs": 252,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.65,
+    "step": 18.45,
+    "bound": 28.2,
+    "atMs": 60,
+    "dt": 9
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": true,
+    "why": "",
+    "open": 11,
+    "close": 263,
+    "land": 263,
+    "motionStart": 11,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 252,
+    "allowMs": 260.6,
+    "closeMinusLandFrames": 0
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 0.72,
+    "tol": 10.8,
+    "frac": 0,
+    "atMs": 317,
+    "why": "worst 0.72 px (0.3 % of D) from the rung's analytic spring (tol 10.8)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.87,
+    "prev": 0.88,
+    "bound": 1.58,
+    "why": "last step 0.87 px after 0.88 px (bound 1.58)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "seats": {
+    "step": {
+     "ok": true,
+     "ratio": 0.65,
+     "step": 9.25,
+     "bound": 14.35,
+     "seat": 5,
+     "atMs": 60
+    },
+    "overlap": {
+     "ok": true,
+     "frames": 0,
+     "first": null
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 5,
+    "movingFrames": 26,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 26 moving frame(s), longest run 0 (bound 1)"
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 2,
+    "failing": 0,
+    "lengthMs": 252,
+    "rows": [
+     {
+      "seat": 1,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 133,
+      "spanFrames": 13,
+      "path": [
+       1,
+       0.568,
+       0.56,
+       0.544,
+       0.526,
+       0.507,
+       0.489,
+       0.468,
+       0.448,
+       0.431,
+       0.416,
+       0.402,
+       0.39,
+       0
+      ]
+     },
+     {
+      "seat": 2,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 133,
+      "spanFrames": 13,
+      "path": [
+       1,
+       0.568,
+       0.56,
+       0.544,
+       0.526,
+       0.507,
+       0.489,
+       0.468,
+       0.448,
+       0.431,
+       0.416,
+       0.402,
+       0.39,
+       0
+      ]
+     }
+    ],
+    "why": "2 leaving seat(s), 0 failing; tightest seat 1: ink 1 → 0.568 → 0.56 → 0.544 → 0.526 → 0.507 → 0.489 → 0.468 → 0.448 → 0.431 → 0.416 → 0.402 → 0.39 → 0 over 133 ms / 13 frame(s) (fade bound ≥ 3 frames and ≥ 63 ms), coverage deficit 1 (track bound 0.1)"
+   },
+   "splice": {
+    "ok": false,
+    "spliceFrames": 1,
+    "sliverFrames": 0,
+    "firstSplice": {
+     "units": [
+      "s3",
+      "s4"
+     ],
+     "gapPx": 9.55,
+     "advPx": 10.86,
+     "atMs": 173
+    },
+    "firstSliver": null,
+    "why": "1 splice frame(s) (first at 173 ms: units s3|s4 meet at a 9.55 px gap, one advance 10.86 px), 0 sliver frame(s) (bound 0 each)"
+   },
+   "lanes": {
+    "ok": true,
+    "judged": true,
+    "flagClosedMs": 263,
+    "lanes": 3,
+    "worst": null,
+    "cancels": [],
+    "why": "every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity"
+   },
+   "summary": "D 245.06 px (102→347.06); step ×0.65; dead; window 252 ms (allow 260.6, clock 214.2); trajectory worst 0.72 px (0.3 % of D) from the rung's analytic spring (tol 10.8); terminal last step 0.87 px after 0.88 px (bound 1.58); owners 0; seat step ×0.65 (9.25 px), seat overlap 0 frame(s); blank 0 blank of 26 moving frame(s), longest run 0 (bound 1); leaving 2 leaving seat(s), 0 failing; tightest seat 1: ink 1 → 0.568 → 0.56 → 0.544 → 0.526 → 0.507 → 0.489 → 0.468 → 0.448 → 0.431 → 0.416 → 0.402 → 0.39 → 0 over 133 ms / 13 frame(s) (fade bound ≥ 3 frames and ≥ 63 ms), coverage deficit 1 (track bound 0.1); splice 1 splice frame(s) (first at 173 ms: units s3|s4 meet at a 9.55 px gap, one advance 10.86 px), 0 sliver frame(s) (bound 0 each); lanes every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity  ⟶ FAILED: splice; faces UNMEASURED (--no-faces: the pixel pass was not run)",
+   "load": 21.15,
+   "faces": {
+    "ok": null,
+    "why": "UNMEASURED (--no-faces: the pixel pass was not run)"
+   }
+  },
+  {
+   "engine": "webkit",
+   "cell": "retarget·40",
+   "pass": false,
+   "failed": [
+    "blank",
+    "leaving",
+    "vanish"
+   ],
+   "frames": 81,
+   "retargetFrame": 5,
+   "blank": {
+    "ok": false,
+    "entering": 3,
+    "movingFrames": 26,
+    "blankFrames": 3,
+    "longestRun": 3,
+    "atMs": 31,
+    "why": "3 blank of 26 moving frame(s), longest run 3 (bound 1)"
+   },
+   "overlap": {
+    "ok": true,
+    "frames": 0,
+    "first": null
+   },
+   "leaving": {
+    "ok": false,
+    "leaving": 2,
+    "failing": 2,
+    "lengthMs": 308,
+    "rows": [
+     {
+      "seat": 1,
+      "ok": false,
+      "tracks": false,
+      "deficit": 1,
+      "fades": false,
+      "spanMs": 52,
+      "spanFrames": 5,
+      "path": [
+       1,
+       0.568,
+       0.564,
+       0.553,
+       0.533,
+       0
+      ]
+     },
+     {
+      "seat": 2,
+      "ok": false,
+      "tracks": false,
+      "deficit": 1,
+      "fades": false,
+      "spanMs": 52,
+      "spanFrames": 5,
+      "path": [
+       1,
+       0.568,
+       0.564,
+       0.553,
+       0.533,
+       0
+      ]
+     }
+    ],
+    "why": "2 leaving seat(s), 2 failing; worst seat 1: ink 1 → 0.568 → 0.564 → 0.553 → 0.533 → 0 over 52 ms / 5 frame(s) (fade bound ≥ 3 frames and ≥ 77 ms), coverage deficit 1 (track bound 0.1)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "vanish": {
+    "drop": 0.53,
+    "seat": 2,
+    "from": 0.53,
+    "to": 0,
+    "atMs": 4
+   },
+   "pageErrors": [],
+   "summary": "swap to long retargeted to mid 40 ms later (scheduled in the page; frame 5): blank 3 blank of 26 moving frame(s), longest run 3 (bound 1); seat overlap 0 frame(s); leaving 2 leaving seat(s), 2 failing; worst seat 1: ink 1 → 0.568 → 0.564 → 0.553 → 0.533 → 0 over 52 ms / 5 frame(s) (fade bound ≥ 3 frames and ≥ 77 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop 0.53 (seat 2 0.53 → 0 at +4 ms) (bound 0.5); splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); page errors 0  ⟶ FAILED: blank, leaving, vanish",
+   "load": 21.15
+  },
+  {
+   "engine": "webkit",
+   "cell": "retarget·80",
+   "pass": false,
+   "failed": [
+    "vanish"
+   ],
+   "frames": 86,
+   "retargetFrame": 9,
+   "blank": {
+    "ok": true,
+    "entering": 3,
+    "movingFrames": 27,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 27 moving frame(s), longest run 0 (bound 1)"
+   },
+   "overlap": {
+    "ok": true,
+    "frames": 0,
+    "first": null
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 2,
+    "failing": 0,
+    "lengthMs": 358,
+    "rows": [
+     {
+      "seat": 1,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 95,
+      "spanFrames": 9,
+      "path": [
+       1,
+       0.569,
+       0.565,
+       0.553,
+       0.537,
+       0.519,
+       0.501,
+       0.477,
+       0.459,
+       0
+      ]
+     },
+     {
+      "seat": 2,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 95,
+      "spanFrames": 9,
+      "path": [
+       1,
+       0.569,
+       0.565,
+       0.553,
+       0.537,
+       0.519,
+       0.501,
+       0.477,
+       0.459,
+       0
+      ]
+     }
+    ],
+    "why": "2 leaving seat(s), 0 failing; tightest seat 1: ink 1 → 0.569 → 0.565 → 0.553 → 0.537 → 0.519 → 0.501 → 0.477 → 0.459 → 0 over 95 ms / 9 frame(s) (fade bound ≥ 3 frames and ≥ 89.5 ms), coverage deficit 1 (track bound 0.1)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "vanish": {
+    "drop": 0.53,
+    "seat": 6,
+    "from": 0.53,
+    "to": 0,
+    "atMs": 3
+   },
+   "pageErrors": [],
+   "summary": "swap to long retargeted to mid 80 ms later (scheduled in the page; frame 9): blank 0 blank of 27 moving frame(s), longest run 0 (bound 1); seat overlap 0 frame(s); leaving 2 leaving seat(s), 0 failing; tightest seat 1: ink 1 → 0.569 → 0.565 → 0.553 → 0.537 → 0.519 → 0.501 → 0.477 → 0.459 → 0 over 95 ms / 9 frame(s) (fade bound ≥ 3 frames and ≥ 89.5 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop 0.53 (seat 6 0.53 → 0 at +3 ms) (bound 0.5); splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); page errors 0  ⟶ FAILED: vanish",
+   "load": 20.9
+  },
+  {
+   "engine": "webkit",
+   "cell": "retarget·120",
+   "pass": false,
+   "failed": [
+    "vanish"
+   ],
+   "frames": 90,
+   "retargetFrame": 14,
+   "blank": {
+    "ok": true,
+    "entering": 3,
+    "movingFrames": 26,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 26 moving frame(s), longest run 0 (bound 1)"
+   },
+   "overlap": {
+    "ok": true,
+    "frames": 0,
+    "first": null
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 2,
+    "failing": 0,
+    "lengthMs": 399,
+    "rows": [
+     {
+      "seat": 1,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 131,
+      "spanFrames": 13,
+      "path": [
+       1,
+       0.568,
+       0.56,
+       0.547,
+       0.524,
+       0.505,
+       0.485,
+       0.47,
+       0.449,
+       0.433,
+       0.417,
+       0.401,
+       0.392,
+       0
+      ]
+     },
+     {
+      "seat": 2,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 131,
+      "spanFrames": 13,
+      "path": [
+       1,
+       0.568,
+       0.56,
+       0.547,
+       0.524,
+       0.505,
+       0.485,
+       0.47,
+       0.449,
+       0.433,
+       0.417,
+       0.401,
+       0.392,
+       0
+      ]
+     }
+    ],
+    "why": "2 leaving seat(s), 0 failing; tightest seat 1: ink 1 → 0.568 → 0.56 → 0.547 → 0.524 → 0.505 → 0.485 → 0.47 → 0.449 → 0.433 → 0.417 → 0.401 → 0.392 → 0 over 131 ms / 13 frame(s) (fade bound ≥ 3 frames and ≥ 99.8 ms), coverage deficit 1 (track bound 0.1)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "vanish": {
+    "drop": 0.59,
+    "seat": 6,
+    "from": 0.59,
+    "to": 0,
+    "atMs": 9
+   },
+   "pageErrors": [],
+   "summary": "swap to long retargeted to mid 120 ms later (scheduled in the page; frame 14): blank 0 blank of 26 moving frame(s), longest run 0 (bound 1); seat overlap 0 frame(s); leaving 2 leaving seat(s), 0 failing; tightest seat 1: ink 1 → 0.568 → 0.56 → 0.547 → 0.524 → 0.505 → 0.485 → 0.47 → 0.449 → 0.433 → 0.417 → 0.401 → 0.392 → 0 over 131 ms / 13 frame(s) (fade bound ≥ 3 frames and ≥ 99.8 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop 0.59 (seat 6 0.59 → 0 at +9 ms) (bound 0.5); splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); page errors 0  ⟶ FAILED: vanish",
+   "load": 20.9
+  }
+ ]
+}

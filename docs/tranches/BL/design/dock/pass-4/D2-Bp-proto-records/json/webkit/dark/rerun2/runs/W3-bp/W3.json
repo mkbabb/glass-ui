@@ -1,0 +1,93 @@
+{
+ "witness": "W3",
+ "target": "bp@3266a071",
+ "when": "2026-10-16T17:44:22.067Z",
+ "load": 23.04,
+ "cells": [
+  {
+   "engine": "webkit",
+   "cell": "retarget·40",
+   "pass": false,
+   "failed": [
+    "vanish"
+   ],
+   "frames": 80,
+   "retargetFrame": 5,
+   "blank": {
+    "ok": true,
+    "entering": 3,
+    "movingFrames": 1,
+    "blankFrames": 1,
+    "longestRun": 1,
+    "atMs": 10,
+    "why": "1 blank of 1 moving frame(s), longest run 1 (bound 1)"
+   },
+   "overlap": {
+    "ok": true,
+    "frames": 0,
+    "first": null
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 2,
+    "failing": 0,
+    "lengthMs": 51,
+    "rows": [
+     {
+      "seat": 1,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 51,
+      "spanFrames": 5,
+      "path": [
+       1,
+       0.568,
+       0.561,
+       0.55,
+       0.53,
+       0
+      ]
+     },
+     {
+      "seat": 2,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 51,
+      "spanFrames": 5,
+      "path": [
+       1,
+       0.568,
+       0.561,
+       0.55,
+       0.53,
+       0
+      ]
+     }
+    ],
+    "why": "2 leaving seat(s), 0 failing; tightest seat 1: ink 1 → 0.568 → 0.561 → 0.55 → 0.53 → 0 over 51 ms / 5 frame(s) (fade bound ≥ 3 frames and ≥ 12.8 ms), coverage deficit 1 (track bound 0.1)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "vanish": {
+    "drop": 0.53,
+    "seat": 1,
+    "from": 0.53,
+    "to": 0,
+    "atMs": 4
+   },
+   "pageErrors": [],
+   "summary": "swap to long retargeted to mid 40 ms later (scheduled in the page; frame 5): blank 1 blank of 1 moving frame(s), longest run 1 (bound 1); seat overlap 0 frame(s); leaving 2 leaving seat(s), 0 failing; tightest seat 1: ink 1 → 0.568 → 0.561 → 0.55 → 0.53 → 0 over 51 ms / 5 frame(s) (fade bound ≥ 3 frames and ≥ 12.8 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop 0.53 (seat 1 0.53 → 0 at +4 ms) (bound 0.5); splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); page errors 0  ⟶ FAILED: vanish",
+   "load": 23.22
+  }
+ ]
+}

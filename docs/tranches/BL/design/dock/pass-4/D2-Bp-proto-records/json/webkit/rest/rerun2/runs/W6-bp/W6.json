@@ -1,0 +1,79 @@
+{
+ "witness": "W6",
+ "target": "bp@3266a071",
+ "when": "2026-10-16T17:38:48.286Z",
+ "load": 19.07,
+ "cells": [
+  {
+   "engine": "webkit",
+   "cell": "form·collapse",
+   "pass": true,
+   "unmeasured": false,
+   "unjudged": [],
+   "failed": [],
+   "D": 142.22,
+   "start": 333.09,
+   "target": 190.88,
+   "frames": 449,
+   "travelMs": 244,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.65,
+    "step": 11.84,
+    "bound": 18.36,
+    "atMs": 3654,
+    "dt": 10
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": true,
+    "why": "",
+    "open": 3614,
+    "close": 3866,
+    "land": 3858,
+    "motionStart": 3614,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 252,
+    "allowMs": 259.6,
+    "closeMinusLandFrames": 1
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 0.42,
+    "tol": 6.69,
+    "frac": 0,
+    "atMs": 3919,
+    "why": "worst 0.42 px (0.3 % of D) from the rung's analytic spring (tol 6.69)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.7,
+    "prev": 0.41,
+    "bound": 1.41,
+    "why": "last step 0.7 px after 0.41 px (bound 1.41)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "faces": {
+    "ok": true,
+    "why": "0 px of form ink beyond the plate over 110 screencast sample(s) (bound 2)"
+   },
+   "summary": "D 142.22 px (333.09→190.88); step ×0.65; dead; window 252 ms (allow 259.6, clock 214.2); trajectory worst 0.42 px (0.3 % of D) from the rung's analytic spring (tol 6.69); terminal last step 0.7 px after 0.41 px (bound 1.41); owners 0; faces 0 px of form ink beyond the plate over 110 screencast sample(s) (bound 2)",
+   "load": 19.07
+  }
+ ]
+}
