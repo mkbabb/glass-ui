@@ -1,0 +1,3066 @@
+{
+ "tolerances": {
+  "E0_px": 0.5,
+  "NR_px": 0.5,
+  "E1_nrms": 0.01,
+  "C_nrms": 0.01,
+  "linear_equal": "|dy| <= 1e-4, |dx| <= 1e-3"
+ },
+ "apple": {
+  "intro-jump-r1": {
+   "load": [
+    "{ 16.71 23.79 23.62 }",
+    "{ 15.85 23.49 23.52 }"
+   ],
+   "frameDt": {
+    "n": 468,
+    "p50": 7.7,
+    "p95": 9.2,
+    "max": 10.2
+   },
+   "E1_E4": {
+    "parts": {
+     "E1": true,
+     "E2": true,
+     "E3": true,
+     "E4": true
+    },
+    "E1_rise_nrms": 0.0015,
+    "E2": 1.029,
+    "E3_onsets": [
+     [
+      746.0,
+      746.0,
+      746.0,
+      746.0,
+      746.0,
+      746.0,
+      746.0
+     ],
+     [
+      762.3,
+      790.6,
+      812.0,
+      827.7,
+      841.9,
+      857.9,
+      878.6
+     ]
+    ],
+    "E4": {
+     "overlap_on_first_frame": true,
+     "frames_both_visible": 72,
+     "split_frames_ms": [],
+     "shape0_hidden_ms": 529.1,
+     "button_first_painted_inside_pill": true
+    }
+   },
+   "T_animations_on_aap_subtree": [
+    {
+     "type": "CSSAnimation",
+     "name": "aap-animate-progress",
+     "easing": "linear",
+     "duration": 6150,
+     "delay": 0,
+     "target": "dotnav-link current",
+     "pseudo": "::after"
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 940,
+     "target": "play-pause-button all-access-pass__play-",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "transform",
+     "easing": "ease-out",
+     "duration": 200,
+     "delay": 940,
+     "target": "play-pause-button all-access-pass__play-",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item current aap-media-card-galle",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    }
+   ],
+   "C": {
+    "channels": {
+     "rise (P-05)": {
+      "travel": 223.1675,
+      "onset_ms": 45.6,
+      "free_fit": {
+       "nrms": 0.0015,
+       "omega0": 10.37,
+       "zeta": 0.414,
+       "response_s": 0.606
+      }
+     },
+     "width (P-08)": {
+      "travel": 217.29,
+      "onset_ms": 327.4,
+      "spring_segment_from_ms": 515.3,
+      "spring_onset_ms": 529.1,
+      "free_fit": {
+       "nrms": 0.0018,
+       "omega0": 10.48,
+       "zeta": 0.52,
+       "response_s": 0.6
+      }
+     },
+     "dots x (P-11)": {
+      "travel": 36.7407,
+      "onset_ms": 762.3,
+      "free_fit": {
+       "nrms": 0.0012,
+       "omega0": 15.65,
+       "zeta": 0.778,
+       "response_s": 0.401
+      }
+     },
+     "capsule --progress-intro (P-12)": {
+      "travel": 1.0206,
+      "onset_ms": 762.3,
+      "free_fit": {
+       "nrms": 0.0012,
+       "omega0": 15.65,
+       "zeta": 0.778,
+       "response_s": 0.401
+      }
+     },
+     "glyph opacity (P-13)": {
+      "travel": 1.0,
+      "onset_ms": 948.7
+     },
+     "glyph scale (P-13)": {
+      "travel": 0.5,
+      "onset_ms": 941.6
+     },
+     "material blur (P-14)": {
+      "travel": 7.0,
+      "onset_ms": 1024.6,
+      "free_fit": {
+       "nrms": 0.0033,
+       "omega0": 9.72,
+       "zeta": 1.0,
+       "response_s": 0.646
+      }
+     },
+     "material --alpha (P-14)": {
+      "travel": 1.0,
+      "onset_ms": 1024.6
+     }
+    },
+    "all_moved": true,
+    "spring_fits_le_1pct": true,
+    "order": [
+     [
+      "rise (P-05)",
+      "<",
+      "width (P-08)",
+      "True"
+     ],
+     [
+      "dots x (P-11)",
+      "<=",
+      "capsule --progress-intro (P-12)",
+      "True"
+     ],
+     [
+      "capsule --progress-intro (P-12)",
+      "<",
+      "glyph opacity (P-13)",
+      "True"
+     ],
+     [
+      "glyph opacity (P-13)",
+      "<",
+      "material blur (P-14)",
+      "True"
+     ],
+     [
+      "width (P-08)",
+      "<",
+      "material blur (P-14)",
+      "True"
+     ]
+    ],
+    "pass": "True"
+   },
+   "T_geometric": {
+    "animations_moving_rise_or_width": [],
+    "branch": "script-driven (no Animation)",
+    "pass": true
+   }
+  },
+  "intro-jump-r2": {
+   "load": [
+    "{ 16.44 21.89 22.89 }",
+    "{ 15.45 21.50 22.74 }"
+   ],
+   "frameDt": {
+    "n": 457,
+    "p50": 7.8,
+    "p95": 9.5,
+    "max": 10.9
+   },
+   "E1_E4": {
+    "parts": {
+     "E1": true,
+     "E2": true,
+     "E3": true,
+     "E4": true
+    },
+    "E1_rise_nrms": 0.0021,
+    "E2": 1.027,
+    "E3_onsets": [
+     [
+      747.7,
+      747.7,
+      747.7,
+      747.7,
+      747.7,
+      747.7,
+      747.7
+     ],
+     [
+      755.7,
+      777.8,
+      793.3,
+      822.5,
+      844.3,
+      859.9,
+      874.5
+     ]
+    ],
+    "E4": {
+     "overlap_on_first_frame": true,
+     "frames_both_visible": 70,
+     "split_frames_ms": [],
+     "shape0_hidden_ms": 526.5,
+     "button_first_painted_inside_pill": true
+    }
+   },
+   "T_animations_on_aap_subtree": [
+    {
+     "type": "CSSAnimation",
+     "name": "aap-animate-progress",
+     "easing": "linear",
+     "duration": 6150,
+     "delay": 0,
+     "target": "dotnav-link current",
+     "pseudo": "::after"
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 940,
+     "target": "play-pause-button all-access-pass__play-",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "transform",
+     "easing": "ease-out",
+     "duration": 200,
+     "delay": 940,
+     "target": "play-pause-button all-access-pass__play-",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item current aap-media-card-galle",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    }
+   ],
+   "C": {
+    "channels": {
+     "rise (P-05)": {
+      "travel": 223.1707,
+      "onset_ms": 45.1,
+      "free_fit": {
+       "nrms": 0.002,
+       "omega0": 10.36,
+       "zeta": 0.414,
+       "response_s": 0.606
+      }
+     },
+     "width (P-08)": {
+      "travel": 217.28,
+      "onset_ms": 333.3,
+      "spring_segment_from_ms": 518.0,
+      "spring_onset_ms": 526.5,
+      "free_fit": {
+       "nrms": 0.0022,
+       "omega0": 10.49,
+       "zeta": 0.52,
+       "response_s": 0.599
+      }
+     },
+     "dots x (P-11)": {
+      "travel": 36.7396,
+      "onset_ms": 763.9,
+      "free_fit": {
+       "nrms": 0.0013,
+       "omega0": 15.65,
+       "zeta": 0.779,
+       "response_s": 0.401
+      }
+     },
+     "capsule --progress-intro (P-12)": {
+      "travel": 1.0205,
+      "onset_ms": 763.9,
+      "free_fit": {
+       "nrms": 0.0013,
+       "omega0": 15.65,
+       "zeta": 0.779,
+       "response_s": 0.401
+      }
+     },
+     "glyph opacity (P-13)": {
+      "travel": 1.0,
+      "onset_ms": 944.8
+     },
+     "glyph scale (P-13)": {
+      "travel": 0.5,
+      "onset_ms": 944.8
+     },
+     "material blur (P-14)": {
+      "travel": 7.0,
+      "onset_ms": 1030.1,
+      "free_fit": {
+       "nrms": 0.0034,
+       "omega0": 9.73,
+       "zeta": 1.0,
+       "response_s": 0.646
+      }
+     },
+     "material --alpha (P-14)": {
+      "travel": 1.0,
+      "onset_ms": 1030.1
+     }
+    },
+    "all_moved": true,
+    "spring_fits_le_1pct": true,
+    "order": [
+     [
+      "rise (P-05)",
+      "<",
+      "width (P-08)",
+      "True"
+     ],
+     [
+      "dots x (P-11)",
+      "<=",
+      "capsule --progress-intro (P-12)",
+      "True"
+     ],
+     [
+      "capsule --progress-intro (P-12)",
+      "<",
+      "glyph opacity (P-13)",
+      "True"
+     ],
+     [
+      "glyph opacity (P-13)",
+      "<",
+      "material blur (P-14)",
+      "True"
+     ],
+     [
+      "width (P-08)",
+      "<",
+      "material blur (P-14)",
+      "True"
+     ]
+    ],
+    "pass": "True"
+   },
+   "T_geometric": {
+    "animations_moving_rise_or_width": [],
+    "branch": "script-driven (no Animation)",
+    "pass": true
+   }
+  },
+  "intro-wheel-r1": {
+   "load": [
+    "{ 13.15 22.25 23.07 }",
+    "{ 14.47 22.23 23.05 }"
+   ],
+   "frameDt": {
+    "n": 761,
+    "p50": 7.7,
+    "p95": 9.1,
+    "max": 25
+   },
+   "E1_E4": {
+    "parts": {
+     "E1": true,
+     "E2": true,
+     "E3": true,
+     "E4": true
+    },
+    "E1_rise_nrms": 0.0016,
+    "E2": 1.028,
+    "E3_onsets": [
+     [
+      741.3,
+      741.3,
+      741.3,
+      741.3,
+      741.3,
+      741.3,
+      741.3
+     ],
+     [
+      746.9,
+      770.4,
+      799.9,
+      813.5,
+      837.3,
+      851.0,
+      866.5
+     ]
+    ],
+    "E4": {
+     "overlap_on_first_frame": true,
+     "frames_both_visible": 71,
+     "split_frames_ms": [],
+     "shape0_hidden_ms": 524.4,
+     "button_first_painted_inside_pill": true
+    }
+   },
+   "T_animations_on_aap_subtree": [
+    {
+     "type": "CSSAnimation",
+     "name": "aap-animate-progress",
+     "easing": "linear",
+     "duration": 6150,
+     "delay": 0,
+     "target": "dotnav-link current",
+     "pseudo": "::after"
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 940,
+     "target": "play-pause-button all-access-pass__play-",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "transform",
+     "easing": "ease-out",
+     "duration": 200,
+     "delay": 940,
+     "target": "play-pause-button all-access-pass__play-",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item current aap-media-card-galle",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    }
+   ],
+   "C": {
+    "channels": {
+     "rise (P-05)": {
+      "travel": 223.1706,
+      "onset_ms": 50.8,
+      "free_fit": {
+       "nrms": 0.0016,
+       "omega0": 10.37,
+       "zeta": 0.414,
+       "response_s": 0.606
+      }
+     },
+     "width (P-08)": {
+      "travel": 217.28,
+      "onset_ms": 321.1,
+      "spring_segment_from_ms": 511.7,
+      "spring_onset_ms": 517.2,
+      "free_fit": {
+       "nrms": 0.0017,
+       "omega0": 10.47,
+       "zeta": 0.52,
+       "response_s": 0.6
+      }
+     },
+     "dots x (P-11)": {
+      "travel": 36.7404,
+      "onset_ms": 754.1,
+      "free_fit": {
+       "nrms": 0.0015,
+       "omega0": 15.69,
+       "zeta": 0.779,
+       "response_s": 0.401
+      }
+     },
+     "capsule --progress-intro (P-12)": {
+      "travel": 1.0206,
+      "onset_ms": 754.1,
+      "free_fit": {
+       "nrms": 0.0015,
+       "omega0": 15.69,
+       "zeta": 0.779,
+       "response_s": 0.401
+      }
+     },
+     "glyph opacity (P-13)": {
+      "travel": 1.0,
+      "onset_ms": 945.4
+     },
+     "glyph scale (P-13)": {
+      "travel": 0.5,
+      "onset_ms": 945.4
+     },
+     "material blur (P-14)": {
+      "travel": 7.0,
+      "onset_ms": 1017.7,
+      "free_fit": {
+       "nrms": 0.0034,
+       "omega0": 9.72,
+       "zeta": 1.0,
+       "response_s": 0.646
+      }
+     },
+     "material --alpha (P-14)": {
+      "travel": 1.0,
+      "onset_ms": 1017.7
+     }
+    },
+    "all_moved": true,
+    "spring_fits_le_1pct": true,
+    "order": [
+     [
+      "rise (P-05)",
+      "<",
+      "width (P-08)",
+      "True"
+     ],
+     [
+      "dots x (P-11)",
+      "<=",
+      "capsule --progress-intro (P-12)",
+      "True"
+     ],
+     [
+      "capsule --progress-intro (P-12)",
+      "<",
+      "glyph opacity (P-13)",
+      "True"
+     ],
+     [
+      "glyph opacity (P-13)",
+      "<",
+      "material blur (P-14)",
+      "True"
+     ],
+     [
+      "width (P-08)",
+      "<",
+      "material blur (P-14)",
+      "True"
+     ]
+    ],
+    "pass": "True"
+   },
+   "T_geometric": {
+    "animations_moving_rise_or_width": [],
+    "branch": "script-driven (no Animation)",
+    "pass": true
+   }
+  },
+  "intro-wheel-r2": {
+   "load": [
+    "{ 15.45 21.50 22.74 }",
+    "{ 19.41 22.08 22.93 }"
+   ],
+   "frameDt": {
+    "n": 762,
+    "p50": 7.7,
+    "p95": 9.1,
+    "max": 23.2
+   },
+   "E1_E4": {
+    "parts": {
+     "E1": true,
+     "E2": true,
+     "E3": true,
+     "E4": true
+    },
+    "E1_rise_nrms": 0.0017,
+    "E2": 1.027,
+    "E3_onsets": [
+     [
+      746.9,
+      746.9,
+      746.9,
+      746.9,
+      746.9,
+      746.9,
+      746.9
+     ],
+     [
+      754.0,
+      769.0,
+      805.9,
+      821.9,
+      835.5,
+      850.1,
+      888.7
+     ]
+    ],
+    "E4": {
+     "overlap_on_first_frame": true,
+     "frames_both_visible": 71,
+     "split_frames_ms": [],
+     "shape0_hidden_ms": 521.1,
+     "button_first_painted_inside_pill": true
+    }
+   },
+   "T_animations_on_aap_subtree": [
+    {
+     "type": "CSSAnimation",
+     "name": "aap-animate-progress",
+     "easing": "linear",
+     "duration": 6150,
+     "delay": 0,
+     "target": "dotnav-link current",
+     "pseudo": "::after"
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 940,
+     "target": "play-pause-button all-access-pass__play-",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "transform",
+     "easing": "ease-out",
+     "duration": 200,
+     "delay": 940,
+     "target": "play-pause-button all-access-pass__play-",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item current aap-media-card-galle",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    }
+   ],
+   "C": {
+    "channels": {
+     "rise (P-05)": {
+      "travel": 223.1709,
+      "onset_ms": 59.3,
+      "free_fit": {
+       "nrms": 0.0017,
+       "omega0": 10.38,
+       "zeta": 0.413,
+       "response_s": 0.605
+      }
+     },
+     "width (P-08)": {
+      "travel": 217.28,
+      "onset_ms": 321.9,
+      "spring_segment_from_ms": 513.0,
+      "spring_onset_ms": 521.1,
+      "free_fit": {
+       "nrms": 0.0015,
+       "omega0": 10.49,
+       "zeta": 0.52,
+       "response_s": 0.599
+      }
+     },
+     "dots x (P-11)": {
+      "travel": 36.742,
+      "onset_ms": 754.0,
+      "free_fit": {
+       "nrms": 0.0012,
+       "omega0": 15.72,
+       "zeta": 0.779,
+       "response_s": 0.4
+      }
+     },
+     "capsule --progress-intro (P-12)": {
+      "travel": 1.0206,
+      "onset_ms": 754.0,
+      "free_fit": {
+       "nrms": 0.0012,
+       "omega0": 15.72,
+       "zeta": 0.779,
+       "response_s": 0.4
+      }
+     },
+     "glyph opacity (P-13)": {
+      "travel": 1.0,
+      "onset_ms": 946.4
+     },
+     "glyph scale (P-13)": {
+      "travel": 0.5,
+      "onset_ms": 946.4
+     },
+     "material blur (P-14)": {
+      "travel": 7.0,
+      "onset_ms": 1021.9,
+      "free_fit": {
+       "nrms": 0.0034,
+       "omega0": 9.74,
+       "zeta": 1.0,
+       "response_s": 0.645
+      }
+     },
+     "material --alpha (P-14)": {
+      "travel": 1.0,
+      "onset_ms": 1021.9
+     }
+    },
+    "all_moved": true,
+    "spring_fits_le_1pct": true,
+    "order": [
+     [
+      "rise (P-05)",
+      "<",
+      "width (P-08)",
+      "True"
+     ],
+     [
+      "dots x (P-11)",
+      "<=",
+      "capsule --progress-intro (P-12)",
+      "True"
+     ],
+     [
+      "capsule --progress-intro (P-12)",
+      "<",
+      "glyph opacity (P-13)",
+      "True"
+     ],
+     [
+      "glyph opacity (P-13)",
+      "<",
+      "material blur (P-14)",
+      "True"
+     ],
+     [
+      "width (P-08)",
+      "<",
+      "material blur (P-14)",
+      "True"
+     ]
+    ],
+    "pass": "True"
+   },
+   "T_geometric": {
+    "animations_moving_rise_or_width": [],
+    "branch": "script-driven (no Animation)",
+    "pass": true
+   }
+  },
+  "intro-outback-r1": {
+   "load": [
+    "{ 13.71 21.94 22.94 }",
+    "{ 16.22 21.94 22.91 }"
+   ],
+   "frameDt": {
+    "n": 1514,
+    "p50": 7.8,
+    "p95": 9.6,
+    "max": 15.3
+   },
+   "E1_E4": {
+    "parts": {
+     "E1": true,
+     "E2": true,
+     "E3": true,
+     "E4": true
+    },
+    "E1_rise_nrms": 0.0015,
+    "E2": 1.026,
+    "E3_onsets": [
+     [
+      749.9,
+      749.9,
+      749.9,
+      749.9,
+      749.9,
+      749.9,
+      749.9
+     ],
+     [
+      759.1,
+      772.8,
+      796.3,
+      825,
+      839.2,
+      854.9,
+      892.3
+     ]
+    ],
+    "E4": {
+     "overlap_on_first_frame": true,
+     "frames_both_visible": 71,
+     "split_frames_ms": [],
+     "shape0_hidden_ms": 530,
+     "button_first_painted_inside_pill": true
+    }
+   },
+   "T_animations_on_aap_subtree": [
+    {
+     "type": "CSSAnimation",
+     "name": "aap-animate-progress",
+     "easing": "linear",
+     "duration": 6150,
+     "delay": 0,
+     "target": "dotnav-link current",
+     "pseudo": "::after"
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 940,
+     "target": "play-pause-button all-access-pass__play-",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "transform",
+     "easing": "ease-out",
+     "duration": 200,
+     "delay": 940,
+     "target": "play-pause-button all-access-pass__play-",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item current aap-media-card-galle",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    },
+    {
+     "type": "CSSTransition",
+     "name": "opacity",
+     "easing": "ease-in",
+     "duration": 100,
+     "delay": 740,
+     "target": "dotnav-item aap-media-card-gallery__dotn",
+     "pseudo": null
+    }
+   ],
+   "C": {
+    "channels": {
+     "rise (P-05)": {
+      "travel": 223.1592,
+      "onset_ms": 55.4,
+      "free_fit": {
+       "nrms": 0.0015,
+       "omega0": 10.38,
+       "zeta": 0.413,
+       "response_s": 0.605
+      }
+     },
+     "width (P-08)": {
+      "travel": 217.31,
+      "onset_ms": 328.4,
+      "spring_segment_from_ms": 513.3,
+      "spring_onset_ms": 530.0,
+      "free_fit": {
+       "nrms": 0.0017,
+       "omega0": 10.47,
+       "zeta": 0.52,
+       "response_s": 0.6
+      }
+     },
+     "dots x (P-11)": {
+      "travel": 36.7396,
+      "onset_ms": 759.1,
+      "free_fit": {
+       "nrms": 0.0015,
+       "omega0": 15.66,
+       "zeta": 0.778,
+       "response_s": 0.401
+      }
+     },
+     "capsule --progress-intro (P-12)": {
+      "travel": 1.0205,
+      "onset_ms": 759.1,
+      "free_fit": {
+       "nrms": 0.0015,
+       "omega0": 15.67,
+       "zeta": 0.778,
+       "response_s": 0.401
+      }
+     },
+     "glyph opacity (P-13)": {
+      "travel": 1.0,
+      "onset_ms": 954.9
+     },
+     "glyph scale (P-13)": {
+      "travel": 0.5,
+      "onset_ms": 954.9
+     },
+     "material blur (P-14)": {
+      "travel": 7.0,
+      "onset_ms": 1029.7,
+      "free_fit": {
+       "nrms": 0.0034,
+       "omega0": 9.73,
+       "zeta": 1.0,
+       "response_s": 0.646
+      }
+     },
+     "material --alpha (P-14)": {
+      "travel": 1.0,
+      "onset_ms": 1029.7
+     }
+    },
+    "all_moved": true,
+    "spring_fits_le_1pct": true,
+    "order": [
+     [
+      "rise (P-05)",
+      "<",
+      "width (P-08)",
+      "True"
+     ],
+     [
+      "dots x (P-11)",
+      "<=",
+      "capsule --progress-intro (P-12)",
+      "True"
+     ],
+     [
+      "capsule --progress-intro (P-12)",
+      "<",
+      "glyph opacity (P-13)",
+      "True"
+     ],
+     [
+      "glyph opacity (P-13)",
+      "<",
+      "material blur (P-14)",
+      "True"
+     ],
+     [
+      "width (P-08)",
+      "<",
+      "material blur (P-14)",
+      "True"
+     ]
+    ],
+    "pass": "True"
+   },
+   "T_geometric": {
+    "animations_moving_rise_or_width": [],
+    "branch": "script-driven (no Animation)",
+    "pass": true
+   },
+   "NR": {
+    "settled_at_out_mark": {
+     "rise": 0.0,
+     "width": 240,
+     "pi": 1.0,
+     "blur": 7.0,
+     "blob_display": "none",
+     "cls_activated": true
+    },
+    "max_dev_after_out_px": {
+     "rise": 0.0,
+     "width": 0,
+     "pi": 0.0,
+     "blur": 0.0
+    },
+    "blob_ever_shown_again": false,
+    "class_ever_left_activated": false,
+    "frames": 1055,
+    "marks_ms": {
+     "jump": 0.0,
+     "outAbove": 3503.2,
+     "inA": 5006.5,
+     "outBelow": 7511.5,
+     "inB": 9016.5
+    },
+    "pass": true
+   }
+  },
+  "E0-r1": {
+   "wheel vs jump, aligned at each run's fitted rise onset, 0-2 s": {
+    "rise": {
+     "max_abs_diff_equal_time_px": 2.16,
+     "max_time_shift_to_0p5px_ms": 2.75
+    },
+    "width": {
+     "max_abs_diff_equal_time_px": 21.109,
+     "max_time_shift_to_0p5px_ms": 20.0
+    }
+   },
+   "pass (shift <= 25 ms: one 60 Hz page frame + one 120 Hz sample)": true
+  },
+  "E0-r2": {
+   "wheel vs jump, aligned at each run's fitted rise onset, 0-2 s": {
+    "rise": {
+     "max_abs_diff_equal_time_px": 3.229,
+     "max_time_shift_to_0p5px_ms": 2.75
+    },
+    "width": {
+     "max_abs_diff_equal_time_px": 21.347,
+     "max_time_shift_to_0p5px_ms": 20.25
+    }
+   },
+   "pass (shift <= 25 ms: one 60 Hz page frame + one 120 Hz sample)": true
+  }
+ },
+ "gui": {
+  "enter3-wheel-1440-h500": {
+   "load": [
+    "{ 7.43 14.12 19.82 }",
+    "{ 7.68 13.95 19.69 }"
+   ],
+   "frameDt": {
+    "n": 600,
+    "p50": 7.7,
+    "p95": 9.3,
+    "max": 14.1
+   },
+   "plantArmed": null,
+   "out_state": {
+    "carTop": -344.796875,
+    "carBottom": -104.796875,
+    "H": 500
+   },
+   "out_state_2": null,
+   "scored_against_row": "apple-rise (0.606, 0.414)",
+   "E1_E4": {
+    "parts": {
+     "E1": false,
+     "E2": false,
+     "E3": false,
+     "E4": false
+    },
+    "E1_fits": {},
+    "E2": 0.0,
+    "E4": "one shape"
+   },
+   "T": {
+    "animations_moving_geometry": [],
+    "branch": "script-driven (no Animation)",
+    "pass": true
+   },
+   "C": {
+    "channels": {
+     "rise (P-05)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "width (P-08)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "dots x (P-11)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "capsule --progress-intro (P-12)": {
+      "travel": 20.68,
+      "onset_ms": 1542.3
+     },
+     "glyph opacity (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "glyph scale (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material blur (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material --alpha (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     }
+    },
+    "all_moved": false,
+    "spring_fits_le_1pct": false,
+    "order": [
+     [
+      "rise (P-05)",
+      "<",
+      "width (P-08)",
+      false
+     ],
+     [
+      "dots x (P-11)",
+      "<=",
+      "capsule --progress-intro (P-12)",
+      false
+     ],
+     [
+      "capsule --progress-intro (P-12)",
+      "<",
+      "glyph opacity (P-13)",
+      false
+     ],
+     [
+      "glyph opacity (P-13)",
+      "<",
+      "material blur (P-14)",
+      false
+     ],
+     [
+      "width (P-08)",
+      "<",
+      "material blur (P-14)",
+      false
+     ]
+    ],
+    "pass": false
+   },
+   "errors": []
+  },
+  "enter3-jump-1440-h500": {
+   "load": [
+    "{ 8.27 13.96 19.67 }",
+    "{ 8.41 13.90 19.61 }"
+   ],
+   "frameDt": {
+    "n": 376,
+    "p50": 7.7,
+    "p95": 9.2,
+    "max": 10.2
+   },
+   "plantArmed": null,
+   "out_state": {
+    "carTop": -344.796875,
+    "carBottom": -104.796875,
+    "H": 500
+   },
+   "out_state_2": null,
+   "scored_against_row": "apple-rise (0.606, 0.414)",
+   "E1_E4": {
+    "parts": {
+     "E1": false,
+     "E2": false,
+     "E3": false,
+     "E4": false
+    },
+    "E1_fits": {},
+    "E2": 0.0,
+    "E4": "one shape"
+   },
+   "T": {
+    "animations_moving_geometry": [],
+    "branch": "script-driven (no Animation)",
+    "pass": true
+   },
+   "C": {
+    "channels": {
+     "rise (P-05)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "width (P-08)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "dots x (P-11)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "capsule --progress-intro (P-12)": {
+      "travel": 20.68,
+      "onset_ms": 1541.5
+     },
+     "glyph opacity (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "glyph scale (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material blur (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material --alpha (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     }
+    },
+    "all_moved": false,
+    "spring_fits_le_1pct": false,
+    "order": [
+     [
+      "rise (P-05)",
+      "<",
+      "width (P-08)",
+      false
+     ],
+     [
+      "dots x (P-11)",
+      "<=",
+      "capsule --progress-intro (P-12)",
+      false
+     ],
+     [
+      "capsule --progress-intro (P-12)",
+      "<",
+      "glyph opacity (P-13)",
+      false
+     ],
+     [
+      "glyph opacity (P-13)",
+      "<",
+      "material blur (P-14)",
+      false
+     ],
+     [
+      "width (P-08)",
+      "<",
+      "material blur (P-14)",
+      false
+     ]
+    ],
+    "pass": false
+   },
+   "errors": []
+  },
+  "enter3-outback-1440-h500": {
+   "load": [
+    "{ 8.77 13.88 19.57 }",
+    "{ 8.79 13.80 19.51 }"
+   ],
+   "frameDt": {
+    "n": 871,
+    "p50": 7.7,
+    "p95": 9.4,
+    "max": 15.7
+   },
+   "plantArmed": null,
+   "out_state": {
+    "carTop": -344.796875,
+    "carBottom": -104.796875,
+    "H": 500
+   },
+   "out_state_2": {
+    "carTop": -344.796875,
+    "carBottom": -104.796875
+   },
+   "scored_against_row": "apple-rise (0.606, 0.414)",
+   "E1_E4": {
+    "parts": {
+     "E1": false,
+     "E2": false,
+     "E3": false,
+     "E4": false
+    },
+    "E1_fits": {},
+    "E2": 0.0,
+    "E4": "one shape"
+   },
+   "T": {
+    "animations_moving_geometry": [],
+    "branch": "script-driven (no Animation)",
+    "pass": true
+   },
+   "C": {
+    "channels": {
+     "rise (P-05)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "width (P-08)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "dots x (P-11)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "capsule --progress-intro (P-12)": {
+      "travel": 20.69,
+      "onset_ms": 1536.2
+     },
+     "glyph opacity (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "glyph scale (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material blur (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material --alpha (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     }
+    },
+    "all_moved": false,
+    "spring_fits_le_1pct": false,
+    "order": [
+     [
+      "rise (P-05)",
+      "<",
+      "width (P-08)",
+      false
+     ],
+     [
+      "dots x (P-11)",
+      "<=",
+      "capsule --progress-intro (P-12)",
+      false
+     ],
+     [
+      "capsule --progress-intro (P-12)",
+      "<",
+      "glyph opacity (P-13)",
+      false
+     ],
+     [
+      "glyph opacity (P-13)",
+      "<",
+      "material blur (P-14)",
+      false
+     ],
+     [
+      "width (P-08)",
+      "<",
+      "material blur (P-14)",
+      false
+     ]
+    ],
+    "pass": false
+   },
+   "errors": [],
+   "NR": {
+    "max_rise_dev_after_out_px": 0.0,
+    "max_width_dev_after_out_px": 0,
+    "pass": true
+   }
+  },
+  "enter3-wheel-1440-h500-plant-linear": {
+   "load": [
+    "{ 8.65 13.69 19.43 }",
+    "{ 8.89 13.58 19.33 }"
+   ],
+   "frameDt": {
+    "n": 603,
+    "p50": 7.7,
+    "p95": 9.3,
+    "max": 10.1
+   },
+   "plantArmed": true,
+   "out_state": {
+    "carTop": -344.796875,
+    "carBottom": -104.796875,
+    "H": 500
+   },
+   "out_state_2": null,
+   "scored_against_row": "apple-rise (0.606, 0.414)",
+   "E1_E4": {
+    "parts": {
+     "E1": true,
+     "E2": true,
+     "E3": true,
+     "E4": true
+    },
+    "E1_fits": {
+     "rise": {
+      "nrms": 0.0021,
+      "onset_ms": 859.9
+     }
+    },
+    "E2": 1.019,
+    "E4": {
+     "overlap_on_first_frame": true,
+     "frames_both_visible": 187,
+     "split_frames_ms": [],
+     "shape0_hidden_ms": 1387.7,
+     "button_first_painted_inside_pill": "no button"
+    }
+   },
+   "T": {
+    "animations_moving_geometry": [
+     {
+      "type": "CSSAnimation",
+      "name": "__plantRise",
+      "props": [
+       "translate"
+      ],
+      "timeline": "DocumentTimeline",
+      "duration_ms": 1600,
+      "easing_head": "linear(0 0%, 0.07956 2.5641025641025643%, 0.27382 5.12820512",
+      "equals_token_row": [],
+      "ok": false
+     }
+    ],
+    "branch": "animation",
+    "pass": false
+   },
+   "C": {
+    "channels": {
+     "rise (P-05)": {
+      "travel": 222.81,
+      "onset_ms": 867.4,
+      "free_fit": {
+       "nrms": 0.0014,
+       "omega0": 10.31,
+       "zeta": 0.418,
+       "response_s": 0.609
+      }
+     },
+     "width (P-08)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "dots x (P-11)": {
+      "travel": 36.0,
+      "onset_ms": 859.9
+     },
+     "capsule --progress-intro (P-12)": {
+      "travel": 20.64,
+      "onset_ms": 1542.1
+     },
+     "glyph opacity (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "glyph scale (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material blur (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material --alpha (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     }
+    },
+    "all_moved": false,
+    "spring_fits_le_1pct": false,
+    "order": [
+     [
+      "rise (P-05)",
+      "<",
+      "width (P-08)",
+      false
+     ],
+     [
+      "dots x (P-11)",
+      "<=",
+      "capsule --progress-intro (P-12)",
+      "True"
+     ],
+     [
+      "capsule --progress-intro (P-12)",
+      "<",
+      "glyph opacity (P-13)",
+      false
+     ],
+     [
+      "glyph opacity (P-13)",
+      "<",
+      "material blur (P-14)",
+      false
+     ],
+     [
+      "width (P-08)",
+      "<",
+      "material blur (P-14)",
+      false
+     ]
+    ],
+    "pass": false
+   },
+   "errors": []
+  },
+  "enter3-jump-1440-h500-plant-linear": {
+   "load": [
+    "{ 9.46 13.62 19.31 }",
+    "{ 9.18 13.49 19.23 }"
+   ],
+   "frameDt": {
+    "n": 373,
+    "p50": 7.7,
+    "p95": 9.4,
+    "max": 10.2
+   },
+   "plantArmed": true,
+   "out_state": {
+    "carTop": -344.796875,
+    "carBottom": -104.796875,
+    "H": 500
+   },
+   "out_state_2": null,
+   "scored_against_row": "apple-rise (0.606, 0.414)",
+   "E1_E4": {
+    "parts": {
+     "E1": true,
+     "E2": true,
+     "E3": true,
+     "E4": true
+    },
+    "E1_fits": {
+     "rise": {
+      "nrms": 0.0024,
+      "onset_ms": 6.2
+     }
+    },
+    "E2": 1.02,
+    "E4": {
+     "overlap_on_first_frame": true,
+     "frames_both_visible": 73,
+     "split_frames_ms": [],
+     "shape0_hidden_ms": 533.5,
+     "button_first_painted_inside_pill": "no button"
+    }
+   },
+   "T": {
+    "animations_moving_geometry": [
+     {
+      "type": "CSSAnimation",
+      "name": "__plantRise",
+      "props": [
+       "translate"
+      ],
+      "timeline": "DocumentTimeline",
+      "duration_ms": 1600,
+      "easing_head": "linear(0 0%, 0.07956 2.5641025641025643%, 0.27382 5.12820512",
+      "equals_token_row": [],
+      "ok": false
+     }
+    ],
+    "branch": "animation",
+    "pass": false
+   },
+   "C": {
+    "channels": {
+     "rise (P-05)": {
+      "travel": 222.87,
+      "onset_ms": 13.7,
+      "free_fit": {
+       "nrms": 0.0018,
+       "omega0": 10.31,
+       "zeta": 0.418,
+       "response_s": 0.609
+      }
+     },
+     "width (P-08)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "dots x (P-11)": {
+      "travel": 36.0,
+      "onset_ms": 6.1
+     },
+     "capsule --progress-intro (P-12)": {
+      "travel": 20.67,
+      "onset_ms": 1534.7
+     },
+     "glyph opacity (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "glyph scale (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material blur (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material --alpha (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     }
+    },
+    "all_moved": false,
+    "spring_fits_le_1pct": false,
+    "order": [
+     [
+      "rise (P-05)",
+      "<",
+      "width (P-08)",
+      false
+     ],
+     [
+      "dots x (P-11)",
+      "<=",
+      "capsule --progress-intro (P-12)",
+      "True"
+     ],
+     [
+      "capsule --progress-intro (P-12)",
+      "<",
+      "glyph opacity (P-13)",
+      false
+     ],
+     [
+      "glyph opacity (P-13)",
+      "<",
+      "material blur (P-14)",
+      false
+     ],
+     [
+      "width (P-08)",
+      "<",
+      "material blur (P-14)",
+      false
+     ]
+    ],
+    "pass": false
+   },
+   "errors": []
+  },
+  "enter3-wheel-1440-h500-plant-token": {
+   "load": [
+    "{ 9.09 13.40 19.16 }",
+    "{ 8.52 13.21 19.06 }"
+   ],
+   "frameDt": {
+    "n": 599,
+    "p50": 7.7,
+    "p95": 9.3,
+    "max": 15.2
+   },
+   "plantArmed": true,
+   "out_state": {
+    "carTop": -344.796875,
+    "carBottom": -104.796875,
+    "H": 500
+   },
+   "out_state_2": null,
+   "scored_against_row": "panel (0.4, 0.71)",
+   "E1_E4": {
+    "parts": {
+     "E1": true,
+     "E2": true,
+     "E3": true,
+     "E4": true
+    },
+    "E1_fits": {
+     "rise": {
+      "nrms": 0.0005,
+      "onset_ms": 862.2
+     }
+    },
+    "E2": 0.533,
+    "E4": {
+     "overlap_on_first_frame": true,
+     "frames_both_visible": 188,
+     "split_frames_ms": [],
+     "shape0_hidden_ms": 1393.8,
+     "button_first_painted_inside_pill": "no button"
+    }
+   },
+   "T": {
+    "animations_moving_geometry": [
+     {
+      "type": "CSSAnimation",
+      "name": "__plantRise",
+      "props": [
+       "translate"
+      ],
+      "timeline": "DocumentTimeline",
+      "duration_ms": 450,
+      "easing_head": "linear(0 0%, 0.00971 2.041%, 0.03623 4.082%, 0.07594 6.122%,",
+      "equals_token_row": [
+       "panel"
+      ],
+      "ok": true
+     }
+    ],
+    "branch": "animation",
+    "pass": true
+   },
+   "C": {
+    "channels": {
+     "rise (P-05)": {
+      "travel": 187.56,
+      "onset_ms": 870.0,
+      "free_fit": {
+       "nrms": 0.0004,
+       "omega0": 15.7,
+       "zeta": 0.71,
+       "response_s": 0.4
+      }
+     },
+     "width (P-08)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "dots x (P-11)": {
+      "travel": 36.0,
+      "onset_ms": 862.3
+     },
+     "capsule --progress-intro (P-12)": {
+      "travel": 20.66,
+      "onset_ms": 1537.1
+     },
+     "glyph opacity (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "glyph scale (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material blur (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material --alpha (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     }
+    },
+    "all_moved": false,
+    "spring_fits_le_1pct": false,
+    "order": [
+     [
+      "rise (P-05)",
+      "<",
+      "width (P-08)",
+      false
+     ],
+     [
+      "dots x (P-11)",
+      "<=",
+      "capsule --progress-intro (P-12)",
+      "True"
+     ],
+     [
+      "capsule --progress-intro (P-12)",
+      "<",
+      "glyph opacity (P-13)",
+      false
+     ],
+     [
+      "glyph opacity (P-13)",
+      "<",
+      "material blur (P-14)",
+      false
+     ],
+     [
+      "width (P-08)",
+      "<",
+      "material blur (P-14)",
+      false
+     ]
+    ],
+    "pass": false
+   },
+   "errors": []
+  },
+  "enter3-jump-1440-h500-plant-token": {
+   "load": [
+    "{ 8.96 13.23 19.03 }",
+    "{ 8.48 13.06 18.94 }"
+   ],
+   "frameDt": {
+    "n": 373,
+    "p50": 7.8,
+    "p95": 9.3,
+    "max": 10.2
+   },
+   "plantArmed": true,
+   "out_state": {
+    "carTop": -344.796875,
+    "carBottom": -104.796875,
+    "H": 500
+   },
+   "out_state_2": null,
+   "scored_against_row": "panel (0.4, 0.71)",
+   "E1_E4": {
+    "parts": {
+     "E1": true,
+     "E2": true,
+     "E3": true,
+     "E4": true
+    },
+    "E1_fits": {
+     "rise": {
+      "nrms": 0.0005,
+      "onset_ms": 6.0
+     }
+    },
+    "E2": 0.537,
+    "E4": {
+     "overlap_on_first_frame": true,
+     "frames_both_visible": 73,
+     "split_frames_ms": [],
+     "shape0_hidden_ms": 534.9,
+     "button_first_painted_inside_pill": "no button"
+    }
+   },
+   "T": {
+    "animations_moving_geometry": [
+     {
+      "type": "CSSAnimation",
+      "name": "__plantRise",
+      "props": [
+       "translate"
+      ],
+      "timeline": "DocumentTimeline",
+      "duration_ms": 450,
+      "easing_head": "linear(0 0%, 0.00971 2.041%, 0.03623 4.082%, 0.07594 6.122%,",
+      "equals_token_row": [
+       "panel"
+      ],
+      "ok": true
+     }
+    ],
+    "branch": "animation",
+    "pass": true
+   },
+   "C": {
+    "channels": {
+     "rise (P-05)": {
+      "travel": 187.56,
+      "onset_ms": 13.5,
+      "free_fit": {
+       "nrms": 0.0005,
+       "omega0": 15.7,
+       "zeta": 0.71,
+       "response_s": 0.4
+      }
+     },
+     "width (P-08)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "dots x (P-11)": {
+      "travel": 36.0,
+      "onset_ms": 6.0
+     },
+     "capsule --progress-intro (P-12)": {
+      "travel": 20.66,
+      "onset_ms": 1538.1
+     },
+     "glyph opacity (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "glyph scale (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material blur (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material --alpha (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     }
+    },
+    "all_moved": false,
+    "spring_fits_le_1pct": false,
+    "order": [
+     [
+      "rise (P-05)",
+      "<",
+      "width (P-08)",
+      false
+     ],
+     [
+      "dots x (P-11)",
+      "<=",
+      "capsule --progress-intro (P-12)",
+      "True"
+     ],
+     [
+      "capsule --progress-intro (P-12)",
+      "<",
+      "glyph opacity (P-13)",
+      false
+     ],
+     [
+      "glyph opacity (P-13)",
+      "<",
+      "material blur (P-14)",
+      false
+     ],
+     [
+      "width (P-08)",
+      "<",
+      "material blur (P-14)",
+      false
+     ]
+    ],
+    "pass": false
+   },
+   "errors": []
+  },
+  "enter3-jump-1440-h500-plant-rafspring": {
+   "load": [
+    "{ 8.92 13.07 18.91 }",
+    "{ 9.89 13.20 18.92 }"
+   ],
+   "frameDt": {
+    "n": 375,
+    "p50": 7.8,
+    "p95": 9.2,
+    "max": 10.1
+   },
+   "plantArmed": true,
+   "out_state": {
+    "carTop": -344.796875,
+    "carBottom": -104.796875,
+    "H": 500
+   },
+   "out_state_2": null,
+   "scored_against_row": "apple-rise (0.606, 0.414)",
+   "E1_E4": {
+    "parts": {
+     "E1": true,
+     "E2": true,
+     "E3": true,
+     "E4": true
+    },
+    "E1_fits": {
+     "rise": {
+      "nrms": 0.0019,
+      "onset_ms": 16.7
+     }
+    },
+    "E2": 1.026,
+    "E4": {
+     "overlap_on_first_frame": true,
+     "frames_both_visible": 73,
+     "split_frames_ms": [],
+     "shape0_hidden_ms": 538.5,
+     "button_first_painted_inside_pill": "no button"
+    }
+   },
+   "T": {
+    "animations_moving_geometry": [],
+    "branch": "script-driven (no Animation)",
+    "pass": true
+   },
+   "C": {
+    "channels": {
+     "rise (P-05)": {
+      "travel": 223.12,
+      "onset_ms": 30.4,
+      "free_fit": {
+       "nrms": 0.0019,
+       "omega0": 10.37,
+       "zeta": 0.414,
+       "response_s": 0.606
+      }
+     },
+     "width (P-08)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "dots x (P-11)": {
+      "travel": 36.0,
+      "onset_ms": 9.2
+     },
+     "capsule --progress-intro (P-12)": {
+      "travel": 20.67,
+      "onset_ms": 1539.4
+     },
+     "glyph opacity (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "glyph scale (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material blur (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material --alpha (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     }
+    },
+    "all_moved": false,
+    "spring_fits_le_1pct": false,
+    "order": [
+     [
+      "rise (P-05)",
+      "<",
+      "width (P-08)",
+      false
+     ],
+     [
+      "dots x (P-11)",
+      "<=",
+      "capsule --progress-intro (P-12)",
+      "True"
+     ],
+     [
+      "capsule --progress-intro (P-12)",
+      "<",
+      "glyph opacity (P-13)",
+      false
+     ],
+     [
+      "glyph opacity (P-13)",
+      "<",
+      "material blur (P-14)",
+      false
+     ],
+     [
+      "width (P-08)",
+      "<",
+      "material blur (P-14)",
+      false
+     ]
+    ],
+    "pass": false
+   },
+   "errors": []
+  },
+  "enter3-outback-1440-h500-plant-replay": {
+   "load": [
+    "{ 10.46 13.27 18.91 }",
+    "{ 11.08 13.31 18.86 }"
+   ],
+   "frameDt": {
+    "n": 870,
+    "p50": 7.7,
+    "p95": 9.3,
+    "max": 14.8
+   },
+   "plantArmed": true,
+   "out_state": {
+    "carTop": -344.796875,
+    "carBottom": -104.796875,
+    "H": 500
+   },
+   "out_state_2": {
+    "carTop": -344.796875,
+    "carBottom": -104.796875
+   },
+   "scored_against_row": "apple-rise (0.606, 0.414)",
+   "E1_E4": {
+    "parts": {
+     "E1": true,
+     "E2": true,
+     "E3": true,
+     "E4": true
+    },
+    "E1_fits": {
+     "rise": {
+      "nrms": 0.0024,
+      "onset_ms": 8.1
+     }
+    },
+    "E2": 1.019,
+    "E4": {
+     "overlap_on_first_frame": true,
+     "frames_both_visible": 73,
+     "split_frames_ms": [],
+     "shape0_hidden_ms": 537.4,
+     "button_first_painted_inside_pill": "no button"
+    }
+   },
+   "T": {
+    "animations_moving_geometry": [
+     {
+      "type": "CSSAnimation",
+      "name": "__plantRise",
+      "props": [
+       "translate"
+      ],
+      "timeline": "DocumentTimeline",
+      "duration_ms": 1600,
+      "easing_head": "linear(0 0%, 0.07956 2.5641025641025643%, 0.27382 5.12820512",
+      "equals_token_row": [],
+      "ok": false
+     }
+    ],
+    "branch": "animation",
+    "pass": false
+   },
+   "C": {
+    "channels": {
+     "rise (P-05)": {
+      "travel": 222.75,
+      "onset_ms": 13.8,
+      "free_fit": {
+       "nrms": 0.0018,
+       "omega0": 10.31,
+       "zeta": 0.418,
+       "response_s": 0.609
+      }
+     },
+     "width (P-08)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "dots x (P-11)": {
+      "travel": 36.0,
+      "onset_ms": 8.2
+     },
+     "capsule --progress-intro (P-12)": {
+      "travel": 20.64,
+      "onset_ms": 1537.5
+     },
+     "glyph opacity (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "glyph scale (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material blur (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material --alpha (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     }
+    },
+    "all_moved": false,
+    "spring_fits_le_1pct": false,
+    "order": [
+     [
+      "rise (P-05)",
+      "<",
+      "width (P-08)",
+      false
+     ],
+     [
+      "dots x (P-11)",
+      "<=",
+      "capsule --progress-intro (P-12)",
+      "True"
+     ],
+     [
+      "capsule --progress-intro (P-12)",
+      "<",
+      "glyph opacity (P-13)",
+      false
+     ],
+     [
+      "glyph opacity (P-13)",
+      "<",
+      "material blur (P-14)",
+      false
+     ],
+     [
+      "width (P-08)",
+      "<",
+      "material blur (P-14)",
+      false
+     ]
+    ],
+    "pass": false
+   },
+   "errors": [],
+   "NR": {
+    "max_rise_dev_after_out_px": 180.0,
+    "max_width_dev_after_out_px": 0,
+    "pass": false
+   }
+  },
+  "enter3-below-wheel-1440-h500-k2-plant-cascade": {
+   "load": [
+    "{ 8.94 16.29 21.13 }",
+    "{ 9.43 16.27 21.09 }"
+   ],
+   "frameDt": {
+    "n": 530,
+    "p50": 7.7,
+    "p95": 9.2,
+    "max": 17.6
+   },
+   "plantArmed": "cascade",
+   "out_state": {
+    "carTop": 432.703125,
+    "carBottom": 652.703125,
+    "H": 500
+   },
+   "out_state_2": null,
+   "scored_against_row": "apple-rise (0.606, 0.414)",
+   "E1_E4": {
+    "parts": {
+     "E1": false,
+     "E2": false,
+     "E3": false,
+     "E4": false
+    },
+    "E1_fits": {
+     "rise": {
+      "nrms": 0.1155,
+      "onset_ms": 525.5
+     }
+    },
+    "E2": 0.0,
+    "E4": "one shape"
+   },
+   "T": {
+    "animations_moving_geometry": [
+     {
+      "type": "CSSAnimation",
+      "name": "gl-cascade-build",
+      "props": [
+       "opacity",
+       "transform"
+      ],
+      "timeline": "ViewTimeline",
+      "duration_ms": "auto",
+      "easing_head": "linear(0 0%, 0.01048 2.041%, 0.03795 4.082%, 0.0774 6.122%, ",
+      "equals_token_row": [],
+      "ok": false
+     }
+    ],
+    "branch": "animation",
+    "pass": false
+   },
+   "C": {
+    "channels": {
+     "rise (P-05)": {
+      "travel": 20.0,
+      "onset_ms": 585.5,
+      "free_fit": {
+       "nrms": 0.0262,
+       "omega0": 80.0,
+       "zeta": 0.584,
+       "response_s": 0.079
+      }
+     },
+     "width (P-08)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "dots x (P-11)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "capsule --progress-intro (P-12)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "glyph opacity (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "glyph scale (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material blur (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material --alpha (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     }
+    },
+    "all_moved": false,
+    "spring_fits_le_1pct": false,
+    "order": [
+     [
+      "rise (P-05)",
+      "<",
+      "width (P-08)",
+      false
+     ],
+     [
+      "dots x (P-11)",
+      "<=",
+      "capsule --progress-intro (P-12)",
+      false
+     ],
+     [
+      "capsule --progress-intro (P-12)",
+      "<",
+      "glyph opacity (P-13)",
+      false
+     ],
+     [
+      "glyph opacity (P-13)",
+      "<",
+      "material blur (P-14)",
+      false
+     ],
+     [
+      "width (P-08)",
+      "<",
+      "material blur (P-14)",
+      false
+     ]
+    ],
+    "pass": false
+   },
+   "errors": []
+  },
+  "enter3-below-jump-1440-h500-k2-plant-cascade": {
+   "load": [
+    "{ 10.92 16.46 21.13 }",
+    "{ 11.24 16.44 21.10 }"
+   ],
+   "frameDt": {
+    "n": 373,
+    "p50": 7.7,
+    "p95": 9.3,
+    "max": 15.1
+   },
+   "plantArmed": "cascade",
+   "out_state": {
+    "carTop": 432.703125,
+    "carBottom": 652.703125,
+    "H": 500
+   },
+   "out_state_2": null,
+   "scored_against_row": "apple-rise (0.606, 0.414)",
+   "E1_E4": {
+    "parts": {
+     "E1": false,
+     "E2": false,
+     "E3": false,
+     "E4": false
+    },
+    "E1_fits": {},
+    "E2": 0.0,
+    "E4": "one shape"
+   },
+   "T": {
+    "animations_moving_geometry": [
+     {
+      "type": "CSSAnimation",
+      "name": "gl-cascade-build",
+      "props": [
+       "opacity",
+       "transform"
+      ],
+      "timeline": "ViewTimeline",
+      "duration_ms": "auto",
+      "easing_head": "linear(0 0%, 0.01048 2.041%, 0.03795 4.082%, 0.0774 6.122%, ",
+      "equals_token_row": [],
+      "ok": false
+     }
+    ],
+    "branch": "animation",
+    "pass": false
+   },
+   "C": {
+    "channels": {
+     "rise (P-05)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "width (P-08)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "dots x (P-11)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "capsule --progress-intro (P-12)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "glyph opacity (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "glyph scale (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material blur (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material --alpha (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     }
+    },
+    "all_moved": false,
+    "spring_fits_le_1pct": false,
+    "order": [
+     [
+      "rise (P-05)",
+      "<",
+      "width (P-08)",
+      false
+     ],
+     [
+      "dots x (P-11)",
+      "<=",
+      "capsule --progress-intro (P-12)",
+      false
+     ],
+     [
+      "capsule --progress-intro (P-12)",
+      "<",
+      "glyph opacity (P-13)",
+      false
+     ],
+     [
+      "glyph opacity (P-13)",
+      "<",
+      "material blur (P-14)",
+      false
+     ],
+     [
+      "width (P-08)",
+      "<",
+      "material blur (P-14)",
+      false
+     ]
+    ],
+    "pass": false
+   },
+   "errors": []
+  },
+  "enter3-below-wheel-1440-h500-k2-plant-linear": {
+   "load": [
+    "{ 10.66 16.23 21.00 }",
+    "{ 10.34 15.98 20.85 }"
+   ],
+   "frameDt": {
+    "n": 530,
+    "p50": 7.7,
+    "p95": 9.3,
+    "max": 10.1
+   },
+   "plantArmed": true,
+   "out_state": {
+    "carTop": 432.703125,
+    "carBottom": 652.703125,
+    "H": 500
+   },
+   "out_state_2": null,
+   "scored_against_row": "apple-rise (0.606, 0.414)",
+   "E1_E4": {
+    "parts": {
+     "E1": true,
+     "E2": true,
+     "E3": true,
+     "E4": true
+    },
+    "E1_fits": {
+     "rise": {
+      "nrms": 0.0021,
+      "onset_ms": 450.2
+     }
+    },
+    "E2": 1.019,
+    "E4": {
+     "overlap_on_first_frame": true,
+     "frames_both_visible": 133,
+     "split_frames_ms": [],
+     "shape0_hidden_ms": 977.4,
+     "button_first_painted_inside_pill": "no button"
+    }
+   },
+   "T": {
+    "animations_moving_geometry": [
+     {
+      "type": "CSSAnimation",
+      "name": "__plantRise",
+      "props": [
+       "translate"
+      ],
+      "timeline": "DocumentTimeline",
+      "duration_ms": 1600,
+      "easing_head": "linear(0 0%, 0.07956 2.5641025641025643%, 0.27382 5.12820512",
+      "equals_token_row": [],
+      "ok": false
+     }
+    ],
+    "branch": "animation",
+    "pass": false
+   },
+   "C": {
+    "channels": {
+     "rise (P-05)": {
+      "travel": 222.86,
+      "onset_ms": 458.0,
+      "free_fit": {
+       "nrms": 0.0015,
+       "omega0": 10.31,
+       "zeta": 0.418,
+       "response_s": 0.609
+      }
+     },
+     "width (P-08)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "dots x (P-11)": {
+      "travel": 36.0,
+      "onset_ms": 440.6
+     },
+     "capsule --progress-intro (P-12)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "glyph opacity (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "glyph scale (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material blur (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material --alpha (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     }
+    },
+    "all_moved": false,
+    "spring_fits_le_1pct": false,
+    "order": [
+     [
+      "rise (P-05)",
+      "<",
+      "width (P-08)",
+      false
+     ],
+     [
+      "dots x (P-11)",
+      "<=",
+      "capsule --progress-intro (P-12)",
+      false
+     ],
+     [
+      "capsule --progress-intro (P-12)",
+      "<",
+      "glyph opacity (P-13)",
+      false
+     ],
+     [
+      "glyph opacity (P-13)",
+      "<",
+      "material blur (P-14)",
+      false
+     ],
+     [
+      "width (P-08)",
+      "<",
+      "material blur (P-14)",
+      false
+     ]
+    ],
+    "pass": false
+   },
+   "errors": []
+  },
+  "enter3-below-jump-1440-h500-k2-plant-linear": {
+   "load": [
+    "{ 10.34 15.98 20.85 }",
+    "{ 9.53 15.62 20.66 }"
+   ],
+   "frameDt": {
+    "n": 376,
+    "p50": 7.7,
+    "p95": 9.3,
+    "max": 10
+   },
+   "plantArmed": true,
+   "out_state": {
+    "carTop": 432.703125,
+    "carBottom": 652.703125,
+    "H": 500
+   },
+   "out_state_2": null,
+   "scored_against_row": "apple-rise (0.606, 0.414)",
+   "E1_E4": {
+    "parts": {
+     "E1": true,
+     "E2": true,
+     "E3": true,
+     "E4": true
+    },
+    "E1_fits": {
+     "rise": {
+      "nrms": 0.0024,
+      "onset_ms": 8.0
+     }
+    },
+    "E2": 1.019,
+    "E4": {
+     "overlap_on_first_frame": true,
+     "frames_both_visible": 73,
+     "split_frames_ms": [],
+     "shape0_hidden_ms": 532.2,
+     "button_first_painted_inside_pill": "no button"
+    }
+   },
+   "T": {
+    "animations_moving_geometry": [
+     {
+      "type": "CSSAnimation",
+      "name": "__plantRise",
+      "props": [
+       "translate"
+      ],
+      "timeline": "DocumentTimeline",
+      "duration_ms": 1600,
+      "easing_head": "linear(0 0%, 0.07956 2.5641025641025643%, 0.27382 5.12820512",
+      "equals_token_row": [],
+      "ok": false
+     }
+    ],
+    "branch": "animation",
+    "pass": false
+   },
+   "C": {
+    "channels": {
+     "rise (P-05)": {
+      "travel": 222.72,
+      "onset_ms": 16.0,
+      "free_fit": {
+       "nrms": 0.0018,
+       "omega0": 10.32,
+       "zeta": 0.418,
+       "response_s": 0.609
+      }
+     },
+     "width (P-08)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "dots x (P-11)": {
+      "travel": 36.0,
+      "onset_ms": 8.0
+     },
+     "capsule --progress-intro (P-12)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "glyph opacity (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "glyph scale (P-13)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material blur (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     },
+     "material --alpha (P-14)": {
+      "travel": 0.0,
+      "onset_ms": null
+     }
+    },
+    "all_moved": false,
+    "spring_fits_le_1pct": false,
+    "order": [
+     [
+      "rise (P-05)",
+      "<",
+      "width (P-08)",
+      false
+     ],
+     [
+      "dots x (P-11)",
+      "<=",
+      "capsule --progress-intro (P-12)",
+      false
+     ],
+     [
+      "capsule --progress-intro (P-12)",
+      "<",
+      "glyph opacity (P-13)",
+      false
+     ],
+     [
+      "glyph opacity (P-13)",
+      "<",
+      "material blur (P-14)",
+      false
+     ],
+     [
+      "width (P-08)",
+      "<",
+      "material blur (P-14)",
+      false
+     ]
+    ],
+    "pass": false
+   },
+   "errors": []
+  },
+  "E0 enter3-*-1440-h500": {
+   "wheel vs jump, aligned at each run's rise onset, 0-2 s": {
+    "rise": {
+     "max_abs_diff_equal_time_px": 0.0,
+     "max_time_shift_to_0p5px_ms": 0.0
+    },
+    "width": {
+     "max_abs_diff_equal_time_px": 0.0,
+     "max_time_shift_to_0p5px_ms": 0.0
+    }
+   },
+   "pass (shift <= 25 ms: one 60 Hz page frame + one 120 Hz sample)": true
+  },
+  "E0 enter3-*-1440-h500-plant-linear": {
+   "wheel vs jump, aligned at each run's rise onset, 0-2 s": {
+    "rise": {
+     "max_abs_diff_equal_time_px": 0.223,
+     "max_time_shift_to_0p5px_ms": 0.0
+    },
+    "width": {
+     "max_abs_diff_equal_time_px": 0.0,
+     "max_time_shift_to_0p5px_ms": 0.0
+    }
+   },
+   "pass (shift <= 25 ms: one 60 Hz page frame + one 120 Hz sample)": true
+  },
+  "E0 enter3-*-1440-h500-plant-token": {
+   "wheel vs jump, aligned at each run's rise onset, 0-2 s": {
+    "rise": {
+     "max_abs_diff_equal_time_px": 0.282,
+     "max_time_shift_to_0p5px_ms": 0.0
+    },
+    "width": {
+     "max_abs_diff_equal_time_px": 0.0,
+     "max_time_shift_to_0p5px_ms": 0.0
+    }
+   },
+   "pass (shift <= 25 ms: one 60 Hz page frame + one 120 Hz sample)": true
+  },
+  "E0 enter3-below-*-1440-h500-k2-plant-cascade": {
+   "wheel vs jump, aligned at each run's rise onset, 0-2 s": {
+    "rise": {
+     "max_abs_diff_equal_time_px": 0.0,
+     "max_time_shift_to_0p5px_ms": 0.0
+    },
+    "width": {
+     "max_abs_diff_equal_time_px": 0.0,
+     "max_time_shift_to_0p5px_ms": 0.0
+    }
+   },
+   "pass (shift <= 25 ms: one 60 Hz page frame + one 120 Hz sample)": true
+  },
+  "E0 enter3-below-*-1440-h500-k2-plant-linear": {
+   "wheel vs jump, aligned at each run's rise onset, 0-2 s": {
+    "rise": {
+     "max_abs_diff_equal_time_px": 0.604,
+     "max_time_shift_to_0p5px_ms": 0.25
+    },
+    "width": {
+     "max_abs_diff_equal_time_px": 0.0,
+     "max_time_shift_to_0p5px_ms": 0.0
+    }
+   },
+   "pass (shift <= 25 ms: one 60 Hz page frame + one 120 Hz sample)": true
+  }
+ }
+}
