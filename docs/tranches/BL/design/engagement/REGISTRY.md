@@ -394,3 +394,256 @@ Every seat is Opus, declared explicitly. D1-D4 hold seats, so D5 runs at most th
 ### P1-9.4 · Convergence criterion
 
 Unchanged from the charter and `§3.5` above: at least three full passes; zero open rows against CK-01..CK-27; a fresh adversarial audit by seats that did not author the winning spec; two consecutive clean passes. Pass 2 cannot converge a route: it is the second of the three required passes.
+
+---
+
+# D5 · pass 2 · REGISTRY: the routes after pass 2
+
+| field | value |
+|---|---|
+| seat | D5 pass-2 agglomeration (`§P1-9.2` wave 4). It closes pass 2: each route's status and convergence as its critic scored it, the CP verdict, the clean-pass count, the owner-glance packet for Q-1, Q-3 and Q-5, what the owner must rule, and the pass-3 plan on the unchanged CK-01..CK-27 |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `10c89b18c`. `git diff --stat v10.1.0 HEAD -- src` prints nothing: every pass-2 seat built on the 10.1.0 bytes |
+| inputs, read in full | every report under `pass-2/`: `H2.md`, `F5.md`, `P-A2.md`, `P-E2.md`, `CP.md`, `C-A2.md`, `C-E2.md`, `C-CP.md`; this file's round-0 and pass-1 parts; `../../CHARTER.md` design-loop section; `../../audit/INBOUND.md` (no ruling on Q-1..Q-5; O-74c G-1 and O-95 read for the rows they route here); `../reference/apple-homeview/GAP.md` rows naming D5 (P-28..P-30); the 2026-10-16 browser-memory note in `../../FORMATION-PROGRESS.md` (commit `10c89b18c`) |
+| instruments | none. This seat re-measured nothing. It opened two Q-5 frames to check that the paths below exist and show what their seats said. Every number cites the report that measured it, which stays the source of record (P-3) |
+| fences | no source edit, no git write; this part is the only write. The round-0 and pass-1 parts above stay the record |
+| engines | Chromium 149 and Playwright WebKit 26.5, headless. Playwright WebKit is not Safari. Every real-Safari cell is **UNMEASURED (owner's safaridriver checkbox)** |
+| standing defaults | Q-1 (c), Q-2 (b), Q-3 (c), Q-4 (b), Q-5 (a). No ruling has arrived. O-87 binds every rung's paint |
+
+Short citations: `C-A2 CK-n` is that critic's §2 row; `C-E2 §0.1` is its in-brief item 1; `CP c1` is the bake-off's cell 1.
+
+## P2-0 · In brief
+
+| route | built as | critic | rows closed / applicable | status | the one-line reason |
+|---|---|---|---:|---|---|
+| **D5-A** · the declared register | F5 + `P-A2-light.patch` (arm iii), with `P-A2-geom.patch` (arm ii) beside it | C-A2 | **6/27 = 22 %** (CK-09, 11, 15, 23, 24, 26) | **ADVANCE** | adoption reads from the rendered element and the retirement is clean, but the default commit cannot be seen or measured on three near-white faces, and the light path fails silently |
+| **D5-E** · the engaged stage on A's table | F5 + A2-light + `P-E2-{veil,noveil}.patch` | C-E2 | **7/27 = 26 %** (CK-04, 09, 11, 15, 23, 24, 26) | **ADVANCE** | the keyboard contract closes and the seam with A's census holds, but every hand-off teleports the outgoing control 68 px through one shared anchor name |
+| **D5-B** · the WAAPI commit path | `CP-waapi.patch` against `CP-css.patch`, four members | C-CP | **1/27 = 4 %** on each build (CK-23), Chromium only | **BANKED** (not retired) | it loses cells 1 and 3, ties cell 2 and wins cell 4 only as built. Its two merits go to A's commit as floor items |
+
+No route converges. Pass 2 is the second of the three passes the charter requires (`§P1-9.4`). No route has a clean pass, so the count of consecutive clean passes is **0 for every route**. The earliest a route can converge is the end of pass 4, after clean passes 3 and 4.
+
+The pass-1 scores (9/31 for each route) were taken against a different list and do not compare with these.
+
+Five findings shape pass 3:
+
+1. **The default commit form fails its own row, and only the owner can change that.** On the light arm the Switch (light theme), the Radio (both themes) and the accordion rise 0.0000-0.0097 against the 0.01 bound in both engines (C-A2 CK-02, C-E2 CK-02, CP §0.5, C-CP §5.2). The ceiling on a 0.92-0.957 face is about 0.005. Clearing it needs about 25 % white, which is a louder token against O-87 (P-A2 §6). The geometric arm passes 104/108 per engine and visibly swells the bit, but it is inadmissible until Q-5 is ruled. Under the default, CK-02 cannot close by building. That makes Q-5 the decisive ruling for D5.
+2. **A gate filmed position and graded scale.** E-10 passed E's hand-off while the outgoing slider jumped 68.0 px onto the incoming one's footprint. The cause is confirmed by a control: every footprint carries `--engage-footprint` (`engage-stage.css:41,46`), and one anchor name per footprint reads 0.0 px (C-E2 §0.1). P-E2 read the frame that shows it as "A frosted". This is the pass-1 lesson again, "green over work not done", now inside the harness.
+3. **Route seats edited the harness that grades them.** P-A2's scene app routes the stateless programmatic commit through `target.click()` and paints a page ground. That moves 10 E-2 passes per engine, and no plant came with either change (C-A2 §0.2). P-E2 read its census on that app. The canonical reading is the harness's own app: A2-light E-2 81/108, latch 25/55. On P-A2's app the latch reads 54/55. The harness gets one owner in pass 3 (H3), and route seats do not edit it.
+4. **The CP bake-off settled the path and found one defect on each side.** B lights a commit that never happened (A→B→A in one task, 12/12) and cuts the light to rest on a second commit (36/36). A lights a mount-task arrival once anything reads style during mount (accordion 6/6; cause control on the Switch 2/2), and is silent on 10/10 planted tokens (C-CP §0.5-6). Each of A's defects has a cure already measured on B's side: the one-frame arming and the door's loud read. Both move into A.
+5. **WebKit starvation left whole seats without second-engine cells.** C-CP read no WebKit cell. C-E2 lost noveil E-3/E-10/E-11 and P-E2's probe in WebKit. CP lost WebKit reps 2-3, B's E-4..E-11 and both captures. P-E2 lost the noveil WebKit capture. Each waited 20-75 min on the machine-wide `--exclusive webkit` slot. A CK row closes only in both engines, so pass 3 schedules D5's WebKit runs as one queue (§P2-8.3).
+
+## P2-1 · Registry
+
+| id | family | status after pass 2 | centre | carries into pass 3 |
+|---|---|---|---|---|
+| D5-A | the declared register | ADVANCE | one table, a stamp per member, class recipes on registered phases. The commit is a CSS phase keyed on the state (CP verdict) | the base of every composition: census, commit, retirement, FL-3 arms |
+| D5-E | the engaged stage | ADVANCE (partial by design) | the held control promoted in place, the one writer of `data-engaged`, with two clients | the held rung on A's table. Q-3 decides whether it is the only held rung |
+| D5-B | the WAAPI commit path | BANKED | the commit played by `Element.animate` from the door | no seat. Harvested into A: the one-frame arming and the loud token read. Re-trigger in §P2-2 |
+| D5-B (door) | the door's parts | in the floor since F5 | hand, modality, writer, release rule, stateless edge | unchanged; the floor items in §P2-6 complete it |
+| D5-C, D5-D | — | RETIRED at pass 1 | — | unchanged |
+| D5-X1..X3 | — | not minted | — | unchanged |
+
+## P2-2 · Route entries
+
+### D5-A · ADVANCE, 22 %
+
+**What held** (C-A2 §0.7, CK rows). The census reads adoption from the rendered element, and all of C-A2's plants fail it (class deleted, Card selectable under `static`). The committed mount is quiet 18/18 per engine, which cures the tabs' 123 px mount glide (CK-03 mount half). `.tap-squish` and `.interactive-item` leave with no alias and no `scale: none` override. Five sibling MIGRATION rows reproduce by grep (CK-11). The coarse Button no longer latches at ×1.015. The selectable Chip's `plus-lighter` flood is gone (CK-26). E-8 19/19 and E-9 60/60 on four reads, both arms, both engines; the Button's reduce squish did not show.
+
+**Open rows, each with its counterexample** (C-A2 §2; the composition rows E inherits are marked †):
+1. **CK-01.** The latch is 25/55 on the harness app and 54/55 on P-A2's (only `dock`, D2's). NumberField and Timeline are stamped `held` and never engaged. E cures the NumberField; Timeline is unread. `PopoverTrigger`'s as-child path renders unclassed (`PopoverTrigger.vue:38,48`). The `static-inert label` fail is reka's own mousedown handler, a census false positive for H3. †
+2. **CK-02.** The light arm fails three members (finding 1). Separately, the Switch's coarse tap in dark rises 0.0289 on the fill's 200 ms clock, which no envelope row carries (3/3 reads). †
+3. **CK-03.** The async arrival had no harness cell. C-CP's `probe/arrival.mjs` now reads it on A's CSS path, and it fails (finding 4). †
+4. **CK-14.** The light seat claims `::after` with `inset: 0`, which displaces the coarse dock trigger's 44 px hit-slop 22 px up and left, and paints the commit light on it (`touch-floor.css:44-52`; probe in both engines). †
+5. **CK-21.** The light clocks fail silently. With `--engage-control-engage-{attack,release}: nonsense` the seat's `transition` computes `all`, the light jumps to its end, and the console shows 0 errors in both engines. †
+6. **CK-22.** No MIGRATION row covers what A imposes on every `engage-chosen/pressed/disclosed` root (`position: relative`, `isolation: isolate`, the claimed `::after`) or the replaced `transition` lists. †
+7. **CK-20 (geom build only).** The utilities-layer `transition` replaces the members' own lists: the selectable Card's `--card-fill` and `scale` snap, and SegmentedTabs loses its `background` leg.
+8. **CK-12.** On the geom arm the crest `--scale-commit-pop-bit: 1.05` was chosen to clear the witness's 0.8 px bound, and `1.02` keeps pass 1's sampler-fitted figure. On A alone `--scale-engage` is off the ladder. E cures the latter (`engageLadder.ts` engaged row `scale: 1.06`).
+9. **CK-13.** No arm is stated or read for `engage-held`'s grow, `engage-disclosed`'s `:active` wash, the veil, or the `[data-press]` fill. C-CP read the fill forced to Canvas under forced colours with no stated arm. †
+10. **CK-06.** E-5 sustain flips between reads on the toggle and the accordion (C-A2: toggle dark ×0.89 in 2 of 3 reads; C-E2: accordion dark ×0.89, then toggle light ×0.73). The accordion has no press-only property (C-CP CK-06). †
+11. **CK-25.** The disclosed press reads as an opaque grey slab over a 320 px row (`C-A2/glance/frames/ca2-light-chromium-coarse-light-accordion-held.png`). The coarse held slider stays ×1.000 under a frosted world (`A2/glance/frames/light-chromium-coarse-light-slider-held.png`), which reads as a bug. That is Q-3 (c) on A alone.
+12. **CK-16.** Skeleton and StatusDot under `static`: UNMEASURED by every pass-2 seat.
+
+### D5-E · ADVANCE (partial by design), 26 %
+
+**What held** (C-E2 §0.2, CK rows). **The pass-1 seam is now tested and holds.** E on A's table reads E-1 89/94 on A's app, the same as P-A2 r3, so the stage does not disturb the census (`§P1-4` row 1). CK-04 closes in both engines: desk pointer and keyboard ×1.060; Tab paints no hand register; modifiers, the unacted `k`, a script `focus()` and a printable key's script focus engage nothing; phone block ×1.060 inside the gutter; PRM ×1.000 with the light leg. Inside a Dialog, one Escape releases the slider and the next closes the Dialog. The slider's value point carries 6.49 px (Chromium) and 4.91 px (WebKit). C-E's three fail-loud plants each raise `console.error` in both engines. `data-engaged` has one writer, `engage/stage.ts`. There are two clients (Slider, NumberField), so the stage is not consumer-less, and the G-OVERFIT export gate is green. The re-render landing glides (3.8-5.4 px per frame where pass 1 jumped 40 px).
+
+**Open rows, E's own** (C-E2 §2):
+1. **CK-20 and CK-27.** The 68 px hand-off teleport (finding 2), on Tab A→B, Shift+Tab B→A and Tab-then-press, in both engines and both arms. The cure is measured: one anchor name per footprint.
+2. **CK-12.** `HOLD_SLOP_PX` (8) is both the sortable list's activation slop and the NumberField's scrub pitch. That is CK-12's named one-figure-two-jobs defect.
+3. **CK-22.** The global anchor name is a consumer-visible path with no row. The scrub arms on the whole `.number-field` root, so a step-button press that drifts 8 px scrubs (static read, not driven).
+4. **CK-25.** The NumberField scrub's veil pool is centred on a 220 px field and frosts half a paragraph (`E2/shots/veil-chromium-numfield-scrub-held.png`). The keyboard veil frosts the world on a Tab (veil arm). The dark Button and presented rows carry a warm halo (`E2/glance/veil-*-coarse.png`, dark rows), which is the composition's, not E's.
+5. **The noveil arm keeps a full-viewport `backdrop-filter: blur(20px) saturate(1.5)` plate open** at opacity 0 under every promoted control. Its compositor cost is unmeasured (C-E2 §0.4; this is a next-pass class, not a row).
+6. **The reach's loud paint.** With an unreadable `--space-section` the engaged control paints at inline ×0 while the console speaks. That is loud, not masking (E-2), and it is the harshest paint possible. It stays as built: a clamp to ×1 would be a fallback that hides the defect.
+
+E also inherits every † row of A above, plus F5's rows in §P2-4.
+
+### D5-B · the WAAPI commit path: BANKED
+
+**The CP verdict.** The rule fixed at pass 1 retires B only if it loses all four cells (`§P1-9.2`). It does not. B loses cell 1 (second commit during the light: B cuts to rest, 36/36 films, one-frame drop 0.073-0.091 against 0.013-0.016 at 45 ms) and cell 3 (commit before hydration: A paints 0.97-1.03×, B 0.00×, 18/18 each). Cell 2 is a tie. B wins cell 4 (reduce) only as built: the library's PRM fallback zeroes A's transitions, and A ties with CP's 23-line authorization row. A is also cheaper: 0 lines per state member against about 9, and +202/−28 over F5 against +278/−37 (CP §2, C-CP CK-23). C-CP's replay, on an independent channel and with plants that bite (`cut` FAIL 6/6, `strip` SILENT 6/6), upholds each cell, and is sharper than CP on cell 1 at 100 ms (13/18 FAIL).
+
+**Ruled: B is not retired. It is BANKED, and the commit path is A's CSS phase.** No seat builds B in pass 3. Its record is two reproduced defects of its own, the cut (CK-20) and the A→B→A phantom light (CK-02), against a single win that is a cascade artefact. Its two merits are not properties of the path, so they move into A as floor items (§P2-8.2, F-7 and F-8):
+- **the one-frame arming**, which keeps B quiet on the in-task arrival, with or without a style read (8/8);
+- **the door's loud read**, which A's commit borrows for its envelope tokens and `--rung-light`.
+
+The reduce cell becomes A's with CP's authorization row, `CP/css-prm-over-css.patch`. It lands in BJ's hashed `PRM-AUTHORIZED-SET`, so it is a governance cost as well as 23 lines.
+
+**Re-trigger.** B reopens only if P-A3 cannot close CK-03's in-task arrival or CK-21 on the CSS path with those two parts in place. B would then have to come with its own cures for the cut (start the light from the seat's current value) and for the A→B→A record. The pass-3 agglomeration retires B outright if P-A3 closes CK-03, CK-10's transient and CK-21 on the CSS path.
+
+## P2-3 · The seams pass 2 tested
+
+| seam | verdict | evidence |
+|---|---|---|
+| E pairs with A's census (`§P1-4` row 1, untested at pass 1) | **CONFIRMED** | E-1 89/94 on A's app with and without the stage; the latch 54/55 either way (P-E2 §0.1, C-E2 CK-01) |
+| A's `held` class needs a writer, or the census is vacuous | **CONFIRMED** | NumberField and Timeline stamped `held`, never engaged (C-A2 §0.5). E's door reaches the NumberField; Timeline is unread. The census reads a stamp, not a behaviour, for any class whose recipe needs a writer (C-A2 §4.3) |
+| the commit path is separable from the door | **CONFIRMED** | `data-commit` has one writer, the door, in both CP builds (C-CP CK-08). The path differs in four files (CP §2) |
+| the press and the commit share no channel | **CONFIRMED again** | cell 2 ties: an inline `scale` on the host and the light on its `::after` do not disturb each other (CP c2, C-CP c2 4/4) |
+| PF-1's one cure is D4's token hunk | **CONFIRMED** | with F5 carrying D4's hunk, the WebKit capture reads 0 `ENGINE CLOSED` rows (P-E2 §6). At HEAD the accordion read 4 of 4 closes (H2 §5) |
+| a light commit survives reduce | **REFUTED as A2 claimed it** | the PRM fallback zeroes A's transitions: rise 0.0000 on 18/18 (CP c4, C-CP c4). E-9 passed A because its light leg reads the committed fill, not the transient (C-CP CK-27) |
+
+## P2-4 · The floor (F5) as pass 2 left it
+
+F5 returned PARTIAL (`F5.md` header): its own batteries and gates did not finish. The critics read it under every composition, so its rows are scored there. Each item, from the critics' reads:
+
+| F5 item | state | evidence | row |
+|---|---|---|---|
+| 1 · D4's PF-1 token hunk; disclosure hover under `(hover: hover)` | **holds** | no WebKit engine close in the E2 capture; C-CP §5.3 reads the guarded hover on coarse | CK-09, CK-14 |
+| 2 · the door's parts (`hold.ts`, `--press-t`, the stateless edge, the reduce arm) | **holds** | E-9 60/60 on four reads by C-A2 and two by C-E2; no Button squish under reduce. H2 §7 warns that one green read is not a cure. Pass 3 reads it three times per engine | CK-10 |
+| 3 · the keyboard contract | **holds on E** | CK-04 CLOSED on the E composition (C-E2). On A alone the phone arm is ×1.000 (Q-3 (c)) | CK-04 |
+| 4 · the release rule | **partial** | slider carry 4.65-9.86 px (on A, Chromium is 0.65 px over its bound); tabs carry 39-40 px and the tabs release teleport is gone (14.8 against 67.5). **Open:** sortable release continuity 72.3-81.1 px against 62.0, every composition, both engines; `tabsdrag release PRM` NOT DRIVEN (0.0 px); the Sheet UNMEASURED in flow | CK-05, CK-10, CK-18, CK-20 |
+| 5 · the veil split | **holds** | `data-engaged` one writer (C-E2 CK-08) | CK-08 |
+| 6 · A's table, stamp and latch | **holds as mechanism; the latch is RED** | `engage-ladder.test.ts`'s adoption latch is still `it.fails` (C-E2 `vitest-targeted.log`) | CK-01 |
+
+Writers still outside the door (CK-08): `GlassDock.vue` `data-held` (D2's) and `PagerDots.vue` `data-press`, which `../reference/apple-homeview/GAP.md` P-30 also routes here.
+
+## P2-5 · The owner-glance packet (Q-1, Q-3, Q-5)
+
+Every path is under `docs/tranches/BL/design/engagement/`. One line per frame pair. Chromium unless marked. Playwright WebKit paints no `backdrop-filter`, so its veil frames show the dim without the blur.
+
+### Q-1 · engagement for a component nobody presses
+
+The pass-1 plan asked pass 2 for one (a) frame beside (c) (`§P1-8`). **No pass-2 seat built the (a) variant**, so the (a) side comes from pass 1's R-C research build (10.1.0 + `R-C.patch`, a Separator inheriting `--engage`).
+
+| pair | (c) exempt, declared `static` | (a) inherited from the pressed host |
+|---|---|---|
+| passive atom at rest against its host pressed, light | `pass-2/A2/glance/frames/light-chromium-fine-light-passive-rest.png` · `…-passive-pressed.png` (identical by construction) | `pass-1/R-C/captures/rc-chromium-light-separator-rest.png` · `rc-chromium-light-separator-host-pressed.png` (ink 0.08 → 0.16) |
+| the same, dark | `pass-2/A2/glance/frames/light-chromium-fine-dark-passive-rest.png` · `…-dark-passive-pressed.png` | `pass-1/R-C/captures/rc-chromium-dark-separator-rest.png` · `rc-chromium-dark-separator-host-pressed.png` |
+| the same, WebKit light | `pass-2/A2/glance/frames/light-webkit-fine-light-passive-rest.png` · `…-passive-pressed.png` | `pass-1/R-C/captures/rc-webkit-light-separator-rest.png` · `rc-webkit-light-separator-host-pressed.png` |
+| HEAD for reference | `pass-2/H2/glance/frames/head-chromium-fine-light-passive-pressed.png` | `pass-1/R-C/captures/head-chromium-light-separator-host-pressed.png` |
+
+R-C's own read is that the (a) step is one ink rung and close to invisible (`R-C.md` §0 item 6).
+
+### Q-3 · the engaged rung: in place, promoted, or split by pointer; the keyboard veil
+
+| pair | arm 1 | arm 2 |
+|---|---|---|
+| fine pointer held: A grows in place against E promotes and veils | `pass-2/A2/glance/frames/light-chromium-fine-light-slider-held.png` (×1.060, no veil) | `pass-2/E2/glance/frames/veil-chromium-fine-light-slider-held.png` (×1.060, promoted, veil) |
+| coarse held: the (c) default on A against E promoting on every pointer | `pass-2/A2/glance/frames/light-chromium-coarse-light-slider-held.png` (×1.000 under a frosted world) | `pass-2/E2/glance/frames/veil-chromium-coarse-light-slider-held.png` (×1.060) |
+| coarse held, WebKit | `pass-2/A2/glance/frames/light-webkit-coarse-light-slider-held.png` | `pass-2/E2/glance/frames/veil-webkit-coarse-light-slider-held.png` |
+| keyboard engaged: veil against noveil | `pass-2/E2/glance/frames/veil-chromium-fine-light-slider-engaged.png` (world frosted) | `pass-2/E2/glance/frames/noveil-chromium-fine-light-slider-engaged.png` (world crisp) |
+| keyboard engaged, dark | `pass-2/E2/glance/frames/veil-chromium-fine-dark-slider-engaged.png` | `pass-2/E2/glance/frames/noveil-chromium-fine-dark-slider-engaged.png` |
+| keyboard engaged, WebKit (the noveil WebKit capture is owed; the probe shots stand in) | `pass-2/E2/shots/veil-webkit-light-keyboard-engaged.png` | `pass-2/E2/shots/noveil-webkit-light-keyboard-engaged.png` |
+| keyboard engaged, A in place (a third arm) | `pass-2/A2/glance/frames/light-chromium-fine-light-slider-engaged.png` | — |
+| the NumberField scrub held, veil against noveil | `pass-2/E2/shots/veil-chromium-numfield-scrub-held.png` (half the paragraph frosted) | `pass-2/E2/shots/noveil-chromium-numfield-scrub-held.png` |
+| **not an arm: the hand-off defect**, shown so it is not judged as the design | `pass-2/E2/shots/veil-chromium-light-keyboard-handoff-90ms.png` | `pass-2/C-E2/shots/veil-chromium-handoff-rev-60ms.png` (A's slot empty, both fills on one track) |
+
+The critics read the noveil keyboard frame as the deft one under O-87 (C-E2 §3), and the coarse in-place default as reading like a bug (C-A2 §3).
+
+### Q-5 · the commit's form: light (arm iii) against a geometric pop (arm ii)
+
+Same scene, same instant (the `committed` column). Left: `pass-2/A2/glance/frames/light-q5-chromium-fine-<theme>-<member>-committed.png`. Right: `pass-2/A2/glance/frames/geom-chromium-fine-<theme>-<member>-committed.png`. The scale figures are from P-A2 §6.
+
+| member · theme | light arm | geom arm |
+|---|---|---|
+| switch · light | ×1.000, rise 0.006 (fails) | ×1.050, the bit swells visibly |
+| switch · dark | ×1.000, rise passes in 3-4 of 4 cells | ×1.050 |
+| checkbox · light | ×1.000, passes by arm iii | ×1.049 |
+| radio · light | ×1.000, rise ≤ 0.003 (fails) | ×1.050 |
+| radio · dark | ×1.000, rise 0.0000 (fails) | ×1.050 |
+| chip · light | ×1.000, passes by arm iii | ×1.020 |
+| chipaction · light | ×1.000, passes by arm iii | ×1.019 |
+| button · light | ×1.001, passes by arm iii | ×1.021 |
+| accordion · light | ×1.000, rise ≤ 0.0097 (fails) | ×1.019 |
+| toggle · light | ×1.000, passes by arm iii | ×1.015 |
+| tabs · light | arm i, the indicator's travel, in both builds | same |
+
+- The whole sheets side by side: `pass-2/A2/glance/light-q5-chromium-fine.png` against `pass-2/A2/glance/geom-chromium-fine.png`, and the `-webkit-` pair.
+- What a short tap shows with the light arm (C-CP's frames; the capture's long-tap "committed" never commits, §P2-7 item 6): `pass-2/C-CP/glance/coarse/css-chromium-coarse-light-switch-tap-committed.png` against `…-coarse-dark-switch-tap-committed.png`. The light arm is faint in dark and invisible in light.
+
+The critics' reading: the arm the spring table forbids is the one a person can see (C-A2 §3, C-CP §5.2).
+
+## P2-6 · What the owner must rule
+
+| id | question | default | what pass 2 adds | blocks |
+|---|---|---|---|---|
+| **Q-5** | the commit's form | (a), read in light | The light arm fails its own 0.01 bound on the Switch (light), the Radio and the accordion in both engines. Clearing it needs about 25 % white, against O-87. The geom arm passes all eight members (104/108 per engine; it fails only the stateless programmatic cells) and is the one that can be seen. Options: **(i)** a geometric pop, which amends `springPresets.ts:55-57` and `panel`'s rider (CK-02 arm ii); **(ii)** a louder light token; **(iii)** light kept as is, with the owner restating arm iii's bound for near-white faces. Only the owner can change a CK row's bound (`§P1-6`) | CK-02 cannot close under the default |
+| **Q-3** | the held rung | (c) in place on fine, promotion on coarse | Neither build is (c) as a whole: A2 grows in place on fine and does nothing on coarse; E2 promotes on every pointer. The keyboard veil was built both ways (§P2-5) | CK-04 on A alone; CK-25 |
+| **Q-1** | engagement for passive atoms | (c) exempt with a reason | No new (a) build. CK-24 closed on (c) in two critiques | nothing, under (c) |
+| **Q-2** | S6 breathing | (b) RETIRE | One line naming S6 still closes CK-07. O-95's `GAP.md` (row P-14/P-34) also leaves stateless breathing to the owner | CK-07 cannot close otherwise |
+| **Q-4** | hallmark 6's reach | (b) | (1) whether the NumberField scrub, a surface not on Q-4's list, should carry a fling (P-E2 §7.4). (2) Whether a near-invisible body may carry the carry (the sortable ghost at opacity ≥ 0.020; H2 §7). (3) For detented surfaces, whether the carry must reach the settle (H2 §7; unchanged since pass 1) | CK-05 reads on the default |
+| **next-pass defect classes** | admit any as a CK row, or leave it with its owner | — | listed in §P2-7. Under `§P1-6` none reaches the list except through the owner | — |
+| **CK-17** | the safaridriver checkbox | — | every Safari cell UNMEASURED | CK-17 cannot close otherwise |
+| **O-74c G-1** | placement of the Sheet's in-flow fix | — | the row `§P1-7` owed is now INBOUND O-74c G-1 (SHEET-POSITION), PLACEMENT OWED | CK-05's and CK-18's Sheet cells stay UNMEASURED until it lands |
+
+Rows that cannot close by building, whatever pass 3 does: **CK-02** (under the default), **CK-07** (Q-2), **CK-17** (Safari), and the Sheet's cells of **CK-05/CK-18** (O-74c). Zero open rows needs these four answers.
+
+## P2-7 · Next-pass defect classes (recorded; no CK row added)
+
+From the critiques and seat reports. Most are harness faults, which H3 cures inside the rows they already serve (CK-19, CK-20, CK-27). Those changes add no row.
+
+1. **A witness films one channel and grades another.** E-10 records `x`/`y` and grades scale. A position plant is owed (C-E2 §4.1). Serves CK-20 and CK-27.
+2. **Route seats edit the harness that grades them** (C-A2 §4.1). H3 rules the stateless programmatic commit (NOT DRIVEN or `element.click()`) and the page ground, each with a plant. A2's widened gallery moves into the harness app, so the latch reads on one app.
+3. **E-8's PRM arm contradicts E-9** (CP §7.4, C-CP §4.1). Every kept clock reads as minted under reduce, A's authorized rows included.
+4. **E-9's light leg reads the committed fill, not the transient** (C-CP CK-27). A passed with its commit light zeroed.
+5. **The commit bound is finer than the read.** +0.002 against an alpha quantum of 1/255 = 0.0039 (C-CP §4.2). The accordion's `__light` saturates on a transparent face (CP §3.5).
+6. **The capture's coarse "committed" is a 1200 ms long-tap that commits nothing** (C-CP §4.3, C-A2 §3). A short tap commits (LIT 12/12).
+7. **The census counts a library-internal handler** (reka `Label`'s mousedown) as an interactive static (C-A2 CK-01).
+8. **A shared pseudo-element claimed by a utility** (C-A2 §4.2). Scored this pass as CK-14's dock-slop counterexample; the class covers every `::after` user.
+9. **The census reads a stamp, not a behaviour,** for classes whose recipe needs a writer (C-A2 §4.3).
+10. **`ExpandableContainer` composes `engage-disclosed` on its whole root** (C-A2 §4.5, NOT-REPRODUCED).
+11. **The noveil arm's open `backdrop-filter` plate**: compositor cost unmeasured (C-E2 §4.2).
+12. **A pointerdown whose pointerup never arrives** (a context menu): `useHold` acquires on any button (C-E2 §4.3). UNMEASURED headless.
+13. **A layout move with no DOM mutation** during a hold is not observed, so the control follows its anchor without the glide (C-E2 §4.4, P-E2 §7.5).
+14. **E-5 sustain flips between reads** on the toggle and the accordion, as the Button's reduce squish does (C-A2 §4.4, C-E2 CK-06). One green read is not a cure.
+
+## P2-8 · Pass-3 plan
+
+The checklist stays **CK-01..CK-27, unchanged**. Critics may not add rows. A defect is a counterexample to the row it breaks, or a next-pass defect class. Defaults stand until the owner rules: Q-1 (c), Q-2 (b), Q-3 (c), Q-4 (b), Q-5 (a). Both Q-5 arms and both Q-3 keyboard arms are built again until ruled. A ruling that arrives mid-pass is folded in at the next seat boundary, never inside a running battery.
+
+### P2-8.1 · Routes
+
+| route | built as | must prove in pass 3 |
+|---|---|---|
+| **D5-A** | P-A3 on F5′ | CK-01 latch green on the harness app (Timeline's writer or a class change, the `PopoverTrigger` as-child stamp); CK-02 on all eight members by an admissible arm (it may stay open on the owner, finding 1); CK-03 including the in-task arrival after a style read; CK-14 the hit-slop collision; CK-21 on the light clocks; CK-10 the transient kept under reduce; CK-13 arms read; CK-20 on the geom build's transition lists; CK-22 the MIGRATION rows C-A2 named |
+| **D5-E** | P-E3 on F5′ + P-A3 | CK-20 with position graded (no teleport on any hand-off path); CK-12 (`HOLD_SLOP_PX` split); CK-22 (the anchor name, the scrub's arming surface); CK-25 (the scrub veil); CK-04 held in both engines on both keyboard arms, noveil WebKit included |
+| **D5-B** | banked | no seat |
+
+### P2-8.2 · The floor F5′ (completing F5, applied under every pass-3 build)
+
+- **F-1** finish F5's battery and gates in both engines (F5 returned PARTIAL).
+- **F-2** the sortable release continuity: the ghost's landing within the drive bound (CK-05, CK-20).
+- **F-3** SegmentedTabs' indicator follows the finger under reduce (CK-10).
+- **F-4** `PagerDots.vue`'s `data-press` behind the door. `GlassDock.vue`'s `data-held` is stated as D2's in the charter of every build (CK-08 permits a named attribute the route does not own).
+- **F-5** the slider carry's margin: Chromium on A read 0.65 px over its bound. Widen it on a named row or rule it (CK-05, CK-12).
+- **F-6** the Sheet: no D5 edit. Its cells stay UNMEASURED until O-74c G-1 lands.
+- **F-7** (from B) the one-frame commit arming in the door, gating A's seat transitions until a frame after mount (CK-03).
+- **F-8** (from B) the door's loud read of the commit's envelope tokens and `--rung-light` (CK-21).
+- **F-9** CP's PRM authorization row (`CP/css-prm-over-css.patch`) in BJ's `PRM-AUTHORIZED-SET` (CK-10).
+
+F-7..F-9 are floor items rather than A's own because E's composition carries them too.
+
+### P2-8.3 · Seats and order
+
+Every seat is Opus, declared explicitly (the owner's 2026-09-23 routing). D5 runs at most three seats at a time, counted against every live workflow. Browser runs follow the 2026-10-16 note: no `--light` for browser runs, one browser per battery with a context per cell, `guarded --exclusive webkit` as the one WebKit lock. D5's WebKit runs go through one queue owned by the driver, so no seat stops a queued WebKit run and returns UNMEASURED.
+
+| wave | seat | charter |
+|---|---|---|
+| 1 | **H3** (harness; the one owner of `../harness/`, no route seat edits it) | §P2-7 items 1-7 inside their rows: E-10 position grading with a position plant; the async-arrival cell (C-CP's `probe/arrival.mjs` with its style-read control) for CK-03; E-8's PRM arm reconciled with E-9; E-9's light leg reading the transient; the light bound in the read's resolution, and a painted ground under the accordion; the coarse short-tap "committed"; the Label rule with a plant; A2's widened gallery and a ruled programmatic commit, each with a plant. Self-test green in both engines; HEAD re-read only on changed witnesses. No route is scored before this |
+| 1 | **F5′** (floor) | §P2-8.2 as one patch at HEAD, its battery on HEAD's scenes in both engines. Starts its browser runs after H3's self-test |
+| 2 | **P-A3** | A on F5′, both Q-5 arms as two builds, per §P2-8.1 |
+| 2→ | **P-E3** | E on F5′ + P-A3's light patch, both keyboard arms, per §P2-8.1. It starts when P-A3 cuts its patch: E's cures are small and named, and building on a stale A is pass 2's census-app fork again |
+| 3 | **C-A3, C-E3** | one critic per route, never an author of any D5 pass-2 or pass-3 seat. Each scores CK-01..CK-27 in both engines on the harness's own app, with the gestalt read from frames (CK-25). A critic whose WebKit cells are not admitted returns those rows open, not closed on Chromium |
+| 4 | agglomeration | the pass-3 registry: status per route, the clean-pass count (pass 3 can be clean pass 1 of 2), the owner packet refreshed with any ruling folded in |
+
+### P2-8.4 · Convergence criterion
+
+Unchanged (`§3.5`, `§P1-9.4`): at least three full passes; zero open rows against CK-01..CK-27; a fresh adversarial audit by seats that did not author the winning spec; two consecutive clean passes. Pass 3 is the last of the three required passes and can be the first clean one. The earliest convergence is pass 4, and only if the four owner-blocked items in §P2-6 are answered.
