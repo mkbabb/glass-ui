@@ -1,0 +1,28 @@
+[guarded] waiting for the 'webkit' lock
+[guarded] waiting for headroom (load 56 > 36)
+== floor-plants start 06:11:43 load { 31.04 33.61 29.38 }
+worktree = floor-v3.patch
+== plant-bound · 06:11:44 · load 31.0 33.6 29.4
+== plant-heldfloor · 06:15:03 · load 16.1 24.9 26.5
+== plant-carrierveil · 06:16:58 · load 18.1 23.2 25.7
+== plant-darkperim · 06:18:52 · load 23.3 23.3 25.4
+== plant-noisolation · 06:20:58 · load 17.7 21.0 24.2
+== risk-opaque-ancestor · 06:21:28 · load 16.4 20.4 23.8
+== diag-held-noveil · 06:21:58 · load 18.9 20.5 23.8
+plant-bound | m2-text-contrast | chromium | FAIL (108 of 298 gated rows)
+plant-bound | m2-text-contrast | webkit | FAIL (110 of 298 gated rows)
+plant-heldfloor | m2-text-contrast | chromium | FAIL (20 of 72 gated rows)
+plant-heldfloor | m2-text-contrast | webkit | FAIL (20 of 72 gated rows)
+plant-carrierveil | m2-text-contrast | chromium | FAIL (50 of 72 gated rows)
+plant-carrierveil | m2-text-contrast | webkit | PASS (72 gated rows)
+plant-darkperim | m3-non-text | chromium | FAIL (47 of 87 gated rows)
+plant-darkperim | m3-non-text | webkit | FAIL (47 of 87 gated rows)
+plant-noisolation | m2-text-contrast | chromium | FAIL (14 of 28 gated rows)
+plant-noisolation | m2-text-contrast | webkit | FAIL (14 of 28 gated rows)
+plant-noisolation | stack-host | chromium | FAIL (8 of 12 gated rows)
+plant-noisolation | stack-host | webkit | FAIL (8 of 12 gated rows)
+risk-opaque-ancestor | m2-text-contrast | chromium | FAIL (4 of 28 gated rows)
+risk-opaque-ancestor | m2-text-contrast | webkit | FAIL (4 of 28 gated rows)
+diag-held-noveil | m2-held-window | chromium | FAIL (2 of 48 gated rows)
+diag-held-noveil | m2-held-window | webkit | FAIL (8 of 8 gated rows)
+== floor-plants end 06:23:12 load { 14.56 18.71 22.80 }
