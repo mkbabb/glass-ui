@@ -1,0 +1,41 @@
+phase1 start 2026-10-16T09:39:45Z load { 32.11 28.95 23.82 }
+HEAD 8af2de6f7c8a0d6819dd76dcaa5ef022257982a4
+chain base digest "35f7b831fe810aac0add8405c7c8dc62126962170fc3abace419c7428fa74f53"
+S1 recorded digest S1 6773b4ec1217ab416eea2e5ec1b79d39587c4201a70871d347e919d532f2cadb
+final recorded digest S70 6fdd4ec7bd259630d38a466a444e45b2b18f71b4cbf2259d258a4c6177996bbf
+steps 126; step ids containing S74c: none
+HEAD tree code digest 35f7b831fe810aac0add8405c7c8dc62126962170fc3abace419c7428fa74f53 over 1327 files
+floor rows exit 0 28 s load { 27.52 28.14 23.68 }
+floor base code digest 6773b4ec1217ab416eea2e5ec1b79d39587c4201a70871d347e919d532f2cadb over 1354 files
+FB1 PASS floor base = S1's recorded digest
+FB2 PASS the floor base differs from pass 10's 5b14c6c7… (re-cut)
+FB3 FAIL landed lib/move.mjs differs from the docs floor's
+FB3   landed: 168:            const lead = e.via === "root-absolute" ? "/" : (bare.match(/^(?:\.\/|(?:\.\.\/)*)/)?.[0] ?? "");
+FB4 docs engine diff vs 16e907cb3: 0 lines (expect 2, one line each side)
+FB5 PASS with the landed engine put back to the pre-cure text the digest is pass 10's floor base: 5b14c6c7ce4e36f092263a90a269d842a0bccf9a131012fe03889d0bf705402f over 1354 files
+FB5 restored
+FP docs engine exit 1 :: FL11 docs-engine SUMMARY pass=1 fail=7 dot-kept=- dot-lost=H-dot-read,H-dot-exst,H-dot-obj,H-dot-q load { 27.64 28.16 23.71 }
+FP landed engine exit 0 :: FL11 landed-engine SUMMARY pass=8 fail=0 dot-kept=H-dot-read,H-dot-exst,H-dot-obj,H-dot-q dot-lost=-
+FP pre-cure engine exit 1 :: FL11 pre-cure-engine SUMMARY pass=2 fail=3 dot-kept=- dot-lost=H-dot-read,H-dot-exst,H-dot-obj,H-dot-q
+FP RESTORE-FAIL docs engine
+floor base digest after the plant 6773b4ec1217ab416eea2e5ec1b79d39587c4201a70871d347e919d532f2cadb over 1354 files
+floor-base MIGRATION.md identical to HEAD's
+base vite build exit 0 10 s load { 24.22 26.98 23.87 }
+base cascade snapshot exit 0 load { 24.22 26.98 23.87 }
+baseline styles.seq: identical to the kit's committed baseline (results/p11/cascade/baseline)
+baseline styles_css.seq: identical to the kit's committed baseline (results/p11/cascade/baseline)
+baseline styles_fonts.seq: identical to the kit's committed baseline (results/p11/cascade/baseline)
+baseline styles_theme.seq: identical to the kit's committed baseline (results/p11/cascade/baseline)
+base peer probe exit 1 load { 24.36 26.97 23.88 }
+peer-base.json equals the kit's committed results/p11/peer-closure-base.json (root field aside)
+dist removed; code digest 6773b4ec1217ab416eea2e5ec1b79d39587c4201a70871d347e919d532f2cadb over 1354 files
+replay exit 0 474 s load { 24.36 26.97 23.88 } -> { 43.02 35.54 28.67 }
+  S69s [row] row 2 written, 0 applied → 37b96827e133bbe8…
+  S70 [row] row 1 written, 0 applied → 6fdd4ec7bd259630…
+replay done in 474.4 s; code digest 6fdd4ec7bd259630d38a466a444e45b2b18f71b4cbf2259d258a4c6177996bbf over 1587 files; chain final MATCH
+replay rerun exit 0 1 s load { 43.02 35.54 28.67 }
+replay: the chain is applied (digest 6fdd4ec7bd259630…)
+replay done in 0.7 s; code digest 6fdd4ec7bd259630d38a466a444e45b2b18f71b4cbf2259d258a4c6177996bbf over 1587 files; chain final MATCH
+final code digest 6fdd4ec7bd259630d38a466a444e45b2b18f71b4cbf2259d258a4c6177996bbf over 1587 files
+FIN PASS final digest = the chain's last recorded digest
+phase1 end 2026-10-16T09:50:23Z load { 43.02 35.54 28.67 }

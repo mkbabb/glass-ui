@@ -1,0 +1,29 @@
+floor-docs start 2026-10-16T10:24:58Z load { 20.33 18.95 22.38 }; HEAD 78dd49813f865ae408fcdc8708180d917c443dd9; docs engine sha ee305d6f21bd3b96
+FL11 docs-engine-preS1 H-ctl KEPT :: move rc=0 lost=0 moved-file=present ::   "refused": false |  "residue": 0,
+FL11 docs-engine-preS1 H-dot-read KEPT :: move rc=0 lost=0 moved-file=present literal "./dist/index.d.ts" kept ::   "refused": false |  "residue": 0,
+FL11 docs-engine-preS1 H-dot-exst KEPT :: move rc=0 lost=0 moved-file=present literal "./dist/glass-ui.js" kept ::   "refused": false |  "residue": 0,
+FL11 docs-engine-preS1 H-dot-obj KEPT :: move rc=0 lost=0 moved-file=present literal "./dist/index.d.ts" kept ::   "refused": false |  "residue": 0,
+FL11 docs-engine-preS1 H-dot-q KEPT :: move rc=0 lost=0 moved-file=present literal "./dist/x.css?raw" kept ::   "refused": false |  "residue": 0,
+FL11 docs-engine-preS1 H-bare KEPT :: move rc=0 lost=0 moved-file=present literal "dist/index.d.ts" kept ::   "refused": false |  "residue": 0,
+FL11 docs-engine-preS1 H-up KEPT :: move rc=0 lost=0 moved-file=present literal "../dist/index.d.ts" kept ::   "refused": false |  "residue": 0,
+FL11 docs-engine-preS1 RESTORE PASS :: git status identical to before the plant
+FL11 docs-engine-preS1 SUMMARY pass=8 fail=0 dot-kept=H-dot-read,H-dot-exst,H-dot-obj,H-dot-q dot-lost=-
+docs engine (cured) exit 0
+swap 168c168
+swap <             const lead = e.via === "root-absolute" ? "/" : (bare.match(/^(?:\.\/|(?:\.\.\/)*)/)?.[0] ?? "");
+swap ---
+swap >             const lead = e.via === "root-absolute" ? "/" : (bare.match(/^(\.\.\/)*/)?.[0] ?? "");
+FL11 pre-cure-docs-engine-preS1 H-ctl KEPT :: move rc=0 lost=0 moved-file=present ::   "refused": false |  "residue": 0,
+FL11 pre-cure-docs-engine-preS1 H-dot-read LOST :: move rc=0 lost=0 moved-file=present literal "./dist/index.d.ts" not found now: "dist/index.d.ts" ::   "refused": false |  "residue": 0,
+FL11 pre-cure-docs-engine-preS1 H-dot-exst LOST :: move rc=0 lost=0 moved-file=present literal "./dist/glass-ui.js" not found now: "dist/glass-ui.js" ::   "refused": false |  "residue": 0,
+FL11 pre-cure-docs-engine-preS1 H-dot-obj LOST :: move rc=1 lost=1 moved-file=absent literal "./dist/index.d.ts" not found ::  "residue": 0, |  "lost": 1,
+FL11 pre-cure-docs-engine-preS1 H-dot-q LOST :: move rc=0 lost=0 moved-file=present literal "./dist/x.css?raw" not found now: "dist/x.css?raw" ::   "refused": false |  "residue": 0,
+FL11 pre-cure-docs-engine-preS1 H-bare KEPT :: move rc=0 lost=0 moved-file=present literal "dist/index.d.ts" kept ::   "refused": false |  "residue": 0,
+FL11 pre-cure-docs-engine-preS1 H-up KEPT :: move rc=0 lost=0 moved-file=present literal "../dist/index.d.ts" kept ::   "refused": false |  "residue": 0,
+FL11 pre-cure-docs-engine-preS1 DISCRIMINATES PASS :: pre-cure engine loses H-dot-read,H-dot-exst,H-dot-obj,H-dot-q
+FL11 pre-cure-docs-engine-preS1 RESTORE PASS :: git status identical to before the plant
+FL11 pre-cure-docs-engine-preS1 SUMMARY pass=5 fail=0 dot-kept=- dot-lost=H-dot-read,H-dot-exst,H-dot-obj,H-dot-q
+pre-cure docs engine exit 0
+docs engine restored
+git status after: 0 lines (expect 1: the node_modules symlink)
+floor-docs end 2026-10-16T10:28:07Z load { 28.20 23.23 23.47 }

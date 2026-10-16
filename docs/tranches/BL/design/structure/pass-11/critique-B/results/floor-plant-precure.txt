@@ -1,0 +1,10 @@
+FL11 pre-cure-engine H-ctl SETUP-FAIL :: move rc=1 lost=? moved-file=absent :: Error: Cannot find module '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p11/crit-B/wt/docs/tranches/BL/design/structure/floor/move.mjs'
+FL11 pre-cure-engine H-dot-read LOST :: move rc=1 lost=? moved-file=absent literal "./dist/index.d.ts" not found :: Error: Cannot find module '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p11/crit-B/wt/docs/tranches/BL/design/structure/floor/move.mjs'
+FL11 pre-cure-engine H-dot-exst LOST :: move rc=1 lost=? moved-file=absent literal "./dist/glass-ui.js" not found :: Error: Cannot find module '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p11/crit-B/wt/docs/tranches/BL/design/structure/floor/move.mjs'
+FL11 pre-cure-engine H-dot-obj LOST :: move rc=1 lost=? moved-file=absent literal "./dist/index.d.ts" not found :: Error: Cannot find module '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p11/crit-B/wt/docs/tranches/BL/design/structure/floor/move.mjs'
+FL11 pre-cure-engine H-dot-q LOST :: move rc=1 lost=? moved-file=absent literal "./dist/x.css?raw" not found :: Error: Cannot find module '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p11/crit-B/wt/docs/tranches/BL/design/structure/floor/move.mjs'
+FL11 pre-cure-engine H-bare SETUP-FAIL :: move rc=1 lost=? moved-file=absent literal "dist/index.d.ts" not found :: Error: Cannot find module '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p11/crit-B/wt/docs/tranches/BL/design/structure/floor/move.mjs'
+FL11 pre-cure-engine H-up SETUP-FAIL :: move rc=1 lost=? moved-file=absent literal "../dist/index.d.ts" not found :: Error: Cannot find module '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p11/crit-B/wt/docs/tranches/BL/design/structure/floor/move.mjs'
+FL11 pre-cure-engine DISCRIMINATES PASS :: pre-cure engine loses H-dot-read,H-dot-exst,H-dot-obj,H-dot-q
+FL11 pre-cure-engine RESTORE PASS :: git status identical to before the plant
+FL11 pre-cure-engine SUMMARY pass=2 fail=3 dot-kept=- dot-lost=H-dot-read,H-dot-exst,H-dot-obj,H-dot-q

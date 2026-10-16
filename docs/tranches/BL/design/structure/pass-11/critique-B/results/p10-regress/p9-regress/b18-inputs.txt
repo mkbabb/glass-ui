@@ -1,0 +1,10 @@
+b18-inputs start 2026-10-16T10:13:59Z load { 18.40 27.50 27.53 }
+B18IN B0-ctl PASS rc=0 expect=0 :: PASS B0 0
+B18IN BI1-readme-missing PASS rc=2 expect=2 :: seal: no verdict: Error: ENOENT: no such file or directory, open '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p11/crit-B/wt/src/README.md'
+B18IN BI2-heading-renamed PASS rc=2 expect=2 :: seal: no verdict: Error: peer: src/README.md holds no "Heavy-peer exclusions" table; B18 has no declared class to judge
+B18IN BI3 row now: none
+B18IN BI3-row-names-no-peer FAIL rc=0 expect=2 :: PASS B0 0
+B18IN BI4-readme-empty PASS rc=2 expect=2 :: seal: no verdict: Error: peer: src/README.md holds no "Heavy-peer exclusions" table; B18 has no declared class to judge
+B18IN B9-ctl-again PASS rc=0 expect=0 :: PASS B0 0
+B18IN SUMMARY pass=5 fail=1
+b18-inputs rc=0 end 2026-10-16T10:14:21Z load { 15.94 26.18 27.05 }

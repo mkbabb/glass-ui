@@ -1,0 +1,37 @@
+p8-plants start 2026-10-16T10:15:57Z load { 20.79 24.81 26.40 }
+BASE {"B0":0,"B1":0,"B2":0,"B3":0,"B4":0,"B5":0,"B6":0,"B7":0,"B8":0,"B9":0,"B10":0,"B11":0,"B12":0,"B13":0,"B14":0,"B15":0,"B16":0,"B17":0,"B18":0}
+CAUGHT  KF-new [B-10 / S-14 (P7-R1 peer class)] a new leaf importing @mkbabb/keyframes.js, exported on the motion-core door src/composables/motion/core/index.ts :: named=B11,B18 gained={"B11":2,"B18":26}
+        B11: src/composables/motion/core/index.ts exports zq8KfLeak (no reader outside src/composables/motion/core)
+        B11: src/composables/motion/core/index.ts +zq8KfLeak (not in the pin)
+        B18: . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/zq8KfLeak.ts:1)
+        B18: . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/zq8KfLeak.ts:1)
+CAUGHT  KF-leaf [B-10 / S-14 (P7-R1 peer class)] an existing motion-core leaf src/composables/motion/core/useRAFLoop.ts gains a value import of @mkbabb/keyframes.js :: named=B18 gained={"B18":27}
+        B18: . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/useRAFLoop.ts:1)
+        B18: . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/useRAFLoop.ts:1)
+CAUGHT  KF-deep [B-10 / S-14 (P7-R1 peer class)] a motion-core leaf imports a new sibling that imports @mkbabb/keyframes.js :: named=B18 gained={"B18":27}
+        B18: . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/zq8KfDeep.ts:1)
+        B18: . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/zq8KfDeep.ts:1)
+CAUGHT  KF-existing [B-10 / S-14 (P7-R1 peer class)] the motion-core door re-exports the keyframes-bearing useSpring (src/composables/motion/spring/useSpring.ts) :: named=B1,B4,B9,B11,B18 gained={"B1":1,"B4":1,"B9":1,"B11":1,"B18":26}
+        B1: src/composables/motion/core/index.ts:17 -> src/composables/motion/spring/useSpring.ts [reexport] (door src/composables/motion/spring/index.ts)
+        B4: cycle @src/composables/motion [spring core] via src/composables/motion/spring/useLiquidPress.ts -> src/composables/motion/core/index.ts ; src/composables/motion/core/index.ts -> src/composables/motion/spring/useSpring.ts
+        B9: src/composables/motion/core/index.ts:17 re-exports src/composables/motion/spring/useSpring.ts (outside src/composables/motion/core)
+        B11: src/composables/motion/core/index.ts +useSpring (not in the pin)
+        B18: . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/spring/useSpring.ts:15)
+        B18: . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/spring/useSpring.ts:15)
+CAUGHT  KF-side [B-10 / S-14 (P7-R1 peer class)] src/composables/motion/core/useRAFLoop.ts gains a side-effect import "@mkbabb/keyframes.js" :: named=B18 gained={"B18":27}
+        B18: . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/useRAFLoop.ts:1)
+        B18: . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/useRAFLoop.ts:1)
+CAUGHT  KF-reexport [B-10 / S-14 (P7-R1 peer class)] src/composables/motion/core/useRAFLoop.ts gains export * from "@mkbabb/keyframes.js" :: named=B18 gained={"B18":27}
+        B18: . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/useRAFLoop.ts:263)
+        B18: . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: Slider (src/components/slider/Slider.vue; first at src/composables/motion/core/useRAFLoop.ts:263)
+CAUGHT  VU-leaf [B-10 / S-14 (P7-R1 peer class)] src/composables/motion/core/useRAFLoop.ts gains a value import of @vueuse/core (motion-core is declared vueuse-free) :: named=B18 gained={"B18":27}
+        B18: . (declared free of @vueuse/core) publishes a name whose module reaches it: Button (src/components/button/Button.vue; first at src/composables/motion/core/useRAFLoop.ts:1)
+        B18: . (declared free of @vueuse/core) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/composables/motion/core/useRAFLoop.ts:1)
+MISSED-RECORD KF-dyn [B-10 / S-14 (P7-R1 peer class)] src/composables/motion/core/useRAFLoop.ts gains a literal dynamic import("@mkbabb/keyframes.js") (recorded) :: named=- gained={}
+CLEAN   CTL-free [B-10 / S-14 (P7-R1 peer class) control] control: a new keyframes-free leaf published on the motion-core door :: named=B11 gained={"B11":2}
+CLEAN   CTL-type [B-10 / S-14 (P7-R1 peer class) control] control: src/composables/motion/core/useRAFLoop.ts gains an erased import type from keyframes.js :: named=- gained={}
+CLEAN   CTL-other [B-10 / S-14 (P7-R1 peer class) control] control: a second keyframes value import in src/composables/motion/spring/useSpring.ts (an entry that may bear the peer) :: named=- gained={}
+RESTORED base judgement unchanged
+TALLY {"CAUGHT":7,"MISSED-RECORD":1,"CLEAN":3}
+COMPARE rows 11 same 11 differ 0 missing 0 extra 0
+p8-plants rc=0 end 2026-10-16T10:16:48Z load { 17.76 23.31 25.75 }

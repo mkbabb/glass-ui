@@ -1,0 +1,24 @@
+critique-B pass 11 · battery hash · seat claude-opus-5-5 · 2026-10-16T09:30:08Z
+Recorded BEFORE reading pass-11/B-kit/, pass-11/B-proto.md or pass-11/plants/.
+Method: cd pass-11/critique-B/battery && cat $(ls | sort) | shasum -a 256   (files sorted by name, concatenated)
+
+317fd849f3775f39111abae1cf90d71fa87ee959bdf3f1317618792f2c023bdd  battery (concatenated, sorted)
+
+Per file (sha256, first 16):
+7eebdb38fe6ac61d  ITEMS.md
+c79d38d8c9beb011  browser11.sh
+f14fc606f7944b1f  floor11.mjs
+37ca008fe63689fd  judges11.sh
+cd2dbc5ecfcd509a  phase1-11.sh
+3605809362e90241  run11.sh
+cb39e6616be68ff9  tally11.mjs
+
+Earlier batteries run by path (re-hashed by the same method at the same time):
+7b7b5303893a05e7d0df90c8f0d9b63364c36be960ef225807b8bf69d61499f6  pass-10/critique-B/battery (= its BATTERY-HASH.txt)
+748826fb8a2739b37e043ae993b26a1eed6ee377ec3cf0b4306c65b4d0579035  pass-9/critique-B/battery (= its BATTERY-HASH.txt)
+a9ffc0f8248bbe39  pass-10/critique-B/tools/fix10.sh       (post-hash correction, read only)
+d3f2ae79d433242a  pass-10/critique-B/tools/fix10b.sh      (post-hash correction, run by path)
+fb4d4536d9941699  pass-10/critique-B/tools/plants10b.mjs  (post-hash correction, run by path)
+11b762a081b3aee5  pass-6/critique-B/battery/fd4-probe.mjs (re-pointed copy in scratch, diff printed)
+
+Kit commit judged: 8af2de6f7 (2026-10-16T09:23:47Z), before this hash.
