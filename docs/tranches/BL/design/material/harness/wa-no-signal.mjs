@@ -15,11 +15,18 @@
 //          FL-5's one source of record), never a literal. "α ≥ bound" on every rung is not asked: legs 2-3 imply it.
 //          A plate with no computed bound is a FAIL row. The analytic bound over the captured paint is printed as
 //          information (its composite leaves blur and saturate out); the self-test calibrates fixture A from it.
-//   node wa-no-signal.mjs <capdir> [--gate chromium[,webkit]]
+//          H5-4 (pass 5): leg 4 follows Q-11's text, as M-1x does (H4-2). With no ruling, or under (a) or (c), every
+//          band stays on the bound. Under (b) ("the light chrome goes opaque, a card everywhere") the LIGHT chrome
+//          band's thinnest rung must paint α = 1 (≥ 0.995, the same 0.005 paint-read noise); content and dark stay on
+//          the bound. (d) is unresearched: the check refuses (exit 2) until the harness is revised for it.
+//   node wa-no-signal.mjs <capdir> [--gate chromium[,webkit]] [--q11 a|b|c]
 import { cli, loadCapture, gateEngines, report, paintedAlpha, region, cr, pct, f, hex, tag, pick, THEMES, CONTENT, BOUND_PROP, CELLS } from "./lib.mjs";
 import { need, tally, inkRows, signalLeg } from "./rows.mjs";
 
-const a = cli(), cap = loadCapture(a._[0]), gate = gateEngines(a);
+const a = cli({ q11: { type: "string" } }), cap = loadCapture(a._[0]), gate = gateEngines(a);
+const q11 = a.q11 || null;
+if (q11 && !["a", "b", "c"].includes(q11)) { console.log(`W-A · Q-11 ruling "${q11}" is not built into this check: revise the harness first`); process.exit(2); }
+const opaqueChrome = (theme, band) => q11 === "b" && theme === "light" && band === "chrome";   // H5-4
 const t = tally(), lines = [];
 // Leg 1
 signalLeg(cap, t, lines, gate);
@@ -73,9 +80,15 @@ for (const engine of [...new Set(cap.cells.map((c) => c.engine))]) for (const th
   for (const [name, rows] of Object.entries(band)) {
     if (!rows.length) continue;
     const thin = rows.reduce((x, y) => (y.alpha < x.alpha ? y : x));
+    if (opaqueChrome(theme, name)) {   // H5-4: Q-11 (b)'s text, the light chrome opaque
+      const ok = thin.alpha >= 0.995;
+      t.add(gated, ok);
+      lines.push(`α ${engine} ${theme} ${name}${gated ? "" : " [info]"}: thinnest ${thin.id} painted α ${f(thin.alpha, 3)} · Q-11 (b): light chrome opaque, α = 1 (≥ 0.995)${ok ? "" : " ✗"} · computed ${BOUND_PROP} ${thin.bound == null ? "absent" : f(thin.bound, 3)} [information] · rungs ${rows.map((r) => `${r.id} ${f(r.alpha, 3)}`).join(" ")}`);
+      continue;
+    }
     const ok = thin.bound != null && thin.alpha >= thin.bound - 0.005 && thin.alpha <= thin.bound + 0.03;
     t.add(gated, ok);
     lines.push(`α ${engine} ${theme} ${name}${gated ? "" : " [info]"}: thinnest ${thin.id} painted α ${f(thin.alpha, 3)} · computed ${BOUND_PROP} ${thin.bound == null ? "absent (FL-5 not built)" : f(thin.bound, 3)}${thin.bound == null ? "" : ` · α − bound ${thin.alpha - thin.bound >= 0 ? "+" : ""}${f(thin.alpha - thin.bound, 3)} (on the bound: [0, +0.03])`}${ok ? "" : " ✗"} · rungs ${rows.map((r) => `${r.id} ${f(r.alpha, 3)}`).join(" ")}`);
   }
 }
-report(cap, { id: "W-A", title: "A′ · a guarantee with no signal (no readback or recurring writer; chrome M-2 over black/white; content M-2 over its band; the thinnest rung on the computed bound)", lines, ...t, gate });
+report(cap, { id: "W-A", title: `A′ · a guarantee with no signal (no readback or recurring writer; chrome M-2 over black/white; content M-2 over its band; the thinnest rung on the computed bound${q11 === "b" ? ", the light chrome opaque under Q-11 (b)" : ""}); Q-11 ${q11 ? "ruled (" + q11 + ")" : "unruled: the default (a)"}`, lines, ...t, gate });

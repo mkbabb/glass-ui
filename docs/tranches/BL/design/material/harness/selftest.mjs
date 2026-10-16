@@ -9,10 +9,14 @@
 // W-C (band [4.5, ∞), three colour retunes) and GLANCE (--story-claim); each ships a fixture PASS and a planted FAIL.
 // H4 (pass 4) changes four checks, each with a fixture PASS and a planted FAIL in both engines: GLANCE reads paint apart
 // from layout (H4-1), M-1x gains its hue term and reads cream as the plate's own paper reading under Q-11's text (H4-2),
-// M-6 reads every variant (H4-3), W-C's loud arm counts only messages naming a glass token (H4-4). The four pass-1 family witnesses that H2 left alone (W-B, W-C, W-E, W-F) and
+// M-6 reads every variant (H4-3), W-C's loud arm counts only messages naming a glass token (H4-4).
+// H5 (pass 5) adds, each with a fixture PASS and a planted FAIL: M-9's upper bound over every state ground, REPORTED and
+// gated only under --dim-max (H5-1); LIT, the lighting-literals witness, static and frame arms, REPORTED and gated only
+// under --strict (H5-2); HOV, no :hover paints a value built on --fill-selected (H5-3); W-A's leg 4 under Q-11's text
+// (H5-4). The static arms (LIT static, HOV) read a tree, not a capture, so they run once and print engine "static". The four pass-1 family witnesses that H2 left alone (W-B, W-C, W-E, W-F) and
 // W-D keep their pass-1 Chromium test. A planted capture holds only the cells its plant touches, and its witness run
 // is restricted to them with --cells (the fixture PASS runs read every cell unrestricted).
-//   node selftest.mjs [--fields <HEAD capdir>] [--only M-1,W-B] [--skip-capture] [--reuse-green]
+//   node selftest.mjs [--fields <HEAD capdir>] [--only M-1,W-B,LIT,HOV] [--skip-capture] [--reuse-green]
 // --reuse-green: keep an existing green capture (the plants are captured fresh).
 // --fields: a HEAD run's capture (its Chromium empty-scene aurora frames become the fixtures' field pixels).
 import fs from "node:fs";
@@ -69,6 +73,22 @@ function witness(id, script, capdir, expect, extra = [], note = "", engines = BO
   }
 }
 const cells = (re) => ["--cells", re];
+// A static check (H5-2's static arm, H5-3): it reads a tree, so it runs once, engine "static".
+function staticWitness(id, script, args, expect, note) {
+  const r = spawnSync(process.execPath, [path.join(HERE, `${script}.mjs`), ...args], { encoding: "utf8", maxBuffer: 64 << 20 });
+  const out = (r.stdout || "") + (r.stderr || ""), verdict = out.trim().split("\n").pop();
+  const fails = out.split("\n").filter((l) => l.includes("✗")).slice(0, 4).map((l) => l.trim());
+  const ok = expect === "PASS" ? r.status === 0 : r.status === 1;
+  results.push({ id, engine: "static", expect, exit: r.status, ok, verdict, capdir: args.join(" "), note, fails });
+  console.log(`${ok ? "ok  " : "BAD "} ${id.padEnd(4)} static   expect ${expect.padEnd(4)} exit ${r.status} · ${verdict} · ${note}`);
+  if (expect === "FAIL" || !ok) for (const l of fails) console.log("        " + l.slice(0, 220));
+}
+// A tiny tree for the static checks: { "src/<file>": css }.
+function tree(name, filesIn) {
+  const d = path.join(ROOT, "fx", name); fs.rmSync(d, { recursive: true, force: true });
+  for (const [f, body] of Object.entries(filesIn)) { fs.mkdirSync(path.dirname(path.join(d, f)), { recursive: true }); fs.writeFileSync(path.join(d, f), body); }
+  return d;
+}
 
 const ALLG = "paper,aurora,aurora50,black,white,checker,stripes";
 const HELD = { grounds: "black,white,aurora", scenes: "held,ladder" };   // M-2h's halo leg reads the resting dock in the ladder
@@ -123,7 +143,7 @@ const M = [
   ["STACK", "stack-host", [[{ grounds: "black,white,aurora", scenes: "held" }, null, `[data-held] { position: static !important; z-index: 1 !important; }`, "H3-11: the grasp hosts carry a z-index digit on a non-positioned, non-flex box (no stacking context)"]]],
 ];
 let greenCap = null;
-if (M.some(([id]) => want(id)) || want("W-D")) {
+if (M.some(([id]) => want(id)) || want("W-D") || want("LIT")) {
   // The windows are captured only when a wanted check reads them (M-5 and W-A's leg 1 the live windows, M-2m the motion
   // and drift windows, W-D the whole battery); the retune variants ride the green capture for M-6 (H4-3).
   const win = (...ids) => ids.some(want) || want("W-D");
@@ -152,6 +172,25 @@ if (M.some(([id]) => want(id)) || want("W-D")) {
   }
   // H4-3 (I-3): every dark plate falls to the page colour in the retuned cells only; the base cells keep the lift.
   if (want("M-6")) witness("M-6", "m6-separable-ladder", await cap("green-M-6-retune", green, { grounds: "paper", scenes: "ladder,dialog", retune: true, retuneCss: `html.dark [data-spec] { background: var(--page) !important; }` }), "FAIL", [], "H4-3: under each colour retune every dark plate paints the page (base cells untouched): H3 read base only");
+  // H5-1: the veil's depth over every state ground. REPORTED with no owner bound; --dim-max gates it (0.40 here, a
+  // self-test bound: the green veil reads at most about −0.2 over the dark aurora, the plant crushes every ground).
+  if (want("M-9")) {
+    witness("M-9", "m9-state-registers", greenCap, "PASS", ["--dim-max", "0.40"], "H5-1: every veil depth within the self-test bound |ΔL| ≤ 0.40 (green fixture)");
+    const deep = await cap("green-M-9-deep", green, { grounds: "paper,aurora", scenes: "state", injectCss: `.fx-veil, html.dark .fx-veil { background: rgb(0 0 0 / 0.97) !important; }` });
+    witness("M-9", "m9-state-registers", deep, "FAIL", ["--dim-max", "0.40"], "H5-1: the veil at 97% black crushes every ground (still dims ≥ 0.02, so the lower bound passes)");
+    witness("M-9", "m9-state-registers", deep, "PASS", [], "H5-1: the same crushing veil with no owner bound: REPORTED, not gated");
+  }
+  // H5-2's frame arm: the dock's luma ring. No shadow and a downward cast read no halo; a zero-offset glow reads one.
+  if (want("LIT")) {
+    const sel = { grounds: "paper,aurora,black,white", scenes: "state,held" };
+    witness("LIT", "lighting-literals", greenCap, "PASS", ["--strict", ...cells("(state|held)$")], "H5-2 frames: the fixture docks carry no shadow");
+    const D = `[data-spec="dock"], [data-spec="dock-collapsed"]`, Dd = `html.dark [data-spec="dock"], html.dark [data-spec="dock-collapsed"]`;
+    const glow = await cap("green-LIT-glow", green, { ...sel, injectCss: `${D} { box-shadow: 0 0 20px rgb(0 0 0 / 0.35) !important; } ${Dd} { box-shadow: 0 0 20px rgb(255 255 255 / 0.3) !important; }` });
+    witness("LIT", "lighting-literals", glow, "FAIL", ["--strict", ...cells("(state|held)$")], "H5-2 frames: a zero-offset 20 px glow on both docks (HEAD's --shadow-dock shape)");
+    witness("LIT", "lighting-literals", glow, "PASS", cells("(state|held)$"), "H5-2 frames: the same glow with no --strict: REPORTED, not gated");
+    const cast = await cap("green-LIT-cast", green, { ...sel, injectCss: `${D} { box-shadow: 0 14px 12px rgb(0 0 0 / 0.35) !important; } ${Dd} { box-shadow: 0 14px 12px rgb(255 255 255 / 0.3) !important; }` });
+    witness("LIT", "lighting-literals", cast, "PASS", ["--strict", ...cells("(state|held)$")], "H5-2 frames: a downward one-layer cast (0 14px 12px) is a cast, not a halo");
+  }
   if (want("M-2")) witness("M-2", "m2-text-contrast", await cap("green-M-2-undeclared", green, { grounds: "black,white,aurora", scenes: "held", injectCss: `[data-spec="wash-held"] { contain: paint !important; background: transparent !important; }` }), "PASS", cells("held$"), "H3-5: wash-held sheds its plate under contain: paint (not declared graspable): not read");
 }
 
@@ -186,6 +225,12 @@ if (want("W-A") || want("T")) {
     const moved = { light: { content: bounds.light.content - 0.06, chrome: bounds.light.chrome - 0.06 }, dark: { content: bounds.dark.content - 0.06, chrome: bounds.dark.chrome - 0.06 } };
     witness("W-A", "wa-no-signal", await cap("A-bound", writeFixture("A", { out: path.join(ROOT, "fx", "A-bound"), fields: FIELDS, alphas, bounds: moved }), bw), "FAIL", BW,
       "H-4: the computed bound moved 0.06 (an ink retune) while the paint kept the old α (a literal left behind)");
+    // H5-4: leg 4 follows Q-11's text. Under (b) the light chrome must paint α = 1; under (a) it stays on the bound.
+    const opq = JSON.parse(JSON.stringify(alphas)); for (const id of CH) opq.light[id] = 1;
+    const aOpq = await cap("A-q11b", writeFixture("A", { out: path.join(ROOT, "fx", "A-q11b"), fields: FIELDS, alphas: opq, bounds }), bw);
+    witness("W-A", "wa-no-signal", aOpq, "PASS", ["--q11", "b", ...BW], "H5-4: Q-11 (b): the light chrome opaque (α 1), content and dark on the bound");
+    witness("W-A", "wa-no-signal", good, "FAIL", ["--q11", "b", ...BW], "H5-4: Q-11 (b): the light chrome left on the bound (α bound + 0.012), not opaque");
+    witness("W-A", "wa-no-signal", aOpq, "FAIL", BW, "H5-4: unruled, the default (a): the opaque light chrome sits off the bound by construction (FV3 §4.2)");
   }
   if (want("T")) {
     const exp = path.join(ROOT, "A-alphas.json");
@@ -256,6 +301,32 @@ if (want("GLANCE")) {
     results.push({ id: "GLANCE", engine, expect, exit: r.status, ok, verdict, capdir: o, note, fails: [] });
     console.log(`${ok ? "ok  " : "BAD "} GLANCE ${engine.padEnd(8)} expect ${expect.padEnd(4)} exit ${r.status} · ${verdict} · ${note}`);
   }
+}
+
+// ── the static checks (H5-2's static arm, H5-3): a tree each, run once ──────────────────────────────────────────
+if (want("LIT")) {
+  const clean = tree("lit-clean", { "src/a.css": `.plate { box-shadow: 0 12px 32px rgb(0 0 0 / 0.12); }\n.ring:focus-visible { box-shadow: 0 0 0 2px var(--ring); outline: none; }\n:root { --shadow-dock: 0 8px 24px rgb(0 0 0 / 0.2); --card-cast: 0 6px 18px rgb(0 0 0 / 0.1); }\n.bevel { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.4), 0 4px 12px rgb(0 0 0 / 0.1); }\n` });
+  staticWitness("LIT", "lighting-literals", ["--root", clean, "--strict"], "PASS", "H5-2 static: one cast per plate, a 0-blur ring, an inset bevel beside one cast, tokens with real offsets");
+  const plants = {
+    halo: [`.card:focus-visible { box-shadow: var(--card-cast), 0 0 8px rgb(0 0 0 / 0.15); }`, "a literal zero-offset focus glow beside the cast (card/styles.css:161's shape): HALO and STACKED"],
+    near: [`:root { --shadow-dock: 0 2px 30px rgb(0 0 0 / 0.2); }`, "a --shadow-* token with a 2 px offset under a 30 px blur (W-0.11's own fixture shape): NEAR"],
+    chain: [`.blob { filter: drop-shadow(var(--a)) drop-shadow(var(--b)); }`, "two chained drop-shadow() (Blob.vue:355's shape): CHAIN"],
+    vue: [`<template><i/></template>\n<style>\n.x { text-shadow: 0 0 6px rgb(255 255 255 / 0.5); }\n</style>\n`, "a .vue <style> block with a zero-offset text glow: HALO"],
+  };
+  for (const [k, [css, note]] of Object.entries(plants)) {
+    const t = tree(`lit-${k}`, { [k === "vue" ? "src/X.vue" : "src/a.css"]: css });
+    staticWitness("LIT", "lighting-literals", ["--root", t, "--strict"], "FAIL", "H5-2 static: " + note);
+    if (k === "halo") staticWitness("LIT", "lighting-literals", ["--root", t], "PASS", "H5-2 static: the same glow with no --strict: REPORTED, not gated");
+  }
+}
+if (want("HOV")) {
+  const base = `:root { --fill-hover: 0.05; --fill-selected: 0.12; }\n.row { --row-bg: oklch(from var(--accent) l c h / var(--fill-selected)); }\n.row[data-highlighted], .row:focus { background: var(--row-bg); }\n.card[data-selected="true"] { --card-fill: oklch(from var(--fg) l c h / var(--fill-selected)); }\n@media (hover: hover) { .card[data-selected="true"]:hover { --card-fill: oklch(from var(--fg) l c h / calc(var(--fill-hover) + var(--fill-selected))); } .card:hover:not([data-disabled]) { --card-fill: oklch(from var(--fg) l c h / var(--fill-hover)); } }\n`;
+  staticWitness("HOV", "hover-fill-selected", ["--root", tree("hov-r6", { "src/menu.css": base + `@media (hover: hover) { .row:hover:not([data-disabled]) { translate: 0 -1px; } }\n` })], "PASS",
+    "H5-3: R-6's shape: the row's --fill-selected fill reaches paint only through [data-highlighted]; :hover keeps its lift; hover on a selected card is the register's derivation");
+  staticWitness("HOV", "hover-fill-selected", ["--root", tree("hov-r4", { "src/menu.css": base + `@media (hover: hover) { .row:hover:not([data-disabled]) { background: var(--row-bg); translate: 0 -1px; } }\n` })], "FAIL",
+    "H5-3: R-4 as built: a bare :hover paints the row fill built on --fill-selected");
+  staticWitness("HOV", "hover-fill-selected", ["--root", tree("hov-nested", { "src/a.css": base, "src/B.vue": `<style>\n.b { --b1: var(--fill-selected); --b2: color-mix(in oklab, var(--accent) calc(var(--b1) * 100%), transparent); &:hover { box-shadow: 0 0 0 1px var(--b2); } }\n</style>\n` })], "FAIL",
+    "H5-3: two levels of indirection inside a .vue block, reached by a nested &:hover");
 }
 
 // ── the pass-1 family witnesses H2 left alone (Chromium, as pass 1 ran them) ──────────────────────────────────

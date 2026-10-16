@@ -1,0 +1,37 @@
+LIT · lighting literals (static: halo, near-halo, stacked and chained shadows outside the --shadow-* census; frames: the dock's luma ring at 4, 8, 16 px); REPORTED
+capture /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p5/H5/wt/.d3out/caps/head-sh · target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p5/H5/wt/.d3out/builds/head/dist · worktree /Users/mkbabb/Programming/glass-ui @ f6abfaab · gate chromium
+  HALO src/components/_shared/field/control.css:224 .field-control:focus-visible { --control-edge-ring: … 0 0 8px color-mix(in srgb, var(--focus-ring-color) 15%, tran }
+  HALO src/components/_shared/field/control.css:250 .field-control:is(:user-invalid, [data-state="invalid"]):focus-visible { --control-edge-ring: … 0 0 8px color-mix(in srgb, var(--destructive) 15%, transpare }
+  CHAIN src/components/blob/Blob.vue:355 .goo-blob-wrapper { filter: drop-shadow(var(--blob-shadow-ambient)) drop-shadow(var(--blob-shadow-contact)) } (2 drop-shadow)
+  CHAIN src/components/blob/Blob.vue:360 .goo-blob-wrapper:hover { filter: drop-shadow(var(--blob-shadow-hover)) drop-shadow(var(--blob-shadow-contact-hover)) } (2 drop-shadow)
+  CHAIN src/components/blob/Blob.vue:417 .goo-blob-wrapper { filter: drop-shadow(var(--blob-shadow-ambient)) drop-shadow(var(--blob-shadow-contact)) !important } (2 drop-shadow)
+  HALO src/components/card/styles.css:161 .card.glass-resting[role="option"][data-shadow]:focus-visible { box-shadow: … 0 0 8px oklch(from var(--foreground) l c h / 0.15) }
+  STACKED src/components/card/styles.css:161 .card.glass-resting[role="option"][data-shadow]:focus-visible { box-shadow: var(--card-cast), 0 0 8px oklch(from var(--foreground) l c h / 0.15) } (2 blurred layers)
+  STACKED src/components/slider/styles.css:292 .glass-slider[data-variant="spectrum"] .slider-thumb:focus-visible { box-shadow: var(--focus-ring-shadow), var(--shadow-sm) } (2 blurred layers)
+  HALO src/styles/glass/control-bit.css:323 .control-bit:focus-visible .control-bit__face { box-shadow: … 0 0 8px color-mix(in oklab, var(--foreground) 15%, transpare }
+  STACKED src/styles/glass/ladder-undershadow.css:39 .glass-quiet.glass-over-text { box-shadow: var(--glass-under-shadow-default), var(--glass-shadow-quiet) } (2 blurred layers)
+  STACKED src/styles/glass/ladder-undershadow.css:43 .glass-resting.glass-over-text { box-shadow: var(--glass-under-shadow-vivid), var(--glass-shadow-resting) } (2 blurred layers)
+  STACKED src/styles/glass/ladder-undershadow.css:49 .glass-resting[data-over-content="solid"] { box-shadow: var(--glass-under-shadow-quiet), var(--glass-shadow-resting) } (2 blurred layers)
+  STACKED src/styles/glass/ladder-undershadow.css:52 .glass-floating[data-over-content="solid"] { box-shadow: var(--glass-material-rim), var(--glass-under-shadow-default), var(--glass-shadow-floating) } (2 blurred layers)
+  STACKED src/styles/glass/ladder.css:97 .glass-quiet { box-shadow: var(--glass-material-rim), var(--glass-under-shadow-quiet), var(--glass-shadow-quiet) } (2 blurred layers)
+  STACKED src/styles/glass/ladder.css:113 .glass-resting { box-shadow: var(--glass-material-rim), var(--glass-under-shadow-default), var(--glass-shadow-resting) } (2 blurred layers)
+  STACKED src/styles/glass/ladder.css:141 .glass-floating { box-shadow: var(--glass-material-rim), var(--glass-under-shadow-vivid), var(--glass-shadow-floating) } (2 blurred layers)
+  STACKED src/styles/glass/overlay-plate.css:316 [data-slot="select-content"] { box-shadow: var(--glass-material-rim), var(--glass-under-shadow-vivid), var(--glass-shadow-floating),  } (2 blurred layers)
+  HALO src/styles/tokens/scale-paper.css:62 :root { --focus-ring-shadow: … 0 0 8px color-mix(in srgb, var(--focus-ring-color) 15%, tran }
+  NEAR src/styles/tokens/shadow.css:24 { --shadow-lg: … 0 4px 20px color-mix(in srgb, var(--shadow-color) 12%, trans } (offset 4px under a quarter of blur 20px)
+  static: tree /Users/mkbabb/Programming/glass-ui · 280 files · 161 shadow and filter declarations read · LIGHTING-LITERALS halo=5 near=1 stacked=10 chain=3 open=19
+  halo chromium light paper state dock: ΔL at 4/8/16 px less 32 px · top -0.0285/-0.0165/-0.0030 · bottom -0.0285/-0.0165/-0.0030 · left —/—/— · right -0.0216/-0.0122/-0.0030 · HALO (top and bottom move alike)
+  halo chromium light aurora state dock: ΔL at 4/8/16 px less 32 px · top -0.0165/-0.0084/-0.0030 · bottom -0.0167/-0.0084/-0.0030 · left —/—/— · right -0.0126/-0.0079/-0.0015 · HALO (top and bottom move alike)
+  halo chromium dark paper state dock: ΔL at 4/8/16 px less 32 px · top +0.0442/+0.0259/+0.0048 · bottom +0.0442/+0.0259/+0.0048 · left —/—/— · right +0.0326/+0.0191/+0.0048 · HALO (top and bottom move alike)
+  halo chromium dark aurora state dock: ΔL at 4/8/16 px less 32 px · top +0.0086/+0.0056/+0.0013 · bottom +0.0085/+0.0056/+0.0014 · left —/—/— · right +0.0067/+0.0035/+0.0015 · HALO (top and bottom move alike)
+  halo chromium light black held dock-collapsed: ΔL at 4/8/16 px less 32 px · top +0.0362/+0.0000/+0.0000 · bottom +0.0362/+0.0000/+0.0000 · left —/—/— · right +0.0362/+0.0000/+0.0000 · HALO (top and bottom move alike)
+  halo chromium light white held dock-collapsed: ΔL at 4/8/16 px less 32 px · top -0.0106/-0.0033/+0.0000 · bottom -0.0106/-0.0033/+0.0000 · left —/—/— · right -0.0106/-0.0033/+0.0000 · HALO (top and bottom move alike)
+  halo chromium light aurora held dock-collapsed: ΔL at 4/8/16 px less 32 px · top -0.0060/-0.0020/+0.0000 · bottom -0.0060/-0.0020/+0.0000 · left —/—/— · right -0.0060/-0.0020/+0.0000 · HALO (top and bottom move alike)
+  halo chromium dark black held dock-collapsed: ΔL at 4/8/16 px less 32 px · top +0.1021/+0.0678/+0.0000 · bottom +0.1021/+0.0678/+0.0000 · left —/—/— · right +0.1021/+0.0678/+0.0000 · HALO (top and bottom move alike)
+  halo chromium dark white held dock-collapsed: ΔL at 4/8/16 px less 32 px · top -0.0006/-0.0002/+0.0000 · bottom -0.0006/-0.0002/+0.0000 · left —/—/— · right -0.0006/-0.0002/+0.0000 · no symmetric halo
+  halo chromium dark aurora held dock-collapsed: ΔL at 4/8/16 px less 32 px · top +0.0037/+0.0010/+0.0000 · bottom +0.0037/+0.0010/+0.0000 · left —/—/— · right +0.0037/+0.0010/+0.0000 · HALO (top and bottom move alike)
+  frames: 9 of 10 dock rings read a symmetric halo
+  LIGHTING-LITERALS halo=5 near=1 stacked=10 chain=3 open=19 frames-halo=9/10
+  REPORTED (inherited findings, not a gate; --strict gates them)
+real Safari: UNMEASURED (owner's safaridriver checkbox)
+PASS (1 gated rows)

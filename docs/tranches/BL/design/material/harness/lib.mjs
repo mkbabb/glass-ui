@@ -10,6 +10,7 @@ import http from "node:http";
 import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
 import { parseArgs } from "node:util";
+import { holdWebkit } from "../../../driver/webkit-lock.mjs";
 
 export const HERE = path.dirname(fileURLToPath(import.meta.url));
 export const CHECKOUT = path.resolve(HERE, "../../../../../..");
@@ -19,6 +20,14 @@ let _pw = null;
 export async function playwright() {
   _pw ??= await import(path.join(CHECKOUT, "node_modules/playwright/index.mjs"));
   return _pw;
+}
+// The BL WebKit lock (driver/webkit-lock.mjs: one Playwright WebKit run machine-wide). H5 (found by H5-5): a witness the
+// self-test spawns (glance.mjs, and the capture.mjs it calls in-process) runs while its parent holds the lock and waits
+// on it, so it waited on its own parent until the lock's 2400 s deadline. A child whose parent owns the lock runs under
+// the parent's hold; anyone else takes the lock as before. The parent is blocked in spawnSync, so one WebKit run stays one.
+export async function holdWebkitLock() {
+  try { const owner = fs.readFileSync(path.join(CHECKOUT, ".claude/worktrees/bl/locks/webkit/owner"), "utf8"); if (Number(owner.split(" ")[0]) === process.ppid) return; } catch {}
+  return holdWebkit();
 }
 export const OUT = process.env.D3_OUT || path.join(os.tmpdir(), "d3-material-harness");
 // Page loads per Playwright WebKit browser process before capture.mjs retires and relaunches it (tile pass-3 H3-1: macOS
@@ -304,4 +313,69 @@ export const RETUNED_TOKENS = Object.fromEntries(Object.entries(RETUNES).map(([v
 export function namesGlassToken(text, variant) {
   const names = String(text).match(/--[\w-]+/g) || [];
   return names.some((n) => /(^|-)glass(-|$)/.test(n.slice(2)) || (RETUNED_TOKENS[variant] || []).some((t) => n === t || n.startsWith(t + "-")));
+}
+
+// ── the static CSS reader (H5-2 lighting-literals, H5-3 hover-fill-selected) ────────────────────────────────
+// Every rule in <root>/src: the .css files and each .vue file's <style> blocks. Comments are blanked (lines kept),
+// at-rules are transparent, nested rules resolve `&` (or descend) against their parent's selectors. Each rule carries
+// its effective selectors and its declarations { prop, value, line }; `file` is relative to <root>.
+export function cssRules(root) {
+  const files = [];
+  (function walk(d) { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); if (e.isDirectory()) { if (e.name !== "node_modules") walk(p); } else if (/\.(css|vue)$/.test(p)) files.push(p); } })(path.join(root, "src"));
+  const rules = [];
+  for (const file of files.sort()) {
+    const src = fs.readFileSync(file, "utf8"), rel = path.relative(root, file);
+    const blocks = file.endsWith(".vue") ? [...src.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)].map((m) => ({ text: m[1], at: m.index + m[0].indexOf(">") + 1 })) : [{ text: src, at: 0 }];
+    for (const { text, at } of blocks) {
+      const base = src.slice(0, at).split("\n").length - 1;
+      const t = text.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "));
+      const stack = [];   // { at: bool, sels: string[] | null, rule }
+      let buf = "", bufStart = 0, depth = 0, quote = null;
+      const lineOf = (i) => base + t.slice(0, i).split("\n").length;
+      const decl = (s, i) => {
+        const owner = [...stack].reverse().find((x) => !x.at); if (!owner) return;
+        const k = s.indexOf(":"); if (k < 0) return;
+        const prop = s.slice(0, k).trim(), value = s.slice(k + 1).replace(/\s+/g, " ").trim();
+        if (!/^-{0,2}[\w-]+$/.test(prop)) return;
+        owner.rule.decls.push({ prop, value, line: lineOf(i) });
+      };
+      for (let i = 0; i < t.length; i++) {
+        const ch = t[i];
+        if (quote) { if (ch === quote && t[i - 1] !== "\\") quote = null; buf += ch; continue; }
+        if (ch === '"' || ch === "'") { quote = ch; buf += ch; continue; }
+        if (ch === "(") depth++; else if (ch === ")") depth--;
+        if (depth > 0) { if (!buf.trim()) bufStart = i; buf += ch; continue; }
+        if (ch === "{") {
+          const prelude = buf.replace(/\s+/g, " ").trim(); buf = "";
+          if (prelude.startsWith("@")) { stack.push({ at: true }); continue; }
+          const parent = [...stack].reverse().find((x) => !x.at);
+          const own = splitTop(prelude);
+          const sels = parent ? parent.sels.flatMap((p) => own.map((c) => (c.includes("&") ? c.replaceAll("&", p) : `${p} ${c}`))) : own;
+          const rule = { file: rel, line: lineOf(i), sels, decls: [] };
+          rules.push(rule); stack.push({ at: false, sels, rule });
+          continue;
+        }
+        if (ch === ";") { decl(buf, bufStart); buf = ""; continue; }
+        if (ch === "}") { if (buf.trim()) decl(buf, bufStart); buf = ""; stack.pop(); continue; }
+        if (!buf.trim()) bufStart = i;
+        buf += ch;
+      }
+    }
+  }
+  return { files: files.length, rules };
+}
+// Split at top-level commas (outside parentheses and brackets).
+export function splitTop(s) {
+  const out = []; let d = 0, cur = "";
+  for (const ch of s) { if (ch === "(" || ch === "[") d++; if (ch === ")" || ch === "]") d--; if (ch === "," && d === 0) { out.push(cur.trim()); cur = ""; } else cur += ch; }
+  if (cur.trim()) out.push(cur.trim());
+  return out;
+}
+// The custom properties a value reads: var(--x) anywhere in it.
+export const varRefs = (v) => [...String(v).matchAll(/var\(\s*(--[\w-]+)/g)].map((m) => m[1]);
+// A static check's tree: --root, else the capture's worktree (cells.json meta).
+export function staticRoot(argv) {
+  if (argv.root) return path.resolve(argv.root);
+  const cap = argv._[0] && path.join(argv._[0], "cells.json");
+  return cap && fs.existsSync(cap) ? JSON.parse(fs.readFileSync(cap, "utf8")).meta?.worktree || null : null;
 }

@@ -16,13 +16,15 @@ import { capture } from "./capture.mjs";
 // The battery: M-1..M-9 as revised by H2 and H3, M-1x (H3-1, reported until Q-11), M-2m with the drift leg (H3-12), M-2h
 // (H3-5), O-66 (H3-9), STACK (H3-11), the route witnesses (W-A for floor v2, W-C and W-S for C″, W-G for D3-G; W-B, W-D,
 // W-E and W-F stay as banked or retired families left them), the transmission report T (H-12, ungated) and the
-// instrument's own raw check (H-1).
+// instrument's own raw check (H-1). H5 (pass 5) adds LIT (H5-2, the lighting literals, REPORTED) and HOV (H5-3, no
+// :hover paints a value built on --fill-selected; static, read from the capture's worktree).
 export const WITNESSES = [
   ["RAW", "raw-clean"],
   ["M-1", "m1-no-grey"], ["M-1x", "m1x-off-paper"], ["M-2", "m2-text-contrast"], ["M-2m", "m2-motion"], ["M-2h", "m2-held-window"], ["M-3", "m3-non-text"], ["M-4", "m4-dock-register"],
   ["M-5", "m5-live-dock"], ["M-6", "m6-separable-ladder"], ["M-7", "m7-halos-whole"], ["M-8", "m8-chrome-calm"], ["M-9", "m9-state-registers"],
   ["O-66", "o66-field-row"], ["STACK", "stack-host"], ["W-A", "wa-no-signal"], ["W-S", "ws-claim-stamp"], ["W-B", "wb-substrate-publishes"], ["W-C", "wc-ink-follows"], ["W-D", "wd-solved-tokens"],
   ["W-E", "we-ink-ground"], ["W-F", "wf-field-yields"], ["W-G", "wg-hue-through"], ["T", "t-transmission"],
+  ["LIT", "lighting-literals"], ["HOV", "hover-fill-selected"],
 ];
 
 export function runWitnesses(capdir, extraArgs = []) {

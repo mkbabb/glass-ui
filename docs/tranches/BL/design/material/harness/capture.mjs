@@ -43,12 +43,11 @@
 // deadline (OPEN_MS, CELL_MS, CLOSE_MS); past it the browser is killed and relaunched, and the page open or the cell is
 // tried once more. Each is recorded in meta.navStalled and printed; a cell that stalls twice is a CRASH row, as before.
 // The live WebGPU field is observed only by screenshot.
-import { holdWebkit } from "../../../driver/webkit-lock.mjs";
 import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
 import { execFileSync } from "node:child_process";
-import { OUT, GROUNDS, EXTRA_GROUNDS, FIELD_GROUNDS, SCENES, SCENE_GROUNDS, THEMES, ENGINES, VIEW, CHROMIUM_ARGS, NAV_CAP, BOUND_PROP, FLAT_ATTR, GROUND_STATE_ATTR, WEBKIT_SHIM, cli, list, playwright, serve, cellKey, readPng, region, mean3, Y } from "./lib.mjs";
+import { holdWebkitLock, OUT, GROUNDS, EXTRA_GROUNDS, FIELD_GROUNDS, SCENES, SCENE_GROUNDS, THEMES, ENGINES, VIEW, CHROMIUM_ARGS, NAV_CAP, BOUND_PROP, FLAT_ATTR, GROUND_STATE_ATTR, WEBKIT_SHIM, cli, list, playwright, serve, cellKey, readPng, region, mean3, Y } from "./lib.mjs";
 
 const OPEN_MS = +(process.env.D3_OPEN_MS || 90000), CELL_MS = +(process.env.D3_CELL_MS || 600000), CLOSE_MS = 30000;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -270,7 +269,7 @@ export async function capture(target, o = {}) {
   };
   for (const engine of engines) {
     const launch = () => pw[engine].launch({ headless: true, args: engine === "chromium" ? CHROMIUM_ARGS : [] });
-    if (engine === "webkit") await holdWebkit();
+    if (engine === "webkit") await holdWebkitLock();
     let browser = await launch(), navs = 0;
     try {
     versions[engine] = browser.version(); navRetired[engine] = 0; navStalled[engine] = 0;

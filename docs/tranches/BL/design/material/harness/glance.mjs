@@ -24,10 +24,9 @@
 // displacement. `frame` is the fixed-rect share pass 3 printed (layout and paint together), kept as information and
 // never gated: over two demos whose copy differs it counts moved plates as paint (C″ critique §5: C-8's 40.64%).
 // Each specimen PNG crops each half around its own box, so the halves are aligned for the eye as well.
-import { holdWebkit } from "../../../driver/webkit-lock.mjs";
 import fs from "node:fs";
 import path from "node:path";
-import { OUT, PNG, VIEW, WEBKIT_SHIM, CHROMIUM_ARGS, cli, list, loadCapture, pick, composite, bare, lch, dE, hex, f, playwright, serve } from "./lib.mjs";
+import { OUT, PNG, VIEW, WEBKIT_SHIM, CHROMIUM_ARGS, holdWebkitLock, cli, list, loadCapture, pick, composite, bare, lch, dE, hex, f, playwright, serve } from "./lib.mjs";
 import { capture } from "./capture.mjs";
 import { inkRows } from "./rows.mjs";
 
@@ -113,7 +112,7 @@ for (const theme of themes) {
   }
   // The glass-material story, from two demo builds.
   if (a["story-base"] && a["story-route"]) {
-    if (engine === "webkit") await holdWebkit();
+    if (engine === "webkit") await holdWebkitLock();
     const pw = await playwright(), browser = await pw[engine].launch({ headless: true, args: engine === "chromium" ? CHROMIUM_ARGS : [] });
     const shots = [];
     for (const dist of [a["story-base"], a["story-route"]]) {

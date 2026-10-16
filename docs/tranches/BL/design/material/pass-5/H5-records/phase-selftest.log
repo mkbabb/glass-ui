@@ -1,0 +1,547 @@
+== selftest start 09:21:18 load { 16.26 18.61 20.23 }
+[guarded] waiting for the 'webkit' lock
+     captured green in 1302 s (load 17.4 14.0 15.8)
+ok   RAW  chromium expect PASS exit 0 · PASS (48 gated rows) · green fixture
+ok   RAW  webkit   expect PASS exit 0 · PASS (48 gated rows) · green fixture
+ok   M-1  chromium expect PASS exit 0 · PASS (11 gated rows) · green fixture
+ok   M-1  webkit   expect PASS exit 0 · PASS (11 gated rows) · green fixture
+ok   M-1x chromium expect PASS exit 0 · PASS (21 gated rows) · green fixture (--q11 b)
+ok   M-1x webkit   expect PASS exit 0 · PASS (21 gated rows) · green fixture (--q11 b)
+ok   M-2  chromium expect PASS exit 0 · PASS (944 gated rows) · green fixture
+ok   M-2  webkit   expect PASS exit 0 · PASS (944 gated rows) · green fixture
+ok   M-2m chromium expect PASS exit 0 · PASS (430 gated rows) · green fixture
+ok   M-2m webkit   expect PASS exit 0 · PASS (430 gated rows) · green fixture
+ok   M-2h chromium expect PASS exit 0 · PASS (74 gated rows) · green fixture
+ok   M-2h webkit   expect PASS exit 0 · PASS (74 gated rows) · green fixture
+ok   M-3  chromium expect PASS exit 0 · PASS (354 gated rows) · green fixture
+ok   M-3  webkit   expect PASS exit 0 · PASS (354 gated rows) · green fixture
+ok   M-4  chromium expect PASS exit 0 · PASS (168 gated rows) · green fixture
+ok   M-4  webkit   expect PASS exit 0 · PASS (168 gated rows) · green fixture
+ok   M-5  chromium expect PASS exit 0 · PASS (20 gated rows) · green fixture
+ok   M-5  webkit   expect PASS exit 0 · PASS (20 gated rows) · green fixture
+ok   M-6  chromium expect PASS exit 0 · PASS (120 gated rows) · green fixture
+ok   M-6  webkit   expect PASS exit 0 · PASS (120 gated rows) · green fixture
+ok   M-7  chromium expect PASS exit 0 · PASS (8 gated rows) · green fixture
+ok   M-7  webkit   expect PASS exit 0 · PASS (8 gated rows) · green fixture
+ok   M-8  chromium expect PASS exit 0 · PASS (8 gated rows) · green fixture
+ok   M-8  webkit   expect PASS exit 0 · PASS (8 gated rows) · green fixture
+ok   M-9  chromium expect PASS exit 0 · PASS (20 gated rows) · green fixture
+ok   M-9  webkit   expect PASS exit 0 · PASS (20 gated rows) · green fixture
+ok   O-66 chromium expect PASS exit 0 · PASS (5 gated rows) · green fixture
+ok   O-66 webkit   expect PASS exit 0 · PASS (5 gated rows) · green fixture
+ok   STACK chromium expect PASS exit 0 · PASS (18 gated rows) · green fixture
+ok   STACK webkit   expect PASS exit 0 · PASS (18 gated rows) · green fixture
+     captured green-RAW-0 in 78 s (load 23.9 18.2 17.1)
+ok   RAW  chromium expect FAIL exit 1 · FAIL (4 of 48 gated rows) · a dock tab paints through its hidden surface in raw (S-10)
+        chromium light black: ground #000000 · 10/11 surfaces leave the ground bare · dock 2116/18512 px off the ground (11.43%), e.g. #040303 ✗
+        chromium light white: ground #ffffff · 10/11 surfaces leave the ground bare · dock 2184/18512 px off the ground (11.80%), e.g. #f4f3f3 ✗
+        chromium dark black: ground #000000 · 10/11 surfaces leave the ground bare · dock 2184/18512 px off the ground (11.80%), e.g. #0c0c0c ✗
+        chromium dark white: ground #ffffff · 10/11 surfaces leave the ground bare · dock 2100/18512 px off the ground (11.34%), e.g. #fdfcfb ✗
+ok   RAW  webkit   expect FAIL exit 1 · FAIL (4 of 48 gated rows) · a dock tab paints through its hidden surface in raw (S-10)
+        webkit+shim light black: ground #000000 · 10/11 surfaces leave the ground bare · dock 2116/18512 px off the ground (11.43%), e.g. #040403 ✗
+        webkit+shim light white: ground #ffffff · 10/11 surfaces leave the ground bare · dock 2184/18512 px off the ground (11.80%), e.g. #f3f3f3 ✗
+        webkit+shim dark black: ground #000000 · 10/11 surfaces leave the ground bare · dock 2184/18512 px off the ground (11.80%), e.g. #0c0c0b ✗
+        webkit+shim dark white: ground #ffffff · 10/11 surfaces leave the ground bare · dock 2124/18512 px off the ground (11.47%), e.g. #fdfcfb ✗
+     captured green-M-1-0 in 20 s (load 24.7 18.7 17.3)
+ok   M-1  chromium expect FAIL exit 1 · FAIL (1 of 11 gated rows) · floating painted HEAD's grey composite #d7d4ce
+        floating #d7d4ce L 0.871 C 0.0088 ΔE 0.115 ✗
+        floating #d7d4ce L 0.871 C 0.0088 ΔE 0.115 ✗
+ok   M-1  webkit   expect FAIL exit 1 · FAIL (1 of 11 gated rows) · floating painted HEAD's grey composite #d7d4ce
+        floating #d7d4ce L 0.871 C 0.0088 ΔE 0.115 ✗
+        floating #d7d4ce L 0.871 C 0.0088 ΔE 0.115 ✗
+     captured green-M-1x-0 in 77 s (load 18.6 18.3 17.3)
+ok   M-1x chromium expect FAIL exit 1 · FAIL (3 of 21 gated rows) · H3-1: floating at the floor's light bound (#fef7f2 at α 0.891): #e2dcd7 over black
+        floating [chrome] #e2dcd8 L 0.898 C 0.0085 · on paper #fef7f3 ΔE 0.082 · ground #000000 grey ✗
+        floating [chrome] #f0eae6 L 0.941 C 0.0085 · on paper #fef7f3 ΔE 0.040 · ground #808080 grey ✗
+        floating [chrome] #e5e2e2 L 0.915 C 0.0033 · on paper #fef7f3 ΔE 0.066 · ground #193b59 grey ✗
+        floating [chrome] #e2dcd8 L 0.898 C 0.0085 · on paper #fef7f3 ΔE 0.082 · ground #000000 grey ✗
+ok   M-1x webkit   expect FAIL exit 1 · FAIL (3 of 21 gated rows) · H3-1: floating at the floor's light bound (#fef7f2 at α 0.891): #e2dcd7 over black
+        floating [chrome] #e2dcd8 L 0.898 C 0.0085 · on paper #fef7f3 ΔE 0.082 · ground #000000 grey ✗
+        floating [chrome] #f0eae6 L 0.941 C 0.0085 · on paper #fef7f3 ΔE 0.040 · ground #808080 grey ✗
+        floating [chrome] #e5e2e2 L 0.915 C 0.0033 · on paper #fef7f3 ΔE 0.066 · ground #193b59 grey ✗
+        floating [chrome] #e2dcd8 L 0.898 C 0.0085 · on paper #fef7f3 ΔE 0.082 · ground #000000 grey ✗
+     captured green-M-2-0 in 39 s (load 18.3 18.2 17.3)
+ok   M-2  chromium expect FAIL exit 1 · FAIL (34 of 94 gated rows) · muted ink moved toward the plate
+        rows: 188 (68 under 4.5; 0 of them pass at R 1 and fail only at R 3)
+ok   M-2  webkit   expect FAIL exit 1 · FAIL (34 of 94 gated rows) · muted ink moved toward the plate
+        rows: 188 (68 under 4.5; 0 of them pass at R 1 and fail only at R 3)
+     captured green-M-2-1 in 13 s (load 19.7 18.5 17.4)
+ok   M-2  chromium expect FAIL exit 1 · FAIL (43 of 43 gated rows) · H-8: no plate, a 5 px card stroke under every glyph (E's sticker geometry, sized to the R 1 ring): R 1 reads the stroke, R 3 the black ground
+        rows: 86 (86 under 4.5; 86 of them pass at R 1 and fail only at R 3)
+ok   M-2  webkit   expect FAIL exit 1 · FAIL (43 of 43 gated rows) · H-8: no plate, a 5 px card stroke under every glyph (E's sticker geometry, sized to the R 1 ring): R 1 reads the stroke, R 3 the black ground
+        rows: 86 (86 under 4.5; 86 of them pass at R 1 and fail only at R 3)
+     captured green-M-2-2 in 75 s (load 19.2 18.7 17.6)
+ok   M-2  chromium expect FAIL exit 1 · FAIL (48 of 78 gated rows) · H-5: the held register sheds the whole plate
+        rows: 156 (96 under 4.5; 0 of them pass at R 1 and fail only at R 3)
+ok   M-2  webkit   expect FAIL exit 1 · FAIL (48 of 78 gated rows) · H-5: the held register sheds the whole plate
+        rows: 156 (96 under 4.5; 0 of them pass at R 1 and fail only at R 3)
+     captured green-M-2-3 in 59 s (load 18.8 18.7 17.6)
+ok   M-2  chromium expect FAIL exit 1 · FAIL (114 of 172 gated rows) · H-10: surfaces thin in the hostile cells (a thin arm that misses the interposed band)
+        rows: 344 (229 under 4.5; 0 of them pass at R 1 and fail only at R 3)
+ok   M-2  webkit   expect FAIL exit 1 · FAIL (115 of 172 gated rows) · H-10: surfaces thin in the hostile cells (a thin arm that misses the interposed band)
+        rows: 344 (229 under 4.5; 0 of them pass at R 1 and fail only at R 3)
+     captured green-M-2-4 in 25 s (load 20.1 19.0 17.8)
+ok   M-2  chromium expect FAIL exit 1 · FAIL (10 of 86 gated rows) · H3-2: the -strong run and the capsule's muted run moved toward the plate
+        rows: 172 (20 under 4.5; 0 of them pass at R 1 and fail only at R 3)
+ok   M-2  webkit   expect FAIL exit 1 · FAIL (10 of 86 gated rows) · H3-2: the -strong run and the capsule's muted run moved toward the plate
+        rows: 172 (20 under 4.5; 0 of them pass at R 1 and fail only at R 3)
+     captured green-M-2-5 in 5 s (load 20.1 19.0 17.8)
+ok   M-2  chromium expect FAIL exit 1 · FAIL (8 of 18 gated rows) · H3-6: the page claim thins every plate over the --secondary tray and inside the opaque card
+        rows: 36 (16 under 4.5; 0 of them pass at R 1 and fail only at R 3)
+ok   M-2  webkit   expect FAIL exit 1 · FAIL (8 of 18 gated rows) · H3-6: the page claim thins every plate over the --secondary tray and inside the opaque card
+        rows: 36 (16 under 4.5; 0 of them pass at R 1 and fail only at R 3)
+     captured green-M-2m-0 in 103 s (load 19.9 19.2 18.0)
+ok   M-2m chromium expect FAIL exit 1 · FAIL (279 of 346 gated rows) · H-11: every surface goes transparent for 300 ms of every 600 ms while the field moves
+        motion chromium light aurora (12 frames, -2999…-209 ms): 8/43 inks ≥ 4.5 in every frame · worst wash·well-muted 1.47 at -2999 ms · under: wash·fg 4.26, wash·muted 1.47, wash·muted-strong 1.47, wash·well-fg 4.25, wash·wel
+        step chromium light aurora (68 frames, -181…1476 ms, ceiling → 0.5): 11/43 inks ≥ 4.5 in every frame · worst wash·muted-strong 1.47 at -24 ms · under: wash·fg 4.31, wash·muted 1.51, wash·muted-strong 1.47, wash·well-mute
+        motion chromium light aurora50 (12 frames, -3000…-207 ms): 19/43 inks ≥ 4.5 in every frame · worst wash·muted-strong 2.92 at -2281 ms · under: wash·muted 2.92, wash·muted-strong 2.92, wash·well-muted 2.92, quiet·muted 2.
+        step chromium light aurora50 (68 frames, -182…1470 ms, ceiling → 1): 11/43 inks ≥ 4.5 in every frame · worst wash·muted-strong 1.47 at 190 ms · under: wash·fg 4.31, wash·muted 1.68, wash·muted-strong 1.47, wash·well-mute
+ok   M-2m webkit   expect FAIL exit 1 · FAIL (278 of 346 gated rows) · H-11: every surface goes transparent for 300 ms of every 600 ms while the field moves
+        motion webkit+shim light aurora (12 frames, -3000…-224 ms): 8/43 inks ≥ 4.5 in every frame · worst wash·muted-strong 1.47 at -981 ms · under: wash·fg 4.28, wash·muted 1.48, wash·muted-strong 1.47, wash·well-fg 4.25, wash
+        step webkit+shim light aurora (33 frames, -203…1474 ms, ceiling → 0.5): 11/43 inks ≥ 4.5 in every frame · worst wash·muted-strong 1.48 at -70 ms · under: wash·fg 4.31, wash·muted 1.68, wash·muted-strong 1.48, wash·well-m
+        motion webkit+shim light aurora50 (12 frames, -3000…-214 ms): 19/43 inks ≥ 4.5 in every frame · worst wash·muted-strong 2.81 at -2241 ms · under: wash·muted 2.87, wash·muted-strong 2.81, wash·well-muted 2.91, quiet·muted
+        step webkit+shim light aurora50 (30 frames, -239…1447 ms, ceiling → 1): 12/43 inks ≥ 4.5 in every frame · worst wash·muted-strong 1.46 at 415 ms · under: wash·muted 1.84, wash·muted-strong 1.46, wash·well-muted 1.47, qui
+     captured green-M-2m-1 in 102 s (load 14.8 17.8 17.7)
+ok   M-2m chromium expect FAIL exit 1 · FAIL (126 of 346 gated rows) · H-11: every surface dips transparent for 400 ms on the ceiling step (a symmetric spring)
+        step chromium light aurora (68 frames, -183…1464 ms, ceiling → 0.5): 19/43 inks ≥ 4.5 in every frame · worst wash·muted-strong 2.92 at 19 ms · under: wash·muted 2.97, wash·muted-strong 2.92, wash·well-muted 2.92, quiet·m
+        step chromium light aurora50 (69 frames, -178…1472 ms, ceiling → 1): 11/43 inks ≥ 4.5 in every frame · worst wash·muted-strong 1.47 at 200 ms · under: wash·fg 4.31, wash·muted 1.52, wash·muted-strong 1.47, wash·well-mute
+        step chromium dark aurora (70 frames, -200…1476 ms, ceiling → 0.5): 18/43 inks ≥ 4.5 in every frame · worst dock·muted-tab 2.46 at 70 ms · under: wash·muted 3.55, wash·muted-strong 4.00, wash·well-muted 4.31, quiet·muted
+        step chromium dark aurora50 (67 frames, -184…1462 ms, ceiling → 1): 0/43 inks ≥ 4.5 in every frame · worst opaque·well-muted 1.02 at 294 ms · under: wash·fg 2.60, wash·muted 1.29, wash·muted-strong 1.53, wash·well-fg 2.1
+ok   M-2m webkit   expect FAIL exit 1 · FAIL (126 of 346 gated rows) · H-11: every surface dips transparent for 400 ms on the ceiling step (a symmetric spring)
+        step webkit+shim light aurora (50 frames, -232…1485 ms, ceiling → 0.5): 19/43 inks ≥ 4.5 in every frame · worst wash·muted-strong 2.81 at 13 ms · under: wash·muted 3.14, wash·muted-strong 2.81, wash·well-muted 2.91, quie
+        step webkit+shim light aurora50 (44 frames, -225…1464 ms, ceiling → 1): 11/43 inks ≥ 4.5 in every frame · worst wash·muted-strong 1.46 at 386 ms · under: wash·fg 4.31, wash·muted 1.75, wash·muted-strong 1.46, wash·well-m
+        step webkit+shim dark aurora (42 frames, -204…1493 ms, ceiling → 0.5): 18/43 inks ≥ 4.5 in every frame · worst dock·muted-tab 2.49 at 364 ms · under: wash·muted 3.58, wash·muted-strong 3.84, wash·well-muted 4.36, quiet·m
+        step webkit+shim dark aurora50 (43 frames, -220…1487 ms, ceiling → 1): 0/43 inks ≥ 4.5 in every frame · worst opaque·well-muted 1.01 at 379 ms · under: wash·fg 2.60, wash·muted 1.29, wash·muted-strong 1.46, wash·well-fg 
+     captured green-M-2m-2 in 229 s (load 16.1 17.0 17.3)
+ok   M-2m chromium expect FAIL exit 1 · FAIL (42 of 129 gated rows) · H3-12: every surface goes transparent 70 s after load (an erosion a 60 s window misses)
+        drift chromium light aurora (51 frames over 100.0 s, load at end 17.2 17.2 17.4): 1/43 inks ≥ 4.5 in every frame · worst wash·well-muted 1.47 at 96.0 s · under: wash·fg 4.26 at 96.0 s, wash·muted 1.47 at 94.0 s, wash·mut
+ok   M-2m webkit   expect FAIL exit 1 · FAIL (42 of 129 gated rows) · H3-12: every surface goes transparent 70 s after load (an erosion a 60 s window misses)
+        drift webkit+shim light aurora (51 frames over 100.0 s, load at end 16.1 17 17.3): 1/43 inks ≥ 4.5 in every frame · worst wash·muted-strong 1.47 at 98.0 s · under: wash·fg 4.28 at 92.0 s, wash·muted 1.48 at 98.0 s, wash·
+     captured green-M-2h-0 in 152 s (load 16.8 17.1 17.3)
+ok   M-2h chromium expect FAIL exit 1 · FAIL (12 of 74 gated rows) · H3-5: the held dock goes transparent for 600 ms on the release
+        release chromium light black held (5 frames, -122…1204 ms): 9/12 inks ≥ 4.5 in every frame · worst dock-held·fg 1.19 at 12 ms · under: dock-held·fg 1.19 at 12 ms, dock-held·muted-tab 3.52 at 12 ms, dock-held·muted 3.52 a
+        release chromium light aurora held (5 frames, -314…1208 ms): 9/12 inks ≥ 4.5 in every frame · worst dock-held·muted-tab 1.51 at 13 ms · under: dock-held·fg 3.48 at 13 ms, dock-held·muted-tab 1.51 at 13 ms, dock-held·mute
+        release chromium dark white held (5 frames, -126…1207 ms): 9/12 inks ≥ 4.5 in every frame · worst dock-held·fg 1.16 at 13 ms · under: dock-held·fg 1.16 at 13 ms, dock-held·muted-tab 2.20 at 13 ms, dock-held·muted 2.22 at
+        release chromium dark aurora held (5 frames, -395…1209 ms): 9/12 inks ≥ 4.5 in every frame · worst dock-held·muted 1.71 at 7 ms · under: dock-held·fg 2.81 at 7 ms, dock-held·muted-tab 1.72 at 7 ms, dock-held·muted 1.71 a
+ok   M-2h webkit   expect FAIL exit 1 · FAIL (12 of 74 gated rows) · H3-5: the held dock goes transparent for 600 ms on the release
+        release webkit+shim light black held (96 frames, -110…1189 ms): 9/12 inks ≥ 4.5 in every frame · worst dock-held·fg 1.19 at 2 ms · under: dock-held·fg 1.19 at 2 ms, dock-held·muted-tab 3.46 at 2 ms, dock-held·muted 3.52 
+        release webkit+shim light aurora held (21 frames, -119…1144 ms): 9/12 inks ≥ 4.5 in every frame · worst dock-held·muted-tab 1.52 at 3 ms · under: dock-held·fg 3.50 at 3 ms, dock-held·muted-tab 1.52 at 3 ms, dock-held·mut
+        release webkit+shim dark white held (92 frames, -106…1185 ms): 9/12 inks ≥ 4.5 in every frame · worst dock-held·fg 1.15 at 2 ms · under: dock-held·fg 1.15 at 2 ms, dock-held·muted-tab 2.20 at 2 ms, dock-held·muted 2.20 a
+        release webkit+shim dark aurora held (21 frames, -121…1175 ms): 9/12 inks ≥ 4.5 in every frame · worst dock-held·muted 1.71 at 2 ms · under: dock-held·fg 2.80 at 2 ms, dock-held·muted-tab 1.73 at 2 ms, dock-held·muted 1.
+     captured green-M-2h-1 in 157 s (load 15.2 16.2 16.9)
+ok   M-2h chromium expect FAIL exit 1 · FAIL (2 of 74 gated rows) · H3-5: the held dock's right half lets the ground through (a halo)
+        halo chromium light: resting dock α 1.000 · held dock α per column 0.765 (x 368) … 1.000 (x 235) over 134 columns · floor 0.980 · the held host lets the ground through (a halo) ✗
+        halo chromium dark: resting dock α 1.000 · held dock α per column 0.765 (x 368) … 1.000 (x 235) over 134 columns · floor 0.980 · the held host lets the ground through (a halo) ✗
+ok   M-2h webkit   expect FAIL exit 1 · FAIL (2 of 74 gated rows) · H3-5: the held dock's right half lets the ground through (a halo)
+        halo webkit light: resting dock α 1.000 · held dock α per column 0.766 (x 368) … 0.997 (x 235) over 134 columns · floor 0.980 · the held host lets the ground through (a halo) ✗
+        halo webkit dark: resting dock α 1.000 · held dock α per column 0.766 (x 368) … 0.997 (x 235) over 134 columns · floor 0.980 · the held host lets the ground through (a halo) ✗
+     captured green-M-3-0 in 39 s (load 17.8 16.8 17.1)
+ok   M-3  chromium expect FAIL exit 1 · FAIL (18 of 38 gated rows) · well perimeter faded to 1.3-1.6:1
+ok   M-3  webkit   expect FAIL exit 1 · FAIL (18 of 38 gated rows) · well perimeter faded to 1.3-1.6:1
+     captured green-M-3-1 in 75 s (load 20.8 18.0 17.5)
+ok   M-3  chromium expect FAIL exit 1 · FAIL (12 of 24 gated rows) · H-5: the held rungs' well perimeter vanishes
+ok   M-3  webkit   expect FAIL exit 1 · FAIL (12 of 24 gated rows) · H-5: the held rungs' well perimeter vanishes
+     captured green-M-4-0 in 39 s (load 22.0 18.6 17.7)
+ok   M-4  chromium expect FAIL exit 1 · FAIL (2 of 24 gated rows) · dock muted ink pinned to the pole (#000 / #fff)
+        chromium light paper: 10/11 surfaces keep the signed ΔL_OK ≥ 0.08 · dock fg #1f1a16 muted #000000 signed ΔL_OK -0.222 (inverted) · muted is a pole ✗
+        chromium dark paper: 10/11 surfaces keep the signed ΔL_OK ≥ 0.08 · dock fg #f0ebe5 muted #ffffff signed ΔL_OK -0.058 (inverted) · muted is a pole ✗
+ok   M-4  webkit   expect FAIL exit 1 · FAIL (2 of 24 gated rows) · dock muted ink pinned to the pole (#000 / #fff)
+        webkit+shim light paper: 10/11 surfaces keep the signed ΔL_OK ≥ 0.08 · dock fg #1f1a16 muted #010102 signed ΔL_OK -0.153 (inverted) · muted is a pole ✗
+        webkit+shim dark paper: 10/11 surfaces keep the signed ΔL_OK ≥ 0.08 · dock fg #f0ebe5 muted #ffffff signed ΔL_OK -0.058 (inverted) · muted is a pole ✗
+     captured green-M-4-1 in 39 s (load 21.6 18.9 17.9)
+ok   M-4  chromium expect FAIL exit 1 · FAIL (24 of 24 gated rows) · H-7: a dead solve, every plate's muted falls back to the fg ink
+        chromium light paper: 0/11 surfaces keep the signed ΔL_OK ≥ 0.08 · wash fg #1f1a16 muted #1f1a16 signed ΔL_OK +0.000 ✗ · quiet fg #1f1a16 muted #1f1a16 signed ΔL_OK +0.000 ✗ · resting fg #1f1a16 muted #1f1a16 signed ΔL_O
+        chromium light paper dialog: 0/1 surfaces keep the signed ΔL_OK ≥ 0.08 · dialog fg #1f1a16 muted #1f1a16 signed ΔL_OK +0.000 ✗
+        chromium dark paper: 0/11 surfaces keep the signed ΔL_OK ≥ 0.08 · wash fg #f0ebe5 muted #f0ebe5 signed ΔL_OK +0.000 ✗ · quiet fg #f0ebe5 muted #f0ebe5 signed ΔL_OK +0.000 ✗ · resting fg #f0ebe5 muted #f0ebe5 signed ΔL_OK
+        chromium dark paper dialog: 0/1 surfaces keep the signed ΔL_OK ≥ 0.08 · dialog fg #f0ebe5 muted #f0ebe5 signed ΔL_OK +0.000 ✗
+ok   M-4  webkit   expect FAIL exit 1 · FAIL (24 of 24 gated rows) · H-7: a dead solve, every plate's muted falls back to the fg ink
+        webkit+shim light paper: 0/11 surfaces keep the signed ΔL_OK ≥ 0.08 · wash fg #1f1a16 muted #26201d signed ΔL_OK +0.027 ✗ · quiet fg #1f1a16 muted #26201c signed ΔL_OK +0.027 ✗ · resting fg #1f1a16 muted #24201c signed Δ
+        webkit+shim light paper dialog: 0/1 surfaces keep the signed ΔL_OK ≥ 0.08 · dialog fg #1f1a16 muted #26201d signed ΔL_OK +0.027 ✗
+        webkit+shim dark paper: 0/11 surfaces keep the signed ΔL_OK ≥ 0.08 · wash fg #f0ebe5 muted #f0ebe5 signed ΔL_OK +0.000 ✗ · quiet fg #f0ebe5 muted #f0ebe5 signed ΔL_OK +0.000 ✗ · resting fg #f0ebe5 muted #f0ebe5 signed ΔL
+        webkit+shim dark paper dialog: 0/1 surfaces keep the signed ΔL_OK ≥ 0.08 · dialog fg #f0ebe5 muted #f0ebe5 signed ΔL_OK +0.000 ✗
+     captured green-M-4-2 in 26 s (load 32.9 21.6 18.9)
+ok   M-4  chromium expect FAIL exit 1 · FAIL (2 of 22 gated rows) · H-2: the dock's active tab painted in the muted register
+        chromium light paper: 10/11 surfaces keep the signed ΔL_OK ≥ 0.08 · dock fg #6b6259 muted #6b6259 signed ΔL_OK +0.000 ✗
+        chromium dark paper: 10/11 surfaces keep the signed ΔL_OK ≥ 0.08 · dock fg #b5ada3 muted #b5ada3 signed ΔL_OK +0.000 ✗
+ok   M-4  webkit   expect FAIL exit 1 · FAIL (2 of 22 gated rows) · H-2: the dock's active tab painted in the muted register
+        webkit+shim light paper: 10/11 surfaces keep the signed ΔL_OK ≥ 0.08 · dock fg #6f665e muted #6c635a signed ΔL_OK -0.011 (inverted) ✗
+        webkit+shim dark paper: 10/11 surfaces keep the signed ΔL_OK ≥ 0.08 · dock fg #b4aca2 muted #b5ada3 signed ΔL_OK -0.003 (inverted) ✗
+     captured green-M-4-3 in 20 s (load 31.3 22.0 19.1)
+ok   M-4  chromium expect FAIL exit 1 · FAIL (12 of 12 gated rows) · H3-3: light muted darker than fg (|ΔL| ≥ 0.08: green unsigned, inverted signed)
+        chromium light paper: 0/11 surfaces keep the signed ΔL_OK ≥ 0.08 · wash fg #1f1a16 muted #050302 signed ΔL_OK -0.121 (inverted) ✗ · quiet fg #1f1a16 muted #050302 signed ΔL_OK -0.121 (inverted) ✗ · resting fg #1f1a16 mut
+        chromium light paper dialog: 0/1 surfaces keep the signed ΔL_OK ≥ 0.08 · dialog fg #1f1a16 muted #050302 signed ΔL_OK -0.121 (inverted) ✗
+ok   M-4  webkit   expect FAIL exit 1 · FAIL (12 of 12 gated rows) · H3-3: light muted darker than fg (|ΔL| ≥ 0.08: green unsigned, inverted signed)
+        webkit+shim light paper: 0/11 surfaces keep the signed ΔL_OK ≥ 0.08 · wash fg #1f1a16 muted #0c0a09 signed ΔL_OK -0.075 (inverted) ✗ · quiet fg #1f1a16 muted #0c0a09 signed ΔL_OK -0.075 (inverted) ✗ · resting fg #1f1a16 
+        webkit+shim light paper dialog: 0/1 surfaces keep the signed ΔL_OK ≥ 0.08 · dialog fg #1f1a16 muted #0c0a09 signed ΔL_OK -0.075 (inverted) ✗
+     captured green-M-5-0 in 102 s (load 18.3 20.3 18.8)
+ok   M-5  chromium expect FAIL exit 1 · FAIL (4 of 20 gated rows) · the page reads back a canvas every frame
+        signal · live chromium light aurora (3000 ms, 360 frames): readbacks 360 (getImageData 360, readPixels 0, toDataURL 0) ✗ · custom-property writes: none
+        signal · live chromium light aurora50 (3000 ms, 360 frames): readbacks 360 (getImageData 360, readPixels 0, toDataURL 0) ✗ · custom-property writes: none
+        signal · live chromium dark aurora (3000 ms, 361 frames): readbacks 361 (getImageData 361, readPixels 0, toDataURL 0) ✗ · custom-property writes: none
+        signal · live chromium dark aurora50 (3000 ms, 360 frames): readbacks 360 (getImageData 360, readPixels 0, toDataURL 0) ✗ · custom-property writes: none
+ok   M-5  webkit   expect FAIL exit 1 · FAIL (4 of 20 gated rows) · the page reads back a canvas every frame
+        signal · live webkit light aurora (3000 ms, 294 frames): readbacks 294 (getImageData 294, readPixels 0, toDataURL 0) ✗ · custom-property writes: none
+        signal · live webkit light aurora50 (3000 ms, 294 frames): readbacks 294 (getImageData 294, readPixels 0, toDataURL 0) ✗ · custom-property writes: none
+        signal · live webkit dark aurora (3000 ms, 294 frames): readbacks 294 (getImageData 294, readPixels 0, toDataURL 0) ✗ · custom-property writes: none
+        signal · live webkit dark aurora50 (3000 ms, 294 frames): readbacks 294 (getImageData 294, readPixels 0, toDataURL 0) ✗ · custom-property writes: none
+     captured green-M-5-1 in 100 s (load 10.2 16.8 17.5)
+ok   M-5  chromium expect FAIL exit 1 · FAIL (4 of 20 gated rows) · H-3: a per-frame writer under a new name (--x-field-y, setProperty)
+        signal · live chromium light aurora (3000 ms, 360 frames): readbacks 0 (getImageData 0, readPixels 0, toDataURL 0) · custom-property writes: --x-field-y in 360 frames · recurring writers (≥ 3 frames): --x-field-y ✗
+        signal · live chromium light aurora50 (3000 ms, 361 frames): readbacks 0 (getImageData 0, readPixels 0, toDataURL 0) · custom-property writes: --x-field-y in 361 frames · recurring writers (≥ 3 frames): --x-field-y ✗
+        signal · live chromium dark aurora (3000 ms, 360 frames): readbacks 0 (getImageData 0, readPixels 0, toDataURL 0) · custom-property writes: --x-field-y in 360 frames · recurring writers (≥ 3 frames): --x-field-y ✗
+        signal · live chromium dark aurora50 (3000 ms, 360 frames): readbacks 0 (getImageData 0, readPixels 0, toDataURL 0) · custom-property writes: --x-field-y in 360 frames · recurring writers (≥ 3 frames): --x-field-y ✗
+ok   M-5  webkit   expect FAIL exit 1 · FAIL (4 of 20 gated rows) · H-3: a per-frame writer under a new name (--x-field-y, setProperty)
+        signal · live webkit light aurora (3000 ms, 295 frames): readbacks 0 (getImageData 0, readPixels 0, toDataURL 0) · custom-property writes: --x-field-y in 295 frames · recurring writers (≥ 3 frames): --x-field-y ✗
+        signal · live webkit light aurora50 (3000 ms, 294 frames): readbacks 0 (getImageData 0, readPixels 0, toDataURL 0) · custom-property writes: --x-field-y in 294 frames · recurring writers (≥ 3 frames): --x-field-y ✗
+        signal · live webkit dark aurora (3000 ms, 294 frames): readbacks 0 (getImageData 0, readPixels 0, toDataURL 0) · custom-property writes: --x-field-y in 294 frames · recurring writers (≥ 3 frames): --x-field-y ✗
+        signal · live webkit dark aurora50 (3000 ms, 294 frames): readbacks 0 (getImageData 0, readPixels 0, toDataURL 0) · custom-property writes: --x-field-y in 294 frames · recurring writers (≥ 3 frames): --x-field-y ✗
+     captured green-M-5-2 in 100 s (load 6.7 13.6 16.2)
+ok   M-5  chromium expect FAIL exit 1 · FAIL (4 of 20 gated rows) · H-3: a per-frame writer by style-attribute rewrite (--x-tone)
+        signal · live chromium light aurora (3000 ms, 360 frames): readbacks 0 (getImageData 0, readPixels 0, toDataURL 0) · custom-property writes: --x-tone in 360 frames · recurring writers (≥ 3 frames): --x-tone ✗
+        signal · live chromium light aurora50 (3000 ms, 360 frames): readbacks 0 (getImageData 0, readPixels 0, toDataURL 0) · custom-property writes: --x-tone in 360 frames · recurring writers (≥ 3 frames): --x-tone ✗
+        signal · live chromium dark aurora (3000 ms, 360 frames): readbacks 0 (getImageData 0, readPixels 0, toDataURL 0) · custom-property writes: --x-tone in 360 frames · recurring writers (≥ 3 frames): --x-tone ✗
+        signal · live chromium dark aurora50 (3000 ms, 360 frames): readbacks 0 (getImageData 0, readPixels 0, toDataURL 0) · custom-property writes: --x-tone in 360 frames · recurring writers (≥ 3 frames): --x-tone ✗
+ok   M-5  webkit   expect FAIL exit 1 · FAIL (4 of 20 gated rows) · H-3: a per-frame writer by style-attribute rewrite (--x-tone)
+        signal · live webkit light aurora (3000 ms, 294 frames): readbacks 0 (getImageData 0, readPixels 0, toDataURL 0) · custom-property writes: --x-tone in 294 frames · recurring writers (≥ 3 frames): --x-tone ✗
+        signal · live webkit light aurora50 (3000 ms, 294 frames): readbacks 0 (getImageData 0, readPixels 0, toDataURL 0) · custom-property writes: --x-tone in 294 frames · recurring writers (≥ 3 frames): --x-tone ✗
+        signal · live webkit dark aurora (3000 ms, 295 frames): readbacks 0 (getImageData 0, readPixels 0, toDataURL 0) · custom-property writes: --x-tone in 295 frames · recurring writers (≥ 3 frames): --x-tone ✗
+        signal · live webkit dark aurora50 (3000 ms, 294 frames): readbacks 0 (getImageData 0, readPixels 0, toDataURL 0) · custom-property writes: --x-tone in 294 frames · recurring writers (≥ 3 frames): --x-tone ✗
+     captured green-M-6-0 in 38 s (load 6.3 12.7 15.8)
+ok   M-6  chromium expect FAIL exit 1 · FAIL (15 of 30 gated rows) · every dark plate painted HEAD's page-coloured composite
+        chromium dark paper: page #0b0a09 · adjacent ΔE wash→quiet 0.000 ✗, quiet→resting 0.000 ✗, resting→floating 0.000 ✗, floating→overlay 0.000 ✗ · ΔE from the page: wash #0e0b09 0.008 ✗ ΔL +0.007, quiet #0e0b09 0.008 ✗ ΔL +
+        chromium dark paper dialog: page #0b0a09 · ΔE from the page: dialog #0e0b09 0.008 ✗ ΔL +0.007
+ok   M-6  webkit   expect FAIL exit 1 · FAIL (15 of 30 gated rows) · every dark plate painted HEAD's page-coloured composite
+        webkit+shim dark paper: page #0b0a09 · adjacent ΔE wash→quiet 0.000 ✗, quiet→resting 0.000 ✗, resting→floating 0.000 ✗, floating→overlay 0.000 ✗ · ΔE from the page: wash #0e0b09 0.008 ✗ ΔL +0.007, quiet #0e0b09 0.008 ✗ Δ
+        webkit+shim dark paper dialog: page #0b0a09 · ΔE from the page: dialog #0e0b09 0.008 ✗ ΔL +0.007
+     captured green-M-6-1 in 38 s (load 5.2 11.6 15.2)
+ok   M-6  chromium expect FAIL exit 1 · FAIL (11 of 30 gated rows) · H-9: every dark plate sinks below the page (L 0.000-0.106 against 0.147), adjacent ΔE 0.063-0.083 and ΔE from the page ≥ 0.053: green unsigned
+        chromium dark paper: page #0b0a09 · adjacent ΔE wash→quiet 0.083, quiet→resting 0.069, resting→floating 0.082, floating→overlay 0.079 · ΔE from the page: wash #000000 0.146 ΔL -0.146 (below the page) ✗, quiet #060000 0.0
+        chromium dark paper dialog: page #0b0a09 · ΔE from the page: dialog #000000 0.146 ΔL -0.146 (below the page) ✗
+ok   M-6  webkit   expect FAIL exit 1 · FAIL (11 of 30 gated rows) · H-9: every dark plate sinks below the page (L 0.000-0.106 against 0.147), adjacent ΔE 0.063-0.083 and ΔE from the page ≥ 0.053: green unsigned
+        webkit+shim dark paper: page #0b0a09 · adjacent ΔE wash→quiet 0.083, quiet→resting 0.069, resting→floating 0.082, floating→overlay 0.079 · ΔE from the page: wash #000000 0.146 ΔL -0.146 (below the page) ✗, quiet #060000 
+        webkit+shim dark paper dialog: page #0b0a09 · ΔE from the page: dialog #000000 0.146 ΔL -0.146 (below the page) ✗
+     captured green-M-7-0 in 7 s (load 5.5 11.6 15.2)
+ok   M-7  chromium expect FAIL exit 1 · FAIL (8 of 8 gated rows) · contain: paint on the content hosts (O-61)
+        chromium light paper halo: reference reach 24 px · wash 2 px ✗ · quiet 2 px ✗ · resting 2 px ✗ · card 2 px ✗
+        chromium dark paper halo: reference reach 24 px · wash 2 px ✗ · quiet 2 px ✗ · resting 2 px ✗ · card 2 px ✗
+ok   M-7  webkit   expect FAIL exit 1 · FAIL (8 of 8 gated rows) · contain: paint on the content hosts (O-61)
+        webkit+shim light paper halo: reference reach 19 px · wash 2 px ✗ · quiet 2 px ✗ · resting 2 px ✗ · card 2 px ✗
+        webkit+shim dark paper halo: reference reach 19 px · wash 2 px ✗ · quiet 2 px ✗ · resting 2 px ✗ · card 2 px ✗
+     captured green-M-8-0 in 38 s (load 17.3 13.4 15.7)
+ok   M-8  chromium expect FAIL exit 1 · FAIL (4 of 8 gated rows) · floating and the Dialog at a thin white veil
+        chromium light stripes: floating bleed 2.81 C 0.0540 ✗ · overlay bleed 1.00 C 0.0093 · dialog-rung bleed 1.00 C 0.0158 · dock (info) bleed 1.00 C 0.0092 · popover (info) bleed 1.00 C 0.0107
+        chromium light stripes dialog: dialog bleed 2.81 C 0.0541 ✗
+        chromium dark stripes: floating bleed 2.81 C 0.0540 ✗ · overlay bleed 1.00 C 0.0116 · dialog-rung bleed 1.00 C 0.0117 · dock (info) bleed 1.00 C 0.0119 · popover (info) bleed 1.00 C 0.0122
+        chromium dark stripes dialog: dialog bleed 2.81 C 0.0541 ✗
+ok   M-8  webkit   expect FAIL exit 1 · FAIL (4 of 8 gated rows) · floating and the Dialog at a thin white veil
+        webkit+shim light stripes: floating bleed 2.81 C 0.0540 ✗ · overlay bleed 1.00 C 0.0093 · dialog-rung bleed 1.00 C 0.0158 · dock (info) bleed 1.00 C 0.0092 · popover (info) bleed 1.00 C 0.0107
+        webkit+shim light stripes dialog: dialog bleed 2.81 C 0.0541 ✗
+        webkit+shim dark stripes: floating bleed 2.81 C 0.0540 ✗ · overlay bleed 1.00 C 0.0116 · dialog-rung bleed 1.00 C 0.0117 · dock (info) bleed 1.00 C 0.0119 · popover (info) bleed 1.00 C 0.0122
+        webkit+shim dark stripes dialog: dialog bleed 2.81 C 0.0541 ✗
+     captured green-M-9-0 in 29 s (load 24.2 15.5 16.4)
+ok   M-9  chromium expect FAIL exit 1 · FAIL (12 of 20 gated rows) · H-6: every state fill paints nothing (a same-hue no-op under a card pole)
+        chromium light paper state: active #f4faff on #f4faff ΔE 0.000 ✗ · hover #f4faff on #f4faff ΔE 0.000 ✗ · checked #f5fcf2 on #f5fcf2 ΔE 0.000 ✗ · selected #a9aca5 on #f2f9ef ΔE 0.235 · focus veil #fbfaf8 → #dcdcda ΔL -0.0
+        chromium light aurora state: active #f4faff on #f3f5fa ΔE 0.012 ✗ · hover #f4faff on #f4faff ΔE 0.000 ✗ · checked #f5fcf2 on #f5fcf2 ΔE 0.000 ✗ · selected #a9aca5 on #f2f9ef ΔE 0.235 · focus veil #e87237 → #cc6431 ΔL -0.
+        chromium dark paper state: active #27221d on #26211c ΔE 0.003 ✗ · hover #27221d on #27221d ΔE 0.000 ✗ · checked #25211b on #25211b ΔE 0.000 ✗ · selected #79756f on #27231d ΔE 0.303 · focus veil #0b0a09 → #040404 ΔL -0.03
+        chromium dark aurora state: active #27221d on #2c231e ΔE 0.011 ✗ · hover #27221d on #27221d ΔE 0.000 ✗ · checked #25211b on #25211b ΔE 0.000 ✗ · selected #79756f on #27231d ΔE 0.303 · focus veil #e87237 → #5d2e16 ΔL -0.3
+ok   M-9  webkit   expect FAIL exit 1 · FAIL (12 of 20 gated rows) · H-6: every state fill paints nothing (a same-hue no-op under a card pole)
+        webkit+shim light paper state: active #f4faff on #f4faff ΔE 0.000 ✗ · hover #f4faff on #f4faff ΔE 0.000 ✗ · checked #f5fcf2 on #f5fcf2 ΔE 0.000 ✗ · selected #a8aaa2 on #f3f9ef ΔE 0.240 · focus veil #fbfaf8 → #dcdcda ΔL -
+        webkit+shim light aurora state: active #f4faff on #f3f5fa ΔE 0.012 ✗ · hover #f4faff on #f4faff ΔE 0.000 ✗ · checked #f5fcf2 on #f5fcf2 ΔE 0.000 ✗ · selected #a8aaa2 on #f3f9ef ΔE 0.240 · focus veil #e87237 → #cc6431 ΔL 
+        webkit+shim dark paper state: active #27221d on #26211c ΔE 0.003 ✗ · hover #27221d on #27221d ΔE 0.000 ✗ · checked #25211b on #25211b ΔE 0.000 ✗ · selected #78746e on #27231d ΔE 0.299 · focus veil #0b0a09 → #040404 ΔL -0
+        webkit+shim dark aurora state: active #27221d on #2c231e ΔE 0.011 ✗ · hover #27221d on #27221d ΔE 0.000 ✗ · checked #25211b on #25211b ΔE 0.000 ✗ · selected #78746e on #27231d ΔE 0.299 · focus veil #e87237 → #5d2e16 ΔL -
+     captured green-M-9-1 in 26 s (load 18.9 14.9 16.1)
+ok   M-9  chromium expect FAIL exit 1 · FAIL (4 of 20 gated rows) · H-6: the focus veil brightens instead of dimming
+        chromium light paper state: active #d6dbde on #f4faff ΔE 0.094 · hover #e3e8ec on #f4faff ΔE 0.054 · checked #1f1a16 on #f5fcf2 ΔE 0.761 · selected #93958e on #f2f9ef ΔE 0.309 · focus veil #fbfaf8 → #fcfcfa ΔL +0.005 (di
+        chromium light aurora state: active #d6dbde on #f3f5fa ΔE 0.083 · hover #e3e8ec on #f4faff ΔE 0.054 · checked #1f1a16 on #f5fcf2 ΔE 0.761 · selected #93958e on #f2f9ef ΔE 0.309 · focus veil #e87237 → #ef9d74 ΔL +0.087 (d
+        chromium dark paper state: active #433e39 on #26211c ΔE 0.114 · hover #37322d on #27221d ΔE 0.065 · checked #f0ebe5 on #25211b ΔE 0.692 · selected #8c8781 on #27231d ΔE 0.367 · focus veil #0b0a09 → #555453 ΔL +0.301 (dim
+        chromium dark aurora state: active #433e39 on #2c231e ΔE 0.102 · hover #37322d on #27221d ΔE 0.065 · checked #f0ebe5 on #25211b ΔE 0.692 · selected #8c8781 on #27231d ΔE 0.367 · focus veil #e87237 → #ef9d74 ΔL +0.087 (di
+ok   M-9  webkit   expect FAIL exit 1 · FAIL (4 of 20 gated rows) · H-6: the focus veil brightens instead of dimming
+        webkit+shim light paper state: active #d6dbde on #f4faff ΔE 0.094 · hover #e3e8ed on #f4faff ΔE 0.053 · checked #1f1a16 on #f5fcf2 ΔE 0.761 · selected #92938c on #f3f9ef ΔE 0.314 · focus veil #fbfaf8 → #fcfcfa ΔL +0.005 
+        webkit+shim light aurora state: active #d6dbde on #f3f5fa ΔE 0.083 · hover #e3e8ed on #f4faff ΔE 0.053 · checked #1f1a16 on #f5fcf2 ΔE 0.761 · selected #92938c on #f3f9ef ΔE 0.314 · focus veil #e87237 → #ef9d74 ΔL +0.087
+        webkit+shim dark paper state: active #433e39 on #26211c ΔE 0.114 · hover #37322d on #27221d ΔE 0.065 · checked #f0ebe5 on #25211b ΔE 0.692 · selected #8b8781 on #27231d ΔE 0.365 · focus veil #0b0a09 → #555453 ΔL +0.301 (
+        webkit+shim dark aurora state: active #433e39 on #2c231e ΔE 0.102 · hover #37322d on #27221d ΔE 0.065 · checked #f0ebe5 on #25211b ΔE 0.692 · selected #8b8781 on #27231d ΔE 0.365 · focus veil #e87237 → #ef9d74 ΔL +0.087 
+     captured green-M-9-2 in 13 s (load 16.5 14.6 16.0)
+ok   M-9  chromium expect FAIL exit 1 · FAIL (2 of 10 gated rows) · H3-4: the dark focus veil brightens
+        chromium dark paper state: active #433e39 on #26211c ΔE 0.114 · hover #37322d on #27221d ΔE 0.065 · checked #f0ebe5 on #25211b ΔE 0.692 · selected #8c8781 on #27231d ΔE 0.367 · focus veil #0b0a09 → #191817 ΔL +0.064 (dim
+        chromium dark aurora state: active #433e39 on #2c231e ΔE 0.102 · hover #37322d on #27221d ΔE 0.065 · checked #f0ebe5 on #25211b ΔE 0.692 · selected #8c8781 on #27231d ΔE 0.367 · focus veil #e87237 → #e97a43 ΔL +0.015 (di
+ok   M-9  webkit   expect FAIL exit 1 · FAIL (2 of 10 gated rows) · H3-4: the dark focus veil brightens
+        webkit+shim dark paper state: active #433e39 on #26211c ΔE 0.114 · hover #37322d on #27221d ΔE 0.065 · checked #f0ebe5 on #25211b ΔE 0.692 · selected #8b8781 on #27231d ΔE 0.365 · focus veil #0b0a09 → #191817 ΔL +0.064 (
+        webkit+shim dark aurora state: active #433e39 on #2c231e ΔE 0.102 · hover #37322d on #27221d ΔE 0.065 · checked #f0ebe5 on #25211b ΔE 0.692 · selected #8b8781 on #27231d ΔE 0.365 · focus veil #e87237 → #e97a43 ΔL +0.015 
+     captured green-O-66-0 in 19 s (load 14.1 14.2 15.8)
+ok   O-66 chromium expect FAIL exit 1 · FAIL (4 of 5 gated rows) · H3-9 G2: the trigger paints a grey plate beside the cream Input (W-0.1 §2: #e7e4df)
+        G2 chromium light paper o66field: paper: trigger #e7e4df L 0.920 · Input #f3ece2 L 0.946 · ΔE 0.027 ✗ · pane: trigger #e7e4df L 0.920 · Input #f3ece2 L 0.946 · ΔE 0.027 ✗
+        G2 chromium dark paper o66field: paper: trigger #2b2723 L 0.276 · Input #3f3731 L 0.343 · ΔE 0.068 ✗ · pane: trigger #2b2723 L 0.276 · Input #3f3731 L 0.343 · ΔE 0.068 ✗
+ok   O-66 webkit   expect FAIL exit 1 · FAIL (4 of 5 gated rows) · H3-9 G2: the trigger paints a grey plate beside the cream Input (W-0.1 §2: #e7e4df)
+        G2 webkit+shim light paper o66field: paper: trigger #e7e4df L 0.920 · Input #f3ece2 L 0.946 · ΔE 0.027 ✗ · pane: trigger #e7e4df L 0.920 · Input #f3ece2 L 0.946 · ΔE 0.027 ✗
+        G2 webkit+shim dark paper o66field: paper: trigger #2b2723 L 0.276 · Input #3f3731 L 0.343 · ΔE 0.068 ✗ · pane: trigger #2b2723 L 0.276 · Input #3f3731 L 0.343 · ΔE 0.068 ✗
+     captured green-O-66-1 in 10 s (load 13.5 14.1 15.7)
+ok   O-66 chromium expect FAIL exit 1 · FAIL (1 of 3 gated rows) · H3-9 G3: the highlighted row darkens the plate with no tint (ΔL about −0.02, C under 0.02)
+        G3 chromium light paper o66menu: row #e3ddd8 L 0.901 C 0.0095 · plate #f3eee8 L 0.951 · ΔL -0.0505 · ΔE 0.050 (grey: darkens the plate, no tint) ✗
+ok   O-66 webkit   expect FAIL exit 1 · FAIL (1 of 3 gated rows) · H3-9 G3: the highlighted row darkens the plate with no tint (ΔL about −0.02, C under 0.02)
+        G3 webkit+shim light paper o66menu: row #e3ddd8 L 0.901 C 0.0095 · plate #f3eee8 L 0.951 · ΔL -0.0505 · ΔE 0.050 (grey: darkens the plate, no tint) ✗
+     captured green-STACK-0 in 72 s (load 8.8 12.5 15.0)
+ok   STACK chromium expect FAIL exit 1 · FAIL (18 of 18 gated rows) · H3-11: the grasp hosts carry a z-index digit on a non-positioned, non-flex box (no stacking context)
+        chromium light black held: wash-held host .fx-plate: forms none (position static, z-index 1, parent block) ✗ · floating-held host .fx-plate: forms none (position static, z-index 1, parent block) ✗ · dock-held host .fx-do
+        chromium light white held: wash-held host .fx-plate: forms none (position static, z-index 1, parent block) ✗ · floating-held host .fx-plate: forms none (position static, z-index 1, parent block) ✗ · dock-held host .fx-do
+        chromium light aurora held: wash-held host .fx-plate: forms none (position static, z-index 1, parent block) ✗ · floating-held host .fx-plate: forms none (position static, z-index 1, parent block) ✗ · dock-held host .fx-d
+        chromium dark black held: wash-held host .fx-plate: forms none (position static, z-index 1, parent block) ✗ · floating-held host .fx-plate: forms none (position static, z-index 1, parent block) ✗ · dock-held host .fx-doc
+ok   STACK webkit   expect FAIL exit 1 · FAIL (18 of 18 gated rows) · H3-11: the grasp hosts carry a z-index digit on a non-positioned, non-flex box (no stacking context)
+        webkit+shim light black held: wash-held host .fx-plate: forms none (position static, z-index 1, parent block) ✗ · floating-held host .fx-plate: forms none (position static, z-index 1, parent block) ✗ · dock-held host .fx
+        webkit+shim light white held: wash-held host .fx-plate: forms none (position static, z-index 1, parent block) ✗ · floating-held host .fx-plate: forms none (position static, z-index 1, parent block) ✗ · dock-held host .fx
+        webkit+shim light aurora held: wash-held host .fx-plate: forms none (position static, z-index 1, parent block) ✗ · floating-held host .fx-plate: forms none (position static, z-index 1, parent block) ✗ · dock-held host .f
+        webkit+shim dark black held: wash-held host .fx-plate: forms none (position static, z-index 1, parent block) ✗ · floating-held host .fx-plate: forms none (position static, z-index 1, parent block) ✗ · dock-held host .fx-
+ok   M-1x chromium expect PASS exit 0 · PASS (1 gated rows) · H3-1: REPORTED (Q-11 unruled): the bound's grey over black prints and does not gate
+ok   M-1x webkit   expect PASS exit 0 · PASS (1 gated rows) · H3-1: REPORTED (Q-11 unruled): the bound's grey over black prints and does not gate
+ok   M-1x chromium expect PASS exit 0 · PASS (1 gated rows) · H3-1: REPORTED (Q-11 ruled (a)): the bound's grey over black prints and does not gate
+ok   M-1x webkit   expect PASS exit 0 · PASS (1 gated rows) · H3-1: REPORTED (Q-11 ruled (a)): the bound's grey over black prints and does not gate
+     captured green-M-1x-hue in 38 s (load 7.1 11.6 14.6)
+ok   M-1x chromium expect FAIL exit 1 · FAIL (1 of 7 gated rows) · H4-2: floating transmits the deep canvas (its hue, not the plate's): no longer passes the colour clause
+        floating [chrome] #3b5770 L 0.445 C 0.0532 · on paper #fcfaf7 ΔE 0.544 · ground #193b59 the ground's hue (Δh 1° ≤ 10°) ✗
+        floating [chrome] #3b5770 L 0.445 C 0.0532 · on paper #fcfaf7 ΔE 0.544 · ground #193b59 the ground's hue (Δh 1° ≤ 10°) ✗
+ok   M-1x webkit   expect FAIL exit 1 · FAIL (1 of 7 gated rows) · H4-2: floating transmits the deep canvas (its hue, not the plate's): no longer passes the colour clause
+        floating [chrome] #3b5770 L 0.445 C 0.0532 · on paper #fcfaf7 ΔE 0.544 · ground #193b59 the ground's hue (Δh 1° ≤ 10°) ✗
+        floating [chrome] #3b5770 L 0.445 C 0.0532 · on paper #fcfaf7 ΔE 0.544 · ground #193b59 the ground's hue (Δh 1° ≤ 10°) ✗
+     captured green-M-1x-cream in 76 s (load 5.1 10.0 13.7)
+ok   M-1x chromium expect PASS exit 0 · PASS (21 gated rows) · H4-2: the opaque escape at #fdf5ec holds its paper reading off paper (H3 read it grey by 0.0014 in L)
+ok   M-1x webkit   expect PASS exit 0 · PASS (21 gated rows) · H4-2: the opaque escape at #fdf5ec holds its paper reading off paper (H3 read it grey by 0.0014 in L)
+ok   M-1  chromium expect FAIL exit 1 · FAIL (1 of 11 gated rows) · H4-2's counterpart: the same #fdf5ec escape stays M-1's row over paper (P-3)
+        opaque #fdf5ec L 0.974 C 0.0147 ΔE 0.017 ✗
+        opaque #fdf5ec L 0.974 C 0.0147 ΔE 0.017 ✗
+ok   M-1  webkit   expect FAIL exit 1 · FAIL (1 of 11 gated rows) · H4-2's counterpart: the same #fdf5ec escape stays M-1's row over paper (P-3)
+        opaque #fdf5ec L 0.974 C 0.0147 ΔE 0.017 ✗
+        opaque #fdf5ec L 0.974 C 0.0147 ΔE 0.017 ✗
+     captured green-M-1x-content in 76 s (load 5.7 9.3 13.1)
+ok   M-1x chromium expect PASS exit 0 · PASS (21 gated rows) · H4-2: under (b)'s text a grey content rung (wash at the bound) is reported and named, not gated
+ok   M-1x webkit   expect PASS exit 0 · PASS (21 gated rows) · H4-2: under (b)'s text a grey content rung (wash at the bound) is reported and named, not gated
+     captured green-M-6-retune in 153 s (load 4.0 7.1 11.6)
+ok   M-6  chromium expect FAIL exit 1 · FAIL (45 of 120 gated rows) · H4-3: under each colour retune every dark plate paints the page (base cells untouched): H3 read base only
+        chromium dark paper [retune-bg]: page #0b0a09 · adjacent ΔE wash→quiet 0.000 ✗, quiet→resting 0.000 ✗, resting→floating 0.000 ✗, floating→overlay 0.000 ✗ · ΔE from the page: wash #0b0a09 0.000 ✗ ΔL +0.000, quiet #0b0a09 
+        chromium dark paper dialog [retune-bg]: page #0b0a09 · ΔE from the page: dialog #0b0a09 0.000 ✗ ΔL +0.000
+        chromium dark paper [retune-fg]: page #0b0a09 · adjacent ΔE wash→quiet 0.000 ✗, quiet→resting 0.000 ✗, resting→floating 0.000 ✗, floating→overlay 0.000 ✗ · ΔE from the page: wash #0b0a09 0.000 ✗ ΔL +0.000, quiet #0b0a09 
+        chromium dark paper dialog [retune-fg]: page #0b0a09 · ΔE from the page: dialog #0b0a09 0.000 ✗ ΔL +0.000
+ok   M-6  webkit   expect FAIL exit 1 · FAIL (45 of 120 gated rows) · H4-3: under each colour retune every dark plate paints the page (base cells untouched): H3 read base only
+        webkit+shim dark paper [retune-bg]: page #0b0a09 · adjacent ΔE wash→quiet 0.000 ✗, quiet→resting 0.000 ✗, resting→floating 0.000 ✗, floating→overlay 0.000 ✗ · ΔE from the page: wash #0b0a09 0.000 ✗ ΔL +0.000, quiet #0b0a
+        webkit+shim dark paper dialog [retune-bg]: page #0b0a09 · ΔE from the page: dialog #0b0a09 0.000 ✗ ΔL +0.000
+        webkit+shim dark paper [retune-fg]: page #0b0a09 · adjacent ΔE wash→quiet 0.000 ✗, quiet→resting 0.000 ✗, resting→floating 0.000 ✗, floating→overlay 0.000 ✗ · ΔE from the page: wash #0b0a09 0.000 ✗ ΔL +0.000, quiet #0b0a
+        webkit+shim dark paper dialog [retune-fg]: page #0b0a09 · ΔE from the page: dialog #0b0a09 0.000 ✗ ΔL +0.000
+ok   M-9  chromium expect PASS exit 0 · PASS (24 gated rows) · H5-1: every veil depth within the self-test bound |ΔL| ≤ 0.40 (green fixture)
+ok   M-9  webkit   expect PASS exit 0 · PASS (24 gated rows) · H5-1: every veil depth within the self-test bound |ΔL| ≤ 0.40 (green fixture)
+     captured green-M-9-deep in 26 s (load 3.7 6.8 11.3)
+ok   M-9  chromium expect FAIL exit 1 · FAIL (3 of 24 gated rows) · H5-1: the veil at 97% black crushes every ground (still dims ≥ 0.02, so the lower bound passes)
+        veil depth chromium light paper state: #fbfaf8 → #080808 ΔL -0.851 (the page: the ground the dim is solved on) · bound |ΔL| ≤ 0.4 ✗
+        veil depth chromium light aurora state: #e87237 → #070402 ΔL -0.572 (0.7× the page's -0.851) · bound |ΔL| ≤ 0.4 ✗
+        veil depth chromium dark aurora state: #e87237 → #070402 ΔL -0.572 (3.9× the page's -0.146) · bound |ΔL| ≤ 0.4 ✗
+ok   M-9  webkit   expect FAIL exit 1 · FAIL (3 of 24 gated rows) · H5-1: the veil at 97% black crushes every ground (still dims ≥ 0.02, so the lower bound passes)
+        veil depth webkit+shim light paper state: #fbfaf8 → #080808 ΔL -0.851 (the page: the ground the dim is solved on) · bound |ΔL| ≤ 0.4 ✗
+        veil depth webkit+shim light aurora state: #e87237 → #070402 ΔL -0.572 (0.7× the page's -0.851) · bound |ΔL| ≤ 0.4 ✗
+        veil depth webkit+shim dark aurora state: #e87237 → #070402 ΔL -0.572 (3.9× the page's -0.146) · bound |ΔL| ≤ 0.4 ✗
+ok   M-9  chromium expect PASS exit 0 · PASS (20 gated rows) · H5-1: the same crushing veil with no owner bound: REPORTED, not gated
+ok   M-9  webkit   expect PASS exit 0 · PASS (20 gated rows) · H5-1: the same crushing veil with no owner bound: REPORTED, not gated
+ok   LIT  chromium expect PASS exit 0 · PASS (10 gated rows) · H5-2 frames: the fixture docks carry no shadow
+ok   LIT  webkit   expect PASS exit 0 · PASS (10 gated rows) · H5-2 frames: the fixture docks carry no shadow
+     captured green-LIT-glow in 97 s (load 6.1 6.8 10.8)
+ok   LIT  chromium expect FAIL exit 1 · FAIL (8 of 10 gated rows) · H5-2 frames: a zero-offset 20 px glow on both docks (HEAD's --shadow-dock shape)
+        halo chromium light paper state dock: ΔL at 4/8/16 px less 32 px · top -0.0802/-0.0481/-0.0105 · bottom -0.0802/-0.0481/-0.0105 · left —/—/— · right -0.0611/-0.0359/-0.0077 · HALO (top and bottom move alike) ✗
+        halo chromium light aurora state dock: ΔL at 4/8/16 px less 32 px · top -0.0488/-0.0290/-0.0061 · bottom -0.0492/-0.0292/-0.0064 · left —/—/— · right -0.0398/-0.0235/-0.0052 · HALO (top and bottom move alike) ✗
+        halo chromium dark paper state dock: ΔL at 4/8/16 px less 32 px · top +0.1008/+0.0600/+0.0166 · bottom +0.1008/+0.0600/+0.0166 · left —/—/— · right +0.0761/+0.0471/+0.0111 · HALO (top and bottom move alike) ✗
+        halo chromium dark aurora state dock: ΔL at 4/8/16 px less 32 px · top +0.0276/+0.0164/+0.0041 · bottom +0.0276/+0.0165/+0.0039 · left —/—/— · right +0.0192/+0.0109/+0.0021 · HALO (top and bottom move alike) ✗
+ok   LIT  webkit   expect FAIL exit 1 · FAIL (8 of 10 gated rows) · H5-2 frames: a zero-offset 20 px glow on both docks (HEAD's --shadow-dock shape)
+        halo webkit+shim light paper state dock: ΔL at 4/8/16 px less 32 px · top -0.0741/-0.0390/-0.0045 · bottom -0.0741/-0.0390/-0.0045 · left —/—/— · right -0.0529/-0.0250/-0.0009 · HALO (top and bottom move alike) ✗
+        halo webkit+shim light aurora state dock: ΔL at 4/8/16 px less 32 px · top -0.0455/-0.0231/-0.0030 · bottom -0.0458/-0.0234/-0.0030 · left —/—/— · right -0.0344/-0.0159/-0.0004 · HALO (top and bottom move alike) ✗
+        halo webkit+shim dark paper state dock: ΔL at 4/8/16 px less 32 px · top +0.0923/+0.0503/+0.0072 · bottom +0.0923/+0.0503/+0.0072 · left —/—/— · right +0.0660/+0.0340/+0.0014 · HALO (top and bottom move alike) ✗
+        halo webkit+shim dark aurora state dock: ΔL at 4/8/16 px less 32 px · top +0.0255/+0.0127/+0.0014 · bottom +0.0252/+0.0126/+0.0014 · left —/—/— · right +0.0164/+0.0081/+0.0004 · HALO (top and bottom move alike) ✗
+ok   LIT  chromium expect PASS exit 0 · PASS (1 gated rows) · H5-2 frames: the same glow with no --strict: REPORTED, not gated
+ok   LIT  webkit   expect PASS exit 0 · PASS (1 gated rows) · H5-2 frames: the same glow with no --strict: REPORTED, not gated
+     captured green-LIT-cast in 97 s (load 6.0 6.8 10.4)
+ok   LIT  chromium expect PASS exit 0 · PASS (10 gated rows) · H5-2 frames: a downward one-layer cast (0 14px 12px) is a cast, not a halo
+ok   LIT  webkit   expect PASS exit 0 · PASS (10 gated rows) · H5-2 frames: a downward one-layer cast (0 14px 12px) is a cast, not a halo
+     captured green-M-2-undeclared in 72 s (load 9.3 7.8 10.5)
+ok   M-2  chromium expect PASS exit 0 · PASS (48 gated rows) · H3-5: wash-held sheds its plate under contain: paint (not declared graspable): not read
+ok   M-2  webkit   expect PASS exit 0 · PASS (48 gated rows) · H3-5: wash-held sheds its plate under contain: paint (not declared graspable): not read
+     captured A-probe in 202 s (load 9.7 9.5 10.7)
+     W-A calibrated bounds (max over both engines' analytic bounds): {"light":{"content":0.885,"chrome":0.915},"dark":{"content":0.795,"chrome":0.895}}; every rung at bound + 0.012
+     captured A in 247 s (load 10.9 9.6 10.4)
+     captured A-thin in 76 s (load 10.1 9.7 10.4)
+ok   W-A  chromium expect PASS exit 0 · PASS (216 gated rows) · every rung at the band's bound + 0.012; --glass-bound = the bound; no readback or writer
+ok   W-A  webkit   expect PASS exit 0 · PASS (216 gated rows) · every rung at the band's bound + 0.012; --glass-bound = the bound; no readback or writer
+     captured A-rename in 51 s (load 11.2 10.0 10.4)
+ok   W-A  chromium expect FAIL exit 1 · FAIL (2 of 44 gated rows) · H-3: a per-frame writer under a new name
+        signal · live chromium light aurora (3000 ms, 360 frames): readbacks 0 (getImageData 0, readPixels 0, toDataURL 0) · custom-property writes: --x-field-y in 360 frames · recurring writers (≥ 3 frames): --x-field-y ✗
+        signal · live chromium dark aurora (3000 ms, 360 frames): readbacks 0 (getImageData 0, readPixels 0, toDataURL 0) · custom-property writes: --x-field-y in 360 frames · recurring writers (≥ 3 frames): --x-field-y ✗
+ok   W-A  webkit   expect FAIL exit 1 · FAIL (2 of 44 gated rows) · H-3: a per-frame writer under a new name
+        signal · live webkit light aurora (3000 ms, 295 frames): readbacks 0 (getImageData 0, readPixels 0, toDataURL 0) · custom-property writes: --x-field-y in 295 frames · recurring writers (≥ 3 frames): --x-field-y ✗
+        signal · live webkit dark aurora (3000 ms, 294 frames): readbacks 0 (getImageData 0, readPixels 0, toDataURL 0) · custom-property writes: --x-field-y in 294 frames · recurring writers (≥ 3 frames): --x-field-y ✗
+     captured A-attr in 51 s (load 14.6 11.0 10.8)
+ok   W-A  chromium expect FAIL exit 1 · FAIL (2 of 44 gated rows) · H-3: a per-frame writer by style-attribute rewrite
+        signal · live chromium light aurora (3000 ms, 361 frames): readbacks 0 (getImageData 0, readPixels 0, toDataURL 0) · custom-property writes: --x-tone in 361 frames · recurring writers (≥ 3 frames): --x-tone ✗
+        signal · live chromium dark aurora (3000 ms, 360 frames): readbacks 0 (getImageData 0, readPixels 0, toDataURL 0) · custom-property writes: --x-tone in 360 frames · recurring writers (≥ 3 frames): --x-tone ✗
+ok   W-A  webkit   expect FAIL exit 1 · FAIL (2 of 44 gated rows) · H-3: a per-frame writer by style-attribute rewrite
+        signal · live webkit light aurora (3000 ms, 294 frames): readbacks 0 (getImageData 0, readPixels 0, toDataURL 0) · custom-property writes: --x-tone in 294 frames · recurring writers (≥ 3 frames): --x-tone ✗
+        signal · live webkit dark aurora (3000 ms, 294 frames): readbacks 0 (getImageData 0, readPixels 0, toDataURL 0) · custom-property writes: --x-tone in 294 frames · recurring writers (≥ 3 frames): --x-tone ✗
+ok   W-A  chromium expect FAIL exit 1 · FAIL (4 of 88 gated rows) · floating α 0.10 under its band's bound
+        chrome chromium light black: 16/17 runs ≥ 4.5 · worst floating·muted 3.71 ✗
+        chrome chromium dark white: 16/17 runs ≥ 4.5 · worst floating·muted 3.39 ✗
+        α chromium light chrome: thinnest floating painted α 0.827 · computed --glass-bound 0.915 · α − bound -0.088 (on the bound: [0, +0.03]) ✗ · rungs floating 0.827 overlay 0.925 dialog-rung 0.925 dock 0.925 popover 0.925 di
+        α chromium dark chrome: thinnest floating painted α 0.808 · computed --glass-bound 0.895 · α − bound -0.087 (on the bound: [0, +0.03]) ✗ · rungs floating 0.808 overlay 0.906 dialog-rung 0.906 dock 0.906 popover 0.906 dia
+ok   W-A  webkit   expect FAIL exit 1 · FAIL (4 of 88 gated rows) · floating α 0.10 under its band's bound
+        chrome webkit+shim light black: 16/17 runs ≥ 4.5 · worst floating·muted 3.65 ✗
+        chrome webkit+shim dark white: 16/17 runs ≥ 4.5 · worst floating·muted 3.39 ✗
+        α webkit light chrome: thinnest floating painted α 0.827 · computed --glass-bound 0.915 · α − bound -0.088 (on the bound: [0, +0.03]) ✗ · rungs floating 0.827 overlay 0.925 dialog-rung 0.925 dock 0.925 popover 0.925 dial
+        α webkit dark chrome: thinnest floating painted α 0.808 · computed --glass-bound 0.895 · α − bound -0.087 (on the bound: [0, +0.03]) ✗ · rungs floating 0.808 overlay 0.906 dialog-rung 0.906 dock 0.906 popover 0.906 dialo
+     captured A-bound in 76 s (load 10.8 10.7 10.7)
+ok   W-A  chromium expect FAIL exit 1 · FAIL (4 of 88 gated rows) · H-4: the computed bound moved 0.06 (an ink retune) while the paint kept the old α (a literal left behind)
+        α chromium light content: thinnest wash painted α 0.898 · computed --glass-bound 0.825 · α − bound +0.073 (on the bound: [0, +0.03]) ✗ · rungs wash 0.898 quiet 0.898 resting 0.898 card 0.898
+        α chromium light chrome: thinnest floating painted α 0.925 · computed --glass-bound 0.855 · α − bound +0.070 (on the bound: [0, +0.03]) ✗ · rungs floating 0.925 overlay 0.925 dialog-rung 0.925 dock 0.925 popover 0.925 di
+        α chromium dark content: thinnest wash painted α 0.808 · computed --glass-bound 0.735 · α − bound +0.073 (on the bound: [0, +0.03]) ✗ · rungs wash 0.808 quiet 0.808 resting 0.808 card 0.808
+        α chromium dark chrome: thinnest floating painted α 0.906 · computed --glass-bound 0.835 · α − bound +0.071 (on the bound: [0, +0.03]) ✗ · rungs floating 0.906 overlay 0.906 dialog-rung 0.906 dock 0.906 popover 0.906 dia
+ok   W-A  webkit   expect FAIL exit 1 · FAIL (4 of 88 gated rows) · H-4: the computed bound moved 0.06 (an ink retune) while the paint kept the old α (a literal left behind)
+        α webkit light content: thinnest wash painted α 0.898 · computed --glass-bound 0.825 · α − bound +0.073 (on the bound: [0, +0.03]) ✗ · rungs wash 0.898 quiet 0.898 resting 0.898 card 0.898
+        α webkit light chrome: thinnest floating painted α 0.925 · computed --glass-bound 0.855 · α − bound +0.070 (on the bound: [0, +0.03]) ✗ · rungs floating 0.925 overlay 0.925 dialog-rung 0.925 dock 0.925 popover 0.925 dial
+        α webkit dark content: thinnest wash painted α 0.808 · computed --glass-bound 0.735 · α − bound +0.073 (on the bound: [0, +0.03]) ✗ · rungs wash 0.808 quiet 0.808 resting 0.808 card 0.808
+        α webkit dark chrome: thinnest floating painted α 0.906 · computed --glass-bound 0.835 · α − bound +0.071 (on the bound: [0, +0.03]) ✗ · rungs floating 0.906 overlay 0.906 dialog-rung 0.906 dock 0.906 popover 0.906 dialo
+     captured A-q11b in 76 s (load 12.3 11.0 10.8)
+ok   W-A  chromium expect PASS exit 0 · PASS (88 gated rows) · H5-4: Q-11 (b): the light chrome opaque (α 1), content and dark on the bound
+ok   W-A  webkit   expect PASS exit 0 · PASS (88 gated rows) · H5-4: Q-11 (b): the light chrome opaque (α 1), content and dark on the bound
+ok   W-A  chromium expect FAIL exit 1 · FAIL (1 of 88 gated rows) · H5-4: Q-11 (b): the light chrome left on the bound (α bound + 0.012), not opaque
+        α chromium light chrome: thinnest floating painted α 0.925 · Q-11 (b): light chrome opaque, α = 1 (≥ 0.995) ✗ · computed --glass-bound 0.915 [information] · rungs floating 0.925 overlay 0.925 dialog-rung 0.925 dock 0.925
+ok   W-A  webkit   expect FAIL exit 1 · FAIL (1 of 88 gated rows) · H5-4: Q-11 (b): the light chrome left on the bound (α bound + 0.012), not opaque
+        α webkit light chrome: thinnest floating painted α 0.925 · Q-11 (b): light chrome opaque, α = 1 (≥ 0.995) ✗ · computed --glass-bound 0.915 [information] · rungs floating 0.925 overlay 0.925 dialog-rung 0.925 dock 0.925 p
+ok   W-A  chromium expect FAIL exit 1 · FAIL (1 of 88 gated rows) · H5-4: unruled, the default (a): the opaque light chrome sits off the bound by construction (FV3 §4.2)
+        α chromium light chrome: thinnest floating painted α 1.000 · computed --glass-bound 0.915 · α − bound +0.085 (on the bound: [0, +0.03]) ✗ · rungs floating 1.000 overlay 1.000 dialog-rung 1.000 dock 1.000 popover 1.000 di
+ok   W-A  webkit   expect FAIL exit 1 · FAIL (1 of 88 gated rows) · H5-4: unruled, the default (a): the opaque light chrome sits off the bound by construction (FV3 §4.2)
+        α webkit light chrome: thinnest floating painted α 1.000 · computed --glass-bound 0.915 · α − bound +0.085 (on the bound: [0, +0.03]) ✗ · rungs floating 1.000 overlay 1.000 dialog-rung 1.000 dock 1.000 popover 1.000 dial
+ok   T    chromium expect PASS exit 0 · PASS (20 gated rows) · T reads back the fixture's authored α within 0.01
+ok   T    webkit   expect PASS exit 0 · PASS (20 gated rows) · T reads back the fixture's authored α within 0.01
+ok   T    chromium expect FAIL exit 1 · FAIL (2 of 20 gated rows) · the painted floating α is 0.10 under what the report is told
+        T chromium light ladder: wash T 0.102 T_c1 — (expected α 0.897) · quiet T 0.102 T_c1 — (expected α 0.897) · resting T 0.102 T_c1 — (expected α 0.897) · card T 0.102 T_c1 — (expected α 0.897) · floating T 0.173 T_c1 — (ex
+        T chromium dark ladder: wash T 0.192 T_c1 — (expected α 0.807) · quiet T 0.192 T_c1 — (expected α 0.807) · resting T 0.192 T_c1 — (expected α 0.807) · card T 0.192 T_c1 — (expected α 0.807) · floating T 0.192 T_c1 — (exp
+ok   T    webkit   expect FAIL exit 1 · FAIL (2 of 20 gated rows) · the painted floating α is 0.10 under what the report is told
+        T webkit+shim light ladder: wash T 0.102 T_c1 — (expected α 0.897) · quiet T 0.102 T_c1 — (expected α 0.897) · resting T 0.102 T_c1 — (expected α 0.897) · card T 0.102 T_c1 — (expected α 0.897) · floating T 0.173 T_c1 — 
+        T webkit+shim dark ladder: wash T 0.192 T_c1 — (expected α 0.807) · quiet T 0.192 T_c1 — (expected α 0.807) · resting T 0.192 T_c1 — (expected α 0.807) · card T 0.192 T_c1 — (expected α 0.807) · floating T 0.192 T_c1 — (
+     captured G in 104 s (load 8.7 10.1 10.5)
+ok   W-G  chromium expect PASS exit 0 · PASS (40 gated rows) · luminosity pole #c9c3bd / #342c26; isolated group stamped data-glass-flat
+ok   W-G  webkit   expect PASS exit 0 · PASS (40 gated rows) · luminosity pole #c9c3bd / #342c26; isolated group stamped data-glass-flat
+     captured G-silent in 52 s (load 8.6 10.0 10.4)
+ok   W-G  chromium expect FAIL exit 1 · FAIL (20 of 20 gated rows) · the isolated group goes flat with no stamp (silent flat)
+        wash #c9c3bd over #dd5136 Δh 34.9° C 0.011/0.138 (0.08 of gamut) M-2 worst muted 7.00 ✗ hue chroma (silent flat)
+        quiet #c9c3bd over #e05936 Δh 32.4° C 0.011/0.138 (0.08 of gamut) M-2 worst muted 7.00 ✗ hue chroma (silent flat)
+        resting #c9c3bd over #e76c37 Δh 25.4° C 0.011/0.138 (0.08 of gamut) M-2 worst muted 7.00 ✗ hue chroma (silent flat)
+        card #c9c3bd over #ec8439 Δh 15.0° C 0.011/0.138 (0.08 of gamut) M-2 worst muted 7.00 ✗ hue chroma (silent flat)
+ok   W-G  webkit   expect FAIL exit 1 · FAIL (20 of 20 gated rows) · the isolated group goes flat with no stamp (silent flat)
+        wash #c9c3bd over #dd5136 Δh 34.9° C 0.011/0.138 (0.08 of gamut) M-2 worst muted-strong 6.20 ✗ hue chroma (silent flat)
+        quiet #c9c3bd over #e05936 Δh 32.4° C 0.011/0.138 (0.08 of gamut) M-2 worst muted-strong 6.20 ✗ hue chroma (silent flat)
+        resting #c9c3bd over #e76c37 Δh 25.4° C 0.011/0.138 (0.08 of gamut) M-2 worst muted-strong 6.20 ✗ hue chroma (silent flat)
+        card #c9c3bd over #ec8439 Δh 15.0° C 0.011/0.138 (0.08 of gamut) M-2 worst muted-strong 6.20 ✗ hue chroma (silent flat)
+     captured G-noblend in 52 s (load 6.8 9.3 10.1)
+ok   W-G  chromium expect FAIL exit 1 · FAIL (20 of 20 gated rows) · mechanism removed: the pole paints normally (no luminosity blend)
+        wash #c9c3bd over #dd5136 Δh 34.9° C 0.011/0.138 (0.08 of gamut) M-2 worst muted 7.00 ✗ hue chroma
+        quiet #c9c3bd over #e05936 Δh 32.4° C 0.011/0.138 (0.08 of gamut) M-2 worst muted 7.00 ✗ hue chroma
+        resting #c9c3bd over #e76c37 Δh 25.4° C 0.011/0.138 (0.08 of gamut) M-2 worst muted 7.00 ✗ hue chroma
+        card #c9c3bd over #ec8439 Δh 15.0° C 0.011/0.138 (0.08 of gamut) M-2 worst muted 7.00 ✗ hue chroma
+ok   W-G  webkit   expect FAIL exit 1 · FAIL (20 of 20 gated rows) · mechanism removed: the pole paints normally (no luminosity blend)
+        wash #c9c3bd over #dd5136 Δh 34.9° C 0.011/0.138 (0.08 of gamut) M-2 worst muted-strong 6.20 ✗ hue chroma
+        quiet #c9c3bd over #e05936 Δh 32.4° C 0.011/0.138 (0.08 of gamut) M-2 worst muted-strong 6.20 ✗ hue chroma
+        resting #c9c3bd over #e76c37 Δh 25.4° C 0.011/0.138 (0.08 of gamut) M-2 worst muted-strong 6.20 ✗ hue chroma
+        card #c9c3bd over #ec8439 Δh 15.0° C 0.011/0.138 (0.08 of gamut) M-2 worst muted-strong 6.20 ✗ hue chroma
+     captured S in 162 s (load 11.5 9.9 10.2)
+ok   W-S  chromium expect PASS exit 0 · PASS (24 gated rows) · the claim thins the content plates to 85% and stamps unpublished / ambiguous
+ok   W-S  webkit   expect PASS exit 0 · PASS (24 gated rows) · the claim thins the content plates to 85% and stamps unpublished / ambiguous
+     captured S-silent in 162 s (load 10.4 10.3 10.3)
+ok   W-S  chromium expect FAIL exit 1 · FAIL (20 of 24 gated rows) · the claim acts with no stamp (the silent dead arm)
+        chromium light aurora fieldout: wash #faddda vs unclaimed #fff6f7 ΔE 0.064 acts · data-glass-ground-state=— (acts with no stamp: silent) ✗ · quiet #fae0d3 vs unclaimed #fff8ee ΔE 0.061 acts · data-glass-ground-state=— (a
+        chromium light aurora fieldtwo: wash #fceae9 vs unclaimed #fff6f7 ΔE 0.032 acts · data-glass-ground-state=— (acts with no stamp) ✗ · quiet #fcece2 vs unclaimed #fff8ee ΔE 0.030 acts · data-glass-ground-state=— (acts with
+        chromium dark aurora fieldout: wash #3b221a vs unclaimed #1e1a15 ΔE 0.070 acts · data-glass-ground-state=— (acts with no stamp: silent) ✗ · quiet #3e261c vs unclaimed #221d18 ΔE 0.069 acts · data-glass-ground-state=— (ac
+        chromium dark aurora fieldtwo: wash #2b1d17 vs unclaimed #1e1a15 ΔE 0.030 acts · data-glass-ground-state=— (acts with no stamp) ✗ · quiet #2f2019 vs unclaimed #221d18 ΔE 0.030 acts · data-glass-ground-state=— (acts with 
+ok   W-S  webkit   expect FAIL exit 1 · FAIL (20 of 24 gated rows) · the claim acts with no stamp (the silent dead arm)
+        webkit+shim light aurora fieldout: wash #faddda vs unclaimed #fff6f7 ΔE 0.064 acts · data-glass-ground-state=— (acts with no stamp: silent) ✗ · quiet #fae0d3 vs unclaimed #fff8ee ΔE 0.061 acts · data-glass-ground-state=—
+        webkit+shim light aurora fieldtwo: wash #fceae9 vs unclaimed #fff6f7 ΔE 0.032 acts · data-glass-ground-state=— (acts with no stamp) ✗ · quiet #fcece2 vs unclaimed #fff8ee ΔE 0.030 acts · data-glass-ground-state=— (acts w
+        webkit+shim dark aurora fieldout: wash #3b221a vs unclaimed #1e1a15 ΔE 0.070 acts · data-glass-ground-state=— (acts with no stamp: silent) ✗ · quiet #3e261c vs unclaimed #221d18 ΔE 0.069 acts · data-glass-ground-state=— 
+        webkit+shim dark aurora fieldtwo: wash #2b1d17 vs unclaimed #1e1a15 ΔE 0.030 acts · data-glass-ground-state=— (acts with no stamp) ✗ · quiet #2f2019 vs unclaimed #221d18 ΔE 0.030 acts · data-glass-ground-state=— (acts wi
+     captured S-lies in 166 s (load 13.4 11.5 10.8)
+ok   W-S  chromium expect FAIL exit 1 · FAIL (12 of 16 gated rows) · the claim acts under a live stamp (published)
+        chromium light aurora fieldout: wash #faddda vs unclaimed #fff6f7 ΔE 0.064 acts · data-glass-ground-state=published (acts under a live stamp "published": the stamp lies) ✗ · quiet #fae0d3 vs unclaimed #fff8ee ΔE 0.061 ac
+        chromium dark aurora fieldout: wash #3b221a vs unclaimed #1e1a15 ΔE 0.070 acts · data-glass-ground-state=published (acts under a live stamp "published": the stamp lies) ✗ · quiet #3e261c vs unclaimed #221d18 ΔE 0.069 act
+        chromium dark aurora fieldgone: wash #1c1713 vs unclaimed #1e1a15 ΔE 0.012 acts · data-glass-ground-state=published (acts under a live stamp "published": the stamp lies) ✗ · quiet #1f1a15 vs unclaimed #221d18 ΔE 0.013 ac
+ok   W-S  webkit   expect FAIL exit 1 · FAIL (12 of 16 gated rows) · the claim acts under a live stamp (published)
+        webkit+shim light aurora fieldout: wash #faddda vs unclaimed #fff6f7 ΔE 0.064 acts · data-glass-ground-state=published (acts under a live stamp "published": the stamp lies) ✗ · quiet #fae0d3 vs unclaimed #fff8ee ΔE 0.061
+        webkit+shim dark aurora fieldout: wash #3b221a vs unclaimed #1e1a15 ΔE 0.070 acts · data-glass-ground-state=published (acts under a live stamp "published": the stamp lies) ✗ · quiet #3e261c vs unclaimed #221d18 ΔE 0.069 
+        webkit+shim dark aurora fieldgone: wash #1c1713 vs unclaimed #1e1a15 ΔE 0.012 acts · data-glass-ground-state=published (acts under a live stamp "published": the stamp lies) ✗ · quiet #1f1a15 vs unclaimed #221d18 ΔE 0.013
+ok   GLANCE chromium expect PASS exit 0 · GLANCE PASS: 6 pairs, each with a visible paint delta · base against a route that repaints every plate
+ok   GLANCE chromium expect FAIL exit 1 · GLANCE FAIL: 6 of 6 pairs show no paint delta or failed (light dock, light dialog, light floating, dark dock, dark dialog, dark floating) · base against itself (no delta)
+BAD  GLANCE webkit   expect PASS exit null · (waiting for the BL WebKit lock, held by 20178 selftest.mjs) · base against a route that repaints every plate
+ok   GLANCE webkit   expect FAIL exit 1 · GLANCE FAIL: 6 of 6 pairs show no paint delta or failed (light dock, light dialog, light floating, dark dock, dark dialog, dark floating) · base against itself (no delta)
+ok   GLANCE chromium expect FAIL exit 1 · GLANCE FAIL: 6 of 6 pairs show no paint delta or failed (light dock [layout only], light dialog [layout only], light floating [layout only], dark dock [layout only], dark dialog [layout only], dark floating [layout only]) · H4-1: plates moved 70 px, no paint change
+ok   GLANCE webkit   expect FAIL exit 1 · GLANCE FAIL: 6 of 6 pairs show no paint delta or failed (light dock [layout only], light dialog [layout only], light floating [layout only], dark dock [layout only], dark dialog [layout only], dark floating [layout only]) · H4-1: plates moved 70 px, no paint change
+ok   GLANCE chromium expect FAIL exit 1 · GLANCE FAIL: 2 of 2 pairs show no paint delta or failed (light story [layout only], dark story [layout only]) · H4-1: story copy moves the card 72 px, no paint change
+ok   GLANCE chromium expect PASS exit 0 · GLANCE PASS: 2 pairs, each with a visible paint delta · H4-1: story copy moves the card and the card is repainted
+ok   GLANCE webkit   expect FAIL exit 1 · GLANCE FAIL: 2 of 2 pairs show no paint delta or failed (light story [layout only], dark story [layout only]) · H4-1: story copy moves the card 72 px, no paint change
+ok   GLANCE webkit   expect PASS exit 0 · GLANCE PASS: 2 pairs, each with a visible paint delta · H4-1: story copy moves the card and the card is repainted
+ok   GLANCE chromium expect PASS exit 0 · GLANCE PASS: every story pair shows a claimed region · H3-10: the route story claims one region
+ok   GLANCE chromium expect FAIL exit 1 · GLANCE FAIL: 2 story pairs with no claimed region · H3-10: the route story claims nothing
+ok   GLANCE webkit   expect PASS exit 0 · GLANCE PASS: every story pair shows a claimed region · H3-10: the route story claims one region
+ok   GLANCE webkit   expect FAIL exit 1 · GLANCE FAIL: 2 story pairs with no claimed region · H3-10: the route story claims nothing
+ok   LIT  static   expect PASS exit 0 · PASS (1 gated rows) · H5-2 static: one cast per plate, a 0-blur ring, an inset bevel beside one cast, tokens with real offsets
+ok   LIT  static   expect FAIL exit 1 · FAIL (2 of 2 gated rows) · H5-2 static: a literal zero-offset focus glow beside the cast (card/styles.css:161's shape): HALO and STACKED
+        HALO src/a.css:1 .card:focus-visible { box-shadow: … 0 0 8px rgb(0 0 0 / 0.15) } ✗
+        STACKED src/a.css:1 .card:focus-visible { box-shadow: var(--card-cast), 0 0 8px rgb(0 0 0 / 0.15) } (2 blurred layers) ✗
+ok   LIT  static   expect PASS exit 0 · PASS (1 gated rows) · H5-2 static: the same glow with no --strict: REPORTED, not gated
+ok   LIT  static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · H5-2 static: a --shadow-* token with a 2 px offset under a 30 px blur (W-0.11's own fixture shape): NEAR
+        NEAR src/a.css:1 { --shadow-dock: … 0 2px 30px rgb(0 0 0 / 0.2) } (offset 2px under a quarter of blur 30px) ✗
+ok   LIT  static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · H5-2 static: two chained drop-shadow() (Blob.vue:355's shape): CHAIN
+        CHAIN src/a.css:1 .blob { filter: drop-shadow(var(--a)) drop-shadow(var(--b)) } (2 drop-shadow) ✗
+ok   LIT  static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · H5-2 static: a .vue <style> block with a zero-offset text glow: HALO
+        HALO src/X.vue:3 .x { text-shadow: … 0 0 6px rgb(255 255 255 / 0.5) } ✗
+ok   HOV  static   expect PASS exit 0 · PASS (2 gated rows) · H5-3: R-6's shape: the row's --fill-selected fill reaches paint only through [data-highlighted]; :hover keeps its lift; hover on a selected card is the register's derivation
+ok   HOV  static   expect FAIL exit 1 · FAIL (1 of 2 gated rows) · H5-3: R-4 as built: a bare :hover paints the row fill built on --fill-selected
+        HOVER-FILL-SELECTED src/menu.css:6 .row:hover:not([data-disabled]) { background: var(--row-bg) } · --row-bg (src/menu.css:2) ← --fill-selected ✗
+ok   HOV  static   expect FAIL exit 1 · FAIL (1 of 2 gated rows) · H5-3: two levels of indirection inside a .vue block, reached by a nested &:hover
+        HOVER-FILL-SELECTED src/B.vue:2 .b:hover { box-shadow: 0 0 0 1px var(--b2) } · --b2 (src/B.vue:2) ← --b1 (src/B.vue:2) ← --fill-selected ✗
+     captured B in 47 s (load 15.3 14.2 13.8)
+ok   W-B  chromium expect PASS exit 0 · PASS (12 gated rows) · flat field; the dock publishes the Y it painted
+     captured B-late in 47 s (load 13.2 13.7 13.6)
+ok   W-B  chromium expect FAIL exit 1 · FAIL (4 of 12 gated rows) · publication lands 12 frames after the step
+        live light aurora default: step ceiling → 0.5: settled painted Y 0.525 · published --glass-backdrop-luma before 0.271, frame 3 0.271, frame 90 0.526 · latency 12 frames ✗
+        live light aurora50 default: step ceiling → 1: settled painted Y 0.271 · published --glass-backdrop-luma before 0.526, frame 3 0.526, frame 90 0.271 · latency 12 frames ✗
+        live dark aurora default: step ceiling → 0.5: settled painted Y 0.071 · published --glass-backdrop-luma before 0.271, frame 3 0.271, frame 90 0.071 · latency 12 frames ✗
+        live dark aurora50 default: step ceiling → 1: settled painted Y 0.271 · published --glass-backdrop-luma before 0.071, frame 3 0.071, frame 90 0.271 · latency 12 frames ✗
+     captured C in 389 s (load 9.6 11.0 12.4)
+ok   W-C  chromium expect PASS exit 0 · PASS (362 gated rows) · RCS solve at 5.0:1 against each plate, fg read from --foreground: every retune followed
+ok   W-C  webkit   expect PASS exit 0 · PASS (362 gated rows) · RCS solve at 5.0:1 against each plate, fg read from --foreground: every retune followed
+     captured C-frozen in 77 s (load 8.4 10.2 12.0)
+ok   W-C  chromium expect FAIL exit 1 · FAIL (2 of 31 gated rows) · muted frozen at #3a3a3a: under --foreground oklch(0.42) the hierarchy inverts with no word (a silent desync)
+        retune-fg chromium light paper [retune-fg]: silent desync · 43/43 runs ≥ 4.5 · hierarchy under 0.08 signed on wash -0.071, quiet -0.071, resting -0.071, card -0.071 ✗
+        retune-fg chromium light paper dialog [retune-fg]: silent desync · 4/4 runs ≥ 4.5 · hierarchy under 0.08 signed on dialog -0.071 ✗
+ok   W-C  webkit   expect FAIL exit 1 · FAIL (2 of 31 gated rows) · muted frozen at #3a3a3a: under --foreground oklch(0.42) the hierarchy inverts with no word (a silent desync)
+        retune-fg webkit+shim light paper [retune-fg]: silent desync · 43/43 runs ≥ 4.5 · hierarchy under 0.08 signed on wash -0.050, quiet -0.050, resting -0.050, card -0.050 ✗
+        retune-fg webkit+shim light paper dialog [retune-fg]: silent desync · 4/4 runs ≥ 4.5 · hierarchy under 0.08 signed on dialog -0.050 ✗
+     captured C-loud in 77 s (load 11.1 10.5 11.9)
+ok   W-C  chromium expect PASS exit 0 · PASS (31 gated rows) · the same frozen ink, but the page refuses the --foreground retune loud (console.warn naming --foreground)
+ok   W-C  webkit   expect PASS exit 0 · PASS (31 gated rows) · the same frozen ink, but the page refuses the --foreground retune loud (console.warn naming --foreground)
+     captured C-unrelated in 77 s (load 8.9 10.0 11.6)
+ok   W-C  chromium expect FAIL exit 1 · FAIL (2 of 31 gated rows) · H4-4: the same frozen ink, and an unrelated console.warn in the retuned cell (names no glass token): a silent desync
+        retune-fg chromium light paper [retune-fg]: silent desync (1 more console errors/warnings than the base cell, none naming a glass token: [fixture] hero.avif failed to decode; showing the placeholder) · 43/43 runs ≥ 4.5 ·
+        retune-fg chromium light paper dialog [retune-fg]: silent desync (1 more console errors/warnings than the base cell, none naming a glass token: [fixture] hero.avif failed to decode; showing the placeholder) · 4/4 runs ≥ 
+ok   W-C  webkit   expect FAIL exit 1 · FAIL (2 of 31 gated rows) · H4-4: the same frozen ink, and an unrelated console.warn in the retuned cell (names no glass token): a silent desync
+        retune-fg webkit+shim light paper [retune-fg]: silent desync (1 more console errors/warnings than the base cell, none naming a glass token: [fixture] hero.avif failed to decode; showing the placeholder) · 43/43 runs ≥ 4.
+        retune-fg webkit+shim light paper dialog [retune-fg]: silent desync (1 more console errors/warnings than the base cell, none naming a glass token: [fixture] hero.avif failed to decode; showing the placeholder) · 4/4 runs
+ok   W-D  chromium expect PASS exit 0 · PASS (9 gated rows) · solver reproduces the file; battery green in both engines
+ok   W-D  chromium expect FAIL exit 1 · FAIL (1 of 9 gated rows) · a hand edit to the solved file
+        solver `node solve.mjs`: differs from the committed file ✗
+     captured E in 104 s (load 6.2 8.6 10.8)
+ok   W-E  chromium expect PASS exit 0 · PASS (420 gated rows) · α 0.20 frost; 6 px card stroke; two-tone indicators
+     captured E-bare in 104 s (load 6.7 7.9 10.3)
+ok   W-E  chromium expect FAIL exit 1 · FAIL (118 of 420 gated rows) · the glyph stroke removed
+        chromium light black: muted 2.17–5.53 (min wash·muted) · indicators 5.53–15.97 (min wash·well) · ✗
+        chromium light black dialog: muted 2.17–2.17 (min dialog·muted) · indicators 5.53–15.97 (min dialog·well) · ✗
+        chromium light checker: muted 2.17–5.53 (min wash·muted) · indicators 5.53–15.97 (min wash·well) · ✗
+        chromium light checker dialog: muted 2.17–2.17 (min dialog·muted) · indicators 5.53–15.97 (min dialog·well) · ✗
+     captured F in 36 s (load 5.7 7.5 10.0)
+ok   W-F  chromium expect PASS exit 0 · PASS (88 gated rows) · the pole at 82% under each rect, nothing outside
+     captured F-spill in 35 s (load 10.1 8.5 10.3)
+ok   W-F  chromium expect FAIL exit 1 · FAIL (44 of 88 gated rows) · the well spills 30 px past each rect
+        wash L p05 0.904 · 24 px out ΔE p95 0.3856 (648 px) ✗
+        quiet L p05 0.904 · 24 px out ΔE p95 0.3870 (449 px) ✗
+        resting L p05 0.906 · 24 px out ΔE p95 0.3813 (449 px) ✗
+        card L p05 0.908 · 24 px out ΔE p95 0.3606 (648 px) ✗
+SELFTEST FAIL: 1 of 197 expectations missed
+== selftest end 13:05:27 load { 9.66 8.41 10.24 }

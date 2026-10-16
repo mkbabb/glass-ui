@@ -1,0 +1,20 @@
+W-B · D3-B · the substrate publishes (luma within ±0.02 of the painted mean, ≤ 2 frames after a field change, 0 synchronous readbacks)
+capture /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p5/H5/wt/.d3out/caps/fv3 · target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p5/H5/wt/.d3out/builds/fv3/dist · worktree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p5/H5/wt @ f6abfaab · gate chromium
+  chromium light aurora: painted mean Y under the dock 0.280 · published --glass-backdrop-luma absent (state —/—) ✗
+  chromium light aurora50: painted mean Y under the dock 0.529 · published --glass-backdrop-luma absent (state —/—) ✗
+  chromium dark aurora: painted mean Y under the dock 0.280 · published --glass-backdrop-luma absent (state —/—) ✗
+  chromium dark aurora50: painted mean Y under the dock 0.073 · published --glass-backdrop-luma absent (state —/—) ✗
+  webkit+shim light aurora: painted mean Y under the dock 0.280 · published --glass-backdrop-luma absent (state —/—) ✗
+  webkit+shim light aurora50: painted mean Y under the dock 0.530 · published --glass-backdrop-luma absent (state —/—) ✗
+  webkit+shim dark aurora: painted mean Y under the dock 0.280 · published --glass-backdrop-luma absent (state —/—) ✗
+  webkit+shim dark aurora50: painted mean Y under the dock 0.073 · published --glass-backdrop-luma absent (state —/—) ✗
+  live light aurora default: synchronous readbacks 0 (getImageData 0, readPixels 0) in 9000 ms
+  live light aurora default: step ceiling → 0.5: settled painted Y 0.487 · published --glass-backdrop-luma before —, frame 3 —, frame 90 — · latency never within ±0.02 ✗
+  live light aurora50 default: synchronous readbacks 0 (getImageData 0, readPixels 0) in 9000 ms
+  live light aurora50 default: step ceiling → 1: settled painted Y 0.232 · published --glass-backdrop-luma before —, frame 3 —, frame 90 — · latency never within ±0.02 ✗
+  live dark aurora default: synchronous readbacks 0 (getImageData 0, readPixels 0) in 9000 ms
+  live dark aurora default: step ceiling → 0.5: settled painted Y 0.061 · published --glass-backdrop-luma before —, frame 3 —, frame 90 — · latency never within ±0.02 ✗
+  live dark aurora50 default: synchronous readbacks 0 (getImageData 0, readPixels 0) in 9000 ms
+  live dark aurora50 default: step ceiling → 1: settled painted Y 0.232 · published --glass-backdrop-luma before —, frame 3 —, frame 90 — · latency never within ±0.02 ✗
+real Safari: UNMEASURED (owner's safaridriver checkbox)
+FAIL (12 of 16 gated rows)
