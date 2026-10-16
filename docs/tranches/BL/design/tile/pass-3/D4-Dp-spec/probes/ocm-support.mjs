@@ -12,7 +12,7 @@ body{margin:0;background:#fff}
 </style><div class="b"></div>`;
 console.log(`ocm-support · load ${load()} at start`);
 for (const [name, eng] of [["chromium", chromium], ["webkit", webkit]]) {
-  const b = await eng.launch({ headless: true, ...(name === "chromium" ? { channel: "chromium" } : {}) });
+  const b = await eng.launch({ headless: true, ...(name === "chromium" && process.env.BL_GPU_CHROME ? { channel: "chromium" } : {}) });
   const p = await b.newPage({ deviceScaleFactor: 2 });
   for (const arm of Object.keys(arms)) {
     await p.setContent(page(arm));

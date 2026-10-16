@@ -228,7 +228,7 @@ export async function browser(engine) {
   if (browsers[engine] && !browsers[engine].isConnected()) { disconnects.push({ engine, load: load() }); delete browsers[engine]; }
   if (!browsers[engine]) {
     if (engine === "webkit") await holdWebkit();
-    browsers[engine] = engine === "webkit" ? await pw.webkit.launch() : await pw.chromium.launch({ channel: "chromium" });
+    browsers[engine] = engine === "webkit" ? await pw.webkit.launch() : await pw.chromium.launch(process.env.BL_GPU_CHROME ? { channel: "chromium" } : {});
   }
   return browsers[engine];
 }

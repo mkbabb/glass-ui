@@ -144,12 +144,12 @@ export async function openTarget(args) {
 // closes once its last context has closed. DOCK_HARNESS_NAV_CAP overrides (the self-test control sets 3).
 export const NAV_CAP = Number(process.env.DOCK_HARNESS_NAV_CAP) || 60;
 export async function launch(engine) {
-    if (engine === "safari") return (await import("./safari.mjs")).launchSafari();
+    if (engine === "safari") throw new Error("OWNER-RUN: real Safari is headed; under the machine law (2026-10-16) its cells are the owner's to run");
     if (engine !== "webkit") { const b = await playwright[engine].launch({ headless: true }); b.__engine = engine; return b; }
     await holdWebkit();
     let b = await playwright.webkit.launch({ headless: true }), loads = 0;
     const retired = [];
-    const sweep = () => { for (const r of retired.splice(0)) { if (r.contexts().length) retired.push(r); else r.close().catch(() => { }); } };
+    const sweep = () => { const now = Date.now(); for (const r of retired.splice(0)) { if (!r.contexts().length) { r.close().catch(() => { }); continue; } if (now - (r.__retiredAt ??= now) > 30000) { console.log(`  (LEAK: a retired Playwright WebKit browser still held ${r.contexts().length} context(s) after 30 s; closed)`); r.close().catch(() => { }); continue; } retired.push(r); } };
     const h = {
         __engine: engine, relaunched: 0,
         async newContext(o) {

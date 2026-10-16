@@ -19,6 +19,9 @@ const release = () => {
 };
 
 export async function holdWebkit(label = path.basename(process.argv[1] ?? "harness")) {
+    // Retired 2026-10-16: `guarded --exclusive webkit` is the one WebKit lock machine-wide; a second lock here
+    // could wait 2,400 s while holding a guard slot. Kept as a no-op so existing importers still load.
+    return;
     if (held) return;
     fs.mkdirSync(path.dirname(DIR), { recursive: true });
     const t0 = Date.now();

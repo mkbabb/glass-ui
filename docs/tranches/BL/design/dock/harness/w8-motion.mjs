@@ -24,7 +24,8 @@ const args = parseArgs();
 const target = await openTarget(args);
 const out = outDir(args, "W8");
 const rep = makeReport("W8", target);
-const HEADED = !!args.headed;
+if (args.headed) throw new Error("OWNER-RUN: headed browsers are banned under the machine law (2026-10-16); the headed real-GPU cell is the owner's to run");
+const HEADED = false;
 
 async function waitChange(page, cap = 7000) {
     const b = await extentNow(page); const t0 = Date.now();

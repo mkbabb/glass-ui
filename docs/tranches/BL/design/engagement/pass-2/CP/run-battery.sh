@@ -16,5 +16,5 @@ XW=""; [[ " $ENG " == *" webkit "* ]] && XW="--exclusive webkit"
 typeset -A SC
 SC=(E-1 switch,accordion,button,slider E-2 switch,accordion,button E-3 slider E-4 slider E-5 press_switch,accordion,button E-6 s6 E-7 modal,slider E-8 switch,accordion,button E-9 switch,accordion,button,slider E-10 slider,slider2 E-11 switch,slider)
 for w in ${=WITS:-E-1 E-2 E-3 E-4 E-5 E-6 E-7 E-8 E-9 E-10 E-11}; do
-  stamp "$w $B start"; $GUARD ${=XW} --light --timeout 30 -- node run.mjs --build $WT/.cp-out/builds/$B --wt $WT --only $w --engines ${(j:,:)ENG} --scenes $SC[$w] --out $OUT --verbose; stamp "$w $B end exit $?"
+  stamp "$w $B start"; $GUARD ${=XW} --timeout 30 -- node run.mjs --build $WT/.cp-out/builds/$B --wt $WT --only $w --engines ${(j:,:)ENG} --scenes $SC[$w] --out $OUT --verbose; stamp "$w $B end exit $?"
 done
