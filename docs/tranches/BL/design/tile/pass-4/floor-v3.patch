@@ -1,0 +1,2439 @@
+diff --git a/MIGRATION.md b/MIGRATION.md
+index ce56a74c4..037ab586b 100644
+--- a/MIGRATION.md
++++ b/MIGRATION.md
+@@ -5,6 +5,119 @@ records the breaking changes that landed in that cut, newest first. Clean breaks
+ — no legacy aliases, no back-compat shims (L invariant 4); every break is a one-line
+ rename or import re-point per call site.
+ 
++## Unreleased — the selectable tile's floor
++
++Four bindings leave. Each is a one-line change per call site.
++
++_`<Card>` loses `selected`_
++
++A card is content, never an option: `selected` and everything it stamped (`role="option"`,
++`tabindex="0"`, `aria-selected`, `data-selected`, the selected fill, hover and press) are
++gone. A set of choices is a `<ToggleGroup type="single">`. A card that a listbox walks by
++`aria-activedescendant` passes `role="option"` and `aria-selected` as attributes, which
++now reach the plate untouched. Detector: `rg ':selected=|\bselected\b' -g '*.vue'` on
++`<Card` lines; `vue-tsc` flags a typed site.
++
++_`<Chip shape="cell">` leaves, and an unknown `shape` throws_
++
++The shapes are `pill` and `icon`. A chip given any other shape throws a `TypeError` naming
++the shapes (`[Chip] shape="cell" is not one of pill, icon.`), in production as well as in
++development; it reaches your app's error handler (the chip itself still renders, as a
++pill). A selectable option that holds more than one line is a `ToggleGroup` item.
++Detector: `rg 'shape="cell"'`.
++
++_`<SegmentedTabs semantics="toggle">` becomes `semantics="radio"`, and an unknown
++`semantics` throws_
++
++The non-tabs semantic is a one-of-N chooser and now says so: `role="radiogroup"` with
++`role="radio"` + `aria-checked` items (was `role="group"` with `aria-pressed`), the
++answer `<ToggleGroup type="single">` gives. Every arrow moves. The default pairing is
++unchanged (pill → `radio`, underline → `tabs`). A value other than `radio` or `tabs`
++throws `[SegmentedTabs] semantics="toggle" is not one of radio, tabs.` in production as
++well as in development, the same refusal Chip gives an unknown `shape`; the strip still
++renders on the default pairing. Detector: `rg 'semantics="toggle"'`, and the error.
++
++_A `role`, `tabindex` or selection state on a `ToggleGroupItem` no longer replaces the
++group's_
++
++The group's engine owns each option's `role`, `aria-checked` / `aria-pressed` /
++`aria-selected` and roving `tabindex`. A consumer value used to win and broke the
++one-tab-stop radio group (`option` inside a `radiogroup`, one stop per item); it is now
++dropped, in production as in development. In a `type="multiple"` group the option's role
++is its button's own, so a consumer `role` is dropped there too. Every other attribute
++(class, style, `data-*`, `aria-label`, `title`, listeners) still lands on the button.
++Delete the five. Detector: in a development build, `[ToggleGroupItem] value=… sets role,
++tabindex: the group's engine owns an option's role, state and tab stop …`;
++`rg 'ToggleGroupItem[^>]*(role=|tabindex=|aria-(checked|pressed|selected)=)'`.
++
++_Behaviour and paint, nothing to change_
++
++- `<FadingScroll>` is a tab stop only while its content holds none. A `ToggleGroup` (or
++  any focusable content) inside it used to read two stops, the port and then the
++  content. The port takes `tabindex="0"` only while nothing inside it is a tab stop (an
++  element at `tabindex="-1"` or a disabled control is not one), and re-reads when its
++  content changes; a port of focusable content scrolls as focus moves through it.
++- `<ToggleGroup>` pads its row by `--focus-ring-reach` (the ring's outline plus offset,
++  now a token), so a scroll port around it cannot cut the focus ring. Rows grow by
++  4px on each side.
++- `<ToggleGroup>` moves on every arrow: Up and Down go to the nearest item in the next
++  row, and step in order where there is none. After a keyed reorder the arrows follow
++  the new order. An arrow typed into an input inside an item stays the input's.
++- A `ToggleGroup` pill and a `SegmentedTabs` tab hold one row. The pill clips at the
++  row, ellipsizes each label element and is clamped to its rung, and lays its direct
++  content out in a row whatever classes it carries. Inside a pill or a tab a `<br>` is
++  dropped and every element runs inline, whether the browser lays it out as a block (a
++  `div`, a `p`) or a class or an inline style sets its display (`block`, `flex`,
++  `style="display: block"`), so two lines written into a label read as one row. An
++  `svg` or `img` runs inline at its own size, and a wrapper that was `flex` or
++  `inline-flex` runs inline, so its `gap` no longer spaces its children. Three things
++  keep their own display: a `Badge`, which sits on the row as one inline box; an
++  element hidden by the `hidden` attribute, by `v-show` or by the `hidden` utility;
++  and an inline `display: … !important`, the one spelling that outranks the row. In a
++  development build of your app a `ToggleGroupItem` whose content asks for a second
++  row (a `<br>`, content past the rung, or text painted on two rows inside it), or
++  holds an interactive element, logs `[ToggleGroupItem] value=… asks for a second row
++  …` or `… holds an interactive descendant …`, at mount and whenever its content, its
++  classes or its inline styles change; a production build logs nothing. These checks
++  read `process.env.NODE_ENV`, which your bundler resolves (Vite and webpack do by
++  default).
++- `--selection-tile` (`none` | `flush` | `plated`, inherited) says whether a set of
++  options are tiles. It is `none` on every `ToggleGroup`, and nothing in the library
++  sets it yet. Under either tile value an option is a card, whatever wrote the value:
++  it is not held to one row, and it takes the field corner (16px), a column,
++  start-aligned text at body leading, the card pad (`--space-atom` block,
++  `--space-body` inline; `sm` `--space-residue` / `--space-atom`), the height of the
++  tallest option in its row, and its selected perimeter. A corner you give a tile by a
++  `rounded-*` utility, a scoped or unlayered rule, or an unlayered `!important` has no
++  effect; only an inline `border-radius: … !important` changes it. Under `flush` an
++  option also paints no plate, floor or blur at rest. A `ToggleGroup` nested inside a
++  tile is pills again (every group resets the value).
++- The selected perimeter of a `ToggleGroup` item paints inside its 1px border instead
++  of straddling it, so paint containment (`content-visibility: auto`, the pill's own
++  clip) keeps all 2px of it.
++- A `ToggleGroup` item pops when it is selected, by pointer, key or a write to the
++  model: it peaks about 2.8 % over its rest (4.5 % under a loud driver,
++  `--motion-weight: 1`), bounces under it and settles, in 450 ms on `transform`. A calm
++  observer (`[data-reorder]`, `[data-autoplay]`) still pops at the rest amplitude;
++  reduced motion runs nothing. Tab entry and mount never pop. A consumer `transform` on
++  an item is overwritten while the pop runs.
++- A selected `ToggleGroup` item's label ink, tint and perimeter follow
++  `--selection-tone` (the label ink and the perimeter are the tone made solid and
++  floored to 3:1). `--selection-ink` is the item's ink (muted at rest, the selected
++  edge when on); media inside an item can stroke with it or with `currentColor` and
++  drop their own `[data-state="on"]` rules. Unset, every value is what it was.
++- Under `prefers-contrast: more` and forced colours a selected `ToggleGroup` item keeps
++  its 1px border and paints its own 2px perimeter layer, instead of widening its border
++  to 2px and moving its content.
++- Up and Down in a row of items of unequal height reach the item in the adjacent row,
++  not the diagonal one.
++- `--control-surface-bg-hover` is one flat mix of the foreground ink into `--card`:
++  at full glass the ink at the rest plate's alpha plus `--fill-hover`; under reduced
++  transparency an opaque `--card` with `--fill-hover` of the ink mixed in, so the hover
++  moves there too (it was the rest plate). The `.control-surface` hover (ToggleGroup
++  items, the Select trigger) paints it on the plate's own layer, only on a fine
++  pointer; the disclosure trigger's hover reads the same token.
++
+ ## 10.0.0 — ~~UNRELEASED~~ [2026-09-22 · LIVE: tag `v10.0.0` at `dcb0f711`, published with provenance by `release.yml` run 35804200390 attempt 1, `latest` on the registry, unpacked 2,915,902 B = the ratchet datum]
+ 
+ **Status.** `package.json` declares ~~`9.0.0`~~ `10.0.0` [2026-09-22 · at the cut, `58f0d243`]
+diff --git a/demo/stories/data/search.vue b/demo/stories/data/search.vue
+index ba4b4de0f..10a55d7d6 100644
+--- a/demo/stories/data/search.vue
++++ b/demo/stories/data/search.vue
+@@ -562,24 +562,18 @@ function formatScore(score: number): string {
+                 role="listbox"
+                 aria-label="Search results"
+             >
+-                <!-- [2026-08-28 · BK π-CURE · R4] ~~`role="option"` +
+-                     `:aria-selected` + `:data-active`~~ — three attributes that
+-                     type-checked, read correctly, and rendered NOTHING. `Card` binds
+-                     `v-bind="$attrs"` first and then restates `:role` / `:aria-selected`
+-                     / `:tabindex` off its OWN `selected` prop, so the later explicit
+-                     bindings won and an unset `selected` REMOVED all three. The route
+-                     was writing to a channel the component owns; `selected` IS that
+-                     channel, and passing it also lights the library's own
+-                     `.card[role="option"][data-selected="true"]` paint
+-                     (`components/card/styles.css:165`) that was dead here for the same
+-                     reason. `data-active` goes with them: nothing styled it, and
+-                     `data-selected` is now written by its one owner. -->
++                <!-- Each result is a listbox option. Card owns no option contract, so
++                     `role` and `aria-selected` reach the plate through `$attrs`, and the
++                     rows take no tab stop: the field walks them by
++                     `aria-activedescendant`. The active row is carried by its full-ink
++                     edge, not a fill. -->
+                 <Card
+                     v-for="(result, i) in visibleResults"
+                     :id="`search-result-${result.item.id}`"
+                     :key="result.item.id"
+-                    class="border-l-4"
+-                    :selected="i === searchState.selectedIndex.value"
++                    class="search-result border-l-4"
++                    role="option"
++                    :aria-selected="i === searchState.selectedIndex.value"
+                     :style="{
+                         borderLeftColor: `var(--section-color-${result.item.tone})`,
+                     }"
+@@ -630,3 +624,10 @@ function formatScore(score: number): string {
+         </StorySection>
+     </StoryPage>
+ </template>
++
++<style scoped>
++.search-result[aria-selected="true"] {
++    border-block-color: var(--foreground);
++    border-inline-end-color: var(--foreground);
++}
++</style>
+diff --git a/demo/stories/display/card.vue b/demo/stories/display/card.vue
+index 45a78e5c7..d0d57e349 100644
+--- a/demo/stories/display/card.vue
++++ b/demo/stories/display/card.vue
+@@ -1,5 +1,4 @@
+ <script setup lang="ts">
+-import { ref } from "vue";
+ import StoryPage from "../../chassis/page/StoryPage.vue";
+ import StorySection from "../../chassis/section/StorySection.vue";
+ import CodeBlock from "../../chassis/code/CodeBlock.vue";
+@@ -16,11 +15,6 @@ import {
+ import { Button } from "@glass/components/button";
+ 
+ const rows = Array.from({ length: 8 }, (_, index) => `Timeline entry ${index + 1}`);
+-const chosen = ref("balanced");
+-const plans = [
+-    { id: "balanced", title: "Balanced", blurb: "The fill carries the state." },
+-    { id: "vivid", title: "Vivid", blurb: "The rim is a locator, not the state." },
+-];
+ </script>
+ 
+ <template>
+@@ -114,28 +108,6 @@ const plans = [
+             </div>
+         </StorySection>
+ 
+-        <StorySection
+-            heading="Selectable cards"
+-            blurb="`selected` present makes the card an option: role, tab stop, aria-selected, pointer, and the fill that carries the state. Absent, the card stays inert prose."
+-        >
+-            <div class="card-board" role="listbox" aria-label="Plan">
+-                <Card
+-                    v-for="plan in plans"
+-                    :key="plan.id"
+-                    :selected="chosen === plan.id"
+-                    @click="chosen = plan.id"
+-                    @keydown.enter.prevent="chosen = plan.id"
+-                    @keydown.space.prevent="chosen = plan.id"
+-                >
+-                    <CardHeader>
+-                        <CardTitle>{{ plan.title }}</CardTitle>
+-                        <CardDescription>{{ plan.blurb }}</CardDescription>
+-                    </CardHeader>
+-                    <CardContent>Hover, tab to it, and press it.</CardContent>
+-                </Card>
+-            </div>
+-        </StorySection>
+-
+         <StorySection
+             heading="Shrinkable header"
+             blurb="Scroll the activity card to compact its heading while the content remains readable and reachable."
+diff --git a/demo/stories/forms/chip.vue b/demo/stories/forms/chip.vue
+index 619aa7813..a3231d332 100644
+--- a/demo/stories/forms/chip.vue
++++ b/demo/stories/forms/chip.vue
+@@ -42,15 +42,11 @@ const actions = ref(0);
+ 
+         <StorySection
+             label="geometry"
+-            blurb="Pill, cell, and icon silhouettes retain the same declared semantics."
++            blurb="Pill and icon silhouettes retain the same declared semantics."
+         >
+             <ShowcaseFrame pad="lg">
+                 <div class="flex flex-wrap items-center gap-3">
+                     <Chip shape="pill">Pill</Chip>
+-                    <Chip shape="cell">
+-                        <Circle class="size-5" aria-hidden="true" />
+-                        <span>Cell</span>
+-                    </Chip>
+                     <Chip shape="icon">
+                         <Circle class="size-4" aria-hidden="true" />
+                     </Chip>
+diff --git a/demo/stories/manifest.ts b/demo/stories/manifest.ts
+index bfe61f1a5..62fdb4599 100644
+--- a/demo/stories/manifest.ts
++++ b/demo/stories/manifest.ts
+@@ -579,7 +579,7 @@ export const CATEGORIES: Category[] = [
+                 "forms",
+                 "chip",
+                 "Chip",
+-                "Explicit static, selectable, action, and removable semantics over pill, cell, and icon geometry.",
++                "Explicit static, selectable, action, and removable semantics over pill and icon geometry.",
+             ),
+             // the LabeledField family (parent SFC + 3 wrappers over Input ·
+             // Slider · Switch — a select is a preset and lives in the demo, BK
+diff --git a/src/components/card/Card.vue b/src/components/card/Card.vue
+index edc7022d5..33f13d6ec 100644
+--- a/src/components/card/Card.vue
++++ b/src/components/card/Card.vue
+@@ -1,5 +1,4 @@
+ <script setup lang="ts">
+-import { computed } from "vue";
+ import { cn } from "../_shared/class-names";
+ import Surface, { type SurfaceProps } from "../surface/Surface.vue";
+ 
+@@ -9,7 +8,8 @@ export type CardSize = "sm" | "md";
+ 
+ /**
+  * A semantic content group. Material concerns are forwarded to Surface; the card
+- * owns proportion, anatomy, and — when `selected` is present — engagement.
++ * owns proportion and anatomy. A card is content, never an option: a choice is a
++ * ToggleGroup item.
+  *
+  * `material` is SEVERED (DAG, via `_shared/surface`): the card is the elevated
+  * role by construction, which is Surface's own default, so the axis added a knob
+@@ -33,23 +33,12 @@ export interface CardProps extends SurfaceProps {
+     size?: CardSize;
+     /** The opt-in elevation. Card owns this axis; Surface no longer has one. */
+     shadow?: boolean;
+-    /** Presence makes the card an option: role, tabindex, aria-selected, states. */
+-    selected?: boolean;
+ }
+ 
+ const props = withDefaults(defineProps<CardProps>(), {
+     size: "md",
+     shadow: true,
+-    /* Declared so Vue's BOOLEAN CASTING does not fire. An absent `Boolean` prop
+-       resolves to `false`, not `undefined` — which would make every card in the
+-       library an option with a tab stop. A declared `undefined` default wins over
+-       the cast, and absence stays absence. */
+-    selected: undefined,
+ });
+-
+-/* PRESENCE, not truth, is the signal: `selected` unset leaves a card inert prose;
+-   `selected="false"` is an unselected OPTION, which owes a role and a tab stop. */
+-const selectable = computed(() => props.selected !== undefined);
+ </script>
+ 
+ <template>
+@@ -62,10 +51,6 @@ const selectable = computed(() => props.selected !== undefined);
+         :as="as"
+         :data-shadow="shadow || undefined"
+         :data-size="size"
+-        :data-selected="selected ? 'true' : undefined"
+-        :role="selectable ? 'option' : undefined"
+-        :tabindex="selectable ? 0 : undefined"
+-        :aria-selected="selectable ? (selected ? 'true' : 'false') : undefined"
+         :class="cn('card', props.class)"
+     >
+         <slot />
+diff --git a/src/components/card/styles.css b/src/components/card/styles.css
+index 77256affa..ff78c3c46 100644
+--- a/src/components/card/styles.css
++++ b/src/components/card/styles.css
+@@ -1,18 +1,5 @@
+-/* Card owns structure, proportion and — on the selectable arm — its own
+-   engagement register. Surface owns every plate material. */
+-
+-/* The selectable card's state FILL, registered so it interpolates. A bare custom
+-   property in a gradient jumps between endpoints; registered, the fill glides on
+-   the light channel's own envelope. `inherits: false` — a card never pushes its
+-   state onto a nested card. (The `@property --fade-start` in utilities/base.css
+-   is the precedent: a component's typed property rides its own recipe file.)
+-   The VALUES are the register's — `--fill-hover` / `--fill-selected`
+-   (tokens/color-radius.css §1.3); nothing is minted here. */
+-@property --card-fill {
+-    syntax: "<color>";
+-    inherits: false;
+-    initial-value: transparent;
+-}
++/* Card owns structure and proportion. Surface owns every plate material. A card is
++   content, never an option: a choice is a ToggleGroup item. */
+ 
+ @layer components {
+     /* ── PROPORTION (PROPORTION §1.1) ─────────────────────────────────────────
+@@ -79,9 +66,7 @@
+             var(--glass-material-rim), var(--glass-under-shadow-default),
+             var(--card-cast-rung), var(--shadow-card);
+         /* The lift and the edge are the two channels that move; both are light,
+-           neither is spatial, so both ride the light clock. `.card[role="option"]`
+-           restates the whole coherent list rather than patching a duration —
+-           a shorthand is a shorthand. */
++           neither is spatial, so both ride the light clock. */
+         transition:
+             box-shadow var(--engage-control-engage-release) var(--ease-standard),
+             border-color var(--engage-control-engage-release) var(--ease-standard);
+@@ -118,85 +103,6 @@
+         --glass-border-rung: oklch(from var(--foreground) l c h / var(--ink-edge));
+     }
+ 
+-    /* ── ENGAGEMENT — the register the card advertised and never wore.
+-       `.glass-card` (glass/surfaces.css) owns a focus/hover composition under a
+-       comment asserting that `<Card>` "owns its own hover composition"; `<Card>`
+-       has never emitted that class, and the module carries zero hover and zero
+-       focus rules. The engagement half of `.glass-card` re-homes HERE, keyed on
+-       the card itself (C-4: the class splits by halves and dies; the material
+-       half folds onto `.glass-resting`). No `:where(.glass-card, .card)` widening.
+-
+-       The arm is the SELECTABLE card only. An inert content group is not a
+-       control and gets no pointer answer — which is what "the plate stays
+-       static; the control owns activation" meant all along.
+-
+-       THE FILL CARRIES THE STATE, the accent rim is a locator (atlas's own
+-       contract comment: "the ring, not the slab"). The fill rides a gradient
+-       rather than `background-color` because the plate's colour IS the
+-       `background` the veil recipe writes — a state that clobbers it would erase
+-       the material to paint 5% of ink. */
+-    .card[role="option"] {
+-        cursor: pointer;
+-        scale: 1;
+-        background-image: linear-gradient(var(--card-fill), var(--card-fill));
+-        transition:
+-            --card-fill var(--engage-control-engage-release) var(--ease-standard),
+-            box-shadow var(--engage-control-engage-release) var(--ease-standard),
+-            border-color var(--engage-control-engage-release) var(--ease-standard),
+-            /* the SPATIAL leg rides the press spring, never the light clock */
+-            scale var(--spring-press-duration) var(--transition-liquid-spatial);
+-    }
+-
+-    /* The ring is an `outline`: a `box-shadow` ring loses to
+-       `button/styles.css`'s (0,4,0) rule on any card that contains a button, and
+-       a ring that the thing it rings can delete is not a ring. The glow leg is
+-       legal here because this rule owns the COMPLETE resting list (C-7) — it
+-       appends to `--card-cast` instead of replacing it. */
+-    .card[role="option"]:focus-visible {
+-        outline: 2px solid oklch(from var(--foreground) l c h / var(--ink-perimeter));
+-        outline-offset: 2px;
+-    }
+-
+-    .card.glass-resting[role="option"][data-shadow]:focus-visible {
+-        box-shadow: var(--card-cast), 0 0 8px oklch(from var(--foreground) l c h / 0.15);
+-    }
+-
+-    /* Persistent state. `--fill-selected` (0.12) is a rung hover cannot mint. */
+-    .card[role="option"][data-selected="true"] {
+-        --card-fill: oklch(from var(--foreground) l c h / var(--fill-selected));
+-    }
+-
+-    /* HOVER IS BRACKETED. On a coarse pointer `:hover` latches on tap and stays
+-       latched, painting a card as permanently pointed-at. */
+-    @media (hover: hover) {
+-        /* The ATTACK channel. `transition` is a shorthand, so the whole coherent
+-           list is restated rather than duration-patched — a bare
+-           `transition-duration` here would drag the SPATIAL press leg onto the
+-           light clock, and the two channels are not interchangeable. */
+-        .card[role="option"]:hover {
+-            --card-fill: oklch(from var(--foreground) l c h / var(--fill-hover));
+-            transition:
+-                --card-fill var(--engage-control-engage-attack) var(--ease-standard),
+-                box-shadow var(--engage-control-engage-attack) var(--ease-standard),
+-                border-color var(--engage-control-engage-attack) var(--ease-standard),
+-                scale var(--spring-press-duration) var(--transition-liquid-spatial);
+-        }
+-
+-        /* Both at once is the register's own DERIVATION (§1.3: hover + selected =
+-           0.17), not a third rung and not a minted token. */
+-        .card[role="option"][data-selected="true"]:hover {
+-            --card-fill: oklch(
+-                from var(--foreground) l c h / calc(var(--fill-hover) + var(--fill-selected))
+-            );
+-        }
+-    }
+-
+-    /* Press is the SHIPPED vocabulary — `--scale-press-sm` (0.97) on the spatial
+-       spring leg, the same rung the button and slider recipes consume. No
+-       literal, no composable, no per-atom press token. */
+-    .card[role="option"]:active {
+-        scale: var(--scale-press-sm);
+-    }
+ 
+     /* ── ANATOMY ─────────────────────────────────────────────────────────────── */
+     .card-header {
+diff --git a/src/components/chip/Chip.vue b/src/components/chip/Chip.vue
+index 429c99f72..dd1a5f075 100644
+--- a/src/components/chip/Chip.vue
++++ b/src/components/chip/Chip.vue
+@@ -9,7 +9,8 @@ import {
+ import { Toggle } from "reka-ui";
+ import { cn } from "../_shared/class-names";
+ import { useAccentTone } from "../../composables/color/useAccentTone";
+-import { chipVariants } from "./chipVariants";
++import { refuseUnknown } from "../_shared/guard";
++import { CHIP_SHAPES, chipVariants } from "./chipVariants";
+ import type { ChipMode, ChipProps } from "./types";
+ 
+ defineOptions({ name: "Chip", inheritAttrs: false });
+@@ -81,6 +82,14 @@ const mergedStyle = computed<StyleValue>(() => [
+ ]);
+ 
+ watchEffect(() => {
++    /* a retired or misspelt shape (`shape="cell"`) refuses loud (_shared/guard.ts) */
++    refuseUnknown(
++        "Chip",
++        "shape",
++        shape.value,
++        CHIP_SHAPES,
++        "A choice that holds more than one line is a ToggleGroup tile.",
++    );
+     if (props.mode === "removable" && !props.removeLabel?.trim()) {
+         throw new TypeError(
+             '[Chip] mode="removable" requires a non-empty removeLabel.',
+diff --git a/src/components/chip/README.md b/src/components/chip/README.md
+index 3d7a12226..833230427 100644
+--- a/src/components/chip/README.md
++++ b/src/components/chip/README.md
+@@ -14,10 +14,12 @@ independent from geometry:
+ ## Axes
+ 
+ - `mode: static | selectable | action | removable` — `static` is the noninteractive
+-  default; selectable uses Toggle and `aria-pressed`; action is a native button;
+-  removable is static content with one separately named remove button.
+-- `shape: pill | cell | icon` — geometry only. It never changes role, focus, state,
+-  or events.
++  default; selectable is an independent toggle (N of M) on Toggle and `aria-pressed`;
++  action is a native button; removable is static content with one separately named
++  remove button.
++- `shape: pill | icon` — geometry only. It never changes role, focus, state, or
++  events. Any other value throws a `TypeError` naming the two. A selectable option that holds more than one line
++  is a ToggleGroup tile, not a chip.
+ - `size: xs | sm | md | lg`, `tone`, and `surface` remain orthogonal visual axes.
+   `xs` is the static micro-pill rung (4/2px pads, fixed 11px roman type); `md` is the
+   default. On a coarse pointer an INTERACTIVE chip still takes the 44px touch floor
+diff --git a/src/components/chip/chipVariants.ts b/src/components/chip/chipVariants.ts
+index f7ed8b436..cae40373a 100644
+--- a/src/components/chip/chipVariants.ts
++++ b/src/components/chip/chipVariants.ts
+@@ -12,9 +12,11 @@ const SIZE = {
+ } as const;
+ const SHAPE = {
+     pill: "",
+-    cell: "glass-chip--cell flex-col gap-1.5 px-2 py-2.5 text-micro",
+     icon: "glass-chip--icon aspect-square p-0",
+ } as const;
++
++/** The shapes the chip paints. Anything else would fall through to no class. */
++export const CHIP_SHAPES = Object.keys(SHAPE) as readonly (keyof typeof SHAPE)[];
+ const ICON_SIZE = {
+     xs: "size-6",
+     sm: "size-8",
+diff --git a/src/components/fading-scroll/FadingScroll.vue b/src/components/fading-scroll/FadingScroll.vue
+index 6871d31c9..08141589f 100644
+--- a/src/components/fading-scroll/FadingScroll.vue
++++ b/src/components/fading-scroll/FadingScroll.vue
+@@ -16,7 +16,7 @@
+ //     OFF when the native timeline is supported (no double-feather).
+ // The CSS axis is selected by `data-fade-axis` (the root attr); the fallback
+ // reads the same `axis` prop.
+-import { computed, ref, toRef, watch } from "vue";
++import { computed, onBeforeUnmount, onMounted, ref, toRef, watch } from "vue";
+ import { useFadingScroll } from "./composables/useFadingScroll";
+ 
+ const props = withDefaults(
+@@ -51,6 +51,34 @@ watch(
+     () => [props.axis, props.fadeStart, props.fadeEnd],
+     fadingScroll.measure,
+ );
++
++/* THE PORT IS A TAB STOP ONLY WHILE NOTHING INSIDE IT IS. A keyboard user must reach a
++ * scroll port, so a port with no tab stop inside takes `tabindex="0"`. A port that
++ * holds one is reached through it (focus scrolls the control into view), and a stop of
++ * its own would put a second, empty stop in front of every set it holds (a radiogroup's
++ * one stop read two, TF-6). "A tab stop" is what Tab lands on: an element parked at
++ * `tabindex="-1"` (a roving set's other items, a heading focused by script) or a
++ * disabled control is not one, so a port that holds only those keeps its own stop.
++ * Re-read whenever the content's elements or their stops change. */
++const TAB_STOP =
++    ':is(a[href], button, input, select, textarea, [contenteditable]:not([contenteditable="false"]), [tabindex]):not([disabled], [tabindex="-1"])';
++const holdsTabStop = ref(false);
++let watcher: MutationObserver | null = null;
++const read = () => {
++    holdsTabStop.value = rootRef.value?.querySelector(TAB_STOP) != null;
++};
++onMounted(() => {
++    read();
++    watcher = new MutationObserver(read);
++    if (rootRef.value)
++        watcher.observe(rootRef.value, {
++            childList: true,
++            subtree: true,
++            attributes: true,
++            attributeFilter: ["tabindex", "disabled", "href", "contenteditable"],
++        });
++});
++onBeforeUnmount(() => watcher?.disconnect());
+ </script>
+ 
+ <template>
+@@ -64,7 +92,7 @@ watch(
+         :role="namedRegion ? 'region' : undefined"
+         :aria-label="ariaLabel"
+         :aria-labelledby="ariaLabelledby"
+-        tabindex="0"
++        :tabindex="holdsTabStop ? undefined : 0"
+     >
+         <slot />
+     </div>
+diff --git a/src/components/fading-scroll/README.md b/src/components/fading-scroll/README.md
+index 7c59aefaa..26857af50 100644
+--- a/src/components/fading-scroll/README.md
++++ b/src/components/fading-scroll/README.md
+@@ -42,8 +42,11 @@ import { FadingScroll } from "@mkbabb/glass-ui/fading-scroll";
+ The root IS the scroll port; the default slot IS the scrolled content. Pass the
+ flex/overflow/scrollbar utilities (`flex gap-2`, `scrollbar-hidden`, `min-h-0`)
+ on `<FadingScroll>` itself — they land on the scroll-port root.
+-Unnamed ports remain ordinary focusable scroll containers; Glass does not create
+-repeated, indistinguishable region landmarks.
++Unnamed ports remain ordinary scroll containers; Glass does not create
++repeated, indistinguishable region landmarks. The port is a tab stop only while its
++content holds none (an element at `tabindex="-1"` or a disabled control is not one):
++a port of focusable content is scrolled by moving focus through that content, so a
++one-tab-stop set inside it stays one stop.
+ 
+ ## The dual-path single-writer mechanism
+ 
+diff --git a/src/components/tabs/README.md b/src/components/tabs/README.md
+index e76097438..1b928dbf5 100644
+--- a/src/components/tabs/README.md
++++ b/src/components/tabs/README.md
+@@ -24,11 +24,14 @@ ONE component, two materials:
+ - **`underline`** — panel-navigation tabs with an underline indicator: the same
+   measured node, drawn as its edge instead of filled.
+ 
+-`semantics="toggle"` exposes `role="group"` + `aria-pressed` buttons;
++`semantics="radio"` exposes `role="radiogroup"` / `role="radio"` + `aria-checked`;
+ `semantics="tabs"` exposes `role="tablist"` / `role="tab"` + `aria-selected`.
+-When omitted, compatibility defaults preserve the historical pairing: pill is
+-toggle semantics and underline is tab semantics. Material remains independent,
+-so `variant="pill" semantics="tabs"` is the glass-pill panel-navigation form.
++When omitted, the pairing is: pill is radio semantics and underline is tab
++semantics. Material remains independent,
++so `variant="pill" semantics="tabs"` is the glass-pill panel-navigation form. Any other value
++throws a `TypeError` naming the two, in production as in development (the strip keeps
++rendering on the default pairing). A tab holds one row: a `<br>` or a block element in
++its label runs on that row.
+ 
+ `activation="automatic"` (default) selects as roving focus moves.
+ `activation="manual"` moves focus independently and selects only on Enter,
+@@ -44,11 +47,14 @@ The role is keyed to `semantics`, not the look:
+ 
+ - `tabs` is **panel navigation** — `role="tablist"` / `role="tab"` +
+   `aria-selected`. Exactly one tab active; each reveals a distinct panel.
+-- `toggle` is the **ToggleGroup-shaped surface** — `role="group"` +
+-  `aria-pressed`. No panel swap; the toggles flip state on a shared view.
++- `radio` is a **one-of-N chooser** — `role="radiogroup"` / `role="radio"` +
++  `aria-checked`, the same answer `<ToggleGroup type="single">` gives. No panel
++  swap; the choice changes a shared view. Every arrow moves (the radio-group
++  model): Left and Right step, Up and Down step where no row lies that way.
+ 
+ Reach for `semantics="tabs"` for mutually-exclusive PANEL navigation and
+-`semantics="toggle"` for a single-select control that mutates one surface.
++`semantics="radio"` for a single-select control that mutates one surface. Each
++tab composes `.focus-ring`.
+ 
+ ---
+ 
+diff --git a/src/components/tabs/SegmentedTabs.vue b/src/components/tabs/SegmentedTabs.vue
+index 22ed4069e..d367c3e33 100644
+--- a/src/components/tabs/SegmentedTabs.vue
++++ b/src/components/tabs/SegmentedTabs.vue
+@@ -4,8 +4,9 @@
+ // `underline` is the paper ink mark drawn as that same body's edge. Both measure
+ // through the same JS writer, so there is no engine branch and no second element to
+ // keep in sync. CSS owns paint; this SFC owns markup and the measured position.
+-import { ref, computed, onBeforeUpdate } from "vue";
++import { ref, computed, onBeforeUpdate, watchEffect } from "vue";
+ import { cn } from "../_shared/class-names";
++import { refuseUnknown } from "../_shared/guard";
+ import {
+     Select,
+     SelectContent,
+@@ -27,7 +28,7 @@ import {
+ import { useSelectionGroup } from "../../composables/motion/morph/useSelectionGroup";
+ import { useTabDragMorph } from "./composables/useTabDragMorph";
+ import { useTabResponsive } from "./composables/useTabResponsive";
+-import type { SegmentedTabOption, SegmentedTabsProps } from "./types";
++import { SEGMENTED_TABS_SEMANTICS, type SegmentedTabOption, type SegmentedTabsProps } from "./types";
+ // Motion weight is the sole drag-enrichment axis.
+ import { useMotionAxis } from "../_shared/useMotionAxis";
+ // WAAPI keyframes can't dereference custom properties — resolve literals at
+@@ -67,6 +68,12 @@ const isTabsSemantic = computed(
+     () => props.semantics === "tabs" || (!props.semantics && isUnderline.value),
+ );
+ 
++/* A retired value (`semantics="toggle"`) would fall to the default pairing and
++   announce a role nobody asked for; it refuses loud (_shared/guard.ts). */
++watchEffect(() =>
++    refuseUnknown("SegmentedTabs", "semantics", props.semantics, SEGMENTED_TABS_SEMANTICS),
++);
++
+ // A non-selected pill tab composes the shared
+ // `.glass-capsule-hover` register (specular catch-light lift + press-snap, the iOS
+ // "ready to receive" read). Only the PILL material (the underline is paper — a
+@@ -84,7 +91,7 @@ function pillHoverClass(option: SegmentedTabOption<T>): string | false {
+ 
+ // ONE indicator node, both materials. It used to exist only on the pill, with the
+ // underline drawn as a `::before` pseudo position-anchored to `[aria-selected]` —
+-// two engines, and the second one had no indicator at all under `semantics="toggle"`
++// two engines, and the second one had no indicator at all under the non-tabs semantics
+ // (no `anchor-name` is minted, `anchor()` is invalid at computed-value time, and the
+ // rule collapsed to a zero-width box). Now the measured node IS the mark: the pill
+ // fills it, the underline draws its edge. Safari-identical by construction, because
+@@ -124,7 +131,11 @@ const stripModel = computed<T | undefined>({
+ const selection = useSelectionGroup<SegmentedTabOption<T>>({
+     options: stripOptions,
+     model: stripModel,
+-    role: computed(() => (isTabsSemantic.value ? "tablist" : "group")),
++    /* `tabs` is panel navigation; `radio` is a one-of-N chooser, the same answer
++     * ToggleGroup gives, so both announce `radiogroup` / `radio` / `aria-checked` and
++     * move on every arrow. */
++    role: computed(() => (isTabsSemantic.value ? "tablist" : "radiogroup")),
++    arrows: computed(() => (isTabsSemantic.value ? "axis" : "grid")),
+     vertical: isVertical,
+     activation: computed(() => props.activation),
+     containerRef,
+@@ -244,7 +255,7 @@ function onMobileUpdate(value: unknown) {
+     <div
+         v-else
+         ref="containerRef"
+-        :role="isTabsSemantic ? 'tablist' : 'group'"
++        :role="selection.groupRole.value"
+         :aria-label="props.ariaLabel"
+         :aria-orientation="
+             isTabsSemantic ? (isVertical ? 'vertical' : 'horizontal') : undefined
+@@ -292,7 +303,7 @@ function onMobileUpdate(value: unknown) {
+              an explanatory tooltip has the wrong label), so nine duplicated
+              attributes and a three-prop slot cannot diverge. `data-active` is
+              PRESENCE-gated (`|| undefined`), the house emit form; it is the styling
+-             hook for both semantics, because `[aria-pressed]` and `[aria-selected]`
++             hook for both semantics, because `[aria-checked]` and `[aria-selected]`
+              are two spellings of one state and paint may not know which. The ARIA
+              attributes themselves are untouched. -->
+         <template v-for="(option, idx) in stripOptions" :key="option.value">
+@@ -303,8 +314,7 @@ function onMobileUpdate(value: unknown) {
+                         if (el) buttonRefs[idx] = el as HTMLElement;
+                     }
+                 "
+-                class="segmented-tab"
+-                :role="isTabsSemantic ? 'tab' : undefined"
++                class="segmented-tab pill-row focus-ring"
+                 :tabindex="rovingTabindex(idx)"
+                 v-bind="{
+                     // Presence-gated, in the house form the landed emit sites use
+@@ -312,12 +322,9 @@ function onMobileUpdate(value: unknown) {
+                     // on, the key absent when off. `data-active=&quot;false&quot;` would make
+                     // `[data-active]` match every tab in the strip.
+                     ...(isActive(option.value) ? { 'data-active': '' } : {}),
+-                    ...(isTabsSemantic
+-                        ? {
+-                              'aria-selected': isActive(option.value) ? 'true' : 'false',
+-                              'aria-controls': option.controls || undefined,
+-                          }
+-                        : { 'aria-pressed': isActive(option.value) ? 'true' : 'false' }),
++                    // role and state from the engine, role-per-mode
++                    ...selection.itemAttrs(option.value),
++                    ...(isTabsSemantic ? { 'aria-controls': option.controls || undefined } : {}),
+                 }"
+                 :disabled="option.disabled"
+                 :class="[option.disabled && 'is-disabled', pillHoverClass(option)]"
+diff --git a/src/components/tabs/composables/useTabRovingFocus.ts b/src/components/tabs/composables/useTabRovingFocus.ts
+index 3dae4ced2..3e09566f4 100644
+--- a/src/components/tabs/composables/useTabRovingFocus.ts
++++ b/src/components/tabs/composables/useTabRovingFocus.ts
+@@ -23,6 +23,17 @@ export interface RovingSelectionOption<V extends SelectionValue = string> {
+ 
+ export type TabActivation = "automatic" | "manual";
+ 
++/**
++ * The arrow model. `axis` is the tablist and toolbar model: the orientation's two
++ * arrows move and the cross pair is inert (the dock run, SegmentedTabs as tabs).
++ * `grid` is the radio-group model, where every arrow moves: Left and Right step
++ * through the set in order (flipped under RTL), Up and Down go to the nearest enabled
++ * item in the adjacent row, and where no row lies that way they step in order like
++ * Left and Right. Rows are read from layout at key time, so a grid, a wrapping row
++ * and a single line are each walked as the eye reads them, with no column count.
++ */
++export type RovingArrows = "axis" | "grid";
++
+ /**
+  * Package-private composable for `SegmentedTabs.vue` (the
+  * roving-focus/responsive carve). The WAI-ARIA tablist/toolbar
+@@ -51,6 +62,8 @@ export interface UseTabRovingFocusParams<V extends SelectionValue = string> {
+     buttonRefs: Ref<HTMLElement[]>;
+     /** The SFC's selection handler (focus-follows activation → model write + squish). */
+     select: (value: V, idx: number) => void;
++    /** The arrow model; `axis` when omitted. */
++    arrows?: ComputedRef<RovingArrows>;
+ }
+ 
+ export interface UseTabRovingFocusReturn {
+@@ -140,6 +153,45 @@ export function useTabRovingFocus<V extends SelectionValue = string>(
+         }
+     }
+ 
++    // The enabled item in the adjacent visual row in `dir` (+1 below, -1 above) whose
++    // inline centre is nearest `fromIdx`'s, or -1 when no row lies that way. An item
++    // lies that way when it starts past the origin's centre line. The adjacent row is
++    // the nearest such item together with every item whose block extent holds that
++    // item's centre line (or whose centre line it holds), so items of unequal height
++    // stay one row whether the row aligns them by their tops or by their centres.
++    function rowNeighbour(fromIdx: number, dir: 1 | -1): number {
++        const els = buttonRefs.value;
++        const at = els[fromIdx]?.getBoundingClientRect();
++        if (!at) return -1;
++        const mid = at.top + at.height / 2;
++        const cx = at.left + at.width / 2;
++        const beyond: { idx: number; r: DOMRect; gap: number }[] = [];
++        els.forEach((el, idx) => {
++            if (idx === fromIdx || stripOptions.value[idx]?.disabled) return;
++            const r = el.getBoundingClientRect();
++            const gap = dir === 1 ? r.top - mid : mid - r.bottom;
++            if (gap > 0) beyond.push({ idx, r, gap });
++        });
++        const lead = beyond.reduce<(typeof beyond)[number] | null>(
++            (near, c) => (near === null || c.gap < near.gap ? c : near),
++            null,
++        );
++        if (!lead) return -1;
++        const centre = (r: DOMRect) => r.top + r.height / 2;
++        const holds = (a: DOMRect, b: DOMRect) => centre(b) >= a.top && centre(b) <= a.bottom;
++        let best = -1;
++        let bestDx = Infinity;
++        for (const c of beyond) {
++            if (!holds(lead.r, c.r) && !holds(c.r, lead.r)) continue;
++            const dx = Math.abs(c.r.left + c.r.width / 2 - cx);
++            if (dx < bestDx) {
++                best = c.idx;
++                bestDx = dx;
++            }
++        }
++        return best;
++    }
++
+     // Move focus to (and activate) the first/last enabled tab.
+     function focusEdge(edge: "first" | "last") {
+         const n = stripOptions.value.length;
+@@ -158,6 +210,10 @@ export function useTabRovingFocus<V extends SelectionValue = string>(
+ 
+     function onStripKeydown(e: KeyboardEvent) {
+         const targetIndex = buttonRefs.value.indexOf(e.target as HTMLElement);
++        // A key typed into an editable descendant of an item is the descendant's: an
++        // arrow moves its caret, never the group's selection. Structural, so it holds
++        // in production as well as in development.
++        if (targetIndex < 0 && isEditable(e.target)) return;
+         const from =
+             targetIndex >= 0 && !stripOptions.value[targetIndex]?.disabled
+                 ? targetIndex
+@@ -178,6 +234,23 @@ export function useTabRovingFocus<V extends SelectionValue = string>(
+             !isVertical.value &&
+             (computedDirection === "rtl" || declaredDirection === "rtl");
+         const nextDirection: 1 | -1 = rtl ? -1 : 1;
++        if (params.arrows?.value === "grid") {
++            const step: Partial<Record<string, 1 | -1>> = {
++                ArrowRight: nextDirection,
++                ArrowLeft: nextDirection === 1 ? -1 : 1,
++                ArrowDown: 1,
++                ArrowUp: -1,
++            };
++            const dir = step[e.key];
++            if (dir !== undefined) {
++                e.preventDefault();
++                const row =
++                    e.key === "ArrowDown" || e.key === "ArrowUp" ? rowNeighbour(from, dir) : -1;
++                if (row >= 0) focusOption(row);
++                else focusEnabled(from, dir);
++                return;
++            }
++        }
+         switch (e.key) {
+             case nextKey:
+                 e.preventDefault();
+@@ -213,3 +286,13 @@ export function useTabRovingFocus<V extends SelectionValue = string>(
+ 
+     return { activeIndex, rovingTabindex, onStripKeydown };
+ }
++
++function isEditable(target: EventTarget | null): boolean {
++    if (!(target instanceof HTMLElement)) return false;
++    return (
++        target.isContentEditable ||
++        target instanceof HTMLInputElement ||
++        target instanceof HTMLTextAreaElement ||
++        target instanceof HTMLSelectElement
++    );
++}
+diff --git a/src/components/tabs/index.ts b/src/components/tabs/index.ts
+index 79c9cf6e6..f309fbdb8 100644
+--- a/src/components/tabs/index.ts
++++ b/src/components/tabs/index.ts
+@@ -1,6 +1,6 @@
+ // The standardized SegmentedTabs family. ONE engine, TWO materials
+ // (`variant`: pill (default, the glass material) · underline (the paper ink-mark)),
+-// ONE semantic axis (toggle · tabs), ONE orientation axis (horizontal · vertical),
++// ONE semantic axis (radio · tabs), ONE orientation axis (horizontal · vertical),
+ // responsive collapse as a prop.
+ // The retired `segmented`/`overflow`/`:multi-select` axes + the `ui/Tabs` public
+ // surface are a clean break (no alias — "No legacy code"; see MIGRATION.md).
+diff --git a/src/components/tabs/types.ts b/src/components/tabs/types.ts
+index fdf3228bf..2fce4f5d4 100644
+--- a/src/components/tabs/types.ts
++++ b/src/components/tabs/types.ts
+@@ -17,8 +17,8 @@ export interface SegmentedTabOption<V extends string = string> {
+     /**
+      * The `id` of the tabpanel this option reveals. When set and semantics resolve to
+      * `tabs`, it is emitted as the tab's `aria-controls`, completing the APG
+-     * tablist↔tabpanel linkage for consumers that own a panel. Ignored in `toggle`
+-     * semantics (a toggle group mutates a shared surface, not a distinct panel).
++     * tablist↔tabpanel linkage for consumers that own a panel. Ignored in `radio`
++     * semantics (a chooser mutates a shared surface, not a distinct panel).
+      */
+     controls?: string;
+ }
+@@ -26,9 +26,11 @@ export interface SegmentedTabOption<V extends string = string> {
+ /** The two materials: `pill` is the default glass eyeglass; `underline` is the paper ink hairline. */
+ export type SegmentedTabsVariant = "pill" | "underline";
+ 
+-/** The interaction semantic, independent of material. `toggle` exposes a
+- *  group of pressed buttons; `tabs` exposes a tablist with selected tabs. */
+-export type SegmentedTabsSemantics = "toggle" | "tabs";
++/** The interaction semantic, independent of material. `radio` exposes a one-of-N
++ *  chooser (`radiogroup` / `radio` / `aria-checked`, every arrow moves); `tabs`
++ *  exposes a tablist with selected tabs. */
++export const SEGMENTED_TABS_SEMANTICS = ["radio", "tabs"] as const;
++export type SegmentedTabsSemantics = (typeof SEGMENTED_TABS_SEMANTICS)[number];
+ 
+ /** Whether focus movement also selects. Manual activation waits for Enter/Space. */
+ export type SegmentedTabsActivation = TabActivation;
+@@ -69,7 +71,7 @@ export interface SegmentedTabsProps<V extends string = string> {
+     variant?: SegmentedTabsVariant;
+     /**
+      * Interaction semantics, independent of `variant`. When omitted, preserves the
+-     * historical mapping: `pill` → `toggle`, `underline` → `tabs`.
++     * historical mapping: `pill` → `radio`, `underline` → `tabs`.
+      */
+     semantics?: SegmentedTabsSemantics;
+     /** Selection follows focus by default; manual mode activates with Enter/Space. */
+diff --git a/src/components/toggle-group/ToggleGroup.vue b/src/components/toggle-group/ToggleGroup.vue
+index 6de7049a0..51a7a124d 100644
+--- a/src/components/toggle-group/ToggleGroup.vue
++++ b/src/components/toggle-group/ToggleGroup.vue
+@@ -1,5 +1,5 @@
+ <script setup lang="ts">
+-import { computed, ref, shallowRef, triggerRef, type HTMLAttributes } from "vue";
++import { computed, onUpdated, ref, shallowRef, triggerRef, type HTMLAttributes } from "vue";
+ import { cn } from "../_shared/class-names";
+ import type { Orientation } from "../_shared/axes";
+ import {
+@@ -76,6 +76,15 @@ function domSorted(list: ToggleItemEntry[]): ToggleItemEntry[] {
+ }
+ 
+ const ordered = computed(() => domSorted(entries.value));
++/* A KEYED MOVE REORDERS THE DOM WITHOUT RE-REGISTERING. The slot renders inside this
++ * component, so a reorder of the consumer's list updates it; the registry re-sorts
++ * then, when the DOM order and the registry disagree, so the arrows and the roving
++ * tab stop walk the order the eye reads. Before, the order froze at registration
++ * (ArrowRight after a reversal landed on the old neighbour). */
++onUpdated(() => {
++    const sorted = domSorted(entries.value);
++    if (sorted.some((entry, at) => entry !== ordered.value[at])) entries.value = sorted;
++});
+ /* The two index-aligned arrays the engine requires, both derived from ONE registry. */
+ const options = computed(() =>
+     ordered.value.map((entry) => ({ value: entry.value, disabled: entry.disabled() })),
+@@ -89,6 +98,10 @@ const selection = useSelectionGroup<{ value: SelectionValue; disabled: boolean }
+     model,
+     mode: computed(() => props.type),
+     vertical: computed(() => props.orientation === "vertical"),
++    /* A WRAPPING ROW IS TWO-DIMENSIONAL, so every arrow moves (Q-4 (b)): Up and Down
++     * go to the nearest item in the adjacent row and step in order where there is
++     * none, which is also what a one-line row and a column do with the cross pair. */
++    arrows: computed(() => "grid" as const),
+     /* MODE-DERIVED, never flat. `automatic` activation fires the engine's `select`
+      * on every arrow move, and `select` in `multiple` mode TOGGLES membership — so a
+      * flat `automatic` would have arrows flip every item they crossed. `single` is
+diff --git a/src/components/toggle-group/ToggleGroupItem.vue b/src/components/toggle-group/ToggleGroupItem.vue
+index d0de9e6c1..410d40bb6 100644
+--- a/src/components/toggle-group/ToggleGroupItem.vue
++++ b/src/components/toggle-group/ToggleGroupItem.vue
+@@ -1,5 +1,5 @@
+ <script setup lang="ts">
+-import { computed, onBeforeUnmount, onMounted, ref, type HTMLAttributes } from "vue";
++import { computed, onBeforeUnmount, onMounted, ref, useAttrs, watch, type HTMLAttributes } from "vue";
+ import { cn } from "../_shared/class-names";
+ import type { SelectionValue } from "../_shared/selection";
+ import { useOptionalToggleGroupContext, type ToggleItemEntry } from "./context";
+@@ -24,7 +24,15 @@ export interface ToggleGroupItemProps {
+     class?: HTMLAttributes["class"];
+ }
+ 
+-defineOptions({ name: "ToggleGroupItem" });
++/* THE ENGINE OWNS THE OPTION'S ROLE, STATE AND TAB STOP. Vue binds fall-through
++ * attributes after a component's own, so a consumer `role` or `tabindex` on an item
++ * used to replace the engine's: `option` inside a `radiogroup` and one tab stop per
++ * item (H3-12). The item binds them by hand (`bound`): the consumer's attributes
++ * first, less the ones the engine owns, then the roving tab stop and the engine's
++ * role and state. A `type="multiple"` item's role is its button's own, so a consumer
++ * `role` is dropped there too. Class, style, `data-*`, `aria-label` and listeners
++ * still land. */
++defineOptions({ name: "ToggleGroupItem", inheritAttrs: false });
+ 
+ const props = defineProps<ToggleGroupItemProps>();
+ 
+@@ -71,25 +79,139 @@ onMounted(() => {
+ onBeforeUnmount(() => group?.unregister(entry));
+ 
+ const selected = computed(() => group?.isSelected(props.value) ?? false);
++const ENGINE_OWNED = ["role", "tabindex", "aria-checked", "aria-pressed", "aria-selected"];
++const attrs = useAttrs();
++const bound = computed(() => ({
++    ...Object.fromEntries(Object.entries(attrs).filter(([k]) => !ENGINE_OWNED.includes(k))),
++    tabindex: group?.tabindex(entry) ?? 0,
++    ...group?.itemAttrs(props.value),
++}));
+ const isDisabled = computed(() => entry.disabled());
++
++/* THE COMMIT. The kick (styles.css) is keyed on the MODEL, not on focus and not on the
++ * pointer: a keyboard commit, a pointer commit and a programmatic write each turn
++ * `selected` from false to true and stamp `data-commit` for the kick's one run. Mount
++ * stamps nothing, and neither does focus entering a group whose choice is made, so a
++ * selected item that merely appears does not pretend to have been chosen. The stamp is
++ * an attribute on the library's own button: no slot re-renders. */
++const committed = ref(false);
++watch(selected, (on, was) => {
++    committed.value = on && was === false;
++});
++/* only the kick's own end clears the stamp: another animation on the button must not
++   cut it short */
++function onAnimationEnd(event: AnimationEvent) {
++    if (event.animationName === "toggle-group-commit") committed.value = false;
++}
++
++/* WHAT PRODUCTION REFUSES STRUCTURALLY, DEVELOPMENT NAMES (Q-5 (b)). A pill lays its
++ * content out on one row (styles.css, `.pill-row`), a key typed in an editable
++ * descendant stays the descendant's (the engine), and the engine's role, state and
++ * tab stop stand over a consumer's (`bound`). None of them says anything, so in
++ * development the item names each, at mount and again whenever its content changes.
++ * The gate is `process.env.NODE_ENV`, which the library build leaves in place and the
++ * consumer's bundler resolves, so a consumer's development build hears these and its
++ * production build drops them (Q-5 (d), without a `development` export condition). */
++if (process.env.NODE_ENV !== "production") {
++    let watcher: MutationObserver | null = null;
++    let queued = 0;
++    const said = new Set<string>();
++    const name = (why: string) => {
++        if (said.has(why)) return;
++        said.add(why);
++        console.error(`[ToggleGroupItem] value=${JSON.stringify(props.value)} ${why}`);
++    };
++    /* the rows of text the item paints: the longest run of text boxes, each with its
++       midpoint below the last one's bottom (a tall badge beside a label is one row) */
++    const textRows = (b: HTMLElement) => {
++        const range = document.createRange();
++        const walk = document.createTreeWalker(b, NodeFilter.SHOW_TEXT);
++        const boxes: DOMRect[] = [];
++        for (let n = walk.nextNode(); n; n = walk.nextNode()) {
++            range.selectNodeContents(n);
++            for (const r of range.getClientRects()) if (r.width > 1 && r.height > 1) boxes.push(r);
++        }
++        boxes.sort((p, q) => p.bottom - q.bottom);
++        let rows = 0;
++        let bottom = -Infinity;
++        for (const r of boxes)
++            if ((r.top + r.bottom) / 2 > bottom) {
++                rows += 1;
++                bottom = r.bottom;
++            }
++        return rows;
++    };
++    const check = () => {
++        queued = 0;
++        const b = el.value;
++        if (!b) return;
++        const tile = getComputedStyle(b).getPropertyValue("--selection-tile").trim();
++        if (tile !== "flush" && tile !== "plated") {
++            /* a pill is one row. Three things ask for a second one: a hard break;
++               content laid out past the rung; and text stacked INSIDE the rung (two
++               rows at this leading fit under it, so nothing is cut and nothing reaches
++               past the plate), which is what the one-row law leaves to an inline
++               `!important` display or a child that wraps its own text */
++            const box = b.getBoundingClientRect();
++            const past = [...b.querySelectorAll("*")].some((c) => {
++                const r = c.getBoundingClientRect();
++                return r.height > 0 && (r.bottom > box.bottom + 1 || r.top < box.top - 1);
++            });
++            if (b.querySelector("br") || past || textRows(b) > 1)
++                name(
++                    "asks for a second row: a pill shows its content on one row. Options that hold more than one row are tiles.",
++                );
++        }
++        const owned = ENGINE_OWNED.filter((a) => a in attrs);
++        if (owned.length)
++            name(
++                `sets ${owned.join(", ")}: the group's engine owns an option's role, state and tab stop, and its values stand.`,
++            );
++        if (b.querySelector("a[href], button, input, select, textarea, [contenteditable], [tabindex]"))
++            name(
++                "holds an interactive descendant. The item is one button: nothing inside it takes focus or a click of its own.",
++            );
++    };
++    const schedule = () => {
++        if (!queued) queued = requestAnimationFrame(check);
++    };
++    onMounted(() => {
++        const b = el.value;
++        if (!b) return;
++        schedule();
++        watcher = new MutationObserver(schedule);
++        watcher.observe(b, {
++            childList: true,
++            subtree: true,
++            characterData: true,
++            attributes: true,
++            attributeFilter: ["class", "style"],
++        });
++    });
++    onBeforeUnmount(() => {
++        watcher?.disconnect();
++        cancelAnimationFrame(queued);
++    });
++}
+ </script>
+ 
+ <template>
+     <button
++        v-bind="bound"
+         ref="el"
+         type="button"
+         data-slot="toggle-group-item"
+         :class="
+             cn(
+-                'toggle-group__item control-surface glass-control-edge glass-capsule-hover tap-squish focus-ring',
++                'toggle-group__item pill-row control-surface glass-control-edge glass-capsule-hover tap-squish focus-ring',
+                 props.class,
+             )
+         "
+         :data-state="selected ? 'on' : 'off'"
++        :data-commit="committed ? '' : undefined"
+         :disabled="isDisabled || undefined"
+-        :tabindex="group?.tabindex(entry) ?? 0"
+-        v-bind="group?.itemAttrs(props.value)"
+         @click="group?.select(entry)"
++        @animationend.self="onAnimationEnd"
+     >
+         <slot name="indicator" :selected="selected" />
+         <slot />
+diff --git a/src/components/toggle-group/styles.css b/src/components/toggle-group/styles.css
+index d6b2b1cf3..8e3a8fd1b 100644
+--- a/src/components/toggle-group/styles.css
++++ b/src/components/toggle-group/styles.css
+@@ -25,11 +25,18 @@
+         inline-size: fit-content;
+         max-inline-size: 100%;
+         align-items: center;
++        /* THE GROUP OWNS THE RING'S CLEARANCE. The focus ring reaches
++           `--focus-ring-reach` past an item (outline plus offset), so a scroll port or
++           a `contain: paint` host around the row would cut it; the row pads by exactly
++           that reach and no host has to know the number. */
++        padding: var(--focus-ring-reach);
+         /* the member rung; ONE ladder transposition at the coarse/narrow step.
+            Literal + MARKED SEAM: re-points to the spacing cohort when PROPORTION §6's
+            ADDED tokens land — they resolve to nothing on disk today, and binding an
+            unresolvable name is the defect this lane was convicted of. */
+         gap: 8px;
++        /* a pill group, unless a tile route says otherwise on this group (base.css) */
++        --selection-tile: none;
+     }
+ 
+     @media (width <= 768px) {
+@@ -63,12 +70,25 @@
+         align-items: center;
+         justify-content: center;
+         gap: 0.5rem;
+-        padding-inline: 0.75rem;
++        /* THE PADS ARE VALUES, NOT DECLARATIONS PER SIZE. A size rule writes the two
++           pads below and never a `padding` of its own, so the one rule that reads them
++           (here for a pill, the tile's geometry below for a tile) wins at the item's
++           own specificity: a size rule at (0,3,0) that wrote `padding-inline` would
++           outrank the tile's pad at (0,1,0) (the `lg` trap). The tile pair is the
++           card pad on the spacing tokens. */
++        --toggle-group-item-pad: 0.75rem;
++        --toggle-group-tile-pad: var(--space-atom) var(--space-body);
++        padding-inline: var(--toggle-group-item-pad);
+         /* ONE spelling of the stadium. The old `calc(var(--radius-pill) + 0.25rem)`
+            pair upstairs is what made this component the sole author of the ×32
+            `10003px` census; the role rung is the whole answer here. */
+         border-radius: var(--radius-pill);
+-        color: var(--muted-foreground);
++        /* THE SELECTED INK, one token for the label and any media inside the item: the
++           rest ink, and the selected edge's ink when on (below), so a consumer's
++           `--selection-tone` reaches the label and a stroke that reads `currentColor`
++           or `var(--selection-ink)` needs no `[data-state="on"]` rule of its own. */
++        --selection-ink: var(--muted-foreground);
++        color: var(--selection-ink);
+         font: inherit;
+         font-size: var(--control-text);
+         font-weight: 500;
+@@ -77,17 +97,193 @@
+         appearance: none;
+         touch-action: manipulation;
+         user-select: none;
++        /* the containing block of the selected perimeter (`::before` below) */
++        position: relative;
++        max-inline-size: 100%;
++        /* THE SELECTED REGISTER'S INPUTS. `--selection-tone` is the consumer's per-item
++           or per-group tone (unset: the foreground). The edge is that tone made solid
++           (`/ 1`: a translucent tone cannot thin it) with its lightness floored away
++           from the plate, so any hue clears 3:1 against the unselected sibling. */
++        --selection-edge: oklch(from var(--selection-tone, var(--foreground)) min(l, 0.42) c h / 1);
++    }
++
++    .dark .toggle-group__item {
++        --selection-edge: oklch(from var(--selection-tone, var(--foreground)) max(l, 0.8) c h / 1);
++    }
++
++    .toggle-group__item > :not(svg) {
++        min-inline-size: 0;
++    }
++
++    /* THE PILL IS ONE ROW (`--selection-tile: none`, base.css). A stadium whose
++       content takes a second row grows into a lozenge (the corner tracks the content),
++       so the pill:
++       - holds its block size to the rung (a clamp, not a `block-size`: an unlayered
++         consumer size outranks a layered one, and a max does not yield to it);
++       - lays its content out in one row whatever classes it carries (`!important` is
++         the refusal: a consumer utility sits in a later layer and would outrank this
++         one otherwise), and `.pill-row` keeps a hard break or a block inside the label
++         on that row;
++       - starts its content when it overflows (`safe`) and clips at the plate. A bare
++         text label is an anonymous flex item `text-overflow` cannot reach, so it
++         clips; a label element ellipsizes.
++       A tile is none of these: the route that sets `--selection-tile` owns its
++       corner, its column and its pad, and nothing here has to be lifted. */
++    @container style(--selection-tile: none) {
++        .toggle-group__item {
++            max-block-size: var(--toggle-group-item-size);
++            flex-direction: row !important;
++            flex-wrap: nowrap !important;
++            justify-content: safe center;
++            white-space: nowrap;
++            overflow: clip;
++        }
++
++        .toggle-group__item > :not(svg) {
++            overflow: hidden;
++            text-overflow: ellipsis;
++            /* the item's `line-height: 1` would shear descenders at the clip edge */
++            padding-block: 0.15em;
++        }
++    }
++
++    /* THE SELECTED PERIMETER: a layer of its own over the border, 2 px of the edge
++       ink. It spends neither `outline` (the ring's) nor `box-shadow` (the ring's and
++       the rim's) nor the item's `border` (the invalid grammar's, a sibling state's and
++       a consumer's), so none of them can erase it, and it never moves layout. The
++       colour is a longhand: an unresolvable tone leaves `currentColor`, the item's own
++       ink, instead of dropping the whole border. The layer carries its own transition,
++       so the item's transition list (the capsule hover's) stays whole. */
++    .toggle-group__item::before {
++        content: "";
++        position: absolute;
++        /* inside the padding box: paint containment (`content-visibility: auto` on a
++           tile, the pill's own `overflow: clip`) clips there, and a band that straddled
++           the 1 px border lost its outer half in both engines (H3-7) */
++        inset: 0;
++        border-width: 2px;
++        border-style: solid;
++        border-color: var(--selection-edge);
++        border-radius: inherit;
++        opacity: 0;
++        pointer-events: none;
++        transition: opacity var(--engage-control-engage-release) var(--ease-standard);
++    }
++
++    .toggle-group__item[data-state="on"]::before {
++        opacity: var(--selection-perimeter, 0);
++        /* the commit attacks on the fast clock; the release keeps the slow one */
++        transition-duration: var(--engage-control-engage-attack);
++    }
++
++    /* THE TILE (`--selection-tile` other than `none`, base.css). Whatever writes the
++       fact, a route's declaration or a consumer's rule, this is the tile's whole
++       geometry, so the fact and the shape cannot disagree: a written `plated` is a
++       card, and a pill group nested in a tile stays pills (the group resets the fact).
++       - The field corner, a card's (a box that holds more than one row is not a
++         stadium). `!important` in this layer is the refusal: a consumer corner, by a
++         utility, a scoped rule or an unlayered `!important`, cannot make a tile a
++         stadium or a lozenge. An inline `!important` is the one thing above it.
++       - A column, body leading, start-aligned text, and the card pad pair (the item's
++         `--toggle-group-tile-pad`, so no size rule outranks it).
++       - One height per row: `align-self`, which reads the fact from the group, where
++         the group's own `align-items` could not (a style query reads an ancestor).
++       - The selected perimeter switches on: a pill carries its state on ink and
++         weight, which hold on a bare label; a tile's content brings its own ink and
++         weight. The switch is a property of the item that its `::before` reads, not
++         a query on the `::before` itself: Playwright WebKit does not re-match a
++         pseudo-element's style query when the value changes after load
++         (`pass-3/floor-v2/probes/style-query-pseudo.mjs`). */
++    @container not style(--selection-tile: none) {
++        .toggle-group__item {
++            border-radius: var(--radius-field) !important;
++            flex-direction: column;
++            align-items: stretch;
++            justify-content: flex-start;
++            align-self: stretch;
++            gap: var(--space-residue);
++            padding: var(--toggle-group-tile-pad);
++            text-align: start;
++            line-height: var(--type-leading-body);
++            --selection-perimeter: 1;
++        }
++    }
++
++    /* the same switch when contrast is requested or colours are forced: there the
++       perimeter replaces the 2 px border accessibility.css gives other selected
++       controls, which would move the content by a pixel per commit */
++
++    @media (prefers-contrast: more), (forced-colors: active) {
++        .toggle-group__item {
++            --selection-perimeter: 1;
++        }
++    }
++
++    /* THE COMMIT KICK. ToggleGroupItem.vue stamps `data-commit` when the MODEL turns
++       the item on (a pointer, a key or a programmatic write; never focus, never
++       mount), for one run. The curve is a spring's impulse response (ζ 0.5): it leaves
++       0, peaks at 1, dips to −0.163 and lands on 0, so the item pops by the amplitude,
++       bounces under its rest and settles where it stood. It rides `transform`, which
++       the hover lift and the press squish (`scale`) never write, so the three compose.
++       THE CALM LAW: a calm observer (`[data-reorder]`, `[data-autoplay]`) pins
++       `--motion-weight` to 0 to still AMBIENT motion. A commit is a state change, not
++       ambient motion, so the amplitude takes the weight with the rest weight (1/φ) as
++       its floor: a loud driver kicks harder, a calm observer kicks at rest. Reduced
++       motion is the one thing that stills it; the perimeter's fade is then the
++       commit. */
++    .toggle-group__item[data-commit] {
++        animation: toggle-group-commit 450ms
++            linear(
++                0,
++                0.4703 4.17%,
++                0.7811 8.33%,
++                0.9497 12.5%,
++                1 16.67%,
++                0.9589 20.83%,
++                0.8535 25%,
++                0.7087 29.17%,
++                0.5463 33.33%,
++                0.3835 37.5%,
++                0.2331 41.67%,
++                0.1037 45.83%,
++                0 50%,
++                -0.0767 54.17%,
++                -0.1274 58.33%,
++                -0.1548 62.5%,
++                -0.163 66.67%,
++                -0.1563 70.83%,
++                -0.1391 75%,
++                -0.1155 79.17%,
++                -0.0891 83.33%,
++                -0.0625 87.5%,
++                -0.038 91.67%,
++                -0.0169 95.83%,
++                0
++            );
++    }
++
++    @keyframes toggle-group-commit {
++        to {
++            transform: scale(calc(1 + 0.045 * max(var(--motion-weight), 0.618)));
++        }
++    }
++
++    @media (prefers-reduced-motion: reduce) {
++        .toggle-group__item[data-commit] {
++            animation: none;
++        }
+     }
+ 
+     .toggle-group[data-size="sm"] .toggle-group__item {
+         --toggle-group-item-size: var(--control-h-sm);
+-        padding-inline: 0.5rem;
++        --toggle-group-item-pad: 0.5rem;
++        --toggle-group-tile-pad: var(--space-residue) var(--space-atom);
+         font-size: var(--control-text-sm);
+     }
+ 
+     .toggle-group[data-size="lg"] .toggle-group__item {
+         --toggle-group-item-size: var(--control-h-lg);
+-        padding-inline: 1.25rem;
++        --toggle-group-item-pad: 1.25rem;
+     }
+ 
+     /* THE ON-STATE CARRIES ON INK AND WEIGHT, AND ASSISTS WITH FILL. It used to be a
+@@ -114,13 +310,22 @@
+        carrying less than §3.5 assumed. That is #82 W-FIELD's register to answer, not
+        this lane's to patch locally with a literal. */
+     .toggle-group__item[data-state="on"] {
+-        background-color: color-mix(in oklab, var(--foreground) 12%, transparent);
+-        color: var(--foreground);
++        /* X-7: the consumer's tone reaches the edge (above), the tint and the ink */
++        background-color: color-mix(
++            in oklab,
++            var(--selection-tone, var(--foreground)) 12%,
++            transparent
++        );
++        --selection-ink: var(--selection-edge);
+         font-weight: 600;
+     }
+ 
+     .toggle-group__item[data-state="on"]:hover:not(:disabled) {
+-        background-color: color-mix(in oklab, var(--foreground) 16%, transparent);
++        background-color: color-mix(
++            in oklab,
++            var(--selection-tone, var(--foreground)) 16%,
++            transparent
++        );
+     }
+ 
+     .toggle-group__item:disabled {
+@@ -153,5 +358,9 @@
+             background: Highlight;
+             color: HighlightText;
+         }
++
++        .toggle-group__item::before {
++            border-color: Highlight;
++        }
+     }
+ }
+diff --git a/src/composables/motion/morph/useSelectionGroup.ts b/src/composables/motion/morph/useSelectionGroup.ts
+index cdf65e668..cce95dc73 100644
+--- a/src/composables/motion/morph/useSelectionGroup.ts
++++ b/src/composables/motion/morph/useSelectionGroup.ts
+@@ -16,6 +16,7 @@ import type { SelectionValue } from "../../../components/_shared/selection";
+ // into the `/motion-core`-eligible engine keeps the keyframes/vueuse fence.
+ import {
+     useTabRovingFocus,
++    type RovingArrows,
+     type TabActivation,
+ } from "../../../components/tabs/composables/useTabRovingFocus";
+ 
+@@ -76,6 +77,8 @@ export interface UseSelectionGroupParams<O extends SelectionOption> {
+     role?: ComputedRef<SelectionRole> | SelectionRole;
+     /** True for the vertical (block-axis) orientation. */
+     vertical?: ComputedRef<boolean>;
++    /** The arrow model: `axis` (default) or `grid`, where every arrow moves. */
++    arrows?: ComputedRef<RovingArrows>;
+     /** Whether roving focus selects immediately. Defaults to automatic. */
+     activation?: ComputedRef<TabActivation> | TabActivation;
+     /** The container scroller root (observed by the indicator's ResizeObserver). */
+@@ -247,6 +250,7 @@ export function useSelectionGroup<O extends SelectionOption>(
+         activation,
+         buttonRefs,
+         select,
++        arrows: params.arrows,
+     });
+ 
+     // ── Role-per-mode item attributes (the WAI-ARIA contract) ──
+diff --git a/src/styles/accessibility.css b/src/styles/accessibility.css
+index 77f12f035..788bc89b7 100644
+--- a/src/styles/accessibility.css
++++ b/src/styles/accessibility.css
+@@ -5,7 +5,10 @@
+ @import "./utilities/a11y-overrides.css";
+ 
+ /* Selection and validation keep a non-hue boundary when contrast is requested.
+-   The system-color arm yields fully to the user's forced palette. */
++   The system-color arm yields fully to the user's forced palette. A ToggleGroup item
++   is exempt from the selection arm (Q-9 (a)): under both media it paints its own 2 px
++   perimeter layer (toggle-group/styles.css, `Highlight` under forced colours), and a
++   2 px border as well would move its content by a pixel on every commit. */
+ @layer components {
+     @media (prefers-contrast: more) {
+         :is(
+@@ -15,7 +18,7 @@
+             [aria-checked="true"],
+             [data-state="checked"],
+             [data-state="on"]
+-        ) {
++        ):not(.toggle-group__item) {
+             border-color: currentColor !important;
+             border-style: solid !important;
+             border-width: 2px !important;
+@@ -36,7 +39,7 @@
+             [aria-checked="true"],
+             [data-state="checked"],
+             [data-state="on"]
+-        ) {
++        ):not(.toggle-group__item) {
+             border-color: Highlight !important;
+             border-style: solid !important;
+             border-width: 2px !important;
+diff --git a/src/styles/glass/control-surfaces.css b/src/styles/glass/control-surfaces.css
+index aa3d95db3..cebf19a5a 100644
+--- a/src/styles/glass/control-surfaces.css
++++ b/src/styles/glass/control-surfaces.css
+@@ -74,14 +74,35 @@
+        lighter `glass-wash` gray before; this is the no-gray control-family seam).
+        It carries the bg/border/blur ONLY (each control owns its own height/radius/
+        padding/font), so a non-pill control composes `.control-surface` + its own
+-       geometry. The hover lift brightens the fill one step toward the resting rung. */
++       geometry. The hover lift moves the fill toward the resting rung. */
+     .control-surface {
+         background: var(--control-surface-bg);
+         border: 1px solid var(--control-surface-border);
+         backdrop-filter: var(--control-surface-blur);
+     }
+-    .control-surface:hover:not(:disabled, [data-disabled]) {
+-        background: var(--control-surface-bg-hover);
++    /* THE HOVER WRITES THE PLATE'S OWN LAYER. A defined control paints its plate as an
++       image layer over its floor (glass/defined.css), so the hover re-points that
++       layer's colour. Writing `background` here instead replaced both layers with a
++       colour, which dropped the floor (TF-8). Bracketed, so a coarse tap never latches
++       it (F-77). */
++    @media (hover: hover) {
++        .control-surface:hover:not(:disabled, [data-disabled]) {
++            --glass-defined-plate: var(--control-surface-bg-hover);
++        }
++    }
++
++    /* THE FLUSH OPTION (Q-2 (b), the default until the owner rules). An option among
++       tiles on a host's plate (`--selection-tile: flush`, utilities/base.css) paints no
++       plate, no floor and no blur at rest, so the set reads as options on one card
++       rather than slabs on a slab; `plated` keeps all three. The hover above outranks
++       this and still paints the plate's layer, and the option's selected state (a tint
++       and a perimeter) is its own. `[data-state]` is what makes a control an option. */
++    @container style(--selection-tile: flush) {
++        .control-surface[data-state] {
++            --glass-defined-plate: transparent;
++            --glass-floor-fill: transparent;
++            backdrop-filter: none;
++        }
+     }
+ 
+     /* Keyboard-focus ring only. Was bare `:focus` (showed the
+diff --git a/src/styles/glass/glass-chip.css b/src/styles/glass/glass-chip.css
+index 7cef8b74b..05f4c49d9 100644
+--- a/src/styles/glass/glass-chip.css
++++ b/src/styles/glass/glass-chip.css
+@@ -56,11 +56,6 @@
+         transition: opacity var(--duration-normal) var(--ease-out) 60ms;
+     }
+ 
+-    .glass-chip--cell,
+-    .glass-chip--cell.glass-capsule {
+-        border-radius: var(--radius-card);
+-    }
+-
+     .glass-chip--icon,
+     .glass-chip--icon.glass-capsule {
+         border-radius: var(--radius-pill);
+diff --git a/src/styles/tokens/glass.css b/src/styles/tokens/glass.css
+index 97921d2e6..79113a80b 100644
+--- a/src/styles/tokens/glass.css
++++ b/src/styles/tokens/glass.css
+@@ -254,7 +254,20 @@
+     --control-surface-bg:        var(--glass-plate-quiet);
+     --control-surface-border:    var(--glass-border-floating);
+     --control-surface-blur:      var(--glass-blur-quiet);
+-    --control-surface-bg-hover:  color-mix(in oklab, var(--glass-plate-quiet), var(--glass-plate-resting) 35%);
++    /* The hover rung is a plate like every rung above, ONE flat mix of the foreground
++       ink into the solid `--card`, and it moves at EVERY `--glass-level`:
++         level 1 → the ink at the rest plate's alpha plus the hover fill (`--fill-hover`),
++                   the glass identity;
++         level 0 → `--card` with `--fill-hover` of the ink mixed in, OPAQUE: under
++                   reduced transparency the hover is a solid step, not the rest plate.
++       The ink's share and its alpha both lerp on the level, so the mix stays one deep.
++       It was a mix of the quiet and resting PLATES, two relative-colour mixes nested
++       inside a third, which broke the plate law above and hung Playwright WebKit on the
++       first hover of any `.control-surface` (SF-8). Its first flat form lerped to the
++       bare `--card` at level 0, so under reduced transparency the hover was the rest
++       plate and moved nothing (HF-4). The foreground ink darkens the plate in light and
++       lifts it in dark. */
++    --control-surface-bg-hover:  color-mix(in srgb, oklch(from var(--foreground) l c h / calc(1 - var(--glass-level) * (1 - var(--glass-veil-quiet) - var(--fill-hover)))) calc((var(--fill-hover) + var(--glass-level) * (1 - var(--fill-hover))) * 100%), var(--card));
+ }
+ 
+ /* The typed per-instance axes — @property no-op floors. Registered here beside the §8
+diff --git a/src/styles/tokens/scale-paper.css b/src/styles/tokens/scale-paper.css
+index 21fcc7403..57d79a1b9 100644
+--- a/src/styles/tokens/scale-paper.css
++++ b/src/styles/tokens/scale-paper.css
+@@ -57,6 +57,12 @@
+     --opacity-icon-muted: 0.8;
+ 
+     --focus-ring-width: 2px;
++    /* The `.focus-ring` outline's gap from the element, and the ring's whole reach past
++       it. A host that must not cut the ring (a scroll port, a `contain: paint` row)
++       leaves `--focus-ring-reach` of clearance and reads it from here, never as a
++       literal. */
++    --focus-ring-offset: 2px;
++    --focus-ring-reach: calc(var(--focus-ring-width) + var(--focus-ring-offset));
+     /* Reads the house `--focus-ring-color` (off the shadcn
+        `--ring`); this is the SOLE `--focus-ring-color` reader (the one retint knob). */
+     --focus-ring-shadow: 0 0 0 var(--focus-ring-width) color-mix(in srgb, var(--focus-ring-color) 30%, transparent),
+diff --git a/src/styles/utilities/base.css b/src/styles/utilities/base.css
+index dc12f8c17..e35b38af4 100644
+--- a/src/styles/utilities/base.css
++++ b/src/styles/utilities/base.css
+@@ -47,7 +47,65 @@
+     initial-value: 0px;
+ }
+ 
++/* ═══════════════════════════════════════════════
++   THE TILE FACT — `--selection-tile`, one value read by every rule that differs
++   between a one-row option (a pill) and a multi-row one (a tile).
++
++   `none` is a pill. `flush` and `plated` are a tile: a tile route sets one of them,
++   once, on the group (or any ancestor of its options), and nothing else declares
++   that an option is a tile. Every reader derives from it: the pill's one-row law
++   below and in toggle-group/styles.css, the tile's plate (`flush` paints no plate at
++   rest, Q-2 (b); `plated` keeps the control plate), the selected perimeter, and the
++   development names in ToggleGroupItem.vue. The readers are style queries, so the
++   value inherits from where it is set down to every option and its content.
++   ═══════════════════════════════════════════════ */
++@property --selection-tile {
++    syntax: "none | flush | plated";
++    inherits: true;
++    initial-value: none;
++}
++
+ @layer components {
++    /* ── THE PILL HOLDS ONE ROW ──
++       A one-row option (ToggleGroupItem, SegmentedTabs' tab) composes `.pill-row`.
++       Inside it, content the markup would stack lays out on the one row instead: a
++       hard break is dropped, and every element runs inline, whether the user agent
++       lays it out as a block (a `div`, a `p`) or a class or an inline style sets its
++       display (a `block` or `flex` utility, `style="display: block"`). Nothing is cut
++       and nothing grows the stadium. Content that needs a row of its own belongs in a
++       tile. `!important` in this layer is the refusal: a utility sits in a later layer
++       and an inline style outranks any selector, so without it a child that sets its
++       own display stacks a second row inside the stadium (H4-2). A graphic runs inline
++       too and keeps its size (a replaced box): the base layer makes an `svg` or an
++       `img` a block, and one inside a label would break the row. A wrapper's flex
++       gap goes with its flex. A Badge (`.badge-atom`, an inline-level box by its own
++       recipe) keeps its display: it sits on the row as one. A hidden element stays
++       hidden: the `hidden` attribute, `v-show` (an inline `display: none`) and the
++       `hidden` utility are the three spellings left out of the law, since
++       `display: none` is a display too. Development names what still asks for a
++       second row (ToggleGroupItem.vue). A tile (`--selection-tile` other than
++       `none`) is not held. */
++    @container style(--selection-tile: none) {
++        :where(
++            .pill-row
++                *:not(
++                    svg *,
++                    .badge-atom,
++                    .badge-atom *,
++                    [hidden],
++                    .hidden,
++                    [style*="display: none"],
++                    [style*="display:none"]
++                )
++        ) {
++            display: inline !important;
++        }
++
++        :where(.pill-row br) {
++            display: none !important;
++        }
++    }
++
+     /* ── Section description ──────────────────────────────
+        Canonical recipe for the `<Section>` primitive's description
+        paragraph. Composes the body type + muted-foreground color in
+@@ -148,7 +206,7 @@
+                 var(--foreground) calc(var(--ink-perimeter) * 100%),
+                 transparent
+             );
+-        outline-offset: 2px;
++        outline-offset: var(--focus-ring-offset);
+     }
+ 
+     /* ── Hairline-accent — 0.5px catch-light + under-shadow pair ──
+@@ -248,7 +306,7 @@
+                 var(--foreground) calc(var(--ink-perimeter) * 100%),
+                 transparent
+             );
+-        outline-offset: 2px;
++        outline-offset: var(--focus-ring-offset);
+     }
+     .interactive-item:active {
+         /* Fold the residual literal press scale onto the canonical
+diff --git a/tests/components/card/Card.test.ts b/tests/components/card/Card.test.ts
+index b1c42aa46..f985a5c8f 100644
+--- a/tests/components/card/Card.test.ts
++++ b/tests/components/card/Card.test.ts
+@@ -72,21 +72,11 @@ describe("Card", () => {
+         expect(wrapper.classes()).not.toContain("glass-press");
+     });
+ 
+-    it("is an OPTION exactly when `selected` is present — presence, not truth", () => {
+-        const unselected = mount(Card, { props: { selected: false } });
+-        expect(unselected.attributes("role")).toBe("option");
+-        expect(unselected.attributes("tabindex")).toBe("0");
+-        expect(unselected.attributes("aria-selected")).toBe("false");
+-        expect(unselected.attributes("data-selected")).toBeUndefined();
+-
+-        const selected = mount(Card, { props: { selected: true } });
+-        expect(selected.attributes("role")).toBe("option");
+-        expect(selected.attributes("aria-selected")).toBe("true");
+-        expect(selected.attributes("data-selected")).toBe("true");
+-
+-        const inert = mount(Card);
+-        expect(inert.attributes("role")).toBeUndefined();
+-        expect(inert.attributes("aria-selected")).toBeUndefined();
++    it("passes a consumer's role and state through untouched", () => {
++        const wrapper = mount(Card, { attrs: { role: "option", "aria-selected": "true" } });
++        expect(wrapper.attributes("role")).toBe("option");
++        expect(wrapper.attributes("aria-selected")).toBe("true");
++        expect(wrapper.attributes("tabindex")).toBeUndefined();
+     });
+ });
+ 
+diff --git a/tests/components/custom/tabs/segmented-tabs.test.ts b/tests/components/custom/tabs/segmented-tabs.test.ts
+index 604e94f50..4283b6a94 100644
+--- a/tests/components/custom/tabs/segmented-tabs.test.ts
++++ b/tests/components/custom/tabs/segmented-tabs.test.ts
+@@ -4,8 +4,8 @@ import { afterEach, describe, expect, it, vi } from "vitest";
+ import SegmentedTabs from "@glass/components/tabs/SegmentedTabs.vue";
+ 
+ // The unified SegmentedTabs replaced BouncyToggle/BouncyTabs/UnderlineTabs +
+-// ResponsiveTabs. v-model round-trip across the variant axis (segmented default = group/
+-// aria-pressed; underline = tablist/aria-selected), keyed off the Vue 3.5 defineModel.
++// ResponsiveTabs. v-model round-trip across the variant axis (segmented default = radiogroup/
++// aria-checked; underline = tablist/aria-selected), keyed off the Vue 3.5 defineModel.
+ const OPTIONS = [
+     { label: "One", value: "one" },
+     { label: "Two", value: "two" },
+@@ -87,7 +87,7 @@ describe("SegmentedTabs v-model (segmented default)", () => {
+                 attrs: { dir },
+                 props: { options: OPTIONS, modelValue: "one", orientation },
+             });
+-            const group = wrapper.get<HTMLElement>('[role="group"]');
++            const group = wrapper.get<HTMLElement>('[role="radiogroup"]');
+             const buttons = wrapper.findAll<HTMLElement>(".segmented-tab");
+ 
+             vi.spyOn(group.element, "getBoundingClientRect").mockReturnValue(container);
+@@ -122,21 +122,21 @@ describe("SegmentedTabs v-model (segmented default)", () => {
+         const wrapper = mount(SegmentedTabs, {
+             props: { options: OPTIONS, modelValue: "one" },
+         });
+-        const btns = wrapper.findAll('[role="group"] button');
++        const btns = wrapper.findAll('[role="radiogroup"] button');
+         expect(btns.length).toBe(3);
+         await btns[1]!.trigger("click");
+         expect(wrapper.emitted("update:modelValue")?.at(-1)?.[0]).toBe("two");
+     });
+-    it("reflects an external modelValue write in aria-pressed", async () => {
++    it("reflects an external modelValue write in aria-checked", async () => {
+         const wrapper = mount(SegmentedTabs, {
+             props: { options: OPTIONS, modelValue: "one", ariaLabel: "Priority" },
+         });
+         await wrapper.setProps({ modelValue: "three" });
+-        const group = wrapper.get('[role="group"]');
++        const group = wrapper.get('[role="radiogroup"]');
+         expect(group.attributes("aria-label")).toBe("Priority");
+         expect(group.attributes("aria-orientation")).toBeUndefined();
+         const btns = group.findAll("button");
+-        expect(btns[2]!.attributes("aria-pressed")).toBe("true");
++        expect(btns[2]!.attributes("aria-checked")).toBe("true");
+     });
+ });
+ 
+@@ -385,3 +385,22 @@ describe("SegmentedTabs semantics=tabs with pill material", () => {
+         expect(tabs.map((tab) => tab.attributes("tabindex"))).toEqual(["-1", "0"]);
+     });
+ });
++
++describe("SegmentedTabs · an unknown semantics refuses loud (one guard policy, Q-5)", () => {
++    it("throws a TypeError naming the set for a retired value, and stays quiet for a known or unset one", () => {
++        const options = [
++            { label: "A", value: "a" },
++            { label: "B", value: "b" },
++        ];
++        const mountWith = (semantics: string | undefined) =>
++            mount(SegmentedTabs, {
++                props: { modelValue: "a", options, semantics: semantics as never },
++            }).unmount();
++        expect(() => mountWith("radio")).not.toThrow();
++        expect(() => mountWith("tabs")).not.toThrow();
++        expect(() => mountWith(undefined)).not.toThrow();
++        expect(() => mountWith("toggle")).toThrow(
++            new TypeError('[SegmentedTabs] semantics="toggle" is not one of radio, tabs.'),
++        );
++    });
++});
+diff --git a/tests/components/fading-scroll.contract.test.ts b/tests/components/fading-scroll.contract.test.ts
+index 42cbb7afd..10492597a 100644
+--- a/tests/components/fading-scroll.contract.test.ts
++++ b/tests/components/fading-scroll.contract.test.ts
+@@ -1,5 +1,7 @@
+ import { mount } from "@vue/test-utils";
+ import { describe, expect, it } from "vitest";
++import { nextTick } from "vue";
++import { letCollectorRun, withStrongObservers } from "../utils/strongObservers";
+ import FadingScroll from "@glass/components/fading-scroll/FadingScroll.vue";
+ import { normalizeHorizontalScrollLeft } from "@glass/components/fading-scroll/composables/useFadingScroll";
+ 
+@@ -19,6 +21,35 @@ describe("FadingScroll", () => {
+         });
+     });
+ 
++    /* floor v3 (FV3-3) · the port is a tab stop only while its content holds none */
++    it("is a tab stop only while nothing inside it is one", async () => {
++        // the port re-reads on a MutationObserver: made under a strong reference
++        const holding = withStrongObservers(() =>
++            mount(FadingScroll, {
++                slots: { default: "<button>a</button><button>b</button>" },
++                attachTo: document.body,
++            }),
++        );
++        await nextTick();
++        expect(holding.attributes("tabindex")).toBeUndefined();
++        await letCollectorRun();
++        holding.findAll("button").forEach((b) => b.element.remove());
++        await new Promise((r) => setTimeout(r, 0)); // the observer's turn
++        await nextTick();
++        expect(holding.attributes("tabindex")).toBe("0");
++        holding.unmount();
++        // an element parked at -1, or a disabled control, is not a tab stop: the port keeps its own
++        const parked = mount(FadingScroll, {
++            slots: {
++                default: '<h3 tabindex="-1">t</h3><button tabindex="-1">a</button><button disabled>b</button>',
++            },
++            attachTo: document.body,
++        });
++        await nextTick();
++        expect(parked.attributes("tabindex")).toBe("0");
++        parked.unmount();
++    });
++
+     it("normalizes every horizontal RTL scrollLeft model from inline-start", () => {
+         expect(normalizeHorizontalScrollLeft(40, 100, "ltr", "negative")).toBe(40);
+         expect(normalizeHorizontalScrollLeft(-40, 100, "rtl", "negative")).toBe(40);
+diff --git a/tests/components/primitive-display.public-contracts.test-d.ts b/tests/components/primitive-display.public-contracts.test-d.ts
+index 716b3f15e..39350e36a 100644
+--- a/tests/components/primitive-display.public-contracts.test-d.ts
++++ b/tests/components/primitive-display.public-contracts.test-d.ts
+@@ -41,13 +41,13 @@ type CardContract = [
+     // [2026-08-09 · BK #66 CLOSE · RT-40-D] ~~`material` / `variant`~~ — both GONE. DAG-RULINGS §4.3 deleted
+     // `material` as a re-minted `tier` (it breached the axes.ts membership fence)
+     // and the variant axis went with it. Card inherits `tier`/`surface`/`deep`
+-    // from `SurfaceProps` and owns `size`/`shadow`/`selected`. Asserted whole:
++    // from `SurfaceProps` and owns `size`/`shadow`; a choice is a ToggleGroup item. Asserted whole:
+     // what it HAS and what it must never re-mint.
+     Assert<Has<"tier", CardProps>>,
+     Assert<Has<"surface", CardProps>>,
+     Assert<Has<"size", CardProps>>,
+     Assert<Has<"shadow", CardProps>>,
+-    Assert<Has<"selected", CardProps>>,
++    Assert<Lacks<"selected", CardProps>>,
+     Assert<Lacks<"material", CardProps>>,
+     Assert<Lacks<"variant", CardProps>>,
+ ];
+diff --git a/tests/components/ui/toggle-group/ToggleGroup.test.ts b/tests/components/ui/toggle-group/ToggleGroup.test.ts
+index 9b87f3d51..0a1a89144 100644
+--- a/tests/components/ui/toggle-group/ToggleGroup.test.ts
++++ b/tests/components/ui/toggle-group/ToggleGroup.test.ts
+@@ -21,8 +21,9 @@ import { readFileSync } from "node:fs";
+ import { resolve } from "node:path";
+ import { mount } from "@vue/test-utils";
+ import { defineComponent, nextTick, ref } from "vue";
+-import { describe, expect, it } from "vitest";
++import { describe, expect, it, vi } from "vitest";
+ import { ToggleGroup, ToggleGroupItem } from "@glass/components/toggle-group";
++import { letCollectorRun, withStrongObservers } from "../../../utils/strongObservers";
+ 
+ const ROOT = process.cwd();
+ const read = (p: string) => readFileSync(resolve(ROOT, p), "utf8");
+@@ -128,6 +129,31 @@ describe("W-TOGGLE-ROW — the selection row", () => {
+         multiple.unmount();
+     });
+ 
++    it("after a keyed reorder the arrows walk the new DOM order", async () => {
++        const order = ref(["one", "two", "three"]);
++        const model = ref("one");
++        const Host = defineComponent({
++            components: { ToggleGroup, ToggleGroupItem },
++            setup: () => ({ order, model }),
++            template: `
++                <ToggleGroup type="single" v-model="model">
++                    <ToggleGroupItem v-for="v in order" :key="v" :value="v">{{ v }}</ToggleGroupItem>
++                </ToggleGroup>`,
++        });
++        const wrapper = mount(Host, { attachTo: document.body });
++        await nextTick();
++        order.value = [...order.value].reverse();
++        await nextTick();
++        const items = wrapper.findAll("button");
++        expect(items.map((b) => b.text())).toEqual(["three", "two", "one"]);
++        items[0]!.element.focus();
++        await items[0]!.trigger("keydown", { key: "ArrowRight" });
++        await nextTick();
++        expect(document.activeElement).toBe(items[1]!.element);
++        expect(model.value).toBe("two");
++        wrapper.unmount();
++    });
++
+     it("G-TOGGLE-ROLE · the group stamps its own orientation and one invalid grammar", () => {
+         const wrapper = mount(ToggleGroup, {
+             props: { type: "single", orientation: "vertical", invalid: true },
+@@ -302,7 +328,15 @@ describe("W-TOGGLE-ROW — the selection row", () => {
+     it("G-TOGGLE-WRAP · the row wraps and the group paints no silhouette", () => {
+         const css = withoutForcedColors(code(LANE_SHEET));
+         expect(css).toContain("flex-wrap: wrap");
+-        expect(css).not.toContain("nowrap");
++        // The ROW wraps; the PILL does not (one row by law). `nowrap` and `safe center`
++        // live on the item rule inside the pill's style query (`--selection-tile:
++        // none`), and nowhere else: a tile is not held, and nothing has to lift it.
++        const rules = css.match(/[^{}]+\{[^}]*\}/g) ?? [];
++        for (const r of rules.filter((r) => /nowrap|safe center/.test(r))) {
++            expect(r.trim(), `only the pill holds one row: ${r}`).toMatch(
++                /^@container style\(--selection-tile: none\) \{\s*\.toggle-group__item\s*\{/,
++            );
++        }
+         expect(css).not.toContain("inline-flex;\n        inline-size");
+         // No corner, no plate, no scroller — all three died with the track.
+         expect(css).not.toContain("--radius-ctx");
+@@ -310,7 +344,6 @@ describe("W-TOGGLE-ROW — the selection row", () => {
+         expect(css).not.toMatch(/var\(--radius-pill\)\s*\+/);
+         expect(css).not.toContain("scroll-padding-inline");
+         expect(css).not.toContain("overscroll-behavior-inline");
+-        expect(css).not.toContain("safe center");
+         // The ONE spelling of the stadium that survives is the item's role rung.
+         expect(css).toContain("border-radius: var(--radius-pill)");
+         // Rules whose selector ENDS at the group host — a descendant rule
+@@ -321,8 +354,12 @@ describe("W-TOGGLE-ROW — the selection row", () => {
+         expect(groupRules.length).toBeGreaterThan(0);
+         for (const rule of groupRules) {
+             expect(rule, `the group may not paint: ${rule}`).not.toMatch(
+-                /background|border-radius|box-shadow|backdrop-filter|padding/,
++                /background|border-radius|box-shadow|backdrop-filter/,
+             );
++            // the one pad the group owns is the ring's clearance, read from its token
++            for (const pad of rule.match(/padding[^;]*;/g) ?? []) {
++                expect(pad).toBe("padding: var(--focus-ring-reach);");
++            }
+         }
+     });
+ 
+@@ -379,3 +416,188 @@ describe("W-TOGGLE-ROW — the selection row", () => {
+         wrapper.unmount();
+     });
+ });
++
++/* FLOOR v2 (D4 pass 3). The DOM halves of the floor: the commit stamp keyed on the
++ * model, the development names, and the sheet's contract read through a CSS parser (so
++ * a rule is matched as parsed, not as spelled). The paint halves (one row, the kick's
++ * bounce, the perimeter, the flush plate) are the tile harness's: happy-dom resolves no
++ * style query and lays nothing out. */
++describe("floor v2 — the commit, the names and the tile fact", () => {
++    it("the commit stamp is keyed on the model: mount and focus stamp nothing, a change stamps once", async () => {
++        const model = ref("a");
++        const Host = defineComponent({
++            components: { ToggleGroup, ToggleGroupItem },
++            setup: () => ({ model }),
++            template: `
++                <ToggleGroup type="single" v-model="model">
++                    <ToggleGroupItem value="a">A</ToggleGroupItem>
++                    <ToggleGroupItem value="b">B</ToggleGroupItem>
++                </ToggleGroup>`,
++        });
++        const wrapper = mount(Host, { attachTo: document.body });
++        await nextTick();
++        const [a, b] = wrapper.findAll("button");
++        expect(wrapper.findAll("[data-commit]")).toHaveLength(0); // the selected item merely appeared
++        a!.element.focus(); // focus entering a made choice commits nothing
++        await nextTick();
++        expect(wrapper.findAll("[data-commit]")).toHaveLength(0);
++        model.value = "b"; // a programmatic write is a commit
++        await nextTick();
++        expect(b!.attributes("data-commit")).toBe("");
++        expect(a!.attributes("data-commit")).toBeUndefined();
++        // another animation ending on the button does not clear the kick early
++        b!.element.dispatchEvent(Object.assign(new Event("animationend"), { animationName: "other" }));
++        await nextTick();
++        expect(b!.attributes("data-commit")).toBe("");
++        b!.element.dispatchEvent(
++            Object.assign(new Event("animationend"), { animationName: "toggle-group-commit" }),
++        );
++        await nextTick();
++        expect(b!.attributes("data-commit")).toBeUndefined();
++        await a!.trigger("click"); // a pointer commit stamps too
++        expect(a!.attributes("data-commit")).toBe("");
++        wrapper.unmount();
++    });
++
++    it("development names a pill's second row and an interactive descendant, also when they arrive late", async () => {
++        const errors: string[] = [];
++        const spy = vi.spyOn(console, "error").mockImplementation((m: unknown) => {
++            errors.push(String(m));
++        });
++        const frame = () => new Promise((r) => requestAnimationFrame(() => r(null)));
++        // the late check rides a MutationObserver: made under a strong reference (tests/utils/strongObservers.ts)
++        const wrapper = withStrongObservers(() =>
++            mount(ToggleGroup, {
++                props: { type: "single", modelValue: "a" },
++                slots: { default: `<ToggleGroupItem value="a"><span data-label>Smooth</span></ToggleGroupItem>` },
++                global: { components: { ToggleGroupItem } },
++                attachTo: document.body,
++            }),
++        );
++        await nextTick();
++        await frame();
++        expect(errors).toEqual([]); // a one-row label is not named
++        const label = wrapper.get("[data-label]").element;
++        await letCollectorRun();
++        label.append(document.createElement("br"), "0.5 s"); // after mount
++        // the observer's delivery and the check's frame are two async hops: wait for the name
++        await vi.waitFor(() => expect(errors.filter((e) => e.includes("asks for a second row"))).toHaveLength(1));
++        label.append(document.createElement("input"));
++        await vi.waitFor(() => expect(errors.filter((e) => e.includes("interactive descendant"))).toHaveLength(1));
++        expect(errors.every((e) => e.startsWith('[ToggleGroupItem] value="a"'))).toBe(true);
++        spy.mockRestore();
++        wrapper.unmount();
++    });
++
++    /* floor v3 (M-12) · text stacked INSIDE the rung: nothing is cut and nothing reaches
++     * past the plate, so only the row count of the painted text sees it */
++    it("development names text stacked inside the rung, which nothing cuts", async () => {
++        const errors: string[] = [];
++        const spy = vi.spyOn(console, "error").mockImplementation((m: unknown) => {
++            errors.push(String(m));
++        });
++        const frame = () => new Promise((r) => requestAnimationFrame(() => r(null)));
++        // no layout here: each text node is given a 14 px box, the readout's a row lower
++        const rects = vi.spyOn(Range.prototype, "getClientRects").mockImplementation(function (this: Range) {
++            const top = this.startContainer.textContent === "0.5 s" ? 16 : 0;
++            return [new DOMRect(0, top, 40, 14)] as unknown as DOMRectList;
++        });
++        const wrapper = withStrongObservers(() =>
++            mount(ToggleGroup, {
++                props: { type: "single", modelValue: "a" },
++                slots: { default: `<ToggleGroupItem value="a"><span data-label>Smooth</span></ToggleGroupItem>` },
++                global: { components: { ToggleGroupItem } },
++                attachTo: document.body,
++            }),
++        );
++        await nextTick();
++        await frame();
++        expect(errors).toEqual([]); // one row of text
++        const readout = document.createElement("span");
++        readout.textContent = "0.5 s";
++        readout.style.setProperty("display", "block", "important"); // the one display the law yields to
++        await letCollectorRun();
++        wrapper.get("[data-label]").element.append(readout);
++        await vi.waitFor(() => expect(errors.filter((e) => e.includes("asks for a second row"))).toHaveLength(1));
++        rects.mockRestore();
++        spy.mockRestore();
++        wrapper.unmount();
++    });
++
++    it("the sheet: the pill law, the perimeter and the kick read the one tile fact", async () => {
++        const postcss = (await import("postcss")).default;
++        const root = postcss.parse(read(LANE_SHEET));
++        const at = (params: string) => {
++            const found: Record<string, Record<string, string>> = {};
++            root.walkAtRules("container", (a) => {
++                if (a.params !== params) return;
++                a.walkRules((r) => {
++                    const decls: Record<string, string> = {};
++                    r.walkDecls((d) => {
++                        decls[d.prop] = d.value + (d.important ? " !important" : "");
++                    });
++                    found[r.selector] = decls;
++                });
++            });
++            return found;
++        };
++        // the pill law lives in the pill's query, and only there
++        expect(at("style(--selection-tile: none)")[".toggle-group__item"]).toMatchObject({
++            "max-block-size": "var(--toggle-group-item-size)",
++            "flex-direction": "row !important",
++            "flex-wrap": "nowrap !important",
++            "white-space": "nowrap",
++        });
++        // a tile's whole geometry and its perimeter read the fact (M-11): whatever writes
++        // the fact gets the card, and the corner is refused to a consumer in this layer
++        expect(at("not style(--selection-tile: none)")[".toggle-group__item"]).toEqual({
++            "border-radius": "var(--radius-field) !important",
++            "flex-direction": "column",
++            "align-items": "stretch",
++            "justify-content": "flex-start",
++            "align-self": "stretch",
++            gap: "var(--space-residue)",
++            padding: "var(--toggle-group-tile-pad)",
++            "text-align": "start",
++            "line-height": "var(--type-leading-body)",
++            "--selection-perimeter": "1",
++        });
++        // no other rule writes the field corner, and no size rule writes a pad (the `lg`
++        // trap: a (0,3,0) `padding-inline` would outrank the tile's pad at (0,1,0))
++        const field: string[] = [];
++        root.walkDecls("border-radius", (d) => {
++            if (d.value === "var(--radius-field)") field.push((d.parent as { selector: string }).selector);
++        });
++        expect(field).toEqual([".toggle-group__item"]);
++        root.walkRules(/\[data-size=/, (r) =>
++            r.walkDecls(/^padding/, (d) => {
++                throw new Error(`${r.selector} writes ${d.prop}: a size rule writes the pad values only`);
++            }),
++        );
++        // the group resets the fact, so a pill group inside a tile stays pills
++        let groupReset = "";
++        root.walkRules(".toggle-group", (r) =>
++            r.walkDecls("--selection-tile", (d) => {
++                groupReset = d.value;
++            }),
++        );
++        expect(groupReset).toBe("none");
++        // the kick: on the stamp, floored at the rest weight, stilled only by reduced motion
++        let kick = "";
++        root.walkRules(".toggle-group__item[data-commit]", (r) => {
++            const parent = r.parent as { type: string; name?: string } | undefined;
++            if (parent?.type === "atrule" && parent.name === "media") return; // the reduced-motion arm
++            r.walkDecls("animation", (d) => {
++                kick = d.value;
++            });
++        });
++        expect(kick).toMatch(/^toggle-group-commit 450ms/);
++        let peak = "";
++        root.walkAtRules("keyframes", (k) =>
++            k.walkDecls("transform", (d) => {
++                peak = d.value;
++            }),
++        );
++        expect(peak).toContain("max(var(--motion-weight), 0.618)");
++    });
++});
+diff --git a/tests/composables/search/search-contracts.test.ts b/tests/composables/search/search-contracts.test.ts
+index 4bdef0576..83c94e98b 100644
+--- a/tests/composables/search/search-contracts.test.ts
++++ b/tests/composables/search/search-contracts.test.ts
+@@ -172,19 +172,11 @@ describe("/data/search — the listbox is a listbox and its options are options"
+             expect(option.attributes("aria-selected")).toMatch(/^(true|false)$/);
+         }
+ 
+-        // THE RESIDUAL, PINNED RATHER THAN LEFT TO DRIFT. `selected` is Card's OPTION
+-        // contract and that contract includes a tab stop by design — *"`selected="false"`
+-        // is an unselected OPTION, which owes a role and a tab stop"* (`Card.vue:44-46`,
+-        // `:60`). Consuming the channel therefore also makes each of the 12 rows
+-        // focusable, beside a field that walks them with `aria-activedescendant` — two
+-        // focus models on one widget. It is asserted here because it is a MEASURED
+-        // consequence of this cure (12 tabbable rows where there were 0), and because the
+-        // route cannot undo it: `Card` binds `v-bind="$attrs"` FIRST, so a consumer
+-        // `tabindex` loses to the component's own — the same clobber that caused R4.
+-        // The question is Card's option contract, not this route's, and is routed there;
+-        // when it is answered this line is the site that says so.
++        // One focus model: the field walks the rows by `aria-activedescendant`, so no
++        // row is a tab stop. Card carries no option contract of its own, and a row's
++        // `role` and `aria-selected` reach the plate through `$attrs`.
+         for (const option of options) {
+-            expect(option.attributes("tabindex")).toBe("0");
++            expect(option.attributes("tabindex")).toBeUndefined();
+         }
+ 
+         const selected = options.filter(
+diff --git a/tests/gates/tabs-seam.test.ts b/tests/gates/tabs-seam.test.ts
+index 3def2940b..3869d140c 100644
+--- a/tests/gates/tabs-seam.test.ts
++++ b/tests/gates/tabs-seam.test.ts
+@@ -71,9 +71,9 @@ const OPTIONS = [
+ ];
+ 
+ const COMBINATIONS = [
+-    { variant: "pill", semantics: "toggle" },
++    { variant: "pill", semantics: "radio" },
+     { variant: "pill", semantics: "tabs" },
+-    { variant: "underline", semantics: "toggle" },
++    { variant: "underline", semantics: "radio" },
+     { variant: "underline", semantics: "tabs" },
+ ] as const;
+ 
+@@ -100,14 +100,14 @@ describe("gate:G-TABS-SEAM — one selected-state seam, one indicator, one defor
+         );
+ 
+         it("the ARIA attributes are untouched by the seam — both spellings still ship", () => {
+-            const toggle = mount(SegmentedTabs, {
++            const radio = mount(SegmentedTabs, {
+                 props: { options: OPTIONS, modelValue: "two", variant: "pill" },
+             });
+             const tabs = mount(SegmentedTabs, {
+                 props: { options: OPTIONS, modelValue: "two", variant: "underline" },
+             });
+             expect(
+-                toggle.findAll(".segmented-tab").map((t) => t.attributes("aria-pressed")),
++                radio.findAll(".segmented-tab").map((t) => t.attributes("aria-checked")),
+             ).toEqual(["false", "true", "false"]);
+             expect(
+                 tabs.findAll(".segmented-tab").map((t) => t.attributes("aria-selected")),
+@@ -381,6 +381,6 @@ describe("gate:G-TABS-SEAM — one selected-state seam, one indicator, one defor
+         );
+         expect(sfc).not.toContain("TooltipProvider");
+         expect(sfc).not.toMatch(/tooltip\?:/);
+-        expect([...sfc.matchAll(/class="segmented-tab"/g)]).toHaveLength(1);
++        expect([...sfc.matchAll(/class="segmented-tab pill-row focus-ring"/g)]).toHaveLength(1);
+     });
+ });
+diff --git a/src/components/_shared/guard.ts b/src/components/_shared/guard.ts
+new file mode 100644
+index 000000000..fe605dfa1
+--- /dev/null
++++ b/src/components/_shared/guard.ts
+@@ -0,0 +1,19 @@
++/* ONE GUARD POLICY FOR AN UNKNOWN VALUE (Q-5). A public prop given a value outside its
++ * set binds no class and no role, so the component would paint or announce its default
++ * with no signal: a retired value (`<Chip shape="cell">`, `<SegmentedTabs
++ * semantics="toggle">`) reads as working until someone looks. It refuses loud instead,
++ * in production as in development: a `TypeError` naming the set, thrown from the
++ * caller's `watchEffect`, which Vue reports through the app's error handler while the
++ * component keeps rendering. A value left unset is the component's to default. */
++export function refuseUnknown(
++    component: string,
++    prop: string,
++    value: unknown,
++    allowed: readonly string[],
++    hint = "",
++): void {
++    if (value === undefined || allowed.includes(value as string)) return;
++    throw new TypeError(
++        `[${component}] ${prop}=${JSON.stringify(value)} is not one of ${allowed.join(", ")}.${hint ? ` ${hint}` : ""}`,
++    );
++}
+diff --git a/tests/components/custom/tabs/roving-grid.test.ts b/tests/components/custom/tabs/roving-grid.test.ts
+new file mode 100644
+index 000000000..67206295b
+--- /dev/null
++++ b/tests/components/custom/tabs/roving-grid.test.ts
+@@ -0,0 +1,136 @@
++/* The radio-group arrow model (`arrows: "grid"`) on stubbed rects.
++ *
++ * The walk reads layout at key time, so each case lays its items out by stubbing
++ * `getBoundingClientRect` and presses real keys on the strip handler. Every arrow
++ * moves: Left and Right step in order (flipped under RTL), Up and Down go to the
++ * nearest enabled item in the adjacent row, nearest centre first, and step in order
++ * where no row lies that way. The `axis` model keeps its inert cross pair. A key typed
++ * into an editable descendant stays the descendant's.
++ */
++import { computed, ref } from "vue";
++import { describe, expect, it } from "vitest";
++import {
++    useTabRovingFocus,
++    type RovingArrows,
++} from "@glass/components/tabs/composables/useTabRovingFocus";
++
++type Box = [x: number, y: number, w?: number, h?: number];
++
++function strip(boxes: Box[], opts: { arrows?: RovingArrows; disabled?: number[]; rtl?: boolean } = {}) {
++    const host = document.createElement("div");
++    if (opts.rtl) host.setAttribute("dir", "rtl");
++    document.body.append(host);
++    const els = boxes.map(([x, y, w = 80, h = 40], i) => {
++        const b = document.createElement("button");
++        b.textContent = String(i);
++        b.getBoundingClientRect = () =>
++            ({ x, y, left: x, top: y, width: w, height: h, right: x + w, bottom: y + h, toJSON() {} }) as DOMRect;
++        host.append(b);
++        return b;
++    });
++    const options = computed(() =>
++        boxes.map((_, i) => ({ value: String(i), disabled: opts.disabled?.includes(i) ?? false })),
++    );
++    const model = ref<string | undefined>("0");
++    const roving = useTabRovingFocus({
++        stripOptions: options,
++        stripValue: computed(() => model.value),
++        isVertical: computed(() => false),
++        activation: computed(() => "automatic" as const),
++        buttonRefs: ref(els),
++        select: (v) => {
++            model.value = v;
++        },
++        arrows: computed(() => opts.arrows ?? "grid"),
++    });
++    const press = (from: number, key: string, target: HTMLElement = els[from]!) => {
++        model.value = String(from);
++        const e = new KeyboardEvent("keydown", { key, bubbles: true, cancelable: true });
++        Object.defineProperty(e, "currentTarget", { value: host });
++        Object.defineProperty(e, "target", { value: target });
++        roving.onStripKeydown(e);
++        return Number(model.value);
++    };
++    return { press, els, host };
++}
++
++// A 2×2 grid: 0 1 / 2 3.
++const GRID: Box[] = [[0, 0], [100, 0], [0, 50], [100, 50]];
++
++describe("the grid arrow model", () => {
++    it("Left and Right step in order, wrapping", () => {
++        const s = strip(GRID);
++        expect(s.press(0, "ArrowRight")).toBe(1);
++        expect(s.press(1, "ArrowRight")).toBe(2);
++        expect(s.press(0, "ArrowLeft")).toBe(3);
++    });
++
++    it("Up and Down go to the item in the adjacent row under the same centre", () => {
++        const s = strip(GRID);
++        expect(s.press(0, "ArrowDown")).toBe(2);
++        expect(s.press(1, "ArrowDown")).toBe(3);
++        expect(s.press(3, "ArrowUp")).toBe(1);
++        expect(s.press(2, "ArrowUp")).toBe(0);
++    });
++
++    it("where no row lies that way, Up and Down step in order", () => {
++        const s = strip(GRID);
++        expect(s.press(3, "ArrowDown")).toBe(0);
++        expect(s.press(0, "ArrowUp")).toBe(3);
++        // one line: the cross pair steps, it is never inert
++        const line = strip([[0, 0], [100, 0], [200, 0]]);
++        expect(line.press(0, "ArrowDown")).toBe(1);
++        expect(line.press(0, "ArrowUp")).toBe(2);
++    });
++
++    it("the nearest centre wins among the next row, and the nearest row wins over a farther one", () => {
++        // three across, then two offset under them, then one far below
++        const s = strip([[0, 0], [100, 0], [200, 0], [40, 50], [160, 50], [100, 200]]);
++        expect(s.press(0, "ArrowDown")).toBe(3);
++        expect(s.press(2, "ArrowDown")).toBe(4);
++        expect(s.press(1, "ArrowDown")).toBe(3); // a tie at 60 px each keeps the first found
++        expect(s.press(4, "ArrowDown")).toBe(5);
++    });
++
++    it("items of unequal height in one row stay one row", () => {
++        const s = strip([[0, 0, 80, 40], [100, 0, 80, 90], [0, 100, 80, 40]]);
++        expect(s.press(0, "ArrowDown")).toBe(2);
++        expect(s.press(1, "ArrowDown")).toBe(2);
++    });
++
++    it("a short item centred beside a tall one is still that row", () => {
++        // two rows of [tall, short], the short one centred on its row (a pill beside a tile)
++        const s = strip([[0, 0, 200, 70], [210, 15, 200, 40], [0, 78, 200, 70], [210, 93, 200, 40]]);
++        expect(s.press(1, "ArrowDown")).toBe(3);
++        expect(s.press(3, "ArrowUp")).toBe(1);
++        expect(s.press(0, "ArrowDown")).toBe(2);
++        expect(s.press(2, "ArrowUp")).toBe(0);
++    });
++
++    it("a disabled item is skipped by the row walk and by the step", () => {
++        const s = strip(GRID, { disabled: [2] });
++        expect(s.press(0, "ArrowDown")).toBe(3);
++        expect(s.press(1, "ArrowRight")).toBe(3);
++    });
++
++    it("RTL flips Left and Right, not Up and Down", () => {
++        const s = strip(GRID, { rtl: true });
++        expect(s.press(1, "ArrowRight")).toBe(0);
++        expect(s.press(0, "ArrowLeft")).toBe(1);
++        expect(s.press(0, "ArrowDown")).toBe(2);
++    });
++
++    it("the axis model keeps the cross pair inert", () => {
++        const s = strip(GRID, { arrows: "axis" });
++        expect(s.press(0, "ArrowDown")).toBe(0);
++        expect(s.press(0, "ArrowRight")).toBe(1);
++    });
++
++    it("an arrow typed into an editable descendant stays the descendant's", () => {
++        const s = strip(GRID);
++        const input = document.createElement("input");
++        s.els[0]!.append(input);
++        expect(s.press(0, "ArrowRight", input)).toBe(0);
++        expect(s.press(0, "ArrowDown", input)).toBe(0);
++    });
++});
+diff --git a/tests/components/ui/toggle-group/item-attrs.test.ts b/tests/components/ui/toggle-group/item-attrs.test.ts
+new file mode 100644
+index 000000000..bce1057b1
+--- /dev/null
++++ b/tests/components/ui/toggle-group/item-attrs.test.ts
+@@ -0,0 +1,64 @@
++import { mount } from "@vue/test-utils";
++import { defineComponent, nextTick, ref } from "vue";
++import { expect, it, vi } from "vitest";
++import { ToggleGroup, ToggleGroupItem } from "@glass/components/toggle-group";
++
++/* floor v3 (FV3-2, H3-12) · a consumer role, tabindex or state on an item no longer
++ * replaces the engine's. Its own file: a mount here, run before ToggleGroup.test.ts's
++ * late development-name case, can leave that case's MutationObserver silent in happy-dom
++ * (pass-3/D4-Dp-spec/logs/wt-devname-flake.log). */
++const host = (type: "single" | "multiple", initial: string | string[]) =>
++    mount(
++        defineComponent({
++            components: { ToggleGroup, ToggleGroupItem },
++            setup: () => ({ model: ref(initial), type }),
++            template: `<ToggleGroup :type="type" v-model="model">
++                <ToggleGroupItem v-for="v in ['a','b','c']" :key="v" :value="v" role="option" tabindex="0"
++                    aria-checked="false" aria-pressed="false" data-x="kept" title="t" style="color: red">{{ v }}</ToggleGroupItem>
++            </ToggleGroup>`,
++        }),
++        { attachTo: document.body },
++    );
++
++it("single: the engine's radio, checked state and one tab stop stand over a consumer's", async () => {
++    const wrapper = host("single", "b");
++    await nextTick();
++    const items = wrapper.findAll("button");
++    expect(items.map((b) => b.attributes("role"))).toEqual(["radio", "radio", "radio"]);
++    expect(items.map((b) => b.attributes("aria-checked"))).toEqual(["false", "true", "false"]);
++    expect(items.map((b) => b.attributes("tabindex"))).toEqual(["-1", "0", "-1"]);
++    expect(items[0]!.attributes("aria-pressed")).toBeUndefined();
++    // everything the engine does not own still lands
++    expect(items[0]!.attributes("data-x")).toBe("kept");
++    expect(items[0]!.attributes("title")).toBe("t");
++    expect(items[0]!.attributes("style")).toContain("color: red");
++    wrapper.unmount();
++});
++
++it("multiple: a consumer role is dropped (the button's own stands) and the pressed state is the engine's", async () => {
++    const wrapper = host("multiple", ["c"]);
++    await nextTick();
++    const items = wrapper.findAll("button");
++    expect(items.map((b) => b.attributes("role"))).toEqual([undefined, undefined, undefined]);
++    expect(items.map((b) => b.attributes("aria-pressed"))).toEqual(["false", "false", "true"]);
++    expect(items[0]!.attributes("aria-checked")).toBeUndefined();
++    expect(items.filter((b) => b.attributes("tabindex") === "0")).toHaveLength(1);
++    wrapper.unmount();
++});
++
++it("development names a consumer's role, tabindex or state once per item", async () => {
++    const errors: string[] = [];
++    const spy = vi.spyOn(console, "error").mockImplementation((m: unknown) => {
++        errors.push(String(m));
++    });
++    const wrapper = host("single", "a");
++    await nextTick();
++    await new Promise((r) => requestAnimationFrame(() => r(null)));
++    const owned = errors.filter((e) => e.includes("the group's engine owns"));
++    expect(owned).toHaveLength(3);
++    expect(owned[0]).toBe(
++        '[ToggleGroupItem] value="a" sets role, tabindex, aria-checked, aria-pressed: the group\'s engine owns an option\'s role, state and tab stop, and its values stand.',
++    );
++    spy.mockRestore();
++    wrapper.unmount();
++});
+diff --git a/tests/utils/strongObservers.ts b/tests/utils/strongObservers.ts
+new file mode 100644
+index 000000000..e8f5296a8
+--- /dev/null
++++ b/tests/utils/strongObservers.ts
+@@ -0,0 +1,38 @@
++/* A MutationObserver that must hear LATE content, made under a strong reference.
++ *
++ * happy-dom holds an observer's delivery closure only through a WeakRef
++ * (`mutation-observer/MutationObserverListener.js`: `callback: new WeakRef((record) =>
++ * this.report(record))`), and nothing else holds that closure. Once a scavenge collects
++ * it, the observed node's mutations are dropped with no error, so a test that adds
++ * content after mount passes alone and fails in the full suite. A browser keeps the
++ * callback for as long as the observer lives, so the component is not at fault: the
++ * environment is. Every observer created inside `create` keeps its closure. */
++class StrongRef<T extends object> {
++    readonly #target: T;
++    constructor(target: T) {
++        this.#target = target;
++    }
++    deref(): T {
++        return this.#target;
++    }
++}
++
++export function withStrongObservers<T>(create: () => T): T {
++    const weak = globalThis.WeakRef;
++    globalThis.WeakRef = StrongRef as unknown as WeakRefConstructor;
++    try {
++        return create();
++    } finally {
++        globalThis.WeakRef = weak;
++    }
++}
++
++/* Give the collector its chance before late content arrives: a forced collection where
++ * `--expose-gc` is on, and three macrotask turns, which let a scavenge take an unpinned
++ * closure. */
++export async function letCollectorRun(): Promise<void> {
++    for (let k = 0; k < 3; k++) {
++        (globalThis as { gc?: () => void }).gc?.();
++        await new Promise((r) => setTimeout(r, 0));
++    }
++}

@@ -1,0 +1,16 @@
+2026-10-16 14:12:18 · load { 9.98 13.79 15.64 }
+in one WebKit-lock hold
+W-D · the tile is declared once, at the group, and only where declared (D4-D)
+  target fv3-src (flavor src) · Playwright WebKit 26.5 · harness H4 e40bfd8801ef
+  load 9.98 / 13.79 / 15.64 at start, 10.06 / 13.75 / 15.61 at end · other headless browser processes at start: 9 (waited 0.2 s) · browser lock waited 0 s
+  FAIL       family-d #0 · corner 9999px→20.00 (--radius-field 16.00) · row · line-height 15.30 vs body 22.95 · rows 1
+  FAIL       family-d #1 · corner 9999px→20.00 (--radius-field 16.00) · row · line-height 15.30 vs body 22.95 · rows 1
+  FAIL       family-d #2 · corner 9999px→20.00 (--radius-field 16.00) · row · line-height 15.30 vs body 22.95 · rows 1
+  FAIL       family-d #3 · corner 9999px→20.00 (--radius-field 16.00) · row · line-height 15.30 vs body 22.95 · rows 1
+  PASS       family-d-undeclared #0 (undeclared pair) · 195.28×40.00 rung 40.00 · corner 9999px→20.00 (÷h/2 1.00) · rows 1
+  PASS       family-d-undeclared #1 (undeclared pair) · 232.92×40.00 rung 40.00 · corner 9999px→20.00 (÷h/2 1.00) · rows 1
+  PASS       family-d-undeclared #2 (undeclared pair) · 212.77×40.00 rung 40.00 · corner 9999px→20.00 (÷h/2 1.00) · rows 1
+  PASS       family-d-undeclared #3 (undeclared pair) · 216.14×40.00 rung 40.00 · corner 9999px→20.00 (÷h/2 1.00) · rows 1
+W-D FAIL · 4/8 gating cells pass [library 4/8]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p4/floor3/out/runs/fv3-src/W-D-webkit.json
+exit 1 · 2026-10-16 14:12:21 · load { 10.06 13.75 15.61 }

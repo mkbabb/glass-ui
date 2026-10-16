@@ -1,0 +1,14 @@
+--- a/src/components/toggle-group/styles.css	2026-10-16 09:19:40
++++ b/src/components/toggle-group/styles.css	2026-10-16 09:19:40
+@@ -362,5 +362,11 @@
+         .toggle-group__item::before {
+             border-color: Highlight;
+         }
++    }
++
++    /* STUB · floor-v3 probe only, not a route: D′'s writer of the fact. A ToggleGroup without a `shape` prop passes
++       `shape="cell"` through as an attribute. */
++    .toggle-group[shape="cell"] {
++        --selection-tile: flush;
+     }
+ }

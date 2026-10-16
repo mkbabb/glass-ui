@@ -1,0 +1,33 @@
+--- a/src/components/toggle-group/styles.css	2026-10-16 09:19:40
++++ b/src/components/toggle-group/styles.css	2026-10-16 09:19:40
+@@ -363,4 +363,9 @@
+             border-color: Highlight;
+         }
+     }
++
++    /* STUB · floor-v3 probe only, not a route: F's writer of the fact, a filled direct anatomy slot. */
++    .toggle-group:has(> .toggle-group__item > :is(.toggle-group__media, .toggle-group__meta):not(:empty)) {
++        --selection-tile: flush;
++    }
+ }
+--- a/src/components/toggle-group/ToggleGroupItem.vue	2026-10-16 09:19:40
++++ b/src/components/toggle-group/ToggleGroupItem.vue	2026-10-16 09:19:40
+@@ -43,6 +43,8 @@
+  * in: this is a slot, not a travelling mark. */
+ defineSlots<{
+     default?: () => unknown;
++    media?: () => unknown;
++    meta?: () => unknown;
+     indicator?: (props: { selected: boolean }) => unknown;
+ }>();
+ 
+@@ -214,7 +216,9 @@
+         @animationend.self="onAnimationEnd"
+     >
+         <slot name="indicator" :selected="selected" />
++        <span v-if="$slots.media" class="toggle-group__media"><slot name="media" /></span>
+         <slot />
++        <span v-if="$slots.meta" class="toggle-group__meta"><slot name="meta" /></span>
+     </button>
+ </template>
+ 
