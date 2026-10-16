@@ -1,0 +1,33 @@
+critique-B pass 9 · battery hash · seat claude-opus-5-5 · 2026-10-15T23:57:04Z
+Recorded BEFORE reading pass-9/B-kit/ or pass-9/B-proto.md.
+Method: cd pass-9/critique-B/battery && cat $(ls | sort) | shasum -a 256   (files sorted by name, concatenated)
+
+748826fb8a2739b37e043ae993b26a1eed6ee377ec3cf0b4306c65b4d0579035   battery (concatenated, sorted)
+
+548f88e0c082641cbba1d178def061141c41aa5ac442407a25091883e5f1d6e4  ITEMS.md
+82c57f7f737196ab09a2755ea3d40d269517f5a2dcfd75f75c7ede7b540c99a1  b18-inputs.sh
+46b183cc5b9e25aa8e3ab37fdd0be4b227ee8431a9d6b22a1368be3159c16c42  compare.mjs
+b86a4bcd92db09403e683e68722d4298f4127087f6671103994b681827bc72c1  flake9.sh
+ccc364231aa5457dc427955c9e023cb9167c0c2faa20610093bf63d29d416da9  judge-rows.mjs
+27159fe2049950268a29c234d770a8fd763c3f48984e1a0a2f59b89a43366a36  judge-throws.sh
+a7e6e552426570dc2dac0cebaa52d6c1e2eff8bc7f224acc3ffe3b34603da80a  plants9.mjs
+e1d5ee2721f90db199953e175d8bbe1bff5d460ccb098529412ce0cf733b523e  regress9.mjs
+eb0ec63830688573edfc6e631a74c9a810506679f6b856479e06ca5581b0e548  run-battery.sh
+971ec2aad3af7e520990323e83d99083ac27728ffba4edfc5f963ce1059bedd2  select-capture.sh
+083be2012c947c1a45bd65ddb2b52b1066f819ba28fecd8d1c80d1e2becf81a2  tally-shim.mjs
+2acf495bd89cff6a39f51f352fc7921fee83927e133f1e879a0fd6430089ed85  toolchain9.sh
+
+Imported or run by path (committed):
+c5c5d3c753fbfb8a3c27e9603c56d2fa2370c6836ee5e89b11ff5fe7a7c5d68d  pass-8/critique-B/battery/adapter.mjs
+d4bcb1c6ba14f64dd16b955f926fe8a0aef8acdfe893bbe0f9b43a766992bc5d  pass-8/critique-B/battery/run-plants.mjs
+dc0d56310eee892662a4377edac32764d1cd8a70f4c11b29de7e4628df2304b8  pass-8/critique-B/battery/plants.mjs
+40f05fdd428d17730d5ae1fbe65853287e2360013d1dfdaaa669daae027112a1  pass-8/critique-B/battery/regress.mjs
+52f6d04cd7f1e0879b2ccadf2950737b2550a6f34d16f7f1b41ed9bf4d3c6046  pass-8/critique-B/battery/gate-modules.mjs
+0cdae5a6dccca99f2be2b9174ae3abe8b540df5b074af3385b29c972c3a75f5d  pass-8/critique-B/battery/crash8.sh
+ae0f58b27cdb96feae8e5374a5607f87d8a23488bff7e2f1cd28dc1c319c59ab  pass-8/critique-B/battery/peer-unbuilt.sh
+292d97e628263550304301c10ab3c03b0637c4a036031329d11a707708acabae  pass-8/critique-B/battery/tree-probes.sh
+61c34b149587f741326fa28c48099d59cd49b1c2895e874c8d9d203b8dcb7822  pass-8/critique-B/battery/browser-plants.mjs
+cb8e2b02e525b13183d1b18d85da6e6e93c58b8a85716f499949c9389ae4f784  pass-8/critique-B/battery/flake-cases.mjs
+419befe61f80567445e93816a1c7d4e3f0c8365d94ec33364f7e6e7b4c03cf18  pass-8/critique-B/results/regress.json
+4ccc4178994282b37d462f983f63f1169e1e3a48b8771ebc965ab376986c4ae8  pass-8/critique-B/results/plants.json
+2552624c6358b95673cbcf48b1edc27f022c06206e77377e19418b589ce8618b  pass-8/critique-B/results/flake.txt
