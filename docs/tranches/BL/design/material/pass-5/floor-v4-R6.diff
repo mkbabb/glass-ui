@@ -1,0 +1,188 @@
+diff --git a/demo/stories/dock/dock-search.vue b/demo/stories/dock/dock-search.vue
+index 0368f34..c4011b1 100644
+--- a/demo/stories/dock/dock-search.vue
++++ b/demo/stories/dock/dock-search.vue
+@@ -364,6 +364,16 @@ function onKeydown(e: KeyboardEvent) {
+     cursor: pointer;
+ }
+ 
++/* This composer is not reka's: `data-highlighted` follows the keyboard's selected
++   index, not the pointer, so the menu row's state fill never reaches a pointed-at
++   result. The pointer keeps its own leg on the transient rung (`--fill-hover`), in
++   the menu's accent; the highlighted result keeps the state fill. */
++@media (hover: hover) {
++    .dock-search-result:hover:not([data-highlighted]) {
++        background: oklch(from var(--section-color-5) l c h / var(--fill-hover));
++    }
++}
++
+ .dock-search-match {
+     color: var(--primary);
+     font-weight: 600;
+diff --git a/src/components/_shared/menu/menu.css b/src/components/_shared/menu/menu.css
+index 1038922..81ab47a 100644
+--- a/src/components/_shared/menu/menu.css
++++ b/src/components/_shared/menu/menu.css
+@@ -1,6 +1,6 @@
+ /* Imported after utilities.css so menu state wins at equal specificity. */
+ @layer components {
+-    /* A menu ROW is not a lens. It carries a hover FILL and nothing else — no
++    /* A menu ROW is not a lens. It carries a highlight FILL and nothing else — no
+        `backdrop-filter`, no rung — because the open menu's own plate is the one backdrop
+        sample for that visual body, and a row-level filter inside it would be a plate
+        nested in a plate for the width of one line of text. The fill is an ACCENT TINT:
+@@ -10,7 +10,9 @@
+        fill darkened the cream row with no hue (C 0.010), which reads grey. The
+        highlighted row is the menu's one current item, so it takes the selected alpha:
+        at the hover alpha no in-gamut accent at this lightness reaches C 0.02 on the
+-       cream plate. Light, on the menu plate: `#f2e6d5`, C 0.026. */
++       cream plate. Light, on the menu plate: `#f2e6d5`, C 0.026. The fill is STATE, so
++       it paints only through the engaged group below (`[data-highlighted]`, `:focus`,
++       an open sub-trigger); a bare `:hover` lifts the row and mints no fill. */
+     .glass-menu-row {
+         --menu-row-bg: oklch(from var(--section-color-5) l c h / var(--fill-selected));
+         --menu-row-lift: -1px;
+@@ -42,35 +44,23 @@
+         translate: 0 0;
+     }
+ 
+-    /* The NON-POINTER engaged states. Keyboard highlight changes paint without
+-       restarting the pointer lift, so these carry no `translate` value of their own —
+-       only the ATTACK clock, because this is the state they land IN. */
+-    .glass-menu-row:focus:not([data-disabled]),
+-    .glass-menu-row[data-highlighted]:not([data-disabled]),
+-    .glass-menu-row[data-state="open"]:not([data-disabled]) {
+-        background: var(--menu-row-bg);
+-        color: var(--accent-foreground);
+-        transition:
+-            background-color var(--engage-control-engage-attack) var(--ease-standard),
+-            color var(--engage-control-engage-attack) var(--ease-standard),
+-            border-color var(--engage-control-engage-attack) var(--ease-standard),
+-            box-shadow var(--engage-control-engage-attack) var(--ease-standard),
+-            translate var(--spring-dock-duration) var(--spring-dock),
+-            scale var(--spring-press-duration) var(--transition-liquid-spatial);
+-    }
+-
+     /* G7 HOVER GUARD at the menu-row seat. `:hover` latches on a coarse pointer and
+-       stays latched until something else is tapped, so an unguarded hover rung paints a
+-       tapped row as permanently pointed-at. The touch answer here is `[data-highlighted]`
+-       above — reka sets and CLEARS it on pointer interaction, so a touch still gets the
+-       fill and never keeps it. (It is NOT `.tap-squish:active`: not one of the six rows
+-       that compose `.interactive-item` composes `.tap-squish`.) The lift is pointer-only
+-       by the same law, and lives here rather than in the group above so a keyboard
+-       highlight never moves the row. */
++       stays latched until something else is tapped, so a hover leg would mark a tapped
++       row as permanently pointed-at. The pointer's fill is `[data-highlighted]` below:
++       reka sets it on pointer movement and CLEARS it on leave, on every composer
++       (rowClass.ts, the four DropdownMenu items, CommandItem), so a pointer still gets
++       the engaged fill and a touch never keeps it. (It is NOT `.tap-squish:active`: not
++       one of the six rows that compose `.interactive-item` composes `.tap-squish`.)
++       Hover itself carries only the lift, pointer-only by the same law, and apart from
++       the engaged group so a keyboard highlight never moves the row. Its background
++       stays at rest: every row here also composes `.interactive-item`, whose own
++       `:hover` paints `--accent` at 50% in the same layer, and that grey would reach a
++       row the pointer rests on while the keyboard highlights another. The rule sits
++       BEFORE the engaged group, so at equal specificity a highlighted row under the
++       pointer takes the state fill. */
+     @media (hover: hover) {
+         .glass-menu-row:hover:not([data-disabled]) {
+-            background: var(--menu-row-bg);
+-            color: var(--accent-foreground);
++            background-color: transparent;
+             translate: 0 var(--menu-row-lift);
+             transition:
+                 background-color var(--engage-control-engage-attack)
+@@ -83,6 +73,24 @@
+         }
+     }
+ 
++    /* The ENGAGED states, pointer and keyboard alike: reka's highlight, focus, an open
++       sub-trigger. A keyboard highlight changes paint without restarting the pointer
++       lift, so these carry no `translate` value of their own, only the ATTACK clock,
++       because this is the state they land IN. */
++    .glass-menu-row:focus:not([data-disabled]),
++    .glass-menu-row[data-highlighted]:not([data-disabled]),
++    .glass-menu-row[data-state="open"]:not([data-disabled]) {
++        background: var(--menu-row-bg);
++        color: var(--accent-foreground);
++        transition:
++            background-color var(--engage-control-engage-attack) var(--ease-standard),
++            color var(--engage-control-engage-attack) var(--ease-standard),
++            border-color var(--engage-control-engage-attack) var(--ease-standard),
++            box-shadow var(--engage-control-engage-attack) var(--ease-standard),
++            translate var(--spring-dock-duration) var(--spring-dock),
++            scale var(--spring-press-duration) var(--transition-liquid-spatial);
++    }
++
+     @media (prefers-reduced-motion: reduce) {
+         .glass-menu-row {
+             /* PRM retires the SPATIAL legs and KEEPS the light. A bare `transition: none`
+diff --git a/src/components/card/styles.css b/src/components/card/styles.css
+index 9460704..65ea704 100644
+--- a/src/components/card/styles.css
++++ b/src/components/card/styles.css
+@@ -161,7 +161,8 @@
+         box-shadow: var(--card-cast), 0 0 8px oklch(from var(--foreground) l c h / 0.15);
+     }
+ 
+-    /* Persistent state. `--fill-selected` (0.12) is a rung hover cannot mint. */
++    /* Persistent state. `--fill-selected` (0.12) is the state rung: a bare hover
++       cannot mint it (its one other reader, the menu's highlighted row, is state too). */
+     .card[role="option"][data-selected="true"] {
+         --card-fill: oklch(from var(--foreground) l c h / var(--fill-selected));
+     }
+diff --git a/src/components/dock/styles/search.css b/src/components/dock/styles/search.css
+index 7e67425..6c387e7 100644
+--- a/src/components/dock/styles/search.css
++++ b/src/components/dock/styles/search.css
+@@ -8,7 +8,7 @@
+  * bakes `:root`'s `--glass-level`. The dock's own L0 plate takes the SAME path
+  * (dock/dock.css), so field and plate hold one bound by construction.
+  *
+- * The result rows ride `.glass-menu-row` (the glass-quiet hover-lift, CONSUMED
++ * The result rows ride `.glass-menu-row` (the highlight fill and hover lift, CONSUMED
+  * here; the glassify is this partial's). The customization-surface axes
+  * (size/surface/variant) are this partial's — it only seats the field +
+  * the legibility seam. The morph itself is the dock's OWN `--dock-morph-t` + the
+@@ -55,8 +55,8 @@
+         color: var(--on-glass-muted);
+     }
+ 
+-    /* The dropdown result rows ride the shared `.glass-menu-row` glass-quiet hover-lift
+-       CONSUMED, not re-authored). The dock-search list applies
++    /* The dropdown result rows ride the shared `.glass-menu-row` highlight fill and hover
++       lift (CONSUMED, not re-authored). The dock-search list applies
+        `.glass-menu-row` per row; this rule reaches the selected/highlighted row through
+        the SAME register the menu families use (no flat `bg-accent`/`bg-muted` fork). The
+        active result reads the data-highlighted state the menu recipe already paints. */
+diff --git a/src/styles/tokens/color-radius.css b/src/styles/tokens/color-radius.css
+index 2aa960a..a0b96c5 100644
+--- a/src/styles/tokens/color-radius.css
++++ b/src/styles/tokens/color-radius.css
+@@ -158,7 +158,9 @@
+        — BELOW the divider beside it at 1.140:1; selected table row `ink/0.08`,
+        byte-equal to hover. */
+     --fill-hover: 0.05;    /* transient pointer answer */
+-    --fill-selected: 0.12; /* persistent state — hover cannot mint it */
++    --fill-selected: 0.12; /* state: persistent selection, and the menu's one highlighted
++                              row (_shared/menu/menu.css, an accent tint at this alpha, not
++                              the ink) — a bare :hover cannot mint it */
+ 
+     --primary: hsl(24 10% 10%);
+     --primary-foreground: var(--neutral-0);
+diff --git a/tests/styles/engage-ladder.test.ts b/tests/styles/engage-ladder.test.ts
+index c0c4371..28915fb 100644
+--- a/tests/styles/engage-ladder.test.ts
++++ b/tests/styles/engage-ladder.test.ts
+@@ -434,8 +434,9 @@ describe("G-ENGAGE-RUNG · PRM arm — every rung has a reduced-motion terminal
+         const guarded = braceBlock(base, base.indexOf("@media (hover: hover)"));
+         expect(guarded).toContain(".interactive-item:hover");
+ 
+-        // The menu row is the rule that actually paints the hover fill and lift on all
+-        // six consumers (0-3-0, later import). Left unguarded, the coarse-pointer latch
++        // The menu row is the rule that decides the hover paint on all six consumers
++        // (0-3-0, later import): the lift, with the fill held at rest (the fill is
++        // state, `[data-highlighted]`). Left unguarded, the coarse-pointer latch
+         // the base.css guard exists to prevent stays fully live, and NONE of the six
+         // composes `.tap-squish`, so the press rung is not their touch answer either.
+         const menu = decomment(MENU);

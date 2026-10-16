@@ -1,0 +1,15 @@
+queued 15:27:58 load { 10.38 10.08 10.23 }
+admitted 15:31:19 load { 10.13 10.55 10.43 }
+vue-tsc src exit 0 15:31:25 load { 11.16 10.75 10.50 }
+tests/components/fourier-field/FourierField.smoke.test.ts(18,30): error TS2307: Cannot find module '@mkbabb/glass-ui/fourier-math' or its corresponding type declarations.
+tests/components/fourier-field/FourierField.smoke.test.ts(19,66): error TS2307: Cannot find module '@mkbabb/glass-ui/fourier-math' or its corresponding type declarations.
+vue-tsc test exit 2 15:31:31 load { 10.67 10.66 10.47 }
+library build exit 0 15:31:36 load { 10.53 10.63 10.46 }
+dist-demo exit 0 15:31:37 load { 10.17 10.55 10.44 }
+
+a:b referenced in a:b didn't resolve at build time, it will remain unchanged to be resolved at runtime
+vitest exit 0 15:32:26 load { 10.06 10.46 10.41 }
+ Test Files  237 passed (237)
+      Tests  2318 passed | 10 expected fail | 1 skipped (2329)
+guard exit 0
+vue-tsc test (after build) exit 0 15:32:48 load { 10.87 10.61 10.46 }

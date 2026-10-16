@@ -1,0 +1,10 @@
+HOV plant-r4 exit 1: FAIL (1 of 58 gated rows)
+prose sweep plant-r4:
+src/styles/tokens/color-radius.css:161:    --fill-selected: 0.12; /* persistent state — hover cannot mint it */
+src/components/card/styles.css:164:    /* Persistent state. `--fill-selected` (0.12) is a rung hover cannot mint. */
+src/components/_shared/menu/menu.css:3:    /* A menu ROW is not a lens. It carries a hover FILL and nothing else — no
+src/components/dock/styles/search.css:11: * The result rows ride `.glass-menu-row` (the glass-quiet hover-lift, CONSUMED
+src/components/dock/styles/search.css:58:    /* The dropdown result rows ride the shared `.glass-menu-row` glass-quiet hover-lift
+HOV plant-r6lit exit 0: PASS (58 gated rows)
+prose sweep plant-r6lit:
+src/styles/tokens/color-radius.css:163:                              the ink) — a bare :hover cannot mint it */

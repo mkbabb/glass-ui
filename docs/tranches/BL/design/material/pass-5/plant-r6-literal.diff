@@ -1,0 +1,71 @@
+--- a/src/components/_shared/menu/menu.css
++++ b/src/components/_shared/menu/menu.css
+@@ -44,23 +44,34 @@
+         translate: 0 0;
+     }
+ 
++    /* The NON-POINTER engaged states. Keyboard highlight changes paint without
++       restarting the pointer lift, so these carry no `translate` value of their own —
++       only the ATTACK clock, because this is the state they land IN. */
++    .glass-menu-row:focus:not([data-disabled]),
++    .glass-menu-row[data-highlighted]:not([data-disabled]),
++    .glass-menu-row[data-state="open"]:not([data-disabled]) {
++        background: var(--menu-row-bg);
++        color: var(--accent-foreground);
++        transition:
++            background-color var(--engage-control-engage-attack) var(--ease-standard),
++            color var(--engage-control-engage-attack) var(--ease-standard),
++            border-color var(--engage-control-engage-attack) var(--ease-standard),
++            box-shadow var(--engage-control-engage-attack) var(--ease-standard),
++            translate var(--spring-dock-duration) var(--spring-dock),
++            scale var(--spring-press-duration) var(--transition-liquid-spatial);
++    }
++
+     /* G7 HOVER GUARD at the menu-row seat. `:hover` latches on a coarse pointer and
+        stays latched until something else is tapped, so a hover leg would mark a tapped
+-       row as permanently pointed-at. The pointer's fill is `[data-highlighted]` below:
++       row as permanently pointed-at. The pointer's fill is `[data-highlighted]` above:
+        reka sets it on pointer movement and CLEARS it on leave, on every composer
+        (rowClass.ts, the four DropdownMenu items, CommandItem), so a pointer still gets
+        the engaged fill and a touch never keeps it. (It is NOT `.tap-squish:active`: not
+        one of the six rows that compose `.interactive-item` composes `.tap-squish`.)
+-       Hover itself carries only the lift, pointer-only by the same law, and apart from
+-       the engaged group so a keyboard highlight never moves the row. Its background
+-       stays at rest: every row here also composes `.interactive-item`, whose own
+-       `:hover` paints `--accent` at 50% in the same layer, and that grey would reach a
+-       row the pointer rests on while the keyboard highlights another. The rule sits
+-       BEFORE the engaged group, so at equal specificity a highlighted row under the
+-       pointer takes the state fill. */
++       Hover itself carries only the lift, pointer-only by the same law, and here rather
++       than in the group above so a keyboard highlight never moves the row. */
+     @media (hover: hover) {
+         .glass-menu-row:hover:not([data-disabled]) {
+-            background-color: transparent;
+             translate: 0 var(--menu-row-lift);
+             transition:
+                 background-color var(--engage-control-engage-attack)
+@@ -73,24 +84,6 @@
+         }
+     }
+ 
+-    /* The ENGAGED states, pointer and keyboard alike: reka's highlight, focus, an open
+-       sub-trigger. A keyboard highlight changes paint without restarting the pointer
+-       lift, so these carry no `translate` value of their own, only the ATTACK clock,
+-       because this is the state they land IN. */
+-    .glass-menu-row:focus:not([data-disabled]),
+-    .glass-menu-row[data-highlighted]:not([data-disabled]),
+-    .glass-menu-row[data-state="open"]:not([data-disabled]) {
+-        background: var(--menu-row-bg);
+-        color: var(--accent-foreground);
+-        transition:
+-            background-color var(--engage-control-engage-attack) var(--ease-standard),
+-            color var(--engage-control-engage-attack) var(--ease-standard),
+-            border-color var(--engage-control-engage-attack) var(--ease-standard),
+-            box-shadow var(--engage-control-engage-attack) var(--ease-standard),
+-            translate var(--spring-dock-duration) var(--spring-dock),
+-            scale var(--spring-press-duration) var(--transition-liquid-spatial);
+-    }
+-
+     @media (prefers-reduced-motion: reduce) {
+         .glass-menu-row {
+             /* PRM retires the SPATIAL legs and KEEPS the light. A bare `transition: none`
