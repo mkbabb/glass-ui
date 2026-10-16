@@ -1,0 +1,14 @@
+
+> @mkbabb/glass-ui@10.1.0 verify:package
+> node scripts/verify-export-types.mjs
+
+file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt/scripts/package-verify/pack.mjs:165
+    if (!firstAdoption && candidate > datum) throw new Error(`G-BUNDLE-RATCHET: bundle ratchet increase forbidden: ${unpackedBytes} > ${datum}`);
+                                                   ^
+
+Error: G-BUNDLE-RATCHET: bundle ratchet increase forbidden: 2920386 > 2919057
+    at ratchetEvidence (file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt/scripts/package-verify/pack.mjs:165:52)
+    at verifyExportTypes (file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt/scripts/package-verify/verify.mjs:63:23)
+    at file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt/scripts/verify-export-types.mjs:12:22
+
+Node.js v26.0.0

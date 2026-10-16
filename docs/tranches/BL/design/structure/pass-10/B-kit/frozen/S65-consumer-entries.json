@@ -1,0 +1,401 @@
+{
+ "step": "B-S14 (P5-R3): consumer references re-point at the entries that publish their names (S64); /data/search drives the engine through useDockSearch (arm (a)); the Fourier studio's PRNG is demo-local; the scroll story keeps its spine and the library file leaves src, and the orphan-CSS bite takes a colocated test as its present-and-unreachable referrer (P6-R1 (a)); the page-imported aurora names read their entry sources",
+ "files": {
+  "demo/composables/virtual/virtualSectionLayout.ts": {
+   "hunks": [
+    [
+     "import type { SectionHierarchy } from \"@glass/composables/sidebar/types\";\n",
+     "import type { SectionHierarchy } from \"@glass/composables/sidebar\";\n"
+    ]
+   ]
+  },
+  "demo/stories/data/search/catalogue.ts": {
+   "hunks": [
+    [
+     "import type { SearchableItem } from \"@glass/components/dock/search/types\";\n",
+     "import type { SearchableItem } from \"@glass/components/dock\";\n"
+    ]
+   ]
+  },
+  "demo/stories/dock/_frame/DockStage.vue": {
+   "hunks": [
+    [
+     "} from \"@glass/components/dock/legibility/useGlassBackdropLuminance\";\n",
+     "} from \"@glass/components/dock\";\n"
+    ]
+   ]
+  },
+  "demo/stories/dock/dock-search.vue": {
+   "hunks": [
+    [
+     "import { GlassDock, useDockSearch } from \"@glass/components/dock\";\nimport { useDockState } from \"@glass/components/dock/composables/useDockState\";\n",
+     "import { GlassDock, useDockSearch, useDockState, type SearchableItem } from \"@glass/components/dock\";\n"
+    ],
+    [
+     "import { useScrollTo } from \"@glass/composables/sidebar\";\nimport type { SearchableItem } from \"@glass/components/dock/search/types\";\nimport DockStage from \"./_frame/DockStage.vue\";\n",
+     "import { useScrollTo } from \"@glass/composables/sidebar\";\nimport DockStage from \"./_frame/DockStage.vue\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/glass-material.vue": {
+   "hunks": [
+    [
+     "import { useGlassBackdropLuminance } from \"@glass/components/dock/legibility/useGlassBackdropLuminance\";\n",
+     "import { useGlassBackdropLuminance } from \"@glass/components/dock\";\n"
+    ]
+   ]
+  },
+  "demo/stories/data/search.vue": {
+   "hunks": [
+    [
+     "import { useFuzzySearch } from \"@glass/components/dock/search/useFuzzySearch\";\nimport type { SearchResult, SearchableItem } from \"@glass/components/dock/search/types\";\n",
+     "// The engine ships as the dock's search mode (BK #42, SE-4): `useDockSearch` composes\n// `useFuzzySearch` and hands it back as `fuzzy`, so this route reads the same handle the\n// dock does. No dock is mounted here, so the composed state machine has no root to watch.\nimport {\n    useDockSearch,\n    useDockState,\n    type SearchResult,\n    type SearchableItem,\n} from \"@glass/components/dock\";\n"
+    ],
+    [
+     "const searchState = useFuzzySearch<SearchableItem>({\n",
+     "const { fuzzy: searchState } = useDockSearch<SearchableItem>({\n    dockState: useDockState({ rootEl: ref(null) }),\n"
+    ],
+    [
+     "    onSelect: (result) => {\n",
+     "    onResultSelect: (result) => {\n"
+    ]
+   ]
+  },
+  "demo/stories/motion/scroll.vue": {
+   "hunks": [
+    [
+     "import { useScrollScene } from \"@glass/composables/motion/scroll/useScrollScene\";\n",
+     "import { useScrollScene } from \"./scroll/useScrollScene\";\n"
+    ]
+   ]
+  },
+  "demo/stories/motion/scroll/useScrollScene.ts": {
+   "create": "// useScrollScene — the scroll story's liquid-weight spine.\n//\n// A rAF-coalesced read of the story's own scroll port, fed through keyframes.js's\n// `SmoothProgress`, so the damped 0..1 LAGS the finger and settles after it lifts. The\n// library's scroll registers are 1:1 with the scroll by construction (the `scroll()`\n// recipe, `useScrollTrigger`'s progress); the weight is this page's own register, so it\n// lives beside the one story that mounts it.\n//\n// No perpetual rAF: `SmoothProgress.play()` ticks only while unsettled and parks at rest,\n// and the port holds at most one frame in flight per scroll burst.\nimport { SmoothProgress } from \"@mkbabb/keyframes.js\";\nimport {\n    onMounted,\n    onScopeDispose,\n    readonly,\n    ref,\n    toValue,\n    watch,\n    type MaybeRefOrGetter,\n    type Ref,\n} from \"vue\";\nimport { useReducedMotion } from \"@glass/composables/motion/motion-core\";\n\nexport interface UseScrollSceneOptions {\n    /** The story's own scroll port (passed explicitly, never auto-discovered). */\n    source: MaybeRefOrGetter<HTMLElement | null>;\n    /** The element the damped value is written onto as a custom property. */\n    bindEl: MaybeRefOrGetter<HTMLElement | null>;\n    /** The custom property the damped 0..1 is written to (`--scene-t`). */\n    property: string;\n    /** The liquid-weight scrub in [0, 1]: 0 snaps 1:1, 1 drifts heaviest. Reduced motion snaps. */\n    scrub: number;\n}\n\nexport interface UseScrollSceneReturn {\n    /** The damped 0..1 progress. */\n    progress: Readonly<Ref<number>>;\n    /** Detach the port and stop the smoother. */\n    dispose: () => void;\n}\n\nconst clamp01 = (v: number): number => (v < 0 ? 0 : v > 1 ? 1 : v);\n\n/**\n * The scrub → damping map. `SmoothProgress.damping` is \"higher = less lag\", the inverse\n * of scrub, so damping = 1 − scrub·(1 − FLOOR): scrub 0 catches up at once, scrub 1 drifts\n * at the floor, which still converges (a damping of 0 stalls).\n */\nfunction scrubToDamping(scrub: number): number {\n    const FLOOR = 0.08;\n    return 1 - clamp01(scrub) * (1 - FLOOR);\n}\n\nexport function useScrollScene(options: UseScrollSceneOptions): UseScrollSceneReturn {\n    const reduced = useReducedMotion();\n    const progress = ref(0);\n    const smoother = new SmoothProgress({\n        damping: scrubToDamping(options.scrub),\n        initial: 0,\n        clamp: true,\n        respectReducedMotion: false,\n    });\n\n    function emit(value: number): void {\n        const v = clamp01(value);\n        progress.value = v;\n        toValue(options.bindEl)?.style.setProperty(options.property, String(v));\n    }\n    smoother.play(emit);\n\n    let port: HTMLElement | null = null;\n    let frame = 0;\n\n    function sample(): void {\n        frame = 0;\n        if (!port) return;\n        const extent = port.scrollHeight - port.clientHeight;\n        const raw = extent > 0 ? clamp01(port.scrollTop / extent) : 0;\n        smoother.setTarget(raw);\n        // Reduced motion: a 1:1 snap, no interpolated drift.\n        if (reduced.value) {\n            smoother.snap();\n            emit(raw);\n        }\n    }\n    const schedule = (): void => {\n        if (!frame) frame = requestAnimationFrame(sample);\n    };\n\n    onMounted(() => {\n        port = toValue(options.source);\n        port?.addEventListener(\"scroll\", schedule, { passive: true });\n        schedule();\n    });\n    const stopReducedWatch = watch(reduced, (next) => {\n        if (next) schedule();\n    });\n\n    function dispose(): void {\n        port?.removeEventListener(\"scroll\", schedule);\n        port = null;\n        if (frame) cancelAnimationFrame(frame);\n        frame = 0;\n        smoother.stop();\n        stopReducedWatch();\n    }\n    onScopeDispose(dispose);\n\n    return { progress: readonly(progress), dispose };\n}\n"
+  },
+  "src/composables/motion/scroll/useScrollScene.ts": {
+   "remove": true,
+   "before": "// useScrollScene — the liquid-weight scroll spine.\n//\n// ONE seam unioning the SHIPPED `createScrollReader` (the rAF-coalesced read core — no\n// fourth listener) + the keyframes.js synchronous physics primitives `SmoothProgress`\n// (scrub inertia) + `SpringProgress` (snap overshoot/settle). It writes a spring-damped\n// 0..1 progress to a CSS custom property AND a reactive ref so every felt scroll axis (the\n// pin, the progress bar, the chrome collapse) carries the SAME liquid weight on EVERY\n// engine — no native `scroll()`/`view()` timeline, no `currentTime: null` deadness.\n//\n// WHY the synchronous primitives, not `createScrollScene`: `ScrollScene`/\n// `createScrollScene` resolve to `undefined` at the installed `@mkbabb/keyframes.js@^6.0.0`\n// (they live only in a lazily `import()`-ed heavy-engine chunk). `ScrollScene` is itself a\n// thin composition of `SmoothProgress` + `SpringProgress` + a parsed range; those three ARE\n// synchronously exported, so this composable builds that exact factoring directly — zero\n// async load, zero net dep, the same physics. A future kf that statically exports\n// `createScrollScene` swaps the internals behind this unchanged signature.\n//\n// NO perpetual rAF: `SmoothProgress`/`SpringProgress` `.play()` runs only while unsettled\n// and auto-parks at rest (the no-momentum-loop fence). The reader writes a fresh target on\n// each coalesced scroll tick; the smoother converges to it AFTER the finger lifts — the\n// liquid-weight signature.\n//\n// KEYFRAMES-BEARING → ships on `/motion`, NEVER `/motion-core` (the SCC-trap discipline).\n\nimport { SmoothProgress, SpringProgress } from \"@mkbabb/keyframes.js\";\nimport {\n    getCurrentScope,\n    onMounted,\n    onScopeDispose,\n    readonly,\n    ref,\n    toValue,\n    watch,\n    type MaybeRefOrGetter,\n    type Ref,\n} from \"vue\";\nimport { createScrollReader, type ScrollReader, type ScrollSource } from \"./scrollReader\";\nimport { useReducedMotion } from \"../core\";\nimport { springPreset } from \"../spring\";\n\n// The scene's spring register IS the table's substrate-travel row — its response and\n// its damping, read from the one table rather than restated. A literal here was a\n// second spring authority hiding in a default parameter.\nconst WORLD = springPreset(\"world\");\n\n/** The smoother register — a pure-lag low-pass (`SmoothProgress`) or an overshooting\n *  spring (`SpringProgress`). The FELT reveal wants the spring (it overshoots, then\n *  settles — the cartoon slam); the pure-lag legs (a progress number) want the smooth. */\nexport type ScrollSceneRegister = \"smooth\" | \"spring\";\n\nexport interface UseScrollSceneOptions {\n    /**\n     * The scroll source — an element with its own scroll port (the demo passes\n     * `main.demo-main-scroller`), the Window, or null. Resolved by `createScrollReader`:\n     * an HTMLElement listens on itself, else the document/window. Passed EXPLICITLY (the\n     * reader does NOT auto-discover a scroller).\n     */\n    source: MaybeRefOrGetter<ScrollSource>;\n    /**\n     * Map a fresh reader read to the raw 0..1 target this scene tracks. Default: the\n     * reader's own `position()/extent()` extent-relative progress. A pin passes a custom\n     * mapper keyed off a per-tick `getBoundingClientRect` (the pin-slice ratio).\n     */\n    map?: (reader: ScrollReader) => number;\n    /**\n     * The liquid-weight scrub ∈ [0, 1] — how much lag the scroll carries. 0 = a 1:1 snap\n     * (no weight); higher = heavier drift. Defaults to 1/φ ≈ 0.618 (the golden\n     * liquid-weight rest); a call site overrides per scene. PRM → 0. Mapped to the engine\n     * damping by `scrubToDamping` (a STATED function, no magic affine constants).\n     */\n    scrub?: number;\n    /** The smoother register (default `smooth` — the pure-lag low-pass). */\n    register?: ScrollSceneRegister;\n    /**\n     * For the `spring` register: the damping ratio ζ. < 1 overshoots (the felt slam).\n     * Defaults to the `world` row's own damping — the substrate-travel register —\n     * read from the table rather than restated. Ignored for `smooth`.\n     */\n    dampingFraction?: number;\n    /** The element the damped value is written onto as a custom property (when bound). */\n    bindEl?: MaybeRefOrGetter<HTMLElement | null>;\n    /** The custom property name to write the damped 0..1 onto (e.g. `--scene-t`). */\n    property?: string;\n    /** Honor `prefers-reduced-motion: reduce` (scrub → 0, snap 1:1). Default true. */\n    respectReducedMotion?: boolean;\n}\n\nexport interface UseScrollSceneReturn {\n    /** The spring-damped 0..1 progress (reactive). The single writer of every felt axis. */\n    progress: Readonly<Ref<number>>;\n    /** Force a coalesced re-read + re-target now (post-resize / layout shift). */\n    recalculate: () => void;\n    /** Detach the reader + stop the smoother. */\n    dispose: () => void;\n}\n\nfunction clamp01(v: number): number {\n    return v < 0 ? 0 : v > 1 ? 1 : v;\n}\n\n/**\n * The scrub → damping map — a STATED function, no free affine constants. `scrub` is a\n * normalized lag ∈ [0, 1] (the scrub param; 0 = no weight, 1 = maximum drift).\n * `SmoothProgress.damping` ∈ (0, 1] is \"higher = faster convergence\", i.e. LESS lag — the\n * inverse polarity. So damping = 1 − scrub·(1 − floor): scrub 0 → damping 1 (instant catch-\n * up, no felt lag); scrub 1 → damping = floor (heaviest drift). The floor keeps the loop\n * from never settling (a damping of 0 stalls). One justified mapping, both engines read it.\n */\nfunction scrubToDamping(scrub: number): number {\n    const s = clamp01(scrub);\n    const FLOOR = 0.08; // the heaviest-drift damping — still converges (no stall)\n    return 1 - s * (1 - FLOOR);\n}\n\n/**\n * The liquid-weight scroll spine. Composes the ONE `createScrollReader` + a keyframes.js\n * smoother (`SmoothProgress` / `SpringProgress`); on each coalesced scroll tick it sets the\n * smoother target to the mapped raw progress; the smoother converges with inertia and keeps\n * moving after scroll stops (the liquid weight). Writes the damped 0..1 to `progress` + the\n * optional `property` on `bindEl`.\n *\n * @example\n * ```ts\n * const { progress } = useScrollScene({\n *   source: () => document.querySelector<HTMLElement>(\"main.demo-main-scroller\"),\n *   scrub: 0.618,\n *   bindEl: stageRef,\n *   property: \"--scroll-t\",\n * })\n * ```\n */\nexport function useScrollScene(options: UseScrollSceneOptions): UseScrollSceneReturn {\n    const {\n        scrub = 0.618,\n        register = \"smooth\",\n        dampingFraction = WORLD.dampingFraction,\n        property,\n        respectReducedMotion = true,\n    } = options;\n\n    const reduced = respectReducedMotion ? useReducedMotion() : ref(false);\n\n    const progress = ref(0);\n\n    // The engine — a low-pass smoother (pure lag) or a spring (overshoot + settle). Both\n    // expose `.play(onFrame)` (rAF auto-park) but DIFFERENT target/value surfaces:\n    // SmoothProgress.setTarget()/.current ; SpringProgress.target=… /.value.\n    const smoother =\n        register === \"spring\"\n            ? new SpringProgress({\n                  response: WORLD.response,\n                  dampingFraction,\n                  initial: 0,\n                  respectReducedMotion: false,\n              })\n            : new SmoothProgress({\n                  damping: scrubToDamping(scrub),\n                  initial: 0,\n                  clamp: true,\n                  respectReducedMotion: false,\n              });\n\n    function setTarget(t: number): void {\n        const clamped = clamp01(t);\n        if (smoother instanceof SpringProgress) smoother.target = clamped;\n        else smoother.setTarget(clamped);\n    }\n\n    // The per-frame emit — write the damped value to the ref + the bound custom property.\n    function emit(value: number): void {\n        const v = clamp01(value);\n        progress.value = v;\n        if (property) {\n            const el = toValue(options.bindEl) ?? null;\n            el?.style.setProperty(property, String(v));\n        }\n    }\n\n    // Arm the engine's managed rAF: it ticks only while unsettled, auto-parks at rest.\n    smoother.play(emit);\n\n    let reader: ScrollReader | null = null;\n\n    function mapRaw(r: ScrollReader): number {\n        if (options.map) return clamp01(options.map(r));\n        const extent = r.extent();\n        return extent > 0 ? clamp01(r.position() / extent) : 0;\n    }\n\n    function onTick(r: ScrollReader): void {\n        const raw = mapRaw(r);\n        // PRM (or scrub 0) → 1:1 snap, no interpolated drift (the vestibular floor).\n        if (reduced.value) {\n            setTarget(raw);\n            smoother.snap();\n            emit(raw);\n            return;\n        }\n        setTarget(raw);\n    }\n\n    function attach(): void {\n        reader = createScrollReader(toValue(options.source), onTick);\n        // One correct initial value on mount (before the first scroll burst).\n        reader.schedule();\n    }\n\n    function recalculate(): void {\n        reader?.schedule();\n    }\n\n    function dispose(): void {\n        reader?.stop();\n        reader = null;\n        smoother.stop();\n        stopReducedMotionWatch();\n    }\n\n    const stopReducedMotionWatch = watch(\n        reduced,\n        (next) => {\n            if (!next || !reader) return;\n            const raw = mapRaw(reader);\n            setTarget(raw);\n            smoother.snap();\n            emit(raw);\n        },\n        { flush: \"sync\" },\n    );\n\n    onMounted(attach);\n    if (getCurrentScope()) onScopeDispose(dispose);\n\n    return { progress: readonly(progress), recalculate, dispose };\n}\n"
+  },
+  "demo/stories/motion/springs/CustomAuthoring.vue": {
+   "hunks": [
+    [
+     "import { springPreset } from \"@glass/composables/motion\";\nimport { springProjection } from \"@glass/composables/motion/spring/springProjection\";\nimport { motionTempo } from \"@glass/composables/motion/core/tempo/motionTempo\";\n",
+     "import { springPreset, springProjection } from \"@glass/composables/motion\";\nimport { motionTempo } from \"@glass/composables/motion/motion-core\";\n"
+    ]
+   ]
+  },
+  "demo/stories/motion/springs/NamedRegisters.vue": {
+   "hunks": [
+    [
+     "import { springPreset } from \"@glass/composables/motion\";\nimport { springProjection } from \"@glass/composables/motion/spring/springProjection\";\nimport { motionTempo } from \"@glass/composables/motion/core/tempo/motionTempo\";\n",
+     "import { springPreset, springProjection } from \"@glass/composables/motion\";\nimport { motionTempo } from \"@glass/composables/motion/motion-core\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/aurora/AuroraStage.vue": {
+   "hunks": [
+    [
+     "import type { AuroraConfig } from \"@glass/components/aurora/aurora-config\";\nimport { isAuroraPointerEnabled } from \"@glass/components/aurora/runtime/contract\";\n",
+     "import { isAuroraPointerEnabled, type AuroraConfig } from \"@glass/components/aurora/aurora-config\";\n"
+    ],
+    [
+     "} from \"@glass/composables/glass/webgpu/rendererStatus\";\n",
+     "} from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/blob.vue": {
+   "hunks": [
+    [
+     "import { pendingRenderer, type RendererStatus } from \"@glass/composables/glass/webgpu/rendererStatus\";\n",
+     "import { pendingRenderer, type RendererStatus } from \"@glass/index\";\n"
+    ],
+    [
+     "import { BLOB_CONFIG_DEFAULTS } from \"@glass/components/blob/config\";\nimport { MAX_SATS } from \"@glass/components/blob/mood/constants\";\n",
+     "import { BLOB_CONFIG_DEFAULTS, MAX_SATS } from \"@glass/components/blob/config\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/constellation.vue": {
+   "hunks": [
+    [
+     "import { pendingRenderer, type RendererStatus } from \"@glass/composables/glass/webgpu/rendererStatus\";\n",
+     "import { pendingRenderer, type RendererStatus } from \"@glass/index\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/fourier-field.vue": {
+   "hunks": [
+    [
+     "} from \"@glass/composables/glass/webgpu/rendererStatus\";\n",
+     "} from \"@glass/index\";\n"
+    ],
+    [
+     "    type MintedSpectrum,\n} from \"@glass/components/fourier-field\";\n",
+     "    type MintedSpectrum,\n    // The rung ladder: the one source of the three strokes this control offers.\n    FOURIER_STROKE_RUNGS,\n} from \"@glass/components/fourier-field\";\n"
+    ],
+    [
+     "} from \"@glass/components/fourier-field\";\n// The rung ladder is module-level, not barrel surface — the one source of the three\n// strokes this control offers.\nimport { FOURIER_STROKE_RUNGS } from \"@glass/components/fourier-field/register/constants\";\nimport { cssToOklch, type OklchStop } from \"@glass/composables/color\";\n",
+     "} from \"@glass/components/fourier-field\";\nimport { cssToOklch, type OklchStop } from \"@glass/composables/color\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/fourier-field/sources.ts": {
+   "hunks": [
+    [
+     "import { mulberry32, hashString } from \"@glass/composables/glass/procedural/prng\";\n",
+     "import { mulberry32, hashString } from \"./prng\";\n"
+    ]
+   ]
+  },
+  "demo/stories/substrates/fourier-field/prng.ts": {
+   "create": "// The Fourier studio's seeded PRNG: the elliptic source is keyed by a string seed, so a\n// shape reproduces across mounts. The two primitives are the library's own seeding\n// functions, which no entry publishes (P5-R3), so the studio keeps its own copy.\n\n/** Mulberry32, a fast 32-bit seeded PRNG. Returns a `() => number` in [0, 1). */\nexport function mulberry32(seed: number): () => number {\n    return () => {\n        seed |= 0;\n        seed = (seed + 0x6d2b79f5) | 0;\n        let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);\n        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;\n        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;\n    };\n}\n\n/** String to u32 hash (djb2). */\nexport function hashString(str: string): number {\n    let hash = 5381;\n    for (let i = 0; i < str.length; i++) {\n        hash = ((hash << 5) + hash + str.charCodeAt(i)) | 0;\n    }\n    return hash >>> 0;\n}\n"
+  },
+  "scripts/regen-spring-tokens.mjs": {
+   "hunks": [
+    [
+     "import { SPRING_PRESETS } from \"../src/composables/motion/index.ts\";\nimport {\n    springProjection,\n    springSettleDurationSeconds,\n} from \"../src/composables/motion/spring/springProjection.ts\";\n",
+     "import { SPRING_PRESETS, springProjection } from \"../src/composables/motion/index.ts\";\n"
+    ],
+    [
+     "        const sec = springSettleDurationSeconds(preset);\n",
+     "        const sec = springProjection(preset).settleSeconds;\n"
+    ],
+    [
+     "            `  --spring-${preset.name}: response=${preset.response}s, ζ=${preset.dampingFraction}, settle=${springSettleDurationSeconds(preset)}s (${preset.comment})`,\n",
+     "            `  --spring-${preset.name}: response=${preset.response}s, ζ=${preset.dampingFraction}, settle=${springProjection(preset).settleSeconds}s (${preset.comment})`,\n"
+    ]
+   ]
+  },
+  "tests-visual/aurora/aurora-swraster.spec.ts": {
+   "hunks": [
+    [
+     "                        \"/src/components/aurora/composables/auroraFallbackGround.ts\"\n",
+     "                        \"/src/components/aurora/aurora-config.ts\"\n"
+    ],
+    [
+     "                        \"/src/components/aurora/config/presets.ts\"\n",
+     "                        \"/src/components/aurora/aurora-config.ts\"\n"
+    ],
+    [
+     "                \"/src/components/aurora/config/renderMode.ts\"\n",
+     "                \"/src/components/aurora/aurora-config.ts\"\n"
+    ],
+    [
+     "                \"/src/components/aurora/runtime/runtime.ts\"\n",
+     "                \"/src/components/aurora/index.ts\"\n"
+    ],
+    [
+     "            const presetMod = await import(\n                \"/src/components/aurora/config/presets.ts\"\n            );\n",
+     "            const presetMod = await import(\n                \"/src/components/aurora/aurora-config.ts\"\n            );\n"
+    ]
+   ]
+  },
+  "tests-visual/aurora/aurora-vibrancy.spec.ts": {
+   "hunks": [
+    [
+     "                        \"/src/components/aurora/composables/auroraFallbackGround.ts\"\n",
+     "                        \"/src/components/aurora/aurora-config.ts\"\n"
+    ],
+    [
+     "            const groundMod = await import(\n                \"/src/components/aurora/composables/auroraFallbackGround.ts\"\n            );\n",
+     "            const groundMod = await import(\n                \"/src/components/aurora/aurora-config.ts\"\n            );\n"
+    ],
+    [
+     "                const groundMod = await import(\n                    \"/src/components/aurora/composables/auroraFallbackGround.ts\"\n                );\n",
+     "                const groundMod = await import(\n                    \"/src/components/aurora/aurora-config.ts\"\n                );\n"
+    ]
+   ]
+  },
+  "tests/composables/motion/springProjection.test.ts": {
+   "hunks": [
+    [
+     "import { SPRING_PRESETS } from \"@glass/composables/motion\";\nimport { springProjection } from \"@glass/composables/motion/spring/springProjection\";\n",
+     "import { SPRING_PRESETS, springProjection } from \"@glass/composables/motion\";\n"
+    ]
+   ]
+  },
+  "tests/demo/springs-story.test.ts": {
+   "hunks": [
+    [
+     "import { springProjection } from \"@glass/composables/motion/spring/springProjection\";\nimport { springPreset } from \"@glass/composables/motion\";\n",
+     "import { springPreset, springProjection } from \"@glass/composables/motion\";\n"
+    ]
+   ]
+  },
+  "tests/components/sheet/sheet-motion.test.ts": {
+   "hunks": [
+    [
+     "import * as springMountModule from \"@glass/composables/motion/spring/useSpringMount\";\n",
+     "import * as springMountModule from \"@glass/composables/motion\";\n"
+    ]
+   ]
+  },
+  "tests/components/fourier-field/surface.smoke.test.ts": {
+   "hunks": [
+    [
+     "import { DEFAULT_FOURIER_CONFIG, FourierField } from \"@glass/components/fourier-field\";\nimport { FOURIER_QUANTUM_FINE } from \"@glass/components/fourier-field/register/constants\";\n\n",
+     "import { DEFAULT_FOURIER_CONFIG, FourierField } from \"@glass/components/fourier-field\";\n\n"
+    ],
+    [
+     "            FOURIER_QUANTUM_FINE,\n",
+     "            1 / 64, // the fine keyboard quantum: 1/64 of the period\n"
+    ]
+   ]
+  },
+  "tests/gates/orphan-css/partial.test.ts": {
+   "hunks": [
+    [
+     "        // so any nonexistent path is vacuously \"unreachable\" — that proves nothing). `useScrollScene`\n        // is a genuine `src/` module that no public entry imports: present AND excluded from reach.\n        const deadSfc = join(SRC, \"composables\", \"motion\", \"scroll\", \"useScrollScene.ts\");\n",
+     "        // so any nonexistent path is vacuously \"unreachable\" — that proves nothing). A colocated test\n        // is a genuine `src/` module that no public entry imports (a slot is never on a door's\n        // chain): present AND excluded from reach.\n        const deadSfc = join(SRC, \"composables\", \"color\", \"__tests__\", \"resolveColor.test.ts\");\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "demo/composables/virtual/virtualSectionLayout.ts",
+   "why": "SectionHierarchy is published on ./sidebar (S64)"
+  },
+  {
+   "file": "demo/stories/data/search/catalogue.ts",
+   "why": "SearchableItem is published on ./dock (S64)"
+  },
+  {
+   "file": "demo/stories/dock/_frame/DockStage.vue",
+   "why": "the backdrop-luminance pair is published on ./dock (S64)"
+  },
+  {
+   "file": "demo/stories/dock/dock-search.vue",
+   "why": "useDockState is published on ./dock (P5-R3, S64)"
+  },
+  {
+   "file": "demo/stories/dock/dock-search.vue",
+   "why": "SearchableItem rides the ./dock import above"
+  },
+  {
+   "file": "demo/stories/substrates/glass-material.vue",
+   "why": "useGlassBackdropLuminance is published on ./dock (S64)"
+  },
+  {
+   "file": "demo/stories/data/search.vue",
+   "why": "arm (a): the route drives the ranking engine through useDockSearch, its one public expression (BK #42, SE-4); no dock is mounted, so the composed state machine has no root"
+  },
+  {
+   "file": "demo/stories/data/search.vue",
+   "why": "arm (a): the select hook is useDockSearch's onResultSelect; the engine handle is its fuzzy"
+  },
+  {
+   "file": "demo/stories/motion/scroll.vue",
+   "why": "P6-R1 (a): the scroll story reads its own spine, beside it"
+  },
+  {
+   "file": "demo/stories/motion/scroll/useScrollScene.ts",
+   "why": "P6-R1 (a): the liquid-weight spine is the scroll story's own register (its one reader); it reads the published useReducedMotion on ./motion-core and keyframes.js's SmoothProgress, and samples its own port"
+  },
+  {
+   "file": "src/composables/motion/scroll/useScrollScene.ts",
+   "why": "P6-R1 (a): no library file reads it and no entry publishes it; the scroll story keeps the spine, so the library file leaves src"
+  },
+  {
+   "file": "demo/stories/motion/springs/CustomAuthoring.vue",
+   "why": "springProjection is published on ./motion, motionTempo on ./motion-core (S64)"
+  },
+  {
+   "file": "demo/stories/motion/springs/NamedRegisters.vue",
+   "why": "springProjection is published on ./motion, motionTempo on ./motion-core (S64)"
+  },
+  {
+   "file": "demo/stories/substrates/aurora/AuroraStage.vue",
+   "why": "isAuroraPointerEnabled is published on ./aurora-config (S64)"
+  },
+  {
+   "file": "demo/stories/substrates/aurora/AuroraStage.vue",
+   "why": "pendingRenderer and RendererStatus ride the root (S64)"
+  },
+  {
+   "file": "demo/stories/substrates/blob.vue",
+   "why": "pendingRenderer and RendererStatus ride the root (S64)"
+  },
+  {
+   "file": "demo/stories/substrates/blob.vue",
+   "why": "MAX_SATS is published on ./blob-config (S64)"
+  },
+  {
+   "file": "demo/stories/substrates/constellation.vue",
+   "why": "pendingRenderer and RendererStatus ride the root (S64)"
+  },
+  {
+   "file": "demo/stories/substrates/fourier-field.vue",
+   "why": "pendingRenderer and RendererStatus ride the root (S64)"
+  },
+  {
+   "file": "demo/stories/substrates/fourier-field.vue",
+   "why": "FOURIER_STROKE_RUNGS is published on ./fourier-field beside the config (S64)"
+  },
+  {
+   "file": "demo/stories/substrates/fourier-field/sources.ts",
+   "why": "P5-R3: the PRNG primitives are not a published contract; the studio seeds from a demo-local copy"
+  },
+  {
+   "file": "demo/stories/substrates/fourier-field/prng.ts",
+   "why": "P5-R3: the studio's seeded PRNG, demo-local (the same two primitives the library seeds its organic shapes with; no published name carries them)"
+  },
+  {
+   "file": "scripts/regen-spring-tokens.mjs",
+   "why": "springProjection is published on ./motion (S64); its settleSeconds is the settle the tokens carry, so the script reads the one projection"
+  },
+  {
+   "file": "scripts/regen-spring-tokens.mjs",
+   "why": "the settle clock is the projection's settleSeconds"
+  },
+  {
+   "file": "scripts/regen-spring-tokens.mjs",
+   "why": "the settle clock is the projection's settleSeconds"
+  },
+  {
+   "file": "tests-visual/aurora/aurora-swraster.spec.ts",
+   "why": "sampleAuroraField and auroraFallbackGround are published on ./aurora-config"
+  },
+  {
+   "file": "tests-visual/aurora/aurora-swraster.spec.ts",
+   "why": "DEFAULT_AURORA_CONFIG is published on ./aurora-config"
+  },
+  {
+   "file": "tests-visual/aurora/aurora-swraster.spec.ts",
+   "why": "isSoftwareWebGLRenderer is published on ./aurora-config"
+  },
+  {
+   "file": "tests-visual/aurora/aurora-swraster.spec.ts",
+   "why": "createAurora is published on ./aurora"
+  },
+  {
+   "file": "tests-visual/aurora/aurora-vibrancy.spec.ts",
+   "why": "sampleAuroraField is published on ./aurora-config"
+  },
+  {
+   "file": "tests/composables/motion/springProjection.test.ts",
+   "why": "springProjection is published on ./motion (S64)"
+  },
+  {
+   "file": "tests/demo/springs-story.test.ts",
+   "why": "springProjection is published on ./motion (S64)"
+  },
+  {
+   "file": "tests/components/sheet/sheet-motion.test.ts",
+   "why": "the sheet calls useSpringMount through the ./motion entry; the spy sits on that entry"
+  },
+  {
+   "file": "tests/components/fourier-field/surface.smoke.test.ts",
+   "why": "FOURIER_QUANTUM_FINE is not published; the test states the quantum the slider steps by"
+  },
+  {
+   "file": "tests/components/fourier-field/surface.smoke.test.ts",
+   "why": "the fine keyboard quantum, 1/64 of the period, stated where it is observed"
+  },
+  {
+   "file": "tests/gates/orphan-css/partial.test.ts",
+   "why": "P6-R1 (a): the bite's referrer, useScrollScene.ts, leaves src in this step; a colocated test is present in src and reached by no entry (a slot is never on a door's chain), so it is the bite's present-and-unreachable referrer"
+  }
+ ]
+}

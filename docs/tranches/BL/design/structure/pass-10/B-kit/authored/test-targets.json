@@ -1,0 +1,6 @@
+{
+ "note": "AUTHORED input to derive/colocate-rest.mjs: a test whose default slot path is taken is named here, with its reason (names are reviewed, S-7)",
+ "targets": {
+  "tests/composables/useTokenColor.test.ts": { "to": "src/composables/dom/__tests__/useTokenColor.resolve.test.ts", "why": "the slot already holds useTokenColor.test.ts (the injection seam); this one covers resolution and the dark-mode switch" }
+ }
+}

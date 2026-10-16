@@ -1,0 +1,31 @@
+{
+ "step": "B-S73b (frozen from authored/p8-dock-context-move.json, F-9)",
+ "moves": [
+  {
+   "from": "src/components/dock/composables/dockContext.ts",
+   "to": "src/components/dock/context/dockContext.ts"
+  }
+ ],
+ "scanDeltas": [
+  {
+   "scanner": "tests/styles/engage-ladder.test.ts",
+   "spec": "`${COMPONENTS}/${name}`",
+   "file": "src/components/dock/composables/dockContext.ts",
+   "reason": "S73b: src/components/dock/composables/dockContext.ts -> src/components/dock/context/dockContext.ts; the scanner's sensitivity is judged by the test run"
+  },
+  {
+   "scanner": "tests/styles/typed-track-seam.test.ts",
+   "spec": "`src/${rel}`",
+   "file": "src/components/dock/composables/dockContext.ts",
+   "reason": "S73b: src/components/dock/composables/dockContext.ts -> src/components/dock/context/dockContext.ts; the scanner's sensitivity is judged by the test run"
+  }
+ ],
+ "globDeltas": [],
+ "reasons": [
+  {
+   "from": "src/components/dock/composables/dockContext.ts",
+   "to": "src/components/dock/context/dockContext.ts",
+   "why": "the dock context's own module: read by GlassDock, DockSeparator, DockLayerGroup, the dock entry and the slider's dock hold"
+  }
+ ]
+}

@@ -1,0 +1,445 @@
+{
+ "$schema": "browser-seat/2",
+ "root": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/base",
+ "testDir": "tests-visual",
+ "project": "chromium-headless-new",
+ "plant": null,
+ "specs": [
+  "config-right.spec.ts",
+  "hierarchy.spec.ts",
+  "substrate-cohesion.spec.ts",
+  "substrate-paints-color.spec.ts",
+  "viz-configurator-suite.spec.ts",
+  "viz-fourier-ribbon.spec.ts",
+  "viz-interaction.spec.ts",
+  "webgpu-everywhere.spec.ts"
+ ],
+ "selection": [
+  {
+   "spec": "config-right.spec.ts",
+   "bands": [],
+   "reasons": [
+    "named"
+   ]
+  },
+  {
+   "spec": "hierarchy.spec.ts",
+   "bands": [],
+   "reasons": [
+    "named"
+   ]
+  },
+  {
+   "spec": "substrate-cohesion.spec.ts",
+   "bands": [],
+   "reasons": [
+    "named"
+   ]
+  },
+  {
+   "spec": "substrate-paints-color.spec.ts",
+   "bands": [],
+   "reasons": [
+    "named",
+    "the π pixel floor (every call)"
+   ]
+  },
+  {
+   "spec": "viz-configurator-suite.spec.ts",
+   "bands": [],
+   "reasons": [
+    "named"
+   ]
+  },
+  {
+   "spec": "viz-fourier-ribbon.spec.ts",
+   "bands": [],
+   "reasons": [
+    "named"
+   ]
+  },
+  {
+   "spec": "viz-interaction.spec.ts",
+   "bands": [],
+   "reasons": [
+    "named"
+   ]
+  },
+  {
+   "spec": "webgpu-everywhere.spec.ts",
+   "bands": [],
+   "reasons": [
+    "named"
+   ]
+  }
+ ],
+ "bands": [],
+ "url": "http://localhost:53637",
+ "waitedS": 0.001,
+ "ranS": 189.962,
+ "stats": {
+  "startTime": "2026-10-16T06:34:28.594Z",
+  "duration": 188321.66199999998,
+  "expected": 33,
+  "skipped": 0,
+  "unexpected": 30,
+  "flaky": 0
+ },
+ "tests": 63,
+ "ran": 63,
+ "passed": 33,
+ "failed": 30,
+ "skipped": 0,
+ "verdict": "RED",
+ "baseReport": null,
+ "newFailures": [],
+ "failures": [
+  "config-right.spec.ts :: aurora light: two-column, aside right, rounded, DOM stage→aside",
+  "config-right.spec.ts :: aurora dark: two-column, aside right, rounded, DOM stage→aside",
+  "config-right.spec.ts :: blob light: two-column, aside right, rounded, DOM stage→aside",
+  "config-right.spec.ts :: blob dark: two-column, aside right, rounded, DOM stage→aside",
+  "config-right.spec.ts :: fourier-field light: two-column, aside right, rounded, DOM stage→aside",
+  "config-right.spec.ts :: fourier-field dark: two-column, aside right, rounded, DOM stage→aside",
+  "config-right.spec.ts :: configurator light: two-column, aside right, rounded, DOM stage→aside",
+  "config-right.spec.ts :: configurator dark: two-column, aside right, rounded, DOM stage→aside",
+  "hierarchy.spec.ts :: H1+H2 — every section <h2> resolves to 20.4px; no child <h3> > parent <h2>",
+  "hierarchy.spec.ts :: H3 — Configurator section label > row label; preset-row block-padding > body-row's",
+  "hierarchy.spec.ts :: H2-GUTTER — the <main> reserves the --dock-content-safe-inset gutter",
+  "substrate-cohesion.spec.ts :: a <Constellation :opacity-ceiling=0.4> paints ~0.4x the ink of the :opacity-ceiling=1 instance",
+  "substrate-cohesion.spec.ts :: the blob cast shadow is SOFT + ambient-tinted (not 80%-near-black) — the gel bead, not the Memphis stamp",
+  "viz-configurator-suite.spec.ts :: aurora light: controls RIGHT, rounded panel + canvas, ONE card",
+  "viz-configurator-suite.spec.ts :: aurora dark: controls RIGHT, rounded panel + canvas, ONE card",
+  "viz-configurator-suite.spec.ts :: blob light: controls RIGHT, rounded panel + canvas, ONE card",
+  "viz-configurator-suite.spec.ts :: blob dark: controls RIGHT, rounded panel + canvas, ONE card",
+  "viz-configurator-suite.spec.ts :: fourier-field light: controls RIGHT, rounded panel + canvas, ONE card",
+  "viz-configurator-suite.spec.ts :: fourier-field dark: controls RIGHT, rounded panel + canvas, ONE card",
+  "viz-configurator-suite.spec.ts :: aurora: the preset thumbnail reads meanLum > 0 (the dead-card fix)",
+  "viz-interaction.spec.ts :: aurora reacts to cursor velocity AND acceleration (light)",
+  "viz-interaction.spec.ts :: aurora PRM-freezes — sweep + flick produce NO reactive change (light)",
+  "viz-interaction.spec.ts :: blob reacts to cursor velocity AND acceleration (light)",
+  "viz-interaction.spec.ts :: constellation reacts to cursor velocity AND acceleration (light)",
+  "viz-interaction.spec.ts :: fourier-field reacts to cursor velocity AND acceleration (light)",
+  "viz-interaction.spec.ts :: aurora reacts to cursor velocity AND acceleration (dark)",
+  "viz-interaction.spec.ts :: aurora PRM-freezes — sweep + flick produce NO reactive change (dark)",
+  "viz-interaction.spec.ts :: blob reacts to cursor velocity AND acceleration (dark)",
+  "viz-interaction.spec.ts :: constellation reacts to cursor velocity AND acceleration (dark)",
+  "viz-interaction.spec.ts :: fourier-field reacts to cursor velocity AND acceleration (dark)"
+ ],
+ "results": [
+  {
+   "spec": "config-right.spec.ts",
+   "title": "aurora light: two-column, aside right, rounded, DOM stage→aside",
+   "status": "unexpected"
+  },
+  {
+   "spec": "config-right.spec.ts",
+   "title": "aurora dark: two-column, aside right, rounded, DOM stage→aside",
+   "status": "unexpected"
+  },
+  {
+   "spec": "config-right.spec.ts",
+   "title": "blob light: two-column, aside right, rounded, DOM stage→aside",
+   "status": "unexpected"
+  },
+  {
+   "spec": "config-right.spec.ts",
+   "title": "blob dark: two-column, aside right, rounded, DOM stage→aside",
+   "status": "unexpected"
+  },
+  {
+   "spec": "config-right.spec.ts",
+   "title": "fourier-field light: two-column, aside right, rounded, DOM stage→aside",
+   "status": "unexpected"
+  },
+  {
+   "spec": "config-right.spec.ts",
+   "title": "fourier-field dark: two-column, aside right, rounded, DOM stage→aside",
+   "status": "unexpected"
+  },
+  {
+   "spec": "config-right.spec.ts",
+   "title": "configurator light: two-column, aside right, rounded, DOM stage→aside",
+   "status": "unexpected"
+  },
+  {
+   "spec": "config-right.spec.ts",
+   "title": "configurator dark: two-column, aside right, rounded, DOM stage→aside",
+   "status": "unexpected"
+  },
+  {
+   "spec": "config-right.spec.ts",
+   "title": "aurora: ≤900px resolves ONE column, stage above aside",
+   "status": "expected"
+  },
+  {
+   "spec": "config-right.spec.ts",
+   "title": "blob: ≤900px resolves ONE column, stage above aside",
+   "status": "expected"
+  },
+  {
+   "spec": "config-right.spec.ts",
+   "title": "fourier-field: ≤900px resolves ONE column, stage above aside",
+   "status": "expected"
+  },
+  {
+   "spec": "config-right.spec.ts",
+   "title": "configurator: ≤900px resolves ONE column, stage above aside",
+   "status": "expected"
+  },
+  {
+   "spec": "hierarchy.spec.ts",
+   "title": "H1+H2 — every section <h2> resolves to 20.4px; no child <h3> > parent <h2>",
+   "status": "unexpected"
+  },
+  {
+   "spec": "hierarchy.spec.ts",
+   "title": "H3 — Configurator section label > row label; preset-row block-padding > body-row's",
+   "status": "unexpected"
+  },
+  {
+   "spec": "hierarchy.spec.ts",
+   "title": "H2-ORDER — the cluster renders eyebrow→title→blurb top-to-bottom, one dominant focal",
+   "status": "expected"
+  },
+  {
+   "spec": "hierarchy.spec.ts",
+   "title": "H2-GRAVITY — the title arrives NO-overshoot (translateY monotone to 0, never past)",
+   "status": "expected"
+  },
+  {
+   "spec": "hierarchy.spec.ts",
+   "title": "H2-PRM — under reduce the cluster paints its static terminal (no rise)",
+   "status": "expected"
+  },
+  {
+   "spec": "hierarchy.spec.ts",
+   "title": "H2-GUTTER — the <main> reserves the --dock-content-safe-inset gutter",
+   "status": "unexpected"
+  },
+  {
+   "spec": "substrate-cohesion.spec.ts",
+   "title": "the blob MOOD bead chroma sits in the warm-register band the FourierField comet occupies",
+   "status": "expected"
+  },
+  {
+   "spec": "substrate-cohesion.spec.ts",
+   "title": "a <Constellation :opacity-ceiling=0.4> paints ~0.4x the ink of the :opacity-ceiling=1 instance",
+   "status": "unexpected"
+  },
+  {
+   "spec": "substrate-cohesion.spec.ts",
+   "title": "the blob cast shadow is SOFT + ambient-tinted (not 80%-near-black) — the gel bead, not the Memphis stamp",
+   "status": "unexpected"
+  },
+  {
+   "spec": "substrate-paints-color.spec.ts",
+   "title": "aurora paints a non-black interior on DEFAULT + every preset at t=1",
+   "status": "expected"
+  },
+  {
+   "spec": "substrate-paints-color.spec.ts",
+   "title": "blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS",
+   "status": "expected"
+  },
+  {
+   "spec": "substrate-paints-color.spec.ts",
+   "title": "blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS",
+   "status": "expected"
+  },
+  {
+   "spec": "viz-configurator-suite.spec.ts",
+   "title": "aurora light: controls RIGHT, rounded panel + canvas, ONE card",
+   "status": "unexpected"
+  },
+  {
+   "spec": "viz-configurator-suite.spec.ts",
+   "title": "aurora dark: controls RIGHT, rounded panel + canvas, ONE card",
+   "status": "unexpected"
+  },
+  {
+   "spec": "viz-configurator-suite.spec.ts",
+   "title": "blob light: controls RIGHT, rounded panel + canvas, ONE card",
+   "status": "unexpected"
+  },
+  {
+   "spec": "viz-configurator-suite.spec.ts",
+   "title": "blob dark: controls RIGHT, rounded panel + canvas, ONE card",
+   "status": "unexpected"
+  },
+  {
+   "spec": "viz-configurator-suite.spec.ts",
+   "title": "fourier-field light: controls RIGHT, rounded panel + canvas, ONE card",
+   "status": "unexpected"
+  },
+  {
+   "spec": "viz-configurator-suite.spec.ts",
+   "title": "fourier-field dark: controls RIGHT, rounded panel + canvas, ONE card",
+   "status": "unexpected"
+  },
+  {
+   "spec": "viz-configurator-suite.spec.ts",
+   "title": "aurora: ≤900px resolves ONE column, stage above aside",
+   "status": "expected"
+  },
+  {
+   "spec": "viz-configurator-suite.spec.ts",
+   "title": "blob: ≤900px resolves ONE column, stage above aside",
+   "status": "expected"
+  },
+  {
+   "spec": "viz-configurator-suite.spec.ts",
+   "title": "fourier-field: ≤900px resolves ONE column, stage above aside",
+   "status": "expected"
+  },
+  {
+   "spec": "viz-configurator-suite.spec.ts",
+   "title": "aurora: the preset thumbnail reads meanLum > 0 (the dead-card fix)",
+   "status": "unexpected"
+  },
+  {
+   "spec": "viz-fourier-ribbon.spec.ts",
+   "title": "fourier ribbon paints as a chromatic stroke — light",
+   "status": "expected"
+  },
+  {
+   "spec": "viz-fourier-ribbon.spec.ts",
+   "title": "fourier ribbon paints as a chromatic stroke — dark",
+   "status": "expected"
+  },
+  {
+   "spec": "viz-fourier-ribbon.spec.ts",
+   "title": "PRM freezes the ribbon to one static frame",
+   "status": "expected"
+  },
+  {
+   "spec": "viz-interaction.spec.ts",
+   "title": "aurora reacts to cursor velocity AND acceleration (light)",
+   "status": "unexpected"
+  },
+  {
+   "spec": "viz-interaction.spec.ts",
+   "title": "aurora PRM-freezes — sweep + flick produce NO reactive change (light)",
+   "status": "unexpected"
+  },
+  {
+   "spec": "viz-interaction.spec.ts",
+   "title": "blob reacts to cursor velocity AND acceleration (light)",
+   "status": "unexpected"
+  },
+  {
+   "spec": "viz-interaction.spec.ts",
+   "title": "blob PRM-freezes — sweep + flick produce NO reactive change (light)",
+   "status": "expected"
+  },
+  {
+   "spec": "viz-interaction.spec.ts",
+   "title": "constellation reacts to cursor velocity AND acceleration (light)",
+   "status": "unexpected"
+  },
+  {
+   "spec": "viz-interaction.spec.ts",
+   "title": "constellation PRM-freezes — sweep + flick produce NO reactive change (light)",
+   "status": "expected"
+  },
+  {
+   "spec": "viz-interaction.spec.ts",
+   "title": "fourier-field reacts to cursor velocity AND acceleration (light)",
+   "status": "unexpected"
+  },
+  {
+   "spec": "viz-interaction.spec.ts",
+   "title": "fourier-field PRM-freezes — sweep + flick produce NO reactive change (light)",
+   "status": "expected"
+  },
+  {
+   "spec": "viz-interaction.spec.ts",
+   "title": "aurora reacts to cursor velocity AND acceleration (dark)",
+   "status": "unexpected"
+  },
+  {
+   "spec": "viz-interaction.spec.ts",
+   "title": "aurora PRM-freezes — sweep + flick produce NO reactive change (dark)",
+   "status": "unexpected"
+  },
+  {
+   "spec": "viz-interaction.spec.ts",
+   "title": "blob reacts to cursor velocity AND acceleration (dark)",
+   "status": "unexpected"
+  },
+  {
+   "spec": "viz-interaction.spec.ts",
+   "title": "blob PRM-freezes — sweep + flick produce NO reactive change (dark)",
+   "status": "expected"
+  },
+  {
+   "spec": "viz-interaction.spec.ts",
+   "title": "constellation reacts to cursor velocity AND acceleration (dark)",
+   "status": "unexpected"
+  },
+  {
+   "spec": "viz-interaction.spec.ts",
+   "title": "constellation PRM-freezes — sweep + flick produce NO reactive change (dark)",
+   "status": "expected"
+  },
+  {
+   "spec": "viz-interaction.spec.ts",
+   "title": "fourier-field reacts to cursor velocity AND acceleration (dark)",
+   "status": "unexpected"
+  },
+  {
+   "spec": "viz-interaction.spec.ts",
+   "title": "fourier-field PRM-freezes — sweep + flick produce NO reactive change (dark)",
+   "status": "expected"
+  },
+  {
+   "spec": "webgpu-everywhere.spec.ts",
+   "title": "aurora paints a non-blank field with no adapter-error spew (light)",
+   "status": "expected"
+  },
+  {
+   "spec": "webgpu-everywhere.spec.ts",
+   "title": "blob paints a non-blank field with no adapter-error spew (light)",
+   "status": "expected"
+  },
+  {
+   "spec": "webgpu-everywhere.spec.ts",
+   "title": "constellation paints a non-blank field with no adapter-error spew (light)",
+   "status": "expected"
+  },
+  {
+   "spec": "webgpu-everywhere.spec.ts",
+   "title": "fourier-field paints a non-blank field with no adapter-error spew (light)",
+   "status": "expected"
+  },
+  {
+   "spec": "webgpu-everywhere.spec.ts",
+   "title": "aurora paints a non-blank field with no adapter-error spew (dark)",
+   "status": "expected"
+  },
+  {
+   "spec": "webgpu-everywhere.spec.ts",
+   "title": "blob paints a non-blank field with no adapter-error spew (dark)",
+   "status": "expected"
+  },
+  {
+   "spec": "webgpu-everywhere.spec.ts",
+   "title": "constellation paints a non-blank field with no adapter-error spew (dark)",
+   "status": "expected"
+  },
+  {
+   "spec": "webgpu-everywhere.spec.ts",
+   "title": "fourier-field paints a non-blank field with no adapter-error spew (dark)",
+   "status": "expected"
+  },
+  {
+   "spec": "webgpu-everywhere.spec.ts",
+   "title": "every WGSL primary compiles with NO reserved-keyword error on real Metal",
+   "status": "expected"
+  },
+  {
+   "spec": "webgpu-everywhere.spec.ts",
+   "title": "the offscreen-park attaches ZERO frames (the demand-gate, made a number)",
+   "status": "expected"
+  }
+ ]
+}

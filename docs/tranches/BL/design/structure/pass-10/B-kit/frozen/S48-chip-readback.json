@@ -1,0 +1,14 @@
+{
+ "step": "FP4-3 / S-34: the chip accent-band readback enters the tree in chip's slot (R-3), so FD-4's evidence for any chip-band reorder is a committed spec that reads the property",
+ "files": {
+  "src/components/chip/__tests__/chip-accent-band.visual.ts": {
+   "create": "// chip-accent-band.visual.ts — the computed-style readback of a Chip's accent band (S-34).\n// Every Chip wears `glass-chip … accent-tone` (the recipe in chipVariants.ts, read below).\n// In @layer components `.glass-chip` follows `.accent-tone` at the same specificity, so a\n// Chip's --accent-band-strength is glass-chip's contrast-floored band, `max(18%, …)`, and\n// not the register's flat 18%. A cascade reorder that swaps the two rungs changes the value,\n// which no class-level assertion sees; FD-4 counts this spec as the property's reader.\nimport { readFileSync } from \"node:fs\";\nimport { expect, test } from \"@playwright/test\";\n\nconst RECIPE = readFileSync(new URL(\"../chipVariants.ts\", import.meta.url), \"utf8\");\n\ntest(\"a Chip's --accent-band-strength is glass-chip's floored band, not the register's 18%\", async ({ page }) => {\n    expect(RECIPE, \"every Chip wears glass-chip and accent-tone\").toMatch(/\"glass-chip\\b[^\"]*\\baccent-tone\\b/);\n    await page.goto(\"/foundations/icons\", { waitUntil: \"domcontentloaded\" });\n    const chip = page.locator(\".glass-chip.accent-tone\").first();\n    await chip.waitFor({ state: \"attached\", timeout: 30_000 });\n    const band = await chip.evaluate((el) => getComputedStyle(el).getPropertyValue(\"--accent-band-strength\").trim());\n    expect(band).toMatch(/^max\\(/);\n});\n"
+  }
+ },
+ "reasons": [
+  {
+   "file": "src/components/chip/__tests__/chip-accent-band.visual.ts",
+   "why": "R-3: the readback's subject is chip (it reads chip's recipe), so it lives in chip's slot as a visual spec"
+  }
+ ]
+}

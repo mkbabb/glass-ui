@@ -1,0 +1,19 @@
+{
+ "step": "P7-G6 (P6-R1): scroll-driven.css's membership note names the demo's own scroll spine, demo/stories/motion/scroll/useScrollScene.ts, which S65 moved out of src",
+ "files": {
+  "src/styles/scroll/scroll-driven.css": {
+   "hunks": [
+    [
+     " * `useScrollScene` spine, so the axis has one in-repo specimen showing all three\n",
+     " * story's own `useScrollScene` spine (`demo/stories/motion/scroll/useScrollScene.ts`),\n * so the axis has one in-repo specimen showing all three\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "src/styles/scroll/scroll-driven.css",
+   "why": "the spine the note cites left src at S65; the citation names where it lives"
+  }
+ ]
+}

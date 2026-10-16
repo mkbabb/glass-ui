@@ -1,0 +1,96 @@
+B-S11 zone src — the final verification, 2026-09-26. Every command below ran on a linked
+worktree; the outputs are filtered to the lines the report cites.
+
+$S  = <scratch>/D1/p5/split-src
+wt  = the authoring tree (pass-4 chain + rows 01-15 authored by hand)
+wt2 = a fresh worktree at 5e278aa7, node_modules + tests-visual/node_modules symlinked
+kitwt = an untouched worktree at 5e278aa7 (the pass-4 kit and floor rows at that commit)
+
+── 1 · replay pass-4's chain on wt2 ─────────────────────────────────────────────────────
+$ node $S/kitwt/docs/tranches/BL/design/structure/pass-4/B-kit/replay.mjs --root $S/wt2
+replay: from the base (digest 35f7b831fe810aac…)
+  S37 [row] row 2 written, 0 applied → 6618df1f7d2f5a0c…
+replay done in 185.9 s; code digest 6618df1f7d2f5a0c657e4b1d14f61203e83e5b8164463abdb479f0432ca8685c over 1437 files; chain final MATCH
+(The same command run with the checkout's CURRENT kit stops at S1: "after S1 the digest is
+fb00dafd0f89b6f0…, the chain records a974a609c0791460…". The checkout's floor rows moved
+with the P5 floor commit; the pass-4 chain replays only with the kit of its own base.)
+
+── 2 · apply rows 01-15 in ORDER.json order, compare with wt ────────────────────────────
+$ node <checkout>/…/pass-5/B-kit/authored/splits/src/tools/apply.mjs --root $S/wt2 --check $S/wt
+01-dock-glassdock edits: 5 file(s) written, 0 already applied
+02-dock-styles moves: ok true, 3 3 pending, 0 applied
+02-dock-styles edits: 9 file(s) written, 0 already applied
+03-timeline edits: 4 file(s) written, 0 already applied
+04-pager-dots edits: 3 file(s) written, 0 already applied
+05-easing-picker edits: 4 file(s) written, 0 already applied
+06-configurator edits: 8 file(s) written, 0 already applied
+07-slider-sheet-css edits: 11 file(s) written, 0 already applied
+08-music-staff edits: 9 file(s) written, 0 already applied
+09-sortable-drag edits: 3 file(s) written, 0 already applied
+10-aurora-presets edits: 8 file(s) written, 0 already applied
+11-aurora-runtime edits: 7 file(s) written, 0 already applied
+12-blob-shaders edits: 5 file(s) written, 0 already applied
+13-webgpu-canvas edits: 4 file(s) written, 0 already applied
+14-constellation-tests edits: 4 file(s) written, 0 already applied
+15-canvas-tests edits: 5 file(s) written, 0 already applied
+check against $S/wt: IDENTICAL
+
+── 3 · build and both typecheck programs on wt2 ─────────────────────────────────────────
+$ npm run build                                   → exit 0
+$ node_modules/.bin/vue-tsc --noEmit              → exit 0
+$ node_modules/.bin/vue-tsc --noEmit -p tsconfig.test.json → exit 0
+
+── 4 · whole vitest suite, base (pass-4 tree) vs wt2 ────────────────────────────────────
+$ node_modules/.bin/vitest run --reporter=json
+base  2331 tests, 2324 passed, 6 failed, 1 skipped, 723 files
+final 2331 tests, 2324 passed, 6 failed, 1 skipped, 729 files
+The 6 failures are the same 6 on both sides:
+  tests/gates/boot-graph.test.ts × 3 (build arm: no dist-demo in the worktree)
+  tests/gates/seal.test.ts B0, B2, B6 (red on the base tree)
+Per-subject counts: music-staff 55 = 55; sortable drag 39 = 39;
+constellation engine 41 = 20 + 14 + 7; WebGL canvas 10 = 6 + 4; WebGPU canvas 8 = 4 + 4.
+
+── 5 · seal gate on wt2 vs the base tree ────────────────────────────────────────────────
+$ node scripts/structure/seal/seal.mjs --root . --json gate-final.json
+FAIL B0 444 PASS B1 0 FAIL B2 67 PASS B3 0 PASS B4 0 PASS B5 0 FAIL B6 41 PASS B7 0 PASS B8 0
+PASS B9 0 PASS B10 0 PASS B11 0 PASS B12 0 PASS B13 0 PASS B14 0 PASS B15 0 PASS B16 0 PASS B17 0
+set diff against the base verdicts:
+  B0  430 → 430 (4 new, 4 gone: three g-dock-lattice reads name run-cap.css for run.css;
+      focus-veil's read(path) moves from :340 to :342)
+  B2  67 → 67 (3 new, 3 gone: AuroraStage.vue and harness.test.ts re-point to
+      runtime/contract.ts and config/presets.ts, the files that now hold the names)
+  B6  62 → 41 (0 new, 21 gone)
+  B6 lines left in src/: src/components/dock/__tests__/: 16 direct files > 12
+                         src/index.ts: 585 lines > 500
+  B16 0 (row 15 first put useGpuSubstrate.test.ts in glass/__tests__ → B16 1; it moved
+      to webgpu/__tests__, which B16 names as its subject's home)
+
+── 6 · package surface on wt2 ───────────────────────────────────────────────────────────
+$ node scripts/structure/surface.mjs check --root .
+{"pinned":{"exportKeys":69,"typesVersions":63,"jsEntries":64,"runtimeNames":583,"typeNames":1241},
+ "now":{"exportKeys":69,"typesVersions":63,"jsEntries":64,"runtimeNames":583,"typeNames":1241},"differences":0}
+
+── 7 · cascade, base dist vs wt2 dist ───────────────────────────────────────────────────
+$ node scripts/structure/cascade.mjs snapshot --dist <base dist> --out casc-b4
+$ node scripts/structure/cascade.mjs verify --baseline casc-b4 --dist $S/wt2/dist → exit 1
+  ./styles/fonts identical (4) · ./styles/theme identical (4)
+  ./styles      RED content: 1970 = 1970 rules, 17 only-base / 17 only-now, first divergence 1566
+  ./styles.css  RED content:  365 =  365 rules, 17 only-base / 17 only-now, first divergence 310
+  both divergences are the Timeline rules (row 03, the one SFC style split)
+$ node tools/scopecmp.mjs casc-b4/styles.seq casc-final/styles.seq          → exit 0
+rules 1970 1970 multiset equal (scope ids erased): true
+rules outside the longest kept order: 10
+$ node tools/scopecmp.mjs casc-b4/styles_css.seq casc-final/styles_css.seq  → exit 0
+rules 365 365 multiset equal (scope ids erased): true
+rules outside the longest kept order: 10
+  the 10 are Timeline.vue's own rules (.tl, .tl__track/.tl__marks grid-area, .tl__track,
+  .tl__span, .tl__fill, the advancing fill, .tl__cap, .tl .track-flow, .tl__detail and its
+  reduced-motion arm); they now follow TimelineMarks.vue's 17 rules. The one element both
+  sets style, .tl__marks, takes grid-area/align-self from the parent and
+  pointer-events/min-block-size/margin/padding/list-style/position from the child: no
+  property is set by both, so the order change resolves to the same values.
+
+── 8 · shader strings (rows 12) ─────────────────────────────────────────────────────────
+node_modules/.bin/jiti, the pre-row module beside the post-row module:
+METABALL_FRAGMENT_SRC  42475 42475 equal true  sha256 2f79be4a305c 2f79be4a305c
+METABALL_WGSL          28956 28956 equal true  sha256 5d589891ecfc 5d589891ecfc

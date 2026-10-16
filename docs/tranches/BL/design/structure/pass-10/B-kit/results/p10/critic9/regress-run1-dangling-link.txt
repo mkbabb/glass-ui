@@ -1,0 +1,42 @@
+regress start 2026-10-16T05:59:24Z load { 16.65 19.83 23.42 }
+node:fs:1710
+  const stats = binding.stat(
+                        ^
+
+Error: ENOENT: no such file or directory, stat '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/node_modules'
+    at statSync (node:fs:1710:25)
+    at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-8/critique-B/battery/run-plants.mjs:41:88
+    at Array.filter (<anonymous>)
+    at dirs (file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-8/critique-B/battery/run-plants.mjs:41:74)
+    at fullest (file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-6/critique-B/battery/plants.mjs:72:28)
+    at plants (file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-6/critique-B/battery/plants.mjs:74:25)
+    at plants (file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-7/critique-B/battery/regress.mjs:14:15)
+    at plants (file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-8/critique-B/battery/regress.mjs:16:15)
+    at plants (file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-9/critique-B/battery/regress9.mjs:8:12)
+    at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-8/critique-B/battery/run-plants.mjs:44:14 {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'stat',
+  path: '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/tests-visual/node_modules'
+}
+
+Node.js v26.0.0
+node:fs:436
+    return binding.readFileUtf8(path, stringToFlags(options.flag));
+                   ^
+
+Error: ENOENT: no such file or directory, open '/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/results/p10/critic9/regress.json'
+    at readFileSync (node:fs:436:20)
+    at rows (file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-9/critique-B/battery/compare.mjs:8:43)
+    at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-9/critique-B/battery/compare.mjs:9:11
+    at ModuleJob.run (node:internal/modules/esm/module_job:437:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:642:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/results/p10/critic9/regress.json'
+}
+
+Node.js v26.0.0
+regress rc=1 end 2026-10-16T05:59:24Z load { 16.65 19.83 23.42 }

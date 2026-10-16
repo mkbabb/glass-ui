@@ -1,0 +1,46 @@
+plants-p9 start 2026-10-16T05:53:12Z load { 30.83 32.03 28.14 }
+PASS JUDGE tally: no arguments: exit 2 (expect 2) · browser-tally: no verdict: Error: browser-tally: --base and --route are required
+PASS JUDGE tally: a missing route report: exit 2 (expect 2) · browser-tally: no verdict: Error: ENOENT: no such file or directory, open '/var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p9-plants-vKfqEj/no-such-report.json'
+PASS JUDGE tally: a non-JSON route report: exit 2 (expect 2) · browser-tally: no verdict: SyntaxError: Expected property name or '}' in JSON at position 2 (line 1 column 3)
+PASS JUDGE tally: a wrong-schema base report: exit 2 (expect 2) · browser-tally: no verdict: Error: browser-tally: /var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p9-plants-vKfqEj/wrong.json is browser-seat/1, not browser-seat/2
+PASS JUDGE tally: the committed reports (control): exit 0 (expect 0) · verdict: GREEN (428 base-green keys, every one accounted: 428 held + 0 failed + 0 absent)
+PASS JUDGE rekey: no arguments: exit 2 (expect 2) · rekey: no verdict: Error: rekey: usage rekey.mjs <base-report.json> <migrated tree> <out.json>
+PASS JUDGE rekey: a missing base report: exit 2 (expect 2) · rekey: no verdict: Error: ENOENT: no such file or directory, open '/var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p9-plants-vKfqEj/no-such-report.json'
+PASS JUDGE rekey: a non-JSON base report: exit 2 (expect 2) · rekey: no verdict: SyntaxError: Expected property name or '}' in JSON at position 2 (line 1 column 3)
+PASS JUDGE rekey: a wrong-schema base report: exit 2 (expect 2) · rekey: no verdict: Error: rekey: the base report is browser-seat/1; it reads browser-seat/2
+PASS JUDGE rekey: a tree that names nothing: exit 2 (expect 2) · rekey: no verdict: Error: rekey: the migrated tree /var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p9-plants-vKfqEj/no-tree holds no package.json
+PASS JUDGE select: no arguments: exit 2 (expect 2) · browser-select: no verdict: Error: browser-select: --root and --out are required
+PASS JUDGE select: a --root that names nothing: exit 2 (expect 2) · browser-select: no verdict: Error: browser-select: --root /var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p9-plants-vKfqEj/no-tree holds no package.json
+PASS JUDGE select: the chain reader throws as it loads (lib/sequence.mjs): exit 2 (expect 2) · browser-select: no verdict: Error: zq9: lib/sequence.mjs throws as it loads
+PASS JUDGE select: the floor loader throws as it loads (lib/floor.mjs): exit 2 (expect 2) · browser-select: no verdict: Error: zq9: lib/floor.mjs throws as it loads
+PASS JUDGE probe: no arguments: exit 2 (expect 2) · peer-closure: no verdict: Error: peer-closure: --root is required
+PASS JUDGE probe: a missing --base report: exit 2 (expect 2) · peer-closure: no verdict: Error: ENOENT: no such file or directory, open '/var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p9-plants-vKfqEj/no-such-report.json'
+PASS JUDGE probe: a non-JSON --base report: exit 2 (expect 2) · peer-closure: no verdict: SyntaxError: Expected property name or '}' in JSON at position 2 (line 1 column 3)
+PASS JUDGE probe: the floor loader throws as it loads (lib/floor.mjs): exit 2 (expect 2) · peer-closure: no verdict: Error: zq9: lib/floor.mjs throws as it loads
+PASS JUDGE probe: B18's reader throws as it loads (gate/peer.mjs): exit 2 (expect 2) · peer-closure: no verdict: Error: zq9: gate/peer.mjs throws as it loads
+PASS JUDGE rekey: the chain follower throws as it loads (lib/follow.mjs): exit 2 (expect 2) · rekey: no verdict: Error: zq9: lib/follow.mjs throws as it loads
+PASS JUDGE probe: the built tree (control): exit 0 (expect 0) · peer-closure: GREEN
+PASS EMPTY tally: an empty route report: exit 2 (expect 2) · browser-tally: no verdict: Error: browser-tally: /var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p9-plants-vKfqEj/route-empty.json holds no results; an empty report is n
+PASS EMPTY tally: an empty base report: exit 2 (expect 2) · browser-tally: no verdict: Error: browser-tally: /var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p9-plants-vKfqEj/base-empty.json holds no results; an empty report is no
+PASS EMPTY tally: an empty route rerun beside the full runs: exit 2 (expect 2) · browser-tally: no verdict: Error: browser-tally: /var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p9-plants-vKfqEj/route-empty.json holds no results; an empty report is n
+PASS EMPTY tally: a base that passes no test: exit 2 (expect 2) · browser-tally: no verdict: Error: browser-tally: the base report passes no test; a bar over no base-green key is no verdict
+PASS EMPTY rekey: an empty base report: exit 2 (expect 2) · rekey: no verdict: Error: rekey: /var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p9-plants-vKfqEj/base0-empty.json holds no results; an empty report is no input
+PASS EMPTY rekey: a base the chain carries none of to the tree: exit 2 (expect 2) · rekey: no verdict: Error: rekey: the chain carries none of /var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p9-plants-vKfqEj/base0-alien.json's specs to /Users/mkbabb/Pro
+PASS EMPTY probe: the dist entry emptied (./dist/motion-core.js): exit 2 (expect 2) · peer-closure: no verdict: Error: peer-closure: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/dist/motion-core.js is empty; the dist arm reads
+PASS EMPTY probe: a module the entry imports emptied (./writeVelocityWeight-C2DwUcQ5.js): exit 2 (expect 2) · peer-closure: no verdict: Error: peer-closure: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/dist/writeVelocityWeight-C2DwUcQ5.js is empty; t
+PASS EMPTY probe: the built tree after both restores (control): exit 0 (expect 0) · peer-closure: GREEN
+PASS CAPTURE a moved capture spec's import broken (tests-visual/substrate/_cohere-debug.spec.ts, moved by S43b: "../pi-manifest.ts"): red [B0] · tests-visual/substrate/_cohere-debug.spec.ts:5 unresolved [import] ../pi-manifest.ts-zq9-gone
+PASS CAPTURE the same plant through the CLI (tests-visual/substrate/_cohere-debug.spec.ts): exit 1 (expect 1) · FAIL B0 1
+PASS CAPTURE control: tests-visual/substrate/_cohere-debug.spec.ts gains an import that resolves: red []
+PASS CAPTURE tests-visual/substrate/_cohere-debug.spec.ts gains a side-effect import that resolves to nothing: red [B0] · tests-visual/substrate/_cohere-debug.spec.ts:1 unresolved [import-side-effect] ./zq9-nowhere
+PASS CAPTURE a moved capture helper's import broken (tests-visual/aurora/probes/_aur-vangogh-harness.ts, moved by S43b: "../../../src/components/aurora/index"): red [B0] · tests-visual/aurora/probes/_aur-vangogh-harness.ts:6 unresolved [import] ../../../src/components/aurora/index-zq9-gone
+PASS CAPTURE the same plant through the CLI (tests-visual/aurora/probes/_aur-vangogh-harness.ts): exit 1 (expect 1) · FAIL B0 1
+PASS CAPTURE control: tests-visual/aurora/probes/_aur-vangogh-harness.ts gains an import that resolves: red []
+PASS CAPTURE tests-visual/aurora/probes/_aur-vangogh-harness.ts gains a side-effect import that resolves to nothing: red [B0] · tests-visual/aurora/probes/_aur-vangogh-harness.ts:1 unresolved [import-side-effect] ./zq9-nowhere
+PASS CAPTURE the selection states the excluded touched captures: exit 0; captures.txt 14, printed 14; capture specs in the chain's move lists 12, every one listed: true
+PASS XR XR-drop: the ./motion-core row withdrawn (a reviewed source edit, read as written): red []
+PASS XR XR-drop-KF: withdrawn + a keyframes.js leaf published on ./motion-core: red [B11,B18] · . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/compo
+PASS XR XR-drop-leaf: withdrawn + an existing motion-core leaf gains keyframes.js: red [B18] · . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/compo
+PASS REDERIVE base.json re-keyed onto the tree equals the committed base-rekeyed.json: exit 0; results identical · {"specs":153,"moved":["tests-visual/a11y-slider.spec.ts -> tests-visual/components/controls/a11y-slider.spec.ts","tests-
+battery 43/43
+plants-p9 rc=0 end 2026-10-16T05:54:06Z load { 25.18 30.30 27.74 }

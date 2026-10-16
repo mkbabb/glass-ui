@@ -1,0 +1,349 @@
+{
+ "plants": 43,
+ "passed": 43,
+ "results": [
+  {
+   "kind": "JUDGE",
+   "id": "tally: no arguments",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · browser-tally: no verdict: Error: browser-tally: --base and --route are required"
+  },
+  {
+   "kind": "JUDGE",
+   "id": "tally: a missing route report",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · browser-tally: no verdict: Error: ENOENT: no such file or directory, open '/var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p9-plants-vKfqEj/no-such-report.json'"
+  },
+  {
+   "kind": "JUDGE",
+   "id": "tally: a non-JSON route report",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · browser-tally: no verdict: SyntaxError: Expected property name or '}' in JSON at position 2 (line 1 column 3)"
+  },
+  {
+   "kind": "JUDGE",
+   "id": "tally: a wrong-schema base report",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · browser-tally: no verdict: Error: browser-tally: /var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p9-plants-vKfqEj/wrong.json is browser-seat/1, not browser-seat/2"
+  },
+  {
+   "kind": "JUDGE",
+   "id": "tally: the committed reports (control)",
+   "expect": 0,
+   "exit": 0,
+   "ok": true,
+   "read": "exit 0 (expect 0) · verdict: GREEN (428 base-green keys, every one accounted: 428 held + 0 failed + 0 absent)"
+  },
+  {
+   "kind": "JUDGE",
+   "id": "rekey: no arguments",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · rekey: no verdict: Error: rekey: usage rekey.mjs <base-report.json> <migrated tree> <out.json>"
+  },
+  {
+   "kind": "JUDGE",
+   "id": "rekey: a missing base report",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · rekey: no verdict: Error: ENOENT: no such file or directory, open '/var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p9-plants-vKfqEj/no-such-report.json'"
+  },
+  {
+   "kind": "JUDGE",
+   "id": "rekey: a non-JSON base report",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · rekey: no verdict: SyntaxError: Expected property name or '}' in JSON at position 2 (line 1 column 3)"
+  },
+  {
+   "kind": "JUDGE",
+   "id": "rekey: a wrong-schema base report",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · rekey: no verdict: Error: rekey: the base report is browser-seat/1; it reads browser-seat/2"
+  },
+  {
+   "kind": "JUDGE",
+   "id": "rekey: a tree that names nothing",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · rekey: no verdict: Error: rekey: the migrated tree /var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p9-plants-vKfqEj/no-tree holds no package.json"
+  },
+  {
+   "kind": "JUDGE",
+   "id": "select: no arguments",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · browser-select: no verdict: Error: browser-select: --root and --out are required"
+  },
+  {
+   "kind": "JUDGE",
+   "id": "select: a --root that names nothing",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · browser-select: no verdict: Error: browser-select: --root /var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p9-plants-vKfqEj/no-tree holds no package.json"
+  },
+  {
+   "kind": "JUDGE",
+   "id": "select: the chain reader throws as it loads (lib/sequence.mjs)",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · browser-select: no verdict: Error: zq9: lib/sequence.mjs throws as it loads"
+  },
+  {
+   "kind": "JUDGE",
+   "id": "select: the floor loader throws as it loads (lib/floor.mjs)",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · browser-select: no verdict: Error: zq9: lib/floor.mjs throws as it loads"
+  },
+  {
+   "kind": "JUDGE",
+   "id": "probe: no arguments",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · peer-closure: no verdict: Error: peer-closure: --root is required"
+  },
+  {
+   "kind": "JUDGE",
+   "id": "probe: a missing --base report",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · peer-closure: no verdict: Error: ENOENT: no such file or directory, open '/var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p9-plants-vKfqEj/no-such-report.json'"
+  },
+  {
+   "kind": "JUDGE",
+   "id": "probe: a non-JSON --base report",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · peer-closure: no verdict: SyntaxError: Expected property name or '}' in JSON at position 2 (line 1 column 3)"
+  },
+  {
+   "kind": "JUDGE",
+   "id": "probe: the floor loader throws as it loads (lib/floor.mjs)",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · peer-closure: no verdict: Error: zq9: lib/floor.mjs throws as it loads"
+  },
+  {
+   "kind": "JUDGE",
+   "id": "probe: B18's reader throws as it loads (gate/peer.mjs)",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · peer-closure: no verdict: Error: zq9: gate/peer.mjs throws as it loads"
+  },
+  {
+   "kind": "JUDGE",
+   "id": "rekey: the chain follower throws as it loads (lib/follow.mjs)",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · rekey: no verdict: Error: zq9: lib/follow.mjs throws as it loads"
+  },
+  {
+   "kind": "JUDGE",
+   "id": "probe: the built tree (control)",
+   "expect": 0,
+   "exit": 0,
+   "ok": true,
+   "read": "exit 0 (expect 0) · peer-closure: GREEN"
+  },
+  {
+   "kind": "EMPTY",
+   "id": "tally: an empty route report",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · browser-tally: no verdict: Error: browser-tally: /var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p9-plants-vKfqEj/route-empty.json holds no results; an empty report is n"
+  },
+  {
+   "kind": "EMPTY",
+   "id": "tally: an empty base report",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · browser-tally: no verdict: Error: browser-tally: /var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p9-plants-vKfqEj/base-empty.json holds no results; an empty report is no"
+  },
+  {
+   "kind": "EMPTY",
+   "id": "tally: an empty route rerun beside the full runs",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · browser-tally: no verdict: Error: browser-tally: /var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p9-plants-vKfqEj/route-empty.json holds no results; an empty report is n"
+  },
+  {
+   "kind": "EMPTY",
+   "id": "tally: a base that passes no test",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · browser-tally: no verdict: Error: browser-tally: the base report passes no test; a bar over no base-green key is no verdict"
+  },
+  {
+   "kind": "EMPTY",
+   "id": "rekey: an empty base report",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · rekey: no verdict: Error: rekey: /var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p9-plants-vKfqEj/base0-empty.json holds no results; an empty report is no input"
+  },
+  {
+   "kind": "EMPTY",
+   "id": "rekey: a base the chain carries none of to the tree",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · rekey: no verdict: Error: rekey: the chain carries none of /var/folders/ld/20j4p2791k5_90_0ccgx2txm0000gr/T/p9-plants-vKfqEj/base0-alien.json's specs to /Users/mkbabb/Pro"
+  },
+  {
+   "kind": "EMPTY",
+   "id": "probe: the dist entry emptied (./dist/motion-core.js)",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · peer-closure: no verdict: Error: peer-closure: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/dist/motion-core.js is empty; the dist arm reads"
+  },
+  {
+   "kind": "EMPTY",
+   "id": "probe: a module the entry imports emptied (./writeVelocityWeight-C2DwUcQ5.js)",
+   "expect": 2,
+   "exit": 2,
+   "ok": true,
+   "read": "exit 2 (expect 2) · peer-closure: no verdict: Error: peer-closure: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2/dist/writeVelocityWeight-C2DwUcQ5.js is empty; t"
+  },
+  {
+   "kind": "EMPTY",
+   "id": "probe: the built tree after both restores (control)",
+   "expect": 0,
+   "exit": 0,
+   "ok": true,
+   "read": "exit 0 (expect 0) · peer-closure: GREEN"
+  },
+  {
+   "kind": "CAPTURE",
+   "id": "a moved capture spec's import broken (tests-visual/substrate/_cohere-debug.spec.ts, moved by S43b: \"../pi-manifest.ts\")",
+   "red": [
+    "B0"
+   ],
+   "ok": true,
+   "read": "red [B0] · tests-visual/substrate/_cohere-debug.spec.ts:5 unresolved [import] ../pi-manifest.ts-zq9-gone"
+  },
+  {
+   "kind": "CAPTURE",
+   "id": "the same plant through the CLI (tests-visual/substrate/_cohere-debug.spec.ts)",
+   "exit": 1,
+   "ok": true,
+   "read": "exit 1 (expect 1) · FAIL B0 1"
+  },
+  {
+   "kind": "CAPTURE",
+   "id": "control: tests-visual/substrate/_cohere-debug.spec.ts gains an import that resolves",
+   "red": [],
+   "ok": true,
+   "read": "red []"
+  },
+  {
+   "kind": "CAPTURE",
+   "id": "tests-visual/substrate/_cohere-debug.spec.ts gains a side-effect import that resolves to nothing",
+   "red": [
+    "B0"
+   ],
+   "ok": true,
+   "read": "red [B0] · tests-visual/substrate/_cohere-debug.spec.ts:1 unresolved [import-side-effect] ./zq9-nowhere"
+  },
+  {
+   "kind": "CAPTURE",
+   "id": "a moved capture helper's import broken (tests-visual/aurora/probes/_aur-vangogh-harness.ts, moved by S43b: \"../../../src/components/aurora/index\")",
+   "red": [
+    "B0"
+   ],
+   "ok": true,
+   "read": "red [B0] · tests-visual/aurora/probes/_aur-vangogh-harness.ts:6 unresolved [import] ../../../src/components/aurora/index-zq9-gone"
+  },
+  {
+   "kind": "CAPTURE",
+   "id": "the same plant through the CLI (tests-visual/aurora/probes/_aur-vangogh-harness.ts)",
+   "exit": 1,
+   "ok": true,
+   "read": "exit 1 (expect 1) · FAIL B0 1"
+  },
+  {
+   "kind": "CAPTURE",
+   "id": "control: tests-visual/aurora/probes/_aur-vangogh-harness.ts gains an import that resolves",
+   "red": [],
+   "ok": true,
+   "read": "red []"
+  },
+  {
+   "kind": "CAPTURE",
+   "id": "tests-visual/aurora/probes/_aur-vangogh-harness.ts gains a side-effect import that resolves to nothing",
+   "red": [
+    "B0"
+   ],
+   "ok": true,
+   "read": "red [B0] · tests-visual/aurora/probes/_aur-vangogh-harness.ts:1 unresolved [import-side-effect] ./zq9-nowhere"
+  },
+  {
+   "kind": "CAPTURE",
+   "id": "the selection states the excluded touched captures",
+   "ok": true,
+   "read": "exit 0; captures.txt 14, printed 14; capture specs in the chain's move lists 12, every one listed: true"
+  },
+  {
+   "kind": "XR",
+   "id": "XR-drop: the ./motion-core row withdrawn (a reviewed source edit, read as written)",
+   "red": [],
+   "ok": true,
+   "read": "red []"
+  },
+  {
+   "kind": "XR",
+   "id": "XR-drop-KF: withdrawn + a keyframes.js leaf published on ./motion-core",
+   "red": [
+    "B11",
+    "B18"
+   ],
+   "ok": true,
+   "read": "red [B11,B18] · . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/compo"
+  },
+  {
+   "kind": "XR",
+   "id": "XR-drop-leaf: withdrawn + an existing motion-core leaf gains keyframes.js",
+   "red": [
+    "B18"
+   ],
+   "ok": true,
+   "read": "red [B18] · . (declared free of @mkbabb/keyframes.js) publishes a name whose module reaches it: CardHeader (src/components/card/CardHeader.vue; first at src/compo"
+  },
+  {
+   "kind": "REDERIVE",
+   "id": "base.json re-keyed onto the tree equals the committed base-rekeyed.json",
+   "exit": 0,
+   "ok": true,
+   "read": "exit 0; results identical · {\"specs\":153,\"moved\":[\"tests-visual/a11y-slider.spec.ts -> tests-visual/components/controls/a11y-slider.spec.ts\",\"tests-"
+  }
+ ]
+}

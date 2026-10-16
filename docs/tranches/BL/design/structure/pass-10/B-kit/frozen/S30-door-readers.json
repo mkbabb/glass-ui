@@ -1,0 +1,163 @@
+{
+ "step": "the floor runtime's CLIs lose their hashbang (the door loads them into DOM-environment tests, whose web transform refuses it); B11: the minify door keeps only minifyCss",
+ "files": {
+  "scripts/structure/bounds.mjs": {
+   "hunks": [
+    [
+     "#!/usr/bin/env node\n// bounds.mjs — R-5's measure: a directory holding more than 12 direct files, or a\n",
+     "// bounds.mjs — R-5's measure: a directory holding more than 12 direct files, or a\n"
+    ]
+   ]
+  },
+  "scripts/structure/browser.mjs": {
+   "hunks": [
+    [
+     "#!/usr/bin/env node\n// browser.mjs — F-10: the one browser seat. π (the pixel-floor readbacks) and Playwright\n",
+     "// browser.mjs — F-10: the one browser seat. π (the pixel-floor readbacks) and Playwright\n"
+    ]
+   ]
+  },
+  "scripts/structure/cascade.mjs": {
+   "hunks": [
+    [
+     "#!/usr/bin/env node\n// cascade.mjs — F-4: the cascade contract.\n",
+     "// cascade.mjs — F-4: the cascade contract.\n"
+    ]
+   ]
+  },
+  "scripts/structure/classify.mjs": {
+   "hunks": [
+    [
+     "#!/usr/bin/env node\n// classify.mjs — FD-5 CLI: every file a structure step changed is move-only, a\n",
+     "// classify.mjs — FD-5 CLI: every file a structure step changed is move-only, a\n"
+    ]
+   ]
+  },
+  "scripts/structure/entries.mjs": {
+   "hunks": [
+    [
+     "#!/usr/bin/env node\n// entries.mjs — F-3 CLI over the one entry record (records/entry-record.json).\n",
+     "// entries.mjs — F-3 CLI over the one entry record (records/entry-record.json).\n"
+    ]
+   ]
+  },
+  "scripts/structure/fixpoint.mjs": {
+   "hunks": [
+    [
+     "#!/usr/bin/env node\n// fixpoint.mjs — F-7 to a fixpoint (FD-2): propose the placement moves (R-2 units, the\n",
+     "// fixpoint.mjs — F-7 to a fixpoint (FD-2): propose the placement moves (R-2 units, the\n"
+    ]
+   ]
+  },
+  "scripts/structure/gates.mjs": {
+   "hunks": [
+    [
+     "#!/usr/bin/env node\n// gates.mjs — the floor's invariant gates, one runner (F-9: wired into `npm test`).\n",
+     "// gates.mjs — the floor's invariant gates, one runner (F-9: wired into `npm test`).\n"
+    ]
+   ]
+  },
+  "scripts/structure/graph.mjs": {
+   "hunks": [
+    [
+     "#!/usr/bin/env node\n// graph.mjs — F-1 CLI. Builds the graph, prints edge counts by kind and by resolution,\n",
+     "// graph.mjs — F-1 CLI. Builds the graph, prints edge counts by kind and by resolution,\n"
+    ]
+   ]
+  },
+  "scripts/structure/move.mjs": {
+   "hunks": [
+    [
+     "#!/usr/bin/env node\n// move.mjs — F-2 CLI. Applies a move list inside a LINKED git worktree only (never the\n",
+     "// move.mjs — F-2 CLI. Applies a move list inside a LINKED git worktree only (never the\n"
+    ]
+   ]
+  },
+  "scripts/structure/placement.mjs": {
+   "hunks": [
+    [
+     "#!/usr/bin/env node\n// placement.mjs — F-7 CLI: every src file's home under R-2's unit set with the FD-1\n",
+     "// placement.mjs — F-7 CLI: every src file's home under R-2's unit set with the FD-1\n"
+    ]
+   ]
+  },
+  "scripts/structure/surface.mjs": {
+   "hunks": [
+    [
+     "#!/usr/bin/env node\n// surface.mjs — anti-vacuity (F-9): the door/surface pin. A built dist's public surface\n",
+     "// surface.mjs — anti-vacuity (F-9): the door/surface pin. A built dist's public surface\n"
+    ]
+   ]
+  },
+  "scripts/minify/index.ts": {
+   "hunks": [
+    [
+     "export { hasCommentOutsideString, minifyCss } from \"./minify-css\";\n",
+     "export { minifyCss } from \"./minify-css\";\n"
+    ]
+   ]
+  },
+  "scripts/minify/__tests__/minify-css.test.ts": {
+   "hunks": [
+    [
+     "import { hasCommentOutsideString, minifyCss } from \"..\";\n",
+     "import { hasCommentOutsideString, minifyCss } from \"../minify-css\";\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "scripts/structure/bounds.mjs",
+   "why": "run as `node <file>`; the door loads it into DOM-environment tests"
+  },
+  {
+   "file": "scripts/structure/browser.mjs",
+   "why": "run as `node <file>`; the door loads it into DOM-environment tests"
+  },
+  {
+   "file": "scripts/structure/cascade.mjs",
+   "why": "run as `node <file>`; the door loads it into DOM-environment tests"
+  },
+  {
+   "file": "scripts/structure/classify.mjs",
+   "why": "run as `node <file>`; the door loads it into DOM-environment tests"
+  },
+  {
+   "file": "scripts/structure/entries.mjs",
+   "why": "run as `node <file>`; the door loads it into DOM-environment tests"
+  },
+  {
+   "file": "scripts/structure/fixpoint.mjs",
+   "why": "run as `node <file>`; the door loads it into DOM-environment tests"
+  },
+  {
+   "file": "scripts/structure/gates.mjs",
+   "why": "run as `node <file>`; the door loads it into DOM-environment tests"
+  },
+  {
+   "file": "scripts/structure/graph.mjs",
+   "why": "run as `node <file>`; the door loads it into DOM-environment tests"
+  },
+  {
+   "file": "scripts/structure/move.mjs",
+   "why": "run as `node <file>`; the door loads it into DOM-environment tests"
+  },
+  {
+   "file": "scripts/structure/placement.mjs",
+   "why": "run as `node <file>`; the door loads it into DOM-environment tests"
+  },
+  {
+   "file": "scripts/structure/surface.mjs",
+   "why": "run as `node <file>`; the door loads it into DOM-environment tests"
+  },
+  {
+   "file": "scripts/minify/index.ts",
+   "why": "B11: only the colocated test read hasCommentOutsideString"
+  },
+  {
+   "file": "scripts/minify/__tests__/minify-css.test.ts",
+   "why": "LAW §5: a colocated test reads its home's inside"
+  }
+ ]
+}

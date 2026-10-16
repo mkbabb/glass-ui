@@ -1,0 +1,29 @@
+toolchain on r1 (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/B-proto/wt2) 2026-10-16T05:14:50Z; node v26.0.0, vite/8.1.5 darwin-arm64 node-v26.0.0, vue-tsc Version 6.0.3, vitest/4.1.10 darwin-arm64 node-v26.0.0, typescript Version 6.0.3, playwright Version 1.61.1, macOS 26.4.1
+code digest 6fdd4ec7bd259630d38a466a444e45b2b18f71b4cbf2259d258a4c6177996bbf over 1587 files
+seal (unbuilt) | exit 0 | 4 s | load { 11.76 18.34 22.11 } -> { 12.66 18.42 22.11 }
+peer probe on the unbuilt tree (expect 2) | exit 2 | 2 s | load { 12.66 18.42 22.11 } -> { 13.01 18.39 22.08 }
+base vite-build | exit 0 | 8 s | load { 13.01 18.39 22.08 } -> { 12.69 18.24 22.01 }
+base cascade snapshot | exit 0 | 2 s | load { 12.69 18.24 22.01 } -> { 13.67 18.35 22.02 }
+baseline styles.seq: identical to the committed baseline
+baseline styles_css.seq: identical to the committed baseline
+baseline styles_fonts.seq: identical to the committed baseline
+baseline styles_theme.seq: identical to the committed baseline
+base peer probe (expect 1: the root is broken at the base) | exit 1 | 2 s | load { 13.67 18.35 22.02 } -> { 13.67 18.35 22.02 }
+base pack list | exit 0 | 2 s | load { 13.67 18.35 22.02 } -> { 13.94 18.33 21.99 }
+vite-build | exit 0 | 9 s | load { 13.94 18.33 21.99 } -> { 13.95 18.26 21.95 }
+verify-package | exit 0 | 30 s | load { 13.95 18.26 21.95 } -> { 16.20 18.33 21.84 }
+verify-package: terminal CLEAN; claims 196, declarations 502, css 162; ratchet {"status":"PRESENT","mode":"later-coordinate","datum":"2920386","unpackedBytes":2920386,"equal":true,"increase":false} (the full record: logs/r1-verify-package.log)
+vue-tsc | exit 0 | 9 s | load { 16.20 18.33 21.84 } -> { 17.89 18.62 21.91 }
+vue-tsc-test | exit 0 | 10 s | load { 17.89 18.62 21.91 } -> { 16.97 18.40 21.79 }
+demo-dist-build | exit 0 | 2 s | load { 16.97 18.40 21.79 } -> { 18.09 18.61 21.84 }
+cascade verify against the floor base | exit 0 | 2 s | load { 18.09 18.61 21.84 } -> { 18.09 18.61 21.84 }
+peer probe (built) | exit 0 | 2 s | load { 18.09 18.61 21.84 } -> { 18.09 18.61 21.84 }
+pack list | exit 0 | 2 s | load { 18.09 18.61 21.84 } -> { 24.57 19.95 22.29 }
+pack diff exit 0
+seal-test | exit 0 | 45 s | load { 24.57 19.95 22.29 } -> { 29.26 21.61 22.77 }
+ Test Files  1 passed (1)
+      Tests  26 passed (26)
+vitest-full | exit 0 | 172 s | load { 29.26 21.61 22.77 } -> { 40.25 32.94 27.48 }
+ Test Files  275 passed (275)
+      Tests  2335 passed | 10 expected fail | 1 skipped (2346)
+toolchain end 2026-10-16T05:19:57Z load { 40.25 32.94 27.48 }

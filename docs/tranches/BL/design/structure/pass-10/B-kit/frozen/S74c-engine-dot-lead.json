@@ -1,0 +1,19 @@
+{
+ "step": "P9-R1 (a): the landed move engine keeps a `./` lead on a root-relative path when its holder moves (FLOOR.md F-2, P4-F3: a root-relative spelling is kept verbatim); it kept only a `../` lead, which turned entries.mjs's `\"./dist/index.d.ts\"` into `\"dist/index.d.ts\"` and refused S74d at the image check",
+ "files": {
+  "scripts/structure/lib/move.mjs": {
+   "hunks": [
+    [
+     "            const lead = e.via === \"root-absolute\" ? \"/\" : (bare.match(/^(\\.\\.\\/)*/)?.[0] ?? \"\");\n",
+     "            const lead = e.via === \"root-absolute\" ? \"/\" : (bare.match(/^(?:\\.\\/|(?:\\.\\.\\/)*)/)?.[0] ?? \"\");\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "scripts/structure/lib/move.mjs",
+   "why": "the lead of a root-relative spelling is kept whole: `./` as well as `../`"
+  }
+ ]
+}

@@ -1,0 +1,103 @@
+{
+ "step": "R-3 / FD-2: eight motion tests read their subject from its own module, not the parent's door, so they can colocate without a unit cycle",
+ "files": {
+  "tests/composables/motion/press.test.ts": {
+   "hunks": [
+    [
+     "import { useLiquidPress } from \"@glass/composables/motion\";\n",
+     "import { useLiquidPress } from \"@glass/composables/motion/spring/useLiquidPress\";\n"
+    ]
+   ]
+  },
+  "tests/composables/useIntersectionPause.test.ts": {
+   "hunks": [
+    [
+     "import { useIntersectionPause } from \"@glass/composables/motion/motion-core\";\n",
+     "import { useIntersectionPause } from \"@glass/composables/motion/core/useIntersectionPause\";\n"
+    ]
+   ]
+  },
+  "tests/composables/useRAFLoop.test.ts": {
+   "hunks": [
+    [
+     "import { useRAFLoop, type RAFLoopControls } from \"@glass/composables/motion/motion-core\";\n",
+     "import { useRAFLoop, type RAFLoopControls } from \"@glass/composables/motion/core/useRAFLoop\";\n"
+    ]
+   ]
+  },
+  "tests/composables/useRouteTransition.test.ts": {
+   "hunks": [
+    [
+     "} from \"@glass/composables/motion/motion-core\";\n",
+     "} from \"@glass/composables/motion/route/useRouteTransition\";\n"
+    ]
+   ]
+  },
+  "tests/composables/useSpring.test.ts": {
+   "hunks": [
+    [
+     "import { useSpring } from \"@glass/composables/motion\";\n",
+     "import { useSpring } from \"@glass/composables/motion/spring/useSpring\";\n"
+    ]
+   ]
+  },
+  "tests/composables/useSpringMount.test.ts": {
+   "hunks": [
+    [
+     "import { useSpringMount, type SpringMountRef } from \"@glass/composables/motion\";\n",
+     "import { useSpringMount, type SpringMountRef } from \"@glass/composables/motion/spring/useSpringMount\";\n"
+    ]
+   ]
+  },
+  "tests/composables/useViewTransition.test.ts": {
+   "hunks": [
+    [
+     "} from \"@glass/composables/motion/motion-core\";\n",
+     "} from \"@glass/composables/motion/core/useViewTransition\";\n"
+    ]
+   ]
+  },
+  "tests/composables/useYieldToMain.test.ts": {
+   "hunks": [
+    [
+     "} from \"@glass/composables/motion/motion-core\";\n",
+     "} from \"@glass/composables/motion/core/useYieldToMain\";\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "tests/composables/motion/press.test.ts",
+   "why": "re-point to the declaring file in the test's home (same symbols)"
+  },
+  {
+   "file": "tests/composables/useIntersectionPause.test.ts",
+   "why": "re-point to the declaring file in the test's home (same symbols)"
+  },
+  {
+   "file": "tests/composables/useRAFLoop.test.ts",
+   "why": "re-point to the declaring file in the test's home (same symbols)"
+  },
+  {
+   "file": "tests/composables/useRouteTransition.test.ts",
+   "why": "re-point to the declaring file in the test's home (same symbols)"
+  },
+  {
+   "file": "tests/composables/useSpring.test.ts",
+   "why": "re-point to the declaring file in the test's home (same symbols)"
+  },
+  {
+   "file": "tests/composables/useSpringMount.test.ts",
+   "why": "re-point to the declaring file in the test's home (same symbols)"
+  },
+  {
+   "file": "tests/composables/useViewTransition.test.ts",
+   "why": "re-point to the declaring file in the test's home (same symbols)"
+  },
+  {
+   "file": "tests/composables/useYieldToMain.test.ts",
+   "why": "re-point to the declaring file in the test's home (same symbols)"
+  }
+ ]
+}

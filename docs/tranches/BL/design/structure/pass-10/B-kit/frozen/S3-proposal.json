@@ -1,0 +1,337 @@
+{
+ "step": "B-S3 dominance proposal (frozen, F-9)",
+ "proposal": [
+  {
+   "unit": "src/components/aurora",
+   "dirs": [
+    {
+     "root": "composables/runtime.ts",
+     "dir": "runtime",
+     "members": [
+      "composables/runtime.ts",
+      "composables/auroraImageSource.ts",
+      "composables/frameLoop.ts",
+      "composables/glSetup.ts",
+      "constants/shaders/aurora-image.frag.ts",
+      "constants/shaders/aurora.frag.ts",
+      "constants/shaders/brush.glsl.ts",
+      "constants/shaders/composition.glsl.ts",
+      "constants/shaders/curlNoise.glsl.ts",
+      "constants/shaders/flow.glsl.ts",
+      "constants/shaders/mediums.glsl.ts",
+      "constants/shaders/metal-medium.glsl.ts",
+      "constants/shaders/oil-modes.glsl.ts",
+      "constants/shaders/vangogh-medium.glsl.ts",
+      "constants/shaders/tonemap.glsl.ts",
+      "constants/shaders/aurora.vert.ts",
+      "composables/textureUpload.ts",
+      "composables/uniformBridge.ts",
+      "composables/wgpuSetup.ts",
+      "composables/uniformBridgeWGPU.ts",
+      "composables/uniformBridgeWGPUImage.ts",
+      "constants/shaders/aurora-image.wgsl.ts",
+      "constants/shaders/aurora.wgsl.ts",
+      "constants/shaders/aurora-mediums.wgsl.ts",
+      "constants/shaders/curlNoise.wgsl.ts"
+     ]
+    },
+    {
+     "root": "composables/glSetup.ts",
+     "dir": "runtime/gl-setup",
+     "members": [
+      "composables/glSetup.ts",
+      "constants/shaders/aurora-image.frag.ts",
+      "constants/shaders/aurora.frag.ts",
+      "constants/shaders/brush.glsl.ts",
+      "constants/shaders/composition.glsl.ts",
+      "constants/shaders/curlNoise.glsl.ts",
+      "constants/shaders/flow.glsl.ts",
+      "constants/shaders/mediums.glsl.ts",
+      "constants/shaders/metal-medium.glsl.ts",
+      "constants/shaders/oil-modes.glsl.ts",
+      "constants/shaders/vangogh-medium.glsl.ts",
+      "constants/shaders/tonemap.glsl.ts",
+      "constants/shaders/aurora.vert.ts"
+     ]
+    },
+    {
+     "root": "constants/shaders/aurora.frag.ts",
+     "dir": "runtime/gl-setup/frag",
+     "members": [
+      "constants/shaders/aurora.frag.ts",
+      "constants/shaders/brush.glsl.ts",
+      "constants/shaders/composition.glsl.ts",
+      "constants/shaders/curlNoise.glsl.ts",
+      "constants/shaders/flow.glsl.ts",
+      "constants/shaders/mediums.glsl.ts",
+      "constants/shaders/metal-medium.glsl.ts",
+      "constants/shaders/oil-modes.glsl.ts",
+      "constants/shaders/vangogh-medium.glsl.ts",
+      "constants/shaders/tonemap.glsl.ts"
+     ]
+    },
+    {
+     "root": "constants/shaders/mediums.glsl.ts",
+     "dir": "runtime/gl-setup/frag/mediums-glsl",
+     "members": [
+      "constants/shaders/mediums.glsl.ts",
+      "constants/shaders/metal-medium.glsl.ts",
+      "constants/shaders/oil-modes.glsl.ts",
+      "constants/shaders/vangogh-medium.glsl.ts"
+     ]
+    },
+    {
+     "root": "composables/wgpuSetup.ts",
+     "dir": "runtime/wgpu-setup",
+     "members": [
+      "composables/wgpuSetup.ts",
+      "composables/uniformBridgeWGPU.ts",
+      "composables/uniformBridgeWGPUImage.ts",
+      "constants/shaders/aurora-image.wgsl.ts",
+      "constants/shaders/aurora.wgsl.ts",
+      "constants/shaders/aurora-mediums.wgsl.ts",
+      "constants/shaders/curlNoise.wgsl.ts"
+     ]
+    },
+    {
+     "root": "constants/shaders/aurora.wgsl.ts",
+     "dir": "runtime/wgpu-setup/wgsl",
+     "members": [
+      "constants/shaders/aurora.wgsl.ts",
+      "constants/shaders/aurora-mediums.wgsl.ts",
+      "constants/shaders/curlNoise.wgsl.ts"
+     ]
+    }
+   ]
+  },
+  {
+   "unit": "src/components/blob",
+   "dirs": [
+    {
+     "root": "composables/useMetaballRenderer.ts",
+     "dir": "metaball-renderer",
+     "members": [
+      "composables/useMetaballRenderer.ts",
+      "composables/blobSimulation.ts",
+      "composables/buildMetaballProgram.ts",
+      "shaders/metaball.frag.ts",
+      "shaders/metaball-uniforms.glsl.ts",
+      "shaders/oklch-perturb.glsl.ts",
+      "shaders/sdf-body.glsl.ts",
+      "shaders/watercolor-edges.glsl.ts",
+      "shaders/metaball.vert.ts",
+      "composables/resolveBlobSurface.ts",
+      "composables/uploadBlobUniforms.ts",
+      "composables/wgpuSetup.ts",
+      "composables/uniformBridgeWGPU.ts",
+      "shaders/metaball.wgsl.ts",
+      "shaders/metaball-noise.wgsl.ts",
+      "shaders/metaball-palette.wgsl.ts"
+     ]
+    },
+    {
+     "root": "composables/buildMetaballProgram.ts",
+     "dir": "metaball-renderer/build-metaball-program",
+     "members": [
+      "composables/buildMetaballProgram.ts",
+      "shaders/metaball.frag.ts",
+      "shaders/metaball-uniforms.glsl.ts",
+      "shaders/oklch-perturb.glsl.ts",
+      "shaders/sdf-body.glsl.ts",
+      "shaders/watercolor-edges.glsl.ts",
+      "shaders/metaball.vert.ts"
+     ]
+    },
+    {
+     "root": "shaders/metaball.frag.ts",
+     "dir": "metaball-renderer/build-metaball-program/metaball-frag",
+     "members": [
+      "shaders/metaball.frag.ts",
+      "shaders/metaball-uniforms.glsl.ts",
+      "shaders/oklch-perturb.glsl.ts",
+      "shaders/sdf-body.glsl.ts",
+      "shaders/watercolor-edges.glsl.ts"
+     ]
+    },
+    {
+     "root": "composables/wgpuSetup.ts",
+     "dir": "metaball-renderer/wgpu-setup",
+     "members": [
+      "composables/wgpuSetup.ts",
+      "composables/uniformBridgeWGPU.ts",
+      "shaders/metaball.wgsl.ts",
+      "shaders/metaball-noise.wgsl.ts",
+      "shaders/metaball-palette.wgsl.ts"
+     ]
+    },
+    {
+     "root": "shaders/metaball.wgsl.ts",
+     "dir": "metaball-renderer/wgpu-setup/metaball-wgsl",
+     "members": [
+      "shaders/metaball.wgsl.ts",
+      "shaders/metaball-noise.wgsl.ts",
+      "shaders/metaball-palette.wgsl.ts"
+     ]
+    }
+   ]
+  },
+  {
+   "unit": "src/components/dock",
+   "dirs": [
+    {
+     "root": "GlassDock.vue",
+     "dir": "glass-dock",
+     "members": [
+      "GlassDock.vue",
+      "composables/dockMorphMeasure.ts",
+      "composables/useDockClickIntegrity.ts",
+      "composables/useDockMorph.ts",
+      "composables/useDockRun.ts",
+      "composables/useDockShellProps.ts"
+     ]
+    },
+    {
+     "root": "styles/controls.css",
+     "dir": "controls",
+     "members": [
+      "styles/controls.css",
+      "styles/controls/icon-button.css",
+      "styles/controls/tab-button.css",
+      "styles/controls/touch-floor.css",
+      "styles/controls/triggers.css"
+     ]
+    }
+   ]
+  },
+  {
+   "unit": "src/components/fourier-field",
+   "dirs": [
+    {
+     "root": "renderer/wgpu.ts",
+     "dir": "wgpu",
+     "members": [
+      "renderer/wgpu.ts",
+      "renderer/compute.wgsl.ts",
+      "renderer/render.wgsl.ts",
+      "renderer/uniforms.ts"
+     ]
+    }
+   ]
+  },
+  {
+   "unit": "src/components/sheet",
+   "dirs": [
+    {
+     "root": "SheetContent.vue",
+     "dir": "content",
+     "members": [
+      "SheetContent.vue",
+      "detents/projection.ts",
+      "detents/use.ts"
+     ]
+    }
+   ]
+  },
+  {
+   "unit": "src/components/sortable-list",
+   "dirs": [
+    {
+     "root": "useSortable.ts",
+     "dir": "sortable",
+     "members": [
+      "useSortable.ts",
+      "drag.ts",
+      "ghost.ts",
+      "motion.ts",
+      "resolve.ts"
+     ]
+    },
+    {
+     "root": "drag.ts",
+     "dir": "sortable/drag",
+     "members": [
+      "drag.ts",
+      "ghost.ts",
+      "motion.ts"
+     ]
+    }
+   ]
+  },
+  {
+   "unit": "src/components/tabs",
+   "dirs": [
+    {
+     "root": "SegmentedTabs.vue",
+     "dir": "segmented-tabs",
+     "members": [
+      "SegmentedTabs.vue",
+      "composables/useTabDragMorph.ts",
+      "composables/useTabResponsive.ts"
+     ]
+    }
+   ]
+  },
+  {
+   "unit": "src/components/toast",
+   "dirs": [
+    {
+     "root": "Toaster.vue",
+     "dir": "toaster",
+     "members": [
+      "Toaster.vue",
+      "Toast.vue",
+      "ToastClose.vue",
+      "ToastDescription.vue",
+      "ToastTitle.vue"
+     ]
+    }
+   ]
+  },
+  {
+   "unit": "src/components/typewriter",
+   "dirs": [
+    {
+     "root": "TypewriterText.vue",
+     "dir": "text",
+     "members": [
+      "TypewriterText.vue",
+      "composables/useTypewriter.ts",
+      "utils/keyboard.ts",
+      "utils/pausePatterns.ts",
+      "utils/timing.ts",
+      "utils/typoStateMachine.ts",
+      "utils/graphemes.ts"
+     ]
+    }
+   ]
+  },
+  {
+   "unit": "src/composables/glass",
+   "dirs": [
+    {
+     "root": "webgpu/useGpuSubstrate.ts",
+     "dir": "gpu-substrate",
+     "members": [
+      "webgpu/useGpuSubstrate.ts",
+      "webgpu/useWebGPUCanvas.ts",
+      "webgpu/webgpuDevice.ts"
+     ]
+    }
+   ]
+  },
+  {
+   "unit": "src/composables/motion",
+   "dirs": [
+    {
+     "root": "route/useRouteTransition.ts",
+     "dir": "route-transition",
+     "members": [
+      "route/useRouteTransition.ts",
+      "core/useViewTransition.ts",
+      "route/routeGrammar.ts"
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,64 @@
+judge-throws start 2026-10-16T05:56:38Z load { 11.05 22.70 25.09 }
+JT T-ctl PASS rc=0 expect=0 :: verdict: GREEN (428 base-green keys, every one accounted: 428 held + 0 failed + 0 absent)
+JT T-noargs PASS rc=2 expect=2 ::     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+JT T-base-missing PASS rc=2 expect=2 ::     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+JT T-route-missing PASS rc=2 expect=2 ::     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+JT T-base-notjson PASS rc=2 expect=2 ::     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+JT T-route-notjson PASS rc=2 expect=2 ::     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+JT T-route-schema1 PASS rc=2 expect=2 ::     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+JT T-route-noresults PASS rc=2 expect=2 ::     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+JT T-route-empty PASS rc=2 expect=2 ::     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+JT T-base-empty PASS rc=2 expect=2 ::     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+JT T-rerun-missing PASS rc=2 expect=2 ::     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+JT T-rerun-notjson PASS rc=2 expect=2 ::     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+JT T-rerun-empty INFO rc=2 ::     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+JT R-ctl PASS rc=0 expect=0 :: {"specs":153,"moved":["tests-visual/a11y-slider.spec.ts -> tests-visual/components/controls/a11y-slider.spec.ts","tests-visual/a11y-splitchars.spec.ts -> tests-visual/typography/a11y-splitchars.spec.ts","tests-visual/ada
+JT R-ctl-equals-committed INFO same (spec,title,status) multiset as the committed base-rekeyed.json results 866/866
+JT R-noargs PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/rekey.mjs:25:42
+JT R-base-missing PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/rekey.mjs:28:25
+JT R-base-notjson PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/rekey.mjs:28:19
+JT R-base-schema1 PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/rekey.mjs:29:47
+JT R-base-empty PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/rekey.mjs:30:65
+JT R-root-missing PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/rekey.mjs:27:52
+JT S-ctl PASS rc=0 expect=0 :: {"moves":604,"changed":723,"specs":155,"programSpecs":155,"captures":14,"excludedTouched":14}
+JT S-noargs PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/browser-select.mjs:37:56
+JT S-root-missing PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/browser-select.mjs:39:52
+JT S-root-not-a-tree PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/browser-select.mjs:39:52
+JT S-seq-notjson PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/browser-select.mjs:43:17
+JT S-seq-schema PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/browser-select.mjs:43:26
+JT P-ctl PASS rc=0 expect=0 :: peer-closure: GREEN
+JT P-noargs PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/peer-closure.mjs:144:7
+JT P-root-missing PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/peer-closure.mjs:144:7
+JT P-base-missing PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/peer-closure.mjs:144:7
+JT P-base-notjson PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/peer-closure.mjs:144:7
+JT P-base-schema PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/peer-closure.mjs:144:7
+JT P-overlay-notjson PASS rc=2 expect=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/peer-closure.mjs:144:7
+JT P-empty-entry:motion-core.js PASS rc=2 expect=2 ::     at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/peer-closure.mjs:144:1
+JT P-empty-entry:index INFO no dist/index.js
+JT P-ctl-again PASS rc=0 expect=0 :: peer-closure: GREEN
+JT M-browser-tally.1:tools/browser-tally.mjs INFO rc=1 :: Node.js v26.0.0
+JT M-browser-tally modules planted: 1
+JT M-browser-select.1:tools/browser-select.mjs INFO rc=1 :: Node.js v26.0.0
+JT M-browser-select.2:lib/floor.mjs PASS rc=2 expect=2 ::     at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/browser-select.mjs:34:30
+JT M-browser-select.3:lib/sequence.mjs PASS rc=2 expect=2 ::     at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/browser-select.mjs:35:26
+JT M-browser-select.4:lib/digest.mjs PASS rc=2 expect=2 ::     at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/browser-select.mjs:35:26
+JT M-browser-select modules planted: 4
+JT MR-browser-select:lib/floor.mjs PASS rc=2 expect=2 ::     at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/browser-select.mjs:34:30
+JT M-rekey.1:tools/rekey.mjs INFO rc=1 :: Node.js v26.0.0
+JT M-rekey.2:lib/follow.mjs PASS rc=2 expect=2 ::     at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/rekey.mjs:23:25
+JT M-rekey.3:lib/sequence.mjs PASS rc=2 expect=2 ::     at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/rekey.mjs:23:25
+JT M-rekey.4:lib/digest.mjs PASS rc=2 expect=2 ::     at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/rekey.mjs:23:25
+JT M-rekey modules planted: 4
+JT MR-rekey:lib/follow.mjs PASS rc=2 expect=2 ::     at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/rekey.mjs:23:25
+JT M-peer-closure.1:tools/peer-closure.mjs INFO rc=1 :: Node.js v26.0.0
+JT M-peer-closure.2:lib/floor.mjs PASS rc=2 expect=2 ::     at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/peer-closure.mjs:38:28
+JT M-peer-closure.3:gate/peer.mjs PASS rc=2 expect=2 ::     at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/peer-closure.mjs:39:34
+JT M-peer-closure modules planted: 3
+JT MR-peer-closure:lib/floor.mjs PASS rc=2 expect=2 ::     at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/peer-closure.mjs:38:28
+JT OTHER-noargs:plants-p10 INFO rc=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/plants-p10.mjs:41:92
+JT OTHER-noargs:plants-p8 INFO rc=1 :: Node.js v26.0.0
+JT OTHER-noargs:plants-p9 INFO rc=2 ::     at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/tools/plants-p9.mjs:42:14
+JT OTHER-noargs:seal-staged INFO rc=2 ::     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+JT OTHER-noargs:sfc-split2 INFO rc=1 :: Node.js v26.0.0
+JT SUMMARY pass=45 fail=0
+judge-throws rc=0 end 2026-10-16T05:56:56Z load { 10.60 22.03 24.81 }
