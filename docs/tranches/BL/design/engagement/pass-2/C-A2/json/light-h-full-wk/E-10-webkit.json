@@ -1,0 +1,43 @@
+{
+ "id": "E-10",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p2/C-A2/wt/.ca2-out/builds/light-h"
+ },
+ "loadStart": "19.6/17.0/17.6",
+ "loadEnd": "20.2/17.2/17.6",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "E-10 slider own release",
+   "status": "REPORT",
+   "line": "Tab out of the engaged slider: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0107 (the reference for the hand-off and Escape bounds)",
+   "load": "19.7/17.1/17.6"
+  },
+  {
+   "name": "E-10 slider escape release",
+   "status": "PASS",
+   "line": "Escape: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0098 (bound ≤ own release 0.0107 + 0.002)",
+   "load": "19.7/17.1/17.6"
+  },
+  {
+   "name": "E-10 slider re-render landing",
+   "status": "PASS",
+   "line": "a sibling inserted during the hold, then release: the root's largest one-frame move per 16.7 ms 1.8 px (without the insert 1.8 px; bound ≤ that + 1 px)",
+   "load": "20.2/17.2/17.6"
+  },
+  {
+   "name": "E-10 slider2 hand-off drop",
+   "status": "PASS",
+   "line": "Tab A → B (focus on Probe B): A ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0088 (bound ≤ A's own release 0.0107 + 0.002) · B ×1.000 → ×1.060",
+   "load": "20.2/17.2/17.6"
+  },
+  {
+   "name": "E-10 slider2 hand-off veil",
+   "status": "REPORT",
+   "line": "no veil up before the Tab (0.00): this route veils no keyboard engagement",
+   "load": "20.2/17.2/17.6"
+  }
+ ]
+}
