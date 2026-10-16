@@ -733,3 +733,304 @@ A route is **CONVERGED only at 0 open rows** on this list. Critics may not add r
 - **The G row** waits on Q-2 and Q-3.
 - **R-1 and R-8** wait on Q-5.
 - **Everything else** is buildable now: on floor v2 and H3, D′'s route-owned rows (X-5, X-7, item 8, item 9's CX-1 half) and F's (X-7's label half, CX-1, late content, the MIGRATION claim) are all in FV-2..FV-7 or H3. That leaves each route's own residue at R-1 (the unmigrated consumer), R-10 (F's four spellings) and the `sm` mark (F).
+
+---
+---
+
+# D4 · pass 3 · REGISTRY: the routes after pass 3
+
+| field | value |
+|---|---|
+| seat | D4 pass-3 agglomeration. Closes pass 3 with each route's status on the fixed 40-row checklist (§P2-6.3), the open rows with their counterexamples, which rows wait only on the owner, the merges pass 3 earned, the owner's questions re-posed on pass-3 evidence, and the pass-4 plan. It picks no winner (§P3-0) |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `9219651e`. `git diff --stat 8d911018 HEAD -- src package.json tests MIGRATION.md` is empty, so every pass-3 seat measured the same library source |
+| inputs, read in full | passes 1 and 2 of this file; `pass-3/H3.md`, `FLOOR-V2.md`, `D4-Dp-spec.md`, `D4-Dp-proto.md`, `D4-Dp-critique.md`, `D4-F-spec.md`, `D4-F-proto.md`, `D4-F-critique.md`; the tile rule in `D4-F-proto.patch` (to compare its structure with D′'s); the MIGRATION text in `floor-v2.patch` and `D4-Dp-proto.patch` (for E-3); the directory listings of each seat's `logs/` (to see which shared probes each route ran); `audit/INBOUND.md` for owner rulings (none on §5 since pass 2) |
+| instruments | none run. Every number cites the report that measured it, which stays the source of record (P-3) |
+| fences | no source edit, no git write; this part is the only write |
+| engines | every WebKit number is **Playwright WebKit 26.5**. Every real-Safari cell is **UNMEASURED (owner's safaridriver checkbox)**: the driver still answers "You must enable 'Allow remote automation'" (`H3.md` header) |
+| harness | D′'s three seats ran H3 `9fd4983bc6b9`. F's prototype and critic ran `24182288e414`, which is H3 plus two lines in `lib.mjs` (`holdWebkit()`, the BL WebKit lock, `13975d8b`); the other 26 files are byte-identical (`D4-F-proto.md` header). No witness or judge differs, so the tallies compare cell for cell. They are still two hashes, and H4 records one (§P3-6) |
+
+Short citations: `D′s` / `D′p` / `D′c` are the D′ spec, prototype and critique; `Fs` / `Fp` / `Fc` the F ones; `FV2` is `FLOOR-V2.md`; `H3` is `H3.md`.
+
+---
+
+## P3-0 · In brief
+
+| id | route | status | checklist (critic, measured) | harmonised (§P3-2) | open rows not on the owner | reason in one line |
+|---|---|---|---:|---:|---|---|
+| D4-D′ | the declared cell | **ADVANCE** | **33 / 40** (82.5 %) | 31 / 40 | R-10 (route; the cure is floor v3); FV-2 and E-3's pill clause (floor, unread on D′) | every number reproduced at load up to 542; one route-owned row: the tile fact and the tile corner are two spellings that disagree (`fact-split` 8/20) |
+| D4-F | the anatomy declares the tile | **ADVANCE** | **32 / 40** (80 %) | 31 / 40 | E-3 (route: empty anatomy makes tiles); FV-2 and E-3's pill clause (floor); R-10 (unread on F, same structure) | every number reproduced at load 9-47; a `#meta` whose content is a false `v-if` turns the set into tiles (4/4), and a self-set block child stacks three rows in a pill on `dist` (2/6) |
+| D4-G | the selection is a body | **BLOCK**, unchanged | not scored | — | — | not run in pass 3; Q-11 is still owed |
+| D4-A, D4-C | | BANK, unchanged | — | — | — | |
+| D4-B, D4-E | | RETIRE, unchanged | — | — | — | |
+
+**No winner.** The two routes are equal on every battery cell (§P3-1). On the checklist they differ by one row as measured, and by nothing once each route is read with the other critic's attack (§P3-2). What separates them is the question the owner holds, Q-13.
+
+**No convergence.** Neither route has zero open rows outside the owner's. Each carries at least one floor-owned row (FV-2) and one row in its own tile rule (R-10 on D′, E-3 on F). Pass 4 can close all of them without a new primitive (§P3-6). After that, the six owner rows are all that is left on either route.
+
+Five findings shape pass 4.
+
+1. **Floor v2 did its work.** Both routes moved from 23/35 and 22/34 to 33/40 and 32/40. Pass 2's route-owned rows were X-5, X-7, item 8, CX-1, late content and the MIGRATION claims. Every one of them is closed on the floor or by H3. T-2 went from 28/40 to 40/40 on HEAD + floor (`FV2` §4.1). T-6 is 33/33 in both engines on both routes, plant-checked (D′ 33 → 21 with the kick removed).
+2. **Both routes built the same three things again**, as in pass 2:
+   - the perimeter at inset 0, so paint containment cannot halve it (H3-7);
+   - `inheritAttrs: false`, with the engine's attributes bound last (H3-12);
+   - FadingScroll as a tab stop only while it holds none (TF-6).
+
+   They belong on the floor (§P3-4 M-10).
+3. **The tile fact and the tile's geometry are two spellings on both routes.** In each route one rule writes `--selection-tile: flush` on the group, and a descendant rule `& .toggle-group__item` writes the corner, the column and the pad. The D′ critic measured the split (`D′c` §2):
+   - a consumer who writes the documented `--selection-tile: plated` on an undeclared group gets the lozenge N-9 rules out: 204×61.58, two rows, corner `9999px` → 30.79 = 1.00×h/2;
+   - a pill group nested inside a tile group keeps its pill fact but wears the 16 px tile corner (0.80×h/2).
+
+   Both cells fail silently in production, in both engines. F's tile rule has the same structure (`D4-F-proto.patch:172-187`), and no F seat ran `fact-split.mjs`. The cure is one floor move: the geometry reads the fact.
+4. **FV-2 leaves one CX-1 cell open, and it is the floor's.** A label child that sets its own `display: block` (an inline style or a utility class) outranks `.pill-row`'s zero-specificity `:where()`. It paints three text rows inside a 36 px or 40 px stadium on production `dist`, silently, in both engines (`Fc` §2.1: shared `late` 2/6). `FV2` §1 states the trade ("a class that sets a display … keeps it"), and the floor's own MIGRATION row then claims "a pill holds one row … whatever classes its content carries", which the cell falsifies. F's prototype added a development name for it (`Fp` §1.2, R-13), so it is now named in development builds. It is still not refused in production. No D′ seat ran `late`, but D′ uses the floor's pill law unchanged.
+5. **The gestalt is where pass 2 left it.** Every focused-selected frame on both routes shows two concentric outlines (`D′c` §3.6, `Fc` §3 G). F puts them 3 px apart, gives them different weights and adds a check. The mark washes out on a pale swatch in dark (`Fc` §2.4), and on V2 it covers 48.6-49.5 % of a thumbnail's corner (`Fp` §2.5). Flush reads as options on one surface; plated reads as slabs in light, and in dark the two barely separate (`D′c` §3.6). This is Q-2's and Q-3's to rule.
+
+---
+
+## P3-1 · Registry
+
+Baselines under H3, from `H3` §4 and `FV2` §4.1, both engines unless split:
+
+| witness | HEAD | HEAD + floor v2 |
+|---|---|---|
+| T-2 | 28/40 | 40/40 |
+| T-5 | 28/78 | 46/78 (`dist` 47/79) |
+| T-6 | 23/55 · 15/43 | 31/55 · 31/55 |
+| W-A | 2/9 | 5/9 |
+| CANON | 2/3 | 2/3 |
+
+T-1, T-3, T-7, T-8 and W-D read a tile, which the floor does not ship.
+
+**Migrated arm, critic's re-run, Chromium · Playwright WebKit.** The two routes read the same on every witness, cell for cell:
+
+| witness | D′ (`D′c` §1) | F (`Fc` §1) |
+|---|---|---|
+| T-1 | 15/15 · 18/18 | 15/15 · 18/18 |
+| T-2 (library) | 40/40 · 40/40 | 40/40 · 40/40 (`dist` the same) |
+| T-3 | 40/43 · 40/43 | 40/43 · 40/43 |
+| T-4 | 24/24 · 24/24 | 24/24 · 24/24 |
+| T-5 | 38/38 · 38/38 (`dist` the same) | 38/38 · 38/38 (`dist` the same) |
+| T-6 | 33/33 · 33/33 | 33/33 · 33/33 |
+| T-7 | 24/24 · 24/24 | 24/24 · 24/24 |
+| T-8 | 27/27 | 27/27 |
+| W-D | 8/8 · 8/8 | 4/8 (W-D's declared half is D′'s witness) |
+| CANON | 3/3 · 3/3 | 3/3 · 3/3 |
+
+| id | status | checklist | vacuous greens found | strongest counterexample |
+|---|---|---:|---|---|
+| D4-D′ | ADVANCE | 33/40 | The prototype's R-10 "one nested block is the only `[data-shape="cell"]` selector" counts selectors, not readers. The fact is a second writable spelling. `D4-Dp-spec/probes/unit-plants.sh` printed nothing and exited 0 without its two vitest configs, which no seat had banked (`D′c` §5). `crit.mjs --part tworow` tests a premise FV-2 removed (`D′s` §2.3) | `D′c` §2: `--selection-tile: plated` on the undeclared K1 arm gives 2 rows at 61.58 px under a `9999px` corner (30.79 = 1.00×h/2) with the perimeter on, silent on `dist`, in both engines |
+| D4-F | ADVANCE | 32/40 | The prototype ruled FV-2 PASS on T-2 while the shared `late` probe read 2/6. The MIGRATION claim "renders only when filled" is checked by `$slots.meta`, which tests that the slot function exists, not that it yields content | `Fc` §2.2: `<template #meta><span v-if="o.hint">…</span></template>` with no hints gives 5 empty 0 px `.toggle-group__meta` rows, `--selection-tile: flush`, a 16 px corner on 48.94 px one-row items, a column, the perimeter and the mark, 4/4 cells |
+| D4-G | BLOCK | not scored | — | `Gb` §3.3 (pass 2), unchanged |
+
+**Machine.** D′'s seats ran at a 1-min load of 89-713. F's prototype ran at 7-77 and its critic at 9-47. Every D′ number reproduced at the heavier load, and the D′ critic re-ran the R-3 plant at load 175-348 with only the commit cells failing. The load difference is not a separator. H3-1's cure held in every seat: there were 0 unexplained stalls. F's one Playwright WebKit stall re-opened on a new process and read (NOT-REPRODUCED, `Fp` §2.2).
+
+---
+
+## P3-2 · Harmonising the two critiques
+
+Each critic attacked its own route, and each attack lands on code the two routes share. Under P2-6.3 a row is scored on the shared instrument's reading, so a cell no seat ran on a route is not a FAIL on that route. The registry therefore keeps the measured scores, 33 and 32. It also states where the same mechanism would read the same way, so the owner does not read a one-row gap as a separation.
+
+| attack | measured on | the other route's code | reading there |
+|---|---|---|---|
+| `fact-split` (R-10): a written fact with no declaration; a pill group nested in a tile group | D′: 8/20 agree, `src` and `dist`, both engines | F writes the fact in `.toggle-group:has(…)` and the corner in its descendant `& .toggle-group__item` (`D4-F-proto.patch:172-187`). The two cells hit that structure the same way | **UNMEASURED on F**; the same structure. F's critic scored R-10 PASS on CANON and the unit, which do not write the fact or nest a group |
+| shared `late` (FV-2): a self-set `display: block` child in a pill's label | F: 2/6 on `src-dev`, `dist-dev` and `dist` | D′ uses the floor's `.pill-row` unchanged and adds nothing to the label | **UNMEASURED on D′**; the same floor code. D′'s FV-2 PASS rests on T-2, whose block case is a UA `div` |
+| E-3, the pill clause ("a pill holds one row") | F's MIGRATION row, falsified by `late` | D′'s MIGRATION row 1 says "A pill holds one row", and the floor's row says "whatever classes its content carries, it lays them out in a row" | the same claim, falsified by the same cell if `late` reads 2/6 on D′ |
+| E-3, empty anatomy | F: 4/4 | D′ has no anatomy; a declared group is tiles whatever its content | does not apply |
+| nesting reach: a tile group inside a pill group turns the outer group into tiles | F: 4/4 (`Fs` `nest`, `Fc` §2.4) | D′'s declaration does not reach an outer group | does not apply. D′'s mirror case is the inner pill wearing the tile corner, which is already under `fact-split` |
+| corner refusal: a consumer `rounded-*`, scoped, unlayered or `!important` rule against a tile | D′: 10/10 on `src` and `dist`, by the layered `!important` | F's corner is a plain `border-radius` | **UNMEASURED on F**. Not scored: E-3 asks whether the route's claims are true, and F claims no refusal |
+
+**Harmonised:** both routes read 31/40 when each is read with the other's attacks: D′ 33 − FV-2 − E-3, and F 32 − R-10. Every row behind that number comes from the floor or from the tile rule's shared structure. None is a choice of declaration or anatomy. This is a projection, not a score, and pass 4 reads every attack on both routes (H4-1).
+
+---
+
+## P3-3 · Route entries
+
+### P3-3.1 · D4-D′ · the declared cell: ADVANCE, 33/40 (82.5 %)
+
+**What held**, reproduced by `D′c` cell for cell:
+- The route is small on floor v2. It is one prop, `shape: "pill" | "cell"`, refused through `refuseUnknown` in production as in development. Then one nested block sets the fact and the corner, column, pad and leading. Then the three shared fixes (§P3-4 M-10).
+- The battery passes as in §P3-1.
+- The corner is refused in paint: 10/10 on `src` and `dist`. Only an inline `!important` beats it, and the MIGRATION row says "class or rule", which is true.
+- The kick plant takes T-6 from 33 to 21. Every failure is a commit cell.
+- X-1..X-7 all pass, with tone 24/24 and states 108/108.
+- The corner-gap probe reads Δ 0.05-0.36 px at 45° on 20/20 cells, and the planted non-concentric edge fails 17/20 (`D′p` §3.1).
+- Bundle 2,933,655 B: +4,133 over floor v2 and +14,598 over the datum.
+
+**Open rows, with counterexamples** (`D′c` §3):
+
+| row | counterexample | owner only? |
+|---|---|---|
+| T-3 | `c1-migrated` reads 22.50 px² against 224 in all three modes, both engines. Shipped K1 `preset-verbatim` reads 0.00 / 233.00 / 0.00 against 248 (Playwright WebKit 0.00 / 217.00 / 0.00) | **yes**: Q-10 (C1), Q-5 (the shipped arm) |
+| E-2 | C1, the same cells | **yes**: Q-10 |
+| R-1 | shipped K2 cut: 4 boxes up to 24.64 px (Chromium) and 24.86 px (Playwright WebKit), silent on `dist`; shipped K1 legible but with no selected carrier in light or PRT | **yes, by Q-5 and Q-15** (§P3-5). Under Q-5 (b) no route can make an unmigrated K2 legible, and the critic's "fails whatever Q-5 rules" holds only while R-1 asks for legibility |
+| R-8 | names on `dist-dev` 4/4, silent on `dist` 4/4; W-E `dist` 1/6 | **yes**: Q-5 |
+| E-4 | real Safari UNMEASURED | **yes**: the checkbox |
+| G | two concentric outlines on every focused-selected frame; plated against flush barely separates in dark | **yes**: Q-2, Q-3 |
+| R-10 | `fact-split` 8/20 (§P3-0 finding 3) | **no**: route. The cure is the floor v3 move (FV3-4), after which D′'s whole tile rule is `[data-shape="cell"] { --selection-tile: flush }` |
+
+Read on the floor's code but not on D′'s build (§P3-2): FV-2 and E-3's pill clause.
+
+### P3-3.2 · D4-F · the anatomy declares the tile: ADVANCE, 32/40 (80 %)
+
+**What held**, reproduced by `Fc` cell for cell:
+- The route is two slots and one selector, with no prop and no value. Pass 2's four spellings are down to one rule. The unit pins it and fails a second spelling.
+- The battery passes as in §P3-1.
+- Every gating cell of the route's own probes passes: `f3.mjs` 26/26, `p3.mjs` 26/26, the pass-2 probe 114/114, and the plants 76/76.
+- The R-13 development name for stacked text: `stack` 22/22 per flavour, and 0 false names on the five gating pill scenes or on a superscript.
+- The forced-colours mark reads 19.04:1 (Chromium) and 10.54:1 (Playwright WebKit).
+- The whole `vitest run` passes 2336 cases, ×4. Its only failures are HEAD's three `boot-graph` cases.
+- The `:has()` cost ratio is 0.99 in Chromium. Playwright WebKit's clock cannot see the cost, so that number is UNMEASURED.
+- The story's Playwright WebKit crash happens on the two control pages too (6/6 "Page crashed"), so it belongs to the dev-served demo, not to the tile (`Fc` §0 item 4). PF-2 stands.
+- Bundle 2,936,130 B: +6,608 over floor v2 and +17,073 over the datum. G-BUNDLE-RATCHET already throws on floor v2.
+
+**Open rows, with counterexamples** (`Fc` §3):
+
+| row | counterexample | owner only? |
+|---|---|---|
+| T-3 | `c1-migrated` 0.00 px² against 224 in all three modes; shipped K1 0.00 / 233.00 / 0.00 against 248 | **yes**: Q-10, Q-5 |
+| E-2 | C1, the same cells. F has no answer for C1 under Q-10 (b): a one-row option fills no slot (`Fs` R-2) | **yes**: Q-10 |
+| R-1 | shipped K2: 8/8 items past the plate, up to 50.92 / 51.14 px, 0 lines on `dist`. This is the same floor law as D′'s cut; `f3.mjs` reads every item and the stage, where the floor's `unmigrated.mjs` reads item 0's boxes | **yes, by Q-5 and Q-15** |
+| R-8 | `late` silent on `dist`; names on the development flavours only | **yes**: Q-5 |
+| E-4 | UNMEASURED | **yes**: the checkbox |
+| G | two outlines when focused and selected (3 px apart); the check washes out on `#ecfccb` in dark; the commit is a 3-4 % pop with no travel | **yes**: Q-2, Q-3 |
+| FV-2 | shared `late` 2/6 on `dist`: `single` 98.63×36.00 and `pill-badge` 146.36×40.00 paint 3 text rows inside the stadium, 0 errors | **no**: floor (FV3-5). Whether production refuses or only names is Q-5's |
+| E-3 | the empty-anatomy cells 4/4 (§P3-1) falsify "a group whose items fill neither slot is pills"; `late` falsifies "a pill is one row" | **no**: route (render a row only when its slot yields content) and floor (the pill clause) |
+
+Recorded and not scored (`Fc` §2.4, `Fs` R-4): the nesting reach. Scoped to `@scope (.toggle-group) to (.toggle-group)` or an equivalent boundary, it would need a measurement against K2's `<section>` wrappers. It folds into R-10 and R-2's cells in H4 (§P3-6).
+
+Unmeasured on F, the same structure as D′'s R-10 (§P3-2): `fact-split`.
+
+### P3-3.3 · D4-G: BLOCK, unchanged
+
+Not run in pass 3. Q-11 is still owed. The glance is ready in `pass-2/glance-G/`. G returns only on a ruling of (b) or (c) and a rect that both follows layout and survives a skipped tile (G-1..G-3).
+
+### P3-3.4 · The floor and the harness
+
+- **H3** (`H3.md`) landed all 13 rows over 147 self-test runs: every fixture passes and every plant fails, in both engines, with 0 BROKEN.
+  - H3-1 found the root cause of the routed Playwright WebKit T-3 stall: an AppSSO reply that stopped arriving after about 90 navigations of one WebKit process, in one boot epoch. The cure retires the browser at 60 navigations. In pass 3 it held across every seat.
+  - H3-5's ΔE hover read removed pass 2's engine split on F1. HEAD `specimen` reads 0.0190 against the 0.02 bar, which leaves that verdict near the threshold (`H3` §5).
+- **Floor v2** (`FLOOR-V2.md`) built FV-1..FV-10 in one patch, sha1 `b04a83be`.
+  - One fact, `--selection-tile` (`none | flush | plated`), drives the pill law, the flush plate, the perimeter, the names and the Q-9 exemption, by style query. The probe reads 26/26, a `display: contents` host included.
+  - FV-7 reaches a consumer's development build through `process.env.NODE_ENV` (16/16 per flavour). That is Q-5 (d) by its intent, because contract-v2 abrogated the `development` export condition.
+  - FV-10's `refuseUnknown` is the one guard policy for SegmentedTabs, Chip and a route's input. Button's DEV-only guard is FV2-3, outside D4.
+  - Its open rows: FV2-1, which is R-1; FV2-2, consumer ARIA, closed by both routes and now M-10; FV2-4, the export condition, which is Q-5's; FL-3 and FL-5, which are consumer edits.
+  - What the floor does not do is FV-2's self-set-display residue (§P3-0 finding 4) and the fact/geometry split (finding 3).
+
+---
+
+## P3-4 · Merges and cross-pollination earned in pass 3
+
+- **M-10 · D′ ∩ F → floor v3.** Both routes built each of these, and both were measured green:
+  - the perimeter at inset 0. D′'s corner-gap probe reads it concentric to within 0.36 px. It also cures the pill's own `overflow: clip` halving the contrast-more and forced-colours perimeter, which no witness reads yet (`D′s` §4);
+  - `inheritAttrs: false`, with consumer attributes first and the engine's last. `Fc` §2.3 shows consumer class, style, `data-*`, `aria-label` and listeners still land, 4/4. D′'s development name for a consumer `role` / `tabindex` / `aria-*` (M-7, 8/8) comes with it;
+  - FadingScroll as a tab stop only while it holds a tabbable element, in F's form, which excludes `tabindex="-1"` and pins it with the `parked-counts-as-a-stop` plant.
+- **M-11 · R-10's cure for both routes → floor v3.** The tile's corner, column, pad pair and leading move under `@container not style(--selection-tile: none)`. That is the form the floor already uses for the perimeter. A route then writes only the fact. The cure removes both `fact-split` cells on both routes:
+  - a nested pill group gets nothing, because the floor resets the fact to `none` on every `.toggle-group`;
+  - a written `plated` gets the 16 px corner.
+
+  `D′c` §4 names one trap: inside the query a bare `.toggle-group__item` loses `padding-inline` to `.toggle-group[data-size="lg"] .toggle-group__item` (0,3,0). Once this lands, D′ and F differ in exactly one thing, what writes the fact.
+- **M-12 · F's R-13 development name → floor v3.** It reads the pill law, which is the floor's, and it costs 734 B (`Fp` §2.1). The floor already names a `<br>` and content past the plate. Stacked rows inside the plate are the third reason, keyed on H3's own `rows()`.
+- **Not earned:**
+  - F's mark on D′. The mark is a register choice, Q-3 (b). If the owner rules (b), it moves to the floor under the fact for both routes. Until then it stays F's, and it is the one visible difference between the routes' frames;
+  - D′'s layered `!important` corner. It is a policy on consumer corners, so it moves with M-11 only if the floor seat measures it under the fact on both routes (H4-1).
+
+---
+
+## P3-5 · What the owner must rule
+
+No §5 question has been ruled since pass 2 (`audit/INBOUND.md`). Pass 3 built every default again. The pass-3 evidence for each question:
+
+| id | state after pass 3 | pass-3 evidence |
+|---|---|---|
+| **Q-13 declaration or anatomy** | **the one axis left.** After floor v3 it is the only difference between the routes | **Battery:** equal, cell for cell (§P3-1). **Checklist:** 33 against 32 as measured, 31 against 31 harmonised (§P3-2). **D′:** one prop; C1 can opt in to a tile; a corner override is refused in paint (10/10); +4,133 B; a consumer who forgets `shape="cell"` gets pills. **F:** a tile by construction, with the H-2 pair passing by construction; the mark; +6,608 B; two failure modes D′ does not have, empty-slot tiles (4/4) and nesting reach (4/4), both with in-route cures; a consumer who does not use the slots gets pills. The unmigrated consumer fails the same way on both. **Q-13 would decide** which writer of `--selection-tile` ships. Pass 4 then runs one route, and the other route's directory is struck. Nothing measured decides it |
+| **Q-10 the edge on a selected pill** | **pressing**: the one T-3 and E-2 row both routes fail | C1 reads 22.50 px² (D′) and 0.00 px² (F) against 224 in light, dark and PRT, both engines. Under (b) C1 stays RED on F. On D′ it could declare `shape="cell"`, which gives a 16 px corner on a 40 px one-row option at 0.80 of h/2. (a) puts the floor perimeter on every selected pill in the library |
+| **Q-5 DEV-only guards** | (b)+(d) built, with (d) carried by `process.env.NODE_ENV` | the names land on `dist-dev` and stay silent on `dist`, 16/16 per flavour, both routes. Production refuses structurally: a `<br>` and a UA block run inline. A self-set block child is not refused (FV-2). Shipped K2 is cut silently: 4 boxes up to 24.64 px by the floor's probe, and 8/8 items up to 50.92 px by F's. Three options stand: (a) ship the names in production; (b)+(d) as built; (c) DEV-only accepted |
+| **Q-15 (new) R-1's legibility half** | proposed | R-1 asks that the unmigrated consumer stay legible. Under Q-5 (b) a pill refuses a second row by design, so an unmigrated K2 is cut on any route, and both critics score R-1 open "whatever Q-5 rules". The standing law is E-1 (clean breaks, no shims), and the consumer-updates ruling says the consumer migrates in its own tranche. Options: (a) strike the legibility half, so that R-1 becomes "the unmigrated consumer's fault is named, per Q-5, on `dist`"; (b) keep it, which makes R-1 unbuildable without a production fallback that E-2 forbids. Under (a), R-1 closes with Q-5 |
+| **Q-2 plate in a plate** | built. Flush is the default, and `plated` is one value away on both routes | the glance pairs are in `D4-Dp-crit/pair/`, `D4-F-proto/glance-pair-s3/` and `D4-F-spec/glance-pair/`: rows flush over plated, columns selected and focused-selected, light and dark × fine and coarse × both engines. Flush rest ΔE is 0.0000 from the host. Plated reads 0.0457-0.0984 in light and 0.0186-0.0239 in dark. Critics: plated reads as slabs in light, and dark barely separates the two, so show light first. On flush, hover is a larger step than the selected tint (ΔE 0.0947 against 0.0764, `Fs` R-5) |
+| **Q-3 the register's look** | **pressing**, unchanged | every focused-selected frame on both routes shows two concentric outlines. F's (b) form (perimeter plus check) puts them 3 px apart with different weights. Its check washes out on a pale swatch in dark and covers 48.6-49.5 % of V2's thumbnail corner. (c), a raised body, is blocked with G |
+| **Q-11 a travelling body** | **owed**; the glance is ready | `pass-2/glance-G/`. G stays BLOCK until it is ruled |
+| **Q-14 the bundle datum** | owed | G-BUNDLE-RATCHET throws on floor v2 alone (2,929,522, +10,465). D′ totals 2,933,655 (+14,598) and F 2,936,130 (+17,073). Floor v3 will move the shared parts out of both route deltas |
+| Q-1, Q-4, Q-6, Q-7, Q-8, Q-9, Q-12 | defaults built and green on both routes | as pass 2 |
+
+**Owner actions, not rulings:**
+- **The safaridriver checkbox.** E-4 fails on every route until it is ticked. Pass 3 adds three engine facts that only Safari can settle:
+  - Playwright WebKit does not re-match a pseudo-element style query after load (`FV2` §1), which the floor works around;
+  - `:has()` with a child combinator inside `:is()`;
+  - `mask-composite: exclude` on the mark.
+- **An on-device capture of Apple's option cards.** Still owed from pass 1.
+- **Placement of O-94 R-2** (`audit/INBOUND.md`): an opt-out of the selected fill on a bare item, which the driver recommends to D4. If it is placed here, it is a value of `--selection-tile` or a sibling fact, measured in pass 4. It is not a new row.
+
+---
+
+## P3-6 · Pass-4 plan
+
+### P3-6.1 · Routes
+
+| route | entering pass 4 | what differs after floor v3 |
+|---|---|---|
+| **D4-D′** | ADVANCE, on floor v3 | `[data-shape="cell"]` writes the fact |
+| **D4-F** | ADVANCE, on floor v3 | `:has(> … #media / #meta)` writes the fact; a row renders only when its slot yields content; a scope boundary for nested groups; the mark, unless Q-3 moves it to the floor |
+| **D4-G** | BLOCK; runs only if Q-11 is ruled (b) or (c) | G-1..G-3 before any row |
+
+If the owner rules Q-13, pass 4 runs one route.
+
+### P3-6.2 · Order
+
+1. **Floor v3 and H4**, built once. Each new check ships with a fixture PASS and a planted FAIL in both engines. HEAD + floor v3 is re-baselined.
+2. **Owner rulings** fold in when they arrive: Q-2, Q-3, Q-5, Q-10, Q-11, Q-13, Q-14, Q-15.
+3. **Routes**: spec, prototype and critique, one seat each, with harness runs serialized under the WebKit lock. **Every critic runs both routes' attacks** (H4-1), so the two scores read the same cells.
+4. **Agglomeration.**
+
+**Floor v3** (on `floor-v2.patch`, sha1 `b04a83be`):
+- **FV3-1.** The perimeter at inset 0 (M-10), with D′p's `corner-gap.mjs` as its witness.
+- **FV3-2.** `inheritAttrs: false`, with the engine's attributes last and the development name for a consumer `role` / `tabindex` / `aria-*` (M-10). It closes FV2-2. It also measures a consumer `role` on a `type="multiple"` item, which `D′c` §5 read from code only: `itemAttrs` returns only `aria-pressed` for the `group` role.
+- **FV3-3.** FadingScroll's stop rule, in F's tabbable form (M-10).
+- **FV3-4.** The tile's geometry reads the fact (M-11): corner, column, pad pair and leading under `@container not style(--selection-tile: none)`, plus `align-items: stretch` on a tile group if it holds against CX-5. One pad spelling replaces the routes' two: D′ uses `--space-atom` / `--space-body`, and F uses `padding-block: 0.625rem` with a 0.25 rem gap. Use the tokens. Measure the `lg` specificity trap. Decide the layered `!important` corner here, on both routes.
+- **FV3-5.** FV-2's residue: a label child that sets its own `display` stays on the row. The candidate is `display: inline !important` on `.pill-row` descendants other than graphics and `.badge-atom`, measured on `pill-icon` and `pill-badge` for the Badge trade. Add F's R-13 name (M-12). Make the floor's MIGRATION pill row true, or narrow it to what it does. Production refusal or a name only is Q-5's.
+- **FV3-6.** The mark, under the fact, **only if Q-3 rules (b)**. With it come the room gate and a legibility rule over light media in dark.
+
+**H4** adds witness cells to existing rows. It adds no rows:
+- **H4-1.** A shared attack set run on every route, against R-10, R-2 and E-3:
+  - `fact-split` (`D4-Dp-crit/probes/fact-split.mjs`), with a fixture and plant still owed: a fact written without a declaration, a pill group nested in a tile group, and a tile group nested in a pill group;
+  - F's `attack.mjs`: empty anatomy, consumer attributes and nesting;
+  - `corner-refusal.mjs`.
+- **H4-2.** T-2's H3-3 cases gain the shared `late` cells, a block child set by inline style and by a utility class (FV-2).
+- **H4-3.** The unit drivers carry their vitest configs (`D4-Dp-crit/probes/`, `D4-F-proto/probes/vitest.wt.config.ts`), and a driver that ran zero cases exits non-zero.
+- **H4-4.** One harness hash for every route, including the WebKit lock.
+- **H4-5.** `crit.mjs --part tworow` is retired. H3-3 supersedes it.
+- **H4-6.** Reported, not gating: the kick on tiles wider than about 286 px against a 4 px gap (`D′c` §5), and the mark's contrast over media (if FV3-6).
+
+### P3-6.3 · The checklist
+
+**P2-6.3's 40 rows stand unchanged.** Pass 3's new defect classes fold into existing rows as witness cells:
+
+| class | row |
+|---|---|
+| fact-split, nesting reach | R-10, R-2 |
+| a block child set by its own display | FV-2, T-2 |
+| empty anatomy | E-3, R-2 |
+| consumer `role` on `multiple` | T-5 |
+| the mark over light media | G |
+
+A row that waits on an owner input is **owner-blocked**. A route at 0 open rows outside the owner's is at its **owner-gated fixed point**. It is not CONVERGED, and further passes do not move it until a ruling arrives.
+
+### P3-6.4 · How close to convergence
+
+| | D′ | F |
+|---|---|---|
+| measured | 33 / 40 | 32 / 40 |
+| harmonised | 31 / 40 | 31 / 40 |
+| open rows outside the owner's, with their cure | R-10 → FV3-4; FV-2 → FV3-5; E-3's pill clause → FV3-5 | FV-2 and E-3's pill clause → FV3-5; E-3 empty anatomy → route; R-10 → FV3-4; nesting → route |
+| owner-blocked rows | T-3, E-2 (Q-10); R-1 (Q-5, Q-15); R-8 (Q-5); G (Q-2, Q-3); E-4 (the checkbox) | the same six |
+| expected after pass 4 | 34 / 40, at the fixed point | 34 / 40, at the fixed point |
+
+Pass 4 is one floor revision plus at most two route cures from both routes sitting at 34/40 with the same six owner rows. Past that point the loop can make no progress on measurement.
+
+**Closing to CONVERGED takes five owner inputs:**
+- Q-10;
+- Q-5, with Q-15;
+- Q-2 and Q-3;
+- the checkbox;
+- Q-13, to pick the route.
+
+On those rulings, the expected pass is one prototype and one critique on one route.
