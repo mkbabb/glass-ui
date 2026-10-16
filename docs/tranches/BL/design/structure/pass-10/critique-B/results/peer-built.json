@@ -1,0 +1,228 @@
+{
+ "root": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p10/crit-B/wt",
+ "table": "src/README.md",
+ "floorBase": false,
+ "base": "/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-10/B-kit/results/p10/peer-closure-base.json",
+ "overlay": [],
+ "declared": {
+  "heavy": [
+   "@mkbabb/keyframes.js",
+   "@vueuse/core"
+  ],
+  "free": {
+   ".": [
+    "@mkbabb/keyframes.js",
+    "@vueuse/core"
+   ],
+   "./motion-core": [
+    "@mkbabb/keyframes.js",
+    "@vueuse/core"
+   ]
+  }
+ },
+ "entries": {
+  ".": {
+   "source": "src/index.ts",
+   "declared": "free of @mkbabb/keyframes.js, @vueuse/core",
+   "runtimeNames": 144,
+   "names": {
+    "origins": 132,
+    "peers": {
+     "@mkbabb/keyframes.js": {
+      "Button": "Button (src/components/button/Button.vue; first at src/composables/motion/number/useAnimatedNumber.ts:7)",
+      "CommandDialog": "CommandDialog (src/components/command/CommandDialog.vue; first at src/components/sheet/detents/useSheetDetents.ts:23)",
+      "DialogClose": "DialogClose (src/components/dialog/index.ts; first at src/components/sheet/detents/useSheetDetents.ts:23)",
+      "DialogTrigger": "DialogTrigger (src/components/dialog/index.ts; first at src/components/sheet/detents/useSheetDetents.ts:23)",
+      "DialogContent": "DialogContent (src/components/dialog/DialogContent.vue; first at src/components/sheet/detents/useSheetDetents.ts:23)",
+      "NumberFieldStep": "NumberFieldStep (src/components/number-field/NumberFieldStep.vue; first at src/composables/motion/number/useAnimatedNumber.ts:7)",
+      "SheetContent": "SheetContent (src/components/sheet/SheetContent.vue; first at src/components/sheet/detents/useSheetDetents.ts:23)"
+     },
+     "@vueuse/core": {
+      "CommandDialog": "CommandDialog (src/components/command/CommandDialog.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "CommandList": "CommandList (src/components/command/CommandList.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "DialogClose": "DialogClose (src/components/dialog/index.ts; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "DialogTrigger": "DialogTrigger (src/components/dialog/index.ts; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "DialogContent": "DialogContent (src/components/dialog/DialogContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "DropdownMenuContent": "DropdownMenuContent (src/components/menu/DropdownMenuContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "DropdownMenuSubContent": "DropdownMenuSubContent (src/components/menu/sub/DropdownMenuSubContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "Popover": "Popover (src/components/popover/Popover.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "PopoverContent": "PopoverContent (src/components/popover/PopoverContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "SelectContent": "SelectContent (src/components/select/SelectContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "SheetContent": "SheetContent (src/components/sheet/SheetContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "Slider": "Slider (src/components/slider/Slider.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "TooltipContent": "TooltipContent (src/components/tooltip/TooltipContent.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)",
+      "Configurator": "Configurator (src/components/configurator/Configurator.vue; first at src/composables/keyboard/useKeyboardShortcuts.ts:12)"
+     }
+    }
+   },
+   "dist": {
+    "files": 58,
+    "peers": [
+     "@mkbabb/keyframes.js",
+     "@vueuse/core"
+    ]
+   },
+   "files": {
+    "files": 282,
+    "peers": {
+     "@vueuse/core": "src/index.ts → … first at src/composables/keyboard/useKeyboardShortcuts.ts:12",
+     "@mkbabb/keyframes.js": "src/index.ts → … first at src/components/sheet/detents/useSheetDetents.ts:23"
+    }
+   },
+   "broken": {
+    "names": [
+     "@mkbabb/keyframes.js",
+     "@vueuse/core"
+    ],
+    "dist": [
+     "@mkbabb/keyframes.js",
+     "@vueuse/core"
+    ],
+    "files": [
+     "@vueuse/core",
+     "@mkbabb/keyframes.js"
+    ]
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": {
+    "names": [
+     "@mkbabb/keyframes.js",
+     "@vueuse/core"
+    ],
+    "dist": [
+     "@mkbabb/keyframes.js",
+     "@vueuse/core"
+    ],
+    "files": [
+     "@vueuse/core",
+     "@mkbabb/keyframes.js"
+    ]
+   }
+  },
+  "./motion-core": {
+   "source": "src/composables/motion/motion-core.ts",
+   "declared": "free of @mkbabb/keyframes.js, @vueuse/core",
+   "runtimeNames": 55,
+   "names": {
+    "origins": 22,
+    "peers": {}
+   },
+   "dist": {
+    "files": 5,
+    "peers": []
+   },
+   "files": {
+    "files": 38,
+    "peers": {}
+   },
+   "broken": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "introduced": {
+    "names": [],
+    "dist": [],
+    "files": []
+   },
+   "atBase": {
+    "names": [],
+    "dist": [],
+    "files": []
+   }
+  }
+ },
+ "published": [
+  {
+   "entry": "./dock",
+   "names": [
+    "GLASS_BACKDROP_SHARED_ATTR",
+    "useDockState",
+    "useGlassBackdropLuminance",
+    "FuzzySearchState",
+    "SearchResult",
+    "SearchableItem"
+   ],
+   "declared": "may bear a peer",
+   "ownModuleBreaks": {},
+   "entryKept": true,
+   "kept": true
+  },
+  {
+   "entry": "./sidebar",
+   "names": [
+    "SectionHierarchy"
+   ],
+   "declared": "may bear a peer",
+   "ownModuleBreaks": {},
+   "entryKept": true,
+   "kept": true
+  },
+  {
+   "entry": "./motion",
+   "names": [
+    "springProjection"
+   ],
+   "declared": "may bear a peer",
+   "ownModuleBreaks": {},
+   "entryKept": true,
+   "kept": true
+  },
+  {
+   "entry": "./motion-core",
+   "names": [
+    "motionTempo"
+   ],
+   "declared": "free of @mkbabb/keyframes.js, @vueuse/core",
+   "ownModuleBreaks": {},
+   "entryKept": true,
+   "kept": true
+  },
+  {
+   "entry": ".",
+   "names": [
+    "pendingRenderer"
+   ],
+   "declared": "free of @mkbabb/keyframes.js, @vueuse/core",
+   "ownModuleBreaks": {},
+   "entryKept": true,
+   "kept": true
+  },
+  {
+   "entry": "./aurora-config",
+   "names": [
+    "isAuroraPointerEnabled"
+   ],
+   "declared": "may bear a peer",
+   "ownModuleBreaks": {},
+   "entryKept": true,
+   "kept": true
+  },
+  {
+   "entry": "./blob-config",
+   "names": [
+    "MAX_SATS"
+   ],
+   "declared": "may bear a peer",
+   "ownModuleBreaks": {},
+   "entryKept": true,
+   "kept": true
+  },
+  {
+   "entry": "./fourier-field",
+   "names": [
+    "FOURIER_STROKE_RUNGS"
+   ],
+   "declared": "may bear a peer",
+   "ownModuleBreaks": {},
+   "entryKept": true,
+   "kept": true
+  }
+ ],
+ "broken": [],
+ "verdict": "GREEN"
+}

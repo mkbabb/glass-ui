@@ -1,0 +1,24 @@
+critique-B pass 10 · battery hash · seat claude-opus-5-5 · 2026-10-16T06:52:45Z
+Recorded BEFORE reading pass-10/B-kit/ or pass-10/B-proto.md.
+Method: cd pass-10/critique-B/battery && cat $(ls | sort) | shasum -a 256   (files sorted by name, concatenated)
+
+7b7b5303893a05e7d0df90c8f0d9b63364c36be960ef225807b8bf69d61499f6   battery (concatenated, sorted)
+
+80a538c74dc669e6ad0877584c39c2d7d54cc7c74be41a00a1e201723387fe24  ITEMS.md
+da7924c9e8e895a3aa4901ad63bcbcdfb2b254e76a619e1b194cab846a5824d0  browser10.sh
+bc7d1ef138415d6e48e05b38f85a73c60d706eea6ebac132a910fa188d3a2dc5  judge-rows10.mjs
+18c637474b9c8cb37fff777a24c92faaaf7edc78f2a0a72491eefada11566bbe  judges10.sh
+c96bf5754382715e130d3094b131585badf1827c8716b61360d861ad374b41d6  migration10.sh
+30367ac4d2bca452d5e09e09877771e7a3e6bb3cd52fb854427082756ff349e6  phase1.sh
+9b10fe11d499e1c4342fd695ef6cdb96f948e42609e8b3716384e7a380c3398e  plants10.mjs
+011014123ef3152b6b6ed6bec560114cf1059f4fc4398338386734dced5c6f2b  run10.sh
+ff5dfcbf0be598fa9bf4629fc3ba0ce5e275e9658827fb9a8774101b1821a39e  tally10.mjs
+ec71f46fbf6d22006ad4fbfa2aa746f06d122ff6bc65c937a525acc4d45ee592  toolchain10.sh
+
+Run by path (committed), with their hashes:
+c5c5d3c753fbfb8a3c27e9603c56d2fa2370c6836ee5e89b11ff5fe7a7c5d68d  pass-8/critique-B/battery/adapter.mjs
+d4bcb1c6ba14f64dd16b955f926fe8a0aef8acdfe893bbe0f9b43a766992bc5d  pass-8/critique-B/battery/run-plants.mjs
+61c34b149587f741326fa28c48099d59cd49b1c2895e874c8d9d203b8dcb7822  pass-8/critique-B/battery/browser-plants.mjs
+eb0ec63830688573edfc6e631a74c9a810506679f6b856479e06ca5581b0e548  pass-9/critique-B/battery/run-battery.sh
+083be2012c947c1a45bd65ddb2b52b1066f819ba28fecd8d1c80d1e2becf81a2  pass-9/critique-B/battery/tally-shim.mjs
+748826fb8a2739b37e043ae993b26a1eed6ee377ec3cf0b4306c65b4d0579035  pass-9/critique-B/battery (the pass-9 critic's whole battery, re-hashed: equals its BATTERY-HASH.txt)
