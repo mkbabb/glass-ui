@@ -1,0 +1,92 @@
+{
+ "meta": {
+  "scenario": "retarget",
+  "runTag": "r1",
+  "W": 1440,
+  "H": 900,
+  "url": "https://www.apple.com/apple-homeview/",
+  "loadStart": "{ 14.06 22.49 24.31 }",
+  "date": "2026-10-15T23:53:21.577Z",
+  "loadEnd": "{ 13.19 22.03 24.12 }",
+  "frameDt": {
+   "n": 359,
+   "p50": 8.399999976158142,
+   "p95": 10.400000035762787,
+   "max": 24.5
+  }
+ },
+ "switches": [
+  [
+   25.2,
+   0,
+   2
+  ]
+ ],
+ "tweens": [
+  {
+   "t_start": 25.2,
+   "t_end": 1012.5,
+   "dur_ms": 987.3,
+   "from": 0.0,
+   "to": 2560.0,
+   "p_at": {
+    "0.1": 0.023,
+    "0.25": 0.132,
+    "0.5": 0.509,
+    "0.75": 0.875,
+    "0.9": 0.979
+   },
+   "vpeak_at": 0.502,
+   "overshoot_px": 0.0,
+   "bezier_fit": [
+    0.475,
+    0.054,
+    0.52,
+    0.957
+   ],
+   "bezier_rms": 0.0025,
+   "named_rms": {
+    "ease": 0.2039,
+    "ease-in-out": 0.0073,
+    "ease-out": 0.1521,
+    "ease-in": 0.16,
+    "linear": 0.0874
+   },
+   "frames": 126
+  }
+ ],
+ "capsule_law": {
+  "model": "w_i = 8 + 40*max(0,1-|i-ap|)*progressIntro",
+  "max_abs_err_px": 0.005,
+  "row_sum_px_minmax": [
+   96,
+   96.01
+  ]
+ },
+ "ap_vs_scroll": {
+  "ap_per_px": 0.0007877765675597895,
+  "stride_px": 1269.4,
+  "intercept": -0.0195,
+  "max_resid": 0.0291
+ },
+ "fill": [],
+ "caption": {
+  "cap1_tx_per_scroll_px": -0.1273,
+  "cap0_tx_per_scroll_px": 0.001,
+  "cap1_tx_range": [
+   -162.0,
+   162.0
+  ],
+  "cap0_op_range": [
+   0.0,
+   1.0
+  ],
+  "cap1_op_range": [
+   0.0,
+   0.972
+  ]
+ },
+ "dock_material_states": 1,
+ "tClick1_rel": 0,
+ "tClick2_rel": 259.1
+}

@@ -1,0 +1,154 @@
+{
+ "meta": {
+  "scenario": "autoplay",
+  "runTag": "r1",
+  "W": 1440,
+  "H": 900,
+  "url": "https://www.apple.com/apple-homeview/",
+  "loadStart": "{ 17.24 24.30 25.01 }",
+  "date": "2026-10-15T23:52:38.739Z",
+  "loadEnd": "{ 15.15 23.24 24.61 }",
+  "frameDt": {
+   "n": 1828,
+   "p50": 8.300000011920929,
+   "p95": 10.600000023841858,
+   "max": 12.400000035762787
+  }
+ },
+ "switches": [
+  [
+   2647.4,
+   0,
+   1
+  ],
+  [
+   9315.4,
+   1,
+   2
+  ]
+ ],
+ "tweens": [
+  {
+   "t_start": 2665.0,
+   "t_end": 3646.7,
+   "dur_ms": 981.7,
+   "from": 0.0,
+   "to": 1280.0,
+   "p_at": {
+    "0.1": 0.024,
+    "0.25": 0.131,
+    "0.5": 0.499,
+    "0.75": 0.868,
+    "0.9": 0.977
+   },
+   "vpeak_at": 0.5,
+   "overshoot_px": 0.0,
+   "bezier_fit": [
+    0.479,
+    0.054,
+    0.523,
+    0.949
+   ],
+   "bezier_rms": 0.0026,
+   "named_rms": {
+    "ease": 0.2072,
+    "ease-in-out": 0.0051,
+    "ease-out": 0.1559,
+    "ease-in": 0.1573,
+    "linear": 0.0881
+   },
+   "frames": 121
+  },
+  {
+   "t_start": 9331.0,
+   "t_end": 10313.8,
+   "dur_ms": 982.8,
+   "from": 1280.0,
+   "to": 2560.0,
+   "p_at": {
+    "0.1": 0.023,
+    "0.25": 0.128,
+    "0.5": 0.496,
+    "0.75": 0.871,
+    "0.9": 0.976
+   },
+   "vpeak_at": 0.432,
+   "overshoot_px": 0.0,
+   "bezier_fit": [
+    0.479,
+    0.051,
+    0.523,
+    0.947
+   ],
+   "bezier_rms": 0.0027,
+   "named_rms": {
+    "ease": 0.21,
+    "ease-in-out": 0.0054,
+    "ease-out": 0.1578,
+    "ease-in": 0.1571,
+    "linear": 0.0884
+   },
+   "frames": 121
+  }
+ ],
+ "capsule_law": {
+  "model": "w_i = 8 + 40*max(0,1-|i-ap|)*progressIntro",
+  "max_abs_err_px": 0.005,
+  "row_sum_px_minmax": [
+   96,
+   96.01
+  ]
+ },
+ "ap_vs_scroll": {
+  "ap_per_px": 0.0007825649264812767,
+  "stride_px": 1277.8,
+  "intercept": -0.0037,
+  "max_resid": 0.0215
+ },
+ "fill": [
+  {
+   "cur": 0,
+   "px_per_s": 8.976,
+   "from_t": 0,
+   "to_t": 2639,
+   "w_from": 31.48,
+   "w_to": 55.16,
+   "lin_resid_px": 0.009
+  },
+  {
+   "cur": 1,
+   "px_per_s": 8.859,
+   "from_t": 2760,
+   "to_t": 9305,
+   "w_from": 1.31,
+   "w_to": 55.19,
+   "lin_resid_px": 3.969
+  },
+  {
+   "cur": 2,
+   "px_per_s": 9.028,
+   "from_t": 9432,
+   "to_t": 14992,
+   "w_from": 1.31,
+   "w_to": 50.97,
+   "lin_resid_px": 0.499
+  }
+ ],
+ "caption": {
+  "cap1_tx_per_scroll_px": -0.1266,
+  "cap0_tx_per_scroll_px": 0.0042,
+  "cap1_tx_range": [
+   -162.0,
+   162.0
+  ],
+  "cap0_op_range": [
+   0.0,
+   1.0
+  ],
+  "cap1_op_range": [
+   0.0,
+   1.0
+  ]
+ },
+ "dock_material_states": 1
+}

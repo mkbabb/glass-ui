@@ -1,0 +1,268 @@
+{
+ "meta": {
+  "scenario": "drag",
+  "runTag": "r1",
+  "W": 390,
+  "H": 844,
+  "url": "https://www.apple.com/apple-homeview/",
+  "loadStart": "{ 18.62 21.67 23.83 }",
+  "date": "2026-10-15T23:54:27.928Z",
+  "loadEnd": "{ 18.66 21.52 23.73 }"
+ },
+ "legs": {
+  "slow30": {
+   "switches": [
+    [
+     1652.2,
+     0,
+     1
+    ]
+   ],
+   "tweens": [
+    {
+     "t_start": 204.3,
+     "t_end": 2656.6,
+     "dur_ms": 2452.3,
+     "from": 0.0,
+     "to": 341.0,
+     "p_at": {
+      "0.1": 0.059,
+      "0.25": 0.15,
+      "0.5": 0.289,
+      "0.75": 0.295,
+      "0.9": 0.88
+     },
+     "vpeak_at": 0.402,
+     "overshoot_px": 1.0,
+     "bezier_fit": [
+      1.0,
+      0.329,
+      0.535,
+      0.0
+     ],
+     "bezier_rms": 0.0998,
+     "named_rms": {
+      "ease": 0.4811,
+      "ease-in-out": 0.3414,
+      "ease-out": 0.4211,
+      "ease-in": 0.2037,
+      "linear": 0.2969
+     },
+     "frames": 327
+    }
+   ],
+   "capsule_law": {
+    "model": "w_i = 8 + 40*max(0,1-|i-ap|)*progressIntro",
+    "max_abs_err_px": 16.0,
+    "row_sum_px_minmax": [
+     79.98,
+     80
+    ]
+   },
+   "ap_vs_scroll": {
+    "ap_per_px": 0.0029257489288900458,
+    "stride_px": 341.8,
+    "intercept": -0.0024,
+    "max_resid": 0.0155
+   },
+   "fill": [
+    {
+     "cur": 0,
+     "px_per_s": 2.23,
+     "from_t": 0,
+     "to_t": 1643,
+     "w_from": 26.95,
+     "w_to": 36.78,
+     "lin_resid_px": 6.257
+    },
+    {
+     "cur": 1,
+     "px_per_s": 5.982,
+     "from_t": 1795,
+     "to_t": 3904,
+     "w_from": 1.31,
+     "w_to": 13.44,
+     "lin_resid_px": 0.49
+    }
+   ],
+   "caption": {
+    "cap1_tx_per_scroll_px": -0.4737,
+    "cap0_tx_per_scroll_px": -0.4737,
+    "cap1_tx_range": [
+     0.0,
+     162.0
+    ],
+    "cap0_op_range": [
+     0.0,
+     1.0
+    ],
+    "cap1_op_range": [
+     0.0,
+     1.0
+    ]
+   },
+   "dock_material_states": 1,
+   "touch_end_ms": 1409.4
+  },
+  "fast30": {
+   "switches": [
+    [
+     235.6,
+     1,
+     2
+    ]
+   ],
+   "tweens": [
+    {
+     "t_start": 26.9,
+     "t_end": 749.4,
+     "dur_ms": 722.5,
+     "from": 341.0,
+     "to": 683.0,
+     "p_at": {
+      "0.1": 0.129,
+      "0.25": 0.454,
+      "0.5": 0.806,
+      "0.75": 0.944,
+      "0.9": 0.982
+     },
+     "vpeak_at": 0.155,
+     "overshoot_px": 0.0,
+     "bezier_fit": [
+      0.358,
+      0.482,
+      0.251,
+      0.888
+     ],
+     "bezier_rms": 0.0121,
+     "named_rms": {
+      "ease": 0.0302,
+      "ease-in-out": 0.2225,
+      "ease-out": 0.0748,
+      "ease-in": 0.3417,
+      "linear": 0.2061
+     },
+     "frames": 95
+    }
+   ],
+   "capsule_law": {
+    "model": "w_i = 8 + 40*max(0,1-|i-ap|)*progressIntro",
+    "max_abs_err_px": 15.963,
+    "row_sum_px_minmax": [
+     79.98,
+     80
+    ]
+   },
+   "ap_vs_scroll": {
+    "ap_per_px": 0.0029239766081871387,
+    "stride_px": 342.0,
+    "intercept": -0.0,
+    "max_resid": 0.0
+   },
+   "fill": [
+    {
+     "cur": 1,
+     "px_per_s": -23.146,
+     "from_t": 6,
+     "to_t": 225,
+     "w_from": 15.31,
+     "w_to": 10.41,
+     "lin_resid_px": 0.681
+    }
+   ],
+   "caption": {
+    "cap1_tx_per_scroll_px": -0.4737,
+    "cap0_tx_per_scroll_px": 0.6185,
+    "cap1_tx_range": [
+     -161.5,
+     0.5
+    ],
+    "cap0_op_range": [
+     0.0,
+     0.0
+    ],
+    "cap1_op_range": [
+     0.0,
+     0.991
+    ]
+   },
+   "dock_material_states": 1,
+   "touch_end_ms": 176.9
+  },
+  "slow60": {
+   "switches": [
+    [
+     1185.8,
+     2,
+     3
+    ]
+   ],
+   "tweens": [
+    {
+     "t_start": 86.8,
+     "t_end": 1943.1,
+     "dur_ms": 1856.3,
+     "from": 683.0,
+     "to": 1024.0,
+     "p_at": {
+      "0.1": 0.081,
+      "0.25": 0.211,
+      "0.5": 0.434,
+      "0.75": 0.639,
+      "0.9": 0.944
+     },
+     "vpeak_at": 0.752,
+     "overshoot_px": 0.0,
+     "bezier_fit": [
+      1.0,
+      0.773,
+      0.708,
+      0.835
+     ],
+     "bezier_rms": 0.0188,
+     "named_rms": {
+      "ease": 0.2483,
+      "ease-in-out": 0.1048,
+      "ease-out": 0.185,
+      "ease-in": 0.0977,
+      "linear": 0.0551
+     },
+     "frames": 239
+    }
+   ],
+   "capsule_law": {
+    "model": "w_i = 8 + 40*max(0,1-|i-ap|)*progressIntro",
+    "max_abs_err_px": 15.963,
+    "row_sum_px_minmax": [
+     79.98,
+     80
+    ]
+   },
+   "ap_vs_scroll": {
+    "ap_per_px": 0.002923976608187135,
+    "stride_px": 342.0,
+    "intercept": 0.0,
+    "max_resid": 0.0
+   },
+   "fill": [],
+   "caption": {
+    "cap1_tx_per_scroll_px": 0.6626,
+    "cap0_tx_per_scroll_px": 0.0,
+    "cap1_tx_range": [
+     -243.0,
+     0.0
+    ],
+    "cap0_op_range": [
+     0.0,
+     0.0
+    ],
+    "cap1_op_range": [
+     0.0,
+     0.0
+    ]
+   },
+   "dock_material_states": 1,
+   "touch_end_ms": 1486.7
+  }
+ }
+}
