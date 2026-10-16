@@ -1,0 +1,362 @@
+{
+ "tool": "amend6/tools/dtgate.mjs",
+ "F1_G4_regex_from_wave": "\\bMAX_DT_MS\\b|\\bWARP_DT_CLAMP\\b|Math\\.min\\(dtMs, 50\\)|Math\\.min\\(Math\\.max\\(input\\.dt, 0\\), 0\\.05\\)",
+ "wave_line": 185,
+ "head": {
+  "files_scanned": 494,
+  "rows": [
+   {
+    "file": "src/components/blob/composables/useBlobPointer.ts",
+    "sinks": [
+     {
+      "line": 174,
+      "call": "springX.tickDt(dtClampedMs)",
+      "pass": false,
+      "violations": [
+       {
+        "line": 159,
+        "what": "call Math.min(…)",
+        "via": "dtClampedMs = … at :159"
+       }
+      ],
+      "unresolved": [],
+      "review": []
+     },
+     {
+      "line": 175,
+      "call": "springY.tickDt(dtClampedMs)",
+      "pass": false,
+      "violations": [
+       {
+        "line": 159,
+        "what": "call Math.min(…)",
+        "via": "dtClampedMs = … at :159"
+       }
+      ],
+      "unresolved": [],
+      "review": []
+     }
+    ],
+    "hand_rolled": [
+     {
+      "line": 184,
+      "text": "-PULSE_OMEGA * PULSE_OMEGA * pulse - 2 * PULSE_ZETA * PULSE_OMEGA * pulseVel"
+     }
+    ],
+    "indirect_sinks": [],
+    "review": [],
+    "pass": false
+   },
+   {
+    "file": "src/components/constellation/constellationInteraction.ts",
+    "sinks": [],
+    "hand_rolled": [
+     {
+      "line": 164,
+      "text": "-2 * zeta * omega * warp.vx - omega * omega * (warp.x - target.x)"
+     },
+     {
+      "line": 165,
+      "text": "-2 * zeta * omega * warp.vy - omega * omega * (warp.y - target.y)"
+     }
+    ],
+    "indirect_sinks": [],
+    "review": [],
+    "pass": false
+   },
+   {
+    "file": "src/components/fourier-field/clock.ts",
+    "sinks": [],
+    "hand_rolled": [
+     {
+      "line": 73,
+      "text": "-OMEGA * OMEGA * momentum - 2 * ZETA * OMEGA * momentumVel"
+     }
+    ],
+    "indirect_sinks": [],
+    "review": [],
+    "pass": false
+   },
+   {
+    "file": "src/composables/motion/morph/useLeadTrail.ts",
+    "sinks": [],
+    "hand_rolled": [
+     {
+      "line": 213,
+      "text": "-omega * omega * (x - target) - 2 * damping * omega * v"
+     }
+    ],
+    "indirect_sinks": [],
+    "review": [
+     {
+      "line": 230,
+      "what": "requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)"
+     },
+     {
+      "line": 240,
+      "what": "requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)"
+     }
+    ],
+    "pass": false
+   },
+   {
+    "file": "src/composables/motion/pointer/usePointerVelocityField.ts",
+    "sinks": [],
+    "hand_rolled": [
+     {
+      "line": 396,
+      "text": "-omega * omega * (ap.x - tgtX) - 2 * zeta * omega * av.x"
+     },
+     {
+      "line": 397,
+      "text": "-omega * omega * (ap.y - tgtY) - 2 * zeta * omega * av.y"
+     }
+    ],
+    "indirect_sinks": [],
+    "review": [],
+    "pass": false
+   },
+   {
+    "file": "src/composables/motion/spring/springProjection.ts",
+    "sinks": [
+     {
+      "line": 39,
+      "call": "spring.tickToTime(t)",
+      "pass": true,
+      "violations": [],
+      "unresolved": [],
+      "review": []
+     }
+    ],
+    "hand_rolled": [],
+    "indirect_sinks": [],
+    "review": [],
+    "pass": true
+   }
+  ],
+  "gate_pass": false,
+  "review": [
+   "src/components/aurora/composables/auroraFallbackGround.ts:146 Math.exp in a file with no SpringProgress step: a hand-written closed form (r02) steps on its own clock here",
+   "src/components/aurora/composables/useAurora.ts:125 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/components/aurora/composables/useAurora.ts:127 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/components/aurora/composables/useAurora.ts:209 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/components/aurora/composables/useAurora.ts:215 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/components/aurora/composables/useCursorInteraction.ts:98 Math.exp in a file with no SpringProgress step: a hand-written closed form (r02) steps on its own clock here",
+   "src/components/deck/composables/useDeckCapture.ts:69 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/components/dock/composables/useDockState.ts:391 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/components/easing/EasingPicker.vue:276 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/components/easing/EasingPicker.vue:277 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/components/easing/usePicker.ts:425 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/components/easing/usePicker.ts:431 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/components/fading-scroll/composables/useFadingScroll.ts:150 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/components/pager-dots/PagerDots.vue:176 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/components/sortable-list/ghost.ts:78 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/dark/installDarkModeSync.ts:29 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/dark/useGlobalDark.ts:108 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/dark/useGlobalDark.ts:150 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/dom/useDragVelocity.ts:166 Math.exp in a file with no SpringProgress step: a hand-written closed form (r02) steps on its own clock here",
+   "src/composables/dom/useDragVelocity.ts:170 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/dom/useDragVelocity.ts:197 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/dom/useResizeObserver.ts:98 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/glass/useSpecularTracking.ts:101 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/glass/webgl/createCanvasLifecycle.ts:232 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/glass/webgl/createCanvasLifecycle.ts:238 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/glass/webgl/createCanvasLifecycle.ts:409 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/glass/webgl/visibility.ts:175 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/glass/webgl/visibility.ts:179 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/glass/webgl/visibility.ts:277 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/motion/morph/useLeadTrail.ts:230 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/motion/morph/useLeadTrail.ts:240 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/motion/scroll/scrollReader.ts:97 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/motion/scroll/useScrollProgress.ts:64 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/sidebar/useLazyLoader.ts:43 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/sidebar/useScrollTo.ts:65 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/sidebar/useScrollTo.ts:86 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/sidebar/useScrollTo.ts:89 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/sidebar/useSidebarFollow.ts:85 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/sidebar/useSidebarFollow.ts:110 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/sidebar/useSidebarFollow.ts:134 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)",
+   "src/composables/sidebar/useSidebarFollow.ts:144 requestAnimationFrame loop in a file with no SpringProgress step: anything it moves steps on its own dt (r02, r05)"
+  ]
+ },
+ "plants": {
+  "critique6/plants/c01-receiver-swap.ts": {
+   "expect": "EXPECT FAIL: a long frame (> 500 ms) dropped by stepping a throwaway spring instead of the lead; the comparison picks the sink's receiver",
+   "expect_class": "FAIL",
+   "gate_pass": true,
+   "as_expected": false,
+   "F1_G4_pass": true,
+   "review": [],
+   "detail": {
+    "file": "critique6/plants/c01-receiver-swap.ts",
+    "sinks": [
+     {
+      "line": 11,
+      "call": "target.tickDt(dt)",
+      "pass": true,
+      "violations": [],
+      "unresolved": [],
+      "review": []
+     }
+    ],
+    "hand_rolled": [],
+    "indirect_sinks": [],
+    "review": [],
+    "pass": true
+   }
+  },
+  "critique6/plants/c02-optional-receiver.ts": {
+   "expect": "EXPECT FAIL: a long frame (> 500 ms) skipped by an optional call on a receiver the comparison nulls (control dependence through `?.`)",
+   "expect_class": "FAIL",
+   "gate_pass": true,
+   "as_expected": false,
+   "F1_G4_pass": true,
+   "review": [],
+   "detail": {
+    "file": "critique6/plants/c02-optional-receiver.ts",
+    "sinks": [
+     {
+      "line": 9,
+      "call": "(dt > LONG_FRAME_MS ? undefined : lead)?.tickDt(dt)",
+      "pass": true,
+      "violations": [],
+      "unresolved": [],
+      "review": []
+     }
+    ],
+    "hand_rolled": [],
+    "indirect_sinks": [],
+    "review": [],
+    "pass": true
+   }
+  },
+  "critique6/plants/c03-yield-delivered.ts": {
+   "expect": "EXPECT FAIL: a 500 ms clamp applied by the driver and delivered into the stepper through a generator's `yield`",
+   "expect_class": "FAIL",
+   "gate_pass": true,
+   "as_expected": false,
+   "F1_G4_pass": true,
+   "review": [],
+   "detail": {
+    "file": "critique6/plants/c03-yield-delivered.ts",
+    "sinks": [
+     {
+      "line": 7,
+      "call": "lead.tickDt(dt)",
+      "pass": true,
+      "violations": [],
+      "unresolved": [],
+      "review": []
+     }
+    ],
+    "hand_rolled": [],
+    "indirect_sinks": [],
+    "review": [],
+    "pass": true
+   }
+  },
+  "critique6/plants/c04-window-published.ts": {
+   "expect": "EXPECT FAIL: the stepper reads a dt another file publishes on `window` (frameClockGlobal.ts clamps it at 500 ms); an outside value read through an allow-listed global",
+   "expect_class": "FAIL",
+   "gate_pass": true,
+   "as_expected": false,
+   "F1_G4_pass": true,
+   "review": [],
+   "detail": {
+    "file": "critique6/plants/c04-window-published.ts",
+    "sinks": [
+     {
+      "line": 5,
+      "call": "lead.tickDt(window.__frameDt)",
+      "pass": true,
+      "violations": [],
+      "unresolved": [],
+      "review": []
+     }
+    ],
+    "hand_rolled": [],
+    "indirect_sinks": [],
+    "review": [],
+    "pass": true
+   }
+  },
+  "critique6/plants/c05-await-stall.ts": {
+   "expect": "EXPECT FAIL: a long frame (> 500 ms) skipped by suspending on a promise that never settles before the step (an earlier sibling with no return/throw)",
+   "expect_class": "FAIL",
+   "gate_pass": true,
+   "as_expected": false,
+   "F1_G4_pass": true,
+   "review": [],
+   "detail": {
+    "file": "critique6/plants/c05-await-stall.ts",
+    "sinks": [
+     {
+      "line": 11,
+      "call": "lead.tickDt(dt)",
+      "pass": true,
+      "violations": [],
+      "unresolved": [],
+      "review": []
+     }
+    ],
+    "hand_rolled": [],
+    "indirect_sinks": [],
+    "review": [],
+    "pass": true
+   }
+  },
+  "critique6/plants/c06-globalThis-dt.ts": {
+   "expect": "EXPECT FAIL: c04 through globalThis, the clamped dt held on a shared global record another file writes",
+   "expect_class": "FAIL",
+   "gate_pass": true,
+   "as_expected": false,
+   "F1_G4_pass": true,
+   "review": [],
+   "detail": {
+    "file": "critique6/plants/c06-globalThis-dt.ts",
+    "sinks": [
+     {
+      "line": 4,
+      "call": "lead.tickDt((globalThis as any).frameClock.dt)",
+      "pass": true,
+      "violations": [],
+      "unresolved": [],
+      "review": []
+     }
+    ],
+    "hand_rolled": [],
+    "indirect_sinks": [],
+    "review": [],
+    "pass": true
+   }
+  }
+ },
+ "providers": {
+  "critique6/plants/frameClockGlobal.ts": {
+   "head": "provider for c04 (not scored): publishes a clamped dt on window",
+   "gate_pass": true,
+   "sinks": 0
+  }
+ },
+ "tally": {
+  "plants": 6,
+  "as_expected": 0,
+  "by_class": {
+   "PASS": {
+    "n": 0,
+    "gate_pass": 0
+   },
+   "FAIL": {
+    "n": 6,
+    "gate_pass": 6
+   },
+   "RESIDUAL": {
+    "n": 0,
+    "gate_pass": 0
+   }
+  },
+  "F1_G4_passes": 6,
+  "residual_with_review_hit": 0,
+  "pass_plants_with_review_hit": []
+ }
+}

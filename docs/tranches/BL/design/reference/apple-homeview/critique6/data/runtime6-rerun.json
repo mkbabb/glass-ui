@@ -1,0 +1,3317 @@
+{
+ "row": {
+  "name": "dock",
+  "response_s": 0.3,
+  "dampingFraction": 0.88,
+  "source": "src/composables/motion/spring/springPresets.ts:84-87"
+ },
+ "clocks": {
+  "block 45": {
+   "load_1min": [
+    "{ 44.47 26.94 24.68 }",
+    "{ 46.28 27.61 24.92 }"
+   ],
+   "frameDt": {
+    "n": 768,
+    "p50": 7.7,
+    "p95": 9.6,
+    "max": 42.1
+   }
+  },
+  "block 150": {
+   "load_1min": [
+    "{ 47.03 28.36 25.22 }",
+    "{ 48.63 29.00 25.47 }"
+   ],
+   "frameDt": {
+    "n": 745,
+    "p50": 7.8,
+    "p95": 9.9,
+    "max": 148.3
+   }
+  },
+  "block 400": {
+   "load_1min": [
+    "{ 50.94 30.14 25.91 }",
+    "{ 56.52 31.98 26.61 }"
+   ],
+   "frameDt": {
+    "n": 766,
+    "p50": 7.7,
+    "p95": 9.4,
+    "max": 400.5
+   }
+  },
+  "stall": {
+   "load_1min": [
+    "{ 17.20 43.75 47.94 }",
+    "{ 17.83 43.01 47.63 }"
+   ],
+   "frameDt": {
+    "n": 378,
+    "p50": 8.4,
+    "p95": 41.9,
+    "max": 50.9
+   }
+  }
+ },
+ "control_none": {
+  "block 45": {
+   "witness_pass": true,
+   "sim_pass": true,
+   "err_px": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "block 150": {
+   "witness_pass": true,
+   "sim_pass": true,
+   "err_px": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "block 400": {
+   "witness_pass": true,
+   "sim_pass": true,
+   "err_px": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "stall": {
+   "growth_ms": [
+    0.0,
+    0.0,
+    null
+   ],
+   "pass": true,
+   "readable_hops": 2
+  },
+  "runtime_arm_pass": true
+ },
+ "policies": {
+  "clamp": {
+   "by_param": {
+    "10": {
+     "block 45": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       7.576,
+       25.244,
+       31.159
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       17.382,
+       57.785,
+       72.923
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       21.775,
+       54.446,
+       95.009
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       78.23,
+       76.37,
+       59.85
+      ],
+      "pass": false,
+      "readable_hops": 3
+     },
+     "runtime_arm_pass": false
+    },
+    "20": {
+     "block 45": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       3.917,
+       12.113,
+       20.233
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       13.081,
+       49.111,
+       61.744
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       18.755,
+       46.291,
+       82.413
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       60.7,
+       59.0,
+       29.9
+      ],
+      "pass": false,
+      "readable_hops": 3
+     },
+     "runtime_arm_pass": false
+    },
+    "30": {
+     "block 45": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       1.575,
+       4.731,
+       10.403
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       10.825,
+       41.224,
+       51.647
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       15.981,
+       38.96,
+       70.69
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       40.7,
+       39.0,
+       null
+      ],
+      "pass": false,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "40": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": false,
+      "err_px": [
+       0.0,
+       0.0,
+       1.69
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       8.844,
+       34.17,
+       42.666
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       13.479,
+       32.467,
+       60.0
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       13.63,
+       13.13,
+       null
+      ],
+      "pass": false,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "45": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       7.953,
+       30.957,
+       38.591
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       12.333,
+       29.529,
+       55.068
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       5.1,
+       5.2,
+       null
+      ],
+      "pass": false,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "48": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       7.45,
+       29.128,
+       36.277
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       11.679,
+       27.862,
+       52.243
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       2.1,
+       2.2,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "50": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       7.126,
+       27.95,
+       34.787
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       11.256,
+       26.79,
+       50.416
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.1,
+       0.2,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "60": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       5.653,
+       22.534,
+       27.956
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       9.308,
+       21.886,
+       41.946
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "80": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       3.354,
+       13.902,
+       17.136
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       6.175,
+       14.151,
+       28.186
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "100": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       1.761,
+       7.764,
+       9.5
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       3.923,
+       8.725,
+       18.163
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "120": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       0.703,
+       3.57,
+       4.322
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       2.368,
+       5.066,
+       11.155
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "140": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.028,
+       0.819,
+       0.953
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       1.336,
+       2.701,
+       6.447
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "160": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       0.681,
+       1.244,
+       3.415
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "180": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": true,
+      "err_px": [
+       0.286,
+       0.4,
+       1.555
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "200": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.115,
+       0.342,
+       0.485
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    },
+    "225": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.111,
+       0.33,
+       0.445
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    },
+    "250": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.105,
+       0.311,
+       0.42
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    },
+    "300": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.073,
+       0.191,
+       0.307
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    },
+    "400": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    },
+    "500": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    },
+    "1000": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    }
+   },
+   "passing": [
+    200,
+    225,
+    250,
+    300,
+    400,
+    500,
+    1000
+   ],
+   "blind_from": 200
+  },
+  "drop": {
+   "by_param": {
+    "20": {
+     "block 45": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       9.422,
+       29.271,
+       43.091
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       18.422,
+       67.139,
+       85.073
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       24.991,
+       63.36,
+       108.203
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       108.47,
+       98.67,
+       103.48
+      ],
+      "pass": false,
+      "readable_hops": 3
+     },
+     "runtime_arm_pass": false
+    },
+    "30": {
+     "block 45": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       9.422,
+       29.271,
+       43.091
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       18.422,
+       67.139,
+       85.073
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       24.991,
+       63.36,
+       108.203
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       108.47,
+       98.67,
+       103.48
+      ],
+      "pass": false,
+      "readable_hops": 3
+     },
+     "runtime_arm_pass": false
+    },
+    "40": {
+     "block 45": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       0.0,
+       0.0,
+       43.091
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       18.422,
+       67.139,
+       85.073
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       24.991,
+       63.36,
+       108.203
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       108.47,
+       98.67,
+       103.48
+      ],
+      "pass": false,
+      "readable_hops": 3
+     },
+     "runtime_arm_pass": false
+    },
+    "45": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       18.422,
+       67.139,
+       85.073
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       24.991,
+       63.36,
+       108.203
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       70.64,
+       68.88,
+       92.67
+      ],
+      "pass": false,
+      "readable_hops": 3
+     },
+     "runtime_arm_pass": false
+    },
+    "48": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       18.422,
+       67.139,
+       85.073
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       24.991,
+       63.36,
+       108.203
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       70.64,
+       68.88,
+       92.67
+      ],
+      "pass": false,
+      "readable_hops": 3
+     },
+     "runtime_arm_pass": false
+    },
+    "50": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       18.422,
+       67.139,
+       85.073
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       24.991,
+       63.36,
+       108.203
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       70.64,
+       20.08,
+       0.0
+      ],
+      "pass": false,
+      "readable_hops": 3
+     },
+     "runtime_arm_pass": false
+    },
+    "52": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       18.422,
+       67.139,
+       85.073
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       24.991,
+       63.36,
+       108.203
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "60": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       18.422,
+       67.139,
+       85.073
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       24.991,
+       63.36,
+       108.203
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "80": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       18.422,
+       67.139,
+       85.073
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       24.991,
+       63.36,
+       108.203
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "100": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       18.422,
+       67.139,
+       85.073
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       24.991,
+       63.36,
+       108.203
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "140": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       18.422,
+       67.139,
+       85.073
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       24.991,
+       63.36,
+       108.203
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "150": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       24.991,
+       63.36,
+       108.203
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "160": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       24.991,
+       63.36,
+       108.203
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "200": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       24.991,
+       63.36,
+       108.203
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "300": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       24.991,
+       63.36,
+       108.203
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "380": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       24.991,
+       63.36,
+       108.203
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "400": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       24.991,
+       0.0,
+       108.203
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "401": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    },
+    "410": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    },
+    "450": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    },
+    "500": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    },
+    "1000": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    }
+   },
+   "passing": [
+    401,
+    410,
+    450,
+    500,
+    1000
+   ],
+   "blind_from": 401
+  },
+  "rebase": {
+   "by_param": {
+    "20": {
+     "block 45": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       4.761,
+       14.758,
+       23.756
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       13.896,
+       51.919,
+       65.354
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       19.736,
+       48.92,
+       86.525
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       56.22,
+       54.49,
+       38.77
+      ],
+      "pass": false,
+      "readable_hops": 3
+     },
+     "runtime_arm_pass": false
+    },
+    "30": {
+     "block 45": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       4.761,
+       14.758,
+       23.756
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       13.896,
+       51.919,
+       65.354
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       19.736,
+       48.92,
+       86.525
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       56.22,
+       54.49,
+       38.77
+      ],
+      "pass": false,
+      "readable_hops": 3
+     },
+     "runtime_arm_pass": false
+    },
+    "40": {
+     "block 45": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       0.0,
+       0.0,
+       23.756
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       13.896,
+       51.919,
+       65.354
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       19.736,
+       48.92,
+       86.525
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       56.22,
+       54.49,
+       38.77
+      ],
+      "pass": false,
+      "readable_hops": 3
+     },
+     "runtime_arm_pass": false
+    },
+    "45": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       13.896,
+       51.919,
+       65.354
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       19.736,
+       48.92,
+       86.525
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       56.22,
+       54.49,
+       38.77
+      ],
+      "pass": false,
+      "readable_hops": 3
+     },
+     "runtime_arm_pass": false
+    },
+    "48": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       13.896,
+       51.919,
+       65.354
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       19.736,
+       48.92,
+       86.525
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       56.22,
+       54.49,
+       38.77
+      ],
+      "pass": false,
+      "readable_hops": 3
+     },
+     "runtime_arm_pass": false
+    },
+    "50": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       13.896,
+       51.919,
+       65.354
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       19.736,
+       48.92,
+       86.525
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       56.22,
+       22.36,
+       0.0
+      ],
+      "pass": false,
+      "readable_hops": 3
+     },
+     "runtime_arm_pass": false
+    },
+    "52": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       13.896,
+       51.919,
+       65.354
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       19.736,
+       48.92,
+       86.525
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "60": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       13.896,
+       51.919,
+       65.354
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       19.736,
+       48.92,
+       86.525
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "80": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       13.896,
+       51.919,
+       65.354
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       19.736,
+       48.92,
+       86.525
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "100": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       13.896,
+       51.919,
+       65.354
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       19.736,
+       48.92,
+       86.525
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "140": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       13.896,
+       51.919,
+       65.354
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       19.736,
+       48.92,
+       86.525
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "150": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       19.736,
+       48.92,
+       86.525
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "160": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       19.736,
+       48.92,
+       86.525
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "200": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       19.736,
+       48.92,
+       86.525
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "300": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       19.736,
+       48.92,
+       86.525
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "380": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       19.736,
+       48.92,
+       86.525
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "400": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       19.736,
+       0.0,
+       86.525
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "401": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    },
+    "410": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    },
+    "450": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    },
+    "500": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    },
+    "1000": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.0,
+       0.0,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    }
+   },
+   "passing": [
+    401,
+    410,
+    450,
+    500,
+    1000
+   ],
+   "blind_from": 401
+  },
+  "soft": {
+   "by_param": {
+    "50": {
+     "block 45": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       2.818,
+       9.273,
+       13.217
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       10.448,
+       37.249,
+       46.71
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       13.758,
+       34.511,
+       60.466
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       42.04,
+       41.22,
+       20.76
+      ],
+      "pass": false,
+      "readable_hops": 3
+     },
+     "runtime_arm_pass": false
+    },
+    "100": {
+     "block 45": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       1.755,
+       5.768,
+       8.423
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       6.182,
+       22.951,
+       28.545
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       6.588,
+       15.621,
+       29.777
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       28.05,
+       27.39,
+       null
+      ],
+      "pass": false,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "200": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": false,
+      "err_px": [
+       0.99,
+       3.251,
+       4.822
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       3.144,
+       11.978,
+       14.791
+      ]
+     },
+     "block 400": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       1.71,
+       3.688,
+       8.118
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       12.61,
+       12.39,
+       null
+      ],
+      "pass": false,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "500": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": false,
+      "err_px": [
+       0.428,
+       1.403,
+       2.103
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       1.149,
+       4.435,
+       5.439
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.11,
+       0.329,
+       0.442
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       3.8,
+       3.83,
+       null
+      ],
+      "pass": false,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "1000": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.22,
+       0.72,
+       1.083
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       0.535,
+       2.068,
+       2.527
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.085,
+       0.238,
+       0.352
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       1.99,
+       2.01,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "1500": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.148,
+       0.484,
+       0.729
+      ]
+     },
+     "block 150": {
+      "witness_pass": false,
+      "sim_pass": false,
+      "err_px": [
+       0.346,
+       1.336,
+       1.63
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.057,
+       0.152,
+       0.241
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       1.35,
+       1.36,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": false
+    },
+    "2000": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.111,
+       0.365,
+       0.55
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.255,
+       0.984,
+       1.201
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.04,
+       0.107,
+       0.174
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       1.02,
+       1.03,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    },
+    "3000": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.074,
+       0.244,
+       0.368
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.167,
+       0.644,
+       0.785
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.025,
+       0.065,
+       0.108
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.69,
+       0.69,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    },
+    "5000": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.045,
+       0.147,
+       0.222
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.098,
+       0.38,
+       0.463
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.014,
+       0.036,
+       0.06
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.41,
+       0.42,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    },
+    "7500": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.03,
+       0.098,
+       0.148
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.065,
+       0.251,
+       0.306
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.009,
+       0.022,
+       0.038
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.28,
+       0.28,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    },
+    "10000": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.022,
+       0.074,
+       0.111
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.049,
+       0.188,
+       0.228
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.006,
+       0.016,
+       0.028
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.21,
+       0.21,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    },
+    "20000": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.011,
+       0.037,
+       0.056
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.024,
+       0.093,
+       0.113
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.003,
+       0.008,
+       0.013
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.1,
+       0.1,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    },
+    "50000": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.005,
+       0.015,
+       0.022
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.01,
+       0.037,
+       0.045
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.001,
+       0.003,
+       0.005
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.04,
+       0.04,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    },
+    "100000": {
+     "block 45": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.002,
+       0.007,
+       0.011
+      ]
+     },
+     "block 150": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.005,
+       0.019,
+       0.023
+      ]
+     },
+     "block 400": {
+      "witness_pass": true,
+      "sim_pass": true,
+      "err_px": [
+       0.001,
+       0.002,
+       0.003
+      ]
+     },
+     "stall": {
+      "growth_ms": [
+       0.02,
+       0.02,
+       null
+      ],
+      "pass": true,
+      "readable_hops": 2
+     },
+     "runtime_arm_pass": true
+    }
+   },
+   "passing": [
+    2000,
+    3000,
+    5000,
+    7500,
+    10000,
+    20000,
+    50000,
+    100000
+   ],
+   "blind_from": 2000
+  },
+  "timer": {
+   "50": {
+    "pass_by_phase": {
+     "0.0": false,
+     "5.0": false,
+     "10.0": false,
+     "15.0": false,
+     "20.0": false,
+     "25.0": false,
+     "30.0": false,
+     "35.0": false,
+     "40.0": false,
+     "45.0": false
+    },
+    "fails_on_every_phase": true,
+    "passes_on_every_phase": false
+   },
+   "100": {
+    "pass_by_phase": {
+     "0.0": false,
+     "10.0": false,
+     "20.0": false,
+     "30.0": false,
+     "40.0": false,
+     "50.0": false,
+     "60.0": false,
+     "70.0": false,
+     "80.0": false,
+     "90.0": false
+    },
+    "fails_on_every_phase": true,
+    "passes_on_every_phase": false
+   },
+   "250": {
+    "pass_by_phase": {
+     "0.0": false,
+     "25.0": false,
+     "50.0": false,
+     "75.0": false,
+     "100.0": false,
+     "125.0": false,
+     "150.0": false,
+     "175.0": false,
+     "200.0": true,
+     "225.0": true
+    },
+    "fails_on_every_phase": false,
+    "passes_on_every_phase": false
+   },
+   "500": {
+    "pass_by_phase": {
+     "0.0": true,
+     "50.0": false,
+     "100.0": false,
+     "150.0": false,
+     "200.0": true,
+     "250.0": false,
+     "300.0": false,
+     "350.0": false,
+     "400.0": false,
+     "450.0": true
+    },
+    "fails_on_every_phase": false,
+    "passes_on_every_phase": false
+   }
+  }
+ },
+ "crosscheck_clamp5": {
+  "block 45": {
+   "clamp5_witness_form": 40,
+   "runtime6": 40
+  },
+  "block 150": {
+   "clamp5_witness_form": 140,
+   "runtime6": 140
+  },
+  "block 400": {
+   "clamp5_witness_form": 200,
+   "runtime6": 200
+  },
+  "stall": {
+   "clamp5": 48,
+   "runtime6": 48
+  }
+ }
+}
