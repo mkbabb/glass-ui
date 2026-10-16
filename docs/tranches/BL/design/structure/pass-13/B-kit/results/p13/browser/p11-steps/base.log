@@ -1,0 +1,35 @@
+[browser-seat 2026-10-16T09:18:25.677Z] seat acquired after 0.0s: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p11/B-proto/base
+[browser-seat 2026-10-16T09:18:26.282Z] demo server http://localhost:53863 (pid 70833, cwd /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p11/B-proto/base); 1 spec(s): substrate-paints-color.spec.ts
+
+Running 3 tests using 1 worker
+
+PI aurora DEFAULT meanChannel=230.7 floor=8
+PI aurora SETTING_SUN meanChannel=231.3 floor=8
+PI aurora DUSK meanChannel=230.1 floor=8
+PI aurora VIVID_SETTING_SUN meanChannel=233.0 floor=8
+PI aurora OPENAI_SKY meanChannel=231.5 floor=8
+PI aurora OPENAI_DAWN meanChannel=229.4 floor=8
+PI aurora OPENAI_MEADOW meanChannel=205.8 floor=8
+PI aurora DELIBERATIVE meanChannel=235.0 floor=8
+PI aurora DAY9_YELLOW meanChannel=229.2 floor=8
+PI aurora OIL_IMPASTO meanChannel=194.0 floor=8
+PI aurora OIL_GESTURAL meanChannel=217.7 floor=8
+PI aurora VANGOGH meanChannel=101.7 floor=8
+PI aurora OILPASTEL_SUNSET meanChannel=200.3 floor=8
+PI aurora OILPASTEL_RAINBOW meanChannel=218.0 floor=8
+PI aurora OILPASTEL_OCEAN meanChannel=145.6 floor=8
+PI aurora CRAYON meanChannel=168.1 floor=8
+PI aurora METAL meanChannel=206.5 floor=8
+PI aurora SPEEDTEST meanChannel=175.9 floor=8
+  ✓  1 [chromium-headless-new] › substrate-paints-color.spec.ts:575:5 › substrate-paints-color (π lane — fail-CLOSED) › aurora paints a non-black interior on DEFAULT + every preset at t=1 (23.1s)
+PI blob paintable=[0.188,0.188]-[0.813,0.702] paintableShareOfInterior=0.557
+PI blob baseline groundMotion=0.000
+PI blob coverage=0.156 floor=0.1 · paintedShare=0.280 ceil=0.7
+  ✓  2 [chromium-headless-new] › substrate-paints-color.spec.ts:759:5 › substrate-paints-color (π lane — fail-CLOSED) › blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS (6.2s)
+PI blob paintable=[0.188,0.188]-[0.813,0.702] paintableShareOfInterior=0.557
+PI blob baseline groundMotion=0.000
+PI blob coverage=0.162 floor=0.1 · paintedShare=0.290 ceil=0.7
+  ✓  3 [chromium-headless-new] › substrate-paints-color.spec.ts:767:5 › substrate-paints-color (π lane — fail-CLOSED) › blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS (6.7s)
+
+  3 passed (36.9s)
+[browser-seat 2026-10-16T09:19:03.652Z] GREEN: 3/3 passed, 0 failed, 0 skipped in 38s → /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-11/B-kit/results/p11/browser/p11-steps/base.json

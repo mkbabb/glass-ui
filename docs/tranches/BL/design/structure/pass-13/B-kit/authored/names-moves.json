@@ -1,0 +1,21 @@
+{
+ "note": "B-07 (B15 in all five zones, pass 4): tests/utils, a placeholder dir, dissolves into the homes of what it held. Each move goes through the floor engine.",
+ "why": "B-07: B15 judges all five zones; tests/utils dissolves into its helpers' homes",
+ "moves": [
+  {
+   "from": "tests/utils/mountComposable.ts",
+   "to": "tests/harness/mountComposable.ts",
+   "why": "the composable mount helper 12 tests read, in the test harness beside the source reader; utils/ names nothing"
+  },
+  {
+   "from": "tests/utils/cssSyntax.ts",
+   "to": "tests/gates/cssSyntax.ts",
+   "why": "its two readers are the token- and type-hygiene gates"
+  },
+  {
+   "from": "tests/utils/cn.test.ts",
+   "to": "tests/components/_shared/cn.test.ts",
+   "why": "cn's contract test beside the other _shared class-name tests"
+  }
+ ]
+}

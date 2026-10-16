@@ -1,0 +1,351 @@
+# B-S11 tests zone: results (D1 pass 5, split seat, claude-opus-5-5, 2026-09-26)
+# Filtered from the seat's logs; each block names its command. Base: HEAD b2fb3042 (code = 10.1.0).
+# Arm F: HEAD + the floor rows (floor/rows/apply.mjs, r1 first: the chain's S1 cut) + split.mjs.
+# Arm C: 5e278aa7 + the pass-4 chain (pass-4/B-kit/replay.mjs, chain final MATCH) + split.mjs: the route's pass-4 tree.
+
+## baseline, the 15 sources at HEAD: npx vitest run <15 files>  (vitest's 'files' field counts suites)
+files 106 tests 571 passed 571 failed 0 pending 0
+
+## arm C replay
+replay done in 86.3 s; code digest 6618df1f7d2f5a0c657e4b1d14f61203e83e5b8164463abdb479f0432ca8685c over 1437 files; chain final MATCH
+
+## arm C: npx vitest run <15 sources> before the split
+files 106 tests 569 passed 569 failed 0 pending 0
+
+## arm F: node split.mjs (no --ledger)
+Error: scripts/structure/records/opaque-ledger.json names 10 reference(s) in split sources; pass --ledger scripts/structure/records/opaque-ledger.json
+
+## arm F: node split.mjs --ledger scripts/structure/records/opaque-ledger.json --apply
+tests/styles/contrast-computed.test.ts (1260 lines, 26 tests) -> tests/styles/contrast/
+  engine.ts                     303 lines  shared: 31 decls
+  pairs.test.ts                 283 lines  12 tests
+  claims.test.ts                386 lines  1 tests
+  grounds.test.ts               346 lines  13 tests
+tests/styles/glass-subtlety.test.ts (1099 lines, 36 tests) -> tests/styles/glass-subtlety/
+  sheets.ts                      50 lines  shared: 7 decls
+  ladders.test.ts               285 lines  13 tests
+  material.test.ts              341 lines  9 tests
+  grasp.test.ts                 440 lines  14 tests
+tests/public-surface.spec.ts (1030 lines, 20 tests) -> tests/public-surface/
+  exports.ts                    378 lines  shared: 5 decls
+  runtime.spec.ts               240 lines  7 tests
+  falsifiers.spec.ts            345 lines  9 tests
+  built.spec.ts                  88 lines  4 tests
+tests/components/custom/dock/g-dock-lattice.test.ts (933 lines, 31 tests) -> tests/components/custom/dock/lattice/
+  bands.ts                       74 lines  shared: 5 decls
+  run.test.ts                   223 lines  12 tests
+  reach.test.ts                 257 lines  11 tests
+  material.test.ts              392 lines  8 tests
+tests/components/easing.contract.test.ts (884 lines, 33 tests) -> tests/components/easing/
+  picker.ts                      28 lines  shared: 6 decls
+  product.test.ts               331 lines  10 tests
+  frame.test.ts                 321 lines  13 tests
+  ink.test.ts                   247 lines  10 tests
+tests/demo/story-preview-card.test.ts (824 lines, 68 tests) -> tests/demo/story-card/
+  sources.ts                     65 lines  shared: 8 decls
+  tiles.test.ts                 275 lines  24 tests
+  names.test.ts                 284 lines  22 tests
+  still.test.ts                 208 lines  22 tests
+tests/components/sortable-list/battery.test.ts (794 lines, 30 tests) -> tests/components/sortable-list/
+  rig.ts                        224 lines  shared: 13 decls
+  lift.test.ts                  187 lines  8 tests
+  receive.test.ts               176 lines  5 tests
+  guard.test.ts                 237 lines  17 tests
+tests/gates/boot-graph.test.ts (677 lines, 14 tests) -> tests/gates/boot-graph/
+  scan.ts                       139 lines  shared: 6 decls
+  source.test.ts                482 lines  11 tests
+  build.test.ts                  70 lines  3 tests
+tests/composables/dark/darkModeSyncScript.test.ts (572 lines, 23 tests) -> tests/composables/dark/
+  host.ts                        75 lines  shared: 3 decls
+  sync-script.test.ts            74 lines  10 tests
+  no-flash.test.ts              430 lines  13 tests
+tests/styles/dissolve.test.ts (676 lines, 22 tests) -> tests/styles/dissolve/
+  rules.ts                       89 lines  shared: 13 decls
+  vaporize.test.ts              435 lines  15 tests
+  exits.test.ts                 173 lines  7 tests
+tests/styles/radius-role-canon.test.ts (670 lines, 40 tests) -> tests/styles/radius-role/
+  tokens.ts                      94 lines  shared: 8 decls
+  canon.test.ts                 216 lines  19 tests
+  roles.test.ts                 372 lines  21 tests
+tests/styles/route-motion.test.ts (547 lines, 17 tests) -> tests/styles/route-motion/
+  grammar.ts                     99 lines  shared: 9 decls
+  alpha.test.ts                 178 lines  6 tests
+  registers.test.ts             282 lines  11 tests
+tests/gates/overfit-structure.test.ts (545 lines, 15 tests) -> tests/gates/overfit/
+  census.ts                     129 lines  shared: 10 decls
+  export-reach.test.ts          182 lines  5 tests
+  seams.test.ts                 246 lines  10 tests
+tests/components/fourier-field/FourierField.smoke.test.ts (505 lines, 30 tests) -> tests/components/fourier-field/
+  field.smoke.test.ts           358 lines  20 tests
+  surface.smoke.test.ts         146 lines  10 tests
+tests/gates/orphan-css-partial.test.ts (492 lines, 9 tests) -> tests/gates/orphan-css/
+  partials.ts                   352 lines  shared: 27 decls
+  partial.test.ts               163 lines  9 tests
+ledger tests/gates/boot-graph.test.ts "demo/shell/Nested.vue" -> tests/gates/boot-graph/source.test.ts
+ledger tests/gates/orphan-css-partial.test.ts "join(REPO_ROOT, \"src/styles/nested-leaf.css\")" -> tests/gates/orphan-css/partial.test.ts
+ledger tests/gates/orphan-css-partial.test.ts "join(SRC, \"components\", \"_shared\", \"field\", \"__dead_orphan__.css\")" -> tests/gates/orphan-css/partial.test.ts
+ledger tests/gates/orphan-css-partial.test.ts "join(SRC, \"styles\", \"planted-orphan.css\")" -> tests/gates/orphan-css/partial.test.ts
+ledger tests/gates/orphan-css-partial.test.ts "src/styles/planted-orphan.css" -> tests/gates/orphan-css/partial.test.ts
+ledger tests/gates/overfit-structure.test.ts "src/a.ts" -> tests/gates/overfit/export-reach.test.ts
+ledger tests/gates/overfit-structure.test.ts "src/w.ts" -> tests/gates/overfit/export-reach.test.ts
+ledger tests/gates/overfit-structure.test.ts "src/x.ts" -> tests/gates/overfit/export-reach.test.ts
+ledger tests/gates/overfit-structure.test.ts "src/y.ts" -> tests/gates/overfit/export-reach.test.ts
+ledger tests/gates/overfit-structure.test.ts "src/z.ts" -> tests/gates/overfit/export-reach.test.ts
+cite tests-visual/easing-primitive.spec.ts: `tests/components/easing.contract.test.ts` -> `tests/components/easing/`
+cite tests/styles/emitted-utility-vars.test.ts: (`easing.contract.test.ts:695`/`:727`) -> (G-E9 in `tests/components/easing/ink.test.ts`)
+cite (shipped) src/components/dock/styles/controls/icon-button.css: (`g-dock-lattice.test.ts` MATERIAL docblock) -> (`tests/components/custom/dock/lattice/material.test.ts` MATERIAL docblock)
+cite vite.dark-stamp.ts: `tests/composables/dark/darkModeSyncScript.test.ts`\n -> `tests/composables/dark/no-flash.test.ts`\n
+cite (shipped) src/styles/tokens/color-radius.css: `tests/styles/contrast-computed.test.ts`, which -> `tests/styles/contrast/claims.test.ts`, which
+cite (shipped) src/styles/glass/grasp.css: The arm in tests/styles/glass-subtlety.test.ts DISCOVERS -> The arm in tests/styles/glass-subtlety/grasp.test.ts DISCOVERS
+cite (shipped) src/styles/glass/material.css: every Vue source file (tests/styles/glass-subtlety.test.ts) -> every Vue source file (tests/styles/glass-subtlety/material.test.ts)
+cite (shipped) src/styles/glass/material.css: the discovery arm in\n       tests/styles/glass-subtlety.test.ts reds -> the discovery arm in\n       tests/styles/glass-subtlety/grasp.test.ts reds
+cite (shipped) src/styles/tokens/light-dark.css: `glass-subtlety.test.ts` REDs -> `glass-subtlety/ladders.test.ts` REDs
+cite DESIGN.md: `tests/styles/radius-role-canon.test.ts` (every -> `tests/styles/radius-role/canon.test.ts` (every
+cite (shipped) src/styles/theme/radius.css: `radius-role-canon.test.ts` case -> `tests/styles/radius-role/` case
+cite tests/gates/tabs-seam.test.ts: `orphan-css-partial.test.ts:68`, `radius-role-canon.test.ts:29` -> `tests/gates/orphan-css/partials.ts`, `tests/styles/radius-role/tokens.ts`
+cite tests/styles/proportion-register.test.ts: (radius-role-canon.test.ts:6 documents -> (the header of tests/styles/radius-role/tokens.ts documents
+cite (shipped) src/composables/motion/route/routeGrammar.ts: // `tests/styles/route-motion.test.ts` censuses -> // `tests/styles/route-motion/` censuses
+cite (shipped) src/composables/motion/route/routeGrammar.ts:  * census: `route-motion.test.ts` reads ->  * census: `tests/styles/route-motion/` reads
+cite (shipped) src/styles/tokens/motion-registers.css: register — `tests/styles/route-motion.test.ts` derives -> register — `tests/styles/route-motion/` derives
+cite (shipped) src/styles/tokens/motion-registers.css: `route-motion.test.ts` censuses -> `tests/styles/route-motion/` censuses
+cite (shipped) src/styles/view-transition.css: `route-motion.test.ts` binds -> `tests/styles/route-motion/` binds
+cite tests/composables/useRouteTransition.test.ts: The CSS half lives at `tests/styles/route-motion.test.ts` -> The CSS half lives at `tests/styles/route-motion/`
+cite (shipped) src/styles/animations.css: `tests/styles/dissolve.test.ts` reds -> `tests/styles/dissolve/vaporize.test.ts` reds
+applied: 73 files in the row, 10 in the shipped row
+
+## arm F: node conserve.mjs
+tests/styles/contrast-computed.test.ts: conserved; 4 outputs; rebased 0 (lines -), cited 0 (lines -)
+tests/styles/glass-subtlety.test.ts: conserved; 4 outputs; rebased 0 (lines -), cited 0 (lines -)
+tests/public-surface.spec.ts: conserved; 4 outputs; rebased 0 (lines -), cited 2 (lines 930,957)
+tests/components/custom/dock/g-dock-lattice.test.ts: conserved; 4 outputs; rebased 0 (lines -), cited 0 (lines -)
+tests/components/easing.contract.test.ts: conserved; 4 outputs; rebased 5 (lines 20,519,611,793,818), cited 0 (lines -)
+tests/demo/story-preview-card.test.ts: conserved; 4 outputs; rebased 0 (lines -), cited 0 (lines -)
+tests/components/sortable-list/battery.test.ts: conserved; 4 outputs; rebased 0 (lines -), cited 0 (lines -)
+tests/gates/boot-graph.test.ts: conserved; 3 outputs; rebased 0 (lines -), cited 0 (lines -)
+tests/composables/dark/darkModeSyncScript.test.ts: conserved; 3 outputs; rebased 0 (lines -), cited 1 (lines 169)
+tests/styles/dissolve.test.ts: conserved; 3 outputs; rebased 0 (lines -), cited 0 (lines -)
+tests/styles/radius-role-canon.test.ts: conserved; 3 outputs; rebased 0 (lines -), cited 0 (lines -)
+tests/styles/route-motion.test.ts: conserved; 3 outputs; rebased 0 (lines -), cited 0 (lines -)
+tests/gates/overfit-structure.test.ts: conserved; 3 outputs; rebased 0 (lines -), cited 0 (lines -)
+tests/components/fourier-field/FourierField.smoke.test.ts: conserved; 2 outputs; rebased 0 (lines -), cited 0 (lines -)
+tests/gates/orphan-css-partial.test.ts: conserved; 2 outputs; rebased 0 (lines -), cited 0 (lines -)
+
+## arm F: sha256 of the derived rows
+2a17ac4dc3d1c7ba7d2dd30202f3ab8eb6acdda1694a7b3381a2f7c366faa5a5  rowF.json
+753a42abd564cd326747a022a392be836c6c07a0d306d7a6ed1f1d6d52205e85  rowF-shipped.json
+
+## arm F: exits
+F base-status       58 (floor rows only)
+F bounds-pre 0
+F split-without-ledger 1
+F split 0
+F conserve 0
+F graph 0
+F bounds-post 0
+F tsc-lib 0
+F tsc-test 0
+F build 0
+F verify-both 1
+F demo 0
+F vitest-full 0
+F verify-tests-row-only 1
+F verify-floor-base 1
+F done
+
+## arm F: node scripts/structure/graph.mjs --quiet (before split / after)
+before: "edges": 7436, "violations": 0
+after:  "edges": 7491, "violations": 0
+
+## arm F: node scripts/structure/bounds.mjs, before -> after
+filesOver 55 -> 41 {"src":18,"demo":8,"tests":18,"tests-visual":6,"scripts":5} -> {"src":18,"demo":8,"tests":4,"tests-visual":6,"scripts":5}
+dirsOver 18 -> 18
+pre  DIR   177  tests-visual
+pre  DIR    43  tests/components
+pre  DIR    28  tests/styles
+pre  DIR    17  tests/demo
+pre  DIR    16  tests/components/custom/dock
+pre  DIR    14  tests/components/custom/aurora
+pre  DIR    14  tests/composables
+post DIR   177  tests-visual
+post DIR    42  tests/components
+post DIR    23  tests/styles
+post DIR    16  tests/demo
+post DIR    15  tests/components/custom/dock
+post DIR    14  tests/components/custom/aurora
+post DIR    14  tests/composables
+post FILE   835  tests/components/custom/constellation/constellationField.test.ts
+post FILE   540  tests/composables/glass/webgl/useWebGLCanvas.test.ts
+post FILE   509  tests/composables/glass/webgpu/useWebGPUCanvas.test.ts
+post FILE   504  tests/components/music-staff.geometry.test.ts
+
+## arm F: npx vitest run (whole suite, after split)
+files 744 tests 2313 passed 2312 failed 0 pending 1
+
+## arm F: npm run verify:package (ratchet datum 2919057; the floor's own shrink is P4-R3's floor row)
+floor rows only:           G-BUNDLE-RATCHET: bundle ratchet shrink — rebind down deliberately: 2913546 < 2919057
++ tests row:               G-BUNDLE-RATCHET: bundle ratchet shrink — rebind down deliberately: 2913546 < 2919057
++ tests row + shipped row: G-BUNDLE-RATCHET: bundle ratchet shrink — rebind down deliberately: 2913552 < 2919057
+
+## arm C: node split.mjs --ledger ... --apply (plan lines that differ from arm F's; the ten ledger lines and the rest are the same)
+tests/public-surface.spec.ts (1034 lines, 20 tests) -> tests/public-surface/
+  exports.ts                    376 lines  shared: 5 decls
+  runtime.spec.ts               237 lines  7 tests
+  built.spec.ts                  97 lines  4 tests
+tests/components/custom/dock/g-dock-lattice.test.ts (930 lines, 31 tests) -> tests/components/custom/dock/lattice/
+  bands.ts                       71 lines  shared: 5 decls
+tests/components/sortable-list/battery.test.ts (799 lines, 30 tests) -> tests/components/sortable-list/
+  rig.ts                        230 lines  shared: 14 decls
+tests/styles/dissolve.test.ts (677 lines, 22 tests) -> tests/styles/dissolve/
+  vaporize.test.ts              436 lines  15 tests
+tests/components/fourier-field/FourierField.smoke.test.ts (509 lines, 30 tests) -> tests/components/fourier-field/
+  field.smoke.test.ts           359 lines  20 tests
+tests/gates/orphan-css-partial.test.ts (505 lines, 9 tests) -> tests/gates/orphan-css/
+  partials.ts                   365 lines  shared: 28 decls
+(the citations follow the route's moves: icon-button.css at src/components/dock/controls/, color-radius.css at
+src/styles/tokens/surface/, material.css at src/styles/glass/material/, light-dark.css at src/styles/tokens/scheme/,
+motion-registers.css at src/styles/tokens/motion/, animations.css at src/styles/motion/, useRouteTransition.test.ts at
+src/composables/motion/route/__tests__/, which is a test slot and so rides the tests row)
+
+## arm C: node conserve.mjs
+15 of 15 conserved (public-surface cited lines 926,953; easing rebased lines 20,519,611,793,818; darkModeSyncScript cited line 169)
+
+## arm C: exits
+C2 split 0
+C2 conserve 0
+C2 graph 0
+C2 seal-after 1
+C2 tsc-test 0
+C2 tsc-lib 0
+C2 build 0
+C2 demo 0
+C2 vitest-mods 0
+C2 vitest-full 1
+
+## arm C: node scripts/structure/seal/seal.mjs --json, counts before -> after (clauses nonzero on either side)
+B0 444 -> 416
+B2 67 -> 68
+B6 62 -> 47
+B16 0 -> 6
+B16 after:
+  tests/components/custom/dock/lattice/reach.test.ts (subject in src/components/dock: belongs in src/components/dock/__tests__/)
+  tests/components/easing/product.test.ts (subject in src/components/easing: belongs in src/components/easing/__tests__/)
+  tests/components/sortable-list/guard.test.ts (subject in src/components/sortable-list: belongs in src/components/sortable-list/__tests__/)
+  tests/components/sortable-list/receive.test.ts (subject in src/components/sortable-list: belongs in src/components/sortable-list/__tests__/)
+  tests/composables/dark/sync-script.test.ts (subject in src/composables/dark: belongs in src/composables/dark/__tests__/)
+  tests/styles/route-motion/alpha.test.ts (subject in src/composables/motion/route: belongs in src/composables/motion/route/__tests__/)
+B0 line diff: gone 119, added 91 (per-site lines; gone by source file, added by new module dir)
+  -  29 tests/components/custom/dock/g-dock-lattice.test.ts
+  -   6 tests/components/easing.contract.test.ts
+  -   6 tests/components/fourier-field/FourierField.smoke.test.ts
+  -   2 tests/components/sortable-list/battery.test.ts
+  -   6 tests/demo/story-preview-card.test.ts
+  -   5 tests/gates/boot-graph.test.ts
+  -  16 tests/gates/orphan-css-partial.test.ts
+  -   9 tests/gates/overfit-structure.test.ts
+  -   2 tests/public-surface.spec.ts
+  -   1 tests/styles/contrast-computed.test.ts
+  -   7 tests/styles/dissolve.test.ts
+  -  16 tests/styles/glass-subtlety.test.ts
+  -   8 tests/styles/radius-role-canon.test.ts
+  -   6 tests/styles/route-motion.test.ts
+  +   7 tests/components/custom/dock/lattice/
+  +   6 tests/components/easing/
+  +   6 tests/components/fourier-field/
+  +   2 tests/components/sortable-list/
+  +   2 tests/demo/story-card/
+  +  10 tests/gates/boot-graph/
+  +  17 tests/gates/orphan-css/
+  +   9 tests/gates/overfit/
+  +   2 tests/public-surface/
+  +   1 tests/styles/contrast/
+  +   6 tests/styles/dissolve/
+  +  13 tests/styles/glass-subtlety/
+  +   4 tests/styles/radius-role/
+  +   6 tests/styles/route-motion/
+  by kind, gone: {"path-literal":20,"scan":2,"computed-read":12,"path-helper":38,"fs-read":47}
+  by kind, added: {"path-literal":19,"scan":2,"computed-read":11,"path-helper":5,"fs-read":54}
+B2 line diff:
+B2 gone 5 added 6
+  - tests/components/custom/dock/g-dock-lattice.test.ts:8 -> src/components/dock/composables/dockMorphMeasure.ts [import]
+  - tests/components/easing.contract.test.ts:15 -> src/components/easing/constants.ts [import]
+  - tests/components/fourier-field/FourierField.smoke.test.ts:36 -> src/components/fourier-field/renderer/mint.ts [import]
+  - tests/components/fourier-field/FourierField.smoke.test.ts:37 -> src/components/fourier-field/clock.ts [import]
+  - tests/components/fourier-field/FourierField.smoke.test.ts:38 -> src/components/fourier-field/register/constants.ts [import]
+  + tests/components/custom/dock/lattice/reach.test.ts:7 -> src/components/dock/composables/dockMorphMeasure.ts [import]
+  + tests/components/easing/frame.test.ts:15 -> src/components/easing/constants.ts [import]
+  + tests/components/easing/product.test.ts:7 -> src/components/easing/constants.ts [import]
+  + tests/components/fourier-field/field.smoke.test.ts:21 -> src/components/fourier-field/renderer/mint.ts [import]
+  + tests/components/fourier-field/field.smoke.test.ts:22 -> src/components/fourier-field/clock.ts [import]
+  + tests/components/fourier-field/surface.smoke.test.ts:10 -> src/components/fourier-field/register/constants.ts [import]
+
+## arm C: npx vitest run <the 36 new test files> (vitest's 'files' field counts suites)
+files 129 tests 569 passed 569 failed 0 pending 0
+
+## arm C: npx vitest run (whole suite, after split)
+files 746 tests 2331 passed 2326 failed 4 pending 1
+  FAIL tests/gates/seal.test.ts :: seal (route D1-B) B0 :: AssertionError: demo/vite.demo-dist.config.ts:56 walk of src/ [path-literal]
+  FAIL tests/gates/seal.test.ts :: seal (route D1-B) B2 :: AssertionError: demo/composables/virtual/virtualSectionLayout.ts:12 -> src/composables/sidebar/types.ts [import-type]
+  FAIL tests/gates/seal.test.ts :: seal (route D1-B) B6 :: AssertionError: demo/stories/containers/: 13 direct files > 12
+  FAIL tests/gates/seal.test.ts :: seal (route D1-B) B16 :: AssertionError: tests/components/custom/dock/lattice/reach.test.ts (subject in src/components/dock: belongs in src/components/dock/__tests__
+
+## plants on the arm C tree (split.mjs refusals, conserve.mjs)
+plant drop: exit 1 :: Error: tests/styles/dissolve.test.ts: block "the census — who releases a backdrop, and how many of them there are" is named by 0 parts
+plant twice: exit 1 :: Error: tests/styles/glass-subtlety.test.ts: block "glass material — the structural invariants" is named by 2 parts
+plant over: exit 1 :: Error: tests/styles/contrast-computed.test.ts: stopped   tests/styles/contrast/all.test.ts: 1262 lines > 500
+plant stale: exit 1 :: Error: tests/styles/route-motion.test.ts: part alpha.test.ts names "no such block", which no block carries
+control (same planted spec, an unplanted entry): exit 0
+plant conserve (the @ts-expect-error line dropped from exports.ts): exit 1 :: tests/public-surface.spec.ts: MISSING ... MISSING 57: // @ts-expect-error — `ColorResolver` is no longer exported from `./color`.
+control conserve (rowC as derived): exit 0
+
+## arm A (HEAD, no floor rows), run with the tool before its ledger / copy / citation-by-text changes; kept for what it found
+vitest on the split modules:
+files 129 tests 571 passed 571 failed 0 pending 0
+whole suite (gate-register reads tests/public-surface.spec.ts by path; floor row r1 retires it before any structure row):
+files 744 tests 2330 passed 2326 failed 3 pending 1
+  FAIL tests/gates/gate-register.test.ts :: every seat and every rostered row resolves to an executable :: AssertionError: active surface.root.exact: sourcePath missing — tests/public-surface.spec.ts
+  FAIL tests/gates/gate-register.test.ts :: BITE — a `describe.skip(` block ... :: Error: ENOENT ... 'tests/public-surface.spec.ts'
+  FAIL tests/gates/gate-register.test.ts :: BITE — a live `it.only(` ... :: Error: ENOENT ... 'tests/public-surface.spec.ts'
+HEAD whole suite, unsplit: files 744 tests 2330 passed 2329 failed 0 pending 1
+verify:package at HEAD (measure.sh): HEAD exit 0; HEAD + tests row exit 0 (equal to the datum 2919057); HEAD + both rows exit 1, 'bundle ratchet increase forbidden: 2919063 > 2919057' (+6 B)
+first derivation, before the import-assertion fix: conserve.mjs reported MISSING in 3 sources (public-surface.spec.ts lines 10, 45-50, 53-56: a @ts-expect-error import, the O-20 type-only door imports, the ColorResolver @ts-expect-error; orphan-css-partial lines 51-53: an import's comment; contrast-computed line 305: the outer describe's banner)
+arm B (floor rows + split), before the copy fix: F-1 4 violations (ledger-stale 3, unresolved 1) in tests/gates/orphan-css/partial.test.ts; vitest floor.test.ts 'F-1 graph' RED
+
+## reproduction: the final split.mjs re-derived each arm's rows (no --apply) and they are byte-identical
+2a17ac4dc3d1c7ba7d2dd30202f3ab8eb6acdda1694a7b3381a2f7c366faa5a5  rowF.json
+2a17ac4dc3d1c7ba7d2dd30202f3ab8eb6acdda1694a7b3381a2f7c366faa5a5  rowF-recheck.json
+753a42abd564cd326747a022a392be836c6c07a0d306d7a6ed1f1d6d52205e85  rowF-shipped.json
+753a42abd564cd326747a022a392be836c6c07a0d306d7a6ed1f1d6d52205e85  rowF-shipped-recheck.json
+053543103091566e9258afed836bb4be60ebd8d35054470c5d2bc6ada0c37b55  rowC.json
+053543103091566e9258afed836bb4be60ebd8d35054470c5d2bc6ada0c37b55  rowC-recheck.json
+58443df53fa49cc34491dcc93bbb6e30b1a8c07b8fe2394a1a3b6e1e832df7e4  rowC-shipped.json
+
+## conserve.mjs with its import-binding arm (added after the runs above; re-run on the banked rows)
+rowF: 15/15 conserved, exit 0
+rowC: 15/15 conserved
+plant: 'import type { FourierSource }' dropped from runtime.spec.ts: exit 1 ::   MISSING import binding FourierSource
+
+## final spec (two part comments corrected after the runs above), re-verified on both trees
+# arm C tree (armG.sh):
+G split 0
+G conserve 0 (15/15)
+G graph 0
+G seal 1
+G seal counts {"B0":416,"B1":0,"B2":68,"B3":0,"B4":0,"B5":0,"B6":47,"B7":0,"B8":0,"B9":0,"B10":0,"B11":0,"B12":0,"B13":0,"B14":0,"B15":0,"B16":6,"B17":0}
+G tsc-test 0
+G builds 0
+G vitest-mods 0
+files 129 tests 569 passed 569 failed 0 pending 0
+d13049bcf44c9637db4fe23c9b64240fba68db8b10a24625d19e49408e9d3fed  rowG.json
+58443df53fa49cc34491dcc93bbb6e30b1a8c07b8fe2394a1a3b6e1e832df7e4  rowG-shipped.json
+G status before and after (unapplied): 849 = 849
+# arm F tree (armH.sh; the seal gate is not landed on a floor-only tree, so that step has no reading there):
+H split 0
+H conserve 0 (15/15)
+H graph 0
+H tsc-test 0
+H builds 0
+H vitest-mods 0
+files 129 tests 571 passed 571 failed 0 pending 0
+b4638ebe534e002d3210df9cb709abf2b3ab40f9e85e09240edd5128875f45a7  rowH.json
+753a42abd564cd326747a022a392be836c6c07a0d306d7a6ed1f1d6d52205e85  rowH-shipped.json
+H status before and after (unapplied): 58 = 58

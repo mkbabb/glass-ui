@@ -1,0 +1,18 @@
+{
+ "file": "tests-visual/pi-manifest.ts",
+ "why": "the scene re-source reads the category files manifest.ts imports",
+ "edits": [
+  {
+   "from": "// PARSE the canonical `s(\"<cat>\", \"<id>\", …)` call sites out of the manifest source\n// text. Route paths are `/${category}/${story}` (demo/router.ts buildRoutes). If a\n// story id/category is renamed in the manifest, this re-source tracks it — there is\n// no second hand-list to drift.\n",
+   "to": "// PARSE the canonical `s(\"<cat>\", \"<id>\", …)` call sites out of the category files the\n// manifest imports (`demo/stories/manifest/categories/<id>.ts`). Route paths are\n// `/${category}/${story}` (demo/router.ts buildRoutes). If a story id/category is\n// renamed in the manifest, this re-source tracks it — there is no second hand-list\n// to drift.\n"
+  },
+  {
+   "from": "    const src = readFileSync(MANIFEST_PATH, \"utf8\");\n",
+   "to": "    // The rows live one file per category; the manifest's own imports name those files,\n    // so a category file the manifest does not assemble is not a scene either.\n    const manifest = readFileSync(MANIFEST_PATH, \"utf8\");\n    const rowFiles = [\n        ...manifest.matchAll(/from \"\\.\\/(manifest\\/categories\\/[a-z0-9-]+)\"/g),\n    ].map((m) => `${LIBRARY_ROOT}demo/stories/${m[1]!}.ts`);\n    if (rowFiles.length === 0) {\n        throw new Error(\n            `pi-manifest: re-source FAILED — ${MANIFEST_PATH} imports no ./manifest/categories/<id> row file. The manifest's assembly moved; the SCENES re-source is the source-of-truth, do NOT hand-list.`,\n        );\n    }\n    const src = rowFiles.map((file) => readFileSync(file, \"utf8\")).join(\"\\n\");\n"
+  },
+  {
+   "from": "            `pi-manifest: re-source FAILED — no s(\"cat\",\"id\") rows parsed from ${MANIFEST_PATH}. The manifest helper shape moved; the SCENES re-source is the source-of-truth, do NOT hand-list.`,\n",
+   "to": "            `pi-manifest: re-source FAILED — no s(\"cat\",\"id\") rows parsed from the category files ${MANIFEST_PATH} imports. The manifest helper shape moved; the SCENES re-source is the source-of-truth, do NOT hand-list.`,\n"
+  }
+ ]
+}

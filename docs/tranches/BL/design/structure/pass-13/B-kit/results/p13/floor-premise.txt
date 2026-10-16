@@ -1,0 +1,115 @@
+floor premise start 2026-10-16T14:56:22Z load { 16.32 13.19 15.62 }
+row r1-register-retire: 2 path(s) touched, 0 under tests-visual
+  D scripts/gate-register.mjs
+  D tests/gates/gate-register.test.ts
+row f3-entry-record: 9 path(s) touched, 0 under tests-visual
+  M docs/tranches/BL/design/structure/floor/records/opaque-ledger.json
+  M scripts/flatten-subpath-types.mjs
+  D scripts/lib/subpath-policy.mjs
+  D scripts/regen-exports.mjs
+  M tests/gates/orphan-css-partial.test.ts
+  M tests/gates/overfit-structure.test.ts
+  M vite.library.ts
+  M vite.style-assets.ts
+  M vite.style-fold.ts
+row f4-terminal-role: 2 path(s) touched, 0 under tests-visual
+  M vite.style-fold.ts
+  M vite.utility-emit.ts
+row m02-overlay-host: 3 path(s) touched, 0 under tests-visual
+  M src/components/_shared/overlay/participation.ts
+  M src/components/dock/composables/dockContext.ts
+  M src/components/dock/composables/useDockState.ts
+row m03-roving-move: 5 path(s) touched, 0 under tests-visual
+  D src/components/tabs/composables/useTabRovingFocus.ts
+  M src/components/tabs/types.ts
+  M src/composables/motion/morph/useSelectionGroup.ts
+  A src/composables/motion/morph/useTabRovingFocus.ts
+  M tests/gates/overfit-structure.test.ts
+row f9-wire: 1 path(s) touched, 0 under tests-visual
+  A tests/gates/floor.test.ts
+row fd6-harness: 3 path(s) touched, 0 under tests-visual
+  M tests/components/easing.contract.test.ts
+  M tests/components/sortable-list/battery.test.ts
+  A tests/harness/source.ts
+row fd7-programs: 4 path(s) touched, 0 under tests-visual
+  M demo/demo.css
+  D tsconfig.build.json
+  M vite.style-assets.ts
+  M vitest.config.ts
+row fd11-land: 71 path(s) touched, 0 under tests-visual
+  D docs/tranches/BL/design/structure/floor/bounds.mjs
+  D docs/tranches/BL/design/structure/floor/browser.mjs
+  D docs/tranches/BL/design/structure/floor/cascade.mjs
+  D docs/tranches/BL/design/structure/floor/classify.mjs
+  D docs/tranches/BL/design/structure/floor/entries.mjs
+  D docs/tranches/BL/design/structure/floor/fixpoint.mjs
+  D docs/tranches/BL/design/structure/floor/gates.mjs
+  D docs/tranches/BL/design/structure/floor/graph.mjs
+  D docs/tranches/BL/design/structure/floor/lib/classify.mjs
+  D docs/tranches/BL/design/structure/floor/lib/entries.mjs
+  D docs/tranches/BL/design/structure/floor/lib/evaluate.mjs
+  D docs/tranches/BL/design/structure/floor/lib/graph.mjs
+  D docs/tranches/BL/design/structure/floor/lib/move.mjs
+  D docs/tranches/BL/design/structure/floor/lib/placement.mjs
+  D docs/tranches/BL/design/structure/floor/lib/plan.mjs
+  D docs/tranches/BL/design/structure/floor/lib/recipes.mjs
+  D docs/tranches/BL/design/structure/floor/lib/resolve.mjs
+  D docs/tranches/BL/design/structure/floor/lib/scan/css.mjs
+  D docs/tranches/BL/design/structure/floor/lib/scan/playwright.mjs
+  D docs/tranches/BL/design/structure/floor/lib/scan/script.mjs
+  D docs/tranches/BL/design/structure/floor/lib/scan/text.mjs
+  D docs/tranches/BL/design/structure/floor/lib/scan/vue.mjs
+  D docs/tranches/BL/design/structure/floor/lib/symbols.mjs
+  D docs/tranches/BL/design/structure/floor/lib/syntax.mjs
+  D docs/tranches/BL/design/structure/floor/lib/tree.mjs
+  D docs/tranches/BL/design/structure/floor/move.mjs
+  D docs/tranches/BL/design/structure/floor/placement.mjs
+  D docs/tranches/BL/design/structure/floor/records/entry-record.json
+  D docs/tranches/BL/design/structure/floor/records/opaque-ledger.json
+  D docs/tranches/BL/design/structure/floor/records/surface-pin.json
+  D docs/tranches/BL/design/structure/floor/surface.mjs
+  M scripts/flatten-subpath-types.mjs
+  D scripts/import-dag.mjs
+  A scripts/structure/bounds.mjs
+  A scripts/structure/browser.mjs
+  A scripts/structure/cascade.mjs
+  A scripts/structure/classify.mjs
+  A scripts/structure/entries.mjs
+  A scripts/structure/fixpoint.mjs
+  A scripts/structure/gates.mjs
+  A scripts/structure/graph.mjs
+  A scripts/structure/lib/classify.mjs
+  A scripts/structure/lib/entries.mjs
+  A scripts/structure/lib/evaluate.mjs
+  A scripts/structure/lib/graph.mjs
+  A scripts/structure/lib/move.mjs
+  A scripts/structure/lib/placement.mjs
+  A scripts/structure/lib/plan.mjs
+  A scripts/structure/lib/recipes.mjs
+  A scripts/structure/lib/resolve.mjs
+  A scripts/structure/lib/scan/css.mjs
+  A scripts/structure/lib/scan/playwright.mjs
+  A scripts/structure/lib/scan/script.mjs
+  A scripts/structure/lib/scan/text.mjs
+  A scripts/structure/lib/scan/vue.mjs
+  A scripts/structure/lib/symbols.mjs
+  A scripts/structure/lib/syntax.mjs
+  A scripts/structure/lib/tree.mjs
+  A scripts/structure/move.mjs
+  A scripts/structure/placement.mjs
+  A scripts/structure/records/entry-record.json
+  A scripts/structure/records/opaque-ledger.json
+  A scripts/structure/records/surface-pin.json
+  A scripts/structure/surface.mjs
+  M tests/gates/floor.test.ts
+  M tests/gates/orphan-css-partial.test.ts
+  M tests/gates/overfit-structure.test.ts
+  M tests/harness/source.ts
+  M vite.library.ts
+  M vite.style-assets.ts
+  M vite.style-fold.ts
+rows 9; paths touched 100; under tests-visual 0
+per-row cut code digest 6773b4ec1217ab416eea2e5ec1b79d39587c4201a70871d347e919d532f2cadb over 1354 files; floor base (apply.mjs) 6773b4ec1217ab416eea2e5ec1b79d39587c4201a70871d347e919d532f2cadb over 1354 files; equal
+baseProgram() at baseSha: 153 specs; the floor base's own program: 153 specs; in baseProgram only 0; on the floor base only 0
+verdict HELD: the base-program premise
+floor premise rc=0 end 2026-10-16T14:57:34Z load { 17.26 14.21 15.80 }

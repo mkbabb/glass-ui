@@ -1,0 +1,46 @@
+frozen-kit proof 2026-10-16T15:27:35Z load { 10.38 17.01 17.64 }
+== diff -r pass-12/B-kit pass-13/B-kit (results/, the run scripts replays/heavy/batteries/browser-p1{2,3}.sh, light-p13.sh and floor-premise.mjs excluded)
+diff -r -x results -x replays-p1[23].sh -x heavy-p1[23].sh -x batteries-p1[23].sh -x browser-p1[23].sh -x light-p13.sh -x floor-premise.mjs -x RESULTS-PATHS-p13.txt pass-12/B-kit/tools/critic9-extra.sh pass-13/B-kit/tools/critic9-extra.sh
+3c3
+< # HERE resolves to that critic's tools/ dir, and the probe base is this kit's results/p12/peer-closure-base.json.
+---
+> # HERE resolves to that critic's tools/ dir, and the probe base is this kit's results/p13/peer-closure-base.json.
+13c13
+< PB="$K/results/p12/peer-closure-base.json"
+---
+> PB="$K/results/p13/peer-closure-base.json"
+43c43
+< rc=$(run node "$K/tools/peer-closure.mjs" --root "$T" --base "$K/results/p12/browser/route.json"); echo "PX base=a-browser-report rc=$rc :: $(tail -1 "$X/p.log")"
+---
+> rc=$(run node "$K/tools/peer-closure.mjs" --root "$T" --base "$K/results/p13/browser/route.json"); echo "PX base=a-browser-report rc=$rc :: $(tail -1 "$X/p.log")"
+diff -r -x results -x replays-p1[23].sh -x heavy-p1[23].sh -x batteries-p1[23].sh -x browser-p1[23].sh -x light-p13.sh -x floor-premise.mjs -x RESULTS-PATHS-p13.txt pass-12/B-kit/tools/plants-p10.mjs pass-13/B-kit/tools/plants-p10.mjs
+65c65
+<     const PBASE = join(KIT, "results/p12/peer-closure-base.json");
+---
+>     const PBASE = join(KIT, "results/p13/peer-closure-base.json");
+diff -r -x results -x replays-p1[23].sh -x heavy-p1[23].sh -x batteries-p1[23].sh -x browser-p1[23].sh -x light-p13.sh -x floor-premise.mjs -x RESULTS-PATHS-p13.txt pass-12/B-kit/tools/plants-p7.mjs pass-13/B-kit/tools/plants-p7.mjs
+92c92
+< const BASE = join(KIT, "results/p12/peer-closure-base.json"); // pass 10: this kit's base report
+---
+> const BASE = join(KIT, "results/p13/peer-closure-base.json"); // pass 10: this kit's base report
+diff -r -x results -x replays-p1[23].sh -x heavy-p1[23].sh -x batteries-p1[23].sh -x browser-p1[23].sh -x light-p13.sh -x floor-premise.mjs -x RESULTS-PATHS-p13.txt pass-12/B-kit/tools/plants-p8.mjs pass-13/B-kit/tools/plants-p8.mjs
+107c107
+<     const PROBE = join(KIT, "tools/peer-closure.mjs"), BASE = join(KIT, "results/p12/peer-closure-base.json");
+---
+>     const PROBE = join(KIT, "tools/peer-closure.mjs"), BASE = join(KIT, "results/p13/peer-closure-base.json");
+diff -r -x results -x replays-p1[23].sh -x heavy-p1[23].sh -x batteries-p1[23].sh -x browser-p1[23].sh -x light-p13.sh -x floor-premise.mjs -x RESULTS-PATHS-p13.txt pass-12/B-kit/tools/plants-p9.mjs pass-13/B-kit/tools/plants-p9.mjs
+102c102
+<     const PROBE = T("peer-closure.mjs"), PBASE = join(KIT, "results/p12/peer-closure-base.json");
+---
+>     const PROBE = T("peer-closure.mjs"), PBASE = join(KIT, "results/p13/peer-closure-base.json");
+diff -r -x results -x replays-p1[23].sh -x heavy-p1[23].sh -x batteries-p1[23].sh -x browser-p1[23].sh -x light-p13.sh -x floor-premise.mjs -x RESULTS-PATHS-p13.txt pass-12/B-kit/tools/repointed/pass-10-fix10.sh pass-13/B-kit/tools/repointed/pass-10-fix10.sh
+46c46
+< P9S="$ST/pass-9/B-kit/results/p9/browser/specs.txt"; BR="$K/results/p12/browser"
+---
+> P9S="$ST/pass-9/B-kit/results/p9/browser/specs.txt"; BR="$K/results/p13/browser"
+diff rc=1
+== sha256 of every file of the frozen parts, pass 12 vs pass 13
+frozen parts: 355 files, 0 differ
+== the floor (structure/floor) against HEAD: git status and git diff, the checkout
+floor status lines: 0
+floor + pass-12 diff lines: 0

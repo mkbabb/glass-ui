@@ -1,0 +1,19 @@
+{
+ "step": "P9-R1 (a): entries.mjs names its own path for the build's watch list by an explicit file URL (`new URL(\"./entries.mjs\", import.meta.url)`), the same path, which F-1 reads as a new-url edge with a span; the bare `fileURLToPath(import.meta.url)` is an edge with no span, and the floor engine refuses to move a file that holds one (S74c moves entries.mjs into lib/tree/)",
+ "files": {
+  "scripts/structure/lib/entries.mjs": {
+   "hunks": [
+    [
+     "    return [join(root, recordPath(root)), fileURLToPath(import.meta.url)];\n",
+     "    return [join(root, recordPath(root)), fileURLToPath(new URL(\"./entries.mjs\", import.meta.url))];\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "scripts/structure/lib/entries.mjs",
+   "why": "the watch list names this reader by an explicit URL the floor can carry through a move"
+  }
+ ]
+}

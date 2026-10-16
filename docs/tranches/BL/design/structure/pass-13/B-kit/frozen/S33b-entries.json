@@ -1,0 +1,17 @@
+{
+ "step": "F-3: package.json follows the entry record (./aurora-config: exports and typesVersions)",
+ "files": {
+  "package.json": {
+   "hunks": [
+    [
+     "            ],\n            \"badge\": [\n",
+     "            ],\n            \"aurora-config\": [\n                \"dist/aurora-config.d.ts\"\n            ],\n            \"badge\": [\n"
+    ],
+    [
+     "            \"import\": \"./dist/aurora.js\"\n        },\n",
+     "            \"import\": \"./dist/aurora.js\"\n        },\n        \"./aurora-config\": {\n            \"types\": \"./dist/aurora-config.d.ts\",\n            \"import\": \"./dist/aurora-config.js\"\n        },\n"
+    ]
+   ]
+  }
+ }
+}

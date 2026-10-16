@@ -1,0 +1,28 @@
+# re-pointed battery files (P10-G4): each is the earlier file with the paths S74d moved re-spelled, nothing else
+## diff pass-6/critique-B/battery/fd4-probe.mjs pass-11/B-kit/tools/repointed/pass-6-fd4-probe.mjs
+21c21
+< const T = await import(S("lib/tree.mjs"));
+---
+> const T = await import(S("lib/tree/tree.mjs"));
+## diff pass-3/critique-B/battery/probes.mjs pass-11/B-kit/tools/repointed/pass-3-probes.mjs
+28c28
+< const graph = async () => { if (!G) { const { buildGraph } = await imp("graph.mjs"); G = buildGraph(WT); const { makeOrigins } = await imp("symbols.mjs"); O = makeOrigins(G); } return G; };
+---
+> const graph = async () => { if (!G) { const { buildGraph } = await imp("graph.mjs"); G = buildGraph(WT); const { makeOrigins } = await imp("tree/symbols.mjs"); O = makeOrigins(G); } return G; };
+77c77
+<     const n = sh("grep -c anchor scripts/structure/lib/placement.mjs").trim();
+---
+>     const n = sh("grep -c anchor scripts/structure/lib/tree/placement.mjs").trim();
+119c119
+<     const slotUse = sh("grep -l 'isSlot' scripts/structure/lib/placement.mjs scripts/structure/bounds.mjs | wc -l").trim();
+---
+>     const slotUse = sh("grep -l 'isSlot' scripts/structure/lib/tree/placement.mjs scripts/structure/bounds.mjs | wc -l").trim();
+## diff pass-10/critique-B/tools/fix10.sh pass-11/B-kit/tools/repointed/pass-10-fix10.sh (its committed-report path names this kit's results dir; HERE resolves to that critic's tools/ dir)
+16c16
+< HERE="$(cd "$(dirname "$0")" && pwd)"; ST="$HERE/../../.."; P8="$ST/pass-8/critique-B/battery"; B="$HERE/../battery"
+---
+> HERE="$(cd "$(dirname "$0")/../../../../pass-10/critique-B/tools" && pwd)"; ST="$HERE/../../.."; P8="$ST/pass-8/critique-B/battery"; B="$HERE/../battery"
+46c46
+< P9S="$ST/pass-9/B-kit/results/p9/browser/specs.txt"; BR="$K/results/p10/browser"
+---
+> P9S="$ST/pass-9/B-kit/results/p9/browser/specs.txt"; BR="$K/results/p11/browser"

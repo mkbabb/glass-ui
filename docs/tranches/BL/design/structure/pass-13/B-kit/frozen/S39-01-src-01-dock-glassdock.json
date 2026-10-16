@@ -1,0 +1,81 @@
+{
+ "step": "B-S11 (R-5, P4-R5): GlassDock.vue 545 → 484 lines, split in place into two named composables; the dock/shell module was refused by FD-2 (refused/dock-shell.moves.json)",
+ "files": {
+  "scripts/structure/records/seal-pin.json": {
+   "hunks": [
+    [
+     "  \"src/components/dock/legibility/index.ts\": [\n   \"useGlassBackdropLuminance\"\n",
+     "  \"src/components/dock/legibility/index.ts\": [\n   \"useDockBackdropLuminance\",\n   \"useGlassBackdropLuminance\"\n"
+    ]
+   ]
+  },
+  "src/components/dock/GlassDock.vue": {
+   "hunks": [
+    [
+     "import { computed, nextTick, ref, useId, useTemplateRef, watch } from \"vue\";\n// The sampled-luminance observer is wired ON for every\n// `backdropMode: \"live\"` dock (the surface the user reported unreadable over light, and the\n// one most often over a live/bright backdrop). It REFINES the declarative bucket +\n// the Arm-1 self-engage (both stay the floor); a dark-substrate consumer opts out via\n// `--glass-level: 0` on the dock or `backdropMode: \"static\"`. Imported\n// directly (NOT via the glass barrel) — the composable is demo-private (path B): the\n// dock is the binary consumer #1, the public barrel seat awaits a 2nd binary consumer\n// (docs/consumer-evidence/use-glass-backdrop-luminance.md names the booked trigger).\nimport { FOCUSABLE_SELECTOR } from \"../_shared/focus\";\nimport { useGlassBackdropLuminance } from \"./legibility\";\nimport { OPEN_DISMISSABLE_LAYER_SELECTOR } from \"./constants\";\n",
+     "import { computed, ref, useId, useTemplateRef, watch } from \"vue\";\n// The sampled-luminance observer (wired ON for every `backdropMode: \"live\"` dock) and the\n// two face keyboards live in their own composables: ./legibility and\n// ./composables/useDockKeyboard.\nimport { useDockBackdropLuminance } from \"./legibility\";\n"
+    ],
+    [
+     "import { provideDockContext } from \"./composables/dockContext\";\nimport { useDockState } from \"./composables/useDockState\";\n",
+     "import { provideDockContext } from \"./composables/dockContext\";\nimport { useDockKeyboard } from \"./composables/useDockKeyboard\";\nimport { useDockState } from \"./composables/useDockState\";\n"
+    ],
+    [
+     "/* Wire the sampled-luminance observer ON for\n   the dock by default. It writes `--glass-backdrop-luma` + derives the\n   `--glass-backdrop: light|dark` bucket on the dock root, DYNAMICALLY tracking the\n   painted backdrop (a live aurora bleed) the static bucket is too coarse for. The\n   Arm-1 self-engage + the declarative bucket stay the FLOOR — this REFINES.\n   Wired ON for every `backdropMode: \"live\"` dock; a `\"static\"` dock uses the\n   solid plate with no observer. */\nif (props.backdropMode === \"live\") {\n    // Hand the field canvas as a REACTIVE GETTER, not\n    // a by-value snapshot. `props.backgroundCanvas` is the DockStage aurora canvas,\n    // which resolves POST-MOUNT (the scoped-slot `canvasRef` is null during this\n    // setup). Passing the raw value captured null forever → the observer never entered\n    // the live `sampleAnimated` path → the whole dock band was a DEAD observer (0 of 12\n    // docks stamped the writer-fired witness). The getter re-resolves each sample, so\n    // the observer picks up the field the moment it paints + writes real luma/ambient-hue.\n    useGlassBackdropLuminance(dockEl, {\n        backgroundCanvas: (): HTMLCanvasElement | null => {\n            const bc = props.backgroundCanvas;\n            return typeof bc === \"function\"\n                ? bc()\n                : bc instanceof HTMLCanvasElement\n                  ? bc\n                  : null;\n        },\n    });\n}\n",
+     "/* The sampled-luminance observer, ON for a `backdropMode: \"live\"` dock: it REFINES the\n   declarative bucket and the Arm-1 self-engage, which stay the FLOOR. */\nuseDockBackdropLuminance(dockEl, props);\n"
+    ],
+    [
+     "const summaryIsDisclosure = computed(() => outerCurrentLayer.value === \"summary\");\nasync function onSummaryKeydown(event: KeyboardEvent) {\n    if (!summaryIsDisclosure.value || ![\"Enter\", \" \"].includes(event.key)) return;\n    event.preventDefault();\n    onClickCollapsed();\n    await nextTick();\n    // The full face is the fallback focus target (it carries `tabindex=\"-1\"`): a dock\n    // whose expanded face holds NO focusable descendant would otherwise no-op to\n    // <body>, and the summary goes inert on expand — a keyboard trap.\n    (\n        fullEl.value?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ?? fullEl.value\n    )?.focus({\n        preventScroll: true,\n    });\n}\n\n// Escape belongs to the innermost owner. The gate is STRUCTURAL, not `defaultPrevented`:\n// reka's DismissableLayer handles Escape on a WINDOW-level bubble and only READS\n// `defaultPrevented` (`if (!event.defaultPrevented) emits(\"dismiss\")`) — it never SETS\n// it. So an element-level `!event.defaultPrevented` gate always sees `false` and is\n// inert, and calling `preventDefault()` here would SUPPRESS reka's own dismiss. Instead:\n// if the key came from inside an OPEN DISMISSABLE layer (a non-portalled Popover, an open\n// menu), that layer owns the dismiss and the dock stays expanded. Portalled\n// Select/Dropdown content never bubbles through this handler at all.\n//\n// The probe is narrowed on BOTH axes. By KIND: `OPEN_DISMISSABLE_LAYER_SELECTOR` reads\n// reka's `[data-dismissable-layer]` marker, not any `data-state=\"open\"` — reka stamps\n// that on Accordion/Collapsible too, and an open accordion in the pane owns no Escape,\n// so it must not eat the collapse. By SCOPE: the matched layer must live INSIDE\n// `fullEl`. `closest()` walks the whole ancestor chain, so a dock hosted inside an open\n// Dialog would otherwise match the DIALOG and never Escape-collapse.\nasync function onFullKeydown(event: KeyboardEvent) {\n    if (event.key !== \"Escape\") return;\n    const layer = (event.target as Element | null)?.closest?.(\n        OPEN_DISMISSABLE_LAYER_SELECTOR,\n    );\n    if (layer && fullEl.value?.contains(layer)) return;\n    collapse();\n    await nextTick();\n    const summary = summaryEl.value;\n    if (summary && !summary.hasAttribute(\"inert\")) summary.focus({ preventScroll: true });\n}\n",
+     "/* The two face keyboards: Enter/Space expands from the summary into the run, and\n   Escape collapses from the run back to the summary unless an open dismissable layer\n   inside the run owns it. */\nconst { summaryIsDisclosure, onSummaryKeydown, onFullKeydown } = useDockKeyboard({\n    fullEl,\n    summaryEl,\n    outerCurrentLayer,\n    onClickCollapsed,\n    collapse,\n});\n"
+    ]
+   ]
+  },
+  "src/components/dock/composables/useDockKeyboard.ts": {
+   "create": "import { computed, nextTick, type Ref } from \"vue\";\nimport { FOCUSABLE_SELECTOR } from \"../../_shared/focus\";\nimport { OPEN_DISMISSABLE_LAYER_SELECTOR } from \"../constants\";\n\nexport interface UseDockKeyboardOptions {\n    /** The expanded face, the run: the fallback focus target on expand. */\n    fullEl: Readonly<Ref<HTMLElement | null>>;\n    /** The collapsed face, focused again when Escape collapses the dock. */\n    summaryEl: Readonly<Ref<HTMLElement | null>>;\n    /** The morph orchestrator's current outer layer. */\n    outerCurrentLayer: Readonly<Ref<string>>;\n    onClickCollapsed: () => void;\n    collapse: () => void;\n}\n\n/**\n * The dock's two face keyboards: Enter/Space on the collapsed summary expands it and\n * moves focus into the run, and Escape inside the run collapses it and returns focus to\n * the summary.\n */\nexport function useDockKeyboard({\n    fullEl,\n    summaryEl,\n    outerCurrentLayer,\n    onClickCollapsed,\n    collapse,\n}: UseDockKeyboardOptions) {\n    const summaryIsDisclosure = computed(() => outerCurrentLayer.value === \"summary\");\n\n    async function onSummaryKeydown(event: KeyboardEvent) {\n        if (!summaryIsDisclosure.value || ![\"Enter\", \" \"].includes(event.key)) return;\n        event.preventDefault();\n        onClickCollapsed();\n        await nextTick();\n        // The full face is the fallback focus target (it carries `tabindex=\"-1\"`): a dock\n        // whose expanded face holds NO focusable descendant would otherwise no-op to\n        // <body>, and the summary goes inert on expand — a keyboard trap.\n        (\n            fullEl.value?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ?? fullEl.value\n        )?.focus({\n            preventScroll: true,\n        });\n    }\n\n    // Escape belongs to the innermost owner. The gate is STRUCTURAL, not `defaultPrevented`:\n    // reka's DismissableLayer handles Escape on a WINDOW-level bubble and only READS\n    // `defaultPrevented` (`if (!event.defaultPrevented) emits(\"dismiss\")`) — it never SETS\n    // it. So an element-level `!event.defaultPrevented` gate always sees `false` and is\n    // inert, and calling `preventDefault()` here would SUPPRESS reka's own dismiss. Instead:\n    // if the key came from inside an OPEN DISMISSABLE layer (a non-portalled Popover, an open\n    // menu), that layer owns the dismiss and the dock stays expanded. Portalled\n    // Select/Dropdown content never bubbles through this handler at all.\n    //\n    // The probe is narrowed on BOTH axes. By KIND: `OPEN_DISMISSABLE_LAYER_SELECTOR` reads\n    // reka's `[data-dismissable-layer]` marker, not any `data-state=\"open\"` — reka stamps\n    // that on Accordion/Collapsible too, and an open accordion in the pane owns no Escape,\n    // so it must not eat the collapse. By SCOPE: the matched layer must live INSIDE\n    // `fullEl`. `closest()` walks the whole ancestor chain, so a dock hosted inside an open\n    // Dialog would otherwise match the DIALOG and never Escape-collapse.\n    async function onFullKeydown(event: KeyboardEvent) {\n        if (event.key !== \"Escape\") return;\n        const layer = (event.target as Element | null)?.closest?.(\n            OPEN_DISMISSABLE_LAYER_SELECTOR,\n        );\n        if (layer && fullEl.value?.contains(layer)) return;\n        collapse();\n        await nextTick();\n        const summary = summaryEl.value;\n        if (summary && !summary.hasAttribute(\"inert\")) summary.focus({ preventScroll: true });\n    }\n\n    return { summaryIsDisclosure, onSummaryKeydown, onFullKeydown };\n}\n"
+  },
+  "src/components/dock/legibility/index.ts": {
+   "hunks": [
+    [
+     "export { useGlassBackdropLuminance } from \"./useGlassBackdropLuminance\";\n",
+     "export { useGlassBackdropLuminance } from \"./useGlassBackdropLuminance\";\nexport { useDockBackdropLuminance } from \"./useDockBackdropLuminance\";\n"
+    ]
+   ]
+  },
+  "src/components/dock/legibility/useDockBackdropLuminance.ts": {
+   "create": "import type { Ref } from \"vue\";\nimport { useGlassBackdropLuminance } from \"./useGlassBackdropLuminance\";\n\n/** The two dock props the observer reads (`DockProps`, structurally). */\nexport interface DockBackdropSource {\n    backdropMode?: \"live\" | \"static\";\n    backgroundCanvas?: HTMLCanvasElement | (() => HTMLCanvasElement | null) | string | null;\n}\n\n/*\n * The sampled-luminance observer is wired ON for every `backdropMode: \"live\"` dock (the\n * surface the user reported unreadable over light, and the one most often over a\n * live/bright backdrop). It writes `--glass-backdrop-luma` + derives the\n * `--glass-backdrop: light|dark` bucket on the dock root, DYNAMICALLY tracking the\n * painted backdrop (a live aurora bleed) the static bucket is too coarse for. It REFINES\n * the declarative bucket + the Arm-1 self-engage (both stay the floor); a dark-substrate\n * consumer opts out via `--glass-level: 0` on the dock or `backdropMode: \"static\"`, and a\n * `\"static\"` dock uses the solid plate with no observer. The composable is dock-private\n * (path B): the dock is the binary consumer #1, the public barrel seat awaits a 2nd\n * binary consumer (docs/consumer-evidence/use-glass-backdrop-luminance.md names the\n * booked trigger).\n */\nexport function useDockBackdropLuminance(\n    dockEl: Ref<HTMLElement | null>,\n    props: DockBackdropSource,\n): void {\n    if (props.backdropMode !== \"live\") return;\n    // Hand the field canvas as a REACTIVE GETTER, not\n    // a by-value snapshot. `props.backgroundCanvas` is the DockStage aurora canvas,\n    // which resolves POST-MOUNT (the scoped-slot `canvasRef` is null during this\n    // setup). Passing the raw value captured null forever → the observer never entered\n    // the live `sampleAnimated` path → the whole dock band was a DEAD observer (0 of 12\n    // docks stamped the writer-fired witness). The getter re-resolves each sample, so\n    // the observer picks up the field the moment it paints + writes real luma/ambient-hue.\n    useGlassBackdropLuminance(dockEl, {\n        backgroundCanvas: (): HTMLCanvasElement | null => {\n            const bc = props.backgroundCanvas;\n            return typeof bc === \"function\"\n                ? bc()\n                : bc instanceof HTMLCanvasElement\n                  ? bc\n                  : null;\n        },\n    });\n}\n"
+  }
+ },
+ "reasons": [
+  {
+   "file": "scripts/structure/records/seal-pin.json",
+   "why": "the pin names the legibility door's new name (the gate's own --write-pin, one line)"
+  },
+  {
+   "file": "src/components/dock/GlassDock.vue",
+   "why": "R-5: 545 → 484 lines; the face keyboards and the backdrop-luminance wiring leave for their own composables and the SFC calls them"
+  },
+  {
+   "file": "src/components/dock/GlassDock.vue",
+   "why": "R-5: 545 → 484 lines; the face keyboards and the backdrop-luminance wiring leave for their own composables and the SFC calls them"
+  },
+  {
+   "file": "src/components/dock/GlassDock.vue",
+   "why": "R-5: 545 → 484 lines; the face keyboards and the backdrop-luminance wiring leave for their own composables and the SFC calls them"
+  },
+  {
+   "file": "src/components/dock/GlassDock.vue",
+   "why": "R-5: 545 → 484 lines; the face keyboards and the backdrop-luminance wiring leave for their own composables and the SFC calls them"
+  },
+  {
+   "file": "src/components/dock/composables/useDockKeyboard.ts",
+   "why": "the summary's Enter/Space expand and the run's Escape collapse, with their focus hand-offs, moved verbatim out of GlassDock.vue (dock/composables holds 12 with it)"
+  },
+  {
+   "file": "src/components/dock/legibility/index.ts",
+   "why": "the legibility door publishes the new wiring hook, read by GlassDock from outside the module"
+  },
+  {
+   "file": "src/components/dock/legibility/useDockBackdropLuminance.ts",
+   "why": "the live-dock luminance wiring moved out of GlassDock.vue into the legibility module that owns the observer it wires"
+  }
+ ]
+}

@@ -1,0 +1,54 @@
+{
+ "step": "B-S74d (frozen from authored/p10-floor-base-move.json, F-9)",
+ "moves": [
+  {
+   "from": "scripts/structure/lib/tree.mjs",
+   "to": "scripts/structure/lib/tree/tree.mjs"
+  },
+  {
+   "from": "scripts/structure/lib/entries.mjs",
+   "to": "scripts/structure/lib/tree/entries.mjs"
+  },
+  {
+   "from": "scripts/structure/lib/resolve.mjs",
+   "to": "scripts/structure/lib/tree/resolve.mjs"
+  },
+  {
+   "from": "scripts/structure/lib/placement.mjs",
+   "to": "scripts/structure/lib/tree/placement.mjs"
+  },
+  {
+   "from": "scripts/structure/lib/symbols.mjs",
+   "to": "scripts/structure/lib/tree/symbols.mjs"
+  }
+ ],
+ "scanDeltas": [],
+ "globDeltas": [],
+ "reasons": [
+  {
+   "from": "scripts/structure/lib/tree.mjs",
+   "to": "scripts/structure/lib/tree/tree.mjs",
+   "why": "the file set, the zones and the floor's own home; read by graph/graph.mjs, placement.mjs, entries.mjs and the lib door"
+  },
+  {
+   "from": "scripts/structure/lib/entries.mjs",
+   "to": "scripts/structure/lib/tree/entries.mjs",
+   "why": "the entry record; read by graph/graph.mjs, resolve.mjs and the lib door"
+  },
+  {
+   "from": "scripts/structure/lib/resolve.mjs",
+   "to": "scripts/structure/lib/tree/resolve.mjs",
+   "why": "module resolution; read by graph/graph.mjs, move.mjs and the lib door"
+  },
+  {
+   "from": "scripts/structure/lib/placement.mjs",
+   "to": "scripts/structure/lib/tree/placement.mjs",
+   "why": "units and placement; read by graph/graph.mjs and the lib door"
+  },
+  {
+   "from": "scripts/structure/lib/symbols.mjs",
+   "to": "scripts/structure/lib/tree/symbols.mjs",
+   "why": "symbol origins; the value-read closure of placement.mjs"
+  }
+ ]
+}

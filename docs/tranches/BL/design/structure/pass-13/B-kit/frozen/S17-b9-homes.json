@@ -1,0 +1,287 @@
+{
+ "step": "B9: the Combobox types move to command and ControlSize to input, the entries that publish them; no door re-exports outside its module",
+ "files": {
+  "src/components/_shared/selection.ts": {
+   "hunks": [
+    [
+     "import type { HTMLAttributes, InputHTMLAttributes } from \"vue\";\nimport type {\n    FocusOutsideEvent,\n    ListboxItemSelectEvent,\n    PointerDownOutsideEvent,\n} from \"./interaction\";\n\n/** Stable scalar identity used by Glass selection controls. */\n",
+     "/** Stable scalar identity used by Glass selection controls. */\n"
+    ],
+    [
+     "    return typeof value === \"string\" || typeof value === \"number\";\n}\n\n// ---------------------------------------------------------------------------\n// The shared selection-list contract (V9 factoring). The reka Combobox substrate\n// is the one collection-backed selection-list primitive; the `Command` family\n// wraps it (CommandInput → RekaComboboxInput, CommandItem → RekaComboboxItem).\n// These part contracts are the shared vocabulary that wrapper owns; they live\n// here in `_shared` (not pasted into `command/`) so the fold is a factoring.\n// ---------------------------------------------------------------------------\n\n/** Stable scalar selection, with `null` representing no single selection. */\nexport type ComboboxValue = SelectionValue | null;\n\nexport interface ComboboxInputProps {\n    modelValue?: string;\n    autoFocus?: boolean;\n    disabled?: boolean;\n    placeholder?: InputHTMLAttributes[\"placeholder\"];\n    class?: HTMLAttributes[\"class\"];\n}\n\nexport interface ComboboxInputEmits {\n    \"update:modelValue\": [value: string];\n}\n\nexport interface ComboboxItemProps {\n    value: SelectionValue;\n    disabled?: boolean;\n    textValue?: string;\n    class?: HTMLAttributes[\"class\"];\n}\n\nexport interface ComboboxItemEmits {\n    select: [event: ListboxItemSelectEvent<SelectionValue>];\n}\n\nexport interface ComboboxGroupProps {\n    heading?: string;\n    class?: HTMLAttributes[\"class\"];\n}\n\nexport interface ComboboxEmptyProps {\n    class?: HTMLAttributes[\"class\"];\n}\n\nexport interface ComboboxListEmits {\n    escapeKeyDown: [event: KeyboardEvent];\n    pointerDownOutside: [event: PointerDownOutsideEvent];\n    focusOutside: [event: FocusOutsideEvent];\n    interactOutside: [event: PointerDownOutsideEvent | FocusOutsideEvent];\n}\n\nexport interface ComboboxSeparatorProps {\n    class?: HTMLAttributes[\"class\"];\n}\n",
+     "    return typeof value === \"string\" || typeof value === \"number\";\n}\n"
+    ]
+   ]
+  },
+  "src/components/command/types.ts": {
+   "hunks": [
+    [
+     "import type { HTMLAttributes } from \"vue\";\n",
+     "import type { HTMLAttributes, InputHTMLAttributes } from \"vue\";\n"
+    ],
+    [
+     "import type { Surface } from \"../_shared/axes\";\nimport type { DialogProps } from \"../dialog\";\n",
+     "import type { Surface } from \"../_shared/axes\";\nimport type {\n    FocusOutsideEvent,\n    ListboxItemSelectEvent,\n    PointerDownOutsideEvent,\n} from \"../_shared/interaction\";\nimport type { SelectionValue } from \"../_shared/selection\";\nimport type { DialogProps } from \"../dialog\";\n"
+    ],
+    [
+     "import type { ComboboxValue } from \"../_shared/selection\";\n",
+     "\n// The Combobox part contracts. The reka Combobox substrate is the one collection-backed\n// selection-list primitive, and the `Command` family is its only wrapper here\n// (CommandInput → RekaComboboxInput, CommandItem → RekaComboboxItem), so they live with\n// it. The scalar vocabulary they build on (`SelectionValue`) is shared by every\n// selection control and stays in `_shared/selection`.\n\n/** Stable scalar selection, with `null` representing no single selection. */\nexport type ComboboxValue = SelectionValue | null;\n\nexport interface ComboboxInputProps {\n    modelValue?: string;\n    autoFocus?: boolean;\n    disabled?: boolean;\n    placeholder?: InputHTMLAttributes[\"placeholder\"];\n    class?: HTMLAttributes[\"class\"];\n}\n\nexport interface ComboboxInputEmits {\n    \"update:modelValue\": [value: string];\n}\n\nexport interface ComboboxItemProps {\n    value: SelectionValue;\n    disabled?: boolean;\n    textValue?: string;\n    class?: HTMLAttributes[\"class\"];\n}\n\nexport interface ComboboxItemEmits {\n    select: [event: ListboxItemSelectEvent<SelectionValue>];\n}\n\nexport interface ComboboxGroupProps {\n    heading?: string;\n    class?: HTMLAttributes[\"class\"];\n}\n\nexport interface ComboboxEmptyProps {\n    class?: HTMLAttributes[\"class\"];\n}\n\nexport interface ComboboxListEmits {\n    escapeKeyDown: [event: KeyboardEvent];\n    pointerDownOutside: [event: PointerDownOutsideEvent];\n    focusOutside: [event: FocusOutsideEvent];\n    interactOutside: [event: PointerDownOutsideEvent | FocusOutsideEvent];\n}\n\nexport interface ComboboxSeparatorProps {\n    class?: HTMLAttributes[\"class\"];\n}\n"
+    ]
+   ]
+  },
+  "src/components/command/CommandItem.vue": {
+   "hunks": [
+    [
+     "} from \"../_shared/selection\";\n",
+     "} from \"./types\";\n"
+    ]
+   ]
+  },
+  "src/components/command/CommandInput.vue": {
+   "hunks": [
+    [
+     "} from \"../_shared/selection\";\n",
+     "} from \"./types\";\n"
+    ]
+   ]
+  },
+  "src/components/command/CommandEmpty.vue": {
+   "hunks": [
+    [
+     "import type { ComboboxEmptyProps } from \"../_shared/selection\";\n",
+     "import type { ComboboxEmptyProps } from \"./types\";\n"
+    ]
+   ]
+  },
+  "src/components/command/CommandGroup.vue": {
+   "hunks": [
+    [
+     "import type { ComboboxGroupProps } from \"../_shared/selection\";\n",
+     "import type { ComboboxGroupProps } from \"./types\";\n"
+    ]
+   ]
+  },
+  "src/components/command/CommandList.vue": {
+   "hunks": [
+    [
+     "import type { ComboboxListEmits } from \"../_shared/selection\";\n",
+     "import type { ComboboxListEmits } from \"./types\";\n"
+    ]
+   ]
+  },
+  "src/components/command/CommandSeparator.vue": {
+   "hunks": [
+    [
+     "import type { ComboboxSeparatorProps } from \"../_shared/selection\";\n",
+     "import type { ComboboxSeparatorProps } from \"./types\";\n"
+    ]
+   ]
+  },
+  "src/components/command/Command.vue": {
+   "hunks": [
+    [
+     "import type { ComboboxValue } from \"../_shared/selection\";\n",
+     "import type { ComboboxValue } from \"./types\";\n"
+    ]
+   ]
+  },
+  "src/components/command/index.ts": {
+   "hunks": [
+    [
+     "/* The Combobox-family prop/emit types this subpath's own components DECLARE. They\n   lived in `_shared/`, unreachable from any published entry, so five of the nine\n   members had a public component and a private prop type — a consumer could mount\n   `<CommandItem>` and not name what it takes. */\n",
+     "/* The Combobox-family prop/emit types this subpath's own components declare, published\n   so a consumer who mounts `<CommandItem>` can name what it takes. */\n"
+    ],
+    [
+     "} from \"../_shared/selection\";\n",
+     "} from \"./types\";\n"
+    ]
+   ]
+  },
+  "src/components/_shared/control.ts": {
+   "hunks": [
+    [
+     "/* The shared CONTROL contract — the size axis the pills ride and the state axis the\n * binary triad rides. Renamed from `control-size.ts` at BK #83 W-CONTROL-BIT (C-6):\n",
+     "/* The shared CONTROL contract — the state axis the binary triad rides. The size axis\n * (`ControlSize`) lives in `input/`, whose entry publishes it. Renamed from `control-size.ts` at BK #83 W-CONTROL-BIT (C-6):\n"
+    ],
+    [
+     " * ends up inheriting a checkbox's paint. */\n\nexport type ControlSize = \"sm\" | \"md\" | \"lg\";\n\n",
+     " * ends up inheriting a checkbox's paint. */\n\n"
+    ]
+   ]
+  },
+  "src/components/input/types.ts": {
+   "hunks": [
+    [
+     "import type { ControlSize } from \"../_shared/control\";\n",
+     "\n/** The `sm | md | lg` union the control register threads as `size?` (Input, Textarea,\n *  NumberField, ToggleGroup). Input is the canonical member and `./input` its one door. */\nexport type ControlSize = \"sm\" | \"md\" | \"lg\";\n"
+    ]
+   ]
+  },
+  "src/components/input/index.ts": {
+   "hunks": [
+    [
+     "// [2026-08-09 · BK #66 CLOSE · RT-65-C(iii)] `ControlSize` re-homes HERE from the\n// retired `./forms` barrel. It is the shared `sm | md | lg` union the control\n// register threads as `size?` (Input · Textarea · NumberFieldInput ·\n// [2026-08-25 · BK #42] ~~SearchBar~~, deleted with its `./search` subpath);\n// Input is the canonical member, so `./input` is the one published door. The\n// definition stays where it always was — `_shared/control.ts` — this is the export,\n// not a second declaration.\nexport type { ControlSize } from \"../_shared/control\";\n",
+     "// `ControlSize`, the `sm | md | lg` union the control register threads as `size?`, is\n// declared in `./types`: Input is the canonical member, so `./input` is its one door.\nexport type { ControlSize } from \"./types\";\n"
+    ]
+   ]
+  },
+  "src/components/number-field/context.ts": {
+   "hunks": [
+    [
+     "import type { ControlSize } from \"../_shared/control\";\n",
+     "import type { ControlSize } from \"../input\";\n"
+    ]
+   ]
+  },
+  "src/components/number-field/NumberField.vue": {
+   "hunks": [
+    [
+     "import type { ControlSize } from \"../_shared/control\";\n",
+     "import type { ControlSize } from \"../input\";\n"
+    ]
+   ]
+  },
+  "src/components/textarea/types.ts": {
+   "hunks": [
+    [
+     "import type { ControlSize } from \"../_shared/control\";\n",
+     "import type { ControlSize } from \"../input\";\n"
+    ]
+   ]
+  },
+  "src/components/toggle-group/ToggleGroup.vue": {
+   "hunks": [
+    [
+     "import {\n    type ControlProps,\n    type ControlSize,\n    controlStateAttrs,\n} from \"../_shared/control\";\n",
+     "import { type ControlProps, controlStateAttrs } from \"../_shared/control\";\nimport type { ControlSize } from \"../input\";\n"
+    ]
+   ]
+  },
+  "src/components/_shared/index.ts": {
+   "remove": true,
+   "before": "// [2026-08-25 · BK #42 W-SEARCH] ~~`export { controlSizeClass } from \"./control\"`~~ —\n// struck with the function itself (see `control.ts`). The TYPE stays: `ControlSize` is\n// the union five components still thread as `size?`.\nexport type { ControlSize } from \"./control\";\n"
+  },
+  "scripts/structure/records/entry-record.json": {
+   "hunks": [
+    [
+     "        \"src/components/_shared/field/index.ts\",\n        \"src/components/_shared/index.ts\",\n        \"src/components/_shared/menu/index.ts\",\n",
+     "        \"src/components/_shared/field/index.ts\",\n        \"src/components/_shared/menu/index.ts\",\n"
+    ]
+   ]
+  },
+  "demo/stories/forms/number-field.vue": {
+   "hunks": [
+    [
+     "import type { ControlSize } from \"@glass/components/_shared\";\n",
+     "import type { ControlSize } from \"@glass/components/input\";\n"
+    ]
+   ]
+  },
+  "tests/components/command.public-contracts.test-d.ts": {
+   "hunks": [
+    [
+     "import type { ComboboxValue } from \"@glass/components/_shared/selection\";\n",
+     "import type { ComboboxValue } from \"@glass/components/command\";\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "src/components/_shared/selection.ts",
+   "why": "B9: the Combobox block leaves the kernel"
+  },
+  {
+   "file": "src/components/_shared/selection.ts",
+   "why": "B9: the Combobox block leaves the kernel"
+  },
+  {
+   "file": "src/components/command/types.ts",
+   "why": "B9: the Combobox block's home is command, the one unit that reads it"
+  },
+  {
+   "file": "src/components/command/CommandItem.vue",
+   "why": "B9: the Combobox types are command's own"
+  },
+  {
+   "file": "src/components/command/CommandInput.vue",
+   "why": "B9: the Combobox types are command's own"
+  },
+  {
+   "file": "src/components/command/CommandEmpty.vue",
+   "why": "B9"
+  },
+  {
+   "file": "src/components/command/CommandGroup.vue",
+   "why": "B9"
+  },
+  {
+   "file": "src/components/command/CommandList.vue",
+   "why": "B9"
+  },
+  {
+   "file": "src/components/command/CommandSeparator.vue",
+   "why": "B9"
+  },
+  {
+   "file": "src/components/command/Command.vue",
+   "why": "B9"
+  },
+  {
+   "file": "src/components/command/index.ts",
+   "why": "B9: the door publishes the Combobox types from inside its module"
+  },
+  {
+   "file": "src/components/command/index.ts",
+   "why": "B9"
+  },
+  {
+   "file": "src/components/_shared/control.ts",
+   "why": "B9: ControlSize leaves for the entry that publishes it"
+  },
+  {
+   "file": "src/components/_shared/control.ts",
+   "why": "B9"
+  },
+  {
+   "file": "src/components/input/types.ts",
+   "why": "B9: the size union's home is the entry that publishes it"
+  },
+  {
+   "file": "src/components/input/index.ts",
+   "why": "B9: the door re-exports ControlSize from inside its module"
+  },
+  {
+   "file": "src/components/number-field/context.ts",
+   "why": "B9: read through input's door"
+  },
+  {
+   "file": "src/components/number-field/NumberField.vue",
+   "why": "B9: read through input's door"
+  },
+  {
+   "file": "src/components/textarea/types.ts",
+   "why": "B9: read through input's door"
+  },
+  {
+   "file": "src/components/toggle-group/ToggleGroup.vue",
+   "why": "B9: read through input's door"
+  },
+  {
+   "file": "src/components/_shared/index.ts",
+   "why": "LAW §1: a container has no door; its one name is on ./input"
+  },
+  {
+   "file": "scripts/structure/records/entry-record.json",
+   "why": "the removed container door leaves record.doors"
+  },
+  {
+   "file": "demo/stories/forms/number-field.vue",
+   "why": "R-10: the story reads ControlSize from its entry"
+  },
+  {
+   "file": "tests/components/command.public-contracts.test-d.ts",
+   "why": "the contract reads ComboboxValue from its entry"
+  }
+ ]
+}

@@ -1,0 +1,104 @@
+{
+ "$schema": "browser-seat/2",
+ "root": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D1/p8/B-proto/base",
+ "testDir": ".",
+ "project": "chromium-headless-new",
+ "plant": null,
+ "specs": [
+  "blob-config-delta.spec.ts",
+  "substrate-paints-color.spec.ts"
+ ],
+ "selection": [
+  {
+   "spec": "blob-config-delta.spec.ts",
+   "bands": [],
+   "reasons": [
+    "named"
+   ]
+  },
+  {
+   "spec": "substrate-paints-color.spec.ts",
+   "bands": [],
+   "reasons": [
+    "the π pixel floor (every call)"
+   ]
+  }
+ ],
+ "bands": [],
+ "url": "http://localhost:59829",
+ "waitedS": 0,
+ "ranS": 68.55,
+ "stats": {
+  "startTime": "2026-10-14T17:14:33.737Z",
+  "duration": 66970.037,
+  "expected": 8,
+  "skipped": 0,
+  "unexpected": 2,
+  "flaky": 0
+ },
+ "tests": 10,
+ "ran": 10,
+ "passed": 8,
+ "failed": 2,
+ "skipped": 0,
+ "verdict": "RED",
+ "baseReport": null,
+ "newFailures": [],
+ "results": [
+  {
+   "spec": "tests-visual/blob/blob-config-delta.spec.ts",
+   "title": "capture studio desktop/light",
+   "status": "expected"
+  },
+  {
+   "spec": "tests-visual/blob/blob-config-delta.spec.ts",
+   "title": "capture studio desktop/dark",
+   "status": "expected"
+  },
+  {
+   "spec": "tests-visual/blob/blob-config-delta.spec.ts",
+   "title": "capture studio mobile/light",
+   "status": "expected"
+  },
+  {
+   "spec": "tests-visual/blob/blob-config-delta.spec.ts",
+   "title": "capture studio mobile/dark",
+   "status": "expected"
+  },
+  {
+   "spec": "tests-visual/blob/blob-config-delta.spec.ts",
+   "title": "D1 — a seed change RE-PAINTS the hero body (the dead-feed fix)",
+   "status": "unexpected"
+  },
+  {
+   "spec": "tests-visual/blob/blob-config-delta.spec.ts",
+   "title": "D2 — a negative attraction SHIES relative to a positive (the sign fix)",
+   "status": "unexpected"
+  },
+  {
+   "spec": "tests-visual/blob/blob-config-delta.spec.ts",
+   "title": "D4 — the paused-prop resume produces a CLEAN canvas (the SEVERE fix)",
+   "status": "expected"
+  },
+  {
+   "spec": "tests-visual/substrate-paints-color.spec.ts",
+   "title": "aurora paints a non-black interior on DEFAULT + every preset at t=1",
+   "status": "expected"
+  },
+  {
+   "spec": "tests-visual/substrate-paints-color.spec.ts",
+   "title": "blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS",
+   "status": "expected"
+  },
+  {
+   "spec": "tests-visual/substrate-paints-color.spec.ts",
+   "title": "blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS",
+   "status": "expected"
+  }
+ ],
+ "rekeyedFrom": {
+  "report": "/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/structure/pass-11/B-kit/results/p11/browser/reruns/base-1-2.json",
+  "testDir": "tests-visual"
+ },
+ "unmapped": []
+}

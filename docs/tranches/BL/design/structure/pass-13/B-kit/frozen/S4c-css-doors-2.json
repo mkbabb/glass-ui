@@ -1,0 +1,16 @@
+{
+ "step": "B-S4c CSS doors, pass 2 (LAW §6)",
+ "files": {
+  "src/components/dock/index.css": {
+   "hunks": [
+    [
+     "@import \"./controls/controls.css\";\n",
+     "@import \"./controls/index.css\";\n"
+    ]
+   ]
+  },
+  "src/components/dock/controls/index.css": {
+   "create": "/* components/dock/controls — CSS door: the sheets this module publishes, in cascade order. */\n@import \"./controls.css\";\n"
+  }
+ }
+}

@@ -1,0 +1,17 @@
+migration10 start 2026-10-16T15:14:23Z load { 15.69 16.91 17.27 }
+MG W-C.2.md sha256 1652c7b64be6dda9
+MG detectors: no-meta.mjs 46 lines, migration-shape.mjs 18 lines
+MG MG0 PASS :: line 8: '## 11.0.0'; section lines 8..127
+MG MG1 PASS :: C2-G1 META hits in the section: 0 (node:internal/child_process:1127)
+MG MG2 PASS :: lines naming BL or tranche: 0
+MG MG3 FAIL :: C2-G4 over the section: rc=1 migration-shape: 1 headings · 1 misses
+MG MG4 PASS :: META hits in MIGRATION.md: route 0, HEAD 0, delta 0
+MG MGP-row-ref FAIL :: 'The structure cut lands as BL #10.' → C2-G1 hits in the section: 0
+MG MGP-wave-id FAIL :: 'Carried by BL.W3.' → C2-G1 hits in the section: 0
+MG MGP-wave-id2 FAIL :: 'Carried by W-STRUCTURE-CUT.' → C2-G1 hits in the section: 0
+MG MGP-dated FAIL :: '[2026-10-16 · structure cut]' → C2-G1 hits in the section: 0
+MG MGI-bl-bare INFO :: 'The structure cut (BL).' → C2-G1 hits in the section: 0
+MG MGI-tranche-word INFO :: 'This tranche moves files.' → C2-G1 hits in the section: 0
+MG MGP-heading PASS :: C2-G4 over the planted heading: rc=1 migration-shape: 1 headings · 1 misses
+MG SUMMARY pass=5 fail=5
+migration10 rc=0 end 2026-10-16T15:14:24Z load { 15.69 16.91 17.27 }

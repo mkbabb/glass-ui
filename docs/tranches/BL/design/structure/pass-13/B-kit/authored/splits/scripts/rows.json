@@ -1,0 +1,60 @@
+{
+ "note": "B-S11 zone scripts: the three files over 500 lines (pass-4 b6-files.txt; the same three on arm F), one row each, applied in this order. Each row is derived on the tree it lands on by tools/author/<script> then tools/author/pin.mjs; the frozen NN-*.mjs rows are the output on arm C (pass-4 chain final 6618df1f…), and arm-f/ holds the same rows cut on HEAD + the P5 floor rows. Land before the tests seat's split.mjs runs: row 03 edits tests/public-surface.spec.ts, which that seat carves by title (its tool re-derives from the tree it runs on).",
+ "rows": [
+  {
+   "id": "01-comment-census",
+   "source": "scripts/comment-census.mjs",
+   "script": "comment-census.mjs",
+   "why": "B-S11 (R-5): scripts/comment-census.mjs 725 → 200 lines; its detector and census become the module scripts/comments/ (lexer, interpolation, detectors, corpus, census; door index.mjs) and the file keeps its CLI",
+   "files": {
+    "scripts/comment-census.mjs": "R-5: the CLI keeps its header (the detector's statement and USAGE), pct and main, and reads the census through the module's door",
+    "scripts/comments/index.mjs": "B7: the module's door; the names its CLI and the gate's test read (B11)",
+    "scripts/comments/lexer.mjs": "R-5: the stateful line lexer (modes, classify, scanLine), verbatim",
+    "scripts/comments/interpolation.mjs": "R-5: the declared interpolation approximation and its bound (interpApproximations, jsRuns), verbatim",
+    "scripts/comments/detectors.mjs": "R-5: the prose classes and the commented-out declarations, verbatim",
+    "scripts/comments/corpus.mjs": "R-5: the tracked corpus, working tree or committed revision (tracked, readAtRev), verbatim",
+    "scripts/comments/census.mjs": "R-5: census, classifyText and byPrefix, verbatim",
+    "scripts/structure/records/seal-pin.json": "B11: the pin names the new module and its door's names (the gate's own --write-pin)",
+    "tests/**": "B1: the gate's test (tests/gates/comment-ratio.test.ts on both arms; found by what it imports) reads the census through the module's door"
+   }
+  },
+  {
+   "id": "02-profile-bundle",
+   "source": "scripts/profile-bundle.mjs",
+   "script": "profile-bundle.mjs",
+   "why": "B-S11 (R-5): scripts/profile-bundle.mjs 936 → 440 lines; what each check judges becomes the module scripts/bundle-checks/ (budgets, drift, value-capabilities, critical-path, external-payload, files; door index.mjs) and the file keeps its program",
+   "files": {
+    "scripts/profile-bundle.mjs": "R-5: the program keeps its paths, build, dist census, budget loop, profile and reports, reads each check through the module's door, and calls the D5 drift where its statements stood",
+    "scripts/bundle-checks/index.mjs": "B7: the module's door; the names the program reads (B11)",
+    "scripts/bundle-checks/budgets.mjs": "R-5: the ceilings with their re-base history and the resolved /styles draw, verbatim",
+    "scripts/bundle-checks/files.mjs": "R-5: the file walk and the dist chunk name the program and two checks read, verbatim",
+    "scripts/bundle-checks/value-capabilities.mjs": "R-5: the Value capability census, verbatim; the root it scans is a parameter",
+    "scripts/bundle-checks/critical-path.mjs": "R-5: the built critical-path check, verbatim",
+    "scripts/bundle-checks/external-payload.mjs": "R-5: the bundled-peer detector and its self-test bite, verbatim; the root it reads is a parameter",
+    "scripts/bundle-checks/drift.mjs": "R-5: D5 drift; its module-level statements become evaluateDrift's body, which returns its report and whether any entry failed",
+    "scripts/structure/records/seal-pin.json": "B11: the pin names the new module and its door's names (the gate's own --write-pin)"
+   }
+  },
+  {
+   "id": "03-verify-export-types",
+   "source": "scripts/verify-export-types.mjs",
+   "script": "verify-export-types.mjs",
+   "why": "B-S11 (R-5): scripts/verify-export-types.mjs 1,078 → 19 lines; the verifier becomes the module scripts/package-verify/ (references, claims, closure, roster, pack, install, type-resolution, verify; door index.mjs) and the file keeps its CLI (`npm run verify:package`)",
+   "files": {
+    "scripts/verify-export-types.mjs": "R-5: the CLI keeps its header and its one call, through the module's door",
+    "scripts/package-verify/index.mjs": "B7: the module's door; the names the CLI and the build's style lifecycle read (B11)",
+    "scripts/package-verify/references.mjs": "R-5: reading a package's files and references, verbatim",
+    "scripts/package-verify/claims.mjs": "R-5: package.json's claims and its agreement with the lock root, verbatim",
+    "scripts/package-verify/closure.mjs": "R-5: the declaration and CSS closures, verbatim",
+    "scripts/package-verify/roster.mjs": "R-5: the published-name roster and its ratchet, verbatim",
+    "scripts/package-verify/pack.mjs": "R-5: the immutable pack, tar membership, packed CSS set and byte ratchet, verbatim",
+    "scripts/package-verify/install.mjs": "R-5: the installed consumer and its peers, verbatim",
+    "scripts/package-verify/type-resolution.mjs": "R-5: the installed consumer's type check in three resolution modes, verbatim",
+    "scripts/package-verify/verify.mjs": "R-5: verifyExportTypes, verbatim but for the repository root, now two levels up; verifierInputs states the module's files for the build's watch list",
+    "vite.style-assets.ts": "B1: the build reads the verifier through its door and watches the files the module states, instead of naming a file by path",
+    "scripts/structure/records/seal-pin.json": "B11: the pin names the new module and its door's names (the gate's own --write-pin)",
+    "tests/**": "the test seam (LAW §5): each subprocess probe that loads the verifier by path (tests/public-surface.spec.ts on both arms, wherever the tests seat's carve puts them) loads the file that defines the name it imports"
+   }
+  }
+ ]
+}

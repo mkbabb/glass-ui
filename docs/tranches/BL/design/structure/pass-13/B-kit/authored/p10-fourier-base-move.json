@@ -1,0 +1,6 @@
+{
+ "why": "P9-R1 (a), LAW §4's base rule: fourier-field/math.ts is a parent-level file that the child module renderer value-reads (mint.ts: comp, partialSumAt), while the parent reads renderer through its door (FourierField.vue, useFourierField.ts, index.ts), so the two closed a value cycle at module grain. The carve skipped it because an entry source is a door (it is ./fourier-math's source). It moves into the unit's named base module, register/ (names.json bases: fourier-field . -> register), where it stays the ./fourier-math entry source; it value-reads nothing, so its closure is itself",
+ "moves": [
+  { "from": "src/components/fourier-field/math.ts", "to": "src/components/fourier-field/register/math.ts", "why": "the base of fourier-field: the pure Fourier maths, read by the parent (the unit door), by renderer/mint.ts and by register/constants.ts (a type); the ./fourier-math entry source" }
+ ]
+}

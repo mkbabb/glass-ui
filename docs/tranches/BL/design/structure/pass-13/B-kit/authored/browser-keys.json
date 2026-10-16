@@ -1,0 +1,6 @@
+{
+ "why": "F-10 (P4-F4): the browser seat's base-green accounting keyed a test by its spec's file name but compared that name against the selected specs' paths, so after the tests-visual carve (S43) every spec in a directory matched nothing: each band read 'no browser signal' and newFailures was empty whatever failed, a vacuous GREEN. The comparison now reads file names on both sides (a carve keeps a spec's name). The selection's text read no longer swallows a failed read: every file it reads is in the tree",
+ "files": {
+  "scripts/structure/browser.mjs": "newFailures and each band's base-green compare a key's spec name with the selected specs' file names; the reach text reads each tree file directly (the try/catch that returned an empty string is gone)"
+ }
+}

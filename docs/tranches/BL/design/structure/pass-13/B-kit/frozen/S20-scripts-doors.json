@@ -1,0 +1,474 @@
+{
+ "step": "B7/B1 in the scripts zone: a door for every scripts module, every crossing through it; path reads of the floor replaced by door functions",
+ "files": {
+  "scripts/structure/lib/graph/index.mjs": {
+   "create": "// graph/ — F-1: the one graph (graph.mjs), its per-language scanners (script, CSS, text,\n// Vue, Playwright) and the evaluator that folds path expressions. graph.mjs is the root; nothing outside\n// this module reads the scanners except through it.\nexport { scanCss } from \"./css.mjs\";\nexport { buildGraph, countBy, loadDeps, moduleSccs, valueSccs, VALUE_KINDS } from \"./graph.mjs\";\nexport { playwrightProgram, SEAT_REPORT } from \"./playwright.mjs\";\n"
+  },
+  "scripts/structure/lib/move.mjs": {
+   "hunks": [
+    [
+     "import { buildGraph, loadDeps, moduleSccs } from \"./graph/graph.mjs\";\n",
+     "import { buildGraph, loadDeps, moduleSccs } from \"./graph/index.mjs\";\n"
+    ]
+   ]
+  },
+  "scripts/structure/lib/classify.mjs": {
+   "hunks": [
+    [
+     "import { buildGraph, loadDeps } from \"./graph/graph.mjs\";\n",
+     "import { buildGraph, loadDeps } from \"./graph/index.mjs\";\n"
+    ]
+   ]
+  },
+  "scripts/structure/lib/index.mjs": {
+   "create": "// lib/ — the floor library: the file set (tree), the graph (F-1), symbol origins, placement\n// (F-7), the move engine (F-2), the step classifier (FD-5), the specifier resolver, the\n// class recipes FD-4 and F-10 read, and the entry record (F-3).\nexport { classifyStep } from \"./classify.mjs\";\nexport {\n    compareToPackage,\n    declarationProgram,\n    libraryEntryMap,\n    loadRecord,\n    readJson,\n    recordCssTargets,\n    recordEntries,\n    recordInputs,\n    recordTerminal,\n    validateRecord,\n} from \"./entries.mjs\";\nexport { buildGraph, countBy, loadDeps, playwrightProgram, scanCss, SEAT_REPORT, valueSccs, VALUE_KINDS } from \"./graph/index.mjs\";\nexport { runMoves, sccGrowth } from \"./move.mjs\";\nexport { CONTAINERS, dirUnits, isSlot, placeAll, proposedPath, publicationAnchor } from \"./placement.mjs\";\nexport { classesOf, classOwners, classRecipes, coOccurrence, impliedBy } from \"./recipes.mjs\";\nexport { makeOrigins } from \"./symbols.mjs\";\nexport { DEFAULT_ROOT, openTree, pinPath, recordPath, ZONES, zoneOf } from \"./tree.mjs\";\n"
+  },
+  "scripts/structure/lib/entries.mjs": {
+   "hunks": [
+    [
+     "import { join } from \"node:path\";\nimport { DEFAULT_ROOT, recordPath } from \"./tree.mjs\";\n",
+     "import { join } from \"node:path\";\nimport { fileURLToPath } from \"node:url\";\nimport { DEFAULT_ROOT, recordPath } from \"./tree.mjs\";\n"
+    ],
+    [
+     "    for (const [name, source] of diskRecord(root).js) map[name] = join(root, source);\n    return map;\n}\n\n",
+     "    for (const [name, source] of diskRecord(root).js) map[name] = join(root, source);\n    return map;\n}\n\n/** The files a build watches so an edit to the record, or to this reader, rebuilds. */\nexport function recordInputs(root = DEFAULT_ROOT) {\n    return [join(root, recordPath(root)), fileURLToPath(import.meta.url)];\n}\n\n"
+    ]
+   ]
+  },
+  "scripts/structure/bounds.mjs": {
+   "hunks": [
+    [
+     "import { DEFAULT_ROOT, ZONES, openTree } from \"./lib/tree.mjs\";\nimport { isSlot } from \"./lib/placement.mjs\";\n",
+     "import { DEFAULT_ROOT, isSlot, openTree, ZONES } from \"./lib/index.mjs\";\n"
+    ]
+   ]
+  },
+  "scripts/structure/classify.mjs": {
+   "hunks": [
+    [
+     "import { classifyStep } from \"./lib/classify.mjs\";\n",
+     "import { classifyStep } from \"./lib/index.mjs\";\n"
+    ]
+   ]
+  },
+  "scripts/structure/entries.mjs": {
+   "hunks": [
+    [
+     "import { DEFAULT_ROOT, openTree, recordPath } from \"./lib/tree.mjs\";\nimport { compareToPackage, loadRecord, readJson, validateRecord } from \"./lib/entries.mjs\";\n",
+     "import { compareToPackage, DEFAULT_ROOT, loadRecord, openTree, readJson, recordPath, validateRecord } from \"./lib/index.mjs\";\n"
+    ]
+   ]
+  },
+  "scripts/structure/fixpoint.mjs": {
+   "hunks": [
+    [
+     "import { buildGraph, countBy } from \"./lib/graph/graph.mjs\";\nimport { runMoves } from \"./lib/move.mjs\";\nimport { dirUnits, placeAll, proposedPath, publicationAnchor } from \"./lib/placement.mjs\";\n",
+     "import { buildGraph, countBy, dirUnits, placeAll, proposedPath, publicationAnchor, runMoves } from \"./lib/index.mjs\";\n"
+    ]
+   ]
+  },
+  "scripts/structure/graph.mjs": {
+   "hunks": [
+    [
+     "import { DEFAULT_ROOT } from \"./lib/tree.mjs\";\nimport { buildGraph, countBy, valueSccs } from \"./lib/graph/graph.mjs\";\n",
+     "import { buildGraph, countBy, DEFAULT_ROOT, valueSccs } from \"./lib/index.mjs\";\n"
+    ]
+   ]
+  },
+  "scripts/structure/move.mjs": {
+   "hunks": [
+    [
+     "import { runMoves } from \"./lib/move.mjs\";\n",
+     "import { runMoves } from \"./lib/index.mjs\";\n"
+    ]
+   ]
+  },
+  "scripts/structure/placement.mjs": {
+   "hunks": [
+    [
+     "import { DEFAULT_ROOT } from \"./lib/tree.mjs\";\nimport { buildGraph, countBy } from \"./lib/graph/graph.mjs\";\nimport { dirUnits, placeAll, proposedPath, publicationAnchor } from \"./lib/placement.mjs\";\n",
+     "import { buildGraph, countBy, DEFAULT_ROOT, dirUnits, placeAll, proposedPath, publicationAnchor } from \"./lib/index.mjs\";\n"
+    ]
+   ]
+  },
+  "scripts/structure/surface.mjs": {
+   "hunks": [
+    [
+     "import { DEFAULT_ROOT, pinPath } from \"./lib/tree.mjs\";\n",
+     "import { DEFAULT_ROOT, pinPath } from \"./lib/index.mjs\";\n"
+    ]
+   ]
+  },
+  "scripts/structure/cascade.mjs": {
+   "hunks": [
+    [
+     "import { DEFAULT_ROOT, openTree } from \"./lib/tree.mjs\";\nimport { classRecipes, classOwners, coOccurrence, impliedBy } from \"./lib/recipes.mjs\";\nimport { SEAT_REPORT } from \"./lib/graph/playwright.mjs\";\n",
+     "import { classOwners, classRecipes, coOccurrence, DEFAULT_ROOT, impliedBy, openTree, SEAT_REPORT } from \"./lib/index.mjs\";\n"
+    ],
+    [
+     "    const { buildGraph } = await import(\"./lib/graph/graph.mjs\");\n",
+     "    const { buildGraph } = await import(\"./lib/index.mjs\");\n"
+    ]
+   ]
+  },
+  "scripts/structure/browser.mjs": {
+   "hunks": [
+    [
+     "import { buildGraph, loadDeps } from \"./lib/graph/graph.mjs\";\nimport { zoneOf } from \"./lib/tree.mjs\";\nimport { classOwners, classRecipes, classesOf, impliedBy } from \"./lib/recipes.mjs\";\nimport { playwrightProgram, SEAT_REPORT } from \"./lib/graph/playwright.mjs\";\n",
+     "import { buildGraph, classesOf, classOwners, classRecipes, impliedBy, loadDeps, playwrightProgram, SEAT_REPORT, zoneOf } from \"./lib/index.mjs\";\n"
+    ]
+   ]
+  },
+  "scripts/structure/gates.mjs": {
+   "hunks": [
+    [
+     "//   node gates.mjs [--root R] [--json]\n",
+     "//   node gates.mjs [--root R] [--json]      (runGates(root) is the same run, read through the door)\n"
+    ],
+    [
+     "import { DEFAULT_ROOT, openTree, pinPath } from \"./lib/tree.mjs\";\nimport { buildGraph, countBy } from \"./lib/graph/graph.mjs\";\nimport { compareToPackage, loadRecord, validateRecord } from \"./lib/entries.mjs\";\n",
+     "import { buildGraph, compareToPackage, countBy, DEFAULT_ROOT, loadRecord, openTree, pinPath, validateRecord } from \"./lib/index.mjs\";\n"
+    ],
+    [
+     "const args = process.argv.slice(2);\nconst root = resolve(args.includes(\"--root\") ? args[args.indexOf(\"--root\") + 1] : DEFAULT_ROOT);\n",
+     "export async function runGates(root = DEFAULT_ROOT) {\n"
+    ],
+    [
+     "const pass = checks.every((x) => x.pass);\nif (args.includes(\"--json\")) console.log(JSON.stringify({ pass, checks }, null, 1));\nelse for (const x of checks) console.log(`${x.pass ? \"PASS\" : \"FAIL\"}  ${x.id}  ${JSON.stringify(x.detail).slice(0, 240)}`);\nprocess.exit(pass ? 0 : 1);\n",
+     "return { pass: checks.every((x) => x.pass), checks };\n}\n\nif (process.argv[1] && resolve(process.argv[1]) === resolve(import.meta.dirname, \"gates.mjs\")) {\n    const args = process.argv.slice(2);\n    const { pass, checks } = await runGates(resolve(args.includes(\"--root\") ? args[args.indexOf(\"--root\") + 1] : DEFAULT_ROOT));\n    if (args.includes(\"--json\")) console.log(JSON.stringify({ pass, checks }, null, 1));\n    else for (const x of checks) console.log(`${x.pass ? \"PASS\" : \"FAIL\"}  ${x.id}  ${JSON.stringify(x.detail).slice(0, 240)}`);\n    process.exit(pass ? 0 : 1);\n}\n"
+    ]
+   ]
+  },
+  "scripts/structure/seal/index.mjs": {
+   "create": "// seal/ — route D1-B's gate: seventeen clauses over one F-1 graph (seal.mjs) and the route's\n// law they share with the B-kit planners (law.mjs).\nexport { seal } from \"./seal.mjs\";\n"
+  },
+  "scripts/structure/seal/seal.mjs": {
+   "hunks": [
+    [
+     "import { buildGraph, VALUE_KINDS } from \"../lib/graph/graph.mjs\";\nimport { makeOrigins } from \"../lib/symbols.mjs\";\nimport { CONTAINERS as FLOOR_CONTAINERS, isSlot as floorIsSlot, placeAll, proposedPath } from \"../lib/placement.mjs\";\nimport { sccGrowth } from \"../lib/move.mjs\";\n",
+     "import { buildGraph, CONTAINERS as FLOOR_CONTAINERS, isSlot as floorIsSlot, makeOrigins, placeAll, proposedPath, sccGrowth, VALUE_KINDS } from \"../lib/index.mjs\";\n"
+    ]
+   ]
+  },
+  "scripts/structure/index.mjs": {
+   "create": "// scripts/structure/ — the D1 floor runtime (FD-11): the graph, the move engine, the entry\n// record, the cascade contract and the gates. Its CLIs sit beside this door; everything a\n// build config, the test harness or a gate test reads comes through here.\nexport { runGates } from \"./gates.mjs\";\nexport {\n    buildGraph,\n    declarationProgram,\n    libraryEntryMap,\n    openTree,\n    recordCssTargets,\n    recordEntries,\n    recordInputs,\n    recordTerminal,\n    scanCss,\n} from \"./lib/index.mjs\";\nexport { seal } from \"./seal/index.mjs\";\n"
+  },
+  "scripts/flatten-subpath-types.mjs": {
+   "hunks": [
+    [
+     "import { recordEntries } from \"../scripts/structure/lib/entries.mjs\";\n",
+     "import { recordEntries } from \"../scripts/structure/index.mjs\";\n"
+    ]
+   ]
+  },
+  "vite.library.ts": {
+   "hunks": [
+    [
+     "import { libraryEntryMap } from \"./scripts/structure/lib/entries.mjs\";\n",
+     "import { libraryEntryMap } from \"./scripts/structure/index.mjs\";\n"
+    ]
+   ]
+  },
+  "vite.style-fold.ts": {
+   "hunks": [
+    [
+     "import { minifyCss } from \"./scripts/minify/minify-css\";\n",
+     "import { minifyCss } from \"./scripts/minify\";\n"
+    ],
+    [
+     "import * as entryRecord from \"./scripts/structure/lib/entries.mjs\";\n",
+     "import { recordCssTargets, recordEntries, recordTerminal } from \"./scripts/structure/index.mjs\";\n"
+    ],
+    [
+     "    const terminal = resolve(dirname(distStyles), String(entryRecord.recordTerminal(root)).replace(/^src\\//, \"\"));\n",
+     "    const terminal = resolve(dirname(distStyles), String(recordTerminal(root)).replace(/^src\\//, \"\"));\n"
+    ],
+    [
+     "    const { sheets, assets } = entryRecord.recordCssTargets(root) as {\n",
+     "    const { sheets, assets } = recordCssTargets(root) as {\n"
+    ],
+    [
+     "    for (const source of Object.values(entryRecord.recordEntries(root)) as string[]) {\n",
+     "    for (const source of Object.values(recordEntries(root)) as string[]) {\n"
+    ],
+    [
+     " * The minify is DELIBERATELY conservative + string-aware (`scripts/lib/\n",
+     " * The minify is DELIBERATELY conservative + string-aware (`scripts/minify/\n"
+    ]
+   ]
+  },
+  "vite.style-assets.ts": {
+   "hunks": [
+    [
+     "import * as entryRecord from \"./scripts/structure/lib/entries.mjs\";\n",
+     "import { declarationProgram, recordInputs } from \"./scripts/structure/index.mjs\";\n"
+    ],
+    [
+     "        \"tsconfig.src.json\",\n        \"scripts/structure/records/entry-record.json\",\n        \"scripts/structure/lib/entries.mjs\",\n        \"scripts/flatten-subpath-types.mjs\",\n",
+     "        \"tsconfig.src.json\",\n        \"scripts/flatten-subpath-types.mjs\",\n"
+    ],
+    [
+     "    for (const path of fixed) plugin.addWatchFile(resolve(root, path));\n    for (const path of closure.sources) plugin.addWatchFile(path);\n",
+     "    for (const path of fixed) plugin.addWatchFile(resolve(root, path));\n    for (const path of recordInputs(root) as string[]) plugin.addWatchFile(path);\n    for (const path of closure.sources) plugin.addWatchFile(path);\n"
+    ],
+    [
+     "        const program = entryRecord.declarationProgram(repositoryRoot, outputRoot) as string;\n",
+     "        const program = declarationProgram(repositoryRoot, outputRoot) as string;\n"
+    ]
+   ]
+  },
+  "tests/styles/minify-css.test.ts": {
+   "hunks": [
+    [
+     "import { hasCommentOutsideString, minifyCss } from \"../../scripts/minify/minify-css\";\n",
+     "import { hasCommentOutsideString, minifyCss } from \"../../scripts/minify\";\n"
+    ]
+   ]
+  },
+  "scripts/minify/index.ts": {
+   "create": "// minify/ — the conservative, string-aware CSS minifier the style fold runs on every\n// published sheet.\nexport { hasCommentOutsideString, minifyCss } from \"./minify-css\";\n"
+  },
+  "tests/gates/orphan-css-partial.test.ts": {
+   "hunks": [
+    [
+     "import { libraryEntryMap } from \"../../scripts/structure/lib/entries.mjs\";\n",
+     "import { libraryEntryMap } from \"../../scripts/structure/index.mjs\";\n"
+    ]
+   ]
+  },
+  "tests/gates/overfit-structure.test.ts": {
+   "hunks": [
+    [
+     "import { libraryEntryMap } from \"../../scripts/structure/lib/entries.mjs\";\n",
+     "import { libraryEntryMap } from \"../../scripts/structure/index.mjs\";\n"
+    ]
+   ]
+  },
+  "tests/harness/source.ts": {
+   "hunks": [
+    [
+     "// @ts-ignore — the floor's tree reader is an untyped ESM leaf.\nimport { openTree } from \"../../scripts/structure/lib/tree.mjs\";\n// @ts-ignore — the floor's graph is an untyped ESM leaf.\nimport { buildGraph } from \"../../scripts/structure/lib/graph/graph.mjs\";\n// @ts-ignore — the floor's CSS scanner is an untyped ESM leaf.\nimport { scanCss } from \"../../scripts/structure/lib/graph/css.mjs\";\n",
+     "import { buildGraph, openTree, scanCss } from \"../../scripts/structure/index.mjs\";\n"
+    ]
+   ]
+  },
+  "tests/gates/floor.test.ts": {
+   "hunks": [
+    [
+     "// entry record, cascade contract, surface pin. One child process, one verdict per gate.\nimport { execFileSync } from \"node:child_process\";\n",
+     "// entry record, cascade contract, surface pin. One run through the floor's door, one verdict\n// per gate.\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { runGates } from \"../../scripts/structure/index.mjs\";\n\n"
+    ],
+    [
+     "const GATES = resolve(ROOT, \"scripts/structure/gates.mjs\");\n",
+     "const verdict: { pass: boolean; checks: { id: string; pass: boolean; detail: unknown }[] } = await runGates(ROOT);\n"
+    ],
+    [
+     "\nfunction run(): { pass: boolean; checks: { id: string; pass: boolean; detail: unknown }[] } {\n    try {\n        return JSON.parse(execFileSync(\"node\", [GATES, \"--root\", ROOT, \"--json\"], { encoding: \"utf8\", maxBuffer: 1 << 26 }));\n    } catch (error) {\n        const out = (error as { stdout?: string }).stdout;\n        if (!out) throw error;\n        return JSON.parse(out);\n    }\n}\n\ndescribe(\"floor gates\", () => {\n",
+     "\ndescribe(\"floor gates\", () => {\n"
+    ],
+    [
+     "describe(\"floor gates\", () => {\n    const verdict = run();\n    for (const check of verdict.checks) {\n",
+     "describe(\"floor gates\", () => {\n    for (const check of verdict.checks) {\n"
+    ]
+   ]
+  },
+  "tests/gates/seal.test.ts": {
+   "hunks": [
+    [
+     "// tests/gates/seal.test.ts — the D1-B seal (scripts/structure/seal.mjs; the route's law is\n// scripts/structure/seal-law.mjs). One verdict per clause, B0..B16, over the F-1 graph and the\n",
+     "// tests/gates/seal.test.ts — the D1-B seal (scripts/structure/seal/; the route's law is\n// scripts/structure/seal/law.mjs). One verdict per clause, B0..B17, over the F-1 graph and the\n"
+    ],
+    [
+     "// read, and a clause passes only with zero violations. One child process, like the floor\n// gates (tests/gates/floor.test.ts).\nimport { execFileSync } from \"node:child_process\";\nimport { mkdtempSync, readFileSync, rmSync } from \"node:fs\";\nimport { tmpdir } from \"node:os\";\nimport { join, resolve } from \"node:path\";\n",
+     "// read, and a clause passes only with zero violations. The gate is read through the floor\n// runtime's door, like every other reader of scripts/structure.\nimport { spawnSync } from \"node:child_process\";\nimport { resolve } from \"node:path\";\n"
+    ],
+    [
+     "import { describe, expect, it } from \"vitest\";\n\n",
+     "import { describe, expect, it } from \"vitest\";\nimport { seal } from \"../../scripts/structure/index.mjs\";\n\n"
+    ],
+    [
+     "const ROOT = resolve(__dirname, \"../..\");\nconst SEAL = resolve(ROOT, \"scripts/structure/seal/seal.mjs\");\n\n",
+     "const ROOT = resolve(__dirname, \"../..\");\n\n"
+    ],
+    [
+     "\nfunction run(): { counts: Record<string, number>; V: Record<string, string[]> } {\n    const dir = mkdtempSync(join(tmpdir(), \"glass-seal-\"));\n    const out = join(dir, \"seal.json\");\n    try {\n        try {\n            execFileSync(\"node\", [SEAL, \"--root\", ROOT, \"--json\", out], { encoding: \"utf8\", maxBuffer: 1 << 26 });\n        } catch (error) {\n            // exit 1 is a verdict with violations; anything else is a broken instrument\n            if ((error as { status?: number }).status !== 1) throw error;\n        }\n        return JSON.parse(readFileSync(out, \"utf8\"));\n    } finally {\n        rmSync(dir, { recursive: true, force: true });\n    }\n}\n\ndescribe(\"seal (route D1-B)\", () => {\n",
+     "\ndescribe(\"seal (route D1-B)\", () => {\n"
+    ],
+    [
+     "    const verdict = run();\n    it(\"judges all seventeen clauses\", () => {\n        expect(Object.keys(verdict.counts)).toEqual(Array.from({ length: 17 }, (_, i) => `B${i}`));\n",
+     "    const verdict: { counts: Record<string, number>; V: Record<string, string[]> } = seal(ROOT);\n    it(\"has one pin path: the CLI refuses a --pin\", () => {\n        const run = spawnSync(process.execPath, [resolve(ROOT, \"scripts/structure/seal/seal.mjs\"), \"--root\", ROOT, \"--pin\", \"elsewhere.json\"], { encoding: \"utf8\" });\n        expect(run.status).not.toBe(0);\n        expect(run.stderr).toContain(\"unknown option --pin\");\n    });\n    it(\"judges all eighteen clauses\", () => {\n        expect(Object.keys(verdict.counts)).toEqual(Array.from({ length: 18 }, (_, i) => `B${i}`));\n"
+    ]
+   ]
+  }
+ },
+ "reasons": [
+  {
+   "file": "scripts/structure/lib/graph/index.mjs",
+   "why": "B7: the graph module's door; the names lib/move, lib/classify and the lib door read"
+  },
+  {
+   "file": "scripts/structure/lib/move.mjs",
+   "why": "B1: lib reads its graph module through the door"
+  },
+  {
+   "file": "scripts/structure/lib/classify.mjs",
+   "why": "B1: lib reads its graph module through the door"
+  },
+  {
+   "file": "scripts/structure/lib/index.mjs",
+   "why": "B7: the floor library's door; the names its CLIs, the gate and the structure door read"
+  },
+  {
+   "file": "scripts/structure/lib/entries.mjs",
+   "why": "the floor states its own watch inputs, so the build names no floor path"
+  },
+  {
+   "file": "scripts/structure/lib/entries.mjs",
+   "why": "the floor states its own watch inputs, so the build names no floor path"
+  },
+  {
+   "file": "scripts/structure/bounds.mjs",
+   "why": "B1: a floor CLI reads lib through its door"
+  },
+  {
+   "file": "scripts/structure/classify.mjs",
+   "why": "B1: a floor CLI reads lib through its door"
+  },
+  {
+   "file": "scripts/structure/entries.mjs",
+   "why": "B1: a floor CLI reads lib through its door"
+  },
+  {
+   "file": "scripts/structure/fixpoint.mjs",
+   "why": "B1: a floor CLI reads lib through its door"
+  },
+  {
+   "file": "scripts/structure/graph.mjs",
+   "why": "B1: a floor CLI reads lib through its door"
+  },
+  {
+   "file": "scripts/structure/move.mjs",
+   "why": "B1: a floor CLI reads lib through its door"
+  },
+  {
+   "file": "scripts/structure/placement.mjs",
+   "why": "B1: a floor CLI reads lib through its door"
+  },
+  {
+   "file": "scripts/structure/surface.mjs",
+   "why": "B1: a floor CLI reads lib through its door"
+  },
+  {
+   "file": "scripts/structure/cascade.mjs",
+   "why": "B1: a floor CLI reads lib through its door"
+  },
+  {
+   "file": "scripts/structure/browser.mjs",
+   "why": "B1: a floor CLI reads lib through its door"
+  },
+  {
+   "file": "scripts/structure/cascade.mjs",
+   "why": "B1: a floor CLI reads lib through its door"
+  },
+  {
+   "file": "scripts/structure/gates.mjs",
+   "why": "B1: a floor CLI reads lib through its door"
+  },
+  {
+   "file": "scripts/structure/gates.mjs",
+   "why": "B1: a floor CLI reads lib through its door"
+  },
+  {
+   "file": "scripts/structure/seal/index.mjs",
+   "why": "B7: the gate module's door; `seal` is read by its test"
+  },
+  {
+   "file": "scripts/structure/seal/seal.mjs",
+   "why": "B1: the gate reads the floor library through its door"
+  },
+  {
+   "file": "scripts/structure/index.mjs",
+   "why": "B7: the floor runtime's door; the names the build configs, the harness and the gate tests read"
+  },
+  {
+   "file": "scripts/flatten-subpath-types.mjs",
+   "why": "B1: through the floor's door"
+  },
+  {
+   "file": "vite.library.ts",
+   "why": "B1: through the floor's door"
+  },
+  {
+   "file": "vite.style-fold.ts",
+   "why": "B1/B11: through the floor's door, naming what it reads"
+  },
+  {
+   "file": "vite.style-fold.ts",
+   "why": "the named import"
+  },
+  {
+   "file": "vite.style-fold.ts",
+   "why": "the named import"
+  },
+  {
+   "file": "vite.style-fold.ts",
+   "why": "the named import"
+  },
+  {
+   "file": "vite.style-assets.ts",
+   "why": "B1/B11: through the floor's door, naming what it reads"
+  },
+  {
+   "file": "vite.style-assets.ts",
+   "why": "the named import"
+  },
+  {
+   "file": "vite.style-assets.ts",
+   "why": "the floor names its own watch inputs"
+  },
+  {
+   "file": "vite.style-assets.ts",
+   "why": "the floor names its own watch inputs"
+  },
+  {
+   "file": "vite.style-fold.ts",
+   "why": "B1: minify-css through its module's door"
+  },
+  {
+   "file": "vite.style-fold.ts",
+   "why": "the prose names the module where it now lives"
+  },
+  {
+   "file": "tests/styles/minify-css.test.ts",
+   "why": "B1: through the module's door"
+  },
+  {
+   "file": "scripts/minify/index.ts",
+   "why": "B7: the minify module's door (TypeScript, so index.ts)"
+  },
+  {
+   "file": "tests/gates/orphan-css-partial.test.ts",
+   "why": "B1: through the floor's door"
+  },
+  {
+   "file": "tests/gates/overfit-structure.test.ts",
+   "why": "B1: through the floor's door"
+  },
+  {
+   "file": "tests/harness/source.ts",
+   "why": "B1: the harness reads the floor through its door"
+  },
+  {
+   "file": "tests/gates/floor.test.ts",
+   "why": "B1: the floor gates run through the door, in process"
+  },
+  {
+   "file": "tests/gates/seal.test.ts",
+   "why": "B1: the gate runs through the floor's door, in process (the kit's gate/seal.test.ts)"
+  }
+ ]
+}
