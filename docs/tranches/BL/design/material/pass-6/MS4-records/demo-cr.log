@@ -1,0 +1,8 @@
+demo-probe minor4 chromium exit 0 04:54:51 load { 23.84 20.53 18.36 }
+DEMO PASS chromium light minor4: rows 30 · pointer on row 1: highlighted [1] painting [1] bg oklch(0.53 0.124 69.6 / 0.12) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.53 0.124 69.6 / 0.12)
+DEMO PASS chromium dark minor4: rows 30 · pointer on row 1: highlighted [1] painting [1] bg color(srgb 0.0927547 0.0503523 0.00879371 / 0.14) · pointer on row 0: highlighted [0] painting [0] bg color(srgb 0.0927547 0.0503523 0.00879371 / 0.14)
+DEMO-PROBE minor4 · PASS (2 theme rows) · load 21.8 19.9 18.1 → 23.8 20.5 18.4
+demo-probe minor3 chromium exit 1 04:55:19 load { 21.10 20.19 18.31 }
+DEMO FAIL chromium light minor3: rows 30 · pointer on row 1: highlighted [0] painting [0,1] bg oklch(0.53 0.124 69.6 / 0.05) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.53 0.124 69.6 / 0.12)
+DEMO FAIL chromium dark minor3: rows 30 · pointer on row 1: highlighted [0] painting [0,1] bg oklch(0.813 0.109 78.2 / 0.05) · pointer on row 0: highlighted [0] painting [0] bg color(srgb 0.0927547 0.0503523 0.00879371 / 0.14)
+DEMO-PROBE minor3 · FAIL (2 of 2 theme rows) · load 23.8 20.5 18.4 → 21.1 20.2 18.3

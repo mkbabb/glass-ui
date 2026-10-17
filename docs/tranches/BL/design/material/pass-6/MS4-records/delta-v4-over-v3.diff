@@ -1,0 +1,223 @@
+--- a/DESIGN.md
++++ b/DESIGN.md
+@@ -518,7 +518,7 @@
+ 
+ ### Plate register
+ 
+-`@utility glass-plate` (`src/styles/glass/veil.css`) is the plate paint, composed at the element. It reads `--glass-veil-tier` (unset resolves `resting`), clamps it upward by the measured backdrop luminance into `--glass-veil-rest` → `--glass-veil-rung`, mixes that into `--glass-veil`, and writes exactly one declaration: `background: var(--glass-veil)`. The five tier classes above apply it and add their own blur, border and shadow; `--glass-veil` is published as a nestable value token for a surface composing the plate inside a larger mix.
++`@utility glass-plate` (`src/styles/glass/veil.css`) is the plate paint, composed at the element. It reads `--glass-veil-tier` (unset resolves `resting`), clamps it upward by the measured backdrop luminance into `--glass-veil-rest` → `--glass-veil-rung`, mixes that into `--glass-veil`, and writes two declarations: `background: var(--glass-veil)`, and `isolation: isolate`, so the plate stays one stacking context while a held plate stands its own `backdrop-filter` down (not a backdrop root: the grasp carriers still sample the ground). The five tier classes above apply it and add their own blur, border and shadow; `--glass-veil` is published as a nestable value token for a surface composing the plate inside a larger mix.
+ 
+ It deliberately supplies **no position, no z-index, no radius, no size**. A plate is paint, not a box. `.dock-plate` is the worked example: it composes `glass-plate` and declares `position: absolute; inset: 0; z-index: -1` itself, because only the surface knows which box it is lining.
+ 
+--- a/demo/stories/dock/dock-search.vue
++++ b/demo/stories/dock/dock-search.vue
+@@ -237,6 +237,7 @@
+                                     :data-highlighted="
+                                         i === fuzzy.selectedIndex.value || undefined
+                                     "
++                                    @pointermove="fuzzy.selectedIndex.value = i"
+                                     @click="fuzzy.selectResult(r)"
+                                 >
+                                     <span class="dock-search-result-label">
+@@ -365,15 +366,10 @@
+     cursor: pointer;
+ }
+ 
+-/* This composer is not reka's: `data-highlighted` follows the keyboard's selected
+-   index, not the pointer, so the menu row's state fill never reaches a pointed-at
+-   result. The pointer keeps its own leg on the transient rung (`--fill-hover`), in
+-   the menu's accent; the highlighted result keeps the state fill. */
+-@media (hover: hover) {
+-    .dock-search-result:hover:not([data-highlighted]) {
+-        background: oklch(from var(--section-color-5) l c h / var(--fill-hover));
+-    }
+-}
++/* This composer is not reka's, so it highlights the way reka's rows do: pointer
++   movement sets the selected index (`@pointermove` above), and `data-highlighted`
++   follows it. The pointer and the keyboard share the one highlighted row, and the
++   menu row's state fill is the one register. */
+ 
+ .dock-search-match {
+     color: var(--primary);
+--- a/src/components/_shared/feedback/feedback-tone.css
++++ b/src/components/_shared/feedback/feedback-tone.css
+@@ -35,7 +35,7 @@
+    `--glass-veil` — the nestable VALUE token `@utility glass-plate` publishes at the
+    element (glass/veil.css:35-37 names "a tone-tinted feedback panel" as one of its two
+    intended consumers, the other being the capsule's warm floor). A `.feedback-tone`
+-   surface that composes a rung therefore tints ITS OWN rung: the earned-darken clamp,
++   surface that composes a rung therefore tints ITS OWN rung: the earned-ink clamp,
+    the tier ink and `--glass-level` all survive INSIDE the mix instead of being replaced
+    by it.
+ 
+--- a/src/components/button/styles.css
++++ b/src/components/button/styles.css
+@@ -123,7 +123,7 @@
+ 
+     /* ── The emphasis ladder — three channels, one rung each ──────────────────
+        PRIMARY is the FLOATING rung (the capsule's own register default, warm floor and
+-       earned darken intact) made THICK: `.glass-deep` re-points the rung's blur onto
++       earned ink intact) made THICK: `.glass-deep` re-points the rung's blur onto
+        the deep LERP, and `--glass-depth` must be declared HERE because the tier map
+        keys on the ladder classes this host deliberately does not carry — without it the
+        registered `initial-value: 1` paints the MENU ceiling on a button.
+--- a/src/components/dock/styles/adaptive-legibility.css
++++ b/src/components/dock/styles/adaptive-legibility.css
+@@ -35,13 +35,14 @@
+        inappropriate over a busy glass plate, so it resolves to the legible dark
+        ink, which clears ~10:1). */
+     :where(.glass-dock) {
+-        /* The plate's own earned darken is NOT here and is not a token re-point: the
++        /* The plate's own earned ink is NOT here and is not a token re-point: the
+            plate composes its veil AT THE ELEMENT (`@apply glass-plate`, dock/dock.css),
+            so the clamp in `@utility glass-plate` (glass/veil.css) reads the
+            `--glass-backdrop-luma` this dock's observer writes on this dock's root
+            (`useGlassBackdropLuminance`) and inherits it down to the plate. That is the
+-           whole dynamic darken; re-pointing an inheriting token here could not produce
+-           it, because the composed `--glass-plate-*` colours resolve at `:root`. What
++           whole dynamic ink (darker in dark, a thicker cream pole in light);
++           re-pointing an inheriting token here could not produce it, because the
++           composed `--glass-plate-*` colours resolve at `:root`. What
+            stays here is the FOREGROUND half, which is genuinely dock-local: the control
+            glyph/label ink over an unknown field. */
+         --dock-fg-on-aurora: var(--foreground);
+--- a/src/components/dock/styles/search.css
++++ b/src/components/dock/styles/search.css
+@@ -41,8 +41,9 @@
+     }
+ 
+     /* The ACTIVE field surface — the element-composed plate (never a `:root`-baked
+-       plate colour). The field reads the floating rung, darkened by whatever the
+-       measured backdrop earns, so it holds ≥4.5:1 over a busy field. It rides the SAME
++       plate colour). The field reads the floating rung plus whatever ink the measured
++       backdrop earns (darker in dark, a thicker cream pole in light), so it holds
++       ≥4.5:1 over a busy field. It rides the SAME
+        `@utility glass-plate` seam the dock's L0 plate does — one recipe, two surfaces,
+        never a field-local fork. The field TEXT is `--foreground` (the full warm ink);
+        the placeholder/muted caption is `--on-glass-muted` (5.76:1 vs the plate). */
+--- a/src/components/dock/styles/shell.css
++++ b/src/components/dock/styles/shell.css
+@@ -232,7 +232,7 @@
+            STRUCTURAL (layout + the drop-shadow elevation below); the plate is the surface.
+            The `--dock-surface-blur` + `--glass-veil-*` tokens declared on `.glass-dock`
+            INHERIT to the plate, so the dark-arm glow and the morph's rung endpoints
+-           reach it with ZERO re-author (the earned darken composes at the plate). The
++           reach it with ZERO re-author (the earned ink composes at the plate). The
+            collapsed↔expanded surface INTERP is retargeted onto `.dock-plate` in
+            morph.css. No `backdrop-filter` on the box → ONE lens, no double-blur. */
+         /* The dock rim is the DIRECTIONAL pair (bright catch-light
+--- a/src/styles/glass.css
++++ b/src/styles/glass.css
+@@ -44,7 +44,7 @@
+    decoration attr rules win over the base rung by source order; BEFORE the
+    squircle override): */
+ @import "./glass/material.css";
+-/* The ink-veil register — the plate recipe + the earned-darken clamp the rungs
++/* The ink-veil register — the plate recipe + the earned-ink clamp the rungs
+    apply. BEFORE ladder.css: the rungs `@apply glass-plate`. */
+ @import "./glass/veil.css";
+ @import "./glass/ladder.css";
+--- a/src/styles/glass/ladder-undershadow.css
++++ b/src/styles/glass/ladder-undershadow.css
+@@ -14,7 +14,7 @@
+     .glass-opaque {
+         /* Level 0 IS the opaque escape: the plate mix resolves 0% ink + 100% `--card`
+            and the blur resolves `blur(0)`, through the SAME machinery every rung
+-           uses. There is no second axis left to zero — the earned-darken clamp rides
++           uses. There is no second axis left to zero — the earned-ink clamp rides
+            the veil's alpha, and at level 0 that alpha is multiplied out. */
+         --glass-level: 0;
+     }
+--- a/src/styles/glass/surface-axis.css
++++ b/src/styles/glass/surface-axis.css
+@@ -39,9 +39,9 @@
+        A text plate with the box border AND rim stripped (a boxed look reads as a
+        dividing line under text). It is the quiet rung's own material — same ink, same
+        radius, same one saturate — with the edge taken off, so `--glass-level` and the
+-       earned darken retune it in lockstep with every other plate. No veil-local recipe
+-       fork, and no brightness leg: it darkens toward the ink in BOTH modes, like the
+-       ladder it belongs to. Dark carries one step more ink, exactly as the rungs do. */
++       earned ink retune it in lockstep with every other plate. No veil-local recipe
++       fork, and no brightness leg: in dark it darkens toward the ink and in light it
++       thickens the cream `--card` pole, like the ladder it belongs to. */
+     [data-surface="veil"] {
+         --glass-veil-tier: var(--glass-veil-quiet);
+         @apply glass-plate;
+--- a/src/styles/glass/surfaces.css
++++ b/src/styles/glass/surfaces.css
+@@ -55,9 +55,10 @@
+     }
+ 
+     /* The segmented-control active pill and the glass capsule read the floating rung's
+-       plate through the ONE element-composed recipe, so the earned darken (the veil
+-       clamp's luma read) reaches the pill exactly as it reaches every other plate — no
+-       tab-local fork, no root-baked token blind to its own scope. */
++       plate through the ONE element-composed recipe, so the earned ink (the veil
++       clamp: darker in dark, a thicker cream pole in light) reaches the pill exactly
++       as it reaches every other plate — no tab-local fork, no root-baked token blind
++       to its own scope. */
+     :where(.segmented-indicator, .glass-capsule) {
+         --glass-veil-tier: var(--glass-veil-floating);
+         @apply glass-plate;
+--- a/src/styles/glass/veil.css
++++ b/src/styles/glass/veil.css
+@@ -25,9 +25,10 @@
+    `glass-plate`. Unset, the tier resolves `resting` — the consumer plate, the honest
+    default for a surface that asked for glass without saying which.
+ 
+-   WHAT IT DOES NOT SUPPLY. One declaration lands: `background: var(--glass-veil)`. No
+-   position, no z-index, no radius, no size — a plate is paint, not a box. `.dock-plate`
+-   composes this utility and declares `position: absolute; inset: 0; z-index: -1` itself,
++   WHAT IT DOES NOT SUPPLY. Two declarations land: `background: var(--glass-veil)` and
++   `isolation: isolate` (below). No position, no z-index, no radius, no size — a plate
++   is paint, not a box. `.dock-plate` composes this utility and declares
++   `position: absolute; inset: 0; z-index: -1` itself,
+    because only the surface knows which box it is lining. That omission is the whole
+    stacking contract: a plate sharing a box with an `absolute inset-0` decorative layer
+    takes its own positioning PLUS a `--z-content` rung, or the positioned sibling paints
+@@ -56,7 +57,15 @@
+    raw tier: held = 0.6 × rest, releasing = rest. Written against the raw tier instead,
+    a held plate over a bright backdrop resolved BELOW the band floor the register's own
+    falsifier pins (0.6·tier < 0.6·rest whenever the clamp earned anything), and the
+-   attribute drop at the end of a release stepped the ink instead of landing on it. */
++   attribute drop at the end of a release stepped the ink instead of landing on it.
++
++   EVERY PLATE IS A STACKING CONTEXT. A held plate stands its own `backdrop-filter`
++   down while its grasp carriers are mounted (glass/grasp.css), and with it the stacking
++   context that filter formed, so the carriers and the plate's content would join the
++   nearest ancestor's context. `isolation: isolate` keeps the plate one context in
++   every state. It is not a backdrop root, so the carriers still sample the ground.
++   Measured: the held floating plate's well read 2.64:1 over black without it and 3.28
++   with it (D3 pass 5, light, Chromium). */
+ @utility glass-plate {
+     --glass-veil-rest: clamp(
+         var(--glass-veil-tier, var(--glass-veil-resting)),
+@@ -82,6 +91,7 @@
+         var(--card)
+     );
+     background: var(--glass-veil);
++    isolation: isolate;
+ }
+ 
+ @layer components {
+--- a/tests/styles/glass-subtlety.test.ts
++++ b/tests/styles/glass-subtlety.test.ts
+@@ -716,6 +716,18 @@
+         expect(read("src/styles/glass/liquid-fill.css")).toMatch(/--glass-veil-floor:\s*0;/);
+         // brightness(0.96) is the STATE's measured leg; the calm ladder has none.
+         expect(grasp).toContain("brightness(0.96)");
++    });
++
++    it("seats every plate as its own stacking context, held or at rest", () => {
++        // A held plate stands its own `backdrop-filter` down (glass/grasp.css), and with
++        // it the stacking context the filter formed. The plate utility declares
++        // `isolation: isolate` so every rung, the card, the capsule and the dock plate stay
++        // one context while held: a stacking context that is not a backdrop root.
++        const plate = /@utility glass-plate\s*\{([\s\S]*?)\n\}/.exec(
++            read("src/styles/glass/veil.css"),
++        )?.[1];
++        expect(plate, "no @utility glass-plate in glass/veil.css").toBeDefined();
++        expect(stripComments(plate!)).toMatch(/(?:^|[;{\s])isolation\s*:\s*isolate\s*;/);
+     });
+ 
+     it("CROSS-COVERS the release — the rest carrier lands before the grasp one leaves", () => {

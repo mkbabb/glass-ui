@@ -1,0 +1,25 @@
+== cr-chain start 04:13:49 load { 12.90 10.22 13.21 }
+exit 0 04:31:36 load { 15.14 13.13 12.31 }
+W-G  exit 1 · FAIL (22 of 40 gated rows)
+T    exit 0 · PASS (1 gated rows)
+LIT  exit 0 · PASS (1 gated rows)
+HOV  exit 0 · PASS (58 gated rows)
+== battery-cr end 04:31:36 load { 15.14 13.13 12.31 }
+== refs-cr start 04:31:41 load { 15.13 13.16 12.32 }
+head cells chromium exit 0 04:38:40 load { 21.87 18.79 15.51 }
+w01ref chromium exit 0 04:44:42 load { 13.14 17.65 16.53 }
+nofl14 chromium exit 0 04:51:15 load { 20.00 18.27 17.16 }
+r9 exit 0 04:54:18 load { 21.07 19.70 17.99 }
+== refs-cr end 04:54:18 load { 21.07 19.70 17.99 }
+DEMO-PROBE minor4 · PASS (2 theme rows) · load 21.8 19.9 18.1 → 23.8 20.5 18.4
+demo-probe minor3 chromium exit 1 04:55:19 load { 21.10 20.19 18.31 }
+DEMO FAIL chromium light minor3: rows 30 · pointer on row 1: highlighted [0] painting [0,1] bg oklch(0.53 0.124 69.6 / 0.05) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.53 0.124 69.6 / 0.12)
+DEMO FAIL chromium dark minor3: rows 30 · pointer on row 1: highlighted [0] painting [0,1] bg oklch(0.813 0.109 78.2 / 0.05) · pointer on row 0: highlighted [0] painting [0] bg color(srgb 0.0927547 0.0503523 0.00879371 / 0.14)
+DEMO-PROBE minor3 · FAIL (2 of 2 theme rows) · load 23.8 20.5 18.4 → 21.1 20.2 18.3
+== demo-cr end 04:55:19 load { 21.10 20.19 18.31 }
+== glance-cr start 04:55:25 load { 21.18 20.22 18.33 }
+glance head->minor4 chromium exit 0 04:56:41 load { 19.24 20.04 18.43 } · GLANCE PASS: 8 pairs, each with a visible paint delta
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-6/glance-minor4/glance-chromium-light-dock-search-pointer-minor3-vs-minor4.png: 440x212 | 440x212; paint delta 36.90% of 93280 px
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-6/glance-minor4/glance-chromium-dark-dock-search-pointer-minor3-vs-minor4.png: 440x212 | 440x212; paint delta 36.02% of 93280 px
+== glance-cr end 04:56:41 load { 19.24 20.04 18.43 }
+== cr-chain end 04:56:47 load { 20.74 20.34 18.55 }

@@ -1,0 +1,7 @@
+/* FL-14 taken back out of the minor v4 build, for its before/after reading: `isolation: auto` on every element that
+   composes `@utility glass-plate` (pass-5/MS3-variants/fl14.css's list, plus `.dock-plate`, which is positioned at
+   z-index -1 and so forms a stacking context either way). None of these elements isolates at HEAD (`git grep
+   isolation: HEAD -- src`), so this paints the minor v3's plates (R-12 and R-13 change no specimen pixel). Not a design. */
+.glass-wash, .glass-quiet, .glass-resting, .glass-floating, .glass-overlay, .glass-card,
+.segmented-indicator, .glass-capsule, [data-surface="veil"], .glass-dock .dock-search-field .input-bar,
+.dock-plate { isolation: auto !important; }

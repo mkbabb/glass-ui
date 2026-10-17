@@ -1,0 +1,43 @@
+LAW · the harness launches the headless shell with no GPU arguments unless a GPU-WITNESS line cites the need (static; H6-0)
+roots: /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/harness, /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-6
+  ✓ harness/lib.mjs: 3 launch finding(s) under GPU-WITNESS M-2m · pass-6/H6.md
+LAUNCH-LAW files=42 cited=1 uncited=0
+PASS (42 gated rows)
+LAW exit 0
+census minor4 exit 0: LIGHTING-CENSUS stacked=0 halo=0 blur=0 open=0
+census v10.1.0 exit 1: LIGHTING-CENSUS stacked=2 halo=2 blur=5 open=9
+W-0.11 G4 bite: exact line
+LIT exit 0: LIGHTING-LITERALS halo=5 near=1 stacked=10 chain=3 open=19 frames-halo=0/0
+HOV exit 0: PASS (58 gated rows)
+-- R-11 LADDER: diff radii-minor4 FV5-records/radii-fv5.txt (fixture: prints nothing)
+LADDER minor4 exit 0
+-- R-11 LADDER plant: diff radii-minor4 FV5-records/radii-fv4.txt
+4,5c4,5
+< --glass-blur-floating-radius: 18px;
+< --glass-blur-overlay-radius:  20px;
+---
+> --glass-blur-floating-radius: 16px;
+> --glass-blur-overlay-radius:  18px;
+LADDER fv4 exit 1
+-- R-13 grep minor v4 (fixture: 0 lines)
+(R-13 minor4 lines: 0)
+-- FL-14 static: @utility glass-plate declares isolation (minor4)
+26:    isolation: isolate;
+worktree = minor-split-v3.patch
+-- R-13 grep minor v3 (planted FAIL: the old sentences)
+src/styles/glass/surface-axis.css:42:       earned darken retune it in lockstep with every other plate. No veil-local recipe
+src/styles/glass/surface-axis.css:43:       fork, and no brightness leg: it darkens toward the ink in BOTH modes, like the
+src/styles/glass/ladder-undershadow.css:17:           uses. There is no second axis left to zero — the earned-darken clamp rides
+src/styles/glass/surfaces.css:58:       plate through the ONE element-composed recipe, so the earned darken (the veil
+src/styles/glass.css:47:/* The ink-veil register — the plate recipe + the earned-darken clamp the rungs
+src/components/button/styles.css:126:       earned darken intact) made THICK: `.glass-deep` re-points the rung's blur onto
+src/components/_shared/feedback/feedback-tone.css:38:   surface that composes a rung therefore tints ITS OWN rung: the earned-darken clamp,
+src/components/dock/styles/search.css:44:       plate colour). The field reads the floating rung, darkened by whatever the
+src/components/dock/styles/shell.css:235:           reach it with ZERO re-author (the earned darken composes at the plate). The
+src/components/dock/styles/adaptive-legibility.css:38:        /* The plate's own earned darken is NOT here and is not a token re-point: the
+src/components/dock/styles/adaptive-legibility.css:43:           whole dynamic darken; re-pointing an inheriting token here could not produce
+(R-13 minor3 lines: 11)
+-- FL-14 static on minor v3 (plant: no isolation)
+0
+HOV minor3 exit 0: PASS (58 gated rows)
+worktree = minor-split-v4.patch

@@ -1,0 +1,24 @@
+queued 04:13:56 load { 12.90 10.27 13.21 }
+[guarded] waiting for the 'webkit' lock
+== wk-inner start 04:17:29 load { 8.01 9.41 12.21 }
+admitted 04:17:29 load { 8.01 9.41 12.21 }
+clear of Chromium phases 04:57:01 load { 20.03 20.21 18.53 }
+worktree = minor-split-v4.patch
+battery-wk exit 0 05:16:34 load { 20.87 18.51 17.76 }
+T    exit 0 · PASS (1 gated rows)
+LIT  exit 0 · PASS (1 gated rows)
+HOV  exit 0 · PASS (58 gated rows)
+== refs-wk start 05:16:34 load { 20.87 18.51 17.76 }
+head cells webkit exit 0 05:23:53 load { 18.21 17.82 17.70 }
+w01ref webkit exit 0 05:30:07 load { 10.01 12.32 15.14 }
+nofl14 webkit exit 0 05:36:51 load { 6.27 7.61 11.69 }
+== refs-wk end 05:36:51 load { 6.27 7.61 11.69 }
+plant-noisolation exit 0 05:37:21 load { 6.09 7.47 11.49 }
+== glance-wk start 05:37:21 load { 6.09 7.47 11.49 }
+glance head->minor4 webkit exit 0 05:38:38 load { 5.71 7.22 11.05 } · GLANCE PASS: 8 pairs, each with a visible paint delta
+== glance-wk end 05:38:38 load { 5.71 7.22 11.05 }
+done 05:38:38 load { 5.71 7.22 11.05 }
+== wk-inner end 05:38:38 load { 5.71 7.22 11.05 }
+admission ended 05:38:43 exit 0
+rerun queued 05:54:08 load { 20.97 19.70 16.24 }
+rerun admitted 06:05:55 load { 24.17 20.96 18.18 }
