@@ -1,0 +1,8 @@
+demo-probe fv5 chromium exit 0 02:24:53 load { 12.62 12.61 16.59 }
+DEMO PASS chromium light fv5: rows 30 · pointer on row 1: highlighted [1] painting [1] bg oklch(0.53 0.124 69.6 / 0.12) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.53 0.124 69.6 / 0.12)
+DEMO PASS chromium dark fv5: rows 30 · pointer on row 1: highlighted [1] painting [1] bg oklch(0.813 0.109 78.2 / 0.12) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.813 0.109 78.2 / 0.12)
+DEMO-PROBE fv5 · PASS (2 theme rows) · load 9.8 12.2 16.6 → 12.2 12.5 16.6
+demo-probe fv4 chromium exit 1 02:25:27 load { 16.07 13.31 16.67 }
+DEMO FAIL chromium light fv4: rows 30 · pointer on row 1: highlighted [0] painting [0,1] bg oklch(0.53 0.124 69.6 / 0.05) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.53 0.124 69.6 / 0.12)
+DEMO FAIL chromium dark fv4: rows 30 · pointer on row 1: highlighted [0] painting [0,1] bg oklch(0.813 0.109 78.2 / 0.05) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.813 0.109 78.2 / 0.12)
+DEMO-PROBE fv4 · FAIL (2 of 2 theme rows) · load 12.6 12.6 16.6 → 12.6 12.6 16.4

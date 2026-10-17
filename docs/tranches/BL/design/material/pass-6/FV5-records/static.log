@@ -1,0 +1,65 @@
+LAW · the harness launches the headless shell with no GPU arguments unless a GPU-WITNESS line cites the need (static; H6-0)
+roots: /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/harness, /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-6
+  ✓ harness/lib.mjs: 3 launch finding(s) under GPU-WITNESS M-2m · pass-6/H6.md
+LAUNCH-LAW files=41 cited=1 uncited=0
+PASS (41 gated rows)
+LAW exit 0
+-- DEL floor v5
+DEL · no file under src/ or demo/ describes a mechanism the patch deletes (static; H6-1)
+tree: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/floor5/wt · 835 text files under src/ and demo/ · declaration: the floor (floor v4 and later): FL-1 and FL-16 delete the backdrop sampler, the clamp and its earned darken, the knee, --glass-backdrop-luma and backdropMode (REGISTRY P5-3.3; names per P5-5 H6-1, plus backdropMode from P5-3.3's row)
+  ✓ "earned darken": 0
+  ✓ "darkened by whatever": 0
+  ✓ "luma read": 0
+  ✓ "backdropLuminance": 0
+  ✓ "--glass-backdrop-luma": 0
+  ✓ "backdropMode": 0
+DELETED-MECHANISMS names=6 hits=0 files=0
+PASS (6 gated rows)
+DEL fv5 exit 0
+-- line grep floor v5
+(grep lines: 0)
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-6/floor-v5.patch:1193: trailing whitespace.
+       white app surface (the canonical G2 case the user reported). 
+warning: 1 line adds whitespace errors.
+worktree = floor-v4.patch
+-- DEL floor v4 (planted FAIL)
+DEL · no file under src/ or demo/ describes a mechanism the patch deletes (static; H6-1)
+tree: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/floor5/wt · 835 text files under src/ and demo/ · declaration: the floor (floor v4 and later): FL-1 and FL-16 delete the backdrop sampler, the clamp and its earned darken, the knee, --glass-backdrop-luma and backdropMode (REGISTRY P5-3.3; names per P5-5 H6-1, plus backdropMode from P5-3.3's row)
+  ✗ "earned darken": 5 · src/components/button/styles.css:126 src/components/dock/styles/shell.css:185 src/styles/glass/overlay-plate.css:272 src/styles/glass/surface-axis.css:42 src/styles/glass/surfaces.css:53
+  ✗ "darkened by whatever": 1 · src/components/dock/styles/search.css:38
+  ✗ "luma read": 1 · src/styles/glass/surfaces.css:54
+  ✓ "backdropLuminance": 0
+  ✓ "--glass-backdrop-luma": 0
+  ✓ "backdropMode": 0
+DELETED-MECHANISMS names=6 hits=7 files=6
+FAIL (3 of 6 gated rows)
+DEL fv4 exit 1
+-- line grep floor v4
+src/styles/glass/surface-axis.css:42:       earned darken retune it in lockstep with every other plate. No veil-local recipe
+src/styles/glass/surfaces.css:53:       plate through the ONE element-composed recipe, so the earned darken (the veil
+src/styles/glass/surfaces.css:54:       clamp's luma read) reaches the pill exactly as it reaches every other plate — no
+src/components/button/styles.css:126:       earned darken intact) made THICK: `.glass-deep` re-points the rung's blur onto
+src/components/dock/styles/search.css:38:       plate colour). The field reads the floating rung, darkened by whatever the
+src/components/dock/styles/shell.css:185:           reach it with ZERO re-author (the earned darken composes at the plate). The
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-5/floor-v4.patch:1177: trailing whitespace.
+       white app surface (the canonical G2 case the user reported). 
+warning: 1 line adds whitespace errors.
+worktree = floor-v5.patch
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-6/floor-v5.patch:1193: trailing whitespace.
+       white app surface (the canonical G2 case the user reported). 
+warning: 1 line adds whitespace errors.
+worktree = minor-split-v3.patch
+worktree = floor-v5.patch
+-- LADDER: diff radii-fv5 radii-minor3 (fixture: prints nothing)
+LADDER fv5 exit 0
+-- LADDER: diff radii-fv4 radii-minor3 (plant: floor v4's 16/18)
+4,5c4,5
+< --glass-blur-floating-radius: 16px;
+< --glass-blur-overlay-radius:  18px;
+---
+> --glass-blur-floating-radius: 18px;
+> --glass-blur-overlay-radius:  20px;
+LADDER fv4 exit 1
+HOV exit 0: PASS (58 gated rows)
+LIT exit 0: LIGHTING-LITERALS halo=5 near=1 stacked=10 chain=3 open=19 frames-halo=0/0
+census exit 0: LIGHTING-CENSUS stacked=0 halo=0 blur=0 open=0

@@ -1,0 +1,23 @@
+queued 02:25:30 load { 16.07 13.31 16.67 }
+[guarded] waiting for the 'webkit' lock
+== wk-inner start 02:45:57 load { 10.32 9.64 11.47 }
+admitted 02:45:57 load { 10.32 9.64 11.47 }
+clear of Chromium phases 02:54:12 load { 9.42 10.71 11.21 }
+worktree = floor-v5.patch
+battery-wk exit 0 03:13:52 load { 20.72 19.67 17.33 }
+T    exit 0 · PASS (1 gated rows)
+LIT  exit 0 · PASS (1 gated rows)
+HOV  exit 0 · PASS (58 gated rows)
+FV3-plants exit 0 03:39:50 load { 23.88 25.38 22.99 }
+FV2-plants exit 0 03:50:58 load { 24.63 24.31 23.41 }
+demo-probe fv5 webkit exit 1 03:51:00 load { 24.63 24.31 23.41 }
+DEMO FAIL webkit light fv5: rows — · pointer on row 1: — · pointer on row 0: — · ERROR Error: page.waitForTimeout: Page crashed
+DEMO FAIL webkit dark fv5: rows — · pointer on row 1: — · pointer on row 0: — · ERROR Error: page.waitForTimeout: Page crashed
+DEMO-PROBE fv5 · FAIL (2 of 2 theme rows) · load 24.6 24.3 23.4 → 24.6 24.3 23.4
+demo-probe fv4 webkit exit 1 03:51:01 load { 24.63 24.31 23.41 }
+DEMO FAIL webkit light fv4: rows — · pointer on row 1: — · pointer on row 0: — · ERROR Error: page.waitForTimeout: Page crashed
+DEMO FAIL webkit dark fv4: rows — · pointer on row 1: — · pointer on row 0: — · ERROR Error: page.waitForTimeout: Page crashed
+DEMO-PROBE fv4 · FAIL (2 of 2 theme rows) · load 24.6 24.3 23.4 → 24.6 24.3 23.4
+done 03:51:01 load { 24.63 24.31 23.41 }
+== wk-inner end 03:51:01 load { 24.63 24.31 23.41 }
+exit 0 03:51:07

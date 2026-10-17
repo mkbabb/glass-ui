@@ -1,0 +1,167 @@
+diff --git a/src/styles/glass/surface-axis.css b/src/styles/glass/surface-axis.css
+--- a/src/styles/glass/surface-axis.css
++++ b/src/styles/glass/surface-axis.css
+@@ -18,8 +18,8 @@
+                so `--glass-level` retunes it in lockstep
+                with every glass surface — NO veil-local recipe fork.
+      opaque   — the `--glass-level:0` solid-card escape (the `.glass-opaque` rung):
+-               solid `--card` + `blur(0)` through the ONE level knob, the tint axis
+-               zeroed (a solid plate has no translucent backdrop to darken-over).
++               solid `--card` + `blur(0)` through the ONE level knob (a solid plate
++               has no translucent backdrop to read through).
+ 
+    Cartoon and grid remain Card-local decoration booleans; neither extends this
+    material axis. The `Surface` alias in `_shared/axes.ts` is the typed half and
+@@ -38,10 +38,11 @@
+     /* ── veil — the borderless text-legibility plate ──────────────────────────
+        A text plate with the box border AND rim stripped (a boxed look reads as a
+        dividing line under text). It is the quiet rung's own material — same ink, same
+-       radius, same one saturate — with the edge taken off, so `--glass-level` and the
+-       earned darken retune it in lockstep with every other plate. No veil-local recipe
+-       fork, and no brightness leg: it darkens toward the ink in BOTH modes, like the
+-       ladder it belongs to. Dark carries one step more ink, exactly as the rungs do. */
++       radius, same one saturate — with the edge taken off, so `--glass-level` retunes
++       it in lockstep with every other plate. No veil-local recipe fork, and no
++       brightness leg: it paints the theme's own `--card` at the quiet rung's α (the
++       bound plus one step), like the ladder it belongs to; nothing samples the
++       backdrop. Each theme derives its bound from its own `--card` (tokens/glass.css). */
+     [data-surface="veil"] {
+         --glass-veil-tier: var(--glass-veil-quiet);
+         @apply glass-plate;
+@@ -76,8 +77,8 @@
+        level-0 endpoint resolved here, not via the baked token) — AND still flips the
+        `--glass-level: 0` / `--glass-level: 0` knobs so a NESTED glass
+        descendant + any consumer reading the level scalar see the opaque register
+-       coherently. The adaptive TINT axis is zeroed (a solid plate has no
+-       translucent backdrop to darken-over — the bucket-INVARIANT contract). */
++       coherently. A solid plate has no translucent backdrop to read through, so the
++       rung's α plays no part. */
+     [data-surface="opaque"] {
+         --glass-level: 0;
+         /* The SOLID --card plate composed at the element via the house color-mix
+diff --git a/src/styles/glass/surfaces.css b/src/styles/glass/surfaces.css
+--- a/src/styles/glass/surfaces.css
++++ b/src/styles/glass/surfaces.css
+@@ -50,9 +50,10 @@
+     }
+ 
+     /* The segmented-control active pill and the glass capsule read the floating rung's
+-       plate through the ONE element-composed recipe, so the earned darken (the veil
+-       clamp's luma read) reaches the pill exactly as it reaches every other plate — no
+-       tab-local fork, no root-baked token blind to its own scope. */
++       plate through the ONE element-composed recipe, so the pill paints the theme's own
++       `--card` at the floating rung's α (the bound), exactly as every other plate
++       does (nothing samples the backdrop) — no tab-local fork, no root-baked token blind
++       to its own scope. */
+     :where(.segmented-indicator, .glass-capsule) {
+         --glass-veil-tier: var(--glass-veil-floating);
+         @apply glass-plate;
+diff --git a/src/styles/glass/overlay-plate.css b/src/styles/glass/overlay-plate.css
+--- a/src/styles/glass/overlay-plate.css
++++ b/src/styles/glass/overlay-plate.css
+@@ -12,7 +12,7 @@
+    rule, so it ships in `dist/glass-ui.css` whatever the consumer's JIT does.
+ 
+    ONE PLATE, ONE OWNER. The component composes the RUNG (`.glass-floating` — the
+-   blur, the base shadow stack, the backdrop bucket). This file states only what a
++   blur, the base shadow stack). This file states only what a
+    rung cannot know it is: that it is an overlay (the veil tier), that it stands
+    over a warm field (the floor, the portal spine), how tall it may grow, where it
+    blooms from, and what its boundary ink is.
+@@ -269,8 +269,8 @@
+     /* ── The listbox plate ──────────────────────────────────────────────────
+        The overlay rung's veil with the capsule's warm floor over it — two flat
+        layers, both reading the ONE recipe. There is no adaptive-tint layer and no
+-       `--select-plate-alpha` solidity knob: the veil already carries the earned
+-       darken, and a second layer pushing the same plate the same way is the
++       `--select-plate-alpha` solidity knob: the veil already paints the overlay rung
++       at the bound, and a second layer pushing the same plate the same way is the
+        double-writer the material law forbids. A menu that needs more body needs a
+        heavier RUNG. `prefers-reduced-transparency` reaches this plate through
+        `--glass-level`, like every other. */
+diff --git a/src/components/dock/styles/shell.css b/src/components/dock/styles/shell.css
+--- a/src/components/dock/styles/shell.css
++++ b/src/components/dock/styles/shell.css
+@@ -182,7 +182,7 @@
+            STRUCTURAL (layout + the drop-shadow elevation below); the plate is the surface.
+            The `--dock-surface-blur` + `--glass-veil-*` tokens declared on `.glass-dock`
+            INHERIT to the plate, so the dark arm and the morph's rung endpoints
+-           reach it with ZERO re-author (the earned darken composes at the plate). The
++           reach it with ZERO re-author (the plate composes the rung at the bound). The
+            collapsed↔expanded surface INTERP is retargeted onto `.dock-plate` in
+            morph.css. No `backdrop-filter` on the box → ONE lens, no double-blur. */
+         /* The dock rim is the DIRECTIONAL pair (bright catch-light
+diff --git a/src/components/dock/styles/search.css b/src/components/dock/styles/search.css
+--- a/src/components/dock/styles/search.css
++++ b/src/components/dock/styles/search.css
+@@ -1,7 +1,7 @@
+ /* Dock search field styles.
+  *
+  * The active dock-search field + its placeholder + the result rows read CLEARLY forward
+- * over whatever backdrop the dock floats on (≥4.5:1, the darken seam) — never the
++ * over whatever backdrop the dock floats on (≥4.5:1, the bound) — never the
+  * pale-ghost-fading-into-content trap (the NN/g defect, WWDC §219 "buttons remain
+  * legible"). The field surface composes its plate at the ELEMENT — `@apply glass-plate`
+  * (the one recipe, glass/veil.css) — NOT a pre-substituted `:root` plate token, which
+@@ -35,8 +35,8 @@
+     }
+ 
+     /* The ACTIVE field surface — the element-composed plate (never a `:root`-baked
+-       plate colour). The field reads the floating rung, darkened by whatever the
+-       measured backdrop earns, so it holds ≥4.5:1 over a busy field. It rides the SAME
++       plate colour). The field reads the floating rung at the bound, which clears the
++       muted ink over any input; nothing samples the backdrop. It rides the SAME
+        `@utility glass-plate` seam the dock's L0 plate does — one recipe, two surfaces,
+        never a field-local fork. The field TEXT is `--foreground` (the full warm ink);
+        the placeholder/muted caption is `--on-glass-muted` (5.76:1 vs the plate). */
+@@ -48,7 +48,7 @@
+ 
+     /* The placeholder + the autocomplete ghost-text + any muted caption inside the field
+        read the on-glass muted rung (NOT `--muted-foreground`, which is calibrated against
+-       the opaque page and collapses on a translucent darkened plate). */
++       the opaque page and collapses on a translucent plate). */
+     .glass-dock .dock-search-field .input-bar-field::placeholder,
+     .glass-dock .dock-search-field .dock-search-ghost,
+     .glass-dock .dock-search-field .dock-search-result-meta {
+diff --git a/src/components/button/styles.css b/src/components/button/styles.css
+--- a/src/components/button/styles.css
++++ b/src/components/button/styles.css
+@@ -123,7 +123,7 @@
+ 
+     /* ── The emphasis ladder — three channels, one rung each ──────────────────
+        PRIMARY is the FLOATING rung (the capsule's own register default, warm floor and
+-       earned darken intact) made THICK: `.glass-deep` re-points the rung's blur onto
++       bound intact) made THICK: `.glass-deep` re-points the rung's blur onto
+        the deep LERP, and `--glass-depth` must be declared HERE because the tier map
+        keys on the ladder classes this host deliberately does not carry — without it the
+        registered `initial-value: 1` paints the MENU ceiling on a button.
+diff --git a/src/styles/tokens/property-regs.css b/src/styles/tokens/property-regs.css
+--- a/src/styles/tokens/property-regs.css
++++ b/src/styles/tokens/property-regs.css
+@@ -147,10 +147,10 @@
+      • level 0  — the OPAQUE escape: solid `--card` + `blur(0)` through the SAME
+                   machinery (the `.glass-opaque` rung and the a11y brackets ride it).
+      • level >1 — clearer (more transparent, more diffuse) in lockstep.
+-   Over-light legibility rides the SEPARATE `--glass-veil-*` axis: level = opacity+blur,
+-   tint = darken-over-light. The two coordinate but never collapse — the a11y
+-   Clear↔Tinted escape rides level-up here AND tint-toward-ink under
+-   `prefers-contrast: more`. */
++   Legibility rides the SEPARATE `--glass-veil-*` axis: each rung's α, held at the
++   bound (`--glass-bound`), with nothing sampled from the backdrop. Level scales that α
++   and the blur; the two never collapse — the a11y escape is level alone (0 under
++   `prefers-reduced-transparency`, 0.3 under `prefers-contrast: more`). */
+ @property --glass-level {
+     syntax: "<number>";
+     inherits: true;
+diff --git a/src/styles/glass/a11y-fallback.css b/src/styles/glass/a11y-fallback.css
+--- a/src/styles/glass/a11y-fallback.css
++++ b/src/styles/glass/a11y-fallback.css
+@@ -40,7 +40,7 @@
+         /* Definition is the MID rung of the SAME
+            a11y ladder `--glass-level: 0.3` rides: an explicit "more contrast" request
+            lifts every glass surface to the DEFINED tier library-wide (a read-carrying
+-           warm rim + the warm-cream floor), joining the level+tint escape as ONE
++           warm rim + the warm-cream floor), joining the level escape as ONE
+            coordinated bracket, not a third fork. */
+         --glass-definition: 1;
+     }

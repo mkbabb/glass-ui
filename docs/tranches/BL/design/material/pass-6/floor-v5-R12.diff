@@ -1,0 +1,31 @@
+diff --git a/demo/stories/dock/dock-search.vue b/demo/stories/dock/dock-search.vue
+--- a/demo/stories/dock/dock-search.vue
++++ b/demo/stories/dock/dock-search.vue
+@@ -236,6 +236,7 @@
+                                     :data-highlighted="
+                                         i === fuzzy.selectedIndex.value || undefined
+                                     "
++                                    @pointermove="fuzzy.selectedIndex.value = i"
+                                     @click="fuzzy.selectResult(r)"
+                                 >
+                                     <span class="dock-search-result-label">
+@@ -364,15 +365,10 @@
+     cursor: pointer;
+ }
+ 
+-/* This composer is not reka's: `data-highlighted` follows the keyboard's selected
+-   index, not the pointer, so the menu row's state fill never reaches a pointed-at
+-   result. The pointer keeps its own leg on the transient rung (`--fill-hover`), in
+-   the menu's accent; the highlighted result keeps the state fill. */
+-@media (hover: hover) {
+-    .dock-search-result:hover:not([data-highlighted]) {
+-        background: oklch(from var(--section-color-5) l c h / var(--fill-hover));
+-    }
+-}
++/* This composer is not reka's, so it highlights the way reka's rows do: pointer
++   movement sets the selected index (`@pointermove` above), and `data-highlighted`
++   follows it. The pointer and the keyboard share the one highlighted row, and the
++   menu row's state fill is the one register. */
+ 
+ .dock-search-match {
+     color: var(--primary);

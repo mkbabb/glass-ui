@@ -1,0 +1,12 @@
+typecheck app exit 0 02:49:29 load { 7.84 9.15 10.90 }
+library build exit 0 02:49:36 load { 9.13 9.40 10.98 }
+typecheck tests exit 0 02:49:44 load { 10.64 9.72 11.07 }
+vitest exit 1 02:50:37 load { 11.29 10.03 11.10 }
+ Test Files  2 failed | 235 passed (237)
+      Tests  6 failed | 2312 passed | 10 expected fail | 1 skipped (2329)
+start 02:52:29 load { 12.00 10.75 11.25 }
+typecheck tests exit 0
+dist-demo exit 0 02:52:38
+vitest exit 0 02:53:37 load { 12.57 11.38 11.46 }
+ Test Files  237 passed (237)
+      Tests  2318 passed | 10 expected fail | 1 skipped (2329)

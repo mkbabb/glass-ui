@@ -1,0 +1,214 @@
+diff --git a/src/styles/tokens/glass.css b/src/styles/tokens/glass.css
+--- a/src/styles/tokens/glass.css
++++ b/src/styles/tokens/glass.css
+@@ -24,10 +24,10 @@
+          wash · chassis       6px    bound             content
+          quiet               10px    bound + 1 step    content
+          resting (= card)    12px    bound + 2 steps   content
+-         floating · dock ·   16px    bound             chrome
++         floating · dock ·   18px    bound             chrome
+            crown · well
+-         overlay · sheet     16px    bound + 1 step    chrome
+-         dialog              16px    1                 the room
++         overlay · sheet     20px    bound + 1 step    chrome
++         dialog              18px    1                 the room
+          opaque (level 0)      0     1
+ 
+        A surface may paint THINNER than the bound only where a mechanism knows its
+@@ -42,8 +42,11 @@
+     --glass-ink-target: 4.8;
+     --glass-bound-ground: 0;
+ 
+-    /* THICKNESS — the rung's radius. The band is [6, 18], strictly ascending, each
+-       rung 4px under its 10.1.0 radius ("slightly less blur", O-87): blur is decoupled
++    /* THICKNESS — the rung's radius. The band is [6, 20], strictly ascending, each
++       rung under its 10.1.0 radius ("slightly less blur", O-87): wash, quiet and resting
++       4px under, floating and overlay 2px under. Floating stops at 18px because 16px
++       cost the dark Dialog's text over a white ground its 4.5:1 (p05 4.46; 17px the
++       same, 18px 4.51, D3 pass 5 R-8); overlay rides floating + 2. Blur is decoupled
+        from legibility (α carries it), so the ladder buys only calm — M-8's bleed half
+        on the dock at 12px keeps a 0.14 margin under 1.25 — at the least cost
+        (`backdrop-filter` is the library's most expensive idiom and radius is its
+@@ -62,8 +65,8 @@
+     --glass-blur-wash-radius:      6px;
+     --glass-blur-quiet-radius:    10px;
+     --glass-blur-resting-radius:  12px;
+-    --glass-blur-floating-radius: 16px;
+-    --glass-blur-overlay-radius:  18px;
++    --glass-blur-floating-radius: 18px;
++    --glass-blur-overlay-radius:  20px;
+ 
+     /* CHROMA — ONE value, mode-invariant. Saturation is a property of the MEDIUM, not
+        of the rung or the mode: a thicker plate does not de-saturate what passes through
+diff --git a/src/styles/glass/ladder.css b/src/styles/glass/ladder.css
+--- a/src/styles/glass/ladder.css
++++ b/src/styles/glass/ladder.css
+@@ -12,8 +12,8 @@
+          wash       6px · bound             content
+          quiet     10px · bound + 1 step    content
+          resting   12px · bound + 2 steps   content (the consumer plate)
+-         floating  16px · bound             chrome
+-         overlay   18px · bound + 1 step    chrome */
++         floating  18px · bound             chrome
++         overlay   20px · bound + 1 step    chrome */
+ 
+     /* The five-rung surface ladder declares the unprefixed
+        `backdrop-filter` only IN SOURCE. Authoring both forms manually here
+diff --git a/src/styles/tokens/glass-deep.css b/src/styles/tokens/glass-deep.css
+--- a/src/styles/tokens/glass-deep.css
++++ b/src/styles/tokens/glass-deep.css
+@@ -14,7 +14,7 @@
+  * thickness graded BACKWARDS with prominence. The +5px delta is what the family
+  * always encoded, so the delta is what the token now holds:
+  *   deep(tier) = tier_radius + 5px * --glass-depth
+- * -> 7.75 / 11.75 / 13.75 / 19.5 / 23px across wash..overlay. Thicker than plain
++ * -> 7.75 / 11.75 / 13.75 / 21.5 / 25px across wash..overlay. Thicker than plain
+  * on every rung, monotone WITH prominence, and immune to a calm-ladder retune.
+  *
+  * The per-frame cost fence still binds, but it binds the CALM ladder that sets the
+@@ -39,7 +39,7 @@
+  * ── The Apple-range derivation (DELTA cross-ref) ───────────────────────────
+  * Apple home nav:        saturate(1.8) blur(20px)  (the canonical measure)
+  * Apple product tiers:   blur(14-20px)             (the band)
+- * glass-ui calm ladder:  6/10/12/16/18px / saturate 1.5 (tokens/glass.css)
++ * glass-ui calm ladder:  6/10/12/18/20px / saturate 1.5 (tokens/glass.css)
+  * glass-ui DEEP (ship):  calm rung + 5px x depth / saturate 1.8 — STRICTLY deeper
+  *                        blur and richer saturate than the rung it decorates, on
+  *                        every rung, by construction rather than by literal.
+@@ -57,7 +57,7 @@
+        overlay 16.0). The +5px DELTA is what the family always encoded; it is now
+        what the token says, and it survives any calm-ladder retune by construction.
+        ONE variable, five rungs: `deep(tier) = tier + 5px x depth`, so
+-       7.75 / 11.75 / 13.75 / 19.5 / 23px — thicker than plain on every rung and
++       7.75 / 11.75 / 13.75 / 21.5 / 25px — thicker than plain on every rung and
+        monotone WITH prominence.
+ 
+        (The `blur(20px)` Apple push stays retired on its own per-frame grounds; the
+@@ -84,7 +84,7 @@
+        `--glass-blur-tier-radius` PER TIER on the base rung; the composition must
+        therefore be declared on `.glass-deep` — the SAME element, at/below the tier-grade
+        site — so both resolve to the element's LIVE rung and the ladder PAINTS
+-       (7.75 < 11.75 < 13.75 < 19.5 < 23px). Only the BOOST + GRADES stay here (they are
++       (7.75 < 11.75 < 13.75 < 21.5 < 25px). Only the BOOST + GRADES stay here (they are
+        literals — no registered-`@property` read — so their `:root` declaration is safe);
+        the COMPOSITION moves to the consuming element. */
+ 
+@@ -102,7 +102,7 @@
+        family, no new @property, no new compositing seam. The three grades scale the ONE
+        +5px boost: content +1.75px, popover +3.5px, menu +5px — so a deep content
+        control clears its own plain rung (6 → 7.75, 10 → 11.75, 12 → 13.75) and only
+-       the menu/overlay rung takes the full boost (18 → 23), saturate 1.61 < 1.71 < 1.8.
++       the menu/overlay rung takes the full boost (20 → 25), saturate 1.61 < 1.71 < 1.8.
+ 
+        The grades are NAMED (not magic literals) so a consumer retunes a WHOLE BAND
+        from ONE ancestor override (`--glass-depth-popover: …`) — the per-band twin of
+diff --git a/src/styles/glass/deep.css b/src/styles/glass/deep.css
+--- a/src/styles/glass/deep.css
++++ b/src/styles/glass/deep.css
+@@ -57,7 +57,7 @@
+        AND `--glass-blur-tier-radius` per tier ON THE BASE RUNG the `.glass-deep`
+        decoration composes with (same element), so declared here both resolve to the
+        element's LIVE rung and the ladder PAINTS:
+-       7.75 < 11.75 < 13.75 < 19.5 < 23px.
++       7.75 < 11.75 < 13.75 < 21.5 < 25px.
+ 
+        The `* var(--glass-level)` clarity scale is unchanged (so the opaque escape +
+        the a11y brackets reach the deep plate through the ONE level path; at
+@@ -73,7 +73,7 @@
+            overlay 16.0). An absolute depth-1 endpoint cannot express "thicker than
+            whatever this rung is"; a BOOST can. Additive, so `deep ≥ plain` holds on
+            all five rungs by construction and the grade orders WITH prominence:
+-           7.75 / 11.75 / 13.75 / 19.5 / 23px. */
++           7.75 / 11.75 / 13.75 / 21.5 / 25px. */
+         --glass-blur-deep-active-radius:
+             calc(
+                 (
+@@ -117,14 +117,14 @@
+ 
+        The resolved ladder, `tier + 5px x depth`:
+          wash      6 + 1.75 =  7.75   quiet   10 + 1.75 = 11.75
+-         resting  12 + 1.75 = 13.75   floating 16 + 3.5 = 19.5
+-         overlay  18 + 5    = 23
++         resting  12 + 1.75 = 13.75   floating 18 + 3.5 = 21.5
++         overlay  20 + 5    = 25
+        — deep ≥ plain on every rung, monotone WITH prominence. (`.glass-card` takes
+        the `:where(.glass-deep)` default above, which is the resting radius it paints.)
+ 
+        No rung reads var(--glass-blur-deep) here — the grade and the radius only DRIVE
+        the deep composition, so a NON-deep tier surface is BYTE-UNCHANGED (a plain
+-       overlay stays the calm 18px; the calm ladder never reads --glass-depth) and only
++       overlay stays the calm 20px; the calm ladder never reads --glass-depth) and only
+        a `.glass-deep`-composed surface consumes them.
+ 
+        SUBSTITUTION-vs-INHERITANCE (the recorded seam): zero-specificity :where() so
+diff --git a/src/components/dock/styles/dock.css b/src/components/dock/styles/dock.css
+--- a/src/components/dock/styles/dock.css
++++ b/src/components/dock/styles/dock.css
+@@ -68,7 +68,7 @@
+            backdrop round-clip to the same silhouette on every shape. */
+         border-radius: inherit;
+         /* The backdrop lens — reads the dock-scoped resolved blur the shell composes
+-           (`--dock-surface-blur: var(--glass-blur-resting)`, the 16px calibration-host
++           (`--dock-surface-blur: var(--glass-blur-resting)`, the calibration-host
+            radius + its saturate companion; the dark arm + the
+            `prefers-reduced-transparency` → `--glass-level: 0` bracket both reach it via
+            the inheriting token). ONE backdrop-filter in the dock — the box no longer
+@@ -114,7 +114,7 @@
+         );
+         @apply glass-plate;
+         /* The grasp register's host inputs (glass/grasp.css): the dock plate is one of
+-           the two named consumers, and its 16px resting radius IS the calibration host
++           the two named consumers, and its resting radius IS the calibration host
+            the 1.625× held optic derives from. */
+         --glass-grasp-rest-filter: var(--dock-surface-blur);
+         --glass-grasp-radius: var(--glass-blur-resting-radius);
+diff --git a/tests/components/ui/surface/Surface.test.ts b/tests/components/ui/surface/Surface.test.ts
+--- a/tests/components/ui/surface/Surface.test.ts
++++ b/tests/components/ui/surface/Surface.test.ts
+@@ -205,7 +205,7 @@
+         }
+         const deeps = resolved.map((r) => r.deep);
+         expect(deeps).toEqual([...deeps].sort((a, b) => a - b));
+-        expect(deeps).toEqual([7.75, 11.75, 13.75, 19.5, 23]);
++        expect(deeps).toEqual([7.75, 11.75, 13.75, 21.5, 25]);
+     });
+ 
+     it("veil and opaque withhold the depth IN PAINT, not in script", () => {
+diff --git a/tests/styles/glass-subtlety.test.ts b/tests/styles/glass-subtlety.test.ts
+--- a/tests/styles/glass-subtlety.test.ts
++++ b/tests/styles/glass-subtlety.test.ts
+@@ -222,13 +222,13 @@
+         expect(blurRadius(light, "--glass-blur-wash")).toBe(6);
+         expect(blurRadius(light, "--glass-blur-quiet")).toBe(10);
+         expect(blurRadius(light, "--glass-blur-resting")).toBe(12);
+-        expect(blurRadius(light, "--glass-blur-floating")).toBe(16);
+-        expect(blurRadius(light, "--glass-blur-overlay")).toBe(18);
++        expect(blurRadius(light, "--glass-blur-floating")).toBe(18);
++        expect(blurRadius(light, "--glass-blur-overlay")).toBe(20);
+     });
+ 
+     it("ascends strictly up the ladder and stays inside the calm band at every rung", () => {
+         // Blur buys calm, not legibility (α carries that). Each rung is thicker than the
+-        // one below it, and every rung sits under its 10.1.0 radius (O-87). [6, 18] px.
++        // one below it, and every rung sits under its 10.1.0 radius (O-87). [6, 20] px.
+         const band = RUNGS.map((rung) => blurRadius(light, `--glass-blur-${rung}`));
+         for (let i = 1; i < band.length; i += 1) {
+             expect(band[i], `${RUNGS[i]} must be thicker than ${RUNGS[i - 1]}`).toBeGreaterThan(
+@@ -237,7 +237,7 @@
+         }
+         for (const radius of band) {
+             expect(radius).toBeGreaterThanOrEqual(6);
+-            expect(radius).toBeLessThanOrEqual(18);
++            expect(radius).toBeLessThanOrEqual(20);
+         }
+     });
+ 
+@@ -280,7 +280,7 @@
+         const raw = read("src/styles/tokens/light-dark.css").replace(/\/\*[\s\S]*?\*\//g, "");
+         expect(raw).not.toMatch(/min-resolution/);
+         expect(raw).not.toMatch(/--glass-blur-overlay-radius/);
+-        expect(blurRadius(light, "--glass-blur-overlay")).toBe(18);
++        expect(blurRadius(light, "--glass-blur-overlay")).toBe(20);
+     });
+ 
+     it("keeps the content and overlay tiers distinct after the pull", () => {
