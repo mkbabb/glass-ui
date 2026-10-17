@@ -1141,3 +1141,377 @@ Every class the pass-3 seats recorded is placed. None is left unassigned, and no
 | the leaving face and presses | G-proto §10.6 | Q-17 |
 | O-87 not applied in pass 3 | this seat | H4-11, L1 |
 | O-88's facility list | O-88 | H4-10, C1-C7 |
+
+---
+---
+
+# D2 · pass 4 · REGISTRY: the two routes after pass 4
+
+Everything above this line is the record of passes 1-3 and the owner's rulings O-87 and O-88. It is left as written. This part closes pass 4.
+
+| field | value |
+|---|---|
+| seat | D2 pass-4 agglomeration. It closes pass 4 with each route's status on the fixed 36-row list, the §P3-7.5 winner rule applied, the O-88 facility status as 10.2.0's critical path, the owner's open questions, every next-pass defect class placed, and the pass-5 plan with its fixed checklist |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `5aae1cda5`. Every pass-4 reading measured HEAD + `pass-4/floor-v3.patch` (sha256 `637d1625…`) + one route patch: B′ `84119167…`, G `394260f8…`. The critics' trees were `5f9482361` (B′) and `fc4ce33f3` (G); both patches applied clean on them |
+| inputs, read in full | passes 1-3 above, O-87 and O-88; `pass-4/H4.md`, `FLOOR-V3.md`, `D2-Bp-proto.md`, `D2-Bp-critique.md`, `D2-G-proto.md`, `D2-G-critique.md`; `audit/INBOUND.md`; `FORMATION-PROGRESS.md` through 2026-10-17. Read for single facts: the ST lines of both critics' `main-ST-*.log`; the `useDockState.ts`, `GlassDock.vue` and `overview.vue` hunks of both route patches; the `useDockState.ts` hunk of `floor-v3.patch` |
+| instruments | none. This seat re-measures nothing. Every number cites the report or log that measured it, and that record stays the source of record (P-3). Findings marked "this seat" come from reading patches, logs and rule texts, not runs |
+| fences | no source edit, no git write; this part is the only write |
+| engines | every WebKit number is **Playwright WebKit**, unshimmed in every floor and route cell. Every real-Safari cell is **UNMEASURED (owner's safaridriver checkbox)**; H4's H8 self-test still logs "You must enable 'Allow remote automation'" |
+| load | every browser run went through `~/.claude/guard/guarded`, WebKit under `--exclusive webkit`. B′ critic 9.45-35.88; G critic 8.0-22.2 (attacks 16.4-25.9). Every red cell was re-run twice; a red that passed both re-runs is NOT-REPRODUCED in both reports |
+| owner rulings since pass 3 | **none** on Q-4, Q-12, Q-15, Q-16 or Q-17 (`audit/INBOUND.md`; `FORMATION-PROGRESS.md` to 2026-10-17). Two inbound rows fold into this loop for pass 5: O-91 (an outside press during the morph) and O-74e (the dock pill at 844 × 390), both "FOLDS INTO O-88", both "not in pass 4's fixed 36 rows" |
+
+Short citations: `H4` is `pass-4/H4.md`, `FV3` is `FLOOR-V3.md`, `B′-proto` and `B′-crit` are `D2-Bp-proto.md` and `D2-Bp-critique.md`, and `G-proto` and `G-crit` likewise.
+
+---
+
+## P4-0 · In brief
+
+| route | status | the fixed 36 rows | first 24 (pass 3's) | open rows | reason in one line |
+|---|---|---:|---:|---|---|
+| D2-B′ | **ADVANCE** | **25/36 (69 %)** on this seat's reading; the critic's verdict column sums to 26 (§P4-2.1) | 16/24 (17/24 by the critic) | P1 (OB, Q-12), P2 and N5 (shared, H4's W2 witness), P3, R1, R2, R6, R7, B2, B3, B1 (parity) | every mechanism row holds and the whole O-88 facility passes; the hard wipe still paints glyph stubs, and the in-page retarget at 40 ms blanks |
+| D2-G | **ADVANCE**, with a BANK trigger at pass 5's close (§P4-4) | **22/36 (61 %)** | 15/24 | P1 (route W7 + OB), P2 and N5, P3, P4, F4, N4, B1 (harness), B2, B3, R6, R8, C1, C2 | the content now leaves cleanly (R1, R2, R7 green), but R8 fails in Playwright WebKit with four in-family mechanisms tried, the collapsed plate paints a square backdrop in Chromium, and the boot graph is over its ceiling |
+
+**Neither route is CONVERGED, and no winner is named.** Neither branch of the §P3-7.5 rule holds (§P4-4), and its precondition is not met either: G's critic ran two arms, `crit-prm` and `crit-corner`, that have not run on B′.
+
+Six findings shape pass 5.
+1. **The O-88 facility is carrier-independent.** Both routes built the same facility hunks, line for line: the `useDockState.ts` hunk is identical in both patches (46 changed lines, `diff` empty), and so are the Escape handler and the summary glyph in `GlassDock.vue` (this seat). Floor v3 fails C1, C3, C5, C6 and C7. Each route passes them with these hunks (B′ 14/14 ×4; G C3-C7 ×4). They move into floor v4 as one copy (N-9), which takes the facility off the carrier question.
+2. **The splice is gone, and the stub is the residue on both routes.** No route frame joins two faces into one word any more. B′'s exclusion lane keeps a seam between faces; G's jump keyframes leave no splice at all in Chromium. But in 1-4 tiles of every face exchange, both routes paint a glyph cut by a hard clip edge, and the stub reads as another glyph: "B" as "E" or "3", "A" as "ʌ" or "\", "P" as a tick (B′-crit §4; G-crit §4). H4-1 judges unit pairs and whole-unit slivers, so it cannot see a stub inside one unit. B2 fails on both routes for this reason.
+3. **G's compositor advantage now holds only for a dock without an in-flow neighbour.** G's flow clock moves every lane of an in-flow dock onto the main thread. In Chromium that holds R8 7/7 (`stall·nb·2raf` travels 0 px before the block ends), and it gives up the travel G was admitted for. In Playwright WebKit the clock does not take, and the neighbour leaps 257.5-379.3 px in one frame (×1.34-1.97 of its bound). Without a neighbour, G still carries the whole 378-380 px through a post-commit block in both engines (`stall·2raf`, `100ms`, `mid-flight`), where B′ covers 0.03-248 px (both critics' `main-ST-*.log`).
+4. **G's critic found three defects in G that its prototype passed, each through a witness that reads too little.** The collapsed plate is a 102 × 56 box with `border-radius: 0`, and Chromium paints its backdrop to the square while CF reads the radius off the rounded hit pair (C1). Under reduced motion the content keeps a 86-96 ms fade and the flag stays up for about 200 ms, where CF reads the extent only (C2). And a WebKit `swap-short` sliver reproduces in 2 of 3 runs (R6). Both arms are G-crit's own, and neither has run on B′.
+5. **Q-4's branch (a) now conflicts with a fixed row.** R7 (H4-2) requires every lane at its final value, within 0.5 px, from the frame the flag closes. Q-4 (a) closes the flag at the 2 % band and lets the sub-band tail paint after it (about 7.6 px on a 380 px travel). Under (a), R7 would have to be re-cut to the band, and that reopens the flag-against-lane gap R7 was fixed to close. Q-4 (c), a dock-only clock of about 0.27 s, is the branch consistent with R7 as fixed (this seat, from the rule texts).
+6. **Q-12 (b) closes P1's card cells on B′ as measured.** FV3 measured the floor's in-flight card radius 5.5-8.9 px outside the rests' band, and so judged that both Q-12 branches fail. On B′ the same cells read 0 px outside the band (B′-crit P1). B′ needs no N-5 hunk under (b). G's critic did not report its band reading.
+
+---
+
+## P4-1 · How pass 4 ran
+
+| step | record | what it established |
+|---|---|---|
+| H4 | `H4.md`; `H4-records/` | Rows H4-1..H4-11 landed in `harness/`, and the self-test holds 147/147 in both engines. The O-88 facility suite (`c-facility.mjs`) was born RED in the demo app on every build. The baseline is PARTIAL: the light set ran on 27 of 36 rows, and the light W1/W2/W4-W8/R6 set and every dark set waited for a guard slot until the seat stopped them so it could bank (H4 §4). Both route critics later ran the full set on their routes in both engines and both themes, so the partial baseline bounds only the HEAD and floor-v2 columns. One lifecycle change: WebKit retires its browser every 60 page loads |
+| floor v3 | `FLOOR-V3.md`; `FV3-records/` | N-6 and N-7 landed (5 files, +3 / −37 source lines over v2): "SEVEN members", plus three reader-less tokens struck. **N-8 needed no hunk**: the product reaches 11/11 seats by key in both engines, and W2's `reach()` never presses a key that lands on Seat 1 (a witness defect). **N-5 stays OWNER-BLOCKED**, and the floor's in-flight card radius leaves the rest band under either branch. 17/36 (v2 16/36). Units 245/245 files, `vue-tsc` 0 |
+| B′ prototype → critique | `D2-Bp-proto.md` → `D2-Bp-critique.md` | 56 files; src +2080 / −1761 (net +319). Critic ADVANCE, 1,097 cells |
+| G prototype → critique | `D2-G-proto.md` → `D2-G-critique.md` | 59 files; src +2782 / −1554 (net +1228); `useDockAperture.ts` 1,799 lines. Critic ADVANCE, 631 cells plus the faces stages and three attack arms |
+
+Every seat ran one heavy run at a time, under the guard. The 2026-10-15 cross-repo WebKit lock is in every pass-4 log.
+
+---
+
+## P4-2 · Registry, per route
+
+### 2.1 · D2-B′ · the measured scene, one integrator: ADVANCE, 25/36
+
+**The count.** B′-crit's verdict column passes P4, P5, F1-F7, N1-N4, R3, R4, R5, B1, R8, C1-C7 and L1. That is 26 rows, and it lists 10 open rows. Its stated "25/36, 11 open" is an arithmetic slip: the first-24 subset it gives (17/24) plus the 9 rows after it (R8, C1-C7, L1) makes 26. **This seat then reopens B1 on its own wording**, "the same arm set as the other route". B′'s critic scored it before G's critic existed. G's critic then ran `crit-prm` and `crit-corner`, which have not run on B′ (G-crit §6.7). The reading of record is therefore **25/36 (69 %), first 24 16/24 (67 %)**, and B1 closes as soon as the two arms run on B′ (H5-6 makes them part of CF).
+
+**What held** (B′-crit §0, §2; reproduced against the prototype):
+- The O-88 facility passes C1-C7 in both engines and both themes (CF 14/14 ×4). Floor v3 fails C1, C3, C5, C6 and C7.
+- Glass and flow share one clock: R8 7/7 ×4, the plate at worst −18.68 px from the neighbour, and the neighbour's worst step ×0.63-0.86 of its bound.
+- Hit follows paint: R5 4/4 ×4, with 0/196 painted centres missing their seat (WebKit warm expand).
+- A stall at the flip replays from rest: ST 10/10 ×4.
+- L1 adds nothing over floor v3: shadow 1 / 4 / 4, gradient 8, pseudo 8, blur 16 px, all equal to the reference in 12 cells.
+- The card's in-flight radius stays inside the rests' band (0 px outside), where floor v3 leaves it by 5.5-8.9 px.
+- The 4× lead cost meets obligation 3: 1 frame over 25 ms at 40 seats (pass 3: 3-4).
+- The three cases are measured, 6/6 in Chromium. `case·rotated` in WebKit is NOT-REPRODUCED, and the control spans 5.99-9.41 between runs.
+
+**Open rows, with counterexamples** (B′-crit §2, source of record):
+
+| row | owner | counterexample |
+|---|---|---|
+| P1 | OWNER-BLOCKED (Q-12) | W1 `card·*` ×3, rest radii 27.93 / 23.93 px, the in-flight r inside the band. Under Q-12 (b) these pass as measured; under (a) N-5 must be built as a carrier hunk |
+| P2, N5 | shared (H4's W2 witness) | `route1·long-run-v` keyboard 10/11, Seat 1 missing, ×4. FV3 §1.3: the product reaches 11/11 |
+| P3 | route; OB (Q-4) | route reds: `swap-long[splice]` (Chromium dark), `retarget·40/80/120`, `first-expand[lanes]` (Chromium dark), `lead-remove` (Chromium light: the flag closes 23.7 ms after the extent lands, which fails the Q-4 lenient reading as well). Every other `window` cell is 259.5-275 ms against 256.3-260.6 and holds the lenient reading |
+| R1 | route | `retarget·40[blank]`: 2-5 blank frames in a row (bound 1), in 12 of 12 runs, ×4 |
+| R2 | route | `retarget·40[leaving]` 51.7-59.9 ms against ≥ 76.1-80.3 ms, 12 of 12 runs; `retarget·80[vanish]` 0.52-0.54 in WebKit (6 of 6); `retarget·120[vanish]` 0.58-0.60 in WebKit dark (3 of 3) and Chromium dark (2 of 3) |
+| R6 | route | Chromium dark `swap-long`: a splice frame in each of 3 runs (gaps 9.47 / 8.72 / 7.41 px against one advance of 10.86 px, at 168-171 ms) |
+| R7 | route | Chromium dark `first-expand`: a 36.46 px icon clip released to identity in one frame at 31 ms, in 2 of 3 runs |
+| B2 | route | cut glyph stubs in 1-3 tiles of every exchange, in both engines and both themes; in the demo, the hover disc is cut to a half disc (B′-crit §4) |
+| B3 | route | four false facts: `index.css:49` (an interp the route deleted), `index.css:36` "The six partials" (it imports 12), `morph.css:10` "@import-ed by dock.css", `morph.css:62-63` "paints a circle" (the collapsed rest is 101.98 × 56) |
+| B1 | parity (this seat) | `crit-prm` and `crit-corner` not run on B′ |
+
+**Ruled here: the same-face splice (B′-proto §7).** B′'s prototype asked whether two arriving units of one face, closing on their own layout gap, count as a splice. **The critic's reading is upheld.** H4-1 judges units, not faces. A unit cut at its end beside a unit cut at its start, within one advance, reads as one glyph run whichever face they belong to. The row stays red.
+
+**Predicted, not measured (this seat).** B′'s demo prose and a new unit test both say what G's do: under reduced motion "the extent lands at once and the content exchange keeps its curve" (`D2-Bp-proto.patch` lines 62 and 6149; G's line 6605). By source, B′ is expected to fail `crit-prm` as G does. It stands as a prediction until H5-6 runs.
+
+**Outside the list** (B′-crit §5, §6): one long trigger frame at 4× (51.6-61 ms) that the floor does not pay; the leaving unit's first-frame ink step (§P4-6); a stale tranche citation in `DockLayerSwitcher.a11y.test.ts`.
+
+### 2.2 · D2-G · the sliding aperture: ADVANCE, 22/36
+
+**What held** (G-crit §0, §2, §3):
+- The content leaves cleanly. R1 30/30 ×4 with 0 blank frames. R2 8/8 ×4: retarget fades of 112.6-233.7 ms, at least 0.42 × the morph, and a worst one-frame vanish of 0.14-0.32. R7 33/33 ×4, in every faces cell too. These were G's pass-3 R2 and B2 defects, and the taper and jump keyframes cured them.
+- R8 holds in Chromium (7/7 ×2) on the flow clock.
+- R3, R4 (10/10 ×4) and R5 (4/4 ×4) hold.
+- C3-C7 and L1 hold. L1's shadow layers are 1 / 3 / 4 against the floor's 1 / 4 / 4, so G adds no lighting layer (H4's baseline read the pass-3 G patch at 14 layers; the pass-4 patch cured it).
+- The `retarget·context` red is diagnosed. V8's inspector collects the evaluate's pending promise ("Promise was collected"). A forced GC two microtasks after the evaluate reproduces it on floor v3 with no G code. Holding the promise in the page passes. The page itself is intact (60/60 pings, 0 navigations).
+
+**Open rows, with counterexamples** (G-crit §2, source of record):
+
+| row | owner | counterexample |
+|---|---|---|
+| P1, N4 | route; OB (Q-12) | W7 `side·light·dpr1[whole]` in Chromium, light and dark, 6/6 runs: the weakest 45° bin reads 1/255 against ≥ 2/255. Floor v3 and B′ read 20/20 under the same witness. **Upheld as G's paint**, not the instrument's: the door clip and the cap border share their outer edge and halve the stroke (G-proto §7). W1 `card·*` ×3 OB |
+| P2, N5 | shared (W2 witness); route | as B′; N5 also carries `--dock-clock`, written into every keyframe and read by nothing (N-7's law) |
+| P3, R6 | route; OB (Q-4) | WebKit light `swap-short` sliver, 8.86 px and 4.98 px of a 40 px unit, in 2 of 3 runs. Windows OB on Q-4 |
+| P4, F4 | route (a floor borderline G does not cure) | WebKit light `compact·non-first-current`: seat step ×1.07 and ×1.04 (0.58 px against 0.54-0.56), 2 of 3 runs. Floor v3 is red on the same cell; B′ passes it 13/13 ×4 |
+| R8 | route | WebKit `stall·nb·2raf` 3/3 ×2: the neighbour steps 379.26-379.29 px in one frame (×1.97). WebKit `stall·nb·mid-flight` 3/3 ×2: the neighbour steps 257.5-273.5 px while the glass travels 89.4-116.8 px inside the block. G-proto §3.1 tried four mechanisms (a main-thread property, a rAF stall watch, holding the layout length, the flow clock with a `steps()` segment); the best is 3/5 on the `nb` arms |
+| B1 | harness | Chromium `retarget·context` 12/12 runs; the cure is H4-5 holding its promise (H5-2) |
+| B2 | route | glyph stubs in `swap-long` and `swap-short`, both engines ("B" as "3", "Tools" as "Too", "A Ɛ B"); in the demo, the arriving search glyph and the leaving "•••" share a frame (G-crit §4) |
+| B3 | route | four false facts: `index.css:93` "the dock's only registered motion scalar" (it registers `--dock-flow-lo/hi` too); `index.css:91-92` "the geometry keeps moving" (on the flow clock it holds); `useDockAperture.ts:1259-1262` and `:61-62` "A block then stops glass and flow together" (WebKit glass travels 89-117 px inside the block); `index.css:36` "The six partials" |
+| C1 | route | Chromium, light and dark: the collapsed plate is 102 × 56, `border-radius: 0`, `clip-path: none`, and carries the backdrop. A pixel 2 px inside the box corner reads (172, 92, 77) on a page of (137, 83, 73) dark and (252, 187, 175) on (245, 191, 181) light. That is a square tile behind the stadium, which O-88 rules out by name. Floor v3: r 9999 px, `clip-path: inset(0px)`, the page's colour in the corner |
+| C2 | route; Q-18 | reduced motion, 3/3 runs per engine: the extent lands in 0 frames, but every seat reaches its final opacity only after 86-96 ms (8-12 partial frames), and `data-morphing` stays up 198.6-207 ms. Floor v3: 0 ms, 0 partial frames, the flag never raised |
+
+**Outside the list** (G-proto §9, G-crit §5, §6):
+- **The boot graph is over its ceiling:** 508,427 B against 503,808 B, +24,501 B over floor v3, reproduced to the byte. The repo's own `gate:boot-graph` is red on this tree, so G cannot land as built.
+- **Cost at 4×, 40 seats, expand:** 87.8-88.9 ms max, 6-8 frames over 25 ms, p95 37.4-42.9. Floor v3 has 0 frames over 25 ms; pass 3's G had a 158-166 ms flip frame. In WebKit at 1×, 40 seats: 2 frames over 25 ms (floor 0).
+- **CASES `case·rotated` (WebKit)** is red in the main stage and the stage re-runs, and green in G-crit's second with-control re-run. It is outside the 36 rows.
+
+### 2.3 · Floor v3's own rows, as the routes found them
+
+| fact | where | placed in |
+|---|---|---|
+| W2 `reach()` never presses a key that lands on Seat 1 when the current seat is not the first; the product reaches 11/11 | FV3 §1.3, both critics | H5-1 |
+| the identical facility hunks in both routes (`useDockState` `scroll.page`, Escape from anywhere with focus to the summary, the glyph disclosure, the coarse tap, the demo dock menu) | this seat (§P4-0 finding 1) | floor v4 N-9 |
+| `morph.css` "the collapsed dock is `cross × cross` and paints a circle" (a floor v3 line, `floor-v3.patch:2420`) is false once the summary glyph lands; `index.css:39` "The six partials" (HEAD text; both routes rewrote the list beside it) | B′-crit B3, G-crit B3 | floor v4 N-10 |
+| the floor deletes HEAD's `if (isTransitioning?.value) return;` (`floor-v3.patch:1721`), the line O-91 names as the cause of the dropped outside press | this seat, from the patch | C8 reads whether that deletion alone cures O-91 |
+| the in-flight card radius 5.5-8.9 px outside the rest band | FV3 §1.4 | P1; B′ holds the band (§P4-0 finding 6) |
+| three timing borderlines on both floors (`seat-transition[trajectory]`, `retarget·40`, `stall·nb·2raf`) | FV3 §3.2 | recorded floor flakes; the critics read them as such |
+
+---
+
+## P4-3 · The cost row, side by side
+
+Every row is from the two critics' records, each with its own tool, unless named. The ST travel rows are read from `D2-Bp-crit-records/main-ST-*.log` and `D2-G-crit-records/main-ST-*.log` (the same `stall.mjs` on both).
+
+| measure | D2-B′ | D2-G | floor v3 | same tool? |
+|---|---|---|---|---|
+| ST verdict, five timings × two arms × two engines × two themes | 20/20 | glass 10/10; `nb` Chromium 5/5, WebKit 3/5 | Chromium 1/5, WebKit 2/5 (FV3) | yes |
+| ST travel before the block ends, `2raf`, no neighbour (C / W) | 0.03 / 10.03 px | 377.63 / 379.57 px | — | yes |
+| ST travel, `mid-flight`, no neighbour (C / W) | 127.58 / 147.64 px | 379.11 / 378.89 px | — | yes |
+| ST travel, `2raf`, with the neighbour (C / W) | 0.01 / 0.27 px | 0 / 0.3 px, then a 379 px one-frame neighbour step in W | — | yes |
+| ST travel, `mid-flight`, with the neighbour (C / W) | 128.56 / 140.61 px | 107.83 / 116.79 px, then a 263.6 px one-frame neighbour step in W | — | yes |
+| ST landing, no neighbour (C / W) | 1440-1480 / 1840-2040 ms | 280 ms post-commit, 1480 at the flip / 2120-2160 ms | — | yes |
+| Chromium 4×, 40 seats, expand: max / frames > 25 ms | 51.6 / 1 | 88.9 / 6 (proto 87.8 / 8) | 16.2-16.8 / 0 | yes, `pcost` on each critic's machine |
+| Chromium 4×, 40 seats, lead: max / frames > 25 ms | 61.0 / 1 | 36.9 / 1 | 9.8-9.9 / 0 (no lead morph) | yes |
+| Chromium 4×, 20 seats, lead | 36.2 / 1 | 53.3 / 3 | 14.8-22.5 / 0 | yes |
+| Chromium 1×, 40 seats, expand | p95 8.9-9.7, 0 > 25 | max 22.1, 0 > 25, p95 15.9 | 0 > 25 | yes |
+| WebKit 1×, 40 seats, expand | p95 12, 0 > 25 | max 33, 2 > 25, p95 21 | 0 > 25 | yes |
+| source against floor v3 | src +2080 / −1761 (net +319) | src +2782 / −1554 (net +1228); `useDockAperture.ts` 1,799 lines | — | patch stats |
+| boot graph | the gate passes after the builds (B′-proto §2); the delta is not reported | 508,427 B, **4,619 B over the ceiling**; the repo gate is red | 483,926 B | no |
+| L1 shadow layers, collapsed / expanded / in flight | 1 / 4 / 4 | 1 / 3 / 4 | 1 / 4 / 4 | yes |
+| `DockProps` | 7 | 7 | 7 | yes |
+| unshimmed WebKit crashes | 0 | 0 | 0 | yes |
+| real Safari | UNMEASURED | UNMEASURED | UNMEASURED | — |
+
+**Reading.**
+- **Both routes meet R4 in both engines.** Neither leaps after any block timing on the glass.
+- **Where G still wins, measured:** a dock with no in-flow neighbour, under a block that starts after commit. G's extent finishes inside the block in both engines, while B′ waits and replays.
+- **What G gave up for R8:** with an in-flow neighbour, Chromium's flow clock freezes G with the layout (0 px at `2raf`), which is B′'s behaviour, and WebKit's does not take (the neighbour leaps).
+- **What each pays:**
+  - **G:** 6-8 long frames at 4× and 40 seats against B′'s 1; 2 long frames in WebKit at 1×; 3.8 times B′'s net source; a boot graph over its ceiling.
+  - **B′:** one long trigger frame at 4× (51.6-61 ms), and a lead morph the floor never animates.
+
+---
+
+## P4-4 · The §P3-7.5 winner rule, applied
+
+| clause | holds? | evidence |
+|---|---|---|
+| both routes measured on this list under H4, with the same stall tool and **the same arm set** | **no** | ST is the same on both. The arm sets differ by G-crit's `crit-prm` and `crit-corner`, which have not run on B′ (G-crit §6.7). `ctx-diag` is a diagnosis and ran on floor v3 |
+| …then **one route converges and the other does not** | **no** | B′ has 11 open rows and G 14. P1 and P3 are owner-blocked on both |
+| …or **the owner's Q-15 ruling makes one route dominated on the cost row** | **no** | Q-15 is unruled |
+
+**No winner is named.** B′'s higher count (25 against 22) does not decide it.
+
+What a Q-15 ruling would do, read on pass-4 measurements:
+- **(a) "A stall delays the motion but never leaps".** Both routes meet it (R4 20/20 and 10/10 on the glass). G is then dominated on the cost row: 6-8 long frames against 1, 2 WebKit long frames against 0, 3.8 times the net source, and a boot graph over its ceiling. **G RETIRES as dominated**, and its compositor carrier is banked with the re-trigger below.
+- **(b) "The extent keeps moving through a post-commit block, and the page's layout moves with it".** P3-4 set the condition: only a route that holds R8 defends (b). Pass 4 measures that:
+  - **For a dock with an in-flow neighbour, no route defends (b) in both engines.** B′ freezes with the layout, by design. G freezes with it in Chromium (its flow clock) and fails R8 in WebKit.
+  - **For a dock with no in-flow neighbour, G defends (b) in both engines** (378-380 px inside the block), and R8 does not apply.
+
+  So (b) as written has no defending route, and that is reported to the owner, not worked around. Only (b) narrowed to out-of-flow docks makes B′ dominated on travel. Even then, G must close R8 in WebKit for its in-flow docks to converge, because R8 is on the fixed list.
+
+**G's BANK trigger, fixed now.** G's prototype reports R8 in Playwright WebKit as out of reach in-family: four mechanisms were tried, and the remaining way is a per-frame main-thread driver that G's lattice forbids (G-proto §3.1, §9.1). A route that cannot close a fixed row cannot converge. **G is BANKED at pass 5's close if either of these holds:**
+- (i) R8 is still red in WebKit under H5;
+- (ii) the owner rules Q-15 (a).
+
+**Re-trigger once banked:** the owner rules Q-15 (b) for out-of-flow docks, and B′ fails a stall row there; or WebKit runs a keyframed custom-property animation on the main-thread clock (the mechanism Chromium already honours). The pass-5 G seat is therefore scoped to its route rows (§P4-7.3). It does not repeat the four R8 variants.
+
+**The combination (P2-3) is still not earned.** Nothing in pass 4 changes its first reason, and G's flow clock now makes its glass main-thread wherever the combination would matter (an in-flow dock).
+
+---
+
+## P4-5 · O-88: the facility status, and 10.2.0's critical path
+
+| row | floor v3 | D2-B′ | D2-G | what closes it |
+|---|---|---|---|---|
+| C1 content-sized collapsed form, one edge, anchored summary, never a square tile | FAIL: a 56 × 56 tile, no painted disclosure | PASS ×4, but `crit-corner` not run (B′'s plate is the floor's rounded plate, so a pass is predicted) | **FAIL**: square backdrop in Chromium | N-9 (the summary glyph) on the floor; the plate's own shape on G; H5-6 on both |
+| C2 one continuous morph; reduced motion instant; rapid toggles | PASS (instant under `crit-prm` too) | PASS on CF; `crit-prm` not run; **predicted FAIL** by source | **FAIL** under `crit-prm` | Q-18; the route's reduced-motion exchange; H5-6 |
+| C3 triggers | FAIL: scroll, coarse tap | PASS ×4 | PASS ×4 | N-9 |
+| C4 `#persistent` | PASS | PASS | PASS | — |
+| C5 keyboard, focus kept, name and state | FAIL: no disclosure, no Escape | PASS ×4 | PASS ×4 | N-9 |
+| C6 menus from a collapsed or expanding dock | FAIL: no menu in the demo | PASS ×4 | PASS ×4 | N-9 |
+| C7 side, vertical, 390 px, coarse | FAIL: coarse tap, vertical morph | PASS ×4 | PASS ×4 | N-9; the vertical morph on the route |
+| C8 (pass 5, O-91) an outside press during the morph | unread | unread | unread | H5-11; the floor already deletes the guard O-91 names |
+| C9 (pass 5, O-74e) the pill at 844 × 390 | unread (O-74e: 67 px at value.js) | unread | unread | H5-11; a short-viewport rung |
+
+**The critical path.** O-88 gates 10.2.0 on D2's convergence. It has two halves.
+- **The facility half** (C1's summary, C3, C5, C6, C7) is solved, and it is carrier-independent. It moves into floor v4 as N-9, so any landing carries it and no route can diverge on it.
+- **The morph half** (C2 with R1, R2, R6, R7 and B2) is the carrier's. It is the actual path to 10.2.0. On B′ it comes down to four route items: the retarget at 40 ms, the glyph stub, one dark lane cancel, and reduced motion once Q-18 is ruled.
+
+No route can converge until Q-4, Q-12 and Q-18 are ruled (§P4-6). The earliest convergence is pass 5's close, and only if those three rulings arrive before the pass-5 critics run.
+
+---
+
+## P4-6 · What the owner must rule
+
+### 6.1 · Questions that block convergence (critical path for 10.2.0, O-88)
+
+| id | question | what pass 4 measured | what is asked | default until ruled | this seat's recommendation |
+|---|---|---|---|---|---|
+| **Q-4** | the landing clock | B′ windows 259.5-275 ms against allowances of 256.3-260.6; G's reach 257.7 against 257.5; both hold the lenient reading, except B′'s `lead-remove`, which fails even that | (a) the flag closes at the 2 % band and the tail paints after it; or (c) a dock-only clock of about 0.27 s | H3-11's lenient reading, cells OB | **(c)**. (a) conflicts with R7 as fixed (§P4-0 finding 5); (c) turns the measured windows green and leaves R7 intact |
+| **Q-12** | does a card dock's corner change with its posture? | B′'s in-flight radius stays inside the rests' band (0 px outside); the floor's leaves it by 5.5-8.9 px | (a) one radius in every frame (N-5); or (b) the lerp stays, and W1's law becomes "every frame between the two rest radii" | the lerp; cells OB | **(b)**. It closes P1's card cells on B′ as measured, with no hunk |
+| **Q-18** (new) | does O-88's "reduced motion gives an instant, correct state change" cover the content exchange and the window flag, or only the extent? | G: extent 0 frames, content 86-96 ms, flag about 200 ms; floor v3 instant on all three; B′ predicted as G (same prose and test) | (a) everything is instant: content at its final opacity in the first frame, the flag never raised; or (b) the extent only, with content fades allowed under reduced motion | (a), the ruling's literal words | **(a)**. The floor already does it, and the ruling's words say "instant" |
+| **Q-15** | which stalls must the dock survive? | §P4-3, §P4-4 | (a) a stall delays but never leaps; or (b) the extent moves through a post-commit block, with the layout, for every dock, or for out-of-flow docks only | none: no route dominated | **(a)**, if the owner wants one now: both routes meet it, and it retires the route that costs 6-8 long frames and the boot-graph ceiling (P-1) |
+
+### 6.2 · Questions that do not block convergence
+
+| id | question | as built | asked | recommendation |
+|---|---|---|---|---|
+| Q-16 | the dock's own alignment (N-1) | landed in floor v2, held under both routes (N1 ×4) | confirm the strike; whether the vertical story centres its docks | confirm |
+| Q-17 | does a leaving face take presses mid-morph? | both routes now leave some leaving seats inert: B′ 13 and 74, G 14 and 103 leaving seats that take no press (R5, recorded) | (a) a leaving face is inert from the flip; or (b) what paints takes presses until it is gone | (a): both builds already lean there, and it removes presses on targets that are vanishing |
+| Q-1..Q-3, Q-5..Q-10 | confirms | unchanged from P3-5.2 | confirm as built | confirm |
+
+**Owner action, unchanged:** tick safaridriver's "Allow remote automation". Every real-Safari cell in all four passes is UNMEASURED. **Glances, unchanged:** the gutter's value; G's 1 px band edge; the rim as an opt-in seat (OW-7).
+
+**One-message ruling sheet:** Q-4 (c) · Q-12 (b) · Q-18 (a) · Q-15 (a) · Q-16 confirm · Q-17 (a) · Q-1..Q-3, Q-5..Q-10 confirm · safaridriver checkbox.
+
+---
+
+## P4-7 · The pass-5 plan
+
+### 7.1 · H5: the harness revision (before any pass-5 prototype)
+
+Every row ships with a fixture PASS and a planted FAIL in both engines. Every row is a class a pass-4 seat recorded; none is minted here.
+
+| id | witness | change | exposed by |
+|---|---|---|---|
+| H5-1 | W2 | `reach()` reaches Seat 1 by a key (ArrowUp from the stop, or Home), or records the seat `focus()` lands on. Plant: a run whose ArrowUp clamps short of Seat 1 still fails | FV3 §1.3, §5; both critics |
+| H5-2 | W3 (H4-5) | `retarget·context` holds its awaited promise in the page. Plant: the forced-GC slot (`ctx-diag`'s `gc-slot`) passes with the hold and fails without it | G-proto §3.4, §7; G-crit §3.3, §6.5 |
+| H5-3 | W3 (H4-1), FM | **the glyph stub.** In any moving frame, a clip edge that crosses a glyph's ink box (from the seat's own font) and leaves between 10 % and 90 % of that glyph painted at opacity above 0.5 fails. Promote the film read to a gated check | B′-crit §4, §6.2; G-crit §4; B′-proto §9 |
+| H5-4 | W3 (H3-3) | **the vanish bound on every leaving cell**: no leaving unit drops more than 0.5 of its ink in one frame, first and last steps included, outside retargets too | B′-crit §6.1 (`lead-remove` 1 → 0.233 passes R2 today) |
+| H5-5 | W6 | the Q-4 lenient window maps to OWNER-BLOCKED as W3's does | B′-crit §6.4 |
+| H5-6 | CF | **C1** reads every backdrop- or background-painting element's own radius and clip, plus the root box's corner pixels against the page; **C2** reads seat opacity and the flag under reduced motion, judged per Q-18. Promotes `crit-corner` and `crit-prm`, so both routes run them. Plants: a square plate under a round hit pair; a reduced-motion content fade | G-crit §6.1, §6.2, §6.7 |
+| H5-7 | W3 (H4-2) | `lanes` covers seat positions after the flag: a seat that moves more than 0.5 px after the flag closes fails | G-crit §6.3 (the `case·rotated·control` residue 0.51-0.58 px) |
+| H5-8 | PR (H4-8) | prose by fact extended: a partial count beside an `@import` list matches it, or the count is struck; no `src/` or `tests/` file cites a design-pass record (`pass-N/*.md`) | B′-crit B3 (2), §6.6; G-crit B3 (4) |
+| H5-9 | runner | the main W3 stage runs its pixel (faces) pass, so one stage reads F5, R1, R6 and R7 measured; the re-run rule also re-runs merged lines; an exact-name re-run keeps the probe's control | G-proto §7; G-crit §6.4; B′-crit §6.3 |
+| H5-10 | F7 | F7 reads the whole unit suite, repo gates included (`gate:boot-graph`), on the route tree after its builds | G-crit §5; G-proto §2 |
+| H5-11 | CF | C8 and C9 born RED in the demo app, with frames: **C8**, an outside press during the morph collapses the dock once it settles, 10 of 10 under load (O-91); **C9**, at 844 × 390 with coarse pointers, the expanded dock's block size is at most one coarse seat (44 px) plus twice the compact rung's block padding (52 px at today's tokens), with no consumer density prop set and every seat ≥ 44 px (O-74e) | `audit/INBOUND.md` O-91, O-74e |
+| H5-12 | W1 (H4-7) | the Chromium card arm samples as many in-flight frames as WebKit's screencast does, so `card·warm-collapse` stops alternating OB / FAIL on one sample | FV3 §1.4, §5 |
+| H5-13 | lib | `insetOf` expands a one-value percentage per axis | B′-proto §7 |
+
+H5 lands, and then floor v4, B′ and G are re-run under it as the pass-5 baseline, light and dark, in both engines. A reading of record starts under the guard. Every red cell is re-run twice, and a red seen only under load is NOT-REPRODUCED.
+
+### 7.2 · Floor v4: rows added to the floor patch
+
+| row | what | from | witness |
+|---|---|---|---|
+| N-9 | **the facility floor.** The carrier-independent O-88 hunks both routes built identically move into the floor once, with their unit tests: `useDockState` `scroll.page` (a page scroll collapses an unheld, unengaged dock), Escape from anywhere in an expanded dock with focus to the summary, the summary's glyph disclosure (`Ellipsis` / `EllipsisVertical`), the coarse tap, and the demo dock's menu. Each route's copy is struck in its rebase (P-3) | §P4-0 finding 1 | C1 (the summary), C3, C5, C6, C7, C8 on floor v4 |
+| N-10 | prose the facility makes false: `morph.css` "the collapsed dock is `cross × cross` and paints a circle" (floor v3) and `index.css` "The six partials" (HEAD) | B′-crit B3; G-crit B3 | H5-8 |
+| N-5 | the card corner, per Q-12. Under (b), no hunk: the routes' band readings decide P1. Under (a), one radius in every frame, built as a carrier hunk in each route, since the floor's lerp cannot hold it | FV3 §1.4; B′-crit P1 | W1 `card` (H5-12) |
+
+### 7.3 · Route obligations
+
+**D2-B′:**
+1. **The retarget (R1, R2).** `retarget·40` blanks 2-5 frames and fades in 51.7-59.9 ms against ≥ 76-80. `retarget·80/120` vanish 0.52-0.60 against 0.5. Isolate why a unit that was arriving when the swap turned stops painting within a frame of being re-armed (`probes/diag.mjs`), and cure it.
+2. **The stub (R6, B2).** No frame paints a hard-cut partial glyph (H5-3), and the dark Chromium `swap-long` splice closes. The hard wipe edge is the class on both routes: a seam with no glyph-sharp edge (for example a ramp at least one advance wide) is the obvious candidate, judged on H5-3 and the strips in both engines.
+3. **R7:** the dark Chromium `first-expand` icon clip (36.46 px released to identity in one frame).
+4. **P3 `lead-remove`:** the flag closes 23.7 ms after the extent lands.
+5. **The leaving ink step** under H5-4: 1 → 0.566 on the first frame of every exchange, and 1 → 0.233 on `lead-remove`.
+6. **C2 under Q-18:** reduced motion makes the content exchange and the flag instant, as the floor does, or the ruling's other branch.
+7. **B3:** the four facts, and the stale citation in `DockLayerSwitcher.a11y.test.ts`.
+
+**D2-G** (scoped by the BANK trigger in §P4-4):
+1. **R8 in Playwright WebKit**, measured once under H5 with the shipped flow clock. The four pass-4 variants are not repeated. A new mechanism enters only if it stays inside G's lattice.
+2. **C1:** the collapsed plate's own paint is the stadium in Chromium, with no square backdrop (H5-6), and the lens stays live (S-28: no ancestor `clip-path`).
+3. **C2** under Q-18.
+4. **R6:** the WebKit `swap-short` sliver.
+5. **P1 and N4:** W7 `side·light·dpr1` in Chromium, where the door clip and the cap border halve the 45° stroke.
+6. **P4 and F4:** `compact·non-first-current` in WebKit, which B′ passes on the same floor.
+7. **B2:** the stub (H5-3).
+8. **B3 and N5:** the four facts, and `--dock-clock` with no reader. That property is the flow clock's own; if R8 in WebKit stays red, it goes with the mechanism.
+9. **The boot graph** under its ceiling (H5-10). The cost row is recorded for Q-15.
+
+**Both:**
+- C8 and C9, in both engines and both themes.
+- The arm set is identical by construction (H5-6 and H5-9). Each critic lists the arm set beside its score.
+- Rebase on floor v4 and strike the route's own copy of the N-9 hunks.
+- Real-Safari cells as soon as the checkbox is ticked: the lens in G's doors, the extent under a block, the reversal row, the band edge at DPR 2-3, a negative plate `inset` under `backdrop-filter`, and the unshimmed mount.
+
+### 7.4 · Order
+
+0. The owner's rulings in §P4-6 are requested now, as one message. Q-4, Q-12 and Q-18 gate any convergence; Q-15 can retire G at once. The routes build on the defaults until the rulings arrive.
+1. H5 with its self-test, including C8 and C9 born RED. Then the pass-5 baseline.
+2. Floor v4 (N-9, N-10; N-5 on Q-12).
+3. B′, then G, each rebased on floor v4: prototype, then critique. One seat at a time, with every browser run under the guard and WebKit under `--exclusive webkit`. If Q-15 is ruled (a) before step 3, G's seats do not run; G banks at that point.
+4. The pass-5 agglomeration.
+
+### 7.5 · The pass-5 checklist (fixed now; critics may not add rows)
+
+One list for both routes: the 36 rows of §P3-7.5, with witnesses re-cut by H5, plus the two facility rows the inbound ledger folded into this loop. That makes 38 rows. Critics report the 38, the first 36 (to compare with pass 4) and the first 24 (to compare with pass 3).
+
+| # | row | witness |
+|---|---|---|
+| P1-P5, F1-F7, N1-N4, R1-R5, B1-B3 | as §P3-7.5 | as §P3-7.5, re-cut by H5-1 (P2), H5-4 (R2), H5-5 (P3), H5-9 (B1), H5-10 (F7), H5-12 (P1) |
+| N5 | floor v3 N-6..N-8 and floor v4 N-9, N-10, held under the route (N-5 on Q-12) | H5-1, H5-8; CF |
+| R6 | no splice, no sliver, and no glyph stub | H4-1, H5-3 |
+| R7 | the flag covers every lane and every seat position | H4-2, H5-7 |
+| R8 | glass and flow on one clock | H3-7, H4-3 |
+| C1-C7 | as §P3-7.5 | H4-10, re-cut by H5-6 (C1, C2) |
+| L1 | O-87: no lighting layer added | H4-11 |
+| **C8** | an outside press during the morph collapses the dock once it settles, 10 of 10 under load (O-91) | H5-11 |
+| **C9** | at 844 × 390 with coarse pointers, the expanded dock's block size is ≤ 44 px + 2 × the compact rung's block padding, with no consumer density prop and every seat ≥ 44 px (O-74e) | H5-11 |
+
+P1 and P3 carry the OWNER-BLOCKED cells until Q-12 and Q-4 are ruled, and C2 its branch until Q-18 is. A route is **CONVERGED** only at 0 open rows, owner-blocked rows included.
+
+The winner rule for pass 5:
+- A winner may be named only when both routes are measured on this list under H5, with the same stall tool and the same arm set.
+- Then one route converges and the other does not, or Q-15 makes one dominated on the cost row (§P4-4 for how each branch applies).
+- G's BANK trigger (§P4-4) is applied at pass 5's close, whatever the other clauses read.
+- If both routes converge, Q-15 decides between them, and the combination question (P2-3) is re-read on pass-5 measurements.
+
+---
+
+## P4-8 · Next-pass defect classes, placed
+
+Every class a pass-4 seat recorded is placed. None is left unassigned, and none was minted into pass 4.
+
+| class | recorded in | placed in |
+|---|---|---|
+| W2 `reach()` cannot land on Seat 1 | FV3 §5; B′-crit §6.5; G-crit P2 | H5-1; P2, N5 |
+| H4-5 measures V8's GC slot, not the page | G-proto §3.4, §7; G-crit §6.5 | H5-2; B1 |
+| the glyph stub inside one unit | B′-proto §9; B′-crit §6.2; G-crit §4 | H5-3; R6, B2; both routes' obligation 2 / 7 |
+| a two-unit splice of one face (ruling asked) | B′-proto §7 | ruled here (§P4-2.1): H4-1 judges units; the row stays red |
+| the leaving ink steps at both ends; vanish judged only on retargets | B′-crit §6.1 | H5-4; R2; B′ obligation 5 |
+| W6 does not map the lenient window to OB | B′-crit §6.4 | H5-5; P3 |
+| a shape read that takes the maximum over elements (C1); L1 counting values, not where they paint | G-crit §6.1 | H5-6; C1 (the C1 square was scored under C1, not L1) |
+| the reduced-motion cell reads the extent only | G-crit §6.2 | H5-6; C2; Q-18 |
+| a residue after the flag on the unrotated control | G-crit §6.3 | H5-7; R7 |
+| prose facts: partial counts, tranche citations in tests, false mechanism claims | B′-crit B3, §6.6; G-crit B3 | H5-8; N-10; B3 on both routes |
+| the faces pass skipped in the main stage; merged reds not re-run; exact-name re-runs that drop the control | G-proto §7; G-crit §6.4; B′-crit §6.3 | H5-9 |
+| the boot graph over its ceiling on G | G-proto §2, §9.6; G-crit §5, §6.6 | H5-10; F7; G obligation 9 |
+| the Chromium card arm judged on one in-flight sample | FV3 §1.4, §5 | H5-12; P1 |
+| `insetOf`'s one-value percentage | B′-proto §7 | H5-13 |
+| the in-flight card radius outside the rests' band (the floor) | FV3 §1.4 | Q-12; N-5; B′ already holds the band |
+| arm-set asymmetry (`crit-prm`, `crit-corner` not on B′) | G-crit §6.7 | H5-6; B1 on B′ (§P4-2.1) |
+| the identical facility hunks in two routes | this seat | N-9 |
+| R8 in WebKit out of reach in-family | G-proto §3.1, §9.1 | G obligation 1; the BANK trigger (§P4-4); Q-15 |
+| `--dock-clock` written, never read | G-proto §7, §9.8; G-crit N5 | G obligation 8 |
+| W7 `side·light·dpr1` on G's doors | G-proto §7, §9.3; G-crit P1 | G obligation 5 (upheld as paint) |
+| the WebKit W4 `compact·non-first-current` borderline | G-crit P4 | G obligation 6 |
+| the 4× trigger frame (B′) and the 4× expand (G) | B′-crit §5; G-crit §5 | recorded for Q-15 (§P4-3) |
+| three timing borderlines on the floor | FV3 §3.2 | recorded floor flakes; the pass-5 critics read them as such |
+| CASES `case·rotated` in WebKit (both routes, the control spanning 5.99-9.41) | B′-crit §3; G-crit §3.1 | H5-9 (control kept); outside the 38 rows |
+| G's WebKit ST landing figure (2120-2160 ms after a full in-block travel), unexplained since pass 3 | P3-3; G-crit `main-ST-webkit.log` | recorded as RECORD on the cost row; not a row |
+| H4's partial baseline (no dark set, no light W1/W2/W4-W8 on HEAD and floor v2) | H4 §4 | superseded on both routes by the critics' full sets ×4; HEAD's and floor v2's dark columns are not owed, because no row reads them |
+| O-91 an outside press during the morph | `audit/INBOUND.md` | C8, H5-11 |
+| O-74e the pill at 844 × 390 | `audit/INBOUND.md` | C9, H5-11 |
+| Q-4 (a) against R7 | this seat | Q-4 recommendation (§P4-6) |
+| O-88's reduced-motion scope | G-crit C2 | Q-18 |
