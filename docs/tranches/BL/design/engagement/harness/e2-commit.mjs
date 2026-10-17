@@ -15,13 +15,25 @@
 //                  tap on a coarse pointer
 //   Tab entry      Tab from the sentinel into the scene: scale range < 0.002, no body moves ≥ 1 px, no light rise
 //                  ≥ 0.01, and the state unchanged
-//   mount (H-8)    mounted already committed (?on=1&defer=1, filmed across __e.mount()): scale range < 0.002, no body
-//                  moves ≥ 1 px, the light at rest (no rise ≥ 0.01)
+//   mount (H-8)    mounted already committed (?on=1&defer=1, filmed across __e.mount()): nothing commits (lib.mjs
+//                  commitsIn, H3: no light above its committed rest ≥ 0.01 on any frame, read without a rise from below,
+//                  so a light lit on the first frame and decaying counts; no scale or body in flight)
+//   arrival (CK-03, H3; C-CP probe/arrival.mjs made a cell) the scene deferred (?defer=1), its model set:
+//                  pre       in the same task as the mount call, before it renders (mounts committed): 0 commits
+//                  own       in the mount's own task, after its render (await mount(); commit()): 0 commits
+//                  ownflush  as own, after one computed-style read of every element of the scene and its ::before and
+//                            ::after (the style-read control: C-CP found A quiet on `own` only while nothing read
+//                            style during the mount, 2/2 with the read against 0/2 without): 0 commits
+//                  late      after first paint (two frames): 1 commit, by an admitted arm (the programmatic commit)
+//                  the state must change across each (else NOT DRIVEN); the film starts after the model is set, so the
+//                  harness's own reads are not the style read. A `stateless` scene has no model to arrive: REPORT
+//   stateless      (H3 ruling) a scene marked `stateless` (Button, the action Chip) has no model: its programmatic
+//                  commit is its activation, `element.click()` on the target, driven here, not through __e.commit
 // A commit that fails on janky frames (median interval > 20 ms) is re-read twice; a failure that does not reproduce
 // prints NOT-REPRODUCED and passes. An engine that closes or hangs (PF-1) is relaunched and the cell re-run once (H-3).
 //   node e2-commit.mjs --build <dir> | --fixture [--fault e2-prog] [--engine webkit] [--scenes a,b] [--themes light]
 //                      [--commit-arms i,ii,iii]
-import { witness, openPage, scenesFor, commitArms, quiet, medianDt, tabKey, center, BOUNCE, LIGHT_RISE, DEFAULT_ARMS, KEY_DWELL, f } from "./lib.mjs";
+import { witness, openPage, scenesFor, commitArms, commitsIn, quiet, medianDt, tabKey, center, BOUNCE, LIGHT_RISE, DEFAULT_ARMS, KEY_DWELL, f } from "./lib.mjs";
 
 const JANK = 20;
 // A film the machine starved (under half its nominal frames, or one gap over 100 ms) is janky whatever its median reads:
@@ -76,8 +88,9 @@ await witness("E-2", "CK-02 the commit, by one arm, on a commit that happened", 
         try {
           const en = await env(P);
           await P.page.focus('[data-sentinel="after"]'); const s0 = await state(P);
-          const pr = film(P, m); await P.page.evaluate(() => window.__e.commit()); const fl = await pr;
-          return judge(s0, await state(P), fl, en);
+          // H3 ruling: a stateless control's programmatic commit is element.click() on its target
+          const pr = film(P, m); await P.page.evaluate((sl) => (sl ? document.querySelector('[data-e~="target"]').click() : window.__e.commit()), !!m.stateless); const fl = await pr;
+          const r = judge(s0, await state(P), fl, en); return m.stateless ? { ...r, line: `element.click() (stateless) · ${r.line}` } : r;
         } finally { await P.close(); }
       }), 45000));
       // pointer: press 150 ms, release; read from the release
@@ -107,10 +120,40 @@ await witness("E-2", "CK-02 the commit, by one arm, on a commit that happened", 
         const P = await openPage(E, T, sc, { theme, q: { on: "1", defer: "1" } });
         try {
           const fl = await P.page.evaluate(async ([o]) => { const p = window.__film(o); await window.__e.mount(); return p; }, [{ target: '[data-e~="target"]', body: '[data-e~="body"]', face: m.face ? '[data-e~="face"]' : '[data-e~="target"]', ms: 800 }]);
-          const q = quiet(fl.fr); const present = fl.fr.filter((x) => x.a).length;
-          return { med: jank(fl), pass: present > 10 && q.range < BOUNCE && q.moved < 1 && !(q.rise >= LIGHT_RISE), line: `after mount: scale range ${Number.isFinite(q.range) ? q.range.toFixed(3) : "n/a"} body moved ${Number.isFinite(q.moved) ? q.moved.toFixed(2) : "n/a"} px light rise ${f(q.rise, 4)} over ${present} of ${fl.fr.length} frames with the target present` };
+          const q = quiet(fl.fr); const c = commitsIn(fl); const present = fl.fr.filter((x) => x.a).length;
+          return { med: jank(fl), pass: present > 10 && q.range < BOUNCE && q.moved < 1 && c.n === 0 && c.ground, line: `after mount: scale range ${Number.isFinite(q.range) ? q.range.toFixed(3) : "n/a"} body moved ${Number.isFinite(q.moved) ? q.moved.toFixed(2) : "n/a"} px · ${c.line} · ${present} of ${fl.fr.length} frames with the target present` };
         } finally { await P.close(); }
       }), 45000));
+      // CK-03's async arrival (H3)
+      for (const mode of ["pre", "own", "ownflush", "late"]) {
+        const nm = `E-2 ${sc} arrival·${mode} ${theme}`;
+        if (m.stateless) { cell(nm, "REPORT", "stateless: no model to arrive (H3 ruling)"); continue; }
+        emit(nm, await guard(`${sc} arrival ${mode}`, () => reread(async () => {
+          const P = await openPage(E, T, sc, { theme, q: { defer: "1" } });
+          try {
+            const en = await env(P);
+            const r = await P.page.evaluate(async ([o, mode]) => {
+              const raf = () => new Promise((ok) => requestAnimationFrame(ok));
+              const st = () => JSON.stringify(window.__e.state?.() ?? null);
+              const s0 = st();
+              if (mode === "pre") { window.__e.mount(); window.__e.commit(); }
+              else {
+                await window.__e.mount();
+                if (mode === "ownflush") for (const e of document.querySelectorAll("main *")) { getComputedStyle(e).opacity; getComputedStyle(e, "::before").opacity; getComputedStyle(e, "::after").opacity; }
+                if (mode === "late") { await raf(); await raf(); }
+                window.__e.commit();
+              }
+              const fl = await window.__film(o);
+              return { s0, s1: st(), fl };
+            }, [{ target: '[data-e~="target"]', body: '[data-e~="body"]', face: m.face ? '[data-e~="face"]' : '[data-e~="target"]', ms: 800 }, mode]);
+            if (r.s0 === r.s1) return { pass: false, notDriven: true, med: jank(r.fl), line: `NOT DRIVEN: the scene's state did not change (${String(r.s0).slice(0, 60)}); an arrival that set nothing is not graded` };
+            const head = `state ${String(r.s0).slice(0, 30)} → ${String(r.s1).slice(0, 30)}`;
+            if (mode === "late") { const a = commitArms(r.fl, arms, en); return { ...a, med: jank(r.fl), line: `${head} · after first paint, 1 commit wanted · ${a.line}` }; }
+            const c = commitsIn(r.fl);
+            return { pass: c.n === 0 && c.ground, med: jank(r.fl), line: `${head} · ${mode === "pre" ? "set before the mount rendered" : mode === "own" ? "set in the mount's own task" : "set in the mount's own task after a style read"}, 0 commits wanted, ${c.n} read · ${c.line}` };
+          } finally { await P.close(); }
+        }), 45000));
+      }
     }
   }
 });

@@ -1,0 +1,62 @@
+{
+ "id": "E-5",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e5-hover"
+ },
+ "loadStart": "16.5/14.2/13.5",
+ "loadEnd": "17.0/14.5/13.7",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-5 pop sustain light",
+   "status": "FAIL",
+   "line": "NOT DRIVEN: no press-only property at +200 ms (the hold paints nothing to sustain)",
+   "load": "17.1/14.4/13.6"
+  },
+  {
+   "name": "E-5 pop press light",
+   "status": "FAIL",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only []",
+   "load": "17.1/14.4/13.6"
+  },
+  {
+   "name": "E-5 pop sustain(PRM) light",
+   "status": "FAIL",
+   "line": "NOT DRIVEN: no press-only property at +200 ms (the hold paints nothing to sustain)",
+   "load": "17.1/14.4/13.6"
+  },
+  {
+   "name": "E-5 pop press-light(PRM) light",
+   "status": "FAIL",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce)",
+   "load": "17.1/14.4/13.6"
+  },
+  {
+   "name": "E-5 pop sustain dark",
+   "status": "FAIL",
+   "line": "NOT DRIVEN: no press-only property at +200 ms (the hold paints nothing to sustain)",
+   "load": "17.0/14.5/13.7"
+  },
+  {
+   "name": "E-5 pop press dark",
+   "status": "FAIL",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only []",
+   "load": "17.0/14.5/13.7"
+  },
+  {
+   "name": "E-5 pop sustain(PRM) dark",
+   "status": "FAIL",
+   "line": "NOT DRIVEN: no press-only property at +200 ms (the hold paints nothing to sustain)",
+   "load": "17.0/14.5/13.7"
+  },
+  {
+   "name": "E-5 pop press-light(PRM) dark",
+   "status": "FAIL",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce)",
+   "load": "17.0/14.5/13.7"
+  }
+ ]
+}

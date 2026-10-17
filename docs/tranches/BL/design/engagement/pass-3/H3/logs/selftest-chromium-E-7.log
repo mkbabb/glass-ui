@@ -1,0 +1,15 @@
+# start E-7 chromium 2026-10-16 16:40:35 load { 22.52 23.63 21.75 }
+OK     E-7 chromium clean exit 0 · E-7 chromium PASS · 7 pass, 0 fail, 0 unmeasured of 7 gating cells (0 reported) · load 22.5/23.6/21.8 at start, 22.2/23.5/21.7 at end
+OK     E-7 chromium fault   e7-veil (the modal's scrim carries a bare data-engaged (presence) beside the held meaning) exit 1
+         first planted FAIL: FAIL       E-7 modal open, nothing held · dialog open true · veil nodes 1 · [data-engaged] nodes 1 (fx-scrim) · bound 0 · load 21.7/23.4/21.7
+OK     E-7 chromium fault   e7-two (two source files write data-engaged, one outside the register's owner) exit 1
+         first planted FAIL: FAIL       E-7 writers data-engaged (static) · 2 writer file(s): src/components/dialog/ModalOverlay.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree fixtures/e7/two-writers · load 21.7
+OK     E-7 chromium fault   e7-spread (CK-08 (X-6): a second writer of data-engaged hides in a v-bind object spread) exit 1
+         first planted FAIL: FAIL       E-7 writers data-engaged (static) · 2 writer file(s): src/components/dock/Dock.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree fixtures/e7/spread · load 21.7/23.4/21.7
+OK     E-7 chromium fault   e7-held (CK-08: a component writes data-held outside the register's owner (GlassDock.vue:346 at HEAD)) exit 1
+         first planted FAIL: FAIL       E-7 writers data-held (static) · 2 writer file(s): src/components/pager-dots/PagerDots.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree fixtures/e7/held-two · load 21.7/23.4
+OK     E-7 chromium fault   e7-prm (under reduced motion the held slider writes no data-engaged: held is gated on motion (H-9)) exit 1
+         first planted FAIL: FAIL       E-7 slider held PRM · reduce · [data-engaged] nodes while pointer-held 0 · bound ≥ 1 · load 21.2/23.3/21.7
+selftest: 6 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# exit 0
+# end E-7 chromium 2026-10-16 16:40:59 load { 20.33 23.04 21.60 }

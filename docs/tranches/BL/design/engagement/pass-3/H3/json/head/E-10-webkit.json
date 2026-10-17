@@ -1,0 +1,49 @@
+{
+ "id": "E-10",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p3/H3/wt/.h3/out/builds/head"
+ },
+ "loadStart": "8.3/8.3/7.8",
+ "loadEnd": "8.0/8.2/7.8",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 slider own release",
+   "status": "REPORT",
+   "line": "Tab-engaged scale ×1.000 < ×1.03: the keyboard does not engage this slider, so the release has no step to film (the hand-off and Escape cells read NOT DRIVEN)",
+   "load": "8.2/8.3/7.8"
+  },
+  {
+   "name": "E-10 slider escape release",
+   "status": "FAIL",
+   "line": "NOT DRIVEN: the slider was not keyboard-engaged at the Escape (×1.000 < ×1.03)",
+   "load": "8.2/8.3/7.8"
+  },
+  {
+   "name": "E-10 slider re-render landing",
+   "status": "PASS",
+   "line": "a sibling inserted during the hold, then release: the root's largest one-frame move per 16.7 ms 0.0 px (without the insert 0.0 px; bound ≤ that + 1 px)",
+   "load": "8.0/8.2/7.8"
+  },
+  {
+   "name": "E-10 slider2 hand-off drop",
+   "status": "FAIL",
+   "line": "NOT DRIVEN: A was not engaged at the Tab (×1.000, veil 0.00)",
+   "load": "8.0/8.2/7.8"
+  },
+  {
+   "name": "E-10 slider2 hand-off veil",
+   "status": "REPORT",
+   "line": "no veil up before the Tab (0.00): this route veils no keyboard engagement",
+   "load": "8.0/8.2/7.8"
+  },
+  {
+   "name": "E-10 slider2 hand-off rev",
+   "status": "FAIL",
+   "line": "NOT DRIVEN: B was not engaged at the Shift+Tab (×1.000, veil 0.00)",
+   "load": "8.0/8.2/7.8"
+  }
+ ]
+}

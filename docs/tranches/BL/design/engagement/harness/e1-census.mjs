@@ -22,7 +22,11 @@
 //   single                    no element anywhere composes more than one engage-* class (a computed read sees only
 //                             the later utility)
 //   static-inert <dir>        a static member's root is not focusable, has no interactive role and no handler, and no
-//                             element stamping `static` is live (Card.vue:66-67's role="option" tabindex="0")
+//                             element stamping `static` is live (Card.vue:66-67's role="option" tabindex="0"). H3: a
+//                             handler counts when the member or its consumer binds it; one a third-party component binds
+//                             inside the member (reka-ui's Label: a mousedown double-click selection guard) is printed and
+//                             not counted (the scene app's member walk reads each handler's origin, App.vue originOf)
+//   gallery rendered          (H3) no member a scene renders was caught by the scene app's error boundary
 //   adoption latch            RED until every declared member is SEEN adopting its recipe in some scene: a member no
 //                             scene renders is unproven, not green (the unit census's latch, read at runtime)
 //   runtime <class> (<dir>)   per class with a rung, on its exemplar's scene, by the rung's own input (CK-19):
@@ -61,7 +65,7 @@ await witness("E-1", "CK-01 the census reads adoption", async ({ E, T, cell, gua
 
   // ── CK-01 adoption: every member instance rendered in any scene ──
   const allowed = (dir) => d.modes?.[dir] ?? (d.members[dir] ? [d.members[dir]] : []);
-  const seen = {}; const multi = []; const statics = {}; let unread = [];
+  const seen = {}; const multi = []; const statics = {}; const libh = {}; const unrendered = []; let unread = [];
   for (const sc of Object.keys(idx)) {
     const r = await guard(`census ${sc}`, async () => {
       const Q = await openPage(E, T, sc);
@@ -76,8 +80,13 @@ await witness("E-1", "CK-01 the census reads adoption", async ({ E, T, cell, gua
       }
     }
     multi.push(...r.c.multi.map((x) => `${sc}: ${x}`));
+    unrendered.push(...(r.c.unrendered ?? []).map((x) => `${sc}: ${x}`));
+    for (const g of r.c.groups) if (g.libHandled?.length) (libh[g.dir] ??= []).push(...g.libHandled.map((x) => `${sc}: ${x}`));
   }
   if (unread.length) cell("E-1 census scenes read", "FAIL", `scenes whose members could not be read: ${unread.join("; ")}`);
+  // H3: every member a scene puts on the page rendered (the scene app's error boundary leaves [data-t="unrendered"] with
+  // the error as its title); a member that throws is named here, not read as "rendered by no scene"
+  cell("E-1 gallery rendered", unrendered.length ? "FAIL" : "PASS", unrendered.length ? `members the scene app's error boundary caught: ${unrendered.slice(0, 6).join(" · ")}` : `no member caught by an error boundary in ${Object.keys(idx).length} scenes`);
   const adopted = new Set();
   for (const dir of Object.keys(seen).sort()) {
     const al = allowed(dir); const inst = seen[dir];
@@ -91,7 +100,8 @@ await witness("E-1", "CK-01 the census reads adoption", async ({ E, T, cell, gua
   for (const dir of Object.keys(d.members).filter((k) => allowed(k).includes("static")).sort()) {
     if (!seen[dir]) continue;
     const live = statics[dir] ?? [];
-    cell(`E-1 static-inert ${dir}`, live.length ? "FAIL" : "PASS", live.length ? `live static elements: ${[...new Set(live)].slice(0, 4).join(" · ")}` : `${seen[dir].length} instance(s): the root is not focusable, has no interactive role and no handler`);
+    const lib = libh[dir]?.length ? ` · library-internal handlers, not counted (H3 rule): ${[...new Set(libh[dir])].slice(0, 3).join(" · ")}` : "";
+    cell(`E-1 static-inert ${dir}`, live.length ? "FAIL" : "PASS", `${live.length ? `live static elements: ${[...new Set(live)].slice(0, 4).join(" · ")}` : `${seen[dir].length} instance(s): the root is not focusable, has no interactive role and no handler the member or its consumer binds`}${lib}`);
   }
   const unproven = Object.keys(d.members).filter((k) => !adopted.has(k)).sort();
   cell("E-1 adoption latch", unproven.length ? "FAIL" : "PASS", `${Object.keys(d.members).length - unproven.length} of ${Object.keys(d.members).length} declared members seen adopting their recipe${unproven.length ? `; unproven (not rendered by any scene, or not adopted): ${unproven.join(" ")}` : ""}`);

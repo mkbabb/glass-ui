@@ -1,0 +1,7 @@
+# start CAP chromium r1 2026-10-16 22:33:21 load { 8.05 10.08 11.57 }
+OK     CAP chromium clean exit 0 · CAP chromium PASS · 2 pass, 0 fail, 0 unmeasured of 2 gating cells (0 reported) · load 8.1/10.1/11.6 at start, 8.4/10.1/11.6 at end
+OK     CAP chromium fault   cap-nocommit (CK-25 (H3 capture): a touch tap does not commit the control: the coarse 'committed' frame must say NOT COMMITTED, never show a frame as a commit) exit 1
+         first planted FAIL: FAIL       CAP pop coarse light committed · chromium: short tap, state "off" → "off": NOT COMMITTED, the frame is labelled so · load 8.7/10.1/11.6
+selftest: 2 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# exit 0
+# end CAP chromium r1 2026-10-16 22:33:39 load { 8.74 10.14 11.57 }

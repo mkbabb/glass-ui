@@ -11,7 +11,9 @@
 //             property), because a reversed transition runs a spec-shortened one (measured: WebKit 348 ms of 350).
 //             A duration no token carries is a minted figure. Offenders are named (property or animation name).
 //   literal PRM (H-9) the same press and commit under reduced motion: whatever still runs (a reduce arm's light
-//             transition) reads a clock token too.
+//             transition) reads a clock token too. H3: a kept clock that a reduce authorization row carries (a class
+//             rule outranking the library's `*` fallback, CP's css-prm-over-css.patch) resolves to its token and reads
+//             as authorized; the token set is resolved past the fallback (CLOCKS below), as E-9's kept light requires.
 // Light only: clocks do not change with the theme.
 //   node e8-clock.mjs --build <dir> | --fixture [--fault e8-drift|e8-literal] [--engine webkit]
 import { witness, openPage, scenesFor, center, tabKey, KEY_DWELL } from "./lib.mjs";
@@ -45,10 +47,16 @@ const CLOCKS = () => {
   const host = document.querySelector('[data-e~="target"]')?.parentElement ?? document.body;
   const probe = document.createElement("i"); probe.style.display = "none"; host.appendChild(probe);
   const ms = new Map();
+  // H3 (pass 3): each token resolves on the probe as an INLINE `!important` transition-duration. Element-attached
+  // important declarations outrank every important author rule in any layer (CSS Cascade 5 §6.2), so the library's PRM
+  // fallback (`* { transition-duration: 0s !important }` in @layer components, a11y-overrides.css) cannot zero the
+  // probe. Pass 2 set it without importance: under reduce every token read 0, the clock set came back empty ("against
+  // 0 clock tokens"), and every kept clock, A's authorized rows included, read as minted (C-CP §4.1, CP §7.4), which
+  // contradicted E-9 (a rung keeps its light leg under reduce)
   for (const n of names) {
-    probe.style.transitionDuration = ""; probe.style.transitionDuration = `var(${n})`;
+    probe.style.removeProperty("transition-duration"); probe.style.setProperty("transition-duration", `var(${n})`, "important");
     const v = getComputedStyle(probe).transitionDuration.split(",")[0].trim();
-    const m = v.match(/^([\d.]+)(m?s)$/); if (m && probe.style.transitionDuration) { const x = +m[1] * (m[2] === "s" ? 1000 : 1); if (x > 0) ms.set(n, x); }
+    const m = v.match(/^([\d.]+)(m?s)$/); if (m && probe.style.getPropertyValue("transition-duration")) { const x = +m[1] * (m[2] === "s" ? 1000 : 1); if (x > 0) ms.set(n, x); }
   }
   probe.remove();
   const root = getComputedStyle(document.documentElement);

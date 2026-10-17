@@ -96,7 +96,7 @@ export const FAULTS = {
   "e8-drift": { why: "the emitted --engage-press-drain-attack is 56ms against its row's 55", witnesses: ["E-8"], cell: /mirror/ },
   "e8-units": { why: "CONTROL, must PASS: a token spelled .18s (a minifier's respelling of 180ms, as the HEAD build does) equals its 180 ms row", witnesses: ["E-8"], expect: "pass" },
   "e8-literal": { why: "the control's press transition spells 230ms, a literal no token carries", witnesses: ["E-8"], cell: /literal pop/ },
-  "e8-prmliteral": { why: "the reduce arm's press transition spells 100ms, a literal no token carries (H-9)", witnesses: ["E-8"], cell: /literal pop PRM/ },
+  "e8-prmliteral": { why: "the reduce arm's authorization row (the class rule that outranks the PRM fallback) spells its press transition 100ms, a literal no token carries (H-9; H3: an authorized row is graded, not exempt)", witnesses: ["E-8"], cell: /literal pop PRM/ },
   "e9-scale": { why: "under reduced motion the press still squishes", witnesses: ["E-9"], cell: /press-spatial/ },
   "e9-dark": { why: "under reduced motion the press retires its scale and keeps no light answer (its press paints the hover value): E-9's press, E-1's exemplar under reduce and E-5's held touch under reduce all read it (H-9)", witnesses: ["E-9", "E-1", "E-5"], cell: /press-light/ },
   "e9-glide": { why: "under reduced motion the selection body still glides", witnesses: ["E-9"], cell: /commit-spatial/ },
@@ -104,6 +104,21 @@ export const FAULTS = {
   "e10-veildip": { why: "CK-20: the shared veil is torn down at A's release and re-ramps from 0 for B (C-E r32)", witnesses: ["E-10"], cell: /hand-off veil/ },
   "e10-escsnap": { why: "CK-20: Escape releases the keyboard engagement in one frame", witnesses: ["E-10"], cell: /escape release/ },
   "e10-rerender": { why: "CK-20: the held slider is pinned out of flow; a sibling inserted during the hold makes the release land in its new slot in one frame (P-E/rerender-probe.md)", witnesses: ["E-10"], cell: /re-render landing/ },
+  // ── H3 (pass 3): a plant per new cell (REGISTRY §P2-7 items 1-7) ──
+  "e1-ownhandler": { why: "CK-01 (H3 handler rule): the static card (delta) carries a click handler its member binds, with no role and no tabindex: the library-internal exemption must not swallow it", witnesses: ["E-1"], cell: /static-inert delta/ },
+  "e1-libhandler": { why: "CONTROL, must PASS (H3 handler rule): the static card carries only a handler a third-party component binds inside it (reka-ui's Label mousedown, C-A2 CK-01); pass 2's census counted it live", witnesses: ["E-1"], expect: "pass" },
+  "e1-unrendered": { why: "CK-01 (H3 gallery): a member the scene app's error boundary caught leaves [data-t=unrendered]; the census names it", witnesses: ["E-1"], cell: /gallery rendered/ },
+  "e2-arrival": { why: "CK-03 (H3): no one-frame arming: a model set in the mount's own task lights the commit (B's lesson, F-7)", witnesses: ["E-2"], cell: /pop arrival·own (light|dark)/ },
+  "e2-arrivalflush": { why: "CK-03 (H3, the style-read control): the commit light is a CSS transition and the only arming is the absence of a before-change style, so a model set in the mount's own task is quiet until something reads style during the mount, then lights (A's defect, C-CP §0 item 5)", witnesses: ["E-2"], cell: /pop arrival·ownflush/ },
+  "e2-arrivalmute": { why: "CK-03 (H3): the arming never arms on a deferred mount: a model set after first paint commits with no light", witnesses: ["E-2"], cell: /pop arrival·late/ },
+  "e2-statelessclick": { why: "CK-02 (H3 stateless ruling): the stateless control lights from its pointerup and keydown handlers only, so element.click() (its programmatic commit) activates it with no light", witnesses: ["E-2"], cell: /act commit·programmatic/ },
+  "e2-noground": { why: "CK-02 (H3 ground ruling): the page paints no ground behind the face; the light read must refuse to grade it rather than composite on an assumed white (CP §3.5)", witnesses: ["E-2"], cell: /pop commit·keyboard/ },
+  "e2-dither": { why: "CONTROL, must PASS (H3 resolution): the committed face is near-white (#eef0f4) and rests on a one-quantum 8-bit dither; one quantum there is ≈ 0.008 of luminance, above pass 2's flat 0.004 rest bound", witnesses: ["E-2"], expect: "pass" },
+  "e2-shimmer": { why: "CK-02 (H3 resolution): after the commit the face's fill keeps flickering by four 8-bit steps (≈ 0.013 on the accent): a light that never rests, above one quantum", witnesses: ["E-2"], cell: /pop commit·keyboard/ },
+  "e9-fillonly": { why: "CK-10 (H3): under reduced motion the commit keeps only the committed state's fill change, its light transient zeroed (A2's light under the library's PRM fallback, C-CP CK-10)", witnesses: ["E-9"], cell: /pop commit-light/ },
+  "e10-teleport": { why: "CK-20 (H3 position): on the hand-off the OUTGOING slider jumps onto the incoming one's place for 300 ms, then jumps home; its scale releases smoothly (C-E2 §0.1's 68 px teleport)", witnesses: ["E-10"], cell: /hand-off drop/ },
+  "e10-teleportin": { why: "CK-20 (H3 position): the INCOMING slider appears on the outgoing one's place for 200 ms, then jumps home (C-E2 §0.1, Shift+Tab B → A)", witnesses: ["E-10"], cell: /hand-off rev/ },
+  "cap-nocommit": { why: "CK-25 (H3 capture): a touch tap does not commit the control: the coarse 'committed' frame must say NOT COMMITTED, never show a frame as a commit", witnesses: ["CAP"], cell: /coarse.*committed/ },
   "e11-silent": { why: "CK-21: the engagement reads --fx-scale-engage at runtime and, when it is unreadable, degrades to no grow with no console.error", witnesses: ["E-11"], cell: /fail-loud/ },
   "e11-unread": { why: "CONTROL: the grow spells its figure in place and reads no token, so an unreadable token degrades nothing: UNMEASURED, not a pass", witnesses: ["E-11"], cell: /fail-loud/, expect: "unmeasured" },
   "e11-noise": { why: "CONTROL (H2 §2.3): the grow spells its figure in place, reads no token, and varies run to run (1.060, 1.061, 1.066, 1.054, 1.060 on successive slider loads); one planted read outside a two-run spread is noise, not a degradation: UNMEASURED, never FAIL", witnesses: ["E-11"], cell: /fail-loud/, expect: "unmeasured" },
@@ -114,6 +129,8 @@ export const FIXTURE_INDEX = {
   pop: { gates: [...CONTROL_GATES, "E-5"], key: "Space", target: ".ctl" },
   travel: { gates: CONTROL_GATES, key: "ArrowRight", target: '.seg[data-v="b"]' },
   rest: { gates: CONTROL_GATES, key: "Space", target: ".ctl" },
+  // H3: a stateless control (a counter, no model): E-2 drives its programmatic commit as element.click()
+  act: { gates: CONTROL_GATES, key: "Space", target: ".ctl", stateless: true },
   slider: { gates: ["E-3", "E-4", "E-7", "E-9", "E-10", "E-11"], key: "ArrowRight", veil: ".fx-veil", failLoud: [{ token: "--fx-scale-engage", value: "nonsense", act: "kbd" }] },
   slider2: { gates: ["E-10"], veil: ".fx-veil", pair: ['.fx-slider[data-n="A"]', '.fx-slider[data-n="B"]'] },
   vsheet: { gates: ["E-4"], axis: "y", dir: -1, detents: true, fixed: ".fx-sheet" },
@@ -167,7 +184,7 @@ export function fixturePage(params, fault = "") {
   --fx-scale-engage: 1.06;
   --bg: #f4f4f6; --ink: #111; --ctl: #d8dbe2; --ctl-hover: #cfd3dc; --ctl-press: #b9bfcc; --accent: #3b6cf0; }
 .dark { --bg: #15161a; --ink: #eee; --ctl: #33363f; --ctl-hover: #3b3f49; --ctl-press: #4b505c; }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 15px system-ui; }
+body { margin: 0; background: ${F("e2-noground") ? "transparent" : "var(--bg)"}; color: var(--ink); font: 15px system-ui; }
 main { min-height: 100vh; padding: ${phone ? "48px 16px" : "48px"}; box-sizing: border-box; }
 .ctl, .seg { display: inline-flex; align-items: center; justify-content: center; height: 40px; padding: 0 18px; border-radius: 20px;
   background-color: var(--ctl); user-select: none; cursor: pointer; position: relative;
@@ -178,10 +195,21 @@ ${F("e5-decay") ? `.ctl:active { animation: fx-sag 500ms linear forwards; } @key
 .ctl[data-state="on"] { color: #fff; background-color: var(--accent); }
 .rest .ctl[data-state="on"] { scale: 1.05; }
 .flash { position: absolute; inset: 0; border-radius: inherit; background: #fff; opacity: 0; pointer-events: none; }
+button.ctl { border: 0; font: inherit; color: inherit; }
+/* H3: the one-frame arming covers the controls' own transitions too (F-7: A's seat transitions gated until a frame after
+   mount): a model that arrives during the mount lands on its committed rest (the rest scene's 1.05) without a glide */
+#stage:not(.armed) :is(.ctl, .seg) { transition: none !important; }
+${F("e2-arrivalflush") ? `.flash { transition: opacity var(--engage-control-engage-release) linear; } .flash.lit { opacity: 0.35; transition-duration: var(--engage-control-engage-attack); }` : ""}
+${F("e2-dither") ? `.ctl[data-state="on"] { background-color: #eef0f4; color: #111; } .ctl { transition: scale var(--spring-press-duration) var(--spring-press); }` : ""}
+${F("e2-shimmer") ? `.ctl { transition: scale var(--spring-press-duration) var(--spring-press); }` : ""}
+/* H3: the library's PRM fallback, modelled (a11y-overrides.css: every transition zeroed under reduce by a * rule with
+   !important), and the reduce arm's light kept by an AUTHORIZATION row, a class rule that outranks it (CP's
+   css-prm-over-css.patch). E-8's PRM arm must read the authorized clock as a token (pass 2 read it minted) */
 @media (prefers-reduced-motion: reduce) {
-  ${F("e9-scale") ? "" : `.ctl:active, .seg:active, .rest .ctl[data-state="on"]:active { scale: 1; } .ctl, .seg { transition: background-color var(--engage-press-drain-attack) linear; }`}
+  *, *::before, *::after { transition-duration: 0s !important; }
+  ${F("e9-scale") ? "" : `.ctl:active, .seg:active, .rest .ctl[data-state="on"]:active { scale: 1; }`}
+  .ctl, .seg { transition: background-color var(--engage-press-drain-attack) linear; transition-duration: ${F("e8-prmliteral") ? "100ms" : "var(--engage-press-drain-attack)"} !important; }
   ${F("e9-dark") ? `.ctl:active, .seg:active { background-color: var(--ctl-hover); }` : ""}
-  ${F("e8-prmliteral") ? `.ctl, .seg { transition: background-color 100ms linear; }` : ""}
 }
 .segs { position: relative; display: inline-flex; gap: 0; padding: 4px; border-radius: 24px; background: var(--ctl); }
 .seg { background-color: transparent; position: relative; z-index: 1; width: 78px; padding: 0; }
@@ -226,12 +254,13 @@ ${F("e1-fielddead") ? "" : ".fx-field:hover { border-color: var(--accent); backg
   const slider = (n = "") => `<div class="fx-slider${F("e1-nullhost") ? "" : " engage-held"}" data-member="beta" data-e="${n ? "" : "root target"}" data-n="${n}"><div class="fx-thumb" role="slider" tabindex="0" aria-label="Probe${n}" aria-valuenow="40" data-e="${n ? "" : "thumb body"}"></div></div>`;
   let body = "";
   if (scene === "pop" || scene === "rest") body = F("e1-absent") && scene === "pop" ? `<div class="${scene}"><div class="ctl ${ctlClass}" data-member="alpha">Probe</div></div>` : `<div class="${scene}">${ctl()}</div>`;
-  else if (scene === "travel") body = `<div class="segs" role="radiogroup" aria-label="Probe" data-member="alpha"><span class="ind" data-e="body"></span>${["a", "b", "c"].map((v) => `<div class="seg ${ctlClass}" role="radio" data-v="${v}" aria-checked="${v === (on ? "b" : "a")}" tabindex="${v === (on ? "b" : "a") ? 0 : -1}"${v === "b" ? ' data-e="target"' : ""}>${v.toUpperCase()}</div>`).join("")}</div>`;
+  else if (scene === "act") body = `<button class="ctl ${ctlClass}" type="button" data-member="alpha" data-e="target" data-handler>Act<span class="flash"></span></button>`;
+  else if (scene === "travel") body = `<div class="segs" role="radiogroup" aria-label="Probe" data-member="alpha"><span class="ind" data-e="body"></span>${["a", "b", "c"].map((v) => `<div class="seg ${ctlClass}" role="radio" data-v="${v}" aria-checked="${v === (on ? "b" : "a")}" tabindex="${v === (on ? "b" : "a") ? 0 : -1}"${v === "b" ? ' data-e="target"' : ""}>${v.toUpperCase()}<span class="flash"></span></div>`).join("")}</div>`;
   else if (scene === "slider") body = `<div id="slot"></div>${slider()}`;
   else if (scene === "slider2") body = `${slider("A")}${slider("B")}`;
   else if (scene === "modal") body = `<div class="fx-scrim" data-state="open" data-e="veil"${F("e7-veil") ? " data-engaged" : ""}></div><div class="fx-dialog" role="dialog" aria-label="Probe" data-e="modal">Body</div>`;
   else if (scene === "s6") body = `<span class="fx-switch" role="switch" aria-checked="false" aria-label="Probe" data-e="target"></span>`;
-  else if (scene === "passive") body = `<hr class="engage-static" data-member="gamma" data-e="target"><div class="card engage-static" data-member="delta"${F("e1-staticfocus") ? ' role="option" tabindex="0" data-handler' : ""}>Card</div>`;
+  else if (scene === "passive") body = `<hr class="engage-static" data-member="gamma" data-e="target"><div class="card engage-static" data-member="delta"${F("e1-staticfocus") ? ' role="option" tabindex="0" data-handler' : F("e1-ownhandler") ? " data-handler" : F("e1-libhandler") ? ' data-handler="lib"' : ""}>Card</div>${F("e1-unrendered") ? '<i data-t="unrendered" title="Error: the member threw in setup"></i>' : ""}`;
   else if (scene === "field") body = `<input class="fx-field engage-field" data-member="eta" data-e="target" aria-label="Probe" data-handler>`;
   else if (scene === "ambient") body = `<div class="fx-amb engage-ambient" data-member="theta" data-e="target"></div>`;
   else if (scene === "vsheet") body = `<div class="fx-vroot" data-e="root"></div><div class="fx-sheet"><div class="fx-grip" role="slider" aria-label="Probe" aria-valuenow="25" tabindex="0" data-e="thumb"></div></div>`;
@@ -246,6 +275,8 @@ const prm = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 // load read here. Fixed cutoffs of 200 and 400 ms misread loaded flings as still (load 171-492), and a cutoff scaled to
 // the move cadence misread WebKit, which can deliver the three moves within 1 ms (pass-2/H2.md §2.1)
 const stale = (hist, now) => now - hist.at(-1).t > 700;
+// the scene's model, readable before the deferred mount renders (CK-03's arrival reads the state across it)
+let model = ON, selIdx = ON ? 1 : 0, count = 0;
 const tok = (n) => parseFloat(getComputedStyle(document.documentElement).getPropertyValue(n));
 const ms = (n) => { const m = getComputedStyle(document.documentElement).getPropertyValue(n).trim().match(/^([\\d.]+)(m?s)$/); return m ? +m[1] * (m[2] === "s" ? 1000 : 1) : NaN; };
 const SPRING = ${JSON.stringify(SPRING)};
@@ -258,9 +289,29 @@ async function flash(el) {
   await up.finished; fl.animate([{ opacity: 0.35 }, { opacity: 0 }], { duration: lit ? 300 : ms("--engage-control-engage-release"), fill: "forwards" }); up.cancel();
 }
 function geom(el, crest) { if (!el || prm()) return; el.animate([{ transform: "scale(1)" }, { transform: "scale(" + crest + ")", offset: 0.35 }, { transform: "scale(" + (2 - crest - (crest - 1) * 0.75) + ")", offset: 0.6 }, { transform: "scale(1.0005)", offset: 0.8 }, { transform: "scale(1)" }], { duration: tok("--spring-press-duration") }); }
+// e2-arrivalflush: the light is a CSS transition armed only by a before-change style. Reading the animations flushes
+// style: a seat styled before (a paint, or any style read) starts its transition and lights; a seat styled for the
+// first time now has no before-change style, starts none, and is put back dark with no transition
+function flashCss(el) {
+  const fl = el?.querySelector(".flash"); if (!fl) return;
+  fl.classList.add("lit");
+  if (!fl.getAnimations().length) { fl.style.transition = "none"; fl.classList.remove("lit"); fl.getAnimations(); fl.style.transition = ""; return; }
+  setTimeout(() => fl.classList.remove("lit"), ms("--engage-control-engage-attack"));
+}
+// H3: a face that never rests after its commit (e2-shimmer: four 8-bit steps on the accent) or rests on a one-quantum
+// dither (e2-dither, near-white); started by the commit, every frame for the page's life
+function flicker(el, a, b) { let k = 0; const go = () => { el.style.backgroundColor = k++ % 2 ? b : a; requestAnimationFrame(go); }; requestAnimationFrame(go); }
+// H3: the one-frame arming (F-7, B's): the commit light is armed two frames after the mount, so a model set during the
+// mount (before or in its own task) commits nothing; e2-arrival never waits for it, e2-arrivalmute never arms a
+// deferred mount
+let armed = false;
+const arm = () => requestAnimationFrame(() => requestAnimationFrame(() => { if (!(FAULT === "e2-arrivalmute" && DEFER)) { armed = true; document.getElementById("stage").classList.add("armed"); } }));
+const quietSet = () => !armed && FAULT !== "e2-arrival" && FAULT !== "e2-arrivalflush";
 function pop(el) {
   if (!el) return;
   if (FAULT === "e2-fillonly") return;
+  if (FAULT === "e9-fillonly" && prm()) return;
+  if (FAULT === "e2-arrivalflush") return flashCss(el);
   if (FAULT === "e2-fade") { if (!prm()) el.animate([{ opacity: 0.6 }, { opacity: 1 }], { duration: 120, easing: "linear" }); return; }
   if (FAULT === "e2-geompop" || FAULT === "e2-bigpop") return geom(el, 1.08);
   if (FAULT === "e2-smallpop") return geom(el, 1.004);
@@ -298,13 +349,18 @@ function wireSlider(root) {
   const th = root.querySelector(".fx-thumb");
   const W = () => root.offsetWidth; let x = 0.4 * W(); const put = () => { th.style.left = x + "px"; th.setAttribute("aria-valuenow", String(Math.round(100 * x / W()))); }; put();
   let drag = null, raf = 0;
-  th.addEventListener("focus", () => {
+  // H3 plants: a root pinned for ms on another root's place by a translate, then put back, each jump one frame
+  const teleport = (other, ms) => { const dy = other.getBoundingClientRect().top - root.getBoundingClientRect().top; root.style.translate = "0 " + dy + "px"; setTimeout(() => { root.style.translate = ""; }, ms); };
+  th.addEventListener("focus", (e) => {
     if (FAULT === "e3-scriptfocus") { kbd(root, true); return; }
+    const prev = e.relatedTarget?.closest?.(".fx-slider");
+    if (FAULT === "e10-teleportin" && prev && prev !== root) teleport(prev, 200);
     if (lastKey.key === "Tab" && performance.now() - lastKey.t < 150) kbd(root, true);
   });
   th.addEventListener("blur", (e) => {
     // a hand-off: focus moves straight to another slider's thumb
     const next = e.relatedTarget?.closest?.(".fx-slider");
+    if (FAULT === "e10-teleport" && next && next !== root) teleport(next, 300);
     if (FAULT === "e10-snap" && next && next !== root) { root.classList.add("snap"); kbd(root, false); root.getBoundingClientRect(); requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("snap"))); return; }
     kbd(root, false);
   });
@@ -350,28 +406,42 @@ function wireSlider(root) {
 }
 function mountScene() {
   const stage = document.getElementById("stage"); stage.innerHTML = ${JSON.stringify(body)};
+  arm();
   if (SCENE === "pop" || SCENE === "rest") {
     const el = stage.querySelector(".ctl");
-    const set = (v, how) => { el.dataset.state = v ? "on" : "off"; el.setAttribute("aria-checked", String(v));
+    const set = (v, how) => { model = v; el.dataset.state = v ? "on" : "off"; el.setAttribute("aria-checked", String(v));
+      if (v && FAULT === "e2-dither") flicker(el, "#eef0f4", "#eff1f5");
+      if (v && FAULT === "e2-shimmer") flicker(el, "#3b6cf0", "#3f70f4");
+      if (quietSet()) return;
       if (FAULT === "e2-prog" && how === "model") return; pop(el); };
-    E.commit = () => set(el.dataset.state !== "on", "model");
-    E.state = () => el.dataset.state;
+    E.commit = () => set(!model, "model");
     let lastTouch = -1e9; el.addEventListener("touchstart", () => { lastTouch = performance.now(); }, { passive: true });
-    el.addEventListener("click", (e) => { if (FAULT === "e2-nocoarse" && (e.pointerType === "touch" || performance.now() - lastTouch < 1000)) { el.dataset.state = el.dataset.state === "on" ? "off" : "on"; return; } set(el.dataset.state !== "on", "event"); });
-    el.addEventListener("keydown", (e) => { if ((e.key === " " || e.key === "Enter") && FAULT !== "e2-notdriven") { e.preventDefault(); set(el.dataset.state !== "on", "event"); } });
+    el.addEventListener("click", (e) => {
+      if (FAULT === "cap-nocommit" && (e.pointerType === "touch" || performance.now() - lastTouch < 1000)) return;
+      if (FAULT === "e2-nocoarse" && (e.pointerType === "touch" || performance.now() - lastTouch < 1000)) { model = !model; el.dataset.state = model ? "on" : "off"; return; } set(!model, "event"); });
+    el.addEventListener("keydown", (e) => { if ((e.key === " " || e.key === "Enter") && FAULT !== "e2-notdriven") { e.preventDefault(); set(!model, "event"); } });
     if (FAULT === "e2-tabpop") el.addEventListener("focus", () => pop(el));
     if (FAULT === "e2-mountpop" && ON) requestAnimationFrame(() => pop(el));
+  }
+  if (SCENE === "act") {
+    // a stateless control: activation counts; the clean control lights on its click, the plant only on pointerup and
+    // keydown (so a script click() counts with no light)
+    const el = stage.querySelector(".ctl");
+    el.addEventListener("click", () => { count++; if (FAULT !== "e2-statelessclick") pop(el); });
+    if (FAULT === "e2-statelessclick") { el.addEventListener("pointerup", () => pop(el)); el.addEventListener("keydown", (e) => { if (e.key === " " || e.key === "Enter") pop(el); }); }
   }
   if (SCENE === "travel") {
     const segs = [...stage.querySelectorAll(".seg")]; const ind = stage.querySelector(".ind");
     const xOf = (s) => s.offsetLeft - 4;
     ind.style.translate = xOf(segs.find((s) => s.getAttribute("aria-checked") === "true")) + "px 0";
-    E.state = () => segs.findIndex((s) => s.getAttribute("aria-checked") === "true");
     const select = (s, how) => {
       const from = parseFloat(ind.style.translate) || 0; const to = xOf(s);
       segs.forEach((x) => { const c = x === s; x.setAttribute("aria-checked", String(c)); x.tabIndex = c ? 0 : -1; });
+      selIdx = segs.indexOf(s);
       ind.style.translate = to + "px 0";
-      if (from === to || prm() && FAULT !== "e9-glide") return;
+      if (from === to || quietSet()) return;
+      // reduce: the body lands (no travel) and the commit keeps its light leg on the chosen segment (CK-10)
+      if (prm() && FAULT !== "e9-glide") { pop(s); return; }
       if (FAULT === "e2-fade") { s.animate([{ opacity: 0.6 }, { opacity: 1 }], { duration: 120, easing: "linear" }); return; }
       const lin = FAULT === "e2-glide" || (FAULT === "e2-prog" && how === "model");
       ind.animate([{ translate: from + "px 0" }, { translate: to + "px 0" }], { duration: tok("--spring-press-duration"), easing: lin ? "linear" : SPRING });
@@ -430,15 +500,23 @@ function mountScene() {
   }
 }
 // CK-01: the rendered members. Each [data-member] root and its own elements (a nested member's subtree is its own);
-// handlers are the elements marked data-handler (the build reads its vnodes' on* props instead)
+// handlers are the elements marked data-handler (the build reads its vnodes' on* props instead); data-handler="lib" is
+// one a third-party component binds inside the member (H3: library-internal, not counted)
 E.members = () => [...document.querySelectorAll("[data-member]")].map((root) => {
   const own = [root, ...root.querySelectorAll("*")].filter((e) => e.closest("[data-member]") === root);
-  return { dir: root.dataset.member, root, els: own, handlers: own.filter((e) => e.hasAttribute("data-handler")) };
+  return { dir: root.dataset.member, root, els: own, handlers: own.filter((e) => e.getAttribute("data-handler") === ""), libHandlers: own.filter((e) => e.getAttribute("data-handler") === "lib") };
 });
 E.state = () => null;
-E.mount = async () => { mountScene(); await new Promise((r) => requestAnimationFrame(r)); };
+if (SCENE === "pop" || SCENE === "rest") E.state = () => (model ? "on" : "off");
+if (SCENE === "travel") E.state = () => selIdx;
+if (SCENE === "act") E.state = () => count;
+// H3: the deferred mount renders in the caller's task (await __e.mount() resolves in a microtask), as the scene app's
+// does: CK-03's "own" arrival is the mount's own task
+E.mount = async () => { mountScene(); };
 if (!DEFER) mountScene();
-setTimeout(() => { E.ready = true; window.__e = E; }, 150);
+// ready once the commit is armed (a mounted page) or at once (a deferred one): a loaded machine can hold rAF past 150 ms
+const ready = () => { if (!DEFER && !armed) return setTimeout(ready, 30); E.ready = true; window.__e = E; };
+setTimeout(ready, 150);
 `;
   return `<!doctype html><html${dark ? ' class="dark"' : ""}><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>D5 fixture</title><style>${css}</style></head>
 <body><main data-scene="${scene}"><button data-sentinel="before">before</button><div id="stage" style="padding:24px 0"></div><button data-sentinel="after">after</button></main>

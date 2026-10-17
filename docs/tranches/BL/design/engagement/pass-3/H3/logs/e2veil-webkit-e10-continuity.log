@@ -1,0 +1,15 @@
+# start e10 e2veil webkit 2026-10-16 17:05:58 load { 35.00 24.51 20.48 }
+[guarded] waiting for the 'webkit' lock
+# E-10 · CK-20 no one-frame discontinuity on an engagement path
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p3/H3/wt/.h3/out/builds/e2veil · engine webkit · lock wait 0.0 s · other headless processes: chromium 8, webkit 0 · load 14.7/13.9/14.4 at start
+# scene app: harness scenes/App.vue (sha1 3fb393c67b89)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  REPORT     E-10 slider own release · Tab in: largest one-frame centre move 0.0 px · Tab out of the engaged slider: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0098, largest centre move 0.0 px (the references for the hand-off and Escape bounds) · load 16.3/14.2/14.5
+  PASS       E-10 slider escape release · Escape: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0091 (bound ≤ own release 0.0098 + 0.002), largest centre move 0.0 px (bound ≤ own release 0.0 + 1 px) · load 16.3/14.2/14.5
+  PASS       E-10 slider re-render landing · a sibling inserted during the hold, then release: the root's largest one-frame move per 16.7 ms 1.6 px (without the insert 1.5 px; bound ≤ that + 1 px) · load 17.3/14.4/14.6
+  FAIL       E-10 slider2 hand-off drop · Tab A → B (focus on Probe B) · outgoing A ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0097 (bound ≤ own release 0.0098 + 0.002), largest centre move 68.0 px at 44 ms (bound ≤ own release 0.0 + 1 px) · incoming B ×1.000 → ×1.060, largest centre move 0.0 px at 74 ms (bound ≤ own engage 0.0 + 1 px) · load 17.3/14.4/14.6
+  PASS       E-10 slider2 hand-off veil · veil 1.00 before the Tab, minimum 1.00 across the hand-off, 1.00 at the end (bound ≥ 0.1× its level: it does not re-ramp from 0) · load 17.3/14.4/14.6
+  FAIL       E-10 slider2 hand-off rev · Shift+Tab B → A (focus on Probe A) · outgoing B ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0098 (bound ≤ own release 0.0098 + 0.002), largest centre move 0.0 px at 58 ms (bound ≤ own release 0.0 + 1 px) · incoming A ×1.000 → ×1.060, largest centre move 68.0 px at 181 ms (bound ≤ own engage 0.0 + 1 px) · load 18.2/14.7/14.7
+E-10 webkit FAIL · 3 pass, 2 fail, 0 unmeasured of 5 gating cells (1 reported) · load 14.7/13.9/14.4 at start, 18.2/14.7/14.7 at end
+# exit 1
+# end e10 e2veil webkit 2026-10-16 17:35:36 load { 18.22 14.69 14.69 }

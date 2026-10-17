@@ -1,0 +1,41 @@
+# start E-2 chromium 2026-10-16 16:02:07 load { 21.33 21.55 20.16 }
+OK     E-2 chromium clean exit 0 · E-2 chromium PASS · 72 pass, 0 fail, 0 unmeasured of 72 gating cells (8 reported) · load 21.3/21.6/20.2 at start, 24.0/21.7/20.3 at end
+OK     E-2 chromium fault   e2-fade (the commit is a 120 ms linear fade-in (light that rises TO its rest, not above it); the selection body jumps: no arm) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·keyboard(Space) light · state "off" → "on" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 76.5 px = 0.00 px (bound > 0.8) · (iii) light rise 0.
+OK     E-2 chromium fault   e2-tabpop (the commit's light also fires when Tab enters the control) exit 1
+         first planted FAIL: FAIL       E-2 pop Tab-entry light · scale range 0.000 body moved 0.00 px light rise 0.0957 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on switch · load 23.4/21.6/20.4
+OK     E-2 chromium fault   e2-prog (the commit fires from pointer and key handlers only: a programmatic model change commits with none) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·programmatic light · state "off" → "on" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 76.5 px = 0.00 px (bound > 0.8) · (iii) light rise 0.000
+OK     E-2 chromium fault   e2-glide (the selection body glides on a linear path and lands without overshoot (travel with no weight)) exit 1
+         first planted FAIL: FAIL       E-2 travel commit·keyboard(ArrowRight) light · state 0 → 1 · arm none of [i,iii] · (i) body travel 78.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 78.0 px = 0.00 px (bound > 0.8) · (iii) light rise 
+OK     E-2 chromium fault   e2-mountpop (a control that mounts already committed fires its commit light on mount (H-8)) exit 1
+         first planted FAIL: FAIL       E-2 pop mount(committed) light · after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.1817 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (boun
+OK     E-2 chromium fault   e2-nocoarse (the commit is keyed on mouse events: a touch tap commits with none) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·tap(coarse) light · state "off" → "on" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.002 trough 1.000 settle 1.000 on 76.5 px = 0.18 px (bound > 0.8) · (iii) light rise 0.0000
+OK     E-2 chromium fault   e2-notdriven (CK-02 precondition: the scene's key does not change the state (X-5); the cell must read NOT DRIVEN, never PASS) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·keyboard(Space) light · NOT DRIVEN: the scene's state did not change ("off"); a commit that never happened is not graded · load 20.8/20.0/19.9
+OK     E-2 chromium fault   e2-fillonly (CK-02 arm iii: the commit is the committed state's own fill change and nothing else) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·keyboard(Space) light · state "off" → "on" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 76.5 px = 0.00 px (bound > 0.8) · (iii) light rise 0.
+OK     E-2 chromium fault   e2-literalflash (CK-02 arm iii: the commit's light rises and decays on 300 ms, a clock no ENGAGE_ENVELOPES row carries) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·keyboard(Space) light · state "off" → "on" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 76.5 px = 0.00 px (bound > 0.8) · (iii) light rise 0.
+OK     E-2 chromium fault   e2-geompop (CK-02 arm ii unadmitted: the commit is a geometric pop alone (1.08 crest), which the default arms (i, iii) do not admit) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·keyboard(Space) light · state "off" → "on" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.077 trough 0.861 settle 1.000 on 76.5 px = 5.89 px (bound > 0.8) · (iii) light rise 0.
+OK     E-2 chromium control e2-bigpop (CONTROL, must PASS with arm ii admitted (--commit-arms i,ii,iii): the 1.08 geometric pop clears 0.8 px on the face with a bounce) exit 0
+OK     E-2 chromium fault   e2-smallpop (CK-02 arm ii admitted: a 1.004 crest moves the painted face 0.4 px (C-A r26's pop), under the 0.8 px floor) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·keyboard(Space) light · state "off" → "on" · arm none of [i,ii,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.004 trough 0.993 settle 1.000 on 76.5 px = 0.30 px (bound > 0.8) · (iii) light rise
+OK     E-2 chromium fault   e2-arrival (CK-03 (H3): no one-frame arming: a model set in the mount's own task lights the commit (B's lesson, F-7)) exit 1
+         first planted FAIL: FAIL       E-2 pop arrival·own light · state "off" → "on" · set in the mount's own task, 0 commits wanted, 1 read · light above its committed rest 0.1817 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), 
+OK     E-2 chromium fault   e2-arrivalflush (CK-03 (H3, the style-read control): the commit light is a CSS transition and the only arming is the absence of a before-change style, so a model set in the mount's own task is quiet until something reads style during the mount, then lights (A's defect, C-CP §0 item 5)) exit 1
+         first planted FAIL: FAIL       E-2 pop arrival·ownflush light · state "off" → "on" · set in the mount's own task after a style read, 0 commits wanted, 1 read · light above its committed rest 0.1817 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scal
+OK     E-2 chromium fault   e2-arrivalmute (CK-03 (H3): the arming never arms on a deferred mount: a model set after first paint commits with no light) exit 1
+         first planted FAIL: FAIL       E-2 pop arrival·late light · state "off" → "on" · after first paint, 1 commit wanted · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 76.5 px = 0.00 px (bound >
+OK     E-2 chromium fault   e2-statelessclick (CK-02 (H3 stateless ruling): the stateless control lights from its pointerup and keydown handlers only, so element.click() (its programmatic commit) activates it with no light) exit 1
+         first planted FAIL: FAIL       E-2 act commit·programmatic light · element.click() (stateless) · state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 59.0 px = 0.00 px (bound > 0.8) ·
+OK     E-2 chromium fault   e2-noground (CK-02 (H3 ground ruling): the page paints no ground behind the face; the light read must refuse to grade it rather than composite on an assumed white (CP §3.5)) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·keyboard(Space) light · state "off" → "on" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 76.5 px = 0.00 px (bound > 0.8) · (iii) NO PAINTED GR
+OK     E-2 chromium control e2-dither (CONTROL, must PASS (H3 resolution): the committed face is near-white (#eef0f4) and rests on a one-quantum 8-bit dither; one quantum there is ≈ 0.008 of luminance, above pass 2's flat 0.004 rest bound) exit 0
+OK     E-2 chromium fault   e2-shimmer (CK-02 (H3 resolution): after the commit the face's fill keeps flickering by four 8-bit steps (≈ 0.013 on the accent): a light that never rests, above one quantum) exit 1
+         first planted FAIL: FAIL       E-2 pop commit·keyboard(Space) light · state "off" → "on" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 76.5 px = 0.00 px (bound > 0.8) · (iii) light rise 0.
+selftest: 20 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# exit 0
+# end E-2 chromium 2026-10-16 16:27:10 load { 22.90 17.08 16.97 }

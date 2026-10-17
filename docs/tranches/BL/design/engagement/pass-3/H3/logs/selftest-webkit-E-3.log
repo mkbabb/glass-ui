@@ -1,0 +1,26 @@
+# start E-3 webkit 2026-10-16 18:09:05 load { 8.88 11.20 13.79 }
+OK     E-3 webkit   clean exit 0 · E-3 webkit PASS · 22 pass, 0 fail, 0 unmeasured of 22 gating cells (0 reported) · load 8.9/11.2/13.8 at start, 10.1/11.3/13.7 at end
+OK     E-3 webkit   fault   e3-still (the slider never grows) exit 1
+         first planted FAIL: FAIL       E-3 slider desk pointer-held light · rest 360.0 px → held 360.0 px (×1.000; [data-engaged] 1) · bound ×1.03 sustained at 450 ms · load 10.1/11.3/13.7
+OK     E-3 webkit   fault   e3-kbd (the slider grows under the pointer only; keyboard engagement leaves it at rest) exit 1
+         first planted FAIL: FAIL       E-3 slider desk keyboard-focused light · rest 360.0 px → focused 360.0 px (×1.000; focus on slider) · bound ×1.03 · load 10.3/11.2/13.6
+OK     E-3 webkit   fault   e3-gutter (the phone slider is full width and grows ×1.06 in place, past the 16 px gutter) exit 1
+         first planted FAIL: FAIL       E-3 slider phone gutter light · engaged box 5.3..384.7 px in a 390 px viewport · bound 16..374 px · load 12.8/11.7/13.7
+OK     E-3 webkit   fault   e3-tabhand (CK-04: Tab paints the hand's register: data-held and cursor grabbing on keyboard focus (C-B §0 item 1)) exit 1
+         first planted FAIL: FAIL       E-3 slider desk keyboard register light · Tab-engaged: [data-held] 1 · cursor grabbing true · root height ×1.060 body height ×1.060 (bound: no data-held, no grabbing, no squish < ×0.99: the hand's register is the pointer's) · loa
+OK     E-3 webkit   fault   e3-latch (CK-04 (X-1): after a pointer drag and release the slider stays engaged (the S-8 :has(:focus-visible) latch)) exit 1
+         first planted FAIL: FAIL       E-3 slider afterdrag light · a pointer drag and release, +600 ms: ×1.060 × 1.060 · [data-held] 0 · veil 1 (bound ×1 ± 0.002, X-1) · load 12.8/12.0/13.7
+OK     E-3 webkit   fault   e3-modifier (CK-04: any keydown engages, a lone modifier included (C-B §0 item 2)) exit 1
+         first planted FAIL: FAIL       E-3 slider modifier light · after a drag (focus on slider), each held alone 400 ms: Shift ×1.060 × 1.060 held 0 · Meta ×1.060 × 1.060 held 0 · Control ×1.060 × 1.060 held 0 · Alt ×1.060 × 1.060 held 0 (bound ×1 ± 0.002, no data-h
+OK     E-3 webkit   fault   e3-charkey (CK-04: a character key the slider does not act on engages (useEngage.ts:108's leading `.`, C-E r33)) exit 1
+         first planted FAIL: FAIL       E-3 slider unacted key light · after a drag, "k" +450 ms: ×1.060 × 1.060 · veil 1 (bound ×1 ± 0.002, no veil: a key the control does not act on engages nothing) · load 10.5/11.5/13.4
+OK     E-3 webkit   fault   e3-scriptfocus (CK-04: a script focus() with no key event engages (C-E §0 item 3)) exit 1
+         first planted FAIL: FAIL       E-3 slider script focus light · element.focus() with no key event (focus on slider), +450 ms: ×1.060 × 1.060 · veil 1 (bound ×1 ± 0.002, no veil) · load 10.5/11.4/13.3
+OK     E-3 webkit   control e3-blockgrow (CONTROL, must PASS: the phone slider grows ×1.06 on the block axis only, inside the gutter (CK-04's block reading, R-E's)) exit 0
+OK     E-3 webkit   fault   e3-prmdark (CK-04: under reduced motion the touch-held phone slider paints nothing (the light leg dropped with the grow)) exit 1
+         first planted FAIL: FAIL       E-3 slider phone touch-held PRM light · reduce · rest → touch-held ×1.000 × 1.000 · light leg [] (bound ×1 ± 0.002 on both axes and ≥ 1 paint property) · load 9.8/11.0/13.0
+OK     E-3 webkit   fault   e3-prmgrow (under reduced motion the slider still grows, on its spring (H-9)) exit 1
+         first planted FAIL: FAIL       E-3 slider keyboard-focused PRM light · reduce · rest → focused ×1.060 × 1.060 (focus on slider) · bound ×1 ± 0.002 · load 10.1/11.0/12.9
+selftest: 12 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# exit 0
+# end E-3 webkit 2026-10-16 18:14:48 load { 9.87 10.84 12.84 }

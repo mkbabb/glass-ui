@@ -1,0 +1,17 @@
+# start E-10 chromium 2026-10-16 16:44:41 load { 15.23 19.35 20.33 }
+OK     E-10 chromium clean exit 0 · E-10 chromium PASS · 5 pass, 0 fail, 0 unmeasured of 5 gating cells (1 reported) · load 15.5/19.3/20.3 at start, 15.2/19.1/20.2 at end
+OK     E-10 chromium fault   e10-snap (CK-20: Tab from slider A to slider B drops A to rest in one frame (C-E r32)) exit 1
+         first planted FAIL: FAIL       E-10 slider2 hand-off drop · Tab A → B (focus on ProbeB) · outgoing A ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0600 (bound ≤ own release 0.0044 + 0.002), largest centre move 0.0 px at NaN ms (bound ≤ own release 0.0 
+OK     E-10 chromium fault   e10-veildip (CK-20: the shared veil is torn down at A's release and re-ramps from 0 for B (C-E r32)) exit 1
+         first planted FAIL: FAIL       E-10 slider2 hand-off veil · veil 1.00 before the Tab, minimum 0.00 across the hand-off, 1.00 at the end (bound ≥ 0.1× its level: it does not re-ramp from 0) · load 15.4/18.9/20.1
+OK     E-10 chromium fault   e10-escsnap (CK-20: Escape releases the keyboard engagement in one frame) exit 1
+         first planted FAIL: FAIL       E-10 slider escape release · Escape: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0600 (bound ≤ own release 0.0051 + 0.002), largest centre move 0.0 px (bound ≤ own release 0.0 + 1 px) · load 14.6/18.7/20.1
+OK     E-10 chromium fault   e10-rerender (CK-20: the held slider is pinned out of flow; a sibling inserted during the hold makes the release land in its new slot in one frame (P-E/rerender-probe.md)) exit 1
+         first planted FAIL: FAIL       E-10 slider re-render landing · a sibling inserted during the hold, then release: the root's largest one-frame move per 16.7 ms 40.0 px (without the insert 0.9 px; bound ≤ that + 1 px) · load 15.5/18.7/20.0
+OK     E-10 chromium fault   e10-teleport (CK-20 (H3 position): on the hand-off the OUTGOING slider jumps onto the incoming one's place for 300 ms, then jumps home; its scale releases smoothly (C-E2 §0.1's 68 px teleport)) exit 1
+         first planted FAIL: FAIL       E-10 slider2 hand-off drop · Tab A → B (focus on ProbeB) · outgoing A ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0050 (bound ≤ own release 0.0051 + 0.002), largest centre move 60.6 px at 37 ms (bound ≤ own release 0.0 
+OK     E-10 chromium fault   e10-teleportin (CK-20 (H3 position): the INCOMING slider appears on the outgoing one's place for 200 ms, then jumps home (C-E2 §0.1, Shift+Tab B → A)) exit 1
+         first planted FAIL: FAIL       E-10 slider2 hand-off rev · Shift+Tab B → A (focus on ProbeA) · outgoing B ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0052 (bound ≤ own release 0.0053 + 0.002), largest centre move 0.0 px at 60 ms (bound ≤ own release 
+selftest: 7 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# exit 0
+# end E-10 chromium 2026-10-16 16:46:09 load { 25.58 20.55 20.63 }

@@ -1,0 +1,14 @@
+# start e10 e2veil chromium 2026-10-16 17:05:39 load { 31.41 23.03 19.87 }
+# E-10 · CK-20 no one-frame discontinuity on an engagement path
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p3/H3/wt/.h3/out/builds/e2veil · engine chromium · lock wait 0.0 s · other headless processes: chromium 8, webkit 2 · load 31.4/23.0/19.9 at start
+# scene app: harness scenes/App.vue (sha1 3fb393c67b89)
+# chromium 149.0.7827.55
+  REPORT     E-10 slider own release · Tab in: largest one-frame centre move 0.0 px · Tab out of the engaged slider: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0130, largest centre move 0.0 px (the references for the hand-off and Escape bounds) · load 36.5/24.2/20.3
+  PASS       E-10 slider escape release · Escape: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0093 (bound ≤ own release 0.0130 + 0.002), largest centre move 0.0 px (bound ≤ own release 0.0 + 1 px) · load 36.5/24.2/20.3
+  PASS       E-10 slider re-render landing · a sibling inserted during the hold, then release: the root's largest one-frame move per 16.7 ms 2.5 px (without the insert 2.2 px; bound ≤ that + 1 px) · load 36.4/24.4/20.4
+  FAIL       E-10 slider2 hand-off drop · Tab A → B (focus on Probe B) · outgoing A ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0090 (bound ≤ own release 0.0130 + 0.002), largest centre move 68.0 px at 40 ms (bound ≤ own release 0.0 + 1 px) · incoming B ×1.000 → ×1.060, largest centre move 0.0 px at 70 ms (bound ≤ own engage 0.0 + 1 px) · load 36.4/24.4/20.4
+  PASS       E-10 slider2 hand-off veil · veil 1.00 before the Tab, minimum 1.00 across the hand-off, 1.00 at the end (bound ≥ 0.1× its level: it does not re-ramp from 0) · load 36.4/24.4/20.4
+  FAIL       E-10 slider2 hand-off rev · Shift+Tab B → A (focus on Probe A) · outgoing B ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0122 (bound ≤ own release 0.0130 + 0.002), largest centre move 0.0 px at 116 ms (bound ≤ own release 0.0 + 1 px) · incoming A ×1.000 → ×1.060, largest centre move 68.0 px at 40 ms (bound ≤ own engage 0.0 + 1 px) · load 35.8/24.5/20.4
+E-10 chromium FAIL · 3 pass, 2 fail, 0 unmeasured of 5 gating cells (1 reported) · load 31.4/23.0/19.9 at start, 35.8/24.5/20.4 at end
+# exit 1
+# end e10 e2veil chromium 2026-10-16 17:05:58 load { 35.00 24.51 20.48 }

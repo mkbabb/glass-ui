@@ -1,0 +1,11 @@
+# start E-5 chromium r1 2026-10-16 17:02:28 load { 16.74 17.34 17.63 }
+OK     E-5 chromium clean exit 0 · E-5 chromium PASS · 8 pass, 0 fail, 0 unmeasured of 8 gating cells (0 reported) · load 16.7/17.3/17.6 at start, 18.3/17.7/17.7 at end
+OK     E-5 chromium fault   e5-hover (a held touch answers only through the hover background, leaked by sticky touch hover (the accordion trigger at HEAD)) exit 1
+         first planted FAIL: FAIL       E-5 pop press light · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] · load 18.5/17.7/17.8
+OK     E-5 chromium fault   e5-decay (CK-06: the held press light decays back toward rest within 500 ms while the touch is still held) exit 1
+         first planted FAIL: FAIL       E-5 pop sustain light · the press light's distance from rest over [background-color]: +200 ms 0.178 → +1200 ms 0.000 (×0.00; bound ≥ ×0.95) · :active at +1200 ms true · load 18.5/17.7/17.8
+OK     E-5 chromium fault   e9-dark (under reduced motion the press retires its scale and keeps no light answer (its press paints the hover value): E-9's press, E-1's exemplar under reduce and E-5's held touch under reduce all read it (H-9)) exit 1
+         first planted FAIL: FAIL       E-5 pop press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce) · load 21.1/18.3/18.0
+selftest: 4 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# exit 0
+# end E-5 chromium r1 2026-10-16 17:03:22 load { 20.16 18.24 17.94 }

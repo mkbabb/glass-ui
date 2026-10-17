@@ -1,0 +1,37 @@
+# start E-1 chromium 2026-10-16 15:53:17 load { 25.26 25.56 19.95 }
+OK     E-1 chromium clean exit 0 · E-1 chromium PASS · 23 pass, 0 fail, 0 unmeasured of 23 gating cells (0 reported) · load 18.7/21.8/19.8 at start, 20.2/22.0/19.9 at end
+OK     E-1 chromium fault   e1-undeclared (a component directory (delta) has no class row) exit 1
+         first planted FAIL: FAIL       E-1 denominator declared · 5 of 6 directories declared; undeclared: delta · load 20.5/22.0/19.9
+OK     E-1 chromium fault   e1-norung (the static class names no rung and gives no reason) exit 1
+         first planted FAIL: FAIL       E-1 class carries a rung · failing: static (rung none, no reason) · members per class: pressed 1, held 1, field 1, ambient 1, static 2 · ladder rungs rest/hover/press/engaged/modal · load 19.6/21.8/19.9
+OK     E-1 chromium fault   e1-dead (the pressed class's exemplar (alpha → pop) answers a press with nothing: the declaration holds on paper only) exit 1
+         first planted FAIL: FAIL       E-1 runtime pressed (alpha) · scene pop, rung press · press: Δscale 0.000 · press-only paint [] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 20.0/21.7/19.9
+OK     E-1 chromium control e1-stale (CONTROL, must PASS: the declaration lists the directories in another order and carries a comment field; order and extra fields are not the census) exit 0
+OK     E-1 chromium fault   e1-unadopted (CK-01: alpha's control composes no recipe (its engage-pressed class deleted, C-A r26): declared, classified, not adopted) exit 1
+         first planted FAIL: FAIL       E-1 adoption alpha · declared pressed · 4 instance(s) in 4 scene(s) · NOT ADOPTED: pop: div[role=switch].ctl computes [unclassed] · travel: div[role=radiogroup].segs computes [unclassed] · rest: div[role=switch].ctl computes [unc
+OK     E-1 chromium fault   e1-nullhost (CK-01: beta's recipe is stamped through a host getter that resolves to null (C-B r26): the slider renders unclassed) exit 1
+         first planted FAIL: FAIL       E-1 adoption beta · declared held · 3 instance(s) in 2 scene(s) · NOT ADOPTED: slider: div.fx-slider computes [unclassed] · slider2: div.fx-slider computes [unclassed] · slider2: div.fx-slider computes [unclassed] · load 17.1/20.
+OK     E-1 chromium fault   e1-wrongclass (CK-01: alpha's control composes engage-chosen against its declared pressed (C-A r1's drift)) exit 1
+         first planted FAIL: FAIL       E-1 adoption alpha · declared pressed · 4 instance(s) in 4 scene(s) · NOT ADOPTED: pop: div[role=switch].ctl.engage-chosen computes [chosen] (div[role=switch].ctl.engage-chosen=chosen) · travel: div[role=radiogroup].segs computes
+OK     E-1 chromium fault   e1-double (CK-01: alpha's control composes two engage-* classes (a computed read sees only the later one)) exit 1
+         first planted FAIL: FAIL       E-1 single · elements composing more than one engage-* class: pop: div[role=switch].ctl.engage-pressed.engage-chosen: engage-pressed+engage-chosen · travel: div[role=radio].seg.engage-pressed.engage-chosen: engage-pressed+engage-
+OK     E-1 chromium fault   e1-staticfocus (CK-01: the static card (delta) renders role="option" tabindex="0" and a click handler (Card.vue:66-67 at HEAD)) exit 1
+         first planted FAIL: FAIL       E-1 static-inert delta · live static elements: passive: root div[role=option].card.engage-static (tabIndex 0, role option, handler) · passive: div[role=option].card.engage-static (tabIndex 0, role option, handler) · load 16.9/20.
+OK     E-1 chromium fault   e1-latch (CK-01's RED latch: a declared member (epsilon) is rendered by no scene, so its adoption is unproven) exit 1
+         first planted FAIL: FAIL       E-1 adoption latch · 6 of 7 declared members seen adopting their recipe; unproven (not rendered by any scene, or not adopted): epsilon · load 18.1/20.3/19.5
+OK     E-1 chromium fault   e1-absent (CK-01: the pressed class's exemplar scene renders no target; E-1 must FAIL that cell, never throw) exit 1
+         first planted FAIL: FAIL       E-1 runtime pressed (alpha) · scene pop, rung press: no target ([data-e~="target"] absent): the exemplar renders nothing to probe · load 20.4/20.7/19.7
+OK     E-1 chromium fault   e1-fielddead (CK-19: the field's exemplar (eta) answers hover with nothing) exit 1
+         first planted FAIL: FAIL       E-1 runtime field (eta) · scene field, rung hover · hover: Δscale 0.000 · paint [] (bound ≥ 1 property or |Δscale| ≥ 0.01) · load 22.7/21.2/19.9
+OK     E-1 chromium fault   e1-ambientdead (CK-19: the ambient cell's exemplar (theta) does not follow the pointer) exit 1
+         first planted FAIL: FAIL       E-1 runtime ambient (theta) · scene ambient, rung rest · pointer moved across: mean pixel change 0.00 levels against 0.00 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift) · load 23.3/21.5/20.0
+OK     E-1 chromium fault   e9-dark (under reduced motion the press retires its scale and keeps no light answer (its press paints the hover value): E-9's press, E-1's exemplar under reduce and E-5's held touch under reduce all read it (H-9)) exit 1
+         first planted FAIL: FAIL       E-1 runtime pressed (alpha) PRM press-light · scene pop, reduce · press: Δscale 0.000 · press-only paint [] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 24.4/21.8/20.1
+OK     E-1 chromium fault   e1-ownhandler (CK-01 (H3 handler rule): the static card (delta) carries a click handler its member binds, with no role and no tabindex: the library-internal exemption must not swallow it) exit 1
+         first planted FAIL: FAIL       E-1 static-inert delta · live static elements: passive: root div.card.engage-static (handler) · passive: div.card.engage-static (handler) · load 25.7/22.2/20.3
+OK     E-1 chromium control e1-libhandler (CONTROL, must PASS (H3 handler rule): the static card carries only a handler a third-party component binds inside it (reka-ui's Label mousedown, C-A2 CK-01); pass 2's census counted it live) exit 0
+OK     E-1 chromium fault   e1-unrendered (CK-01 (H3 gallery): a member the scene app's error boundary caught leaves [data-t=unrendered]; the census names it) exit 1
+         first planted FAIL: FAIL       E-1 gallery rendered · members the scene app's error boundary caught: passive: Error: the member threw in setup · load 23.1/21.9/20.2
+selftest: 18 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# exit 0
+# end E-1 chromium 2026-10-16 16:02:07 load { 21.33 21.55 20.16 }

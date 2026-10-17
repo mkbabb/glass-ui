@@ -1,0 +1,21 @@
+# start capture webkit 2026-10-16 21:57:30 load { 8.23 8.28 7.86 }
+[guarded] waiting for the 'webkit' lock
+# capture · head · /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p3/H3/wt/.h3/out/builds/head · scene app: harness scenes/App.vue (sha1 3fb393c67b89) · lock wait 0.0 s · other headless processes: chromium 8, webkit 0 · load 15.8/13.7/10.9 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  head-webkit-coarse-light-switch · rest ×1.000 · pressed ×0.962 · held ×0.960 · engaged ×0.960 · committed ×1.000 · released ×1.000 · load 15.1/13.6/10.9
+  PASS       CAP switch coarse light committed · webkit: short tap, state false → true · load 15.1/13.6/10.9
+  head-webkit-coarse-light-accordion · UNREAD (ENGINE CLOSED, REPRODUCED 2/2 (Target.sendMessageToTarget: Missing target for given targetId; then Target.sendMessageToTarget: Missing targe) · load 15.6/13.7/10.9
+  FAIL       CAP accordion coarse light committed · webkit: UNREAD (ENGINE CLOSED, REPRODUCED 2/2 (Target.sendMessageToTarget: Missing target for given targetId; then T) · load 15.6/13.7/10.9
+  head-webkit-coarse-light-button · rest ×1.000 · pressed ×1.007 · held ×1.033 · engaged ×1.033 · committed ×1.013 · released ×1.015 · load 16.5/13.9/11.0
+  PASS       CAP button coarse light committed · webkit: short tap, state 0 → 1 · load 16.5/13.9/11.0
+  head-webkit-coarse-dark-switch · rest ×1.000 · pressed ×0.961 · held ×0.960 · engaged ×0.960 · committed ×1.000 · released ×1.000 · load 15.8/13.8/11.0
+  PASS       CAP switch coarse dark committed · webkit: short tap, state false → true · load 15.8/13.8/11.0
+  head-webkit-coarse-dark-accordion · UNREAD (ENGINE CLOSED, REPRODUCED 2/2 (Target.sendMessageToTarget: Missing target for given targetId; then Target.sendMessageToTarget: Missing targe) · load 16.0/13.9/11.1
+  FAIL       CAP accordion coarse dark committed · webkit: UNREAD (ENGINE CLOSED, REPRODUCED 2/2 (Target.sendMessageToTarget: Missing target for given targetId; then T) · load 16.0/13.9/11.1
+  head-webkit-coarse-dark-button · rest ×1.000 · pressed ×1.007 · held ×1.033 · engaged ×1.033 · committed ×1.013 · released ×1.015 · load 17.3/14.3/11.2
+  PASS       CAP button coarse dark committed · webkit: short tap, state 0 → 1 · load 17.3/14.3/11.2
+# sheet /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-3/H3/capture/head-webkit-coarse.png · 6 rows
+# capture done · load 17.3/14.3/11.2 at end
+CAP webkit FAIL · 4 pass, 2 fail, 0 unmeasured of 6 gating cells (0 reported) · load 15.8/13.7/10.9 at start, 17.3/14.3/11.2 at end
+# exit 1
+# end capture webkit 2026-10-16 22:12:36 load { 16.70 14.19 11.21 }

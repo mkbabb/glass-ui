@@ -1,0 +1,19 @@
+# start E-6 chromium 2026-10-16 16:38:46 load { 25.54 24.68 21.84 }
+OK     E-6 chromium clean exit 0 · E-6 chromium PASS · 14 pass, 0 fail, 0 unmeasured of 14 gating cells (0 reported) · load 24.5/24.5/21.8 at start, 23.4/24.2/21.7 at end
+OK     E-6 chromium fault   e6-absent (no idle rung) exit 1
+         first planted FAIL: FAIL       E-6 s6 present light · 0 running infinite animation(s) at rest · load 22.6/24.1/21.7
+OK     E-6 chromium fault   e6-dim (the round-0 plant: the host's opacity breathes to .9 over 4 s, dimming the control's own ink (H-5)) exit 1
+         first planted FAIL: FAIL       E-6 s6 channel light · disallowed: opacity on the subject (dims its ink) (breathing channels: scale, a scale transform, opacity on a pseudo-element) · load 22.4/23.9/21.7
+OK     E-6 chromium fault   e6-layout (the idle rung animates width (a layout channel)) exit 1
+         first planted FAIL: FAIL       E-6 s6 channel light · disallowed: width (not a breathing channel) (breathing channels: scale, a scale transform, opacity on a pseudo-element) · load 22.7/23.9/21.8
+OK     E-6 chromium fault   e6-prm (the breathing keeps its scale under reduced motion) exit 1
+         first planted FAIL: FAIL       E-6 s6 PRM light · 1 idle animation(s) under reduced motion, 1 spatial: fx-breathe · load 22.3/23.8/21.7
+OK     E-6 chromium fault   e6-fast (the breathing runs a 600 ms period (a flicker, not a breath)) exit 1
+         first planted FAIL: FAIL       E-6 s6 period light · iteration 600 ms (bound 2400..8000 ms) · load 22.3/23.8/21.7
+OK     E-6 chromium fault   e6-spin (the idle rung is a spinner: rotate 360° every 4 s, linear (a loop, not a breath; H-5)) exit 1
+         first planted FAIL: FAIL       E-6 s6 channel light · disallowed: rotate (not a breathing channel) (breathing channels: scale, a scale transform, opacity on a pseudo-element) · load 21.1/23.5/21.7
+OK     E-6 chromium fault   e6-saw (the idle rung ramps scale 1 → 1.012 linearly and jumps back at the seam (a sawtooth on a legal channel, amplitude and period; H-5)) exit 1
+         first planted FAIL: FAIL       E-6 s6 shape light · not a breath: fx-saw scale 1 → 1.012 at the seam; fx-saw linear · load 21.6/23.5/21.7
+selftest: 8 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# exit 0
+# end E-6 chromium 2026-10-16 16:40:35 load { 22.52 23.63 21.75 }

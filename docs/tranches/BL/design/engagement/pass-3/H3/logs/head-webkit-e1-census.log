@@ -1,0 +1,13 @@
+# start e1-census webkit 2026-10-16 19:45:32 load { 27.16 22.09 19.79 }
+[guarded] waiting for the 'webkit' lock
+# E-1 · CK-01 the census reads adoption
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p3/H3/wt/.h3/out/builds/head · engine webkit · lock wait 0.0 s · other headless processes: chromium 16, webkit 0 · load 27.4/23.1/20.4 at start
+# scene app: harness scenes/App.vue (sha1 3fb393c67b89)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  FAIL       E-1 declaration present · no declaration in the build (the export does not exist); 55 directories to declare · load 27.4/23.1/20.4
+  FAIL       E-1 denominator declared · 0 of 55 directories declared: accordion alert aurora avatar badge blob button card carousel checkbox chip collapsible command configurator constellation dark-mode-toggle data-table deck dialog dock easing expandable-container fading-scroll fourier-field handmark infinite-scroll input label labeled-field menu metric music-staff number-field pager-dots popover progress radio-group scroll-progress-rim select separator sheet skeleton slider sortable-list status-dot surface switch table tabs textarea timeline toast toggle-group tooltip typewriter · load 27.4/23.1/20.4
+  FAIL       E-1 class carries a rung · no classes declared · load 27.4/23.1/20.4
+  FAIL       E-1 adoption latch · no declaration: no member can be seen adopting · load 27.4/23.1/20.4
+E-1 webkit FAIL · 0 pass, 4 fail, 0 unmeasured of 4 gating cells (0 reported) · load 27.4/23.1/20.4 at start, 27.4/23.1/20.4 at end
+# exit 1
+# end e1-census webkit 2026-10-16 19:47:01 load { 26.42 22.92 20.32 }

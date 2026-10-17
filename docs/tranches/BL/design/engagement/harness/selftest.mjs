@@ -22,7 +22,9 @@ const out = typeof a.out === "string" ? ["--out", a.out] : [];
 const ENGINE_ONLY = Object.fromEntries(Object.entries(FAULTS).filter(([, fl]) => fl.engines).map(([n, fl]) => [n, fl.engines]));
 let broken = 0, runs = 0, na = 0; const retried = [];
 const failLines = (o) => o.split("\n").filter((l) => /^\s+FAIL\s/.test(l));
-for (const [id, file] of WITNESSES) {
+// H3 (pass 3): the capture (CK-25) carries a gating cell (its committed frame shows a commit that happened) and so a
+// plant (`cap-nocommit`); it is self-tested beside the witnesses, on the fixture's `pop` scene, light, both pointers
+for (const [id, file] of [...WITNESSES, ["CAP", "capture.mjs"]]) {
   if (only && !only.has(id)) continue;
   for (const engine of engines) {
     const tag = `${id} ${engine.padEnd(8)}`;

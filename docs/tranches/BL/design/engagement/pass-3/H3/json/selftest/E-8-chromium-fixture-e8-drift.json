@@ -1,0 +1,68 @@
+{
+ "id": "E-8",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e8-drift"
+ },
+ "loadStart": "18.8/22.6/21.5",
+ "loadEnd": "20.6/22.8/21.6",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-8 mirror",
+   "status": "FAIL",
+   "line": "2 rows, 4 --engage-* tokens on :root · drift [--engage-press-drain-attack 56ms ≠ 55ms] · orphans []",
+   "load": "18.1/22.4/21.4"
+  },
+  {
+   "name": "E-8 literal pop",
+   "status": "PASS",
+   "line": "10 animation(s) ran [background-color@56ms, scale@350ms, script@60ms, script@180ms] against 5 clock tokens · minted []",
+   "load": "18.1/22.4/21.4"
+  },
+  {
+   "name": "E-8 literal pop PRM",
+   "status": "PASS",
+   "line": "8 animation(s) ran [background-color@56ms, script@60ms, script@180ms] against 5 clock tokens · minted []",
+   "load": "18.1/22.4/21.4"
+  },
+  {
+   "name": "E-8 literal travel",
+   "status": "PASS",
+   "line": "8 animation(s) ran [background-color@56ms, scale@350ms, script@350ms] against 5 clock tokens · minted []",
+   "load": "22.3/23.2/21.7"
+  },
+  {
+   "name": "E-8 literal travel PRM",
+   "status": "PASS",
+   "line": "8 animation(s) ran [background-color@56ms, script@60ms, script@180ms] against 5 clock tokens · minted []",
+   "load": "22.3/23.2/21.7"
+  },
+  {
+   "name": "E-8 literal rest",
+   "status": "PASS",
+   "line": "11 animation(s) ran [background-color@56ms, scale@350ms, script@60ms, script@180ms] against 5 clock tokens · minted []",
+   "load": "22.3/23.2/21.7"
+  },
+  {
+   "name": "E-8 literal rest PRM",
+   "status": "PASS",
+   "line": "8 animation(s) ran [background-color@56ms, script@60ms, script@180ms] against 5 clock tokens · minted []",
+   "load": "21.3/23.0/21.6"
+  },
+  {
+   "name": "E-8 literal act",
+   "status": "PASS",
+   "line": "14 animation(s) ran [background-color@56ms, scale@350ms, script@60ms, script@180ms] against 5 clock tokens · minted []",
+   "load": "21.3/23.0/21.6"
+  },
+  {
+   "name": "E-8 literal act PRM",
+   "status": "PASS",
+   "line": "10 animation(s) ran [background-color@56ms, script@60ms, script@180ms] against 5 clock tokens · minted []",
+   "load": "20.6/22.8/21.6"
+  }
+ ]
+}

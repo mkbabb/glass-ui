@@ -1,0 +1,62 @@
+{
+ "id": "E-5",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e5-hover"
+ },
+ "loadStart": "18.3/17.7/17.7",
+ "loadEnd": "18.0/17.6/17.7",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-5 pop sustain light",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-color]: +200 ms 0.030 → +1200 ms 0.053 (×1.75; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "18.5/17.7/17.8"
+  },
+  {
+   "name": "E-5 pop press light",
+   "status": "FAIL",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only []",
+   "load": "18.5/17.7/17.8"
+  },
+  {
+   "name": "E-5 pop sustain(PRM) light",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-color]: +200 ms 0.012 → +1200 ms 0.053 (×4.48; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "18.5/17.7/17.8"
+  },
+  {
+   "name": "E-5 pop press-light(PRM) light",
+   "status": "FAIL",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce)",
+   "load": "18.5/17.7/17.8"
+  },
+  {
+   "name": "E-5 pop sustain dark",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-color]: +200 ms 0.014 → +1200 ms 0.061 (×4.52; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "18.0/17.6/17.7"
+  },
+  {
+   "name": "E-5 pop press dark",
+   "status": "FAIL",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only []",
+   "load": "18.0/17.6/17.7"
+  },
+  {
+   "name": "E-5 pop sustain(PRM) dark",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-color]: +200 ms 0.030 → +1200 ms 0.061 (×2.07; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "18.0/17.6/17.7"
+  },
+  {
+   "name": "E-5 pop press-light(PRM) dark",
+   "status": "FAIL",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce)",
+   "load": "18.0/17.6/17.7"
+  }
+ ]
+}

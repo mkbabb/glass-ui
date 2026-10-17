@@ -1,0 +1,14 @@
+# start E-9 webkit 2026-10-16 19:34:06 load { 20.19 18.84 17.97 }
+[guarded] waiting for the 'webkit' lock
+OK     E-9 webkit   clean exit 0 · E-9 webkit PASS · 38 pass, 0 fail, 0 unmeasured of 38 gating cells (2 reported) · load 17.7/19.5/18.6 at start, 17.2/19.2/18.5 at end
+OK     E-9 webkit   fault   e9-scale (under reduced motion the press still squishes) exit 1
+         first planted FAIL: FAIL       E-9 pop press-spatial light · scale range while pressed 0.040 over 31 frames (bound < 0.002) · load 18.9/19.5/18.6
+OK     E-9 webkit   fault   e9-dark (under reduced motion the press retires its scale and keeps no light answer (its press paints the hover value): E-9's press, E-1's exemplar under reduce and E-5's held touch under reduce all read it (H-9)) exit 1
+         first planted FAIL: FAIL       E-9 pop press-light light · press-only paint changes [] (bound ≥ 1) · load 15.1/18.5/18.3
+OK     E-9 webkit   fault   e9-glide (under reduced motion the selection body still glides) exit 1
+         first planted FAIL: FAIL       E-9 travel commit-spatial light · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 77.29 px with 21 frame(s) in flight (bound ≤ 1 frame each) · 80 frames · load 17.3/18.6/18.4
+OK     E-9 webkit   fault   e9-fillonly (CK-10 (H3): under reduced motion the commit keeps only the committed state's fill change, its light transient zeroed (A2's light under the library's PRM fallback, C-CP CK-10)) exit 1
+         first planted FAIL: FAIL       E-9 pop commit-light light · commit(Space) under reduce, state "off" → "on": the transient · light rise 0.0000 on the layers channel (peak 0.1795 → rest 0.1795, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0030, tail spread 0.0000
+selftest: 5 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# exit 0
+# end E-9 webkit 2026-10-16 19:40:52 load { 17.38 18.55 18.36 }

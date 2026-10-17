@@ -1,0 +1,20 @@
+{
+ "id": "E-11",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e11-silent"
+ },
+ "loadStart": "24.9/20.1/18.9",
+ "loadEnd": "25.7/20.4/19.0",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-11 slider fail-loud --fx-scale-engage (kbd)",
+   "status": "FAIL",
+   "line": "SILENT DEGRADATION · --fx-scale-engage: \"nonsense\" on the root · clean {\"s\":1.0599999321831597,\"veil\":1,\"n\":1} {\"s\":1.0599999321831597,\"veil\":1,\"n\":1} {\"s\":1.0599999321831597,\"veil\":1,\"n\":1} · planted {\"s\":1,\"veil\":1,\"n\":1} {\"s\":1,\"veil\":1,\"n\":1} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 0",
+   "load": "25.7/20.4/19.0"
+  }
+ ]
+}

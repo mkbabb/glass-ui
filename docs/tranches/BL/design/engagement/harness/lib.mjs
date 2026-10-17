@@ -188,8 +188,14 @@ export const INIT = () => {
    *  not composited (the CK-25 frames are the pixel read). */
   window.__light = (sel, parts) => {
     const el = typeof sel === "string" ? document.querySelector(sel) : sel; if (!el) return null;
-    let base = [1, 1, 1, 1];
-    for (let e = el.parentElement; e; e = e.parentElement) { const c = rgba(getComputedStyle(e).backgroundColor); if (c && c[3] > 0) { base = over([1, 1, 1, 1], c); break; } }
+    // H3 (pass 3): the ground is the page's own paint behind the face: every ancestor background down to the first
+    // opaque one, composited in order. With no opaque ancestor the page paints no ground of its own (`ground` false);
+    // the composite then sits on a placeholder white and arm (iii) refuses to grade it (CP §3.5: a transparent
+    // accordion face read L 1.0000 at rest in both themes and its light moved L down)
+    const stack = []; let ground = false;
+    for (let e = el.parentElement; e; e = e.parentElement) { const c = rgba(getComputedStyle(e).backgroundColor); if (c && c[3] > 0) { stack.push(c); if (c[3] >= 0.999) { ground = true; break; } } }
+    let base = ground ? stack.at(-1) : [1, 1, 1, 1];
+    for (let i = stack.length - (ground ? 2 : 1); i >= 0; i--) base = over(base, stack[i]);
     const cs = getComputedStyle(el);
     const mk = () => { let st = [0, 0, 0, 0]; return { add(c, k) { if (!c || c[3] * k <= 0) return; const a = c[3] * k, A = st[3] + a * (1 - st[3]); st = [0, 1, 2].map((i) => (c[i] * a + st[i] * st[3] * (1 - a)) / (A || 1)).concat([A]); }, get v() { return st; } }; };
     const all = mk(), layers = mk(); const fill = rgba(cs.backgroundColor) ?? [0, 0, 0, 0];
@@ -201,7 +207,11 @@ export const INIT = () => {
     const out = all.v[3] > 0 ? over(base, all.v, op) : base;
     let br = 1; for (const m of cs.filter.matchAll(/brightness\(([\d.]+)(%?)\)/g)) br *= +m[1] / (m[2] ? 100 : 1);
     const L = Math.min(1, lum(out) * br);
-    return parts ? { L, base, fill, layers: layers.v, br } : L;
+    // the read's resolution: every colour is read through an 8-bit canvas, so one quantum is 1/255 on each channel; q
+    // is the luminance one such step moves at this composite (about 0.008 on a near-white face, 0.003 on the accent)
+    const up = out.slice(0, 3).every((v) => v <= 1 - 1 / 255);
+    const q = Math.abs(Math.min(1, lum(out.slice(0, 3).map((v) => v + (up ? 1 : -1) / 255)) * br) - L);
+    return parts ? { L, base, fill, layers: layers.v, br, ground, q } : L;
   };
   const LIGHT = new Set(["opacity", "background-color", "background", "background-image", "filter", "box-shadow", "color", "border-color", "border-top-color", "outline-color", "backdropFilter", "backgroundColor", "backgroundImage", "boxShadow", "borderColor"]);
   /** the light animations running in a subtree, read once per frame while __film runs: a CSS transition at its
@@ -234,13 +244,21 @@ export const INIT = () => {
     const desc = (e) => `${e.tagName.toLowerCase()}${e.getAttribute("role") ? `[role=${e.getAttribute("role")}]` : ""}${[...e.classList].slice(0, 3).map((c) => "." + c).join("")}`.slice(0, 80);
     const cls = (e) => getComputedStyle(e).getPropertyValue("--rung-class").trim();
     const live = (e, hs) => { const b = []; if (e.tabIndex >= 0 && !e.disabled) b.push(`tabIndex ${e.tabIndex}`); const r = e.getAttribute("role"); if (r && ROLE.test(r)) b.push(`role ${r}`); if (hs.includes(e)) b.push("handler"); return b; };
+    // H3 (pass 3), the library-internal handler rule: a handler counts as live when the member or its consumer bound
+    // it. A handler a third-party component binds inside the member (reka-ui's Label: a mousedown that only blocks
+    // double-click selection, C-A2 CK-01) is reported in `libHandled` and does not make a static root live; a third-party
+    // primitive that really makes an element interactive also makes it focusable or gives it a role, which still count
     const out = groups.map((g) => {
       const stamped = g.els.map((e) => [e, cls(e)]).filter(([, c]) => c && c !== "unclassed");
       const statics = stamped.filter(([, c]) => c === "static").map(([e]) => [e, live(e, g.handlers)]).filter(([, b]) => b.length).map(([e, b]) => `${desc(e)} (${b.join(", ")})`);
-      return { dir: g.dir, root: g.root ? desc(g.root) : "none", classes: [...new Set(stamped.map(([, c]) => c))], stamped: stamped.slice(0, 6).map(([e, c]) => `${desc(e)}=${c}`), rootLive: g.root ? live(g.root, g.handlers) : [], statics, n: g.els.length };
+      const libHandled = (g.libHandlers ?? []).filter((e) => !g.handlers.includes(e)).map(desc);
+      return { dir: g.dir, root: g.root ? desc(g.root) : "none", classes: [...new Set(stamped.map(([, c]) => c))], stamped: stamped.slice(0, 6).map(([e, c]) => `${desc(e)}=${c}`), rootLive: g.root ? live(g.root, g.handlers) : [], statics, libHandled, n: g.els.length };
     });
     const multi = [...document.querySelectorAll('[class*="engage-"]')].map((e) => [e, [...e.classList].filter((c) => c.startsWith("engage-"))]).filter(([, l]) => l.length > 1).map(([e, l]) => `${desc(e)}: ${l.join("+")}`);
-    return { groups: out, multi };
+    // H3: a member the scene app's error boundary caught renders `[data-t="unrendered"]` (its title is the error); the
+    // census names it rather than reading its absence as "no scene renders it"
+    const unrendered = [...document.querySelectorAll('[data-t="unrendered"]')].map((e) => (e.getAttribute("title") ?? "").slice(0, 120));
+    return { groups: out, multi, unrendered };
   };
   /** one film, every frame for ms: the target's, the body's and the face's effective scale and box, the face's light,
    *  and (T) the frame's performance.now(); plus every light animation seen in the scene root's subtree */
@@ -295,6 +313,12 @@ export async function sceneIndex(E, T) {
 }
 export const scenesFor = (idx, id) => Object.entries(idx).filter(([, m]) => (m.gates ?? []).includes(id));
 
+/** the scene app a build carries (build.mjs writes scene-app.json): the harness's own, or a named fork */
+export function sceneApp(build) {
+  try { const j = JSON.parse(fs.readFileSync(path.join(path.resolve(build), "scene-app.json"), "utf8")); return j.fork ? `FORK ${j.app} (sha1 ${j.sha1}): not the harness's app, not a scoring read` : `harness scenes/App.vue (sha1 ${j.sha1})`; }
+  catch { return "UNKNOWN (no scene-app.json: a build from before H3)"; }
+}
+
 // ── the witness wrapper ─────────────────────────────────────────────────────────────────────────────
 /**
  * witness(id, title, body): parses args, takes the lock, serves the target, launches the engine, runs body, prints
@@ -321,6 +345,9 @@ export async function witness(id, title, body) {
   let T, E;
   try {
     T = await serveTarget(a);
+    // H3 (pass 3): which scene app the build carries. A scoring read is on the harness's own app (REGISTRY §P2-7 item
+    // 2: P-A2's fork moved 10 E-2 cells per engine); a fork built with `build.mjs --app` is named in every header
+    if (!a.fixture) console.log(`# scene app: ${sceneApp(a.build)}`);
     E = new Engine(engine);
     await E.browser();
     console.log(`# ${engine} ${E.version}${engine === "webkit" ? " (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))" : ""}`);
@@ -384,12 +411,16 @@ const linN = (u) => (u <= 0.04045 ? u / 12.92 : ((u + 0.055) / 1.055) ** 2.4);
 const lumN = (c) => 0.2126 * linN(c[0]) + 0.7152 * linN(c[1]) + 0.0722 * linN(c[2]);
 const overN = (dst, src) => { const a = src[3]; return [0, 1, 2].map((i) => src[i] * a + dst[i] * (1 - a)).concat([1]); };
 /** the rise of one luminance series: a frame brighter than the darkest frame before it (a fade-in, light that only
- *  returns to its rest from a brighter start, rises nowhere) that also stands above the committed rest (the last frame) */
+ *  returns to its rest from a brighter start, rises nowhere) that also stands above the committed rest (the last frame).
+ *  H3 (pass 3): "at rest" is stated in the read's resolution: the tail's spread within max(LIGHT_REST, one quantum of
+ *  the read at the tail's colours). The pass-2 rule (0.004 flat) sat under one 8-bit step on a near-white face
+ *  (≈ 0.008), so a face resting on an 8-bit dither read "not at rest" (C-CP §4.2) */
 function riseOf(F, key) {
   const settle = key(F.at(-1)); let lo = key(F[0]), best = -Infinity, pk = 0;
   F.forEach((x, k) => { const v = key(x); lo = Math.min(lo, v); if (v - lo > best) { best = v - lo; pk = k; } });
-  const tail = F.filter((x) => x.t >= F.at(-1).t - REST_MS).map(key);
-  return { rise: Math.min(best, key(F[pk]) - settle), peak: key(F[pk]), settle, rest: Math.max(...tail) - Math.min(...tail) <= LIGHT_REST, peakT: F[pk].t };
+  const T = F.filter((x) => x.t >= F.at(-1).t - REST_MS); const tail = T.map(key);
+  const q = Math.max(0, ...T.map((x) => x.Lx?.q ?? 0)); const restBound = Math.max(LIGHT_REST, q);
+  return { rise: Math.min(best, key(F[pk]) - settle), peak: key(F[pk]), settle, rest: Math.max(...tail) - Math.min(...tail) <= restBound + 1e-9, spread: Math.max(...tail) - Math.min(...tail), restBound, q, peakT: F[pk].t };
 }
 /** CK-02 arm (iii)'s light rise over a film, on two channels, the larger standing: (layers) the face's light layers
  *  (pseudo-elements, descendants) and its brightness() over its COMMITTED fill (the last frame's), so the committed
@@ -401,7 +432,29 @@ export function lightRise(fr) {
   const a = riseOf(F, (x) => Math.min(1, lumN(overN(fillFin, x.Lx.layers)) * x.Lx.br));
   const b = riseOf(F, (x) => lumN(overN(x.Lx.base, x.Lx.fill)));
   const w = a.rise >= b.rise ? { ...a, ch: "layers" } : { ...b, ch: "fill" };
-  return { ...w, rest: a.rest && b.rest, n: F.length };
+  return { ...w, rest: a.rest && b.rest, spread: Math.max(a.spread, b.spread), ground: F.every((x) => x.Lx.ground !== false), n: F.length };
+}
+/** the light read's resolution, for a line: the rise in quanta and the rest bound (H3) */
+const quanta = (lr) => `${Number.isFinite(lr.q) && lr.q > 0 ? `${f(lr.rise / lr.q, 1)} quanta of ${f(lr.q, 4)}` : "quantum n/a"}, tail spread ${f(lr.spread, 4)} against ${f(lr.restBound, 4)}`;
+/** CK-03 (H3): did anything commit across a film that should hold none (a mount, an arrival in the mount's own task)?
+ *  Read without a rise from below, so a light already lit on the first filmed frame and decaying counts: the face's
+ *  light layers over its COMMITTED fill standing ≥ LIGHT_RISE above their last frame on any frame (the committed fill's
+ *  own change is not light, as in arm iii); the fill flashing above its rest (riseOf, as arm iii); the target's or the
+ *  face's scale in flight on ≥ 2 frames; the body in flight on ≥ 2 frames */
+export function commitsIn(film) {
+  const fr = film.fr ?? film; const F = fr.filter((x) => x.Lx);
+  const qt = quiet(fr);
+  let above = NaN, fillRise = NaN, ground = true, fsm = 0;
+  if (F.length >= 3) {
+    const fin = F.at(-1).Lx; const fillFin = overN(fin.base, fin.fill);
+    const lay = F.map((x) => Math.min(1, lumN(overN(fillFin, x.Lx.layers)) * x.Lx.br));
+    above = Math.max(...lay) - lay.at(-1);
+    fillRise = riseOf(F, (x) => lumN(overN(x.Lx.base, x.Lx.fill))).rise;
+    ground = F.every((x) => x.Lx.ground !== false);
+  }
+  const FF = fr.filter((x) => x.f); if (FF.length > 2) { const s = FF.map((x) => x.f.s); fsm = s.filter((v) => Math.abs(v - s[0]) >= BOUNCE && Math.abs(v - s.at(-1)) >= BOUNCE).length; }
+  const lit = above >= LIGHT_RISE || fillRise >= LIGHT_RISE; const moved = qt.smid >= 2 || fsm >= 2 || qt.mid >= 2;
+  return { n: lit || moved ? 1 : 0, lit, moved, ground, line: `light above its committed rest ${f(above, 4)} (layers) · fill flash ${f(fillRise, 4)} (bound < ${LIGHT_RISE} each${ground ? "" : "; NO PAINTED GROUND"}) · target scale in flight ${qt.smid} frame(s), face ${fsm}, body ${qt.mid} (bound < 2 each) · ${fr.length} frames` };
 }
 /** CK-02's three arms over one film ({ fr, anims } from __film) against the admitted arms. */
 export function commitArms(film, arms = DEFAULT_ARMS, env = []) {
@@ -425,11 +478,21 @@ export function commitArms(film, arms = DEFAULT_ARMS, env = []) {
   // the fill: the face's own background) all run on an envelope row's clock, and at least one runs
   const chan = anims.filter((x) => (lr.ch === "fill" ? x.self && x.props.some((p) => /background/i.test(p)) : x.inFace && !x.self));
   const onRow = chan.filter((x) => Number.isFinite(x.dur) && clocks.some((c) => Math.abs(c - x.dur) <= 1));
-  const iii = lr.rise >= LIGHT_RISE && lr.rest && onRow.length > 0 && onRow.length === chan.length;
+  // H3: arm (iii) reads light only over a ground the page paints; without one the composite sits on an assumed white
+  // and is not graded (it can neither pass nor be called a rise)
+  const iii = lr.ground && lr.rise >= LIGHT_RISE && lr.rest && onRow.length > 0 && onRow.length === chan.length;
   const ok = { i, ii, iii };
   const pass = arms.some((k) => ok[k]);
   const animTxt = [...new Set(anims.map((x) => `${x.props.join("+")}${x.pseudo}@${Math.round(x.dur)}ms`))].join(", ").slice(0, 160);
-  return { pass, arms: ok, line: `arm ${pass ? arms.filter((k) => ok[k]).join("+") : "none"} of [${arms.join(",")}] · (i) body travel ${f(travel, 2)} px overshoot ${f(over, 2)} px · (ii) face peak ${f(pkS)} trough ${f(trS)} settle ${f(stS)} on ${f(w0, 1)} px = ${f(exc, 2)} px (bound > ${FACE_PX}) · (iii) light rise ${f(lr.rise, 4)} on the ${lr.ch ?? "?"} channel (peak ${f(lr.peak, 4)} → rest ${f(lr.settle, 4)}, at rest ${lr.rest}; bound ≥ ${LIGHT_RISE}) on envelope clocks [${onRow.map((x) => Math.round(x.dur)).join(",")}] of the channel's [${chan.map((x) => Math.round(x.dur)).join(",")}] ms; light anims [${animTxt}] · ${fr.length} frames, median ${f(medianDt(fr), 1)} ms` };
+  return { pass, arms: ok, line: `arm ${pass ? arms.filter((k) => ok[k]).join("+") : "none"} of [${arms.join(",")}] · (i) body travel ${f(travel, 2)} px overshoot ${f(over, 2)} px · (ii) face peak ${f(pkS)} trough ${f(trS)} settle ${f(stS)} on ${f(w0, 1)} px = ${f(exc, 2)} px (bound > ${FACE_PX}) · (iii) ${lr.ground ? "" : "NO PAINTED GROUND under the face (the light is not graded) · "}light rise ${f(lr.rise, 4)} on the ${lr.ch ?? "?"} channel (peak ${f(lr.peak, 4)} → rest ${f(lr.settle, 4)}, at rest ${lr.rest}; bound ≥ ${LIGHT_RISE}; ${quanta(lr)}) on envelope clocks [${onRow.map((x) => Math.round(x.dur)).join(",")}] of the channel's [${chan.map((x) => Math.round(x.dur)).join(",")}] ms; light anims [${animTxt}] · ${fr.length} frames, median ${f(medianDt(fr), 1)} ms` };
+}
+/** CK-10 (H3): a light leg kept under reduce, read on the TRANSIENT: lightRise over the film (the layers over the
+ *  committed fill, or a fill that flashes above its rest and returns), so the committed state's own fill change does not
+ *  count (C-CP CK-27: E-9 passed A with its commit light zeroed). No clock condition here: the clock is E-8's */
+export function lightLeg(film) {
+  const lr = lightRise(film.fr ?? film);
+  const pass = lr.ground && lr.rise >= LIGHT_RISE && lr.rest;
+  return { pass, line: `${lr.ground ? "" : "NO PAINTED GROUND under the face · "}light rise ${f(lr.rise, 4)} on the ${lr.ch ?? "?"} channel (peak ${f(lr.peak, 4)} → rest ${f(lr.settle, 4)}, at rest ${lr.rest}; bound ≥ ${LIGHT_RISE}; ${quanta(lr)})` };
 }
 /** Scale range and body movement over frames (Tab entry, the mount case, PRM). */
 export function quiet(fr) {

@@ -1,0 +1,8 @@
+# start CAP webkit 2026-10-16 19:44:40 load { 25.89 20.67 19.16 }
+[guarded] waiting for the 'webkit' lock
+OK     CAP webkit   clean exit 0 · CAP webkit PASS · 2 pass, 0 fail, 0 unmeasured of 2 gating cells (0 reported) · load 28.8/21.9/19.6 at start, 28.0/21.9/19.7 at end
+OK     CAP webkit   fault   cap-nocommit (CK-25 (H3 capture): a touch tap does not commit the control: the coarse 'committed' frame must say NOT COMMITTED, never show a frame as a commit) exit 1
+         first planted FAIL: FAIL       CAP pop coarse light committed · webkit: short tap, state "off" → "off": NOT COMMITTED, the frame is labelled so · load 28.0/22.2/19.8
+selftest: 2 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# exit 0
+# end CAP webkit 2026-10-16 19:45:32 load { 27.16 22.09 19.79 }

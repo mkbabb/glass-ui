@@ -1,0 +1,11 @@
+# start E-11 chromium 2026-10-16 16:46:09 load { 25.58 20.55 20.63 }
+OK     E-11 chromium clean exit 0 · E-11 chromium PASS · 1 pass, 0 fail, 0 unmeasured of 1 gating cells (0 reported) · load 25.6/20.5/20.6 at start, 24.9/20.5/20.6 at end
+OK     E-11 chromium fault   e11-silent (CK-21: the engagement reads --fx-scale-engage at runtime and, when it is unreadable, degrades to no grow with no console.error) exit 1
+         first planted FAIL: FAIL       E-11 slider fail-loud --fx-scale-engage (kbd) · SILENT DEGRADATION · --fx-scale-engage: "nonsense" on the root · clean {"s":1.0599999321831597,"veil":1,"n":1} {"s":1.0599999321831597,"veil":1,"n":1} {"s":1.0599999321831597,"veil"
+OK     E-11 chromium unmeas  e11-unread (CONTROL: the grow spells its figure in place and reads no token, so an unreadable token degrades nothing: UNMEASURED, not a pass) exit 3
+         planted UNMEASURED: UNMEASURED E-11 slider fail-loud --fx-scale-engage (kbd) · no degradation, no error: the token is not read on this path · --fx-scale-engage: "nonsense" on the root · clean {"s":1.0599999321831597,"veil":1,"n":1} {"s":1.0599999321831597,"vei
+OK     E-11 chromium unmeas  e11-noise (CONTROL (H2 §2.3): the grow spells its figure in place, reads no token, and varies run to run (1.060, 1.061, 1.066, 1.054, 1.060 on successive slider loads); one planted read outside a two-run spread is noise, not a degradation: UNMEASURED, never FAIL) exit 3
+         planted UNMEASURED: UNMEASURED E-11 slider fail-loud --fx-scale-engage (kbd) · no degradation, no error: the token is not read on this path · --fx-scale-engage: "nonsense" on the root · clean {"s":1.0599999321831597,"veil":1,"n":1} {"s":1.0609998914930556,"vei
+selftest: 4 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# exit 0
+# end E-11 chromium 2026-10-16 16:46:32 load { 23.03 20.32 20.54 }

@@ -41,11 +41,20 @@ export default M;
 fs.writeFileSync(path.join(work, "index.html"), `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>D5 battery</title></head><body><div id="app"></div><script type="module" src="./main.ts"></script></body></html>`);
 fs.writeFileSync(path.join(work, "main.ts"), `import "./h.css";\nimport { createApp } from "vue";\nimport App from "./App.vue";\nif (new URLSearchParams(location.search).get("theme") === "dark") document.documentElement.classList.add("dark");\ncreateApp(App).mount("#app");\n`);
 fs.writeFileSync(path.join(work, "h.css"), `@import "${nm}/tailwindcss/index.css" source("./");\n@source "${wt}/src/components/**/*.vue";\n@source "${wt}/src/components/_shared/**/*.ts";\n@source "${wt}/src/components/**/index.ts";\n@import "${nm}/tw-animate-css/dist/tw-animate.css";\n@import "${wt}/src/styles/index.css";\nbody { min-height: 100vh; margin: 0; }\n`);
-// --app <file>: a route's scene-app fork (its H-2 exemplars) in place of scenes/App.vue; same DOM contract (§1.3)
-fs.copyFileSync(typeof a.app === "string" ? path.resolve(a.app) : path.join(HERE, "scenes", "App.vue"), path.join(work, "App.vue"));
+// --app <file>: a probe's scene-app fork in place of scenes/App.vue; same DOM contract (§1.3). H3 (pass 3): a fork is
+// a probe, never a scoring read (REGISTRY §P2-7 item 2): every witness header names it from scene-app.json
+const app = typeof a.app === "string" ? path.resolve(a.app) : path.join(HERE, "scenes", "App.vue");
+fs.copyFileSync(app, path.join(work, "App.vue"));
+// CK-01's library-internal handler rule (H3): the scene app tells a handler a third-party component binds (reka-ui) from
+// one the member or its consumer binds, by the identity of reka-ui's exports; one module instance for the library and
+// the app alike
+const reka = path.join(fs.realpathSync(path.join(nm, "reka-ui")), "dist", "index.js");
+fs.writeFileSync(path.join(work, "reka.ts"), `import * as R from "reka-ui";\nexport default new Set<unknown>(Object.values(R as Record<string, unknown>));\n`);
 await vite.build({
   configFile: false, root: work, base: "./", cacheDir: path.join(work, ".vite"), logLevel: "warn", plugins: [tailwind(), vue()],
-  resolve: { alias: [{ find: "@glass", replacement: path.join(wt, "src") }, { find: /^vue$/, replacement: path.join(nm, "vue/dist/vue.runtime.esm-bundler.js") }] },
+  resolve: { alias: [{ find: "@glass", replacement: path.join(wt, "src") }, { find: /^vue$/, replacement: path.join(nm, "vue/dist/vue.runtime.esm-bundler.js") }, { find: /^reka-ui$/, replacement: reka }] },
   build: { outDir, emptyOutDir: true, reportCompressedSize: false, chunkSizeWarningLimit: 1e9 },
 });
-console.log(`${outDir} · ${dirs.length} component directories (${withIndex.length} with an index.ts mapped for the member walk) · declaration ${declPath}#${declName}`);
+const sha1 = (await import("node:crypto")).createHash("sha1").update(fs.readFileSync(app)).digest("hex").slice(0, 12);
+fs.writeFileSync(path.join(outDir, "scene-app.json"), JSON.stringify({ app: typeof a.app === "string" ? app : "scenes/App.vue", fork: typeof a.app === "string", sha1 }));
+console.log(`${outDir} · ${dirs.length} component directories (${withIndex.length} with an index.ts mapped for the member walk) · declaration ${declPath}#${declName} · scene app ${typeof a.app === "string" ? `FORK ${app}` : "harness"} ${sha1}`);

@@ -1,0 +1,13 @@
+# start E-8 webkit 2026-10-16 18:58:34 load { 9.11 9.82 10.75 }
+[guarded] waiting for the 'webkit' lock
+OK     E-8 webkit   clean exit 0 · E-8 webkit PASS · 9 pass, 0 fail, 0 unmeasured of 9 gating cells (0 reported) · load 19.7/18.3/17.7 at start, 20.4/18.6/17.8 at end
+OK     E-8 webkit   fault   e8-drift (the emitted --engage-press-drain-attack is 56ms against its row's 55) exit 1
+         first planted FAIL: FAIL       E-8 mirror · 2 rows, 4 --engage-* tokens on :root · drift [--engage-press-drain-attack 56ms ≠ 55ms] · orphans [] · load 19.4/18.4/17.7
+OK     E-8 webkit   control e8-units (CONTROL, must PASS: a token spelled .18s (a minifier's respelling of 180ms, as the HEAD build does) equals its 180 ms row) exit 0
+OK     E-8 webkit   fault   e8-literal (the control's press transition spells 230ms, a literal no token carries) exit 1
+         first planted FAIL: FAIL       E-8 literal pop · 10 animation(s) ran [background-color@55ms, scale@230ms, script@60ms, script@180ms] against 5 clock tokens · minted [CSSTransition scale 230ms on ctl engage-pressed] · load 20.7/18.8/17.9
+OK     E-8 webkit   fault   e8-prmliteral (the reduce arm's authorization row (the class rule that outranks the PRM fallback) spells its press transition 100ms, a literal no token carries (H-9; H3: an authorized row is graded, not exempt)) exit 1
+         first planted FAIL: FAIL       E-8 literal pop PRM · 8 animation(s) ran [background-color@100ms, script@60ms, script@180ms] against 5 clock tokens · minted [CSSTransition background-color 100ms on ctl engage-pressed] · load 19.1/18.6/17.9
+selftest: 5 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# exit 0
+# end E-8 webkit 2026-10-16 19:34:06 load { 20.19 18.84 17.97 }
