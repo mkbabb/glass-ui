@@ -1,0 +1,10 @@
+# start E-9 light webkit (wk-batch) 2026-10-17 16:32:49 load { 14.56 12.77 13.82 }
+E-9 webkit   exit 1 · E-9 webkit FAIL · 72 pass, 6 fail, 0 unmeasured of 78 gating cells (2 reported) · load 14.6/12.8/13.8 at start, 17.2/13.7/14.1 at end · 63 s, load at start 14.6/12.8/13.8
+    FAIL       E-9 switch commit-light light · commit(Space) under reduce, state false → true: the transient · light rise 0.0003 on the layers channel (peak 0.9227 → rest 0.9224, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0085, tail spread 0.0000 against 0.0085) · load 13.9/12.7/13.8
+    FAIL       E-9 radio commit-light light · commit(ArrowDown) under reduce, state "a" → "b": the transient · light rise 0.0027 on the layers channel (peak 0.9593 → rest 0.9566, at rest true; bound ≥ 0.01; 0.3 quanta of 0.0087, tail spread 0.0000 against 0.0087) · load 12.9/12.5/13.7
+    FAIL       E-9 tabs commit-light light · commit(ArrowRight) under reduce, state "a" → "b": the transient · light rise 0.0000 on the layers channel (peak 0.7807 → rest 0.7807, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0077, tail spread 0.0000 against 0.0077) · load 14.1/12.7/13.8
+    FAIL       E-9 tabs commit-light dark · commit(ArrowRight) under reduce, state "a" → "b": the transient · light rise 0.0000 on the layers channel (peak 0.0033 → rest 0.0033, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0003, tail spread 0.0000 against 0.0040) · load 14.1/12.7/13.8
+    FAIL       E-9 accordion commit-light light · commit(Enter) under reduce, state null → "one": the transient · light rise 0.0032 on the layers channel (peak 0.9598 → rest 0.9566, at rest true; bound ≥ 0.01; 0.4 quanta of 0.0087, tail spread 0.0000 against 0.0087) · load 15.8/13.2/13.9
+    FAIL       E-9 accordion commit-light dark · commit(Enter) under reduce, state null → "one": the transient · light rise 0.0098 on the layers channel (peak 0.0129 → rest 0.0031, at rest true; bound ≥ 0.01; 31.0 quanta of 0.0003, tail spread 0.0000 against 0.0040) · load 15.8/13.2/13.9
+# exit 1
+# end E-9 light webkit 2026-10-17 16:33:52 load { 17.16 13.66 14.06 }

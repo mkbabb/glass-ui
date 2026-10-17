@@ -1,0 +1,8 @@
+# start E-1 geom webkit (wk-batch) 2026-10-17 16:35:22 load { 19.96 15.48 14.72 }
+E-1 webkit   exit 1 · E-1 webkit FAIL · 92 pass, 4 fail, 0 unmeasured of 96 gating cells (0 reported) · load 20.0/15.5/14.7 at start, 21.9/16.6/15.1 at end · 41 s, load at start 20.0/15.5/14.7
+    FAIL       E-1 adoption latch · 54 of 55 declared members seen adopting their recipe; unproven (not rendered by any scene, or not adopted): dock · load 21.4/16.1/15.0
+    FAIL       E-1 runtime presented (sheet) PRM press-light · scene sheet: no target while pressed · load 21.6/16.4/15.1
+    FAIL       E-1 runtime ambient (aurora) · scene ambient, rung rest · pointer moved across: mean pixel change 1.17 levels against 1.13 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift) · load 21.9/16.6/15.1
+    FAIL       E-1 runtime ambient (aurora) PRM press-light · scene ambient, reduce · pointer moved across: mean pixel change 0.00 levels against 0.00 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift) · load 21.9/16.6/15.1
+# exit 1
+# end E-1 geom webkit 2026-10-17 16:36:03 load { 21.93 16.56 15.15 }

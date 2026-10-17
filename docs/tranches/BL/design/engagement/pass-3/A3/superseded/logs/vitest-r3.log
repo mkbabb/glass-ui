@@ -1,0 +1,262 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p3/A3/wt
+
+ ❯ tests/gates/boot-graph.test.ts (14 tests | 3 failed) 101ms
+     × the built demo has a dist-demo to measure 5ms
+     × the dist-demo it measures is NEWER than every source it is built from 1ms
+     × the eager graph stays under the modulepreload and byte ceilings 0ms
+stderr | tests/components/easing.contract.test.ts > EasingPicker product contract > shows pending and copied states, then cancels the reset timer on unmount
+[glass-ui] useEngage: --engage-control-engage-attack is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui stylesheet loaded?
+[glass-ui] useEngage: --engage-control-engage-release is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui stylesheet loaded?
+
+stderr | tests/components/easing.contract.test.ts > EasingPicker product contract > owns truthful transport state and completes immediately when PRM flips on
+[glass-ui] useEngage: --engage-control-engage-attack is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui stylesheet loaded?
+[glass-ui] useEngage: --engage-control-engage-release is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui stylesheet loaded?
+
+stderr | tests/components/easing.contract.test.ts > EasingPicker product contract > owns truthful transport state and completes immediately when PRM flips on
+[glass-ui] useEngage: --engage-control-engage-attack is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui stylesheet loaded?
+[glass-ui] useEngage: --engage-control-engage-release is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui stylesheet loaded?
+
+stderr | tests/components/easing.contract.test.ts > EasingPicker product contract > stays idle under initial PRM and completes only after a requested preview
+[glass-ui] useEngage: --engage-control-engage-attack is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui stylesheet loaded?
+[glass-ui] useEngage: --engage-control-engage-release is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui stylesheet loaded?
+
+ ❯ tests/components/easing.contract.test.ts (33 tests | 4 failed) 344ms
+     × shows pending and copied states, then cancels the reset timer on unmount 15ms
+     × owns truthful transport state and completes immediately when PRM flips on 8ms
+     × stays idle under initial PRM and completes only after a requested preview 6ms
+     × inks a new curve ON, and never arms the sweep under reduced motion 9ms
+(node:44802) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/gates/tabs-seam.test.ts (26 tests | 1 failed) 54ms
+       × the organ actually writes itself onto the node on a real commit 7ms
+(node:45682) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:45894) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/styles/engage-ladder.test.ts (27 tests | 2 failed) 40ms
+     × a mode-split member lists its primary class first, and only declared classes 4ms
+     × the commit is light, so it has no reduced-motion arm to lose 1ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 10 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/easing.contract.test.ts > EasingPicker product contract > shows pending and copied states, then cancels the reset timer on unmount
+AssertionError: expected 2 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 2
+
+ ❯ tests/components/easing.contract.test.ts:192:36
+    190|
+    191|         wrapper.unmount();
+    192|         expect(vi.getTimerCount()).toBe(0);
+       |                                    ^
+    193|     });
+    194|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/10]⎯
+
+ FAIL  tests/components/easing.contract.test.ts > EasingPicker product contract > owns truthful transport state and completes immediately when PRM flips on
+AssertionError: expected 2 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 2
+
+ ❯ tests/components/easing.contract.test.ts:317:29
+    315|         expect(wrapper.attributes("data-playback-state")).toBe("idle");
+    316|         staleFrame(600);
+    317|         expect(frames.size).toBe(0);
+       |                             ^
+    318|
+    319|         await transport().trigger("click");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/10]⎯
+
+ FAIL  tests/components/easing.contract.test.ts > EasingPicker product contract > stays idle under initial PRM and completes only after a requested preview
+AssertionError: expected "vi.fn()" to not be called at all, but actually been called 2 times
+
+Received:
+
+  1st vi.fn() call:
+
+    Array [
+      [Function anonymous],
+    ]
+
+  2nd vi.fn() call:
+
+    Array [
+      [Function anonymous],
+    ]
+
+
+Number of calls: 2
+
+ ❯ tests/components/easing.contract.test.ts:362:34
+    360|         expect(wrapper.attributes("data-playback-state")).toBe("comple…
+    361|         expect(wrapper.find('[data-slot="easing-curve-travel"]').exist…
+    362|         expect(requestFrame).not.toHaveBeenCalled();
+       |                                  ^
+    363|         wrapper.unmount();
+    364|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/10]⎯
+
+ FAIL  tests/components/easing.contract.test.ts > G-E9 STROKE+FOCUS — whole-pixel ink, and an indicator on every focusable > inks a new curve ON, and never arms the sweep under reduced motion
+AssertionError: the sweep is armed on the frame the curve changes: expected [ [Function], [Function], [Function] ] to have a length of 1 but got 3
+
+- Expected
++ Received
+
+- 1
++ 3
+
+ ❯ tests/components/easing.contract.test.ts:716:76
+    714|         // two frames, and the second one is the mechanism, not paddin…
+    715|         const first = frames.splice(0);
+    716|         expect(first, "the sweep is armed on the frame the curve chang…
+       |                                                                            ^
+    717|         first[0]!(0);
+    718|         expect(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/10]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the built demo has a dist-demo to measure
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:566:34
+    564|
+    565|     it("the built demo has a dist-demo to measure", () => {
+    566|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    567|     });
+    568|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/10]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:570:34
+    568|
+    569|     it("the dist-demo it measures is NEWER than every source it is bui…
+    570|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    571|         const builtAt = statSync(indexHtml).mtimeMs;
+    572|         const newestSrc = newestSourceMtime();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/10]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the eager graph stays under the modulepreload and byte ceilings
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:580:34
+    578|
+    579|     it("the eager graph stays under the modulepreload and byte ceiling…
+    580|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    581|         const html = readFileSync(indexHtml, "utf8");
+    582|         const graph = measureEagerGraph(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/10]⎯
+
+ FAIL  tests/gates/tabs-seam.test.ts > gate:G-TABS-SEAM — one selected-state seam, one indicator, one deform law > G-TABS-SEAM arm (e) — the EYEGLASS is the default, and it is one law > the organ actually writes itself onto the node on a real commit
+AssertionError: expected '' not to be '' // Object.is equality
+ ❯ tests/gates/tabs-seam.test.ts:359:71
+    357|             await buttons[2]!.trigger("click");
+    358|             await nextTick();
+    359|             expect(indicator.style.getPropertyValue("--stretch")).not.…
+       |                                                                       ^
+    360|             wrapper.unmount();
+    361|         });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/10]⎯
+
+ FAIL  tests/styles/engage-ladder.test.ts > G-ENGAGE-RUNG — every component directory is declared, and adopts its class > a mode-split member lists its primary class first, and only declared classes
+AssertionError: expected [ Array(6) ] to deeply equal [ Array(5) ]
+
+- Expected
++ Received
+
+@@ -2,6 +2,7 @@
+    "card",
+    "chip",
+    "configurator",
+    "popover",
+    "surface",
++   "timeline",
+  ]
+
+ ❯ tests/styles/engage-ladder.test.ts:131:43
+    129|
+    130|     it("a mode-split member lists its primary class first, and only de…
+    131|         expect(Object.keys(modes).sort()).toEqual(["card", "chip", "co…
+       |                                           ^
+    132|         for (const [dir, list] of Object.entries(modes)) {
+    133|             expect(list[0]).toBe(members[dir]);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/10]⎯
+
+ FAIL  tests/styles/engage-ladder.test.ts > G-ENGAGE-RUNG · PRM arm — every rung has a reduced-motion terminal parity > the commit is light, so it has no reduced-motion arm to lose
+AssertionError: expected '@media (prefers-reduced-motion: reduc…' not to contain '::after'
+
+- Expected
++ Received
+
+- ::after
++ @media (prefers-reduced-motion: reduce) {
++         :where(.engage-chosen, .engage-pressed, .engage-disclosed):not(:has([data-engage-face]))::after,
++         :where(.engage-chosen, .engage-pressed, .engage-disclosed) [data-engage-light] {
++             transition-duration:
++                 var(--engage-control-engage-release), var(--engage-control-engage-attack) !important;
++         }
++
++         :where(.engage-chosen, .engage-disclosed):is([data-state="checked"], [data-state="on"], [data-state="open"]):not(:has([data-engage-face]))::after,
++         :where(.engage-chosen, .engage-disclosed):is([data-state="checked"], [data-state="on"], [data-state="open"]) [data-engage-light],
++         :where(.engage-pressed)[data-commit="b"]::after {
++             transition-duration:
++                 var(--engage-control-engage-attack), var(--engage-control-engage-release) !important;
++         }
++     }
+
+ ❯ tests/styles/engage-ladder.test.ts:371:31
+    369|         for (const m of css.matchAll(/@media \(prefers-reduced-motion:…
+    370|             const block = braceBlock(css, m.index!);
+    371|             expect(block).not.toContain("::after");
+       |                               ^
+    372|         }
+    373|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/10]⎯
+
+
+ Test Files  4 failed | 237 passed (241)
+      Tests  10 failed | 2327 passed | 10 expected fail | 1 skipped (2348)
+   Start at  04:29:23
+   Duration  61.77s (transform 4.11s, setup 8.24s, import 27.22s, tests 22.45s, environment 35.92s)
+
+exit 1

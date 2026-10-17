@@ -1,0 +1,9 @@
+# start E-1 light webkit 2026-10-17 05:35:30 load { 6.81 8.24 12.30 }
+[guarded] waiting for the 'webkit' lock
+E-1 webkit   exit 1 · E-1 webkit FAIL · 92 pass, 4 fail, 0 unmeasured of 96 gating cells (0 reported) · load 14.8/10.3/11.4 at start, 15.8/11.2/11.6 at end · 41 s, load at start 14.8/10.3/11.4
+    FAIL       E-1 adoption latch · 54 of 55 declared members seen adopting their recipe; unproven (not rendered by any scene, or not adopted): dock · load 16.3/11.0/11.6
+    FAIL       E-1 runtime presented (sheet) PRM press-light · scene sheet: no target while pressed · load 15.8/11.1/11.6
+    FAIL       E-1 runtime ambient (aurora) · scene ambient, rung rest · pointer moved across: mean pixel change 1.18 levels against 1.13 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift) · load 15.8/11.2/11.6
+    FAIL       E-1 runtime ambient (aurora) PRM press-light · scene ambient, reduce · pointer moved across: mean pixel change 0.00 levels against 0.00 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift) · load 15.8/11.2/11.6
+# exit 1
+# end E-1 light webkit 2026-10-17 05:43:17 load { 14.89 11.06 11.60 }

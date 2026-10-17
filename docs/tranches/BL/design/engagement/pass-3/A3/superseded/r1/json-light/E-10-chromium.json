@@ -1,0 +1,49 @@
+{
+ "id": "E-10",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p3/A3/wt/.a3-out/builds/light"
+ },
+ "loadStart": "18.8/18.2/17.9",
+ "loadEnd": "19.5/18.4/18.0",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "E-10 slider own release",
+   "status": "REPORT",
+   "line": "Tab in: largest one-frame centre move 0.0 px · Tab out of the engaged slider: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0065, largest centre move 0.0 px (the references for the hand-off and Escape bounds)",
+   "load": "19.0/18.3/17.9"
+  },
+  {
+   "name": "E-10 slider escape release",
+   "status": "PASS",
+   "line": "Escape: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0081 (bound ≤ own release 0.0065 + 0.002), largest centre move 0.0 px (bound ≤ own release 0.0 + 1 px)",
+   "load": "19.0/18.3/17.9"
+  },
+  {
+   "name": "E-10 slider re-render landing",
+   "status": "PASS",
+   "line": "a sibling inserted during the hold, then release: the root's largest one-frame move per 16.7 ms 2.0 px (without the insert 2.4 px; bound ≤ that + 1 px)",
+   "load": "18.4/18.2/17.9"
+  },
+  {
+   "name": "E-10 slider2 hand-off drop",
+   "status": "PASS",
+   "line": "Tab A → B (focus on Probe B) · outgoing A ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0072 (bound ≤ own release 0.0065 + 0.002), largest centre move 0.0 px at 148 ms (bound ≤ own release 0.0 + 1 px) · incoming B ×1.000 → ×1.060, largest centre move 0.0 px at 121 ms (bound ≤ own engage 0.0 + 1 px)",
+   "load": "18.4/18.2/17.9"
+  },
+  {
+   "name": "E-10 slider2 hand-off veil",
+   "status": "REPORT",
+   "line": "no veil up before the Tab (0.00): this route veils no keyboard engagement",
+   "load": "18.4/18.2/17.9"
+  },
+  {
+   "name": "E-10 slider2 hand-off rev",
+   "status": "PASS",
+   "line": "Shift+Tab B → A (focus on Probe A) · outgoing B ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0071 (bound ≤ own release 0.0065 + 0.002), largest centre move 0.0 px at 71 ms (bound ≤ own release 0.0 + 1 px) · incoming A ×1.000 → ×1.060, largest centre move 0.0 px at 150 ms (bound ≤ own engage 0.0 + 1 px)",
+   "load": "19.5/18.4/18.0"
+  }
+ ]
+}

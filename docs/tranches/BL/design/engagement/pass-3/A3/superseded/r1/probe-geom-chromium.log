@@ -1,0 +1,22 @@
+# probe geom chromium start 2026-10-17 05:11:41 load { 10.23 16.08 17.14 }
+# a3-probe geom engine chromium build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p3/A3/wt/.a3-out/builds/geom load 10.2/16.1/17.1 at start
+  PASS       CK-14 dock trigger slop coarse light · face 32.6×24.4 px, slop 44.0×44.0 px at -6.00, -10.00 (centred: -5.72, -9.79); at rest -6.00, -10.00; 60 ms after open: background rgba(0, 0, 0, 0), opacity 1 · load 10.2/16.1/17.1
+  PASS       CK-14 dock trigger slop coarse dark · face 32.5×24.4 px, slop 44.0×44.0 px at -6.00, -10.00 (centred: -5.73, -9.80); at rest -6.00, -10.00; 60 ms after open: background rgba(0, 0, 0, 0), opacity 1 · load 10.2/16.1/17.1
+  REPORT     CK-20 transition list selectable card · property [--card-fill, box-shadow, border-color, scale] duration [0.18s, 0.18s, 0.18s, 0.12s] transform matrix(1, 0, 0, 1, 0, 0) · load 10.2/16.1/17.1
+  REPORT     CK-20 transition list tabs strip · property [background] duration [0.18s] transform matrix(1, 0, 0, 1, 0, 0) · load 9.8/15.9/17.1
+  REPORT     CK-20 transition list switch host · property [--rung-commit] duration [0.45s] transform matrix(1, 0, 0, 1, 0, 0) · load 9.8/15.9/17.1
+  REPORT     CK-20 transition list switch face · property [background-color, border-color, outline-color] duration [0.12s, 0.2s, 0.2s] transform none · load 9.8/15.9/17.1
+  REPORT     CK-20 transition list chip · property [background-color, border-color, color, --rung-commit] duration [0.2s, 0.2s, 0.2s, 0.45s] transform matrix(1, 0, 0, 1, 0, 0) · load 9.8/15.9/17.1
+  REPORT     CK-20 transition list action chip · property [background-color, border-color, color, --rung-commit] duration [0.2s, 0.2s, 0.2s, 0.45s] transform matrix(1, 0, 0, 1, 0, 0) · load 9.8/15.9/17.1
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+browserContext.newPage: Target page, context or browser has been closed
+    at openPage (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/lib.mjs:292:26)
+    at async withPage (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-3/A3/probe/a3-probe.mjs:27:13)
+    at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-3/A3/probe/a3-probe.mjs:175:7 {
+  log: []
+}
+
+Node.js v26.0.0

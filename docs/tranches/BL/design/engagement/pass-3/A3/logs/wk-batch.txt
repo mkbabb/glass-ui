@@ -1,0 +1,17 @@
+[guarded] waiting for the 'webkit' lock
+# wk-batch admitted 2026-10-17 16:32:06 load { 9.90 11.73 13.52 }
+bat light webkit E-8: E-8 webkit   exit 0 · E-8 webkit PASS · 19 pass, 0 fail, 0 unmeasured of 19 gating cells (0 reported) · load 9.9/11.7/13.5 at start, 14.6/12.8/13.8 at end · 42 s, load at start 9.9/11.7/13.5
+bat light webkit E-9: E-9 webkit   exit 1 · E-9 webkit FAIL · 72 pass, 6 fail, 0 unmeasured of 78 gating cells (2 reported) · load 14.6/12.8/13.8 at start, 17.2/13.7/14.1 at end · 63 s, load at start 14.6/12.8/13.8
+bat light webkit E-10: E-10 webkit   exit 0 · E-10 webkit PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (2 reported) · load 17.2/13.7/14.1 at start, 16.9/13.8/14.1 at end · 14 s, load at start 17.2/13.7/14.1
+bat light webkit E-11: E-11 webkit   exit 0 · E-11 webkit PASS · 2 pass, 0 fail, 2 unmeasured of 4 gating cells (0 reported) · load 16.9/13.8/14.1 at start, 19.0/14.5/14.3 at end · 20 s, load at start 16.9/13.8/14.1
+probe light webkit: a3-probe light webkit · 46 pass, 1 fail, 11 unmeasured, 9 report · load 20.9/15.6/14.8 at end
+bat geom webkit E-1: E-1 webkit   exit 1 · E-1 webkit FAIL · 92 pass, 4 fail, 0 unmeasured of 96 gating cells (0 reported) · load 20.0/15.5/14.7 at start, 21.9/16.6/15.1 at end · 41 s, load at start 20.0/15.5/14.7
+bat geom webkit E-2: E-2 webkit   exit 1 · E-2 webkit FAIL · 88 pass, 76 fail, 0 unmeasured of 164 gating cells (16 reported) · load 21.9/16.6/15.1 at start, 9.8/13.0/14.0 at end · 211 s, load at start 21.9/16.6/15.1
+bat geom webkit E-8: E-8 webkit   exit 0 · E-8 webkit PASS · 19 pass, 0 fail, 0 unmeasured of 19 gating cells (0 reported) · load 9.8/13.0/14.0 at start, 8.4/12.2/13.6 at end · 41 s, load at start 9.8/13.0/14.0
+bat geom webkit E-9: E-9 webkit   exit 1 · E-9 webkit FAIL · 60 pass, 18 fail, 0 unmeasured of 78 gating cells (2 reported) · load 8.4/12.2/13.6 at start, 6.9/11.1/13.1 at end · 62 s, load at start 8.4/12.2/13.6
+bat geom-arms webkit E-2: E-2 webkit   exit 0 · E-2 webkit PASS · 164 pass, 0 fail, 0 unmeasured of 164 gating cells (16 reported) · load 6.9/11.1/13.1 at start, 19.3/15.1/14.4 at end · 213 s, load at start 6.9/11.1/13.1
+probe geom webkit: a3-probe geom webkit · 2 pass, 0 fail, 0 unmeasured, 9 report · load 19.2/15.2/14.4 at end
+cap light webkit: # capture done · load 12.6/14.7/14.4 at end CAP webkit PASS · 12 pass, 0 fail, 0 unmeasured of 12 gating cells (24 reported) · load 18.1/15.0/14.3 at start, 12.6/14.7/14.4 at end 
+cap geom webkit: # capture done · load 11.5/13.2/13.8 at end CAP webkit PASS · 12 pass, 0 fail, 0 unmeasured of 12 gating cells (24 reported) · load 12.6/14.7/14.4 at start, 11.5/13.2/13.8 at end 
+# wk-batch done 2026-10-17 16:50:17 load { 11.49 13.24 13.80 }
+guarded exit 0
