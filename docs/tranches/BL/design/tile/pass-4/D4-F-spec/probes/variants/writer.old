@@ -1,0 +1,13 @@
+    .toggle-group:has(
+            .toggle-group__item
+                > :is(.toggle-group__media, .toggle-group__meta):not(.toggle-group .toggle-group *)
+        ),
+    .toggle-group
+        .toggle-group:has(
+            .toggle-group__item
+                > :is(.toggle-group__media, .toggle-group__meta):not(
+                    .toggle-group .toggle-group .toggle-group *
+                )
+        ) {
+        --selection-tile: flush;
+    }

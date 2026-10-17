@@ -1,0 +1,10 @@
+2026-10-16 21:59:45 · load { 12.38 9.81 8.52 }
+CANON-FACT · the canon law with @container style() conditions evaluated (R-7 on floor v3; F3-1's blind spot)
+  target f4-src (flavor src) · Playwright WebKit 26.5 · harness H4 a26206b6a740
+  load 12.38 / 9.81 / 8.52 at start, 12.38 / 9.81 / 8.52 at end · other headless browser processes at start: 9 (waited 0.2 s) · browser lock waited 0 s
+  FAIL       canon-fact tile corner (plant S) · 48 twins, 139 corner rules · twin facts tile flush / pill none · tile spelling «.toggle-group:has(.toggle-group__item > :is(.toggle-group__media, .toggle-group__meta)) .toggle-group__item» · exactly one rule reaches a tile and not its pill twin, on var(--radius-field) · 2 rule(s): «@container not style(--selection-tile: none) .toggle-group__item» → var(--radius-field) (index-DXHPlhUA.css; 48/48 twins, first sm/horizontal/none/on); «.toggle-group[data-size="sm"] :is(.toggle-group:has(.toggle-group__item > :is(.toggle-group__media, .toggle-group__meta)) .toggle-group__item)» → var(--radius-panel) (inline#1; 16/48 twins, first sm/horizontal/none/on)
+  PASS       canon-fact pill corner (plant S) · 48 twins, 139 corner rules · twin facts tile flush / pill none · tile spelling «.toggle-group:has(.toggle-group__item > :is(.toggle-group__media, .toggle-group__meta)) .toggle-group__item» · every group-scoped corner on a pill is var(--radius-pill) or inherit · 2 rule(s) reach a pill
+  PASS       canon-fact unmatched (plant S) · 48 twins, 139 corner rules · twin facts tile flush / pill none · tile spelling «.toggle-group:has(.toggle-group__item > :is(.toggle-group__media, .toggle-group__meta)) .toggle-group__item» · every corner selector is matched by the engine · 0 unmatched
+CANON-FACT FAIL · 2/3 gating cells pass [library 2/3]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p4/D4-F-spec/out/runs/f4-src/CANON-FACT-webkit.json
+exit 1 · 2026-10-16 21:59:47 · load { 12.38 9.81 8.52 }

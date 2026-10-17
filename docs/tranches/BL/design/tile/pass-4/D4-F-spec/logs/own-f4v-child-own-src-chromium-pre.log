@@ -1,0 +1,61 @@
+F4-ATTACK · D4-F pass 4: empty anatomy, wrappers and nesting, the fact written below the group
+  target f4v-child-own-src (flavor src) · Chromium 149.0.7827.55 · harness H4 a26206b6a740
+  load 23.83 / 26.12 / 23.59 at start, 28.20 / 26.91 / 23.94 at end · other headless browser processes at start: 19 (waited 0.5 s) · browser lock waited 0 s
+  PASS       c1-migrated light · group «empty» fact none (want none)
+  PASS       c1-migrated light · item «vif» want pill · item fact none · 184.00×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 0
+  PASS       c1-migrated light · item «vfor» want pill · item fact none · 184.00×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 0
+  PASS       c1-migrated light · item «blank» want pill · item fact none · 184.00×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 0
+  PASS       c1-migrated light · item «none» want pill · item fact none · 184.00×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 0
+  PASS       c1-migrated dark · group «empty» fact none (want none)
+  PASS       c1-migrated dark · item «vif» want pill · item fact none · 184.00×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 0
+  PASS       c1-migrated dark · item «vfor» want pill · item fact none · 184.00×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 0
+  PASS       c1-migrated dark · item «blank» want pill · item fact none · 184.00×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 0
+  PASS       c1-migrated dark · item «none» want pill · item fact none · 184.00×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 0
+  FAIL       v2-migrated light · group «k2wrap» fact none (want flush)
+  PASS       v2-migrated light · group «pill-in-tile» fact none (want none)
+  FAIL       v2-migrated light · item «wrapped» want tile · item fact none · 137.73×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 1
+  FAIL       v2-migrated light · item «wrapped» want tile · item fact none · 137.73×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 1
+  PASS       v2-migrated light · item «inner-pill» want pill · item fact none · 92.78×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 0
+  FAIL       v2-migrated dark · group «k2wrap» fact none (want flush)
+  PASS       v2-migrated dark · group «pill-in-tile» fact none (want none)
+  FAIL       v2-migrated dark · item «wrapped» want tile · item fact none · 137.73×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 1
+  FAIL       v2-migrated dark · item «wrapped» want tile · item fact none · 137.73×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 1
+  PASS       v2-migrated dark · item «inner-pill» want pill · item fact none · 92.78×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 0
+  PASS       specimen-migrated light · group «pill-outer» fact none (want none)
+  PASS       specimen-migrated light · group «tile-in-pill» fact flush (want flush)
+  PASS       specimen-migrated light · item «outer-pill» want pill · item fact none · 65.31×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 0
+  PASS       specimen-migrated light · item «outer-pill» want pill · item fact none · 124.23×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 0
+  PASS       specimen-migrated light · item «inner-tile» want tile · item fact flush · 63.50×67.88 16px → used 16.00 (h/2 33.94) · column · overflow visible · text rows 2, cut 0, library rows 1
+  PASS       specimen-migrated dark · group «pill-outer» fact none (want none)
+  PASS       specimen-migrated dark · group «tile-in-pill» fact flush (want flush)
+  PASS       specimen-migrated dark · item «outer-pill» want pill · item fact none · 65.31×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 0
+  PASS       specimen-migrated dark · item «outer-pill» want pill · item fact none · 124.23×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 0
+  PASS       specimen-migrated dark · item «inner-tile» want tile · item fact flush · 63.50×67.88 16px → used 16.00 (h/2 33.94) · column · overflow visible · text rows 2, cut 0, library rows 1
+  FAIL       f1-migrated light · group «tile-outer» fact none (want flush)
+  PASS       f1-migrated light · group «tile-in-tile» fact flush (want flush)
+  FAIL       f1-migrated light · item «outer-tile» want tile · item fact none · 94.09×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 1
+  FAIL       f1-migrated light · item «outer-tile» want tile · item fact none · 94.09×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 1
+  FAIL       f1-migrated light · item «outer-tile» want tile · item fact none · 94.09×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 1
+  PASS       f1-migrated light · item «inner-tile» want tile · item fact flush · 63.50×67.88 16px → used 16.00 (h/2 33.94) · column · overflow visible · text rows 2, cut 0, library rows 1
+  FAIL       f1-migrated dark · group «tile-outer» fact none (want flush)
+  PASS       f1-migrated dark · group «tile-in-tile» fact flush (want flush)
+  FAIL       f1-migrated dark · item «outer-tile» want tile · item fact none · 94.09×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 1
+  FAIL       f1-migrated dark · item «outer-tile» want tile · item fact none · 94.09×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 1
+  FAIL       f1-migrated dark · item «outer-tile» want tile · item fact none · 94.09×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 1
+  PASS       f1-migrated dark · item «inner-tile» want tile · item fact flush · 63.50×67.88 16px → used 16.00 (h/2 33.94) · column · overflow visible · text rows 2, cut 0, library rows 1
+  PASS       preset-migrated light · group «pinned» fact flush (want flush)
+  PASS       preset-migrated light · item «item-writes-none» want tile · item fact flush · 204.00×86.75 16px → used 16.00 (h/2 43.38) · column · overflow visible · text rows 3, cut 0, library rows 1 · inner span block fact flush
+  PASS       preset-migrated light · item «content-writes-none» want tile · item fact flush · 204.00×86.75 16px → used 16.00 (h/2 43.38) · column · overflow visible · text rows 3, cut 0, library rows 1 · inner span inline fact flush; span block fact flush
+  info-pass  preset-migrated light [src, production: reported] · "asks for a second row" 0
+  PASS       preset-migrated dark · group «pinned» fact flush (want flush)
+  PASS       preset-migrated dark · item «item-writes-none» want tile · item fact flush · 204.00×86.75 16px → used 16.00 (h/2 43.38) · column · overflow visible · text rows 3, cut 0, library rows 1 · inner span block fact flush
+  PASS       preset-migrated dark · item «content-writes-none» want tile · item fact flush · 204.00×86.75 16px → used 16.00 (h/2 43.38) · column · overflow visible · text rows 3, cut 0, library rows 1 · inner span inline fact flush; span block fact flush
+  info-pass  preset-migrated dark [src, production: reported] · "asks for a second row" 0
+  PASS       strip-migrated light · group «pill-content-writes» fact none (want none)
+  PASS       strip-migrated light · item «label-writes-flush» want pill · item fact none · 94.03×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 0 · inner span inline fact none
+  info-pass  strip-migrated light [src, production: reported] · "asks for a second row" 0
+  PASS       strip-migrated dark · group «pill-content-writes» fact none (want none)
+  PASS       strip-migrated dark · item «label-writes-flush» want pill · item fact none · 94.03×40.00 9999px → used 20.00 (h/2 20.00) · row · overflow clip · text rows 1, cut 0, library rows 0 · inner span inline fact none
+  info-pass  strip-migrated dark [src, production: reported] · "asks for a second row" 0
+F4-ATTACK FAIL · 38/52 gating cells pass [library 38/52]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p4/D4-F-spec/out/runs/f4v-child-own-src/F4-ATTACK-chromium.json

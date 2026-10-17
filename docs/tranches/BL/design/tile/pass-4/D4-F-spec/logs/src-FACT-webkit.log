@@ -1,0 +1,19 @@
+2026-10-16 21:59:08 · load { 12.04 9.41 8.32 }
+FACT · is a tile has one spelling: the fact and the tile geometry agree under nesting and a written fact (H4-1; R-10, R-2)
+  target f4-atk-src (flavor src) · Playwright WebKit 26.5 · harness H4 a26206b6a740
+  load 12.04 / 9.41 / 8.32 at start, 11.88 / 9.50 / 8.38 at end · other headless browser processes at start: 9 (waited 0.1 s) · browser lock waited 0 s
+  PASS       declared light · want tile · a tile on the field corner · fact flush · 95.97×66.59 · 16px → used 16.00 (0.48×h/2) · 2 row(s) · column
+  PASS       pill-in-tile light · want pill · a pill at h/2 on one row · fact none · 92.81×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       pill-beside-tile light · want pill · a pill at h/2 on one row · fact none · 92.81×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       tile-in-pill light · want pill · a pill at h/2 on one row · fact none · 63.05×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       fact-plated light · --selection-tile: plated written on the group · want agree · the written fact and the geometry agree: a tile on the field corner · fact plated · 204.00×61.58 · 16px → used 16.00 (0.52×h/2) · 2 row(s) · column
+  PASS       fact-flush light · --selection-tile: flush written on the group · want agree · the written fact and the geometry agree: a tile on the field corner · fact flush · 204.00×61.58 · 16px → used 16.00 (0.52×h/2) · 2 row(s) · column
+  PASS       declared dark · want tile · a tile on the field corner · fact flush · 95.97×66.59 · 16px → used 16.00 (0.48×h/2) · 2 row(s) · column
+  PASS       pill-in-tile dark · want pill · a pill at h/2 on one row · fact none · 92.81×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       pill-beside-tile dark · want pill · a pill at h/2 on one row · fact none · 92.81×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       tile-in-pill dark · want pill · a pill at h/2 on one row · fact none · 63.05×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       fact-plated dark · --selection-tile: plated written on the group · want agree · the written fact and the geometry agree: a tile on the field corner · fact plated · 204.00×61.58 · 16px → used 16.00 (0.52×h/2) · 2 row(s) · column
+  PASS       fact-flush dark · --selection-tile: flush written on the group · want agree · the written fact and the geometry agree: a tile on the field corner · fact flush · 204.00×61.58 · 16px → used 16.00 (0.52×h/2) · 2 row(s) · column
+FACT PASS · 12/12 gating cells pass [library 12/12]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p4/D4-F-spec/out/runs/f4-atk-src/FACT-webkit.json
+exit 0 · 2026-10-16 21:59:21 · load { 11.88 9.50 8.38 }

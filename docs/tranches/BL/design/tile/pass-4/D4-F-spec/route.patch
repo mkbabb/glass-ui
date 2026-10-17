@@ -1,0 +1,420 @@
+--- a/src/components/toggle-group/ToggleGroupItem.vue
++++ b/src/components/toggle-group/ToggleGroupItem.vue
+@@ -1,5 +1,17 @@
+ <script setup lang="ts">
+-import { computed, onBeforeUnmount, onMounted, ref, useAttrs, watch, type HTMLAttributes } from "vue";
++import {
++    Comment,
++    computed,
++    Fragment,
++    onBeforeUnmount,
++    onMounted,
++    ref,
++    Text,
++    useAttrs,
++    watch,
++    type HTMLAttributes,
++    type VNode,
++} from "vue";
+ import { cn } from "../_shared/class-names";
+ import type { SelectionValue } from "../_shared/selection";
+ import { useOptionalToggleGroupContext, type ToggleItemEntry } from "./context";
+@@ -43,9 +55,30 @@
+  * in: this is a slot, not a travelling mark. */
+ defineSlots<{
+     default?: () => unknown;
++    /** A row above the label: a glyph, a thumbnail, a stage. A group with one is a set of tiles. */
++    media?: () => VNode[];
++    /** A row below the label: a readout, a description. A group with one is a set of tiles. */
++    meta?: () => VNode[];
+     indicator?: (props: { selected: boolean }) => unknown;
+ }>();
+ 
++/* THE ANATOMY DECLARES THE TILE (D4-F). `#media` and `#meta` each render in a
++ * library-marked row, and a row exists only when its slot yields something to paint:
++ * a slot that holds only a false `v-if` (a comment), a `v-for` over nothing (an empty
++ * fragment) or blank text is unfilled, so it renders no row and makes no tile. A child
++ * component counts as content whatever it renders. The rows are what the group's tile
++ * rule reads (styles.css); nothing else in this component knows about tiles. */
++const yields = (nodes: VNode[] | undefined): boolean =>
++    (nodes ?? []).some((n) =>
++        n.type === Comment
++            ? false
++            : n.type === Text
++              ? String(n.children).trim() !== ""
++              : n.type === Fragment
++                ? yields(n.children as VNode[])
++                : true,
++    );
++
+ const el = ref<HTMLElement | null>(null);
+ const group = useOptionalToggleGroupContext();
+ 
+@@ -159,7 +192,7 @@
+             });
+             if (b.querySelector("br") || past || textRows(b) > 1)
+                 name(
+-                    "asks for a second row: a pill shows its content on one row. Options that hold more than one row are tiles.",
++                    "asks for a second row: a pill shows its content on one row. An option with a row above its label fills #media, and one with a row below it fills #meta; that makes the set tiles.",
+                 );
+         }
+         const owned = ENGINE_OWNED.filter((a) => a in attrs);
+@@ -214,7 +247,9 @@
+         @animationend.self="onAnimationEnd"
+     >
+         <slot name="indicator" :selected="selected" />
++        <span v-if="yields($slots.media?.())" class="toggle-group__media"><slot name="media" /></span>
+         <slot />
++        <span v-if="yields($slots.meta?.())" class="toggle-group__meta"><slot name="meta" /></span>
+     </button>
+ </template>
+ 
+--- a/src/components/toggle-group/styles.css
++++ b/src/components/toggle-group/styles.css
+@@ -78,6 +78,8 @@
+            card pad on the spacing tokens. */
+         --toggle-group-item-pad: 0.75rem;
+         --toggle-group-tile-pad: var(--space-atom) var(--space-body);
++        --toggle-group-mark: 1.125rem;
++        --toggle-group-mark-inset: 0.375rem;
+         padding-inline: var(--toggle-group-item-pad);
+         /* ONE spelling of the stadium. The old `calc(var(--radius-pill) + 0.25rem)`
+            pair upstairs is what made this component the sole author of the ×32
+@@ -206,9 +208,104 @@
+             text-align: start;
+             line-height: var(--type-leading-body);
+             --selection-perimeter: 1;
++            /* D4-F: the mark (below) */
++            --toggle-group-marked: 1;
+         }
++    }
++
++    /* THE ANATOMY DECLARES THE TILE (D4-F). A group one of whose own options fills
++       `#media` (a row above its label) or `#meta` (a row below it) is a set of tiles.
++       This rule is the whole route: it writes the tile fact, and the tile's geometry,
++       perimeter, plate and names read the fact above (base.css). Nothing is declared.
++       - The rows are the library's (ToggleGroupItem.vue renders one only when its slot
++         yields content), so the child combinator counts anatomy, not a class inside
++         slotted content.
++       - "Its own" is the row's nearest group. A consumer's wrappers between a group
++         and its options (a family `<section>`, a grid `<div>`) do not matter; a group
++         nested inside another is one more group above its rows. A group at the top
++         counts rows under exactly one group, and a nested group rows under exactly
++         two, so a tile group inside a pill group leaves the outer group pills.
++         A third level of nesting reads pills: a radiogroup inside a radiogroup is
++         already outside ARIA's model. */
++    .toggle-group:has(
++            .toggle-group__item
++                > :is(.toggle-group__media, .toggle-group__meta):not(.toggle-group .toggle-group *)
++        ),
++    .toggle-group
++        .toggle-group:has(
++            .toggle-group__item
++                > :is(.toggle-group__media, .toggle-group__meta):not(
++                    .toggle-group .toggle-group .toggle-group *
++                )
++        ) {
++        --selection-tile: flush;
++    }
++
++    /* THE FACT IS THE GROUP'S, AT EVERY ELEMENT THAT READS IT. The tile's geometry
++       reads the fact on the option's parent; the one-row law, the pill's clip and the
++       development name read it on the option itself. A value written on an option or
++       inside it would split the two (a tile's corner over a pill's clip), so the option
++       and its content inherit the fact and nothing below the group can write it.
++       `!important` in this layer is the refusal; an inline `!important` is the one
++       thing above it. */
++    :where(.toggle-group__item, .toggle-group__item *) {
++        --selection-tile: inherit !important;
++    }
++
++    /* THE MARK: a disc of the edge ink with a check cut through it, in the tile's
++       block-start / inline-end corner. It is the selected carrier that is neither a
++       colour nor an outline, so a selected tile does not read as a focused one. It
++       reads the tile fact as a property of the item (`--toggle-group-marked`, set in
++       the tile's geometry rule above), not through a query on `::after`: Playwright WebKit does not re-match a
++       pseudo-element's style query after load. On `::after` (the perimeter holds
++       `::before`); it springs in on the press curve.
++       THE MARK NEEDS ROOM. A percentage here is the tile's own padding box, so the
++       mark is its size where the tile is at least 3.5 marks wide and 0 below that: a
++       40 px glyph tile carries its state on the edge, the plate and the ink, and the
++       mark never sits on the one glyph the tile shows. */
++    .toggle-group__item::after {
++        --toggle-group-mark-size: calc(var(--toggle-group-mark) * var(--toggle-group-marked, 0));
++        content: "";
++        position: absolute;
++        inset-block-start: var(--toggle-group-mark-inset);
++        inset-inline-end: var(--toggle-group-mark-inset);
++        inline-size: min(
++            var(--toggle-group-mark-size),
++            max(0px, (100% - 3.5 * var(--toggle-group-mark-size)) * 9999)
++        );
++        aspect-ratio: 1;
++        background: var(--selection-edge);
++        mask:
++            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='12'/%3E%3C/svg%3E")
++                center / contain no-repeat,
++            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 8.5 10.25 15.5 7 12.25'/%3E%3C/svg%3E")
++                center / contain no-repeat;
++        mask-composite: exclude;
++        opacity: 0;
++        scale: 0.4;
++        pointer-events: none;
++        transition:
++            opacity var(--engage-control-engage-release) var(--ease-standard),
++            scale var(--spring-press-duration) var(--spring-press);
+     }
+ 
++    .toggle-group__item[data-state="on"]::after {
++        opacity: 1;
++        scale: 1;
++    }
++
++    /* the rows: a media row spans the tile, a meta row is the secondary line. Both
++       inherit the item's ink (`--selection-ink`), so a stroke of `currentColor` and a
++       readout follow the state with no `[data-state="on"]` rule of the consumer's */
++    .toggle-group__media {
++        display: flex;
++        align-self: stretch;
++    }
++
++    .toggle-group__meta {
++        font-weight: 400;
++    }
++
+     /* the same switch when contrast is requested or colours are forced: there the
+        perimeter replaces the 2 px border accessibility.css gives other selected
+        controls, which would move the content by a pixel per commit */
+@@ -278,6 +375,8 @@
+         --toggle-group-item-size: var(--control-h-sm);
+         --toggle-group-item-pad: 0.5rem;
+         --toggle-group-tile-pad: var(--space-residue) var(--space-atom);
++        --toggle-group-mark: 0.875rem;
++        --toggle-group-mark-inset: 0.25rem;
+         font-size: var(--control-text-sm);
+     }
+ 
+@@ -362,5 +461,12 @@
+         .toggle-group__item::before {
+             border-color: Highlight;
+         }
++
++        /* a mask over a fill would be repainted as Canvas; the selected plate is
++           Highlight, so the mark is the ink that reads on it */
++        .toggle-group__item::after {
++            forced-color-adjust: none;
++            background: HighlightText;
++        }
+     }
+ }
+--- a/tests/components/ui/toggle-group/ToggleGroup.test.ts
++++ b/tests/components/ui/toggle-group/ToggleGroup.test.ts
+@@ -18,6 +18,7 @@
+  * them.
+  */
+ import { readFileSync } from "node:fs";
++import type { Rule as CssRule } from "postcss";
+ import { resolve } from "node:path";
+ import { mount } from "@vue/test-utils";
+ import { defineComponent, nextTick, ref } from "vue";
+@@ -561,6 +562,7 @@
+             "text-align": "start",
+             "line-height": "var(--type-leading-body)",
+             "--selection-perimeter": "1",
++            "--toggle-group-marked": "1",
+         });
+         // no other rule writes the field corner, and no size rule writes a pad (the `lg`
+         // trap: a (0,3,0) `padding-inline` would outrank the tile's pad at (0,1,0))
+@@ -601,3 +603,80 @@
+         expect(peak).toContain("max(var(--motion-weight), 0.618)");
+     });
+ });
++
++/* D4-F · THE ANATOMY DECLARES THE TILE. The item's `#media` and `#meta` rows are the
++ * one thing that makes a group a set of tiles; nothing is declared. These cases pin the
++ * DOM half (a row exists only when its slot yields content) and the sheet's one writer
++ * of the fact. The paint half (16 px, a column, the perimeter, the mark, nesting and
++ * wrappers) is the tile harness's and the route's probes': happy-dom resolves no
++ * `:has()` and no style query. */
++describe("D4-F — the anatomy declares the tile", () => {
++    const rows = (slot: string, data: Record<string, unknown> = {}) => {
++        const Holder = defineComponent({
++            components: { ToggleGroup, ToggleGroupItem },
++            setup: () => data,
++            template: `<ToggleGroup type="single" model-value="a"><ToggleGroupItem value="a">A${slot}</ToggleGroupItem></ToggleGroup>`,
++        });
++        const wrapper = mount(Holder);
++        const found = [...wrapper.get("button").element.children].map((c) => c.className);
++        wrapper.unmount();
++        return found;
++    };
++
++    it("a row renders only when its slot yields content", () => {
++        const Nothing = defineComponent({ render: () => null });
++        expect(rows(`<template #media><svg /></template><template #meta><span>0.5 s</span></template>`)).toEqual([
++            "toggle-group__media",
++            "toggle-group__meta",
++        ]);
++        // a false v-if (a comment), a v-for over nothing (an empty fragment), blank text: unfilled
++        expect(rows(`<template #meta><span v-if="hint">{{ hint }}</span></template>`, { hint: "" })).toEqual([]);
++        expect(rows(`<template #meta><span v-for="h in hints" :key="h">{{ h }}</span></template>`, { hints: [] })).toEqual(
++            [],
++        );
++        expect(rows(`<template #meta>{{ hint }}</template>`, { hint: "  " })).toEqual([]);
++        // a child component counts as content whatever it renders (the claim MIGRATION states)
++        const withChild = defineComponent({
++            components: { ToggleGroup, ToggleGroupItem, Nothing },
++            template: `<ToggleGroup type="single" model-value="a"><ToggleGroupItem value="a">A<template #meta><Nothing /></template></ToggleGroupItem></ToggleGroup>`,
++        });
++        const w = mount(withChild);
++        expect(w.find(".toggle-group__meta").exists()).toBe(true);
++        w.unmount();
++    });
++
++    it("the sheet: one rule writes the tile fact, from the anatomy, and the option cannot rewrite it", async () => {
++        const postcss = (await import("postcss")).default;
++        const root = postcss.parse(read(LANE_SHEET));
++        const ANATOMY = /toggle-group__(media|meta)/;
++        const writers: string[] = [];
++        root.walkDecls("--selection-tile", (d) => {
++            const r = d.parent as CssRule;
++            if (d.value === "flush" || d.value === "plated") writers.push(r.selector.replace(/\s+/g, " "));
++        });
++        expect(writers).toEqual([
++            ".toggle-group:has( .toggle-group__item > :is(.toggle-group__media, .toggle-group__meta):not(.toggle-group .toggle-group *) ), .toggle-group .toggle-group:has( .toggle-group__item > :is(.toggle-group__media, .toggle-group__meta):not( .toggle-group .toggle-group .toggle-group * ) )",
++        ]);
++        // no other rule reads the anatomy: every tile reader reads the fact
++        const readers: string[] = [];
++        root.walkRules((r) => {
++            if (ANATOMY.test(r.selector) && r.selector.includes(":has(")) readers.push(r.selector);
++        });
++        expect(readers).toHaveLength(1);
++        // the option and its content inherit the fact, refused to anything below the group
++        let pin = "";
++        root.walkRules(":where(.toggle-group__item, .toggle-group__item *)", (r) =>
++            r.walkDecls("--selection-tile", (d) => {
++                pin = d.value + (d.important ? " !important" : "");
++            }),
++        );
++        expect(pin).toBe("inherit !important");
++        // the mark switches on the fact, as an item property its ::after reads
++        const marked: string[] = [];
++        root.walkDecls("--toggle-group-marked", (d) => {
++            const at = d.parent?.parent as { type: string; params?: string } | undefined;
++            marked.push(`${at?.type === "atrule" ? at.params : "-"} ${(d.parent as CssRule).selector}`);
++        });
++        expect(marked).toEqual(["not style(--selection-tile: none) .toggle-group__item"]);
++    });
++});
+--- a/MIGRATION.md
++++ b/MIGRATION.md
+@@ -50,6 +50,24 @@
+ tabindex: the group's engine owns an option's role, state and tab stop …`;
+ `rg 'ToggleGroupItem[^>]*(role=|tabindex=|aria-(checked|pressed|selected)=)'`.
+ 
++_`<ToggleGroupItem>` gains `#media` and `#meta`, and they are what makes a set of tiles_
++
++`#media` is a row above the label (a glyph, a thumbnail, a stage), `#meta` a row below it
++(a readout, a description). A group one of whose own options fills either slot is a set
++of tiles (`--selection-tile: flush`, below): every option in it is a card, and a
++selected one carries a check in its top inline-end corner when it is at least 3.5 checks
++wide. Nothing is declared, and there is no prop. A slot that yields only a false
++`v-if`, a `v-for` over nothing or blank text is unfilled and renders no row; a child
++component counts as content whatever it renders. Wrappers between a group and its
++options (a `<section>` per family, a grid `div`) do not matter; an option belongs to its
++nearest group, so a tile group nested inside a pill group leaves the outer group pills
++and the other way round, for two levels of groups (a group three levels deep is pills).
++The silent change: a default slot that held two rows (a name over a readout) now lays
++them out on one row of a pill and clips; move the second row into `#meta` or `#media`.
++Detectors: `rg -U '<ToggleGroupItem[^>]*class="[^"]*(flex-col|rounded-)'` for options
++that hand-built a tile; in a development build, `[ToggleGroupItem] value=… asks for a
++second row … fills #meta …`.
++
+ _Behaviour and paint, nothing to change_
+ 
+ - `<FadingScroll>` is a tab stop only while its content holds none. A `ToggleGroup` (or
+@@ -82,8 +100,9 @@
+   read `process.env.NODE_ENV`, which your bundler resolves (Vite and webpack do by
+   default).
+ - `--selection-tile` (`none` | `flush` | `plated`, inherited) says whether a set of
+-  options are tiles. It is `none` on every `ToggleGroup`, and nothing in the library
+-  sets it yet. Under either tile value an option is a card, whatever wrote the value:
++  options are tiles. It is `none` on every `ToggleGroup`, and `flush` on one whose own
++  options fill `#media` or `#meta`. It is the group's: written on an option or on content
++  inside one, it has no effect (only an inline `--selection-tile: … !important` does). Under either tile value an option is a card, whatever wrote the value:
+   it is not held to one row, and it takes the field corner (16px), a column,
+   start-aligned text at body leading, the card pad (`--space-atom` block,
+   `--space-body` inline; `sm` `--space-residue` / `--space-atom`), the height of the
+--- a/demo/stories/forms/toggle.vue
++++ b/demo/stories/forms/toggle.vue
+@@ -18,6 +18,14 @@
+ const densityOptions = ["Compact", "Comfortable", "Spacious", "Touch", "Presentation"];
+ const region = ref<string>("");
+ const frozen = ref<string>("balanced");
++const spring = ref<string>("snappy");
++const springs = [
++    { id: "gentle", label: "Gentle", readout: "0.60 s · ζ 0.90", path: "M2 20 C 14 20 22 4 46 4" },
++    { id: "snappy", label: "Snappy", readout: "0.35 s · ζ 0.60", path: "M2 20 C 8 20 12 -2 22 3 S 34 5 46 4" },
++    { id: "bouncy", label: "Bouncy", readout: "0.50 s · ζ 0.35", path: "M2 20 C 6 20 9 -8 16 2 S 24 8 30 3 S 40 5 46 4" },
++    { id: "stiff", label: "Stiff", readout: "0.20 s · ζ 1.00", path: "M2 20 C 6 20 8 4 46 4" },
++];
++const sources = ref<string[]>(["warm"]);
+ </script>
+ 
+ <template>
+@@ -82,6 +90,55 @@
+         </StorySection>
+ 
+         <StorySection
++            heading="Tiles"
++            blurb="An option that fills #media (a row above its label) or #meta (a row below it) makes its set tiles: a card corner at every size, one height per row, a selected edge and a check. Nothing is declared; the same group with bare labels is pills."
++        >
++            <ToggleGroup
++                v-model="spring"
++                type="single"
++                class="grid w-full max-w-md grid-cols-2"
++                aria-label="Spring preset"
++            >
++                <ToggleGroupItem v-for="s in springs" :key="s.id" :value="s.id">
++                    <template #media>
++                        <svg viewBox="0 0 48 24" class="h-6 w-12" fill="none" aria-hidden="true">
++                            <path
++                                :d="s.path"
++                                stroke="currentColor"
++                                stroke-width="1.75"
++                                stroke-linecap="round"
++                            />
++                        </svg>
++                    </template>
++                    {{ s.label }}
++                    <template #meta>
++                        <span class="text-mono-small">{{ s.readout }}</span>
++                    </template>
++                </ToggleGroupItem>
++            </ToggleGroup>
++            <ToggleGroup
++                v-model="sources"
++                type="multiple"
++                size="sm"
++                class="grid w-full max-w-md grid-cols-3"
++                aria-label="Mix sources"
++            >
++                <ToggleGroupItem value="warm">
++                    Warm
++                    <template #meta>3 stops</template>
++                </ToggleGroupItem>
++                <ToggleGroupItem value="cool">
++                    Cool
++                    <template #meta>5 stops</template>
++                </ToggleGroupItem>
++                <ToggleGroupItem value="mono">Mono</ToggleGroupItem>
++            </ToggleGroup>
++            <p class="text-mono-small text-muted-foreground">
++                spring · {{ spring }} · sources · [{{ sources.join(", ") }}]
++            </p>
++        </StorySection>
++
++        <StorySection
+             heading="Invalid and disabled"
+             blurb="One invalid grammar (data-invalid + aria-invalid on the group) and the disabled axis, at the group and at a single item."
+         >
