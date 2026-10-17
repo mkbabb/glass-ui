@@ -1,0 +1,25 @@
+19:16  up 21:39, 2 users, load averages: 21.20 23.10 18.44
+PASS  CF  Chromium  c1·shape·h  collapsed 102×56 px (main×cross), corner R 9999 px (stadium ≥ 27), painting seats' span 86 px (hug bound 110); disclosure div#glass-dock-v-14-summary.dock-layer.dock-layer--summary.is-active "Expand dock" aria-expanded=false; plate opacity 1 collapsed, 1 expanded (expanded); frame chromium-c1-h-collapsed.png  [load 21.27]
+PASS  CF  Chromium  c2·morph·h  first expand: travel 157 px, largest one-frame step 12.06 px (bound 70.65), 32 frame(s) between the rests, flash 0, root cross drift 0 px, the extent first moves 96 ms after the hover; collapse: travel 157 px, largest one-frame step 10.31 px (bound 70.65), 33 frame(s) between the rests, flash 0, root cross drift 0 px; warm expand: travel 157 px, largest one-frame step 11.63 px (bound 70.65), 33 frame(s) between the rests, flash 0, root cross drift 0 px; frames 8 (frames/chromium-c2_morph_h-expand, warm)  [load 21.43]
+PASS  CF  Chromium  c1·shape·v  collapsed 116×64 px (main×cross), corner R 9999 px (stadium ≥ 31), painting seats' span 92 px (hug bound 116); disclosure div#glass-dock-v-24-summary.dock-layer.dock-layer--summary.is-active "Expand dock" aria-expanded=false; plate opacity 1 collapsed, 1 expanded (expanded); frame chromium-c1-v-collapsed.png  [load 21.64]
+PASS  CF  Chromium  c2·morph·v  first expand: travel 213 px, largest one-frame step 13.84 px (bound 95.85), 31 frame(s) between the rests, flash 0, root cross drift 0 px, the extent first moves 101 ms after the hover; collapse: travel 213 px, largest one-frame step 17.4 px (bound 95.85), 33 frame(s) between the rests, flash 0, root cross drift 0 px; warm expand: travel 213 px, largest one-frame step 14.6 px (bound 95.85), 33 frame(s) between the rests, flash 0, root cross drift 0 px; frames 8 (frames/chromium-c2_morph_v-expand, warm)  [load 21.76]
+PASS  CF  Chromium  c2·prm  reduced motion: 102 → 259 px; the extent lands 0 frame(s) after its first change (bound ≤ 3)  [load 22.18]
+PASS  CF  Chromium  c2·rapid  five toggles 70 ms apart ending on Enter: rests pinned at 259 px (expanded rest 259 px); disclosure aria-expanded (none); focus button.dock-icon-button.glass-specular-track.glass-capsule-hover  [load 23.21]
+PASS  CF  Chromium  c3·hover  hover: expanded after 91 ms; leave: collapsed after 3613 ms  [load 23.35]
+PASS  CF  Chromium  c3·focus  Tab ×1: focus on button.dock-icon-button.glass-specular-track.glass-capsule-hover (in the dock); after 1.2 s the dock is expanded  [load 23.16]
+PASS  CF  Chromium  c3·scroll  expanded yes; wheel 240 px scrolled the page 240 px; collapsed after 87 ms  [load 23.16]
+PASS  CF  Chromium  c4·persistent  1 persistent element(s) collapsed, 1 expanded; failing: none  [load 23.07]
+PASS  CF  Chromium  c5·keyboard  Tab ×1 → button.dock-icon-button.glass-specular-track.glass-capsule-hover with the dock expanded; Escape then Enter. Collapsed disclosure: div#glass-dock-v-14-summary.dock-layer.dock-layer--summary.is-active "Expand dock" aria-expanded=false. Enter: expanded, focus div#glass-dock-v-14-full.dock-layer.dock-layer--full.dock-run; Escape: collapsed, focus div#glass-dock-v-14-summary.dock-layer.dock-layer--summary.is-active (the disclosure)  [load 21.7]
+PASS  CF  Chromium  c6·menu  trigger button#reka-dropdown-menu-trigger-v-15.menu__trigger.dock-trigger.dock-dropdown-trigger: menu open after 5 ms; 4.5 s later (past the dwell, pointer on the menu) menu open, dock expanded; Escape: menu closed, focus button#reka-dropdown-menu-trigger-v-15.menu__trigger.dock-trigger.dock-dropdown-trigger (the trigger)  [load 20.6]
+PASS  CF  Chromium  c7·narrow  390 px: expanded extent 81..309 px in a 390 px viewport; document scrollWidth 390; frame chromium-c7-narrow-expanded.png  [load 21.04]
+PASS  CF  Chromium  c7·coarse-tap  tap at the collapsed dock's disclosure (coarse, 390 px): expanded after 449 ms; elements activated none  [load 21.04]
+ROW  CF  chromium  C1  PASS  (c1·shape·h pass)
+ROW  CF  chromium  C2  PASS  (c2·morph·h pass, c2·prm pass, c2·rapid pass)
+ROW  CF  chromium  C3  PASS  (c3·hover pass, c3·focus pass, c3·scroll pass, c7·coarse-tap pass)
+ROW  CF  chromium  C4  PASS  (c4·persistent pass)
+ROW  CF  chromium  C5  PASS  (c5·keyboard pass)
+ROW  CF  chromium  C6  PASS  (c6·menu pass)
+ROW  CF  chromium  C7  PASS  (c1·shape·v pass, c2·morph·v pass, c7·narrow pass, c7·coarse-tap pass)
+PASS  CF  g11@7d309f73  14/14 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p4/G-proto/wt/.gout/dev-CF-g11-chromium/runs/CF-g11/CF.json)
+exit 0
+19:18  up 21:40, 2 users, load averages: 20.63 22.69 18.69

@@ -1,0 +1,452 @@
+{
+ "cell": {
+  "res": [
+   {
+    "raw-long": 1
+   },
+   {
+    "raw-await-mid": 1
+   },
+   {
+    "raw-long": 1
+   },
+   {
+    "raw-await-mid+userGesture": 1
+   },
+   {
+    "raw-long": 1
+   },
+   {
+    "callFunctionOn": 1
+   },
+   {
+    "raw-long": 1
+   },
+   {
+    "callFunctionOn+userGesture": 1
+   },
+   {
+    "raw-long": 1
+   },
+   {
+    "callFunctionOn, Playwright's wrapper PROTOCOL-ERROR": "cdpSession.send: Protocol error (Runtime.callFunctionOn): Promise was collected"
+   },
+   {
+    "raw-long": 1
+   },
+   {
+    "callFunctionOn, Playwright's wrapper, promises held by window": 1
+   },
+   {
+    "raw-long": 1
+   },
+   {
+    "callFunctionOn, Playwright's wrapper (again)": 1
+   },
+   {
+    "raw-long": 1
+   },
+   {
+    "callFunctionOn, Playwright's wrapper via eval": 1
+   },
+   {
+    "ok": 1
+   },
+   {
+    "ok": 1
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "await-only": {
+  "res": [
+   {
+    "ok": 1
+   },
+   {
+    "ok": 1
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "sync-retarget": {
+  "res": [
+   {
+    "ok": 1
+   },
+   {
+    "ok": 1
+   },
+   {
+    "ok": 1
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "await-at-rest": {
+  "res": [
+   {
+    "err": "page.evaluate: Execution context was destroyed, most likely because of a navigation."
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "cell-caught": {
+  "res": [
+   {
+    "ok": 1
+   },
+   {
+    "err": "page.evaluate: Execution context was destroyed, most likely because of a navigation."
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "cell-tick": {
+  "res": [
+   {
+    "ok": 1
+   },
+   {
+    "ok": 1
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "alloc": {
+  "res": [
+   {
+    "ok": 1
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "alloc-micro": {
+  "res": [
+   {
+    "ok": 1
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "alloc-micro-small": {
+  "res": [
+   {
+    "ok": 1
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "cancel-only": {
+  "res": [
+   {
+    "ok": 1
+   },
+   {
+    "ok": 33
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "cell-nocancel": {
+  "res": [
+   {
+    "ok": 1
+   },
+   {
+    "err": "page.evaluate: Execution context was destroyed, most likely because of a navigation."
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "cancel-fresh": {
+  "res": [
+   {
+    "ok": 46
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "cell-micro": {
+  "res": [
+   {
+    "ok": 1
+   },
+   {
+    "ok": 1
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "cell-trace": {
+  "res": [
+   {
+    "ok": 1
+   },
+   {
+    "ok": 1
+   },
+   {
+    "err": "page.evaluate: Execution context was destroyed, most likely because of a navigation."
+   },
+   {
+    "ok": "{\"win.queueMicrotask\":2,\"HEl.removeAttribute:aria-hidden\":1,\"El.removeAttribute:aria-hidden\":1,\"HEl.setAttribute:tabindex\":1,\"El.setAttribute:tabindex\":1,\"HEl.setAttribute:aria-hidden\":1,\"El.setAttribute:aria-hidden\":1,\"HEl.removeAttribute:tabindex\":1,\"El.removeAttribute:tabindex\":1,\"HEl.getBoundingClientRect\":17,\"El.getBoundingClientRect\":17,\"win.getComputedStyle\":31,\"HEl.getAnimations\":1,\"El.getAnimations\":1,\"Anim.cancel\":66,\"win.clearTimeout\":1,\"style.setProperty:left\":1,\"style.setProperty:right\":1,\"HEl.animate\":43,\"El.animate\":43,\"HEl.setAttribute:data-aperture\":1,\"El.setAttribute:data-aperture\":1,\"win.setTimeout\":1}"
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "trace-fv-reference": {
+  "res": [
+   {
+    "ok": 1
+   },
+   {
+    "ok": 1
+   },
+   {
+    "ok": 1
+   },
+   {
+    "ok": "{\"win.setTimeout\":2,\"HEl.removeAttribute:aria-hidden\":1,\"El.removeAttribute:aria-hidden\":1,\"HEl.setAttribute:tabindex\":1,\"El.setAttribute:tabindex\":1,\"HEl.setAttribute:aria-hidden\":1,\"El.setAttribute:aria-hidden\":1,\"HEl.removeAttribute:tabindex\":1,\"El.removeAttribute:tabindex\":1,\"HEl.getBoundingClientRect\":19,\"El.getBoundingClientRect\":19,\"win.getComputedStyle\":35,\"HEl.getAnimations\":1,\"El.getAnimations\":1,\"Anim.cancel\":66,\"win.clearTimeout\":1,\"style.setProperty:left\":1,\"style.setProperty:right\":1,\"HEl.animate\":43,\"El.animate\":43,\"HEl.setAttribute:data-aperture\":1,\"El.setAttribute:data-aperture\":1,\"win.requestAnimationFrame\":3,\"HEl.toggleAttribute:data-overflowing\":1,\"El.toggleAttribute:data-overflowing\":1}"
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "micro-animate": {
+  "res": [
+   {
+    "ok": 1
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "micro-getAnimations": {
+  "res": [
+   {
+    "ok": 1
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "micro-layout": {
+  "res": [
+   {
+    "ok": 1
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "micro-attr": {
+  "res": [
+   {
+    "ok": 1
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "micro-timer": {
+  "res": [
+   {
+    "ok": 1
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "micro-shape": {
+  "res": [
+   {
+    "ok": 1
+   },
+   {
+    "ok": 1
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "micro-shape-rest": {
+  "res": [
+   {
+    "ok": 1
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "stub-animate": {
+  "res": [
+   {
+    "ok": 1
+   },
+   {
+    "err": "page.evaluate: Execution context was destroyed, most likely because of a navigation."
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "stub-setTimeout": {
+  "res": [
+   {
+    "ok": 1
+   },
+   {
+    "err": "page.evaluate: Execution context was destroyed, most likely because of a navigation."
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "stub-clearTimeout": {
+  "res": [
+   {
+    "ok": 1
+   },
+   {
+    "err": "page.evaluate: Execution context was destroyed, most likely because of a navigation."
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "stub-setProperty": {
+  "res": [
+   {
+    "ok": 1
+   },
+   {
+    "err": "page.evaluate: Execution context was destroyed, most likely because of a navigation."
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "stub-setAttribute": {
+  "res": [
+   {
+    "ok": 1
+   },
+   {
+    "err": "page.evaluate: Execution context was destroyed, most likely because of a navigation."
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "stub-getAnimations": {
+  "res": [
+   {
+    "ok": 1
+   },
+   {
+    "err": "page.evaluate: Execution context was destroyed, most likely because of a navigation."
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "stub-measureText": {
+  "res": [
+   {
+    "ok": 1
+   },
+   {
+    "err": "page.evaluate: Execution context was destroyed, most likely because of a navigation."
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "stub-getBoundingClientRect": {
+  "res": [
+   {
+    "ok": 1
+   },
+   {
+    "err": "page.evaluate: Execution context was destroyed, most likely because of a navigation."
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "gc-sync": {
+  "res": [
+   {
+    "ok": "undefined"
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "gc-micro": {
+  "res": [
+   {
+    "ok": "undefined"
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "gc-micro-noawait": {
+  "res": [
+   {
+    "ok": "undefined"
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "waapi": {
+  "res": [
+   {
+    "ok": 1
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "canvas": {
+  "res": [
+   {
+    "ok": 1
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ },
+ "scheduled": {
+  "res": [
+   {
+    "ok": 1
+   },
+   {
+    "ok": 1
+   },
+   {
+    "ok": 1
+   }
+  ],
+  "alive": 1,
+  "ev": []
+ }
+}

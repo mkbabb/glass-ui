@@ -1,0 +1,10 @@
+20:51  up 23:14, 2 users, load averages: 5.78 6.82 8.33
+PASS  CASES  Chromium  case·capped·seat-transition  cap 150 px, run overflowing true; grow and shrink a seat's own width transition: page errors 0, window error events 0; plate travel 0.09 px, largest one-frame step 0.09 px; flag at rest closed; chromium-case_capped_seat-transition.json  [load 5.56]
+PASS  CASES  Chromium  case·capped·morph  cap 300 px: expand (run overflowing true), add a seat, collapse: page errors 0, window error events 0; plate travel 198 px, largest one-frame step 15.22 px; flag at rest closed; chromium-case_capped_morph.json  [load 5.56]
+PASS  CASES  Chromium  case·consumer-margin  unlayered ".glass-dock { margin-inline: 20px; }" (computed margin-left at rest 20px): expand, collapse; plate end edge past the neighbour by at most -31.98 px (bound 0.5); neighbour travel 379.66 px, largest one-frame step 28.13 px against the plate edge's 28.12 px (+1); chromium-case_consumer-margin.json  [load 5.51]
+PASS  CASES  Chromium  case·consumer-margin·control  no consumer rule (computed margin-left at rest 8px): expand, collapse; plate end edge past the neighbour by at most -19.98 px (bound 0.5); neighbour travel 379.66 px, largest one-frame step 29.3 px against the plate edge's 29.3 px (+1); chromium-case_consumer-margin_control.json  [load 5.51]
+PASS  CASES  Chromium  case·rotated·control  host rotate(0deg): expand, collapse; seats' largest second difference 5.54 px/frame²; largest one-frame seat move after the window closed 0.42 px (bound 0.5); chromium-case_rotated_control.json  [load 5.51]
+PASS  CASES  Chromium  case·rotated  host rotate(2deg): expand, collapse; seats' largest second difference 5.23 px/frame² (control 5.54, bound +1); largest one-frame seat move after the window closed 0.12 px (bound 0.5); chromium-case_rotated.json  [load 5.31]
+PASS  CASES  g@7d309f73  6/6 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p4/G-proto/wt/.gout-chromium/main/runs/CASES-g/CASES.json)
+exit 0
+20:52  up 23:14, 2 users, load averages: 5.31 6.67 8.25

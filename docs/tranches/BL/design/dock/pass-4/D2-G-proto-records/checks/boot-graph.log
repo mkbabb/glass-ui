@@ -1,0 +1,30 @@
+22:41  up 1 day,  1:04, 2 users, load averages: 11.16 9.66 10.59
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p4/G-proto/wt
+
+ ❯ tests/gates/boot-graph.test.ts (14 tests | 1 failed) 84ms
+     × the eager graph stays under the modulepreload and byte ceilings 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the eager graph stays under the modulepreload and byte ceilings
+AssertionError: eager graph: 62 modulepreloads + 1 entry = 63 files / 508427 B: expected 508427 to be less than or equal to 503808
+ ❯ tests/gates/boot-graph.test.ts:597:44
+    595|
+    596|         expect(graph.modulepreloads, report).toBeLessThanOrEqual(MAX_M…
+    597|         expect(graph.eagerJsBytes, report).toBeLessThanOrEqual(MAX_EAG…
+       |                                            ^
+    598|     });
+    599| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 13 passed (14)
+   Start at  22:41:52
+   Duration  687ms (transform 64ms, setup 43ms, import 210ms, tests 84ms, environment 226ms)
+
+exit 1
+{"preloads":62,"entries":1,"files":63,"bytes":508427,"dock":["/assets/dockContext:730"]}
+22:41  up 1 day,  1:04, 2 users, load averages: 11.23 9.70 10.60

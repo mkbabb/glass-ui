@@ -1,0 +1,4 @@
+D2-G-proto.patch sha256 8beac741b79ecc77f9803a1e3b7b1b2798048ee64b784c7f0856994fe0bced34
+1. git apply --check on the seat's HEAD + floor v3 checkout (7d309f73a + floor-v3.patch, worktree G-proto/fv3): exit 0
+2. git archive ec90b3103 (src tests demo docs/design) + git apply floor-v3.patch (exit 0) + git apply --check D2-G-proto.patch: exit 0
+Fri Oct 16 21:02:24 EDT 2026

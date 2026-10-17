@@ -1,0 +1,246 @@
+{
+ "witness": "W6",
+ "target": "g@7d309f73",
+ "when": "2026-10-17T01:10:01.762Z",
+ "load": 4.85,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "form·collapsed-rest",
+   "pass": true,
+   "failed": [],
+   "wraps": {
+    "plate": {
+     "l": 625,
+     "t": 40,
+     "r": 816,
+     "b": 96
+    },
+    "faceInk": 1671,
+    "outsidePx": 0,
+    "outside": 0
+   },
+   "structure": {
+    "present": [
+     {
+      "sel": "[data-testid=form-face]",
+      "ok": true
+     },
+     {
+      "sel": "[data-testid=form-track]",
+      "ok": true
+     },
+     {
+      "sel": "[data-testid=form-count]",
+      "ok": true
+     },
+     {
+      "sel": "[data-testid=form-dismiss]",
+      "ok": true
+     }
+    ],
+    "isSeat": true,
+    "plates": [
+     {
+      "who": "div.dock-plate",
+      "isPlate": true
+     }
+    ],
+    "plateId": "div.dock-plate",
+    "marked": true
+   },
+   "summary": "form ink beyond the plate 0 px (bound 1); present 4/4; dismiss is a seat: true; backdrop plates 1 [div.dock-plate]",
+   "load": 5.37
+  },
+  {
+   "engine": "chromium",
+   "cell": "form·expanded-rest",
+   "pass": true,
+   "failed": [],
+   "wraps": {
+    "plate": {
+     "l": 553,
+     "t": 40,
+     "r": 886,
+     "b": 96
+    },
+    "faceInk": 1336,
+    "outsidePx": 0,
+    "outside": 0
+   },
+   "structure": {
+    "present": [
+     {
+      "sel": "[data-testid=form-face]",
+      "ok": false
+     },
+     {
+      "sel": "[data-testid=form-track]",
+      "ok": true
+     },
+     {
+      "sel": "[data-testid=form-count]",
+      "ok": true
+     },
+     {
+      "sel": "[data-testid=form-dismiss]",
+      "ok": true
+     }
+    ],
+    "isSeat": true,
+    "plates": [
+     {
+      "who": "div.dock-plate",
+      "isPlate": true
+     }
+    ],
+    "plateId": "div.dock-plate",
+    "marked": true
+   },
+   "summary": "form ink beyond the plate 0 px (bound 1); present 3/4 (missing [data-testid=form-face]); dismiss is a seat: true; backdrop plates 1 [div.dock-plate]; plate div.dock-plate (collapsed div.dock-plate); the same element: true",
+   "load": 5.1
+  },
+  {
+   "engine": "chromium",
+   "cell": "form·expand",
+   "pass": true,
+   "unmeasured": false,
+   "unjudged": [],
+   "failed": [],
+   "D": 142.19,
+   "start": 190.88,
+   "target": 333.06,
+   "frames": 142,
+   "travelMs": 239.4,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.64,
+    "step": 9.59,
+    "bound": 14.96,
+    "atMs": 166.7,
+    "dt": 8.1
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": true,
+    "why": "",
+    "open": 121.90000000000009,
+    "close": 370.0999999999999,
+    "land": 361.29999999999995,
+    "motionStart": 121.90000000000009,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 248.2,
+    "allowMs": 257.7,
+    "closeMinusLandFrames": 1
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 0.44,
+    "tol": 6.69,
+    "frac": 0,
+    "atMs": 361.3,
+    "why": "worst 0.44 px (0.31 % of D) from the rung's analytic spring (tol 6.69)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.22,
+    "prev": 0.48,
+    "bound": 1.51,
+    "why": "last step 0.22 px after 0.48 px (bound 1.51)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "faces": {
+    "ok": true,
+    "why": "0 px of form ink beyond the plate over 13 screenshot sample(s) (8 in flight) (bound 1)"
+   },
+   "summary": "D 142.19 px (190.88→333.06); step ×0.64; dead; window 248.2 ms (allow 257.7, clock 214.2); trajectory worst 0.44 px (0.31 % of D) from the rung's analytic spring (tol 6.69); terminal last step 0.22 px after 0.48 px (bound 1.51); owners 0; faces 0 px of form ink beyond the plate over 13 screenshot sample(s) (8 in flight) (bound 1)",
+   "load": 4.85
+  },
+  {
+   "engine": "chromium",
+   "cell": "form·collapse",
+   "pass": true,
+   "unmeasured": false,
+   "unjudged": [],
+   "failed": [],
+   "D": 142.19,
+   "start": 333.06,
+   "target": 190.88,
+   "frames": 603,
+   "travelMs": 240.2,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.64,
+    "step": 9.12,
+    "bound": 14.25,
+    "atMs": 3666.1,
+    "dt": 7.7
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": true,
+    "why": "",
+    "open": 3620.6,
+    "close": 3870.1,
+    "land": 3860.7999999999997,
+    "motionStart": 3620.6,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 249.5,
+    "allowMs": 257.6,
+    "closeMinusLandFrames": 1
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 0.46,
+    "tol": 6.69,
+    "frac": 0,
+    "atMs": 3860.8,
+    "why": "worst 0.46 px (0.32 % of D) from the rung's analytic spring (tol 6.69)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.11,
+    "prev": 0.47,
+    "bound": 1.41,
+    "why": "last step 0.11 px after 0.47 px (bound 1.41)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "faces": {
+    "ok": true,
+    "why": "0 px of form ink beyond the plate over 57 screenshot sample(s) (0 in flight) (bound 1)"
+   },
+   "summary": "D 142.19 px (333.06→190.88); step ×0.64; dead; window 249.5 ms (allow 257.6, clock 214.2); trajectory worst 0.46 px (0.32 % of D) from the rung's analytic spring (tol 6.69); terminal last step 0.11 px after 0.47 px (bound 1.41); owners 0; faces 0 px of form ink beyond the plate over 57 screenshot sample(s) (0 in flight) (bound 1)",
+   "load": 4.85
+  }
+ ]
+}

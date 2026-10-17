@@ -1,0 +1,74 @@
+{
+ "witness": "W3",
+ "target": "g@7d309f73",
+ "when": "2026-10-17T02:36:54.280Z",
+ "load": 8.96,
+ "cells": [
+  {
+   "engine": "webkit",
+   "cell": "anchor-end·warm-expand",
+   "pass": true,
+   "failed": [],
+   "D": 379.72,
+   "start": 102,
+   "target": 481.72,
+   "frames": 105,
+   "travelMs": 247,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.66,
+    "step": 37.88,
+    "bound": 57.72,
+    "atMs": 143,
+    "dt": 12
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": true,
+    "why": "",
+    "open": 100,
+    "close": 357,
+    "land": 347,
+    "motionStart": 100,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 257,
+    "allowMs": 259.6,
+    "closeMinusLandFrames": 1
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 2.27,
+    "tol": 16.19,
+    "frac": 0.01,
+    "atMs": 153,
+    "why": "worst 2.27 px (0.6 % of D) from the rung's analytic spring (tol 16.19)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.42,
+    "prev": 0.95,
+    "bound": 2.08,
+    "why": "last step 0.42 px after 0.95 px (bound 2.08)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "anchorDriftPx": 0,
+   "summary": "D 379.72 px (102→481.72); step ×0.66; dead; window 257 ms (allow 259.6, clock 214.2); trajectory worst 2.27 px (0.6 % of D) from the rung's analytic spring (tol 16.19); terminal last step 0.42 px after 0.95 px (bound 2.08); owners 0; anchored edge drift 0 px (bound 0.5)",
+   "load": 8.96
+  }
+ ]
+}

@@ -1,0 +1,78 @@
+{
+ "witness": "W3",
+ "target": "g@7d309f73",
+ "when": "2026-10-17T02:36:41.476Z",
+ "load": 9.13,
+ "cells": [
+  {
+   "engine": "webkit",
+   "cell": "anchor-end·warm-expand",
+   "pass": false,
+   "failed": [
+    "window"
+   ],
+   "ownerBlocked": "Q-4",
+   "D": 379.72,
+   "start": 102,
+   "target": 481.72,
+   "frames": 104,
+   "travelMs": 261,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.71,
+    "step": 37.65,
+    "bound": 52.95,
+    "atMs": 143,
+    "dt": 11
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": false,
+    "why": "window 261 ms > clock 214.2 + 2×16.7 + stall 13 = 260.6 ms (O-64 R-4, H-3d)",
+    "open": 86,
+    "close": 347,
+    "land": 347,
+    "motionStart": 86,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 261,
+    "allowMs": 260.6,
+    "q4": true,
+    "q4AllowMs": 316.4
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 2.23,
+    "tol": 16.19,
+    "frac": 0.01,
+    "atMs": 132,
+    "why": "worst 2.23 px (0.59 % of D) from the rung's analytic spring (tol 16.19)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.78,
+    "prev": 1.06,
+    "bound": 2.45,
+    "why": "last step 0.78 px after 1.06 px (bound 2.45)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "anchorDriftPx": 0,
+   "summary": "D 379.72 px (102→481.72); step ×0.71; dead; window 261 ms (allow 260.6, clock 214.2) — window 261 ms > clock 214.2 + 2×16.7 + stall 13 = 260.6 ms (O-64 R-4, H-3d); trajectory worst 2.23 px (0.59 % of D) from the rung's analytic spring (tol 16.19); terminal last step 0.78 px after 1.06 px (bound 2.45); owners 0; Q-4 lenient window holds (allow 316.4 ms); anchored edge drift 0 px (bound 0.5)  ⟶ OWNER-BLOCKED (Q-4): window",
+   "load": 9.13
+  }
+ ]
+}

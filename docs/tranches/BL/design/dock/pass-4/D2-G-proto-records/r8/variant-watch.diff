@@ -1,0 +1,43 @@
+--- /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p4/G-proto/wt/src/components/dock/composables/useDockAperture.ts.shipped	2026-10-16 19:04:11
++++ /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p4/G-proto/wt/src/components/dock/composables/useDockAperture.ts	2026-10-16 19:04:11
+@@ -116,6 +116,17 @@
+ const EXCHANGE_FRAC = 0.75;
+ /** The grid steps over which what is left under the landing band eases out. */
+ const LAND_STEPS = 2;
++// [r8 variant: main] the dock's animations on the main thread (an uncomposited property in every keyframe)
++if (typeof Element !== "undefined" && !(Element.prototype as any).__dockMainClock) {
++    const a0 = Element.prototype.animate;
++    (Element.prototype as any).__dockMainClock = true;
++    Element.prototype.animate = function (this: Element, k: any, o?: any) {
++        if (Array.isArray(k) && this.closest?.(".glass-dock"))
++            k = k.map((f: any, i: number) => ({ ...f, "--dock-clock": String(f.offset ?? i) }));
++        return a0.call(this, k, o);
++    } as any;
++}
++
+ 
+ type Axis = "x" | "y";
+ interface Beat {
+@@ -1496,6 +1507,22 @@
+         }
+         const wait = (ms: number) => Math.max(0, t0 + ms - performance.now());
+         ep.timers.push(window.setTimeout(() => land(ep), wait(ep.endMs)));
++        // [r8 variant: watch] a frame gap above 3 grid steps shifts the episode by the gap less a step
++        let last = -1;
++        const tick = (now: number) => {
++            if (episode !== ep) return;
++            if (last >= 0 && now - last > 3 * STEP_MS) {
++                const shift = now - last - STEP_MS;
++                for (const an of ep.anims) if (an.startTime != null) an.startTime = (an.startTime as number) + shift;
++                for (const id of ep.timers) clearTimeout(id);
++                const st = ep.anims.find((an) => an.startTime != null)?.startTime as number | undefined;
++                const left = st == null ? ep.endMs : Math.max(0, ep.endMs - (now - st));
++                ep.timers = [window.setTimeout(() => land(ep), left + STEP_MS)];
++            }
++            last = now;
++            requestAnimationFrame(tick);
++        };
++        requestAnimationFrame(tick);
+     }
+ 
+     function closeWindow(ep: Episode): void {

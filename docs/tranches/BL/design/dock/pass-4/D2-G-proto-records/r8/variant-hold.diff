@@ -1,0 +1,14 @@
+--- /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p4/G-proto/wt/src/components/dock/composables/useDockAperture.ts.shipped	2026-10-16 19:04:17
++++ /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p4/G-proto/wt/src/components/dock/composables/useDockAperture.ts	2026-10-16 19:04:17
+@@ -1372,7 +1372,10 @@
+         // The flow: an in-flow dock hands its layout length back on the window's curve.
+         const pos = cs.position;
+         if (!reduced && (pos === "static" || pos === "relative" || pos === "sticky")) {
+-            const m = grid.map((_, i) => Bg[i] - Ag[i]);
++            // [r8 variant: hold] the layout length held at the union: a collapse keeps its old
++            // length to the landing, an expand takes its new one at the flip
++            const held = Math.max(0, Bg[0] - Ag[0]);
++            const m = grid.map((_, i) => (i === grid.length - 1 ? 0 : held));
+             if (m.some((v) => Math.abs(v) > STILL_PX)) {
+                 animate(
+                     root,

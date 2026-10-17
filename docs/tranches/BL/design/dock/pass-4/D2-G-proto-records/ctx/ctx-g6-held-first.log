@@ -1,0 +1,36 @@
+18:24  up 20:47, 2 users, load averages: 11.81 13.61 13.43
+cell: [{"raw-long":1},{"FIRST: wrapper, promises held by window":1},{"raw-long":1},{"SECOND: wrapper PROTOCOL-ERROR":"cdpSession.send: Protocol error (Runtime.callFunctionOn): Promise was collected"},{"ok":1},{"err":"page.evaluate: Execution context was destroyed, most likely because of a navigation."}] alive=1
+await-only: [{"ok":1},{"ok":1}] alive=1
+sync-retarget: [{"ok":1},{"ok":1},{"ok":1}] alive=1
+await-at-rest: [{"err":"page.evaluate: Execution context was destroyed, most likely because of a navigation."}] alive=1
+cell-caught: [{"ok":1},{"err":"page.evaluate: Execution context was destroyed, most likely because of a navigation."}] alive=1
+cell-tick: [{"ok":1},{"ok":1}] alive=1
+alloc: [{"ok":1}] alive=1
+alloc-micro: [{"ok":1}] alive=1
+alloc-micro-small: [{"ok":1}] alive=1
+cancel-only: [{"ok":1},{"ok":33}] alive=1
+cell-nocancel: [{"ok":1},{"err":"page.evaluate: Execution context was destroyed, most likely because of a navigation."}] alive=1
+cancel-fresh: [{"ok":46}] alive=1
+cell-micro: [{"ok":1},{"ok":1}] alive=1
+cell-trace: [{"ok":1},{"ok":1},{"err":"page.evaluate: Execution context was destroyed, most likely because of a navigation."},{"ok":"{\"win.queueMicrotask\":2,\"HEl.removeAttribute:aria-hidden\":1,\"El.removeAttribute:aria-hidden\":1,\"HEl.setAttribute:tabindex\":1,\"El.setAttribute:tabindex\":1,\"HEl.setAttribute:aria-hidden\":1,\"El.setAttribute:aria-hidden\":1,\"HEl.removeAttribute:tabindex\":1,\"El.removeAttribute:tabindex\":1,\"HEl.getBoundingClientRect\":17,\"El.getBoundingClientRect\":17,\"win.getComputedStyle\":31,\"HEl.getAnimations\":1,\"El.getAnimations\":1,\"Anim.cancel\":66,\"win.clearTimeout\":1,\"style.setProperty:left\":1,\"style.setProperty:right\":1,\"HEl.animate\":43,\"El.animate\":43,\"HEl.setAttribute:data-aperture\":1,\"El.setAttribute:data-aperture\":1,\"win.setTimeout\":1}"}] alive=1
+trace-fv-reference: [{"ok":1},{"ok":1},{"ok":1},{"ok":"{\"win.setTimeout\":2,\"HEl.removeAttribute:aria-hidden\":1,\"El.removeAttribute:aria-hidden\":1,\"HEl.setAttribute:tabindex\":1,\"El.setAttribute:tabindex\":1,\"HEl.setAttribute:aria-hidden\":1,\"El.setAttribute:aria-hidden\":1,\"HEl.removeAttribute:tabindex\":1,\"El.removeAttribute:tabindex\":1,\"HEl.getBoundingClientRect\":17,\"El.getBoundingClientRect\":17,\"win.getComputedStyle\":31,\"HEl.getAnimations\":1,\"El.getAnimations\":1,\"Anim.cancel\":66,\"win.clearTimeout\":1,\"style.setProperty:left\":1,\"style.setProperty:right\":1,\"HEl.animate\":43,\"El.animate\":43,\"HEl.setAttribute:data-aperture\":1,\"El.setAttribute:data-aperture\":1}"}] alive=1
+micro-animate: [{"ok":1}] alive=1
+micro-getAnimations: [{"ok":1}] alive=1
+micro-layout: [{"ok":1}] alive=1
+micro-attr: [{"ok":1}] alive=1
+micro-timer: [{"ok":1}] alive=1
+micro-shape: [{"ok":1},{"ok":1}] alive=1
+micro-shape-rest: [{"ok":1}] alive=1
+stub-animate: [{"ok":1},{"err":"page.evaluate: Execution context was destroyed, most likely because of a navigation."}] alive=1
+stub-setTimeout: [{"ok":1},{"err":"page.evaluate: Execution context was destroyed, most likely because of a navigation."}] alive=1
+stub-clearTimeout: [{"ok":1},{"err":"page.evaluate: Execution context was destroyed, most likely because of a navigation."}] alive=1
+stub-setProperty: [{"ok":1},{"err":"page.evaluate: Execution context was destroyed, most likely because of a navigation."}] alive=1
+stub-setAttribute: [{"ok":1},{"err":"page.evaluate: Execution context was destroyed, most likely because of a navigation."}] alive=1
+stub-getAnimations: [{"ok":1},{"err":"page.evaluate: Execution context was destroyed, most likely because of a navigation."}] alive=1
+gc-sync: [{"ok":"undefined"}] alive=1
+gc-micro: [{"ok":"undefined"}] alive=1
+gc-micro-noawait: [{"ok":"undefined"}] alive=1
+waapi: [{"ok":1}] alive=1
+canvas: [{"ok":1}] alive=1
+scheduled: [{"ok":1},{"ok":1},{"ok":1}] alive=1
+18:25  up 20:48, 2 users, load averages: 12.37 13.37 13.35

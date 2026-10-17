@@ -1,0 +1,25 @@
+22:32  up 1 day, 55 mins, 2 users, load averages: 9.25 10.52 11.79
+PASS  CF  Playwright WebKit  c1·shape·h  collapsed 102×56 px (main×cross), corner R 9999 px (stadium ≥ 27), painting seats' span 86 px (hug bound 110); disclosure div#glass-dock-v-14-summary.dock-layer.dock-layer--summary.is-active "Expand dock" aria-expanded=false; plate opacity 1 collapsed, 1 expanded (expanded); frame webkit-c1-h-collapsed.png  [load 8.99]
+PASS  CF  Playwright WebKit  c2·morph·h  first expand: travel 157 px, largest one-frame step 14.33 px (bound 70.65), 19 frame(s) between the rests, flash 0, root cross drift 0 px, the extent first moves 69 ms after the hover; collapse: travel 157 px, largest one-frame step 14.19 px (bound 70.65), 24 frame(s) between the rests, flash 0, root cross drift 0 px; warm expand: travel 157 px, largest one-frame step 18.24 px (bound 70.65), 15 frame(s) between the rests, flash 0, root cross drift 0 px; frames 8 (frames/webkit-c2_morph_h-expand, warm)  [load 8.47]
+PASS  CF  Playwright WebKit  c1·shape·v  collapsed 116×64 px (main×cross), corner R 9999 px (stadium ≥ 31), painting seats' span 92 px (hug bound 116); disclosure div#glass-dock-v-24-summary.dock-layer.dock-layer--summary.is-active "Expand dock" aria-expanded=false; plate opacity 1 collapsed, 1 expanded (expanded); frame webkit-c1-v-collapsed.png  [load 8.44]
+PASS  CF  Playwright WebKit  c2·morph·v  first expand: travel 213 px, largest one-frame step 19.52 px (bound 95.85), 25 frame(s) between the rests, flash 0, root cross drift 0 px, the extent first moves 82 ms after the hover; collapse: travel 213 px, largest one-frame step 20.38 px (bound 95.85), 24 frame(s) between the rests, flash 0, root cross drift 0 px; warm expand: travel 213 px, largest one-frame step 19.06 px (bound 95.85), 24 frame(s) between the rests, flash 0, root cross drift 0 px; frames 8 (frames/webkit-c2_morph_v-expand, warm)  [load 8.05]
+PASS  CF  Playwright WebKit  c2·prm  reduced motion: 102 → 259 px; the extent lands 0 frame(s) after its first change (bound ≤ 3)  [load 8.37]
+PASS  CF  Playwright WebKit  c2·rapid  five toggles 70 ms apart ending on Enter: rests pinned at 259 px (expanded rest 259 px); disclosure aria-expanded (none); focus button.dock-icon-button.glass-specular-track.glass-capsule-hover  [load 9.06]
+PASS  CF  Playwright WebKit  c3·hover  hover: expanded after 89 ms; leave: collapsed after 3892 ms  [load 9]
+PASS  CF  Playwright WebKit  c3·focus  Alt+Tab ×4: focus on button.dock-icon-button.glass-specular-track.glass-capsule-hover (in the dock); after 1.2 s the dock is expanded  [load 8.92]
+PASS  CF  Playwright WebKit  c3·scroll  expanded yes; wheel 240 px scrolled the page 240 px; collapsed after 88 ms  [load 8.92]
+PASS  CF  Playwright WebKit  c4·persistent  1 persistent element(s) collapsed, 1 expanded; failing: none  [load 9.08]
+PASS  CF  Playwright WebKit  c5·keyboard  Alt+Tab ×4 → button.dock-icon-button.glass-specular-track.glass-capsule-hover with the dock expanded; Escape then Enter. Collapsed disclosure: div#glass-dock-v-14-summary.dock-layer.dock-layer--summary.is-active "Expand dock" aria-expanded=false. Enter: expanded, focus div#glass-dock-v-14-full.dock-layer.dock-layer--full.dock-run; Escape: collapsed, focus div#glass-dock-v-14-summary.dock-layer.dock-layer--summary.is-active (the disclosure)  [load 9.48]
+PASS  CF  Playwright WebKit  c6·menu  trigger button#reka-dropdown-menu-trigger-v-15.menu__trigger.dock-trigger.dock-dropdown-trigger: menu open after 1 ms; 4.5 s later (past the dwell, pointer on the menu) menu open, dock expanded; Escape: menu closed, focus button#reka-dropdown-menu-trigger-v-15.menu__trigger.dock-trigger.dock-dropdown-trigger (the trigger)  [load 9.08]
+PASS  CF  Playwright WebKit  c7·narrow  390 px: expanded extent 81..309 px in a 390 px viewport; document scrollWidth 390; frame webkit-c7-narrow-expanded.png  [load 9.08]
+PASS  CF  Playwright WebKit  c7·coarse-tap  tap at the collapsed dock's disclosure (coarse, 390 px): expanded after 9 ms; elements activated none  [load 9.16]
+ROW  CF  webkit  C1  PASS  (c1·shape·h pass)
+ROW  CF  webkit  C2  PASS  (c2·morph·h pass, c2·prm pass, c2·rapid pass)
+ROW  CF  webkit  C3  PASS  (c3·hover pass, c3·focus pass, c3·scroll pass, c7·coarse-tap pass)
+ROW  CF  webkit  C4  PASS  (c4·persistent pass)
+ROW  CF  webkit  C5  PASS  (c5·keyboard pass)
+ROW  CF  webkit  C6  PASS  (c6·menu pass)
+ROW  CF  webkit  C7  PASS  (c1·shape·v pass, c2·morph·v pass, c7·narrow pass, c7·coarse-tap pass)
+PASS  CF  g@7d309f73  14/14 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p4/G-proto/wt/.gout-fin-webkit/dark/runs/CF-g/CF.json)
+exit 0
+22:34  up 1 day, 57 mins, 2 users, load averages: 9.16 10.10 11.50

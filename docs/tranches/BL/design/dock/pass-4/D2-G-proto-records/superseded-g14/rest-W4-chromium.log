@@ -1,0 +1,17 @@
+20:52  up 23:15, 2 users, load averages: 5.39 6.54 8.14
+PASS  W4  Chromium  compact·compacts  rest 206.13 px → past threshold 93.59 px, posture compact  [load 5.52]
+PASS  W4  Chromium  compact·seat-scale  compact rest: plate cross-axis ratio 1, smallest painting-seat scale 1 (Photos); bound: no seat below the plate's ratio − 0.02 (cross 56 px at rest)  [load 5.52]
+PASS  W4  Chromium  compact·engagement-expands  rest 206.13; hover 206.13, leave 93.59, focus 206.13, blur 93.59, top 206.13 px  [load 5.52]
+PASS  W4  Chromium  compact·no-threshold-bounce  enter at 88 px, exit at 40 px (band 48 px); 24 moves of ±4 px around enter flipped the posture 1 time(s) (bound 1)  [load 5.47]
+PASS  W4  Chromium  compact·non-first-current  compaction with the second seat current: worst seat step ×0.52 (1.38 px vs 2.65), overlap frames 0  [load 5.36]
+PASS  W4  Chromium  compact·late-getter  a source element mounted 600 ms late: scrolled → compact (206.13 → 93.59 px), back → pinned; page errors 0  [load 5.36]
+PASS  W4  Chromium  compact·shared-scroller  after the other dock on the same source unmounts: at 0 pinned, at 900 compact, back at 0 pinned (bound: not compact, compact, not compact)  [load 5.89]
+PASS  W4  Chromium  coarse·press-then-scroll  a coarse press on a seat, then a scroll to 900: posture compact (bound: compact)  [load 5.89]
+PASS  W4  Chromium  prm·compact  reduced motion, scroll stepped 25 px at a time to 900: 206.13 → 93.59 px with 0 frame(s) strictly between (bound 0; canon P6 on scroll-scrubbed change is pending the owner)  [load 8.62]
+PASS  W4  Chromium  prm·posture-morph  reduced motion: expand 102→481.66 px with 0 intermediate frame(s); collapse 481.66→102 px with 0 (bound 0)  [load 9.93]
+PASS  W4  Chromium  coarse·no-hover-latch  (hover: hover) false, (pointer: coarse) true; 1.5 s after a tap the seat, its pseudos and its descendants' pseudos are back to rest; :hover true  [load 14.42]
+PASS  W4  Chromium  coarse·tap-pins  tap on the collapsed face's "Play": posture collapsed → pinned (+0.7 s) → pinned (+5.5 s); clicks fired 0 (bound: pinned, 0 clicks)  [load 13.91]
+PASS  W4  Chromium  coarse·menu-holds  menu opened (posture pinned); 5.5 s later menu open, posture pinned, extent 177.47 px  [load 13.6]
+PASS  W4  g@7d309f73  13/13 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p4/G-proto/wt/.gout-chromium/rest/runs/W4-g/W4.json)
+exit 0
+20:53  up 23:16, 2 users, load averages: 13.60 8.51 8.77

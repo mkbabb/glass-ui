@@ -1,0 +1,35 @@
+22:41  up 1 day,  1:04, 2 users, load averages: 11.23 9.70 10.60
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p4/G-proto/wt
+
+ ❯ tests/gates/boot-graph.test.ts (14 tests | 1 failed) 90ms
+     × the eager graph stays under the modulepreload and byte ceilings 3ms
+(node:81455) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:82226) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:82536) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the eager graph stays under the modulepreload and byte ceilings
+AssertionError: eager graph: 62 modulepreloads + 1 entry = 63 files / 508427 B: expected 508427 to be less than or equal to 503808
+ ❯ tests/gates/boot-graph.test.ts:597:44
+    595|
+    596|         expect(graph.modulepreloads, report).toBeLessThanOrEqual(MAX_M…
+    597|         expect(graph.eagerJsBytes, report).toBeLessThanOrEqual(MAX_EAG…
+       |                                            ^
+    598|     });
+    599| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 240 passed (241)
+      Tests  1 failed | 2343 passed | 10 expected fail | 1 skipped (2355)
+   Start at  22:41:57
+   Duration  56.11s (transform 3.81s, setup 7.65s, import 23.92s, tests 19.97s, environment 32.84s)
+
+exit 1
+22:42  up 1 day,  1:05, 2 users, load averages: 12.81 10.43 10.81

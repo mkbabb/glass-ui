@@ -1,0 +1,62 @@
+19:12  up 21:35, 2 users, load averages: 28.47 22.19 16.47
+    151|     it("ships every backdrop-filter as an adjacent -webkit-/standard p…
+    152|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    153|         const files = distCssFiles(DIST);
+    154|         expect(files.length).toBeGreaterThan(0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/8]⎯
+
+ FAIL  tests/components/custom/dock/g-dock-lattice.test.ts > G-DOCK-MORPH — the aperture moves by compositor lanes only (D2-G §6 row 7) > every lane animates translate, opacity (and the hit it gates), a seat's clip, the ink or the flow, and nothing else
+AssertionError: expected [ '--dock-clock', …(7) ] to deeply equal [ '--dock-expand-t', …(6) ]
+
+- Expected
++ Received
+
+@@ -1,6 +1,7 @@
+  [
++   "--dock-clock",
+    "--dock-expand-t",
+    "--dock-flow-hi",
+    "--dock-flow-lo",
+    "clipPath",
+    "opacity",
+
+ ❯ tests/components/custom/dock/g-dock-lattice.test.ts:607:44
+    605|         ];
+    606|         expect(props.length).toBeGreaterThan(0);
+    607|         expect([...new Set(props)].sort()).toEqual([
+       |                                            ^
+    608|             "--dock-expand-t",
+    609|             "--dock-flow-hi",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/8]⎯
+
+ FAIL  tests/components/custom/dock/g-dock-lattice.test.ts > G-DOCK-MATERIAL — the focus ring composes instead of competing > the scroll port's paint gutter is stated in the box model that lets it exist
+AssertionError: expected [ …(2) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  [
++   "src/components/dock/styles/dock.css: .dock-cap-ring { box-sizing: border-box }",
+    "src/components/dock/styles/run.css: .glass-dock .dock-run[data-overflowing] { box-sizing: content-box }",
+  ]
+
+ ❯ tests/components/custom/dock/g-dock-lattice.test.ts:754:11
+    752|         expect(
+    753|             bandDeclSites(/^\s*box-sizing\s*:/).map(({ file, chain, de…
+    754|         ).toEqual([`${STYLES}/run.css: .glass-dock .dock-run[data-over…
+       |           ^
+    755|         // The gutter holds the ring's outer extent: it is the dock's …
+    756|         expect(declarations(`${STYLES}/run.css`)).toMatch(/--dock-run-…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/8]⎯
+
+
+ Test Files  3 failed | 42 passed | 2 skipped (47)
+      Tests  8 failed | 700 passed | 6 expected fail | 7 skipped (721)
+   Start at  19:12:52
+   Duration  17.96s (transform 3.60s, setup 1.95s, import 8.98s, tests 9.02s, environment 8.90s)
+
+19:13  up 21:36, 2 users, load averages: 34.69 24.21 17.36
