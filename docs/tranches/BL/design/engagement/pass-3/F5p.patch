@@ -1,0 +1,3313 @@
+diff --git a/docs/design/affordance-map.md b/docs/design/affordance-map.md
+index fbeadcc03..4e919a5b5 100644
+--- a/docs/design/affordance-map.md
++++ b/docs/design/affordance-map.md
+@@ -74,7 +74,7 @@ the SFC template + the CVA `index.ts`).
+ 
+ | element class | dir | H | G | P | D | F | delivering primitive(s) / source |
+ |---|---|---|---|---|---|---|---|
+-| **Button** (glass: default/glass/primary-audacious) | ui/button | ✓ `scale-hover` | ✓ `v-specular` auto-arm | ✓ `useSpringPress`+`tap-squish` `--glass-btn-press-t` | — | ✓ `.focus-ring` | `useSpringPress.ts`·`vSpecular.ts`·`index.ts` CVA base; press reads the eased `press` register (`BC.W-SPRING-EASE`) |
++| **Button** (glass: default/glass/primary-audacious) | ui/button | ✓ `scale-hover` | ✓ `v-specular` auto-arm | ✓ `useSpringPress`+`tap-squish` `--press-t` | — | ✓ `.focus-ring` | `useSpringPress.ts`·`vSpecular.ts`·`index.ts` CVA base; press reads the eased `press` register (`BC.W-SPRING-EASE`) |
+ | **Button** (solid/destructive/link/secondary/outline/ghost) | ui/button | ✓ `scale-hover` | — (opaque, no glass-tier `::before`) | ✓ `.tap-squish` `:active` + `useSpringPress` | — | ✓ `.focus-ring` | `index.ts` `transition-control`; the gleam is glass-tier-only (recorded) |
+ | **DockIconButton** | custom/dock | ✓ `--scale-hover-dock` | ✓ `v-specular` | ✓ `tap-squish`/`:active` | — | ✓ `.focus-ring` | `DockIconButton.vue`·`dock/styles/controls/icon-button.css` |
+ | **DockTabButton / DockSelectTrigger / DockDropdownTrigger** | custom/dock | ✓ `--scale-hover-dock` | ✓ `v-specular` | ✓ `:active` press | — | ✓ `.focus-ring` (`dock.css`) | `dock/styles/controls/triggers.css`·`dock/styles/controls/tab-button.css` |
+diff --git a/docs/design/tunable-anim.md b/docs/design/tunable-anim.md
+index 7b700f69c..dc0b5e637 100644
+--- a/docs/design/tunable-anim.md
++++ b/docs/design/tunable-anim.md
+@@ -129,7 +129,7 @@ them is kind 1.
+ 
+ | drive | token | default | range | re-tune |
+ |---|---|---|---|---|
+-| button press | `--glass-btn-press-t` | 0 | [0,1] | the spring (kind 1) + the surface CSS |
++| button press | `--press-t` | 0 | [0,1] | the spring (kind 1) + the surface CSS |
+ | cartoon cast press | `--cartoon-press-t` | 0 | [0,1] | the consumer's own driver — `useLiquidPress({ pressVar: "--cartoon-press-t" })` |
+ | dock morph | `--dock-morph-t` | 0 | [0,1] | `DOCK_SPRING` (`springPreset("dock")`) |
+ | dock expand | `--dock-expand-t` | 0 | [0,1] | the dock morph scalar |
+diff --git a/docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md b/docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md
+index 373bba9b6..59a838e4b 100644
+--- a/docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md
++++ b/docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md
+@@ -192,6 +192,7 @@ fallback; index.css:1 layer order):
+ | AUTH-1 | `transitions.css:120-130` | `.fade-*`/`.tab-fade-*`/`.pane-swap-*`/`.metric-swap-*` -active/-leave | opacity fade / 0.1s | `9e04f749…` |
+ | AUTH-2 | `transitions.css:132-140` | `.pane-swap-*`/`.metric-swap-*` -active | `transition-property: opacity` / 0.15s | `d3f21adf…` |
+ | AUTH-3 | `glass/dissolve.css:266-279` | `.glass-vaporize[data-state="closed"]` + its `> *` | `animation-name` (the three material channels / the reduced ink) + `animation-duration: var(--vap-clock)` | `c3333028…` |
++| AUTH-4 | `utilities/engage.css:27-57` | the engagement commit seat: `:where(.engage-chosen, .engage-pressed, .engage-disclosed)` face-less `::after` and `[data-engage-light]`, at rest and committed (`[data-state="checked"\|"open"]`, `[data-commit="b"]`) | `transition-duration: var(--engage-control-engage-{release,attack})` in the seat's leg order / the `control-engage` envelope | `ea2b3f3f…` |
+ 
+ **[AMENDED 2026-08-05 — BK #30 W-DISSOLVE cure, CURE-3.]** AUTH-3 is the vaporize dismissal's own
+ reduced-motion exit, and it needs BOTH halves of the escape for two different reasons: `!important`
+@@ -209,6 +210,15 @@ Hash detector, verbatim:
+ Armed at `tests/styles/dissolve.test.ts` ("owns the root's OWN reduced-motion exit"), which reads
+ this register's path out of `a11y-overrides.css`'s own pointer and reds if the row goes missing.
+ 
++**[AMENDED 2026-10-16 — BL D5 pass 3, F5' F-9.]** AUTH-4 is the engagement commit's light under
++reduced motion. The commit is light (D5 CK-02 arm iii, Q-5's default) and light is the channel
++reduced motion keeps (CK-10); the instant fallback zeroed it, rise 0.0000 on every member in both
++engines (D5 pass 2 `CP.md` cell 4). Its clocks are `ENGAGE_ENVELOPES`' `control-engage` row, never a
++minted figure, and no transform rides the seat. Hash detector, verbatim:
++`sed -n '/AUTH-4 begin/,/AUTH-4 end/p' src/styles/utilities/engage.css | shasum -a 256`.
++Armed at `tests/styles/engage-floor.test.ts` ("AUTH-4"), which reads the block and this row and reds
++when either goes missing or the digest drifts.
++
+ Subordinate (dead-in-effect, unchanged): `animations.css:300-305`
+ `.glass-top-layer[popover], dialog.glass-top-layer` — its non-`!important`
+ `transition-duration: var(--duration-fast)` is overridden to `0s` by the instant wildcard (as it
+diff --git a/src/components/_shared/disclosure/disclosure.css b/src/components/_shared/disclosure/disclosure.css
+index 754c6ca41..d8d5f0f73 100644
+--- a/src/components/_shared/disclosure/disclosure.css
++++ b/src/components/_shared/disclosure/disclosure.css
+@@ -72,8 +72,13 @@
+             box-shadow var(--duration-control) var(--ease-standard);
+     }
+ 
+-    .disclosure-group-trigger:hover:not(:disabled, [data-disabled]) {
+-        background: var(--control-surface-bg-hover);
++    /* Hover is a pointer's approach, and a coarse pointer has none: under touch a tap
++       leaves `:hover` stuck on the trigger, so the lift latched after every tap (FL-4).
++       The fill is the hover rung `--control-surface-bg-hover`, which reads `--fill-hover`. */
++    @media (hover: hover) {
++        .disclosure-group-trigger:hover:not(:disabled, [data-disabled]) {
++            background: var(--control-surface-bg-hover);
++        }
+     }
+ 
+     .disclosure-icon {
+diff --git a/src/components/_shared/overlay/index.ts b/src/components/_shared/overlay/index.ts
+index 5d605f4f8..97ddfb7e6 100644
+--- a/src/components/_shared/overlay/index.ts
++++ b/src/components/_shared/overlay/index.ts
+@@ -10,11 +10,8 @@ export { overlayContentAttrs, type OverlayAttrs, type OverlayRole } from "./cont
+ export { isTeleportedTarget } from "./isTeleportedTarget";
+ export {
+     useDockParticipation,
+-    useHoldToken,
+     type DockParticipation,
+     type DockPortalAttrs,
+-    type HoldTarget,
+-    type HoldToken,
+ } from "./participation";
+ export type {
+     FloatingAlign,
+diff --git a/src/components/_shared/overlay/participation.ts b/src/components/_shared/overlay/participation.ts
+index 5029b7158..8b929ca1b 100644
+--- a/src/components/_shared/overlay/participation.ts
++++ b/src/components/_shared/overlay/participation.ts
+@@ -1,74 +1,13 @@
+ import {
+     computed,
+-    onScopeDispose,
+-    ref,
+     toValue,
+     watch,
+     type ComputedRef,
+     type MaybeRefOrGetter,
+     type Ref,
+ } from "vue";
+-import {
+-    useOptionalDockContext,
+-    type DockHoldKind,
+-} from "../../dock/composables/dockContext";
+-
+-/**
+- * ══ THE ONE KEEP-OPEN TOKEN ══
+- *
+- * Four sites used to hand-roll the same six lines: a boolean `isHeld`, an
+- * acquire guarded on it, a release guarded on it, and a teardown that had to
+- * remember to release — `Popover.vue`, `DockLayerGroup.vue`, `useDockSearch.ts`
+- * and `useDockHold.ts`. Four copies of a discipline is four chances to leak a
+- * token, and a leaked token is a dock that never idle-collapses again for the
+- * life of the page. The dock context's `keepOpen`/`release` pair is already a
+- * REF-COUNT; what was duplicated is the *token* — the guarantee that one holder
+- * takes exactly one count and gives it back exactly once, including on unmount.
+- *
+- * `target` is a getter rather than a value so a holder can sit above the thing
+- * it holds (`useDockSearch` drives its own dock state object; a Popover reads an
+- * optional context that may be absent entirely). A null target is not an error:
+- * the flag still flips, because whether the holder is holding is a fact about
+- * the holder, not about whether a dock happened to be listening.
+- */
+-export interface HoldTarget {
+-    keepOpen: (kind?: DockHoldKind) => void;
+-    release: (kind?: DockHoldKind) => void;
+-}
+-
+-export interface HoldToken {
+-    /** `true` while this token holds its count. */
+-    readonly isHeld: Readonly<Ref<boolean>>;
+-    /** Idempotent — a second call while held is a no-op, never a second count. */
+-    acquire: () => void;
+-    /** Idempotent — a release while free is a no-op, never a negative count. */
+-    release: () => void;
+-}
+-
+-export function useHoldToken(
+-    target: () => HoldTarget | null | undefined,
+-    kind?: DockHoldKind,
+-): HoldToken {
+-    const isHeld = ref(false);
+-
+-    function acquire(): void {
+-        if (isHeld.value) return;
+-        isHeld.value = true;
+-        target()?.keepOpen(kind);
+-    }
+-
+-    function release(): void {
+-        if (!isHeld.value) return;
+-        isHeld.value = false;
+-        target()?.release(kind);
+-    }
+-
+-    // The teardown that three of the four copies each had to remember. Owning it
+-    // here is the whole point: a holder can no longer forget it.
+-    onScopeDispose(release);
+-
+-    return { isHeld, acquire, release };
+-}
++import { useOptionalDockContext } from "../../dock/composables/dockContext";
++import { useHoldToken, type HoldKind } from "../../../composables/motion/engage/hold";
+ 
+ /**
+  * The portal stamp pair a dock-owned overlay writes onto its TELEPORTED root.
+@@ -103,7 +42,7 @@ export interface DockParticipation {
+  */
+ export function useDockParticipation(o?: {
+     hold?: MaybeRefOrGetter<boolean>;
+-    kind?: DockHoldKind;
++    kind?: HoldKind;
+ }): DockParticipation {
+     const dock = useOptionalDockContext();
+     const token = useHoldToken(() => dock, o?.kind);
+diff --git a/src/components/button/Button.vue b/src/components/button/Button.vue
+index 9c6f38273..146d535c2 100644
+--- a/src/components/button/Button.vue
++++ b/src/components/button/Button.vue
+@@ -23,7 +23,6 @@ import {
+     useAttrs,
+     watchEffect,
+     type ButtonHTMLAttributes,
+-    type CSSProperties,
+     type ComponentPublicInstance,
+     type HTMLAttributes,
+ } from "vue";
+@@ -34,7 +33,7 @@ import type { PrimitiveProps } from "../_shared/primitive";
+ import DotRing from "../_shared/feedback/DotRing.vue";
+ import { vSpecular } from "../../composables/glass";
+ import { asElement } from "../../composables/motion/core/asElement";
+-import { useLiquidPress } from "../../composables/motion/spring/useLiquidPress";
++import { useEngage } from "../../composables/motion/engage/useEngage";
+ 
+ export type ButtonEmphasis = "primary" | "secondary" | "quiet" | "text";
+ export type ButtonSize = Extract<Size, "xs" | "sm" | "md" | "lg">;
+@@ -98,21 +97,20 @@ const hostAttrs = computed(() => ({
+         !nativeButton.value && activationBlocked.value ? "true" : undefined,
+ }));
+ 
+-// The pressed element itself, so `useLiquidPress` derives its cap off the LIVE
+-// `--motion-weight` at this host rather than off the static default. The half-wire —
+-// an option the primitive documents and the one consumer never passed — is gone; a
+-// silent static path is a fallback masking an unthreaded primitive.
++// The engage door owns the command's engagement: the press (the one `--press-t` drive,
++// written natively on the host, its geometry dropped under reduced motion) and the
++// stateless commit edge (`data-commit`'s parity, flipped on every activation). The
++// pressed element itself is the host, so the press derives its cap off the LIVE
++// `--motion-weight` here.
+ const hostEl = ref<HTMLElement | null>(null);
+ function captureHost(value: Element | ComponentPublicInstance | null): void {
+     hostEl.value = asElement(value as HTMLElement | ComponentPublicInstance | null);
+ }
+ 
+-const press = useLiquidPress({
+-    el: hostEl,
+-    disabled: () => activationBlocked.value,
+-    pressVar: "--glass-btn-press-t",
++const engage = useEngage(() => hostEl.value, {
++    press: { disabled: () => activationBlocked.value },
++    commit: "call",
+ });
+-const hostStyle = computed<CSSProperties>(() => press.pressStyle.value);
+ const hostClass = computed(() =>
+     cn(
+         "button tap-squish focus-ring",
+@@ -150,10 +148,13 @@ if (import.meta.env.DEV) {
+  * carries no `disabled` attribute now, so the browser will happily submit its form;
+  * this is what stops it.
+  */
+-function guardDisabledActivation(event: MouseEvent): void {
+-    if (!activationBlocked.value) return;
+-    event.preventDefault();
+-    event.stopImmediatePropagation();
++function activate(event: MouseEvent): void {
++    if (activationBlocked.value) {
++        event.preventDefault();
++        event.stopImmediatePropagation();
++        return;
++    }
++    engage.commit();
+ }
+ </script>
+ 
+@@ -170,20 +171,10 @@ function guardDisabledActivation(event: MouseEvent): void {
+         :data-icon-only="iconOnly || undefined"
+         data-control-target=""
+         :data-loading="loading || undefined"
+-        :data-press-armed="press.armed ? '' : undefined"
+         :aria-busy="loading || undefined"
+         v-bind="hostAttrs"
+         :class="hostClass"
+-        :style="hostStyle"
+-        @click="guardDisabledActivation"
+-        @pointerdown="press.handlers.onPointerdown"
+-        @pointerup="press.handlers.onPointerup"
+-        @pointercancel="press.handlers.onPointercancel"
+-        @pointerleave="press.handlers.onPointerleave"
+-        @pointerenter="press.handlers.onPointerenter"
+-        @keydown="press.handlers.onKeydown"
+-        @keyup="press.handlers.onKeyup"
+-        @blur="press.handlers.onBlur"
++        @click="activate"
+     >
+         <!-- The library's ONE work-in-flight mark (#28 W-FEEDBACK-MOTION). No
+              <Transition>: the ring hands off to the label the moment the work ends,
+diff --git a/src/components/button/styles.css b/src/components/button/styles.css
+index 222fe7362..90dd69ba3 100644
+--- a/src/components/button/styles.css
++++ b/src/components/button/styles.css
+@@ -276,7 +276,7 @@
+     }
+ 
+     /* The press-coupled gleam, re-keyed onto the `::before` seat this host actually
+-       carries. It rides the ONE `--glass-btn-press-t` spring drive, so the catch-light
++       carries. It rides the ONE `--press-t` spring drive, so the catch-light
+        tracks the squish frame-for-frame instead of snapping between two CSS states. */
+     .button.glass-specular-track:active::before {
+         --specular-intensity: calc(
+@@ -285,7 +285,7 @@
+                     var(--glass-specular-intensity-active) -
+                         var(--glass-specular-intensity-hover)
+                 ) *
+-                var(--glass-btn-press-t)
++                var(--press-t)
+         );
+     }
+ }
+diff --git a/src/components/dialog/ModalOverlay.vue b/src/components/dialog/ModalOverlay.vue
+index 9cb477a99..134f5ef3f 100644
+--- a/src/components/dialog/ModalOverlay.vue
++++ b/src/components/dialog/ModalOverlay.vue
+@@ -71,7 +71,7 @@ const props = withDefaults(defineProps<ModalOverlayProps>(), {
+         "
+         :style="props.opacity == null ? undefined : { opacity: props.opacity }"
+     >
+-        <span v-if="props.veil" class="glass-focus-veil" data-engaged aria-hidden="true" />
++        <span v-if="props.veil" class="glass-focus-veil" aria-hidden="true" />
+         <slot />
+     </DialogOverlay>
+ </template>
+diff --git a/src/components/dock/DockLayerGroup.vue b/src/components/dock/DockLayerGroup.vue
+index 80334f4a3..b2c1c2ae6 100644
+--- a/src/components/dock/DockLayerGroup.vue
++++ b/src/components/dock/DockLayerGroup.vue
+@@ -11,7 +11,7 @@ import {
+ } from "vue";
+ import type { Component } from "vue";
+ import { useSelectionGroup } from "../../composables/motion/morph/useSelectionGroup";
+-import { useHoldToken } from "../_shared/overlay";
++import { useHoldToken } from "../../composables/motion/engage/hold";
+ import { useOptionalDockContext } from "./composables/dockContext";
+ import { provideDockSwitcherContext } from "./composables/dockSwitcherContext";
+ import DockCrossfade from "./DockCrossfade.vue";
+diff --git a/src/components/dock/composables/dockContext.ts b/src/components/dock/composables/dockContext.ts
+index 5af0d504e..0db14d670 100644
+--- a/src/components/dock/composables/dockContext.ts
++++ b/src/components/dock/composables/dockContext.ts
+@@ -1,24 +1,12 @@
+ import type { ComputedRef } from "vue";
+ import { createStrictContext } from "../../../composables/context";
+ import { DOCK_CONTEXT_LABEL } from "../constants";
++import type { HoldKind } from "../../../composables/motion/engage/hold";
+ 
+ export type DockOrientation = "horizontal" | "vertical";
+ 
+-/**
+- * What KIND of hold a token is. The two are different facts about the dock and
+- * only one of them is a hand:
+- *
+- *  - `"morph"` (the default) — POSTURE only. "Something is open and the dock must
+- *    not idle-collapse under it": an armed search field, an open popover, a
+- *    focused switcher tab. It suppresses the collapse timer and nothing else. It is
+- *    NOT a hand, and it never engages the grasp optic (glass/grasp.css) — a
+- *    search field left open for a minute is not a minute-long touch.
+- *  - `"grasp"` — a live POINTER HOLD on a descendant control (`useDockHold`'s
+- *    acquire, driven by native `pointerdown`/`touchstart` on the resolved host).
+- *    A grasp IMPLIES a morph hold (a finger down must also hold the dock open),
+- *    so it takes both counts; it is the edge the material answers.
+- */
+-export type DockHoldKind = "morph" | "grasp";
++/* What KIND of hold a token is (`"morph"` posture, `"grasp"` a hand) is the engage
++   module's `HoldKind` (composables/motion/engage/hold.ts), where the hand lives. */
+ 
+ /**
+  * Dock context surfaces the dock id + orientation + held-state coordination
+@@ -46,9 +34,9 @@ export interface DockContext {
+      * `"morph"` (posture only). Pass `"grasp"` for a live pointer hold — it takes
+      * BOTH counts, so a grasp also holds the dock open.
+      */
+-    keepOpen: (kind?: DockHoldKind) => void;
++    keepOpen: (kind?: HoldKind) => void;
+     /** Release a previously-acquired token of the SAME `kind` that took it. */
+-    release: (kind?: DockHoldKind) => void;
++    release: (kind?: HoldKind) => void;
+     /**
+      * Reactive GRASP edge — `true` while ≥1 pointer hold is live on a descendant.
+      * This is what the dock root reflects as `data-held` and what the grasp
+diff --git a/src/components/dock/composables/index.ts b/src/components/dock/composables/index.ts
+index 720f5e985..fad2d4e39 100644
+--- a/src/components/dock/composables/index.ts
++++ b/src/components/dock/composables/index.ts
+@@ -9,8 +9,6 @@ export type { UseDockStateOptions, UseDockStateReturn, DockState } from "./useDo
+ export { useDockSearch } from "./useDockSearch";
+ export type { UseDockSearchOptions, UseDockSearchReturn } from "./useDockSearch";
+ 
+-export { useDockHold } from "./useDockHold";
+-export type { UseDockHoldOptions, UseDockHoldReturn } from "./useDockHold";
+ 
+ /* The portal predicate moved to `_shared/overlay/` — beside `overlayContentAttrs`,
+    the writer of the very attribute pair it parses. The dock re-exports it because
+diff --git a/src/components/dock/composables/useDockHold.ts b/src/components/dock/composables/useDockHold.ts
+deleted file mode 100644
+index b7bf36e37..000000000
+--- a/src/components/dock/composables/useDockHold.ts
++++ /dev/null
+@@ -1,167 +0,0 @@
+-import { onBeforeUnmount, onMounted } from "vue";
+-import type { Ref } from "vue";
+-import { useHoldToken } from "../../_shared/overlay";
+-import { useOptionalDockContext } from "./dockContext";
+-
+-/**
+- * Host-native dock hold.
+- *
+- * `keepDockOpen` is a FIRST-CLASS, synchronous morph-state input to the dock's
+- * one state machine: while a continuous pointer/touch gesture is live on a
+- * descendant control, the dock holds open (idle-collapse suppressed) and the
+- * dock's `held` edge lights `data-held` on the dock root AND the control for the
+- * thumb-halo intensification.
+- *
+- * THIS ACQUIRE IS THE HAND. It is the only path in the library driven by an actual
+- * pointer going down, so it is the one the GRASP register (glass/grasp.css) is
+- * sourced from: the token it takes is `keepOpen("grasp")`, which lights the dock's
+- * `held` edge as well as holding posture. The returned `isHeld` is this host's OWN
+- * live-hold flag — it flips with the finger whether or not a dock is present, so a
+- * STANDALONE control engages on its own drag and a control inside a dock does NOT
+- * co-engage off a sibling's hold.
+- *
+- * Why NATIVE host listeners (not a Vue `@pointerdown` template binding) — and NOT
+- * because the binding would be lost. reka-ui's `<SliderRoot>` is a forwarding
+- * component and does set `inheritAttrs: false` (`SliderRoot.js:17`), but it re-merges
+- * `$attrs` by hand on the way out — `mergeProps(_ctx.$attrs, { … onPointerdown })`
+- * (`:149`) — and `mergeProps` CHAINS `onX` handlers rather than overwriting them, so a
+- * consumer `@pointerdown` arrives and runs. Measured at our pin and at the consumer's:
+- * the merged order is reka's slide start, reka's update, then the consumer — LAST,
+- * which is the one real limit (it cannot `preventDefault` ahead of the slide).
+- * `tests/components/ui/slider/attrs-pointerdown-channel.test.ts` holds the arrival as a
+- * standing arm; the order was measured at the seat and is not asserted there.
+- *
+- * The native listeners are taken for three reasons that do hold: `pointerdown` AND
+- * `touchstart` fold onto ONE acquire under one owner; the release is window-scoped and
+- * so survives reka's `setPointerCapture` retarget; and the acquire is
+- * capture-independent, which is what makes it instant-on. A Reka `dragging`-ref
+- * subscription serves none of the three and is not publicly exposed.
+- *
+- * The hold is INSTANT-ON (Apple "Building Fluid Interfaces", facet 5): the first
+- * line `keepOpen()` is capture-independent and synchronous, so the halo +
+- * substrate tier-shade light the instant the pointer goes down (under the ~100ms
+- * perception threshold — reads as instant); the spring governs only the settle.
+- *
+- * The release window is window-scoped `pointerup`/`pointercancel`: reka
+- * `setPointerCapture`-retargets the move/up to the captured element, which
+- * bubbles to `window`, so a release anywhere ends the hold. The touch parity
+- * folds onto the SAME single acquire — one owner, one acquire path (no second
+- * hold path, no parallel `touchGate` watch).
+- *
+- * DI: consumes the EXISTING typed `DockContext` via `useOptionalDockContext()`
+- * through the `keepOpen` and `release` pair. A control rendered OUTSIDE a
+- * `<GlassDock>` gets the befitting-silent default (no dock) — the DOCK half is a
+- * no-op, a primitive may legitimately render outside a dock. The HAND half is not
+- * conditional on it: the returned edge tracks the pointer either way, which is what
+- * lets a standalone `<Slider>` grasp.
+- */
+-
+-export interface UseDockHoldOptions {
+-    /**
+-     * Whether the hold is armed. A reactive getter so a consumer prop
+-     * (`keepDockOpen`) can disarm it without re-instantiating the composable.
+-     * Defaults to always-armed.
+-     */
+-    enabled?: () => boolean;
+-}
+-
+-export interface UseDockHoldReturn {
+-    /**
+-     * `true` while THIS host's own pointer hold is live — from the native
+-     * `pointerdown`/`touchstart` acquire to the window-scoped release. Dock-free by
+-     * construction: a control outside a `<GlassDock>` still reports its own hand,
+-     * and a control inside one never reports a sibling's.
+-     */
+-    isHeld: Ref<boolean>;
+-}
+-
+-/**
+- * @param resolveHost A getter that resolves the REAL host element to attach the
+- *   native listeners to. Called inside `onMounted` (template refs are populated
+- *   before `onMounted` fires), so a reka forwardRef host (`SliderRoot.$el`) is
+- *   live by then. A getter — not a `Ref` — sidesteps the cross-composable
+- *   `onMounted`-ordering trap (a sibling `onMounted` that populates a ref runs
+- *   AFTER this one).
+- */
+-export function useDockHold(
+-    resolveHost: () => HTMLElement | null,
+-    options: UseDockHoldOptions = {},
+-): UseDockHoldReturn {
+-    const dock = useOptionalDockContext();
+-    const armed = options.enabled ?? (() => true);
+-
+-    // ONE acquire flag — the single source of truth for whether THIS host holds a
+-    // token. The native pointer + touch listeners drive the same flag, so a
+-    // pointer-down then a stray touch (or vice versa) cannot double-acquire. The
+-    // flag IS the host's grasp edge, returned to the consumer: the dock token is a
+-    // side effect of the hand, not its definition, so it flips with no dock in
+-    // scope.
+-    // A pointer hold is a GRASP: it takes the posture count (no idle-collapse
+-    // mid-gesture) and the grasp count (the edge the material answers). The token
+-    // DISCIPLINE — acquire once, release once, release on teardown — is
+-    // `_shared/overlay`'s, shared with the other three holders; what stood here was
+-    // one of four hand-rolled copies of it.
+-    const token = useHoldToken(() => dock, "grasp");
+-    const held = token.isHeld;
+-
+-    function acquire(): void {
+-        if (!armed()) return;
+-        token.acquire();
+-    }
+-
+-    const release = token.release;
+-
+-    // Window-scoped release: reka retargets the captured pointer's up/cancel to
+-    // the captured element, which bubbles to `window` — so a release wherever the
+-    // gesture ends still fires. Installed once on the first press, removed on the
+-    // matching release (kept off `window` at rest).
+-    function onWindowRelease(): void {
+-        release();
+-        if (typeof window === "undefined") return;
+-        window.removeEventListener("pointerup", onWindowRelease);
+-        window.removeEventListener("pointercancel", onWindowRelease);
+-        window.removeEventListener("blur", onWindowRelease);
+-    }
+-
+-    function onPress(): void {
+-        acquire();
+-        if (typeof window === "undefined") return;
+-        // Idempotent re-add: removing first avoids a duplicate listener if a press
+-        // re-fires before a release (e.g. a touch then a synthesized pointer).
+-        window.removeEventListener("pointerup", onWindowRelease);
+-        window.removeEventListener("pointercancel", onWindowRelease);
+-        window.removeEventListener("blur", onWindowRelease);
+-        window.addEventListener("pointerup", onWindowRelease);
+-        window.addEventListener("pointercancel", onWindowRelease);
+-        window.addEventListener("blur", onWindowRelease);
+-    }
+-
+-    let host: HTMLElement | null = null;
+-
+-    onMounted(() => {
+-        host = resolveHost();
+-        if (!host) return;
+-        // Native listeners on the RESOLVED host element — immune to the reka
+-        // forwarding-drop. Both press kinds drive the SAME single acquire.
+-        host.addEventListener("pointerdown", onPress);
+-        host.addEventListener("touchstart", onPress, { passive: true });
+-    });
+-
+-    onBeforeUnmount(() => {
+-        // Teardown safety net: if the gesture is mid-flight on unmount (the host
+-        // teleported into a dock portal, or the slider unmounted under a held
+-        // thumb), release the token so the dock's `keepOpenCount` can never leak.
+-        if (host) {
+-            host.removeEventListener("pointerdown", onPress);
+-            host.removeEventListener("touchstart", onPress);
+-        }
+-        if (typeof window !== "undefined") {
+-            window.removeEventListener("pointerup", onWindowRelease);
+-            window.removeEventListener("pointercancel", onWindowRelease);
+-            window.removeEventListener("blur", onWindowRelease);
+-        }
+-        release();
+-    });
+-
+-    return { isHeld: held };
+-}
+diff --git a/src/components/dock/composables/useDockSearch.ts b/src/components/dock/composables/useDockSearch.ts
+index 40a9b740f..c09cb229f 100644
+--- a/src/components/dock/composables/useDockSearch.ts
++++ b/src/components/dock/composables/useDockSearch.ts
+@@ -45,7 +45,7 @@ import {
+     type Ref,
+ } from "vue";
+ import type { UseDockStateReturn } from "./useDockState";
+-import { useHoldToken } from "../../_shared/overlay";
++import { useHoldToken } from "../../../composables/motion/engage/hold";
+ // [2026-08-25 · BK #42 W-SEARCH] ~~`from "../../search/composables"`~~ — the engine
+ // left `src/components/search/` for `src/composables/search/` when `SearchBar` was
+ // deleted with its relay. This is the SAME edge, one directory over: a sibling
+diff --git a/src/components/dock/composables/useDockState.ts b/src/components/dock/composables/useDockState.ts
+index b040531a7..d1896f5cb 100644
+--- a/src/components/dock/composables/useDockState.ts
++++ b/src/components/dock/composables/useDockState.ts
+@@ -1,7 +1,7 @@
+ import { computed, ref, watch, onUnmounted } from "vue";
+ import type { ComputedRef, Ref } from "vue";
+ import { isTeleportedTarget } from "../../_shared/overlay/isTeleportedTarget";
+-import type { DockHoldKind } from "./dockContext";
++import type { HoldKind } from "../../../composables/motion/engage/hold";
+ import { DOCK_COLLAPSE_DELAY_MS, HOVER_INTENT_MS } from "../constants";
+ 
+ export interface UseDockStateOptions {
+@@ -67,9 +67,9 @@ export interface UseDockStateReturn {
+     /** Click handler on the collapsed layer — transitions to `pinned`. */
+     onClickCollapsed: () => void;
+     /** Increment hold ref-count; suppresses timer-based collapse. */
+-    keepOpen: (kind?: DockHoldKind) => void;
++    keepOpen: (kind?: HoldKind) => void;
+     /** Decrement hold ref-count; allows timer-based collapse when count reaches 0. */
+-    release: (kind?: DockHoldKind) => void;
++    release: (kind?: HoldKind) => void;
+     /** Imperative open — forces `state = "hover"` (no-op when `alwaysExpanded`). */
+     expand: () => void;
+     /** Imperative close — forces `state = "collapsed"` (no-op when `alwaysExpanded`). */
+@@ -125,7 +125,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
+     /* TWO COUNTS, TWO FACTS. `keepOpenCount` is POSTURE — every token, of either
+        kind, suppresses timer-based collapse and click-away. `graspCount` is the
+        HAND — only a live pointer hold takes one (`keepOpen("grasp")`, acquired by
+-       `useDockHold` off a native `pointerdown`/`touchstart` on the resolved host).
++       `useHold` (composables/motion/engage/hold.ts) off a native `pointerdown`/`touchstart` on the resolved host).
+        The split exists because the grasp register (glass/grasp.css) is a
+        direct-manipulation answer to a finger: sourced from the posture count it
+        engaged the held optic — 0.6× ink, 1.625× blur, the plate's clip and grain
+@@ -333,13 +333,13 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
+ 
+     // --- keepOpen / release (ref-counted child holds) ---
+ 
+-    function keepOpen(kind: DockHoldKind = "morph") {
++    function keepOpen(kind: HoldKind = "morph") {
+         keepOpenCount.value++;
+         if (kind === "grasp") graspCount.value++;
+         clearTimer();
+     }
+ 
+-    function release(kind: DockHoldKind = "morph") {
++    function release(kind: HoldKind = "morph") {
+         if (kind === "grasp") graspCount.value = Math.max(0, graspCount.value - 1);
+         keepOpenCount.value = Math.max(0, keepOpenCount.value - 1);
+         if (keepOpenCount.value === 0 && state.value === "hover") {
+diff --git a/src/components/dock/styles/controls/icon-button.css b/src/components/dock/styles/controls/icon-button.css
+index f93940c70..fa69e174d 100644
+--- a/src/components/dock/styles/controls/icon-button.css
++++ b/src/components/dock/styles/controls/icon-button.css
+@@ -78,17 +78,17 @@
+            register below stays the no-JS / PRM floor:
+ 
+            • the SPECULAR leg — the dock press drive aliases onto the shared
+-             `--glass-btn-press-t` the material `::before` catch-light reads (glass/
+-             material.css `--specular-intensity: max(rest, active·--glass-btn-press-t)`),
++             `--press-t` the material `::before` catch-light reads (glass/
++             material.css `--specular-intensity: max(rest, active·--press-t)`),
+              so on RELEASE the gleam SETTLES with the spring's alive rebound instead of
+              snapping to rest (the material comment's "a dock control writes it" intent, now
+-             wired). At rest `--dock-press-t` is 0 → `--glass-btn-press-t` 0 → byte-identical
++             wired). At rest `--dock-press-t` is 0 → `--press-t` 0 → byte-identical
+              (no second specular recipe — the DRY reuse of the built material gleam).
+            • the DARKEN leg — a sub-perceptual `filter: brightness()` deepen on the SAME
+              drive so the plate reads as pressing IN (not just shrinking), settling on the
+              spring; `filter` is compositor-safe (`proof:no-layout-animation` greens it),
+              and `brightness(1)` at rest is a no-op. */
+-        --glass-btn-press-t: var(--dock-press-t, 0);
++        --press-t: var(--dock-press-t, 0);
+         filter: brightness(calc(1 - var(--dock-press-t, 0) * 0.04));
+ 
+         /* Glass icon-hover. The icon-button hover reads as a glass
+diff --git a/src/components/dock/styles/morph.css b/src/components/dock/styles/morph.css
+index df3d25431..f19b751aa 100644
+--- a/src/components/dock/styles/morph.css
++++ b/src/components/dock/styles/morph.css
+@@ -321,7 +321,7 @@
+     /* Held-state substrate response.
+      *
+      * `data-held` on the root is the GRASP edge — `useDockState.graspHeld`, written by
+-     * a live pointer hold on a descendant control (`useDockHold`'s
++     * a live pointer hold on a descendant control (`useHold`'s
+      * `keepOpen("grasp")`), not by the posture count that an open popover or an armed
+      * search field also takes. The border quiets to the floating ring on
+      * `--duration-fast` so it reads as a held-cursor cue tracking the pointer, not as
+diff --git a/src/components/pager-dots/PagerDots.vue b/src/components/pager-dots/PagerDots.vue
+index 4c18c3f07..143d14e65 100644
+--- a/src/components/pager-dots/PagerDots.vue
++++ b/src/components/pager-dots/PagerDots.vue
+@@ -2,6 +2,7 @@
+ import type { HTMLAttributes } from "vue";
+ import { computed, nextTick, ref, watch } from "vue";
+ import { cn } from "../_shared/class-names";
++import { usePressMark } from "../../composables/motion/engage/press";
+ import { sequenceWindow, type SequenceWindowPolicy } from "../deck";
+ import { usePagerWorm } from "./worm";
+ 
+@@ -228,13 +229,17 @@ function press(i: number): void {
+ 
+ // The hand's state, held where the paint is. The pips live in the bed layer and
+ // the pointer is over a button in a different layer, so no CSS selector relates
+-// them; two integers do. Before this, rest, hover and press computed
+-// byte-identical on a rail whose own README promised a hover.
++// them; the hover is an integer, and the press is the engage door's mark (press.ts,
++// the one writer of `data-press`) on the pip under the pressed dot. Before this,
++// rest, hover and press computed byte-identical on a rail whose own README promised
++// a hover.
+ const hoverIndex = ref<number | null>(null);
+-const pressIndex = ref<number | null>(null);
+-function releasePress(): void {
+-    pressIndex.value = null;
+-}
++usePressMark(() => rootEl.value, {
++    organ: (e) => {
++        for (const [i, dot] of dotEls) if (dot.contains(e.target as Node)) return bedDotEls.get(i);
++        return null;
++    },
++});
+ 
+ // ── THE ROVING-TABINDEX CONTRACT — the library's ONE paging key table ────────
+ // Exactly one tab stop; axis-derived arrows; Home/End; PageUp/PageDown; digit
+@@ -358,7 +363,6 @@ const liveMessage = computed(() => {
+                 :style="{ '--pip-rank': pipRank(i) }"
+                 :data-active="i === activeIndex ? '' : undefined"
+                 :data-hover="i === hoverIndex ? '' : undefined"
+-                :data-press="i === pressIndex ? '' : undefined"
+                 :data-edge="
+                     (i === shown[0] && win.clippedStart) ||
+                     (i === shown[shown.length - 1] && win.clippedEnd)
+@@ -403,9 +407,6 @@ const liveMessage = computed(() => {
+             @click="press(i)"
+             @pointerenter="hoverIndex = i"
+             @pointerleave="hoverIndex === i && (hoverIndex = null)"
+-            @pointerdown="pressIndex = i"
+-            @pointerup="releasePress"
+-            @pointercancel="releasePress"
+         />
+ 
+         <!-- The step announcement's owned region. -->
+diff --git a/src/components/sheet/detents/use.ts b/src/components/sheet/detents/use.ts
+index 875bbf212..3de2b335e 100644
+--- a/src/components/sheet/detents/use.ts
++++ b/src/components/sheet/detents/use.ts
+@@ -22,6 +22,7 @@
+ import { onScopeDispose, ref, watch, type Ref } from "vue";
+ import { SpringProgress } from "@mkbabb/keyframes.js";
+ import { motionTempo } from "../../../composables/motion/core/motionTempo";
++import { VelocitySampler } from "../../../composables/motion/engage/release";
+ import { springPreset } from "../../../composables/motion/spring/springPresets";
+ import { nearestRung, resolveRelease } from "./projection";
+ import type { SidePlacement } from "../motion";
+@@ -162,9 +163,10 @@ export function useSheetDetents(
+     let root: HTMLElement | null = null;
+     let startCoord = 0;
+     let startT = 0;
+-    let lastCoord = 0;
+-    let lastTime = 0;
+-    let velocity = 0; // fraction/s, toward-open positive
++    // The release rule's measurement (`engage/release.ts`): the chord over the samples
++    // inside its window, the lift itself a sample. The last-move delta it replaces threw a
++    // finger held still before it lifted to the far detent on that stale velocity.
++    const sampler = new VelocitySampler();
+     let span = 1;
+ 
+     function onPointerdown(event: PointerEvent) {
+@@ -182,10 +184,9 @@ export function useSheetDetents(
+         dragging.value = true;
+         span = dragSpan(side());
+         startCoord = axisCoord(side(), event);
+-        lastCoord = startCoord;
+-        lastTime = event.timeStamp;
++        sampler.reset();
++        sampler.push(startCoord, 0, event.timeStamp);
+         startT = t.value;
+-        velocity = 0;
+         host.setPointerCapture?.(event.pointerId);
+         host.addEventListener("pointermove", onPointermove);
+         host.addEventListener("pointerup", onPointerup);
+@@ -195,10 +196,7 @@ export function useSheetDetents(
+     function onPointermove(event: PointerEvent) {
+         if (event.pointerId !== pointerId) return;
+         const coord = axisCoord(side(), event);
+-        const dt = (event.timeStamp - lastTime) / 1000;
+-        if (dt > 0) velocity = (coord - lastCoord) / dt / span;
+-        lastCoord = coord;
+-        lastTime = event.timeStamp;
++        sampler.push(coord, 0, event.timeStamp);
+         // The clamp floors at ZERO, not at the first rung. A drag that cannot reach the
+         // dismissed position is a drag whose dismiss branch is unreachable.
+         const rungs = ladder();
+@@ -208,6 +206,7 @@ export function useSheetDetents(
+ 
+     function onPointerup(event: PointerEvent) {
+         if (event.pointerId !== pointerId) return;
++        const velocity = sampler.release(axisCoord(side(), event), 0, event.timeStamp).x / span; // fraction/s, toward-open
+         releaseDrag();
+         // The throw coasts on the register that will catch it, tempo-scaled with it —
+         // so a consumer who slows the library slows the fling by the same factor.
+@@ -217,6 +216,8 @@ export function useSheetDetents(
+             dampingFraction: row.dampingFraction,
+             settleBand: row.settleBand,
+         });
++        // the settle leaves at the finger's velocity: its leg's row is seeded with it
++        seatSpring(target === 0 ? "travel" : "rung", t.value, velocity);
+         if (target === 0) {
+             requestClose();
+             settle(0, "travel");
+diff --git a/src/components/slider/Slider.vue b/src/components/slider/Slider.vue
+index fc7b5de15..df0767127 100644
+--- a/src/components/slider/Slider.vue
++++ b/src/components/slider/Slider.vue
+@@ -16,8 +16,8 @@ import {
+     SliderTrack,
+     useForwardPropsEmits,
+ } from "reka-ui";
+-import { useDragVelocity } from "../../composables/dom/useDragVelocity";
+-import { useDockHold } from "../dock/composables/useDockHold";
++import { useEngage } from "../../composables/motion/engage/useEngage";
++import { useOptionalDockContext } from "../dock/composables/dockContext";
+ import { resolveValueMarks } from "../_shared/field/valueDomain";
+ import { useMotionAxis } from "../_shared/useMotionAxis";
+ import type { SliderProps, SliderSize, SliderVariant } from "./types";
+@@ -56,17 +56,14 @@ const delegatedProps = computed(() => {
+ 
+ const forwarded = useForwardPropsEmits(delegatedProps, emits);
+ 
+-/* The host-native drag hold — one owner, one acquire path. `useDockHold` attaches
+-   NATIVE `pointerdown`/`touchstart` on the RESOLVED host, and not because a template
+-   binding would be lost: reka's `<SliderRoot>` sets `inheritAttrs: false` and then
+-   re-merges `$attrs` by hand through `mergeProps` (SliderRoot.js:149), which CHAINS
+-   `onX` handlers, so a consumer `@pointerdown` does land. It lands LAST — after reka's
+-   own slide start — which is the one real limit: it cannot `preventDefault` ahead of
+-   the slide. The native listeners earn their place on three other counts:
+-   `pointerdown` AND `touchstart` fold onto ONE acquire, the release is window-scoped
+-   and survives reka's `setPointerCapture` retarget, and the acquire is
+-   capture-independent instant-on. `data-held` reflects THIS slider's own hand, never
+-   the dock's posture count. */
++/* The engage door (composables/motion/engage/useEngage.ts) owns this slider's
++   engagement and is the only writer of its engagement attributes: `data-held` (the
++   hand, on the root and the range, never the dock's posture count), `data-engaged` (the
++   hand or the keyboard driving it, on the root, the veil and the loupe). Its hand is
++   `useHold`: NATIVE `pointerdown`/`touchstart` on the RESOLVED host, one acquire, a
++   window-scoped release that survives reka's `setPointerCapture` retarget. reka's
++   `<SliderRoot>` does forward a consumer `@pointerdown` (`mergeProps` chains it,
++   SliderRoot.js:149), but last, after its own slide start. */
+ const sliderRootRef = useTemplateRef<{ $el: HTMLElement } | HTMLElement | null>(
+     "sliderRootRef",
+ );
+@@ -78,19 +75,31 @@ function getRootEl(): HTMLElement | null {
+     return (ref.$el as HTMLElement | undefined) ?? null;
+ }
+ 
+-const { isHeld } = useDockHold(getRootEl);
+-
+ const loupeRef = useTemplateRef<HTMLElement>("loupeRef");
++const focusVeilRef = useTemplateRef<HTMLElement>("focusVeilRef");
++const rangeEl = (): HTMLElement | null =>
++    getRootEl()?.querySelector<HTMLElement>(".slider-range") ?? null;
+ 
+-/* The weight-train velocity bridge. Writes the bounded `--atom-drag-v` and the ONE
+-   registered velocity term `--flex-vel` on the resolved host during the drag window
+-   only; the rAF tears down on release. The loupe is mirrored because it is teleported
+-   out of the host's inheritance. */
++/* The weight-train velocity bridge rides the door's drag part: the bounded
++   `--atom-drag-v` and the ONE registered velocity term `--flex-vel` on the host during
++   the drag window only (the loupe mirrored, being teleported out of the host's
++   inheritance), and on release the release rule's velocity carried by the visible body,
++   the range's leading edge: it runs on with the fling and the `dock` row brings it home.
++   The value the finger chose does not move. */
+ const motionAxis = useMotionAxis(() => props.motion);
+-useDragVelocity({
+-    host: () => (motionAxis.armed.value ? getRootEl() : null),
+-    mirror: () => loupeRef.value,
+-    axis: () => (props.orientation === "vertical" ? "y" : "x"),
++const dock = useOptionalDockContext();
++const { isHeld } = useEngage(getRootEl, {
++    hold: {
++        target: () => dock,
++        heldOn: () => [getRootEl()?.querySelector(".slider-range")],
++        engagedOn: () => [focusVeilRef.value, loupeRef.value],
++    },
++    drag: {
++        axis: () => (props.orientation === "vertical" ? "y" : "x"),
++        body: rangeEl,
++        mirror: () => loupeRef.value,
++        enabled: () => motionAxis.armed.value,
++    },
+ });
+ 
+ // ── The GRASP mount (glass/grasp.css) ────────────────────────────────────────────
+@@ -120,8 +129,6 @@ function onGraspReleaseEnd(event: TransitionEvent): void {
+ // is. The re-take rides a capture-phase `scroll` listener on `window` — `scroll` does
+ // not bubble from a scroller, capture still reaches it, so one listener covers every
+ // scroller.
+-const focusVeilRef = useTemplateRef<HTMLElement>("focusVeilRef");
+-
+ function writeVeilCentre(): void {
+     const host = getRootEl();
+     const veil = focusVeilRef.value;
+@@ -266,7 +273,6 @@ onMounted(() => {
+         :data-variant="v"
+         :data-size="s"
+         :data-invalid="props.invalid || undefined"
+-        :data-held="isHeld || undefined"
+         :data-inverted="props.inverted || undefined"
+         :data-focus-veil="(grasping && graspable) || undefined"
+         :data-motion="motionAxis.dataMotion.value"
+@@ -286,7 +292,6 @@ onMounted(() => {
+                 v-if="grasping && graspable"
+                 ref="focusVeilRef"
+                 class="glass-focus-veil"
+-                :data-engaged="isHeld || undefined"
+                 aria-hidden="true"
+             />
+         </Teleport>
+@@ -304,7 +309,6 @@ onMounted(() => {
+                 v-if="loupeShown"
+                 ref="loupeRef"
+                 class="glass-loupe glass-plate"
+-                :data-engaged="isHeld || undefined"
+                 aria-hidden="true"
+             >
+                 <span class="glass-loupe-clone">
+@@ -342,7 +346,6 @@ onMounted(() => {
+             <SliderRange
+                 class="slider-range"
+                 :class="v !== 'spectrum' && 'glass-liquid-fill'"
+-                :data-held="isHeld || undefined"
+             >
+                 <template v-if="grasping && graspable">
+                     <span class="glass-grasp-carrier" data-grasp="rest"></span>
+diff --git a/src/components/sortable-list/drag.ts b/src/components/sortable-list/drag.ts
+index 9ce10adaf..bbd07f202 100644
+--- a/src/components/sortable-list/drag.ts
++++ b/src/components/sortable-list/drag.ts
+@@ -20,11 +20,11 @@
+  * and clearing a transform animates home instead of snapping.
+  */
+ 
++import { VelocitySampler } from "../../composables/motion/engage/release";
+ import { createGhost, type Ghost } from "./ghost";
+ import {
+     ACTIVATION_HOLD_MS,
+     ACTIVATION_SLOP_PX,
+-    VelocitySampler,
+     flyProgress,
+     type Flight,
+ } from "./motion";
+@@ -145,12 +145,24 @@ export function createDragController(deps: DragControllerDeps): DragController {
+         return deps.getItems().map((item) => deps.getId(item));
+     }
+ 
+-    /** The source row's live top-left — the landing for a same-list drop or a reversal. */
++    /** The source row's live top-left — where a subject that left the list retires. */
+     function sourceOrigin(): Origin | null {
+         const box = sourceEl?.getBoundingClientRect();
+         return box ? { x: box.left, y: box.top } : null;
+     }
+ 
++    /**
++     * Where a same-list drop comes to rest: the vacancy's SETTLED slot, the source's
++     * resting box plus the shift `partLocal` sent it. Never the row's live box: that
++     * shift rides a CSS spring, and on a fast drop it has barely begun, so the plate flew
++     * back to the old slot while the row appeared at the new one, 69-83 px away, in one
++     * frame (D5 CK-05/CK-20; HEAD's film: the shift read 4 of its 83 px at the release).
++     */
++    function localLanding(source: number, final: number): Origin | null {
++        if (!sourceRect || !rects) return sourceOrigin();
++        return { x: sourceRect.left, y: sourceRect.top + (final - source) * rects.pitch };
++    }
++
+     // ── the vacancy ─────────────────────────────────────────────────────────────
+     /** Write one row's parting offset. `0` clears the write entirely. */
+     function shiftRow(id: SortableId, dy: number): void {
+@@ -415,15 +427,15 @@ export function createDragController(deps: DragControllerDeps): DragController {
+             return;
+         }
+ 
+-        // The endpoint is measured while the vacancy is still open — after cleanup the
+-        // rows have started home and the rect would be the resting one, not the landing.
+-        // A CROSS-LIST release lands in the RECEIVER's gap: `partLeaving` closes this
+-        // list behind the subject and so leaves the source row at its own resting slot,
+-        // which flew every foreign drop back to the list the row had just left.
++        // The endpoint is the vacancy's settled slot, taken before cleanup clears the
++        // geometry it is computed from. A CROSS-LIST release lands in the RECEIVER's gap:
++        // `partLeaving` closes this list behind the subject and so leaves the source row
++        // at its own resting slot, which flew every foreign drop back to the list the row
++        // had just left.
+         releaseGhost(
+             nextProposal.target
+                 ? nextProposal.target.getVacancyOrigin(nextProposal.index)
+-                : sourceOrigin(),
++                : localLanding(sourceIndex, nextProposal.index),
+         );
+ 
+         const item = list[sourceIndex];
+@@ -573,6 +585,9 @@ export function createDragController(deps: DragControllerDeps): DragController {
+ 
+     function onPointerUp(event: PointerEvent): void {
+         if (event.pointerId !== pointerId) return;
++        // the lift is a sample (the release rule): a finger held still before it lifts
++        // flies home on no velocity
++        sampler.push(event.clientX, event.clientY);
+         commit();
+     }
+ 
+diff --git a/src/components/sortable-list/motion.ts b/src/components/sortable-list/motion.ts
+index 453a759e4..81c584bb6 100644
+--- a/src/components/sortable-list/motion.ts
++++ b/src/components/sortable-list/motion.ts
+@@ -67,42 +67,6 @@ export function prefersReducedMotion(): boolean {
+     );
+ }
+ 
+-/** A pointer sample: position and the clock it was taken on. */
+-interface Sample {
+-    x: number;
+-    y: number;
+-    t: number;
+-}
+-
+-/**
+- * A small ring buffer over the last few pointer samples. Release velocity is the
+- * chord across the window rather than the last frame's delta, so one stalled frame
+- * cannot fling the ghost.
+- */
+-export class VelocitySampler {
+-    private readonly ring: Sample[] = [];
+-    private readonly size = 5;
+-
+-    push(x: number, y: number, t: number = performance.now()): void {
+-        this.ring.push({ x, y, t });
+-        if (this.ring.length > this.size) this.ring.shift();
+-    }
+-
+-    reset(): void {
+-        this.ring.length = 0;
+-    }
+-
+-    /** px/s across the sample window; `{x:0,y:0}` when the window is degenerate. */
+-    velocity(): { x: number; y: number } {
+-        const first = this.ring[0];
+-        const last = this.ring[this.ring.length - 1];
+-        if (!first || !last) return { x: 0, y: 0 };
+-        const dt = (last.t - first.t) / 1000;
+-        if (dt <= 0) return { x: 0, y: 0 };
+-        return { x: (last.x - first.x) / dt, y: (last.y - first.y) / dt };
+-    }
+-}
+-
+ /**
+  * Velocity-derived tilt on the shared tanh register, capped at the existing ceiling.
+  * A static rotation is width-dependent and says nothing; this one says how hard the
+diff --git a/src/components/switch/Switch.vue b/src/components/switch/Switch.vue
+index aecb2fa16..d86bc2c41 100644
+--- a/src/components/switch/Switch.vue
++++ b/src/components/switch/Switch.vue
+@@ -1,10 +1,11 @@
+ <script setup lang="ts">
+-import { computed, type HTMLAttributes } from "vue";
++import { computed, ref, type HTMLAttributes } from "vue";
+ import { SwitchRoot, SwitchThumb, useForwardPropsEmits } from "reka-ui";
+ import { cn } from "../_shared/class-names";
+ import { type ControlProps, controlStateAttrs } from "../_shared/control";
+ import type { FormFieldProps, PrimitiveProps } from "../_shared/primitive";
+ import type { SelectionValue } from "../_shared/selection";
++import { useEngage } from "../../composables/motion/engage/useEngage";
+ 
+ export interface SwitchProps extends PrimitiveProps, FormFieldProps, ControlProps {
+     modelValue?: boolean;
+@@ -31,6 +32,13 @@ const delegatedProps = computed(() => {
+     return { ...delegated, value: value === undefined ? undefined : String(value) };
+ });
+ const forwarded = useForwardPropsEmits(delegatedProps, emit);
++
++/* The engage door holds the switch's mount frame (`commit: "state"`): a value that
++ * arrives with the mount, even after something read style, is the rest it mounts in,
++ * so the thumb does not glide and nothing lights (CK-03). It reads the commit's tokens
++ * loudly on every `data-state` edge (CK-21). It paints nothing. */
++const rootRef = ref<{ $el: Element } | null>(null);
++useEngage(() => (rootRef.value?.$el as HTMLElement | undefined) ?? null, { commit: "state" });
+ </script>
+ 
+ <template>
+@@ -41,6 +49,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emit);
+          pad against a 1px perimeter is symmetric at rest AND checked, and always
+          was; the refuted "fix" to 48 × 24 / pad 2 is what would have broken it. -->
+     <SwitchRoot
++        ref="rootRef"
+         data-slot="switch"
+         v-bind="{ ...forwarded, ...controlStateAttrs(props.invalid) }"
+         :class="cn('switch control-bit tap-squish', props.class)"
+diff --git a/src/components/tabs/SegmentedTabs.vue b/src/components/tabs/SegmentedTabs.vue
+index 22ed4069e..16d1f0ce8 100644
+--- a/src/components/tabs/SegmentedTabs.vue
++++ b/src/components/tabs/SegmentedTabs.vue
+@@ -164,8 +164,12 @@ const { dragEnabled, drag } = useTabDragMorph({
+     indicatorRef,
+     isVertical,
+     isUnderline,
+-    // Drag arms only for resolved `full` motion.
+-    draggable: () => motionAxis.armed.value,
++    // Drag arms for a `full` request. The reduce preference does not disarm it:
++    // following the finger is the hand's, not an animation, so under reduce the
++    // indicator still follows 1:1 and lands on the nearest tab with no frames between
++    // (useDragMorph's own reduce arm: no squish, instant landing). A `reduced` or
++    // `off` request is the click-only strip (CK-10; HEAD moved 0.0 px under reduce).
++    draggable: () => (props.motion ?? "full") === "full",
+     stripOptions,
+     buttonRefs,
+     model,
+diff --git a/src/components/tabs/styles/drag.css b/src/components/tabs/styles/drag.css
+index b70cf29cb..de46c230d 100644
+--- a/src/components/tabs/styles/drag.css
++++ b/src/components/tabs/styles/drag.css
+@@ -57,7 +57,7 @@
+        is a backing surface, the glyph is the foreground). But that same stack makes the
+        indicator UNGRABBABLE two ways, and both must fall or the liquid tab stays dead:
+ 
+-         · THE GRAB BOOTSTRAP — kf `Draggable` binds `pointerdown` on the INDICATOR node,
++         · THE GRAB BOOTSTRAP — `useDragMorph` binds `pointerdown` on the INDICATOR node,
+            yet a press on the active pill hits the z-10 BUTTON (a sibling, not an
+            ancestor of the indicator), so the gesture never reaches the drag listener.
+            On a DRAGGABLE strip (the indicator carries `.glass-drag-grabbable`) the ACTIVE
+diff --git a/src/components/tabs/types.ts b/src/components/tabs/types.ts
+index fdf3228bf..be9f4070f 100644
+--- a/src/components/tabs/types.ts
++++ b/src/components/tabs/types.ts
+@@ -91,7 +91,8 @@ export interface SegmentedTabsProps<V extends string = string> {
+      * fully operable click and keyboard path; it is never the sole selection method.
+      * `reduced` and `off` use the click-only strip while preserving roving focus.
+      * Underline has no deformable indicator. Reduced-motion preference forces
+-     * `full → reduced`.
++     * `full → reduced` for every animation; the pill still follows a pointer under it
++     * and lands on the nearest tab at once (no squash, no glide).
+      */
+     motion?: Motion;
+     class?: HTMLAttributes["class"];
+diff --git a/src/composables/dom/useDragVelocity.ts b/src/composables/dom/useDragVelocity.ts
+index d7950531f..0d9d970de 100644
+--- a/src/composables/dom/useDragVelocity.ts
++++ b/src/composables/dom/useDragVelocity.ts
+@@ -29,12 +29,13 @@
+ // drives is `transform`/`scale`/`translate` in the consuming CSS — the §L7 paint-fence.
+ 
+ import { onMounted, onScopeDispose, readonly, ref, type Ref } from "vue";
++import { VelocitySampler } from "../motion/engage/release";
+ 
+ export interface UseDragVelocityParams {
+     /**
+      * The host element resolver — a getter (NOT a ref Slider populates in a sibling
+      * `onMounted`) so it sidesteps the onMounted-ordering trap the slider's
+-     * `useDockHold` already documents. The `--atom-drag-v` var is written on THIS
++     * `useHold` already documents. The `--atom-drag-v` var is written on THIS
+      * element; descendants inherit it (the fill + the cast read it).
+      */
+     host: () => HTMLElement | null;
+@@ -62,6 +63,13 @@ export interface UseDragVelocityParams {
+     clamp?: number;
+     /** Honor `prefers-reduced-motion: reduce` (no rAF, value pinned 0). Default true. */
+     respectReducedMotion?: boolean;
++    /**
++     * Called once per release with the release velocity along the axis, px/s: the
++     * release rule's measurement (`motion/engage/release.ts`) through the same saturating
++     * pole as `--flex-vel` (`V0 · tanh(v / V0)`). 0 under reduced motion, which samples
++     * nothing.
++     */
++    onRelease?: (velocity: number) => void;
+ }
+ 
+ export interface UseDragVelocityReturn {
+@@ -126,6 +134,7 @@ export function useDragVelocity(
+     const FLEX_V0 = 900;
+     const FLEX_TAU_MS = 100;
+     let flexSmoothed = 0;
++    const sampler = new VelocitySampler();
+ 
+     function write(el: HTMLElement | null, smear: number, flex: number): void {
+         if (!el) return;
+@@ -175,6 +184,7 @@ export function useDragVelocity(
+         const pos = axisOf() === "y" ? e.clientY : e.clientX;
+         frameDelta += pos - lastPos;
+         lastPos = pos;
++        sampler.push(e.clientX, e.clientY, e.timeStamp);
+     }
+ 
+     function onPointerDown(e: PointerEvent): void {
+@@ -185,6 +195,8 @@ export function useDragVelocity(
+         frameDelta = 0;
+         smoothed = 0;
+         flexSmoothed = 0;
++        sampler.reset();
++        sampler.push(e.clientX, e.clientY, e.timeStamp);
+         // PRM: pin the vars at 0 and NEVER open the rAF (no smear; the value still
+         // tracks via reka). The no-idle-cost contract is trivially honored.
+         if (respectPRM && prefersReducedMotion()) {
+@@ -215,14 +227,20 @@ export function useDragVelocity(
+         setVar(0);
+     }
+ 
+-    function onPointerUp(): void {
++    function onPointerUp(e: PointerEvent): void {
+         if (!pointerActive) return;
++        if (params.onRelease) {
++            const reduced = respectPRM && prefersReducedMotion();
++            const v = sampler.release(e.clientX, e.clientY, e.timeStamp);
++            const along = axisOf() === "y" ? v.y : v.x;
++            params.onRelease(reduced ? 0 : FLEX_V0 * Math.tanh(along / FLEX_V0));
++        }
+         teardown();
+     }
+ 
+     // The host is a reka forwardRef element (`SliderRoot.$el`) — null at SETUP, live
+     // by `onMounted` (template refs are populated before `onMounted` fires; the same
+-    // `useDockHold` resolver discipline). A native `pointerdown` on the resolved host
++    // `useHold` resolver discipline). A native `pointerdown` on the resolved host
+     // is immune to reka's forwarding-drop. The bound host is retained for teardown.
+     let boundHost: HTMLElement | null = null;
+     onMounted(() => {
+diff --git a/src/composables/motion/engage/engageClasses.ts b/src/composables/motion/engage/engageClasses.ts
+new file mode 100644
+index 000000000..cf71f54f2
+--- /dev/null
++++ b/src/composables/motion/engage/engageClasses.ts
+@@ -0,0 +1,130 @@
++// The glass-ui ENGAGEMENT DECLARATION: what each component directory IS on the ladder.
++//
++// The ladder (`engageLadder.ts`) names the rungs; this table names the members. Every
++// component directory is declared into exactly one class (a mode-split member lists
++// each class it may render as), and every class names the highest ladder rung it owes,
++// or none with the reason. One source of record: a class's look and motion live in its
++// one recipe, and the recipe stamps the class on the element it paints as the
++// registered `--rung-class` (`tokens/property-regs.css`; initial value `unclassed`).
++//
++// The census reads THIS table and then the rendered element, never source bytes: a
++// member is adopted when its rendered root computes a `--rung-class` its row declares.
++// Until every member is, the census is RED by its latch (`tests/styles/engage-ladder`).
++//
++// It mints no figure: rungs come from `ENGAGE_LADDER`, clocks from the spring and
++// envelope tables, scales from the scale register.
++
++import type { EngageRungName } from "./engageLadder";
++
++/** The register classes. */
++export type EngageClass =
++    | "pressed"
++    | "chosen"
++    | "held"
++    | "dragged"
++    | "disclosed"
++    | "presented"
++    | "field"
++    | "ambient"
++    | "static";
++
++/** One class: the rung it owes, or none with the reason, and the directory that proves it. */
++export interface EngageClassRow {
++    readonly rung: EngageRungName | null;
++    readonly reason?: string;
++    readonly exemplar?: string;
++    /** The class's recipe plays a commit edge (CK-02's members). The engage door reads
++     *  the commit's tokens loudly on a host that stamps it (`useEngage`). */
++    readonly commits?: true;
++}
++
++export interface EngageDeclaration {
++    readonly classes: Readonly<Record<EngageClass, EngageClassRow>>;
++    /** Each directory's PRIMARY class. */
++    readonly members: Readonly<Record<string, EngageClass>>;
++    /** A member whose class depends on its rendered mode lists every class it may
++     *  stamp (its primary first). The runtime census accepts any of them per element. */
++    readonly modes: Readonly<Record<string, readonly EngageClass[]>>;
++}
++
++export const ENGAGE_DECLARATION: EngageDeclaration = {
++    classes: {
++        pressed: { rung: "press", exemplar: "button", commits: true },
++        chosen: { rung: "press", exemplar: "switch", commits: true },
++        held: { rung: "engaged", exemplar: "slider" },
++        dragged: { rung: "press", exemplar: "sortable-list" },
++        disclosed: { rung: "press", exemplar: "accordion", commits: true },
++        presented: { rung: "modal", exemplar: "sheet" },
++        field: { rung: "hover", exemplar: "input" },
++        ambient: { rung: "rest", exemplar: "aurora" },
++        static: {
++            rung: null,
++            reason: "no input of its own: its engagement is its host's (a separator, a placeholder) or its members' (a table, a labelled field)",
++        },
++    },
++    members: {
++        accordion: "disclosed",
++        alert: "static",
++        aurora: "ambient",
++        avatar: "static",
++        badge: "static",
++        blob: "ambient",
++        button: "pressed",
++        card: "static",
++        carousel: "dragged",
++        checkbox: "chosen",
++        chip: "chosen",
++        collapsible: "disclosed",
++        command: "field",
++        configurator: "static",
++        constellation: "ambient",
++        "dark-mode-toggle": "chosen",
++        "data-table": "static",
++        deck: "dragged",
++        dialog: "presented",
++        dock: "held",
++        easing: "chosen",
++        "expandable-container": "disclosed",
++        "fading-scroll": "dragged",
++        "fourier-field": "ambient",
++        handmark: "static",
++        "infinite-scroll": "dragged",
++        input: "field",
++        label: "static",
++        "labeled-field": "static",
++        menu: "disclosed",
++        metric: "static",
++        "music-staff": "ambient",
++        "number-field": "held",
++        "pager-dots": "chosen",
++        popover: "disclosed",
++        progress: "static",
++        "radio-group": "chosen",
++        "scroll-progress-rim": "static",
++        select: "disclosed",
++        separator: "static",
++        sheet: "presented",
++        skeleton: "static",
++        slider: "held",
++        "sortable-list": "dragged",
++        "status-dot": "static",
++        surface: "static",
++        switch: "chosen",
++        table: "static",
++        tabs: "chosen",
++        textarea: "field",
++        timeline: "held",
++        toast: "presented",
++        "toggle-group": "chosen",
++        tooltip: "presented",
++        typewriter: "static",
++    },
++    modes: {
++        // selectable → chosen; action → pressed; removable and static → static (the
++        // remove button is its own control)
++        chip: ["chosen", "pressed", "static"],
++        // inert prose → static; `selected` present (even false) makes it an option, with
++        // a role and a tab stop → chosen
++        card: ["static", "chosen"],
++    },
++};
+diff --git a/src/composables/motion/engage/hold.ts b/src/composables/motion/engage/hold.ts
+new file mode 100644
+index 000000000..08d4791dc
+--- /dev/null
++++ b/src/composables/motion/engage/hold.ts
+@@ -0,0 +1,136 @@
++import { onBeforeUnmount, onMounted, onScopeDispose, ref, type Ref } from "vue";
++
++/**
++ * ══ THE HAND, AND THE ONE KEEP-OPEN TOKEN ══
++ *
++ * Two pieces that every engaged control composes, kept beside the engage door that
++ * owns them (`useEngage.ts`). Neither knows about a dock: the posture a hold takes is
++ * handed in as a `HoldTarget`, so this module imports nothing from `components/`.
++ *
++ * WHAT KIND OF HOLD A TOKEN IS. Two different facts, and only one is a hand:
++ *  - `"morph"` (the default): posture only. "Something is open and the host must not
++ *    idle-collapse under it": an armed search field, an open popover, a focused
++ *    switcher tab. It is NOT a hand and never engages the grasp optic (glass/grasp.css).
++ *  - `"grasp"`: a live pointer hold on a control. A grasp implies a morph hold (a
++ *    finger down must also hold the host open), so a target takes both counts.
++ */
++export type HoldKind = "morph" | "grasp";
++
++/** The ref-counted posture a token holds: the dock's `keepOpen`/`release` pair. */
++export interface HoldTarget {
++    keepOpen: (kind?: HoldKind) => void;
++    release: (kind?: HoldKind) => void;
++}
++
++export interface HoldToken {
++    /** `true` while this token holds its count. */
++    readonly isHeld: Readonly<Ref<boolean>>;
++    /** Idempotent: a second call while held is a no-op, never a second count. */
++    acquire: () => void;
++    /** Idempotent: a release while free is a no-op, never a negative count. */
++    release: () => void;
++}
++
++/**
++ * One holder takes exactly one count and gives it back exactly once, including on
++ * teardown. Four sites used to hand-roll these six lines (a Popover, the dock layer
++ * group, the dock search, the hand); a leaked token is a dock that never idle-collapses
++ * again for the life of the page.
++ *
++ * `target` is a getter so a holder can sit above the thing it holds. A null target is
++ * not an error: the flag still flips, because whether the holder is holding is a fact
++ * about the holder, not about whether a dock happened to be listening.
++ */
++export function useHoldToken(
++    target: () => HoldTarget | null | undefined,
++    kind?: HoldKind,
++): HoldToken {
++    const isHeld = ref(false);
++
++    function acquire(): void {
++        if (isHeld.value) return;
++        isHeld.value = true;
++        target()?.keepOpen(kind);
++    }
++
++    function release(): void {
++        if (!isHeld.value) return;
++        isHeld.value = false;
++        target()?.release(kind);
++    }
++
++    onScopeDispose(release);
++
++    return { isHeld, acquire, release };
++}
++
++export interface UseHoldOptions {
++    /** The posture the hold takes (the enclosing dock's context), or none. */
++    target?: () => HoldTarget | null | undefined;
++    /** Whether the hold is armed. A getter, so a prop can disarm it live. Default armed. */
++    enabled?: () => boolean;
++}
++
++/**
++ * THE HAND: a host's own live pointer or touch hold.
++ *
++ * The only path in the library driven by a pointer actually going down, so it is the
++ * one the grasp register (glass/grasp.css) is sourced from. The returned `isHeld` flips
++ * with the finger whether or not a target is listening: a standalone control engages
++ * on its own drag, and a control inside a dock never co-engages off a sibling's hold.
++ *
++ * Native listeners on the RESOLVED host, for three reasons: `pointerdown` and
++ * `touchstart` fold onto one acquire under one owner; the release is window-scoped and
++ * so survives reka's `setPointerCapture` retarget; and the acquire is capture-
++ * independent, so it is instant-on (the halo lights the instant the pointer goes down;
++ * the spring governs only the settle). reka's `<SliderRoot>` does forward a consumer
++ * `@pointerdown` (`mergeProps` chains it), but last, after its own slide start.
++ *
++ * @param resolveHost a getter for the real host element, called in `onMounted`, so a
++ *   reka forwardRef host (`SliderRoot.$el`) is live by then.
++ */
++export function useHold(
++    resolveHost: () => HTMLElement | null,
++    options: UseHoldOptions = {},
++): { isHeld: Readonly<Ref<boolean>> } {
++    const armed = options.enabled ?? (() => true);
++    const token = useHoldToken(() => options.target?.(), "grasp");
++
++    const off = (): void => {
++        window.removeEventListener("pointerup", onWindowRelease);
++        window.removeEventListener("pointercancel", onWindowRelease);
++        window.removeEventListener("blur", onWindowRelease);
++    };
++
++    function onWindowRelease(): void {
++        token.release();
++        off();
++    }
++
++    function onPress(): void {
++        if (!armed()) return;
++        token.acquire();
++        // remove-then-add: a touch then its synthesized pointer must not install two
++        off();
++        window.addEventListener("pointerup", onWindowRelease);
++        window.addEventListener("pointercancel", onWindowRelease);
++        window.addEventListener("blur", onWindowRelease);
++    }
++
++    let host: HTMLElement | null = null;
++    onMounted(() => {
++        host = resolveHost();
++        host?.addEventListener("pointerdown", onPress);
++        host?.addEventListener("touchstart", onPress, { passive: true });
++    });
++    onBeforeUnmount(() => {
++        // a gesture mid-flight at unmount (a slider unmounted under a held thumb) gives
++        // its count back here, so the target's keep-open count can never leak
++        host?.removeEventListener("pointerdown", onPress);
++        host?.removeEventListener("touchstart", onPress);
++        if (typeof window !== "undefined") off();
++        token.release();
++    });
++
++    return { isHeld: token.isHeld };
++}
+diff --git a/src/composables/motion/engage/press.ts b/src/composables/motion/engage/press.ts
+new file mode 100644
+index 000000000..f82b1d6ee
+--- /dev/null
++++ b/src/composables/motion/engage/press.ts
+@@ -0,0 +1,63 @@
++// The press mark: the door's one writer of `data-press`.
++//
++// `data-press` says the press part is down: a primary pointer down on the control, or
++// its activation key (Enter, Space) held. The engage door marks its host with it
++// (`useEngage`'s press part), and a group control whose press lands on one of many hit
++// targets and is painted on an organ elsewhere (the pager rail: a transparent button
++// over a pip in the bed layer) names that organ with `organ`. Either way this file is
++// the only place the attribute is written (CK-08).
++//
++// The mark is the hand's state only. It paints nothing: the recipe that reads it does.
++
++import { onBeforeUnmount, onMounted } from "vue";
++
++/** Native listeners on the host, bound at mount and dropped at unmount. */
++export function listen(host: () => HTMLElement | null, on: [string, (e: Event) => void][]): void {
++    let el: HTMLElement | null = null;
++    onMounted(() => {
++        el = host();
++        for (const [n, f] of on) el?.addEventListener(n, f);
++    });
++    onBeforeUnmount(() => {
++        for (const [n, f] of on) el?.removeEventListener(n, f);
++    });
++}
++
++export interface UsePressMarkOptions {
++    /** The element a press marks, from the event that pressed (default the host). */
++    organ?: (e: Event) => Element | null | undefined;
++    /** A disabled control is not pressed. */
++    disabled?: () => boolean;
++}
++
++const ACTIVATION_KEYS: ReadonlySet<string> = new Set(["Enter", " "]);
++
++export function usePressMark(host: () => HTMLElement | null, o: UsePressMarkOptions = {}): void {
++    let marked: Element | null = null;
++    const down = (e: Event): void => {
++        if (o.disabled?.()) return;
++        const el = o.organ ? o.organ(e) : host();
++        if (!el || el === marked) return;
++        up();
++        marked = el;
++        el.setAttribute("data-press", "");
++    };
++    const up = (): void => {
++        marked?.removeAttribute("data-press");
++        marked = null;
++    };
++    listen(host, [
++        ["pointerdown", (e) => { if ((e as PointerEvent).button === 0) down(e); }],
++        ["pointerenter", (e) => { if ((e as PointerEvent).buttons & 1) down(e); }],
++        ["pointerup", up],
++        ["pointercancel", up],
++        ["pointerleave", up],
++        ["keydown", (e) => {
++            const k = e as KeyboardEvent;
++            if (ACTIVATION_KEYS.has(k.key) && !k.repeat) down(e);
++        }],
++        ["keyup", (e) => { if (ACTIVATION_KEYS.has((e as KeyboardEvent).key)) up(); }],
++        ["focusout", up],
++    ]);
++    onBeforeUnmount(up);
++}
+diff --git a/src/composables/motion/engage/release.ts b/src/composables/motion/engage/release.ts
+new file mode 100644
+index 000000000..dedc3891e
+--- /dev/null
++++ b/src/composables/motion/engage/release.ts
+@@ -0,0 +1,69 @@
++// THE RELEASE RULE: hallmark 6's one measurement.
++//
++// "A release carries its velocity into the settle" has two halves. This file is the
++// first, for every surface: the release velocity is the chord across the pointer
++// samples no older than the rule's window, measured back from the release itself, and
++// the release is a sample. A finger held still for longer than the window before it
++// lifts therefore throws nothing, and one stalled frame cannot fling anything.
++//
++// The second half, the settle, stays with each surface, seeded with this velocity on a
++// named spring row (`springPresets.ts`): the slider's carry and the tabs drag on `dock`
++// through the engage door and the drag morph, the sortable flight on `dock`
++// (`sortable-list/motion.ts`), the Sheet on its own detent legs (`sheet/detents`).
++//
++// Pure data and arithmetic: no Vue, no keyframes.js. `useDragVelocity` ships on the
++// keyframes-free root and `/dom` entries and reads this file.
++
++/** The rule's one table. A surface reads it; none restates a figure from it. */
++export const RELEASE_RULE = {
++    /**
++     * The velocity window, in ms: only samples this young, against the release, count.
++     * It is the drag engine's own default (keyframes.js `Draggable`'s `velocityWindow`,
++     * 100 ms) and the platforms' velocity-tracker horizon (Android `VelocityTracker`,
++     * Flutter `VelocityTracker._horizonMilliseconds`), so a drag measured here and a
++     * drag the engine measures agree. It is not the press-acknowledge budget
++     * (`ACKNOWLEDGE_WINDOW_MS`), which bounds how fast a press is answered, not how far
++     * back a release looks.
++     */
++    windowMs: 100,
++    /** The settle row a release carry rides unless its surface names its own. */
++    row: "dock",
++} as const;
++
++/** A pointer sample: position and the clock it was taken on. */
++interface Sample {
++    x: number;
++    y: number;
++    t: number;
++}
++
++/** The last few pointer samples; the release velocity is the chord across the window. */
++export class VelocitySampler {
++    private readonly ring: Sample[] = [];
++    private readonly size = 8;
++
++    push(x: number, y: number, t: number = performance.now()): void {
++        this.ring.push({ x, y, t });
++        if (this.ring.length > this.size) this.ring.shift();
++    }
++
++    reset(): void {
++        this.ring.length = 0;
++    }
++
++    /** px/s across the samples inside the rule's window; `{x:0,y:0}` when there are fewer than two. */
++    velocity(): { x: number; y: number } {
++        const last = this.ring[this.ring.length - 1];
++        const first = last && this.ring.find((s) => last.t - s.t <= RELEASE_RULE.windowMs);
++        if (!first || !last) return { x: 0, y: 0 };
++        const dt = (last.t - first.t) / 1000;
++        if (dt <= 0) return { x: 0, y: 0 };
++        return { x: (last.x - first.x) / dt, y: (last.y - first.y) / dt };
++    }
++
++    /** The release: the lift is a sample, then the windowed velocity. */
++    release(x: number, y: number, t: number = performance.now()): { x: number; y: number } {
++        this.push(x, y, t);
++        return this.velocity();
++    }
++}
+diff --git a/src/composables/motion/engage/useEngage.ts b/src/composables/motion/engage/useEngage.ts
+new file mode 100644
+index 000000000..9e922ed58
+--- /dev/null
++++ b/src/composables/motion/engage/useEngage.ts
+@@ -0,0 +1,362 @@
++// useEngage: the engage door.
++//
++// Engagement is behaviour, so it has one door. A component hands it its host and names
++// the parts it has; the door owns the state and is the ONLY writer of the engagement
++// attributes:
++//   · data-held      the hand is down on the control (a pointer or touch hold), and only
++//                    that. The grasp register (glass/grasp.css) and a host's own rules
++//                    read it as the hand's
++//   · data-engaged   the control is engaged: the hand is down, or the keyboard is driving
++//                    it. Written on the host and on the organs the adopter names
++//                    (`engagedOn`: a veil, a loupe)
++//   · data-press     the press part is down (written through press.ts, its one writer)
++//   · data-commit    a stateless control's commit edge, as a parity ("a" ↔ "b") that
++//                    flips on every activation
++//   · data-engage-arming   a state member's mount frame (`commit: "state"`): its
++//                    transitions are held off from mount until the first frame
++//                    (utilities/engage.css), so a state that ARRIVES with the mount (an
++//                    async model set in the mount's own task, even after a style read) is
++//                    the rest it mounts in, never a commit. On that frame the door flushes
++//                    style, so the arrived state is the before-change style, and lifts the
++//                    mark. A state set after it commits. B's one-frame arming (CP), moved
++//                    to the door (F5' F-7)
++//
++// The commit's inputs fail loud. On a committing host the door reads the commit envelope
++// (`--engage-control-engage-{attack,release}`) and, when the host's `--rung-class` is a
++// class whose recipe commits (`ENGAGE_DECLARATION` `commits`), `--rung-light`: a state
++// member at its arming frame and on every `data-state` edge, a stateless one on every
++// `commit()`. Each unreadable token is said once per host in a `console.error`: a
++// transition whose clock does not resolve plays nothing and says nothing (C-A2 CK-21).
++// B's loud read (CP), moved to the door (F-8)
++//
++// The parts, each the shipped leaf composed rather than copied:
++//   · the hand      `useHold` (hold.ts): pointer and touch acquire, the window-scoped
++//                   release, the target's posture token. Beside it the keyboard
++//                   engagement: a focus that a KEY brought (never a script `focus()`,
++//                   never a pointer's), or a key the control acts on, engages; Escape
++//                   and leaving disengage. A modifier alone, or a key the control does
++//                   not act on, does nothing
++//   · the press     `useLiquidPress`, on its one `--press-t` drive with its own defaults:
++//                   the door takes no press options beyond `disabled`. It binds the
++//                   handlers natively and writes the press style on the host, so an
++//                   adopter binds nothing in its template. Under reduced motion the
++//                   press keeps its light (`--press-t`) and drops its geometry (`scale`)
++//   · the commit    `commit: "call"`, a stateless control (a command): the adopter calls
++//                   the returned `commit()` on activation and the door flips the parity.
++//                   `commit: "state"`, a control with a committed state its class recipe
++//                   plays from `data-state`: the door arms its mount frame and reads its
++//                   commit loudly; it plays nothing.
++//                   The door paints nothing for it; a class recipe reads the parity
++//   · the release   `useDragVelocity` measures the release on the release rule
++//                   (release.ts) and the door carries it: the visible body stretches
++//                   toward the fling from its own transform origin and the `dock` row
++//                   (the engaged rung's spring) brings it home. The value the finger
++//                   chose does not move
++
++import {
++    computed,
++    onBeforeUnmount,
++    onMounted,
++    shallowRef,
++    watch,
++    type Ref,
++} from "vue";
++import { SpringProgress } from "@mkbabb/keyframes.js";
++
++import { useDragVelocity } from "../../dom/useDragVelocity";
++import { motionTempo } from "../core/motionTempo";
++import { useLiquidPress } from "../spring/useLiquidPress";
++import { springPreset } from "../spring/springPresets";
++import { ENGAGE_DECLARATION, type EngageClassRow } from "./engageClasses";
++import { useHold, type HoldTarget } from "./hold";
++import { listen, usePressMark } from "./press";
++import { RELEASE_RULE } from "./release";
++
++/** The keys a range control acts on: the acting-key set a held range engages on. */
++const RANGE_ACTING_KEYS: ReadonlySet<string> = new Set([
++    "ArrowLeft",
++    "ArrowRight",
++    "ArrowUp",
++    "ArrowDown",
++    "PageUp",
++    "PageDown",
++    "Home",
++    "End",
++]);
++
++export interface UseEngageOptions {
++    /** The hand, and the keyboard engagement beside it. */
++    hold?: {
++        /** The posture a hold takes (the enclosing dock's context), or none. */
++        target?: () => HoldTarget | null | undefined;
++        /** The keys the control acts on. Default `RANGE_ACTING_KEYS`. */
++        keys?: ReadonlySet<string>;
++        /** Elements that carry `data-held` with the host (a grasp register's host). */
++        heldOn?: () => (Element | null | undefined)[];
++        /** Elements that carry `data-engaged` with the host (a veil, a loupe). */
++        engagedOn?: () => (Element | null | undefined)[];
++    };
++    /** The press: the interruptible press spring on the host. */
++    press?: { disabled?: () => boolean };
++    /** The commit: `"call"`, a stateless edge the adopter fires with `commit()`; `"state"`,
++     *  a committed state the class recipe plays (the door arms the mount frame). */
++    commit?: "call" | "state";
++    /** A drag surface: the axis its velocity is read on and the visible body a release carries. */
++    drag?: {
++        axis: () => "x" | "y";
++        body: () => HTMLElement | null;
++        /** A second element that receives the live drag velocity (a teleported organ). */
++        mirror?: () => HTMLElement | null;
++        enabled?: () => boolean;
++    };
++}
++
++export interface UseEngageReturn {
++    /** The hand is down on the control. */
++    isHeld: Readonly<Ref<boolean>>;
++    /** The hand is down, or the keyboard drives the control. */
++    isEngaged: Readonly<Ref<boolean>>;
++    /** Fire the commit edge now (a stateless control's activation). */
++    commit: () => void;
++}
++
++const reduced = (): boolean =>
++    typeof window !== "undefined" &&
++    typeof window.matchMedia === "function" &&
++    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
++
++// ── the keys held down, page-wide ───────────────────────────────────────────────
++// A focus is the keyboard's only while a key is down: Tab moves focus inside its own
++// keydown, before its keyup. A script `focus()` arrives with no key down. One capture
++// listener pair for the page, installed by the first door that needs it.
++const keysDown = new Set<string>();
++let tracking = false;
++function trackKeys(): void {
++    if (tracking || typeof window === "undefined") return;
++    tracking = true;
++    window.addEventListener("keydown", (e) => keysDown.add(e.key), true);
++    window.addEventListener("keyup", (e) => keysDown.delete(e.key), true);
++    window.addEventListener("blur", () => keysDown.clear());
++}
++
++// ── fail loud ───────────────────────────────────────────────────────────────────
++// once per host and token: each degraded control speaks, none repeats itself
++const said = new WeakMap<Element, Set<string>>();
++function loud(token: string, on: Element): void {
++    const seen = said.get(on) ?? new Set<string>();
++    if (seen.has(token)) return;
++    said.set(on, seen.add(token));
++    console.error(
++        `[glass-ui] useEngage: ${token} is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui stylesheet loaded?`,
++    );
++}
++
++/** The commit envelope's clocks, in `ENGAGE_ENVELOPES`' CSS mirror (`control-engage`). */
++const COMMIT_CLOCKS = ["--engage-control-engage-attack", "--engage-control-engage-release"] as const;
++
++const supports = (prop: string, v: string): boolean =>
++    v !== "" && (typeof CSS === "undefined" || typeof CSS.supports !== "function" || CSS.supports(prop, v));
++
++/** The host's declared class commits: its recipe plays a commit edge. */
++function commitsByClass(h: Element): boolean {
++    const name = getComputedStyle(h).getPropertyValue("--rung-class").trim();
++    const rows = ENGAGE_DECLARATION.classes as Readonly<Record<string, EngageClassRow | undefined>>;
++    return rows[name]?.commits === true;
++}
++
++/** Read the commit's inputs on the host, loudly: the envelope's clocks, and the light a class recipe paints with. */
++function readCommit(h: Element, light: boolean): void {
++    const cs = getComputedStyle(h);
++    for (const t of COMMIT_CLOCKS) if (!supports("transition-duration", cs.getPropertyValue(t).trim())) loud(t, h);
++    if (light && !supports("color", cs.getPropertyValue("--rung-light").trim())) loud("--rung-light", h);
++}
++
++/** A row's settle clock in ms, read from its CSS token on `el` (tempo included); 0, loudly, when unreadable. */
++function rowClockMs(row: string, el: Element): number {
++    const token = `--spring-${row}-settle`;
++    const s = Number.parseFloat(getComputedStyle(el).getPropertyValue(token));
++    if (Number.isFinite(s) && s > 0) return s * 1000 * motionTempo(el);
++    loud(token, el);
++    return 0;
++}
++
++/** A row's response to an impulse: displacement 0, velocity `v0`, target 0, sampled over `ms`. */
++function impulseFrames(v0: number, ms: number, n = 24): number[] {
++    const r = springPreset(RELEASE_RULE.row);
++    const spring = new SpringProgress({
++        response: r.response * motionTempo(),
++        dampingFraction: r.dampingFraction,
++        initial: 0,
++        initialVelocity: v0,
++        respectReducedMotion: false,
++    });
++    spring.target = 0;
++    const out: number[] = [];
++    for (let k = 0; k <= n; k++) out.push(k === n ? 0 : spring.tickToTime((k / n) * (ms / 1000)));
++    spring.dispose();
++    return out;
++}
++
++/**
++ * The release carry on the visible body: its edge away from its transform origin (the
++ * leading edge of a fill) travels with the fling and the row brings it home, as a
++ * stretch along the axis composited onto whatever transform the body already plays.
++ */
++function carry(body: HTMLElement, axis: "x" | "y", v: number): void {
++    if (!v) return;
++    const ms = rowClockMs(RELEASE_RULE.row, body);
++    if (!ms) return;
++    const box = body.getBoundingClientRect();
++    const length = axis === "x" ? box.width : box.height;
++    if (length < 1) return;
++    const [ox, oy] = getComputedStyle(body).transformOrigin.split(" ").map(Number.parseFloat);
++    const origin = axis === "x" ? ox : oy;
++    // the edge that moves is the one away from the origin: a fill growing from its start
++    // stretches with a forward fling and shortens with a backward one
++    const dir = (origin ?? 0) <= length / 2 ? 1 : -1;
++    const s = (d: number): number => Math.max(0, 1 + (dir * d) / length);
++    body.animate(
++        impulseFrames(v, ms).map((d) => ({
++            transform: axis === "x" ? `scaleX(${s(d)})` : `scaleY(${s(d)})`,
++        })),
++        { duration: ms, composite: "add" },
++    );
++}
++
++export function useEngage(
++    host: () => HTMLElement | null,
++    o: UseEngageOptions,
++): UseEngageReturn {
++    // ── the hand, and the keyboard that engages like it ─────────────────────────
++    const isHeld: Readonly<Ref<boolean>> = o.hold
++        ? useHold(host, { target: o.hold.target }).isHeld
++        : shallowRef(false);
++    const keyed = shallowRef(false);
++    const isEngaged = computed(() => isHeld.value || keyed.value);
++    if (o.hold) {
++        const h = o.hold;
++        const keys = h.keys ?? RANGE_ACTING_KEYS;
++        trackKeys();
++        // A pointer's focus (reka focuses the thumb by script on a slide) is not the
++        // keyboard's, though `:focus-visible` may match it, and a key held through a
++        // click (Shift-click) must not make it one. The mark lives as long as the hand.
++        let pointed = false;
++        watch(isHeld, (held) => {
++            if (!held) pointed = false;
++        });
++        listen(host, [
++            ["pointerdown", () => { pointed = true; keyed.value = false; }],
++            ["focusin", () => { keyed.value = !pointed && keysDown.size > 0; }],
++            ["keydown", (e) => {
++                const k = (e as KeyboardEvent).key;
++                if (k === "Escape") keyed.value = false;
++                else if (keys.has(k)) keyed.value = true;
++            }],
++            ["focusout", (e) => {
++                const to = (e as FocusEvent).relatedTarget as Node | null;
++                if (to && host()?.contains(to)) return;
++                keyed.value = false;
++            }],
++        ]);
++        watch(
++            () => [isHeld.value, isEngaged.value, h.heldOn?.(), h.engagedOn?.()] as const,
++            ([held, engaged, heldOn, engagedOn]) => {
++                const el = host();
++                for (const x of [el, ...(heldOn ?? [])]) x?.toggleAttribute("data-held", held);
++                for (const x of [el, ...(engagedOn ?? [])]) x?.toggleAttribute("data-engaged", engaged);
++            },
++            { flush: "post" },
++        );
++    }
++
++    // ── the press ──────────────────────────────────────────────────────────────
++    if (o.press) {
++        const disabled = o.press.disabled;
++        const el = shallowRef<HTMLElement | null>(null);
++        const p = useLiquidPress({ el, disabled });
++        let written: string[] = [];
++        watch(
++            () => p.pressStyle.value,
++            (style) => {
++                const h = el.value;
++                if (!h) return;
++                const rec = style as Record<string, string>;
++                for (const k of written) if (!(k in rec)) h.style.removeProperty(k);
++                // under reduce the press keeps its light and drops its geometry
++                written = Object.keys(rec).filter((k) => k !== "scale" || !reduced());
++                for (const k of written) h.style.setProperty(k, rec[k]!);
++            },
++            { flush: "sync" },
++        );
++        // the mark is press.ts's, the one writer of `data-press`
++        usePressMark(host, { disabled });
++        listen(host, [
++            ["pointerdown", (e) => p.handlers.onPointerdown(e as PointerEvent)],
++            ["pointerenter", (e) => p.handlers.onPointerenter(e as PointerEvent)],
++            ["pointerup", () => p.handlers.onPointerup()],
++            ["pointercancel", () => p.handlers.onPointercancel()],
++            ["pointerleave", () => p.handlers.onPointerleave()],
++            ["keydown", (e) => p.handlers.onKeydown(e as KeyboardEvent)],
++            ["keyup", (e) => p.handlers.onKeyup(e as KeyboardEvent)],
++            ["blur", () => p.handlers.onBlur()],
++        ]);
++        onMounted(() => {
++            el.value = host();
++            // the press is JS-owned from here: the `:active` CSS floors stand down
++            el.value?.setAttribute("data-press-armed", "");
++        });
++    }
++
++    // ── the release, carried on the visible body ────────────────────────────────
++    if (o.drag) {
++        const d = o.drag;
++        useDragVelocity({
++            host: () => (d.enabled?.() === false ? null : host()),
++            mirror: d.mirror,
++            axis: d.axis,
++            onRelease: (v) => {
++                const body = d.body();
++                if (body && !reduced()) carry(body, d.axis(), v);
++            },
++        });
++    }
++
++    // ── a state member's mount frame, and the commit's loud read ────────────────
++    // `data-engage-arming` holds the host's transitions off until the first frame; there
++    // the door flushes style (the arrived state becomes the before-change style), lifts
++    // the mark, reads the commit's inputs, and watches `data-state` for every edge after,
++    // each read again: a token planted after mount is caught on the commit it degrades.
++    let edges: MutationObserver | null = null;
++    if (o.commit === "state") {
++        onMounted(() => {
++            const h = host();
++            if (!h) return;
++            h.setAttribute("data-engage-arming", "");
++            requestAnimationFrame(() => {
++                if (!h.isConnected) return;
++                void getComputedStyle(h).transitionProperty;
++                h.removeAttribute("data-engage-arming");
++                const light = commitsByClass(h);
++                readCommit(h, light);
++                edges = new MutationObserver(() => readCommit(h, light));
++                edges.observe(h, { attributes: true, attributeFilter: ["data-state"] });
++            });
++        });
++        onBeforeUnmount(() => edges?.disconnect());
++    }
++
++    // ── the stateless commit edge ──────────────────────────────────────────────
++    // The parity is stamped at mount (no before-change style, so nothing reads it as a
++    // commit) and flips on every activation, so a recipe keyed on it answers each one.
++    if (o.commit === "call") {
++        onMounted(() => host()?.setAttribute("data-commit", "a"));
++    }
++    const commit = (): void => {
++        const h = host();
++        if (o.commit !== "call" || !h) return;
++        h.setAttribute("data-commit", h.getAttribute("data-commit") === "a" ? "b" : "a");
++        readCommit(h, commitsByClass(h));
++    };
++
++    return { isHeld, isEngaged, commit };
++}
+diff --git a/src/composables/motion/index.ts b/src/composables/motion/index.ts
+index fc0f4b570..1c5261be8 100644
+--- a/src/composables/motion/index.ts
++++ b/src/composables/motion/index.ts
+@@ -24,11 +24,11 @@ export * from "./spring/useSpringMount";
+ // `pressStyle` object. Button, Card, and dock controls consume it. Keyframes-bearing →
+ // ships on `/motion` ONLY, never the root barrel (the SCC-trap discipline).
+ export * from "./spring/useLiquidPress";
+-// Pull/drag-to-morph-squish primitive. Composes the
+-// UNCONSUMED kf `Draggable` (pointer-capture follow + velocity-window + snap-aware
+-// fling) + `SpringProgress` + `useLiquidFlex` `"tanh"` velocity-squish into ONE
+-// gesture. Statically reaches `@mkbabb/keyframes.js` (via `Draggable`), so it rides
+-// the heavy-peer `/motion` barrel — NOT `/motion-core`.
++// Pull/drag-to-morph-squish primitive: a 1:1 pointer follow, the release rule's
++// velocity (`engage/release.ts`) into a `dock` `SpringProgress` landing on the
++// projected snap (kf `decayRest`), and `useLiquidFlex`'s `"tanh"` velocity-squish, as ONE
++// gesture. Statically reaches `@mkbabb/keyframes.js`, so it rides the heavy-peer
++// `/motion` barrel — NOT `/motion-core`.
+ export * from "./morph/useDragMorph";
+ // Single compositor FLIP/morph runner (`useElementMorph` +
+ // `asElement` + `lockSpatialTransition`). One NumericAnimation owns playback,
+@@ -104,3 +104,12 @@ export {
+     type EngageRungName,
+     type EngageChannel,
+ } from "./engage/engageLadder";
++
++// The DECLARATION is the ladder's member list: every component directory in one class,
++// every class naming the rung it owes. The census reads it; each class's recipe stamps it.
++export {
++    ENGAGE_DECLARATION,
++    type EngageClass,
++    type EngageClassRow,
++    type EngageDeclaration,
++} from "./engage/engageClasses";
+diff --git a/src/composables/motion/morph/useDragMorph.ts b/src/composables/motion/morph/useDragMorph.ts
+index 7c0dd2f82..84b98e1d8 100644
+--- a/src/composables/motion/morph/useDragMorph.ts
++++ b/src/composables/motion/morph/useDragMorph.ts
+@@ -8,26 +8,21 @@
+ // settling with a small ζ<1 overshoot. The motion is grab → follow → squish →
+ // fling-snap.
+ //
+-// THE LOAD-BEARING REUSE (no second engine). glass-ui peer-depends on
+-// `@mkbabb/keyframes.js`, whose `Draggable` class ships UNCONSUMED: it owns
+-// the complete pointer-capture follow (a `SpringProgress.target` write per
+-// `pointermove`), a velocity-windowed sample buffer (robust to a jittery last
+-// frame), and on release a fling that re-seats the spring from `(value,
+-// releaseVelocity)` — the C¹-continuous interruptible fling. This composable WIRES
+-// that substrate; it owns NO hand-rolled pointer-velocity sampler and NO parallel
+-// rAF spring integrator (the D1/D2 fence).
++// THE FOLLOW IS 1:1, THE RELEASE IS THE RELEASE RULE. Between the finger and the
++// thing it holds there is no spring (MOTION-CANON §4): the indicator's centre stays
++// under the point it was grabbed at, frame for frame. On release the velocity is the
++// release rule's (`engage/release.ts`: the chord over the window's samples, the lift a
++// sample), the resting point is projected with the engine's frictional glide
++// (keyframes.js `decayRest`, its default friction), and the nearest snap target is the
++// landing. The `dock` row's spring then carries the indicator from where the finger
++// left it, at the finger's velocity, to that target: one continuous curve, no jump at
++// the release.
+ //
+-// THE NATIVE SNAP (kf 5.1.0 `DragOptions.snap`). The kf `Draggable` carries a `snap`
+-// option: on release it projects the frictional resting point (`decayRest`, internal)
+-// and re-seats the spring toward the NEAREST declared target rather than decelerating
+-// freely. glass-ui hands it `snap: snapTargets.map(t => t.center)` at construction
+-// (re-read on every `reattach`, so a resize / option change / orientation flip
+-// re-resolves the centers), so the PHYSICS-side snap lives ENTIRELY in the engine —
+-// glass-ui owns NO `decayRest` + nearest-center + `spring.target` re-roll (it edits
+-// ZERO kf tree; it wires the published surface). The composable keeps ONLY the
+-// COMMIT-side resolution (`nearestTarget`/`nearestValue`): it maps the settled spring
+-// center back to the consumer's domain value V for the single `onSnap` commit (the
+-// value domain the engine has no knowledge of).
++// THE LANDING HANDS OFF WITHOUT A JUMP. When the spring settles, `onSnap` writes the
++// model and the selection writer moves the indicator's base `translate` to the target
++// a render later. The gesture offset is cleared in the same frame the base lands, with
++// the base's glide held off for that one style change, so the indicator neither snaps
++// back to its old slot nor glides a second time to the one it is already on.
+ //
+ // The squish rides the SHARED `useLiquidFlex` `"tanh"` velocity register (the
+ // metaball/morph-showcase law), capped at the live `--tab-indicator-max-stretch`
+@@ -51,10 +46,9 @@
+ // INSTANT nearest-snap (the `SpringProgress.respectReducedMotion` policy snaps to
+ // target with zero in-between frames). The physics is off; the gesture works.
+ 
+-import { Draggable, SpringProgress } from "@mkbabb/keyframes.js";
++import { SpringProgress, decayRest } from "@mkbabb/keyframes.js";
+ import {
+     computed,
+-    nextTick,
+     onScopeDispose,
+     readonly,
+     ref,
+@@ -63,6 +57,7 @@ import {
+ import { useLiquidFlex } from "../spring/useLiquidFlex";
+ import { useElementMorph } from "./useElementMorph";
+ import { springPreset } from "../spring/springPresets";
++import { VelocitySampler } from "../engage/release";
+ 
+ /** The morph axis — `"x"` tracks the inline (horizontal) travel, `"y"` the block. */
+ export type DragMorphAxis = "x" | "y";
+@@ -112,13 +107,12 @@ export interface UseDragMorphReturn {
+     /** The live squish scalar (≥1, capped at the live cap). 1 at rest / under PRM. */
+     stretch: Readonly<Ref<number>>;
+     /**
+-     * Re-resolve the snap centers + axis (kf reads `snap` at construction, so a
+-     * geometry change — a resize, an option change, an orientation flip — calls
+-     * this to rebuild the `Draggable` over the SAME reused spring). Idempotent;
+-     * a no-op while a gesture is in flight (the rebuild waits for settle).
++     * Re-bind the gesture to the handle element (it mounts after the first paint, and
++     * an orientation flip re-reads the axis). Idempotent; a no-op while a gesture is
++     * in flight. Snap centres are read live at release.
+      */
+     refresh: () => void;
+-    /** Tear down — detach the `Draggable`, dispose the spring + watchers. */
++    /** Tear down: detach the pointer listeners, dispose the spring and watchers. */
+     detach: () => void;
+ }
+ 
+@@ -131,10 +125,10 @@ function prefersReducedMotion(): boolean {
+ }
+ 
+ /**
+- * The abstract pull/drag-to-morph-squish gesture. Composes kf `Draggable`
+- * (pointer-capture follow + velocity + snap-aware fling) + `SpringProgress` (the
+- * physics core) + `useLiquidFlex` (`"tanh"` velocity-squish) into ONE gesture with
+- * a consumer-wired single-commit `onSnap`. See the module header for the REUSE +
++ * The abstract pull/drag-to-morph-squish gesture: a 1:1 pointer follow, the release
++ * rule's velocity into a `dock` `SpringProgress` landing on the projected snap, and
++ * `useLiquidFlex` (`"tanh"` velocity-squish), with a consumer-wired single-commit
++ * `onSnap`. See the module header for the REUSE +
+  * compositor-only + PRM rationale.
+  *
+  * @example
+@@ -193,29 +187,16 @@ export function useDragMorph<V = string>(
+         });
+         spring = s;
+         unsubscribe = s.subscribe((v: number) => {
+-            position.value = v;
+-            if (hasGestured) {
+-                const delta = v - dragOrigin.value;
+-                if (axisOf() === "y") morph.offset(0, delta);
+-                else morph.offset(delta, 0);
+-            }
+-            // Drive the squish off the NORMALIZED live position (the "tanh" law).
+-            // PRM-gated — no deform.
+-            if (!(respectPRM && prefersReducedMotion())) {
+-                liquid.drive(normalizedPosition(v));
+-            }
+-            // Fire the single commit when the post-release fling settles — ONLY after
+-            // a real gesture (not the settled-on-mount emit).
+-            if (hasGestured && !dragging.value && s.settled && !committed) {
+-                const value = nearestValue(v);
+-                if (value != null) {
+-                    committed = true;
+-                    hasGestured = false;
+-                    params.onSnap(value);
+-                    // The model update seats the indicator's base translate while the
+-                    // morph lock is held; then release the gesture delta without a jump.
+-                    void nextTick(() => morph.clear());
+-                }
++            // the spring runs only the landing; the drag itself writes `follow`
++            if (!hasGestured || dragging.value) return;
++            follow(v);
++            // the single commit when the landing settles, on the target it was sent to
++            if (s.settled && !committed && landing) {
++                committed = true;
++                hasGestured = false;
++                const value = landing.value;
++                land(landing.center);
++                params.onSnap(value);
+             }
+         });
+         // Arm the engine's managed rAF lifecycle (the no-op keeps the auto-resume
+@@ -243,9 +224,49 @@ export function useDragMorph<V = string>(
+         respectPRM && prefersReducedMotion() ? 1 : liquid.stretch.value,
+     );
+ 
+-    // The follow is an offset from the settled footprint. `useElementMorph` owns
+-    // the transform write; this gesture owns only pointer physics and snap value.
+-    const dragOrigin = ref(0);
++    // The follow is an offset from the settled footprint (`base`, the indicator's centre
++    // with no gesture offset). `useElementMorph` owns the transform write; this gesture
++    // owns the pointer, the release and the snap value.
++    let base = 0;
++    let offsetNow = 0;
++    let landing: DragMorphSnapTarget<V> | null = null;
++
++    /** Place the indicator's centre at `p` on the axis (an offset from its base). */
++    function follow(p: number): void {
++        position.value = p;
++        offsetNow = p - base;
++        if (axisOf() === "y") morph.offset(0, offsetNow);
++        else morph.offset(offsetNow, 0);
++        // the squish rides the normalized live position (the "tanh" law); PRM-gated
++        if (!(respectPRM && prefersReducedMotion())) liquid.drive(normalizedPosition(p));
++    }
++
++    /**
++     * The hand-off. The commit moves the base to `center` a render later; the offset is
++     * cleared in the microtask after that style write lands, with the base's glide held
++     * off for that one style change (`morph.offset` holds the spatial transition lock;
++     * a forced style read applies the new base under it before `clear` releases it).
++     * A commit that moves nothing (the same slot) clears at once.
++     */
++    function land(center: number): void {
++        const el = params.surface?.value ?? params.handle.value;
++        if (!el || Math.abs(center - base) < 0.5) {
++            morph.clear();
++            offsetNow = 0;
++            return;
++        }
++        const before = el.style.translate;
++        const done = (): void => {
++            mo.disconnect();
++            void getComputedStyle(el).translate;
++            morph.clear();
++            offsetNow = 0;
++        };
++        const mo = new MutationObserver(() => {
++            if (el.style.translate !== before) done();
++        });
++        mo.observe(el, { attributes: true, attributeFilter: ["style"] });
++    }
+ 
+     // The normalized travel domain for the squish — the span across the first/last
+     // snap centers. `drive(t)` wants 0→1, so map the live position onto that span.
+@@ -260,11 +281,7 @@ export function useDragMorph<V = string>(
+         return n < 0 ? 0 : n > 1 ? 1 : n;
+     }
+ 
+-    // The nearest snap target to a coordinate — the kf `handleUp` `nearestSnap`
+-    // math (closest center; ties → the first). The COMMIT-side resolver: it maps the
+-    // settled spring position back to the consumer's domain VALUE for the single
+-    // `onSnap` commit (the PHYSICS-side nearest-center snap is the engine's, kf 5.1.0
+-    // `DragOptions.snap`).
++    // The nearest snap target to a coordinate (closest centre; ties → the first).
+     function nearestTarget(coord: number): DragMorphSnapTarget<V> | null {
+         const targets = targetsOf();
+         if (targets.length === 0) return null;
+@@ -280,8 +297,6 @@ export function useDragMorph<V = string>(
+         }
+         return best;
+     }
+-    const nearestValue = (coord: number): V | null =>
+-        nearestTarget(coord)?.value ?? null;
+ 
+     // Single-commit guard — the spring can emit several near-settled frames; the
+     // commit fires ONCE per gesture (the one-registry discipline forbids a
+@@ -291,100 +306,87 @@ export function useDragMorph<V = string>(
+     let committed = false;
+     let hasGestured = false;
+ 
+-    // The kf Draggable — the pointer-capture follow + velocity-window + the C¹
+-    // fling + the NATIVE snap (kf 5.1.0 `DragOptions.snap`, see the header; no
+-    // re-fork of the pointer-velocity engine). We hand it OUR spring (the physics
+-    // core is the single source of truth) AND the snap centers (the engine projects
+-    // `decayRest` + re-seats toward the nearest on release — no glass-ui retarget
+-    // re-roll). The composable keeps only the COMMIT-side value resolution
+-    // (`nearestValue`, in the settle watcher).
+-    let draggable: Draggable | null = null;
+-
+-    // (The per-frame mirror `subscribe` + the rAF `play` arm live in `ensureSpring`
+-    // above — deferred to the first gesture-arm, not setup.)
+-
+-    let detachDrag: (() => void) | null = null;
++    // The pointer: captured on the handle, followed 1:1, sampled for the release rule.
++    const sampler = new VelocitySampler();
+     let handleEl: HTMLElement | null = null;
++    let pointerId: number | null = null;
++    let grab = 0;
++    const coordOf = (e: PointerEvent): number => (axisOf() === "y" ? e.clientY : e.clientX);
+ 
+-    // Re-attach the drag whenever the element appears (the indicator mounts after
+-    // the first paint). Re-resolve the axis on attach so an orientation flip
+-    // re-binds the correct pointer axis.
+     function reattach(): void {
+-        handleEl?.removeEventListener("pointerdown", onPointerDownCapture);
+-        handleEl = null;
+-        detachDrag?.();
+-        detachDrag = null;
+-        draggable?.detach();
+-        const node = params.handle.value;
+-        if (!node) return;
+-        handleEl = node;
+-        // (Re)build the Draggable over OUR reused spring (the physics core stays the
+-        // single source of truth across rebuilds; a rebuild re-resolves the axis on
+-        // an orientation flip AND re-reads the snap centers — kf reads `snap` at
+-        // construction, so a geometry change re-resolves them HERE, never live on
+-        // release).
+-        draggable = new Draggable({
+-            spring: ensureSpring(),
+-            axis: axisOf(),
+-            snap: targetsOf().map((t) => t.center),
+-        });
+-        node.addEventListener("pointerdown", onPointerDownCapture);
+-        detachDrag = draggable.attach(node);
++        handleEl?.removeEventListener("pointerdown", onPointerDown);
++        handleEl = params.handle.value;
++        handleEl?.addEventListener("pointerdown", onPointerDown);
+     }
+ 
+-    function onPointerDownCapture(): void {
+-        dragging.value = true;
++    function onPointerDown(e: PointerEvent): void {
++        const el = handleEl;
++        if (!el || e.button !== 0 || pointerId !== null) return;
++        const s = ensureSpring();
++        // a grab during a landing takes the body where it is: the landing stops, the
++        // offset it reached stays, and the base is what lies under it
++        s.reset(s.value, 0);
++        const r = el.getBoundingClientRect();
++        const centre = axisOf() === "y" ? r.top + r.height / 2 : r.left + r.width / 2;
++        base = centre - offsetNow;
++        grab = coordOf(e) - centre;
++        pointerId = e.pointerId;
++        el.setPointerCapture?.(e.pointerId);
++        el.addEventListener("pointermove", onPointerMove);
++        el.addEventListener("pointerup", onPointerUp);
++        el.addEventListener("pointercancel", onPointerUp);
++        sampler.reset();
++        sampler.push(e.clientX, e.clientY, e.timeStamp);
++        landing = null;
+         committed = false;
+         hasGestured = true;
+-        dragOrigin.value = ensureSpring().value;
+-        // While dragging, the squish is live; on settle the watcher releases it
+-        // to 1 via the normalized-position drive (the travel decays to 0).
++        dragging.value = true;
++        follow(centre);
+     }
+ 
+-    function onPointerUpCapture(): void {
+-        if (!dragging.value) return;
+-        // The kf Draggable already re-seated the spring from `(value,
+-        // releaseVelocity)` AND snapped it toward the nearest declared target on its
+-        // own pointerup (the native `DragOptions.snap` fling). We only flip the flag
+-        // so the settle watcher arms the single COMMIT-side `onSnap` (off the value
+-        // the spring settles at — the nearest center the engine snapped to).
+-        dragging.value = false;
++    function onPointerMove(e: PointerEvent): void {
++        if (e.pointerId !== pointerId) return;
++        sampler.push(e.clientX, e.clientY, e.timeStamp);
++        follow(coordOf(e) - grab);
+     }
+ 
+-    // The kf Draggable owns the per-gesture pointermove/up; we mirror dragging
+-    // state off pointerdown (captured above) + a window-level pointerup so the
+-    // flag clears even when the release lands outside the element (pointer
+-    // capture delivers it to the element, but a defensive window listener keeps
+-    // the flag honest).
+-    function bindWindowUp(): void {
+-        if (typeof window === "undefined") return;
+-        window.addEventListener("pointerup", onPointerUpCapture);
+-        window.addEventListener("pointercancel", onPointerUpCapture);
++    function endGesture(): void {
++        const el = handleEl;
++        if (el && pointerId !== null) el.releasePointerCapture?.(pointerId);
++        el?.removeEventListener("pointermove", onPointerMove);
++        el?.removeEventListener("pointerup", onPointerUp);
++        el?.removeEventListener("pointercancel", onPointerUp);
++        pointerId = null;
+     }
+-    function unbindWindowUp(): void {
+-        if (typeof window === "undefined") return;
+-        window.removeEventListener("pointerup", onPointerUpCapture);
+-        window.removeEventListener("pointercancel", onPointerUpCapture);
++
++    function onPointerUp(e: PointerEvent): void {
++        if (e.pointerId !== pointerId) return;
++        const at = coordOf(e) - grab;
++        const vw = sampler.release(e.clientX, e.clientY, e.timeStamp);
++        const v = e.type === "pointercancel" ? 0 : axisOf() === "y" ? vw.y : vw.x;
++        endGesture();
++        follow(at);
++        // the landing: the projected rest picks the snap; the `dock` row carries the body
++        // there from the release point at the release velocity (instant under reduce)
++        landing = nearestTarget(decayRest({ initial: at, velocity: v }));
++        dragging.value = false;
++        const s = ensureSpring();
++        s.reset(at, v);
++        s.target = landing?.center ?? at;
+     }
+ 
+-    // Re-resolve the geometry on demand (the consumer's resize/option watcher) —
+-    // a no-op mid-gesture (the rebuild would detach the live pointer listeners);
+-    // the next settle picks up the fresh centers via reattach on the following
+-    // grab anyway.
++    // Re-bind on demand (the consumer's mount/option/axis watcher); a no-op mid-gesture.
+     function refresh(): void {
+         if (dragging.value) return;
+         reattach();
+     }
+ 
+     reattach();
+-    bindWindowUp();
+ 
+     function detach(): void {
+-        handleEl?.removeEventListener("pointerdown", onPointerDownCapture);
++        endGesture();
++        handleEl?.removeEventListener("pointerdown", onPointerDown);
+         handleEl = null;
+-        detachDrag?.();
+-        detachDrag = null;
+-        unbindWindowUp();
+         unsubscribe?.();
+         unsubscribe = null;
+         // Own the spring's teardown too — `unsubscribe` only drops OUR callback;
+@@ -393,8 +395,6 @@ export function useDragMorph<V = string>(
+         // second detach a no-op regardless.
+         spring?.dispose();
+         spring = null;
+-        draggable?.dispose();
+-        draggable = null;
+         morph.cancel();
+         morph.clear();
+     }
+diff --git a/src/composables/motion/spring/useLiquidPress.ts b/src/composables/motion/spring/useLiquidPress.ts
+index 50e1e4feb..57378c2d1 100644
+--- a/src/composables/motion/spring/useLiquidPress.ts
++++ b/src/composables/motion/spring/useLiquidPress.ts
+@@ -58,8 +58,8 @@ export interface UseLiquidPressOptions extends UseSpringPressOptions {
+     /**
+      * The custom-property NAME the live press value (0..1) is written under, for the
+      * surface CSS to read for the coupled brightness/specular leg. Default
+-     * `"--press-t"`. Button passes `"--glass-btn-press-t"` (the drive
+-     * the gleam already reads); the dock control passes `"--dock-press-t"`.
++     * `"--press-t"`, the drive the material gleam reads (the engage door's press,
++     * the Button's, rides it); the dock control passes `"--dock-press-t"`.
+      */
+     pressVar?: string;
+     /**
+diff --git a/src/styles/glass/focus-veil.css b/src/styles/glass/focus-veil.css
+index 07c5262d3..42e7af0ce 100644
+--- a/src/styles/glass/focus-veil.css
++++ b/src/styles/glass/focus-veil.css
+@@ -149,15 +149,20 @@
+         transition: opacity var(--duration-fast) var(--ease-standard);
+     }
+ 
+-    /* THE IN CLOCK — behind the geometry by one rank-6 beat. */
+-    .glass-focus-veil[data-engaged] {
++    /* THE IN CLOCK — behind the geometry by one rank-6 beat. Two readers, two facts: a
++       held control's veil carries `data-engaged` (the engage door writes it, and nothing
++       else does); a modal's veil reads its overlay's own open state, because an open
++       modal is presented, not engaged. */
++    .glass-focus-veil[data-engaged],
++    [data-state="open"] > .glass-focus-veil {
+         opacity: 1;
+         transition: opacity var(--duration-normal) var(--ease-standard)
+             var(--duration-instant);
+     }
+ 
+     @starting-style {
+-        .glass-focus-veil[data-engaged] {
++        .glass-focus-veil[data-engaged],
++        [data-state="open"] > .glass-focus-veil {
+             opacity: 0;
+         }
+     }
+diff --git a/src/styles/glass/grasp.css b/src/styles/glass/grasp.css
+index 4a8a14aa3..b4279dea8 100644
+--- a/src/styles/glass/grasp.css
++++ b/src/styles/glass/grasp.css
+@@ -7,7 +7,7 @@
+    press ladder owns scale), no colour event.
+ 
+    THE HAND IS A POINTER HOLD, AND ONLY THAT. `[data-held]` on a graspable surface is
+-   written from a live pointer/touch acquire on the host (`useDockHold`'s
++   written from a live pointer/touch acquire on the host (`useHold`'s
+    `keepOpen("grasp")` → the dock's `graspHeld`; the slider's own returned edge). It is
+    NOT the dock's posture count: an armed search field or an open popover holds the
+    dock OPEN, which is a state, and a register that answered it would sit at 0.6× ink
+diff --git a/src/styles/glass/material.css b/src/styles/glass/material.css
+index ad8812041..15df10a3b 100644
+--- a/src/styles/glass/material.css
++++ b/src/styles/glass/material.css
+@@ -162,11 +162,11 @@
+            cohort (the interaction-light state machine below).
+ 
+            The press-COUPLED magnitude (absorbs 13.5, soft-
+-           gated by F5.1). The specular reads the ONE `--glass-btn-press-t` spring
++           gated by F5.1). The specular reads the ONE `--press-t` spring
+            drive (Button.vue / a dock control writes it off `useLiquidPress`), so on
+            RELEASE — after the binary CSS `:active` lets go — the gleam SETTLES with
+            the spring's alive overshoot (the press-swell returns) instead of snapping
+-           to rest. Soft-gated: `--glass-btn-press-t` defaults 0 (property-regs.css),
++           to rest. Soft-gated: `--press-t` defaults 0 (property-regs.css),
+            so an unwired surface reads `max(rest, 0.16*0) = rest` byte-identical — no
+            hard F5.1 dependency. The `<number> * <number>` calc is engine-safe (NOT a
+            registered var nested in an hsl() alpha — the Chromium-computes-to-0 class
+@@ -177,7 +177,7 @@
+             var(--glass-specular-intensity-rest, 0),
+             calc(
+                 var(--glass-specular-intensity-active, 0.16) *
+-                    var(--glass-btn-press-t, 0)
++                    var(--press-t, 0)
+             )
+         );
+         /* A thin, BOUNDED, pointer-anchored EDGE gleam (not a
+@@ -304,14 +304,14 @@
+            intensity `.dark` arm); the rest rung is already 0 so the dark arm only
+            softens hover/active via the cohort. The rest rung re-reads the (dark)
+            token here so a dark `:root` override resolves. The
+-           dark arm mirrors the base press-couple `max()` so the `--glass-btn-press-t`
++           dark arm mirrors the base press-couple `max()` so the `--press-t`
+            release-settle is NOT dropped in dark (the base opacity floor + the neutral
+            box-shadow hairline are inherited unchanged). */
+         --specular-intensity: max(
+             var(--glass-specular-intensity-rest, 0),
+             calc(
+                 var(--glass-specular-intensity-active, 0.16) *
+-                    var(--glass-btn-press-t, 0)
++                    var(--press-t, 0)
+             )
+         );
+     }
+@@ -395,5 +395,5 @@
+     }
+ 
+     /* The press read is carried by the press squish + gleam lift on the ONE
+-       `--glass-btn-press-t` drive (material gleam, above). */
++       `--press-t` drive (material gleam, above). */
+ }
+diff --git a/src/styles/tokens/glass.css b/src/styles/tokens/glass.css
+index 97921d2e6..e5f866b5f 100644
+--- a/src/styles/tokens/glass.css
++++ b/src/styles/tokens/glass.css
+@@ -254,7 +254,15 @@
+     --control-surface-bg:        var(--glass-plate-quiet);
+     --control-surface-border:    var(--glass-border-floating);
+     --control-surface-blur:      var(--glass-blur-quiet);
+-    --control-surface-bg-hover:  color-mix(in oklab, var(--glass-plate-quiet), var(--glass-plate-resting) 35%);
++    /* The hover rung is a plate like every rung above, ONE flat mix: the foreground
++       ink at the rest plate's alpha plus the hover fill (`--fill-hover`), lerped to the
++       solid `--card` on `--glass-level`. It was a mix of the quiet and resting PLATES,
++       two relative-colour mixes nested inside a third, which broke the plate law above
++       and hung Playwright WebKit on the first hover of any `.control-surface` (SF-8).
++       It was also 35% of one step of the warm ink, which moved no pixel under the
++       capsule gleam (TF-8); the foreground ink darkens the plate in light and lifts it
++       in dark. */
++    --control-surface-bg-hover:  color-mix(in srgb, oklch(from var(--foreground) l c h / calc(var(--glass-veil-quiet) + var(--fill-hover))) calc(var(--glass-level) * 100%), var(--card));
+ }
+ 
+ /* The typed per-instance axes — @property no-op floors. Registered here beside the §8
+diff --git a/src/styles/tokens/motion-registers.css b/src/styles/tokens/motion-registers.css
+index 43409e0a4..d3751b885 100644
+--- a/src/styles/tokens/motion-registers.css
++++ b/src/styles/tokens/motion-registers.css
+@@ -52,7 +52,7 @@
+ 
+    ── press / morph / cascade — NAMES over shipped recipes (zero paint change) ──
+    These names point at their existing source tokens; no unused alias is minted:
+-     · press   → `--spring-press` (the tap; useLiquidPress + --glass-btn-press-t)
++     · press   → `--spring-press` (the tap; useLiquidPress + --press-t)
+      · morph   → `--spring-dock` / `--spring-dock-duration` (the dock box morph)
+      · cascade → the `.scroll-cascade` / `--scroll-cascade-*` recipe
+ 
+diff --git a/src/styles/tokens/property-regs-specular.css b/src/styles/tokens/property-regs-specular.css
+index e4808cecb..c6e7ec25f 100644
+--- a/src/styles/tokens/property-regs-specular.css
++++ b/src/styles/tokens/property-regs-specular.css
+@@ -1,5 +1,5 @@
+ /* tokens/property-regs-specular.css
+-   §11b the pointer-anchored moving-specular :root/.dark magnitude cohort + the interaction/scroll DRIVE @property registrations (glass-btn-press-t, the native scroll-ramp / chrome-collapse customs).
++   §11b the pointer-anchored moving-specular :root/.dark magnitude cohort + the interaction/scroll DRIVE @property registrations (press-t, the native scroll-ramp / chrome-collapse customs).
+    A partial held under the no-god-module 500-line bound; @import-ed by tokens.css IMMEDIATELY AFTER property-regs.css. Same :root cascade context as its sibling — the @property registrations are order-invariant and the specular-intensity :root/.dark cohort is the sole writer. */
+ /* ── The specular-intensity magnitude cohort ──────────────────────
+    The catch-light alpha multiplier at each interaction state, as a SINGLE
+@@ -44,7 +44,8 @@
+ }
+ 
+ /* The press DRIVE scalar. ONE typed 0..1 custom
+-   property Button.vue writes off the `useLiquidPress` spring (0 released → 1
++   property the engage door (and every `useLiquidPress` caller on its default name)
++   writes off the press spring (0 released → 1
+    pressed, with the ~5% overshoot the spring carries). It is the SINGLE drive the
+    press SQUISH (the `useLiquidFlex` reciprocal X/Y deform) and the coupled specular/
+    brightness lift both read — the "one drive, the glass deforms under press" read.
+@@ -53,7 +54,7 @@
+    true` so the host-written value reaches the material-group `::before` pseudo +
+    the coupled rules. `initial-value: 0` so an unwired/SSR button is the static
+    rest frame (the no-JS CSS `.tap-squish` scale floor still presses). */
+-@property --glass-btn-press-t {
++@property --press-t {
+     syntax: "<number>";
+     inherits: true;
+     initial-value: 0;
+diff --git a/src/styles/tokens/property-regs.css b/src/styles/tokens/property-regs.css
+index 961d41095..de14a92cf 100644
+--- a/src/styles/tokens/property-regs.css
++++ b/src/styles/tokens/property-regs.css
+@@ -58,6 +58,18 @@
+     initial-value: 0;
+ }
+ 
++/* The ENGAGEMENT CLASS stamp. Each class's recipe sets it on the element it paints to
++   the class's name (`ENGAGE_DECLARATION`, composables/motion/engage/engageClasses.ts),
++   and the census reads it from the rendered element: a member root that computes
++   `unclassed` composes no recipe. `inherits: false`, so a member's class never leaks
++   into the members it hosts. Named `--rung-*`, not `--engage-*`: the `:root` `--engage-*`
++   names are the envelope table's mirror. */
++@property --rung-class {
++    syntax: "<custom-ident>";
++    inherits: false;
++    initial-value: unclassed;
++}
++
+ /* The LIVE velocity channel. `useLiquidFlex` writes this per-frame off the saturating
+    velocity term it already computes (`tanh(|ṫ|·k) ∈ [0,1]`); a consumer folds it into a
+    transient `--motion-weight: calc(0.618 + 0.382 * var(--flex-vel))` boost, so a driver
+diff --git a/src/styles/utilities.css b/src/styles/utilities.css
+index 743855bf7..2ac4db96a 100644
+--- a/src/styles/utilities.css
++++ b/src/styles/utilities.css
+@@ -22,3 +22,6 @@
+ @import "./utilities/metal.css";
+ @import "./utilities/components.css";
+ @import "./utilities/btn.css";
++/* the engagement register's shared rules (the mount frame, the commit light's PRM
++   authorization): after the button cluster, a same-layer block with unique selectors */
++@import "./utilities/engage.css";
+diff --git a/src/styles/utilities/a11y-overrides.css b/src/styles/utilities/a11y-overrides.css
+index 55840cc1c..e6d59121f 100644
+--- a/src/styles/utilities/a11y-overrides.css
++++ b/src/styles/utilities/a11y-overrides.css
+@@ -40,8 +40,9 @@
+    layer the fallback got stronger — CSS Cascade L5 ranks an earlier layer's
+    `!important` above `utilities` and unlayered `!important`]. enumerated + hashed in
+    docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md §PRM-AUTHORIZED-SET (the
+-   opacity-only Vue fade / pane-swap classes in transitions.css). They are never
+-   inferred from a `*` wildcard. */
++   opacity-only Vue fade / pane-swap classes in transitions.css, and the engagement
++   commit light's seat in utilities/engage.css). They are never inferred from a `*`
++   wildcard. */
+ @layer components {
+     @media (prefers-reduced-motion: reduce) {
+         *,
+diff --git a/src/styles/utilities/engage.css b/src/styles/utilities/engage.css
+new file mode 100644
+index 000000000..f8d3a9042
+--- /dev/null
++++ b/src/styles/utilities/engage.css
+@@ -0,0 +1,57 @@
++/* utilities/engage.css
++   The engagement register's shared rules: what every engagement recipe stands on.
++   A partial of the utilities.css cascade; @import-ed by utilities.css in cascade order.
++   See docs/precepts/design-idioms.md §cohesion-aware partials. */
++
++@layer components {
++    /* ── THE MOUNT FRAME (the one-frame commit arming) ──────────────────────────────
++       The engage door (composables/motion/engage/useEngage.ts) marks its host
++       `data-engage-arming` from mount until the first frame, where it flushes style
++       and lifts the mark. Until then nothing under the host transitions, so a state
++       that arrives with the mount (an async model set in the mount's own task, even
++       after something read style) is the rest the host mounts in, not a commit
++       (CK-03). Only `transition-property` is held: a duration or an authorization is
++       untouched, and an animation (an entrance keyframe) is not a transition. The
++       theme flip's `html.no-transition` (a11y-overrides.css) is the same idiom for
++       a different moment. */
++    [data-engage-arming],
++    [data-engage-arming] *,
++    [data-engage-arming]::before,
++    [data-engage-arming]::after,
++    [data-engage-arming] *::before,
++    [data-engage-arming] *::after {
++        transition-property: none !important;
++    }
++}
++
++/* AUTH-4 begin ── PRM-AUTHORIZED (docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md
++   §PRM-AUTHORIZED-SET, row AUTH-4): the engagement commit light keeps its envelope
++   clocks under reduced motion. The commit is light (CK-02 arm iii, Q-5's default),
++   and light is the channel reduced motion keeps (CK-10); the library's instant
++   fallback (a11y-overrides.css, `*, *::after { transition-duration: 0s !important }`)
++   would zero it. The rows name the commit seat exactly as the recipes do (the host's
++   `::after` on a face-less member, the face's `[data-engage-light]` layer otherwise)
++   and outrank the `*` fallback by specificity inside `@layer components`, as the
++   transitions.css fade rows do. The clocks are `ENGAGE_ENVELOPES`' `control-engage`
++   row, in each state's leg order (the gate's opacity, then the charge's
++   background-color): at rest the gate closes on the release over a charge that
++   returns on the attack; committed, the gate opens on the attack over a charge that
++   drains on the release. No transform rides it. CP's row (D5 pass 2,
++   `CP/css-prm-over-css.patch`), placed by F5' (F-9). */
++@layer components {
++    @media (prefers-reduced-motion: reduce) {
++        :where(.engage-chosen, .engage-pressed, .engage-disclosed):not(:has([data-engage-face]))::after,
++        :where(.engage-chosen, .engage-pressed, .engage-disclosed) [data-engage-light] {
++            transition-duration:
++                var(--engage-control-engage-release), var(--engage-control-engage-attack) !important;
++        }
++
++        :where(.engage-chosen, .engage-disclosed):is([data-state="checked"], [data-state="open"]):not(:has([data-engage-face]))::after,
++        :where(.engage-chosen, .engage-disclosed):is([data-state="checked"], [data-state="open"]) [data-engage-light],
++        :where(.engage-pressed)[data-commit="b"]::after {
++            transition-duration:
++                var(--engage-control-engage-attack), var(--engage-control-engage-release) !important;
++        }
++    }
++}
++/* AUTH-4 end */
+diff --git a/tests/components/button/Button.test.ts b/tests/components/button/Button.test.ts
+index cd2e19c7d..28e6bc6b9 100644
+--- a/tests/components/button/Button.test.ts
++++ b/tests/components/button/Button.test.ts
+@@ -70,7 +70,7 @@ describe("Button — the command contract", () => {
+             expect(
+                 Number(
+                     (button.element as HTMLElement).style.getPropertyValue(
+-                        "--glass-btn-press-t",
++                        "--press-t",
+                     ),
+                 ),
+             ).toBeGreaterThan(0.9);
+@@ -80,7 +80,7 @@ describe("Button — the command contract", () => {
+             expect(
+                 Number(
+                     (button.element as HTMLElement).style.getPropertyValue(
+-                        "--glass-btn-press-t",
++                        "--press-t",
+                     ),
+                 ),
+             ).toBeLessThan(0.1);
+diff --git a/tests/components/ui/slider/attrs-pointerdown-channel.test.ts b/tests/components/ui/slider/attrs-pointerdown-channel.test.ts
+index 19df6cbb1..d48320a3d 100644
+--- a/tests/components/ui/slider/attrs-pointerdown-channel.test.ts
++++ b/tests/components/ui/slider/attrs-pointerdown-channel.test.ts
+@@ -22,7 +22,7 @@
+ //      reka major really does sever the channel, which is the regression the docblocks were
+ //      guessing at.
+ //
+-// What stays true, and is why `useDockHold` keeps native listeners: one acquire path for
++// What stays true, and is why `useHold` (composables/motion/engage/hold.ts) keeps native listeners: one acquire path for
+ // `pointerdown` AND `touchstart`, a window-scoped release that survives reka's
+ // `setPointerCapture` retarget, and capture-independent instant-on. Those are the reasons;
+ // a dropped binding never was one.
+@@ -39,7 +39,7 @@ import { Slider } from "@glass/components/slider";
+ /** The three files that carried the claim. */
+ const SITES = [
+     "src/components/slider/Slider.vue",
+-    "src/components/dock/composables/useDockHold.ts",
++    "src/composables/motion/engage/hold.ts",
+     "tests/components/ui/slider/dock-hold-contract.test.ts",
+ ] as const;
+ 
+diff --git a/tests/components/ui/slider/dock-hold-contract.test.ts b/tests/components/ui/slider/dock-hold-contract.test.ts
+index 4716436e0..57900070d 100644
+--- a/tests/components/ui/slider/dock-hold-contract.test.ts
++++ b/tests/components/ui/slider/dock-hold-contract.test.ts
+@@ -15,7 +15,7 @@
+  * guards is the ACQUIRE: the hold must be taken from the slider's REAL host element,
+  * under one owner, for pointer and touch alike, with a window-scoped release. So a drag
+  * that starts on the resolved `[data-slot="slider"]` node must light `data-held` on both
+- * roots, and a release anywhere must end it. `useDockHold` attaches the native listeners
++ * roots, and a release anywhere must end it. `useHold` attaches the native listeners
+  * that do that; without them `keepOpen()` never fires and `data-held` never flips.
+  *
+  * It is browser-FREE: the seam that breaks IS a component-mount fact, so it is
+diff --git a/tests/composables/motion/engage-door.test.ts b/tests/composables/motion/engage-door.test.ts
+new file mode 100644
+index 000000000..801cea99c
+--- /dev/null
++++ b/tests/composables/motion/engage-door.test.ts
+@@ -0,0 +1,248 @@
++// The engage door's floor contract (D5 pass 2, F5; pass 3, F5'): the hand and the keyboard
++// engagement beside it (CK-04), the press's reduce arm (CK-10), the stateless commit edge,
++// the release rule's window (CK-18), the mount frame (CK-03), the commit's loud read
++// (CK-21) and the press mark's one writer (CK-08). Paint is the D5 battery's; this file holds the door's
++// own state machine, each case with the input that must NOT engage beside the one that
++// must.
++
++import { mount } from "@vue/test-utils";
++import { defineComponent, h, nextTick, ref } from "vue";
++import { afterEach, describe, expect, it, vi } from "vitest";
++
++import { useEngage } from "@glass/composables/motion/engage/useEngage";
++import { RELEASE_RULE, VelocitySampler } from "@glass/composables/motion/engage/release";
++import { usePressMark } from "@glass/composables/motion/engage/press";
++
++function mountDoor(o: Parameters<typeof useEngage>[1]) {
++    const api: { door?: ReturnType<typeof useEngage> } = {};
++    const C = defineComponent({
++        setup() {
++            const el = ref<HTMLElement | null>(null);
++            api.door = useEngage(() => el.value, o);
++            return () => h("div", { ref: el, tabindex: 0 }, [h("button", { class: "inner" })]);
++        },
++    });
++    const wrapper = mount(C, { attachTo: document.body });
++    return { wrapper, host: wrapper.element as HTMLElement, api };
++}
++
++/** A key the way a hand presses it: down on the page, the default action, then up. */
++async function press(key: string, during?: () => void): Promise<void> {
++    const target = document.activeElement ?? document.body;
++    target.dispatchEvent(new KeyboardEvent("keydown", { key, bubbles: true }));
++    during?.();
++    target.dispatchEvent(new KeyboardEvent("keyup", { key, bubbles: true }));
++    await nextTick();
++}
++
++describe("the keyboard engagement (CK-04): its own state, never the hand's", () => {
++    let w: ReturnType<typeof mountDoor> | null = null;
++    afterEach(() => {
++        w?.wrapper.unmount();
++        w = null;
++    });
++
++    it("a Tab's focus engages; data-held stays absent; Escape and leaving disengage", async () => {
++        w = mountDoor({ hold: {} });
++        await press("Tab", () => w!.host.focus());
++        expect(w.host.hasAttribute("data-engaged")).toBe(true);
++        expect(w.host.hasAttribute("data-held")).toBe(false);
++        expect(w.api.door!.isHeld.value).toBe(false);
++        await press("Escape");
++        expect(w.host.hasAttribute("data-engaged")).toBe(false);
++        await press("ArrowRight");
++        expect(w.host.hasAttribute("data-engaged")).toBe(true);
++        w.host.blur();
++        await nextTick();
++        expect(w.host.hasAttribute("data-engaged")).toBe(false);
++    });
++
++    it("a script focus() with no key down engages nothing", async () => {
++        w = mountDoor({ hold: {} });
++        w.host.focus();
++        await nextTick();
++        expect(document.activeElement).toBe(w.host);
++        expect(w.host.hasAttribute("data-engaged")).toBe(false);
++    });
++
++    it("a modifier alone, or a key the control does not act on, engages nothing", async () => {
++        w = mountDoor({ hold: {} });
++        w.host.focus();
++        for (const key of ["Shift", "Meta", "Control", "Alt", "k", ".", "Enter", " "]) {
++            await press(key);
++            expect(w.host.hasAttribute("data-engaged"), key).toBe(false);
++        }
++        await press("End");
++        expect(w.host.hasAttribute("data-engaged")).toBe(true);
++    });
++
++    it("the hand: data-held while the pointer is down, and a key held through the click is not a keyboard focus", async () => {
++        w = mountDoor({ hold: {} });
++        window.dispatchEvent(new KeyboardEvent("keydown", { key: "Shift" }));
++        w.host.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true }));
++        w.host.focus();
++        await nextTick();
++        expect(w.host.hasAttribute("data-held")).toBe(true);
++        expect(w.host.hasAttribute("data-engaged")).toBe(true);
++        window.dispatchEvent(new PointerEvent("pointerup"));
++        window.dispatchEvent(new KeyboardEvent("keyup", { key: "Shift" }));
++        await nextTick();
++        expect(w.host.hasAttribute("data-held")).toBe(false);
++        expect(w.host.hasAttribute("data-engaged")).toBe(false);
++    });
++});
++
++describe("the press (CK-10): one --press-t drive; under reduce the geometry retires", () => {
++    afterEach(() => vi.restoreAllMocks());
++
++    it("writes --press-t and scale while pressed, and only --press-t under reduce", async () => {
++        vi.useFakeTimers();
++        const both: string[][] = [];
++        for (const reduce of [false, true]) {
++            vi.spyOn(window, "matchMedia").mockImplementation(
++                (q: string) =>
++                    ({ matches: reduce && q.includes("reduce"), media: q, addEventListener() {}, removeEventListener() {} }) as unknown as MediaQueryList,
++            );
++            const w = mountDoor({ press: {} });
++            w.host.dispatchEvent(new PointerEvent("pointerdown", { button: 0, bubbles: true }));
++            await vi.advanceTimersByTimeAsync(120);
++            both.push([w.host.style.getPropertyValue("--press-t"), w.host.style.getPropertyValue("scale")]);
++            expect(w.host.hasAttribute("data-press")).toBe(true);
++            expect(w.host.hasAttribute("data-press-armed")).toBe(true);
++            w.wrapper.unmount();
++            vi.restoreAllMocks();
++        }
++        vi.useRealTimers();
++        expect(Number(both[0][0])).toBeGreaterThan(0);
++        expect(both[0][1]).not.toBe("");
++        expect(Number(both[1][0])).toBeGreaterThan(0);
++        expect(both[1][1]).toBe("");
++    });
++});
++
++describe("the stateless commit edge", () => {
++    it("stamps the parity at mount and flips it on every activation", async () => {
++        const w = mountDoor({ commit: "call" });
++        await nextTick();
++        expect(w.host.getAttribute("data-commit")).toBe("a");
++        w.api.door!.commit();
++        expect(w.host.getAttribute("data-commit")).toBe("b");
++        w.api.door!.commit();
++        expect(w.host.getAttribute("data-commit")).toBe("a");
++        w.wrapper.unmount();
++    });
++});
++
++describe("the release rule (CK-18): the window, the lift a sample", () => {
++    const drive = (s: VelocitySampler): void => {
++        s.reset();
++        for (let k = 0; k <= 3; k++) s.push(40 * k, 0, 16 * k);
++    };
++
++    it("a fling released at once carries the drive's velocity", () => {
++        const s = new VelocitySampler();
++        drive(s);
++        expect(s.release(120, 0, 64).x).toBeGreaterThan(1000);
++    });
++
++    it("a finger still for longer than the window releases with nothing", () => {
++        const s = new VelocitySampler();
++        drive(s);
++        expect(s.release(120, 0, 48 + RELEASE_RULE.windowMs + 1).x).toBe(0);
++    });
++});
++
++const frame = (): Promise<void> => new Promise((ok) => requestAnimationFrame(() => ok()));
++
++describe("the mount frame (CK-03, F5' F-7): an arrival with the mount is not a commit", () => {
++    it("a stateless or holding door does not arm: only a state member's mount can carry an arrival", async () => {
++        for (const o of [{ commit: "call" as const }, { hold: {} }, { press: {} }]) {
++            const w = mountDoor(o);
++            expect(w.host.hasAttribute("data-engage-arming")).toBe(false);
++            w.wrapper.unmount();
++        }
++    });
++
++    it("marks a state member's host data-engage-arming from mount until the first frame, then lifts it", async () => {
++        const w = mountDoor({ commit: "state" });
++        expect(w.host.hasAttribute("data-engage-arming")).toBe(true);
++        await frame();
++        await frame();
++        expect(w.host.hasAttribute("data-engage-arming")).toBe(false);
++        w.wrapper.unmount();
++    });
++});
++
++describe("the commit's inputs fail loud (CK-21, F5' F-8)", () => {
++    afterEach(() => vi.restoreAllMocks());
++
++    const tokens = (h: HTMLElement, attack: string): void => {
++        h.style.setProperty("--engage-control-engage-attack", attack);
++        h.style.setProperty("--engage-control-engage-release", "180ms");
++        h.style.setProperty("--rung-light", "white");
++    };
++
++    it("a stateless commit reads its envelope on every edge, and says so once when a clock is unreadable", async () => {
++        const err = vi.spyOn(console, "error").mockImplementation(() => {});
++        const w = mountDoor({ commit: "call" });
++        tokens(w.host, "60ms");
++        await frame();
++        await frame();
++        expect(err).not.toHaveBeenCalled();
++        tokens(w.host, "");
++        w.api.door!.commit();
++        expect(err).toHaveBeenCalledTimes(1);
++        expect(String(err.mock.calls[0]![0])).toContain("--engage-control-engage-attack");
++        w.wrapper.unmount();
++    });
++
++    it("a state member whose class commits is read on its state edges, --rung-light included", async () => {
++        const err = vi.spyOn(console, "error").mockImplementation(() => {});
++        const w = mountDoor({ commit: "state" });
++        tokens(w.host, "60ms");
++        w.host.style.setProperty("--rung-class", "chosen");
++        await frame();
++        await frame();
++        expect(err).not.toHaveBeenCalled();
++        w.host.style.setProperty("--rung-light", "");
++        w.host.setAttribute("data-state", "checked");
++        await nextTick();
++        await new Promise((ok) => setTimeout(ok, 0));
++        expect(err.mock.calls.map((c) => String(c[0])).join(" ")).toContain("--rung-light");
++        w.wrapper.unmount();
++    });
++
++    it("a host with no commit reads nothing", async () => {
++        const err = vi.spyOn(console, "error").mockImplementation(() => {});
++        const w = mountDoor({ hold: {} });
++        await frame();
++        await frame();
++        expect(err).not.toHaveBeenCalled();
++        w.wrapper.unmount();
++    });
++});
++
++describe("the press mark (CK-08, F5' F-4): one writer of data-press, on the host or on a named organ", () => {
++    it("marks the organ the pressed target names, and clears it on release", async () => {
++        const C = defineComponent({
++            setup() {
++                const root = ref<HTMLElement | null>(null);
++                const pip = ref<HTMLElement | null>(null);
++                usePressMark(() => root.value, {
++                    organ: (e) => ((e.target as Element).classList.contains("dot") ? pip.value : null),
++                });
++                return () => h("div", { ref: root }, [h("span", { ref: pip, class: "pip" }), h("button", { class: "dot" })]);
++            },
++        });
++        const wrapper = mount(C, { attachTo: document.body });
++        await nextTick();
++        const dot = wrapper.find(".dot").element;
++        const pip = wrapper.find(".pip").element;
++        dot.dispatchEvent(new PointerEvent("pointerdown", { button: 0, bubbles: true }));
++        expect(pip.hasAttribute("data-press")).toBe(true);
++        expect(wrapper.element.hasAttribute("data-press")).toBe(false);
++        dot.dispatchEvent(new PointerEvent("pointerup", { bubbles: true }));
++        expect(pip.hasAttribute("data-press")).toBe(false);
++        wrapper.unmount();
++    });
++});
+diff --git a/tests/design/drive-tokens.test.ts b/tests/design/drive-tokens.test.ts
+index a53b7787a..9fcf5e017 100644
+--- a/tests/design/drive-tokens.test.ts
++++ b/tests/design/drive-tokens.test.ts
+@@ -14,7 +14,7 @@ import { describe, expect, it } from "vitest";
+ // SCOPE, and why it is not the ledger's wording. The disposition ledger proposed
+ // "every Kind-5 drive token carries an `@property` registration under
+ // `src/styles/tokens/property-regs*.css`". Measured, that assertion is RED on ELEVEN
+-// of the table's twelve rows, not on `--card-press-t` alone: only `--glass-btn-press-t`
++// of the table's twelve rows, not on `--card-press-t` alone: only `--press-t`
+ // is registered there, `--dock-morph-t` is registered in `components/dock/styles/index.css`,
+ // and the remaining ten are choreography knobs the table's own preamble distinguishes
+ // from the registered 0..1 scalars (`--scroll-cascade-rise` is a length; registering it
+diff --git a/tests/gates/overfit-structure.test.ts b/tests/gates/overfit-structure.test.ts
+index 6ba112fe8..58c5f0b22 100644
+--- a/tests/gates/overfit-structure.test.ts
++++ b/tests/gates/overfit-structure.test.ts
+@@ -523,7 +523,8 @@ describe("gate:G-OVERFIT — OVERLAY-SEAM arm (BK #89 W-OVERLAY)", () => {
+     it("ONE-LATCH — exactly one keep-open token implementation", () => {
+         // The token is the guarded acquire/release PAIR plus its teardown. Its shape on
+         // disk is a call to the dock context's `keepOpen`; anything else calling it is a
+-        // second implementation of the same six lines.
++        // second implementation of the same six lines. It lives beside the hand that is
++        // its first holder (`composables/motion/engage/hold.ts`); the seam composes it.
+         const callers = srcFiles
+             .map((f) => relative(REPO_ROOT, f).replace(/\\/g, "/"))
+             .filter((rel) => /\.keepOpen\(/.test(read(join(REPO_ROOT, rel))));
+@@ -532,7 +533,7 @@ describe("gate:G-OVERFIT — OVERLAY-SEAM arm (BK #89 W-OVERLAY)", () => {
+             `${callers.length} module(s) acquire a dock keep-open token directly. The ref-count is the dock's; the ` +
+                 `TOKEN discipline is ONE composable's, and a hand-rolled copy is a leak waiting for the teardown ` +
+                 `it forgot:\n  ${callers.join("\n  ")}`,
+-        ).toEqual([SEAM]);
++        ).toEqual(["src/composables/motion/engage/hold.ts"]);
+     });
+ 
+     it("self-test bites — each overlay detector matches its own shape", () => {
+diff --git a/tests/styles/engage-floor.test.ts b/tests/styles/engage-floor.test.ts
+new file mode 100644
+index 000000000..9a39581f0
+--- /dev/null
++++ b/tests/styles/engage-floor.test.ts
+@@ -0,0 +1,87 @@
++// The engagement register's shared rules (utilities/engage.css; D5 pass 3, F5'): the
++// mount frame's transition hold (CK-03, F-7) and the commit light's reduced-motion
++// authorization, AUTH-4 of BJ's §PRM-AUTHORIZED-SET (CK-10, F-9).
++//
++// happy-dom runs no cascade, so these read the shipped source; the battery reads the paint.
++
++import { createHash } from "node:crypto";
++import { readFileSync } from "node:fs";
++import { join } from "node:path";
++
++import { describe, expect, it } from "vitest";
++
++const read = (rel: string): string => readFileSync(join(process.cwd(), rel), "utf8");
++const ENGAGE = read("src/styles/utilities/engage.css");
++const UTILITIES = read("src/styles/utilities.css");
++const A11Y = read("src/styles/utilities/a11y-overrides.css");
++const decomment = (css: string): string => css.replace(/\/\*[\s\S]*?\*\//g, "");
++
++/** `sed -n '/AUTH-4 begin/,/AUTH-4 end/p'`: whole lines, each with its newline. */
++const authBlock = (): string => {
++    const lines = ENGAGE.split("\n");
++    const a = lines.findIndex((l) => l.includes("AUTH-4 begin"));
++    const b = lines.findIndex((l, i) => i >= a && l.includes("AUTH-4 end"));
++    return a < 0 || b < 0 ? "" : lines.slice(a, b + 1).map((l) => `${l}\n`).join("");
++};
++
++/** The rules of a CSS text: [selector list, declarations], one level under any wrapper. */
++const rules = (css: string): Array<{ selector: string; body: string }> =>
++    [...decomment(css).matchAll(/([^{};]+)\{([^{}]*)\}/g)].map((m) => ({
++        selector: m[1]!.trim(),
++        body: m[2]!.trim(),
++    }));
++
++describe("the mount frame (CK-03): the door's arming mark holds every transition under its host", () => {
++    it("is imported by the utilities root", () => {
++        expect(UTILITIES).toMatch(/@import "\.\/utilities\/engage\.css";/);
++    });
++
++    it("holds transition-property only, on the host, its descendants and their pseudo-elements", () => {
++        const gate = rules(ENGAGE).find((r) => r.selector.includes("[data-engage-arming]"));
++        expect(gate).toBeDefined();
++        const sel = gate!.selector.split(",").map((s) => s.trim());
++        for (const s of [
++            "[data-engage-arming]",
++            "[data-engage-arming] *",
++            "[data-engage-arming]::before",
++            "[data-engage-arming]::after",
++            "[data-engage-arming] *::before",
++            "[data-engage-arming] *::after",
++        ])
++            expect(sel).toContain(s);
++        expect(gate!.body).toBe("transition-property: none !important;");
++    });
++});
++
++describe("AUTH-4 (CK-10): the commit light keeps its envelope under reduced motion", () => {
++    const block = authBlock();
++
++    it("is one reduced-motion block of narrow seat selectors that set durations from the envelope only", () => {
++        expect(block).not.toBe("");
++        expect(block).toMatch(/@media \(prefers-reduced-motion: reduce\)/);
++        const rs = rules(block);
++        expect(rs.length).toBe(2);
++        for (const r of rs) {
++            for (const s of r.selector.split(/,(?![^(]*\))/)) {
++                expect(s.trim()).not.toMatch(/^\*/);
++                expect(s).toMatch(/\.engage-(chosen|pressed|disclosed)/);
++            }
++            expect(r.body).toMatch(/^transition-duration:/);
++            expect(r.body).not.toMatch(/transition-property|transform|scale|translate/);
++            const values = r.body.replace(/^transition-duration:/, "").replace(/!important;?/, "");
++            for (const v of values.split(","))
++                expect(v.trim()).toMatch(/^var\(--engage-control-engage-(attack|release)\)$/);
++        }
++    });
++
++    it("is a row of the register a11y-overrides.css names, and the row's digest is this block's", () => {
++        const register = A11Y.match(/(docs\/[\w./-]+\.md)\s*§PRM-AUTHORIZED-SET/);
++        expect(register, "a11y-overrides.css no longer names its authorized-set register").not.toBeNull();
++        const row = read(register![1]!)
++            .split("\n")
++            .find((line) => /^\|\s*AUTH-4\s*\|/.test(line));
++        expect(row, "the commit light's PRM row is not enumerated in the authorized set").toBeDefined();
++        expect(row).toContain("utilities/engage.css");
++        expect(row).toContain(createHash("sha256").update(block).digest("hex").slice(0, 8));
++    });
++});
+diff --git a/tests/styles/engage-ladder.test.ts b/tests/styles/engage-ladder.test.ts
+index c0c437113..1a5d52263 100644
+--- a/tests/styles/engage-ladder.test.ts
++++ b/tests/styles/engage-ladder.test.ts
+@@ -16,15 +16,14 @@
+ // that the two channels' exit asymmetries are ruled rather than colliding, and that
+ // the shared interactive seat answers inside the budget it publishes.
+ //
+-// THE CENSUS ARM IS `it.fails`, AND THE LATCH IS THE POINT. G-ENGAGE-RUNG's seat text
+-// is a claim about all 63 components, and this cut builds the shared vocabulary rather
+-// than retrofitting 63 components — those are the component rows (#28/#29/#30,
+-// #79-#88, #31-#42). A latch that must be hand-flipped would be a second state to keep
+-// true; `it.fails` is self-flipping in the correct direction — the day the last
+-// component row lands its rung, this case FAILS with "expected to fail but passed" and
+-// forces the seat GREEN. The born-RED figures were measured on a pristine
+-// `git archive HEAD` tree (HEAD `c381cec2`, before any byte of this cut) and are
+-// banked at the row's RECORD.md §BORN-RED.
++// THE CENSUS READS A DECLARATION, AND ITS LATCH IS `it.fails`. Every component
++// directory is declared into one engagement class (`ENGAGE_DECLARATION`), and each class
++// names the ladder rung it owes or none with a reason; this file proves the declaration
++// total and well-formed. Adoption, whether each rendered member composes the recipe its
++// row declares, is a runtime fact (the registered `--rung-class` stamp, read off every
++// rendered member root by the D5 battery's E-1). The latch below is the census's RED
++// until adoption is total: it reads which directories compose their class's recipe at
++// all, and `it.fails` self-flips the day the last one does, forcing the latch out.
+ 
+ import { readFileSync, readdirSync, statSync } from "node:fs";
+ import { join } from "node:path";
+@@ -45,6 +44,7 @@ import {
+     engageAttackT90Ms,
+ } from "@glass/composables/motion/engage/engageEnvelopes";
+ import { SPRING_PRESETS } from "@glass/composables/motion/spring/springPresets";
++import { ENGAGE_DECLARATION } from "@glass/composables/motion/engage/engageClasses";
+ 
+ const read = (rel: string): string => readFileSync(join(process.cwd(), rel), "utf8");
+ 
+@@ -100,59 +100,56 @@ function readDirText(dir: string, out: string[] = []): string[] {
+     for (const entry of readdirSync(dir)) {
+         const path = join(dir, entry);
+         if (statSync(path).isDirectory()) readDirText(path, out);
+-        else if (/\.(css|vue|ts)$/.test(entry)) out.push(readFileSync(path, "utf8"));
++        else if (/\.(vue|ts)$/.test(entry)) out.push(readFileSync(path, "utf8"));
+     }
+     return out;
+ }
+ 
+-/**
+- * THE CENSUS DETECTOR, stated so the figure re-derives (the J-10 law). A component
+- * implements a rung BEYOND hover when its own `*.vue|*.ts|*.css` bytes carry a press
+- * (`:active`), a hold (`[data-held]`), an engagement (`data-engaged`), or when it
+- * composes one of the two SHARED ladder recipes that carry those rungs from the token
+- * set (`tap-squish` / `interactive-item`), or reads an `--engage-*` clock directly.
+- * Hover alone never counts — the seat text says "beyond hover" and this is that word
+- * made executable.
+- *
+- * `:active` MATCHES IN CSS PSEUDO-CLASS CONTEXT ONLY — the lookahead requires a
+- * selector-continuation character after it. A bare `/:active/` scores a Vue prop
+- * binding (`:active="isActive(…)"`) and a prose mention (`v-model:active`) as press
+- * rungs, and both are sole-match false positives that inflate ADOPTION — the one
+- * direction a born-RED census may never be wrong in.
+- */
+-const RUNG_BEYOND_HOVER =
+-    /:active(?=[\s,){:.#[>+~])|\[data-held\]|data-engaged|tap-squish|interactive-item|--engage-/;
+-
+-const withRung = COMPONENT_DIRS.filter((name) =>
+-    readDirText(join(COMPONENTS, name)).some((text) => RUNG_BEYOND_HOVER.test(text)),
+-);
+-
+-describe("G-ENGAGE-RUNG — every interactive component implements a rung beyond hover", () => {
+-    // BORN-RED AND STILL RED. This is the seat's own claim and it is the honest state
+-    // of the library: the vocabulary now exists, the components have not adopted it.
+-    // `it.fails` flips the moment they do — see the header.
+-    it.fails("every component directory carries a rung beyond hover", () => {
+-        expect(withRung).toEqual(COMPONENT_DIRS);
++/** Code without its comments, so prose that names a recipe never scores as composing it. */
++const uncomment = (text: string): string =>
++    text.replace(/\/\*[\s\S]*?\*\//g, "").replace(/(^|[^:])\/\/.*$/gm, "$1").replace(/<!--[\s\S]*?-->/g, "");
++
++describe("G-ENGAGE-RUNG — every component directory is declared, and adopts its class", () => {
++    const { members, classes, modes } = ENGAGE_DECLARATION;
++    const rungs = ENGAGE_LADDER.map((row) => row.rung) as readonly string[];
++    const classesOf = (dir: string): readonly string[] => modes[dir] ?? [members[dir]!];
++
++    it("the denominator is the directory list, each declared exactly once", () => {
++        expect(Object.keys(members).sort()).toEqual([...COMPONENT_DIRS].sort());
+     });
+ 
+-    it("the census is measurable, and its denominator is the directory count", () => {
+-        // No figure is frozen here — freezing "63" would be a second authority that
+-        // drifts the next time a component lands. What IS asserted is that the
+-        // detector discriminates.
+-        //
+-        // DISCRIMINATION IS ASSERTED ON THE DETECTOR, NOT ON THE CENSUS. Asserting
+-        // `withRung.length < COMPONENT_DIRS.length` reads as the same claim and is not:
+-        // it forbids the row's own GOAL state, so the day the last component row lands
+-        // its rung this plain `it` REDs the suite on success and the `it.fails` census
+-        // above can never self-flip. A gate may not make the win a failure.
+-        expect(COMPONENT_DIRS.length).toBeGreaterThan(0);
+-        expect(withRung.length).toBeGreaterThan(0);
+-        expect(withRung.length).toBeLessThanOrEqual(COMPONENT_DIRS.length);
+-        expect(RUNG_BEYOND_HOVER.test("<div class='x' @click='go'>hover only</div>")).toBe(
+-            false,
++    it("every member names a declared class, and every class names a rung or a reason", () => {
++        for (const cls of Object.values(members)) expect(Object.keys(classes)).toContain(cls);
++        for (const row of Object.values(classes)) {
++            if (row.rung === null) expect(row.reason?.trim()).toBeTruthy();
++            else expect(rungs).toContain(row.rung);
++        }
++    });
++
++    it("a mode-split member lists its primary class first, and only declared classes", () => {
++        expect(Object.keys(modes).sort()).toEqual(["card", "chip"]);
++        for (const [dir, list] of Object.entries(modes)) {
++            expect(list[0]).toBe(members[dir]);
++            for (const cls of list) expect(Object.keys(classes)).toContain(cls);
++        }
++    });
++
++    it("the class stamp is registered, uninherited, with `unclassed` as its initial value", () => {
++        const regs = decomment(read("src/styles/tokens/property-regs.css"));
++        expect(regs).toMatch(
++            /@property --rung-class\s*\{\s*syntax:\s*"<custom-ident>";\s*inherits:\s*false;\s*initial-value:\s*unclassed;\s*\}/,
+         );
+-        expect(RUNG_BEYOND_HOVER.test(':active="isActive(option.value)"')).toBe(false);
+-        expect(RUNG_BEYOND_HOVER.test(".x:active { scale: 1; }")).toBe(true);
++    });
++
++    // THE LATCH. RED while any declared member composes no `engage-<class>` recipe of a
++    // class its row allows. `it.fails` passes while the census is RED and fails the day
++    // adoption is total, which forces this case to become a plain `it`.
++    it.fails("every declared member composes its class's recipe (the adoption latch)", () => {
++        const adopted = COMPONENT_DIRS.filter((dir) => {
++            const code = readDirText(join(COMPONENTS, dir)).map(uncomment).join("\n");
++            return classesOf(dir).some((cls) => new RegExp(`\\bengage-${cls}\\b`).test(code));
++        });
++        expect(adopted).toEqual(COMPONENT_DIRS);
+     });
+ 
+     it("the shared token set the seat refers to is REACHABLE, not notional", () => {
+diff --git a/tests/styles/focus-veil.test.ts b/tests/styles/focus-veil.test.ts
+index c87c45e47..b140c498d 100644
+--- a/tests/styles/focus-veil.test.ts
++++ b/tests/styles/focus-veil.test.ts
+@@ -234,7 +234,7 @@ describe("G-RUNG-ONLY · GRADIENT-BLUR arm — applied at its named consumers",
+         // PORTALLED, not nested — the plate is a body child and NOT inside the host.
+         expect(veil!.parentElement).toBe(document.body);
+         expect(root.contains(veil!)).toBe(false);
+-        expect(veil!.getAttribute("data-engaged")).toBe("true");
++        expect(veil!.hasAttribute("data-engaged")).toBe(true);
+         // The centre is written from the host's own rect on the mount tick.
+         expect(veil!.style.getPropertyValue("--veil-x")).not.toBe("");
+         expect(veil!.style.getPropertyValue("--veil-y")).not.toBe("");
+diff --git a/tests/styles/glass-subtlety.test.ts b/tests/styles/glass-subtlety.test.ts
+index 7f001ff03..a2219dd09 100644
+--- a/tests/styles/glass-subtlety.test.ts
++++ b/tests/styles/glass-subtlety.test.ts
+@@ -800,6 +800,10 @@ describe("grasp register — the material answers the hand", () => {
+         );
+     });
+ 
++    /** The classes a file hands the engage door as `heldOn` elements (`.slider-range`). */
++    const heldOnClasses = (source: string): string[] =>
++        Array.from(source.matchAll(/heldOn:[^\n]*?["']\.([\w-]+)/g), (m) => m[1]);
++
+     it("is MOUNTED by both named consumers, on the plate that carries the hold", () => {
+         // §5.1's E-3 naming duty, checked instead of asserted. Both consumers put
+         // `data-held` on a ROOT that carries no plate while the glass sat on a
+@@ -811,13 +815,15 @@ describe("grasp register — the material answers the hand", () => {
+         ] as const;
+         for (const [file, plateClass] of consumers) {
+             const source = read(file);
+-            // The element carrying the plate class also carries the hold…
++            // The element carrying the plate class also carries the hold: written in its
++            // template, or handed to the engage door (the attribute's one writer) as a
++            // `heldOn` element…
+             const plateTag = new RegExp(`<[^>]*${plateClass}[^>]*>`).exec(source);
+             expect(plateTag, `${file}: no ${plateClass} element`).not.toBeNull();
+             expect(
+-                plateTag![0],
++                plateTag![0].includes("data-held") || heldOnClasses(source).includes(plateClass),
+                 `${file}: ${plateClass} does not carry the hold — the register cannot match it`,
+-            ).toContain("data-held");
++            ).toBe(true);
+             // …and both carriers mount inside it, unmounting on the release's own
+             // transitionend rather than on a timer.
+             expect(source, `${file}: no rest carrier`).toContain(
+@@ -857,8 +863,11 @@ describe("grasp register — the material answers the hand", () => {
+                 if (attrs.includes("glass-grasp-carrier")) {
+                     // The nearest enclosing element that carries the hold. `<template
+                     // v-if>` wrappers render nothing, so they are stepped over.
++                    const handed = heldOnClasses(source);
+                     for (let i = stack.length - 1; i >= 0; i -= 1) {
+-                        if (!/\bdata-held\b/.test(stack[i])) continue;
++                        const own = /\bclass="([^"]*)"/.exec(stack[i])?.[1]?.split(/\s+/) ?? [];
++                        if (!/\bdata-held\b/.test(stack[i]) && !own.some((c) => handed.includes(c)))
++                            continue;
+                         // Static `class` UNION the string literals inside a `:class`
+                         // binding. A recipe that applies a register conditionally (the
+                         // slider's fill, which the spectrum variant must not carry)

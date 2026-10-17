@@ -1,0 +1,17 @@
+# start E-4 head webkit 2026-10-17 00:33:00 load { 8.00 9.00 13.95 }
+E-4 webkit   exit 1 · E-4 webkit FAIL · 6 pass, 5 fail, 8 unmeasured of 19 gating cells (0 reported) · load 7.8/8.9/13.9 at start, 9.4/9.2/13.7 at end · 58 s, load at start 7.8/8.9/13.9
+    FAIL       E-4 slider fling carries velocity · axis x, leading edge, page frame · fling: carry 0.11 px, settles -3.33 px past release · still: carry 0.07 px, settles -2.23 px · difference: carry 0.04 px, settle -1.09 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 196 frames, median 10.0 ms · load 7.5/8.9/13.8
+    FAIL       E-4 tabsdrag release continuity · largest one-frame move on release: fling 244.7 px, still 245.8 px · during the drive: fling 91.0 px, still 91.0 px (bound ≤ drive × 1.5 + 2 = 138.5 px) · load 8.1/8.9/13.8
+    FAIL       E-4 tabsdrag release PRM · NOT DRIVEN under reduce: the drag moved the body 0.0 px (bound ≥ 20 px) · load 9.5/9.2/13.8
+    UNMEASURED E-4 sheet fling carries velocity · the surface paints in flow ([role="dialog"] computes position: relative): UNMEASURED until its owner cures its position (REGISTRY §P1-7) · load 9.1/9.1/13.8
+    UNMEASURED E-4 sheet release continuity · in flow (above) · load 9.1/9.1/13.8
+    UNMEASURED E-4 sheet repeat landing · the surface is not read in this engine (above) · load 9.1/9.1/13.8
+    UNMEASURED E-4 sheet release PRM · the surface is not driven or not read in this engine (above) · load 9.1/9.1/13.8
+    FAIL       E-4 sortable fling carries velocity · axis y, page frame · fling: carry 34.97 px, settles -36.69 px past release · still: carry 47.91 px, settles -36.69 px · difference: carry -12.94 px, settle 0.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 0.028 · 196 frames, median 10.0 ms · load 8.9/9.1/13.8
+    FAIL       E-4 sortable release continuity · largest one-frame move on release: fling 80.2 px, still 34.8 px · during the drive: fling 40.0 px, still 40.0 px (bound ≤ drive × 1.5 + 2 = 62.0 px) · load 8.9/9.1/13.8
+    UNMEASURED E-4 carousel fling carries velocity · the touch drag moved the body 0.0 px (fling) and 0.0 px (still), bound ≥ 20 px: macOS WebKit has no touch scrolling, so a touch drag cannot drive this surface (H-4); real Safari UNMEASURED (owner's safaridriver checkbox) · load 9.4/9.2/13.7
+    UNMEASURED E-4 carousel release continuity · not driven in this engine (above) · load 9.4/9.2/13.7
+    UNMEASURED E-4 carousel repeat landing · the surface is not read in this engine (above) · load 9.4/9.2/13.7
+    UNMEASURED E-4 carousel release PRM · the surface is not driven or not read in this engine (above) · load 9.4/9.2/13.7
+# exit 1
+# end E-4 head webkit 2026-10-17 00:34:02 load { 9.39 9.19 13.65 }
