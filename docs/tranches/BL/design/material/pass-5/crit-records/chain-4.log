@@ -1,0 +1,73 @@
+queued 23:08:01 load { 8.99 12.53 13.94 } for: rerun
+== rerun start 23:08:01 load { 8.99 12.53 13.94 }
+rerun fv4 chromium 1 m2-held-window 23:11:04 load { 8.42 11.08 13.08 }: FAIL (1 of 68 gated rows)
+rerun fv4 chromium 1 m6-separable-ladder 23:11:04 load { 8.42 11.08 13.08 }: FAIL (7 of 30 gated rows)
+rerun fv4 chromium 2 m2-held-window 23:14:07 load { 11.54 11.64 12.93 }: FAIL (1 of 68 gated rows)
+rerun fv4 chromium 2 m6-separable-ladder 23:14:07 load { 11.54 11.64 12.93 }: FAIL (7 of 30 gated rows)
+== rerun end 23:14:07 load { 11.54 11.64 12.93 }
+queued 23:14:12 load { 11.25 11.58 12.90 } for: rerun-r18
+== rerun-r18 start 23:14:13 load { 11.25 11.58 12.90 }
+rerun fv4+r18 1 23:15:14 load { 9.99 11.00 12.58 }: FAIL (2 of 68 gated rows)
+  halo chromium light: held or ladder black/white cell missing ✗
+  halo chromium dark: held or ladder black/white cell missing ✗
+rerun fv4+r18 2 23:16:16 load { 9.75 10.78 12.39 }: FAIL (2 of 68 gated rows)
+  halo chromium light: held or ladder black/white cell missing ✗
+  halo chromium dark: held or ladder black/white cell missing ✗
+== rerun-r18 end 23:16:16 load { 9.75 10.78 12.39 }
+queued 23:16:21 load { 9.85 10.79 12.38 } for: rerun
+== rerun start 23:16:21 load { 9.85 10.79 12.38 }
+rerun minor3 chromium 1 m2-text-contrast 23:19:19 load { 9.75 10.37 11.91 }: FAIL (89 of 442 gated rows)
+rerun minor3 chromium 1 m3-non-text 23:19:19 load { 9.75 10.37 11.91 }: FAIL (77 of 180 gated rows)
+rerun minor3 chromium 1 m2-held-window 23:19:25 load { 8.85 10.16 11.82 }: FAIL (20 of 44 gated rows)
+rerun minor3 chromium 1 m6-separable-ladder 23:19:25 load { 8.85 10.16 11.82 }: FAIL (18 of 30 gated rows)
+rerun minor3 chromium 2 m2-text-contrast 23:22:24 load { 10.65 10.36 11.58 }: FAIL (89 of 442 gated rows)
+rerun minor3 chromium 2 m3-non-text 23:22:24 load { 10.65 10.36 11.58 }: FAIL (77 of 180 gated rows)
+rerun minor3 chromium 2 m2-held-window 23:22:31 load { 10.94 10.43 11.59 }: FAIL (20 of 44 gated rows)
+rerun minor3 chromium 2 m6-separable-ladder 23:22:31 load { 10.94 10.43 11.59 }: FAIL (18 of 30 gated rows)
+== rerun end 23:22:31 load { 10.94 10.43 11.59 }
+queued 23:22:37 load { 15.67 11.42 11.94 } for: probe-one
+== probe-one start 23:22:37 load { 15.67 11.42 11.94 }
+probe r6lit chromium exit 0 23:23:09 load { 12.90 11.18 11.83 }
+crit-r6lit Chromium light menu parked item-0: highlighted=false hover=true focus=false bg=color(srgb 0.87451 0.823529 0.764706 / 0.5) translate=0px -1px
+crit-r6lit Chromium light menu parked item-1: highlighted=true hover=false focus=true bg=oklch(0.53 0.124 69.6 / 0.12) translate=0px
+crit-r6lit Chromium light select parked select-0: highlighted=false hover=true focus=false bg=color(srgb 0.87451 0.823529 0.764706 / 0.5) translate=0px -1px
+crit-r6lit Chromium light select parked select-1: highlighted=true hover=false focus=true bg=oklch(0.53 0.124 69.6 / 0.12) translate=0px
+crit-r6lit Chromium light command parked command-0: highlighted=false hover=true focus=false bg=color(srgb 0.87451 0.823529 0.764706 / 0.5) translate=0px -1px
+crit-r6lit Chromium light command parked command-1: highlighted=true hover=false focus=false bg=oklch(0.53 0.124 69.6 / 0.12) translate=0px
+crit-r6lit Chromium dark menu parked item-0: highlighted=false hover=true focus=false bg=color(srgb 0.258824 0.219608 0.180392 / 0.5) translate=0px -1px
+crit-r6lit Chromium dark menu parked item-1: highlighted=true hover=false focus=true bg=oklch(0.813 0.109 78.2 / 0.12) translate=0px
+crit-r6lit Chromium dark select parked select-0: highlighted=false hover=true focus=false bg=color(srgb 0.258824 0.219608 0.180392 / 0.5) translate=0px -1px
+crit-r6lit Chromium dark select parked select-1: highlighted=true hover=false focus=true bg=oklch(0.813 0.109 78.2 / 0.12) translate=0px
+crit-r6lit Chromium dark command parked command-0: highlighted=false hover=true focus=false bg=color(srgb 0.258824 0.219608 0.180392 / 0.5) translate=0px -1px
+crit-r6lit Chromium dark command parked command-1: highlighted=true hover=false focus=false bg=oklch(0.813 0.109 78.2 / 0.12) translate=0px
+POINTER→[data-highlighted] 22/22
+PARKED hovered-not-highlighted rows: 6; painting a fill: 6 (color(srgb 0.87451 0.823529 0.764706 / 0.5) | color(srgb 0.258824 0.219608 0.180392 / 0.5))
+BARE hover paint: chromium/light color(srgb 0.87451 0.823529 0.764706 / 0.5); chromium/dark color(srgb 0.258824 0.219608 0.180392 / 0.5)
+== probe-one end 23:23:10 load { 12.90 11.18 11.83 }
+queued 23:23:15 load { 12.67 11.16 11.82 } for: toolchain
+== toolchain start 23:23:15 load { 13.58 11.37 11.89 }
+typecheck app fv4 exit 0 23:23:24 load { 15.29 11.76 12.03 }
+library build fv4 exit 0 23:23:31 load { 18.07 12.47 12.27 }
+typecheck tests fv4 exit 0 23:23:40 load { 18.06 12.56 12.30 }
+dist-demo fv4 exit 0 23:23:42 load { 18.14 12.66 12.34 }
+vitest fv4 exit 0 23:24:38 load { 18.59 13.87 12.82 }
+ Test Files  237 passed (237)
+      Tests  2318 passed | 10 expected fail | 1 skipped (2329)
+== toolchain end 23:24:38 load { 18.59 13.87 12.82 }
+queued 23:24:44 load { 19.02 14.04 12.89 } for: toolchain
+== toolchain start 23:24:44 load { 19.02 14.04 12.89 }
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-5/floor-v4.patch:1177: trailing whitespace.
+       white app surface (the canonical G2 case the user reported). 
+warning: 1 line adds whitespace errors.
+worktree = minor-split-v3.patch
+typecheck app minor3 exit 0 23:24:51 load { 19.10 14.22 12.96 }
+library build minor3 exit 0 23:24:58 load { 19.49 14.38 13.03 }
+typecheck tests minor3 exit 0 23:25:05 load { 18.89 14.34 13.02 }
+dist-demo minor3 exit 0 23:25:06 load { 18.02 14.23 12.99 }
+vitest minor3 exit 0 23:26:04 load { 19.24 15.22 13.43 }
+ Test Files  239 passed (239)
+      Tests  2320 passed | 10 expected fail | 1 skipped (2331)
+verifier minor3 exit 1 23:26:05 load { 19.24 15.22 13.43 }
+G-BUNDLE-RATCHET: bundle ratchet increase forbidden: ${unpackedBytes} > ${datum}`);
+worktree = floor-v4.patch
+== toolchain end 23:26:05 load { 18.82 15.20 13.44 }

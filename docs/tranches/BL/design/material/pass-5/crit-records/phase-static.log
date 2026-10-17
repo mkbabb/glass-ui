@@ -1,0 +1,51 @@
+== static start 19:45:17 load { 28.02 21.95 19.69 }
+worktree = floor-v4.patch
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-5/floor-v4.patch:1177: trailing whitespace.
+       white app surface (the canonical G2 case the user reported). 
+warning: 1 line adds whitespace errors.
+worktree = minor-split-v3.patch
+worktree = floor-v4.patch
+census fv4 exit 0: LIGHTING-CENSUS stacked=0 halo=0 blur=0 open=0
+census minor3 exit 0: LIGHTING-CENSUS stacked=0 halo=0 blur=0 open=0
+census v1010 exit 1: LIGHTING-CENSUS stacked=2 halo=2 blur=5 open=9
+LIT fv4 exit 0: LIGHTING-LITERALS halo=5 near=1 stacked=10 chain=3 open=19 frames-halo=0/0
+LIT minor3 exit 0: LIGHTING-LITERALS halo=5 near=1 stacked=10 chain=3 open=19 frames-halo=0/0
+HOV fv4 exit 0: PASS (58 gated rows)
+HOV minor3 exit 0: PASS (58 gated rows)
+HOV r4 exit 1: FAIL (1 of 58 gated rows)
+HOV r6lit exit 0: PASS (58 gated rows)
+HOV minor2 exit 1: FAIL (1 of 58 gated rows)
+prose sweep fv4:
+src/styles/tokens/color-radius.css:163:                              the ink) — a bare :hover cannot mint it */
+prose sweep minor3:
+src/styles/tokens/color-radius.css:166:                              the ink) — a bare :hover cannot mint it */
+prose sweep r4:
+src/styles/tokens/color-radius.css:161:    --fill-selected: 0.12; /* persistent state — hover cannot mint it */
+src/components/card/styles.css:164:    /* Persistent state. `--fill-selected` (0.12) is a rung hover cannot mint. */
+src/components/_shared/menu/menu.css:3:    /* A menu ROW is not a lens. It carries a hover FILL and nothing else — no
+src/components/dock/styles/search.css:11: * The result rows ride `.glass-menu-row` (the glass-quiet hover-lift, CONSUMED
+src/components/dock/styles/search.css:58:    /* The dropdown result rows ride the shared `.glass-menu-row` glass-quiet hover-lift
+prose sweep r6lit:
+src/styles/tokens/color-radius.css:163:                              the ink) — a bare :hover cannot mint it */
+prose sweep minor2:
+src/styles/tokens/color-radius.css:164:    --fill-selected: 0.12; /* persistent state — hover cannot mint it */
+src/components/card/styles.css:164:    /* Persistent state. `--fill-selected` (0.12) is a rung hover cannot mint. */
+src/components/_shared/menu/menu.css:3:    /* A menu ROW is not a lens. It carries a hover FILL and nothing else — no
+src/components/dock/styles/search.css:17: * The result rows ride `.glass-menu-row` (the glass-quiet hover-lift, CONSUMED
+src/components/dock/styles/search.css:64:    /* The dropdown result rows ride the shared `.glass-menu-row` glass-quiet hover-lift
+earned-darken sentences (minor3):
+src/styles/glass/surface-axis.css:42:       earned darken retune it in lockstep with every other plate. No veil-local recipe
+src/styles/glass/ladder-undershadow.css:17:           uses. There is no second axis left to zero — the earned-darken clamp rides
+src/styles/glass/surfaces.css:58:       plate through the ONE element-composed recipe, so the earned darken (the veil
+src/styles/glass.css:47:/* The ink-veil register — the plate recipe + the earned-darken clamp the rungs
+src/components/button/styles.css:126:       earned darken intact) made THICK: `.glass-deep` re-points the rung's blur onto
+src/components/_shared/feedback/feedback-tone.css:38:   surface that composes a rung therefore tints ITS OWN rung: the earned-darken clamp,
+src/components/dock/styles/shell.css:235:           reach it with ZERO re-author (the earned darken composes at the plate). The
+src/components/dock/styles/adaptive-legibility.css:38:        /* The plate's own earned darken is NOT here and is not a token re-point: the
+edge gleam copy (fv4, minor3):
+fv4/src/styles/glass/material.css:152:        /* A thin, BOUNDED, pointer-anchored EDGE gleam (not a
+fv4/src/styles/tokens/property-regs-specular.css:14:   BOUNDED plus-lighter edge gleam (glass.css), the gleam is a whisper at every
+fv4/src/styles/tokens/property-regs-specular.css:21:     • hover  0.10 — a whisper edge gleam, not a bloom.
+fv4/demo/stories/substrates/glass-material.vue:124:            blurb="Hover any plate and the edge gleam follows the cursor, then settles softly back into the material when you leave."
+minor3/demo/stories/substrates/glass-material.vue:147:            blurb="Hover any plate and the edge gleam follows the cursor, then settles softly back into the material when you leave."
+== static end 19:45:33 load { 26.67 22.07 19.79 }

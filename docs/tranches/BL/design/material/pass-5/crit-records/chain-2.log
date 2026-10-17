@@ -1,0 +1,52 @@
+queued 20:05:49 load { 24.98 24.34 24.21 } for: battery-fv4-w battery-minor3-w plants-fv4 head-cells probe-fv4
+[guarded] waiting for the 'webkit' lock
+== battery-fv4-w start 20:07:36 load { 24.09 23.98 24.06 }
+worktree = floor-v4.patch
+exit 0 20:26:56 load { 7.17 9.15 14.05 }
+W-G  exit 1 · FAIL (28 of 40 gated rows)
+T    exit 0 · PASS (1 gated rows)
+LIT  exit 0 · PASS (1 gated rows)
+HOV  exit 0 · PASS (58 gated rows)
+== battery-fv4-w end 20:26:56 load { 7.17 9.15 14.05 }
+== battery-minor3-w start 20:26:56 load { 7.17 9.15 14.05 }
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-5/floor-v4.patch:1177: trailing whitespace.
+       white app surface (the canonical G2 case the user reported). 
+warning: 1 line adds whitespace errors.
+worktree = minor-split-v3.patch
+exit 0 20:45:10 load { 6.43 7.17 9.19 }
+W-G  exit 1 · FAIL (8 of 8 gated rows)
+T    exit 0 · PASS (1 gated rows)
+LIT  exit 0 · PASS (1 gated rows)
+HOV  exit 0 · PASS (58 gated rows)
+worktree = floor-v4.patch
+== battery-minor3-w end 20:45:11 load { 6.43 7.17 9.19 }
+== plants-fv4 start 20:45:11 load { 6.43 7.17 9.19 }
+worktree = floor-v4.patch
+== plant-R1 · 20:45:11 · load 6.4 7.2 9.2
+== plant-R2 · 20:49:32 · load 7.9 7.6 8.8
+== probe-R2-35 · 20:50:00 · load 6.6 7.3 8.7
+== plant-R3 · 20:50:29 · load 6.8 7.2 8.6
+== plant-R4 · 20:50:44 · load 6.2 7.1 8.5
+== var-q1c · 20:51:01 · load 5.9 7.0 8.5
+== var-q11b · 21:02:16 · load 17.0 14.9 12.2
+== plant-q1c-noroom · 21:06:21 · load 6.1 11.2 11.4
+== end · 21:10:40 · load 5.0 8.0 9.9
+== plant-bound · 21:10:40 · load 5.0 8.0 9.9
+== plant-heldfloor · 21:13:55 · load 6.4 7.1 9.1
+== plant-carrierveil · 21:15:45 · load 5.7 6.8 8.8
+== plant-darkperim · 21:17:35 · load 4.6 5.9 8.2
+== plant-noisolation · 21:19:38 · load 4.3 5.4 7.7
+== risk-opaque-ancestor · 21:20:07 · load 4.4 5.4 7.6
+== diag-held-noveil · 21:20:36 · load 4.1 5.2 7.4
+== plants-fv4 end 21:21:35 load { 4.40 5.10 7.25 }
+== head-cells start 21:21:35 load { 4.40 5.10 7.25 }
+exit 0 21:35:48 load { 9.64 8.20 7.60 }
+webkit-dark-deep-dialog-base +shim: 1 specs, 2 rings, pointer rest, readbacks 0
+captured 112 cells, 0 live windows, 0 motion windows and 0 drift windows in 852.4s (load 9.6 8.2 7.6) → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p5/crit/wt/.d3out/caps/head
+== head-cells end 21:35:48 load { 9.64 8.20 7.60 }
+== probe-fv4 start 21:35:48 load { 9.64 8.20 7.60 }
+probe fv4 chromium,webkit exit 0 21:36:53 load { 6.19 7.52 7.38 }
+POINTER→[data-highlighted] 44/44
+PARKED hovered-not-highlighted rows: 12; painting a fill: 0
+BARE hover paint: chromium/light rgba(0, 0, 0, 0); chromium/dark rgba(0, 0, 0, 0); webkit/light rgba(0, 0, 0, 0); webkit/dark rgba(0, 0, 0, 0)
+[guarded] KILLED: timeout after 90 min

@@ -1,0 +1,14 @@
+== ladder-fv4 start 22:01:20 load { 10.96 10.23 8.83 }
+capture fv4-r18 exit 0 22:07:25 load { 14.17 10.17 9.00 }
+fv4+r18 m2: FAIL (2 of 904 gated rows)
+fv4+r18 m3: PASS (354 gated rows)
+fv4+r18 m8: PASS (8 gated rows)
+fv4+r18 t: PASS (1 gated rows)
+fv4+r18 m2h: FAIL (2 of 68 gated rows)
+fv4+r18 m1: PASS (11 gated rows)
+fv4+r18 m6: FAIL (7 of 30 gated rows)
+webkit dark paper claim | quiet-in-card·muted-strong
+G7 m2: head PASS rows 902; regressed 0; head-PASS rows absent in route 974; rows FAIL at head now PASS 0
+webkit dark aurora50 hostile | opaque·ring:well
+G7 m3: head PASS rows 354; regressed 0; head-PASS rows absent in route 352; rows FAIL at head now PASS 0
+== ladder-fv4 end 22:07:36 load { 13.80 10.23 9.03 }
