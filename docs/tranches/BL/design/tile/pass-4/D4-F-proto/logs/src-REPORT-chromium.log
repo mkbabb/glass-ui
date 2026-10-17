@@ -1,0 +1,11 @@
+2026-10-16 22:50:37 · load { 14.72 14.74 12.69 }
+REPORT · H4-6, reported: the commit on wide tiles against a 4 px gap; the selection mark over light media
+  target f4p-src (flavor src) · Chromium 149.0.7827.55 · harness H4 a26206b6a740
+  load 14.72 / 14.74 / 12.69 at start, 15.22 / 14.85 / 12.74 at end · other headless browser processes at start: 17 (waited 0.1 s) · browser lock waited 0 s
+  FAIL       kick · preset-migrated forced to two 300 px columns at a 4 px gap · item 1 300.00×66.58, rest gap 4.00 px · programmatic commit (checked true), 105 frames · peak scale 1.0276 · deepest push into a neighbour 0.14 px (want ≤ 0.05)
+  info-pass  kick · preset-migrated at the scene's own geometry · item 1 204.00×66.58, rest gap 8.00 px · peak scale 1.0278 · deepest push 0.00 px
+  PASS       mark · v2-migrated dark · the mark #dedbd7 over #292825 beneath it, 368 device px · 10.70:1 (want ≥ 3:1)
+  info-pass  mark · v2-migrated light · the mark #272421 over #e7f1d2 beneath it, 942 device px · 13.12:1 (want ≥ 3:1)
+REPORT FAIL · 1/2 gating cells pass [library 1/2]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p4/D4-F-proto/out/runs/f4p-src/REPORT-chromium.json
+exit 1 · 2026-10-16 22:50:43 · load { 15.22 14.85 12.74 }

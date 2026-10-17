@@ -1,0 +1,15 @@
+2026-10-16 22:50:27 · load { 15.69 14.92 12.73 }
+W-D · the tile is declared once, at the group, and only where declared (D4-D)
+  target f4p-src (flavor src) · Chromium 149.0.7827.55 · harness H4 a26206b6a740
+  load 15.69 / 14.92 / 12.73 at start, 15.39 / 14.87 / 12.72 at end · other headless browser processes at start: 16 (waited 0.2 s) · browser lock waited 0 s
+  FAIL       family-d #0 · corner 9999px→20.00 (--radius-field 16.00) · row · line-height 15.30 vs body 22.95 · rows 1
+  FAIL       family-d #1 · corner 9999px→20.00 (--radius-field 16.00) · row · line-height 15.30 vs body 22.95 · rows 1
+  FAIL       family-d #2 · corner 9999px→20.00 (--radius-field 16.00) · row · line-height 15.30 vs body 22.95 · rows 1
+  FAIL       family-d #3 · corner 9999px→20.00 (--radius-field 16.00) · row · line-height 15.30 vs body 22.95 · rows 1
+  PASS       family-d-undeclared #0 (undeclared pair) · 195.28×40.00 rung 40.00 · corner 9999px→20.00 (÷h/2 1.00) · rows 1
+  PASS       family-d-undeclared #1 (undeclared pair) · 232.92×40.00 rung 40.00 · corner 9999px→20.00 (÷h/2 1.00) · rows 1
+  PASS       family-d-undeclared #2 (undeclared pair) · 212.77×40.00 rung 40.00 · corner 9999px→20.00 (÷h/2 1.00) · rows 1
+  PASS       family-d-undeclared #3 (undeclared pair) · 216.14×40.00 rung 40.00 · corner 9999px→20.00 (÷h/2 1.00) · rows 1
+W-D FAIL · 4/8 gating cells pass [library 4/8]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p4/D4-F-proto/out/runs/f4p-src/W-D-chromium.json
+exit 1 · 2026-10-16 22:50:30 · load { 15.39 14.87 12.72 }

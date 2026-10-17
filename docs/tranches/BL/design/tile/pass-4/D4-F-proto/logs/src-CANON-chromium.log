@@ -1,0 +1,10 @@
+2026-10-16 22:50:35 · load { 14.72 14.74 12.69 }
+CANON · the canon unit's law on widened fixtures (size, orientation, children, state), parsed by the engine
+  target f4p-src (flavor src) · Chromium 149.0.7827.55 · harness H4 a26206b6a740
+  load 14.72 / 14.74 / 12.69 at start, 14.72 / 14.74 / 12.69 at end · other headless browser processes at start: 17 (waited 0.2 s) · browser lock waited 0 s
+  FAIL       canon tile corner · 48 twins, 138 corner rules · tile spelling «.toggle-group:has(.toggle-group__item > :is(.toggle-group__media, .toggle-group__meta)) .toggle-group__item» · exactly one rule reaches a tile and not its pill twin, on var(--radius-field) · 0 rule(s): no rule declares the tile
+  FAIL       canon pill corner · 48 twins, 138 corner rules · tile spelling «.toggle-group:has(.toggle-group__item > :is(.toggle-group__media, .toggle-group__meta)) .toggle-group__item» · every group-scoped corner on a pill is var(--radius-pill) or inherit · 3 rule(s) reach a pill; 1 do not: «.toggle-group__item» → var(--radius-field) (index-DXHPlhUA.css; 48 twins)
+  PASS       canon unmatched · 48 twins, 138 corner rules · tile spelling «.toggle-group:has(.toggle-group__item > :is(.toggle-group__media, .toggle-group__meta)) .toggle-group__item» · every corner selector is matched by the engine · 0 unmatched
+CANON FAIL · 1/3 gating cells pass [library 1/3]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p4/D4-F-proto/out/runs/f4p-src/CANON-chromium.json
+exit 1 · 2026-10-16 22:50:37 · load { 14.72 14.74 12.69 }

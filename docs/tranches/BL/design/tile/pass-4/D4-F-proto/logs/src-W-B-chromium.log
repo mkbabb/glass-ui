@@ -1,0 +1,36 @@
+2026-10-16 22:49:58 · load { 17.97 15.19 12.74 }
+W-B · every multi-line one-of-N site composes the choice card (D4-B)
+  target f4p-src (flavor src) · Chromium 149.0.7827.55 · harness H4 a26206b6a740
+  load 17.97 / 15.19 / 12.74 at start, 16.19 / 15.01 / 12.74 at end · other headless browser processes at start: 17 (waited 0.2 s) · browser lock waited 0 s
+  FAIL       exports · RED by absence: no ChoiceGroup/ChoiceCard in the bundle (exports seen: [none])
+  FAIL       preset · 0 multi-line items · slots [] · roles [] (CDP AX tree) · used corner  · tab stops 1
+  PASS       preset arrows grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  PASS       preset arrows grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true
+  PASS       preset arrows grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true
+  PASS       preset arrows grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true
+  info-pass  preset arrows grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 3 · moved true · checked true
+  info-pass  preset arrows grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 3 · moved true · checked true
+  FAIL       specimen · 8 multi-line items · slots [toggle-group-item] · roles [radio] (CDP AX tree) · used corner 18.00 · tab stops 1
+  PASS       specimen arrows grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  PASS       specimen arrows grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true
+  PASS       specimen arrows grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true
+  PASS       specimen arrows grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true
+  info-pass  specimen arrows grid edge ArrowDown from #6 (no item that way; reported) · focus 6 → 7 · moved true · checked true
+  info-pass  specimen arrows grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 7 · moved true · checked true
+  FAIL       strip · 6 multi-line items · slots [] · roles [button] (CDP AX tree) · used corner 22.00 · tab stops 6
+  FAIL       strip arrows row ArrowRight from #0 · focus 0 → 0 · moved false · checked true
+  FAIL       strip arrows row ArrowLeft from #1 · focus 1 → 1 · moved false · checked true
+  FAIL       strip arrows row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true
+  FAIL       strip arrows row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 5 · moved false · checked true
+  FAIL       contract T-3 preset light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.19:1; p95 1.20; items 1/0 204×40
+  FAIL       contract T-3 preset dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.23:1; p95 1.28; items 1/0 204×40
+  FAIL       contract T-3 preset prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.00:1; p95 1.00; items 1/0 204×40
+  FAIL       contract T-3 specimen light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.19:1; p95 1.19; items 1/0 207×36
+  FAIL       contract T-3 specimen dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.22:1; p95 1.29; items 1/0 207×36
+  FAIL       contract T-3 specimen prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.00:1; p95 1.00; items 1/0 207×36
+  FAIL       contract T-3 strip light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 88.00 px²; fill 1.49:1; p95 1.50; items 1/0 44×44
+  PASS       contract T-3 strip dark · carrier ≥3:1 area 846.50 px² (perimeter band 0.00, interior 846.50) vs the bar 88.00 px²; fill 3.21:1; p95 3.53; items 1/0 44×44
+  FAIL       contract T-3 strip prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 88.00 px²; fill 1.13:1; p95 1.13; items 1/0 44×44
+W-B FAIL · 9/25 gating cells pass [library 9/25]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p4/D4-F-proto/out/runs/f4p-src/W-B-chromium.json
+exit 1 · 2026-10-16 22:50:21 · load { 16.19 15.01 12.74 }
