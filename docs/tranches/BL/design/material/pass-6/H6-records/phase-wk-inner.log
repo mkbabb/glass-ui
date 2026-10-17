@@ -1,0 +1,26 @@
+queued 00:49:59 load { 16.15 13.34 12.76 }
+[guarded] waiting for the 'webkit' lock
+== wk-inner start 00:56:38 load { 21.68 17.98 15.16 }
+admitted 00:56:38 load { 21.68 17.98 15.16 }
+worktree = floor-v4.patch
+battery-wk exit 0 01:15:44 load { 13.75 13.00 13.79 }
+arm-wk exit 0 01:16:00 load { 14.64 13.25 13.86 }
+selftest GLANCE exit 0 01:22:13 load { 17.22 16.86 15.49 }
+SELFTEST PASS: 14 expectations met
+capture fv4 webkit 1 exit 0 01:23:34 load { 19.21 17.77 15.97 }
+crit fv4 webkit 1 m3-non-text 01:23:34 load { 19.21 17.77 15.97 }: FAIL (28 of 140 gated rows)
+crit fv4 webkit 1 m8-chrome-calm 01:23:34 load { 19.21 17.77 15.97 }: FAIL (1 of 8 gated rows)
+crit fv4 webkit 1 m6-separable-ladder 01:23:35 load { 19.21 17.77 15.97 }: FAIL (7 of 30 gated rows)
+capture minor3 webkit 1 exit 0 01:24:56 load { 19.70 18.38 16.37 }
+crit minor3 webkit 1 m3-non-text 01:24:56 load { 19.24 18.31 16.36 }: FAIL (72 of 140 gated rows)
+crit minor3 webkit 1 m2-text-contrast 01:24:57 load { 19.24 18.31 16.36 }: FAIL (81 of 310 gated rows)
+capture fv4 webkit 2 exit 0 01:26:16 load { 16.44 17.56 16.23 }
+crit fv4 webkit 2 m3-non-text 01:26:16 load { 15.92 17.44 16.20 }: FAIL (28 of 140 gated rows)
+crit fv4 webkit 2 m8-chrome-calm 01:26:16 load { 15.92 17.44 16.20 }: FAIL (1 of 8 gated rows)
+crit fv4 webkit 2 m6-separable-ladder 01:26:17 load { 15.92 17.44 16.20 }: FAIL (7 of 30 gated rows)
+capture minor3 webkit 2 exit 0 01:27:36 load { 16.21 17.22 16.23 }
+crit minor3 webkit 2 m3-non-text 01:27:37 load { 16.21 17.22 16.23 }: FAIL (72 of 140 gated rows)
+crit minor3 webkit 2 m2-text-contrast 01:27:38 load { 16.21 17.22 16.23 }: FAIL (81 of 310 gated rows)
+done 01:27:38 load { 16.21 17.22 16.23 }
+== wk-inner end 01:27:38 load { 16.21 17.22 16.23 }
+guard exit 0 01:27:44

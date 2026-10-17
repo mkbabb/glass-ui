@@ -76,7 +76,18 @@ export const LIVE_STATES = ["published", "live"];
 export const WEBKIT_SHIM = ".glass-dock .dock-plate { border-color: var(--dock-plate-expanded-border) !important; }";
 export const THEMES = ["light", "dark"];
 export const ENGINES = ["chromium", "webkit"];
-export const CHROMIUM_ARGS = ["--enable-unsafe-webgpu", "--ignore-gpu-blocklist", "--use-angle=metal"];
+// H6-0 (pass 6): Chromium launches as Playwright's default headless shell with no GPU arguments (the machine law,
+// user-level CLAUDE.md, "Browser runs"). No witness of the 44 rows reads a GPU-only paint: every metric reads captured
+// pixels, and the field grounds are whatever the shell paints (H6.md §3 records which arm that is). A witness that needs
+// GPU arguments must prove it and cite the proof in its own file on a `GPU-WITNESS:` line (launch-law.mjs gates this).
+export const CHROMIUM_ARGS = [];
+// The one exception, proved by H6's own run: the moving-field windows (capture.mjs live, motion and drift; M-2m's motion,
+// step and drift legs, M-5 and W-A leg 1). Under the shell the aurora takes its static css arm (no navigator.gpu; WebGL2
+// only on SwiftShader, which the substrate's software guard refuses), paints once and parks, so a motion or step window
+// holds 1 frame against M-2m's ≥ 6 and ≥ 10, and the live window reads a field that never runs. Those windows alone
+// relaunch the headless shell with these arguments (one browser at a time); every cell keeps CHROMIUM_ARGS.
+// GPU-WITNESS: M-2m · ../pass-6/H6.md
+export const CHROMIUM_FIELD_ARGS = ["--enable-unsafe-webgpu", "--ignore-gpu-blocklist", "--use-angle=metal"];
 export const VIEW = { width: 1280, height: 900 };
 export const LADDER = ["wash", "quiet", "resting", "floating", "overlay"];
 export const CONTENT = ["wash", "quiet", "resting", "card"];

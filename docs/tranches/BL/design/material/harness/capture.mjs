@@ -47,7 +47,7 @@ import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
 import { execFileSync } from "node:child_process";
-import { holdWebkitLock, OUT, GROUNDS, EXTRA_GROUNDS, FIELD_GROUNDS, SCENES, SCENE_GROUNDS, THEMES, ENGINES, VIEW, CHROMIUM_ARGS, NAV_CAP, BOUND_PROP, FLAT_ATTR, GROUND_STATE_ATTR, WEBKIT_SHIM, cli, list, playwright, serve, cellKey, readPng, region, mean3, Y } from "./lib.mjs";
+import { holdWebkitLock, OUT, GROUNDS, EXTRA_GROUNDS, FIELD_GROUNDS, SCENES, SCENE_GROUNDS, THEMES, ENGINES, VIEW, CHROMIUM_ARGS, CHROMIUM_FIELD_ARGS, NAV_CAP, BOUND_PROP, FLAT_ATTR, GROUND_STATE_ATTR, WEBKIT_SHIM, cli, list, playwright, serve, cellKey, readPng, region, mean3, Y } from "./lib.mjs";
 
 const OPEN_MS = +(process.env.D3_OPEN_MS || 90000), CELL_MS = +(process.env.D3_CELL_MS || 600000), CLOSE_MS = 30000;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -217,7 +217,7 @@ export async function capture(target, o = {}) {
   const qs = o.query ? "&" + String(o.query).replace(/^[&?]/, "") : "";
   const pw = await playwright();
   const server = await serve(target);
-  const cells = [], live = [], motion = [], drift = [], versions = {}, unshimmed = {}, navRetired = {}, navStalled = {};
+  const cells = [], live = [], motion = [], drift = [], versions = {}, unshimmed = {}, navRetired = {}, navStalled = {}, launchArgs = {};
   const t0 = Date.now();
   const log = (s) => { if (!o.quiet) console.log(s); };
   const newPage = async (browser, engine, theme, reducedMotion) => {
@@ -272,7 +272,7 @@ export async function capture(target, o = {}) {
     if (engine === "webkit") await holdWebkitLock();
     let browser = await launch(), navs = 0;
     try {
-    versions[engine] = browser.version(); navRetired[engine] = 0; navStalled[engine] = 0;
+    versions[engine] = browser.version(); navRetired[engine] = 0; navStalled[engine] = 0; if (engine === "chromium") launchArgs.chromiumCells = CHROMIUM_ARGS;
     // Every page load goes through fresh(): past NAV_CAP loads, Playwright WebKit's browser is closed and relaunched.
     const fresh = async () => {
       if (engine === "webkit" && navs >= NAV_CAP) { await browser.close().catch(() => {}); browser = await launch(); navs = 0; navRetired[engine]++; log(`webkit browser retired and relaunched after ${NAV_CAP} page loads (${navRetired[engine]}×)`); }
@@ -362,6 +362,12 @@ export async function capture(target, o = {}) {
       unshimmed[theme] = { crashed, error };
       log(`webkit ${theme} ladder paper UNSHIMMED: ${crashed ? "CRASH " + (error || "") : "no crash"}`);
       await shut(ctx);
+    }
+    // H6-0: the moving-field windows need the field's GPU arm (lib.mjs CHROMIUM_FIELD_ARGS, its GPU-WITNESS line); the cells
+    // above ran on the headless shell's default. The cell browser closes first, so one browser stays one.
+    if (engine === "chromium" && (o.live || o.motion || o.drift)) {
+      await browser.close().catch(() => {}); browser = await pw.chromium.launch({ headless: true, args: CHROMIUM_FIELD_ARGS }); navs = 0;
+      launchArgs.chromiumWindows = CHROMIUM_FIELD_ARGS; log(`chromium relaunched for the moving-field windows with ${CHROMIUM_FIELD_ARGS.join(" ")}`);
     }
     if (o.live) {
       for (const theme of themes) for (const ground of grounds.filter((g) => FIELD_GROUNDS.includes(g))) {
@@ -474,7 +480,7 @@ export async function capture(target, o = {}) {
   const liveKey = (r) => [r.engine, r.theme, r.ground, r.variant].join("/");
   const doc = {
     meta: { ...(prev.meta || {}), target, label, worktree: o.worktree || buildMeta.worktree || prev.meta?.worktree || null, sha: buildMeta.sha || prev.meta?.sha || null,
-      versions: { ...(prev.meta?.versions || {}), ...versions }, navCap: NAV_CAP, navStalled: Object.fromEntries([...new Set([...Object.keys(prev.meta?.navStalled || {}), ...Object.keys(navStalled)])].map((e) => [e, (prev.meta?.navStalled?.[e] || 0) + (navStalled[e] || 0)])), navRetired: Object.fromEntries([...new Set([...Object.keys(prev.meta?.navRetired || {}), ...Object.keys(navRetired)])].map((e) => [e, (prev.meta?.navRetired?.[e] || 0) + (navRetired[e] || 0)])), webkitShim: shim ? WEBKIT_SHIM : null,
+      versions: { ...(prev.meta?.versions || {}), ...versions }, navCap: NAV_CAP, navStalled: Object.fromEntries([...new Set([...Object.keys(prev.meta?.navStalled || {}), ...Object.keys(navStalled)])].map((e) => [e, (prev.meta?.navStalled?.[e] || 0) + (navStalled[e] || 0)])), navRetired: Object.fromEntries([...new Set([...Object.keys(prev.meta?.navRetired || {}), ...Object.keys(navRetired)])].map((e) => [e, (prev.meta?.navRetired?.[e] || 0) + (navRetired[e] || 0)])), webkitShim: shim ? WEBKIT_SHIM : null, launchArgs: { ...(prev.meta?.launchArgs || {}), ...launchArgs },
       webkitUnshimmed: { ...(prev.meta?.webkitUnshimmed || {}), ...unshimmed },
       captured: new Date().toISOString(), query: o.query || null, load: os.loadavg().map((v) => +v.toFixed(1)), seconds: +((Date.now() - t0) / 1000).toFixed(1) },
     cells: keep(prev.cells || [], cells, cellKey), live: keep(prev.live || [], live, liveKey), motion: keep(prev.motion || [], motion, liveKey), drift: keep(prev.drift || [], drift, liveKey) };

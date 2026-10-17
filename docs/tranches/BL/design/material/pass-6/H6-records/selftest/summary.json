@@ -1,0 +1,269 @@
+[
+ {
+  "id": "GLANCE",
+  "engine": "chromium",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "GLANCE PASS: 6 pairs, each with a visible paint delta",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/wt/.d3out/selftest/glance/chromium-PASS",
+  "note": "base against a route that repaints every plate",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "chromium",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "GLANCE FAIL: 6 of 6 pairs show no paint delta or failed (light dock, light dialog, light floating, dark dock, dark dialog, dark floating)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/wt/.d3out/selftest/glance/chromium-FAIL",
+  "note": "base against itself (no delta)",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "webkit",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "GLANCE PASS: 6 pairs, each with a visible paint delta",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/wt/.d3out/selftest/glance/webkit-PASS",
+  "note": "base against a route that repaints every plate",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "webkit",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "GLANCE FAIL: 6 of 6 pairs show no paint delta or failed (light dock, light dialog, light floating, dark dock, dark dialog, dark floating)",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/wt/.d3out/selftest/glance/webkit-FAIL",
+  "note": "base against itself (no delta)",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "chromium",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "GLANCE FAIL: 6 of 6 pairs show no paint delta or failed (light dock [layout only], light dialog [layout only], light floating [layout only], dark dock [layout only], dark dialog [layout only], dark floating [layout only])",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/wt/.d3out/selftest/glance/chromium-moved-FAIL",
+  "note": "H4-1: the route moves the plates 70 px and repaints nothing",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "webkit",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "GLANCE FAIL: 6 of 6 pairs show no paint delta or failed (light dock [layout only], light dialog [layout only], light floating [layout only], dark dock [layout only], dark dialog [layout only], dark floating [layout only])",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/wt/.d3out/selftest/glance/webkit-moved-FAIL",
+  "note": "H4-1: the route moves the plates 70 px and repaints nothing",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "chromium",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "GLANCE FAIL: 2 of 2 pairs show no paint delta or failed (light story [layout only], dark story [layout only])",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/wt/.d3out/selftest/glance/chromium-storycopy-FAIL",
+  "note": "H4-1: story copy moves the card 72 px, no paint change",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "chromium",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "GLANCE PASS: 2 pairs, each with a visible paint delta",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/wt/.d3out/selftest/glance/chromium-storycopy-PASS",
+  "note": "H4-1: story copy moves the card and the card is repainted",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "webkit",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "GLANCE FAIL: 2 of 2 pairs show no paint delta or failed (light story [layout only], dark story [layout only])",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/wt/.d3out/selftest/glance/webkit-storycopy-FAIL",
+  "note": "H4-1: story copy moves the card 72 px, no paint change",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "webkit",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "GLANCE PASS: 2 pairs, each with a visible paint delta",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/wt/.d3out/selftest/glance/webkit-storycopy-PASS",
+  "note": "H4-1: story copy moves the card and the card is repainted",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "chromium",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "GLANCE PASS: every story pair shows a claimed region",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/wt/.d3out/selftest/glance/chromium-story-PASS",
+  "note": "H3-10: the route story claims one region",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "chromium",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "GLANCE FAIL: 2 story pairs with no claimed region",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/wt/.d3out/selftest/glance/chromium-story-FAIL",
+  "note": "H3-10: the route story claims nothing",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "webkit",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "GLANCE PASS: every story pair shows a claimed region",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/wt/.d3out/selftest/glance/webkit-story-PASS",
+  "note": "H3-10: the route story claims one region",
+  "fails": []
+ },
+ {
+  "id": "GLANCE",
+  "engine": "webkit",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "GLANCE FAIL: 2 story pairs with no claimed region",
+  "capdir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/wt/.d3out/selftest/glance/webkit-story-FAIL",
+  "note": "H3-10: the route story claims nothing",
+  "fails": []
+ },
+ {
+  "id": "LAW",
+  "engine": "static",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "PASS (39 gated rows)",
+  "capdir": "",
+  "note": "H6-0: the harness itself (and pass-6/ when present): headless shell, no GPU arguments",
+  "fails": []
+ },
+ {
+  "id": "LAW",
+  "engine": "static",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "FAIL (1 of 1 gated rows)",
+  "capdir": "--root /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/wt/.d3out/selftest/fx/law-pass5",
+  "note": "H6-0: pass 5's lib.mjs (CHROMIUM_ARGS with WebGPU, blocklist override and ANGLE Metal), uncited",
+  "fails": [
+   "✗ law-pass5/h/lib.mjs: no GPU-WITNESS citation"
+  ]
+ },
+ {
+  "id": "LAW",
+  "engine": "static",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "PASS (1 gated rows)",
+  "capdir": "--root /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/wt/.d3out/selftest/fx/law-cited",
+  "note": "H6-0: a GPU launch under a GPU-WITNESS line whose evidence file exists",
+  "fails": []
+ },
+ {
+  "id": "LAW",
+  "engine": "static",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "FAIL (1 of 1 gated rows)",
+  "capdir": "--root /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/wt/.d3out/selftest/fx/law-badcite",
+  "note": "H6-0: a GPU-WITNESS line citing evidence that does not exist",
+  "fails": [
+   "✗ law-badcite/h/gpu.mjs: GPU-WITNESS cites ev/missing.md, which does not exist"
+  ]
+ },
+ {
+  "id": "LAW",
+  "engine": "static",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "FAIL (1 of 1 gated rows)",
+  "capdir": "--root /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/wt/.d3out/selftest/fx/law-channel",
+  "note": "H6-0: full Chrome for Testing, headed, uncited",
+  "fails": [
+   "✗ law-channel/h/p.mjs: no GPU-WITNESS citation"
+  ]
+ },
+ {
+  "id": "DEL",
+  "engine": "static",
+  "expect": "PASS",
+  "exit": 0,
+  "ok": true,
+  "verdict": "PASS (6 gated rows)",
+  "capdir": "--root /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/wt/.d3out/selftest/fx/del-clean --declare /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/harness/deletes-floor.json",
+  "note": "H6-1: the floor's names absent; the deletion stated as such",
+  "fails": []
+ },
+ {
+  "id": "DEL",
+  "engine": "static",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "FAIL (1 of 6 gated rows)",
+  "capdir": "--root /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/wt/.d3out/selftest/fx/del-split --declare /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/harness/deletes-floor.json",
+  "note": "H6-1: a phrase broken over two comment lines (overlay-plate.css:272-273's shape)",
+  "fails": [
+   "✗ \"earned darken\": 1 · src/a.css:1"
+  ]
+ },
+ {
+  "id": "DEL",
+  "engine": "static",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "FAIL (1 of 6 gated rows)",
+  "capdir": "--root /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/wt/.d3out/selftest/fx/del-demo --declare /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/harness/deletes-floor.json",
+  "note": "H6-1: an identifier in an untouched demo file",
+  "fails": [
+   "✗ \"backdropMode\": 1 · demo/x.ts:1"
+  ]
+ },
+ {
+  "id": "DEL",
+  "engine": "static",
+  "expect": "FAIL",
+  "exit": 1,
+  "ok": true,
+  "verdict": "FAIL (3 of 6 gated rows)",
+  "capdir": "--root /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/wt --declare /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/harness/deletes-floor.json",
+  "note": "H6-1: floor v4's tree (H6): the six earned-darken comments",
+  "fails": [
+   "✗ \"earned darken\": 5 · src/components/button/styles.css:126 src/components/dock/styles/shell.css:185 src/styles/glass/overlay-plate.css:272 src/styles/glass/surface-axis.css:42 src/styles/glass/surfaces.css:53",
+   "✗ \"darkened by whatever\": 1 · src/components/dock/styles/search.css:38",
+   "✗ \"luma read\": 1 · src/styles/glass/surfaces.css:54"
+  ]
+ }
+]

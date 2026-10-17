@@ -13,20 +13,21 @@
 // H5 (pass 5) adds, each with a fixture PASS and a planted FAIL: M-9's upper bound over every state ground, REPORTED and
 // gated only under --dim-max (H5-1); LIT, the lighting-literals witness, static and frame arms, REPORTED and gated only
 // under --strict (H5-2); HOV, no :hover paints a value built on --fill-selected (H5-3); W-A's leg 4 under Q-11's text
-// (H5-4). The static arms (LIT static, HOV) read a tree, not a capture, so they run once and print engine "static". The four pass-1 family witnesses that H2 left alone (W-B, W-C, W-E, W-F) and
+// (H5-4). H6 (pass 6) adds LAW (H6-0, the launch law) and DEL (H6-1, the deleted-mechanism check), static. The static arms (LIT static, HOV) read a tree, not a capture, so they run once and print engine "static". The four pass-1 family witnesses that H2 left alone (W-B, W-C, W-E, W-F) and
 // W-D keep their pass-1 Chromium test. A planted capture holds only the cells its plant touches, and its witness run
 // is restricted to them with --cells (the fixture PASS runs read every cell unrestricted).
-//   node selftest.mjs [--fields <HEAD capdir>] [--only M-1,W-B,LIT,HOV] [--skip-capture] [--reuse-green]
+//   node selftest.mjs [--fields <HEAD capdir>] [--only M-1,W-B,LIT,HOV] [--skip-capture] [--reuse-green] [--tree <floor v4 worktree>]
+// --tree: DEL's (H6-1) planted FAIL on a real tree carrying the deleted mechanism's prose (floor v4's six comments).
 // --reuse-green: keep an existing green capture (the plants are captured fresh).
 // --fields: a HEAD run's capture (its Chromium empty-scene aurora frames become the fixtures' field pixels).
 import fs from "node:fs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
-import { OUT, HERE, RETUNES, FIELD_CLAIM_SCENES, cli, list, lin } from "./lib.mjs";
+import { OUT, HERE, CHECKOUT, RETUNES, FIELD_CLAIM_SCENES, cli, list, lin } from "./lib.mjs";
 import { writeFixture, writeStoryFixture } from "./fixtures.mjs";
 import { capture } from "./capture.mjs";
 
-const a = cli({ fields: { type: "string" }, only: { type: "string" }, "skip-capture": { type: "boolean" }, "reuse-green": { type: "boolean" } });
+const a = cli({ fields: { type: "string" }, only: { type: "string" }, "skip-capture": { type: "boolean" }, "reuse-green": { type: "boolean" }, tree: { type: "string" } });
 const FIELDS = path.resolve(a.fields || path.join(OUT, "caps", "head"));
 const ROOT = path.join(OUT, "selftest");
 const only = list(a.only, null);
@@ -327,6 +328,26 @@ if (want("HOV")) {
     "H5-3: R-4 as built: a bare :hover paints the row fill built on --fill-selected");
   staticWitness("HOV", "hover-fill-selected", ["--root", tree("hov-nested", { "src/a.css": base, "src/B.vue": `<style>\n.b { --b1: var(--fill-selected); --b2: color-mix(in oklab, var(--accent) calc(var(--b1) * 100%), transparent); &:hover { box-shadow: 0 0 0 1px var(--b2); } }\n</style>\n` })], "FAIL",
     "H5-3: two levels of indirection inside a .vue block, reached by a nested &:hover");
+}
+// ── H6 (pass 6): the launch law (H6-0) and the deleted-mechanism check (H6-1), static, run once ────────────────
+if (want("LAW")) {
+  staticWitness("LAW", "launch-law", [], "PASS", "H6-0: the harness itself (and pass-6/ when present): headless shell, no GPU arguments");
+  const pass5Lib = spawnSync("git", ["-C", CHECKOUT, "show", "f9267e35a:docs/tranches/BL/design/material/harness/lib.mjs"], { encoding: "utf8", maxBuffer: 64 << 20 }).stdout;
+  staticWitness("LAW", "launch-law", ["--root", tree("law-pass5", { "h/lib.mjs": pass5Lib })], "FAIL", "H6-0: pass 5's lib.mjs (CHROMIUM_ARGS with WebGPU, blocklist override and ANGLE Metal), uncited");
+  // The planted launch lines are assembled here, so this file's own source names no launch flag (LAW reads it too).
+  const [flag, chan, head] = [["--enable", "unsafe", "webgpu"].join("-"), ["channel", ' "chromium"'].join(":"), ["headless", " false"].join(":")];
+  const probe = `const b = await chromium.launch({ args: ["${flag}"] });\n`;
+  staticWitness("LAW", "launch-law", ["--root", tree("law-cited", { "h/gpu.mjs": `// GPU-WITNESS: W-X · ev/proof.md\n${probe}`, "h/ev/proof.md": "the named witness's proof\n" })], "PASS", "H6-0: a GPU launch under a GPU-WITNESS line whose evidence file exists");
+  staticWitness("LAW", "launch-law", ["--root", tree("law-badcite", { "h/gpu.mjs": `// GPU-WITNESS: W-X · ev/missing.md\n${probe}` })], "FAIL", "H6-0: a GPU-WITNESS line citing evidence that does not exist");
+  staticWitness("LAW", "launch-law", ["--root", tree("law-channel", { "h/p.mjs": `const b = await chromium.launch({ ${chan}, ${head} });\n` })], "FAIL", "H6-0: full Chrome for Testing, headed, uncited");
+}
+if (want("DEL")) {
+  const decl = path.join(HERE, "deletes-floor.json");
+  const ok = `/* The plate paints the theme's own ground at the bound. No luma term and no clamp — nothing samples. */\n.p { background: var(--card); }\n`;
+  staticWitness("DEL", "deleted-mechanisms", ["--root", tree("del-clean", { "src/a.css": ok, "demo/b.vue": "<template><p>cream at the bound</p></template>\n" }), "--declare", decl], "PASS", "H6-1: the floor's names absent; the deletion stated as such");
+  staticWitness("DEL", "deleted-mechanisms", ["--root", tree("del-split", { "src/a.css": `/* the veil already carries the earned\n   * darken of the clamp */\n.p { color: red; }\n` }), "--declare", decl], "FAIL", "H6-1: a phrase broken over two comment lines (overlay-plate.css:272-273's shape)");
+  staticWitness("DEL", "deleted-mechanisms", ["--root", tree("del-demo", { "src/a.css": ok, "demo/x.ts": `const m = props.backdropMode;\n` }), "--declare", decl], "FAIL", "H6-1: an identifier in an untouched demo file");
+  if (a.tree) staticWitness("DEL", "deleted-mechanisms", ["--root", path.resolve(a.tree), "--declare", decl], "FAIL", `H6-1: floor v4's tree (${path.basename(path.dirname(path.resolve(a.tree)))}): the six earned-darken comments`);
 }
 
 // ── the pass-1 family witnesses H2 left alone (Chromium, as pass 1 ran them) ──────────────────────────────────

@@ -1,0 +1,18 @@
+ok   LAW  static   expect PASS exit 0 · PASS (39 gated rows) · H6-0: the harness itself (and pass-6/ when present): headless shell, no GPU arguments
+ok   LAW  static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · H6-0: pass 5's lib.mjs (CHROMIUM_ARGS with WebGPU, blocklist override and ANGLE Metal), uncited
+        ✗ law-pass5/h/lib.mjs: no GPU-WITNESS citation
+ok   LAW  static   expect PASS exit 0 · PASS (1 gated rows) · H6-0: a GPU launch under a GPU-WITNESS line whose evidence file exists
+ok   LAW  static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · H6-0: a GPU-WITNESS line citing evidence that does not exist
+        ✗ law-badcite/h/gpu.mjs: GPU-WITNESS cites ev/missing.md, which does not exist
+ok   LAW  static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · H6-0: full Chrome for Testing, headed, uncited
+        ✗ law-channel/h/p.mjs: no GPU-WITNESS citation
+ok   DEL  static   expect PASS exit 0 · PASS (6 gated rows) · H6-1: the floor's names absent; the deletion stated as such
+ok   DEL  static   expect FAIL exit 1 · FAIL (1 of 6 gated rows) · H6-1: a phrase broken over two comment lines (overlay-plate.css:272-273's shape)
+        ✗ "earned darken": 1 · src/a.css:1
+ok   DEL  static   expect FAIL exit 1 · FAIL (1 of 6 gated rows) · H6-1: an identifier in an untouched demo file
+        ✗ "backdropMode": 1 · demo/x.ts:1
+ok   DEL  static   expect FAIL exit 1 · FAIL (3 of 6 gated rows) · H6-1: floor v4's tree (H6): the six earned-darken comments
+        ✗ "earned darken": 5 · src/components/button/styles.css:126 src/components/dock/styles/shell.css:185 src/styles/glass/overlay-plate.css:272 src/styles/glass/surface-axis.css:42 src/styles/glass/surfaces.css:53
+        ✗ "darkened by whatever": 1 · src/components/dock/styles/search.css:38
+        ✗ "luma read": 1 · src/styles/glass/surfaces.css:54
+SELFTEST PASS: 9 expectations met

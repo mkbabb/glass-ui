@@ -1,11 +1,11 @@
-# D3 · the glass material battery (harness), H5
+# D3 · the glass material battery (harness), H6
 
 | field | value |
 |---|---|
-| seat | D3 pass 3, H3. Lands `REGISTRY.md` P2-6.2 step 1 (H3-1..H3-12) in place over H2 (pass 2's H-1..H-15, which stay). D3 pass 4, H4: lands P3-5.2 step 1, the instrument fixes I-1..I-4 as H4-1..H4-4, in place over H3. D3 pass 5, H5: lands P4-6.2 step 1, the defect classes H5-1..H5-5 (REGISTRY P4-5), in place over H4 |
+| seat | D3 pass 3, H3. Lands `REGISTRY.md` P2-6.2 step 1 (H3-1..H3-12) in place over H2 (pass 2's H-1..H-15, which stay). D3 pass 4, H4: lands P3-5.2 step 1, the instrument fixes I-1..I-4 as H4-1..H4-4, in place over H3. D3 pass 5, H5: lands P4-6.2 step 1, the defect classes H5-1..H5-5 (REGISTRY P4-5), in place over H4. D3 pass 6, H6: lands P5-6.2 step 1, H6-0 (the launch law) and H6-1 (the deleted-mechanism check), in place over H5 |
 | model | `claude-opus-5-5`, asserted from own system identity |
-| engines | Chromium 149 (`--enable-unsafe-webgpu --ignore-gpu-blocklist --use-angle=metal`, WebGPU adapter present) and Playwright WebKit 26.5, both headless, Playwright imported from `glass-ui/node_modules/playwright`. **Playwright WebKit is not Safari.** Every real-Safari cell is UNMEASURED (owner's safaridriver checkbox) |
-| records | the self-test result per check and engine, and the baseline per witness, engine and theme: `../pass-5/H5.md` for H5 (the floor v3 baseline), `../pass-4/H4.md` for H4 (the floor v2 baseline), `../pass-3/H3.md` for H3 (`../pass-2/H2.md` for H2's). Those files are the source of record for the numbers; this file describes the instrument |
+| engines | Chromium 149 as Playwright's headless shell (`chrome-headless-shell`) with **no launch arguments** for every cell (H6-0); the moving-field windows alone (live, motion, drift) relaunch it with `--enable-unsafe-webgpu --ignore-gpu-blocklist --use-angle=metal` under `lib.mjs`'s `GPU-WITNESS: M-2m` line (`../pass-6/H6.md` §1.1). Under the shell the aurora cells paint the field's static `css` arm, which is the ground the cells read. Playwright WebKit 26.5, headless, Playwright imported from `glass-ui/node_modules/playwright`. **Playwright WebKit is not Safari.** Every real-Safari cell is UNMEASURED (owner's safaridriver checkbox) |
+| records | the self-test result per check and engine, and the baseline per witness, engine and theme: `../pass-6/H6.md` for H6 (the floor v4 baseline under the headless shell), `../pass-5/H5.md` for H5 (the floor v3 baseline), `../pass-4/H4.md` for H4 (the floor v2 baseline), `../pass-3/H3.md` for H3 (`../pass-2/H2.md` for H2's). Those files are the source of record for the numbers; this file describes the instrument |
 
 ## 1 · What is here
 
@@ -26,6 +26,9 @@
 | `wa-…` … `wg-…` | W-A (A′), W-B..W-F (banked or retired families, unchanged), W-G (D3-G) |
 | `t-transmission.mjs` | T (H-12): T = 1 − α and T_c1 per rung; reported, not gated |
 | `lighting-literals.mjs` | LIT (H5-2): the lighting literals the `--shadow-*` census cannot see. A static arm over the tree's CSS and `.vue` `<style>` blocks (HALO, NEAR, STACKED, CHAIN) and a frame arm (W-0.11 §6's luma ring around the captured dock at 4, 8 and 16 px). REPORTED; `--strict` gates. Separate from `../pass-4/lighting-census.mjs`, which stays W-0.11 appendix A verbatim so W-0.11 G4's summary line holds |
+| `launch-law.mjs` | LAW (H6-0): every `.mjs`, `.js`, `.cjs` and `.sh` file under the harness and `../pass-6/` launches the headless shell with no GPU argument, no full-browser channel, no headed browser and no explicit executable, unless the file carries a `GPU-WITNESS: <witness id> · <evidence path>` line whose evidence exists. Static, one row per file; comment lines are not read |
+| `deleted-mechanisms.mjs` | DEL (H6-1): no file under the tree's `src/` and `demo/` (every text file, touched or not) names a mechanism the patch declares deleted. `--declare <names.json>`: a name with a space is a phrase (case-insensitive, matched across whitespace and comment leaders, so a phrase broken over two comment lines is found); a name without one is an identifier (exact). One row per name |
+| `deletes-floor.json` | The floor's declaration for DEL: `earned darken`, `darkened by whatever`, `luma read`, `backdropLuminance`, `--glass-backdrop-luma`, `backdropMode` (FL-1, FL-16; REGISTRY P5-5 H6-1 and P5-3.3) |
 | `hover-fill-selected.mjs` | HOV (H5-3): no `:hover` rule paints a value built on `--fill-selected` (static; the tree is `--root` or the capture's worktree) |
 | `glance.mjs` | The owner-glance pair (H-13): base against route, dock, Dialog, floating and the glass-material story, both themes. H4-1: paint read apart from layout, each surface aligned by its own DOM box |
 | `run.mjs` | `node run.mjs <worktree> [--label x] [--demo]`: build, capture everything, run every check. Logs in `<capdir>/results/<id>.log` |
@@ -46,7 +49,9 @@ node $H/baseline.mjs $D3_OUT/caps/<route> --out <file.json>          # the per-e
 node $H/m2-text-contrast.mjs $D3_OUT/caps/<route> [--gate chromium|webkit] [--verbose] [--cells <regex>]
 node $H/glance.mjs --base $D3_OUT/builds/head/dist --route $D3_OUT/builds/<route>/dist --out <dir> --name <route> \
     --story-base $D3_OUT/builds/head/demo --story-route $D3_OUT/builds/<route>/demo [--engine webkit]
-node $H/selftest.mjs --fields $D3_OUT/caps/head [--only M-2,W-G]    # H3: ../pass-3/H3.md §2 for the time and load
+node $H/selftest.mjs --fields $D3_OUT/caps/head [--only M-2,W-G] [--tree <floor wt>]   # H3: ../pass-3/H3.md §2 for the time and load
+node $H/launch-law.mjs                                              # H6-0: LAW over harness/ and pass-6/
+node $H/deleted-mechanisms.mjs --root <wt> --declare $H/deletes-floor.json   # H6-1: DEL over every src/ and demo/ file
 node $H/m1x-off-paper.mjs $D3_OUT/caps/<route> [--q11 a|b|c]         # REPORTED with no ruling or under (a); (b) gates chrome and the escape, (c) the claimed plates
 ```
 
@@ -111,7 +116,7 @@ No canvas context is ever requested; the live WebGPU field is observed only by s
 
 ### 2.5 · Engines
 
-- **Chromium** is the gate engine.
+- **Chromium** is the gate engine: the headless shell, no launch arguments, software raster (H6-0, `launch-law.mjs` gates it). Its aurora cells paint the `css` arm (no `navigator.gpu`; WebGL2 only on SwiftShader, which the substrate refuses). The live, motion and drift windows relaunch the shell with `CHROMIUM_FIELD_ARGS` (the one cited exception: M-2m's motion legs need a moving field), recorded in `cells.json` `meta.launchArgs`.
 - **Playwright WebKit** paints no `backdrop-filter`, exposes no `navigator.gpu` (the aurora runs its GL arm), and crashes on any page that mounts `GlassDock`. **H-14**: every WebKit context now carries D2's crash shim (`WEBKIT_SHIM`, from `dock/harness/adapter-head.mjs:45`: the plate border's nested translucent `color-mix()` pinned to one arm, colours only), so WebKit dock rows exist and print `webkit+shim`. The unshimmed probe records the crash beside them. `--gate webkit` gates on WebKit.
 - **Real Safari** prints UNMEASURED (owner's safaridriver checkbox) in every check.
 
@@ -140,6 +145,8 @@ No canvas context is ever requested; the live WebGPU field is observed only by s
 | GLANCE | specimen builds (+ demo builds) | `--require-delta`: every pair's **paint** delta ≥ 0.1% (each surface aligned by its own box; layout and the fixed-rect `frame` delta print beside it, ungated); `--story-claim`: the route's story claims a region (cropped as its own pair) | H-13, H3-10, H4-1 |
 | W-C | ladder, dialog × 7; retune-bg, retune-fg, retune-card × paper | every muted run p05 ≥ 4.5 (the [4.5, 5.5] ceiling struck); each colour retune followed (every run ≥ 4.5 and the signed hierarchy kept) or refused loud (more console errors and warnings **naming a glass token** than the base cell: `lib.mjs namesGlassToken`, the retuned token, its numeric twins, or a `--glass-*` / `--on-glass-*` property) | C″'s witness, row 17; H3-8, H4-4 |
 | LIT | the tree (static); state × paper, c1 and held × black, white, c1 (frames) | REPORTED (exit 0) with every finding printed and one summary line `LIGHTING-LITERALS halo= near= stacked= chain= open= frames-halo=k/n`. `--strict`: each static finding and each dock ring with a symmetric halo is a FAIL row. Static: HALO (a literal zero-offset blurred non-inset layer in `box-shadow`, `text-shadow`, a `drop-shadow()`, or a non-`--shadow-*` custom property), NEAR (offset under a quarter of the blur; `--shadow-*` tokens read for this one only), STACKED (two or more blurred non-inset layers in one `box-shadow`, a var() to a shadow, cast or glow token counting as one, the cartoon family exempt), CHAIN (two or more `drop-shadow()` in one filter). Frames: per side, ΔL_OK(full − raw) on the 2 px ring at 4, 8, 16 px outside the dock's box, less the 32 px ring; a halo when top and bottom move alike by ≥ 0.003 and the smaller is ≥ half the larger | H5-2 |
+| LAW | the harness and `../pass-6/` (static) | every launch is the headless shell with no GPU argument, or the file cites a named witness's proof on a `GPU-WITNESS:` line whose evidence exists. One gated row per file | H6-0 |
+| DEL | the tree's `src/` and `demo/` (static) | no declared name of a deleted mechanism appears in any text file. One gated row per declared name; each hit prints `file:line` | H6-1 |
 | HOV | the tree (static) | no effective `:hover` selector without persistent state of its own paints a value that reads `--fill-selected` or a custom property built on it (to a fixpoint). One gated row per `:hover` selector | H5-3 |
 | W-B, W-D, W-E, W-F | as pass 1 | as pass 1 | written only when their families' re-triggers fire (REGISTRY §3.3) |
 

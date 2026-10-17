@@ -1,0 +1,60 @@
+LAW · the harness launches the headless shell with no GPU arguments unless a GPU-WITNESS line cites the need (static; H6-0)
+roots: /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/harness, /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-6
+  ✓ harness/lib.mjs: 3 launch finding(s) under GPU-WITNESS M-2m · pass-6/H6.md
+LAUNCH-LAW files=39 cited=1 uncited=0
+PASS (39 gated rows)
+LAW exit 0
+-- DEL tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/wt
+DEL · no file under src/ or demo/ describes a mechanism the patch deletes (static; H6-1)
+tree: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/wt · 835 text files under src/ and demo/ · declaration: the floor (floor v4 and later): FL-1 and FL-16 delete the backdrop sampler, the clamp and its earned darken, the knee, --glass-backdrop-luma and backdropMode (REGISTRY P5-3.3; names per P5-5 H6-1, plus backdropMode from P5-3.3's row)
+  ✗ "earned darken": 5 · src/components/button/styles.css:126 src/components/dock/styles/shell.css:185 src/styles/glass/overlay-plate.css:272 src/styles/glass/surface-axis.css:42 src/styles/glass/surfaces.css:53
+  ✗ "darkened by whatever": 1 · src/components/dock/styles/search.css:38
+  ✗ "luma read": 1 · src/styles/glass/surfaces.css:54
+  ✓ "backdropLuminance": 0
+  ✓ "--glass-backdrop-luma": 0
+  ✓ "backdropMode": 0
+DELETED-MECHANISMS names=6 hits=7 files=6
+FAIL (3 of 6 gated rows)
+DEL exit 1
+-- DEL tree /Users/mkbabb/Programming/glass-ui
+DEL · no file under src/ or demo/ describes a mechanism the patch deletes (static; H6-1)
+tree: /Users/mkbabb/Programming/glass-ui · 838 text files under src/ and demo/ · declaration: the floor (floor v4 and later): FL-1 and FL-16 delete the backdrop sampler, the clamp and its earned darken, the knee, --glass-backdrop-luma and backdropMode (REGISTRY P5-3.3; names per P5-5 H6-1, plus backdropMode from P5-3.3's row)
+  ✗ "earned darken": 11 · src/components/button/styles.css:126 src/components/dock/styles/adaptive-legibility.css:7 src/components/dock/styles/adaptive-legibility.css:38 src/components/dock/styles/dock.css:15 src/components/dock/styles/dock.css:102 src/components/dock/styles/shell.css:235 src/styles/glass/overlay-plate.css:272 src/styles/glass/surface-axis.css:42 src/styles/glass/surfaces.css:58 src/styles/glass/veil.css:37 demo/stories/manifest.ts:510
+  ✗ "darkened by whatever": 1 · src/components/dock/styles/search.css:44
+  ✗ "luma read": 1 · src/styles/glass/surfaces.css:59
+  ✗ "backdropLuminance": 1 · src/composables/glass/useGlassBackdropLuminance.ts:23
+  ✗ "--glass-backdrop-luma": 22 · src/components/dock/GlassDock.vue:112 src/components/dock/styles/adaptive-legibility.css:41 src/components/dock/styles/adaptive-legibility.css:82 src/components/dock/styles/dock.css:104 src/components/dock/styles/search.css:7 src/components/dock/styles/shell.css:133 src/composables/glass/useGlassBackdropLuminance.ts:58 src/composables/glass/useGlassBackdropLuminance.ts:65 src/composables/glass/useGlassBackdropLuminance.ts:248 src/composables/glass/useGlassBackdropLuminance.ts:280 src/styles/glass/veil.css:10 src/styles/glass/veil.css:41 src/styles/glass/veil.css:65 src/styles/glass/veil.css:65 src/styles/glass/veil.css:66 src/styles/tokens/glass-fx.css:132 src/styles/tokens/glass-fx.css:145 src/styles/tokens/property-regs.css:169 demo/stories/dock/_frame/DockStage.vue:55 demo/stories/dock/_frame/DockStage.vue:76 demo/stories/dock/overview.vue:115 demo/stories/substrates/glass-material.vue:30
+  ✗ "backdropMode": 9 · src/components/dock/GlassDock.vue:23 src/components/dock/GlassDock.vue:26 src/components/dock/GlassDock.vue:84 src/components/dock/GlassDock.vue:116 src/components/dock/GlassDock.vue:118 src/components/dock/GlassDock.vue:345 src/components/dock/README.md:42 src/components/dock/README.md:52 src/components/dock/composables/useDockShellProps.ts:48
+DELETED-MECHANISMS names=6 hits=45 files=19
+FAIL (6 of 6 gated rows)
+DEL exit 1
+-- DEL tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/v1010.4Vhu
+DEL · no file under src/ or demo/ describes a mechanism the patch deletes (static; H6-1)
+tree: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p6/H6/v1010.4Vhu · 838 text files under src/ and demo/ · declaration: the floor (floor v4 and later): FL-1 and FL-16 delete the backdrop sampler, the clamp and its earned darken, the knee, --glass-backdrop-luma and backdropMode (REGISTRY P5-3.3; names per P5-5 H6-1, plus backdropMode from P5-3.3's row)
+  ✗ "earned darken": 11 · src/components/button/styles.css:126 src/components/dock/styles/adaptive-legibility.css:7 src/components/dock/styles/adaptive-legibility.css:38 src/components/dock/styles/dock.css:15 src/components/dock/styles/dock.css:102 src/components/dock/styles/shell.css:235 src/styles/glass/overlay-plate.css:272 src/styles/glass/surface-axis.css:42 src/styles/glass/surfaces.css:58 src/styles/glass/veil.css:37 demo/stories/manifest.ts:510
+  ✗ "darkened by whatever": 1 · src/components/dock/styles/search.css:44
+  ✗ "luma read": 1 · src/styles/glass/surfaces.css:59
+  ✗ "backdropLuminance": 1 · src/composables/glass/useGlassBackdropLuminance.ts:23
+  ✗ "--glass-backdrop-luma": 22 · src/components/dock/GlassDock.vue:112 src/components/dock/styles/adaptive-legibility.css:41 src/components/dock/styles/adaptive-legibility.css:82 src/components/dock/styles/dock.css:104 src/components/dock/styles/search.css:7 src/components/dock/styles/shell.css:133 src/composables/glass/useGlassBackdropLuminance.ts:58 src/composables/glass/useGlassBackdropLuminance.ts:65 src/composables/glass/useGlassBackdropLuminance.ts:248 src/composables/glass/useGlassBackdropLuminance.ts:280 src/styles/glass/veil.css:10 src/styles/glass/veil.css:41 src/styles/glass/veil.css:65 src/styles/glass/veil.css:65 src/styles/glass/veil.css:66 src/styles/tokens/glass-fx.css:132 src/styles/tokens/glass-fx.css:145 src/styles/tokens/property-regs.css:169 demo/stories/dock/_frame/DockStage.vue:55 demo/stories/dock/_frame/DockStage.vue:76 demo/stories/dock/overview.vue:115 demo/stories/substrates/glass-material.vue:30
+  ✗ "backdropMode": 9 · src/components/dock/GlassDock.vue:23 src/components/dock/GlassDock.vue:26 src/components/dock/GlassDock.vue:84 src/components/dock/GlassDock.vue:116 src/components/dock/GlassDock.vue:118 src/components/dock/GlassDock.vue:345 src/components/dock/README.md:42 src/components/dock/README.md:52 src/components/dock/composables/useDockShellProps.ts:48
+DELETED-MECHANISMS names=6 hits=45 files=19
+FAIL (6 of 6 gated rows)
+DEL exit 1
+-- the registry's line grep on floor v4 (P5-2.2 R-10's plant as written)
+src/styles/glass/surface-axis.css:42:       earned darken retune it in lockstep with every other plate. No veil-local recipe
+src/styles/glass/surfaces.css:53:       plate through the ONE element-composed recipe, so the earned darken (the veil
+src/styles/glass/surfaces.css:54:       clamp's luma read) reaches the pill exactly as it reaches every other plate — no
+src/components/button/styles.css:126:       earned darken intact) made THICK: `.glass-deep` re-points the rung's blur onto
+src/components/dock/styles/search.css:38:       plate colour). The field reads the floating rung, darkened by whatever the
+src/components/dock/styles/shell.css:185:           reach it with ZERO re-author (the earned darken composes at the plate). The
+-- LAW over the whole material directory (pass records included, information)
+LAW · the harness launches the headless shell with no GPU arguments unless a GPU-WITNESS line cites the need (static; H6-0)
+roots: /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material
+  ✓ material/harness/lib.mjs: 3 launch finding(s) under GPU-WITNESS M-2m · material/pass-6/H6.md
+  ✗ material/pass-3/D3-Cpp-proto-computed.mjs: no GPU-WITNESS citation
+      24 WebGPU flag: const b = await (eng === "chromium" ? chromium : webkit).launch(eng === "chromium" ? { args: ["--enable-unsafe-webgpu", 
+      24 GPU blocklist override: const b = await (eng === "chromium" ? chromium : webkit).launch(eng === "chromium" ? { args: ["--enable-unsafe-webgpu", 
+      24 ANGLE backend flag: const b = await (eng === "chromium" ? chromium : webkit).launch(eng === "chromium" ? { args: ["--enable-unsafe-webgpu", 
+LAUNCH-LAW files=83 cited=1 uncited=1
+FAIL (1 of 83 gated rows)
+LAW(all) exit 1
