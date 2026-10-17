@@ -1,0 +1,47 @@
+{
+ "witness": "PR",
+ "target": "wt",
+ "when": "2026-10-17T03:05:01.929Z",
+ "load": 13.5,
+ "cells": [
+  {
+   "engine": "source",
+   "cell": "prose·readers",
+   "pass": false,
+   "failed": [
+    "readers"
+   ],
+   "dead": [
+    "--dock-clock (src/components/dock/composables/useDockAperture.ts)"
+   ],
+   "summary": "72 custom propert(ies) declared or written in the dock band; 1 with no reader in src/ or demo/: --dock-clock (src/components/dock/composables/useDockAperture.ts)",
+   "load": 13.5
+  },
+  {
+   "engine": "source",
+   "cell": "prose·count",
+   "pass": true,
+   "failed": [],
+   "counts": [
+    {
+     "at": "src/components/dock/GlassDock.vue:67",
+     "says": "SEVEN members",
+     "n": 7,
+     "ok": true
+    }
+   ],
+   "members": 7,
+   "summary": "DockProps has 7 member(s); 1 prose count(s) near it, 0 wrong",
+   "load": 13.5
+  },
+  {
+   "engine": "source",
+   "cell": "prose·rows",
+   "pass": true,
+   "failed": [],
+   "dup": [],
+   "summary": "32 token(s) with a row in docs/design/tunable-anim.md; 0 with more than one",
+   "load": 13.5
+  }
+ ]
+}

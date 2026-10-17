@@ -1,0 +1,26 @@
+{
+ "witness": "CASES",
+ "target": "g@fc4ce33f",
+ "when": "2026-10-17T04:21:43.408Z",
+ "load": 19.44,
+ "cells": [
+  {
+   "engine": "webkit",
+   "cell": "case·rotated·control",
+   "pass": false,
+   "failed": [
+    "snap"
+   ],
+   "summary": "host rotate(0deg): expand, collapse; seats' largest second difference 11.44 px/frame²; largest one-frame seat move after the window closed 0.57 px (bound 0.5); webkit-case_rotated_control.json  ⟶ FAILED: snap",
+   "load": 20
+  },
+  {
+   "engine": "webkit",
+   "cell": "case·rotated",
+   "pass": true,
+   "failed": [],
+   "summary": "host rotate(2deg): expand, collapse; seats' largest second difference 6.81 px/frame² (control 11.44, bound +1); largest one-frame seat move after the window closed 0.38 px (bound 0.5); webkit-case_rotated.json",
+   "load": 19.44
+  }
+ ]
+}
