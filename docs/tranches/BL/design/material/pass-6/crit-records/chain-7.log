@@ -1,0 +1,23 @@
+queued 19:41:23 load { 13.49 10.90 11.07 } [--light --timeout 30] for: readings g67
+== readings start 19:41:24 load { 13.49 10.90 11.07 }
+fv5 M-6 --q1 a chromium: PASS (88 gated rows)
+fv5 M-6 --q1 c chromium: FAIL (2 of 96 gated rows)
+fv5 M-1x (a) chromium: PASS (1 gated rows)
+fv5 M-1x --q11 b chromium: FAIL (12 of 21 gated rows)
+fv5 M-9 chromium: PASS (20 gated rows)
+minor4 M-1x (a) chromium: PASS (1 gated rows)
+fv5 M-6 --q1 a webkit: PASS (88 gated rows)
+fv5 M-6 --q1 c webkit: FAIL (2 of 96 gated rows)
+fv5 M-1x (a) webkit: PASS (1 gated rows)
+fv5 M-1x --q11 b webkit: FAIL (12 of 21 gated rows)
+fv5 M-9 webkit: PASS (20 gated rows)
+minor4 M-1x (a) webkit: PASS (1 gated rows)
+== readings end 19:42:19 load { 21.05 13.03 11.82 }
+== g67 start 19:42:19 load { 21.05 13.03 11.82 }
+g7-m2.txt: G7 m2: head PASS rows 1125; regressed 0; head-PASS rows absent in route 0; rows FAIL at head now PASS 377
+g7-m3.txt: G7 m3: head PASS rows 70; regressed 0; head-PASS rows absent in route 0; rows FAIL at head now PASS 350
+g6-dark-raw.txt: G6 dark composites compared 26, worst ΔE_OK 0.0022, over 0.002: 1
+g6-dark-r9.txt: G6 dark composites compared 13, worst ΔE_OK 0.0000, over 0.002: 0
+w011g6-m2.txt: G7 m2: head PASS rows 1442; regressed 0; head-PASS rows absent in route 0; rows FAIL at head now PASS 0
+w011g6-m3.txt: G7 m3: head PASS rows 420; regressed 0; head-PASS rows absent in route 0; rows FAIL at head now PASS 0
+== g67 end 19:42:47 load { 21.27 13.77 12.13 }

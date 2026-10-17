@@ -1,0 +1,890 @@
+src/composables/color/index.ts:12:// Forcing one return space would darken one of the surfaces. The CSS
+src/composables/color/index.ts:42: * does not clamp negative linear (an out-of-gamut stop yields negatives; the wrap
+src/composables/color/index.ts:91: * so Blob paints in the intended output space. Channels are clamped to [0,1]
+src/composables/color/index.ts:234:    /** Number of stops to produce. Default 3; clamped to [2, 4]. */
+src/composables/color/index.ts:246:     * units). When set, each stop's chroma is clamped to AT MOST this value AFTER
+src/composables/color/index.ts:268:     * stop. Replaces the hardcoded `0.05` low clamp, so a consumer guarantees no stop
+src/composables/color/index.ts:270:     * `0.98` high clamp is untouched. `undefined` → the byte-identical `0.05` floor.
+src/composables/color/index.ts:305:    // The low clamp (default 0.05) is the `lightnessFloor` knob.
+src/composables/color/index.ts:306:    const lowClamp = lightnessFloor !== undefined ? lightnessFloor : 0.05;
+src/composables/motion/core/useYieldToMain.ts:13:// `setTimeout(0)`, is not clamped to 4ms and is not deprioritized after nested
+src/composables/motion/core/motionTempo.ts:17:// SSR / off-DOM safe (returns the identity 1), positive-clamped (a malformed or ≤0
+src/composables/motion/scroll/useScrollChrome.ts:93:function clamp01(v: number): number {
+src/composables/motion/scroll/useScrollChrome.ts:161:        const next = reduced.value ? (t >= snapMidpoint ? 1 : 0) : clamp01(t);
+src/composables/motion/scroll/useScrollChrome.ts:217:        // so a re-expand starts immediately from the clamped extreme, with no dead travel
+src/composables/motion/scroll/useScrollTrigger.ts:106:function clamp01(v: number): number {
+src/composables/motion/scroll/useScrollTrigger.ts:113:    if ("fraction" in at) return clamp01(at.fraction) * reader.extent();
+src/composables/motion/scroll/useScrollScene.ts:97:function clamp01(v: number): number {
+src/composables/motion/scroll/useScrollScene.ts:110:    const s = clamp01(scrub);
+src/composables/motion/scroll/useScrollScene.ts:159:                  clamp: true,
+src/composables/motion/scroll/useScrollScene.ts:164:        const clamped = clamp01(t);
+src/composables/motion/scroll/useScrollScene.ts:165:        if (smoother instanceof SpringProgress) smoother.target = clamped;
+src/composables/motion/scroll/useScrollScene.ts:166:        else smoother.setTarget(clamped);
+src/composables/motion/scroll/useScrollScene.ts:171:        const v = clamp01(value);
+src/composables/motion/scroll/useScrollScene.ts:185:        if (options.map) return clamp01(options.map(r));
+src/composables/motion/scroll/useScrollScene.ts:187:        return extent > 0 ? clamp01(r.position() / extent) : 0;
+src/composables/motion/morph/useDragMorph.ts:14:// `pointermove`), a velocity-windowed sample buffer (robust to a jittery last
+src/composables/motion/morph/useDragMorph.ts:17:// that substrate; it owns NO hand-rolled pointer-velocity sampler and NO parallel
+src/composables/motion/morph/useElementMorph.ts:99:const clamp01 = (n: number): number => (n < 0 ? 0 : n > 1 ? 1 : n);
+src/composables/motion/morph/useElementMorph.ts:199:        const p = clamp01(rawProgress);
+src/composables/motion/morph/useElementMorph.ts:228:        if (opacityOn) el.style.opacity = String(clamp01(frame.opacity));
+src/composables/motion/morph/useElementMorph.ts:266:        if (opacityOn && terminal) el.style.opacity = String(clamp01(terminal.opacity));
+src/composables/motion/morph/useElementMorph.ts:299:                const local = clamp01(frame.clock);
+src/composables/motion/morph/useSelectionIndicator.ts:11:// shared `useLiquidFlex` primitive. The reciprocal-stretch cap-clamp + the `--stretch`
+src/composables/motion/morph/useSelectionIndicator.ts:64: * travel, swells across, and clamps at the track's inner edge. Where it is not
+src/composables/motion/morph/useSelectionIndicator.ts:259:    // owns the cap-clamp + the reciprocal `--stretch` value.
+src/composables/motion/morph/useSelectionIndicator.ts:355:            // coordinates, and clamps against the container's PADDING box — the
+src/composables/motion/morph/useSelectionIndicator.ts:385:            // The clamp is REPORTED, never silently absorbed — the paint reads it to
+src/composables/motion/morph/useSelectionIndicator.ts:387:            if (organ.clamped) el.dataset.eyeglassClamped = "";
+src/composables/motion/morph/useSelectionIndicator.ts:388:            else delete el.dataset.eyeglassClamped;
+src/composables/motion/morph/useSelectionIndicator.ts:416:                delete el.dataset.eyeglassClamped;
+src/composables/motion/morph/eyeglass.ts:136:     * edge". Omit only where no track exists to clamp against.
+src/composables/motion/morph/eyeglass.ts:151:     * clamp is a REPORTED state, not a silent floor: a paint that wants to read
+src/composables/motion/morph/eyeglass.ts:154:    readonly clamped: boolean;
+src/composables/motion/morph/eyeglass.ts:179:    if (!(toExtent > 0)) return { span: 1, clamped: false, direction: 0 };
+src/composables/motion/morph/eyeglass.ts:184:    if (!(geometric > 1)) return { span: 1, clamped: false, direction: 0 };
+src/composables/motion/morph/eyeglass.ts:191:    // The boundary clamp. The body grows about the derived origin, so the two edges
+src/composables/motion/morph/eyeglass.ts:216:    const clamped = frac < 0 ? 0 : frac > 1 ? 1 : frac;
+src/composables/motion/morph/eyeglass.ts:217:    return 1 + clamped * (swellMax - 1);
+src/composables/motion/morph/useLeadTrail.ts:30:// an eleven-cell hop READS as eleven, which a fixed 36 px clamp made impossible
+src/composables/motion/morph/useLeadTrail.ts:66:// Clamp a long inter-frame gap (a backgrounded tab) so the spring never explodes.
+src/composables/motion/reveal/useLiquidReveal.ts:10:// FLIP runner). It owns NO rAF loop, NO geometry fallback, NO spring sample — it declares
+src/composables/motion/number/useAnimatedNumber.ts:25:    /** Numeric contract. Progress mode accepts and clamps 0..100. Default absolute. */
+src/composables/motion/number/useAnimatedNumber.ts:35:    /** Absolute-mode clamp to [0, 1]. Progress mode always clamps to [0, 100]. */
+src/composables/motion/number/useAnimatedNumber.ts:36:    clamp?: boolean;
+src/composables/motion/number/useAnimatedNumber.ts:57:function clampProgress(value: number): number {
+src/composables/motion/number/useAnimatedNumber.ts:75:    // range its clamp supports) and scale at the consumer-facing boundary.
+src/composables/motion/number/useAnimatedNumber.ts:84:            ? (value: number) => clampProgress(value) / PROGRESS_SCALE
+src/composables/motion/number/useAnimatedNumber.ts:92:        ? clampProgress(options.initial ?? 0)
+src/composables/motion/number/useAnimatedNumber.ts:117:        // Progress mode clamps internally — the [0, 1] smoother range is the
+src/composables/motion/number/useAnimatedNumber.ts:119:        clamp: mode === "progress" ? true : (options.clamp ?? false),
+src/composables/motion/number/useAnimatedNumberMap.ts:29: * smoothed sample. This matches the per-metric `raw → smoothed` contract.
+src/composables/motion/number/useAnimatedNumberMap.ts:54:        // surface (placeholder pills, "no sample yet" registers).
+src/composables/motion/pointer/useRoutePointer.ts:65:function clamp01(v: number): number {
+src/composables/motion/pointer/useRoutePointer.ts:115:            x: clamp01(event.clientX / w),
+src/composables/motion/pointer/useRoutePointer.ts:116:            y: clamp01(event.clientY / h),
+src/composables/motion/pointer/usePointerVelocityField.ts:207:function clamp01(v: number): number {
+src/composables/motion/pointer/usePointerVelocityField.ts:298:        position.value = { x: clamp01(xNorm), y: clamp01(yNorm) };
+src/composables/motion/spring/useLiquidFlex.ts:111:     * is the travel FRACTION (clamped to [0,1]); in `"tanh"` law it is `tanh(travel·k)`.
+src/composables/motion/spring/useLiquidFlex.ts:168:        const clamped = next < 0 ? 0 : next > 1 ? 1 : next;
+src/composables/motion/spring/useLiquidFlex.ts:170:        t.value = clamped;
+src/composables/motion/spring/useLiquidFlex.ts:183:    // Volume-preserving squish, capped at maxStretch. The cap-clamp + the reciprocal
+src/composables/motion/spring/useLiquidFlex.ts:210:    // squish already computes (linear law: the travel fraction, clamped). The
+src/composables/motion/spring/springProjection.ts:18:    readonly sampleCount: number;
+src/composables/motion/spring/springProjection.ts:21:    /** The maximum of the timing function across the sampled horizon — the
+src/composables/motion/spring/springProjection.ts:26:const SPRING_TOKEN_SAMPLE_COUNT = 48;
+src/composables/motion/spring/springProjection.ts:53:        sampleCount: SPRING_TOKEN_SAMPLE_COUNT,
+src/composables/motion/spring/springProjection.ts:58:    for (let index = 1; index <= SPRING_TOKEN_SAMPLE_COUNT; index++) {
+src/composables/motion/spring/springProjection.ts:63:        sampleCount: SPRING_TOKEN_SAMPLE_COUNT,
+src/composables/search/match.ts:143: * The repair is the separation, not a clamp: `multiTokenFuzzy` ALREADY returns null
+src/composables/glass/webgl/createCanvasLifecycle.ts:123:     * overshoot — opacity clamps at 1.0, only `filter: brightness` can exceed the
+src/composables/glass/webgl/visibility.ts:245:    // `--ease-cartoon-punch` linear() curve (opacity clamps at 1.0 — only filter:
+src/composables/glass/webgl/backingSize.ts:7: * the DPR clamp + the NEVER-300×150 floor, ONE implementation); it only UPLOADS these
+src/composables/glass/procedural/color.glsl.ts:148:// shared chunk) so aurora's samplePalette splices one source. Depends on
+src/composables/glass/procedural/color.glsl.ts:197:// The ramp dispatcher aurora's samplePalette splices. tRaw is the raw inter-stop
+src/composables/glass/procedural/color.glsl.ts:201:vec3 samplePaletteRamp(vec3 a, vec3 b, float tRaw, int huePath) {
+src/composables/glass/procedural/color.wgsl.ts:161:// The ramp dispatcher (the samplePalette splices it). tRaw is the raw inter-stop
+src/composables/glass/procedural/color.wgsl.ts:165:fn samplePaletteRamp(a: vec3<f32>, b: vec3<f32>, tRaw: f32, huePath: i32) -> vec3<f32> {
+src/composables/dom/useDragVelocity.ts:18:// SATURATED through `tanh(k·v)` and clamped at `clamp` (~0.7) before it is written to
+src/composables/dom/useDragVelocity.ts:59:     * The smear CEILING (the clamp the saturated value floors under). Default `0.7`
+src/composables/dom/useDragVelocity.ts:62:    clamp?: number;
+src/composables/dom/useDragVelocity.ts:102:    const ceil = params.clamp ?? 0.7;
+src/composables/dom/useDragVelocity.ts:112:    // gets for free; here a cheap one-pole filter, no sample buffer).
+src/composables/dom/useDragVelocity.ts:119:    //   `--atom-drag-v` is the SMEAR term: EMA'd hard and clamped at the ceiling, so a
+src/composables/dom/useDragVelocity.ts:123:    //   V0 = 900 px/s pole through a τ = 100 ms one-pole, and it is NOT clamped — a
+src/composables/dom/useDragVelocity.ts:141:    // The saturating map: raw px/frame → tanh(gain·|v|), clamped at the ceiling.
+src/composables/dom/useDragVelocity.ts:156:        // here we decay the smear toward the live sample so a STOP (no move) bleeds the
+src/composables/dom/useDragVelocity.ts:158:        // smearing). One-pole EMA: 0.35 toward the live sample, 0.65 retained.
+src/styles/animations.css:276:               `--surface-tint-*` house family + the `in oklab` glass tint axis are
+src/styles/paper.css:41: * sinks into the paper's pits → darken) / `screen` (dark — fiber catches light →
+src/styles/paper.css:55:   darken/lighten. All three fiber periods (2.8px / 3.5px / 7px) divide the 140px
+src/styles/paper.css:114:    /* LIGHT: ink sinks into the cream → multiply darkens the valleys. */
+src/styles/paper.css:159:        /* LIGHT tooth: multiply — the physically-true ink-into-pits darken (NOT
+src/styles/paper.css:189:   multiply darkens the ruling into a light sheet, screen lifts it out of a dark
+src/styles/track-well.css:88:           clamped), so this reads shadowed at the top without a per-mode fork
+src/styles/glass/focus-veil.css:22:   §13): stacked full-viewport backdrop samples are the single most expensive thing this
+src/styles/glass/focus-veil.css:28:   radius re-samples the whole viewport every frame; the veil's entire motion budget is
+src/styles/glass/glass-atom.css:7:   MARK, and a mark samples nothing; the `surface="glass"` axis that composed
+src/styles/glass/glass-atom.css:110:       mark samples nothing — `.glass-capsule` paints a real `backdrop-filter`
+src/styles/glass/surface-axis.css:44:       bound plus one step), like the ladder it belongs to; nothing samples the
+src/styles/glass/material.css:73:       descendants, so a `backdrop-filter` nested inside a rung samples that rung's
+src/styles/glass/material.css:211:        /* `plus-lighter` (additive but HDR-clamped, Safari 16.4+), NOT
+src/styles/glass/material.css:253:        /* Smooth the position + intensity between pointer samples (the typed
+src/styles/glass/overlay-plate.css:112:       clamped too. Capping without the scroller would clip the tail silently, which is
+src/styles/glass/overlay-plate.css:353:       cannot sample glass, avoided by construction) paints a 3-stop warm spine
+src/styles/glass/control-bit.css:177:       THE POLE IS BLACK. A recess must darken below the L* 0.1456 page floor, and
+src/styles/glass/control-bit.css:180:       (tokens/glass-fx.css). Darkening toward black scales the host's channels and
+src/styles/glass/deep.css:18: * tint axis + the a11y brackets all compose unchanged. The deep tier rides a base
+src/styles/glass/surfaces.css:55:       does (nothing samples the backdrop) — no tab-local fork, no root-baked token blind
+src/styles/glass/control-surfaces.css:17:           --control-floor)`, the h-10 register with the WCAG-44px coarse clamp), the
+src/styles/glass/mark.css:15:   (1) A MARK SAMPLES NOTHING. `backdrop-filter: none` is the one glass claim
+src/styles/glass/mark.css:92:    /* (1) LAW: a mark samples nothing. */
+src/styles/glass/reveal.css:52:           legible band by the generator's clamp), derived from the entering row's own
+src/styles/glass/dissolve.css:140:       §3 sampled across its boundary and found 74 → 91 in four device pixels: no shadow,
+src/styles/glass/grasp.css:32:   down, so a carrier mounted on a `.glass-card` today would sample nothing past the
+src/styles/glass/grasp.css:87:       ANCESTOR may form a BACKDROP ROOT. A `backdrop-filter` samples only as far back
+src/styles/glass/a11y-fallback.css:35:   and the level IS the mix. The separate tint-darken this bracket used to add was a
+src/styles/glass/veil.css:36:   `prefers-contrast: more` rides. No luma term and no clamp — nothing samples, so
+src/styles/glass/veil.css:61:   root, so the carriers still sample the ground. Without it the carriers fall behind
+src/styles/utilities/components.css:17:           `--radius-control` stadium (= --radius-pill, clamped to half-height), NOT the
+src/styles/theme/radius.css:50:   `--radius-pill` (9999px) is clamped by the engine to half the ACTUAL block-size,
+src/styles/theme/radius.css:56:   bound is REFUSED — it couples the corner to a second token to re-derive a clamp
+src/styles/theme/radius.css:151:       track cannot wear the `9999px` pill: on a tall box the stadium clamps its
+src/styles/theme/radius.css:161:       control (clamped to half-height by `--radius-pill`'s 9999px geometry, so a 16px
+src/styles/theme/radius.css:172:       stadium by construction (--radius-pill clamps to half-height on a short box →
+src/styles/theme/bridges.css:21:       that silently bypass the fluid √φ clamps — a linter cannot tell the scale
+src/styles/glass.css:20: * its blur. Bottom line: one backdrop sample per visual plate; nested cells do
+src/styles/typography/scale.css:90:       media-query staircase. The <min> of every clamp is the rung's prior fixed rem
+src/styles/typography/scale.css:125:       ONE fluid value, so 1/√φ holds at the clamp floor, throughout its
+src/styles/typography/semantic.css:51:   forking: `--text-hero-size` (total clamp), `--text-hero-leading` (line-height,
+src/styles/typography/utilities.css:154:       `--muted-foreground` never double-darkens) so the neutral eyebrow clears
+src/styles/tokens/scroll-tokens.css:79:       (CPU + GPU sample the same curve). No cubic-bezier fallback seed survives —
+src/styles/tokens/dark-arm.css:47:       so the page↔card gap widens from a 4-L collapse (card/page relL ≈ 2.0×, a 0.003-luma
+src/styles/tokens/dark-arm.css:304:       light arm's darkening) so it clears AA over the composited dark plate WHILE
+src/styles/tokens/color-radius.css:304:    --constellation-well-max-speed:   4.0;    /* base-width px/frame cap — the no-slingshot clamp */
+src/styles/tokens/scheme-spring.css:88:       and sampling a curve over the short analytic span leaves its penultimate stop
+src/styles/tokens/scheme-spring.css:96:       sampled over `springLinearStops`'s default `4×response` while this clock was the
+src/styles/tokens/shadow.css:54:       cannot hold C 0.11 at L 0.18, so the browser clamps each channel and the ink
+src/styles/tokens/shadow.css:127:       the surface (the contact-darkening AO the satellites pick up where they merge into
+src/styles/tokens/shadow.css:143:       contact band TIGHTENS toward the lifted base (a touch of extra grounding-darken
+src/styles/tokens/glass.css:13:       over ANY input (a black ground in light, a white one in dark). Nothing samples
+src/styles/tokens/glass.css:164:    /* THE PER-INSTANCE PLATE-FILL TINT AXIS (`--glass-fill-tint` /
+src/styles/tokens/glass.css:304:   override CLAMPS to the initial-value — the typed fail-safe. */
+src/styles/tokens/glass-fx.css:120:       so it darkens the inner-top edge without re-coloring the warm fill. */
+src/styles/tokens/scale-paper.css:70:       (`--invalid-ring-tint`, the documented retint axis), resolving
+src/styles/tokens/light-dark.css:12:   `--touch-target`, so every scaled control-height `max(scaled, floor)` clamps at
+src/styles/tokens/sizing.css:22:       `--control-floor` is the WCAG-2.5.5 clamp seam: 0 at desktop, lifted to
+src/styles/tokens/sizing.css:40:       ratio it rides the fluid clamp and the comfort factor exactly once, for free.
+src/styles/tokens/sizing.css:153:       `max(…, --dock-control-floor)` clamp. `--dock-mobile-scale` overrides this. */
+src/styles/tokens/sizing.css:257:       brief darken rather than scaling alone. The one-ink SELECTED rung
+src/styles/tokens/sizing.css:321:     2. TYPE keeps its own clamp and never rides `--ui-scale`; no type rung appears
+src/styles/tokens/property-regs.css:22:   samples; a bare unregistered var() snaps. --specular-intensity is the alpha
+src/styles/tokens/property-regs.css:41:   an unregistered percentage var() in a gradient stop snaps between samples, so a veil
+src/styles/tokens/property-regs.css:130:   CLAMPS to the initial value — the typed fail-safe. */
+src/styles/tokens/property-regs.css:151:   bound (`--glass-bound`), with nothing sampled from the backdrop. Level scales that α
+src/styles/tokens/property-regs.css:185:   `calc(<base> * var(--ui-scale))` is always valid — a malformed override CLAMPS to 1
+src/styles/tokens/property-regs.css:219:   override CLAMPS to 1, and `motionTempo()` mirrors the ≤0 → 1 clamp JS-side.
+src/styles/tokens/offsets.css:30:       than cliffs~~. Defaults clamp to ~~80vw /~~ 80vh capped at ~~sensible
+src/components/tabs/README.md:22:  to a lit dome, and clamps at the bar's inner edge. The eyeglass is not a third
+src/components/tabs/README.md:163:  clamp, the swell and the cascade delay are all DERIVED from `eyeglass.ts` rather
+src/components/tabs/styles/segmented.css:49:           `--radius-tab` (= --radius-pill = 9999px) — on a short pill box this clamps to
+src/components/tabs/styles/segmented.css:88:           on a tall multi-row box the stadium clamps its end-caps to a ~46px half-height
+src/components/tabs/styles/segmented.css:241:    /* THE CLAMP. Driven into the end of the bar the body cannot span further, so it
+src/components/tabs/styles/segmented.css:246:    .segmented-indicator[data-eyeglass-clamped] {
+src/components/fourier-field/renderer/wgpu.ts:3:// Two passes per frame: the compute kernel writes the curve samples and the chain tips
+src/components/fourier-field/renderer/wgpu.ts:24:    FOURIER_CURVE_SAMPLES,
+src/components/fourier-field/renderer/wgpu.ts:213:                    label: "[FourierField] curve-samples",
+src/components/fourier-field/renderer/wgpu.ts:214:                    size: FOURIER_CURVE_SAMPLES * 16,
+src/components/fourier-field/renderer/wgpu.ts:272:            const sampleCount = FOURIER_CURVE_SAMPLES;
+src/components/fourier-field/renderer/wgpu.ts:279:                sampleCount,
+src/components/fourier-field/renderer/wgpu.ts:315:                sampleCount,
+src/components/fourier-field/renderer/wgpu.ts:344:            rpass.draw(6, sampleCount - 1, 0, 0);
+src/components/fourier-field/renderer/uniforms.ts:36://   ints : vec4<i32>  off 16  (harmonicN, sampleCount, termCount, _pad)
+src/components/fourier-field/renderer/uniforms.ts:50:    sampleCount: number,
+src/components/fourier-field/renderer/uniforms.ts:59:    i32[C_OFF.ints + 1] = sampleCount;
+src/components/fourier-field/renderer/uniforms.ts:72://   ints : vec4<i32>  off  96  (sampleCount, lutSize, chainCount, _pad)
+src/components/fourier-field/renderer/uniforms.ts:218:    sampleCount: number;
+src/components/fourier-field/renderer/uniforms.ts:226: * intensity envelope and CLAMPED here — the one place loudness can leave the legal range,
+src/components/fourier-field/renderer/uniforms.ts:264:    i32[R_OFF.ints + 0] = p.sampleCount;
+src/components/fourier-field/renderer/mint.ts:32:/** The number of `t` samples the fit bbox pass walks. */
+src/components/fourier-field/renderer/mint.ts:33:const FIT_SAMPLES = 720;
+src/components/fourier-field/renderer/mint.ts:68:    for (let i = 0; i < FIT_SAMPLES; i++) {
+src/components/fourier-field/renderer/mint.ts:69:        const [x, y] = partialSumAt(terms, i / FIT_SAMPLES);
+src/components/fourier-field/constants.ts:17: * The CPU-resolved OKLab ramp resolution. The palette is sampled into this many entries
+src/components/fourier-field/constants.ts:47: * chartreuse by construction rather than by a clamp.
+src/components/fourier-field/constants.ts:56: * Deliberately OFF the `/fourier-field` barrel: nothing clamps `markStroke` to it, and no
+src/components/fourier-field/constants.ts:87:/** The number of curve samples the comet body is built from. */
+src/components/fourier-field/constants.ts:88:export const FOURIER_CURVE_SAMPLES = 384;
+src/components/fourier-field/constants.ts:123:    /** Outer loudness envelope (0..2). Above 1 the pack clamps, and the row says so. */
+src/components/fourier-field/shaders/render.wgsl.ts:63:  // ints: (sampleCount, lutSize, chainCount, _pad)
+src/components/fourier-field/shaders/render.wgsl.ts:70:@group(0) @binding(1) var<storage, read> curveSamples: array<vec4<f32>>;
+src/components/fourier-field/shaders/render.wgsl.ts:78:fn sampleRamp(t: f32) -> vec3<f32> {
+src/components/fourier-field/shaders/render.wgsl.ts:90:  let base = sampleRamp(seg * 0.6);
+src/components/fourier-field/shaders/render.wgsl.ts:177:    a = curveSamples[inst].xy;
+src/components/fourier-field/shaders/render.wgsl.ts:178:    b = curveSamples[inst + 1u].xy;
+src/components/fourier-field/shaders/render.wgsl.ts:179:    age = max(curveSamples[inst].z, curveSamples[inst + 1u].z);
+src/components/fourier-field/shaders/render.wgsl.ts:180:    tint = sampleRamp(1.0 - age);
+src/components/fourier-field/shaders/render.wgsl.ts:184:    // HEAD — centred on the newest curve sample; the AABB is the halo.
+src/components/fourier-field/shaders/render.wgsl.ts:185:    a = curveSamples[0].xy;
+src/components/fourier-field/shaders/render.wgsl.ts:186:    b = curveSamples[1].xy;
+src/components/fourier-field/shaders/compute.wgsl.ts:4://   • `curveSamples[i]` — the comet body: the partial-sum curve point at
+src/components/fourier-field/shaders/compute.wgsl.ts:5://     `t_i = fract(head_t − trailArc · i/(M−1))`, truncated to N terms, with the per-sample
+src/components/fourier-field/shaders/compute.wgsl.ts:26:  // ints: (harmonicN, sampleCount, termCount, _pad)
+src/components/fourier-field/shaders/compute.wgsl.ts:32:// curveSamples[i] = (x, y, age, _pad) in MODEL space
+src/components/fourier-field/shaders/compute.wgsl.ts:33:@group(0) @binding(2) var<storage, read_write> curveSamples: array<vec4<f32>>;
+src/components/fourier-field/shaders/compute.wgsl.ts:58:  let sampleCount = u.ints.y;
+src/components/fourier-field/shaders/compute.wgsl.ts:61:  if (i < sampleCount) {
+src/components/fourier-field/shaders/compute.wgsl.ts:62:    let denom = max(f32(sampleCount - 1), 1.0);
+src/components/fourier-field/shaders/compute.wgsl.ts:68:    curveSamples[i] = vec4<f32>(pt.x, pt.y, age, 0.0);
+src/components/fourier-field/useFourierField.ts:70:     * reader (or a screen reader) can follow. It is a sample of the frame loop, never a
+src/components/fourier-field/useFourierField.ts:93:    /** The reactive sample of `headT`, republished at most this often (ms). */
+src/components/sortable-list/styles.css:92:        /* ONE size for the row. `--text-body` is a fluid clamp, so §1.4's mobile rung
+src/components/sortable-list/motion.ts:70:/** A pointer sample: position and the clock it was taken on. */
+src/components/sortable-list/motion.ts:71:interface Sample {
+src/components/sortable-list/motion.ts:78: * A small ring buffer over the last few pointer samples. Release velocity is the
+src/components/sortable-list/motion.ts:82:export class VelocitySampler {
+src/components/sortable-list/motion.ts:83:    private readonly ring: Sample[] = [];
+src/components/sortable-list/motion.ts:95:    /** px/s across the sample window; `{x:0,y:0}` when the window is degenerate. */
+src/components/sortable-list/drag.ts:27:    VelocitySampler,
+src/components/sortable-list/drag.ts:128:    const sampler = new VelocitySampler();
+src/components/sortable-list/drag.ts:354:        const v = sampler.velocity();
+src/components/sortable-list/drag.ts:393:        sampler.reset();
+src/components/sortable-list/drag.ts:509:        sampler.reset();
+src/components/sortable-list/drag.ts:510:        sampler.push(armed.x, armed.y);
+src/components/sortable-list/drag.ts:552:        sampler.push(event.clientX, event.clientY);
+src/components/sortable-list/drag.ts:555:            ghost.tilt(sampler.velocity().x);
+src/components/easing/usePicker.ts:16://     zero samples — and says whether the drawn curve leaves the frame. A handle
+src/components/easing/usePicker.ts:18://     authored value. Nothing here samples a curve to decide where to put the box.
+src/components/easing/usePicker.ts:19:// (2) The staircase is CONSTRUCTED, not sampled. A step function's shape is n treads
+src/components/easing/usePicker.ts:20://     joined by risers at exactly `i/n`; sampling it at 241 points is why the riser
+src/components/easing/usePicker.ts:123:    /** Where the handles PAINT: on their own leader, clamped to the frame edge. */
+src/components/easing/usePicker.ts:127:    /** The bezier path `d` (`M 0 1 C …`) — the authored control points, unclamped. */
+src/components/easing/usePicker.ts:129:    /** The staircase path `d` — constructed from the callable, never sampled. */
+src/components/easing/usePicker.ts:253:    /** Move a control handle (0 or 1) to clamped (x in [0,1], y in the overshoot band). */
+src/components/easing/usePicker.ts:264:    // A seeded quad is authored input like any other: it goes through the SAME clamp
+src/components/easing/EasingCurve.vue:26: * exact riser positions, and a display unit handed a callable can only sample — which
+src/components/easing/README.md:69:quadratic; zero samples), `data-curve-clipped` mounts on the root, and the crossed
+src/components/easing/README.md:86:**constructed, not sampled**: each tread's height is one read of the owner's callable
+src/components/easing/constants.ts:2:// CONSTANT frame, the overshoot clamp, the pointer hit floor, and the two clocks.
+src/components/easing/constants.ts:4:// Curve math belongs to value.js. Nothing here samples, fits, or evaluates a curve.
+src/components/easing/constants.ts:55: *  function of the frame and shrank to a 40.7px target at the small clamp, under
+src/components/card/styles.css:212:       re-typed — so the interval holds at the clamp floor, through the fluid arm
+src/components/card/scroll.css:90:       survives the clamp at every viewport. */
+src/components/constellation/constellationTypes.ts:89:     * neutral hairline's alpha so it clears the perceptual/sampling floor across its
+src/components/constellation/constellationTypes.ts:211:    /** the per-node speed cap (base-width px/frame) — the no-slingshot clamp. */
+src/components/constellation/constellationInteraction.ts:31:// cool/ramp rates, the dt-clamp, the settle band) stays INTERNAL — it travels with the
+src/components/constellation/constellationInteraction.ts:97:/** dt clamp (s) — guards a tab-throttle / offscreen-park-resume gap from teleporting. */
+src/components/constellation/constellationInteraction.ts:98:const WARP_DT_CLAMP = 0.05; // ≈50ms; a clamped dt resolves the park-mid-warp teleport for free.
+src/components/constellation/constellationInteraction.ts:136: * warp is active (`targetIdx < 0`). `dt` is clamped to {@link WARP_DT_CLAMP} so a
+src/components/constellation/constellationInteraction.ts:163:    // then position, for stability at the clamped dt).
+src/components/constellation/constellationInteraction.ts:337:    // fresh point within ±wanderFrac of the anchor, clamped to the canvas with a small
+src/components/constellation/constellationField.ts:200:    // no-slingshot clamp; an ALWAYS-ON `|v|→speed` ease-back renormalises the field
+src/components/constellation/constellationField.ts:360:    // The pointer-relative shift, scaled by depth + the parallax knob (clamped to a hair so
+src/components/constellation/constellationWell.ts:38: * pull too slowly — the force keeps heating the field past the 30-frame sample,
+src/components/constellation/constellationWell.ts:46: * about HALF the ≥30-frame cool sample. That leaves the remaining ~15+ frames for
+src/components/constellation/constellationWell.ts:49: * the force injecting velocity well past the sample → the field reads HOT. This is
+src/components/constellation/constellationWell.ts:56:/** dt clamp (s) — the SAME park-resume guard the warp uses (constellationInteraction's
+src/components/constellation/constellationWell.ts:57: *  WARP_DT_CLAMP); a clamped dt resolves the park-mid-well teleport for free. */
+src/components/constellation/constellationWell.ts:58:const WELL_DT_CLAMP = 0.05;
+src/components/constellation/constellationWell.ts:66: * clamp); ALWAYS ease every node's |v| back toward `speed` (the field-cools
+src/components/constellation/constellationWell.ts:70: * `dt` is clamped to {@link WELL_DT_CLAMP} (the same park-resume guard the warp
+src/components/constellation/constellationWell.ts:120:                    nvx = (nvx / nsp) * cap; // no-slingshot clamp
+src/components/constellation/README.md:49:  Canvas2D substrate, which owns the canvas lifecycle: dpr-clamped resize, the RAF loop, and the
+src/components/constellation/README.md:178:| `dpr` | `number` | the device-pixel ratio the context is transformed by (clamped ≤ 2) |
+src/components/constellation/README.md:251:  exists to provide. The `dt` is clamped (~50 ms) so a tab-throttle / offscreen-park-resume gap
+src/components/constellation/README.md:423:| `--constellation-well-max-speed` | `4.0` | base-width px/frame cap — the no-slingshot clamp |
+src/components/constellation/README.md:450:  override any rung at the consumer to retint or re-weight. The field re-samples on a dark-mode flip
+src/components/constellation/README.md:469:set — so a constellation that is not on screen attaches zero frames. dpr is clamped to 2 so a 3×
+src/components/constellation/constants.ts:6:// cool/ramp rates + their interlocking derivations, the dt-clamp, the settle band)
+src/components/constellation/constants.ts:62:    maxSpeed: 4.0, // base-width px/frame cap — the no-slingshot clamp
+src/components/handmark/stroke.ts:70:/** L1 — the clampless allometric nib. `weight` is a dimensionless multiple. */
+src/components/handmark/stroke.ts:88: * so `easing(1)` was `samples` and a draw animating `stroke-dashoffset` to 0 with
+src/components/handmark/stroke.ts:91:export function minJerk(samples = 24): string {
+src/components/handmark/stroke.ts:93:    for (let i = 0; i <= samples; i++) {
+src/components/handmark/stroke.ts:94:        const t = i / samples;
+src/components/handmark/stroke.ts:260: * at any sample is the nib the eye reads there.
+src/components/alert/AlertTitle.vue:23:         No `line-clamp-1`: a truncated title is a lost sentence on a surface whose whole
+src/components/alert/index.ts:46:   utility was the reason the tone never painted: `joinClassValues` is a bucketed
+src/components/separator/Separator.vue:126:       above is (0,2,0) and this class was (0,1,0), so the horizontal clamp reached the
+src/components/separator/Separator.vue:137:    /* The un-clamp is spelled at (0,2,0) on each orientation arm, NOT at (0,1,0) on
+src/components/separator/Separator.vue:139:       to the (0,2,0) hairline clamp above it and the labelled host stays 1px tall. */
+src/components/slider/Slider.vue:52:    // The containment law: reka's `contain` alignment clamps the thumb's value-follow
+src/components/aurora/composables/atoms-fields.ts:5:import { clampBudget } from "../constants/budget";
+src/components/aurora/composables/atoms-fields.ts:131:            clampBudget(lerp(stop.C, pole, variance), 0, 0.4),
+src/components/aurora/composables/atoms-fields.ts:153:    const t = clampBudget(amount, 0, 1);
+src/components/aurora/composables/atoms-fields.ts:154:    cfg.warpAmount = clampBudget(lerp(0.2, 0.6, t), 0, 0.6);
+src/components/aurora/composables/atoms-fields.ts:155:    cfg.warpScale = clampBudget(lerp(1, 2.6, t), 0.5, 3);
+src/components/aurora/composables/atoms-fields.ts:168:    const a = clampBudget(amount, 0, 1);
+src/components/aurora/composables/atoms-fields.ts:210:            return clampBudget(cfg.wetEdge, 0, 1);
+src/components/aurora/composables/atoms-fields.ts:219:            return clampBudget(cfg.strokeAmount, 0, 1);
+src/components/aurora/composables/atoms-fields.ts:224:            return clampBudget((cfg.metalPolish ?? METAL_POLISH_DEFAULT) / 4, 0, 1);
+src/components/aurora/composables/atoms-fields.ts:236:/** Invert a clamped lerp(calm, vivid, t) back to t∈[0,1] (the energy/noise inverses). */
+src/components/aurora/composables/atoms-fields.ts:239:    return clampBudget((value - lo) / (hi - lo), 0, 1);
+src/components/aurora/composables/auroraImageSource.ts:76: * through the ONE shared primitive; seeds the neutral placeholder so the sampler is always
+src/components/aurora/composables/atoms.ts:18: *     out-of-range field). Clamp/saturate, never garbage.
+src/components/aurora/composables/atoms.ts:23: * as clamped overrides. An absent atom keeps the default's value, so the empty atom
+src/components/aurora/composables/atoms.ts:29:    clampBudget,
+src/components/aurora/composables/atoms.ts:69:    /** 1..MAX_NUCLEI — the number of color zones (nuclei). Clamped. */
+src/components/aurora/composables/atoms.ts:255: * TOTAL function: clones the BASE config and applies ONLY the present atoms as clamped
+src/components/aurora/composables/atoms.ts:284:        atoms.colorEnergy !== undefined ? clampBudget(atoms.colorEnergy, 0, 1) : undefined;
+src/components/aurora/composables/atoms.ts:293:                ? clampBudget(atoms.hueSpread, 0, 180)
+src/components/aurora/composables/atoms.ts:316:                clampBudget(atoms.chromaVariance, 0, 1),
+src/components/aurora/composables/atoms.ts:323:        cfg.saturation = clampBudget(
+src/components/aurora/composables/atoms.ts:328:        cfg.valueVariance = clampBudget(
+src/components/aurora/composables/atoms.ts:333:        cfg.breathDepth = clampBudget(
+src/components/aurora/composables/atoms.ts:368:        cfg.nucleiDrift = clampBudget(mo.nucleiDrift, 0, 0.05);
+src/components/aurora/composables/atoms.ts:369:        cfg.paletteDrift = clampBudget(mo.paletteDrift, 0, 0.04);
+src/components/aurora/composables/atoms.ts:370:        cfg.warpDrift = clampBudget(mo.warpDrift, 0, 0.015);
+src/components/aurora/composables/atoms.ts:373:        cfg.breathDepth = clampBudget(
+src/components/aurora/composables/atoms.ts:394:            // The sized amplitude atom — clamped 0..1 (default balanced 0.5).
+src/components/aurora/composables/atoms.ts:395:            amplitude: it.amplitude !== undefined ? clampBudget(it.amplitude, 0, 1) : 0.5,
+src/components/aurora/composables/wgpuSetup.ts:61:     * the decoded photo the `source:"image"` program samples (or
+src/components/aurora/composables/wgpuSetup.ts:124:        // carrying the texture + sampler + the image-uniform tail) rather than the palette
+src/components/aurora/composables/wgpuSetup.ts:264:// and the sampler (binding 2). The texture is uploaded through the ONE shared
+src/components/aurora/composables/wgpuSetup.ts:298:    const sampler = device.createSampler({
+src/components/aurora/composables/wgpuSetup.ts:299:        label: "[Aurora] image sampler",
+src/components/aurora/composables/wgpuSetup.ts:302:        addressModeU: "clamp-to-edge",
+src/components/aurora/composables/wgpuSetup.ts:303:        addressModeV: "clamp-to-edge",
+src/components/aurora/composables/wgpuSetup.ts:313:                texture: { sampleType: "float", viewDimension: "2d" },
+src/components/aurora/composables/wgpuSetup.ts:318:                sampler: { type: "filtering" },
+src/components/aurora/composables/wgpuSetup.ts:343:    // neutral 1×1 placeholder so the sampler is always complete (never a black-garbage frame).
+src/components/aurora/composables/wgpuSetup.ts:356:                { binding: 2, resource: sampler },
+src/components/aurora/composables/textureUpload.ts:76: * A 1×1 mid-grey placeholder source — the texture a `source:"image"` program samples
+src/components/aurora/composables/textureUpload.ts:77: * BEFORE its real photo has decoded (so the sampler is always complete + the first frame
+src/components/aurora/composables/textureUpload.ts:106:/** WebGL2 upload options — the sampling register the texture is created with. */
+src/components/aurora/composables/textureUpload.ts:110:    /** Wrap mode. Default `CLAMP_TO_EDGE` (a cover-fit backdrop never tiles). */
+src/components/aurora/composables/textureUpload.ts:111:    clampToEdge?: boolean;
+src/components/aurora/composables/textureUpload.ts:116: * Returns the bound texture (the caller sets the sampler uniform to its unit + binds
+src/components/aurora/composables/textureUpload.ts:125:    const { linearFilter = true, clampToEdge = true } = opts;
+src/components/aurora/composables/textureUpload.ts:147:    const wrap = clampToEdge ? gl.CLAMP_TO_EDGE : gl.REPEAT;
+src/components/aurora/composables/textureUpload.ts:178: * texture + its dims (the caller builds the sampler + the bind group entry).
+src/components/aurora/composables/runtime.ts:237:        if (presentation.opaque) canvas.style.opacity = String(clampAlpha(alpha));
+src/components/aurora/composables/auroraFallbackGround.ts:11: * in the software-raster, capture substrate, with a FIELD-SAMPLED ground derived
+src/components/aurora/composables/auroraFallbackGround.ts:15: * THE FIELD MATH IS MIRRORED CPU-SIDE, NOT RE-INVENTED. `sampleAuroraField`
+src/components/aurora/composables/auroraFallbackGround.ts:18: * `samplePalette` (the linear-sRGB LUT lerp of the CPU-baked endpoints) + the
+src/components/aurora/composables/auroraFallbackGround.ts:29: * context paints the downsampled nuclei-field raster (each texel its `sampleAuroraField`
+src/components/aurora/composables/auroraFallbackGround.ts:35: * `radial-gradient` stack (zero canvas) — the same field samples, the SSR-safe form.
+src/components/aurora/composables/auroraFallbackGround.ts:57: * knees) so the CPU-side luminance closes with the GPU's; a divergent tonemap is
+src/components/aurora/composables/auroraFallbackGround.ts:79:        clamp01(cr + (newPeak - cr) * gg),
+src/components/aurora/composables/auroraFallbackGround.ts:80:        clamp01(cg + (newPeak - cg) * gg),
+src/components/aurora/composables/auroraFallbackGround.ts:81:        clamp01(cb + (newPeak - cb) * gg),
+src/components/aurora/composables/auroraFallbackGround.ts:92: * value.js bake `flattenPalette` feeds the GPU; ONE color source). Sampling at
+src/components/aurora/composables/auroraFallbackGround.ts:94: * endpoints the shader's `samplePalette` LUT also reads).
+src/components/aurora/composables/auroraFallbackGround.ts:96:function samplePaletteLinear(linStops: Lin[], id: number): Lin {
+src/components/aurora/composables/auroraFallbackGround.ts:101:    const scaled = clamped * (n - 1);
+src/components/aurora/composables/auroraFallbackGround.ts:120: * bottom-origin position, AND the fragment samples `vUv` (bottom-origin). Sampling
+src/components/aurora/composables/auroraFallbackGround.ts:159: * Sample the aurora's STATIC composite at normalized `(x, y)` → a gamma-sRGB
+src/components/aurora/composables/auroraFallbackGround.ts:166:export function sampleAuroraField(config: AuroraConfig, x: number, y: number): Lin {
+src/components/aurora/composables/auroraFallbackGround.ts:174:    const base = samplePaletteLinear(linStops, paletteId);
+src/components/aurora/composables/auroraFallbackGround.ts:194:    /** Mean relative luminance over the sample grid (gamma → relative-luminance). */
+src/components/aurora/composables/auroraFallbackGround.ts:201:    /** Field-sample grid resolution per axis (default 8 → an 8×8 = 64-sample ground). */
+src/components/aurora/composables/auroraFallbackGround.ts:214:/** Convert a relative-luminance gamma color back from a sampled gamma triple. */
+src/components/aurora/composables/auroraFallbackGround.ts:227: * Samples the static field at a `grid × grid` lattice (the SAME `sampleAuroraField`
+src/components/aurora/composables/auroraFallbackGround.ts:229: * sample cell, centred on the cell, fading to transparent at ~the cell radius — over
+src/components/aurora/composables/auroraFallbackGround.ts:236: * The returned `metrics` are computed over the SAME sample lattice the layers paint,
+src/components/aurora/composables/auroraFallbackGround.ts:246:    // Sample the static field at the grid-cell centres.
+src/components/aurora/composables/auroraFallbackGround.ts:247:    const samples: { x: number; y: number; color: Lin }[] = [];
+src/components/aurora/composables/auroraFallbackGround.ts:255:            const color = sampleAuroraField(config, x, y);
+src/components/aurora/composables/auroraFallbackGround.ts:256:            samples.push({ x, y, color });
+src/components/aurora/composables/auroraFallbackGround.ts:265:    const mean = lumSum / samples.length;
+src/components/aurora/composables/auroraFallbackGround.ts:276:    for (const s of samples) {
+src/components/aurora/composables/auroraFallbackGround.ts:281:    meanColor[0] /= samples.length;
+src/components/aurora/composables/auroraFallbackGround.ts:282:    meanColor[1] /= samples.length;
+src/components/aurora/composables/auroraFallbackGround.ts:283:    meanColor[2] /= samples.length;
+src/components/aurora/composables/auroraFallbackGround.ts:289:    // radial-gradient stack below (zero canvas, the same samples).
+src/components/aurora/composables/auroraFallbackGround.ts:290:    const rasterDataUri = rasterizeField(samples, grid);
+src/components/aurora/composables/auroraFallbackGround.ts:304:    const layers = samples.map((s) => {
+src/components/aurora/composables/auroraFallbackGround.ts:322: * Paint the field samples into a `grid × grid` 2D canvas (one texel per cell, its
+src/components/aurora/composables/auroraFallbackGround.ts:329:    samples: { x: number; y: number; color: Lin }[],
+src/components/aurora/composables/auroraFallbackGround.ts:348:    for (const s of samples) {
+src/components/aurora/composables/uniformBridge.ts:348:        // byte-identical. Only the separate image program reads them. uImage samples
+src/components/aurora/composables/glSetup.ts:90:    // The image program's own uniform lane (the sampler + the
+src/components/aurora/composables/uniformBridgeWGPUImage.ts:7: * group (uniform + texture + sampler). The image lane never touches the palette struct —
+src/components/aurora/composables/color.ts:37: * the GC. Unused slots are zero-filled; the shader clamps via `uStopCount`.
+src/components/aurora/composables/color.ts:107:    /** Number of stops to produce. Default 4; clamped to [2, MAX_STOPS]. */
+src/components/aurora/composables/color.ts:152:     * derived field needs a bespoke luminosity window. Clamped into [0, 1] defensively.
+src/components/aurora/composables/color.ts:159: * ramp is clamped into this window so no stop reads as pure black or blown white,
+src/components/aurora/composables/color.ts:201: * clamped to `[2, MAX_STOPS]`; L is monotonic ascending across the ramp.
+src/components/aurora/composables/color.ts:231:    // L ramp: spread the anchor L symmetrically by lightnessSpread, then clamp the
+src/components/aurora/composables/color.ts:233:    // edge clamps so the total travel is preserved where the band allows.
+src/components/aurora/composables/color.ts:279:        // (toward COOL_POLE) as it darkens — interpolated toward the named poles.
+src/components/aurora/composables/color.ts:291:        const stop = clampMonotonicInGamut(gamutMapStop({ L, C, h }), floorL);
+src/components/aurora/composables/color.ts:308:function clampMonotonicInGamut(stop: OklchStop, floorL: number): OklchStop {
+src/components/aurora/constants/shaders/brush.glsl.ts:17:// Coverage blends paint atop col based on per-stroke color sampled from the
+src/components/aurora/constants/shaders/brush.glsl.ts:83://   colAtMid       — pre-sampled color at midpoint
+src/components/aurora/constants/shaders/brush.glsl.ts:182://   streakAmp    — 0..0.2 how much internal streaks darken/lighten
+src/components/aurora/constants/shaders/brush.glsl.ts:240:  // Cross-stroke ridge/valley shading — a catch-light along the spine centre, darkening to
+src/components/aurora/constants/shaders/brush.glsl.ts:294:// Best-of-9-neighbor placement: sample 3x3 surrounding cells and take the
+src/components/aurora/constants/shaders/brush.glsl.ts:359:        float graded = mix(0.5, 1.5, luma) * mix(0.6, 1.0, coh);
+src/components/aurora/constants/shaders/brush.glsl.ts:371:        sampleBase(center, t),
+src/components/aurora/constants/shaders/aurora-image.frag.ts:13:// budget precedent), sampled in LINEAR light (the shared OETF `srgbToLinear`), NO FBO
+src/components/aurora/constants/shaders/aurora-image.frag.ts:35:// bounded-tap witness). 3 rings × 8 angular taps = 24 stratified samples; the DISSOLVE
+src/components/aurora/constants/shaders/aurora-image.frag.ts:82:uniform sampler2D uImage;
+src/components/aurora/constants/shaders/aurora-image.frag.ts:191:// is per-fragment (mix(uBlurMin, uBlurMax, zone)); every tap is sampled in LINEAR light
+src/components/aurora/constants/shaders/composition.glsl.ts:3:// `samplePalette` reads the CPU-baked linear-sRGB palette LUT; `nucleiField`
+src/components/aurora/constants/shaders/composition.glsl.ts:11:// uHuePath) is the shared samplePaletteRamp from procedural-color.glsl, the SAME
+src/components/aurora/constants/shaders/composition.glsl.ts:12:// source the WebGPU twin splices; samplePalette here only selects the bracketing
+src/components/aurora/constants/shaders/composition.glsl.ts:14:vec3 samplePalette(float id) {
+src/components/aurora/constants/shaders/composition.glsl.ts:20:  return samplePaletteRamp(uPalette[i0], uPalette[i1], t, uHuePath);
+src/components/aurora/constants/shaders/mediums.glsl.ts:2:// plus the `sampleBase` edge-mask recompute they share.
+src/components/aurora/constants/shaders/mediums.glsl.ts:7:// and sampleBase/samplePalette (composition.glsl.ts); the oil medium also consumes
+src/components/aurora/constants/shaders/mediums.glsl.ts:11:// brush primitive: `sampleBase` + watercolor + pastel precede the brush, crayon +
+src/components/aurora/constants/shaders/mediums.glsl.ts:20:// A quick re-computation of base color for edge-mask sampling
+src/components/aurora/constants/shaders/mediums.glsl.ts:21:vec3 sampleBase(vec2 p, float t) {
+src/components/aurora/constants/shaders/mediums.glsl.ts:25:  vec3 c = samplePalette(id);
+src/components/aurora/constants/shaders/mediums.glsl.ts:36:// luma(sampleBase) yields the gradient (Gx,Gy); the 2x2 structure tensor
+src/components/aurora/constants/shaders/mediums.glsl.ts:44:  // 3x3 luma samples.
+src/components/aurora/constants/shaders/mediums.glsl.ts:45:  float l00 = dot(sampleBase(p + vec2(-e, -e), t), W_LUMA);
+src/components/aurora/constants/shaders/mediums.glsl.ts:46:  float l10 = dot(sampleBase(p + vec2( 0.0, -e), t), W_LUMA);
+src/components/aurora/constants/shaders/mediums.glsl.ts:47:  float l20 = dot(sampleBase(p + vec2( e, -e), t), W_LUMA);
+src/components/aurora/constants/shaders/mediums.glsl.ts:48:  float l01 = dot(sampleBase(p + vec2(-e, 0.0), t), W_LUMA);
+src/components/aurora/constants/shaders/mediums.glsl.ts:49:  float l21 = dot(sampleBase(p + vec2( e, 0.0), t), W_LUMA);
+src/components/aurora/constants/shaders/mediums.glsl.ts:50:  float l02 = dot(sampleBase(p + vec2(-e, e), t), W_LUMA);
+src/components/aurora/constants/shaders/mediums.glsl.ts:51:  float l12 = dot(sampleBase(p + vec2( 0.0, e), t), W_LUMA);
+src/components/aurora/constants/shaders/mediums.glsl.ts:52:  float l22 = dot(sampleBase(p + vec2( e, e), t), W_LUMA);
+src/components/aurora/constants/shaders/mediums.glsl.ts:95:  // Wet-edge cauliflowers via luma-gradient magnitude
+src/components/aurora/constants/shaders/mediums.glsl.ts:97:  vec3 cx1 = sampleBase(p + vec2(eps, 0.0), t);
+src/components/aurora/constants/shaders/mediums.glsl.ts:98:  vec3 cx2 = sampleBase(p - vec2(eps, 0.0), t);
+src/components/aurora/constants/shaders/mediums.glsl.ts:99:  vec3 cy1 = sampleBase(p + vec2(0.0, eps), t);
+src/components/aurora/constants/shaders/mediums.glsl.ts:100:  vec3 cy2 = sampleBase(p - vec2(0.0, eps), t);
+src/components/aurora/constants/shaders/mediums.glsl.ts:101:  float gx = dot(cx1 - cx2, W_LUMA);
+src/components/aurora/constants/shaders/mediums.glsl.ts:102:  float gy = dot(cy1 - cy2, W_LUMA);
+src/components/aurora/constants/shaders/mediums.glsl.ts:109:  float pigLoad = 1.0 - dot(col, W_LUMA);
+src/components/aurora/constants/shaders/mediums.glsl.ts:229:  float groundFloor; // Bare-ground darken floor. The gaps between strokes
+src/components/aurora/constants/shaders/mediums.glsl.ts:232:                     // Starry-Night visible ground). Oil/oil-pastel keep 1.0 (no darken).
+src/components/aurora/constants/shaders/mediums.glsl.ts:367:  // between them darkens.
+src/components/aurora/constants/shaders/mediums.glsl.ts:390:// is a PROCEDURAL field (no input texture), so the operator runs over sampleBase() directly:
+src/components/aurora/constants/shaders/mediums.glsl.ts:395:// Single-pass small-radius WebGL2 form: 4 rings × 8 angular taps = 32 procedural samples
+src/components/aurora/constants/shaders/mediums.glsl.ts:412:  // 8 sectors, soft polynomial weights. Each sector i centers on angle i·45°; a sample's
+src/components/aurora/constants/shaders/mediums.glsl.ts:414:  // argmin → no pinwheel banding). The center sample seeds all sectors equally.
+src/components/aurora/constants/shaders/mediums.glsl.ts:421:  // 4 rings × 8 angular taps over the elliptical disc. Each tap: sample the procedural
+src/components/aurora/constants/shaders/mediums.glsl.ts:433:      vec3 c = sampleBase(p + off, t);
+src/components/aurora/constants/shaders/mediums.glsl.ts:434:      // The sample's angular bin (its sector) — soft, so it spills into neighbours.
+src/components/aurora/constants/shaders/mediums.glsl.ts:448:  // Per-sector mean + scalar luma-variance, then the SOFT variance-weighted blend.
+src/components/aurora/constants/shaders/mediums.glsl.ts:455:    float variance = dot(var3, W_LUMA);           // perceptual scalar variance
+src/components/aurora/constants/shaders/mediums.glsl.ts:465:  // The center sample anchors the result in near-flat zones (where every sector reads the
+src/components/aurora/constants/shaders/mediums.glsl.ts:467:  vec3 center = sampleBase(p, t);
+src/components/aurora/constants/shaders/vangogh-medium.glsl.ts:4:// loaded comma dabs over a darkened swirl underpainting, oriented off the
+src/components/aurora/constants/shaders/vangogh-medium.glsl.ts:15:// AND the per-cell 8-tap structure tensor × 4 layers × 9 cells = ~324 sampleBase/pixel
+src/components/aurora/constants/shaders/vangogh-medium.glsl.ts:26://   • SPARSE placement with visible inter-dab ground (density ≈ 0.42), over a darkened
+src/components/aurora/constants/shaders/vangogh-medium.glsl.ts:28://   • a single sampleBase per cell + OKLCh broken-color jitter (pigment shimmer);
+src/components/aurora/constants/shaders/vangogh-medium.glsl.ts:30:// This is ~2 layers × 9 cells × ~1 sampleBase ≈ 20/pixel (a ~16× cost cut, ~60fps), and
+src/components/aurora/constants/shaders/vangogh-medium.glsl.ts:90:      // One sampleBase per cell + OKLCh broken-color jitter (pigment patch shimmer). The
+src/components/aurora/constants/shaders/vangogh-medium.glsl.ts:94:      // mean-luma. The higher mean raises the gap-fraction threshold (meanLum·0.6) so the
+src/components/aurora/constants/shaders/vangogh-medium.glsl.ts:100:        saturate3(sampleBase(center, t), 1.22),
+src/components/aurora/constants/shaders/vangogh-medium.glsl.ts:126:  // INVERSELY (higher = finer dabs) around the ~0.07 chunky default; clamped so the
+src/components/aurora/constants/shaders/vangogh-medium.glsl.ts:162:  // dab spine, injecting fine-scale luma energy that flattens the too-steep β WITHOUT
+src/components/aurora/constants/shaders/vangogh-medium.glsl.ts:196:  // the OPEN GROUND with a flow-aligned ripple. It is SUBTRACTIVE-biased (it only darkens,
+src/components/aurora/constants/shaders/vangogh-medium.glsl.ts:198:  // atomicity preserved/strengthened) while injecting the across-flow mid-band luma energy
+src/components/aurora/constants/shaders/vangogh-medium.glsl.ts:229:  // height) darkens toward the deep underpainting, so the bright impasto dabs read as
+src/components/aurora/constants/shaders/aurora.wgsl.ts:11:// (anisotropic Gaussian softmax + drift + palette drift), samplePalette (the shared OKLCh
+src/components/aurora/constants/shaders/aurora.wgsl.ts:215:fn samplePalette(id0: f32) -> vec3<f32> {
+src/components/aurora/constants/shaders/aurora.wgsl.ts:222:  return samplePaletteRamp(u.palette[i0].rgb, u.palette[i1].rgb, t, u.ints1.y);
+src/components/aurora/constants/shaders/aurora.wgsl.ts:323:// nucleiField, samplePalette, linOklab, saturate3, oklabToOklch/oklchToOklab,
+src/components/aurora/constants/shaders/aurora.wgsl.ts:365:  var col = samplePalette(nf.paletteId);
+src/components/aurora/constants/shaders/metal-medium.glsl.ts:6:// in mediums.glsl.ts PRE_BRUSH, flowField in flow.glsl.ts, W_LUMA/hash21/uCursor/
+src/components/aurora/constants/shaders/metal-medium.glsl.ts:15:// structureTensorField re-plumbs its already-computed luma gradient (Gx,Gy) out through
+src/components/aurora/constants/shaders/metal-medium.glsl.ts:17:// 8 sampleBase() taps). 12 bits per bounded component ([-4,4]) into one f32, exact under
+src/components/aurora/constants/shaders/metal-medium.glsl.ts:36:// warm folded metal: the luma HEIGHT field (the packed structure-tensor gradient →
+src/components/aurora/constants/shaders/metal-medium.glsl.ts:52:const float METAL_GRADIENT_FLATTEN = 0.55;  // metal-gradient pre-flatten toward luma
+src/components/aurora/constants/shaders/metal-medium.glsl.ts:59:// every pow base is clamped to [0,1], the exponents are compile-time constants.
+src/components/aurora/constants/shaders/metal-medium.glsl.ts:64:  // Height-field normal: N = normalize(vec3(grad * scale, 1)). The luma relief tilts
+src/components/aurora/constants/shaders/metal-medium.glsl.ts:100:  // Pre-flatten toward luma (the smoother gradient-metallic base) — same BRDF, calmer body.
+src/components/aurora/constants/shaders/metal-medium.glsl.ts:103:  vec3 flatCol = mix(col, vec3(dot(col, W_LUMA)), METAL_GRADIENT_FLATTEN);
+src/components/aurora/constants/shaders/oil-modes.glsl.ts:40:    1.0     // groundFloor — oil keeps the full base (no ground darken; fills everywhere)
+src/components/aurora/constants/shaders/oil-modes.glsl.ts:85:                              // by luma/coherence so the dab-size energy spreads across
+src/components/aurora/constants/shaders/aurora.frag.ts:113:// the specular catch intensity; uMetalHeightScale scales the luma-relief → normal tilt.
+src/components/aurora/constants/shaders/aurora.frag.ts:239:// the smoothstep-eased samplePaletteRamp dispatcher) is SPLICED from the shared
+src/components/aurora/constants/shaders/aurora.frag.ts:241:// samplePalette calls samplePaletteRamp.
+src/components/aurora/constants/shaders/aurora.frag.ts:324:const vec3 W_LUMA = vec3(0.2126, 0.7152, 0.0722);
+src/components/aurora/constants/shaders/aurora.frag.ts:348:// replacing the luma-mix sRGB form). amt=1 is identity; amt<1 desaturates toward
+src/components/aurora/constants/shaders/aurora.frag.ts:349:// the achromatic axis with NO lightness shift (the muddy-luma-mix grey is gone).
+src/components/aurora/constants/shaders/aurora.frag.ts:394:  // Normalized 0..1 coordinates for nuclei, domain warp, and medium sampling.
+src/components/aurora/constants/shaders/aurora.frag.ts:406:  vec3 col = samplePalette(paletteId);
+src/components/aurora/constants/shaders/aurora-image.wgsl.ts:5:// carrying the texture + sampler + the image-uniform tail), NEVER a per-fragment runtime
+src/components/aurora/constants/shaders/aurora-image.wgsl.ts:11:// FIXED 3-ring × 8-sector (24-tap) kernel (a compile-time constant loop bound), sampled in
+src/components/aurora/constants/shaders/aurora-image.wgsl.ts:58:@group(0) @binding(2) var imgSampler: sampler;
+src/components/aurora/constants/shaders/aurora-image.wgsl.ts:170:// per-fragment, sampled in LINEAR light. textureSampleLevel (explicit LOD 0) — WGSL has
+src/components/aurora/constants/shaders/aurora-image.wgsl.ts:174:  var sum = srgbToLinear(textureSampleLevel(imgTex, imgSampler, coverUv(uv), 0.0).rgb);
+src/components/aurora/constants/shaders/aurora-image.wgsl.ts:181:      sum = sum + srgbToLinear(textureSampleLevel(imgTex, imgSampler, coverUv(uv + off), 0.0).rgb);
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:7://   - `sampleBase`  — the edge-mask base-color re-sample (the operator the painterly
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:8://     mediums Sobel/sector-sample). The WGSL twin of mediums.glsl.ts's `sampleBase`.
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:10://     COLOR FIELD's OWN structure (a 3×3 Sobel over luma(sampleBase) → the 2×2 structure
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:17://     (sampleBase/structureTensorField/vnoise only — no stroke cascade).
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:20://     over sampleBase over an elliptical kernel oriented along the structure tensor, 4
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:21://     rings × 8 angular taps = 32 procedural samples, 8 OVERLAPPING sectors blended SOFT
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:41:// ── Painterly luma + medium scalar accessors ───────────────────────────────
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:42:const W_LUMA: vec3<f32> = vec3<f32>(0.2126, 0.7152, 0.0722);
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:61:// structureTensorField re-plumbs its already-computed luma gradient (Gx,Gy) out
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:75:// ── Base color re-sample (the edge-mask operator the mediums Sobel/sector-sample) ──
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:76:// The WGSL twin of mediums.glsl.ts sampleBase: warp -> nuclei field -> palette -> value.
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:77:fn sampleBase(p: vec2<f32>, t: f32) -> vec3<f32> {
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:80:  var c = samplePalette(nf.paletteId);
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:101:  let l00 = dot(sampleBase(p + vec2<f32>(-e, -e), t), W_LUMA);
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:102:  let l10 = dot(sampleBase(p + vec2<f32>(0.0, -e), t), W_LUMA);
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:103:  let l20 = dot(sampleBase(p + vec2<f32>( e, -e), t), W_LUMA);
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:104:  let l01 = dot(sampleBase(p + vec2<f32>(-e, 0.0), t), W_LUMA);
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:105:  let l21 = dot(sampleBase(p + vec2<f32>( e, 0.0), t), W_LUMA);
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:106:  let l02 = dot(sampleBase(p + vec2<f32>(-e, e), t), W_LUMA);
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:107:  let l12 = dot(sampleBase(p + vec2<f32>(0.0, e), t), W_LUMA);
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:108:  let l22 = dot(sampleBase(p + vec2<f32>( e, e), t), W_LUMA);
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:165:  let cx1 = sampleBase(p + vec2<f32>(eps, 0.0), t);
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:166:  let cx2 = sampleBase(p - vec2<f32>(eps, 0.0), t);
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:167:  let cy1 = sampleBase(p + vec2<f32>(0.0, eps), t);
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:168:  let cy2 = sampleBase(p - vec2<f32>(0.0, eps), t);
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:169:  let gx = dot(cx1 - cx2, W_LUMA);
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:170:  let gy = dot(cy1 - cy2, W_LUMA);
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:176:  let pigLoad = 1.0 - dot(col, W_LUMA);
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:243:// operator runs over sampleBase directly: an elliptical kernel oriented along the structure
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:246:// no 8-spoke pinwheel by construction). 4 rings × 8 angular taps = 32 procedural samples.
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:251:  // The studio knob drives the patch radius; clamp into the procedural patch band.
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:277:      let c = sampleBase(p + off, t);
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:297:    let variance = dot(var3, W_LUMA);
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:305:  let center = sampleBase(p, t);
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:317:// The field re-lights as warm folded metal: the luma HEIGHT field (the packed
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:352:  // Technicolor valley base — the body keeps the FIELD hue; luma rides the relief.
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:367:  let flat = mix(col, vec3<f32>(dot(col, W_LUMA)), METAL_GRADIENT_FLATTEN);
+src/components/aurora/constants/shaders/flow.glsl.ts:10:// (`structureTensorField`) lives in the mediums-pre block (after `sampleBase`,
+src/components/aurora/constants/shaders/flow.glsl.ts:11:// which it Sobel-samples) and is reached here via a GLSL prototype (ES 3.00
+src/components/aurora/constants/shaders/flow.glsl.ts:18:// Structure-tensor prototype (body defined post-sampleBase in the mediums block).
+src/components/aurora/constants/budget.ts:1:/** Shared CPU-side ceilings for GPU surface work. Authored values are clamped at
+src/components/aurora/constants/budget.ts:5: * The device-pixel-ratio clamp. A retina/4K display reports `devicePixelRatio`
+src/components/aurora/constants/budget.ts:35:/** Clamp a numeric value into an inclusive `[min, max]` band. */
+src/components/aurora/constants/budget.ts:36:export function clampBudget(value: number, min: number, max: number): number {
+src/components/aurora/constants/budget.ts:41: * Resolve the budget-clamped backing-store DPR for a surface. SSR-safe (returns
+src/components/aurora/constants/presets.ts:26:// selects a distinct fragment program at setup, samples a decoded photo through
+src/components/aurora/constants/presets.ts:95:    // NOT a finish axis): `metal` re-lights the field as warm folded metal (the luma
+src/components/aurora/constants/presets.ts:260:     * the luma-relief → normal tilt (a higher value reads as sharper folds). On the WGSL
+src/components/aurora/constants/presets.ts:436: * The default `metalHeightScale` (luma-relief → normal tilt) when omitted. A higher
+src/components/aurora/Aurora.vue:23: * (`auroraFallbackGround`, the field-sampled nuclei glow) paints the first frame
+src/components/aurora/Aurora.vue:41: * internal cross-fade rides under the clamped ceiling and the config's pigment
+src/components/aurora/Aurora.vue:74:         * Per-route aurora saturation clamp.
+src/components/aurora/Aurora.vue:87:         * to `0.5` so the drift recedes behind form/text density. Clamped to
+src/components/aurora/Aurora.vue:121:// `opacityCeiling` contract is unchanged — only the paint authority moved. The clamp
+src/components/aurora/Aurora.vue:161:// a field-sampled nuclei-glow derived from the same palette and nuclei the GPU path
+src/components/aurora/Aurora.vue:214:          field-sampled ground on EVERY substrate — frame 0 is palette-colored,
+src/components/aurora/Aurora.vue:253:           is the template's clamped `opacityCeiling`; `--aurora-ceiling-a11y` is written by
+src/components/aurora/Aurora.vue:292:       `radial-gradient` stack — the same field samples — which fills natively.) */
+src/components/aurora/Aurora.vue:313:           GPU present race their backdrop snapshot to a black sample; `isolate`
+src/components/aurora/index.ts:92:// field-sampled nuclei-glow surface for the software-raster / capture substrate;
+src/components/aurora/index.ts:93:// reuses oklchToLinear — ONE color source). `sampleAuroraField` is the per-pixel
+src/components/aurora/index.ts:97:    sampleAuroraField,
+src/components/carousel/projection.ts:26:// nothing else: `memberLag` re-typed the clamp inline while its own docstring said "that
+src/components/carousel/types.ts:42:    /** The sequence core — index authority, clamp, states, announcement. */
+src/components/dialog/DialogTitle.vue:15:         fluid body value so the √φ interval with the description holds at the clamp
+src/components/dialog/styles.css:16: * IS the consistency F48 asked for. The inline gutter clamp is load-bearing — at 393
+src/components/dialog/styles.css:19: * clamp yields 512px capped at wide widths and a real 20px gutter per side at 393. */
+src/components/dialog/styles.css:67:     * holds at the clamp floor, through the fluid arm, and at the ceiling. Type takes NO
+src/components/dialog/ModalOverlay.vue:11: * a wash blur pulls bright neighbours into every sampled pixel. A scrim that raises the
+src/components/scroll-progress-rim/ScrollProgressRim.vue:31:const clamp = (value: number, min: number, max: number) =>
+src/components/music-staff/glyphs.ts:68:    one meaning per row, gated against the sampled paths in tests. Detached marks
+src/components/music-staff/staffGeometry.ts:80:/** The largest rhythm the sounding length covers; shorter than a 32nd clamps. */
+src/components/button/styles.css:60:           box. `--radius-pill` (9999px) is clamped by the engine to half the
+src/components/button/styles.css:67:           still reads a circle: the engine's own radius scaling clamps the corner
+src/components/button/styles.css:72:           token to re-derive a clamp the engine already applies (GF-DOCK §STRIKE —
+src/components/pager-dots/worm.ts:44: * and READS as eleven. The predecessor's fixed 36 px clamp saturated on every hop
+src/components/typewriter/composables/useTypewriter.ts:368:        displayText.value = targetChars.slice(0, clamped).join("");
+src/components/typewriter/utils/timing.ts:56:/** Uniform noise around base: `base * (1 + uniform(-variance, +variance))`, clamped to [min, max]. */
+src/components/_shared/useMotionAxis.ts:30:// (`off`), never above — `resolveMotion` clamps a prop `full`/`reduced` down to
+src/components/_shared/useMotionAxis.ts:48: * only clamp DOWN — PRM forces `full`/`reduced` → `reduced` (never an escalation),
+src/components/_shared/useMotionAxis.ts:68:    /** The PRM-clamped resolved rung (`full`/`reduced`/`off`). */
+src/components/_shared/useMotionAxis.ts:82: * root `:style`. All four derive from the ONE `resolveMotion` clamp so PRM
+src/components/_shared/class-names.ts:20: * conflict-key (the CSS-property bucket the utility writes to), and
+src/components/_shared/class-names.ts:21: * keeps only the last token per bucket. Variant prefixes like
+src/components/_shared/class-names.ts:23: * scope: a bucket-key incorporates the prefix so `text-small md:text-lg`
+src/components/_shared/class-names.ts:28: * Tokens that don't match a known bucket pass through untouched (custom
+src/components/_shared/class-names.ts:34: * `font-text` / `font-display` / `font-serif-math` (the family bucket is
+src/components/_shared/class-names.ts:36: * `border-*` / `ring-*` colours (`border-border`, `ring-ring`; those buckets
+src/components/_shared/class-names.ts:38: * `.published-roster` carries IS bucketed, by its true property — a unit in
+src/components/_shared/class-names.ts:91: * literal or a colour function (`rgb(`, `oklch(`, `color-mix(` …); those bucket as
+src/components/_shared/class-names.ts:94: * buckets as a size.
+src/components/_shared/class-names.ts:103: * Rules: each entry is `[bucket-id, regex]`. The regex is matched
+src/components/_shared/class-names.ts:105: * prefixes and `!`). The bucket-id is what we collide on — two tokens
+src/components/_shared/class-names.ts:106: * sharing a bucket-id under the same prefix scope are conflicts.
+src/components/_shared/class-names.ts:115:    // mis-bucketed as a colour.
+src/components/_shared/class-names.ts:124:    // size/leading/font-family recipes, NOT colour utilities; bucketing
+src/components/_shared/class-names.ts:128:    // utility (`text-micro`) instead of shadowing it. This conflict-bucket
+src/components/_shared/class-names.ts:132:    // Button variant under the previous catch-all `text-color` bucket).
+src/components/_shared/class-names.ts:147:    // `--tw-text-shadow-color`) are two properties, so two buckets. Both run
+src/components/_shared/class-names.ts:153:    ["text-color", /^text-/], // catch-all colour bucket; runs AFTER size/align/typography
+src/components/_shared/class-names.ts:204:    // ONE bucket per CSS longhand group the utility writes, and an OPEN value
+src/components/_shared/class-names.ts:217:    // Per-corner/per-side buckets are required, NOT one radius bucket: the
+src/components/_shared/class-names.ts:225:    // shorthand bucket, which is correct — they set all four corners.
+src/components/_shared/class-names.ts:299:function bucketFor(core: string): string | null {
+src/components/_shared/class-names.ts:308: * its conflict bucket; keep only the last token per `(scope|bucket)`
+src/components/_shared/class-names.ts:309: * pair. Tokens with no bucket pass through (preserving order).
+src/components/_shared/class-names.ts:325:        const bucket = bucketFor(core);
+src/components/_shared/class-names.ts:326:        if (bucket === null) continue;
+src/components/_shared/class-names.ts:327:        const key = `${scope}|${bucket}`;
+src/components/_shared/field/control.css:98:           filter is the backdrop root, so a filter here would sample the plate's
+src/components/_shared/field/control.css:109:           The fluid clamp ALONE. `--control-text` is `--type-small × --ui-scale`,
+src/components/_shared/field/control.css:110:           and the second factor escapes the clamp the first one exists to impose:
+src/components/_shared/field/control.css:111:           16.40px at 1440 fine becomes 24.60px at coarse, past the clamp's own
+src/components/_shared/field/control.css:138:       to name: a single-line field keeps the stadium (`--radius-pill`, clamped by
+src/components/_shared/menu/menu.css:5:       sample for that visual body, and a row-level filter inside it would be a plate
+src/components/_shared/menu/menu.css:10:       fill darkened the cream row with no hue (C 0.010), which reads grey. The
+src/components/command/Command.vue:77:       a glass plate — the palette sampled a backdrop that was itself a backdrop
+src/components/command/Command.vue:78:       sample: a plate nested in a plate, one blur reading the blur beneath it.
+src/components/configurator/styles.css:38: * live stage, and inspector. Sampling the backdrop on the outer `.glass-floating`
+src/components/configurator/styles.css:42: * sample per visible chrome plate while the stage remains outside every filtered
+src/components/configurator/styles.css:444:        /* `cqi`, not `vw`. The middle term of a tile clamp is a share of the ribbon the
+src/components/configurator/styles.css:462:     * placement so the aside inspector idiom stays byte-unchanged. The clamp MIN (200px)
+src/components/select/SelectTrigger.vue:59:                'tap-squish focus-ring flex w-full cursor-pointer items-center justify-between rounded-pill px-3 py-2 text-dropdown placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-disabled [&>span]:line-clamp-1 transition-control aria-invalid:border-(--destructive) user-invalid:border-(--destructive) focus-visible:aria-invalid:shadow-(--invalid-ring) focus-visible:user-invalid:shadow-(--invalid-ring)',
+src/components/timeline/geometry.ts:33:function clamp01(n: number): number {
+src/components/timeline/geometry.ts:45: * 1. Authored `at` values are clamped monotone non-decreasing in [0, 1]:
+src/components/timeline/geometry.ts:46: *    `at_i = max(at_{i−1}, clamp01(at_i))`. They are NEVER sorted — keys,
+src/components/timeline/geometry.ts:48: *    silently reordered narrative. The clamp preserves author order and
+src/components/timeline/geometry.ts:63:    // Pass 1 — clamp the AUTHORED boundaries monotone in [0, 1].
+src/components/timeline/geometry.ts:68:        const raw = clamp01(seg.at as number);
+src/components/timeline/geometry.ts:78:                "its predecessor's. The boundaries are CLAMPED monotone (author " +
+src/components/timeline/geometry.ts:120: * Explicit `progress` wins (clamped). Otherwise `completed` is 1 and `pending`
+src/components/timeline/geometry.ts:126:    if (typeof seg.progress === "number") return clamp01(seg.progress);
+src/components/timeline/Timeline.vue:529:           (the canon's ≥0.30-of-peak clamp), so it is not restated. ~~Unlayered scoped
+src/components/timeline/Timeline.vue:588:           and NOT `--cartoon-ink`: the cartoon ink is clamped dark in both modes,
+src/components/timeline/README.md:29:- `at` is a span's **end** boundary, cumulative, clamped monotone non-decreasing —
+src/components/timeline/types.ts:24:     * The span's END boundary on the unit axis, 0..1, CUMULATIVE. Clamped
+src/components/blob/composables/uploadBlobUniforms.ts:152:    // away as one. The trail count stays; the zero-radius samples paint
+src/components/blob/composables/uploadBlobUniforms.ts:247:    // which is NEGATIVE (clamped to 0) when the satellite is well-inside the
+src/components/blob/composables/uploadBlobUniforms.ts:253:    // gap and is CLAMPED to `MAX_BRIDGE_WIDEN` (×1.25) so the widen can never
+src/components/blob/composables/uploadBlobUniforms.ts:270:    // top of the nominal band, clamped so the body self-seam never over-leans.
+src/components/blob/composables/uploadBlobUniforms.ts:278:    // The single clamped surface axis. `uStage` is derived: the flat endpoint skips
+src/components/blob/composables/easing.ts:43:// Outside [0,1] it clamps. The merge-IN (the return half) reuses easeOut (slow), so the
+src/components/blob/composables/useBlobPointer.ts:5:/** A single trail sample — a decaying-radius metaball source the shader smin-merges. */
+src/components/blob/composables/useBlobPointer.ts:6:export interface TrailSample {
+src/components/blob/composables/useBlobPointer.ts:64:    // The trail ring buffer — TRAIL_N most-recent smoothed positions. Later samples
+src/components/blob/composables/useBlobPointer.ts:66:    const trail: TrailSample[] = Array.from({ length: TRAIL_N }, () => ({
+src/components/blob/composables/useBlobPointer.ts:77:    // radius; it is CLAMPED to > -0.9 so bodyR never inverts. A click kicks the
+src/components/blob/composables/useBlobPointer.ts:153:     * the first post-park `dtMs` can be seconds, so it is CLAMPED to ~50ms (the
+src/components/blob/composables/useBlobPointer.ts:154:     * first-dt clamp — without it the spring/trail JUMP after an offscreen/PRM
+src/components/blob/composables/useBlobPointer.ts:160:        const dt = dtClampedMs / 1000; // seconds — the symplectic-Euler pulse integrator math
+src/components/blob/composables/useBlobPointer.ts:172:        // Tickable step the shared RAFPlayback loop drives). Pass the ms-clamped
+src/components/blob/composables/useBlobPointer.ts:174:        springX.tickDt(dtClampedMs);
+src/components/blob/composables/useBlobPointer.ts:175:        springY.tickDt(dtClampedMs);
+src/components/blob/composables/useBlobPointer.ts:216:    function trailSources(baseRadius: number): { sources: TrailSample[]; count: number } {
+src/components/blob/composables/useBlobPointer.ts:217:        const sources: TrailSample[] = [];
+src/components/blob/composables/useBlobSatellites.ts:32:function clamp01(t: number): number {
+src/components/blob/composables/useBlobSatellites.ts:71:    // never-leaves-reach clamp). A bonded-breath satellite only enters `fissioning` when
+src/components/blob/composables/useBlobSatellites.ts:140:        // MORE; a sleepy one barely. Clamped to [0, 1]. At amp 0 the whole fission branch
+src/components/blob/composables/useBlobSatellites.ts:150:            const t = clamp01(s.phaseDuration > 0 ? elapsed / s.phaseDuration : 1);
+src/components/blob/composables/useBlobSatellites.ts:280:                        const bt = clamp01(blendElapsed / ORBIT_BLEND_MS);
+src/components/blob/composables/useBlobSatellites.ts:293:                    const ease = easeIn(clamp01((now - s.phaseStart) / s.phaseDuration));
+src/components/blob/composables/useBlobSatellites.ts:296:                    const mt = clamp01((now - s.phaseStart) / s.phaseDuration);
+src/components/blob/composables/useBlobSatellites.ts:309:                    const ease = easeOut(clamp01((now - s.phaseStart) / s.phaseDuration));
+src/components/blob/composables/useBlobSatellites.ts:312:                    const et = clamp01((now - s.phaseStart) / s.phaseDuration);
+src/components/blob/composables/useBlobSatellites.ts:326:                    const ft = clamp01((now - s.phaseStart) / s.phaseDuration);
+src/components/blob/composables/useBlobSatellites.ts:340:                    scale = lerp(0.78, 1.0, clamp01(reachT));
+src/components/blob/composables/useBlobSatellites.ts:350:                        // rings, an excited one punches. Clamped to the gentle pulse range.
+src/components/blob/composables/uniformBridgeWGPU.ts:177:    // The same single clamped surface decision the WebGL2 bridge consumes.
+src/components/blob/README.md:71:  the energy-conserving Blinn-Phong glint is re-derived sub-unity and clamped before the OETF so it is
+src/components/blob/README.md:80:  hue-preservingly gamut-clamped, then emitted through the mandatory sRGB OETF, with an
+src/components/blob/README.md:225:  morphT: number;             // clamped 0..1: flat blob → dressed meatball (default 1)
+src/components/blob/README.md:296:  OKLab/OKLCh matrices, with a **hue-preserving gamut clamp** and the **mandatory `linearToSrgb()`
+src/components/blob/README.md:317:- **Fill-rate is the cost, and it is quadratic in device-pixel ratio.** The substrate clamps DPR at 2×.
+src/components/blob/README.md:345:  resolution and lets the browser bilinear-upsample on composite (~4× fragment savings on weak GPUs;
+src/components/blob/README.md:408:│   └── oklch-perturb.glsl.ts     # inGamut + hue-preserving gamutClampOklch
+src/components/blob/README.md:439:  normal-variance specular clamp @ `:364`) transcribe to WGSL fragment-stage `fwidth()` — the most
+src/components/blob/README.md:463:  gamut-clipping the blob's clamp follows).
+src/components/blob/types.ts:10: * clamped DPR; `half` renders the backing store at HALF resolution and lets the
+src/components/blob/types.ts:11: * browser bilinear-upsample on composite (~4× fragment savings for weak GPUs — the
+src/components/blob/types.ts:53:// clamp). The phase token is READ by BOTH uniform packers to PHASE-SCOPE `orbitWiden`:
+src/components/blob/types.ts:174:     * `clampLightnessFloor`; default 0.15. This does not affect the pre-baked
+src/components/blob/types.ts:270:     * The sole flat↔dressed surface axis. Values are clamped to `[0, 1]`: `0` is the
+src/components/blob/types.ts:277:    // with bilinear upsampling, reducing fragment work by roughly 4×).
+src/components/blob/constants.ts:62: * pointer lean. ONE principled surface — the five named moods are samples of it.
+src/components/blob/constants.ts:106:/** The resolved per-mood target params (samples of the `paramsFor` surface). */
+src/components/blob/constants.ts:197: * clamp. Paints at `FISSION_REACH_MAX · POS_SCALE` uv.
+src/components/blob/shaders/metaball-palette.wgsl.ts:1:// Goo-blob metaball OKLCh gamut-clamp and palette-sample helper
+src/components/blob/shaders/metaball-palette.wgsl.ts:5:// The hue-preserving inward chroma gamut clamp + the multi-stop palette sample
+src/components/blob/shaders/metaball-palette.wgsl.ts:18:// ── OKLCh gamut clamp (hue-preserving inward chroma clamp — blob-local) ──
+src/components/blob/shaders/metaball-palette.wgsl.ts:22:fn gamutClampOklch(lch: vec3<f32>) -> vec3<f32> {
+src/components/blob/shaders/metaball-palette.wgsl.ts:35:// Sample the multi-stop palette at t, OKLab mix + midpoint chroma-bump. Returns
+src/components/blob/shaders/metaball-palette.wgsl.ts:37:fn samplePaletteOklch(t: f32) -> vec3<f32> {
+src/components/blob/shaders/metaball.wgsl.ts:12:// 364 the Toksvig normal-variance specular clamp) transcribe to WGSL FRAGMENT-STAGE
+src/components/blob/shaders/metaball.wgsl.ts:23:// gamut clamp) stays inline here as a deliberately distinct implementation.
+src/components/blob/shaders/metaball.wgsl.ts:35:// The noise/FBM and OKLCh gamut-clamp/palette helper groups live
+src/components/blob/shaders/metaball.wgsl.ts:147:// OKLCh gamut clamp, palette sample, and breath from metaball-palette.wgsl,
+src/components/blob/shaders/metaball.wgsl.ts:365:  //    nVar = length(fwidth(Nh)) IS the Toksvig clamp the lit block reads); the named lit-
+src/components/blob/shaders/metaball.wgsl.ts:368:  //    flow; the math is byte-identical to the GLSL fallback's Toksvig clamp, only its
+src/components/blob/shaders/metaball.wgsl.ts:372:  //    clamp, the WGSL fragment-stage fwidth() of the surface normal. NOW in uniform
+src/components/blob/shaders/metaball.wgsl.ts:383:  var oklch = samplePaletteOklch(colorNoise);
+src/components/blob/shaders/metaball.wgsl.ts:403:  let flatOkl = gamutClampOklch(oklch);
+src/components/blob/shaders/metaball.wgsl.ts:446:  //    march returns < 1 and DARKENS the OKLCh L — a soft grounded contact band UNDER the
+src/components/blob/shaders/metaball.wgsl.ts:466:    let shadowDarken = (1.0 - sh) * away * band * 0.20;
+src/components/blob/shaders/metaball.wgsl.ts:467:    oklch.x = max(oklch.x - shadowDarken, 0.0);
+src/components/blob/shaders/metaball.wgsl.ts:470:  oklch = gamutClampOklch(oklch);
+src/components/blob/shaders/metaball.wgsl.ts:481:    // ── fwidth SITE #2 — Toksvig normal-variance specular clamp. nVar is the HOISTED
+src/components/blob/shaders/watercolor-edges.glsl.ts:93:// through the per-octave frequency scale AND the FBM_ROT rotation: octave i samples
+src/components/blob/shaders/metaball.frag.ts:7:// displaces the edge) · oklch-perturb (inGamut + gamutClampOklch). The uniforms +
+src/components/blob/shaders/metaball.frag.ts:13:// gamut clamp, then the MANDATORY `linearToSrgb()` OETF before output — a linear-in
+src/components/blob/shaders/metaball.frag.ts:61:// (__tests__/metaball-color.glsl-port.ts) mirrors that chunk. The gamut-clamp
+src/components/blob/shaders/metaball.frag.ts:91:// warns the 4-tap did implicitly by sampling in screen space).
+src/components/blob/shaders/metaball.frag.ts:205:// Sample the multi-stop palette at t in [0,1], interpolating adjacent
+src/components/blob/shaders/metaball.frag.ts:209:vec3 samplePaletteOklch(float t) {
+src/components/blob/shaders/metaball.frag.ts:230:// neighbourhood toward its explicit shade — mixed in OKLab (the samplePaletteOklch
+src/components/blob/shaders/metaball.frag.ts:275:    // sample-shift sign here was uv -= dir*influence; the live readback (an attraction
+src/components/blob/shaders/metaball.frag.ts:279:    // pointerDir = uPointer - uv is the toward-pointer direction in SAMPLE space; to
+src/components/blob/shaders/metaball.frag.ts:280:    // MOVE the rendered body TOWARD the pointer the sample must shift ALONG pointerDir
+src/components/blob/shaders/metaball.frag.ts:281:    // (sample the field from where the pointer is), so the sign is uv += dir*influence.
+src/components/blob/shaders/metaball.frag.ts:320:    // → OKLCh; perturb L/C/h; OKLCh → OKLab → linear; hue-preserving gamut clamp.
+src/components/blob/shaders/metaball.frag.ts:321:    // The base is the multi-stop palette sample — distributed across the
+src/components/blob/shaders/metaball.frag.ts:324:    vec3 oklch = samplePaletteOklch(colorNoise);
+src/components/blob/shaders/metaball.frag.ts:344:    // uMorphT is the single clamped config surface axis; a consumer ANIMATING
+src/components/blob/shaders/metaball.frag.ts:355:    vec3 flatOkl = gamutClampOklch(oklch);
+src/components/blob/shaders/metaball.frag.ts:381:    // warm arc (uIridHue), with the chroma clamped to a warm-pearl band so the rim
+src/components/blob/shaders/metaball.frag.ts:383:    // OKLCh BEFORE the gamut clamp. Default LOW.
+src/components/blob/shaders/metaball.frag.ts:391:        // Warm-pearl chroma cap: lift chroma toward a pale-pearl band, clamped.
+src/components/blob/shaders/metaball.frag.ts:400:    // L and warm the hue, consuming the normal. In OKLCh before the gamut clamp.
+src/components/blob/shaders/metaball.frag.ts:421:    //    light, DARKEN the OKLCh L — a soft grounded contact band under the dome
+src/components/blob/shaders/metaball.frag.ts:434:        float shadowDarken = (1.0 - sh) * away * band * 0.20;
+src/components/blob/shaders/metaball.frag.ts:435:        oklch.x = max(oklch.x - shadowDarken, 0.0);
+src/components/blob/shaders/metaball.frag.ts:438:    oklch = gamutClampOklch(oklch);
+src/components/blob/shaders/metaball.frag.ts:465:        // (Toksvig-style fwidth clamp) — drop shininess, NOT raise it. nVar reads
+src/components/blob/shaders/metaball.frag.ts:496:        // Clamp the linear highlight below unity before the add (the
+src/components/blob/shaders/metaball.frag.ts:501:        // warm gleam, sub-unity) means the OETF clamp below can never crush a
+src/components/blob/shaders/oklch-perturb.glsl.ts:2:// clamp.
+src/components/blob/shaders/oklch-perturb.glsl.ts:4:// `inGamut` tests a linear-sRGB triple against [0,1]³; `gamutClampOklch` bisects
+src/components/blob/shaders/oklch-perturb.glsl.ts:10:export const METABALL_OKLCH_PERTURB_GLSL = /* glsl */ `// Edit #4's gamut step — hue-preserving inward chroma clamp. If the linear result
+src/components/blob/shaders/oklch-perturb.glsl.ts:16:vec3 gamutClampOklch(vec3 lch) {
+src/components/blob/shaders/metaball-uniforms.glsl.ts:52:// renderer clamps it from config.morphT. Animating 0 to 1 gets the live morph.
+src/components/blob/shaders/metaball-uniforms.glsl.ts:116:// DYNAMIC break on uTrailCount, mirroring the satellite loop. Later samples paint
+src/components/blob/presets.ts:17:// `lightnessFloor` config atom clamps that body stop to a legible OKLab-L floor. The
+src/components/blob/presets.ts:29: * Clamp a lightness-floor value into the {@link LIGHTNESS_FLOOR_BRACKET} `[0.12, 0.20]`.
+src/components/blob/presets.ts:35:export function clampLightnessFloor(v: number = LIGHTNESS_FLOOR_DEFAULT): number {
+src/components/blob/Blob.vue:221:// and the spring caught up in one clamped 50ms step — the delayed-then-lurching
+src/components/blob/index.ts:25:    clampLightnessFloor,
+src/components/blob/config.ts:36:    clampLightnessFloor,
+src/components/deck/composables/useDeck.ts:20:     · `canNext` / `canPrev` — the clamp, published instead of re-derived by every
+src/components/deck/composables/useDeck.ts:37:    /** The 0-based active member index (clamped). The ONE authority. */
+src/components/deck/composables/useDeck.ts:45:    /** Whether a forward step exists (the clamp, published once). */
+src/components/deck/composables/useDeck.ts:77:    /** The initial 0-based index (clamped). Default 0. */
+src/components/deck/composables/useDeck.ts:136:    // A shrinking sequence re-clamps rather than stranding the authority past its
+src/components/deck/README.md:6:headless clamped index with no rendering half, and an item-scroller with no
+src/components/deck/README.md:94:The sequence clamps. Native scroll-snap has no circular scrolling and the core
+src/components/deck/window.ts:4:// indices around the active, clamped to the ends, with edge flags cueing more
+src/components/deck/window.ts:23:// so the margin collapses rather than fighting the clamp.
+src/components/deck/window.ts:46:const clamp = (n: number, lo: number, hi: number): number =>
+src/components/deck/index.ts:4:// registers were separate implementations of one contract — a headless clamped
+src/components/dock/DockTrigger.vue:27: * greenfield trigger clamps its own label (the retired `clampLabel` prop's
+src/components/dock/DockTrigger.vue:28: * disposition, decided-terminal: label-clamp is a native trigger concern). Reka's
+src/components/dock/composables/useDockRun.ts:19://     (i−1)·P + [openIdx < i]·(m−1)·P − P/2      clamped to [0, scrollMax]
+src/components/dock/composables/useDockRun.ts:28:// The clamp is what makes the terminals flush (0 and scrollMax, ≡ 0 mod P by
+src/components/dock/DockControl.vue:28: * `--dock-control-size` (≥44px on coarse via the density clamp) — hit box ≠ paint
+src/components/dock/DockControl.vue:128:// dock-controls CSS reads to couple darken/specular to the spring physics. The
+src/components/dock/README.md:20:- `GlassDock` owns the plate, orientation, collapse state, overflow, and backdrop mode.
+src/components/dock/README.md:51:any backdrop with no sampling; `class="glass-opaque"` paints the level-0 escape, a solid
+src/components/dock/styles/dock.css:131:       plate, and a `backdrop-filter` samples only as far back as its BACKDROP ROOT.
+src/components/dock/styles/search.css:39:       muted ink over any input; nothing samples the backdrop. It rides the SAME
+src/components/dock/styles/shape.css:122:       The `max(…, 0.06)` guard matches the layers.css `--dock-size-scale` clamp floor
+src/components/dock/styles/layers.css:260:           the center-coupled scale read the SAME clamp (fade coupled to
+src/components/dock/styles/density.css:7: * `max(…, --dock-control-floor)` WCAG 2.5.5 clamp.
+src/components/dock/styles/density.css:107:       control-size carries an INNER `max(…, 44px)` WCAG 2.5.5 clamp (the coarse
+src/components/dock/styles/density.css:110:       floor — the floor survives as a CLAMP, not a parallel `@media` rule.
+src/components/dock/styles/density.css:183:       --dock-control-floor)` WCAG 2.5.5 clamp as the rungs — the cockpit is tight, but
+src/components/dock/styles/density.css:347:       the `max(…, --dock-control-floor)` clamp directly below, NOT by growing. So
+src/components/dock/styles/shell.css:162:           measured, so the cap was clamping the dock BELOW the width the viewport
+src/components/dock/styles/shell.css:292:    /* Vertical docks grow-to-fit then clamp at `--dock-max-block-size` (the
+src/components/dock/styles/controls/triggers.css:7:   darken, the focus + open/active fill (hover ≠ open), and
+src/components/dock/styles/controls/touch-floor.css:7:        clamp; this is the no-`.glass-dock`-ancestor half).
+src/components/dock/styles/controls/touch-floor.css:16:       is subsumed into the `--dock-scale` multiplier + the `max(…, 44px)` clamp in
+src/components/dock/styles/controls/touch-floor.css:18:       44px target, the clamp guarantees the floor even below 1.0× scale). This
+src/components/dock/styles/controls/icon-button.css:16:       darken/specular legs read it via `calc()` (typed <number> so the calc interpolates),
+src/components/dock/styles/controls/icon-button.css:87:           • the DARKEN leg — a sub-perceptual `filter: brightness()` deepen on the SAME
+src/components/dock/styles/morph.css:70:       included, makes that ancestor a BACKDROP ROOT: the lens beneath samples IT instead
+src/components/dock/styles/run.css:450:       token to couple to; the rejected `from: 9999px` is pinned by the half-box clamp
+src/components/dock/styles/run.css:453:       where no clamp is in play.
+src/components/dock/DockCrossfade.vue:132:function clamp01(v: number): number {
+src/components/dock/DockCrossfade.vue:188:            stale === next && Number.isFinite(enterT) ? 1 - clamp01(enterT) : 0;
+src/components/dock/DockCrossfade.vue:189:        const leaveStart = Number.isFinite(leaveT) ? clamp01(leaveT) : 1;
+src/components/dock/DockCrossfade.vue:229:                // Clamp the opacity drive to [0,1]: the spring's ζ<1 overshoot is a box-
+src/components/dock/DockCrossfade.vue:232:                // `1 - 1.03 → 0` clamp boundaries during the ring-down).
+src/components/dock/DockCrossfade.vue:235:                    clamp01(enterStart + (1 - enterStart) * progress),
+src/components/dock/DockCrossfade.vue:237:                writeT(prev, clamp01(1 - leaveStart * (1 - progress)));
+demo/composables/virtual/virtualSectionLayout.ts:62: * computed sequentially from index 0. Heights are rounded and clamped >= 1.
+demo/chassis/hero/aurora-hero.ts:143:        // a warmer-neighbour stop for a polychrome spread (clamped warm so the
+demo/chassis/hero/aurora-hero.ts:145:        { L: HERO_WASH_L + 0.06, C: c * 0.78, h: clampWarm(warmH + 18) },
+demo/chassis/hero/aurora-hero.ts:285:    const h = clampWarm(hue);
+demo/chassis/hero/aurora-hero.ts:297:            { L: 0.93, C: 0.065, h: clampWarm(h + 14) }, // a warmer neighbour
+demo/chassis/hero/aurora-hero.ts:298:            { L: 0.95, C: 0.05, h: clampWarm(h - 10) }, // a cooler-warm neighbour
+demo/chassis/hero/aurora-hero.ts:334:    const h = clampWarm(hue);
+demo/chassis/hero/aurora-hero.ts:342:            { L: 0.25, C: 0.07, h: clampWarm(h + 14) }, // a warmer-ember neighbour (the brightest nuclei)
+demo/chassis/hero/aurora-hero.ts:343:            { L: 0.19, C: 0.05, h: clampWarm(h - 10) }, // a deeper warm neighbour
+demo/chassis/showcase/TokenLadder.vue:2:// TokenLadder — three-cell grid (sample · token · resolved-value) over a
+demo/chassis/showcase/TokenLadder.vue:23:    /** Class applied to each sample cell (e.g., "p-6", "size-12"). */
+demo/chassis/showcase/TokenLadder.vue:24:    sampleClass?: string;
+demo/chassis/showcase/TokenLadder.vue:25:    /** Sample slot text — defaults to "Aa" for typography, "" for layout-only ladders. */
+demo/chassis/showcase/TokenLadder.vue:26:    sampleText?: string;
+demo/chassis/showcase/TokenLadder.vue:33:    sampleClass: "",
+demo/chassis/showcase/TokenLadder.vue:34:    sampleText: "Aa",
+demo/chassis/showcase/TokenLadder.vue:50:            <div :class="cn('min-w-0', row.cls, sampleClass)">
+demo/chassis/showcase/TokenLadder.vue:51:                <slot name="sample" :row="row">{{ sampleText }}</slot>
+demo/stories/forms/slider.vue:26:// sample at setup, no GL context, nothing animating, so nothing for PRM to pause.
+demo/stories/forms/slider.vue:46:        // 12 × 12 field samples (the preset cards bake 10): finer texels keep real
+demo/stories/compositions/auth-shell.vue:210:   backdrop bucket. The section-color trust chips already provide their own ink.
+demo/stories/compositions/auth-shell.vue:223:    /* The muted body copy is darkened from the light-mode `38%` lightness: over
+demo/stories/compositions/auth-shell.vue:226:       the muted ink at ~5:1 over that brightest sample (π-measured) while staying
+demo/stories/navigation/tabs.vue:23:// sample at setup, no GL context, nothing animating, so nothing for PRM to pause.
+demo/stories/navigation/tabs.vue:46:        // 12 × 12 field samples (the preset cards bake 10): finer texels keep real
+demo/stories/navigation/carousel.vue:324:                    sequence clamps.
+demo/stories/motion/springs.vue:257:            blurb="Each named motion character balances response and damping for a distinct feel. Play the samples together or one at a time to compare their arrivals."
+demo/stories/motion/springs.vue:361:                            {{ presetProjection.sampleCount }} samples ·
+demo/stories/motion/springs.vue:362:                            {{ presetProjection.sampleCount + 2 }} stops ·
+demo/stories/motion/springs.vue:466:                            · {{ playProjection.sampleCount }} samples ·
+demo/stories/motion/deck.vue:5:// clamp, the ONE `[data-state]` vocabulary, the announcement), `<DeckStage>` (the
+demo/stories/foundations/typography.vue:3:// 18-row label/sample table. It leads with ONE focal display word, ACTIVATES the
+demo/stories/foundations/typography.vue:18:const ladder: { cls: string; label: string; sample: string }[] = [
+demo/stories/foundations/typography.vue:19:    { cls: "text-display-5", label: "display-5", sample: "Golden" },
+demo/stories/foundations/typography.vue:20:    { cls: "text-display-4", label: "display-4", sample: "Audacious" },
+demo/stories/foundations/typography.vue:21:    { cls: "text-display-3", label: "display-3", sample: "Ornament" },
+demo/stories/foundations/typography.vue:22:    { cls: "text-display-2", label: "display-2", sample: "Plus Jakarta" },
+demo/stories/foundations/typography.vue:23:    { cls: "text-display", label: "display", sample: "Display" },
+demo/stories/foundations/typography.vue:24:    { cls: "text-title", label: "title", sample: "Section title" },
+demo/stories/foundations/typography.vue:25:    { cls: "text-heading", label: "heading", sample: "Subsection head" },
+demo/stories/foundations/typography.vue:26:    { cls: "text-subheading", label: "subheading", sample: "Card title" },
+demo/stories/foundations/typography.vue:27:    { cls: "text-prose", label: "prose", sample: "Long-form reading sits at prose — φ line-height, Plus Jakarta Sans." },
+demo/stories/foundations/typography.vue:28:    { cls: "text-body", label: "body", sample: "Body copy uses Plus Jakarta Sans at 1rem, 1.5 leading." },
+demo/stories/foundations/typography.vue:29:    { cls: "text-small", label: "small", sample: "Metadata and secondary body copy." },
+demo/stories/foundations/typography.vue:30:    { cls: "text-caption", label: "caption", sample: "Caption · labels · hints" },
+demo/stories/foundations/typography.vue:31:    { cls: "text-micro", label: "micro", sample: "Micro: badges, fine print" },
+demo/stories/foundations/typography.vue:32:    { cls: "text-math", label: "math", sample: "f(x) = ∑ aₙ φₙ(x)" },
+demo/stories/foundations/typography.vue:33:    { cls: "text-math-body", label: "math-body", sample: "KaTeX-adjacent body math" },
+demo/stories/foundations/typography.vue:34:    { cls: "text-mono-small", label: "mono-small", sample: "npm run dev" },
+demo/stories/foundations/typography.vue:59:             `--type-display-audacious`, whose clamp CEILING is 22rem = 352px
+demo/stories/foundations/typography.vue:104:        <!-- THE GRADED LADDER — a designed rhythm, NOT a label/sample table. The
+demo/stories/foundations/typography.vue:105:             label is a quiet mono caption ABOVE its sample (a designed stack), the
+demo/stories/foundations/typography.vue:106:             sample reads ink at full size, the rungs flow over the calm wash.
+demo/stories/foundations/typography.vue:128:                            row.sample
+demo/stories/foundations/motion.vue:103:            blurb="The Vue <Transition> class-sets shipped in the library — each composes the curve canon into an enter/leave grammar for a kind of surface. Toggle a card to watch the sample enter and leave."
+demo/stories/foundations/overlays-scrims.vue:8:// the backdrop-darkening it IS.
+demo/stories/foundations/overlays-scrims.vue:48:            blurb="Each scrim weight paints over a vivid stage so its backdrop-darkening reads clearly. Open Dialog or Confirm dialog to experience focus, dismissal, and live overlay behavior."
+demo/stories/foundations/overlays-scrims.vue:72:                    sample-class="size-3 rounded-full bg-primary"
+demo/stories/foundations/overlays-scrims.vue:73:                    sample-text=""
+demo/stories/foundations/overlays-scrims.vue:97:   dim reads as the darkening it is. The section-color
+demo/stories/foundations/chart-palette.vue:33:                    sample-class="size-12 rounded-md border border-border"
+demo/stories/foundations/chart-palette.vue:34:                    sample-text=""
+demo/stories/substrates/fourier-field.vue:517:                    description="Overall loudness. Above 1 the paint clamps, so the picture stops changing before the slider does."
+demo/stories/substrates/fourier-field/fGlyphPoints.ts:13: * A closed, evenly-resampled ℱ outline in a centered unit box (roughly
+demo/stories/substrates/fourier-field/fGlyphPoints.ts:14: * x,y ∈ [-0.5, 0.5]; y grows DOWNWARD, screen convention). `samples` controls
+demo/stories/substrates/fourier-field/fGlyphPoints.ts:17:export function fGlyphPoints(samples = 128): [number, number][] {
+demo/stories/substrates/fourier-field/fGlyphPoints.ts:38:    return resampleClosed(recenterUnit(v), samples);
+demo/stories/substrates/fourier-field/fGlyphPoints.ts:62: * Resample a closed polyline to `n` points uniformly by arc length, so the DFT
+demo/stories/substrates/fourier-field/fGlyphPoints.ts:63: * sees an evenly-sampled signal (uneven vertex spacing skews the spectrum).
+demo/stories/substrates/fourier-field/fGlyphPoints.ts:65:function resampleClosed(
+demo/stories/substrates/fourier-field/fourier-paths.ts:26:    /** The closed outline, centered unit box, resampled uniformly by arc length. */
+demo/stories/substrates/fourier-field/fourier-paths.ts:56:/** Sample a closed parametric curve `f(u)` over u ∈ [0,1) at `n` points. */
+demo/stories/substrates/fourier-field/fourier-paths.ts:57:function sampleClosed(
+demo/stories/substrates/fourier-field/fourier-paths.ts:69:function heartPoints(samples = 256): [number, number][] {
+demo/stories/substrates/fourier-field/fourier-paths.ts:70:    return sampleClosed((u) => {
+demo/stories/substrates/fourier-field/fourier-paths.ts:80:    }, samples);
+demo/stories/substrates/fourier-field/fourier-paths.ts:84:// outer/inner vertices (sampled on the segments so the DFT sees a smooth signal).
+demo/stories/substrates/fourier-field/fourier-paths.ts:85:function starPoints(points = 5, samples = 256): [number, number][] {
+demo/stories/substrates/fourier-field/fourier-paths.ts:89:    // Build the 2*points alternating vertices, then sample uniformly around the
+demo/stories/substrates/fourier-field/fourier-paths.ts:107:    for (let k = 0; k < samples; k++) {
+demo/stories/substrates/fourier-field/fourier-paths.ts:108:        const target = (k / samples) * total;
+demo/stories/substrates/aurora/config/TextureLayer.vue:126:            description="0..1 · watercolor cauliflower darkening"
+demo/stories/substrates/aurora/presets.ts:550:// mirroring VANGOGH). The metal medium re-lights the field's luma as a HEIGHT
+demo/stories/substrates/aurora/presets.ts:551:// field, so a warm gold/bronze/copper ramp with a strong luma range gives the
+demo/stories/substrates/aurora/usePresetThumbnails.ts:29: * The bake is synchronous + cheap (an 8×8 field sample per preset), so the whole
+demo/stories/substrates/aurora/usePresetThumbnails.ts:43:    // grid 10 → a 100-sample field; the bilinear CSS upscale reads as a smooth
+demo/stories/substrates/aurora/usePresetThumbnails.ts:74:        // chunk is a pure CPU field sample (no device, no rAF, no GL).
+demo/stories/substrates/blob.vue:516:                              cap (211px) clamps BELOW the 225px height — the box goes
+demo/stories/substrates/glass-material.vue:65:const tintSamples = [
+demo/stories/substrates/glass-material.vue:70:const tint = ref<(typeof tintSamples)[number]>(tintSamples[0]);
+demo/stories/substrates/glass-material.vue:73:// thinnest content rung and the thinnest chrome rung. Nothing samples it: both sit on
+demo/stories/substrates/glass-material.vue:106:const accentSamples = [
+demo/stories/substrates/glass-material.vue:153:            blurb="Both plates sit over a canvas that flips between a deep and a bright ground. Nothing samples it. Every rung paints at or above one bound, computed in CSS from the muted ink and the card pole, at which that ink holds AA over any input. Retune the ink and the bound moves with it."
+demo/stories/substrates/glass-material.vue:209:                         one-backdrop-sample-per-plate law in one frame: a rung nested
+demo/stories/substrates/glass-material.vue:217:                                One backdrop sample per plate — the inner surface takes
+demo/stories/substrates/glass-material.vue:265:                        v-for="s in accentSamples"
+demo/stories/substrates/glass-material.vue:340:            blurb="A plate has exactly one chromatic writer on its body: the veil's pole, --card. Re-point --card on a surface and the whole rung follows, at every level. There is no second tint axis, and no painted fringe at the edge — chroma at the rim is what saturate() delivers through a real radius."
+demo/stories/substrates/glass-material.vue:345:                        >tint sample:</span
+demo/stories/substrates/glass-material.vue:348:                        v-for="s in tintSamples"
+demo/stories/substrates/glass-material.vue:351:                        :data-tint-sample="s.source"
+demo/stories/data/search.vue:459:// [2026-08-25 · BK #42 W-SEARCH] ~~`const sizeSample = ref("")` + the three size
+demo/stories/data/metric.vue:24:                        label="Sample"
+demo/stories/data/metric.vue:32:                        {{ loading ? "Show sample" : "Mask sample" }}
+demo/stories/data/metric.vue:94:                                context="Last 100 samples"
+demo/stories/dock/_frame/DockStage.vue:65:             is clamped to the viewport:
+demo/stories/dock/_frame/DockStage.vue:71:             only ~one viewport is ever visible. The DPR clamp (sub-2× wash,
+demo/stories/dock/_frame/DockStage.vue:106:   viewport-clamped field stays pinned as the page scrolls. */
+demo/stories/dock/_frame/DockStage.vue:124:/* The one shared aurora field is viewport-clamped. Sized to `100dvh` (not the full ~2365px scroll column), so the
+demo/stories/dock/overview.vue:555:                sampling region rather than painting a second glass plate inside the

@@ -1,0 +1,90 @@
+queued 15:42:56 load { 22.01 21.04 25.09 } [--timeout 90] for: demo-c ringprobe
+== demo-c start 15:45:05 load { 19.79 21.12 24.62 }
+demo-probe fv5 exit 0 15:45:33 load { 19.91 21.09 24.49 }
+DEMO PASS chromium light fv5: rows 30 · pointer on row 1: highlighted [1] painting [1] bg oklch(0.53 0.124 69.6 / 0.12) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.53 0.124 69.6 / 0.12)
+DEMO PASS chromium dark fv5: rows 30 · pointer on row 1: highlighted [1] painting [1] bg oklch(0.813 0.109 78.2 / 0.12) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.813 0.109 78.2 / 0.12)
+DEMO-PROBE fv5 · PASS (2 theme rows) · load 19.8 21.1 24.6 → 19.9 21.1 24.5
+demo-probe fv4 exit 1 15:46:01 load { 15.80 19.98 23.97 }
+DEMO FAIL chromium light fv4: rows 30 · pointer on row 1: highlighted [0] painting [0,1] bg oklch(0.53 0.124 69.6 / 0.05) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.53 0.124 69.6 / 0.12)
+DEMO FAIL chromium dark fv4: rows 30 · pointer on row 1: highlighted [0] painting [0,1] bg oklch(0.813 0.109 78.2 / 0.05) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.813 0.109 78.2 / 0.12)
+DEMO-PROBE fv4 · FAIL (2 of 2 theme rows) · load 19.9 21.1 24.5 → 15.8 20.0 24.0
+demo-probe minor4 exit 0 15:46:29 load { 13.44 19.08 23.53 }
+DEMO PASS chromium light minor4: rows 30 · pointer on row 1: highlighted [1] painting [1] bg oklch(0.53 0.124 69.6 / 0.12) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.53 0.124 69.6 / 0.12)
+DEMO PASS chromium dark minor4: rows 30 · pointer on row 1: highlighted [1] painting [1] bg color(srgb 0.0927547 0.0503523 0.00879371 / 0.14) · pointer on row 0: highlighted [0] painting [0] bg color(srgb 0.0927547 0.0503523 0.00879371 / 0.14)
+DEMO-PROBE minor4 · PASS (2 theme rows) · load 15.8 20.0 24.0 → 13.4 19.1 23.5
+demo-probe minor3 exit 1 15:46:57 load { 12.63 18.37 23.11 }
+DEMO FAIL chromium light minor3: rows 30 · pointer on row 1: highlighted [0] painting [0,1] bg oklch(0.53 0.124 69.6 / 0.05) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.53 0.124 69.6 / 0.12)
+DEMO FAIL chromium dark minor3: rows 30 · pointer on row 1: highlighted [0] painting [0,1] bg oklch(0.813 0.109 78.2 / 0.05) · pointer on row 0: highlighted [0] painting [0] bg color(srgb 0.0927547 0.0503523 0.00879371 / 0.14)
+DEMO-PROBE minor3 · FAIL (2 of 2 theme rows) · load 13.4 19.1 23.5 → 12.6 18.4 23.1
+crit-demo fv5 exit 0 15:47:27 load { 13.54 17.99 22.81 }
+CRIT PASS chromium light fv5: P pointer→row1 ok highlighted [1] painting [1] · K ArrowDown with pointer on row 1 (still :hover true) ok highlighted [2] painting [2] bg oklch(0.53 0.124 69.6 / 0.12) ink rgb(28, 25, 23) · L pointer leaves ok highlighted [2] painting [2]
+CRIT PASS chromium dark fv5: P pointer→row1 ok highlighted [1] painting [1] · K ArrowDown with pointer on row 1 (still :hover true) ok highlighted [2] painting [2] bg oklch(0.813 0.109 78.2 / 0.12) ink rgb(233, 230, 226) · L pointer leaves ok highlighted [2] painting [2]
+CRIT-DEMO fv5 · PASS (2) · load 12.6 18.4 23.1 → 13.5 18.0 22.8
+crit-demo minor4 exit 0 15:47:56 load { 13.97 17.69 22.53 }
+CRIT PASS chromium light minor4: P pointer→row1 ok highlighted [1] painting [1] · K ArrowDown with pointer on row 1 (still :hover true) ok highlighted [2] painting [2] bg oklch(0.53 0.124 69.6 / 0.12) ink rgb(28, 25, 23) · L pointer leaves ok highlighted [2] painting [2]
+CRIT PASS chromium dark minor4: P pointer→row1 ok highlighted [1] painting [1] · K ArrowDown with pointer on row 1 (still :hover true) ok highlighted [2] painting [2] bg color(srgb 0.0927547 0.0503523 0.00879371 / 0.14) ink rgb(233, 230, 226) · L pointer leaves ok highlighted [2] painting [2]
+CRIT-DEMO minor4 · PASS (2) · load 13.5 18.0 22.8 → 14.0 17.7 22.5
+crit-demo fv4 exit 1 15:48:26 load { 13.04 17.08 22.14 }
+CRIT FAIL chromium light fv4: P pointer→row1 ✗ highlighted [0] painting [0,1] · K ArrowDown with pointer on row 1 (still :hover true) ✗ highlighted [1] painting [1] bg rgba(0, 0, 0, 0) ink rgb(28, 25, 23) · L pointer leaves ok highlighted [1] painting [1]
+CRIT FAIL chromium dark fv4: P pointer→row1 ✗ highlighted [0] painting [0,1] · K ArrowDown with pointer on row 1 (still :hover true) ✗ highlighted [1] painting [1] bg rgba(0, 0, 0, 0) ink rgb(233, 230, 226) · L pointer leaves ok highlighted [1] painting [1]
+CRIT-DEMO fv4 · FAIL (2 of 2) · load 14.0 17.7 22.5 → 13.0 17.1 22.1
+== demo-c end 15:48:26 load { 13.04 17.08 22.14 }
+== ringprobe start 15:48:26 load { 13.04 17.08 22.14 }
+ring fv5 exit 0 15:48:39 load { 12.66 16.87 22.01 }
+RING chromium light paper fv5: top 291.000 ow 2 off 2 fv true transforms 0 · colour oklab(0.216114 0.00343135 0.00508514 / 0.52) · solid composite undefined over undefined cr — · M-3 band at round(top) 3.24 · best of ±1 3.24 · profile #fef7f1 #fef7f1 #fef7f1 #fef7f1 #fef7f1 #fef7f1 #8d8884 #89837f #f8f1eb #fef7f1 #fef7f1 #fef7f1 #fef7f1 #fef7f1
+RING chromium light white fv5: top 291.000 ow 2 off 2 fv true transforms 0 · colour oklab(0.216114 0.00343135 0.00508514 / 0.52) · solid composite undefined over undefined cr — · M-3 band at round(top) 3.24 · best of ±1 3.24 · profile #fef7f1 #fef7f1 #fef7f1 #fef7f1 #fef7f1 #fef7f1 #8d8884 #89837f #f8f1eb #fef7f1 #fef7f1 #fef7f1 #fef7f1 #fef7f1
+RING chromium dark paper fv5: top 291.000 ow 2 off 2 fv true transforms 0 · colour oklab(0.926146 0.00162765 0.00610709 / 0.6) · solid composite undefined over undefined cr — · M-3 band at round(top) 4.56 · best of ±1 4.56 · profile #352a22 #352a22 #352a22 #352a22 #352a22 #352a22 #9b9690 #a19a95 #3a2f27 #352a22 #352a22 #352a22 #352a22 #352a22
+RING chromium dark white fv5: top 291.000 ow 2 off 2 fv true transforms 0 · colour oklab(0.926146 0.00162765 0.00610709 / 0.6) · solid composite undefined over undefined cr — · M-3 band at round(top) 4.56 · best of ±1 4.56 · profile #352a22 #352a22 #352a22 #352a22 #352a22 #352a22 #9b9690 #a19a95 #3a2f27 #352a22 #352a22 #352a22 #352a22 #352a22
+RINGPROBE fv5 · load 13.0 17.1 22.1 → 12.7 16.9 22.0
+ring minor4 exit 0 15:48:51 load { 12.51 16.63 21.83 }
+RING chromium light paper minor4: top 291.000 ow 2 off 2 fv true transforms 0 · colour oklab(0.216114 0.00343135 0.00508514 / 0.54) · solid composite undefined over undefined cr — · M-3 band at round(top) 3.39 · best of ±1 3.39 · profile #fef7f1 #fef7f1 #fef7f1 #fef7f1 #fef7f1 #fef7f1 #89847f #847f7b #f7f0ea #fef7f1 #fef7f1 #fef7f1 #fef7f1 #fef7f1
+RING chromium light white minor4: top 291.000 ow 2 off 2 fv true transforms 0 · colour oklab(0.216114 0.00343135 0.00508514 / 0.54) · solid composite undefined over undefined cr — · M-3 band at round(top) 3.39 · best of ±1 3.39 · profile #fef7f1 #fef7f1 #fef7f1 #fef7f1 #fef7f1 #fef7f1 #89847f #847f7b #f7f0ea #fef7f1 #fef7f1 #fef7f1 #fef7f1 #fef7f1
+RING chromium dark paper minor4: top 291.000 ow 2 off 2 fv true transforms 0 · colour oklab(0.926147 0.00162765 0.00610709 / 0.54) · solid composite undefined over undefined cr — · M-3 band at round(top) 4.67 · best of ±1 4.67 · profile #150f09 #150f09 #150f09 #150f09 #150f09 #150f09 #827d78 #87837e #19140e #150f09 #150f09 #150f09 #150f09 #150f09
+RING chromium dark white minor4: top 291.000 ow 2 off 2 fv true transforms 0 · colour oklab(0.926147 0.00162765 0.00610709 / 0.54) · solid composite undefined over undefined cr — · M-3 band at round(top) 2.34 · best of ±1 2.34 · profile #6a6560 #6a6560 #6a6560 #6a6560 #6a6560 #6a6560 #aba6a2 #afaaa6 #6d6864 #6a6560 #6a6560 #6a6560 #6a6560 #6a6560
+RINGPROBE minor4 · load 12.7 16.9 22.0 → 12.5 16.6 21.8
+ring head exit 0 15:49:04 load { 12.95 16.57 21.75 }
+RING chromium light paper head: top 291.000 ow 2 off 2 fv true transforms 0 · colour oklab(0.216114 0.00343135 0.00508514 / 0.48) · solid composite undefined over undefined cr — · M-3 band at round(top) 1.79 · best of ±1 1.79 · profile #746e66 #746e66 #746e66 #746e66 #746e66 #746e66 #4a4642 #494540 #716b63 #746e66 #746e66 #746e66 #746e66 #746e66
+RING chromium light white head: top 291.000 ow 2 off 2 fv true transforms 0 · colour oklab(0.216114 0.00343135 0.00508514 / 0.48) · solid composite undefined over undefined cr — · M-3 band at round(top) 1.81 · best of ±1 1.81 · profile #757068 #757068 #757068 #757068 #757068 #757068 #4b4743 #494641 #726d65 #757068 #757068 #757068 #757068 #757068
+RING chromium dark paper head: top 291.000 ow 2 off 2 fv true transforms 0 · colour oklab(0.926146 0.00162765 0.00610709 / 0.48) · solid composite undefined over undefined cr — · M-3 band at round(top) 3.94 · best of ±1 3.94 · profile #150f09 #150f09 #150f09 #150f09 #150f09 #150f09 #75716c #797670 #18130d #150f09 #150f09 #150f09 #150f09 #150f09
+RING chromium dark white head: top 291.000 ow 2 off 2 fv true transforms 0 · colour oklab(0.926146 0.00162765 0.00610709 / 0.48) · solid composite undefined over undefined cr — · M-3 band at round(top) 2.18 · best of ±1 2.18 · profile #6a6560 #6a6560 #6a6560 #6a6560 #6a6560 #6a6560 #a4a09c #a6a29e #6c6763 #6a6560 #6a6560 #6a6560 #6a6560 #6a6560
+RINGPROBE head · load 12.5 16.6 21.8 → 12.9 16.6 21.8
+== ringprobe end 15:49:04 load { 12.95 16.57 21.75 }
+queued 15:49:08 load { 13.67 16.66 21.75 } [--timeout 90] for: rerun rerun
+== rerun start 15:49:08 load { 13.67 16.66 21.75 }
+rerun fv5 chromium 1 m3-non-text 15:52:02 load { 14.79 15.17 20.13 }: FAIL (20 of 192 gated rows)
+rerun fv5 chromium 1 m2-held-window 15:52:04 load { 14.79 15.17 20.13 }: FAIL (2 of 68 gated rows)
+rerun fv5 chromium 1 m6-separable-ladder 15:52:04 load { 14.79 15.17 20.13 }: FAIL (7 of 30 gated rows)
+rerun fv5 chromium 2 m3-non-text 15:54:58 load { 12.46 14.58 19.01 }: FAIL (20 of 192 gated rows)
+rerun fv5 chromium 2 m2-held-window 15:54:59 load { 12.46 14.58 19.01 }: FAIL (2 of 68 gated rows)
+rerun fv5 chromium 2 m6-separable-ladder 15:55:00 load { 12.46 14.58 19.01 }: FAIL (7 of 30 gated rows)
+== rerun end 15:55:00 load { 12.46 14.58 19.01 }
+== rerun start 15:55:00 load { 12.46 14.58 19.01 }
+rerun fv5 chromium 1 m3-non-text 15:57:54 load { 10.99 13.30 17.67 }: FAIL (20 of 192 gated rows)
+rerun fv5 chromium 1 m2-held-window 15:57:55 load { 10.99 13.30 17.67 }: FAIL (2 of 68 gated rows)
+rerun fv5 chromium 1 m6-separable-ladder 15:57:55 load { 10.99 13.30 17.67 }: FAIL (7 of 30 gated rows)
+rerun fv5 chromium 2 m3-non-text 16:00:49 load { 9.80 11.89 16.28 }: FAIL (20 of 192 gated rows)
+rerun fv5 chromium 2 m2-held-window 16:00:50 load { 9.80 11.89 16.28 }: FAIL (2 of 68 gated rows)
+rerun fv5 chromium 2 m6-separable-ladder 16:00:50 load { 9.80 11.89 16.28 }: FAIL (7 of 30 gated rows)
+== rerun end 16:00:50 load { 9.80 11.89 16.28 }
+queued 16:00:56 load { 9.53 11.76 16.18 } [--timeout 90] for: rerun rerun
+== rerun start 16:04:39 load { 12.70 12.14 15.30 }
+rerun minor4 chromium 1 m3-non-text 16:07:33 load { 7.52 10.39 14.00 }: FAIL (79 of 180 gated rows)
+rerun minor4 chromium 1 m2-held-window 16:07:34 load { 7.52 10.39 14.00 }: FAIL (20 of 44 gated rows)
+rerun minor4 chromium 1 m2-text-contrast 16:07:35 load { 7.52 10.39 14.00 }: FAIL (88 of 442 gated rows)
+rerun minor4 chromium 1 stack-host 16:07:35 load { 7.52 10.39 14.00 }: PASS (24 gated rows)
+rerun minor4 chromium 2 m3-non-text 16:10:29 load { 9.04 10.27 13.32 }: FAIL (79 of 180 gated rows)
+rerun minor4 chromium 2 m2-held-window 16:10:31 load { 10.96 10.65 13.43 }: FAIL (20 of 44 gated rows)
+rerun minor4 chromium 2 m2-text-contrast 16:10:32 load { 10.96 10.65 13.43 }: FAIL (88 of 442 gated rows)
+rerun minor4 chromium 2 stack-host 16:10:32 load { 10.96 10.65 13.43 }: PASS (24 gated rows)
+== rerun end 16:10:32 load { 10.96 10.65 13.43 }
+== rerun start 16:10:32 load { 10.96 10.65 13.43 }
+rerun minor4 chromium 1 m3-non-text 16:13:28 load { 15.27 13.22 14.01 }: FAIL (79 of 180 gated rows)
+rerun minor4 chromium 1 m2-held-window 16:13:29 load { 15.27 13.22 14.01 }: FAIL (20 of 44 gated rows)
+rerun minor4 chromium 1 m2-text-contrast 16:13:31 load { 14.92 13.19 13.99 }: FAIL (88 of 442 gated rows)
+rerun minor4 chromium 1 stack-host 16:13:31 load { 14.92 13.19 13.99 }: PASS (24 gated rows)
+rerun minor4 chromium 2 m3-non-text 16:16:26 load { 17.87 15.28 14.69 }: FAIL (79 of 180 gated rows)
+rerun minor4 chromium 2 m2-held-window 16:16:28 load { 17.87 15.28 14.69 }: FAIL (20 of 44 gated rows)
+rerun minor4 chromium 2 m2-text-contrast 16:16:30 load { 17.87 15.28 14.69 }: FAIL (88 of 442 gated rows)
+rerun minor4 chromium 2 stack-host 16:16:30 load { 17.87 15.28 14.69 }: PASS (24 gated rows)
+== rerun end 16:16:30 load { 17.87 15.28 14.69 }
+CHAIN2-DONE

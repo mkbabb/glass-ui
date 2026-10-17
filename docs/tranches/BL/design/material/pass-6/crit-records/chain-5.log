@@ -1,0 +1,29 @@
+queued 19:39:47 load { 7.83 9.08 10.51 } [--timeout 90] for: toolchain
+== toolchain start 19:39:47 load { 7.83 9.08 10.51 }
+typecheck app fv5 exit 0 19:39:56 load { 9.25 9.34 10.58 }
+library build fv5 exit 0 19:40:04 load { 10.81 9.67 10.69 }
+typecheck tests fv5 exit 0 19:40:13 load { 11.23 9.80 10.72 }
+dist-demo fv5 exit 0 19:40:14 load { 11.23 9.80 10.72 }
+vitest fv5 exit 0 19:41:24 load { 13.49 10.90 11.07 }
+ Test Files  237 passed (237)
+      Tests  2318 passed | 10 expected fail | 1 skipped (2329)
+== toolchain end 19:41:24 load { 13.49 10.90 11.07 }
+queued 19:41:30 load { 13.53 10.95 11.08 } [--timeout 90] for: toolchain
+== toolchain start 19:41:30 load { 13.53 10.95 11.08 }
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-6/floor-v5.patch:1193: trailing whitespace.
+       white app surface (the canonical G2 case the user reported). 
+warning: 1 line adds whitespace errors.
+swapped to minor-split-v4.patch
+typecheck app minor4 exit 0 19:41:40 load { 13.30 10.99 11.09 }
+library build minor4 exit 0 19:41:48 load { 13.47 11.10 11.13 }
+typecheck tests minor4 exit 0 19:41:58 load { 12.84 11.05 11.11 }
+dist-demo minor4 exit 0 19:42:00 load { 12.84 11.05 11.11 }
+vitest minor4 exit 0 19:43:18 load { 18.36 13.86 12.22 }
+ Test Files  239 passed (239)
+      Tests  2321 passed | 10 expected fail | 1 skipped (2332)
+verifier minor4 exit 1 19:43:19 load { 18.36 13.86 12.22 }
+G-BUNDLE-RATCHET: bundle ratchet increase forbidden: ${unpackedBytes} > ${datum}`);
+(roster diffs above; empty = none)
+swapped to floor-v5.patch
+== toolchain end 19:43:20 load { 18.36 13.86 12.22 }
+CHAIN5-DONE 19:43:25

@@ -1,0 +1,28 @@
+| witness | Chromium light | Chromium dark | Playwright WebKit light | Playwright WebKit dark |
+|---|---|---|---|---|
+| RAW | PASS 24 | PASS 24 | PASS 24 | PASS 24 |
+| M-1 | PASS 11 | — | PASS 11 | — |
+| M-1x | PASS 1 | PASS 1 | PASS 1 | PASS 1 |
+| M-2 | FAIL 9/457 | FAIL 156/457 | FAIL 3/457 | FAIL 159/457 |
+| M-2m | PASS 215 | FAIL 98/215 | PASS 215 | FAIL 89/215 |
+| M-2h | FAIL 7/22 | FAIL 13/22 | PASS 22 | FAIL 10/22 |
+| M-3 | FAIL 7/171 | FAIL 130/171 | FAIL 1/171 | FAIL 126/171 |
+| M-4 | FAIL 7/84 | FAIL 14/84 | FAIL 7/84 | FAIL 14/84 |
+| M-5 | PASS 10 | FAIL 2/10 | PASS 10 | FAIL 1/10 |
+| M-6 | FAIL 16/16 | FAIL 65/104 | FAIL 16/16 | FAIL 66/104 |
+| M-7 | FAIL 4/4 | FAIL 4/4 | FAIL 4/4 | FAIL 4/4 |
+| M-8 | PASS 4 | FAIL 4/4 | PASS 4 | FAIL 4/4 |
+| M-9 | PASS 10 | FAIL 3/10 | PASS 10 | FAIL 3/10 |
+| O-66 | PASS 3 | PASS 2 | PASS 3 | PASS 2 |
+| STACK | PASS 12 | PASS 12 | PASS 12 | PASS 12 |
+| W-A | PASS 108 | FAIL 28/108 | PASS 108 | FAIL 27/108 |
+| W-S | PASS 12 | FAIL 4/12 | PASS 12 | FAIL 4/12 |
+| W-B | FAIL 6/10 | FAIL 6/10 | FAIL 6/10 | FAIL 6/10 |
+| W-C | FAIL 4/181 | FAIL 68/181 | FAIL 4/181 | FAIL 67/181 |
+| W-D | FAIL 8/9 | FAIL 8/9 | FAIL 8/9 | FAIL 8/9 |
+| W-E | FAIL 16/220 | FAIL 127/220 | FAIL 12/220 | FAIL 124/220 |
+| W-F | FAIL 20/44 | FAIL 16/44 | FAIL 21/44 | FAIL 17/44 |
+| W-G | FAIL 12/20 | FAIL 10/20 | FAIL 16/20 | FAIL 10/20 |
+| T | PASS 1 | PASS 1 | PASS 1 | PASS 1 |
+| LIT | PASS 1 | PASS 1 | PASS 1 | PASS 1 |
+| HOV | PASS 58 | PASS 58 | PASS 58 | PASS 58 |

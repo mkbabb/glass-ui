@@ -1,0 +1,30 @@
+== demo-c start 15:45:05 load { 19.79 21.12 24.62 }
+demo-probe fv5 exit 0 15:45:33 load { 19.91 21.09 24.49 }
+DEMO PASS chromium light fv5: rows 30 · pointer on row 1: highlighted [1] painting [1] bg oklch(0.53 0.124 69.6 / 0.12) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.53 0.124 69.6 / 0.12)
+DEMO PASS chromium dark fv5: rows 30 · pointer on row 1: highlighted [1] painting [1] bg oklch(0.813 0.109 78.2 / 0.12) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.813 0.109 78.2 / 0.12)
+DEMO-PROBE fv5 · PASS (2 theme rows) · load 19.8 21.1 24.6 → 19.9 21.1 24.5
+demo-probe fv4 exit 1 15:46:01 load { 15.80 19.98 23.97 }
+DEMO FAIL chromium light fv4: rows 30 · pointer on row 1: highlighted [0] painting [0,1] bg oklch(0.53 0.124 69.6 / 0.05) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.53 0.124 69.6 / 0.12)
+DEMO FAIL chromium dark fv4: rows 30 · pointer on row 1: highlighted [0] painting [0,1] bg oklch(0.813 0.109 78.2 / 0.05) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.813 0.109 78.2 / 0.12)
+DEMO-PROBE fv4 · FAIL (2 of 2 theme rows) · load 19.9 21.1 24.5 → 15.8 20.0 24.0
+demo-probe minor4 exit 0 15:46:29 load { 13.44 19.08 23.53 }
+DEMO PASS chromium light minor4: rows 30 · pointer on row 1: highlighted [1] painting [1] bg oklch(0.53 0.124 69.6 / 0.12) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.53 0.124 69.6 / 0.12)
+DEMO PASS chromium dark minor4: rows 30 · pointer on row 1: highlighted [1] painting [1] bg color(srgb 0.0927547 0.0503523 0.00879371 / 0.14) · pointer on row 0: highlighted [0] painting [0] bg color(srgb 0.0927547 0.0503523 0.00879371 / 0.14)
+DEMO-PROBE minor4 · PASS (2 theme rows) · load 15.8 20.0 24.0 → 13.4 19.1 23.5
+demo-probe minor3 exit 1 15:46:57 load { 12.63 18.37 23.11 }
+DEMO FAIL chromium light minor3: rows 30 · pointer on row 1: highlighted [0] painting [0,1] bg oklch(0.53 0.124 69.6 / 0.05) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.53 0.124 69.6 / 0.12)
+DEMO FAIL chromium dark minor3: rows 30 · pointer on row 1: highlighted [0] painting [0,1] bg oklch(0.813 0.109 78.2 / 0.05) · pointer on row 0: highlighted [0] painting [0] bg color(srgb 0.0927547 0.0503523 0.00879371 / 0.14)
+DEMO-PROBE minor3 · FAIL (2 of 2 theme rows) · load 13.4 19.1 23.5 → 12.6 18.4 23.1
+crit-demo fv5 exit 0 15:47:27 load { 13.54 17.99 22.81 }
+CRIT PASS chromium light fv5: P pointer→row1 ok highlighted [1] painting [1] · K ArrowDown with pointer on row 1 (still :hover true) ok highlighted [2] painting [2] bg oklch(0.53 0.124 69.6 / 0.12) ink rgb(28, 25, 23) · L pointer leaves ok highlighted [2] painting [2]
+CRIT PASS chromium dark fv5: P pointer→row1 ok highlighted [1] painting [1] · K ArrowDown with pointer on row 1 (still :hover true) ok highlighted [2] painting [2] bg oklch(0.813 0.109 78.2 / 0.12) ink rgb(233, 230, 226) · L pointer leaves ok highlighted [2] painting [2]
+CRIT-DEMO fv5 · PASS (2) · load 12.6 18.4 23.1 → 13.5 18.0 22.8
+crit-demo minor4 exit 0 15:47:56 load { 13.97 17.69 22.53 }
+CRIT PASS chromium light minor4: P pointer→row1 ok highlighted [1] painting [1] · K ArrowDown with pointer on row 1 (still :hover true) ok highlighted [2] painting [2] bg oklch(0.53 0.124 69.6 / 0.12) ink rgb(28, 25, 23) · L pointer leaves ok highlighted [2] painting [2]
+CRIT PASS chromium dark minor4: P pointer→row1 ok highlighted [1] painting [1] · K ArrowDown with pointer on row 1 (still :hover true) ok highlighted [2] painting [2] bg color(srgb 0.0927547 0.0503523 0.00879371 / 0.14) ink rgb(233, 230, 226) · L pointer leaves ok highlighted [2] painting [2]
+CRIT-DEMO minor4 · PASS (2) · load 13.5 18.0 22.8 → 14.0 17.7 22.5
+crit-demo fv4 exit 1 15:48:26 load { 13.04 17.08 22.14 }
+CRIT FAIL chromium light fv4: P pointer→row1 ✗ highlighted [0] painting [0,1] · K ArrowDown with pointer on row 1 (still :hover true) ✗ highlighted [1] painting [1] bg rgba(0, 0, 0, 0) ink rgb(28, 25, 23) · L pointer leaves ok highlighted [1] painting [1]
+CRIT FAIL chromium dark fv4: P pointer→row1 ✗ highlighted [0] painting [0,1] · K ArrowDown with pointer on row 1 (still :hover true) ✗ highlighted [1] painting [1] bg rgba(0, 0, 0, 0) ink rgb(233, 230, 226) · L pointer leaves ok highlighted [1] painting [1]
+CRIT-DEMO fv4 · FAIL (2 of 2) · load 14.0 17.7 22.5 → 13.0 17.1 22.1
+== demo-c end 15:48:26 load { 13.04 17.08 22.14 }
