@@ -1,0 +1,10 @@
+ 5:58  up 1 day,  8:21, 2 users, load averages: 15.32 17.20 16.03
+Sat Oct 17 05:58:55 EDT 2026
+[guarded] waiting for the 'webkit' lock
+OK   W3  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 33/33 PASS  [116 s, load 21.13]
+OK   W3  bandclose       expect: an OWNER-BLOCKED cell in ^warm-expand|^warm-collapse  ·  got: exit 0, 2/2 FAIL; matching 2 (webkit)  [34 s, load 15.67]
+OK   W3  seatsettle      expect: exit ≠ 0; lanes fails in ^warm-expand|^warm-collapse  ·  got: exit 1, 2/2 FAIL; matching 2 (webkit)  [35 s, load 12.66]
+SELFTEST PASS  3/3 expectations hold
+exit 0
+ 6:11  up 1 day,  8:34, 2 users, load averages: 14.71 17.71 17.64
+Sat Oct 17 06:11:11 EDT 2026

@@ -58,6 +58,11 @@ export const AGREE_PX = 1.0;
 export const MOVES_MIN = 3;
 export const INFLIGHT_MIN = 2;
 export const VIDEO_SCALE_MAX = 0.05;   // a video more than 5 % off 1:1 is not read
+/** H5-12 · the Chromium card arm judges `card` on at least as many in-flight frames as Playwright WebKit's screencast
+ *  takes of one morph: ⌈the pinned dock clock 214.2 ms / 40 ms⌉ = 6. It replays the card sequence on fresh pages
+ *  (CARD_REPLAYS at most) until every card cell holds that many in-flight shots; fewer, and a `card` read that passes
+ *  is UNMEASURED (a read that fails still fails). Pass 4: `card·warm-collapse` alternated OB / FAIL on one sample. */
+export const CARD_INFLIGHT_MIN = 6, CARD_REPLAYS = 6;
 const args = parseArgs();
 const target = await openTarget(args);
 const out = outDir(args, "W1");
@@ -113,7 +118,7 @@ function staticEnds(ok, ax) {
     return { head: end(ok), tail: end([...ok].reverse()) };
 }
 
-function judgeMorph(engine, name, samples, { bound, fitR, restR = null, restPairR = null, adapterRange = null, endpoints = null, how, restTrue = null, logInflight = null, videoScale = null, headOffset = null, mustMove = true }) {
+function judgeMorph(engine, name, samples, { bound, fitR, restR = null, restPairR = null, adapterRange = null, endpoints = null, how, restTrue = null, logInflight = null, videoScale = null, headOffset = null, mustMove = true, replays = null }) {
     const ok = samples.filter((s) => !s.empty);
     const ax = samples[0]?.ax ?? "x";
     // H3-5: the screencast's static-rest offset (painted − extent() at the rest before the trigger)
@@ -179,6 +184,9 @@ function judgeMorph(engine, name, samples, { bound, fitR, restR = null, restPair
     // three shots in flight. Two bracketing reads in flight with two distinct extents is a starved sampler
     // (Chromium `card·first-expand`, 5 shots, 2 in flight, load 89-145, 2 of 3 runs), not a dead morph.
     const movesJudged = travel < 20 || how !== "screenshot" || inflight >= MOVES_MIN || distinct >= MOVES_MIN || (logInflight ?? Infinity) < INFLIGHT_MIN;
+    // H5-12 · a starved card read that would pass is not a pass
+    const cardStarved = fitR && how === "screenshot" && travel >= 20 && inflight != null && inflight < CARD_INFLIGHT_MIN;
+    if (cardStarved && between && !unjudged.includes("card")) unjudged.push("card");
     if (!movesJudged) unjudged.push("moves");
     // H4-9 · `ran`: a cell that asked for a posture change must see the extent travel ≥ 20 px. A hover
     // that never reached the dock (a probe that hid its press surface: G-proto §3.4, every W1 dynamic cell
@@ -195,9 +203,9 @@ function judgeMorph(engine, name, samples, { bound, fitR, restR = null, restPair
     if (failed.length === 1 && failed[0] === "card" && pair && pair.every((v) => v != null) && Math.abs(pair[0] - pair[1]) > BOUND_PX && between) ownerBlocked = "Q-12";
     const calNote = how === "screencast" && headOffset != null ? `; static-rest offset ${r2(headOffset)} px${cal ? " (calibrated)" : " (not calibrated: beyond the bound)"}` : "";
     const liftNote = how === "screencast" && ends ? `; video static ends head ${ends.head ? r2(ends.head.err) : "untrusted"} / tail ${ends.tail ? r2(ends.tail.err) : "untrusted"} px; video scale ${videoScale != null ? videoScale.toFixed(4) : "-"}` : "";
-    rep.add({ engine, cell: name + engineTag(target, engine), pass: failed.length === 0 && !unmeasured, unmeasured, ownerBlocked, restPairR: pair ?? undefined, headOffsetPx: headOffset != null ? r2(headOffset) : undefined, failed, unjudged, videoScale: videoScale != null ? +videoScale.toFixed(4) : undefined, samples: ok.length, how, distinctExtents: distinct, inflight, logInflight, adapterTravelPx: r2(travel), worst: worst && { maxErr: worst.maxErr, bound: r2(boundAt(worst)), corner: worst.worstCorner, w: worst.w, h: worst.h, rExpected: worst.rExpected }, disagreePx: r2(worstDis), rSpread: r2(rSpread), restPairPx: restPair != null ? r2(restPair) : undefined, noise: ends ? { head: ends.head, tail: ends.tail } : undefined,
+    rep.add({ engine, cell: name + engineTag(target, engine), pass: failed.length === 0 && !unmeasured, unmeasured, ownerBlocked, restPairR: pair ?? undefined, headOffsetPx: headOffset != null ? r2(headOffset) : undefined, failed, unjudged, videoScale: videoScale != null ? +videoScale.toFixed(4) : undefined, samples: ok.length, how, distinctExtents: distinct, inflight, logInflight, replays: replays ?? undefined, cardStarved: cardStarved || undefined, adapterTravelPx: r2(travel), worst: worst && { maxErr: worst.maxErr, bound: r2(boundAt(worst)), corner: worst.worstCorner, w: worst.w, h: worst.h, rExpected: worst.rExpected }, disagreePx: r2(worstDis), rSpread: r2(rSpread), restPairPx: restPair != null ? r2(restPair) : undefined, noise: ends ? { head: ends.head, tail: ends.tail } : undefined,
         frames: ok.map((s) => ({ t: s.tMs, w: s.w, h: s.h, maxErr: s.maxErr, r: s.rExpected, pre: s.pre != null ? r2(s.pre) : undefined, post: s.post != null ? r2(s.post) : undefined })),
-        summary: `${unmeasured ? "UNMEASURED " + unjudged.join(", ") + ": " : ""}${ok.length} ${how} sample(s)${inflight != null ? ` (${inflight} in flight; rAF log ${logInflight ?? "-"} frames in flight)` : ""}, ${distinct} distinct painted extents over an adapter travel of ${r2(travel)} px (moves: ≥ ${MOVES_MIN} when ≥ 20 px); worst corner ${worst?.maxErr ?? "n/a"} px at ${worst?.worstCorner ?? "-"} (plate ${worst?.w}x${worst?.h}, r ${worst?.rExpected}; bound ${worst ? r2(boundAt(worst)) : bound})${liftNote}; silhouette outside the adapter's extent by ${r2(worstDis)} px${calNote}${fitR ? `; fitted r outside the rests' range [${rLo != null ? r2(rLo) : "-"}, ${rHi != null ? r2(rHi) : "-"}] by ${r2(rSpread)} px (rests ${instRests.map(r2).join(" / ")} by this instrument ± ${cardBound})${restPair != null ? `, lossless rest radii differ by ${r2(restPair)} px (bound ${BOUND_PX})` : ""}` : ""}${failed.length ? `  ⟶ ${ownerBlocked ? "OWNER-BLOCKED (" + ownerBlocked + ", rest radii " + pair.map(r2).join(" / ") + " px)" : "FAILED"}: ` + failed.join(", ") : ""}` });
+        summary: `${unmeasured ? "UNMEASURED " + unjudged.join(", ") + ": " : ""}${ok.length} ${how} sample(s)${replays ? ` over ${replays + 1} runs (H5-12)` : ""}${inflight != null ? ` (${inflight} in flight${fitR && how === "screenshot" ? `, card bound ≥ ${CARD_INFLIGHT_MIN}` : ""}; rAF log ${logInflight ?? "-"} frames in flight)` : ""}, ${distinct} distinct painted extents over an adapter travel of ${r2(travel)} px (moves: ≥ ${MOVES_MIN} when ≥ 20 px); worst corner ${worst?.maxErr ?? "n/a"} px at ${worst?.worstCorner ?? "-"} (plate ${worst?.w}x${worst?.h}, r ${worst?.rExpected}; bound ${worst ? r2(boundAt(worst)) : bound})${liftNote}; silhouette outside the adapter's extent by ${r2(worstDis)} px${calNote}${fitR ? `; fitted r outside the rests' range [${rLo != null ? r2(rLo) : "-"}, ${rHi != null ? r2(rHi) : "-"}] by ${r2(rSpread)} px (rests ${instRests.map(r2).join(" / ")} by this instrument ± ${cardBound})${restPair != null ? `, lossless rest radii differ by ${r2(restPair)} px (bound ${BOUND_PX})` : ""}` : ""}${failed.length ? `  ⟶ ${ownerBlocked ? "OWNER-BLOCKED (" + ownerBlocked + ", rest radii " + pair.map(r2).join(" / ") + " px)" : "FAILED"}: ` + failed.join(", ") : ""}` });
 }
 
 /** Chromium: screenshot continuously from the trigger until the plate is still, bracketing each shot with adapter reads. */
@@ -232,8 +240,14 @@ async function sampleByShots(page, engine, name, trigger, opts = {}) {
     // the rAF log says whether the extent had in-between frames at all (a jump has none)
     const lo = Math.min(main(before), main(after)) + 0.5, hi = Math.max(main(before), main(after)) - 0.5;
     const logInflight = (await stopLog(page)).filter((f) => { const L = before.axis === "x" ? f.e[2] - f.e[0] : f.e[3] - f.e[1]; return L > lo && L < hi; }).length;
-    return (extra = {}) => judgeMorph(engine, name, samples, { bound: BOUND_PX, fitR: opts.fitR, restR: opts.restR, endpoints: [main(before), main(after)], how: "screenshot", logInflight, ...extra });
+    const judge = (extra = {}) => judgeMorph(engine, name, samples, { bound: BOUND_PX, fitR: opts.fitR, restR: opts.restR, endpoints: [main(before), main(after)], how: "screenshot", logInflight, ...extra });
+    Object.assign(judge, { samples, endpoints: [main(before), main(after)], logInflight, cell: name, opts });
+    return judge;
 }
+const inflightOf = (j) => { const lo = Math.min(...j.endpoints) + 0.5, hi = Math.max(...j.endpoints) - 0.5; return j.samples.filter((s) => !s.empty && [s.pre, s.post].some((v) => v > lo && v < hi)).length; };
+/** H5-12 · merge a replay's samples into the cell's first sampler (same endpoints within 1 px, else the replay is dropped). */
+const absorb = (j, r) => { if (Math.abs(r.endpoints[0] - j.endpoints[0]) > 1 || Math.abs(r.endpoints[1] - j.endpoints[1]) > 1) return false; j.samples.push(...r.samples); j.logInflight = (j.logInflight ?? 0) + (r.logInflight ?? 0); return true; };
+const judgeMerged = (engine, j, extra) => judgeMorph(engine, j.cell, j.samples, { bound: BOUND_PX, fitR: j.opts.fitR, restR: j.opts.restR, endpoints: j.endpoints, how: "screenshot", logInflight: j.logInflight, ...extra });
 
 /** Playwright WebKit: one screencast per scene, the rests read by screenshot between transitions. */
 async function webkitScene(browser, engine, scene, query, prefix, fitR) {
@@ -349,12 +363,31 @@ for (const engine of engines(args)) {
                 const j1 = await sampleByShots(s.page, engine, `${prefix}·first-expand`, () => s.page.mouse.move(c.x, c.y, { steps: 3 }), { fitR, restR: r0?.rExpected });
                 const r1 = await atRest(s.page, engine, `${prefix}·expanded-rest`, { fitR });
                 const pair = { restPairR: fitR ? [r0?.rExpected ?? null, r1?.rExpected ?? null] : null };
-                j1(pair);
-                (await sampleByShots(s.page, engine, `${prefix}·warm-collapse`, () => s.page.mouse.move(4, 4), { fitR, restR: r1?.rExpected }))(pair);
+                const j2 = await sampleByShots(s.page, engine, `${prefix}·warm-collapse`, () => s.page.mouse.move(4, 4), { fitR, restR: r1?.rExpected });
                 await waitRest(s.page);
                 const c2 = await dockCenter(s.page);
-                (await sampleByShots(s.page, engine, `${prefix}·warm-expand`, () => s.page.mouse.move(c2.x, c2.y, { steps: 3 }), { fitR, restR: r1?.rExpected }))(pair);
+                const j3 = await sampleByShots(s.page, engine, `${prefix}·warm-expand`, () => s.page.mouse.move(c2.x, c2.y, { steps: 3 }), { fitR, restR: r1?.rExpected });
                 await s.close();
+                // H5-12 · the card arm replays the sequence on fresh pages until each cell holds CARD_INFLIGHT_MIN shots in flight
+                let replays = 0;
+                for (let k = 0; fitR && k < CARD_REPLAYS - 1 && [j1, j2, j3].some((j) => inflightOf(j) < CARD_INFLIGHT_MIN); k++) {
+                    const sr = await openScene(browser, target, scene, { query });
+                    try {
+                        await probeMode(sr.page, null); await sr.page.waitForTimeout(150);
+                        const cr = await dockCenter(sr.page);
+                        const a = await sampleByShots(sr.page, engine, j1.cell, () => sr.page.mouse.move(cr.x, cr.y, { steps: 3 }), j1.opts);
+                        await waitRest(sr.page); await sr.page.waitForTimeout(150);
+                        const b = await sampleByShots(sr.page, engine, j2.cell, () => sr.page.mouse.move(4, 4), j2.opts);
+                        await waitRest(sr.page);
+                        const cr2 = await dockCenter(sr.page);
+                        const d = await sampleByShots(sr.page, engine, j3.cell, () => sr.page.mouse.move(cr2.x, cr2.y, { steps: 3 }), j3.opts);
+                        if (inflightOf(j1) < CARD_INFLIGHT_MIN) absorb(j1, a);
+                        if (inflightOf(j2) < CARD_INFLIGHT_MIN) absorb(j2, b);
+                        if (inflightOf(j3) < CARD_INFLIGHT_MIN) absorb(j3, d);
+                        replays++;
+                    } finally { await sr.close(); }
+                }
+                for (const j of [j1, j2, j3]) judgeMerged(engine, j, { ...pair, replays });
             });
         }
     } finally {

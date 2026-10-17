@@ -20,7 +20,7 @@
 //                        wraps on every sampled frame (screenshots in Chromium, the screencast
 //                        in Playwright WebKit, as W3)
 import path from "node:path";
-import { parseArgs, engines, openTarget, launch, openScene, makeReport, outDir, engineTag, startLog, stopLog, mark, waitRest, dockCenter, extentNow, probeMode, shoot, facesRead, FACE_DOM_SCREENCAST, screencast, readFrame, interiorGreen, pinnedRung, analyseMorph, morphChecks, morphSummary, r2 } from "./lib.mjs";
+import { parseArgs, engines, openTarget, launch, openScene, makeReport, outDir, engineTag, startLog, stopLog, mark, waitRest, dockCenter, extentNow, probeMode, shoot, facesRead, FACE_DOM_SCREENCAST, screencast, readFrame, interiorGreen, pinnedRung, analyseMorph, morphChecks, morphSummary, r2, q4Blocked } from "./lib.mjs";
 
 const FORM = ["[data-testid=form-face]", "[data-testid=form-track]", "[data-testid=form-count]", "[data-testid=form-dismiss]"];
 export const WRAP_PX = 1.0, WRAP_PX_SCREENCAST = 2.0, INFLIGHT_MIN = 2;
@@ -126,7 +126,11 @@ for (const engine of engines(args)) {
                 const checks = morphChecks(a); const unjudged = checks.faces === null ? ["faces"] : []; if (unjudged.length) delete checks.faces;
                 const failed = Object.entries(checks).filter(([, v]) => !v).map(([x]) => x);
                 const unmeasured = failed.length === 0 && unjudged.length > 0;
-                rep.add({ engine, cell: k + tag, pass: failed.length === 0 && !unmeasured, unmeasured, unjudged, failed, ...a, summary: morphSummary(a) + (failed.length ? "  ⟶ FAILED: " + failed.join(", ") : "") });
+                // H5-5 · W3's H3-11 rule here too: a cell whose ONLY failure is `window`, and whose window holds under Q-4's
+                // lenient reading (lib.mjs Q4_DOCK_CLOCK_MS), is OWNER-BLOCKED (Q-4), not FAIL (B′-crit §6.4: W6 printed
+                // "Q-4 lenient window holds" and still returned FAIL)
+                const ownerBlocked = failed.length ? q4Blocked(failed, a) : undefined;
+                rep.add({ engine, cell: k + tag, pass: failed.length === 0 && !unmeasured, unmeasured, unjudged, failed, ownerBlocked, ...a, summary: morphSummary(a) + (failed.length ? `  ⟶ ${ownerBlocked ? "OWNER-BLOCKED (" + ownerBlocked + ")" : "FAILED"}: ` + failed.join(", ") : "") });
             }
         });
     } finally {

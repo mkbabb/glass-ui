@@ -1,0 +1,38 @@
+{
+ "witness": "CASES",
+ "target": "head@91728a09",
+ "when": "2026-10-17T10:38:09.016Z",
+ "load": 8.18,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "case·capped·morph",
+   "pass": false,
+   "failed": [
+    "continuous"
+   ],
+   "summary": "cap 300 px: expand (run overflowing false), add a seat, collapse: page errors 0, window error events 0; plate travel 198 px, largest one-frame step 198 px; flag at rest closed; chromium-case_capped_morph.json  ⟶ FAILED: continuous",
+   "load": 8.45
+  },
+  {
+   "engine": "chromium",
+   "cell": "case·rotated·control",
+   "pass": false,
+   "failed": [
+    "snap"
+   ],
+   "summary": "host rotate(0deg): expand, collapse; seats' largest second difference 251.83 px/frame²; largest one-frame seat move after the window closed 251.83 px (bound 0.5); chromium-case_rotated_control.json  ⟶ FAILED: snap",
+   "load": 8.18
+  },
+  {
+   "engine": "chromium",
+   "cell": "case·rotated",
+   "pass": false,
+   "failed": [
+    "snap"
+   ],
+   "summary": "host rotate(2deg): expand, collapse; seats' largest second difference 251.83 px/frame² (control 251.83, bound +1); largest one-frame seat move after the window closed 251.83 px (bound 0.5); chromium-case_rotated.json  ⟶ FAILED: snap",
+   "load": 8.18
+  }
+ ]
+}

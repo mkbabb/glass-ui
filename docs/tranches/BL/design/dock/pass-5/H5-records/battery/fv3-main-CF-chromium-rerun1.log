@@ -1,0 +1,19 @@
+ 7:25  up 1 day,  9:48, 2 users, load averages: 17.81 14.96 12.48
+FAIL  CF  Chromium  c1·shape·h  collapsed 56×56 px (main×cross), corner R 9999 px (stadium ≥ 27), painting seats' span 40 px (hug bound 64); disclosure div#glass-dock-v-14-summary.dock-layer.dock-layer--summary.is-active "Expand dock" aria-expanded=false (does not paint); plate opacity 1 collapsed, 1 expanded (expanded); own shape: no painter paints a corner outside the stadium; corner pixels (shadows off) differ from the page by 0/255 at worst (bound 8); frame chromium-c1-h-collapsed.png  ⟶ FAILED: square, summary  [load 16.63]
+FAIL  CF  Chromium  c2·morph·v  first expand: travel 213 px, largest one-frame step 178 px (bound 95.85), 72 frame(s) between the rests, flash 0, root cross drift 0 px, the extent first moves 105 ms after the hover; collapse: travel 213 px, largest one-frame step 75.1 px (bound 95.85), 32 frame(s) between the rests, flash 0, root cross drift 0 px; warm expand: travel 213 px, largest one-frame step 178 px (bound 95.85), 73 frame(s) between the rests, flash 0, root cross drift 0 px; frames 8 (frames/chromium-c2_morph_v-expand, warm)  ⟶ FAILED: continuous  [load 16.45]
+FAIL  CF  Chromium  c3·scroll  expanded yes; wheel 240 px scrolled the page 240 px; did NOT collapse within 1.5 s (the dwell is 3.6 s)  ⟶ FAILED: collapses  [load 16.42]
+FAIL  CF  Chromium  c5·keyboard  Tab ×1 → button.dock-icon-button.glass-specular-track.glass-capsule-hover with the dock expanded; Escape then Enter. Collapsed disclosure: NONE. Enter: expanded, focus button.dock-icon-button.glass-specular-track.glass-capsule-hover; Escape: did NOT collapse, focus button.dock-icon-button.glass-specular-track.glass-capsule-hover (in the dock)  ⟶ FAILED: disclosure, escape  [load 16.35]
+FAIL  CF  Chromium  c6·menu  absent: the collapsible dock carries no menu trigger ([aria-haspopup]) in either posture; O-88's menu-from-a-collapsed-dock has nothing to open  ⟶ FAILED: menu  [load 16.35]
+FAIL  CF  Chromium  c7·coarse-tap  tap at the collapsed dock's centre (coarse, 390 px): did NOT expand; elements activated none (not counted: button.dock-icon-button.glass-specular-track.glass-capsule-hover, the disclosure's or a persistent element's own)  ⟶ FAILED: opens  [load 15.2]
+FAIL  CF  Chromium  c8·outside-press  press point 20,60; 16 attempt(s), 8 press(es) landed mid-morph (bound 10 of 10); 0/8 collapsed within 1500 ms of the morph settling (stayed expanded, attempt 0); 8 hover(s) that did not open the dock; frames frames/chromium-c8_outside-press  ⟶ FAILED: opens, collapses  [load 17.6]
+FAIL  CF  Chromium  c9·short-coarse  844 × 390, coarse: tap at the collapsed dock's centre did NOT expand it; expanded block size - px (bound 52: a 44 px seat + 2 × the compact rung's 4 px block padding); 1 painting seat(s), the smallest 44 px; frame chromium-c9-short-coarse.png  ⟶ FAILED: opened  [load 18.12]
+ROW  CF  chromium  C1  FAIL  (c1·shape·h FAIL)
+ROW  CF  chromium  C3  FAIL  (c3·scroll FAIL, c7·coarse-tap FAIL)
+ROW  CF  chromium  C5  FAIL  (c5·keyboard FAIL)
+ROW  CF  chromium  C6  FAIL  (c6·menu FAIL)
+ROW  CF  chromium  C7  FAIL  (c2·morph·v FAIL, c7·coarse-tap FAIL)
+ROW  CF  chromium  C8  FAIL  (c8·outside-press FAIL)
+ROW  CF  chromium  C9  FAIL  (c9·short-coarse FAIL)
+FAIL  CF  fv3@91728a09  0/8 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p5/H5/wt/.h5out/chromium/fv3/main/rerun1/runs/CF-fv3/CF.json)
+exit 1
+ 7:27  up 1 day,  9:50, 2 users, load averages: 18.12 15.88 13.19

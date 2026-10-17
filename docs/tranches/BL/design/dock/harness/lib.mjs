@@ -145,7 +145,9 @@ export async function openTarget(args) {
 export const NAV_CAP = Number(process.env.DOCK_HARNESS_NAV_CAP) || 60;
 export async function launch(engine) {
     if (engine === "safari") throw new Error("OWNER-RUN: real Safari is headed; under the machine law (2026-10-16) its cells are the owner's to run");
-    if (engine !== "webkit") { const b = await playwright[engine].launch({ headless: true }); b.__engine = engine; return b; }
+    // H5-2 · DOCK_HARNESS_EXPOSE_GC=1 (the self-test's `ctxgc` rows only): Chromium with V8's gc() in the page, so
+    // the fixture can force a GC into the slot after an evaluate returns (ctx-diag's gc-slot). Not a GPU arg
+    if (engine !== "webkit") { const b = await playwright[engine].launch({ headless: true, ...(engine === "chromium" && process.env.DOCK_HARNESS_EXPOSE_GC ? { args: ["--js-flags=--expose-gc"] } : {}) }); b.__engine = engine; return b; }
     await holdWebkit();
     let b = await playwright.webkit.launch({ headless: true }), loads = 0;
     const retired = [];
@@ -228,9 +230,10 @@ export const HP_SRC = `(() => {
       const body = m[1].split(/\\bround\\b/)[0].trim();
       const parts = body.match(/calc\\([^)]*\\)|[-\\d.]+(?:px|%)?/g) || ["0"];
       const res = (s, ref) => s.endsWith("%") ? PX(s) / 100 * ref : PX(s);
-      const v = parts.map((s, i) => res(s, i % 2 === 0 ? h : w));
-      const [t, r = t, b = t, l = r] = v;
-      return [t, r, b, l];
+      // H5-13 · expand the shorthand BEFORE resolving: a one-value inset(10%) is 10% of the height on
+      // the block sides and 10% of the width on the inline sides (it resolved every side against h)
+      const [t, r = t, b = t, l = r] = parts;
+      return [res(t, h), res(r, w), res(b, h), res(l, w)];
     },
     /** The rect an element clips its descendants to (Infinity on an unclipped axis). */
     clipRectOf(el) {
@@ -531,6 +534,7 @@ export function readFrame(f) { const img = decodePng(fs.readFileSync(f.file)); r
  * writes sustained across frames, plus the extent-owner rule of K-13).
  */
 export async function startLog(page, opts = {}) {
+    opts = { stubLo: STUB_LO, stubHi: STUB_HI, cutPx: CUT_PX, ...opts };
     await page.evaluate((opts) => {
         const P = window.__dockProbe, hp = window.__hp, root = P.root();
         const ids = new WeakMap(); let nid = 0; const idOf = (e) => { if (!ids.has(e)) ids.set(e, ++nid); return ids.get(e); };
@@ -538,6 +542,7 @@ export async function startLog(page, opts = {}) {
         const kfCache = new WeakMap();
         // H4-1 · one glyph advance ("0") in the element's own computed font, CSS px (canvas measure: no page write)
         const advCache = new WeakMap(); const cv = document.createElement("canvas").getContext("2d");
+        const glyphCache = new Map();   // H5-3 · per font and character: the ink bounds (canvas measure)
         const advOf = (el) => { if (advCache.has(el)) return advCache.get(el); const cs = getComputedStyle(el); cv.font = cs.fontStyle + " " + cs.fontWeight + " " + cs.fontSize + " " + cs.fontFamily; const a = +cv.measureText("0").width.toFixed(2); advCache.set(el, a); return a; };
         // H4-2 · the lanes: per element under the root, the animated values that paint (clip-path inset, translate +
         // transform translation, scale, opacity). Only non-identity lanes are stored; an absent lane is identity.
@@ -598,7 +603,9 @@ export async function startLog(page, opts = {}) {
             const f = { t: ts, mk: L.mark, e: [e.l, e.t, e.r, e.b].map((v) => +v.toFixed(3)), m: !!P.morphing(), p: P.posture?.() ?? "" };
             if (opts.seats || opts.sharp || opts.ink) {
                 const ss = P.seats({ all: true });
-                if (opts.seats) f.s = ss.map((el) => { const q = el.getBoundingClientRect(); const c = hp.paintedRect(el); return [idOf(el), +q.left.toFixed(2), +q.top.toFixed(2), +q.right.toFixed(2), +q.bottom.toFixed(2), +c.l.toFixed(2), +c.t.toFixed(2), +c.r.toFixed(2), +c.b.toFixed(2), +hp.visibleOpacity(el).toFixed(3), advOf(el)]; });
+                // H5-7 appends q[11]: 1 while the seat is the engagement carrier (:hover / :active, or its own scale,
+                // transform or translate transition running), whose own motion is D-2's, not the morph's
+                if (opts.seats) f.s = ss.map((el) => { const q = el.getBoundingClientRect(); const c = hp.paintedRect(el); const eng = el.matches(":hover, :active") || el.getAnimations().some((a) => a.transitionProperty && /^(scale|transform|translate)$/.test(a.transitionProperty) && a.playState === "running"); return [idOf(el), +q.left.toFixed(2), +q.top.toFixed(2), +q.right.toFixed(2), +q.bottom.toFixed(2), +c.l.toFixed(2), +c.t.toFixed(2), +c.r.toFixed(2), +c.b.toFixed(2), +hp.visibleOpacity(el).toFixed(3), advOf(el), eng ? 1 : 0]; });
                 if (opts.sharp) { let n = 0, who = ""; for (const el of ss) { if (hp.visibleOpacity(el) <= 0.05) continue; const u = hp.unsharp(el); if (u) { n++; who = who || u; } } f.us = n; if (who) f.usWho = who; }
                 // H3-3 · ink leaves the adapter does not call seats (a carrier's clones, a face drawn
                 // elsewhere): every element under the root that paints a glyph (a direct text node or an
@@ -621,6 +628,47 @@ export async function startLog(page, opts = {}) {
                     }
                     f.k = ks;
                 }
+            }
+            // H5-3 · the glyph stub. Every glyph under the root that paints above 0.5 opacity: its ink box on the main
+            // axis (the character's range box, widened by its own font's ink bounds, canvas-measured: no page write; an
+            // <svg> is one glyph, its box), against what its element paints (hp.paintedRect: its own and every ancestor
+            // clip). A glyph cut by a clip edge that lies inside the plate (more than CUT_PX from the plate's own main
+            // edges: the closing plate taking a seat is the leaving rule's) and painted between STUB_LO and STUB_HI of
+            // its ink is a STUB. f.gn = glyphs judged; f.st = the first stubs [label, char, fraction, cut px, opacity]
+            if (opts.glyphs) {
+                const ax = P.axis(), e = P.extent(), pm0 = ax === "y" ? e.t : e.l, pm1 = ax === "y" ? e.b : e.r;
+                const pr = new Map(), op = new Map(), sk = new Map(), st = []; let n = 0;
+                const paints = (el) => { if (!op.has(el)) op.set(el, hp.visibleOpacity(el)); return op.get(el); };
+                const clipOf = (el) => { if (!pr.has(el)) pr.set(el, hp.paintedRect(el)); return pr.get(el); };
+                const kOf = (el) => { if (!sk.has(el)) { const q = el.getBoundingClientRect(); const L = ax === "y" ? el.offsetHeight : el.offsetWidth; sk.set(el, L ? (ax === "y" ? q.height : q.width) / L : 1); } return sk.get(el); };
+                const judge = (el, g0, g1, ch) => {
+                    if (g1 - g0 < 0.5) return; n++;
+                    const c = clipOf(el), c0 = ax === "y" ? c.t : c.l, c1 = ax === "y" ? c.b : c.r;
+                    const frac = Math.max(0, Math.min(g1, c1) - Math.max(g0, c0)) / (g1 - g0);
+                    if (frac <= opts.stubLo || frac >= opts.stubHi) return;
+                    const inner = (c0 > g0 && c0 < g1 && c0 > pm0 + opts.cutPx) ? c0 : (c1 > g0 && c1 < g1 && c1 < pm1 - opts.cutPx) ? c1 : null;
+                    if (inner == null) return;
+                    st.push([hp.label(el), ch, +frac.toFixed(2), +inner.toFixed(1), +paints(el).toFixed(2)]);
+                };
+                const rng = document.createRange();
+                const tw = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+                for (let t = tw.nextNode(); t; t = tw.nextNode()) {
+                    const el = t.parentElement; const s = t.textContent;
+                    if (!el || !s.trim() || el.closest("svg") || paints(el) <= 0.5) continue;
+                    const cs = getComputedStyle(el); const font = cs.fontStyle + " " + cs.fontWeight + " " + cs.fontSize + " " + cs.fontFamily; const k = kOf(el);
+                    for (let i = 0; i < s.length; i++) {
+                        const code = s.charCodeAt(i); const w2 = code >= 0xd800 && code <= 0xdbff ? 2 : 1; const ch = s.slice(i, i + w2);
+                        if (!/\S/.test(ch)) { i += w2 - 1; continue; }
+                        rng.setStart(t, i); rng.setEnd(t, i + w2); i += w2 - 1;
+                        const rr = rng.getBoundingClientRect(); if (rr.width * rr.height <= 0) continue;
+                        const key = font + "|" + ch; let m = glyphCache.get(key);
+                        if (!m) { cv.font = font; const x = cv.measureText(ch); m = { l: x.actualBoundingBoxLeft || 0, r: x.actualBoundingBoxRight || x.width, a: x.actualBoundingBoxAscent || 0, d: x.actualBoundingBoxDescent || 0, fa: x.fontBoundingBoxAscent || 0 }; glyphCache.set(key, m); }
+                        if (ax === "y") judge(el, rr.top + (m.fa - m.a) * k, rr.top + (m.fa + m.d) * k, ch);
+                        else judge(el, rr.left - m.l * k, rr.left + m.r * k, ch);
+                    }
+                }
+                for (const sv of root.querySelectorAll("svg")) { if (paints(sv) <= 0.5) continue; const q = sv.getBoundingClientRect(); judge(sv, ax === "y" ? q.top : q.left, ax === "y" ? q.bottom : q.right, "<svg>"); }
+                f.gn = n; if (st.length) { f.st = st.slice(0, 4); f.stn = st.length; }
             }
             // H3-2 · the main-axis length of named seats' cells (the largest ancestor that holds
             // exactly that one seat, inside the root): the seat's own width, whoever carries it
@@ -916,14 +964,23 @@ export function leavingRow(frames, lengthMs) {
         let i0 = Math.max(0, i1 - 1); while (i0 > 0 && ser[i0].ink < LEAVE_HI) i0--;
         const spanMs = ser[i1].t - ser[i0].t, spanFrames = i1 - i0;
         const tracks = deficit <= LEAVE_TRACK_TOL, fades = spanFrames >= LEAVE_MIN_FRAMES && spanMs >= LEAVE_FRAC * lengthMs;
-        rows.push({ seat: id, ok: tracks || fades, tracks, deficit: +deficit.toFixed(3), fades, spanMs: +spanMs.toFixed(1), spanFrames, path: ser.slice(i0, i1 + 1).map((x) => +x.ink.toFixed(3)) });
+        // H5-4 · the vanish bound on every leaving seat, first and last steps included: its one-frame ink drop, less
+        // what the closing plate edge took that frame (its coverage drop), is at most VANISH_MAX
+        let vd = { drop: 0 };
+        for (let i = 1; i < ser.length; i++) { const d = (ser[i - 1].ink - ser[i].ink) - Math.max(0, ser[i - 1].cov - ser[i].cov); if (d > vd.drop) vd = { drop: +d.toFixed(3), from: +ser[i - 1].ink.toFixed(3), to: +ser[i].ink.toFixed(3), atMs: +(ser[i].t - ser[0].t).toFixed(1) }; }
+        rows.push({ seat: id, ok: tracks || fades, tracks, deficit: +deficit.toFixed(3), fades, spanMs: +spanMs.toFixed(1), spanFrames, path: ser.slice(i0, i1 + 1).map((x) => +x.ink.toFixed(3)), vanish: vd });
     }
     const bad = rows.filter((r) => !r.ok);
     const w = bad[0] ?? rows.reduce((m, r) => (!m || r.spanMs < m.spanMs ? r : m), null);
     const bound = +(LEAVE_FRAC * lengthMs).toFixed(1);
-    return { ok: bad.length === 0, leaving: rows.length, failing: bad.length, lengthMs: +lengthMs.toFixed(1), rows,
-        why: rows.length ? `${rows.length} leaving seat(s), ${bad.length} failing${w ? `; ${bad.length ? "worst" : "tightest"} seat ${w.seat}: ink ${w.path.join(" → ")} over ${w.spanMs} ms / ${w.spanFrames} frame(s) (fade bound ≥ ${LEAVE_MIN_FRAMES} frames and ≥ ${bound} ms), coverage deficit ${w.deficit} (track bound ${LEAVE_TRACK_TOL})` : ""}` : "no seat leaves" };
+    const vw = rows.reduce((m, r) => (!m || r.vanish.drop > m.vanish.drop ? r : m), null);
+    const vanish = { ok: !vw || vw.vanish.drop <= VANISH_MAX, drop: vw ? vw.vanish.drop : 0, seat: vw?.seat, from: vw?.vanish.from, to: vw?.vanish.to, atMs: vw?.vanish.atMs };
+    return { ok: bad.length === 0, leaving: rows.length, failing: bad.length, lengthMs: +lengthMs.toFixed(1), rows, vanish,
+        why: (rows.length ? `${rows.length} leaving seat(s), ${bad.length} failing${w ? `; ${bad.length ? "worst" : "tightest"} seat ${w.seat}: ink ${w.path.join(" → ")} over ${w.spanMs} ms / ${w.spanFrames} frame(s) (fade bound ≥ ${LEAVE_MIN_FRAMES} frames and ≥ ${bound} ms), coverage deficit ${w.deficit} (track bound ${LEAVE_TRACK_TOL})` : ""}` : "no seat leaves")
+            + (rows.length ? `; vanish worst one-frame drop beyond the closing edge ${vanish.drop}${vw && vanish.drop ? ` (seat ${vw.seat} ${vanish.from} → ${vanish.to} at +${vanish.atMs} ms)` : ""} (bound ${VANISH_MAX})` : "") };
 }
+/** H5-4 · the one-frame ink drop a leaving seat may take beyond its coverage drop (H4-5's retarget bound, now on every leaving cell). */
+export const VANISH_MAX = 0.5;
 
 // ── H4-1 · the splice ─────────────────────────────────────────────────────────
 /**
@@ -980,6 +1037,33 @@ export function spliceRow(frames, ax) {
         why: `${spliceFrames} splice frame(s)${firstSplice ? ` (first at ${firstSplice.atMs} ms: units ${firstSplice.units.join("|")} meet at a ${firstSplice.gapPx} px gap, one advance ${firstSplice.advPx} px)` : ""}, ${sliverFrames} sliver frame(s)${firstSliver ? ` (first at ${firstSliver.atMs} ms: unit ${firstSliver.unit} paints ${firstSliver.paintsPx} px of a ${firstSliver.boxPx} px box, one advance ${firstSliver.advPx} px)` : ""} (bound 0 each)` };
 }
 
+// ── H5-3 · the glyph stub ─────────────────────────────────────────────────────
+/**
+ * frames[i].gn / .st from startLog `glyphs` (the in-page read is described there). H4-1 judges unit pairs and
+ * whole-unit slivers, so a glyph cut through inside one unit wider than an advance passed it, and both pass-4
+ * routes painted such stubs in 1-4 tiles of every face exchange ("B" read as "3", "A" as "\", B′-crit §4,
+ * G-crit §4). The rule: in any moving frame (from the strip's second frame to one frame after its last change of
+ * the extent or of a seat's painted rect), no glyph painting above 0.5 opacity is cut by a clip edge inside the
+ * plate to between STUB_LO and STUB_HI of its ink. The gate is 0 stub frames.
+ */
+export const STUB_LO = 0.1, STUB_HI = 0.9;
+export function stubRow(frames, ax) {
+    if (!frames.some((f) => f.gn != null)) return null;
+    const sig = (f) => [...f.e, ...(f.s ?? []).flatMap((q) => [q[5], q[6], q[7], q[8], q[9]])];
+    let last = 0;
+    for (let i = 1; i < frames.length; i++) { const a = sig(frames[i - 1]), b = sig(frames[i]); if (a.length !== b.length || a.some((v, k) => Math.abs(v - b[k]) > 0.25)) last = i; }
+    const end = Math.min(frames.length - 1, last + 1);
+    let judged = 0, stubFrames = 0, first = null, glyphs = 0;
+    for (let i = 1; i <= end; i++) {
+        const f = frames[i]; if (f.gn == null) continue;
+        judged++; glyphs = Math.max(glyphs, f.gn);
+        if (f.st?.length) { stubFrames++; if (!first) { const [label, ch, frac, cut, op] = f.st[0]; first = { atMs: +(f.t - frames[0].t).toFixed(1), label, ch, frac, cutPx: cut, opacity: op, inFrame: f.stn }; } }
+    }
+    void ax;
+    return { ok: stubFrames === 0, judged, stubFrames, glyphs, first,
+        why: `${stubFrames} stub frame(s) of ${judged} judged (up to ${glyphs} glyphs a frame)${first ? `; first at ${first.atMs} ms: "${first.ch}" in ${first.label} painted ${Math.round(first.frac * 100)} % at opacity ${first.opacity}, cut at ${first.cutPx} px (${first.inFrame} stub(s) in that frame)` : ""} (bound 0; a stub paints ${STUB_LO * 100}-${STUB_HI * 100} % of a glyph above 0.5 opacity, cut inside the plate)` };
+}
+
 // ── H4-2 · the window flag covers every lane ─────────────────────────────────
 /**
  * frames[i].ln = { elementId: [[kind, value], …] } for every element under the root with a
@@ -993,6 +1077,19 @@ export function spliceRow(frames, ax) {
  * single frame from a residue above LANE_PX after the flag. A strip whose flag never opened is not
  * judged here (W3 `window` judges it).
  */
+/** H3-11, extended by H5-5/H5-7: a morph cell is OWNER-BLOCKED (Q-4) when its only failure is `window` and Q-4's
+ *  lenient window holds; or when it fails `window` and `lanes`, the lanes' only failure is a seat still moving after
+ *  the flag (no lane residue, no cancel: H5-7's seat read) and the last frame a seat is off its final centre falls
+ *  inside the lenient allowance counted from the flag's opening (the window's own time base). A flag that closes at the 2 %
+ *  band closes while the spring's tail still moves the seats; that is the same question Q-4 asks. */
+export function q4Blocked(failed, a) {
+    if (a.window?.q4 !== true || !failed.includes("window")) return undefined;
+    const rest = failed.filter((k) => k !== "window");
+    if (!rest.length) return "Q-4";
+    const l = a.lanes;
+    if (rest.length === 1 && rest[0] === "lanes" && l && !l.worst && !l.cancels?.length && l.seatAfterFlag && a.window.open != null && l.seatAfterFlag.lastMs - a.window.open <= (a.window.q4AllowMs ?? 0)) return "Q-4";
+    return undefined;
+}
 export const LANE_PX = 0.5, LANE_SCALE = 0.005, LANE_OPACITY = 0.02;
 export function lanesRow(frames, labels = {}) {
     if (!frames.some((f) => f.ln)) return null;
@@ -1019,9 +1116,26 @@ export function lanesRow(frames, labels = {}) {
         }
     }
     const c0 = cancels.sort((a, b) => b.residue - a.residue)[0];
-    return { ok: !worst && !cancels.length, judged: true, flagClosedMs: +(frames[iClose].t - frames[0].t).toFixed(1), lanes: ids.size, worst, cancels: cancels.slice(0, 4),
+    // H5-7 · every seat POSITION too: from the frame the flag closes, a painting seat's transform-aware centre (main
+    // and cross) stays within LANE_PX of its centre on the strip's last frame. The lanes above read clip, translate,
+    // scale and opacity; a seat that settles by layout after the flag (G-crit §6.3: the unrotated control's
+    // 0.51-0.58 px one-frame move after the window closed) moves no lane. A frame on which the seat is the
+    // engagement carrier (q[11]) is D-2's and is skipped; a scale about the centre moves no centre
+    let seatWorst = null, lastOff = 0;
+    if (frames.some((f) => f.s)) {
+        const cen = (q) => [(q[1] + q[3]) / 2, (q[2] + q[4]) / 2];
+        const finS = new Map((fin.s ?? []).filter((q) => q[9] > 0.05).map((q) => [q[0], q]));
+        for (let i = iClose; i < frames.length; i++) for (const q of frames[i].s ?? []) {
+            const z = finS.get(q[0]); if (!z || q[9] <= 0.05 || q[11] || z[11]) continue;
+            const [a, b] = cen(q), [c, d] = cen(z); const res = Math.max(Math.abs(a - c), Math.abs(b - d));
+            if (res > LANE_PX) { lastOff = frames[i].t - frames[0].t; if (!seatWorst || res > seatWorst.residue) seatWorst = { seat: q[0], residue: +res.toFixed(3), atMs: +(frames[i].t - frames[iClose].t).toFixed(1) }; }
+        }
+        if (seatWorst) seatWorst.lastMs = +lastOff.toFixed(1);   // the last frame any seat is off its final centre, from the strip's first frame
+    }
+    return { ok: !worst && !cancels.length && !seatWorst, judged: true, flagClosedMs: +(frames[iClose].t - frames[0].t).toFixed(1), lanes: ids.size, worst, cancels: cancels.slice(0, 4), seatAfterFlag: seatWorst,
         why: (worst ? `${worst.lane} is ${JSON.stringify(worst.value)} ${worst.atMs} ms after the flag closed (final ${JSON.stringify(worst.final)}; residue ${worst.residue}, bound ${worst.bound})` : `every lane (${ids.size}) at its final value from the frame the flag closed`)
-            + (cancels.length ? `; ${cancels.length} lane(s) cancelled to identity, the largest ${c0.lane} from ${c0.residue} px in one frame (previous step ${c0.step} px) at ${c0.atMs} ms` : "; no lane cancelled to identity") };
+            + (cancels.length ? `; ${cancels.length} lane(s) cancelled to identity, the largest ${c0.lane} from ${c0.residue} px in one frame (previous step ${c0.step} px) at ${c0.atMs} ms` : "; no lane cancelled to identity")
+            + (frames.some((f) => f.s) ? (seatWorst ? `; seat ${seatWorst.seat} is ${seatWorst.residue} px from its final centre ${seatWorst.atMs} ms after the flag closed (bound ${LANE_PX})` : "; every seat at its final position from the flag") : "") };
 }
 
 // ── reporting ────────────────────────────────────────────────────────────────
@@ -1237,6 +1351,8 @@ export function analyseMorph(frames, rung, { ax = "x", reversal = null, seats = 
         out.blank = blankRow(frames, ax);
         out.leaving = leavingRow(frames, out.travelMs != null && D >= 0.5 ? out.travelMs : clockMs);
         out.splice = spliceRow(frames, ax);   // H4-1
+        const st = stubRow(frames, ax);       // H5-3
+        if (st) out.stub = st;
     }
     const ln = lanesRow(frames, laneLabels ?? frames.laneLabels ?? {});   // H4-2
     if (ln?.judged) out.lanes = ln;
@@ -1247,7 +1363,9 @@ export function morphChecks(a) {
     if (a.seats) { c.seatStep = a.seats.step.ok; c.seatOverlap = a.seats.overlap.ok; }
     if (a.blank) c.blank = a.blank.ok;
     if (a.leaving) c.leaving = a.leaving.ok;
+    if (a.leaving?.vanish && a.leaving.leaving) c.vanish = a.leaving.vanish.ok;   // H5-4
     if (a.splice) c.splice = a.splice.ok;
+    if (a.stub) c.stub = a.stub.ok;                                            // H5-3
     if (a.lanes) c.lanes = a.lanes.ok;
     if (a.faces) c.faces = a.faces.ok;
     return c;
@@ -1260,6 +1378,7 @@ export function morphSummary(a) {
     if (a.blank) s.push(`blank ${a.blank.why}`);
     if (a.leaving) s.push(`leaving ${a.leaving.why}`);
     if (a.splice) s.push(`splice ${a.splice.why}`);
+    if (a.stub) s.push(`stub ${a.stub.why}`);
     if (a.lanes) s.push(`lanes ${a.lanes.why}`);
     if (a.window.q4 != null) s.push(`Q-4 lenient window ${a.window.q4 ? "holds" : "fails"} (allow ${a.window.q4AllowMs} ms)`);
     if (a.faces) s.push(`faces ${a.faces.why}`);

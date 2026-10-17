@@ -1,0 +1,9 @@
+ 7:37  up 1 day, 10 hrs, 2 users, load averages: 26.56 23.37 18.03
+PASS  W6  Chromium  form·collapsed-rest  form ink beyond the plate 0 px (bound 1); present 4/4; dismiss is a seat: true; backdrop plates 1 [div.dock-plate]  [load 26.56]
+PASS  W6  Chromium  form·expanded-rest  form ink beyond the plate 0 px (bound 1); present 3/4 (missing [data-testid=form-face]); dismiss is a seat: true; backdrop plates 1 [div.dock-plate]; plate div.dock-plate (collapsed div.dock-plate); the same element: true  [load 26.32]
+FAIL  W6  Chromium  form·expand  D 142.19 px (190.88→333.06); step ×0.64; dead; window 556.7 ms (allow 267.3, clock 214.2) — window 556.7 ms > clock 214.2 + 2×16.7 + stall 19.7 = 267.3 ms (O-64 R-4, H-3d); trajectory worst 1.68 px (1.18 % of D) from the rung's analytic spring (tol 6.69); terminal last step 0.17 px after 0.18 px (bound 0.9); owners 0; Q-4 lenient window fails (allow 323.1 ms); faces 9 px of form ink beyond the plate over 18 screenshot sample(s) (5 in flight) (bound 1)  ⟶ FAILED: window, faces  [load 25.9]
+FAIL  W6  Chromium  form·collapse  D 142.19 px (333.06→190.88); step ×0.64; dead; window 553.3 ms (allow 257.6, clock 214.2) — window 553.3 ms > clock 214.2 + 2×16.7 + stall 10 = 257.6 ms (O-64 R-4, H-3d); trajectory worst 1.68 px (1.18 % of D) from the rung's analytic spring (tol 6.69); terminal last step 0.18 px after 0.28 px (bound 0.86); owners 0; Q-4 lenient window fails (allow 313.4 ms); faces 0 px of form ink beyond the plate over 48 screenshot sample(s) (0 in flight) (bound 1)  ⟶ FAILED: window  [load 25.9]
+FAIL  W6  fv3@91728a09  2/4 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p5/H5/wt/.h5out/chromium/fv3/rest/runs/W6-fv3/W6.json)
+exit 1
+ 7:37  up 1 day, 10 hrs, 2 users, load averages: 25.90 23.38 18.13
+reds: ^(form·collapse(·control)?|form·expand(·control)?)$

@@ -1,0 +1,124 @@
+{
+ "witness": "W8",
+ "target": "head@91728a09",
+ "when": "2026-10-17T10:45:39.055Z",
+ "load": 9.5,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "expand",
+   "pass": false,
+   "failed": [
+    "sharp"
+   ],
+   "frames": 73,
+   "p95": 9.5,
+   "over33": 0,
+   "over40": 0,
+   "unsharpFrames": 8,
+   "unsharpFirst": "button.dock-icon-button.glass-specular-track.glass-capsule-hover scale 0.84235",
+   "fps": "UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)",
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "summary": "73 motion frames: unsharp 8 (button.dock-icon-button.glass-specular-track.glass-capsule-hover scale 0.84235) (bound 0); pacing p95 9.5 ms, 0 > 33.4 ms, 0 > 40 ms (headless bound: ≤ 1 over 40); 60 fps: UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)  ⟶ FAILED: sharp",
+   "load": 9.79
+  },
+  {
+   "engine": "chromium",
+   "cell": "collapse",
+   "pass": false,
+   "failed": [
+    "sharp"
+   ],
+   "frames": 74,
+   "p95": 9.2,
+   "over33": 0,
+   "over40": 0,
+   "unsharpFrames": 74,
+   "unsharpFirst": "div.dock-persistent scale 1.04094 1",
+   "fps": "UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)",
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "summary": "74 motion frames: unsharp 74 (div.dock-persistent scale 1.04094 1) (bound 0); pacing p95 9.2 ms, 0 > 33.4 ms, 0 > 40 ms (headless bound: ≤ 1 over 40); 60 fps: UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)  ⟶ FAILED: sharp",
+   "load": 9.79
+  },
+  {
+   "engine": "chromium",
+   "cell": "content-add",
+   "pass": true,
+   "failed": [],
+   "frames": 1008,
+   "p95": 9.4,
+   "over33": 0,
+   "over40": 0,
+   "unsharpFrames": 0,
+   "fps": "UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)",
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "summary": "1008 motion frames: unsharp 0 (bound 0); pacing p95 9.4 ms, 0 > 33.4 ms, 0 > 40 ms (headless bound: ≤ 1 over 40); 60 fps: UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)",
+   "load": 9.79
+  },
+  {
+   "engine": "chromium",
+   "cell": "swap",
+   "pass": true,
+   "failed": [],
+   "frames": 1008,
+   "p95": 9.3,
+   "over33": 0,
+   "over40": 0,
+   "unsharpFrames": 0,
+   "fps": "UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)",
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "summary": "1008 motion frames: unsharp 0 (bound 0); pacing p95 9.3 ms, 0 > 33.4 ms, 0 > 40 ms (headless bound: ≤ 1 over 40); 60 fps: UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)",
+   "load": 9.5
+  },
+  {
+   "engine": "chromium",
+   "cell": "compact",
+   "pass": false,
+   "absent": true,
+   "summary": "absent: no compact-on-scroll rung (W4)",
+   "load": 9.5
+  },
+  {
+   "engine": "chromium",
+   "cell": "form-expand",
+   "pass": false,
+   "failed": [
+    "sharp"
+   ],
+   "frames": 72,
+   "p95": 9.2,
+   "over33": 0,
+   "over40": 0,
+   "unsharpFrames": 8,
+   "unsharpFirst": "button.dock-icon-button.glass-specular-track.glass-capsule-hover scale 0.84235",
+   "fps": "UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)",
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "summary": "72 motion frames: unsharp 8 (button.dock-icon-button.glass-specular-track.glass-capsule-hover scale 0.84235) (bound 0); pacing p95 9.2 ms, 0 > 33.4 ms, 0 > 40 ms (headless bound: ≤ 1 over 40); 60 fps: UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)  ⟶ FAILED: sharp",
+   "load": 9.5
+  },
+  {
+   "engine": "consumer",
+   "cell": "consumer·value.js",
+   "pass": false,
+   "unmeasured": true,
+   "summary": "UNMEASURED: value.js has a live session: this seat builds and runs nothing there (fence). O-66 §2 judges every dock motion there at 60 fps, headed, on a real GPU",
+   "load": 9.5
+  },
+  {
+   "engine": "consumer",
+   "cell": "consumer·keyframes",
+   "pass": false,
+   "unmeasured": true,
+   "summary": "UNMEASURED: headed real-GPU runs of keyframes' served dock were not made by this seat (headless only). O-66 §2 judges every dock motion there at 60 fps, headed, on a real GPU",
+   "load": 9.5
+  },
+  {
+   "engine": "consumer",
+   "cell": "consumer·fourier",
+   "pass": false,
+   "unmeasured": true,
+   "summary": "UNMEASURED: headed real-GPU runs of fourier's docks were not made by this seat (headless only). O-66 §2 judges every dock motion there at 60 fps, headed, on a real GPU",
+   "load": 9.5
+  }
+ ]
+}

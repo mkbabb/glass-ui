@@ -1,0 +1,125 @@
+{
+ "when": "2026-10-17T06:19:17.526Z",
+ "engines": [
+  "chromium"
+ ],
+ "rows": [
+  {
+   "witness": "ST",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 10/10 PASS",
+   "ok": true,
+   "ms": 69335,
+   "load": 15.69
+  },
+  {
+   "witness": "ST",
+   "fixture": "pass@dark",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 10/10 PASS",
+   "ok": true,
+   "ms": 68390,
+   "load": 20.91
+  },
+  {
+   "witness": "ST",
+   "fixture": "leap",
+   "expect": "exit ≠ 0; leap fails in ^stall·",
+   "got": "exit 1, 8/10 FAIL; matching 4 (chromium)",
+   "ok": true,
+   "ms": 67377,
+   "load": 19.37
+  },
+  {
+   "witness": "ST",
+   "fixture": "nbjump",
+   "expect": "exit ≠ 0; neighbour fails in ^stall·nb·",
+   "got": "exit 1, 2/5 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 34258,
+   "load": 13.97
+  },
+  {
+   "witness": "ST",
+   "fixture": "nboverlap",
+   "expect": "exit ≠ 0; overlap fails in ^stall·nb·",
+   "got": "exit 1, 4/5 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 34898,
+   "load": 12.22
+  },
+  {
+   "witness": "FM",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 6/6 PASS",
+   "ok": true,
+   "ms": 27886,
+   "load": 11.25
+  },
+  {
+   "witness": "FM",
+   "fixture": "pass@dark",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 6/6 PASS",
+   "ok": true,
+   "ms": 28420,
+   "load": 11.19
+  },
+  {
+   "witness": "FM",
+   "fixture": "deadhooks",
+   "expect": "exit ≠ 0; tiles fails in ^film·",
+   "got": "exit 1, 6/6 FAIL; matching 6 (chromium)",
+   "ok": true,
+   "ms": 26562,
+   "load": 11.56
+  },
+  {
+   "witness": "FM",
+   "fixture": "stub",
+   "expect": "exit ≠ 0; stub fails in ^film·swap-",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 8851,
+   "load": 9.76
+  },
+  {
+   "witness": "R5",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 4/4 PASS",
+   "ok": true,
+   "ms": 12890,
+   "load": 10.41
+  },
+  {
+   "witness": "R5",
+   "fixture": "nohit",
+   "expect": "exit ≠ 0; corner fails in ^hit·",
+   "got": "exit 1, 4/4 FAIL; matching 4 (chromium)",
+   "ok": true,
+   "ms": 12746,
+   "load": 10.1
+  },
+  {
+   "witness": "R5",
+   "fixture": "seatmiss",
+   "expect": "exit ≠ 0; seat fails in ^hit·warm-",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 6936,
+   "load": 11.01
+  },
+  {
+   "witness": "R5",
+   "fixture": "ghosthit",
+   "expect": "exit ≠ 0; ghost fails in ^hit·warm-",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 6955,
+   "load": 10.45
+  }
+ ]
+}

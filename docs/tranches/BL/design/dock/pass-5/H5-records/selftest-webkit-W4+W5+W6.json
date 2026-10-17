@@ -1,0 +1,278 @@
+{
+ "when": "2026-10-17T08:17:25.245Z",
+ "engines": [
+  "webkit"
+ ],
+ "rows": [
+  {
+   "witness": "W4",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 13/13 PASS",
+   "ok": true,
+   "ms": 51779,
+   "load": 10.17
+  },
+  {
+   "witness": "W4",
+   "fixture": "nohyst",
+   "expect": "exit ≠ 0; no-threshold-bounce",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 12587,
+   "load": 11.72
+  },
+  {
+   "witness": "W4",
+   "fixture": "latch",
+   "expect": "exit ≠ 0; no-hover-latch",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 4257,
+   "load": 12.42
+  },
+  {
+   "witness": "W4",
+   "fixture": "menucollapse",
+   "expect": "exit ≠ 0; menu-holds",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 9705,
+   "load": 12.42
+  },
+  {
+   "witness": "W4",
+   "fixture": "noprm",
+   "expect": "exit ≠ 0; prm·posture-morph|prm·compact",
+   "got": "exit 1, 2/2 FAIL; matching 2 (webkit)",
+   "ok": true,
+   "ms": 12433,
+   "load": 12.7
+  },
+  {
+   "witness": "W4",
+   "fixture": "tapthrough",
+   "expect": "exit ≠ 0; tap-pins",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 8169,
+   "load": 11.98
+  },
+  {
+   "witness": "W4",
+   "fixture": "ungatedafter",
+   "expect": "exit ≠ 0; no-hover-latch",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 4238,
+   "load": 11.9
+  },
+  {
+   "witness": "W4",
+   "fixture": "pressgate",
+   "expect": "exit ≠ 0; press-then-scroll",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 3758,
+   "load": 13.19
+  },
+  {
+   "witness": "W4",
+   "fixture": "lategetter",
+   "expect": "exit ≠ 0; late-getter",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 5011,
+   "load": 12.54
+  },
+  {
+   "witness": "W4",
+   "fixture": "norefcount",
+   "expect": "exit ≠ 0; shared-scroller",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 4340,
+   "load": 12.97
+  },
+  {
+   "witness": "W4",
+   "fixture": "seatshrink",
+   "expect": "exit ≠ 0; seat-scale",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 13005,
+   "load": 12.9
+  },
+  {
+   "witness": "W4",
+   "fixture": "prmscrub",
+   "expect": "exit ≠ 0; prm·compact",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 3983,
+   "load": 12.44
+  },
+  {
+   "witness": "W4",
+   "fixture": "compactjump",
+   "expect": "exit ≠ 0; non-first-current",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 3594,
+   "load": 12.44
+  },
+  {
+   "witness": "W4",
+   "fixture": "nocompact",
+   "expect": "exit ≠ 0; compact·compacts",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 11973,
+   "load": 12.32
+  },
+  {
+   "witness": "W4",
+   "fixture": "noengage",
+   "expect": "exit ≠ 0; engagement-expands",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 12444,
+   "load": 12.67
+  },
+  {
+   "witness": "W5",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 6/6 PASS",
+   "ok": true,
+   "ms": 17127,
+   "load": 11.86
+  },
+  {
+   "witness": "W5",
+   "fixture": "rimout",
+   "expect": "exit ≠ 0; inside fails in expanded|collapsed",
+   "got": "exit 1, 5/5 FAIL; matching 5 (webkit)",
+   "ok": true,
+   "ms": 15021,
+   "load": 12.55
+  },
+  {
+   "witness": "W5",
+   "fixture": "deadfill",
+   "expect": "exit ≠ 0; fill fails in h·expanded|v·expanded",
+   "got": "exit 1, 3/3 FAIL; matching 3 (webkit)",
+   "ok": true,
+   "ms": 9133,
+   "load": 11.6
+  },
+  {
+   "witness": "W5",
+   "fixture": "rimshift",
+   "expect": "exit ≠ 0; whole fails in expanded|collapsed",
+   "got": "exit 1, 5/5 FAIL; matching 5 (webkit)",
+   "ok": true,
+   "ms": 14896,
+   "load": 10.87
+  },
+  {
+   "witness": "W5",
+   "fixture": "winonly",
+   "expect": "exit ≠ 0; fill fails in el-source",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 3442,
+   "load": 9.49
+  },
+  {
+   "witness": "W6",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 4/4 PASS",
+   "ok": true,
+   "ms": 10578,
+   "load": 9.05
+  },
+  {
+   "witness": "W6",
+   "fixture": "formout",
+   "expect": "exit ≠ 0; wraps fails in form·collapsed-rest",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 10612,
+   "load": 10.09
+  },
+  {
+   "witness": "W6",
+   "fixture": "dismissout",
+   "expect": "exit ≠ 0; wraps fails in form·collapsed-rest",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 10509,
+   "load": 9.45
+  },
+  {
+   "witness": "W6",
+   "fixture": "twoplates",
+   "expect": "exit ≠ 0; onePlate fails in form·collapsed-rest",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 10368,
+   "load": 8.91
+  },
+  {
+   "witness": "W6",
+   "fixture": "formgone",
+   "expect": "exit ≠ 0; present fails in form·collapsed-rest",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 10429,
+   "load": 8.99
+  },
+  {
+   "witness": "W6",
+   "fixture": "dismissspan",
+   "expect": "exit ≠ 0; dismissSeat fails in form·collapsed-rest",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 10427,
+   "load": 8.45
+  },
+  {
+   "witness": "W6",
+   "fixture": "plateswap",
+   "expect": "exit ≠ 0; samePlate fails in form·expanded-rest",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 10407,
+   "load": 8.48
+  },
+  {
+   "witness": "W6",
+   "fixture": "jump",
+   "expect": "exit ≠ 0; continuity fails in form·expand",
+   "got": "exit 1, 1/2 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 10470,
+   "load": 8.97
+  },
+  {
+   "witness": "W6",
+   "fixture": "bandclose",
+   "expect": "an OWNER-BLOCKED cell in form·expand|form·collapse",
+   "got": "exit 0, 2/4 FAIL; matching 2 (webkit)",
+   "ok": true,
+   "ms": 10482,
+   "load": 8.68
+  },
+  {
+   "witness": "W6",
+   "fixture": "slowclock",
+   "expect": "exit ≠ 0; window fails in form·expand|form·collapse",
+   "got": "exit 1, 2/4 FAIL; matching 2 (webkit)",
+   "ok": true,
+   "ms": 16181,
+   "load": 8.95
+  }
+ ]
+}

@@ -1,0 +1,100 @@
+{
+ "note": "H5-10 self-test: synthetic F7 inputs (steps + a vitest JSON report)",
+ "steps": {
+  "typecheck": {
+   "exit": 0,
+   "ms": 1,
+   "load": [
+    0,
+    0
+   ],
+   "tail": ""
+  },
+  "lib": {
+   "exit": 0,
+   "ms": 1,
+   "load": [
+    0,
+    0
+   ],
+   "tail": ""
+  },
+  "demo": {
+   "exit": 0,
+   "ms": 1,
+   "load": [
+    0,
+    0
+   ],
+   "tail": ""
+  },
+  "units": {
+   "exit": 0,
+   "ms": 1,
+   "load": [
+    0,
+    0
+   ],
+   "tail": ""
+  }
+ },
+ "report": {
+  "numFailedTests": 0,
+  "testResults": [
+   {
+    "name": "/x/tests/components/dock/run.test.ts",
+    "status": "passed",
+    "assertionResults": [
+     {
+      "ancestorTitles": [],
+      "title": "gap",
+      "fullName": "gap",
+      "status": "passed"
+     },
+     {
+      "ancestorTitles": [],
+      "title": "seat",
+      "fullName": "seat",
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "name": "/x/tests/gates/token-hygiene.test.ts",
+    "status": "passed",
+    "assertionResults": [
+     {
+      "ancestorTitles": [
+       "gate:token-hygiene"
+      ],
+      "title": "no raw hex",
+      "fullName": "gate:token-hygiene no raw hex",
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "name": "/x/tests/gates/boot-graph.test.ts",
+    "status": "failed",
+    "assertionResults": [
+     {
+      "ancestorTitles": [
+       "gate:boot-graph — source arm"
+      ],
+      "title": "source graph",
+      "fullName": "gate:boot-graph — source arm source graph",
+      "status": "passed"
+     },
+     {
+      "ancestorTitles": [
+       "gate:boot-graph — build arm"
+      ],
+      "title": "the eager graph stays under the modulepreload and byte ceilings",
+      "fullName": "gate:boot-graph — build arm the eager graph stays under the modulepreload and byte ceilings",
+      "status": "failed"
+     }
+    ]
+   }
+  ]
+ }
+}

@@ -132,11 +132,19 @@ async function reach(page, scene) {
     let eng = "chromium"; try { eng = page.context().browser().browserType().name(); } catch { eng = "safari"; }
     const TAB = eng === "chromium" ? "Tab" : "Alt+Tab";
     for (let k = 0; k < n + 6; k++) { await page.keyboard.press(TAB); const i = await who(); if (i >= 0) seen.add(i); }
-    const first = await page.evaluate(() => { const P = window.__dockProbe; const s = P.seats(); const a = document.activeElement; return s.findIndex((x) => x === a || x.contains(a)); });
-    await page.evaluate(() => { const s = window.__dockProbe.seats(); s[0].focus(); });
+    // H5-1 · every seat by a KEY. From the run's Tab stop (focus returns there by Shift+Tab when the walk ran past
+    // it): the arrows back toward Seat 1, then Home, then the arrows forward to the end. A programmatic focus()
+    // reaches nothing: the pass-4 walk focused Seat 1 by script and recorded only what the arrows reached after it,
+    // so a run whose current seat was not the first never had Seat 1 pressed to (FLOOR-V3 §1.3: the product
+    // reaches 11/11). A run whose ArrowUp clamps short of Seat 1 and has no Home still fails (plant `arrowclamp`)
     const axis = await page.evaluate(() => window.__dockProbe.axis());
-    for (let k = 0; k < n + 2; k++) { await page.keyboard.press(axis === "x" ? "ArrowRight" : "ArrowDown"); const i = await who(); if (i >= 0) seen.add(i); }
-    void first;
+    const [BACK, FWD] = axis === "x" ? ["ArrowLeft", "ArrowRight"] : ["ArrowUp", "ArrowDown"];
+    if ((await who()) < 0) { for (let k = 0; k < n + 6 && (await who()) < 0; k++) await page.keyboard.press("Shift+" + TAB); }
+    const stop = await who();
+    for (let k = 0; k < n + 2; k++) { await page.keyboard.press(BACK); const i = await who(); if (i >= 0) seen.add(i); }
+    await page.keyboard.press("Home"); { const i = await who(); if (i >= 0) seen.add(i); }
+    for (let k = 0; k < 2 * n + 2; k++) { await page.keyboard.press(FWD); const i = await who(); if (i >= 0) seen.add(i); }
+    void stop;
     await page.evaluate(() => document.getElementById("hp-kb-start")?.remove());
     let snap = "";
     try { snap = await page.locator(rootSel(scene)).first().ariaSnapshot(); } catch (e) { snap = "ERR " + e.message; }

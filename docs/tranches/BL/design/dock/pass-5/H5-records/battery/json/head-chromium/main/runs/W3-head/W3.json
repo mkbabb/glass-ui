@@ -1,0 +1,6400 @@
+{
+ "witness": "W3",
+ "target": "head@91728a09",
+ "when": "2026-10-17T10:23:41.456Z",
+ "load": 11.64,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "first-expand",
+   "pass": false,
+   "failed": [
+    "continuity",
+    "window",
+    "trajectory",
+    "terminal",
+    "seatStep",
+    "seatOverlap"
+   ],
+   "D": 387.66,
+   "start": 102,
+   "target": 489.66,
+   "frames": 181,
+   "travelMs": 0,
+   "continuity": {
+    "ok": false,
+    "ratio": 10.21,
+    "step": 387.66,
+    "bound": 37.98,
+    "atMs": 642.5,
+    "dt": 7.7
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": false,
+    "why": "window 546.6 ms > clock 214.2 + 2×16.7 + stall 13.4 = 261 ms (O-64 R-4, H-3d)",
+    "open": 95.90000000000009,
+    "close": 642.5,
+    "land": 642.5,
+    "motionStart": 642.5,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 546.6,
+    "allowMs": 261,
+    "q4": false,
+    "q4AllowMs": 316.8
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": false,
+    "dev": 350.11,
+    "tol": 16.51,
+    "frac": 0.9,
+    "atMs": 642.5,
+    "why": "worst 350.11 px (90.31 % of D) from the rung's analytic spring (tol 16.51)"
+   },
+   "terminal": {
+    "ok": false,
+    "why": "the motion is 1 step(s): 387.66 px"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "seats": {
+    "step": {
+     "ok": false,
+     "ratio": 14.22,
+     "step": 193.83,
+     "bound": 13.63,
+     "seat": 2,
+     "atMs": 642.5
+    },
+    "overlap": {
+     "ok": false,
+     "frames": 22,
+     "first": {
+      "seats": [
+       2,
+       8
+      ],
+      "mainPx": 33.69,
+      "opacities": [
+       0.124,
+       0.95
+      ],
+      "atMs": 95.9
+     }
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 7,
+    "movingFrames": 1,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 1 moving frame(s), longest run 0 (bound 1)"
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 1,
+    "failing": 0,
+    "lengthMs": 0,
+    "rows": [
+     {
+      "seat": 8,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 146.7,
+      "spanFrames": 19,
+      "path": [
+       0.95,
+       0.863,
+       0.802,
+       0.738,
+       0.666,
+       0.628,
+       0.555,
+       0.497,
+       0.441,
+       0.401,
+       0.353,
+       0.306,
+       0.264,
+       0.225,
+       0.201,
+       0.172,
+       0.15,
+       0.121,
+       0.107,
+       0.088
+      ],
+      "vanish": {
+       "drop": 0.087,
+       "from": 0.95,
+       "to": 0.863,
+       "atMs": 109.3
+      }
+     }
+    ],
+    "vanish": {
+     "ok": true,
+     "drop": 0.087,
+     "seat": 8,
+     "from": 0.95,
+     "to": 0.863,
+     "atMs": 109.3
+    },
+    "why": "1 leaving seat(s), 0 failing; tightest seat 8: ink 0.95 → 0.863 → 0.802 → 0.738 → 0.666 → 0.628 → 0.555 → 0.497 → 0.441 → 0.401 → 0.353 → 0.306 → 0.264 → 0.225 → 0.201 → 0.172 → 0.15 → 0.121 → 0.107 → 0.088 over 146.7 ms / 19 frame(s) (fade bound ≥ 3 frames and ≥ 0 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.087 (seat 8 0.95 → 0.863 at +109.3 ms) (bound 0.5)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "stub": {
+    "ok": true,
+    "judged": 88,
+    "stubFrames": 0,
+    "glyphs": 23,
+    "first": null,
+    "why": "0 stub frame(s) of 88 judged (up to 23 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate)"
+   },
+   "lanes": {
+    "ok": true,
+    "judged": true,
+    "flagClosedMs": 642.5,
+    "lanes": 3,
+    "worst": null,
+    "cancels": [],
+    "seatAfterFlag": null,
+    "why": "every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag"
+   },
+   "summary": "D 387.66 px (102→489.66); step ×10.21; dead; window 546.6 ms (allow 261, clock 214.2) — window 546.6 ms > clock 214.2 + 2×16.7 + stall 13.4 = 261 ms (O-64 R-4, H-3d); trajectory worst 350.11 px (90.31 % of D) from the rung's analytic spring (tol 16.51); terminal the motion is 1 step(s): 387.66 px; owners 0; seat step ×14.22 (193.83 px), seat overlap 22 frame(s); blank 0 blank of 1 moving frame(s), longest run 0 (bound 1); leaving 1 leaving seat(s), 0 failing; tightest seat 8: ink 0.95 → 0.863 → 0.802 → 0.738 → 0.666 → 0.628 → 0.555 → 0.497 → 0.441 → 0.401 → 0.353 → 0.306 → 0.264 → 0.225 → 0.201 → 0.172 → 0.15 → 0.121 → 0.107 → 0.088 over 146.7 ms / 19 frame(s) (fade bound ≥ 3 frames and ≥ 0 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.087 (seat 8 0.95 → 0.863 at +109.3 ms) (bound 0.5); splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 88 judged (up to 23 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate); lanes every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag; Q-4 lenient window fails (allow 316.8 ms)  ⟶ FAILED: continuity, window, trajectory, terminal, seatStep, seatOverlap; faces UNMEASURED (sampler starved: 0 in-flight read(s)) · 0 px of face ink beyond the plate over 22 screenshot sample(s) (0 in flight) (bound 1)",
+   "load": 8.3,
+   "faces": {
+    "ok": null,
+    "max": 0,
+    "n": 22,
+    "inflight": 0,
+    "travel": 387.66,
+    "bound": 1,
+    "how": "screenshot",
+    "why": "UNMEASURED (sampler starved: 0 in-flight read(s)) · 0 px of face ink beyond the plate over 22 screenshot sample(s) (0 in flight) (bound 1)"
+   }
+  },
+  {
+   "engine": "chromium",
+   "cell": "warm-collapse",
+   "pass": false,
+   "failed": [
+    "window",
+    "seatStep",
+    "seatOverlap",
+    "leaving",
+    "faces"
+   ],
+   "D": 387.66,
+   "start": 489.66,
+   "target": 102,
+   "frames": 652,
+   "travelMs": 243.1,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.66,
+    "step": 23.04,
+    "bound": 35.06,
+    "atMs": 3650.9,
+    "dt": 7.1
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": false,
+    "why": "window 542 ms > clock 214.2 + 2×16.7 + stall 10.1 = 257.7 ms (O-64 R-4, H-3d)",
+    "open": 3614.9,
+    "close": 4156.9,
+    "land": 3857.9999999999995,
+    "motionStart": 3614.9,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 542,
+    "allowMs": 257.7,
+    "q4": false,
+    "q4AllowMs": 313.5
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 4.2,
+    "tol": 16.51,
+    "frac": 0.01,
+    "atMs": 3650.9,
+    "why": "worst 4.2 px (1.08 % of D) from the rung's analytic spring (tol 16.51)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.43,
+    "prev": 0.46,
+    "bound": 1.44,
+    "why": "last step 0.43 px after 0.46 px (bound 1.44)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "seats": {
+    "step": {
+     "ok": false,
+     "ratio": 6.65,
+     "step": 212.23,
+     "bound": 31.93,
+     "seat": 8,
+     "atMs": 4156.9
+    },
+    "overlap": {
+     "ok": false,
+     "frames": 23,
+     "first": {
+      "seats": [
+       2,
+       8
+      ],
+      "mainPx": 40,
+      "opacities": [
+       0.95,
+       1
+      ],
+      "atMs": 3614.9
+     }
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 2,
+    "movingFrames": 35,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 35 moving frame(s), longest run 0 (bound 1)"
+   },
+   "leaving": {
+    "ok": false,
+    "leaving": 6,
+    "failing": 1,
+    "lengthMs": 243.1,
+    "rows": [
+     {
+      "seat": 2,
+      "ok": false,
+      "tracks": false,
+      "deficit": 1,
+      "fades": false,
+      "spanMs": 41.8,
+      "spanFrames": 6,
+      "path": [
+       0.9,
+       0.859,
+       0.811,
+       0.739,
+       0.486,
+       0.234,
+       0.054
+      ],
+      "vanish": {
+       "drop": 0.072,
+       "from": 0.811,
+       "to": 0.739,
+       "atMs": 3643.8
+      }
+     },
+     {
+      "seat": 3,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 71.8,
+      "spanFrames": 10,
+      "path": [
+       0.9,
+       0.859,
+       0.811,
+       0.739,
+       0.679,
+       0.617,
+       0.564,
+       0.46,
+       0.274,
+       0.123,
+       0.052
+      ],
+      "vanish": {
+       "drop": 0.072,
+       "from": 0.811,
+       "to": 0.739,
+       "atMs": 3643.8
+      }
+     },
+     {
+      "seat": 4,
+      "ok": true,
+      "tracks": false,
+      "deficit": 0.697,
+      "fades": true,
+      "spanMs": 109.2,
+      "spanFrames": 15,
+      "path": [
+       0.9,
+       0.859,
+       0.811,
+       0.739,
+       0.679,
+       0.617,
+       0.564,
+       0.496,
+       0.44,
+       0.384,
+       0.352,
+       0.303,
+       0.23,
+       0.149,
+       0.108,
+       0.064
+      ],
+      "vanish": {
+       "drop": 0.072,
+       "from": 0.811,
+       "to": 0.739,
+       "atMs": 3643.8
+      }
+     },
+     {
+      "seat": 5,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 133.4,
+      "spanFrames": 18,
+      "path": [
+       0.9,
+       0.859,
+       0.811,
+       0.739,
+       0.679,
+       0.617,
+       0.564,
+       0.496,
+       0.44,
+       0.384,
+       0.352,
+       0.303,
+       0.264,
+       0.225,
+       0.202,
+       0.172,
+       0.145,
+       0.121,
+       0.1
+      ],
+      "vanish": {
+       "drop": 0.072,
+       "from": 0.811,
+       "to": 0.739,
+       "atMs": 3643.8
+      }
+     },
+     {
+      "seat": 6,
+      "ok": true,
+      "tracks": false,
+      "deficit": 0.662,
+      "fades": true,
+      "spanMs": 125.3,
+      "spanFrames": 17,
+      "path": [
+       0.95,
+       0.9,
+       0.859,
+       0.811,
+       0.739,
+       0.679,
+       0.617,
+       0.564,
+       0.496,
+       0.44,
+       0.384,
+       0.352,
+       0.288,
+       0.23,
+       0.179,
+       0.151,
+       0.118,
+       0.092
+      ],
+      "vanish": {
+       "drop": 0.072,
+       "from": 0.811,
+       "to": 0.739,
+       "atMs": 3643.8
+      }
+     },
+     {
+      "seat": 7,
+      "ok": true,
+      "tracks": false,
+      "deficit": 0.176,
+      "fades": true,
+      "spanMs": 66.6,
+      "spanFrames": 9,
+      "path": [
+       0.95,
+       0.854,
+       0.752,
+       0.639,
+       0.486,
+       0.373,
+       0.27,
+       0.193,
+       0.109,
+       0.052
+      ],
+      "vanish": {
+       "drop": 0.05,
+       "from": 1,
+       "to": 0.95,
+       "atMs": 3614.9
+      }
+     }
+    ],
+    "vanish": {
+     "ok": true,
+     "drop": 0.072,
+     "seat": 2,
+     "from": 0.811,
+     "to": 0.739,
+     "atMs": 3643.8
+    },
+    "why": "6 leaving seat(s), 1 failing; worst seat 2: ink 0.9 → 0.859 → 0.811 → 0.739 → 0.486 → 0.234 → 0.054 over 41.8 ms / 6 frame(s) (fade bound ≥ 3 frames and ≥ 60.8 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.072 (seat 2 0.811 → 0.739 at +3643.8 ms) (bound 0.5)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "stub": {
+    "ok": true,
+    "judged": 558,
+    "stubFrames": 0,
+    "glyphs": 23,
+    "first": null,
+    "why": "0 stub frame(s) of 558 judged (up to 23 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate)"
+   },
+   "lanes": {
+    "ok": true,
+    "judged": true,
+    "flagClosedMs": 4156.9,
+    "lanes": 3,
+    "worst": null,
+    "cancels": [],
+    "seatAfterFlag": null,
+    "why": "every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag"
+   },
+   "summary": "D 387.66 px (489.66→102); step ×0.66; dead; window 542 ms (allow 257.7, clock 214.2) — window 542 ms > clock 214.2 + 2×16.7 + stall 10.1 = 257.7 ms (O-64 R-4, H-3d); trajectory worst 4.2 px (1.08 % of D) from the rung's analytic spring (tol 16.51); terminal last step 0.43 px after 0.46 px (bound 1.44); owners 0; seat step ×6.65 (212.23 px), seat overlap 23 frame(s); blank 0 blank of 35 moving frame(s), longest run 0 (bound 1); leaving 6 leaving seat(s), 1 failing; worst seat 2: ink 0.9 → 0.859 → 0.811 → 0.739 → 0.486 → 0.234 → 0.054 over 41.8 ms / 6 frame(s) (fade bound ≥ 3 frames and ≥ 60.8 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.072 (seat 2 0.811 → 0.739 at +3643.8 ms) (bound 0.5); splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 558 judged (up to 23 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate); lanes every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag; Q-4 lenient window fails (allow 313.5 ms)  ⟶ FAILED: window, seatStep, seatOverlap, leaving; faces 143.5 px of face ink beyond the plate over 153 screenshot sample(s) (8 in flight) (bound 1)  ⟶ FAILED: faces",
+   "load": 8.3,
+   "faces": {
+    "ok": false,
+    "max": 143.5,
+    "n": 153,
+    "inflight": 8,
+    "travel": 387.66,
+    "bound": 1,
+    "how": "screenshot",
+    "why": "143.5 px of face ink beyond the plate over 153 screenshot sample(s) (8 in flight) (bound 1)"
+   }
+  },
+  {
+   "engine": "chromium",
+   "cell": "warm-expand",
+   "pass": false,
+   "failed": [
+    "landing",
+    "window",
+    "seatStep",
+    "seatOverlap",
+    "leaving",
+    "faces"
+   ],
+   "D": 387.66,
+   "start": 102,
+   "target": 489.66,
+   "frames": 177,
+   "travelMs": 243.3,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.66,
+    "step": 25.63,
+    "bound": 38.99,
+    "atMs": 129.7,
+    "dt": 7.9
+   },
+   "landing": {
+    "ok": false,
+    "why": "sub-pixel ring 0.34 px (O-64 R-3)",
+    "overshoot": 0.34,
+    "reversals": 1
+   },
+   "window": {
+    "ok": false,
+    "why": "window 543.5 ms > clock 214.2 + 2×16.7 + stall 9.8 = 257.4 ms (O-64 R-4, H-3d)",
+    "open": 92.10000000000036,
+    "close": 635.6000000000004,
+    "land": 335.39999999999964,
+    "motionStart": 92.10000000000036,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 543.5,
+    "allowMs": 257.4,
+    "q4": false,
+    "q4AllowMs": 313.2
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 4.03,
+    "tol": 16.51,
+    "frac": 0.01,
+    "atMs": 83.7,
+    "why": "worst 4.03 px (1.04 % of D) from the rung's analytic spring (tol 16.51)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.34,
+    "prev": 0.41,
+    "bound": 0.95,
+    "why": "last step 0.34 px after 0.41 px (bound 0.95)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "seats": {
+    "step": {
+     "ok": false,
+     "ratio": 7.92,
+     "step": 211.12,
+     "bound": 26.64,
+     "seat": 8,
+     "atMs": 92.1
+    },
+    "overlap": {
+     "ok": false,
+     "frames": 23,
+     "first": {
+      "seats": [
+       2,
+       8
+      ],
+      "mainPx": 33.7,
+      "opacities": [
+       0.124,
+       0.95
+      ],
+      "atMs": 92.1
+     }
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 7,
+    "movingFrames": 36,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 36 moving frame(s), longest run 0 (bound 1)"
+   },
+   "leaving": {
+    "ok": false,
+    "leaving": 1,
+    "failing": 1,
+    "lengthMs": 243.3,
+    "rows": [
+     {
+      "seat": 8,
+      "ok": false,
+      "tracks": false,
+      "deficit": 1,
+      "fades": false,
+      "spanMs": 8.4,
+      "spanFrames": 1,
+      "path": [
+       1,
+       0
+      ],
+      "vanish": {
+       "drop": 0.033,
+       "from": 0.262,
+       "to": 0.229,
+       "atMs": 195.5
+      }
+     }
+    ],
+    "vanish": {
+     "ok": true,
+     "drop": 0.033,
+     "seat": 8,
+     "from": 0.262,
+     "to": 0.229,
+     "atMs": 195.5
+    },
+    "why": "1 leaving seat(s), 1 failing; worst seat 8: ink 1 → 0 over 8.4 ms / 1 frame(s) (fade bound ≥ 3 frames and ≥ 60.8 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.033 (seat 8 0.262 → 0.229 at +195.5 ms) (bound 0.5)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "stub": {
+    "ok": true,
+    "judged": 86,
+    "stubFrames": 0,
+    "glyphs": 23,
+    "first": null,
+    "why": "0 stub frame(s) of 86 judged (up to 23 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate)"
+   },
+   "lanes": {
+    "ok": true,
+    "judged": true,
+    "flagClosedMs": 635.6,
+    "lanes": 3,
+    "worst": null,
+    "cancels": [],
+    "seatAfterFlag": null,
+    "why": "every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag"
+   },
+   "summary": "D 387.66 px (102→489.66); step ×0.66; sub-pixel ring 0.34 px (O-64 R-3), 1 reversal(s); window 543.5 ms (allow 257.4, clock 214.2) — window 543.5 ms > clock 214.2 + 2×16.7 + stall 9.8 = 257.4 ms (O-64 R-4, H-3d); trajectory worst 4.03 px (1.04 % of D) from the rung's analytic spring (tol 16.51); terminal last step 0.34 px after 0.41 px (bound 0.95); owners 0; seat step ×7.92 (211.12 px), seat overlap 23 frame(s); blank 0 blank of 36 moving frame(s), longest run 0 (bound 1); leaving 1 leaving seat(s), 1 failing; worst seat 8: ink 1 → 0 over 8.4 ms / 1 frame(s) (fade bound ≥ 3 frames and ≥ 60.8 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.033 (seat 8 0.262 → 0.229 at +195.5 ms) (bound 0.5); splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 86 judged (up to 23 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate); lanes every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag; Q-4 lenient window fails (allow 313.2 ms)  ⟶ FAILED: landing, window, seatStep, seatOverlap, leaving; faces 123 px of face ink beyond the plate over 25 screenshot sample(s) (8 in flight) (bound 1)  ⟶ FAILED: faces",
+   "load": 8.3,
+   "faces": {
+    "ok": false,
+    "max": 123,
+    "n": 25,
+    "inflight": 8,
+    "travel": 387.66,
+    "bound": 1,
+    "how": "screenshot",
+    "why": "123 px of face ink beyond the plate over 25 screenshot sample(s) (8 in flight) (bound 1)"
+   }
+  },
+  {
+   "engine": "chromium",
+   "cell": "content-add",
+   "pass": false,
+   "failed": [
+    "continuity",
+    "window",
+    "trajectory",
+    "terminal",
+    "seatStep"
+   ],
+   "D": 179.33,
+   "start": 489.66,
+   "target": 668.98,
+   "frames": 1035,
+   "travelMs": 0,
+   "continuity": {
+    "ok": false,
+    "ratio": 13.22,
+    "step": 179.33,
+    "bound": 13.56,
+    "atMs": 5.8,
+    "dt": 5.8
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": false,
+    "why": "no window opened for the change (O-64 R-2)",
+    "open": null,
+    "close": null,
+    "land": 5.799999999999272,
+    "motionStart": 5.799999999999272,
+    "clockMs": 214.2,
+    "frameMs": 16.7
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": false,
+    "dev": 164.21,
+    "tol": 8.17,
+    "frac": 0.92,
+    "atMs": 5.8,
+    "why": "worst 164.21 px (91.57 % of D) from the rung's analytic spring (tol 8.17)"
+   },
+   "terminal": {
+    "ok": false,
+    "why": "the motion is 1 step(s): 179.33 px"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "seats": {
+    "step": {
+     "ok": false,
+     "ratio": 12.75,
+     "step": 89.65,
+     "bound": 7.03,
+     "seat": 7,
+     "atMs": 5.8
+    },
+    "overlap": {
+     "ok": true,
+     "frames": 0,
+     "first": null
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 8,
+    "movingFrames": 1,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 1 moving frame(s), longest run 0 (bound 1)"
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 0,
+    "failing": 0,
+    "lengthMs": 0,
+    "rows": [],
+    "vanish": {
+     "ok": true,
+     "drop": 0
+    },
+    "why": "no seat leaves"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "stub": {
+    "ok": true,
+    "judged": 3,
+    "stubFrames": 0,
+    "glyphs": 38,
+    "first": null,
+    "why": "0 stub frame(s) of 3 judged (up to 38 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate)"
+   },
+   "summary": "D 179.33 px (489.66→668.98); step ×13.22; dead; window none ms (allow -, clock 214.2) — no window opened for the change (O-64 R-2); trajectory worst 164.21 px (91.57 % of D) from the rung's analytic spring (tol 8.17); terminal the motion is 1 step(s): 179.33 px; owners 0; seat step ×12.75 (89.65 px), seat overlap 0 frame(s); blank 0 blank of 1 moving frame(s), longest run 0 (bound 1); leaving no seat leaves; splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 3 judged (up to 38 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate)  ⟶ FAILED: continuity, window, trajectory, terminal, seatStep; faces UNMEASURED (sampler starved: 0 in-flight read(s)) · 0 px of face ink beyond the plate over 5 screenshot sample(s) (0 in flight) (bound 1)",
+   "load": 8.3,
+   "faces": {
+    "ok": null,
+    "max": 0,
+    "n": 5,
+    "inflight": 0,
+    "travel": 179.33,
+    "bound": 1,
+    "how": "screenshot",
+    "why": "UNMEASURED (sampler starved: 0 in-flight read(s)) · 0 px of face ink beyond the plate over 5 screenshot sample(s) (0 in flight) (bound 1)"
+   }
+  },
+  {
+   "engine": "chromium",
+   "cell": "content-remove",
+   "pass": false,
+   "failed": [
+    "continuity",
+    "window",
+    "trajectory",
+    "terminal",
+    "seatStep",
+    "leaving",
+    "vanish"
+   ],
+   "D": 179.33,
+   "start": 668.98,
+   "target": 489.66,
+   "frames": 1034,
+   "travelMs": 0,
+   "continuity": {
+    "ok": false,
+    "ratio": 14.69,
+    "step": 179.33,
+    "bound": 12.21,
+    "atMs": 15.4,
+    "dt": 5.2
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": false,
+    "why": "no window opened for the change (O-64 R-2)",
+    "open": null,
+    "close": null,
+    "land": 15.399999999997817,
+    "motionStart": 15.399999999997817,
+    "clockMs": 214.2,
+    "frameMs": 16.7
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": false,
+    "dev": 164.9,
+    "tol": 8.17,
+    "frac": 0.92,
+    "atMs": 15.4,
+    "why": "worst 164.9 px (91.96 % of D) from the rung's analytic spring (tol 8.17)"
+   },
+   "terminal": {
+    "ok": false,
+    "why": "the motion is 1 step(s): 179.33 px"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "seats": {
+    "step": {
+     "ok": false,
+     "ratio": 14.11,
+     "step": 89.65,
+     "bound": 6.35,
+     "seat": 1,
+     "atMs": 15.4
+    },
+    "overlap": {
+     "ok": true,
+     "frames": 0,
+     "first": null
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 7,
+    "movingFrames": 1,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 1 moving frame(s), longest run 0 (bound 1)"
+   },
+   "leaving": {
+    "ok": false,
+    "leaving": 1,
+    "failing": 1,
+    "lengthMs": 0,
+    "rows": [
+     {
+      "seat": 18,
+      "ok": false,
+      "tracks": false,
+      "deficit": 0.547,
+      "fades": false,
+      "spanMs": 5.2,
+      "spanFrames": 1,
+      "path": [
+       1,
+       0
+      ],
+      "vanish": {
+       "drop": 0.547,
+       "from": 1,
+       "to": 0,
+       "atMs": 15.4
+      }
+     }
+    ],
+    "vanish": {
+     "ok": false,
+     "drop": 0.547,
+     "seat": 18,
+     "from": 1,
+     "to": 0,
+     "atMs": 15.4
+    },
+    "why": "1 leaving seat(s), 1 failing; worst seat 18: ink 1 → 0 over 5.2 ms / 1 frame(s) (fade bound ≥ 3 frames and ≥ 0 ms), coverage deficit 0.547 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.547 (seat 18 1 → 0 at +15.4 ms) (bound 0.5)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "stub": {
+    "ok": true,
+    "judged": 3,
+    "stubFrames": 0,
+    "glyphs": 38,
+    "first": null,
+    "why": "0 stub frame(s) of 3 judged (up to 38 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate)"
+   },
+   "summary": "D 179.33 px (668.98→489.66); step ×14.69; dead; window none ms (allow -, clock 214.2) — no window opened for the change (O-64 R-2); trajectory worst 164.9 px (91.96 % of D) from the rung's analytic spring (tol 8.17); terminal the motion is 1 step(s): 179.33 px; owners 0; seat step ×14.11 (89.65 px), seat overlap 0 frame(s); blank 0 blank of 1 moving frame(s), longest run 0 (bound 1); leaving 1 leaving seat(s), 1 failing; worst seat 18: ink 1 → 0 over 5.2 ms / 1 frame(s) (fade bound ≥ 3 frames and ≥ 0 ms), coverage deficit 0.547 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.547 (seat 18 1 → 0 at +15.4 ms) (bound 0.5); splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 3 judged (up to 38 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate)  ⟶ FAILED: continuity, window, trajectory, terminal, seatStep, leaving, vanish; faces UNMEASURED (sampler starved: 0 in-flight read(s)) · 0 px of face ink beyond the plate over 5 screenshot sample(s) (0 in flight) (bound 1)",
+   "load": 8.3,
+   "faces": {
+    "ok": null,
+    "max": 0,
+    "n": 5,
+    "inflight": 0,
+    "travel": 179.33,
+    "bound": 1,
+    "how": "screenshot",
+    "why": "UNMEASURED (sampler starved: 0 in-flight read(s)) · 0 px of face ink beyond the plate over 5 screenshot sample(s) (0 in flight) (bound 1)"
+   }
+  },
+  {
+   "engine": "chromium",
+   "cell": "lead-add",
+   "pass": false,
+   "failed": [
+    "continuity",
+    "window",
+    "trajectory",
+    "terminal",
+    "seatStep"
+   ],
+   "D": 70.3,
+   "start": 489.66,
+   "target": 559.95,
+   "frames": 1037,
+   "travelMs": 0,
+   "continuity": {
+    "ok": false,
+    "ratio": 9.75,
+    "step": 70.3,
+    "bound": 7.21,
+    "atMs": 7.6,
+    "dt": 7.6
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": false,
+    "why": "no window opened for the change (O-64 R-2)",
+    "open": null,
+    "close": null,
+    "land": 7.600000000002183,
+    "motionStart": 7.600000000002183,
+    "clockMs": 214.2,
+    "frameMs": 16.7
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": false,
+    "dev": 63.54,
+    "tol": 3.81,
+    "frac": 0.9,
+    "atMs": 7.6,
+    "why": "worst 63.54 px (90.38 % of D) from the rung's analytic spring (tol 3.81)"
+   },
+   "terminal": {
+    "ok": false,
+    "why": "the motion is 1 step(s): 70.3 px"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "seats": {
+    "step": {
+     "ok": false,
+     "ratio": 9.12,
+     "step": 35.14,
+     "bound": 3.85,
+     "seat": 1,
+     "atMs": 7.6
+    },
+    "overlap": {
+     "ok": true,
+     "frames": 0,
+     "first": null
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 8,
+    "movingFrames": 1,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 1 moving frame(s), longest run 0 (bound 1)"
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 0,
+    "failing": 0,
+    "lengthMs": 0,
+    "rows": [],
+    "vanish": {
+     "ok": true,
+     "drop": 0
+    },
+    "why": "no seat leaves"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "stub": {
+    "ok": true,
+    "judged": 3,
+    "stubFrames": 0,
+    "glyphs": 26,
+    "first": null,
+    "why": "0 stub frame(s) of 3 judged (up to 26 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate)"
+   },
+   "summary": "D 70.3 px (489.66→559.95); step ×9.75; dead; window none ms (allow -, clock 214.2) — no window opened for the change (O-64 R-2); trajectory worst 63.54 px (90.38 % of D) from the rung's analytic spring (tol 3.81); terminal the motion is 1 step(s): 70.3 px; owners 0; seat step ×9.12 (35.14 px), seat overlap 0 frame(s); blank 0 blank of 1 moving frame(s), longest run 0 (bound 1); leaving no seat leaves; splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 3 judged (up to 26 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate)  ⟶ FAILED: continuity, window, trajectory, terminal, seatStep; faces UNMEASURED (sampler starved: 0 in-flight read(s)) · 0 px of face ink beyond the plate over 5 screenshot sample(s) (0 in flight) (bound 1)",
+   "load": 8.3,
+   "faces": {
+    "ok": null,
+    "max": 0,
+    "n": 5,
+    "inflight": 0,
+    "travel": 70.3,
+    "bound": 1,
+    "how": "screenshot",
+    "why": "UNMEASURED (sampler starved: 0 in-flight read(s)) · 0 px of face ink beyond the plate over 5 screenshot sample(s) (0 in flight) (bound 1)"
+   }
+  },
+  {
+   "engine": "chromium",
+   "cell": "lead-remove",
+   "pass": false,
+   "failed": [
+    "continuity",
+    "window",
+    "trajectory",
+    "terminal",
+    "seatStep",
+    "leaving",
+    "vanish"
+   ],
+   "D": 70.3,
+   "start": 559.95,
+   "target": 489.66,
+   "frames": 1036,
+   "travelMs": 0,
+   "continuity": {
+    "ok": false,
+    "ratio": 11.27,
+    "step": 70.3,
+    "bound": 6.24,
+    "atMs": 6.5,
+    "dt": 6.5
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": false,
+    "why": "no window opened for the change (O-64 R-2)",
+    "open": null,
+    "close": null,
+    "land": 6.5,
+    "motionStart": 6.5,
+    "clockMs": 214.2,
+    "frameMs": 16.7
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": false,
+    "dev": 64.05,
+    "tol": 3.81,
+    "frac": 0.91,
+    "atMs": 6.5,
+    "why": "worst 64.05 px (91.11 % of D) from the rung's analytic spring (tol 3.81)"
+   },
+   "terminal": {
+    "ok": false,
+    "why": "the motion is 1 step(s): 70.3 px"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "seats": {
+    "step": {
+     "ok": false,
+     "ratio": 10.43,
+     "step": 35.15,
+     "bound": 3.37,
+     "seat": 7,
+     "atMs": 6.5
+    },
+    "overlap": {
+     "ok": true,
+     "frames": 0,
+     "first": null
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 7,
+    "movingFrames": 1,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 1 moving frame(s), longest run 0 (bound 1)"
+   },
+   "leaving": {
+    "ok": false,
+    "leaving": 1,
+    "failing": 1,
+    "lengthMs": 0,
+    "rows": [
+     {
+      "seat": 19,
+      "ok": false,
+      "tracks": false,
+      "deficit": 1,
+      "fades": false,
+      "spanMs": 6.5,
+      "spanFrames": 1,
+      "path": [
+       1,
+       0
+      ],
+      "vanish": {
+       "drop": 1,
+       "from": 1,
+       "to": 0,
+       "atMs": 6.5
+      }
+     }
+    ],
+    "vanish": {
+     "ok": false,
+     "drop": 1,
+     "seat": 19,
+     "from": 1,
+     "to": 0,
+     "atMs": 6.5
+    },
+    "why": "1 leaving seat(s), 1 failing; worst seat 19: ink 1 → 0 over 6.5 ms / 1 frame(s) (fade bound ≥ 3 frames and ≥ 0 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 1 (seat 19 1 → 0 at +6.5 ms) (bound 0.5)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "stub": {
+    "ok": true,
+    "judged": 2,
+    "stubFrames": 0,
+    "glyphs": 22,
+    "first": null,
+    "why": "0 stub frame(s) of 2 judged (up to 22 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate)"
+   },
+   "summary": "D 70.3 px (559.95→489.66); step ×11.27; dead; window none ms (allow -, clock 214.2) — no window opened for the change (O-64 R-2); trajectory worst 64.05 px (91.11 % of D) from the rung's analytic spring (tol 3.81); terminal the motion is 1 step(s): 70.3 px; owners 0; seat step ×10.43 (35.15 px), seat overlap 0 frame(s); blank 0 blank of 1 moving frame(s), longest run 0 (bound 1); leaving 1 leaving seat(s), 1 failing; worst seat 19: ink 1 → 0 over 6.5 ms / 1 frame(s) (fade bound ≥ 3 frames and ≥ 0 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 1 (seat 19 1 → 0 at +6.5 ms) (bound 0.5); splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 2 judged (up to 22 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate)  ⟶ FAILED: continuity, window, trajectory, terminal, seatStep, leaving, vanish; faces UNMEASURED (sampler starved: 0 in-flight read(s)) · 0 px of face ink beyond the plate over 5 screenshot sample(s) (0 in flight) (bound 1)",
+   "load": 8.3,
+   "faces": {
+    "ok": null,
+    "max": 0,
+    "n": 5,
+    "inflight": 0,
+    "travel": 70.3,
+    "bound": 1,
+    "how": "screenshot",
+    "why": "UNMEASURED (sampler starved: 0 in-flight read(s)) · 0 px of face ink beyond the plate over 5 screenshot sample(s) (0 in flight) (bound 1)"
+   }
+  },
+  {
+   "engine": "chromium",
+   "cell": "reversal",
+   "pass": false,
+   "failed": [
+    "landing",
+    "window",
+    "trajectory",
+    "seatOverlap"
+   ],
+   "D": 0,
+   "start": 489.66,
+   "target": 489.66,
+   "frames": 176,
+   "travelMs": 318.3,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.8,
+    "step": 31.3,
+    "bound": 38.96,
+    "atMs": 66.7,
+    "dt": 7.9
+   },
+   "landing": {
+    "ok": false,
+    "why": "sub-pixel ring 0.34 px (O-64 R-3)",
+    "overshoot": 0.34,
+    "reversals": 2
+   },
+   "window": {
+    "ok": false,
+    "why": "window 549.5 ms after the retarget > clock 214.2 + 2×16.7 + stall 9.7 = 257.3 ms (O-64 R-4, H-3d)",
+    "open": 7.30000000000291,
+    "close": 608.3000000000029,
+    "land": 325.6000000000058,
+    "motionStart": 7.30000000000291,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 601,
+    "fromRetargetMs": 549.5,
+    "allowMs": 257.3,
+    "q4": false,
+    "q4AllowMs": 313.1
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": false,
+    "dev1": 5.16,
+    "tol1": 16.51,
+    "dev2": 11.58,
+    "tol2": 8.36,
+    "vAtRetarget": -3.22,
+    "D1": 149.55,
+    "why": "before the retarget 5.16 px (tol 16.51); after it, released at 353.86 px with -3.22 px/ms: 11.58 px (tol 8.36)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.34,
+    "prev": 0.24,
+    "bound": 0.9,
+    "why": "last step 0.34 px after 0.24 px (bound 0.9)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "seats": {
+    "step": {
+     "ok": true,
+     "ratio": 0.8,
+     "step": 13.5,
+     "bound": 16.96,
+     "seat": 1,
+     "atMs": 66.7
+    },
+    "overlap": {
+     "ok": false,
+     "frames": 31,
+     "first": {
+      "seats": [
+       2,
+       8
+      ],
+      "mainPx": 40,
+      "opacities": [
+       0.95,
+       1
+      ],
+      "atMs": 7.3
+     }
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 7,
+    "movingFrames": 45,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 45 moving frame(s), longest run 0 (bound 1)"
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 0,
+    "failing": 0,
+    "lengthMs": 318.3,
+    "rows": [],
+    "vanish": {
+     "ok": true,
+     "drop": 0
+    },
+    "why": "no seat leaves"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "stub": {
+    "ok": true,
+    "judged": 83,
+    "stubFrames": 0,
+    "glyphs": 23,
+    "first": null,
+    "why": "0 stub frame(s) of 83 judged (up to 23 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate)"
+   },
+   "lanes": {
+    "ok": true,
+    "judged": true,
+    "flagClosedMs": 608.3,
+    "lanes": 3,
+    "worst": null,
+    "cancels": [],
+    "seatAfterFlag": null,
+    "why": "every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag"
+   },
+   "summary": "D 0 px (489.66→489.66); step ×0.8; sub-pixel ring 0.34 px (O-64 R-3), 2 reversal(s); window 601 ms (allow 257.3, clock 214.2) — window 549.5 ms after the retarget > clock 214.2 + 2×16.7 + stall 9.7 = 257.3 ms (O-64 R-4, H-3d); trajectory before the retarget 5.16 px (tol 16.51); after it, released at 353.86 px with -3.22 px/ms: 11.58 px (tol 8.36); terminal last step 0.34 px after 0.24 px (bound 0.9); owners 0; seat step ×0.8 (13.5 px), seat overlap 31 frame(s); blank 0 blank of 45 moving frame(s), longest run 0 (bound 1); leaving no seat leaves; splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 83 judged (up to 23 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate); lanes every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag; Q-4 lenient window fails (allow 313.1 ms); retargeted at 340.11 px  ⟶ FAILED: landing, window, trajectory, seatOverlap",
+   "load": 8.3
+  },
+  {
+   "engine": "chromium",
+   "cell": "swap-long",
+   "pass": false,
+   "failed": [
+    "continuity",
+    "window",
+    "trajectory",
+    "terminal",
+    "seatStep",
+    "seatOverlap"
+   ],
+   "D": 244.98,
+   "start": 110,
+   "target": 354.98,
+   "frames": 1036,
+   "travelMs": 0,
+   "continuity": {
+    "ok": false,
+    "ratio": 15.73,
+    "step": 244.98,
+    "bound": 15.57,
+    "atMs": 4.9,
+    "dt": 4.9
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": false,
+    "why": "no window opened for the change (O-64 R-2)",
+    "open": null,
+    "close": null,
+    "land": 4.900000000000091,
+    "motionStart": 4.900000000000091,
+    "clockMs": 214.2,
+    "frameMs": 16.7
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": false,
+    "dev": 225.74,
+    "tol": 10.8,
+    "frac": 0.92,
+    "atMs": 4.9,
+    "why": "worst 225.74 px (92.15 % of D) from the rung's analytic spring (tol 10.8)"
+   },
+   "terminal": {
+    "ok": false,
+    "why": "the motion is 1 step(s): 244.98 px"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "seats": {
+    "step": {
+     "ok": false,
+     "ratio": 15.24,
+     "step": 122.48,
+     "bound": 8.04,
+     "seat": 2,
+     "atMs": 4.9
+    },
+    "overlap": {
+     "ok": false,
+     "frames": 22,
+     "first": {
+      "seats": [
+       1,
+       3
+      ],
+      "mainPx": 40,
+      "opacities": [
+       0.895,
+       0.105
+      ],
+      "atMs": 13.8
+     }
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 5,
+    "movingFrames": 1,
+    "blankFrames": 1,
+    "longestRun": 1,
+    "atMs": 4.9,
+    "why": "1 blank of 1 moving frame(s), longest run 1 (bound 1)"
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 2,
+    "failing": 0,
+    "lengthMs": 0,
+    "rows": [
+     {
+      "seat": 1,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 150.1,
+      "spanFrames": 20,
+      "path": [
+       0.95,
+       0.895,
+       0.847,
+       0.772,
+       0.707,
+       0.667,
+       0.593,
+       0.534,
+       0.481,
+       0.439,
+       0.381,
+       0.333,
+       0.288,
+       0.247,
+       0.221,
+       0.19,
+       0.162,
+       0.138,
+       0.121,
+       0.101,
+       0.081
+      ],
+      "vanish": {
+       "drop": 0.075,
+       "from": 0.847,
+       "to": 0.772,
+       "atMs": 29.8
+      }
+     },
+     {
+      "seat": 2,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 150.1,
+      "spanFrames": 20,
+      "path": [
+       0.95,
+       0.895,
+       0.847,
+       0.772,
+       0.707,
+       0.667,
+       0.593,
+       0.534,
+       0.481,
+       0.439,
+       0.381,
+       0.333,
+       0.288,
+       0.247,
+       0.221,
+       0.19,
+       0.162,
+       0.138,
+       0.121,
+       0.101,
+       0.081
+      ],
+      "vanish": {
+       "drop": 0.075,
+       "from": 0.847,
+       "to": 0.772,
+       "atMs": 29.8
+      }
+     }
+    ],
+    "vanish": {
+     "ok": true,
+     "drop": 0.075,
+     "seat": 1,
+     "from": 0.847,
+     "to": 0.772,
+     "atMs": 29.8
+    },
+    "why": "2 leaving seat(s), 0 failing; tightest seat 1: ink 0.95 → 0.895 → 0.847 → 0.772 → 0.707 → 0.667 → 0.593 → 0.534 → 0.481 → 0.439 → 0.381 → 0.333 → 0.288 → 0.247 → 0.221 → 0.19 → 0.162 → 0.138 → 0.121 → 0.101 → 0.081 over 150.1 ms / 20 frame(s) (fade bound ≥ 3 frames and ≥ 0 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.075 (seat 1 0.847 → 0.772 at +29.8 ms) (bound 0.5)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "stub": {
+    "ok": true,
+    "judged": 2,
+    "stubFrames": 0,
+    "glyphs": 2,
+    "first": null,
+    "why": "0 stub frame(s) of 2 judged (up to 2 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate)"
+   },
+   "summary": "D 244.98 px (110→354.98); step ×15.73; dead; window none ms (allow -, clock 214.2) — no window opened for the change (O-64 R-2); trajectory worst 225.74 px (92.15 % of D) from the rung's analytic spring (tol 10.8); terminal the motion is 1 step(s): 244.98 px; owners 0; seat step ×15.24 (122.48 px), seat overlap 22 frame(s); blank 1 blank of 1 moving frame(s), longest run 1 (bound 1); leaving 2 leaving seat(s), 0 failing; tightest seat 1: ink 0.95 → 0.895 → 0.847 → 0.772 → 0.707 → 0.667 → 0.593 → 0.534 → 0.481 → 0.439 → 0.381 → 0.333 → 0.288 → 0.247 → 0.221 → 0.19 → 0.162 → 0.138 → 0.121 → 0.101 → 0.081 over 150.1 ms / 20 frame(s) (fade bound ≥ 3 frames and ≥ 0 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.075 (seat 1 0.847 → 0.772 at +29.8 ms) (bound 0.5); splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 2 judged (up to 2 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate)  ⟶ FAILED: continuity, window, trajectory, terminal, seatStep, seatOverlap; faces UNMEASURED (sampler starved: 0 in-flight read(s)) · 0 px of face ink beyond the plate over 5 screenshot sample(s) (0 in flight) (bound 1)",
+   "load": 9.84,
+   "faces": {
+    "ok": null,
+    "max": 0,
+    "n": 5,
+    "inflight": 0,
+    "travel": 244.98,
+    "bound": 1,
+    "how": "screenshot",
+    "why": "UNMEASURED (sampler starved: 0 in-flight read(s)) · 0 px of face ink beyond the plate over 5 screenshot sample(s) (0 in flight) (bound 1)"
+   }
+  },
+  {
+   "engine": "chromium",
+   "cell": "swap-short",
+   "pass": false,
+   "failed": [
+    "continuity",
+    "window",
+    "trajectory",
+    "terminal",
+    "seatStep",
+    "seatOverlap"
+   ],
+   "D": 244.98,
+   "start": 354.98,
+   "target": 110,
+   "frames": 1037,
+   "travelMs": 0,
+   "continuity": {
+    "ok": false,
+    "ratio": 10,
+    "step": 244.98,
+    "bound": 24.5,
+    "atMs": 7.8,
+    "dt": 7.8
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": false,
+    "why": "no window opened for the change (O-64 R-2)",
+    "open": null,
+    "close": null,
+    "land": 7.799999999999272,
+    "motionStart": 7.799999999999272,
+    "clockMs": 214.2,
+    "frameMs": 16.7
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": false,
+    "dev": 221.09,
+    "tol": 10.8,
+    "frac": 0.9,
+    "atMs": 7.8,
+    "why": "worst 221.09 px (90.25 % of D) from the rung's analytic spring (tol 10.8)"
+   },
+   "terminal": {
+    "ok": false,
+    "why": "the motion is 1 step(s): 244.98 px"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "seats": {
+    "step": {
+     "ok": false,
+     "ratio": 9.8,
+     "step": 122.49,
+     "bound": 12.5,
+     "seat": 4,
+     "atMs": 7.8
+    },
+    "overlap": {
+     "ok": false,
+     "frames": 22,
+     "first": {
+      "seats": [
+       1,
+       3
+      ],
+      "mainPx": 40,
+      "opacities": [
+       0.1,
+       0.9
+      ],
+      "atMs": 16
+     }
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 2,
+    "movingFrames": 1,
+    "blankFrames": 1,
+    "longestRun": 1,
+    "atMs": 7.8,
+    "why": "1 blank of 1 moving frame(s), longest run 1 (bound 1)"
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 5,
+    "failing": 0,
+    "lengthMs": 0,
+    "rows": [
+     {
+      "seat": 3,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 141,
+      "spanFrames": 19,
+      "path": [
+       0.9,
+       0.842,
+       0.795,
+       0.732,
+       0.667,
+       0.602,
+       0.553,
+       0.496,
+       0.439,
+       0.385,
+       0.334,
+       0.302,
+       0.265,
+       0.225,
+       0.195,
+       0.169,
+       0.145,
+       0.124,
+       0.101,
+       0.083
+      ],
+      "vanish": {
+       "drop": 0.065,
+       "from": 0.667,
+       "to": 0.602,
+       "atMs": 53.1
+      }
+     },
+     {
+      "seat": 4,
+      "ok": true,
+      "tracks": false,
+      "deficit": 0.81,
+      "fades": true,
+      "spanMs": 133.3,
+      "spanFrames": 18,
+      "path": [
+       1,
+       0.592,
+       0.561,
+       0.525,
+       0.495,
+       0.456,
+       0.416,
+       0.375,
+       0.345,
+       0.309,
+       0.274,
+       0.24,
+       0.208,
+       0.188,
+       0.165,
+       0.14,
+       0.122,
+       0.105,
+       0.09
+      ],
+      "vanish": {
+       "drop": 0.218,
+       "from": 1,
+       "to": 0.592,
+       "atMs": 7.8
+      }
+     },
+     {
+      "seat": 5,
+      "ok": true,
+      "tracks": true,
+      "deficit": 0,
+      "fades": false,
+      "spanMs": 7.8,
+      "spanFrames": 1,
+      "path": [
+       1,
+       0
+      ],
+      "vanish": {
+       "drop": 0
+      }
+     },
+     {
+      "seat": 6,
+      "ok": true,
+      "tracks": true,
+      "deficit": 0,
+      "fades": false,
+      "spanMs": 7.8,
+      "spanFrames": 1,
+      "path": [
+       1,
+       0
+      ],
+      "vanish": {
+       "drop": 0
+      }
+     },
+     {
+      "seat": 7,
+      "ok": true,
+      "tracks": true,
+      "deficit": 0,
+      "fades": false,
+      "spanMs": 7.8,
+      "spanFrames": 1,
+      "path": [
+       1,
+       0
+      ],
+      "vanish": {
+       "drop": 0
+      }
+     }
+    ],
+    "vanish": {
+     "ok": true,
+     "drop": 0.218,
+     "seat": 4,
+     "from": 1,
+     "to": 0.592,
+     "atMs": 7.8
+    },
+    "why": "5 leaving seat(s), 0 failing; tightest seat 5: ink 1 → 0 over 7.8 ms / 1 frame(s) (fade bound ≥ 3 frames and ≥ 0 ms), coverage deficit 0 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.218 (seat 4 1 → 0.592 at +7.8 ms) (bound 0.5)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "stub": {
+    "ok": true,
+    "judged": 2,
+    "stubFrames": 0,
+    "glyphs": 20,
+    "first": null,
+    "why": "0 stub frame(s) of 2 judged (up to 20 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate)"
+   },
+   "summary": "D 244.98 px (354.98→110); step ×10; dead; window none ms (allow -, clock 214.2) — no window opened for the change (O-64 R-2); trajectory worst 221.09 px (90.25 % of D) from the rung's analytic spring (tol 10.8); terminal the motion is 1 step(s): 244.98 px; owners 0; seat step ×9.8 (122.49 px), seat overlap 22 frame(s); blank 1 blank of 1 moving frame(s), longest run 1 (bound 1); leaving 5 leaving seat(s), 0 failing; tightest seat 5: ink 1 → 0 over 7.8 ms / 1 frame(s) (fade bound ≥ 3 frames and ≥ 0 ms), coverage deficit 0 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.218 (seat 4 1 → 0.592 at +7.8 ms) (bound 0.5); splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 2 judged (up to 20 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate)  ⟶ FAILED: continuity, window, trajectory, terminal, seatStep, seatOverlap; faces UNMEASURED (sampler starved: 0 in-flight read(s)) · 0 px of face ink beyond the plate over 5 screenshot sample(s) (0 in flight) (bound 1)",
+   "load": 9.84,
+   "faces": {
+    "ok": null,
+    "max": 0,
+    "n": 5,
+    "inflight": 0,
+    "travel": 244.98,
+    "bound": 1,
+    "how": "screenshot",
+    "why": "UNMEASURED (sampler starved: 0 in-flight read(s)) · 0 px of face ink beyond the plate over 5 screenshot sample(s) (0 in flight) (bound 1)"
+   }
+  },
+  {
+   "engine": "chromium",
+   "cell": "anchor-end·warm-expand",
+   "pass": false,
+   "failed": [
+    "landing",
+    "window",
+    "anchor"
+   ],
+   "D": 387.66,
+   "start": 102,
+   "target": 489.66,
+   "frames": 180,
+   "travelMs": 243.1,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.67,
+    "step": 19.27,
+    "bound": 28.76,
+    "atMs": 84.5,
+    "dt": 5.8
+   },
+   "landing": {
+    "ok": false,
+    "why": "sub-pixel ring 0.34 px (O-64 R-3)",
+    "overshoot": 0.34,
+    "reversals": 1
+   },
+   "window": {
+    "ok": false,
+    "why": "window 544.7 ms > clock 214.2 + 2×16.7 + stall 10 = 257.6 ms (O-64 R-4, H-3d)",
+    "open": 84.5,
+    "close": 629.1999999999998,
+    "land": 327.60000000000036,
+    "motionStart": 84.5,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 544.7,
+    "allowMs": 257.6,
+    "q4": false,
+    "q4AllowMs": 313.4
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 6.43,
+    "tol": 16.51,
+    "frac": 0.02,
+    "atMs": 78.7,
+    "why": "worst 6.43 px (1.66 % of D) from the rung's analytic spring (tol 16.51)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.34,
+    "prev": 0.43,
+    "bound": 1.08,
+    "why": "last step 0.34 px after 0.43 px (bound 1.08)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "anchorDriftPx": 194,
+   "summary": "D 387.66 px (102→489.66); step ×0.67; sub-pixel ring 0.34 px (O-64 R-3), 1 reversal(s); window 544.7 ms (allow 257.6, clock 214.2) — window 544.7 ms > clock 214.2 + 2×16.7 + stall 10 = 257.6 ms (O-64 R-4, H-3d); trajectory worst 6.43 px (1.66 % of D) from the rung's analytic spring (tol 16.51); terminal last step 0.34 px after 0.43 px (bound 1.08); owners 0; Q-4 lenient window fails (allow 313.4 ms); anchored edge drift 194 px (bound 0.5)  ⟶ FAILED: landing, window, anchor",
+   "load": 9.77
+  },
+  {
+   "engine": "chromium",
+   "cell": "anchor-end·warm-collapse",
+   "pass": false,
+   "failed": [
+    "window",
+    "anchor"
+   ],
+   "D": 387.66,
+   "start": 489.66,
+   "target": 102,
+   "frames": 651,
+   "travelMs": 245.3,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.68,
+    "step": 18.93,
+    "bound": 27.76,
+    "atMs": 3613.2,
+    "dt": 5.6
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": false,
+    "why": "window 548.8 ms > clock 214.2 + 2×16.7 + stall 8.9 = 256.5 ms (O-64 R-4, H-3d)",
+    "open": 3613.2000000000007,
+    "close": 4162,
+    "land": 3858.5,
+    "motionStart": 3613.2000000000007,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 548.8,
+    "allowMs": 256.5,
+    "q4": false,
+    "q4AllowMs": 312.3
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 6.43,
+    "tol": 16.51,
+    "frac": 0.02,
+    "atMs": 3607.6,
+    "why": "worst 6.43 px (1.66 % of D) from the rung's analytic spring (tol 16.51)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.27,
+    "prev": 0.73,
+    "bound": 1.42,
+    "why": "last step 0.27 px after 0.73 px (bound 1.42)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "anchorDriftPx": 193.83,
+   "summary": "D 387.66 px (489.66→102); step ×0.68; dead; window 548.8 ms (allow 256.5, clock 214.2) — window 548.8 ms > clock 214.2 + 2×16.7 + stall 8.9 = 256.5 ms (O-64 R-4, H-3d); trajectory worst 6.43 px (1.66 % of D) from the rung's analytic spring (tol 16.51); terminal last step 0.27 px after 0.73 px (bound 1.42); owners 0; Q-4 lenient window fails (allow 312.3 ms); anchored edge drift 193.83 px (bound 0.5)  ⟶ FAILED: window, anchor",
+   "load": 9.77
+  },
+  {
+   "engine": "chromium",
+   "cell": "hidden-shown",
+   "pass": true,
+   "frames": 110,
+   "minLen": 214.13,
+   "cross": 56,
+   "maxOffsetPx": 0,
+   "summary": "110 painted frame(s) after show(): shortest main extent 214.13 px (cross 56), farthest edge from its rest 0 px (bound 0.5: it appears at its rest)",
+   "load": 9.55
+  },
+  {
+   "engine": "chromium",
+   "cell": "viewport-resize",
+   "pass": true,
+   "failed": [],
+   "lengthSpanPx": 6.09,
+   "restDeltaPx": -6.09,
+   "windowFrames": 0,
+   "restMs": 405,
+   "summary": "1440 → 1200 px viewport: 0 morph-window frame(s) (bound 0); the new rest reached (405 ms); main extent span 6.09 px, rest delta -6.09 px (recorded)",
+   "load": 9.55
+  },
+  {
+   "engine": "chromium",
+   "cell": "ticking",
+   "pass": false,
+   "ticks": 8,
+   "spanPx": 11,
+   "continuity": {
+    "ratio": 7.6,
+    "step": 9.58,
+    "bound": 1.26
+   },
+   "ownerFrames": 0,
+   "windowFrames": 0,
+   "summary": "8 ticks over a 11 px content span; worst step 9.58 px vs bound 1.26 (×7.6); two-owner frames 0; window open 0/283 frames (recorded)",
+   "load": 9.34
+  },
+  {
+   "engine": "chromium",
+   "cell": "seat-transition",
+   "pass": false,
+   "failed": [
+    "window"
+   ],
+   "D": 80,
+   "start": 200,
+   "target": 280,
+   "frames": 136,
+   "travelMs": 262.6,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.56,
+    "step": 3.84,
+    "bound": 6.83,
+    "atMs": 71.9,
+    "dt": 6.3
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": false,
+    "why": "no window opened for the change (O-64 R-2)",
+    "open": null,
+    "close": null,
+    "land": 275.5999999999999,
+    "motionStart": 13,
+    "clockMs": 214.2,
+    "frameMs": 16.7
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 4.18,
+    "tol": 4.2,
+    "frac": 0.05,
+    "atMs": 146,
+    "why": "worst 4.18 px (5.22 % of D) from the rung's analytic spring (tol 4.2)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.09,
+    "prev": 0.12,
+    "bound": 0.74,
+    "why": "last step 0.09 px after 0.12 px (bound 0.74)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "summary": "D 80 px (200→280); step ×0.56; dead; window none ms (allow -, clock 214.2) — no window opened for the change (O-64 R-2); trajectory worst 4.18 px (5.22 % of D) from the rung's analytic spring (tol 4.2); terminal last step 0.09 px after 0.12 px (bound 0.74); owners 0  ⟶ FAILED: window",
+   "load": 9.34
+  },
+  {
+   "engine": "chromium",
+   "cell": "lattice",
+   "pass": true,
+   "failed": [],
+   "D": 0,
+   "start": 585.66,
+   "target": 585.66,
+   "frames": 190,
+   "travelMs": null,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.03,
+    "step": 0.02,
+    "bound": 0.5,
+    "atMs": 219.2,
+    "dt": 7.7
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 1
+   },
+   "window": {
+    "ok": true,
+    "why": "",
+    "open": null,
+    "close": null,
+    "land": 0,
+    "motionStart": null,
+    "clockMs": 214.2,
+    "frameMs": 16.7
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "why": "no motion"
+   },
+   "terminal": {
+    "ok": true,
+    "why": "no motion"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "seats": {
+    "step": {
+     "ok": true,
+     "ratio": 0.6,
+     "step": 3.36,
+     "bound": 5.56,
+     "seat": 3,
+     "atMs": 65.3
+    },
+    "overlap": {
+     "ok": true,
+     "frames": 0,
+     "first": null
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 7,
+    "movingFrames": 0,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 0 moving frame(s), longest run 0 (bound 1)"
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 0,
+    "failing": 0,
+    "lengthMs": 214.2,
+    "rows": [],
+    "vanish": {
+     "ok": true,
+     "drop": 0
+    },
+    "why": "no seat leaves"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "stub": {
+    "ok": true,
+    "judged": 30,
+    "stubFrames": 0,
+    "glyphs": 22,
+    "first": null,
+    "why": "0 stub frame(s) of 30 judged (up to 22 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate)"
+   },
+   "cellWidths": [
+    {
+     "D": 96,
+     "distinct": 29,
+     "ratio": 0.63,
+     "step": 6.7,
+     "bound": 10.63,
+     "atMs": 65.3
+    },
+    {
+     "D": 96,
+     "distinct": 29,
+     "ratio": 0.63,
+     "step": 6.7,
+     "bound": 10.63,
+     "atMs": 65.3
+    }
+   ],
+   "pageErrors": [],
+   "summary": "D 0 px (585.66→585.66); step ×0.03; dead, 1 reversal(s); window none ms (allow -, clock 214.2); trajectory no motion; terminal no motion; owners 0; seat step ×0.6 (3.36 px), seat overlap 0 frame(s); blank 0 blank of 0 moving frame(s), longest run 0 (bound 1); leaving no seat leaves; splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 30 judged (up to 22 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate); the open-seat exchange: One 96 px over 29 distinct widths, worst step 6.7 px vs bound 10.63 (×0.63); Two 96 px over 29, worst 6.7 px vs 10.63 (×0.63); page errors 0",
+   "load": 8.83
+  },
+  {
+   "engine": "chromium",
+   "cell": "infanim",
+   "pass": true,
+   "failed": [],
+   "frames": 268,
+   "windowFrames": 0,
+   "allowFrames": 15,
+   "pageErrors": [],
+   "extentSpanPx": 23.98,
+   "distinctExtents": 144,
+   "summary": "a seat with an infinite width animation over 2 s: page errors 0 (bound 0); window open 0/268 frames (bound 15: one clock + 2 frames); extent span 23.98 px over 144 distinct extents (recorded)",
+   "load": 8.37
+  },
+  {
+   "engine": "chromium",
+   "cell": "stretch·lead-add",
+   "pass": false,
+   "failed": [
+    "seatStep"
+   ],
+   "D": 0,
+   "start": 650,
+   "target": 650,
+   "frames": 191,
+   "travelMs": null,
+   "continuity": {
+    "ok": true,
+    "ratio": 0
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": true,
+    "why": "",
+    "open": null,
+    "close": null,
+    "land": 0,
+    "motionStart": null,
+    "clockMs": 214.2,
+    "frameMs": 16.7
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "why": "no motion"
+   },
+   "terminal": {
+    "ok": true,
+    "why": "no motion"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "seats": {
+    "step": {
+     "ok": false,
+     "ratio": 9.52,
+     "step": 70.3,
+     "bound": 7.39,
+     "seat": 2,
+     "atMs": 7.8
+    },
+    "overlap": {
+     "ok": true,
+     "frames": 0,
+     "first": null
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 8,
+    "movingFrames": 0,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 0 moving frame(s), longest run 0 (bound 1)"
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 0,
+    "failing": 0,
+    "lengthMs": 214.2,
+    "rows": [],
+    "vanish": {
+     "ok": true,
+     "drop": 0
+    },
+    "why": "no seat leaves"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "stub": {
+    "ok": true,
+    "judged": 3,
+    "stubFrames": 0,
+    "glyphs": 26,
+    "first": null,
+    "why": "0 stub frame(s) of 3 judged (up to 26 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate)"
+   },
+   "rootWidth": [
+    650,
+    650
+   ],
+   "summary": "D 0 px (650→650); step ×0; dead; window none ms (allow -, clock 214.2); trajectory no motion; terminal no motion; owners 0; seat step ×9.52 (70.3 px), seat overlap 0 frame(s); blank 0 blank of 0 moving frame(s), longest run 0 (bound 1); leaving no seat leaves; splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 3 judged (up to 26 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate); root held 160 px wide of its natural width: 650 → 650 px across the insertion  ⟶ FAILED: seatStep",
+   "load": 8.66
+  },
+  {
+   "engine": "chromium",
+   "cell": "neighbour·warm-collapse",
+   "pass": true,
+   "failed": [],
+   "neighbour": {
+    "D": 0,
+    "distinct": 1,
+    "ratio": 0,
+    "step": 0,
+    "bound": 0.5
+   },
+   "extentD": 387.66,
+   "overlapPx": 0,
+   "minGapPx": 421.17,
+   "summary": "the in-flow neighbour travels 0 px over 1 distinct positions (the extent 387.66 px); worst one-frame step 0 px vs bound 0.5 (×0) at - ms; the plate overlaps it by 0 px at worst (bound 0.5), smallest gap 421.17 px (recorded)",
+   "load": 7.86
+  },
+  {
+   "engine": "chromium",
+   "cell": "neighbour·warm-expand",
+   "pass": true,
+   "failed": [],
+   "neighbour": {
+    "D": 0,
+    "distinct": 1,
+    "ratio": 0,
+    "step": 0,
+    "bound": 0.5
+   },
+   "extentD": 387.66,
+   "overlapPx": 0,
+   "minGapPx": 421,
+   "summary": "the in-flow neighbour travels 0 px over 1 distinct positions (the extent 387.66 px); worst one-frame step 0 px vs bound 0.5 (×0) at - ms; the plate overlaps it by 0 px at worst (bound 0.5), smallest gap 421 px (recorded)",
+   "load": 7.86
+  },
+  {
+   "engine": "chromium",
+   "cell": "vagree·morph·warm-collapse",
+   "pass": true,
+   "failed": [],
+   "samples": 74,
+   "inflight": 31,
+   "worstOutInflightPx": 0.24,
+   "worstOutRestPx": 0,
+   "rests": [
+    102,
+    489.66
+   ],
+   "rows": [
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 32,
+     "pre": 490,
+     "post": 430.86,
+     "painted": 451,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 60,
+     "pre": 410.3,
+     "post": 317.63,
+     "painted": 334.91,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 81,
+     "pre": 317.63,
+     "post": 275.15,
+     "painted": 274.91,
+     "outPx": 0.24,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 102,
+     "pre": 252.29,
+     "post": 220.39,
+     "painted": 220.39,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 126,
+     "pre": 205.86,
+     "post": 168.61,
+     "painted": 176.52,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 144,
+     "pre": 168.61,
+     "post": 150.74,
+     "painted": 150.74,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 163,
+     "pre": 150.74,
+     "post": 129.71,
+     "painted": 134.01,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 184,
+     "pre": 129.71,
+     "post": 120.23,
+     "painted": 120.23,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 203,
+     "pre": 116.38,
+     "post": 111.4,
+     "painted": 111.4,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 227,
+     "pre": 111.4,
+     "post": 105.62,
+     "painted": 105.62,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 249,
+     "pre": 104.73,
+     "post": 102.91,
+     "painted": 102.91,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 262,
+     "pre": 102.91,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 278,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 294,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 316,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 337,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 351,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 366,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 382,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 395,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 410,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 428,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 449,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 462,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 479,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 499,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 524,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 22,
+     "pre": 490,
+     "post": 453.81,
+     "painted": 453.82,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 43,
+     "pre": 430.57,
+     "post": 381.74,
+     "painted": 381.86,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 64,
+     "pre": 363.23,
+     "post": 312.14,
+     "painted": 311.95,
+     "outPx": 0.2,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 79,
+     "pre": 312.14,
+     "post": 272.7,
+     "painted": 272.75,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 101,
+     "pre": 272.7,
+     "post": 217.42,
+     "painted": 217.42,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 118,
+     "pre": 217.42,
+     "post": 185.78,
+     "painted": 185.78,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 133,
+     "pre": 185.78,
+     "post": 162.78,
+     "painted": 162.78,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 150,
+     "pre": 162.78,
+     "post": 144.85,
+     "painted": 144.85,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 174,
+     "pre": 137.76,
+     "post": 122.62,
+     "painted": 126.13,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 195,
+     "pre": 122.62,
+     "post": 115.37,
+     "painted": 115.36,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 220,
+     "pre": 111.92,
+     "post": 106.5,
+     "painted": 108.06,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 244,
+     "pre": 106.5,
+     "post": 103.3,
+     "painted": 103.93,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 279,
+     "pre": 103.3,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 299,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 320,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 343,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 366,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 385,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 411,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 432,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 453,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 476,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 497,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 511,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 22,
+     "pre": 490,
+     "post": 453.81,
+     "painted": 453.82,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 45,
+     "pre": 453.81,
+     "post": 384.01,
+     "painted": 383.9,
+     "outPx": 0.11,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 66,
+     "pre": 360,
+     "post": 314.88,
+     "painted": 314.89,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 89,
+     "pre": 292.89,
+     "post": 250.04,
+     "painted": 250,
+     "outPx": 0.04,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 111,
+     "pre": 230.08,
+     "post": 202.39,
+     "painted": 202.38,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 133,
+     "pre": 189.69,
+     "post": 159.2,
+     "painted": 166.94,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 156,
+     "pre": 159.2,
+     "post": 140.44,
+     "painted": 140.45,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 177,
+     "pre": 134.66,
+     "post": 124.14,
+     "painted": 124.14,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 198,
+     "pre": 119.87,
+     "post": 114.06,
+     "painted": 114.06,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 222,
+     "pre": 111.37,
+     "post": 107.05,
+     "painted": 107.05,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 243,
+     "pre": 107.05,
+     "post": 103.64,
+     "painted": 103.64,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 263,
+     "pre": 103.64,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 279,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 302,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 325,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 346,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 368,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 392,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 416,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 436,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 459,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 481,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 501,
+     "pre": 102,
+     "post": 102,
+     "painted": 102,
+     "outPx": 0,
+     "inflight": false
+    }
+   ],
+   "summary": "74 lossless shot(s), 31 in flight (both bracketing reads strictly between the rests 102 / 489.66 px): painted main length outside [pre, post] by 0.24 px in flight (bound 1.5: 1 + 1 device px), 0 px otherwise (recorded)",
+   "load": 14.44
+  },
+  {
+   "engine": "chromium",
+   "cell": "vagree·morph·warm-expand",
+   "pass": true,
+   "failed": [],
+   "samples": 78,
+   "inflight": 32,
+   "worstOutInflightPx": 0.31,
+   "worstOutRestPx": 0.22,
+   "rests": [
+    102,
+    489.66
+   ],
+   "rows": [
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 29,
+     "pre": 102,
+     "post": 161.73,
+     "painted": 161.73,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 47,
+     "pre": 186.76,
+     "post": 229.74,
+     "painted": 229.74,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 72,
+     "pre": 229.74,
+     "post": 319.3,
+     "painted": 303.92,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 95,
+     "pre": 319.3,
+     "post": 358.73,
+     "painted": 358.77,
+     "outPx": 0.05,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 114,
+     "pre": 376.67,
+     "post": 401.27,
+     "painted": 400.95,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 138,
+     "pre": 401.27,
+     "post": 436.45,
+     "painted": 435.97,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 159,
+     "pre": 443.11,
+     "post": 457.26,
+     "painted": 456.95,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 182,
+     "pre": 457.26,
+     "post": 474.69,
+     "painted": 471.89,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 205,
+     "pre": 474.69,
+     "post": 482.74,
+     "painted": 480.91,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 226,
+     "pre": 482.74,
+     "post": 486.33,
+     "painted": 486,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 246,
+     "pre": 486.33,
+     "post": 489.06,
+     "painted": 488.89,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 263,
+     "pre": 489.06,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 276,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 291,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 305,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 321,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 339,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 369,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 388,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 404,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 425,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 439,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 454,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 477,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 499,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 520,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 19,
+     "pre": 102,
+     "post": 132.64,
+     "painted": 132.64,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 44,
+     "pre": 151.25,
+     "post": 222.93,
+     "painted": 204.43,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 67,
+     "pre": 222.93,
+     "post": 296.2,
+     "painted": 272.18,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 85,
+     "pre": 296.2,
+     "post": 334.37,
+     "painted": 334,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 108,
+     "pre": 350.03,
+     "post": 385.55,
+     "painted": 385.86,
+     "outPx": 0.31,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 129,
+     "pre": 398.46,
+     "post": 422.83,
+     "painted": 422.83,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 146,
+     "pre": 422.83,
+     "post": 443,
+     "painted": 442.87,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 167,
+     "pre": 448.82,
+     "post": 461.78,
+     "painted": 461.82,
+     "outPx": 0.03,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 188,
+     "pre": 466.38,
+     "post": 474.27,
+     "painted": 474,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 202,
+     "pre": 474.27,
+     "post": 480.08,
+     "painted": 479.93,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 217,
+     "pre": 480.08,
+     "post": 484.27,
+     "painted": 483.98,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 241,
+     "pre": 484.27,
+     "post": 488.22,
+     "painted": 487.96,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 263,
+     "pre": 488.87,
+     "post": 490,
+     "painted": 490,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 283,
+     "pre": 490,
+     "post": 490,
+     "painted": 490,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 310,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 331,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 351,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 374,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 396,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 417,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 433,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 447,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 463,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 477,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 499,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 513,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 24,
+     "pre": 102,
+     "post": 165.93,
+     "painted": 139.76,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 46,
+     "pre": 165.93,
+     "post": 218.38,
+     "painted": 218.38,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 63,
+     "pre": 218.38,
+     "post": 287.66,
+     "painted": 271.76,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 83,
+     "pre": 287.66,
+     "post": 333.09,
+     "painted": 332.95,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 104,
+     "pre": 348.83,
+     "post": 381.18,
+     "painted": 380.95,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 128,
+     "pre": 381.18,
+     "post": 422.55,
+     "painted": 422.76,
+     "outPx": 0.21,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 146,
+     "pre": 422.55,
+     "post": 443.22,
+     "painted": 442.91,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 162,
+     "pre": 443.22,
+     "post": 458.62,
+     "painted": 458.77,
+     "outPx": 0.15,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 176,
+     "pre": 458.62,
+     "post": 468.28,
+     "painted": 467.91,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 190,
+     "pre": 468.28,
+     "post": 475.53,
+     "painted": 475.76,
+     "outPx": 0.23,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 212,
+     "pre": 475.53,
+     "post": 483.08,
+     "painted": 482.9,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 229,
+     "pre": 483.08,
+     "post": 486.53,
+     "painted": 486.82,
+     "outPx": 0.29,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 254,
+     "pre": 487.58,
+     "post": 489.51,
+     "painted": 489.72,
+     "outPx": 0.22,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 275,
+     "pre": 489.51,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 295,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 312,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 329,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 349,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 363,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 386,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 409,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 429,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 445,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 461,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 484,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 505,
+     "pre": 490,
+     "post": 490,
+     "painted": 489.99,
+     "outPx": 0.01,
+     "inflight": false
+    }
+   ],
+   "summary": "78 lossless shot(s), 32 in flight (both bracketing reads strictly between the rests 102 / 489.66 px): painted main length outside [pre, post] by 0.31 px in flight (bound 1.5: 1 + 1 device px), 0.22 px otherwise (recorded)",
+   "load": 13.69
+  },
+  {
+   "engine": "chromium",
+   "cell": "vagree·vmorph·warm-collapse",
+   "pass": true,
+   "failed": [],
+   "samples": 89,
+   "inflight": 37,
+   "worstOutInflightPx": 0.17,
+   "worstOutRestPx": 0.21,
+   "rests": [
+    110,
+    273
+   ],
+   "rows": [
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 23,
+     "pre": 273,
+     "post": 250.87,
+     "painted": 255.87,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 41,
+     "pre": 250.87,
+     "post": 229.29,
+     "painted": 229.18,
+     "outPx": 0.11,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 57,
+     "pre": 229.29,
+     "post": 207.24,
+     "painted": 207.15,
+     "outPx": 0.09,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 78,
+     "pre": 199.81,
+     "post": 181.03,
+     "painted": 180.91,
+     "outPx": 0.12,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 92,
+     "pre": 181.03,
+     "post": 166.51,
+     "painted": 166.37,
+     "outPx": 0.14,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 107,
+     "pre": 166.51,
+     "post": 152.66,
+     "painted": 152.52,
+     "outPx": 0.14,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 122,
+     "pre": 152.66,
+     "post": 141.24,
+     "painted": 141.15,
+     "outPx": 0.09,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 136,
+     "pre": 141.24,
+     "post": 133.72,
+     "painted": 133.71,
+     "outPx": 0.01,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 152,
+     "pre": 133.72,
+     "post": 126.15,
+     "painted": 126.14,
+     "outPx": 0.01,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 164,
+     "pre": 126.15,
+     "post": 121.94,
+     "painted": 121.94,
+     "outPx": 0.01,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 183,
+     "pre": 121.94,
+     "post": 117.55,
+     "painted": 117.54,
+     "outPx": 0.01,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 205,
+     "pre": 116.21,
+     "post": 113.82,
+     "painted": 113.81,
+     "outPx": 0.01,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 225,
+     "pre": 113.09,
+     "post": 111.67,
+     "painted": 111.66,
+     "outPx": 0.01,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 240,
+     "pre": 111.67,
+     "post": 110.71,
+     "painted": 110.7,
+     "outPx": 0.01,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 256,
+     "pre": 110.71,
+     "post": 110.11,
+     "painted": 110.1,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 270,
+     "pre": 110.11,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 293,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 315,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 329,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 344,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 358,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 374,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 390,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 411,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 425,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 441,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 457,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 477,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 491,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 507,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 18,
+     "pre": 273,
+     "post": 255.11,
+     "painted": 254.91,
+     "outPx": 0.21,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 35,
+     "pre": 255.11,
+     "post": 234.98,
+     "painted": 234.89,
+     "outPx": 0.09,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 55,
+     "pre": 227.25,
+     "post": 206.32,
+     "painted": 206.19,
+     "outPx": 0.12,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 70,
+     "pre": 206.32,
+     "post": 188.62,
+     "painted": 188.46,
+     "outPx": 0.17,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 84,
+     "pre": 188.62,
+     "post": 171.57,
+     "painted": 171.43,
+     "outPx": 0.14,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 102,
+     "pre": 171.57,
+     "post": 151.77,
+     "painted": 155.71,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 121,
+     "pre": 151.77,
+     "post": 140.54,
+     "painted": 140.39,
+     "outPx": 0.15,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 134,
+     "pre": 140.54,
+     "post": 133.15,
+     "painted": 133.04,
+     "outPx": 0.11,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 150,
+     "pre": 133.15,
+     "post": 126,
+     "painted": 125.9,
+     "outPx": 0.1,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 167,
+     "pre": 126,
+     "post": 120.55,
+     "painted": 120.41,
+     "outPx": 0.14,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 184,
+     "pre": 120.55,
+     "post": 116.86,
+     "painted": 116.75,
+     "outPx": 0.11,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 206,
+     "pre": 116.86,
+     "post": 113.25,
+     "painted": 113.24,
+     "outPx": 0.01,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 232,
+     "pre": 113.25,
+     "post": 110.84,
+     "painted": 111.13,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 250,
+     "pre": 110.84,
+     "post": 110.21,
+     "painted": 110.2,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 267,
+     "pre": 110.21,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 285,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 300,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 321,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 335,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 350,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 367,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 384,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 400,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 420,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 437,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 460,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 473,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 488,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 502,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 18,
+     "pre": 273,
+     "post": 259.71,
+     "painted": 259.84,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 41,
+     "pre": 259.71,
+     "post": 231.06,
+     "painted": 231.04,
+     "outPx": 0.02,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 55,
+     "pre": 231.06,
+     "post": 212.04,
+     "painted": 212.02,
+     "outPx": 0.02,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 72,
+     "pre": 212.04,
+     "post": 191.54,
+     "painted": 191.52,
+     "outPx": 0.01,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 92,
+     "pre": 183.43,
+     "post": 167.6,
+     "painted": 167.44,
+     "outPx": 0.16,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 108,
+     "pre": 167.6,
+     "post": 153.06,
+     "painted": 153.01,
+     "outPx": 0.05,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 129,
+     "pre": 153.06,
+     "post": 138.52,
+     "painted": 138.39,
+     "outPx": 0.13,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 145,
+     "pre": 138.52,
+     "post": 129.92,
+     "painted": 129.92,
+     "outPx": 0.01,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 165,
+     "pre": 127.63,
+     "post": 122.1,
+     "painted": 122.09,
+     "outPx": 0.01,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 183,
+     "pre": 122.1,
+     "post": 117.7,
+     "painted": 117.7,
+     "outPx": 0.01,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 199,
+     "pre": 117.7,
+     "post": 114.66,
+     "painted": 114.65,
+     "outPx": 0.01,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 215,
+     "pre": 114.66,
+     "post": 112.64,
+     "painted": 112.63,
+     "outPx": 0.01,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 236,
+     "pre": 112.64,
+     "post": 110.96,
+     "painted": 110.95,
+     "outPx": 0.01,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 251,
+     "pre": 110.96,
+     "post": 110.32,
+     "painted": 110.31,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 266,
+     "pre": 110.32,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 280,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 294,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 311,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 332,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 348,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 362,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 377,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 391,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 408,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 421,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 440,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 458,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 474,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 488,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 504,
+     "pre": 110,
+     "post": 110,
+     "painted": 109.98,
+     "outPx": 0.02,
+     "inflight": false
+    }
+   ],
+   "summary": "89 lossless shot(s), 37 in flight (both bracketing reads strictly between the rests 110 / 273 px): painted main length outside [pre, post] by 0.17 px in flight (bound 1.5: 1 + 1 device px), 0.21 px otherwise (recorded)",
+   "load": 12.92
+  },
+  {
+   "engine": "chromium",
+   "cell": "vagree·vmorph·warm-expand",
+   "pass": true,
+   "failed": [],
+   "samples": 88,
+   "inflight": 38,
+   "worstOutInflightPx": 0.18,
+   "worstOutRestPx": 0.1,
+   "rests": [
+    110,
+    273
+   ],
+   "rows": [
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 26,
+     "pre": 110,
+     "post": 132.99,
+     "painted": 126.41,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 43,
+     "pre": 132.99,
+     "post": 153.3,
+     "painted": 153.17,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 64,
+     "pre": 153.3,
+     "post": 182.03,
+     "painted": 181.91,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 79,
+     "pre": 182.03,
+     "post": 200.83,
+     "painted": 200.7,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 93,
+     "pre": 200.83,
+     "post": 216.09,
+     "painted": 215.96,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 110,
+     "pre": 216.09,
+     "post": 229.61,
+     "painted": 229.46,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 122,
+     "pre": 229.61,
+     "post": 239.66,
+     "painted": 239.48,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 137,
+     "pre": 239.66,
+     "post": 248.49,
+     "painted": 248.32,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 155,
+     "pre": 248.49,
+     "post": 256.14,
+     "painted": 255.99,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 177,
+     "pre": 258.69,
+     "post": 263.24,
+     "painted": 262.98,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 197,
+     "pre": 263.24,
+     "post": 267.49,
+     "painted": 266.97,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 220,
+     "pre": 267.49,
+     "post": 270.72,
+     "painted": 270.77,
+     "outPx": 0.05,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 246,
+     "pre": 270.72,
+     "post": 272.35,
+     "painted": 271.95,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 259,
+     "pre": 272.35,
+     "post": 272.91,
+     "painted": 272.89,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 275,
+     "pre": 272.91,
+     "post": 273,
+     "painted": 272.9,
+     "outPx": 0.01,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 287,
+     "pre": 273,
+     "post": 273,
+     "painted": 272.9,
+     "outPx": 0.1,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 304,
+     "pre": 273,
+     "post": 273,
+     "painted": 272.9,
+     "outPx": 0.1,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 320,
+     "pre": 273,
+     "post": 273,
+     "painted": 272.9,
+     "outPx": 0.1,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 333,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 350,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 370,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 387,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 407,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 421,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 436,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 453,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 473,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 487,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 0,
+     "dsf": 2,
+     "ms": 503,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 20,
+     "pre": 110,
+     "post": 126.75,
+     "painted": 126.74,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 33,
+     "pre": 126.75,
+     "post": 143.88,
+     "painted": 143.87,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 49,
+     "pre": 143.88,
+     "post": 165.02,
+     "painted": 165.01,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 61,
+     "pre": 165.02,
+     "post": 182.41,
+     "painted": 182.4,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 76,
+     "pre": 182.41,
+     "post": 200.72,
+     "painted": 200.7,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 102,
+     "pre": 200.72,
+     "post": 223.89,
+     "painted": 218.6,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 123,
+     "pre": 230.43,
+     "post": 241.24,
+     "painted": 241.12,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 140,
+     "pre": 241.24,
+     "post": 251.15,
+     "painted": 251.01,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 155,
+     "pre": 251.15,
+     "post": 257.98,
+     "painted": 257.86,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 168,
+     "pre": 257.98,
+     "post": 262.2,
+     "painted": 262.09,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 186,
+     "pre": 262.2,
+     "post": 266.22,
+     "painted": 266.1,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 200,
+     "pre": 266.22,
+     "post": 268.61,
+     "painted": 268.48,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 216,
+     "pre": 268.61,
+     "post": 270.48,
+     "painted": 270.35,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 237,
+     "pre": 270.48,
+     "post": 272.08,
+     "painted": 271.95,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 260,
+     "pre": 272.08,
+     "post": 273,
+     "painted": 272.89,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 279,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 294,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 310,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 326,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 343,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 359,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 381,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 394,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 410,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 427,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 448,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 464,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 485,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 499,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 1,
+     "dsf": 2,
+     "ms": 513,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 21,
+     "pre": 110,
+     "post": 126.31,
+     "painted": 126.29,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 38,
+     "pre": 126.31,
+     "post": 147.35,
+     "painted": 147.34,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 59,
+     "pre": 147.35,
+     "post": 176.68,
+     "painted": 166.36,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 74,
+     "pre": 176.68,
+     "post": 195.21,
+     "painted": 195.06,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 88,
+     "pre": 195.21,
+     "post": 211.23,
+     "painted": 211.06,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 104,
+     "pre": 211.23,
+     "post": 225.56,
+     "painted": 225.39,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 125,
+     "pre": 225.56,
+     "post": 242.58,
+     "painted": 236.7,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 142,
+     "pre": 242.58,
+     "post": 251.34,
+     "painted": 251.21,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 163,
+     "pre": 253.92,
+     "post": 259.85,
+     "painted": 259.88,
+     "outPx": 0.03,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 179,
+     "pre": 259.85,
+     "post": 264.41,
+     "painted": 263.99,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 201,
+     "pre": 264.41,
+     "post": 268.44,
+     "painted": 268,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 213,
+     "pre": 268.44,
+     "post": 270.19,
+     "painted": 269.95,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 229,
+     "pre": 270.19,
+     "post": 271.53,
+     "painted": 271.71,
+     "outPx": 0.18,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 245,
+     "pre": 271.53,
+     "post": 272.45,
+     "painted": 272,
+     "outPx": 0,
+     "inflight": true
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 268,
+     "pre": 272.65,
+     "post": 273,
+     "painted": 272.89,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 280,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 296,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 312,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 333,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 346,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 362,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 379,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 401,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 421,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 437,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 455,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 476,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 497,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    },
+    {
+     "rep": 2,
+     "dsf": 2,
+     "ms": 513,
+     "pre": 273,
+     "post": 273,
+     "painted": 273,
+     "outPx": 0,
+     "inflight": false
+    }
+   ],
+   "summary": "88 lossless shot(s), 38 in flight (both bracketing reads strictly between the rests 110 / 273 px): painted main length outside [pre, post] by 0.18 px in flight (bound 1.5: 1 + 1 device px), 0.1 px otherwise (recorded)",
+   "load": 12.55
+  },
+  {
+   "engine": "chromium",
+   "cell": "compaction",
+   "pass": false,
+   "failed": [
+    "leaving",
+    "blank"
+   ],
+   "summary": "the dock has no compact rung (compact() is false): nothing compacts, so nothing leaves on it  ⟶ FAILED: leaving, blank",
+   "load": 12.55
+  },
+  {
+   "engine": "chromium",
+   "cell": "retarget·40",
+   "pass": false,
+   "failed": [
+    "seatOverlap",
+    "vanish"
+   ],
+   "frames": 83,
+   "retargetFrame": 7,
+   "blank": {
+    "ok": true,
+    "entering": 3,
+    "movingFrames": 1,
+    "blankFrames": 1,
+    "longestRun": 1,
+    "atMs": 10,
+    "why": "1 blank of 1 moving frame(s), longest run 1 (bound 1)"
+   },
+   "overlap": {
+    "ok": false,
+    "frames": 19,
+    "first": {
+     "seats": [
+      1,
+      6
+     ],
+     "mainPx": 40,
+     "opacities": [
+      0.903,
+      0.097
+     ],
+     "atMs": 15.5
+    }
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 2,
+    "failing": 0,
+    "lengthMs": 57.2,
+    "rows": [
+     {
+      "seat": 1,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 41.7,
+      "spanFrames": 5,
+      "path": [
+       0.903,
+       0.843,
+       0.777,
+       0.718,
+       0.65,
+       0
+      ],
+      "vanish": {
+       "drop": 0.65,
+       "from": 0.65,
+       "to": 0,
+       "atMs": 57.2
+      }
+     },
+     {
+      "seat": 2,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 41.7,
+      "spanFrames": 5,
+      "path": [
+       0.903,
+       0.843,
+       0.777,
+       0.718,
+       0.65,
+       0
+      ],
+      "vanish": {
+       "drop": 0.65,
+       "from": 0.65,
+       "to": 0,
+       "atMs": 57.2
+      }
+     }
+    ],
+    "vanish": {
+     "ok": false,
+     "drop": 0.65,
+     "seat": 1,
+     "from": 0.65,
+     "to": 0,
+     "atMs": 57.2
+    },
+    "why": "2 leaving seat(s), 0 failing; tightest seat 1: ink 0.903 → 0.843 → 0.777 → 0.718 → 0.65 → 0 over 41.7 ms / 5 frame(s) (fade bound ≥ 3 frames and ≥ 14.3 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.65 (seat 1 0.65 → 0 at +57.2 ms) (bound 0.5)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "vanish": {
+    "drop": 0.65,
+    "seat": 1,
+    "from": 0.65,
+    "to": 0,
+    "atMs": 9
+   },
+   "stub": {
+    "ok": true,
+    "judged": 8,
+    "stubFrames": 0,
+    "glyphs": 2,
+    "first": null,
+    "why": "0 stub frame(s) of 8 judged (up to 2 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate)"
+   },
+   "pageErrors": [],
+   "summary": "swap to long retargeted to mid 40 ms later (scheduled in the page; frame 7): blank 1 blank of 1 moving frame(s), longest run 1 (bound 1); seat overlap 19 frame(s); leaving 2 leaving seat(s), 0 failing; tightest seat 1: ink 0.903 → 0.843 → 0.777 → 0.718 → 0.65 → 0 over 41.7 ms / 5 frame(s) (fade bound ≥ 3 frames and ≥ 14.3 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.65 (seat 1 0.65 → 0 at +57.2 ms) (bound 0.5); vanish worst one-frame drop from the retarget 0.65 (seat 1 0.65 → 0 at +9 ms) (bound 0.5), over the strip 0.65; splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 8 judged (up to 2 glyphs a frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate); page errors 0  ⟶ FAILED: seatOverlap, vanish",
+   "load": 12.34
+  },
+  {
+   "engine": "chromium",
+   "cell": "retarget·80",
+   "pass": false,
+   "failed": [
+    "seatOverlap",
+    "vanish",
+    "stub"
+   ],
+   "frames": 89,
+   "retargetFrame": 12,
+   "blank": {
+    "ok": true,
+    "entering": 3,
+    "movingFrames": 1,
+    "blankFrames": 1,
+    "longestRun": 1,
+    "atMs": 7.8,
+    "why": "1 blank of 1 moving frame(s), longest run 1 (bound 1)"
+   },
+   "overlap": {
+    "ok": false,
+    "frames": 29,
+    "first": {
+     "seats": [
+      1,
+      6
+     ],
+     "mainPx": 40,
+     "opacities": [
+      0.908,
+      0.092
+     ],
+     "atMs": 14.5
+    }
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 2,
+    "failing": 0,
+    "lengthMs": 89.7,
+    "rows": [
+     {
+      "seat": 1,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 75.2,
+      "spanFrames": 10,
+      "path": [
+       0.908,
+       0.848,
+       0.799,
+       0.74,
+       0.672,
+       0.604,
+       0.542,
+       0.495,
+       0.44,
+       0.387,
+       0
+      ],
+      "vanish": {
+       "drop": 0.387,
+       "from": 0.387,
+       "to": 0,
+       "atMs": 89.7
+      }
+     },
+     {
+      "seat": 2,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 75.2,
+      "spanFrames": 10,
+      "path": [
+       0.908,
+       0.848,
+       0.799,
+       0.74,
+       0.672,
+       0.604,
+       0.542,
+       0.495,
+       0.44,
+       0.387,
+       0
+      ],
+      "vanish": {
+       "drop": 0.387,
+       "from": 0.387,
+       "to": 0,
+       "atMs": 89.7
+      }
+     }
+    ],
+    "vanish": {
+     "ok": true,
+     "drop": 0.387,
+     "seat": 1,
+     "from": 0.387,
+     "to": 0,
+     "atMs": 89.7
+    },
+    "why": "2 leaving seat(s), 0 failing; tightest seat 1: ink 0.908 → 0.848 → 0.799 → 0.74 → 0.672 → 0.604 → 0.542 → 0.495 → 0.44 → 0.387 → 0 over 75.2 ms / 10 frame(s) (fade bound ≥ 3 frames and ≥ 22.4 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.387 (seat 1 0.387 → 0 at +89.7 ms) (bound 0.5)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "vanish": {
+    "drop": 0.61,
+    "seat": 10,
+    "from": 0.61,
+    "to": 0,
+    "atMs": 0.7
+   },
+   "stub": {
+    "ok": false,
+    "judged": 13,
+    "stubFrames": 2,
+    "glyphs": 20,
+    "first": {
+     "atMs": 89.7,
+     "label": "button.dock-tab-button.glass-specular-track",
+     "ch": "r",
+     "frac": 0.61,
+     "cutPx": 791.9,
+     "opacity": 0.66,
+     "inFrame": 1
+    },
+    "why": "2 stub frame(s) of 13 judged (up to 20 glyphs a frame); first at 89.7 ms: \"r\" in button.dock-tab-button.glass-specular-track painted 61 % at opacity 0.66, cut at 791.9 px (1 stub(s) in that frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate)"
+   },
+   "pageErrors": [],
+   "summary": "swap to long retargeted to mid 80 ms later (scheduled in the page; frame 12): blank 1 blank of 1 moving frame(s), longest run 1 (bound 1); seat overlap 29 frame(s); leaving 2 leaving seat(s), 0 failing; tightest seat 1: ink 0.908 → 0.848 → 0.799 → 0.74 → 0.672 → 0.604 → 0.542 → 0.495 → 0.44 → 0.387 → 0 over 75.2 ms / 10 frame(s) (fade bound ≥ 3 frames and ≥ 22.4 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.387 (seat 1 0.387 → 0 at +89.7 ms) (bound 0.5); vanish worst one-frame drop from the retarget 0.61 (seat 10 0.61 → 0 at +0.7 ms) (bound 0.5), over the strip 0.387; splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 2 stub frame(s) of 13 judged (up to 20 glyphs a frame); first at 89.7 ms: \"r\" in button.dock-tab-button.glass-specular-track painted 61 % at opacity 0.66, cut at 791.9 px (1 stub(s) in that frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate); page errors 0  ⟶ FAILED: seatOverlap, vanish, stub",
+   "load": 12.34
+  },
+  {
+   "engine": "chromium",
+   "cell": "retarget·120",
+   "pass": false,
+   "failed": [
+    "seatOverlap",
+    "vanish",
+    "stub"
+   ],
+   "frames": 95,
+   "retargetFrame": 17,
+   "blank": {
+    "ok": true,
+    "entering": 3,
+    "movingFrames": 1,
+    "blankFrames": 1,
+    "longestRun": 1,
+    "atMs": 8.6,
+    "why": "1 blank of 1 moving frame(s), longest run 1 (bound 1)"
+   },
+   "overlap": {
+    "ok": false,
+    "frames": 36,
+    "first": {
+     "seats": [
+      1,
+      6
+     ],
+     "mainPx": 40,
+     "opacities": [
+      0.905,
+      0.095
+     ],
+     "atMs": 14.1
+    }
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 2,
+    "failing": 0,
+    "lengthMs": 128.7,
+    "rows": [
+     {
+      "seat": 1,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 114.6,
+      "spanFrames": 15,
+      "path": [
+       0.905,
+       0.855,
+       0.79,
+       0.728,
+       0.653,
+       0.587,
+       0.521,
+       0.459,
+       0.402,
+       0.365,
+       0.319,
+       0.283,
+       0.239,
+       0.212,
+       0.187,
+       0
+      ],
+      "vanish": {
+       "drop": 0.187,
+       "from": 0.187,
+       "to": 0,
+       "atMs": 128.7
+      }
+     },
+     {
+      "seat": 2,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 114.6,
+      "spanFrames": 15,
+      "path": [
+       0.905,
+       0.855,
+       0.79,
+       0.728,
+       0.653,
+       0.587,
+       0.521,
+       0.459,
+       0.402,
+       0.365,
+       0.319,
+       0.283,
+       0.239,
+       0.212,
+       0.187,
+       0
+      ],
+      "vanish": {
+       "drop": 0.187,
+       "from": 0.187,
+       "to": 0,
+       "atMs": 128.7
+      }
+     }
+    ],
+    "vanish": {
+     "ok": true,
+     "drop": 0.187,
+     "seat": 1,
+     "from": 0.187,
+     "to": 0,
+     "atMs": 128.7
+    },
+    "why": "2 leaving seat(s), 0 failing; tightest seat 1: ink 0.905 → 0.855 → 0.79 → 0.728 → 0.653 → 0.587 → 0.521 → 0.459 → 0.402 → 0.365 → 0.319 → 0.283 → 0.239 → 0.212 → 0.187 → 0 over 114.6 ms / 15 frame(s) (fade bound ≥ 3 frames and ≥ 32.2 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.187 (seat 1 0.187 → 0 at +128.7 ms) (bound 0.5)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "vanish": {
+    "drop": 0.81,
+    "seat": 10,
+    "from": 0.81,
+    "to": 0,
+    "atMs": 1.6
+   },
+   "stub": {
+    "ok": false,
+    "judged": 18,
+    "stubFrames": 2,
+    "glyphs": 20,
+    "first": {
+     "atMs": 128.7,
+     "label": "button.dock-tab-button.glass-specular-track",
+     "ch": "r",
+     "frac": 0.61,
+     "cutPx": 791.9,
+     "opacity": 0.82,
+     "inFrame": 1
+    },
+    "why": "2 stub frame(s) of 18 judged (up to 20 glyphs a frame); first at 128.7 ms: \"r\" in button.dock-tab-button.glass-specular-track painted 61 % at opacity 0.82, cut at 791.9 px (1 stub(s) in that frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate)"
+   },
+   "pageErrors": [],
+   "summary": "swap to long retargeted to mid 120 ms later (scheduled in the page; frame 17): blank 1 blank of 1 moving frame(s), longest run 1 (bound 1); seat overlap 36 frame(s); leaving 2 leaving seat(s), 0 failing; tightest seat 1: ink 0.905 → 0.855 → 0.79 → 0.728 → 0.653 → 0.587 → 0.521 → 0.459 → 0.402 → 0.365 → 0.319 → 0.283 → 0.239 → 0.212 → 0.187 → 0 over 114.6 ms / 15 frame(s) (fade bound ≥ 3 frames and ≥ 32.2 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.187 (seat 1 0.187 → 0 at +128.7 ms) (bound 0.5); vanish worst one-frame drop from the retarget 0.81 (seat 10 0.81 → 0 at +1.6 ms) (bound 0.5), over the strip 0.187; splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 2 stub frame(s) of 18 judged (up to 20 glyphs a frame); first at 128.7 ms: \"r\" in button.dock-tab-button.glass-specular-track painted 61 % at opacity 0.82, cut at 791.9 px (1 stub(s) in that frame) (bound 0; a stub paints 10-90 % of a glyph above 0.5 opacity, cut inside the plate); page errors 0  ⟶ FAILED: seatOverlap, vanish, stub",
+   "load": 12.31
+  },
+  {
+   "engine": "chromium",
+   "cell": "retarget·context",
+   "pass": true,
+   "failed": [],
+   "error": null,
+   "dead": null,
+   "events": [],
+   "probeAfter": true,
+   "held": true,
+   "summary": "the awaited retarget (setFace long; one evaluate awaits 80 ms in the page, then setFace mid; its promise held by the page): evaluate returned; liveness pings 60/60; main-frame navigations 0; the probe present after",
+   "load": 12.31
+  },
+  {
+   "engine": "chromium",
+   "cell": "wide·collapsed-rest",
+   "pass": false,
+   "unmeasured": false,
+   "failed": [
+    "faces"
+   ],
+   "faces": {
+    "ok": false,
+    "max": 18,
+    "n": 1,
+    "inflight": null,
+    "travel": null,
+    "bound": 1,
+    "how": "screenshot",
+    "why": "18 px of face ink beyond the plate over 1 screenshot sample(s) (bound 1)"
+   },
+   "summary": "faces 18 px of face ink beyond the plate over 1 screenshot sample(s) (bound 1)  ⟶ FAILED: faces",
+   "load": 11.64
+  },
+  {
+   "engine": "chromium",
+   "cell": "wide·warm-expand",
+   "pass": false,
+   "unmeasured": false,
+   "failed": [
+    "faces"
+   ],
+   "faces": {
+    "ok": false,
+    "max": 22,
+    "n": 23,
+    "inflight": 0,
+    "travel": 387.66,
+    "bound": 1,
+    "how": "screenshot",
+    "why": "22 px of face ink beyond the plate over 23 screenshot sample(s) (0 in flight) (bound 1)"
+   },
+   "D": 387.66,
+   "start": 102,
+   "target": 489.66,
+   "frames": 178,
+   "travelMs": 0,
+   "continuity": {
+    "ok": false,
+    "ratio": 9.59,
+    "step": 387.66,
+    "bound": 40.42,
+    "atMs": 632.6,
+    "dt": 8.2
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": false,
+    "why": "window 544.9 ms > clock 214.2 + 2×16.7 + stall 12.2 = 259.8 ms (O-64 R-4, H-3d)",
+    "open": 87.70000000000005,
+    "close": 632.5999999999999,
+    "land": 632.5999999999999,
+    "motionStart": 632.5999999999999,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 544.9,
+    "allowMs": 259.8,
+    "q4": false,
+    "q4AllowMs": 315.6
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": false,
+    "dev": 348.79,
+    "tol": 16.51,
+    "frac": 0.9,
+    "atMs": 632.6,
+    "why": "worst 348.79 px (89.97 % of D) from the rung's analytic spring (tol 16.51)"
+   },
+   "terminal": {
+    "ok": false,
+    "why": "the motion is 1 step(s): 387.66 px"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "seats": {
+    "step": {
+     "ok": false,
+     "ratio": 13.38,
+     "step": 193.83,
+     "bound": 14.49,
+     "seat": 2,
+     "atMs": 632.6
+    },
+    "overlap": {
+     "ok": false,
+     "frames": 34,
+     "first": {
+      "seats": [
+       1,
+       8
+      ],
+      "mainPx": 32.87,
+      "opacities": [
+       1,
+       1
+      ],
+      "atMs": 0
+     }
+    }
+   },
+   "summary": "faces 22 px of face ink beyond the plate over 23 screenshot sample(s) (0 in flight) (bound 1)  ⟶ FAILED: faces",
+   "load": 11.64
+  },
+  {
+   "engine": "chromium",
+   "cell": "wide·warm-collapse",
+   "pass": false,
+   "unmeasured": false,
+   "failed": [
+    "faces"
+   ],
+   "faces": {
+    "ok": false,
+    "max": 184,
+    "n": 145,
+    "inflight": 8,
+    "travel": 387.66,
+    "bound": 1,
+    "how": "screenshot",
+    "why": "184 px of face ink beyond the plate over 145 screenshot sample(s) (8 in flight) (bound 1)"
+   },
+   "summary": "faces 184 px of face ink beyond the plate over 145 screenshot sample(s) (8 in flight) (bound 1)  ⟶ FAILED: faces",
+   "load": 11.64
+  }
+ ]
+}

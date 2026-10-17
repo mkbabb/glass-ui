@@ -1,0 +1,179 @@
+{
+ "when": "2026-10-17T09:58:51.140Z",
+ "engines": [
+  "webkit"
+ ],
+ "rows": [
+  {
+   "witness": "CF",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 16/16 PASS",
+   "ok": true,
+   "ms": 72173,
+   "load": 20.06
+  },
+  {
+   "witness": "CF",
+   "fixture": "tilesq",
+   "expect": "exit ≠ 0; square|summary fails in ^c1·shape·h",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 2783,
+   "load": 13.45
+  },
+  {
+   "witness": "CF",
+   "fixture": "morphsnap",
+   "expect": "exit ≠ 0; continuous fails in ^c2·morph·",
+   "got": "exit 1, 2/2 FAIL; matching 2 (webkit)",
+   "ok": true,
+   "ms": 20710,
+   "load": 13.45
+  },
+  {
+   "witness": "CF",
+   "fixture": "nofocus",
+   "expect": "exit ≠ 0; opens fails in ^c3·focus",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 3273,
+   "load": 13.59
+  },
+  {
+   "witness": "CF",
+   "fixture": "noscroll",
+   "expect": "exit ≠ 0; collapses fails in ^c3·scroll",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 4156,
+   "load": 12.82
+  },
+  {
+   "witness": "CF",
+   "fixture": "persistentinert",
+   "expect": "exit ≠ 0; live fails in ^c4·persistent",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 2680,
+   "load": 13.47
+  },
+  {
+   "witness": "CF",
+   "fixture": "focuslost",
+   "expect": "exit ≠ 0; escape fails in ^c5·keyboard",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 6253,
+   "load": 13.47
+  },
+  {
+   "witness": "CF",
+   "fixture": "menucollapse",
+   "expect": "exit ≠ 0; holds fails in ^c6·menu",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 7846,
+   "load": 15.33
+  },
+  {
+   "witness": "CF",
+   "fixture": "narrowover",
+   "expect": "exit ≠ 0; inside|noscroll fails in ^c7·narrow",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 2937,
+   "load": 15.54
+  },
+  {
+   "witness": "CF",
+   "fixture": "tapthrough",
+   "expect": "exit ≠ 0; opens|swallowed fails in ^c7·coarse-tap",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 5161,
+   "load": 16.14
+  },
+  {
+   "witness": "CF",
+   "fixture": "platesq",
+   "expect": "exit ≠ 0; ownshape|corner fails in ^c1·shape·",
+   "got": "exit 1, 2/2 FAIL; matching 2 (webkit)",
+   "ok": true,
+   "ms": 5151,
+   "load": 16.85
+  },
+  {
+   "witness": "CF",
+   "fixture": "prmfade",
+   "expect": "exit ≠ 0; content|flag fails in ^c2·prm",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 2833,
+   "load": 17.26
+  },
+  {
+   "witness": "CF",
+   "fixture": "pressdrop",
+   "expect": "exit ≠ 0; collapses fails in ^c8·",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 42277,
+   "load": 17.26
+  },
+  {
+   "witness": "CF",
+   "fixture": "shorttall",
+   "expect": "exit ≠ 0; block fails in ^c9·",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 2962,
+   "load": 16.87
+  },
+  {
+   "witness": "CF",
+   "fixture": "shortseat",
+   "expect": "exit ≠ 0; seats fails in ^c9·",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 2911,
+   "load": 16.87
+  },
+  {
+   "witness": "L1",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 6/6 PASS",
+   "ok": true,
+   "ms": 14895,
+   "load": 18
+  },
+  {
+   "witness": "L1",
+   "fixture": "glowhalo",
+   "expect": "exit ≠ 0; added fails in ^l1·",
+   "got": "exit 1, 6/6 FAIL; matching 6 (webkit)",
+   "ok": true,
+   "ms": 28459,
+   "load": 17.75
+  },
+  {
+   "witness": "L1",
+   "fixture": "gleam",
+   "expect": "exit ≠ 0; added fails in ^l1·",
+   "got": "exit 1, 6/6 FAIL; matching 6 (webkit)",
+   "ok": true,
+   "ms": 28607,
+   "load": 17.75
+  },
+  {
+   "witness": "L1",
+   "fixture": "shimmer",
+   "expect": "exit ≠ 0; idle fails in ^l1·(light|dark)·(collapsed|expanded)",
+   "got": "exit 1, 4/4 FAIL; matching 4 (webkit)",
+   "ok": true,
+   "ms": 17673,
+   "load": 16.75
+  }
+ ]
+}

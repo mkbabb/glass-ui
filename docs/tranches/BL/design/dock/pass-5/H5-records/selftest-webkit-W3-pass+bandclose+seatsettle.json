@@ -1,0 +1,35 @@
+{
+ "when": "2026-10-17T10:11:05.747Z",
+ "engines": [
+  "webkit"
+ ],
+ "rows": [
+  {
+   "witness": "W3",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 33/33 PASS",
+   "ok": true,
+   "ms": 115571,
+   "load": 21.13
+  },
+  {
+   "witness": "W3",
+   "fixture": "bandclose",
+   "expect": "an OWNER-BLOCKED cell in ^warm-expand|^warm-collapse",
+   "got": "exit 0, 2/2 FAIL; matching 2 (webkit)",
+   "ok": true,
+   "ms": 33699,
+   "load": 15.67
+  },
+  {
+   "witness": "W3",
+   "fixture": "seatsettle",
+   "expect": "exit ≠ 0; lanes fails in ^warm-expand|^warm-collapse",
+   "got": "exit 1, 2/2 FAIL; matching 2 (webkit)",
+   "ok": true,
+   "ms": 35326,
+   "load": 12.66
+  }
+ ]
+}

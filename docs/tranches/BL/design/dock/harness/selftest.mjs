@@ -14,6 +14,12 @@
 // H4 (pass-4/H4.md) adds R5 (r5-hit.mjs), CF (c-facility.mjs), L1 (l1-light.mjs) and PR (prose.mjs,
 // engine "source"), their plants, the W3/W1/ST plants of H4-1..H4-7, the L-6 adapter plant, and theme
 // variants: a fixture written "pass@dark" runs the pass fixture with DOCK_HARNESS_THEME=dark.
+// H5 (pass-5/H5.md) adds F7 (f7.mjs, engine "source", synthetic suite results), the H5-1..H5-13 plants, and two
+// fixture suffixes: "ctxgc!nohold" runs the ctxgc fixture with DOCK_HARNESS_CTX_NOHOLD=1 (the context cell does not
+// hold its promise), and any ctxgc run sets DOCK_HARNESS_EXPOSE_GC=1 (Chromium gets --expose-gc, the plant's gc()).
+// An expectation's 5th element narrows the engines it is judged in (the forced-GC plant: Chromium only, WebKit
+// exposes no gc() to a page; the ctxloss plant covers the context promise in both engines). The runner's own
+// re-run rule (reds.mjs) has its plants in `node reds.mjs --selftest` (witness RUN).
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
@@ -144,18 +150,46 @@ const EXPECT = [
     ["PR", "noreader", /^prose·readers/, ["readers"]],                 // H4-8
     ["PR", "count", /^prose·count/, ["count"]],                        // H4-8
     ["PR", "duprow", /^prose·rows/, ["rows"]],                         // H4-8
+    ["W2", "arrowclamp", /route1/, ["keyboard"]],                      // H5-1 · Seat 1 by a key, not by focus()
+    ["W3", "ctxgc!nohold", /^retarget·context/, ["context"], ["chromium"]],   // H5-2 · the collected promise
+    ["W3", "stub", /^swap-/, ["stub"]],                                // H5-3 · glyph stub
+    ["W3", "vanishstep", /^content-remove|^lead-remove/, ["vanish"]],  // H5-4 · vanish on every leaver
+    ["W3", "seatsettle", /^warm-expand|^warm-collapse/, ["lanes"]],    // H5-7 · seat position after the flag
+    ["FM", "stub", /^film·swap-/, ["stub"]],                           // H5-3 · the film read, gated
+    ["W1", "cardblip", /card·warm-expand|card·warm-collapse|card·first-expand/, ["card"]],   // H5-12 · enough samples
+    ["W6", "bandclose", /form·expand|form·collapse/, [OB]],             // H5-5 · Q-4 lenient window
+    ["W6", "slowclock", /form·expand|form·collapse/, ["window"]],       // H5-5 · a late morph still FAILS
+    ["CF", "platesq", /^c1·shape·/, ["ownshape", "corner"]],            // H5-6 · C1 per painter + pixels
+    ["CF", "prmfade", /^c2·prm/, ["content", "flag"]],                  // H5-6 · C2 per Q-18 (a)
+    ["CF", "pressdrop", /^c8·/, ["collapses"]],                         // H5-11 · C8 (O-91)
+    ["CF", "shorttall", /^c9·/, ["block"]],                             // H5-11 · C9 (O-74e)
+    ["CF", "shortseat", /^c9·/, ["seats"]],                             // H5-11 · C9
+    ["PR", "partials", /^prose·partials/, ["partials"]],                // H5-8
+    ["PR", "passcite", /^prose·citations/, ["citations"]],              // H5-8
+    ["F7", "unitred", /^f7·units/, ["units"]],                          // H5-10
+    ["F7", "gatered", /^f7·gate·boot-graph/, ["gate"]],                 // H5-10
+    ["F7", "tscred", /^f7·typecheck/, ["typecheck"]],                   // H5-10
+    ["F7", "gateskip", /^f7·gate·boot-graph/, ["UNMEASURED"]],          // H5-10 · a skipped build arm is never PASS
 ];
-const PASS_VARIANTS = [["W1", "csscarrier"], ["W7", "splitcaps"], ["W1", "hitpair"], ["ST", "pass@dark"], ["FM", "pass@dark"], ["W1", "pass@dark"]];
-const SCRIPT = { W1: "w1-corner.mjs", W2: "w2-run.mjs", W3: "w3-morph.mjs", W4: "w4-state.mjs", W5: "w5-rim.mjs", W6: "w6-collapsed-form.mjs", W7: "w7-edge.mjs", W8: "w8-motion.mjs", R6: "r6-probe.mjs", ST: "stall.mjs", FM: "film.mjs", R5: "r5-hit.mjs", CF: "c-facility.mjs", L1: "l1-light.mjs", PR: "prose.mjs" };
+// [witness, fixture, cells pattern (optional: the variant runs only those blocks)]
+const PASS_VARIANTS = [["W1", "csscarrier"], ["W7", "splitcaps"], ["W1", "hitpair"], ["ST", "pass@dark"], ["FM", "pass@dark"], ["W1", "pass@dark"],
+    ["W2", "roving"], ["W3", "ctxgc", "^retarget·context"]];
+const SOURCE = new Set(["PR", "F7"]);
+const SCRIPT = { W1: "w1-corner.mjs", W2: "w2-run.mjs", W3: "w3-morph.mjs", W4: "w4-state.mjs", W5: "w5-rim.mjs", W6: "w6-collapsed-form.mjs", W7: "w7-edge.mjs", W8: "w8-motion.mjs", R6: "r6-probe.mjs", ST: "stall.mjs", FM: "film.mjs", R5: "r5-hit.mjs", CF: "c-facility.mjs", L1: "l1-light.mjs", PR: "prose.mjs", F7: "f7.mjs" };
 
 const rows = [];
 function run(w, fixtureArg, cells = null) {
-    const [fixture, theme] = fixtureArg.split("@");
+    const [fx0, theme] = fixtureArg.split("@");
+    const [fixture, flag] = fx0.split("!");
+    const env = { ...process.env };
+    if (theme) env.DOCK_HARNESS_THEME = theme;
+    if (flag === "nohold") env.DOCK_HARNESS_CTX_NOHOLD = "1";
+    if (fixture === "ctxgc") env.DOCK_HARNESS_EXPOSE_GC = "1";
     const argv = [path.join(HERE, SCRIPT[w]), "--fixture", fixture, "--engine", want.join(",")];
     if (outRoot) argv.push("--out", outRoot);
     if (cells) argv.push("--cells", cells);
     const t0 = Date.now(), load = loadAvg();
-    const r = spawnSync(process.execPath, argv, { encoding: "utf8", maxBuffer: 1 << 26, env: theme ? { ...process.env, DOCK_HARNESS_THEME: theme } : process.env });
+    const r = spawnSync(process.execPath, argv, { encoding: "utf8", maxBuffer: 1 << 26, env });
     const dir = outDir({ out: outRoot, fixture }, w);
     let cellsOut = [];
     try { cellsOut = JSON.parse(fs.readFileSync(path.join(dir, `${w}.json`), "utf8")).cells; } catch { }
@@ -167,24 +201,27 @@ const log = (row) => { rows.push(row); console.log(`${row.ok ? "OK  " : "BAD "} 
 
 for (const w of Object.keys(SCRIPT)) {
     if (only && !only.includes(w)) continue;
-    for (const fx of ["pass", ...PASS_VARIANTS.filter(([pw]) => pw === w).map(([, f]) => f)]) {
+    for (const [, fx, vcells] of [[w, "pass"], ...PASS_VARIANTS.filter(([pw]) => pw === w)]) {
         if (onlyFaults && !onlyFaults.includes(fx)) continue;
-        const p = run(w, fx);
+        const p = run(w, fx, vcells ?? null);
         const cs = counted(p.cells);
         const engs = new Set(cs.map((c) => c.engine));
-        const ok = p.code === 0 && cs.length > 0 && cs.every((c) => c.pass) && (w === "PR" ? ["source"] : want).every((e) => engs.has(e));
-        log({ witness: w, fixture: fx, expect: "exit 0, all cells PASS", got: `exit ${p.code}, ${cs.filter((c) => c.pass).length}/${cs.length} PASS${ok ? "" : "; failing: " + cs.filter((c) => !c.pass).map((c) => `${c.engine}:${c.cell}${c.failed ? "[" + c.failed.join(",") + "]" : ""}`).slice(0, 6).join(" ")}${p.err && !cs.length ? " · " + p.err : ""}`, ok, ms: p.ms, load: p.load });
+        const ok = p.code === 0 && cs.length > 0 && cs.every((c) => c.pass) && (SOURCE.has(w) ? ["source"] : want).every((e) => engs.has(e));
+        log({ witness: w, fixture: fx + (vcells ? ` (${vcells})` : ""), expect: "exit 0, all cells PASS", got: `exit ${p.code}, ${cs.filter((c) => c.pass).length}/${cs.length} PASS${ok ? "" : "; failing: " + cs.filter((c) => !c.pass).map((c) => `${c.engine}:${c.cell}${c.failed ? "[" + c.failed.join(",") + "]" : ""}`).slice(0, 6).join(" ")}${p.err && !cs.length ? " · " + p.err : ""}`, ok, ms: p.ms, load: p.load });
     }
-    for (const [ew, fault, pat, check] of EXPECT) {
+    for (const [ew, fault, pat, check, only1] of EXPECT) {
         if (ew !== w) continue;
-        if (onlyFaults && !onlyFaults.includes(fault)) continue;
+        if (onlyFaults && !onlyFaults.includes(fault) && !onlyFaults.includes(fault.split("!")[0])) continue;
         const f = run(w, fault, pat.source);
-        const ob = check?.includes(OB);
+        const ob = check?.includes(OB), um = check?.includes("UNMEASURED");
+        const judged = SOURCE.has(w) ? ["source"] : want.filter((e) => !only1 || only1.includes(e));
+        if (!judged.length) continue;
         const hit = ob ? f.cells.filter((c) => pat.test(c.cell) && !c.pass && c.ownerBlocked)
+            : um ? f.cells.filter((c) => pat.test(c.cell) && !c.pass && c.unmeasured)
             : f.cells.filter((c) => pat.test(c.cell) && !c.pass && !c.unmeasured && !c.record && !c.ownerBlocked && (!check || check.some((k) => (c.failed ?? []).includes(k))));
         const engs = new Set(hit.map((c) => c.engine));
-        const ok = (ob || f.code !== 0) && (w === "PR" ? ["source"] : want).every((e) => engs.has(e));
-        log({ witness: w, fixture: fault, expect: ob ? `an OWNER-BLOCKED cell in ${pat.source}` : `exit ≠ 0; ${check ? check.join("|") + " fails in " : ""}${pat.source}`, got: `exit ${f.code}, ${f.cells.filter((c) => !c.pass).length}/${f.cells.length} FAIL; matching ${hit.length} (${[...engs].join("+") || "none"})${ok ? "" : f.err ? " · " + f.err : ""}`, ok, ms: f.ms, load: f.load });
+        const ok = (ob || um || f.code !== 0) && judged.every((e) => engs.has(e));
+        log({ witness: w, fixture: fault + (only1 ? ` [${only1.join(",")}]` : ""), expect: ob ? `an OWNER-BLOCKED cell in ${pat.source}` : um ? `an UNMEASURED (never PASS) cell in ${pat.source}` : `exit ≠ 0; ${check ? check.join("|") + " fails in " : ""}${pat.source}`, got: `exit ${f.code}, ${f.cells.filter((c) => !c.pass).length}/${f.cells.length} FAIL; matching ${hit.length} (${[...engs].join("+") || "none"})${ok ? "" : f.err ? " · " + f.err : ""}`, ok, ms: f.ms, load: f.load });
     }
 }
 if (!only || only.includes("H6")) {
@@ -198,6 +235,12 @@ if (!only || only.includes("H6")) {
     log({ witness: "H6", fixture: "adapter-G-p3", expect: "L-1..L-6 hold (exit 0)", got: `exit ${g.status}: ${g.stdout.trim().split("\n")[0]}`, ok: g.status === 0 && /L-6/.test(g.stdout), ms: Date.now() - t0, load: loadAvg() });
     const h = spawnSync(process.execPath, [path.join(HERE, "adapter-law.mjs"), path.join(HERE, "..", "pass-4", "H4-records", "adapter-plant-l6.mjs")], { encoding: "utf8" });
     log({ witness: "H6", fixture: "adapter-plant-l6", expect: "L-6 fails for hit() and edge() (exit ≠ 0)", got: `exit ${h.status}: ${h.stdout.trim().split("\n")[0]}`, ok: h.status !== 0 && /L-6 hit/.test(h.stdout) && /L-6 edge/.test(h.stdout), ms: Date.now() - t0, load: loadAvg() });
+}
+if (!only || only.includes("RUN")) {
+    const t0 = Date.now();
+    const r = spawnSync(process.execPath, [path.join(HERE, "reds.mjs"), "--selftest"], { encoding: "utf8" });
+    const last = r.stdout.trim().split("\n").pop();
+    log({ witness: "RUN", fixture: "reds+faces", expect: "merged reds and controls re-run; main W3 runs faces (exit 0)", got: `exit ${r.status}: ${last}`, ok: r.status === 0, ms: Date.now() - t0, load: loadAvg() });
 }
 if (!only || only.includes("H8")) {
     const t0 = Date.now();

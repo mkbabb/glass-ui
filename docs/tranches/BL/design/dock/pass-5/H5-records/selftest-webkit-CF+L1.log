@@ -1,0 +1,26 @@
+ 5:50  up 1 day,  8:13, 2 users, load averages: 19.77 17.19 14.53
+Sat Oct 17 05:50:27 EDT 2026
+[guarded] waiting for the 'webkit' lock
+OK   CF  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 16/16 PASS  [72 s, load 20.06]
+OK   CF  tilesq          expect: exit ≠ 0; square|summary fails in ^c1·shape·h  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [3 s, load 13.45]
+OK   CF  morphsnap       expect: exit ≠ 0; continuous fails in ^c2·morph·  ·  got: exit 1, 2/2 FAIL; matching 2 (webkit)  [21 s, load 13.45]
+OK   CF  nofocus         expect: exit ≠ 0; opens fails in ^c3·focus  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [3 s, load 13.59]
+OK   CF  noscroll        expect: exit ≠ 0; collapses fails in ^c3·scroll  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [4 s, load 12.82]
+OK   CF  persistentinert  expect: exit ≠ 0; live fails in ^c4·persistent  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [3 s, load 13.47]
+OK   CF  focuslost       expect: exit ≠ 0; escape fails in ^c5·keyboard  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [6 s, load 13.47]
+OK   CF  menucollapse    expect: exit ≠ 0; holds fails in ^c6·menu  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [8 s, load 15.33]
+OK   CF  narrowover      expect: exit ≠ 0; inside|noscroll fails in ^c7·narrow  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [3 s, load 15.54]
+OK   CF  tapthrough      expect: exit ≠ 0; opens|swallowed fails in ^c7·coarse-tap  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [5 s, load 16.14]
+OK   CF  platesq         expect: exit ≠ 0; ownshape|corner fails in ^c1·shape·  ·  got: exit 1, 2/2 FAIL; matching 2 (webkit)  [5 s, load 16.85]
+OK   CF  prmfade         expect: exit ≠ 0; content|flag fails in ^c2·prm  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [3 s, load 17.26]
+OK   CF  pressdrop       expect: exit ≠ 0; collapses fails in ^c8·  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [42 s, load 17.26]
+OK   CF  shorttall       expect: exit ≠ 0; block fails in ^c9·  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [3 s, load 16.87]
+OK   CF  shortseat       expect: exit ≠ 0; seats fails in ^c9·  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [3 s, load 16.87]
+OK   L1  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 6/6 PASS  [15 s, load 18]
+OK   L1  glowhalo        expect: exit ≠ 0; added fails in ^l1·  ·  got: exit 1, 6/6 FAIL; matching 6 (webkit)  [28 s, load 17.75]
+OK   L1  gleam           expect: exit ≠ 0; added fails in ^l1·  ·  got: exit 1, 6/6 FAIL; matching 6 (webkit)  [29 s, load 17.75]
+OK   L1  shimmer         expect: exit ≠ 0; idle fails in ^l1·(light|dark)·(collapsed|expanded)  ·  got: exit 1, 4/4 FAIL; matching 4 (webkit)  [18 s, load 16.75]
+SELFTEST PASS  19/19 expectations hold
+exit 0
+ 5:58  up 1 day,  8:21, 2 users, load averages: 15.32 17.20 16.03
+Sat Oct 17 05:58:55 EDT 2026

@@ -1,0 +1,35 @@
+{
+ "when": "2026-10-17T10:13:40.588Z",
+ "engines": [
+  "chromium"
+ ],
+ "rows": [
+  {
+   "witness": "W3",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 1, 32/33 PASS; failing: chromium:lead-remove[window]",
+   "ok": false,
+   "ms": 101343,
+   "load": 14.71
+  },
+  {
+   "witness": "W3",
+   "fixture": "bandclose",
+   "expect": "an OWNER-BLOCKED cell in ^warm-expand|^warm-collapse",
+   "got": "exit 0, 2/2 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 23776,
+   "load": 11.76
+  },
+  {
+   "witness": "W3",
+   "fixture": "seatsettle",
+   "expect": "exit ≠ 0; lanes fails in ^warm-expand|^warm-collapse",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 23741,
+   "load": 11.2
+  }
+ ]
+}

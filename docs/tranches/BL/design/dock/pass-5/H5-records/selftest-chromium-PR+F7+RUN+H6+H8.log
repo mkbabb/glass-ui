@@ -1,0 +1,23 @@
+ 2:23  up 1 day,  4:46, 2 users, load averages: 11.81 12.72 16.96
+Sat Oct 17 02:23:50 EDT 2026
+OK   PR  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 5/5 PASS  [0 s, load 11.81]
+OK   PR  noreader        expect: exit ≠ 0; readers fails in ^prose·readers  ·  got: exit 1, 1/5 FAIL; matching 1 (source)  [0 s, load 11.81]
+OK   PR  count           expect: exit ≠ 0; count fails in ^prose·count  ·  got: exit 1, 1/5 FAIL; matching 1 (source)  [0 s, load 11.81]
+OK   PR  duprow          expect: exit ≠ 0; rows fails in ^prose·rows  ·  got: exit 1, 1/5 FAIL; matching 1 (source)  [0 s, load 11.81]
+OK   PR  partials        expect: exit ≠ 0; partials fails in ^prose·partials  ·  got: exit 1, 1/5 FAIL; matching 1 (source)  [0 s, load 11.42]
+OK   PR  passcite        expect: exit ≠ 0; citations fails in ^prose·citations  ·  got: exit 1, 1/5 FAIL; matching 1 (source)  [0 s, load 11.42]
+OK   F7  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 5/5 PASS  [0 s, load 11.42]
+OK   F7  unitred         expect: exit ≠ 0; units fails in ^f7·units  ·  got: exit 1, 1/5 FAIL; matching 1 (source)  [0 s, load 11.42]
+OK   F7  gatered         expect: exit ≠ 0; gate fails in ^f7·gate·boot-graph  ·  got: exit 1, 1/5 FAIL; matching 1 (source)  [0 s, load 11.42]
+OK   F7  tscred          expect: exit ≠ 0; typecheck fails in ^f7·typecheck  ·  got: exit 1, 1/5 FAIL; matching 1 (source)  [0 s, load 11.42]
+OK   F7  gateskip        expect: an UNMEASURED (never PASS) cell in ^f7·gate·boot-graph  ·  got: exit 0, 1/5 FAIL; matching 1 (source)  [0 s, load 11.42]
+OK   H6  adapter-head    expect: the law holds (exit 0)  ·  got: exit 0: PASS  adapter-law  ../harness/adapter-head.mjs  L-1..L-5 hold  [0 s, load 11.42]
+OK   H6  adapter-preclip  expect: L-1, L-2 and L-3 fail (exit ≠ 0)  ·  got: exit 1: FAIL  adapter-law  ../harness/plants/adapter-preclip.mjs  L-1 extent() reads a custom property · L-2 paintingSeats() refers to extent()/plate() (a pre-clip) · L-3 the probe writes into the page  [0 s, load 11.42]
+OK   H6  adapter-G-p3    expect: L-1..L-6 hold (exit 0)  ·  got: exit 0: PASS  adapter-law  ../pass-3/adapter-G-p3.mjs  L-1..L-5, L-6 hold  [1 s, load 11.42]
+OK   H6  adapter-plant-l6  expect: L-6 fails for hit() and edge() (exit ≠ 0)  ·  got: exit 1: FAIL  adapter-law  ../pass-4/H4-records/adapter-plant-l6.mjs  L-6 hit() does not select under P.root() · L-6 edge() refers to extent()/paintingSeats()  [1 s, load 11.42]
+OK   RUN  reds+faces      expect: merged reds and controls re-run; main W3 runs faces (exit 0)  ·  got: exit 0: RUN SELFTEST PASS  6/6  [0 s, load 11.42]
+OK   H8  safaridriver    expect: reports ENABLED, or UNMEASURED (owner's safaridriver checkbox) with safaridriver's reason  ·  got: UNMEASURED (owner's safaridriver checkbox)  Safari 26.4 (Darwin 25.4.0): session not created: Could not create a session: You must enable 'Allow remote automation' in the Developer section of Safari Settings to control Safari via WebDriver.  [0 s, load 11.42]
+SELFTEST PASS  17/17 expectations hold
+exit 0
+ 2:23  up 1 day,  4:46, 2 users, load averages: 11.31 12.58 16.86
+Sat Oct 17 02:23:58 EDT 2026

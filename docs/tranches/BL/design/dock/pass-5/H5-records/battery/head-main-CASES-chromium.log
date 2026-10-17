@@ -1,0 +1,11 @@
+ 6:37  up 1 day, 9 hrs, 2 users, load averages: 8.30 8.22 9.85
+PASS  CASES  Chromium  case·capped·seat-transition  cap 150 px, run overflowing false; grow and shrink a seat's own width transition: page errors 0, window error events 0; plate travel 0 px, largest one-frame step 0 px; flag at rest closed; chromium-case_capped_seat-transition.json  [load 7.95]
+FAIL  CASES  Chromium  case·capped·morph  cap 300 px: expand (run overflowing false), add a seat, collapse: page errors 0, window error events 0; plate travel 198 px, largest one-frame step 198 px; flag at rest closed; chromium-case_capped_morph.json  ⟶ FAILED: continuous  [load 7.8]
+PASS  CASES  Chromium  case·consumer-margin  unlayered ".glass-dock { margin-inline: 20px; }" (computed margin-left at rest 20px): expand, collapse; plate end edge past the neighbour by at most -32 px (bound 0.5); neighbour travel 388 px, largest one-frame step 388 px against the plate edge's 387.66 px (+1); chromium-case_consumer-margin.json  [load 7.8]
+PASS  CASES  Chromium  case·consumer-margin·control  no consumer rule (computed margin-left at rest 0px): expand, collapse; plate end edge past the neighbour by at most -421 px (bound 0.5); neighbour travel 0 px, largest one-frame step 0 px against the plate edge's 193.83 px (+1); chromium-case_consumer-margin_control.json  [load 8.05]
+FAIL  CASES  Chromium  case·rotated·control  host rotate(0deg): expand, collapse; seats' largest second difference 251.83 px/frame²; largest one-frame seat move after the window closed 251.83 px (bound 0.5); chromium-case_rotated_control.json  ⟶ FAILED: snap  [load 8.05]
+FAIL  CASES  Chromium  case·rotated  host rotate(2deg): expand, collapse; seats' largest second difference 251.83 px/frame² (control 251.83, bound +1); largest one-frame seat move after the window closed 251.83 px (bound 0.5); chromium-case_rotated.json  ⟶ FAILED: snap  [load 7.97]
+FAIL  CASES  head@91728a09  3/6 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p5/H5/wt/.h5out/chromium/head/main/runs/CASES-head/CASES.json)
+exit 1
+ 6:37  up 1 day, 9 hrs, 2 users, load averages: 7.97 8.14 9.78
+reds: ^(case·capped·morph(·control)?|case·rotated(·control)?)$

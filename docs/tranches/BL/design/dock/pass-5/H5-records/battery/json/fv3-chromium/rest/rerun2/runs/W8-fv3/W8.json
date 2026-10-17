@@ -1,0 +1,62 @@
+{
+ "witness": "W8",
+ "target": "fv3@91728a09",
+ "when": "2026-10-17T11:40:00.433Z",
+ "load": 24.8,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "expand",
+   "pass": false,
+   "failed": [
+    "sharp"
+   ],
+   "frames": 70,
+   "p95": 9.9,
+   "over33": 0,
+   "over40": 0,
+   "unsharpFrames": 30,
+   "unsharpFirst": "div.dock-persistent scale 3.98537 1",
+   "fps": "UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)",
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "summary": "70 motion frames: unsharp 30 (div.dock-persistent scale 3.98537 1) (bound 0); pacing p95 9.9 ms, 0 > 33.4 ms, 0 > 40 ms (headless bound: ≤ 1 over 40); 60 fps: UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)  ⟶ FAILED: sharp",
+   "load": 24.69
+  },
+  {
+   "engine": "chromium",
+   "cell": "collapse",
+   "pass": false,
+   "failed": [
+    "sharp"
+   ],
+   "frames": 72,
+   "p95": 9.8,
+   "over33": 0,
+   "over40": 0,
+   "unsharpFrames": 72,
+   "unsharpFirst": "div.dock-persistent scale 1.04074 1",
+   "fps": "UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)",
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "summary": "72 motion frames: unsharp 72 (div.dock-persistent scale 1.04074 1) (bound 0); pacing p95 9.8 ms, 0 > 33.4 ms, 0 > 40 ms (headless bound: ≤ 1 over 40); 60 fps: UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)  ⟶ FAILED: sharp",
+   "load": 24.69
+  },
+  {
+   "engine": "chromium",
+   "cell": "form-expand",
+   "pass": false,
+   "failed": [
+    "sharp"
+   ],
+   "frames": 67,
+   "p95": 10.1,
+   "over33": 0,
+   "over40": 0,
+   "unsharpFrames": 28,
+   "unsharpFirst": "button.dock-icon-button.glass-specular-track.glass-capsule-hover scale 0.84235",
+   "fps": "UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)",
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+   "summary": "67 motion frames: unsharp 28 (button.dock-icon-button.glass-specular-track.glass-capsule-hover scale 0.84235) (bound 0); pacing p95 10.1 ms, 0 > 33.4 ms, 0 > 40 ms (headless bound: ≤ 1 over 40); 60 fps: UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)  ⟶ FAILED: sharp",
+   "load": 24.8
+  }
+ ]
+}

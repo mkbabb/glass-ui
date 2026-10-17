@@ -1,0 +1,2856 @@
+{
+ "witness": "W1",
+ "target": "head@91728a09",
+ "when": "2026-10-17T10:52:45.878Z",
+ "load": 8.21,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "sidebar·short-viewport",
+   "pass": false,
+   "failed": [
+    "corner"
+   ],
+   "worst": {
+    "maxErr": 16.486,
+    "corner": "br",
+    "w": 64,
+    "h": 479.96,
+    "rExpected": 32
+   },
+   "adapterDeltaPx": 0.04,
+   "rootOutPx": 0.04,
+   "seatOutPx": 0,
+   "summary": "plate 64x479.96, r 32, worst 16.486 px at br (bound 1); silhouette vs extent() Δ 0.04 px (bound 1); root outside the silhouette 0.04 px, seats 0 px (bound 1)  ⟶ FAILED: corner",
+   "load": 8.89
+  },
+  {
+   "engine": "chromium",
+   "cell": "rail·rest",
+   "pass": false,
+   "failed": [
+    "corner"
+   ],
+   "worst": {
+    "maxErr": 19.845,
+    "corner": "tr",
+    "w": 64,
+    "h": 559.95,
+    "rExpected": 32
+   },
+   "adapterDeltaPx": 0.05,
+   "rootOutPx": 0.05,
+   "seatOutPx": 0,
+   "summary": "plate 64x559.95, r 32, worst 19.845 px at tr (bound 1); silhouette vs extent() Δ 0.05 px (bound 1); root outside the silhouette 0.05 px, seats 0 px (bound 1)  ⟶ FAILED: corner",
+   "load": 8.74
+  },
+  {
+   "engine": "chromium",
+   "cell": "rail·scrolled-end",
+   "pass": false,
+   "failed": [
+    "corner"
+   ],
+   "worst": {
+    "maxErr": 19.818,
+    "corner": "br",
+    "w": 64,
+    "h": 559.93,
+    "rExpected": 32
+   },
+   "adapterDeltaPx": 0.07,
+   "rootOutPx": 0.07,
+   "seatOutPx": 0,
+   "lastSeatInside": true,
+   "summary": "plate 64x559.93, r 32, worst 19.818 px at br (bound 1); silhouette vs extent() Δ 0.07 px (bound 1); root outside the silhouette 0.07 px, seats 0 px (bound 1); scrollIntoView: the last seat is inside the plate (seat 528-568, plate 16-576)  ⟶ FAILED: corner",
+   "load": 8.74
+  },
+  {
+   "engine": "chromium",
+   "cell": "rail·focus-end",
+   "pass": false,
+   "failed": [
+    "corner"
+   ],
+   "worst": {
+    "maxErr": 19.818,
+    "corner": "br",
+    "w": 64,
+    "h": 559.93,
+    "rExpected": 32
+   },
+   "adapterDeltaPx": 0.07,
+   "rootOutPx": 0.07,
+   "seatOutPx": 0,
+   "lastSeatInside": true,
+   "summary": "plate 64x559.93, r 32, worst 19.818 px at br (bound 1); silhouette vs extent() Δ 0.07 px (bound 1); root outside the silhouette 0.07 px, seats 0 px (bound 1); focus(): the last seat is inside the plate (seat 528-568, plate 16-576)  ⟶ FAILED: corner",
+   "load": 8.74
+  },
+  {
+   "engine": "chromium",
+   "cell": "morph·collapsed-rest",
+   "pass": false,
+   "failed": [
+    "corner"
+   ],
+   "worst": {
+    "maxErr": 4.624,
+    "corner": "br",
+    "w": 101.98,
+    "h": 56,
+    "rExpected": 28
+   },
+   "adapterDeltaPx": 0.02,
+   "rootOutPx": 0.02,
+   "seatOutPx": 0,
+   "summary": "plate 101.98x56, r 28, worst 4.624 px at br (bound 1); silhouette vs extent() Δ 0.02 px (bound 1); root outside the silhouette 0.02 px, seats 0 px (bound 1)  ⟶ FAILED: corner",
+   "load": 8.74
+  },
+  {
+   "engine": "chromium",
+   "cell": "morph·first-expand",
+   "pass": false,
+   "unmeasured": false,
+   "failed": [
+    "corner",
+    "moves"
+   ],
+   "unjudged": [],
+   "samples": 23,
+   "how": "screenshot",
+   "distinctExtents": 2,
+   "inflight": 0,
+   "logInflight": 0,
+   "replays": 0,
+   "adapterTravelPx": 387.66,
+   "worst": {
+    "maxErr": 4.624,
+    "bound": 1,
+    "corner": "br",
+    "w": 101.98,
+    "h": 56,
+    "rExpected": 28
+   },
+   "disagreePx": 0,
+   "rSpread": 0,
+   "frames": [
+    {
+     "t": 30,
+     "w": 101.98,
+     "h": 56,
+     "maxErr": 4.624,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 52,
+     "w": 101.98,
+     "h": 56,
+     "maxErr": 4.624,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 75,
+     "w": 101.98,
+     "h": 56,
+     "maxErr": 4.624,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 106,
+     "w": 101.98,
+     "h": 56,
+     "maxErr": 4.624,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 135,
+     "w": 101.98,
+     "h": 56,
+     "maxErr": 4.624,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 167,
+     "w": 101.98,
+     "h": 56,
+     "maxErr": 4.624,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 199,
+     "w": 101.98,
+     "h": 56,
+     "maxErr": 4.624,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 225,
+     "w": 101.98,
+     "h": 56,
+     "maxErr": 4.624,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 245,
+     "w": 101.98,
+     "h": 56,
+     "maxErr": 4.624,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 270,
+     "w": 101.98,
+     "h": 56,
+     "maxErr": 4.624,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 298,
+     "w": 101.98,
+     "h": 56,
+     "maxErr": 4.624,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 327,
+     "w": 101.98,
+     "h": 56,
+     "maxErr": 4.624,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 355,
+     "w": 101.98,
+     "h": 56,
+     "maxErr": 4.624,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 377,
+     "w": 101.98,
+     "h": 56,
+     "maxErr": 4.624,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 401,
+     "w": 101.98,
+     "h": 56,
+     "maxErr": 4.624,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 434,
+     "w": 101.98,
+     "h": 56,
+     "maxErr": 4.624,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 464,
+     "w": 101.98,
+     "h": 56,
+     "maxErr": 4.624,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 492,
+     "w": 101.98,
+     "h": 56,
+     "maxErr": 4.624,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 526,
+     "w": 101.98,
+     "h": 56,
+     "maxErr": 4.624,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 554,
+     "w": 489.98,
+     "h": 56,
+     "maxErr": 0.137,
+     "r": 28,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 579,
+     "w": 489.98,
+     "h": 56,
+     "maxErr": 0.137,
+     "r": 28,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 604,
+     "w": 489.98,
+     "h": 56,
+     "maxErr": 0.137,
+     "r": 28,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 625,
+     "w": 489.98,
+     "h": 56,
+     "maxErr": 0.137,
+     "r": 28,
+     "pre": 489.66,
+     "post": 489.66
+    }
+   ],
+   "summary": "23 screenshot sample(s) (0 in flight; rAF log 0 frames in flight), 2 distinct painted extents over an adapter travel of 387.66 px (moves: ≥ 3 when ≥ 20 px); worst corner 4.624 px at br (plate 101.98x56, r 28; bound 1); silhouette outside the adapter's extent by 0 px  ⟶ FAILED: corner, moves",
+   "load": 9.93
+  },
+  {
+   "engine": "chromium",
+   "cell": "morph·warm-collapse",
+   "pass": false,
+   "unmeasured": false,
+   "failed": [
+    "corner"
+   ],
+   "unjudged": [],
+   "samples": 24,
+   "how": "screenshot",
+   "distinctExtents": 9,
+   "inflight": 9,
+   "logInflight": 33,
+   "replays": 0,
+   "adapterTravelPx": 387.66,
+   "worst": {
+    "maxErr": 6.266,
+    "bound": 1,
+    "corner": "tl",
+    "w": 102,
+    "h": 56,
+    "rExpected": 28
+   },
+   "disagreePx": 0,
+   "rSpread": 0,
+   "frames": [
+    {
+     "t": 26,
+     "w": 413.83,
+     "h": 56,
+     "maxErr": 1.268,
+     "r": 28,
+     "pre": 459.12,
+     "post": 392.74
+    },
+    {
+     "t": 58,
+     "w": 318.82,
+     "h": 56,
+     "maxErr": 2.983,
+     "r": 28,
+     "pre": 392.74,
+     "post": 275.7
+    },
+    {
+     "t": 90,
+     "w": 238.95,
+     "h": 56,
+     "maxErr": 4.599,
+     "r": 28,
+     "pre": 275.7,
+     "post": 206.45
+    },
+    {
+     "t": 114,
+     "w": 180.41,
+     "h": 56,
+     "maxErr": 5.799,
+     "r": 28,
+     "pre": 206.45,
+     "post": 168.89
+    },
+    {
+     "t": 144,
+     "w": 140.9,
+     "h": 56,
+     "maxErr": 6.007,
+     "r": 28,
+     "pre": 168.89,
+     "post": 133.86
+    },
+    {
+     "t": 172,
+     "w": 122.45,
+     "h": 56,
+     "maxErr": 6.136,
+     "r": 28,
+     "pre": 133.86,
+     "post": 115.91
+    },
+    {
+     "t": 202,
+     "w": 110.27,
+     "h": 56,
+     "maxErr": 6.187,
+     "r": 28,
+     "pre": 115.91,
+     "post": 106.84
+    },
+    {
+     "t": 229,
+     "w": 104.26,
+     "h": 56,
+     "maxErr": 6.191,
+     "r": 28,
+     "pre": 106.84,
+     "post": 103.3
+    },
+    {
+     "t": 252,
+     "w": 102,
+     "h": 56,
+     "maxErr": 6.266,
+     "r": 28,
+     "pre": 103.3,
+     "post": 102
+    },
+    {
+     "t": 274,
+     "w": 102,
+     "h": 56,
+     "maxErr": 6.266,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 298,
+     "w": 102,
+     "h": 56,
+     "maxErr": 6.266,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 319,
+     "w": 102,
+     "h": 56,
+     "maxErr": 6.266,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 342,
+     "w": 102,
+     "h": 56,
+     "maxErr": 6.266,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 365,
+     "w": 102,
+     "h": 56,
+     "maxErr": 6.266,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 388,
+     "w": 102,
+     "h": 56,
+     "maxErr": 6.266,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 413,
+     "w": 102,
+     "h": 56,
+     "maxErr": 6.266,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 447,
+     "w": 102,
+     "h": 56,
+     "maxErr": 6.266,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 476,
+     "w": 102,
+     "h": 56,
+     "maxErr": 6.266,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 503,
+     "w": 102,
+     "h": 56,
+     "maxErr": 6.266,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 532,
+     "w": 102,
+     "h": 56,
+     "maxErr": 6.266,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 552,
+     "w": 101.98,
+     "h": 56,
+     "maxErr": 4.624,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 573,
+     "w": 101.98,
+     "h": 56,
+     "maxErr": 4.624,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 601,
+     "w": 101.98,
+     "h": 56,
+     "maxErr": 4.624,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 634,
+     "w": 101.98,
+     "h": 56,
+     "maxErr": 4.624,
+     "r": 28,
+     "pre": 102,
+     "post": 102
+    }
+   ],
+   "summary": "24 screenshot sample(s) (9 in flight; rAF log 33 frames in flight), 9 distinct painted extents over an adapter travel of 387.66 px (moves: ≥ 3 when ≥ 20 px); worst corner 6.266 px at tl (plate 102x56, r 28; bound 1); silhouette outside the adapter's extent by 0 px  ⟶ FAILED: corner",
+   "load": 9.93
+  },
+  {
+   "engine": "chromium",
+   "cell": "morph·warm-expand",
+   "pass": false,
+   "unmeasured": false,
+   "failed": [
+    "corner"
+   ],
+   "unjudged": [],
+   "samples": 20,
+   "how": "screenshot",
+   "distinctExtents": 9,
+   "inflight": 8,
+   "logInflight": 33,
+   "replays": 0,
+   "adapterTravelPx": 387.66,
+   "worst": {
+    "maxErr": 5.751,
+    "bound": 1,
+    "corner": "tr",
+    "w": 180.75,
+    "h": 56,
+    "rExpected": 28
+   },
+   "disagreePx": 0,
+   "rSpread": 0,
+   "frames": [
+    {
+     "t": 39,
+     "w": 180.75,
+     "h": 56,
+     "maxErr": 5.751,
+     "r": 28,
+     "pre": 121.27,
+     "post": 230.38
+    },
+    {
+     "t": 74,
+     "w": 295.95,
+     "h": 56,
+     "maxErr": 3.516,
+     "r": 28,
+     "pre": 251.26,
+     "post": 338.45
+    },
+    {
+     "t": 100,
+     "w": 371.87,
+     "h": 56,
+     "maxErr": 2.009,
+     "r": 28,
+     "pre": 338.45,
+     "post": 400.58
+    },
+    {
+     "t": 130,
+     "w": 423.73,
+     "h": 56,
+     "maxErr": 1.104,
+     "r": 28,
+     "pre": 400.58,
+     "post": 442.46
+    },
+    {
+     "t": 162,
+     "w": 457.79,
+     "h": 56,
+     "maxErr": 0.606,
+     "r": 28,
+     "pre": 442.46,
+     "post": 467.13
+    },
+    {
+     "t": 189,
+     "w": 474.99,
+     "h": 56,
+     "maxErr": 0.417,
+     "r": 28,
+     "pre": 467.13,
+     "post": 480.47
+    },
+    {
+     "t": 218,
+     "w": 484.8,
+     "h": 56,
+     "maxErr": 0.211,
+     "r": 28,
+     "pre": 480.47,
+     "post": 487.12
+    },
+    {
+     "t": 248,
+     "w": 488.88,
+     "h": 56,
+     "maxErr": 0.21,
+     "r": 28,
+     "pre": 487.12,
+     "post": 490
+    },
+    {
+     "t": 275,
+     "w": 489.98,
+     "h": 56,
+     "maxErr": 0.137,
+     "r": 28,
+     "pre": 490,
+     "post": 490
+    },
+    {
+     "t": 309,
+     "w": 489.98,
+     "h": 56,
+     "maxErr": 0.137,
+     "r": 28,
+     "pre": 490,
+     "post": 490
+    },
+    {
+     "t": 337,
+     "w": 489.98,
+     "h": 56,
+     "maxErr": 0.137,
+     "r": 28,
+     "pre": 490,
+     "post": 490
+    },
+    {
+     "t": 378,
+     "w": 489.98,
+     "h": 56,
+     "maxErr": 0.137,
+     "r": 28,
+     "pre": 490,
+     "post": 490
+    },
+    {
+     "t": 406,
+     "w": 489.98,
+     "h": 56,
+     "maxErr": 0.137,
+     "r": 28,
+     "pre": 490,
+     "post": 490
+    },
+    {
+     "t": 436,
+     "w": 489.98,
+     "h": 56,
+     "maxErr": 0.137,
+     "r": 28,
+     "pre": 490,
+     "post": 490
+    },
+    {
+     "t": 463,
+     "w": 489.98,
+     "h": 56,
+     "maxErr": 0.137,
+     "r": 28,
+     "pre": 490,
+     "post": 490
+    },
+    {
+     "t": 499,
+     "w": 489.98,
+     "h": 56,
+     "maxErr": 0.137,
+     "r": 28,
+     "pre": 490,
+     "post": 490
+    },
+    {
+     "t": 529,
+     "w": 489.98,
+     "h": 56,
+     "maxErr": 0.137,
+     "r": 28,
+     "pre": 490,
+     "post": 490
+    },
+    {
+     "t": 556,
+     "w": 489.98,
+     "h": 56,
+     "maxErr": 0.137,
+     "r": 28,
+     "pre": 490,
+     "post": 489.66
+    },
+    {
+     "t": 584,
+     "w": 489.98,
+     "h": 56,
+     "maxErr": 0.137,
+     "r": 28,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 612,
+     "w": 489.98,
+     "h": 56,
+     "maxErr": 0.137,
+     "r": 28,
+     "pre": 489.66,
+     "post": 489.66
+    }
+   ],
+   "summary": "20 screenshot sample(s) (8 in flight; rAF log 33 frames in flight), 9 distinct painted extents over an adapter travel of 387.66 px (moves: ≥ 3 when ≥ 20 px); worst corner 5.751 px at tr (plate 180.75x56, r 28; bound 1); silhouette outside the adapter's extent by 0 px  ⟶ FAILED: corner",
+   "load": 9.93
+  },
+  {
+   "engine": "chromium",
+   "cell": "vmorph·collapsed-rest",
+   "pass": false,
+   "failed": [
+    "corner"
+   ],
+   "worst": {
+    "maxErr": 5.923,
+    "corner": "bl",
+    "w": 64,
+    "h": 109.98,
+    "rExpected": 32
+   },
+   "adapterDeltaPx": 0.02,
+   "rootOutPx": 0.02,
+   "seatOutPx": 0,
+   "summary": "plate 64x109.98, r 32, worst 5.923 px at bl (bound 1); silhouette vs extent() Δ 0.02 px (bound 1); root outside the silhouette 0.02 px, seats 0 px (bound 1)  ⟶ FAILED: corner",
+   "load": 9.93
+  },
+  {
+   "engine": "chromium",
+   "cell": "vmorph·first-expand",
+   "pass": false,
+   "unmeasured": false,
+   "failed": [
+    "corner",
+    "moves"
+   ],
+   "unjudged": [],
+   "samples": 25,
+   "how": "screenshot",
+   "distinctExtents": 2,
+   "inflight": 0,
+   "logInflight": 0,
+   "replays": 0,
+   "adapterTravelPx": 163,
+   "worst": {
+    "maxErr": 5.923,
+    "bound": 1,
+    "corner": "bl",
+    "w": 64,
+    "h": 109.98,
+    "rExpected": 32
+   },
+   "disagreePx": 0,
+   "rSpread": 0,
+   "frames": [
+    {
+     "t": 24,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 52,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 79,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 102,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 129,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 156,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 187,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 214,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 242,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 264,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 286,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 308,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 328,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 354,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 374,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 396,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 421,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 449,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 470,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 493,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 515,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 538,
+     "w": 64,
+     "h": 273,
+     "maxErr": 0.137,
+     "r": 32,
+     "pre": 110,
+     "post": 273
+    },
+    {
+     "t": 559,
+     "w": 64,
+     "h": 273,
+     "maxErr": 0.137,
+     "r": 32,
+     "pre": 273,
+     "post": 273
+    },
+    {
+     "t": 582,
+     "w": 64,
+     "h": 273,
+     "maxErr": 0.137,
+     "r": 32,
+     "pre": 273,
+     "post": 273
+    },
+    {
+     "t": 603,
+     "w": 64,
+     "h": 273,
+     "maxErr": 0.137,
+     "r": 32,
+     "pre": 273,
+     "post": 273
+    }
+   ],
+   "summary": "25 screenshot sample(s) (0 in flight; rAF log 0 frames in flight), 2 distinct painted extents over an adapter travel of 163 px (moves: ≥ 3 when ≥ 20 px); worst corner 5.923 px at bl (plate 64x109.98, r 32; bound 1); silhouette outside the adapter's extent by 0 px  ⟶ FAILED: corner, moves",
+   "load": 10.01
+  },
+  {
+   "engine": "chromium",
+   "cell": "vmorph·warm-collapse",
+   "pass": false,
+   "unmeasured": false,
+   "failed": [
+    "corner",
+    "agree"
+   ],
+   "unjudged": [],
+   "samples": 34,
+   "how": "screenshot",
+   "distinctExtents": 18,
+   "inflight": 9,
+   "logInflight": 32,
+   "replays": 0,
+   "adapterTravelPx": 163,
+   "worst": {
+    "maxErr": 11.956,
+    "bound": 1,
+    "corner": "tr",
+    "w": 64,
+    "h": 259.83,
+    "rExpected": 32
+   },
+   "disagreePx": 0.66,
+   "rSpread": 0,
+   "frames": [
+    {
+     "t": 31,
+     "w": 64,
+     "h": 259.83,
+     "maxErr": 11.956,
+     "r": 32,
+     "pre": 273,
+     "post": 242.15
+    },
+    {
+     "t": 66,
+     "w": 64,
+     "h": 211.76,
+     "maxErr": 10.233,
+     "r": 32,
+     "pre": 242.15,
+     "post": 191.41
+    },
+    {
+     "t": 90,
+     "w": 64,
+     "h": 175.31,
+     "maxErr": 8.661,
+     "r": 32,
+     "pre": 191.41,
+     "post": 167.6
+    },
+    {
+     "t": 120,
+     "w": 64,
+     "h": 146.83,
+     "maxErr": 7.095,
+     "r": 32,
+     "pre": 167.6,
+     "post": 142.87
+    },
+    {
+     "t": 150,
+     "w": 64,
+     "h": 129.83,
+     "maxErr": 6.057,
+     "r": 32,
+     "pre": 138.1,
+     "post": 127.42
+    },
+    {
+     "t": 182,
+     "w": 64,
+     "h": 119.91,
+     "maxErr": 5.355,
+     "r": 32,
+     "pre": 124.84,
+     "post": 116.43
+    },
+    {
+     "t": 209,
+     "w": 64,
+     "h": 113.93,
+     "maxErr": 4.902,
+     "r": 32,
+     "pre": 116.43,
+     "post": 113.04
+    },
+    {
+     "t": 238,
+     "w": 64,
+     "h": 111.15,
+     "maxErr": 4.678,
+     "r": 32,
+     "pre": 113.04,
+     "post": 110.73
+    },
+    {
+     "t": 258,
+     "w": 64,
+     "h": 110.16,
+     "maxErr": 4.605,
+     "r": 32,
+     "pre": 110.73,
+     "post": 110
+    },
+    {
+     "t": 280,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 4.591,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 303,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 4.591,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 325,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 4.591,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 348,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 4.591,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 373,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 4.591,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 399,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 4.591,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 420,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 4.591,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 445,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 4.591,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 473,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 4.591,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 495,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 4.591,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 518,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 4.591,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 540,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 4.591,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 569,
+     "w": 64,
+     "h": 45.13,
+     "maxErr": 6.938,
+     "r": 32,
+     "pre": 110,
+     "post": 46.79
+    },
+    {
+     "t": 589,
+     "w": 64,
+     "h": 52.69,
+     "maxErr": 7.06,
+     "r": 32,
+     "pre": 46.79,
+     "post": 56.68
+    },
+    {
+     "t": 614,
+     "w": 64,
+     "h": 65.21,
+     "maxErr": 6.914,
+     "r": 32,
+     "pre": 56.68,
+     "post": 68.36
+    },
+    {
+     "t": 639,
+     "w": 64,
+     "h": 76.79,
+     "maxErr": 6.86,
+     "r": 32,
+     "pre": 68.36,
+     "post": 80.05
+    },
+    {
+     "t": 657,
+     "w": 64,
+     "h": 86.69,
+     "maxErr": 6.626,
+     "r": 32,
+     "pre": 80.05,
+     "post": 89.67
+    },
+    {
+     "t": 681,
+     "w": 64,
+     "h": 94.8,
+     "maxErr": 6.361,
+     "r": 32,
+     "pre": 89.67,
+     "post": 96.24
+    },
+    {
+     "t": 701,
+     "w": 64,
+     "h": 100.23,
+     "maxErr": 6.305,
+     "r": 32,
+     "pre": 96.24,
+     "post": 101.86
+    },
+    {
+     "t": 726,
+     "w": 64,
+     "h": 104.49,
+     "maxErr": 6.15,
+     "r": 32,
+     "pre": 101.86,
+     "post": 105.54
+    },
+    {
+     "t": 759,
+     "w": 64,
+     "h": 107.2,
+     "maxErr": 5.97,
+     "r": 32,
+     "pre": 105.54,
+     "post": 108.09
+    },
+    {
+     "t": 780,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 108.09,
+     "post": 110
+    },
+    {
+     "t": 803,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 822,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    },
+    {
+     "t": 846,
+     "w": 64,
+     "h": 109.98,
+     "maxErr": 5.923,
+     "r": 32,
+     "pre": 110,
+     "post": 110
+    }
+   ],
+   "summary": "34 screenshot sample(s) (9 in flight; rAF log 32 frames in flight), 18 distinct painted extents over an adapter travel of 163 px (moves: ≥ 3 when ≥ 20 px); worst corner 11.956 px at tr (plate 64x259.83, r 32; bound 1); silhouette outside the adapter's extent by 0.66 px  ⟶ FAILED: corner, agree",
+   "load": 10.01
+  },
+  {
+   "engine": "chromium",
+   "cell": "vmorph·warm-expand",
+   "pass": false,
+   "unmeasured": false,
+   "failed": [
+    "corner"
+   ],
+   "unjudged": [],
+   "samples": 25,
+   "how": "screenshot",
+   "distinctExtents": 10,
+   "inflight": 10,
+   "logInflight": 31,
+   "replays": 0,
+   "adapterTravelPx": 163,
+   "worst": {
+    "maxErr": 11.876,
+    "bound": 1,
+    "corner": "tr",
+    "w": 64,
+    "h": 259.87,
+    "rExpected": 32
+   },
+   "disagreePx": 0,
+   "rSpread": 0,
+   "frames": [
+    {
+     "t": 27,
+     "w": 64,
+     "h": 133.96,
+     "maxErr": 6.339,
+     "r": 32,
+     "pre": 110,
+     "post": 142.69
+    },
+    {
+     "t": 64,
+     "w": 64,
+     "h": 177.06,
+     "maxErr": 8.759,
+     "r": 32,
+     "pre": 153.17,
+     "post": 193.89
+    },
+    {
+     "t": 92,
+     "w": 64,
+     "h": 209.84,
+     "maxErr": 10.155,
+     "r": 32,
+     "pre": 193.89,
+     "post": 224.42
+    },
+    {
+     "t": 116,
+     "w": 64,
+     "h": 236.12,
+     "maxErr": 11.136,
+     "r": 32,
+     "pre": 224.42,
+     "post": 242.71
+    },
+    {
+     "t": 136,
+     "w": 64,
+     "h": 249.98,
+     "maxErr": 11.605,
+     "r": 32,
+     "pre": 242.71,
+     "post": 253.17
+    },
+    {
+     "t": 160,
+     "w": 64,
+     "h": 259.87,
+     "maxErr": 11.876,
+     "r": 32,
+     "pre": 253.17,
+     "post": 262.54
+    },
+    {
+     "t": 182,
+     "w": 64,
+     "h": 265.95,
+     "maxErr": 0.338,
+     "r": 32,
+     "pre": 262.54,
+     "post": 267.51
+    },
+    {
+     "t": 205,
+     "w": 64,
+     "h": 269.78,
+     "maxErr": 0.194,
+     "r": 32,
+     "pre": 267.51,
+     "post": 270.55
+    },
+    {
+     "t": 227,
+     "w": 64,
+     "h": 271.78,
+     "maxErr": 0.188,
+     "r": 32,
+     "pre": 270.55,
+     "post": 272.15
+    },
+    {
+     "t": 251,
+     "w": 64,
+     "h": 272.91,
+     "maxErr": 0.141,
+     "r": 32,
+     "pre": 272.15,
+     "post": 272.97
+    },
+    {
+     "t": 274,
+     "w": 64,
+     "h": 273,
+     "maxErr": 0.137,
+     "r": 32,
+     "pre": 272.97,
+     "post": 273
+    },
+    {
+     "t": 294,
+     "w": 64,
+     "h": 273,
+     "maxErr": 0.137,
+     "r": 32,
+     "pre": 273,
+     "post": 273
+    },
+    {
+     "t": 317,
+     "w": 64,
+     "h": 273,
+     "maxErr": 0.137,
+     "r": 32,
+     "pre": 273,
+     "post": 273
+    },
+    {
+     "t": 339,
+     "w": 64,
+     "h": 273,
+     "maxErr": 0.137,
+     "r": 32,
+     "pre": 273,
+     "post": 273
+    },
+    {
+     "t": 364,
+     "w": 64,
+     "h": 273,
+     "maxErr": 0.137,
+     "r": 32,
+     "pre": 273,
+     "post": 273
+    },
+    {
+     "t": 388,
+     "w": 64,
+     "h": 273,
+     "maxErr": 0.137,
+     "r": 32,
+     "pre": 273,
+     "post": 273
+    },
+    {
+     "t": 410,
+     "w": 64,
+     "h": 273,
+     "maxErr": 0.137,
+     "r": 32,
+     "pre": 273,
+     "post": 273
+    },
+    {
+     "t": 431,
+     "w": 64,
+     "h": 273,
+     "maxErr": 0.137,
+     "r": 32,
+     "pre": 273,
+     "post": 273
+    },
+    {
+     "t": 455,
+     "w": 64,
+     "h": 273,
+     "maxErr": 0.137,
+     "r": 32,
+     "pre": 273,
+     "post": 273
+    },
+    {
+     "t": 477,
+     "w": 64,
+     "h": 273,
+     "maxErr": 0.137,
+     "r": 32,
+     "pre": 273,
+     "post": 273
+    },
+    {
+     "t": 498,
+     "w": 64,
+     "h": 273,
+     "maxErr": 0.137,
+     "r": 32,
+     "pre": 273,
+     "post": 273
+    },
+    {
+     "t": 524,
+     "w": 64,
+     "h": 273,
+     "maxErr": 0.137,
+     "r": 32,
+     "pre": 273,
+     "post": 273
+    },
+    {
+     "t": 552,
+     "w": 64,
+     "h": 273,
+     "maxErr": 0.137,
+     "r": 32,
+     "pre": 273,
+     "post": 273
+    },
+    {
+     "t": 580,
+     "w": 64,
+     "h": 273,
+     "maxErr": 0.137,
+     "r": 32,
+     "pre": 273,
+     "post": 273
+    },
+    {
+     "t": 601,
+     "w": 64,
+     "h": 273,
+     "maxErr": 0.137,
+     "r": 32,
+     "pre": 273,
+     "post": 273
+    }
+   ],
+   "summary": "25 screenshot sample(s) (10 in flight; rAF log 31 frames in flight), 10 distinct painted extents over an adapter travel of 163 px (moves: ≥ 3 when ≥ 20 px); worst corner 11.876 px at tr (plate 64x259.87, r 32; bound 1); silhouette outside the adapter's extent by 0 px  ⟶ FAILED: corner",
+   "load": 10.01
+  },
+  {
+   "engine": "chromium",
+   "cell": "card·collapsed-rest",
+   "pass": false,
+   "failed": [
+    "corner"
+   ],
+   "worst": {
+    "maxErr": 2.829,
+    "corner": "bl",
+    "w": 102,
+    "h": 56,
+    "rExpected": 17.18
+   },
+   "adapterDeltaPx": 0,
+   "rootOutPx": 0,
+   "seatOutPx": 0,
+   "summary": "plate 102x56, r 17.18 (fitted), worst 2.829 px at bl (bound 1); silhouette vs extent() Δ 0 px (bound 1); root outside the silhouette 0 px, seats 0 px (bound 1)  ⟶ FAILED: corner",
+   "load": 10.01
+  },
+  {
+   "engine": "chromium",
+   "cell": "card·first-expand",
+   "pass": false,
+   "unmeasured": false,
+   "restPairR": [
+    17.18,
+    23.93
+   ],
+   "failed": [
+    "corner",
+    "moves"
+   ],
+   "unjudged": [
+    "card"
+   ],
+   "samples": 73,
+   "how": "screenshot",
+   "distinctExtents": 2,
+   "inflight": 0,
+   "logInflight": 0,
+   "replays": 5,
+   "cardStarved": true,
+   "adapterTravelPx": 387.66,
+   "worst": {
+    "maxErr": 2.829,
+    "bound": 1,
+    "corner": "bl",
+    "w": 102,
+    "h": 56,
+    "rExpected": 17.18
+   },
+   "disagreePx": 0,
+   "rSpread": 0,
+   "restPairPx": 6.75,
+   "frames": [
+    {
+     "t": 82,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 149,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 221,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 289,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 359,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 422,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 492,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 558,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 489.66
+    },
+    {
+     "t": 621,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 687,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 752,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 814,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 68,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 137,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 214,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 269,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 329,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 393,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 462,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 526,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 489.66
+    },
+    {
+     "t": 591,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 648,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 726,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 789,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 73,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 133,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 196,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 258,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 315,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 372,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 433,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 492,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 546,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 609,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 672,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 733,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 795,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 65,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 133,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 196,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 260,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 330,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 397,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 468,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 534,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 600,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 102,
+     "post": 489.66
+    },
+    {
+     "t": 659,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 727,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 790,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 81,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 162,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 241,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 312,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 379,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 457,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 530,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 597,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 102,
+     "post": 489.66
+    },
+    {
+     "t": 656,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 715,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 773,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 65,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 134,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 203,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 261,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 326,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 395,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 453,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 512,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 575,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 489.66
+    },
+    {
+     "t": 643,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 704,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 761,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 822,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    }
+   ],
+   "summary": "73 screenshot sample(s) over 6 runs (H5-12) (0 in flight, card bound ≥ 6; rAF log 0 frames in flight), 2 distinct painted extents over an adapter travel of 387.66 px (moves: ≥ 3 when ≥ 20 px); worst corner 2.829 px at bl (plate 102x56, r 17.18; bound 1); silhouette outside the adapter's extent by 0 px; fitted r outside the rests' range [16.18, 24.93] by 0 px (rests 17.18 / 23.93 by this instrument ± 1), lossless rest radii differ by 6.75 px (bound 1)  ⟶ FAILED: corner, moves",
+   "load": 8.21
+  },
+  {
+   "engine": "chromium",
+   "cell": "card·warm-collapse",
+   "pass": false,
+   "unmeasured": false,
+   "restPairR": [
+    17.18,
+    23.93
+   ],
+   "failed": [
+    "corner",
+    "card"
+   ],
+   "unjudged": [],
+   "samples": 21,
+   "how": "screenshot",
+   "distinctExtents": 9,
+   "inflight": 8,
+   "logInflight": 65,
+   "replays": 5,
+   "adapterTravelPx": 387.66,
+   "worst": {
+    "maxErr": 2.829,
+    "bound": 1,
+    "corner": "bl",
+    "w": 102,
+    "h": 56,
+    "rExpected": 17.18
+   },
+   "disagreePx": 0,
+   "rSpread": 5,
+   "restPairPx": 6.75,
+   "frames": [
+    {
+     "t": 68,
+     "w": 435.74,
+     "h": 56,
+     "maxErr": 0.426,
+     "r": 26.43,
+     "pre": 490,
+     "post": 274.33
+    },
+    {
+     "t": 131,
+     "w": 237.35,
+     "h": 56,
+     "maxErr": 1.22,
+     "r": 18.93,
+     "pre": 274.33,
+     "post": 157.84
+    },
+    {
+     "t": 201,
+     "w": 135.97,
+     "h": 56,
+     "maxErr": 1.4,
+     "r": 13.43,
+     "pre": 157.84,
+     "post": 109.05
+    },
+    {
+     "t": 261,
+     "w": 105.99,
+     "h": 56,
+     "maxErr": 1.376,
+     "r": 11.43,
+     "pre": 109.05,
+     "post": 102
+    },
+    {
+     "t": 320,
+     "w": 102,
+     "h": 56,
+     "maxErr": 1.382,
+     "r": 11.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 379,
+     "w": 102,
+     "h": 56,
+     "maxErr": 1.382,
+     "r": 11.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 437,
+     "w": 102,
+     "h": 56,
+     "maxErr": 1.382,
+     "r": 11.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 495,
+     "w": 102,
+     "h": 56,
+     "maxErr": 1.382,
+     "r": 11.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 557,
+     "w": 102,
+     "h": 56,
+     "maxErr": 1.382,
+     "r": 11.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 618,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 677,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 66,
+     "w": 430.9,
+     "h": 56,
+     "maxErr": 0.366,
+     "r": 26.05,
+     "pre": 470.73,
+     "post": 267.58
+    },
+    {
+     "t": 134,
+     "w": 233.15,
+     "h": 56,
+     "maxErr": 1.224,
+     "r": 18.68,
+     "pre": 267.58,
+     "post": 147.2
+    },
+    {
+     "t": 202,
+     "w": 135.47,
+     "h": 56,
+     "maxErr": 1.423,
+     "r": 13.55,
+     "pre": 147.2,
+     "post": 107.94
+    },
+    {
+     "t": 270,
+     "w": 105.31,
+     "h": 56,
+     "maxErr": 1.45,
+     "r": 11.68,
+     "pre": 107.94,
+     "post": 102
+    },
+    {
+     "t": 338,
+     "w": 102,
+     "h": 56,
+     "maxErr": 1.382,
+     "r": 11.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 396,
+     "w": 102,
+     "h": 56,
+     "maxErr": 1.382,
+     "r": 11.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 467,
+     "w": 102,
+     "h": 56,
+     "maxErr": 1.382,
+     "r": 11.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 550,
+     "w": 102,
+     "h": 56,
+     "maxErr": 1.382,
+     "r": 11.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 613,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    },
+    {
+     "t": 673,
+     "w": 102,
+     "h": 56,
+     "maxErr": 2.829,
+     "r": 17.18,
+     "pre": 102,
+     "post": 102
+    }
+   ],
+   "summary": "21 screenshot sample(s) over 6 runs (H5-12) (8 in flight, card bound ≥ 6; rAF log 65 frames in flight), 9 distinct painted extents over an adapter travel of 387.66 px (moves: ≥ 3 when ≥ 20 px); worst corner 2.829 px at bl (plate 102x56, r 17.18; bound 1); silhouette outside the adapter's extent by 0 px; fitted r outside the rests' range [16.18, 24.93] by 5 px (rests 17.18 / 23.93 by this instrument ± 1), lossless rest radii differ by 6.75 px (bound 1)  ⟶ FAILED: corner, card",
+   "load": 8.21
+  },
+  {
+   "engine": "chromium",
+   "cell": "card·warm-expand",
+   "pass": false,
+   "unmeasured": false,
+   "restPairR": [
+    17.18,
+    23.93
+   ],
+   "failed": [
+    "corner",
+    "card"
+   ],
+   "unjudged": [],
+   "samples": 22,
+   "how": "screenshot",
+   "distinctExtents": 9,
+   "inflight": 8,
+   "logInflight": 66,
+   "replays": 5,
+   "adapterTravelPx": 387.66,
+   "worst": {
+    "maxErr": 1.41,
+    "bound": 1,
+    "corner": "tl",
+    "w": 139.23,
+    "h": 56,
+    "rExpected": 13.68
+   },
+   "disagreePx": 0,
+   "rSpread": 13.38,
+   "restPairPx": 6.75,
+   "frames": [
+    {
+     "t": 62,
+     "w": 183.59,
+     "h": 56,
+     "maxErr": 1.326,
+     "r": 16.18,
+     "pre": 139.5,
+     "post": 318.76
+    },
+    {
+     "t": 121,
+     "w": 357.97,
+     "h": 56,
+     "maxErr": 0.648,
+     "r": 23.18,
+     "pre": 318.76,
+     "post": 436.45
+    },
+    {
+     "t": 205,
+     "w": 450.73,
+     "h": 56,
+     "maxErr": 0.36,
+     "r": 26.93,
+     "pre": 436.45,
+     "post": 484.78
+    },
+    {
+     "t": 271,
+     "w": 487.75,
+     "h": 56,
+     "maxErr": 0.237,
+     "r": 27.93,
+     "pre": 484.78,
+     "post": 490
+    },
+    {
+     "t": 334,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.4,
+     "r": 2.8,
+     "pre": 490,
+     "post": 490
+    },
+    {
+     "t": 401,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.101,
+     "r": 5.3,
+     "pre": 490,
+     "post": 490
+    },
+    {
+     "t": 470,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.111,
+     "r": 17.8,
+     "pre": 490,
+     "post": 490
+    },
+    {
+     "t": 535,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.11,
+     "r": 22.93,
+     "pre": 490,
+     "post": 490
+    },
+    {
+     "t": 600,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 490,
+     "post": 489.66
+    },
+    {
+     "t": 663,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 739,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 56,
+     "w": 139.23,
+     "h": 56,
+     "maxErr": 1.41,
+     "r": 13.68,
+     "pre": 102,
+     "post": 279.55
+    },
+    {
+     "t": 122,
+     "w": 319.94,
+     "h": 56,
+     "maxErr": 0.88,
+     "r": 22.18,
+     "pre": 279.55,
+     "post": 423.95
+    },
+    {
+     "t": 183,
+     "w": 442.9,
+     "h": 56,
+     "maxErr": 0.334,
+     "r": 26.55,
+     "pre": 423.95,
+     "post": 475.23
+    },
+    {
+     "t": 254,
+     "w": 482.96,
+     "h": 56,
+     "maxErr": 0.128,
+     "r": 27.68,
+     "pre": 477.98,
+     "post": 490
+    },
+    {
+     "t": 319,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.089,
+     "r": 4.8,
+     "pre": 490,
+     "post": 490
+    },
+    {
+     "t": 386,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.4,
+     "r": 2.8,
+     "pre": 490,
+     "post": 490
+    },
+    {
+     "t": 456,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.112,
+     "r": 14.43,
+     "pre": 490,
+     "post": 490
+    },
+    {
+     "t": 521,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.113,
+     "r": 21.8,
+     "pre": 490,
+     "post": 490
+    },
+    {
+     "t": 587,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.091,
+     "r": 23.68,
+     "pre": 490,
+     "post": 489.66
+    },
+    {
+     "t": 653,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    },
+    {
+     "t": 716,
+     "w": 490,
+     "h": 56,
+     "maxErr": 0.086,
+     "r": 23.93,
+     "pre": 489.66,
+     "post": 489.66
+    }
+   ],
+   "summary": "22 screenshot sample(s) over 6 runs (H5-12) (8 in flight, card bound ≥ 6; rAF log 66 frames in flight), 9 distinct painted extents over an adapter travel of 387.66 px (moves: ≥ 3 when ≥ 20 px); worst corner 1.41 px at tl (plate 139.23x56, r 13.68; bound 1); silhouette outside the adapter's extent by 0 px; fitted r outside the rests' range [16.18, 24.93] by 13.38 px (rests 17.18 / 23.93 by this instrument ± 1), lossless rest radii differ by 6.75 px (bound 1)  ⟶ FAILED: corner, card",
+   "load": 8.21
+  }
+ ]
+}

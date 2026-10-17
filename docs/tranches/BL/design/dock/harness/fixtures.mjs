@@ -37,6 +37,13 @@
 //     __scene.stretch(px) holds the run px wider than its content (H3-6);
 //   · edge scene PASS variant `splitcaps`: the plate paints its straights, two cap elements
 //     outside the plate paint the arcs, and edge() names them (H3-9).
+// H5 additions (pass-5/H5.md):
+//   · a text seat paints each character in its own span (.g); a glyph that a moving clip edge cuts to between 5 and
+//     95 % of its ink paints at 0.4 opacity (soften()), so the fixture's wipe leaves no glyph stub (H5-3). It is the
+//     rule's own allowance, a seam with no glyph-sharp edge; plant `stub` turns it off;
+//   · facility: an outside press collapses the dock at once, mid-morph too (C8, O-91); under max-height 30rem the
+//     dock takes the short rung (pad 4 px: a 52 px pill of 44 px seats, C9, O-74e); a rail run whose roving tabindex
+//     arrows reach Seat 1 (`roving`, a PASS variant of W2).
 //
 // ?scene=  fit | rail | long | morph | vmorph | swap | menu | compact | rim | vrim | cwidth |
 //          depth | nested | tick | seatgrow | hidden | form | edge
@@ -60,8 +67,11 @@ export const FAULTS = {
     // R5 nohit, seatmiss, ghosthit; CF (the facility scene) and L1 plants are listed in their witnesses
     H4: ["splice", "sliver", "lanesnap", "lanecancel", "retargetpop", "ctxloss", "cardstep", "hitpairunnamed", "nohit", "seatmiss", "ghosthit", "glowhalo", "gleam", "shimmer",
         "tilesq", "morphsnap", "nofocus", "persistentinert", "focuslost", "menucollapse", "narrowover", "noscroll", "tapthrough"],
+    // H5 (pass-5/H5.md): W2 arrowclamp; W3 stub, vanishstep, seatsettle; W1 cardblip; CF platesq, prmfade, pressdrop,
+    // shorttall, shortseat; W3 ctxgc (the forced-GC slot: a PASS variant with the hold, a FAIL without it)
+    H5: ["arrowclamp", "stub", "vanishstep", "seatsettle", "cardblip", "platesq", "prmfade", "pressdrop", "shorttall", "shortseat", "ctxgc"],
     // variants that must PASS (they change the carrier, not the property)
-    PASS: ["csscarrier", "splitcaps", "hitpair"],
+    PASS: ["csscarrier", "splitcaps", "hitpair", "roving", "ctxgc"],
 };
 
 export function fixturePage(q) {
@@ -90,7 +100,9 @@ html.dark body { background: linear-gradient(180deg, #1c1917, #0c0a09); }
 .dock { position: relative; pointer-events: none; }
 .ap { position: relative; ${fault === "nohit" ? "pointer-events: auto;" : ""} }
 .plate, .seat, .hit, .menu { pointer-events: auto; }
-${fault === "hitpair" || fault === "hitpairunnamed" ? ".plate { pointer-events: none !important; } .hit { position: absolute; inset: 0; border-radius: var(--r); background: transparent; }" : ""}
+${fault === "hitpair" || fault === "hitpairunnamed" || fault === "platesq" ? ".plate { pointer-events: none !important; } .hit { position: absolute; inset: 0; border-radius: var(--r); background: transparent; }" : ""}
+${fault === "platesq" ? ".plate { border-radius: 0 !important; }" : ""}
+${scene === "facility" && fault !== "shorttall" ? "@media (max-height: 30rem) { :root { --pad: 4px; " + (fault === "shortseat" ? "--seat: 36px; " : "") + "} }" : ""}
 ${fault === "seatmiss" ? ".dock[data-morphing] .seat { pointer-events: none; }" : ""}
 ${fault === "glowhalo" ? ".plate { box-shadow: 0 6px 24px rgba(0,0,0,.14), 0 0 36px 6px rgba(255,170,40,.55), inset 0 0 0 1px var(--edge) !important; }" : ""}
 ${fault === "gleam" ? ".plate::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(180deg, rgba(255,255,255,.5), transparent 60%); pointer-events: none; }" : ""}
@@ -195,7 +207,8 @@ const host = document.getElementById("host");
 const H = !V;
 host.className = "host " + (V ? "v" : "h") + (scene === "rail" ? " top" : "") + (Q.get("anchor") === "end" && fault !== "anchordrift" ? " end" : "") + (scene === "hidden" ? " hidden" : "");
 const ICON = '<svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="currentColor"/></svg>';
-const seat = (label, o = {}) => { const b = document.createElement("button"); b.className = "seat" + (o.tab ? " tab" : "") + (o.cls ? " " + o.cls : ""); if (o.html) b.innerHTML = o.html; else b.textContent = label; if (o.aria) b.setAttribute("aria-label", o.aria); if (o.id) b.dataset.testid = o.id; if (o.pressed) b.setAttribute("aria-pressed", "true"); if (o.current) b.setAttribute("aria-current", "page"); b.dataset.dockSeat = ""; return b; };
+const glyphs = (el, text) => { for (const ch of text) { if (/\\s/.test(ch)) { el.append(ch); continue; } const g = document.createElement("span"); g.className = "g"; g.textContent = ch; el.append(g); } };
+const seat = (label, o = {}) => { const b = document.createElement("button"); b.className = "seat" + (o.tab ? " tab" : "") + (o.cls ? " " + o.cls : ""); if (o.html) b.innerHTML = o.html; else glyphs(b, label); if (o.aria) b.setAttribute("aria-label", o.aria); if (o.id) b.dataset.testid = o.id; if (o.pressed) b.setAttribute("aria-pressed", "true"); if (o.current) b.setAttribute("aria-current", "page"); b.dataset.dockSeat = ""; return b; };
 const sep = () => { const s = document.createElement("span"); s.className = "sep"; return s; };
 const dock = document.createElement("div"); dock.className = "dock" + (q("shape") === "card" ? " card" : ""); dock.dataset.testid = "dock";
 function q(k) { return Q.get(k); }
@@ -206,7 +219,7 @@ const run = document.createElement("div"); run.className = "run"; run.setAttribu
 ap.append(plate, run); dock.append(ap);
 // H4-9 · a hit pair: the plate takes no presses; a transparent element of the plate's shape does
 let hitEl = null;
-if (fault === "hitpair" || fault === "hitpairunnamed") { hitEl = document.createElement("div"); hitEl.className = "hit"; ap.insertBefore(hitEl, run); }
+if (fault === "hitpair" || fault === "hitpairunnamed" || fault === "platesq") { hitEl = document.createElement("div"); hitEl.className = "hit"; ap.insertBefore(hitEl, run); }
 let budget = V ? innerHeight - 32 : innerWidth - 32;
 let collapsible = false, collapsedExtent = null, badge = null;
 const routed = Q.get("routed") === "1";
@@ -427,6 +440,27 @@ function swapTick(vt) {
   }
   return true;
 }
+// H5-3 · a glyph a moving clip edge cuts to between 5 and 95 % of its ink paints at 0.4 opacity: the seam has no
+// glyph-sharp edge (the rule's allowance: a stub paints above 0.5). stub: the hard cut stays
+const gCv = document.createElement("canvas").getContext("2d"), gInk = new Map();
+function soften() {
+  if (fault === "stub") return;
+  for (const s of seatsAll()) {
+    const gs = s.querySelectorAll(":scope > .g"); if (!gs.length) continue;
+    const cp = s.style.clipPath;
+    if (!cp) { if (s.__soft) { gs.forEach((g) => { g.style.opacity = ""; }); s.__soft = false; } continue; }
+    const v = (cp.match(/-?[\\d.]+px|\\b0\\b/g) || []).map((x) => parseFloat(x) || 0); const [t = 0, r = t, b = t, l = r] = v;
+    const q = s.getBoundingClientRect(); const c0 = V ? q.top + t : q.left + l, c1 = V ? q.bottom - b : q.right - r;
+    for (const g of gs) {
+      const gq = g.getBoundingClientRect(); let g0, g1;
+      if (V) { g0 = gq.top; g1 = gq.bottom; }
+      else { const cs = getComputedStyle(g); const key = cs.fontWeight + cs.fontSize + cs.fontFamily + g.textContent; let m = gInk.get(key); if (!m) { gCv.font = cs.fontStyle + " " + cs.fontWeight + " " + cs.fontSize + " " + cs.fontFamily; const x = gCv.measureText(g.textContent); m = [x.actualBoundingBoxLeft || 0, x.actualBoundingBoxRight || x.width]; gInk.set(key, m); } g0 = gq.left - m[0]; g1 = gq.left + m[1]; }
+      const frac = g1 - g0 > 0.5 ? Math.max(0, Math.min(g1, c1) - Math.max(g0, c0)) / (g1 - g0) : 1;
+      g.style.opacity = frac > 0.05 && frac < 0.95 ? "0.4" : "";
+    }
+    s.__soft = true;
+  }
+}
 function tick(now) {
   raf = 0;
   if (lastTick != null && fault !== "leap") { const gap = now - lastTick; if (gap > STALL_MS) lag += gap - 1000 / 60; }
@@ -437,7 +471,8 @@ function tick(now) {
   for (const [s, L] of leavers) {
     if (fault === "slipfade") { L.slip++; if (L.slip <= 2) { s.style.opacity = L.slip === 1 ? "0.97" : "0.94"; moving = true; continue; } s.remove(); leavers.delete(s); continue; }   // slipfade: 1 → 0.97 → 0.94 → gone (B′ V-3's path)
     const tau = now - L.ep.t0; const p = Math.max(0, Math.min(1, L.ep.pos(tau)));
-    clipMain(s, false, noSliver() && (1 - p) * L.w < adv() ? L.w : p * L.w);   // H4-1: under one advance it does not paint
+    const cut = fault === "vanishstep" ? L.w * (0.8 + 0.2 * p) : p * L.w;   // vanishstep (H5-4): 0.8 of its ink goes in the first frame, the rest on the spring
+    clipMain(s, false, noSliver() && L.w - cut < adv() ? L.w : cut);   // H4-1: under one advance it does not paint
     if (tau >= L.ep.T) { s.remove(); leavers.delete(s); } else moving = true;
   }
   if (swapState && swapTick(now)) moving = true;
@@ -465,11 +500,13 @@ function tick(now) {
     }
   }
   if (fault === "cardspread" && dock.classList.contains("card")) plate.style.borderRadius = moving ? "26px" : "";   // cardspread: the card radius swells mid-morph
+  if (fault === "cardblip" && dock.classList.contains("card")) { const tau = ext ? now - ext.t0 : -1; plate.style.borderRadius = ext && tau > 0.2 * ext.T && tau < 0.7 * ext.T ? "26px" : ""; }   // cardblip (H5-12): 26 px through the middle half of the morph's time only
+  soften();
   if (fading && !moving) { dock.removeAttribute("data-morphing"); raf = requestAnimationFrame(tick); return; }   // the window is the spatial morph's; a fade is not
   const inBand = fault === "bandclose" && ext && Math.abs(cur - ext.to) <= BAND * Math.abs(ext.to - ext.x0);   // bandclose: the flag closes at the 2 % band (Q-4 (a))
   if (moving) { if (inBand) dock.removeAttribute("data-morphing"); else dock.setAttribute("data-morphing", ""); raf = requestAnimationFrame(tick); }
   else if (fault === "late") setTimeout(() => { if (!raf) dock.removeAttribute("data-morphing"); }, 250);
-  else dock.removeAttribute("data-morphing");
+  else { if (fault === "seatsettle" && dock.hasAttribute("data-morphing")) { const f1 = run.querySelector('[data-testid="f1"]'); if (f1) { f1.style.left = "1px"; setTimeout(() => { f1.style.left = ""; }, 120); } } dock.removeAttribute("data-morphing"); }   // seatsettle (H5-7): a seat settles 1 px by layout after the flag closes
   if (!raf) lastTick = null;
 }
 // ghosthit: each seat gets a fixed, transparent press proxy at its layout centre while the dock morphs (a press surface that does not follow the clip)
@@ -484,7 +521,10 @@ function morph(to) {
   if (fault === "nboverlap" && Q.get("neighbour") === "1" && !dock.style[V ? "height" : "width"]) dock.style[V ? "height" : "width"] = crossOf() + "px";   // nboverlap: the dock's layout box keeps its collapsed size, so the plate paints over the neighbour
   if (cur == null) { set(to); return; }
   if (Math.abs(to - cur) < 0.01 && !ext) return;
-  if (PRM.matches && fault !== "noprm") { ext = null; set(to); dock.removeAttribute("data-morphing"); return; }
+  if (PRM.matches && fault !== "noprm") { ext = null; set(to); dock.removeAttribute("data-morphing");
+    // prmfade (H5-6): under reduced motion the extent lands at once, but the seats fade in over 100 ms and the flag stays up 200 ms
+    if (fault === "prmfade") { dock.setAttribute("data-morphing", ""); for (const s of seatsAll()) s.animate({ opacity: [0, 1] }, { duration: 100 }); setTimeout(() => dock.removeAttribute("data-morphing"), 200); }
+    return; }
   if (fault === "morphsnap" && scene === "facility") { ext = null; set(to); return; }   // morphsnap: collapse and expand jump
   if (useCss) {
     const from = cur; cur = to; ap.style.setProperty("--from", from + "px"); ap.style.setProperty("--to", to + "px");
@@ -531,6 +571,18 @@ const target2 = () => (posture === "collapsed" || (posture === "compact" && faul
 fitRun();
 if (lenOf(run) > 0) { set(target2()); snapshot(); }
 inertFaces();
+// H5-1 · a roving-tabindex run (rail, long): one Tab stop, the arrows move focus, Home/End jump. roving: a PASS variant;
+// arrowclamp: the back arrow clamps at Seat 2 and there is no Home, so Seat 1 has no key
+if ((fault === "roving" || fault === "arrowclamp") && (scene === "rail" || scene === "long")) {
+  const ss = seatsAll(); const cur = Math.max(0, ss.findIndex((x) => x.hasAttribute("aria-current") || x.getAttribute("aria-pressed") === "true"));
+  ss.forEach((x, j) => { x.setAttribute("tabindex", j === cur ? "0" : "-1"); x.dataset.roving = ""; });   // a roving -1 is still a seat (seats() below)
+  const at = (k) => { ss.forEach((x, j) => x.setAttribute("tabindex", j === k ? "0" : "-1")); ss[k].focus(); };
+  run.addEventListener("keydown", (e) => { const i = ss.indexOf(document.activeElement); if (i < 0) return; const lo = fault === "arrowclamp" ? 1 : 0;
+    if (e.key === (V ? "ArrowUp" : "ArrowLeft")) { e.preventDefault(); at(Math.max(lo, i - 1)); }
+    else if (e.key === (V ? "ArrowDown" : "ArrowRight")) { e.preventDefault(); at(Math.min(ss.length - 1, i + 1)); }
+    else if (fault === "roving" && e.key === "Home") { e.preventDefault(); at(0); }
+    else if (fault === "roving" && e.key === "End") { e.preventDefault(); at(ss.length - 1); } });
+}
 if (fault === "noname") seatsAll()[1]?.setAttribute("aria-hidden", "true");   // noname: one seat is hidden from AT
 if (fault === "overhang" || fault === "adapterclip" || fault === "dismissout") ap.style.overflow = "visible";
 if (fault === "formout") ap.style.overflow = "visible";
@@ -621,7 +673,11 @@ dock.addEventListener("pointerdown", (e) => {
 }, true);
 dock.addEventListener("click", (e) => { if (swallow) { swallow = false; e.stopPropagation(); e.preventDefault(); } }, true);
 const menu = document.getElementById("menu");
-document.addEventListener("pointerdown", (e) => { if (dock.contains(e.target) || menu.contains(e.target)) return; if (!menu.hidden) { menu.hidden = true; held = false; } if (pinned) { pinned = false; schedule(); } });
+document.addEventListener("pointerdown", (e) => { if (dock.contains(e.target) || menu.contains(e.target)) return; if (!menu.hidden) { menu.hidden = true; held = false; }
+  // H5-11 · the facility scene: an outside press collapses an expanded dock at once, mid-morph too (the integrator retargets).
+  // pressdrop: a press that lands while the flag is up is dropped, and nothing re-arms the collapse (O-91)
+  if (scene === "facility") { if (fault === "pressdrop" && dock.hasAttribute("data-morphing")) return; if (posture !== "collapsed" && !held) { pinned = false; go("collapsed"); } return; }
+  if (pinned) { pinned = false; schedule(); } });
 run.querySelector('[data-testid="menu"]')?.addEventListener("click", () => { menu.hidden = !menu.hidden; held = !menu.hidden; if (!held || fault === "menucollapse") schedule(); });
 // H4-10 · the facility scene's keyboard and scroll: Escape closes an open menu (focus back to its trigger), else
 // collapses the dock with focus on the disclosure; a scroll of the page collapses an expanded dock nothing holds
@@ -702,8 +758,9 @@ window.__scene = {
     enter.forEach((s) => wiping.add(s));
     const widest = enter.reduce((m, e) => (!m || lenOf(e) > lenOf(m) ? e : m), null);
     swapState = { ep: episode(0, 0, 1, vnow()), faces, to, enter, widest, pop: fault === "retargetpop" && faces.length > 1, old: old.map((g) => ({ ...g, wipe: g.wipe !== false && (g.a + g.b) / 2 < newLen })) };
-    swapTick(vnow());
+    swapTick(vnow()); soften();
     changed(); kick();
+    if (fault === "ctxgc" && faces.length > 1) queueMicrotask(() => queueMicrotask(() => { if (typeof gc === "function") gc(); }));   // ctxgc (H5-2): a full GC two microtasks after a retarget (ctx-diag's gc-slot), where V8's inspector collects an unheld evaluate promise
   },
   setExtra: (v) => { const x = run.querySelector('[data-testid="extra"]'); if (v && !x) run.append(seat(V ? "5" : "Brushes and layers", { tab: !V, aria: V ? "Five" : undefined, id: "extra" })); else if (!v && x) leaveSeat(x); changed(); if (!v) kick(); },
   setLead: (v) => { const x = run.querySelector('[data-testid="lead"]'); const f1 = run.querySelector('[data-testid="f1"]'); if (v && !x) run.insertBefore(seat(V ? "0" : "Lead", { tab: !V, aria: V ? "Zero" : undefined, id: "lead" }), f1); else if (!v && x) leaveSeat(x); if (fault !== "nostretch") changed(); if (!v) kick(); },   // nostretch: the carrier learns of an insertion only from a ResizeObserver on the run
@@ -732,7 +789,7 @@ window.__dockProbe = {
     if (fault === "deadmorph" && liveExtent != null) return V ? { ...e, b: e.t + liveExtent } : { ...e, r: e.l + liveExtent };
     return e;
   },
-  seats: (o = {}) => seatsAll().filter((s) => o.all || s.getAttribute("tabindex") !== "-1"),
+  seats: (o = {}) => seatsAll().filter((s) => o.all || s.getAttribute("tabindex") !== "-1" || s.dataset.roving !== undefined),
   paintingSeats: () => seatsAll().map((el) => ({ el, o: hp.visibleOpacity(el), rect: hp.paintedRect(el) })).filter((s) => s.o > 0.05 && s.rect.r - s.rect.l > 0.5 && s.rect.b - s.rect.t > 0.5)
     .map((s) => { if (fault !== "adapterclip") return s; const e = extentRect(); return { ...s, rect: { l: Math.max(s.rect.l, e.l), t: Math.max(s.rect.t, e.t), r: Math.min(s.rect.r, e.r), b: Math.min(s.rect.b, e.b) } }; }),
   morphing: () => dock.hasAttribute("data-morphing"),
@@ -744,7 +801,7 @@ window.__dockProbe = {
   badge: () => badge,
   persistent: () => [...run.querySelectorAll("[data-persistent]")],
   ...(fault === "splitcaps" ? { edge: () => caps } : fault === "nocaps" ? { edge: () => [] } : {}),   // nocaps: the caps paint, edge() does not name them
-  ...(fault === "hitpair" ? { hit: () => [hitEl] } : {}),   // H4-9: hitpairunnamed has the same page and no hit() read
+  ...(fault === "hitpair" || fault === "platesq" ? { hit: () => [hitEl] } : {}),   // H4-9: hitpairunnamed has the same page and no hit() read; H5-6 platesq: a square plate under a round hit pair
 };
 })();
 </script></body></html>`;

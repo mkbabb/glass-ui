@@ -1,0 +1,109 @@
+{
+ "witness": "W4",
+ "target": "head@91728a09",
+ "when": "2026-10-17T11:07:03.004Z",
+ "load": 7.65,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "compact·compacts",
+   "pass": false,
+   "absent": true,
+   "summary": "absent: no compact-on-scroll rung; GlassDock declares [fitContent, backdropMode, shape, orientation, collapse, backgroundCanvas], none takes a scroll source",
+   "load": 8.23
+  },
+  {
+   "engine": "chromium",
+   "cell": "compact·engagement-expands",
+   "pass": false,
+   "absent": true,
+   "summary": "absent: no compact-on-scroll rung; GlassDock declares [fitContent, backdropMode, shape, orientation, collapse, backgroundCanvas], none takes a scroll source",
+   "load": 8.23
+  },
+  {
+   "engine": "chromium",
+   "cell": "compact·no-threshold-bounce",
+   "pass": false,
+   "absent": true,
+   "summary": "absent: no compact-on-scroll rung; GlassDock declares [fitContent, backdropMode, shape, orientation, collapse, backgroundCanvas], none takes a scroll source",
+   "load": 8.23
+  },
+  {
+   "engine": "chromium",
+   "cell": "compact·seat-scale",
+   "pass": false,
+   "absent": true,
+   "summary": "absent: no compact-on-scroll rung; GlassDock declares [fitContent, backdropMode, shape, orientation, collapse, backgroundCanvas], none takes a scroll source",
+   "load": 8.23
+  },
+  {
+   "engine": "chromium",
+   "cell": "compact·non-first-current",
+   "pass": false,
+   "absent": true,
+   "summary": "absent: no compact-on-scroll rung; GlassDock declares [fitContent, backdropMode, shape, orientation, collapse, backgroundCanvas], none takes a scroll source",
+   "load": 8.23
+  },
+  {
+   "engine": "chromium",
+   "cell": "compact·late-getter",
+   "pass": false,
+   "absent": true,
+   "summary": "absent: no compact-on-scroll rung; GlassDock declares [fitContent, backdropMode, shape, orientation, collapse, backgroundCanvas], none takes a scroll source",
+   "load": 8.23
+  },
+  {
+   "engine": "chromium",
+   "cell": "compact·shared-scroller",
+   "pass": false,
+   "absent": true,
+   "summary": "absent: no compact-on-scroll rung; GlassDock declares [fitContent, backdropMode, shape, orientation, collapse, backgroundCanvas], none takes a scroll source",
+   "load": 8.23
+  },
+  {
+   "engine": "chromium",
+   "cell": "coarse·press-then-scroll",
+   "pass": false,
+   "absent": true,
+   "summary": "absent: no compact-on-scroll rung; GlassDock declares [fitContent, backdropMode, shape, orientation, collapse, backgroundCanvas], none takes a scroll source",
+   "load": 8.23
+  },
+  {
+   "engine": "chromium",
+   "cell": "prm·compact",
+   "pass": false,
+   "absent": true,
+   "summary": "absent: no compact-on-scroll rung; GlassDock declares [fitContent, backdropMode, shape, orientation, collapse, backgroundCanvas], none takes a scroll source",
+   "load": 8.23
+  },
+  {
+   "engine": "chromium",
+   "cell": "coarse·no-hover-latch",
+   "pass": false,
+   "media": {
+    "hover": false,
+    "coarse": true
+   },
+   "differs": [
+    "0.scale",
+    "0.backgroundColor",
+    "0::before.opacity"
+   ],
+   "summary": "(hover: hover) false, (pointer: coarse) true; 1.5 s after a tap 3 paint value(s) still differ: 0.scale 1 → 1.1; 0.backgroundColor rgba(0, 0, 0, 0) → color(srgb 0.0927547 0.0503523 0.00879371 / 0.18); 0::before.opacity 0 → 0.11; :hover true",
+   "load": 8.06
+  },
+  {
+   "engine": "chromium",
+   "cell": "coarse·tap-pins",
+   "pass": false,
+   "before": "collapsed",
+   "after": "pinned",
+   "later": "pinned",
+   "clicks": [
+    "button.dock-icon-button.glass-specular-track.glass-capsule-hover[Play]"
+   ],
+   "summary": "tap on the collapsed face's \"Play\": posture collapsed → pinned (+0.7 s) → pinned (+5.5 s); clicks fired 1 (button.dock-icon-button.glass-specular-track.glass-capsule-hover[Play]) (bound: pinned, 0 clicks)",
+   "load": 7.65
+  }
+ ]
+}

@@ -1,0 +1,92 @@
+{
+ "witness": "PR",
+ "target": "wt",
+ "when": "2026-10-17T10:17:00.485Z",
+ "load": 8.74,
+ "cells": [
+  {
+   "engine": "source",
+   "cell": "prose·readers",
+   "pass": false,
+   "failed": [
+    "readers"
+   ],
+   "dead": [
+    "--dock-crossfade-peak (src/components/dock/DockCrossfade.vue)",
+    "--dock-morph-max-stretch (src/components/dock/styles/density.css)",
+    "--dock-search-shrink-start (src/components/dock/styles/density.css)",
+    "--dock-search-shrink-end (src/components/dock/styles/density.css)"
+   ],
+   "summary": "78 custom propert(ies) declared or written in the dock band; 4 with no reader in src/ or demo/: --dock-crossfade-peak (src/components/dock/DockCrossfade.vue), --dock-morph-max-stretch (src/components/dock/styles/density.css), --dock-search-shrink-start (src/components/dock/styles/density.css), --dock-search-shrink-end (src/components/dock/styles/density.css)",
+   "load": 8.74
+  },
+  {
+   "engine": "source",
+   "cell": "prose·count",
+   "pass": false,
+   "failed": [
+    "count"
+   ],
+   "counts": [
+    {
+     "at": "src/components/dock/GlassDock.vue:67",
+     "says": "SIX members",
+     "n": 6,
+     "ok": true
+    },
+    {
+     "at": "src/components/dock/composables/useDockShellProps.ts:5",
+     "says": "SIX props",
+     "n": 6,
+     "ok": true
+    },
+    {
+     "at": "src/components/dock/styles/density.css:296",
+     "says": "14 members",
+     "n": 14,
+     "ok": false
+    }
+   ],
+   "members": 6,
+   "summary": "DockProps has 6 member(s); 3 prose count(s) near it, 1 wrong: src/components/dock/styles/density.css:296 \"14 members\"",
+   "load": 8.74
+  },
+  {
+   "engine": "source",
+   "cell": "prose·partials",
+   "pass": false,
+   "failed": [
+    "partials"
+   ],
+   "partials": [
+    {
+     "at": "src/components/dock/styles/index.css:39",
+     "says": "six partials",
+     "n": 6,
+     "imports": 13,
+     "ok": false
+    }
+   ],
+   "summary": "1 partial count(s) in an @import file; 1 wrong: src/components/dock/styles/index.css:39 \"six partials\" over 13 @import(s)",
+   "load": 8.74
+  },
+  {
+   "engine": "source",
+   "cell": "prose·citations",
+   "pass": true,
+   "failed": [],
+   "cites": [],
+   "summary": "0 design-pass record citation(s) in src/ or tests/",
+   "load": 8.74
+  },
+  {
+   "engine": "source",
+   "cell": "prose·rows",
+   "pass": true,
+   "failed": [],
+   "dup": [],
+   "summary": "33 token(s) with a row in docs/design/tunable-anim.md; 0 with more than one",
+   "load": 8.74
+  }
+ ]
+}

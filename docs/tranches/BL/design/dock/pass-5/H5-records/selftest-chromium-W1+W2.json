@@ -1,0 +1,269 @@
+{
+ "when": "2026-10-17T06:03:44.081Z",
+ "engines": [
+  "chromium"
+ ],
+ "rows": [
+  {
+   "witness": "W1",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 22/22 PASS",
+   "ok": true,
+   "ms": 26874,
+   "load": 22.65
+  },
+  {
+   "witness": "W1",
+   "fixture": "csscarrier",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 22/22 PASS",
+   "ok": true,
+   "ms": 26862,
+   "load": 25.11
+  },
+  {
+   "witness": "W1",
+   "fixture": "hitpair",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 22/22 PASS",
+   "ok": true,
+   "ms": 27389,
+   "load": 27.24
+  },
+  {
+   "witness": "W1",
+   "fixture": "pass@dark",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 22/22 PASS",
+   "ok": true,
+   "ms": 27142,
+   "load": 28.15
+  },
+  {
+   "witness": "W1",
+   "fixture": "lens",
+   "expect": "exit ≠ 0; corner fails in fit·rest|morph·expanded-rest|rail·rest",
+   "got": "exit 1, 4/4 FAIL; matching 4 (chromium)",
+   "ok": true,
+   "ms": 13727,
+   "load": 25.99
+  },
+  {
+   "witness": "W1",
+   "fixture": "squash",
+   "expect": "exit ≠ 0; corner fails in morph·first-expand|morph·warm-collapse|morph·collapsed-rest",
+   "got": "exit 1, 6/6 FAIL; matching 6 (chromium)",
+   "ok": true,
+   "ms": 7703,
+   "load": 27.94
+  },
+  {
+   "witness": "W1",
+   "fixture": "cssbend",
+   "expect": "exit ≠ 0; corner fails in morph·warm-expand|morph·warm-collapse",
+   "got": "exit 1, 4/4 FAIL; matching 4 (chromium)",
+   "ok": true,
+   "ms": 7639,
+   "load": 26.61
+  },
+  {
+   "witness": "W1",
+   "fixture": "deadmorph",
+   "expect": "exit ≠ 0; agree|moves fails in morph·warm-expand|morph·warm-collapse",
+   "got": "exit 1, 4/4 FAIL; matching 4 (chromium)",
+   "ok": true,
+   "ms": 7514,
+   "load": 26.3
+  },
+  {
+   "witness": "W1",
+   "fixture": "dot",
+   "expect": "exit ≠ 0; cover fails in fit·rest",
+   "got": "exit 1, 1/1 FAIL; matching 1 (chromium)",
+   "ok": true,
+   "ms": 3535,
+   "load": 25.39
+  },
+  {
+   "witness": "W1",
+   "fixture": "cardlens",
+   "expect": "exit ≠ 0; corner fails in card·",
+   "got": "exit 1, 4/5 FAIL; matching 4 (chromium)",
+   "ok": true,
+   "ms": 9700,
+   "load": 24.24
+  },
+  {
+   "witness": "W1",
+   "fixture": "endlens",
+   "expect": "exit ≠ 0; corner fails in rail·scrolled-end|rail·focus-end",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 3496,
+   "load": 24.35
+  },
+  {
+   "witness": "W1",
+   "fixture": "endout",
+   "expect": "exit ≠ 0; end fails in rail·scrolled-end|rail·focus-end",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 3452,
+   "load": 24.35
+  },
+  {
+   "witness": "W1",
+   "fixture": "cardspread",
+   "expect": "exit ≠ 0; card fails in card·warm-expand|card·warm-collapse|card·first-expand",
+   "got": "exit 1, 3/3 FAIL; matching 3 (chromium)",
+   "ok": true,
+   "ms": 9496,
+   "load": 24.16
+  },
+  {
+   "witness": "W1",
+   "fixture": "cardlerp",
+   "expect": "an OWNER-BLOCKED cell in card·warm-expand|card·warm-collapse|card·first-expand",
+   "got": "exit 0, 3/3 FAIL; matching 3 (chromium)",
+   "ok": true,
+   "ms": 9815,
+   "load": 23.57
+  },
+  {
+   "witness": "W1",
+   "fixture": "cardstep",
+   "expect": "an OWNER-BLOCKED cell in card·warm-expand|card·warm-collapse|card·first-expand",
+   "got": "exit 0, 3/3 FAIL; matching 3 (chromium)",
+   "ok": true,
+   "ms": 9810,
+   "load": 26.66
+  },
+  {
+   "witness": "W1",
+   "fixture": "hitpairunnamed",
+   "expect": "exit ≠ 0; ran fails in morph·warm-expand|morph·warm-collapse",
+   "got": "exit 1, 2/4 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 34337,
+   "load": 27.66
+  },
+  {
+   "witness": "W1",
+   "fixture": "cardblip",
+   "expect": "exit ≠ 0; card fails in card·warm-expand|card·warm-collapse|card·first-expand",
+   "got": "exit 1, 3/3 FAIL; matching 3 (chromium)",
+   "ok": true,
+   "ms": 9464,
+   "load": 29.94
+  },
+  {
+   "witness": "W2",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 8/8 PASS",
+   "ok": true,
+   "ms": 22213,
+   "load": 29.5
+  },
+  {
+   "witness": "W2",
+   "fixture": "roving",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 8/8 PASS",
+   "ok": true,
+   "ms": 22245,
+   "load": 27.37
+  },
+  {
+   "witness": "W2",
+   "fixture": "scroller",
+   "expect": "exit ≠ 0; scroller fails in route2|route3|route4",
+   "got": "exit 1, 3/3 FAIL; matching 3 (chromium)",
+   "ok": true,
+   "ms": 10329,
+   "load": 26.61
+  },
+  {
+   "witness": "W2",
+   "fixture": "ringclip",
+   "expect": "exit ≠ 0; ring fails in route1",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 7769,
+   "load": 25.91
+  },
+  {
+   "witness": "W2",
+   "fixture": "noring",
+   "expect": "exit ≠ 0; paint fails in route1|route4",
+   "got": "exit 1, 3/3 FAIL; matching 3 (chromium)",
+   "ok": true,
+   "ms": 12834,
+   "load": 25.76
+  },
+  {
+   "witness": "W2",
+   "fixture": "foldtail",
+   "expect": "exit ≠ 0; pointer|keyboard|at fails in route1",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 7921,
+   "load": 22.94
+  },
+  {
+   "witness": "W2",
+   "fixture": "notab",
+   "expect": "exit ≠ 0; keyboard fails in route1|route5|route6|route7",
+   "got": "exit 1, 5/5 FAIL; matching 5 (chromium)",
+   "ok": true,
+   "ms": 12332,
+   "load": 23.02
+  },
+  {
+   "witness": "W2",
+   "fixture": "noname",
+   "expect": "exit ≠ 0; at fails in route1|route5|route6|route7",
+   "got": "exit 1, 5/5 FAIL; matching 5 (chromium)",
+   "ok": true,
+   "ms": 12328,
+   "load": 20.77
+  },
+  {
+   "witness": "W2",
+   "fixture": "cwidth",
+   "expect": "exit ≠ 0; plateOut fails in route5",
+   "got": "exit 1, 1/1 FAIL; matching 1 (chromium)",
+   "ok": true,
+   "ms": 1661,
+   "load": 19.45
+  },
+  {
+   "witness": "W2",
+   "fixture": "depthscroll",
+   "expect": "exit ≠ 0; scroller fails in route6",
+   "got": "exit 1, 1/1 FAIL; matching 1 (chromium)",
+   "ok": true,
+   "ms": 2726,
+   "load": 19.57
+  },
+  {
+   "witness": "W2",
+   "fixture": "nestgrow",
+   "expect": "exit ≠ 0; fits|faces|pointer fails in route7",
+   "got": "exit 1, 1/1 FAIL; matching 1 (chromium)",
+   "ok": true,
+   "ms": 1654,
+   "load": 19.57
+  },
+  {
+   "witness": "W2",
+   "fixture": "arrowclamp",
+   "expect": "exit ≠ 0; keyboard fails in route1",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 7858,
+   "load": 19.57
+  }
+ ]
+}

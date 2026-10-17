@@ -42,14 +42,42 @@
 //                       sideways
 //   c7·coarse-tap   C3, C7  touch at 390 px: a tap on the collapsed dock (its disclosure when that paints) expands it
 //                       and activates nothing but a persistent element (C4's) or the disclosure
+//
+// H5 (pass-5/H5.md):
+//   H5-6  c1·shape·{h,v} also read every element in the dock that paints a background or a backdrop: its OWN radius
+//         and clip (and every ancestor's clip), at its own box corners, 2 px in on the diagonal; a corner it paints
+//         outside the dock's stadium (the extent, radius cross/2) fails `ownshape` (G-crit §6.1: the radius was the
+//         maximum over plate, hit pair and edge, so a square plate passed on a round hit pair). And the corner PIXELS:
+//         the extent's and the root's box corners, 2 px in, shadows removed, against the same page with the dock at
+//         opacity 0: a deviation over CORNER_PX fails `corner` (crit-corner, promoted).
+//         c2·prm reads every seat's opacity and the window flag per rAF under reduced motion and judges them per
+//         Q-18 (crit-prm, promoted). Default (a), the ruling's literal words: `content` every seat at its final
+//         opacity within one frame of the first change, `flag` the flag never raised. DOCK_HARNESS_Q18=b judges the
+//         extent only and records the rest
+//   H5-11 c8·outside-press  C8 (O-91): the dock expanded by a hover; while its morph is in flight, a mouse press on a
+//                       point outside it that activates nothing; the dock reaches collapsed within C8_AFTER_MS of the
+//                       morph settling (well under the 3.6 s dwell, so the dwell is not read as the press). 10 of 10
+//                       presses that landed mid-morph (the flag up, or the extent moving, at the press); frames
+//         c9·short-coarse   C9 (O-74e): at 844 × 390 with coarse pointers, the dock tapped open: its block size ≤ one
+//                       coarse seat (44 px) + 2 × the compact rung's block padding (C9_BLOCK_MAX = 52 px at today's
+//                       tokens, density.css: compact --dock-padding-block 0.25rem), every painting seat ≥ 44 px; no
+//                       consumer density prop is set by the harness; frame
 import fs from "node:fs";
 import path from "node:path";
-import { parseArgs, engines, openTarget, launch, openScene, makeReport, outDir, engineTag, r2 } from "./lib.mjs";
+import { parseArgs, engines, openTarget, launch, openScene, makeReport, outDir, engineTag, r2, PNG } from "./lib.mjs";
 
 export const ROWS = {
     C1: ["c1·shape·h"], C2: ["c2·morph·h", "c2·prm", "c2·rapid"], C3: ["c3·hover", "c3·focus", "c3·scroll", "c7·coarse-tap"],
     C4: ["c4·persistent"], C5: ["c5·keyboard"], C6: ["c6·menu"], C7: ["c1·shape·v", "c2·morph·v", "c7·narrow", "c7·coarse-tap"],
+    C8: ["c8·outside-press"], C9: ["c9·short-coarse"],
 };
+/** H5-6 · a corner pixel (shadows removed) may differ from the page under it by this much (max channel, lossless). */
+export const CORNER_PX = 8;
+/** H5-11 · C8: presses that must land mid-morph, the attempts allowed, and the time after the morph settles. */
+export const C8_REPS = 10, C8_TRIES = 16, C8_AFTER_MS = 1500, C8_DWELL_GUARD_MS = 3300;
+/** H5-11 · C9 (O-74e): one coarse seat plus twice the compact rung's block padding (0.25rem) at today's tokens. */
+export const C9_SEAT = 44, C9_BLOCK_MAX = 44 + 2 * 4;
+const Q18 = (process.env.DOCK_HARNESS_Q18 || "a").toLowerCase();
 const DEMO = { h: ["/dock/overview", "[data-testid=dock-horizontal-collapsed-first-paint]"], v: ["/dock/vertical", "[data-testid=dock-vertical-collapsed-first-paint]"] };
 const args = parseArgs();
 const target = await openTarget(args);
@@ -94,8 +122,103 @@ const READ = `() => {
     triggers: [...root.querySelectorAll("[aria-haspopup]")].length,
     menuOpen: [...document.querySelectorAll("[role=menu]")].some((m) => { const q = m.getBoundingClientRect(); return !m.hidden && q.width > 4 && q.height > 4 && getComputedStyle(m).visibility !== "hidden"; }),
     vw: innerWidth, sw: document.documentElement.scrollWidth, sy: (() => { for (let a = root.parentElement; a; a = a.parentElement) { const cs = getComputedStyle(a); if (/(auto|scroll)/.test(cs.overflowY) && a.scrollHeight > a.clientHeight + 1) return a.scrollTop; } return scrollY; })(),
-    persC: pers.map((p) => { const q = p.getBoundingClientRect(); return [q.left, q.top, q.right, q.bottom]; }) };
+    persC: pers.map((p) => { const q = p.getBoundingClientRect(); return [q.left, q.top, q.right, q.bottom]; }),
+    so: P.seats({ all: true }).map((s) => +hp.visibleOpacity(s).toFixed(3)) };
 }`;
+// H5-6 · C1's own-shape read: every element under the root that paints a background or a backdrop, its own radius and
+// clip and every ancestor's clip, tested at its own box corners (2 px in on the diagonal) against the dock's stadium
+const SHAPE = `() => {
+  const P = window.__dockProbe, hp = window.__hp, root = P.root(), e = P.extent();
+  const PX = (v) => parseFloat(v) || 0;
+  const alpha = (c) => { if (!c || c === "transparent") return 0; const sl = /\\/\\s*([\\d.]+)(%?)\\s*\\)$/.exec(c); if (sl) return parseFloat(sl[1]) * (sl[2] ? 0.01 : 1); const m = /^rgba\\(([^)]*)\\)$/.exec(c); if (m) { const p = m[1].split(","); return p.length > 3 ? parseFloat(p[3]) : 1; } return 1; };
+  const radii = (cs, W, H, sx, sy) => { const one = (v) => { const p = String(v).split(" "); const f = (s, ref) => s.endsWith("%") ? parseFloat(s) / 100 * ref : PX(s); return [f(p[0], W) * sx, f(p[1] ?? p[0], H) * sy]; }; return { tl: one(cs.borderTopLeftRadius), tr: one(cs.borderTopRightRadius), bl: one(cs.borderBottomLeftRadius), br: one(cs.borderBottomRightRadius) }; };
+  // inside a rounded box (CSS radius scaling when radii overlap)
+  const inRound = (x, y, L, T, R, B, rd) => {
+    if (x < L || x > R || y < T || y > B) return false;
+    const W = R - L, H = B - T; let f = 1;
+    const fit = (a, b, ref) => { if (a + b > ref && a + b > 0) f = Math.min(f, ref / (a + b)); };
+    fit(rd.tl[0], rd.tr[0], W); fit(rd.bl[0], rd.br[0], W); fit(rd.tl[1], rd.bl[1], H); fit(rd.tr[1], rd.br[1], H);
+    const ell = (rx, ry, cx, cy) => { if (rx <= 0 || ry <= 0) return true; const dx = (x - cx) / rx, dy = (y - cy) / ry; return dx * dx + dy * dy <= 1; };
+    const q = (k) => [rd[k][0] * f, rd[k][1] * f];
+    let [rx, ry] = q("tl"); if (x < L + rx && y < T + ry) return ell(rx, ry, L + rx, T + ry);
+    [rx, ry] = q("tr"); if (x > R - rx && y < T + ry) return ell(rx, ry, R - rx, T + ry);
+    [rx, ry] = q("bl"); if (x < L + rx && y > B - ry) return ell(rx, ry, L + rx, B - ry);
+    [rx, ry] = q("br"); if (x > R - rx && y > B - ry) return ell(rx, ry, R - rx, B - ry);
+    return true;
+  };
+  // the element's own clip-path: inset(... round r) is read; any other shape is UNREAD (judged by the pixels)
+  const clipOk = (el, x, y, q, sx, sy) => {
+    const cp = getComputedStyle(el).clipPath || "none"; if (cp === "none") return { ok: true };
+    if (!/^inset\\(/.test(cp)) return { ok: true, unread: cp.slice(0, 40) };
+    const ins = hp.insetOf(el, el.offsetWidth, el.offsetHeight) || [0, 0, 0, 0];
+    const rm = /round\\s+([\\d.]+)(px|%)?/.exec(cp); const r = rm ? (rm[2] === "%" ? parseFloat(rm[1]) / 100 * Math.min(el.offsetWidth, el.offsetHeight) : parseFloat(rm[1])) : 0;
+    const L = q.left + ins[3] * sx, T = q.top + ins[0] * sy, R = q.right - ins[1] * sx, B = q.bottom - ins[2] * sy;
+    const rr = [r * sx, r * sy]; return { ok: inRound(x, y, L, T, R, B, { tl: rr, tr: rr, bl: rr, br: rr }) };
+  };
+  const paintsAt = (el, x, y) => {
+    const q = el.getBoundingClientRect(), cs = getComputedStyle(el);
+    const sx = el.offsetWidth ? q.width / el.offsetWidth : 1, sy = el.offsetHeight ? q.height / el.offsetHeight : 1;
+    if (!inRound(x, y, q.left, q.top, q.right, q.bottom, radii(cs, el.offsetWidth, el.offsetHeight, sx, sy))) return { paints: false };
+    const own = clipOk(el, x, y, q, sx, sy); if (!own.ok) return { paints: false };
+    let unread = own.unread || null;
+    for (let a = el.parentElement; a && a !== document.documentElement; a = a.parentElement) {
+      const ac = getComputedStyle(a), aq = a.getBoundingClientRect();
+      const asx = a.offsetWidth ? aq.width / a.offsetWidth : 1, asy = a.offsetHeight ? aq.height / a.offsetHeight : 1;
+      const cx = ac.overflowX !== "visible" || /paint|strict|content/.test(ac.contain), cy = ac.overflowY !== "visible" || /paint|strict|content/.test(ac.contain);
+      if (cx || cy) {
+        const bl = PX(ac.borderLeftWidth) * asx, bt = PX(ac.borderTopWidth) * asy, br = PX(ac.borderRightWidth) * asx, bb = PX(ac.borderBottomWidth) * asy;
+        const L = cx ? aq.left + bl : -1e9, T = cy ? aq.top + bt : -1e9, R = cx ? aq.right - br : 1e9, B = cy ? aq.bottom - bb : 1e9;
+        const ro = radii(ac, a.offsetWidth, a.offsetHeight, asx, asy); const inner = {}; for (const k of ["tl", "tr", "bl", "br"]) inner[k] = [Math.max(0, ro[k][0] - (k[1] === "l" ? bl : br)), Math.max(0, ro[k][1] - (k[0] === "t" ? bt : bb))];
+        if (!inRound(x, y, L, T, R, B, cx && cy ? inner : { tl: [0, 0], tr: [0, 0], bl: [0, 0], br: [0, 0] })) return { paints: false };
+      }
+      const ap = clipOk(a, x, y, aq, asx, asy); if (!ap.ok) return { paints: false }; if (ap.unread) unread = unread || ap.unread;
+    }
+    return { paints: true, unread };
+  };
+  const W = e.r - e.l, H = e.b - e.t, R0 = Math.min(W, H) / 2, sr = [R0, R0];
+  const inStadium = (x, y) => inRound(x, y, e.l, e.t, e.r, e.b, { tl: sr, tr: sr, bl: sr, br: sr });
+  const out = [], unread = [];
+  for (const el of [root, ...root.querySelectorAll("*")]) {
+    if (el instanceof SVGElement) continue;
+    const cs = getComputedStyle(el); if (cs.visibility !== "visible" || hp.visibleOpacity(el) <= 0.05) continue;
+    const bf = cs.backdropFilter || cs.webkitBackdropFilter;
+    const painter = (bf && bf !== "none") || alpha(cs.backgroundColor) > 0.05 || cs.backgroundImage !== "none";
+    if (!painter) continue;
+    const q = el.getBoundingClientRect(); if (q.width < 1 || q.height < 1) continue;
+    const ov = Math.max(0, Math.min(q.right, e.r) - Math.max(q.left, e.l)) * Math.max(0, Math.min(q.bottom, e.b) - Math.max(q.top, e.t));
+    if (ov < 0.5 * q.width * q.height) continue;   // paint that belongs to the dock's body
+    for (const [x, y, k] of [[q.left + 2, q.top + 2, "tl"], [q.right - 2, q.top + 2, "tr"], [q.left + 2, q.bottom - 2, "bl"], [q.right - 2, q.bottom - 2, "br"]]) {
+      if (inStadium(x, y)) continue;
+      const p = paintsAt(el, x, y);
+      if (p.paints && p.unread) { unread.push(hp.label(el) + " " + k + " (" + p.unread + ")"); continue; }
+      if (p.paints) { out.push({ el: hp.label(el), corner: k, box: [q.left, q.top, q.width, q.height].map((v) => +v.toFixed(1)), radius: cs.borderTopLeftRadius, clip: (cs.clipPath || "none").slice(0, 60), backdrop: bf && bf !== "none" ? bf.slice(0, 40) : "none", bg: cs.backgroundColor }); break; }
+    }
+  }
+  const rb = root.getBoundingClientRect();
+  return { escapes: out, unread, extent: [e.l, e.t, W, H].map((v) => +v.toFixed(1)), rootBox: [rb.left, rb.top, rb.width, rb.height].map((v) => +v.toFixed(1)),
+    pts: [[e.l + 2, e.t + 2], [e.r - 2, e.t + 2], [e.l + 2, e.b - 2], [e.r - 2, e.b - 2], [rb.left + 2, rb.top + 2], [rb.right - 2, rb.top + 2], [rb.left + 2, rb.bottom - 2], [rb.right - 2, rb.bottom - 2]] };
+}`;
+/** H5-6 · the corner pixels: shadows off; the dock as painted against the dock at opacity 0 (the page under it). */
+async function cornerPixels(page, shape) {
+    const xs = shape.pts.map((p) => p[0]), ys = shape.pts.map((p) => p[1]);
+    const clip = { x: Math.max(0, Math.min(...xs) - 6), y: Math.max(0, Math.min(...ys) - 6), width: Math.max(...xs) - Math.min(...xs) + 12, height: Math.max(...ys) - Math.min(...ys) + 12 };
+    await page.evaluate(() => { const st = document.createElement("style"); st.id = "hp-c1-css"; st.textContent = "[data-hp-c1], [data-hp-c1] *, [data-hp-c1]::before, [data-hp-c1]::after, [data-hp-c1] *::before, [data-hp-c1] *::after { box-shadow: none !important; filter: none !important; } [data-hp-c1][data-hp-c1-off] { opacity: 0 !important; }"; document.head.appendChild(st); window.__dockProbe.root().setAttribute("data-hp-c1", ""); });
+    await page.waitForTimeout(150);
+    const a = await page.screenshot({ clip, scale: "device", caret: "hide" });
+    await page.evaluate(() => window.__dockProbe.root().setAttribute("data-hp-c1-off", ""));
+    await page.waitForTimeout(150);
+    const b = await page.screenshot({ clip, scale: "device", caret: "hide" });
+    await page.evaluate(() => { const r = window.__dockProbe.root(); r.removeAttribute("data-hp-c1"); r.removeAttribute("data-hp-c1-off"); document.getElementById("hp-c1-css")?.remove(); });
+    const A = PNG.sync.read(a), B = PNG.sync.read(b), dsf = A.width / clip.width;
+    let worst = { d: 0 };
+    for (const [x, y] of shape.pts) {
+        const px = Math.floor((x - clip.x) * dsf), py = Math.floor((y - clip.y) * dsf);
+        if (px < 0 || py < 0 || px >= A.width || py >= A.height) continue;
+        const i = (py * A.width + px) * 4; const d = Math.max(...[0, 1, 2].map((k) => Math.abs(A.data[i + k] - B.data[i + k])));
+        if (d > worst.d) worst = { d, at: [+x.toFixed(1), +y.toFixed(1)], painted: [A.data[i], A.data[i + 1], A.data[i + 2]], page: [B.data[i], B.data[i + 1], B.data[i + 2]] };
+    }
+    return { ...worst, png: a };
+}
 const read = (page) => page.evaluate(`(${READ})()`);
 /** Sample READ on every rAF in the page until `stop()` is called or `max` frames. */
 const startSample = (page, max = 150) => page.evaluate(([src, max]) => { const f = new Function(`return (${src})`)(); const rows = [f()], run = (window.__cfRun ?? 0) + 1; window.__cfRun = run; window.__cfRows = rows; let n = 0; const tick = () => { if (window.__cfRun !== run || n++ > max) return; rows.push(f()); requestAnimationFrame(tick); }; requestAnimationFrame(tick); }, [READ, max]);
@@ -154,11 +277,15 @@ for (const engine of engines(args)) {
                     const c = await read(s.page);
                     const f = path.join(out, "frames", `${engine}-c1-${variant}-collapsed.png`); fs.mkdirSync(path.dirname(f), { recursive: true });
                     await s.page.screenshot({ path: f, clip: { x: Math.max(0, c.e[0] - 40), y: Math.max(0, c.e[1] - 40), width: c.e[2] - c.e[0] + 80, height: c.e[3] - c.e[1] + 80 } });
+                    const shape = await s.page.evaluate(`(${SHAPE})()`);   // H5-6
+                    const px = await cornerPixels(s.page, shape);
+                    fs.writeFileSync(path.join(out, "frames", `${engine}-c1-${variant}-corner-noshadow.png`), px.png);
                     const [cx, cy] = centre(c); await s.page.mouse.move(cx, cy);
                     const x = await until(s.page, (r) => r.posture !== "collapsed" && !r.m, 3000);
                     await away(s.page);
-                    const checks = { square: c.main >= c.cross + 8, stadium: c.R >= c.cross / 2 - 1, hugs: c.span > 0 && c.main <= c.span + 24, summary: !!c.disc && c.disc.paints && c.disc.name.length > 0, material: c.plateO >= 0.5 && x.r.plateO >= 0.5 };
-                    done(engine, `c1·shape·${variant}`, checks, `collapsed ${c.main}×${c.cross} px (main×cross), corner R ${c.R} px (stadium ≥ ${r2(c.cross / 2 - 1)}), painting seats' span ${c.span} px (hug bound ${r2(c.span + 24)}); disclosure ${c.disc ? `${c.disc.label} "${c.disc.name}" aria-expanded=${c.disc.exp}${c.disc.paints ? "" : " (does not paint)"}` : "NONE"}; plate opacity ${r2(c.plateO)} collapsed, ${r2(x.r.plateO)} expanded (${x.r.posture}); frame ${path.basename(f)}`, { collapsed: c, frame: f });
+                    const checks = { square: c.main >= c.cross + 8, stadium: c.R >= c.cross / 2 - 1, hugs: c.span > 0 && c.main <= c.span + 24, summary: !!c.disc && c.disc.paints && c.disc.name.length > 0, material: c.plateO >= 0.5 && x.r.plateO >= 0.5, ownshape: shape.escapes.length === 0, corner: px.d <= CORNER_PX };
+                    const esc = shape.escapes.map((q) => `${q.el} paints its ${q.corner} corner outside the stadium (r ${q.radius}, clip ${q.clip}, backdrop ${q.backdrop}, bg ${q.bg}, box ${q.box.join("×")})`);
+                    done(engine, `c1·shape·${variant}`, checks, `collapsed ${c.main}×${c.cross} px (main×cross), corner R ${c.R} px (stadium ≥ ${r2(c.cross / 2 - 1)}), painting seats' span ${c.span} px (hug bound ${r2(c.span + 24)}); disclosure ${c.disc ? `${c.disc.label} "${c.disc.name}" aria-expanded=${c.disc.exp}${c.disc.paints ? "" : " (does not paint)"}` : "NONE"}; plate opacity ${r2(c.plateO)} collapsed, ${r2(x.r.plateO)} expanded (${x.r.posture}); own shape: ${esc.length ? esc.slice(0, 2).join("; ") : "no painter paints a corner outside the stadium"}${shape.unread.length ? ` (unread clip: ${shape.unread.slice(0, 2).join(", ")})` : ""}; corner pixels (shadows off) differ from the page by ${px.d}/255 at worst${px.at ? ` at ${px.at.join(",")} (painted ${px.painted.join(",")} over page ${px.page.join(",")})` : ""} (bound ${CORNER_PX}); frame ${path.basename(f)}`, { collapsed: c, shape, cornerPx: { d: px.d, at: px.at, painted: px.painted, page: px.page }, frame: f });
                 } finally { await s.close(); }
             });
             // C2 / C7 · the morph
@@ -200,7 +327,16 @@ for (const engine of engines(args)) {
                 const rows = await stopSample(s.page);
                 const z = rows.at(-1).main, i0 = rows.findIndex((r) => Math.abs(r.main - r0.main) > 0.5), i1 = rows.findIndex((r) => Math.abs(r.main - z) <= 1);
                 const n = i0 < 0 ? null : i1 - i0;
-                done(engine, "c2·prm", { moved: Math.abs(z - r0.main) >= 8, instant: n !== null && n <= 3 }, `reduced motion: ${r0.main} → ${z} px; the extent lands ${n === null ? "(never moved)" : n + " frame(s)"} after its first change (bound ≤ 3)`);
+                // H5-6 · the seats and the flag (crit-prm): from the first frame anything changes, every seat at its final
+                // opacity (± 0.02) within one frame, and the flag never raised: Q-18 (a), O-88's "an instant, correct state change"
+                const fin = rows.at(-1);
+                const j0 = rows.findIndex((r) => Math.abs(r.main - r0.main) > 0.5 || r.m || r.so.some((v, j) => Math.abs(v - (r0.so[j] ?? v)) > 0.02));
+                let lastOff = -1; rows.forEach((r, i) => { if (r.so.length !== fin.so.length || r.so.some((v, j) => Math.abs(v - fin.so[j]) > 0.02)) lastOff = i; });
+                const opFrames = j0 < 0 ? 0 : Math.max(0, lastOff + 1 - j0), opMs = j0 < 0 || lastOff + 1 >= rows.length ? null : r2(rows[lastOff + 1].t - rows[j0].t);
+                const partial = rows.filter((r) => r.so.some((v) => v > 0.05 && v < 0.95) && r.so.some((v, j) => Math.abs(v - fin.so[j]) > 0.02)).length;
+                const flagFrames = rows.filter((r) => r.m).length, flagMs = flagFrames ? r2(rows.filter((r) => r.m).at(-1).t - rows.find((r) => r.m).t) : 0;
+                const checks = { moved: Math.abs(z - r0.main) >= 8, instant: n !== null && n <= 3, ...(Q18 === "b" ? {} : { content: opFrames <= 1, flag: flagFrames === 0 }) };
+                done(engine, "c2·prm", checks, `reduced motion: ${r0.main} → ${z} px; the extent lands ${n === null ? "(never moved)" : n + " frame(s)"} after its first change (bound ≤ 3); every seat at its final opacity ${opFrames} frame(s) after the first change${opMs != null ? ` (${opMs} ms)` : ""}, ${partial} frame(s) with a seat part-faded (Q-18 ${Q18 === "b" ? "(b): recorded" : "(a): bound ≤ 1 frame"}); the window flag up ${flagFrames} frame(s)${flagFrames ? ` (${flagMs} ms)` : ""} (Q-18 ${Q18 === "b" ? "(b): recorded" : "(a): bound 0"})`, { prm: { extentFrames: n, opacityFrames: opFrames, opacityMs: opMs, partialFrames: partial, flagFrames, flagMs, q18: Q18 } });
             } finally { await s.close(); }
         });
         await rep.guard(engine, ["c2·rapid" + engineTag(target, engine)], async () => {
@@ -336,6 +472,65 @@ for (const engine of engines(args)) {
                 const persL = new Set(c.pers.map((p) => p.label));
                 const through = acts.filter((l) => l !== disc && !persL.has(l));
                 done(engine, "c7·coarse-tap", { opens: a.ok, swallowed: through.length === 0 }, `tap at the collapsed dock's ${c.disc?.paints ? "disclosure" : "centre"} (coarse, 390 px): ${a.ok ? `expanded after ${a.ms} ms` : "did NOT expand"}; elements activated ${through.length ? through.join(", ") : "none"}${acts.length > through.length ? ` (not counted: ${acts.filter((l) => !through.includes(l)).join(", ")}, the disclosure's or a persistent element's own)` : ""}`);
+            } finally { await s.close(); }
+        });
+        // H5-11 · C8 (O-91): an outside press during the morph collapses the dock once it settles
+        await rep.guard(engine, ["c8·outside-press" + engineTag(target, engine)], async () => {
+            const s = await open(browser, "h");
+            try {
+                await away(s.page); await s.page.waitForTimeout(400);
+                // a point outside the dock that activates nothing, ≥ 120 px from it
+                const outPt = await s.page.evaluate(() => {
+                    const root = window.__dockProbe.root(), q = root.getBoundingClientRect(), cx = (q.left + q.right) / 2, cy = (q.top + q.bottom) / 2;
+                    const live = "a, button, input, select, textarea, label, summary, details, video, audio, iframe, [role=button], [role=link], [role=tab], [role=menuitem], [role=checkbox], [role=switch], [role=slider], [tabindex], [contenteditable], [onclick]";
+                    for (let y = 60; y < innerHeight - 20; y += 37) for (let x = 20; x < innerWidth - 20; x += 41) { if (Math.hypot(x - cx, y - cy) < 120) continue; const el = document.elementFromPoint(x, y); if (!el || root.contains(el) || el.closest(live)) continue; return [x, y]; }
+                    return null;
+                });
+                if (!outPt) { done(engine, "c8·outside-press", { point: null }, "UNMEASURED: no point outside the dock that activates nothing"); return; }
+                // in the page: at every pointerdown outside the dock, the flag and whether the extent moved since the last frame
+                await s.page.evaluate(() => {
+                    const P = window.__dockProbe, root = P.root(), x = P.axis() === "x"; const main = () => { const e = P.extent(); return x ? e.r - e.l : e.b - e.t; };
+                    let prev = main(), cur = prev; const tick = () => { prev = cur; cur = main(); requestAnimationFrame(tick); }; requestAnimationFrame(tick);
+                    document.addEventListener("pointerdown", (e) => { if (root.contains(e.target)) return; const m = main(); window.__c8 = { m: !!P.morphing(), moving: Math.abs(m - prev) > 0.1 || Math.abs(m - cur) > 0.1, main: m }; }, true);
+                });
+                const reps = []; let frameDir = null;
+                for (let k = 0; k < C8_TRIES && reps.filter((r) => r.mid).length < C8_REPS; k++) {
+                    await away(s.page); await until(s.page, (r) => r.posture === "collapsed" && !r.m, 6000); await s.page.waitForTimeout(250);
+                    const c = await read(s.page); const [cx, cy] = centre(c);
+                    await s.page.evaluate(() => { window.__c8 = null; });
+                    const shots = [];
+                    const shoot_ = async (tag) => { if (k !== 0) return; frameDir ??= path.join(out, "frames", `${engine}-c8_outside-press`); fs.mkdirSync(frameDir, { recursive: true }); const r = await read(s.page); const f = path.join(frameDir, `${tag}.png`); await s.page.screenshot({ path: f, clip: { x: 0, y: Math.max(0, Math.min(r.e[1], c.e[1]) - 200), width: r.vw, height: Math.min(900 - Math.max(0, Math.min(r.e[1], c.e[1]) - 200), Math.max(r.e[3], c.e[3]) - Math.min(r.e[1], c.e[1]) + 260) } }); shots.push(path.basename(f)); };
+                    await s.page.mouse.move(cx, cy, { steps: 2 });
+                    const st = await until(s.page, (r) => r.m || Math.abs(r.main - c.main) > 0.5, 2000);
+                    await s.page.mouse.click(outPt[0], outPt[1]);
+                    const pr = await s.page.evaluate(() => window.__c8);
+                    await shoot_("01-after-press");
+                    const settle = await until(s.page, (r) => !r.m, 3000);
+                    const z = await until(s.page, (r) => r.posture === "collapsed" && !r.m, C8_AFTER_MS);
+                    await shoot_("02-settled");
+                    // a collapse that comes only after the 3.6 s dwell (the pointer left the dock to press) is the dwell's, not the press's
+                    reps.push({ k, opened: st.ok, mid: !!pr && (pr.m || pr.moving), press: pr, settleMs: settle.ms, collapsed: z.ok && settle.ms + z.ms < C8_DWELL_GUARD_MS, collapseMs: z.ms, posture: z.r.posture, shots });
+                }
+                const mid = reps.filter((r) => r.mid), bad = mid.filter((r) => !r.collapsed);
+                const checks = { opens: reps.length > 0 && reps.every((r) => r.opened), collapses: bad.length ? false : mid.length >= C8_REPS ? true : null };
+                done(engine, "c8·outside-press", checks, `press point ${outPt.join(",")}; ${reps.length} attempt(s), ${mid.length} press(es) landed mid-morph (bound ${C8_REPS} of ${C8_REPS}); ${mid.length - bad.length}/${mid.length} collapsed within ${C8_AFTER_MS} ms of the morph settling${bad.length ? ` (stayed ${bad[0].posture}, attempt ${bad[0].k})` : ""}; ${reps.filter((r) => !r.opened).length} hover(s) that did not open the dock; frames ${frameDir ? path.relative(out, frameDir) : "-"}`, { reps, point: outPt });
+            } finally { await s.close(); }
+        });
+        // H5-11 · C9 (O-74e): the expanded dock at 844 × 390, coarse
+        await rep.guard(engine, ["c9·short-coarse" + engineTag(target, engine)], async () => {
+            const s = await open(browser, "h", { viewport: { width: 844, height: 390 }, hasTouch: true, isMobile: engine !== "webkit" ? true : undefined });
+            try {
+                await s.page.waitForTimeout(400);
+                const c = await read(s.page);
+                const [tx, ty] = c.disc?.paints ? c.disc.c : centre(c); await s.page.touchscreen.tap(tx, ty);
+                const a = await until(s.page, (r) => r.posture !== "collapsed" && !r.m, 3000); await s.page.waitForTimeout(300);
+                const r = await read(s.page);
+                const seats = await s.page.evaluate(() => { const P = window.__dockProbe, e = P.extent(); return P.paintingSeats().filter((q) => { const x = (q.rect.l + q.rect.r) / 2, y = (q.rect.t + q.rect.b) / 2; return x > e.l && x < e.r && y > e.t && y < e.b; }).map((q) => { const b = q.el.getBoundingClientRect(); return [+(b.width).toFixed(1), +(b.height).toFixed(1), window.__hp.label(q.el)]; }); });
+                const minSeat = seats.length ? Math.min(...seats.map((q) => Math.min(q[0], q[1]))) : null;
+                const f = path.join(out, "frames", `${engine}-c9-short-coarse.png`); fs.mkdirSync(path.dirname(f), { recursive: true }); await s.page.screenshot({ path: f });
+                const small = seats.filter((q) => Math.min(q[0], q[1]) < C9_SEAT - 0.5);
+                done(engine, "c9·short-coarse", { opened: a.ok, block: a.ok ? r.cross <= C9_BLOCK_MAX + 0.5 : null, seats: a.ok ? seats.length > 0 && !small.length : null },
+                    `844 × 390, coarse: tap at the collapsed dock's ${c.disc?.paints ? "disclosure" : "centre"} ${a.ok ? `expanded it (${r.posture})` : "did NOT expand it"}; expanded block size ${a.ok ? r.cross : "-"} px (bound ${C9_BLOCK_MAX}: a ${C9_SEAT} px seat + 2 × the compact rung's 4 px block padding); ${seats.length} painting seat(s), the smallest ${minSeat ?? "-"} px${small.length ? ` (under ${C9_SEAT}: ${small.slice(0, 3).map((q) => q[2] + " " + q[0] + "×" + q[1]).join(", ")})` : ""}; frame ${path.basename(f)}`, { blockPx: a.ok ? r.cross : null, seats });
             } finally { await s.close(); }
         });
     } finally {

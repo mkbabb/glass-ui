@@ -1,0 +1,9 @@
+ 6:11  up 1 day,  8:34, 2 users, load averages: 14.71 17.71 17.64
+Sat Oct 17 06:11:11 EDT 2026
+BAD  W3  pass            expect: exit 0, all cells PASS  ·  got: exit 1, 32/33 PASS; failing: chromium:lead-remove[window]  [101 s, load 14.71]
+OK   W3  bandclose       expect: an OWNER-BLOCKED cell in ^warm-expand|^warm-collapse  ·  got: exit 0, 2/2 FAIL; matching 2 (chromium)  [24 s, load 11.76]
+OK   W3  seatsettle      expect: exit ≠ 0; lanes fails in ^warm-expand|^warm-collapse  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium)  [24 s, load 11.2]
+SELFTEST FAIL  2/3 expectations hold
+exit 1
+ 6:13  up 1 day,  8:36, 2 users, load averages: 12.31 15.32 16.66
+Sat Oct 17 06:13:44 EDT 2026

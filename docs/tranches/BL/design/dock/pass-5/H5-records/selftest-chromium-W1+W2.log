@@ -1,0 +1,35 @@
+ 1:57  up 1 day,  4:20, 2 users, load averages: 22.65 26.85 25.67
+Sat Oct 17 01:57:43 EDT 2026
+OK   W1  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 22/22 PASS  [27 s, load 22.65]
+OK   W1  csscarrier      expect: exit 0, all cells PASS  ·  got: exit 0, 22/22 PASS  [27 s, load 25.11]
+OK   W1  hitpair         expect: exit 0, all cells PASS  ·  got: exit 0, 22/22 PASS  [27 s, load 27.24]
+OK   W1  pass@dark       expect: exit 0, all cells PASS  ·  got: exit 0, 22/22 PASS  [27 s, load 28.15]
+OK   W1  lens            expect: exit ≠ 0; corner fails in fit·rest|morph·expanded-rest|rail·rest  ·  got: exit 1, 4/4 FAIL; matching 4 (chromium)  [14 s, load 25.99]
+OK   W1  squash          expect: exit ≠ 0; corner fails in morph·first-expand|morph·warm-collapse|morph·collapsed-rest  ·  got: exit 1, 6/6 FAIL; matching 6 (chromium)  [8 s, load 27.94]
+OK   W1  cssbend         expect: exit ≠ 0; corner fails in morph·warm-expand|morph·warm-collapse  ·  got: exit 1, 4/4 FAIL; matching 4 (chromium)  [8 s, load 26.61]
+OK   W1  deadmorph       expect: exit ≠ 0; agree|moves fails in morph·warm-expand|morph·warm-collapse  ·  got: exit 1, 4/4 FAIL; matching 4 (chromium)  [8 s, load 26.3]
+OK   W1  dot             expect: exit ≠ 0; cover fails in fit·rest  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [4 s, load 25.39]
+OK   W1  cardlens        expect: exit ≠ 0; corner fails in card·  ·  got: exit 1, 4/5 FAIL; matching 4 (chromium)  [10 s, load 24.24]
+OK   W1  endlens         expect: exit ≠ 0; corner fails in rail·scrolled-end|rail·focus-end  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium)  [3 s, load 24.35]
+OK   W1  endout          expect: exit ≠ 0; end fails in rail·scrolled-end|rail·focus-end  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium)  [3 s, load 24.35]
+OK   W1  cardspread      expect: exit ≠ 0; card fails in card·warm-expand|card·warm-collapse|card·first-expand  ·  got: exit 1, 3/3 FAIL; matching 3 (chromium)  [9 s, load 24.16]
+OK   W1  cardlerp        expect: an OWNER-BLOCKED cell in card·warm-expand|card·warm-collapse|card·first-expand  ·  got: exit 0, 3/3 FAIL; matching 3 (chromium)  [10 s, load 23.57]
+OK   W1  cardstep        expect: an OWNER-BLOCKED cell in card·warm-expand|card·warm-collapse|card·first-expand  ·  got: exit 0, 3/3 FAIL; matching 3 (chromium)  [10 s, load 26.66]
+OK   W1  hitpairunnamed  expect: exit ≠ 0; ran fails in morph·warm-expand|morph·warm-collapse  ·  got: exit 1, 2/4 FAIL; matching 2 (chromium)  [34 s, load 27.66]
+OK   W1  cardblip        expect: exit ≠ 0; card fails in card·warm-expand|card·warm-collapse|card·first-expand  ·  got: exit 1, 3/3 FAIL; matching 3 (chromium)  [9 s, load 29.94]
+OK   W2  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 8/8 PASS  [22 s, load 29.5]
+OK   W2  roving          expect: exit 0, all cells PASS  ·  got: exit 0, 8/8 PASS  [22 s, load 27.37]
+OK   W2  scroller        expect: exit ≠ 0; scroller fails in route2|route3|route4  ·  got: exit 1, 3/3 FAIL; matching 3 (chromium)  [10 s, load 26.61]
+OK   W2  ringclip        expect: exit ≠ 0; ring fails in route1  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium)  [8 s, load 25.91]
+OK   W2  noring          expect: exit ≠ 0; paint fails in route1|route4  ·  got: exit 1, 3/3 FAIL; matching 3 (chromium)  [13 s, load 25.76]
+OK   W2  foldtail        expect: exit ≠ 0; pointer|keyboard|at fails in route1  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium)  [8 s, load 22.94]
+OK   W2  notab           expect: exit ≠ 0; keyboard fails in route1|route5|route6|route7  ·  got: exit 1, 5/5 FAIL; matching 5 (chromium)  [12 s, load 23.02]
+OK   W2  noname          expect: exit ≠ 0; at fails in route1|route5|route6|route7  ·  got: exit 1, 5/5 FAIL; matching 5 (chromium)  [12 s, load 20.77]
+OK   W2  cwidth          expect: exit ≠ 0; plateOut fails in route5  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [2 s, load 19.45]
+OK   W2  depthscroll     expect: exit ≠ 0; scroller fails in route6  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [3 s, load 19.57]
+OK   W2  nestgrow        expect: exit ≠ 0; fits|faces|pointer fails in route7  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [2 s, load 19.57]
+OK   W2  arrowclamp      expect: exit ≠ 0; keyboard fails in route1  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium)  [8 s, load 19.57]
+SELFTEST PASS  29/29 expectations hold
+exit 0
+ 2:03  up 1 day,  4:26, 2 users, load averages: 20.41 25.05 25.47
+Sat Oct 17 02:03:50 EDT 2026

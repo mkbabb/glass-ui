@@ -1,0 +1,8 @@
+ 7:31  up 1 day,  9:54, 2 users, load averages: 15.79 16.33 14.02
+FAIL  CASES  Chromium  case·consumer-margin  unlayered ".glass-dock { margin-inline: 20px; }" (computed margin-left at rest 20px): expand, collapse; plate end edge past the neighbour by at most -32 px (bound 0.5); neighbour travel 379.66 px, largest one-frame step 379.66 px against the plate edge's 32.58 px (+1); chromium-case_consumer-margin.json  ⟶ FAILED: follows  [load 17.01]
+FAIL  CASES  Chromium  case·consumer-margin·control  no consumer rule (computed margin-left at rest 8px): expand, collapse; plate end edge past the neighbour by at most -20 px (bound 0.5); neighbour travel 379.66 px, largest one-frame step 379.66 px against the plate edge's 32.67 px (+1); chromium-case_consumer-margin_control.json  ⟶ FAILED: follows  [load 16.04]
+FAIL  CASES  Chromium  case·rotated·control  host rotate(0deg): expand, collapse; seats' largest second difference 207.96 px/frame²; largest one-frame seat move after the window closed 207.96 px (bound 0.5); chromium-case_rotated_control.json  ⟶ FAILED: snap  [load 16.04]
+FAIL  CASES  Chromium  case·rotated  host rotate(2deg): expand, collapse; seats' largest second difference 214.58 px/frame² (control 207.96, bound +1); largest one-frame seat move after the window closed 214.58 px (bound 0.5); chromium-case_rotated.json  ⟶ FAILED: snap, jerk  [load 15.24]
+FAIL  CASES  fv3@91728a09  0/4 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p5/H5/wt/.h5out/chromium/fv3/main/rerun1/runs/CASES-fv3/CASES.json)
+exit 1
+ 7:31  up 1 day,  9:54, 2 users, load averages: 15.24 16.21 14.02

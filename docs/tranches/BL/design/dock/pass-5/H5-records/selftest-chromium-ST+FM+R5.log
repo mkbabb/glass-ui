@@ -1,0 +1,19 @@
+ 2:12  up 1 day,  4:35, 2 users, load averages: 15.40 19.34 22.48
+Sat Oct 17 02:12:31 EDT 2026
+OK   ST  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 10/10 PASS  [69 s, load 15.69]
+OK   ST  pass@dark       expect: exit 0, all cells PASS  ·  got: exit 0, 10/10 PASS  [68 s, load 20.91]
+OK   ST  leap            expect: exit ≠ 0; leap fails in ^stall·  ·  got: exit 1, 8/10 FAIL; matching 4 (chromium)  [67 s, load 19.37]
+OK   ST  nbjump          expect: exit ≠ 0; neighbour fails in ^stall·nb·  ·  got: exit 1, 2/5 FAIL; matching 2 (chromium)  [34 s, load 13.97]
+OK   ST  nboverlap       expect: exit ≠ 0; overlap fails in ^stall·nb·  ·  got: exit 1, 4/5 FAIL; matching 2 (chromium)  [35 s, load 12.22]
+OK   FM  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 6/6 PASS  [28 s, load 11.25]
+OK   FM  pass@dark       expect: exit 0, all cells PASS  ·  got: exit 0, 6/6 PASS  [28 s, load 11.19]
+OK   FM  deadhooks       expect: exit ≠ 0; tiles fails in ^film·  ·  got: exit 1, 6/6 FAIL; matching 6 (chromium)  [27 s, load 11.56]
+OK   FM  stub            expect: exit ≠ 0; stub fails in ^film·swap-  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium)  [9 s, load 9.76]
+OK   R5  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 4/4 PASS  [13 s, load 10.41]
+OK   R5  nohit           expect: exit ≠ 0; corner fails in ^hit·  ·  got: exit 1, 4/4 FAIL; matching 4 (chromium)  [13 s, load 10.1]
+OK   R5  seatmiss        expect: exit ≠ 0; seat fails in ^hit·warm-  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium)  [7 s, load 11.01]
+OK   R5  ghosthit        expect: exit ≠ 0; ghost fails in ^hit·warm-  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium)  [7 s, load 10.45]
+SELFTEST PASS  13/13 expectations hold
+exit 0
+ 2:19  up 1 day,  4:42, 2 users, load averages: 11.38 14.22 18.91
+Sat Oct 17 02:19:22 EDT 2026

@@ -1,0 +1,75 @@
+{
+ "witness": "PR",
+ "target": "wt",
+ "when": "2026-10-17T10:20:50.545Z",
+ "load": 10.15,
+ "cells": [
+  {
+   "engine": "source",
+   "cell": "prose·readers",
+   "pass": false,
+   "failed": [
+    "readers"
+   ],
+   "dead": [
+    "--dock-clock (src/components/dock/composables/useDockAperture.ts)"
+   ],
+   "summary": "72 custom propert(ies) declared or written in the dock band; 1 with no reader in src/ or demo/: --dock-clock (src/components/dock/composables/useDockAperture.ts)",
+   "load": 10.15
+  },
+  {
+   "engine": "source",
+   "cell": "prose·count",
+   "pass": true,
+   "failed": [],
+   "counts": [
+    {
+     "at": "src/components/dock/GlassDock.vue:67",
+     "says": "SEVEN members",
+     "n": 7,
+     "ok": true
+    }
+   ],
+   "members": 7,
+   "summary": "DockProps has 7 member(s); 1 prose count(s) near it, 0 wrong",
+   "load": 10.15
+  },
+  {
+   "engine": "source",
+   "cell": "prose·partials",
+   "pass": false,
+   "failed": [
+    "partials"
+   ],
+   "partials": [
+    {
+     "at": "src/components/dock/styles/index.css:36",
+     "says": "six partials",
+     "n": 6,
+     "imports": 14,
+     "ok": false
+    }
+   ],
+   "summary": "1 partial count(s) in an @import file; 1 wrong: src/components/dock/styles/index.css:36 \"six partials\" over 14 @import(s)",
+   "load": 10.15
+  },
+  {
+   "engine": "source",
+   "cell": "prose·citations",
+   "pass": true,
+   "failed": [],
+   "cites": [],
+   "summary": "0 design-pass record citation(s) in src/ or tests/",
+   "load": 10.15
+  },
+  {
+   "engine": "source",
+   "cell": "prose·rows",
+   "pass": true,
+   "failed": [],
+   "dup": [],
+   "summary": "32 token(s) with a row in docs/design/tunable-anim.md; 0 with more than one",
+   "load": 10.15
+  }
+ ]
+}

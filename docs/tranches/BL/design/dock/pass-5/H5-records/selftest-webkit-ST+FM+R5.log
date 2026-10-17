@@ -1,0 +1,20 @@
+ 5:42  up 1 day,  8:05, 2 users, load averages: 14.85 10.33 11.38
+Sat Oct 17 05:42:31 EDT 2026
+[guarded] waiting for the 'webkit' lock
+OK   ST  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 10/10 PASS  [70 s, load 14.89]
+OK   ST  pass@dark       expect: exit 0, all cells PASS  ·  got: exit 0, 10/10 PASS  [72 s, load 14.93]
+OK   ST  leap            expect: exit ≠ 0; leap fails in ^stall·  ·  got: exit 1, 8/10 FAIL; matching 4 (webkit)  [72 s, load 22.56]
+OK   ST  nbjump          expect: exit ≠ 0; neighbour fails in ^stall·nb·  ·  got: exit 1, 4/5 FAIL; matching 4 (webkit)  [36 s, load 19.24]
+OK   ST  nboverlap       expect: exit ≠ 0; overlap fails in ^stall·nb·  ·  got: exit 1, 4/5 FAIL; matching 3 (webkit)  [36 s, load 15.07]
+OK   FM  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 6/6 PASS  [29 s, load 17.05]
+OK   FM  pass@dark       expect: exit 0, all cells PASS  ·  got: exit 0, 6/6 PASS  [29 s, load 19.14]
+OK   FM  deadhooks       expect: exit ≠ 0; tiles fails in ^film·  ·  got: exit 1, 6/6 FAIL; matching 6 (webkit)  [28 s, load 19.33]
+OK   FM  stub            expect: exit ≠ 0; stub fails in ^film·swap-  ·  got: exit 1, 2/2 FAIL; matching 2 (webkit)  [10 s, load 20.54]
+OK   R5  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 4/4 PASS  [14 s, load 19.26]
+OK   R5  nohit           expect: exit ≠ 0; corner fails in ^hit·  ·  got: exit 1, 4/4 FAIL; matching 4 (webkit)  [14 s, load 19.61]
+OK   R5  seatmiss        expect: exit ≠ 0; seat fails in ^hit·warm-  ·  got: exit 1, 2/2 FAIL; matching 2 (webkit)  [8 s, load 18.43]
+OK   R5  ghosthit        expect: exit ≠ 0; ghost fails in ^hit·warm-  ·  got: exit 1, 2/2 FAIL; matching 2 (webkit)  [8 s, load 18.98]
+SELFTEST PASS  13/13 expectations hold
+exit 0
+ 5:50  up 1 day,  8:13, 2 users, load averages: 19.77 17.19 14.53
+Sat Oct 17 05:50:27 EDT 2026

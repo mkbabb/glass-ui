@@ -1,0 +1,228 @@
+{
+ "witness": "W2",
+ "target": "head@91728a09",
+ "when": "2026-10-17T10:37:32.600Z",
+ "load": 8.3,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "route1·long-run-h",
+   "pass": false,
+   "failed": [
+    "ring"
+   ],
+   "genuine": {
+    "needed": 664,
+    "budget": 360,
+    "exceeds": true,
+    "run": "div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run"
+   },
+   "frames": {
+    "frames": 41,
+    "framesWithScroller": 41,
+    "framesWithRange": 41,
+    "maxRange": 328,
+    "who": [
+     "div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run(auto/hidden)"
+    ]
+   },
+   "ring": {
+    "cutA": 2.5,
+    "cutB": 2.5,
+    "painted": true,
+    "clipped": [
+     1.75,
+     1.75
+    ],
+    "free": [
+     4.25,
+     4.25
+    ]
+   },
+   "reach": {
+    "n": 14,
+    "ok": true,
+    "miss": {
+     "pointer": [],
+     "keyboard": [],
+     "at": []
+    },
+    "tab": "Tab"
+   },
+   "summary": "seats need 664 px vs budget 360 (EXCEED: scrolling allowed); scroller frames 41/41; ring reach clipped 1.75/1.75 vs free 4.25/4.25 px → cut 2.5/2.5 (bound 0.5); focus-visible true, hovered true, selected true; reach 14 seats: pointer 14/14, keyboard (Tab, arrows) 14/14, AT 14/14  ⟶ FAILED: ring",
+   "load": 8.1
+  },
+  {
+   "engine": "chromium",
+   "cell": "route1·long-run-v",
+   "pass": false,
+   "failed": [
+    "ring"
+   ],
+   "genuine": {
+    "needed": 568,
+    "budget": 560,
+    "exceeds": true,
+    "run": "div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run"
+   },
+   "frames": {
+    "frames": 41,
+    "framesWithScroller": 41,
+    "framesWithRange": 41,
+    "maxRange": 24,
+    "who": [
+     "div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run(hidden/auto)"
+    ]
+   },
+   "ring": {
+    "cutA": 2.5,
+    "cutB": 2.5,
+    "painted": true,
+    "clipped": [
+     1.75,
+     1.75
+    ],
+    "free": [
+     4.25,
+     4.25
+    ]
+   },
+   "reach": {
+    "n": 11,
+    "ok": true,
+    "miss": {
+     "pointer": [],
+     "keyboard": [],
+     "at": []
+    },
+    "tab": "Tab"
+   },
+   "summary": "seats need 568 px vs budget 560 (EXCEED: scrolling allowed); scroller frames 41/41; ring reach clipped 1.75/1.75 vs free 4.25/4.25 px → cut 2.5/2.5 (bound 0.5); focus-visible true, hovered true, selected true; reach 11 seats: pointer 11/11, keyboard (Tab, arrows) 11/11, AT 11/11  ⟶ FAILED: ring",
+   "load": 8.26
+  },
+  {
+   "engine": "chromium",
+   "cell": "route2·collapsed-layer",
+   "pass": false,
+   "failed": [
+    "scroller"
+   ],
+   "genuine": {
+    "needed": 419.66,
+    "budget": 1440,
+    "exceeds": false,
+    "run": "div.dock-controls"
+   },
+   "frames": {
+    "frames": 81,
+    "framesWithScroller": 81,
+    "framesWithRange": 81,
+    "maxRange": 318,
+    "who": [
+     "div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run(auto/hidden)"
+    ]
+   },
+   "summary": "seats need 419.66 px vs budget 1440 (fit); frames with a seat scroll container 81/81, with range > 0.5px 81 (max 318px); div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run(auto/hidden)",
+   "load": 8.26
+  },
+  {
+   "engine": "chromium",
+   "cell": "route3·aria-current",
+   "pass": false,
+   "failed": [
+    "scroller"
+   ],
+   "genuine": {
+    "needed": 434.88,
+    "budget": 1440,
+    "exceeds": false,
+    "run": "div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run"
+   },
+   "frames": {
+    "frames": 263,
+    "framesWithScroller": 263,
+    "framesWithRange": 0,
+    "maxRange": 0,
+    "who": [
+     "div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run(auto/hidden)"
+    ]
+   },
+   "summary": "seats need 434.88 px vs budget 1440 (fit); frames with a seat scroll container 263/263, with range 0 (max 0px); div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run(auto/hidden)",
+   "load": 8.24
+  },
+  {
+   "engine": "chromium",
+   "cell": "route4·hover-scale",
+   "pass": false,
+   "failed": [
+    "scroller",
+    "ring"
+   ],
+   "genuine": {
+    "needed": 376.47,
+    "budget": 1440,
+    "exceeds": false,
+    "run": "div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run"
+   },
+   "frames": {
+    "frames": 240,
+    "framesWithScroller": 240,
+    "framesWithRange": 124,
+    "maxRange": 2,
+    "who": [
+     "div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run(auto/hidden)"
+    ]
+   },
+   "ring": {
+    "cutA": 1.5,
+    "cutB": 1.5,
+    "painted": true,
+    "clipped": [
+     2.85,
+     2.85
+    ],
+    "free": [
+     4.35,
+     4.35
+    ]
+   },
+   "summary": "seats need 376.47 px vs budget 1440 (fit); frames with a seat scroll container 240/240, with range 124 (max 2px) div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run(auto/hidden); ring reach clipped 2.85/2.85 vs free 4.35/4.35 px → cut 1.5/1.5 (bound 0.5); focus-visible true, hovered true, selected true  ⟶ FAILED: scroller, ring",
+   "load": 8.3
+  },
+  {
+   "engine": "chromium",
+   "cell": "route6·depth",
+   "pass": false,
+   "failed": [
+    "scroller"
+   ],
+   "genuine": {
+    "needed": 214.3,
+    "budget": 1440,
+    "exceeds": false,
+    "run": "div"
+   },
+   "frames": {
+    "frames": 156,
+    "framesWithScroller": 156,
+    "framesWithRange": 67,
+    "maxRange": 4,
+    "who": [
+     "div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run(auto/hidden)"
+    ]
+   },
+   "reach": {
+    "n": 4,
+    "ok": true,
+    "miss": {
+     "pointer": [],
+     "keyboard": [],
+     "at": []
+    },
+    "tab": "Tab"
+   },
+   "summary": "seats at depth need 214.3 px vs budget 1440 (fit); scroller frames 156/156 (div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run(auto/hidden)); reach 4 seats: pointer 4/4, keyboard (Tab, arrows) 4/4, AT 4/4  ⟶ FAILED: scroller",
+   "load": 8.3
+  }
+ ]
+}

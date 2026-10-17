@@ -27,10 +27,13 @@
 // never paints the corner light, so the pass-3 rule (light corner, then black) found no trigger there
 // (Chromium dark 6/6 "no trigger marker"); and a white armed state is not enough, because Playwright
 // WebKit's video opens on white frames before the page paints dark. Pure red is neither.
+// H5-3 (pass-5/H5.md): the film read is promoted to a gated check. While the strip records, the in-page logger reads
+// every glyph (lib.mjs startLog `glyphs`) and the strip's cell carries `stub` (lib.mjs stubRow): no glyph above 0.5
+// opacity cut by a clip edge inside the plate to 10-90 % of its ink, the class B2's gestalt read found by eye.
 import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
-import { parseArgs, engines, openTarget, launch, makeReport, outDir, engineTag, screencast, readFrame, waitRest, extentNow, r2 } from "./lib.mjs";
+import { parseArgs, engines, openTarget, launch, makeReport, outDir, engineTag, screencast, readFrame, waitRest, extentNow, r2, startLog, stopLog, stubRow } from "./lib.mjs";
 
 export const TILES = 14, NOISE_PX = 40, MARK_PX = 8, FRAME_MS = 40;
 export const SEQ = [
@@ -60,7 +63,7 @@ for (const engine of engines(args)) {
         for (const q of SEQ) {
             await rep.guard(engine, ["film·" + q.name + tag], async () => {
                 const dir = path.join(out, `cast-${engine}-${q.name}`);
-                let box = null, mk = null;
+                let box = null, mk = null, strip = null;
                 const cast = await screencast(browser, target, q.scene, { ctx: { deviceScaleFactor: 1 }, dir, crop: () => box }, async (page, mark) => {
                     for (const h of q.pre ?? []) { await hook(page, h); await page.waitForTimeout(200); await waitRest(page, { quiet: 500, cap: 7000 }); }
                     await page.waitForTimeout(400);
@@ -68,9 +71,12 @@ for (const engine of engines(args)) {
                     mk = { x: 0, y: 0 };
                     await page.evaluate(({ x, y, s }) => { const m = document.createElement("div"); m.id = "hp-film-mark"; m.style.cssText = `position:fixed;left:${x}px;top:${y}px;width:${s}px;height:${s}px;background:#f00;z-index:2147483647;pointer-events:none;`; document.body.appendChild(m); }, { ...mk, s: MARK_PX });
                     await page.waitForTimeout(300);
+                    await startLog(page, { seats: true, ink: true, glyphs: true }); await page.waitForTimeout(100);
                     mark("go");
-                    await page.evaluate((go) => { document.getElementById("hp-film-mark").style.setProperty("background", "#000", "important"); for (const [fn, a] of go) window.__scene[fn](a); }, q.go);
+                    await page.evaluate((go) => { window.__hpLog.mark = "go"; document.getElementById("hp-film-mark").style.setProperty("background", "#000", "important"); for (const [fn, a] of go) window.__scene[fn](a); }, q.go);
                     await page.waitForTimeout(1200); await waitRest(page, { quiet: 400, cap: 7000 });
+                    const fr = await stopLog(page); const i0 = fr.findIndex((f) => f.mk === "go");
+                    strip = i0 > 0 ? fr.slice(i0 - 1) : fr;
                     const e1 = await extentNow(page);
                     const vp = page.viewportSize();
                     const l = Math.max(0, Math.min(e0.l, e1.l) - 24), t = Math.max(0, Math.min(e0.t, e1.t) - 24), r = Math.min(vp.width, Math.max(e0.r, e1.r) + 24), b = Math.min(vp.height, Math.max(e0.b, e1.b) + 24);
@@ -98,9 +104,13 @@ for (const engine of engines(args)) {
                 const list = path.join(dir, "strip.txt");
                 fs.writeFileSync(list, pick.map((f) => `file '${f.file}'`).join("\n"));
                 execFileSync("ffmpeg", ["-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", list, "-vf", `tile=1x${pick.length}:padding=2:color=red`, "-frames:v", "1", png]);
-                const pass = distinct >= 2 && moved;
-                rep.add({ engine, cell: "film·" + q.name + tag, pass, failed: pass ? [] : ["tiles"], strip: png, tiles: pick.length, distinctTiles: distinct, markerFrame: start, wallClockFrame: goF, alignShiftMs: (start - goF) * FRAME_MS, motionFrames: end - start + 1,
-                    summary: `${pick.length} tiles from frame ${s0} (the trigger marker first shows on frame ${start}, ${(start - goF) * FRAME_MS} ms from the wall-clock mark), ${distinct} distinct; motion to frame ${end} (${(end - start + 1) * FRAME_MS} ms); strip ${path.basename(png)}${pass ? "" : "  ⟶ FAILED: tiles (the strip does not count)"}` });
+                const counted = distinct >= 2 && moved;
+                const z = strip?.at(-1), ax = z && z.e[3] - z.e[1] > z.e[2] - z.e[0] ? "y" : "x";
+                const stub = strip ? stubRow(strip, ax) : null;
+                const failed = [...(counted ? [] : ["tiles"]), ...(stub && !stub.ok ? ["stub"] : [])];
+                const pass = counted && !!stub && stub.ok;
+                rep.add({ engine, cell: "film·" + q.name + tag, pass, failed, stub, strip: png, tiles: pick.length, distinctTiles: distinct, markerFrame: start, wallClockFrame: goF, alignShiftMs: (start - goF) * FRAME_MS, motionFrames: end - start + 1,
+                    summary: `${pick.length} tiles from frame ${s0} (the trigger marker first shows on frame ${start}, ${(start - goF) * FRAME_MS} ms from the wall-clock mark), ${distinct} distinct; motion to frame ${end} (${(end - start + 1) * FRAME_MS} ms); strip ${path.basename(png)}; stub ${stub ? stub.why : "NOT READ (no glyph strip)"}${counted ? "" : "  ⟶ FAILED: tiles (the strip does not count)"}${stub && !stub.ok ? "  ⟶ FAILED: stub" : ""}` });
             });
         }
     } finally {

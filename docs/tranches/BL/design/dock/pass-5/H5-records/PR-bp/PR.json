@@ -1,0 +1,75 @@
+{
+ "witness": "PR",
+ "target": "wt",
+ "when": "2026-10-17T10:19:30.569Z",
+ "load": 7.97,
+ "cells": [
+  {
+   "engine": "source",
+   "cell": "prose·readers",
+   "pass": true,
+   "failed": [],
+   "dead": [],
+   "summary": "65 custom propert(ies) declared or written in the dock band; 0 with no reader in src/ or demo/",
+   "load": 7.97
+  },
+  {
+   "engine": "source",
+   "cell": "prose·count",
+   "pass": true,
+   "failed": [],
+   "counts": [
+    {
+     "at": "src/components/dock/GlassDock.vue:62",
+     "says": "SEVEN members",
+     "n": 7,
+     "ok": true
+    }
+   ],
+   "members": 7,
+   "summary": "DockProps has 7 member(s); 1 prose count(s) near it, 0 wrong",
+   "load": 7.97
+  },
+  {
+   "engine": "source",
+   "cell": "prose·partials",
+   "pass": false,
+   "failed": [
+    "partials"
+   ],
+   "partials": [
+    {
+     "at": "src/components/dock/styles/index.css:36",
+     "says": "six partials",
+     "n": 6,
+     "imports": 14,
+     "ok": false
+    }
+   ],
+   "summary": "1 partial count(s) in an @import file; 1 wrong: src/components/dock/styles/index.css:36 \"six partials\" over 14 @import(s)",
+   "load": 7.97
+  },
+  {
+   "engine": "source",
+   "cell": "prose·citations",
+   "pass": false,
+   "failed": [
+    "citations"
+   ],
+   "cites": [
+    "tests/components/custom/dock/DockLayerSwitcher.a11y.test.ts:235 pass-3/D2-Bp-proto.md"
+   ],
+   "summary": "1 design-pass record citation(s) in src/ or tests/: tests/components/custom/dock/DockLayerSwitcher.a11y.test.ts:235 pass-3/D2-Bp-proto.md",
+   "load": 7.97
+  },
+  {
+   "engine": "source",
+   "cell": "prose·rows",
+   "pass": true,
+   "failed": [],
+   "dup": [],
+   "summary": "32 token(s) with a row in docs/design/tunable-anim.md; 0 with more than one",
+   "load": 7.97
+  }
+ ]
+}

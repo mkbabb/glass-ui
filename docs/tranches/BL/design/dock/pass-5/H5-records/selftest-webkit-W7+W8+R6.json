@@ -1,0 +1,125 @@
+{
+ "when": "2026-10-17T09:42:28.145Z",
+ "engines": [
+  "webkit"
+ ],
+ "rows": [
+  {
+   "witness": "W7",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 18/18 PASS",
+   "ok": true,
+   "ms": 32372,
+   "load": 5.97
+  },
+  {
+   "witness": "W7",
+   "fixture": "splitcaps",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 18/18 PASS",
+   "ok": true,
+   "ms": 32397,
+   "load": 5.87
+  },
+  {
+   "witness": "W7",
+   "fixture": "edgecut",
+   "expect": "exit ≠ 0; whole fails in ^(top|side|canvas)·",
+   "got": "exit 1, 18/18 FAIL; matching 18 (webkit)",
+   "ok": true,
+   "ms": 29441,
+   "load": 7.4
+  },
+  {
+   "witness": "W7",
+   "fixture": "sideedge",
+   "expect": "exit ≠ 0; same fails in ^side·",
+   "got": "exit 1, 6/6 FAIL; matching 6 (webkit)",
+   "ok": true,
+   "ms": 20109,
+   "load": 7.58
+  },
+  {
+   "witness": "W7",
+   "fixture": "gutterless",
+   "expect": "exit ≠ 0; gutter fails in ^(side|canvas)·",
+   "got": "exit 1, 12/12 FAIL; matching 12 (webkit)",
+   "ok": true,
+   "ms": 29565,
+   "load": 8.42
+  },
+  {
+   "witness": "W7",
+   "fixture": "badgeover",
+   "expect": "exit ≠ 0; badge fails in ^side·",
+   "got": "exit 1, 3/6 FAIL; matching 3 (webkit)",
+   "ok": true,
+   "ms": 20500,
+   "load": 10.46
+  },
+  {
+   "witness": "W7",
+   "fixture": "lens",
+   "expect": "exit ≠ 0; radius fails in ^(top|side)·",
+   "got": "exit 1, 12/12 FAIL; matching 12 (webkit)",
+   "ok": true,
+   "ms": 20591,
+   "load": 12.34
+  },
+  {
+   "witness": "W7",
+   "fixture": "nocaps",
+   "expect": "exit ≠ 0; whole fails in ^(top|side|canvas)·dark·dpr2",
+   "got": "exit 1, 3/3 FAIL; matching 3 (webkit)",
+   "ok": true,
+   "ms": 5599,
+   "load": 14.57
+  },
+  {
+   "witness": "W8",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 6/6 PASS",
+   "ok": true,
+   "ms": 11829,
+   "load": 15.25
+  },
+  {
+   "witness": "W8",
+   "fixture": "squash",
+   "expect": "exit ≠ 0; sharp fails in ^expand|^collapse",
+   "got": "exit 1, 2/2 FAIL; matching 2 (webkit)",
+   "ok": true,
+   "ms": 5693,
+   "load": 16.79
+  },
+  {
+   "witness": "W8",
+   "fixture": "jank",
+   "expect": "exit ≠ 0; pacing fails in ^expand|^collapse",
+   "got": "exit 1, 2/2 FAIL; matching 2 (webkit)",
+   "ok": true,
+   "ms": 5661,
+   "load": 16.17
+  },
+  {
+   "witness": "R6",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 1/1 PASS",
+   "ok": true,
+   "ms": 5028,
+   "load": 15.28
+  },
+  {
+   "witness": "R6",
+   "fixture": "backdropmotion",
+   "expect": "exit ≠ 0; ring·static",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 5070,
+   "load": 14.69
+  }
+ ]
+}

@@ -1,0 +1,11 @@
+ 6:42  up 1 day,  9:05, 2 users, load averages: 9.19 9.49 9.94
+FAIL  W5  Chromium  h·expanded  absent: the dock has no rim of its own (adapter rim() is null); the consumer-composed ScrollProgressRim overlay (for the record): 142 device px outside the plate, 4.3 px deep on a 160x56 plate  [load 9.19]
+FAIL  W5  Chromium  h·collapsed  absent: the dock has no rim of its own (adapter rim() is null); the consumer-composed ScrollProgressRim overlay (for the record): 71 device px outside the plate, 4.24 px deep on a 56x56 plate  [load 9.19]
+FAIL  W5  Chromium  v·expanded  absent: the dock has no rim of its own (adapter rim() is null); the consumer-composed ScrollProgressRim overlay (for the record): 210 device px outside the plate, 5.83 px deep on a 64x158 plate  [load 9.1]
+FAIL  W5  Chromium  v·collapsed  absent: the dock has no rim of its own (adapter rim() is null); the consumer-composed ScrollProgressRim overlay (for the record): 99 device px outside the plate, 5.32 px deep on a 58x64 plate  [load 9.1]
+FAIL  W5  Chromium  h·expanded·el-source  absent: the dock has no rim of its own (adapter rim() is null); the consumer-composed ScrollProgressRim overlay (for the record): 142 device px outside the plate, 4.3 px deep on a 160x56 plate  [load 9.1]
+FAIL  W5  Chromium  h·compact  absent: no compact rung and no dock rim  [load 9.1]
+FAIL  W5  head@91728a09  0/6 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p5/H5/wt/.h5out/chromium/head/rest/runs/W5-head/W5.json)
+exit 1
+ 6:42  up 1 day,  9:05, 2 users, load averages: 9.10 9.46 9.93
+reds: ^(h·collapsed(·control)?|h·compact(·control)?|h·expanded(·control)?|h·expanded·el-source(·control)?|v·collapsed(·control)?|v·expanded(·control)?)$

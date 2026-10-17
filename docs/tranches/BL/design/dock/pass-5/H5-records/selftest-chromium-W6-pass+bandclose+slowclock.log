@@ -1,0 +1,9 @@
+ 6:13  up 1 day,  8:36, 2 users, load averages: 12.31 15.32 16.66
+Sat Oct 17 06:13:44 EDT 2026
+OK   W6  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 4/4 PASS  [8 s, load 12.31]
+OK   W6  bandclose       expect: an OWNER-BLOCKED cell in form·expand|form·collapse  ·  got: exit 0, 2/4 FAIL; matching 2 (chromium)  [8 s, load 12.21]
+OK   W6  slowclock       expect: exit ≠ 0; window fails in form·expand|form·collapse  ·  got: exit 1, 2/4 FAIL; matching 2 (chromium)  [13 s, load 11.17]
+SELFTEST PASS  3/3 expectations hold
+exit 0
+ 6:14  up 1 day,  8:37, 2 users, load averages: 11.25 14.75 16.41
+Sat Oct 17 06:14:18 EDT 2026

@@ -1,0 +1,157 @@
+{
+ "witness": "W6",
+ "target": "fv3@91728a09",
+ "when": "2026-10-17T11:38:08.816Z",
+ "load": 24.44,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "form·expand",
+   "pass": false,
+   "unmeasured": false,
+   "unjudged": [],
+   "failed": [
+    "window",
+    "faces"
+   ],
+   "D": 142.19,
+   "start": 190.88,
+   "target": 333.06,
+   "frames": 178,
+   "travelMs": 235.2,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.64,
+    "step": 9.81,
+    "bound": 15.32,
+    "atMs": 127.2,
+    "dt": 8.3
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": false,
+    "why": "window 546.6 ms > clock 214.2 + 2×16.7 + stall 20.2 = 267.8 ms (O-64 R-4, H-3d)",
+    "open": 84.5,
+    "close": 631.1000000000001,
+    "land": 319.70000000000005,
+    "motionStart": 84.5,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 546.6,
+    "allowMs": 267.8,
+    "q4": false,
+    "q4AllowMs": 323.6
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 1.63,
+    "tol": 6.69,
+    "frac": 0.01,
+    "atMs": 118.9,
+    "why": "worst 1.63 px (1.14 % of D) from the rung's analytic spring (tol 6.69)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.17,
+    "prev": 0.24,
+    "bound": 0.87,
+    "why": "last step 0.17 px after 0.24 px (bound 0.87)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "faces": {
+    "ok": false,
+    "why": "7 px of form ink beyond the plate over 19 screenshot sample(s) (6 in flight) (bound 1)"
+   },
+   "summary": "D 142.19 px (190.88→333.06); step ×0.64; dead; window 546.6 ms (allow 267.8, clock 214.2) — window 546.6 ms > clock 214.2 + 2×16.7 + stall 20.2 = 267.8 ms (O-64 R-4, H-3d); trajectory worst 1.63 px (1.14 % of D) from the rung's analytic spring (tol 6.69); terminal last step 0.17 px after 0.24 px (bound 0.87); owners 0; Q-4 lenient window fails (allow 323.6 ms); faces 7 px of form ink beyond the plate over 19 screenshot sample(s) (6 in flight) (bound 1)  ⟶ FAILED: window, faces",
+   "load": 24.44
+  },
+  {
+   "engine": "chromium",
+   "cell": "form·collapse",
+   "pass": false,
+   "unmeasured": false,
+   "unjudged": [],
+   "failed": [
+    "window"
+   ],
+   "D": 142.19,
+   "start": 333.06,
+   "target": 190.88,
+   "frames": 647,
+   "travelMs": 236.2,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.64,
+    "step": 9.16,
+    "bound": 14.25,
+    "atMs": 3654,
+    "dt": 7.7
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": false,
+    "why": "window 549.5 ms > clock 214.2 + 2×16.7 + stall 10.1 = 257.7 ms (O-64 R-4, H-3d)",
+    "open": 3608.9000000000005,
+    "close": 4158.400000000001,
+    "land": 3853,
+    "motionStart": 3616.8,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 549.5,
+    "allowMs": 257.7,
+    "q4": false,
+    "q4AllowMs": 313.5
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 1.68,
+    "tol": 6.69,
+    "frac": 0.01,
+    "atMs": 3608.9,
+    "why": "worst 1.68 px (1.18 % of D) from the rung's analytic spring (tol 6.69)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.14,
+    "prev": 0.23,
+    "bound": 0.83,
+    "why": "last step 0.14 px after 0.23 px (bound 0.83)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "faces": {
+    "ok": true,
+    "why": "0 px of form ink beyond the plate over 48 screenshot sample(s) (0 in flight) (bound 1)"
+   },
+   "summary": "D 142.19 px (333.06→190.88); step ×0.64; dead; window 549.5 ms (allow 257.7, clock 214.2) — window 549.5 ms > clock 214.2 + 2×16.7 + stall 10.1 = 257.7 ms (O-64 R-4, H-3d); trajectory worst 1.68 px (1.18 % of D) from the rung's analytic spring (tol 6.69); terminal last step 0.14 px after 0.23 px (bound 0.83); owners 0; Q-4 lenient window fails (allow 313.5 ms); faces 0 px of form ink beyond the plate over 48 screenshot sample(s) (0 in flight) (bound 1)  ⟶ FAILED: window",
+   "load": 24.44
+  }
+ ]
+}

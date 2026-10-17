@@ -1,0 +1,53 @@
+{
+ "witness": "R6",
+ "target": "head@91728a09",
+ "when": "2026-10-17T10:46:27.552Z",
+ "load": 8.46,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "ring·static",
+   "pass": true,
+   "diffOutside": 0,
+   "bboxDelta": 0,
+   "devicePx": 2,
+   "summary": "static page, expanded, trigger un-hovered: 0 ring pixels changed over 1 s (bound 0); trigger box moved 0 px",
+   "load": 8.5
+  },
+  {
+   "engine": "chromium",
+   "cell": "r6·arms",
+   "pass": true,
+   "record": true,
+   "arms": {
+    "A": {
+     "diffOutside": 0,
+     "bboxDelta": 0,
+     "devicePx": 2
+    },
+    "B": {
+     "diffOutside": 3508,
+     "bboxDelta": 0,
+     "devicePx": 2
+    },
+    "C": {
+     "diffOutside": 3484,
+     "bboxDelta": 0,
+     "devicePx": 2
+    },
+    "D": {
+     "diffOutside": 0,
+     "bboxDelta": 0,
+     "devicePx": 2
+    }
+   },
+   "cancelled": [
+    "gl-dock-cap-inline-start",
+    "gl-dock-cap-inline-end"
+   ],
+   "verdict": "A = 0; B 3508, C 3484: the re-sampling reading is not isolated",
+   "summary": "A static 0 · B backdrop moving 3508 · C B without backdrop-filter 3484 · D plate animations cancelled (gl-dock-cap-inline-start, gl-dock-cap-inline-end) 0 ⟶ A = 0; B 3508, C 3484: the re-sampling reading is not isolated. Headless; keyframes' reading was headed on a real GPU",
+   "load": 8.46
+  }
+ ]
+}

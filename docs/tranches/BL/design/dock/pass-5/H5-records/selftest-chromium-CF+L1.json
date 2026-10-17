@@ -1,0 +1,179 @@
+{
+ "when": "2026-10-17T06:23:46.106Z",
+ "engines": [
+  "chromium"
+ ],
+ "rows": [
+  {
+   "witness": "CF",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 16/16 PASS",
+   "ok": true,
+   "ms": 71594,
+   "load": 11.38
+  },
+  {
+   "witness": "CF",
+   "fixture": "tilesq",
+   "expect": "exit ≠ 0; square|summary fails in ^c1·shape·h",
+   "got": "exit 1, 1/1 FAIL; matching 1 (chromium)",
+   "ok": true,
+   "ms": 2534,
+   "load": 11.5
+  },
+  {
+   "witness": "CF",
+   "fixture": "morphsnap",
+   "expect": "exit ≠ 0; continuous fails in ^c2·morph·",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 20787,
+   "load": 11.46
+  },
+  {
+   "witness": "CF",
+   "fixture": "nofocus",
+   "expect": "exit ≠ 0; opens fails in ^c3·focus",
+   "got": "exit 1, 1/1 FAIL; matching 1 (chromium)",
+   "ok": true,
+   "ms": 2897,
+   "load": 10.9
+  },
+  {
+   "witness": "CF",
+   "fixture": "noscroll",
+   "expect": "exit ≠ 0; collapses fails in ^c3·scroll",
+   "got": "exit 1, 1/1 FAIL; matching 1 (chromium)",
+   "ok": true,
+   "ms": 3728,
+   "load": 10.9
+  },
+  {
+   "witness": "CF",
+   "fixture": "persistentinert",
+   "expect": "exit ≠ 0; live fails in ^c4·persistent",
+   "got": "exit 1, 1/1 FAIL; matching 1 (chromium)",
+   "ok": true,
+   "ms": 2425,
+   "load": 10.35
+  },
+  {
+   "witness": "CF",
+   "fixture": "focuslost",
+   "expect": "exit ≠ 0; escape fails in ^c5·keyboard",
+   "got": "exit 1, 1/1 FAIL; matching 1 (chromium)",
+   "ok": true,
+   "ms": 5862,
+   "load": 10
+  },
+  {
+   "witness": "CF",
+   "fixture": "menucollapse",
+   "expect": "exit ≠ 0; holds fails in ^c6·menu",
+   "got": "exit 1, 1/1 FAIL; matching 1 (chromium)",
+   "ok": true,
+   "ms": 7456,
+   "load": 9.6
+  },
+  {
+   "witness": "CF",
+   "fixture": "narrowover",
+   "expect": "exit ≠ 0; inside|noscroll fails in ^c7·narrow",
+   "got": "exit 1, 1/1 FAIL; matching 1 (chromium)",
+   "ok": true,
+   "ms": 2685,
+   "load": 10.67
+  },
+  {
+   "witness": "CF",
+   "fixture": "tapthrough",
+   "expect": "exit ≠ 0; opens|swallowed fails in ^c7·coarse-tap",
+   "got": "exit 1, 1/1 FAIL; matching 1 (chromium)",
+   "ok": true,
+   "ms": 5004,
+   "load": 10.86
+  },
+  {
+   "witness": "CF",
+   "fixture": "platesq",
+   "expect": "exit ≠ 0; ownshape|corner fails in ^c1·shape·",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 4736,
+   "load": 11.03
+  },
+  {
+   "witness": "CF",
+   "fixture": "prmfade",
+   "expect": "exit ≠ 0; content|flag fails in ^c2·prm",
+   "got": "exit 1, 1/1 FAIL; matching 1 (chromium)",
+   "ok": true,
+   "ms": 2500,
+   "load": 11.43
+  },
+  {
+   "witness": "CF",
+   "fixture": "pressdrop",
+   "expect": "exit ≠ 0; collapses fails in ^c8·",
+   "got": "exit 1, 1/1 FAIL; matching 1 (chromium)",
+   "ok": true,
+   "ms": 41880,
+   "load": 11.43
+  },
+  {
+   "witness": "CF",
+   "fixture": "shorttall",
+   "expect": "exit ≠ 0; block fails in ^c9·",
+   "got": "exit 1, 1/1 FAIL; matching 1 (chromium)",
+   "ok": true,
+   "ms": 2593,
+   "load": 14.07
+  },
+  {
+   "witness": "CF",
+   "fixture": "shortseat",
+   "expect": "exit ≠ 0; seats fails in ^c9·",
+   "got": "exit 1, 1/1 FAIL; matching 1 (chromium)",
+   "ok": true,
+   "ms": 2483,
+   "load": 14.07
+  },
+  {
+   "witness": "L1",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 6/6 PASS",
+   "ok": true,
+   "ms": 13702,
+   "load": 13.5
+  },
+  {
+   "witness": "L1",
+   "fixture": "glowhalo",
+   "expect": "exit ≠ 0; added fails in ^l1·",
+   "got": "exit 1, 6/6 FAIL; matching 6 (chromium)",
+   "ok": true,
+   "ms": 26747,
+   "load": 13.14
+  },
+  {
+   "witness": "L1",
+   "fixture": "gleam",
+   "expect": "exit ≠ 0; added fails in ^l1·",
+   "got": "exit 1, 6/6 FAIL; matching 6 (chromium)",
+   "ok": true,
+   "ms": 26946,
+   "load": 11.09
+  },
+  {
+   "witness": "L1",
+   "fixture": "shimmer",
+   "expect": "exit ≠ 0; idle fails in ^l1·(light|dark)·(collapsed|expanded)",
+   "got": "exit 1, 4/4 FAIL; matching 4 (chromium)",
+   "ok": true,
+   "ms": 16281,
+   "load": 11.65
+  }
+ ]
+}

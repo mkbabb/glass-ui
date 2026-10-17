@@ -1,0 +1,10 @@
+ 7:06  up 1 day,  9:29, 2 users, load averages: 8.69 8.65 8.99
+OK   F7  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 5/5 PASS  [0 s, load 8.69]
+OK   F7  unitred         expect: exit ≠ 0; units fails in ^f7·units  ·  got: exit 1, 1/5 FAIL; matching 1 (source)  [0 s, load 8.69]
+OK   F7  gatered         expect: exit ≠ 0; gate fails in ^f7·gate·boot-graph  ·  got: exit 1, 1/5 FAIL; matching 1 (source)  [0 s, load 8.69]
+OK   F7  tscred          expect: exit ≠ 0; typecheck fails in ^f7·typecheck  ·  got: exit 1, 1/5 FAIL; matching 1 (source)  [0 s, load 8.69]
+OK   F7  gateskip        expect: an UNMEASURED (never PASS) cell in ^f7·gate·boot-graph  ·  got: exit 0, 1/5 FAIL; matching 1 (source)  [0 s, load 8.69]
+OK   RUN  reds+faces      expect: merged reds and controls re-run; main W3 runs faces (exit 0)  ·  got: exit 0: RUN SELFTEST PASS  6/6  [0 s, load 8.69]
+SELFTEST PASS  6/6 expectations hold
+exit 0
+ 7:06  up 1 day,  9:29, 2 users, load averages: 8.23 8.56 8.96

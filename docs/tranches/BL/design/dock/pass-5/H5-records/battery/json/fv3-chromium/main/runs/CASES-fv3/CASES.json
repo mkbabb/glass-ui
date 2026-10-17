@@ -1,0 +1,65 @@
+{
+ "witness": "CASES",
+ "target": "fv3@91728a09",
+ "when": "2026-10-17T11:31:43.686Z",
+ "load": 15.79,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "case·capped·seat-transition",
+   "pass": true,
+   "failed": [],
+   "summary": "cap 150 px, run overflowing true; grow and shrink a seat's own width transition: page errors 0, window error events 0; plate travel 0 px, largest one-frame step 0 px; flag at rest closed; chromium-case_capped_seat-transition.json",
+   "load": 17.49
+  },
+  {
+   "engine": "chromium",
+   "cell": "case·capped·morph",
+   "pass": true,
+   "failed": [],
+   "summary": "cap 300 px: expand (run overflowing true), add a seat, collapse: page errors 0, window error events 0; plate travel 236.47 px, largest one-frame step 38.47 px; flag at rest closed; chromium-case_capped_morph.json",
+   "load": 17.13
+  },
+  {
+   "engine": "chromium",
+   "cell": "case·consumer-margin",
+   "pass": false,
+   "failed": [
+    "follows"
+   ],
+   "summary": "unlayered \".glass-dock { margin-inline: 20px; }\" (computed margin-left at rest 20px): expand, collapse; plate end edge past the neighbour by at most -32 px (bound 0.5); neighbour travel 379.66 px, largest one-frame step 379.66 px against the plate edge's 35.37 px (+1); chromium-case_consumer-margin.json  ⟶ FAILED: follows",
+   "load": 16.64
+  },
+  {
+   "engine": "chromium",
+   "cell": "case·consumer-margin·control",
+   "pass": false,
+   "failed": [
+    "follows"
+   ],
+   "summary": "no consumer rule (computed margin-left at rest 8px): expand, collapse; plate end edge past the neighbour by at most -20 px (bound 0.5); neighbour travel 379.66 px, largest one-frame step 379.66 px against the plate edge's 34.67 px (+1); chromium-case_consumer-margin_control.json  ⟶ FAILED: follows",
+   "load": 16.64
+  },
+  {
+   "engine": "chromium",
+   "cell": "case·rotated·control",
+   "pass": false,
+   "failed": [
+    "snap"
+   ],
+   "summary": "host rotate(0deg): expand, collapse; seats' largest second difference 207.96 px/frame²; largest one-frame seat move after the window closed 207.96 px (bound 0.5); chromium-case_rotated_control.json  ⟶ FAILED: snap",
+   "load": 15.79
+  },
+  {
+   "engine": "chromium",
+   "cell": "case·rotated",
+   "pass": false,
+   "failed": [
+    "snap",
+    "jerk"
+   ],
+   "summary": "host rotate(2deg): expand, collapse; seats' largest second difference 214.58 px/frame² (control 207.96, bound +1); largest one-frame seat move after the window closed 214.58 px (bound 0.5); chromium-case_rotated.json  ⟶ FAILED: snap, jerk",
+   "load": 15.79
+  }
+ ]
+}

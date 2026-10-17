@@ -1,0 +1,36 @@
+ 2:03  up 1 day,  4:26, 2 users, load averages: 20.41 25.05 25.47
+Sat Oct 17 02:03:50 EDT 2026
+OK   W4  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 13/13 PASS  [48 s, load 20.41]
+OK   W4  nohyst          expect: exit ≠ 0; no-threshold-bounce  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [11 s, load 19.83]
+OK   W4  latch           expect: exit ≠ 0; no-hover-latch  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [4 s, load 21.62]
+OK   W4  menucollapse    expect: exit ≠ 0; menu-holds  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [9 s, load 22.53]
+OK   W4  noprm           expect: exit ≠ 0; prm·posture-morph|prm·compact  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium)  [12 s, load 22.37]
+OK   W4  tapthrough      expect: exit ≠ 0; tap-pins  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [8 s, load 21.47]
+OK   W4  ungatedafter    expect: exit ≠ 0; no-hover-latch  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [4 s, load 22.4]
+OK   W4  pressgate       expect: exit ≠ 0; press-then-scroll  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [4 s, load 22.37]
+OK   W4  lategetter      expect: exit ≠ 0; late-getter  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [5 s, load 22.37]
+OK   W4  norefcount      expect: exit ≠ 0; shared-scroller  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [4 s, load 22.98]
+OK   W4  seatshrink      expect: exit ≠ 0; seat-scale  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [11 s, load 22.74]
+OK   W4  prmscrub        expect: exit ≠ 0; prm·compact  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [4 s, load 22.91]
+OK   W4  compactjump     expect: exit ≠ 0; non-first-current  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [3 s, load 22.84]
+OK   W4  nocompact       expect: exit ≠ 0; compact·compacts  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [10 s, load 22.77]
+OK   W4  noengage        expect: exit ≠ 0; engagement-expands  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [10 s, load 22.88]
+OK   W5  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 6/6 PASS  [17 s, load 21.56]
+OK   W5  rimout          expect: exit ≠ 0; inside fails in expanded|collapsed  ·  got: exit 1, 5/5 FAIL; matching 5 (chromium)  [15 s, load 21.01]
+OK   W5  deadfill        expect: exit ≠ 0; fill fails in h·expanded|v·expanded  ·  got: exit 1, 3/3 FAIL; matching 3 (chromium)  [9 s, load 20.9]
+OK   W5  rimshift        expect: exit ≠ 0; whole fails in expanded|collapsed  ·  got: exit 1, 5/5 FAIL; matching 5 (chromium)  [15 s, load 21.36]
+OK   W5  winonly         expect: exit ≠ 0; fill fails in el-source  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [3 s, load 21.98]
+OK   W6  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 4/4 PASS  [8 s, load 22.06]
+OK   W6  formout         expect: exit ≠ 0; wraps fails in form·collapsed-rest  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [8 s, load 22.53]
+OK   W6  dismissout      expect: exit ≠ 0; wraps fails in form·collapsed-rest  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [8 s, load 21.9]
+OK   W6  twoplates       expect: exit ≠ 0; onePlate fails in form·collapsed-rest  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [8 s, load 22.39]
+OK   W6  formgone        expect: exit ≠ 0; present fails in form·collapsed-rest  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [8 s, load 22.27]
+OK   W6  dismissspan     expect: exit ≠ 0; dismissSeat fails in form·collapsed-rest  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [8 s, load 22.53]
+OK   W6  plateswap       expect: exit ≠ 0; samePlate fails in form·expanded-rest  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [13 s, load 21.47]
+OK   W6  jump            expect: exit ≠ 0; continuity fails in form·expand  ·  got: exit 1, 1/2 FAIL; matching 1 (chromium)  [8 s, load 20.67]
+OK   W6  bandclose       expect: an OWNER-BLOCKED cell in form·expand|form·collapse  ·  got: exit 0, 2/4 FAIL; matching 2 (chromium)  [8 s, load 19.09]
+OK   W6  slowclock       expect: exit ≠ 0; window fails in form·expand|form·collapse  ·  got: exit 1, 2/4 FAIL; matching 2 (chromium)  [13 s, load 19.13]
+SELFTEST PASS  30/30 expectations hold
+exit 0
+ 2:08  up 1 day,  4:31, 2 users, load averages: 19.14 22.25 24.09
+Sat Oct 17 02:08:55 EDT 2026
