@@ -15,6 +15,15 @@ export const ATTACK_FAULTS = {
   "atk-attrs": { why: "H4-1 consumer-attributes plant: the consumer's role=option and tabindex=0 stand over the engine's", witnesses: ["ATTACK"], family: "atk", cell: /attrs ·/ },
   "atk-sup": { why: "H4-1 superscript plant (development flavour): the namer counts a <sup> as a second row and names a one-row pill", witnesses: ["ATTACK"], family: "atk", flavor: "src-dev", cell: /sup ·/ },
   "atk-sup-dev": { why: "CONTROL, must PASS: the clean page on a development flavour, where the `sup` cell gates: 0 names on one-row pills", witnesses: ["ATTACK"], family: "atk", flavor: "src-dev", expect: "pass" },
+  // H5-2 · FACT's matrix: where the fact is written against where it is read (R-10, R-2)
+  "atk-nopin": { why: "H5-2 plant: no pin. The tile's geometry reads the fact at the group, the pill's label clip, row law and development name at the option, so a write on the option splits them (D′c §2)", witnesses: ["FACT"], family: "atk", cell: /item-none-in-tile|matrix .*option/ },
+  "atk-unbounded": { why: "H5-2 plant: F's unbounded pin `:where(.it, .it *) { --selection-tile: inherit !important }`, which outranks a nested group's own reset and declaration (Fc §2.1 N3)", witnesses: ["FACT"], family: "atk", cell: /pill-in-option|tile-in-option/ },
+  "atk-nopin-dev": { why: "H5-2 plant on a development flavour: no pin, so the option written none inside a tile is also named a pill that asks for a second row (D′c §2's false name), and the matrix line says so", witnesses: ["FACT"], family: "atk", flavor: "src-dev", cell: /item-none-in-tile.*NAMED/ },
+  "atk-mx-dev": { why: "H5-2 CONTROL, must PASS: the clean matrix on a development flavour, where the names gate: no read option is named", witnesses: ["FACT"], family: "atk", flavor: "src-dev", expect: "pass" },
+  "atk-optpin": { why: "H5-2 plant: an option-only pin `.it { --selection-tile: inherit !important }` (D′c §4's form): content inside the option still writes its own fact and its rows split (Fs §2.3 «content-writes-none»)", witnesses: ["FACT"], family: "atk", cell: /matrix .*content/ },
+  // H5-4 · a mount-time name, counted from navigation (X-5)
+  "atk-x5none": { why: "H5-4 plant (development flavour): an option that holds a nested group is never named as holding an interactive descendant", witnesses: ["ATTACK"], family: "atk", flavor: "src-dev", cell: /x5 ·/ },
+  "h5-logs-ready": { why: "H5-4 instrument plant (development flavour): console errors counted from ready, not from navigation (TILE_HARNESS_LOGS_FROM=ready, the pass-4 probes' habit): the X-5 name logged at mount is lost", witnesses: ["ATTACK"], family: "atk", flavor: "src-dev", env: { TILE_HARNESS_LOGS_FROM: "ready" }, cell: /x5 ·/ },
   "atk-corner": { why: "H4-1 corner-refusal plant: the tile corner is a plain layered declaration, so a consumer utility, a scoped rule, an unlayered !important and an inline style each re-round the tile", witnesses: ["CORNER"], family: "atk", cell: /preset-migrated (utility|scoped|important|inline) / },
 };
 
@@ -22,7 +31,25 @@ const PRESETS = [["smooth", "0.5 s · ζ 1"], ["snappy", "0.35 s · ζ 0.78"], [
 const STATUSES = ["Any status", "Messaged", "Not messaged", "Seen", "Not seen"];
 const PALETTES = ["Dusk", "Moss", "Tide", "Clay"];
 const STRIP = ["quad-in", "quad-out", "quad-in-out", "back-in", "back-out", "back-in-out"];
-export const ATTACK_SCENES = ["preset", "family-d-undeclared", "preset-migrated", "specimen-migrated", "v2-migrated", "c1-migrated", "strip-migrated"];
+export const ATTACK_SCENES = ["preset", "family-d-undeclared", "preset-migrated", "specimen-migrated", "v2-migrated", "c1-migrated", "strip-migrated", "matrix-migrated"];
+/** H5-2 · the matrix in fixture markup (attack-route `matrix`): options are role=radio divs, so a group can nest in one. */
+function matrixBody(params) {
+  const w = params.get("w") ?? "", v = params.get("v") ?? "";
+  const W = (site) => (v && w === site ? ` style="--selection-tile: ${v}"` : "");
+  const content = (a, b, site = false) => `<span class="mx-c" data-mx-content${site ? ` data-mx-site="content"${W("content")}` : ""}><span class="mx-b">${a}</span><span class="mx-b">${b}</span></span>`;
+  const meta = (on) => (on ? '<span class="meta t-meta">0.5 s</span>' : "");
+  const opt = (id, inner, extra = "") => `<div class="it" role="radio" aria-checked="false" data-mx-item="${id}"${extra}>${inner}</div>`;
+  const kind = (k) => {
+    const tile = k === "tile", t = tile ? "t" : "p";
+    return `<div data-mx-kind="${k}" data-mx-site="ancestor" class="mx-host"${W("ancestor")}>
+      <div role="radiogroup" aria-label="Matrix ${k}s" class="g-grid2" data-mx-site="group"${tile ? " data-tile" : ""}${W("group")}>
+        ${opt(`${t}a`, content("Smooth", "calm", true) + meta(tile), ` data-mx-site="option"${W("option")}`)}
+        <div class="mx-wrap" data-mx-site="wrapper"${W("wrapper")}>${opt(`${t}b`, content("Snappy", "quick") + meta(tile))}</div>
+        ${opt(`${t}c`, content("Bouncy", "lively") + `<div role="radiogroup" aria-label="Nested" class="g-row" data-mx-site="nested-group"${!tile ? " data-tile" : ""}${W("nested-group")}>${opt(`${t}n0`, content("Inner", "row") + meta(!tile), ` data-mx-site="nested-option"${W("nested-option")}`)}${opt(`${t}n1`, content("Other", "row") + meta(!tile))}</div>` + meta(tile))}
+      </div></div>`;
+  };
+  return `<div class="mx-both">${kind("tile")}${kind("pill")}</div>`;
+}
 
 export function attackFixturePage(params, fault = "", flavor = "dist") {
   const scene = params.get("scene") ?? "__index";
@@ -39,6 +66,7 @@ export function attackFixturePage(params, fault = "", flavor = "dist") {
     case "specimen-migrated": body = `<div class="atk-split"><div role="radiogroup" aria-label="Tiles" data-group data-tile class="g-grid2 atk-tile">${PRESETS.slice(0, 2).map(([n, m]) => tile(n, m)).join("")}<div class="atk-nest">${nested("atk-pill-in", "Nested pills")}</div></div>${nested("atk-pill-beside", "Pills beside")}</div>`; break;
     case "v2-migrated": body = `<div role="group" aria-label="Mix sources" data-group class="g-row atk-outer">${PALETTES.map((p, i) => pill(p, `aria-pressed="${i === 1}"`)).join("")}<div class="atk-nest"><div role="radiogroup" aria-label="Inner" data-tile class="atk-tile-in"><button type="button" class="it" role="radio" aria-checked="true" data-atk-item><span data-ink>Inner</span><span data-ink class="t-meta meta">tile</span></button></div></div></div>`; break;
     case "c1-migrated": body = `<div role="radiogroup" aria-label="Status" data-group class="g-col">${STATUSES.map((l) => `<button type="button" class="it" data-item><span class="media"></span><span data-ink data-line-slot>${l}</span><span class="meta"></span></button>`).join("")}</div>`; break;
+    case "matrix-migrated": body = matrixBody(params); break;
     case "strip-migrated": body = `<div role="radiogroup" aria-label="Area unit" data-group class="g-row">${STRIP.map((s) => pill(`m<sup>2</sup> ${s}`)).join("")}</div>`; break;
     default: body = `<p>${ATTACK_SCENES.join(" · ")}</p>`;
   }
@@ -74,6 +102,21 @@ ${anatomy} { --selection-tile: flush; }
 .it sup { line-height: 0; }
 /* a pill holds one row */
 @container style(--selection-tile: none) { .it [data-ink] br { display: none; } .it [data-ink], .it [data-ink] :not(sup) { display: inline; } }
+/* H5-2 · the pin (floor v4, M-13): the option and its content carry their group's fact, bounded at a nested group */
+${fault.startsWith("atk-nopin") ? "" : fault === "atk-unbounded" ? ":where(.it, .it *) { --selection-tile: inherit !important; }"
+  : fault === "atk-optpin" ? ".it { --selection-tile: inherit !important; }"
+  : "@scope (.it) to ([data-group], [role=radiogroup], [role=group]) { :scope, :scope * { --selection-tile: inherit !important; } }"}
+/* H5-2 · the floor's readers in the matrix, each at its own element, as floor v3 reads them: the pill's clamp at the
+   option (its container is its parent), the label clip at the option's children (their container is the option), the
+   one-row law at every descendant (its container is its parent) */
+.mx-host { width: 460px; } .mx-wrap { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.mx-c, .mx-b { display: block; } .mx-b + .mx-b { font-size: 12px; }
+.mx-both .it { cursor: default; }
+@container style(--selection-tile: none) {
+  .mx-both .it { max-block-size: var(--rung); overflow: clip; white-space: nowrap; }
+  .mx-both .it > :not(svg) { overflow: hidden; text-overflow: ellipsis; padding-block: 0.15em; }
+  .mx-both .it *:not(.it) { display: inline !important; }
+}
 /* the tile reads the fact (the one spelling) */
 ${fault === "atk-split" ? `[data-tile] .it { ${geometry} }` : `@container not style(--selection-tile: none) { .it { ${geometry} } }`}
 }
@@ -100,8 +143,18 @@ if (DEV) for (const el of document.querySelectorAll(".it")) {
   const h = el.getBoundingClientRect().height, rung = parseFloat(getComputedStyle(el).minBlockSize);
   if (h > rung + 0.5 || (FAULT === "atk-sup" && el.querySelector("sup"))) console.error("[fixture] a pill asks for a second row");
 }
+// H5-2 / H5-4 · development names in the matrix, in the library's words and at mount: a pill whose own fact is none
+// and whose content takes a second row; an option that holds another option (X-5; the atk-x5none plant drops it)
+if (DEV) for (const el of document.querySelectorAll(".mx-both .it")) {
+  const id = el.dataset.mxItem, box = el.getBoundingClientRect();
+  const boxes = []; const rg = document.createRange(); const tw = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  for (let n = tw.nextNode(); n; n = tw.nextNode()) { if (n.parentElement.closest(".it") !== el) continue; rg.selectNodeContents(n); for (const r of rg.getClientRects()) if (r.width > 1 && r.height > 1) boxes.push(r); }
+  boxes.sort((p, q) => p.bottom - q.bottom); let rows = 0, bottom = -Infinity; for (const r of boxes) if ((r.top + r.bottom) / 2 > bottom) { rows++; bottom = r.bottom; }
+  if (getComputedStyle(el).getPropertyValue("--selection-tile").trim() === "none" && !el.querySelector(".it") && rows > 1) console.error('[ToggleGroupItem] value="' + id + '" asks for a second row: a pill shows its content on one row.');
+  if (el.querySelector(".it") && FAULT !== "atk-x5none") console.error('[ToggleGroupItem] value="' + id + '" holds an interactive descendant. The item is one button: nothing inside it takes focus or a click of its own.');
+}
 window.__tile = { ready: false, dev: DEV, flavor: FLAVOR, scenes: ${JSON.stringify(ATTACK_SCENES.map((id) => ({ id })))}, scene: ${JSON.stringify(scene)}, exports: [],
-  migration: { label: "fixture", attack: true, sites: ["preset", "specimen", "v2", "c1", "strip"] },
+  migration: { label: "fixture", attack: true, sites: ["preset", "specimen", "v2", "c1", "strip", "matrix"] },
   async select(i) { if (RADIO) select(i === null ? -1 : i); }, selected: () => (current ? live().indexOf(current) : -1), async reorder() {} };
 requestAnimationFrame(() => requestAnimationFrame(() => { window.__tile.ready = true; }));
 `;

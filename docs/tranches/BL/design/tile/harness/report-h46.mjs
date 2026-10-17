@@ -11,7 +11,15 @@
 //          tile the item is shot with its `::after` shown and hidden; the pixels that change are the mark. Its mean
 //          colour against the mean of what lies under it, WCAG contrast, want ≥ 3:1; dark is the cell, light is info.
 //          No changed pixels reads UNMEASURED ("no mark painted")
-//   node report-h46.mjs --build <out>/builds/<label> | --fixture --family h46 [--fault h46-kick|h46-mark] [--engine webkit]
+//   name-ink  H5-5 · whether the selected K2 name takes the selection ink, now that neither route's transcription paints
+//          it (`k2.mjs`, XSCRIPT): on the route's `specimen-migrated`, the selected tile's name (`[data-line-slot]`) against
+//          its own item's ink. PASS when the name's computed colour is the item's (it inherits the library's
+//          `--selection-ink`); the selected and unselected name inks and their contrast are printed. Light and dark.
+//          A build that does not migrate K2 reads UNMEASURED
+// H5-6 · REPORT READS A ROUTE BUILD. Pass 4's F spec ran it on the attack build in Playwright WebKit, whose V2 has no
+// tile, and banked "no mark painted" as a reading (`Fs` §6). An attack build (`migration.attack`, label H4-attack) is
+// now refused: exit 2, naming the build to pass instead. run.mjs hands REPORT `--build`, never `--attack`.
+//   node report-h46.mjs --build <out>/builds/<label> | --fixture --family h46 [--fault h46-kick|h46-mark|h46-nameink|h46-attack] [--engine webkit]
 import { cli, openPage, engineVersion, engineOf, f2, shot, clipAround, contrast, hex } from "./lib.mjs";
 import { tagItems } from "./measure.mjs";
 import { isAttack } from "./fact-split.mjs";
@@ -68,6 +76,26 @@ async function mark(target, engine, scene, mode) {
   return { n, mark: ma, under: mb, ratio: contrast(ma, mb) };
 }
 
+/** H5-5 · the selected name's ink against its item's, on the selected tile of a scene, and the unselected name beside it. */
+async function nameInk(target, engine, scene, mode) {
+  const P = await openPage(target, engine, scene, { mode });
+  await tagItems(P);
+  const r = await P.page.evaluate(async () => {
+    const th = window.__th; await th.frame();
+    const its = th.items(), on = its.find((e) => th.on(e)), off = its.find((e) => !th.on(e));
+    if (!on || !off) return null;
+    const nm = (el) => el.querySelector("[data-line-slot]");
+    if (!nm(on) || !nm(off)) return { noName: true };
+    // sRGB through a 1 px canvas: a computed colour can print as oklab()/oklch() (the live-π trap), which no regex reads
+    const cv = document.createElement("canvas"); cv.width = cv.height = 1; const g = cv.getContext("2d", { willReadFrequently: true });
+    const rgb = (c) => { g.clearRect(0, 0, 1, 1); g.fillStyle = "#000"; g.fillStyle = c; g.fillRect(0, 0, 1, 1); return [...g.getImageData(0, 0, 1, 1).data.slice(0, 3)]; };
+    const col = (el) => getComputedStyle(el).color;
+    return { nameOn: col(nm(on)), itemOn: col(on), nameOff: col(nm(off)), itemOff: col(off), ink: getComputedStyle(on).getPropertyValue("--selection-ink").trim() || "(unset)", rgbOn: rgb(col(nm(on))), rgbOff: rgb(col(nm(off))), rgbItem: rgb(col(on)) };
+  });
+  await P.close();
+  return r;
+}
+
 if (import.meta.url === `file://${process.argv[1]}`) {
   await cli("REPORT", async (args, target) => {
     const engine = engineOf(args);
@@ -75,6 +103,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     const P0 = await openPage(target, engine, "__index");
     const migration = await P0.page.evaluate(() => window.__tile.migration ?? null);
     await P0.close();
+    if (isAttack(migration)) throw new Error(`REPORT reads a route build, and ${target.label} is an attack build (migration ${migration.label}): its V2 and K2 carry no route tile, so the mark and the name read nothing. Pass the route build (build.mjs --route <route dir>), as run.mjs does (H5-6)`);
     const own = (site) => (migration && !isAttack(migration) && (migration.sites ?? []).includes(site)) || target.kind === "fixture" ? `${site}-migrated` : site;
     const kp = own("preset");
     const k = await kick(target, engine, kp, true);
@@ -89,6 +118,16 @@ if (import.meta.url === `file://${process.argv[1]}`) {
       else if (!m.mark) cells.push({ gating, pass: null, line: `mark · ${mp} ${mode} · UNMEASURED: no mark painted (${m.n} device px change with ::after hidden; FV3-6 is built only if Q-3 rules (b))` });
       else cells.push({ gating, pass: m.ratio >= 3, line: `mark · ${mp} ${mode} · the mark ${hex(m.mark)} over ${hex(m.under)} beneath it, ${m.n} device px · ${m.ratio.toFixed(2)}:1 (want ≥ 3:1)` });
     }
-    return { id: "REPORT", title: "H4-6, reported: the commit on wide tiles against a 4 px gap; the selection mark over light media", engine, engineLabel: await engineVersion(engine), target: target.label, dev: target.meta.dev, cells };
+    const sp = own("specimen");
+    for (const mode of ["light", "dark"]) {
+      const n = sp.endsWith("-migrated") ? await nameInk(target, engine, sp, mode) : null;
+      if (!sp.endsWith("-migrated")) cells.push({ gating: true, pass: null, line: `name-ink · ${mode} · UNMEASURED: this build does not migrate K2 (route ${migration?.label ?? "none"})` });
+      else if (!n || n.noName) cells.push({ gating: true, pass: null, line: `name-ink · ${sp} ${mode} · UNMEASURED: ${!n ? "no selected and unselected tile" : "no [data-line-slot] name"}` });
+      else {
+        const same = n.nameOn === n.itemOn;
+        cells.push({ gating: true, pass: same, line: `name-ink · ${sp} ${mode} · the selected name ${n.nameOn} ${same ? "is" : "is NOT"} its item's ink ${n.itemOn} (sRGB ${n.rgbItem.join(", ")}; --selection-ink ${n.ink}) · unselected name ${n.nameOff}, item ${n.itemOff} · the name's ink selected against unselected ${contrast(n.rgbOn, n.rgbOff).toFixed(2)}:1` });
+      }
+    }
+    return { id: "REPORT", title: "H4-6, H5-5, H5-6, reported: the commit on wide tiles against a 4 px gap; the selection mark over light media; the selected K2 name's ink; on a route build only", engine, engineLabel: await engineVersion(engine), target: target.label, dev: target.meta.dev, cells };
   });
 }

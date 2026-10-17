@@ -18,6 +18,26 @@
 //   fact-flush        the same with `flush`
 // An unset fact (HEAD, where the fact does not exist) reads as no tile fact. A build that is not an attack build
 // reads UNMEASURED on every attack cell.
+//
+// H5-2 · THE MATRIX (REGISTRY §P4-6.2; rows R-10, R-2). Pass 4 found its two new cells by asking where the fact can be
+// written against where it is read (`D′c` §2 the option, `Fc` §2.1 a group inside an option). The matrix asks it in
+// full on `matrix-migrated`: seven write sites (ancestor, group, wrapper, option, content, nested-group,
+// nested-option) × `none`, `flush`, `plated` × a tile group and a pill group, each written inline at mount
+// (`?w=&v=`), plus the unwritten references. Each cell is judged by PAINT, never by the item's computed fact (a pinned
+// value prints as agreement, `D′c` §4): the used corner, the box against its reference, the text rows, the rows inside
+// the option's content (the one-row law), the children the pill's label rule clips, content cut past the box, and on
+// a development flavour the names the read option draws (gating there: a name on it is a false name or a split).
+// What each site must read:
+//   reference       the tile group's options are tiles and its nested group pills; the pill group's options pills and
+//                   its nested group tiles (`pill-in-option`, `tile-in-option`: F's N3)
+//   ancestor        unchanged (every group resets the fact)
+//   group           the value decides: none is a pill, flush and plated a tile
+//   wrapper         agreement: the options behind it read one fact (a coherent pill or tile; which one is printed)
+//   option, content unchanged: the option and its content carry their group's fact (`item-none-in-tile`,
+//                   `item-flush-in-pill`, `content-writes-none`)
+//   nested-group    the value decides for the nested group's options (it is a group of its own)
+//   nested-option   unchanged (that option carries its own group's fact)
+// Light reads the whole matrix; dark reads the references and the two option cells.
 //   node fact-split.mjs --build <out>/builds/<label>-atk | --fixture --family atk [--fault atk-split] [--engine webkit]
 import { cli, openPage, engineVersion, engineOf, f2 } from "./lib.mjs";
 import { ATTACK_LABEL } from "./attack-route/migrated.mjs";
@@ -58,6 +78,94 @@ export function judgeFact(want, r) {
   return { pass: ok, why: ok ? (isTile(r) ? "the written fact and the geometry agree: a tile on the field corner" : "the write is refused: a one-row pill") : `the written fact and the geometry DISAGREE${!noFact(r.fact) && r.ratio > 0.99 ? ": a LOZENGE" : ""}` };
 }
 
+// ── H5-2 · the matrix ─────────────────────────────────────────────────────────────────────────────────────────
+export const MX_SITES = ["ancestor", "group", "wrapper", "option", "content", "nested-group", "nested-option"];
+export const MX_VALUES = ["none", "flush", "plated"];
+const READ_SITE = { reference: ["a", "b", "n0"], ancestor: ["a"], group: ["a"], wrapper: ["b"], option: ["a"], content: ["a"], "nested-group": ["n0"], "nested-option": ["n0"] };
+/** Paint reads of matrix options (by `data-mx-item`), after two frames: box, used corner, rows, content rows, clip, cut. */
+export const READ_MX = async (ids) => {
+  await window.__th.frame();
+  const out = {};
+  for (const id of ids) {
+    const el = document.querySelector(`[data-mx-item="${id}"]`);
+    if (!el) { out[id] = null; continue; }
+    const c = window.__th.corner(el), cs = getComputedStyle(el), box = el.getBoundingClientRect();
+    const rowsIn = (root) => { // the midpoint chain over the text boxes that belong to this option, not to a nested one
+      const boxes = [], rg = document.createRange(), tw = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      for (let n = tw.nextNode(); n; n = tw.nextNode()) {
+        if (!n.textContent.trim() || n.parentElement.closest("[data-mx-item]") !== el) continue;
+        rg.selectNodeContents(n); for (const r of rg.getClientRects()) if (r.width > 1 && r.height > 1) boxes.push(r);
+      }
+      boxes.sort((p, q) => p.bottom - q.bottom); let rows = 0, bottom = -Infinity;
+      for (const r of boxes) if ((r.top + r.bottom) / 2 > bottom) { rows++; bottom = r.bottom; }
+      return rows;
+    };
+    const content = el.querySelector("[data-mx-content]");
+    const clip = [...el.children].filter((k) => k.localName !== "svg" && !k.matches("[data-mx-item], [role=radiogroup], [role=group]") && ["hidden", "clip"].includes(getComputedStyle(k).overflowX)).length;
+    let past = 0;
+    for (const k of el.querySelectorAll("*")) { if (k.closest("[data-mx-item]") !== el) continue; const r = k.getBoundingClientRect(); if (r.height > 0 && (r.bottom > box.bottom + 1 || r.top < box.top - 1)) past++; }
+    out[id] = { w: c.w, h: c.h, computed: c.computed, used: c.used, dir: cs.flexDirection, rows: rowsIn(el), crows: content ? rowsIn(content) : 0, clip, past };
+  }
+  return out;
+};
+const mxDesc = (r) => `${f2(r.w)}×${f2(r.h)} · ${r.computed} → used ${f2(r.used)} (${f2(r.used / (r.h / 2))}×h/2) · ${r.dir} · ${r.rows} row(s), content ${r.crows} row(s), ${r.clip} clipped child(ren), ${r.past} cut`;
+const pillOk = (r, ref) => Math.abs(r.used - r.h / 2) <= 0.5 && r.rows <= 1 && r.past === 0 && (!ref || r.h <= ref.h + 0.5);
+const tileOk = (r, ref) => Math.abs(r.used - 16) <= 0.5 && r.dir === "column" && r.past === 0 && r.crows === 2 && (!ref || r.clip <= ref.clip);
+const same = (r, ref) => Math.abs(r.h - ref.h) <= 0.5 && Math.abs(r.w - ref.w) <= 0.5 && r.rows === ref.rows && r.crows === ref.crows && r.clip === ref.clip;
+/** the named cells pass 4 found, as the matrix spells them */
+export const MX_ALIAS = { "option none tile": "item-none-in-tile", "option flush pill": "item-flush-in-pill", "content none tile": "content-writes-none", "reference - tile n0": "pill-in-option", "reference - pill n0": "tile-in-option" };
+/** judge one matrix read: want is "tile" | "pill" | "same" (the reference) | "agree" (either, coherent) */
+export function judgeMx(want, r, ref, kindRef, tileRef, names) {
+  if (!r) return { pass: false, why: "no such option" };
+  const named = names.length ? `; NAMED ${names.length}× «${names[0].slice(0, 90)}»` : "";
+  const nameOk = names.length === 0;
+  if (want === "same") {
+    const ok = (kindRef === "tile" ? tileOk(r, tileRef) : pillOk(r, ref)) && same(r, ref);
+    return { pass: ok && nameOk, why: `${ok ? `unchanged: a ${kindRef} as its reference` : `CHANGED from its reference (${kindRef}, ${f2(ref.w)}×${f2(ref.h)}, ${ref.rows} row(s), content ${ref.crows}, ${ref.clip} clipped): the readers split`}${named}` };
+  }
+  if (want === "agree") {
+    const t = tileOk(r, tileRef), p = pillOk(r, null);
+    return { pass: (t || p) && nameOk, why: `${t ? "agree: a tile" : p ? "agree: a pill" : "the readers DISAGREE: neither a tile nor a pill"}${named}` };
+  }
+  const ok = want === "tile" ? tileOk(r, tileRef) : pillOk(r, kindRef === "pill" ? ref : null);
+  return { pass: ok && nameOk, why: `${ok ? `a ${want}, as the value decides` : `NOT a ${want}: the value should decide`}${named}` };
+}
+async function matrix(target, engine, cells) {
+  const dev = !!target.meta.dev;
+  const namesFor = (P, id) => P.logs.filter((l) => (l.type === "error" || l.type === "pageerror") && l.text.includes(`value="${id}" asks for a second row`)).map((l) => l.text);
+  const read = async (mode, w, v) => {
+    const P = await openPage(target, engine, "matrix-migrated", { mode, query: w ? { w, v } : {} });
+    const ids = ["ta", "tb", "tn0", "pa", "pb", "pn0"];
+    const r = await P.page.evaluate(READ_MX, ids);
+    const names = Object.fromEntries(ids.map((id) => [id, namesFor(P, id)]));
+    await P.close();
+    return { r, names };
+  };
+  for (const mode of ["light", "dark"]) {
+    const ref = await read(mode, "", "");
+    const tileRef = ref.r.ta;
+    const kindOf = (k, slot) => (slot === "n0" ? (k === "tile" ? "pill" : "tile") : k);
+    const push = (site, v, k, slot, want, got, refR) => {
+      const id = `${k[0]}${slot}`, r = got.r[id], names = dev ? got.names[id] : [];
+      const j = judgeMx(want, r, refR, kindOf(k, slot), slot === "n0" ? (k === "pill" ? tileRef : null) : tileRef, names);
+      const alias = MX_ALIAS[`${site} ${v} ${k}${site === "reference" ? ` ${slot}` : ""}`];
+      cells.push({ gating: true, pass: j.pass, line: `matrix ${mode} · ${site}${v !== "-" ? ` ${v}` : ""} · ${k} group, option ${id}${alias ? ` [${alias}]` : ""} · want ${want === "same" ? "unchanged" : want} · ${j.why}${r ? ` · ${mxDesc(r)}` : ""}${dev ? "" : " · names: production flavour, not read"}` });
+    };
+    for (const k of ["tile", "pill"]) for (const slot of READ_SITE.reference) push("reference", "-", k, slot, kindOf(k, slot), ref, ref.r[`${k[0]}${slot}`]);
+    const sites = mode === "light" ? MX_SITES : ["option"];
+    for (const site of sites) for (const v of mode === "light" ? MX_VALUES : ["none", "flush"]) {
+      const got = await read(mode, site, v);
+      for (const k of ["tile", "pill"]) for (const slot of READ_SITE[site]) {
+        if (mode === "dark" && !MX_ALIAS[`${site} ${v} ${k}`]) continue;
+        const base = kindOf(k, slot), refR = ref.r[`${k[0]}${slot}`];
+        const want = ["ancestor", "option", "content", "nested-option"].includes(site) ? "same" : site === "wrapper" ? "agree" : v === "none" ? "pill" : "tile";
+        push(site, v, k, slot, want === "same" ? "same" : want, got, refR);
+        void base;
+      }
+    }
+  }
+}
+
 if (import.meta.url === `file://${process.argv[1]}`) {
   await cli("FACT", async (args, target) => {
     const engine = engineOf(args);
@@ -76,6 +184,8 @@ if (import.meta.url === `file://${process.argv[1]}`) {
       const j = judgeFact(c.want, r);
       cells.push({ gating: true, pass: j.pass, line: line(`${c.write ? `--selection-tile: ${c.write} written on the group · ` : ""}want ${c.want} · ${j.why}${r ? ` · ${desc(r)}` : ""}`) });
     }
-    return { id: "FACT", title: "is a tile has one spelling: the fact and the tile geometry agree under nesting and a written fact (H4-1; R-10, R-2)", engine, engineLabel: await engineVersion(engine), target: target.label, dev: target.meta.dev, cells };
+    if (attack) await matrix(target, engine, cells);
+    else cells.push({ gating: true, pass: null, line: `matrix · UNMEASURED: not an attack build (migration ${migration?.label ?? "none"}); build with --route <harness>/attack-route` });
+    return { id: "FACT", title: "is a tile has one spelling: the fact and the tile geometry agree under nesting, a written fact, and every write site × read site of the matrix, judged by paint (H4-1, H5-2; R-10, R-2)", engine, engineLabel: await engineVersion(engine), target: target.label, dev: target.meta.dev, cells };
   });
 }

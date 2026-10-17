@@ -41,7 +41,7 @@ export const HASHED = (() => {
 export const HARNESS = (() => {
   const h = createHash("sha256");
   for (const f of HASHED) { h.update(f); h.update("\0"); h.update(fs.readFileSync(path.join(HERE, f))); h.update("\0"); }
-  return { hash: h.digest("hex").slice(0, 12), files: HASHED.length, rev: "H4" };
+  return { hash: h.digest("hex").slice(0, 12), files: HASHED.length, rev: "H5" };
 })();
 
 export const DSF = 2;
@@ -340,9 +340,17 @@ async function openPageOnce(target, engine, scene, { mode = "light", prm = false
   if (coarse) { opts.hasTouch = true; if (engine === "chromium") opts.isMobile = true; }
   const ctx = await step(`${tag} newContext`, () => b.newContext(opts));
   const page = await step(`${tag} newPage`, () => ctx.newPage());
+  // H5-4 · CONSOLE ERRORS COUNT FROM NAVIGATION. The listeners attach before `goto`, so a name a component logs at
+  // mount (X-5's interactive descendant, before `__tile.ready`) is in `logs`; each entry carries its phase, `nav`
+  // (before ready) or `ready` (after), and `readyAt` is the count at ready, so a cell can print how many arrived at
+  // mount. The pass-4 critics' probes counted from the first frame after load and missed every mount-time name
+  // (`Fc` §5). TILE_HARNESS_LOGS_FROM=ready is the planted instrument fault (`h5-logs-ready`): it drops every entry
+  // logged before ready, as those probes did, and the X-5 cell must then FAIL.
   const logs = [];
-  page.on("console", (m) => logs.push({ type: m.type(), text: m.text() }));
-  page.on("pageerror", (e) => logs.push({ type: "pageerror", text: String(e) }));
+  let phase = "nav";
+  const keep = (e) => { if (phase === "nav" && process.env.TILE_HARNESS_LOGS_FROM === "ready") return; logs.push({ ...e, phase }); };
+  page.on("console", (m) => keep({ type: m.type(), text: m.text() }));
+  page.on("pageerror", (e) => keep({ type: "pageerror", text: String(e) }));
   let cdp = null;
   if (engine === "chromium") {
     cdp = await ctx.newCDPSession(page);
@@ -363,6 +371,8 @@ async function openPageOnce(target, engine, scene, { mode = "light", prm = false
     await step(`${tag} goto`, () => page.goto(target.url(q.toString()), { waitUntil: "load", timeout: 60000 }));
     await step(`${tag} ready`, () => page.waitForFunction(() => window.__tile && window.__tile.ready === true, null, { timeout: 30000 }));
   } catch (e) { await within(10000, () => ctx.close()); throw e; }
+  phase = "ready";
+  const readyAt = logs.length;
   if (mode === "prt" && engine !== "chromium") await page.addStyleTag({ content: LEVEL0 });
   if (uiScale !== null) await page.addStyleTag({ content: `:root{--ui-scale:${uiScale} !important}` });
   await step(`${tag} fonts`, () => page.evaluate(() => document.fonts.ready.then(() => true)));
@@ -387,7 +397,7 @@ async function openPageOnce(target, engine, scene, { mode = "light", prm = false
   if (prm && !verify.prm) modeOk = false;
   if (coarse) { modeLabel += " coarse"; if (!(verify.hoverNone && verify.coarse)) modeOk = false; }
   if (uiScale !== null) { modeLabel += ` --ui-scale ${uiScale}`; if (parseFloat(verify.uiScale) !== uiScale) modeOk = false; }
-  return { page, ctx, cdp, logs, verify, engine, keys: KEYS[engine], mode, modeLabel, modeOk, close: () => step(`${tag} close`, () => ctx.close()) };
+  return { page, ctx, cdp, logs, readyAt, verify, engine, keys: KEYS[engine], mode, modeLabel, modeOk, close: () => step(`${tag} close`, () => ctx.close()) };
 }
 
 // ── in-page helpers (window.__th): DOM reads only, no source text ─────────────

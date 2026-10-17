@@ -11,7 +11,39 @@
 //   v2        FACT: a pill group holding a one-item tile group (`.atk-tile-in`): the nesting reach
 //   c1        ATTACK `empty`: no declaration; every item's optional slots render nothing (`v-if` on absent data)
 //   strip     ATTACK `sup`: pills whose label carries a superscript (one row of text)
+//   matrix    H5-2 FACT's write-site × read-site matrix and H5-4's mount-time name: a tile group and a pill group, each
+//             with a direct option, an option behind a wrapper `div`, and an option that holds a nested group of the
+//             other kind (`matrix-migrated`). `?w=<site>&v=<value>` writes `--selection-tile: <value>` inline at mount
+//             on that site in BOTH groups (`mx(site)`, scenes.mjs), so the development names see the write. Sites:
+//             ancestor (a div around the group), group, wrapper, option (the direct option), content (a span inside
+//             it; the direct option's only), nested-group (the root of the group inside the third option), nested-option (that group's first
+//             option). Every option's content holds two block rows (`[data-mx-content]`) the pill's one-row law runs
+//             inline, so a reader that splits the fact shows in the rows. Values are unique per option (the names
+//             carry them)
 export const ATTACK_LABEL = "H4-attack";
+/** H5-2: one option of the matrix: two block rows of content, a #meta row for a tile (F's declaration). */
+const mxContent = (a, b, site = false) => `<span data-mx-content${site ? ` data-mx-site="content" :style="mx('content')"` : ""} class="block"><span class="block">${a}</span><span class="block text-micro">${b}</span></span>`;
+const mxGroup = (kind) => {
+  const tile = kind === "tile";
+  const t = tile ? "t" : "p";
+  const decl = (on) => (on ? ' shape="cell"' : "");
+  const meta = (on) => (on ? `<template #meta><span class="text-mono-caption">0.5 s</span></template>` : "");
+  return `<div data-mx-kind="${kind}" data-mx-site="ancestor" :style="mx('ancestor')" class="mx-host">
+        <ToggleGroup type="single"${decl(tile)} aria-label="Matrix ${kind}s" model-value="${t}a" data-mx-site="group" :style="mx('group')" class="mx-group grid grid-cols-2 gap-2">
+          <ToggleGroupItem value="${t}a" data-mx-item="${t}a" data-mx-site="option" :style="mx('option')">${mxContent("Smooth", "calm", true)}${meta(tile)}</ToggleGroupItem>
+          <div data-mx-site="wrapper" :style="mx('wrapper')" class="mx-wrap">
+            <ToggleGroupItem value="${t}b" data-mx-item="${t}b">${mxContent("Snappy", "quick")}${meta(tile)}</ToggleGroupItem>
+          </div>
+          <ToggleGroupItem value="${t}c" data-mx-item="${t}c">${mxContent("Bouncy", "lively")}
+            <ToggleGroup type="single"${decl(!tile)} aria-label="Nested ${tile ? "pills" : "tiles"}" model-value="${t}n0" data-mx-site="nested-group" :style="mx('nested-group')">
+              <ToggleGroupItem value="${t}n0" data-mx-item="${t}n0" data-mx-site="nested-option" :style="mx('nested-option')">${mxContent("Inner", "row")}${meta(!tile)}</ToggleGroupItem>
+              <ToggleGroupItem value="${t}n1">${mxContent("Other", "row")}${meta(!tile)}</ToggleGroupItem>
+            </ToggleGroup>
+            ${meta(tile)}
+          </ToggleGroupItem>
+        </ToggleGroup>
+      </div>`;
+};
 const pills = (cls, label) => `<ToggleGroup type="single" aria-label="${label}" model-value="a" class="${cls}">
           <ToggleGroupItem value="a" data-atk-item><span data-ink>Nested A</span></ToggleGroupItem>
           <ToggleGroupItem value="b" data-atk-item><span data-ink>Nested B</span></ToggleGroupItem>
@@ -62,6 +94,13 @@ export default {
           <template #meta><span v-if="o.hint" class="text-micro">{{ o.hint }}</span></template>
         </ToggleGroupItem>
       </ToggleGroup>`,
+  },
+  matrix: {
+    group: `<div class="mx-both flex flex-col gap-6" data-mx>
+      ${mxGroup("tile")}
+      ${mxGroup("pill")}
+      </div>`,
+    css: `.mx-host { inline-size: 460px; } .mx-wrap { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }`,
   },
   strip: {
     group: `<ToggleGroup type="single" data-group aria-label="Area unit" v-model="model">

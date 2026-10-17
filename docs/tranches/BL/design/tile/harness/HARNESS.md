@@ -1,11 +1,11 @@
-# D4 · the tile witness battery (H4, pass 4)
+# D4 · the tile witness battery (H5, pass 5)
 
 | field | value |
 |---|---|
-| seat | D4 pass 2, H2 seat, landed REGISTRY §3.2 rows H-1..H-11 over the pass-1 battery (T-1..T-8, W-A..W-E). D4 pass 3, H3 seat, landed REGISTRY §P2-6.2 rows H3-1..H3-13 in place (§2.2). D4 pass 4, H4 seat, landed REGISTRY §P3-6.2 rows H4-1..H4-6 in place (§2.3) |
+| seat | D4 pass 2, H2 seat, landed REGISTRY §3.2 rows H-1..H-11 over the pass-1 battery (T-1..T-8, W-A..W-E). D4 pass 3, H3 seat, landed REGISTRY §P2-6.2 rows H3-1..H3-13 in place (§2.2). D4 pass 4, H4 seat, landed REGISTRY §P3-6.2 rows H4-1..H4-6 in place (§2.3). D4 pass 5, H5 seat, landed REGISTRY §P4-6.2 rows H5-1..H5-6 in place (§2.4) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | engines | Chromium (`channel: "chromium"`) and Playwright WebKit, from `glass-ui/node_modules/playwright`, headless, 1000×900 at DSF 2. Playwright WebKit is not Safari. Real Safari runs through `safari.mjs` (H-11), and every cell reads **UNMEASURED (owner's safaridriver checkbox)** until the owner ticks Develop ▸ Allow Remote Automation |
-| results | not here. The self-test and the HEAD and HEAD + floor v2 baselines under H4 are recorded once, in `../pass-4/H4.md`; under H3, in `../pass-3/H3.md`; under H2, in `../pass-2/H2.md` (P-3). Every run JSON carries `harness.hash` (H3-10, H4-4): two tallies compare cell for cell only when their hashes match, and a route seat never edits this directory |
+| results | not here. The H5 self-test and the H5 cells read on both pass-4 routes are recorded once, in `../pass-5/H5.md`. The self-test and the HEAD and HEAD + floor v2 baselines under H4 are recorded once, in `../pass-4/H4.md`; under H3, in `../pass-3/H3.md`; under H2, in `../pass-2/H2.md` (P-3). Every run JSON carries `harness.hash` (H3-10, H4-4): two tallies compare cell for cell only when their hashes match, and a route seat never edits this directory |
 
 ## 1 · What it is
 
@@ -27,15 +27,17 @@ One scene page, built against any worktree's library, and thirteen witness scrip
 | `route-example/` | the H-7 route contract on a real build: `preset` migrated clean (T-7 migrated PASS), `specimen` migrated with one consumer rule on the tile (T-7 migrated FAIL) |
 | `glance.mjs` | owner-glance captures. Not a witness |
 | `film.mjs` | owner-glance films of a commit across arms; `--pair` (H3-13) the stills pair, plated against flush and focused-selected against selected, each frame checked against its label. Not a witness |
-| `canon.mjs` | H3-4: the canon unit's law on 48 widened twins (size × orientation × children × state), parsed by the engine; plants A, S, H on the route's own tile spelling (`route.json` → `canon`) |
+| `canon.mjs` | H3-4, H5-1: CANON, R-7's one instrument: the canon law on 48 widened twins (size × orientation × children × state), every corner rule that reaches an item whatever its selector, each rule's `@container` condition evaluated on the twin's own container, the corner each twin wears ranked by importance, layer, specificity and order, at rest and engaged; plants A, S, H, `layer`, `foreign`, `unlayered`, `cq` and controls `lowlayer`, `cqoff` on the route's own tile spelling (`route.json` → `canon`) |
 | `appsso-probe.mjs` | H3-1: counts the AppSSO checks each navigation form makes in Playwright WebKit, from the unified log |
 | `attack-route/` | H4-1: the shared attack compositions (`route.json` label `H4-attack`, `migrated.mjs`), one markup for every route: a tile group carries both live declarations (`shape="cell"` and a filled `#meta`). Build a second scene app per worktree with `--route <harness>/attack-route` |
-| `fact-split.mjs` | FACT (H4-1): the tile fact and the tile geometry agree, nested both ways and under a fact written without a declaration |
-| `attack.mjs` | ATTACK (H4-1): empty anatomy is pills, consumer attributes land under the engine, a superscript is not a second row |
+| `fact-split.mjs` | FACT (H4-1, H5-2): the tile fact and the tile geometry agree, nested both ways and under a fact written without a declaration; and the write-site × read-site matrix on `matrix-migrated`, judged by paint |
+| `attack.mjs` | ATTACK (H4-1, H5-4): empty anatomy is pills, consumer attributes land under the engine, a superscript is not a second row, an option holding a nested group is named at mount (X-5), counted from navigation |
 | `corner-refusal.mjs` | CORNER (H4-1): a consumer corner (utility, scoped, unlayered `!important`, inline) leaves the tile on the field corner |
 | `fixture-attack.mjs` | the attack fixture (`--fixture --family atk`) and its plants (`ATTACK_FAULTS`, merged into `FAULTS`) |
-| `report-h46.mjs` | REPORT (H4-6), reported and not gating: the commit on 300 px tiles at a 4 px gap; the selection mark over light media |
-| `unit.mjs`, `vitest.wt.config.ts` | UNIT (H4-3): the one unit driver, with its config, `--sub` plants restored after, and exit 2 on zero cases run |
+| `report-h46.mjs` | REPORT (H4-6, H5-5, H5-6), reported and not gating: the commit on 300 px tiles at a 4 px gap; the selection mark over light media; whether the selected K2 name takes the selection ink. Route builds only: an attack build exits 2 |
+| `unit.mjs`, `vitest.wt.config.ts` | UNIT (H4-3, H5-3): the one unit driver, with its config, one driver per worktree (a lock), `--sub` plants restored from a copy taken before the first and checked against `git diff`, and exit 2 on zero cases run |
+| `k2.mjs` | H5-5: the one K2 transcription, `K2_SPECIMEN("shape" \| "anatomy")`; a route's `migrated.mjs` takes its `specimen` from here |
+| `transcribe.mjs` | XSCRIPT (H5-5): the routes' K2 transcriptions differ only by the declaration and paint nothing; a static read of each route's `migrated.mjs`, engine-free, with its own `--selftest` |
 
 ### 1.1 Running it
 
@@ -49,7 +51,9 @@ for f in src src-dev dist dist-dev; do node $H/build.mjs $S/wt --label head-$f -
 node $H/run.mjs --build $OUT/builds/head-src --out $OUT --webkit
 node $H/build.mjs $S/wt --label head-atk-src --out $OUT --route $H/attack-route   # H4-1: the attack build
 node $H/run.mjs --build $OUT/builds/head-src --attack $OUT/builds/head-atk-src --out $OUT --webkit --only FACT,ATTACK,CORNER,REPORT
-node $H/unit.mjs $S/wt [-t <name>] [--sub '<file>|<old>|<new>'] <test files>     # H4-3; --selftest for its own self-test
+node $H/unit.mjs $S/wt [-t <name>] [--sub '<file>|<old>|<new>'] <test files>     # H4-3, H5-3 (one per worktree); --selftest for its own self-test
+node $H/transcribe.mjs --routes <routeDirA>,<routeDirB>                    # H5-5; --selftest for its own self-test
+node $H/report-h46.mjs --build $OUT/builds/<route build> --engine webkit      # H5-6: REPORT reads the ROUTE build, never the attack build
 node $H/we-one-line.mjs --build $OUT/builds/head-dist --out $OUT          # refusal cells gate on dist only
 node $H/selftest.mjs --out $OUT [--engines chromium,webkit] [--only T-5] [--faults t5-input]
 node $H/safari.mjs --build $OUT/builds/head-src      # H-11; UNMEASURED until the checkbox (it prints the driver's reason)
@@ -200,11 +204,25 @@ H4 adds witness cells to existing checklist rows. It adds no rows (REGISTRY §P3
 
 The FACT, ATTACK and CORNER cells score on existing rows: R-10 and R-2 (FACT), E-3, R-2 and R-9 (ATTACK), E-3 wherever a route or the floor claims the refusal (CORNER; FV3-4 decides the layered `!important` corner).
 
+### 2.4 · H5 (pass 5)
+
+H5 adds witness cells to existing checklist rows. It adds no rows (REGISTRY §P4-6.3): R-10 and R-2 (H5-2), R-7 (H5-1), X-5 (H5-4), X-2 and T-7 (H5-5). Every cell has a fixture PASS and a planted FAIL in Chromium and Playwright WebKit (`../pass-5/H5.md` §2).
+
+| row | where | what the harness now does | plants and controls |
+|---|---|---|---|
+| H5-1 | `canon.mjs` | CANON reads what the engine paints. Each rule's enclosing `@container [name] <condition>` is evaluated against the twin's own query container (an unnamed style query's container is the subject's parent); `style(--p: v)`, `style(--p)`, `not`, `and`, `or` and parentheses are read, any other condition is UNEVALUATED and fails `unmatched`. The corner each twin wears is the cascade winner among the rules that reach it, ranked by importance, then layer (unlayered above every layer for a normal declaration and below for `!important`; a later layer above an earlier one; a declaration directly in a layer above its sublayers), then specificity, then order; `@media` and `@supports` are evaluated, `@scope` read with its root and limit. Every corner-setting rule that reaches an item counts, whatever its selector names; a pseudo-element subject is listed, not ranked. Winners are read at rest (state pseudo-classes as written) and engaged (stripped). Laws: one tile-only rule on `var(--radius-field)`; every tile twin wears the field corner; every pill twin wears the stadium; nothing unmatched or unevaluated. The item carries `pill-row` (floor v3). The fixture's sheet is the floor-v3 shape (the fact, its writer, the stadium, the field corner under `@container not style(--selection-tile: none)`) | `canon-a`, `canon-s`, `canon-h`, `canon-layer`, `canon-foreign`, `canon-unlayered`, `canon-cq`; controls `canon-lowlayer`, `canon-cqoff`. On a build: `--plant a\|s\|h\|layer\|foreign\|unlayered\|cq\|lowlayer\|cqoff` |
+| H5-2 | `attack-route/migrated.mjs` (`matrix`), `scenes.mjs` (`mx()`, route-only sites), `build.mjs`, `fact-split.mjs` (`READ_MX`, `judgeMx`), `fixture-attack.mjs` | FACT's matrix on `matrix-migrated`: a tile group and a pill group, each with a direct option, an option behind a wrapper and an option holding a nested group of the other kind; `?w=<site>&v=<value>` writes `--selection-tile` inline at mount. Seven write sites (ancestor, group, wrapper, option, content, nested-group, nested-option) × `none`, `flush`, `plated` × both groups, plus the references, in light; the references and the two option cells in dark. Judged by paint (used corner, box against its reference, text rows, content rows under the one-row law, children the pill's label rule clips, content cut past the box) and, on a development flavour, the names the read option draws. Never by the item's computed fact. Pass 4's cells are spelled `item-none-in-tile`, `item-flush-in-pill`, `content-writes-none`, `pill-in-option`, `tile-in-option`. The clean attack fixture carries the M-13 bounded pin | `atk-nopin`, `atk-nopin-dev` (on `src-dev`: the false name), `atk-unbounded` (F's pin), `atk-optpin` (an option-only pin); control `atk-mx-dev` |
+| H5-3 | `unit.mjs` | one driver per worktree (`<wt>/.h5-unit.lock`, O_EXCL; a live holder is exit 2, a dead one's lock broken and its restore copy written back); plants restored from a copy taken before the first `--sub`; `git diff HEAD`, `git status` and each planted file's sha1 compared before and after, exit 2 on any difference | `unit.mjs --selftest`: a held worktree (exit 2, the file untouched), a dead holder (its plant recovered, exit 0), a concurrent writer (exit 2, restore mismatch), clean at the end |
+| H5-4 | `lib.mjs` (`openPage`: `logs[].phase`, `readyAt`), `attack.mjs` (`x5`) | console entries carry their phase (`nav` before ready, `ready` after); ATTACK `x5` wants each option that holds a nested group named as holding an interactive descendant on a development flavour, counted from navigation, and prints how many arrived before ready | `atk-x5none` (no name); `h5-logs-ready` (TILE_HARNESS_LOGS_FROM=ready: the instrument counts from ready, as the pass-4 probes did) |
+| H5-5 | `k2.mjs`, `transcribe.mjs` (XSCRIPT), `report-h46.mjs` (`name-ink`), `../pass-5/H5/routes/` | one K2 transcription with the declaration as its only parameter; XSCRIPT fails a route pair whose K2 differs beyond the declaration or paints the tile; REPORT `name-ink` reads whether the selected K2 name is its item's ink, light and dark. The pass-5 route dirs take K2 from `k2.mjs` and every other site from their pass-4 dirs | XSCRIPT `--selftest`: `xs-paint`, `xs-drift`, `xs-none` (exit 2); REPORT `h46-nameink` |
+| H5-6 | `report-h46.mjs` | REPORT refuses an attack build (exit 2, naming the build to pass); `run.mjs` hands it `--build` | `h46-attack` (expect error) |
+
 ## 3 · Notes for the route seats
 
 - A route builds in its own worktree and passes `--route <its dir>` with a `route.json`. Its migrated compositions live there and nowhere else. A route never edits `scenes.mjs`'s verbatim transcriptions (H-7).
 - Report every witness with its arm tally, so the unmigrated and migrated consumer read side by side.
 - Harness runs are serialized by the lock. Record the load printed beside every timing.
 - H4: build each worktree twice, once with `--route <your route dir>` and once with `--route <harness>/attack-route`, and pass the second as `run.mjs --attack`. Every critic runs FACT, ATTACK and CORNER, so both routes' scores read the same cells. Run unit cases and plants through `unit.mjs`, never a bare `vitest` call. Never edit this directory: one hash for every route.
+- H5: the route dirs are `../pass-5/H5/routes/D4-Dp` and `../pass-5/H5/routes/D4-F` (K2 from `k2.mjs`; run `transcribe.mjs --routes` on the pair). FACT reads the matrix on the attack build on `src` and on `src-dev` (the names gate there). REPORT reads the route build in both engines, never the attack build. One `unit.mjs` per worktree at a time; a second one stops loud.
 - WebKit T-6 pointer cells on ToggleGroupItem fail loud on the PF-1 hang until the SF-8 token fix lands. The keyboard, programmatic and Tab-entry cells run on a page the pointer never enters, so they stay readable.
 - Consumers drift (PF-5). The scenes transcribe the revisions named at the top of `scenes.mjs`. Re-read a consumer before quoting its numbers.

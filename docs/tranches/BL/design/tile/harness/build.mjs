@@ -22,7 +22,10 @@
 //               { group: "<Vue template of the group, the DOM contract stamped>", css: "<rules, nested under the
 //               migrated arm>" }. The template sees PRESETS, orderedPresets, CURVE_GROUPS, STRIP, LEVELS, PALETTES,
 //               STATUSES, model, isMulti, toggleMulti, and the components the app imports (family modules by
-//               their directory name). It renders as <site>-migrated with a stripped twin for T-7.
+//               their directory name). It renders as <site>-migrated with a stripped twin for T-7. A key that is no
+//               consumer site (H5-2: the attack route's `matrix`) renders as <site>-migrated as written, with no host
+//               and no twin; its template also sees `mx(site)`, the inline `--selection-tile` write `?w=<site>&v=<value>`
+//               asks for at mount (undefined otherwise)
 import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";

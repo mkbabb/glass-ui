@@ -1,0 +1,34 @@
+2026-10-17 15:52:15 · load { 15.36 15.28 20.11 }
+[guarded] waiting for the 'webkit' lock
+admitted · 2026-10-17 16:29:37 · load { 12.19 13.70 14.48 }
+selftest · harness H5 bfe1b6beddb0 (41 files)
+OK     W-A  webkit   clean exit 0 · W-A PASS · 9/9 gating cells pass [library 9/9]
+OK     W-A  webkit   fault   t1-late (the control corner is stamped 300 ms after the content changes (painted frames show the stadium)) exit 1 · W-A FAIL · 0/9 gating cells pass [library 0/9]
+         first planted FAIL: FAIL       wrap light ToggleGroupItem · 71.73×40.00 9999px→20.00 (÷h/2 1.00) | 110.00×80.00 9999px→40.00 (÷h/2 1.00) | 110.00×120.00 9999px→55.00 (÷h/2 0.92) · one line at h/2 true, unchanged by lines false (Δ 35.00 px)
+OK     W-A  webkit   control t1-ro (CONTROL, must PASS: the control corner is stamped by a ResizeObserver before paint; a synchronous read sees the stadium, the framed read the stamp) exit 0 · W-A PASS · 9/9 gating cells pass [library 9/9]
+OK     W-A  webkit   fault   wa (the control-role holders keep the stadium, so a wrapped holder balloons) exit 1 · W-A FAIL · 0/9 gating cells pass [library 0/9]
+         first planted FAIL: FAIL       wrap light ToggleGroupItem · 71.73×40.00 9999px→20.00 (÷h/2 1.00) | 110.00×80.00 9999px→40.00 (÷h/2 1.00) | 110.00×120.00 9999px→55.00 (÷h/2 0.92) · one line at h/2 true, unchanged by lines false (Δ 35.00 px)
+OK     W-B  webkit   clean exit 0 · W-B PASS · 25/25 gating cells pass [library 25/25]
+OK     W-B  webkit   fault   t5 (ArrowUp and ArrowDown are dead (the tablist model), so grid arrows do not move) exit 1 · W-B FAIL · 19/25 gating cells pass [library 19/25]
+         first planted FAIL: FAIL       preset arrows grid ArrowDown from #0 · focus 0 → 0 · moved false · checked true (started by focus + Space: PF-1)
+OK     W-B  webkit   fault   wb (no choice-card slot and no ChoiceGroup/ChoiceCard export) exit 1 · W-B FAIL · 21/25 gating cells pass [library 21/25]
+         first planted FAIL: FAIL       exports · RED by absence: no ChoiceGroup/ChoiceCard in the bundle (exports seen: [SelectionGroup, SelectionItem])
+OK     W-C  webkit   clean exit 0 · W-C PASS · 8/8 gating cells pass [library 8/8]
+OK     W-C  webkit   fault   wc (the card board is a listbox of options, each its own tab stop, with no group stamp) exit 1 · W-C FAIL · 1/8 gating cells pass [library 1/8]
+         first planted FAIL: FAIL       card · group listbox · items option (Playwright aria snapshot + DOM states) · tab stops 4
+OK     W-C  webkit   fault   wc-stamp (the group stamp is present but its values are stale: aria-checked never follows the selection) exit 1 · W-C FAIL · 2/8 gating cells pass [library 2/8]
+         first planted FAIL: FAIL       card stamp values at rest (role/aria-checked/tabindex, * = group-stamped; selected #1) · radio/false/0* radio/false/-1* radio/false/-1* radio/false/-1*
+OK     W-D  webkit   clean exit 0 · W-D PASS · 8/8 gating cells pass [library 8/8]
+OK     W-D  webkit   fault   wd (the declared cell lays out as a row) exit 1 · W-D FAIL · 4/8 gating cells pass [library 4/8]
+         first planted FAIL: FAIL       family-d #0 · corner 16px→16.00 (--radius-field 16.00) · row · line-height 21.00 vs body 21.00 · rows 1
+OK     W-D  webkit   fault   wd2 (the declaration is ignored: every item is a cell, the undeclared pair included) exit 1 · W-D FAIL · 4/8 gating cells pass [library 4/8]
+         first planted FAIL: FAIL       family-d-undeclared #0 (undeclared pair) · 226.00×66.00 rung 40.00 · corner 16px→16.00 (÷h/2 0.48) · rows 2
+OK     W-E  webkit   clean exit 0 · W-E PASS · 6/6 gating cells pass [library 6/6]
+OK     W-E  webkit   fault   we (the one-line guard is absent) exit 1 · W-E FAIL · 3/6 gating cells pass [library 3/6]
+         first planted FAIL: FAIL       preset refusal (flavor dist) · a line added to item 0 → no refusal (no console error, no throw)
+OK     W-E  webkit   fault   we-devonly (the one-line guard is DEV-only, so what a consumer installs refuses nothing) exit 1 · W-E FAIL · 3/6 gating cells pass [library 3/6]
+         first planted FAIL: FAIL       preset refusal (flavor dist) · a line added to item 0 → no refusal (no console error, no throw)
+OK     W-E  webkit   fault   we-lh1 (an option stacks two lines at line-height 1 inside its rung (the midpoint row test must count 2)) exit 1 · W-E FAIL · 4/6 gating cells pass [library 4/6]
+         first planted FAIL: FAIL       preset · 4 items · 1 not one line · e.g. 40.00 px tall at rung 40.00 (1.00 rungs), 2 rows
+selftest: 17 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0 · 2026-10-17 16:32:06 · load { 9.90 11.73 13.52 }

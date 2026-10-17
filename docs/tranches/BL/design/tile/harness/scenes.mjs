@@ -310,6 +310,8 @@ export function sceneApp(wt, nm, { familyModules = {}, migration = null, flavor 
       sections.push([`${site}-migrated-stripped`, "stripped", b.host(stripItemClasses(mig[site].group))]);
     }
   }
+  // H5-2 · a route site that is no consumer site (the attack route's `matrix`) renders as `<site>-migrated` as written
+  for (const [site, m] of Object.entries(mig)) if (!SITE_BUILD[site]) sections.push([`${site}-migrated`, "migrated", m.group]);
   sections.push(["preset-invalid", "library", presetHost(presetGroup({ invalid: true }))]);
   sections.push(["preset-sibling", "library", presetHost(presetGroup({ sibling: true }))]);
   sections.push(["preset-tone-translucent", "library", presetHost(presetGroup({ tone: "rgb(120 80 200 / 0.35)" }))]);
@@ -437,6 +439,10 @@ const multi = ref<string[]>(MULTI && first !== NONE ? [first] : []);
 const isMulti = (s: string) => multi.value.includes(s);
 const toggleMulti = (s: string) => { multi.value = isMulti(s) ? multi.value.filter((x) => x !== s) : [...multi.value, s]; };
 const tabsOptions = values.tabs.map((v) => ({ label: v, value: v }));
+// H5-2 · the matrix write: \`?w=<site>&v=<none|flush|plated>\` puts \`--selection-tile\` inline at mount on every element
+// a route template marks with \`:style="mx('<site>')"\`
+const MX = { w: q.get("w") ?? "", v: q.get("v") ?? "" };
+const mx = (site: string) => (MX.v && MX.w === site ? { "--selection-tile": MX.v } : undefined);
 
 (window as any).__tile = {
   ready: false,

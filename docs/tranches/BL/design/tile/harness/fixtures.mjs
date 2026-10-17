@@ -73,10 +73,19 @@ export const FAULTS = {
   navcap: { why: "H3-1 CONTROL, must PASS: TILE_HARNESS_NAV_CAP=5 retires the Playwright WebKit browser every 5 navigations and every cell still reads", witnesses: ["T-3"], expect: "pass", env: { TILE_HARNESS_NAV_CAP: "5" }, note: { webkit: /retired and relaunched \d+×/ } },
   "canon-a": { why: "H3-4 plant A: the tile corner re-spelled in a second sheet (`:is(<tile>)`, 12 px): two rules decide the tile", witnesses: ["CANON"], cell: /canon tile corner/ },
   "canon-s": { why: "H3-4 plant S: a size arm on the tile (`[data-size=\"sm\"]`) on --radius-panel, which a one-md-item fixture never reaches", witnesses: ["CANON"], cell: /canon tile corner/ },
-  "canon-h": { why: "H3-4 plant H: a structural re-spelling (`.toggle-group__item:has(> * + *)`, 12 px), which a childless fixture never reaches", witnesses: ["CANON"], cell: /canon pill corner/ },
+  "canon-h": { why: "H3-4 plant H: a structural re-spelling (`.toggle-group__item:has(> * + *)`, 12 px), which a childless fixture never reaches", witnesses: ["CANON"], cell: /canon pill winner/ },
+  // H5-1 (pass 5): CANON evaluates container conditions and ranks corners by layer before specificity
+  "canon-layer": { why: "H5-1 plant `layer` (D′c §5.2): an unlayered `.toggle-group { --selection-tile: none }` after the layer resets the fact on every group: no tile anywhere", witnesses: ["CANON"], cell: /canon tile (corner|winner)/ },
+  "canon-foreign": { why: "H5-1 plant `foreign` (D′c §5.2): `.pill-row.control-surface { border-radius: 12px }` in the library's layer, a pill corner from a selector that does not name toggle-group", witnesses: ["CANON"], cell: /canon pill winner/ },
+  "canon-unlayered": { why: "H5-1 plant: `:where(.toggle-group__item) { border-radius: 12px }` unlayered: zero specificity, but an unlayered normal declaration outranks every layer (a specificity-first ranker passes it)", witnesses: ["CANON"], cell: /canon pill winner/ },
+  "canon-cq": { why: "H5-1 plant: a 12 px pill corner inside `@container style(--selection-tile: none)` in the library's layer: only the container condition scopes it to pills", witnesses: ["CANON"], cell: /canon pill winner/ },
+  "canon-lowlayer": { why: "H5-1 CONTROL, must PASS: a (0,3,0) 12 px corner in `@layer base`, below the library's layer, loses to the (0,1,0) stadium (a specificity-first ranker fails it)", witnesses: ["CANON"], expect: "pass" },
+  "canon-cqoff": { why: "H5-1 CONTROL, must PASS: the `cq` rule under `style(--selection-tile: plated)`, which no twin's container holds, reaches nothing (a container-blind reader fails it)", witnesses: ["CANON"], expect: "pass" },
   // H4-6 (reported, not gating; family h46)
   "h46-kick": { why: "H4-6 plant: the commit pop peaks at 1.035, so a 300 px tile pushes 5.25 px into a 4 px neighbour gap", witnesses: ["REPORT"], family: "h46", cell: /kick ·/ },
   "h46-mark": { why: "H4-6 plant: in dark the selection mark is near-white over the pale swatch (Fc §2.4's washed-out check)", witnesses: ["REPORT"], family: "h46", cell: /mark .*dark/ },
+  "h46-nameink": { why: "H5-5 plant: the migrated K2 name pins its own ink (consumer paint, D′'s pass-4 `.tile-name { color }` class), so the selected name is not its item's ink", witnesses: ["REPORT"], family: "h46", cell: /name-ink ·/ },
+  "h46-attack": { why: "H5-6 plant: REPORT handed an attack build (the F spec's pass-4 misdirection): it must stop loud, exit 2, and name the route build to pass", witnesses: ["REPORT"], family: "h46", expect: "error", cell: /REPORT reads a route build/ },
   ...ATTACK_FAULTS,
   "t8-migrated": { why: "H3-2: a WebKit-only rule turns the MIGRATED tiles back into stadiums (the library arm and Chromium stay green)", witnesses: ["T-8"], cell: /Playwright WebKit T-1 .*-migrated/ },
 
@@ -236,7 +245,8 @@ ${fault === "t7" ? '[data-arm="migrated"] .c-cell { outline: 1px dashed transpar
 ${h46 && fault !== "h46-kick" ? "@keyframes pop { 0% { scale: 1; } 45% { scale: 1.02; } 70% { scale: 0.994; } 85% { scale: 1.002; } 100% { scale: 1; } }" : ""}
 ${h46 ? `.t-strip i, .t-strip i:nth-child(2n) { background: #ecfccb; }
 .it[aria-pressed="true"]::after { content: ""; position: absolute; top: 12px; right: 18px; width: 16px; height: 16px; border-radius: 50%; background: #1c1917; pointer-events: none; }
-${fault === "h46-mark" ? ':root.dark .it[aria-pressed="true"]::after { background: #f5f5f4; }' : ""}` : ""}
+${fault === "h46-mark" ? ':root.dark .it[aria-pressed="true"]::after { background: #f5f5f4; }' : ""}
+${fault === "h46-nameink" ? '[data-arm="migrated"] .t-meta { color: rgb(120, 113, 108); }' : ""}` : ""}
 ${fault === "t6-calm" ? "[data-reorder] .it.pop { animation: none; }" : ""}
 ${fault === "t6-rest" ? '.it[aria-checked="true"], .it[aria-pressed="true"] { scale: 1.05; } @keyframes pop-rest { 0% { scale: 1; } 45% { scale: 1.085; } 70% { scale: 1.04; } 85% { scale: 1.053; } 100% { scale: 1.05; } } .it.pop { animation-name: pop-rest; }' : ""}
 .sentinel { font: 12px system-ui; padding: 2px 6px; }
@@ -360,7 +370,7 @@ if (${JSON.stringify(late)}) {
   document.querySelectorAll(".holder").forEach((el) => ro.observe(el));
 }
 window.__tile = { ready: false, dev: DEV, flavor: FLAVOR, scenes: ${JSON.stringify(SCENES)}, scene: ${JSON.stringify(scene)}, exports: ${JSON.stringify(exportsList)},
-  migration: { label: "fixture", sites: ${JSON.stringify(SITES)} },
+  migration: { label: ${fault === "h46-attack" ? '"H4-attack", attack: true' : '"fixture"'}, sites: ${JSON.stringify(SITES)} },
   async select(i) { if (MULTI) { if (i !== null && list()[i].getAttribute("aria-pressed") !== "true") toggle(i); } else select(i === null ? -1 : i, false); },
   selected: () => (MULTI ? live().filter(on).map((el) => live().indexOf(el)) : current ? live().indexOf(current) : -1),
   async reorder() { const L = live(); L.reverse().forEach((el) => el.parentElement.appendChild(el)); roving(); } };

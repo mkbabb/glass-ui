@@ -10,6 +10,11 @@
 //          data-* and aria-label landed, the role is the engine's `radio`, and the group keeps one tab stop
 //   sup    `strip-migrated`: pills labelled "m<sup>2</sup> …", one row of text. On a development flavour (where a route
 //          names a stacked pill) want 0 console errors or page errors; on a production flavour it is reported only
+//   x5     H5-4 · `matrix-migrated`: the tile group's third option and the pill group's third option each hold a nested
+//          group. On a development flavour want each named as holding an interactive descendant (X-5), counted from
+//          NAVIGATION: the name fires at mount, before `__tile.ready`, and the pass-4 probes that counted from load
+//          missed it (`Fc` §5). The line prints how many of the names arrived before ready. On a production flavour the
+//          count is reported only
 // A build that is not an attack build reads UNMEASURED.
 //   node attack.mjs --build <out>/builds/<label>-atk | --fixture --family atk [--fault atk-empty] [--flavor src-dev]
 // H4-5 · `crit.mjs --part tworow` (the pass-2/3 critics' copies) is retired: H3-3's one-row cells and H4-2's late cells
@@ -25,7 +30,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     const migration = await P0.page.evaluate(() => window.__tile.migration ?? null);
     await P0.close();
     if (!isAttack(migration)) {
-      for (const k of ["empty", "attrs", "sup"]) cells.push({ gating: true, pass: null, line: `${k} · UNMEASURED: not an attack build (migration ${migration?.label ?? "none"}); build with --route <harness>/attack-route` });
+      for (const k of ["empty", "attrs", "sup", "x5"]) cells.push({ gating: true, pass: null, line: `${k} · UNMEASURED: not an attack build (migration ${migration?.label ?? "none"}); build with --route <harness>/attack-route` });
     } else {
       for (const mode of ["light", "dark"]) { // empty anatomy
         const P = await openPage(target, engine, "c1-migrated", { mode, query: { sel: 1 } });
@@ -67,7 +72,17 @@ if (import.meta.url === `file://${process.argv[1]}`) {
         const dev = !!target.meta.dev;
         cells.push({ gating: dev, pass: errs.length === 0, line: `sup · strip-migrated [${target.meta.flavor}${dev ? "" : ": a production flavour, reported"}] · pill ${f2(r.h)} px, used ${f2(r.used)} · console errors ${errs.length} over ${r.n} one-row pills (want 0)${errs[0] ? ` «${errs[0].text.slice(0, 100)}»` : ""}` });
       }
+      { // H5-4 · X-5's mount-time name on an option that holds a nested group, counted from navigation
+        const P = await openPage(target, engine, "matrix-migrated", { mode: "light" });
+        await P.page.waitForTimeout(300);
+        const hosts = ["tc", "pc"];
+        const named = hosts.map((id) => { const hit = P.logs.filter((l) => (l.type === "error" || l.type === "pageerror") && l.text.includes(`value="${id}" holds an interactive descendant`)); return { id, n: hit.length, atMount: hit.filter((l) => l.phase === "nav").length }; });
+        const total = P.logs.filter((l) => l.type === "error" || l.type === "pageerror").length;
+        await P.close();
+        const dev = !!target.meta.dev;
+        cells.push({ gating: dev, pass: named.every((x) => x.n >= 1), line: `x5 · matrix-migrated [${target.meta.flavor}${dev ? "" : ": a production flavour, reported"}] · console errors counted from navigation (${total} in all${process.env.TILE_HARNESS_LOGS_FROM === "ready" ? "; PLANTED: entries before ready dropped" : ""}) · ${named.map((x) => `option ${x.id} (holds a nested group) named ${x.n}× as holding an interactive descendant, ${x.atMount} before ready`).join("; ")} (want each ≥ 1)` });
+      }
     }
-    return { id: "ATTACK", title: "empty anatomy is pills, consumer attributes land under the engine, a superscript is not a second row (H4-1; E-3, R-2, R-9)", engine, engineLabel: await engineVersion(engine), target: target.label, dev: target.meta.dev, cells };
+    return { id: "ATTACK", title: "empty anatomy is pills, consumer attributes land under the engine, a superscript is not a second row, a nested group is named at mount (H4-1, H5-4; E-3, R-2, R-9, X-5)", engine, engineLabel: await engineVersion(engine), target: target.label, dev: target.meta.dev, cells };
   });
 }

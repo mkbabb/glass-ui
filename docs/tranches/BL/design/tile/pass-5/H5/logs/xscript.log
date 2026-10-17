@@ -1,0 +1,24 @@
+OK     XSCRIPT clean · exit 0 (want 0) · XSCRIPT PASS · 3/3 gating cells pass
+OK     XSCRIPT xs-paint (D′'s pass-4 name ink, consumer paint) · exit 1 (want 1) · XSCRIPT FAIL · 1/3 gating cells pass · first FAIL: FAIL       K2 equal · fixture-shape and fixture-anatomy, each with its declaration removed · markup equal · css DIFFERS at char 227: «tile-name{align-self:stretch;}.tile-name{color:var(--selection-ink
+OK     XSCRIPT xs-drift (a class on one route's items) · exit 1 (want 1) · XSCRIPT FAIL · 2/3 gating cells pass · first FAIL: FAIL       K2 equal · fixture-shape and fixture-anatomy, each with its declaration removed · markup DIFFERS at char 432: «… c.name" data-item data-surface="opaque" class="specimen-tile"><span data-ink
+OK     XSCRIPT xs-none (a route with no K2 site) · exit 2 (want 2) · XSCRIPT HARNESS ERROR no specimen (K2) site in fixture-anatomy
+xscript selftest: 4 runs; the check passes one K2 under two declarations, fails consumer paint and a drift, and stops on a missing site
+exit 0
+XSCRIPT · the routes' K2 transcriptions differ only by the declaration, and paint nothing (H5-5; X-2, T-7)
+  target xscript-D4-Dp-p5-D4-F-p5 · engine-free (a static read of each route's migrated.mjs) · harness H5 bfe1b6beddb0
+  PASS       K2 equal · D4-Dp-p5 and D4-F-p5, each with its declaration removed · markup equal · css equal
+  PASS       K2 paint · D4-Dp-p5 · no rule paints the tile or its content
+  info       other site · D4-Dp-p5 strip · paint: .tile-glyph path { stroke: var(--selection-ink) }; .tile-label { color: var(--selection-ink) }
+  info       other site · D4-Dp-p5 f1 · paint: .grid-label { color: var(--selection-ink) }
+  PASS       K2 paint · D4-F-p5 · no rule paints the tile or its content
+XSCRIPT PASS · 3/3 gating cells pass
+exit 0
+XSCRIPT · the routes' K2 transcriptions differ only by the declaration, and paint nothing (H5-5; X-2, T-7)
+  target xscript-D4-Dp-p4-D4-F · engine-free (a static read of each route's migrated.mjs) · harness H5 bfe1b6beddb0
+  FAIL       K2 equal · D4-Dp-p4 and D4-F, each with its declaration removed · markup DIFFERS at char 91: «…a-label="Easing curve specimens" class="mig-specimen-group" v-model="model"><section v-for="g in CUR» vs «…a-label="Easing curve specimens" class="specimen-grid-group" v-model="model"><section v-for="g in CU» · css DIFFERS at char 1: «.mig-specimen-group{display:flex;flex-direction:column;flex-w» vs «.specimen-grid-group{padding:var(--focus-ring-reach) var(--fo»
+  FAIL       K2 paint · D4-Dp-p4 · CONSUMER PAINT on the tile: .tile-sparkline path { stroke: var(--selection-ink) }; .tile-name { color: var(--selection-ink) }
+  info       other site · D4-Dp-p4 strip · paint: .tile-glyph path { stroke: var(--selection-ink) }; .tile-label { color: var(--selection-ink) }
+  info       other site · D4-Dp-p4 f1 · paint: .grid-label { color: var(--selection-ink) }
+  PASS       K2 paint · D4-F · no rule paints the tile or its content
+XSCRIPT FAIL · 1/3 gating cells pass
+exit 1
