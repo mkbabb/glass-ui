@@ -1,0 +1,11 @@
+2026-10-17 02:00:01 · load { 26.32 27.27 26.03 }
+REPORT · H4-6, reported: the commit on wide tiles against a 4 px gap; the selection mark over light media
+  target fc-src (flavor src) · Playwright WebKit 26.5 · harness H4 a26206b6a740
+  load 26.30 / 27.25 / 26.03 at start, 25.39 / 27.04 / 25.97 at end · other headless browser processes at start: 9 (waited 0.3 s) · browser lock waited 0 s
+  FAIL       kick · preset-migrated forced to two 300 px columns at a 4 px gap · item 1 300.00×66.59, rest gap 4.00 px · programmatic commit (checked true), 79 frames · peak scale 1.0275 · deepest push into a neighbour 0.13 px (want ≤ 0.05)
+  info-pass  kick · preset-migrated at the scene's own geometry · item 1 204.00×66.59, rest gap 8.00 px · peak scale 1.0276 · deepest push 0.00 px
+  PASS       mark · v2-migrated dark · the mark #dedbd7 over #292825 beneath it, 368 device px · 10.72:1 (want ≥ 3:1)
+  info-pass  mark · v2-migrated light · the mark #262421 over #e7f1d2 beneath it, 943 device px · 13.16:1 (want ≥ 3:1)
+REPORT FAIL · 1/2 gating cells pass [library 1/2]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p4/D4-F-crit/out/runs/fc-src/REPORT-webkit.json
+exit 1 · 2026-10-17 02:00:09 · load { 25.39 27.04 25.97 }

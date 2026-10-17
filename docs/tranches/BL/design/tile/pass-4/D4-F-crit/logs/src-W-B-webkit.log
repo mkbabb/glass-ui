@@ -1,0 +1,36 @@
+2026-10-17 01:59:12 · load { 28.52 27.72 26.12 }
+W-B · every multi-line one-of-N site composes the choice card (D4-B)
+  target fc-src (flavor src) · Playwright WebKit 26.5 · harness H4 a26206b6a740
+  load 28.52 / 27.72 / 26.12 at start, 27.67 / 27.55 / 26.10 at end · other headless browser processes at start: 13 (waited 0.4 s) · browser lock waited 0 s
+  FAIL       exports · RED by absence: no ChoiceGroup/ChoiceCard in the bundle (exports seen: [none])
+  FAIL       preset · 0 multi-line items · slots [] · roles [] (Playwright aria snapshot + DOM states) · used corner  · tab stops 1
+  PASS       preset arrows grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       preset arrows grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       preset arrows grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       preset arrows grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  preset arrows grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 3 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  preset arrows grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 3 · moved true · checked true (started by focus + Space: PF-1)
+  FAIL       specimen · 8 multi-line items · slots [toggle-group-item] · roles [radio] (Playwright aria snapshot + DOM states) · used corner 18.00 · tab stops 1
+  PASS       specimen arrows grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       specimen arrows grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       specimen arrows grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true (started by focus + Space: PF-1)
+  PASS       specimen arrows grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  specimen arrows grid edge ArrowDown from #6 (no item that way; reported) · focus 6 → 7 · moved true · checked true (started by focus + Space: PF-1)
+  info-pass  specimen arrows grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 7 · moved true · checked true (started by focus + Space: PF-1)
+  FAIL       strip · 6 multi-line items · slots [] · roles [button] (Playwright aria snapshot + DOM states) · used corner 22.00 · tab stops 6
+  FAIL       strip arrows row ArrowRight from #0 · focus 0 → 0 · moved false · checked true (started by focus + Space: PF-1)
+  FAIL       strip arrows row ArrowLeft from #1 · focus 1 → 1 · moved false · checked true (started by focus + Space: PF-1)
+  FAIL       strip arrows row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true (started by focus + Space: PF-1)
+  FAIL       strip arrows row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 5 · moved false · checked true (started by focus + Space: PF-1)
+  FAIL       contract T-3 preset light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.21:1; p95 1.22; items 1/0 204×40
+  FAIL       contract T-3 preset dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.20:1; p95 1.27; items 1/0 204×40
+  FAIL       contract T-3 preset prt (forced level-0 path) · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.00:1; p95 1.00; items 1/0 204×40
+  FAIL       contract T-3 specimen light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.21:1; p95 1.22; items 1/0 207×36
+  FAIL       contract T-3 specimen dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.20:1; p95 1.26; items 1/0 207×36
+  FAIL       contract T-3 specimen prt (forced level-0 path) · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.00:1; p95 1.01; items 1/0 207×36
+  FAIL       contract T-3 strip light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 88.00 px²; fill 1.49:1; p95 1.49; items 1/0 44×44
+  PASS       contract T-3 strip dark · carrier ≥3:1 area 847.00 px² (perimeter band 1.25, interior 845.75) vs the bar 88.00 px²; fill 3.21:1; p95 3.53; items 1/0 44×44
+  FAIL       contract T-3 strip prt (forced level-0 path) · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 88.00 px²; fill 1.13:1; p95 1.13; items 1/0 44×44
+W-B FAIL · 9/25 gating cells pass [library 9/25]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p4/D4-F-crit/out/runs/fc-src/W-B-webkit.json
+exit 1 · 2026-10-17 01:59:40 · load { 27.67 27.55 26.10 }
