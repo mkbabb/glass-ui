@@ -1,0 +1,9 @@
+# 2026-10-18 00:58:10 load { 16.56 15.49 13.47 }
+C-E3 scroll probe veil · webkit · load 16.6/15.5/13.5 at start
+  PASS       scroll scrollBy light · scrolled to 120 px in 4 steps, A promoted true · largest gap from its own footprint: sync 30.0 · raf1 0.0 · post1 0.0 · raf2 0.0 · post2 0.0 px (bound: post1 and post2 <= 1; raf1 is before the frame's layout) · per step 30.0/0.0/0.0/0.0/0.0 ; 30.0/0.0/0.0/0.0/0.0 ; 30.0/0.0/0.0/0.0/0.0 ; 30.0/0.0/0.0/0.0/0.0 · load 16.5/15.5/13.5
+  PASS       scroll wheel light · scrolled to 120 px in 4 steps, A promoted true · largest gap from its own footprint: sync 0.0 · raf1 0.0 · post1 0.0 · raf2 0.0 · post2 0.0 px (bound: post1 and post2 <= 1; raf1 is before the frame's layout) · per step -/0.0/0.0/0.0/0.0 ; -/0.0/0.0/0.0/0.0 ; -/0.0/0.0/0.0/0.0 ; -/0.0/0.0/0.0/0.0 · load 16.5/15.5/13.5
+  REPORT     wheel over promoted control · a 30 px wheel with the pointer on the engaged control: box +0, page +30 · with the pointer in the box off the control: box +30, page +0 · load 16.5/15.5/13.5
+  REPORT     footprint clipped · box scrollTop 356, footprint y [14.7, 34.7] against box [170.7, 234.7] · control promoted true, visibility visible, centre y 24.7, elementFromPoint(centre) is the control true, position-visibility anchors-visible · load 16.5/15.5/13.5
+  REPORT     nested scroller · engaged in the box: promoted true, centre y 200.7 in box [170.7, 234.7] true · after a 6 x 30 px wheel inside the box: scrollTop 180 → 210, footprint y [160.7, 180.7], promoted true, visibility visible, centre y 170.7, inside the box's clip true, gap from footprint 0 px, elementFromPoint(centre) is the control true · position-visibility anchors-visible · load 16.5/15.5/13.5
+ce3-scroll veil webkit · 5 pass, 0 fail · load 16.5/15.5/13.5 at end
+# exit 0

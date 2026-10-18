@@ -1,0 +1,18 @@
+# ce3-probe noveil chromium start 2026-10-18 00:08:53 load { 12.16 9.14 9.15 }
+C-E3 probe noveil · chromium · load 14.6/10.0/9.5 at start
+  PASS       modal veil · open Dialog +900 ms: 1 overlay veil(s) parent data-state open, visibility visible, opacity 1.00, backdrop-filter blur(20px) saturate(1.5) · load 14.6/10.0/9.5
+  PASS       modal veil PRM · open Dialog +900 ms: 1 overlay veil(s) parent data-state open, visibility visible, opacity 1.00, backdrop-filter blur(20px) saturate(1.5) · load 14.0/10.0/9.5
+  PASS       A-B-A rapid 50 ms · frames 133 · A move 0.0 px gap 0.0 px · B move 0.0 px gap 0.0 px (bounds move <= 4 per 16.7 ms, gap <= 1) · at end: footprints 1, engaged A true B false, promoted A true B false, veil {"open":true,"vis":"hidden","op":0,"eng":false} · load 14.0/10.0/9.5
+  PASS       A-B-A rapid 120 ms · frames 133 · A move 0.0 px gap 0.0 px · B move 0.0 px gap 0.0 px (bounds move <= 4 per 16.7 ms, gap <= 1) · at end: footprints 1, engaged A true B false, promoted A true B false, veil {"open":true,"vis":"hidden","op":0,"eng":false} · load 14.0/10.0/9.5
+  FAIL       scroll pin · A keyboard-engaged, scrolled to 120 px: promoted 85/85 frames, largest gap from its own footprint 30.0 px (bound <= 1) · load 14.8/10.2/9.5
+  PASS       cycle leak · 12 cycles then focus away +1.5 s: footprints 0, promoted 0, inline position-anchor left [], engaged false,false, veil {"open":false,"vis":"hidden","op":0,"eng":false} · console errors 0 · load 14.8/10.2/9.5
+  FAIL       consumer anchor restored · consumer inline position-anchor --consumer-own · while engaged "--engage-footprint-chdk0g-1" · after release +1.2 s "(removed)" (E-M1: "overwritten while it is engaged") · load 14.3/10.2/9.5
+  PASS       scrub bad pitch · --scrub-pitch: nonsense, 60 px scrub: console errors naming it 1 (want 1), value 50 → 50, promoted true, engaged true · load 14.3/10.2/9.5
+  REPORT     right-button press · secondary press on A's thumb +450 ms: promoted 1, engaged true,false, veil {"open":true,"vis":"visible","op":1,"eng":true} · after release +900 ms: promoted 0, veil {"open":false,"vis":"hidden","op":0,"eng":false} · load 14.3/10.2/9.5
+  PASS       CK-16 Skeleton rest · animations skeleton-breathe-49828e60 [opacity] running · compositor-only true · layouts 0.0/s, style recalcs 0.0/s over 2 s · load 15.0/10.4/9.6
+  FAIL       CK-16 Skeleton off-screen · 3000 px below the viewport (off-screen true): skeleton-breathe-49828e60 running, currentTime +1016 ms over 1 s · layouts 0.0/s · load 15.0/10.4/9.6
+  PASS       CK-16 StatusDot rest · animations feedback-mark-pulse-16c3eaa5::after [opacity,scale] running · compositor-only true · layouts 0.0/s, style recalcs 120.5/s over 2 s · load 15.5/10.6/9.7
+  FAIL       CK-16 StatusDot off-screen · 3000 px below the viewport (off-screen true): feedback-mark-pulse-16c3eaa5::after running, currentTime +1008 ms over 1 s · layouts 0.0/s · load 15.5/10.6/9.7
+ce3-probe noveil chromium · 8 pass, 4 fail, 1 other · load 15.5/10.6/9.7 at end
+# exit 1
+# probe end 2026-10-18 00:09:48 load { 16.39 10.82 9.78 }

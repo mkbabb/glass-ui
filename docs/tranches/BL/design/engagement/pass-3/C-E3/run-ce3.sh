@@ -41,6 +41,10 @@ for s in "$@"; do
       plant probe-p-vis $FV 's{opacity: 0;\n        visibility: hidden;}{opacity: 0;\n        visibility: visible; /* ce3 plant */}' 'ce3 plant' --app $E3/probe/App.vue
       veilarm true
       print -- "worktree vs HEAD: $(cd $WT && git diff --shortstat HEAD)" ;;
+    builds2)
+      # CK-04 plant 2: a modifier alone engages
+      plant p-mod $UE 's/\} else if \(keys\.has\(k\)\) keyed\.value = true;/} else if (keys.has(k) || ["Shift", "Meta", "Control", "Alt"].includes(k)) keyed.value = true;/' '["Shift", "Meta", "Control", "Alt"].includes(k)'
+      print -- "worktree vs HEAD (builds2): $(cd $WT && git diff --shortstat HEAD)" ;;
     bat-*)
       parts=(${(s:-:)s#bat-}); l=$parts[1]; eng=$parts[2]
       [[ $l == p ]] && { l=$parts[1]-$parts[2]; eng=$parts[3]; }

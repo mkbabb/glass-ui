@@ -1,0 +1,7 @@
+# 2026-10-18 00:25:59 load { 7.11 9.35 10.21 }
+C-E3 scroll probe veil · chromium · load 6.8/7.8/9.3 at start
+  FAIL       scroll scrollBy light · scrolled to 120 px in 4 steps, A promoted true · largest gap from its own footprint: sync 30.0 · raf1 30.0 · post1 30.0 · raf2 30.0 · post2 0.0 px (bound: post1 and post2 <= 1; raf1 is before the frame's layout) · per step 30.0/0.0/0.0/30.0/0.0 ; 30.0/30.0/0.0/0.0/0.0 ; 30.0/0.0/30.0/30.0/0.0 ; 30.0/30.0/0.0/0.0/0.0 · load 6.8/7.8/9.3
+  PASS       scroll wheel light · scrolled to 120 px in 4 steps, A promoted true · largest gap from its own footprint: sync 0.0 · raf1 0.0 · post1 0.0 · raf2 0.0 · post2 0.0 px (bound: post1 and post2 <= 1; raf1 is before the frame's layout) · per step -/0.0/0.0/0.0/0.0 ; -/0.0/0.0/0.0/0.0 ; -/0.0/0.0/0.0/0.0 ; -/0.0/0.0/0.0/0.0 · load 7.4/8.0/9.3
+  REPORT     nested scroller · engaged in the box: promoted true, centre y 200.7 in box [170.7, 234.7] true · after a 6 x 30 px wheel inside the box: scrollTop 180 → 210, footprint y [160.7, 180.7], promoted true, visibility visible, centre y 170.7, inside the box's clip false, gap from footprint 0 px, elementFromPoint(centre) is the control true · position-visibility anchors-visible · load 7.4/8.0/9.3
+ce3-scroll veil chromium · 2 pass, 1 fail · load 7.4/8.0/9.3 at end
+# exit 1

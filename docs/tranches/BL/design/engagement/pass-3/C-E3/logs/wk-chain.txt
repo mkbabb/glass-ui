@@ -1,2 +1,45 @@
-# queue wk-ce3 a 2026-10-17 22:08:14 load { 14.97 13.34 9.54 }
+# queue wk-ce3 a 2026-10-17 23:44:05 load { 11.19 13.26 13.09 }
 [guarded] waiting for the 'webkit' lock
+# wk-ce3 a admitted 2026-10-18 00:01:55 load { 6.77 8.69 9.46 }
+# builds ready 2026-10-18 00:01:55
+bat-veil-webkit-E-3,E-10,E-11 E-3: E-3 webkit   exit 0 · E-3 webkit PASS · 22 pass, 0 fail, 0 unmeasured of 22 gating cells (0 reported) · load 7.5/8.7/9.5 at start, 6.7/8.4/9.3 at end · 47 s, load at start 7.5/8.7/9.5
+bat-veil-webkit-E-3,E-10,E-11 E-10: E-10 webkit   exit 0 · E-10 webkit PASS · 5 pass, 0 fail, 0 unmeasured of 5 gating cells (1 reported) · load 6.7/8.3/9.2 at start, 7.6/8.4/9.3 at end · 36 s, load at start 6.7/8.3/9.2
+bat-veil-webkit-E-3,E-10,E-11 E-11: E-11 webkit   exit 0 · E-11 webkit PASS · 3 pass, 0 fail, 1 unmeasured of 4 gating cells (0 reported) · load 7.6/8.4/9.3 at start, 7.7/8.4/9.2 at end · 19 s, load at start 7.6/8.4/9.3
+bat-noveil-webkit-E-3,E-10,E-11 E-3: E-3 webkit   exit 0 · E-3 webkit PASS · 22 pass, 0 fail, 0 unmeasured of 22 gating cells (0 reported) · load 7.7/8.4/9.2 at start, 6.9/8.1/9.1 at end · 29 s, load at start 7.7/8.4/9.2
+bat-noveil-webkit-E-3,E-10,E-11 E-10: E-10 webkit   exit 0 · E-10 webkit PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (2 reported) · load 6.4/7.9/9.0 at start, 6.4/7.8/9.0 at end · 36 s, load at start 6.4/7.9/9.0
+bat-noveil-webkit-E-3,E-10,E-11 E-11: E-11 webkit   exit 0 · E-11 webkit PASS · 3 pass, 0 fail, 1 unmeasured of 4 gating cells (0 reported) · load 5.9/7.5/8.8 at start, 6.7/7.6/8.8 at end · 58 s, load at start 5.9/7.5/8.8
+bat-p-anchor-webkit-E-10 E-10: E-10 webkit   exit 1 · E-10 webkit FAIL · 3 pass, 2 fail, 0 unmeasured of 5 gating cells (1 reported) · load 6.5/7.4/8.7 at start, 10.6/8.2/8.9 at end · 52 s, load at start 6.5/7.4/8.7
+bat-p-char-webkit-E-3 E-3: E-3 webkit   exit 1 · E-3 webkit FAIL · 20 pass, 2 fail, 0 unmeasured of 22 gating cells (0 reported) · load 9.1/8.0/8.9 at start, 7.1/7.7/8.7 at end · 54 s, load at start 9.1/8.0/8.9
+bat-p-script-webkit-E-3 E-3: E-3 webkit   exit 1 · E-3 webkit FAIL · 20 pass, 2 fail, 0 unmeasured of 22 gating cells (0 reported) · load 7.6/7.7/8.7 at start, 11.3/8.7/9.0 at end · 54 s, load at start 7.6/7.7/8.7
+bat-p-tabhand-webkit-E-3 E-3: E-3 webkit   exit 1 · E-3 webkit FAIL · 20 pass, 2 fail, 0 unmeasured of 22 gating cells (0 reported) · load 11.0/8.9/9.1 at start, 14.6/10.0/9.5 at end · 55 s, load at start 11.0/8.9/9.1
+bat-p-mod-webkit-E-3 E-3: E-3 webkit   exit 1 · E-3 webkit FAIL · 18 pass, 4 fail, 0 unmeasured of 22 gating cells (0 reported) · load 15.5/10.6/9.7 at start, 17.9/11.6/10.1 at end · 55 s, load at start 15.5/10.6/9.7
+probe-veil-webkit: e3-probe veil webkit · 17 pass, 0 fail, 1 other · load 19.5/12.7/10.5 at end
+probe-noveil-webkit: e3-probe noveil webkit · 17 pass, 0 fail, 1 other · load 19.9/13.4/10.9 at end
+probe-p-scrubveil-webkit: e3-probe veil webkit · 16 pass, 1 fail, 1 other · load 17.4/14.3/11.4 at end
+probe-p-vis-webkit: e3-probe noveil webkit · 15 pass, 2 fail, 1 other · load 7.4/10.6/10.5 at end
+ce3-veil-webkit: ce3-probe veil webkit · 7 pass, 3 fail, 3 other · load 9.9/10.3/10.3 at end
+ce3-noveil-webkit: ce3-probe noveil webkit · 7 pass, 3 fail, 3 other · load 18.0/12.7/11.2 at end
+bat-veil-webkit-E-1,E-2,E-4,E-5,E-6,E-7,E-8,E-9 E-1: E-1 webkit   exit 1 · E-1 webkit FAIL · 92 pass, 4 fail, 0 unmeasured of 96 gating cells (0 reported) · load 17.4/12.8/11.3 at start, 15.4/12.8/11.4 at end · 51 s, load at start 17.4/12.8/11.3
+bat-veil-webkit-E-1,E-2,E-4,E-5,E-6,E-7,E-8,E-9 E-2: E-2 webkit   exit 1 · E-2 webkit FAIL · 143 pass, 21 fail, 0 unmeasured of 164 gating cells (16 reported) · load 15.1/12.8/11.4 at start, 8.6/10.6/10.7 at end · 217 s, load at start 15.1/12.8/11.4
+bat-veil-webkit-E-1,E-2,E-4,E-5,E-6,E-7,E-8,E-9 E-4: E-4 webkit   exit 0 · E-4 webkit PASS · 11 pass, 0 fail, 8 unmeasured of 19 gating cells (0 reported) · load 6.8/9.9/10.5 at start, 8.2/9.7/10.4 at end · 97 s, load at start 6.8/9.9/10.5
+bat-veil-webkit-E-1,E-2,E-4,E-5,E-6,E-7,E-8,E-9 E-5: E-5 webkit   exit 0 · E-5 webkit PASS · 56 pass, 0 fail, 0 unmeasured of 56 gating cells (0 reported) · load 8.1/9.7/10.4 at start, 8.0/9.2/10.1 at end · 127 s, load at start 8.1/9.7/10.4
+bat-veil-webkit-E-1,E-2,E-4,E-5,E-6,E-7,E-8,E-9 E-6: E-6 webkit   exit 1 · E-6 webkit FAIL · 2 pass, 2 fail, 8 unmeasured of 12 gating cells (2 reported) · load 7.5/8.8/9.8 at start, 7.2/8.7/9.8 at end · 62 s, load at start 7.5/8.8/9.8
+bat-veil-webkit-E-1,E-2,E-4,E-5,E-6,E-7,E-8,E-9 E-7: E-7 webkit   exit 1 · E-7 webkit FAIL · 6 pass, 1 fail, 0 unmeasured of 7 gating cells (0 reported) · load 6.4/7.8/9.3 at start, 6.8/7.8/9.3 at end · 136 s, load at start 6.4/7.8/9.3
+bat-veil-webkit-E-1,E-2,E-4,E-5,E-6,E-7,E-8,E-9 E-8: E-8 webkit   exit 0 · E-8 webkit PASS · 19 pass, 0 fail, 0 unmeasured of 19 gating cells (0 reported) · load 7.4/8.0/9.3 at start, 7.8/8.0/9.3 at end · 46 s, load at start 7.4/8.0/9.3
+bat-veil-webkit-E-1,E-2,E-4,E-5,E-6,E-7,E-8,E-9 E-9: E-9 webkit   exit 1 · E-9 webkit FAIL · 72 pass, 6 fail, 0 unmeasured of 78 gating cells (2 reported) · load 7.5/7.8/9.0 at start, 8.6/8.0/9.0 at end · 200 s, load at start 7.5/7.8/9.0
+# run-ce3 bat-veil-webkit-E-3,E-10,E-11 bat-noveil-webkit-E-3,E-10,E-11 bat-p-anchor-webkit-E-10 bat-p-char-webkit-E-3 bat-p-script-webkit-E-3 bat-p-tabhand-webkit-E-3 bat-p-mod-webkit-E-3 probe-veil-webkit probe-noveil-webkit probe-p-scrubveil-webkit probe-p-vis-webkit ce3-veil-webkit ce3-noveil-webkit bat-veil-webkit-E-1,E-2,E-4,E-5,E-6,E-7,E-8,E-9 done 2026-10-18 00:35:01
+# wk-ce3 a done 2026-10-18 00:35:01 load { 8.62 8.04 9.00 }
+# wk part a exit 0 2026-10-18 00:35:05
+# queue wk-ce3 b 2026-10-18 00:35:05 load { 8.89 8.10 9.02 }
+[guarded] waiting for the 'webkit' lock
+# wk-ce3 b admitted 2026-10-18 00:52:06 load { 13.86 14.96 12.01 }
+# builds ready 2026-10-18 00:52:06
+cap-veil-webkit: CAP webkit PASS · 12 pass, 0 fail, 0 unmeasured of 12 gating cells (24 reported) · load 13.9/15.0/12.0 at start, 18.0/17.4/13.6 at end
+cap-noveil-webkit: CAP webkit PASS · 12 pass, 0 fail, 0 unmeasured of 12 gating cells (24 reported) · load 18.0/17.4/13.6 at start, 11.7/14.6/13.1 at end
+probe-veil-webkit-shots: e3-probe veil webkit · 15 pass, 2 fail, 1 other · load 16.6/15.5/13.5 at end
+# run-ce3 cap-veil-webkit cap-noveil-webkit probe-veil-webkit-shots done 2026-10-18 00:58:10
+ce3-scroll veil webkit: ce3-scroll veil webkit · 5 pass, 0 fail · load 16.5/15.5/13.5 at end
+ce3-scroll noveil webkit: ce3-scroll noveil webkit · 5 pass, 0 fail · load 24.7/17.3/14.2 at end
+rbutton webkit: ce3-rbutton veil webkit · 3 of 3 stuck · load 25.4/17.9/14.4 at end
+# wk-ce3 b done 2026-10-18 00:58:43 load { 23.92 17.74 14.38 }
+# wk part b exit 0 2026-10-18 00:58:47

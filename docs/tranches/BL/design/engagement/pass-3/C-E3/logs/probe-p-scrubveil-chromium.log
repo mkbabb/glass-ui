@@ -1,0 +1,24 @@
+# e3-probe p-scrubveil chromium start 2026-10-18 00:06:26 load { 6.75 7.44 8.68 }
+P-E3 probe veil · chromium · arm veil · load 10.6/8.2/8.9 at start
+  PASS       handoff pin fwd (Tab A → B) · frames 85, both promoted in 16 · outgoing A: promoted 20 frames, largest gap from its own footprint 0.0 px, largest one-frame move 1.4 px · incoming B: promoted 81 frames, gap 0.0 px, move 0.8 px (bounds gap ≤ 1, move ≤ 4 per 16.7 ms) · pins --engage-footprint-6guo4q-1=--engage-footprint-6guo4q-1, --engage-footprint-6guo4q-2=--engage-footprint-6guo4q-2 · load 10.2/8.2/8.9
+  PASS       handoff pin rev (Shift+Tab B → A) · frames 85, both promoted in 16 · outgoing B: promoted 20 frames, largest gap from its own footprint 0.0 px, largest one-frame move 1.2 px · incoming A: promoted 81 frames, gap 0.0 px, move 0.8 px (bounds gap ≤ 1, move ≤ 4 per 16.7 ms) · pins --engage-footprint-lu9kfe-1=--engage-footprint-lu9kfe-1, --engage-footprint-lu9kfe-2=--engage-footprint-lu9kfe-2 · load 10.2/8.2/8.9
+  PASS       hand over keys (Tab A, press B) · frames 84, both promoted in 17 · outgoing A: promoted 23 frames, largest gap from its own footprint 0.0 px, largest one-frame move 1.3 px · incoming B: promoted 78 frames, gap 0.0 px, move 0.9 px (bounds gap ≤ 1, move ≤ 4 per 16.7 ms) · pins --engage-footprint-5egro4-1=--engage-footprint-5egro4-1, --engage-footprint-5egro4-2=--engage-footprint-5egro4-2 · load 10.2/8.2/8.9
+  PASS       consumer anchor (Tab A → B, consumer anchors named --engage-footprint, --engage-footprint-1) · frames 85, both promoted in 16 · outgoing A: promoted 20 frames, largest gap from its own footprint 0.0 px, largest one-frame move 1.3 px · incoming B: promoted 81 frames, gap 0.0 px, move 0.8 px (bounds gap ≤ 1, move ≤ 4 per 16.7 ms) · pins --engage-footprint-j44xrt-1=--engage-footprint-j44xrt-1, --engage-footprint-j44xrt-2=--engage-footprint-j44xrt-2 · load 9.6/8.1/8.9
+  PASS       numfield click · 4 px of travel: popover false, engaged false, value 50 (50), focus on the field true, footprints 0 · load 9.6/8.1/8.9
+  FAIL       numfield scrub · 60 px of travel: popover true, engaged true, scale ×1.060, value 50 → 57 (7 steps; pitch 8.49 px from --scrub-pitch, trunc(60/pitch) = 7; the slop would give 7) · veil: data-engaged true, opacity 1.00, visibility visible (no veil wanted) · console errors 0 · load 9.1/8.0/8.9
+  PASS       numfield value kept · fling: 64 at release → 64; still: 64 → 64; off the stage true, footprints 0 · load 9.1/8.0/8.9
+  PASS       numfield carry · leading edge past its rest, page frame: fling 11.91 px, still 6.60 px, differential 5.31 px (bound ≥ 4); largest one-frame move on release 0.9 px · load 9.1/8.0/8.9
+  PASS       numfield PRM · under reduce, scrubbing: scale ×1.000, promoted true, light leg [field child3 shadow, input box-shadow, input outline-style, input outline-color, input backdrop-filter] (≥ 1 paint property), value 50 → 57 · load 9.1/8.0/8.9
+  PASS       numfield step drift · a press on the increment button drifting 60 px: held false, promoted false, value 50 → 51 (the button's own press: 50 or 51; a scrub would step ≥ 6) · load 9.1/8.0/8.9
+  PASS       numfield coarse · (hover:none) true (pointer:coarse) true · touch drag 60 px on the input: held true, promoted true, scale ×1.060, value 50 → 57 (want 7 steps at pitch 8.49 px; after release 57); input touch-action pan-y · load 9.1/8.0/8.9
+  PASS       between landing · a keyed insert before the held slider: footprint re-seated true (before it: inserted); release, largest one-frame move 1.2 px (without the insert 1.4 px; bound ≤ that + 1 px); during the hold, largest one-frame move 3.2 px · load 8.9/8.0/8.8
+  PASS       dialog escape · 1 Tab(s) to the thumb: engaged true; first Escape: engaged false, Dialog open true; second Escape: Dialog open false · load 8.9/8.0/8.8
+  PASS       keyfocus · "k" focuses the thumb by script: focus slider, engaged false, promoted false, scale ×1.000 · load 9.1/8.0/8.9
+  PASS       keyfocus then acting key · ArrowRight after it engages (the control acts on it): true · load 9.1/8.0/8.9
+  PASS       keyboard veil · arm veil · Tab into A: veil popover open true, data-engaged true, visibility visible, opacity 1.00, backdrop-filter blur(20px) saturate(1.5) (want engaged, visible) · load 9.1/8.0/8.9
+  PASS       veil after release · Escape, +900 ms: open false, data-engaged false, visibility hidden, opacity 0.00 · load 9.1/8.0/8.9
+  PASS       forced-colors held · media applied true · pointer-held A: promoted true ×1.060, background rgba(255, 255, 255, 0) · veil display none (the arm: removed) · load 9.1/8.0/8.9
+  PASS       reduced-transparency held · media applied true · pointer-held A: promoted true ×1.060, background rgba(0, 0, 0, 0) · veil display none (the arm: removed) · load 9.1/8.0/8.9
+e3-probe veil chromium · 18 pass, 1 fail, 0 other · load 9.1/8.0/8.9 at end
+# exit 1
+# probe end 2026-10-18 00:07:04 load { 9.05 8.06 8.85 }
