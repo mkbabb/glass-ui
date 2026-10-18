@@ -1,0 +1,13 @@
+2026-10-18 01:42:21 · load { 13.15 19.96 23.09 }
+REPORT · H4-6, H5-5, H5-6, reported: the commit on wide tiles against a 4 px gap; the selection mark over light media; the selected K2 name's ink; on a route build only
+  target f-src (flavor src) · Chromium 149.0.7827.55 · harness H5 bfe1b6beddb0
+  load 13.15 / 19.96 / 23.09 at start, 12.75 / 19.65 / 22.94 at end · other headless browser processes at start: 9 (waited 0.2 s) · browser lock waited 0 s
+  FAIL       kick · preset-migrated forced to two 300 px columns at a 4 px gap · item 1 300.00×66.58, rest gap 4.00 px · programmatic commit (checked true), 96 frames · peak scale 1.0278 · deepest push into a neighbour 0.17 px (want ≤ 0.05)
+  info-pass  kick · preset-migrated at the scene's own geometry · item 1 204.00×66.58, rest gap 8.00 px · peak scale 1.0278 · deepest push 0.00 px
+  PASS       mark · v2-migrated dark · the mark #dedbd7 over #292825 beneath it, 368 device px · 10.70:1 (want ≥ 3:1)
+  info-pass  mark · v2-migrated light · the mark #272421 over #e7f1d2 beneath it, 942 device px · 13.12:1 (want ≥ 3:1)
+  FAIL       name-ink · specimen-migrated light · the selected name rgb(112, 89, 66) is NOT its item's ink oklch(0.216114 0.00613456 55.9893) (sRGB 28, 25, 23; --selection-ink oklch(from light-dark(#1c1917, #e9e6e2) min(l, 0.42) c h / 1)) · unselected name rgb(112, 89, 66), item rgb(112, 89, 66) · the name's ink selected against unselected 1.00:1
+  FAIL       name-ink · specimen-migrated dark · the selected name rgb(195, 185, 172) is NOT its item's ink oklch(0.926146 0.00632027 75.0765) (sRGB 233, 230, 226; --selection-ink oklch(from #e9e6e2 max(l, 0.8) c h / 1)) · unselected name rgb(195, 185, 172), item rgb(195, 185, 172) · the name's ink selected against unselected 1.00:1
+REPORT FAIL · 1/4 gating cells pass [library 1/4]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p5/D4-F-crit/out/runs/f-src/REPORT-chromium.json
+exit 1 · 2026-10-18 01:42:29 · load { 12.75 19.65 22.94 }

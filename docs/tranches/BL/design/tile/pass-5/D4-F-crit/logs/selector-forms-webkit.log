@@ -1,0 +1,88 @@
+2026-10-18 02:29:51 · load { 19.29 19.50 18.05 }
+# selector-forms · webkit 26.5 · load 19.29 · 2026-10-18T06:29:51.818Z
+PASS webkit desc direct · got {"g":"flush"} want {"g":"flush"}
+PASS webkit desc k2wrap · got {"g":"flush"} want {"g":"flush"}
+PASS webkit desc v1wrap · got {"g":"flush"} want {"g":"flush"}
+PASS webkit desc contents · got {"g":"flush"} want {"g":"flush"}
+PASS webkit desc none · got {"g":"none"} want {"g":"none"}
+FAIL webkit desc tileInPill · got {"outer":"flush","inner":"flush"} want {"outer":"none","inner":"flush"}
+FAIL webkit desc tileInPillDirect · got {"outer":"flush","inner":"flush"} want {"outer":"none","inner":"flush"}
+PASS webkit desc pillInTile · got {"outer":"flush","inner":"none"} want {"outer":"flush","inner":"none"}
+PASS webkit desc bothTiles · got {"outer":"flush","inner":"flush"} want {"outer":"flush","inner":"flush"}
+PASS webkit desc deepWrap · got {"g":"flush"} want {"g":"flush"}
+FAIL webkit desc nest3 · got {"a":"flush","b":"flush","c":"flush"} want {"a":"none","b":"none","c":"flush"}
+PASS webkit desc rowInContent · got {"g":"none"} want {"g":"none"}
+PASS webkit desc dynamic-k2wrap · none → flush → none (want none → flush → none)
+== webkit desc: 10/13
+PASS webkit child direct · got {"g":"flush"} want {"g":"flush"}
+FAIL webkit child k2wrap · got {"g":"none"} want {"g":"flush"}
+FAIL webkit child v1wrap · got {"g":"none"} want {"g":"flush"}
+FAIL webkit child contents · got {"g":"none"} want {"g":"flush"}
+PASS webkit child none · got {"g":"none"} want {"g":"none"}
+PASS webkit child tileInPill · got {"outer":"none","inner":"flush"} want {"outer":"none","inner":"flush"}
+PASS webkit child tileInPillDirect · got {"outer":"none","inner":"flush"} want {"outer":"none","inner":"flush"}
+PASS webkit child pillInTile · got {"outer":"flush","inner":"none"} want {"outer":"flush","inner":"none"}
+FAIL webkit child bothTiles · got {"outer":"none","inner":"flush"} want {"outer":"flush","inner":"flush"}
+FAIL webkit child deepWrap · got {"g":"none"} want {"g":"flush"}
+PASS webkit child nest3 · got {"a":"none","b":"none","c":"flush"} want {"a":"none","b":"none","c":"flush"}
+PASS webkit child rowInContent · got {"g":"none"} want {"g":"none"}
+FAIL webkit child dynamic-k2wrap · none → none → none (want none → flush → none)
+== webkit child: 7/13
+PASS webkit scope direct · got {"g":"flush"} want {"g":"flush"}
+PASS webkit scope k2wrap · got {"g":"flush"} want {"g":"flush"}
+PASS webkit scope v1wrap · got {"g":"flush"} want {"g":"flush"}
+PASS webkit scope contents · got {"g":"flush"} want {"g":"flush"}
+PASS webkit scope none · got {"g":"none"} want {"g":"none"}
+FAIL webkit scope tileInPill · got {"outer":"flush","inner":"flush"} want {"outer":"none","inner":"flush"}
+FAIL webkit scope tileInPillDirect · got {"outer":"flush","inner":"flush"} want {"outer":"none","inner":"flush"}
+PASS webkit scope pillInTile · got {"outer":"flush","inner":"none"} want {"outer":"flush","inner":"none"}
+PASS webkit scope bothTiles · got {"outer":"flush","inner":"flush"} want {"outer":"flush","inner":"flush"}
+PASS webkit scope deepWrap · got {"g":"flush"} want {"g":"flush"}
+FAIL webkit scope nest3 · got {"a":"flush","b":"flush","c":"flush"} want {"a":"none","b":"none","c":"flush"}
+PASS webkit scope rowInContent · got {"g":"none"} want {"g":"none"}
+PASS webkit scope dynamic-k2wrap · none → flush → none (want none → flush → none)
+== webkit scope: 10/13
+PASS webkit notnested direct · got {"g":"flush"} want {"g":"flush"}
+PASS webkit notnested k2wrap · got {"g":"flush"} want {"g":"flush"}
+PASS webkit notnested v1wrap · got {"g":"flush"} want {"g":"flush"}
+PASS webkit notnested contents · got {"g":"flush"} want {"g":"flush"}
+PASS webkit notnested none · got {"g":"none"} want {"g":"none"}
+PASS webkit notnested tileInPill · got {"outer":"none","inner":"flush"} want {"outer":"none","inner":"flush"}
+PASS webkit notnested tileInPillDirect · got {"outer":"none","inner":"flush"} want {"outer":"none","inner":"flush"}
+PASS webkit notnested pillInTile · got {"outer":"flush","inner":"none"} want {"outer":"flush","inner":"none"}
+FAIL webkit notnested bothTiles · got {"outer":"none","inner":"flush"} want {"outer":"flush","inner":"flush"}
+PASS webkit notnested deepWrap · got {"g":"flush"} want {"g":"flush"}
+PASS webkit notnested nest3 · got {"a":"none","b":"none","c":"flush"} want {"a":"none","b":"none","c":"flush"}
+PASS webkit notnested rowInContent · got {"g":"none"} want {"g":"none"}
+PASS webkit notnested dynamic-k2wrap · none → flush → none (want none → flush → none)
+== webkit notnested: 12/13
+PASS webkit depth2 direct · got {"g":"flush"} want {"g":"flush"}
+PASS webkit depth2 k2wrap · got {"g":"flush"} want {"g":"flush"}
+PASS webkit depth2 v1wrap · got {"g":"flush"} want {"g":"flush"}
+PASS webkit depth2 contents · got {"g":"flush"} want {"g":"flush"}
+PASS webkit depth2 none · got {"g":"none"} want {"g":"none"}
+PASS webkit depth2 tileInPill · got {"outer":"none","inner":"flush"} want {"outer":"none","inner":"flush"}
+PASS webkit depth2 tileInPillDirect · got {"outer":"none","inner":"flush"} want {"outer":"none","inner":"flush"}
+PASS webkit depth2 pillInTile · got {"outer":"flush","inner":"none"} want {"outer":"flush","inner":"none"}
+PASS webkit depth2 bothTiles · got {"outer":"flush","inner":"flush"} want {"outer":"flush","inner":"flush"}
+PASS webkit depth2 deepWrap · got {"g":"flush"} want {"g":"flush"}
+FAIL webkit depth2 nest3 · got {"a":"none","b":"none","c":"none"} want {"a":"none","b":"none","c":"flush"}
+PASS webkit depth2 rowInContent · got {"g":"none"} want {"g":"none"}
+PASS webkit depth2 dynamic-k2wrap · none → flush → none (want none → flush → none)
+== webkit depth2: 12/13
+PASS webkit chain3 direct · got {"g":"flush"} want {"g":"flush"}
+PASS webkit chain3 k2wrap · got {"g":"flush"} want {"g":"flush"}
+PASS webkit chain3 v1wrap · got {"g":"flush"} want {"g":"flush"}
+PASS webkit chain3 contents · got {"g":"flush"} want {"g":"flush"}
+PASS webkit chain3 none · got {"g":"none"} want {"g":"none"}
+PASS webkit chain3 tileInPill · got {"outer":"none","inner":"flush"} want {"outer":"none","inner":"flush"}
+PASS webkit chain3 tileInPillDirect · got {"outer":"none","inner":"flush"} want {"outer":"none","inner":"flush"}
+PASS webkit chain3 pillInTile · got {"outer":"flush","inner":"none"} want {"outer":"flush","inner":"none"}
+PASS webkit chain3 bothTiles · got {"outer":"flush","inner":"flush"} want {"outer":"flush","inner":"flush"}
+FAIL webkit chain3 deepWrap · got {"g":"none"} want {"g":"flush"}
+PASS webkit chain3 nest3 · got {"a":"none","b":"none","c":"flush"} want {"a":"none","b":"none","c":"flush"}
+PASS webkit chain3 rowInContent · got {"g":"none"} want {"g":"none"}
+PASS webkit chain3 dynamic-k2wrap · none → flush → none (want none → flush → none)
+== webkit chain3: 12/13
+# webkit total 63/78 · load 18.46 · 2026-10-18T06:29:53.608Z
+exit 0 · 2026-10-18 02:29:53 · load { 18.46 19.33 18.00 }

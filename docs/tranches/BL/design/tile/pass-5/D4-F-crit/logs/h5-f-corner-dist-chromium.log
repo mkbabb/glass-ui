@@ -1,0 +1,13 @@
+2026-10-18 01:43:08 · load { 11.82 18.56 22.39 }
+CORNER · a consumer corner on a tile is refused in paint (H4-1; FV3-4, E-3)
+  target f-atk-dist (flavor dist) · Chromium 149.0.7827.55 · harness H5 bfe1b6beddb0
+  load 11.82 / 18.56 / 22.39 at start, 11.76 / 18.43 / 22.32 at end · other headless browser processes at start: 15 (waited 0.2 s) · browser lock waited 0 s
+  PASS       preset-migrated utility · computed 16px · used 16.00 on 204.00×66.58 · want the field corner kept (16px)
+  PASS       preset-migrated scoped · computed 16px · used 16.00 on 204.00×66.58 · want the field corner kept (16px)
+  PASS       preset-migrated important · computed 16px · used 16.00 on 204.00×66.58 · want the field corner kept (16px)
+  PASS       preset-migrated inline · computed 16px · used 16.00 on 204.00×66.58 · want the field corner kept (16px)
+  info-fail  preset-migrated inline-important · computed 9999px · used 33.29 on 204.00×66.58 · want the field corner kept (16px) · INFO: no stylesheet rule outranks an inline !important
+  PASS       family-d-undeclared scoped-control · computed 7px (want 7px: the selector reaches an item) · 195.28×40.00
+CORNER PASS · 5/5 gating cells pass [library 5/5]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p5/D4-F-crit/out/runs/f-atk-dist/CORNER-chromium.json
+exit 0 · 2026-10-18 01:43:14 · load { 11.76 18.43 22.32 }

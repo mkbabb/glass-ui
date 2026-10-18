@@ -1,0 +1,11 @@
+2026-10-18 02:39:24 · load { 9.71 17.32 18.97 }
+CRIT-NAME-LIFT · X-2: the selected K2 name with only the shared scene's consumer colour lifted (reported)
+  target f-src (flavor src) · Playwright WebKit 26.5 · harness H5 bfe1b6beddb0
+  load 9.71 / 17.32 / 18.97 at start, 9.41 / 17.14 / 18.89 at end · other headless browser processes at start: 9 (waited 0.1 s) · browser lock waited 0 s
+  info-fail  as built · light · selected name rgb(112, 89, 66), its item rgb(28, 25, 23) · unselected name rgb(112, 89, 66) · name selected:unselected 1.00:1 · the selected name does NOT take its item's ink
+  info-pass  consumer colour lifted · light · selected name rgb(28, 25, 23), its item rgb(28, 25, 23) · unselected name rgb(112, 89, 66) · name selected:unselected 2.66:1 · the selected name TAKES its item's ink
+  info-fail  as built · dark · selected name rgb(195, 185, 172), its item rgb(233, 230, 226) · unselected name rgb(195, 185, 172) · name selected:unselected 1.00:1 · the selected name does NOT take its item's ink
+  info-pass  consumer colour lifted · dark · selected name rgb(233, 230, 226), its item rgb(233, 230, 226) · unselected name rgb(195, 185, 172) · name selected:unselected 1.56:1 · the selected name TAKES its item's ink
+CRIT-NAME-LIFT FAIL · 0/0 gating cells pass
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p5/D4-F-crit/out/runs/f-src/CRIT-NAME-LIFT-webkit.json
+exit 1 · 2026-10-18 02:39:28 · load { 9.41 17.14 18.89 }

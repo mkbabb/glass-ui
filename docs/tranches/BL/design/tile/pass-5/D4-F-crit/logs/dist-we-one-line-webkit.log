@@ -1,0 +1,13 @@
+2026-10-18 02:22:30 · load { 17.20 13.70 15.75 }
+W-E · every one-of-N option is one line, and what a consumer installs refuses one that is not (D4-E)
+  target f-dist (flavor dist) · Playwright WebKit 26.5 · harness H5 bfe1b6beddb0
+  load 17.20 / 13.70 / 15.75 at start, 15.79 / 13.51 / 15.66 at end · other headless browser processes at start: 23 (waited 0.4 s) · browser lock waited 0 s
+  PASS       preset · 4 items · 0 not one line · e.g. 40.00 px tall at rung 40.00 (1.00 rungs), 1 rows
+  FAIL       preset refusal (flavor dist) · a line added to item 0 → no refusal (no console error, no throw)
+  FAIL       specimen · 8 items · 8 not one line · e.g. 36.00 px tall at rung 36.00 (1.00 rungs), 3 rows
+  FAIL       specimen refusal (flavor dist) · a line added to item 0 → no refusal (no console error, no throw)
+  FAIL       strip · 6 items · 6 not one line · e.g. 44.00 px tall at rung 44.00 (1.00 rungs), 2 rows
+  FAIL       strip refusal (flavor dist) · a line added to item 0 → no refusal (no console error, no throw)
+W-E FAIL · 1/6 gating cells pass [library 1/6]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p5/D4-F-crit/out/runs/f-dist/W-E-webkit.json
+exit 1 · 2026-10-18 02:22:37 · load { 15.79 13.51 15.66 }

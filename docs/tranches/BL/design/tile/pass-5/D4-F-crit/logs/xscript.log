@@ -1,0 +1,11 @@
+2026-10-18 01:20:57 · load { 24.24 20.77 18.69 }
+admitted · 2026-10-18 01:20:57 · load { 23.66 20.71 18.68 }
+XSCRIPT · the routes' K2 transcriptions differ only by the declaration, and paint nothing (H5-5; X-2, T-7)
+  target xscript-D4-Dp-p5-D4-F-p5 · engine-free (a static read of each route's migrated.mjs) · harness H5 bfe1b6beddb0
+  PASS       K2 equal · D4-Dp-p5 and D4-F-p5, each with its declaration removed · markup equal · css equal
+  PASS       K2 paint · D4-Dp-p5 · no rule paints the tile or its content
+  info       other site · D4-Dp-p5 strip · paint: .tile-glyph path { stroke: var(--selection-ink) }; .tile-label { color: var(--selection-ink) }
+  info       other site · D4-Dp-p5 f1 · paint: .grid-label { color: var(--selection-ink) }
+  PASS       K2 paint · D4-F-p5 · no rule paints the tile or its content
+XSCRIPT PASS · 3/3 gating cells pass
+exit 0 · 2026-10-18 01:21:02 · load { 23.04 20.63 18.66 }
