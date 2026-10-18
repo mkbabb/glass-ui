@@ -1,0 +1,30 @@
+DEL · no file in scope (src/, demo/, tests/, every path the patch touches) describes a mechanism the patch deletes, in any word form, or a value it changes (static; H6-1, H7-2, H8-1)
+tree: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p8/floor7/wt · 1089 text files in scope (src/, demo/, tests/, plus 0 of 1 touched paths outside them that exist) · reported: 17 files · declaration: the floor (floor v4 and later): FL-1 and FL-16 delete the backdrop sampler, the clamp and its earned darken, the knee, --glass-backdrop-luma, backdropMode and the adaptive tint (REGISTRY P5-3.3; names per P5-5 H6-1, backdropMode from P5-3.3's row, backdrop mode and adaptive tint per P6-2.2 R-15 (ii)). The concepts a patch deletes with no identifier are declared here by hand; declare-removed.mjs adds every identifier the patch's removed lines name (R-15 (iii)) · 8 names, 0 exact only, 0 sites read in context
+patch: floor-v7.patch · 88 paths · 82 exist in the tree and are read
+  ✓ "earned darken": 0
+  ✓ "darkened by whatever": 0
+  ✓ "luma read": 0
+  ✓ "backdropLuminance": 0
+  ✗ "--glass-backdrop-luma": 1 · tests/styles/glass-subtlety.test.ts:192 "--glass-backdrop-luma"
+  ✗ "backdropMode": 2 · tests/components/custom/dock/GlassDock.posture.test.ts:153 "backdropMode" tests/components/custom/dock/GlassDock.posture.test.ts:155 "backdrop-mode"
+  ✗ "backdrop mode": 2 · tests/components/custom/dock/GlassDock.posture.test.ts:153 "backdropMode" tests/components/custom/dock/GlassDock.posture.test.ts:155 "backdrop-mode"
+  ✓ "adaptive tint": 0
+changed values: 8 declarations in src/ · 8 tokens
+  ✗ --ink-perimeter: 0.48 → 0.52 (literal 0.48; src/styles/tokens/color-radius.css): 1 · src/styles/tokens/scale-paper.css:90 "0.48 · ink perimeter"
+  ✓ --glass-veil-step: 0.04 → calc((1 - var(--glass-bound)) / 3) (literal 0.04; src/styles/tokens/glass.css): 0
+  ✓ --glass-blur-wash-radius: 10px → 6px (literal 10px; src/styles/tokens/glass.css): 0
+  ✓ --glass-blur-quiet-radius: 14px → 10px (literal 14px; src/styles/tokens/glass.css): 0
+  ✓ --glass-blur-resting-radius: 16px → 12px (literal 16px; src/styles/tokens/glass.css): 0
+  ✗ --glass-blur-floating-radius: 20px → 18px (literal 20px; src/styles/tokens/glass.css): 1 · src/styles/glass/deep.css:69 "20px · glass blur floating radius"
+  ✓ --glass-blur-overlay-radius: 22px → 20px (literal 22px; src/styles/tokens/glass.css): 0
+  ✓ --glass-saturate-grasp: 1.75 → calc(var(--glass-saturate) * 7 / 6) (literal 1.75; src/styles/tokens/glass.css): 0
+REPORTED (not gated; repo-root *.md and docs/canon/): 7
+  [reported] "backdropLuminance" · DESIGN.md:521 "backdrop luminance"
+  [reported] "backdropLuminance" · MIGRATION.md:4062 "backdrop-luminance"
+  [reported] "--glass-backdrop-luma" · MIGRATION.md:4045 "--glass-backdrop-luma"
+  [reported] "backdropMode" · MIGRATION.md:503 "backdropMode"
+  [reported] "backdrop mode" · MIGRATION.md:503 "backdropMode"
+  [reported] --ink-perimeter: 0.48 → 0.52 (literal 0.48; src/styles/tokens/color-radius.css) · DESIGN.md:1805 "0.48 · ink perimeter"
+  [reported] --ink-perimeter: 0.48 → 0.52 (literal 0.48; src/styles/tokens/color-radius.css) · MIGRATION.md:1000 "0.48 · ink perimeter"
+DELETED-MECHANISMS names=8 hits=7 files=4 changed=8 sites=0 reported=7 · src/styles/glass/deep.css src/styles/tokens/scale-paper.css tests/components/custom/dock/GlassDock.posture.test.ts tests/styles/glass-subtlety.test.ts
+FAIL (5 of 16 gated rows)

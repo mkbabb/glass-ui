@@ -1,0 +1,54 @@
+diff --git a/src/styles/glass/liquid-fill.css b/src/styles/glass/liquid-fill.css
+index fa2a610e1..49da157f4 100644
+--- a/src/styles/glass/liquid-fill.css
++++ b/src/styles/glass/liquid-fill.css
+@@ -71,7 +71,7 @@
+                 calc(var(--liquid-fill-strength, 88%) * var(--glass-veil-rung)),
+             oklch(0.9 0.05 75 / 0)
+         );
+-        /* The blur routes the `--glass-blur-quiet` rung (the 14px radius that SCALES by
++        /* The blur routes the `--glass-blur-quiet` rung (its radius SCALES by
+            `--glass-level`), not a literal blur off the level knob. */
+         backdrop-filter: var(--liquid-fill-blur, var(--glass-blur-quiet));
+         /* The grasp register's host inputs (glass/grasp.css). The fill IS the quiet
+diff --git a/tests/components/field/forms-seam.test.ts b/tests/components/field/forms-seam.test.ts
+index 95424f028..c17e1a3df 100644
+--- a/tests/components/field/forms-seam.test.ts
++++ b/tests/components/field/forms-seam.test.ts
+@@ -16,16 +16,15 @@
+  * are component close-battery rows, not standing roster gates (CWT-3 §5;
+  * TERMINAL-ROSTER E-7 extended to tier-3).
+  *
+- * TWO SPEC CLAUSES ARE FENCED ON ANOTHER ROW, and they are marked in place rather
++ * ONE SPEC CLAUSE IS FENCED ON ANOTHER ROW, and it is marked in place rather
+  * than dropped:
+  *   · G-F1's `rg -c "input-pill" src == 0` half — the 124-line dead register is
+  *     `control-surfaces.css`'s owner's to strike (§9 row 1), not this lane's.
+- *   · G-F2's `bg α < 1.0` + `field L* ≤ page L* − 3` halves — both resolve
+- *     `--input-on-glass`, which is #22 W-FROST's token (§9 row 2, "both or
+- *     nothing paints"). The other half of that two-part kill, `material.css`'s
+- *     nested-cell blanket, has already landed.
+- * To be exact about what is red and what is not: it is the SPEC gates G-F1/G-F2
+- * that stay open until those owners cut, not the checks below. Each check asserts
++ * G-F2's `bg α < 1.0` + `field L* ≤ page L* − 3` halves both resolve the field
++ * well, `--control-surface-bg: var(--glass-well)`, which the G-F2 check reads by
++ * name; their paint is a §6 browser-seat probe.
++ * To be exact about what is red and what is not: it is the SPEC gate G-F1 that
++ * stays open until its owner cuts, not the checks below. Each check asserts
+  * only the direction this lane can honestly own and is GREEN as written; the fenced
+  * half is named in the check's own title so nobody mistakes one for the other, and
+  * nobody greens the fenced half by accident.
+@@ -88,11 +87,11 @@ describe("W-FIELD — the forms-seam lane battery", () => {
+         expect(read(NF_SHEET)).not.toContain("input-pill");
+     });
+ 
+-    it("G-F2 · PERIMETER + RECESS — the perimeter rides the 0.48 ink rung and the well is a real inset (fill α fenced on W-FROST)", () => {
++    it("G-F2 · PERIMETER + RECESS — the perimeter rides the `--ink-perimeter` rung and the well is a real inset", () => {
+         const register = strip(read(REGISTER));
+ 
+         // ONE ink, the perimeter rung, at 1px. HEAD: 1.5px × 0.05 = a composited
+-        // mass of 0.075 against the ladder's 0.48.
++        // mass of 0.075, a fraction of the ladder's perimeter rung.
+         expect(register).toMatch(/--ink-perimeter/);
+         expect(register).not.toMatch(/border-width:\s*1\.5px/);
+         expect(register).not.toMatch(/border-width:\s*2px/);
