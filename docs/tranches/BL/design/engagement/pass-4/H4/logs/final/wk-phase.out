@@ -1,0 +1,27 @@
+[guarded] waiting for the 'webkit' lock
+[guarded] waiting for headroom (load 52 > 36)
+admitted 2026-10-18 13:46:30 load { 34.62 37.80 29.06 }
+## 2026-10-18 13:46:30 load { 34.62 37.80 29.06 } · selftest webkit E-5 
+         first planted FAIL: FAIL       E-5 pop sustain light · 2 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [background-color]: read 1 0.185 → 0.185 ×1.00 · read 2 0.078 → 0.000 ×0.00 · read 3 0
+selftest: 5 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+## 2026-10-18 13:50:38 load { 41.64 40.70 32.61 } · selftest webkit E-12 --faults e12-wheelchain,e12-wheelrow,e12-anchorlost
+         first planted FAIL: FAIL       E-12 slider consumer anchor · escape · a consumer's inline position-anchor --consumer-own · while engaged (×1.060, top layer false) "--fx-footprint" · Escape: the release ended at 225 ms, then +300 ms: "(removed)" (bound: the con
+selftest: 3 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+## 2026-10-18 13:51:58 load { 30.07 36.83 31.83 } · start head webkit e12-floor.mjs
+E-12 webkit FAIL · 58 pass, 4 fail, 1 unmeasured of 63 gating cells (0 reported) · load 30.1/36.8/31.8 at start, 35.1/37.2/32.3 at end
+## 2026-10-18 13:52:56 load { 35.05 37.15 32.27 } · start head webkit e10-continuity.mjs
+E-10 webkit FAIL · 1 pass, 5 fail, 0 unmeasured of 6 gating cells (2 reported) · load 35.1/37.2/32.3 at start, 32.8/36.6/32.1 at end
+## 2026-10-18 13:53:10 load { 32.77 36.55 32.14 } · start head webkit e1-census.mjs
+E-1 webkit FAIL · 0 pass, 4 fail, 0 unmeasured of 4 gating cells (0 reported) · load 32.8/36.6/32.1 at start, 32.8/36.6/32.1 at end
+## 2026-10-18 13:53:12 load { 32.77 36.55 32.14 } · start head webkit e5-touch.mjs
+E-5 webkit FAIL · 28 pass, 16 fail, 0 unmeasured of 44 gating cells (0 reported) · load 32.8/36.6/32.1 at start, 17.9/20.8/25.2 at end
+## 2026-10-18 14:09:12 load { 17.89 20.81 25.25 } · clean webkit E-2
+## 2026-10-18 14:10:34 load { 20.30 20.77 24.80 } · clean webkit E-3
+## 2026-10-18 14:11:02 load { 17.11 20.01 24.41 } · clean webkit E-4
+## 2026-10-18 14:11:40 load { 16.47 19.40 23.98 } · clean webkit E-6
+## 2026-10-18 14:11:45 load { 18.68 19.81 24.09 } · clean webkit E-7
+## 2026-10-18 14:11:48 load { 18.22 19.69 24.03 } · clean webkit E-8
+## 2026-10-18 14:12:06 load { 19.14 19.79 23.99 } · clean webkit E-9
+## 2026-10-18 14:12:35 load { 18.81 19.74 23.83 } · clean webkit E-11
+## 2026-10-18 14:12:39 load { 17.87 19.53 23.73 } · capture clean webkit
+released 2026-10-18 14:12:48 load { 16.26 19.13 23.54 }

@@ -119,9 +119,6 @@ const INDEX: Record<string, Record<string, unknown>> = {
   presented: { gates: [], target: '[role="dialog"] .button', modal: '[role="dialog"]' },
   field: { gates: [], target: 'input[data-t="field"]' },
   ambient: { gates: [], target: '[data-t="ambient"]' },
-  // H4: a second ambient exemplar, the Constellation (a canvas-2D pointer field), which paints a pointer move in a
-  // headless engine where the Aurora's software-raster guard resolves its static "css" ground (CK-19, CK-01)
-  constellation: { gates: [], target: '[data-t="constellation"]' },
   gallery: { gates: [] },
   // H4, E-12 (CK-14 × CK-13): the three dock triggers on a coarse pointer, compact (a consumer-sized 32×24 face, the
   // rung touch-floor.css names). `census: false`: the dock is D2's fence and its latch closes only with D2's leave
@@ -155,7 +152,7 @@ const LIMIT: Record<string, () => string | null> = {
 const SCENE_OF_DIR: Record<string, string> = {
   switch: "switch", checkbox: "checkbox", "radio-group": "radio", tabs: "tabs", "toggle-group": "toggle",
   chip: "chip", accordion: "accordion", button: "button", slider: "slider", separator: "passive", skeleton: "passive", dialog: "presented",
-  sheet: "sheet", "sortable-list": "sortable", carousel: "carousel", input: "field", textarea: "gallery", aurora: "ambient", constellation: "constellation",
+  sheet: "sheet", "sortable-list": "sortable", carousel: "carousel", input: "field", textarea: "gallery", aurora: "ambient",
   card: "gallery", alert: "gallery", badge: "gallery", progress: "gallery", "status-dot": "gallery", "pager-dots": "gallery",
 };
 
@@ -287,7 +284,6 @@ onMounted(async () => {
       </Dialog>
       <div v-else-if="scene === 'field'" style="width:320px"><Input v-model="txt" aria-label="Probe" data-t="field" /></div>
       <div v-else-if="scene === 'ambient'" data-t="ambient" style="width:420px;height:240px;position:relative;overflow:hidden;border-radius:16px"><Safe><Aurora /></Safe></div>
-      <div v-else-if="scene === 'constellation'" data-t="constellation" style="width:420px;height:240px;position:relative;overflow:hidden;border-radius:16px"><Safe><Constellation /></Safe></div>
       <div v-else-if="scene === 'docktrig'" style="display:flex;gap:48px;align-items:center;padding:24px">
         <Safe><Select><DockTrigger for="select" data-t="dt-select" aria-label="Pick" style="inline-size:32px;block-size:24px;padding:0;min-height:0"><SelectValue placeholder="A" /></DockTrigger><SelectContent><SelectItem value="a">A</SelectItem></SelectContent></Select></Safe>
         <Safe><DropdownMenu><DockTrigger for="dropdown" data-t="dt-dropdown" aria-label="Menu" style="inline-size:32px;block-size:24px;padding:0;min-height:0">⋯</DockTrigger><DropdownMenuContent><DropdownMenuItem>One</DropdownMenuItem></DropdownMenuContent></DropdownMenu></Safe>

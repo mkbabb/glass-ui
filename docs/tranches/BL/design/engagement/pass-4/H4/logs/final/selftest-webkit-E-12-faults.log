@@ -1,0 +1,9 @@
+## 2026-10-18 13:50:38 load { 41.64 40.70 32.61 } · selftest webkit E-12 --faults e12-wheelchain,e12-wheelrow,e12-anchorlost
+OK     E-12 webkit   fault   e12-wheelchain (CK-22 (H4): the keyboard-engaged slider is promoted to the top layer, so a wheel over it inside a scroller scrolls the page and not the box (C-E3 §0.3: +30 page, +0 box)) exit 1
+         first planted FAIL: FAIL       E-12 slider wheel over engaged control · nothing engaged: box +30, page +0 · keyboard-engaged (×1.060, top layer true): a 30 px wheel over the control scrolls the box +0, the page +30 (bound: the box scrolls, the page does not) ·
+OK     E-12 webkit   control e12-wheelrow (CONTROL, must PASS (H4): the same promotion with the route's MIGRATION row cited (--migration wheel): the wheel cell REPORTs and the critic scores the row) exit 0
+OK     E-12 webkit   fault   e12-anchorlost (CK-22 (H4): the engagement writes its own position-anchor on the root and removes the property on release, so a consumer's anchor is gone after the release (C-E3 §0.3, E-M1)) exit 1
+         first planted FAIL: FAIL       E-12 slider consumer anchor · escape · a consumer's inline position-anchor --consumer-own · while engaged (×1.060, top layer false) "--fx-footprint" · Escape: the release ended at 225 ms, then +300 ms: "(removed)" (bound: the con
+selftest: 3 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+exit 0
+## 2026-10-18 13:51:58 load { 30.07 36.83 31.83 } · end selftest webkit E-12

@@ -1,0 +1,13 @@
+## 2026-10-18 13:40:31 load { 26.53 18.85 19.33 } · selftest chromium E-5 rerun
+OK     E-5 chromium clean exit 0 · E-5 chromium PASS · 8 pass, 0 fail, 0 unmeasured of 8 gating cells (0 reported) · load 26.5/18.8/19.3 at start, 33.6/21.5/20.3 at end
+OK     E-5 chromium fault   e5-hover (a held touch answers only through the hover background, leaked by sticky touch hover (the accordion trigger at HEAD)) exit 1
+         first planted FAIL: FAIL       E-5 pop press light · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] · load 35.8/22.5/20.7
+OK     E-5 chromium fault   e5-decay (CK-06: the held press light decays back toward rest within 500 ms while the touch is still held) exit 1
+         first planted FAIL: FAIL       E-5 pop sustain light · 0 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [background-color]: read 1 0.174 → 0.000 ×0.00 · read 2 0.176 → 0.000 ×0.00 · read 3 0
+OK     E-5 chromium fault   e9-dark (under reduced motion the press retires its scale and keeps no light answer (its press paints the hover value): E-9's press, E-1's exemplar under reduce and E-5's held touch under reduce all read it (H-9)) exit 1
+         first planted FAIL: FAIL       E-5 pop press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce) · load 47.0/28.8/23.2
+OK     E-5 chromium fault   e5-flaky (CK-06 (H4 three-read rule): the held press light sags back toward rest on one touch hold in three (every third page load of the scene); a one-read rule passes it two times in three) exit 1
+         first planted FAIL: FAIL       E-5 pop sustain light · 2 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [background-color]: read 1 0.059 → 0.185 ×3.11 · read 2 0.185 → 0.000 ×0.00 · read 3 0
+selftest: 5 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+exit 0
+## 2026-10-18 13:43:18 load { 49.41 32.40 24.84 } · end
