@@ -1,0 +1,93 @@
+# floor v7 counterexamples (rows 20, FL-12), each in a file floor-v7.patch touches; HEAD alongside
+--- src/styles/glass/surfaces-pager.css :29-39 (trees/fv7)
+29	        /* The element-level oklab TINT seam (NOT the raw
+30	           pre-substituted `--glass-plate-floating` :root token — the gray-hole
+31	           substitution-trap). At the `--glass-level: 0` default this is the
+32	           no-op floor (`X, src 0%) ≡ X` — byte-identical pager pixels
+33	           over a flat page); the pill paints the floating rung's chrome-bound veil; under `.dark` the
+34	           tint arm LIFTS it toward luminous warm-dark, never a charcoal
+35	           slab. `in oklab` is the glass-tint perceptual family (the in-srgb
+36	           `--surface-tint-*` brand fence is untouched). The dock plate's element-level
+37	           compose precedent applied to the pager chassis (a `--glass-veil-tier` +
+38	           `@apply glass-plate` pair — glass/veil.css; the old `--glass-plate-dock`
+39	           pre-composed colour is struck). */
+--- src/styles/glass/surfaces-pager.css :29-39 (trees/head)
+29	        /* The element-level oklab TINT seam (NOT the raw
+30	           pre-substituted `--glass-plate-floating` :root token — the gray-hole
+31	           substitution-trap). At the `--glass-level: 0` default this is the
+32	           no-op floor (`X, src 0%) ≡ X` — byte-identical pager pixels
+33	           over a flat page); over a declared/sampled BRIGHT carousel image
+34	           (`@container style(--glass-backdrop: light)`) the pill darkens-toward-ink for a
+35	           real silhouette (the ≤24% clamp keeps it translucent); under `.dark` the
+36	           tint arm LIFTS it toward luminous warm-dark, never a charcoal
+37	           slab. `in oklab` is the glass-tint perceptual family (the in-srgb
+38	           `--surface-tint-*` brand fence is untouched). The dock plate's element-level
+39	           compose precedent applied to the pager chassis (a `--glass-veil-tier` +
+--- src/styles/glass/veil.css :64-74 (trees/fv7)
+64	@utility glass-plate {
+65	    --glass-veil-floor: var(--glass-bound);
+66	    --glass-veil-rest: var(--glass-veil-tier, var(--glass-veil-resting));
+67	    --glass-veil-rung: var(--glass-veil-rest);
+68	    --glass-veil: color-mix(
+69	        in srgb,
+70	        var(--card) calc((1 - (1 - var(--glass-veil-rung)) * var(--glass-level)) * 100%),
+71	        transparent
+72	    );
+73	    background: var(--glass-veil);
+74	    isolation: isolate;
+--- src/components/dock/GlassDock.vue :463-469 (trees/fv7)
+463	                It seats INSIDE the `.dock-layers` morph aperture so the pill→field
+464	                reveal rides the dock's OWN `--dock-morph-t` glide (the box
+465	                shrink-wraps; no second engine). The consumer composes `useDockSearch`
+466	                and slots its search field + the fuzzy dropdown here; the
+467	                `.dock-search-field` surface reads the tint seam (dock/search.css) so
+468	                the active field reads ≥4.5:1 over the backdrop (the no-pale-fade
+469	                legibility floor).
+--- src/components/dock/styles/index.css :79-84 (trees/fv7)
+79	/* The dock-as-native-dynamic-search-bar field surface (the
+80	   active-field tint legibility seam + the `.glass-menu-row` result rows). A net-new
+81	   surface on a dock that authors the `#search` slot ([2026-08-12 · BK #47 W1
+82	   SURFACE] ~~`[data-search]`~~); the pill→field morph is the dock's OWN `--dock-morph-t`
+83	   glide (box-inviolate); CONSUMES the tint seam + the menu-row recipe, re-authors neither. */
+84	@import "./search.css";
+--- src/components/dock/styles/search.css :1-15 (trees/fv7)
+1	/* Dock search field styles.
+2	 *
+3	 * The active dock-search field + its placeholder + the result rows read CLEARLY forward
+4	 * over whatever backdrop the dock floats on (≥4.5:1, the bound) — never the
+5	 * pale-ghost-fading-into-content trap (the NN/g defect, WWDC §219 "buttons remain
+6	 * legible"). The field surface composes its plate at the ELEMENT — `@apply glass-plate`
+7	 * (the one recipe, glass/veil.css) — NOT a pre-substituted `:root` plate token, which
+8	 * bakes `:root`'s `--glass-level`. The dock's own L0 plate takes the SAME path
+9	 * (dock/dock.css), so field and plate hold one bound by construction.
+10	 *
+11	 * The result rows ride `.glass-menu-row` (the highlight fill and hover lift, CONSUMED
+12	 * here; the glassify is this partial's). The customization-surface axes
+13	 * (size/surface/variant) are this partial's — it only seats the field +
+14	 * the legibility seam. The morph itself is the dock's OWN `--dock-morph-t` + the
+15	 * byte-untouched `morph-bridge.css` metaball (READ-ONLY — bound, never edited). */
+--- src/styles/tokens/glass-deep.css :10-17 (trees/fv7)
+10	 * it exists to deepen. This file shipped that inversion: the endpoint pair was
+11	 * written against a calm floating rung of 11px, so 16px read as "+5px, strictly
+12	 * deeper"; the calm ladder then moved to 10/14/16/20/22px and the LERP ran
+13	 * 20px -> 16px. A deep overlay painted 16px where the plain overlay paints 22, and
+14	 * thickness graded BACKWARDS with prominence. The +5px delta is what the family
+15	 * always encoded, so the delta is what the token now holds:
+16	 *   deep(tier) = tier_radius + 5px * --glass-depth
+17	 * -> 7.75 / 11.75 / 13.75 / 21.5 / 25px across wash..overlay. Thicker than plain
+--- src/styles/tokens/glass-deep.css :40-42 (trees/fv7)
+40	 * Apple home nav:        saturate(1.8) blur(20px)  (the canonical measure)
+41	 * Apple product tiers:   blur(14-20px)             (the band)
+42	 * glass-ui calm ladder:  6/10/12/18/20px / saturate 1.5 (tokens/glass.css)
+--- src/styles/tokens/glass-deep.css :52-56 (trees/fv7)
+52	       to deepen. That is exactly what shipped — the endpoint pair was written when
+53	       calm floating was 11px and the deep endpoint 16px (a +5px thickening), and
+54	       the calm ladder has since moved to 10/14/16/20/22px, so the LERP ran
+55	       20px → 16px: a deep overlay painted 16px where the plain overlay painted 22,
+56	       and thickness graded BACKWARDS with prominence (wash 18.6 > floating 17.2 >
+--- src/styles/tokens/glass.css :65-69 (trees/fv7)
+65	    --glass-blur-wash-radius:      6px;
+66	    --glass-blur-quiet-radius:    10px;
+67	    --glass-blur-resting-radius:  12px;
+68	    --glass-blur-floating-radius: 18px;
+69	    --glass-blur-overlay-radius:  20px;

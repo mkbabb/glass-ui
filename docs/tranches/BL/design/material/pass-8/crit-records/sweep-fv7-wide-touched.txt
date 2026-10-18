@@ -1,0 +1,193 @@
+demo/stories/compositions/auth-shell.vue:223:    /* The muted body copy is darkened from the light-mode `38%` lightness: over
+demo/stories/dock/_frame/DockStage.vue:65:             is clamped to the viewport:
+demo/stories/dock/_frame/DockStage.vue:71:             only ~one viewport is ever visible. The DPR clamp (sub-2× wash,
+demo/stories/dock/_frame/DockStage.vue:106:   viewport-clamped field stays pinned as the page scrolls. */
+demo/stories/dock/_frame/DockStage.vue:124:/* The one shared aurora field is viewport-clamped. Sized to `100dvh` (not the full ~2365px scroll column), so the
+demo/stories/dock/_frame/DockStage.vue:125:   Aurora ResizeObserver measures the viewport and the backing store never
+demo/stories/dock/layers.vue:38:    "color ramp + tints",
+demo/stories/dock/overview.vue:432:                tint strength, so the field behind comes forward), the dock's rim quiets
+demo/stories/feedback/progress.vue:63:        <!-- the feedback-band identity COLOR EVENT (the tinted
+demo/stories/feedback/progress.vue:205:                <code>.glass-liquid-fill</code> paint that Slider also reads. The tint
+demo/stories/feedback/progress.vue:212:                    aria-label="Liquid fill, default tint"
+demo/stories/feedback/progress.vue:217:                    aria-label="Liquid fill, legendre tint"
+demo/stories/manifest.ts:422:                "Surface Tints",
+demo/stories/manifest.ts:423:                "Nine-rung tint scale plus the tier aliases (quiet / floating / modal).",
+demo/stories/substrates/glass-material.vue:6:// one pole, `--card`, carries any tint. The matrix is staged over a
+demo/stories/substrates/glass-material.vue:65:const tintSamples = [
+demo/stories/substrates/glass-material.vue:70:const tint = ref<(typeof tintSamples)[number]>(tintSamples[0]);
+demo/stories/substrates/glass-material.vue:91:    liveFieldTimer = window.setInterval(paint, 1400);
+demo/stories/substrates/glass-material.vue:99:// tint. Each swatch sets `--glass-accent: <data-hue>; --glass-accent-strength: <N%>`
+demo/stories/substrates/glass-material.vue:104:// The accent tints the RIM (silhouette edge) + the::before catch-light glint with
+demo/stories/substrates/glass-material.vue:185:             no high-frequency detail, so a plate's blur radius and its tint are both
+demo/stories/substrates/glass-material.vue:257:            blurb="The third glass axis (level · tint · accent). A consumer data hue OKLab-tints the surface's rim (silhouette edge) and the ::before catch-light g
+demo/stories/substrates/glass-material.vue:340:            blurb="A plate has exactly one chromatic writer on its body: the veil's pole, --card. Re-point --card on a surface and the whole rung follows, at every
+demo/stories/substrates/glass-material.vue:345:                        >tint sample:</span
+demo/stories/substrates/glass-material.vue:348:                        v-for="s in tintSamples"
+demo/stories/substrates/glass-material.vue:351:                        :data-tint-sample="s.source"
+demo/stories/substrates/glass-material.vue:352:                        :aria-pressed="tint.label === s.label"
+demo/stories/substrates/glass-material.vue:353:                        @click="tint = s"
+demo/stories/substrates/glass-material.vue:361:                        data-tint-plate
+demo/stories/substrates/glass-material.vue:363:                            '--card': tint.source
+demo/stories/substrates/glass-material.vue:364:                                ? `color-mix(in oklab, var(--popover), ${tint.source} ${tint.strength})`
+src/components/_shared/feedback/feedback-tone.css:4:   through it [2026-08-08 · BK #33]: `.feedback-tone` — the tinted PLATE — has exactly ONE
+src/components/_shared/feedback/feedback-tone.css:8:   rung (R-3, neutral glass + status ink — the tinted Alert plate is not built). Everything
+src/components/_shared/feedback/feedback-tone.css:20:   a tinted-glass wash (the rung bg mixed a BOUNDED % toward the tone, the SAME
+src/components/_shared/feedback/feedback-tone.css:21:   `color-mix(in oklab, <rung bg>, <tint> <strength>)` seam the `--glass-veil-*`
+src/components/_shared/feedback/feedback-tone.css:25:   `--card-foreground` for legibility (the Alert discipline — body never tone-tinted),
+src/components/_shared/feedback/feedback-tone.css:29:   THE ONE KNOB: `--feedback-tone-strength` tints all four tones at once (the bounded
+src/components/_shared/feedback/feedback-tone.css:34:   THE RUNG IS THE SURFACE'S OWN PLATE, NOT A SECOND ONE. The tint mixes over
+src/components/_shared/feedback/feedback-tone.css:36:   element (glass/veil.css:35-37 names "a tone-tinted feedback panel" as one of its two
+src/components/_shared/feedback/feedback-tone.css:38:   surface that composes a rung therefore tints ITS OWN rung: the rung's alpha at the
+src/components/_shared/feedback/feedback-tone.css:43:   a single property the tinted result REPLACED the rung's own `background: var(--glass-veil)`
+src/components/_shared/feedback/feedback-tone.css:56:           (the backdrop shows through, the silhouette is unmistakably tinted) without
+src/components/_shared/feedback/feedback-tone.css:62:           `src/`, held by `G-FEEDBACK-TINT-SEAM` arm (b). */
+src/components/_shared/feedback/feedback-tone.css:64:        /* The rim weight — a tone-keyed border, a thin tinted rim (not a loud edge). */
+src/components/_shared/feedback/feedback-tone.css:70:       `.feedback-tone`; the tinted-glass wash + the tone-keyed rim resolve off the ONE
+src/components/_shared/feedback/feedback-tone.css:108:       color event's saturated note over the tinted wash). A consumer composes it on its
+src/components/_shared/field/control.css:109:           The fluid clamp ALONE. `--control-text` is `--type-small × --ui-scale`,
+src/components/_shared/field/control.css:110:           and the second factor escapes the clamp the first one exists to impose:
+src/components/_shared/field/control.css:111:           16.40px at 1440 fine becomes 24.60px at coarse, past the clamp's own
+src/components/_shared/field/control.css:138:       to name: a single-line field keeps the stadium (`--radius-pill`, clamped by
+src/components/_shared/menu/menu.css:6:       nested in a plate for the width of one line of text. The fill is an ACCENT TINT:
+src/components/_shared/menu/menu.css:10:       fill darkened the cream row with no hue (C 0.010), which reads grey. The
+src/components/_shared/menu/menu.css:117:   the ink is a `color-mix` on `--foreground` it re-tints under `.dark` through the
+src/components/button/styles.css:60:           box. `--radius-pill` (9999px) is clamped by the engine to half the
+src/components/button/styles.css:67:           still reads a circle: the engine's own radius scaling clamps the corner
+src/components/button/styles.css:72:           token to re-derive a clamp the engine already applies (GF-DOCK §STRIKE —
+src/components/button/styles.css:143:    /* ── Tone TINTS; it never replaces ────────────────────────────────────────
+src/components/card/styles.css:212:       re-typed — so the interval holds at the clamp floor, through the fluid arm
+src/components/configurator/styles.css:149:         * sub-perceptual — the rounded border + section tint carry the card read. */
+src/components/configurator/styles.css:444:        /* `cqi`, not `vw`. The middle term of a tile clamp is a share of the ribbon the
+src/components/configurator/styles.css:462:     * placement so the aside inspector idiom stays byte-unchanged. The clamp MIN (200px)
+src/components/dialog/styles.css:16: * IS the consistency F48 asked for. The inline gutter clamp is load-bearing — at 393
+src/components/dialog/styles.css:19: * clamp yields 512px capped at wide widths and a real 20px gutter per side at 393. */
+src/components/dialog/styles.css:67:     * holds at the clamp floor, through the fluid arm, and at the ceiling. Type takes NO
+src/components/dock/GlassDock.vue:36:// exactly when there is something to scroll, so the observer, the attribute and the
+src/components/dock/GlassDock.vue:467:                `.dock-search-field` surface reads the tint seam (dock/search.css) so
+src/components/dock/styles/controls/icon-button.css:5:   fill, the iOS press DARKEN-plus-shrink
+src/components/dock/styles/controls/icon-button.css:16:       darken/specular legs read it via `calc()` (typed <number> so the calc interpolates),
+src/components/dock/styles/controls/icon-button.css:87:           • the DARKEN leg — a sub-perceptual `filter: brightness()` deepen on the SAME
+src/components/dock/styles/controls/icon-button.css:95:           surface, not a flat `--muted` plate: a translucent card-tinted fill is
+src/components/dock/styles/controls/icon-button.css:104:           surface was the worst-offending double-light blowout; the card-tinted
+src/components/dock/styles/controls/icon-button.css:118:        /* The iOS press DARKEN-plus-shrink. Press lands the
+src/components/dock/styles/controls/icon-button.css:119:           glass-darken (`--dock-control-press-bg`, a tier below resting) alongside
+src/components/dock/styles/controls/icon-button.css:120:           the existing scale-press, so a tap reads "darken + shrink" (C4-INV-4 was
+src/components/dock/styles/controls/touch-floor.css:7:        clamp; this is the no-`.glass-dock`-ancestor half).
+src/components/dock/styles/controls/touch-floor.css:16:       is subsumed into the `--dock-scale` multiplier + the `max(…, 44px)` clamp in
+src/components/dock/styles/controls/touch-floor.css:18:       44px target, the clamp guarantees the floor even below 1.0× scale). This
+src/components/dock/styles/controls/touch-floor.css:58:       affordance (accent glyph tint + a leading-edge accent rule) from the shipped
+src/components/dock/styles/dock.css:15: *        endpoints — one chromatic writer, no second tint layer. The shell + adaptive-legibility partials re-point
+src/components/dock/styles/dock.css:105:           NO SEPARATE TINT VEIL. A permanently-zero-alpha gradient layer painted over
+src/components/dock/styles/index.css:65:   "does the row fit?" with a ResizeObserver, an attribute and two branches; the
+src/components/dock/styles/index.css:80:   active-field tint legibility seam + the `.glass-menu-row` result rows). A net-new
+src/components/dock/styles/index.css:83:   glide (box-inviolate); CONSUMES the tint seam + the menu-row recipe, re-authors neither. */
+src/components/dock/styles/layer-group.css:167:       tints, so the whole switcher ladder is tunable from §sizing. */
+src/components/dock/styles/layer-group.css:242:           backdrop) to the nav-glyph contrast register: a strong warm-ink tint of
+src/components/dock/styles/layer-group.css:283:    /* KEEP the active glyph tint on the selected tab (reka emits
+src/components/dock/styles/shape.css:122:       The `max(…, 0.06)` guard matches the layers.css `--dock-size-scale` clamp floor
+src/components/dock/styles/shell.css:162:           measured, so the cap was clamping the dock BELOW the width the viewport
+src/components/dock/styles/shell.css:292:    /* Vertical docks grow-to-fit then clamp at `--dock-max-block-size` (the
+src/components/music-staff/styles.css:58:       rung: a plate carries exactly one plate-tint writer, and painting cream over
+src/components/music-staff/styles.css:372:   linear so the phase lock survives, so the rebound is sampled from the press
+src/components/sheet/styles.css:320:     * sampler's `backdrop-filter` landed NOTHING and what painted was a masked gradient tint
+src/components/sheet/styles.css:356:        /* one rung under the surface it grades, so the plate is never sampled through it */
+src/components/sheet/styles.css:496:     * clamp is not a fit.
+src/components/tabs/styles/segmented.css:8:                 the selected-reads-as-glass body (a glass tint FORWARD of the
+src/components/tabs/styles/segmented.css:11:                 across, inverts from a pressed well to a lit dome, and clamps at
+src/components/tabs/styles/segmented.css:49:           `--radius-tab` (= --radius-pill = 9999px) — on a short pill box this clamps to
+src/components/tabs/styles/segmented.css:88:           on a tall multi-row box the stadium clamps its end-caps to a ~46px half-height
+src/components/tabs/styles/segmented.css:241:    /* THE CLAMP. Driven into the end of the bar the body cannot span further, so it
+src/components/tabs/styles/segmented.css:242:       compresses against the inner edge instead. The writer REPORTS the clamp rather
+src/components/tabs/styles/segmented.css:246:    .segmented-indicator[data-eyeglass-clamped] {
+src/styles/glass.css:118:   (same `@layer components`, source-order-after so their tinted-fill layers win at equal
+src/styles/glass/a11y-fallback.css:35:   and the level IS the mix. The separate tint-darken this bracket used to add was a
+src/styles/glass/control-bit.css:177:       THE POLE IS BLACK. A recess must darken below the L* 0.1456 page floor, and
+src/styles/glass/control-bit.css:180:       (tokens/glass-fx.css). Darkening toward black scales the host's channels and
+src/styles/glass/control-surfaces.css:17:           --control-floor)`, the h-10 register with the WCAG-44px coarse clamp), the
+src/styles/glass/control-surfaces.css:108:       KEEPS (a11y, not a ladder). The destructive/success tints reuse the
+src/styles/glass/control-surfaces.css:130:           glass-tint substrate the bare-ring surfaces do not carry). */
+src/styles/glass/deep.css:18: * tint axis + the a11y brackets all compose unchanged. The deep tier rides a base
+src/styles/glass/grasp.css:131:       tinted MIX and no veil — declares `--glass-veil-rest: 1` and scales its tint
+src/styles/glass/ladder.css:171:    /* The on-glass MUTED lift EXTENDS to the mid-tone / tone-tinted / selected-
+src/styles/glass/ladder.css:174:       composited TINTED / mid-tone glass plate exactly as it does on the calm content tier —
+src/styles/glass/ladder.css:177:       TONE-TINTED plates (`.feedback-tone` — ~~Alert / Toast, the AlertDescription
+src/styles/glass/ladder.css:189:       tone-tinted / selected chip plate
+src/styles/glass/liquid-fill.css:4:   The warm glass-cylinder fill — a continuous rounded pill of warm tinted glass
+src/styles/glass/liquid-fill.css:17:   PHASE-COLOUR COMPOSABLE, ZERO PER-SITE GLASS KNOWLEDGE. A surface tints the
+src/styles/glass/liquid-fill.css:23:     · --liquid-fill-strength  — the tint mix % against the warm 0-alpha leg (88%),
+src/styles/glass/liquid-fill.css:47:           plate — it paints a tinted MIX, not a veil — so it declares the pair itself
+src/styles/glass/liquid-fill.css:55:           written for. Now held really does shed 40% of the fill's tint in paint, and
+src/styles/glass/liquid-fill.css:61:        /* The warm tinted glass fill — the tint mixes against a warm 0-alpha leg so
+src/styles/glass/liquid-fill.css:62:           the cylinder is a warm tinted `.glass-atom` over the field, not a flat bar.
+src/styles/glass/material.css:95:       accent tint), re-point the leg's own ink; do not rebuild the layer here. */
+src/styles/glass/material.css:211:        /* `plus-lighter` (additive but HDR-clamped, Safari 16.4+), NOT
+src/styles/glass/overlay-plate.css:112:       clamped too. Capping without the scroller would clip the tail silently, which is
+src/styles/glass/overlay-plate.css:271:       layers, both reading the ONE recipe. There is no second tint layer and no
+src/styles/glass/rim.css:16:       reads as a half-tinted edge rather than one accent silhouette.
+src/styles/glass/surface-axis.css:124:       glass-tint family (NOT the in-srgb brand-overlay fence). The inset groove reads
+src/styles/glass/surfaces-pager.css:29:        /* The element-level oklab TINT seam (NOT the raw
+src/styles/glass/surfaces-pager.css:34:           tint arm LIFTS it toward luminous warm-dark, never a charcoal
+src/styles/glass/surfaces-pager.css:35:           slab. `in oklab` is the glass-tint perceptual family (the in-srgb
+src/styles/glass/veil.css:36:   `prefers-contrast: more` rides. No luma term and no clamp — nothing samples, so
+src/styles/glass/veil.css:40:   plate INSIDE a bigger mix (the capsule's warm floor, a tone-tinted feedback panel)
+src/styles/tokens/color-radius.css:37:       carry 0.020 at L90 without a visible cast — the triumvirate "tinted not
+src/styles/tokens/color-radius.css:77:       Bounded: the cream family, never a tinted cast (the triumvirate bar). */
+src/styles/tokens/color-radius.css:162:                              row (_shared/menu/menu.css, an accent tint at this alpha, not
+src/styles/tokens/color-radius.css:213:    /* Foreground-tint rungs — canonical handles for the 36+ raw
+src/styles/tokens/color-radius.css:231:    /* Muted-tinted surface rungs — canonical handles for the 9 raw
+src/styles/tokens/color-radius.css:245:       Only `--constellation-accent` (the anomaly tint) stays a CONSUMER preset
+src/styles/tokens/color-radius.css:265:    /* Anomaly tint — NEUTRAL library default (a desaturated warm accent). The
+src/styles/tokens/color-radius.css:280:       (above) is the edge TINT; `-edge-floor` is the neutral-edge alpha MINIMUM so a
+src/styles/tokens/color-radius.css:304:    --constellation-well-max-speed:   4.0;    /* base-width px/frame cap — the no-slingshot clamp */
+src/styles/tokens/color-radius.css:335:    --section-color-7:  oklch(0.532 0.180 317.5);  /* violet     — the tinted eyebrow's default rung */
+src/styles/tokens/dark-arm.css:47:       so the page↔card gap widens from a 4-L collapse (card/page relL ≈ 2.0×, a 0.003-luma
+src/styles/tokens/dark-arm.css:304:       light arm's darkening) so it clears AA over the composited dark plate WHILE
+src/styles/tokens/dark-arm.css:331:       cream) tint composites to near-black: the 9-rung chip/hairline/divider scale is
+src/styles/tokens/dark-arm.css:334:       tint). A hardcoded hsl(48 12% 96%) literal ×12 would sit at the
+src/styles/tokens/dark-arm.css:347:       fence holds — the oklch(from …) is the INK SOURCE, not the tint mix space).
+src/styles/tokens/glass-fx.css:1:/* tokens/glass-fx.css — §8 glass EFFECT knobs: grain/specular/edge-light, the tint source, the decorative fringe/curvature/chart-palette, and
+src/styles/tokens/glass-fx.css:120:       so it darkens the inner-top edge without re-coloring the warm fill. */
+src/styles/tokens/glass-fx.css:147:    /* Chart palette aliases — consumers read these for phase tinting; defaults map to
+src/styles/tokens/glass-fx.css:185:       rides `--shadow-color: var(--foreground)` — correct, a shadow re-tints under `.dark`
+src/styles/tokens/glass.css:133:       of a surface color), and the oklab/srgb fence is tint-vs-plate.
+src/styles/tokens/glass.css:151:       The tone-step is an oklab mix (the perceptual glass-tint family, NOT the in-srgb
+src/styles/tokens/glass.css:166:       `--glass-accent` and the whole-plate veil (`--glass-veil-*`). It tints the
+src/styles/tokens/glass.css:176:       each re-spelling the mix. It reads the tint/strength axis DIRECTLY, so a
+src/styles/tokens/glass.css:195:       hue stays `--foreground` (warm, not tinted), only the PRESENCE falls below the
+src/styles/tokens/glass.css:218:       `--glass-floor-fill` is an ALPHA-OF-`--card` PLATE leg, not a chroma tint, so
+src/styles/tokens/glass.css:219:       `in srgb` is CORRECT (the oklab/srgb fence is tint-vs-plate). At definition 0 it
+src/styles/tokens/glass.css:304:   override CLAMPS to the initial-value — the typed fail-safe. */
+src/styles/tokens/light-dark.css:12:   `--touch-target`, so every scaled control-height `max(scaled, floor)` clamps at
+src/styles/tokens/property-regs.css:114:/* The per-INSTANCE CHROMATIC-RIM tint. `--glass-accent` is a complete `<color>` (a
+src/styles/tokens/property-regs.css:115:   consumer DATA hue) that OKLab-tints a glass surface's RIM — the
+src/styles/tokens/property-regs.css:122:   accent is the RIM+GLINT chromatic decoration axis and it NEVER tints the plate
+src/styles/tokens/property-regs.css:123:   background. Three disjoint glass axes: LEVEL (opacity+blur) · TINT (whole-plate
+src/styles/tokens/property-regs.css:130:   CLAMPS to the initial value — the typed fail-safe. */
+src/styles/tokens/property-regs.css:151:   bound (`--glass-bound`), with nothing sampled from the backdrop. Level scales that α
+src/styles/tokens/property-regs.css:185:   `calc(<base> * var(--ui-scale))` is always valid — a malformed override CLAMPS to 1
+src/styles/tokens/property-regs.css:197:   the whole mechanism: a DRIVER ancestor pushes `--motion-weight: 1`; an OBSERVER
+src/styles/tokens/property-regs.css:219:   override CLAMPS to 1, and `motionTempo()` mirrors the ≤0 → 1 clamp JS-side.
+src/styles/tokens/scale-paper.css:69:       inline. ONE geometry (the SAME `--focus-ring-width`), ONE tint knob
+src/styles/tokens/scale-paper.css:82:       RadioGroupItem) reads it so a re-tint is ONE edit, library-wide.
+src/styles/tokens/scale-paper.css:101:       • `--control-checked-bg` — the SELECTED glass-tinted fill. The recipe is minted
+src/styles/tokens/scale-paper.css:137:       so it re-tints with the theme by construction (warm-ink on light, lifting
+src/styles/tokens/scale-paper.css:152:       the document-register card's INTERIOR ground, felt THROUGH the glass tint.
+src/styles/tokens/scale-paper.css:158:       shared. The ink stays a `color-mix(… var(--foreground) N%, …)` (re-tints with
+src/styles/tokens/scale-paper.css:216:       as polished metal, not a tinted cast, and the cool hue distinguishes it from
+src/styles/tokens/scale-paper.css:248:       "warm-not-tinted" bar). It is NOT a neutral — a low-chroma bronze would BE a
+src/styles/tokens/shadow.css:54:       cannot hold C 0.11 at L 0.18, so the browser clamps each channel and the ink
+src/styles/tokens/shadow.css:96:       shadow (small downward offset, a large soft blur, ambient-tinted), in the
+src/styles/tokens/shadow.css:103:       casts a faint tinted contact shade. Adaptive-by-construction: `--shadow-color`
+src/styles/tokens/shadow.css:127:       the surface (the contact-darkening AO the satellites pick up where they merge into
+src/styles/tokens/shadow.css:143:       contact band TIGHTENS toward the lifted base (a touch of extra grounding-darken
+src/styles/tokens/sizing.css:22:       `--control-floor` is the WCAG-2.5.5 clamp seam: 0 at desktop, lifted to
+src/styles/tokens/sizing.css:40:       ratio it rides the fluid clamp and the comfort factor exactly once, for free.
+src/styles/tokens/sizing.css:153:       `max(…, --dock-control-floor)` clamp. `--dock-mobile-scale` overrides this. */
+src/styles/tokens/sizing.css:212:    /* The layer switcher is a HAIRLINE register, not a fused tinted gutter: the
+src/styles/tokens/sizing.css:214:       edge. The hover/active affordance stays a translucent GLASS tint — the accent
+src/styles/tokens/sizing.css:218:       one thing with one name, and the value taken is the dock's OWN tint rung —
+src/styles/tokens/sizing.css:233:       glass-correct translucent tint a ladder step above hover, never an opaque plate
+src/styles/tokens/sizing.css:256:    /* The press DARKEN, read on `:active` alongside the scale-press so a press lands a
+src/styles/tokens/sizing.css:257:       brief darken rather than scaling alone. The one-ink SELECTED rung
+src/styles/tokens/sizing.css:321:     2. TYPE keeps its own clamp and never rides `--ui-scale`; no type rung appears
+src/styles/utilities/base.css:299:       consumer's own hover/active bg-tint cascade to acknowledge the

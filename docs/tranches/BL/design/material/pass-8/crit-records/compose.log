@@ -1,0 +1,25 @@
+apply --check floor-v6.patch at c3aa357b0: exit 0 · 87 files · sha1 235a5117
+apply --check floor-v7.patch at c3aa357b0: exit 0 · 88 files · sha1 4a1e09c8
+apply --check minor-split-v5.patch at c3aa357b0: exit 0 · 57 files · sha1 a790fd05
+apply --check minor-split-v6.patch at c3aa357b0: exit 0 · 59 files · sha1 4ea01c0e
+worktree = floor-v6.patch
+floor-v6 + floor-v7-R17.diff = floor-v7.patch: cmp exit 0
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-8/floor-v7.patch:1240: trailing whitespace.
+       white app surface (the canonical G2 case the user reported). 
+warning: 1 line adds whitespace errors.
+worktree = HEAD
+worktree = minor-split-v5.patch
+minor-v5 + minor-split-v6-R18.diff = minor-split-v6.patch: cmp exit 0
+worktree = HEAD
+R-17 delta paths:
+1	1	src/styles/glass/liquid-fill.css
+8	9	tests/components/field/forms-seam.test.ts
+R-18 delta paths:
+11	13	src/components/dock/styles/adaptive-legibility.css
+4	4	src/components/dock/styles/index.css
+3	3	src/components/dock/styles/search.css
+4	3	src/components/dock/styles/shell.css
+3	2	src/styles/glass/surface-axis.css
+3	4	src/styles/glass/surfaces-pager.css
+4	2	src/styles/tokens/property-regs.css
+1	1	tests/components/field/forms-seam.test.ts

@@ -1,0 +1,44 @@
+# patch floor-v7.patch: 88 paths; scope 1087 files; changed tokens 8
+#   changed --glass-blur-floating-radius: ['20px']
+#   changed --glass-blur-overlay-radius: ['22px']
+#   changed --glass-blur-quiet-radius: ['14px']
+#   changed --glass-blur-resting-radius: ['16px']
+#   changed --glass-blur-wash-radius: ['10px']
+#   changed --glass-saturate-grasp: ['1.75']
+#   changed --glass-veil-step: ['0.04']
+#   changed --ink-perimeter: ['0.48']
+V1 demo/stories/substrates/glass-panel.vue:9 [--glass-blur-floating-radius 20px] // `.glass-deep` DEPTH axis (the apple-home-nav 16-20px register).
+V1 src/components/dialog/styles.css:78 [--glass-blur-floating-radius 20px] * PAINTED plate (18% brown over the α0.50 scrim through blur(20px) saturate(1.5)) at
+V1 src/styles/glass/deep.css:4 [--glass-blur-floating-radius 20px] * calm default (the Apple `saturate(1.8) blur(20px)` family, landed
+V2 src/styles/glass/deep.css:69 [--glass-blur-floating-radius 20px] predecessor LERPed `--glass-blur-floating-radius` (20px) toward
+V1 src/styles/glass/deep.css:127 [--glass-blur-floating-radius 20px] overlay stays the calm 20px; the calm ladder never reads --glass-depth) and only
+V1 src/styles/tokens/glass-deep.css:40 [--glass-blur-floating-radius 20px] * Apple home nav:        saturate(1.8) blur(20px)  (the canonical measure)
+V1 src/styles/tokens/glass-deep.css:41 [--glass-blur-floating-radius 20px] * Apple product tiers:   blur(14-20px)             (the band)
+V1 src/styles/tokens/glass-deep.css:42 [--glass-blur-floating-radius 20px] * glass-ui calm ladder:  6/10/12/18/20px / saturate 1.5 (tokens/glass.css)
+V1 src/styles/tokens/glass-deep.css:63 [--glass-blur-floating-radius 20px] (The `blur(20px)` Apple push stays retired on its own per-frame grounds; the
+V1 tests/components/ui/surface/Surface.test.ts:162 [--glass-blur-floating-radius 20px] /* RED at the first cut's bytes: the recipe LERPed the FLOATING radius (20px)
+V1 src/components/easing/constants.ts:56 [--glass-blur-overlay-radius 22px] *  the 44px coarse floor. 22px radius = the 44px diameter floor exactly. */
+V1 src/styles/glass/deep.css:71 [--glass-blur-overlay-radius 22px] painted 16px against a plain overlay's 22px and the ladder graded
+V1 src/styles/glass/control-bit.css:48 [--glass-blur-resting-radius 16px] NO `backdrop-filter` ANYWHERE IN THE LANE (D7/K9). A computed blur(7px) on a 16px
+V1 src/styles/glass/deep.css:70 [--glass-blur-resting-radius 16px] `--glass-blur-deep-radius` (16px), i.e. DOWNWARD, so a deep overlay
+V1 src/styles/glass/ladder.css:83 [--glass-blur-resting-radius 16px] resting → `--glass-under-shadow-default` (0 4px 16px -2px α0.08)
+V1 src/styles/theme/radius.css:21 [--glass-blur-resting-radius 16px] ─ multi-line field / stepper    --radius-field    16px     soft-rect   a box is not a stadium
+V1 src/styles/theme/radius.css:22 [--glass-blur-resting-radius 16px] ─ content card / popover        --radius-card     16px     squircle@lg content container (R28-40)
+V1 src/styles/theme/radius.css:23 [--glass-blur-resting-radius 16px] ─ alert                         --radius-card     16px     round       a presented plate — the
+V1 src/styles/theme/radius.css:26 [--glass-blur-resting-radius 16px] ─ toast                         --radius-card     16px     round       floats ABOVE the card
+V1 src/styles/theme/radius.css:42 [--glass-blur-resting-radius 16px] ─ dock shape="rounded"          --radius-card     16px     round       a plate silhouette; a
+V1 src/styles/theme/radius.css:113 [--glass-blur-resting-radius 16px] /* A finite radius rung above --radius-2xl (16px), below
+V1 src/styles/theme/radius.css:161 [--glass-blur-resting-radius 16px] control (clamped to half-height by `--radius-pill`'s 9999px geometry, so a 16px
+V1 src/styles/theme/radius.css:247 [--glass-blur-resting-radius 16px] engine rather than two. (The earlier "imperceptible at the 16px dialog radius"
+V1 src/styles/tokens/property-regs.css:163 [--glass-blur-resting-radius 16px] endpoint (depth 1 ≡ saturate 1.5 / blur 16px), so the deep blur is DRIVEN by this
+V1 tests/components/ui/surface/Surface.test.ts:163 [--glass-blur-resting-radius 16px] toward an absolute `--glass-blur-deep-radius` (16px), so deep resolved
+V1 tests/styles/glass-subtlety.test.ts:268 [--glass-blur-resting-radius 16px] /* The absolute `--glass-blur-deep-radius: 16px` endpoint is RETIRED: it was
+V1 src/components/_shared/field/control.css:140 [--glass-blur-wash-radius 10px] not a stadium — `--radius-field`). This lane's spec drafted "10px
+V1 src/components/alert/index.ts:8 [--glass-blur-wash-radius 10px] `--radius` → 10px). An alert IS a presented plate — the same rank as Card,
+V1 src/styles/theme/radius.css:46 [--glass-blur-wash-radius 10px] ─ media tile (skeleton/avatar/  --radius-media    10px     soft-rect   media/tile surface —
+V1 src/styles/theme/radius.css:103 [--glass-blur-wash-radius 10px] not the value: `--radius-lg` is 10px here, where Tailwind's own `lg` rung is
+V1 src/styles/glass/control-bit.css:119 [--ink-perimeter 0.48] headroom. The perimeter rung then stood at 0.48, the floor itself, so reading
+V1 src/styles/glass/control-bit.css:120 [--ink-perimeter 0.48] it gave some of that back. Both inks re-composited at 0.48 over all five
+V2 src/styles/tokens/scale-paper.css:90 [--ink-perimeter 0.48] reads the perimeter rung `--ink-perimeter` (then 0.48) off the one-ink register
+# deleted tokens (declared on a removed src line, declared nowhere in the patched src): 7
+SWEEP lines=33

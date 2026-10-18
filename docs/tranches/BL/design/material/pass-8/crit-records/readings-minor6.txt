@@ -1,0 +1,110 @@
+# minor v6: H8-1 sites and sentences beside the R-18 rewrites, in context
+--- DESIGN.md :1804-1806 (trees/minor6)
+1804	**One ink.** Every boundary and rule is `--foreground` at one of three alphas
+1805	(`--ink-seam` 0.08, `--ink-edge` 0.16, `--ink-perimeter` 0.48), composed by the reader:
+1806	`color-mix(in oklab, var(--foreground) calc(var(--ink-perimeter) * 100%), transparent)`
+--- src/styles/glass/liquid-fill.css :76-77 (trees/minor6)
+76	        /* The blur routes the `--glass-blur-quiet` rung (the 14px radius that SCALES by
+77	           `--glass-level`), not a literal blur off the level knob. */
+--- tests/components/button/Button.test.ts :145-147 (trees/minor6)
+145	            // Every write COMPOSES over `--glass-veil` — the element-composed plate,
+146	            // so the tier, the earned-darken clamp and `--glass-level` all survive
+147	            // inside the mix instead of being replaced by a `:root`-baked literal.
+--- tests/gates/feedback-tint-seam.test.ts :9-12 (trees/minor6)
+9	// single property: when `.feedback-tone` writes a `color-mix()` it REPLACES whatever the
+10	// rung wrote, so if the mix base is a raw plate token the rung's entire contribution —
+11	// its tier ink, its earned-darken clamp, its `--glass-level` — is discarded at the last
+12	// step. The surface claims a rung in its class list and paints something the ladder
+--- src/components/sheet/styles.css :194-197 (trees/minor6)
+194	     * THE INK IS α 0.08, the spec's own figure (CWT-2 §3.4). LIGHT: the one-ink
+195	     * register's in-content rule `--ink-seam` (tokens/color-radius.css §1.2); the light
+196	     * veil ink is the `--card` pole, which would draw a cream line on cream. DARK: two
+197	     * veil steps of the dark ink (`--glass-veil-step` 0.04, tokens/dark-arm.css). */
+--- src/styles/glass/overlay-plate.css :172-174 (trees/minor6)
+172	           The recipe RESTATES `.focus-ring:focus-visible` (`utilities/base.css:144`, the
+173	           source of record — the `--ink-perimeter` rung, which BK #80 measured at 3.0:1 at 0.48
+174	           against the retired shadow's 1.91:1) rather than composing the class, and the
+--- src/styles/glass/deep.css :72-76 (trees/minor6)
+72	        /* DEEP THICKENS THE RUNG IT DECORATES — it never re-bases it. The
+73	           predecessor LERPed `--glass-blur-floating-radius` (20px) toward
+74	           `--glass-blur-deep-radius` (16px), i.e. DOWNWARD, so a deep overlay
+75	           painted 16px against a plain overlay's 22px and the ladder graded
+76	           BACKWARDS with prominence (wash/quiet/resting 18.6 > floating 17.2 >
+--- src/components/dock/styles/adaptive-legibility.css :46-68 (trees/minor6)
+46	        --dock-fg-on-aurora: var(--foreground);
+47	        --muted-foreground: var(--foreground);
+48	    }
+49	
+50	    /* NO `@container style(--glass-backdrop: light)` bucket for the dock's own ink. It
+51	       declared exactly what the unconditional self-engage above already declares, so it
+52	       could only ever re-assert a value — a condition wearing a mechanism's name. The
+53	       bucket that genuinely reaches DESCENDANT nested glass inside a dock lives with
+54	       the rungs it re-points (glass/ladder.css); this file owns the dock root's ink. */
+55	
+56	    /* The `contrast-color()` flip for the dock control foreground (Chrome
+57	       147+/Safari 26+; progressive enhancement, NEVER the load-bearing floor). The
+58	       unconditional self-engage above already carries AA on all engines: it re-points
+59	       `--dock-fg-on-aurora` and the muted register to the full `--foreground` ink, and
+60	       it moves no plate. On a supporting engine `contrast-color()` REFINES the control ink,
+61	       anchored on the LIGHT BACKDROP signal (`--card`, the warm-white surface base the
+62	       bright bucket implies) — `contrast-color(var(--card))` resolves to the legible
+63	       DARK ink. Anchoring on the dark ink instead inverts to white (illegible on the
+64	       still-light dock plate), so the anchor is the light surface, matching the rung
+65	       refinement in glass.css. The bucket is the floor; this is the native pick. */
+66	    @supports (color: contrast-color(white)) {
+67	        /* The SELF-ENGAGED dock refinement (the unconditional self-engage above);
+68	           progressive enhancement only — the declarative lift is the AA floor. */
+--- src/styles/glass/surfaces-pager.css :29-36 (trees/minor6)
+29	        /* The plate composed at the element (NOT the raw
+30	           pre-substituted `--glass-plate-floating` :root token — the gray-hole
+31	           substitution-trap). Over a calm or unsampled backdrop the clamp resolves
+32	           exactly the floating rung's own ink; over a sampled BRIGHT carousel image the pill earns ink
+33	           for a real silhouette (darker in dark, a thicker cream pole in light; the
+34	           clamp's two-step ceiling keeps it translucent); under `.dark` the
+35	           tint arm LIFTS it toward luminous warm-dark, never a charcoal
+36	           slab. `in oklab` is the glass-tint perceptual family (the in-srgb
+--- src/styles/tokens/property-regs.css :121-125 (trees/minor6)
+121	   DISTINCT, not a fork, of `--glass-veil-ink` (the whole-plate legibility ink: darker
+122	   in dark, a thicker cream pole in light): the
+123	   accent is the RIM+GLINT chromatic decoration axis and it NEVER tints the plate
+124	   background. Three disjoint glass axes: LEVEL (opacity+blur) · TINT (whole-plate
+125	   legibility) · ACCENT (per-instance chromatic rim+glint).
+--- src/styles/tokens/property-regs.css :151-155 (trees/minor6)
+151	   Over-light legibility rides the SEPARATE `--glass-veil-*` axis: level = opacity+blur,
+152	   veil = the earned ink (darker in dark, a thicker cream pole in light). The two
+153	   coordinate but never collapse — the a11y
+154	   Clear↔Tinted escape rides level-up here AND tint-toward-ink under
+155	   `prefers-contrast: more`. */
+--- src/styles/glass/a11y-fallback.css :32-46 (trees/minor6)
+32	   ONE axis reaches it now. `--glass-level: 0.3` lerps every plate 70% of the way to
+33	   solid `--card` AND drops the blur to 30% of its rung — the firmer plate and the
+34	   legibility lift are the same move, because the plate is ink over the card escape
+35	   and the level IS the mix. The separate tint-darken this bracket used to add was a
+36	   second writer pushing the same plate the same direction. */
+37	@media (prefers-contrast: more) {
+38	    :root {
+39	        --glass-level: 0.3;
+40	        /* Definition is the MID rung of the SAME
+41	           a11y ladder `--glass-level: 0.3` rides: an explicit "more contrast" request
+42	           lifts every glass surface to the DEFINED tier library-wide (a read-carrying
+43	           warm rim + the warm-cream floor), joining the level+tint escape as ONE
+44	           coordinated bracket, not a third fork. */
+45	        --glass-definition: 1;
+46	    }
+--- tests/components/field/forms-seam.test.ts :93-95 (trees/minor6)
+93	
+94	        // ONE ink, the perimeter rung, at 1px. HEAD: 1.5px × 0.05 = a composited
+95	        // mass of 0.075 against the ladder's 0.48.
+--- src/styles/tokens/color-radius.css :154-154 (trees/minor6)
+154	    --ink-perimeter: 0.54; /* a control's own edge · the focus ring · the selection indicator — ≥ 3.0:1 on every resting light plate at the bound, the wash well over black the lowest (0.52 read 2.96 there, 0.48 read 2.79) */
+--- src/styles/tokens/glass-deep.css :10-14 (trees/minor6)
+10	 * it exists to deepen. This file shipped that inversion: the endpoint pair was
+11	 * written against a calm floating rung of 11px, so 16px read as "+5px, strictly
+12	 * deeper"; the calm ladder then moved to 10/14/16/20/22px and the LERP ran
+13	 * 20px -> 16px. A deep overlay painted 16px where the plain overlay paints 22, and
+14	 * thickness graded BACKWARDS with prominence. The +5px delta is what the family
+--- src/styles/tokens/glass-deep.css :52-55 (trees/minor6)
+52	       to deepen. That is exactly what shipped — the endpoint pair was written when
+53	       calm floating was 11px and the deep endpoint 16px (a +5px thickening), and
+54	       the calm ladder has since moved to 10/14/16/20/22px, so the LERP ran
+55	       20px → 16px: a deep overlay painted 16px where the plain overlay painted 22,

@@ -1,0 +1,18 @@
+-- declaration rebuilt from floor-v7.patch on floor v7
+  present write (export) ×170 · demo/shell/AppShell.vue:149 demo/shell/configurator/preset-editor/types.ts:75 demo/shell/configurator/presets/neutral.css:67 demo/stories/forms/checks.vue:25 demo/stories/motion/scroll.vue:8 demo/stories/substrates/aurora/AuroraConfigDock.vue:48
+crit vs FV7 declaration: IDENTICAL
+DEL H8 fv7 exit 0: PASS (85 gated rows)
+DEL H8 fv6 exit 1: FAIL (3 of 85 gated rows)
+DEL deletes-floor.json alone fv7 exit 1: FAIL (5 of 16 gated rows)
+-- minor
+H7-3 (src/demo) minor6 exit 1: FAIL (2 of 39 gated rows)
+H7-3 (src/demo) minor5 exit 1: FAIL (17 of 39 gated rows)
+H8-1 over the minor v6 patch minor6 exit 1: FAIL (6 of 47 gated rows)
+H8-1 over the minor v6 patch minor5 exit 1: FAIL (21 of 47 gated rows)
+H8-1 minor6 with MS6-proposed-sites exit 1: FAIL (4 of 50 gated rows)
+LAW exit 0: PASS (68 gated rows)
+census fv7 exit 0: LIGHTING-CENSUS stacked=0 halo=0 blur=0 open=0
+census minor6 exit 0: LIGHTING-CENSUS stacked=0 halo=0 blur=0 open=0
+census HEAD exit 1: LIGHTING-CENSUS stacked=2 halo=2 blur=5 open=9
+HOV fv7 exit 0: PASS (58 gated rows)
+HOV minor6 exit 0: PASS (58 gated rows)

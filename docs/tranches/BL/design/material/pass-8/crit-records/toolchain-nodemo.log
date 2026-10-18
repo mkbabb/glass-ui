@@ -1,0 +1,20 @@
+worktree = HEAD
+worktree = floor-v7.patch
+floor-v7 typecheck app exit 0 15:53:26 load { 32.49 26.92 24.61 }
+floor-v7 library build exit 0 15:53:34 load { 32.21 26.95 24.63 }
+floor-v7 typecheck tests exit 0 15:53:40 load { 30.27 26.72 24.58 }
+floor-v7 vitest exit 1 15:54:51 load { 31.20 27.17 24.88 }
+ Test Files  1 failed | 236 passed (237)
+      Tests  3 failed | 2315 passed | 10 expected fail | 1 skipped (2329)
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-8/floor-v7.patch:1240: trailing whitespace.
+       white app surface (the canonical G2 case the user reported). 
+warning: 1 line adds whitespace errors.
+worktree = HEAD
+worktree = minor-split-v6.patch
+minor-split-v6 typecheck app exit 0 15:55:01 load { 30.76 27.22 24.93 }
+minor-split-v6 library build exit 0 15:55:10 load { 29.96 27.17 24.93 }
+minor-split-v6 typecheck tests exit 0 15:55:19 load { 31.12 27.51 25.08 }
+minor-split-v6 vitest exit 1 15:56:32 load { 29.40 27.74 25.36 }
+ Test Files  1 failed | 238 passed (239)
+      Tests  3 failed | 2318 passed | 10 expected fail | 1 skipped (2332)
+worktree = HEAD
