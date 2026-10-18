@@ -1,0 +1,13 @@
+dist fv7 vs fv8: diff -rq exit 0, 0 lines
+dist fv8 vs fv8 rebuilt: diff -rq exit 0
+dist: fv8 3 files, fv7 3 files; sha256 lists diff: identical
+demo fv7 vs fv8: diff -rq exit 0, 0 lines
+demo fv8 vs fv8 rebuilt: diff -rq exit 0
+demo: fv8 346 files, fv7 346 files; sha256 lists diff: identical
+fv7 specimen css index-DyuSrJvX.css 391121 B sha256 347288745da7cf97
+fv8 specimen css index-DyuSrJvX.css 391121 B sha256 347288745da7cf97
+-- against pass 8's banked floor v7 same-label lists (FV7-records/same-fv7-*.sha256)
+dist banked fv7 vs fv8: diff exit 1, 8 lines
+demo banked fv7 vs fv8: diff exit 0, 0 lines
+demo, chunk hashes normalised: 338 files · 338 files · differ 0 []
+demo, chunk hashes normalised, scoped ids normalised: 338 files · 338 files · differ 0 []

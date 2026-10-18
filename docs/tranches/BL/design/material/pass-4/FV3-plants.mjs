@@ -2,7 +2,8 @@
 // FV3-plants.mjs · D3 pass 4, floor v3: the R-1..R-5 mechanism-removal plants and the two owner-option variants, each an
 // injection over the ONE floor v3 specimen build (REGISTRY P3-4.2, P3-5.2 step 2). Each plant puts back floor v2's value
 // for one ruling and must red that ruling's row; the variants (Q-1 (c), Q-11 (b)) are read under their own text.
-//   node FV3-plants.mjs <dist> <worktree> [--only id,id] [--out <dir>]
+//   node FV3-plants.mjs <dist> <worktree> [--only id,id] [--engines chromium|webkit] [--out <dir>]
+// --engines (H9-5, pass 9): as FV2-plants.mjs, every capture of a variant (its retunes too) in those engines only.
 // Each variant is captured into its own capdir and relabelled `base`, so the unmodified witnesses read it; cells a
 // variant does not take print as MISSING. R-5's plant is static (lighting-census.mjs on the 10.1.0 and floor v2 tokens).
 import fs from "node:fs";
@@ -10,6 +11,7 @@ import path from "node:path";
 import os from "node:os";
 import { fileURLToPath } from "node:url";
 import { OUT, RETUNES, cli, list } from "../harness/lib.mjs";
+import { enginesFor } from "../pass-3/FV2-plants.mjs";
 import { capture } from "../harness/capture.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -40,19 +42,22 @@ function relabel(capdir) {
   fs.writeFileSync(f, JSON.stringify(d, null, 1));
 }
 
-const a = cli({ only: { type: "string" }, out: { type: "string" } });
-if (!a._[0]) { console.error("usage: node FV3-plants.mjs <dist> <worktree> [--only ids] [--out dir]"); process.exit(2); }
-const root = path.resolve(a.out || path.join(OUT, "caps"));
-for (const id of list(a.only, Object.keys(VARIANTS))) {
-  const v = VARIANTS[id], capdir = path.join(root, id), css = path.join(root, `${id}.css`);
-  fs.mkdirSync(root, { recursive: true }); fs.writeFileSync(css, v.css + "\n");
-  console.log(`== ${id} · ${new Date().toTimeString().slice(0, 8)} · load ${os.loadavg().map((x) => x.toFixed(1)).join(" ")}`);
-  await capture(path.resolve(a._[0]), { out: capdir, engines: v.engines, themes: v.themes, scenes: v.scenes, grounds: v.grounds, variant: id, inject: css, worktree: a._[1] && path.resolve(a._[1]), quiet: true });
-  relabel(capdir);
-  if (v.retunes) for (const [rv, rcss] of Object.entries(RETUNES)) {
-    const f = path.join(root, `${id}-${rv}.css`); fs.writeFileSync(f, v.css + "\n" + rcss + "\n");
-    await capture(path.resolve(a._[0]), { out: capdir, grounds: "paper", scenes: "ladder,dialog", variant: rv, inject: f, worktree: a._[1] && path.resolve(a._[1]), quiet: true });
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const a = cli({ only: { type: "string" }, out: { type: "string" }, engines: { type: "string" } });
+  if (!a._[0]) { console.error("usage: node FV3-plants.mjs <dist> <worktree> [--only ids] [--engines list] [--out dir]"); process.exit(2); }
+  const root = path.resolve(a.out || path.join(OUT, "caps"));
+  for (const id of list(a.only, Object.keys(VARIANTS))) {
+    const v = VARIANTS[id], capdir = path.join(root, id), css = path.join(root, `${id}.css`), engines = enginesFor(v, a.engines).join(",");
+    if (!engines) { console.log(`== ${id}: not captured (variant engines ${v.engines}, --engines ${a.engines})`); continue; }
+    fs.mkdirSync(root, { recursive: true }); fs.writeFileSync(css, v.css + "\n");
+    console.log(`== ${id} · engines ${engines} · ${new Date().toTimeString().slice(0, 8)} · load ${os.loadavg().map((x) => x.toFixed(1)).join(" ")}`);
+    await capture(path.resolve(a._[0]), { out: capdir, engines, themes: v.themes, scenes: v.scenes, grounds: v.grounds, variant: id, inject: css, worktree: a._[1] && path.resolve(a._[1]), quiet: true });
     relabel(capdir);
+    if (v.retunes) for (const [rv, rcss] of Object.entries(RETUNES)) {
+      const f = path.join(root, `${id}-${rv}.css`); fs.writeFileSync(f, v.css + "\n" + rcss + "\n");
+      await capture(path.resolve(a._[0]), { out: capdir, engines, grounds: "paper", scenes: "ladder,dialog", variant: rv, inject: f, worktree: a._[1] && path.resolve(a._[1]), quiet: true });
+      relabel(capdir);
+    }
   }
+  console.log(`== end · ${new Date().toTimeString().slice(0, 8)} · load ${os.loadavg().map((x) => x.toFixed(1)).join(" ")}`);
 }
-console.log(`== end · ${new Date().toTimeString().slice(0, 8)} · load ${os.loadavg().map((x) => x.toFixed(1)).join(" ")}`);

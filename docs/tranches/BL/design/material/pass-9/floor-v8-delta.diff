@@ -1,0 +1,133 @@
+diff --git a/src/components/_shared/feedback/feedback-tone.css b/src/components/_shared/feedback/feedback-tone.css
+index c9c3f0519..0d04b0210 100644
+--- a/src/components/_shared/feedback/feedback-tone.css
++++ b/src/components/_shared/feedback/feedback-tone.css
+@@ -17,9 +17,9 @@
+    was inert behind a 100%-opaque plate).
+ 
+    This file mints the tone register ONCE. Every feedback tone reads as COLORED GLASS:
+-   a tinted-glass wash (the rung bg mixed a BOUNDED % toward the tone, the SAME
+-   `color-mix(in oklab, <rung bg>, <tint> <strength>)` seam the `--glass-veil-*`
+-   legibility lift and the `--veil-bg` plate already run — ZERO new compositing path) +
++   a tinted-glass wash (the rung bg mixed a BOUNDED % toward the tone,
++   `color-mix(in oklab, <rung bg>, <tint> <strength>)` over the rung's own published
++   `--glass-veil` — one mix, ZERO new compositing path, no second plate) +
+    a tone-keyed rim + a full-chroma glyph. The backdrop STILL shows through (α stays
+    translucent, the π floor < ~0.92). The body ink stays `--foreground` /
+    `--card-foreground` for legibility (the Alert discipline — body never tone-tinted),
+diff --git a/src/components/dock/GlassDock.vue b/src/components/dock/GlassDock.vue
+index ac27a7e64..fbe243245 100644
+--- a/src/components/dock/GlassDock.vue
++++ b/src/components/dock/GlassDock.vue
+@@ -464,9 +464,9 @@ defineExpose({
+                 reveal rides the dock's OWN `--dock-morph-t` glide (the box
+                 shrink-wraps; no second engine). The consumer composes `useDockSearch`
+                 and slots its search field + the fuzzy dropdown here; the
+-                `.dock-search-field` surface reads the tint seam (dock/search.css) so
+-                the active field reads ≥4.5:1 over the backdrop (the no-pale-fade
+-                legibility floor).
++                `.dock-search-field` surface reads the bound dock/search.css composes
++                at the element (≥4.5:1, the bound), so the active field holds the
++                no-pale-fade legibility floor over the backdrop.
+             -->
+             <div v-if="$slots.search" class="dock-search-field">
+                 <slot name="search" />
+diff --git a/src/components/dock/styles/index.css b/src/components/dock/styles/index.css
+index 44ec863dd..af2823789 100644
+--- a/src/components/dock/styles/index.css
++++ b/src/components/dock/styles/index.css
+@@ -76,11 +76,11 @@
+    resting-geometry reserve + the plain transition:opacity FLIP reveal). Last in the
+    dock cascade — a net-new surface around the byte-untouched useDockCtaReceive morph. */
+ @import "./cta-seat.css";
+-/* The dock-as-native-dynamic-search-bar field surface (the
+-   active-field tint legibility seam + the `.glass-menu-row` result rows). A net-new
++/* The dock-as-native-dynamic-search-bar field surface (the active field,
++   which holds the bound, ≥4.5:1, + the `.glass-menu-row` result rows). A net-new
+    surface on a dock that authors the `#search` slot ([2026-08-12 · BK #47 W1
+    SURFACE] ~~`[data-search]`~~); the pill→field morph is the dock's OWN `--dock-morph-t`
+-   glide (box-inviolate); CONSUMES the tint seam + the menu-row recipe, re-authors neither. */
++   glide (box-inviolate); CONSUMES `glass-plate` + the menu-row recipe, re-authors neither. */
+ @import "./search.css";
+ 
+ /* The SINGLE morph scalar. The dock morph orchestrator writes it once per frame
+diff --git a/src/styles/glass/a11y-fallback.css b/src/styles/glass/a11y-fallback.css
+index bdc802226..411a25989 100644
+--- a/src/styles/glass/a11y-fallback.css
++++ b/src/styles/glass/a11y-fallback.css
+@@ -30,10 +30,10 @@
+    for AA while keeping a hint of the glass register. ONE knob, every rung.
+ 
+    ONE axis reaches it now. `--glass-level: 0.3` lerps every plate 70% of the way to
+-   solid `--card` AND drops the blur to 30% of its rung — the firmer plate and the
+-   legibility lift are the same move, because the plate is ink over the card escape
+-   and the level IS the mix. The separate tint-darken this bracket used to add was a
+-   second writer pushing the same plate the same direction. */
++   solid `--card` AND drops the blur to 30% of its rung — the firmer plate is the
++   whole move, because the plate is `--card` at α and the level IS that α. The
++   separate tint-darken this bracket used to add was a second writer pushing the
++   same plate the same direction. */
+ @media (prefers-contrast: more) {
+     :root {
+         --glass-level: 0.3;
+diff --git a/src/styles/glass/surfaces-pager.css b/src/styles/glass/surfaces-pager.css
+index 20e69ff38..776872ba4 100644
+--- a/src/styles/glass/surfaces-pager.css
++++ b/src/styles/glass/surfaces-pager.css
+@@ -26,13 +26,13 @@
+         padding-inline: var(--space-atom);
+         padding-block: var(--space-residue);
+         border-radius: var(--radius-pill);
+-        /* The element-level oklab TINT seam (NOT the raw
+-           pre-substituted `--glass-plate-floating` :root token — the gray-hole
+-           substitution-trap). At the `--glass-level: 0` default this is the
+-           no-op floor (`X, src 0%) ≡ X` — byte-identical pager pixels
+-           over a flat page); the pill paints the floating rung's chrome-bound veil; under `.dark` the
+-           tint arm LIFTS it toward luminous warm-dark, never a charcoal
+-           slab. `in oklab` is the glass-tint perceptual family (the in-srgb
++        /* The pill applies `glass-plate` at the floating rung: one `--card`
++           pole composed at the ELEMENT (NOT the raw pre-substituted
++           `--glass-plate-floating` :root token — the gray-hole
++           substitution-trap). The composition is the same in both themes,
++           with no ink, clamp or oklab mix; only `--card` differs between
++           them. `--glass-level` defaults to 1, so the pill paints the
++           floating rung's chrome-bound veil (the in-srgb
+            `--surface-tint-*` brand fence is untouched). The dock plate's element-level
+            compose precedent applied to the pager chassis (a `--glass-veil-tier` +
+            `@apply glass-plate` pair — glass/veil.css; the old `--glass-plate-dock`
+diff --git a/src/styles/tokens/glass-deep.css b/src/styles/tokens/glass-deep.css
+index 6ebdfa7a4..51ea56a65 100644
+--- a/src/styles/tokens/glass-deep.css
++++ b/src/styles/tokens/glass-deep.css
+@@ -9,9 +9,9 @@
+  * moment the calm ladder retunes past that number the decoration THINS the surface
+  * it exists to deepen. This file shipped that inversion: the endpoint pair was
+  * written against a calm floating rung of 11px, so 16px read as "+5px, strictly
+- * deeper"; the calm ladder then moved to 10/14/16/20/22px and the LERP ran
+- * 20px -> 16px. A deep overlay painted 16px where the plain overlay paints 22, and
+- * thickness graded BACKWARDS with prominence. The +5px delta is what the family
++ * deeper"; the calm ladder (the `--glass-blur-*-radius` rungs) then retuned and the
++ * LERP ran 20px -> 16px. A deep overlay painted 16px where the plain overlay then
++ * painted 22, and thickness graded BACKWARDS with prominence. The +5px delta is what the family
+  * always encoded, so the delta is what the token now holds:
+  *   deep(tier) = tier_radius + 5px * --glass-depth
+  * -> 7.75 / 11.75 / 13.75 / 21.5 / 25px across wash..overlay. Thicker than plain
+@@ -51,7 +51,7 @@
+        calm ladder retunes past it the decoration THINS the surface it is supposed
+        to deepen. That is exactly what shipped — the endpoint pair was written when
+        calm floating was 11px and the deep endpoint 16px (a +5px thickening), and
+-       the calm ladder has since moved to 10/14/16/20/22px, so the LERP ran
++       the calm ladder then retuned (the `--glass-blur-*-radius` rungs), so the LERP ran
+        20px → 16px: a deep overlay painted 16px where the plain overlay painted 22,
+        and thickness graded BACKWARDS with prominence (wash 18.6 > floating 17.2 >
+        overlay 16.0). The +5px DELTA is what the family always encoded; it is now
+diff --git a/src/styles/tokens/glass-fx.css b/src/styles/tokens/glass-fx.css
+index aeaf58f57..378ce3121 100644
+--- a/src/styles/tokens/glass-fx.css
++++ b/src/styles/tokens/glass-fx.css
+@@ -1,4 +1,4 @@
+-/* tokens/glass-fx.css — §8 glass EFFECT knobs: grain/specular/edge-light, the tint source, the decorative fringe/curvature/chart-palette, and
++/* tokens/glass-fx.css — §8 glass EFFECT knobs: grain/specular/edge-light, the capsule warm floor, the decorative fringe/curvature/chart-palette, and
+    the per-tier shadow/spine/under-shadow/overlay-scrim recipes. @import-ed by tokens.css
+    IMMEDIATELY AFTER glass.css, whose §8 ladder and control-REST register this partial
+    continues — two adjacent same-selector :root{} blocks at the same cascade slot. */

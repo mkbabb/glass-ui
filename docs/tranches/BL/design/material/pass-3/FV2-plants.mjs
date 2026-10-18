@@ -4,13 +4,15 @@
 // adds floor v2's own: the plate's `isolation` removed under an opaque ancestor (FL-14's stacking precondition), and the
 // held Slider's carriers' filter off (N-3: the halo M-2h reads on the held dock, attributed or not). The four pass-2
 // variants are copied verbatim from ../pass-2/D3-Ap-plants.mjs (that file runs its CLI on import).
-//   node FV2-plants.mjs <dist> <worktree> [--only id,id] [--out <dir>]      ($D3_OUT/caps/<id> by default)
+//   node FV2-plants.mjs <dist> <worktree> [--only id,id] [--engines chromium|webkit] [--out <dir>]      ($D3_OUT/caps/<id> by default)
+// --engines (H9-5, pass 9) narrows every variant to those engines, as capture.mjs takes it: a variant keeps its own
+// `engines` intersected with the flag, and one left with none is printed as not captured. lib.mjs's ENGINES is frozen.
 // Each variant is captured into its own capdir and relabelled `base`, so the unmodified witnesses read it; the cells a
 // variant does not take print as MISSING (ignore them; read the rows it touches).
 import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
-import { OUT, cli, list } from "../harness/lib.mjs";
+import { OUT, ENGINES, cli, list } from "../harness/lib.mjs";
 import { capture } from "../harness/capture.mjs";
 
 const HELD = { scenes: "held", grounds: "black,white,aurora" };
@@ -43,13 +45,19 @@ function relabel(capdir) {
   fs.writeFileSync(f, JSON.stringify(d, null, 1));
 }
 
-const a = cli({ only: { type: "string" }, out: { type: "string" } });
-if (!a._[0]) { console.error("usage: node FV2-plants.mjs <dist> <worktree> [--only ids] [--out dir]"); process.exit(2); }
-const root = path.resolve(a.out || path.join(OUT, "caps"));
-for (const id of list(a.only, Object.keys(VARIANTS))) {
-  const v = VARIANTS[id], capdir = path.join(root, id), css = path.join(root, `${id}.css`);
-  fs.mkdirSync(root, { recursive: true }); fs.writeFileSync(css, v.css + "\n");
-  console.log(`== ${id} · ${new Date().toTimeString().slice(0, 8)} · load ${os.loadavg().map((x) => x.toFixed(1)).join(" ")}`);
-  await capture(path.resolve(a._[0]), { out: capdir, engines: v.engines, themes: v.themes, scenes: v.scenes, grounds: v.grounds, variant: id, inject: css, worktree: a._[1] && path.resolve(a._[1]), quiet: true });
-  relabel(capdir);
+// H9-5: the engines a variant is captured in: its own `engines` (else lib.mjs's ENGINES), narrowed by --engines.
+export const enginesFor = (v, flag) => { const only = list(flag, null), own = list(v.engines, [...ENGINES]); return only ? own.filter((e) => only.includes(e)) : own; };
+
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const a = cli({ only: { type: "string" }, out: { type: "string" }, engines: { type: "string" } });
+  if (!a._[0]) { console.error("usage: node FV2-plants.mjs <dist> <worktree> [--only ids] [--engines list] [--out dir]"); process.exit(2); }
+  const root = path.resolve(a.out || path.join(OUT, "caps"));
+  for (const id of list(a.only, Object.keys(VARIANTS))) {
+    const v = VARIANTS[id], capdir = path.join(root, id), css = path.join(root, `${id}.css`), engines = enginesFor(v, a.engines);
+    if (!engines.length) { console.log(`== ${id}: not captured (variant engines ${v.engines}, --engines ${a.engines})`); continue; }
+    fs.mkdirSync(root, { recursive: true }); fs.writeFileSync(css, v.css + "\n");
+    console.log(`== ${id} · engines ${engines.join(",")} · ${new Date().toTimeString().slice(0, 8)} · load ${os.loadavg().map((x) => x.toFixed(1)).join(" ")}`);
+    await capture(path.resolve(a._[0]), { out: capdir, engines: engines.join(","), themes: v.themes, scenes: v.scenes, grounds: v.grounds, variant: id, inject: css, worktree: a._[1] && path.resolve(a._[1]), quiet: true });
+    relabel(capdir);
+  }
 }
