@@ -1,4 +1,15 @@
 {
-  "patch": "the floor (floor v4 and later): FL-1 and FL-16 delete the backdrop sampler, the clamp and its earned darken, the knee, --glass-backdrop-luma, backdropMode and the adaptive tint (REGISTRY P5-3.3; names per P5-5 H6-1, backdropMode from P5-3.3's row, backdrop mode and adaptive tint per P6-2.2 R-15 (ii)). The concepts a patch deletes with no identifier are declared here by hand; declare-removed.mjs adds every identifier the patch's removed lines name (R-15 (iii))",
-  "names": ["earned darken", "darkened by whatever", "luma read", "backdropLuminance", "--glass-backdrop-luma", "backdropMode", "backdrop mode", "adaptive tint"]
+  "patch": "the floor (floor v4 and later): FL-1 and FL-16 delete the backdrop sampler, the clamp and its earned darken, the knee, --glass-backdrop-luma, backdropMode and the adaptive tint (REGISTRY P5-3.3; names per P5-5 H6-1, backdropMode from P5-3.3's row, backdrop mode and adaptive tint per P6-2.2 R-15 (ii)). The concepts a patch deletes with no identifier are declared here by hand; declare-removed.mjs adds every identifier the patch's removed lines name (R-15 (iii)). H9-1 (P8-5): the clamp's oklab tint seam, its tint arm and the dock's active-field tint legibility seam are declared as phrases; each live homonym site (the feedback-tone seam and its gate, the music-staff folio's own seam, the accent axis that OKLab-tints a rim) is a `homonyms` site entry, read in context in pass 9 (pass-9/H9.md §1)",
+  "names": ["earned darken", "darkened by whatever", "luma read", "backdropLuminance", "--glass-backdrop-luma", "backdropMode", "backdrop mode", "adaptive tint", "tint seam", "tint arm", "oklab tint", "tint legibility seam"],
+  "homonyms": [
+    { "name": "tint seam", "at": "src/components/_shared/feedback/feedback-tone.css:62", "why": "the live gate name `G-FEEDBACK-TINT-SEAM` (the feedback-tone seam, not the clamp's)" },
+    { "name": "tint seam", "at": "src/components/alert/index.ts:70", "why": "the live gate name `G-FEEDBACK-TINT-SEAM`" },
+    { "name": "tint seam", "at": "src/components/metric/styles.css:86", "why": "#33's live feedback-tint seam at its ink half (P8-5 H9-1 names it)" },
+    { "name": "tint seam", "at": "src/components/music-staff/README.md:60", "why": "the folio material's own rung-tint seam, not the patch's mechanism (Crit §3, P8-1.1: landing docs pass)" },
+    { "name": "tint seam", "at": "tests/gates/feedback-tint-seam.test.ts:1", "why": "the gate's own name line" },
+    { "name": "tint seam", "at": "tests/gates/feedback-tint-seam.test.ts:121", "why": "the gate's own describe title" },
+    { "name": "tint seam", "at": "tests/gates/gate-register.test.ts:163", "why": "the register's line for the live gate" },
+    { "name": "oklab tint", "at": "demo/stories/substrates/glass-material.vue:257", "why": "the live accent axis: a data hue OKLab-tints the rim (verb, not the plate seam)" },
+    { "name": "oklab tint", "at": "src/styles/tokens/property-regs.css:115", "why": "the live accent axis: `--glass-accent` OKLab-tints the rim" }
+  ]
 }

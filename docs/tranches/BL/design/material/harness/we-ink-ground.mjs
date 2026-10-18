@@ -6,7 +6,7 @@
 //   Leg 2: every level's painted α (from its composites over black and white) ≤ 0.30.
 //   Leg 3: every perimeter and ring (as M-3) over the same grounds ≥ 3.0.
 //   node we-ink-ground.mjs <capdir> [--gate chromium[,webkit]]
-import { cli, loadCapture, gateEngines, report, paintedAlpha, f, tag, pick, THEMES } from "./lib.mjs";
+import { cli, loadCapture, gateEngines, report, paintedAlpha, f, tag, pick, THEMES, VARIANT } from "./lib.mjs";
 import { need, tally, inkRows, indicatorRows, span } from "./rows.mjs";
 
 const a = cli(), cap = loadCapture(a._[0]), gate = gateEngines(a);
@@ -22,7 +22,7 @@ for (const { cell, gated } of n.have) {
 }
 for (const engine of [...new Set(cap.cells.map((c) => c.engine))]) for (const theme of THEMES) for (const scene of ["ladder", "dialog"]) {
   const gated = gate.includes(engine);
-  const B = pick(cap, { engine, theme, ground: "black", scene, variant: "base" })[0], W = pick(cap, { engine, theme, ground: "white", scene, variant: "base" })[0];
+  const B = pick(cap, { engine, theme, ground: "black", scene, variant: VARIANT })[0], W = pick(cap, { engine, theme, ground: "white", scene, variant: VARIANT })[0];
   if (!B || !W || B.crashed || W.crashed) continue;
   const parts = B.specs.filter((s) => s.sample && s.id !== "opaque").map((s) => { const { alpha } = paintedAlpha(cap, B, W, s); const ok = alpha <= 0.3; t.add(gated, ok); return `${s.id} ${f(alpha, 3)}${ok ? "" : " ✗"}`; });
   lines.push(`painted α ${engine} ${theme} ${scene}${gated ? "" : " [info]"}: ${parts.join(" · ")}`);

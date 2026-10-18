@@ -21,7 +21,7 @@
 //   node m2-motion.mjs <capdir> [--gate chromium[,webkit]] [--verbose]
 import fs from "node:fs";
 import path from "node:path";
-import { PNG, cli, loadCapture, gateEngines, report, glyphCoverage, ringRead, region, mean3, lch, pick, f, THEMES, FIELD_GROUNDS, CELLS } from "./lib.mjs";
+import { PNG, cli, loadCapture, gateEngines, report, glyphCoverage, ringRead, region, mean3, lch, pick, f, THEMES, FIELD_GROUNDS, CELLS, VARIANT } from "./lib.mjs";
 import { tally } from "./rows.mjs";
 
 const a = cli(), cap = loadCapture(a._[0]), gate = gateEngines(a);
@@ -30,10 +30,10 @@ const same = (p, q) => p && q && p.every((v, i) => Math.abs(v - q[i]) <= 1);
 const engines = [...new Set([...gate, ...(cap.motion || []).map((m) => m.engine)])];
 for (const engine of engines) for (const theme of THEMES) for (const ground of FIELD_GROUNDS) {
   if (CELLS && !CELLS.test(`${engine} ${theme} ${ground} ladder`)) continue;
-  const gated = gate.includes(engine), m = (cap.motion || []).find((x) => x.engine === engine && x.theme === theme && x.ground === ground && (x.variant || "base") === "base");
+  const gated = gate.includes(engine), m = (cap.motion || []).find((x) => x.engine === engine && x.theme === theme && x.ground === ground && (x.variant || "base") === VARIANT);
   const lab = `${engine}${m?.shim ? "+shim" : ""} ${theme} ${ground}`;
   if (!m || m.error) { if (gated) { t.add(true, false); lines.push(`motion ${lab}: ${m ? "ERROR " + m.error : "MISSING (capture with --motion)"} ✗`); } continue; }
-  const cell = pick(cap, { engine, theme, ground, scene: "ladder", variant: "base" })[0];
+  const cell = pick(cap, { engine, theme, ground, scene: "ladder", variant: VARIANT })[0];
   if (!cell || cell.crashed) { t.add(gated, false); lines.push(`motion ${lab}: no frozen ladder cell for the masks ✗`); continue; }
   const moved = m.specs.filter((s) => { const c = cell.specs.find((z) => z.id === s.id); return !c || !same(s.rect, c.rect) || s.inks.some((i) => !same(i.box, c.inks.find((z) => z.id === i.id)?.box)); });
   if (moved.length) { t.add(gated, false); lines.push(`motion ${lab}: layout differs from the frozen cell (${moved.map((s) => s.id).join(", ")}) ✗`); continue; }
@@ -65,10 +65,10 @@ for (const engine of engines) for (const theme of THEMES) for (const ground of F
 for (const engine of [...new Set([...gate, ...(cap.drift || []).map((m) => m.engine)])]) for (const theme of THEMES) {
   const ground = "aurora";
   if (CELLS && !CELLS.test(`${engine} ${theme} ${ground} ladder`)) continue;
-  const gated = gate.includes(engine), m = (cap.drift || []).find((x) => x.engine === engine && x.theme === theme && x.ground === ground && (x.variant || "base") === "base");
+  const gated = gate.includes(engine), m = (cap.drift || []).find((x) => x.engine === engine && x.theme === theme && x.ground === ground && (x.variant || "base") === VARIANT);
   const lab = `${engine}${m?.shim ? "+shim" : ""} ${theme} ${ground}`;
   if (!m || m.error) { if (gated) { t.add(true, false); lines.push(`drift ${lab}: ${m ? "ERROR " + m.error : "MISSING (capture with --drift)"} ✗`); } continue; }
-  const cell = pick(cap, { engine, theme, ground, scene: "ladder", variant: "base" })[0];
+  const cell = pick(cap, { engine, theme, ground, scene: "ladder", variant: VARIANT })[0];
   if (!cell || cell.crashed) { t.add(gated, false); lines.push(`drift ${lab}: no frozen ladder cell for the masks ✗`); continue; }
   const moved = m.specs.filter((s) => { const c = cell.specs.find((z) => z.id === s.id); return !c || !same(s.rect, c.rect) || s.inks.some((i) => !same(i.box, c.inks.find((z) => z.id === i.id)?.box)); });
   if (moved.length) { t.add(gated, false); lines.push(`drift ${lab}: layout differs from the frozen cell (${moved.map((s) => s.id).join(", ")}) ✗`); continue; }

@@ -16,7 +16,7 @@
 //   node m2-held-window.mjs <capdir> [--gate chromium[,webkit]] [--verbose]
 import fs from "node:fs";
 import path from "node:path";
-import { PNG, cli, loadCapture, gateEngines, report, glyphCoverage, ringRead, paintedAlpha, pick, f, tag, THEMES, SCENE_GROUNDS, CELLS } from "./lib.mjs";
+import { PNG, cli, loadCapture, gateEngines, report, glyphCoverage, ringRead, paintedAlpha, pick, f, tag, THEMES, SCENE_GROUNDS, CELLS, VARIANT } from "./lib.mjs";
 import { need, tally, heldUnread } from "./rows.mjs";
 
 const a = cli(), cap = loadCapture(a._[0]), gate = gateEngines(a);
@@ -46,8 +46,8 @@ const engines = [...new Set([...gate, ...cap.cells.map((c) => c.engine)])];
 for (const engine of engines) for (const theme of THEMES) {
   if (CELLS && !CELLS.test(`${engine} ${theme} black held`)) continue;
   const gated = gate.includes(engine), lab = `halo ${engine} ${theme}${gated ? "" : " [info]"}`;
-  const hb = pick(cap, { engine, theme, ground: "black", scene: "held", variant: "base" })[0], hw = pick(cap, { engine, theme, ground: "white", scene: "held", variant: "base" })[0];
-  const lb = pick(cap, { engine, theme, ground: "black", scene: "ladder", variant: "base" })[0], lw = pick(cap, { engine, theme, ground: "white", scene: "ladder", variant: "base" })[0];
+  const hb = pick(cap, { engine, theme, ground: "black", scene: "held", variant: VARIANT })[0], hw = pick(cap, { engine, theme, ground: "white", scene: "held", variant: VARIANT })[0];
+  const lb = pick(cap, { engine, theme, ground: "black", scene: "ladder", variant: VARIANT })[0], lw = pick(cap, { engine, theme, ground: "white", scene: "ladder", variant: VARIANT })[0];
   if (![hb, hw, lb, lw].every((c) => c && !c.crashed)) { if (gated) { t.add(true, false); lines.push(`${lab}: held or ladder black/white cell missing ✗`); } continue; }
   const sb = hb.specs.find((s) => s.id === "dock-held"), sw = hw.specs.find((s) => s.id === "dock-held"), rest = lb.specs.find((s) => s.id === "dock");
   if (!sb?.sample || !sw?.sample || !rest?.sample || !lw.specs.find((s) => s.id === "dock")) { t.add(gated, false); lines.push(`${lab}: dock-held or resting dock sample missing ✗`); continue; }

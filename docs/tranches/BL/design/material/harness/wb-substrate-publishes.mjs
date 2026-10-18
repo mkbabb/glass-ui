@@ -13,7 +13,7 @@
 // Chromium only (Playwright WebKit exposes no navigator.gpu and crashes on GlassDock).
 //   node wb-substrate-publishes.mjs <capdir> [--prop --glass-backdrop-luma]
 import path from "node:path";
-import { cli, loadCapture, report, region, readPng, Y, mean3, f, tag, FIELD_GROUNDS, THEMES } from "./lib.mjs";
+import { cli, loadCapture, report, region, readPng, Y, mean3, f, tag, FIELD_GROUNDS, THEMES, VARIANT } from "./lib.mjs";
 import { need, tally } from "./rows.mjs";
 
 const a = cli({ prop: { type: "string" } }), cap = loadCapture(a._[0]), gate = ["chromium"], prop = a.prop || "--glass-backdrop-luma";
@@ -31,7 +31,7 @@ for (const { cell } of have) {
   t.add(true, ok);
   lines.push(`${tag(cell)}: painted mean Y under the dock ${f(painted, 3)} · published ${prop} ${v == null ? "absent" : f(v, 3)} (state ${cell.signals?.dock?.state || "—"}/${cell.signals?.dock?.reason || "—"})${ok ? "" : " ✗"}`);
 }
-for (const r of (cap.live || []).filter((x) => x.engine === "chromium" && (x.variant || "base") === "base")) {
+for (const r of (cap.live || []).filter((x) => x.engine === "chromium" && (x.variant || "base") === VARIANT)) {
   const cfg = `live ${r.theme} ${r.ground} ${r.feed ? "fed" : "default"}`;
   if (r.error) { t.add(true, false); lines.push(`${cfg}: ERROR ${r.error} ✗`); continue; }
   const ok = r.readbacks === 0; t.add(true, ok);

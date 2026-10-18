@@ -1,0 +1,191 @@
+DECLARE floor-v7.patch: 190 identifiers on removed lines · 62 absent from the patched tree (declared: token 9, export 28, module const 7, type or component 3, module stem 3, prop 4, data- attribute 8) · 128 still named (listed for the seat) · 12 concepts · 72 names, 5 exact only, 18 sites (9 homonym) → /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-9/H9-records/declare-floor-v7-H9.json
+  declared --control-surface-blur (token)
+  declared --glass-backdrop (token)
+  declared --glass-backdrop-luma (token)
+  declared --glass-backdrop-luma-knee (token)
+  declared --glass-backdrop-sampled (token)
+  declared --glass-veil-base (token)
+  declared --glass-veil-ink (token)
+  declared --input-on-glass (token)
+  declared --select-plate-alpha (token)
+  declared BackgroundCanvasSource (export)
+  declared CSS_INITIAL_UNDERLAY (module const)
+  declared DockBackdropMode (export)
+  declared FIELD_ALPHA_FLOOR (export)
+  declared GLASS_BACKDROP_SHARED_ATTR (export)
+  declared GlassBackdropBucket (export)
+  declared GlassBackdropSample (type or component)
+  declared GlassBackdropTargetRect (type or component)
+  declared PopperArrow (type or component)
+  declared SAMPLE_DOWNSAMPLE (export)
+  declared SHELL_FIELD_CANVAS_SELECTOR (export)
+  declared SampleResult (export)
+  declared UseGlassBackdropLuminanceControls (export)
+  declared UseGlassBackdropLuminanceOptions (export)
+  declared applyMotionState (export)
+  declared backdropLuminanceSample (module stem)
+  declared backdropMode (prop)
+  declared backdropSample (module const)
+  declared backdropSampleMath (module stem)
+  declared backgroundCanvas (module const)
+  declared compositeOver (export)
+  declared coveredByShared (export)
+  declared data-backdrop-mode (data- attribute)
+  declared data-backdrop-sample-reason (data- attribute)
+  declared data-backdrop-sample-source (data- attribute)
+  declared data-backdrop-sample-state (data- attribute)
+  declared data-backdrop-sampled (data- attribute)
+  declared data-glass-backdrop-shared (data- attribute)
+  declared data-glass-field-canvas (data- attribute)
+  declared data-glass-sample (data- attribute)
+  declared getDownContext (export)
+  declared isCanvas (export)
+  declared lightThreshold (prop)
+  declared linearize (export)
+  declared liveCardEl (module const)
+  declared minSampleIntervalMs (prop)
+  declared normalizeToRgb (export)
+  declared parseRgb (export)
+  declared relLuminance (export)
+  declared resolveBackdropRgba (export)
+  declared resolveSourceCanvas (export)
+  declared resolveUnderlayRgb (export)
+  declared sampleAge (module const)
+  declared sampleAnimated (export)
+  declared sampleNow (module const)
+  declared sampleStatic (export)
+  declared stageEl (module const)
+  declared staticResult (export)
+  declared targetRect (export)
+  declared useGlassBackdropLuminance (module stem)
+  declared wantsLiveLoop (export)
+  declared writeBucket (prop)
+  declared writeUnavailable (export)
+  present --accent-foreground (token) ×5 · demo/shell/configurator/presets/neutral.css:33 demo/shell/configurator/presets/neutral.css:89 src/components/_shared/menu/menu.css:84 src/styles/theme/bridges.css:124 src/styles/tokens/color-radius.css:105
+  present --background (token) ×47 · demo/chassis/hero/story-hero.css:95 demo/chassis/hero/story-hero.css:96 demo/demo.css:159 demo/shell/configurator/presets/neutral.css:18 demo/shell/configurator/presets/neutral.css:74 demo/stories/foundations/colors.vue:42
+  present --card (token) ×151 · demo/chassis/hero/story-hero.css:2 demo/chassis/hero/story-hero.css:8 demo/chassis/hero/story-hero.css:8 demo/chassis/hero/story-hero.css:9 demo/chassis/hero/story-hero.css:12 demo/chassis/hero/story-hero.css:44
+  present --cartoon-ink-lead (token) ×12 · src/styles/tokens/dark-arm.css:221 src/styles/tokens/dark-arm.css:229 src/styles/tokens/dark-arm.css:230 src/styles/tokens/shadow.css:9 src/styles/tokens/shadow.css:10 src/styles/tokens/shadow.css:12
+  present --control-checked-bg (token) ×7 · src/styles/glass/control-bit.css:64 src/styles/glass/control-bit.css:203 src/styles/glass/control-bit.css:204 src/styles/glass/control-bit.css:245 src/styles/glass/control-bit.css:250 src/styles/tokens/scale-paper.css:101
+  present --control-ring (token) ×2 · src/styles/glass/control-bit.css:111 src/styles/tokens/scale-paper.css:84
+  present --control-surface-bg (token) ×13 · src/components/_shared/field/control.css:74 src/components/_shared/field/control.css:100 src/components/_shared/field/control.css:229 src/components/_shared/field/control.css:250 src/components/_shared/field/control.css:270 src/components/toggle-group/styles.css:112
+  present --control-surface-bg-hover (token) ×4 · src/components/_shared/disclosure/disclosure.css:76 src/components/toggle-group/styles.css:107 src/styles/glass/control-surfaces.css:79 src/styles/tokens/glass.css:238
+  present --control-surface-border (token) ×4 · src/styles/glass/control-surfaces.css:41 src/styles/glass/control-surfaces.css:44 src/styles/glass/control-surfaces.css:76 src/styles/tokens/glass.css:237
+  present --destructive (token) ×42 · demo/shell/configurator/presets/neutral.css:34 demo/shell/configurator/presets/neutral.css:90 demo/stories/foundations/colors.vue:52 demo/stories/substrates/_frame/RendererStatus.vue:64 src/components/_shared/feedback/README.md:30 src/components/_shared/feedback/feedback-tone.css:31
+  present --dock-control-active-bg (token) ×10 · src/components/dock/DockControl.vue:33 src/components/dock/styles/controls/icon-button.css:183 src/components/dock/styles/controls/icon-button.css:199 src/components/dock/styles/controls/tab-button.css:98 src/components/dock/styles/controls/touch-floor.css:71 src/components/dock/styles/controls/triggers.css:65
+  present --dock-control-hover-bg (token) ×6 · src/components/dock/styles/controls/icon-button.css:108 src/components/dock/styles/controls/icon-button.css:113 src/components/dock/styles/controls/tab-button.css:70 src/components/dock/styles/controls/triggers.css:72 src/components/dock/styles/controls/triggers.css:81 src/styles/tokens/sizing.css:204
+  present --dock-control-press-bg (token) ×6 · src/components/dock/styles/controls/icon-button.css:119 src/components/dock/styles/controls/icon-button.css:121 src/components/dock/styles/controls/icon-button.css:123 src/components/dock/styles/controls/tab-button.css:77 src/components/dock/styles/controls/triggers.css:89 src/styles/tokens/sizing.css:259
+  present --dock-control-safe-inset (token) ×15 · src/components/dock/DockControl.vue:27 src/components/dock/styles/controls/icon-button.css:35 src/components/dock/styles/controls/icon-button.css:38 src/components/dock/styles/controls/tab-button.css:36 src/components/dock/styles/controls/triggers.css:43 src/components/dock/styles/density.css:34
+  present --dock-expand-t (token) ×42 · src/components/dock/styles/cta-seat.css:25 src/components/dock/styles/dock.css:12 src/components/dock/styles/dock.css:95 src/components/dock/styles/dock.css:113 src/components/dock/styles/dock.css:124 src/components/dock/styles/dock.css:233
+  present --dock-fg-on-aurora (token) ×12 · src/components/dock/styles/adaptive-legibility.css:13 src/components/dock/styles/adaptive-legibility.css:17 src/components/dock/styles/controls/icon-button.css:49 src/components/dock/styles/controls/icon-button.css:55 src/components/dock/styles/controls/icon-button.css:208 src/components/dock/styles/controls/triggers.css:46
+  present --dock-layer-switcher-active (token) ×4 · src/components/dock/styles/layer-group.css:335 src/components/dock/styles/layer-group.css:348 src/components/dock/styles/layer-group.css:351 src/styles/tokens/sizing.css:223
+  present --dock-plate-collapsed-tier (token) ×3 · src/components/dock/styles/dock.css:109 src/components/dock/styles/dock.css:112 src/components/dock/styles/shell.css:96
+  present --dock-plate-expanded-border (token) ×3 · src/components/dock/styles/dock.css:124 src/components/dock/styles/morph.css:343 src/components/dock/styles/shell.css:99
+  present --dock-surface-blur (token) ×7 · src/components/dock/styles/dock.css:16 src/components/dock/styles/dock.css:71 src/components/dock/styles/dock.css:76 src/components/dock/styles/dock.css:119 src/components/dock/styles/shell.css:20 src/components/dock/styles/shell.css:183
+  present --ease-standard (token) ×160 · demo/stories/foundations/css-utilities.vue:7 demo/stories/foundations/css-utilities.vue:90 demo/stories/foundations/motion.vue:15 demo/stories/foundations/motion.vue:27 demo/stories/foundations/motion.vue:29 src/components/_shared/disclosure/disclosure.css:70
+  present --engage-control-engage-attack (token) ×19 · src/components/_shared/menu/menu.css:66 src/components/_shared/menu/menu.css:68 src/components/_shared/menu/menu.css:69 src/components/_shared/menu/menu.css:70 src/components/_shared/menu/menu.css:86 src/components/_shared/menu/menu.css:87
+  present --field-control-duration (token) ×7 · src/components/_shared/field/control.css:86 src/components/_shared/field/control.css:129 src/components/_shared/field/control.css:131 src/components/_shared/field/control.css:132 src/components/_shared/field/control.css:133 src/components/_shared/field/control.css:227
+  present --field-control-ease (token) ×6 · src/components/_shared/field/control.css:87 src/components/_shared/field/control.css:130 src/components/_shared/field/control.css:131 src/components/_shared/field/control.css:132 src/components/_shared/field/control.css:133 src/components/_shared/field/control.css:228
+  present --fill-selected (token) ×22 · src/components/_shared/menu/menu.css:8 src/components/_shared/menu/menu.css:17 src/components/button/styles.css:30 src/components/button/styles.css:175 src/components/button/styles.css:216 src/components/card/styles.css:9
+  present --foreground (token) ×305 · demo/chassis/code/Code.vue:7 demo/chassis/code/Code.vue:57 demo/chassis/code/Code.vue:59 demo/chassis/code/Code.vue:64 demo/chassis/code/CodeBlock.vue:159 demo/chassis/code/hljs-house-theme.css:6
+  present --glass-accent (token) ×23 · demo/shell/dock-layer-contexts.ts:66 demo/stories/substrates/glass-material.vue:99 demo/stories/substrates/glass-material.vue:257 demo/stories/substrates/glass-material.vue:261 demo/stories/substrates/glass-material.vue:271 demo/stories/substrates/glass-material.vue:279
+  present --glass-accent-strength (token) ×11 · demo/stories/substrates/glass-material.vue:99 demo/stories/substrates/glass-material.vue:257 demo/stories/substrates/glass-material.vue:272 demo/stories/substrates/glass-material.vue:294 src/styles/glass/material.css:179 src/styles/glass/material.css:184
+  present --glass-blur-dock (token) ×1 · src/styles/theme/bridges.css:354
+  present --glass-blur-floating (token) ×13 · demo/stories/foundations/paper-glass.vue:68 src/components/button/styles.css:140 src/components/configurator/styles.css:77 src/styles/glass/deep.css:95 src/styles/glass/deep.css:106 src/styles/glass/glass-capsule.css:57
+  present --glass-blur-floating-radius (token) ×10 · src/styles/glass/deep.css:69 src/styles/glass/deep.css:141 src/styles/glass/dissolve.css:49 src/styles/glass/veil.css:113 src/styles/theme/bridges.css:351 src/styles/tokens/glass.css:68
+  present --glass-blur-overlay-radius (token) ×6 · src/styles/glass/deep.css:137 src/styles/glass/veil.css:118 src/styles/theme/bridges.css:352 src/styles/tokens/glass.css:69 src/styles/tokens/glass.css:88 src/styles/tokens/motion-registers.css:128
+  present --glass-blur-quiet (token) ×14 · demo/stories/foundations/paper-glass.vue:54 src/components/alert/index.ts:17 src/components/alert/index.ts:25 src/components/button/styles.css:140 src/styles/glass.css:138 src/styles/glass/deep.css:104
+  present --glass-blur-quiet-radius (token) ×8 · demo/stories/dock/dock-search.vue:386 src/styles/glass/deep.css:149 src/styles/glass/liquid-fill.css:83 src/styles/glass/surface-axis.css:50 src/styles/glass/veil.css:97 src/styles/theme/bridges.css:349
+  present --glass-blur-resting (token) ×10 · demo/stories/foundations/paper-glass.vue:61 src/components/dock/styles/dock.css:71 src/components/dock/styles/shell.css:20 src/styles/glass/deep.css:36 src/styles/glass/deep.css:105 src/styles/glass/grasp.css:162
+  present --glass-blur-resting-radius (token) ×8 · src/components/dock/styles/dock.css:120 src/styles/glass/deep.css:41 src/styles/glass/deep.css:145 src/styles/glass/grasp.css:174 src/styles/glass/veil.css:108 src/styles/theme/bridges.css:350
+  present --glass-blur-wash-radius (token) ×5 · src/styles/glass/deep.css:153 src/styles/glass/veil.css:92 src/styles/theme/bridges.css:348 src/styles/tokens/glass.css:65 src/styles/tokens/glass.css:84
+  present --glass-border-floating (token) ×10 · demo/chassis/landing/SectionPreviewCard.vue:91 src/components/dock/styles/morph.css:340 src/components/dock/styles/morph.css:343 src/components/dock/styles/shell.css:97 src/styles/glass/control-surfaces.css:42 src/styles/glass/ladder.css:132
+  present --glass-capsule-fill (token) ×9 · src/components/button/styles.css:5 src/components/button/styles.css:166 src/components/configurator/styles.css:522 src/components/configurator/styles.css:529 src/components/dock/styles/controls/icon-button.css:193 src/components/dock/styles/controls/icon-button.css:199
+  present --glass-cell-backdrop-filter (token) ×1 · demo/stories/substrates/glass-material.vue:210
+  present --glass-depth (token) ×29 · src/components/button/styles.css:127 src/components/button/styles.css:134 src/styles/glass/deep.css:48 src/styles/glass/deep.css:54 src/styles/glass/deep.css:56 src/styles/glass/deep.css:81
+  present --glass-focus-veil-dim (token) ×3 · src/styles/glass/focus-veil.css:74 src/styles/tokens/dark-arm.css:294 src/styles/tokens/glass.css:114
+  present --glass-level (token) ×90 · demo/shell/configurator/PresetEditor.vue:186 demo/shell/configurator/preset-editor/css-writers.ts:45 demo/shell/configurator/preset-editor/css-writers.ts:48 demo/shell/configurator/preset-editor/defaults.ts:54 demo/shell/configurator/preset-editor/defaults.ts:84 demo/shell/configurator/preset-editor/types.ts:32
+  present --glass-plate-chassis (token) ×1 · src/styles/tokens/glass.css:146
+  present --glass-plate-dialog (token) ×1 · src/styles/tokens/glass.css:147
+  present --glass-plate-dock (token) ×2 · src/styles/glass/surfaces-pager.css:38 src/styles/tokens/glass.css:144
+  present --glass-plate-floating (token) ×7 · src/components/_shared/feedback/feedback-tone.css:63 src/styles/glass/surface-axis.css:72 src/styles/glass/surfaces-pager.css:7 src/styles/glass/surfaces-pager.css:30 src/styles/tokens/glass.css:142 src/styles/utilities/components.css:7
+  present --glass-plate-overlay (token) ×1 · src/styles/tokens/glass.css:143
+  present --glass-plate-quiet (token) ×7 · demo/stories/dock/dock-search.vue:385 src/components/tabs/styles/segmented.css:7 src/styles/glass/surface-axis.css:14 src/styles/glass/surface-axis.css:16 src/styles/theme/bridges.css:157 src/styles/tokens/glass.css:140
+  present --glass-plate-resting (token) ×1 · src/styles/tokens/glass.css:141
+  present --glass-plate-wash (token) ×5 · src/components/alert/index.ts:19 src/components/avatar/styles.css:78 src/components/metric/styles.css:143 src/styles/tokens/glass.css:139 src/styles/utilities/base-misc.css:266
+  present --glass-saturate (token) ×15 · src/components/dock/styles/shell.css:18 src/components/sheet/styles.css:367 src/styles/glass/deep.css:87 src/styles/glass/deep.css:88 src/styles/glass/dissolve.css:50 src/styles/glass/focus-veil.css:73
+  present --glass-saturate-grasp (token) ×2 · src/styles/glass/grasp.css:178 src/styles/tokens/glass.css:78
+  present --glass-veil (token) ×20 · src/components/_shared/feedback/feedback-tone.css:35 src/components/_shared/feedback/feedback-tone.css:43 src/components/_shared/feedback/feedback-tone.css:49 src/components/_shared/feedback/feedback-tone.css:61 src/components/_shared/feedback/feedback-tone.css:82 src/components/alert/index.ts:16
+  present --glass-veil-chassis (token) ×2 · src/styles/tokens/glass.css:146 src/styles/tokens/glass.css:286
+  present --glass-veil-crown (token) ×3 · src/components/sheet/SheetContent.vue:280 src/components/sheet/SheetContent.vue:280 src/styles/tokens/glass.css:288
+  present --glass-veil-dialog (token) ×4 · src/components/dialog/DialogContent.vue:171 src/components/sheet/SheetContent.vue:283 src/styles/tokens/glass.css:147 src/styles/tokens/glass.css:290
+  present --glass-veil-dock (token) ×5 · src/components/dock/styles/shell.css:96 src/components/dock/styles/shell.css:98 src/components/dock/styles/shell.css:368 src/styles/tokens/glass.css:145 src/styles/tokens/glass.css:287
+  present --glass-veil-floating (token) ×7 · demo/stories/foundations/paper-glass.vue:67 src/components/dock/styles/search.css:44 src/styles/glass/surfaces-pager.css:40 src/styles/glass/surfaces.css:58 src/styles/glass/veil.css:112 src/styles/tokens/glass.css:142
+  present --glass-veil-overlay (token) ×5 · demo/stories/foundations/paper-glass.vue:74 src/styles/glass/overlay-plate.css:278 src/styles/glass/veil.css:117 src/styles/tokens/glass.css:143 src/styles/tokens/glass.css:284
+  present --glass-veil-quiet (token) ×7 · demo/stories/foundations/paper-glass.vue:53 src/components/button/styles.css:139 src/styles/glass/surface-axis.css:47 src/styles/glass/veil.css:20 src/styles/glass/veil.css:96 src/styles/tokens/glass.css:140
+  present --glass-veil-rest (token) ×11 · src/styles/glass/grasp.css:121 src/styles/glass/grasp.css:131 src/styles/glass/grasp.css:135 src/styles/glass/grasp.css:197 src/styles/glass/grasp.css:209 src/styles/glass/liquid-fill.css:48
+  present --glass-veil-resting (token) ×5 · demo/stories/foundations/paper-glass.vue:60 src/styles/glass/veil.css:66 src/styles/glass/veil.css:107 src/styles/tokens/glass.css:141 src/styles/tokens/glass.css:282
+  present --glass-veil-rung (token) ×16 · src/components/slider/styles.css:205 src/components/slider/styles.css:213 src/styles/glass/grasp.css:82 src/styles/glass/grasp.css:135 src/styles/glass/grasp.css:209 src/styles/glass/grasp.css:210
+  present --glass-veil-sheet (token) ×2 · src/components/sheet/SheetContent.vue:280 src/styles/tokens/glass.css:289
+  present --glass-veil-step (token) ×6 · src/styles/tokens/glass.css:278 src/styles/tokens/glass.css:281 src/styles/tokens/glass.css:282 src/styles/tokens/glass.css:284 src/styles/tokens/glass.css:289 src/styles/tokens/manifest.ts:22
+  present --glass-veil-tier (token) ×20 · src/components/_shared/menu/menu.css:132 src/components/button/styles.css:139 src/components/dialog/DialogContent.vue:167 src/components/dialog/DialogContent.vue:171 src/components/dock/styles/dock.css:108 src/components/dock/styles/search.css:44
+  present --glass-veil-wash (token) ×4 · demo/stories/foundations/paper-glass.vue:46 src/styles/glass/veil.css:91 src/styles/tokens/glass.css:139 src/styles/tokens/glass.css:280
+  present --ink-perimeter (token) ×24 · src/components/_shared/field/control.css:48 src/components/_shared/field/control.css:55 src/components/_shared/field/control.css:267 src/components/button/styles.css:31 src/components/button/styles.css:163 src/components/card/styles.css:110
+  present --menu-row-bg (token) ×2 · src/components/_shared/menu/menu.css:17 src/components/_shared/menu/menu.css:83
+  present --muted-foreground (token) ×69 · demo/chassis/code/CodeBlock.vue:144 demo/chassis/code/CodeBlock.vue:174 demo/chassis/hero/aurora-hero.ts:292 demo/chassis/hero/aurora-hero.ts:324 demo/chassis/hero/story-hero.css:271 demo/chassis/showcase/ShowcaseFrame.vue:85
+  present --neutral-0 (token) ×16 · demo/chassis/hero/story-hero.css:12 src/styles/tokens/color-radius.css:40 src/styles/tokens/color-radius.css:58 src/styles/tokens/color-radius.css:60 src/styles/tokens/color-radius.css:166 src/styles/tokens/color-radius.css:168
+  present --neutral-5 (token) ×13 · demo/chassis/hero/story-hero.css:271 demo/stories/foundations/shadows.vue:98 src/styles/glass/ladder.css:173 src/styles/tokens/color-radius.css:45 src/styles/tokens/color-radius.css:97 src/styles/tokens/dark-arm.css:61
+  present --on-glass-muted (token) ×12 · demo/stories/navigation/toc-tracking.vue:105 src/components/alert/index.ts:29 src/components/dock/styles/adaptive-legibility.css:14 src/components/dock/styles/adaptive-legibility.css:18 src/components/dock/styles/search.css:42 src/components/dock/styles/search.css:55
+  present --on-glass-muted-strong (token) ×12 · demo/chassis/code/hljs-house-theme.css:7 demo/chassis/code/hljs-house-theme.css:28 demo/chassis/code/hljs-house-theme.css:38 demo/stories/foundations/shadows.vue:101 demo/stories/foundations/shadows.vue:102 demo/stories/navigation/toc-tracking.vue:112
+  present --opacity-icon-muted (token) ×6 · src/components/dock/styles/controls/icon-button.css:52 src/components/dock/styles/controls/icon-button.css:56 src/components/dock/styles/controls/triggers.css:50 src/styles/theme/literals.css:55 src/styles/theme/literals.css:65 src/styles/tokens/scale-paper.css:57
+  present --overlay-scrim (token) ×7 · demo/stories/foundations/overlays-scrims.vue:22 demo/stories/foundations/overlays-scrims.vue:23 src/components/expandable-container/ExpandableContainer.vue:112 src/components/expandable-container/README.md:19 src/components/expandable-container/styles.css:15 src/styles/theme/bridges.css:184
+  present --popover (token) ×11 · demo/shell/configurator/presets/neutral.css:24 demo/shell/configurator/presets/neutral.css:80 demo/stories/foundations/colors.vue:48 demo/stories/substrates/glass-material.vue:63 demo/stories/substrates/glass-material.vue:364 src/styles/theme/bridges.css:129
+  present --primary (token) ×51 · demo/chassis/hero/StoryHero.vue:77 demo/shell/configurator/presets/neutral.css:28 demo/shell/configurator/presets/neutral.css:84 demo/stories/compositions/empty-states.vue:108 demo/stories/compositions/settings.vue:313 demo/stories/containers/expandable-container.vue:165
+  present --radius-card (token) ×83 · demo/chassis/hero/story-hero.css:55 demo/chassis/hero/story-hero.css:92 demo/chassis/hero/story-hero.css:240 demo/chassis/hero/story-hero.css:241 demo/chassis/landing/SectionPreviewCard.vue:106 demo/shell/configurator/presets/neutral.css:53
+  present --section-color-5 (token) ×13 · demo/chassis/hero/aurora-hero.ts:37 demo/chassis/hero/aurora-hero.ts:42 demo/stories/display/badge.vue:9 demo/stories/display/surface.vue:188 demo/stories/forms/chip.vue:23 demo/stories/foundations/css-utilities.vue:36
+  present --shadow-color (token) ×45 · demo/shell/configurator/presets/neutral.css:39 demo/shell/configurator/presets/neutral.css:60 demo/shell/configurator/presets/neutral.css:61 src/components/blob/Blob.vue:353 src/styles/glass/surfaces-pager.css:45 src/styles/glass/surfaces-pager.css:62
+  present --shadow-dock (token) ×6 · src/components/dock/GlassDock.vue:376 src/components/dock/styles/morph.css:289 src/components/dock/styles/shape.css:156 src/components/dock/styles/shell.css:196 src/styles/tokens/manifest.ts:41 src/styles/tokens/shadow.css:37
+  present --shadow-dock-collapsed (token) ×2 · src/components/dock/styles/morph.css:167 src/styles/tokens/shadow.css:38
+  present --shadow-modal (token) ×3 · src/styles/tokens/manifest.ts:41 src/styles/tokens/shadow.css:22 src/styles/utilities/components.css:170
+  present --spring-dock (token) ×65 · demo/chassis/hero/story-hero.css:255 demo/chassis/hero/story-hero.css:266 demo/stories/display/surface.vue:33 demo/stories/display/surface.vue:229 demo/stories/display/surface.vue:230 demo/stories/display/surface.vue:270
+  present --spring-dock-duration (token) ×55 · demo/chassis/hero/story-hero.css:256 demo/chassis/hero/story-hero.css:265 demo/stories/display/surface.vue:33 demo/stories/display/surface.vue:229 demo/stories/display/surface.vue:230 demo/stories/display/surface.vue:270
+  present --spring-press-duration (token) ×45 · demo/stories/display/surface.vue:258 src/components/_shared/menu/menu.css:43 src/components/_shared/menu/menu.css:72 src/components/_shared/menu/menu.css:91 src/components/button/styles.css:104 src/components/card/styles.css:147
+  present --token (token) ×21 · src/components/blob/Blob.vue:24 src/components/blob/README.md:120 src/components/blob/README.md:120 src/components/blob/README.md:303 src/components/blob/composables/useMetaballRenderer.ts:29 src/components/blob/composables/useMetaballRenderer.ts:116
+  present --transition-liquid-spatial (token) ×20 · src/components/_shared/menu/menu.css:43 src/components/_shared/menu/menu.css:72 src/components/_shared/menu/menu.css:91 src/components/button/styles.css:104 src/components/card/styles.css:147 src/components/card/styles.css:183
+  present --viz-amber (token) ×7 · demo/chassis/code/hljs-house-theme.css:6 demo/chassis/code/hljs-house-theme.css:27 demo/chassis/code/hljs-house-theme.css:37 src/styles/theme/bridges.css:215 src/styles/tokens/color-radius.css:333 src/styles/tokens/color-radius.css:353
+  present Canvas2D (type or component) ×53 · demo/chassis/landing/vizPreviewStill.ts:4 demo/stories/manifest.ts:481 demo/stories/manifest.ts:490 demo/stories/manifest.ts:492 demo/stories/manifest.ts:499 demo/stories/substrates/constellation.vue:25
+  present CanvasRenderingContext2D (type or component) ×24 · demo/chassis/hero/StoryHero.vue:80 demo/chassis/landing/vizPreviewStill.ts:148 demo/chassis/landing/vizPreviewStill.ts:157 demo/chassis/landing/vizPreviewStill.ts:177 demo/chassis/landing/vizPreviewStill.ts:198 demo/chassis/landing/vizPreviewStill.ts:227
+  present DEFAULT_SURFACE (module const) ×2 · src/composables/color/accent-tone-solve.ts:29 src/composables/color/accent-tone-solve.ts:50
+  present DockStage (type or component) ×49 · demo/chassis/hero/focal.ts:14 demo/chassis/hero/focal.ts:57 demo/chassis/hero/focal.ts:65 demo/chassis/hero/focal.ts:66 demo/stories/dock/_frame/DockStage.vue:2 demo/stories/dock/controls.vue:33
+  present DropdownMenu (type or component) ×33 · demo/shell/DockFacetMenu.vue:5 demo/shell/DockFacetMenu.vue:28 demo/shell/DockFacetMenu.vue:45 demo/shell/dock-nav.css:176 demo/stories/containers/context-menu.vue:6 demo/stories/containers/context-menu.vue:45
+  present GlassDock (type or component) ×149 · demo/chassis/landing/storyTile.ts:8 demo/shell/BottomDock.vue:4 demo/shell/BottomDock.vue:26 demo/shell/BottomDock.vue:97 demo/shell/BottomDock.vue:274 demo/shell/SidebarDock.vue:4
+  present HoverCard (type or component) ×7 · demo/stories/containers/hover-card.vue:2 demo/stories/dock/overview.vue:310 src/components/_shared/axes.ts:47 src/components/dock/constants.ts:22 src/components/popover/popoverContext.ts:3 src/index.ts:232
+  present IntersectionObserver (type or component) ×57 · src/components/aurora/Aurora.vue:266 src/components/constellation/README.md:467 src/components/deck/README.md:33 src/components/deck/composables/useDeckSnap.ts:14 src/components/deck/composables/useDeckSnap.ts:61 src/components/deck/composables/useDeckSnap.ts:125
+  present NumberField (type or component) ×30 · demo/stories/forms/inputs.vue:39 demo/stories/forms/number-field.vue:5 demo/stories/forms/number-field.vue:31 demo/stories/forms/number-field.vue:41 demo/stories/forms/number-field.vue:48 demo/stories/forms/number-field.vue:60
+  present RAFLoopControls (export) ×2 · src/composables/motion/core/useRAFLoop.ts:45 src/composables/motion/core/useRAFLoop.ts:90
+  present Ref (export) ×351 · demo/chassis/code/useCodeHighlight.ts:16 demo/chassis/code/useCodeHighlight.ts:81 demo/chassis/code/useCodeHighlight.ts:92 demo/composables/virtual/useVirtualSectionWindow.ts:10 demo/composables/virtual/useVirtualSectionWindow.ts:33 demo/shell/configurator/preset-editor/types.ts:5
+  present SegmentedTabs (type or component) ×83 · demo/chassis/family/FamilyTabs.vue:5 demo/chassis/family/FamilyTabs.vue:7 demo/chassis/family/FamilyTabs.vue:18 demo/chassis/family/FamilyTabs.vue:58 demo/chassis/family/FamilyTabs.vue:68 demo/shell/configurator/PresetEditor.vue:22
+  present StorySection (type or component) ×640 · demo/capture/capture.css:74 demo/chassis/body/StoryBodyRenderer.vue:6 demo/chassis/body/StoryBodyRenderer.vue:26 demo/chassis/body/StoryBodyRenderer.vue:26 demo/chassis/body/StoryBodyRenderer.vue:168 demo/chassis/body/StoryBodyRenderer.vue:187
+  present WebGL (type or component) ×57 · demo/capture/capture.css:72 demo/chassis/hero/aurora-hero.ts:12 demo/chassis/hero/focal.ts:100 demo/chassis/landing/vizPreviewStill.ts:6 demo/main.ts:136 demo/main.ts:138
+  present data-disabled (data- attribute) ×27 · src/components/_shared/disclosure/disclosure.css:50 src/components/_shared/disclosure/disclosure.css:75 src/components/_shared/menu/menu.css:62 src/components/_shared/menu/menu.css:80 src/components/_shared/menu/menu.css:81 src/components/_shared/menu/menu.css:82
+  present data-highlighted (data- attribute) ×7 · demo/stories/dock/dock-search.vue:237 demo/stories/dock/dock-search.vue:370 src/components/_shared/menu/menu.css:14 src/components/_shared/menu/menu.css:49 src/components/_shared/menu/menu.css:81 src/components/dock/styles/search.css:62
+  present data-keyed (data- attribute) ×2 · demo/stories/substrates/glass-material.vue:257 src/styles/tokens/property-regs.css:117
+  present data-material-live-canvas (data- attribute) ×1 · demo/stories/substrates/glass-material.vue:165
+  present data-state (data- attribute) ×168 · demo/stories/containers/dialog.vue:136 demo/stories/motion/curve-gallery.vue:152 demo/stories/motion/deck.vue:5 demo/stories/substrates/_frame/RendererStatus.vue:23 demo/stories/substrates/_frame/RendererStatus.vue:59 src/components/_shared/disclosure/disclosure.css:86
+  present data-testid (data- attribute) ×58 · demo/chassis/code/CodeBlock.vue:106 demo/shell/BottomDock.vue:102 demo/shell/BottomDock.vue:271 demo/shell/SidebarDock.vue:114 demo/shell/SidebarDock.vue:194 demo/stories/containers/sheet.vue:130
+  present dialect (export) ×19 · demo/chassis/layout.css:137 src/composables/motion/dissolve/dissolveGrammar.ts:35 src/composables/motion/dissolve/dissolveGrammar.ts:36 src/composables/motion/dissolve/dissolveGrammar.ts:41 src/composables/motion/dissolve/dissolveGrammar.ts:42 src/composables/motion/dissolve/dissolveGrammar.ts:54
+  present dispose (export) ×151 · demo/stories/manifest.ts:481 demo/stories/motion/curve-gallery.vue:31 demo/stories/motion/scroll.vue:38 src/components/aurora/DESIGN.md:62 src/components/aurora/README.md:88 src/components/aurora/composables/runtime.ts:335
+  present dock-plate (class or utility) ×30 · demo/stories/dock/overview.vue:100 src/components/dock/GlassDock.vue:340 src/components/dock/styles/dock.css:10 src/components/dock/styles/dock.css:52 src/components/dock/styles/dock.css:145 src/components/dock/styles/dock.css:148
+  present glass-card (class or utility) ×54 · demo/chassis/page/StoryPage.vue:43 demo/stories/compositions/form-validation.vue:52 demo/stories/foundations/shadows.vue:65 demo/stories/motion/countup.vue:60 demo/stories/motion/scroll.vue:66 demo/stories/motion/scroll.vue:91
+  present glass-dock (class or utility) ×225 · demo/shell/dock-nav.css:94 src/components/dark-mode-toggle/dark-mode-toggle.css:58 src/components/dock/DockSeparator.vue:14 src/components/dock/DockSeparator.vue:21 src/components/dock/DockSeparator.vue:34 src/components/dock/DockSeparator.vue:50
+  present glass-floating (class or utility) ×84 · demo/stories/containers/command.vue:118 demo/stories/foundations/paper-glass.vue:66 demo/stories/foundations/paper-glass.vue:98 demo/stories/motion/curve-gallery.vue:151 demo/stories/motion/deck.vue:92 demo/stories/substrates/aurora.vue:192
+  present glass-menu-row (class or utility) ×24 · demo/stories/dock/dock-search.vue:224 demo/stories/dock/dock-search.vue:234 src/components/_shared/menu/menu.css:16 src/components/_shared/menu/menu.css:62 src/components/_shared/menu/menu.css:80 src/components/_shared/menu/menu.css:81
+  present glass-opaque (class or utility) ×19 · demo/stories/dock/overview.vue:182 demo/stories/dock/overview.vue:191 demo/stories/feedback/progress.vue:235 demo/stories/feedback/progress.vue:253 src/components/dock/README.md:51 src/components/dock/styles/adaptive-legibility.css:7
+  present glass-overlay (class or utility) ×25 · demo/stories/foundations/paper-glass.vue:73 demo/stories/substrates/glass-panel.vue:27 src/components/_shared/class-names.ts:81 src/components/expandable-container/ExpandableContainer.vue:106 src/components/expandable-container/README.md:16 src/styles/glass-specular-track.css:35
+  present glass-plate (class or utility) ×39 · demo/chassis/landing/vizPreviewStill.ts:30 demo/chassis/landing/vizPreviewStill.ts:54 demo/chassis/landing/vizPreviewStill.ts:363 src/components/_shared/feedback/feedback-tone.css:35 src/components/_shared/menu/menu.css:133 src/components/alert/index.ts:16
+  present glass-quiet (class or utility) ×43 · demo/chassis/code/hljs-house-theme.css:17 demo/stories/foundations/paper-glass.vue:52 demo/stories/motion/curve-gallery.vue:100 demo/stories/motion/deck.vue:81 demo/stories/motion/scroll.vue:79 demo/stories/motion/springs.vue:327
+  present glass-resting (class or utility) ×42 · demo/chassis/landing/SectionPreviewCard.vue:30 demo/shell/configurator/PresetEditor.vue:149 demo/stories/display/music-staff.vue:110 demo/stories/feedback/progress.vue:316 demo/stories/foundations/paper-glass.vue:59 demo/stories/foundations/paper-glass.vue:91
+  present glass-wash (class or utility) ×36 · demo/stories/foundations/paper-glass.vue:45 demo/stories/foundations/paper-glass.vue:84 demo/stories/navigation/carousel.vue:154 demo/stories/substrates/glass-panel.vue:23 src/components/_shared/class-names.ts:84 src/components/_shared/feedback/feedback-tone.css:13
+  present live (prop) ×747 · demo/capture/capture.css:8 demo/capture/engine-badge.ts:5 demo/capture/engine-badge.ts:19 demo/capture/engine-badge.ts:53 demo/capture/engine-badge.ts:78 demo/chassis/body/story-body.ts:13
+  present shared (prop) ×459 · demo/chassis/body/StoryBodyRenderer.vue:126 demo/chassis/code/useCodeHighlight.ts:27 demo/chassis/hero/StoryHero.vue:67 demo/chassis/hero/aurora-hero.ts:146 demo/chassis/landing/storyTile.ts:31 demo/chassis/landing/storyTile.ts:55
+  present the (export) ×35107 · demo/capture/capture.css:2 demo/capture/capture.css:6 demo/capture/capture.css:8 demo/capture/capture.css:9 demo/capture/capture.css:10 demo/capture/capture.css:10
+  present write (export) ×170 · demo/shell/AppShell.vue:149 demo/shell/configurator/preset-editor/types.ts:75 demo/shell/configurator/presets/neutral.css:67 demo/stories/forms/checks.vue:25 demo/stories/motion/scroll.vue:8 demo/stories/substrates/aurora/AuroraConfigDock.vue:48

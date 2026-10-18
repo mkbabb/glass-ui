@@ -28,6 +28,13 @@
 // H8 (pass 8) adds, each with a fixture PASS and a planted FAIL: H8-1, DEL's scope arm (src/, demo/, tests/, every
 // path the patch touches), changed-value arm and REPORTED arm, with site entries in the exact list (R-17); H8-2,
 // declare-removed.mjs's module stems and module-level consts. --h8-trees (fv6, fv6fix), --h8-patch, --h8-exact.
+// H9 (pass 9) adds, each with a fixture PASS and a planted FAIL: H9-1, homonym phrases declared with site entries for
+// their live homonyms; H9-2, the tuple arm (and the rung reading it prints for R-21 (b)); H9-3, the arm-aware value arm;
+// H9-4, the variant a witness reads (--variant) and its loud exit on a capture with no cell of it (expect LOUD, exit 2);
+// H9-5, --engines on the plant scripts and lib.mjs's frozen ENGINES; H9-6, R-21's frozen list and its printer.
+// --h9-trees (fv7, fv8, minor6: src/ demo/ tests/ docs/canon/ and the root *.md), --h9-patch (floor-v7.patch),
+// --h9-exact (the floor's exact list with H9's site), --h9-minor-patch (minor-split-v6.patch). With H9, the H8-1 rows
+// on floor v6 read H9's reds beside H8's (pass-9/H9.md §7).
 // --reuse-green: keep an existing green capture (the plants are captured fresh).
 // --fields: a HEAD run's capture (its Chromium empty-scene aurora frames become the fixtures' field pixels).
 import fs from "node:fs";
@@ -39,7 +46,8 @@ import { capture } from "./capture.mjs";
 
 const a = cli({ fields: { type: "string" }, only: { type: "string" }, "skip-capture": { type: "boolean" }, "reuse-green": { type: "boolean" }, tree: { type: "string" },
   "h7-trees": { type: "string" }, "h7-decl": { type: "string" },
-  "h8-trees": { type: "string" }, "h8-patch": { type: "string" }, "h8-exact": { type: "string" } });
+  "h8-trees": { type: "string" }, "h8-patch": { type: "string" }, "h8-exact": { type: "string" },
+  "h9-trees": { type: "string" }, "h9-patch": { type: "string" }, "h9-exact": { type: "string" }, "h9-minor-patch": { type: "string" } });
 const FIELDS = path.resolve(a.fields || path.join(OUT, "caps", "head"));
 const ROOT = path.join(OUT, "selftest");
 const only = list(a.only, null);
@@ -91,7 +99,8 @@ function staticWitness(id, script, args, expect, note) {
   const r = spawnSync(process.execPath, [path.join(HERE, `${script}.mjs`), ...args], { encoding: "utf8", maxBuffer: 64 << 20 });
   const out = (r.stdout || "") + (r.stderr || ""), verdict = out.trim().split("\n").pop();
   const fails = out.split("\n").filter((l) => l.includes("✗")).slice(0, 4).map((l) => l.trim());
-  const ok = expect === "PASS" ? r.status === 0 : r.status === 1;
+  // H9-4: LOUD is a witness that refuses to read (exit 2), as against a measured FAIL (exit 1).
+  const ok = expect === "PASS" ? r.status === 0 : expect === "LOUD" ? r.status === 2 : r.status === 1;
   results.push({ id, engine: "static", expect, exit: r.status, ok, verdict, capdir: args.join(" "), note, fails });
   console.log(`${ok ? "ok  " : "BAD "} ${id.padEnd(4)} static   expect ${expect.padEnd(4)} exit ${r.status} · ${verdict} · ${note}`);
   if (expect === "FAIL" || !ok) for (const l of fails) console.log("        " + l.slice(0, 220));
@@ -367,13 +376,15 @@ if (want("DEL")) {
 // ── H7 (pass 7): M-3's round-ring reader (H7-1), DEL's word forms and patch-built declaration (H7-2), the minor's
 // declaration (H7-3) ─────────────────────────────────────────────────────────────────────────────────────────────
 // An expectation on a witness's printed rows, beside its exit code: every pattern in `must` appears in the output.
+// H9: an entry { not: pattern } must be absent.
 function rowsHold(id, engine, out, must, note) {
-  const miss = must.filter((m) => !(m instanceof RegExp ? m.test(out) : out.includes(m)));
+  const has = (m) => (m instanceof RegExp ? m.test(out) : out.includes(m));
+  const miss = must.filter((m) => (m && m.not !== undefined ? has(m.not) : !has(m))).map((m) => (m && m.not !== undefined ? `present: ${m.not}` : m));
   const ok = miss.length === 0;
   results.push({ id, engine, expect: "ROWS", exit: ok ? 0 : 1, ok, verdict: ok ? `rows hold (${must.length})` : `missing: ${miss.join(" | ")}`, capdir: "", note, fails: [] });
   console.log(`${ok ? "ok  " : "BAD "} ${id.padEnd(4)} ${engine.padEnd(8)} expect ROWS exit ${ok ? 0 : 1} · ${ok ? `rows hold (${must.length})` : "missing: " + miss.join(" | ")} · ${note}`);
 }
-if (want("H7-1")) {
+if (want("H7-1") || want("H9-4")) {
   // The pixels the pass-6 critic read off floor v5's light Close ring, from the battery's own ring PNG (Chromium, the
   // headless shell): columns 852-854, rows 283-292, the paper cell (every light ground reads the same, the ring sits on
   // the opaque Dialog). One source: the banked log, parsed here.
@@ -393,7 +404,7 @@ if (want("H7-1")) {
   // HEAD's own plate beside its light Close ring, as the critic's ring probe read it (crit-records/phase-ringprobe.log,
   // "RING chromium light paper head": the rows around the band read #746e66; the band #4a4642, the ink at 0.48 over it).
   const HEAD_PLATE = [0x74, 0x6e, 0x66];
-  function ringCap(name, { rows, cols = [852, 853, 854], ow = 2, edge = false, plate = PLATE }) {
+  function ringCap(name, { rows, cols = [852, 853, 854], ow = 2, edge = false, plate = PLATE, variant = "base" }) {
     const W = 860, H = 300, png = new PNG({ width: W, height: H });
     for (let i = 0; i < W * H; i++) png.data.set([...plate, 255], i * 4);
     for (const [x, col] of Object.entries(rows)) for (const [y, rgb] of Object.entries(col)) png.data.set([...rgb.map((v) => Math.round(Math.max(0, Math.min(255, v)))), 255], (+y * W + +x) * 4);
@@ -402,9 +413,10 @@ if (want("H7-1")) {
     const band = [...Array(ow).keys()].map((j) => 287 + j), probeCols = cols.map((x) => ({ x, band, in: 287 + ow, out: 286 }));
     const spec = { id: "dialog", edges: edge ? [{ id: "well", painted: true, kind: "border", width: ow, cols: probeCols }] : [], inks: [], rings: edge ? [] : ["close"] };
     const rings = edge ? [] : [{ id: "close", painted: true, kind: "outline", width: ow, offset: 2, spec: "dialog", focusVisible: true, cols: probeCols, file: "png/full.png", dx: 0, dy: 0 }];
-    fs.writeFileSync(path.join(dir, "cells.json"), JSON.stringify({ meta: { target: `H7-1 ${name} (from ${path.relative(HERE, LOG)})` }, cells: [{ engine: "chromium", theme: "light", ground: "paper", scene: "dialog", variant: "base", files: { full: "png/full.png" }, specs: [spec], rings }] }, null, 1));
+    fs.writeFileSync(path.join(dir, "cells.json"), JSON.stringify({ meta: { target: `H7-1 ${name} (from ${path.relative(HERE, LOG)})` }, cells: [{ engine: "chromium", theme: "light", ground: "paper", scene: "dialog", variant, files: { full: "png/full.png" }, specs: [spec], rings }] }, null, 1));
     return dir;
   }
+  if (want("H7-1")) {
   const m3 = (name, opts, expect, must, note) => {
     const out = staticWitness("H7-1", "m3-non-text", [ringCap(name, opts), "--gate", "chromium", "--verbose", "--cells", "^chromium light paper dialog$"], expect, note);
     rowsHold("H7-1", "pixels", out, must, note);
@@ -427,6 +439,21 @@ if (want("H7-1")) {
     "R-14 bite: a straight-run ring is untouched (p05 over its columns; one full column does not lift it)");
   m3("h7-perimeter", { edge: true, rows: prof }, "FAIL", [/dialog·perimeter:well p05 2\.66 min 2\.66 cols 3\n/],
     "R-14 bite: a perimeter on the three-column fallback is untouched (R-14 reads rings only)");
+  }
+  // ── H9-4 (pass 9, F-1): a witness reads the variant it is told (--variant, `base` by default) and refuses loud, exit 2,
+  // on a capture with no cell of it. The plant is pass-7's shape: the α 0.40 ring captured under its own label `ring040`
+  // and never relabelled, which M-3 used to print as 14 MISSING rows and a gated FAIL (pass-7 crit-records
+  // verbose/m3-fv6-ring040-chromium.txt).
+  if (want("H9-4")) {
+    const R = ["--gate", "chromium", "--verbose", "--cells", "^chromium light paper dialog$"];
+    const c040 = ringCap("h9-ring040", { rows: scaled(0.40), variant: "ring040" }), cgood = ringCap("h9-ring-good", { rows: prof, variant: "ring040" });
+    const o1 = staticWitness("H9-4", "m3-non-text", [c040, ...R], "LOUD", "H9-4 plant: M-3 on the unrelabelled ring040 capture, no --variant: nothing read, exit 2 (was 14 MISSING rows, a vacuous FAIL)");
+    rowsHold("H9-4", "pixels", o1, ["0 cells of variant base: nothing read", "holds ring040", { not: /MISSING/ }], "H9-4: the refusal names the variant and what the capture holds; no MISSING row is printed");
+    const o2 = staticWitness("H9-4", "m3-non-text", [c040, ...R, "--variant", "ring040"], "FAIL", "H9-4: the same capture read as --variant ring040: a measured red (the α 0.40 ring)");
+    rowsHold("H9-4", "pixels", o2, [/dialog·ring:close p05 [12]\.\d\d min .* \(full-coverage column 852\)/, /FAIL \(1 of 1 gated rows\)/], "H9-4: one gated row, the ring, read at its full-coverage column");
+    staticWitness("H9-4", "m3-non-text", [cgood, ...R, "--variant", "ring040"], "PASS", "H9-4 fixture: floor v5's ring pixels labelled ring040, read as --variant ring040: 3.52");
+    staticWitness("H9-4", "m2-text-contrast", [c040, ...R], "LOUD", "H9-4: every rows.mjs reader refuses the same way (M-2 on the ring040 capture, no --variant)");
+  }
 }
 if (want("H7-2")) {
   const decl = path.join(HERE, "deletes-floor.json");
@@ -527,10 +554,14 @@ if (want("H8-1") || want("H8-2")) {
       "H8-1 plant: a site entry that exempts no hit is stale and FAILs");
     if (realDecl) {
       const o6 = staticWitness("H8-1", "deleted-mechanisms", ["--root", path.join(T8, "fv6"), "--declare", realDecl, "--patch", P8], "FAIL", "H8-1 plant: floor v6 as banked, under its patch-built declaration and patch");
-      rowsHold("H8-1", "static", o6, ['tests/components/field/forms-seam.test.ts:24 "--input-on-glass"', /tests\/components\/field\/forms-seam\.test\.ts:91 "0\.48 · ink perimeter"/i, /src\/styles\/glass\/liquid-fill\.css:74 "14px/, /FAIL \(3 of \d+ gated rows\)/],
-        "H8-1 plant: floor v6 reds at forms-seam.test.ts:24 (deleted-name arm) and :91 (value arm), and at liquid-fill.css:74 (value arm), and nowhere else");
-      const o7 = staticWitness("H8-1", "deleted-mechanisms", ["--root", path.join(T8, "fv6fix"), "--declare", realDecl, "--patch", P8], "PASS", "H8-1 fixture: floor v6 with R-17 (i)'s rewrites and liquid-fill.css:74's (the floor v7 stand-in)");
-      rowsHold("H8-1", "static", o7, [/\[reported\] .*DESIGN\.md:521/, /\[reported\] .*docs\/canon\/glass-system\.md:(4[4-9]|5\d|60)/], "H8-1 REPORTED arm: DESIGN.md:521 and docs/canon/glass-system.md:44-60 printed, not gated");
+      // H9 (pass 9): deletes-floor.json now declares H9-1's phrases and DEL reads H9-2's tuple, so floor v6 also reds at
+      // A-1's sentences (8 rows: H8's 3, H9-1's 4, H9-2's 1), and fv6fix, the floor v7 stand-in, now reds at A-1's sentences
+      // only. Both keep H8's own reading: the three H8 sites red on fv6 and are gone from fv6fix.
+      const A1 = [/src\/styles\/glass\/surfaces-pager\.css:29 "TINT seam"/, /src\/styles\/glass\/surfaces-pager\.css:34 "tint arm"/, /src\/components\/dock\/GlassDock\.vue:467 "tint seam"/, /src\/components\/dock\/styles\/index\.css:80 "tint legibility seam"/, /src\/components\/dock\/styles\/index\.css:83 "tint seam"/, /src\/styles\/tokens\/glass-deep\.css:12 "10\/14\/16\/20\/22px"/, /src\/styles\/tokens\/glass-deep\.css:54 "10\/14\/16\/20\/22px"/];
+      rowsHold("H8-1", "static", o6, ['tests/components/field/forms-seam.test.ts:24 "--input-on-glass"', /tests\/components\/field\/forms-seam\.test\.ts:91 "0\.48 · ink perimeter"/i, /src\/styles\/glass\/liquid-fill\.css:74 "14px/, ...A1, /FAIL \(8 of \d+ gated rows\)/],
+        "H8-1 plant: floor v6 reds at forms-seam.test.ts:24 (deleted-name arm) and :91 (value arm) and liquid-fill.css:74 (value arm); with H9, at A-1's sentences too");
+      const o7 = staticWitness("H8-1", "deleted-mechanisms", ["--root", path.join(T8, "fv6fix"), "--declare", realDecl, "--patch", P8], "FAIL", "H8-1 on fv6fix (the floor v7 stand-in): H8's three sites gone; with H9 it reds at A-1's sentences, as floor v7 does");
+      rowsHold("H8-1", "static", o7, [/\[reported\] .*DESIGN\.md:521/, /\[reported\] .*docs\/canon\/glass-system\.md:(4[4-9]|5\d|60)/, ...A1, { not: /✗.*forms-seam\.test\.ts/ }, { not: /✗.*liquid-fill\.css/ }], "H8-1 REPORTED arm: DESIGN.md:521 and docs/canon/glass-system.md:44-60 printed, not gated; H8's sites absent, A-1's present");
     }
   }
   if (want("H8-2")) {
@@ -553,10 +584,134 @@ if (want("H8-1") || want("H8-2")) {
       // The pass-7 critic's 28 absent-undeclared tokens (crit-records/declcheck.log), split by H8-2's kinds.
       const IN = ["CSS_INITIAL_UNDERLAY", "backdropLuminanceSample", "backdropSample", "backdropSampleMath", "liveCardEl", "sampleAge", "stageEl"];
       const OUT28 = ["--glass", "--glass-plate", "alphaSum", "auroraCanvas", "bc", "bgRaw", "bodyBg", "downCanvas", "downCtx", "drawImage", "elementsFromPoint", "getImageData", "glassSample", "isShared", "lastSampleAt", "prefersReduced", "sampledAt", "sampleIntervalMs", "srcRect", "stopMotionWatch", "willReadFrequently"];
-      const ok2 = JSON.stringify(added) === JSON.stringify([...IN].sort()) && !lost.length && !OUT28.some((n) => rd.names.includes(n));
+      // H9-1 (pass 9): deletes-floor.json's new phrases are hand-declared concepts, added beside H8-2's seven.
+      const H9C = JSON.parse(fs.readFileSync(path.join(HERE, "deletes-floor.json"), "utf8")).names.filter((n) => !banked.names.includes(n));
+      const ok2 = JSON.stringify(added) === JSON.stringify([...IN, ...H9C].sort()) && !lost.length && !OUT28.some((n) => rd.names.includes(n));
       results.push({ id: "H8-2", engine: "static", expect: "DECL", exit: ok2 ? 0 : 1, ok: ok2, verdict: `floor v6: ${rd.names.length} names (pass 7: ${banked.names.length}) · added ${added.join(", ")} · lost ${lost.join(", ") || "none"}`, capdir: realDecl, note: "H8-2 on floor-v6.patch: the 7 of the critic's 28 that are module stems or module-level consts are declared; the 21 locals, browser APIs, template prefixes, a comment word and a dataset key are not", fails: [] });
       console.log(`${ok2 ? "ok  " : "BAD "} H8-2 static   expect DECL · floor v6 ${rd.names.length} names (pass 7 ${banked.names.length}) · added ${added.join(", ")} · lost ${lost.join(", ") || "none"}`);
     }
+  }
+}
+
+// ── H9 (pass 9): homonyms (H9-1), the tuple arm and rung reading (H9-2), the arm-aware value arm (H9-3), --engines and
+// the frozen ENGINES (H9-5), R-21's frozen list and printer (H9-6). Static, run once. H9-4 runs with H7-1's ring pixels.
+const T9 = a["h9-trees"] && path.resolve(a["h9-trees"]), P9 = a["h9-patch"] && path.resolve(a["h9-patch"]);
+let decl9 = null;
+if ((want("H9-1") || want("H9-2") || want("H9-6")) && T9 && P9 && a["h9-exact"]) {
+  decl9 = path.join(ROOT, "h9-declare-floor-v7.json");
+  const r = spawnSync(process.execPath, [path.join(HERE, "declare-removed.mjs"), "--patch", P9, "--root", path.join(T9, "fv7"), "--concepts", path.join(HERE, "deletes-floor.json"), "--exact", path.resolve(a["h9-exact"]), "--out", decl9], { encoding: "utf8" });
+  console.log(`     H9 real declaration: ${(r.stdout || r.stderr).split("\n")[0]}`);
+  fs.writeFileSync(path.join(ROOT, "h9-declare-floor-v7.log"), (r.stdout || "") + (r.stderr || ""));
+}
+if (want("H9-1")) {
+  // A concepts file with one homonym phrase and its live site, through declare-removed.mjs, as the floor's is built.
+  const h91 = (name, files, homonyms) => {
+    const d = tree(name, { "p.patch": "diff --git a/src/a.css b/src/a.css\n--- a/src/a.css\n+++ b/src/a.css\n@@ -1 +1 @@\n-x\n+y\n", ...files });
+    fs.writeFileSync(path.join(d, "concepts.json"), JSON.stringify({ patch: "H9-1 fixture", names: ["tint seam"], homonyms }));
+    const r = spawnSync(process.execPath, [path.join(HERE, "declare-removed.mjs"), "--patch", path.join(d, "p.patch"), "--root", d, "--concepts", path.join(d, "concepts.json"), "--out", path.join(d, "decl.json")], { encoding: "utf8" });
+    return { r, args: ["--root", d, "--declare", path.join(d, "decl.json"), "--patch", path.join(d, "p.patch")] };
+  };
+  const LIVE = "/* held by `G-FEEDBACK-TINT-SEAM` arm (b). */\n", SITE = [{ name: "tint seam", at: "src/fb.css:1", why: "the live gate name" }];
+  staticWitness("H9-1", "deleted-mechanisms", h91("h91-clean", { "src/fb.css": LIVE, "src/a.css": "/* the pill composes the bound at the element. */\n" }, SITE).args, "PASS", "H9-1 fixture: the live homonym at its site entry, the deleted seam named nowhere");
+  staticWitness("H9-1", "deleted-mechanisms", h91("h91-dead", { "src/fb.css": LIVE, "src/a.css": "/* the field reads the tint seam (dock/search.css) at ≥4.5:1. */\n" }, SITE).args, "FAIL", "H9-1 plant: the deleted seam named live beside its homonym (GlassDock.vue:467's shape)");
+  staticWitness("H9-1", "deleted-mechanisms", h91("h91-retint", { "src/fb.css": LIVE, "src/a.css": "/* the dots ride the retint seam of the pager. */\n" }, SITE).args, "PASS", "H9-1 bite: \"retint seam\" is another word (PagerDots.vue:426's shape)");
+  staticWitness("H9-1", "deleted-mechanisms", h91("h91-moved", { "src/fb.css": "\n" + LIVE }, SITE).args, "FAIL", "H9-1 plant: the homonym moved a line: its site is stale, and the line it moved to reds");
+  const bad = h91("h91-undeclared", { "src/fb.css": LIVE }, [{ name: "tint arm", at: "src/fb.css:1", why: "a phrase not declared" }]);
+  const okRefuse = bad.r.status === 2 && /needs an `at` site and a declared phrase/.test(bad.r.stdout);
+  results.push({ id: "H9-1", engine: "static", expect: "REFUSE", exit: bad.r.status, ok: okRefuse, verdict: bad.r.stdout.trim().split("\n").pop(), capdir: "", note: "H9-1: a homonym entry for a phrase the concepts file does not declare is refused", fails: [] });
+  console.log(`${okRefuse ? "ok  " : "BAD "} H9-1 static   expect REFUSE exit ${bad.r.status} · ${bad.r.stdout.trim().split("\n").pop()}`);
+  if (decl9) {
+    const o = staticWitness("H9-1", "deleted-mechanisms", ["--root", path.join(T9, "fv7"), "--declare", decl9, "--patch", P9], "FAIL", "H9-1/H9-2 plant: floor v7 as banked, at the four P8 sentences (Crit A-1)");
+    rowsHold("H9-1", "static", o, [/✗ "tint seam": 3 · src\/components\/dock\/GlassDock\.vue:467 "tint seam" src\/components\/dock\/styles\/index\.css:83 "tint seam" src\/styles\/glass\/surfaces-pager\.css:29 "TINT seam"\n/,
+      /✗ "tint arm": 1 · src\/styles\/glass\/surfaces-pager\.css:34 "tint arm"\n/, /✗ "oklab tint": 1 · src\/styles\/glass\/surfaces-pager\.css:29 "oklab TINT"\n/, /✗ "tint legibility seam": 1 · src\/components\/dock\/styles\/index\.css:80 "tint legibility seam"\n/,
+      /✗ --glass-blur-\*-radius tuple 10\/14\/16\/20\/22px → 6\/10\/12\/18\/20px \(src\/styles\/tokens\/glass\.css\): 2 · src\/styles\/tokens\/glass-deep\.css:12 "10\/14\/16\/20\/22px" src\/styles\/tokens\/glass-deep\.css:54 "10\/14\/16\/20\/22px"\n/,
+      /DELETED-MECHANISMS names=72 hits=8 files=4 .* sites=19 /, /FAIL \(5 of 100 gated rows\)/, { not: /exempt site .* stale/ }],
+      "H9-1/H9-2 plant: floor v7 reds at surfaces-pager.css:29, :34, GlassDock.vue:467, index.css:80, :83 (H9-1) and glass-deep.css:12, :54 (H9-2), and nowhere else; every homonym site exempts a live hit");
+    const o8 = staticWitness("H9-1", "deleted-mechanisms", ["--root", path.join(T9, "fv8"), "--declare", decl9, "--patch", P9], "PASS", "H9-1/H9-2 fixture: the floor v8 stand-in (R-20's four rewrites, scratch wording) at 0");
+    rowsHold("H9-1", "static", o8, [/exempt src\/components\/metric\/styles\.css:86 "tint seam"/, /exempt src\/styles\/tokens\/property-regs\.css:115 "OKLab-tints"/, /exempt tests\/components\/ui\/surface\/Surface\.test\.ts:164 "10 \/ 14 \/ 16 \/ 20 \/ 22"/, /PASS \(100 gated rows\)/],
+      "H9-1/H9-2 fixture: the homonym sites and the tuple's history site each exempt their hit on floor v8");
+  }
+}
+if (want("H9-2") || want("H9-3")) {
+  // A three-rung ladder in src/t.css (--x-{a,b,c}-r: 10/14/16px → 6/10/12px) and --x-step 0.04 → 0.05 in :root, whose
+  // .dark arm in src/dark.css still declares 0.04.
+  const PATCH9 = ["diff --git a/src/t.css b/src/t.css", "--- a/src/t.css", "+++ b/src/t.css", "@@ -1,6 +1,6 @@", " :root {",
+    "-    --x-a-r: 10px;", "-    --x-b-r: 14px;", "-    --x-c-r: 16px;", "-    --x-step: 0.04;", "+    --x-a-r: 6px;", "+    --x-b-r: 10px;", "+    --x-c-r: 12px;", "+    --x-step: 0.05;", " }", ""].join("\n");
+  const T = ":root {\n    --x-a-r: 6px;\n    --x-b-r: 10px;\n    --x-c-r: 12px;\n    --x-step: 0.05;\n}\n", DARK = "/* the dark arm */\n.dark {\n    --x-step: 0.04;\n}\n";
+  const h9 = (name, files, exact = []) => {
+    const d = tree(name, { "p.patch": PATCH9, "src/t.css": T, "src/dark.css": DARK, ...files });
+    fs.writeFileSync(path.join(d, "decl.json"), JSON.stringify({ patch: "H9 fixture", names: [], exact }));
+    return ["--root", d, "--declare", path.join(d, "decl.json"), "--patch", path.join(d, "p.patch")];
+  };
+  if (want("H9-2")) {
+    const o = staticWitness("H9-2", "deleted-mechanisms", h9("h92-clean", { "src/n.css": "/* the ladder is 6/10/12px today (the --x-*-r rungs). */\n" }), "PASS", "H9-2 fixture: the new tuple, and the ladder named by its tokens");
+    rowsHold("H9-2", "static", o, ["changed values: 4 declarations in src/ · 4 tokens · 1 families", "--x-*-r tuple 10/14/16px → 6/10/12px (src/t.css): 0"], "H9-2: three changed rungs of one file differing in one segment are one family, its old tuple in declaration order");
+    const plants = {
+      "slash": [{ "src/n.css": "/* the ladder has since moved to 10/14/16px. */\n" }, "the old tuple, `/` separated, unit once (glass-deep.css:54's shape)"],
+      "spaced": [{ "tests/n.test.ts": "/* against plain 10 / 14 / 16 — thinner */\n" }, "the old tuple with spaces and no unit, in a tests/ comment (Surface.test.ts:164's shape)"],
+      "dot": [{ "demo/n.md": "rungs 10px · 14px · 16px\n" }, "the old tuple, `·` separated, a unit on each"],
+    };
+    for (const [k, [files, note]] of Object.entries(plants)) staticWitness("H9-2", "deleted-mechanisms", h9(`h92-${k}`, files), "FAIL", "H9-2 plant: " + note);
+    staticWitness("H9-2", "deleted-mechanisms", h9("h92-site", { "src/n.css": "/* the first cut LERPed against plain 10/14/16. */\n" }, [{ name: "--x-*-r", at: "src/n.css:1", why: "history" }]), "PASS", "H9-2 site entry: a history line exempt by the family's name");
+    staticWitness("H9-2", "deleted-mechanisms", h9("h92-partial", { "src/n.css": "/* the steps 14/16 and 10/14 read as one. */\n" }), "PASS", "H9-2 bite: part of the tuple is not the tuple");
+    const ob = staticWitness("H9-2", "deleted-mechanisms", h9("h92-bare", { "src/n.css": "/* a deep c painted 12px where the plain c paints 16, and a paints 6. */\n" }), "PASS", "H9-2 rung reading: a rung's word then its old number is printed for R-21 (b), not gated");
+    rowsHold("H9-2", "static", ob, ['[R-21 b] --x-c-r: src/n.css:1 "c paints 16"', "rung=1", { not: /\[R-21 b\] --x-a-r/ }], "H9-2 rung reading: \"c paints 16\" printed (the old c); \"c painted 12px\" and \"a paints 6\" (new values) not");
+    if (decl9) {
+      const o7 = staticWitness("H9-2", "deleted-mechanisms", ["--root", path.join(T9, "fv7"), "--declare", decl9, "--patch", P9], "FAIL", "H9-2 plant: floor v7's tuple rows and rung reading");
+      rowsHold("H9-2", "static", o7, [/exempt tests\/components\/ui\/surface\/Surface\.test\.ts:164 "10 \/ 14 \/ 16 \/ 20 \/ 22"/, '[R-21 b] --glass-blur-overlay-radius: src/styles/tokens/glass-deep.css:13 "overlay paints 22"', '[R-21 b] --glass-blur-overlay-radius: src/styles/tokens/glass-deep.css:55 "overlay painted 22"', "rung=5"],
+        "H9-2: floor v7's tuple in a dated test comment is a site; \"paints 22\" (:13) and \"painted 22\" (:55) are printed for R-21 (b), whose reader rules tense");
+    }
+  }
+  if (want("H9-3")) {
+    const o = staticWitness("H9-3", "deleted-mechanisms", h9("h93-dark-file", { "src/s.css": "/* DARK: two x steps of the ink (`--x-step` 0.04, dark.css). */\n" }), "PASS", "H9-3 fixture: the old value cited with the arm file that still declares it (sheet/styles.css:197's shape)");
+    rowsHold("H9-3", "static", o, ['arm-true src/s.css:1 "0.04 · x steps" (cites src/dark.css:3 (.dark) declares 0.04)', "1 arms still at an old value"], "H9-3: the arm is keyed by file, line and selector");
+    staticWitness("H9-3", "deleted-mechanisms", h9("h93-dark-sel", { "src/s.css": "/* under .dark the x step stays 0.04. */\n" }), "PASS", "H9-3 fixture: the arm cited by its selector");
+    staticWitness("H9-3", "deleted-mechanisms", h9("h93-root-file", { "src/s.css": "/* the x step is 0.04 (t.css). */\n" }), "FAIL", "H9-3 plant: the old value cited with the arm that changed");
+    staticWitness("H9-3", "deleted-mechanisms", h9("h93-uncited", { "src/s.css": "/* the x step is 0.04. */\n" }), "FAIL", "H9-3 plant: the old value citing no arm reads as the changed one");
+    if (T9 && a["h9-minor-patch"]) {
+      const om = staticWitness("H9-3", "deleted-mechanisms", ["--root", path.join(T9, "minor6"), "--declare", path.join(HERE, "deletes-minor.json"), "--patch", path.resolve(a["h9-minor-patch"])], "FAIL", "H9-3 on the minor v6 (R-23 unbuilt): sheet/styles.css:197 is arm-true; the rest red as Crit §5.2 ruled");
+      rowsHold("H9-3", "static", om, ['arm-true src/components/sheet/styles.css:197 "0.04 · glass veil steps" (cites src/styles/tokens/dark-arm.css:277 (.dark) declares 0.04)', { not: /✗ --glass-veil-step/ }, /FAIL \(6 of 48 gated rows\)/],
+        "H9-3 fixture: the minor v6's sheet/styles.css:197 needs no site entry (MS6 §7)");
+    }
+  }
+}
+if (want("H9-5")) {
+  // --engines on the plant scripts: each variant keeps its own engines, narrowed by the flag; importing a plant script
+  // runs nothing (its CLI is guarded), so the variant tables are read here without a capture.
+  const fv2 = await import(path.join(HERE, "..", "pass-3", "FV2-plants.mjs")), fv3 = await import(path.join(HERE, "..", "pass-4", "FV3-plants.mjs"));
+  const plan = (mod, flag) => Object.fromEntries(Object.entries(mod.VARIANTS).map(([id, v]) => [id, fv2.enginesFor(v, flag).join(",")]));
+  const w3 = plan(fv3, "webkit"), w2 = plan(fv2, "webkit"), all2 = plan(fv2, undefined);
+  const ok = Object.values(w3).every((e) => e === "webkit") && w2["diag-held-sliderpaint"] === "" && w2["diag-held-noveil"] === "" && w2["plant-bound"] === "webkit" && all2["plant-bound"] === "chromium,webkit" && all2["diag-held-noveil"] === "chromium";
+  const verdict = `FV3 --engines webkit: ${Object.keys(w3).length} variants all webkit · FV2: plant-bound ${w2["plant-bound"]}, diag-held-noveil "${w2["diag-held-noveil"]}" (not captured) · no flag: plant-bound ${all2["plant-bound"]}, diag-held-noveil ${all2["diag-held-noveil"]}`;
+  results.push({ id: "H9-5", engine: "static", expect: "PLAN", exit: ok ? 0 : 1, ok, verdict, capdir: "", note: "H9-5 fixture: --engines narrows each variant; a Chromium-only diagnostic under --engines webkit is not captured", fails: [] });
+  console.log(`${ok ? "ok  " : "BAD "} H9-5 static   expect PLAN · ${verdict}`);
+  const r = spawnSync(process.execPath, ["--input-type=module", "-e", `import { ENGINES } from ${JSON.stringify(path.join(HERE, "lib.mjs"))}; ENGINES.splice(0, ENGINES.length, "webkit"); console.log("mutated", ENGINES);`], { encoding: "utf8" });
+  const out = (r.stdout || "") + (r.stderr || ""), loud = r.status !== 0 && /TypeError/.test(r.stderr || "") && !/mutated/.test(r.stdout || "");
+  results.push({ id: "H9-5", engine: "static", expect: "THROW", exit: r.status, ok: loud, verdict: (out.match(/TypeError[^\n]*/) || ["no TypeError"])[0], capdir: "", note: "H9-5 plant: pass-8 wk-plants.mjs's narrowing (ENGINES.splice) throws on the frozen array", fails: [] });
+  console.log(`${loud ? "ok  " : "BAD "} H9-5 static   expect THROW exit ${r.status} · ${(out.match(/TypeError[^\n]*/) || ["no TypeError"])[0]}`);
+  const gone = !fs.existsSync(path.join(HERE, "..", "pass-8", "wk-plants.mjs"));
+  results.push({ id: "H9-5", engine: "static", expect: "RETIRED", exit: gone ? 0 : 1, ok: gone, verdict: gone ? "pass-8/wk-plants.mjs retired" : "pass-8/wk-plants.mjs still present", capdir: "", note: "H9-5: the wrapper that mutated ENGINES is retired (P8-5)", fails: [] });
+  console.log(`${gone ? "ok  " : "BAD "} H9-5 static   expect RETIRED · ${gone ? "pass-8/wk-plants.mjs retired" : "still present"}`);
+}
+if (want("H9-6")) {
+  const PATCH6 = "diff --git a/src/a.css b/src/a.css\n--- a/src/a.css\n+++ b/src/a.css\n@@ -1 +1 @@\n-x\n+y\n";
+  const A = "/* the pill composes the bound. */\n.p { color: red; }\n/* the clamp darkens the plate over light. */\n/* a retint of the dots. */\n";
+  const t6 = (name, rulings) => {
+    const d = tree(name, { "p.patch": PATCH6, "src/a.css": A, "src/b.css": "/* the clamp darkens, untouched. */\n" });
+    const args = ["--root", d, "--patch", path.join(d, "p.patch")];
+    if (rulings) { fs.writeFileSync(path.join(d, "rulings.json"), JSON.stringify(rulings)); args.push("--rulings", path.join(d, "rulings.json")); }
+    return args;
+  };
+  const o = staticWitness("H9-6", "prose-sweep", t6("h96-list"), "PASS", "H9-6: the printer lists every frozen-word prose line of every touched file (exit 0, LIST)");
+  rowsHold("H9-6", "static", o, [/· src\/a\.css:3 \[word "darken"; word "clamp"\]|· src\/a\.css:3 \[word "clamp"; word "darken"\]/, "SWEEP lines=1 files=1", { not: "src/b.css" }, { not: "src/a.css:4" }], "H9-6: the touched file's clamp-and-darken line prints with its context; an untouched file and \"retint\" do not");
+  staticWitness("H9-6", "prose-sweep", t6("h96-ruled", [{ at: "src/a.css:3", says: "the clamp darkens the plate", why: "read: true of the fixture" }]), "PASS", "H9-6 fixture: every printed line ruled true");
+  staticWitness("H9-6", "prose-sweep", t6("h96-unread", []), "FAIL", "H9-6 plant: a printed line no ruling covers is unread");
+  staticWitness("H9-6", "prose-sweep", t6("h96-stale", [{ at: "src/a.css:3", says: "the clamp darkens the plate", why: "true" }, { at: "src/a.css:1", says: "the tint seam", why: "a line rewritten since" }]), "FAIL", "H9-6 plant: a ruling whose line no longer says it is stale");
+  if (decl9) {
+    const o7 = staticWitness("H9-6", "prose-sweep", ["--root", path.join(T9, "fv7"), "--patch", P9, "--declare", decl9], "PASS", "H9-6: R-21 (b)'s list over floor v7 (88 touched paths)");
+    rowsHold("H9-6", "static", o7, ["src/styles/glass/surfaces-pager.css:29 [", "src/styles/glass/surfaces-pager.css:34 [", "src/components/dock/GlassDock.vue:467 [", "src/components/dock/styles/index.css:80 [", "src/components/dock/styles/index.css:83 [",
+      "src/styles/tokens/glass-deep.css:12 [tuple", "src/styles/tokens/glass-deep.css:13 [rung", "src/styles/tokens/glass-deep.css:54 [tuple"], "H9-6: floor v7's list prints A-1's four sentences, the tuple lines and the bare \"paints 22\"");
+    staticWitness("H9-6", "prose-sweep", ["--root", path.join(T9, "fv8"), "--patch", P9, "--declare", decl9], "PASS", "H9-6: R-21 (b)'s list over the floor v8 stand-in, for the floor v8 seat to read");
   }
 }
 

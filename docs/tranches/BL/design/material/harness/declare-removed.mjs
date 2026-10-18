@@ -13,8 +13,10 @@
 //            seat to rule one by one (live: keep; prose: rewrite and declare by hand)
 // Concepts with no identifier (the adaptive tint, the earned darken) are declared by hand: --concepts <json> adds its
 // names. --exact <json> carries the seat's exact list into DEL's `exact`: { name, why } reads an identifier exact only;
-// { name, why, at } exempts one site read in context (H8-1). The output is DEL's { patch, names, exact } plus
-// { derived, concepts, present }.
+// { name, why, at } exempts one site read in context (H8-1). H9-1: a concepts file may carry `homonyms`, site entries
+// { name, at, why } for the live sites of a declared phrase that is also a live homonym ("tint seam" is the deleted dock
+// seam and the live feedback-tone seam); they join `exact` beside the seat's list. The output is DEL's
+// { patch, names, exact } plus { derived, concepts, present }.
 //   node declare-removed.mjs --patch <file.patch> --root <patched tree> [--concepts <names.json>] [--exact <rulings.json>] --out <decl.json>
 import fs from "node:fs";
 import path from "node:path";
@@ -68,14 +70,15 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     for (const [rel, text] of files) for (const m of text.matchAll(re)) where.push(`${rel}:${text.slice(0, m.index).split("\n").length}`);
     if (where.length) present.push({ id, kind, n: where.length, where: where.slice(0, 6) }); else derived.push({ id, kind });
   }
-  const concepts = a.concepts ? JSON.parse(fs.readFileSync(path.resolve(a.concepts), "utf8")).names : [];
+  const cdoc = a.concepts ? JSON.parse(fs.readFileSync(path.resolve(a.concepts), "utf8")) : { names: [] }, concepts = cdoc.names;
   const names = [...new Set([...concepts, ...derived.map((d) => d.id)])];
-  const exact = a.exact ? JSON.parse(fs.readFileSync(path.resolve(a.exact), "utf8")) : [];
+  for (const h of cdoc.homonyms || []) if (!h.at || !concepts.includes(h.name)) { console.log(`homonym entry "${h.name}" needs an \`at\` site and a declared phrase`); process.exit(2); }
+  const exact = [...(a.exact ? JSON.parse(fs.readFileSync(path.resolve(a.exact), "utf8")) : []), ...(cdoc.homonyms || [])];
   for (const e of exact) if (!e.at && !names.includes(e.name)) { console.log(`exact-only ruling "${e.name}" names no declared identifier`); process.exit(2); }
   const doc = { patch: `${path.basename(patch)}: every identifier its removed lines name that the patched src/ and demo/ no longer name (declare-removed.mjs), plus ${concepts.length} concepts declared by hand${a.concepts ? " (" + path.basename(a.concepts) + ")" : ""}`, names, exact, derived, concepts, present };
   fs.writeFileSync(path.resolve(a.out), JSON.stringify(doc, null, 1) + "\n");
   const kinds = Object.entries(derived.reduce((o, d) => ((o[d.kind] = (o[d.kind] || 0) + 1), o), {})).map(([k, n]) => `${k} ${n}`).join(", ");
-  console.log(`DECLARE ${path.basename(patch)}: ${cand.length} identifiers on removed lines · ${derived.length} absent from the patched tree (declared: ${kinds}) · ${present.length} still named (listed for the seat) · ${concepts.length} concepts · ${names.length} names, ${exact.filter((e) => !e.at).length} exact only, ${exact.filter((e) => e.at).length} sites → ${a.out}`);
+  console.log(`DECLARE ${path.basename(patch)}: ${cand.length} identifiers on removed lines · ${derived.length} absent from the patched tree (declared: ${kinds}) · ${present.length} still named (listed for the seat) · ${concepts.length} concepts · ${names.length} names, ${exact.filter((e) => !e.at).length} exact only, ${exact.filter((e) => e.at).length} sites (${(cdoc.homonyms || []).length} homonym) → ${a.out}`);
   for (const d of derived) console.log(`  declared ${d.id} (${d.kind})`);
   for (const p of present) console.log(`  present ${p.id} (${p.kind}) ×${p.n} · ${p.where.join(" ")}`);
 }

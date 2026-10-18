@@ -21,6 +21,20 @@
 //                      together with a word of `--x`'s name is a hit. P-3: prose names a rung by its token
 //   REPORTED arm       the repo-root *.md and docs/canon/ are read under both arms and printed, never gated (they are
 //                      not touched files; the landing's docs pass owns them)
+// H9 (pass 9, REGISTRY P8-5 H9-1..H9-3, R-21):
+//   homonyms (H9-1)    a deleted concept whose phrase is also a live homonym ("tint seam") is declared with `at` site
+//                      entries for the live sites. They are kept beside the phrase in the concepts file (`homonyms`), and
+//                      declare-removed.mjs carries them into the declaration's `exact`, so a stale homonym site FAILs too
+//   tuple arm (H9-2)   a family is three or more changed tokens of one file that differ in one name segment
+//                      (`--glass-blur-{wash,quiet,…}-radius`). Its old values in declaration order, with or without the
+//                      unit, joined by `/` or `·` ("10/14/16/20/22px"), on a prose line is a hit: one gated row per family
+//   rung reading       a family rung's own word followed by its old number with no other number between ("the plain
+//                      overlay paints 22") is printed for R-21 (b)'s reading and never gated: tense decides it, and a
+//                      word sweep cannot read tense (P8-5 H9-2)
+//   arm-aware (H9-3)   a changed value is keyed by the file and selector that declare it. A value hit whose line cites
+//                      (by file name or selector) an arm that still declares the old literal is true and not a hit
+//                      ("`--glass-veil-step` 0.04, tokens/dark-arm.css" when only the `:root` arm moved); it prints as
+//                      `arm-true`
 // The exact list (a declaration's `exact: [{ name, why, at? }]`, owned by the seat that declares, read by the critic):
 //   no `at`            an identifier whose word form is ordinary live prose ("composited over" for `compositeOver`) is
 //                      read exact only. Only an identifier can be listed; a phrase is its own word form
@@ -133,13 +147,95 @@ export function hits(name, files, exactOnly = false) {
 // Every prose line that carries one of a changed token's old literals and every word of its name (in any order, each
 // in its inflections). One word is not enough: "radius" or "glass" beside "16px" reads every --radius-* table row
 // (pass-8 H8.md §1 measures it); the name's words together are the rung, and a sentence about the rung names them.
-export function valueHits(ch, files) {
+// H9-3: a hit whose line cites an arm (file name or selector) that still declares the old literal is true, and is
+// returned apart as `armTrue`.
+export function valueHits(ch, files, arms = []) {
   const lits = ch.literals.map((l) => new RegExp(`(?<![\\w.])${esc(l)}(?![\\w%]|\\.\\d)`)), ws = words(ch.token).map((w) => new RegExp(`(?<![A-Za-z0-9])${wordRe(w)}(?![a-z0-9])`, "i"));
+  const kept = arms.filter((x) => x.token === ch.token && x.value === ch.from);
   const out = [];
   for (const [rel, text] of files) proseLines(rel, text).forEach((p, i) => {
     if (!p) return;
     const lit = lits.find((r) => r.test(p));
-    if (lit && ws.every((r) => r.test(p))) out.push({ where: `${rel}:${i + 1}`, text: `${p.match(lit)[0]} · ${ws.map((r) => p.match(r)[0]).join(" ")}` });
+    if (!lit || !ws.every((r) => r.test(p))) return;
+    const cited = kept.find((x) => citesArm(p, x));
+    out.push({ where: `${rel}:${i + 1}`, text: `${p.match(lit)[0]} · ${ws.map((r) => p.match(r)[0]).join(" ")}`, armTrue: cited ? `${cited.file}:${cited.line} (${cited.selector}) declares ${ch.from}` : null });
+  });
+  return out;
+}
+
+// H9-3: every declaration of each changed token in the patched tree, with its file, line and enclosing selector.
+// Only stylesheet text is read (.css, and a .vue file's <style> blocks); a comment is not a declaration.
+const STYLE = /\.(css|vue)$/;
+export function declaredArms(tokens, files) {
+  const want = new Set(tokens), out = [];
+  for (const [rel, text] of files) {
+    if (!STYLE.test(rel)) continue;
+    const src = text.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " ")), stack = [];
+    let sel = "", line = 1;
+    for (let i = 0; i < src.length; i++) {
+      const c = src[i];
+      if (c === "\n") { line++; continue; }
+      if (c === "{") { stack.push(sel.trim().replace(/\s+/g, " ")); sel = ""; continue; }
+      if (c === "}") { stack.pop(); sel = ""; continue; }
+      if (c === ";") { sel = ""; continue; }
+      if (c === "-" && src[i + 1] === "-" && /[\s;{]/.test(src[i - 1] ?? "\n")) {
+        const m = src.slice(i).match(/^(--[a-z][a-z0-9-]*[a-z0-9])\s*:\s*([^;{}]+?)\s*(?:!important\s*)?;/);
+        if (m && want.has(m[1])) out.push({ token: m[1], value: m[2], file: rel, line, selector: stack.at(-1) || "(top)" });
+        if (m) { line += m[0].split("\n").length - 1; i += m[0].length - 1; sel = ""; continue; }
+      }
+      sel += c;
+    }
+  }
+  return out;
+}
+// A line cites an arm by the arm file's name (`dark-arm.css`, `tokens/dark-arm.css`) or by its selector when the
+// selector is not `:root` (`.dark`).
+export function citesArm(line, arm) {
+  if (line.includes(path.basename(arm.file))) return true;
+  return arm.selector !== ":root" && arm.selector !== "(top)" && arm.selector.split(",").some((s) => s.trim().length > 2 && line.includes(s.trim()));
+}
+
+// H9-2: the families of a patch's changed values. Three or more changed tokens of one file whose names differ in one
+// segment form a family; its tuple is their old values in declaration order. Only a scalar ladder is read.
+export function families(changed) {
+  const groups = new Map();
+  for (const c of changed) {
+    const segs = c.token.slice(2).split("-");
+    for (let k = 0; k < segs.length; k++) {
+      const key = `${c.file}|${segs.slice(0, k).join("-")}|${segs.slice(k + 1).join("-")}|${k}`;
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push({ ...c, seg: segs[k] });
+    }
+  }
+  const out = [];
+  for (const [key, rungs] of groups) {
+    if (rungs.length < 3) continue;
+    const [file, pre, post] = key.split("|");
+    const name = `--${pre ? pre + "-" : ""}*${post ? "-" + post : ""}`;
+    const nums = rungs.map((r) => r.from.match(/^(-?[\d.]+)([a-z%]*)$/)).filter(Boolean);
+    if (nums.length !== rungs.length) continue;
+    out.push({ name, file, rungs: rungs.map((r, i) => ({ seg: r.seg, token: r.token, from: r.from, num: nums[i][1], unit: nums[i][2] })), tuple: nums.map((n) => n[1]), unit: nums[0][2], to: rungs.map((r) => r.to.match(/^-?[\d.]+/)?.[0] ?? r.to) });
+  }
+  return out;
+}
+// The old tuple on a prose line, in order, each number with or without the unit, separated by `/` or `·`.
+export function tupleHits(fam, files) {
+  const u = fam.unit ? `(?:${esc(fam.unit)})?` : "";
+  const re = new RegExp(`(?<![\\w.])${fam.tuple.map((n) => esc(n) + u).join("\\s*[/·]\\s*")}(?![\\w%]|\\.\\d)`);
+  const out = [];
+  for (const [rel, text] of files) proseLines(rel, text).forEach((p, i) => { const m = p && p.match(re); if (m) out.push({ where: `${rel}:${i + 1}`, text: m[0] }); });
+  return out;
+}
+// The rung reading (printed for R-21 (b), not gated): a rung's word, then its old number, no other number between.
+export function rungHits(fam, files) {
+  const out = [];
+  for (const [rel, text] of files) proseLines(rel, text).forEach((p, i) => {
+    if (!p) return;
+    for (const r of fam.rungs) {
+      const re = new RegExp(`(?<![A-Za-z0-9])${wordRe(r.seg)}(?![a-z0-9])[^\\d;:.]{0,24}?(?<![\\w.])(${esc(r.num)})(?:${esc(r.unit || "")})?(?![\\w%]|\\.\\d)`, "i");
+      const m = p.match(re);
+      if (m) out.push({ where: `${rel}:${i + 1}`, text: m[0].replace(/\s+/g, " "), rung: r.token });
+    }
   });
   return out;
 }
@@ -153,7 +249,7 @@ export function exempt(sites, name, where) {
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   const a = cli({ root: { type: "string" }, declare: { type: "string" }, patch: { type: "string" } });
-  console.log("DEL · no file in scope (src/, demo/, tests/, every path the patch touches) describes a mechanism the patch deletes, in any word form, or a value it changes (static; H6-1, H7-2, H8-1)");
+  console.log("DEL · no file in scope (src/, demo/, tests/, every path the patch touches) describes a mechanism the patch deletes, in any word form, or a value or ladder it changes (static; H6-1, H7-2, H8-1, H9-1..H9-3)");
   if (!a.root || !a.declare) { console.log("usage: node deleted-mechanisms.mjs --root <tree> --declare <names.json> [--patch <file.patch>]\nFAIL (no gated rows measured: no tree or no declaration)"); process.exit(2); }
   const root = path.resolve(a.root), decl = JSON.parse(fs.readFileSync(path.resolve(a.declare), "utf8"));
   const patchText = a.patch ? fs.readFileSync(path.resolve(a.patch), "utf8") : "";
@@ -182,19 +278,31 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     row({ name, text: `"${name}"` }, hits(name, files, ex), why);
     report({ name, text: `"${name}"` }, hits(name, reported, ex));
   }
-  const changed = a.patch ? changedValues(patchText) : [];
-  if (a.patch) console.log(`changed values: ${changed.length} declarations in src/ · ${[...new Set(changed.map((c) => c.token))].length} tokens`);
+  const changed = a.patch ? changedValues(patchText) : [], fams = families(changed);
+  const arms = declaredArms(changed.map((c) => c.token), files);
+  if (a.patch) console.log(`changed values: ${changed.length} declarations in src/ · ${[...new Set(changed.map((c) => c.token))].length} tokens · ${fams.length} families · ${arms.filter((x) => changed.some((c) => c.token === x.token && c.from === x.value)).length} arms still at an old value`);
+  let armTrue = 0;
   for (const ch of changed) {
     const label = { name: ch.token, text: `${ch.token}: ${ch.from} → ${ch.to} (literal ${ch.literals.join(", ")}; ${ch.file})` };
-    row(label, valueHits(ch, files), "");
-    report(label, valueHits(ch, reported));
+    const h = valueHits(ch, files, arms);
+    for (const x of h.filter((x) => x.armTrue)) { armTrue++; console.log(`    · arm-true ${x.where} "${x.text}" (cites ${x.armTrue})`); }
+    row(label, h.filter((x) => !x.armTrue), "");
+    report(label, valueHits(ch, reported, arms).filter((x) => !x.armTrue));
   }
+  const rung = [];
+  for (const fam of fams) {
+    const label = { name: fam.name, text: `${fam.name} tuple ${fam.tuple.join("/")}${fam.unit} → ${fam.to.join("/")}${fam.unit} (${fam.file})` };
+    row(label, tupleHits(fam, files), "");
+    report(label, tupleHits(fam, reported));
+    for (const x of rungHits(fam, files)) rung.push(`${x.rung}: ${x.where} "${x.text}"`);
+  }
+  if (fams.length) { console.log(`RUNG READING (not gated; R-21 (b) reads each line's tense): ${rung.length}`); for (const r of rung) console.log(`  [R-21 b] ${r}`); }
   const stale = sites.filter((s) => !s.used);
   for (const s of stale) { fails++; console.log(`  ✗ exempt site ${s.at} for "${s.name}" exempts no hit: stale (${s.why})`); }
   console.log(`REPORTED (not gated; repo-root *.md and docs/canon/): ${rep.length}`);
   for (const r of rep) console.log(`  [reported] ${r}`);
-  const rows = decl.names.length + changed.length + sites.length;
-  console.log(`DELETED-MECHANISMS names=${decl.names.length} hits=${hitsAll} files=${where.size} changed=${changed.length} sites=${sites.length} reported=${rep.length} · ${[...where].sort().join(" ")}`);
+  const rows = decl.names.length + changed.length + fams.length + sites.length;
+  console.log(`DELETED-MECHANISMS names=${decl.names.length} hits=${hitsAll} files=${where.size} changed=${changed.length} families=${fams.length} sites=${sites.length} arm-true=${armTrue} rung=${rung.length} reported=${rep.length} · ${[...where].sort().join(" ")}`);
   console.log(fails ? `FAIL (${fails} of ${rows} gated rows)` : `PASS (${rows} gated rows)`);
   process.exit(fails ? 1 : 0);
 }

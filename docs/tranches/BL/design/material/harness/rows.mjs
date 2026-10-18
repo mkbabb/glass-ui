@@ -1,7 +1,7 @@
 // rows.mjs · the row generators the witnesses share: which cells a witness needs, the glyph and indicator
 // rows of a cell, and the compact per-cell summaries. Every number comes from lib.mjs's painted-pixel metrics.
 import path from "node:path";
-import { glyphRing, edgeContrast, readPng, pick, tag, f, LABEL, CELLS } from "./lib.mjs";
+import { glyphRing, edgeContrast, readPng, pick, tag, f, LABEL, CELLS, VARIANT } from "./lib.mjs";
 
 // The recurring-writer threshold (H-3): a custom property written in this many distinct animation frames of a live
 // window is a per-frame signal, whatever its name and however it is written.
@@ -9,12 +9,22 @@ export const RECURRING_FRAMES = 3;
 
 // The cells a witness needs, per engine. A gate engine's missing or crashed cell is a FAIL row (an incomplete
 // capture never passes); a Playwright WebKit crash is recorded as UNMEASURED.
+// H9-4 (pass 9, F-1): the variant read is want.variant, else --variant (lib.mjs VARIANT, `base` by default). A capture
+// that holds no cell of that variant has nothing to read: the witness says so and exits 2. It never prints MISSING rows
+// as a gated FAIL, which would read as a measured red (E-2; pass-7's `ring040` and `ring1px` captures did that).
+export function variantOrExit(cap, variant) {
+  if (cap.cells.some((c) => (c.variant ?? "base") === variant)) return variant;
+  const have = [...new Set(cap.cells.map((c) => c.variant ?? "base"))];
+  console.log(`0 cells of variant ${variant}: nothing read (capture ${cap.capdir} holds ${have.join(", ") || "no cells"}; name one with --variant)`);
+  process.exit(2);
+}
 export function need(cap, gate, want) {
   const have = [], lines = []; let missing = 0;
+  const variant = variantOrExit(cap, want.variant || VARIANT);
   const engines = [...new Set([...gate, ...cap.cells.map((c) => c.engine)])];
   for (const engine of engines) for (const theme of want.themes) for (const ground of want.grounds) for (const scene of want.scenes) {
     if (CELLS && !CELLS.test(`${engine} ${theme} ${ground} ${scene}`)) continue;
-    const c = pick(cap, { engine, theme, ground, scene, variant: want.variant || "base" })[0];
+    const c = pick(cap, { engine, theme, ground, scene, variant })[0];
     const gated = gate.includes(engine);
     if (!c) { if (gated) { missing++; lines.push(`MISSING ${engine} ${theme} ${ground} ${scene}: not captured`); } continue; }
     if (c.crashed) { if (gated) { missing++; lines.push(`CRASH ${tag(c)}: ${c.error || "page crashed"}`); } else lines.push(`${tag(c)}: UNMEASURED (Playwright WebKit crashed: ${c.error || "page crash"})`); continue; }
@@ -82,7 +92,7 @@ export const engineNote = (c) => (c.engine === "webkit" ? " [" + LABEL.webkit.sp
 // (getImageData, readPixels, toDataURL) and no custom property written in RECURRING_FRAMES or more animation frames.
 // A window is gated when its engine is a gate engine; a gate engine with no window is a FAIL row.
 export function signalLeg(cap, t, lines, gate = ["chromium"]) {
-  const wins = (cap.live || []).filter((x) => (x.variant || "base") === "base" && (!CELLS || CELLS.test(`${x.engine || "chromium"} ${x.theme} ${x.ground} ladder`)));
+  const wins = (cap.live || []).filter((x) => (x.variant || "base") === VARIANT && (!CELLS || CELLS.test(`${x.engine || "chromium"} ${x.theme} ${x.ground} ladder`)));
   for (const e of gate) if (!wins.some((x) => (x.engine || "chromium") === e)) {
     if (CELLS) { lines.push(`signal: no ${e} live window in the restricted cells (not read)`); continue; }
     t.add(true, false); lines.push(`signal: no ${e} live windows (capture with --live) ✗`); }

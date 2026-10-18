@@ -20,7 +20,7 @@
 //          band's thinnest rung must paint α = 1 (≥ 0.995, the same 0.005 paint-read noise); content and dark stay on
 //          the bound. (d) is unresearched: the check refuses (exit 2) until the harness is revised for it.
 //   node wa-no-signal.mjs <capdir> [--gate chromium[,webkit]] [--q11 a|b|c]
-import { cli, loadCapture, gateEngines, report, paintedAlpha, region, cr, pct, f, hex, tag, pick, THEMES, CONTENT, BOUND_PROP, CELLS } from "./lib.mjs";
+import { cli, loadCapture, gateEngines, report, paintedAlpha, region, cr, pct, f, hex, tag, pick, THEMES, CONTENT, BOUND_PROP, CELLS, VARIANT } from "./lib.mjs";
 import { need, tally, inkRows, signalLeg } from "./rows.mjs";
 
 const a = cli({ q11: { type: "string" } }), cap = loadCapture(a._[0]), gate = gateEngines(a);
@@ -52,7 +52,7 @@ for (const engine of [...new Set(cap.cells.map((c) => c.engine))]) for (const th
   const gated = gate.includes(engine), band = { content: [], chrome: [] };
   for (const scene of ["ladder", "dialog"]) {
     if (CELLS && !CELLS.test(`${engine} ${theme} black ${scene}`)) continue;
-    const B = pick(cap, { engine, theme, ground: "black", scene, variant: "base" })[0], W = pick(cap, { engine, theme, ground: "white", scene, variant: "base" })[0];
+    const B = pick(cap, { engine, theme, ground: "black", scene, variant: VARIANT })[0], W = pick(cap, { engine, theme, ground: "white", scene, variant: VARIANT })[0];
     if (!B || !W || B.crashed || W.crashed) { if (gated) { t.add(true, false); lines.push(`α ${engine} ${theme} ${scene}: black or white cell missing ✗`); } continue; }
     const parts = [];
     for (const s of B.specs.filter((s) => s.sample && s.id !== "opaque")) {
@@ -65,7 +65,7 @@ for (const engine of [...new Set(cap.cells.map((c) => c.engine))]) for (const th
         if (CH.includes(s.id)) an = solve((x) => [[0, 0, 0], [255, 255, 255]].every((G) => [...inks.values()].every((i) => cr(i, mix(pole, G, x)) >= 4.5)));
         else {
           // Each ink over the raw field under its OWN text box (the pixels its ring sees), across the declared band.
-          const fields = ["paper", "aurora", "aurora50"].map((g) => pick(cap, { engine, theme, ground: g, scene, variant: "base" })[0]).filter((c) => c && !c.crashed);
+          const fields = ["paper", "aurora", "aurora50"].map((g) => pick(cap, { engine, theme, ground: g, scene, variant: VARIANT })[0]).filter((c) => c && !c.crashed);
           const under = new Map([...inks.keys()].map((id) => [id, fields.flatMap((c) => {
             const box = c.specs.find((z) => z.id === s.id)?.inks.find((i) => i.id === id)?.box;
             return box ? region(cap.img(c, "raw"), box).filter((_, k) => k % 3 === 0) : [];

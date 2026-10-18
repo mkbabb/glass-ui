@@ -75,7 +75,9 @@ export const LIVE_STATES = ["published", "live"];
 // plate border's nested translucent color-mix() to one arm, colours only. Every WebKit dock row is labelled "+shim".
 export const WEBKIT_SHIM = ".glass-dock .dock-plate { border-color: var(--dock-plate-expanded-border) !important; }";
 export const THEMES = ["light", "dark"];
-export const ENGINES = ["chromium", "webkit"];
+// H9-5 (pass 9): frozen. A run narrows engines with --engines (capture.mjs, the plant scripts), never by mutating this
+// shared array in-process; a mutation throws (E-2).
+export const ENGINES = Object.freeze(["chromium", "webkit"]);
 // H6-0 (pass 6): Chromium launches as Playwright's default headless shell with no GPU arguments (the machine law,
 // user-level CLAUDE.md, "Browser runs"). No witness of the 44 rows reads a GPU-only paint: every metric reads captured
 // pixels, and the field grounds are whatever the shell paints (H6.md §3 records which arm that is). A witness that needs
@@ -109,6 +111,9 @@ export function cli(options = {}) {
 // --cells <regex>: restrict every witness to the cells whose "engine theme ground scene" matches (the self-test's
 // planted captures hold only the cells their plant touches; a full run never passes it).
 export const CELLS = (() => { const i = process.argv.indexOf("--cells"); return i > 0 && process.argv[i + 1] ? new RegExp(process.argv[i + 1]) : null; })();
+// --variant <id> (H9-4, pass 9): the variant a witness reads, `base` by default. A plant captured under its own label
+// (`ring040`) is read by naming it; a capture with no cell of the variant exits loud (rows.mjs need), never a FAIL.
+export const VARIANT = (() => { const i = process.argv.indexOf("--variant"); return i > 0 && process.argv[i + 1] ? process.argv[i + 1] : "base"; })();
 export const list = (s, dflt) => (s ? String(s).split(",").map((x) => x.trim()).filter(Boolean) : dflt);
 
 // ── colour ─────────────────────────────────────────────────────────────────────────────────────────────

@@ -1,0 +1,175 @@
+ok   LAW  static   expect PASS exit 0 · PASS (71 gated rows) · H6-0: the harness itself (and pass-6/ when present): headless shell, no GPU arguments
+ok   LAW  static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · H6-0: pass 5's lib.mjs (CHROMIUM_ARGS with WebGPU, blocklist override and ANGLE Metal), uncited
+        ✗ law-pass5/h/lib.mjs: no GPU-WITNESS citation
+ok   LAW  static   expect PASS exit 0 · PASS (1 gated rows) · H6-0: a GPU launch under a GPU-WITNESS line whose evidence file exists
+ok   LAW  static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · H6-0: a GPU-WITNESS line citing evidence that does not exist
+        ✗ law-badcite/h/gpu.mjs: GPU-WITNESS cites ev/missing.md, which does not exist
+ok   LAW  static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · H6-0: full Chrome for Testing, headed, uncited
+        ✗ law-channel/h/p.mjs: no GPU-WITNESS citation
+ok   DEL  static   expect PASS exit 0 · PASS (12 gated rows) · H6-1: the floor's names absent; the deletion stated as such
+ok   DEL  static   expect FAIL exit 1 · FAIL (1 of 12 gated rows) · H6-1: a phrase broken over two comment lines (overlay-plate.css:272-273's shape)
+        ✗ "earned darken": 1 · src/a.css:1 "earned * darken"
+ok   DEL  static   expect FAIL exit 1 · FAIL (2 of 12 gated rows) · H6-1: an identifier in an untouched demo file
+        ✗ "backdropMode": 1 · demo/x.ts:1 "backdropMode"
+        ✗ "backdrop mode": 1 · demo/x.ts:1 "backdropMode"
+ok   DEL  static   expect FAIL exit 1 · FAIL (10 of 12 gated rows) · H6-1: floor v4's tree (h7trees): the six earned-darken comments
+        ✗ "earned darken": 5 · src/components/button/styles.css:126 "earned darken" src/components/dock/styles/shell.css:185 "earned darken" src/styles/glass/overlay-plate.css:272 "earned darken" src/styles/glass/surface-axis.cs
+        ✗ "darkened by whatever": 1 · src/components/dock/styles/search.css:38 "darkened by whatever"
+        ✗ "luma read": 1 · src/styles/glass/surfaces.css:54 "luma read"
+        ✗ "backdropMode": 1 · src/components/dock/README.md:20 "backdrop mode"
+     H7-1 pixels: plate 254,247,241 · banked solid 137,131,127 · ink 28.0,25.0,23.0 → at α 0.52 136.5,131.6,127.6
+ok   H7-1 static   expect PASS exit 0 · PASS (1 gated rows) · R-14 fixture: floor v5's light Close ring, its banked pixels: the full-coverage column 852 reads 3.52 (the worst of three, 2.66, is the antialiasing)
+ok   H7-1 pixels   expect ROWS exit 0 · rows hold (1) · R-14 fixture: floor v5's light Close ring, its banked pixels: the full-coverage column 852 reads 3.52 (the worst of three, 2.66, is the antialiasing)
+ok   H7-1 static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · R-14 plant: HEAD's ring (--ink-perimeter 0.48 over HEAD's plate #746e66) with the same geometry: reds at its full-coverage column
+ok   H7-1 pixels   expect ROWS exit 0 · rows hold (1) · R-14 plant: HEAD's ring (--ink-perimeter 0.48 over HEAD's plate #746e66) with the same geometry: reds at its full-coverage column
+ok   H7-1 static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · R-14 plant: the same ring at α 0.40: reds at its full-coverage column
+ok   H7-1 pixels   expect ROWS exit 0 · rows hold (1) · R-14 plant: the same ring at α 0.40: reds at its full-coverage column
+ok   H7-1 static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · R-14 plant: a 1 px outline with no provable full-coverage column keeps the worst of three (its column 852 alone would read 3.52)
+ok   H7-1 pixels   expect ROWS exit 0 · rows hold (1) · R-14 plant: a 1 px outline with no provable full-coverage column keeps the worst of three (its column 852 alone would read 3.52)
+ok   H7-1 static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · R-14 bite: a straight-run ring is untouched (p05 over its columns; one full column does not lift it)
+ok   H7-1 pixels   expect ROWS exit 0 · rows hold (1) · R-14 bite: a straight-run ring is untouched (p05 over its columns; one full column does not lift it)
+ok   H7-1 static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · R-14 bite: a perimeter on the three-column fallback is untouched (R-14 reads rings only)
+ok   H7-1 pixels   expect ROWS exit 0 · rows hold (1) · R-14 bite: a perimeter on the three-column fallback is untouched (R-14 reads rings only)
+ok   H9-4 static   expect LOUD exit 2 · 0 cells of variant base: nothing read (capture /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p9/H9/out2/selftest/caps/h9-ring040 holds ring040; name one with --variant) · H9-4 plant: M-3 on the unrelabelled ring040 capture, no --variant: nothing read, exit 2 (was 14 MISSING rows, a vacuous FAIL)
+ok   H9-4 pixels   expect ROWS exit 0 · rows hold (3) · H9-4: the refusal names the variant and what the capture holds; no MISSING row is printed
+ok   H9-4 static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · H9-4: the same capture read as --variant ring040: a measured red (the α 0.40 ring)
+ok   H9-4 pixels   expect ROWS exit 0 · rows hold (2) · H9-4: one gated row, the ring, read at its full-coverage column
+ok   H9-4 static   expect PASS exit 0 · PASS (1 gated rows) · H9-4 fixture: floor v5's ring pixels labelled ring040, read as --variant ring040: 3.52
+ok   H9-4 static   expect LOUD exit 2 · 0 cells of variant base: nothing read (capture /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p9/H9/out2/selftest/caps/h9-ring040 holds ring040; name one with --variant) · H9-4: every rows.mjs reader refuses the same way (M-2 on the ring040 capture, no --variant)
+ok   H7-2 static   expect PASS exit 0 · PASS (12 gated rows) · H7-2 fixture: each deletion stated with no name of what it deleted
+ok   H7-2 static   expect FAIL exit 1 · FAIL (2 of 12 gated rows) · H7-2 plant: `backdropMode`'s word form, "backdrop mode" (dock/README.md:20's shape)
+        ✗ "backdropMode": 1 · src/README.md:1 "backdrop mode"
+        ✗ "backdrop mode": 1 · src/README.md:1 "backdrop mode"
+ok   H7-2 static   expect FAIL exit 1 · FAIL (1 of 12 gated rows) · H7-2 plant: "adaptive tint" inflected and split over an HTML comment's lines (dock-search.vue:197-198's shape)
+        ✗ "adaptive tint": 1 · demo/s.vue:2 "adaptive tinting"
+ok   H7-2 static   expect FAIL exit 1 · FAIL (1 of 12 gated rows) · H7-2 plant: "adaptive tint" in kebab case
+        ✗ "adaptive tint": 1 · src/a.css:1 "adaptive-tint"
+ok   H7-2 static   expect FAIL exit 1 · FAIL (2 of 12 gated rows) · H7-2 plant: `backdropMode` as a kebab data- attribute in an untouched demo file
+        ✗ "backdropMode": 1 · demo/x.vue:1 "backdrop-mode"
+        ✗ "backdrop mode": 1 · demo/x.vue:1 "backdrop-mode"
+ok   H7-2 static   expect DECL · declared --glass-backdrop-luma, backdropMode, data-backdrop-sample-state · present DockBackdropMode · the test file's names not read
+ok   H7-2 static   expect FAIL exit 1 · FAIL (1 of 3 gated rows) · H7-2 plant: the built declaration reads "backdrop sample state" in an untouched readme
+        ✗ "data-backdrop-sample-state": 1 · src/readme.md:1 "backdrop sample state"
+ok   H7-2 static   expect FAIL exit 1 · FAIL (5 of 60 gated rows) · H7-2 plant: floor v5 under its patch-built declaration
+        ✗ "backdropMode": 1 · src/components/dock/README.md:20 "backdrop mode"
+        ✗ "backdrop mode": 1 · src/components/dock/README.md:20 "backdrop mode"
+        ✗ "adaptive tint": 3 · demo/stories/dock/dock-search.vue:197 "adaptive tinting" demo/stories/substrates/glass-material.vue:5 "adaptive tint" src/styles/glass/overlay-plate.css:271 "adaptive-tint"
+        ✗ "GlassBackdropBucket": 1 · demo/stories/compositions/auth-shell.vue:209 "glass backdrop bucket"
+ok   H7-2 static   expect ROWS exit 0 · rows hold (3) · H7-2 plant: floor v5 reds at the three sentences P6-1.1 names
+ok   H7-2 static   expect PASS exit 0 · PASS (60 gated rows) · H7-2 fixture: floor v5 with its stale sentences rewritten name-free (fv5fix)
+ok   H7-3 static   expect PASS exit 0 · PASS (39 gated rows) · H7-3 fixture: R-13's register, "earned ink"
+ok   H7-3 static   expect FAIL exit 1 · FAIL (1 of 39 gated rows) · H7-3 plant: "earned darken" split over two comment lines (adaptive-legibility.css:7-8's shape)
+        ✗ "earned darken": 1 · src/a.css:1 "earned * darken"
+ok   H7-3 static   expect FAIL exit 1 · FAIL (2 of 39 gated rows) · H7-3 plant: an R-16 (iii) sentence (tokens/glass.css:208's shape)
+        ✗ "plate still darkens": 1 · src/a.css:1 "plate still darkens"
+        ✗ "darken-over-light": 1 · src/a.css:1 "darkens-over-light"
+ok   H7-3 static   expect FAIL exit 1 · FAIL (1 of 39 gated rows) · H7-3 plant: an R-18 sentence, "declarative darken" (adaptive-legibility.css:70's shape)
+        ✗ "declarative darken": 1 · src/a.css:1 "declarative darken"
+ok   H7-3 static   expect FAIL exit 1 · FAIL (36 of 39 gated rows) · H7-3 plant: the minor v4 under the minor's declaration
+        ✗ "earned darken": 2 · src/components/dock/styles/adaptive-legibility.css:7 "earned * darken" src/styles/glass/overlay-plate.css:272 "earned darken"
+        ✗ "locally darken the glass": 1 · src/styles/glass/ladder.css:164 "locally darken the glass"
+        ✗ "veil already writes warm near-black ink": 1 · src/styles/glass/ladder.css:166 "veil already writes warm near-black ink"
+        ✗ "plate darkened twice": 1 · src/styles/glass/ladder.css:167 "plate darkened twice"
+ok   H7-3 static   expect ROWS exit 0 · rows hold (5) · H7-3 plant: the minor v4 reds at A-3's two sentences, the R-16 (iii) sentences and the R-18 sentences
+ok   H7-3 static   expect FAIL exit 1 · FAIL (15 of 39 gated rows) · H7-3 plant: the minor v5 under the R-18 declaration
+        ✗ "declarative darken": 1 · src/components/dock/styles/adaptive-legibility.css:70 "declarative darken"
+        ✗ "darkened plate": 2 · src/components/dock/styles/adaptive-legibility.css:33 "darkened plate" src/components/dock/styles/search.css:58 "darkened plate"
+        ✗ "cannot self-darken": 1 · src/components/dock/styles/adaptive-legibility.css:23 "cannot self-darken"
+        ✗ "own darken": 1 · src/components/dock/styles/adaptive-legibility.css:29 "own darken"
+ok   H7-3 static   expect ROWS exit 0 · rows hold (7) · H7-3 plant: the minor v5 reds at Crit A-3's sentences, one row per R-18 name
+ok   H7-3 static   expect PASS exit 0 · PASS (39 gated rows) · H7-3 fixture: the minor v6 (R-18 built)
+     H8 real declaration: DECLARE floor-v6.patch: 190 identifiers on removed lines · 62 absent from the patched tree (declared: token 9, export 28, module const 7, type or component 3, module stem 3, prop 4, data- attribute 8) · 128 still named (listed for the seat) · 12 concepts · 72 names, 5 exact only, 18 sites (9 homonym) → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p9/H9/out2/selftest/h8-declare-floor-v6.json
+ok   H8-1 static   expect PASS exit 0 · PASS (2 gated rows) · H8-1 fixture: tests/ and the touched doc name nothing deleted or changed; the repo-root and docs/canon/ prose is printed, not gated
+ok   H8-1 static   expect ROWS exit 0 · rows hold (4) · H8-1 REPORTED arm: DESIGN.md and docs/canon/ print their hits; the quoted `--x: v` in a comment is not a declaration (one changed value, not two)
+ok   H8-1 static   expect FAIL exit 1 · FAIL (1 of 2 gated rows) · H8-1 plant: scope arm: a deleted token named live in a tests/ comment (forms-seam.test.ts:23-26's shape); H7's DEL never read tests/
+        ✗ "--glass-veil-ink": 1 · tests/f.test.ts:2 "--glass-veil-ink"
+ok   H8-1 static   expect FAIL exit 1 · FAIL (1 of 2 gated rows) · H8-1 plant: scope arm: the deleted token's word form in a touched file outside src/ demo/ tests/ (the patch's docs/notes.md)
+        ✗ "--glass-veil-ink": 1 · docs/notes.md:1 "glass veil ink"
+ok   H8-1 static   expect FAIL exit 1 · FAIL (1 of 2 gated rows) · H8-1 plant: value arm: a test title carrying the old literal with the rung's words (forms-seam.test.ts:91's shape)
+        ✗ --ink-perimeter: 0.48 → 0.52 (literal 0.48; src/t.css): 1 · tests/f.test.ts:1 "0.48 · ink PERIMETER"
+ok   H8-1 static   expect FAIL exit 1 · FAIL (1 of 2 gated rows) · H8-1 plant: value arm: a src/ comment quoting the old rung value by its words
+        ✗ --ink-perimeter: 0.48 → 0.52 (literal 0.48; src/t.css): 1 · src/u.css:1 "0.48 · ink perimeter"
+ok   H8-1 static   expect PASS exit 0 · PASS (2 gated rows) · H8-1 bite: the same sentence in a docs/ file the patch does not touch and outside the roots is not read
+ok   H8-1 static   expect PASS exit 0 · PASS (2 gated rows) · H8-1 bite: one word of the name beside the literal is not the rung (the value arm needs every word); a code literal is not prose
+ok   H8-1 static   expect PASS exit 0 · PASS (3 gated rows) · H8-1 site entry: a test line that asserts the deletion, read in context, is exempt
+ok   H8-1 static   expect FAIL exit 1 · FAIL (1 of 3 gated rows) · H8-1 plant: a site entry that exempts no hit is stale and FAILs
+        ✗ exempt site tests/f.test.ts:9 for "--glass-veil-ink" exempts no hit: stale (a line that moved)
+ok   H8-1 static   expect FAIL exit 1 · FAIL (8 of 99 gated rows) · H8-1 plant: floor v6 as banked, under its patch-built declaration and patch
+        ✗ "tint seam": 3 · src/components/dock/GlassDock.vue:467 "tint seam" src/components/dock/styles/index.css:83 "tint seam" src/styles/glass/surfaces-pager.css:29 "TINT seam"
+        ✗ "tint arm": 1 · src/styles/glass/surfaces-pager.css:34 "tint arm"
+        ✗ "oklab tint": 1 · src/styles/glass/surfaces-pager.css:29 "oklab TINT"
+        ✗ "tint legibility seam": 1 · src/components/dock/styles/index.css:80 "tint legibility seam"
+ok   H8-1 static   expect ROWS exit 0 · rows hold (11) · H8-1 plant: floor v6 reds at forms-seam.test.ts:24 (deleted-name arm) and :91 (value arm) and liquid-fill.css:74 (value arm); with H9, at A-1's sentences too
+ok   H8-1 static   expect FAIL exit 1 · FAIL (5 of 99 gated rows) · H8-1 on fv6fix (the floor v7 stand-in): H8's three sites gone; with H9 it reds at A-1's sentences, as floor v7 does
+        ✗ "tint seam": 3 · src/components/dock/GlassDock.vue:467 "tint seam" src/components/dock/styles/index.css:83 "tint seam" src/styles/glass/surfaces-pager.css:29 "TINT seam"
+        ✗ "tint arm": 1 · src/styles/glass/surfaces-pager.css:34 "tint arm"
+        ✗ "oklab tint": 1 · src/styles/glass/surfaces-pager.css:29 "oklab TINT"
+        ✗ "tint legibility seam": 1 · src/components/dock/styles/index.css:80 "tint legibility seam"
+ok   H8-1 static   expect ROWS exit 0 · rows hold (11) · H8-1 REPORTED arm: DESIGN.md:521 and docs/canon/glass-system.md:44-60 printed, not gated; H8's sites absent, A-1's present
+ok   H8-2 static   expect DECL · declared CSS_INITIAL_UNDERLAY, backdropSample, backdropSampleMath, liveCardEl · present stop
+ok   H8-2 static   expect FAIL exit 1 · FAIL (2 of 4 gated rows) · H8-2 plant: the deleted module's stem in its word form, "backdrop sample math", in a readme
+        ✗ "backdropSample": 1 · src/readme.md:1 "backdrop sample"
+        ✗ "backdropSampleMath": 1 · src/readme.md:1 "backdrop sample math"
+ok   H8-2 static   expect DECL · floor v6 72 names (pass 7 61) · added CSS_INITIAL_UNDERLAY, backdropLuminanceSample, backdropSample, backdropSampleMath, liveCardEl, oklab tint, sampleAge, stageEl, tint arm, tint legibility seam, tint seam · lost none
+     H9 real declaration: DECLARE floor-v7.patch: 190 identifiers on removed lines · 62 absent from the patched tree (declared: token 9, export 28, module const 7, type or component 3, module stem 3, prop 4, data- attribute 8) · 128 still named (listed for the seat) · 12 concepts · 72 names, 5 exact only, 19 sites (9 homonym) → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p9/H9/out2/selftest/h9-declare-floor-v7.json
+ok   H9-1 static   expect PASS exit 0 · PASS (2 gated rows) · H9-1 fixture: the live homonym at its site entry, the deleted seam named nowhere
+ok   H9-1 static   expect FAIL exit 1 · FAIL (1 of 2 gated rows) · H9-1 plant: the deleted seam named live beside its homonym (GlassDock.vue:467's shape)
+        ✗ "tint seam": 1 · src/a.css:1 "tint seam"
+ok   H9-1 static   expect PASS exit 0 · PASS (2 gated rows) · H9-1 bite: "retint seam" is another word (PagerDots.vue:426's shape)
+ok   H9-1 static   expect FAIL exit 1 · FAIL (2 of 2 gated rows) · H9-1 plant: the homonym moved a line: its site is stale, and the line it moved to reds
+        ✗ "tint seam": 1 · src/fb.css:2 "TINT-SEAM"
+        ✗ exempt site src/fb.css:1 for "tint seam" exempts no hit: stale (the live gate name)
+ok   H9-1 static   expect REFUSE exit 2 · homonym entry "tint arm" needs an `at` site and a declared phrase
+ok   H9-1 static   expect FAIL exit 1 · FAIL (5 of 100 gated rows) · H9-1/H9-2 plant: floor v7 as banked, at the four P8 sentences (Crit A-1)
+        ✗ "tint seam": 3 · src/components/dock/GlassDock.vue:467 "tint seam" src/components/dock/styles/index.css:83 "tint seam" src/styles/glass/surfaces-pager.css:29 "TINT seam"
+        ✗ "tint arm": 1 · src/styles/glass/surfaces-pager.css:34 "tint arm"
+        ✗ "oklab tint": 1 · src/styles/glass/surfaces-pager.css:29 "oklab TINT"
+        ✗ "tint legibility seam": 1 · src/components/dock/styles/index.css:80 "tint legibility seam"
+ok   H9-1 static   expect ROWS exit 0 · rows hold (8) · H9-1/H9-2 plant: floor v7 reds at surfaces-pager.css:29, :34, GlassDock.vue:467, index.css:80, :83 (H9-1) and glass-deep.css:12, :54 (H9-2), and nowhere else; every homonym site exempts a live hit
+ok   H9-1 static   expect PASS exit 0 · PASS (100 gated rows) · H9-1/H9-2 fixture: the floor v8 stand-in (R-20's four rewrites, scratch wording) at 0
+ok   H9-1 static   expect ROWS exit 0 · rows hold (4) · H9-1/H9-2 fixture: the homonym sites and the tuple's history site each exempt their hit on floor v8
+ok   H9-2 static   expect PASS exit 0 · PASS (5 gated rows) · H9-2 fixture: the new tuple, and the ladder named by its tokens
+ok   H9-2 static   expect ROWS exit 0 · rows hold (2) · H9-2: three changed rungs of one file differing in one segment are one family, its old tuple in declaration order
+ok   H9-2 static   expect FAIL exit 1 · FAIL (1 of 5 gated rows) · H9-2 plant: the old tuple, `/` separated, unit once (glass-deep.css:54's shape)
+        ✗ --x-*-r tuple 10/14/16px → 6/10/12px (src/t.css): 1 · src/n.css:1 "10/14/16px"
+ok   H9-2 static   expect FAIL exit 1 · FAIL (1 of 5 gated rows) · H9-2 plant: the old tuple with spaces and no unit, in a tests/ comment (Surface.test.ts:164's shape)
+        ✗ --x-*-r tuple 10/14/16px → 6/10/12px (src/t.css): 1 · tests/n.test.ts:1 "10 / 14 / 16"
+ok   H9-2 static   expect FAIL exit 1 · FAIL (1 of 5 gated rows) · H9-2 plant: the old tuple, `·` separated, a unit on each
+        ✗ --x-*-r tuple 10/14/16px → 6/10/12px (src/t.css): 1 · demo/n.md:1 "10px · 14px · 16px"
+ok   H9-2 static   expect PASS exit 0 · PASS (6 gated rows) · H9-2 site entry: a history line exempt by the family's name
+ok   H9-2 static   expect PASS exit 0 · PASS (5 gated rows) · H9-2 bite: part of the tuple is not the tuple
+ok   H9-2 static   expect PASS exit 0 · PASS (5 gated rows) · H9-2 rung reading: a rung's word then its old number is printed for R-21 (b), not gated
+ok   H9-2 static   expect ROWS exit 0 · rows hold (3) · H9-2 rung reading: "c paints 16" printed (the old c); "c painted 12px" and "a paints 6" (new values) not
+ok   H9-2 static   expect FAIL exit 1 · FAIL (5 of 100 gated rows) · H9-2 plant: floor v7's tuple rows and rung reading
+        ✗ "tint seam": 3 · src/components/dock/GlassDock.vue:467 "tint seam" src/components/dock/styles/index.css:83 "tint seam" src/styles/glass/surfaces-pager.css:29 "TINT seam"
+        ✗ "tint arm": 1 · src/styles/glass/surfaces-pager.css:34 "tint arm"
+        ✗ "oklab tint": 1 · src/styles/glass/surfaces-pager.css:29 "oklab TINT"
+        ✗ "tint legibility seam": 1 · src/components/dock/styles/index.css:80 "tint legibility seam"
+ok   H9-2 static   expect ROWS exit 0 · rows hold (4) · H9-2: floor v7's tuple in a dated test comment is a site; "paints 22" (:13) and "painted 22" (:55) are printed for R-21 (b), whose reader rules tense
+ok   H9-3 static   expect PASS exit 0 · PASS (5 gated rows) · H9-3 fixture: the old value cited with the arm file that still declares it (sheet/styles.css:197's shape)
+ok   H9-3 static   expect ROWS exit 0 · rows hold (2) · H9-3: the arm is keyed by file, line and selector
+ok   H9-3 static   expect PASS exit 0 · PASS (5 gated rows) · H9-3 fixture: the arm cited by its selector
+ok   H9-3 static   expect FAIL exit 1 · FAIL (1 of 5 gated rows) · H9-3 plant: the old value cited with the arm that changed
+        ✗ --x-step: 0.04 → 0.05 (literal 0.04; src/t.css): 1 · src/s.css:1 "0.04 · x step"
+ok   H9-3 static   expect FAIL exit 1 · FAIL (1 of 5 gated rows) · H9-3 plant: the old value citing no arm reads as the changed one
+        ✗ --x-step: 0.04 → 0.05 (literal 0.04; src/t.css): 1 · src/s.css:1 "0.04 · x step"
+ok   H9-3 static   expect FAIL exit 1 · FAIL (6 of 48 gated rows) · H9-3 on the minor v6 (R-23 unbuilt): sheet/styles.css:197 is arm-true; the rest red as Crit §5.2 ruled
+        ✗ "earned darken": 2 · tests/components/button/Button.test.ts:146 "earned-darken" tests/gates/feedback-tint-seam.test.ts:11 "earned-darken"
+        ✗ "earned-darken clamp": 2 · tests/components/button/Button.test.ts:146 "earned-darken clamp" tests/gates/feedback-tint-seam.test.ts:11 "earned-darken clamp"
+        ✗ --ink-perimeter: 0.48 → 0.54 (literal 0.48; src/styles/tokens/color-radius.css): 2 · DESIGN.md:1805 "0.48 · ink perimeter" src/styles/glass/overlay-plate.css:173 "0.48 · ink perimeter"
+        ✗ --glass-blur-quiet-radius: 14px → 10px (literal 14px; src/styles/tokens/glass.css): 1 · src/styles/glass/liquid-fill.css:76 "14px · glass blur quiet radius"
+ok   H9-3 static   expect ROWS exit 0 · rows hold (3) · H9-3 fixture: the minor v6's sheet/styles.css:197 needs no site entry (MS6 §7)
+ok   H9-5 static   expect PLAN · FV3 --engines webkit: 8 variants all webkit · FV2: plant-bound webkit, diag-held-noveil "" (not captured) · no flag: plant-bound chromium,webkit, diag-held-noveil chromium
+ok   H9-5 static   expect THROW exit 1 · TypeError: Cannot delete property '1' of [object Array]
+ok   H9-5 static   expect RETIRED · pass-8/wk-plants.mjs retired
+ok   H9-6 static   expect PASS exit 0 · LIST (1 lines to read; no rulings given) · H9-6: the printer lists every frozen-word prose line of every touched file (exit 0, LIST)
+ok   H9-6 static   expect ROWS exit 0 · rows hold (4) · H9-6: the touched file's clamp-and-darken line prints with its context; an untouched file and "retint" do not
+ok   H9-6 static   expect PASS exit 0 · PASS (1 lines, each ruled true) · H9-6 fixture: every printed line ruled true
+ok   H9-6 static   expect FAIL exit 1 · FAIL (1 unread, 0 stale of 1 lines) · H9-6 plant: a printed line no ruling covers is unread
+        ✗ unread src/a.css:3 [word "darken"; word "clamp"]
+ok   H9-6 static   expect FAIL exit 1 · FAIL (0 unread, 1 stale of 1 lines) · H9-6 plant: a ruling whose line no longer says it is stale
+        ✗ stale ruling src/a.css:1 "the tint seam": the line no longer prints or no longer says it (a line rewritten since)
+ok   H9-6 static   expect PASS exit 0 · LIST (223 lines to read; no rulings given) · H9-6: R-21 (b)'s list over floor v7 (88 touched paths)
+ok   H9-6 static   expect ROWS exit 0 · rows hold (8) · H9-6: floor v7's list prints A-1's four sentences, the tuple lines and the bare "paints 22"
+ok   H9-6 static   expect PASS exit 0 · LIST (214 lines to read; no rulings given) · H9-6: R-21 (b)'s list over the floor v8 stand-in, for the floor v8 seat to read
+SELFTEST PASS: 101 expectations met
