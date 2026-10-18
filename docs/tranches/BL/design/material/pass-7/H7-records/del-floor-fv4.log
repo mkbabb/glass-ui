@@ -1,0 +1,12 @@
+DEL · no file under src/ or demo/ describes a mechanism the patch deletes, in any word form (static; H6-1, H7-2)
+tree: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p7/H7/trees/fv4 · 835 text files under src/ and demo/ · declaration: the floor (floor v4 and later): FL-1 and FL-16 delete the backdrop sampler, the clamp and its earned darken, the knee, --glass-backdrop-luma, backdropMode and the adaptive tint (REGISTRY P5-3.3; names per P5-5 H6-1, backdropMode from P5-3.3's row, backdrop mode and adaptive tint per P6-2.2 R-15 (ii)). The concepts a patch deletes with no identifier are declared here by hand; declare-removed.mjs adds every identifier the patch's removed lines name (R-15 (iii)) · 8 names, 0 exact only
+  ✗ "earned darken": 5 · src/components/button/styles.css:126 "earned darken" src/components/dock/styles/shell.css:185 "earned darken" src/styles/glass/overlay-plate.css:272 "earned darken" src/styles/glass/surface-axis.css:42 "earned darken" src/styles/glass/surfaces.css:53 "earned darken"
+  ✗ "darkened by whatever": 1 · src/components/dock/styles/search.css:38 "darkened by whatever"
+  ✗ "luma read": 1 · src/styles/glass/surfaces.css:54 "luma read"
+  ✓ "backdropLuminance": 0
+  ✓ "--glass-backdrop-luma": 0
+  ✗ "backdropMode": 1 · src/components/dock/README.md:20 "backdrop mode"
+  ✗ "backdrop mode": 1 · src/components/dock/README.md:20 "backdrop mode"
+  ✗ "adaptive tint": 4 · src/styles/glass/overlay-plate.css:271 "adaptive-tint" src/styles/glass/surface-axis.css:79 "adaptive TINT" demo/stories/dock/dock-search.vue:197 "adaptive tinting" demo/stories/substrates/glass-material.vue:5 "adaptive tint"
+DELETED-MECHANISMS names=8 hits=13 files=9 · demo/stories/dock/dock-search.vue demo/stories/substrates/glass-material.vue src/components/button/styles.css src/components/dock/README.md src/components/dock/styles/search.css src/components/dock/styles/shell.css src/styles/glass/overlay-plate.css src/styles/glass/surface-axis.css src/styles/glass/surfaces.css
+FAIL (6 of 8 gated rows)

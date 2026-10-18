@@ -18,16 +18,21 @@
 // is restricted to them with --cells (the fixture PASS runs read every cell unrestricted).
 //   node selftest.mjs [--fields <HEAD capdir>] [--only M-1,W-B,LIT,HOV] [--skip-capture] [--reuse-green] [--tree <floor v4 worktree>]
 // --tree: DEL's (H6-1) planted FAIL on a real tree carrying the deleted mechanism's prose (floor v4's six comments).
+// H7 (pass 7) adds, each with a fixture PASS and a planted FAIL: H7-1, M-3's round-ring reader (R-14), on one-cell
+// captures laid out from banked pixels (no browser); H7-2, DEL's word forms and its patch-built declaration (R-15);
+// H7-3, the minor split's own declaration (R-16). --h7-trees <dir> holds the real trees (fv5, fv5fix, minor4,
+// minor4fix: src/ and demo/ each) and --h7-decl the declaration declare-removed.mjs built from floor-v5.patch.
 // --reuse-green: keep an existing green capture (the plants are captured fresh).
 // --fields: a HEAD run's capture (its Chromium empty-scene aurora frames become the fixtures' field pixels).
 import fs from "node:fs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
-import { OUT, HERE, CHECKOUT, RETUNES, FIELD_CLAIM_SCENES, cli, list, lin } from "./lib.mjs";
+import { OUT, HERE, CHECKOUT, RETUNES, FIELD_CLAIM_SCENES, cli, list, lin, oklchLin, PNG } from "./lib.mjs";
 import { writeFixture, writeStoryFixture } from "./fixtures.mjs";
 import { capture } from "./capture.mjs";
 
-const a = cli({ fields: { type: "string" }, only: { type: "string" }, "skip-capture": { type: "boolean" }, "reuse-green": { type: "boolean" }, tree: { type: "string" } });
+const a = cli({ fields: { type: "string" }, only: { type: "string" }, "skip-capture": { type: "boolean" }, "reuse-green": { type: "boolean" }, tree: { type: "string" },
+  "h7-trees": { type: "string" }, "h7-decl": { type: "string" } });
 const FIELDS = path.resolve(a.fields || path.join(OUT, "caps", "head"));
 const ROOT = path.join(OUT, "selftest");
 const only = list(a.only, null);
@@ -83,6 +88,7 @@ function staticWitness(id, script, args, expect, note) {
   results.push({ id, engine: "static", expect, exit: r.status, ok, verdict, capdir: args.join(" "), note, fails });
   console.log(`${ok ? "ok  " : "BAD "} ${id.padEnd(4)} static   expect ${expect.padEnd(4)} exit ${r.status} · ${verdict} · ${note}`);
   if (expect === "FAIL" || !ok) for (const l of fails) console.log("        " + l.slice(0, 220));
+  return out;
 }
 // A tiny tree for the static checks: { "src/<file>": css }.
 function tree(name, filesIn) {
@@ -95,7 +101,7 @@ const ALLG = "paper,aurora,aurora50,black,white,checker,stripes";
 const HELD = { grounds: "black,white,aurora", scenes: "held,ladder" };   // M-2h's halo leg reads the resting dock in the ladder
 
 // ── the green battery fixture: RAW, M-1..M-9 and M-2m PASS, gated in each engine ──────────────────────────────
-const green = writeFixture("green", { out: path.join(ROOT, "fx", "green"), fields: FIELDS });
+// Written only when a check that captures it is wanted (H7: the static and banked-pixel checks need no HEAD capture).
 // [id, script, plant capture selection, --cells restriction, plant css, note]
 const M = [
   ["RAW", "raw-clean", [[{ grounds: "black,white", scenes: "ladder,dialog" }, null, `html[data-cap="raw"] [data-spec] .fx-tab { visibility: visible !important; }`, "a dock tab paints through its hidden surface in raw (S-10)"]]],
@@ -148,6 +154,7 @@ if (M.some(([id]) => want(id)) || want("W-D") || want("LIT")) {
   // The windows are captured only when a wanted check reads them (M-5 and W-A's leg 1 the live windows, M-2m the motion
   // and drift windows, W-D the whole battery); the retune variants ride the green capture for M-6 (H4-3).
   const win = (...ids) => ids.some(want) || want("W-D");
+  const green = writeFixture("green", { out: path.join(ROOT, "fx", "green"), fields: FIELDS });
   greenCap = await cap("green", green, { grounds: ALLG + ",red,deep", live: win("M-5"), motion: win("M-2m"), drift: win("M-2m"), probeUnshimmed: true, retune: true });
   for (const [id, script, , args = []] of M) if (want(id)) witness(id, script, greenCap, "PASS", args, "green fixture" + (args.length ? " (" + args.join(" ") + ")" : ""));
   for (const [id, script, plants, args = []] of M) if (want(id)) for (const [k, [sel, re, css, note]] of plants.entries()) {
@@ -348,6 +355,114 @@ if (want("DEL")) {
   staticWitness("DEL", "deleted-mechanisms", ["--root", tree("del-split", { "src/a.css": `/* the veil already carries the earned\n   * darken of the clamp */\n.p { color: red; }\n` }), "--declare", decl], "FAIL", "H6-1: a phrase broken over two comment lines (overlay-plate.css:272-273's shape)");
   staticWitness("DEL", "deleted-mechanisms", ["--root", tree("del-demo", { "src/a.css": ok, "demo/x.ts": `const m = props.backdropMode;\n` }), "--declare", decl], "FAIL", "H6-1: an identifier in an untouched demo file");
   if (a.tree) staticWitness("DEL", "deleted-mechanisms", ["--root", path.resolve(a.tree), "--declare", decl], "FAIL", `H6-1: floor v4's tree (${path.basename(path.dirname(path.resolve(a.tree)))}): the six earned-darken comments`);
+}
+
+// ── H7 (pass 7): M-3's round-ring reader (H7-1), DEL's word forms and patch-built declaration (H7-2), the minor's
+// declaration (H7-3) ─────────────────────────────────────────────────────────────────────────────────────────────
+// An expectation on a witness's printed rows, beside its exit code: every pattern in `must` appears in the output.
+function rowsHold(id, engine, out, must, note) {
+  const miss = must.filter((m) => !(m instanceof RegExp ? m.test(out) : out.includes(m)));
+  const ok = miss.length === 0;
+  results.push({ id, engine, expect: "ROWS", exit: ok ? 0 : 1, ok, verdict: ok ? `rows hold (${must.length})` : `missing: ${miss.join(" | ")}`, capdir: "", note, fails: [] });
+  console.log(`${ok ? "ok  " : "BAD "} ${id.padEnd(4)} ${engine.padEnd(8)} expect ROWS exit ${ok ? 0 : 1} · ${ok ? `rows hold (${must.length})` : "missing: " + miss.join(" | ")} · ${note}`);
+}
+if (want("H7-1")) {
+  // The pixels the pass-6 critic read off floor v5's light Close ring, from the battery's own ring PNG (Chromium, the
+  // headless shell): columns 852-854, rows 283-292, the paper cell (every light ground reads the same, the ring sits on
+  // the opaque Dialog). One source: the banked log, parsed here.
+  const LOG = path.join(HERE, "..", "pass-6", "crit-records", "ringread-fv5-light-chromium.log");
+  const txt = fs.readFileSync(LOG, "utf8").split("\n"), at0 = txt.findIndex((l) => l.startsWith("RINGREAD chromium light dialog·paper dialog:close"));
+  const prof = {};
+  for (const l of txt.slice(at0 + 1, at0 + 4)) { const x = +l.match(/x (\d+):/)[1]; prof[x] = Object.fromEntries([...l.matchAll(/(\d+):#([0-9a-f]{6})/g)].map(([, y, h]) => [+y, [0, 2, 4].map((k) => parseInt(h.slice(k, k + 2), 16))])); }
+  const PLATE = prof[852][283], SOLID = prof[852][287];
+  // The ring's ink, the library's --ink-perimeter colour (oklab(0.216114 0.00343135 0.00508514), H6's ring probe), as sRGB.
+  const enc = (v) => 255 * (v <= 0.0031308 ? 12.92 * v : 1.055 * v ** (1 / 2.4) - 0.055);
+  const INK = oklchLin(0.216114, Math.hypot(0.00343135, 0.00508514), (Math.atan2(0.00508514, 0.00343135) * 180) / Math.PI).map((v) => enc(Math.max(0, v)));
+  const over = (al, plate = PLATE) => INK.map((c, k) => c * al + plate[k] * (1 - al));
+  const cov = (px) => [0, 1, 2].reduce((sum, k) => sum + (PLATE[k] - px[k]) / (PLATE[k] - SOLID[k]), 0) / 3;
+  // A ring at another alpha, over another plate, with the SAME geometry: each banked pixel's coverage applied to the
+  // new solid composite.
+  const scaled = (al, plate = PLATE) => { const S = over(al, plate); return Object.fromEntries(Object.entries(prof).map(([x, col]) => [x, Object.fromEntries(Object.entries(col).map(([y, p]) => [y, S.map((c, k) => plate[k] + cov(p) * (c - plate[k]))]))])); };
+  // HEAD's own plate beside its light Close ring, as the critic's ring probe read it (crit-records/phase-ringprobe.log,
+  // "RING chromium light paper head": the rows around the band read #746e66; the band #4a4642, the ink at 0.48 over it).
+  const HEAD_PLATE = [0x74, 0x6e, 0x66];
+  function ringCap(name, { rows, cols = [852, 853, 854], ow = 2, edge = false, plate = PLATE }) {
+    const W = 860, H = 300, png = new PNG({ width: W, height: H });
+    for (let i = 0; i < W * H; i++) png.data.set([...plate, 255], i * 4);
+    for (const [x, col] of Object.entries(rows)) for (const [y, rgb] of Object.entries(col)) png.data.set([...rgb.map((v) => Math.round(Math.max(0, Math.min(255, v)))), 255], (+y * W + +x) * 4);
+    const dir = path.join(ROOT, "caps", name); fs.rmSync(dir, { recursive: true, force: true }); fs.mkdirSync(path.join(dir, "png"), { recursive: true });
+    fs.writeFileSync(path.join(dir, "png", "full.png"), PNG.sync.write(png));
+    const band = [...Array(ow).keys()].map((j) => 287 + j), probeCols = cols.map((x) => ({ x, band, in: 287 + ow, out: 286 }));
+    const spec = { id: "dialog", edges: edge ? [{ id: "well", painted: true, kind: "border", width: ow, cols: probeCols }] : [], inks: [], rings: edge ? [] : ["close"] };
+    const rings = edge ? [] : [{ id: "close", painted: true, kind: "outline", width: ow, offset: 2, spec: "dialog", focusVisible: true, cols: probeCols, file: "png/full.png", dx: 0, dy: 0 }];
+    fs.writeFileSync(path.join(dir, "cells.json"), JSON.stringify({ meta: { target: `H7-1 ${name} (from ${path.relative(HERE, LOG)})` }, cells: [{ engine: "chromium", theme: "light", ground: "paper", scene: "dialog", variant: "base", files: { full: "png/full.png" }, specs: [spec], rings }] }, null, 1));
+    return dir;
+  }
+  const m3 = (name, opts, expect, must, note) => {
+    const out = staticWitness("H7-1", "m3-non-text", [ringCap(name, opts), "--gate", "chromium", "--verbose", "--cells", "^chromium light paper dialog$"], expect, note);
+    rowsHold("H7-1", "pixels", out, must, note);
+  };
+  console.log(`     H7-1 pixels: plate ${PLATE} · banked solid ${SOLID} · ink ${INK.map((v) => v.toFixed(1))} → at α 0.52 ${over(0.52).map((v) => v.toFixed(1))}`);
+  m3("h7-fv5-ring", { rows: prof }, "PASS", [/dialog·ring:close p05 3\.52 min 2\.66 cols 3 \(full-coverage column 852\)/],
+    "R-14 fixture: floor v5's light Close ring, its banked pixels: the full-coverage column 852 reads 3.52 (the worst of three, 2.66, is the antialiasing)");
+  m3("h7-head-ring", { rows: scaled(0.48, HEAD_PLATE), plate: HEAD_PLATE }, "FAIL", [/dialog·ring:close p05 1\.\d\d min .* \(full-coverage column 852\)/],
+    "R-14 plant: HEAD's ring (--ink-perimeter 0.48 over HEAD's plate #746e66) with the same geometry: reds at its full-coverage column");
+  m3("h7-alpha40-ring", { rows: scaled(0.40) }, "FAIL", [/dialog·ring:close p05 [12]\.\d\d min .* \(full-coverage column 852\)/],
+    "R-14 plant: the same ring at α 0.40: reds at its full-coverage column");
+  // A 1 px outline: one band row cannot show full coverage. Column 852 is the solid composite (3.52 by itself), 853 and
+  // 854 fall off the curve; the reading stays the worst of three. A reader that took the best column would pass it.
+  const P = PLATE, S = SOLID, mix = (t) => S.map((c, k) => P[k] + t * (c - P[k]));
+  m3("h7-1px-ring", { ow: 1, rows: { 852: { 287: S }, 853: { 287: mix(0.8) }, 854: { 287: mix(0.55) } } }, "FAIL", [/dialog·ring:close p05 [12]\.\d\d min .* cols 3 \(worst of three: no full-coverage column\)/],
+    "R-14 plant: a 1 px outline with no provable full-coverage column keeps the worst of three (its column 852 alone would read 3.52)");
+  // Bite: a straight run (8 columns) with one full-coverage column at 3.52 and seven antialiased ones reads as before.
+  const run = [852, 853, 854, 855, 856, 857, 858, 859];
+  m3("h7-straight-ring", { cols: run, rows: Object.fromEntries(run.map((x, i) => [x, i === 0 ? prof[852] : prof[854]])) }, "FAIL", [/dialog·ring:close p05 2\.66 min 2\.66 cols 8\n/],
+    "R-14 bite: a straight-run ring is untouched (p05 over its columns; one full column does not lift it)");
+  m3("h7-perimeter", { edge: true, rows: prof }, "FAIL", [/dialog·perimeter:well p05 2\.66 min 2\.66 cols 3\n/],
+    "R-14 bite: a perimeter on the three-column fallback is untouched (R-14 reads rings only)");
+}
+if (want("H7-2")) {
+  const decl = path.join(HERE, "deletes-floor.json");
+  const ok = `/* The listbox plate: two flat layers. There is no second tint layer: the veil paints the overlay rung at the bound. */\n.p { background: var(--card); }\n`;
+  staticWitness("H7-2", "deleted-mechanisms", ["--root", tree("h72-clean", { "src/a.css": ok, "src/README.md": "- `GlassDock` owns the plate, orientation, collapse state, and overflow.\n" }), "--declare", decl], "PASS", "H7-2 fixture: each deletion stated with no name of what it deleted");
+  const plants = {
+    "backdrop-mode": [{ "src/README.md": "- `GlassDock` owns the plate, orientation, collapse state, overflow, and backdrop mode.\n" }, "`backdropMode`'s word form, \"backdrop mode\" (dock/README.md:20's shape)"],
+    "tinting": [{ "demo/s.vue": "<template>\n  <!-- The aperture rides the morph; adaptive tinting\n       keeps its text contrast at or above 4.5:1. -->\n</template>\n" }, "\"adaptive tint\" inflected and split over an HTML comment's lines (dock-search.vue:197-198's shape)"],
+    "kebab": [{ "src/a.css": "/* There is no adaptive-tint layer and no knob. */\n" }, "\"adaptive tint\" in kebab case"],
+    "attr": [{ "demo/x.vue": `<template><GlassDock :data-backdrop-mode="m" /></template>\n` }, "`backdropMode` as a kebab data- attribute in an untouched demo file"],
+  };
+  for (const [k, [files, note]] of Object.entries(plants)) staticWitness("H7-2", "deleted-mechanisms", ["--root", tree(`h72-${k}`, files), "--declare", decl], "FAIL", "H7-2 plant: " + note);
+  // The declaration built from a patch's removed lines (R-15 (iii)): a prop, a token and a data- attribute on removed
+  // lines of src/ files are declared; a test file's removed line is not read; a name the tree still uses is listed, not declared.
+  const pt = tree("h72-patch", {
+    "p.patch": ["diff --git a/src/D.vue b/src/D.vue", "--- a/src/D.vue", "+++ b/src/D.vue", "@@ -1,3 +1,1 @@", "-    backdropMode?: DockBackdropMode;", "-  --glass-backdrop-luma: 0.5;", '-  <div :data-backdrop-sample-state="s" :class="cn(x)" />', " keep",
+      "diff --git a/tests/D.test.ts b/tests/D.test.ts", "--- a/tests/D.test.ts", "+++ b/tests/D.test.ts", "@@ -1,1 +0,0 @@", "-    expect(x).toBeCloseTo(1); const sampleBackdrop = 1;", ""].join("\n"),
+    "src/live.ts": "export const cn = (x: string) => x;\nexport type DockBackdropMode = 'live';\n",
+    "src/readme.md": "The dock picks a backdrop sample state each frame.\n" });
+  const dj = path.join(pt, "decl.json");
+  const r = spawnSync(process.execPath, [path.join(HERE, "declare-removed.mjs"), "--patch", path.join(pt, "p.patch"), "--root", pt, "--out", dj], { encoding: "utf8" });
+  const d = JSON.parse(fs.readFileSync(dj, "utf8"));
+  const want3 = ["--glass-backdrop-luma", "backdropMode", "data-backdrop-sample-state"].every((n) => d.names.includes(n)) && !d.names.includes("toBeCloseTo") && !d.names.includes("sampleBackdrop") && d.present.some((p) => p.id === "DockBackdropMode") && !d.names.includes("DockBackdropMode");
+  results.push({ id: "H7-2", engine: "static", expect: "DECL", exit: r.status, ok: r.status === 0 && want3, verdict: `declared ${d.names.join(", ")} · present ${d.present.map((p) => p.id).join(", ")}`, capdir: pt, note: "H7-2: declare-removed.mjs over a three-line patch", fails: [] });
+  console.log(`${r.status === 0 && want3 ? "ok  " : "BAD "} H7-2 static   expect DECL · declared ${d.names.join(", ")} · present ${d.present.map((p) => p.id).join(", ")} · the test file's names not read`);
+  staticWitness("H7-2", "deleted-mechanisms", ["--root", pt, "--declare", dj], "FAIL", "H7-2 plant: the built declaration reads \"backdrop sample state\" in an untouched readme");
+  if (a["h7-trees"] && a["h7-decl"]) {
+    const T = path.resolve(a["h7-trees"]), D = path.resolve(a["h7-decl"]);
+    const out = staticWitness("H7-2", "deleted-mechanisms", ["--root", path.join(T, "fv5"), "--declare", D], "FAIL", "H7-2 plant: floor v5 under its patch-built declaration");
+    rowsHold("H7-2", "static", out, ['src/components/dock/README.md:20 "backdrop mode"', 'demo/stories/dock/dock-search.vue:197 "adaptive tinting"', 'demo/stories/substrates/glass-material.vue:5 "adaptive tint"'], "H7-2 plant: floor v5 reds at the three sentences P6-1.1 names");
+    staticWitness("H7-2", "deleted-mechanisms", ["--root", path.join(T, "fv5fix"), "--declare", D], "PASS", "H7-2 fixture: floor v5 with its stale sentences rewritten name-free (fv5fix)");
+  }
+}
+if (want("H7-3")) {
+  const decl = path.join(HERE, "deletes-minor.json");
+  staticWitness("H7-3", "deleted-mechanisms", ["--root", tree("h73-clean", { "src/a.css": "/* the veil already carries the earned\n   ink (darker in dark, a thicker cream pole in light), and a second layer is the double-writer. */\n" }), "--declare", decl], "PASS", "H7-3 fixture: R-13's register, \"earned ink\"");
+  staticWitness("H7-3", "deleted-mechanisms", ["--root", tree("h73-split", { "src/a.css": "/* The PLATE half — the earned\n * darken off the measured backdrop luminance — is composed at the element. */\n" }), "--declare", decl], "FAIL", "H7-3 plant: \"earned darken\" split over two comment lines (adaptive-legibility.css:7-8's shape)");
+  if (a["h7-trees"]) {
+    const T = path.resolve(a["h7-trees"]);
+    const out = staticWitness("H7-3", "deleted-mechanisms", ["--root", path.join(T, "minor4"), "--declare", decl], "FAIL", "H7-3 plant: the minor v4 under the minor's declaration");
+    rowsHold("H7-3", "static", out, ["src/components/dock/styles/adaptive-legibility.css:7", "src/styles/glass/overlay-plate.css:272", "hits=2 files=2"], "H7-3 plant: the minor v4 reds at exactly the two line-split sentences");
+    staticWitness("H7-3", "deleted-mechanisms", ["--root", path.join(T, "minor4fix"), "--declare", decl], "PASS", "H7-3 fixture: the minor v4 with R-16 (i)'s two rewrites (minor4fix)");
+  }
 }
 
 // ── the pass-1 family witnesses H2 left alone (Chromium, as pass 1 ran them) ──────────────────────────────────

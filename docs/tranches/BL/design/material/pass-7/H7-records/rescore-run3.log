@@ -1,0 +1,97 @@
+H7-RESCORE fv5 · m3-fv5.txt · rows 708 · three-column rings 28 (scored 28, unscored 0) · column records 32 (+12 variant rows not read by M-3)
+  H6: chromium light FAIL 7/177 · chromium dark PASS 177 · webkit light FAIL 2/177 · webkit dark PASS 177
+  H7: chromium light PASS 177 · chromium dark PASS 177 · webkit light FAIL 2/177 · webkit dark PASS 177
+  verdicts moved: 7 three-column rings, 0 other rows · column-record mismatches 0 · rows within 0.01 of 3.00: 0
+PASS (only three-column rings may move, and the records agree)
+H7-RESCORE minor4 · m3-minor4.txt · rows 684 · three-column rings 28 (scored 28, unscored 0) · column records 32 (+12 variant rows not read by M-3)
+  H6: chromium light FAIL 7/171 · chromium dark FAIL 130/171 · webkit light FAIL 1/171 · webkit dark FAIL 126/171
+  H7: chromium light PASS 171 · chromium dark FAIL 128/171 · webkit light FAIL 1/171 · webkit dark FAIL 126/171
+  verdicts moved: 9 three-column rings, 0 other rows · column-record mismatches 0 · rows within 0.01 of 3.00: 0
+PASS (only three-column rings may move, and the records agree)
+H7-RESCORE head · m3-head.txt · rows 684 · three-column rings 28 (scored 14, unscored 14) · column records 16 (+0 variant rows not read by M-3)
+  H6: chromium light FAIL 171/171 · chromium dark FAIL 141/171 · webkit light FAIL 171/171 · webkit dark FAIL 131/171
+  H7: chromium light FAIL 171/171 · chromium dark FAIL 138/171 · webkit light FAIL 171/171 · webkit dark FAIL 131/171
+  verdicts moved: 3 three-column rings, 0 other rows · column-record mismatches 0 · rows within 0.01 of 3.00: 0
+PASS (only three-column rings may move, and the records agree)
+== diff m3-fv5-H6-verdicts.txt m3-fv5-H7-verdicts.txt
+18c18
+< chromium light paper dialog dialog·ring:close · FAIL
+---
+> chromium light paper dialog dialog·ring:close · PASS
+37c37
+< chromium light aurora dialog dialog·ring:close · FAIL
+---
+> chromium light aurora dialog dialog·ring:close · PASS
+56c56
+< chromium light aurora50 dialog dialog·ring:close · FAIL
+---
+> chromium light aurora50 dialog dialog·ring:close · PASS
+75c75
+< chromium light black dialog dialog·ring:close · FAIL
+---
+> chromium light black dialog dialog·ring:close · PASS
+94c94
+< chromium light white dialog dialog·ring:close · FAIL
+---
+> chromium light white dialog dialog·ring:close · PASS
+113c113
+< chromium light checker dialog dialog·ring:close · FAIL
+---
+> chromium light checker dialog dialog·ring:close · PASS
+132c132
+< chromium light stripes dialog dialog·ring:close · FAIL
+---
+> chromium light stripes dialog dialog·ring:close · PASS
+(diff exit 1)
+== diff m3-minor4-H6-verdicts.txt m3-minor4-H7-verdicts.txt
+18c18
+< chromium light paper dialog dialog·ring:close · FAIL
+---
+> chromium light paper dialog dialog·ring:close · PASS
+37c37
+< chromium light aurora dialog dialog·ring:close · FAIL
+---
+> chromium light aurora dialog dialog·ring:close · PASS
+56c56
+< chromium light aurora50 dialog dialog·ring:close · FAIL
+---
+> chromium light aurora50 dialog dialog·ring:close · PASS
+75c75
+< chromium light black dialog dialog·ring:close · FAIL
+---
+> chromium light black dialog dialog·ring:close · PASS
+94c94
+< chromium light white dialog dialog·ring:close · FAIL
+---
+> chromium light white dialog dialog·ring:close · PASS
+113c113
+< chromium light checker dialog dialog·ring:close · FAIL
+---
+> chromium light checker dialog dialog·ring:close · PASS
+132c132
+< chromium light stripes dialog dialog·ring:close · FAIL
+---
+> chromium light stripes dialog dialog·ring:close · PASS
+246c246
+< chromium dark checker dialog dialog·ring:close · FAIL
+---
+> chromium dark checker dialog dialog·ring:close · PASS
+265c265
+< chromium dark stripes dialog dialog·ring:close · FAIL
+---
+> chromium dark stripes dialog dialog·ring:close · PASS
+(diff exit 1)
+== diff m3-head-H6-verdicts.txt m3-head-H7-verdicts.txt
+189c189
+< chromium dark aurora50 dialog dialog·ring:close · FAIL
+---
+> chromium dark aurora50 dialog dialog·ring:close · PASS
+246c246
+< chromium dark checker dialog dialog·ring:close · FAIL
+---
+> chromium dark checker dialog dialog·ring:close · PASS
+265c265
+< chromium dark stripes dialog dialog·ring:close · FAIL
+---
+> chromium dark stripes dialog dialog·ring:close · PASS
+(diff exit 1)

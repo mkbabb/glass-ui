@@ -1,0 +1,61 @@
+ok   LAW  static   expect PASS exit 0 · PASS (52 gated rows) · H6-0: the harness itself (and pass-6/ when present): headless shell, no GPU arguments
+ok   LAW  static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · H6-0: pass 5's lib.mjs (CHROMIUM_ARGS with WebGPU, blocklist override and ANGLE Metal), uncited
+        ✗ law-pass5/h/lib.mjs: no GPU-WITNESS citation
+ok   LAW  static   expect PASS exit 0 · PASS (1 gated rows) · H6-0: a GPU launch under a GPU-WITNESS line whose evidence file exists
+ok   LAW  static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · H6-0: a GPU-WITNESS line citing evidence that does not exist
+        ✗ law-badcite/h/gpu.mjs: GPU-WITNESS cites ev/missing.md, which does not exist
+ok   LAW  static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · H6-0: full Chrome for Testing, headed, uncited
+        ✗ law-channel/h/p.mjs: no GPU-WITNESS citation
+ok   DEL  static   expect PASS exit 0 · PASS (8 gated rows) · H6-1: the floor's names absent; the deletion stated as such
+ok   DEL  static   expect FAIL exit 1 · FAIL (1 of 8 gated rows) · H6-1: a phrase broken over two comment lines (overlay-plate.css:272-273's shape)
+        ✗ "earned darken": 1 · src/a.css:1 "earned * darken"
+ok   DEL  static   expect FAIL exit 1 · FAIL (2 of 8 gated rows) · H6-1: an identifier in an untouched demo file
+        ✗ "backdropMode": 1 · demo/x.ts:1 "backdropMode"
+        ✗ "backdrop mode": 1 · demo/x.ts:1 "backdropMode"
+ok   DEL  static   expect FAIL exit 1 · FAIL (6 of 8 gated rows) · H6-1: floor v4's tree (trees): the six earned-darken comments
+        ✗ "earned darken": 5 · src/components/button/styles.css:126 "earned darken" src/components/dock/styles/shell.css:185 "earned darken" src/styles/glass/overlay-plate.css:272 "earned darken" src/styles/glass/surface-axis.cs
+        ✗ "darkened by whatever": 1 · src/components/dock/styles/search.css:38 "darkened by whatever"
+        ✗ "luma read": 1 · src/styles/glass/surfaces.css:54 "luma read"
+        ✗ "backdropMode": 1 · src/components/dock/README.md:20 "backdrop mode"
+     H7-1 pixels: plate 254,247,241 · banked solid 137,131,127 · ink 28.0,25.0,23.0 → at α 0.52 136.5,131.6,127.6
+ok   H7-1 static   expect PASS exit 0 · PASS (1 gated rows) · R-14 fixture: floor v5's light Close ring, its banked pixels: the full-coverage column 852 reads 3.52 (the worst of three, 2.66, is the antialiasing)
+ok   H7-1 pixels   expect ROWS exit 0 · rows hold (1) · R-14 fixture: floor v5's light Close ring, its banked pixels: the full-coverage column 852 reads 3.52 (the worst of three, 2.66, is the antialiasing)
+ok   H7-1 static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · R-14 plant: HEAD's ring (--ink-perimeter 0.48 over HEAD's plate #746e66) with the same geometry: reds at its full-coverage column
+ok   H7-1 pixels   expect ROWS exit 0 · rows hold (1) · R-14 plant: HEAD's ring (--ink-perimeter 0.48 over HEAD's plate #746e66) with the same geometry: reds at its full-coverage column
+ok   H7-1 static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · R-14 plant: the same ring at α 0.40: reds at its full-coverage column
+ok   H7-1 pixels   expect ROWS exit 0 · rows hold (1) · R-14 plant: the same ring at α 0.40: reds at its full-coverage column
+ok   H7-1 static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · R-14 plant: a 1 px outline with no provable full-coverage column keeps the worst of three (its column 852 alone would read 3.52)
+ok   H7-1 pixels   expect ROWS exit 0 · rows hold (1) · R-14 plant: a 1 px outline with no provable full-coverage column keeps the worst of three (its column 852 alone would read 3.52)
+ok   H7-1 static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · R-14 bite: a straight-run ring is untouched (p05 over its columns; one full column does not lift it)
+ok   H7-1 pixels   expect ROWS exit 0 · rows hold (1) · R-14 bite: a straight-run ring is untouched (p05 over its columns; one full column does not lift it)
+ok   H7-1 static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · R-14 bite: a perimeter on the three-column fallback is untouched (R-14 reads rings only)
+ok   H7-1 pixels   expect ROWS exit 0 · rows hold (1) · R-14 bite: a perimeter on the three-column fallback is untouched (R-14 reads rings only)
+ok   H7-2 static   expect PASS exit 0 · PASS (8 gated rows) · H7-2 fixture: each deletion stated with no name of what it deleted
+ok   H7-2 static   expect FAIL exit 1 · FAIL (2 of 8 gated rows) · H7-2 plant: `backdropMode`'s word form, "backdrop mode" (dock/README.md:20's shape)
+        ✗ "backdropMode": 1 · src/README.md:1 "backdrop mode"
+        ✗ "backdrop mode": 1 · src/README.md:1 "backdrop mode"
+ok   H7-2 static   expect FAIL exit 1 · FAIL (1 of 8 gated rows) · H7-2 plant: "adaptive tint" inflected and split over an HTML comment's lines (dock-search.vue:197-198's shape)
+        ✗ "adaptive tint": 1 · demo/s.vue:2 "adaptive tinting"
+ok   H7-2 static   expect FAIL exit 1 · FAIL (1 of 8 gated rows) · H7-2 plant: "adaptive tint" in kebab case
+        ✗ "adaptive tint": 1 · src/a.css:1 "adaptive-tint"
+ok   H7-2 static   expect FAIL exit 1 · FAIL (2 of 8 gated rows) · H7-2 plant: `backdropMode` as a kebab data- attribute in an untouched demo file
+        ✗ "backdropMode": 1 · demo/x.vue:1 "backdrop-mode"
+        ✗ "backdrop mode": 1 · demo/x.vue:1 "backdrop-mode"
+ok   H7-2 static   expect DECL · declared --glass-backdrop-luma, backdropMode, data-backdrop-sample-state · present DockBackdropMode · the test file's names not read
+ok   H7-2 static   expect FAIL exit 1 · FAIL (1 of 3 gated rows) · H7-2 plant: the built declaration reads "backdrop sample state" in an untouched readme
+        ✗ "data-backdrop-sample-state": 1 · src/readme.md:1 "backdrop sample state"
+ok   H7-2 static   expect FAIL exit 1 · FAIL (5 of 60 gated rows) · H7-2 plant: floor v5 under its patch-built declaration
+        ✗ "backdropMode": 1 · src/components/dock/README.md:20 "backdrop mode"
+        ✗ "backdrop mode": 1 · src/components/dock/README.md:20 "backdrop mode"
+        ✗ "adaptive tint": 3 · src/styles/glass/overlay-plate.css:271 "adaptive-tint" demo/stories/dock/dock-search.vue:197 "adaptive tinting" demo/stories/substrates/glass-material.vue:5 "adaptive tint"
+        ✗ "GlassBackdropBucket": 1 · demo/stories/compositions/auth-shell.vue:209 "glass backdrop bucket"
+ok   H7-2 static   expect ROWS exit 0 · rows hold (3) · H7-2 plant: floor v5 reds at the three sentences P6-1.1 names
+ok   H7-2 static   expect PASS exit 0 · PASS (60 gated rows) · H7-2 fixture: floor v5 with its stale sentences rewritten name-free (fv5fix)
+ok   H7-3 static   expect PASS exit 0 · PASS (4 gated rows) · H7-3 fixture: R-13's register, "earned ink"
+ok   H7-3 static   expect FAIL exit 1 · FAIL (1 of 4 gated rows) · H7-3 plant: "earned darken" split over two comment lines (adaptive-legibility.css:7-8's shape)
+        ✗ "earned darken": 1 · src/a.css:1 "earned * darken"
+ok   H7-3 static   expect FAIL exit 1 · FAIL (1 of 4 gated rows) · H7-3 plant: the minor v4 under the minor's declaration
+        ✗ "earned darken": 2 · src/components/dock/styles/adaptive-legibility.css:7 "earned * darken" src/styles/glass/overlay-plate.css:272 "earned darken"
+ok   H7-3 static   expect ROWS exit 0 · rows hold (3) · H7-3 plant: the minor v4 reds at exactly the two line-split sentences
+ok   H7-3 static   expect PASS exit 0 · PASS (4 gated rows) · H7-3 fixture: the minor v4 with R-16 (i)'s two rewrites (minor4fix)
+SELFTEST PASS: 36 expectations met

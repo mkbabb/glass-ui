@@ -4,6 +4,8 @@
 // top edge, band vs the adjacent row inside (the well fill) and outside (the plate composite). Ring: each
 // [data-ring] focused with keyboard modality (the wells, the real Dialog's Close), its outline band vs the
 // adjacent row inside (the offset gap) and outside. Per column min(inside, outside); p05 over the columns.
+// H7-1 (R-14): a round ring with no straight run (the three-column fallback) reads at its full-coverage column where one
+// exists, else the worst of three (lib.mjs ringFallbackRead); --verbose prints which.
 // Cells: ladder and dialog over the seven grounds; the H-5 held cells (held rungs' wells) over black, white and c1;
 // the H-10 hostile cells over the aurora at both ceilings. A held rung is read only where the library declares its host
 // graspable (H3-5, rows.mjs heldUnread).

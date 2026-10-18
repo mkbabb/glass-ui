@@ -1,0 +1,23 @@
+== h7-fv5-ring
+      dialog·ring:close p05 3.52 min 2.66 cols 3 (full-coverage column 852)
+PASS (1 gated rows)
+== h7-head-ring
+      dialog·ring:close p05 1.88 min 1.62 cols 3 (full-coverage column 852)
+FAIL (1 of 1 gated rows)
+== h7-alpha40-ring
+      dialog·ring:close p05 2.49 min 2.03 cols 3 (full-coverage column 852)
+FAIL (1 of 1 gated rows)
+== h7-1px-ring
+      dialog·ring:close p05 1.87 min 1.87 cols 3 (worst of three: no full-coverage column)
+FAIL (1 of 1 gated rows)
+== h7-straight-ring
+      dialog·ring:close p05 2.66 min 2.66 cols 8
+FAIL (1 of 1 gated rows)
+== h7-perimeter
+      dialog·perimeter:well p05 2.66 min 2.66 cols 3
+FAIL (1 of 1 gated rows)
+
+COLS h7-fv5-ring outline ow 2 · 852=3.52 [#89837f/#89837f] 853~3.24 [#8d8884/#89837f] 854~2.66 [#98948f/#89837f]
+COLS h7-head-ring outline ow 2 · 852=1.88 [#4a4540/#4a4540] 853~1.80 [#4b4742/#4a4540] 854~1.62 [#504b45/#4a4540]
+COLS h7-alpha40-ring outline ow 2 · 852=2.49 [#a49e9a/#a49e9a] 853~2.33 [#a7a29d/#a49e9a] 854~2.03 [#b0aaa6/#a49e9a]
+COLS h7-1px-ring outline ow 1 · 852~3.52 [#89837f] 853~2.62 [#a09a96] 854~1.87 [#beb7b2]

@@ -233,15 +233,35 @@ export function ringRead({ ox, oy, W, H, cov, cmax }, full, ground, R, ringMax =
 // A non-text indicator against the painted ground on both sides. A probe carries, per column along the
 // element's top edge, the band pixel rows and one adjacent row inside and one outside. Per column:
 // min(cr(band, in), cr(band, out)); reported as p05 over the columns.
+// H7-1 (pass 7, REGISTRY P6-2.2 R-14): a ring with no straight run. capture.mjs RING_PROBE falls back to the three
+// columns [c − 1, c, c + 1] around the rounded centre when the outline has no run of 4 or more columns (x1 − x0 < 3), so
+// an outline probe of exactly 3 columns is that fallback (a straight run is never 3 columns). Off the apex a round
+// outline curves through the band, and the worst of the three reads its antialiasing. Such a ring is read at its
+// FULL-COVERAGE column: a column whose band rows (2 or more) are equal within FULL_TOL per channel, so the outline covers
+// the whole band there and the band is the ring's solid composite (of several, the worst). Where no column of the three
+// is at full coverage (a 1 px outline, a subpixel ring) the reading stays the worst of three, so a thin ring is not
+// loosened. Perimeters and straight-run rings are read as before.
+export const FULL_TOL = 1;
+export const fullCoverage = (bandPx) => bandPx.length >= 2 && bandPx.every((p) => p.every((v, k) => Math.abs(v - bandPx[0][k]) <= FULL_TOL));
+export const ringFallback = (probe) => probe.kind === "outline" && probe.cols.length === 3;
+// cols: [{ x, v, full }] → { value, how }. One source for the live reader and for re-scoring banked column records.
+export function ringFallbackRead(cols) {
+  const full = cols.filter((c) => c.full);
+  if (full.length) { const c = full.reduce((a, b) => (b.v < a.v ? b : a)); return { value: c.v, how: `full-coverage column ${c.x}` }; }
+  return { value: Math.min(...cols.map((c) => c.v)), how: "worst of three: no full-coverage column" };
+}
 export function edgeContrast(png, probe, dx = 0, dy = 0) {
   if (!probe.painted) return { p05: null, n: 0, note: probe.note || "indicator not painted" };
-  const vals = [];
+  const vals = [], cols = [];
   for (const col of probe.cols) {
-    const band = mean3(col.band.map((yy) => at(png, col.x - dx, yy - dy)));
+    const bandPx = col.band.map((yy) => at(png, col.x - dx, yy - dy)), band = mean3(bandPx);
     const inn = at(png, col.x - dx, col.in - dy), out = at(png, col.x - dx, col.out - dy);
-    vals.push(Math.min(cr(band, inn), cr(band, out)));
+    const v = Math.min(cr(band, inn), cr(band, out));
+    vals.push(v); cols.push({ x: col.x, v, full: fullCoverage(bandPx) });
   }
-  return { p05: pct(vals, 0.05), min: vals.length ? Math.min(...vals) : null, n: vals.length };
+  const min = vals.length ? Math.min(...vals) : null;
+  if (ringFallback(probe)) { const r = ringFallbackRead(cols); return { p05: r.value, min, n: vals.length, note: r.how }; }
+  return { p05: pct(vals, 0.05), min, n: vals.length };
 }
 
 // Luminance bleed and composite chroma inside a sample region (M-8).

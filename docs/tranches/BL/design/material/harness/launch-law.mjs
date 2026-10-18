@@ -6,13 +6,15 @@
 // file's directory, then the scanned root's parent, and must exist.
 // Static: every .mjs, .js, .cjs and .sh file under each root. Comment lines (//, /*, *, #) are not read, so prose may
 // name a flag. One gated row per file read; a file with a launch finding and no valid citation is a FAIL row.
-//   node launch-law.mjs [--root <dir>[,<dir>…]]   (default: the harness directory and ../pass-6)
+//   node launch-law.mjs [--root <dir>[,<dir>…]]   (default: the harness directory and every ../pass-N, N ≥ 6)
 import fs from "node:fs";
 import path from "node:path";
 import { HERE, cli, list } from "./lib.mjs";
 
 const a = cli({ root: { type: "string" } });
-const roots = list(a.root, [HERE, path.resolve(HERE, "../pass-6")]).map((r) => path.resolve(r)).filter((r) => fs.existsSync(r));
+// The law binds from pass 6 on (H6-0): the harness and every pass-N directory with N ≥ 6 (H7 adds pass-7/ and later).
+const passes = fs.readdirSync(path.resolve(HERE, "..")).filter((d) => /^pass-(\d+)$/.test(d) && +d.slice(5) >= 6).map((d) => path.resolve(HERE, "..", d));
+const roots = list(a.root, [HERE, ...passes]).map((r) => path.resolve(r)).filter((r) => fs.existsSync(r));
 const BAD = [
   [/--enable-unsafe-webgpu/, "WebGPU flag"], [/--ignore-gpu-blocklist/, "GPU blocklist override"], [/--use-angle\b/, "ANGLE backend flag"],
   [/--use-gl\b/, "GL backend flag"], [/--enable-gpu\b/, "GPU enable flag"], [/--enable-unsafe-swiftshader/, "SwiftShader flag"],
