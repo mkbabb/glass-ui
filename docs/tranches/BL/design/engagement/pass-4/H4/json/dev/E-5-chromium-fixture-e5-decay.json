@@ -1,0 +1,62 @@
+{
+ "id": "E-5",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e5-decay"
+ },
+ "loadStart": "14.4/16.5/20.8",
+ "loadEnd": "23.7/18.3/21.3",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-5 pop sustain light",
+   "status": "FAIL",
+   "line": "0 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [background-color]: read 1 0.178 → 0.000 ×0.00 · read 2 0.183 → 0.000 ×0.00 · read 3 0.178 → 0.000 ×0.00 (bound ≥ ×0.95 on every read)",
+   "load": "15.6/16.7/20.8"
+  },
+  {
+   "name": "E-5 pop press light",
+   "status": "PASS",
+   "line": ":active true · Δscale -0.042 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color]",
+   "load": "15.6/16.7/20.8"
+  },
+  {
+   "name": "E-5 pop sustain(PRM) light",
+   "status": "FAIL",
+   "line": "0 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [background-color]: read 1 0.176 → 0.000 ×0.00 · read 2 0.176 → 0.000 ×0.00 · read 3 0.178 → 0.000 ×0.00 (bound ≥ ×0.95 on every read)",
+   "load": "15.6/16.7/20.8"
+  },
+  {
+   "name": "E-5 pop press-light(PRM) light",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color] (bound ≥ 1 press-only property under reduce)",
+   "load": "15.6/16.7/20.8"
+  },
+  {
+   "name": "E-5 pop sustain dark",
+   "status": "FAIL",
+   "line": "0 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [background-color]: read 1 0.179 → 0.000 ×0.00 · read 2 0.173 → 0.000 ×0.00 · read 3 0.179 → 0.000 ×0.00 (bound ≥ ×0.95 on every read)",
+   "load": "23.7/18.3/21.3"
+  },
+  {
+   "name": "E-5 pop press dark",
+   "status": "PASS",
+   "line": ":active true · Δscale -0.042 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color]",
+   "load": "23.7/18.3/21.3"
+  },
+  {
+   "name": "E-5 pop sustain(PRM) dark",
+   "status": "FAIL",
+   "line": "0 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [background-color]: read 1 0.166 → 0.000 ×0.00 · read 2 0.173 → 0.000 ×0.00 · read 3 0.179 → 0.000 ×0.00 (bound ≥ ×0.95 on every read)",
+   "load": "23.7/18.3/21.3"
+  },
+  {
+   "name": "E-5 pop press-light(PRM) dark",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color] (bound ≥ 1 press-only property under reduce)",
+   "load": "23.7/18.3/21.3"
+  }
+ ]
+}

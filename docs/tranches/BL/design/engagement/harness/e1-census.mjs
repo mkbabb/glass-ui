@@ -37,6 +37,11 @@
 //                                                      ≥ 0.5 levels mean and ≥ 2× the drift of the same interval at rest
 //                             An absent target FAILS the cell ("no target"); the witness never throws on it
 //   runtime … PRM press-light H-9: the same probe under reduced motion still changes paint (the rung's light leg)
+//   H4 (pass 4): a scene whose subject cannot paint its rung's input in this engine says so through `__e.limit()`,
+//   read from the member's own resolved state (the Aurora's `data-aurora-substrate="css"`, its software-raster guard);
+//   both runtime cells are then UNMEASURED "ENGINE LIMIT" with that reason, never PASS, and no other member is read in
+//   the exemplar's place (the line names the class's other members that have a harness scene; the route picks its
+//   exemplar). A scene marked `census: false` (the dock triggers, D2's fence) is not read by the census
 // Light only; fine pointer (E-5 owns the coarse press).
 //   node e1-census.mjs --build <dir> | --fixture [--fault e1-undeclared] [--engine webkit]
 import { witness, openPage, center, paintDiff, f } from "./lib.mjs";
@@ -66,7 +71,10 @@ await witness("E-1", "CK-01 the census reads adoption", async ({ E, T, cell, gua
   // ── CK-01 adoption: every member instance rendered in any scene ──
   const allowed = (dir) => d.modes?.[dir] ?? (d.members[dir] ? [d.members[dir]] : []);
   const seen = {}; const multi = []; const statics = {}; const libh = {}; const unrendered = []; let unread = [];
-  for (const sc of Object.keys(idx)) {
+  // H4: a scene marked `census: false` renders a fenced member for another witness (the dock triggers, D2's: their
+  // latch closes only with D2's leave, REGISTRY §P3-6) and is not read here
+  const fenced = Object.entries(idx).filter(([, m]) => m.census === false).map(([k]) => k);
+  for (const sc of Object.keys(idx).filter((k) => !fenced.includes(k))) {
     const r = await guard(`census ${sc}`, async () => {
       const Q = await openPage(E, T, sc);
       try { await Q.page.waitForTimeout(200); return { c: await Q.page.evaluate(() => window.__census()) }; } finally { await Q.close(); }
@@ -86,7 +94,7 @@ await witness("E-1", "CK-01 the census reads adoption", async ({ E, T, cell, gua
   if (unread.length) cell("E-1 census scenes read", "FAIL", `scenes whose members could not be read: ${unread.join("; ")}`);
   // H3: every member a scene puts on the page rendered (the scene app's error boundary leaves [data-t="unrendered"] with
   // the error as its title); a member that throws is named here, not read as "rendered by no scene"
-  cell("E-1 gallery rendered", unrendered.length ? "FAIL" : "PASS", unrendered.length ? `members the scene app's error boundary caught: ${unrendered.slice(0, 6).join(" · ")}` : `no member caught by an error boundary in ${Object.keys(idx).length} scenes`);
+  cell("E-1 gallery rendered", unrendered.length ? "FAIL" : "PASS", unrendered.length ? `members the scene app's error boundary caught: ${unrendered.slice(0, 6).join(" · ")}` : `no member caught by an error boundary in ${Object.keys(idx).length - fenced.length} scenes${fenced.length ? ` (not read: ${fenced.join(", ")}, census: false)` : ""}`);
   const adopted = new Set();
   for (const dir of Object.keys(seen).sort()) {
     const al = allowed(dir); const inst = seen[dir];
@@ -121,6 +129,11 @@ await witness("E-1", "CK-01 the census reads adoption", async ({ E, T, cell, gua
         // null when the target is gone: an exemplar whose target leaves mid-probe FAILs its cell, it never throws (CK-01)
         const snap = () => Q.page.evaluate(() => { const t = document.querySelector('[data-e~="target"]'); return t ? { p: window.__paint('[data-e~="target"]'), s: window.__eff(t).s } : null; });
         const cc = await center(Q.page, at);
+        // H4 (CK-19): the scene states, from the member's own resolved state, when its subject cannot paint this
+        // rung's input in this engine (the Aurora's software-raster "css" ground). The cell is then UNMEASURED with
+        // that reason: the engine's limit, never a pass, and never read on another member in its place
+        const limit = await Q.page.evaluate(() => window.__e.limit?.() ?? null);
+        if (limit) return { limit };
         if (kind === "move") {
           const bx = cc.bx; const clip = { x: Math.max(0, bx.x), y: Math.max(0, bx.y), width: Math.max(1, bx.width), height: Math.max(1, bx.height) };
           await Q.page.mouse.move(bx.x + bx.width * 0.2, bx.y + bx.height * 0.3); await Q.page.waitForTimeout(250);
@@ -148,12 +161,16 @@ await witness("E-1", "CK-01 the census reads adoption", async ({ E, T, cell, gua
     const say = (r) => (r.kind === "move" ? `pointer moved across: mean pixel change ${f(r.move, 2)} levels against ${f(r.drift, 2)} at rest over the same interval (bound ≥ ${MOVE_MIN} and ≥ 2× drift)` : r.kind === "hover" ? `hover: Δscale ${f(r.ds)} · paint [${r.hov.join(", ").slice(0, 160)}] (bound ≥ 1 property or |Δscale| ≥ 0.01)` : `press: Δscale ${f(r.ds)} · press-only paint [${r.press.join(", ").slice(0, 160)}] (bound |Δscale| ≥ 0.01 or ≥ 1 property)`);
     const r = await probe(false);
     const nm = `E-1 runtime ${k} (${ex})`;
+    const others = Object.entries(d.members).filter(([dir, cl]) => cl === k && dir !== ex && R.sceneOfDir[dir]).map(([dir]) => `${dir} → ${R.sceneOfDir[dir]}`);
+    const lim = (x) => `ENGINE LIMIT, scene ${sc}, rung ${c.rung}: ${x.limit}${others.length ? ` · harness scenes of the class's other members: ${others.join(", ")} (the route names the exemplar)` : ""}`;
     if (r.crashed) cell(nm, "FAIL", r.line);
     else if (r.absent) cell(nm, "FAIL", `scene ${sc}, rung ${c.rung}: no target ([data-e~="target"] absent${r.when ? ` ${r.when}` : ""}): the exemplar renders nothing to probe`);
+    else if (r.limit) cell(nm, "UNMEASURED", lim(r));
     else cell(nm, judge(r) ? "PASS" : "FAIL", `scene ${sc}, rung ${c.rung} · ${say(r)}`);
     // H-9: under reduced motion the class's rung keeps its light leg (its spatial leg is E-9's to retire)
     const q = await probe(true);
-    if (q.crashed || q.mode) cell(`${nm} PRM press-light`, "FAIL", q.line ?? `MODE NOT APPLIED ${q.mode}`);
+    if (q.limit) cell(`${nm} PRM press-light`, "UNMEASURED", lim(q));
+    else if (q.crashed || q.mode) cell(`${nm} PRM press-light`, "FAIL", q.line ?? `MODE NOT APPLIED ${q.mode}`);
     else if (q.absent) cell(`${nm} PRM press-light`, "FAIL", `scene ${sc}: no target${q.when ? ` ${q.when}` : ""}`);
     else cell(`${nm} PRM press-light`, judgeLight(q) ? "PASS" : "FAIL", `scene ${sc}, reduce · ${say(q)}`);
   }

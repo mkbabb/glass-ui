@@ -1,0 +1,236 @@
+{
+ "id": "E-12",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e12-fcreach"
+ },
+ "loadStart": "22.2/27.6/26.0",
+ "loadEnd": "21.8/27.1/25.9",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-12 slop fcslop trig coarse light",
+   "status": "PASS",
+   "line": "slop 44.0×44.0 px on a 32.0×24.0 px face; a tap 5.0 px above the face hits the trigger · forced colours: ::after display block, content \"\", 44.0×44.0 px, the same tap hits the trigger (bound: the slop and its hit unchanged)",
+   "load": "22.2/27.6/26.0"
+  },
+  {
+   "name": "E-12 slop fcslop trig coarse dark",
+   "status": "PASS",
+   "line": "slop 44.0×44.0 px on a 32.0×24.0 px face; a tap 5.0 px above the face hits the trigger · forced colours: ::after display block, content \"\", 44.0×44.0 px, the same tap hits the trigger (bound: the slop and its hit unchanged)",
+   "load": "22.2/27.6/26.0"
+  },
+  {
+   "name": "E-12 pop fc-reach fine",
+   "status": "FAIL",
+   "line": "1 element(s) render an ::after; forced colours removes 1: div.ctl.engage-pressed (pointer-events auto) · hit area lost under forced colours: div.ctl.engage-pressed: 4 of 4 out-of-box hit point(s) lost with its ::after (bound: the arm removes paint, never a hit area)",
+   "load": "22.2/27.6/26.0"
+  },
+  {
+   "name": "E-12 pop fc-reach coarse",
+   "status": "FAIL",
+   "line": "1 element(s) render an ::after; forced colours removes 1: div.ctl.engage-pressed (pointer-events auto) · hit area lost under forced colours: div.ctl.engage-pressed: 4 of 4 out-of-box hit point(s) lost with its ::after (bound: the arm removes paint, never a hit area)",
+   "load": "24.1/27.9/26.2"
+  },
+  {
+   "name": "E-12 travel fc-reach fine",
+   "status": "PASS",
+   "line": "0 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "24.1/27.9/26.2"
+  },
+  {
+   "name": "E-12 travel fc-reach coarse",
+   "status": "PASS",
+   "line": "0 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "24.1/27.9/26.2"
+  },
+  {
+   "name": "E-12 rest fc-reach fine",
+   "status": "FAIL",
+   "line": "1 element(s) render an ::after; forced colours removes 1: div.ctl.engage-pressed (pointer-events auto) · hit area lost under forced colours: div.ctl.engage-pressed: 4 of 4 out-of-box hit point(s) lost with its ::after (bound: the arm removes paint, never a hit area)",
+   "load": "24.1/27.9/26.2"
+  },
+  {
+   "name": "E-12 rest fc-reach coarse",
+   "status": "FAIL",
+   "line": "1 element(s) render an ::after; forced colours removes 1: div.ctl.engage-pressed (pointer-events auto) · hit area lost under forced colours: div.ctl.engage-pressed: 4 of 4 out-of-box hit point(s) lost with its ::after (bound: the arm removes paint, never a hit area)",
+   "load": "24.1/27.9/26.2"
+  },
+  {
+   "name": "E-12 act fc-reach fine",
+   "status": "FAIL",
+   "line": "1 element(s) render an ::after; forced colours removes 1: button.ctl.engage-pressed (pointer-events auto) · hit area lost under forced colours: button.ctl.engage-pressed: 4 of 4 out-of-box hit point(s) lost with its ::after (bound: the arm removes paint, never a hit area)",
+   "load": "24.1/27.9/26.2"
+  },
+  {
+   "name": "E-12 act fc-reach coarse",
+   "status": "FAIL",
+   "line": "1 element(s) render an ::after; forced colours removes 1: button.ctl.engage-pressed (pointer-events auto) · hit area lost under forced colours: button.ctl.engage-pressed: 4 of 4 out-of-box hit point(s) lost with its ::after (bound: the arm removes paint, never a hit area)",
+   "load": "24.1/27.9/26.2"
+  },
+  {
+   "name": "E-12 slider fc-reach fine",
+   "status": "PASS",
+   "line": "0 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "24.1/27.9/26.2"
+  },
+  {
+   "name": "E-12 slider fc-reach coarse",
+   "status": "PASS",
+   "line": "0 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "24.1/27.9/26.2"
+  },
+  {
+   "name": "E-12 slider2 fc-reach fine",
+   "status": "PASS",
+   "line": "0 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "24.1/27.9/26.2"
+  },
+  {
+   "name": "E-12 slider2 fc-reach coarse",
+   "status": "PASS",
+   "line": "0 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "24.1/27.9/26.2"
+  },
+  {
+   "name": "E-12 vsheet fc-reach fine",
+   "status": "PASS",
+   "line": "0 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "24.1/27.9/26.2"
+  },
+  {
+   "name": "E-12 vsheet fc-reach coarse",
+   "status": "PASS",
+   "line": "0 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "22.8/27.6/26.1"
+  },
+  {
+   "name": "E-12 strip fc-reach fine",
+   "status": "PASS",
+   "line": "0 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "22.8/27.6/26.1"
+  },
+  {
+   "name": "E-12 strip fc-reach coarse",
+   "status": "PASS",
+   "line": "0 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "22.8/27.6/26.1"
+  },
+  {
+   "name": "E-12 modal fc-reach fine",
+   "status": "PASS",
+   "line": "0 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "22.8/27.6/26.1"
+  },
+  {
+   "name": "E-12 modal fc-reach coarse",
+   "status": "PASS",
+   "line": "0 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "22.8/27.6/26.1"
+  },
+  {
+   "name": "E-12 s6 fc-reach fine",
+   "status": "PASS",
+   "line": "1 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "22.8/27.6/26.1"
+  },
+  {
+   "name": "E-12 s6 fc-reach coarse",
+   "status": "PASS",
+   "line": "1 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "22.8/27.6/26.1"
+  },
+  {
+   "name": "E-12 passive fc-reach fine",
+   "status": "PASS",
+   "line": "0 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "22.8/27.6/26.1"
+  },
+  {
+   "name": "E-12 passive fc-reach coarse",
+   "status": "PASS",
+   "line": "0 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "22.8/27.6/26.1"
+  },
+  {
+   "name": "E-12 field fc-reach fine",
+   "status": "PASS",
+   "line": "0 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "22.8/27.6/26.1"
+  },
+  {
+   "name": "E-12 field fc-reach coarse",
+   "status": "PASS",
+   "line": "0 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "22.8/27.6/26.1"
+  },
+  {
+   "name": "E-12 ambient fc-reach fine",
+   "status": "PASS",
+   "line": "0 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "21.7/27.3/26.0"
+  },
+  {
+   "name": "E-12 ambient fc-reach coarse",
+   "status": "PASS",
+   "line": "0 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "21.7/27.3/26.0"
+  },
+  {
+   "name": "E-12 slop fc-reach fine",
+   "status": "PASS",
+   "line": "1 element(s) render an ::after; forced colours removes 1: span[seat].seatdemo · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "21.7/27.3/26.0"
+  },
+  {
+   "name": "E-12 slop fc-reach coarse",
+   "status": "PASS",
+   "line": "2 element(s) render an ::after; forced colours removes 1: span[seat].seatdemo · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "21.7/27.3/26.0"
+  },
+  {
+   "name": "E-12 restloop fc-reach fine",
+   "status": "PASS",
+   "line": "0 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "21.7/27.3/26.0"
+  },
+  {
+   "name": "E-12 restloop fc-reach coarse",
+   "status": "PASS",
+   "line": "0 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "21.7/27.3/26.0"
+  },
+  {
+   "name": "E-12 restloop rest layouts",
+   "status": "PASS",
+   "line": "0.0 layouts/s over 2 s at rest (W-F.6 bound 0) · running at rest: div[loop].loop fx-shim",
+   "load": "21.9/27.3/25.9"
+  },
+  {
+   "name": "E-12 restloop rest-running off-screen",
+   "status": "PASS",
+   "line": "1 animation(s) running at rest, their targets moved off-screen (top 4093 px against a 500 px viewport): all stopped (div[loop].loop fx-shim paused) (bound: stops off-screen)",
+   "load": "21.9/27.3/25.9"
+  },
+  {
+   "name": "E-12 slider wheel over engaged control",
+   "status": "PASS",
+   "line": "nothing engaged: box +30, page +0 · keyboard-engaged (×1.060, top layer false): a 30 px wheel over the control scrolls the box +30, the page +0 (bound: the box scrolls, the page does not)",
+   "load": "21.9/27.3/25.9"
+  },
+  {
+   "name": "E-12 slider consumer anchor · escape",
+   "status": "PASS",
+   "line": "a consumer's inline position-anchor --consumer-own · while engaged (×1.060, top layer false) \"--consumer-own\" · Escape: the release ended at 261 ms, then +300 ms: \"--consumer-own\" (bound: the consumer's own value)",
+   "load": "21.9/27.3/25.9"
+  },
+  {
+   "name": "E-12 slider consumer anchor · blur",
+   "status": "PASS",
+   "line": "a consumer's inline position-anchor --consumer-own · while engaged (×1.060, top layer false) \"--consumer-own\" · Tab away: the release ended at 210 ms, then +300 ms: \"--consumer-own\" (bound: the consumer's own value)",
+   "load": "21.8/27.1/25.9"
+  }
+ ]
+}

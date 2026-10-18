@@ -327,10 +327,11 @@ export function sceneApp(build) {
  * guard(name, fn, ms): runs one cell's measurement with a timeout; an engine that closes or hangs is relaunched and
  * the cell re-run once (H-3: segment isolation). A crash that repeats is a FAIL "ENGINE CLOSED … REPRODUCED".
  */
-export async function witness(id, title, body) {
+export async function witness(id, title, body, defaultDeadlineS = 1500) {
   const a = parseArgs();
   const engine = a.engine === "webkit" ? "webkit" : "chromium";
-  const deadline = +(a.deadline ?? 1500) * 1000;
+  // H4: a witness that reads each cell several times (E-5's three-read rule) carries its own default deadline
+  const deadline = +(a.deadline ?? defaultDeadlineS) * 1000;
   const dog = setTimeout(() => { console.log(`${id} ${engine} HARNESS ERROR · deadline ${deadline / 1000} s passed (hang) · load ${load()}`); process.exit(2); }, deadline);
   dog.unref();
   const waited = await acquireLock();

@@ -60,6 +60,8 @@ import { Popover, PopoverTrigger, PopoverContent } from "@glass/components/popov
 import { Toaster, toast } from "@glass/components/toast";
 import { Configurator, ConfiguratorLayer, ConfiguratorRow } from "@glass/components/configurator";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@glass/components/menu";
+// H4 (pass 4): CK-14's coarse dock-trigger hit-slop under forced colours, read on the real trigger (C-A3's `fcslop`)
+import { DockTrigger } from "@glass/components/dock";
 import { ENGAGE_LADDER, ENGAGE_ENVELOPES } from "@glass/composables/motion";
 import DIRS from "./dirs";
 import DECL from "./decl";
@@ -94,9 +96,11 @@ const INDEX: Record<string, Record<string, unknown>> = {
   press_checkbox: { gates: ["E-5"], target: '[role="checkbox"]' },
   // CK-05: E-4 reads the slider's VISIBLE value point (the range's leading edge, `point` + `edge: "lead"`), pressed at
   // the reka thumb; CK-20: the slider and the pair; CK-21: C-E's three plants (plant-fallback.mjs)
-  slider: { gates: ["E-3", "E-4", "E-7", "E-9", "E-10", "E-11"], key: "ArrowRight", target: ".glass-slider", root: ".glass-slider", thumb: '[role="slider"]', body: ".slider-range", point: ".slider-range", edge: "lead", veil: ".glass-focus-veil",
+  // H4: `engaged` is the selector a root matches while it is engaged (the door's one writer, `data-engaged`: CK-15's
+  // count in E-10, the engagement precondition of E-12's MIGRATION cells); `floor` names the E-12 cells a scene carries
+  slider: { gates: ["E-3", "E-4", "E-7", "E-9", "E-10", "E-11", "E-12"], key: "ArrowRight", target: ".glass-slider", root: ".glass-slider", thumb: '[role="slider"]', body: ".slider-range", point: ".slider-range", edge: "lead", veil: ".glass-focus-veil", engaged: "[data-engaged]", floor: ["wheel", "anchor"],
     failLoud: [{ token: "--space-section", value: "nonsense", act: "kbd" }, { token: "--scale-engage", value: "nonsense", act: "kbd" }, { token: "--spring-dock-settle", value: "nonsense", act: "fling" }] },
-  slider2: { gates: ["E-10"], pair: ['[data-t="slider-a"] .glass-slider', '[data-t="slider-b"] .glass-slider'], veil: ".glass-focus-veil" },
+  slider2: { gates: ["E-10"], pair: ['[data-t="slider-a"] .glass-slider', '[data-t="slider-b"] .glass-slider'], veil: ".glass-focus-veil", engaged: "[data-engaged]" },
   // CK-05's repeat-run detent reads every detented Q-4 (b) surface: the tabs drag lands on a tab, the sortable row on a
   // slot (pass-2/H2.md §2.3, HEAD read only the Sheet and the Carousel)
   tabsdrag: { gates: ["E-4"], detents: true, root: ".segmented-tabs, [role=tablist]", thumb: ".segmented-indicator", target: ".segmented-indicator" },
@@ -115,13 +119,43 @@ const INDEX: Record<string, Record<string, unknown>> = {
   presented: { gates: [], target: '[role="dialog"] .button', modal: '[role="dialog"]' },
   field: { gates: [], target: 'input[data-t="field"]' },
   ambient: { gates: [], target: '[data-t="ambient"]' },
+  // H4: a second ambient exemplar, the Constellation (a canvas-2D pointer field), which paints a pointer move in a
+  // headless engine where the Aurora's software-raster guard resolves its static "css" ground (CK-19, CK-01)
+  constellation: { gates: [], target: '[data-t="constellation"]' },
   gallery: { gates: [] },
+  // H4, E-12 (CK-14 × CK-13): the three dock triggers on a coarse pointer, compact (a consumer-sized 32×24 face, the
+  // rung touch-floor.css names). `census: false`: the dock is D2's fence and its latch closes only with D2's leave
+  // (REGISTRY §P3-6), so E-1 does not read this scene's members
+  docktrig: { gates: ["E-12"], floor: ["slop"], census: false, slop: '[data-t^="dt-"]' },
+  // H4, E-12 (CK-16): the rest-running members alone, so a layout count and an off-screen read are theirs
+  restloop: { gates: ["E-12"], floor: ["rest"] },
+};
+// H4 (CK-19): a scene whose subject cannot paint its rung's input in this engine says so, read from the member's own
+// resolved state, never assumed. The Aurora stamps its resolved substrate (`data-aurora-substrate`); "css" is the
+// static palette ground its software-raster guard picks (constants/renderMode.ts isSoftwareWebGLRenderer). E-1 marks
+// the cell UNMEASURED with this reason, never PASS
+function rendererString(): string {
+  try {
+    const gl = document.createElement("canvas").getContext("webgl2");
+    if (!gl) return "no WebGL2 context";
+    const x = gl.getExtension("WEBGL_debug_renderer_info");
+    const r = String(x ? gl.getParameter(x.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER));
+    gl.getExtension("WEBGL_lose_context")?.loseContext();
+    return r;
+  } catch (e) { return `WebGL2 probe threw: ${String(e).slice(0, 80)}`; }
+}
+const LIMIT: Record<string, () => string | null> = {
+  ambient: () => {
+    const s = document.querySelector('[data-t="ambient"] [data-aurora-substrate]')?.getAttribute("data-aurora-substrate");
+    if (s == null) return "the Aurora rendered no substrate stamp (data-aurora-substrate absent)";
+    return s === "css" ? `the Aurora resolved its "css" substrate (data-aurora-substrate="css": the software-raster guard, constants/renderMode.ts; WebGL2 renderer "${rendererString()}"): a static palette ground with no pointer field in this engine` : null;
+  },
 };
 // E-1's runtime arm: which harness scene exemplifies a component directory (CK-19)
 const SCENE_OF_DIR: Record<string, string> = {
   switch: "switch", checkbox: "checkbox", "radio-group": "radio", tabs: "tabs", "toggle-group": "toggle",
   chip: "chip", accordion: "accordion", button: "button", slider: "slider", separator: "passive", skeleton: "passive", dialog: "presented",
-  sheet: "sheet", "sortable-list": "sortable", carousel: "carousel", input: "field", textarea: "gallery", aurora: "ambient",
+  sheet: "sheet", "sortable-list": "sortable", carousel: "carousel", input: "field", textarea: "gallery", aurora: "ambient", constellation: "constellation",
   card: "gallery", alert: "gallery", badge: "gallery", progress: "gallery", "status-dot": "gallery", "pager-dots": "gallery",
 };
 
@@ -210,6 +244,7 @@ onMounted(async () => {
     ready: true, kind: "build", scene, index: INDEX, sceneOfDir: SCENE_OF_DIR, dirs: DIRS, decl: DECL,
     rungs: ENGAGE_LADDER.map((r) => r.rung), envelopes: ENGAGE_ENVELOPES.map((r) => ({ role: r.role, attackMs: r.attackMs, releaseMs: r.releaseMs })),
     commit: () => commit[base]?.(),
+    limit: () => LIMIT[scene]?.() ?? null,
     state: () => (STATE[base] ? JSON.parse(JSON.stringify(STATE[base]())) : null),
     members,
     // CK-20: a parent re-render puts a block before the slider during a hold
@@ -252,6 +287,13 @@ onMounted(async () => {
       </Dialog>
       <div v-else-if="scene === 'field'" style="width:320px"><Input v-model="txt" aria-label="Probe" data-t="field" /></div>
       <div v-else-if="scene === 'ambient'" data-t="ambient" style="width:420px;height:240px;position:relative;overflow:hidden;border-radius:16px"><Safe><Aurora /></Safe></div>
+      <div v-else-if="scene === 'constellation'" data-t="constellation" style="width:420px;height:240px;position:relative;overflow:hidden;border-radius:16px"><Safe><Constellation /></Safe></div>
+      <div v-else-if="scene === 'docktrig'" style="display:flex;gap:48px;align-items:center;padding:24px">
+        <Safe><Select><DockTrigger for="select" data-t="dt-select" aria-label="Pick" style="inline-size:32px;block-size:24px;padding:0;min-height:0"><SelectValue placeholder="A" /></DockTrigger><SelectContent><SelectItem value="a">A</SelectItem></SelectContent></Select></Safe>
+        <Safe><DropdownMenu><DockTrigger for="dropdown" data-t="dt-dropdown" aria-label="Menu" style="inline-size:32px;block-size:24px;padding:0;min-height:0">⋯</DockTrigger><DropdownMenuContent><DropdownMenuItem>One</DropdownMenuItem></DropdownMenuContent></DropdownMenu></Safe>
+        <Safe><Popover><DockTrigger for="popover" data-t="dt-popover" aria-label="Pop" style="inline-size:32px;block-size:24px;padding:0;min-height:0">⋯</DockTrigger><PopoverContent>Pop body</PopoverContent></Popover></Safe>
+      </div>
+      <div v-else-if="scene === 'restloop'" style="width:320px;display:grid;gap:16px"><Skeleton data-t="skel" style="height:24px" /><StatusDot state="active" data-t="dot" /></div>
       <div v-else-if="scene === 'gallery'" style="width:420px;display:grid;gap:12px">
         <Safe><Card><CardContent>Card</CardContent></Card></Safe>
         <Safe><Card :selected="false"><CardContent>Card, selectable</CardContent></Card></Safe>

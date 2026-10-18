@@ -1,0 +1,16 @@
+## 2026-10-18 07:41:54 load { 19.32 15.49 14.73 } · start head webkit e5-touch.mjs
+# E-5 · a held touch answers through a press rung, and sustains (CK-06)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p4/H4/out/builds/head · engine webkit · lock wait 0.0 s · other headless processes: chromium 14, webkit 0 · load 19.3/15.5/14.7 at start
+# scene app: harness scenes/App.vue (sha1 0b73f092858e)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  FAIL       E-5 tabs sustain light · 0 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over []: read 1 NOT DRIVEN (no press-only property at +200 ms) · read 2 NOT DRIVEN (no press-only property at +200 ms) · read 3 NOT DRIVEN (no press-only property at +200 ms) (bound ≥ ×0.95 on every read) · load 21.7/16.4/15.1
+  PASS       E-5 tabs press light · :active true · Δscale -0.030 · touch-changed [] · hover-changed [] · press-only [] · load 21.7/16.4/15.1
+  FAIL       E-5 tabs sustain(PRM) light · 0 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over []: read 1 NOT DRIVEN (no press-only property at +200 ms) · read 2 NOT DRIVEN (no press-only property at +200 ms) · read 3 NOT DRIVEN (no press-only property at +200 ms) (bound ≥ ×0.95 on every read) · load 21.7/16.4/15.1
+  FAIL       E-5 tabs press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [] · hover-changed [] · press-only [] (bound ≥ 1 press-only property under reduce) · load 21.7/16.4/15.1
+  FAIL       E-5 tabs sustain dark · 0 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over []: read 1 NOT DRIVEN (no press-only property at +200 ms) · read 2 NOT DRIVEN (no press-only property at +200 ms) · read 3 NOT DRIVEN (no press-only property at +200 ms) (bound ≥ ×0.95 on every read) · load 24.0/18.0/15.8
+  PASS       E-5 tabs press dark · :active true · Δscale -0.030 · touch-changed [] · hover-changed [] · press-only [] · NOT-REPRODUCED: engine closed on the first run (CELL TIMEOUT 240 s) · load 24.0/18.0/15.8
+  FAIL       E-5 tabs sustain(PRM) dark · 0 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over []: read 1 NOT DRIVEN (no press-only property at +200 ms) · read 2 NOT DRIVEN (no press-only property at +200 ms) · read 3 NOT DRIVEN (no press-only property at +200 ms) (bound ≥ ×0.95 on every read) · load 24.0/18.0/15.8
+  FAIL       E-5 tabs press-light(PRM) dark · :active true · Δscale 0.000 · touch-changed [] · hover-changed [] · press-only [] (bound ≥ 1 press-only property under reduce) · NOT-REPRODUCED: engine closed on the first run (CELL TIMEOUT 240 s) · load 24.0/18.0/15.8
+E-5 webkit HARNESS ERROR · deadline 1500 s passed (hang) · load 17.7/17.8/15.9
+exit 2
+## 2026-10-18 08:18:27 load { 17.65 17.77 15.93 } · end head webkit e5-touch.mjs

@@ -119,6 +119,17 @@ export const FAULTS = {
   "e10-teleport": { why: "CK-20 (H3 position): on the hand-off the OUTGOING slider jumps onto the incoming one's place for 300 ms, then jumps home; its scale releases smoothly (C-E2 §0.1's 68 px teleport)", witnesses: ["E-10"], cell: /hand-off drop/ },
   "e10-teleportin": { why: "CK-20 (H3 position): the INCOMING slider appears on the outgoing one's place for 200 ms, then jumps home (C-E2 §0.1, Shift+Tab B → A)", witnesses: ["E-10"], cell: /hand-off rev/ },
   "cap-nocommit": { why: "CK-25 (H3 capture): a touch tap does not commit the control: the coarse 'committed' frame must say NOT COMMITTED, never show a frame as a commit", witnesses: ["CAP"], cell: /coarse.*committed/ },
+  // ── H4 (pass 4): a plant per new cell (REGISTRY §P3-8.3 wave 1) ──
+  "e10-twoengaged": { why: "CK-15 (H4): on the hand-off the outgoing slider keeps its engagement for 250 ms after the incoming one takes it: two engaged controls on the same frames (its scale and position stay lawful)", witnesses: ["E-10"], cell: /hand-off singleton fwd/ },
+  "e1-ambientlimit": { why: "CONTROL, must read UNMEASURED (H4, CK-19): the ambient field states that it resolved a static ground in this engine (the Aurora's software-raster guard) and does not follow the pointer; the cell is the engine's limit, never a pass and never a fail", witnesses: ["E-1"], cell: /runtime ambient \(theta\) ·/, expect: "unmeasured" },
+  "e5-flaky": { why: "CK-06 (H4 three-read rule): the held press light sags back toward rest on one touch hold in three (every third page load of the scene); a one-read rule passes it two times in three", witnesses: ["E-5"], cell: /pop sustain/ },
+  "e12-fcslop": { why: "CK-14 (H4): the forced-colours arm hides every ::after, the coarse trigger's 44 px hit-slop included (C-A3 §0.2: engage.css:225-230 on the dock triggers)", witnesses: ["E-12"], cell: /slop fcslop/ },
+  "e12-fcreach": { why: "CK-27 (H4): the control's ::after is a 6 px hit ring around it, and the forced-colours arm removes it: the arm reaches a pseudo-element beyond the slop scene (the widened cell must find it on every scene)", witnesses: ["E-12"], cell: /pop fc-reach/ },
+  "e12-restloop": { why: "CK-16 (H4): the rest loop keeps running off-screen (C-A3 §0.4: Skeleton and StatusDot 3000-4346 px off-screen)", witnesses: ["E-12"], cell: /restloop rest-running off-screen/ },
+  "e12-restlayout": { why: "CK-16 (H4): the rest loop animates width, a layout every frame at rest (W-F.6's 0 layouts/s)", witnesses: ["E-12"], cell: /restloop rest layouts/, engines: ["chromium"] },
+  "e12-wheelchain": { why: "CK-22 (H4): the keyboard-engaged slider is promoted to the top layer, so a wheel over it inside a scroller scrolls the page and not the box (C-E3 §0.3: +30 page, +0 box)", witnesses: ["E-12"], cell: /wheel over engaged control/ },
+  "e12-wheelrow": { why: "CONTROL, must PASS (H4): the same promotion with the route's MIGRATION row cited (--migration wheel): the wheel cell REPORTs and the critic scores the row", witnesses: ["E-12"], expect: "pass", args: ["--migration", "wheel"] },
+  "e12-anchorlost": { why: "CK-22 (H4): the engagement writes its own position-anchor on the root and removes the property on release, so a consumer's anchor is gone after the release (C-E3 §0.3, E-M1)", witnesses: ["E-12"], cell: /consumer anchor · escape/ },
   "e11-silent": { why: "CK-21: the engagement reads --fx-scale-engage at runtime and, when it is unreadable, degrades to no grow with no console.error", witnesses: ["E-11"], cell: /fail-loud/ },
   "e11-unread": { why: "CONTROL: the grow spells its figure in place and reads no token, so an unreadable token degrades nothing: UNMEASURED, not a pass", witnesses: ["E-11"], cell: /fail-loud/, expect: "unmeasured" },
   "e11-noise": { why: "CONTROL (H2 §2.3): the grow spells its figure in place, reads no token, and varies run to run (1.060, 1.061, 1.066, 1.054, 1.060 on successive slider loads); one planted read outside a two-run spread is noise, not a degradation: UNMEASURED, never FAIL", witnesses: ["E-11"], cell: /fail-loud/, expect: "unmeasured" },
@@ -131,8 +142,9 @@ export const FIXTURE_INDEX = {
   rest: { gates: CONTROL_GATES, key: "Space", target: ".ctl" },
   // H3: a stateless control (a counter, no model): E-2 drives its programmatic commit as element.click()
   act: { gates: CONTROL_GATES, key: "Space", target: ".ctl", stateless: true },
-  slider: { gates: ["E-3", "E-4", "E-7", "E-9", "E-10", "E-11"], key: "ArrowRight", veil: ".fx-veil", failLoud: [{ token: "--fx-scale-engage", value: "nonsense", act: "kbd" }] },
-  slider2: { gates: ["E-10"], veil: ".fx-veil", pair: ['.fx-slider[data-n="A"]', '.fx-slider[data-n="B"]'] },
+  slider: { gates: ["E-3", "E-4", "E-7", "E-9", "E-10", "E-11", "E-12"], key: "ArrowRight", veil: ".fx-veil", engaged: "[data-held], [data-kbd]", floor: ["wheel", "anchor"], failLoud: [{ token: "--fx-scale-engage", value: "nonsense", act: "kbd" }] },
+  // H4: the fixture slider marks its engagement as data-held (the hand) or data-kbd (the keyboard)
+  slider2: { gates: ["E-10"], veil: ".fx-veil", engaged: "[data-held], [data-kbd]", pair: ['.fx-slider[data-n="A"]', '.fx-slider[data-n="B"]'] },
   vsheet: { gates: ["E-4"], axis: "y", dir: -1, detents: true, fixed: ".fx-sheet" },
   strip: { gates: ["E-4"], input: "touch", dir: -1, platform: true },
   modal: { gates: ["E-7"] },
@@ -140,11 +152,17 @@ export const FIXTURE_INDEX = {
   passive: { gates: [] },
   field: { gates: [] },
   ambient: { gates: [] },
+  // H4, E-12: a coarse trigger with a transparent ::after hit-slop beside a paint-only ::after seat the forced-colours
+  // arm may remove (CK-14, CK-27); the rest loop that pauses off-screen (CK-16)
+  slop: { gates: ["E-12"], floor: ["slop"], census: false, slop: ".trig" },
+  restloop: { gates: ["E-12"], floor: ["rest"] },
 };
 
 // e11-noise: the slider's grow figure on successive slider loads of one server (E-11 loads clean, clean, planted, then
 // to confirm clean, planted): the first planted read leaves the clean pair's spread, the confirming one does not
 const E11_NOISE = [1.060, 1.061, 1.066, 1.054, 1.060]; let e11n = 0;
+// e5-flaky (H4): every third page load of the press scene sags its held light (E-5 takes three holds on three loads)
+let e5n = 0;
 export function fixturePage(params, fault = "") {
   const scene = params.get("scene") ?? "__index";
   const noise = fault === "e11-noise" && scene === "slider" ? E11_NOISE[e11n++ % E11_NOISE.length] : null;
@@ -155,6 +173,7 @@ export function fixturePage(params, fault = "") {
   const run = +(params.get("run") ?? 0);
   const F = (id) => fault === id;
   const nopress = F("e1-dead") || F("e5-hover");
+  const sag = fault === "e5-flaky" && scene === "pop" && e5n++ % 3 === 2;
 
   const members = { alpha: "pressed", beta: "held", gamma: "static", delta: "static", eta: "field", theta: "ambient" };
   if (F("e1-undeclared")) delete members.delta;
@@ -191,7 +210,7 @@ main { min-height: 100vh; padding: ${phone ? "48px 16px" : "48px"}; box-sizing: 
   transition: scale ${F("e8-literal") ? "230ms" : "var(--spring-press-duration)"} var(--spring-press), background-color var(--engage-press-drain-attack) linear; }
 .ctl:hover, .seg:hover { background-color: var(--ctl-hover); }
 ${nopress ? "" : `.ctl:active, .seg:active { scale: 0.96; background-color: var(--ctl-press); }`}
-${F("e5-decay") ? `.ctl:active { animation: fx-sag 500ms linear forwards; } @keyframes fx-sag { to { background-color: var(--ctl); } }` : ""}
+${F("e5-decay") || sag ? `.ctl:active { animation: fx-sag 500ms linear forwards; } @keyframes fx-sag { to { background-color: var(--ctl); } }` : ""}
 .ctl[data-state="on"] { color: #fff; background-color: var(--accent); }
 .rest .ctl[data-state="on"] { scale: 1.05; }
 .flash { position: absolute; inset: 0; border-radius: inherit; background: #fff; opacity: 0; pointer-events: none; }
@@ -247,6 +266,17 @@ ${F("e6-prm") ? "" : "@media (prefers-reduced-motion: reduce) { .fx-switch { ani
 .card { display: block; width: 240px; padding: 16px; border-radius: 16px; background: var(--ctl); }
 .fx-field { width: 240px; height: 36px; border-radius: 10px; border: 1px solid #8884; background: var(--bg); color: var(--ink); padding: 0 10px; }
 ${F("e1-fielddead") ? "" : ".fx-field:hover { border-color: var(--accent); background: var(--ctl-hover); }"}
+/* H4: CK-14/CK-27, the coarse trigger's transparent hit-slop and a paint-only seat the forced-colours arm removes */
+.trig { position: relative; inline-size: 32px; block-size: 24px; padding: 0; border: 0; border-radius: 8px; background: var(--ctl); font: inherit; color: inherit; }
+@media (pointer: coarse) { .trig::after { content: ""; position: absolute; left: 50%; top: 50%; inline-size: max(100%, 44px); block-size: max(100%, 44px); transform: translate(-50%, -50%); } }
+.seatdemo { position: relative; display: inline-block; margin-left: 48px; padding: 4px 10px; border-radius: 8px; background: var(--ctl); }
+.seatdemo::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: #fff4; pointer-events: none; }
+${F("e12-fcreach") ? `.ctl::after { content: ""; position: absolute; inset: -6px; border-radius: inherit; }` : ""}
+@media (forced-colors: active) { .seatdemo::after { display: none; } ${F("e12-fcslop") ? ".trig::after { display: none; }" : ""} ${F("e12-fcreach") ? ".ctl::after { display: none; }" : ""} }
+/* H4: CK-16, a loop that runs at rest on a compositor property and pauses off-screen */
+.loop { width: 120px; height: 16px; border-radius: 8px; background: var(--ctl); animation: ${F("e12-restlayout") ? "fx-shimw" : "fx-shim"} 1.2s ease-in-out infinite; }
+@keyframes fx-shim { 50% { opacity: 0.5; } }
+@keyframes fx-shimw { 50% { width: 140px; } }
 .fx-amb { width: 320px; height: 160px; border-radius: 16px; background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), #3b6cf0 0, #3b6cf000 60%), var(--ctl); }
 `;
 
@@ -263,6 +293,8 @@ ${F("e1-fielddead") ? "" : ".fx-field:hover { border-color: var(--accent); backg
   else if (scene === "passive") body = `<hr class="engage-static" data-member="gamma" data-e="target"><div class="card engage-static" data-member="delta"${F("e1-staticfocus") ? ' role="option" tabindex="0" data-handler' : F("e1-ownhandler") ? " data-handler" : F("e1-libhandler") ? ' data-handler="lib"' : ""}>Card</div>${F("e1-unrendered") ? '<i data-t="unrendered" title="Error: the member threw in setup"></i>' : ""}`;
   else if (scene === "field") body = `<input class="fx-field engage-field" data-member="eta" data-e="target" aria-label="Probe" data-handler>`;
   else if (scene === "ambient") body = `<div class="fx-amb engage-ambient" data-member="theta" data-e="target"></div>`;
+  else if (scene === "slop") body = `<button class="trig" type="button" data-t="trig" aria-label="Menu">⋯</button><span class="seatdemo" data-t="seat">seat</span>`;
+  else if (scene === "restloop") body = `<div class="loop" data-t="loop"></div>`;
   else if (scene === "vsheet") body = `<div class="fx-vroot" data-e="root"></div><div class="fx-sheet"><div class="fx-grip" role="slider" aria-label="Probe" aria-valuenow="25" tabindex="0" data-e="thumb"></div></div>`;
   else if (scene === "strip") body = `<div class="fx-strip" data-e="root">${[0, 1, 2, 3].map((i) => `<div class="fx-cell"${i ? "" : ' data-e="thumb"'}></div>`).join("")}</div>`;
 
@@ -340,9 +372,17 @@ function checkToken(root) {
   const raw = getComputedStyle(root).getPropertyValue("--fx-scale-engage").trim();
   if (!(parseFloat(raw) > 1) || !/^[\\d.]+$/.test(raw)) console.error("[fixture] --fx-scale-engage is unreadable (" + JSON.stringify(raw) + "): the engagement cannot size its grow");
 }
+// H4 plants: e12-wheelchain promotes the engaged root into the top layer where it painted (a wheel over it chains to
+// the viewport); e12-anchorlost writes the engagement's own position-anchor and removes the property on release
+function promote(root, on) {
+  if (on && !root.matches(":popover-open")) { const b = root.getBoundingClientRect(); root.popover = "manual"; root.style.cssText += ";position:fixed;inset:auto;left:" + b.left + "px;top:" + b.top + "px;margin:0;padding:0;border:0;overflow:visible;width:" + b.width + "px;height:" + b.height + "px;background:var(--ctl)"; root.showPopover(); }
+  else if (!on && root.matches(":popover-open")) { root.hidePopover(); root.removeAttribute("popover"); for (const k of ["position", "inset", "left", "top", "margin", "padding", "border", "overflow", "width", "height", "background"]) root.style.removeProperty(k); }
+}
 function kbd(root, on) {
   if (on) { if (root.dataset.kbd === undefined) checkToken(root); root.dataset.kbd = ""; if (FAULT === "e3-tabhand") root.dataset.held = "key"; }
   else { delete root.dataset.kbd; if (FAULT === "e3-tabhand") delete root.dataset.held; }
+  if (FAULT === "e12-wheelchain" || FAULT === "e12-wheelrow") promote(root, on);
+  if (FAULT === "e12-anchorlost") { if (on) root.style.setProperty("position-anchor", "--fx-footprint"); else root.style.removeProperty("position-anchor"); }
   settleVeil();
 }
 function wireSlider(root) {
@@ -361,6 +401,7 @@ function wireSlider(root) {
     // a hand-off: focus moves straight to another slider's thumb
     const next = e.relatedTarget?.closest?.(".fx-slider");
     if (FAULT === "e10-teleport" && next && next !== root) teleport(next, 300);
+    if (FAULT === "e10-twoengaged" && next && next !== root) { setTimeout(() => kbd(root, false), 250); return; }
     if (FAULT === "e10-snap" && next && next !== root) { root.classList.add("snap"); kbd(root, false); root.getBoundingClientRect(); requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("snap"))); return; }
     kbd(root, false);
   });
@@ -460,7 +501,12 @@ function mountScene() {
   if (SCENE === "passive" || SCENE === "field") E.state = () => null;
   if (SCENE === "ambient") {
     const a = stage.querySelector(".fx-amb");
-    if (FAULT !== "e1-ambientdead") a.addEventListener("pointermove", (e) => { const r = a.getBoundingClientRect(); a.style.setProperty("--mx", ((e.clientX - r.left) / r.width * 100).toFixed(1) + "%"); a.style.setProperty("--my", ((e.clientY - r.top) / r.height * 100).toFixed(1) + "%"); });
+    if (FAULT !== "e1-ambientdead" && FAULT !== "e1-ambientlimit") a.addEventListener("pointermove", (e) => { const r = a.getBoundingClientRect(); a.style.setProperty("--mx", ((e.clientX - r.left) / r.width * 100).toFixed(1) + "%"); a.style.setProperty("--my", ((e.clientY - r.top) / r.height * 100).toFixed(1) + "%"); });
+  }
+  if (SCENE === "restloop" && FAULT !== "e12-restloop") {
+    // the clean loop pauses while it is off-screen (CK-16)
+    const l = stage.querySelector(".loop");
+    new IntersectionObserver(([en]) => { l.style.animationPlayState = en.isIntersecting ? "running" : "paused"; }).observe(l);
   }
   if (SCENE === "vsheet") {
     // a bottom sheet sized by its rung; the grip drags it; the release velocity picks the detent
@@ -507,6 +553,9 @@ E.members = () => [...document.querySelectorAll("[data-member]")].map((root) => 
   return { dir: root.dataset.member, root, els: own, handlers: own.filter((e) => e.getAttribute("data-handler") === ""), libHandlers: own.filter((e) => e.getAttribute("data-handler") === "lib") };
 });
 E.state = () => null;
+// H4 (CK-19): the scene states when its subject cannot paint its rung's input in this engine (the scene app reads the
+// Aurora's resolved substrate); the fixture's ambient field states it under e1-ambientlimit
+E.limit = () => (SCENE === "ambient" && FAULT === "e1-ambientlimit" ? "the fixture's ambient field resolved a static ground in this engine (plant e1-ambientlimit)" : null);
 if (SCENE === "pop" || SCENE === "rest") E.state = () => (model ? "on" : "off");
 if (SCENE === "travel") E.state = () => selIdx;
 if (SCENE === "act") E.state = () => count;

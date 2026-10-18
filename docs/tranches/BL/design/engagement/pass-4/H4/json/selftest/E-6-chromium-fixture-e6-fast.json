@@ -1,0 +1,98 @@
+{
+ "id": "E-6",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e6-fast"
+ },
+ "loadStart": "4.4/7.5/12.4",
+ "loadEnd": "4.3/7.4/12.3",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-6 s6 present light",
+   "status": "PASS",
+   "line": "1 running infinite animation(s) at rest: fx-breathe[scale on the subject, 600 ms]",
+   "load": "4.3/7.4/12.3"
+  },
+  {
+   "name": "E-6 s6 channel light",
+   "status": "PASS",
+   "line": "channels scale",
+   "load": "4.3/7.4/12.3"
+  },
+  {
+   "name": "E-6 s6 shape light",
+   "status": "PASS",
+   "line": "continuous at the seam, eased (ease-in-out)",
+   "load": "4.3/7.4/12.3"
+  },
+  {
+   "name": "E-6 s6 amplitude light",
+   "status": "PASS",
+   "line": "scale 0.012 (0.004..0.03)",
+   "load": "4.3/7.4/12.3"
+  },
+  {
+   "name": "E-6 s6 period light",
+   "status": "FAIL",
+   "line": "iteration 600 ms (bound 2400..8000 ms)",
+   "load": "4.3/7.4/12.3"
+  },
+  {
+   "name": "E-6 s6 layouts/s light",
+   "status": "PASS",
+   "line": "layouts/s 0.0 · style recalcs/s 0.3 over 3 s at rest (bound 0 layouts/s)",
+   "load": "4.3/7.4/12.3"
+  },
+  {
+   "name": "E-6 s6 PRM light",
+   "status": "PASS",
+   "line": "0 idle animation(s) under reduced motion, 0 spatial",
+   "load": "4.3/7.4/12.3"
+  },
+  {
+   "name": "E-6 s6 present dark",
+   "status": "PASS",
+   "line": "1 running infinite animation(s) at rest: fx-breathe[scale on the subject, 600 ms]",
+   "load": "4.3/7.4/12.3"
+  },
+  {
+   "name": "E-6 s6 channel dark",
+   "status": "PASS",
+   "line": "channels scale",
+   "load": "4.3/7.4/12.3"
+  },
+  {
+   "name": "E-6 s6 shape dark",
+   "status": "PASS",
+   "line": "continuous at the seam, eased (ease-in-out)",
+   "load": "4.3/7.4/12.3"
+  },
+  {
+   "name": "E-6 s6 amplitude dark",
+   "status": "PASS",
+   "line": "scale 0.012 (0.004..0.03)",
+   "load": "4.3/7.4/12.3"
+  },
+  {
+   "name": "E-6 s6 period dark",
+   "status": "FAIL",
+   "line": "iteration 600 ms (bound 2400..8000 ms)",
+   "load": "4.3/7.4/12.3"
+  },
+  {
+   "name": "E-6 s6 layouts/s dark",
+   "status": "PASS",
+   "line": "layouts/s 0.0 · style recalcs/s 0.3 over 3 s at rest (bound 0 layouts/s)",
+   "load": "4.3/7.4/12.3"
+  },
+  {
+   "name": "E-6 s6 PRM dark",
+   "status": "PASS",
+   "line": "0 idle animation(s) under reduced motion, 0 spatial",
+   "load": "4.3/7.4/12.3"
+  }
+ ]
+}

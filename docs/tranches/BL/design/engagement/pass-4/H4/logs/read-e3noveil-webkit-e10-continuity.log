@@ -1,0 +1,16 @@
+## 2026-10-18 07:25:31 load { 17.09 14.24 14.26 } · start e3noveil webkit e10-continuity.mjs
+# E-10 · CK-20 no one-frame discontinuity on an engagement path
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p4/H4/out/builds/e3noveil · engine webkit · lock wait 0.0 s · other headless processes: chromium 6, webkit 0 · load 17.1/14.2/14.3 at start
+# scene app: harness scenes/App.vue (sha1 0b73f092858e)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  REPORT     E-10 slider own release · Tab in: largest one-frame centre move 0.0 px · Tab out of the engaged slider: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0138, largest centre move 0.0 px (the references for the hand-off and Escape bounds) · load 16.5/14.2/14.2
+  PASS       E-10 slider escape release · Escape: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0128 (bound ≤ own release 0.0138 + 0.002), largest centre move 0.0 px (bound ≤ own release 0.0 + 1 px) · load 16.5/14.2/14.2
+  PASS       E-10 slider re-render landing · a sibling inserted during the hold, then release: the root's largest one-frame move per 16.7 ms 2.4 px (without the insert 2.6 px; bound ≤ that + 1 px) · load 17.0/14.3/14.3
+  PASS       E-10 slider2 hand-off drop · Tab A → B (focus on Probe B) · outgoing A ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0134 (bound ≤ own release 0.0138 + 0.002), largest centre move 0.0 px at 92 ms (bound ≤ own release 0.0 + 1 px) · incoming B ×1.000 → ×1.060, largest centre move 0.0 px at 109 ms (bound ≤ own engage 0.0 + 1 px) · load 17.8/14.5/14.4
+  PASS       E-10 slider2 hand-off singleton fwd · 56 frames: engaged roots per frame max 1, 0 frame(s) with none · first frame A engaged true, B false · last frame B engaged true, A false (bound: at most one engaged on every frame, the incoming one at the end; selector [data-engaged]) · load 17.8/14.5/14.4
+  REPORT     E-10 slider2 hand-off veil · no veil up before the Tab (0.00): this route veils no keyboard engagement · load 17.8/14.5/14.4
+  PASS       E-10 slider2 hand-off rev · Shift+Tab B → A (focus on Probe A) · outgoing B ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0134 (bound ≤ own release 0.0138 + 0.002), largest centre move 0.0 px at 83 ms (bound ≤ own release 0.0 + 1 px) · incoming A ×1.000 → ×1.060, largest centre move 0.0 px at 197 ms (bound ≤ own engage 0.0 + 1 px) · load 17.8/14.5/14.4
+  PASS       E-10 slider2 hand-off singleton rev · 56 frames: engaged roots per frame max 1, 0 frame(s) with none · first frame B engaged true, A false · last frame A engaged true, B false (bound: at most one engaged on every frame, the incoming one at the end; selector [data-engaged]) · load 17.8/14.5/14.4
+E-10 webkit PASS · 6 pass, 0 fail, 0 unmeasured of 6 gating cells (2 reported) · load 17.1/14.2/14.3 at start, 17.8/14.5/14.4 at end
+exit 0
+## 2026-10-18 07:25:45 load { 17.84 14.52 14.36 } · end e3noveil webkit e10-continuity.mjs

@@ -26,6 +26,12 @@
 //                    it), +300 ms release: the root's largest one-frame move in the page frame over the 900 ms after the
 //                    release ≤ 1 px + the same release's largest move without the insert. A scene without
 //                    insertSibling is UNMEASURED
+//   hand-off singleton (H4, CK-15: "one engaged control") on both hand-off films: every frame counts the pair's
+//                    roots matching the row's `engaged` selector (the door's one writer, default `[data-engaged]`).
+//                    PASS when no frame counts more than one, the first frame's one is the outgoing root and the last
+//                    frame's one is the incoming root. NOT DRIVEN (FAIL) when the outgoing root does not match the
+//                    selector before the Tab. The outgoing root's exit (its scale and position) stays the drop/rev
+//                    cells' (CK-20); this cell reads the engagement state, every frame. C-E3 counted it only at the end
 // The sortable and tabs teleports are CK-05's continuity cell (E-4).
 //   node e10-continuity.mjs --build <dir> | --fixture [--fault e10-snap|e10-teleport|e10-teleportin] [--engine webkit]
 import { witness, openPage, scenesFor, center, tabKey, f } from "./lib.mjs";
@@ -33,13 +39,13 @@ import { witness, openPage, scenesFor, center, tabKey, f } from "./lib.mjs";
 const TOL = 0.002, POS = 1, ENG = 1.03, VEIL_KEEP = 0.1;
 // a film of each root's scale (effective: box width over its untransformed width), its box (left/top), its box centre,
 // and the veil's opacity
-const filmFn = ([roots, veilSel, ms]) => new Promise((ok) => {
+const filmFn = ([roots, veilSel, ms, engSel]) => new Promise((ok) => {
   const fr = []; const t0 = performance.now();
   const tick = () => {
     const els = roots.map((s) => document.querySelector(s));
     const veils = [...document.querySelectorAll(`[data-engaged]${veilSel ? `, ${veilSel}` : ""}`)].filter((e) => !els.some((r) => r && (r === e || r.contains(e))));
     const R = els.map((e) => (e ? e.getBoundingClientRect() : null));
-    fr.push({ t: performance.now() - t0, s: els.map((e) => (e ? window.__eff(e).s : NaN)), y: R.map((r) => (r ? r.top : NaN)), x: R.map((r) => (r ? r.left : NaN)), cx: R.map((r) => (r ? r.left + r.width / 2 + scrollX : NaN)), cy: R.map((r) => (r ? r.top + r.height / 2 + scrollY : NaN)), veil: Math.max(0, ...veils.map((v) => +getComputedStyle(v).opacity)) });
+    fr.push({ t: performance.now() - t0, s: els.map((e) => (e ? window.__eff(e).s : NaN)), y: R.map((r) => (r ? r.top : NaN)), x: R.map((r) => (r ? r.left : NaN)), cx: R.map((r) => (r ? r.left + r.width / 2 + scrollX : NaN)), cy: R.map((r) => (r ? r.top + r.height / 2 + scrollY : NaN)), veil: Math.max(0, ...veils.map((v) => +getComputedStyle(v).opacity)), eng: els.map((e) => !!e && !!engSel && e.matches(engSel)) });
     if (performance.now() - t0 < ms) requestAnimationFrame(tick); else ok(fr);
   };
   requestAnimationFrame(tick);
@@ -115,7 +121,7 @@ await witness("E-10", "CK-20 no one-frame discontinuity on an engagement path", 
         try {
           const key = dir === "fwd" ? tabKey(engine) : shift;
           await P.page.focus(dir === "fwd" ? '[data-sentinel="before"]' : '[data-sentinel="after"]'); await P.page.keyboard.press(key); await P.page.waitForTimeout(600);
-          const pr = P.page.evaluate(filmFn, [m.pair, m.veil ?? null, 900]); await P.page.waitForTimeout(32);
+          const pr = P.page.evaluate(filmFn, [m.pair, m.veil ?? null, 900, m.engaged ?? "[data-engaged]"]); await P.page.waitForTimeout(32);
           await P.page.keyboard.press(key);
           return { fr: await pr, focus: await P.page.evaluate(() => document.activeElement?.getAttribute("aria-label") ?? document.activeElement?.tagName) };
         } finally { await P.close(); }
@@ -129,6 +135,15 @@ await witness("E-10", "CK-20 no one-frame discontinuity on an engagement path", 
         const dO = maxDrop(fr, o), mO = shiftAt(fr, o), mN = shiftAt(fr, n);
         const ok = dO <= step + TOL && mO.d <= move + POS && mN.d <= inMove + POS;
         cell(name, ok ? "PASS" : "FAIL", `${dir === "fwd" ? "Tab A → B" : "Shift+Tab B → A"} (focus on ${r.focus}) · outgoing ${ON} ×${f(o0)} → ×${f(fr.at(-1).s[o])}, largest one-frame drop per 16.7 ms ${f(dO, 4)} (bound ≤ own release ${f(step, 4)} + ${TOL}), largest centre move ${f(mO.d, 1)} px at ${f(mO.t, 0)} ms (bound ≤ own release ${f(move, 1)} + ${POS} px) · incoming ${IN} ×${f(fr[0].s[n])} → ×${f(fr.at(-1).s[n])}, largest centre move ${f(mN.d, 1)} px at ${f(mN.t, 0)} ms (bound ≤ own engage ${f(inMove, 1)} + ${POS} px)`);
+      }
+      // CK-15: the engaged count at every frame of the hand-off
+      {
+        const sn = `E-10 ${sc} hand-off singleton ${dir}`; const sel = m.engaged ?? "[data-engaged]";
+        const cnt = fr.map((x) => x.eng.filter(Boolean).length); const mx = Math.max(...cnt);
+        const over = fr.filter((x, k) => cnt[k] > 1); const first = fr[0].eng, last = fr.at(-1).eng;
+        const zero = cnt.filter((c) => c === 0).length;
+        if (!first[o]) cell(sn, "FAIL", `NOT DRIVEN: the outgoing ${ON} does not match ${sel} before the ${dir === "fwd" ? "Tab" : "Shift+Tab"} (the route marks no engagement on the root)`);
+        else cell(sn, mx <= 1 && last[n] && !last[o] ? "PASS" : "FAIL", `${fr.length} frames: engaged roots per frame max ${mx}${over.length ? ` (${over.length} frame(s) with two, first at ${f(over[0].t, 0)} ms)` : ""}, ${zero} frame(s) with none · first frame ${ON} engaged ${first[o]}, ${IN} ${first[n]} · last frame ${IN} engaged ${last[n]}, ${ON} ${last[o]} (bound: at most one engaged on every frame, the incoming one at the end; selector ${sel})`);
       }
       if (dir !== "fwd") continue;
       if (!(v0 > 0.05)) cell(`E-10 ${sc} hand-off veil`, "REPORT", `no veil up before the Tab (${f(v0, 2)}): this route veils no keyboard engagement`);

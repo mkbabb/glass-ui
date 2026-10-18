@@ -15,9 +15,16 @@
 //                    at +200 ms are measured as their distance from rest (a colour as its RGBA distance, a number as
 //                    its difference, any other value 1 when it differs); PASS when the distance at +1200 ms is ≥ 0.95×
 //                    the distance at +200 ms. Read normally and under reduced motion (sustain(PRM))
+//   H4 (pass 4), the three-read rule (CK-06; REGISTRY §P3-8.3): each held touch is taken THREE times, on three fresh
+//                    touch pages, and `sustain` passes only when all three reads pass. Pass 3 read sustain once and the
+//                    critics found it failing on some member on 3 of 3 Chromium reads (C-A3 §0.4) and on 2 of 5
+//                    (C-E3 §0.4): one read passes a press light that sags on one hold in three (fixtures.mjs
+//                    `e5-flaky`). `press` and `press-light(PRM)` are read on the first hold
 // Real Safari: UNMEASURED (owner's safaridriver checkbox).
 //   node e5-touch.mjs --build <dir> | --fixture [--fault e5-hover] [--engine webkit]
 import { witness, openPage, openTouchPage, scenesFor, center, paintDiff, f } from "./lib.mjs";
+
+const READS = 3;
 
 await witness("E-5", "a held touch answers through a press rung, and sustains (CK-06)", async ({ E, T, cell, guard, idx }) => {
   for (const [sc, m] of scenesFor(idx, "E-5")) {
@@ -51,18 +58,24 @@ await witness("E-5", "a held touch answers through a press rung, and sustains (C
             return { t: paintDiff(p0.p, p1.p), only: onlyAt(p1), ds: p1.s - p0.s, act: p1.act, sus: { keys, ...dist, actZ: pz.act } };
           } finally { await Q.close(); }
         };
-        return { h: paintDiff(h0.p, h1.p), on: await touch(false), prm: await touch(true) };
-      }, 90000);
+        const on = [], prm = [];
+        for (let k = 0; k < READS; k++) on.push(await touch(false));
+        for (let k = 0; k < READS; k++) prm.push(await touch(true));
+        return { h: paintDiff(h0.p, h1.p), on, prm };
+      }, 240000);
       if (r.crashed) { cell(`E-5 ${sc} press ${theme}`, "FAIL", r.line); continue; }
-      for (const [k, x] of [["press", r.on], ["press-light(PRM)", r.prm]]) {
-        if (x.mode) { cell(`E-5 ${sc} ${k} ${theme}`, "FAIL", `MODE NOT APPLIED ${x.mode}`); continue; }
-        const sn = `E-5 ${sc} sustain${k === "press" ? "" : "(PRM)"} ${theme}`; const u = x.sus;
-        if (!u.keys.length) cell(sn, "FAIL", `NOT DRIVEN: no press-only property at +200 ms (the hold paints nothing to sustain)`);
-        else cell(sn, u.z >= 0.95 * u.a - 1e-9 ? "PASS" : "FAIL", `the press light's distance from rest over [${u.keys.join(", ").slice(0, 120)}]: +200 ms ${f(u.a, 3)} → +1200 ms ${f(u.z, 3)} (${u.a ? `×${f(u.z / u.a, 2)}` : "rising from 0 at +200 ms"}; bound ≥ ×0.95) · :active at +1200 ms ${u.actZ}`);
+      for (const [k, xs] of [["press", r.on], ["press-light(PRM)", r.prm]]) {
+        const x = xs[0];
+        if (xs.some((y) => y.mode)) { cell(`E-5 ${sc} ${k} ${theme}`, "FAIL", `MODE NOT APPLIED ${xs.find((y) => y.mode).mode}`); continue; }
+        // the three-read rule: every read drives (a press-only property at +200 ms) and every read sustains
+        const sn = `E-5 ${sc} sustain${k === "press" ? "" : "(PRM)"} ${theme}`;
+        const one = (u) => (!u.keys.length ? { ok: false, t: "NOT DRIVEN (no press-only property at +200 ms)" } : { ok: u.z >= 0.95 * u.a - 1e-9, t: `${f(u.a, 3)} → ${f(u.z, 3)} ${u.a ? `×${f(u.z / u.a, 2)}` : "(rising from 0)"}${u.actZ ? "" : " (:active lost)"}` });
+        const reads = xs.map((y) => one(y.sus)); const nOk = reads.filter((y) => y.ok).length;
+        cell(sn, nOk === reads.length ? "PASS" : "FAIL", `${nOk} of ${reads.length} reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [${x.sus.keys.join(", ").slice(0, 100)}]: ${reads.map((y, i) => `read ${i + 1} ${y.t}`).join(" · ")} (bound ≥ ×0.95 on every read)`);
         const only = x.only;
         const pass = k === "press" ? Math.abs(x.ds) >= 0.01 || only.length > 0 : only.length > 0;
         cell(`E-5 ${sc} ${k} ${theme}`, pass ? "PASS" : "FAIL", `:active ${x.act} · Δscale ${f(x.ds)} · touch-changed [${x.t.join(", ")}] · hover-changed [${r.h.join(", ")}] · press-only [${only.join(", ")}]${k === "press" ? "" : " (bound ≥ 1 press-only property under reduce)"}${r.note ? ` · ${r.note}` : ""}`);
       }
     }
   }
-});
+}, 4800); // H4: three holds per cell, and WebKit's PF-1 page closes re-run on a fresh browser: HEAD hung at 1500 s

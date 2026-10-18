@@ -1,0 +1,16 @@
+## 2026-10-18 01:56:49 load { 15.60 23.10 25.12 } · start head chromium e10-continuity.mjs
+# E-10 · CK-20 no one-frame discontinuity on an engagement path
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p4/H4/out/builds/head · engine chromium · lock wait 0.0 s · other headless processes: chromium 18, webkit 0 · load 15.6/23.1/25.1 at start
+# scene app: harness scenes/App.vue (sha1 0b73f092858e)
+# chromium 149.0.7827.55
+  REPORT     E-10 slider own release · Tab-engaged scale ×1.000 < ×1.03: the keyboard does not engage this slider, so the release has no step to film (the hand-off and Escape cells read NOT DRIVEN) · load 15.5/22.9/25.1
+  FAIL       E-10 slider escape release · NOT DRIVEN: the slider was not keyboard-engaged at the Escape (×1.000 < ×1.03) · load 15.5/22.9/25.1
+  PASS       E-10 slider re-render landing · a sibling inserted during the hold, then release: the root's largest one-frame move per 16.7 ms 0.0 px (without the insert 0.0 px; bound ≤ that + 1 px) · load 14.9/22.7/25.0
+  FAIL       E-10 slider2 hand-off drop · NOT DRIVEN: A was not engaged at the Tab (×1.000, veil 0.00) · load 14.9/22.7/25.0
+  FAIL       E-10 slider2 hand-off singleton fwd · NOT DRIVEN: the outgoing A does not match [data-engaged] before the Tab (the route marks no engagement on the root) · load 14.9/22.7/25.0
+  REPORT     E-10 slider2 hand-off veil · no veil up before the Tab (0.00): this route veils no keyboard engagement · load 14.9/22.7/25.0
+  FAIL       E-10 slider2 hand-off rev · NOT DRIVEN: B was not engaged at the Shift+Tab (×1.000, veil 0.00) · load 14.9/22.7/25.0
+  FAIL       E-10 slider2 hand-off singleton rev · NOT DRIVEN: the outgoing B does not match [data-engaged] before the Shift+Tab (the route marks no engagement on the root) · load 14.9/22.7/25.0
+E-10 chromium FAIL · 1 pass, 5 fail, 0 unmeasured of 6 gating cells (2 reported) · load 15.6/23.1/25.1 at start, 14.9/22.7/25.0 at end
+exit 1
+## 2026-10-18 01:57:02 load { 14.87 22.70 24.96 } · end head chromium e10-continuity.mjs
