@@ -1,0 +1,268 @@
+diff --git a/src/components/dock/styles/adaptive-legibility.css b/src/components/dock/styles/adaptive-legibility.css
+index 2651d1e..beb7f70 100644
+--- a/src/components/dock/styles/adaptive-legibility.css
++++ b/src/components/dock/styles/adaptive-legibility.css
+@@ -5,9 +5,9 @@
+  * from the morph chrome: the unconditional `:where(.glass-dock)` self-engage of the
+  * control glyph/label ink, the contrast-color() progressive refinement, and the
+  * frozen-backdrop (`data-backdrop-mode="static"`) arm. The PLATE half — the earned
+- * darken off the measured backdrop luminance — is composed at the element in
+- * dock/dock.css and lives in `@utility glass-plate` (glass/veil.css); no token
+- * re-pointed here could carry it.
++ * ink off the measured backdrop luminance (darker in dark, a thicker cream pole in
++ * light) — is composed at the element in dock/dock.css and lives in `@utility
++ * glass-plate` (glass/veil.css); no token re-pointed here could carry it.
+  *
+  * @import-ed by dock.css in cascade order, in the SAME `@layer components` as morph.css
+  * (the carve is isomorphic — same layer, source order preserved → ZERO visual delta). */
+diff --git a/src/composables/glass/useGlassBackdropLuminance.ts b/src/composables/glass/useGlassBackdropLuminance.ts
+index a2f6801..5923a7a 100644
+--- a/src/composables/glass/useGlassBackdropLuminance.ts
++++ b/src/composables/glass/useGlassBackdropLuminance.ts
+@@ -42,7 +42,7 @@ export interface UseGlassBackdropLuminanceOptions {
+      */
+     live?: boolean;
+     /**
+-     * The luminance threshold above which the backdrop is `light` (engages the darken).
++     * The luminance threshold above which the backdrop is `light` (engages the bright bucket).
+      * Default 0.6 — a near-white page surface (luma ≈ 0.9) is light; a dark substrate
+      * (luma ≈ 0.1) is dark; a mid aurora bleed crosses here.
+      */
+diff --git a/src/styles/glass/deep.css b/src/styles/glass/deep.css
+index fcd2342..11b3a1b 100644
+--- a/src/styles/glass/deep.css
++++ b/src/styles/glass/deep.css
+@@ -23,11 +23,12 @@
+  * brackets (`prefers-reduced-transparency: reduce` / `prefers-contrast: more` set
+  * `--glass-level: 0` / 0.3 at :root, a11y-fallback.css) reach the deep plate for
+  * FREE — the deep blur collapses to blur(0) under reduced-transparency through the
+- * SAME level path (the opaque escape). The bright-bucket darken reaches the
+- * deep surface by construction too: `.glass-deep` is composed WITH `.glass-floating`,
+- * which is already in the `@container style(--glass-backdrop: light)` material
+- * group (ladder.css) AND self-engages the overlay-band darken — the deep tier
+- * inherits the legibility tint with no selector-list edit.
++ * SAME level path (the opaque escape). The bright bucket reaches the deep surface
++ * by construction too: `.glass-deep` is composed WITH `.glass-floating`, which is
++ * already in the `@container style(--glass-backdrop: light)` material group
++ * (ladder.css) AND self-engages the overlay band's bucket, and its plate earns the
++ * floating rung's ink (darker in dark, a thicker cream pole in light) — the deep
++ * tier inherits both with no selector-list edit.
+  *
+  * @import-ed in glass.css AFTER ladder.css/surfaces.css (the same @layer components,
+  * source-order-after so the token re-point lands beside the rung it rides) and
+diff --git a/src/styles/glass/ladder.css b/src/styles/glass/ladder.css
+index 9df62b2..6902e8e 100644
+--- a/src/styles/glass/ladder.css
++++ b/src/styles/glass/ladder.css
+@@ -160,21 +160,20 @@
+         box-shadow: var(--glass-material-rim), var(--glass-shadow-overlay);
+     }
+ 
+-    /* ── Adaptive legibility: the bright-backdrop bucket (the iOS-26/27
+-       "locally darken the glass over light content" move; G2) ──────────────────
+-       THE TINT AXIS IS GONE. It mixed every rung toward `--glass-veil-ink` — the warm
+-       near-black `--foreground` — while the veil already writes warm near-black ink at
+-       the rung's own alpha. Two chromatic writers, one plate, one direction: the plate
+-       darkened twice and neither writer could be reasoned about alone. The veil is the
++    /* ── Adaptive legibility: the bright-backdrop bucket (G2: legible ink over
++       light content) ────────────────────────────────────────────────────────────
++       THE TINT AXIS IS GONE. It mixed every rung toward `--glass-veil-ink` while the
++       veil already writes that ink at the rung's own alpha. Two chromatic writers, one
++       plate, one direction: the plate moved twice and neither writer could be reasoned
++       about alone. The veil is the
+        one writer now, and the observer-driven refinement rides ITS alpha (the clamp in
+        `@utility glass-plate`, glass/veil.css): calm backdrop → exactly the rung's ink,
+        measured-bright backdrop → up to two more rungs of it, ceiling included.
+ 
+        What the bucket still drives is the INK ON the plate, not the plate. When a
+        consumer/shell declares `--glass-backdrop: light` on an ancestor, the muted body
+-       register lifts to the full warm ink: the muted L40 tier cannot clear 4.5:1 on a
+-       darkened translucent plate, because darkening moves the plate TOWARD muted's own
+-       luminance. That is a foreground decision and it belongs here.
++       register lifts to the full warm ink. That is a foreground decision and it
++       belongs here.
+ 
+        No `@supports` wrapper: style queries introduce no new `container-type` value, so
+        an engine without style-query support drops the unknown at-rule and keeps the
+@@ -243,8 +242,8 @@
+     /* The `contrast-color()` foreground-ink flip (Chrome 147+/Safari 26+).
+        A PROGRESSIVE-ENHANCEMENT layer, NEVER the load-bearing floor (Open-Q #5
+        ratified): the declarative bucket above already carries AA on ALL engines (it
+-       darkens the translucent plate so dark text clears ~11:1 over white at the 18%
+-       floor — the live π readback ratifies). On a supporting engine `contrast-color()`
++       lifts the ink on the plate to the full warm ink). On a supporting engine
++       `contrast-color()`
+        REFINES the foreground-ink pick natively, anchored on the LIGHT BACKDROP signal
+        (`--card`, the warm-white surface base the bright bucket implies) — NOT on the
+        ink. `contrast-color(var(--card))` over the light backdrop resolves to the
+@@ -265,7 +264,7 @@
+            SAME anchored contrast-color ink as the lifted inactive, so selected ≥ unselected
+            everywhere (the inversion gone for ANY --muted-foreground/--foreground selection
+            pairing inside a glass card — the SYSTEMIC library-seam fix, not a curve-picker
+-           one-off). Progressive enhancement only — the declarative darken is the AA floor. */
++           one-off). Progressive enhancement only — the declarative lift is the AA floor. */
+         @container style(--glass-backdrop: light) {
+             .glass-wash,
+             .glass-quiet,
+@@ -289,19 +288,19 @@
+            register. Now: over a calm/dark backdrop the modal keeps the WARM-INK
+            `--foreground` (legible, not pure-black) + the muted caption register; only a
+            modal over a genuinely-bright/busy backdrop flips to the dark contrast ink
+-           (where the plate ACTUALLY darkens to bright-bucket AA), the `--foreground`/
++           (where the bucket lifts the ink to its AA floor), the `--foreground`/
+            `--muted-foreground` lift moving in LOCKSTEP there (the scope-6 lockstep). The
+-           overlay band STILL self-darkens UNCONDITIONALLY (the tint-strength clamp above,
+-           it floats over unknown) — only the INK flips in the bright bucket. ONE
++           overlay band STILL self-engages the bucket UNCONDITIONALLY (it floats over
++           unknown) — only the INK flips in the bright bucket. ONE
+            reconciled flip, not two forks (ladder.css stays the single source). */
+         /* The content-tier ink flip is GATED on the bright
+            signal (it moved INTO the @container bucket above), NOT unconditional. Over a calm
+-           LIGHT page the content tiers only carry the 4% silhouette floor (still a warm cream
+-           plate), so flipping the ink to the contrast-color DARK ink there is correct only
+-           where the plate ACTUALLY darkens to the bright-bucket AA — the unconditional flip
+-           would force a white-on-cream / dark-on-darkened mismatch on the calm card. The
+-           content tiers therefore take NO unconditional contrast-color flip; their flip lives
+-           in the @container bucket with the rest of the bright-condition darken. */
++           LIGHT page the content tiers paint the cream pole at the bound, so flipping the
++           ink to the contrast-color DARK ink there is correct only where the bucket
++           engages — the unconditional flip would force the contrast ink onto the calm
++           card. The content tiers therefore take NO unconditional contrast-color flip;
++           their flip lives in the @container bucket with the rest of the bright-condition
++           lift. */
+     }
+ 
+ }
+diff --git a/src/styles/glass/overlay-plate.css b/src/styles/glass/overlay-plate.css
+index 440d622..524bfb0 100644
+--- a/src/styles/glass/overlay-plate.css
++++ b/src/styles/glass/overlay-plate.css
+@@ -270,10 +270,11 @@
+        The overlay rung's veil with the capsule's warm floor over it — two flat
+        layers, both reading the ONE recipe. There is no adaptive-tint layer and no
+        `--select-plate-alpha` solidity knob: the veil already carries the earned
+-       darken, and a second layer pushing the same plate the same way is the
+-       double-writer the material law forbids. A menu that needs more body needs a
+-       heavier RUNG. `prefers-reduced-transparency` reaches this plate through
+-       `--glass-level`, like every other. */
++       ink (darker in dark, a thicker cream pole in light), and a second layer
++       pushing the same plate the same way is the double-writer the material law
++       forbids. A menu that needs more body needs a heavier RUNG.
++       `prefers-reduced-transparency` reaches this plate through `--glass-level`,
++       like every other. */
+     [data-slot="select-content"] {
+         --glass-veil-tier: var(--glass-veil-overlay);
+ 
+diff --git a/src/styles/glass/rim.css b/src/styles/glass/rim.css
+index 0ed74fb..e80d6f0 100644
+--- a/src/styles/glass/rim.css
++++ b/src/styles/glass/rim.css
+@@ -32,7 +32,7 @@
+        resolves the un-mixed rung ink — the no-op floor.
+ 
+        This axis NEVER touches the plate BACKGROUND (the `--glass-veil-ink` cohort):
+-       the accent is rim decoration, not the whole-plate legibility darken. One
++       the accent is rim decoration, not the whole-plate legibility ink. One
+        chromatic writer pair per plate — veil ink + rim ink — and these are the rim's
+        half. */
+     /* ── THE ONE RIM ──────────────────────────────────────────────────────────────
+diff --git a/src/styles/glass/surface-axis.css b/src/styles/glass/surface-axis.css
+index 475a1a7..e281a35 100644
+--- a/src/styles/glass/surface-axis.css
++++ b/src/styles/glass/surface-axis.css
+@@ -15,11 +15,11 @@
+                fill + blur with the box border AND rim STRIPPED (the boxed look
+                reads as a dividing line on a text plate). Reads `--glass-plate-quiet`
+                + the `--glass-veil-*` seam through the SAME `--glass-*` ladder,
+-               so `--glass-level` / the bright-bucket darken retune it in lockstep
++               so `--glass-level` / the earned ink retune it in lockstep
+                with every glass surface — NO veil-local recipe fork.
+      opaque   — the `--glass-level:0` solid-card escape (the `.glass-opaque` rung):
+                solid `--card` + `blur(0)` through the ONE level knob, the tint axis
+-               zeroed (a solid plate has no translucent backdrop to darken-over).
++               zeroed (a solid plate has no translucent backdrop to earn ink over).
+ 
+    Cartoon and grid remain Card-local decoration booleans; neither extends this
+    material axis. The `Surface` alias in `_shared/axes.ts` is the typed half and
+@@ -77,7 +77,7 @@
+        `--glass-level: 0` / `--glass-level: 0` knobs so a NESTED glass
+        descendant + any consumer reading the level scalar see the opaque register
+        coherently. The adaptive TINT axis is zeroed (a solid plate has no
+-       translucent backdrop to darken-over — the bucket-INVARIANT contract). */
++       translucent backdrop to earn ink over — the bucket-INVARIANT contract). */
+     [data-surface="opaque"] {
+         --glass-level: 0;
+         /* The SOLID --card plate composed at the element via the house color-mix
+diff --git a/src/styles/glass/surfaces-pager.css b/src/styles/glass/surfaces-pager.css
+index ca0b49d..995c625 100644
+--- a/src/styles/glass/surfaces-pager.css
++++ b/src/styles/glass/surfaces-pager.css
+@@ -30,9 +30,9 @@
+            pre-substituted `--glass-plate-floating` :root token — the gray-hole
+            substitution-trap). At the `--glass-level: 0` default this is the
+            no-op floor (`X, src 0%) ≡ X` — byte-identical pager pixels
+-           over a flat page); over a declared/sampled BRIGHT carousel image
+-           (`@container style(--glass-backdrop: light)`) the pill darkens-toward-ink for a
+-           real silhouette (the ≤24% clamp keeps it translucent); under `.dark` the
++           over a flat page); over a sampled BRIGHT carousel image the pill earns ink
++           for a real silhouette (darker in dark, a thicker cream pole in light; the
++           clamp's two-step ceiling keeps it translucent); under `.dark` the
+            tint arm LIFTS it toward luminous warm-dark, never a charcoal
+            slab. `in oklab` is the glass-tint perceptual family (the in-srgb
+            `--surface-tint-*` brand fence is untouched). The dock plate's element-level
+diff --git a/src/styles/tokens/glass-fx.css b/src/styles/tokens/glass-fx.css
+index faec038..370ad15 100644
+--- a/src/styles/tokens/glass-fx.css
++++ b/src/styles/tokens/glass-fx.css
+@@ -140,8 +140,8 @@
+ 
+     /* The ONE retune knob for the continuous observer driver: below this knee the plate
+        resolves EXACTLY the rung's own ink; above it the ink ramps CONTINUOUSLY toward two
+-       rungs deeper. Raising the knee darkens LATER — a brighter backdrop is tolerated
+-       before the lift. */
++       steps more (darker in dark, a thicker cream pole in light). Raising the knee earns
++       ink LATER — a brighter backdrop is tolerated before the lift. */
+     --glass-backdrop-luma-knee: 0.6;
+     /* The on-glass FOREGROUND register lives in tokens/on-glass-fg.css. */
+ 
+diff --git a/src/styles/tokens/glass.css b/src/styles/tokens/glass.css
+index 12c28c4..77c406e 100644
+--- a/src/styles/tokens/glass.css
++++ b/src/styles/tokens/glass.css
+@@ -205,7 +205,8 @@
+        COLORED GLASS without re-declaring a composed `--glass-plate-*` token. Distinct,
+        not a fork, of `--glass-accent`: the fill writes the plate body, the accent writes
+        the rim, and a chip may carry BOTH. It rides ON TOP of the legibility composite,
+-       additively — the plate still darkens-over-light for AA AND carries the data hue.
++       additively — the plate still earns its ink for AA (darker in dark, a thicker
++       cream pole in light) AND carries the data hue.
+        The registration is at the foot of this file. */
+ 
+     /* `--glass-fill-tinted` is the ONE per-instance data-hue plate the fill-tint
+diff --git a/src/styles/tokens/on-glass-fg.css b/src/styles/tokens/on-glass-fg.css
+index 7eabf57..749d965 100644
+--- a/src/styles/tokens/on-glass-fg.css
++++ b/src/styles/tokens/on-glass-fg.css
+@@ -12,7 +12,7 @@
+    (the dark-theme contrast ask measured 1.15-3.29:1 — the "whisper collapse").
+ 
+    This is the THIRD state the adaptive-glass seam never expressed (the SAME
+-   --glass-veil-* cascade context, NOT a fork): (a) bright/darkened plate → full
++   --glass-veil-* cascade context, NOT a fork): (a) declared-bright backdrop → full
+    ink (the @container bright bucket + the overlay band, shipped — glass/ladder.css);
+    (b) opaque canvas → page-muted (--neutral-5, kept); (c) THIS — calm translucent
+    glass plate → a register BETWEEN page-muted and full-ink (legible-AND-subordinate;
+diff --git a/src/styles/tokens/property-regs.css b/src/styles/tokens/property-regs.css
+index 961d410..14d8331 100644
+--- a/src/styles/tokens/property-regs.css
++++ b/src/styles/tokens/property-regs.css
+@@ -118,7 +118,8 @@
+    one-line seam on the instance, not a hand-threaded `border-color` plus an inline
+    catch-light per consumer.
+ 
+-   DISTINCT, not a fork, of `--glass-veil-ink` (the whole-plate legibility darken): the
++   DISTINCT, not a fork, of `--glass-veil-ink` (the whole-plate legibility ink: darker
++   in dark, a thicker cream pole in light): the
+    accent is the RIM+GLINT chromatic decoration axis and it NEVER tints the plate
+    background. Three disjoint glass axes: LEVEL (opacity+blur) · TINT (whole-plate
+    legibility) · ACCENT (per-instance chromatic rim+glint).

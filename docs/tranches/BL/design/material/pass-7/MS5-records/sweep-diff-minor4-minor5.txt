@@ -1,0 +1,37 @@
+2d1
+< src/composables/glass/useGlassBackdropLuminance.ts:45:     * The luminance threshold above which the backdrop is `light` (engages the darken).
+8,21d6
+< src/styles/glass/surface-axis.css:18:               so `--glass-level` / the bright-bucket darken retune it in lockstep
+< src/styles/glass/surface-axis.css:22:               zeroed (a solid plate has no translucent backdrop to darken-over).
+< src/styles/glass/surface-axis.css:80:       translucent backdrop to darken-over — the bucket-INVARIANT contract). */
+< src/styles/glass/ladder.css:164:       "locally darken the glass over light content" move; G2) ──────────────────
+< src/styles/glass/ladder.css:168:       darkened twice and neither writer could be reasoned about alone. The veil is the
+< src/styles/glass/ladder.css:176:       darkened translucent plate, because darkening moves the plate TOWARD muted's own
+< src/styles/glass/ladder.css:246:       darkens the translucent plate so dark text clears ~11:1 over white at the 18%
+< src/styles/glass/ladder.css:268:           one-off). Progressive enhancement only — the declarative darken is the AA floor. */
+< src/styles/glass/ladder.css:292:           (where the plate ACTUALLY darkens to bright-bucket AA), the `--foreground`/
+< src/styles/glass/ladder.css:294:           overlay band STILL self-darkens UNCONDITIONALLY (the tint-strength clamp above,
+< src/styles/glass/ladder.css:301:           where the plate ACTUALLY darkens to the bright-bucket AA — the unconditional flip
+< src/styles/glass/ladder.css:302:           would force a white-on-cream / dark-on-darkened mismatch on the calm card. The
+< src/styles/glass/ladder.css:304:           in the @container bucket with the rest of the bright-condition darken. */
+< src/styles/glass/overlay-plate.css:273:       darken, and a second layer pushing the same plate the same way is the
+24,27d8
+< src/styles/glass/deep.css:26: * SAME level path (the opaque escape). The bright-bucket darken reaches the
+< src/styles/glass/deep.css:29: * group (ladder.css) AND self-engages the overlay-band darken — the deep tier
+< src/styles/glass/rim.css:35:       the accent is rim decoration, not the whole-plate legibility darken. One
+< src/styles/glass/surfaces-pager.css:34:           (`@container style(--glass-backdrop: light)`) the pill darkens-toward-ink for a
+32d12
+< src/styles/tokens/on-glass-fg.css:15:   --glass-veil-* cascade context, NOT a fork): (a) bright/darkened plate → full
+36d15
+< src/styles/tokens/glass.css:208:       additively — the plate still darkens-over-light for AA AND carries the data hue.
+38d16
+< src/styles/tokens/glass-fx.css:143:       rungs deeper. Raising the knee darkens LATER — a brighter backdrop is tolerated
+40,42c18,19
+< src/styles/tokens/property-regs.css:121:   DISTINCT, not a fork, of `--glass-veil-ink` (the whole-plate legibility darken): the
+< src/styles/tokens/property-regs.css:151:   tint = darken-over-light. The two coordinate but never collapse — the a11y
+< src/styles/tokens/property-regs.css:163:   applying the plate earns the same continuous darken from the same arithmetic. It
+---
+> src/styles/tokens/property-regs.css:152:   tint = darken-over-light. The two coordinate but never collapse — the a11y
+> src/styles/tokens/property-regs.css:164:   applying the plate earns the same continuous darken from the same arithmetic. It
+72d48
+< src/components/dock/styles/adaptive-legibility.css:8: * darken off the measured backdrop luminance — is composed at the element in

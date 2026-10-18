@@ -21,7 +21,8 @@
 // H7 (pass 7) adds, each with a fixture PASS and a planted FAIL: H7-1, M-3's round-ring reader (R-14), on one-cell
 // captures laid out from banked pixels (no browser); H7-2, DEL's word forms and its patch-built declaration (R-15);
 // H7-3, the minor split's own declaration (R-16). --h7-trees <dir> holds the real trees (fv5, fv5fix, minor4,
-// minor4fix: src/ and demo/ each) and --h7-decl the declaration declare-removed.mjs built from floor-v5.patch.
+// minor5: src/ and demo/ each) and --h7-decl the declaration declare-removed.mjs built from floor-v5.patch. The H7-3
+// rows on the real trees run when minor4 and minor5 are present; the H7-2 rows when fv5 and --h7-decl are.
 // --reuse-green: keep an existing green capture (the plants are captured fresh).
 // --fields: a HEAD run's capture (its Chromium empty-scene aurora frames become the fixtures' field pixels).
 import fs from "node:fs";
@@ -457,11 +458,13 @@ if (want("H7-3")) {
   const decl = path.join(HERE, "deletes-minor.json");
   staticWitness("H7-3", "deleted-mechanisms", ["--root", tree("h73-clean", { "src/a.css": "/* the veil already carries the earned\n   ink (darker in dark, a thicker cream pole in light), and a second layer is the double-writer. */\n" }), "--declare", decl], "PASS", "H7-3 fixture: R-13's register, \"earned ink\"");
   staticWitness("H7-3", "deleted-mechanisms", ["--root", tree("h73-split", { "src/a.css": "/* The PLATE half — the earned\n * darken off the measured backdrop luminance — is composed at the element. */\n" }), "--declare", decl], "FAIL", "H7-3 plant: \"earned darken\" split over two comment lines (adaptive-legibility.css:7-8's shape)");
-  if (a["h7-trees"]) {
-    const T = path.resolve(a["h7-trees"]);
+  // R-16 (iii): a sentence the minor v5 seat ruled false in light, kebab-spelt as the minor v4 carries it
+  staticWitness("H7-3", "deleted-mechanisms", ["--root", tree("h73-iii", { "src/a.css": "/* additively — the plate still darkens-over-light for AA AND carries the data hue. */\n" }), "--declare", decl], "FAIL", "H7-3 plant: an R-16 (iii) sentence (tokens/glass.css:208's shape)");
+  const T = a["h7-trees"] && path.resolve(a["h7-trees"]);
+  if (T && fs.existsSync(path.join(T, "minor4")) && fs.existsSync(path.join(T, "minor5"))) {
     const out = staticWitness("H7-3", "deleted-mechanisms", ["--root", path.join(T, "minor4"), "--declare", decl], "FAIL", "H7-3 plant: the minor v4 under the minor's declaration");
-    rowsHold("H7-3", "static", out, ["src/components/dock/styles/adaptive-legibility.css:7", "src/styles/glass/overlay-plate.css:272", "hits=2 files=2"], "H7-3 plant: the minor v4 reds at exactly the two line-split sentences");
-    staticWitness("H7-3", "deleted-mechanisms", ["--root", path.join(T, "minor4fix"), "--declare", decl], "PASS", "H7-3 fixture: the minor v4 with R-16 (i)'s two rewrites (minor4fix)");
+    rowsHold("H7-3", "static", out, ["src/components/dock/styles/adaptive-legibility.css:7", "src/styles/glass/overlay-plate.css:272", "src/styles/glass/ladder.css:164", "src/composables/glass/useGlassBackdropLuminance.ts:45", "hits=26 files=11"], "H7-3 plant: the minor v4 reds at A-3's two sentences and the R-16 (iii) sentences ruled false in light");
+    staticWitness("H7-3", "deleted-mechanisms", ["--root", path.join(T, "minor5"), "--declare", decl], "PASS", "H7-3 fixture: the minor v5 (R-16 (i) and (iii) built)");
   }
 }
 
