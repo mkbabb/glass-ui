@@ -1,0 +1,18 @@
+minor-split-v6-R18.diff: 8 files, +33/-32, sha1 1905e64a
+minor-split-v5.patch: 57 files, sha1 a790fd05
+minor-split-v6.patch: 59 files, sha1 4ea01c0e; git diff --shortstat:  59 files changed, 712 insertions(+), 525 deletions(-)
+-- paths the minor v6 adds to the minor v5's list
+-- every R-18 hunk line, outside comments? (non-comment +/- lines; prints the test title only)
+-   tint = darken-over-light. The two coordinate but never collapse — the a11y
++   veil = the earned ink (darker in dark, a thicker cream pole in light). The two
++   coordinate but never collapse — the a11y
+-   applying the plate earns the same continuous darken from the same arithmetic. It
++   applying the plate earns the same continuous ink (darker in dark, a thicker cream
++   pole in light) from the same arithmetic. It
+-- paths the minor v6 adds to the minor v5's list
+13a14
+> src/components/dock/styles/index.css
+50a52
+> tests/components/field/forms-seam.test.ts
+-- R-18 files: src/components/dock/styles/adaptive-legibility.css src/components/dock/styles/index.css src/components/dock/styles/search.css src/components/dock/styles/shell.css src/styles/glass/surface-axis.css src/styles/glass/surfaces-pager.css src/styles/tokens/property-regs.css tests/components/field/forms-seam.test.ts 
+-- .vue files in the R-18 delta: 0

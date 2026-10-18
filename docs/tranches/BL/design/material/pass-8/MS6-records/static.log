@@ -1,0 +1,33 @@
+-- H7-3, deletes-minor.json (39 names), H7 scope (src/ demo/)
+DEL minor6 exit 0: DELETED-MECHANISMS names=39 hits=0 files=0 changed=0 sites=0 reported=0 ·  PASS (39 gated rows) 
+DEL minor5 exit 1: DELETED-MECHANISMS names=39 hits=18 files=7 changed=0 sites=0 reported=0 · src/components/dock/styles/adaptive-legibility.css src/components/dock/styles/index.css src/components/dock/styles/search.css src/components/dock/styles/shell.css src/styles/glass/surface-axis.css src/styles/glass/surfaces-pager.css src/styles/tokens/property-regs.css FAIL (15 of 39 gated rows) 
+DEL minor4 exit 1: DELETED-MECHANISMS names=39 hits=48 files=15 changed=0 sites=0 reported=0 · src/components/dock/styles/adaptive-legibility.css src/components/dock/styles/index.css src/components/dock/styles/search.css src/components/dock/styles/shell.css src/composables/glass/useGlassBackdropLuminance.ts src/styles/glass/deep.css src/styles/glass/ladder.css src/styles/glass/overlay-plate.css src/styles/glass/rim.css src/styles/glass/surface-axis.css src/styles/glass/surfaces-pager.css src/styles/tokens/glass-fx.css src/styles/tokens/glass.css src/styles/tokens/on-glass-fg.css src/styles/tokens/property-regs.css FAIL (36 of 39 gated rows) 
+-- H7-3 under H8-1's scope (src/ demo/ tests/), no patch
+DEL minor6 exit 1: FAIL (2 of 39 gated rows)
+DEL minor5 exit 1: FAIL (17 of 39 gated rows)
+-- H8-1 over the minor's own patch (R-18 (v)): minor v6 with minor-split-v6.patch; minor v5 with minor-split-v6.patch (plant) and with minor-split-v5.patch (H8 §4.3's reading)
+DEL H8 minor6 exit 1: FAIL (6 of 47 gated rows)
+DEL H8 minor5 under v6 decl+patch exit 1: FAIL (21 of 47 gated rows)
+DEL H8 minor5 under v5 decl+patch (H8 §4.3) exit 1: FAIL (6 of 32 gated rows)
+-- the R-16 sweep (grep -i darken minus press|tone-step|well|darker in dark|in dark), src + demo/stories
+   minor5: 59 lines
+   minor6: 46 lines
+   diff sweep v5 v6: 13 lines gone, 0 added
+-- tint sweep (grep -i 'tint (axis|seam|arm|clamp)'), src
+   minor5: 21 lines
+   minor6: 19 lines
+LAW exit 0: PASS (64 gated rows)
+census minor6 exit 0: LIGHTING-CENSUS stacked=0 halo=0 blur=0 open=0
+census v10.1.0 exit 1: LIGHTING-CENSUS stacked=2 halo=2 blur=5 open=9
+HOV exit 0: PASS (58 gated rows)
+LIT exit 0: LIGHTING-LITERALS halo=5 near=1 stacked=10 chain=3 open=19 frames-halo=0/0
+-- LADDER diff radii-minor6 FV7 radii-minor5 (prints nothing)
+LADDER exit 0
+-- FL-14 static: @utility glass-plate declares isolation
+26:    isolation: isolate;
+-- identifiers on R-18's removed and added lines (comments and a title, so no declaration should move)
+   3 --glass-level
+   2 --glass-plate-
+   2 --dock-fg-on-aurora
+   1 --ink-perimeter
+   1 --foreground

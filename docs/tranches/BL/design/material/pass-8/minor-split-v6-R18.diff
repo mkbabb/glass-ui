@@ -1,0 +1,194 @@
+diff --git a/src/components/dock/styles/adaptive-legibility.css b/src/components/dock/styles/adaptive-legibility.css
+index beb7f7051..3f3d57c7d 100644
+--- a/src/components/dock/styles/adaptive-legibility.css
++++ b/src/components/dock/styles/adaptive-legibility.css
+@@ -21,19 +21,17 @@
+        A self-declared `--glass-backdrop: light` on the dock's OWN root (shell.css)
+        would be a NO-OP: CSS style queries NEVER self-match (a `@container style()`
+        block reads an ANCESTOR — verified on Chrome 148), so a self-declaration cannot
+-       self-darken. This `:where(.glass-dock)` rule is the genuine UNCONDITIONAL
++       self-engage. This `:where(.glass-dock)` rule is the genuine UNCONDITIONAL
+        self-engage — mirroring the overlay band's `ladder.css:169` — and what it
+        engages is the FOREGROUND: `--dock-fg-on-aurora` and the muted body register,
+        re-pointed directly on the dock root so the CONTROLS' glyph/label ink clears
+        over an unknown field. It re-points no plate colour and could not: the plate's
+-       own darken is composed AT THE ELEMENT through the veil clamp (see the rule
+-       body below), which is the whole dynamic half. A dark-substrate consumer opts
+-       out via `--glass-level` on the dock root. The muted body
+-       register lifts to the full warm-ink under the engaged plate (the muted L40
+-       tier cannot clear 4.5:1 on a translucent darkened plate — darkening moves the
+-       plate TOWARD muted's own luminance; the low-contrast muted register is
+-       inappropriate over a busy glass plate, so it resolves to the legible dark
+-       ink, which clears ~10:1). */
++       own earned ink (darker in dark, a thicker cream pole in light) is composed AT
++       THE ELEMENT through the veil clamp (see the rule body below), which is the
++       whole dynamic half. A dark-substrate consumer opts out via `--glass-level` on
++       the dock root. The muted body register lifts to the full warm ink under the
++       engaged plate: the low-contrast muted register is inappropriate over a busy
++       glass plate. */
+     :where(.glass-dock) {
+         /* The plate's own earned ink is NOT here and is not a token re-point: the
+            plate composes its veil AT THE ELEMENT (`@apply glass-plate`, dock/dock.css),
+@@ -57,9 +55,9 @@
+ 
+     /* The `contrast-color()` flip for the dock control foreground (Chrome
+        147+/Safari 26+; progressive enhancement, NEVER the load-bearing floor). The
+-       declarative bucket above already carries AA on all engines (it darkens the dock
+-       plate so the warm-dark `--dock-fg-on-aurora` clears ~17:1 over white at the 18%
+-       floor). On a supporting engine `contrast-color()` REFINES the control ink,
++       unconditional self-engage above already carries AA on all engines: it re-points
++       `--dock-fg-on-aurora` and the muted register to the full `--foreground` ink, and
++       it moves no plate. On a supporting engine `contrast-color()` REFINES the control ink,
+        anchored on the LIGHT BACKDROP signal (`--card`, the warm-white surface base the
+        bright bucket implies) — `contrast-color(var(--card))` resolves to the legible
+        DARK ink. Anchoring on the dark ink instead inverts to white (illegible on the
+@@ -67,7 +65,7 @@
+        refinement in glass.css. The bucket is the floor; this is the native pick. */
+     @supports (color: contrast-color(white)) {
+         /* The SELF-ENGAGED dock refinement (the unconditional self-engage above);
+-           progressive enhancement only — the declarative darken is the AA floor. */
++           progressive enhancement only — the declarative lift is the AA floor. */
+         :where(.glass-dock) {
+             --dock-fg-on-aurora: contrast-color(var(--card));
+             --muted-foreground: contrast-color(var(--card));
+diff --git a/src/components/dock/styles/index.css b/src/components/dock/styles/index.css
+index ec9648ece..de6505bbb 100644
+--- a/src/components/dock/styles/index.css
++++ b/src/components/dock/styles/index.css
+@@ -18,10 +18,10 @@
+  * - dock/morph.css — the single-scalar morph chrome + state response
+  *                            (--dock-expand-t interp, collapsed/summary, held /
+  *                            open).
+- *   - dock/adaptive-legibility.css — the darken-over-light self-engage (the
+- *                            continuous backdrop-luma tint clamp, the warm-chromatic
+- *                            dock ink, the @container light bucket, contrast-color()
+- *                            refinement, the frozen-backdrop static arm). Split from
++ *   - dock/adaptive-legibility.css — the dock's foreground self-engage (the
++ *                            warm-chromatic dock ink, the contrast-color()
++ *                            refinement, the frozen-backdrop static arm; it holds
++ *                            no clamp and no bucket). Split from
+  *                            morph.css to keep both partials under the 500-line bound.
+  * - dock/density.css — the density × --dock-scale cascade.
+  *   - dock/layers.css      — the `.dock-layer` crossfade + hit-test + reveal-
+diff --git a/src/components/dock/styles/search.css b/src/components/dock/styles/search.css
+index c8e8f4283..bfec13a4f 100644
+--- a/src/components/dock/styles/search.css
++++ b/src/components/dock/styles/search.css
+@@ -1,13 +1,13 @@
+ /* Dock search field styles.
+  *
+  * The active dock-search field + its placeholder + the result rows read CLEARLY forward
+- * over whatever backdrop the dock floats on (≥4.5:1, the darken seam) — never the
++ * over whatever backdrop the dock floats on (≥4.5:1, the plate's earned ink) — never the
+  * pale-ghost-fading-into-content trap (the NN/g defect, WWDC §219 "buttons remain
+  * legible"). The field surface composes its plate at the ELEMENT — `@apply glass-plate`
+  * (the one recipe, glass/veil.css), whose clamp reads the `--glass-backdrop-luma` the
+  * dock's observer writes and the field inherits — NOT a pre-substituted `:root` plate
+  * token (the substitution-vs-inheritance trap: a colour composed at `:root` bakes
+- * `:root`'s luma and does NOT darken — the pale-fade; the dock's own such token is
++ * `:root`'s luma and does NOT earn ink — the pale-fade; the dock's own such token is
+  * struck for exactly that reason, tokens/glass.css). Over a calm or
+  * unsampled backdrop the clamp resolves exactly the tier's own ink (the honest calm
+  * identity); past the knee it earns up to two more rungs of it. The dock's own L0 plate
+@@ -55,7 +55,7 @@
+ 
+     /* The placeholder + the autocomplete ghost-text + any muted caption inside the field
+        read the on-glass muted rung (NOT `--muted-foreground`, which is calibrated against
+-       the opaque page and collapses on a translucent darkened plate). */
++       the opaque page and collapses on a translucent glass plate). */
+     .glass-dock .dock-search-field .input-bar-field::placeholder,
+     .glass-dock .dock-search-field .dock-search-ghost,
+     .glass-dock .dock-search-field .dock-search-result-meta {
+diff --git a/src/components/dock/styles/shell.css b/src/components/dock/styles/shell.css
+index f1600cab9..be51a3e10 100644
+--- a/src/components/dock/styles/shell.css
++++ b/src/components/dock/styles/shell.css
+@@ -127,12 +127,13 @@
+            folds here as the base. A dock is centred in its own flow box, full stop;
+            there is no second positioning register to pick from. */
+         margin: 0 auto;
+-        /* The dock self-darkens over light backdrops with NO consumer opt-in (a dock
+-           floats over arbitrary — frequently light — page content), and it does so
++        /* The dock earns its plate ink over light backdrops (darker in dark, a thicker
++           cream pole in light) with NO consumer opt-in (a dock floats over arbitrary —
++           frequently light — page content), and it does so
+            WHERE IT PAINTS: the L0 plate composes `@utility glass-plate` at the element
+            (dock/dock.css), whose clamp reads the `--glass-backdrop-luma` this dock's
+            own observer writes on this root and which inherits to the plate. No token
+-           re-pointed here darkens the plate — the `--glass-plate-*` colours resolve at
++           re-pointed here moves the plate — the `--glass-plate-*` colours resolve at
+            `:root`. `--glass-backdrop: light` is KEPT so a consumer's DESCENDANT
+            nested-glass inside the dock reads the bright bucket via the
+            ancestor-querying `@container` block in glass/ladder.css (CSS style queries
+diff --git a/src/styles/glass/surface-axis.css b/src/styles/glass/surface-axis.css
+index e281a357c..217868d38 100644
+--- a/src/styles/glass/surface-axis.css
++++ b/src/styles/glass/surface-axis.css
+@@ -76,8 +76,9 @@
+        level-0 endpoint resolved here, not via the baked token) — AND still flips the
+        `--glass-level: 0` / `--glass-level: 0` knobs so a NESTED glass
+        descendant + any consumer reading the level scalar see the opaque register
+-       coherently. The adaptive TINT axis is zeroed (a solid plate has no
+-       translucent backdrop to earn ink over — the bucket-INVARIANT contract). */
++       coherently. There is no tint axis to zero: the veil is the plate's one writer
++       (glass/veil.css), and a solid plate has no translucent backdrop to earn ink
++       over — the bucket-INVARIANT contract. */
+     [data-surface="opaque"] {
+         --glass-level: 0;
+         /* The SOLID --card plate composed at the element via the house color-mix
+diff --git a/src/styles/glass/surfaces-pager.css b/src/styles/glass/surfaces-pager.css
+index 995c625aa..9fe4530b0 100644
+--- a/src/styles/glass/surfaces-pager.css
++++ b/src/styles/glass/surfaces-pager.css
+@@ -26,11 +26,10 @@
+         padding-inline: var(--space-atom);
+         padding-block: var(--space-residue);
+         border-radius: var(--radius-pill);
+-        /* The element-level oklab TINT seam (NOT the raw
++        /* The plate composed at the element (NOT the raw
+            pre-substituted `--glass-plate-floating` :root token — the gray-hole
+-           substitution-trap). At the `--glass-level: 0` default this is the
+-           no-op floor (`X, src 0%) ≡ X` — byte-identical pager pixels
+-           over a flat page); over a sampled BRIGHT carousel image the pill earns ink
++           substitution-trap). Over a calm or unsampled backdrop the clamp resolves
++           exactly the floating rung's own ink; over a sampled BRIGHT carousel image the pill earns ink
+            for a real silhouette (darker in dark, a thicker cream pole in light; the
+            clamp's two-step ceiling keeps it translucent); under `.dark` the
+            tint arm LIFTS it toward luminous warm-dark, never a charcoal
+diff --git a/src/styles/tokens/property-regs.css b/src/styles/tokens/property-regs.css
+index 14d83314f..fc5a8d095 100644
+--- a/src/styles/tokens/property-regs.css
++++ b/src/styles/tokens/property-regs.css
+@@ -149,7 +149,8 @@
+                   machinery (the `.glass-opaque` rung and the a11y brackets ride it).
+      • level >1 — clearer (more transparent, more diffuse) in lockstep.
+    Over-light legibility rides the SEPARATE `--glass-veil-*` axis: level = opacity+blur,
+-   tint = darken-over-light. The two coordinate but never collapse — the a11y
++   veil = the earned ink (darker in dark, a thicker cream pole in light). The two
++   coordinate but never collapse — the a11y
+    Clear↔Tinted escape rides level-up here AND tint-toward-ink under
+    `prefers-contrast: more`. */
+ @property --glass-level {
+@@ -161,7 +162,8 @@
+ /* The OBSERVER's measured backdrop relative-luminance. `useGlassBackdropLuminance`
+    WRITES this (0..1) on the glass target; the ONE clamp that reads it lives in
+    `@utility glass-plate` (glass/veil.css) and composes AT THE ELEMENT, so every surface
+-   applying the plate earns the same continuous darken from the same arithmetic. It
++   applying the plate earns the same continuous ink (darker in dark, a thicker cream
++   pole in light) from the same arithmetic. It
+    lifts the rung's own ink by up to two steps as the measured backdrop brightens past
+    the knee, ceiling included. Registered so a bare `var()` INTERPOLATES between sample
+    frames instead of snapping — a per-sample re-paint would flicker the plate.
+diff --git a/tests/components/field/forms-seam.test.ts b/tests/components/field/forms-seam.test.ts
+index c5da02943..3a668e3e9 100644
+--- a/tests/components/field/forms-seam.test.ts
++++ b/tests/components/field/forms-seam.test.ts
+@@ -88,7 +88,7 @@ describe("W-FIELD — the forms-seam lane battery", () => {
+         expect(read(NF_SHEET)).not.toContain("input-pill");
+     });
+ 
+-    it("G-F2 · PERIMETER + RECESS — the perimeter rides the 0.48 ink rung and the well is a real inset (fill α fenced on W-FROST)", () => {
++    it("G-F2 · PERIMETER + RECESS — the perimeter rides the `--ink-perimeter` rung and the well is a real inset (fill α fenced on W-FROST)", () => {
+         const register = strip(read(REGISTER));
+ 
+         // ONE ink, the perimeter rung, at 1px. HEAD: 1.5px × 0.05 = a composited
