@@ -1,0 +1,8 @@
+dist fv5 vs fv6: diff -rq exit 0, 0 lines
+dist fv6 vs fv6 rebuilt: diff -rq exit 0
+demo fv5 vs fv6: diff -rq exit 1, 223 lines
+demo fv6 vs fv6 rebuilt: diff -rq exit 0
+fv5 specimen css index-DyuSrJvX.css 391121 B sha256 347288745da7cf97
+fv6 specimen css index-DyuSrJvX.css 391121 B sha256 347288745da7cf97
+demo, chunk hashes normalised: 338 files · 338 files · differ 4 ['assets/auth-shell-H.css', 'assets/auth-shell-H.js', 'assets/dock-search-H.css', 'assets/dock-search-H.js']
+demo, chunk hashes normalised, scoped ids normalised: 338 files · 338 files · differ 0 []

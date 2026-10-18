@@ -1,0 +1,16 @@
+demo-probe fv6 chromium exit 0 20:33:37 load { 12.88 12.44 13.68 }
+DEMO PASS chromium light fv6: rows 30 · pointer on row 1: highlighted [1] painting [1] bg oklch(0.53 0.124 69.6 / 0.12) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.53 0.124 69.6 / 0.12)
+DEMO PASS chromium dark fv6: rows 30 · pointer on row 1: highlighted [1] painting [1] bg oklch(0.813 0.109 78.2 / 0.12) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.813 0.109 78.2 / 0.12)
+DEMO-PROBE fv6 · PASS (2 theme rows) · load 12.7 12.4 13.7 → 13.1 12.5 13.7
+crit-demo fv6 chromium exit 0 20:34:12 load { 13.85 12.78 13.75 }
+CRIT PASS chromium light fv6: P pointer→row1 ok highlighted [1] painting [1] · K ArrowDown with pointer on row 1 (still :hover true) ok highlighted [2] painting [2] bg oklch(0.53 0.124 69.6 / 0.12) ink rgb(28, 25, 23) · L pointer leaves ok highlighted [2] painting [2]
+CRIT PASS chromium dark fv6: P pointer→row1 ok highlighted [1] painting [1] · K ArrowDown with pointer on row 1 (still :hover true) ok highlighted [2] painting [2] bg oklch(0.813 0.109 78.2 / 0.12) ink rgb(233, 230, 226) · L pointer leaves ok highlighted [2] painting [2]
+CRIT-DEMO fv6 · PASS (2) · load 12.9 12.4 13.7 → 13.7 12.7 13.7
+demo-probe fv5 chromium exit 0 20:34:44 load { 11.65 12.38 13.57 }
+DEMO PASS chromium light fv5: rows 30 · pointer on row 1: highlighted [1] painting [1] bg oklch(0.53 0.124 69.6 / 0.12) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.53 0.124 69.6 / 0.12)
+DEMO PASS chromium dark fv5: rows 30 · pointer on row 1: highlighted [1] painting [1] bg oklch(0.813 0.109 78.2 / 0.12) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.813 0.109 78.2 / 0.12)
+DEMO-PROBE fv5 · PASS (2 theme rows) · load 13.9 12.8 13.8 → 11.7 12.4 13.6
+crit-demo fv5 chromium exit 0 20:35:20 load { 13.24 12.61 13.60 }
+CRIT PASS chromium light fv5: P pointer→row1 ok highlighted [1] painting [1] · K ArrowDown with pointer on row 1 (still :hover true) ok highlighted [2] painting [2] bg oklch(0.53 0.124 69.6 / 0.12) ink rgb(28, 25, 23) · L pointer leaves ok highlighted [2] painting [2]
+CRIT PASS chromium dark fv5: P pointer→row1 ok highlighted [1] painting [1] · K ArrowDown with pointer on row 1 (still :hover true) ok highlighted [2] painting [2] bg oklch(0.813 0.109 78.2 / 0.12) ink rgb(233, 230, 226) · L pointer leaves ok highlighted [2] painting [2]
+CRIT-DEMO fv5 · PASS (2) · load 11.6 12.4 13.6 → 11.3 12.2 13.5

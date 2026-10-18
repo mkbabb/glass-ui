@@ -1,0 +1,34 @@
+-- DEL floor v6 under its declaration (fixture)
+DEL fv6 exit 0: PASS (61 gated rows)
+-- DEL floor v6 under deletes-floor.json alone
+exit 0: PASS (8 gated rows)
+-- LAW
+LAW exit 0: PASS (53 gated rows)
+HOV exit 0: PASS (58 gated rows)
+LIT exit 0: LIGHTING-LITERALS halo=5 near=1 stacked=10 chain=3 open=19 frames-halo=0/0
+census fv6 exit 0: LIGHTING-CENSUS stacked=0 halo=0 blur=0 open=0
+worktree = floor-v5.patch
+-- DEL floor v5 under the floor v6 declaration (plant)
+DEL fv5 exit 1: FAIL (6 of 61 gated rows)
+worktree = minor-split-v4.patch
+worktree = HEAD
+census HEAD (10.1.0 source) exit 1: LIGHTING-CENSUS stacked=2 halo=2 blur=5 open=9
+worktree = floor-v6.patch
+-- LADDER diff radii-fv6 radii-minor4 (fixture: prints nothing)
+LADDER fv6 exit 0
+-- LADDER diff radii-fv5 radii-fv6
+LADDER fv5-fv6 exit 0
+-- LADDER diff radii-head radii-minor4 (bite)
+1,5c1,5
+< --glass-blur-wash-radius:     10px;
+< --glass-blur-quiet-radius:    14px;
+< --glass-blur-resting-radius:  16px;
+< --glass-blur-floating-radius: 20px;
+< --glass-blur-overlay-radius:  22px;
+---
+> --glass-blur-wash-radius:      6px;
+> --glass-blur-quiet-radius:    10px;
+> --glass-blur-resting-radius:  12px;
+> --glass-blur-floating-radius: 18px;
+> --glass-blur-overlay-radius:  20px;
+LADDER head exit 1

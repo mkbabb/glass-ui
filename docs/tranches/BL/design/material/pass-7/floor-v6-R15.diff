@@ -1,0 +1,78 @@
+diff --git a/demo/stories/compositions/auth-shell.vue b/demo/stories/compositions/auth-shell.vue
+index 6eac6125a..5627d04b1 100644
+--- a/demo/stories/compositions/auth-shell.vue
++++ b/demo/stories/compositions/auth-shell.vue
+@@ -206,8 +206,8 @@ const highlights = [
+ <style scoped>
+ /* The brand panel always paints a bright purple→tomato aurora in both themes, so
+    its ink is fixed to the dark light-theme values for legibility. This is a local
+-   token pin because the panel is not a glass surface and cannot inherit the glass
+-   backdrop bucket. The section-color trust chips already provide their own ink.
++   token pin because the panel is not a glass surface, so no glass rung's bound
++   covers its ground. The section-color trust chips already provide their own ink.
+ 
+    The token pin alone is NOT enough for the HEADING: `color` is an INHERITED
+    property and `body { color: var(--foreground) }` already resolves it to cream
+diff --git a/demo/stories/dock/dock-search.vue b/demo/stories/dock/dock-search.vue
+index afe18bd48..a36d4023a 100644
+--- a/demo/stories/dock/dock-search.vue
++++ b/demo/stories/dock/dock-search.vue
+@@ -194,8 +194,9 @@ function onKeydown(e: KeyboardEvent) {
+                             </button>
+                         </template>
+ 
+-                        <!-- The search field aperture rides the morph; adaptive tinting
+-                             keeps its text contrast at or above 4.5:1. -->
++                        <!-- The search field aperture rides the morph; the field reads the
++                             floating rung at the bound, which keeps its text
++                             contrast at or above 4.5:1. -->
+                         <template #search>
+                             <div class="input-bar" data-surface="glass">
+                                 <Search class="size-4 text-muted-foreground shrink-0" />
+diff --git a/demo/stories/substrates/glass-material.vue b/demo/stories/substrates/glass-material.vue
+index b39d84b86..b6085e0b3 100644
+--- a/demo/stories/substrates/glass-material.vue
++++ b/demo/stories/substrates/glass-material.vue
+@@ -1,10 +1,10 @@
+ <script setup lang="ts">
+ // The unified glass-material matrix. Every named band surface (the five ladder
+ // rungs + card + the floating/overlay registers Dialog/Sheet/Popover compose)
+-// reads the SAME catch-light + rim from one `.glass-material` mixin; the three
+-// SOTA folds (squircle, chromatic fringe, adaptive tint) ride that
+-// grammar behind capability checks and tokens. The matrix is staged over a
+-// shipped high-frequency Aurora backdrop so the specular + rim + folds read
++// reads the SAME catch-light + rim from one `.glass-material` mixin; the
++// squircle fold rides that grammar behind a capability check, and the veil's
++// one pole, `--card`, carries any tint. The matrix is staged over a
++// shipped high-frequency Aurora backdrop so the specular + rim + squircle read
+ // against busy color (glass does not read on flat cream).
+ //
+ // This story BINDS the shipped seams it narrates: the moving catch-light is
+diff --git a/src/components/dock/README.md b/src/components/dock/README.md
+index b863b1798..0cfaaa1e5 100644
+--- a/src/components/dock/README.md
++++ b/src/components/dock/README.md
+@@ -17,7 +17,7 @@ state machine, and one motion spine. Import the family from `@mkbabb/glass-ui/do
+ 
+ ## Public anatomy
+ 
+-- `GlassDock` owns the plate, orientation, collapse state, overflow, and backdrop mode.
++- `GlassDock` owns the plate, orientation, collapse state, and overflow.
+ - `DockControl` is the button face. Use `shape="icon"` or `shape="tab"`.
+ - `DockTrigger` applies the same face to select, dropdown, or popover triggers.
+ - `DockSeparator` follows the dock's orientation and layout.
+diff --git a/src/styles/glass/overlay-plate.css b/src/styles/glass/overlay-plate.css
+index 49cad7d81..106da00f8 100644
+--- a/src/styles/glass/overlay-plate.css
++++ b/src/styles/glass/overlay-plate.css
+@@ -268,8 +268,8 @@
+ 
+     /* ── The listbox plate ──────────────────────────────────────────────────
+        The overlay rung's veil with the capsule's warm floor over it — two flat
+-       layers, both reading the ONE recipe. There is no adaptive-tint layer and no
+-       `--select-plate-alpha` solidity knob: the veil already paints the overlay rung
++       layers, both reading the ONE recipe. There is no second tint layer and no
++       solidity knob of its own: the veil already paints the overlay rung
+        at the bound, and a second layer pushing the same plate the same way is the
+        double-writer the material law forbids. A menu that needs more body needs a
+        heavier RUNG. `prefers-reduced-transparency` reaches this plate through
