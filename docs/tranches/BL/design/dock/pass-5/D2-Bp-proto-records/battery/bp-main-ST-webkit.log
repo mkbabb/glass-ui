@@ -1,0 +1,16 @@
+ 4:50  up 16:41, 2 users, load averages: 22.75 22.62 17.25
+UNMEASURED  ST  Playwright WebKit  stall·same-task  UNMEASURED: HARNESS-TIMEOUT: the block did not return in 480000 ms  [load 22.75]
+PASS  ST  Playwright WebKit  stall·same-task  same-task: a 1200 ms block 0 ms after the flip (video: trigger marker → block-end marker 1240 ms); D 379.36 px (101.83 → 481.19); first leaves its rest at 1240 ms, travels 0.6 px before the block-end marker, lands at 2600 ms (RECORD; video scale 0.982); worst one-frame step 154.68 px at 1320 ms (dt 40 ms) vs bound 192.56 px (×0.8)  [load 21.81]
+PASS  ST  Playwright WebKit  stall·1raf  1raf: a 1200 ms block 16 ms after the flip (video: trigger marker → block-end marker 1240 ms); D 379.41 px (101.85 → 481.26); first leaves its rest at 1240 ms, travels 0.57 px before the block-end marker, lands at 2560 ms (RECORD; video scale 0.982); worst one-frame step 137.7 px at 1280 ms (dt 40 ms) vs bound 192.58 px (×0.72)  [load 21.81]
+PASS  ST  Playwright WebKit  stall·2raf  2raf: a 1200 ms block 32 ms after the flip (video: trigger marker → block-end marker 1240 ms); D 378.93 px (101.84 → 480.76); first leaves its rest at 40 ms, travels 0.51 px before the block-end marker, lands at 2520 ms (RECORD; video scale 0.982); worst one-frame step 173.7 px at 1280 ms (dt 40 ms) vs bound 192.34 px (×0.9)  [load 20.85]
+PASS  ST  Playwright WebKit  stall·100ms  100ms: a 1200 ms block 101 ms after the flip (video: trigger marker → block-end marker 1320 ms); D 379.29 px (101.86 → 481.15); first leaves its rest at 40 ms, travels 211.77 px before the block-end marker, lands at 2560 ms (RECORD; video scale 0.982); worst one-frame step 113.77 px at 40 ms (dt 40 ms) vs bound 192.52 px (×0.59)  [load 21.59]
+PASS  ST  Playwright WebKit  stall·mid-flight  mid-flight: a 1200 ms block 89 ms after the flip (video: trigger marker → block-end marker 1320 ms); D 379.77 px (101.92 → 481.69); first leaves its rest at 40 ms, travels 166.36 px before the block-end marker, lands at 2600 ms (RECORD; video scale 0.981); worst one-frame step 149.91 px at 120 ms (dt 40 ms) vs bound 192.76 px (×0.78)  [load 21.86]
+FAIL  ST  Playwright WebKit  stall·nb·same-task  not measured: the video shows no block-end marker  [load 26.27]
+FAIL  ST  Playwright WebKit  stall·nb·1raf  not measured: the video shows no block-end marker  [load 29.48]
+FAIL  ST  Playwright WebKit  stall·nb·2raf  not measured: the video shows no block-end marker  [load 29.6]
+UNMEASURED  ST  Playwright WebKit  stall·nb·100ms  UNMEASURED: HARNESS-TIMEOUT: the block did not return in 480000 ms  [load 28.59]
+FAIL  ST  Playwright WebKit  stall·nb·mid-flight  not measured: the video shows no block-end marker  [load 33.24]
+FAIL  ST  bp@088815ec  5/11 cells pass, 2 UNMEASURED  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p5/Bp-proto/wt/.bpout/webkit/bp/main/runs/ST-bp/ST.json)
+exit 1
+ 5:15  up 17:07, 2 users, load averages: 33.24 25.20 18.57
+reds: ^(stall·nb·1raf(·control)?|stall·nb·2raf(·control)?|stall·nb·mid-flight(·control)?|stall·nb·same-task(·control)?)$

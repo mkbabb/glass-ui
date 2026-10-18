@@ -1,0 +1,21 @@
+ 1:58  up 13:50, 2 users, load averages: 33.61 29.46 27.45
+STEP  F7  lib  exit 0  9 s  [load 28.67-26.12]
+STEP  F7  demo  exit 0  3 s  [load 26.12-26.12]
+STEP  F7  typecheck  exit 0  17 s  [load 26.12-23.46]
+STEP  F7  units  exit 1  70 s  [load 23.46-17.6]
+PASS  F7  source  f7·typecheck  typecheck exit 0  [load 17.6]
+PASS  F7  source  f7·build  lib build exit 0, demo dist build exit 0  [load 17.6]
+PASS  F7  source  f7·units  232 test file(s) outside tests/gates/, 2239 test(s); 0 file(s) failing  [load 17.6]
+FAIL  F7  source  f7·gate·boot-graph  14 assertion(s), 14 ran, 1 failing: gate:boot-graph — build arm the eager graph stays under the modulepreload and byte ceilings; build arm 3/3 ran  [load 17.6]
+PASS  F7  source  f7·gate·comment-ratio  15 assertion(s), 15 ran, 0 failing  [load 17.6]
+PASS  F7  source  f7·gate·feedback-tint-seam  3 assertion(s), 3 ran, 0 failing  [load 17.6]
+PASS  F7  source  f7·gate·gate-register  21 assertion(s), 21 ran, 0 failing  [load 17.6]
+PASS  F7  source  f7·gate·orphan-css-partial  9 assertion(s), 9 ran, 0 failing  [load 17.6]
+PASS  F7  source  f7·gate·overfit-structure  15 assertion(s), 15 ran, 0 failing  [load 17.6]
+PASS  F7  source  f7·gate·tabs-seam  26 assertion(s), 26 ran, 0 failing  [load 17.6]
+PASS  F7  source  f7·gate·token-hygiene  4 assertion(s), 4 ran, 0 failing  [load 17.6]
+PASS  F7  source  f7·gate·trap-gates  6 assertion(s), 6 ran, 0 failing  [load 17.6]
+PASS  F7  source  f7·gate·type-hygiene  7 assertion(s), 7 ran, 0 failing  [load 17.6]
+FAIL  F7  wt  12/13 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p5/Bp-proto/wt/.bpout/f7/runs/F7-wt/F7.json)
+exit 1
+ 2:00  up 13:52, 2 users, load averages: 17.31 24.58 25.77
