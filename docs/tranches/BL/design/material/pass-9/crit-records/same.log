@@ -1,0 +1,16 @@
+dist fv7 vs fv8 (this session): diff -rq exit 0
+dist HEAD vs fv8 (bite): diff -rq exit 1
+demo fv7 vs fv8 (this session): diff -rq exit 0
+demo HEAD vs fv8 (bite): diff -rq exit 1
+dist banked fv7 vs fv8: diff exit 1, 7 lines
+demo banked fv7 vs fv8: diff exit 0, 0 lines
+dist banked m6 vs m7: diff exit 1, 7 lines
+demo banked m6 vs m7: diff exit 0, 0 lines
+fv8 specimen css 391121 B sha256 347288745da7cf97
+fv7 specimen css 391121 B sha256 347288745da7cf97
+m7 specimen css 398432 B sha256 e11613c3eeb45cab
+head specimen css 394891 B sha256 b09b9e73a61b75b1
+fv8 specimen JS, path rewritten to p8/floor7: sha256 a24f4ba3d5d586899fac6219761392a5b6610cf8fc2cdbeb20a8c27c22aab3a0
+m7 specimen JS, path rewritten to p8/minor6: sha256 399323637852c62b4d81f6fff4fff49dca6cdc316b0a7633085cb0978f01ba3a
+banked fv7 JS: 06edc55a045485f5f643fd9f29824206dfd273a7431d060c02f6f2203e43ca37  ./assets/index-3lKSpDp8.js
+banked m6 JS: 929393c20eb9d0781fa697fb901fc7ce41be1f5e683b3d6a0e990a7167609664  ./assets/index-DP1ZxLyx.js

@@ -1,0 +1,18 @@
+worktree = floor-v8.patch
+floor-v7.patch + floor-v8-delta.diff = floor-v8.patch (worktree diff cmp exit 0)
+worktree = minor-split-v7.patch
+minor-split-v6.patch + minor-split-v7-R23.diff = minor-split-v7.patch (worktree diff cmp exit 0)
+floor-v7.patch: 88 files, sha1 4a1e09c8
+floor-v8.patch: 88 files, sha1 0d104e63
+minor-split-v6.patch: 59 files, sha1 4ea01c0e
+minor-split-v7.patch: 61 files, sha1 3a7a8eec
+floor-v8-delta.diff: 7 files, sha1 1e0bba88
+minor-split-v7-R23.diff: 9 files, sha1 0cf8056f
+MS7-r21b-proposed.diff: 2 files, sha1 ccee3e30
+apply --check floor-v8 at checkout ee48aa072 exit 0
+apply --check minor-v7 at checkout exit 0
+delta files floor v8: a/src/components/_shared/feedback/feedback-tone.css a/src/components/dock/GlassDock.vue a/src/components/dock/styles/index.css a/src/styles/glass/a11y-fallback.css a/src/styles/glass/surfaces-pager.css a/src/styles/tokens/glass-deep.css a/src/styles/tokens/glass-fx.css 
+delta files minor v7: a/DESIGN.md a/src/components/dock/styles/adaptive-legibility.css a/src/styles/glass/liquid-fill.css a/src/styles/glass/surfaces-pager.css a/src/styles/tokens/glass-deep.css a/src/styles/tokens/property-regs.css a/tests/components/button/Button.test.ts a/tests/components/field/forms-seam.test.ts a/tests/gates/feedback-tint-seam.test.ts 
+-- non-comment lines in the floor v8 delta (every +/- line, for the critic to read)
+      50
+10.1.0 source diff to HEAD (empty above = none)

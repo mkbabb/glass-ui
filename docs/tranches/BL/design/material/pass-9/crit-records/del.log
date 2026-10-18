@@ -1,0 +1,16 @@
+DEL floor-decl fv8 exit 0: PASS (101 gated rows)
+DEL floor-decl fv7 exit 1: FAIL (6 of 101 gated rows)
+DEL floor-decl head exit 1: FAIL (89 of 101 gated rows)
+DEL H9's decl fv8 exit 0: PASS (100 gated rows)
+DEL minor-decl m7 exit 0: PASS (54 gated rows)
+DEL minor-decl m6 exit 1: FAIL (8 of 54 gated rows)
+DEL minor-decl m7p exit 0: PASS (54 gated rows)
+DEL H7-3 m7 exit 0: PASS (42 gated rows)
+DEL H7-3 m6 exit 1: FAIL (2 of 42 gated rows)
+DEL on an absent root exit 0: PASS (42 gated rows)
+LAW exit 0: PASS (74 gated rows)
+census fv8 exit 0: LIGHTING-CENSUS stacked=0 halo=0 blur=0 open=0
+census m7 exit 0: LIGHTING-CENSUS stacked=0 halo=0 blur=0 open=0
+census head exit 1: LIGHTING-CENSUS stacked=2 halo=2 blur=5 open=9
+HOV fv8 exit 0: PASS (58 gated rows)
+HOV m7 exit 0: PASS (58 gated rows)
