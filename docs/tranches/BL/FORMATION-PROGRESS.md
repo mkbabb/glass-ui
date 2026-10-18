@@ -488,3 +488,4 @@ Outage log:
 - 2026-10-18 D3 pass 7 CLOSED (wf_986590e0-183): REGISTRY Pass 7 (P7-0..P7-6). Floor v6 37/44 ADVANCE, two-clean 0/2. Rows 20 + FL-12 reopen on forms-seam.test.ts (DEL scope). Minor v5 passes every W-0.1/W-0.11 gate; cannot ship until the entry gate clears.
 - 2026-10-18 D3 pass 8 launched: wf_c5689651-da8 (bl-design-d3-pass8.js, 64d2c5378). Live runs: D2 wf_5e67c472-dcb, D3 wf_c5689651-da8, D4 wf_42e50cc0-e84, D5 wf_a78db19c-034.
 - 2026-10-18 11:57 D5 pass-4 H4 seat died at system sleep after ~10 h (harness edits + Chromium phase landed, WebKit batch queued). Run stopped, H4 prompt amended to review and finish the partial work, resumed from wf_a78db19c-034.
+- 2026-10-18 12:0x caffeinate -i -w 11897 (pid 70212) holds PreventUserIdleSystemSleep for the life of this Claude session (display may still sleep); it exits with the session. Stop it with: kill 70212.
