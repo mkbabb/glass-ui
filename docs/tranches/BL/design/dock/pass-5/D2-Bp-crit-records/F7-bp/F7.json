@@ -1,0 +1,165 @@
+{
+ "witness": "F7",
+ "target": "wt",
+ "when": "2026-10-18T18:40:58.899Z",
+ "load": 44.38,
+ "steps": {
+  "lib": {
+   "exit": 0,
+   "ms": 6503,
+   "load": [
+    29.9,
+    28.31
+   ],
+   "tail": ".glass-generation-h5Hy0K/aurora.js                                                     203.50 kB │ gzip: 65.43 kB |  | \u001b[32m✓ built in 648ms\u001b[39m | declaration entries: projected 63 public entries | gen-component-styles: wrote /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p5/Bp-crit/wt/.glass-generation-h5Hy0K/component-styles.css | {\"type\":\"glass-ui:ready\",\"generation\":\"28e4c5793b2c1001cb27efdee3d8309bd1082afc7052c3437726609fd75e0c9b\",\"output\":\"/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p5/Bp-crit/wt/dist\",\"tuple\":\"js/sfc-css/declarations/relays/styles/fonts/utili"
+  },
+  "demo": {
+   "exit": 0,
+   "ms": 1655,
+   "load": [
+    28.31,
+    27.32
+   ],
+   "tail": "dist-demo/assets/Blob-BqJ0CWtA.js                                               93.77 kB │ gzip: 34.33 kB | dist-demo/assets/Aurora-BOppQyYQ.js                                            207.96 kB │ gzip: 69.28 kB |  | \u001b[32m✓ built in 1.17s\u001b[39m |  | a:b referenced in a:b didn't resolve at build time, it will remain unchanged to be resolved at runtime"
+  },
+  "typecheck": {
+   "exit": 0,
+   "ms": 15948,
+   "load": [
+    27.32,
+    25.09
+   ],
+   "tail": "> @mkbabb/glass-ui@10.1.0 typecheck | > vue-tsc --noEmit && vue-tsc --noEmit -p tsconfig.test.json"
+  },
+  "units": {
+   "exit": 1,
+   "ms": 73781,
+   "load": [
+    25.09,
+    44.38
+   ],
+   "tail": "    597|         expect(graph.eagerJsBytes, report).toBeLessThanOrEqual(MAX_EAG… |        |                                            ^ |     598|     }); |     599| }); |  | ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯"
+  }
+ },
+ "cells": [
+  {
+   "engine": "source",
+   "cell": "f7·typecheck",
+   "pass": true,
+   "failed": [],
+   "summary": "typecheck exit 0",
+   "load": 44.38
+  },
+  {
+   "engine": "source",
+   "cell": "f7·build",
+   "pass": true,
+   "failed": [],
+   "summary": "lib build exit 0, demo dist build exit 0",
+   "load": 44.38
+  },
+  {
+   "engine": "source",
+   "cell": "f7·units",
+   "pass": true,
+   "failed": [],
+   "summary": "232 test file(s) outside tests/gates/, 2239 test(s); 0 file(s) failing",
+   "load": 44.38,
+   "failingFiles": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·boot-graph",
+   "pass": false,
+   "failed": [
+    "gate"
+   ],
+   "summary": "14 assertion(s), 14 ran, 1 failing: gate:boot-graph — build arm the eager graph stays under the modulepreload and byte ceilings; build arm 3/3 ran",
+   "load": 44.38,
+   "failing": [
+    "gate:boot-graph — build arm the eager graph stays under the modulepreload and byte ceilings"
+   ]
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·comment-ratio",
+   "pass": true,
+   "failed": [],
+   "summary": "15 assertion(s), 15 ran, 0 failing",
+   "load": 44.38,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·feedback-tint-seam",
+   "pass": true,
+   "failed": [],
+   "summary": "3 assertion(s), 3 ran, 0 failing",
+   "load": 44.38,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·gate-register",
+   "pass": true,
+   "failed": [],
+   "summary": "21 assertion(s), 21 ran, 0 failing",
+   "load": 44.38,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·orphan-css-partial",
+   "pass": true,
+   "failed": [],
+   "summary": "9 assertion(s), 9 ran, 0 failing",
+   "load": 44.38,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·overfit-structure",
+   "pass": true,
+   "failed": [],
+   "summary": "15 assertion(s), 15 ran, 0 failing",
+   "load": 44.38,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·tabs-seam",
+   "pass": true,
+   "failed": [],
+   "summary": "26 assertion(s), 26 ran, 0 failing",
+   "load": 44.38,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·token-hygiene",
+   "pass": true,
+   "failed": [],
+   "summary": "4 assertion(s), 4 ran, 0 failing",
+   "load": 44.38,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·trap-gates",
+   "pass": true,
+   "failed": [],
+   "summary": "6 assertion(s), 6 ran, 0 failing",
+   "load": 44.38,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·type-hygiene",
+   "pass": true,
+   "failed": [],
+   "summary": "7 assertion(s), 7 ran, 0 failing",
+   "load": 44.38,
+   "failing": []
+  }
+ ]
+}

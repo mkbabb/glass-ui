@@ -1,0 +1,50 @@
+{
+ "witness": "R6",
+ "target": "bp@3c8563f3",
+ "when": "2026-10-18T22:48:52.441Z",
+ "load": 19.67,
+ "cells": [
+  {
+   "engine": "webkit",
+   "cell": "ring·static",
+   "pass": true,
+   "diffOutside": 0,
+   "bboxDelta": 0,
+   "devicePx": 2,
+   "summary": "static page, expanded, trigger un-hovered: 0 ring pixels changed over 1 s (bound 0); trigger box moved 0 px",
+   "load": 20.33
+  },
+  {
+   "engine": "webkit",
+   "cell": "r6·arms",
+   "pass": true,
+   "record": true,
+   "arms": {
+    "A": {
+     "diffOutside": 0,
+     "bboxDelta": 0,
+     "devicePx": 2
+    },
+    "B": {
+     "diffOutside": 3282,
+     "bboxDelta": 0,
+     "devicePx": 2
+    },
+    "C": {
+     "diffOutside": 3144,
+     "bboxDelta": 0,
+     "devicePx": 2
+    },
+    "D": {
+     "diffOutside": 0,
+     "bboxDelta": 0,
+     "devicePx": 2
+    }
+   },
+   "cancelled": [],
+   "verdict": "A = 0; B 3282, C 3144: the re-sampling reading is not isolated",
+   "summary": "A static 0 · B backdrop moving 3282 · C B without backdrop-filter 3144 · D plate animations cancelled (none) 0 ⟶ A = 0; B 3282, C 3144: the re-sampling reading is not isolated. Headless; keyframes' reading was headed on a real GPU",
+   "load": 19.67
+  }
+ ]
+}
