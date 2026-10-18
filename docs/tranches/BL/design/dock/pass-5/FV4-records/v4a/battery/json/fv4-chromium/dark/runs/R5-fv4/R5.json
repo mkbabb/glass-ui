@@ -1,0 +1,373 @@
+{
+ "witness": "R5",
+ "target": "fv4@89aab527",
+ "when": "2026-10-17T19:43:56.439Z",
+ "load": 23.04,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "hit·rest-collapsed",
+   "pass": true,
+   "unjudged": [],
+   "failed": [],
+   "samples": 1,
+   "inflight": 0,
+   "Rs": [
+    28
+   ],
+   "seatMiss": [],
+   "missBy": [],
+   "firstOpen": -1,
+   "lastOpen": -1,
+   "q17Count": 0,
+   "q17": [],
+   "ghostHit": [],
+   "luneHit": [],
+   "coreMiss": 0,
+   "summary": "1 sample(s), 0 with the window open; painted seat centres that miss their seat 0/2; leaving seats that take no press 0 (Q-17, recorded); clipped-away centres that hit their seat 0/6; corner points outside the arc that hit the dock 0/8; R 28 px; the centre misses the dock on 0 sample(s)",
+   "load": 23.49
+  },
+  {
+   "engine": "chromium",
+   "cell": "hit·rest-expanded",
+   "pass": true,
+   "unjudged": [],
+   "failed": [],
+   "samples": 1,
+   "inflight": 0,
+   "Rs": [
+    28
+   ],
+   "seatMiss": [],
+   "missBy": [],
+   "firstOpen": -1,
+   "lastOpen": -1,
+   "q17Count": 0,
+   "q17": [],
+   "ghostHit": [],
+   "luneHit": [],
+   "coreMiss": 0,
+   "summary": "1 sample(s), 0 with the window open; painted seat centres that miss their seat 0/7; leaving seats that take no press 0 (Q-17, recorded); clipped-away centres that hit their seat 0/1; corner points outside the arc that hit the dock 0/8; R 28 px; the centre misses the dock on 0 sample(s)",
+   "load": 24.41
+  },
+  {
+   "engine": "chromium",
+   "cell": "hit·warm-expand",
+   "pass": false,
+   "unjudged": [],
+   "failed": [
+    "seat",
+    "ghost",
+    "corner"
+   ],
+   "samples": 69,
+   "inflight": 64,
+   "Rs": [
+    28
+   ],
+   "seatMiss": [
+    {
+     "i": 0,
+     "label": "Home",
+     "hit": false,
+     "got": "div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run",
+     "in": "div.dock-persistent",
+     "m": true
+    },
+    {
+     "i": 0,
+     "label": "Home",
+     "hit": false,
+     "got": "div.dock-separator",
+     "in": "div.dock-persistent",
+     "m": true
+    },
+    {
+     "i": 0,
+     "label": "Home",
+     "hit": false,
+     "got": "div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run",
+     "in": "div.dock-persistent",
+     "m": true
+    },
+    {
+     "i": 0,
+     "label": "Home",
+     "hit": false,
+     "got": "div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run",
+     "in": "div.dock-persistent",
+     "m": true
+    }
+   ],
+   "missBy": [
+    {
+     "i": 0,
+     "label": "Home",
+     "in": "div.dock-persistent",
+     "got": "div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run",
+     "samples": [
+      1,
+      2,
+      5,
+      9
+     ]
+    }
+   ],
+   "firstOpen": 1,
+   "lastOpen": 64,
+   "q17Count": 0,
+   "q17": [],
+   "ghostHit": [
+    {
+     "i": 1,
+     "label": "One",
+     "hit": true,
+     "got": "button.dock-icon-button.glass-specular-track.glass-capsule-hover",
+     "m": true
+    },
+    {
+     "i": 2,
+     "label": "Two",
+     "hit": true,
+     "got": "button.dock-icon-button.glass-specular-track.glass-capsule-hover",
+     "m": true
+    },
+    {
+     "i": 3,
+     "label": "Three",
+     "hit": true,
+     "got": "button.dock-icon-button.glass-specular-track.glass-capsule-hover",
+     "m": true
+    },
+    {
+     "i": 4,
+     "label": "Play",
+     "hit": true,
+     "got": "button.dock-tab-button.glass-specular-track",
+     "m": true
+    }
+   ],
+   "luneHit": [
+    {
+     "at": [
+      673.1,
+      816.1
+     ],
+     "dock": true,
+     "got": "div.dock-plate"
+    },
+    {
+     "at": [
+      766.9,
+      816.1
+     ],
+     "dock": true,
+     "got": "div.dock-plate"
+    },
+    {
+     "at": [
+      766.9,
+      863.9
+     ],
+     "dock": true,
+     "got": "div.dock-plate"
+    },
+    {
+     "at": [
+      673.1,
+      863.9
+     ],
+     "dock": true,
+     "got": "div.dock-plate"
+    }
+   ],
+   "coreMiss": 0,
+   "summary": "69 sample(s), 64 with the window open (bound ≥ 2); painted seat centres that miss their seat 4/421 (first: Home → div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run); leaving seats that take no press 0 (Q-17, recorded); clipped-away centres that hit their seat 10/64 (first: One → button.dock-icon-button.glass-specular-track.glass-capsule-hover); corner points outside the arc that hit the dock 9/552 (first 673.1,816.1 → div.dock-plate); R 28 px; the centre misses the dock on 0 sample(s)  ⟶ FAILED: seat, ghost, corner",
+   "load": 23.74
+  },
+  {
+   "engine": "chromium",
+   "cell": "hit·warm-collapse",
+   "pass": false,
+   "unjudged": [],
+   "failed": [
+    "seat",
+    "corner"
+   ],
+   "samples": 70,
+   "inflight": 65,
+   "Rs": [
+    28,
+    217.83,
+    209.99,
+    197.33,
+    186.43,
+    170.3,
+    158.3,
+    147.96
+   ],
+   "seatMiss": [
+    {
+     "i": 0,
+     "label": "Home",
+     "hit": false,
+     "got": "div#glass-dock-v-0-summary.dock-layer.dock-layer--summary.is-active",
+     "in": "div.dock-persistent",
+     "m": true
+    },
+    {
+     "i": 0,
+     "label": "Home",
+     "hit": false,
+     "got": "div#glass-dock-v-0-summary.dock-layer.dock-layer--summary.is-active",
+     "in": "div.dock-persistent",
+     "m": true
+    },
+    {
+     "i": 0,
+     "label": "Home",
+     "hit": false,
+     "got": "div#glass-dock-v-0-summary.dock-layer.dock-layer--summary.is-active",
+     "in": "div.dock-persistent",
+     "m": true
+    },
+    {
+     "i": 0,
+     "label": "Home",
+     "hit": false,
+     "got": "div#glass-dock-v-0-summary.dock-layer.dock-layer--summary.is-active",
+     "in": "div.dock-persistent",
+     "m": true
+    }
+   ],
+   "missBy": [
+    {
+     "i": 0,
+     "label": "Home",
+     "in": "div.dock-persistent",
+     "got": "div#glass-dock-v-0-summary.dock-layer.dock-layer--summary.is-active",
+     "samples": [
+      6,
+      10,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65
+     ]
+    }
+   ],
+   "firstOpen": 1,
+   "lastOpen": 65,
+   "q17Count": 40,
+   "q17": [
+    {
+     "i": 1,
+     "label": "One",
+     "hit": false,
+     "got": "div#glass-dock-v-0-summary.dock-layer.dock-layer--summary.is-active",
+     "in": "div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run",
+     "m": true
+    },
+    {
+     "i": 2,
+     "label": "Two",
+     "hit": false,
+     "got": "div#glass-dock-v-0-summary.dock-layer.dock-layer--summary.is-active",
+     "in": "div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run",
+     "m": true
+    },
+    {
+     "i": 3,
+     "label": "Three",
+     "hit": false,
+     "got": "div#glass-dock-v-0-summary.dock-layer.dock-layer--summary.is-active",
+     "in": "div#glass-dock-v-0-full.dock-layer.dock-layer--full.dock-run",
+     "m": true
+    }
+   ],
+   "ghostHit": [],
+   "luneHit": [
+    {
+     "at": [
+      928.9,
+      464.2
+     ],
+     "dock": true,
+     "got": "div#glass-dock-v-0-summary.dock-layer.dock-layer--summary.is-active"
+    },
+    {
+     "at": [
+      928.9,
+      836.1
+     ],
+     "dock": true,
+     "got": "div#glass-dock-v-0-summary.dock-layer.dock-layer--summary.is-active"
+    },
+    {
+     "at": [
+      919.5,
+      464.2
+     ],
+     "dock": true,
+     "got": "div#glass-dock-v-0-summary.dock-layer.dock-layer--summary.is-active"
+    },
+    {
+     "at": [
+      919.5,
+      836.1
+     ],
+     "dock": true,
+     "got": "div#glass-dock-v-0-summary.dock-layer.dock-layer--summary.is-active"
+    }
+   ],
+   "coreMiss": 0,
+   "summary": "70 sample(s), 65 with the window open (bound ≥ 2); painted seat centres that miss their seat 51/152 (first: Home → div#glass-dock-v-0-summary.dock-layer.dock-layer--summary.is-active); leaving seats that take no press 40 (Q-17, recorded); clipped-away centres that hit their seat 0/289; corner points outside the arc that hit the dock 172/560 (first 928.9,464.2 → div#glass-dock-v-0-summary.dock-layer.dock-layer--summary.is-active); R 28/217.83/209.99/197.33/186.43 px; the centre misses the dock on 0 sample(s)  ⟶ FAILED: seat, corner",
+   "load": 23.04
+  }
+ ]
+}

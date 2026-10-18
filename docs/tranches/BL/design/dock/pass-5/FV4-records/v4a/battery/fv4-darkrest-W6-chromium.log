@@ -1,0 +1,9 @@
+15:55  up  3:47, 2 users, load averages: 11.96 14.11 18.58
+PASS  W6  Chromium  form·collapsed-rest  form ink beyond the plate 0 px (bound 1); present 4/4; dismiss is a seat: true; backdrop plates 1 [div.dock-plate]  [load 11.96]
+PASS  W6  Chromium  form·expanded-rest  form ink beyond the plate 0 px (bound 1); present 3/4 (missing [data-testid=form-face]); dismiss is a seat: true; backdrop plates 1 [div.dock-plate]; plate div.dock-plate (collapsed div.dock-plate); the same element: true  [load 12.29]
+FAIL  W6  Chromium  form·expand  D 142.19 px (190.88→333.06); step ×0.64; dead; window 541.7 ms (allow 264.5, clock 214.2) — window 541.7 ms > clock 214.2 + 2×16.7 + stall 16.9 = 264.5 ms (O-64 R-4, H-3d); trajectory worst 1.48 px (1.04 % of D) from the rung's analytic spring (tol 6.69); terminal last step 0.2 px after 0.28 px (bound 0.92); owners 0; Q-4 lenient window fails (allow 320.3 ms); faces 7.5 px of form ink beyond the plate over 21 screenshot sample(s) (6 in flight) (bound 1)  ⟶ FAILED: window, faces  [load 12.26]
+FAIL  W6  Chromium  form·collapse  D 142.19 px (333.06→190.88); step ×0.64; dead; window 549.7 ms (allow 258, clock 214.2) — window 549.7 ms > clock 214.2 + 2×16.7 + stall 10.4 = 258 ms (O-64 R-4, H-3d); trajectory worst 1.68 px (1.18 % of D) from the rung's analytic spring (tol 6.69); terminal last step 0.23 px after 0.24 px (bound 1); owners 0; Q-4 lenient window fails (allow 313.8 ms); faces 0 px of form ink beyond the plate over 53 screenshot sample(s) (0 in flight) (bound 1)  ⟶ FAILED: window  [load 12.26]
+FAIL  W6  fv4@89aab527  2/4 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p5/floor4/wt/.fv4out/chromium/fv4/darkrest/runs/W6-fv4/W6.json)
+exit 1
+15:55  up  3:47, 2 users, load averages: 12.26 14.10 18.53
+reds: ^(form·collapse(·control)?|form·expand(·control)?)$

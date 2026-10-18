@@ -1,0 +1,161 @@
+{
+ "witness": "F7",
+ "target": "wt",
+ "when": "2026-10-17T21:01:11.953Z",
+ "load": 20,
+ "steps": {
+  "lib": {
+   "exit": 0,
+   "ms": 7956,
+   "load": [
+    16.51,
+    17.03
+   ],
+   "tail": ".glass-generation-Y3PffA/aurora.js                                                     203.50 kB │ gzip: 65.43 kB |  | \u001b[32m✓ built in 1.03s\u001b[39m | declaration entries: projected 63 public entries | gen-component-styles: wrote /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p5/floor4/wt/.glass-generation-Y3PffA/component-styles.css | {\"type\":\"glass-ui:ready\",\"generation\":\"284bfdaf7bc306fe8833751291235b49fb0980a1838dd17ec4681ec0cbca6503\",\"output\":\"/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p5/floor4/wt/dist\",\"tuple\":\"js/sfc-css/declarations/relays/styles/fonts/utiliti"
+  },
+  "demo": {
+   "exit": 0,
+   "ms": 2057,
+   "load": [
+    17.03,
+    16.79
+   ],
+   "tail": "dist-demo/assets/Blob-C0QJOXKS.js                                               93.77 kB │ gzip: 34.33 kB | dist-demo/assets/Aurora-BOppQyYQ.js                                            207.96 kB │ gzip: 69.28 kB |  | \u001b[32m✓ built in 1.54s\u001b[39m |  | a:b referenced in a:b didn't resolve at build time, it will remain unchanged to be resolved at runtime"
+  },
+  "typecheck": {
+   "exit": 0,
+   "ms": 16580,
+   "load": [
+    16.79,
+    18.15
+   ],
+   "tail": "> @mkbabb/glass-ui@10.1.0 typecheck | > vue-tsc --noEmit && vue-tsc --noEmit -p tsconfig.test.json"
+  },
+  "units": {
+   "exit": 0,
+   "ms": 76987,
+   "load": [
+    18.15,
+    20
+   ],
+   "tail": " | (node:54652) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided. | (Use `node --trace-warnings ...` to show where the warning was created) | stderr | tests/components/custom/dock/useDockContent.test.ts > useDockContent — the dock's one content observer (N-2) > fails loud when the dock root is not mounted | [Vue warn]: Unhandled error during execution of mounted hook  |   at <App>"
+  }
+ },
+ "cells": [
+  {
+   "engine": "source",
+   "cell": "f7·typecheck",
+   "pass": true,
+   "failed": [],
+   "summary": "typecheck exit 0",
+   "load": 20
+  },
+  {
+   "engine": "source",
+   "cell": "f7·build",
+   "pass": true,
+   "failed": [],
+   "summary": "lib build exit 0, demo dist build exit 0",
+   "load": 20
+  },
+  {
+   "engine": "source",
+   "cell": "f7·units",
+   "pass": true,
+   "failed": [],
+   "summary": "235 test file(s) outside tests/gates/, 2254 test(s); 0 file(s) failing",
+   "load": 20,
+   "failingFiles": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·boot-graph",
+   "pass": true,
+   "failed": [],
+   "summary": "14 assertion(s), 14 ran, 0 failing; build arm 3/3 ran",
+   "load": 20,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·comment-ratio",
+   "pass": true,
+   "failed": [],
+   "summary": "15 assertion(s), 15 ran, 0 failing",
+   "load": 20,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·feedback-tint-seam",
+   "pass": true,
+   "failed": [],
+   "summary": "3 assertion(s), 3 ran, 0 failing",
+   "load": 20,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·gate-register",
+   "pass": true,
+   "failed": [],
+   "summary": "21 assertion(s), 21 ran, 0 failing",
+   "load": 20,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·orphan-css-partial",
+   "pass": true,
+   "failed": [],
+   "summary": "9 assertion(s), 9 ran, 0 failing",
+   "load": 20,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·overfit-structure",
+   "pass": true,
+   "failed": [],
+   "summary": "15 assertion(s), 15 ran, 0 failing",
+   "load": 20,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·tabs-seam",
+   "pass": true,
+   "failed": [],
+   "summary": "26 assertion(s), 26 ran, 0 failing",
+   "load": 20,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·token-hygiene",
+   "pass": true,
+   "failed": [],
+   "summary": "4 assertion(s), 4 ran, 0 failing",
+   "load": 20,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·trap-gates",
+   "pass": true,
+   "failed": [],
+   "summary": "6 assertion(s), 6 ran, 0 failing",
+   "load": 20,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·type-hygiene",
+   "pass": true,
+   "failed": [],
+   "summary": "7 assertion(s), 7 ran, 0 failing",
+   "load": 20,
+   "failing": []
+  }
+ ]
+}

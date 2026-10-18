@@ -1,0 +1,11 @@
+15:17  up  3:09, 2 users, load averages: 29.04 26.80 28.50
+PASS  CASES  Chromium  case·capped·seat-transition  cap 150 px, run overflowing true; grow and shrink a seat's own width transition: page errors 0, window error events 0; plate travel 0 px, largest one-frame step 0 px; flag at rest closed; chromium-case_capped_seat-transition.json  [load 28.4]
+PASS  CASES  Chromium  case·capped·morph  cap 300 px: expand (run overflowing true), add a seat, collapse: page errors 0, window error events 0; plate travel 236.47 px, largest one-frame step 38.47 px; flag at rest closed; chromium-case_capped_morph.json  [load 28.4]
+FAIL  CASES  Chromium  case·consumer-margin  unlayered ".glass-dock { margin-inline: 20px; }" (computed margin-left at rest 20px): expand, collapse; plate end edge past the neighbour by at most -32 px (bound 0.5); neighbour travel 379.66 px, largest one-frame step 379.66 px against the plate edge's 29.06 px (+1); chromium-case_consumer-margin.json  ⟶ FAILED: follows  [load 31.57]
+FAIL  CASES  Chromium  case·consumer-margin·control  no consumer rule (computed margin-left at rest 8px): expand, collapse; plate end edge past the neighbour by at most -20 px (bound 0.5); neighbour travel 379.66 px, largest one-frame step 379.66 px against the plate edge's 29.69 px (+1); chromium-case_consumer-margin_control.json  ⟶ FAILED: follows  [load 31.44]
+FAIL  CASES  Chromium  case·rotated·control  host rotate(0deg): expand, collapse; seats' largest second difference 207.96 px/frame²; largest one-frame seat move after the window closed 207.96 px (bound 0.5); chromium-case_rotated_control.json  ⟶ FAILED: snap  [load 31.44]
+FAIL  CASES  Chromium  case·rotated  host rotate(2deg): expand, collapse; seats' largest second difference 214.58 px/frame² (control 207.96, bound +1); largest one-frame seat move after the window closed 214.58 px (bound 0.5); chromium-case_rotated.json  ⟶ FAILED: snap, jerk  [load 31.17]
+FAIL  CASES  fv4@89aab527  2/6 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p5/floor4/wt/.fv4out/chromium/fv4/main/runs/CASES-fv4/CASES.json)
+exit 1
+15:17  up  3:09, 2 users, load averages: 31.17 27.44 28.69
+reds: ^(case·consumer-margin(·control)?|case·rotated(·control)?)$

@@ -1,0 +1,9 @@
+20:24  up  8:16, 2 users, load averages: 25.67 18.61 15.68
+PASS  W6  Playwright WebKit  form·collapsed-rest  form ink beyond the plate 0 px (bound 1); present 4/4; dismiss is a seat: true; backdrop plates 1 [div.dock-plate]  [load 25.67]
+PASS  W6  Playwright WebKit  form·expanded-rest  form ink beyond the plate 0 px (bound 1); present 3/4 (missing [data-testid=form-face]); dismiss is a seat: true; backdrop plates 1 [div.dock-plate]; plate div.dock-plate (collapsed div.dock-plate); the same element: true  [load 24.64]
+FAIL  W6  Playwright WebKit  form·expand  D 142.22 px (190.88→333.09); step ×0.65; dead; window 550 ms (allow 260.6, clock 214.2) — window 550 ms > clock 214.2 + 2×16.7 + stall 13 = 260.6 ms (O-64 R-4, H-3d); trajectory worst 0.55 px (0.39 % of D) from the rung's analytic spring (tol 6.69); terminal last step 0.16 px after 0.29 px (bound 0.94); owners 0; Q-4 lenient window fails (allow 316.4 ms); faces 14 px of form ink beyond the plate over 30 screencast sample(s) (bound 2)  ⟶ FAILED: window, faces  [load 24.63]
+FAIL  W6  Playwright WebKit  form·collapse  D 142.22 px (333.09→190.88); step ×0.65; dead; window 561 ms (allow 260.6, clock 214.2) — window 561 ms > clock 214.2 + 2×16.7 + stall 13 = 260.6 ms (O-64 R-4, H-3d); trajectory worst 1.11 px (0.78 % of D) from the rung's analytic spring (tol 6.69); terminal last step 0.11 px after 0.27 px (bound 0.95); owners 0; Q-4 lenient window fails (allow 316.4 ms); faces 9 px of form ink beyond the plate over 117 screencast sample(s) (bound 2)  ⟶ FAILED: window, faces  [load 24.63]
+FAIL  W6  fv4@89aab527  2/4 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p5/floor4/wt/.fv4out/webkit/fv4/rest/runs/W6-fv4/W6.json)
+exit 1
+20:24  up  8:16, 2 users, load averages: 24.63 18.82 15.82
+reds: ^(form·collapse(·control)?|form·expand(·control)?)$

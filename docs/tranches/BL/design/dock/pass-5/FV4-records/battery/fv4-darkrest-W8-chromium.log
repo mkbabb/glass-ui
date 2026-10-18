@@ -1,0 +1,14 @@
+17:50  up  5:42, 2 users, load averages: 21.88 22.20 21.61
+FAIL  W8  Chromium  expand  69 motion frames: unsharp 29 (div.dock-persistent scale 3.98537 1) (bound 0); pacing p95 9.5 ms, 0 > 33.4 ms, 0 > 40 ms (headless bound: ≤ 1 over 40); 60 fps: UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)  ⟶ FAILED: sharp  [load 21.8]
+FAIL  W8  Chromium  collapse  70 motion frames: unsharp 70 (div.dock-persistent scale 1.04074 1) (bound 0); pacing p95 10.2 ms, 0 > 33.4 ms, 0 > 40 ms (headless bound: ≤ 1 over 40); 60 fps: UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)  ⟶ FAILED: sharp  [load 21.8]
+PASS  W8  Chromium  content-add  965 motion frames: unsharp 0 (bound 0); pacing p95 10.2 ms, 0 > 33.4 ms, 0 > 40 ms (headless bound: ≤ 1 over 40); 60 fps: UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)  [load 21.8]
+PASS  W8  Chromium  swap  977 motion frames: unsharp 0 (bound 0); pacing p95 9.9 ms, 0 > 33.4 ms, 0 > 40 ms (headless bound: ≤ 1 over 40); 60 fps: UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)  [load 22.75]
+PASS  W8  Chromium  compact  71 motion frames: unsharp 0 (bound 0); pacing p95 8.6 ms, 0 > 33.4 ms, 0 > 40 ms (headless bound: ≤ 1 over 40); 60 fps: UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)  [load 22.75]
+FAIL  W8  Chromium  form-expand  67 motion frames: unsharp 29 (button.dock-icon-button.glass-specular-track.glass-capsule-hover scale 0.84235) (bound 0); pacing p95 10.7 ms, 0 > 33.4 ms, 0 > 40 ms (headless bound: ≤ 1 over 40); 60 fps: UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)  ⟶ FAILED: sharp  [load 22.69]
+UNMEASURED  W8  consumer  consumer·value.js  UNMEASURED: value.js has a live session: this seat builds and runs nothing there (fence). O-66 §2 judges every dock motion there at 60 fps, headed, on a real GPU  [load 22.69]
+UNMEASURED  W8  consumer  consumer·keyframes  UNMEASURED: headed real-GPU runs of keyframes' served dock were not made by this seat (headless only). O-66 §2 judges every dock motion there at 60 fps, headed, on a real GPU  [load 22.69]
+UNMEASURED  W8  consumer  consumer·fourier  UNMEASURED: headed real-GPU runs of fourier's docks were not made by this seat (headless only). O-66 §2 judges every dock motion there at 60 fps, headed, on a real GPU  [load 22.69]
+FAIL  W8  fv4@89aab527  3/9 cells pass, 3 UNMEASURED  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p5/floor4/wt/.fv4out/chromium/fv4/darkrest/runs/W8-fv4/W8.json)
+exit 1
+17:51  up  5:42, 2 users, load averages: 22.69 22.35 21.68
+reds: ^(collapse(·control)?|expand(·control)?|form-expand(·control)?)$

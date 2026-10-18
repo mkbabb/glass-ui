@@ -1,0 +1,490 @@
+--- a/src/components/dock/GlassDock.vue
++++ b/src/components/dock/GlassDock.vue
+@@ -19,6 +19,7 @@
+ // The fission split facility is DEFINITION-ABSENT (decided-terminal;
+ // clean break, no alias — demo-only spectacle + the prime Safari suspect).
+ import { computed, nextTick, ref, useId, useTemplateRef, watch } from "vue";
++import { Ellipsis, EllipsisVertical } from "@lucide/vue";
+ // The sampled-luminance observer is wired ON for every
+ // `backdropMode: "live"` dock (the surface the user reported unreadable over light, and the
+ // one most often over a live/bright backdrop). It REFINES the declarative bucket +
+@@ -262,7 +263,9 @@
+     });
+ }
+ 
+-// Escape belongs to the innermost owner. The gate is STRUCTURAL, not `defaultPrevented`:
++// Escape folds the dock from anywhere in it (a persistent seat included), and focus lands
++// on the summary, the disclosure that opens it again (O-88: keyboard open and close with
++// focus kept). Escape belongs to the innermost owner. The gate is STRUCTURAL, not `defaultPrevented`:
+ // reka's DismissableLayer handles Escape on a WINDOW-level bubble and only READS
+ // `defaultPrevented` (`if (!event.defaultPrevented) emits("dismiss")`) — it never SETS
+ // it. So an element-level `!event.defaultPrevented` gate always sees `false` and is
+@@ -274,15 +277,15 @@
+ // The probe is narrowed on BOTH axes. By KIND: `OPEN_DISMISSABLE_LAYER_SELECTOR` reads
+ // reka's `[data-dismissable-layer]` marker, not any `data-state="open"` — reka stamps
+ // that on Accordion/Collapsible too, and an open accordion in the pane owns no Escape,
+-// so it must not eat the collapse. By SCOPE: the matched layer must live INSIDE
+-// `fullEl`. `closest()` walks the whole ancestor chain, so a dock hosted inside an open
++// so it must not eat the collapse. By SCOPE: the matched layer must live INSIDE the
++// dock. `closest()` walks the whole ancestor chain, so a dock hosted inside an open
+ // Dialog would otherwise match the DIALOG and never Escape-collapse.
+-async function onFullKeydown(event: KeyboardEvent) {
+-    if (event.key !== "Escape") return;
++async function onDockKeydown(event: KeyboardEvent) {
++    if (event.key !== "Escape" || !expanded.value) return;
+     const layer = (event.target as Element | null)?.closest?.(
+         OPEN_DISMISSABLE_LAYER_SELECTOR,
+     );
+-    if (layer && fullEl.value?.contains(layer)) return;
++    if (layer && dockEl.value?.contains(layer)) return;
+     collapse();
+     await nextTick();
+     const summary = summaryEl.value;
+@@ -368,6 +371,7 @@
+         @mouseleave="onMouseLeave($event)"
+         @focusin="onFocusIn"
+         @focusout="onFocusOut"
++        @keydown="onDockKeydown"
+         @pointerdown.capture="onPointerDownCapture"
+         @pointercancel.capture="onPointerCancelCapture"
+         @click.capture="onClickCapture"
+@@ -499,7 +503,6 @@
+                 }]"
+                 :inert="(outerCurrentLayer !== 'full' && pressKeepaliveLayer !== 'full') || undefined"
+                 tabindex="-1"
+-                @keydown="onFullKeydown"
+             >
+                 <slot />
+             </div>
+@@ -520,7 +523,14 @@
+                 @keydown="onSummaryKeydown"
+                 @click="onClickCollapsed"
+             >
+-                <slot name="collapsed" />
++                <!-- The summary always paints: with no `#collapsed` content it shows the
++                     dock's own "more" glyph in a seat, so the collapsed form is the
++                     persistent seats and a disclosure, never a bare tile (O-88). -->
++                <slot name="collapsed">
++                    <span class="dock-icon-button dock-summary-glyph" aria-hidden="true">
++                        <EllipsisVertical v-if="orientation === 'vertical'" /><Ellipsis v-else />
++                    </span>
++                </slot>
+             </div>
+ 
+             <!--
+--- a/src/components/dock/composables/useDockState.ts
++++ b/src/components/dock/composables/useDockState.ts
+@@ -55,6 +55,7 @@
+     | "rearm"
+     | "scroll.past"
+     | "scroll.top"
++    | "scroll.page"
+     | "expand"
+     | "collapse";
+ 
+@@ -125,9 +126,9 @@
+  *
+  *   collapsed ──hover.fine · focus.visible · expand──▶ hover
+  *   collapsed ──press.coarse · click.summary──▶ pinned          (W-11, R4-01-15)
+- *   hover ──idle (unheld, unengaged) · click.away · collapse──▶ collapsed
++ *   hover ──idle · scroll.page (unheld, unengaged) · click.away · collapse──▶ collapsed
+  *   hover ──click.summary──▶ pinned
+- *   pinned ──click.away · collapse──▶ rest                     (collapsible only)
++ *   pinned ──click.away · collapse · scroll.page (unheld, unengaged)──▶ rest  (collapsible only)
+  *   pinned ──scroll.past · rearm (unengaged, past)──▶ compact
+  *   compact ──hover.fine · focus.visible · press.coarse · scroll.top · expand──▶ pinned
+  */
+@@ -141,6 +142,7 @@
+     },
+     hover: {
+         idle: (c) => (c.held || c.engaged ? null : "collapsed"),
++        "scroll.page": (c) => (c.held || c.engaged ? null : "collapsed"),
+         "click.away": (c) => (c.held || c.transitioning ? null : "collapsed"),
+         collapse: "collapsed",
+         "click.summary": "pinned",
+@@ -149,6 +151,7 @@
+         "click.away": (c) =>
+             c.collapsible && !c.held && !c.transitioning ? "collapsed" : null,
+         collapse: (c) => (c.collapsible ? "collapsed" : null),
++        "scroll.page": (c) => (c.collapsible && !c.held && !c.engaged ? "collapsed" : null),
+         "scroll.past": (c) => (!c.collapsible && c.compactOnScroll && !c.engaged ? "compact" : null),
+         rearm: (c) =>
+             !c.collapsible && c.compactOnScroll && c.past && !c.engaged ? "compact" : null,
+@@ -355,7 +358,7 @@
+         }
+     }
+ 
+-    // --- Click-away listener ---
++    // --- The outside listeners: a press away, a page scroll ---
+ 
+     function onPointerDownOutside(e: PointerEvent) {
+         const root = rootEl.value;
+@@ -365,28 +368,41 @@
+         send("click.away");
+     }
+ 
+-    let removeClickAway: (() => void) | null = null;
+-    let installClickAwayFrame: number | null = null;
+-    function removeClickAwayListener() {
+-        if (installClickAwayFrame !== null) cancelAnimationFrame(installClickAwayFrame);
+-        installClickAwayFrame = null;
+-        removeClickAway?.();
++    /* A page scroll carries the content under an open dock that nothing engages: the
++       dock folds away from it (O-88's scroll-driven collapse). A scroll inside the dock
++       (its own run) or inside a surface it owns is the dock's, not the page's. */
++    function onPageScroll(e: Event) {
++        const root = rootEl.value;
++        const t = e.target;
++        if (!root || (t instanceof Node && root.contains(t))) return;
++        if (isTeleportedTarget(t, dockId)) return;
++        send("scroll.page");
++    }
++
++    let removeOutside: (() => void) | null = null;
++    let installOutsideFrame: number | null = null;
++    function removeOutsideListeners() {
++        if (installOutsideFrame !== null) cancelAnimationFrame(installOutsideFrame);
++        installOutsideFrame = null;
++        removeOutside?.();
+     }
+ 
+     watch(
+         expanded,
+         (isExpanded) => {
+-            removeClickAwayListener();
++            removeOutsideListeners();
+             if (!isExpanded || typeof document === "undefined") return;
+             // Defer attachment past the current event's propagation: the opening
+             // pointerdown can still reach a capture listener attached this microtask.
+-            installClickAwayFrame = requestAnimationFrame(() => {
+-                installClickAwayFrame = null;
++            installOutsideFrame = requestAnimationFrame(() => {
++                installOutsideFrame = null;
+                 if (!expanded.value) return;
+                 document.addEventListener("pointerdown", onPointerDownOutside, true);
+-                removeClickAway = () => {
++                document.addEventListener("scroll", onPageScroll, { capture: true, passive: true });
++                removeOutside = () => {
+                     document.removeEventListener("pointerdown", onPointerDownOutside, true);
+-                    removeClickAway = null;
++                    document.removeEventListener("scroll", onPageScroll, true);
++                    removeOutside = null;
+                 };
+             });
+         },
+@@ -404,7 +420,7 @@
+ 
+     onUnmounted(() => {
+         clearTimers();
+-        removeClickAwayListener();
++        removeOutsideListeners();
+     });
+ 
+     return {
+--- a/src/components/dock/styles/morph.css
++++ b/src/components/dock/styles/morph.css
+@@ -9,7 +9,7 @@
+  * surface (root, clip, variants, persistent) lives in dock/shell.css; the dock's
+  * foreground legibility lives in dock/adaptive-legibility.css.
+  *
+- * @import-ed by dock.css in cascade order, in the SAME `@layer components` — the
++ * @import-ed by index.css in cascade order, in the SAME `@layer components` — the
+  * carve is isomorphic (same layer, same source order → ZERO visual delta). */
+ 
+ @layer components {
+@@ -97,8 +97,13 @@
+         box-shadow: var(--shadow-dock-override, var(--shadow-dock-collapsed));
+     }
+ 
+-    /* The collapsed summary is a SQUARE the size of a seat row, so the collapsed dock
+-       is `cross × cross` and paints a circle of radius cross/2 (W1). [D2 floor row 1]
++    /* The collapsed summary is a seat at least the seat row square, by its two minimum
++       sizes: the dock's own disclosure glyph, or the consumer's `#collapsed` content
++       (GlassDock.vue). The collapsed dock is that seat plus any persistent seats, a stadium
++       of radius cross/2 (W1); a dock with no persistent seat collapses to the one seat, a
++       circle. No `aspect-ratio`: mid-morph the pane stretches along the main axis to the
++       dock's extent, and a ratio turned that width into its cross size (a 259 px morph
++       painted the dock 213 px tall). [D2 floor row 1]
+        ~~`--dock-collapsed-summary-min-size` (0.85 × the layer height)~~ is struck: a
+        34px face under the 40px `.dock-layer` height floor laid out 34 × 40, so the
+        collapsed dock was 50 × 56 and its corner could not be cross/2 (HEAD W1 collapsed
+@@ -106,7 +111,6 @@
+     .glass-dock .dock-layer--summary {
+         min-inline-size: var(--dock-layer-height, 2.5rem);
+         min-block-size: var(--dock-layer-height, 2.5rem);
+-        aspect-ratio: 1;
+         justify-content: center;
+     }
+ 
+@@ -126,49 +130,6 @@
+         --dock-expand-t: var(--dock-morph-t);
+     }
+ 
+-    /* The EMPTY-collapsed-summary trap. A dock with a
+-       `#persistent` control but NO `#collapsed` slot (the overview first-section
+-       dock) still renders a `.dock-layer--summary` pane that floors to the circle
+-       min-width — so collapsed it read as a WIDE pill: the persistent Home glyph on
+-       the LEFT + an empty circle of dead space on the RIGHT (the measured 84×50
+-       oval). Expanding then grew the content INTO that right-side void, so the
+-       morph read "from the right" not center-out (the user's B15). When the summary
+-       slot is EMPTY (`:not(:has(*))`), collapse it to zero width + no floor so the
+-       persistent control stands alone as the collapsed circle, and the morph grows
+-       symmetrically about the persistent. An empty Vue `#collapsed` slot renders
+-       ZERO child nodes (no whitespace text node either), so `:empty` matches it
+-       exactly — and a flat `:empty` avoids the nested-`:has()` form Lightning CSS
+-       drops. An authored `#collapsed` slot (non-empty summary) keeps its circle
+-       pill. */
+-    .glass-dock .dock-layer--summary:empty {
+-        min-width: 0;
+-        inline-size: 0;
+-        padding: 0;
+-        margin: 0;
+-        border: 0;
+-    }
+-
+-    /* The persistent control IS the collapsed pill in the empty-summary case — drop
+-       the inter-region gap so the collapsed circle is exactly the persistent box. */
+-    .glass-dock.collapsed:has(.dock-layer--summary:empty)
+-        .dock-persistent
+-        + .dock-layers {
+-        margin-inline-start: 0;
+-    }
+-
+-    /* The collapsed persistent pill centers its single glyph on
+-       BOTH axes (the empty-summary case where the #persistent control IS the collapsed
+-       circle). The `--dock-control-safe-inset` padding (background-clip: content-box) must
+-       not shift the glyph off the pill's geometric center — `place-items: center`
+-       belt-and-braces both axes so the shrunken icon reads dead-center (A5 "icons in the
+-       SHRUNKEN state are NOT ALIGNED"). */
+-    .glass-dock.collapsed:has(.dock-layer--summary:empty) .dock-persistent {
+-        display: grid;
+-        place-items: center;
+-    }
+-    .glass-dock.collapsed:has(.dock-layer--summary:empty) .dock-persistent > * {
+-        place-self: center;
+-    }
+     /* Floor the collapsed glyph at the 16px-min the switcher glyph
+        carries (never a sliver inside an inline-flex column). */
+     .glass-dock.collapsed .dock-persistent svg,
+@@ -192,7 +153,7 @@
+        in useDockMorph.ts). The bare `.collapsed:hover { scale: 1.1 }` multiplied
+        that transient ~535px box, painting a ±24-34px right-edge pop (the user's
+        "flashing"). Scoping the SCALE to `:not([data-morphing])` makes the +1.1 lift
+-       apply ONLY at rest (the box is the 54px circle then) — during `[data-morphing]`
++       apply ONLY at rest (the box is its collapsed rest then) — during `[data-morphing]`
+        the hover scale is inert, mirroring the shipped `--dock-expand-t`
+        `[data-morphing]` precedent above (morph.css:46-53). The surface arms
+        (background/border/shadow) stay on the bare `:hover` (they don't multiply
+--- a/src/components/dock/styles/density.css
++++ b/src/components/dock/styles/density.css
+@@ -56,7 +56,7 @@
+ 
+        The circle↔pill identity they were introduced to preserve is preserved by the
+        thing that was actually producing it all along: `--radius-dock` on the shell plus
+-       the collapsed pane's own `aspect-ratio: 1` square floor (morph.css). Nothing in
++       the collapsed pane's own square floor, its two minimum sizes (morph.css). Nothing in
+        the rendered dock moves.
+ 
+        Clean break, no alias (MEMORY: no backwards compat). Migration: NONE — a token
+--- a/src/components/dock/styles/index.css
++++ b/src/components/dock/styles/index.css
+@@ -7,36 +7,19 @@
+  * are shared, so they live at the import root, not per-control), and the
+  * `@import`s of the cohesive `dock/*.css` partials.
+  *
+- * The dock CSS is composed from src/styles/dock/ cohesive single-axis partials,
++ * The dock CSS is composed from cohesive single-axis partials in this directory,
+  * each under the 500-line bound, @import-ed below in cascade order into the
+  * SAME `@layer components` (same layer, same source order → one deterministic
+- * cascade):
+- * - dock/shell.css — the `.glass-dock` structural skeleton (root,
+- *                            morph-clip aperture, grain, vertical-root, shape /
+- * variant plates, position, #persistent + vertical
+- *                            three-region body).
+- * - dock/morph.css — the single-scalar morph chrome + state response
+- *                            (--dock-expand-t interp, collapsed/summary, held /
+- *                            open).
+- *   - dock/adaptive-legibility.css — the darken-over-light self-engage (the
+- *                            continuous backdrop-luma tint clamp, the warm-chromatic
+- *                            dock ink, the @container light bucket, contrast-color()
+- *                            refinement, the frozen-backdrop static arm). Split from
+- *                            morph.css to keep both partials under the 500-line bound.
+- * - dock/density.css — the density × --dock-scale cascade.
+- *   - dock/layers.css      — the `.dock-layer` crossfade + hit-test + reveal-
+- *                            stagger contract + the `layout="grid"` tile grid.
+- *   - dock/layer-group.css — `.dock-layer-group` / layer switcher / stack.
+- *   - dock/overflow.css    — the `overflow=` scroll/wrap strategies + the coarse
+- *                            multiplier.
++ * cascade). The @import list is the one record of the partials and their order;
++ * each import's own comment, and each partial's header, names what it owns.
+  *
+- * The FIVE interactive control families stay in dock-controls.css (@import-ed
+- * by index.css directly after this file). The Vue SFCs own
++ * The FIVE interactive control families stay in controls.css (@import-ed
++ * by src/styles/index.css directly after this file). The Vue SFCs own
+  * structure + runtime behavior; selectors, motion, glass, and layering tokens
+  * live here + in the partials so consumers have one public CSS path. */
+ 
+ /* CSS `@import` rules must precede every other rule (a `@property`/`@layer`
+-   block after an `@import` would render it invalid + dropped). The six partials
++   block after an `@import` would render it invalid + dropped). The partials
+    @import in cascade order; each opens its own `@layer components` so the layered
+    cascade is preserved bit-for-bit (the carve-isomorphism gate is the witness). */
+ @import "./shell.css";
+--- a/demo/stories/dock/overview.vue
++++ b/demo/stories/dock/overview.vue
+@@ -124,7 +124,10 @@
+                 The controls cascade in outer-to-inward, reversed on collapse. Under
+                 <code class="rounded bg-muted px-1">prefers-reduced-motion</code> the
+                 scale and stagger snap; the state still toggles. Both examples remain
+-                collapsible — the open posture is not pinned.
++                collapsible — the open posture is not pinned. Collapsed, the pill is Home
++                and a disclosure: a tap or Enter opens it, Escape folds it with focus back
++                on the disclosure, a page scroll folds it when nothing holds it, and an
++                open menu holds it open.
+             </p>
+             <div class="grid gap-3 md:grid-cols-2">
+                 <div
+@@ -150,6 +153,24 @@
+                         <DockSeparator />
+                         <DockControl aria-label="Notifications"><Bell /></DockControl>
+                         <DockControl aria-label="Settings"><Settings /></DockControl>
++                        <DropdownMenu>
++                            <DockTrigger for="dropdown" aria-label="Dock view">
++                                <SlidersHorizontal class="h-4 w-4" />
++                            </DockTrigger>
++                            <DropdownMenuContent align="center" class="w-44">
++                                <DropdownMenuLabel>Dock view</DropdownMenuLabel>
++                                <DropdownMenuSeparator />
++                                <DropdownMenuRadioGroup v-model="dockView">
++                                    <DropdownMenuRadioItem
++                                        v-for="view in dockViews"
++                                        :key="view.value"
++                                        :value="view.value"
++                                    >
++                                        {{ view.label }}
++                                    </DropdownMenuRadioItem>
++                                </DropdownMenuRadioGroup>
++                            </DropdownMenuContent>
++                        </DropdownMenu>
+                     </GlassDock>
+                 </div>
+             </div>
+--- a/tests/components/custom/dock/GlassDock.posture.test.ts
++++ b/tests/components/custom/dock/GlassDock.posture.test.ts
+@@ -377,7 +377,7 @@
+         ).toBeUndefined();
+     });
+ 
+-    it("a dock HOSTED INSIDE an open dismissable layer still collapses — the match is bounded by the full face", async () => {
++    it("a dock HOSTED INSIDE an open dismissable layer still collapses — the match is bounded by the dock", async () => {
+         // The unbounded `closest()` walked past the dock root: a dock inside an open
+         // Dialog matched the DIALOG's layer and could never Escape-collapse.
+         const host = document.createElement("div");
+@@ -417,6 +417,41 @@
+             wrapper.get<HTMLDivElement>(".dock-layer--summary").attributes("inert"),
+         ).toBeUndefined();
+     });
++
++    it("Escape from a persistent seat folds the dock and lands on the summary (O-88 C5)", async () => {
++        const wrapper = mountDock(
++            { collapse: "open" },
++            {
++                persistent: () => h("button", { "data-testid": "home" }, "Home"),
++                default: () => h("button", "Search"),
++                collapsed: () => h("span", "More"),
++            },
++        );
++        const home = wrapper.get<HTMLButtonElement>("[data-testid='home']");
++        home.element.focus();
++        home.element.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true, cancelable: true }));
++        await nextTick();
++        await nextTick();
++
++        const summary = wrapper.get<HTMLDivElement>(".dock-layer--summary");
++        expect(wrapper.find(".glass-dock").classes()).toContain("collapsed");
++        expect(document.activeElement).toBe(summary.element);
++        expect(summary.attributes("aria-expanded")).toBe("false");
++    });
++
++    it("with no #collapsed content the summary paints the dock's glyph in a seat (O-88 C1)", () => {
++        const wrapper = mountDock(
++            { collapse: "closed" },
++            {
++                persistent: () => h("button", "Home"),
++                default: () => h("button", "Search"),
++            },
++        );
++        const glyph = wrapper.get(".dock-layer--summary > .dock-summary-glyph");
++        expect(glyph.classes()).toContain("dock-icon-button");
++        expect(glyph.attributes("aria-hidden")).toBe("true");
++        expect(glyph.find("svg").exists()).toBe(true);
++    });
+ });
+ 
+ // ── useDockSearch: the armSearch reroute ───────────────────────────────────────
+--- a/tests/components/custom/dock/useDockState.chart.test.ts
++++ b/tests/components/custom/dock/useDockState.chart.test.ts
+@@ -2,7 +2,7 @@
+ // edge table. The compact rung (O-55 R-1), the coarse press (W-11) and the fine-hover
+ // gate (F-77) are its edges.
+ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+-import { ref } from "vue";
++import { nextTick, ref } from "vue";
+ import { DOCK_CHART, useDockState } from "@glass/components/dock/composables/useDockState";
+ import {
+     DOCK_COMPACT_ENTER_PX,
+@@ -86,6 +86,53 @@
+         unmount();
+     });
+ 
++    // The outside listeners attach on the frame after the dock opens (past the opening event).
++    const opened = async () => {
++        await nextTick();
++        vi.advanceTimersByTime(40);
++    };
++
++    it("a page scroll folds an open dock that nothing engages, never one a hold engages (O-88 C3)", async () => {
++        expect(DOCK_CHART.collapsed["scroll.page"]).toBeUndefined();
++        const a = chart();
++        a.result.expand();
++        await opened();
++        expect(a.result.state.value).toBe("hover");
++        document.dispatchEvent(new Event("scroll"));
++        expect(a.result.state.value).toBe("collapsed");
++        a.unmount();
++
++        const b = chart();
++        b.result.onCoarsePress();
++        b.result.keepOpen();
++        await opened();
++        document.dispatchEvent(new Event("scroll"));
++        expect(b.result.state.value).toBe("pinned");
++        b.result.release();
++        document.dispatchEvent(new Event("scroll"));
++        expect(b.result.state.value).toBe("collapsed");
++        b.unmount();
++
++        const c = chart({ alwaysExpanded: true });
++        await opened();
++        document.dispatchEvent(new Event("scroll"));
++        expect(c.result.state.value).toBe("pinned");
++        c.unmount();
++    });
++
++    it("a scroll inside the dock is the dock's own, not the page's", async () => {
++        const { root, result, unmount } = chart();
++        const run = document.createElement("div");
++        root.append(run);
++        result.expand();
++        await opened();
++        run.dispatchEvent(new Event("scroll"));
++        expect(result.state.value).toBe("hover");
++        document.dispatchEvent(new Event("scroll"));
++        expect(result.state.value).toBe("collapsed");
++        unmount();
++    });
++
+     it("a hover without a fine pointer is not engagement (the (hover: hover) gate)", () => {
+         vi.stubGlobal("matchMedia", () => ({ matches: false }));
+         const { result, unmount } = chart();

@@ -1,0 +1,12 @@
+15:13  up  3:05, 2 users, load averages: 26.49 25.19 28.57
+FAIL  CF  Chromium  c2·morph·h  first expand: travel 157 px, largest one-frame step 11.82 px (bound 70.65), 29 frame(s) between the rests, flash 0, root cross drift 0 px, the extent first moves 76 ms after the hover; collapse: travel 157 px, largest one-frame step 10.98 px (bound 70.65), 29 frame(s) between the rests, flash 0, root cross drift 157 px; warm expand: travel 157 px, largest one-frame step 10.87 px (bound 70.65), 28 frame(s) between the rests, flash 0, root cross drift 0 px; frames 8 (frames/chromium-c2_morph_h-expand, warm)  ⟶ FAILED: pop  [load 26.65]
+FAIL  CF  Chromium  c2·morph·v  first expand: travel 213 px, largest one-frame step 178 px (bound 95.85), 66 frame(s) between the rests, flash 0, root cross drift 0 px, the extent first moves 85 ms after the hover; collapse: travel 213 px, largest one-frame step 74.34 px (bound 95.85), 29 frame(s) between the rests, flash 0, root cross drift 0 px; warm expand: travel 213 px, largest one-frame step 178 px (bound 95.85), 66 frame(s) between the rests, flash 0, root cross drift 0 px; frames 8 (frames/chromium-c2_morph_v-expand, warm)  ⟶ FAILED: continuous  [load 25.22]
+FAIL  CF  Chromium  c8·outside-press  press point 20,60; 16 attempt(s), 8 press(es) landed mid-morph (bound 10 of 10); 0/8 collapsed within 1500 ms of the morph settling (stayed expanded, attempt 0); 8 hover(s) that did not open the dock; frames frames/chromium-c8_outside-press  ⟶ FAILED: opens, collapses  [load 27.59]
+FAIL  CF  Chromium  c9·short-coarse  844 × 390, coarse: tap at the collapsed dock's disclosure expanded it (pinned); expanded block size 60 px (bound 52: a 44 px seat + 2 × the compact rung's 4 px block padding); 4 painting seat(s), the smallest 44 px; frame chromium-c9-short-coarse.png  ⟶ FAILED: block  [load 26.9]
+ROW  CF  chromium  C2  FAIL  (c2·morph·h FAIL)
+ROW  CF  chromium  C7  FAIL  (c2·morph·v FAIL)
+ROW  CF  chromium  C8  FAIL  (c8·outside-press FAIL)
+ROW  CF  chromium  C9  FAIL  (c9·short-coarse FAIL)
+FAIL  CF  fv4@89aab527  0/4 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p5/floor4/wt/.fv4out/chromium/fv4/main/rerun2/runs/CF-fv4/CF.json)
+exit 1
+15:15  up  3:07, 2 users, load averages: 26.90 26.06 28.46

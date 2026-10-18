@@ -1,0 +1,14 @@
+22:09  up 10:01, 2 users, load averages: 14.62 13.25 9.92
+FAIL  W8  Playwright WebKit  expand  54 motion frames: unsharp 24 (div.dock-persistent scale 3.985788 1) (bound 0); pacing p95 12 ms, 0 > 33.4 ms, 0 > 40 ms (headless bound: ≤ 1 over 40); 60 fps: UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)  ⟶ FAILED: sharp  [load 14.91]
+FAIL  W8  Playwright WebKit  collapse  54 motion frames: unsharp 54 (div.dock-persistent scale 1.040745 1) (bound 0); pacing p95 13 ms, 0 > 33.4 ms, 0 > 40 ms (headless bound: ≤ 1 over 40); 60 fps: UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)  ⟶ FAILED: sharp  [load 14.91]
+PASS  W8  Playwright WebKit  content-add  737 motion frames: unsharp 0 (bound 0); pacing p95 12 ms, 0 > 33.4 ms, 0 > 40 ms (headless bound: ≤ 1 over 40); 60 fps: UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)  [load 14.91]
+PASS  W8  Playwright WebKit  swap  737 motion frames: unsharp 0 (bound 0); pacing p95 12 ms, 0 > 33.4 ms, 0 > 40 ms (headless bound: ≤ 1 over 40); 60 fps: UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)  [load 15.32]
+PASS  W8  Playwright WebKit  compact  52 motion frames: unsharp 0 (bound 0); pacing p95 12 ms, 0 > 33.4 ms, 0 > 40 ms (headless bound: ≤ 1 over 40); 60 fps: UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)  [load 15.29]
+FAIL  W8  Playwright WebKit  form-expand  54 motion frames: unsharp 24 (button.dock-icon-button.glass-specular-track.glass-capsule-hover scale 0.84235) (bound 0); pacing p95 12 ms, 0 > 33.4 ms, 0 > 40 ms (headless bound: ≤ 1 over 40); 60 fps: UNMEASURED (headless; O-66 §2 is judged headed on a real GPU)  ⟶ FAILED: sharp  [load 15.29]
+UNMEASURED  W8  consumer  consumer·value.js  UNMEASURED: value.js has a live session: this seat builds and runs nothing there (fence). O-66 §2 judges every dock motion there at 60 fps, headed, on a real GPU  [load 15.29]
+UNMEASURED  W8  consumer  consumer·keyframes  UNMEASURED: headed real-GPU runs of keyframes' served dock were not made by this seat (headless only). O-66 §2 judges every dock motion there at 60 fps, headed, on a real GPU  [load 15.29]
+UNMEASURED  W8  consumer  consumer·fourier  UNMEASURED: headed real-GPU runs of fourier's docks were not made by this seat (headless only). O-66 §2 judges every dock motion there at 60 fps, headed, on a real GPU  [load 15.29]
+FAIL  W8  fv4@89aab527  3/9 cells pass, 3 UNMEASURED  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p5/floor4/wt/.fv4out/webkit/fv4/darkrest/runs/W8-fv4/W8.json)
+exit 1
+22:10  up 10:02, 2 users, load averages: 15.29 13.53 10.13
+reds: ^(collapse(·control)?|expand(·control)?|form-expand(·control)?)$

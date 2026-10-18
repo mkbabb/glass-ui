@@ -1,0 +1,9 @@
+17:20  up  5:12, 2 users, load averages: 17.15 14.28 14.10
+FAIL  CASES  Chromium  case·capped·morph  cap 300 px: expand (run overflowing true), add a seat, collapse: page errors 0, window error events 1 (ResizeObserver loop completed with undelivered notifications.); plate travel 236.47 px, largest one-frame step 38.47 px; flag at rest closed; chromium-case_capped_morph.json  ⟶ FAILED: errors  [load 20.18]
+FAIL  CASES  Chromium  case·consumer-margin  unlayered ".glass-dock { margin-inline: 20px; }" (computed margin-left at rest 20px): expand, collapse; plate end edge past the neighbour by at most -32 px (bound 0.5); neighbour travel 379.66 px, largest one-frame step 379.66 px against the plate edge's 27.97 px (+1); chromium-case_consumer-margin.json  ⟶ FAILED: follows  [load 19.37]
+FAIL  CASES  Chromium  case·consumer-margin·control  no consumer rule (computed margin-left at rest 8px): expand, collapse; plate end edge past the neighbour by at most -20 px (bound 0.5); neighbour travel 379.66 px, largest one-frame step 379.66 px against the plate edge's 29.6 px (+1); chromium-case_consumer-margin_control.json  ⟶ FAILED: follows  [load 19.37]
+FAIL  CASES  Chromium  case·rotated·control  host rotate(0deg): expand, collapse; seats' largest second difference 207.96 px/frame²; largest one-frame seat move after the window closed 207.96 px (bound 0.5); chromium-case_rotated_control.json  ⟶ FAILED: snap  [load 18.62]
+FAIL  CASES  Chromium  case·rotated  host rotate(2deg): expand, collapse; seats' largest second difference 207.96 px/frame² (control 207.96, bound +1); largest one-frame seat move after the window closed 207.96 px (bound 0.5); chromium-case_rotated.json  ⟶ FAILED: snap  [load 18.25]
+FAIL  CASES  fv4@89aab527  0/5 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p5/floor4/wt/.fv4out/chromium/fv4/main/rerun1/runs/CASES-fv4/CASES.json)
+exit 1
+17:21  up  5:12, 2 users, load averages: 18.25 14.78 14.28

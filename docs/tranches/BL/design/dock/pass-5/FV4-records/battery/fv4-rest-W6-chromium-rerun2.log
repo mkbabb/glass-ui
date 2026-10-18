@@ -1,0 +1,6 @@
+17:25  up  5:17, 2 users, load averages: 23.42 20.81 17.19
+FAIL  W6  Chromium  form·expand  D 142.19 px (190.88→333.06); step ×0.64; dead; window 542.9 ms (allow 265.1, clock 214.2) — window 542.9 ms > clock 214.2 + 2×16.7 + stall 17.5 = 265.1 ms (O-64 R-4, H-3d); trajectory worst 1.9 px (1.33 % of D) from the rung's analytic spring (tol 6.69); terminal last step 0.15 px after 0.33 px (bound 0.89); owners 0; Q-4 lenient window fails (allow 320.9 ms); faces 11 px of form ink beyond the plate over 21 screenshot sample(s) (6 in flight) (bound 1)  ⟶ FAILED: window, faces  [load 21.75]
+FAIL  W6  Chromium  form·collapse  D 142.19 px (333.06→190.88); step ×0.64; dead; window 541.7 ms (allow 257.8, clock 214.2) — window 541.7 ms > clock 214.2 + 2×16.7 + stall 10.2 = 257.8 ms (O-64 R-4, H-3d); trajectory worst 1.11 px (0.78 % of D) from the rung's analytic spring (tol 6.69); terminal last step 0.19 px after 0.28 px (bound 0.92); owners 0; Q-4 lenient window fails (allow 313.6 ms); faces 0 px of form ink beyond the plate over 51 screenshot sample(s) (0 in flight) (bound 1)  ⟶ FAILED: window  [load 21.75]
+FAIL  W6  fv4@89aab527  0/2 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p5/floor4/wt/.fv4out/chromium/fv4/rest/rerun2/runs/W6-fv4/W6.json)
+exit 1
+17:25  up  5:17, 2 users, load averages: 21.75 20.56 17.16

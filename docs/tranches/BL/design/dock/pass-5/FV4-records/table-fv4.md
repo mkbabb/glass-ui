@@ -1,0 +1,46 @@
+| row | witness | head | fv3 | fv4 |
+|---|---|---|---|---|
+| P1 | W1 (card per H5-12) + W7 | FAIL (sidebar·short-viewport[corner] C, rail·rest[corner] C, rail·scrolled-end[corner] C +53) | FAIL (morph·first-expand[corner] C, morph·warm-collapse[corner] C, morph·warm-expand[corner] C +6) | FAIL (morph·first-expand[corner] C, morph·warm-collapse[corner] C, morph·warm-expand[corner] C +33) |
+| P2 | W2 (reach by key, H5-1) | FAIL (route1·long-run-h[ring] C, route1·long-run-v[ring] C, route2·collapsed-layer[scroller] C +9) | PASS | PASS |
+| P3 | W3 every check, W6 (H5-5), W8 | FAIL (first-expand[continuity,window,trajectory,terminal,seatStep,seatOverlap] C, warm-collapse[window,seatStep,seatOverlap,leaving,faces] C, warm-expand[landing,window,seatStep,seatOverlap,leaving,faces] C +53) | FAIL (first-expand[window,seatStep,seatOverlap,leaving,faces] C, warm-collapse[window,seatOverlap,leaving] C, warm-expand[window,seatStep,seatOverlap,leaving,faces] C +25) | FAIL (first-expand[window,seatStep,seatOverlap,leaving,faces] C, warm-collapse[window,seatStep,seatOverlap,leaving,faces] C, warm-expand[window,seatStep,seatOverlap,leaving,faces] C +109) |
+| P4 | W4 | FAIL (compact·compacts C, compact·engagement-expands C, compact·no-threshold-bounce C +19) | FAIL (compact·non-first-current C) | FAIL (compact·non-first-current C, compact·non-first-current C·d, compact·non-first-current W +1) |
+| P5 | W5 + R6 | FAIL (h·expanded C, h·collapsed C, v·expanded C +9) | PASS | PASS |
+| F1 | W1 rests + W2 | FAIL (route1·long-run-h[ring] C, route2·collapsed-layer[scroller] C, route3·aria-current[scroller] C +15) | PASS | PASS |
+| F2 | W5 | FAIL (h·expanded C, h·collapsed C, v·expanded C +9) | PASS | PASS |
+| F3 | W4 coarse, hover gate | FAIL (coarse·press-then-scroll C, coarse·no-hover-latch C, coarse·tap-pins C +3) | PASS | PASS |
+| F4 | W4 compact | FAIL (compact·compacts C, compact·engagement-expands C, compact·no-threshold-bounce C +13) | FAIL (compact·non-first-current C) | FAIL (compact·non-first-current C, compact·non-first-current C·d, compact·non-first-current W +1) |
+| F5 | W3 first-expand (faces read in main, H5-9) | FAIL (first-expand[continuity] C, first-expand[continuity] C·d) | FAIL (first-expand[faces] C) | FAIL (first-expand[faces] C, first-expand[faces] C·d, first-expand[faces] W +1) |
+| F6 | crash-free (every browser cell) | PASS | PASS | PASS |
+| F7 | F7 whole suite + gates (H5-10) | — | — | PASS |
+| N1 | W3 anchor-end | FAIL (anchor-end·warm-expand[anchor] C, anchor-end·warm-collapse[anchor] C, anchor-end·warm-expand[anchor] C·d +1) | PASS | PASS |
+| N2 | W3 stretch·lead-add | FAIL (stretch·lead-add[seatStep] C, stretch·lead-add[seatStep] C·d) | FAIL (stretch·lead-add[seatStep] C) | FAIL (stretch·lead-add[seatStep] C, stretch·lead-add[seatStep] C·d, stretch·lead-add[seatStep] W +1) |
+| N3 | W3 lattice, infanim, seat-transition | FAIL (seat-transition[trajectory] C·d) | FAIL (seat-transition[trajectory] C) | FAIL (seat-transition[trajectory] W·d) |
+| N4 | W7 gutter, badge, whole, same | FAIL (side·light·dpr1[gutter,badge] C, canvas·light·dpr1[gutter] C, side·light·dpr2[gutter,badge] C +21) | PASS | PASS |
+| N5 | PR count, readers, partials (H5-8) + W2 long-run-v | FAIL (route1·long-run-v[ring] C, route1·long-run-v[ring] C·d, prose·readers[readers] +2) | FAIL (prose·partials[partials]) | PASS |
+| R1 | W3 continuity, seats, paint floor + CASES capped | FAIL (first-expand[continuity,trajectory,terminal,seatStep,seatOverlap] C, warm-collapse[seatStep,seatOverlap,faces] C, warm-expand[landing,seatStep,seatOverlap,faces] C +36) | FAIL (first-expand[seatStep,seatOverlap,faces] C, warm-collapse[seatOverlap] C, warm-expand[seatStep,seatOverlap,faces] C +14) | FAIL (case·capped·morph[errors] C, first-expand[seatStep,seatOverlap,faces] C, warm-collapse[seatStep,seatOverlap,faces] C +64) |
+| R2 | W3 leaving + vanish on every leaver (H5-4) | FAIL (warm-collapse[leaving] C, warm-expand[leaving] C, content-remove[leaving,vanish] C +12) | FAIL (first-expand[leaving] C, warm-collapse[leaving] C, warm-expand[leaving] C +6) | FAIL (first-expand[leaving] C, warm-collapse[leaving] C, warm-expand[leaving] C +32) |
+| R3 | W3 reversal | FAIL (reversal[trajectory] C, reversal[trajectory] C·d) | FAIL (reversal[trajectory] C) | FAIL (reversal[trajectory] C, reversal[trajectory] C·d, reversal[trajectory] W +1) |
+| R4 | ST five timings | FAIL (stall·same-task[leap] C, stall·1raf[leap] C, stall·2raf[leap] C +5) | FAIL (stall·same-task[leap] C, stall·1raf[leap] C, stall·2raf[leap] C +5) | FAIL (stall·same-task[leap] C, stall·1raf[leap] C, stall·2raf[leap] C +11) |
+| R5 | R5 hit sampler | FAIL (hit·warm-expand[seat,ghost,corner] C, hit·warm-collapse[seat,corner] C, hit·warm-expand[seat,ghost,corner] C·d +1) | FAIL (hit·warm-expand[seat,ghost,corner] C, hit·warm-collapse[seat,corner] C) | FAIL (hit·warm-expand[seat,ghost,corner] C, hit·warm-collapse[seat,corner] C, hit·warm-expand[seat,ghost,corner] C·d +5) |
+| R6 | W3 splice + stub, FM stub (H5-3) | FAIL (retarget·80[stub] C, retarget·120[stub] C, retarget·80[stub] C·d +1) | PASS | PASS |
+| R7 | W3 lanes + seat positions (H5-7) + CASES rotated | PASS | PASS | PASS |
+| R8 | W3 neighbour + ST nb + CASES consumer-margin | PASS | FAIL (case·consumer-margin[follows] C, case·consumer-margin·control[follows] C, stall·nb·same-task[neighbour] C +8) | FAIL (case·consumer-margin[follows] C, case·consumer-margin·control[follows] C, stall·nb·same-task[neighbour] C +24) NR 2 |
+| B1 | W3 retarget·context (H5-2) | PASS | PASS | PASS |
+| B2 | FM strips (tiles, stub) | PASS | PASS | PASS |
+| B3 | PR count, rows, partials, citations | FAIL (prose·count[count], prose·partials[partials]) | FAIL (prose·partials[partials]) | PASS |
+| C1 | CF c1·shape·h (ownshape, corner: H5-6) | FAIL (c1·shape·h[square,summary,ownshape] C, c1·shape·h[square,summary,ownshape] C·d) | FAIL (c1·shape·h[square,summary] C) | PASS |
+| C2 | CF c2 (prm per Q-18 (a): H5-6) | FAIL (c2·morph·h[continuous] C, c2·morph·h[continuous] C·d) | PASS | PASS NR 1 |
+| C3 | CF c3 + coarse tap | FAIL (c3·scroll[collapses] C, c3·scroll[collapses] C·d) | FAIL (c3·scroll[collapses] C, c7·coarse-tap[opens] C) | PASS |
+| C4 | CF c4 | PASS | PASS | PASS |
+| C5 | CF c5 | FAIL (c5·keyboard[disclosure,escape] C, c5·keyboard[disclosure,escape] C·d) | FAIL (c5·keyboard[disclosure,escape] C) | PASS |
+| C6 | CF c6 | FAIL (c6·menu[menu] C, c6·menu[menu] C·d) | FAIL (c6·menu[menu] C) | PASS |
+| C7 | CF vertical + narrow | FAIL (c1·shape·v[ownshape] C, c2·morph·v[continuous] C, c1·shape·v[ownshape] C·d +1) | FAIL (c2·morph·v[continuous] C, c7·coarse-tap[opens] C) | FAIL (c2·morph·v[continuous] C, c2·morph·v[continuous] C·d, c2·morph·v[continuous] W +1) |
+| C8 | CF c8·outside-press (H5-11) | FAIL (c8·outside-press[collapses] C, c8·outside-press[collapses] C·d) | FAIL (c8·outside-press[opens,collapses] C) | FAIL (c8·outside-press[opens,collapses] C, c8·outside-press[opens,collapses] C·d, c8·outside-press[opens,collapses] W +1) |
+| C9 | CF c9·short-coarse (H5-11) | FAIL (c9·short-coarse[block] C, c9·short-coarse[block] C·d) | FAIL (c9·short-coarse[opened] C) | FAIL (c9·short-coarse[block] C, c9·short-coarse[block] C·d, c9·short-coarse[block] W +1) |
+| L1 | L1 census | PASS | PASS | PASS |
+
+| build | 38 rows PASS | first 36 | first 24 | OWNER-BLOCKED rows | UNMEASURED rows |
+|---|---:|---:|---:|---:|---:|
+| head | 7/38 | 7/36 | 3/24 | - | F7 |
+| fv3 | 15/38 | 15/36 | 10/24 | - | F7 |
+| fv4 | 22/38 | 22/36 | 12/24 | - | - |

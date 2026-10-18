@@ -1,0 +1,442 @@
+{
+ "witness": "CF",
+ "target": "fv4@89aab527",
+ "when": "2026-10-17T19:51:30.387Z",
+ "load": 11.57,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "c2·morph·h",
+   "pass": false,
+   "failed": [
+    "pop"
+   ],
+   "unjudged": [],
+   "up": {
+    "travel": 157,
+    "step": 10.98,
+    "between": 29,
+    "flash": 0,
+    "pop": 0,
+    "checks": {
+     "moved": true,
+     "continuous": true,
+     "flash": true,
+     "pop": true
+    }
+   },
+   "down": {
+    "travel": 157,
+    "step": 10.98,
+    "between": 29,
+    "flash": 0,
+    "pop": 157,
+    "checks": {
+     "moved": true,
+     "continuous": true,
+     "flash": true,
+     "pop": false
+    }
+   },
+   "warm": {
+    "travel": 157,
+    "step": 11.25,
+    "between": 28,
+    "flash": 0,
+    "pop": 0,
+    "checks": {
+     "moved": true,
+     "continuous": true,
+     "flash": true,
+     "pop": true
+    }
+   },
+   "stallMs": 78,
+   "frames": {
+    "dir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p5/floor4/wt/.fv4out/chromium/fv4/dark/rerun2/runs/CF-fv4/frames/chromium-c2_morph_h-expand",
+    "shots": [
+     "step-00-7-42ms.png",
+     "step-01-44-65ms.png",
+     "step-02-67-93ms.png",
+     "step-03-95-127ms.png",
+     "step-04-129-170ms.png",
+     "step-05-172-209ms.png",
+     "step-06-211-244ms.png",
+     "step-07-245-286ms.png"
+    ]
+   },
+   "summary": "first expand: travel 157 px, largest one-frame step 10.98 px (bound 70.65), 29 frame(s) between the rests, flash 0, root cross drift 0 px, the extent first moves 78 ms after the hover; collapse: travel 157 px, largest one-frame step 10.98 px (bound 70.65), 29 frame(s) between the rests, flash 0, root cross drift 157 px; warm expand: travel 157 px, largest one-frame step 11.25 px (bound 70.65), 28 frame(s) between the rests, flash 0, root cross drift 0 px; frames 8 (frames/chromium-c2_morph_h-expand, warm)  ⟶ FAILED: pop",
+   "load": 13.21
+  },
+  {
+   "engine": "chromium",
+   "cell": "c2·morph·v",
+   "pass": false,
+   "failed": [
+    "continuous"
+   ],
+   "unjudged": [],
+   "up": {
+    "travel": 213,
+    "step": 178,
+    "between": 66,
+    "flash": 0,
+    "pop": 0,
+    "checks": {
+     "moved": true,
+     "continuous": false,
+     "flash": true,
+     "pop": true
+    }
+   },
+   "down": {
+    "travel": 213,
+    "step": 74.29,
+    "between": 29,
+    "flash": 0,
+    "pop": 0,
+    "checks": {
+     "moved": true,
+     "continuous": true,
+     "flash": true,
+     "pop": true
+    }
+   },
+   "warm": {
+    "travel": 213,
+    "step": 178,
+    "between": 65,
+    "flash": 0,
+    "pop": 0,
+    "checks": {
+     "moved": true,
+     "continuous": false,
+     "flash": true,
+     "pop": true
+    }
+   },
+   "stallMs": 78,
+   "frames": {
+    "dir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p5/floor4/wt/.fv4out/chromium/fv4/dark/rerun2/runs/CF-fv4/frames/chromium-c2_morph_v-expand",
+    "shots": [
+     "step-00-10-42ms.png",
+     "step-01-44-79ms.png",
+     "step-02-80-112ms.png",
+     "step-03-113-145ms.png",
+     "step-04-147-179ms.png",
+     "step-05-181-213ms.png",
+     "step-06-214-254ms.png",
+     "step-07-255-304ms.png"
+    ]
+   },
+   "summary": "first expand: travel 213 px, largest one-frame step 178 px (bound 95.85), 66 frame(s) between the rests, flash 0, root cross drift 0 px, the extent first moves 78 ms after the hover; collapse: travel 213 px, largest one-frame step 74.29 px (bound 95.85), 29 frame(s) between the rests, flash 0, root cross drift 0 px; warm expand: travel 213 px, largest one-frame step 178 px (bound 95.85), 65 frame(s) between the rests, flash 0, root cross drift 0 px; frames 8 (frames/chromium-c2_morph_v-expand, warm)  ⟶ FAILED: continuous",
+   "load": 12.84
+  },
+  {
+   "engine": "chromium",
+   "cell": "c3·scroll",
+   "pass": false,
+   "failed": [
+    "collapses"
+   ],
+   "unjudged": [],
+   "summary": "expanded yes; wheel 240 px scrolled the page 240 px; did NOT collapse within 1.5 s (the dwell is 3.6 s)  ⟶ FAILED: collapses",
+   "load": 12.37
+  },
+  {
+   "engine": "chromium",
+   "cell": "c8·outside-press",
+   "pass": false,
+   "failed": [
+    "opens",
+    "collapses"
+   ],
+   "unjudged": [],
+   "reps": [
+    {
+     "k": 0,
+     "opened": true,
+     "mid": true,
+     "press": {
+      "m": true,
+      "moving": true,
+      "main": 127.74734497070312
+     },
+     "settleMs": 505,
+     "collapsed": false,
+     "collapseMs": 1583,
+     "posture": "expanded",
+     "shots": [
+      "01-after-press.png",
+      "02-settled.png"
+     ]
+    },
+    {
+     "k": 1,
+     "opened": false,
+     "mid": false,
+     "press": {
+      "m": false,
+      "moving": false,
+      "main": 259
+     },
+     "settleMs": 586,
+     "collapsed": true,
+     "collapseMs": 1,
+     "posture": "collapsed",
+     "shots": []
+    },
+    {
+     "k": 2,
+     "opened": true,
+     "mid": true,
+     "press": {
+      "m": true,
+      "moving": true,
+      "main": 127.625244140625
+     },
+     "settleMs": 582,
+     "collapsed": false,
+     "collapseMs": 1502,
+     "posture": "expanded",
+     "shots": []
+    },
+    {
+     "k": 3,
+     "opened": false,
+     "mid": false,
+     "press": {
+      "m": false,
+      "moving": false,
+      "main": 259
+     },
+     "settleMs": 586,
+     "collapsed": true,
+     "collapseMs": 2,
+     "posture": "collapsed",
+     "shots": []
+    },
+    {
+     "k": 4,
+     "opened": true,
+     "mid": true,
+     "press": {
+      "m": true,
+      "moving": true,
+      "main": 127.3812255859375
+     },
+     "settleMs": 583,
+     "collapsed": false,
+     "collapseMs": 1580,
+     "posture": "expanded",
+     "shots": []
+    },
+    {
+     "k": 5,
+     "opened": false,
+     "mid": false,
+     "press": {
+      "m": false,
+      "moving": false,
+      "main": 259
+     },
+     "settleMs": 582,
+     "collapsed": true,
+     "collapseMs": 1,
+     "posture": "collapsed",
+     "shots": []
+    },
+    {
+     "k": 6,
+     "opened": true,
+     "mid": true,
+     "press": {
+      "m": true,
+      "moving": true,
+      "main": 126.89483642578125
+     },
+     "settleMs": 586,
+     "collapsed": false,
+     "collapseMs": 1582,
+     "posture": "expanded",
+     "shots": []
+    },
+    {
+     "k": 7,
+     "opened": false,
+     "mid": false,
+     "press": {
+      "m": false,
+      "moving": false,
+      "main": 259
+     },
+     "settleMs": 587,
+     "collapsed": true,
+     "collapseMs": 2,
+     "posture": "collapsed",
+     "shots": []
+    },
+    {
+     "k": 8,
+     "opened": true,
+     "mid": true,
+     "press": {
+      "m": true,
+      "moving": true,
+      "main": 127.625244140625
+     },
+     "settleMs": 584,
+     "collapsed": false,
+     "collapseMs": 1580,
+     "posture": "expanded",
+     "shots": []
+    },
+    {
+     "k": 9,
+     "opened": false,
+     "mid": false,
+     "press": {
+      "m": false,
+      "moving": false,
+      "main": 259
+     },
+     "settleMs": 583,
+     "collapsed": true,
+     "collapseMs": 1,
+     "posture": "collapsed",
+     "shots": []
+    },
+    {
+     "k": 10,
+     "opened": true,
+     "mid": true,
+     "press": {
+      "m": true,
+      "moving": true,
+      "main": 127.5030517578125
+     },
+     "settleMs": 585,
+     "collapsed": false,
+     "collapseMs": 1500,
+     "posture": "expanded",
+     "shots": []
+    },
+    {
+     "k": 11,
+     "opened": false,
+     "mid": false,
+     "press": {
+      "m": false,
+      "moving": false,
+      "main": 259
+     },
+     "settleMs": 586,
+     "collapsed": true,
+     "collapseMs": 1,
+     "posture": "collapsed",
+     "shots": []
+    },
+    {
+     "k": 12,
+     "opened": true,
+     "mid": true,
+     "press": {
+      "m": true,
+      "moving": true,
+      "main": 127.5030517578125
+     },
+     "settleMs": 587,
+     "collapsed": false,
+     "collapseMs": 1502,
+     "posture": "expanded",
+     "shots": []
+    },
+    {
+     "k": 13,
+     "opened": false,
+     "mid": false,
+     "press": {
+      "m": false,
+      "moving": false,
+      "main": 259
+     },
+     "settleMs": 584,
+     "collapsed": true,
+     "collapseMs": 1,
+     "posture": "collapsed",
+     "shots": []
+    },
+    {
+     "k": 14,
+     "opened": true,
+     "mid": true,
+     "press": {
+      "m": true,
+      "moving": true,
+      "main": 127.74734497070312
+     },
+     "settleMs": 585,
+     "collapsed": false,
+     "collapseMs": 1581,
+     "posture": "expanded",
+     "shots": []
+    },
+    {
+     "k": 15,
+     "opened": false,
+     "mid": false,
+     "press": {
+      "m": false,
+      "moving": false,
+      "main": 259
+     },
+     "settleMs": 584,
+     "collapsed": true,
+     "collapseMs": 1,
+     "posture": "collapsed",
+     "shots": []
+    }
+   ],
+   "point": [
+    20,
+    60
+   ],
+   "summary": "press point 20,60; 16 attempt(s), 8 press(es) landed mid-morph (bound 10 of 10); 0/8 collapsed within 1500 ms of the morph settling (stayed expanded, attempt 0); 8 hover(s) that did not open the dock; frames frames/chromium-c8_outside-press  ⟶ FAILED: opens, collapses",
+   "load": 11.57
+  },
+  {
+   "engine": "chromium",
+   "cell": "c9·short-coarse",
+   "pass": false,
+   "failed": [
+    "block"
+   ],
+   "unjudged": [],
+   "blockPx": 60,
+   "seats": [
+    [
+     44,
+     44,
+     "button.dock-icon-button.glass-specular-track.glass-capsule-hover"
+    ],
+    [
+     44,
+     44,
+     "button.dock-icon-button.glass-specular-track.glass-capsule-hover"
+    ],
+    [
+     44,
+     44,
+     "button.dock-icon-button.glass-specular-track.glass-capsule-hover"
+    ],
+    [
+     44,
+     44,
+     "button.dock-icon-button.glass-specular-track.glass-capsule-hover"
+    ]
+   ],
+   "summary": "844 × 390, coarse: tap at the collapsed dock's disclosure expanded it (pinned); expanded block size 60 px (bound 52: a 44 px seat + 2 × the compact rung's 4 px block padding); 4 painting seat(s), the smallest 44 px; frame chromium-c9-short-coarse.png  ⟶ FAILED: block",
+   "load": 11.57
+  }
+ ]
+}
