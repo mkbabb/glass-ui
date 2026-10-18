@@ -1,0 +1,37 @@
+{
+ "id": "F-11",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p4/F5pp/out/builds/head"
+ },
+ "loadStart": "19.9/25.2/26.8",
+ "loadEnd": "19.5/25.0/26.7",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "F-11 secondary press",
+   "status": "FAIL",
+   "line": "pressed: held true engaged 2 contextmenu 1 · released: held false engaged 0 contextmenu 1 · after a primary click elsewhere: held false engaged 0 contextmenu 1",
+   "load": "19.9/25.2/26.8"
+  },
+  {
+   "name": "F-11 contextmenu ends a pointer hold",
+   "status": "FAIL",
+   "line": "pressed: held true engaged 2 contextmenu 0 · contextmenu, button still down: held true engaged 2 contextmenu 1 · after the release: held false engaged 0 contextmenu 1",
+   "load": "19.9/25.2/26.8"
+  },
+  {
+   "name": "F-11 control-click",
+   "status": "REPORT",
+   "line": "Control + primary press: held true engaged 2 contextmenu 1 · after release: held false engaged 0 contextmenu 1",
+   "load": "19.9/25.2/26.8"
+  },
+  {
+   "name": "F-11 touch long press",
+   "status": "PASS",
+   "line": "+200 ms: held true engaged 2 contextmenu 0 · +1500 ms: held true engaged 2 contextmenu 1 · 300 ms after the touch ends: held false engaged 0 contextmenu 1",
+   "load": "19.5/25.0/26.7"
+  }
+ ]
+}

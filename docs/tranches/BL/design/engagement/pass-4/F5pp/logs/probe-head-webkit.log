@@ -1,0 +1,12 @@
+# start probe head webkit 2026-10-18 16:37:55 load { 33.96 26.25 23.29 }
+# F-11 · useHold: the primary button only; a contextmenu ends a pointer hold (probe)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p4/F5pp/out/builds/head · engine webkit · lock wait 0.0 s · other headless processes: chromium 10, webkit 0 · load 34.0/26.2/23.3 at start
+# scene app: harness scenes/App.vue (sha1 3c135d6264f8)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  FAIL       F-11 secondary press · pressed: held true engaged 2 contextmenu 1 · released: held true engaged 2 contextmenu 1 · after a primary click elsewhere: held true engaged 2 contextmenu 1 · load 34.0/26.2/23.3
+  FAIL       F-11 contextmenu ends a pointer hold · pressed: held true engaged 2 contextmenu 0 · contextmenu, button still down: held true engaged 2 contextmenu 1 · after the release: held false engaged 0 contextmenu 1 · load 32.0/26.0/23.2
+  REPORT     F-11 control-click · Control + primary press: held true engaged 2 contextmenu 1 · after release: held true engaged 2 contextmenu 1 · load 32.0/26.0/23.2
+  PASS       F-11 touch long press · +200 ms: held true engaged 2 contextmenu 0 · +1500 ms: held true engaged 2 contextmenu 0 · 300 ms after the touch ends: held false engaged 0 contextmenu 0 · load 31.2/25.9/23.2
+F-11 webkit FAIL · 1 pass, 2 fail, 0 unmeasured of 3 gating cells (1 reported) · load 34.0/26.2/23.3 at start, 31.2/25.9/23.2 at end
+# exit 1
+# end probe head webkit 2026-10-18 16:38:06 load { 31.16 25.89 23.20 }

@@ -1,0 +1,9 @@
+# start E-10 head webkit 2026-10-18 16:56:33 load { 26.15 25.02 25.42 }
+E-10 webkit   exit 1 · E-10 webkit FAIL · 1 pass, 5 fail, 0 unmeasured of 6 gating cells (2 reported) · load 26.1/25.0/25.4 at start, 26.5/25.1/25.4 at end · 15 s, load at start 26.1/25.0/25.4
+    FAIL       E-10 slider escape release · NOT DRIVEN: the slider was not keyboard-engaged at the Escape (×1.000 < ×1.03) · load 24.4/24.7/25.3
+    FAIL       E-10 slider2 hand-off drop · NOT DRIVEN: A was not engaged at the Tab (×1.000, veil 0.00) · load 26.5/25.1/25.4
+    FAIL       E-10 slider2 hand-off singleton fwd · NOT DRIVEN: the outgoing A does not match [data-engaged] before the Tab (the route marks no engagement on the root) · load 26.5/25.1/25.4
+    FAIL       E-10 slider2 hand-off rev · NOT DRIVEN: B was not engaged at the Shift+Tab (×1.000, veil 0.00) · load 26.5/25.1/25.4
+    FAIL       E-10 slider2 hand-off singleton rev · NOT DRIVEN: the outgoing B does not match [data-engaged] before the Shift+Tab (the route marks no engagement on the root) · load 26.5/25.1/25.4
+# exit 1
+# end E-10 head webkit 2026-10-18 16:56:48 load { 26.46 25.11 25.44 }

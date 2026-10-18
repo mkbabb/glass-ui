@@ -1,0 +1,15 @@
+# start E-4 head chromium 2026-10-18 14:39:10 load { 31.41 35.35 32.57 }
+[guarded] waiting for headroom (load 48 > 36)
+E-4 chromium exit 1 · E-4 chromium FAIL · 8 pass, 6 fail, 4 unmeasured of 18 gating cells (1 reported) · load 33.9/35.1/32.8 at start, 23.2/31.5/31.6 at end · 61 s, load at start 33.9/35.1/32.8
+    FAIL       E-4 slider fling carries velocity · axis x, leading edge, page frame · fling: carry 0.10 px, settles -3.49 px past release · still: carry 0.08 px, settles -2.23 px · difference: carry 0.03 px, settle -1.26 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 240 frames, median 8.3 ms · load 31.9/34.7/32.7
+    FAIL       E-4 tabsdrag fling carries velocity · axis x, page frame · fling: carry 39.17 px, settles -54.53 px past release · still: carry 36.73 px, settles -54.53 px · difference: carry 2.44 px, settle 0.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 239 frames, median 8.3 ms · load 28.1/33.8/32.4
+    FAIL       E-4 tabsdrag release continuity · largest one-frame move on release: fling 245.6 px, still 245.6 px · during the drive: fling 91.2 px, still 91.2 px (bound ≤ drive × 1.5 + 2 = 138.7 px) · load 28.1/33.8/32.4
+    FAIL       E-4 tabsdrag release PRM · NOT DRIVEN under reduce: the drag moved the body 0.0 px (bound ≥ 20 px) · load 25.7/33.1/32.2
+    UNMEASURED E-4 sheet fling carries velocity · the surface paints in flow ([role="dialog"] computes position: relative): UNMEASURED until its owner cures its position (REGISTRY §P1-7) · load 24.7/32.7/32.0
+    UNMEASURED E-4 sheet release continuity · in flow (above) · load 24.7/32.7/32.0
+    UNMEASURED E-4 sheet repeat landing · the surface is not read in this engine (above) · load 24.7/32.7/32.0
+    UNMEASURED E-4 sheet release PRM · the surface is not driven or not read in this engine (above) · load 24.7/32.7/32.0
+    FAIL       E-4 sortable fling carries velocity · axis y, page frame · fling: carry 27.37 px, settles -36.69 px past release · still: carry 37.95 px, settles -36.69 px · difference: carry -10.59 px, settle 0.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 0.025 · 240 frames, median 8.4 ms · load 23.7/32.4/31.9
+    FAIL       E-4 sortable release continuity · largest one-frame move on release: fling 74.6 px, still 28.2 px · during the drive: fling 40.0 px, still 40.0 px (bound ≤ drive × 1.5 + 2 = 62.0 px) · load 23.7/32.4/31.9
+# exit 1
+# end E-4 head chromium 2026-10-18 14:42:31 load { 24.00 31.56 31.64 }

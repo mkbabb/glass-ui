@@ -1,0 +1,493 @@
+{
+ "id": "E-9",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p4/F5pp/out/builds/head"
+ },
+ "loadStart": "23.0/27.4/29.6",
+ "loadEnd": "20.1/25.4/28.7",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-9 switch press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 38 frames (bound < 0.002)",
+   "load": "21.7/27.1/29.5"
+  },
+  {
+   "name": "E-9 switch press-light light",
+   "status": "PASS",
+   "line": "press-only paint changes [child0 bg] (bound ≥ 1)",
+   "load": "21.7/27.1/29.5"
+  },
+  {
+   "name": "E-9 switch commit-spatial light",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 20.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 97 frames",
+   "load": "21.7/27.1/29.5"
+  },
+  {
+   "name": "E-9 switch commit-light light",
+   "status": "FAIL",
+   "line": "commit(Space) under reduce, state false → true: the transient · light rise 0.0000 on the layers channel (peak 0.9224 → rest 0.9224, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0085, tail spread 0.0000 against 0.0085)",
+   "load": "21.7/27.1/29.5"
+  },
+  {
+   "name": "E-9 switch press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 38 frames (bound < 0.002)",
+   "load": "20.6/26.8/29.3"
+  },
+  {
+   "name": "E-9 switch press-light dark",
+   "status": "PASS",
+   "line": "press-only paint changes [child0 bg] (bound ≥ 1)",
+   "load": "20.6/26.8/29.3"
+  },
+  {
+   "name": "E-9 switch commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 20.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 97 frames",
+   "load": "20.6/26.8/29.3"
+  },
+  {
+   "name": "E-9 switch commit-light dark",
+   "status": "FAIL",
+   "line": "commit(Space) under reduce, state false → true: the transient · light rise 0.0000 on the layers channel (peak 0.0253 → rest 0.0253, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0011, tail spread 0.0000 against 0.0040)",
+   "load": "20.6/26.8/29.3"
+  },
+  {
+   "name": "E-9 checkbox press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 37 frames (bound < 0.002)",
+   "load": "20.6/26.8/29.3"
+  },
+  {
+   "name": "E-9 checkbox press-light light",
+   "status": "PASS",
+   "line": "press-only paint changes [child0 bg] (bound ≥ 1)",
+   "load": "20.6/26.8/29.3"
+  },
+  {
+   "name": "E-9 checkbox commit-spatial light",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 97 frames",
+   "load": "20.6/26.8/29.3"
+  },
+  {
+   "name": "E-9 checkbox commit-light light",
+   "status": "FAIL",
+   "line": "commit(Space) under reduce, state false → true: the transient · light rise 0.0000 on the layers channel (peak 0.0300 → rest 0.0300, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0012, tail spread 0.0000 against 0.0040)",
+   "load": "20.6/26.8/29.3"
+  },
+  {
+   "name": "E-9 checkbox press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 37 frames (bound < 0.002)",
+   "load": "19.7/26.5/29.2"
+  },
+  {
+   "name": "E-9 checkbox press-light dark",
+   "status": "PASS",
+   "line": "press-only paint changes [child0 bg] (bound ≥ 1)",
+   "load": "19.7/26.5/29.2"
+  },
+  {
+   "name": "E-9 checkbox commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 97 frames",
+   "load": "19.7/26.5/29.2"
+  },
+  {
+   "name": "E-9 checkbox commit-light dark",
+   "status": "FAIL",
+   "line": "commit(Space) under reduce, state false → true: the transient · light rise 0.0000 on the layers channel (peak 0.2893 → rest 0.2893, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0043, tail spread 0.0000 against 0.0043)",
+   "load": "19.7/26.5/29.2"
+  },
+  {
+   "name": "E-9 radio press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 38 frames (bound < 0.002)",
+   "load": "19.7/26.5/29.2"
+  },
+  {
+   "name": "E-9 radio press-light light",
+   "status": "PASS",
+   "line": "press-only paint changes [child0 bg] (bound ≥ 1)",
+   "load": "19.7/26.5/29.2"
+  },
+  {
+   "name": "E-9 radio commit-spatial light",
+   "status": "PASS",
+   "line": "commit(ArrowDown): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 97 frames",
+   "load": "19.7/26.5/29.2"
+  },
+  {
+   "name": "E-9 radio commit-light light",
+   "status": "FAIL",
+   "line": "commit(ArrowDown) under reduce, state \"a\" → \"b\": the transient · light rise 0.0000 on the layers channel (peak 0.9566 → rest 0.9566, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0087, tail spread 0.0000 against 0.0087)",
+   "load": "19.7/26.5/29.2"
+  },
+  {
+   "name": "E-9 radio press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 37 frames (bound < 0.002)",
+   "load": "18.8/26.2/29.1"
+  },
+  {
+   "name": "E-9 radio press-light dark",
+   "status": "PASS",
+   "line": "press-only paint changes [child0 bg] (bound ≥ 1)",
+   "load": "18.8/26.2/29.1"
+  },
+  {
+   "name": "E-9 radio commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(ArrowDown): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 97 frames",
+   "load": "18.8/26.2/29.1"
+  },
+  {
+   "name": "E-9 radio commit-light dark",
+   "status": "FAIL",
+   "line": "commit(ArrowDown) under reduce, state \"a\" → \"b\": the transient · light rise 0.0000 on the layers channel (peak 0.2893 → rest 0.0100, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0006, tail spread 0.0000 against 0.0040)",
+   "load": "18.8/26.2/29.1"
+  },
+  {
+   "name": "E-9 tabs press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 37 frames (bound < 0.002)",
+   "load": "18.8/26.1/29.0"
+  },
+  {
+   "name": "E-9 tabs press-light light",
+   "status": "FAIL",
+   "line": "press-only paint changes [] (bound ≥ 1)",
+   "load": "18.8/26.1/29.0"
+  },
+  {
+   "name": "E-9 tabs commit-spatial light",
+   "status": "PASS",
+   "line": "commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 97 frames",
+   "load": "18.8/26.1/29.0"
+  },
+  {
+   "name": "E-9 tabs commit-light light",
+   "status": "FAIL",
+   "line": "commit(ArrowRight) under reduce, state \"a\" → \"b\": the transient · light rise 0.0000 on the layers channel (peak 0.7807 → rest 0.7807, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0077, tail spread 0.0000 against 0.0077)",
+   "load": "18.8/26.1/29.0"
+  },
+  {
+   "name": "E-9 tabs press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 38 frames (bound < 0.002)",
+   "load": "18.8/26.1/29.0"
+  },
+  {
+   "name": "E-9 tabs press-light dark",
+   "status": "FAIL",
+   "line": "press-only paint changes [] (bound ≥ 1)",
+   "load": "18.8/26.1/29.0"
+  },
+  {
+   "name": "E-9 tabs commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 97 frames",
+   "load": "18.8/26.1/29.0"
+  },
+  {
+   "name": "E-9 tabs commit-light dark",
+   "status": "FAIL",
+   "line": "commit(ArrowRight) under reduce, state \"a\" → \"b\": the transient · light rise 0.0000 on the layers channel (peak 0.0033 → rest 0.0033, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0003, tail spread 0.0000 against 0.0040)",
+   "load": "18.8/26.1/29.0"
+  },
+  {
+   "name": "E-9 toggle press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 37 frames (bound < 0.002)",
+   "load": "18.1/25.8/28.9"
+  },
+  {
+   "name": "E-9 toggle press-light light",
+   "status": "FAIL",
+   "line": "press-only paint changes [] (bound ≥ 1)",
+   "load": "18.1/25.8/28.9"
+  },
+  {
+   "name": "E-9 toggle commit-spatial light",
+   "status": "PASS",
+   "line": "commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 97 frames",
+   "load": "18.1/25.8/28.9"
+  },
+  {
+   "name": "E-9 toggle commit-light light",
+   "status": "FAIL",
+   "line": "commit(ArrowRight) under reduce, state \"a\" → \"b\": the transient · light rise 0.0000 on the layers channel (peak 0.7357 → rest 0.7357, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0075, tail spread 0.0000 against 0.0075)",
+   "load": "18.1/25.8/28.9"
+  },
+  {
+   "name": "E-9 toggle press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 37 frames (bound < 0.002)",
+   "load": "18.1/25.8/28.9"
+  },
+  {
+   "name": "E-9 toggle press-light dark",
+   "status": "FAIL",
+   "line": "press-only paint changes [] (bound ≥ 1)",
+   "load": "18.1/25.8/28.9"
+  },
+  {
+   "name": "E-9 toggle commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 97 frames",
+   "load": "18.1/25.8/28.9"
+  },
+  {
+   "name": "E-9 toggle commit-light dark",
+   "status": "FAIL",
+   "line": "commit(ArrowRight) under reduce, state \"a\" → \"b\": the transient · light rise 0.0000 on the layers channel (peak 0.0183 → rest 0.0183, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0009, tail spread 0.0000 against 0.0040)",
+   "load": "18.1/25.8/28.9"
+  },
+  {
+   "name": "E-9 chip press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 38 frames (bound < 0.002)",
+   "load": "17.7/25.6/28.8"
+  },
+  {
+   "name": "E-9 chip press-light light",
+   "status": "FAIL",
+   "line": "press-only paint changes [] (bound ≥ 1)",
+   "load": "17.7/25.6/28.8"
+  },
+  {
+   "name": "E-9 chip commit-spatial light",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 97 frames",
+   "load": "17.7/25.6/28.8"
+  },
+  {
+   "name": "E-9 chip commit-light light",
+   "status": "FAIL",
+   "line": "commit(Space) under reduce, state false → true: the transient · light rise 0.0000 on the layers channel (peak 0.5269 → rest 0.5269, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0062, tail spread 0.0000 against 0.0062)",
+   "load": "17.7/25.6/28.8"
+  },
+  {
+   "name": "E-9 chip press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 38 frames (bound < 0.002)",
+   "load": "17.7/25.6/28.8"
+  },
+  {
+   "name": "E-9 chip press-light dark",
+   "status": "FAIL",
+   "line": "press-only paint changes [] (bound ≥ 1)",
+   "load": "17.7/25.6/28.8"
+  },
+  {
+   "name": "E-9 chip commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 97 frames",
+   "load": "17.7/25.6/28.8"
+  },
+  {
+   "name": "E-9 chip commit-light dark",
+   "status": "FAIL",
+   "line": "commit(Space) under reduce, state false → true: the transient · light rise 0.0000 on the layers channel (peak 0.0646 → rest 0.0646, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0018, tail spread 0.0000 against 0.0040)",
+   "load": "17.7/25.6/28.8"
+  },
+  {
+   "name": "E-9 chipaction press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 37 frames (bound < 0.002)",
+   "load": "17.8/25.5/28.8"
+  },
+  {
+   "name": "E-9 chipaction press-light light",
+   "status": "FAIL",
+   "line": "press-only paint changes [] (bound ≥ 1)",
+   "load": "17.8/25.5/28.8"
+  },
+  {
+   "name": "E-9 chipaction commit-spatial light",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 97 frames",
+   "load": "17.8/25.5/28.8"
+  },
+  {
+   "name": "E-9 chipaction commit-light light",
+   "status": "FAIL",
+   "line": "commit(Space) under reduce, state 0 → 1: the transient · light rise 0.0000 on the layers channel (peak 0.6482 → rest 0.6482, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0069, tail spread 0.0000 against 0.0069)",
+   "load": "17.8/25.5/28.8"
+  },
+  {
+   "name": "E-9 chipaction press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 37 frames (bound < 0.002)",
+   "load": "17.3/25.2/28.7"
+  },
+  {
+   "name": "E-9 chipaction press-light dark",
+   "status": "FAIL",
+   "line": "press-only paint changes [] (bound ≥ 1)",
+   "load": "17.3/25.2/28.7"
+  },
+  {
+   "name": "E-9 chipaction commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 97 frames",
+   "load": "17.3/25.2/28.7"
+  },
+  {
+   "name": "E-9 chipaction commit-light dark",
+   "status": "FAIL",
+   "line": "commit(Space) under reduce, state 0 → 1: the transient · light rise 0.0000 on the layers channel (peak 0.0074 → rest 0.0074, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0005, tail spread 0.0000 against 0.0040)",
+   "load": "17.3/25.2/28.7"
+  },
+  {
+   "name": "E-9 accordion press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 37 frames (bound < 0.002)",
+   "load": "17.3/25.2/28.7"
+  },
+  {
+   "name": "E-9 accordion press-light light",
+   "status": "FAIL",
+   "line": "press-only paint changes [] (bound ≥ 1)",
+   "load": "17.3/25.2/28.7"
+  },
+  {
+   "name": "E-9 accordion commit-spatial light",
+   "status": "PASS",
+   "line": "commit(Enter): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 97 frames",
+   "load": "17.3/25.2/28.7"
+  },
+  {
+   "name": "E-9 accordion commit-light light",
+   "status": "FAIL",
+   "line": "commit(Enter) under reduce, state null → \"one\": the transient · light rise 0.0000 on the layers channel (peak 0.9566 → rest 0.9566, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0087, tail spread 0.0000 against 0.0087)",
+   "load": "17.3/25.2/28.7"
+  },
+  {
+   "name": "E-9 accordion press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 38 frames (bound < 0.002)",
+   "load": "16.4/24.9/28.5"
+  },
+  {
+   "name": "E-9 accordion press-light dark",
+   "status": "FAIL",
+   "line": "press-only paint changes [] (bound ≥ 1)",
+   "load": "16.4/24.9/28.5"
+  },
+  {
+   "name": "E-9 accordion commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(Enter): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 97 frames",
+   "load": "16.4/24.9/28.5"
+  },
+  {
+   "name": "E-9 accordion commit-light dark",
+   "status": "FAIL",
+   "line": "commit(Enter) under reduce, state null → \"one\": the transient · light rise 0.0000 on the layers channel (peak 0.0031 → rest 0.0031, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0003, tail spread 0.0000 against 0.0040)",
+   "load": "16.4/24.9/28.5"
+  },
+  {
+   "name": "E-9 button press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 38 frames (bound < 0.002)",
+   "load": "16.4/24.9/28.5"
+  },
+  {
+   "name": "E-9 button press-light light",
+   "status": "PASS",
+   "line": "press-only paint changes [::before opacity] (bound ≥ 1)",
+   "load": "16.4/24.9/28.5"
+  },
+  {
+   "name": "E-9 button commit-spatial light",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.030 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 97 frames",
+   "load": "16.4/24.9/28.5"
+  },
+  {
+   "name": "E-9 button commit-light light",
+   "status": "FAIL",
+   "line": "commit(Space) under reduce, state 0 → 1: the transient · light rise 0.0000 on the layers channel (peak 0.7562 → rest 0.7562, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0076, tail spread 0.0000 against 0.0076)",
+   "load": "16.4/24.9/28.5"
+  },
+  {
+   "name": "E-9 button press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 37 frames (bound < 0.002)",
+   "load": "18.3/25.2/28.6"
+  },
+  {
+   "name": "E-9 button press-light dark",
+   "status": "PASS",
+   "line": "press-only paint changes [::before opacity] (bound ≥ 1)",
+   "load": "18.3/25.2/28.6"
+  },
+  {
+   "name": "E-9 button commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.030 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 98 frames",
+   "load": "18.3/25.2/28.6"
+  },
+  {
+   "name": "E-9 button commit-light dark",
+   "status": "FAIL",
+   "line": "commit(Space) under reduce, state 0 → 1: the transient · light rise 0.0000 on the layers channel (peak 0.0076 → rest 0.0076, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0005, tail spread 0.0000 against 0.0040)",
+   "load": "18.3/25.2/28.6"
+  },
+  {
+   "name": "E-9 slider press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 37 frames (bound < 0.002)",
+   "load": "18.3/25.2/28.6"
+  },
+  {
+   "name": "E-9 slider press-light light",
+   "status": "PASS",
+   "line": "press-only paint changes [child1 bg] (bound ≥ 1)",
+   "load": "18.3/25.2/28.6"
+  },
+  {
+   "name": "E-9 slider commit-spatial light",
+   "status": "PASS",
+   "line": "commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 97 frames",
+   "load": "18.3/25.2/28.6"
+  },
+  {
+   "name": "E-9 slider commit-light light",
+   "status": "REPORT",
+   "line": "not a CK-02 commit member (no E-2 gate): its reduce light leg is read by E-3",
+   "load": "18.3/25.2/28.6"
+  },
+  {
+   "name": "E-9 slider press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 36 frames (bound < 0.002)",
+   "load": "20.1/25.4/28.7"
+  },
+  {
+   "name": "E-9 slider press-light dark",
+   "status": "PASS",
+   "line": "press-only paint changes [child1 bg] (bound ≥ 1)",
+   "load": "20.1/25.4/28.7"
+  },
+  {
+   "name": "E-9 slider commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 97 frames",
+   "load": "20.1/25.4/28.7"
+  },
+  {
+   "name": "E-9 slider commit-light dark",
+   "status": "REPORT",
+   "line": "not a CK-02 commit member (no E-2 gate): its reduce light leg is read by E-3",
+   "load": "20.1/25.4/28.7"
+  }
+ ]
+}

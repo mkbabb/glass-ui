@@ -1,0 +1,8 @@
+# start E-7 head chromium 2026-10-18 14:47:07 load { 31.36 29.50 30.44 }
+E-7 chromium exit 1 · E-7 chromium FAIL · 3 pass, 4 fail, 0 unmeasured of 7 gating cells (0 reported) · load 31.4/29.5/30.4 at start, 30.0/29.2/30.3 at end · 5 s, load at start 31.4/29.5/30.4
+    FAIL       E-7 writers data-engaged (static) · 2 writer file(s): src/components/dialog/ModalOverlay.vue, src/components/slider/Slider.vue · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui · load 30.0/29.2/30.3
+    FAIL       E-7 writers data-held (static) · 2 writer file(s): src/components/dock/GlassDock.vue, src/components/slider/Slider.vue · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui · load 30.0/29.2/30.3
+    FAIL       E-7 writers data-press (static) · 1 writer file(s): src/components/pager-dots/PagerDots.vue · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui · load 30.0/29.2/30.3
+    FAIL       E-7 modal open, nothing held · dialog open true · veil nodes 1 · [data-engaged] nodes 1 (glass-focus-veil) · bound 0 · load 30.0/29.2/30.3
+# exit 1
+# end E-7 head chromium 2026-10-18 14:47:17 load { 29.34 29.13 30.29 }

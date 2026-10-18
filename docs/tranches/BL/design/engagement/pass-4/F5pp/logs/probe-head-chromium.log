@@ -1,0 +1,12 @@
+# start probe head chromium 2026-10-18 15:04:58 load { 20.37 25.39 26.85 }
+# F-11 · useHold: the primary button only; a contextmenu ends a pointer hold (probe)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p4/F5pp/out/builds/head · engine chromium · lock wait 0.0 s · other headless processes: chromium 10, webkit 2 · load 19.9/25.2/26.8 at start
+# scene app: harness scenes/App.vue (sha1 3c135d6264f8)
+# chromium 149.0.7827.55
+  FAIL       F-11 secondary press · pressed: held true engaged 2 contextmenu 1 · released: held false engaged 0 contextmenu 1 · after a primary click elsewhere: held false engaged 0 contextmenu 1 · load 19.9/25.2/26.8
+  FAIL       F-11 contextmenu ends a pointer hold · pressed: held true engaged 2 contextmenu 0 · contextmenu, button still down: held true engaged 2 contextmenu 1 · after the release: held false engaged 0 contextmenu 1 · load 19.9/25.2/26.8
+  REPORT     F-11 control-click · Control + primary press: held true engaged 2 contextmenu 1 · after release: held false engaged 0 contextmenu 1 · load 19.9/25.2/26.8
+  PASS       F-11 touch long press · +200 ms: held true engaged 2 contextmenu 0 · +1500 ms: held true engaged 2 contextmenu 1 · 300 ms after the touch ends: held false engaged 0 contextmenu 1 · load 19.5/25.0/26.7
+F-11 chromium FAIL · 1 pass, 2 fail, 0 unmeasured of 3 gating cells (1 reported) · load 19.9/25.2/26.8 at start, 19.5/25.0/26.7 at end
+# exit 1
+# end probe head chromium 2026-10-18 15:05:10 load { 18.86 24.81 26.62 }

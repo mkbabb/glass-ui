@@ -1,0 +1,61 @@
+{
+ "id": "E-10",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p4/F5pp/out/builds/f5pp"
+ },
+ "loadStart": "18.3/25.7/27.1",
+ "loadEnd": "21.2/26.0/27.1",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 slider own release",
+   "status": "REPORT",
+   "line": "Tab-engaged scale ×1.000 < ×1.03: the keyboard does not engage this slider, so the release has no step to film (the hand-off and Escape cells read NOT DRIVEN)",
+   "load": "18.1/25.6/27.0"
+  },
+  {
+   "name": "E-10 slider escape release",
+   "status": "FAIL",
+   "line": "NOT DRIVEN: the slider was not keyboard-engaged at the Escape (×1.000 < ×1.03)",
+   "load": "18.1/25.6/27.0"
+  },
+  {
+   "name": "E-10 slider re-render landing",
+   "status": "PASS",
+   "line": "a sibling inserted during the hold, then release: the root's largest one-frame move per 16.7 ms 0.0 px (without the insert 0.0 px; bound ≤ that + 1 px)",
+   "load": "20.6/26.0/27.1"
+  },
+  {
+   "name": "E-10 slider2 hand-off drop",
+   "status": "FAIL",
+   "line": "NOT DRIVEN: A was not engaged at the Tab (×1.000, veil 0.00)",
+   "load": "21.2/26.0/27.1"
+  },
+  {
+   "name": "E-10 slider2 hand-off singleton fwd",
+   "status": "PASS",
+   "line": "109 frames: engaged roots per frame max 1, 0 frame(s) with none · first frame A engaged true, B false · last frame B engaged true, A false (bound: at most one engaged on every frame, the incoming one at the end; selector [data-engaged])",
+   "load": "21.2/26.0/27.1"
+  },
+  {
+   "name": "E-10 slider2 hand-off veil",
+   "status": "REPORT",
+   "line": "no veil up before the Tab (0.00): this route veils no keyboard engagement",
+   "load": "21.2/26.0/27.1"
+  },
+  {
+   "name": "E-10 slider2 hand-off rev",
+   "status": "FAIL",
+   "line": "NOT DRIVEN: B was not engaged at the Shift+Tab (×1.000, veil 0.00)",
+   "load": "21.2/26.0/27.1"
+  },
+  {
+   "name": "E-10 slider2 hand-off singleton rev",
+   "status": "PASS",
+   "line": "110 frames: engaged roots per frame max 1, 0 frame(s) with none · first frame B engaged true, A false · last frame A engaged true, B false (bound: at most one engaged on every frame, the incoming one at the end; selector [data-engaged])",
+   "load": "21.2/26.0/27.1"
+  }
+ ]
+}
