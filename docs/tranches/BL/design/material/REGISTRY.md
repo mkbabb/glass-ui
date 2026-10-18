@@ -2156,3 +2156,268 @@ If the owner has not ruled by pass 8's critic, pass 8 cannot be clean, whatever 
 - **C″ stays banked** unless a re-trigger fires. The live one is Q-11's content clause ruled "not accepted" (re-trigger (c)). It would re-enter on its 48 rows, with C-4 and the chrome held floor owed first.
 - If the owner rules Q-3 (c), every banked family's re-trigger is re-read, and the next pass opens whichever fires.
 - If the owner overrides R-14, row 6 returns to FV5 §5's options, and the registry rules among them. (i)'s 0.60 would move R-7 and O-98 R-3's headroom with it.
+
+---
+
+# D3 · pass 8 · REGISTRY: the routes after pass 8
+
+| field | value |
+|---|---|
+| seat | D3 pass-8 agglomeration. It closes pass 8 with floor v7's status and rows on the fixed checklist (the same 44 rows as P2-6.3), whether the pass is clean, the minor split v6's W-0.1 and W-0.11 readings, the refreshed ruling sheet, where each next-pass defect class goes, and the pass-9 plan. The text of passes 1-7 above stays as the record |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `07dfed2c3` (the critic's bank, docs only). `git diff --stat 1da7eb17b HEAD -- src demo tests package.json scripts tests-visual vite.targets.ts .bundle-ratchet .published-roster DESIGN.md docs/canon` prints nothing. Every number below is the published 10.1.0 source plus the named patch |
+| inputs, read in full | this registry (passes 1-7 and the O-87 section); `pass-8/H8.md`, `FLOOR-V7.md`, `MINOR-SPLIT-v6.md`, `WEBKIT-OWED.md`, `D3-critique.md`; `waves/W-0.1.md` §3, §5 and `waves/W-0.11.md` §3.3, §5; `audit/INBOUND.md` to its last row; the D3 lines of `FORMATION-PROGRESS.md` through the critic's bank |
+| owner rulings | **None on Q-1, Q-3, Q-11 (chrome or content clause), Q-12, Q-13 or Q-14.** INBOUND still ends at O-98. `FORMATION-PROGRESS.md`'s D3 lines after the pass-7 close are the pass-8 launch and the H8, floor v7, minor v6, owed-WebKit and critic banks; none records a ruling. Every pass-8 seat built the P7-4 defaults. The critic ran unruled, as the driver recorded |
+| instruments | none. This seat re-measures nothing, and each number cites the report that measured it (P-3). Where the critic and a seat disagree, the critic's reading is cited. **Source reads, to check the critic against the tree:** (1) at HEAD, `src/styles/glass/surfaces-pager.css:29-36` reads "The element-level oklab TINT seam … the no-op floor (`X, src 0%) ≡ X` … under `.dark` the tint arm LIFTS it toward luminous warm-dark", and `src/styles/tokens/glass-deep.css:12-13` and `:54` read "the calm ladder then moved to 10/14/16/20/22px … where the plain overlay paints 22" and "has since moved to 10/14/16/20/22px". (2) `floor-v7.patch` carries a `diff --git` header for each of `surfaces-pager.css`, `glass-deep.css`, `dock/GlassDock.vue` and `dock/styles/index.css`, so all four are touched files of floor v7 |
+| engines | Chromium 149 gated, on Playwright's headless shell (the moving-field windows under H6's `GPU-WITNESS: M-2m`). **Playwright WebKit 26.5** paint-only. **Every real-Safari cell: UNMEASURED (owner's safaridriver checkbox)** |
+| fences | no source edit, no git write. This part is the only write |
+
+Short citations: `H8`, `FV7` (`FLOOR-V7.md`), `MS6` (`MINOR-SPLIT-v6.md`), `WK` (`WEBKIT-OWED.md`), `Crit` (`pass-8/D3-critique.md`). `§n` after them is their section.
+
+---
+
+## P8-0 · In brief
+
+| route or build | status | rows | clean? | reason in one line |
+|---|---|---:|---|---|
+| **floor v7** = floor v6 + R-17 | **ADVANCE**, the one advancing route | **37/44 = 0.841** (pass 7: 37/44) | **no** | R-17 is built as ruled and H8-1 reads 0, but four sentences in four touched files still call the patch's deleted tint seam or its old blur ladder live (Crit A-1). Five rows wait only on the owner |
+| **the minor split v6** (a build) | **the measured shape of 10.2.0's veil recut and lighting tokens**, not shippable yet | W-0.1 G1-G7 **PASS** (G6 per R-9); W-0.11 G1-G6 **PASS**, all carried on bytes re-proved identical to the minor v5's | — | R-18 built at all 15 of A-3's sites. H8-1 over its own patch reads FAIL 6/47; the critic rules them: 3 site entries and 11 rewrites, a comment-only minor v7 |
+| C″ | BANK, unchanged | — | — | no re-trigger fired: Q-11 and Q-12 unruled, the aurora ceiling unmoved |
+| D3-G | BLOCK, unchanged | — | — | Q-13 unruled; no engine shipped the primitive |
+| D3-BF, D3-D | BANK, unchanged | — | — | no re-trigger fired |
+| D3-E | RETIRE, unchanged | — | — | — |
+
+**Pass 8 is not clean** (7 rows open; clean means 0). **The two-clean count stays at 0 of 2.** The seat scored 39; the critic's 37 stands, because A-1's four counterexamples are in the tree (header reads (1), (2)). **The loop is not at its owner-gated fixed point.** P7-6.4 set the fixed point at "pass 8 closes rows 20 and FL-12 and the sheet is still unanswered", and pass 8 did not close them. It is one thin pass away: if R-20 closes them in pass 9 under R-21, floor v8 reads 39/44 with only owner rows open.
+
+Four findings shape pass 9.
+
+1. **The prose rows reopened for the fifth pass running, each time on a sentence the instrument of that pass could not reach** (the register, the earned darken, two other mechanisms, a test file outside DEL's roots, now a homonym and a ladder tuple). Each cure was right and cheap, and each critic found the next sentence by widening the sweep's words. A row whose test is "a fresh reader finds nothing" does not converge over a corpus of narrative comments. R-21 fixes the row's reading to a finite list. The row's text, the 44 rows and every gate stay as they are.
+2. **Every pass-8 byte proof holds.** Floor v7's specimen dist and dist-demo equal floor v6's with no normalisation, and the minor v6's equal the minor v5's, re-proved by the critic against pass 7's banked lists (Crit §1). Every paint verdict carries. Pass 8 ran no Chromium battery.
+3. **The owed WebKit cells are paid and move nothing.** All three groups got the lock under the split admissions (longest wait 40 min). Plants, Close rings and the dark drift window equal their banked readings, and pass 7's one WebKit M-2m FAIL was its guard kill (WK §0). One record correction follows (F-1, P8-1.1).
+4. **The owner-gated rows are six passes old.** Rows 3, 9, 23, N-1 and N-2 have read the same since pass 3, and the sheet (P8-4) is unchanged because no specimen pixel has moved since pass 7. Pass 9 can reach the fixed point without the owner. It cannot be clean without the owner.
+
+---
+
+## P8-1 · Per route
+
+### P8-1.1 · Floor v7 · ADVANCE, 0.841 (37/44)
+
+**Proved by running.** FV7 §1-§4, Crit §1-§4.
+- **Composition:** `floor-v7.patch` (88 files, sha1 `4a1e09c8`) = `floor-v6.patch` + `floor-v7-R17.diff`, `cmp` exit 0 (FV7 header, Crit `compose.log`). The 88th path is `liquid-fill.css:74`, the radius clause H8-1 found; the critic upholds that departure from R-17 (i)'s "only this file" (Crit §2.3), because the alternative was an `exact` entry that exempts a false sentence (E-2).
+- **Byte identity:** specimen dist and dist-demo, floor v6 against floor v7, 0 differing entries, specimen CSS 391,121 B `347288745da7cf97`; the dist-demo sha256 list equals pass 7's banked floor v6 list (Crit §1.1). Every floor v6 paint verdict carries (P7-2.2's thin-build rule).
+- **DEL under H8-1 and H8-2:** floor v7 **PASS 85**; floor v6 **FAIL 3/85** at `forms-seam.test.ts:24`, `:91` and `liquid-fill.css:74` (H8 §1.2, FV7 §2, reproduced by Crit §2.1). Declaration 68 names, 5 exact only, 9 sites, every `exact` entry upheld in context (Crit §2.2). H8's every-word reading of the value arm is upheld: the one-word reading adds 31 lines on floor v7 and no true site (Crit §2.3).
+- **Static:** LAW PASS 68, census `stacked=0 halo=0 blur=0 open=0` (HEAD `2/2/5/9`), HOV 58 (Crit §2.1).
+- **Toolchain:** `vue-tsc` exit 0 on both projects, library build and dist-demo exit 0, vitest 237 files, **2318 passed**, 0 failed (FV7 §4, Crit §1.3).
+- **WebKit, informational:** floor v7 plants equal floor v6's WebKit verdicts line for line; Close rings light 3.07 / dark 4.30 on all seven grounds, M-3 PASS 42; checker re-runs 2.83 / 2.96, not load-borne; dark M-2m drift 43/43 ≥ 4.5 in every frame, twice (WK §2-§6).
+
+**The R rows** (FV7 §1, Crit §2-§3):
+
+| R | row | built | reading | plant |
+|---|---|---|---|---|
+| R-17 | 20 · FL-12 | `forms-seam.test.ts` header, G-F2 title and :93-94 rewritten; `liquid-fill.css:74`'s literal dropped; DEL's scope, value and REPORTED arms (H8-1) | H8-1 **PASS 85** on floor v7 | floor v6 FAIL 3/85. **But the row is open:** four touched-file sentences outside both arms (Crit A-1) |
+
+**The fixed checklist** (Crit §4 is the source of record for each status):
+
+| # | row | status | evidence or counterexample | waits on |
+|---|---|---|---|---|
+| 1, 2, 4, 5, 7, 8, 10-19, 21, 22, 24 | RAW, M-1, M-2, M-2m, M-4, M-5, M-7, M-8, M-9, T, release, O-66 G2, O-66 G3, W-A, engines, plants, FL-13, O-87, STACK | **PASS** (19) | carried from pass 7 on outputs proved byte-identical (Crit §1). Row 11: the critic's toolchain. Row 18: WK's dark drift window 43/43 twice. Row 19: the plants on floor v7 in WebKit (WK §2), DEL's plant 3/85 | — |
+| 3 | M-1x | OPEN | REPORTED under (a): content grey off paper. `var-q11b` 21/21 on record, re-read on floor v7 in WebKit (WK §2) | **owner, Q-11 chrome clause** |
+| 6 | M-3 | **PASS** | carried: H7-1, Chromium light Close ring 3.52. Record correction below | — |
+| 9 | M-6 | OPEN | stepped 29/120; `--q1 a` PASS 88/88 both engines | **owner, Q-1** |
+| **20** | prose sweep of every touched file | **OPEN** (the seat scored PASS) | Crit A-1: `surfaces-pager.css:29-36` (the deleted oklab tint seam and tint arm as live), `GlassDock.vue:467` and `dock/styles/index.css:79-83` (the active field "reads the tint seam"; floor v7's `dock/search.css` composes the bound), `glass-deep.css:12-13, :54` (HEAD's 10/14/16/20/22 ladder in the present tense; floor v7's is 6/10/12/18/20, written into `:42` of the same file) | route: **R-20** under **R-21** |
+| 23 | gestalt, O-62 frame | OPEN | unchanged: floor v7 moves no specimen pixel | **owner: Q-11 content clause, Q-3, Q-14**, with the frames |
+| FL-1..FL-11, FL-13..FL-16 | the floor | **PASS 15** | carried on byte-identical specimens; FL-15's `plant-darkperim` FAIL 47/87 in WebKit (WK §2) | — |
+| FL-12 | prose sweep of every touched file | **OPEN** (the seat scored PASS) | as row 20 | route: **R-20** under **R-21** |
+| N-1 | Q-1's ruling built | OPEN | (a) built; (c) is `pass-4/fv3/q1c.*` (FAIL 2/96, both engines, WK §2) | **owner, Q-1** |
+| N-2 | Q-11's ruling built | OPEN | (a) built; (b) is `pass-4/fv3/q11b.*` | **owner, Q-11 chrome clause** |
+| N-3 | the dock's held halo | **PASS (attributed), both themes** | carried: M-2h 2/68 | — |
+| N-4 | the minor split's W-0.1 reading | **PASS** | P8-3 | — |
+
+**Count: 37 PASS, 7 OPEN.** **Closed this pass: none. Opened: none.** **Route-owned: 2** (20, FL-12), ruled in P8-2.2. **Waiting only on the owner: 5** (3, 9, 23, N-1, N-2).
+
+**Record correction (F-1; WK §5, Crit §6.2).** P7-1.1's R-14 row and Crit7 §2 cite the two ring plants' "M-3" readings as 2.50 (α 0.40) and 2.43 (1 px outline). M-3 read nothing on those captures: `rows.mjs:17` picks variant `base`, so a capture labelled `ring040` or `ring1px` printed 14 of 14 `MISSING` and a vacuous FAIL. 2.50 and 2.43 are the pass-7 critic's independent reader, in Chromium. Under M-3 itself, with the plants relabelled `base`, they red in WebKit at 2.25 and 2.90 (WK §3). HEAD's ring was captured as `base`, so M-3's HEAD reading (1.91 Chromium, 1.84 WebKit) stands. **Row 6 does not move**: each plant reds under a real reader in real paint. The class goes to H9-4.
+
+**Recorded beside the rows, not rows:** `property-regs.css:162-165` (the deep endpoint 10.1.0 already retired), `DESIGN.md:516` and `:521`, `docs/canon/glass-system.md:50, 51, 60` and `music-staff/README.md:60` are stale at HEAD or not the patch's mechanisms (Crit §3, §5.2; H8 §1.2's REPORTED arm). They belong to the landing's docs pass.
+
+### P8-1.2 · The owner options, measured over floor v7 (carried from floor v6 on identical bytes; WK §2 re-read the WebKit half)
+
+| ruling | rows it closes by selection, as built | what it leaves or costs |
+|---|---|---|
+| **Q-1 (a)**, the default | **9, N-1** (`--q1 a` PASS 88/88 in both engines) | the light ladder stays one paint to the eye (row 23's frame) |
+| Q-1 (c), three materials | none | `--q1 c` FAIL 2/96 in both engines (the `retune-bg` dark room), unchanged since pass 4. Needs a room-only reading and a room value, neither built |
+| **Q-11 (a)**, chrome, the default | **3, N-2**, by (a)'s text | content grey off paper; (a)'s text does not cover it |
+| Q-11 (b), chrome opaque | **3, N-2** by selecting `pass-4/fv3/q11b.*` (M-1x 21/21, both engines) | content stays grey off paper; owes the full battery in both engines |
+| Q-11, content clause | row 23, with Q-3 and Q-14 | "accept" closes it with no build. "Not accepted" has no measured candidate and fires C″'s re-trigger (c) |
+| Q-14 | row 23 | (a) closes it on the owner's word over the frames. (b) reverses R-2 and re-reads row 12's dark-signed leg |
+
+### P8-1.3 · Banked and retired, re-checked
+
+- **C″:** BANK. None of P3-1.2's re-triggers fired. Owed before re-entry, unchanged: C-4's follow mechanism, the chrome held floor, the I-5 items.
+- **D3-G:** BLOCK. **D3-BF**, **D3-D:** not fired. **D3-E:** retired.
+
+---
+
+## P8-2 · The harness after pass 8, and the rulings on measurement
+
+### P8-2.1 · H8
+
+| id | landed | evidence | open |
+|---|---|---|---|
+| H8-1 | DEL reads `src/`, `demo/`, `tests/` and every path the patch lists; `exact` entries take an `at` site, and a site that exempts nothing FAILs; a changed-value arm (old literal with every word of the token's name); a REPORTED arm for repo-root `*.md` and `docs/canon/` | self-test 14/14; floor v6 FAIL 3/85, floor v7 PASS 85 (H8 §1, Crit §2) | **homonyms** (H9-1), **tuples and bare numbers** (H9-2), **arm-blind values** (H9-3) |
+| H8-2 | `declare-removed.mjs` declares deleted module stems and module-level consts (61 → 68 names) | self-test 3/3; floor v6 and v7 read 0 on the 7 new names (H8 §2, Crit §2.3) | none |
+| H7-3, extended | `deletes-minor.json` 24 → 39 names (R-18's 15, `declarative darken` and `darkened plate` among them) | minor v6 PASS 39; minor v5 FAIL 15/39 at A-3's sites only (MS6 §2, Crit §5.2) | the minor v7's 3 site entries |
+| beside them | LAW | PASS 68 (Crit §2.1) | — |
+
+**The machine law held.** Every seat ran through `guarded` as the literal command word. The owed-WebKit seat split its captures into five `--exclusive webkit --timeout 60` admissions with witnesses `--light` outside the lock, and every one was admitted inside 90 min (waits 1 min 29 s to 40 min 10 s; WK §1). The critic's one WebKit capture waited 91 min behind other repos' runs, was stopped before it launched a browser, and is recorded as owed (Crit §6.3). It holds nothing. No kernel-zone refusal fired in any seat.
+
+### P8-2.2 · Rulings on measurement
+
+| id | rows or gate | ruling | evidence | plant |
+|---|---|---|---|---|
+| **R-20** | 20 · FL-12 | **Floor v8 rewrites the four sentences of Crit A-1, comments only.** (i) `surfaces-pager.css:29-36` states what floor v7 paints: the pill applies `glass-plate` at the floating rung, one `--card` pole composed at the element, the same composition in both themes, with no ink, clamp or oklab mix; `--glass-level` defaults to 1. (ii) `GlassDock.vue:467` and (iii) `dock/styles/index.css:79-83` say the active field reads the bound that `dock/search.css` composes, in that file's own words ("≥4.5:1, the bound"). (iv) `glass-deep.css:12-13` and `:54` keep the history in the past tense and name the current ladder by its tokens, not a literal tuple (P-3), so ":54" no longer says the ladder "has since moved to" HEAD's values and ":12-13" no longer says the plain overlay "paints 22". No other sentence is rewritten by the seat; a further find goes to the pass-9 critic under R-21 | Crit A-1, §3; header reads (1), (2) | **floor v7 as banked: FAIL** under H9-1 at `surfaces-pager.css:29, 34`, `GlassDock.vue:467`, `dock/styles/index.css:80, 83`, and under H9-2 at `glass-deep.css:12, 54`. Floor v8 at 0 is the fixture |
+| **R-21** | 20 · FL-12, and H8-1 over the minor's patch | **The prose rows read a finite list.** "Prose sweep of every touched file" is read as two instruments, both fixed when pass 9 opens: (a) DEL with H8-1, H8-2 and H9-1..H9-3, at 0; and (b) a **frozen sweep list**, the words of Crit §3's sweep (tint, darken, clamp, luma, bucket, observer, knee, sampled, backdrop mode) plus the declaration's names, printed by the harness over every touched file with each line's context. The row passes when (a) reads 0, the predecessor reds under (a), and every line (b) prints has been read and ruled true or rewritten. **A critic may still report a false sentence that neither list reaches.** It is rewritten in the next comment-only build and recorded, but it does not reopen the row in the pass that finds it, and it does not add a word to the frozen list. The reason is the convergence law: a row that any new search word can reopen cannot reach two consecutive clean passes over a corpus of narrative comments, and five passes have shown it. Nothing is masked, because every such find is still built. The owner may override this ruling | P8-0 finding 1; Crit §3, §8 ("A sentence that names a deleted mechanism with none of those words would escape me as well") | floor v7 under (a) with H9: FAIL (R-20's plant); under (b) the list prints A-1's four sites |
+| **R-22** | the floor v8 byte proof | **A comment-only SFC edit proves identity raw first, then under FV6's normaliser.** R-20 (ii) edits an HTML comment in `GlassDock.vue`, a library SFC, and FV6 saw scoped ids move on SFC edits. The seat builds floor v7 and floor v8 under one label. If both outputs are raw-identical, every verdict carries. If they differ only by scoped ids and chunk hashes and the normalised compare reads 0 differing files, every verdict carries too, and the seat adds one bite: the dock scenes, floor v7 and floor v8, captured in one Chromium run (headless shell, both themes) and compared pixel-exact. Any other difference, or a pixel difference, requires the full battery in both engines, as FV6 ran | FV6 §4; Crit §3 last paragraph | — |
+| **R-23** | the minor's light-law prose (a W-0.1 landing item, not a gate row) | **The minor v7 is the critic's list, fixed:** three site entries in `deletes-minor.json` (`sheet/styles.css:197`, `overlay-plate.css:173`, `deep.css:73`, as `MS6-proposed-sites.json`), and comment-only rewrites at 11 sites in 9 files (`DESIGN.md:1805`, `liquid-fill.css:76`, `Button.test.ts:146`, `feedback-tint-seam.test.ts:11`, `adaptive-legibility.css:61-62` and `:65`, `surfaces-pager.css:34-36`, `property-regs.css:154-155`, `forms-seam.test.ts:94-95`, `glass-deep.css:12-13` and `:54`). `property-regs.css:124` and the minor's own "tint seam" lines (`GlassDock.vue:505`, `dock/styles/index.css:80, 85`) are kept as true (the minor keeps the clamp). Its fixture is H8-1 with H9 at 0 over its own patch; R-21 binds it as it binds the floor. No `.vue` file is in the delta, so raw byte identity is expected | Crit §5.2; MS6 §4 | the minor v6 under the minor v7's declaration: FAIL at the 11 sites |
+
+**Rulings on pass 8's handed-on items** (Crit §2.3, upheld here): H8's every-word value arm; FV7's two departures (`liquid-fill.css:74`, `forms-seam.test.ts:93-94`); H8-2's split of the 28 absent tokens; R-18 (iv) binds the seat and (v) binds the build after the critic; A-3's count is the table's 15 sites, not its prose's 13.
+
+**Thin builds, again.** R-20 and R-23 change comments only. Each seat proves both outputs identical to its predecessor's (floor v7: specimen CSS 391,121 B `347288745da7cf97`; minor v6: 398,432 B `e11613c3eeb45cab`) under R-22, then runs the static checks, H9 and the toolchain with vitest, and no battery.
+
+---
+
+## P8-3 · The minor split v6, measured against W-0.1 G1-G7 and W-0.11 G1-G6
+
+### P8-3.1 · The gates
+
+The build (MS6 §1): the minor v5 plus R-18, comments and one test title. 59 files, +712 / −525, sha1 `4ea01c0e`, composed by `cmp` from `minor-split-v5.patch` + `minor-split-v6-R18.diff`. Specimen dist and dist-demo are identical to the minor v5's with no normalisation (MS6 §3, re-proved by Crit §1.1 against pass 7's banked lists), so every pass-7 paint verdict carries.
+
+| gate | verdict | basis |
+|---|---|---|
+| **W-0.1 G1** M-1 | **PASS** over paper (11/11 both engines); off paper REPORTED 48/66 | carried; Q-11 content unruled |
+| **G2** O-66 field, **G3** O-66 row | **PASS** | carried; HOV 58 read fresh (Crit §2.1) |
+| **G4** W-A light | **PASS** (108/108, thinnest α 0.890) | carried |
+| **G5** scope | **PASS**, rebind owed at landing (**+2,333 B**, MS6 §5) | R-18 removes no name; library build exit 0 |
+| **G6** per R-9 | **PASS** (13 dark composites, worst ΔE 0.0000; raw 1/13 at 0.0022 printed) | carried |
+| **G7** M-2 and M-3 halves (M-3 under H7-1) | **PASS**, 0 regressions | carried; WK §3 re-read the minor's WebKit Close rings on fresh pixels (light 3.25 on every ground, dark equal to MS5 §4.1 to the digit) |
+| **W-0.11 G1-G4** | **PASS**: census `stacked=0 halo=0 blur=0 open=0`; HEAD `2/2/5/9` | read fresh (Crit §2.1) |
+| **W-0.11 G5** | **PASS** | as W-0.1 G5 |
+| **W-0.11 G6** | **PASS** (M-2 720, M-3 214 HEAD-PASS, 0 regress) | carried |
+| STACK (FL-14) | **24/24** | carried |
+| units | 239 files, **2321 passed**, 0 failed | MS6 §5, Crit §1.3 |
+
+H7-3 with R-18's declaration: minor v6 PASS 39. H8-1 over its own patch: FAIL 6/47 at 8 sites outside A-3's list (MS6 §4), ruled by Crit §5.2 into R-23.
+
+### P8-3.2 · The minor-split table: amendments to P5-3.3
+
+P5-3.3 stays the one table (P-3), as amended by P6-3.2 and P7-3.2. Pass 8 amends one row:
+
+| row | amendment | lands in |
+|---|---|---|
+| light-law prose | R-13's nine sentences, `search.css:44`, R-16's two and its 19 listed sentences, R-18's 15 A-3 sites and the forms-seam title (minor v6), **plus R-23's 11 rewrites and 3 site entries** (minor v7), guarded by `deletes-minor.json` and H8-1 with H9 over the minor's own patch | W-0.1 |
+
+### P8-3.3 · Can W-0.1 and W-0.11 ship from the minor v6 in 10.2.0? No
+
+1. **The entry gate:** 0 of 2 clean passes (W-0.1 §3, W-0.11 §3.3). Its open rows are floor v7's two route rows and five owner rows.
+2. **Q-11's content clause:** G1 off paper reads 48 of 66 grey with content included. Only the owner can say whether 10.2.0 may ship grey content off paper.
+3. **R-23:** the minor v7, so the tree that lands is the tree measured.
+4. **The landing's own items**, unchanged: R-9's reading enters W-0.1 §5 G6's text (the owner may override); each gate binds to one probe (`scripts/probes/band-0/*`, which the tree still lacks); `.bundle-ratchet` rebinds to the measured bytes (**+2,333 B**).
+5. **10.2.0 is also gated on D2 converging** (O-88).
+
+**Closed this pass from P7-3.3:** item 3 (R-18 built). W-0.11 has no blocker of its own, since G1-G6 are green, and it shares W-0.1's entry gate. **Earliest landing for both: the close of pass 10**, if passes 9 and 10 are both clean, which needs the owner's answers before pass 9's critic.
+
+---
+
+## P8-4 · What the owner must rule
+
+**The ruling sheet (one message, five answers), refreshed with pass-8 readings.** No specimen pixel has moved since pass 7, so every measurement is P7-4's, with the WebKit half re-read on floor v7 (WK §2). Each line gives the default, which pass 9 builds if no answer arrives, and what each answer closes. Owner-gated rows count as open until the answer arrives and the row is built to it (P2-6.3).
+
+| id | question | the measurement behind it (floor v7, the shell's raster) | default | answering it closes |
+|---|---|---|---|---|
+| **Q-1** | Should the light ladder's wash, quiet and resting read as one paint, (a), or as three separated materials, (c)? | (a) **PASS 88/88** in both engines. (c) FAIL 2/96 in both (the `retune-bg` dark room), unbuilt since pass 4 | (a) | rows 9, N-1, by selection, no build |
+| **Q-3** | Is chrome a card, sitting at the bound, (a), or glass that transmits, (c)? | chrome at the bound, T 0.110 light / 0.125 dark | (a) | row 23, with Q-11 and Q-14 |
+| **Q-11 chrome** | Off paper, is light chrome that reads grey accepted, (a), or does it go opaque, (b)? | (a) closes by its text. (b) selects `pass-4/fv3/q11b.*`: M-1x 21/21 in both engines, chrome α 1.000 | (a) | rows 3, N-2, by text or by selection |
+| **Q-11 content** | Off paper, may wash, quiet, resting and card read grey? | grey in every build and option measured: over black `#e2dcd7` (L 0.898, C 0.0095), over the deep canvas `#e3e3e3` (C 0.0000); the minor 48 of 66. "Not accepted" has no measured candidate and fires C″'s re-trigger (c) | REPORTED (unruled) | row 23; W-0.1 G1 off paper |
+| **Q-14** | Should the dark focus veil keep its 40 % black dim, which reads as a smudge on bright grounds? | dark page −0.025; the aurora's focus spot `#ec9642 → #99560a` **−0.226, 9.1×**. (a) accept: the dim carries focus state. (b) frost only: reverses R-2 and re-reads row 12's dark-signed leg. (c) defer to D5's veil register, keeping (a) until D5 rules | (a) | row 23 |
+
+**The shortest path, unchanged.** Q-1 (a), Q-3 (a), Q-11 (a) for chrome, grey content accepted off paper, and Q-14 (a) close rows 3, 9, N-1 and N-2 by selection and row 23 on the owner's word, with no build and no browser. With R-20 built under R-21, pass 9 can then be clean.
+
+Unchanged: **Q-9** closed for this loop (R-8). **Q-12** (a), no new data. **Q-13** (a), no new data.
+
+**Owner glance frames** (unchanged from P6-4 and P7-4; no pass-8 build moves a specimen pixel):
+
+| look at | file | shows |
+|---|---|---|
+| the dark focus veil over the aurora (Q-14) | `pass-5/frames-H5-1/chromium-dark-aurora-state-veil-raw-vs-full.png` | the orange focus spot darkened to a soft brown smudge |
+| the light veil over the same ground | `pass-5/frames-H5-1/chromium-light-aurora-state-*.png` | a faint warming, less than the page's depth |
+| HEAD → the minor (10.2.0's recut and tokens) | `pass-6/glance-minor4/glance-chromium-light-{dock,dialog,floating,story}-base-vs-minor4.png`, `glance-chromium-dark-dock-base-vs-minor4.png` | cream plates over paper; the dark pill flat with one quiet edge. The minor v6's paint is the minor v4's to the byte |
+| R-12, the dock search | `pass-6/glance-fv5/glance-chromium-{light,dark}-dock-search-pointer-fv4-vs-fv5.png` | two tinted rows become one; the highlight follows pointer and keyboard |
+
+**Not owner questions, recorded:** R-14, R-17..R-23 (this registry's rulings on measurement; the owner may override any of them, R-21 above all, since it fixes how the prose rows are read), FL-14's assignment, R-9's reading of W-0.1 G6. **Owner actions, not rulings:** the safaridriver checkbox (every Safari cell UNMEASURED); the in-session go for the 10.2.0 tag; O-98's placement (the driver recommends R-1 and R-2 to D3 beside row 3, and R-3 as a regression read on any `--ink-perimeter` or `--input-on-glass` change; under the fixed checklist neither becomes a row of this loop until the owner places it).
+
+---
+
+## P8-5 · Next-pass defect classes, placed
+
+The checklist stays at 44 rows. Each class goes to the pass-9 instrument list (H9), to a ruled build or reading (R-20..R-23), to the owner, or to another wave or loop.
+
+| id | class | found by | placed |
+|---|---|---|---|
+| **H9-1** | a deleted concept whose name is also a live homonym ("tint seam", "tint arm", "oklab tint") cannot be declared without site entries | Crit A-1 #1-#3 | **instrument:** declare the three phrases in the floor's concepts, with `at` site entries for the live feedback-tone homonyms (`metric/styles.css:86`, the `feedback-tint-seam` gate's own name lines); "retint seam" stays unmatched by word boundary. Plant: floor v7 at `surfaces-pager.css:29, 34`, `GlassDock.vue:467`, `dock/styles/index.css:80, 83`. Fixture: floor v8 at 0 |
+| **H9-2** | the value arm misses a changed ladder written as a tuple ("10/14/16/20/22px") | Crit A-1 #4 | **instrument:** a tuple arm. For each token family whose rungs the patch changes (`--glass-blur-*-radius`), the old tuple in order, with or without unit, `/` or `·` separated, is a prose hit unless a site entry marks it history. Plant: floor v7 `glass-deep.css:12, :54`. Bare-number present-tense statements ("paints 22") are read under R-21 (b) |
+| **H9-3** | the value arm does not check which arm (`:root` or `.dark`) a sentence cites | MS6 §7, Crit §5.2 | **instrument note:** key a changed value by file and selector; a sentence citing the unchanged arm's file is not a hit. Fixture: the minor v6 `sheet/styles.css:197`, which then needs no site entry |
+| **H9-4** | F-1: a witness reading a capture with no cell of its variant prints MISSING rows as a gated FAIL (E-2) | WK §5, Crit §6.2 | **instrument:** M-3 (and every `rows.mjs` reader) takes `--variant` and exits loud ("0 cells of variant X: nothing read", exit 2) when none match. Plant: the unrelabelled `ring040` capture. The record correction is P8-1.1 |
+| **H9-5** | plant scripts narrow engines by mutating `lib.mjs`'s exported `ENGINES` in-process | WK §8, Crit §2.3 | **instrument note (P-1):** `--engines` on `FV2-plants.mjs` and `FV3-plants.mjs`, as `capture.mjs` takes it; `wk-plants.mjs` retires |
+| **H9-6** | the prose rows' test reads an open-ended search | P8-0 finding 1 | **R-21:** the frozen sweep list lands as a harness file and a printer over every touched file, with a self-test row (floor v7 prints A-1's four sites) |
+| — | four floor v7 sentences call the deleted tint seam or HEAD's ladder live | Crit A-1 | **build: R-20** (floor v8), byte proof under R-22 |
+| — | the minor v6's 11 stale sentences and 3 true sites outside A-3 | MS6 §4, Crit §5.2 | **build: R-23** (minor v7) |
+| — | the floor v7 WebKit dialog Close ring on fresh pixels (the critic's cross-check of WK) | Crit §6.3 | **pass 9, informational:** one `--exclusive webkit --timeout 60` admission on floor v8's bytes with `D3-crit-run2.sh wk-dlg`. If not admitted in 90 min, owed again; holds nothing |
+| — | a critic's WebKit admission waited 91 min behind other repos' runs | Crit §6.3 | **driver:** queue a pass's informational WebKit cells in the seat that runs first, not in the critic, so the critic's own work never waits on the lock |
+| — | the critic's first toolchain run omitted the dist-demo build (3 boot-graph rows "absent") | Crit §1.3 | **process:** the toolchain phase builds the dist-demo before vitest, as FV7 and MS6 did |
+| — | `property-regs.css:162-165`, `DESIGN.md:516, :521`, `docs/canon/glass-system.md:50, 51, 60`, `music-staff/README.md:60` | Crit §3, §5.2; H8 §1.2 | landing docs pass; stale at HEAD or not the patch's mechanisms; printed by H8-1's REPORTED arm until then. Not rows |
+| — | the minor's dark Close rings under 3.0 (aurora 2.96, white 2.49 Chromium; WebKit 2.23, 1.70, 2.55) | MS5 §4.1, WK §3 | **W-H.2's**, unchanged. HEAD-FAIL under H7, so G7 does not count them |
+| — | LIT's 19 inherited literals | H5 §3.3 | relays, as P5-5 placed them. Row 22 stays PASS |
+| I-5 | the two-ground α estimator; W-S blind to a lie on an inert claim | P3-2 | C″'s bank entry, unchanged |
+
+---
+
+## P8-6 · Pass-9 plan
+
+### P8-6.1 · Routes
+
+| route | centre | judged on |
+|---|---|---|
+| **floor v8** = floor v7 + R-20 (+ whatever the owner has ruled, selected from the variants) | the bound, static ink, FL-1..FL-16 | **the same 44 rows** (24 core + FL-1..FL-16 + N-1..N-4). No row is added, struck or renamed. Rows 20 and FL-12 are read under R-21 |
+| **the minor split v7** (a build, not a route) | minor v6 + R-23 | byte identity to the minor v6; H7-3 with the minor v7's declaration; H8-1 with H9 over its own patch at 0; R-21's printed list read; the toolchain. Every gate verdict carries if the bytes hold |
+| C″ | BANK | not run unless a re-trigger fires (Q-11 content "not accepted" fires (c)) |
+| D3-G | BLOCK | not run unless Q-13 (b) or an engine ships the primitive |
+
+### P8-6.2 · Order (browser seats serialized; every WebKit capture group its own `guarded --exclusive webkit --timeout 60` admission, witnesses `--light` outside the lock)
+
+0. **The ruling sheet goes to the owner now** (P8-4). It is one message, and it is the only thing that can make pass 9 clean.
+1. **H9.** H9-1..H9-5 and R-21's frozen list and printer (H9-6), each with its fixture PASS and planted FAIL in the self-test. Static only, `--light`.
+2. **Floor v8.** Build R-20 on `floor-v7.patch`. Prove identity under R-22 (raw, else normalised plus the one Chromium dock bite). If it holds, run the static checks (DEL under H8 and H9, R-21's printed list read line by line, LAW, census, HOV, the ladder `diff`) and the toolchain with vitest (dist-demo built first), and no battery. Select any ruled owner option from the variants (`pass-4/fv3/q1c.*`, `fv3/q11b.*`), which then requires the full battery in both engines; build only what no variant carries. A Q-14 (b) ruling is built as R-2's deletion in the dark arm and re-reads row 12.
+3. **The minor split v7.** Build R-23. Prove raw byte identity to the minor v6, then H7-3, H8-1 with H9 over its own patch, R-21's list, and the toolchain. No browser if the bytes hold.
+4. **The one informational WebKit cell** (P8-5), queued after steps 2-3 in the floor v8 seat or its own seat, never in the critic. Not admitted in 90 min: owed, holds nothing.
+5. **The critic**, one seat, adversarial, on floor v8 and the minor v7. It runs whether or not the owner has answered, because its job this pass includes confirming the fixed point; if unruled, it records that pass 9 cannot be clean. It checks R-20's four rewrites against the tree, the byte proofs, H9's plants, every line R-21's list prints, and R-23 against Crit §5.2's table. It may not add rows. A false sentence outside both of R-21's lists is reported for the next build and does not reopen rows 20 or FL-12 (R-21). A new defect class goes to the pass-10 instrument list.
+6. **Agglomeration**, reading any owner rulings that have arrived.
+
+### P8-6.3 · What would make pass 9 clean
+
+Floor v8 is clean at **0 open rows of 44**:
+- rows 20 and FL-12 close on R-20 under R-21: DEL with H9 at 0 over every touched file, floor v7 red under it, and every line of the frozen list read and true;
+- rows 9 and N-1 close when the owner rules Q-1, by selection under (a);
+- rows 3 and N-2 close when the owner rules Q-11's chrome clause, by (a)'s text or by selecting `fv3/q11b.*`;
+- row 23 closes when the owner rules Q-11's content clause, Q-3 and Q-14 and accepts the frames.
+
+If the owner has not ruled by pass 9's critic, pass 9 cannot be clean, whatever the builds read.
+
+**W-0.1's and W-0.11's entry gate after pass 8:** 0 of 2 clean passes. Earliest landing: the close of **pass 10**, if passes 9 and 10 are both clean. Both ship from the minor split (v7 or later), never from the floor (P5-3.3), once G1-G7 are green (G6 per R-9, in W-0.1's text), Q-11's ruling is applied to G1's off-paper reading, R-23 is built, each gate is bound to one probe, and the ratchet is rebound at landing. 10.2.0 is also gated on D2 converging (O-88).
+
+### P8-6.4 · What would end the loop
+
+- **Floor v8 converges** once Q-1, Q-3, Q-11 (both clauses) and Q-14 are ruled and selected or built, R-20 closes rows 20 and FL-12 under R-21, and two consecutive passes are clean. It is then D3's converged specification: W-0.1's light arm and W-0.11's tokens through the minor split and its table (P5-3.3 as amended by P6-3.2, P7-3.2 and P8-3.2) in 10.2.0, and the rest in the W-H landing.
+- **The fixed point.** If pass 9 closes rows 20 and FL-12 and the sheet is still unanswered, floor v8 reads 39/44 with only rows 3, 9, 23, N-1 and N-2 open. No route work can move those rows, so that is the loop's owner-gated fixed point. In that case **pass 10 is launched only when the owner's answers arrive**. A further pass without them re-measures the same tree and cannot be clean.
+- **If pass 9's critic still finds rows 20 and FL-12 open under R-21** (a line R-21's list prints, read false, or a DEL hit), the next pass is one more comment-only build, not a new instrument, and the driver puts R-21's list to the owner beside the sheet.
+- **C″ stays banked** unless a re-trigger fires. The live one is Q-11's content clause ruled "not accepted" (re-trigger (c)). It would re-enter on its 48 rows, with C-4 and the chrome held floor owed first.
+- If the owner rules Q-3 (c), every banked family's re-trigger is re-read, and the next pass opens whichever fires.
+- If the owner overrides R-14, row 6 returns to FV5 §5's options, and the registry rules among them. If the owner overrides R-21, rows 20 and FL-12 return to P7-6.3's open-ended reading, and the fixed point cannot be promised.
