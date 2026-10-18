@@ -1,0 +1,11 @@
+tokens declared on both a removed and an added line of floor-v9.patch (value changed or moved): 48
+  --card --control-checked-bg --control-surface-bg --control-surface-bg-hover --dock-control-active-bg --dock-control-hover-bg --dock-control-press-bg --dock-layer-switcher-active --dock-plate-collapsed-tier --fill-selected --glass-blur-floating-radius --glass-blur-overlay-radius --glass-blur-quiet-radius --glass-blur-resting-radius --glass-blur-wash-radius --glass-capsule-fill --glass-focus-veil-dim --glass-plate-chassis --glass-plate-dialog --glass-plate-floating --glass-plate-overlay --glass-plate-quiet --glass-plate-resting --glass-plate-wash --glass-saturate-grasp --glass-veil-chassis --glass-veil-crown --glass-veil-dialog --glass-veil-dock --glass-veil-floating --glass-veil-overlay --glass-veil-quiet --glass-veil-rest --glass-veil-resting --glass-veil-rung --glass-veil-sheet --glass-veil-step --glass-veil-wash --ink-perimeter --menu-row-bg --muted-foreground --on-glass-muted --on-glass-muted-strong --popover --section-color-5 --shadow-dock --shadow-dock-collapsed --shadow-modal
+printed lines naming one of them: 8
+  :6 ['--card'] | // one pole, `--card`, carries any tint. The matrix is staged over a
+  :119 ['--dock-control-press-bg'] | glass-darken (`--dock-control-press-bg`, a tier below resting) alongside
+  :69 ['--glass-blur-floating-radius'] | predecessor LERPed `--glass-blur-floating-radius` (20px) toward
+  :131 ['--glass-veil-rest'] | tinted MIX and no veil — declares `--glass-veil-rest: 1` and scales its tint
+  :218 ['--card'] | `--glass-floor-fill` is an ALPHA-OF-`--card` PLATE leg, not a chroma tint, so
+  :101 ['--control-checked-bg'] | • `--control-checked-bg` — the SELECTED glass-tinted fill. The recipe is minted
+  :947 ['--card'] | // surface those labels sit on, `--card`, and each one is measured, not sampled.
+  :184 ['--card'] | it("paints ONE pole — the plate is `--card` at α, with no ink token and no luma term", () => {

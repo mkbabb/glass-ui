@@ -1,0 +1,35 @@
+-- DEL (H8+H9+H10) floor v9 (fixture)
+DEL fv9 exit 0: PASS (101 gated rows)
+tree: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p10/floor9/wt · 1089 text files in scope (src/, demo/, tests/, plus 0 of 1 touched paths outside them that exist) · reported: 17 files · declaration: floor-v9.patch: every identifier its removed lines name that the patched src/ and demo/ no longer name (declare-removed.mjs), plus 12 concepts declared by hand (deletes-floor.json) · 73 names, 5 exact only, 19 sites read in context
+DELETED-MECHANISMS names=73 hits=0 files=0 changed=8 families=1 sites=19 arm-true=0 rung=4 reported=23 · 
+-- DEL H10-1, absent root, floor v9's declaration
+DEL absent exit 2: FAIL (nothing read: the tree does not exist)
+-- LAW
+LAW exit 0: PASS (77 gated rows)
+HOV exit 0: PASS (58 gated rows)
+LIT exit 0: LIGHTING-LITERALS halo=5 near=1 stacked=10 chain=3 open=19 frames-halo=0/0
+census fv9 exit 0: LIGHTING-CENSUS stacked=0 halo=0 blur=0 open=0
+worktree = floor-v8.patch
+-- DEL floor v8 under the floor v9 declaration and patch
+DEL fv8 exit 0: PASS (101 gated rows)
+worktree = HEAD
+census HEAD (10.1.0 source) exit 1: LIGHTING-CENSUS stacked=2 halo=2 blur=5 open=9
+-- DEL HEAD under the floor v9 declaration and patch (bite)
+DEL HEAD exit 1: FAIL (89 of 101 gated rows)
+worktree = floor-v9.patch
+-- LADDER diff radii-fv8 radii-fv9 (fixture: prints nothing)
+LADDER fv8-fv9 exit 0
+-- LADDER diff radii-head radii-fv9 (bite)
+1,5c1,5
+< --glass-blur-wash-radius:     10px;
+< --glass-blur-quiet-radius:    14px;
+< --glass-blur-resting-radius:  16px;
+< --glass-blur-floating-radius: 20px;
+< --glass-blur-overlay-radius:  22px;
+---
+> --glass-blur-wash-radius:      6px;
+> --glass-blur-quiet-radius:    10px;
+> --glass-blur-resting-radius:  12px;
+> --glass-blur-floating-radius: 18px;
+> --glass-blur-overlay-radius:  20px;
+LADDER head exit 1

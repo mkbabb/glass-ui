@@ -1,0 +1,45 @@
+diff --git a/src/components/dock/styles/dock.css b/src/components/dock/styles/dock.css
+index 086a38e8c..efe12f60e 100644
+--- a/src/components/dock/styles/dock.css
++++ b/src/components/dock/styles/dock.css
+@@ -12,7 +12,7 @@
+  *        INK lerps between the collapsed/expanded rungs on `--dock-expand-t` (never a
+  *        two-layer opacity crossfade — that composites `a + b − ab` and sags mid-morph),
+  *        composed through `@utility glass-plate` AT THE ELEMENT, on the bound at both
+- *        endpoints — one chromatic writer, no second tint layer. The shell + adaptive-legibility partials re-point
++ *        endpoints — one chromatic writer, no second tint layer. The shell partial re-points
+  *        the inheriting `--dock-surface-blur`/`--glass-veil-*` tokens on `.glass-dock`,
+  *        so the dark arm reaches the layers via inheritance, ZERO
+  *        re-author. Its VISIBLE
+diff --git a/src/styles/glass/a11y-fallback.css b/src/styles/glass/a11y-fallback.css
+index 411a25989..b2be57bba 100644
+--- a/src/styles/glass/a11y-fallback.css
++++ b/src/styles/glass/a11y-fallback.css
+@@ -31,9 +31,9 @@
+ 
+    ONE axis reaches it now. `--glass-level: 0.3` lerps every plate 70% of the way to
+    solid `--card` AND drops the blur to 30% of its rung — the firmer plate is the
+-   whole move, because the plate is `--card` at α and the level IS that α. The
+-   separate tint-darken this bracket used to add was a second writer pushing the
+-   same plate the same direction. */
++   whole move, because the plate is `--card` at α and the level scales its
++   transmission: 1 − α = (1 − rung) · level. The separate tint-darken this bracket
++   used to add was a second writer pushing the same plate the same direction. */
+ @media (prefers-contrast: more) {
+     :root {
+         --glass-level: 0.3;
+diff --git a/src/styles/glass/surfaces-pager.css b/src/styles/glass/surfaces-pager.css
+index 776872ba4..20b9f4d39 100644
+--- a/src/styles/glass/surfaces-pager.css
++++ b/src/styles/glass/surfaces-pager.css
+@@ -30,8 +30,8 @@
+            pole composed at the ELEMENT (NOT the raw pre-substituted
+            `--glass-plate-floating` :root token — the gray-hole
+            substitution-trap). The composition is the same in both themes,
+-           with no ink, clamp or oklab mix; only `--card` differs between
+-           them. `--glass-level` defaults to 1, so the pill paints the
++           with no ink, clamp or oklab mix.
++           `--glass-level` defaults to 1, so the pill paints the
+            floating rung's chrome-bound veil (the in-srgb
+            `--surface-tint-*` brand fence is untouched). The dock plate's element-level
+            compose precedent applied to the pager chassis (a `--glass-veil-tier` +

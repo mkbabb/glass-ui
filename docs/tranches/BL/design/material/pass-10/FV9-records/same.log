@@ -1,0 +1,12 @@
+dist fv8 vs fv9: diff -rq exit 0, 0 lines
+dist fv9 vs fv9 rebuilt: diff -rq exit 0
+dist: fv9 3 files, fv8 3 files; sha256 lists diff: identical
+demo fv8 vs fv9: diff -rq exit 0, 0 lines
+demo fv9 vs fv9 rebuilt: diff -rq exit 0
+demo: fv9 346 files, fv8 346 files; sha256 lists diff: identical
+fv8 specimen css index-DyuSrJvX.css 391121 B sha256 347288745da7cf97
+fv9 specimen css index-DyuSrJvX.css 391121 B sha256 347288745da7cf97
+-- R-27 tie to pass 9's bank: the specimen CSS hash and the dist-demo sha256 list only
+banked fv8 specimen css: 347288745da7cf97d5dd3140ab02fc772145d45ff453594b130bdad1e3001d29  ./assets/index-DyuSrJvX.css
+fv9 specimen css:        347288745da7cf97d5dd3140ab02fc772145d45ff453594b130bdad1e3001d29  ./assets/index-DyuSrJvX.css
+demo banked fv8 list vs fv9 list: diff exit 0, 0 lines
