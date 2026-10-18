@@ -1,0 +1,9 @@
+# start zsh -c cd /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-3/C-A3/probe && /Users/mkbabb/.claude/guard/guarded --timeout 10 -- node ck16.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p3/C-A3/wt/.ca3-out/builds/light --engine chromium 2026-10-17 22:11:40 load { 12.27 12.70 10.08 }
+# ck16 engine chromium load 12.3/12.7/10.1 at start
+  PASS       CK-16 Skeleton at rest · --rung-class static; running 1: skeleton-breathe-49828e60[opacity]; 0.0 layouts/s · load 12.3/12.7/10.1
+  FAIL       CK-16 Skeleton off-screen · element top 4114 px against a 500 px viewport; running animations 1 (bound 0 off-screen) · load 12.3/12.7/10.1
+  PASS       CK-16 StatusDot at rest · --rung-class static; running 1: feedback-mark-pulse-16c3eaa5[opacity,scale]; 0.0 layouts/s · load 13.4/12.9/10.2
+  FAIL       CK-16 StatusDot off-screen · element top 4346 px against a 500 px viewport; running animations 1 (bound 0 off-screen) · load 13.4/12.9/10.2
+ck16 chromium · 2 pass, 2 fail, 0 unmeasured · load 13.4/12.9/10.2 at end
+# exit 0
+# end 2026-10-17 22:11:59 load { 13.08 12.88 10.19 }

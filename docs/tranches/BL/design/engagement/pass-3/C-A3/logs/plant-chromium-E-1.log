@@ -1,0 +1,9 @@
+# start /Users/mkbabb/.claude/guard/guarded --timeout 30 -- node run.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p3/C-A3/wt/.ca3-out/builds/plant --wt /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p3/C-A3/wt-plant --engines chromium --only E-1 --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-3/C-A3/json/plant --verbose 2026-10-17 21:24:35 load { 10.62 10.01 9.58 }
+E-1 chromium exit 1 · E-1 chromium FAIL · 91 pass, 5 fail, 0 unmeasured of 96 gating cells (0 reported) · load 6.6/8.4/9.0 at start, 6.1/8.1/8.9 at end · 34 s, load at start 6.6/8.4/9.0
+    FAIL       E-1 adoption switch · declared chosen · 3 instance(s) in 3 scene(s) · NOT ADOPTED: switch: button[role=switch].switch.control-bit computes [unclassed] · press_switch: button[role=switch].switch.control-bit computes [unclassed] · s6: button[role=switch].switch.control-bit computes [unclassed] · load 6.8/8.3/9.0
+    FAIL       E-1 adoption latch · 53 of 55 declared members seen adopting their recipe; unproven (not rendered by any scene, or not adopted): dock switch · load 6.8/8.3/9.0
+    FAIL       E-1 runtime presented (sheet) PRM press-light · scene sheet: no target while pressed · load 6.2/8.1/8.9
+    FAIL       E-1 runtime ambient (aurora) · scene ambient, rung rest · pointer moved across: mean pixel change 0.00 levels against 0.00 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift) · load 6.1/8.1/8.9
+    FAIL       E-1 runtime ambient (aurora) PRM press-light · scene ambient, reduce · pointer moved across: mean pixel change 0.00 levels against 0.00 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift) · load 6.1/8.1/8.9
+# exit 1
+# end 2026-10-17 21:30:32 load { 6.44 8.11 8.88 }

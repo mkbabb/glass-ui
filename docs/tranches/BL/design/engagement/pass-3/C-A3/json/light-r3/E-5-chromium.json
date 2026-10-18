@@ -1,0 +1,349 @@
+{
+ "id": "E-5",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p3/C-A3/wt/.ca3-out/builds/light"
+ },
+ "loadStart": "14.8/13.7/10.8",
+ "loadEnd": "16.1/14.3/11.3",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-5 tabs sustain light",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-color]: +200 ms 0.000 → +1200 ms 0.209 (rising from 0 at +200 ms; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "14.2/13.6/10.8"
+  },
+  {
+   "name": "E-5 tabs press light",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [] · press-only [background-color]",
+   "load": "14.2/13.6/10.8"
+  },
+  {
+   "name": "E-5 tabs sustain(PRM) light",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-color]: +200 ms 0.209 → +1200 ms 0.209 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "14.2/13.6/10.8"
+  },
+  {
+   "name": "E-5 tabs press-light(PRM) light",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [] · press-only [background-color] (bound ≥ 1 press-only property under reduce)",
+   "load": "14.2/13.6/10.8"
+  },
+  {
+   "name": "E-5 tabs sustain dark",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-color]: +200 ms 1.575 → +1200 ms 1.549 (×0.98; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "13.9/13.5/10.8"
+  },
+  {
+   "name": "E-5 tabs press dark",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [] · press-only [background-color]",
+   "load": "13.9/13.5/10.8"
+  },
+  {
+   "name": "E-5 tabs sustain(PRM) dark",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-color]: +200 ms 1.549 → +1200 ms 1.549 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "13.9/13.5/10.8"
+  },
+  {
+   "name": "E-5 tabs press-light(PRM) dark",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [] · press-only [background-color] (bound ≥ 1 press-only property under reduce)",
+   "load": "13.9/13.5/10.8"
+  },
+  {
+   "name": "E-5 toggle sustain light",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-color]: +200 ms 0.201 → +1200 ms 0.209 (×1.04; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "13.7/13.5/10.8"
+  },
+  {
+   "name": "E-5 toggle press light",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color, background-image] · press-only [background-color]",
+   "load": "13.7/13.5/10.8"
+  },
+  {
+   "name": "E-5 toggle sustain(PRM) light",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-color]: +200 ms 0.209 → +1200 ms 0.209 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "13.7/13.5/10.8"
+  },
+  {
+   "name": "E-5 toggle press-light(PRM) light",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color, background-image] · press-only [background-color] (bound ≥ 1 press-only property under reduce)",
+   "load": "13.7/13.5/10.8"
+  },
+  {
+   "name": "E-5 toggle sustain dark",
+   "status": "FAIL",
+   "line": "the press light's distance from rest over [background-color]: +200 ms 1.732 → +1200 ms 1.549 (×0.89; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "13.0/13.3/10.8"
+  },
+  {
+   "name": "E-5 toggle press dark",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color, background-image] · press-only [background-color]",
+   "load": "13.0/13.3/10.8"
+  },
+  {
+   "name": "E-5 toggle sustain(PRM) dark",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-color]: +200 ms 1.549 → +1200 ms 1.549 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "13.0/13.3/10.8"
+  },
+  {
+   "name": "E-5 toggle press-light(PRM) dark",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color, background-image] · press-only [background-color] (bound ≥ 1 press-only property under reduce)",
+   "load": "13.0/13.3/10.8"
+  },
+  {
+   "name": "E-5 chip sustain light",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-image]: +200 ms 1.000 → +1200 ms 1.000 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "12.8/13.3/10.8"
+  },
+  {
+   "name": "E-5 chip press light",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-image] · hover-changed [] · press-only [background-image]",
+   "load": "12.8/13.3/10.8"
+  },
+  {
+   "name": "E-5 chip sustain(PRM) light",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-image]: +200 ms 1.000 → +1200 ms 1.000 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "12.8/13.3/10.8"
+  },
+  {
+   "name": "E-5 chip press-light(PRM) light",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-image] · hover-changed [] · press-only [background-image] (bound ≥ 1 press-only property under reduce)",
+   "load": "12.8/13.3/10.8"
+  },
+  {
+   "name": "E-5 chip sustain dark",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-image]: +200 ms 1.000 → +1200 ms 1.000 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "12.9/13.3/10.8"
+  },
+  {
+   "name": "E-5 chip press dark",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-image] · hover-changed [] · press-only [background-image]",
+   "load": "12.9/13.3/10.8"
+  },
+  {
+   "name": "E-5 chip sustain(PRM) dark",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-image]: +200 ms 1.000 → +1200 ms 1.000 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "12.9/13.3/10.8"
+  },
+  {
+   "name": "E-5 chip press-light(PRM) dark",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-image] · hover-changed [] · press-only [background-image] (bound ≥ 1 press-only property under reduce)",
+   "load": "12.9/13.3/10.8"
+  },
+  {
+   "name": "E-5 accordion sustain light",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-color]: +200 ms 0.008 → +1200 ms 0.209 (×26.63; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "13.1/13.3/10.8"
+  },
+  {
+   "name": "E-5 accordion press light",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color]",
+   "load": "13.1/13.3/10.8"
+  },
+  {
+   "name": "E-5 accordion sustain(PRM) light",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-color]: +200 ms 0.209 → +1200 ms 0.209 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "13.1/13.3/10.8"
+  },
+  {
+   "name": "E-5 accordion press-light(PRM) light",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color] (bound ≥ 1 press-only property under reduce)",
+   "load": "13.1/13.3/10.8"
+  },
+  {
+   "name": "E-5 accordion sustain dark",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-color]: +200 ms 1.440 → +1200 ms 1.549 (×1.08; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "15.4/13.8/11.0"
+  },
+  {
+   "name": "E-5 accordion press dark",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color]",
+   "load": "15.4/13.8/11.0"
+  },
+  {
+   "name": "E-5 accordion sustain(PRM) dark",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [background-color]: +200 ms 1.549 → +1200 ms 1.549 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "15.4/13.8/11.0"
+  },
+  {
+   "name": "E-5 accordion press-light(PRM) dark",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color] (bound ≥ 1 press-only property under reduce)",
+   "load": "15.4/13.8/11.0"
+  },
+  {
+   "name": "E-5 button sustain light",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [::before opacity]: +200 ms 0.030 → +1200 ms 0.160 (×5.39; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "16.7/14.1/11.1"
+  },
+  {
+   "name": "E-5 button press light",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.033 · touch-changed [::before opacity] · hover-changed [::before opacity] · press-only [::before opacity]",
+   "load": "16.7/14.1/11.1"
+  },
+  {
+   "name": "E-5 button sustain(PRM) light",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [::before opacity]: +200 ms 0.160 → +1200 ms 0.160 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "16.7/14.1/11.1"
+  },
+  {
+   "name": "E-5 button press-light(PRM) light",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [::before opacity] · hover-changed [::before opacity] · press-only [::before opacity] (bound ≥ 1 press-only property under reduce)",
+   "load": "16.7/14.1/11.1"
+  },
+  {
+   "name": "E-5 button sustain dark",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [::before opacity]: +200 ms 0.033 → +1200 ms 0.120 (×3.67; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "16.8/14.2/11.2"
+  },
+  {
+   "name": "E-5 button press dark",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.033 · touch-changed [::before opacity] · hover-changed [::before opacity] · press-only [::before opacity]",
+   "load": "16.8/14.2/11.2"
+  },
+  {
+   "name": "E-5 button sustain(PRM) dark",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [::before opacity]: +200 ms 0.120 → +1200 ms 0.120 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "16.8/14.2/11.2"
+  },
+  {
+   "name": "E-5 button press-light(PRM) dark",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [::before opacity] · hover-changed [::before opacity] · press-only [::before opacity] (bound ≥ 1 press-only property under reduce)",
+   "load": "16.8/14.2/11.2"
+  },
+  {
+   "name": "E-5 press_switch sustain light",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [child0 bg]: +200 ms 1.000 → +1200 ms 1.000 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "17.6/14.4/11.3"
+  },
+  {
+   "name": "E-5 press_switch press light",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg]",
+   "load": "17.6/14.4/11.3"
+  },
+  {
+   "name": "E-5 press_switch sustain(PRM) light",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [child0 bg]: +200 ms 1.000 → +1200 ms 1.000 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "17.6/14.4/11.3"
+  },
+  {
+   "name": "E-5 press_switch press-light(PRM) light",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce)",
+   "load": "17.6/14.4/11.3"
+  },
+  {
+   "name": "E-5 press_switch sustain dark",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [child0 bg]: +200 ms 1.000 → +1200 ms 1.000 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "17.0/14.4/11.3"
+  },
+  {
+   "name": "E-5 press_switch press dark",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg]",
+   "load": "17.0/14.4/11.3"
+  },
+  {
+   "name": "E-5 press_switch sustain(PRM) dark",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [child0 bg]: +200 ms 1.000 → +1200 ms 1.000 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "17.0/14.4/11.3"
+  },
+  {
+   "name": "E-5 press_switch press-light(PRM) dark",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce)",
+   "load": "17.0/14.4/11.3"
+  },
+  {
+   "name": "E-5 press_checkbox sustain light",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [child0 bg]: +200 ms 1.000 → +1200 ms 1.000 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "17.3/14.5/11.3"
+  },
+  {
+   "name": "E-5 press_checkbox press light",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg]",
+   "load": "17.3/14.5/11.3"
+  },
+  {
+   "name": "E-5 press_checkbox sustain(PRM) light",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [child0 bg]: +200 ms 1.000 → +1200 ms 1.000 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "17.3/14.5/11.3"
+  },
+  {
+   "name": "E-5 press_checkbox press-light(PRM) light",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce)",
+   "load": "17.3/14.5/11.3"
+  },
+  {
+   "name": "E-5 press_checkbox sustain dark",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [child0 bg]: +200 ms 1.000 → +1200 ms 1.000 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "16.1/14.3/11.3"
+  },
+  {
+   "name": "E-5 press_checkbox press dark",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg]",
+   "load": "16.1/14.3/11.3"
+  },
+  {
+   "name": "E-5 press_checkbox sustain(PRM) dark",
+   "status": "PASS",
+   "line": "the press light's distance from rest over [child0 bg]: +200 ms 1.000 → +1200 ms 1.000 (×1.00; bound ≥ ×0.95) · :active at +1200 ms true",
+   "load": "16.1/14.3/11.3"
+  },
+  {
+   "name": "E-5 press_checkbox press-light(PRM) dark",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [child0 bg] · hover-changed [child0 bg] · press-only [child0 bg] (bound ≥ 1 press-only property under reduce)",
+   "load": "16.1/14.3/11.3"
+  }
+ ]
+}
