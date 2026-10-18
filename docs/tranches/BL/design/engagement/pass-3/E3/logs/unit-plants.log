@@ -1,0 +1,10 @@
+plant shared-anchor: exit 1 · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯ · ['× two controls on the stage pin to their own footprints, never to a shared name 6ms']
+plant pitch-is-slop: exit 1 · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯ · ['× a press on the input that travels takes the value, one step per PITCH (not per slop), promoted while the hand is down 12ms']
+plant arm-on-host: exit 1 · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯ · ['× a press on a part that is not the surface (a step button) scrubs nothing, however far it drifts (CK-22) 10ms']
+plant scrub-veils: exit 1 · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯ · ['× the scrub raises no veil (CK-25): promoted, the world untouched 7ms']
+plant silent-pitch: exit 1 · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯ · ['× plant: an unreadable pitch (the registered 0) is loud and steps nothing 7ms']
+# 2026-10-17 17:2x · engage-door.test.ts "a state member whose class commits is read on its state edges": flaky on the E3
+# composition (1 of 3 and 2 of 4 runs failed; A3's tree 12/12 green, with or without E3's tests/setup.ts). Cause read in
+# node_modules/happy-dom/lib/mutation-observer/MutationObserverListener.js:48: records are delivered on happy-dom's own
+# window microtask queue; the test waited on Node's setTimeout. The wait is now two window frames: 8/8 green.
+plant door-edge-silent (the state-edge MutationObserver calls nothing): exit 1 · 1 failed | 13 passed · × a state member whose class commits is read on its state edges, --rung-light included

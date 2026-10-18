@@ -1,0 +1,31 @@
+# queue wk-batch ab 2026-10-17 18:16:33 load { 9.00 12.67 15.91 }
+[guarded] waiting for the 'webkit' lock
+# wk-batch ab admitted 2026-10-17 19:43:44 load { 16.06 13.67 12.20 }
+bat veil webkit E-3: E-3 webkit   exit 0 · E-3 webkit PASS · 22 pass, 0 fail, 0 unmeasured of 22 gating cells (0 reported) · load 16.1/13.7/12.2 at start, 18.5/14.4/12.5 at end · 31 s, load at start 16.1/13.7/12.2
+bat veil webkit E-10: E-10 webkit   exit 0 · E-10 webkit PASS · 5 pass, 0 fail, 0 unmeasured of 5 gating cells (1 reported) · load 18.5/14.4/12.5 at start, 19.3/14.8/12.7 at end · 14 s, load at start 18.5/14.4/12.5
+bat veil webkit E-11: E-11 webkit   exit 0 · E-11 webkit PASS · 3 pass, 0 fail, 1 unmeasured of 4 gating cells (0 reported) · load 19.3/14.8/12.7 at start, 18.5/14.9/12.8 at end · 21 s, load at start 19.3/14.8/12.7
+probe veil webkit: e3-probe veil webkit · 15 pass, 2 fail, 1 other · load 14.5/14.3/12.7 at end
+bat noveil webkit E-3: E-3 webkit   exit 0 · E-3 webkit PASS · 22 pass, 0 fail, 0 unmeasured of 22 gating cells (0 reported) · load 14.5/14.3/12.7 at start, 14.5/14.4/12.8 at end · 30 s, load at start 14.5/14.3/12.7
+bat noveil webkit E-10: E-10 webkit   exit 0 · E-10 webkit PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (2 reported) · load 14.5/14.4/12.8 at start, 14.0/14.3/12.7 at end · 14 s, load at start 14.5/14.4/12.8
+bat noveil webkit E-11: E-11 webkit   exit 0 · E-11 webkit PASS · 3 pass, 0 fail, 1 unmeasured of 4 gating cells (0 reported) · load 14.0/14.3/12.7 at start, 12.6/14.0/12.7 at end · 20 s, load at start 14.0/14.3/12.7
+probe noveil webkit: e3-probe noveil webkit · 15 pass, 2 fail, 1 other · load 19.8/15.6/13.4 at end
+bat veil webkit E-1: E-1 webkit   exit 1 · E-1 webkit FAIL · 92 pass, 4 fail, 0 unmeasured of 96 gating cells (0 reported) · load 19.8/15.6/13.4 at start, 18.0/15.7/13.5 at end · 41 s, load at start 19.8/15.6/13.4
+bat veil webkit E-2: E-2 webkit   exit 1 · E-2 webkit FAIL · 142 pass, 22 fail, 0 unmeasured of 164 gating cells (16 reported) · load 18.0/15.7/13.5 at start, 11.0/13.6/13.1 at end · 213 s, load at start 18.0/15.7/13.5
+bat veil webkit E-4: E-4 webkit   exit 0 · E-4 webkit PASS · 11 pass, 0 fail, 8 unmeasured of 19 gating cells (0 reported) · load 11.0/13.6/13.1 at start, 13.0/13.6/13.2 at end · 58 s, load at start 11.0/13.6/13.1
+bat veil webkit E-5: E-5 webkit   exit 0 · E-5 webkit PASS · 56 pass, 0 fail, 0 unmeasured of 56 gating cells (0 reported) · load 13.0/13.6/13.2 at start, 15.7/14.1/13.4 at end · 123 s, load at start 13.0/13.6/13.2
+bat veil webkit E-6: E-6 webkit   exit 1 · E-6 webkit FAIL · 2 pass, 2 fail, 8 unmeasured of 12 gating cells (2 reported) · load 15.7/14.1/13.4 at start, 14.7/13.9/13.3 at end · 5 s, load at start 15.7/14.1/13.4
+bat veil webkit E-7: E-7 webkit   exit 1 · E-7 webkit FAIL · 6 pass, 1 fail, 0 unmeasured of 7 gating cells (0 reported) · load 14.7/13.9/13.3 at start, 14.0/13.8/13.3 at end · 5 s, load at start 14.7/13.9/13.3
+bat veil webkit E-8: E-8 webkit   exit 0 · E-8 webkit PASS · 19 pass, 0 fail, 0 unmeasured of 19 gating cells (0 reported) · load 14.0/13.8/13.3 at start, 11.0/13.1/13.0 at end · 42 s, load at start 14.0/13.8/13.3
+bat veil webkit E-9: E-9 webkit   exit 1 · E-9 webkit FAIL · 73 pass, 5 fail, 0 unmeasured of 78 gating cells (2 reported) · load 11.0/13.1/13.0 at start, 8.3/11.9/12.6 at end · 62 s, load at start 11.0/13.1/13.0
+# wk-batch ab done 2026-10-17 19:56:41 load { 8.28 11.88 12.59 }
+wk-batch.sh:34: unmatched "
+# wk-batch ab exit 1 2026-10-17 19:56:46
+# queue wk-batch c 2026-10-17 19:56:46 load { 8.33 11.84 12.57 }
+[guarded] waiting for the 'webkit' lock
+# wk-batch c admitted 2026-10-17 20:27:31 load { 13.20 17.10 15.70 }
+film veil webkit fwd: 1 step frames
+film veil webkit rev: 1 step frames
+cap veil webkit: # capture done · load 8.3/13.0/14.2 at end CAP webkit PASS · 12 pass, 0 fail, 0 unmeasured of 12 gating cells (24 reported) · load 12.0/16.7/15.6 at start, 8.3/13.0/14.2 at end 
+cap noveil webkit: # capture done · load 12.0/12.3/13.7 at end CAP webkit PASS · 12 pass, 0 fail, 0 unmeasured of 12 gating cells (24 reported) · load 8.3/13.0/14.2 at start, 12.0/12.3/13.7 at end 
+# wk-batch c done 2026-10-17 20:32:58 load { 11.96 12.26 13.67 }
+# wk-batch c exit 0 2026-10-17 20:33:02
