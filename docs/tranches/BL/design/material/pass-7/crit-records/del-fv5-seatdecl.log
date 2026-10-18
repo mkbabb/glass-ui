@@ -1,0 +1,65 @@
+DEL · no file under src/ or demo/ describes a mechanism the patch deletes, in any word form (static; H6-1, H7-2)
+tree: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p7/crit/trees/fv5 · 835 text files under src/ and demo/ · declaration: floor-v6.patch: every identifier its removed lines name that the patched src/ and demo/ no longer name (declare-removed.mjs), plus 8 concepts declared by hand (deletes-floor.json) · 61 names, 3 exact only
+  ✓ "earned darken": 0
+  ✓ "darkened by whatever": 0
+  ✓ "luma read": 0
+  ✓ "backdropLuminance": 0
+  ✓ "--glass-backdrop-luma": 0
+  ✗ "backdropMode": 1 · src/components/dock/README.md:20 "backdrop mode"
+  ✗ "backdrop mode": 1 · src/components/dock/README.md:20 "backdrop mode"
+  ✗ "adaptive tint": 3 · src/styles/glass/overlay-plate.css:271 "adaptive-tint" demo/stories/dock/dock-search.vue:197 "adaptive tinting" demo/stories/substrates/glass-material.vue:5 "adaptive tint"
+  ✓ "--control-surface-blur": 0
+  ✓ "--glass-backdrop": 0 (exact only: floor v6 seat, read in context: the one word-form hit, src/styles/animations.css:267 "Glass backdrop — blur + dim", heads the live ::backdrop rules of showModal() dialogs (a file floor v6 does not touch), not the deleted bucket token; the token's exact spelling stays declared)
+  ✓ "--glass-backdrop-luma-knee": 0
+  ✓ "--glass-backdrop-sampled": 0
+  ✓ "--glass-veil-base": 0
+  ✓ "--glass-veil-ink": 0
+  ✓ "--input-on-glass": 0
+  ✗ "--select-plate-alpha": 1 · src/styles/glass/overlay-plate.css:272 "--select-plate-alpha"
+  ✓ "BackgroundCanvasSource": 0
+  ✓ "DockBackdropMode": 0
+  ✓ "FIELD_ALPHA_FLOOR": 0
+  ✓ "GLASS_BACKDROP_SHARED_ATTR": 0
+  ✗ "GlassBackdropBucket": 1 · demo/stories/compositions/auth-shell.vue:209 "glass backdrop bucket"
+  ✓ "GlassBackdropSample": 0
+  ✓ "GlassBackdropTargetRect": 0
+  ✓ "PopperArrow": 0
+  ✓ "SAMPLE_DOWNSAMPLE": 0
+  ✓ "SHELL_FIELD_CANVAS_SELECTOR": 0
+  ✓ "SampleResult": 0
+  ✓ "UseGlassBackdropLuminanceControls": 0
+  ✓ "UseGlassBackdropLuminanceOptions": 0
+  ✓ "applyMotionState": 0
+  ✓ "backgroundCanvas": 0 (exact only: floor v6 seat, read in context: the one word-form hit, demo/stories/substrates/constellation.vue:365 "mounts a constellation background canvas at index 0", names the live constellation canvas, not the deleted GlassDock prop; the prop's exact spelling stays declared)
+  ✓ "compositeOver": 0 (exact only: floor v6 seat, read in context: the 9 word-form hits (presets.ts:296, PagerDots.vue:28, pager-dots/README.md:24, useRouteTransition.ts:126, view-transition.css:253, aurora-hero.ts:312, story-hero.css:39-40, toc-tracking.vue:110) are ordinary compositing prose ('composited over', 'composites over') about live layers, not the deleted sampler helper; the helper's exact spelling stays declared)
+  ✓ "coveredByShared": 0
+  ✗ "data-backdrop-mode": 1 · src/components/dock/README.md:20 "backdrop mode"
+  ✓ "data-backdrop-sample-reason": 0
+  ✓ "data-backdrop-sample-source": 0
+  ✓ "data-backdrop-sample-state": 0
+  ✓ "data-backdrop-sampled": 0
+  ✓ "data-glass-backdrop-shared": 0
+  ✓ "data-glass-field-canvas": 0
+  ✓ "data-glass-sample": 0
+  ✓ "getDownContext": 0
+  ✓ "isCanvas": 0
+  ✓ "lightThreshold": 0
+  ✓ "linearize": 0
+  ✓ "minSampleIntervalMs": 0
+  ✓ "normalizeToRgb": 0
+  ✓ "parseRgb": 0
+  ✓ "relLuminance": 0
+  ✓ "resolveBackdropRgba": 0
+  ✓ "resolveSourceCanvas": 0
+  ✓ "resolveUnderlayRgb": 0
+  ✓ "sampleAnimated": 0
+  ✓ "sampleNow": 0
+  ✓ "sampleStatic": 0
+  ✓ "staticResult": 0
+  ✓ "targetRect": 0
+  ✓ "useGlassBackdropLuminance": 0
+  ✓ "wantsLiveLoop": 0
+  ✓ "writeBucket": 0
+  ✓ "writeUnavailable": 0
+DELETED-MECHANISMS names=61 hits=8 files=5 · demo/stories/compositions/auth-shell.vue demo/stories/dock/dock-search.vue demo/stories/substrates/glass-material.vue src/components/dock/README.md src/styles/glass/overlay-plate.css
+FAIL (6 of 61 gated rows)

@@ -1,0 +1,18 @@
+== fl14-read start 02:06:41 load { 8.27 15.48 21.19 }
+minor5-fl m6: FAIL (18 of 30 gated rows)
+minor5-fl m2: FAIL (161 of 880 gated rows)
+minor5-fl m3: FAIL (128 of 342 gated rows)
+minor5-fl stack: PASS (24 gated rows)
+minor5-nofl14 m6: FAIL (18 of 30 gated rows)
+minor5-nofl14 m2: FAIL (163 of 880 gated rows)
+minor5-nofl14 m3: FAIL (130 of 342 gated rows)
+minor5-nofl14 stack: FAIL (6 of 24 gated rows)
+fl14 dark (M-6 composites): G6 dark composites compared 13, worst ΔE_OK 0.0000, over 0.002: 0
+fl14 pxdiff exit 0
+   chromium dark white held chromium-dark-white-held-base-release011.png 72503 px, max Δ 60, box 24,25-606,355
+   chromium dark white held chromium-dark-white-held-base-release012.png size 1280x900 vs 149x72
+   chromium dark white held chromium-dark-white-held-base-release013.png size 1280x900 vs 149x72
+   chromium dark checker dialog chromium-dark-checker-dialog-base-full.png 1 px, max Δ 2, box 827,312-827,312
+   chromium dark deep dialog chromium-dark-deep-dialog-base-full.png 1 px, max Δ 2, box 827,312-827,312
+PXDIFF light 66/274 differ (max Δ 166) · dark 57/266 differ (max Δ 238)
+== fl14-read end 02:07:00 load { 8.69 15.12 20.93 }

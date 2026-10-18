@@ -1,0 +1,48 @@
+backdropLuminance · DESIGN.md:521 · `@utility glass-plate` (`src/styles/glass/veil.css`) is the plate paint, composed at the element. It reads `--glass-veil-tier` (unset resolves `restin
+backdropLuminance · MIGRATION.md:4062 · barrel promotion (`docs/consumer-evidence/use-glass-backdrop-luminance.md`).
+--glass-backdrop-luma · MIGRATION.md:4045 · and writes `--glass-backdrop-luma` + the `--glass-backdrop` bucket on the dock root.
+--glass-backdrop-luma · MIGRATION.md:4045 · and writes `--glass-backdrop-luma` + the `--glass-backdrop` bucket on the dock root.
+--glass-backdrop-luma · tests/styles/glass-subtlety.test.ts:192 · expect(veil).not.toMatch(/--glass-backdrop-luma|clamp\(/);
+--glass-backdrop-luma · tests/styles/glass-subtlety.test.ts:192 · expect(veil).not.toMatch(/--glass-backdrop-luma|clamp\(/);
+backdropMode · MIGRATION.md:503 · `DockProps` went from fourteen members to six: `fitContent`, `backdropMode`, `shape`,
+backdropMode · MIGRATION.md:503 · `DockProps` went from fourteen members to six: `fitContent`, `backdropMode`, `shape`,
+backdropMode · tests/components/custom/dock/GlassDock.posture.test.ts:153 · // `backdropMode` is struck: the dock paints the chrome bound, and
+backdropMode · tests/components/custom/dock/GlassDock.posture.test.ts:153 · // `backdropMode` is struck: the dock paints the chrome bound, and
+backdropMode · tests/components/custom/dock/GlassDock.posture.test.ts:155 · expect(root.attributes("data-backdrop-mode")).toBeUndefined();
+backdrop mode · MIGRATION.md:503 · `DockProps` went from fourteen members to six: `fitContent`, `backdropMode`, `shape`,
+backdrop mode · tests/components/custom/dock/GlassDock.posture.test.ts:153 · // `backdropMode` is struck: the dock paints the chrome bound, and
+backdrop mode · tests/components/custom/dock/GlassDock.posture.test.ts:155 · expect(root.attributes("data-backdrop-mode")).toBeUndefined();
+--glass-backdrop · MIGRATION.md:4045 · and writes `--glass-backdrop-luma` + the `--glass-backdrop` bucket on the dock root.
+--glass-backdrop · MIGRATION.md:4045 · and writes `--glass-backdrop-luma` + the `--glass-backdrop` bucket on the dock root.
+--glass-backdrop · MIGRATION.md:4078 · declared/sampled BRIGHT signal (`--glass-backdrop: light` / the observer). A consumer whose
+--glass-backdrop · MIGRATION.md:4085 · .my-bright-region { --glass-backdrop: light; }
+--glass-backdrop · docs/canon/glass-system.md:50 · self-engage only the sub-perceptual floor); (2) the declarative `--glass-backdrop: light`
+--glass-backdrop · tests/styles/glass-subtlety.test.ts:192 · expect(veil).not.toMatch(/--glass-backdrop-luma|clamp\(/);
+--glass-veil-base · tests/styles/glass-subtlety.test.ts:187 · expect(map.has("--glass-veil-base")).toBe(false);
+--glass-veil-base · tests/styles/glass-subtlety.test.ts:187 · expect(map.has("--glass-veil-base")).toBe(false);
+--glass-veil-ink · tests/styles/glass-subtlety.test.ts:186 · expect(map.has("--glass-veil-ink")).toBe(false);
+--glass-veil-ink · tests/styles/glass-subtlety.test.ts:186 · expect(map.has("--glass-veil-ink")).toBe(false);
+--input-on-glass · MIGRATION.md:2917 · (+ `--on-glass-muted-strong`), `--input-on-glass`, and `--progress-track-on-glass`. The
+--input-on-glass · MIGRATION.md:2925 · per-site edit. Input/Textarea wells read `--input-on-glass`; the Progress default/gradient track
+--input-on-glass · MIGRATION.md:2917 · (+ `--on-glass-muted-strong`), `--input-on-glass`, and `--progress-track-on-glass`. The
+--input-on-glass · MIGRATION.md:2925 · per-site edit. Input/Textarea wells read `--input-on-glass`; the Progress default/gradient track
+--input-on-glass · docs/canon/glass-system.md:60 · `--input-on-glass`, `--progress-track-on-glass` — the THIRD state beside the adaptive seam
+--input-on-glass · docs/canon/glass-system.md:60 · `--input-on-glass`, `--progress-track-on-glass` — the THIRD state beside the adaptive seam
+--input-on-glass · tests/components/field/forms-seam.test.ts:24 · *     `--input-on-glass`, which is #22 W-FROST's token (§9 row 2, "both or
+--input-on-glass · tests/components/field/forms-seam.test.ts:24 · *     `--input-on-glass`, which is #22 W-FROST's token (§9 row 2, "both or
+backgroundCanvas · MIGRATION.md:504 · `orientation`, `backgroundCanvas`, `collapse`. `./dock` gains the types `DockCollapse`
+data-backdrop-mode · MIGRATION.md:503 · `DockProps` went from fourteen members to six: `fitContent`, `backdropMode`, `shape`,
+data-backdrop-mode · tests/components/custom/dock/GlassDock.posture.test.ts:155 · expect(root.attributes("data-backdrop-mode")).toBeUndefined();
+data-backdrop-mode · tests/components/custom/dock/GlassDock.posture.test.ts:153 · // `backdropMode` is struck: the dock paints the chrome bound, and
+data-backdrop-mode · tests/components/custom/dock/GlassDock.posture.test.ts:155 · expect(root.attributes("data-backdrop-mode")).toBeUndefined();
+isCanvas · docs/archive/audits/runs/2026-06-03-glass-ui-self/f-fourier.md:26 · *Legitimate (not flagged):* hex/rgba inside `<canvas>`/SVG paint contexts (`BasisCanvas`, `ConvergencePlot`, `FrequencyGraph`, `HarmonicLevelGrid`, `F
+isCanvas · docs/archive/audits/runs/2026-06-03-glass-ui-self/f-fourier.md:83 · **Gap 1 (HEADLINE) — reactive token→hex bridge for canvas consumers.** `lib/colors.ts` is a 110-line hand-rolled `cssVarToHex` (hsl/rgb/bare-triplet→h
+isCanvas · docs/archive/constellation/next/audit/A3-fourier-valuejs.md:28 · rAF park (reference-counted IO in `BasisCanvas`); the I-local hand-roll was then *replaced* by
+useGlassBackdropLuminance · CHANGELOG.md:874 · - **Adaptive glass**: the unconditional self-engage legibility floor + the sampled-luminance observer (`useGlassBackdropLuminance`, dock default-ON), 
+useGlassBackdropLuminance · CHANGELOG.md:874 · - **Adaptive glass**: the unconditional self-engage legibility floor + the sampled-luminance observer (`useGlassBackdropLuminance`, dock default-ON), 
+useGlassBackdropLuminance · MIGRATION.md:4044 · by default (`useGlassBackdropLuminance`), which dynamically tracks a live/animated backdrop
+useGlassBackdropLuminance · MIGRATION.md:4044 · by default (`useGlassBackdropLuminance`), which dynamically tracks a live/animated backdrop
+useGlassBackdropLuminance · MIGRATION.md:4062 · barrel promotion (`docs/consumer-evidence/use-glass-backdrop-luminance.md`).
+useGlassBackdropLuminance · docs/canon/glass-system.md:51 · ancestor bucket; (3) the sampled-luminance observer `useGlassBackdropLuminance` (DEMO-
+useGlassBackdropLuminance · docs/canon/glass-system.md:51 · ancestor bucket; (3) the sampled-luminance observer `useGlassBackdropLuminance` (DEMO-
+OUTSCOPE files=323 hits=47

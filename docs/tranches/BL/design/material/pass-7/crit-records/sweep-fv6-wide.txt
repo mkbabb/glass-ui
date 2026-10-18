@@ -1,0 +1,154 @@
+src/composables/color/index.ts:12:// Forcing one return space would darken one of the surfaces. The CSS
+src/composables/motion/morph/useDragMorph.ts:17:// that substrate; it owns NO hand-rolled pointer-velocity sampler and NO parallel
+src/styles/paper.css:41: * sinks into the paper's pits → darken) / `screen` (dark — fiber catches light →
+src/styles/paper.css:55:   darken/lighten. All three fiber periods (2.8px / 3.5px / 7px) divide the 140px
+src/styles/paper.css:114:    /* LIGHT: ink sinks into the cream → multiply darkens the valleys. */
+src/styles/paper.css:159:        /* LIGHT tooth: multiply — the physically-true ink-into-pits darken (NOT
+src/styles/paper.css:189:   multiply darkens the ruling into a light sheet, screen lifts it out of a dark
+src/styles/glass/control-bit.css:177:       THE POLE IS BLACK. A recess must darken below the L* 0.1456 page floor, and
+src/styles/glass/control-bit.css:180:       (tokens/glass-fx.css). Darkening toward black scales the host's channels and
+src/styles/glass/surfaces.css:55:       does (nothing samples the backdrop) — no tab-local fork, no root-baked token blind
+src/styles/glass/veil.css:36:   `prefers-contrast: more` rides. No luma term and no clamp — nothing samples, so
+src/styles/typography/utilities.css:154:       `--muted-foreground` never double-darkens) so the neutral eyebrow clears
+src/styles/glass/a11y-fallback.css:35:   and the level IS the mix. The separate tint-darken this bracket used to add was a
+src/styles/tokens/dark-arm.css:47:       so the page↔card gap widens from a 4-L collapse (card/page relL ≈ 2.0×, a 0.003-luma
+src/styles/tokens/dark-arm.css:304:       light arm's darkening) so it clears AA over the composited dark plate WHILE
+src/styles/tokens/shadow.css:127:       the surface (the contact-darkening AO the satellites pick up where they merge into
+src/styles/tokens/shadow.css:143:       contact band TIGHTENS toward the lifted base (a touch of extra grounding-darken
+src/styles/tokens/glass-fx.css:120:       so it darkens the inner-top edge without re-coloring the warm fill. */
+src/styles/tokens/sizing.css:256:    /* The press DARKEN, read on `:active` alongside the scale-press so a press lands a
+src/styles/tokens/sizing.css:257:       brief darken rather than scaling alone. The one-ink SELECTED rung
+src/components/fourier-field/shaders/render.wgsl.ts:78:fn sampleRamp(t: f32) -> vec3<f32> {
+src/components/fourier-field/shaders/render.wgsl.ts:90:  let base = sampleRamp(seg * 0.6);
+src/components/fourier-field/shaders/render.wgsl.ts:180:    tint = sampleRamp(1.0 - age);
+src/components/sortable-list/motion.ts:82:export class VelocitySampler {
+src/components/sortable-list/drag.ts:27:    VelocitySampler,
+src/components/sortable-list/drag.ts:128:    const sampler = new VelocitySampler();
+src/components/sortable-list/drag.ts:354:        const v = sampler.velocity();
+src/components/sortable-list/drag.ts:393:        sampler.reset();
+src/components/sortable-list/drag.ts:509:        sampler.reset();
+src/components/sortable-list/drag.ts:510:        sampler.push(armed.x, armed.y);
+src/components/sortable-list/drag.ts:552:        sampler.push(event.clientX, event.clientY);
+src/components/sortable-list/drag.ts:555:            ghost.tilt(sampler.velocity().x);
+src/components/alert/index.ts:46:   utility was the reason the tone never painted: `joinClassValues` is a bucketed
+src/components/aurora/composables/auroraFallbackGround.ts:210:    /** The measured luminance metrics (mean + per-quadrant) for the certify band. */
+src/components/aurora/composables/textureUpload.ts:77: * BEFORE its real photo has decoded (so the sampler is always complete + the first frame
+src/components/aurora/composables/textureUpload.ts:116: * Returns the bound texture (the caller sets the sampler uniform to its unit + binds
+src/components/aurora/composables/textureUpload.ts:178: * texture + its dims (the caller builds the sampler + the bind group entry).
+src/components/aurora/composables/uniformBridgeWGPUImage.ts:7: * group (uniform + texture + sampler). The image lane never touches the palette struct —
+src/components/aurora/composables/wgpuSetup.ts:124:        // carrying the texture + sampler + the image-uniform tail) rather than the palette
+src/components/aurora/composables/wgpuSetup.ts:264:// and the sampler (binding 2). The texture is uploaded through the ONE shared
+src/components/aurora/composables/wgpuSetup.ts:298:    const sampler = device.createSampler({
+src/components/aurora/composables/wgpuSetup.ts:299:        label: "[Aurora] image sampler",
+src/components/aurora/composables/wgpuSetup.ts:318:                sampler: { type: "filtering" },
+src/components/aurora/composables/wgpuSetup.ts:343:    // neutral 1×1 placeholder so the sampler is always complete (never a black-garbage frame).
+src/components/aurora/composables/wgpuSetup.ts:356:                { binding: 2, resource: sampler },
+src/components/aurora/composables/auroraImageSource.ts:76: * through the ONE shared primitive; seeds the neutral placeholder so the sampler is always
+src/components/aurora/constants/shaders/metal-medium.glsl.ts:15:// structureTensorField re-plumbs its already-computed luma gradient (Gx,Gy) out through
+src/components/aurora/constants/shaders/metal-medium.glsl.ts:36:// warm folded metal: the luma HEIGHT field (the packed structure-tensor gradient →
+src/components/aurora/constants/shaders/metal-medium.glsl.ts:52:const float METAL_GRADIENT_FLATTEN = 0.55;  // metal-gradient pre-flatten toward luma
+src/components/aurora/constants/shaders/metal-medium.glsl.ts:64:  // Height-field normal: N = normalize(vec3(grad * scale, 1)). The luma relief tilts
+src/components/aurora/constants/shaders/metal-medium.glsl.ts:100:  // Pre-flatten toward luma (the smoother gradient-metallic base) — same BRDF, calmer body.
+src/components/aurora/constants/presets.ts:95:    // NOT a finish axis): `metal` re-lights the field as warm folded metal (the luma
+src/components/aurora/constants/presets.ts:260:     * the luma-relief → normal tilt (a higher value reads as sharper folds). On the WGSL
+src/components/aurora/constants/presets.ts:436: * The default `metalHeightScale` (luma-relief → normal tilt) when omitted. A higher
+src/components/aurora/constants/shaders/aurora-image.wgsl.ts:5:// carrying the texture + sampler + the image-uniform tail), NEVER a per-fragment runtime
+src/components/aurora/constants/shaders/aurora-image.wgsl.ts:58:@group(0) @binding(2) var imgSampler: sampler;
+src/components/aurora/constants/shaders/aurora-image.wgsl.ts:174:  var sum = srgbToLinear(textureSampleLevel(imgTex, imgSampler, coverUv(uv), 0.0).rgb);
+src/components/aurora/constants/shaders/aurora-image.wgsl.ts:181:      sum = sum + srgbToLinear(textureSampleLevel(imgTex, imgSampler, coverUv(uv + off), 0.0).rgb);
+src/components/aurora/composables/glSetup.ts:90:    // The image program's own uniform lane (the sampler + the
+src/components/aurora/constants/shaders/brush.glsl.ts:182://   streakAmp    — 0..0.2 how much internal streaks darken/lighten
+src/components/aurora/constants/shaders/brush.glsl.ts:240:  // Cross-stroke ridge/valley shading — a catch-light along the spine centre, darkening to
+src/components/aurora/constants/shaders/brush.glsl.ts:359:        float graded = mix(0.5, 1.5, luma) * mix(0.6, 1.0, coh);
+src/components/aurora/constants/shaders/tonemap.glsl.ts:15:// knee at 0.8 − 0.04, a hyperbolic highlight compression, and a luminance-anchored
+src/components/aurora/constants/shaders/vangogh-medium.glsl.ts:4:// loaded comma dabs over a darkened swirl underpainting, oriented off the
+src/components/aurora/constants/shaders/vangogh-medium.glsl.ts:26://   • SPARSE placement with visible inter-dab ground (density ≈ 0.42), over a darkened
+src/components/aurora/constants/shaders/vangogh-medium.glsl.ts:94:      // mean-luma. The higher mean raises the gap-fraction threshold (meanLum·0.6) so the
+src/components/aurora/constants/shaders/vangogh-medium.glsl.ts:162:  // dab spine, injecting fine-scale luma energy that flattens the too-steep β WITHOUT
+src/components/aurora/constants/shaders/vangogh-medium.glsl.ts:196:  // the OPEN GROUND with a flow-aligned ripple. It is SUBTRACTIVE-biased (it only darkens,
+src/components/aurora/constants/shaders/vangogh-medium.glsl.ts:198:  // atomicity preserved/strengthened) while injecting the across-flow mid-band luma energy
+src/components/aurora/constants/shaders/vangogh-medium.glsl.ts:229:  // height) darkens toward the deep underpainting, so the bright impasto dabs read as
+src/components/aurora/composables/color.ts:279:        // (toward COOL_POLE) as it darkens — interpolated toward the named poles.
+src/components/aurora/constants/shaders/mediums.glsl.ts:36:// luma(sampleBase) yields the gradient (Gx,Gy); the 2x2 structure tensor
+src/components/aurora/constants/shaders/mediums.glsl.ts:44:  // 3x3 luma samples.
+src/components/aurora/constants/shaders/mediums.glsl.ts:95:  // Wet-edge cauliflowers via luma-gradient magnitude
+src/components/aurora/constants/shaders/mediums.glsl.ts:229:  float groundFloor; // Bare-ground darken floor. The gaps between strokes
+src/components/aurora/constants/shaders/mediums.glsl.ts:232:                     // Starry-Night visible ground). Oil/oil-pastel keep 1.0 (no darken).
+src/components/aurora/constants/shaders/mediums.glsl.ts:367:  // between them darkens.
+src/components/aurora/constants/shaders/mediums.glsl.ts:448:  // Per-sector mean + scalar luma-variance, then the SOFT variance-weighted blend.
+src/components/aurora/constants/shaders/aurora-image.frag.ts:82:uniform sampler2D uImage;
+src/components/aurora/constants/shaders/oil-modes.glsl.ts:40:    1.0     // groundFloor — oil keeps the full base (no ground darken; fills everywhere)
+src/components/aurora/constants/shaders/oil-modes.glsl.ts:85:                              // by luma/coherence so the dab-size energy spreads across
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:10://     COLOR FIELD's OWN structure (a 3×3 Sobel over luma(sampleBase) → the 2×2 structure
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:41:// ── Painterly luma + medium scalar accessors ───────────────────────────────
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:61:// structureTensorField re-plumbs its already-computed luma gradient (Gx,Gy) out
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:317:// The field re-lights as warm folded metal: the luma HEIGHT field (the packed
+src/components/aurora/constants/shaders/aurora-mediums.wgsl.ts:352:  // Technicolor valley base — the body keeps the FIELD hue; luma rides the relief.
+src/components/aurora/constants/shaders/aurora.frag.ts:113:// the specular catch intensity; uMetalHeightScale scales the luma-relief → normal tilt.
+src/components/aurora/constants/shaders/aurora.frag.ts:348:// replacing the luma-mix sRGB form). amt=1 is identity; amt<1 desaturates toward
+src/components/aurora/constants/shaders/aurora.frag.ts:349:// the achromatic axis with NO lightness shift (the muddy-luma-mix grey is gone).
+src/components/_shared/class-names.ts:20: * conflict-key (the CSS-property bucket the utility writes to), and
+src/components/_shared/class-names.ts:21: * keeps only the last token per bucket. Variant prefixes like
+src/components/_shared/class-names.ts:23: * scope: a bucket-key incorporates the prefix so `text-small md:text-lg`
+src/components/_shared/class-names.ts:28: * Tokens that don't match a known bucket pass through untouched (custom
+src/components/_shared/class-names.ts:34: * `font-text` / `font-display` / `font-serif-math` (the family bucket is
+src/components/_shared/class-names.ts:36: * `border-*` / `ring-*` colours (`border-border`, `ring-ring`; those buckets
+src/components/_shared/class-names.ts:38: * `.published-roster` carries IS bucketed, by its true property — a unit in
+src/components/_shared/class-names.ts:91: * literal or a colour function (`rgb(`, `oklch(`, `color-mix(` …); those bucket as
+src/components/_shared/class-names.ts:94: * buckets as a size.
+src/components/_shared/class-names.ts:103: * Rules: each entry is `[bucket-id, regex]`. The regex is matched
+src/components/_shared/class-names.ts:105: * prefixes and `!`). The bucket-id is what we collide on — two tokens
+src/components/_shared/class-names.ts:106: * sharing a bucket-id under the same prefix scope are conflicts.
+src/components/_shared/class-names.ts:115:    // mis-bucketed as a colour.
+src/components/_shared/class-names.ts:124:    // size/leading/font-family recipes, NOT colour utilities; bucketing
+src/components/_shared/class-names.ts:128:    // utility (`text-micro`) instead of shadowing it. This conflict-bucket
+src/components/_shared/class-names.ts:132:    // Button variant under the previous catch-all `text-color` bucket).
+src/components/_shared/class-names.ts:147:    // `--tw-text-shadow-color`) are two properties, so two buckets. Both run
+src/components/_shared/class-names.ts:153:    ["text-color", /^text-/], // catch-all colour bucket; runs AFTER size/align/typography
+src/components/_shared/class-names.ts:204:    // ONE bucket per CSS longhand group the utility writes, and an OPEN value
+src/components/_shared/class-names.ts:217:    // Per-corner/per-side buckets are required, NOT one radius bucket: the
+src/components/_shared/class-names.ts:225:    // shorthand bucket, which is correct — they set all four corners.
+src/components/_shared/class-names.ts:299:function bucketFor(core: string): string | null {
+src/components/_shared/class-names.ts:308: * its conflict bucket; keep only the last token per `(scope|bucket)`
+src/components/_shared/class-names.ts:309: * pair. Tokens with no bucket pass through (preserving order).
+src/components/_shared/class-names.ts:325:        const bucket = bucketFor(core);
+src/components/_shared/class-names.ts:326:        if (bucket === null) continue;
+src/components/_shared/class-names.ts:327:        const key = `${scope}|${bucket}`;
+src/components/_shared/menu/menu.css:10:       fill darkened the cream row with no hue (C 0.010), which reads grey. The
+src/components/sheet/styles.css:110:     * graded sampler with the scrollport. */
+src/components/sheet/styles.css:329:     *     plate, no sampler                             120.41
+src/components/sheet/styles.css:330:     *     sampler AS A CHILD                86.64 →  81.55   FLAT — the disease
+src/components/sheet/styles.css:332:     *     sampler AS A SIBLING               79.57 →   0.00   the ramp, in paint
+src/components/sheet/styles.css:337:     * a different material. So the sampler is the surface's SIBLING and takes the surface's own
+src/components/sheet/styles.css:340:     * geometry read in JS. The surface stays a non-sampler, as its own comment always claimed. */
+src/components/sheet/styles.css:383:     * SURFACE's — the sampler is its shape, so it takes the same logical longhands rather than
+src/components/sheet/styles.css:406:    /* THE SAMPLER'S SIZE IS CONSTANT ON THE DETENTED ARM — and only its SIZE.
+src/components/sheet/styles.css:416:     * across the rung range even though it never changes size. A screen-fixed sampler with the
+src/components/sheet/SheetContent.vue:169:// THE SAMPLER'S PRESENCE IS THE SURFACE'S. It is a portal sibling now, so reka's own
+src/components/sheet/SheetContent.vue:171:// one sampler per MOUNTED SHEET on the page, open or not, and each would anchor to
+src/components/sheet/SheetContent.vue:376:                 `scroll` only changes that region's overflow. The plate and sampler
+src/components/sheet/SheetContent.vue:395:             nothing. The host's flat blur stays off: this is the sole sampler. -->
+src/components/blob/shaders/metaball.wgsl.ts:446:  //    march returns < 1 and DARKENS the OKLCh L — a soft grounded contact band UNDER the
+src/components/blob/shaders/metaball.wgsl.ts:466:    let shadowDarken = (1.0 - sh) * away * band * 0.20;
+src/components/blob/shaders/metaball.wgsl.ts:467:    oklch.x = max(oklch.x - shadowDarken, 0.0);
+src/components/blob/shaders/metaball.frag.ts:421:    //    light, DARKEN the OKLCh L — a soft grounded contact band under the dome
+src/components/blob/shaders/metaball.frag.ts:434:        float shadowDarken = (1.0 - sh) * away * band * 0.20;
+src/components/blob/shaders/metaball.frag.ts:435:        oklch.x = max(oklch.x - shadowDarken, 0.0);
+src/components/dock/DockControl.vue:128:// dock-controls CSS reads to couple darken/specular to the spring physics. The
+src/components/dock/styles/controls/tab-button.css:75:        /* The iOS press darken-plus-shrink (see the icon-button). */
+src/components/dock/styles/search.css:39:       muted ink over any input; nothing samples the backdrop. It rides the SAME
+src/components/dock/styles/controls/triggers.css:7:   darken, the focus + open/active fill (hover ≠ open), and
+src/components/dock/styles/controls/triggers.css:85:    /* The iOS press darken-plus-shrink (see the icon-button). */
+src/components/dock/styles/controls/icon-button.css:5:   fill, the iOS press DARKEN-plus-shrink
+src/components/dock/styles/controls/icon-button.css:16:       darken/specular legs read it via `calc()` (typed <number> so the calc interpolates),
+src/components/dock/styles/controls/icon-button.css:87:           • the DARKEN leg — a sub-perceptual `filter: brightness()` deepen on the SAME
+src/components/dock/styles/controls/icon-button.css:118:        /* The iOS press DARKEN-plus-shrink. Press lands the
+src/components/dock/styles/controls/icon-button.css:119:           glass-darken (`--dock-control-press-bg`, a tier below resting) alongside
+src/components/dock/styles/controls/icon-button.css:120:           the existing scale-press, so a tap reads "darken + shrink" (C4-INV-4 was
+demo/stories/compositions/auth-shell.vue:223:    /* The muted body copy is darkened from the light-mode `38%` lightness: over
+demo/stories/foundations/overlays-scrims.vue:8:// the backdrop-darkening it IS.
+demo/stories/foundations/overlays-scrims.vue:48:            blurb="Each scrim weight paints over a vivid stage so its backdrop-darkening reads clearly. Open Dialog or Confirm dialog to experience focus, dismissal, and live overlay behavior."
+demo/stories/foundations/overlays-scrims.vue:97:   dim reads as the darkening it is. The section-color
+demo/stories/substrates/aurora/presets.ts:550:// mirroring VANGOGH). The metal medium re-lights the field's luma as a HEIGHT
+demo/stories/substrates/aurora/presets.ts:551:// field, so a warm gold/bronze/copper ramp with a strong luma range gives the
+demo/stories/substrates/aurora/config/TextureLayer.vue:126:            description="0..1 · watercolor cauliflower darkening"

@@ -1,0 +1,108 @@
+== --glass · words glass · word-form hits in tree 0
+== --glass-plate · words glass plate · word-form hits in tree 103
+   HIT src/composables/motion/morph/useDragMorph.ts:40 «// gesture is `transform` over the EXISTING settled footprint; the glass plate is»
+   HIT src/styles/index.css:114 «*                              cards.css (it reads the same `--glass-plate-*` rung tokens»
+   HIT src/styles/glass.css:48 «the rungs `@apply glass-plate`. */»
+   HIT src/styles/glass/surface-axis.css:14 «veil    — the borderless/rimless text-legibility plate: the `--glass-plate-quiet`»
+   HIT src/styles/glass/surface-axis.css:16 «reads as a dividing line on a text plate). Reads `--glass-plate-quiet`»
+   HIT src/styles/glass/surface-axis.css:48 «@apply glass-plate;»
+== CSS_INITIAL_UNDERLAY · words css initial underlay · word-form hits in tree 0
+   removed: src/composables/glass/backdropLuminanceSample.ts: const CSS_INITIAL_UNDERLAY: readonly [number, number, number] = [255, 255, 255];
+   removed: src/composables/glass/backdropLuminanceSample.ts: return [...CSS_INITIAL_UNDERLAY];
+== alphaSum · words alpha sum · word-form hits in tree 0
+   removed: src/composables/glass/backdropLuminanceSample.ts: let alphaSum = 0;
+   removed: src/composables/glass/backdropLuminanceSample.ts: alphaSum += a;
+== auroraCanvas · words aurora canvas · word-form hits in tree 11
+   removed: demo/stories/dock/_frame/DockStage.vue: reads BLACK (luma 0 / hue transparent) off `drawImage(auroraCanvas)` —
+   HIT src/components/aurora/Aurora.vue:164 «//   - the live canvas warms into it — the `.aurora-canvas` opacity cross-fade»
+   HIT src/components/aurora/Aurora.vue:236 «class="aurora-canvas-layer h-full min-h-0 w-full"»
+   HIT src/components/aurora/Aurora.vue:237 «:class="{ 'aurora-canvas-layer--armed': api.isArmed.value }"»
+   HIT src/components/aurora/Aurora.vue:242 «class="aurora-canvas block h-full w-full"»
+   HIT src/components/aurora/Aurora.vue:243 «:class="{ 'aurora-canvas--armed': api.isArmed.value }"»
+   HIT src/components/aurora/Aurora.vue:281 «.aurora-root > .aurora-canvas-layer {»
+== backdropLuminanceSample · words backdrop luminance sample · word-form hits in tree 0
+   removed: src/composables/glass/useGlassBackdropLuminance.ts: } from "./backdropLuminanceSample";
+   removed: tests/composables/glass/backdropLuminanceSample.test.ts: import { sampleAnimated } from "@glass/composables/glass/backdropLuminanceSample";
+== backdropSample · words backdrop sample · word-form hits in tree 10
+   removed: demo/stories/substrates/glass-material.vue: const { sample: backdropSample } = useGlassBackdropLuminance(liveCardEl, {
+   removed: demo/stories/substrates/glass-material.vue: const current = backdropSample.value;
+   HIT src/styles/glass.css:20 «* its blur. Bottom line: one backdrop sample per visual plate; nested cells do»
+   HIT src/styles/glass/focus-veil.css:22 «§13): stacked full-viewport backdrop samples are the single most expensive thing this»
+   HIT src/components/_shared/menu/menu.css:4 «`backdrop-filter`, no rung — because the open menu's own plate is the one backdrop»
+   HIT src/components/command/Command.vue:77 «a glass plate — the palette sampled a backdrop that was itself a backdrop»
+   HIT src/components/sheet/styles.css:314 «* One fixed 34px backdrop sample is mask-graded from 13/40 opacity at the viewport-facing»
+   HIT src/components/sheet/styles.css:408 «* A backdrop sample is re-derived whenever the box it is taken over changes, and on this»
+== backdropSampleMath · words backdrop sample math · word-form hits in tree 0
+   removed: src/composables/glass/backdropLuminanceSample.ts: import { isCanvas, relLuminance, parseRgb, compositeOver } from "./backdropSampleMath";
+   removed: src/composables/glass/backdropSampleMath.ts: // backdropSampleMath — the pure sRGB sampling primitives (the no-god-module colocation leaf: position-
+== bc · words bc · word-form hits in tree 0
+   removed: src/components/dock/GlassDock.vue: const bc = props.backgroundCanvas;
+   removed: src/components/dock/GlassDock.vue: return typeof bc === "function"
+== bgRaw · words bg raw · word-form hits in tree 0
+   removed: src/composables/glass/backdropLuminanceSample.ts: const bgRaw = getComputedStyle(node).backgroundColor;
+   removed: src/composables/glass/backdropLuminanceSample.ts: const concrete = resolveTokenColor(bgRaw, el);
+== bodyBg · words body bg · word-form hits in tree 0
+   removed: src/composables/glass/backdropLuminanceSample.ts: const bodyBg = resolveTokenColor(
+   removed: src/composables/glass/backdropLuminanceSample.ts: return normalizeToRgb(bodyBg, ctx);
+== downCanvas · words down canvas · word-form hits in tree 0
+   removed: src/composables/glass/useGlassBackdropLuminance.ts: let downCanvas: HTMLCanvasElement | null = null;
+   removed: src/composables/glass/useGlassBackdropLuminance.ts: if (!downCanvas) {
+== downCtx · words down ctx · word-form hits in tree 0
+   removed: src/composables/glass/useGlassBackdropLuminance.ts: let downCtx: CanvasRenderingContext2D | null = null;
+   removed: src/composables/glass/useGlassBackdropLuminance.ts: if (!downCtx) {
+== drawImage · words draw image · word-form hits in tree 0
+   removed: demo/stories/dock/_frame/DockStage.vue: // samples the field (drawImage + getImageData, ≤ 4 Hz, 32×32) at the `.dock-stage` scope
+   removed: demo/stories/dock/_frame/DockStage.vue: reads BLACK (luma 0 / hue transparent) off `drawImage(auroraCanvas)` —
+== elementsFromPoint · words elements from point · word-form hits in tree 0
+   removed: src/composables/glass/backdropLuminanceSample.ts: //   - `sampleStatic`   — the `elementsFromPoint` stack-walk of the painted background
+   removed: src/composables/glass/backdropLuminanceSample.ts: *  shell stands down, an SSR scope) the static `elementsFromPoint` path is the floor. */
+== getImageData · words get image data · word-form hits in tree 0
+   removed: demo/stories/dock/_frame/DockStage.vue: // samples the field (drawImage + getImageData, ≤ 4 Hz, 32×32) at the `.dock-stage` scope
+   removed: demo/stories/dock/_frame/DockStage.vue: // per-dock getImageData readbacks → 1 per route. The stage template ALSO carries the
+== glassSample · words glass sample · word-form hits in tree 0
+   removed: src/composables/glass/useGlassBackdropLuminance.ts: if (target.value?.dataset.glassSample === "live") return true;
+== isShared · words is shared · word-form hits in tree 20
+   removed: src/composables/glass/useGlassBackdropLuminance.ts: const isShared = options.shared === true;
+   removed: src/composables/glass/useGlassBackdropLuminance.ts: if (isShared) return false;
+   HIT src/composables/sidebar/useScrollTracker.ts:148 «// The rAF-coalesce + listener is shared via the ONE `createScrollReader` core»
+   HIT src/composables/sidebar/useScrollTracker.ts:151 «// the listener/coalesce plumbing is shared. `onScroll` is the per-tick callback»
+   HIT src/composables/motion/core/constants.ts:22 «* One frame at 60fps, in milliseconds. The display's own beat, which is why it is»
+   HIT src/composables/glass/webgpu/useWebGPUCanvas.ts:120 «* chain + pipeline); only the DEVICE is shared.»
+   HIT src/styles/tokens/motion-registers.css:92 «WORLD channel is shared: every class that moves a window recedes the world it»
+   HIT src/styles/tokens/scale-paper.css:157 «card interior reads quieter than a full-bleed page wash — but the PITCH is»
+== lastSampleAt · words last sample at · word-form hits in tree 0
+   removed: src/composables/glass/useGlassBackdropLuminance.ts: let lastSampleAt = 0;
+   removed: src/composables/glass/useGlassBackdropLuminance.ts: lastSampleAt =
+== liveCardEl · words live card el · word-form hits in tree 0
+   removed: demo/stories/substrates/glass-material.vue: const liveCardEl = useTemplateRef<HTMLElement>("liveCardEl");
+   removed: demo/stories/substrates/glass-material.vue: const { sample: backdropSample } = useGlassBackdropLuminance(liveCardEl, {
+== prefersReduced · words prefers reduced · word-form hits in tree 189
+   removed: src/composables/glass/useGlassBackdropLuminance.ts: const prefersReduced = useReducedMotion();
+   removed: src/composables/glass/useGlassBackdropLuminance.ts: if (prefersReduced.value) return; // PRM → one static sample, then park
+   HIT src/composables/motion/core/useRAFLoop.ts:41 «/** Honor prefers-reduced-motion by pausing the loop. Default true. */»
+   HIT src/composables/motion/core/useRAFLoop.ts:50 «/** Current prefers-reduced-motion state when monitored. */»
+   HIT src/composables/motion/core/useReducedMotion.ts:10 «const QUERY = "(prefers-reduced-motion: reduce)";»
+   HIT src/composables/motion/core/useViewTransition.ts:80 «* `prefers-reduced-motion: reduce` matchMedia probe. SSR/no-matchMedia returns»
+   HIT src/composables/motion/core/useViewTransition.ts:87 «return window.matchMedia("(prefers-reduced-motion: reduce)").matches;»
+   HIT src/composables/motion/scroll/useScrollChrome.ts:27 «// `prefers-reduced-motion: reduce` the `collapseT` ramp drops to a DISCRETE snap (the»
+== sampleAge · words sample age · word-form hits in tree 1
+   removed: demo/stories/substrates/glass-material.vue: const sampleAge = computed(() => {
+   removed: demo/stories/substrates/glass-material.vue: {{ sampleAge === null ? "—" : `${sampleAge}ms` }}
+   HIT src/components/fourier-field/shaders/compute.wgsl.ts:5 «//     `t_i = fract(head_t − trailArc · i/(M−1))`, truncated to N terms, with the per-sample»
+== sampleIntervalMs · words sample interval ms · word-form hits in tree 0
+   removed: src/composables/glass/useGlassBackdropLuminance.ts: const sampleIntervalMs = Math.max(250, minSampleIntervalMs);
+   removed: src/composables/glass/useGlassBackdropLuminance.ts: if (now - lastSampleAt < sampleIntervalMs) return; // ≤ 4 Hz throttle
+== sampledAt · words sampled at · word-form hits in tree 0
+   removed: demo/stories/substrates/glass-material.vue: return current.state === "pending" ? null : sampleNow.value - current.sampledAt;
+   removed: src/composables/glass/useGlassBackdropLuminance.ts: sampledAt: number;
+== srcRect · words src rect · word-form hits in tree 0
+   removed: src/composables/glass/backdropLuminanceSample.ts: const srcRect = source.getBoundingClientRect();
+   removed: src/composables/glass/backdropLuminanceSample.ts: if (srcRect.width === 0 || srcRect.height === 0) return null;
+== stageEl · words stage el · word-form hits in tree 0
+   removed: demo/stories/dock/_frame/DockStage.vue: const stageEl = useTemplateRef<HTMLElement>("stageEl");
+   removed: demo/stories/dock/_frame/DockStage.vue: useGlassBackdropLuminance(stageEl, {
+== stopMotionWatch · words stop motion watch · word-form hits in tree 0
+   removed: src/composables/glass/useGlassBackdropLuminance.ts: const stopMotionWatch = watch(prefersReduced, applyMotionState, { flush: "sync" });
+   removed: src/composables/glass/useGlassBackdropLuminance.ts: stopMotionWatch();
+== willReadFrequently · words will read frequently · word-form hits in tree 0
+   removed: src/composables/glass/useGlassBackdropLuminance.ts: downCtx = downCanvas.getContext("2d", { willReadFrequently: true });

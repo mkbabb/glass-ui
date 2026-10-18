@@ -1,0 +1,23 @@
+== static start 01:24:09 load { 43.86 30.08 22.95 }
+LAW exit 0: PASS (55 gated rows)
+declare (crit, seat's exact) exit 0:   present the (export) ×35108 · src/components/PROCEDURAL-SUITE.md:19 src/components/PROCEDURAL-SUITE.md:20 src/components/PROCEDURAL-SUITE.md:21 src/components/PROCEDURAL-SUITE.md:33 src/components/PROCEDURAL-SUITE.md:39 src/components/PROCEDURAL-SUITE.md:47   present write (export) ×170 · src/components/_shared/class-names.ts:118 src/components/_shared/class-names.ts:192 src/components/_shared/overlay/participation.ts:77 src/components/_shared/useMotionAxis.ts:14 src/components/aurora/composables/frameLoop.ts:50 src/components/aurora/composables/runtime.ts:422 
+declare (crit, no exact) exit 0
+DEL fv6 (seat decl) exit 0: PASS (61 gated rows)
+DEL fv5 (seat decl) exit 1: FAIL (6 of 61 gated rows)
+DEL fv6 (crit decl) exit 0: PASS (61 gated rows)
+DEL fv5 (crit decl) exit 1: FAIL (6 of 61 gated rows)
+DEL fv6 (no exact) exit 1: FAIL (3 of 61 gated rows)
+DEL minor decl minor5 exit 0: PASS (24 gated rows)
+DEL minor decl minor4 exit 1: FAIL (21 of 24 gated rows)
+census fv6 exit 0: LIGHTING-CENSUS stacked=0 halo=0 blur=0 open=0
+census minor5 exit 0: LIGHTING-CENSUS stacked=0 halo=0 blur=0 open=0
+census v1010 exit 1: LIGHTING-CENSUS stacked=2 halo=2 blur=5 open=9
+HOV fv6 exit 0: PASS (58 gated rows)
+HOV minor5 exit 0: PASS (58 gated rows)
+LIT fv6 exit 0: LIGHTING-LITERALS halo=5 near=1 stacked=10 chain=3 open=19 frames-halo=0/0
+LIT minor5 exit 0: LIGHTING-LITERALS halo=5 near=1 stacked=10 chain=3 open=19 frames-halo=0/0
+LADDER fv6 vs minor5 exit 0
+LADDER head vs minor5 exit 1 (bite)
+FL-14 static minor5: 1
+FL-14 static minor4: 1
+== static end 01:24:20 load { 43.31 30.44 23.16 }

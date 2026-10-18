@@ -1,0 +1,26 @@
+     H7-1 pixels: plate 254,247,241 · banked solid 137,131,127 · ink 28.0,25.0,23.0 → at α 0.52 136.5,131.6,127.6
+ok   H7-1 static   expect PASS exit 0 · PASS (1 gated rows) · R-14 fixture: floor v5's light Close ring, its banked pixels: the full-coverage column 852 reads 3.52 (the worst of three, 2.66, is the antialiasing)
+ok   H7-1 pixels   expect ROWS exit 0 · rows hold (1) · R-14 fixture: floor v5's light Close ring, its banked pixels: the full-coverage column 852 reads 3.52 (the worst of three, 2.66, is the antialiasing)
+ok   H7-1 static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · R-14 plant: HEAD's ring (--ink-perimeter 0.48 over HEAD's plate #746e66) with the same geometry: reds at its full-coverage column
+ok   H7-1 pixels   expect ROWS exit 0 · rows hold (1) · R-14 plant: HEAD's ring (--ink-perimeter 0.48 over HEAD's plate #746e66) with the same geometry: reds at its full-coverage column
+ok   H7-1 static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · R-14 plant: the same ring at α 0.40: reds at its full-coverage column
+ok   H7-1 pixels   expect ROWS exit 0 · rows hold (1) · R-14 plant: the same ring at α 0.40: reds at its full-coverage column
+ok   H7-1 static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · R-14 plant: a 1 px outline with no provable full-coverage column keeps the worst of three (its column 852 alone would read 3.52)
+ok   H7-1 pixels   expect ROWS exit 0 · rows hold (1) · R-14 plant: a 1 px outline with no provable full-coverage column keeps the worst of three (its column 852 alone would read 3.52)
+ok   H7-1 static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · R-14 bite: a straight-run ring is untouched (p05 over its columns; one full column does not lift it)
+ok   H7-1 pixels   expect ROWS exit 0 · rows hold (1) · R-14 bite: a straight-run ring is untouched (p05 over its columns; one full column does not lift it)
+ok   H7-1 static   expect FAIL exit 1 · FAIL (1 of 1 gated rows) · R-14 bite: a perimeter on the three-column fallback is untouched (R-14 reads rings only)
+ok   H7-1 pixels   expect ROWS exit 0 · rows hold (1) · R-14 bite: a perimeter on the three-column fallback is untouched (R-14 reads rings only)
+ok   H7-3 static   expect PASS exit 0 · PASS (24 gated rows) · H7-3 fixture: R-13's register, "earned ink"
+ok   H7-3 static   expect FAIL exit 1 · FAIL (1 of 24 gated rows) · H7-3 plant: "earned darken" split over two comment lines (adaptive-legibility.css:7-8's shape)
+        ✗ "earned darken": 1 · src/a.css:1 "earned * darken"
+ok   H7-3 static   expect FAIL exit 1 · FAIL (1 of 24 gated rows) · H7-3 plant: an R-16 (iii) sentence (tokens/glass.css:208's shape)
+        ✗ "plate still darkens": 1 · src/a.css:1 "plate still darkens"
+ok   H7-3 static   expect FAIL exit 1 · FAIL (21 of 24 gated rows) · H7-3 plant: the minor v4 under the minor's declaration
+        ✗ "earned darken": 2 · src/components/dock/styles/adaptive-legibility.css:7 "earned * darken" src/styles/glass/overlay-plate.css:272 "earned darken"
+        ✗ "locally darken the glass": 1 · src/styles/glass/ladder.css:164 "locally darken the glass"
+        ✗ "veil already writes warm near-black ink": 1 · src/styles/glass/ladder.css:166 "veil already writes warm near-black ink"
+        ✗ "plate darkened twice": 1 · src/styles/glass/ladder.css:167 "plate darkened twice"
+ok   H7-3 static   expect ROWS exit 0 · rows hold (5) · H7-3 plant: the minor v4 reds at A-3's two sentences and the R-16 (iii) sentences ruled false in light
+ok   H7-3 static   expect PASS exit 0 · PASS (24 gated rows) · H7-3 fixture: the minor v5 (R-16 (i) and (iii) built)
+SELFTEST PASS: 18 expectations met

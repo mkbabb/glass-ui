@@ -1,0 +1,24 @@
+queued 01:23:10 load { 30.87 25.64 20.99 } [--light --timeout 30] for: setup trees static
+admitted 01:23:10 load { 30.87 25.64 20.99 } for: setup trees static
+ended 01:24:20 load { 43.31 30.44 23.16 } for: setup trees static
+queued 01:24:54 load { 36.35 29.98 23.28 } [--timeout 90] for: builds same
+admitted 01:26:07 load { 26.33 28.19 23.16 } for: builds same
+ended 01:26:29 load { 34.30 29.92 23.90 } for: builds same
+queued 01:28:08 load { 28.49 29.22 24.30 } [--timeout 90] for: battery-c ring-c fl14-c
+admitted 01:29:01 load { 25.31 28.42 24.29 } for: battery-c ring-c fl14-c
+queued 01:53:43 load { 25.21 30.45 27.72 } [--light --timeout 30] for: ring-read (run2)
+admitted 01:53:44 load { 25.21 30.45 27.72 } for: ring-read (run2)
+ended 01:53:45 load { 25.21 30.45 27.72 } for: ring-read (run2)
+ended 02:06:36 load { 8.38 15.63 21.28 } for: battery-c ring-c fl14-c
+queued 02:06:41 load { 8.27 15.48 21.19 } [--light --timeout 30] for: fl14-read
+admitted 02:06:41 load { 8.27 15.48 21.19 } for: fl14-read
+queued 02:06:47 load { 8.57 15.42 21.14 } [--timeout 90] for: refs-c rerun (run2)
+ended 02:07:00 load { 8.69 15.12 20.93 } for: fl14-read
+admitted 02:12:18 load { 13.15 13.96 18.53 } for: refs-c rerun (run2)
+ended 02:30:35 load { 59.00 28.54 21.36 } for: refs-c rerun (run2)
+queued wk-A 02:33:53 load { 21.19 23.45 20.67 }
+admitted wk-A 02:45:24 load { 7.34 10.06 14.81 }
+queued wk-B 04:17:29 load { 37.18 22.66 16.15 }
+queued 04:33:31 load { 26.54 22.19 16.44 } [--light --timeout 30] for: witnesses readings
+admitted 04:33:31 load { 26.54 22.19 16.44 } for: witnesses readings
+stopped 06:36:30 load { 7.95 10.11 13.23 }: wk-B (plants) never admitted after 2h19m in the webkit queue; wk-C, wk-D not started; no browser launched; waiters stopped for teardown
