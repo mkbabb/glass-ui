@@ -1,0 +1,23 @@
+# e3-probe p-scrubveil webkit start 2026-10-17 21:22:47 load { 12.42 9.49 9.34 }
+P-E3 probe veil · webkit · arm veil · load 12.4/9.5/9.3 at start
+  PASS       handoff pin fwd (Tab A → B) · frames 71, both promoted in 13 · outgoing A: promoted 17 frames, largest gap from its own footprint 0.0 px, largest one-frame move 1.7 px · incoming B: promoted 67 frames, gap 0.0 px, move 1.0 px (bounds gap ≤ 1, move ≤ 4 per 16.7 ms) · pins --engage-footprint-gfy8g8-1=--engage-footprint-gfy8g8-1, --engage-footprint-gfy8g8-2=--engage-footprint-gfy8g8-2 · load 13.1/9.7/9.4
+  PASS       handoff pin rev (Shift+Tab B → A) · frames 71, both promoted in 13 · outgoing B: promoted 17 frames, largest gap from its own footprint 0.0 px, largest one-frame move 1.7 px · incoming A: promoted 67 frames, gap 0.0 px, move 1.1 px (bounds gap ≤ 1, move ≤ 4 per 16.7 ms) · pins --engage-footprint-x92bhn-1=--engage-footprint-x92bhn-1, --engage-footprint-x92bhn-2=--engage-footprint-x92bhn-2 · load 13.1/9.7/9.4
+  PASS       hand over keys (Tab A, press B) · frames 72, both promoted in 13 · outgoing A: promoted 20 frames, largest gap from its own footprint 0.0 px, largest one-frame move 1.6 px · incoming B: promoted 65 frames, gap 0.0 px, move 1.1 px (bounds gap ≤ 1, move ≤ 4 per 16.7 ms) · pins --engage-footprint-f62xc8-1=--engage-footprint-f62xc8-1, --engage-footprint-f62xc8-2=--engage-footprint-f62xc8-2 · load 13.1/9.7/9.4
+  PASS       consumer anchor (Tab A → B, consumer anchors named --engage-footprint, --engage-footprint-1) · frames 70, both promoted in 13 · outgoing A: promoted 17 frames, largest gap from its own footprint 0.0 px, largest one-frame move 1.8 px · incoming B: promoted 66 frames, gap 0.0 px, move 1.1 px (bounds gap ≤ 1, move ≤ 4 per 16.7 ms) · pins --engage-footprint-7dmdqy-1=--engage-footprint-7dmdqy-1, --engage-footprint-7dmdqy-2=--engage-footprint-7dmdqy-2 · load 13.7/9.9/9.5
+  PASS       numfield click · 4 px of travel: popover false, engaged false, value 50 (50), focus on the field true, footprints 0 · load 13.7/9.9/9.5
+  FAIL       numfield scrub · 60 px of travel: popover true, engaged true, scale ×1.060, value 50 → 57 (7 steps; pitch 8.49 px from --scrub-pitch, trunc(60/pitch) = 7; the slop would give 7) · veil: data-engaged true, opacity 1.00, visibility visible (no veil wanted) · console errors 0 · load 14.1/10.0/9.5
+  PASS       numfield value kept · fling: 64 at release → 64; still: 64 → 64; off the stage true, footprints 0 · load 14.1/10.0/9.5
+  PASS       numfield carry · leading edge past its rest, page frame: fling 13.22 px, still 6.60 px, differential 6.62 px (bound ≥ 4); largest one-frame move on release 1.1 px · load 14.1/10.0/9.5
+  PASS       numfield PRM · under reduce, scrubbing: scale ×1.000, promoted true, light leg [field child3 shadow, input box-shadow, input outline-style, input outline-color, input backdrop-filter] (≥ 1 paint property), value 50 → 57 · load 14.1/10.0/9.5
+  PASS       numfield step drift · a press on the increment button drifting 60 px: held false, promoted false, value 50 → 51 (the button's own press: 50 or 51; a scrub would step ≥ 6) · load 14.1/10.0/9.5
+  PASS       numfield coarse · (hover:none) true (pointer:coarse) true raw WebKit touch · touch drag 60 px on the input: held true, promoted true, scale ×1.060, value 50 → 57 (want 7 steps at pitch 8.49 px; after release 57); input touch-action pan-y · load 13.7/10.0/9.5
+  PASS       between landing · a keyed insert before the held slider: footprint re-seated true (before it: inserted); release, largest one-frame move 1.8 px (without the insert 1.8 px; bound ≤ that + 1 px); during the hold, largest one-frame move 3.9 px · load 13.3/10.0/9.5
+  PASS       dialog escape · 1 Tab(s) to the thumb: engaged true; first Escape: engaged false, Dialog open true; second Escape: Dialog open false · load 13.3/10.0/9.5
+  PASS       keyfocus · "k" focuses the thumb by script: focus slider, engaged false, promoted false, scale ×1.000 · load 13.3/10.0/9.5
+  PASS       keyfocus then acting key · ArrowRight after it engages (the control acts on it): true · load 13.3/10.0/9.5
+  PASS       keyboard veil · arm veil · Tab into A: veil popover open true, data-engaged true, visibility visible, opacity 1.00, backdrop-filter blur(20px) saturate(1.5) (want engaged, visible) · load 12.8/9.9/9.5
+  PASS       veil after release · Escape, +900 ms: open false, data-engaged false, visibility hidden, opacity 0.00 · load 12.8/9.9/9.5
+  UNMEASURED forced-colors / reduced-transparency held · Playwright WebKit applies neither query (the engine's limit, not a pass) · load 12.8/9.9/9.5
+e3-probe veil webkit · 16 pass, 1 fail, 1 other · load 12.8/9.9/9.5 at end
+# exit 1
+# probe end 2026-10-17 21:23:15 load { 12.80 9.92 9.51 }

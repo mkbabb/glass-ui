@@ -1,0 +1,27 @@
+48:export const KEYBOARD_VEIL = true;
+build veil: # exit 0
+build probe-veil: # exit 0
+plant p-anchor: applied (162:    const anchor = "--engage-footprint"; void page; void anchors;)
+build p-anchor: # exit 0
+plant p-anchor restored: identical
+plant p-char: applied (241:                } else if (keys.has(k) || k.length === 1) keyed.value = true;)
+build p-char: # exit 0
+plant p-char restored: identical
+plant p-script: applied (233:            ["focusin", () => { keyed.value = !pointed; }],)
+build p-script: # exit 0
+plant p-script restored: identical
+plant p-tabhand: applied (214:    const isHeld = computed(() => hand.value || scrubbing.value || keyed.value);)
+build p-tabhand: # exit 0
+plant p-tabhand restored: identical
+plant probe-p-scrubveil: applied (263:            () => isHeld.value || (KEYBOARD_VEIL && keyed.value),)
+build probe-p-scrubveil: # exit 0
+plant probe-p-scrubveil restored: identical
+48:export const KEYBOARD_VEIL = false;
+build noveil: # exit 0
+build probe-noveil: # exit 0
+plant probe-p-vis: applied (152:        visibility: visible; /* ce3 plant */)
+build probe-p-vis: # exit 0
+plant probe-p-vis restored: identical
+48:export const KEYBOARD_VEIL = true;
+worktree vs HEAD:  162 files changed, 1237 insertions(+), 1458 deletions(-)
+# run-ce3 builds done 2026-10-17 22:07:21

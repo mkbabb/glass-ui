@@ -1,0 +1,13 @@
+# ce3-probe noveil webkit start 2026-10-17 21:23:31 load { 12.81 10.07 9.57 }
+C-E3 probe noveil · webkit · load 12.8/10.1/9.6 at start
+  PASS       modal veil · open Dialog +900 ms: 1 overlay veil(s) parent data-state open, visibility visible, opacity 1.00, backdrop-filter blur(20px) saturate(1.5) · load 12.8/10.1/9.6
+  PASS       modal veil PRM · open Dialog +900 ms: 1 overlay veil(s) parent data-state open, visibility visible, opacity 1.00, backdrop-filter blur(20px) saturate(1.5) · load 12.8/10.1/9.6
+  PASS       A-B-A rapid 50 ms · frames 109 · A move 0.0 px gap 0.0 px · B move 0.0 px gap 0.0 px (bounds move <= 4 per 16.7 ms, gap <= 1) · at +1.3 s: footprints 1, engaged A true B false, promoted A true B false, veil {"open":true,"vis":"hidden","op":0,"eng":false} · load 12.5/10.1/9.6
+  PASS       A-B-A rapid 120 ms · frames 109 · A move 0.0 px gap 0.0 px · B move 0.0 px gap 0.0 px (bounds move <= 4 per 16.7 ms, gap <= 1) · at +1.3 s: footprints 1, engaged A true B false, promoted A true B false, veil {"open":true,"vis":"hidden","op":0,"eng":false} · load 12.5/10.1/9.6
+  PASS       scroll pin · A keyboard-engaged, scrolled to 120 px: promoted 69/69 frames, largest gap from its own footprint 0.0 px (bound <= 1) · load 12.4/10.1/9.6
+  PASS       cycle leak · 12 cycles (Tab A, Tab B, Escape) then focus away +1.5 s: footprints 0, promoted 0, inline position-anchor left [], engaged false,false, veil {"open":false,"vis":"hidden","op":0,"eng":false} · errors 0 · load 12.4/10.1/9.6
+  REPORT     consumer anchor kept · consumer inline position-anchor --consumer-own · while engaged: "--engage-footprint-l5twug-1" · after release +1.2 s: "(removed)" · load 11.9/10.0/9.6
+  PASS       scrub bad pitch · --scrub-pitch: nonsense, 60 px scrub: console errors naming it 1 (want 1), value 50 → 50, promoted true, engaged true · load 11.9/10.0/9.6
+ce3-probe noveil webkit · 7 pass, 0 fail, 1 other · load 11.9/10.0/9.6 at end
+# exit 0
+# probe end 2026-10-17 21:23:46 load { 11.95 10.02 9.56 }
