@@ -8,8 +8,10 @@
 #             and the dark ink, and recuts the light veil to the `--card` pole at the solved bound, so a line is read
 #             against that tree, not against the floor's.
 #   REPORTED  the line is false on the minor v7 and was already false at HEAD; the minor's patch did not write it and
-#             changes no mechanism it names. It is ruled "true as to the patch" (the floor seat's dock.css:15 reading,
-#             FLOOR-V8.md §1.2) and reported for the landing docs pass. Each such `why` starts with "REPORTED".
+#             changes no mechanism it names. It is reported for the landing docs pass. Under H10-2 (pass 10) such a
+#             ruling carries verdict "reported" (its `why` used to start with "REPORTED", or carry "REPORTED:" for a
+#             reported clause); every other ruling carries verdict "true". Migrated in place by the H10 seat
+#             (pass-10/H10.md §3); no reading changed.
 #   FALSE     the line is false on the minor v7 because of the minor (its light law), or sits in a sentence the minor's
 #             patch rewrote. It gets NO ruling here, so prose-sweep FAILs it as unread on the minor v7; the proposed
 #             comment-only rewrite is MS7-r21b-proposed.diff, and --proposed rules the rewritten text.
@@ -112,6 +114,10 @@ for l in src:
         else:
             out.append({"at": at, "says": m.group(2).strip(), "why": LINE.get(at) or FILE[f]})
         at = None
+def verdict(x):  # H10-2: the REPORTED why-prefix (or a "REPORTED:" clause) becomes verdict "reported"
+    rep = x["why"].startswith("REPORTED") or "REPORTED:" in x["why"]
+    return {"at": x["at"], "says": x["says"], "verdict": "reported" if rep else "true", "why": re.sub(r"^REPORTED[,:] ", "", x["why"])}
+out = [verdict(x) for x in out]
 json.dump(out, open(sys.argv[2], "w", encoding="utf-8"), indent=1, ensure_ascii=False)
-rep = sum(1 for x in out if x["why"].startswith("REPORTED") or "REPORTED:" in x["why"])
+rep = sum(1 for x in out if x["verdict"] == "reported")
 print(f"rulings: {len(out)} lines in {len({x['at'].rsplit(':',1)[0] for x in out})} files · {rep} of them REPORTED · left unruled (FALSE): {', '.join(unruled) or 'none'}")

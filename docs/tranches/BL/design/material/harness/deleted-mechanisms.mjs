@@ -44,6 +44,9 @@
 //                      A site for a changed token or a ladder (a name the declaration does not list) is read only by
 //                      the value arm, which runs only with --patch: without one it prints `not read` and is no row
 //                      (the minor's declaration carries such sites and H7-3 reads it without a patch; pass-9 MS7)
+// H10-1 (pass 10, REGISTRY P9-5): DEL refuses to read nothing. 0 text files in scope (an absent or empty --root, a root
+// with no src/, demo/ or tests/ and no touched path that exists) prints `nothing read` and exits 2, as H9-4 made the
+// rows.mjs readers do; it used to print PASS on every gated row (pass-9 crit-records/del-absent.log).
 // One gated row per name and per changed token; each hit prints file:line once.
 //   node deleted-mechanisms.mjs --root <tree> --declare <names.json> [--patch <file.patch>]
 import fs from "node:fs";
@@ -252,7 +255,7 @@ export function exempt(sites, name, where) {
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   const a = cli({ root: { type: "string" }, declare: { type: "string" }, patch: { type: "string" } });
-  console.log("DEL · no file in scope (src/, demo/, tests/, every path the patch touches) describes a mechanism the patch deletes, in any word form, or a value or ladder it changes (static; H6-1, H7-2, H8-1, H9-1..H9-3)");
+  console.log("DEL · no file in scope (src/, demo/, tests/, every path the patch touches) describes a mechanism the patch deletes, in any word form, or a value or ladder it changes (static; H6-1, H7-2, H8-1, H9-1..H9-3, H10-1)");
   if (!a.root || !a.declare) { console.log("usage: node deleted-mechanisms.mjs --root <tree> --declare <names.json> [--patch <file.patch>]\nFAIL (no gated rows measured: no tree or no declaration)"); process.exit(2); }
   const root = path.resolve(a.root), decl = JSON.parse(fs.readFileSync(path.resolve(a.declare), "utf8"));
   const patchText = a.patch ? fs.readFileSync(path.resolve(a.patch), "utf8") : "";
@@ -265,6 +268,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const inScope = new Set(files.map(([rel]) => rel));
   console.log(`tree: ${root} · ${files.length} text files in scope (src/, demo/, tests/${outside.length ? `, plus ${outside.filter((p) => inScope.has(p)).length} of ${outside.length} touched paths outside them that exist` : ""}) · reported: ${reported.length} files · declaration: ${decl.patch || path.basename(a.declare)} · ${decl.names.length} names, ${exact.size} exact only, ${sites.length} sites read in context`);
   if (a.patch) console.log(`patch: ${path.basename(a.patch)} · ${touched.length} paths · ${touched.filter((p) => inScope.has(p)).length} exist in the tree and are read`);
+  if (!files.length) { console.log(`0 text files in scope under ${root}: nothing read\nFAIL (nothing read: ${fs.existsSync(root) ? "no text file in scope" : "the tree does not exist"})`); process.exit(2); }
   let fails = 0, hitsAll = 0;
   const where = new Set(), rep = [];
   const row = (label, h, why) => {

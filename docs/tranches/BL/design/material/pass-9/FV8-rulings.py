@@ -73,6 +73,9 @@ LINE = {
  "demo/stories/substrates/glass-material.vue:6": "floor v8's plate: the veil's one pole, `--card`, carries any tint",
  "demo/stories/substrates/glass-material.vue:185": "a measurement note true of any plate: on a flat route a plate's blur radius and tint are both invisible",
 }
+# H10-2 (pass 10): the lines this seat read with a false clause the patch did not write carry verdict "reported"
+# (pass-10/H10.md §3); every other ruling is verdict "true". Migrated in place by the H10 seat; no reading changed.
+REPORTED = {"src/components/dock/styles/dock.css:15"}
 src = open(sys.argv[1]).read().split("\n")
 out, at = [], None
 for l in src:
@@ -83,6 +86,6 @@ for l in src:
         assert at.endswith(":" + m.group(1)), (at, l)
         f = at.rsplit(":", 1)[0]
         why = LINE.get(at) or FILE[f]
-        out.append({"at": at, "says": m.group(2).strip(), "why": why}); at = None
+        out.append({"at": at, "says": m.group(2).strip(), "verdict": "reported" if at in REPORTED else "true", "why": why}); at = None
 json.dump(out, open(sys.argv[2], "w"), indent=1, ensure_ascii=False)
-print(f"rulings: {len(out)} lines in {len({x['at'].rsplit(':',1)[0] for x in out})} files")
+print(f"rulings: {len(out)} lines in {len({x['at'].rsplit(':',1)[0] for x in out})} files · {sum(x['verdict'] == 'reported' for x in out)} reported")

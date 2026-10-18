@@ -38,6 +38,12 @@
 // The minor v7 (pass 9, R-23; pass-9/MINOR-SPLIT-v7.md) grows H7-3 and H9-3 in place: the declaration holds 42 names and
 // R-23's three site entries; the minor v6 is now a plant and the minor v7 the fixture (--h7-trees minor7; --h9-trees
 // minor7 with --h9-minor7-patch, minor-split-v7.patch). A value-arm site reads `not read` without --patch (H7-3's read).
+// H10 (pass 10, REGISTRY P9-5) adds, each with a fixture PASS and a planted FAIL: H10-1, DEL (and SWEEP) refuse a tree
+// with 0 text files in scope (expect LOUD, exit 2), the real floor v8 and minor v7 reading as before; H10-2, each
+// --rulings entry's verdict ("true" | "reported"), a reported line in its own tally, gating nothing and going stale like
+// any ruling, and a malformed rulings file refused (LOUD). The H10 real rows read --h9-trees (fv7, fv8 = the real floor
+// v8, minor7, minor7p) with the banked pass-9 patches, declarations and rulings files, which H10 migrated in place.
+// The H9-6 tiny rulings carry verdict "true" since H10-2.
 // --reuse-green: keep an existing green capture (the plants are captured fresh).
 // --fields: a HEAD run's capture (its Chromium empty-scene aurora frames become the fixtures' field pixels).
 import fs from "node:fs";
@@ -727,14 +733,85 @@ if (want("H9-6")) {
   };
   const o = staticWitness("H9-6", "prose-sweep", t6("h96-list"), "PASS", "H9-6: the printer lists every frozen-word prose line of every touched file (exit 0, LIST)");
   rowsHold("H9-6", "static", o, [/· src\/a\.css:3 \[word "darken"; word "clamp"\]|· src\/a\.css:3 \[word "clamp"; word "darken"\]/, "SWEEP lines=1 files=1", { not: "src/b.css" }, { not: "src/a.css:4" }], "H9-6: the touched file's clamp-and-darken line prints with its context; an untouched file and \"retint\" do not");
-  staticWitness("H9-6", "prose-sweep", t6("h96-ruled", [{ at: "src/a.css:3", says: "the clamp darkens the plate", why: "read: true of the fixture" }]), "PASS", "H9-6 fixture: every printed line ruled true");
+  staticWitness("H9-6", "prose-sweep", t6("h96-ruled", [{ at: "src/a.css:3", says: "the clamp darkens the plate", verdict: "true", why: "read: true of the fixture" }]), "PASS", "H9-6 fixture: every printed line ruled true");
   staticWitness("H9-6", "prose-sweep", t6("h96-unread", []), "FAIL", "H9-6 plant: a printed line no ruling covers is unread");
-  staticWitness("H9-6", "prose-sweep", t6("h96-stale", [{ at: "src/a.css:3", says: "the clamp darkens the plate", why: "true" }, { at: "src/a.css:1", says: "the tint seam", why: "a line rewritten since" }]), "FAIL", "H9-6 plant: a ruling whose line no longer says it is stale");
+  staticWitness("H9-6", "prose-sweep", t6("h96-stale", [{ at: "src/a.css:3", says: "the clamp darkens the plate", verdict: "true", why: "true" }, { at: "src/a.css:1", says: "the tint seam", verdict: "true", why: "a line rewritten since" }]), "FAIL", "H9-6 plant: a ruling whose line no longer says it is stale");
   if (decl9) {
     const o7 = staticWitness("H9-6", "prose-sweep", ["--root", path.join(T9, "fv7"), "--patch", P9, "--declare", decl9], "PASS", "H9-6: R-21 (b)'s list over floor v7 (88 touched paths)");
     rowsHold("H9-6", "static", o7, ["src/styles/glass/surfaces-pager.css:29 [", "src/styles/glass/surfaces-pager.css:34 [", "src/components/dock/GlassDock.vue:467 [", "src/components/dock/styles/index.css:80 [", "src/components/dock/styles/index.css:83 [",
       "src/styles/tokens/glass-deep.css:12 [tuple", "src/styles/tokens/glass-deep.css:13 [rung", "src/styles/tokens/glass-deep.css:54 [tuple"], "H9-6: floor v7's list prints A-1's four sentences, the tuple lines and the bare \"paints 22\"");
     staticWitness("H9-6", "prose-sweep", ["--root", path.join(T9, "fv8"), "--patch", P9, "--declare", decl9], "PASS", "H9-6: R-21 (b)'s list over the floor v8 stand-in, for the floor v8 seat to read");
+  }
+}
+
+// ── H10 (pass 10, REGISTRY P9-5): DEL refuses to read nothing (H10-1); a ruling's verdict, true or reported (H10-2).
+// Static, run once. The real rows read the banked pass-9 records in place.
+const P9D = path.join(HERE, "..", "pass-9");
+const REAL = T9 && ["fv7", "fv8", "minor7", "minor7p"].every((t) => fs.existsSync(path.join(T9, t, "src")));
+if (want("H10-1")) {
+  const absent = path.join(ROOT, "fx", "h101-absent"); fs.rmSync(absent, { recursive: true, force: true });
+  const o1 = staticWitness("H10-1", "deleted-mechanisms", ["--root", absent, "--declare", path.join(HERE, "deletes-minor.json")], "LOUD", "H10-1 plant: DEL on an absent --root (pass-9 crit-records/del-absent.log's shape: was PASS (42 gated rows), exit 0)");
+  rowsHold("H10-1", "static", o1, ["0 text files in scope", "FAIL (nothing read: the tree does not exist)", { not: /gated rows/ }], "H10-1: the refusal says nothing was read, and prints no gated row");
+  const empty = tree("h101-empty", { "notes/README.txt": "the clamp darkens the plate\n" });
+  staticWitness("H10-1", "deleted-mechanisms", ["--root", empty, "--declare", path.join(HERE, "deletes-minor.json")], "LOUD", "H10-1 plant: a tree with no src/, demo/ or tests/ and no touched path: 0 text files in scope");
+  const os = staticWitness("H10-1", "prose-sweep", ["--root", absent, "--patch", path.join(P9D, "minor-split-v7.patch"), "--declare", path.join(HERE, "deletes-minor.json")], "LOUD", "H10-1 (SWEEP): the frozen list on an absent tree refuses too (was LIST (0 lines), exit 0)");
+  rowsHold("H10-1", "static", os, ["0 touched files read", "FAIL (nothing read: the tree does not exist)"], "H10-1 (SWEEP): the refusal names the absent tree");
+  staticWitness("H10-1", "deleted-mechanisms", ["--root", tree("h101-one", { "src/a.css": "/* the pill composes the bound. */\n" }), "--declare", path.join(HERE, "deletes-minor.json")], "PASS", "H10-1 fixture: one text file in scope is read, and reads clean");
+  if (REAL) {
+    const o8 = staticWitness("H10-1", "deleted-mechanisms", ["--root", path.join(T9, "fv8"), "--declare", path.join(P9D, "FV8-records", "declare-floor-v8.json"), "--patch", path.join(P9D, "floor-v8.patch")], "PASS", "H10-1 fixture: floor v8 under its own declaration and patch, as FV8 §2 read it");
+    rowsHold("H10-1", "static", o8, [/· 1089 text files in scope/, "DELETED-MECHANISMS names=73 hits=0", "PASS (101 gated rows)"], "H10-1 fixture: floor v8 reads PASS 101 over 1,089 text files, as banked (FV8-records/del-H9-fv8.log)");
+    const o7 = staticWitness("H10-1", "deleted-mechanisms", ["--root", path.join(T9, "minor7"), "--declare", path.join(HERE, "deletes-minor.json"), "--patch", path.join(P9D, "minor-split-v7.patch")], "PASS", "H10-1 fixture: the minor v7 over its own patch, as MS7 read it");
+    rowsHold("H10-1", "static", o7, [/· 1095 text files in scope/, "DELETED-MECHANISMS names=42 hits=0", "PASS (54 gated rows)"], "H10-1 fixture: the minor v7 reads PASS 54 over 1,095 text files, as banked (MS7-records/del-H9-minor7.log)");
+  }
+}
+if (want("H10-2")) {
+  const PATCH = "diff --git a/src/a.css b/src/a.css\n--- a/src/a.css\n+++ b/src/a.css\n@@ -1 +1 @@\n-x\n+y\n";
+  const SHELL = "   * one chromatic writer, no second tint layer. The shell + legibility partials re-point the veil */\n";
+  const A = "/* the pill composes the bound. */\n.p { color: red; }\n/* the clamp darkens the plate over light. */\n/*\n" + SHELL + ".q { color: blue; }\n";
+  const t = (name, rulings, body = A) => {
+    const d = tree(name, { "p.patch": PATCH, "src/a.css": body });
+    fs.writeFileSync(path.join(d, "rulings.json"), JSON.stringify(rulings));
+    return ["--root", d, "--patch", path.join(d, "p.patch"), "--rulings", path.join(d, "rulings.json")];
+  };
+  const TRUE3 = { at: "src/a.css:3", says: "the clamp darkens the plate", verdict: "true", why: "the fixture's clamp darkens its plate" };
+  const REP5 = { at: "src/a.css:5", says: "The shell + legibility partials re-point", verdict: "reported", why: "the first clause is true; the attribution was false before the patch, which did not write it" };
+  const o = staticWitness("H10-2", "prose-sweep", t("h102-fix", [TRUE3, REP5]), "PASS", "H10-2 fixture: one line ruled true, one reported: the reported line prints in its own tally and gates nothing");
+  rowsHold("H10-2", "static", o, ["✓ true src/a.css:3", "◦ reported src/a.css:5", "REPORTED (not gated; a false clause the patch did not write, for the landing docs pass): 1", "  [reported] src/a.css:5", "ruled=2 true=1 reported=1 unread=0 stale=0", "PASS (2 lines: 1 ruled true, 1 reported)"],
+    "H10-2: the tally separates true from reported; the verdict line never calls the reported line true");
+  const changed = A.replace("The shell + legibility partials re-point", "The shell partial re-points");
+  const os = staticWitness("H10-2", "prose-sweep", t("h102-stale", [TRUE3, REP5], changed), "FAIL", "H10-2 plant: a reported ruling on a line that changed (R-24 (iii)'s shape) is stale, and the changed line is unread");
+  rowsHold("H10-2", "static", os, ["✗ stale reported ruling src/a.css:5", "✗ unread src/a.css:5", "FAIL (1 unread, 1 stale of 2 lines)"], "H10-2: a reported ruling goes stale like any ruling");
+  const refuse = {
+    "none": [[TRUE3, { ...REP5, verdict: undefined }], /ruling 1 \(src\/a\.css:5\): verdict undefined is not one of "true", "reported"/, "a ruling with no verdict (the pass-9 shape)"],
+    "other": [[TRUE3, { ...REP5, verdict: "false" }], /verdict "false" is not one of/, "a ruling with a verdict other than true or reported (a false line is rewritten, not ruled)"],
+    "workaround": [[TRUE3, { ...REP5, verdict: "true", why: "REPORTED, HEAD-stale (true as to the patch): the attribution" }], /verdict "true" with a `why` that reports a clause \(REPORTED\)/, "verdict true over a REPORTED why (the pass-9 workaround)"],
+    "nowhy": [[TRUE3, { ...REP5, why: "" }], /ruling 1 \(src\/a\.css:5\): no `why`/, "a ruling with no why"],
+  };
+  for (const [k, [rs, re, note]] of Object.entries(refuse)) {
+    const r = staticWitness("H10-2", "prose-sweep", t(`h102-${k}`, rs), "LOUD", "H10-2 plant: refused, " + note);
+    rowsHold("H10-2", "static", r, [re, /FAIL \(rulings refused: 1 malformed of 2; nothing read\)/, { not: /✓ true/ }], "H10-2: the refusal names the entry and reads nothing");
+  }
+  if (REAL) {
+    const D8 = path.join(P9D, "FV8-records", "declare-floor-v8.json"), FV8 = path.join(P9D, "floor-v8.patch"), MS7 = path.join(P9D, "minor-split-v7.patch"), DM = path.join(HERE, "deletes-minor.json");
+    const r8 = staticWitness("H10-2", "prose-sweep", ["--root", path.join(T9, "fv8"), "--patch", FV8, "--declare", D8, "--rulings", path.join(P9D, "FV8-rulings.json")], "PASS", "H10-2 fixture: floor v8 under the migrated FV8-rulings.json");
+    rowsHold("H10-2", "static", r8, ["◦ reported src/components/dock/styles/dock.css:15", "  [reported] src/components/dock/styles/dock.css:15", "ruled=214 true=213 reported=1 unread=0 stale=0", "PASS (214 lines: 213 ruled true, 1 reported)"],
+      "H10-2: the floor seat's dock.css:15 reading ('true as to the patch', its clause reported in words) is verdict reported; the other 213 read true, as banked (FV8-records/sweep-fv8-ruled.log)");
+    const r7 = staticWitness("H10-2", "prose-sweep", ["--root", path.join(T9, "fv7"), "--patch", FV8, "--declare", D8, "--rulings", path.join(P9D, "FV8-rulings.json")], "FAIL", "H10-2 plant: floor v7 under the migrated FV8-rulings.json, as FV8 §3 read it");
+    rowsHold("H10-2", "static", r7, ["FAIL (13 unread, 3 stale of 224 lines)"], "H10-2: floor v7 reads 13 unread, 3 stale of 224, as banked (FV8-records/sweep-fv7-plant.log)");
+    const m7 = staticWitness("H10-2", "prose-sweep", ["--root", path.join(T9, "minor7"), "--patch", MS7, "--declare", DM, "--rulings", path.join(P9D, "MS7-rulings.json")], "FAIL", "H10-2 plant: the minor v7 under the migrated MS7-rulings.json (R-25's plant)");
+    rowsHold("H10-2", "static", m7, ["✗ unread DESIGN.md:34", "✗ unread src/styles/glass/surface-axis.css:21", "ruled=369 true=359 reported=10 unread=2 stale=0", "FAIL (2 unread, 0 stale of 371 lines)"], "H10-2: the minor v7 reads 2 unread of 371 as banked, its ten REPORTED lines now the reported tally");
+    const mp = staticWitness("H10-2", "prose-sweep", ["--root", path.join(T9, "minor7p"), "--patch", MS7, "--declare", DM, "--rulings", path.join(P9D, "MS7-rulings-proposed.json")], "PASS", "H10-2 fixture: the minor v7 + MS7-r21b-proposed.diff under the migrated MS7-rulings-proposed.json");
+    rowsHold("H10-2", "static", mp, ["ruled=371 true=361 reported=10 unread=0 stale=0", "PASS (371 lines: 361 ruled true, 10 reported)"], "H10-2: 371 lines read, 361 true and 10 reported, as banked (MS7-records/sweep-minor7p-ruled.log read 371 'each ruled true')");
+    // The real line: floor v8's dock.css with R-24 (iii) written, read under the floor seat's dock.css rulings.
+    const dock = "src/components/dock/styles/dock.css", body = fs.readFileSync(path.join(T9, "fv8", dock), "utf8");
+    const rs = JSON.parse(fs.readFileSync(path.join(P9D, "FV8-rulings.json"), "utf8")).filter((x) => x.at.startsWith(dock + ":"));
+    const dt = (name, text) => { const d = tree(name, { [dock]: text, "p.patch": `diff --git a/${dock} b/${dock}\n` }); fs.writeFileSync(path.join(d, "r.json"), JSON.stringify(rs)); return ["--root", d, "--patch", path.join(d, "p.patch"), "--declare", D8, "--rulings", path.join(d, "r.json")]; };
+    const od = staticWitness("H10-2", "prose-sweep", dt("h102-dock", body), "PASS", "H10-2 fixture: floor v8's dock.css under its own rulings");
+    rowsHold("H10-2", "static", od, ["◦ reported src/components/dock/styles/dock.css:15", "reported=1 unread=0 stale=0"], "H10-2: dock.css:15 reported on floor v8's text");
+    const r24 = body.replace("The shell + adaptive-legibility partials re-point", "The shell partial re-points");
+    if (r24 === body) throw new Error("H10-2: floor v8's dock.css:15 no longer carries R-24 (iii)'s words");
+    const op = staticWitness("H10-2", "prose-sweep", dt("h102-dock-r24", r24), "FAIL", "H10-2 plant: R-24 (iii) written on dock.css:15: the reported ruling is stale and the rewritten line unread, for the floor v9 seat to read");
+    rowsHold("H10-2", "static", op, ["✗ stale reported ruling src/components/dock/styles/dock.css:15", "✗ unread src/components/dock/styles/dock.css:15", /FAIL \(1 unread, 1 stale of \d+ lines\)/], "H10-2: the reported ruling does not outlive its line");
   }
 }
 
