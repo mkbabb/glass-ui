@@ -1,0 +1,6 @@
+2026-10-17 22:45:05 · load { 10.12 9.89 10.87 }
+REPORT HARNESS ERROR Error: REPORT reads a route build, and dp-atk-src is an attack build (migration H4-attack): its V2 and K2 carry no route tile, so the mark and the name read nothing. Pass the route build (build.mjs --route <route dir>), as run.mjs does (H5-6)
+    at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/report-h46.mjs:106:36
+    at async cli (file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/lib.mjs:799:17)
+    at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/report-h46.mjs:100:3
+exit 2 · 2026-10-17 22:45:07 · load { 10.12 9.89 10.87 }

@@ -1,0 +1,101 @@
+2026-10-17 22:49:41 · load { 16.82 15.58 13.26 }
+scope-bound · chromium · load 16.82 15.58 13.26 · 2026-10-18T02:49:42.064Z
+engine Chromium 149.0.7827.55
+
+## form scope (clean): 17/17 cells · PASS · expected PASS → OK
+  PASS  tile group's option (#n1o): flush, want flush
+  PASS  pill group nested in a tile option: the group (#n1g): none, want none
+  PASS  pill group nested in a tile option: its option (#n1go): none, want none
+  PASS  pill group nested in a tile option: its content (#n1gs): none, want none
+  PASS  pill group's option (#n2o): none, want none
+  PASS  tile group nested in a pill option: its option (#n2go): flush, want flush
+  PASS  tile group nested in a pill option: its content (#n2gs): flush, want flush
+  PASS  wrapper writes none in a tile group: the option follows it (#wro): none, want none
+  PASS  wrapper writes none in a tile group: the content agrees (#wrs): none, want none
+  PASS  a rule on the option writes none in a tile group: refused (#opo): flush, want flush
+  PASS    its content (#ops): flush, want flush
+  PASS  a rule on the option's content writes none: refused (#cts): flush, want flush
+  PASS    inside that content (#ctb): flush, want flush
+  PASS  an inline style on the option writes none: refused (#ilo): flush, want flush
+  PASS  an inline !important on the option: the one write above the pin (#imo): none, want none
+  PASS    its content follows it (#ims): none, want none
+  PASS  a rule on a pill option writes flush: refused (#plo): none, want none
+
+## form unbounded (plant): 12/17 cells · FAIL · expected FAIL → OK
+  PASS  tile group's option (#n1o): flush, want flush
+  FAIL  pill group nested in a tile option: the group (#n1g): flush, want none
+  FAIL  pill group nested in a tile option: its option (#n1go): flush, want none
+  FAIL  pill group nested in a tile option: its content (#n1gs): flush, want none
+  PASS  pill group's option (#n2o): none, want none
+  FAIL  tile group nested in a pill option: its option (#n2go): none, want flush
+  FAIL  tile group nested in a pill option: its content (#n2gs): none, want flush
+  PASS  wrapper writes none in a tile group: the option follows it (#wro): none, want none
+  PASS  wrapper writes none in a tile group: the content agrees (#wrs): none, want none
+  PASS  a rule on the option writes none in a tile group: refused (#opo): flush, want flush
+  PASS    its content (#ops): flush, want flush
+  PASS  a rule on the option's content writes none: refused (#cts): flush, want flush
+  PASS    inside that content (#ctb): flush, want flush
+  PASS  an inline style on the option writes none: refused (#ilo): flush, want flush
+  PASS  an inline !important on the option: the one write above the pin (#imo): none, want none
+  PASS    its content follows it (#ims): none, want none
+  PASS  a rule on a pill option writes flush: refused (#plo): none, want none
+
+## form option (plant): 15/17 cells · FAIL · expected FAIL → OK
+  PASS  tile group's option (#n1o): flush, want flush
+  PASS  pill group nested in a tile option: the group (#n1g): none, want none
+  PASS  pill group nested in a tile option: its option (#n1go): none, want none
+  PASS  pill group nested in a tile option: its content (#n1gs): none, want none
+  PASS  pill group's option (#n2o): none, want none
+  PASS  tile group nested in a pill option: its option (#n2go): flush, want flush
+  PASS  tile group nested in a pill option: its content (#n2gs): flush, want flush
+  PASS  wrapper writes none in a tile group: the option follows it (#wro): none, want none
+  PASS  wrapper writes none in a tile group: the content agrees (#wrs): none, want none
+  PASS  a rule on the option writes none in a tile group: refused (#opo): flush, want flush
+  PASS    its content (#ops): flush, want flush
+  FAIL  a rule on the option's content writes none: refused (#cts): none, want flush
+  FAIL    inside that content (#ctb): none, want flush
+  PASS  an inline style on the option writes none: refused (#ilo): flush, want flush
+  PASS  an inline !important on the option: the one write above the pin (#imo): none, want none
+  PASS    its content follows it (#ims): none, want none
+  PASS  a rule on a pill option writes flush: refused (#plo): none, want none
+
+## form crit (clean): 17/17 cells · PASS · expected PASS → OK
+  PASS  tile group's option (#n1o): flush, want flush
+  PASS  pill group nested in a tile option: the group (#n1g): none, want none
+  PASS  pill group nested in a tile option: its option (#n1go): none, want none
+  PASS  pill group nested in a tile option: its content (#n1gs): none, want none
+  PASS  pill group's option (#n2o): none, want none
+  PASS  tile group nested in a pill option: its option (#n2go): flush, want flush
+  PASS  tile group nested in a pill option: its content (#n2gs): flush, want flush
+  PASS  wrapper writes none in a tile group: the option follows it (#wro): none, want none
+  PASS  wrapper writes none in a tile group: the content agrees (#wrs): none, want none
+  PASS  a rule on the option writes none in a tile group: refused (#opo): flush, want flush
+  PASS    its content (#ops): flush, want flush
+  PASS  a rule on the option's content writes none: refused (#cts): flush, want flush
+  PASS    inside that content (#ctb): flush, want flush
+  PASS  an inline style on the option writes none: refused (#ilo): flush, want flush
+  PASS  an inline !important on the option: the one write above the pin (#imo): none, want none
+  PASS    its content follows it (#ims): none, want none
+  PASS  a rule on a pill option writes flush: refused (#plo): none, want none
+
+## form none (plant): 11/17 cells · FAIL · expected FAIL → OK
+  PASS  tile group's option (#n1o): flush, want flush
+  PASS  pill group nested in a tile option: the group (#n1g): none, want none
+  PASS  pill group nested in a tile option: its option (#n1go): none, want none
+  PASS  pill group nested in a tile option: its content (#n1gs): none, want none
+  PASS  pill group's option (#n2o): none, want none
+  PASS  tile group nested in a pill option: its option (#n2go): flush, want flush
+  PASS  tile group nested in a pill option: its content (#n2gs): flush, want flush
+  PASS  wrapper writes none in a tile group: the option follows it (#wro): none, want none
+  PASS  wrapper writes none in a tile group: the content agrees (#wrs): none, want none
+  FAIL  a rule on the option writes none in a tile group: refused (#opo): none, want flush
+  FAIL    its content (#ops): none, want flush
+  FAIL  a rule on the option's content writes none: refused (#cts): none, want flush
+  FAIL    inside that content (#ctb): none, want flush
+  FAIL  an inline style on the option writes none: refused (#ilo): none, want flush
+  PASS  an inline !important on the option: the one write above the pin (#imo): none, want none
+  PASS    its content follows it (#ims): none, want none
+  FAIL  a rule on a pill option writes flush: refused (#plo): flush, want none
+
+load 16.82 15.58 13.26 · every form read as expected
+exit 0 · 2026-10-17 22:49:42 · load { 16.82 15.58 13.26 }

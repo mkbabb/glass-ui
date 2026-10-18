@@ -1,0 +1,22 @@
+2026-10-17 22:59:55 · load { 6.54 8.24 10.11 } · build dp-src
+CRIT-NAME-LIFT · X-2: the selected K2 name with only the shared scene's consumer colour lifted (reported)
+  target dp-src (flavor src) · Chromium 149.0.7827.55 · harness H5 bfe1b6beddb0
+  load 6.54 / 8.24 / 10.11 at start, 6.25 / 8.15 / 10.07 at end · other headless browser processes at start: 5 (waited 0.1 s) · browser lock waited 0 s
+  info-fail  as built · light · selected name rgb(112, 89, 66), its item rgb(28, 25, 23) · unselected name rgb(112, 89, 66) · name selected:unselected 1.00:1 · the selected name does NOT take its item's ink
+  info-pass  consumer colour lifted · light · selected name rgb(28, 25, 23), its item rgb(28, 25, 23) · unselected name rgb(112, 89, 66) · name selected:unselected 2.66:1 · the selected name TAKES its item's ink
+  info-fail  as built · dark · selected name rgb(195, 185, 172), its item rgb(233, 230, 226) · unselected name rgb(195, 185, 172) · name selected:unselected 1.00:1 · the selected name does NOT take its item's ink
+  info-pass  consumer colour lifted · dark · selected name rgb(233, 230, 226), its item rgb(233, 230, 226) · unselected name rgb(195, 185, 172) · name selected:unselected 1.56:1 · the selected name TAKES its item's ink
+CRIT-NAME-LIFT FAIL · 0/0 gating cells pass
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p5/D4-Dp-crit/out/runs/dp-src/CRIT-NAME-LIFT-chromium.json
+exit 1 · 2026-10-17 23:00:02 · load { 5.91 8.05 10.03 }
+2026-10-17 23:00:02 · load { 5.91 8.05 10.03 } · build f-src
+CRIT-NAME-LIFT · X-2: the selected K2 name with only the shared scene's consumer colour lifted (reported)
+  target f-src (flavor src) · Chromium 149.0.7827.55 · harness H5 bfe1b6beddb0
+  load 5.91 / 8.05 / 10.03 at start, 6.56 / 8.15 / 10.05 at end · other headless browser processes at start: 5 (waited 0.1 s) · browser lock waited 0 s
+  info-fail  as built · light · selected name rgb(112, 89, 66), its item rgb(28, 25, 23) · unselected name rgb(112, 89, 66) · name selected:unselected 1.00:1 · the selected name does NOT take its item's ink
+  info-pass  consumer colour lifted · light · selected name rgb(28, 25, 23), its item rgb(28, 25, 23) · unselected name rgb(112, 89, 66) · name selected:unselected 2.66:1 · the selected name TAKES its item's ink
+  info-fail  as built · dark · selected name rgb(195, 185, 172), its item rgb(233, 230, 226) · unselected name rgb(195, 185, 172) · name selected:unselected 1.00:1 · the selected name does NOT take its item's ink
+  info-pass  consumer colour lifted · dark · selected name rgb(233, 230, 226), its item rgb(233, 230, 226) · unselected name rgb(195, 185, 172) · name selected:unselected 1.56:1 · the selected name TAKES its item's ink
+CRIT-NAME-LIFT FAIL · 0/0 gating cells pass
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p5/D4-Dp-crit/out/runs/f-src/CRIT-NAME-LIFT-chromium.json
+exit 1 · 2026-10-17 23:00:10 · load { 6.56 8.15 10.05 }
