@@ -23,6 +23,9 @@
 // H7-3, the minor split's own declaration (R-16). --h7-trees <dir> holds the real trees (fv5, fv5fix, minor4,
 // minor5: src/ and demo/ each) and --h7-decl the declaration declare-removed.mjs built from floor-v5.patch. The H7-3
 // rows on the real trees run when minor4 and minor5 are present; the H7-2 rows when fv5 and --h7-decl are.
+// H8 (pass 8) adds, each with a fixture PASS and a planted FAIL: H8-1, DEL's scope arm (src/, demo/, tests/, every
+// path the patch touches), changed-value arm and REPORTED arm, with site entries in the exact list (R-17); H8-2,
+// declare-removed.mjs's module stems and module-level consts. --h8-trees (fv6, fv6fix), --h8-patch, --h8-exact.
 // --reuse-green: keep an existing green capture (the plants are captured fresh).
 // --fields: a HEAD run's capture (its Chromium empty-scene aurora frames become the fixtures' field pixels).
 import fs from "node:fs";
@@ -33,7 +36,8 @@ import { writeFixture, writeStoryFixture } from "./fixtures.mjs";
 import { capture } from "./capture.mjs";
 
 const a = cli({ fields: { type: "string" }, only: { type: "string" }, "skip-capture": { type: "boolean" }, "reuse-green": { type: "boolean" }, tree: { type: "string" },
-  "h7-trees": { type: "string" }, "h7-decl": { type: "string" } });
+  "h7-trees": { type: "string" }, "h7-decl": { type: "string" },
+  "h8-trees": { type: "string" }, "h8-patch": { type: "string" }, "h8-exact": { type: "string" } });
 const FIELDS = path.resolve(a.fields || path.join(OUT, "caps", "head"));
 const ROOT = path.join(OUT, "selftest");
 const only = list(a.only, null);
@@ -469,6 +473,87 @@ if (want("H7-3")) {
 }
 
 // ── the pass-1 family witnesses H2 left alone (Chromium, as pass 1 ran them) ──────────────────────────────────
+// ── H8 (pass 8): DEL's scope, changed-value and REPORTED arms (H8-1, R-17) and declare-removed.mjs's module stems and
+// module-level consts (H8-2), static, run once. --h8-trees <dir> holds fv6 (floor v6 as banked) and fv6fix (floor v6
+// with R-17 (i)'s rewrites and liquid-fill.css:74's), each with src/ demo/ tests/ docs/canon/ and the root *.md;
+// --h8-patch is floor-v6.patch and --h8-exact the exact list the real declaration is built with.
+if (want("H8-1") || want("H8-2")) {
+  // A one-file patch for the tiny trees: --ink-perimeter 0.48 → 0.52 in src/, a comment quoting it (not a declaration),
+  // the deleted token --glass-veil-ink, and a touched doc outside the roots.
+  const PATCH = ["diff --git a/src/t.css b/src/t.css", "--- a/src/t.css", "+++ b/src/t.css", "@@ -1,4 +1,3 @@",
+    "-    --ink-perimeter: 0.48; /* a control's own edge */", "+    --ink-perimeter: 0.52; /* a control's own edge */",
+    "-    /* `--glass-blur-quiet-radius: 14px` was the quiet rung */", "+    /* the quiet rung */", "-    --glass-veil-ink: 0.9;",
+    "diff --git a/docs/notes.md b/docs/notes.md", "--- a/docs/notes.md", "+++ b/docs/notes.md", "@@ -1 +1 @@", "-old", "+new", ""].join("\n");
+  const h8 = (name, files, extra = {}) => {
+    const d = tree(name, { "p.patch": PATCH, "src/t.css": ":root {\n    --ink-perimeter: 0.52; /* a control's own edge */\n    /* the quiet rung */\n}\n", ...files });
+    const decl = path.join(d, "decl.json");
+    fs.writeFileSync(decl, JSON.stringify({ patch: "H8-1 fixture", names: ["--glass-veil-ink"], exact: extra.exact || [] }));
+    return ["--root", d, "--declare", decl, "--patch", path.join(d, "p.patch")];
+  };
+  const T8 = a["h8-trees"] && path.resolve(a["h8-trees"]), P8 = a["h8-patch"] && path.resolve(a["h8-patch"]);
+  let realDecl = null;
+  if (T8 && P8 && a["h8-exact"]) {
+    realDecl = path.join(ROOT, "h8-declare-floor-v6.json");
+    const r = spawnSync(process.execPath, [path.join(HERE, "declare-removed.mjs"), "--patch", P8, "--root", path.join(T8, "fv6"), "--concepts", path.join(HERE, "deletes-floor.json"), "--exact", path.resolve(a["h8-exact"]), "--out", realDecl], { encoding: "utf8" });
+    console.log(`     H8 real declaration: ${(r.stdout || r.stderr).split("\n")[0]}`);
+    fs.writeFileSync(path.join(ROOT, "h8-declare-floor-v6.log"), (r.stdout || "") + (r.stderr || ""));
+  }
+  if (want("H8-1")) {
+    const TITLE_OK = `it("G-F2 · the perimeter rides the \`--ink-perimeter\` rung", () => {});\n`;
+    const out = staticWitness("H8-1", "deleted-mechanisms", h8("h81-clean", { "tests/f.test.ts": TITLE_OK, "DESIGN.md": "The veil reads `--glass-veil-ink` (stale; the docs pass owns it).\n", "docs/canon/g.md": "the perimeter rides the 0.48 ink rung\n", "docs/notes.md": "the quiet rung\n" }), "PASS",
+      "H8-1 fixture: tests/ and the touched doc name nothing deleted or changed; the repo-root and docs/canon/ prose is printed, not gated");
+    rowsHold("H8-1", "static", out, ['[reported] "--glass-veil-ink" · DESIGN.md:1', "[reported] --ink-perimeter: 0.48 → 0.52 (literal 0.48; src/t.css) · docs/canon/g.md:1", "changed values: 1 declarations", "2 paths · 2 exist in the tree and are read"],
+      "H8-1 REPORTED arm: DESIGN.md and docs/canon/ print their hits; the quoted `--x: v` in a comment is not a declaration (one changed value, not two)");
+    const plants = {
+      "scope": [{ "tests/f.test.ts": TITLE_OK + "/* both resolve `--glass-veil-ink`, which is #22 W-FROST's token */\n" }, "scope arm: a deleted token named live in a tests/ comment (forms-seam.test.ts:23-26's shape); H7's DEL never read tests/"],
+      "touched": [{ "tests/f.test.ts": TITLE_OK, "docs/notes.md": "the glass veil ink paints the pole\n" }, "scope arm: the deleted token's word form in a touched file outside src/ demo/ tests/ (the patch's docs/notes.md)"],
+      "value": [{ "tests/f.test.ts": `it("G-F2 · PERIMETER — the perimeter rides the 0.48 ink rung", () => {});\n` }, "value arm: a test title carrying the old literal with the rung's words (forms-seam.test.ts:91's shape)"],
+      "value-comment": [{ "src/u.css": "/* The control edge rides the ink perimeter, 0.48 over the plate. */\n" }, "value arm: a src/ comment quoting the old rung value by its words"],
+    };
+    for (const [k, [files, note]] of Object.entries(plants)) staticWitness("H8-1", "deleted-mechanisms", h8(`h81-${k}`, files), "FAIL", "H8-1 plant: " + note);
+    staticWitness("H8-1", "deleted-mechanisms", h8("h81-untouched-doc", { "docs/other.md": "the glass veil ink paints the pole\n" }), "PASS",
+      "H8-1 bite: the same sentence in a docs/ file the patch does not touch and outside the roots is not read");
+    staticWitness("H8-1", "deleted-mechanisms", h8("h81-oneword", { "tests/f.test.ts": `it("each ink at 0.48 alpha composites", () => {});\nconst x = 0.48; // perimeter\n` }), "PASS",
+      "H8-1 bite: one word of the name beside the literal is not the rung (the value arm needs every word); a code literal is not prose");
+    staticWitness("H8-1", "deleted-mechanisms", h8("h81-site", { "tests/f.test.ts": TITLE_OK + "expect(map.has(\"--glass-veil-ink\")).toBe(false);\n" }, { exact: [{ name: "--glass-veil-ink", at: "tests/f.test.ts:2", why: "asserts the deletion" }] }), "PASS",
+      "H8-1 site entry: a test line that asserts the deletion, read in context, is exempt");
+    staticWitness("H8-1", "deleted-mechanisms", h8("h81-stale", { "tests/f.test.ts": TITLE_OK }, { exact: [{ name: "--glass-veil-ink", at: "tests/f.test.ts:9", why: "a line that moved" }] }), "FAIL",
+      "H8-1 plant: a site entry that exempts no hit is stale and FAILs");
+    if (realDecl) {
+      const o6 = staticWitness("H8-1", "deleted-mechanisms", ["--root", path.join(T8, "fv6"), "--declare", realDecl, "--patch", P8], "FAIL", "H8-1 plant: floor v6 as banked, under its patch-built declaration and patch");
+      rowsHold("H8-1", "static", o6, ['tests/components/field/forms-seam.test.ts:24 "--input-on-glass"', /tests\/components\/field\/forms-seam\.test\.ts:91 "0\.48 · ink perimeter"/i, /src\/styles\/glass\/liquid-fill\.css:74 "14px/, /FAIL \(3 of \d+ gated rows\)/],
+        "H8-1 plant: floor v6 reds at forms-seam.test.ts:24 (deleted-name arm) and :91 (value arm), and at liquid-fill.css:74 (value arm), and nowhere else");
+      const o7 = staticWitness("H8-1", "deleted-mechanisms", ["--root", path.join(T8, "fv6fix"), "--declare", realDecl, "--patch", P8], "PASS", "H8-1 fixture: floor v6 with R-17 (i)'s rewrites and liquid-fill.css:74's (the floor v7 stand-in)");
+      rowsHold("H8-1", "static", o7, [/\[reported\] .*DESIGN\.md:521/, /\[reported\] .*docs\/canon\/glass-system\.md:(4[4-9]|5\d|60)/], "H8-1 REPORTED arm: DESIGN.md:521 and docs/canon/glass-system.md:44-60 printed, not gated");
+    }
+  }
+  if (want("H8-2")) {
+    const pt = tree("h82-patch", {
+      "p.patch": ["diff --git a/src/g/backdropSampleMath.ts b/src/g/backdropSampleMath.ts", "deleted file mode 100644", "--- a/src/g/backdropSampleMath.ts", "+++ /dev/null", "@@ -1,2 +0,0 @@",
+        "-const CSS_INITIAL_UNDERLAY = [255, 255, 255];", "-    const downCtx = c.getImageData(0, 0, 1, 1);",
+        "diff --git a/demo/s.vue b/demo/s.vue", "--- a/demo/s.vue", "+++ b/demo/s.vue", "@@ -1,3 +1,1 @@", "-const liveCardEl = useTemplateRef(\"liveCardEl\");", "-const { sample: backdropSample, stop } = useX(liveCardEl);", " keep", ""].join("\n"),
+      "demo/s.vue": "keep\nconst stop = 1;\n",
+      "src/readme.md": "The sampler's backdrop sample math rounds each channel.\n" });
+    const dj = path.join(pt, "decl.json");
+    const r = spawnSync(process.execPath, [path.join(HERE, "declare-removed.mjs"), "--patch", path.join(pt, "p.patch"), "--root", pt, "--out", dj], { encoding: "utf8" });
+    const d = JSON.parse(fs.readFileSync(dj, "utf8"));
+    const ok = r.status === 0 && ["backdropSampleMath", "CSS_INITIAL_UNDERLAY", "liveCardEl", "backdropSample"].every((n) => d.names.includes(n)) && !["downCtx", "getImageData", "stop"].some((n) => d.names.includes(n)) && d.present.some((p) => p.id === "stop");
+    results.push({ id: "H8-2", engine: "static", expect: "DECL", exit: r.status, ok, verdict: `declared ${d.names.join(", ")} · present ${d.present.map((p) => p.id).join(", ")}`, capdir: pt, note: "H8-2: a deleted module's stem and the module-level consts (destructured too) are declared; an indented local and a browser API are not; a const still named is listed", fails: [] });
+    console.log(`${ok ? "ok  " : "BAD "} H8-2 static   expect DECL · declared ${d.names.join(", ")} · present ${d.present.map((p) => p.id).join(", ")}`);
+    staticWitness("H8-2", "deleted-mechanisms", ["--root", pt, "--declare", dj], "FAIL", "H8-2 plant: the deleted module's stem in its word form, \"backdrop sample math\", in a readme");
+    if (realDecl) {
+      const rd = JSON.parse(fs.readFileSync(realDecl, "utf8")), banked = JSON.parse(fs.readFileSync(path.join(HERE, "..", "pass-7", "FV6-records", "declare-floor-v6.json"), "utf8"));
+      const added = rd.names.filter((n) => !banked.names.includes(n)).sort(), lost = banked.names.filter((n) => !rd.names.includes(n));
+      // The pass-7 critic's 28 absent-undeclared tokens (crit-records/declcheck.log), split by H8-2's kinds.
+      const IN = ["CSS_INITIAL_UNDERLAY", "backdropLuminanceSample", "backdropSample", "backdropSampleMath", "liveCardEl", "sampleAge", "stageEl"];
+      const OUT28 = ["--glass", "--glass-plate", "alphaSum", "auroraCanvas", "bc", "bgRaw", "bodyBg", "downCanvas", "downCtx", "drawImage", "elementsFromPoint", "getImageData", "glassSample", "isShared", "lastSampleAt", "prefersReduced", "sampledAt", "sampleIntervalMs", "srcRect", "stopMotionWatch", "willReadFrequently"];
+      const ok2 = JSON.stringify(added) === JSON.stringify([...IN].sort()) && !lost.length && !OUT28.some((n) => rd.names.includes(n));
+      results.push({ id: "H8-2", engine: "static", expect: "DECL", exit: ok2 ? 0 : 1, ok: ok2, verdict: `floor v6: ${rd.names.length} names (pass 7: ${banked.names.length}) · added ${added.join(", ")} · lost ${lost.join(", ") || "none"}`, capdir: realDecl, note: "H8-2 on floor-v6.patch: the 7 of the critic's 28 that are module stems or module-level consts are declared; the 21 locals, browser APIs, template prefixes, a comment word and a dataset key are not", fails: [] });
+      console.log(`${ok2 ? "ok  " : "BAD "} H8-2 static   expect DECL · floor v6 ${rd.names.length} names (pass 7 ${banked.names.length}) · added ${added.join(", ")} · lost ${lost.join(", ") || "none"}`);
+    }
+  }
+}
+
 if (want("W-B")) {
   const fx = writeFixture("B", { out: path.join(ROOT, "fx", "B") });
   const sel = { engines: "chromium", grounds: "aurora,aurora50", scenes: "ladder", live: true };

@@ -1,24 +1,34 @@
 #!/usr/bin/env node
-// DEL · H6-1 (pass 6), H7-2 (pass 7): a mechanism a patch deletes is not described as live anywhere in the tree. The
-// prose sweep read only the sentences a ruling named, so the earned darken's description outlived it in five touched
-// files and one untouched one (pass-5 Crit A-1, REGISTRY P5-2.2 R-10). A deletion falsifies untouched prose too, so this
-// reads EVERY file under src/ and demo/ (text files; node_modules and binaries skipped), not only the files the patch
-// touches. Each patch declares the names it deletes in a JSON file ({ patch, names: [] }); declare-removed.mjs builds
-// that list from a patch's removed lines (REGISTRY P6-2.2 R-15 (iii)).
-// H7-2 (Crit A-1 of pass 6): one spelling per name let "backdrop mode" outlive `backdropMode` and "adaptive tinting"
-// outlive "adaptive tint". Every name now also matches in its WORD FORM (wordForm below):
+// DEL · H6-1 (pass 6), H7-2 (pass 7), H8-1 (pass 8): a mechanism a patch deletes or a value it changes is not described
+// as live in any file the patch touches, nor anywhere under src/, demo/ or tests/.
+// H6-1: a deletion falsifies untouched prose too, so DEL reads EVERY text file under its roots (node_modules and
+// binaries skipped), not only the touched files. Each patch declares the names it deletes in a JSON file
+// ({ patch, names: [], exact: [] }); declare-removed.mjs builds that list from a patch's removed lines.
+// H7-2: every name also matches in its WORD FORM (wordForm below):
 //   an identifier         exact, as written (case-sensitive), and, when it splits into two or more words
 //                         (`backdropMode`, `--glass-backdrop-luma`, `data-backdrop-mode`), as those words
 //   a name with a space   a phrase: its words (split on spaces and hyphens)
 // Words match case-insensitively, from a word start, joined by any run (or none) of whitespace, comment leaders
-// (* // #), hyphens and underscores, so a phrase broken over two comment lines, a kebab or a camel spelling is found.
-// Each word takes its inflections: -s -es -d -ed -ing -ings -er -ers, a final e dropped before -ing/-ed/-er
-// ("sample" → "sampling"), a final consonant doubled ("map" → "mapping"). A single-word identifier stays exact only (a
-// lone common word would read every sentence that uses it). One gated row per name; each hit prints file:line once.
-// A declaration may hold `exact: [{ name, why }]`: an identifier whose word form is ordinary live prose ("composited
-// over" for `compositeOver`) is read exact only, and the reason is printed on its row. Only an identifier can be listed;
-// a phrase is its own word form. The seat that declares owns each entry, and the critic reads them.
-//   node deleted-mechanisms.mjs --root <tree> --declare <names.json>
+// (* // #), hyphens and underscores. Each word takes its inflections: -s -es -d -ed -ing -ings -er -ers, a final e
+// dropped before -ing/-ed/-er, a final consonant doubled. A single-word identifier stays exact only.
+// H8-1 (REGISTRY P7-2.2 R-17): the row reads "every touched file", so DEL's scope is the row's own text.
+//   scope arm          the roots are src/, demo/ and tests/, plus every path the patch's `diff --git` headers name that
+//                      exists in the tree (the paths `git apply --numstat` lists; a deleted file is gone and not read)
+//   changed-value arm  with --patch: each custom property whose declared value the patch changes in a src/ file (a
+//                      removed `--x: v` and an added `--x: v′` in the same file, v not among the added values) gives
+//                      its old literals (the numbers and dimensions of v that no added value carries; v itself when it
+//                      has none and is one word). A comment or test-title line in scope that carries an old literal
+//                      together with a word of `--x`'s name is a hit. P-3: prose names a rung by its token
+//   REPORTED arm       the repo-root *.md and docs/canon/ are read under both arms and printed, never gated (they are
+//                      not touched files; the landing's docs pass owns them)
+// The exact list (a declaration's `exact: [{ name, why, at? }]`, owned by the seat that declares, read by the critic):
+//   no `at`            an identifier whose word form is ordinary live prose ("composited over" for `compositeOver`) is
+//                      read exact only. Only an identifier can be listed; a phrase is its own word form
+//   `at: "file:line"`  (or "file:a-b") one site read in context and exempt for that name, in either arm: a test line
+//                      that asserts the deletion, a token comment that reports what the old value measured. A site
+//                      entry that exempts no hit is stale and FAILs, so the list cannot outlive the lines it names
+// One gated row per name and per changed token; each hit prints file:line once.
+//   node deleted-mechanisms.mjs --root <tree> --declare <names.json> [--patch <file.patch>]
 import fs from "node:fs";
 import path from "node:path";
 import { cli } from "./lib.mjs";
@@ -48,9 +58,69 @@ export function wordForm(name) {
 export const exactForm = (name) => (/\s/.test(name.trim()) ? null : new RegExp(esc(name.trim()), "g"));
 
 const walk = (d) => (fs.existsSync(d) ? fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.name === "node_modules" ? [] : e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)])) : []);
-export function textFiles(root) {
-  return [...walk(path.join(root, "src")), ...walk(path.join(root, "demo"))].map((f) => [f, fs.readFileSync(f)]).filter(([, b]) => !b.subarray(0, 8192).includes(0)).map(([f, b]) => [path.relative(root, f), b.toString("utf8")]);
+const readText = (root, list) => list.map((f) => [f, fs.readFileSync(f)]).filter(([, b]) => !b.subarray(0, 8192).includes(0)).map(([f, b]) => [path.relative(root, f), b.toString("utf8")]);
+// The gated scope: src/, demo/, tests/, and every path the patch names that exists in the tree (H8-1's scope arm).
+export const ROOTS = ["src", "demo", "tests"];
+export function textFiles(root, extra = [], roots = ROOTS) {
+  const all = new Set(roots.flatMap((r) => walk(path.join(root, r))));
+  for (const p of extra) { const f = path.join(root, p); if (fs.existsSync(f) && fs.statSync(f).isFile()) all.add(f); }
+  return readText(root, [...all].sort());
 }
+// The REPORTED scope: the repo-root markdown and docs/canon/, minus anything the gated scope already reads.
+export function reportedFiles(root, gated) {
+  const have = new Set(gated.map(([rel]) => rel));
+  const top = fs.existsSync(root) ? fs.readdirSync(root).filter((f) => f.endsWith(".md")).map((f) => path.join(root, f)) : [];
+  return readText(root, [...top, ...walk(path.join(root, "docs", "canon"))].filter((f) => !have.has(path.relative(root, f))));
+}
+// The paths a patch's `diff --git` headers name (b/ side), as `git apply --numstat` lists them.
+export const patchPaths = (patchText) => [...new Set([...patchText.matchAll(/^diff --git a\/\S+ b\/(\S+)$/gm)].map((m) => m[1]))];
+
+// H8-1's changed-value arm: { token, from, to, literals, file } for each custom property whose declared value the
+// patch changes in a src/ file. A declaration is a whole line (`--x: v;`), so a token quoted in a comment is not one.
+// The arm reads scalar values (a number or a dimension: `0.48`, `16px`, `40%`), the value prose quotes for a rung; a
+// composite value (a colour, a color-mix) has no one literal a sentence would carry, and is not read.
+const DECL = /^\s*(--[a-z][a-z0-9-]*[a-z0-9])\s*:\s*([^;{}]+?)\s*(?:!important\s*)?;/;
+const SCALAR = /^-?(?:\d+(?:\.\d+)?|\.\d+)(?:px|rem|em|deg|ms|s|%)?$/;
+export function changedValues(patchText) {
+  const out = [];
+  let file = null, rm = new Map(), add = new Map();
+  const flush = () => {
+    for (const [token, olds] of rm) {
+      const news = add.get(token);
+      if (news) for (const v of olds) if (!news.has(v) && SCALAR.test(v)) out.push({ token, from: v, to: [...news].join(" | "), literals: [v], file });
+    }
+    rm = new Map(); add = new Map();
+  };
+  for (const l of patchText.split("\n")) {
+    if (l.startsWith("diff --git ")) { flush(); const m = l.match(/ b\/(\S+)$/); file = m && /^src\//.test(m[1]) ? m[1] : null; continue; }
+    if (!file || l.startsWith("---") || l.startsWith("+++")) continue;
+    const side = l[0] === "-" ? rm : l[0] === "+" ? add : null, m = side && l.slice(1).match(DECL);
+    if (!m) continue;
+    if (!side.has(m[1])) side.set(m[1], new Set());
+    side.get(m[1]).add(m[2]);
+  }
+  flush();
+  return out;
+}
+
+// The prose of a file, per line: a markdown file is all prose; elsewhere block comments (/* */ and <!-- -->), line
+// comments (// after whitespace or punctuation, so a URL's scheme is not one) and test titles (the string argument of
+// it/test/describe). Returns one string per line, empty where the line holds no prose.
+const TITLE = /\b(?:it|test|describe)(?:\.(?:skip|only|todo|concurrent))?\(\s*(["'`])((?:\\.|(?!\1)[^\\])*)\1/g;
+const COMMENT = /\/\*[\s\S]*?\*\/|<!--[\s\S]*?-->|(?<=^|[\s;,(){}])\/\/[^\n]*/g;
+export function proseLines(rel, text) {
+  const lines = text.split("\n");
+  if (rel.endsWith(".md")) return lines;
+  const out = lines.map(() => ""), starts = [0];
+  for (let i = 0; i < text.length; i++) if (text[i] === "\n") starts.push(i + 1);
+  const lineAt = (i) => { let lo = 0, hi = starts.length - 1; while (lo < hi) { const mid = (lo + hi + 1) >> 1; if (starts[mid] <= i) lo = mid; else hi = mid - 1; } return lo; };
+  for (const re of [COMMENT, TITLE]) for (const m of text.matchAll(re)) {
+    const a = m.index, b = a + m[0].length;
+    for (let ln = lineAt(a); ln <= lineAt(Math.max(a, b - 1)); ln++) out[ln] += " " + text.slice(Math.max(a, starts[ln]), Math.min(b, (starts[ln + 1] ?? text.length + 1) - 1));
+  }
+  return out;
+}
+
 // Every hit of a name in the files, once per file:line, with the matched text.
 export function hits(name, files, exactOnly = false) {
   const res = [exactForm(name), exactOnly ? null : wordForm(name)].filter(Boolean), out = new Map();
@@ -60,25 +130,71 @@ export function hits(name, files, exactOnly = false) {
   }
   return [...out].map(([where, text]) => ({ where, text }));
 }
+// Every prose line that carries one of a changed token's old literals and every word of its name (in any order, each
+// in its inflections). One word is not enough: "radius" or "glass" beside "16px" reads every --radius-* table row
+// (pass-8 H8.md §1 measures it); the name's words together are the rung, and a sentence about the rung names them.
+export function valueHits(ch, files) {
+  const lits = ch.literals.map((l) => new RegExp(`(?<![\\w.])${esc(l)}(?![\\w%]|\\.\\d)`)), ws = words(ch.token).map((w) => new RegExp(`(?<![A-Za-z0-9])${wordRe(w)}(?![a-z0-9])`, "i"));
+  const out = [];
+  for (const [rel, text] of files) proseLines(rel, text).forEach((p, i) => {
+    if (!p) return;
+    const lit = lits.find((r) => r.test(p));
+    if (lit && ws.every((r) => r.test(p))) out.push({ where: `${rel}:${i + 1}`, text: `${p.match(lit)[0]} · ${ws.map((r) => p.match(r)[0]).join(" ")}` });
+  });
+  return out;
+}
+
+// Site exemptions (`at`): "file:line" or "file:a-b".
+const parseAt = (at) => { const m = at.match(/^(.+):(\d+)(?:-(\d+))?$/); if (!m) throw new Error(`bad site "${at}"`); return { file: m[1], a: +m[2], b: +(m[3] || m[2]) }; };
+export function exempt(sites, name, where) {
+  const i = where.lastIndexOf(":"), file = where.slice(0, i), line = +where.slice(i + 1);
+  return sites.find((s) => s.name === name && s.file === file && line >= s.a && line <= s.b) || null;
+}
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const a = cli({ root: { type: "string" }, declare: { type: "string" } });
-  console.log("DEL · no file under src/ or demo/ describes a mechanism the patch deletes, in any word form (static; H6-1, H7-2)");
-  if (!a.root || !a.declare) { console.log("usage: node deleted-mechanisms.mjs --root <tree> --declare <names.json>\nFAIL (no gated rows measured: no tree or no declaration)"); process.exit(2); }
+  const a = cli({ root: { type: "string" }, declare: { type: "string" }, patch: { type: "string" } });
+  console.log("DEL · no file in scope (src/, demo/, tests/, every path the patch touches) describes a mechanism the patch deletes, in any word form, or a value it changes (static; H6-1, H7-2, H8-1)");
+  if (!a.root || !a.declare) { console.log("usage: node deleted-mechanisms.mjs --root <tree> --declare <names.json> [--patch <file.patch>]\nFAIL (no gated rows measured: no tree or no declaration)"); process.exit(2); }
   const root = path.resolve(a.root), decl = JSON.parse(fs.readFileSync(path.resolve(a.declare), "utf8"));
-  const files = textFiles(root), exact = new Map((decl.exact || []).map((e) => [e.name, e.why]));
+  const patchText = a.patch ? fs.readFileSync(path.resolve(a.patch), "utf8") : "";
+  const touched = patchPaths(patchText), files = textFiles(root, touched), reported = reportedFiles(root, files);
+  const entries = decl.exact || [];
+  const exact = new Map(entries.filter((e) => !e.at).map((e) => [e.name, e.why]));
+  const sites = entries.filter((e) => e.at).map((e) => ({ ...e, ...parseAt(e.at), used: 0 }));
   for (const n of exact.keys()) if (/\s/.test(n.trim())) { console.log(`exact-only entry "${n}" is a phrase: a phrase is its own word form\nFAIL (declaration refused)`); process.exit(2); }
-  console.log(`tree: ${root} · ${files.length} text files under src/ and demo/ · declaration: ${decl.patch || path.basename(a.declare)} · ${decl.names.length} names, ${exact.size} exact only`);
+  const outside = touched.filter((p) => !ROOTS.some((r) => p.startsWith(r + "/")));
+  const inScope = new Set(files.map(([rel]) => rel));
+  console.log(`tree: ${root} · ${files.length} text files in scope (src/, demo/, tests/${outside.length ? `, plus ${outside.filter((p) => inScope.has(p)).length} of ${outside.length} touched paths outside them that exist` : ""}) · reported: ${reported.length} files · declaration: ${decl.patch || path.basename(a.declare)} · ${decl.names.length} names, ${exact.size} exact only, ${sites.length} sites read in context`);
+  if (a.patch) console.log(`patch: ${path.basename(a.patch)} · ${touched.length} paths · ${touched.filter((p) => inScope.has(p)).length} exist in the tree and are read`);
   let fails = 0, hitsAll = 0;
-  const where = new Set();
-  for (const name of decl.names) {
-    const h = hits(name, files, exact.has(name)), why = exact.has(name) ? ` (exact only: ${exact.get(name)})` : "";
-    hitsAll += h.length; for (const x of h) where.add(x.where.split(":")[0]);
-    if (!h.length) { console.log(`  ✓ "${name}": 0${why}`); continue; }
+  const where = new Set(), rep = [];
+  const row = (label, h, why) => {
+    const kept = [];
+    for (const x of h) { const s = exempt(sites, label.name, x.where); if (s) { s.used++; console.log(`    · exempt ${x.where} "${x.text}" (${s.why})`); } else kept.push(x); }
+    hitsAll += kept.length; for (const x of kept) where.add(x.where.split(":")[0]);
+    if (!kept.length) { console.log(`  ✓ ${label.text}: 0${why}`); return; }
     fails++;
-    console.log(`  ✗ "${name}"${why}: ${h.length} · ${h.map((x) => `${x.where} "${x.text}"`).join(" ")}`);
+    console.log(`  ✗ ${label.text}${why}: ${kept.length} · ${kept.map((x) => `${x.where} "${x.text}"`).join(" ")}`);
+  };
+  const report = (label, h) => { for (const x of h) { const s = exempt(sites, label.name, x.where); if (s) s.used++; else rep.push(`${label.text} · ${x.where} "${x.text}"`); } };
+  for (const name of decl.names) {
+    const ex = exact.has(name), why = ex ? ` (exact only: ${exact.get(name)})` : "";
+    row({ name, text: `"${name}"` }, hits(name, files, ex), why);
+    report({ name, text: `"${name}"` }, hits(name, reported, ex));
   }
-  console.log(`DELETED-MECHANISMS names=${decl.names.length} hits=${hitsAll} files=${where.size} · ${[...where].sort().join(" ")}`);
-  console.log(fails ? `FAIL (${fails} of ${decl.names.length} gated rows)` : `PASS (${decl.names.length} gated rows)`);
+  const changed = a.patch ? changedValues(patchText) : [];
+  if (a.patch) console.log(`changed values: ${changed.length} declarations in src/ · ${[...new Set(changed.map((c) => c.token))].length} tokens`);
+  for (const ch of changed) {
+    const label = { name: ch.token, text: `${ch.token}: ${ch.from} → ${ch.to} (literal ${ch.literals.join(", ")}; ${ch.file})` };
+    row(label, valueHits(ch, files), "");
+    report(label, valueHits(ch, reported));
+  }
+  const stale = sites.filter((s) => !s.used);
+  for (const s of stale) { fails++; console.log(`  ✗ exempt site ${s.at} for "${s.name}" exempts no hit: stale (${s.why})`); }
+  console.log(`REPORTED (not gated; repo-root *.md and docs/canon/): ${rep.length}`);
+  for (const r of rep) console.log(`  [reported] ${r}`);
+  const rows = decl.names.length + changed.length + sites.length;
+  console.log(`DELETED-MECHANISMS names=${decl.names.length} hits=${hitsAll} files=${where.size} changed=${changed.length} sites=${sites.length} reported=${rep.length} · ${[...where].sort().join(" ")}`);
+  console.log(fails ? `FAIL (${fails} of ${rows} gated rows)` : `PASS (${rows} gated rows)`);
   process.exit(fails ? 1 : 0);
 }

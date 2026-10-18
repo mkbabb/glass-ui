@@ -1,0 +1,1960 @@
+{
+ "patch": "floor-v6.patch: every identifier its removed lines name that the patched src/ and demo/ no longer name (declare-removed.mjs), plus 8 concepts declared by hand (deletes-floor.json)",
+ "names": [
+  "earned darken",
+  "darkened by whatever",
+  "luma read",
+  "backdropLuminance",
+  "--glass-backdrop-luma",
+  "backdropMode",
+  "backdrop mode",
+  "adaptive tint",
+  "--control-surface-blur",
+  "--glass-backdrop",
+  "--glass-backdrop-luma-knee",
+  "--glass-backdrop-sampled",
+  "--glass-veil-base",
+  "--glass-veil-ink",
+  "--input-on-glass",
+  "--select-plate-alpha",
+  "BackgroundCanvasSource",
+  "CSS_INITIAL_UNDERLAY",
+  "DockBackdropMode",
+  "FIELD_ALPHA_FLOOR",
+  "GLASS_BACKDROP_SHARED_ATTR",
+  "GlassBackdropBucket",
+  "GlassBackdropSample",
+  "GlassBackdropTargetRect",
+  "PopperArrow",
+  "SAMPLE_DOWNSAMPLE",
+  "SHELL_FIELD_CANVAS_SELECTOR",
+  "SampleResult",
+  "UseGlassBackdropLuminanceControls",
+  "UseGlassBackdropLuminanceOptions",
+  "applyMotionState",
+  "backdropLuminanceSample",
+  "backdropSample",
+  "backdropSampleMath",
+  "backgroundCanvas",
+  "compositeOver",
+  "coveredByShared",
+  "data-backdrop-mode",
+  "data-backdrop-sample-reason",
+  "data-backdrop-sample-source",
+  "data-backdrop-sample-state",
+  "data-backdrop-sampled",
+  "data-glass-backdrop-shared",
+  "data-glass-field-canvas",
+  "data-glass-sample",
+  "getDownContext",
+  "isCanvas",
+  "lightThreshold",
+  "linearize",
+  "liveCardEl",
+  "minSampleIntervalMs",
+  "normalizeToRgb",
+  "parseRgb",
+  "relLuminance",
+  "resolveBackdropRgba",
+  "resolveSourceCanvas",
+  "resolveUnderlayRgb",
+  "sampleAge",
+  "sampleAnimated",
+  "sampleNow",
+  "sampleStatic",
+  "stageEl",
+  "staticResult",
+  "targetRect",
+  "useGlassBackdropLuminance",
+  "wantsLiveLoop",
+  "writeBucket",
+  "writeUnavailable"
+ ],
+ "exact": [
+  {
+   "name": "--glass-backdrop",
+   "why": "floor v6 seat, read in context: the one word-form hit, src/styles/animations.css:267 \"Glass backdrop — blur + dim\", heads the live ::backdrop rules of showModal() dialogs (a file floor v6 does not touch), not the deleted bucket token; the token's exact spelling stays declared"
+  },
+  {
+   "name": "backgroundCanvas",
+   "why": "floor v6 seat, read in context: the one word-form hit, demo/stories/substrates/constellation.vue:365 \"mounts a constellation background canvas at index 0\", names the live constellation canvas, not the deleted GlassDock prop; the prop's exact spelling stays declared"
+  },
+  {
+   "name": "compositeOver",
+   "why": "floor v6 seat, read in context: the 9 word-form hits (presets.ts:296, PagerDots.vue:28, pager-dots/README.md:24, useRouteTransition.ts:126, view-transition.css:253, aurora-hero.ts:312, story-hero.css:39-40, toc-tracking.vue:110) are ordinary compositing prose ('composited over', 'composites over') about live layers, not the deleted sampler helper; the helper's exact spelling stays declared"
+  },
+  {
+   "name": "backdropSample",
+   "why": "H8 seat (H8-2 declares it, a module const of glass-material.vue), read in context: its 15 word-form hits (glass.css:20, focus-veil.css:22, menu.css:4, Command.vue:77, SheetContent.vue:382-386, sheet/styles.css:314-408, glass-material.vue:209-217 and the rest) are the one-backdrop-sample-per-plate compositing law, i.e. what backdrop-filter samples, not the deleted luminance observer's ref; the const's exact spelling stays declared"
+  },
+  {
+   "name": "sampleAge",
+   "why": "H8 seat (H8-2 declares it, a module const of glass-material.vue), read in context: the one word-form hit, src/components/fourier-field/shaders/compute.wgsl.ts:5 'per-sample // AGE', joins 'sample' and 'AGE' across a comment leader in the live comet shader's buffer layout; the const's exact spelling stays declared"
+  },
+  {
+   "name": "backdropMode",
+   "at": "tests/components/custom/dock/GlassDock.posture.test.ts:153-155",
+   "why": "R-17 (ii), read in context: the comment states the prop is struck and the assertion checks data-backdrop-mode is absent; the test asserts the deletion"
+  },
+  {
+   "name": "backdrop mode",
+   "at": "tests/components/custom/dock/GlassDock.posture.test.ts:153-155",
+   "why": "R-17 (ii): as backdropMode, the same two lines"
+  },
+  {
+   "name": "data-backdrop-mode",
+   "at": "tests/components/custom/dock/GlassDock.posture.test.ts:153-155",
+   "why": "R-17 (ii): as backdropMode, the same two lines"
+  },
+  {
+   "name": "--glass-veil-ink",
+   "at": "tests/styles/glass-subtlety.test.ts:186",
+   "why": "R-17 (ii), read in context: expect(map.has(...)).toBe(false) asserts the token is gone in both modes"
+  },
+  {
+   "name": "--glass-veil-base",
+   "at": "tests/styles/glass-subtlety.test.ts:187",
+   "why": "R-17 (ii), read in context: expect(map.has(...)).toBe(false) asserts the token is gone in both modes"
+  },
+  {
+   "name": "--glass-backdrop-luma",
+   "at": "tests/styles/glass-subtlety.test.ts:192",
+   "why": "R-17 (ii), read in context: expect(veil).not.toMatch(/--glass-backdrop-luma|clamp\\(/) asserts the luma term is gone from veil.css"
+  },
+  {
+   "name": "--glass-backdrop",
+   "at": "tests/styles/glass-subtlety.test.ts:192",
+   "why": "the exact form of --glass-backdrop is a prefix of --glass-backdrop-luma on the same assertion line (DEL's exact form has no right boundary); the line asserts the deletion"
+  },
+  {
+   "name": "--ink-perimeter",
+   "at": "src/styles/tokens/scale-paper.css:90",
+   "why": "R-17 (iii)'s own example, read in context: a struck (~~) history note of BK #83 that reports the rung as it stood then, '(then 0.48)'"
+  },
+  {
+   "name": "--glass-blur-floating-radius",
+   "at": "src/styles/glass/deep.css:69",
+   "why": "R-17 (iii), read in context, proposed for the critic: 'The predecessor LERPed `--glass-blur-floating-radius` (20px) toward ...' reports the predecessor recipe with the value it then read; the live rule beneath reads the token"
+  }
+ ],
+ "derived": [
+  {
+   "id": "--control-surface-blur",
+   "kind": "token"
+  },
+  {
+   "id": "--glass-backdrop",
+   "kind": "token"
+  },
+  {
+   "id": "--glass-backdrop-luma",
+   "kind": "token"
+  },
+  {
+   "id": "--glass-backdrop-luma-knee",
+   "kind": "token"
+  },
+  {
+   "id": "--glass-backdrop-sampled",
+   "kind": "token"
+  },
+  {
+   "id": "--glass-veil-base",
+   "kind": "token"
+  },
+  {
+   "id": "--glass-veil-ink",
+   "kind": "token"
+  },
+  {
+   "id": "--input-on-glass",
+   "kind": "token"
+  },
+  {
+   "id": "--select-plate-alpha",
+   "kind": "token"
+  },
+  {
+   "id": "BackgroundCanvasSource",
+   "kind": "export"
+  },
+  {
+   "id": "CSS_INITIAL_UNDERLAY",
+   "kind": "module const"
+  },
+  {
+   "id": "DockBackdropMode",
+   "kind": "export"
+  },
+  {
+   "id": "FIELD_ALPHA_FLOOR",
+   "kind": "export"
+  },
+  {
+   "id": "GLASS_BACKDROP_SHARED_ATTR",
+   "kind": "export"
+  },
+  {
+   "id": "GlassBackdropBucket",
+   "kind": "export"
+  },
+  {
+   "id": "GlassBackdropSample",
+   "kind": "type or component"
+  },
+  {
+   "id": "GlassBackdropTargetRect",
+   "kind": "type or component"
+  },
+  {
+   "id": "PopperArrow",
+   "kind": "type or component"
+  },
+  {
+   "id": "SAMPLE_DOWNSAMPLE",
+   "kind": "export"
+  },
+  {
+   "id": "SHELL_FIELD_CANVAS_SELECTOR",
+   "kind": "export"
+  },
+  {
+   "id": "SampleResult",
+   "kind": "export"
+  },
+  {
+   "id": "UseGlassBackdropLuminanceControls",
+   "kind": "export"
+  },
+  {
+   "id": "UseGlassBackdropLuminanceOptions",
+   "kind": "export"
+  },
+  {
+   "id": "applyMotionState",
+   "kind": "export"
+  },
+  {
+   "id": "backdropLuminanceSample",
+   "kind": "module stem"
+  },
+  {
+   "id": "backdropMode",
+   "kind": "prop"
+  },
+  {
+   "id": "backdropSample",
+   "kind": "module const"
+  },
+  {
+   "id": "backdropSampleMath",
+   "kind": "module stem"
+  },
+  {
+   "id": "backgroundCanvas",
+   "kind": "module const"
+  },
+  {
+   "id": "compositeOver",
+   "kind": "export"
+  },
+  {
+   "id": "coveredByShared",
+   "kind": "export"
+  },
+  {
+   "id": "data-backdrop-mode",
+   "kind": "data- attribute"
+  },
+  {
+   "id": "data-backdrop-sample-reason",
+   "kind": "data- attribute"
+  },
+  {
+   "id": "data-backdrop-sample-source",
+   "kind": "data- attribute"
+  },
+  {
+   "id": "data-backdrop-sample-state",
+   "kind": "data- attribute"
+  },
+  {
+   "id": "data-backdrop-sampled",
+   "kind": "data- attribute"
+  },
+  {
+   "id": "data-glass-backdrop-shared",
+   "kind": "data- attribute"
+  },
+  {
+   "id": "data-glass-field-canvas",
+   "kind": "data- attribute"
+  },
+  {
+   "id": "data-glass-sample",
+   "kind": "data- attribute"
+  },
+  {
+   "id": "getDownContext",
+   "kind": "export"
+  },
+  {
+   "id": "isCanvas",
+   "kind": "export"
+  },
+  {
+   "id": "lightThreshold",
+   "kind": "prop"
+  },
+  {
+   "id": "linearize",
+   "kind": "export"
+  },
+  {
+   "id": "liveCardEl",
+   "kind": "module const"
+  },
+  {
+   "id": "minSampleIntervalMs",
+   "kind": "prop"
+  },
+  {
+   "id": "normalizeToRgb",
+   "kind": "export"
+  },
+  {
+   "id": "parseRgb",
+   "kind": "export"
+  },
+  {
+   "id": "relLuminance",
+   "kind": "export"
+  },
+  {
+   "id": "resolveBackdropRgba",
+   "kind": "export"
+  },
+  {
+   "id": "resolveSourceCanvas",
+   "kind": "export"
+  },
+  {
+   "id": "resolveUnderlayRgb",
+   "kind": "export"
+  },
+  {
+   "id": "sampleAge",
+   "kind": "module const"
+  },
+  {
+   "id": "sampleAnimated",
+   "kind": "export"
+  },
+  {
+   "id": "sampleNow",
+   "kind": "module const"
+  },
+  {
+   "id": "sampleStatic",
+   "kind": "export"
+  },
+  {
+   "id": "stageEl",
+   "kind": "module const"
+  },
+  {
+   "id": "staticResult",
+   "kind": "export"
+  },
+  {
+   "id": "targetRect",
+   "kind": "export"
+  },
+  {
+   "id": "useGlassBackdropLuminance",
+   "kind": "module stem"
+  },
+  {
+   "id": "wantsLiveLoop",
+   "kind": "export"
+  },
+  {
+   "id": "writeBucket",
+   "kind": "prop"
+  },
+  {
+   "id": "writeUnavailable",
+   "kind": "export"
+  }
+ ],
+ "concepts": [
+  "earned darken",
+  "darkened by whatever",
+  "luma read",
+  "backdropLuminance",
+  "--glass-backdrop-luma",
+  "backdropMode",
+  "backdrop mode",
+  "adaptive tint"
+ ],
+ "present": [
+  {
+   "id": "--accent-foreground",
+   "kind": "token",
+   "n": 5,
+   "where": [
+    "demo/shell/configurator/presets/neutral.css:33",
+    "demo/shell/configurator/presets/neutral.css:89",
+    "src/components/_shared/menu/menu.css:84",
+    "src/styles/theme/bridges.css:124",
+    "src/styles/tokens/color-radius.css:105"
+   ]
+  },
+  {
+   "id": "--background",
+   "kind": "token",
+   "n": 47,
+   "where": [
+    "demo/chassis/hero/story-hero.css:95",
+    "demo/chassis/hero/story-hero.css:96",
+    "demo/demo.css:159",
+    "demo/shell/configurator/presets/neutral.css:18",
+    "demo/shell/configurator/presets/neutral.css:74",
+    "demo/stories/foundations/colors.vue:42"
+   ]
+  },
+  {
+   "id": "--card",
+   "kind": "token",
+   "n": 151,
+   "where": [
+    "demo/chassis/hero/story-hero.css:2",
+    "demo/chassis/hero/story-hero.css:8",
+    "demo/chassis/hero/story-hero.css:8",
+    "demo/chassis/hero/story-hero.css:9",
+    "demo/chassis/hero/story-hero.css:12",
+    "demo/chassis/hero/story-hero.css:44"
+   ]
+  },
+  {
+   "id": "--cartoon-ink-lead",
+   "kind": "token",
+   "n": 12,
+   "where": [
+    "src/styles/tokens/dark-arm.css:221",
+    "src/styles/tokens/dark-arm.css:229",
+    "src/styles/tokens/dark-arm.css:230",
+    "src/styles/tokens/shadow.css:9",
+    "src/styles/tokens/shadow.css:10",
+    "src/styles/tokens/shadow.css:12"
+   ]
+  },
+  {
+   "id": "--control-checked-bg",
+   "kind": "token",
+   "n": 7,
+   "where": [
+    "src/styles/glass/control-bit.css:64",
+    "src/styles/glass/control-bit.css:203",
+    "src/styles/glass/control-bit.css:204",
+    "src/styles/glass/control-bit.css:245",
+    "src/styles/glass/control-bit.css:250",
+    "src/styles/tokens/scale-paper.css:101"
+   ]
+  },
+  {
+   "id": "--control-ring",
+   "kind": "token",
+   "n": 2,
+   "where": [
+    "src/styles/glass/control-bit.css:111",
+    "src/styles/tokens/scale-paper.css:84"
+   ]
+  },
+  {
+   "id": "--control-surface-bg",
+   "kind": "token",
+   "n": 13,
+   "where": [
+    "src/components/_shared/field/control.css:74",
+    "src/components/_shared/field/control.css:100",
+    "src/components/_shared/field/control.css:229",
+    "src/components/_shared/field/control.css:250",
+    "src/components/_shared/field/control.css:270",
+    "src/components/toggle-group/styles.css:112"
+   ]
+  },
+  {
+   "id": "--control-surface-bg-hover",
+   "kind": "token",
+   "n": 4,
+   "where": [
+    "src/components/_shared/disclosure/disclosure.css:76",
+    "src/components/toggle-group/styles.css:107",
+    "src/styles/glass/control-surfaces.css:79",
+    "src/styles/tokens/glass.css:238"
+   ]
+  },
+  {
+   "id": "--control-surface-border",
+   "kind": "token",
+   "n": 4,
+   "where": [
+    "src/styles/glass/control-surfaces.css:41",
+    "src/styles/glass/control-surfaces.css:44",
+    "src/styles/glass/control-surfaces.css:76",
+    "src/styles/tokens/glass.css:237"
+   ]
+  },
+  {
+   "id": "--destructive",
+   "kind": "token",
+   "n": 42,
+   "where": [
+    "demo/shell/configurator/presets/neutral.css:34",
+    "demo/shell/configurator/presets/neutral.css:90",
+    "demo/stories/foundations/colors.vue:52",
+    "demo/stories/substrates/_frame/RendererStatus.vue:64",
+    "src/components/_shared/feedback/README.md:30",
+    "src/components/_shared/feedback/feedback-tone.css:31"
+   ]
+  },
+  {
+   "id": "--dock-control-active-bg",
+   "kind": "token",
+   "n": 10,
+   "where": [
+    "src/components/dock/DockControl.vue:33",
+    "src/components/dock/styles/controls/icon-button.css:183",
+    "src/components/dock/styles/controls/icon-button.css:199",
+    "src/components/dock/styles/controls/tab-button.css:98",
+    "src/components/dock/styles/controls/touch-floor.css:71",
+    "src/components/dock/styles/controls/triggers.css:65"
+   ]
+  },
+  {
+   "id": "--dock-control-hover-bg",
+   "kind": "token",
+   "n": 6,
+   "where": [
+    "src/components/dock/styles/controls/icon-button.css:108",
+    "src/components/dock/styles/controls/icon-button.css:113",
+    "src/components/dock/styles/controls/tab-button.css:70",
+    "src/components/dock/styles/controls/triggers.css:72",
+    "src/components/dock/styles/controls/triggers.css:81",
+    "src/styles/tokens/sizing.css:204"
+   ]
+  },
+  {
+   "id": "--dock-control-press-bg",
+   "kind": "token",
+   "n": 6,
+   "where": [
+    "src/components/dock/styles/controls/icon-button.css:119",
+    "src/components/dock/styles/controls/icon-button.css:121",
+    "src/components/dock/styles/controls/icon-button.css:123",
+    "src/components/dock/styles/controls/tab-button.css:77",
+    "src/components/dock/styles/controls/triggers.css:89",
+    "src/styles/tokens/sizing.css:259"
+   ]
+  },
+  {
+   "id": "--dock-control-safe-inset",
+   "kind": "token",
+   "n": 15,
+   "where": [
+    "src/components/dock/DockControl.vue:27",
+    "src/components/dock/styles/controls/icon-button.css:35",
+    "src/components/dock/styles/controls/icon-button.css:38",
+    "src/components/dock/styles/controls/tab-button.css:36",
+    "src/components/dock/styles/controls/triggers.css:43",
+    "src/components/dock/styles/density.css:34"
+   ]
+  },
+  {
+   "id": "--dock-expand-t",
+   "kind": "token",
+   "n": 42,
+   "where": [
+    "src/components/dock/styles/cta-seat.css:25",
+    "src/components/dock/styles/dock.css:12",
+    "src/components/dock/styles/dock.css:95",
+    "src/components/dock/styles/dock.css:113",
+    "src/components/dock/styles/dock.css:124",
+    "src/components/dock/styles/dock.css:233"
+   ]
+  },
+  {
+   "id": "--dock-fg-on-aurora",
+   "kind": "token",
+   "n": 12,
+   "where": [
+    "src/components/dock/styles/adaptive-legibility.css:13",
+    "src/components/dock/styles/adaptive-legibility.css:17",
+    "src/components/dock/styles/controls/icon-button.css:49",
+    "src/components/dock/styles/controls/icon-button.css:55",
+    "src/components/dock/styles/controls/icon-button.css:208",
+    "src/components/dock/styles/controls/triggers.css:46"
+   ]
+  },
+  {
+   "id": "--dock-layer-switcher-active",
+   "kind": "token",
+   "n": 4,
+   "where": [
+    "src/components/dock/styles/layer-group.css:335",
+    "src/components/dock/styles/layer-group.css:348",
+    "src/components/dock/styles/layer-group.css:351",
+    "src/styles/tokens/sizing.css:223"
+   ]
+  },
+  {
+   "id": "--dock-plate-collapsed-tier",
+   "kind": "token",
+   "n": 3,
+   "where": [
+    "src/components/dock/styles/dock.css:109",
+    "src/components/dock/styles/dock.css:112",
+    "src/components/dock/styles/shell.css:96"
+   ]
+  },
+  {
+   "id": "--dock-plate-expanded-border",
+   "kind": "token",
+   "n": 3,
+   "where": [
+    "src/components/dock/styles/dock.css:124",
+    "src/components/dock/styles/morph.css:343",
+    "src/components/dock/styles/shell.css:99"
+   ]
+  },
+  {
+   "id": "--dock-surface-blur",
+   "kind": "token",
+   "n": 7,
+   "where": [
+    "src/components/dock/styles/dock.css:16",
+    "src/components/dock/styles/dock.css:71",
+    "src/components/dock/styles/dock.css:76",
+    "src/components/dock/styles/dock.css:119",
+    "src/components/dock/styles/shell.css:20",
+    "src/components/dock/styles/shell.css:183"
+   ]
+  },
+  {
+   "id": "--ease-standard",
+   "kind": "token",
+   "n": 160,
+   "where": [
+    "demo/stories/foundations/css-utilities.vue:7",
+    "demo/stories/foundations/css-utilities.vue:90",
+    "demo/stories/foundations/motion.vue:15",
+    "demo/stories/foundations/motion.vue:27",
+    "demo/stories/foundations/motion.vue:29",
+    "src/components/_shared/disclosure/disclosure.css:70"
+   ]
+  },
+  {
+   "id": "--engage-control-engage-attack",
+   "kind": "token",
+   "n": 19,
+   "where": [
+    "src/components/_shared/menu/menu.css:66",
+    "src/components/_shared/menu/menu.css:68",
+    "src/components/_shared/menu/menu.css:69",
+    "src/components/_shared/menu/menu.css:70",
+    "src/components/_shared/menu/menu.css:86",
+    "src/components/_shared/menu/menu.css:87"
+   ]
+  },
+  {
+   "id": "--field-control-duration",
+   "kind": "token",
+   "n": 7,
+   "where": [
+    "src/components/_shared/field/control.css:86",
+    "src/components/_shared/field/control.css:129",
+    "src/components/_shared/field/control.css:131",
+    "src/components/_shared/field/control.css:132",
+    "src/components/_shared/field/control.css:133",
+    "src/components/_shared/field/control.css:227"
+   ]
+  },
+  {
+   "id": "--field-control-ease",
+   "kind": "token",
+   "n": 6,
+   "where": [
+    "src/components/_shared/field/control.css:87",
+    "src/components/_shared/field/control.css:130",
+    "src/components/_shared/field/control.css:131",
+    "src/components/_shared/field/control.css:132",
+    "src/components/_shared/field/control.css:133",
+    "src/components/_shared/field/control.css:228"
+   ]
+  },
+  {
+   "id": "--fill-selected",
+   "kind": "token",
+   "n": 22,
+   "where": [
+    "src/components/_shared/menu/menu.css:8",
+    "src/components/_shared/menu/menu.css:17",
+    "src/components/button/styles.css:30",
+    "src/components/button/styles.css:175",
+    "src/components/button/styles.css:216",
+    "src/components/card/styles.css:9"
+   ]
+  },
+  {
+   "id": "--foreground",
+   "kind": "token",
+   "n": 305,
+   "where": [
+    "demo/chassis/code/Code.vue:7",
+    "demo/chassis/code/Code.vue:57",
+    "demo/chassis/code/Code.vue:59",
+    "demo/chassis/code/Code.vue:64",
+    "demo/chassis/code/CodeBlock.vue:159",
+    "demo/chassis/code/hljs-house-theme.css:6"
+   ]
+  },
+  {
+   "id": "--glass-accent",
+   "kind": "token",
+   "n": 23,
+   "where": [
+    "demo/shell/dock-layer-contexts.ts:66",
+    "demo/stories/substrates/glass-material.vue:99",
+    "demo/stories/substrates/glass-material.vue:257",
+    "demo/stories/substrates/glass-material.vue:261",
+    "demo/stories/substrates/glass-material.vue:271",
+    "demo/stories/substrates/glass-material.vue:279"
+   ]
+  },
+  {
+   "id": "--glass-accent-strength",
+   "kind": "token",
+   "n": 11,
+   "where": [
+    "demo/stories/substrates/glass-material.vue:99",
+    "demo/stories/substrates/glass-material.vue:257",
+    "demo/stories/substrates/glass-material.vue:272",
+    "demo/stories/substrates/glass-material.vue:294",
+    "src/styles/glass/material.css:179",
+    "src/styles/glass/material.css:184"
+   ]
+  },
+  {
+   "id": "--glass-blur-dock",
+   "kind": "token",
+   "n": 1,
+   "where": [
+    "src/styles/theme/bridges.css:354"
+   ]
+  },
+  {
+   "id": "--glass-blur-floating",
+   "kind": "token",
+   "n": 13,
+   "where": [
+    "demo/stories/foundations/paper-glass.vue:68",
+    "src/components/button/styles.css:140",
+    "src/components/configurator/styles.css:77",
+    "src/styles/glass/deep.css:95",
+    "src/styles/glass/deep.css:106",
+    "src/styles/glass/glass-capsule.css:57"
+   ]
+  },
+  {
+   "id": "--glass-blur-floating-radius",
+   "kind": "token",
+   "n": 10,
+   "where": [
+    "src/styles/glass/deep.css:69",
+    "src/styles/glass/deep.css:141",
+    "src/styles/glass/dissolve.css:49",
+    "src/styles/glass/veil.css:113",
+    "src/styles/theme/bridges.css:351",
+    "src/styles/tokens/glass.css:68"
+   ]
+  },
+  {
+   "id": "--glass-blur-overlay-radius",
+   "kind": "token",
+   "n": 6,
+   "where": [
+    "src/styles/glass/deep.css:137",
+    "src/styles/glass/veil.css:118",
+    "src/styles/theme/bridges.css:352",
+    "src/styles/tokens/glass.css:69",
+    "src/styles/tokens/glass.css:88",
+    "src/styles/tokens/motion-registers.css:128"
+   ]
+  },
+  {
+   "id": "--glass-blur-quiet",
+   "kind": "token",
+   "n": 14,
+   "where": [
+    "demo/stories/foundations/paper-glass.vue:54",
+    "src/components/alert/index.ts:17",
+    "src/components/alert/index.ts:25",
+    "src/components/button/styles.css:140",
+    "src/styles/glass.css:138",
+    "src/styles/glass/deep.css:104"
+   ]
+  },
+  {
+   "id": "--glass-blur-quiet-radius",
+   "kind": "token",
+   "n": 8,
+   "where": [
+    "demo/stories/dock/dock-search.vue:386",
+    "src/styles/glass/deep.css:149",
+    "src/styles/glass/liquid-fill.css:83",
+    "src/styles/glass/surface-axis.css:50",
+    "src/styles/glass/veil.css:97",
+    "src/styles/theme/bridges.css:349"
+   ]
+  },
+  {
+   "id": "--glass-blur-resting",
+   "kind": "token",
+   "n": 10,
+   "where": [
+    "demo/stories/foundations/paper-glass.vue:61",
+    "src/components/dock/styles/dock.css:71",
+    "src/components/dock/styles/shell.css:20",
+    "src/styles/glass/deep.css:36",
+    "src/styles/glass/deep.css:105",
+    "src/styles/glass/grasp.css:162"
+   ]
+  },
+  {
+   "id": "--glass-blur-resting-radius",
+   "kind": "token",
+   "n": 8,
+   "where": [
+    "src/components/dock/styles/dock.css:120",
+    "src/styles/glass/deep.css:41",
+    "src/styles/glass/deep.css:145",
+    "src/styles/glass/grasp.css:174",
+    "src/styles/glass/veil.css:108",
+    "src/styles/theme/bridges.css:350"
+   ]
+  },
+  {
+   "id": "--glass-blur-wash-radius",
+   "kind": "token",
+   "n": 5,
+   "where": [
+    "src/styles/glass/deep.css:153",
+    "src/styles/glass/veil.css:92",
+    "src/styles/theme/bridges.css:348",
+    "src/styles/tokens/glass.css:65",
+    "src/styles/tokens/glass.css:84"
+   ]
+  },
+  {
+   "id": "--glass-border-floating",
+   "kind": "token",
+   "n": 10,
+   "where": [
+    "demo/chassis/landing/SectionPreviewCard.vue:91",
+    "src/components/dock/styles/morph.css:340",
+    "src/components/dock/styles/morph.css:343",
+    "src/components/dock/styles/shell.css:97",
+    "src/styles/glass/control-surfaces.css:42",
+    "src/styles/glass/ladder.css:132"
+   ]
+  },
+  {
+   "id": "--glass-capsule-fill",
+   "kind": "token",
+   "n": 9,
+   "where": [
+    "src/components/button/styles.css:5",
+    "src/components/button/styles.css:166",
+    "src/components/configurator/styles.css:522",
+    "src/components/configurator/styles.css:529",
+    "src/components/dock/styles/controls/icon-button.css:193",
+    "src/components/dock/styles/controls/icon-button.css:199"
+   ]
+  },
+  {
+   "id": "--glass-cell-backdrop-filter",
+   "kind": "token",
+   "n": 1,
+   "where": [
+    "demo/stories/substrates/glass-material.vue:210"
+   ]
+  },
+  {
+   "id": "--glass-depth",
+   "kind": "token",
+   "n": 29,
+   "where": [
+    "src/components/button/styles.css:127",
+    "src/components/button/styles.css:134",
+    "src/styles/glass/deep.css:48",
+    "src/styles/glass/deep.css:54",
+    "src/styles/glass/deep.css:56",
+    "src/styles/glass/deep.css:81"
+   ]
+  },
+  {
+   "id": "--glass-focus-veil-dim",
+   "kind": "token",
+   "n": 3,
+   "where": [
+    "src/styles/glass/focus-veil.css:74",
+    "src/styles/tokens/dark-arm.css:294",
+    "src/styles/tokens/glass.css:114"
+   ]
+  },
+  {
+   "id": "--glass-level",
+   "kind": "token",
+   "n": 90,
+   "where": [
+    "demo/shell/configurator/PresetEditor.vue:186",
+    "demo/shell/configurator/preset-editor/css-writers.ts:45",
+    "demo/shell/configurator/preset-editor/css-writers.ts:48",
+    "demo/shell/configurator/preset-editor/defaults.ts:54",
+    "demo/shell/configurator/preset-editor/defaults.ts:84",
+    "demo/shell/configurator/preset-editor/types.ts:32"
+   ]
+  },
+  {
+   "id": "--glass-plate-chassis",
+   "kind": "token",
+   "n": 1,
+   "where": [
+    "src/styles/tokens/glass.css:146"
+   ]
+  },
+  {
+   "id": "--glass-plate-dialog",
+   "kind": "token",
+   "n": 1,
+   "where": [
+    "src/styles/tokens/glass.css:147"
+   ]
+  },
+  {
+   "id": "--glass-plate-dock",
+   "kind": "token",
+   "n": 2,
+   "where": [
+    "src/styles/glass/surfaces-pager.css:38",
+    "src/styles/tokens/glass.css:144"
+   ]
+  },
+  {
+   "id": "--glass-plate-floating",
+   "kind": "token",
+   "n": 7,
+   "where": [
+    "src/components/_shared/feedback/feedback-tone.css:63",
+    "src/styles/glass/surface-axis.css:72",
+    "src/styles/glass/surfaces-pager.css:7",
+    "src/styles/glass/surfaces-pager.css:30",
+    "src/styles/tokens/glass.css:142",
+    "src/styles/utilities/components.css:7"
+   ]
+  },
+  {
+   "id": "--glass-plate-overlay",
+   "kind": "token",
+   "n": 1,
+   "where": [
+    "src/styles/tokens/glass.css:143"
+   ]
+  },
+  {
+   "id": "--glass-plate-quiet",
+   "kind": "token",
+   "n": 7,
+   "where": [
+    "demo/stories/dock/dock-search.vue:385",
+    "src/components/tabs/styles/segmented.css:7",
+    "src/styles/glass/surface-axis.css:14",
+    "src/styles/glass/surface-axis.css:16",
+    "src/styles/theme/bridges.css:157",
+    "src/styles/tokens/glass.css:140"
+   ]
+  },
+  {
+   "id": "--glass-plate-resting",
+   "kind": "token",
+   "n": 1,
+   "where": [
+    "src/styles/tokens/glass.css:141"
+   ]
+  },
+  {
+   "id": "--glass-plate-wash",
+   "kind": "token",
+   "n": 5,
+   "where": [
+    "src/components/alert/index.ts:19",
+    "src/components/avatar/styles.css:78",
+    "src/components/metric/styles.css:143",
+    "src/styles/tokens/glass.css:139",
+    "src/styles/utilities/base-misc.css:266"
+   ]
+  },
+  {
+   "id": "--glass-saturate",
+   "kind": "token",
+   "n": 15,
+   "where": [
+    "src/components/dock/styles/shell.css:18",
+    "src/components/sheet/styles.css:367",
+    "src/styles/glass/deep.css:87",
+    "src/styles/glass/deep.css:88",
+    "src/styles/glass/dissolve.css:50",
+    "src/styles/glass/focus-veil.css:73"
+   ]
+  },
+  {
+   "id": "--glass-saturate-grasp",
+   "kind": "token",
+   "n": 2,
+   "where": [
+    "src/styles/glass/grasp.css:178",
+    "src/styles/tokens/glass.css:78"
+   ]
+  },
+  {
+   "id": "--glass-veil",
+   "kind": "token",
+   "n": 20,
+   "where": [
+    "src/components/_shared/feedback/feedback-tone.css:35",
+    "src/components/_shared/feedback/feedback-tone.css:43",
+    "src/components/_shared/feedback/feedback-tone.css:49",
+    "src/components/_shared/feedback/feedback-tone.css:61",
+    "src/components/_shared/feedback/feedback-tone.css:82",
+    "src/components/alert/index.ts:16"
+   ]
+  },
+  {
+   "id": "--glass-veil-chassis",
+   "kind": "token",
+   "n": 2,
+   "where": [
+    "src/styles/tokens/glass.css:146",
+    "src/styles/tokens/glass.css:286"
+   ]
+  },
+  {
+   "id": "--glass-veil-crown",
+   "kind": "token",
+   "n": 3,
+   "where": [
+    "src/components/sheet/SheetContent.vue:280",
+    "src/components/sheet/SheetContent.vue:280",
+    "src/styles/tokens/glass.css:288"
+   ]
+  },
+  {
+   "id": "--glass-veil-dialog",
+   "kind": "token",
+   "n": 4,
+   "where": [
+    "src/components/dialog/DialogContent.vue:171",
+    "src/components/sheet/SheetContent.vue:283",
+    "src/styles/tokens/glass.css:147",
+    "src/styles/tokens/glass.css:290"
+   ]
+  },
+  {
+   "id": "--glass-veil-dock",
+   "kind": "token",
+   "n": 5,
+   "where": [
+    "src/components/dock/styles/shell.css:96",
+    "src/components/dock/styles/shell.css:98",
+    "src/components/dock/styles/shell.css:368",
+    "src/styles/tokens/glass.css:145",
+    "src/styles/tokens/glass.css:287"
+   ]
+  },
+  {
+   "id": "--glass-veil-floating",
+   "kind": "token",
+   "n": 7,
+   "where": [
+    "demo/stories/foundations/paper-glass.vue:67",
+    "src/components/dock/styles/search.css:44",
+    "src/styles/glass/surfaces-pager.css:40",
+    "src/styles/glass/surfaces.css:58",
+    "src/styles/glass/veil.css:112",
+    "src/styles/tokens/glass.css:142"
+   ]
+  },
+  {
+   "id": "--glass-veil-overlay",
+   "kind": "token",
+   "n": 5,
+   "where": [
+    "demo/stories/foundations/paper-glass.vue:74",
+    "src/styles/glass/overlay-plate.css:278",
+    "src/styles/glass/veil.css:117",
+    "src/styles/tokens/glass.css:143",
+    "src/styles/tokens/glass.css:284"
+   ]
+  },
+  {
+   "id": "--glass-veil-quiet",
+   "kind": "token",
+   "n": 7,
+   "where": [
+    "demo/stories/foundations/paper-glass.vue:53",
+    "src/components/button/styles.css:139",
+    "src/styles/glass/surface-axis.css:47",
+    "src/styles/glass/veil.css:20",
+    "src/styles/glass/veil.css:96",
+    "src/styles/tokens/glass.css:140"
+   ]
+  },
+  {
+   "id": "--glass-veil-rest",
+   "kind": "token",
+   "n": 11,
+   "where": [
+    "src/styles/glass/grasp.css:121",
+    "src/styles/glass/grasp.css:131",
+    "src/styles/glass/grasp.css:135",
+    "src/styles/glass/grasp.css:197",
+    "src/styles/glass/grasp.css:209",
+    "src/styles/glass/liquid-fill.css:48"
+   ]
+  },
+  {
+   "id": "--glass-veil-resting",
+   "kind": "token",
+   "n": 5,
+   "where": [
+    "demo/stories/foundations/paper-glass.vue:60",
+    "src/styles/glass/veil.css:66",
+    "src/styles/glass/veil.css:107",
+    "src/styles/tokens/glass.css:141",
+    "src/styles/tokens/glass.css:282"
+   ]
+  },
+  {
+   "id": "--glass-veil-rung",
+   "kind": "token",
+   "n": 16,
+   "where": [
+    "src/components/slider/styles.css:205",
+    "src/components/slider/styles.css:213",
+    "src/styles/glass/grasp.css:82",
+    "src/styles/glass/grasp.css:135",
+    "src/styles/glass/grasp.css:209",
+    "src/styles/glass/grasp.css:210"
+   ]
+  },
+  {
+   "id": "--glass-veil-sheet",
+   "kind": "token",
+   "n": 2,
+   "where": [
+    "src/components/sheet/SheetContent.vue:280",
+    "src/styles/tokens/glass.css:289"
+   ]
+  },
+  {
+   "id": "--glass-veil-step",
+   "kind": "token",
+   "n": 6,
+   "where": [
+    "src/styles/tokens/glass.css:278",
+    "src/styles/tokens/glass.css:281",
+    "src/styles/tokens/glass.css:282",
+    "src/styles/tokens/glass.css:284",
+    "src/styles/tokens/glass.css:289",
+    "src/styles/tokens/manifest.ts:22"
+   ]
+  },
+  {
+   "id": "--glass-veil-tier",
+   "kind": "token",
+   "n": 20,
+   "where": [
+    "src/components/_shared/menu/menu.css:132",
+    "src/components/button/styles.css:139",
+    "src/components/dialog/DialogContent.vue:167",
+    "src/components/dialog/DialogContent.vue:171",
+    "src/components/dock/styles/dock.css:108",
+    "src/components/dock/styles/search.css:44"
+   ]
+  },
+  {
+   "id": "--glass-veil-wash",
+   "kind": "token",
+   "n": 4,
+   "where": [
+    "demo/stories/foundations/paper-glass.vue:46",
+    "src/styles/glass/veil.css:91",
+    "src/styles/tokens/glass.css:139",
+    "src/styles/tokens/glass.css:280"
+   ]
+  },
+  {
+   "id": "--ink-perimeter",
+   "kind": "token",
+   "n": 24,
+   "where": [
+    "src/components/_shared/field/control.css:48",
+    "src/components/_shared/field/control.css:55",
+    "src/components/_shared/field/control.css:267",
+    "src/components/button/styles.css:31",
+    "src/components/button/styles.css:163",
+    "src/components/card/styles.css:110"
+   ]
+  },
+  {
+   "id": "--menu-row-bg",
+   "kind": "token",
+   "n": 2,
+   "where": [
+    "src/components/_shared/menu/menu.css:17",
+    "src/components/_shared/menu/menu.css:83"
+   ]
+  },
+  {
+   "id": "--muted-foreground",
+   "kind": "token",
+   "n": 69,
+   "where": [
+    "demo/chassis/code/CodeBlock.vue:144",
+    "demo/chassis/code/CodeBlock.vue:174",
+    "demo/chassis/hero/aurora-hero.ts:292",
+    "demo/chassis/hero/aurora-hero.ts:324",
+    "demo/chassis/hero/story-hero.css:271",
+    "demo/chassis/showcase/ShowcaseFrame.vue:85"
+   ]
+  },
+  {
+   "id": "--neutral-0",
+   "kind": "token",
+   "n": 16,
+   "where": [
+    "demo/chassis/hero/story-hero.css:12",
+    "src/styles/tokens/color-radius.css:40",
+    "src/styles/tokens/color-radius.css:58",
+    "src/styles/tokens/color-radius.css:60",
+    "src/styles/tokens/color-radius.css:166",
+    "src/styles/tokens/color-radius.css:168"
+   ]
+  },
+  {
+   "id": "--neutral-5",
+   "kind": "token",
+   "n": 13,
+   "where": [
+    "demo/chassis/hero/story-hero.css:271",
+    "demo/stories/foundations/shadows.vue:98",
+    "src/styles/glass/ladder.css:173",
+    "src/styles/tokens/color-radius.css:45",
+    "src/styles/tokens/color-radius.css:97",
+    "src/styles/tokens/dark-arm.css:61"
+   ]
+  },
+  {
+   "id": "--on-glass-muted",
+   "kind": "token",
+   "n": 12,
+   "where": [
+    "demo/stories/navigation/toc-tracking.vue:105",
+    "src/components/alert/index.ts:29",
+    "src/components/dock/styles/adaptive-legibility.css:14",
+    "src/components/dock/styles/adaptive-legibility.css:18",
+    "src/components/dock/styles/search.css:42",
+    "src/components/dock/styles/search.css:55"
+   ]
+  },
+  {
+   "id": "--on-glass-muted-strong",
+   "kind": "token",
+   "n": 12,
+   "where": [
+    "demo/chassis/code/hljs-house-theme.css:7",
+    "demo/chassis/code/hljs-house-theme.css:28",
+    "demo/chassis/code/hljs-house-theme.css:38",
+    "demo/stories/foundations/shadows.vue:101",
+    "demo/stories/foundations/shadows.vue:102",
+    "demo/stories/navigation/toc-tracking.vue:112"
+   ]
+  },
+  {
+   "id": "--opacity-icon-muted",
+   "kind": "token",
+   "n": 6,
+   "where": [
+    "src/components/dock/styles/controls/icon-button.css:52",
+    "src/components/dock/styles/controls/icon-button.css:56",
+    "src/components/dock/styles/controls/triggers.css:50",
+    "src/styles/theme/literals.css:55",
+    "src/styles/theme/literals.css:65",
+    "src/styles/tokens/scale-paper.css:57"
+   ]
+  },
+  {
+   "id": "--overlay-scrim",
+   "kind": "token",
+   "n": 7,
+   "where": [
+    "demo/stories/foundations/overlays-scrims.vue:22",
+    "demo/stories/foundations/overlays-scrims.vue:23",
+    "src/components/expandable-container/ExpandableContainer.vue:112",
+    "src/components/expandable-container/README.md:19",
+    "src/components/expandable-container/styles.css:15",
+    "src/styles/theme/bridges.css:184"
+   ]
+  },
+  {
+   "id": "--popover",
+   "kind": "token",
+   "n": 11,
+   "where": [
+    "demo/shell/configurator/presets/neutral.css:24",
+    "demo/shell/configurator/presets/neutral.css:80",
+    "demo/stories/foundations/colors.vue:48",
+    "demo/stories/substrates/glass-material.vue:63",
+    "demo/stories/substrates/glass-material.vue:364",
+    "src/styles/theme/bridges.css:129"
+   ]
+  },
+  {
+   "id": "--primary",
+   "kind": "token",
+   "n": 51,
+   "where": [
+    "demo/chassis/hero/StoryHero.vue:77",
+    "demo/shell/configurator/presets/neutral.css:28",
+    "demo/shell/configurator/presets/neutral.css:84",
+    "demo/stories/compositions/empty-states.vue:108",
+    "demo/stories/compositions/settings.vue:313",
+    "demo/stories/containers/expandable-container.vue:165"
+   ]
+  },
+  {
+   "id": "--radius-card",
+   "kind": "token",
+   "n": 83,
+   "where": [
+    "demo/chassis/hero/story-hero.css:55",
+    "demo/chassis/hero/story-hero.css:92",
+    "demo/chassis/hero/story-hero.css:240",
+    "demo/chassis/hero/story-hero.css:241",
+    "demo/chassis/landing/SectionPreviewCard.vue:106",
+    "demo/shell/configurator/presets/neutral.css:53"
+   ]
+  },
+  {
+   "id": "--section-color-5",
+   "kind": "token",
+   "n": 13,
+   "where": [
+    "demo/chassis/hero/aurora-hero.ts:37",
+    "demo/chassis/hero/aurora-hero.ts:42",
+    "demo/stories/display/badge.vue:9",
+    "demo/stories/display/surface.vue:188",
+    "demo/stories/forms/chip.vue:23",
+    "demo/stories/foundations/css-utilities.vue:36"
+   ]
+  },
+  {
+   "id": "--shadow-color",
+   "kind": "token",
+   "n": 45,
+   "where": [
+    "demo/shell/configurator/presets/neutral.css:39",
+    "demo/shell/configurator/presets/neutral.css:60",
+    "demo/shell/configurator/presets/neutral.css:61",
+    "src/components/blob/Blob.vue:353",
+    "src/styles/glass/surfaces-pager.css:45",
+    "src/styles/glass/surfaces-pager.css:62"
+   ]
+  },
+  {
+   "id": "--shadow-dock",
+   "kind": "token",
+   "n": 6,
+   "where": [
+    "src/components/dock/GlassDock.vue:376",
+    "src/components/dock/styles/morph.css:289",
+    "src/components/dock/styles/shape.css:156",
+    "src/components/dock/styles/shell.css:196",
+    "src/styles/tokens/manifest.ts:41",
+    "src/styles/tokens/shadow.css:37"
+   ]
+  },
+  {
+   "id": "--shadow-dock-collapsed",
+   "kind": "token",
+   "n": 2,
+   "where": [
+    "src/components/dock/styles/morph.css:167",
+    "src/styles/tokens/shadow.css:38"
+   ]
+  },
+  {
+   "id": "--shadow-modal",
+   "kind": "token",
+   "n": 3,
+   "where": [
+    "src/styles/tokens/manifest.ts:41",
+    "src/styles/tokens/shadow.css:22",
+    "src/styles/utilities/components.css:170"
+   ]
+  },
+  {
+   "id": "--spring-dock",
+   "kind": "token",
+   "n": 65,
+   "where": [
+    "demo/chassis/hero/story-hero.css:255",
+    "demo/chassis/hero/story-hero.css:266",
+    "demo/stories/display/surface.vue:33",
+    "demo/stories/display/surface.vue:229",
+    "demo/stories/display/surface.vue:230",
+    "demo/stories/display/surface.vue:270"
+   ]
+  },
+  {
+   "id": "--spring-dock-duration",
+   "kind": "token",
+   "n": 55,
+   "where": [
+    "demo/chassis/hero/story-hero.css:256",
+    "demo/chassis/hero/story-hero.css:265",
+    "demo/stories/display/surface.vue:33",
+    "demo/stories/display/surface.vue:229",
+    "demo/stories/display/surface.vue:230",
+    "demo/stories/display/surface.vue:270"
+   ]
+  },
+  {
+   "id": "--spring-press-duration",
+   "kind": "token",
+   "n": 45,
+   "where": [
+    "demo/stories/display/surface.vue:258",
+    "src/components/_shared/menu/menu.css:43",
+    "src/components/_shared/menu/menu.css:72",
+    "src/components/_shared/menu/menu.css:91",
+    "src/components/button/styles.css:104",
+    "src/components/card/styles.css:147"
+   ]
+  },
+  {
+   "id": "--token",
+   "kind": "token",
+   "n": 21,
+   "where": [
+    "src/components/blob/Blob.vue:24",
+    "src/components/blob/README.md:120",
+    "src/components/blob/README.md:120",
+    "src/components/blob/README.md:303",
+    "src/components/blob/composables/useMetaballRenderer.ts:29",
+    "src/components/blob/composables/useMetaballRenderer.ts:116"
+   ]
+  },
+  {
+   "id": "--transition-liquid-spatial",
+   "kind": "token",
+   "n": 20,
+   "where": [
+    "src/components/_shared/menu/menu.css:43",
+    "src/components/_shared/menu/menu.css:72",
+    "src/components/_shared/menu/menu.css:91",
+    "src/components/button/styles.css:104",
+    "src/components/card/styles.css:147",
+    "src/components/card/styles.css:183"
+   ]
+  },
+  {
+   "id": "--viz-amber",
+   "kind": "token",
+   "n": 7,
+   "where": [
+    "demo/chassis/code/hljs-house-theme.css:6",
+    "demo/chassis/code/hljs-house-theme.css:27",
+    "demo/chassis/code/hljs-house-theme.css:37",
+    "src/styles/theme/bridges.css:215",
+    "src/styles/tokens/color-radius.css:333",
+    "src/styles/tokens/color-radius.css:353"
+   ]
+  },
+  {
+   "id": "Canvas2D",
+   "kind": "type or component",
+   "n": 53,
+   "where": [
+    "demo/chassis/landing/vizPreviewStill.ts:4",
+    "demo/stories/manifest.ts:481",
+    "demo/stories/manifest.ts:490",
+    "demo/stories/manifest.ts:492",
+    "demo/stories/manifest.ts:499",
+    "demo/stories/substrates/constellation.vue:25"
+   ]
+  },
+  {
+   "id": "CanvasRenderingContext2D",
+   "kind": "type or component",
+   "n": 24,
+   "where": [
+    "demo/chassis/hero/StoryHero.vue:80",
+    "demo/chassis/landing/vizPreviewStill.ts:148",
+    "demo/chassis/landing/vizPreviewStill.ts:157",
+    "demo/chassis/landing/vizPreviewStill.ts:177",
+    "demo/chassis/landing/vizPreviewStill.ts:198",
+    "demo/chassis/landing/vizPreviewStill.ts:227"
+   ]
+  },
+  {
+   "id": "DEFAULT_SURFACE",
+   "kind": "module const",
+   "n": 2,
+   "where": [
+    "src/composables/color/accent-tone-solve.ts:29",
+    "src/composables/color/accent-tone-solve.ts:50"
+   ]
+  },
+  {
+   "id": "DockStage",
+   "kind": "type or component",
+   "n": 49,
+   "where": [
+    "demo/chassis/hero/focal.ts:14",
+    "demo/chassis/hero/focal.ts:57",
+    "demo/chassis/hero/focal.ts:65",
+    "demo/chassis/hero/focal.ts:66",
+    "demo/stories/dock/_frame/DockStage.vue:2",
+    "demo/stories/dock/controls.vue:33"
+   ]
+  },
+  {
+   "id": "DropdownMenu",
+   "kind": "type or component",
+   "n": 33,
+   "where": [
+    "demo/shell/DockFacetMenu.vue:5",
+    "demo/shell/DockFacetMenu.vue:28",
+    "demo/shell/DockFacetMenu.vue:45",
+    "demo/shell/dock-nav.css:176",
+    "demo/stories/containers/context-menu.vue:6",
+    "demo/stories/containers/context-menu.vue:45"
+   ]
+  },
+  {
+   "id": "GlassDock",
+   "kind": "type or component",
+   "n": 149,
+   "where": [
+    "demo/chassis/landing/storyTile.ts:8",
+    "demo/shell/BottomDock.vue:4",
+    "demo/shell/BottomDock.vue:26",
+    "demo/shell/BottomDock.vue:97",
+    "demo/shell/BottomDock.vue:274",
+    "demo/shell/SidebarDock.vue:4"
+   ]
+  },
+  {
+   "id": "HoverCard",
+   "kind": "type or component",
+   "n": 7,
+   "where": [
+    "demo/stories/containers/hover-card.vue:2",
+    "demo/stories/dock/overview.vue:310",
+    "src/components/_shared/axes.ts:47",
+    "src/components/dock/constants.ts:22",
+    "src/components/popover/popoverContext.ts:3",
+    "src/index.ts:232"
+   ]
+  },
+  {
+   "id": "IntersectionObserver",
+   "kind": "type or component",
+   "n": 57,
+   "where": [
+    "src/components/aurora/Aurora.vue:266",
+    "src/components/constellation/README.md:467",
+    "src/components/deck/README.md:33",
+    "src/components/deck/composables/useDeckSnap.ts:14",
+    "src/components/deck/composables/useDeckSnap.ts:61",
+    "src/components/deck/composables/useDeckSnap.ts:125"
+   ]
+  },
+  {
+   "id": "NumberField",
+   "kind": "type or component",
+   "n": 30,
+   "where": [
+    "demo/stories/forms/inputs.vue:39",
+    "demo/stories/forms/number-field.vue:5",
+    "demo/stories/forms/number-field.vue:31",
+    "demo/stories/forms/number-field.vue:41",
+    "demo/stories/forms/number-field.vue:48",
+    "demo/stories/forms/number-field.vue:60"
+   ]
+  },
+  {
+   "id": "RAFLoopControls",
+   "kind": "export",
+   "n": 2,
+   "where": [
+    "src/composables/motion/core/useRAFLoop.ts:45",
+    "src/composables/motion/core/useRAFLoop.ts:90"
+   ]
+  },
+  {
+   "id": "Ref",
+   "kind": "export",
+   "n": 351,
+   "where": [
+    "demo/chassis/code/useCodeHighlight.ts:16",
+    "demo/chassis/code/useCodeHighlight.ts:81",
+    "demo/chassis/code/useCodeHighlight.ts:92",
+    "demo/composables/virtual/useVirtualSectionWindow.ts:10",
+    "demo/composables/virtual/useVirtualSectionWindow.ts:33",
+    "demo/shell/configurator/preset-editor/types.ts:5"
+   ]
+  },
+  {
+   "id": "SegmentedTabs",
+   "kind": "type or component",
+   "n": 83,
+   "where": [
+    "demo/chassis/family/FamilyTabs.vue:5",
+    "demo/chassis/family/FamilyTabs.vue:7",
+    "demo/chassis/family/FamilyTabs.vue:18",
+    "demo/chassis/family/FamilyTabs.vue:58",
+    "demo/chassis/family/FamilyTabs.vue:68",
+    "demo/shell/configurator/PresetEditor.vue:22"
+   ]
+  },
+  {
+   "id": "StorySection",
+   "kind": "type or component",
+   "n": 640,
+   "where": [
+    "demo/capture/capture.css:74",
+    "demo/chassis/body/StoryBodyRenderer.vue:6",
+    "demo/chassis/body/StoryBodyRenderer.vue:26",
+    "demo/chassis/body/StoryBodyRenderer.vue:26",
+    "demo/chassis/body/StoryBodyRenderer.vue:168",
+    "demo/chassis/body/StoryBodyRenderer.vue:187"
+   ]
+  },
+  {
+   "id": "WebGL",
+   "kind": "type or component",
+   "n": 57,
+   "where": [
+    "demo/capture/capture.css:72",
+    "demo/chassis/hero/aurora-hero.ts:12",
+    "demo/chassis/hero/focal.ts:100",
+    "demo/chassis/landing/vizPreviewStill.ts:6",
+    "demo/main.ts:136",
+    "demo/main.ts:138"
+   ]
+  },
+  {
+   "id": "data-disabled",
+   "kind": "data- attribute",
+   "n": 27,
+   "where": [
+    "src/components/_shared/disclosure/disclosure.css:50",
+    "src/components/_shared/disclosure/disclosure.css:75",
+    "src/components/_shared/menu/menu.css:62",
+    "src/components/_shared/menu/menu.css:80",
+    "src/components/_shared/menu/menu.css:81",
+    "src/components/_shared/menu/menu.css:82"
+   ]
+  },
+  {
+   "id": "data-highlighted",
+   "kind": "data- attribute",
+   "n": 7,
+   "where": [
+    "demo/stories/dock/dock-search.vue:237",
+    "demo/stories/dock/dock-search.vue:370",
+    "src/components/_shared/menu/menu.css:14",
+    "src/components/_shared/menu/menu.css:49",
+    "src/components/_shared/menu/menu.css:81",
+    "src/components/dock/styles/search.css:62"
+   ]
+  },
+  {
+   "id": "data-keyed",
+   "kind": "data- attribute",
+   "n": 2,
+   "where": [
+    "demo/stories/substrates/glass-material.vue:257",
+    "src/styles/tokens/property-regs.css:117"
+   ]
+  },
+  {
+   "id": "data-material-live-canvas",
+   "kind": "data- attribute",
+   "n": 1,
+   "where": [
+    "demo/stories/substrates/glass-material.vue:165"
+   ]
+  },
+  {
+   "id": "data-state",
+   "kind": "data- attribute",
+   "n": 168,
+   "where": [
+    "demo/stories/containers/dialog.vue:136",
+    "demo/stories/motion/curve-gallery.vue:152",
+    "demo/stories/motion/deck.vue:5",
+    "demo/stories/substrates/_frame/RendererStatus.vue:23",
+    "demo/stories/substrates/_frame/RendererStatus.vue:59",
+    "src/components/_shared/disclosure/disclosure.css:86"
+   ]
+  },
+  {
+   "id": "data-testid",
+   "kind": "data- attribute",
+   "n": 58,
+   "where": [
+    "demo/chassis/code/CodeBlock.vue:106",
+    "demo/shell/BottomDock.vue:102",
+    "demo/shell/BottomDock.vue:271",
+    "demo/shell/SidebarDock.vue:114",
+    "demo/shell/SidebarDock.vue:194",
+    "demo/stories/containers/sheet.vue:130"
+   ]
+  },
+  {
+   "id": "dialect",
+   "kind": "export",
+   "n": 19,
+   "where": [
+    "demo/chassis/layout.css:137",
+    "src/composables/motion/dissolve/dissolveGrammar.ts:35",
+    "src/composables/motion/dissolve/dissolveGrammar.ts:36",
+    "src/composables/motion/dissolve/dissolveGrammar.ts:41",
+    "src/composables/motion/dissolve/dissolveGrammar.ts:42",
+    "src/composables/motion/dissolve/dissolveGrammar.ts:54"
+   ]
+  },
+  {
+   "id": "dispose",
+   "kind": "export",
+   "n": 151,
+   "where": [
+    "demo/stories/manifest.ts:481",
+    "demo/stories/motion/curve-gallery.vue:31",
+    "demo/stories/motion/scroll.vue:38",
+    "src/components/aurora/DESIGN.md:62",
+    "src/components/aurora/README.md:88",
+    "src/components/aurora/composables/runtime.ts:335"
+   ]
+  },
+  {
+   "id": "dock-plate",
+   "kind": "class or utility",
+   "n": 30,
+   "where": [
+    "demo/stories/dock/overview.vue:100",
+    "src/components/dock/GlassDock.vue:340",
+    "src/components/dock/styles/dock.css:10",
+    "src/components/dock/styles/dock.css:52",
+    "src/components/dock/styles/dock.css:145",
+    "src/components/dock/styles/dock.css:148"
+   ]
+  },
+  {
+   "id": "glass-card",
+   "kind": "class or utility",
+   "n": 54,
+   "where": [
+    "demo/chassis/page/StoryPage.vue:43",
+    "demo/stories/compositions/form-validation.vue:52",
+    "demo/stories/foundations/shadows.vue:65",
+    "demo/stories/motion/countup.vue:60",
+    "demo/stories/motion/scroll.vue:66",
+    "demo/stories/motion/scroll.vue:91"
+   ]
+  },
+  {
+   "id": "glass-dock",
+   "kind": "class or utility",
+   "n": 225,
+   "where": [
+    "demo/shell/dock-nav.css:94",
+    "src/components/dark-mode-toggle/dark-mode-toggle.css:58",
+    "src/components/dock/DockSeparator.vue:14",
+    "src/components/dock/DockSeparator.vue:21",
+    "src/components/dock/DockSeparator.vue:34",
+    "src/components/dock/DockSeparator.vue:50"
+   ]
+  },
+  {
+   "id": "glass-floating",
+   "kind": "class or utility",
+   "n": 84,
+   "where": [
+    "demo/stories/containers/command.vue:118",
+    "demo/stories/foundations/paper-glass.vue:66",
+    "demo/stories/foundations/paper-glass.vue:98",
+    "demo/stories/motion/curve-gallery.vue:151",
+    "demo/stories/motion/deck.vue:92",
+    "demo/stories/substrates/aurora.vue:192"
+   ]
+  },
+  {
+   "id": "glass-menu-row",
+   "kind": "class or utility",
+   "n": 24,
+   "where": [
+    "demo/stories/dock/dock-search.vue:224",
+    "demo/stories/dock/dock-search.vue:234",
+    "src/components/_shared/menu/menu.css:16",
+    "src/components/_shared/menu/menu.css:62",
+    "src/components/_shared/menu/menu.css:80",
+    "src/components/_shared/menu/menu.css:81"
+   ]
+  },
+  {
+   "id": "glass-opaque",
+   "kind": "class or utility",
+   "n": 19,
+   "where": [
+    "demo/stories/dock/overview.vue:182",
+    "demo/stories/dock/overview.vue:191",
+    "demo/stories/feedback/progress.vue:235",
+    "demo/stories/feedback/progress.vue:253",
+    "src/components/dock/README.md:51",
+    "src/components/dock/styles/adaptive-legibility.css:7"
+   ]
+  },
+  {
+   "id": "glass-overlay",
+   "kind": "class or utility",
+   "n": 25,
+   "where": [
+    "demo/stories/foundations/paper-glass.vue:73",
+    "demo/stories/substrates/glass-panel.vue:27",
+    "src/components/_shared/class-names.ts:81",
+    "src/components/expandable-container/ExpandableContainer.vue:106",
+    "src/components/expandable-container/README.md:16",
+    "src/styles/glass-specular-track.css:35"
+   ]
+  },
+  {
+   "id": "glass-plate",
+   "kind": "class or utility",
+   "n": 39,
+   "where": [
+    "demo/chassis/landing/vizPreviewStill.ts:30",
+    "demo/chassis/landing/vizPreviewStill.ts:54",
+    "demo/chassis/landing/vizPreviewStill.ts:363",
+    "src/components/_shared/feedback/feedback-tone.css:35",
+    "src/components/_shared/menu/menu.css:133",
+    "src/components/alert/index.ts:16"
+   ]
+  },
+  {
+   "id": "glass-quiet",
+   "kind": "class or utility",
+   "n": 43,
+   "where": [
+    "demo/chassis/code/hljs-house-theme.css:17",
+    "demo/stories/foundations/paper-glass.vue:52",
+    "demo/stories/motion/curve-gallery.vue:100",
+    "demo/stories/motion/deck.vue:81",
+    "demo/stories/motion/scroll.vue:79",
+    "demo/stories/motion/springs.vue:327"
+   ]
+  },
+  {
+   "id": "glass-resting",
+   "kind": "class or utility",
+   "n": 42,
+   "where": [
+    "demo/chassis/landing/SectionPreviewCard.vue:30",
+    "demo/shell/configurator/PresetEditor.vue:149",
+    "demo/stories/display/music-staff.vue:110",
+    "demo/stories/feedback/progress.vue:316",
+    "demo/stories/foundations/paper-glass.vue:59",
+    "demo/stories/foundations/paper-glass.vue:91"
+   ]
+  },
+  {
+   "id": "glass-wash",
+   "kind": "class or utility",
+   "n": 36,
+   "where": [
+    "demo/stories/foundations/paper-glass.vue:45",
+    "demo/stories/foundations/paper-glass.vue:84",
+    "demo/stories/navigation/carousel.vue:154",
+    "demo/stories/substrates/glass-panel.vue:23",
+    "src/components/_shared/class-names.ts:84",
+    "src/components/_shared/feedback/feedback-tone.css:13"
+   ]
+  },
+  {
+   "id": "live",
+   "kind": "prop",
+   "n": 747,
+   "where": [
+    "demo/capture/capture.css:8",
+    "demo/capture/engine-badge.ts:5",
+    "demo/capture/engine-badge.ts:19",
+    "demo/capture/engine-badge.ts:53",
+    "demo/capture/engine-badge.ts:78",
+    "demo/chassis/body/story-body.ts:13"
+   ]
+  },
+  {
+   "id": "shared",
+   "kind": "prop",
+   "n": 459,
+   "where": [
+    "demo/chassis/body/StoryBodyRenderer.vue:126",
+    "demo/chassis/code/useCodeHighlight.ts:27",
+    "demo/chassis/hero/StoryHero.vue:67",
+    "demo/chassis/hero/aurora-hero.ts:146",
+    "demo/chassis/landing/storyTile.ts:31",
+    "demo/chassis/landing/storyTile.ts:55"
+   ]
+  },
+  {
+   "id": "the",
+   "kind": "export",
+   "n": 35108,
+   "where": [
+    "demo/capture/capture.css:2",
+    "demo/capture/capture.css:6",
+    "demo/capture/capture.css:8",
+    "demo/capture/capture.css:9",
+    "demo/capture/capture.css:10",
+    "demo/capture/capture.css:10"
+   ]
+  },
+  {
+   "id": "write",
+   "kind": "export",
+   "n": 170,
+   "where": [
+    "demo/shell/AppShell.vue:149",
+    "demo/shell/configurator/preset-editor/types.ts:75",
+    "demo/shell/configurator/presets/neutral.css:67",
+    "demo/stories/forms/checks.vue:25",
+    "demo/stories/motion/scroll.vue:8",
+    "demo/stories/substrates/aurora/AuroraConfigDock.vue:48"
+   ]
+  }
+ ]
+}
