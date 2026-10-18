@@ -1310,3 +1310,278 @@ If the owner rules Q-13 first, pass 5 runs one route and strikes the other's dir
 - the checkbox, with an owner-run Safari pass.
 
 On those rulings, the expected pass is one prototype and one critique on one route.
+
+---
+---
+
+# D4 · pass 5 · REGISTRY: the routes after pass 5
+
+| field | value |
+|---|---|
+| seat | D4 pass-5 agglomeration. Closes pass 5 per §P4-6.4: each route's measured score of 40, whether it sits at the owner-gated fixed point, the one non-owner open row with the H5 cell that reads it and the shape of its cure, the owner inputs refreshed as one ruling sheet, and the pass-6 plan. It picks no winner (§P5-0) |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `a5334672c`. `git diff --stat 0cb8f5bca HEAD -- src package.json tests MIGRATION.md demo vite.config.ts` is empty, so every pass-5 seat measured the library source pass 4 measured |
+| inputs, read in full | passes 1-4 of this file; `pass-5/H5.md` (with `H5/selftest-table.md`), `FLOOR-V4.md`, `D4-Dp-critique.md`, `D4-F-critique.md`; the patch sha1s (`floor-v4.patch` `2d56cc5a`, `D4-Dp.patch` `b09d15e4`, `D4-F.patch` `c7072d6e`, each matching its report); `harness/scenes.mjs:530-545` (to confirm the traced K2 rule); `audit/INBOUND.md` and `FORMATION-PROGRESS.md` for owner rulings: **none on Q-2, Q-3, Q-5, Q-10, Q-11, Q-13, Q-14, Q-15 or the checkbox since pass 2** (the last D4 line is the F critic's bank, 2026-10-18) |
+| instruments | none run. Every number cites the report that measured it, which stays the source of record (P-3) |
+| fences | no source edit, no git write; this part is the only write |
+| engines | every WebKit number is **Playwright WebKit 26.5**. Every real-Safari cell is **UNMEASURED (owner's safaridriver checkbox)**; the driver still answers "You must enable 'Allow remote automation'" (`D′c` header) |
+| harness | **H5 `bfe1b6beddb0`** (41 files) on every seat after the H5 seat: floor v4, both critics. No seat edited it. The four route documents compare cell for cell under one hash |
+
+Short citations: `H5` is `H5.md`; `FV4` is `FLOOR-V4.md`; `D′c` and `Fc` are the pass-5 critiques; `D′c4` and `Fc4` are pass 4's.
+
+---
+
+## P5-0 · In brief
+
+| id | route | status | checklist (critic, measured) | pass 4 | open rows not on the owner | owner-gated fixed point? |
+|---|---|---|---:|---:|---|---|
+| D4-D′ | the declared cell | **ADVANCE** | **33 / 40** (82.5 %) | 33 | X-2 (H5 cell: REPORT `name-ink`) | **no**, one row short |
+| D4-F | the anatomy declares the tile | **ADVANCE** | **33 / 40** (82.5 %) | 31 | X-2 (the same cell) | **no**, one row short |
+| D4-G | the selection is a body | **BLOCK**, unchanged | not scored | — | — | Q-11 still owed |
+| D4-A, D4-C | | BANK, unchanged | — | — | — | |
+| D4-B, D4-E | | RETIRE, unchanged | — | — | — | |
+
+**No winner.** The two routes read the same score on the same seven open rows. Every H5 cell, every battery cell and every shared attack reads the same on both routes in both engines (§P5-1). What separates them is still Q-13.
+
+**Not at the fixed point.** §P4-6.4 expected 34/40 on both routes with only the six owner rows open. Pass 5 closed every row it was built to close: R-10 on D′, R-2, E-3 and R-7 on F. Both routes then fail one row that pass 4 had met, **X-2**, on one cell, **REPORT `name-ink`**. The route code did not change. The witness did: H5-5 folded "the selected name's ink" into X-2 (§P4-6.3), and the name does not take the selected ink in either route's K2.
+
+**The cure is floor- and harness-shaped, and route-neutral.** The D′ critic traced the cause, and the F critic re-traced it on F's build. It is not in the library. The harness's shared K2 block, `harness/scenes.mjs:539`, sets `.tile-name { … color: var(--muted-foreground) }` unlayered and outside any `[data-arm]` scope. So the migrated arm keeps a consumer rest colour that no MIGRATION row tells the consumer to delete. With that one colour lifted, the selected name takes its item's ink on both routes in both engines (2.66:1 light, 1.56:1 dark; `D′c` §2, `Fc` §2). The cure is one MIGRATION sentence on the floor, plus the migrated K2 following it in the harness. It needs no library rule, no paint value and no route change (§P5-2).
+
+Five findings shape pass 6.
+
+1. **Floor v4 did what it was built for.** The bounded pin (`@scope (.toggle-group__item) to (.toggle-group)`) is measured to bound a custom-property subject in both engines: `scope-bound` 17/17, with the unbounded pin at 12/17, the option-only pin at 15/17 and no pin at 11/17 (`FV4` §1, re-read by both critics). On both rebased routes: FACT matrix 68/68 on `src`, `src-dev` and `dist`; CANON clean 4/4 with all seven plants failing and both controls passing; ATTACK 5/5 with X-5 named before ready; CORNER 5/5; T-2 52/52; T-3 40/43 (C1, Q-10). All of this holds in both engines.
+2. **One fact in the floor's own record was false, and it is corrected here.** `FV4` §3.3 put X-2's cause in the item ("the item's own computed `color` stays the unselected ink"), and `H5` §3.4 said "the library does not hand the selection ink to the name". Both are false. The selected item computes `rgb(28, 25, 23)` in light and `rgb(233, 230, 226)` in dark, which is the selection ink. K2's sparkline takes it through `currentColor`. REPORT's "item rgb(112, 89, 66)" line names the *unselected* item (`D′c` §2). `D′c` §2 is the source of record for the cause.
+3. **Three classes are new, and they are route-neutral and floor-shaped.** No H5 cell reads them, so they are not scored:
+   - a SegmentedTabs inside a tile option inherits the outer `flush` and loses the one-row law: two rows, strip 40.94 → 54.69 px, silent on `src`, with or without the pin (`Fc` §3.1);
+   - FV4-2's stated exception, an inline `!important` on an option, reproduces pass 4's split on both routes (D′ 40.00 → 43.97 px, F 66.58 → 75.70 px; `D′c` §3, `Fc` §3.3);
+   - XSCRIPT reads each route's `migrated.mjs` and not the shared transcription blocks, which is how K2's rest colour reached the migrated arm unseen (`D′c` §4.2).
+4. **Two corroboration instruments are dead.** Both pass-4 `canon-fact.mjs` forks crash on H5's CANON inputs (exit 2, both engines). F's units pass plants H, `layer` and `foreign` (62/62). Since M-14, CANON is R-7's one instrument, and it fails every plant on both routes. Neither fork nor F's unit corroborates R-7 any more (§P5-4).
+5. **The gestalt is where pass 3 left it, with one cell now measured.** Neither critic re-filmed, because no seat changed paint. F's check covers K2's sparkline end point on **all 8 specimen tiles** in both engines (7.28-13.92 px² of overlap), and it covers the glyph's end point on `strip`'s two wide tiles (`Fc` §3.2). That is Q-3's to weigh. O-87 holds on both routes: neither adds a lighting layer.
+
+---
+
+## P5-1 · Registry
+
+**Floor v4 under H5** (`FV4` §3.2), Chromium · Playwright WebKit:
+
+| witness | HEAD + floor v4 (no writer) | D′ on floor v4 | F on floor v4 | the same routes on floor v3 (`H5` §3) |
+|---|---|---|---|---|
+| FACT matrix `src` · `src-dev` | 47/68 · 47/68 | **68/68** | **68/68** | D′ 57/68, F 55/68 |
+| CANON clean | 2/4 | **4/4** | **4/4** | 4/4 |
+| ATTACK `src-dev` (`x5`) | 5/5 | 5/5 | 5/5 | 5/5 |
+| CORNER | 1/5 (no tile) | 5/5 | 5/5 | 5/5 |
+| T-2 | 52/52 | 52/52 | 52/52 | 52/52 |
+| T-3 migrated | — | 40/43 (C1) | 40/43 (C1) | 40/43 |
+
+**Migrated arm, critic's re-run, Chromium · Playwright WebKit** (`D′c` §1, `Fc` §1). The two routes read the same on every witness, cell for cell:
+
+| witness | D′ | F |
+|---|---|---|
+| T-1 | 15/15 · 18/18 | 15/15 · 18/18 |
+| T-2 (`src`, `dist`) | 52/52 · 52/52 | 52/52 · 52/52 |
+| T-3 | 40/43 · 40/43 (C1 ×3) | 40/43 · 40/43 (C1 ×3) |
+| T-4 | 24/24 · 24/24 | 24/24 · 24/24 |
+| T-5 (`src`, `dist`) | 38/38 · 38/38 | 38/38 · 38/38 |
+| T-6 | 33/33 · 33/33 | 33/33 · 33/33 |
+| T-7 | 24/24 · 24/24 | 24/24 · 24/24 |
+| T-8 | 27/27 (one run) | 27/27 (one run) |
+| W-D | 8/8 · 8/8 | 4/8 (the declared half is D′'s witness) |
+| FACT matrix (`src`, `src-dev`, `dist`) | 68/68 each, both engines | 68/68 each, both engines |
+| CANON clean · `h` · other plants · controls | 4/4 · 3/4 · each fails · 4/4 | 4/4 · 2/4 (F's spelling) · each fails · 4/4 |
+| ATTACK · CORNER | 5/5 · 5/5 | 5/5 · 5/5 |
+| REPORT `name-ink` | **FAIL 1.00:1** light and dark | **FAIL 1.00:1** light and dark |
+| REPORT `mark`, V2 dark | UNMEASURED (no mark; Q-3) | 10.70 · 10.72:1 (light 13.12 · 13.16:1) |
+| REPORT `kick` (300 px at a 4 px gap) | 0.17 · 0.11 px (want ≤ 0.05) | 0.17 · 0.13 px |
+| XSCRIPT | 3/3 | 3/3 |
+| R-3 plant (kick removed) | migrated 33/33 → 21/33 | 33/33 → 21/33 |
+| whole unit suite | 2,352 ran; HEAD's 3 `boot-graph` fail | 2,351 ran; the same 3 |
+| bundle (unpacked) | 2,936,815 B (+17,758 over the datum) | 2,938,684 B (+19,627) |
+
+| id | status | checklist | vacuous greens found | strongest counterexample |
+|---|---|---:|---|---|
+| D4-D′ | ADVANCE | 33/40 | `FV4` §3.3's cause for X-2 (corrected, §P5-0 finding 2). `canon-fact.mjs` crashes and so corroborates nothing. The rebase amended two of D′'s sheet-reading tests (`FV4` §3.1). The critic's `crit-sm-none` and `crit-lg-plated` plants each still fail them, so the amendment opened no hole | `D′c` §2: the selected K2 name at 1.00:1 against unselected, light and dark, both engines, held by the harness's unlayered `.tile-name` rest colour; lifted, 2.66:1 · 1.56:1 |
+| D4-F | ADVANCE | 33/40 | F's units pass plants H, `layer` and `foreign` (62/62). Only CANON fails them, and since M-14 CANON is the instrument. `crit-room-off` deletes the mark's room gate, and F's units still pass 62/62 | `Fc` §2: the same name cell. `Fc` §3.1 (not scored): a SegmentedTabs in a tile option's `#meta` stacks two rows, strip 40.94 → 54.69 px, silent on `src` |
+| D4-G | BLOCK | not scored | — | `Gb` §3.3 (pass 2), unchanged |
+
+**Machine.** Every seat ran under `guarded --rss-gb 8`. Every Playwright WebKit read was inside an `--exclusive webkit` hold. Lock waits were 0-85 min; none passed 90. Loads ran 4.1-42.5, with one spike to 81.54 that moved no tally. There were no janky cells, no stalls and no NOT-REPRODUCED lines.
+
+Three interruptions hit the pass:
+- the 2026-10-17 08:15 kernel-zone stop killed the H5 chain at 9 of 12 parts, and it resumed after the reboot on the same hash (`H5` §2.1);
+- the 21:34 usage limit killed the D′ critic's first sitting. No number rests on that sitting, and where both sittings read a cell they agree (`D′c` header);
+- the floor seat self-reported two fence slips: a `tail` of `zone.log` and a read of the session's own tool output under `~/.claude` (`FV4` header). Neither touched a measurement.
+
+---
+
+## P5-2 · The one non-owner row: X-2, its H5 cell, and the shape of its cure
+
+§P4-6.4 requires this before any pass 6 is planned.
+
+| | |
+|---|---|
+| **row** | X-2: the selected state reaches the tile's media and, folded in by §P4-6.3, the selected name in a transcription |
+| **H5 cell that reads it** | **REPORT `name-ink`** on the route build's `specimen-migrated` (H5-5), both routes, both engines, light and dark: **1.00:1** selected against unselected |
+| **the half that holds** | the media. K2's stroke takes the item's ink through `currentColor`, with no state rule: 2.66:1 light, 1.56:1 dark (`crit-ink`, both critics). On that half alone, pass 4 scored X-2 met |
+| **cause, traced** | `harness/scenes.mjs:539`, K2's shared "layout and type" block: `.tile-name { … color: var(--muted-foreground) }`, unlayered and not `[data-arm]`-scoped. It is the only matched colour rule on the name (CDP trace, `D′c` §2 and `Fc` §2). The item carries the selection ink and the name does not inherit it, because it sets its own colour. This seat read the line in place and confirms it |
+| **why it surfaced now** | pass 4's D′ arm hid it with `.tile-name { color: var(--selection-ink) }`. H5-5 struck that line so the two routes' K2 would be one transcription. XSCRIPT gates `migrated.mjs` only, so it could not see the shared block (`D′c` §4.2) |
+| **is the cure floor-shaped?** | **Yes: floor prose plus a harness transcription line. No library rule, no paint value, no route code.** The floor's `--selection-ink` row and F's MIGRATION both say content "inherits the item's ink". That is true of content that sets no colour, and neither row tells the consumer to delete a rest colour. The cure: **(floor)** one MIGRATION sentence saying a rest colour on an option's content is deleted, because the item's ink is already muted at rest and content that sets its own colour does not take the selected ink; **(harness)** the migrated K2 follows that sentence, and the shared block's `color` moves under `[data-arm="verbatim"]`. Measured in advance by `crit-name-lift` on both routes in both engines: the name reads its item's ink, 2.66:1 light and 1.56:1 dark |
+| **not a cure** | a library rule that forces the ink onto content over the content's own colour. That would need an `!important` on consumer content, which is consumer-paint override (T-7) and a masking fallback (E-2). Both critics rule it out, and so does this registry |
+| **reported, not gating** | 1.56:1 in dark is the stroke's own contrast. R-5 reports it; it does not gate. The perimeter carries the selected state in dark (T-3 migrated). The owner's G glance should include it |
+
+**One reading for the selection ink in the transcriptions (`D′c` §4.4).** H5-5 called D′'s struck K2 line consumer paint. Yet D′'s `strip` (`.tile-glyph path { stroke }`, `.tile-label { color }`) and `f1` (`.grid-label { color }`) still read `var(--selection-ink)`, and XSCRIPT prints them as info. **Ruling:** reading the token carries no state selector, and the floor's row licenses it for media, so it is not paint. The reason H5-5's strike stands is **drift**: H5-5's law is that the routes' transcriptions differ only by the declaration. On that law the `strip` and `f1` lines are drift too, since F's arms do not have them. Pass 6 applies the law to every migrated site, using one spelling: inheritance, and `currentColor` on media. The floor's row stays as written. It describes what a consumer may write, and the harness uses one of the forms it allows.
+
+---
+
+## P5-3 · Route entries
+
+### P5-3.1 · D4-D′ · the declared cell: ADVANCE, 33/40 (82.5 %)
+
+**What it is now.** HEAD + `floor-v4.patch` (`2d56cc5a`) + `D4-Dp.patch` (`b09d15e4`, 8 files, +291 / −9). `src` is byte-identical to pass 4's route: one prop, `shape: "pill" | "cell"`, stamped as `data-shape`, refused when unknown, and `.toggle-group[data-shape="cell"] { --selection-tile: flush }`. The rebase changed two of D′'s sheet-reading tests, because both read the floor's `inherit` pin as a second fact writer (`FV4` §3.1). The critic planted two second writers, and both still fail (`D′c` §1.3). P4-6.1 said "no code change"; that held for `src` and not for the route's tests. It is recorded, not scored.
+
+**Closed in pass 5:** R-10. `D′c4` §2's counterexample now reads a coherent tile, 204.00×63.58 at 16 px with no pill clip (12/12 per flavour, both engines), and H5's matrix reads 68/68.
+
+**Open rows.**
+
+| row | counterexample | owner? |
+|---|---|---|
+| **X-2** | REPORT `name-ink` 1.00:1 (§P5-2) | **no: floor prose + harness transcription** (FV5-1, H6-1) |
+| T-3, E-2 | C1 22.50 / 23.00 / 22.50 px² against 224 (light / dark / PRT), both engines; shipped K1 has no carrier in light or PRT | Q-10 (Q-5 for K1) |
+| R-1 | shipped K2 on `dist`: 3 rows in a 36 px pill, 4 boxes cut up to 24.64 · 24.86 px, silent | Q-5, Q-15 |
+| R-8 | W-E `dist` 1/6 · 1/6 | Q-5 |
+| G | two concentric outlines on focused-selected; plated barely separates from flush in dark | Q-2, Q-3 |
+| E-4 | UNMEASURED (owner's safaridriver checkbox) | the checkbox |
+
+**Fixed point:** not yet. One floor sentence and one harness line away.
+
+### P5-3.2 · D4-F · the anatomy declares the tile: ADVANCE, 33/40 (82.5 %)
+
+**What it is now.** HEAD + `floor-v4.patch` + `D4-F.patch` (`c7072d6e`, 5 files, +281 / −4). Two slots, `yields()`, the two-selector `:has()` writer and the mark. F's pin is struck, and the floor now carries it. F's share of the `--selection-tile` MIGRATION row is struck too (FV4-2 holds it).
+
+**Closed in pass 5:**
+- **R-2:** FACT `pill-in-option`, `tile-in-option`, `nested-group` ×3 and `nested-option` ×6, on every flavour in both engines. `Fc4`'s N3 cell now reads a pill (24/24).
+- **E-3:** "and the other way round" now holds. "Three deep is pills" holds by the critic's own cell (`L3`, 8/8). "At least 3.5 checks wide" holds by paint (`mark` 6/6).
+- **R-7:** CANON, both engines.
+
+**Open rows.**
+
+| row | counterexample | owner? |
+|---|---|---|
+| **X-2** | the same cell and cause as D′ (`Fc` §2) | **no: floor prose + harness transcription** (FV5-1, H6-1) |
+| T-3, E-2 | C1 has no carrier in any mode; shipped K1 has none in light or PRT | Q-10 (Q-5 for K1) |
+| R-1, R-8 | as D′ | Q-5, Q-15 |
+| G | as D′. The check now covers K2's sparkline end point, measured on 8/8 specimen tiles | Q-2, Q-3 |
+| E-4 | UNMEASURED. Safari has more to settle on F: `:has()` with a complex `:not()`, `mask-composite: exclude` and the percentage `min()` room gate | the checkbox |
+
+**Fixed point:** not yet. The same distance as D′.
+
+### P5-3.3 · D4-G: BLOCK, unchanged
+
+Not run. It runs only if Q-11 is ruled (b) or (c), and then G-1..G-3 come before any row.
+
+### P5-3.4 · H5 and floor v4
+
+- **H5** (`bfe1b6beddb0`, 41 files) landed H5-1..H5-6. Its self-test covers 205 runs with 0 BROKEN, and every H5 plant reads the same tally in both engines. UNIT reads 10/10 and XSCRIPT 4/4. CANON is now container-aware and ranks writers by layer before specificity. FACT reads the 7-site × 3-value matrix by paint. It has two gaps, both found in pass 5:
+  - XSCRIPT does not read the shared transcription blocks (H6-2);
+  - FACT's nested sites nest ToggleGroups only (H6-3).
+- **Floor v4** (`2d56cc5a`, 38 files, +1,375 / −272) is floor v3 plus 33 lines: the pin, the MIGRATION row, the corrected `base.css` comment and one sheet assertion, with three unit plants that each fail. It adds no paint value (O-87) and no primitive. Its one open sentence is the inline-`!important` clause (§P5-0 finding 3), which is true as written and states no consequence.
+
+---
+
+## P5-4 · Merges, retirements, and what pass 5 did not earn
+
+- **M-16 · The rest-colour sentence → floor v5 (FV5-1); the migrated K2 follows it → H6-1.** Both critics measured the same cause and the same lift on both routes (§P5-2). It is route-neutral.
+- **M-17 · The transcription law covers every migrated site and the shared blocks → H6-2.** This is H5-5's law, "the routes differ only by the declaration", applied beyond K2 (`D′c` §4.2, §4.4).
+- **M-18 · SegmentedTabs resets the fact → floor v5 (FV5-2).** This is `Fc` §4.1's KISS cure. The strip resets `--selection-tile` to `none`, as `.toggle-group` does, and the pin's `@scope` limit gains the strip, because otherwise the pin's `!important` outranks the reset. The floor seat measures this, as FV4-1's engine question was measured. The class is nesting reach into a row-law holder, so it folds into R-2 and FV-2.
+- **Retired as R-7 evidence:** both pass-4 `canon-fact.mjs` forks (they crash on H5's inputs) and F's unit cases for plants H, `layer` and `foreign`. They stay in the pass-4 directories as that pass's record. No pass-6 seat runs them, and no row cites them (P-3, M-14). F's units still pin F's own writer, which is what they test.
+- **Not earned:**
+  - **F's room-gate unit** (`Fc` §4.3). The gate is F's mark, and the mark is Q-3 (b)'s (FV3-6). If the owner rules (b), the floor takes the mark with a witness for the gate and the content rule `Fc4` §5 asks for. Until then nothing is built;
+  - **a library rule for content ink** (§P5-2, *not a cure*);
+  - **deleting FV4-2's inline-`!important` clause outright.** An inline `!important` does outrank the pin, which is CSS. The floor states what it does instead (FV5-3).
+
+---
+
+## P5-5 · What the owner must rule: the ruling sheet
+
+No question has been ruled since pass 2 (`audit/INBOUND.md`, `FORMATION-PROGRESS.md`). Pass 5 built every default again. **Five inputs close both routes to CONVERGED.** This sheet replaces §P4-5 as the current one (P-3); §P4-5 stays as pass 4's record.
+
+| # | input | rows it closes | the default built | pass-5 evidence |
+|---|---|---|---|---|
+| 1 | **Q-13 declaration or anatomy** | none by itself. It picks the route, and the other route's directory is struck | both routes run | **Nothing measured separates them.** Both read 33/40 on the same seven rows, with every H5, battery and attack cell equal in both engines (§P5-1). **D′:** one prop and one rule, `src` +27 / −1; bundle 2,936,815 B; C1 can opt in to a tile; a consumer who forgets `shape` gets pills. **F:** two slots, `yields()`, the `:has()` writer and the mark; bundle 2,938,684 B (+1,869 over D′); tiles by construction; nesting bounded (three deep is pills, 8/8); three more engine facts only Safari can settle; the mark covers K2's curve end on 8/8 tiles. The inline-`!important` split costs F more (+9.12 px against +3.97) because F's tile is two rows, but the cause is the floor's clause, not F |
+| 2 | **Q-10 the edge on a selected pill** | T-3, E-2 | (b) tiles only | unchanged. C1 22.50 / 23.00 / 22.50 px² against 224 on D′, no carrier on F, both engines. (a) puts the floor perimeter on every selected pill in the library. Under (b) C1 stays RED on F, and on D′ C1 can declare `shape="cell"`. O-94a's narrowed R-2 (the bare item's selected fill and pill radius) is on the same element |
+| 3 | **Q-5 DEV-only guards, with Q-15** | R-1, R-8 | (b)+(d) | unchanged. Production refusal is structural (T-2 52/52 and CORNER 5/5 on `dist`). Shipped K2 is still cut silently on `dist` (4 boxes, up to 24.64 · 24.86 px). W-E `dist` reads 1/6. Q-15 (a) strikes R-1's legibility half, so R-1 closes with Q-5. Under (b) no route can build R-1 without the production fallback E-2 forbids |
+| 4 | **Q-2 plate in a plate, and Q-3 the register's look** | G | flush default, `plated` one value away; floor register (a) with F's check on F | not re-filmed: no seat changed paint. The pass-3/4 glance pairs stand (`D4-F-proto/glance-pair/`): two concentric outlines on focused-selected, and plated barely separating from flush in dark. New, measured: F's check covers K2's sparkline end point on 8/8 specimen tiles and `strip`'s glyph end point on its two wide tiles. Q-3 (b) would move the mark to the floor (FV3-6) with a room-gate witness and a content rule. Reported for the glance: the selected name and stroke in dark read 1.56:1 against unselected once X-2's cure lands |
+| 5 | **The safaridriver checkbox, and an owner-run Safari pass** | E-4 | — | the driver still asks for "Allow remote automation". Safari's list: a pseudo-element style query re-matching after load; `@container style()` on a registered property; **`@scope` with a lower boundary (FV4-1, both routes; it would also carry FV5-2)**; `:has()` with a complex `:not()` (F); `mask-composite: exclude` (F); the percentage `min()` room gate (F) |
+
+**Owed, not blocking a row:**
+- **Q-14, the bundle datum.** D′ is +17,758 and F +19,627 over `.bundle-ratchet` (2,919,057). R-9 is met as stated, and the rebind at the cut is the owner's.
+- **Q-11, a travelling body.** G stays BLOCK.
+- **O-94 R-2 placement** (narrowed by O-94a). If it is placed in D4, it is a sibling fact on the group, measured against H5's matrix. It cannot be a value written on the item, because FV4-1 refuses exactly that write.
+- **An on-device capture of Apple's option cards**, owed since pass 1.
+
+On these five inputs the expected pass is one prototype and one critique on one route.
+
+---
+
+## P5-6 · Pass-6 plan
+
+### P5-6.1 · Routes
+
+| route | entering pass 6 | what differs after floor v5 |
+|---|---|---|
+| **D4-D′** | ADVANCE | none in `src`. `D4-Dp.patch` is rebased on floor v5 |
+| **D4-F** | ADVANCE | none in `src`. `D4-F.patch` is rebased |
+| **D4-G** | BLOCK; runs only on Q-11 (b) or (c) | G-1..G-3 first |
+
+If the owner rules Q-13 first, pass 6 runs one route and strikes the other's directory.
+
+### P5-6.2 · Order
+
+1. **H6**, then **floor v5**, each built once. Every new cell ships with a fixture PASS and a planted FAIL in both engines. The floor seat measures both rebased routes on H6's cells in both engines.
+2. **Owner rulings** fold in when they arrive (the five in §P5-5).
+3. **One critic per route.** There is no spec or prototype seat, since no route's `src` changes. Each critic re-runs every number, reads both routes' H6 cells, and scores the 40 rows.
+4. **Agglomeration.**
+
+**H6** (on `bfe1b6beddb0`):
+- **H6-1. The migrated K2 follows FV5-1.** The shared K2 block's `color` on `.tile-name` moves under `[data-arm="verbatim"]`, so the verbatim arm is unchanged and the migrated arm sets no rest colour on content. REPORT `name-ink` is expected to read the item's ink, 2.66:1 light and 1.56:1 dark (`crit-name-lift`). The planted FAIL is `h46-nameink`, which stays.
+- **H6-2. XSCRIPT reads every migrated site and the shared blocks** (M-17). It gates each route's every migrated site on H5-5's K2 law, and it gates paint properties on content in the shared transcription blocks outside `[data-arm="verbatim"]`. D′'s `strip` and `f1` `var(--selection-ink)` lines go to inheritance and `currentColor` (§P5-2). New plants: a shared-block rest colour outside `verbatim`, and one route-only `var(--selection-ink)` line.
+- **H6-3. FACT's nested sites gain a SegmentedTabs** (R-2, FV-2). A tile option and a pill option each hold a SegmentedTabs whose tabs carry two block rows, judged by the tab's rows, its strip height and its development name. That is `Fc` §3.1's `stnest`, moved into the matrix. Plant: floor v5's strip reset struck.
+- **H6-4. FACT reports `none!` at `option`** (E-3; reported, not gating): an inline `--selection-tile: none !important`, read against FV5-3's sentence. It cannot gate, because CSS puts an inline `!important` above every layer.
+
+**Floor v5** (on `floor-v4.patch`, sha1 `2d56cc5a`):
+- **FV5-1. One MIGRATION sentence on content ink** (M-16), beside the `--selection-ink` row: a rest colour on an option's content is deleted, because the item's ink is already muted at rest and content that sets its own colour does not take the selected ink. It is witnessed by REPORT `name-ink` on both rebased routes, both engines.
+- **FV5-2. SegmentedTabs resets the fact** (M-18). The strip writes `--selection-tile: none`, and the pin's `@scope` limit becomes `to (.toggle-group, <the strip>)`. The witness is H6-3 on both routes. It must also hold FACT 68/68, `scope-bound` 17/17, T-2 52/52 and SegmentedTabs' own T-5 and T-6 cells. If a SegmentedTabs strip can itself be a tile holder somewhere the reset would break, the seat reports it with measurements and does not work around it.
+- **FV5-3. The inline-`!important` clause states what the write does**: it outranks the pin and splits the option (the geometry follows the group, while the clip and the row law follow the option), so it is not an opt-out. The witness is H6-4.
+- Nothing else. Floor v5 adds no paint value (O-87), no primitive and no row.
+
+### P5-6.3 · The checklist
+
+**P2-6.3's 40 rows stand unchanged.** Pass 5's classes fold into existing rows as witness cells:
+
+| class | row |
+|---|---|
+| a rest colour on content in a transcription; shared-block paint; route-only token reads | X-2, T-7 (H6-1, H6-2) |
+| the fact reaching a SegmentedTabs inside an option | R-2, FV-2 (H6-3) |
+| an inline `!important` on an option | E-3 (H6-4, reported) |
+
+The pass-5 rules carry over: critics may not add rows; a critic may not rule a row PASS against its own instrument's reading; a non-owner open row must name the H6 (or H5) cell that reads it.
+
+### P5-6.4 · How close to convergence
+
+| | D′ | F |
+|---|---|---|
+| measured | 33 / 40 | 33 / 40 |
+| open rows outside the owner's, with their cure | X-2 → FV5-1 + H6-1 | the same |
+| owner-blocked rows | T-3, E-2 (Q-10); R-1 (Q-5, Q-15); R-8 (Q-5); G (Q-2, Q-3); E-4 (the checkbox) | the same six |
+| expected after pass 6 | 34 / 40, at the fixed point | 34 / 40, at the fixed point |
+
+The projection rests on a measurement taken before the cure, not on a forecast: `crit-name-lift` already read the cured name on both routes in both engines. H6-3 is the one risk to it. It is a cell the floor fails today, and FV5-2 is built to close it in the same pass, as FV4-1 closed H5-2. If FV5-2 cannot close it, R-2 opens on H6-3, and the floor seat reports that before the critics run.
+
+**The stop rule for pass 6.** If both critics read 34/40 with only the six owner rows open, the loop is at its owner-gated fixed point and **stops**. A class a pass-6 critic finds that no H6 or H5 cell reads goes to the owner's sheet and the execution backlog, not to a pass 7. A pass 7 is planned only if a pass-6 critic opens a non-owner row on an H6 or H5 cell, and only if its cure is one floor declaration or one harness line. Otherwise that row goes to the owner as a ruling. This bounds the loop: pass 5 opened X-2 because a fold changed an instrument, and pass 6 folds nothing that it does not also cure.
+
+**Closing to CONVERGED takes the same five owner inputs:**
+- Q-13, to pick the route;
+- Q-10;
+- Q-5, with Q-15;
+- Q-2 and Q-3;
+- the checkbox, with an owner-run Safari pass.
+
+On those rulings, the expected pass is one prototype and one critique on one route.
