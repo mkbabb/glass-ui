@@ -1,0 +1,439 @@
+diff --git a/MIGRATION.md b/MIGRATION.md
+index 5a174c9a9..80ae6c818 100644
+--- a/MIGRATION.md
++++ b/MIGRATION.md
+@@ -7,7 +7,7 @@ rename or import re-point per call site.
+ 
+ ## Unreleased — the selectable tile's floor
+ 
+-Four bindings leave. Each is a one-line change per call site.
++Four bindings leave and one arrives. Each is a one-line change per call site.
+ 
+ _`<Card>` loses `selected`_
+ 
+@@ -23,8 +23,9 @@ _`<Chip shape="cell">` leaves, and an unknown `shape` throws_
+ The shapes are `pill` and `icon`. A chip given any other shape throws a `TypeError` naming
+ the shapes (`[Chip] shape="cell" is not one of pill, icon.`), in production as well as in
+ development; it reaches your app's error handler (the chip itself still renders, as a
+-pill). A selectable option that holds more than one line is a `ToggleGroup` item.
+-Detector: `rg 'shape="cell"'`.
++pill). A selectable option that holds more than one line is a `<ToggleGroup
++shape="cell">` item (below). Detector: `rg '<Chip[^>]*shape="cell"'` (a `ToggleGroup`'s
++`shape="cell"` is not a hit).
+ 
+ _`<SegmentedTabs semantics="toggle">` becomes `semantics="radio"`, and an unknown
+ `semantics` throws_
+@@ -37,6 +38,21 @@ throws `[SegmentedTabs] semantics="toggle" is not one of radio, tabs.` in produc
+ well as in development, the same refusal Chip gives an unknown `shape`; the strip still
+ renders on the default pairing. Detector: `rg 'semantics="toggle"'`, and the error.
+ 
++_A set whose options hold more than one row declares `<ToggleGroup shape="cell">`_
++
++`<ToggleGroup>` takes `shape: "pill" | "cell"` (default `pill`; the type is exported as
++`ToggleGroupShape`). A pill holds one row (below), so an option that shows a name over a
++readout, or a picture over a name, renders on one row and clips until its group says
++`shape="cell"`. `shape="cell"` sets `--selection-tile: flush` on the group, and that is
++all it sets: everything a tile is follows from the value (below). The group's layout
++(grid, columns, gap) stays yours. Delete the item utilities the tile now supplies
++(`flex-col`, `items-start`, the pads, `leading-*`), any corner (`rounded-*`, which has no
++effect on a tile), the group reset you wrote over the old plate, and any selected paint
++(an outline, border, ring or fill, and `[data-state="on"]` ink rules). A value other than
++`pill` or `cell` throws `[ToggleGroup] shape="…" is not one of pill, cell.` in production
++as in development; the group still renders, as pills. Detector: in a development build,
++`[ToggleGroupItem] value=… asks for a second row`; `rg 'ToggleGroupItem[^>]*(flex-col|rounded-)'`.
++
+ _A `role`, `tabindex` or selection state on a `ToggleGroupItem` no longer replaces the
+ group's_
+ 
+@@ -82,8 +98,11 @@ _Behaviour and paint, nothing to change_
+   read `process.env.NODE_ENV`, which your bundler resolves (Vite and webpack do by
+   default).
+ - `--selection-tile` (`none` | `flush` | `plated`, inherited) says whether a set of
+-  options are tiles. It is `none` on every `ToggleGroup`, and nothing in the library
+-  sets it yet. A value takes effect on the group element, or on an element between the
++  options are tiles. It is `none` on every `ToggleGroup` and `flush` on a `<ToggleGroup
++  shape="cell">`. A rule of yours on the group element itself (an unlayered or scoped
++  rule, or a utility such as `[--selection-tile:plated]`) writes over either: `plated`
++  for a plate at rest, `none` for pills. A value takes effect on the group element,
++  or on an element between the
+   group and its options (a grid `div`, a `<section>` per family), whose options follow
+   it. On an ancestor of the group it has no effect, because every group resets it to
+   `none`. On an option or on content inside one it has no effect either: an option and
+diff --git a/src/components/toggle-group/ToggleGroup.vue b/src/components/toggle-group/ToggleGroup.vue
+index 51a7a124d..9352972b5 100644
+--- a/src/components/toggle-group/ToggleGroup.vue
++++ b/src/components/toggle-group/ToggleGroup.vue
+@@ -1,5 +1,5 @@
+ <script setup lang="ts">
+-import { computed, onUpdated, ref, shallowRef, triggerRef, type HTMLAttributes } from "vue";
++import { computed, onUpdated, ref, shallowRef, triggerRef, watchEffect, type HTMLAttributes } from "vue";
+ import { cn } from "../_shared/class-names";
+ import type { Orientation } from "../_shared/axes";
+ import {
+@@ -8,6 +8,8 @@ import {
+     controlStateAttrs,
+ } from "../_shared/control";
+ import type { SelectionMode, SelectionValue } from "../_shared/selection";
++import { refuseUnknown } from "../_shared/guard";
++import { TOGGLE_GROUP_SHAPES, type ToggleGroupShape } from "./shape";
+ import { useSelectionGroup } from "../../composables/motion/morph/useSelectionGroup";
+ import { provideToggleGroupContext, type ToggleItemEntry } from "./context";
+ 
+@@ -44,6 +46,8 @@ export interface ToggleGroupProps extends ControlProps {
+     type: SelectionMode;
+     orientation?: Orientation;
+     size?: ControlSize;
++    /** `pill` — one-row options (default). `cell` — tiles that hold more than one row. */
++    shape?: ToggleGroupShape;
+     class?: HTMLAttributes["class"];
+ }
+ 
+@@ -52,8 +56,11 @@ defineOptions({ name: "ToggleGroup" });
+ const props = withDefaults(defineProps<ToggleGroupProps>(), {
+     orientation: "horizontal",
+     size: "md",
++    shape: "pill",
+ });
+ 
++watchEffect(() => refuseUnknown("ToggleGroup", "shape", props.shape, TOGGLE_GROUP_SHAPES));
++
+ /* One scalar model for both cardinalities: `single` holds one value, `multiple` an
+  * array. The engine writes it and nothing else does. */
+ const model = defineModel<SelectionValue | SelectionValue[]>();
+@@ -156,6 +163,7 @@ provideToggleGroupContext({
+         :role="selection.groupRole.value"
+         :data-type="props.type"
+         :data-size="props.size"
++        :data-shape="props.shape"
+         :data-orientation="props.orientation"
+         v-bind="controlStateAttrs(props.invalid)"
+         @keydown="selection.onKeydown"
+diff --git a/src/components/toggle-group/index.ts b/src/components/toggle-group/index.ts
+index e1b7b9d5b..8943eaace 100644
+--- a/src/components/toggle-group/index.ts
++++ b/src/components/toggle-group/index.ts
+@@ -1,4 +1,5 @@
+ export { default as ToggleGroup, type ToggleGroupProps } from "./ToggleGroup.vue";
++export { type ToggleGroupShape } from "./shape";
+ export {
+     default as ToggleGroupItem,
+     type ToggleGroupItemProps,
+diff --git a/src/components/toggle-group/styles.css b/src/components/toggle-group/styles.css
+index b018fb88a..4068ce2ce 100644
+--- a/src/components/toggle-group/styles.css
++++ b/src/components/toggle-group/styles.css
+@@ -50,6 +50,15 @@
+         align-items: stretch;
+     }
+ 
++    /* THE TILE, DECLARED (`<ToggleGroup shape="cell">`). The declaration writes the
++       tile fact and nothing else: the tile's corner, column, pad, leading, row height,
++       perimeter and flush plate all read the fact (below, and base.css), so this rule
++       cannot disagree with them. `plated` is the consumer's to write over it (Q-2), and
++       a group nested inside stays pills (every group resets the fact). */
++    .toggle-group[data-shape="cell"] {
++        --selection-tile: flush;
++    }
++
+     /* THE FACT IS THE GROUP'S, AT EVERY ELEMENT THAT READS IT. The tile's geometry
+        reads `--selection-tile` by a style query on the option, which reads the
+        option's parent; the pill's one-row law, its clip and the development names
+diff --git a/src/index.ts b/src/index.ts
+index ca7c490c8..76febe13f 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -371,6 +371,7 @@ export {
+     ToggleGroupItem,
+     type ToggleGroupItemProps,
+     type ToggleGroupProps,
++    type ToggleGroupShape,
+ } from "./components/toggle-group";
+ export {
+     Tooltip,
+diff --git a/tests/components/ui/toggle-group/ToggleGroup.test.ts b/tests/components/ui/toggle-group/ToggleGroup.test.ts
+index 3eccdbeb1..67e659e77 100644
+--- a/tests/components/ui/toggle-group/ToggleGroup.test.ts
++++ b/tests/components/ui/toggle-group/ToggleGroup.test.ts
+@@ -387,9 +387,47 @@ describe("W-TOGGLE-ROW — the selection row", () => {
+             "ToggleGroupItem",
+             "ToggleGroupItemProps",
+             "ToggleGroupProps",
++            "ToggleGroupShape",
+         ]);
+     });
+ 
++    /* D4-D′ · the tile is declared once, at the group. `shape` stamps `data-shape`, and
++     * the sheet's one rule on that attribute writes the tile fact and nothing else (the
++     * floor derives the tile from the fact). An unknown value is refused loud through
++     * the app's error handler, and the group renders as pills. */
++    it("shape stamps data-shape, defaults to pill, and refuses an unknown value", () => {
++        const make = (shape?: string) =>
++            mount(ToggleGroup, {
++                props: { type: "single", modelValue: "a", ...(shape ? { shape } : {}) } as never,
++                slots: { default: () => [] },
++            });
++        const pill = make();
++        const cell = make("cell");
++        expect(pill.attributes("data-shape")).toBe("pill");
++        expect(cell.attributes("data-shape")).toBe("cell");
++        pill.unmount();
++        cell.unmount();
++        expect(() => make("card").unmount()).toThrow(
++            new TypeError('[ToggleGroup] shape="card" is not one of pill, cell.'),
++        );
++    });
++
++    it("the declaration writes the tile fact and nothing else (R-10: one spelling)", async () => {
++        const postcss = (await import("postcss")).default;
++        const root = postcss.parse(read(LANE_SHEET));
++        const declared: string[] = [];
++        root.walkRules((r) => {
++            if (/data-shape/.test(r.selector)) declared.push(`${r.selector} { ${r.nodes.map(String).join("; ")} }`);
++        });
++        expect(declared).toEqual(['.toggle-group[data-shape="cell"] { --selection-tile: flush }']);
++        // no other rule in the sheet writes a tile value (the floor's pin writes `inherit`)
++        const writers: string[] = [];
++        root.walkDecls("--selection-tile", (d) => {
++            if (d.value === "flush" || d.value === "plated") writers.push((d.parent as { selector: string }).selector);
++        });
++        expect(writers).toEqual(['.toggle-group[data-shape="cell"]']);
++    });
++
+     /* The ⊕⁷ o19 A-18 salvage: the indicator SEAT is the library's, the PAINT is the
+      * consumer's. The slot renders inside the pill, so whatever the consumer puts in
+      * it inherits the hover lift and press squish and no motion authority leaves the
+diff --git a/tests/styles/radius-role-canon.test.ts b/tests/styles/radius-role-canon.test.ts
+index 152af2735..6376f877a 100644
+--- a/tests/styles/radius-role-canon.test.ts
++++ b/tests/styles/radius-role-canon.test.ts
+@@ -1,5 +1,6 @@
+ import { readdirSync, readFileSync } from "node:fs";
+ import { join } from "node:path";
++import postcss from "postcss";
+ import { describe, expect, it } from "vitest";
+ import { cn } from "@glass/components/_shared/class-names";
+ 
+@@ -562,9 +563,207 @@ describe("7. this wave's role bindings", () => {
+         // …and the sentinel-producing calc goes with it, in EITHER spelling: the
+         // literal D-5 recorded and the relay #23 re-expressed it as.
+         expect(strippedSheet).not.toMatch(/var\(--radius-pill\)\s*\+/);
+-        // The segment keeps its own role rung (law B) — one stadium, one spelling.
+-        const item = rule(sheet, "\\.toggle-group__item");
+-        expect(item).toContain("border-radius: var(--radius-pill)");
++        // The segment's own rung (law B) is read on the parsed selector below.
++    });
++
++    /* D4 · THE TILE CORNER IS ONE DECLARATION, read on the PARSED sheet, never on text.
++     * Every corner-declaring rule in every sheet under src/ (nesting resolved: `&` is the
++     * parent's selector) is matched against 48 twins: the same item in a `shape="cell"`
++     * group and in a `pill` group, at sm, md and lg, in both orientations, with no child,
++     * one label, two rows, or media and a label, on and off. A rule inside a container
++     * query reaches a twin only when its condition holds there: `style(--selection-tile:
++     * …)` is evaluated against the twin's own fact, which is the cascade's winner among
++     * the sheet's `--selection-tile` declarations that match the item's group (the style
++     * query's container is the item's parent). Any other container condition, and any
++     * selector the matcher cannot parse, FAILS rather than counting as no reach. The law:
++     * exactly one rule reaches a tile and not its pill twin, on the field rung and
++     * refused to a consumer (`!important`); every group-scoped corner that reaches a pill
++     * is the stadium or `inherit`. The painted corner is pinned in both engines by the D4
++     * harness (T-1, T-2, W-D, FACT, CORNER). */
++    it("the tile corner is one declaration on the field rung; the pill keeps the stadium", () => {
++        const files = (dir: string): string[] =>
++            readdirSync(dir, { withFileTypes: true }).flatMap((d) =>
++                d.isDirectory()
++                    ? files(join(dir, d.name))
++                    : d.name.endsWith(".css")
++                      ? [join(dir, d.name)]
++                      : [],
++            );
++        const CHILDREN = {
++            none: "",
++            label: "<span>Gentle</span>",
++            rows: "<span>Gentle</span><span>0.5 s</span>",
++            media: '<svg viewBox="0 0 1 1"></svg><span>Gentle</span>',
++        };
++        const twins: { key: string; cell: Element; pill: Element }[] = [];
++        const mk = (shape: string, size: string, o: string, inner: string, st: string) => {
++            const g = document.createElement("div");
++            g.innerHTML = `<div class="toggle-group" data-slot="toggle-group" role="radiogroup" data-type="single" data-shape="${shape}" data-size="${size}" data-orientation="${o}"><button type="button" class="toggle-group__item pill-row control-surface glass-control-edge glass-capsule-hover tap-squish focus-ring" data-slot="toggle-group-item" role="radio" data-state="${st}">${inner}</button></div>`;
++            document.body.append(g);
++            return g.querySelector("button")!;
++        };
++        for (const size of ["sm", "md", "lg"])
++            for (const o of ["horizontal", "vertical"])
++                for (const [ck, inner] of Object.entries(CHILDREN))
++                    for (const st of ["on", "off"])
++                        twins.push({
++                            key: `${size}/${o}/${ck}/${st}`,
++                            cell: mk("cell", size, o, inner, st),
++                            pill: mk("pill", size, o, inner, st),
++                        });
++        const absolute = (r: postcss.Rule): string[] => {
++            let up = r.parent;
++            while (up && up.type !== "rule" && !(up.type === "atrule" && (up as postcss.AtRule).name === "utility") && up.type !== "root")
++                up = up.parent;
++            if (!up || up.type === "root") return r.selectors.map((one) => one.replace(/\s+/g, " "));
++            // a Tailwind `@utility <name>` is the class `.name`
++            const parent =
++                up.type === "atrule"
++                    ? `.${(up as postcss.AtRule).params.trim()}`
++                    : absolute(up as postcss.Rule).join(", ");
++            return r.selectors.map((raw) => raw.replace(/\s+/g, " ")).map((one) =>
++                one.includes("&") ? one.replaceAll("&", `:is(${parent})`) : `:is(${parent}) ${one}`,
++            );
++        };
++        // the container conditions a rule sits under, innermost first
++        const conditions = (r: postcss.Node): string[] => {
++            const out: string[] = [];
++            for (let up = r.parent; up && up.type !== "root"; up = up.parent)
++                if (up.type === "atrule" && (up as postcss.AtRule).name === "container") out.push((up as postcss.AtRule).params.trim());
++            return out;
++        };
++        const host = (one: string) =>
++            one
++                .replace(
++                    /::?(before|after|hover|active|focus-visible|focus-within|focus|marker|placeholder|backdrop)\b(\([^)]*\))?/g,
++                    "",
++                )
++                .trim() || "*";
++        /* happy-dom's matcher returns false, silently, for a complex selector inside
++         * `:is()`, `:where()` or `:not()` (`:is(.g .i)` never matches). So each such
++         * argument is resolved from the innermost out: every element that matches the
++         * argument directly is marked, and the pseudo-class is replaced by the mark.
++         * That is exact on the twins, whatever the argument holds. */
++        let mark = 0;
++        const marked: string[] = [];
++        const resolve = (sel: string): string => {
++            const innermost = /:(is|where|not)\(([^()]*)\)/;
++            let out = sel;
++            for (let m = out.match(innermost); m; m = out.match(innermost)) {
++                const attr = `data-canon-${mark++}`;
++                marked.push(attr);
++                const not = m[1] === "not";
++                for (const el of document.querySelectorAll("*")) if (el.matches(m[2]) !== not) el.setAttribute(attr, "");
++                out = out.replace(m[0], `[${attr}]`);
++            }
++            return out;
++        };
++        const unmark = () => {
++            for (const attr of marked.splice(0)) for (const el of document.querySelectorAll(`[${attr}]`)) el.removeAttribute(attr);
++        };
++        const matches = (el: Element, one: string): boolean => {
++            try {
++                return el.matches(resolve(host(one)));
++            } finally {
++                unmark();
++            }
++        };
++        /* Specificity [a, b, c] of one complex selector: `:is()` and `:not()` take their
++         * most specific argument, `:where()` counts nothing. */
++        const specificity = (sel: string): number[] => {
++            const out = [0, 0, 0];
++            let s = sel;
++            for (let m = s.match(/:(is|where|not)\(([^()]*)\)/); m; m = s.match(/:(is|where|not)\(([^()]*)\)/)) {
++                if (m[1] !== "where") {
++                    const best = m[2].split(",").map((x) => specificity(x.trim())).sort((x, y) => y[0] - x[0] || y[1] - x[1] || y[2] - x[2])[0];
++                    for (let i = 0; i < 3; i++) out[i] += best[i];
++                }
++                s = s.replace(m[0], "");
++            }
++            out[0] += (s.match(/#[\w-]+/g) ?? []).length;
++            out[1] += (s.match(/\.[\w-]+|\[[^\]]*\]|:(?!:)[\w-]+/g) ?? []).length;
++            out[2] += (s.match(/(^|[\s>+~])[a-z][\w-]*/gi) ?? []).length + (s.match(/::[\w-]+/g) ?? []).length;
++            return out;
++        };
++        const sheets = files(join(process.cwd(), "src")).map((file) => ({
++            rel: file.slice(process.cwd().length + 1),
++            root: postcss.parse(readFileSync(file, "utf8")),
++        }));
++        // every `--selection-tile` declaration, in sheet order, with its selectors made absolute
++        // A declaration under `@scope (<root>) to (<limit>)` (the floor's pin) reads `:scope` as its root, and an
++        // element at or under the limit (inside the root) is out of scope
++        const facts: { sels: string[]; value: string; spec: number[][]; at: number; scope?: { root: string; limit: string } }[] = [];
++        for (const { root } of sheets)
++            root.walkDecls("--selection-tile", (d) => {
++                if (d.parent?.type !== "rule") return;
++                const at = d.parent.parent as postcss.AtRule | undefined;
++                const sc = at?.type === "atrule" && at.name === "scope" ? at.params.match(/^\((.+?)\)\s+to\s+\((.+)\)$/) : null;
++                const sels = sc
++                    ? (d.parent as postcss.Rule).selectors.map((one) => one.replace(/:scope/g, `:is(${sc[1]})`))
++                    : absolute(d.parent as postcss.Rule);
++                facts.push({ sels, value: d.value.trim(), spec: sels.map(specificity), at: facts.length, ...(sc ? { scope: { root: sc[1], limit: sc[2] } } : {}) });
++            });
++        const outOfScope = (el: Element, scope: { root: string; limit: string }): boolean => {
++            for (let up: Element | null = el; up && !up.matches(scope.root); up = up.parentElement) if (up.matches(scope.limit)) return true;
++            return false;
++        };
++        // the fact the item's style query reads: the cascade's winner on the item's parent
++        const factOf = (item: Element): string => {
++            const group = item.parentElement!;
++            let best: { value: string; spec: number[]; at: number } | undefined;
++            for (const f of facts)
++                f.sels.forEach((one, i) => {
++                    if (!matches(group, one) || (f.scope && outOfScope(group, f.scope))) return;
++                    const spec = f.spec[i];
++                    // higher specificity wins; a tie goes to the later declaration
++                    const cmp = best ? spec[0] - best.spec[0] || spec[1] - best.spec[1] || spec[2] - best.spec[2] : 1;
++                    if (cmp > 0 || (cmp === 0 && f.at > best!.at)) best = { value: f.value, spec, at: f.at };
++                });
++            // nothing matched: the registered initial value (`@property --selection-tile`, base.css)
++            return best?.value ?? "none";
++        };
++        const fact = new Map<Element, string>();
++        for (const t of twins) for (const el of [t.cell, t.pill]) fact.set(el, factOf(el));
++        const holds = (el: Element, cond: string): boolean => {
++            const m = cond.match(/^(not\s+)?style\(\s*--selection-tile\s*:\s*([\w-]+)\s*\)$/);
++            if (!m) throw new Error(`container condition not evaluated: ${cond}`);
++            return (fact.get(el) === m[2]) !== !!m[1];
++        };
++        const tileOnly = new Set<string>();
++        const pillBad: string[] = [];
++        const unmatched: string[] = [];
++        for (const { rel, root } of sheets)
++            root.walkDecls(/^border(-(top|bottom|start|end)-(left|right|start|end))?-radius$/, (d) => {
++                if (d.parent?.type !== "rule") return;
++                const conds = conditions(d.parent);
++                const where = conds.length ? ` @container ${conds.join(" & ")}` : "";
++                for (const one of absolute(d.parent as postcss.Rule)) {
++                    let onCell = 0;
++                    let onPill = 0;
++                    try {
++                        const reaches = (el: Element) => conds.every((c) => holds(el, c)) && matches(el, one);
++                        for (const t of twins) {
++                            if (reaches(t.cell) && !reaches(t.pill)) onCell++;
++                            if (reaches(t.pill)) onPill++;
++                        }
++                    } catch {
++                        unmatched.push(`${rel}: ${one}${where}`);
++                        continue;
++                    }
++                    if (onCell) tileOnly.add(`${rel} | ${one}${where} | ${d.value}${d.important ? " !important" : ""}`);
++                    if (onPill && /toggle-group/.test(one + where) && !["var(--radius-pill)", "inherit"].includes(d.value))
++                        pillBad.push(`${rel} | ${one}${where} | ${d.value}`);
++                }
++            });
++        // the fact itself: every twin's group resolved, a cell twin to `flush`, a pill to `none`
++        const facts48 = twins.map((t) => `${fact.get(t.cell)}/${fact.get(t.pill)}`);
++        document.body.replaceChildren();
++        expect(unmatched).toEqual([]);
++        expect(new Set(facts48)).toEqual(new Set(["flush/none"]));
++        expect([...tileOnly]).toEqual([
++            "src/components/toggle-group/styles.css | .toggle-group__item @container not style(--selection-tile: none) | var(--radius-field) !important",
++        ]);
++        expect(pillBad).toEqual([]);
+     });
+ 
+     it("mints no radius token to do any of it", () => {
+diff --git a/src/components/toggle-group/shape.ts b/src/components/toggle-group/shape.ts
+new file mode 100644
+index 000000000..e58b2d0c4
+--- /dev/null
++++ b/src/components/toggle-group/shape.ts
+@@ -0,0 +1,7 @@
++/* THE OPTION SHAPE, declared once at the group. `pill` (the default) is a one-row
++ * option: a stadium at the control rung that lays its content out on one row. `cell`
++ * is a tile, an option that holds more than one row. The declaration writes the one
++ * tile fact (`--selection-tile: flush`, styles.css), and the floor derives the tile's
++ * whole geometry and state from that fact; nothing else reads the declaration. */
++export const TOGGLE_GROUP_SHAPES = ["pill", "cell"] as const;
++export type ToggleGroupShape = (typeof TOGGLE_GROUP_SHAPES)[number];
