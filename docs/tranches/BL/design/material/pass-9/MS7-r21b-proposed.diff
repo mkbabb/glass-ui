@@ -1,0 +1,28 @@
+diff --git a/DESIGN.md b/DESIGN.md
+index 29998008a..22366f2cc 100644
+--- a/DESIGN.md
++++ b/DESIGN.md
+@@ -31,7 +31,7 @@ Liquid Glass is the iOS 26 material — a real-time refractive surface, not a Ga
+ **The six-layer composite.** Every glass surface composes six optical layers. A primitive that omits one reads as iOS-7-flat, not iOS-26-liquid. We require all six (or the documented degraded fallback under §L5):
+ 
+ 1. **Backdrop blur + saturation** — the refraction proxy. `backdrop-filter: blur(<r>) saturate(<f>)` per tier. The saturation channel matters as much as the blur radius; it carries the "concentrated light" reading.
+-2. **Surface tint (rgba background)** — the light-vs-dark admit-through. Light-mode and dark-mode tints differ; the dark-mode tint is denser to compensate for the lower contrast floor.
++2. **Surface tint (rgba background)** — the light-vs-dark admit-through. Light-mode and dark-mode tints differ: light paints the `--card` pole at or above the solved bound α (a cream frost, never an ink: O-62), and dark paints the warm near-black ink at its own rung α.
+ 3. **Edge rim (border)** — the boundary halo that holds the surface against its backdrop. `border: 1px solid var(--glass-border-<tier>)`. Carried by the per-tier border opacity.
+ 4. **Inner shadow / catch-light** — the upper-edge specular streak (`inset 0 0.5px 0 0 hsl(0 0% 100% / 0.25)` via `--glass-highlight`) that reads as "this surface has an edge that catches the room light."
+ 5. **Drop shadow** — adaptive depth shadow under the tile; depth scales with z-elevation. Per-tier `--glass-shadow-<tier>`.
+diff --git a/src/styles/glass/surface-axis.css b/src/styles/glass/surface-axis.css
+index 217868d38..5d082e666 100644
+--- a/src/styles/glass/surface-axis.css
++++ b/src/styles/glass/surface-axis.css
+@@ -18,8 +18,8 @@
+                so `--glass-level` / the earned ink retune it in lockstep
+                with every glass surface — NO veil-local recipe fork.
+      opaque   — the `--glass-level:0` solid-card escape (the `.glass-opaque` rung):
+-               solid `--card` + `blur(0)` through the ONE level knob, the tint axis
+-               zeroed (a solid plate has no translucent backdrop to earn ink over).
++               solid `--card` + `blur(0)` through the ONE level knob, with no tint axis
++               to zero (a solid plate has no translucent backdrop to earn ink over).
+ 
+    Cartoon and grid remain Card-local decoration booleans; neither extends this
+    material axis. The `Surface` alias in `_shared/axes.ts` is the typed half and

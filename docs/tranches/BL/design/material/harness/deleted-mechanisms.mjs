@@ -40,7 +40,10 @@
 //                      read exact only. Only an identifier can be listed; a phrase is its own word form
 //   `at: "file:line"`  (or "file:a-b") one site read in context and exempt for that name, in either arm: a test line
 //                      that asserts the deletion, a token comment that reports what the old value measured. A site
-//                      entry that exempts no hit is stale and FAILs, so the list cannot outlive the lines it names
+//                      entry that exempts no hit is stale and FAILs, so the list cannot outlive the lines it names.
+//                      A site for a changed token or a ladder (a name the declaration does not list) is read only by
+//                      the value arm, which runs only with --patch: without one it prints `not read` and is no row
+//                      (the minor's declaration carries such sites and H7-3 reads it without a patch; pass-9 MS7)
 // One gated row per name and per changed token; each hit prints file:line once.
 //   node deleted-mechanisms.mjs --root <tree> --declare <names.json> [--patch <file.patch>]
 import fs from "node:fs";
@@ -297,12 +300,14 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     for (const x of rungHits(fam, files)) rung.push(`${x.rung}: ${x.where} "${x.text}"`);
   }
   if (fams.length) { console.log(`RUNG READING (not gated; R-21 (b) reads each line's tense): ${rung.length}`); for (const r of rung) console.log(`  [R-21 b] ${r}`); }
-  const stale = sites.filter((s) => !s.used);
+  const armRan = (s) => !!a.patch || decl.names.includes(s.name);
+  for (const s of sites.filter((s) => !armRan(s))) console.log(`    · site ${s.at} for "${s.name}" not read: no --patch, so the value arm did not run`);
+  const stale = sites.filter((s) => !s.used && armRan(s));
   for (const s of stale) { fails++; console.log(`  ✗ exempt site ${s.at} for "${s.name}" exempts no hit: stale (${s.why})`); }
   console.log(`REPORTED (not gated; repo-root *.md and docs/canon/): ${rep.length}`);
   for (const r of rep) console.log(`  [reported] ${r}`);
-  const rows = decl.names.length + changed.length + fams.length + sites.length;
-  console.log(`DELETED-MECHANISMS names=${decl.names.length} hits=${hitsAll} files=${where.size} changed=${changed.length} families=${fams.length} sites=${sites.length} arm-true=${armTrue} rung=${rung.length} reported=${rep.length} · ${[...where].sort().join(" ")}`);
+  const rows = decl.names.length + changed.length + fams.length + sites.filter(armRan).length;
+  console.log(`DELETED-MECHANISMS names=${decl.names.length} hits=${hitsAll} files=${where.size} changed=${changed.length} families=${fams.length} sites=${sites.filter(armRan).length} arm-true=${armTrue} rung=${rung.length} reported=${rep.length} · ${[...where].sort().join(" ")}`);
   console.log(fails ? `FAIL (${fails} of ${rows} gated rows)` : `PASS (${rows} gated rows)`);
   process.exit(fails ? 1 : 0);
 }

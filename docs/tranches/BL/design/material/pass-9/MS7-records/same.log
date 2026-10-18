@@ -1,0 +1,19 @@
+m7 build.json: "srcDirtyFiles": 47
+m6 build.json: "srcDirtyFiles": 47
+m7b build.json: "srcDirtyFiles": 47
+m7p build.json: "srcDirtyFiles": 47
+dist minor v6 vs minor v7: diff -rq exit 0, 0 lines
+dist minor v7 vs minor v7 rebuilt: diff -rq exit 0
+dist minor v7 vs minor v7 + proposed: diff -rq exit 0
+dist files: m6 3, m7 3; sha256 list diff exit 0
+demo minor v6 vs minor v7: diff -rq exit 0, 0 lines
+demo minor v7 vs minor v7 rebuilt: diff -rq exit 0
+demo minor v7 vs minor v7 + proposed: diff -rq exit 0
+demo files: m6 346, m7 346; sha256 list diff exit 0
+m6 specimen css index-Bd1ws62N.css 398432 B sha256 e11613c3eeb45cab
+m7 specimen css index-Bd1ws62N.css 398432 B sha256 e11613c3eeb45cab
+m6 dist-demo css total 431116 B, files 347
+m7 dist-demo css total 431116 B, files 347
+-- against pass 8's banked minor v6 same-label lists (pass-8/MS6-records/same-m6-*.sha256)
+dist banked m6 vs m7: diff exit 1, 7 lines
+demo banked m6 vs m7: diff exit 0, 0 lines

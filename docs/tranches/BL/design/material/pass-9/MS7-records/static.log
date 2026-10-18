@@ -1,0 +1,30 @@
+-- H7-3, deletes-minor.json (42 names, 3 sites), H7 scope (src/ demo/), no patch
+DEL H7-3 minor7 exit 0: PASS (42 gated rows)
+DEL H7-3 minor6 exit 1: FAIL (2 of 42 gated rows)
+DEL H7-3 minor5 exit 1: FAIL (17 of 42 gated rows)
+DEL H7-3 minor4 exit 1: FAIL (38 of 42 gated rows)
+-- H8-1 with H9 over the minor's own patch (src/ demo/ tests/ + every touched path; REPORTED arm)
+DEL H9 minor7 + v7 patch exit 0: PASS (54 gated rows)
+DEL H9 minor6 + v7 patch (plant) exit 1: FAIL (8 of 54 gated rows)
+DEL H9 minor6 + v6 patch exit 1: FAIL (8 of 54 gated rows)
+-- the R-16 sweep (grep -i darken minus press|tone-step|well|darker in dark|in dark), src + demo/stories
+   minor6: 46 lines
+   minor7: 46 lines
+   diff exit 0
+LAW exit 0: PASS (73 gated rows)
+census minor7 exit 0: LIGHTING-CENSUS stacked=0 halo=0 blur=0 open=0
+census v10.1.0 exit 1: LIGHTING-CENSUS stacked=2 halo=2 blur=5 open=9
+HOV exit 0: PASS (58 gated rows)
+LIT exit 0: LIGHTING-LITERALS halo=5 near=1 stacked=10 chain=3 open=19 frames-halo=0/0
+-- LADDER diff radii-minor7 pass-8 radii-minor6 (prints nothing)
+LADDER exit 0
+-- FL-14 static: @utility glass-plate declares isolation
+26:    isolation: isolate;
+-- identifiers on R-23's removed and added lines (comments only, so no declaration should move)
+   5 --glass-level
+   4 --card
+   2 --ink-seam
+   2 --ink-perimeter
+   2 --ink-edge
+   2 --glass-blur-quiet
+   2 --glass-blur-

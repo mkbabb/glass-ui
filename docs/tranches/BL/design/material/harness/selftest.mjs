@@ -35,6 +35,9 @@
 // --h9-trees (fv7, fv8, minor6: src/ demo/ tests/ docs/canon/ and the root *.md), --h9-patch (floor-v7.patch),
 // --h9-exact (the floor's exact list with H9's site), --h9-minor-patch (minor-split-v6.patch). With H9, the H8-1 rows
 // on floor v6 read H9's reds beside H8's (pass-9/H9.md §7).
+// The minor v7 (pass 9, R-23; pass-9/MINOR-SPLIT-v7.md) grows H7-3 and H9-3 in place: the declaration holds 42 names and
+// R-23's three site entries; the minor v6 is now a plant and the minor v7 the fixture (--h7-trees minor7; --h9-trees
+// minor7 with --h9-minor7-patch, minor-split-v7.patch). A value-arm site reads `not read` without --patch (H7-3's read).
 // --reuse-green: keep an existing green capture (the plants are captured fresh).
 // --fields: a HEAD run's capture (its Chromium empty-scene aurora frames become the fixtures' field pixels).
 import fs from "node:fs";
@@ -47,7 +50,7 @@ import { capture } from "./capture.mjs";
 const a = cli({ fields: { type: "string" }, only: { type: "string" }, "skip-capture": { type: "boolean" }, "reuse-green": { type: "boolean" }, tree: { type: "string" },
   "h7-trees": { type: "string" }, "h7-decl": { type: "string" },
   "h8-trees": { type: "string" }, "h8-patch": { type: "string" }, "h8-exact": { type: "string" },
-  "h9-trees": { type: "string" }, "h9-patch": { type: "string" }, "h9-exact": { type: "string" }, "h9-minor-patch": { type: "string" } });
+  "h9-trees": { type: "string" }, "h9-patch": { type: "string" }, "h9-exact": { type: "string" }, "h9-minor-patch": { type: "string" }, "h9-minor7-patch": { type: "string" } });
 const FIELDS = path.resolve(a.fields || path.join(OUT, "caps", "head"));
 const ROOT = path.join(OUT, "selftest");
 const only = list(a.only, null);
@@ -495,13 +498,29 @@ if (want("H7-3")) {
   staticWitness("H7-3", "deleted-mechanisms", ["--root", tree("h73-iii", { "src/a.css": "/* additively — the plate still darkens-over-light for AA AND carries the data hue. */\n" }), "--declare", decl], "FAIL", "H7-3 plant: an R-16 (iii) sentence (tokens/glass.css:208's shape)");
   // R-18 (ii): a Crit A-3 sentence, the phrase MS5 §2.3 left unguarded (adaptive-legibility.css:70's shape)
   staticWitness("H7-3", "deleted-mechanisms", ["--root", tree("h73-r18", { "src/a.css": "/* progressive enhancement only — the declarative darken is the AA floor. */\n" }), "--declare", decl], "FAIL", "H7-3 plant: an R-18 sentence, \"declarative darken\" (adaptive-legibility.css:70's shape)");
+  // R-23: a Crit8 §5.2 sentence (surfaces-pager.css:34-35's shape), one of the three phrases R-23 adds
+  staticWitness("H7-3", "deleted-mechanisms", ["--root", tree("h73-r23", { "src/a.css": "/* under `.dark` the\n   tint arm LIFTS it toward luminous warm-dark. */\n" }), "--declare", decl], "FAIL", "H7-3 plant: an R-23 sentence, \"tint arm\" (surfaces-pager.css:34-35's shape)");
+  // R-23's value-arm sites without --patch: not read, no row; a site under a declared name is read and goes stale
+  const s73 = tree("h73-sites", { "src/a.css": "/* nothing here */\n", "d.json": JSON.stringify({ patch: "H7-3 sites", names: ["x seam"], exact: [{ name: "--t", at: "src/a.css:1", why: "value site" }] }) });
+  const o73 = staticWitness("H7-3", "deleted-mechanisms", ["--root", s73, "--declare", path.join(s73, "d.json")], "PASS", "H7-3 fixture: a value-arm site with no --patch is not read and is no row");
+  rowsHold("H7-3", "static", o73, ['site src/a.css:1 for "--t" not read: no --patch', "PASS (1 gated rows)"], "H7-3: the value arm did not run, so its site is printed, not gated");
+  const s73b = tree("h73-sites-name", { "src/a.css": "/* nothing here */\n", "d.json": JSON.stringify({ patch: "H7-3 sites", names: ["x seam"], exact: [{ name: "x seam", at: "src/a.css:1", why: "name site" }] }) });
+  const o73b = staticWitness("H7-3", "deleted-mechanisms", ["--root", s73b, "--declare", path.join(s73b, "d.json")], "FAIL", "H7-3 plant: a site under a declared name is read without --patch, and one that exempts nothing is stale");
+  rowsHold("H7-3", "static", o73b, ['exempt site src/a.css:1 for "x seam" exempts no hit: stale'], "H7-3: a name site stays gated with or without a patch");
   const T = a["h7-trees"] && path.resolve(a["h7-trees"]);
   if (T && fs.existsSync(path.join(T, "minor4")) && fs.existsSync(path.join(T, "minor5"))) {
     const out = staticWitness("H7-3", "deleted-mechanisms", ["--root", path.join(T, "minor4"), "--declare", decl], "FAIL", "H7-3 plant: the minor v4 under the minor's declaration");
-    rowsHold("H7-3", "static", out, ["src/components/dock/styles/adaptive-legibility.css:7", "src/styles/glass/overlay-plate.css:272", "src/styles/glass/ladder.css:164", "src/composables/glass/useGlassBackdropLuminance.ts:45", "hits=48 files=15"], "H7-3 plant: the minor v4 reds at A-3's two sentences, the R-16 (iii) sentences and the R-18 sentences");
+    rowsHold("H7-3", "static", out, ["src/components/dock/styles/adaptive-legibility.css:7", "src/styles/glass/overlay-plate.css:272", "src/styles/glass/ladder.css:164", "src/composables/glass/useGlassBackdropLuminance.ts:45", "hits=50 files=15"], "H7-3 plant: the minor v4 reds at A-3's two sentences, the R-16 (iii) sentences, the R-18 sentences and the R-23 sentences");
     const out5 = staticWitness("H7-3", "deleted-mechanisms", ["--root", path.join(T, "minor5"), "--declare", decl], "FAIL", "H7-3 plant: the minor v5 under the R-18 declaration");
-    rowsHold("H7-3", "static", out5, ["src/components/dock/styles/adaptive-legibility.css:70", "src/components/dock/styles/search.css:58", "src/components/dock/styles/index.css:21", "src/styles/glass/surface-axis.css:79", "src/styles/glass/surfaces-pager.css:29", "hits=18 files=7", "FAIL (15 of 39"], "H7-3 plant: the minor v5 reds at Crit A-3's sentences, one row per R-18 name");
-    if (fs.existsSync(path.join(T, "minor6"))) staticWitness("H7-3", "deleted-mechanisms", ["--root", path.join(T, "minor6"), "--declare", decl], "PASS", "H7-3 fixture: the minor v6 (R-18 built)");
+    rowsHold("H7-3", "static", out5, ["src/components/dock/styles/adaptive-legibility.css:70", "src/components/dock/styles/search.css:58", "src/components/dock/styles/index.css:21", "src/styles/glass/surface-axis.css:79", "src/styles/glass/surfaces-pager.css:29", "hits=20 files=7", "FAIL (17 of 42"], "H7-3 plant: the minor v5 reds at Crit A-3's sentences, one row per R-18 name, and at R-23's two src/ phrases");
+    if (fs.existsSync(path.join(T, "minor6"))) {
+      const o6 = staticWitness("H7-3", "deleted-mechanisms", ["--root", path.join(T, "minor6"), "--declare", decl], "FAIL", "H7-3 plant: the minor v6 under the minor v7's declaration (R-23 unbuilt)");
+      rowsHold("H7-3", "static", o6, ["src/styles/glass/surfaces-pager.css:35", "src/styles/tokens/property-regs.css:154", "FAIL (2 of 42"], "H7-3 plant: the minor v6 reds at R-23's two declarable src/ sentences (the third phrase is in tests/, outside H7's scope)");
+    }
+    if (fs.existsSync(path.join(T, "minor7"))) {
+      const o7 = staticWitness("H7-3", "deleted-mechanisms", ["--root", path.join(T, "minor7"), "--declare", decl], "PASS", "H7-3 fixture: the minor v7 (R-23 built)");
+      rowsHold("H7-3", "static", o7, ['site src/styles/glass/overlay-plate.css:173 for "--ink-perimeter" not read', 'site tests/components/ui/surface/Surface.test.ts:164 for "--glass-blur-*-radius" not read', "PASS (42 gated rows)"], "H7-3: R-23's sites are the value arm's, unread without the patch");
+    }
   }
 }
 
@@ -669,9 +688,13 @@ if (want("H9-2") || want("H9-3")) {
     staticWitness("H9-3", "deleted-mechanisms", h9("h93-root-file", { "src/s.css": "/* the x step is 0.04 (t.css). */\n" }), "FAIL", "H9-3 plant: the old value cited with the arm that changed");
     staticWitness("H9-3", "deleted-mechanisms", h9("h93-uncited", { "src/s.css": "/* the x step is 0.04. */\n" }), "FAIL", "H9-3 plant: the old value citing no arm reads as the changed one");
     if (T9 && a["h9-minor-patch"]) {
-      const om = staticWitness("H9-3", "deleted-mechanisms", ["--root", path.join(T9, "minor6"), "--declare", path.join(HERE, "deletes-minor.json"), "--patch", path.resolve(a["h9-minor-patch"])], "FAIL", "H9-3 on the minor v6 (R-23 unbuilt): sheet/styles.css:197 is arm-true; the rest red as Crit §5.2 ruled");
-      rowsHold("H9-3", "static", om, ['arm-true src/components/sheet/styles.css:197 "0.04 · glass veil steps" (cites src/styles/tokens/dark-arm.css:277 (.dark) declares 0.04)', { not: /✗ --glass-veil-step/ }, /FAIL \(6 of 48 gated rows\)/],
-        "H9-3 fixture: the minor v6's sheet/styles.css:197 needs no site entry (MS6 §7)");
+      const om = staticWitness("H9-3", "deleted-mechanisms", ["--root", path.join(T9, "minor6"), "--declare", path.join(HERE, "deletes-minor.json"), "--patch", path.resolve(a["h9-minor-patch"])], "FAIL", "H9-3 on the minor v6 under the minor v7's declaration (R-23's plant): sheet/styles.css:197 is arm-true; the rest red at R-23's sites");
+      rowsHold("H9-3", "static", om, ['arm-true src/components/sheet/styles.css:197 "0.04 · glass veil steps" (cites src/styles/tokens/dark-arm.css:277 (.dark) declares 0.04)', { not: /✗ --glass-veil-step/ }, "src/styles/tokens/glass-deep.css:12", "DESIGN.md:1805", /FAIL \(8 of 54 gated rows\)/],
+        "H9-3 fixture: the minor v6's sheet/styles.css:197 needs no site entry (MS6 §7); the minor v6 is R-23's plant");
+    }
+    if (T9 && a["h9-minor7-patch"] && fs.existsSync(path.join(T9, "minor7"))) {
+      const o7 = staticWitness("H9-3", "deleted-mechanisms", ["--root", path.join(T9, "minor7"), "--declare", path.join(HERE, "deletes-minor.json"), "--patch", path.resolve(a["h9-minor7-patch"])], "PASS", "H9-3 fixture: the minor v7 over its own patch at 0 (R-23)");
+      rowsHold("H9-3", "static", o7, ['arm-true src/components/sheet/styles.css:197', 'exempt src/styles/glass/overlay-plate.css:173', 'exempt src/styles/glass/deep.css:73', 'exempt tests/components/ui/surface/Surface.test.ts:164', "PASS (54 gated rows)"], "H9-3: every R-23 site exempts a hit; none is stale");
     }
   }
 }

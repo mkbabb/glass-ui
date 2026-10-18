@@ -1,0 +1,29 @@
+SWEEP minor7 LIST exit 0: LIST (371 lines to read; no rulings given)
+SWEEP minor7p LIST exit 0: LIST (371 lines to read; no rulings given)
+rulings: 369 lines in 52 files · 10 of them REPORTED · left unruled (FALSE): DESIGN.md:34, src/styles/glass/surface-axis.css:21
+rulings: 371 lines in 52 files · 10 of them REPORTED · left unruled (FALSE): none
+SWEEP minor7 ruled exit 1: FAIL (2 unread, 0 stale of 371 lines)
+SWEEP minor7p ruled exit 0: PASS (371 lines, each ruled true)
+SWEEP minor6 (plant) ruled exit 1: FAIL (15 unread, 5 stale of 379 lines)
+sweep-minor7-ruled.log:✗ unread DESIGN.md:34 [word "tint"]
+sweep-minor7-ruled.log:✗ unread src/styles/glass/surface-axis.css:21 [word "tint"]
+sweep-minor6-plant.log:✗ unread DESIGN.md:34 [word "tint"]
+sweep-minor6-plant.log:✗ unread src/components/dock/styles/adaptive-legibility.css:62 [word "bucket"]
+sweep-minor6-plant.log:✗ unread src/components/dock/styles/adaptive-legibility.css:65 [word "bucket"]
+sweep-minor6-plant.log:✗ unread src/styles/glass/liquid-fill.css:76 [rung --glass-blur-quiet-radius "quiet` rung (the 14px"]
+sweep-minor6-plant.log:✗ unread src/styles/glass/surface-axis.css:21 [word "tint"]
+sweep-minor6-plant.log:✗ unread src/styles/glass/surfaces-pager.css:34 [word "clamp"]
+sweep-minor6-plant.log:✗ unread src/styles/glass/surfaces-pager.css:35 [word "tint"; name "tint arm"]
+sweep-minor6-plant.log:✗ unread src/styles/glass/surfaces-pager.css:36 [word "tint"]
+sweep-minor6-plant.log:✗ unread src/styles/tokens/glass-deep.css:12 [tuple --glass-blur-*-radius 10/14/16/20/22]
+sweep-minor6-plant.log:✗ unread src/styles/tokens/glass-deep.css:13 [rung --glass-blur-overlay-radius "overlay paints 22"]
+sweep-minor6-plant.log:✗ unread src/styles/tokens/glass-deep.css:54 [tuple --glass-blur-*-radius 10/14/16/20/22]
+sweep-minor6-plant.log:✗ unread src/styles/tokens/property-regs.css:154 [word "tint"; name "tint toward ink"]
+sweep-minor6-plant.log:✗ unread tests/components/button/Button.test.ts:146 [word "darken"; word "clamp"; name "earned darken"; name "earned-darken clamp"]
+sweep-minor6-plant.log:✗ unread tests/components/field/forms-seam.test.ts:95 [name "ladder's 0.48"]
+sweep-minor6-plant.log:✗ unread tests/gates/feedback-tint-seam.test.ts:11 [word "darken"; word "clamp"; name "earned darken"; name "earned-darken clamp"]
+sweep-minor6-plant.log:✗ stale ruling src/styles/glass/surfaces-pager.css:34 "clamp's two-step ceiling keeps it translucent, in both themes; one": the line no longer prints or no longer says it (R-18 (:29-33) and R-23 (:34-36) as rewritten: the clamp resolves the floating rung's own ink over a calm backdrop and earns up to two steps over a sampled bright one, translucent in both themes (base + 2(1 − base)/3 < 1 light, 0.30 dark); :37 the --surface-tint-* brand fence)
+sweep-minor6-plant.log:✗ stale ruling src/styles/glass/surfaces-pager.css:35 "writer, the clamp, moves the pill's ink, never a second axis, and": the line no longer prints or no longer says it (R-18 (:29-33) and R-23 (:34-36) as rewritten: the clamp resolves the floating rung's own ink over a calm backdrop and earns up to two steps over a sampled bright one, translucent in both themes (base + 2(1 − base)/3 < 1 light, 0.30 dark); :37 the --surface-tint-* brand fence)
+sweep-minor6-plant.log:✗ stale ruling src/styles/tokens/property-regs.css:154 "Clear↔Tinted escape rides this knob alone: `prefers-contrast: more` sets": the line no longer prints or no longer says it (the live accent axis (:114-131; :115 is H9-1's homonym site; 'TINT (whole-plate legibility)' at :124 is the label Crit8 §5.2 kept), R-23's rewrite (:154-155), R-18's (:162-171: the one clamp in @utility glass-plate reads the observer's luma), @property's typed clamps, and --motion-weight's OBSERVER subtree)
+sweep-minor6-plant.log:✗ stale ruling tests/components/button/Button.test.ts:146 "// so the tier, the earned-ink clamp and `--glass-level` all survive": the line no longer prints or no longer says it (R-23's rewrite (:146, the earned-ink clamp survives inside the mix) and Button §5's tone describe title)
+sweep-minor6-plant.log:✗ stale ruling tests/gates/feedback-tint-seam.test.ts:11 "// its tier ink, its earned-ink clamp, its `--glass-level` — is discarded at the last": the line no longer prints or no longer says it (the live gate G-FEEDBACK-TINT-SEAM: its name lines (H9-1 homonym sites :1, :121), its rule that the tone tints its own plate, and R-23's rewrite (:11, the earned-ink clamp))

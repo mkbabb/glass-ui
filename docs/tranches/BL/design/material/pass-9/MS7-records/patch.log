@@ -1,0 +1,22 @@
+minor-split-v7-R23.diff: 9 files, +17/-17, sha1 0cf8056f
+minor-split-v6.patch: 59 files, sha1 4ea01c0e
+minor-split-v7.patch: 61 files, sha1 3a7a8eec; git diff --shortstat:  61 files changed, 728 insertions(+), 541 deletions(-)
+-- paths the minor v7 adds to the minor v6's list
+51a52
+> tests/components/button/Button.test.ts
+54a56
+> tests/gates/feedback-tint-seam.test.ts
+-- R-23 files: DESIGN.md src/components/dock/styles/adaptive-legibility.css src/styles/glass/liquid-fill.css src/styles/glass/surfaces-pager.css src/styles/tokens/glass-deep.css src/styles/tokens/property-regs.css tests/components/button/Button.test.ts tests/components/field/forms-seam.test.ts tests/gates/feedback-tint-seam.test.ts 
+-- .vue files in the R-23 delta: 0
+-- line counts per R-23 file, minor v6 -> minor v7 (an edit that keeps its comment's line count moves no line below it)
+   DESIGN.md 1868 -> 1868
+   src/styles/glass/liquid-fill.css 99 -> 99
+   tests/components/button/Button.test.ts 412 -> 412
+   tests/gates/feedback-tint-seam.test.ts 166 -> 166
+   src/components/dock/styles/adaptive-legibility.css 97 -> 97
+   src/styles/glass/surfaces-pager.css 66 -> 66
+   src/styles/tokens/property-regs.css 322 -> 322
+   tests/components/field/forms-seam.test.ts 302 -> 302
+   src/styles/tokens/glass-deep.css 118 -> 118
+MS7-r21b-proposed.diff: 2 files, +3/-3, sha1 ccee3e30
+DEL H9 minor7 + proposed, v7 patch exit 0: PASS (54 gated rows)
