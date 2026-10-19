@@ -1,0 +1,27 @@
+# 2026-10-18 20:47:23 load { 12.04 17.89 22.05 }
+## plant: anchor-lost (the consumer's anchor is not written back)
+     × a consumer's own inline position-anchor is set aside while promoted and written back on release 6ms
+      Tests  1 failed | 20 passed (21)
+restored byte-identical
+## plant: wheel-chain (no wheel forwarding on a promoted host)
+     × a wheel over a promoted control scrolls the scroller its footprint sits in, not the page 7ms
+      Tests  1 failed | 20 passed (21)
+restored byte-identical
+## plant: promote-every-pointer (the pointer arm ignored)
+     × a press on the input that travels takes the value, one step per PITCH (not per slop), promoted while the hand is down 14ms
+     × a fine pointer's hold: promoted on "every", engaged IN PLACE on "coarse" (no footprint, no veil) 3ms
+      Tests  2 failed | 19 passed (21)
+restored byte-identical
+## plant: veil-in-place (an in-place hold raises the veil)
+     × a fine pointer's hold: promoted on "every", engaged IN PLACE on "coarse" (no footprint, no veil) 7ms
+      Tests  1 failed | 20 passed (21)
+restored byte-identical
+## arm KEYBOARD_VEIL=true POINTER_STAGE=every: 11
+      Tests  21 passed (21)
+## arm KEYBOARD_VEIL=true POINTER_STAGE=coarse: 11
+      Tests  21 passed (21)
+## arm KEYBOARD_VEIL=false POINTER_STAGE=every: 11
+      Tests  21 passed (21)
+## arm KEYBOARD_VEIL=false POINTER_STAGE=coarse: 11
+      Tests  21 passed (21)
+final restore: 62:export const KEYBOARD_VEIL = true; 65:export const POINTER_STAGE: "every" | "coarse" = "coarse"; 

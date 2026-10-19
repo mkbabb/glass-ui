@@ -1,0 +1,9 @@
+# 2026-10-18 21:32:39 load { 12.96 14.95 16.04 }
+arm-veil-every: export const KEYBOARD_VEIL = true; export const POINTER_STAGE: "every" | "coarse" = "every"; 
+      Tests  57 passed (57)
+arm-veil-coarse: export const KEYBOARD_VEIL = true; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+      Tests  57 passed (57)
+arm-noveil-every: export const KEYBOARD_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "every"; 
+      Tests  57 passed (57)
+arm-noveil-coarse: export const KEYBOARD_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+      Tests  57 passed (57)
