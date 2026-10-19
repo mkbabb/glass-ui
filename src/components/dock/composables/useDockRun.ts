@@ -91,10 +91,33 @@ function openIndexOf(seats: HTMLElement[]): number {
     });
 }
 
-/** The seat's own focusable, or the seat itself when it is one. */
-function focusTargetOf(seat: HTMLElement): HTMLElement | null {
-    if (seat.matches(FOCUSABLE_SELECTOR)) return seat;
-    return seat.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
+/**
+ * THE SEAT RULE. The run roves a seat only when the seat IS its control, and the
+ * roved target is then the seat itself. A seat that is not (a container holding a
+ * ToggleGroup, a slider with its own reka roving, a band of buttons) is not roved:
+ * the run writes no `tabIndex` into it and claims no key pressed inside it, so the
+ * composite keeps its own tab stop and its own arrows (atlas G-3).
+ *
+ * What this replaced reached into the seat for its first focusable descendant and
+ * wrote `-1` onto it on every subtree mutation, which took the selected item of a
+ * nested ToggleGroup out of the tab order and stole its ArrowRight for the next seat.
+ *
+ * A seat that carries a `tabindex` is its own control whatever the value, because the
+ * run writes `-1` onto every seat but the stop: reading membership off the sequential
+ * `FOCUSABLE_SELECTOR` alone would drop a `[role=button][tabindex]` seat from the run
+ * the moment the run demoted it (the b-i counterexample, `crit-seat-cx`).
+ *
+ * How a container seat should count toward the run's `role="toolbar"` claim is the
+ * seat-shape question (G-4), and it is not decided here: a declared seat target and a
+ * run that drops the claim both extend this predicate rather than replace it.
+ */
+function isRovedSeat(seat: HTMLElement): boolean {
+    return seat.matches(FOCUSABLE_SELECTOR) || seat.hasAttribute("tabindex");
+}
+
+/** The seats the run roves, in document order. */
+function rovedSeatsOf(run: HTMLElement): HTMLElement[] {
+    return seatsOf(run).filter(isRovedSeat);
 }
 
 export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
@@ -169,7 +192,11 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
     function announce(seat: HTMLElement): void {
         const status = statusEl.value;
         if (!status) return;
-        const target = focusTargetOf(seat) ?? seat;
+        // The NAME is read, never written: a container seat is named by its first
+        // control, as before the seat rule, because naming is not roving.
+        const target = isRovedSeat(seat)
+            ? seat
+            : (seat.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ?? seat);
         const name =
             target.getAttribute("aria-label") ??
             target.getAttribute("title") ??
@@ -211,7 +238,7 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
     function syncRoving(): void {
         const run = runEl.value;
         if (!run) return;
-        const seats = seatsOf(run);
+        const seats = rovedSeatsOf(run);
         if (seats.length === 0) return;
         const openIdx = openIndexOf(seats);
         // A seat that already holds focus keeps the stop — re-seating it to the open
@@ -219,31 +246,29 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
         const focusedIdx = seats.findIndex((seat) => seat.contains(document.activeElement));
         const stop = focusedIdx >= 0 ? focusedIdx : openIdx >= 0 ? openIdx : 0;
         seats.forEach((seat, idx) => {
-            const target = focusTargetOf(seat);
-            if (!target) return;
-            target.tabIndex = idx === stop ? 0 : -1;
+            seat.tabIndex = idx === stop ? 0 : -1;
         });
     }
 
     function moveTo(seats: HTMLElement[], idx: number): void {
         const seat = seats[idx];
         if (!seat) return;
-        const target = focusTargetOf(seat);
-        if (!target) return;
         // Glide FIRST, focus second. `focus()` on an occluded child triggers the
         // engine's own scroll-into-view, which lands at the engine's anchor rather than
         // the lattice's and then fights the spring for the same scroll offset.
         // `preventScroll` refuses that, and reach owns the travel.
         reach(seat);
-        target.tabIndex = 0;
-        target.focus({ preventScroll: true });
+        seat.tabIndex = 0;
+        seat.focus({ preventScroll: true });
         syncRoving();
     }
 
     function onKeydown(event: KeyboardEvent): void {
         const run = runEl.value;
         if (!run) return;
-        const seats = seatsOf(run);
+        // A key pressed inside a seat the run does not rove belongs to that seat:
+        // `from` stays −1 for it and the handler returns before claiming the key.
+        const seats = rovedSeatsOf(run);
         if (seats.length === 0) return;
         const from = seats.findIndex((seat) => seat.contains(event.target as Node));
         if (from < 0) return;
