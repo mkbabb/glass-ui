@@ -5,6 +5,24 @@ records the breaking changes that landed in that cut, newest first. Clean breaks
 — no legacy aliases, no back-compat shims (L invariant 4); every break is a one-line
 rename or import re-point per call site.
 
+## 10.1.1
+
+No break. Behaviour a consumer may notice:
+
+- **A dock collapse closes the menus and popovers its seats opened.** A consumer that
+  closed them by hand on collapse can delete that code. To keep the dock open while an
+  overlay is up, use the existing `keepDockOpen` (Popover) or `keepOpen`/`release`.
+- **The dock run no longer roves a container seat.** A seat that is not itself a control
+  (a `div` holding a ToggleGroup, a slider, a band of buttons) keeps its own tab order and
+  its own arrow keys. Arrows travel only the seats that are controls. Nothing to change
+  unless a consumer relied on the run focusing a container's first control.
+- **Overlay content takes its z rung from its role.** `DropdownMenuContent` and
+  `DropdownMenuSubContent` now paint at `--z-popover`. A consumer that added `z-popover` (or
+  any z class) through `class` keeps its class: the consumer class merges last.
+- **`SheetContent` carries the `fixed` utility.** Sheets that rendered in page flow now
+  open at their edge. A consumer override that positioned the sheet itself can be deleted.
+- **New:** `<Skeleton shimmer>`.
+
 ## 10.0.0 — ~~UNRELEASED~~ [2026-09-22 · LIVE: tag `v10.0.0` at `dcb0f711`, published with provenance by `release.yml` run 35804200390 attempt 1, `latest` on the registry, unpacked 2,915,902 B = the ratchet datum]
 
 **Status.** `package.json` declares ~~`9.0.0`~~ `10.0.0` [2026-09-22 · at the cut, `58f0d243`]

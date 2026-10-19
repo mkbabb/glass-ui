@@ -1,5 +1,59 @@
 # Changelog
 
+## 10.1.1 — 2026-10-19
+
+Five cures and one owner-ruled addition, no break. Asked by the atlas consumer (U batch
+G-1 to G-3, `docs/tranches/BK/coordination/ATLAS-TO-GLASS-2026-10-17-U-BATCH.md` and its
+addendum) and by the owner through value.js (records: `docs/tranches/BL/audit/INBOUND.md`
+O-99, O-99a, O-102, O-102b). `MIGRATION.md` §10.1.1 lists the behaviour a consumer may
+notice. Each witness below fails on the 10.1.0 bytes and passes on these; the engine
+witnesses are `tests-visual/release-10-1-1.spec.ts` (harness `tests-visual/release-10-1-1/`),
+run in Chromium (desk and coarse projects) and Playwright WebKit 2287
+(`tests-visual/webkit-2287.config.ts`; 2311 crashes on any dock page, atlas N-1).
+
+- **Sheet renders fixed, not in document flow (G-1).** `.glass-floating` sets
+  `position: relative` at 0,1,0, and the sheet's `position: fixed` sat in a `:where()` rule
+  at 0,0,0 in the same layer, so every sheet opened at the end of the page. `SheetContent`
+  now carries the `fixed` utility, as `DialogContent` does, and the `:where()` rule no
+  longer declares a position. Witness: `tests/components/sheet/sheet-position.test.ts`;
+  engine: "G-1 · an open sheet is fixed and inside the viewport".
+- **Menus and submenus paint above the dock (G-2).** The z rung is now a fact of the overlay
+  role, written once in `overlayContentAttrs` (`menu` and `panel` → `z-popover`, `hint` →
+  `z-tooltip`). Menus and submenus had none and opened under `--z-dock`; Popover and Tooltip
+  no longer spell their own. Witness: `tests/components/menu/menu-z-rung.test.ts`; engine:
+  "G-2 · a menu and its submenu paint above the dock's rung" (5 of 5 hit points on each).
+- **A composite in a dock seat keeps its tab stop and its arrows (G-3).** The run roves a
+  seat only when the seat is its own control (sequentially focusable, or carrying a
+  `tabindex`), and writes into nothing else. It used to write `tabIndex` onto a container
+  seat's first focusable descendant and claim arrows pressed inside it, so a nested
+  ToggleGroup had no tab stop and lost ArrowRight to the next seat. A container seat's
+  accessible name is still read from its first control. The `role="toolbar"` shape (G-4)
+  is unchanged and left to the owner; both of its arms extend this predicate. Witnesses:
+  `tests/components/custom/dock/g-dock-seat-rule.test.ts`, `crit-seat-cx.test.ts`; engine:
+  "G-3 · a composite in a container seat keeps its tab stop and its arrows".
+- **Collapsing the dock closes what its seats opened (O-102 (3)).** The dock context
+  publishes its posture (`expanded`), and `useDockParticipation` takes a `close`: on the
+  collapse edge every participating overlay closes. Popover closes at its root, the menu
+  through reka's root context. One path, no timer, and an expand opens nothing back.
+  Witness: `tests/components/custom/dock/GlassDock.collapse-closes-overlays.test.ts`;
+  engine: "O-102(3) · a dropdown / a popover opened from a seat closes when the dock
+  collapses".
+- **Skeleton `shimmer` (owner ruling, O-102b (3)).** One prop. A sheen of one fixed period
+  travels across the shape in place of the breathe, on the shared `--duration-shimmer-fast`
+  clock, `linear`, compositor-only. Ink only: the foreground at the `--ink-seam` rung, no
+  hue. Static under `prefers-reduced-motion`, paused while the tile is off-screen or the
+  document is hidden, absent under forced colors. The A-9 decline note in `Skeleton.vue` now
+  records the ruling. Demo: Feedback › Skeleton › shimmer. Engine: "Skeleton · shimmer
+  travels…" and "…holds still under reduced motion".
+- **The clipped dock popover (O-102 (6)): measured, not a glass defect.** A glass Popover
+  opened from a seat is unclipped at 390 and 1280, portalled or not, on 10.1.0 and 10.1.1
+  alike: reka's wrapper is `position: fixed`, and the dock's `contain: layout` makes the dock,
+  not the run, its containing block. The plate clipped in the owner's frame is fourier's
+  timeline caret, an absolutely positioned float inside the run, which is a scroll port and
+  clips its cross axis by CSS rule (`run.css`). The engine guard "O-102(6) · a popover
+  opened from a seat is not clipped" holds the glass half at both widths and both portal
+  arms.
+
 ## 10.1.0 — 2026-09-24
 
 Two additive Configurator features, no break; `MIGRATION.md` is untouched. Both were asked for
