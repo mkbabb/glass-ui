@@ -40,4 +40,4 @@ for (const root of roots) for (const file of walk(root)) {
 }
 console.log(`LAUNCH-LAW files=${rows} cited=${cited} uncited=${fails}`);
 console.log(rows === 0 ? "FAIL (no gated rows measured: no file)" : fails ? `FAIL (${fails} of ${rows} gated rows)` : `PASS (${rows} gated rows)`);
-process.exit(rows && !fails ? 0 : 1);
+process.exitCode = rows && !fails ? 0 : 1;   // H11-1: no process.exit

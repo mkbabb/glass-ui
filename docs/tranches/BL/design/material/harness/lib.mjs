@@ -12,6 +12,19 @@ import { createRequire } from "node:module";
 import { parseArgs } from "node:util";
 import { holdWebkit } from "../../../driver/webkit-lock.mjs";
 
+// H11-1 (pass 11, REGISTRY P10-5): every harness tool writes its report synchronously. On macOS node writes to a pipe
+// asynchronously, and a process.exit() after console.log drops whatever the pipe has not taken yet: the tally and the
+// verdict, printed last, are lost (pass-10 crit-records/pipe-truncation.log, 2 of 12 runs through spawnSync's pipe at
+// load about 40). Every tool imports this module before it prints, so blocking stdout and stderr here makes each
+// console.log complete before it returns, and an exit at any depth (rows.mjs variantOrExit, a refusal) leaves the whole
+// report. A file needs nothing (node writes files synchronously, which is why every `> file` log was whole). A stream
+// with a handle that cannot block is refused loud (E-2).
+for (const [name, s] of [["stdout", process.stdout], ["stderr", process.stderr]]) {
+  if (!s._handle) continue;
+  if (typeof s._handle.setBlocking !== "function") throw new Error(`H11-1: ${name} (${s._handle.constructor?.name}) cannot be written synchronously: a report could be lost at exit`);
+  s._handle.setBlocking(true);
+}
+
 export const HERE = path.dirname(fileURLToPath(import.meta.url));
 export const CHECKOUT = path.resolve(HERE, "../../../../../..");
 const require = createRequire(path.join(CHECKOUT, "package.json"));

@@ -16,6 +16,8 @@
 // A ruling with no verdict, another verdict, no `at`, `says` or `why`, or verdict "true" with a `why` that carries the
 // word REPORTED (the pass-9 workaround) is refused: exit 2, nothing read. The record never calls a false line true.
 // H10-1's refusal holds here too: 0 touched files read prints `nothing read` and exits 2.
+// H11-1 (pass 11, REGISTRY P10-5): the exit code is set through process.exitCode, never process.exit, so a pipe reader
+// gets the tally and the verdict line (pass 10 lost them in 2 of 12 piped runs).
 //   node prose-sweep.mjs --root <tree> --patch <file.patch> [--declare <decl.json>] [--list sweep-frozen.json] [--rulings <json>] [--context 1]
 import fs from "node:fs";
 import path from "node:path";
@@ -63,18 +65,20 @@ export function sweep({ root, patchText, decl, list }) {
   return { touched, files: files.length, lines: [...out.values()].sort((x, y) => (x.where < y.where ? -1 : x.where > y.where ? 1 : 0)), byFile };
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+// H11-1 (pass 11): the CLI returns its exit code into process.exitCode and never calls process.exit, so a pipe
+// reader gets the whole report (lib.mjs also writes it synchronously).
+function main() {
   const a = cli({ root: { type: "string" }, patch: { type: "string" }, declare: { type: "string" }, list: { type: "string" }, rulings: { type: "string" }, context: { type: "string" } });
   console.log("SWEEP · R-21 (b): every prose line of every touched file that carries a frozen word, a declared name, or a changed ladder's old tuple or rung number, printed with its context (static; H9-6, H10-1, H10-2)");
-  if (!a.root || !a.patch) { console.log("usage: node prose-sweep.mjs --root <tree> --patch <file.patch> [--declare <decl.json>] [--list <json>] [--rulings <json>] [--context N]\nFAIL (nothing read: no tree or no patch)"); process.exit(2); }
+  if (!a.root || !a.patch) { console.log("usage: node prose-sweep.mjs --root <tree> --patch <file.patch> [--declare <decl.json>] [--list <json>] [--rulings <json>] [--context N]\nFAIL (nothing read: no tree or no patch)"); return 2; }
   const root = path.resolve(a.root), list = JSON.parse(fs.readFileSync(path.resolve(a.list || path.join(HERE, "sweep-frozen.json")), "utf8"));
   const decl = a.declare ? JSON.parse(fs.readFileSync(path.resolve(a.declare), "utf8")) : null, ctx = +(a.context ?? 1);
   const r = sweep({ root, patchText: fs.readFileSync(path.resolve(a.patch), "utf8"), decl, list });
   console.log(`tree: ${root} · patch ${path.basename(a.patch)}: ${r.touched.length} touched files exist · ${r.files} read as text · list: ${list.words.length} words + ${decl ? decl.names.length : 0} declared names + the changed ladders`);
-  if (!r.files) { console.log(`0 touched files read under ${root}: nothing read\nFAIL (nothing read: ${fs.existsSync(root) ? "no touched file exists in the tree" : "the tree does not exist"})`); process.exit(2); }
+  if (!r.files) { console.log(`0 touched files read under ${root}: nothing read\nFAIL (nothing read: ${fs.existsSync(root) ? "no touched file exists in the tree" : "the tree does not exist"})`); return 2; }
   const rulings = a.rulings ? JSON.parse(fs.readFileSync(path.resolve(a.rulings), "utf8")) : null;
   const bad = rulings ? refusals(rulings) : [];
-  if (bad.length) { for (const b of bad) console.log(`✗ refused ${b}`); console.log(`FAIL (rulings refused: ${bad.length} malformed of ${Array.isArray(rulings) ? rulings.length : 0}; nothing read)`); process.exit(2); }
+  if (bad.length) { for (const b of bad) console.log(`✗ refused ${b}`); console.log(`FAIL (rulings refused: ${bad.length} malformed of ${Array.isArray(rulings) ? rulings.length : 0}; nothing read)`); return 2; }
   let unread = 0;
   const used = new Set(), rep = [];
   for (const l of r.lines) {
@@ -91,7 +95,8 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   if (rulings) { console.log(`REPORTED (not gated; a false clause the patch did not write, for the landing docs pass): ${rep.length}`); for (const x of rep) console.log(`  [reported] ${x.at} (${x.why})`); }
   const files = new Set(r.lines.map((l) => l.where.slice(0, l.where.lastIndexOf(":"))));
   console.log(`SWEEP lines=${r.lines.length} files=${files.size}${rulings ? ` ruled=${used.size} true=${used.size - rep.length} reported=${rep.length} unread=${unread} stale=${stale.length}` : ""}`);
-  if (!rulings) { console.log(`LIST (${r.lines.length} lines to read; no rulings given)`); process.exit(0); }
+  if (!rulings) { console.log(`LIST (${r.lines.length} lines to read; no rulings given)`); return 0; }
   console.log(unread || stale.length ? `FAIL (${unread} unread, ${stale.length} stale of ${r.lines.length} lines)` : `PASS (${r.lines.length} lines: ${used.size - rep.length} ruled true, ${rep.length} reported)`);
-  process.exit(unread || stale.length ? 1 : 0);
+  return unread || stale.length ? 1 : 0;
 }
+if (import.meta.url === `file://${process.argv[1]}`) process.exitCode = main();

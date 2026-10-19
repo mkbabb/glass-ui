@@ -1,0 +1,139 @@
+DEL · no file in scope (src/, demo/, tests/, every path the patch touches) describes a mechanism the patch deletes, in any word form, or a value or ladder it changes (static; H6-1, H7-2, H8-1, H9-1..H9-3, H10-1)
+tree: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p11/H11/trees/fv9 · 1089 text files in scope (src/, demo/, tests/, plus 0 of 1 touched paths outside them that exist) · reported: 17 files · declaration: floor-v9.patch: every identifier its removed lines name that the patched src/ and demo/ no longer name (declare-removed.mjs), plus 12 concepts declared by hand (deletes-floor.json) · 73 names, 5 exact only, 19 sites read in context
+patch: floor-v9.patch · 88 paths · 82 exist in the tree and are read
+  ✓ "earned darken": 0
+  ✓ "darkened by whatever": 0
+  ✓ "luma read": 0
+  ✓ "backdropLuminance": 0
+    · exempt tests/styles/glass-subtlety.test.ts:192 "--glass-backdrop-luma" (R-17 (ii), read in context: expect(veil).not.toMatch(/--glass-backdrop-luma|clamp\(/) asserts the luma term is gone from veil.css)
+  ✓ "--glass-backdrop-luma": 0
+    · exempt tests/components/custom/dock/GlassDock.posture.test.ts:153 "backdropMode" (R-17 (ii), read in context: the comment states the prop is struck and the assertion checks data-backdrop-mode is absent; the test asserts the deletion)
+    · exempt tests/components/custom/dock/GlassDock.posture.test.ts:155 "backdrop-mode" (R-17 (ii), read in context: the comment states the prop is struck and the assertion checks data-backdrop-mode is absent; the test asserts the deletion)
+  ✓ "backdropMode": 0
+    · exempt tests/components/custom/dock/GlassDock.posture.test.ts:153 "backdropMode" (R-17 (ii): as backdropMode, the same two lines)
+    · exempt tests/components/custom/dock/GlassDock.posture.test.ts:155 "backdrop-mode" (R-17 (ii): as backdropMode, the same two lines)
+  ✓ "backdrop mode": 0
+  ✓ "adaptive tint": 0
+    · exempt src/components/_shared/feedback/feedback-tone.css:62 "TINT-SEAM" (the live gate name `G-FEEDBACK-TINT-SEAM` (the feedback-tone seam, not the clamp's))
+    · exempt src/components/alert/index.ts:70 "TINT-SEAM" (the live gate name `G-FEEDBACK-TINT-SEAM`)
+    · exempt src/components/metric/styles.css:86 "tint seam" (#33's live feedback-tint seam at its ink half (P8-5 H9-1 names it))
+    · exempt src/components/music-staff/README.md:60 "tint seam" (the folio material's own rung-tint seam, not the patch's mechanism (Crit §3, P8-1.1: landing docs pass))
+    · exempt tests/gates/feedback-tint-seam.test.ts:1 "TINT-SEAM" (the gate's own name line)
+    · exempt tests/gates/feedback-tint-seam.test.ts:121 "TINT-SEAM" (the gate's own describe title)
+    · exempt tests/gates/gate-register.test.ts:163 "TINT-SEAM" (the register's line for the live gate)
+  ✓ "tint seam": 0
+  ✓ "tint arm": 0
+    · exempt demo/stories/substrates/glass-material.vue:257 "OKLab-tints" (the live accent axis: a data hue OKLab-tints the rim (verb, not the plate seam))
+    · exempt src/styles/tokens/property-regs.css:115 "OKLab-tints" (the live accent axis: `--glass-accent` OKLab-tints the rim)
+  ✓ "oklab tint": 0
+  ✓ "tint legibility seam": 0
+  ✓ "--control-surface-blur": 0
+    · exempt tests/styles/glass-subtlety.test.ts:192 "--glass-backdrop" (the exact form of --glass-backdrop is a prefix of --glass-backdrop-luma on the same assertion line (DEL's exact form has no right boundary); the line asserts the deletion)
+  ✓ "--glass-backdrop": 0 (exact only: floor v6 seat, read in context: the one word-form hit, src/styles/animations.css:267 "Glass backdrop — blur + dim", heads the live ::backdrop rules of showModal() dialogs (a file floor v6 does not touch), not the deleted bucket token; the token's exact spelling stays declared)
+  ✓ "--glass-backdrop-luma-knee": 0
+  ✓ "--glass-backdrop-sampled": 0
+    · exempt tests/styles/glass-subtlety.test.ts:187 "--glass-veil-base" (R-17 (ii), read in context: expect(map.has(...)).toBe(false) asserts the token is gone in both modes)
+  ✓ "--glass-veil-base": 0
+    · exempt tests/styles/glass-subtlety.test.ts:186 "--glass-veil-ink" (R-17 (ii), read in context: expect(map.has(...)).toBe(false) asserts the token is gone in both modes)
+  ✓ "--glass-veil-ink": 0
+  ✓ "--input-on-glass": 0
+  ✓ "--select-plate-alpha": 0
+  ✓ "--veil-bg": 0
+  ✓ "BackgroundCanvasSource": 0
+  ✓ "CSS_INITIAL_UNDERLAY": 0
+  ✓ "DockBackdropMode": 0
+  ✓ "FIELD_ALPHA_FLOOR": 0
+  ✓ "GLASS_BACKDROP_SHARED_ATTR": 0
+  ✓ "GlassBackdropBucket": 0
+  ✓ "GlassBackdropSample": 0
+  ✓ "GlassBackdropTargetRect": 0
+  ✓ "PopperArrow": 0
+  ✓ "SAMPLE_DOWNSAMPLE": 0
+  ✓ "SHELL_FIELD_CANVAS_SELECTOR": 0
+  ✓ "SampleResult": 0
+  ✓ "UseGlassBackdropLuminanceControls": 0
+  ✓ "UseGlassBackdropLuminanceOptions": 0
+  ✓ "applyMotionState": 0
+  ✓ "backdropLuminanceSample": 0
+  ✓ "backdropSample": 0 (exact only: H8 seat (H8-2 declares it, a module const of glass-material.vue), read in context: its 15 word-form hits (glass.css:20, focus-veil.css:22, menu.css:4, Command.vue:77, SheetContent.vue:382-386, sheet/styles.css:314-408, glass-material.vue:209-217 and the rest) are the one-backdrop-sample-per-plate compositing law, i.e. what backdrop-filter samples, not the deleted luminance observer's ref; the const's exact spelling stays declared)
+  ✓ "backdropSampleMath": 0
+  ✓ "backgroundCanvas": 0 (exact only: floor v6 seat, read in context: the one word-form hit, demo/stories/substrates/constellation.vue:365 "mounts a constellation background canvas at index 0", names the live constellation canvas, not the deleted GlassDock prop; the prop's exact spelling stays declared)
+  ✓ "compositeOver": 0 (exact only: floor v6 seat, read in context: the 9 word-form hits (presets.ts:296, PagerDots.vue:28, pager-dots/README.md:24, useRouteTransition.ts:126, view-transition.css:253, aurora-hero.ts:312, story-hero.css:39-40, toc-tracking.vue:110) are ordinary compositing prose ('composited over', 'composites over') about live layers, not the deleted sampler helper; the helper's exact spelling stays declared)
+  ✓ "coveredByShared": 0
+    · exempt tests/components/custom/dock/GlassDock.posture.test.ts:155 "data-backdrop-mode" (R-17 (ii): as backdropMode, the same two lines)
+    · exempt tests/components/custom/dock/GlassDock.posture.test.ts:153 "backdropMode" (R-17 (ii): as backdropMode, the same two lines)
+  ✓ "data-backdrop-mode": 0
+  ✓ "data-backdrop-sample-reason": 0
+  ✓ "data-backdrop-sample-source": 0
+  ✓ "data-backdrop-sample-state": 0
+  ✓ "data-backdrop-sampled": 0
+  ✓ "data-glass-backdrop-shared": 0
+  ✓ "data-glass-field-canvas": 0
+  ✓ "data-glass-sample": 0
+  ✓ "getDownContext": 0
+  ✓ "isCanvas": 0
+  ✓ "lightThreshold": 0
+  ✓ "linearize": 0
+  ✓ "liveCardEl": 0
+  ✓ "minSampleIntervalMs": 0
+  ✓ "normalizeToRgb": 0
+  ✓ "parseRgb": 0
+  ✓ "relLuminance": 0
+  ✓ "resolveBackdropRgba": 0
+  ✓ "resolveSourceCanvas": 0
+  ✓ "resolveUnderlayRgb": 0
+  ✓ "sampleAge": 0 (exact only: H8 seat (H8-2 declares it, a module const of glass-material.vue), read in context: the one word-form hit, src/components/fourier-field/shaders/compute.wgsl.ts:5 'per-sample // AGE', joins 'sample' and 'AGE' across a comment leader in the live comet shader's buffer layout; the const's exact spelling stays declared)
+  ✓ "sampleAnimated": 0
+  ✓ "sampleNow": 0
+  ✓ "sampleStatic": 0
+  ✓ "stageEl": 0
+  ✓ "staticResult": 0
+  ✓ "targetRect": 0
+  ✓ "useGlassBackdropLuminance": 0
+  ✓ "wantsLiveLoop": 0
+  ✓ "writeBucket": 0
+  ✓ "writeUnavailable": 0
+changed values: 8 declarations in src/ · 8 tokens · 1 families · 0 arms still at an old value
+    · exempt src/styles/tokens/scale-paper.css:90 "0.48 · ink perimeter" (R-17 (iii)'s own example, read in context: a struck (~~) history note of BK #83 that reports the rung as it stood then, '(then 0.48)')
+  ✓ --ink-perimeter: 0.48 → 0.52 (literal 0.48; src/styles/tokens/color-radius.css): 0
+  ✓ --glass-veil-step: 0.04 → calc((1 - var(--glass-bound)) / 3) (literal 0.04; src/styles/tokens/glass.css): 0
+  ✓ --glass-blur-wash-radius: 10px → 6px (literal 10px; src/styles/tokens/glass.css): 0
+  ✓ --glass-blur-quiet-radius: 14px → 10px (literal 14px; src/styles/tokens/glass.css): 0
+  ✓ --glass-blur-resting-radius: 16px → 12px (literal 16px; src/styles/tokens/glass.css): 0
+    · exempt src/styles/glass/deep.css:69 "20px · glass blur floating radius" (R-17 (iii), read in context, proposed for the critic: 'The predecessor LERPed `--glass-blur-floating-radius` (20px) toward ...' reports the predecessor recipe with the value it then read; the live rule beneath reads the token)
+  ✓ --glass-blur-floating-radius: 20px → 18px (literal 20px; src/styles/tokens/glass.css): 0
+  ✓ --glass-blur-overlay-radius: 22px → 20px (literal 22px; src/styles/tokens/glass.css): 0
+  ✓ --glass-saturate-grasp: 1.75 → calc(var(--glass-saturate) * 7 / 6) (literal 1.75; src/styles/tokens/glass.css): 0
+    · exempt tests/components/ui/surface/Surface.test.ts:164 "10 / 14 / 16 / 20 / 22" (H9-2's tuple arm, read in context by the H9 seat, for the critic: the block comment at :161-167 opens 'RED at the first cut's bytes:' and reports what the first cut resolved 'against plain 10 / 14 / 16 / 20 / 22' in the past tense; the case below reads the shipped tokens. History, so a site entry, not a rewrite)
+  ✓ --glass-blur-*-radius tuple 10/14/16/20/22px → 6/10/12/18/20px (src/styles/tokens/glass.css): 0
+RUNG READING (not gated; R-21 (b) reads each line's tense): 4
+  [R-21 b] --glass-blur-floating-radius: src/styles/glass/deep.css:69 "floating-radius` (20px"
+  [R-21 b] --glass-blur-overlay-radius: src/styles/glass/deep.css:71 "overlay's 22px"
+  [R-21 b] --glass-blur-overlay-radius: src/styles/tokens/glass-deep.css:55 "overlay painted 22"
+  [R-21 b] --glass-blur-floating-radius: tests/components/ui/surface/Surface.test.ts:162 "FLOATING radius (20px"
+REPORTED (not gated; repo-root *.md and docs/canon/): 23
+  [reported] "backdropLuminance" · DESIGN.md:521 "backdrop luminance"
+  [reported] "backdropLuminance" · MIGRATION.md:4062 "backdrop-luminance"
+  [reported] "--glass-backdrop-luma" · MIGRATION.md:4045 "--glass-backdrop-luma"
+  [reported] "backdropMode" · MIGRATION.md:503 "backdropMode"
+  [reported] "backdrop mode" · MIGRATION.md:503 "backdropMode"
+  [reported] "tint seam" · docs/canon/glass-system.md:48 "tint seam"
+  [reported] "tint seam" · docs/canon/glass-system.md:68 "tint-seam"
+  [reported] "oklab tint" · docs/canon/glass-system.md:76 "OKLab-tint"
+  [reported] "--glass-backdrop" · MIGRATION.md:4045 "--glass-backdrop"
+  [reported] "--glass-backdrop" · MIGRATION.md:4078 "--glass-backdrop"
+  [reported] "--glass-backdrop" · MIGRATION.md:4085 "--glass-backdrop"
+  [reported] "--glass-backdrop" · docs/canon/glass-system.md:50 "--glass-backdrop"
+  [reported] "--input-on-glass" · MIGRATION.md:2917 "--input-on-glass"
+  [reported] "--input-on-glass" · MIGRATION.md:2925 "--input-on-glass"
+  [reported] "--input-on-glass" · docs/canon/glass-system.md:60 "--input-on-glass"
+  [reported] "backgroundCanvas" · MIGRATION.md:504 "backgroundCanvas"
+  [reported] "data-backdrop-mode" · MIGRATION.md:503 "backdropMode"
+  [reported] "useGlassBackdropLuminance" · CHANGELOG.md:874 "useGlassBackdropLuminance"
+  [reported] "useGlassBackdropLuminance" · MIGRATION.md:4044 "useGlassBackdropLuminance"
+  [reported] "useGlassBackdropLuminance" · MIGRATION.md:4062 "use-glass-backdrop-luminance"
+  [reported] "useGlassBackdropLuminance" · docs/canon/glass-system.md:51 "useGlassBackdropLuminance"
+  [reported] --ink-perimeter: 0.48 → 0.52 (literal 0.48; src/styles/tokens/color-radius.css) · DESIGN.md:1805 "0.48 · ink perimeter"
+  [reported] --ink-perimeter: 0.48 → 0.52 (literal 0.48; src/styles/tokens/color-radius.css) · MIGRATION.md:1000 "0.48 · ink perimeter"
+DELETED-MECHANISMS names=73 hits=0 files=0 changed=8 families=1 sites=19 arm-true=0 rung=4 reported=23 · 
+PASS (101 gated rows)

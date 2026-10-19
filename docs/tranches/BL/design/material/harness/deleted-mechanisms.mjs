@@ -47,6 +47,8 @@
 // H10-1 (pass 10, REGISTRY P9-5): DEL refuses to read nothing. 0 text files in scope (an absent or empty --root, a root
 // with no src/, demo/ or tests/ and no touched path that exists) prints `nothing read` and exits 2, as H9-4 made the
 // rows.mjs readers do; it used to print PASS on every gated row (pass-9 crit-records/del-absent.log).
+// H11-1 (pass 11, REGISTRY P10-5): the exit code is set through process.exitCode, never process.exit, so a pipe reader
+// gets the tally and the verdict line.
 // One gated row per name and per changed token; each hit prints file:line once.
 //   node deleted-mechanisms.mjs --root <tree> --declare <names.json> [--patch <file.patch>]
 import fs from "node:fs";
@@ -253,22 +255,24 @@ export function exempt(sites, name, where) {
   return sites.find((s) => s.name === name && s.file === file && line >= s.a && line <= s.b) || null;
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+// H11-1 (pass 11): the CLI returns its exit code into process.exitCode and never calls process.exit, so a pipe
+// reader gets the whole report (lib.mjs also writes it synchronously).
+function main() {
   const a = cli({ root: { type: "string" }, declare: { type: "string" }, patch: { type: "string" } });
   console.log("DEL · no file in scope (src/, demo/, tests/, every path the patch touches) describes a mechanism the patch deletes, in any word form, or a value or ladder it changes (static; H6-1, H7-2, H8-1, H9-1..H9-3, H10-1)");
-  if (!a.root || !a.declare) { console.log("usage: node deleted-mechanisms.mjs --root <tree> --declare <names.json> [--patch <file.patch>]\nFAIL (no gated rows measured: no tree or no declaration)"); process.exit(2); }
+  if (!a.root || !a.declare) { console.log("usage: node deleted-mechanisms.mjs --root <tree> --declare <names.json> [--patch <file.patch>]\nFAIL (no gated rows measured: no tree or no declaration)"); return 2; }
   const root = path.resolve(a.root), decl = JSON.parse(fs.readFileSync(path.resolve(a.declare), "utf8"));
   const patchText = a.patch ? fs.readFileSync(path.resolve(a.patch), "utf8") : "";
   const touched = patchPaths(patchText), files = textFiles(root, touched), reported = reportedFiles(root, files);
   const entries = decl.exact || [];
   const exact = new Map(entries.filter((e) => !e.at).map((e) => [e.name, e.why]));
   const sites = entries.filter((e) => e.at).map((e) => ({ ...e, ...parseAt(e.at), used: 0 }));
-  for (const n of exact.keys()) if (/\s/.test(n.trim())) { console.log(`exact-only entry "${n}" is a phrase: a phrase is its own word form\nFAIL (declaration refused)`); process.exit(2); }
+  for (const n of exact.keys()) if (/\s/.test(n.trim())) { console.log(`exact-only entry "${n}" is a phrase: a phrase is its own word form\nFAIL (declaration refused)`); return 2; }
   const outside = touched.filter((p) => !ROOTS.some((r) => p.startsWith(r + "/")));
   const inScope = new Set(files.map(([rel]) => rel));
   console.log(`tree: ${root} · ${files.length} text files in scope (src/, demo/, tests/${outside.length ? `, plus ${outside.filter((p) => inScope.has(p)).length} of ${outside.length} touched paths outside them that exist` : ""}) · reported: ${reported.length} files · declaration: ${decl.patch || path.basename(a.declare)} · ${decl.names.length} names, ${exact.size} exact only, ${sites.length} sites read in context`);
   if (a.patch) console.log(`patch: ${path.basename(a.patch)} · ${touched.length} paths · ${touched.filter((p) => inScope.has(p)).length} exist in the tree and are read`);
-  if (!files.length) { console.log(`0 text files in scope under ${root}: nothing read\nFAIL (nothing read: ${fs.existsSync(root) ? "no text file in scope" : "the tree does not exist"})`); process.exit(2); }
+  if (!files.length) { console.log(`0 text files in scope under ${root}: nothing read\nFAIL (nothing read: ${fs.existsSync(root) ? "no text file in scope" : "the tree does not exist"})`); return 2; }
   let fails = 0, hitsAll = 0;
   const where = new Set(), rep = [];
   const row = (label, h, why) => {
@@ -313,5 +317,6 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const rows = decl.names.length + changed.length + fams.length + sites.filter(armRan).length;
   console.log(`DELETED-MECHANISMS names=${decl.names.length} hits=${hitsAll} files=${where.size} changed=${changed.length} families=${fams.length} sites=${sites.filter(armRan).length} arm-true=${armTrue} rung=${rung.length} reported=${rep.length} · ${[...where].sort().join(" ")}`);
   console.log(fails ? `FAIL (${fails} of ${rows} gated rows)` : `PASS (${rows} gated rows)`);
-  process.exit(fails ? 1 : 0);
+  return fails ? 1 : 0;
 }
+if (import.meta.url === `file://${process.argv[1]}`) process.exitCode = main();

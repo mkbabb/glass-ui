@@ -44,6 +44,14 @@
 // any ruling, and a malformed rulings file refused (LOUD). The H10 real rows read --h9-trees (fv7, fv8 = the real floor
 // v8, minor7, minor7p) with the banked pass-9 patches, declarations and rulings files, which H10 migrated in place.
 // The H9-6 tiny rulings carry verdict "true" since H10-2.
+// H11 (pass 11, REGISTRY P10-5): H11-1, every row reads the tool's verdict line as well as its exit code (`judge`): a
+// PASS row needs `PASS (…)`, `LIST (…)` or `PRINT (…)` last, a FAIL row a measured `FAIL (…)`, a LOUD row a refusal
+// (`nothing read`, `refused`); an output that lost its tail through a pipe reads BAD whatever the exit code. lib.mjs
+// writes every tool's report synchronously and the sweep, DEL and the printer set process.exitCode; the pipe rows run
+// the real tools through a reader that sleeps before it reads, six times, and a pre-H11-shaped tool through the same
+// pipe, which truncates and reads FAIL. Its fixtures: floor v9 and the minor v8 as banked (--h9-trees fv9, fv9p,
+// minor8, minor8p; --h7-trees minor8). H11-2, the printer of the re-valued tokens' neighbourhood (neighbourhood.mjs):
+// a tiny fixture, floor v9's six printed lines (P10-1.1) as its plant, and sweep-frozen.json byte-equal to HEAD's.
 // --reuse-green: keep an existing green capture (the plants are captured fresh).
 // --fields: a HEAD run's capture (its Chromium empty-scene aurora frames become the fixtures' field pixels).
 import fs from "node:fs";
@@ -86,15 +94,27 @@ async function cap(name, fixtureDir, opts) {
   }
   return out;
 }
+// H11-1: the verdict line a row reads beside the exit code. The last non-empty line of the output must be the tool's
+// verdict and agree with the expectation; a report that lost its tail (pass-10 crit-records/pipe-truncation.log) ends
+// on a row line and reads BAD.
+const VERDICT = {
+  PASS: /^(?:(?:PASS|LIST|PRINT) \(.+\)|GLANCE PASS: .+)$/,
+  FAIL: /^(?:FAIL \((?!nothing read|rulings refused|declaration refused).+\)|GLANCE FAIL: .+)$/,
+  LOUD: /^(?:FAIL \((?:nothing read|rulings refused|declaration refused)\b.*\)|.*: nothing read \(.+\))$/,
+};
+const EXIT = { PASS: 0, FAIL: 1, LOUD: 2 };
+function judge(expect, status, out) {
+  const verdict = (out || "").trim().split("\n").pop() || "";
+  return { verdict, ok: status === EXIT[expect] && VERDICT[expect].test(verdict) };
+}
 // One witness run. `engines` lists the gate engines to run it under, one run each.
 function witness(id, script, capdir, expect, extra = [], note = "", engines = BOTH) {
   for (const engine of engines) {
     const args = [path.join(HERE, `${script}.mjs`), capdir, ...extra, "--gate", engine];
     const r = spawnSync(process.execPath, args, { encoding: "utf8", maxBuffer: 256 << 20 });
     const out = (r.stdout || "") + (r.stderr || "");
-    const verdict = out.trim().split("\n").pop();
+    const { verdict, ok } = judge(expect, r.status, out);
     const fails = out.split("\n").filter((l) => l.includes("✗") && !l.includes("[info]")).slice(0, 4).map((l) => l.trim());
-    const ok = expect === "PASS" ? r.status === 0 : r.status === 1;
     results.push({ id, engine, expect, exit: r.status, ok, verdict, capdir, note, fails });
     fs.writeFileSync(path.join(capdir, `selftest-${id}-${expect}-${engine}.log`), out);
     console.log(`${ok ? "ok  " : "BAD "} ${id.padEnd(4)} ${engine.padEnd(8)} expect ${expect.padEnd(4)} exit ${r.status} · ${verdict}${note ? " · " + note : ""}`);
@@ -106,10 +126,11 @@ const cells = (re) => ["--cells", re];
 // A static check (H5-2's static arm, H5-3): it reads a tree, so it runs once, engine "static".
 function staticWitness(id, script, args, expect, note) {
   const r = spawnSync(process.execPath, [path.join(HERE, `${script}.mjs`), ...args], { encoding: "utf8", maxBuffer: 64 << 20 });
-  const out = (r.stdout || "") + (r.stderr || ""), verdict = out.trim().split("\n").pop();
+  const out = (r.stdout || "") + (r.stderr || "");
   const fails = out.split("\n").filter((l) => l.includes("✗")).slice(0, 4).map((l) => l.trim());
-  // H9-4: LOUD is a witness that refuses to read (exit 2), as against a measured FAIL (exit 1).
-  const ok = expect === "PASS" ? r.status === 0 : expect === "LOUD" ? r.status === 2 : r.status === 1;
+  // H9-4: LOUD is a witness that refuses to read (exit 2), as against a measured FAIL (exit 1). H11-1: and the verdict
+  // line says so.
+  const { verdict, ok } = judge(expect, r.status, out);
   results.push({ id, engine: "static", expect, exit: r.status, ok, verdict, capdir: args.join(" "), note, fails });
   console.log(`${ok ? "ok  " : "BAD "} ${id.padEnd(4)} static   expect ${expect.padEnd(4)} exit ${r.status} · ${verdict} · ${note}`);
   if (expect === "FAIL" || !ok) for (const l of fails) console.log("        " + l.slice(0, 220));
@@ -295,7 +316,7 @@ if (want("GLANCE")) {
   fs.writeFileSync(overlay, `[data-spec] { background: color-mix(in oklab, var(--card) 70%, #7c3aed) !important; }`);
   for (const engine of BOTH) for (const [expect, extra, note] of [["PASS", ["--overlay", overlay], "base against a route that repaints every plate"], ["FAIL", ["--route", green], "base against itself (no delta)"]]) {
     const r = spawnSync(process.execPath, [path.join(HERE, "glance.mjs"), "--base", green, ...extra, "--out", path.join(dir, `${engine}-${expect}`), "--name", expect === "PASS" ? "route" : "self", "--engine", engine, "--require-delta"], { encoding: "utf8", maxBuffer: 64 << 20 });
-    const out = (r.stdout || "") + (r.stderr || ""), verdict = out.trim().split("\n").pop(), ok = expect === "PASS" ? r.status === 0 : r.status === 1;
+    const out = (r.stdout || "") + (r.stderr || ""), { verdict, ok } = judge(expect, r.status, out);
     fs.mkdirSync(path.join(dir, `${engine}-${expect}`), { recursive: true }); fs.writeFileSync(path.join(dir, `${engine}-${expect}`, "selftest.log"), out);
     results.push({ id: "GLANCE", engine, expect, exit: r.status, ok, verdict, capdir: path.join(dir, `${engine}-${expect}`), note, fails: [] });
     console.log(`${ok ? "ok  " : "BAD "} GLANCE ${engine.padEnd(8)} expect ${expect.padEnd(4)} exit ${r.status} · ${verdict} · ${note}`);
@@ -307,7 +328,7 @@ if (want("GLANCE")) {
   for (const engine of BOTH) {
     const o = path.join(dir, `${engine}-moved-FAIL`);
     const r = spawnSync(process.execPath, [path.join(HERE, "glance.mjs"), "--base", green, "--overlay", movedCss, "--out", o, "--name", "moved", "--engine", engine, "--require-delta"], { encoding: "utf8", maxBuffer: 64 << 20 });
-    const out = (r.stdout || "") + (r.stderr || ""), verdict = out.trim().split("\n").pop(), ok = r.status === 1;
+    const out = (r.stdout || "") + (r.stderr || ""), { verdict, ok } = judge("FAIL", r.status, out);
     fs.mkdirSync(o, { recursive: true }); fs.writeFileSync(path.join(o, "selftest.log"), out);
     results.push({ id: "GLANCE", engine, expect: "FAIL", exit: r.status, ok, verdict, capdir: o, note: "H4-1: the route moves the plates 70 px and repaints nothing", fails: [] });
     console.log(`${ok ? "ok  " : "BAD "} GLANCE ${engine.padEnd(8)} expect FAIL exit ${r.status} · ${verdict} · H4-1: plates moved 70 px, no paint change`);
@@ -319,7 +340,7 @@ if (want("GLANCE")) {
   for (const engine of BOTH) for (const [expect, route, note] of [["FAIL", sCopy, "H4-1: story copy moves the card 72 px, no paint change"], ["PASS", sTint, "H4-1: story copy moves the card and the card is repainted"]]) {
     const o = path.join(dir, `${engine}-storycopy-${expect}`);
     const r = spawnSync(process.execPath, [path.join(HERE, "glance.mjs"), "--base", green, "--route", green, "--ids", "none", "--story-base", sPlain, "--story-route", route, "--require-delta", "--out", o, "--name", "copy", "--engine", engine], { encoding: "utf8", maxBuffer: 64 << 20 });
-    const out = (r.stdout || "") + (r.stderr || ""), verdict = out.trim().split("\n").pop(), ok = expect === "PASS" ? r.status === 0 : r.status === 1;
+    const out = (r.stdout || "") + (r.stderr || ""), { verdict, ok } = judge(expect, r.status, out);
     fs.mkdirSync(o, { recursive: true }); fs.writeFileSync(path.join(o, "selftest.log"), out);
     results.push({ id: "GLANCE", engine, expect, exit: r.status, ok, verdict, capdir: o, note, fails: [] });
     console.log(`${ok ? "ok  " : "BAD "} GLANCE ${engine.padEnd(8)} expect ${expect.padEnd(4)} exit ${r.status} · ${verdict} · ${note}`);
@@ -329,7 +350,7 @@ if (want("GLANCE")) {
   for (const engine of BOTH) for (const [expect, route, note] of [["PASS", sClaim, "H3-10: the route story claims one region"], ["FAIL", sBase, "H3-10: the route story claims nothing"]]) {
     const o = path.join(dir, `${engine}-story-${expect}`);
     const r = spawnSync(process.execPath, [path.join(HERE, "glance.mjs"), "--base", green, "--route", green, "--ids", "none", "--story-base", sBase, "--story-route", route, "--story-claim", "--out", o, "--name", "claim", "--engine", engine], { encoding: "utf8", maxBuffer: 64 << 20 });
-    const out = (r.stdout || "") + (r.stderr || ""), verdict = out.trim().split("\n").pop(), ok = expect === "PASS" ? r.status === 0 : r.status === 1;
+    const out = (r.stdout || "") + (r.stderr || ""), { verdict, ok } = judge(expect, r.status, out);
     fs.mkdirSync(o, { recursive: true }); fs.writeFileSync(path.join(o, "selftest.log"), out);
     results.push({ id: "GLANCE", engine, expect, exit: r.status, ok, verdict, capdir: o, note, fails: [] });
     console.log(`${ok ? "ok  " : "BAD "} GLANCE ${engine.padEnd(8)} expect ${expect.padEnd(4)} exit ${r.status} · ${verdict} · ${note}`);
@@ -813,6 +834,111 @@ if (want("H10-2")) {
     const op = staticWitness("H10-2", "prose-sweep", dt("h102-dock-r24", r24), "FAIL", "H10-2 plant: R-24 (iii) written on dock.css:15: the reported ruling is stale and the rewritten line unread, for the floor v9 seat to read");
     rowsHold("H10-2", "static", op, ["✗ stale reported ruling src/components/dock/styles/dock.css:15", "✗ unread src/components/dock/styles/dock.css:15", /FAIL \(1 unread, 1 stale of \d+ lines\)/], "H10-2: the reported ruling does not outlive its line");
   }
+}
+
+// ── H11 (pass 11, REGISTRY P10-5): the report survives a pipe (H11-1); the re-valued tokens' neighbourhood, printed
+// (H11-2). Static, run once. The real rows read --h9-trees (fv9, fv9p, minor7, minor8, minor8p) and --h7-trees (minor8).
+const P10D = path.join(HERE, "..", "pass-10");
+// A constructed row (no witness verdict of its own): ok as computed, printed like the rest.
+function row(id, expect, ok, verdict, note) {
+  results.push({ id, engine: "static", expect, exit: ok ? 0 : 1, ok, verdict, capdir: "", note, fails: [] });
+  console.log(`${ok ? "ok  " : "BAD "} ${id.padEnd(4)} static   expect ${expect} · ${verdict} · ${note}`);
+}
+// A tool run through a pipe whose reader sleeps a second before it reads, so the pipe fills and the rest of the report
+// waits in the writer (the shape that loses it when the writer exits early). The exit code is the tool's.
+const slowPipe = (args) => spawnSync("bash", ["-c", `"$@" | (sleep 1; cat); exit \${PIPESTATUS[0]}`, "pipe", process.execPath, ...args], { encoding: "utf8", maxBuffer: 64 << 20 });
+// The same tool with its stdout on a file: node writes a file synchronously, so this is the whole report.
+function toFile(args, name) {
+  const f = path.join(ROOT, `${name}.out`), fd = fs.openSync(f, "w");
+  const r = spawnSync(process.execPath, args, { stdio: ["ignore", fd, fd] }); fs.closeSync(fd);
+  return { status: r.status, out: fs.readFileSync(f, "utf8") };
+}
+if (want("H11-1")) {
+  // Every tool that still calls process.exit imports lib.mjs, which writes the report synchronously; the sweep, DEL and
+  // the printer set process.exitCode instead (comments are not read).
+  const code = (f) => fs.readFileSync(path.join(HERE, f), "utf8").replace(/\/\*[\s\S]*?\*\//g, "").replace(/(^|[^:"'`])\/\/[^\n]*/g, "$1");
+  const mjs = fs.readdirSync(HERE).filter((f) => f.endsWith(".mjs")), exits = mjs.filter((f) => /\bprocess\.exit\(/.test(code(f)));
+  const noLib = exits.filter((f) => f !== "lib.mjs" && !/^import [^;]*from "\.\/lib\.mjs";/m.test(code(f)));
+  const named = ["prose-sweep.mjs", "deleted-mechanisms.mjs", "neighbourhood.mjs", "launch-law.mjs"].filter((f) => exits.includes(f));
+  const blocks = /_handle\.setBlocking\(true\)/.test(code("lib.mjs"));
+  row("H11-1", "EXITS", !noLib.length && !named.length && blocks, `${exits.length} tools still call process.exit (${exits.join(", ")}); without lib.mjs: ${noLib.join(", ") || "none"}; sweep/DEL/printer/LAW: ${named.join(", ") || "none"}; lib.mjs blocks stdout and stderr: ${blocks}`, "H11-1: every exit leaves a whole report");
+  // The plant: a tool of the pre-H11 shape (2,400 rows of ~100 B, a verdict, process.exit) with and without lib.mjs.
+  const big = (lib) => tree(lib ? "h111-lib" : "h111-pre", { "tool.mjs": `${lib ? `import ${JSON.stringify(path.join(HERE, "lib.mjs"))};\n` : ""}for (let i = 0; i < 2400; i++) console.log("row " + String(i).padStart(4, "0") + " " + "x".repeat(90));\nconsole.log("PASS (2400 rows)");\nprocess.exit(0);\n` });
+  const pre = big(false), post = big(true), full = toFile([path.join(pre, "tool.mjs")], "h111-pre-file");
+  const rp = slowPipe([path.join(pre, "tool.mjs")]), jp = judge("PASS", rp.status, rp.stdout);
+  row("H11-1", "TRUNC", rp.status === 0 && rp.stdout.length < full.out.length && !jp.ok, `pre-H11 shape through the slow pipe: exit ${rp.status}, ${rp.stdout.length} of ${full.out.length} B, last line ${JSON.stringify(jp.verdict.slice(0, 40))}: the row reads ${jp.ok ? "PASS" : "FAIL"}`, "H11-1 plant: a row fed a truncated report reads FAIL on its verdict line though the exit code is 0");
+  const rl = slowPipe([path.join(post, "tool.mjs")]), jl = judge("PASS", rl.status, rl.stdout);
+  row("H11-1", "WHOLE", jl.ok && rl.stdout === full.out, `the same tool importing lib.mjs: exit ${rl.status}, ${rl.stdout.length} of ${full.out.length} B, ${jl.verdict}`, "H11-1 fixture: lib.mjs writes the report synchronously, so the same exit leaves it whole");
+  // The real tools, six times each through the slow pipe and six through spawnSync's own pipe (the self-test's shape and
+  // the pass-10 critic's probe, crit-pipe-truncation.mjs), each byte-equal to the file run.
+  if (T9 && fs.existsSync(path.join(T9, "minor7", "src")) && fs.existsSync(path.join(T9, "fv9", "src"))) {
+    const runs = [
+      ["prose-sweep", ["--root", path.join(T9, "minor7"), "--patch", path.join(P9D, "minor-split-v7.patch"), "--declare", path.join(HERE, "deletes-minor.json"), "--rulings", path.join(P9D, "MS7-rulings.json")], "FAIL", "the critic's probe: the minor v7 under MS7-rulings.json"],
+      ["deleted-mechanisms", ["--root", path.join(T9, "fv9"), "--declare", path.join(P10D, "FV9-records", "declare-floor-v9.json"), "--patch", path.join(P10D, "floor-v9.patch")], "PASS", "DEL over floor v9"],
+      ["neighbourhood", ["--root", path.join(T9, "fv9"), "--patch", path.join(P10D, "floor-v9.patch")], "PASS", "the printer over floor v9"],
+    ];
+    for (const [tool, args, expect, what] of runs) {
+      const argv = [path.join(HERE, `${tool}.mjs`), ...args], ref = toFile(argv, `h111-${tool}-file`);
+      for (const [shape, run] of [["slow pipe", () => slowPipe(argv)], ["spawnSync pipe", () => spawnSync(process.execPath, argv, { encoding: "utf8", maxBuffer: 64 << 20 })]]) {
+        let whole = 0; const sizes = [];
+        for (let k = 0; k < 6; k++) { const r = run(); sizes.push(r.stdout.length); if (r.stdout === ref.out && judge(expect, r.status, r.stdout).ok) whole++; }
+        row("H11-1", "PIPE", whole === 6, `${tool} through the ${shape}: ${whole}/6 whole (${[...new Set(sizes)].join(", ")} B; file ${ref.out.length} B, ${judge(expect, ref.status, ref.out).verdict})`, `H11-1: ${what}, six runs`);
+      }
+    }
+  }
+  // Fixture: floor v9 and the minor v8 read as banked (FV9, MS8 and the pass-10 critic's records).
+  if (T9 && ["fv9", "fv9p", "minor8", "minor8p"].every((t) => fs.existsSync(path.join(T9, t, "src")))) {
+    const D9 = path.join(P10D, "FV9-records", "declare-floor-v9.json"), FV9 = path.join(P10D, "floor-v9.patch"), MS8 = path.join(P10D, "minor-split-v8.patch"), DM = path.join(HERE, "deletes-minor.json");
+    const d9 = staticWitness("H11-1", "deleted-mechanisms", ["--root", path.join(T9, "fv9"), "--declare", D9, "--patch", FV9], "PASS", "H11-1 fixture: floor v9 under its declaration and patch, as FV9 §0 read it");
+    rowsHold("H11-1", "static", d9, ["DELETED-MECHANISMS names=73 hits=0", "PASS (101 gated rows)"], "H11-1: floor v9 reads PASS 101 (FV9-records/del-fv9.log)");
+    const m8 = staticWitness("H11-1", "deleted-mechanisms", ["--root", path.join(T9, "minor8"), "--declare", DM, "--patch", MS8], "PASS", "H11-1 fixture: the minor v8 over its own patch, as MS8 read it");
+    rowsHold("H11-1", "static", m8, ["DELETED-MECHANISMS names=42 hits=0", "PASS (54 gated rows)"], "H11-1: the minor v8 reads PASS 54 (MS8-records/del-minor8.log)");
+    if (a["h7-trees"] && fs.existsSync(path.join(path.resolve(a["h7-trees"]), "minor8"))) staticWitness("H11-1", "deleted-mechanisms", ["--root", path.join(path.resolve(a["h7-trees"]), "minor8"), "--declare", DM], "PASS", "H11-1 fixture: the minor v8 in H7-3's scope, PASS 42 (MS8-records/del-H7-minor8.log)");
+    const s9 = staticWitness("H11-1", "prose-sweep", ["--root", path.join(T9, "fv9"), "--patch", FV9, "--declare", D9, "--rulings", path.join(P10D, "FV9-rulings.json")], "FAIL", "H11-1 fixture: floor v9 under FV9-rulings.json, as FV9 §4.2 read it");
+    rowsHold("H11-1", "static", s9, ["ruled=211 true=205 reported=6 unread=3 stale=0", "FAIL (3 unread, 0 stale of 214 lines)"], "H11-1: floor v9's three unread lines (FV9-records/sweep-fv9-ruled.log)");
+    const c9 = staticWitness("H11-1", "prose-sweep", ["--root", path.join(T9, "fv9"), "--patch", FV9, "--declare", D9, "--rulings", path.join(P10D, "crit-fv10-rulings-proposed.json")], "FAIL", "H11-1 fixture: floor v9 under the critic's floor v10 rulings (R-28's plant)");
+    rowsHold("H11-1", "static", c9, [...[95, 104, 118, 119, 120].map((n) => `✗ unread src/components/dock/styles/controls/icon-button.css:${n} [`), "✗ unread src/styles/tokens/sizing.css:256 [", "✗ unread src/styles/tokens/sizing.css:257 [", "FAIL (7 unread, 0 stale of 214 lines)"], "H11-1: red at exactly the seven lines (crit-records/sweep-fv9-plant-proposed.log)");
+    const p9 = staticWitness("H11-1", "prose-sweep", ["--root", path.join(T9, "fv9p"), "--patch", FV9, "--declare", D9, "--rulings", path.join(P10D, "crit-fv10-rulings-proposed.json")], "PASS", "H11-1 fixture: floor v9 + crit-fv10-proposed.diff (R-28) under its rulings");
+    rowsHold("H11-1", "static", p9, ["PASS (207 lines: 200 ruled true, 7 reported)"], "H11-1: R-28's cut reads PASS 207 (crit-records/sweep-fv9p-ruled.log)");
+    const s8 = staticWitness("H11-1", "prose-sweep", ["--root", path.join(T9, "minor8"), "--patch", MS8, "--declare", DM, "--rulings", path.join(P10D, "MS8-rulings.json")], "FAIL", "H11-1 fixture: the minor v8 under MS8-rulings.json, as MS8 §4.3 read it");
+    rowsHold("H11-1", "static", s8, ["ruled=367 true=349 reported=18 unread=4 stale=0", "FAIL (4 unread, 0 stale of 371 lines)"], "H11-1: the minor v8's four unread lines (MS8-records/sweep-minor8-ruled.log)");
+    const p8 = staticWitness("H11-1", "prose-sweep", ["--root", path.join(T9, "minor8p"), "--patch", MS8, "--declare", DM, "--rulings", path.join(P10D, "MS8-rulings-proposed.json")], "PASS", "H11-1 fixture: the minor v8 + MS8-r26-proposed.diff (R-29) under its rulings");
+    rowsHold("H11-1", "static", p8, ["PASS (369 lines: 351 ruled true, 18 reported)"], "H11-1: R-29's cut reads PASS 369 (MS8-records/sweep-minor8p-ruled.log)");
+  }
+}
+if (want("H11-2")) {
+  // A tiny tree: --x-hover re-valued over two lines in src/t.css; two three-rung families (--v-*-r, --p-*) whose shared
+  // segments are the rung names; an alias falling back to --x-hover in a touched file; a sentence stating a ladder
+  // relation in a touched file, and the same in an untouched one.
+  const PATCH = ["diff --git a/src/t.css b/src/t.css", "--- a/src/t.css", "+++ b/src/t.css", "@@ -1,11 +1,10 @@", " :root {",
+    "     /* The hover lifts a plate tier. */", "-    --x-hover: color-mix(", "-        in oklab, var(--plate) 90%, white);", "+    --x-hover: oklch(from var(--ink) l c h / 0.05);",
+    "-    --v-wash-r: 1px;", "-    --v-calm-r: 2px;", "-    --v-deep-r: 3px;", "+    --v-wash-r: 4px;", "+    --v-calm-r: 5px;", "+    --v-deep-r: 6px;",
+    "-    --p-wash: 0.1;", "-    --p-calm: 0.2;", "-    --p-deep: 0.3;", "+    --p-wash: 0.4;", "+    --p-calm: 0.5;", "+    --p-deep: 0.6;", " }",
+    "diff --git a/src/u.css b/src/u.css", "--- a/src/u.css", "+++ b/src/u.css", "@@ -1 +1 @@", "-x", "+y",
+    "diff --git a/demo/readme.md b/demo/readme.md", "--- a/demo/readme.md", "+++ b/demo/readme.md", "@@ -1 +1 @@", "-x", "+y", ""].join("\n");
+  const T = ":root {\n    /* The hover lifts a plate tier. */\n    --x-hover: oklch(from var(--ink) l c h / 0.05);\n    --v-wash-r: 4px;\n    --v-calm-r: 5px;\n    --v-deep-r: 6px;\n    --p-wash: 0.4;\n    --p-calm: 0.5;\n    --p-deep: 0.6;\n}\n";
+  const U = ".b {\n    /* A card-tinted fill: a consumer sets `--y-hover`. */\n    &:hover {\n        background: var(--y-hover, var(--x-hover));\n    }\n}\n/* The veil paints the calm rung\n   at the bound, and the deep rung above it. */\n.q { color: red; }\n";
+  const fx = tree("h112", { "p.patch": PATCH, "src/t.css": T, "src/u.css": U, "demo/readme.md": "Retune `--y-hover` for a brand hover.\n", "src/o.css": "/* untouched: the plate sits at the bound. */\n" });
+  const o = staticWitness("H11-2", "neighbourhood", ["--root", fx, "--patch", path.join(fx, "p.patch")], "PASS", "H11-2 fixture: a two-line value re-valued, an alias, a ladder sentence");
+  rowsHold("H11-2", "static", o, ["re-valued: 7 declarations of 7 tokens", "  --x-hover (src/t.css): color-mix(in oklab, var(--plate) 90%, white) → oklch(from var(--ink) l c h / 0.05)",
+    "  --y-hover → --x-hover (src/u.css:4)", 'rung names (segments of two or more re-valued families of one file): calm, deep, wash; and "bound"',
+    "src/t.css:2 [above the --x-hover declaration (:3)", "src/t.css:3 [declares --x-hover]",
+    "src/u.css:2 [above var(--y-hover, var(--x-hover)) (:4); names the alias --y-hover]", "src/u.css:4 [var(--y-hover) falls back to --x-hover]", "demo/readme.md:1 [names the alias --y-hover]",
+    'src/u.css:7 [carries "calm"; sentence of :8]', /src\/u\.css:8 \[sentence of :7; carries "bound", "deep"\]/, { not: "src/o.css" }, { not: "src/u.css:9" }, "PRINT (13 lines in 3 files; not gated)"],
+    "H11-2: the declaration's block, the alias line with its block and its prose, the ladder sentence whole; an untouched file is not read");
+  if (T9 && fs.existsSync(path.join(T9, "fv9", "src"))) {
+    const o9 = staticWitness("H11-2", "neighbourhood", ["--root", path.join(T9, "fv9"), "--patch", path.join(P10D, "floor-v9.patch")], "PASS", "H11-2 plant: floor v9, whose patch made six printed lines false (P10-1.1)");
+    const at = (f, n) => new RegExp(`^${f.replace(/[.]/g, "\\.")}:${n} \\[`, "m");
+    rowsHold("H11-2", "static", o9, [at("src/components/dock/styles/controls/icon-button.css", 95), at("src/components/dock/styles/controls/icon-button.css", 104),
+      at("src/components/dock/styles/controls/icon-button.css", 118), at("src/components/dock/styles/controls/icon-button.css", 119), at("src/components/dock/styles/controls/icon-button.css", 120),
+      at("src/styles/tokens/sizing.css", 256), at("src/styles/tokens/sizing.css", 257), at("src/styles/glass/overlay-plate.css", 271), at("src/styles/glass/overlay-plate.css", 273),
+      "  --dock-icon-hover-bg → --dock-control-hover-bg (src/components/dock/styles/controls/icon-button.css:113)", /PRINT \(\d+ lines in \d+ files; not gated\)/],
+      "H11-2 plant: Crit A-1 (icon-button.css:95, :104), FV9 §4.2 (:118-120), Crit A-2 (sizing.css:256-257), Crit A-3 (overlay-plate.css:271-273) all print");
+  }
+  staticWitness("H11-2", "neighbourhood", ["--root", path.join(ROOT, "fx", "h112-absent"), "--patch", path.join(fx, "p.patch")], "LOUD", "H11-2: an absent tree reads nothing and refuses (H10-1's law)");
+  const head = spawnSync("git", ["-C", CHECKOUT, "show", "HEAD:docs/tranches/BL/design/material/harness/sweep-frozen.json"], { encoding: "utf8" }).stdout;
+  const same = head === fs.readFileSync(path.join(HERE, "sweep-frozen.json"), "utf8"), opens = /sweep-frozen/.test(fs.readFileSync(path.join(HERE, "neighbourhood.mjs"), "utf8").replace(/^\/\/.*$/gm, ""));
+  row("H11-2", "FROZEN", same && !opens && head.length > 0, `sweep-frozen.json ${same ? "byte-equal to" : "differs from"} HEAD's (${JSON.parse(head || "{\"words\":[]}").words.length} words); the printer's code ${opens ? "opens" : "does not open"} it`, "H11-2 adds no frozen word");
 }
 
 if (want("W-B")) {

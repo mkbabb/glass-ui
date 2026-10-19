@@ -1,0 +1,42 @@
+ok   H11-1 static   expect EXITS · 12 tools still call process.exit (baseline.mjs, build.mjs, capture.mjs, declare-removed.mjs, fixtures.mjs, glance.mjs, hover-fill-selected.mjs, m1x-off-paper.mjs, m6-separable-ladder.mjs, rows.mjs, run.mjs, wa-no-signal.mjs); without lib.mjs: none; sweep/DEL/printer/LAW: none; lib.mjs blocks stdout and stderr: true · H11-1: every exit leaves a whole report
+ok   H11-1 static   expect TRUNC · pre-H11 shape through the slow pipe: exit 0, 65500 of 240017 B, last line "row 0654 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx": the row reads FAIL · H11-1 plant: a row fed a truncated report reads FAIL on its verdict line though the exit code is 0
+ok   H11-1 static   expect WHOLE · the same tool importing lib.mjs: exit 0, 240017 of 240017 B, PASS (2400 rows) · H11-1 fixture: lib.mjs writes the report synchronously, so the same exit leaves it whole
+ok   H11-1 static   expect PIPE · prose-sweep through the slow pipe: 6/6 whole (211729 B; file 211729 B, FAIL (2 unread, 0 stale of 371 lines)) · H11-1: the critic's probe: the minor v7 under MS7-rulings.json, six runs
+ok   H11-1 static   expect PIPE · prose-sweep through the spawnSync pipe: 6/6 whole (211729 B; file 211729 B, FAIL (2 unread, 0 stale of 371 lines)) · H11-1: the critic's probe: the minor v7 under MS7-rulings.json, six runs
+ok   H11-1 static   expect PIPE · deleted-mechanisms through the slow pipe: 6/6 whole (11805 B; file 11805 B, PASS (101 gated rows)) · H11-1: DEL over floor v9, six runs
+ok   H11-1 static   expect PIPE · deleted-mechanisms through the spawnSync pipe: 6/6 whole (11805 B; file 11805 B, PASS (101 gated rows)) · H11-1: DEL over floor v9, six runs
+ok   H11-1 static   expect PIPE · neighbourhood through the slow pipe: 6/6 whole (269234 B; file 269234 B, PRINT (1597 lines in 73 files; not gated)) · H11-1: the printer over floor v9, six runs
+ok   H11-1 static   expect PIPE · neighbourhood through the spawnSync pipe: 6/6 whole (269234 B; file 269234 B, PRINT (1597 lines in 73 files; not gated)) · H11-1: the printer over floor v9, six runs
+ok   H11-1 static   expect PASS exit 0 · PASS (101 gated rows) · H11-1 fixture: floor v9 under its declaration and patch, as FV9 §0 read it
+ok   H11-1 static   expect ROWS exit 0 · rows hold (2) · H11-1: floor v9 reads PASS 101 (FV9-records/del-fv9.log)
+ok   H11-1 static   expect PASS exit 0 · PASS (54 gated rows) · H11-1 fixture: the minor v8 over its own patch, as MS8 read it
+ok   H11-1 static   expect ROWS exit 0 · rows hold (2) · H11-1: the minor v8 reads PASS 54 (MS8-records/del-minor8.log)
+ok   H11-1 static   expect PASS exit 0 · PASS (42 gated rows) · H11-1 fixture: the minor v8 in H7-3's scope, PASS 42 (MS8-records/del-H7-minor8.log)
+ok   H11-1 static   expect FAIL exit 1 · FAIL (3 unread, 0 stale of 214 lines) · H11-1 fixture: floor v9 under FV9-rulings.json, as FV9 §4.2 read it
+        ✗ unread src/components/dock/styles/controls/icon-button.css:118 [word "darken"]
+        ✗ unread src/components/dock/styles/controls/icon-button.css:119 [word "darken"]
+        ✗ unread src/components/dock/styles/controls/icon-button.css:120 [word "darken"]
+ok   H11-1 static   expect ROWS exit 0 · rows hold (2) · H11-1: floor v9's three unread lines (FV9-records/sweep-fv9-ruled.log)
+ok   H11-1 static   expect FAIL exit 1 · FAIL (7 unread, 0 stale of 214 lines) · H11-1 fixture: floor v9 under the critic's floor v10 rulings (R-28's plant)
+        ✗ unread src/components/dock/styles/controls/icon-button.css:104 [word "tint"]
+        ✗ unread src/components/dock/styles/controls/icon-button.css:118 [word "darken"]
+        ✗ unread src/components/dock/styles/controls/icon-button.css:119 [word "darken"]
+        ✗ unread src/components/dock/styles/controls/icon-button.css:120 [word "darken"]
+ok   H11-1 static   expect ROWS exit 0 · rows hold (8) · H11-1: red at exactly the seven lines (crit-records/sweep-fv9-plant-proposed.log)
+ok   H11-1 static   expect PASS exit 0 · PASS (207 lines: 200 ruled true, 7 reported) · H11-1 fixture: floor v9 + crit-fv10-proposed.diff (R-28) under its rulings
+ok   H11-1 static   expect ROWS exit 0 · rows hold (1) · H11-1: R-28's cut reads PASS 207 (crit-records/sweep-fv9p-ruled.log)
+ok   H11-1 static   expect FAIL exit 1 · FAIL (4 unread, 0 stale of 371 lines) · H11-1 fixture: the minor v8 under MS8-rulings.json, as MS8 §4.3 read it
+        ✗ unread src/styles/glass/ladder.css:297 [word "bucket"]
+        ✗ unread src/styles/glass/ladder.css:299 [word "bucket"]
+        ✗ unread src/styles/tokens/sizing.css:258 [word "darken"]
+        ✗ unread src/styles/tokens/sizing.css:259 [word "darken"]
+ok   H11-1 static   expect ROWS exit 0 · rows hold (2) · H11-1: the minor v8's four unread lines (MS8-records/sweep-minor8-ruled.log)
+ok   H11-1 static   expect PASS exit 0 · PASS (369 lines: 351 ruled true, 18 reported) · H11-1 fixture: the minor v8 + MS8-r26-proposed.diff (R-29) under its rulings
+ok   H11-1 static   expect ROWS exit 0 · rows hold (1) · H11-1: R-29's cut reads PASS 369 (MS8-records/sweep-minor8p-ruled.log)
+ok   H11-2 static   expect PASS exit 0 · PRINT (13 lines in 3 files; not gated) · H11-2 fixture: a two-line value re-valued, an alias, a ladder sentence
+ok   H11-2 static   expect ROWS exit 0 · rows hold (14) · H11-2: the declaration's block, the alias line with its block and its prose, the ladder sentence whole; an untouched file is not read
+ok   H11-2 static   expect PASS exit 0 · PRINT (1597 lines in 73 files; not gated) · H11-2 plant: floor v9, whose patch made six printed lines false (P10-1.1)
+ok   H11-2 static   expect ROWS exit 0 · rows hold (11) · H11-2 plant: Crit A-1 (icon-button.css:95, :104), FV9 §4.2 (:118-120), Crit A-2 (sizing.css:256-257), Crit A-3 (overlay-plate.css:271-273) all print
+ok   H11-2 static   expect LOUD exit 2 · FAIL (nothing read: the tree does not exist) · H11-2: an absent tree reads nothing and refuses (H10-1's law)
+ok   H11-2 static   expect FROZEN · sweep-frozen.json byte-equal to HEAD's (9 words); the printer's code does not open it · H11-2 adds no frozen word
+SELFTEST PASS: 30 expectations met
