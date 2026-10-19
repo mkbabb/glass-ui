@@ -1,0 +1,8 @@
+# unit engage-stage + focus-veil + slider · export const KEYBOARD_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse";  2026-10-19 02:30:39 load { 19.17 18.47 18.51 }
+ Test Files  1 passed (1)
+      Tests  21 passed (21)
+# typecheck 2026-10-19 02:30:45 load { 17.36 18.10 18.38 }
+
+tests/components/fourier-field/FourierField.smoke.test.ts(18,30): error TS2307: Cannot find module '@mkbabb/glass-ui/fourier-math' or its corresponding type declarations.
+tests/components/fourier-field/FourierField.smoke.test.ts(19,66): error TS2307: Cannot find module '@mkbabb/glass-ui/fourier-math' or its corresponding type declarations.
+# typecheck exit 0

@@ -1,0 +1,39 @@
+build veil-coarse: # exit 0 · scene app harness 3c135d6264f8 · export const KEYBOARD_VEIL = true; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+build probe-veil-coarse: # exit 0 ·  · export const KEYBOARD_VEIL = true; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+build ce4-veil-coarse: # exit 0 ·  · export const KEYBOARD_VEIL = true; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+build veil-every: # exit 0 · scene app harness 3c135d6264f8 · export const KEYBOARD_VEIL = true; export const POINTER_STAGE: "every" | "coarse" = "every"; 
+build probe-veil-every: # exit 0 ·  · export const KEYBOARD_VEIL = true; export const POINTER_STAGE: "every" | "coarse" = "every"; 
+build ce4-veil-every: # exit 0 ·  · export const KEYBOARD_VEIL = true; export const POINTER_STAGE: "every" | "coarse" = "every"; 
+build noveil-every: # exit 0 · scene app harness 3c135d6264f8 · export const KEYBOARD_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "every"; 
+build probe-noveil-every: # exit 0 ·  · export const KEYBOARD_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "every"; 
+build ce4-noveil-every: # exit 0 ·  · export const KEYBOARD_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "every"; 
+build noveil-coarse: # exit 0 · scene app harness 3c135d6264f8 · export const KEYBOARD_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+build probe-noveil-coarse: # exit 0 ·  · export const KEYBOARD_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+build ce4-noveil-coarse: # exit 0 ·  · export const KEYBOARD_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+default arm restored: export const KEYBOARD_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+plant p-anchor: applied (260:    const anchor = "--engage-footprint"; void page; void anchors;)
+build p-anchor: # exit 0 · scene app harness 3c135d6264f8 · export const KEYBOARD_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+plant p-anchor restored: identical
+plant p-char: applied (255:                } else if (keys.has(k) || k.length === 1) keyed.value = true;)
+build p-char: # exit 0 · scene app harness 3c135d6264f8 · export const KEYBOARD_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+plant p-char restored: identical
+plant p-script: applied (247:            ["focusin", () => { keyed.value = !pointed; }],)
+build p-script: # exit 0 · scene app harness 3c135d6264f8 · export const KEYBOARD_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+plant p-script restored: identical
+plant p-tabhand: applied (228:    const isHeld = computed(() => hand.value || scrubbing.value || keyed.value);)
+build p-tabhand: # exit 0 · scene app harness 3c135d6264f8 · export const KEYBOARD_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+plant p-tabhand restored: identical
+plant p-mod: applied (255:                } else if (keys.has(k) || ["Shift", "Meta", "Control", "Alt"].includes(k)) keyed.value = true;)
+build p-mod: # exit 0 · scene app harness 3c135d6264f8 · export const KEYBOARD_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+plant p-mod restored: identical
+plant pl-anchorlost: applied (302:    if (false) host.style.setProperty("position-anchor", h.own[0], h.own[1]);)
+build pl-anchorlost: # exit 0 · scene app harness 3c135d6264f8 · export const KEYBOARD_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+plant pl-anchorlost restored: identical
+plant pl-wheelchain: applied (280:    void onWheel; // ce4 plant)
+build pl-wheelchain: # exit 0 · scene app harness 3c135d6264f8 · export const KEYBOARD_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+plant pl-wheelchain restored: identical
+plant probe-pl-arm: applied (281:                true ||)
+build probe-pl-arm: # exit 0 ·  · export const KEYBOARD_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+plant probe-pl-arm restored: identical
+worktree vs HEAD after plants:  162 files changed, 1403 insertions(+), 1464 deletions(-) · export const KEYBOARD_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+# run-ce4 builds plants done 2026-10-19 00:27:16

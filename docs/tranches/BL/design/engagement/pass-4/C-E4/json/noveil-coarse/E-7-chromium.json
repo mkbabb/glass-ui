@@ -1,0 +1,55 @@
+{
+ "id": "E-7",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p4/C-E4/out/builds/noveil-coarse"
+ },
+ "loadStart": "14.9/17.2/17.8",
+ "loadEnd": "15.7/17.4/17.8",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-7 writers data-engaged (static)",
+   "status": "PASS",
+   "line": "1 writer file(s): src/composables/motion/engage/stage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p4/C-E4/wt",
+   "load": "14.9/17.2/17.8"
+  },
+  {
+   "name": "E-7 writers data-held (static)",
+   "status": "FAIL",
+   "line": "2 writer file(s): src/components/dock/GlassDock.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p4/C-E4/wt",
+   "load": "14.9/17.2/17.8"
+  },
+  {
+   "name": "E-7 writers data-press (static)",
+   "status": "PASS",
+   "line": "1 writer file(s): src/composables/motion/engage/press.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p4/C-E4/wt",
+   "load": "14.9/17.2/17.8"
+  },
+  {
+   "name": "E-7 writers data-commit (static)",
+   "status": "PASS",
+   "line": "1 writer file(s): src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p4/C-E4/wt",
+   "load": "14.9/17.2/17.8"
+  },
+  {
+   "name": "E-7 slider held",
+   "status": "PASS",
+   "line": "[data-engaged] nodes while pointer-held 1 · bound ≥ 1",
+   "load": "14.9/17.2/17.8"
+  },
+  {
+   "name": "E-7 slider held PRM",
+   "status": "PASS",
+   "line": "reduce · [data-engaged] nodes while pointer-held 1 · bound ≥ 1",
+   "load": "14.9/17.2/17.8"
+  },
+  {
+   "name": "E-7 modal open, nothing held",
+   "status": "PASS",
+   "line": "dialog open true · veil nodes 1 · [data-engaged] nodes 0 · bound 0",
+   "load": "15.7/17.4/17.8"
+  }
+ ]
+}

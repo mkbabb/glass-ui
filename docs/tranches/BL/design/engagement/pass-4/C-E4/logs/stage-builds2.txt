@@ -1,0 +1,6 @@
+build ce4-veil-coarse: # exit 0 ·  · export const KEYBOARD_VEIL = true; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+build ce4-veil-every: # exit 0 ·  · export const KEYBOARD_VEIL = true; export const POINTER_STAGE: "every" | "coarse" = "every"; 
+build ce4-noveil-every: # exit 0 ·  · export const KEYBOARD_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "every"; 
+build ce4-noveil-coarse: # exit 0 ·  · export const KEYBOARD_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+default arm restored: export const KEYBOARD_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+# run-ce4 builds done 2026-10-19 00:33:05

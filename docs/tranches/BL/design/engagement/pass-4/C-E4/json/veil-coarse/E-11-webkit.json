@@ -1,0 +1,37 @@
+{
+ "id": "E-11",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p4/C-E4/out/builds/veil-coarse"
+ },
+ "loadStart": "17.6/18.3/19.2",
+ "loadEnd": "15.5/17.8/19.0",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "E-11 switch fail-loud --scale-commit-pop=1 (commit)",
+   "status": "UNMEASURED",
+   "line": "no degradation, no error: the token is not read on this path · --scale-commit-pop: \"1\" on the root · clean {\"peak\":0,\"rise\":0.003252727611949502} {\"peak\":0,\"rise\":0.006816444003487021} · planted {\"peak\":0,\"rise\":0.003252727611949502} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 0",
+   "load": "17.1/18.2/19.2"
+  },
+  {
+   "name": "E-11 slider fail-loud --space-section (kbd)",
+   "status": "PASS",
+   "line": "fails loud · --space-section: \"nonsense\" on the root · clean {\"s\":1.0599999321831597,\"veil\":1,\"n\":2} {\"s\":1.0599999321831597,\"veil\":1,\"n\":2} · planted {\"s\":0,\"veil\":1,\"n\":2} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 1: [glass-ui] engage stage: --stage-reach (from --space-section, --stage-room, --stage-w) is unreadable on the host; the en",
+   "load": "16.2/18.0/19.1"
+  },
+  {
+   "name": "E-11 slider fail-loud --scale-engage (kbd)",
+   "status": "PASS",
+   "line": "fails loud · --scale-engage: \"nonsense\" on the root · clean {\"s\":1.0599999321831597,\"veil\":1,\"n\":2} {\"s\":1.0599999321831597,\"veil\":1,\"n\":2} · planted {\"s\":1,\"veil\":1,\"n\":2} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 2: [glass-ui] engage stage: --scale-engage is unreadable on the host; the engagement it drives paints nothing. Is the glass",
+   "load": "16.3/18.0/19.1"
+  },
+  {
+   "name": "E-11 slider fail-loud --spring-dock-settle (fling)",
+   "status": "PASS",
+   "line": "fails loud · --spring-dock-settle: \"nonsense\" on the root · clean {\"x\":284.7540054321289} {\"x\":283.88696670532227} · planted {\"x\":281.07178115844727} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 1: [glass-ui] engage: --spring-dock-settle is unreadable on the host; the engagement it drives paints nothing. Is the glass",
+   "load": "15.5/17.8/19.0"
+  }
+ ]
+}
