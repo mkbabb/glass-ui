@@ -1,0 +1,12 @@
+DEL fv10 (floor v10 decl+patch) exit 0: PASS (101 gated rows)
+DEL fv10s (floor v10 decl+patch) exit 0: PASS (101 gated rows)
+DEL fv9 (floor v10 decl+patch) exit 0: PASS (101 gated rows)
+DEL absent exit 2: FAIL (nothing read: the tree does not exist)
+DEL minor9 (deletes-minor + minor v9 patch) exit 0: PASS (54 gated rows)
+DEL minor9s (deletes-minor + minor v9 patch) exit 0: PASS (54 gated rows)
+H7-3 minor9 exit 0: PASS (42 gated rows)
+LAW exit 0: PASS (87 gated rows)
+HOV fv10 exit 0: PASS (58 gated rows)
+census fv10 exit 0: LIGHTING-CENSUS stacked=0 halo=0 blur=0 open=0
+HOV minor9 exit 0: PASS (58 gated rows)
+census minor9 exit 0: LIGHTING-CENSUS stacked=0 halo=0 blur=0 open=0

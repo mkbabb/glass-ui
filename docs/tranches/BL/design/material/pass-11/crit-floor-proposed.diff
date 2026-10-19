@@ -1,0 +1,15 @@
+diff --git a/src/styles/glass/grasp.css b/src/styles/glass/grasp.css
+index 3db8acb6e..9894504d7 100644
+--- a/src/styles/glass/grasp.css
++++ b/src/styles/glass/grasp.css
+@@ -129,8 +129,8 @@
+        plate. `@utility glass-plate` composes both names as the veil's alpha
+        (glass/veil.css); `glass/liquid-fill.css` — the slider's host, which paints a
+        tinted MIX and no veil — declares `--glass-veil-rest: 1` and scales its tint
+-       strength by the rung, so `rung ÷ rest` runs the same 1 → 0.6 there and "sheds 40%
+-       of its ink" is a paint fact on BOTH shipped consumers rather than prose on one. */
++       strength by the rung, so `rung ÷ rest` runs 1 → 0.6 there and the fill sheds 40%
++       of its strength in paint; the dock, a plate at the bound, keeps its α when held. */
+     [data-held]:has(> .glass-grasp-carrier[data-grasp="grasp"]) {
+         --glass-veil-rung: max(calc(var(--glass-veil-rest) * 0.6), var(--glass-veil-floor, 0));
+     }

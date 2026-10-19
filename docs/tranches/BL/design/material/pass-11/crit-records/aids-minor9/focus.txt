@@ -1,0 +1,400 @@
+DESIGN.md:34 [WRITTEN; nbhd: carries "bound"] true
+   says: 2. **Surface tint (rgba background)** — the light-vs-dark admit-through. Light-mode and dark-mode tints differ: light paints the `--card` pole at or above the solved bound α (a cream frost, never an i
+   why: R-25 (MS7-r21b-proposed.diff) as built. 'Surface tint (rgba background)': glass-plate writes a translucent colour background (veil.css:87-94). 'the light-vs-dark admit-through': the plate's α sets what the backdrop admits. 'Light-mode and dark-mode tints differ': light paints --glass-veil-ink = var(--card) (tokens/glass.css:40) at rungs bound, bound + 1 step, bound + 2 steps (:51-55), so 'at or above the solved bound α' holds and 'a cream frost, never an ink' holds (the pole is --card, O-62); dark paints oklch(0.17 0.03 70), a warm near-black (dark-arm.css:275), at base 0.18 ± n·0.04 (:276-282), 'at its own rung α'
+
+DESIGN.md:521 [WRITTEN; nbhd: names the alias --glass-veil-tier; carries "resting"] true
+   says: `@utility glass-plate` (`src/styles/glass/veil.css`) is the plate paint, composed at the element. It reads `--glass-veil-tier` (unset resolves `resting`), clamps it upward by the measured backdrop lum
+   why: matches the minor's recipe clause by clause (veil.css:69-94): reads --glass-veil-tier with resting as the unset default; clamps it upward by the measured luma into --glass-veil-rest then --glass-veil-rung; mixes into --glass-veil; writes exactly background: var(--glass-veil) and isolation: isolate; 'not a backdrop root' is veil.css:62-68's own reading; the five tiers apply it (ladder.css); --glass-veil is a nestable value token (veil.css:49-51)
+
+demo/stories/substrates/glass-material.vue:230 [WRITTEN] true
+   says: earned-ink clamp can actually be photographed.
+   why: this page wires the sampled-luminance observer on a content card; the only other mounts are the dock's own (GlassDock.vue) and the dock stage (DockStage.vue), so 'the one place … outside the dock' holds; 'earned-ink clamp' is the clamp the minor keeps (veil.css:69-85), photographed here because the observer feeds it
+
+demo/stories/substrates/glass-material.vue:253 [nbhd: sentence of :249; sentence of :254] true
+   says: plate carries no second lens) and the bright-backdrop bucket
+   why: a rung nested in a rung resolves --glass-cell-backdrop-filter: none (one backdrop sample per plate), and the bright bucket engages through the floating ancestor, which declares --glass-backdrop: light (ladder.css:125-133)
+
+demo/stories/substrates/glass-material.vue:5 [nbhd: sentence of :3] reported
+   says: // SOTA folds (squircle, chromatic fringe, adaptive tint) ride that
+   why: of the three 'SOTA folds', the chromatic fringe is not painted (the story's own blurb at :383, 'no painted fringe at the edge'). HEAD text, byte-identical, not written by the patch (MS7 §4.2)
+
+src/components/_shared/feedback/feedback-tone.css:109 [nbhd: carries "wash"] true
+   says: color event's saturated note over the tinted wash). A consumer composes it on its
+   why: .feedback-tone-glyph carries the full-chroma --tone, the one saturated note over the tinted wash
+
+src/components/_shared/feedback/feedback-tone.css:20 [nbhd: carries "wash"] reported
+   says: a tinted-glass wash (the rung bg mixed a BOUNDED % toward the tone, the SAME
+   why: the sentence calls the tone wash 'the SAME color-mix(in oklab, …) seam the --glass-veil-* legibility lift and the --veil-bg plate already run': the veil mixes in srgb (veil.css:87-92) and no --veil-bg is declared in src/. HEAD text (HEAD's veil is srgb too, and HEAD declares no --veil-bg); the patch edits this header at :38 only (MS7 §4.2)
+
+src/components/_shared/feedback/feedback-tone.css:21 [nbhd: sentence of :20] reported
+   says: `color-mix(in oklab, <rung bg>, <tint> <strength>)` seam the `--glass-veil-*`
+   why: the sentence calls the tone wash 'the SAME color-mix(in oklab, …) seam the --glass-veil-* legibility lift and the --veil-bg plate already run': the veil mixes in srgb (veil.css:87-92) and no --veil-bg is declared in src/. HEAD text (HEAD's veil is srgb too, and HEAD declares no --veil-bg); the patch edits this header at :38 only (MS7 §4.2)
+
+src/components/_shared/feedback/feedback-tone.css:38 [WRITTEN] true
+   says: surface that composes a rung therefore tints ITS OWN rung: the earned-ink clamp,
+   why: a .feedback-tone surface mixing over --glass-veil tints its own rung, so the earned-ink clamp (which the minor keeps, veil.css:69-85), the tier ink and --glass-level, all inputs of --glass-veil (:87-92), survive inside the mix
+
+src/components/_shared/feedback/feedback-tone.css:4 [nbhd: sentence of :5] true
+   says: through it [2026-08-08 · BK #33]: `.feedback-tone` — the tinted PLATE — has exactly ONE
+   why: .feedback-tone has one shipped consumer, Toast (Toast.vue:138); Alert binds only the --tone registers (alert/index.ts) over a neutral .glass-quiet rung, and the tinted Alert plate is not built (R-3)
+
+src/components/_shared/feedback/feedback-tone.css:71 [nbhd: carries "wash"] true
+   says: `.feedback-tone`; the tinted-glass wash + the tone-keyed rim resolve off the ONE
+   why: a surface declares --tone and composes .feedback-tone; the wash and the rim resolve off the one recipe
+
+src/components/_shared/feedback/feedback-tone.css:8 [nbhd: sentence of :9] true
+   says: rung (R-3, neutral glass + status ink — the tinted Alert plate is not built). Everything
+   why: .feedback-tone has one shipped consumer, Toast (Toast.vue:138); Alert binds only the --tone registers (alert/index.ts) over a neutral .glass-quiet rung, and the tinted Alert plate is not built (R-3)
+
+src/components/_shared/menu/menu.css:11 [WRITTEN; nbhd: above the --menu-row-bg declaration (:18)] true
+   says: darkens the cream row with no hue (C 0.010), which reads grey. The highlighted
+   why: the light menu plate is --card at α, the theme's own cream, so a plate colour over it paints nothing visible; a foreground-ink fill darkens it with no hue (C 0.010, the minor's measured figure), which reads grey; hence the accent tint (:7-9)
+
+src/components/_shared/menu/menu.css:8 [WRITTEN; nbhd: above the --menu-row-bg declaration (:18)] true
+   says: TINT, the warm accent ink (`--section-color-5`, the amber) at the selected fill
+   why: the minor's light row: --menu-row-bg is light-dark(oklch(from var(--section-color-5) l c h / var(--fill-selected)), …) (menu.css), so LIGHT is the amber accent ink at the selected alpha 0.12 (color-radius.css:164)
+
+src/components/button/styles.css:143 [nbhd: above the --glass-capsule-fill declaration (:166)] true
+   says: /* ── Tone TINTS; it never replaces ────────────────────────────────────────
+   why: Button's tone tints and never replaces: the fill is the emphasis plate mixed toward the tone over --glass-veil (button/styles.css reads var(--glass-veil); Button.test.ts:144-149)
+
+src/components/button/styles.css:60 [nbhd: sentence of :59] true
+   says: box. `--radius-pill` (9999px) is clamped by the engine to half the
+   why: the engine clamps --radius-pill (9999px) to half the block-size, and the radius scaling clamps a narrow box's corner to half its short edge; a min(9999px, …) would re-derive a clamp the engine already applies. Geometry, not the veil
+
+src/components/configurator/styles.css:528 [WRITTEN; nbhd: above the --glass-capsule-fill declaration (:529); carries "quiet"] true
+   says: * the one-ink selected fill (`--fill-selected`); dark, the quiet glass tint. */
+   why: the selected chip sets --glass-capsule-fill to light-dark(oklch(from var(--foreground) l c h / var(--fill-selected)), var(--glass-plate-quiet)) (:529): light the one-ink --fill-selected fill, dark the quiet glass plate, through the documented override hook
+
+src/components/dock/styles/adaptive-legibility.css:30 [WRITTEN] true
+   says: THE ELEMENT through the veil clamp (see the rule body below), which is the
+   why: the partial re-points no plate colour (its declarations are --dock-fg-on-aurora and the muted register, :35-48); the plate's earned ink is the veil clamp composed at the element, the whole dynamic half; a dark-substrate consumer opts out with --glass-level on the dock root
+
+src/components/dock/styles/index.css:24 [WRITTEN; nbhd: sentence of :25] true
+   says: *                            no clamp and no bucket). Split from
+   why: dock/adaptive-legibility.css holds the foreground self-engage, the contrast-color() refinement and the static arm, and declares no clamp and no bucket (its clamp and bucket mentions are comments naming veil.css and ladder.css, :30, :38, :50-54)
+
+src/components/dock/styles/search.css:10 [WRITTEN] true
+   says: * `:root`'s luma and does NOT earn ink — the pale-fade; the dock's own such token is
+   why: a colour composed at :root bakes :root's luma and earns no ink (the substitution trap); the dock's own such token is struck: tokens/glass.css:187, 'NO --glass-plate-dock, deliberately'
+
+src/components/dock/styles/shell.css:30 [nbhd: sentence of :31] reported
+   says: UNIFIED PLATE TINT is the PRIMARY anti-gray. Riding the
+   why: 'the UNIFIED PLATE TINT is the PRIMARY anti-gray … The plate-tint self-engage (dock/adaptive-legibility.css)': that partial carries no plate tint, and the plate's ink is glass-plate's clamp (dock.css:101-116). HEAD's adaptive-legibility.css already 're-points no plate colour'; the patch edits this file at :130-146 only (MS7 §4.2)
+
+src/components/dock/styles/shell.css:33 [nbhd: sentence of :31] reported
+   says: liquid glass concentrates light ~1.1-1.25×). The plate-tint self-engage
+   why: 'the UNIFIED PLATE TINT is the PRIMARY anti-gray … The plate-tint self-engage (dock/adaptive-legibility.css)': that partial carries no plate tint, and the plate's ink is glass-plate's clamp (dock.css:101-116). HEAD's adaptive-legibility.css already 're-points no plate colour'; the patch edits this file at :130-146 only (MS7 §4.2)
+
+src/composables/glass/useGlassBackdropLuminance.ts:45 [WRITTEN] true
+   says: * The luminance threshold above which the backdrop is `light` (engages the bright bucket).
+   why: lightThreshold defaults to 0.6 (:143) and the bucket is light at value ≥ threshold (:238); a near-white page (luma ≈ 0.9) reads light and a dark substrate (≈ 0.1) dark; the bright bucket is what the light value engages
+
+src/styles/glass.css:47 [WRITTEN] true
+   says: /* The ink-veil register — the plate recipe + the earned-ink clamp the rungs
+   why: veil.css is the ink-veil register: the plate recipe and its earned-ink clamp (veil.css:69-94), imported before ladder.css because the rungs @apply glass-plate
+
+src/styles/glass/deep.css:26 [WRITTEN; nbhd: sentence of :29; sentence of :30] true
+   says: * SAME level path (the opaque escape). The bright bucket reaches the deep surface
+   why: the deep blur composes --glass-level (glass-deep.css), so the a11y brackets reach it and reduced-transparency collapses it to blur(0); .glass-deep is composed with .glass-floating, which sits in the @container bright-bucket group and self-engages the bucket (ladder.css:125-133), and its plate earns the floating rung's ink through the clamp, darker in dark and a thicker --card pole in light (veil.css:39-44)
+
+src/styles/glass/deep.css:29 [WRITTEN; nbhd: carries "overlay"; sentence of :30] true
+   says: * (ladder.css) AND self-engages the overlay band's bucket, and its plate earns the
+   why: the deep blur composes --glass-level (glass-deep.css), so the a11y brackets reach it and reduced-transparency collapses it to blur(0); .glass-deep is composed with .glass-floating, which sits in the @container bright-bucket group and self-engages the bucket (ladder.css:125-133), and its plate earns the floating rung's ink through the clamp, darker in dark and a thicker --card pole in light (veil.css:39-44)
+
+src/styles/glass/deep.css:75 [nbhd: sentence of :74; carries "overlay"; sentence of :76; sentence of :77] true
+   says: painted 16px against a plain overlay's 22px and the ladder graded
+   why: history in the past tense: the predecessor LERPed the floating radius (20px then) toward the 16px deep endpoint, so a deep overlay painted 16px against a plain 22px overlay. R-23's history site (deletes-minor.json); the rung reading prints, not gated (H9-2)
+
+src/styles/glass/grasp.css:120 [nbhd: above the --glass-veil-rung declaration (:139)] true
+   says: 0.6 × the host's CLAMPED rest ink (`--glass-veil-rest`) — never 0.6 × the raw
+   why: the held rung is max(--glass-veil-rest × 0.6, --glass-veil-floor) (:139), and --glass-veil-rest is the clamped rest (veil.css:70-85); shedding from the raw tier would drop below the band over a bright backdrop
+
+src/styles/glass/grasp.css:121 [nbhd: above the --glass-veil-rung declaration (:139)] true
+   says: tier. Over a measured-bright backdrop the clamp has already earned ink, and
+   why: the held rung is max(--glass-veil-rest × 0.6, --glass-veil-floor) (:139), and --glass-veil-rest is the clamped rest (veil.css:70-85); shedding from the raw tier would drop below the band over a bright backdrop
+
+src/styles/glass/grasp.css:133 [nbhd: above the --glass-veil-rung declaration (:139)] true
+   says: plate. `@utility glass-plate` composes both names as the veil's alpha (the clamp
+   why: glass-plate composes both names as the veil's α (veil.css:70-92); liquid-fill.css declares --glass-veil-rest: 1 (:59) and scales its mix % by the rung (:73), so the ratio runs 1 → 0.6 there too
+
+src/styles/glass/grasp.css:135 [nbhd: above the --glass-veil-rung declaration (:139)] true
+   says: tinted MIX and no veil — declares `--glass-veil-rest: 1` and scales its tint
+   why: glass-plate composes both names as the veil's α (veil.css:70-92); liquid-fill.css declares --glass-veil-rest: 1 (:59) and scales its mix % by the rung (:73), so the ratio runs 1 → 0.6 there too
+
+src/styles/glass/ladder-undershadow.css:17 [WRITTEN] true
+   says: uses. There is no second axis left to zero — the earned-ink clamp rides
+   why: level 0 resolves the veil mix to 0% ink and 100% --card (veil.css:87-92: ink at calc(level × 100%) into --card) and the blur to blur(0); the earned-ink clamp is the rung, the veil's α, which level 0 multiplies out
+
+src/styles/glass/ladder.css:125 [nbhd: carries "overlay", "floating"] true
+   says: /* Engage the bright-backdrop bucket BY DEFAULT on the overlay band: a floating
+   why: .glass-floating declares --glass-backdrop: light by default, the overlay band over an unknown surface
+
+src/styles/glass/ladder.css:148 [nbhd: carries "overlay"] true
+   says: /* The overlay band engages the bucket by default
+   why: .glass-overlay declares --glass-backdrop: light (:150)
+
+src/styles/glass/ladder.css:163 [WRITTEN] true
+   says: /* ── Adaptive legibility: the bright-backdrop bucket (G2: legible ink over
+   why: the section heads the bright bucket (G2); 'THE TINT AXIS IS GONE': no rung mixes toward --glass-veil-ink outside the veil, which writes that ink at the rung's own α (veil.css:87-92)
+
+src/styles/glass/ladder.css:165 [WRITTEN] true
+   says: THE TINT AXIS IS GONE. It mixed every rung toward `--glass-veil-ink` while the
+   why: the section heads the bright bucket (G2); 'THE TINT AXIS IS GONE': no rung mixes toward --glass-veil-ink outside the veil, which writes that ink at the rung's own α (veil.css:87-92)
+
+src/styles/glass/ladder.css:2 [nbhd: carries "wash", "quiet", "resting", "floating", "overlay"] true
+   says: The five-tier .glass-{wash,quiet,resting,floating,overlay} surface ladder + the adaptive-legibility @container style(--glass-backdrop: light) bucket (co-located with its rung) + the .glass-opaque e
+   why: the file holds the five-tier ladder, the @container style(--glass-backdrop: light) bucket beside its rungs, and the .glass-opaque escape
+
+src/styles/glass/ladder.css:228 [nbhd: sentence of :227] true
+   says: tone-tinted / selected chip plate
+   why: tone-tinted and selected chip plates composite brighter than the calm quiet plate (stated measured figures), so they read the -strong rung
+
+src/styles/glass/ladder.css:254 [nbhd: carries "overlay"] true
+   says: /* The bright-bucket ink flip — the content tiers + overlay band over a DECLARED/
+   why: the bright-bucket ink flip covers the content tiers and the overlay band over a declared or sampled bright backdrop, lifting --muted-foreground with the active register in lockstep
+
+src/styles/glass/ladder.css:255 [nbhd: sentence of :254] true
+   says: sampled bright backdrop. The SYSTEMIC contrast-color()
+   why: the bright-bucket ink flip covers the content tiers and the overlay band over a declared or sampled bright backdrop, lifting --muted-foreground with the active register in lockstep
+
+src/styles/glass/ladder.css:281 [nbhd: sentence of :280] true
+   says: band's `contrast-color()` ink flip is now GATED in the bright bucket above
+   why: the overlay band's flip lives in the @container bright block (which lists .glass-floating, .glass-overlay), not as an unconditional rule
+
+src/styles/glass/ladder.css:291 [WRITTEN] true
+   says: (where the bucket lifts the ink to its AA floor), the `--foreground`/
+   why: a modal over a bright backdrop flips to the contrast ink where the bucket lifts it to its floor; --foreground and --muted-foreground move together there
+
+src/styles/glass/ladder.css:293 [WRITTEN; nbhd: carries "overlay"] true
+   says: overlay band STILL self-engages the bucket UNCONDITIONALLY (it floats over
+   why: the overlay band self-engages the bucket unconditionally (.glass-floating and .glass-overlay declare --glass-backdrop: light), and only the ink flips in the bright bucket
+
+src/styles/glass/ladder.css:294 [WRITTEN; nbhd: sentence of :293] true
+   says: unknown) — only the INK flips in the bright bucket. ONE
+   why: the overlay band self-engages the bucket unconditionally (.glass-floating and .glass-overlay declare --glass-backdrop: light), and only the ink flips in the bright bucket
+
+src/styles/glass/ladder.css:297 [nbhd: sentence of :298] true
+   says: signal (it moved INTO the @container bucket above), NOT unconditional. Over a calm
+   why: MS8-r26-proposed.diff: the sentence (:297-301) now says the content tiers paint the cream pole 'at or above the bound' (tokens/glass.css:51-55: wash at the bound, quiet and resting above), so flipping to the contrast ink is right only where the bucket engages; the first sentence (:296-297) holds: the content-tier flip lives in the @container bucket
+
+src/styles/glass/ladder.css:299 [WRITTEN; nbhd: sentence of :298] true
+   says: ink to the contrast-color DARK ink there is correct only where the bucket
+   why: MS8-r26-proposed.diff: as :297; the flip to the contrast-color dark ink is correct only where the bucket engages, and an unconditional flip would force it onto the calm card
+
+src/styles/glass/ladder.css:302 [WRITTEN] true
+   says: their flip lives in the @container bucket with the rest of the bright-condition
+   why: the content tiers take no unconditional contrast-color flip; their flip lives in the @container bucket
+
+src/styles/glass/liquid-fill.css:47 [nbhd: above the --glass-veil-rung declaration (:60)] true
+   says: plate — it paints a tinted MIX, not a veil — so it declares the pair itself
+   why: the fill paints a mix, not glass-plate's veil, so it declares --glass-veil-rest and --glass-veil-rung itself (:59-60)
+
+src/styles/glass/liquid-fill.css:55 [nbhd: above the --glass-veil-rung declaration (:60)] true
+   says: written for. Now held really does shed 40% of the fill's tint in paint, and
+   why: held, the rung is 0.6 × rest, so the mix % (strength × rung, :73) sheds 40%; the release lerps the registered --glass-veil-rung
+
+src/styles/glass/overlay-plate.css:15 [nbhd: sentence of :16] true
+   says: blur, the base shadow stack, the backdrop bucket). This file states only what a
+   why: the component composes .glass-floating, which carries the blur, the base shadow and the backdrop bucket (--glass-backdrop: light, ladder.css:125-133)
+
+src/styles/glass/overlay-plate.css:271 [nbhd: sentence of :270] true
+   says: layers, both reading the ONE recipe. There is no adaptive-tint layer and no
+   why: the listbox plate is two flat layers reading one recipe; there is no adaptive-tint layer and no --select-plate-alpha (grep: no declaration), and the veil carries the earned ink
+
+src/styles/glass/rim.css:30 [nbhd: sentence of :31] true
+   says: `--surface-tint-*` brand-overlay family, a separate axis this never touches). At
+   why: the accent mix is color-mix(in oklab, …); the in-srgb fence is the --surface-tint-* family, which this never touches
+
+src/styles/glass/rim.css:6 [nbhd: sentence of :5] true
+   says: bright-bucket @container + the calm-tier re-point + the contrast-color ink-flip +
+   why: the partial lists what stays in ladder.css (the ladder, the bright-bucket @container, the calm re-point, the contrast-color flip, the opaque escape, the under-shadow, the grain); the bright bucket is kept there to hold its source-order tie with the @supports block
+
+src/styles/glass/surface-axis.css:21 [WRITTEN] true
+   says: solid `--card` + `blur(0)` through the ONE level knob, with no tint axis
+   why: R-25 (MS7-r21b-proposed.diff) as built: the opaque escape is solid --card + blur(0) through the one --glass-level knob, 'with no tint axis to zero' (there is none: ladder.css:165), and a solid plate has no translucent backdrop to earn ink over
+
+src/styles/glass/surface-axis.css:43 [WRITTEN] true
+   says: fork, and no brightness leg: in dark it darkens toward the ink and in light it
+   why: the veil surface is the quiet rung's material (--glass-veil-tier: var(--glass-veil-quiet), :46) with the edge off; no recipe fork and no brightness leg: the clamp darkens toward the near-black ink in dark and thickens the --card pole in light (veil.css:39-44)
+
+src/styles/glass/surface-axis.css:79 [WRITTEN] true
+   says: coherently. There is no tint axis to zero: the veil is the plate's one writer
+   why: there is no tint axis to zero (ladder.css:165): the veil is the plate's one writer, and a solid plate earns no ink; 'bucket-INVARIANT' because the opaque rung paints solid --card whatever the bucket
+
+src/styles/glass/surface-axis.css:81 [WRITTEN] true
+   says: over — the bucket-INVARIANT contract. */
+   why: there is no tint axis to zero (ladder.css:165): the veil is the plate's one writer, and a solid plate earns no ink; 'bucket-INVARIANT' because the opaque rung paints solid --card whatever the bucket
+
+src/styles/glass/surfaces-pager.css:31 [WRITTEN; nbhd: sentence of :32] true
+   says: substitution-trap). Over a calm or unsampled backdrop the clamp resolves
+   why: the pill composes glass-plate at the element (:41-42), not the :root --glass-plate-floating token; over a calm or unsampled backdrop the clamp resolves the floating rung's own α exactly, and over a sampled bright image it earns ink (veil.css:69-85)
+
+src/styles/glass/surfaces-pager.css:32 [WRITTEN; nbhd: carries "floating"] true
+   says: exactly the floating rung's own ink; over a sampled BRIGHT carousel image the pill earns ink
+   why: the pill composes glass-plate at the element (:41-42), not the :root --glass-plate-floating token; over a calm or unsampled backdrop the clamp resolves the floating rung's own α exactly, and over a sampled bright image it earns ink (veil.css:69-85)
+
+src/styles/glass/surfaces-pager.css:34 [WRITTEN; nbhd: sentence of :32] true
+   says: clamp's two-step ceiling keeps it translucent, in both themes); one
+   why: the parenthesis R-25 restores closes after 'in both themes)': the clamp's two-step ceiling keeps the pill translucent in both themes (light: bound + 2·(1 − bound)/3 < 1, tokens/glass.css:51-57; dark: 0.22 + 0.08 = 0.30, dark-arm.css:279); one writer, the clamp, moves the pill's ink (veil.css:46-47), never a second axis; the pill runs no oklab mix of its own (its two box-shadow mixes are in srgb)
+
+src/styles/glass/surfaces-pager.css:35 [WRITTEN; nbhd: sentence of :32] true
+   says: writer, the clamp, moves the pill's ink, never a second axis, and
+   why: the parenthesis R-25 restores closes after 'in both themes)': the clamp's two-step ceiling keeps the pill translucent in both themes (light: bound + 2·(1 − bound)/3 < 1, tokens/glass.css:51-57; dark: 0.22 + 0.08 = 0.30, dark-arm.css:279); one writer, the clamp, moves the pill's ink (veil.css:46-47), never a second axis; the pill runs no oklab mix of its own (its two box-shadow mixes are in srgb)
+
+src/styles/glass/surfaces-pager.css:37 [nbhd: sentence of :32] true
+   says: `--surface-tint-*` brand fence is untouched). The dock plate's element-level
+   why: the in-srgb --surface-tint-* brand fence is untouched by the pill; the pager chassis follows the dock plate's element-composed precedent (--glass-veil-tier + @apply glass-plate)
+
+src/styles/glass/surfaces.css:59 [WRITTEN; nbhd: sentence of :57] true
+   says: clamp: darker in dark, a thicker cream pole in light) reaches the pill exactly
+   why: :where(.segmented-indicator, .glass-capsule) set --glass-veil-tier: var(--glass-veil-floating) and apply the one recipe, so the clamp's earned ink (darker in dark, a thicker --card pole in light) reaches them as every plate
+
+src/styles/glass/veil.css:39 [WRITTEN; nbhd: above the --glass-veil-rung declaration (:86); above var(--glass-veil-tier, var(--glass-veil-resting)) (:71); above var(--glass-veil-tier, var(--glass-veil-resting)) (:73); above var(--glass-veil-tier, var(--glass-veil-resting)) (:82)] true
+   says: THE EARNED INK. `--glass-veil-rung` is the tier's own α, clamped upward by the
+   why: --glass-veil-rung is --glass-veil-rest, the tier clamped upward by the luma ramp (:70-85); at or below the knee the ramp is max(0, …) = 0, so the rung is the tier exactly
+
+src/styles/glass/veil.css:40 [nbhd: above the --glass-veil-rung declaration (:86); above var(--glass-veil-tier, var(--glass-veil-resting)) (:71); above var(--glass-veil-tier, var(--glass-veil-resting)) (:73); above var(--glass-veil-tier, var(--glass-veil-resting)) (:82)] true
+   says: measured backdrop luminance: at or below the knee the clamp resolves EXACTLY the
+   why: --glass-veil-rung is --glass-veil-rest, the tier clamped upward by the luma ramp (:70-85); at or below the knee the ramp is max(0, …) = 0, so the rung is the tier exactly
+
+src/styles/glass/veil.css:42 [WRITTEN; nbhd: above the --glass-veil-rung declaration (:86); above var(--glass-veil-tier, var(--glass-veil-resting)) (:71); above var(--glass-veil-tier, var(--glass-veil-resting)) (:73); above var(--glass-veil-tier, var(--glass-veil-resting)) (:82); sentence of :44] true
+   says: thickens), and past the knee it earns up to TWO more steps, ceiling included. In
+   why: past the knee it earns up to two steps, the clamp's ceiling tier + 2·step included (:81-84); in dark that adds near-black ink (darker), in light it thickens --card (the light ink is var(--card), tokens/glass.css:40), and every light tier is ≥ the bound (:51-55), so a light plate only moves above it
+
+src/styles/glass/veil.css:43 [WRITTEN; nbhd: above the --glass-veil-rung declaration (:86); above var(--glass-veil-tier, var(--glass-veil-resting)) (:71); above var(--glass-veil-tier, var(--glass-veil-resting)) (:73); above var(--glass-veil-tier, var(--glass-veil-resting)) (:82); sentence of :44] true
+   says: dark that darkens toward the ink; in light it thickens the `--card` pole, so a
+   why: past the knee it earns up to two steps, the clamp's ceiling tier + 2·step included (:81-84); in dark that adds near-black ink (darker), in light it thickens --card (the light ink is var(--card), tokens/glass.css:40), and every light tier is ≥ the bound (:51-55), so a light plate only moves above it
+
+src/styles/glass/veil.css:44 [WRITTEN; nbhd: above the --glass-veil-rung declaration (:86); above var(--glass-veil-tier, var(--glass-veil-resting)) (:71); above var(--glass-veil-tier, var(--glass-veil-resting)) (:73); above var(--glass-veil-tier, var(--glass-veil-resting)) (:82); carries "bound"] true
+   says: sampled-bright backdrop moves a light plate ABOVE the bound, never below it.
+   why: past the knee it earns up to two steps, the clamp's ceiling tier + 2·step included (:81-84); in dark that adds near-black ink (darker), in light it thickens --card (the light ink is var(--card), tokens/glass.css:40), and every light tier is ≥ the bound (:51-55), so a light plate only moves above it
+
+src/styles/glass/veil.css:45 [nbhd: above the --glass-veil-rung declaration (:86); above var(--glass-veil-tier, var(--glass-veil-resting)) (:71); above var(--glass-veil-tier, var(--glass-veil-resting)) (:73); above var(--glass-veil-tier, var(--glass-veil-resting)) (:82)] true
+   says: Unsampled surfaces read the registered `--glass-backdrop-luma` initial 0 and sit on
+   why: --glass-backdrop-luma registers initial-value 0 (property-regs.css:172-176), so an unsampled surface sits on its tier; the veil is the one chromatic writer and no tint axis remains (ladder.css:165)
+
+src/styles/glass/veil.css:47 [nbhd: above the --glass-veil-rung declaration (:86); above var(--glass-veil-tier, var(--glass-veil-resting)) (:71); above var(--glass-veil-tier, var(--glass-veil-resting)) (:73); above var(--glass-veil-tier, var(--glass-veil-resting)) (:82)] true
+   says: tint axis mixing the same plate toward the same ink.
+   why: --glass-backdrop-luma registers initial-value 0 (property-regs.css:172-176), so an unsampled surface sits on its tier; the veil is the one chromatic writer and no tint axis remains (ladder.css:165)
+
+src/styles/glass/veil.css:50 [nbhd: above the --glass-veil-rung declaration (:86); above var(--glass-veil-tier, var(--glass-veil-resting)) (:71); above var(--glass-veil-tier, var(--glass-veil-resting)) (:73); above var(--glass-veil-tier, var(--glass-veil-resting)) (:82)] true
+   says: plate INSIDE a bigger mix (the capsule's warm floor, a tone-tinted feedback panel)
+   why: --glass-veil is the nestable value token; its readers include the capsule's warm floor (glass-capsule.css) and the tone-tinted panel (feedback-tone.css)
+
+src/styles/glass/veil.css:53 [nbhd: above the --glass-veil-rung declaration (:86); above var(--glass-veil-tier, var(--glass-veil-resting)) (:71); above var(--glass-veil-tier, var(--glass-veil-resting)) (:73); above var(--glass-veil-tier, var(--glass-veil-resting)) (:82)] true
+   says: TWO NAMES, ONE ARITHMETIC. `--glass-veil-rest` is the CLAMPED rest ink — the tier
+   why: --glass-veil-rest is the clamped rest (tier plus what the backdrop earned); --glass-veil-rung is what the plate paints, equal to rest at rest (:86)
+
+src/styles/glass/veil.css:59 [nbhd: above the --glass-veil-rung declaration (:86); above var(--glass-veil-tier, var(--glass-veil-resting)) (:71); above var(--glass-veil-tier, var(--glass-veil-resting)) (:73); above var(--glass-veil-tier, var(--glass-veil-resting)) (:82)] true
+   says: falsifier pins (0.6·tier < 0.6·rest whenever the clamp earned anything), and the
+   why: history: written against the raw tier, a held plate over a bright backdrop fell below the band floor, since 0.6·tier < 0.6·rest whenever the clamp earned anything
+
+src/styles/glass/veil.css:7 [WRITTEN] true
+   says: declares the ONE recipe that turns a rung into paint, plus the observer-driven
+   why: the file declares @utility glass-plate (:69) and the observer-driven clamp that lets a measured-bright backdrop earn more than the rung
+
+src/styles/tokens/color-radius.css:165 [WRITTEN] true
+   says: row (_shared/menu/menu.css, an accent tint at this alpha, not
+   why: --fill-selected is 0.12 (:164), the light menu row's accent tint alpha (menu.css: oklch(from var(--section-color-5) … / var(--fill-selected))), an accent, not the ink; hover is --fill-hover 0.05
+
+src/styles/tokens/color-radius.css:77 [nbhd: above the --card declaration (:85)] true
+   says: Bounded: the cream family, never a tinted cast (the triumvirate bar). */
+   why: the light --card family stays cream, never a tinted cast: --card is oklch(0.9799 0.011 63.36) (:84-85)
+
+src/styles/tokens/color-radius.css:94 [nbhd: carries "overlay"] true
+   says: a --surface-tint-* overlay. Consumer applies on /dashboard/* only. */
+   why: --surface-public-data-panel is an opaque hsl() surface (:95), not a --surface-tint-* overlay
+
+src/styles/tokens/dark-arm.css:310 [nbhd: above the --on-glass-muted declaration (:316)] true
+   says: light arm's darkening) so it clears AA over the composited dark plate WHILE
+   why: the dark on-glass muted rung, hsl(34 16% 72%) (:316), lifts brighter than page-muted; 'the mirror of the light arm's darkening': the light on-glass muted, oklch(0.4811 0.046 66.37) (on-glass-fg.css:38-39), sits below the light page-muted hsl(30 22% 40%) (OKLab L 0.526); it stays under the L90 --foreground, and the bright bucket is the full-ink lift
+
+src/styles/tokens/dark-arm.css:312 [nbhd: above the --on-glass-muted declaration (:316)] true
+   says: preserved — NOT a blanket lift to full ink, which the bright bucket already does).
+   why: the dark on-glass muted rung, hsl(34 16% 72%) (:316), lifts brighter than page-muted; 'the mirror of the light arm's darkening': the light on-glass muted, oklch(0.4811 0.046 66.37) (on-glass-fg.css:38-39), sits below the light page-muted hsl(30 22% 40%) (OKLab L 0.526); it stays under the L90 --foreground, and the bright bucket is the full-ink lift
+
+src/styles/tokens/glass-deep.css:55 [nbhd: sentence of :53; carries "overlay"; sentence of :56; sentence of :57] true
+   says: 20px → 16px: a deep overlay painted 16px where the plain overlay painted 22,
+   why: history in the past tense: the LERP ran 20px → 16px, so a deep overlay painted 16px where the plain overlay painted 22; R-23's line above names the ladder by its tokens
+
+src/styles/tokens/glass-fx.css:143 [WRITTEN] true
+   says: steps more (darker in dark, a thicker cream pole in light). Raising the knee earns
+   why: --glass-backdrop-luma-knee 0.6 (:145): below it the clamp gives the rung's own α, above it the α ramps continuously toward two more steps, darker in dark and a thicker --card pole in light; a higher knee earns later
+
+src/styles/tokens/glass-fx.css:208 [nbhd: sentence of :210] true
+   says: rides `--shadow-color: var(--foreground)` — correct, a shadow re-tints under `.dark`
+   why: --shadow-color is var(--foreground), so a cartoon shadow re-tints under .dark; the scrim pins its own ink instead
+
+src/styles/tokens/glass.css:14 [WRITTEN; nbhd: sentence of :13] true
+   says: over ANY input (a black ground under the dark ink). The plate never darkens
+   why: the minor's light law: the plate recipe paints --card at the rung's α; the bound is the α at which the muted ink clears its target over any input; with the light ink = --card (:40) the plate never mixes toward a near-black ink over paper, so it does not read grey there (O-62; W-0.1 G1 over paper 11/11, carried)
+
+src/styles/tokens/on-glass-fg.css:16 [nbhd: carries "overlay"] true
+   says: ink (the @container bright bucket + the overlay band, shipped — glass/ladder.css);
+   why: state (a): a declared-bright backdrop lifts to the full ink through the @container bright bucket and the overlay band (ladder.css)
+
+src/styles/tokens/property-regs.css:154 [WRITTEN] true
+   says: Clear↔Tinted escape rides this knob alone: `prefers-contrast: more` sets
+   why: R-23 as built: under prefers-contrast: more the a11y bracket sets --glass-level: 0.3 and --glass-definition: 1 (a11y-fallback.css:37-47, HEAD's file, untouched by the minor) and writes no veil token
+
+src/styles/tokens/scale-paper.css:101 [nbhd: above the --control-checked-bg declaration (:107)] true
+   says: • `--control-checked-bg` — the SELECTED glass-tinted fill. The recipe is minted
+   why: --control-checked-bg is minted once (--primary 88% over light-dark(transparent, the dark plate)); in light the 12% it leaves transmits whatever glass the control sits on, so 'glass-tinted' holds as the fill's read over glass (FV9 §4.4 reads the floor's same line the same way; for the critic)
+
+src/styles/tokens/scale-paper.css:159 [nbhd: sentence of :158] true
+   says: shared. The ink stays a `color-mix(… var(--foreground) N%, …)` (re-tints with
+   why: .paper-grid is the card interior's ground, felt through the plate; its ink is a --foreground mix that re-tints in lockstep
+
+src/styles/tokens/scale-paper.css:82 [nbhd: above the --control-checked-bg declaration (:107)] true
+   says: RadioGroupItem) reads it so a re-tint is ONE edit, library-wide.
+   why: Checkbox, Switch and RadioGroupItem read the selection-control register, so a re-tint is one edit
+
+src/styles/tokens/sizing.css:220 [nbhd: above the --dock-layer-switcher-active declaration (:225)] true
+   says: one thing with one name, and the value taken is the dock's OWN tint rung —
+   why: --dock-hairline: var(--surface-tint-15) (:223), the ladder dark-arm.css re-resolves warm by derivation
+
+src/styles/tokens/sizing.css:221 [nbhd: above the --dock-layer-switcher-active declaration (:225)] true
+   says: `--surface-tint-*` is the ladder dark-arm.css re-resolves warm in dark by
+   why: --dock-hairline: var(--surface-tint-15) (:223), the ladder dark-arm.css re-resolves warm by derivation
+
+tests/components/button/Button.test.ts:146 [WRITTEN] true
+   says: // so the tier, the earned-ink clamp and `--glass-level` all survive
+   why: R-23 as built: every write composes over --glass-veil (the assertions at :148-149), whose inputs are the tier, the earned-ink clamp the minor keeps and --glass-level (veil.css:69-92)
+
+tests/components/ui/surface/Surface.test.ts:162 [nbhd: carries "floating"; sentence of :165] true
+   says: /* RED at the first cut's bytes: the recipe LERPed the FLOATING radius (20px)
+   why: history in the past tense (RED at the first cut's bytes): the LERP from the 20px floating radius toward a 16px endpoint against plain 10/14/16/20/22. R-23's history site under the tuple's name (deletes-minor.json)
+
+tests/components/ui/surface/Surface.test.ts:164 [nbhd: sentence of :162; sentence of :165] true
+   says: 18.6 / 18.6 / 18.6 / 17.2 / 16.0px against plain 10 / 14 / 16 / 20 / 22 —
+   why: history in the past tense (RED at the first cut's bytes): the LERP from the 20px floating radius toward a 16px endpoint against plain 10/14/16/20/22. R-23's history site under the tuple's name (deletes-minor.json)
+
+tests/gates/feedback-tint-seam.test.ts:1 [nbhd: carries "bound"] true
+   says: // BK.#33 gate — the standing `G-FEEDBACK-TINT-SEAM` seat (TR §B.5, family SEAM), BOUND
+   why: the file binds the standing G-FEEDBACK-TINT-SEAM seat
+
+tests/gates/feedback-tint-seam.test.ts:11 [WRITTEN] true
+   says: // its tier ink, its earned-ink clamp, its `--glass-level` — is discarded at the last
+   why: R-23 as built: a mix over a raw plate token discards the rung's tier ink, earned-ink clamp and --glass-level, all inputs of --glass-veil (veil.css:69-92)
+
+tests/styles/glass-subtlety.test.ts:192 [WRITTEN] true
+   says: // Light: the plate is the theme's own ground at α, so it never darkens toward a
+   why: the light sentence: light --glass-veil-ink is var(--card) (asserted at :195), the theme's own ground at alpha, so the plate never mixes toward a near-black ink over paper (O-62); the line's own clause is true. The dark clause that follows on :193 is read there
+
+tests/styles/glass-subtlety.test.ts:193 [WRITTEN] UNRULED
+   says: 
+   why: 
+
+tests/styles/glass-subtlety.test.ts:326 [nbhd: carries "wash"; sentence of :328] true
+   says: // two scrim blurs — a wash pulls bright neighbours into every sampled pixel, so the
+   why: history: the immersive scrim's blur pulled bright neighbours into every sampled pixel, so the backdrop brightened
+
+tests/styles/glass-subtlety.test.ts:695 [WRITTEN] true
+   says: it("sheds ink toward 0.6× the CLAMPED rest rung, not the raw tier, and never below the floor", () => {
+   why: the held rung sheds toward 0.6 × the clamped rest, never the raw tier, and never below the floor (grasp.css:139; veil.css:70-86); a held plate over a bright backdrop would otherwise land below its own band
+
+tests/styles/glass-subtlety.test.ts:99 [WRITTEN] true
+   says: // here: resolve every `var()`, then read calc/pow/min/max/clamp as JS.
+   why: the helper resolves var() and evaluates calc/pow/min/max/clamp in JS because happy-dom runs no cascade
+
