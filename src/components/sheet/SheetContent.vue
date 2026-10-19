@@ -102,8 +102,14 @@ const SIDE_BORDER: Record<SidePlacement, string> = {
     right: "border-l",
 };
 
+// POSITION IS IDENTITY, stated as a utility the way `DialogContent` states it. The
+// material classes author `position: relative` for their own rims (material.css,
+// ladder.css) at 0,1,0 in `@layer components`, and the sheet's `position: fixed` sat
+// in a `:where()` rule at 0,0,0 in the same layer, so every sheet rendered in document
+// flow, below the fold (atlas G-1). The `fixed` utility rides `@layer utilities`, which
+// outranks every material rule by layer, not by a specificity race.
 const contentClass = computed(() =>
-    cn(SIDE_BORDER[props.side], surfaceClass("floating"), props.class),
+    cn("fixed", SIDE_BORDER[props.side], surfaceClass("floating"), props.class),
 );
 
 const dialogRoot = injectDialogRootContext();
