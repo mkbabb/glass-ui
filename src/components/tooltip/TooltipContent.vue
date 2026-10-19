@@ -47,8 +47,8 @@ const placementProps = computed(() => ({
    click-away and pointer-out can tell a dock's own overlay from the page. */
 const dock = useDockParticipation();
 
-/* `z-tooltip` is the per-host rung and stays on the component; everything else
-   the plate is comes from the ONE register. The retired
+/* The `z-tooltip` rung is the hint ROLE's, written by the ONE register with
+   everything else the plate is. The retired
    `border text-popover-foreground rounded-tooltip overflow-hidden` utilities
    were a SECOND boundary author over `.glass-floating`'s rim (the bare `border`
    resolved to the raw shadcn `--border` ink and painted the 2px black rule the
@@ -59,7 +59,7 @@ const contentAttrs = computed(() =>
         role: "hint",
         slot: "tooltip-content",
         dock: dock.portalAttrs.value,
-        class: ["z-tooltip", props.class],
+        class: props.class,
     }),
 );
 </script>

@@ -124,7 +124,7 @@ const contentAttrs = computed(() =>
         role: "panel",
         slot: "popover-content",
         dock: dock.portalAttrs.value,
-        class: ["z-popover", props.class],
+        class: props.class,
     }),
 );
 </script>
