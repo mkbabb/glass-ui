@@ -1,0 +1,13 @@
+2026-10-19 05:15:01 · load { 20.24 21.39 21.37 }
+REPORT · H4-6, H5-5, H5-6, reported: the commit on wide tiles against a 4 px gap; the selection mark over light media; the selected K2 name's ink; on a route build only
+  target dp-src (flavor src) · Playwright WebKit 26.5 · harness H6 e2360106ad0d
+  load 20.24 / 21.39 / 21.37 at start, 19.34 / 21.18 / 21.30 at end · other headless browser processes at start: 1 (waited 0.2 s) · browser lock waited 0 s
+  FAIL       kick · preset-migrated forced to two 300 px columns at a 4 px gap · item 1 300.00×63.58, rest gap 4.00 px · programmatic commit (checked true), 48 frames · peak scale 1.0274 · deepest push into a neighbour 0.11 px (want ≤ 0.05)
+  info-pass  kick · preset-migrated at the scene's own geometry · item 1 204.00×63.58, rest gap 8.00 px · peak scale 1.0274 · deepest push 0.00 px
+  UNMEASURED mark · v2-migrated dark · UNMEASURED: no mark painted (0 device px change with ::after hidden; FV3-6 is built only if Q-3 rules (b))
+  UNMEASURED mark · v2-migrated light · UNMEASURED: no mark painted (0 device px change with ::after hidden; FV3-6 is built only if Q-3 rules (b))
+  PASS       name-ink · specimen-migrated light · the selected name oklch(0.216115 0.006126 56.043385) is its item's ink oklch(0.216115 0.006126 56.043385) (sRGB 28, 25, 23; --selection-ink oklch(from light-dark(#1c1917, #e9e6e2) min(l, 0.42) c h / 1)) · unselected name rgb(112, 89, 66), item rgb(112, 89, 66) · the name's ink selected against unselected 2.66:1
+  PASS       name-ink · specimen-migrated dark · the selected name oklch(0.926152 0.006292 75.403397) is its item's ink oklch(0.926152 0.006292 75.403397) (sRGB 233, 230, 226; --selection-ink oklch(from #e9e6e2 max(l, 0.8) c h / 1)) · unselected name rgb(195, 185, 172), item rgb(195, 185, 172) · the name's ink selected against unselected 1.56:1
+REPORT FAIL · 2/3 gating cells pass, 1 unmeasured [library 2/3]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/D4-Dp-crit/out/runs/dp-src/REPORT-webkit.json
+exit 1 · 2026-10-19 05:15:10 · load { 19.34 21.18 21.30 }

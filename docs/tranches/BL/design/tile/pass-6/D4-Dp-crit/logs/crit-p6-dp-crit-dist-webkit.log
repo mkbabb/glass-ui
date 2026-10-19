@@ -1,0 +1,17 @@
+2026-10-19 05:25:09 · load { 25.37 22.21 21.41 }
+CRIT-P6 · FV5-2 on the strips H6-3 does not build: vertical, underline, a declared group in a tab, a write on the strip (R-2, FV-2 class)
+  target dp-crit-dist (flavor dist) · Playwright WebKit 26.5 · harness H6 e2360106ad0d
+  load 25.37 / 22.21 / 21.41 at start, 23.98 / 21.97 / 21.33 at end · other headless browser processes at start: 1 (waited 0.2 s) · browser lock waited 0 s
+  PASS       [migrated] vt light · every tab one row, nothing cut, at the reference height · strip 369.56×139.75 fact none · tabs 32.94px 1r none, 32.94px 1r none, 32.94px 1r none, 32.94px 1r none · reference strip 520.00×139.75 fact none · tabs 32.94px 1r none, 32.94px 1r none, 32.94px 1r none, 32.94px 1r none
+  PASS       [migrated] ut light · every tab one row, nothing cut, at the reference height · strip 369.56×43.52 fact none · tabs 42.52px 1r none, 42.52px 1r none, 42.52px 1r none, 42.52px 1r none · reference strip 520.00×43.52 fact none · tabs 42.52px 1r none, 42.52px 1r none, 42.52px 1r none, 42.52px 1r none
+  info-pass  [migrated] ct light (info) · the inner shape="cell" options ARE tiles · group inline fact flush · fact flush 63.52×58.69 used 16.00 2r column | fact flush 66.64×58.69 used 16.00 2r column · tab-strip strip 369.56×76.69 fact none · tabs 68.69px 2r none, 68.69px 1r none
+  PASS       [migrated] sw light (no write: H6-3's strip, a 4-tab twin) · every tab one row, nothing cut, at the reference height · strip 369.56×40.94 fact none · tabs 32.94px 1r none, 32.94px 1r none, 32.94px 1r none, 32.94px 1r none
+  info-fail  [migrated] sw light (info: unlayered consumer `--selection-tile: flush` ON the strip) · 4 tab(s) off the one-row law or off the reference height · strip 368.34×54.69 fact flush · tabs 46.69px 2r flush, 46.69px 2r flush, 46.69px 2r flush, 46.69px 2r flush
+  PASS       [migrated] vt dark · every tab one row, nothing cut, at the reference height · strip 369.56×139.75 fact none · tabs 32.94px 1r none, 32.94px 1r none, 32.94px 1r none, 32.94px 1r none · reference strip 520.00×139.75 fact none · tabs 32.94px 1r none, 32.94px 1r none, 32.94px 1r none, 32.94px 1r none
+  PASS       [migrated] ut dark · every tab one row, nothing cut, at the reference height · strip 369.56×43.52 fact none · tabs 42.52px 1r none, 42.52px 1r none, 42.52px 1r none, 42.52px 1r none · reference strip 520.00×43.52 fact none · tabs 42.52px 1r none, 42.52px 1r none, 42.52px 1r none, 42.52px 1r none
+  info-pass  [migrated] ct dark (info) · the inner shape="cell" options ARE tiles · group inline fact flush · fact flush 63.52×58.69 used 16.00 2r column | fact flush 66.64×58.69 used 16.00 2r column · tab-strip strip 369.56×76.69 fact none · tabs 68.69px 2r none, 68.69px 1r none
+  PASS       [migrated] sw dark (no write: H6-3's strip, a 4-tab twin) · every tab one row, nothing cut, at the reference height · strip 369.56×40.94 fact none · tabs 32.94px 1r none, 32.94px 1r none, 32.94px 1r none, 32.94px 1r none
+  info-fail  [migrated] sw dark (info: unlayered consumer `--selection-tile: flush` ON the strip) · 4 tab(s) off the one-row law or off the reference height · strip 368.34×54.69 fact flush · tabs 46.69px 2r flush, 46.69px 2r flush, 46.69px 2r flush, 46.69px 2r flush
+CRIT-P6 PASS · 6/6 gating cells pass [migrated 6/6]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/D4-Dp-crit/out/runs/dp-crit-dist/CRIT-P6-webkit.json
+exit 0 · 2026-10-19 05:25:13 · load { 23.98 21.97 21.33 }

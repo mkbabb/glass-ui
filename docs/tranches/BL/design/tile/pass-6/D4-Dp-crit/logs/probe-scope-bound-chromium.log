@@ -1,0 +1,204 @@
+2026-10-19 04:22:00 · load { 22.70 19.80 19.37 }
+scope-bound (floor v5) · chromium · load 22.65 19.84 19.38 · 2026-10-19T08:22:01.158Z
+engine Chromium 149.0.7827.55
+
+## form scope5: 17 cells 17/17 · PASS · expected PASS → OK | strip cells 9/9 · PASS · expected PASS → OK
+  PASS  tile group's option (#n1o): flush, want flush
+  PASS  pill group nested in a tile option: the group (#n1g): none, want none
+  PASS  pill group nested in a tile option: its option (#n1go): none, want none
+  PASS  pill group nested in a tile option: its content (#n1gs): none, want none
+  PASS  pill group's option (#n2o): none, want none
+  PASS  tile group nested in a pill option: its option (#n2go): flush, want flush
+  PASS  tile group nested in a pill option: its content (#n2gs): flush, want flush
+  PASS  wrapper writes none in a tile group: the option follows it (#wro): none, want none
+  PASS  wrapper writes none in a tile group: the content agrees (#wrs): none, want none
+  PASS  a rule on the option writes none in a tile group: refused (#opo): flush, want flush
+  PASS    its content (#ops): flush, want flush
+  PASS  a rule on the option's content writes none: refused (#cts): flush, want flush
+  PASS    inside that content (#ctb): flush, want flush
+  PASS  an inline style on the option writes none: refused (#ilo): flush, want flush
+  PASS  an inline !important on the option: the one write above the pin (#imo): none, want none
+  PASS    its content follows it (#ims): none, want none
+  PASS  a rule on a pill option writes flush: refused (#plo): none, want none
+  PASS  [strip] strip in a tile option: the option's own content stays pinned (#s1m): flush, want flush
+  PASS  [strip] strip in a tile option: the strip (#s1s): none, want none
+  PASS  [strip] strip in a tile option: its tab (#s1t): none, want none
+  PASS  [strip] strip in a tile option: the tab's content (#s1r): none, want none
+  PASS  [strip] strip in a pill option: its tab (#s2t): none, want none
+  PASS  [strip] strip in a pill option: the tab's content (#s2r): none, want none
+  PASS  [strip] strip under a non-group ancestor writing flush: the strip (#s3s): none, want none
+  PASS  [strip] strip under a non-group ancestor writing flush: its tab (#s3t): none, want none
+  PASS  [strip] strip alone: its tab (#s4t): none, want none
+  info  [strip] a consumer rule writes flush ON a strip: the strip (#i1): flush
+  info  [strip]   its tab (#i1t): flush
+  info  [strip]   the tab's content (#i1r): flush
+  info  [strip] a consumer rule writes flush ON a strip in a tile option: the strip (#i2s): flush
+  info  [strip]   its tab (#i2t): flush
+
+## form scope: 17 cells 17/17 · PASS · expected PASS → OK | strip cells 4/9 · FAIL · expected FAIL → OK
+  PASS  tile group's option (#n1o): flush, want flush
+  PASS  pill group nested in a tile option: the group (#n1g): none, want none
+  PASS  pill group nested in a tile option: its option (#n1go): none, want none
+  PASS  pill group nested in a tile option: its content (#n1gs): none, want none
+  PASS  pill group's option (#n2o): none, want none
+  PASS  tile group nested in a pill option: its option (#n2go): flush, want flush
+  PASS  tile group nested in a pill option: its content (#n2gs): flush, want flush
+  PASS  wrapper writes none in a tile group: the option follows it (#wro): none, want none
+  PASS  wrapper writes none in a tile group: the content agrees (#wrs): none, want none
+  PASS  a rule on the option writes none in a tile group: refused (#opo): flush, want flush
+  PASS    its content (#ops): flush, want flush
+  PASS  a rule on the option's content writes none: refused (#cts): flush, want flush
+  PASS    inside that content (#ctb): flush, want flush
+  PASS  an inline style on the option writes none: refused (#ilo): flush, want flush
+  PASS  an inline !important on the option: the one write above the pin (#imo): none, want none
+  PASS    its content follows it (#ims): none, want none
+  PASS  a rule on a pill option writes flush: refused (#plo): none, want none
+  PASS  [strip] strip in a tile option: the option's own content stays pinned (#s1m): flush, want flush
+  FAIL  [strip] strip in a tile option: the strip (#s1s): flush, want none
+  FAIL  [strip] strip in a tile option: its tab (#s1t): flush, want none
+  FAIL  [strip] strip in a tile option: the tab's content (#s1r): flush, want none
+  PASS  [strip] strip in a pill option: its tab (#s2t): none, want none
+  PASS  [strip] strip in a pill option: the tab's content (#s2r): none, want none
+  FAIL  [strip] strip under a non-group ancestor writing flush: the strip (#s3s): flush, want none
+  FAIL  [strip] strip under a non-group ancestor writing flush: its tab (#s3t): flush, want none
+  PASS  [strip] strip alone: its tab (#s4t): none, want none
+  info  [strip] a consumer rule writes flush ON a strip: the strip (#i1): flush
+  info  [strip]   its tab (#i1t): flush
+  info  [strip]   the tab's content (#i1r): flush
+  info  [strip] a consumer rule writes flush ON a strip in a tile option: the strip (#i2s): flush
+  info  [strip]   its tab (#i2t): flush
+
+## form unbounded: 17 cells 12/17 · FAIL · expected FAIL → OK | strip cells 4/9 · FAIL · info
+  PASS  tile group's option (#n1o): flush, want flush
+  FAIL  pill group nested in a tile option: the group (#n1g): flush, want none
+  FAIL  pill group nested in a tile option: its option (#n1go): flush, want none
+  FAIL  pill group nested in a tile option: its content (#n1gs): flush, want none
+  PASS  pill group's option (#n2o): none, want none
+  FAIL  tile group nested in a pill option: its option (#n2go): none, want flush
+  FAIL  tile group nested in a pill option: its content (#n2gs): none, want flush
+  PASS  wrapper writes none in a tile group: the option follows it (#wro): none, want none
+  PASS  wrapper writes none in a tile group: the content agrees (#wrs): none, want none
+  PASS  a rule on the option writes none in a tile group: refused (#opo): flush, want flush
+  PASS    its content (#ops): flush, want flush
+  PASS  a rule on the option's content writes none: refused (#cts): flush, want flush
+  PASS    inside that content (#ctb): flush, want flush
+  PASS  an inline style on the option writes none: refused (#ilo): flush, want flush
+  PASS  an inline !important on the option: the one write above the pin (#imo): none, want none
+  PASS    its content follows it (#ims): none, want none
+  PASS  a rule on a pill option writes flush: refused (#plo): none, want none
+  info  [strip] strip in a tile option: the option's own content stays pinned (#s1m): flush, want flush
+  info  [strip] strip in a tile option: the strip (#s1s): flush, want none
+  info  [strip] strip in a tile option: its tab (#s1t): flush, want none
+  info  [strip] strip in a tile option: the tab's content (#s1r): flush, want none
+  info  [strip] strip in a pill option: its tab (#s2t): none, want none
+  info  [strip] strip in a pill option: the tab's content (#s2r): none, want none
+  info  [strip] strip under a non-group ancestor writing flush: the strip (#s3s): flush, want none
+  info  [strip] strip under a non-group ancestor writing flush: its tab (#s3t): flush, want none
+  info  [strip] strip alone: its tab (#s4t): none, want none
+  info  [strip] a consumer rule writes flush ON a strip: the strip (#i1): flush
+  info  [strip]   its tab (#i1t): flush
+  info  [strip]   the tab's content (#i1r): flush
+  info  [strip] a consumer rule writes flush ON a strip in a tile option: the strip (#i2s): flush
+  info  [strip]   its tab (#i2t): flush
+
+## form option: 17 cells 15/17 · FAIL · expected FAIL → OK | strip cells 4/9 · FAIL · info
+  PASS  tile group's option (#n1o): flush, want flush
+  PASS  pill group nested in a tile option: the group (#n1g): none, want none
+  PASS  pill group nested in a tile option: its option (#n1go): none, want none
+  PASS  pill group nested in a tile option: its content (#n1gs): none, want none
+  PASS  pill group's option (#n2o): none, want none
+  PASS  tile group nested in a pill option: its option (#n2go): flush, want flush
+  PASS  tile group nested in a pill option: its content (#n2gs): flush, want flush
+  PASS  wrapper writes none in a tile group: the option follows it (#wro): none, want none
+  PASS  wrapper writes none in a tile group: the content agrees (#wrs): none, want none
+  PASS  a rule on the option writes none in a tile group: refused (#opo): flush, want flush
+  PASS    its content (#ops): flush, want flush
+  FAIL  a rule on the option's content writes none: refused (#cts): none, want flush
+  FAIL    inside that content (#ctb): none, want flush
+  PASS  an inline style on the option writes none: refused (#ilo): flush, want flush
+  PASS  an inline !important on the option: the one write above the pin (#imo): none, want none
+  PASS    its content follows it (#ims): none, want none
+  PASS  a rule on a pill option writes flush: refused (#plo): none, want none
+  info  [strip] strip in a tile option: the option's own content stays pinned (#s1m): flush, want flush
+  info  [strip] strip in a tile option: the strip (#s1s): flush, want none
+  info  [strip] strip in a tile option: its tab (#s1t): flush, want none
+  info  [strip] strip in a tile option: the tab's content (#s1r): flush, want none
+  info  [strip] strip in a pill option: its tab (#s2t): none, want none
+  info  [strip] strip in a pill option: the tab's content (#s2r): none, want none
+  info  [strip] strip under a non-group ancestor writing flush: the strip (#s3s): flush, want none
+  info  [strip] strip under a non-group ancestor writing flush: its tab (#s3t): flush, want none
+  info  [strip] strip alone: its tab (#s4t): none, want none
+  info  [strip] a consumer rule writes flush ON a strip: the strip (#i1): flush
+  info  [strip]   its tab (#i1t): flush
+  info  [strip]   the tab's content (#i1r): flush
+  info  [strip] a consumer rule writes flush ON a strip in a tile option: the strip (#i2s): flush
+  info  [strip]   its tab (#i2t): flush
+
+## form crit: 17 cells 17/17 · PASS · expected PASS → OK | strip cells 4/9 · FAIL · info
+  PASS  tile group's option (#n1o): flush, want flush
+  PASS  pill group nested in a tile option: the group (#n1g): none, want none
+  PASS  pill group nested in a tile option: its option (#n1go): none, want none
+  PASS  pill group nested in a tile option: its content (#n1gs): none, want none
+  PASS  pill group's option (#n2o): none, want none
+  PASS  tile group nested in a pill option: its option (#n2go): flush, want flush
+  PASS  tile group nested in a pill option: its content (#n2gs): flush, want flush
+  PASS  wrapper writes none in a tile group: the option follows it (#wro): none, want none
+  PASS  wrapper writes none in a tile group: the content agrees (#wrs): none, want none
+  PASS  a rule on the option writes none in a tile group: refused (#opo): flush, want flush
+  PASS    its content (#ops): flush, want flush
+  PASS  a rule on the option's content writes none: refused (#cts): flush, want flush
+  PASS    inside that content (#ctb): flush, want flush
+  PASS  an inline style on the option writes none: refused (#ilo): flush, want flush
+  PASS  an inline !important on the option: the one write above the pin (#imo): none, want none
+  PASS    its content follows it (#ims): none, want none
+  PASS  a rule on a pill option writes flush: refused (#plo): none, want none
+  info  [strip] strip in a tile option: the option's own content stays pinned (#s1m): flush, want flush
+  info  [strip] strip in a tile option: the strip (#s1s): flush, want none
+  info  [strip] strip in a tile option: its tab (#s1t): flush, want none
+  info  [strip] strip in a tile option: the tab's content (#s1r): flush, want none
+  info  [strip] strip in a pill option: its tab (#s2t): none, want none
+  info  [strip] strip in a pill option: the tab's content (#s2r): none, want none
+  info  [strip] strip under a non-group ancestor writing flush: the strip (#s3s): flush, want none
+  info  [strip] strip under a non-group ancestor writing flush: its tab (#s3t): flush, want none
+  info  [strip] strip alone: its tab (#s4t): none, want none
+  info  [strip] a consumer rule writes flush ON a strip: the strip (#i1): flush
+  info  [strip]   its tab (#i1t): flush
+  info  [strip]   the tab's content (#i1r): flush
+  info  [strip] a consumer rule writes flush ON a strip in a tile option: the strip (#i2s): flush
+  info  [strip]   its tab (#i2t): flush
+
+## form none: 17 cells 11/17 · FAIL · expected FAIL → OK | strip cells 4/9 · FAIL · info
+  PASS  tile group's option (#n1o): flush, want flush
+  PASS  pill group nested in a tile option: the group (#n1g): none, want none
+  PASS  pill group nested in a tile option: its option (#n1go): none, want none
+  PASS  pill group nested in a tile option: its content (#n1gs): none, want none
+  PASS  pill group's option (#n2o): none, want none
+  PASS  tile group nested in a pill option: its option (#n2go): flush, want flush
+  PASS  tile group nested in a pill option: its content (#n2gs): flush, want flush
+  PASS  wrapper writes none in a tile group: the option follows it (#wro): none, want none
+  PASS  wrapper writes none in a tile group: the content agrees (#wrs): none, want none
+  FAIL  a rule on the option writes none in a tile group: refused (#opo): none, want flush
+  FAIL    its content (#ops): none, want flush
+  FAIL  a rule on the option's content writes none: refused (#cts): none, want flush
+  FAIL    inside that content (#ctb): none, want flush
+  FAIL  an inline style on the option writes none: refused (#ilo): none, want flush
+  PASS  an inline !important on the option: the one write above the pin (#imo): none, want none
+  PASS    its content follows it (#ims): none, want none
+  FAIL  a rule on a pill option writes flush: refused (#plo): flush, want none
+  info  [strip] strip in a tile option: the option's own content stays pinned (#s1m): flush, want flush
+  info  [strip] strip in a tile option: the strip (#s1s): flush, want none
+  info  [strip] strip in a tile option: its tab (#s1t): flush, want none
+  info  [strip] strip in a tile option: the tab's content (#s1r): flush, want none
+  info  [strip] strip in a pill option: its tab (#s2t): none, want none
+  info  [strip] strip in a pill option: the tab's content (#s2r): none, want none
+  info  [strip] strip under a non-group ancestor writing flush: the strip (#s3s): flush, want none
+  info  [strip] strip under a non-group ancestor writing flush: its tab (#s3t): flush, want none
+  info  [strip] strip alone: its tab (#s4t): none, want none
+  info  [strip] a consumer rule writes flush ON a strip: the strip (#i1): flush
+  info  [strip]   its tab (#i1t): flush
+  info  [strip]   the tab's content (#i1r): flush
+  info  [strip] a consumer rule writes flush ON a strip in a tile option: the strip (#i2s): flush
+  info  [strip]   its tab (#i2t): flush
+
+load 22.65 19.84 19.38 · every form read as expected
+exit 0 · 2026-10-19 04:22:01 · load { 22.65 19.84 19.38 }
