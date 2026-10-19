@@ -1,0 +1,442 @@
+=== src/components/_shared/feedback/feedback-tone.css
+      1| /* Shared feedback-tone styles for Alert and Toast.
+      2| 
+      3|    ~~Both compose `.feedback-tone`.~~ THE CONSUMER SPLIT, and read the rest of this header
+>     4|    through it [2026-08-08 · BK #33]: `.feedback-tone` — the tinted PLATE — has exactly ONE
+      5|    shipped consumer, Toast, the floating tier where a louder semantic belongs. Alert
+      6|    composes only the four `.feedback-tone-<name>` registers below, which bind `--tone` and
+      7|    nothing else, and spends that tone on the glyph and the ink over a neutral `.glass-quiet`
+>     8|    rung (R-3, neutral glass + status ink — the tinted Alert plate is not built). Everything
+      9|    below about the WASH is therefore Toast's; everything about the four `--tone` registers
+     10|    and the full-chroma glyph is shared.
+     11| 
+   ---
+     17|    was inert behind a 100%-opaque plate).
+     18| 
+     19|    This file mints the tone register ONCE. Every feedback tone reads as COLORED GLASS:
+>    20|    a tinted-glass wash (the rung bg mixed a BOUNDED % toward the tone, the SAME
+>    21|    `color-mix(in oklab, <rung bg>, <tint> <strength>)` seam the `--glass-veil-*`
+     22|    legibility lift and the `--veil-bg` plate already run — ZERO new compositing path) +
+     23|    a tone-keyed rim + a full-chroma glyph. The backdrop STILL shows through (α stays
+     24|    translucent, the π floor < ~0.92). The body ink stays `--foreground` /
+>    25|    `--card-foreground` for legibility (the Alert discipline — body never tone-tinted),
+     26|    so the tone is ONE deliberate color event per surface (the one-color-
+     27|    event idiom), never a full-bleed fill.
+     28| 
+>    29|    THE ONE KNOB: `--feedback-tone-strength` tints all four tones at once (the bounded
+     30|    mix %, the toast-glass §A band). The four tone hues map to the HOUSE tokens
+     31|    `--success` / `--warning` / `--info` / `--destructive` (presets-in-consumers — NO new
+     32|    colors). A consumer recalibrates the tone weight with ONE override.
+     33| 
+>    34|    THE RUNG IS THE SURFACE'S OWN PLATE, NOT A SECOND ONE. The tint mixes over
+     35|    `--glass-veil` — the nestable VALUE token `@utility glass-plate` publishes at the
+>    36|    element (glass/veil.css:35-37 names "a tone-tinted feedback panel" as one of its two
+     37|    intended consumers, the other being the capsule's warm floor). A `.feedback-tone`
+>+   38|    surface that composes a rung therefore tints ITS OWN rung: the earned-ink clamp,
+     39|    the tier ink and `--glass-level` all survive INSIDE the mix instead of being replaced
+     40|    by it.
+     41| 
+     42|    That is the defect this seam closes, and it was structural, not cosmetic. The register
+     43|    used to mix over a RAW `--feedback-tone-rung` plate token, and because `background` is
+>    44|    a single property the tinted result REPLACED the rung's own `background: var(--glass-veil)`
+     45|    wholesale — so every tone arm painted a plate the glass ladder had never touched. The
+     46|    surface claimed a rung and then discarded it. `--feedback-tone-rung` survives as the
+     47|    FALLBACK ONLY, for a hypothetical `.feedback-tone` consumer that composes no rung at
+   ---
+     54| @layer components {
+     55|     :root {
+     56|         /* The bounded mix % — the tone wash strength. 18% reads as colored GLASS
+>    57|            (the backdrop shows through, the silhouette is unmistakably tinted) without
+     58|            tipping toward a slab; the toast-glass §A band is ≈12–22%. ONE knob retunes
+     59|            all four tones. */
+     60|         --feedback-tone-strength: 18%;
+     61|         /* The FALLBACK plate, used only where the surface composes no rung at all and
+     62|            `--glass-veil` is therefore absent. Not a re-point seam: zero writers in
+>    63|            `src/`, held by `G-FEEDBACK-TINT-SEAM` arm (b). */
+     64|         --feedback-tone-rung: var(--glass-plate-floating);
+>    65|         /* The rim weight — a tone-keyed border, a thin tinted rim (not a loud edge). */
+     66|         --feedback-tone-border-strength: 40%;
+     67|     }
+     68| 
+     69|     /* ── The parametric register ──────────────────────────────────────────────────
+     70|        A surface declares `--tone` (one of the four house tokens) + composes
+>    71|        `.feedback-tone`; the tinted-glass wash + the tone-keyed rim resolve off the ONE
+     72|        recipe. The glyph carries the FULL-chroma tone (`[&>svg]` via the consumer's own
+     73|        class, or the `.feedback-tone-glyph` helper below). The `default` (un-toned)
+     74|        surface simply omits `.feedback-tone` — the bare glass rung paints.
+   ---
+    106|     }
+    107| 
+    108|     /* The glyph helper — the leading status glyph carries the FULL-chroma tone (the one
+>   109|        color event's saturated note over the tinted wash). A consumer composes it on its
+    110|        icon, or reads `var(--tone)` directly in an arbitrary `[&>svg]:text-(--tone)`
+    111|        utility. */
+    112|     .feedback-tone-glyph {
+   ---
+=== src/components/_shared/field/control.css
+    111|         caret-color: currentColor;
+    112| 
+    113|         /* ── THE TYPE RUNG ──
+>   114|            The fluid clamp ALONE. `--control-text` is `--type-small × --ui-scale`,
+>   115|            and the second factor escapes the clamp the first one exists to impose:
+>   116|            16.40px at 1440 fine becomes 24.60px at coarse, past the clamp's own
+    117|            20px ceiling and off every rung of the ladder. The field reads the
+    118|            bounded rung directly so its type is invariant across `sm`/`md`/`lg`
+    119|            AND across `--ui-scale` — comfort scales the BOX, not the letterform.
+   ---
+    142| 
+    143|     /* ── GEOMETRY, per kind ──
+    144|        Two geometries, four shells, and the radius rungs are #23 W-RADIUS-ROLE's
+>   145|        to name: a single-line field keeps the stadium (`--radius-pill`, clamped by
+    146|        the engine to half its own block-size), a multi-line box does not (a box is
+    147|        not a stadium — `--radius-field`). This lane's spec drafted "10px
+    148|        everywhere"; the landed 7-role spine — which §9 routes this exact question
+   ---
+=== src/components/_shared/menu/menu.css
+      5|        sample for that visual body, and a row-level filter inside it would be a plate
+      6|        nested in a plate for the width of one line of text. (The token home used to
+      7|        describe the row as "the quiet tier"; it never resolved a tier.) LIGHT: an ACCENT
+>+    8|        TINT, the warm accent ink (`--section-color-5`, the amber) at the selected fill
+      9|        alpha (`--fill-selected`, tokens/color-radius.css §1.3). The light menu plate is
+     10|        the theme's own ground, so a plate colour over it paints nothing, and an ink fill
+>+   11|        darkens the cream row with no hue (C 0.010), which reads grey. The highlighted
+     12|        row is the menu's one current item, so it takes the selected alpha: at the hover
+     13|        alpha no in-gamut accent at this lightness reaches C 0.02 on the cream plate.
+     14|        DARK: the quiet rung's plate colour. The fill is STATE in both modes, so it
+   ---
+    115|    §ink — break-even 0.0705, so it reads and does not shout). Select's separator
+    116|    spelled 12%, Command's read `var(--border)`, and the two disagreed on the same
+    117|    line inside the same plate. One class, one ink, both compose it — and because
+>   118|    the ink is a `color-mix` on `--foreground` it re-tints under `.dark` through the
+    119|    same channel every other warm hairline reads. */
+    120| @layer components {
+    121|     .glass-menu-divider {
+   ---
+=== src/components/button/styles.css
+     57|            box beside it, at the same `size`. */
+     58|         border: 1px solid var(--button-edge);
+     59|         /* The stadium bound, resolved against the CONTROL RUNG rather than the
+>    60|            box. `--radius-pill` (9999px) is clamped by the engine to half the
+     61|            ACTUAL block-size, so a button whose label wraps to two lines grows a
+     62|            balloon: the curvature tracks the content instead of the control. The
+     63|            corner is half the control rung `--button-size` (which the size arms
+     64|            re-point to `--control-h-xs/sm/lg`), so a single-line button is
+     65|            byte-identical to the stadium it was, and a wrapped or multi-line button
+     66|            keeps single-line curvature. A narrower-than-tall box (the icon arm)
+>    67|            still reads a circle: the engine's own radius scaling clamps the corner
+     68|            to half the short edge, which is the resolved-corner precedent — and it is
+     69|            the `icon / single tap-target → 50%` row of the radius role spine, so the
+     70|            icon arm mints no corner of its own.
+     71|            A bare `min(9999px, …)` is REFUSED: it couples the corner to a second
+>    72|            token to re-derive a clamp the engine already applies (GF-DOCK §STRIKE —
+     73|            `from: 50%` IS the resolved corner). */
+     74|         border-radius: calc(var(--button-size) / 2);
+     75|         color: var(--button-ink);
+   ---
+    140|         --glass-blur-floating: var(--glass-blur-quiet);
+    141|     }
+    142| 
+>   143|     /* ── Tone TINTS; it never replaces ────────────────────────────────────────
+    144|        The fill is the emphasis's own composed plate mixed toward the tone at the ONE
+    145|        shared strength — the identical seam a destructive Alert runs, so the two read as
+    146|        one grammar and not two calibrations, and the plate stays COLORED GLASS (the
+   ---
+=== src/components/card/styles.css
+    209| 
+    210|     /* TYPE rides the ONE ratio (PROPORTION §1.4: `--type-body` is rung 0 and every
+    211|        rung is `body × φ^(n/4)`), derived from the one fluid value rather than
+>   212|        re-typed — so the interval holds at the clamp floor, through the fluid arm
+    213|        and at the ceiling. Title = rung +2 (√φ above body, 23.67 at 1440);
+    214|        description = rung −1 (16.50). `--type-heading` was 25.888 — a φ rung of a
+    215|        DIFFERENT ladder, one the card's own body text does not sit on. */
+   ---
+=== src/components/configurator/styles.css
+    126|      *    Cascade: configurator.css imports after utilities.css, and these element-
+    127|      *    targeting selectors set the `border-color`, with no `border-border/N` utility
+    128|      *    in the SFC class lists to compete (nothing for the cascade to lose to). The faint section
+>   129|      *    tonal step (--configurator-section-tint, default transparent on light) reads
+    130|      *    behind a <ConfiguratorLayer> so a section reads as a section without a second
+    131|      *    heading rung. */
+    132|     .configurator-layer {
+   ---
+    146|          * `overflow: hidden` on the card: the section-header trigger's OUTSET `.focus-ring`
+    147|          * (box-shadow) must NOT be clipped by the card box (a keyboard-a11y regression), and
+    148|          * at the concentric card radius the header hover-fill's rounded-corner poke is
+>   149|          * sub-perceptual — the rounded border + section tint carry the card read. */
+    150|         border-radius: max(
+    151|             var(--radius-floor),
+    152|             calc(var(--radius-ctx) - var(--radius-inset))
+   ---
+    441|      * the warm-glass body; this rule sets the card radius + the column flex so the
+    442|      * well meets the rounded crown with zero bg leak. */
+    443|     .configurator-preset-tile {
+>   444|         /* `cqi`, not `vw`. The middle term of a tile clamp is a share of the ribbon the
+    445|          * tile sits in, and the ribbon is the studio — a `vw` term sized the tiles off
+    446|          * the window, so the same studio at the same width grew different tiles
+    447|          * depending on how much of the page it had been given. The floor and ceiling are
+   ---
+    459|      * form — the "LARGE ribbon" the aurora studio wants. Still the SAME
+    460|      * .configurator-preset-tile card (no new material, the warm-glass capsule + cast carry
+    461|      * from the base rule); only the inline-size floor lifts, and it is scoped to the top
+>   462|      * placement so the aside inspector idiom stays byte-unchanged. The clamp MIN (200px)
+    463|      * clears the ≥72px LARGE-ribbon floor with headroom; the FadingScroll port (the
+    464|      * .configurator-gallery-track) still clips the horizontal overflow. */
+    465|     [data-slot="configurator"][data-gallery="top"] .configurator-preset-tile {
+   ---
+    525|     }
+    526|     .configurator-preset-chip.is-active {
+    527|         /* the selected rung via the documented override hook (NO new composite): light,
+>+  528|          * the one-ink selected fill (`--fill-selected`); dark, the quiet glass tint. */
+    529|         --glass-capsule-fill: light-dark(oklch(from var(--foreground) l c h / var(--fill-selected)), var(--glass-plate-quiet));
+    530|     }
+    531| 
+   ---
+=== src/components/dialog/styles.css
+     13| 
+     14| /* THE ROOM. The plate is a ROOM (radius.css's room role, 24px): `§4:233` binds
+     15|  * room to "dialog, sheet, drawer" by name, and `room = 1.5 × card` with `r − pad = 4`
+>    16|  * IS the consistency F48 asked for. The inline gutter clamp is load-bearing — at 393
+     17|  * the plate sat flush to both viewport edges (x 0, w 393), and two consumers hand-rolled
+     18|  * their own gutter and disagreed. `--space-section` is 32 desktop / 20 mobile, so the
+>    19|  * clamp yields 512px capped at wide widths and a real 20px gutter per side at 393. */
+     20| @layer components {
+     21|     :where([data-slot="dialog-content"]) {
+     22|         border-radius: var(--radius-3xl);
+   ---
+     64|     /* Type. The pair is DERIVED from ONE fluid value, the house's paired-interval idiom
+     65|      * (`typography/scale.css` --type-proportional-*): the description rides `--type-body`
+     66|      * (rung 0 — 18.608px at 1440) and the title sits √φ above it, so the 1.272 interval
+>    67|      * holds at the clamp floor, through the fluid arm, and at the ceiling. Type takes NO
+     68|      * part in the §1.1 mobile transposition — that block names space rungs only, and no
+     69|      * type rung appears in it. */
+     70|     :where([data-slot="dialog-title"]) {
+   ---
+=== src/components/dock/styles/adaptive-legibility.css
+      4|  * This partial owns the dock's FOREGROUND legibility over an unknown backdrop, distinct
+      5|  * from the morph chrome: the unconditional `:where(.glass-dock)` self-engage of the
+      6|  * control glyph/label ink, the contrast-color() progressive refinement, and the
+>     7|  * frozen-backdrop (`data-backdrop-mode="static"`) arm. The PLATE half — the earned
+      8|  * ink off the measured backdrop luminance (darker in dark, a thicker cream pole in
+      9|  * light) — is composed at the element in dock/dock.css and lives in `@utility
+     10|  * glass-plate` (glass/veil.css); no token re-pointed here could carry it.
+   ---
+     15| @layer components {
+     16|     /* ── Adaptive legibility: SELF-ENGAGE the dock over a light backdrop by default
+     17|        The literal G2 surface; "Glass dock over VERY
+>    18|        LIGHT materials is unreadable, darken DYNAMICALLY like iOS 27") ─────────────
+     19|        The dock floats over WHATEVER the consumer painted — frequently a light/near-
+     20|        white app surface (the canonical G2 case the user reported). 
+     21|        A self-declared `--glass-backdrop: light` on the dock's OWN root (shell.css)
+   ---
+     27|        re-pointed directly on the dock root so the CONTROLS' glyph/label ink clears
+     28|        over an unknown field. It re-points no plate colour and could not: the plate's
+     29|        own earned ink (darker in dark, a thicker cream pole in light) is composed AT
+>+   30|        THE ELEMENT through the veil clamp (see the rule body below), which is the
+     31|        whole dynamic half. A dark-substrate consumer opts out via `--glass-level` on
+     32|        the dock root. The muted body register lifts to the full warm ink under the
+     33|        engaged plate: the low-contrast muted register is inappropriate over a busy
+   ---
+     35|     :where(.glass-dock) {
+     36|         /* The plate's own earned ink is NOT here and is not a token re-point: the
+     37|            plate composes its veil AT THE ELEMENT (`@apply glass-plate`, dock/dock.css),
+>    38|            so the clamp in `@utility glass-plate` (glass/veil.css) reads the
+>    39|            `--glass-backdrop-luma` this dock's observer writes on this dock's root
+     40|            (`useGlassBackdropLuminance`) and inherits it down to the plate. That is the
+     41|            whole dynamic ink (darker in dark, a thicker cream pole in light);
+     42|            re-pointing an inheriting token here could not produce it, because the
+   ---
+     47|         --muted-foreground: var(--foreground);
+     48|     }
+     49| 
+>    50|     /* NO `@container style(--glass-backdrop: light)` bucket for the dock's own ink. It
+     51|        declared exactly what the unconditional self-engage above already declares, so it
+     52|        could only ever re-assert a value — a condition wearing a mechanism's name. The
+>    53|        bucket that genuinely reaches DESCENDANT nested glass inside a dock lives with
+     54|        the rungs it re-points (glass/ladder.css); this file owns the dock root's ink. */
+     55| 
+     56|     /* The `contrast-color()` flip for the dock control foreground (Chrome
+   ---
+=== src/components/dock/styles/dock.css
+     11|  *        visual clip, pointer absorption, and grain. It paints ONE surface layer whose
+     12|  *        INK lerps between the collapsed/expanded rungs on `--dock-expand-t` (never a
+     13|  *        two-layer opacity crossfade — that composites `a + b − ab` and sags mid-morph),
+>    14|  *        composed through `@utility glass-plate` AT THE ELEMENT so the observer's
+     15|  *        measured backdrop luminance reaches it — the earned ink, one chromatic
+>    16|  *        writer, no second tint layer. The shell + adaptive-legibility partials re-point
+     17|  *        the inheriting `--dock-surface-blur`/`--glass-veil-*` tokens on `.glass-dock`,
+     18|  *        so the dark-arm glow reaches the layers via inheritance, ZERO
+     19|  *        re-author. Its VISIBLE
+   ---
+    101| 
+    102|            WHY THE INK AND NOT THE COLOUR — this is the dock's earned ink. The
+    103|            `--glass-plate-{rung}` tokens are composed at `:root`, so they bake `:root`'s
+>   104|            `--glass-backdrop-luma`: a plate painted from them cannot see the luminance
+>   105|            THIS dock's own observer writes on THIS dock's root
+    106|            (`useGlassBackdropLuminance`), and the G2 edict — "glass dock over VERY LIGHT
+>   107|            materials is unreadable, darken DYNAMICALLY like iOS 27" — resolves to a
+    108|            constant. Composing through `@utility glass-plate` (glass/veil.css) at the
+>   109|            ELEMENT reads the inherited luma where the surface actually paints, so the
+>   110|            clamp earns up to two more rungs of ink over a measured-bright backdrop and
+    111|            resolves EXACTLY the tier's own ink over a calm or unsampled one. ONE
+>   112|            chromatic writer, and the observer is wired to it.
+    113| 
+>   114|            NO SEPARATE TINT VEIL. A permanently-zero-alpha gradient layer painted over
+    115|            the rung is a mechanism's name on an identity: it had exactly one writer, at
+>   116|            alpha 0, and the axis it was meant to carry IS the veil clamp above. */
+    117|         --glass-veil-tier: calc(
+    118|             var(--dock-plate-collapsed-tier) +
+    119|                 (
+   ---
+=== src/components/dock/styles/index.css
+     21|  *   - dock/adaptive-legibility.css — the dock's foreground self-engage (the
+     22|  *                            warm-chromatic dock ink, the contrast-color()
+     23|  *                            refinement, the frozen-backdrop static arm; it holds
+>+   24|  *                            no clamp and no bucket). Split from
+     25|  *                            morph.css to keep both partials under the 500-line bound.
+     26|  * - dock/density.css — the density × --dock-scale cascade.
+     27|  *   - dock/layers.css      — the `.dock-layer` crossfade + hit-test + reveal-
+   ---
+     79|    dock cascade — a net-new surface around the byte-untouched useDockCtaReceive morph. */
+     80| @import "./cta-seat.css";
+     81| /* The dock-as-native-dynamic-search-bar field surface (the
+>    82|    active-field tint legibility seam + the `.glass-menu-row` result rows). A net-new
+     83|    surface on a dock that authors the `#search` slot ([2026-08-12 · BK #47 W1
+     84|    SURFACE] ~~`[data-search]`~~); the pill→field morph is the dock's OWN `--dock-morph-t`
+>    85|    glide (box-inviolate); CONSUMES the tint seam + the menu-row recipe, re-authors neither. */
+     86| @import "./search.css";
+     87| 
+     88| /* The SINGLE morph scalar. The dock morph orchestrator writes it once per frame
+   ---
+=== src/components/dock/styles/search.css
+      4|  * over whatever backdrop the dock floats on (≥4.5:1, the plate's earned ink) — never the
+      5|  * pale-ghost-fading-into-content trap (the NN/g defect, WWDC §219 "buttons remain
+      6|  * legible"). The field surface composes its plate at the ELEMENT — `@apply glass-plate`
+>     7|  * (the one recipe, glass/veil.css), whose clamp reads the `--glass-backdrop-luma` the
+>     8|  * dock's observer writes and the field inherits — NOT a pre-substituted `:root` plate
+      9|  * token (the substitution-vs-inheritance trap: a colour composed at `:root` bakes
+>+   10|  * `:root`'s luma and does NOT earn ink — the pale-fade; the dock's own such token is
+     11|  * struck for exactly that reason, tokens/glass.css). Over a calm or
+>    12|  * unsampled backdrop the clamp resolves exactly the tier's own ink (the honest calm
+>    13|  * identity); past the knee it earns up to two more rungs of it. The dock's own L0 plate
+     14|  * takes the SAME path (dock/dock.css), so field and plate earn their ink in lockstep by
+     15|  * construction rather than by two recipes agreeing.
+     16|  *
+   ---
+=== src/components/dock/styles/shape.css
+    119|        `(--stretch × --dock-punch-stretch)²` residual the deformation zoo introduced is
+    120|        structurally gone with it).
+    121| 
+>   122|        The `max(…, 0.06)` guard matches the layers.css `--dock-size-scale` clamp floor
+    123|        exactly (a math fence, not a masking fallback). The children default
+    124|        `transform-origin: 50% 50%`, the SAME centre the root scales from, so the inverse
+    125|        un-does the box's outward scale about the shared centroid. SCOPED to
+   ---
+=== src/components/dock/styles/shell.css
+     27|            RETIRED (the chain orphaned by this peer re-point);
+     28|            the dock reads the unified resting material, there is no dock-own rung. */
+     29|         /* Re-anchor the dock's saturate at 1.2 now the
+>    30|            UNIFIED PLATE TINT is the PRIMARY anti-gray. Riding the
+     31|            content-tier `--glass-saturate` (1.4) through the resting peer would
+     32|            over-correct to a "metallic" gray (real
+>    33|            liquid glass concentrates light ~1.1-1.25×). The plate-tint self-engage
+     34|            (dock/adaptive-legibility.css) is now the PRIMARY anti-gray device, so saturate
+     35|            no longer carries the whole load and drops off the metallic ceiling to the calm
+     36|            1.2 SECONDARY floor.
+   ---
+    131|            cream pole in light) with NO consumer opt-in (a dock floats over arbitrary —
+    132|            frequently light — page content), and it does so
+    133|            WHERE IT PAINTS: the L0 plate composes `@utility glass-plate` at the element
+>   134|            (dock/dock.css), whose clamp reads the `--glass-backdrop-luma` this dock's
+>   135|            own observer writes on this root and which inherits to the plate. No token
+    136|            re-pointed here moves the plate — the `--glass-plate-*` colours resolve at
+    137|            `:root`. `--glass-backdrop: light` is KEPT so a consumer's DESCENDANT
+>   138|            nested-glass inside the dock reads the bright bucket via the
+    139|            ancestor-querying `@container` block in glass/ladder.css (CSS style queries
+    140|            never self-match, so this declaration is inert for the dock's OWN plate). */
+    141|         --glass-backdrop: light;
+    142|         /* The plate's morph endpoints are INK RUNGS, not composed colours: the plate
+    143|            lerps its own veil alpha between them and composes the colour at the element
+>   144|            (dock/dock.css), which is what lets the observer's measured luminance reach
+>   145|            the paint. A `--glass-plate-*` colour endpoint bakes `:root`'s luma and
+    146|            cannot. */
+    147|         --dock-plate-collapsed-tier: var(--glass-veil-wash);
+    148|         --dock-plate-collapsed-border: var(--glass-border-floating);
+   ---
+    210| 
+    211|            And squeeze it did, measurably, on the viewport the budget law was written
+    212|            for: at 393px `80vw` is **314px**, NARROWER than the 377px plate GF-DOCK
+>   213|            measured, so the cap was clamping the dock BELOW the width the viewport
+    214|            actually offered while the counted chrome (236–281px of it) and the run
+    215|            competed inside the remainder — which is precisely how the run reached
+    216|            `clientWidth: 0`. A root cap makes chrome and lattice fight over an arbitrary
+   ---
+    357|        Same recipe (the `--paper-clean-texture` overlay + the `.dark` soft-light arm),
+    358|        byte-identical. */
+    359| 
+>   360|     /* Vertical docks grow-to-fit then clamp at `--dock-max-block-size` (the
+    361|        contract). At rest a capped column scrolls its OWN block axis
+    362|        internally (the `.vertical.always-expanded:not([data-morphing])` port above)
+    363|        so a consumer setting `--dock-max-block-size` gets a viewport-anchored
+   ---
+=== src/components/sheet/styles.css
+    325|      * clock. Opaque and veil sheets keep their own material and render no band.
+    326|      *
+    327|      * WHY IT IS NOT A CHILD OF THE PLATE, AND THE FIGURE THAT SAYS SO. As a child this
+>   328|      * sampler's `backdrop-filter` landed NOTHING and what painted was a masked gradient tint
+    329|      * wearing the computed style of frost. The cause is the plate's OWN material: the glass
+    330|      * recipe carries a `plus-lighter` specular pseudo and a `soft-light` grain pseudo, and a
+    331|      * descendant with a blend mode makes its parent an ISOLATED GROUP — a backdrop root — so
+   ---
+    361|         right: anchor(right);
+    362|         bottom: anchor(bottom);
+    363|         left: anchor(left);
+>   364|         /* one rung under the surface it grades, so the plate is never sampled through it */
+    365|         z-index: calc(var(--z-modal) - 1);
+    366|         pointer-events: none;
+    367|         background: linear-gradient(
+   ---
+    501|      * shipped answer was to honour it anyway and cut what did not fit: at the 0.12 peek the
+    502|      * primary action was 45% clipped on a 900 viewport and 81% clipped on a real 780 one,
+    503|      * while the measured bar read GREEN, because a clipped row still reports its rect. A
+>   504|      * clamp is not a fit.
+    505|      *
+    506|      * The floor is the CHROME, spelled in the same tokens the chrome is built from, so it
+    507|      * transposes one rung down at mobile with everything else and no number is invented here:
+   ---
+=== src/components/tabs/styles/segmented.css
+      5| 
+      6|      · PILL    (DEFAULT) — THE GLASS MATERIAL, and the EYEGLASS. The track rides
+      7|                  `--glass-plate-quiet` + a hairline edge; the measured indicator is
+>     8|                  the selected-reads-as-glass body (a glass tint FORWARD of the
+      9|                  track, NEVER a saturated hue, never an opaque `bg-card`). On a hop
+     10|                  it SPANS origin and destination, leans 2:1 into its travel, swells
+>    11|                  across, inverts from a pressed well to a lit dome, and clamps at
+     12|                  the bar's inner edge. The organ is armed HERE, by declaring
+     13|                  `--eyeglass-span-max`; the writer reads it off the cascade.
+     14|      · UNDERLINE — THE PAPER MATERIAL. NO plate, NO blur, NO track surface — the
+   ---
+     46|     .segmented-tabs {
+     47|         --bouncy-track-trim: 0.1875rem;
+     48|         /* The iOS-27 stadium register. The pill reads the role-bearing
+>    49|            `--radius-tab` (= --radius-pill = 9999px) — on a short pill box this clamps to
+     50|            half-height → a TRUE stadium end-cap (not the squared `0.3125rem` rounded-rect
+     51|            form). The TRACK corner is CONCENTRIC with the pill (Apple's
+     52|            `.containerConcentric`): the pill radius + the trim inset, so a stadium pill
+   ---
+     85|         align-items: stretch;
+     86|         /* (Law 2 — capsule-vs-card). A COLUMN-STACK track cannot
+     87|            wear the horizontal arm's stadium `--radius-tab` (= --radius-pill = 9999px):
+>    88|            on a tall multi-row box the stadium clamps its end-caps to a ~46px half-height
+     89|            balloon (the live-measured 10003px→46px defect). The vertical arm
+     90|            re-binds the family radius var onto the BOUNDED `--radius-strip` (≈12px); the
+     91|            shipped concentric track calc (`--bouncy-track-radius`, above) re-resolves the
+   ---
+    238|             var(--glass-shadow-capsule);
+    239|     }
+    240| 
+>   241|     /* THE CLAMP. Driven into the end of the bar the body cannot span further, so it
+>   242|        compresses against the inner edge instead. The writer REPORTS the clamp rather
+    243|        than silently shortening the span, and this is the paint that answers it: the
+    244|        pile-up reads as a body meeting a wall, which is the only honest thing a
+    245|        travelling object can do at a boundary. */
+   ---

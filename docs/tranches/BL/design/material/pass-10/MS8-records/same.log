@@ -1,0 +1,13 @@
+dist minor v7 vs minor v8: diff -rq exit 0, 0 lines
+dist minor v8 vs minor v8 rebuilt: diff -rq exit 0
+dist files: m7 3, m8 3; sha256 list diff exit 0
+demo minor v7 vs minor v8: diff -rq exit 0, 0 lines
+demo minor v8 vs minor v8 rebuilt: diff -rq exit 0
+demo files: m7 346, m8 346; sha256 list diff exit 0
+m7 specimen css index-Bd1ws62N.css 398432 B sha256 e11613c3eeb45cab2ebe3e88245ba9a55a8c41b640f48d9a45df116bb3638b0a
+m8 specimen css index-Bd1ws62N.css 398432 B sha256 e11613c3eeb45cab2ebe3e88245ba9a55a8c41b640f48d9a45df116bb3638b0a
+m7 dist-demo css total 431116 B, files 347
+m8 dist-demo css total 431116 B, files 347
+-- R-27: the path-free ties to pass 9's banked minor v7 (pass-9/MS7-records/same-m7-*.sha256)
+banked minor v7 specimen css: e11613c3eeb45cab2ebe3e88245ba9a55a8c41b640f48d9a45df116bb3638b0a  ./assets/index-Bd1ws62N.css
+demo banked m7 vs m8: diff exit 0, 0 lines

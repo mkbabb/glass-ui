@@ -1,0 +1,24 @@
+LIT · lighting literals (static: halo, near-halo, stacked and chained shadows outside the --shadow-* census; frames: the dock's luma ring at 4, 8, 16 px); REPORTED
+  HALO src/components/_shared/field/control.css:225 .field-control:focus-visible { --control-edge-ring: … 0 0 8px color-mix(in srgb, var(--focus-ring-color) 15%, tran }
+  HALO src/components/_shared/field/control.css:251 .field-control:is(:user-invalid, [data-state="invalid"]):focus-visible { --control-edge-ring: … 0 0 8px color-mix(in srgb, var(--destructive) 15%, transpare }
+  CHAIN src/components/blob/Blob.vue:355 .goo-blob-wrapper { filter: drop-shadow(var(--blob-shadow-ambient)) drop-shadow(var(--blob-shadow-contact)) } (2 drop-shadow)
+  CHAIN src/components/blob/Blob.vue:360 .goo-blob-wrapper:hover { filter: drop-shadow(var(--blob-shadow-hover)) drop-shadow(var(--blob-shadow-contact-hover)) } (2 drop-shadow)
+  CHAIN src/components/blob/Blob.vue:417 .goo-blob-wrapper { filter: drop-shadow(var(--blob-shadow-ambient)) drop-shadow(var(--blob-shadow-contact)) !important } (2 drop-shadow)
+  HALO src/components/card/styles.css:161 .card.glass-resting[role="option"][data-shadow]:focus-visible { box-shadow: … 0 0 8px oklch(from var(--foreground) l c h / 0.15) }
+  STACKED src/components/card/styles.css:161 .card.glass-resting[role="option"][data-shadow]:focus-visible { box-shadow: var(--card-cast), 0 0 8px oklch(from var(--foreground) l c h / 0.15) } (2 blurred layers)
+  STACKED src/components/slider/styles.css:292 .glass-slider[data-variant="spectrum"] .slider-thumb:focus-visible { box-shadow: var(--focus-ring-shadow), var(--shadow-sm) } (2 blurred layers)
+  HALO src/styles/glass/control-bit.css:324 .control-bit:focus-visible .control-bit__face { box-shadow: … 0 0 8px color-mix(in oklab, var(--foreground) 15%, transpare }
+  STACKED src/styles/glass/ladder-undershadow.css:39 .glass-quiet.glass-over-text { box-shadow: var(--glass-under-shadow-default), var(--glass-shadow-quiet) } (2 blurred layers)
+  STACKED src/styles/glass/ladder-undershadow.css:43 .glass-resting.glass-over-text { box-shadow: var(--glass-under-shadow-vivid), var(--glass-shadow-resting) } (2 blurred layers)
+  STACKED src/styles/glass/ladder-undershadow.css:49 .glass-resting[data-over-content="solid"] { box-shadow: var(--glass-under-shadow-quiet), var(--glass-shadow-resting) } (2 blurred layers)
+  STACKED src/styles/glass/ladder-undershadow.css:52 .glass-floating[data-over-content="solid"] { box-shadow: var(--glass-material-rim), var(--glass-under-shadow-default), var(--glass-shadow-floating) } (2 blurred layers)
+  STACKED src/styles/glass/ladder.css:97 .glass-quiet { box-shadow: var(--glass-material-rim), var(--glass-under-shadow-quiet), var(--glass-shadow-quiet) } (2 blurred layers)
+  STACKED src/styles/glass/ladder.css:113 .glass-resting { box-shadow: var(--glass-material-rim), var(--glass-under-shadow-default), var(--glass-shadow-resting) } (2 blurred layers)
+  STACKED src/styles/glass/ladder.css:141 .glass-floating { box-shadow: var(--glass-material-rim), var(--glass-under-shadow-vivid), var(--glass-shadow-floating) } (2 blurred layers)
+  STACKED src/styles/glass/overlay-plate.css:317 [data-slot="select-content"] { box-shadow: var(--glass-material-rim), var(--glass-under-shadow-vivid), var(--glass-shadow-floating),  } (2 blurred layers)
+  HALO src/styles/tokens/scale-paper.css:62 :root { --focus-ring-shadow: … 0 0 8px color-mix(in srgb, var(--focus-ring-color) 15%, tran }
+  NEAR src/styles/tokens/shadow.css:27 { --shadow-lg: … 0 4px 20px color-mix(in srgb, var(--shadow-color) 12%, trans } (offset 4px under a quarter of blur 20px)
+  static: tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p10/minor8/wt · 280 files · 160 shadow and filter declarations read · LIGHTING-LITERALS halo=5 near=1 stacked=10 chain=3 open=19
+  LIGHTING-LITERALS halo=5 near=1 stacked=10 chain=3 open=19 frames-halo=0/0
+  REPORTED (inherited findings, not a gate; --strict gates them)
+PASS (1 gated rows)

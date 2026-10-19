@@ -1,0 +1,18 @@
+minor-split-v8-R25.diff: 3 files, +4/-4, sha1 7540ff70
+MS7-r21b-proposed.diff: 2 files, sha1 ccee3e30
+minor-split-v7.patch: 61 files, sha1 3a7a8eec
+minor-split-v8.patch: 61 files, sha1 a843b388; git diff --shortstat:  61 files changed, 730 insertions(+), 543 deletions(-)
+-- path list, minor v7 vs minor v8 (prints nothing = equal)
+paths diff exit 0
+-- the R-25 delta, the r21b hunks removed: what is left must be the one parenthesis
+6a7,8
+> -           clamp's two-step ceiling keeps it translucent, in both themes; one
+> +           clamp's two-step ceiling keeps it translucent, in both themes); one
+-- line counts per R-25 file, minor v7 -> minor v8
+   DESIGN.md 1868 -> 1868
+   src/styles/glass/surface-axis.css 137 -> 137
+   src/styles/glass/surfaces-pager.css 66 -> 66
+-- parentheses in the surfaces-pager.css pill comment (:20-40): minor v7 then minor v8
+   opens 9, closes 8
+   opens 9, closes 9
+-- .vue files in the R-25 delta: 0

@@ -1,0 +1,596 @@
+=== DESIGN.md
+     31| **The six-layer composite.** Every glass surface composes six optical layers. A primitive that omits one reads as iOS-7-flat, not iOS-26-liquid. We require all six (or th
+     32| 
+     33| 1. **Backdrop blur + saturation** — the refraction proxy. `backdrop-filter: blur(<r>) saturate(<f>)` per tier. The saturation channel matters as much as the blur radius; 
+>+   34| 2. **Surface tint (rgba background)** — the light-vs-dark admit-through. Light-mode and dark-mode tints differ: light paints the `--card` pole at or above the solved boun
+     35| 3. **Edge rim (border)** — the boundary halo that holds the surface against its backdrop. `border: 1px solid var(--glass-border-<tier>)`. Carried by the per-tier border o
+     36| 4. **Inner shadow / catch-light** — the upper-edge specular streak (`inset 0 0.5px 0 0 hsl(0 0% 100% / 0.25)` via `--glass-highlight`) that reads as "this surface has an 
+     37| 5. **Drop shadow** — adaptive depth shadow under the tile; depth scales with z-elevation. Per-tier `--glass-shadow-<tier>`.
+   ---
+     86| - `--motion-ease-apple-spring` (`cubic-bezier(0.175, 0.885, 0.32, 1.275)`) — single-step elastic overshoot for switches and micro-hovers that don't want the multi-stop `l
+     87| - `--ease-standard` (`cubic-bezier(0.4, 0, 0.2, 1)`) — calm decelerate; the default for non-spring exits and time-bound system-driven motion.
+     88| 
+>    89| **Spring selection rule — "if the user's finger touched a pixel, use a spring."** A press-release is `snappy` (the user demanded the motion). A sheet entrance is `bouncy`
+     90| 
+     91| ### §L3 — Tap Choreography
+     92| 
+>    93| Every interactive primitive squishes on press. Tap-squish is `transform: scale()`, not opacity, not bg-tint — opacity flips and bg-tints are interactive-rest indicators, 
+     94| 
+     95| **Canonical rung — 0.96.** The single canonical press-scale is `0.96` (the iOS `.regular` control rung). Consumers reach for `--scale-press` and get the canonical squish.
+     96| 
+   ---
+    112| 
+    113| Disney's 12 principles are the canonical taxonomy for UI motion. **The library ships substrate for all twelve** — the _Liquid Weight is Universal_ law: every **driver** m
+    114| 
+>   115| **`--motion-weight` (0 → 1, rest `0.62 ≈ 1/φ`).** One scalar names _how much cartoon_ a surface carries; it co-scales the squash depth, the overshoot share, the anticipat
+    116| 
+    117| **Universal tier — every primitive shipping driver motion honors these:**
+    118| 
+   ---
+    147| 
+    148| | User preference                | Subsystem disabled                | Glass-ui behavior                                                                                  
+    149| | ------------------------------ | --------------------------------- | ---------------------------------------------------------------------------------------------------
+>   150| | `prefers-reduced-transparency` | Transparency / blur               | Surface α → 1.0; `backdrop-filter` → none; grain → 0; rim → solid border. Glass becomes opaque tint
+    151| | `prefers-reduced-motion`       | Springs + morphs + ambient motion | Springs → `--ease-standard` (no overshoot); rubber-band → cross-fade; `<Aurora>` pauses via `useInt
+    152| | `prefers-contrast: more`       | Vibrancy + thin rim               | Rim opacity → 1.0; rim width × 2; text color → max contrast (`--text-strong` floor); vibrancy / sat
+    153| 
+   ---
+    459| 
+    460| ### Cartoon shadows (offset, layered) — the Cartoon register
+    461| 
+>   462| The cartoon shadow is not just an elevation token — it is the **visual half of the Cartoon register** (its motion half is `--ease-cartoon-punch`, §L2). The 1940s-technico
+    463| 
+    464| ```
+    465| --shadow-cartoon-sm: -3px 2px 1px color-mix(in srgb, var(--shadow-color) 10%, transparent),
+   ---
+    473|                      -6px 6px 2px color-mix(in srgb, var(--shadow-color)  8%, transparent);
+    474| ```
+    475| 
+>   476| > A _warm-tinted_ (technicolor-color) cartoon cast — re-pointing the cartoon family off the neutral `--shadow-color`/`--foreground` toward a warm or chromatic ink — is a 
+    477| 
+    478| **The cast is a MOVING cast, and the consumer drives it.** No component emits the cast child, so a surface that wants the punch authors it: `<span class="cartoon-cast" ar
+    479| 
+   ---
+    518| 
+    519| ### Plate register
+    520| 
+>+  521| `@utility glass-plate` (`src/styles/glass/veil.css`) is the plate paint, composed at the element. It reads `--glass-veil-tier` (unset resolves `resting`), clamps it upwar
+    522| 
+    523| It deliberately supplies **no position, no z-index, no radius, no size**. A plate is paint, not a box. `.dock-plate` is the worked example: it composes `glass-plate` and 
+    524| 
+   ---
+    597| | State                         | Behavior                           | Token                                                                                              
+    598| | ----------------------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------
+    599| | Rest                          | Default appearance                 | —                                                                                                  
+>   600| | Hover                         | Scale up, or bg tint               | `--scale-hover` (1.08) · `--scale-hover-dock` (1.1)                                                
+    601| | Active / pressed              | Scale down                         | `--scale-press` (0.96, the canonical iOS rung — see §L3) · `--scale-press-btn` (0.97; aliases `--sc
+    602| | Disabled                      | Reduced opacity, no pointer events | `--opacity-disabled` (0.50)                                                                        
+    603| | Focus-visible                 | Ring + glow                        | `--focus-ring-shadow`: 0 0 0 2px rgba(ring, 0.30), 0 0 8px rgba(ring, 0.15)                        
+>   604| | `aria-pressed` / `.is-active` | Tinted bg, full-opacity text       | Component-scoped                                                                                   
+    605| 
+    606| ### Composable base classes
+    607| 
+>   608| - `.interactive-item`—bg-tint four-state (50% accent) + focus ring
+    609| - `.active-scale`—atomic `:active { transform: scale(0.97) }`
+    610| - `.disabled-base`—atomic `:disabled { opacity + pointer-events }`
+    611| - `.focus-ring`—atomic `:focus-visible { box-shadow: var(--focus-ring-shadow) }`
+   ---
+    729| | `--type-subheading`        | 1.272rem                                  | 20.4        | `text-xl`   | Card titles, labels                       |
+    730| | `--type-heading`           | 1.618rem                                  | 25.9        | `text-2xl`  | Subsection heads                          |
+    731| | `--type-title`             | 2.058rem                                  | 32.9        | `text-3xl`  | Page heads                                |
+>   732| | `--type-display-1`         | clamp(1.618rem, 1.2rem + 1.6vw, 2.618rem) | 25.9–41.9   | `text-4xl`  | Display                                   |
+>   733| | `--type-display-2`         | clamp(2.058rem, 1.5rem + 2.2vw, 3.33rem)  | 32.9–53.3   | `text-5xl`  | Large display                             |
+>   734| | `--type-display-3`         | clamp(2.618rem, 2rem + 3vw, 4.236rem)     | 41.9–67.8   | `text-6xl`  | Extra-large display                       |
+>   735| | `--type-display-4`         | clamp(3.33rem, 2.5rem + 4vw, 5.382rem)    | 53.3–86.1   | —           | Splash (custom)                           |
+>   736| | `--type-display-5`         | clamp(4.236rem, 3.5rem + 6vw, 6.854rem)   | 67.8–109.7  | —           | Mega hero (custom)                        |
+>   737| | `--type-display-mega`      | clamp(5.382rem, 4rem + 9vw, 11.089rem)    | 86.1–177.4  | —           | Poster: section / pane title (v1.0.3)     |
+>   738| | `--type-display-hero`      | clamp(6.854rem, 4.5rem + 12vw, 17.942rem) | 109.7–287.1 | —           | Poster: page hero / metric value (v1.0.3) |
+>   739| | `--type-display-audacious` | clamp(8.728rem, 5rem + 16vw, 22rem)       | 139.6–352   | —           | Fast.com-scale single number (v1.0.3)     |
+    740| 
+    741| Consumers extending beyond display-audacious add tokens in their preset—the library exposes the mechanism, not every conceivable step.
+    742| 
+   ---
+    748| hierarchy, marketing-surface headlines. Same vw-axis as
+    749| `display-1..5`, so the size is consumer-agnostic; a consumer that
+    750| needs container-query precision (e.g. speedtest's `.metric-col`
+>   751| container) wraps its own clamp with these tokens as the ceiling:
+    752| 
+    753| ```css
+    754| /* speedtest SpeedtestResults.vue:763—cqi axis with audacious ceiling */
+>   755| font-size: clamp(
+    756|     6rem,
+    757|     calc(38cqi * 3 / max(3, var(--digit-count))),
+    758|     var(--type-display-audacious)
+   ---
+    928| | `size` | `xs \| sm \| md \| lg` | `md` | Shared control-height rung |
+    929| 
+    930| **The target floor under that rung.** Three mechanisms carry WCAG-2.5.5's 44px,
+>   931| and the `size` rung is only the first of them. (1) `--control-floor` is the clamp
+    932| seam inside the height cohort: `0px` at desktop, lifted to `--touch-target`
+    933| (`2.75rem`) under `pointer: coarse`, with every `--control-h-xs|sm|md|lg` written
+    934| as a `max()` against it — so a `--ui-scale` below 1 cannot drop a control under
+   ---
+    980| 
+    981| ### Section-tone recipe (table status cells)
+    982| 
+>   983| Tables and tag-input chips frequently need a per-section tinted chip whose hue tracks `--section-color-N`. The ladder is exactly thirteen stops and carries no fallback, s
+    984| 
+    985| ```
+    986| bg-section-N/15 text-section-N border-section-N/30
+    987| ```
+    988| 
+>   989| paired with `<Badge variant="outline" size="md">`. The `outline` variant supplies the focus-ring/border substrate and yields foreground text; the section triplet then ove
+    990| 
+    991| - Color `var(--muted-foreground)`
+    992| - Hover: 85% bg lighten, 20% foreground border, 15% foreground color, `transform: scale(1.08)`
+   ---
+   1042| | Component             | Shape                                                                             | Hover                                     | Use             
+   1043| | --------------------- | --------------------------------------------------------------------------------- | ----------------------------------------- | ----------------
+   1044| | `GlassDock`           | Pill container, height ≈ 55 px                                                    | —                                         | Outer dock surfa
+>  1045| | `DockIconButton`      | Fixed square `--size-icon-btn` (40 × 40 px); `compact` prop auto-sizes to content | Bg darken + `--scale-hover-dock` (1.1)    | Icon-only button
+>  1046| | `DockSelectTrigger`   | Variable width, text + chevron                                                    | Bg darken only (no scale—anchors popover) | `<Select>` trigg
+>  1047| | `DockDropdownTrigger` | Variable width, text + icon + chevron                                             | Bg darken + scale (1.1)                   | `<DropdownMenu>`
+   1048| | `DockLayer`           | Grid cell, fades in/out by slot key                                               | —                                         | Layer-active swi
+   1049| | `DockLayerGroup`      | Grid wrapper, animates width across layers                                        | —                                         | Multi-layer dock
+   1050| 
+   ---
+   1224| </Card>
+   1225| ```
+   1226| 
+>  1227| The sticky-position + backdrop-blur classes (and the `--card-header-bg` tint token) stay consumer-side — the SFC composes the choreography; the host card composes the sur
+   1228| 
+   1229| **Named timeline + tokens**
+   1230| 
+   1231| | Symbol              | Type                  | Default                                            | Use                                                                  
+   1232| | ------------------- | --------------------- | -------------------------------------------------- | ---------------------------------------------------------------------
+   1233| | `--card-scroll`     | named scroll-timeline | (emitted by `.card-scroll-host`)                   | The timeline `<CardHeader shrink>` binds to. `block` axis.           
+>  1234| | `--card-header-bg`  | color                 | `color-mix(in srgb, var(--card) 60%, transparent)` | Canonical sticky-header backdrop tint. Auto-dark via `--card`.       
+   1235| | `.card-scroll-host` | `@utility`            | (in `utilities.css`)                               | The scroll-overflow host that emits `--card-scroll` + isolates it via
+   1236| 
+   1237| **PRM contract**: the scoped CSS forces `animation-duration: 0.01ms` on all three lanes under `@media (prefers-reduced-motion: reduce)`. Reduced-motion users see the rest
+   ---
+   1283| 
+   1284| 1. **Acquire**—`pointerdown` on the slider thumb injects a `dockKeepOpen` token via the dock's `useDockState` provide tree. While the token is held, the dock's idle-colla
+   1285| 2. **Release**—`pointerup` / `pointercancel` (attached at window scope so the gesture survives the cursor leaving the dock) drops the token.
+>  1286| 3. **Visual binding**—the Slider subscribes to the dock's reactive `dockHeld` flag (the OR-reduction of all currently-held tokens) and reflects it via `data-held` on its 
+   1287| 4. **Substrate response**—`.glass-dock[data-held]` in `src/components/dock/styles/morph.css` tier-shades the dock background up while any descendant holds a token.
+   1288| 
+   1289| The cross-substrate proof story WAS `demo/stories/compositions/dock-with-slider.vue` (K W7)—three cells exercising the contract: standard slider (Volume), `glass-pill` va
+   ---
+   1306| 2. **Primitive surfaces the token in DESIGN.md**: a token row in the component's section, with the property name, accepted value type, and default. This is the contract.
+   1307| 3. **Consumer overrides via inline style OR a wrapper class**: `<Primitive :style="{ '--token-name': '...' }">` or `.consumer-wrap { --token-name: ...; }`. Either form re
+   1308| 
+>  1309| **Worked example—Metric ledger geometry.** `MetricStack` owns the shared responsive grid and each `MetricRow` reads it through subgrid. Product-specific phase tint and an
+   1310| 
+   1311| **Worked example—Timeline groove thickness.** `<Timeline>` reads `var(--timeline-track-h)` on its `.tl__track` selector. The consumer sets the variable on the wrapping co
+   1312| 
+   ---
+   1356| 
+   1357| ### The partition
+   1358| 
+>  1359| - `at` is an **end** boundary, cumulative, and is **clamped monotone non-decreasing — never
+   1360|   sorted**. Keys, labels and states travel with `at`, so a sort turns one typo into a silently
+>  1361|   reordered narrative; the clamp preserves author order and renders the violation visible (a
+   1362|   zero-width span with its mark stacked on its neighbour's).
+   1363| - An omitted `at` takes an equal share of the axis its pinned neighbours leave. All-omitted is
+   1364|   the plain equal split.
+   ---
+   1814| `Textarea`, `NumberField`, `Checkbox`, `Switch` and `Radio`, paint their boundary in
+   1815| `--foreground` at `--ink-perimeter`: 3.1:1 light and 3.8:1 dark on `--card`.
+   1816| 
+>  1817| **Tier and status tones are tints, not text inks.** `--tier-featured` / `--tier-saved`
+>  1818| (the `text-tier-*` / `bg-tier-*` bridges) and the status tones tint marks, fills and
+   1819| plates. A tier or a status rides a mark or plate beside a `--foreground` numeral; the
+>  1820| numeral itself is never painted in the tint.
+   1821| 
+   1822| ### Status
+   1823| 
+   ---
+=== demo/stories/dock/dock-search.vue
+    195|                             </button>
+    196|                         </template>
+    197| 
+>   198|                         <!-- The search field aperture rides the morph; adaptive tinting
+    199|                              keeps its text contrast at or above 4.5:1. -->
+    200|                         <template #search>
+    201|                             <div class="input-bar" data-surface="glass">
+   ---
+=== demo/stories/substrates/glass-material.vue
+      2| // The unified glass-material matrix. Every named band surface (the five ladder
+      3| // rungs + card + the floating/overlay registers Dialog/Sheet/Popover compose)
+      4| // reads the SAME catch-light + rim from one `.glass-material` mixin; the three
+>     5| // SOTA folds (squircle, chromatic fringe, adaptive tint) ride that
+      6| // grammar behind capability checks and tokens. The matrix is staged over a
+      7| // shipped high-frequency Aurora backdrop so the specular + rim + folds read
+      8| // against busy color (glass does not read on flat cream).
+      9| //
+     10| // This story BINDS the shipped seams it narrates: the moving catch-light is
+     11| // composed off `useSpecularTracking` (the DRY pointer-write seam), the adaptive
+>    12| // tint sets BOTH `--glass-veil-ink` + a non-zero `--glass-veil-rung` so
+     13| // the `color-mix(in oklab, …)` actually bites, the squircle reads on the
+     14| // dialog/sheet register (cards stay round by policy), and the deliberately-subtle
+     15| // rim is shown against an on/off contrast device.
+   ---
+     24|     AlertTitle,
+     25|     AlertDescription,
+     26| } from "@glass/index";
+>    27| //  Arm 2 — the DEMO exerciser for the sampled-luminance observer
+     28| // (path B: demo-private — the composable is OFF the public glass barrel, imported
+     29| // directly here as the content-glass DEMO mount that exercises the live sampling path;
+>    30| // the binary consumer is the dock). It writes `--glass-backdrop-luma` + the bucket on a
+     31| // glass-card over the page's live Aurora substrate so the earned ink TRACKS the
+     32| // painted backdrop (the iOS-27 register). A demo mount is NOT a binary consumer (the
+     33| // own-story exclusion: it exercises the composable, it does not by
+   ---
+     69| // the centred 50% fallback). NO hand-rolled --mouse-x math, NO per-plate copy.
+     70| const { specularStyle, onPointerMove } = useSpecularTracking();
+     71| 
+>    72| // A consumer-provided dominant backdrop color drives the adaptive tint. The
+>    73| // tint BITES only when BOTH knobs are set — `--glass-veil-ink` (the sampled
+     74| // hue) AND a non-zero `--glass-veil-rung` (the ≤30% house ceiling). "none"
+     75| // resolves strength 0% (the genuine zero-delta default); the aurora samples
+     76| // resolve a non-zero strength so the `color-mix(in oklab, …)` actually biases.
+   ---
+    119| });
+    120| 
+    121| // the THIRD disjoint glass axis: the per-INSTANCE chromatic-rim
+>   122| // tint. Each swatch sets `--glass-accent: <data-hue>; --glass-accent-strength: <N%>`
+    123| // per instance through inline style, without hand-threading separate border and
+    124| // catch-light colors. The data
+    125| // hues are the demo's OWN palette (presets-in-consumers — the library token default
+    126| // is the NEUTRAL transparent identity; a consumer's DATA hue never enters the lib).
+>   127| // The accent tints the RIM (silhouette edge) + the::before catch-light glint with
+    128| // the datum's color; an UNSET surface beside it stays byte-identical warm-cream glass.
+    129| const accentSamples = [
+    130|     { label: "series · rose", hue: "oklch(0.68 0.19 18)" },
+   ---
+    222| 
+    223|         <!-- The ALERT specimens live HERE, not only on `/feedback/alert`, and the reason
+    224|              is measurable: that route's substrate has luminance σ ≈ 1.2-1.7 with almost
+>   225|              no high-frequency detail, so a plate's blur radius and its tint are both
+    226|              invisible against it. A capture taken there cannot distinguish a 1px rung
+    227|              from a 7px one and reads any material change as "no change needed". This
+>   228|              page stages the live Aurora field and is the one place the sampled-luminance
+>   229|              observer is wired outside the dock, so it is where the alert's rung and its
+>+  230|              earned-ink clamp can actually be photographed.
+    231| 
+    232|              Five arms, one plate: under the ruled Alert identity the tone is carried by
+    233|              the glyph and the ink, and every tone rides the SAME neutral quiet rung — so
+   ---
+    250|                          things in one frame that no isolated capture can: the
+    251|                          one-backdrop-sample-per-plate law (a rung nested in a rung
+    252|                          resolves `--glass-cell-backdrop-filter: none`, so the inner
+>   253|                          plate carries no second lens) and the bright-backdrop bucket
+    254|                          engaging through the floating ancestor that declares it. -->
+    255|                     <div class="glass-floating rounded-card p-4">
+    256|                         <Alert tone="info">
+   ---
+=== src/composables/glass/useGlassBackdropLuminance.ts
+>     1| // Sample the painted field beneath glass and adapt its tint for legibility. Static
+      2| // surfaces use an `elementsFromPoint` stack walk; live surfaces downsample a known
+      3| // background canvas because browsers do not expose composited backdrop-filter pixels.
+>     4| // The observer writes WCAG luminance and a light/dark bucket.
+      5| // Live sampling is capped at 4 Hz, pauses offscreen or when hidden, and collapses to
+      6| // one sample under reduced motion. Static surfaces sample at mount and resize settle.
+      7| 
+   ---
+     22|     type BackgroundCanvasSource,
+     23| } from "./backdropLuminanceSample";
+     24| 
+>    25| /** The discrete backdrop bucket derived and written by the observer. */
+     26| export type GlassBackdropBucket = "light" | "dark";
+     27| 
+     28| export interface UseGlassBackdropLuminanceOptions {
+     29|     /**
+     30|      * The KNOWN background-layer source for the ANIMATED case — an HTMLCanvasElement
+     31|      * (or a getter, a CSS selector resolved against the document). When present, the
+>    32|      * observer downsamples this canvas under the surface's bounding box each settle
+     33|      * instead of the static `elementsFromPoint` stack-walk. The aurora/blob `<canvas>`
+     34|      * the surface floats over.
+     35|      */
+   ---
+     42|      */
+     43|     live?: boolean;
+     44|     /**
+>+   45|      * The luminance threshold above which the backdrop is `light` (engages the bright bucket).
+>    46|      * Default 0.6 — a near-white page surface (luma ≈ 0.9) is light; a dark substrate
+>    47|      * (luma ≈ 0.1) is dark; a mid aurora bleed crosses here.
+     48|      */
+     49|     lightThreshold?: number;
+     50|     /**
+   ---
+     53|      */
+     54|     minSampleIntervalMs?: number;
+     55|     /**
+>    56|      * Write the discrete `--glass-backdrop` bucket too (re-engages the @container +
+     57|      * self-engage machinery). Default true. When false, only the numeric
+>    58|      * `--glass-backdrop-luma` is written (a continuous-strength consumer).
+     59|      */
+     60|     writeBucket?: boolean;
+     61|     /**
+>    62|      * mark this as the SHARED per-ROUTE observer. It stamps
+     63|      * `GLASS_BACKDROP_SHARED_ATTR` on its target (the route/stage scope) so descendant
+     64|      * glass surfaces (docks) DETECT the coverage and STAND DOWN — inheriting the route's
+>    65|      * `--glass-backdrop-luma`, `--glass-backdrop` via the cascade
+>    66|      * rather than each mounting its own readback loop (12 per-dock observers over ONE
+>    67|      * aurora → ONE per-route readback). Default false: a per-SURFACE observer, which
+     68|      * stands down when a shared ancestor covers it and self-samples as the honest floor
+     69|      * when standalone. N docks over the SAME aurora read ONE per-route signal.
+     70|      */
+   ---
+     72| }
+     73| 
+     74| export interface UseGlassBackdropLuminanceControls {
+>    75|     /** The last sampled backdrop relative luminance (0..1), or null before the first sample. */
+     76|     readonly luma: Readonly<Ref<number | null>>;
+>    77|     /** The last derived bucket, or null before the first sample. */
+     78|     readonly bucket: Readonly<Ref<GlassBackdropBucket | null>>;
+     79|     /**
+>    80|      * The observer's explicit sample provenance. A live request is never represented
+     81|      * as a static sample: a missing or unreadable canvas reports `unavailable`.
+     82|      */
+     83|     readonly sample: Readonly<Ref<GlassBackdropSample>>;
+     84|     /** Force one sample now (bypasses the throttle — used on mount + resize-settle). */
+     85|     sampleNow: () => void;
+>    86|     /** Stop the loop + detach every observer/listener. */
+     87|     dispose: () => void;
+     88| }
+     89| 
+   ---
+    118| }
+    119| 
+    120| /**
+>   121|  * Shared-coverage marker. A route observer stamps this on its target; descendant
+>   122|  * surface observers stand down and inherit its custom properties. A DOM marker is
+    123|  * required because provide/inject does not follow the rendered slot ancestry that
+    124|  * the custom properties use.
+    125|  */
+    126| export const GLASS_BACKDROP_SHARED_ATTR = "data-glass-backdrop-shared";
+    127| 
+    128| /**
+>   129|  * The sampled-luminance observer. Wire it on a glass surface (the dock root, a
+    130|  * content-glass panel) to write a dynamic backdrop-luminance signal that refines the
+>   131|  * declarative bucket. Default on for Dock; a dark-substrate consumer
+    132|  * opts out by setting `--glass-level: 0` on the surface (the declarative floor
+>   133|  * stays the guarantee — the observer only refines).
+    134|  *
+    135|  * @param target the glass surface element ref to sample under + write the tokens on
+    136|  * @param options sampling source, throttle, threshold (see the interface)
+   ---
+    147|     // Bound the sampling cadence to 4 Hz.
+    148|     const sampleIntervalMs = Math.max(250, minSampleIntervalMs);
+    149| 
+>   150|     // A shared route observer runs one readback. Descendant surface observers inherit
+>   151|     // its values; standalone surface observers sample themselves.
+    152|     const isShared = options.shared === true;
+    153| 
+    154|     /**
+>   155|      * Does a SHARED route observer cover this per-surface target? True when an ANCESTOR
+    156|      * carries `GLASS_BACKDROP_SHARED_ATTR`. `.closest` starts at `el`, but a per-surface
+>   157|      * target never carries the marker itself (only a `shared` observer stamps it), so a
+>   158|      * match is an ancestor's shared scope. A shared observer never stands down (it IS the
+    159|      * coverage), so it short-circuits false.
+    160|      */
+    161|     function coveredByShared(el: HTMLElement): boolean {
+   ---
+    203|     /**
+    204|      * Does the config intend the live loop? The loop must arm before a provided source
+    205|      * resolves: field canvases commonly mount one beat after their consumer. Each tick
+>   206|      * re-resolves the source, so a live request is either sampled from that canvas or
+    207|      * reported unavailable; it never becomes a static sample.
+    208|      */
+    209|     function wantsLiveLoop(): boolean {
+   ---
+    247|         };
+    248|         el.style.setProperty("--glass-backdrop-luma", value.toFixed(3));
+    249|         // Stamp the first successful write so consumers can distinguish an unsampled
+>   250|         // observer from a genuinely calm backdrop. This never affects layout.
+    251|         el.setAttribute("data-backdrop-sampled", "");
+    252|         el.setAttribute("data-backdrop-sample-state", "sampled");
+    253|         el.setAttribute(
+   ---
+    295|     function sampleNow(): void {
+    296|         const el = target.value;
+    297|         if (!el) return;
+>   298|         // STAND DOWN — a shared route observer covers this per-surface target; inherit its
+    299|         // `--glass-backdrop-*` via the cascade (zero readback — the 12→1 collapse).
+    300|         if (coveredByShared(el)) return;
+    301|         // Live intent has one source of truth: an unavailable canvas is surfaced as
+   ---
+    306|             mode === "live" ? resolveSourceCanvas(options.backgroundCanvas) : null;
+    307|         // The animated field is TRANSLUCENT: composite it over the REAL opaque page
+    308|         // beneath the surface (the same stack the static sampler reads) so a dark page
+>   309|         // and a light page under the same field resolve to distinct luma.
+    310|         const result =
+    311|             mode === "live"
+    312|                 ? sampleAnimated(el, source, ctx, resolveUnderlayRgb(el, ctx))
+   ---
+    342|         {
+    343|             pause: () => loop.pause(),
+    344|             resume: () => {
+>   345|                 // A covered per-surface observer stays parked (it inherits — never a loop).
+    346|                 const el = target.value;
+    347|                 if (el && coveredByShared(el)) return;
+    348|                 if (wantsLiveLoop() && !prefersReduced.value) loop.resume();
+   ---
+    356| 
+    357|     // ── Arm/disarm the live loop on PRM flips (mirrors the substrate's live monitor) ─
+    358|     function applyMotionState(): void {
+>   359|         // A covered per-surface observer never runs the loop nor samples (it inherits the
+    360|         // shared route signal via the cascade — the 12→1 collapse).
+    361|         const el = target.value;
+    362|         if (el && coveredByShared(el)) {
+   ---
+    378|         () => target.value,
+    379|         (el) => {
+    380|             if (!el) return;
+>   381|             // The SHARED route observer STAMPS the coverage marker so descendant docks
+    382|             // detect it + stand down (the demo also carries a static template marker so
+>   383|             // the stamp is race-free from frame 0). A per-surface observer covered by a
+>   384|             // shared ancestor stands down here — it inherits the route luma (no sample,
+    385|             // no loop); an uncovered surface self-samples (the honest floor).
+    386|             if (isShared) el.setAttribute(GLASS_BACKDROP_SHARED_ATTR, "");
+    387|             else if (coveredByShared(el)) return;
+   ---
+=== tests/components/button/Button.test.ts
+    143|         expect(writes.length).toBeGreaterThan(0);
+    144|         for (const write of writes) {
+    145|             // Every write COMPOSES over `--glass-veil` — the element-composed plate,
+>+  146|             // so the tier, the earned-ink clamp and `--glass-level` all survive
+    147|             // inside the mix instead of being replaced by a `:root`-baked literal.
+    148|             expect(write).toMatch(/color-mix\(/);
+    149|             expect(write).toMatch(/var\(--glass-veil\)/);
+   ---
+    379|     });
+    380| });
+    381| 
+>   382| describe("Button §5 TONE — it tints, it never replaces", () => {
+    383|     it("`tone` is exactly two members", () => {
+    384|         const source = read("src/components/button/Button.vue");
+    385|         expect(source).toMatch(
+   ---
+=== tests/components/field/forms-seam.test.ts
+    152|         expect(register).not.toMatch(/--field-control-font/);
+    153|         expect(register).not.toMatch(/--control-text/);
+    154| 
+>   155|         // ONE type rung: the bounded clamp, never multiplied past its own ceiling.
+    156|         expect(register).toMatch(/font-size:\s*var\(--type-small\)/);
+    157| 
+    158|         // NumberField no longer hard-pins a rung of its own.
+   ---
+=== tests/components/ui/surface/Surface.test.ts
+    159|     });
+    160| 
+    161|     it("deep THICKENS every rung and grades WITH prominence — numerically", () => {
+>   162|         /* RED at the first cut's bytes: the recipe LERPed the FLOATING radius (20px)
+    163|            toward an absolute `--glass-blur-deep-radius` (16px), so deep resolved
+>   164|            18.6 / 18.6 / 18.6 / 17.2 / 16.0px against plain 10 / 14 / 16 / 20 / 22 —
+    165|            THINNER than plain on floating and overlay, and DECREASING with prominence.
+    166|            This case resolves the shipped tokens and does the arithmetic, so any
+    167|            endpoint/boost retune that re-inverts it reds. Mutation: put the absolute
+   ---
+=== tests/gates/feedback-tint-seam.test.ts
+>     1| // BK.#33 gate — the standing `G-FEEDBACK-TINT-SEAM` seat (TR §B.5, family SEAM), BOUND
+      2| // here. Nothing is minted: the seat pre-exists in the roster and this file gives it its
+      3| // first live executable, so the register budget stays exactly 60.
+      4| //
+      5| // ── THE INVARIANT ───────────────────────────────────────────────────────────────────
+      6| //
+>     7| // A tone register must tint the surface's OWN plate, never a plate of its own. This is a
+      8| // structural rule, not a colour preference, and the reason is that `background` is a
+      9| // single property: when `.feedback-tone` writes a `color-mix()` it REPLACES whatever the
+     10| // rung wrote, so if the mix base is a raw plate token the rung's entire contribution —
+>+   11| // its tier ink, its earned-ink clamp, its `--glass-level` — is discarded at the last
+     12| // step. The surface claims a rung in its class list and paints something the ladder
+     13| // never touched, and every downstream measurement (contrast tables, transmission gates,
+     14| // the π composite) is taken against a plate no rung owns.
+   ---
+     16| // The seam that closes it already exists and already names this consumer:
+     17| // `@utility glass-plate` publishes `--glass-veil` as a nestable VALUE token precisely so
+     18| // a surface composing the plate inside a bigger mix can read it without re-spelling the
+>    19| // recipe (`src/styles/glass/veil.css`, whose header names "a tone-tinted feedback panel"
+     20| // and the capsule's warm floor as its two intended consumers). Mixing over `--glass-veil`
+>    21| // keeps the rung INSIDE the tint instead of underneath it.
+     22| //
+     23| //   (a) MIX BASE — `.feedback-tone`'s `background` declaration names `--glass-veil` as
+     24| //       the base of its `color-mix()`. `--feedback-tone-rung` may appear only as the
+   ---
+    118|     return hits;
+    119| }
+    120| 
+>   121| describe("gate:G-FEEDBACK-TINT-SEAM — the tone register tints its own rung", () => {
+    122|     it("(a) `.feedback-tone` mixes over `--glass-veil`, the rung's published plate value", () => {
+    123|         const bg = feedbackToneBackground();
+    124|         expect(bg, "`.feedback-tone { background: … }` not found").not.toBe("");
+   ---
+=== tests/styles/contrast-computed.test.ts
+    257|                   : 0.5;
+    258|         const wb = 1 - wa;
+    259|         // CSS `color-mix()` interpolates PREMULTIPLIED, which is why a mix toward
+>   260|         // `transparent` darkens nothing — it only thins.
+    261|         const alpha = a.a * wa + b.a * wb;
+    262|         const [ca, cb] = oklab ? [rgbToOklab(a.rgb), rgbToOklab(b.rgb)] : [a.rgb, b.rgb];
+    263|         const channel = (i: 0 | 1 | 2): number =>
+   ---
+    411|             });
+    412|         }
+    413| 
+>   414|         it("the orphaned --surface-tint-35 register stays deleted (def + dark arm + bridge)", () => {
+    415|             expect(read(LIGHT_TOKENS)).not.toMatch(/--surface-tint-35\s*:/);
+    416|             expect(read(DARK_TOKENS)).not.toMatch(/--surface-tint-35\s*:/);
+    417|             expect(read("src/styles/theme/bridges.css")).not.toMatch(
+   ---
+    944|     // because the ramp is finite by construction — and it is offered as TEXT: the
+    945|     // library paints its own eyebrow out of it (§6b), and DESIGN.md's section-tone
+    946|     // recipe invites a page to do the same. So every rung owes the text floor on the
+>   947|     // surface those labels sit on, `--card`, and each one is measured, not sampled.
+    948|     //
+    949|     // FOUR RUNGS WERE BELOW IT. Stops 4 (4.27), 6 (4.39), 10 (4.24) and 11 (3.51) had
+    950|     // shipped under 4.5 on the warm-cream card since the ramp was authored; only stop 5
+   ---
+    981|             });
+    982|         }
+    983| 
+>   984|         // §6b · glass-ui is its own consumer here. The tinted eyebrow reads the ramp
+    985|         // through a knob whose DEFAULT is a rung, so the rung is shipped text in our
+    986|         // own sheet — read off the register rather than restated, so the row cannot
+    987|         // drift from what paints.
+>   988|         it("the library's own tinted eyebrow reads the ramp, and that default clears the floor", () => {
+    989|             const register = read("src/styles/typography/utilities.css");
+    990|             const declared = register.match(
+    991|                 /\.section-label--tinted\s*\{\s*color:\s*(var\([^;]+\));/,
+   ---
+=== tests/styles/glass-subtlety.test.ts
+     96|     for (const [k, v] of declMap(darkArm)) darkAll.set(k, v);
+     97| 
+     98|     // happy-dom runs no cascade and no `pow()`, so the token arithmetic is evaluated
+>+   99|     // here: resolve every `var()`, then read calc/pow/min/max/clamp as JS.
+    100|     const evaluate = (map: Map<string, string>, token: string): number => {
+    101|         let expr = map.get(token);
+    102|         if (expr === undefined) throw new Error(`no declaration for ${token}`);
+   ---
+    189|     });
+    190| 
+    191|     it("paints the light veil as the `--card` pole and DIMS in dark with a near-black ink", () => {
+>+  192|         // Light: the plate is the theme's own ground at α, so it never darkens toward a
+>+  193|         // near-black ink over paper (O-62). Dark: the sign law holds, the rung darkens
+    194|         // what is behind it.
+    195|         expect(light.get("--glass-veil-ink")).toBe("var(--card)");
+    196|         const darkInk = declMap(darkArm).get("--glass-veil-ink")!;
+   ---
+    323| // The immersive stage scrim is GONE, and its describe block with it. It was the last
+    324| // `backdrop-filter` on any scrim in the library, and it died with `drawer/styles.css`:
+    325| // the family that opted into it retired, and the measurement W-DIALOG took on the other
+>   326| // two scrim blurs — a wash pulls bright neighbours into every sampled pixel, so the
+    327| // "backdrop" BRIGHTENED what it was meant to recede — applies to a fixed 14px sample
+    328| // exactly as it applied to the resting ones. A test whose subject file no longer exists
+    329| // is ABSENT, not green, so it leaves rather than being re-pointed at something else.
+   ---
+    692|         expect(Math.sqrt(1 + phi * phi) / phi).toBeLessThanOrEqual(1.25);
+    693|     });
+    694| 
+>+  695|     it("sheds ink toward 0.6× the CLAMPED rest rung, not the raw tier, and never below the floor", () => {
+>   696|         // The band A-11 arms is [0.6·α_rest, α_rest] "at any sampled f", and α_rest is
+>   697|         // the rung AFTER the backdrop clamp. Shed from the raw tier instead and a held
+    698|         // plate over a bright backdrop lands BELOW its own floor — a falsifier that
+    699|         // fails by construction, which π would have misread as a mount defect.
+    700|         expect(graspCss.replace(/\s+/g, " ")).toContain(
+   ---
+=== tests/styles/proportion-register.test.ts
+    140|     it("derives --control-label from --control-text at φ^(−1/4), minting no literal", () => {
+    141|         // §1.4 states the law as an INVARIANT, not a value: `control label : control
+    142|         // value = φ^(−1/4), at every viewport`. Expressed as a ratio it survives the
+>   143|         // fluid clamp and --ui-scale for free; a px literal would drift out of ratio
+    144|         // at the first retune of either input.
+    145|         const value = decl(sizing, "--control-label") ?? "";
+    146|         expect(value, "--control-label must READ --control-text, not restate its value")
+   ---
+    284| 
+    285|     it("records the ambient specular channel as DISCHARGED — ⊕¹⁶(3)", () => {
+    286|         // The ⊕¹⁶(3) inbound (dead ambient channel, ~20-line end-to-end deletion
+>   287|         // across 4 files incl. the luminance-observer writes) was executed by W-FROST
+>   288|         // at 4b1a9733. Verified, not re-opened: no CSS token AND no observer residue.
+    289|         expect(Array.from(surface.matchAll(/--glass-ambient/g))).toEqual([]);
+    290|     });
+    291| 
+   ---

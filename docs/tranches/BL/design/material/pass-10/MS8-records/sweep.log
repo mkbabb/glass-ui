@@ -1,0 +1,26 @@
+SWEEP minor8 LIST exit 0: LIST (371 lines to read; no rulings given)
+SWEEP minor8 under MS7-rulings-proposed.json exit 1: FAIL (1 unread, 1 stale of 371 lines)
+SWEEP minor8 ruled (MS8-rulings.json) exit 1: FAIL (4 unread, 0 stale of 371 lines)
+SWEEP · R-21 (b): every prose line of every touched file that carries a frozen word, a declared name, or a changed ladder's old tuple or rung number, printed with its context (static; H9-6, H10-1, H10-2)
+SWEEP lines=371 files=52 ruled=367 true=349 reported=18 unread=4 stale=0
+SWEEP minor7 under MS8-rulings.json (plant) exit 1: FAIL (7 unread, 3 stale of 371 lines)
+sweep-minor8-ruled.log:✗ unread src/styles/glass/ladder.css:297 [word "bucket"]
+sweep-minor8-ruled.log:✗ unread src/styles/glass/ladder.css:299 [word "bucket"]
+sweep-minor8-ruled.log:✗ unread src/styles/tokens/sizing.css:258 [word "darken"]
+sweep-minor8-ruled.log:✗ unread src/styles/tokens/sizing.css:259 [word "darken"]
+sweep-minor7-plant.log:✗ unread DESIGN.md:34 [word "tint"]
+sweep-minor7-plant.log:✗ unread src/styles/glass/ladder.css:297 [word "bucket"]
+sweep-minor7-plant.log:✗ unread src/styles/glass/ladder.css:299 [word "bucket"]
+sweep-minor7-plant.log:✗ unread src/styles/glass/surface-axis.css:21 [word "tint"]
+sweep-minor7-plant.log:✗ unread src/styles/glass/surfaces-pager.css:34 [word "clamp"]
+sweep-minor7-plant.log:✗ unread src/styles/tokens/sizing.css:258 [word "darken"]
+sweep-minor7-plant.log:✗ unread src/styles/tokens/sizing.css:259 [word "darken"]
+sweep-minor7-plant.log:✗ stale true ruling DESIGN.md:34 "2. **Surface tint (rgba background)** — the light-vs-dark admit-through. Light-mode and dark-mode tints differ: light paints the `--card` pole at or above the solved bound α (a cream frost, never an i": the line no longer prints or no longer says it (R-25 (MS7-r21b-proposed.diff) as built. 'Surface tint (rgba background)': glass-plate writes a translucent colour background (veil.css:87-94). 'the light-vs-dark admit-through': the plate's α sets what the backdrop admits. 'Light-mode and dark-mode tints differ': light paints --glass-veil-ink = var(--card) (tokens/glass.css:40) at rungs bound, bound + 1 step, bound + 2 steps (:51-55), so 'at or above the solved bound α' holds and 'a cream frost, never an ink' holds (the pole is --card, O-62); dark paints oklch(0.17 0.03 70), a warm near-black (dark-arm.css:275), at base 0.18 ± n·0.04 (:276-282), 'at its own rung α')
+sweep-minor7-plant.log:✗ stale true ruling src/styles/glass/surface-axis.css:21 "solid `--card` + `blur(0)` through the ONE level knob, with no tint axis": the line no longer prints or no longer says it (R-25 (MS7-r21b-proposed.diff) as built: the opaque escape is solid --card + blur(0) through the one --glass-level knob, 'with no tint axis to zero' (there is none: ladder.css:165), and a solid plate has no translucent backdrop to earn ink over)
+sweep-minor7-plant.log:✗ stale true ruling src/styles/glass/surfaces-pager.css:34 "clamp's two-step ceiling keeps it translucent, in both themes); one": the line no longer prints or no longer says it (the parenthesis R-25 restores closes after 'in both themes)': the clamp's two-step ceiling keeps the pill translucent in both themes (light: bound + 2·(1 − bound)/3 < 1, tokens/glass.css:51-57; dark: 0.22 + 0.08 = 0.30, dark-arm.css:279); one writer, the clamp, moves the pill's ink (veil.css:46-47), never a second axis; the pill runs no oklab mix of its own (its two box-shadow mixes are in srgb))
+SWEEP absent root exit 2: FAIL (nothing read: the tree does not exist)
+SWEEP minor8 + proposed LIST exit 0: LIST (369 lines to read; no rulings given)
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-10/MS8-rulings-proposed.json: 369 printed, 369 ruled (351 true, 18 reported), 0 read false and left unruled: none; distinct whys 264
+SWEEP minor8 + proposed ruled (MS8-rulings-proposed.json) exit 0: PASS (369 lines: 351 ruled true, 18 reported)
+SWEEP · R-21 (b): every prose line of every touched file that carries a frozen word, a declared name, or a changed ladder's old tuple or rung number, printed with its context (static; H9-6, H10-1, H10-2)
+SWEEP lines=369 files=52 ruled=369 true=351 reported=18 unread=0 stale=0
