@@ -56,6 +56,14 @@ export interface DockContext {
      * popover is not a finger).
      */
     held: ComputedRef<boolean>;
+    /**
+     * The dock's POSTURE — `true` while the expanded face is the one painted. Its
+     * falling edge IS the collapse, and every overlay a seat opened closes on it
+     * (`useDockParticipation`'s `close`): a menu left standing over a collapsed dock
+     * points at a control that is no longer there. One writer (the dock), one edge,
+     * no timer.
+     */
+    expanded: ComputedRef<boolean>;
 }
 
 // Strict and optional access share one key: `<GlassDock>` provides; descendants

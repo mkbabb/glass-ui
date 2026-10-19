@@ -77,7 +77,14 @@ useModalShortcutBarrier(
         (openModalRoot.value?.modal.value ?? false),
 );
 
-const dock = useDockParticipation();
+/* A menu a dock seat opened closes when that dock collapses: the collapse owns the
+   close, through the menu root's own open channel (O-102 (3)). */
+const dock = useDockParticipation({
+    close: () => {
+        const root = openModalRoot.value;
+        if (root?.open.value) root.onOpenChange(false);
+    },
+});
 /* ONE CLASS SPELLING. The root used to carry BOTH `dropdown-menu-content` and
    `menu__content` — two names for one element, feeding two different
    unlayered sheets. Both are gone; the register is `.glass-overlay-plate`, which

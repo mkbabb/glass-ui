@@ -170,15 +170,16 @@ const {
    as `data-held` and what a descendant reads to co-answer the same hand. The
    posture count is reached through `keepOpen`/`release` and is deliberately not
    published as a flag — nothing should paint off "a popover is open". */
+const visualExpanded = computed(() => alwaysExpanded.value || expanded.value);
+
 provideDockContext({
     id: dockId,
     orientation,
     keepOpen,
     release,
     held: graspHeld,
+    expanded: visualExpanded,
 });
-
-const visualExpanded = computed(() => alwaysExpanded.value || expanded.value);
 
 /* The SPINE plate owns clipping. Portaled menu and search surfaces remain outside the
    dock's layout, while `.glass-dock` uses layout containment without paint clipping. */

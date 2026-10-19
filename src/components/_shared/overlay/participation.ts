@@ -94,7 +94,8 @@ export interface DockParticipation {
 }
 
 /**
- * Dock participation for a portalled overlay: the stamp, and the one token.
+ * Dock participation for a portalled overlay: the stamp, the one token, and the
+ * close on collapse.
  *
  * `hold` is the DECLARATIVE arm — pass a ref/getter that is true exactly while
  * the surface should pin the dock open and the token is driven for you. The
@@ -104,9 +105,23 @@ export interface DockParticipation {
 export function useDockParticipation(o?: {
     hold?: MaybeRefOrGetter<boolean>;
     kind?: DockHoldKind;
+    /**
+     * Close this overlay. Called on the dock's COLLAPSE edge, so a dropdown or
+     * popover a seat opened never outlives the posture it was opened from. The
+     * collapse owns the close: the overlay states how it closes, the dock says
+     * when. Outside a dock it is never called.
+     */
+    close?: () => void;
 }): DockParticipation {
     const dock = useOptionalDockContext();
     const token = useHoldToken(() => dock, o?.kind);
+
+    const close = o?.close;
+    if (dock && close) {
+        watch(dock.expanded, (expanded, was) => {
+            if (was && !expanded) close();
+        });
+    }
 
     const portalAttrs = computed<DockPortalAttrs>(() =>
         dock?.id
