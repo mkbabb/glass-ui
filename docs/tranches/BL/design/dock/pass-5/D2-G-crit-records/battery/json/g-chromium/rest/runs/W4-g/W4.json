@@ -1,0 +1,167 @@
+{
+ "witness": "W4",
+ "target": "g@fddd5eee",
+ "when": "2026-10-19T08:53:51.834Z",
+ "load": 21.19,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "compact·compacts",
+   "pass": true,
+   "rest": 206.13,
+   "compact": 93.59,
+   "posture": "compact",
+   "summary": "rest 206.13 px → past threshold 93.59 px, posture compact",
+   "load": 15.04
+  },
+  {
+   "engine": "chromium",
+   "cell": "compact·seat-scale",
+   "pass": true,
+   "plateK": 1,
+   "minSeatK": 1,
+   "summary": "compact rest: plate cross-axis ratio 1, smallest painting-seat scale 1 (Photos); bound: no seat below the plate's ratio − 0.02 (cross 56 px at rest)",
+   "load": 15.04
+  },
+  {
+   "engine": "chromium",
+   "cell": "compact·engagement-expands",
+   "pass": true,
+   "rest": 206.13,
+   "hover": 206.13,
+   "afterLeave": 93.59,
+   "focus": 206.13,
+   "afterBlur": 93.59,
+   "top": 206.13,
+   "summary": "rest 206.13; hover 206.13, leave 93.59, focus 206.13, blur 93.59, top 206.13 px",
+   "load": 17.2
+  },
+  {
+   "engine": "chromium",
+   "cell": "compact·no-threshold-bounce",
+   "pass": true,
+   "enter": 88,
+   "exit": 40,
+   "flips": 1,
+   "summary": "enter at 88 px, exit at 40 px (band 48 px); 24 moves of ±4 px around enter flipped the posture 1 time(s) (bound 1)",
+   "load": 17.02
+  },
+  {
+   "engine": "chromium",
+   "cell": "compact·non-first-current",
+   "pass": true,
+   "seats": {
+    "step": {
+     "ok": true,
+     "ratio": 0.53,
+     "step": 1.33,
+     "bound": 2.51,
+     "seat": 2,
+     "atMs": 166.5
+    },
+    "overlap": {
+     "ok": true,
+     "frames": 0,
+     "first": null
+    }
+   },
+   "summary": "compaction with the second seat current: worst seat step ×0.53 (1.33 px vs 2.51), overlap frames 0",
+   "load": 17.02
+  },
+  {
+   "engine": "chromium",
+   "cell": "compact·late-getter",
+   "pass": true,
+   "posture": [
+    "compact",
+    "pinned"
+   ],
+   "summary": "a source element mounted 600 ms late: scrolled → compact (206.13 → 93.59 px), back → pinned; page errors 0",
+   "load": 16.54
+  },
+  {
+   "engine": "chromium",
+   "cell": "compact·shared-scroller",
+   "pass": true,
+   "postures": [
+    "pinned",
+    "compact",
+    "pinned"
+   ],
+   "summary": "after the other dock on the same source unmounts: at 0 pinned, at 900 compact, back at 0 pinned (bound: not compact, compact, not compact)",
+   "load": 17.78
+  },
+  {
+   "engine": "chromium",
+   "cell": "coarse·press-then-scroll",
+   "pass": true,
+   "posture": "compact",
+   "summary": "a coarse press on a seat, then a scroll to 900: posture compact (bound: compact)",
+   "load": 17.78
+  },
+  {
+   "engine": "chromium",
+   "cell": "prm·compact",
+   "pass": true,
+   "between": 0,
+   "from": 206.13,
+   "to": 93.59,
+   "last": 93.59,
+   "summary": "reduced motion, scroll stepped 25 px at a time to 900: 206.13 → 93.59 px with 0 frame(s) strictly between (bound 0; canon P6 on scroll-scrubbed change is pending the owner)",
+   "load": 17.79
+  },
+  {
+   "engine": "chromium",
+   "cell": "prm·posture-morph",
+   "pass": true,
+   "expand": {
+    "between": 0,
+    "from": 102,
+    "to": 481.66,
+    "last": 481.66
+   },
+   "collapse": {
+    "between": 0,
+    "from": 481.66,
+    "to": 102,
+    "last": 102
+   },
+   "summary": "reduced motion: expand 102→481.66 px with 0 intermediate frame(s); collapse 481.66→102 px with 0 (bound 0)",
+   "load": 17.57
+  },
+  {
+   "engine": "chromium",
+   "cell": "coarse·no-hover-latch",
+   "pass": true,
+   "media": {
+    "hover": false,
+    "coarse": true
+   },
+   "differs": [],
+   "summary": "(hover: hover) false, (pointer: coarse) true; 1.5 s after a tap the seat, its pseudos and its descendants' pseudos are back to rest; :hover true",
+   "load": 18.8
+  },
+  {
+   "engine": "chromium",
+   "cell": "coarse·tap-pins",
+   "pass": true,
+   "before": "collapsed",
+   "after": "pinned",
+   "later": "pinned",
+   "clicks": [],
+   "summary": "tap on the collapsed face's \"Play\": posture collapsed → pinned (+0.7 s) → pinned (+5.5 s); clicks fired 0 (bound: pinned, 0 clicks)",
+   "load": 18.26
+  },
+  {
+   "engine": "chromium",
+   "cell": "coarse·menu-holds",
+   "pass": true,
+   "opened": true,
+   "stillOpen": true,
+   "postOpen": "pinned",
+   "later": "pinned",
+   "summary": "menu opened (posture pinned); 5.5 s later menu open, posture pinned, extent 177.47 px",
+   "load": 21.19
+  }
+ ]
+}

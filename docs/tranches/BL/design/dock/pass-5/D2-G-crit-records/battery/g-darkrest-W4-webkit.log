@@ -1,0 +1,18 @@
+ 6:03  up 1 day, 17:55, 2 users, load averages: 12.69 11.14 11.51
+PASS  W4  Playwright WebKit  compact·compacts  rest 206.16 px → past threshold 93.61 px, posture compact  [load 12.69]
+PASS  W4  Playwright WebKit  compact·seat-scale  compact rest: plate cross-axis ratio 1, smallest painting-seat scale 1 (Photos); bound: no seat below the plate's ratio − 0.02 (cross 56 px at rest)  [load 12.69]
+PASS  W4  Playwright WebKit  compact·engagement-expands  rest 206.16; hover 206.16, leave 93.61, focus 206.16, blur 93.61, top 206.16 px  [load 12.63]
+PASS  W4  Playwright WebKit  compact·no-threshold-bounce  enter at 88 px, exit at 40 px (band 48 px); 24 moves of ±4 px around enter flipped the posture 1 time(s) (bound 1)  [load 12.5]
+PASS  W4  Playwright WebKit  compact·non-first-current  compaction with the second seat current: worst seat step ×0.59 (2.78 px vs 4.75), overlap frames 0  [load 12.86]
+PASS  W4  Playwright WebKit  compact·late-getter  a source element mounted 600 ms late: scrolled → compact (206.16 → 93.61 px), back → pinned; page errors 0  [load 12.86]
+PASS  W4  Playwright WebKit  compact·shared-scroller  after the other dock on the same source unmounts: at 0 pinned, at 900 compact, back at 0 pinned (bound: not compact, compact, not compact)  [load 12.87]
+PASS  W4  Playwright WebKit  coarse·press-then-scroll  a coarse press on a seat, then a scroll to 900: posture compact (bound: compact)  [load 12.87]
+PASS  W4  Playwright WebKit  prm·compact  reduced motion, scroll stepped 25 px at a time to 900: 206.16 → 93.61 px with 0 frame(s) strictly between (bound 0; canon P6 on scroll-scrubbed change is pending the owner)  [load 12.56]
+PASS  W4  Playwright WebKit  prm·posture-morph  reduced motion: expand 102→481.72 px with 0 intermediate frame(s); collapse 481.72→102 px with 0 (bound 0)  [load 12.19]
+PASS  W4  Playwright WebKit  coarse·no-hover-latch  (hover: hover) false, (pointer: coarse) true; 1.5 s after a tap the seat, its pseudos and its descendants' pseudos are back to rest; :hover true  [load 12.19]
+PASS  W4  Playwright WebKit  coarse·tap-pins  tap on the collapsed face's "Play": posture collapsed → pinned (+0.7 s) → pinned (+5.5 s); clicks fired 0 (bound: pinned, 0 clicks)  [load 11.7]
+PASS  W4  Playwright WebKit  coarse·menu-holds  menu opened (posture pinned); 5.5 s later menu open, posture pinned, extent 177.5 px  [load 11.78]
+PASS  W4  g@fddd5eee  13/13 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p5/G-crit/wt/.gcrit/webkit/g/darkrest/runs/W4-g/W4.json)
+exit 0
+ 6:04  up 1 day, 17:56, 2 users, load averages: 11.78 11.16 11.49
+reds: none
