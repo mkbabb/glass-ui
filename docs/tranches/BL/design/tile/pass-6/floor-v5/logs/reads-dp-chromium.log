@@ -1,0 +1,652 @@
+2026-10-18 23:42:32 · load { 19.14 23.59 26.37 }
+admitted · 2026-10-18 23:42:32 · load { 19.14 23.59 26.37 }
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:97> [[ dp != fv5 ]]
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:98> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/canon.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/builds/dp-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out --engine chromium
+CANON · the canon law on widened twins, each rule's container condition evaluated on the twin and every corner ranked by layer before specificity (H3-4, H5-1; R-7)
+  target dp-src (flavor src) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 19.14 / 23.59 / 26.37 at start, 19.61 / 23.61 / 26.36 at end · other headless browser processes at start: 7 (waited 0.4 s) · browser lock waited 0 s
+  PASS       canon tile corner · exactly one rule reaches a tile and not its pill twin, on var(--radius-field) · 1 rule(s): «.toggle-group__item @container not style(--selection-tile: none) @layer components !important» → var(--radius-field) (index-DYvva2W1.css; 48/48 twins, first sm/horizontal/none/on) · 48 twins (tile/pill container facts flush/none), 138 corner rules (3 under an @media/@supports that does not hold; 3 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon tile winner · every tile twin wears var(--radius-field) at rest and var(--radius-field) or inherit engaged, ranked by importance, layer, specificity, order · 48/48 twins; rest winner «.toggle-group__item @container not style(--selection-tile: none) @layer components !important» → var(--radius-field) · 48 twins (tile/pill container facts flush/none), 138 corner rules (3 under an @media/@supports that does not hold; 3 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon pill winner · every pill twin wears var(--radius-pill) at rest and var(--radius-pill) or inherit engaged, ranked by importance, layer, specificity, order · 48/48 twins; rest winner «.toggle-group__item @layer components» → var(--radius-pill) · 48 twins (tile/pill container facts flush/none), 138 corner rules (3 under an @media/@supports that does not hold; 3 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon unmatched · every corner selector is matched by the engine and every condition around it evaluated · 0 not · 48 twins (tile/pill container facts flush/none), 138 corner rules (3 under an @media/@supports that does not hold; 3 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  note layers (root): properties, theme, base, components, utilities, glass-overrides
+CANON PASS · 4/4 gating cells pass [library 4/4]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/runs/dp-src/CANON-chromium.json
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:99> p=a
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:99> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/canon.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/builds/dp-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/plant-a --engine chromium --plant a
+CANON · the canon law on widened twins, each rule's container condition evaluated on the twin and every corner ranked by layer before specificity (H3-4, H5-1; R-7)
+  target dp-src (flavor src) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 19.61 / 23.61 / 26.36 at start, 19.61 / 23.61 / 26.36 at end · other headless browser processes at start: 6 (waited 0.3 s) · browser lock waited 0 s
+  FAIL       canon tile corner (plant a) · exactly one rule reaches a tile and not its pill twin, on var(--radius-field) · 2 rule(s): «.toggle-group__item @container not style(--selection-tile: none) @layer components !important» → var(--radius-field) (index-DYvva2W1.css; 48/48 twins, first sm/horizontal/none/on); «:is(.toggle-group[data-shape="cell"] .toggle-group__item) (unlayered)» → 12px (inline#1; 48/48 twins, first sm/horizontal/none/on) · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon tile winner (plant a) · every tile twin wears var(--radius-field) at rest and var(--radius-field) or inherit engaged, ranked by importance, layer, specificity, order · 48/48 twins; rest winner «.toggle-group__item @container not style(--selection-tile: none) @layer components !important» → var(--radius-field) · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon pill winner (plant a) · every pill twin wears var(--radius-pill) at rest and var(--radius-pill) or inherit engaged, ranked by importance, layer, specificity, order · 48/48 twins; rest winner «.toggle-group__item @layer components» → var(--radius-pill) · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon unmatched (plant a) · every corner selector is matched by the engine and every condition around it evaluated · 0 not · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  note layers (root): properties, theme, base, components, utilities, glass-overrides
+CANON FAIL · 3/4 gating cells pass [library 3/4]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/plant-a/runs/dp-src/CANON-chromium.json
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:99> p=s
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:99> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/canon.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/builds/dp-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/plant-s --engine chromium --plant s
+CANON · the canon law on widened twins, each rule's container condition evaluated on the twin and every corner ranked by layer before specificity (H3-4, H5-1; R-7)
+  target dp-src (flavor src) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 19.61 / 23.61 / 26.36 at start, 19.61 / 23.61 / 26.36 at end · other headless browser processes at start: 7 (waited 0.4 s) · browser lock waited 0 s
+  FAIL       canon tile corner (plant s) · exactly one rule reaches a tile and not its pill twin, on var(--radius-field) · 2 rule(s): «.toggle-group__item @container not style(--selection-tile: none) @layer components !important» → var(--radius-field) (index-DYvva2W1.css; 48/48 twins, first sm/horizontal/none/on); «.toggle-group[data-size="sm"] :is(.toggle-group[data-shape="cell"] .toggle-group__item) (unlayered)» → var(--radius-panel) (inline#1; 16/48 twins, first sm/horizontal/none/on) · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon tile winner (plant s) · every tile twin wears var(--radius-field) at rest and var(--radius-field) or inherit engaged, ranked by importance, layer, specificity, order · 48/48 twins; rest winner «.toggle-group__item @container not style(--selection-tile: none) @layer components !important» → var(--radius-field) · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon pill winner (plant s) · every pill twin wears var(--radius-pill) at rest and var(--radius-pill) or inherit engaged, ranked by importance, layer, specificity, order · 48/48 twins; rest winner «.toggle-group__item @layer components» → var(--radius-pill) · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon unmatched (plant s) · every corner selector is matched by the engine and every condition around it evaluated · 0 not · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  note layers (root): properties, theme, base, components, utilities, glass-overrides
+CANON FAIL · 3/4 gating cells pass [library 3/4]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/plant-s/runs/dp-src/CANON-chromium.json
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:99> p=h
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:99> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/canon.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/builds/dp-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/plant-h --engine chromium --plant h
+CANON · the canon law on widened twins, each rule's container condition evaluated on the twin and every corner ranked by layer before specificity (H3-4, H5-1; R-7)
+  target dp-src (flavor src) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 19.48 / 23.52 / 26.31 at start, 19.48 / 23.52 / 26.31 at end · other headless browser processes at start: 6 (waited 0.3 s) · browser lock waited 0 s
+  PASS       canon tile corner (plant h) · exactly one rule reaches a tile and not its pill twin, on var(--radius-field) · 1 rule(s): «.toggle-group__item @container not style(--selection-tile: none) @layer components !important» → var(--radius-field) (index-DYvva2W1.css; 48/48 twins, first sm/horizontal/none/on) · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon tile winner (plant h) · every tile twin wears var(--radius-field) at rest and var(--radius-field) or inherit engaged, ranked by importance, layer, specificity, order · 48/48 twins; rest winner «.toggle-group__item @container not style(--selection-tile: none) @layer components !important» → var(--radius-field) · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  FAIL       canon pill winner (plant h) · every pill twin wears var(--radius-pill) at rest and var(--radius-pill) or inherit engaged, ranked by importance, layer, specificity, order · 24/48 twins; wrong: lg/vertical/media/off rest «.toggle-group__item:has(> * + *) (unlayered)» → 12px, engaged «.toggle-group__item:has(> * + *) (unlayered)» → 12px · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon unmatched (plant h) · every corner selector is matched by the engine and every condition around it evaluated · 0 not · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  note layers (root): properties, theme, base, components, utilities, glass-overrides
+CANON FAIL · 3/4 gating cells pass [library 3/4]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/plant-h/runs/dp-src/CANON-chromium.json
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:99> p=layer
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:99> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/canon.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/builds/dp-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/plant-layer --engine chromium --plant layer
+CANON · the canon law on widened twins, each rule's container condition evaluated on the twin and every corner ranked by layer before specificity (H3-4, H5-1; R-7)
+  target dp-src (flavor src) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 19.48 / 23.52 / 26.31 at start, 19.48 / 23.52 / 26.31 at end · other headless browser processes at start: 7 (waited 0.3 s) · browser lock waited 0 s
+  FAIL       canon tile corner (plant layer) · exactly one rule reaches a tile and not its pill twin, on var(--radius-field) · 0 rule(s): no rule declares the tile · 48 twins (tile/pill container facts none/none), 138 corner rules (3 under an @media/@supports that does not hold; 2 reach an item, 0 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  FAIL       canon tile winner (plant layer) · every tile twin wears var(--radius-field) at rest and var(--radius-field) or inherit engaged, ranked by importance, layer, specificity, order · 0/48 twins; wrong: lg/vertical/media/off rest «.toggle-group__item @layer components» → var(--radius-pill), engaged «.toggle-group__item @layer components» → var(--radius-pill) · 48 twins (tile/pill container facts none/none), 138 corner rules (3 under an @media/@supports that does not hold; 2 reach an item, 0 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon pill winner (plant layer) · every pill twin wears var(--radius-pill) at rest and var(--radius-pill) or inherit engaged, ranked by importance, layer, specificity, order · 48/48 twins; rest winner «.toggle-group__item @layer components» → var(--radius-pill) · 48 twins (tile/pill container facts none/none), 138 corner rules (3 under an @media/@supports that does not hold; 2 reach an item, 0 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon unmatched (plant layer) · every corner selector is matched by the engine and every condition around it evaluated · 0 not · 48 twins (tile/pill container facts none/none), 138 corner rules (3 under an @media/@supports that does not hold; 2 reach an item, 0 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  note layers (root): properties, theme, base, components, utilities, glass-overrides
+CANON FAIL · 2/4 gating cells pass [library 2/4]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/plant-layer/runs/dp-src/CANON-chromium.json
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:99> p=foreign
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:99> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/canon.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/builds/dp-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/plant-foreign --engine chromium --plant foreign
+CANON · the canon law on widened twins, each rule's container condition evaluated on the twin and every corner ranked by layer before specificity (H3-4, H5-1; R-7)
+  target dp-src (flavor src) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 19.48 / 23.52 / 26.31 at start, 19.48 / 23.52 / 26.31 at end · other headless browser processes at start: 9 (waited 0.3 s) · browser lock waited 0 s
+  PASS       canon tile corner (plant foreign) · exactly one rule reaches a tile and not its pill twin, on var(--radius-field) · 1 rule(s): «.toggle-group__item @container not style(--selection-tile: none) @layer components !important» → var(--radius-field) (index-DYvva2W1.css; 48/48 twins, first sm/horizontal/none/on) · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon tile winner (plant foreign) · every tile twin wears var(--radius-field) at rest and var(--radius-field) or inherit engaged, ranked by importance, layer, specificity, order · 48/48 twins; rest winner «.toggle-group__item @container not style(--selection-tile: none) @layer components !important» → var(--radius-field) · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  FAIL       canon pill winner (plant foreign) · every pill twin wears var(--radius-pill) at rest and var(--radius-pill) or inherit engaged, ranked by importance, layer, specificity, order · 0/48 twins; wrong: lg/vertical/media/off rest «.pill-row.control-surface @layer components» → 12px, engaged «.pill-row.control-surface @layer components» → 12px · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon unmatched (plant foreign) · every corner selector is matched by the engine and every condition around it evaluated · 0 not · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  note layers (root): properties, theme, base, components, utilities, glass-overrides
+CANON FAIL · 3/4 gating cells pass [library 3/4]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/plant-foreign/runs/dp-src/CANON-chromium.json
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:99> p=unlayered
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:99> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/canon.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/builds/dp-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/plant-unlayered --engine chromium --plant unlayered
+CANON · the canon law on widened twins, each rule's container condition evaluated on the twin and every corner ranked by layer before specificity (H3-4, H5-1; R-7)
+  target dp-src (flavor src) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 18.88 / 23.32 / 26.22 at start, 18.88 / 23.32 / 26.22 at end · other headless browser processes at start: 9 (waited 0.3 s) · browser lock waited 0 s
+  PASS       canon tile corner (plant unlayered) · exactly one rule reaches a tile and not its pill twin, on var(--radius-field) · 1 rule(s): «.toggle-group__item @container not style(--selection-tile: none) @layer components !important» → var(--radius-field) (index-DYvva2W1.css; 48/48 twins, first sm/horizontal/none/on) · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon tile winner (plant unlayered) · every tile twin wears var(--radius-field) at rest and var(--radius-field) or inherit engaged, ranked by importance, layer, specificity, order · 48/48 twins; rest winner «.toggle-group__item @container not style(--selection-tile: none) @layer components !important» → var(--radius-field) · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  FAIL       canon pill winner (plant unlayered) · every pill twin wears var(--radius-pill) at rest and var(--radius-pill) or inherit engaged, ranked by importance, layer, specificity, order · 0/48 twins; wrong: lg/vertical/media/off rest «:where(.toggle-group__item) (unlayered)» → 12px, engaged «:where(.toggle-group__item) (unlayered)» → 12px · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon unmatched (plant unlayered) · every corner selector is matched by the engine and every condition around it evaluated · 0 not · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  note layers (root): properties, theme, base, components, utilities, glass-overrides
+CANON FAIL · 3/4 gating cells pass [library 3/4]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/plant-unlayered/runs/dp-src/CANON-chromium.json
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:99> p=cq
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:99> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/canon.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/builds/dp-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/plant-cq --engine chromium --plant cq
+CANON · the canon law on widened twins, each rule's container condition evaluated on the twin and every corner ranked by layer before specificity (H3-4, H5-1; R-7)
+  target dp-src (flavor src) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 18.88 / 23.32 / 26.22 at start, 18.88 / 23.32 / 26.22 at end · other headless browser processes at start: 8 (waited 0.3 s) · browser lock waited 0 s
+  PASS       canon tile corner (plant cq) · exactly one rule reaches a tile and not its pill twin, on var(--radius-field) · 1 rule(s): «.toggle-group__item @container not style(--selection-tile: none) @layer components !important» → var(--radius-field) (index-DYvva2W1.css; 48/48 twins, first sm/horizontal/none/on) · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 2 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon tile winner (plant cq) · every tile twin wears var(--radius-field) at rest and var(--radius-field) or inherit engaged, ranked by importance, layer, specificity, order · 48/48 twins; rest winner «.toggle-group__item @container not style(--selection-tile: none) @layer components !important» → var(--radius-field) · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 2 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  FAIL       canon pill winner (plant cq) · every pill twin wears var(--radius-pill) at rest and var(--radius-pill) or inherit engaged, ranked by importance, layer, specificity, order · 0/48 twins; wrong: lg/vertical/media/off rest «.toggle-group__item.control-surface @container style(--selection-tile: none) @layer components» → 12px, engaged «.toggle-group__item.control-surface @container style(--selection-tile: none) @layer components» → 12px · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 2 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon unmatched (plant cq) · every corner selector is matched by the engine and every condition around it evaluated · 0 not · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 2 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  note layers (root): properties, theme, base, components, utilities, glass-overrides
+CANON FAIL · 3/4 gating cells pass [library 3/4]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/plant-cq/runs/dp-src/CANON-chromium.json
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:99> p=lowlayer
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:99> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/canon.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/builds/dp-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/plant-lowlayer --engine chromium --plant lowlayer
+CANON · the canon law on widened twins, each rule's container condition evaluated on the twin and every corner ranked by layer before specificity (H3-4, H5-1; R-7)
+  target dp-src (flavor src) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 18.88 / 23.32 / 26.22 at start, 18.88 / 23.32 / 26.22 at end · other headless browser processes at start: 9 (waited 0.3 s) · browser lock waited 0 s
+  PASS       canon tile corner (plant lowlayer) · exactly one rule reaches a tile and not its pill twin, on var(--radius-field) · 1 rule(s): «.toggle-group__item @container not style(--selection-tile: none) @layer components !important» → var(--radius-field) (index-DYvva2W1.css; 48/48 twins, first sm/horizontal/none/on) · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon tile winner (plant lowlayer) · every tile twin wears var(--radius-field) at rest and var(--radius-field) or inherit engaged, ranked by importance, layer, specificity, order · 48/48 twins; rest winner «.toggle-group__item @container not style(--selection-tile: none) @layer components !important» → var(--radius-field) · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon pill winner (plant lowlayer) · every pill twin wears var(--radius-pill) at rest and var(--radius-pill) or inherit engaged, ranked by importance, layer, specificity, order · 48/48 twins; rest winner «.toggle-group__item @layer components» → var(--radius-pill) · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon unmatched (plant lowlayer) · every corner selector is matched by the engine and every condition around it evaluated · 0 not · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 4 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  note layers (root): properties, theme, base, components, utilities, glass-overrides
+CANON PASS · 4/4 gating cells pass [library 4/4]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/plant-lowlayer/runs/dp-src/CANON-chromium.json
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:99> p=cqoff
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:99> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/canon.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/builds/dp-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/plant-cqoff --engine chromium --plant cqoff
+CANON · the canon law on widened twins, each rule's container condition evaluated on the twin and every corner ranked by layer before specificity (H3-4, H5-1; R-7)
+  target dp-src (flavor src) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 20.09 / 23.50 / 26.27 at start, 20.09 / 23.50 / 26.27 at end · other headless browser processes at start: 9 (waited 0.2 s) · browser lock waited 0 s
+  PASS       canon tile corner (plant cqoff) · exactly one rule reaches a tile and not its pill twin, on var(--radius-field) · 1 rule(s): «.toggle-group__item @container not style(--selection-tile: none) @layer components !important» → var(--radius-field) (index-DYvva2W1.css; 48/48 twins, first sm/horizontal/none/on) · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 3 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon tile winner (plant cqoff) · every tile twin wears var(--radius-field) at rest and var(--radius-field) or inherit engaged, ranked by importance, layer, specificity, order · 48/48 twins; rest winner «.toggle-group__item @container not style(--selection-tile: none) @layer components !important» → var(--radius-field) · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 3 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon pill winner (plant cqoff) · every pill twin wears var(--radius-pill) at rest and var(--radius-pill) or inherit engaged, ranked by importance, layer, specificity, order · 48/48 twins; rest winner «.toggle-group__item @layer components» → var(--radius-pill) · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 3 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  PASS       canon unmatched (plant cqoff) · every corner selector is matched by the engine and every condition around it evaluated · 0 not · 48 twins (tile/pill container facts flush/none), 139 corner rules (3 under an @media/@supports that does not hold; 3 reach an item, 1 inside a container query; 26 on a pseudo-element, listed not ranked) · tile spelling «.toggle-group[data-shape="cell"] .toggle-group__item»
+  note layers (root): properties, theme, base, components, utilities, glass-overrides
+CANON PASS · 4/4 gating cells pass [library 4/4]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/plant-cqoff/runs/dp-src/CANON-chromium.json
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:101> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/fact-split.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/builds/dp-atk-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out --engine chromium
+FACT · is a tile has one spelling: the fact and the tile geometry agree under nesting, a written fact, and every write site × read site of the matrix, judged by paint (H4-1, H5-2; R-10, R-2)
+  target dp-atk-src (flavor src) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 20.09 / 23.50 / 26.27 at start, 24.06 / 24.02 / 26.34 at end · other headless browser processes at start: 9 (waited 0.2 s) · browser lock waited 0 s
+  PASS       declared light · want tile · a tile on the field corner · fact flush · 95.94×40.00 · 16px → used 16.00 (0.80×h/2) · 1 row(s) · column
+  PASS       pill-in-tile light · want pill · a pill at h/2 on one row · fact none · 92.78×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       pill-beside-tile light · want pill · a pill at h/2 on one row · fact none · 92.78×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       tile-in-pill light · want pill · a pill at h/2 on one row · fact none · 63.03×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       fact-plated light · --selection-tile: plated written on the group · want agree · the written fact and the geometry agree: a tile on the field corner · fact plated · 204.00×61.58 · 16px → used 16.00 (0.52×h/2) · 2 row(s) · column
+  PASS       fact-flush light · --selection-tile: flush written on the group · want agree · the written fact and the geometry agree: a tile on the field corner · fact flush · 204.00×61.58 · 16px → used 16.00 (0.52×h/2) · 2 row(s) · column
+  PASS       declared dark · want tile · a tile on the field corner · fact flush · 95.94×40.00 · 16px → used 16.00 (0.80×h/2) · 1 row(s) · column
+  PASS       pill-in-tile dark · want pill · a pill at h/2 on one row · fact none · 92.78×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       pill-beside-tile dark · want pill · a pill at h/2 on one row · fact none · 92.78×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       tile-in-pill dark · want pill · a pill at h/2 on one row · fact none · 63.03×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       fact-plated dark · --selection-tile: plated written on the group · want agree · the written fact and the geometry agree: a tile on the field corner · fact plated · 204.00×61.58 · 16px → used 16.00 (0.52×h/2) · 2 row(s) · column
+  PASS       fact-flush dark · --selection-tile: flush written on the group · want agree · the written fact and the geometry agree: a tile on the field corner · fact flush · 204.00×61.58 · 16px → used 16.00 (0.52×h/2) · 2 row(s) · column
+  PASS       matrix light · strip in a tile option (td) [segmented-in-tile] · want one row, the reference strip's height · the tab holds one row · strip 40.94 against the reference 40.94 · tab 99.45×32.94, 1 row(s), 0 span(s) cut · strip 40.94 (grid) · tab fact none · reference tab 113.00×32.94, 1 row(s), 0 span(s) cut · strip 40.94 (grid) · tab fact none · names: production flavour, not read
+  PASS       matrix light · strip in a pill option (pd) [segmented-in-pill] · want one row, the pill's block size · the tab holds one row · option 452.00×40.00 against the pill pa 40.00 · tab 61.56×25.75, 1 row(s), 0 span(s) cut · strip 30.31 (block) · tab fact none · reference tab 113.00×32.94, 1 row(s), 0 span(s) cut · strip 40.94 (grid) · tab fact none · names: production flavour, not read
+  PASS       matrix light · reference · tile group, option ta · want tile · a tile, as the value decides · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · reference · tile group, option tb · want tile · a tile, as the value decides · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · reference · tile group, option tn0 [pill-in-option] · want pill · a pill, as the value decides · 83.67×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · reference · pill group, option pa · want pill · a pill, as the value decides · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · reference · pill group, option pb · want pill · a pill, as the value decides · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · reference · pill group, option pn0 [tile-in-option] · want tile · a tile, as the value decides · 63.50×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · ancestor none · tile group, option ta · want unchanged · unchanged: a tile as its reference · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · ancestor none · pill group, option pa · want unchanged · unchanged: a pill as its reference · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · ancestor flush · tile group, option ta · want unchanged · unchanged: a tile as its reference · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · ancestor flush · pill group, option pa · want unchanged · unchanged: a pill as its reference · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · ancestor plated · tile group, option ta · want unchanged · unchanged: a tile as its reference · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · ancestor plated · pill group, option pa · want unchanged · unchanged: a pill as its reference · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · group none · tile group, option ta · want pill · a pill, as the value decides · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · group none · pill group, option pa · want pill · a pill, as the value decides · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · group flush · tile group, option ta · want tile · a tile, as the value decides · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · group flush · pill group, option pa · want tile · a tile, as the value decides · 193.78×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · group plated · tile group, option ta · want tile · a tile, as the value decides · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · group plated · pill group, option pa · want tile · a tile, as the value decides · 193.78×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · wrapper none · tile group, option tb · want agree · agree: a pill · 211.92×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · wrapper none · pill group, option pb · want agree · agree: a pill · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · wrapper flush · tile group, option tb · want agree · agree: a tile · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · wrapper flush · pill group, option pb · want agree · agree: a tile · 222.00×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · wrapper plated · tile group, option tb · want agree · agree: a tile · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · wrapper plated · pill group, option pb · want agree · agree: a tile · 222.00×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · option none · tile group, option ta [item-none-in-tile] · want unchanged · unchanged: a tile as its reference · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · option none · pill group, option pa · want unchanged · unchanged: a pill as its reference · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · option flush · tile group, option ta · want unchanged · unchanged: a tile as its reference · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · option flush · pill group, option pa [item-flush-in-pill] · want unchanged · unchanged: a pill as its reference · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · option plated · tile group, option ta · want unchanged · unchanged: a tile as its reference · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · option plated · pill group, option pa · want unchanged · unchanged: a pill as its reference · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · content none · tile group, option ta [content-writes-none] · want unchanged · unchanged: a tile as its reference · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · content none · pill group, option pa · want unchanged · unchanged: a pill as its reference · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · content flush · tile group, option ta · want unchanged · unchanged: a tile as its reference · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · content flush · pill group, option pa · want unchanged · unchanged: a pill as its reference · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · content plated · tile group, option ta · want unchanged · unchanged: a tile as its reference · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · content plated · pill group, option pa · want unchanged · unchanged: a pill as its reference · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · nested-group none · tile group, option tn0 · want pill · a pill, as the value decides · 83.67×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · nested-group none · pill group, option pn0 · want pill · a pill, as the value decides · 83.67×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · nested-group flush · tile group, option tn0 · want tile · a tile, as the value decides · 63.50×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · nested-group flush · pill group, option pn0 · want tile · a tile, as the value decides · 63.50×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · nested-group plated · tile group, option tn0 · want tile · a tile, as the value decides · 63.50×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · nested-group plated · pill group, option pn0 · want tile · a tile, as the value decides · 63.50×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · nested-option none · tile group, option tn0 · want unchanged · unchanged: a pill as its reference · 83.67×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · nested-option none · pill group, option pn0 · want unchanged · unchanged: a tile as its reference · 63.50×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · nested-option flush · tile group, option tn0 · want unchanged · unchanged: a pill as its reference · 83.67×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · nested-option flush · pill group, option pn0 · want unchanged · unchanged: a tile as its reference · 63.50×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · nested-option plated · tile group, option tn0 · want unchanged · unchanged: a pill as its reference · 83.67×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix light · nested-option plated · pill group, option pn0 · want unchanged · unchanged: a tile as its reference · 63.50×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  info-pass  none! light · option · tile group, option ta · an inline --selection-tile: none !important (above every layer; reported, not gating) · want FV5-3's stated split: the geometry follows the group (the field corner, a column), the clip and the one-row law follow the option · the paint is the stated split · 211.92×45.50 · 16px → used 16.00 (0.70×h/2) · column · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · reference 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix dark · strip in a tile option (td) [segmented-in-tile] · want one row, the reference strip's height · the tab holds one row · strip 40.94 against the reference 40.94 · tab 99.45×32.94, 1 row(s), 0 span(s) cut · strip 40.94 (grid) · tab fact none · reference tab 113.00×32.94, 1 row(s), 0 span(s) cut · strip 40.94 (grid) · tab fact none · names: production flavour, not read
+  PASS       matrix dark · strip in a pill option (pd) [segmented-in-pill] · want one row, the pill's block size · the tab holds one row · option 452.00×40.00 against the pill pa 40.00 · tab 61.56×25.75, 1 row(s), 0 span(s) cut · strip 30.31 (block) · tab fact none · reference tab 113.00×32.94, 1 row(s), 0 span(s) cut · strip 40.94 (grid) · tab fact none · names: production flavour, not read
+  PASS       matrix dark · reference · tile group, option ta · want tile · a tile, as the value decides · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix dark · reference · tile group, option tb · want tile · a tile, as the value decides · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix dark · reference · tile group, option tn0 [pill-in-option] · want pill · a pill, as the value decides · 83.67×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix dark · reference · pill group, option pa · want pill · a pill, as the value decides · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix dark · reference · pill group, option pb · want pill · a pill, as the value decides · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix dark · reference · pill group, option pn0 [tile-in-option] · want tile · a tile, as the value decides · 63.50×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix dark · option none · tile group, option ta [item-none-in-tile] · want unchanged · unchanged: a tile as its reference · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut · names: production flavour, not read
+  PASS       matrix dark · option flush · pill group, option pa [item-flush-in-pill] · want unchanged · unchanged: a pill as its reference · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · names: production flavour, not read
+FACT PASS · 72/72 gating cells pass [library 72/72]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/runs/dp-atk-src/FACT-chromium.json
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:102> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/fact-split.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/builds/dp-atk-src-dev --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out --engine chromium
+FACT · is a tile has one spelling: the fact and the tile geometry agree under nesting, a written fact, and every write site × read site of the matrix, judged by paint (H4-1, H5-2; R-10, R-2)
+  target dp-atk-src-dev (flavor src-dev, DEV) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 24.06 / 24.02 / 26.34 at start, 28.70 / 25.15 / 26.67 at end · other headless browser processes at start: 7 (waited 0.6 s) · browser lock waited 0 s
+  PASS       declared light · want tile · a tile on the field corner · fact flush · 95.94×40.00 · 16px → used 16.00 (0.80×h/2) · 1 row(s) · column
+  PASS       pill-in-tile light · want pill · a pill at h/2 on one row · fact none · 92.78×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       pill-beside-tile light · want pill · a pill at h/2 on one row · fact none · 92.78×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       tile-in-pill light · want pill · a pill at h/2 on one row · fact none · 63.03×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       fact-plated light · --selection-tile: plated written on the group · want agree · the written fact and the geometry agree: a tile on the field corner · fact plated · 204.00×61.58 · 16px → used 16.00 (0.52×h/2) · 2 row(s) · column
+  PASS       fact-flush light · --selection-tile: flush written on the group · want agree · the written fact and the geometry agree: a tile on the field corner · fact flush · 204.00×61.58 · 16px → used 16.00 (0.52×h/2) · 2 row(s) · column
+  PASS       declared dark · want tile · a tile on the field corner · fact flush · 95.94×40.00 · 16px → used 16.00 (0.80×h/2) · 1 row(s) · column
+  PASS       pill-in-tile dark · want pill · a pill at h/2 on one row · fact none · 92.78×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       pill-beside-tile dark · want pill · a pill at h/2 on one row · fact none · 92.78×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       tile-in-pill dark · want pill · a pill at h/2 on one row · fact none · 63.03×40.00 · 9999px → used 20.00 (1.00×h/2) · 1 row(s) · row
+  PASS       fact-plated dark · --selection-tile: plated written on the group · want agree · the written fact and the geometry agree: a tile on the field corner · fact plated · 204.00×61.58 · 16px → used 16.00 (0.52×h/2) · 2 row(s) · column
+  PASS       fact-flush dark · --selection-tile: flush written on the group · want agree · the written fact and the geometry agree: a tile on the field corner · fact flush · 204.00×61.58 · 16px → used 16.00 (0.52×h/2) · 2 row(s) · column
+  PASS       matrix light · strip in a tile option (td) [segmented-in-tile] · want one row, the reference strip's height, no second-row name · the tab holds one row · strip 40.94 against the reference 40.94 · tab 99.45×32.94, 1 row(s), 0 span(s) cut · strip 40.94 (grid) · tab fact none · reference tab 113.00×32.94, 1 row(s), 0 span(s) cut · strip 40.94 (grid) · tab fact none
+  PASS       matrix light · strip in a pill option (pd) [segmented-in-pill] · want one row, the pill's block size, no second-row name · the tab holds one row · option 452.00×40.00 against the pill pa 40.00 · tab 61.56×25.75, 1 row(s), 0 span(s) cut · strip 30.31 (block) · tab fact none · reference tab 113.00×32.94, 1 row(s), 0 span(s) cut · strip 40.94 (grid) · tab fact none
+  PASS       matrix light · reference · tile group, option ta · want tile · a tile, as the value decides · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · reference · tile group, option tb · want tile · a tile, as the value decides · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · reference · tile group, option tn0 [pill-in-option] · want pill · a pill, as the value decides · 83.67×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+  PASS       matrix light · reference · pill group, option pa · want pill · a pill, as the value decides · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+  PASS       matrix light · reference · pill group, option pb · want pill · a pill, as the value decides · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+  PASS       matrix light · reference · pill group, option pn0 [tile-in-option] · want tile · a tile, as the value decides · 63.50×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · ancestor none · tile group, option ta · want unchanged · unchanged: a tile as its reference · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · ancestor none · pill group, option pa · want unchanged · unchanged: a pill as its reference · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+  PASS       matrix light · ancestor flush · tile group, option ta · want unchanged · unchanged: a tile as its reference · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · ancestor flush · pill group, option pa · want unchanged · unchanged: a pill as its reference · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+  PASS       matrix light · ancestor plated · tile group, option ta · want unchanged · unchanged: a tile as its reference · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · ancestor plated · pill group, option pa · want unchanged · unchanged: a pill as its reference · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+  PASS       matrix light · group none · tile group, option ta · want pill · a pill, as the value decides · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+  PASS       matrix light · group none · pill group, option pa · want pill · a pill, as the value decides · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+  PASS       matrix light · group flush · tile group, option ta · want tile · a tile, as the value decides · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · group flush · pill group, option pa · want tile · a tile, as the value decides · 193.78×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · group plated · tile group, option ta · want tile · a tile, as the value decides · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · group plated · pill group, option pa · want tile · a tile, as the value decides · 193.78×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · wrapper none · tile group, option tb · want agree · agree: a pill · 211.92×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+  PASS       matrix light · wrapper none · pill group, option pb · want agree · agree: a pill · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+  PASS       matrix light · wrapper flush · tile group, option tb · want agree · agree: a tile · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · wrapper flush · pill group, option pb · want agree · agree: a tile · 222.00×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · wrapper plated · tile group, option tb · want agree · agree: a tile · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · wrapper plated · pill group, option pb · want agree · agree: a tile · 222.00×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · option none · tile group, option ta [item-none-in-tile] · want unchanged · unchanged: a tile as its reference · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · option none · pill group, option pa · want unchanged · unchanged: a pill as its reference · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+  PASS       matrix light · option flush · tile group, option ta · want unchanged · unchanged: a tile as its reference · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · option flush · pill group, option pa [item-flush-in-pill] · want unchanged · unchanged: a pill as its reference · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+  PASS       matrix light · option plated · tile group, option ta · want unchanged · unchanged: a tile as its reference · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · option plated · pill group, option pa · want unchanged · unchanged: a pill as its reference · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+  PASS       matrix light · content none · tile group, option ta [content-writes-none] · want unchanged · unchanged: a tile as its reference · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · content none · pill group, option pa · want unchanged · unchanged: a pill as its reference · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+  PASS       matrix light · content flush · tile group, option ta · want unchanged · unchanged: a tile as its reference · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · content flush · pill group, option pa · want unchanged · unchanged: a pill as its reference · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+  PASS       matrix light · content plated · tile group, option ta · want unchanged · unchanged: a tile as its reference · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · content plated · pill group, option pa · want unchanged · unchanged: a pill as its reference · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+  PASS       matrix light · nested-group none · tile group, option tn0 · want pill · a pill, as the value decides · 83.67×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+  PASS       matrix light · nested-group none · pill group, option pn0 · want pill · a pill, as the value decides · 83.67×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+  PASS       matrix light · nested-group flush · tile group, option tn0 · want tile · a tile, as the value decides · 63.50×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · nested-group flush · pill group, option pn0 · want tile · a tile, as the value decides · 63.50×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · nested-group plated · tile group, option tn0 · want tile · a tile, as the value decides · 63.50×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · nested-group plated · pill group, option pn0 · want tile · a tile, as the value decides · 63.50×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · nested-option none · tile group, option tn0 · want unchanged · unchanged: a pill as its reference · 83.67×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+  PASS       matrix light · nested-option none · pill group, option pn0 · want unchanged · unchanged: a tile as its reference · 63.50×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · nested-option flush · tile group, option tn0 · want unchanged · unchanged: a pill as its reference · 83.67×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+  PASS       matrix light · nested-option flush · pill group, option pn0 · want unchanged · unchanged: a tile as its reference · 63.50×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix light · nested-option plated · tile group, option tn0 · want unchanged · unchanged: a pill as its reference · 83.67×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+  PASS       matrix light · nested-option plated · pill group, option pn0 · want unchanged · unchanged: a tile as its reference · 63.50×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  info-pass  none! light · option · tile group, option ta · an inline --selection-tile: none !important (above every layer; reported, not gating) · want FV5-3's stated split: the geometry follows the group (the field corner, a column), the clip and the one-row law follow the option · the paint is the stated split · 211.92×45.50 · 16px → used 16.00 (0.70×h/2) · column · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut · reference 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix dark · strip in a tile option (td) [segmented-in-tile] · want one row, the reference strip's height, no second-row name · the tab holds one row · strip 40.94 against the reference 40.94 · tab 99.45×32.94, 1 row(s), 0 span(s) cut · strip 40.94 (grid) · tab fact none · reference tab 113.00×32.94, 1 row(s), 0 span(s) cut · strip 40.94 (grid) · tab fact none
+  PASS       matrix dark · strip in a pill option (pd) [segmented-in-pill] · want one row, the pill's block size, no second-row name · the tab holds one row · option 452.00×40.00 against the pill pa 40.00 · tab 61.56×25.75, 1 row(s), 0 span(s) cut · strip 30.31 (block) · tab fact none · reference tab 113.00×32.94, 1 row(s), 0 span(s) cut · strip 40.94 (grid) · tab fact none
+  PASS       matrix dark · reference · tile group, option ta · want tile · a tile, as the value decides · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix dark · reference · tile group, option tb · want tile · a tile, as the value decides · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix dark · reference · tile group, option tn0 [pill-in-option] · want pill · a pill, as the value decides · 83.67×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+  PASS       matrix dark · reference · pill group, option pa · want pill · a pill, as the value decides · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+  PASS       matrix dark · reference · pill group, option pb · want pill · a pill, as the value decides · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+  PASS       matrix dark · reference · pill group, option pn0 [tile-in-option] · want tile · a tile, as the value decides · 63.50×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix dark · option none · tile group, option ta [item-none-in-tile] · want unchanged · unchanged: a tile as its reference · 211.92×54.69 · 16px → used 16.00 (0.59×h/2) · column · 2 row(s), content 2 row(s), 0 clipped child(ren), 0 cut
+  PASS       matrix dark · option flush · pill group, option pa [item-flush-in-pill] · want unchanged · unchanged: a pill as its reference · 222.00×40.00 · 9999px → used 20.00 (1.00×h/2) · row · 1 row(s), content 1 row(s), 1 clipped child(ren), 0 cut
+FACT PASS · 72/72 gating cells pass [library 72/72]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/runs/dp-atk-src-dev/FACT-chromium.json
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:103> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/attack.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/builds/dp-atk-src-dev --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out --engine chromium
+ATTACK · empty anatomy is pills, consumer attributes land under the engine, a superscript is not a second row, a nested group is named at mount (H4-1, H5-4; E-3, R-2, R-9, X-5)
+  target dp-atk-src-dev (flavor src-dev, DEV) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 31.44 / 25.78 / 26.88 at start, 32.45 / 26.08 / 26.98 at end · other headless browser processes at start: 7 (waited 0.3 s) · browser lock waited 0 s
+  PASS       empty · c1-migrated light · group fact none, item fact none · item 0 184.00×40.00 9999px → used 20.00 (h/2 20.00), row · anatomy rows rendered 0, empty 0 · want a pill (no tile fact, h/2)
+  PASS       empty · c1-migrated dark · group fact none, item fact none · item 0 184.00×40.00 9999px → used 20.00 (h/2 20.00), row · anatomy rows rendered 0, empty 0 · want a pill (no tile fact, h/2)
+  PASS       attrs · preset-migrated · pointer click on item 0: consumer @click ran 1× (want 1), aria-checked true, role radio (want radio), class true, style --atk-style "7", data-consumer yes, aria-label "preset smooth", tab stops 1 (want 1)
+  PASS       sup · strip-migrated [src-dev] · pill 40.00 px, used 20.00 · console errors 0 over 6 one-row pills (want 0)
+  PASS       x5 · matrix-migrated [src-dev] · console errors counted from navigation (5 in all) · option tc (holds a nested group) named 1× as holding an interactive descendant, 1 before ready; option pc (holds a nested group) named 1× as holding an interactive descendant, 1 before ready (want each ≥ 1)
+ATTACK PASS · 5/5 gating cells pass [library 5/5]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/runs/dp-atk-src-dev/ATTACK-chromium.json
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:104> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/corner-refusal.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/builds/dp-atk-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out --engine chromium
+CORNER · a consumer corner on a tile is refused in paint (H4-1; FV3-4, E-3)
+  target dp-atk-src (flavor src) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 32.45 / 26.08 / 26.98 at start, 32.17 / 26.13 / 26.99 at end · other headless browser processes at start: 7 (waited 0.5 s) · browser lock waited 0 s
+  PASS       preset-migrated utility · computed 16px · used 16.00 on 204.00×40.00 · want the field corner kept (16px)
+  PASS       preset-migrated scoped · computed 16px · used 16.00 on 204.00×40.00 · want the field corner kept (16px)
+  PASS       preset-migrated important · computed 16px · used 16.00 on 204.00×40.00 · want the field corner kept (16px)
+  PASS       preset-migrated inline · computed 16px · used 16.00 on 204.00×40.00 · want the field corner kept (16px)
+  info-fail  preset-migrated inline-important · computed 9999px · used 20.00 on 204.00×40.00 · want the field corner kept (16px) · INFO: no stylesheet rule outranks an inline !important
+  PASS       family-d-undeclared scoped-control · computed 7px (want 7px: the selector reaches an item) · 195.28×40.00
+CORNER PASS · 5/5 gating cells pass [library 5/5]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/runs/dp-atk-src/CORNER-chromium.json
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:105> [[ dp != fv5 ]]
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:105> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/report-h46.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/builds/dp-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out --engine chromium
+REPORT · H4-6, H5-5, H5-6, reported: the commit on wide tiles against a 4 px gap; the selection mark over light media; the selected K2 name's ink; on a route build only
+  target dp-src (flavor src) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 32.32 / 26.26 / 27.03 at start, 31.97 / 26.29 / 27.04 at end · other headless browser processes at start: 7 (waited 0.4 s) · browser lock waited 0 s
+  FAIL       kick · preset-migrated forced to two 300 px columns at a 4 px gap · item 1 300.00×63.58, rest gap 4.00 px · programmatic commit (checked true), 96 frames · peak scale 1.0278 · deepest push into a neighbour 0.17 px (want ≤ 0.05)
+  info-pass  kick · preset-migrated at the scene's own geometry · item 1 204.00×63.58, rest gap 8.00 px · peak scale 1.0278 · deepest push 0.00 px
+  UNMEASURED mark · v2-migrated dark · UNMEASURED: no mark painted (0 device px change with ::after hidden; FV3-6 is built only if Q-3 rules (b))
+  UNMEASURED mark · v2-migrated light · UNMEASURED: no mark painted (0 device px change with ::after hidden; FV3-6 is built only if Q-3 rules (b))
+  PASS       name-ink · specimen-migrated light · the selected name oklch(0.216114 0.00613456 55.9893) is its item's ink oklch(0.216114 0.00613456 55.9893) (sRGB 28, 25, 23; --selection-ink oklch(from light-dark(#1c1917, #e9e6e2) min(l, 0.42) c h / 1)) · unselected name rgb(112, 89, 66), item rgb(112, 89, 66) · the name's ink selected against unselected 2.66:1
+  PASS       name-ink · specimen-migrated dark · the selected name oklch(0.926146 0.00632027 75.0765) is its item's ink oklch(0.926146 0.00632027 75.0765) (sRGB 233, 230, 226; --selection-ink oklch(from #e9e6e2 max(l, 0.8) c h / 1)) · unselected name rgb(195, 185, 172), item rgb(195, 185, 172) · the name's ink selected against unselected 1.56:1
+REPORT FAIL · 2/3 gating cells pass, 1 unmeasured [library 2/3]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/runs/dp-src/REPORT-chromium.json
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:106> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/t2-one-line-stadium.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/builds/dp-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out --engine chromium
+T-2 · a one-line item stays a stadium, and a gated pill never leaves its rung
+  target dp-src (flavor src) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 31.97 / 26.29 / 27.04 at start, 26.79 / 26.17 / 26.96 at end · other headless browser processes at start: 7 (waited 0.6 s) · browser lock waited 0 s
+  PASS       single #0 36.00×36.00 rung 36.00 9999px→18.00 (÷h/2 1.00), 1 row(s)
+  PASS       single #1 58.44×36.00 rung 36.00 9999px→18.00 (÷h/2 1.00), 1 row(s)
+  PASS       single #2 49.41×36.00 rung 36.00 9999px→18.00 (÷h/2 1.00), 1 row(s)
+  PASS       single #3 60.03×36.00 rung 36.00 9999px→18.00 (÷h/2 1.00), 1 row(s)
+  PASS       single #0 one-row law · <br> inside the label, after mount · 36.00 px at rung 36.00 · nothing cut; one row
+  PASS       single #0 one-row law · a block child (div) inside the label, after mount · 36.00 px at rung 36.00 · nothing cut; one row
+  PASS       single #0 one-row law · a div appended to the item, beside the label, after mount · 36.00 px at rung 36.00 · nothing cut; one row
+  PASS       single #0 one-row law · a span inside the label that sets its own display: block by inline style, after mount · 36.00 px at rung 36.00 · the child computes display: inline · nothing cut; one row
+  PASS       single #0 one-row law · a span inside the label that sets its own display: block by a utility class (@layer utilities), after mount · 36.00 px at rung 36.00 · the child computes display: inline · nothing cut; one row
+  PASS       vertical #0 56.00×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       vertical #1 56.00×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       vertical #2 56.00×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       vertical #3 56.00×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       vertical #0 one-row law · <br> inside the label, after mount · 40.00 px at rung 40.00 · nothing cut; one row
+  PASS       vertical #0 one-row law · a block child (div) inside the label, after mount · 40.00 px at rung 40.00 · nothing cut; one row
+  PASS       vertical #0 one-row law · a div appended to the item, beside the label, after mount · 40.00 px at rung 40.00 · nothing cut; one row
+  PASS       vertical #0 one-row law · a span inside the label that sets its own display: block by inline style, after mount · 40.00 px at rung 40.00 · the child computes display: inline · nothing cut; one row
+  PASS       vertical #0 one-row law · a span inside the label that sets its own display: block by a utility class (@layer utilities), after mount · 40.00 px at rung 40.00 · the child computes display: inline · nothing cut; one row
+  PASS       tabs #0 69.47×32.94 rung 32.94 9999px→16.47 (÷h/2 1.00), 1 row(s)
+  PASS       tabs #1 69.47×32.94 rung 32.94 9999px→16.47 (÷h/2 1.00), 1 row(s)
+  PASS       tabs #2 69.47×32.94 rung 32.94 9999px→16.47 (÷h/2 1.00), 1 row(s)
+  PASS       tabs #3 69.47×32.94 rung 32.94 9999px→16.47 (÷h/2 1.00), 1 row(s)
+  PASS       tabs #0 one-row law · <br> inside the label, after mount · 32.94 px at rung 0.00 · nothing cut; one row
+  PASS       tabs #0 one-row law · a block child (div) inside the label, after mount · 32.94 px at rung 0.00 · nothing cut; one row
+  PASS       tabs #0 one-row law · a div appended to the item, beside the label, after mount · 32.94 px at rung 0.00 · nothing cut; one row
+  PASS       tabs #0 one-row law · a span inside the label that sets its own display: block by inline style, after mount · 32.94 px at rung 0.00 · the child computes display: inline · nothing cut; one row
+  PASS       tabs #0 one-row law · a span inside the label that sets its own display: block by a utility class (@layer utilities), after mount · 32.94 px at rung 0.00 · the child computes display: inline · nothing cut; one row
+  PASS       pill-icon #0 80.14×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       pill-icon #1 76.59×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       pill-icon #2 92.27×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       pill-icon #0 one-row law · <br> inside the label, after mount · 40.00 px at rung 40.00 · nothing cut; one row
+  PASS       pill-icon #0 one-row law · a block child (div) inside the label, after mount · 40.00 px at rung 40.00 · nothing cut; one row
+  PASS       pill-icon #0 one-row law · a div appended to the item, beside the label, after mount · 40.00 px at rung 40.00 · nothing cut; one row
+  PASS       pill-icon #0 one-row law · a span inside the label that sets its own display: block by inline style, after mount · 40.00 px at rung 40.00 · the child computes display: inline · nothing cut; one row
+  PASS       pill-icon #0 one-row law · a span inside the label that sets its own display: block by a utility class (@layer utilities), after mount · 40.00 px at rung 40.00 · the child computes display: inline · nothing cut; one row
+  PASS       pill-badge #0 95.34×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       pill-badge #1 90.36×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       pill-badge #2 100.80×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       pill-badge #0 one-row law · <br> inside the label, after mount · 40.00 px at rung 40.00 · nothing cut; one row
+  PASS       pill-badge #0 one-row law · a block child (div) inside the label, after mount · 40.00 px at rung 40.00 · nothing cut; one row
+  PASS       pill-badge #0 one-row law · a div appended to the item, beside the label, after mount · 40.00 px at rung 40.00 · nothing cut; one row
+  PASS       pill-badge #0 one-row law · a span inside the label that sets its own display: block by inline style, after mount · 40.00 px at rung 40.00 · the child computes display: inline · nothing cut; one row
+  PASS       pill-badge #0 one-row law · a span inside the label that sets its own display: block by a utility class (@layer utilities), after mount · 40.00 px at rung 40.00 · the child computes display: inline · nothing cut; one row
+  PASS       family-d-undeclared #0 195.28×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       family-d-undeclared #1 232.92×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       family-d-undeclared #2 212.77×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       family-d-undeclared #3 216.14×40.00 rung 40.00 9999px→20.00 (÷h/2 1.00), 1 row(s)
+  PASS       family-d-undeclared #0 one-row law · <br> inside the label, after mount · 40.00 px at rung 40.00 · nothing cut; one row
+  PASS       family-d-undeclared #0 one-row law · a block child (div) inside the label, after mount · 40.00 px at rung 40.00 · nothing cut; one row
+  PASS       family-d-undeclared #0 one-row law · a div appended to the item, beside the label, after mount · 40.00 px at rung 40.00 · nothing cut; one row
+  PASS       family-d-undeclared #0 one-row law · a span inside the label that sets its own display: block by inline style, after mount · 40.00 px at rung 40.00 · the child computes display: inline · nothing cut; one row
+  PASS       family-d-undeclared #0 one-row law · a span inside the label that sets its own display: block by a utility class (@layer utilities), after mount · 40.00 px at rung 40.00 · the child computes display: inline · nothing cut; one row
+T-2 PASS · 52/52 gating cells pass [library 52/52]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/runs/dp-src/T-2-chromium.json
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:107> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/t3-selected-separates.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/builds/dp-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out --engine chromium
+T-3 · the selected state separates ≥ 3:1 on painted pixels (light, dark, PRT), fill reported apart; paint containment keeps the edge
+  target dp-src (flavor src) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 26.79 / 26.17 / 26.96 at start, 20.87 / 25.45 / 26.60 at end · other headless browser processes at start: 7 (waited 0.3 s) · browser lock waited 0 s
+  FAIL       preset light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.19:1; p95 1.20; items 1/0 204×40
+  info-fail  preset light · fill alone 1.19:1 (#bbb6af vs #cbc6be) — decoration, reported apart from the edge
+  FAIL       preset dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.23:1; p95 1.28; items 1/0 204×40
+  info-fail  preset dark · fill alone 1.23:1 (#27241c vs #140f09) — decoration, reported apart from the edge
+  FAIL       preset prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.00:1; p95 1.00; items 1/0 204×40
+  info-fail  preset prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  preset forced · carrier ≥3:1 area 7366.00 px² (perimeter band 1152.50, interior 6213.50) vs the bar 244.00 px²; fill 11.34:1; p95 17.87; items 1/0 204×40
+  info-pass  preset forced · fill alone 11.34:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  FAIL       [unmigrated] preset-verbatim light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 248.00 px²; fill 1.09:1; p95 1.23; items 1/0 208×40
+  info-fail  [unmigrated] preset-verbatim light · fill alone 1.09:1 (#f1edf4 vs #e7e5e0) — decoration, reported apart from the edge
+  FAIL       [unmigrated] preset-verbatim dark · carrier ≥3:1 area 238.00 px² (perimeter band 232.00, interior 6.00) vs the bar 248.00 px²; fill 1.06:1; p95 1.13; items 1/0 208×40
+  info-fail  [unmigrated] preset-verbatim dark · fill alone 1.06:1 (#19151b vs #120f0b) — decoration, reported apart from the edge
+  FAIL       [unmigrated] preset-verbatim prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 248.00 px²; fill 1.07:1; p95 1.07; items 1/0 208×40
+  info-fail  [unmigrated] preset-verbatim prt · fill alone 1.07:1 (#f1edf4 vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  [unmigrated] preset-verbatim forced · carrier ≥3:1 area 1192.75 px² (perimeter band 1122.50, interior 70.25) vs the bar 248.00 px²; fill 1.00:1; p95 11.31; items 1/0 208×40
+  info-fail  [unmigrated] preset-verbatim forced · fill alone 1.00:1 (#ffffff vs #ffffff) — decoration, reported apart from the edge
+  PASS       [migrated] preset-migrated light · carrier ≥3:1 area 998.75 px² (perimeter band 939.50, interior 59.25) vs the bar 267.00 px²; fill 1.28:1; p95 13.86; items 1/0 204×63
+  info-fail  [migrated] preset-migrated light · fill alone 1.28:1 (#cdccc8 vs #e6e5e0) — decoration, reported apart from the edge
+  PASS       [migrated] preset-migrated dark · carrier ≥3:1 area 1009.75 px² (perimeter band 946.50, interior 63.25) vs the bar 267.00 px²; fill 1.30:1; p95 14.25; items 1/0 204×63
+  info-fail  [migrated] preset-migrated dark · fill alone 1.30:1 (#272622 vs #0c0b07) — decoration, reported apart from the edge
+  PASS       [migrated] preset-migrated prt · carrier ≥3:1 area 1000.75 px² (perimeter band 940.75, interior 60.00) vs the bar 267.00 px²; fill 1.28:1; p95 16.20; items 1/0 204×63
+  info-fail  [migrated] preset-migrated prt · fill alone 1.28:1 (#e1dad2 vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  [migrated] preset-migrated forced · carrier ≥3:1 area 12333.75 px² (perimeter band 1564.25, interior 10769.50) vs the bar 267.00 px²; fill 11.31:1; p95 17.80; items 1/0 204×63
+  info-pass  [migrated] preset-migrated forced · fill alone 11.31:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  FAIL       specimen light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.19:1; p95 1.19; items 1/0 207×36
+  info-fail  specimen light · fill alone 1.19:1 (#c1bcb6 vs #d0cdc5) — decoration, reported apart from the edge
+  FAIL       specimen dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.22:1; p95 1.29; items 1/0 207×36
+  info-fail  specimen dark · fill alone 1.22:1 (#27221d vs #140e09) — decoration, reported apart from the edge
+  FAIL       specimen prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.00:1; p95 1.00; items 1/0 207×36
+  info-fail  specimen prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  specimen forced · carrier ≥3:1 area 6724.00 px² (perimeter band 1186.00, interior 5538.00) vs the bar 243.00 px²; fill 11.33:1; p95 17.87; items 1/0 207×36
+  info-pass  specimen forced · fill alone 11.33:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  info-pass  [unmigrated] specimen-verbatim light · carrier ≥3:1 area 454.25 px² (perimeter band 442.25, interior 12.00) vs the bar 243.00 px²; fill 1.00:1; p95 8.34; items 1/0 207×36
+  info-fail  [unmigrated] specimen-verbatim light · fill alone 1.00:1 (#d0cdc6 vs #d0cdc6) — decoration, reported apart from the edge
+  info-pass  [unmigrated] specimen-verbatim dark · carrier ≥3:1 area 467.25 px² (perimeter band 453.25, interior 14.00) vs the bar 243.00 px²; fill 1.00:1; p95 11.00; items 1/0 207×36
+  info-fail  [unmigrated] specimen-verbatim dark · fill alone 1.00:1 (#140e09 vs #140e09) — decoration, reported apart from the edge
+  info-pass  [unmigrated] specimen-verbatim prt · carrier ≥3:1 area 458.50 px² (perimeter band 445.00, interior 13.50) vs the bar 243.00 px²; fill 1.00:1; p95 12.14; items 1/0 207×36
+  info-fail  [unmigrated] specimen-verbatim prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  [unmigrated] specimen-verbatim forced · carrier ≥3:1 area 882.75 px² (perimeter band 820.75, interior 62.00) vs the bar 243.00 px²; fill 1.00:1; p95 11.31; items 1/0 207×36
+  info-fail  [unmigrated] specimen-verbatim forced · fill alone 1.00:1 (#ffffff vs #ffffff) — decoration, reported apart from the edge
+  PASS       [migrated] specimen-migrated light · carrier ≥3:1 area 1086.25 px² (perimeter band 1018.50, interior 67.75) vs the bar 291.00 px²; fill 1.28:1; p95 11.49; items 1/0 205×86
+  info-fail  [migrated] specimen-migrated light · fill alone 1.28:1 (#c6c3c1 vs #dfdcd7) — decoration, reported apart from the edge
+  PASS       [migrated] specimen-migrated dark · carrier ≥3:1 area 1099.25 px² (perimeter band 1027.75, interior 71.50) vs the bar 291.00 px²; fill 1.30:1; p95 13.37; items 1/0 205×86
+  info-fail  [migrated] specimen-migrated dark · fill alone 1.30:1 (#282521 vs #0d0a07) — decoration, reported apart from the edge
+  PASS       [migrated] specimen-migrated prt · carrier ≥3:1 area 1090.75 px² (perimeter band 1022.25, interior 68.50) vs the bar 291.00 px²; fill 1.28:1; p95 16.20; items 1/0 205×86
+  info-fail  [migrated] specimen-migrated prt · fill alone 1.28:1 (#e1dad2 vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  [migrated] specimen-migrated forced · carrier ≥3:1 area 16862.00 px² (perimeter band 1511.00, interior 15351.00) vs the bar 291.00 px²; fill 11.31:1; p95 17.87; items 1/0 205×86
+  info-pass  [migrated] specimen-migrated forced · fill alone 11.31:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  FAIL       strip light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 88.00 px²; fill 1.49:1; p95 1.50; items 1/0 44×44
+  info-fail  strip light · fill alone 1.49:1 (#fffefc vs #dbd2c3) — decoration, reported apart from the edge
+  PASS       strip dark · carrier ≥3:1 area 846.50 px² (perimeter band 0.00, interior 846.50) vs the bar 88.00 px²; fill 3.21:1; p95 3.53; items 1/0 44×44
+  info-pass  strip dark · fill alone 3.21:1 (#7d5e6e vs #1a140c) — decoration, reported apart from the edge
+  FAIL       strip prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 88.00 px²; fill 1.13:1; p95 1.13; items 1/0 44×44
+  info-fail  strip prt · fill alone 1.13:1 (#fffefc vs #fdefdd) — decoration, reported apart from the edge
+  info-pass  strip forced · carrier ≥3:1 area 260.50 px² (perimeter band 177.00, interior 83.50) vs the bar 88.00 px²; fill 1.03:1; p95 11.31; items 1/0 44×44
+  info-fail  strip forced · fill alone 1.03:1 (#fcfcfc vs #ffffff) — decoration, reported apart from the edge
+  info-fail  [unmigrated] strip-verbatim light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 88.00 px²; fill 1.49:1; p95 1.50; items 1/0 44×44
+  info-fail  [unmigrated] strip-verbatim light · fill alone 1.49:1 (#fffefc vs #dbd2c3) — decoration, reported apart from the edge
+  info-pass  [unmigrated] strip-verbatim dark · carrier ≥3:1 area 846.50 px² (perimeter band 0.00, interior 846.50) vs the bar 88.00 px²; fill 3.21:1; p95 3.53; items 1/0 44×44
+  info-pass  [unmigrated] strip-verbatim dark · fill alone 3.21:1 (#7d5e6e vs #1a140c) — decoration, reported apart from the edge
+  info-fail  [unmigrated] strip-verbatim prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 88.00 px²; fill 1.13:1; p95 1.13; items 1/0 44×44
+  info-fail  [unmigrated] strip-verbatim prt · fill alone 1.13:1 (#fffefc vs #fdefdd) — decoration, reported apart from the edge
+  info-pass  [unmigrated] strip-verbatim forced · carrier ≥3:1 area 260.50 px² (perimeter band 177.00, interior 83.50) vs the bar 88.00 px²; fill 1.03:1; p95 11.31; items 1/0 44×44
+  info-fail  [unmigrated] strip-verbatim forced · fill alone 1.03:1 (#fcfcfc vs #ffffff) — decoration, reported apart from the edge
+  PASS       [migrated] strip-migrated light · carrier ≥3:1 area 277.25 px² (perimeter band 216.75, interior 60.50) vs the bar 86.00 px²; fill 1.30:1; p95 16.77; items 1/0 40×46
+  info-fail  [migrated] strip-migrated light · fill alone 1.30:1 (#dededc vs #fbfaf8) — decoration, reported apart from the edge
+  PASS       [migrated] strip-migrated dark · carrier ≥3:1 area 286.00 px² (perimeter band 223.00, interior 63.00) vs the bar 86.00 px²; fill 1.32:1; p95 15.90; items 1/0 40×46
+  info-fail  [migrated] strip-migrated dark · fill alone 1.32:1 (#272624 vs #0b0a09) — decoration, reported apart from the edge
+  PASS       [migrated] strip-migrated prt · carrier ≥3:1 area 277.25 px² (perimeter band 216.75, interior 60.50) vs the bar 86.00 px²; fill 1.30:1; p95 16.77; items 1/0 40×46
+  info-fail  [migrated] strip-migrated prt · fill alone 1.30:1 (#dededc vs #fbfaf8) — decoration, reported apart from the edge
+  info-pass  [migrated] strip-migrated forced · carrier ≥3:1 area 1519.50 px² (perimeter band 314.00, interior 1205.50) vs the bar 86.00 px²; fill 11.36:1; p95 17.87; items 1/0 40×46
+  info-pass  [migrated] strip-migrated forced · fill alone 11.36:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  FAIL       f1 light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 157.00 px²; fill 1.00:1; p95 1.03; items 1/0 82×75
+  info-fail  f1 light · fill alone 1.00:1 (#c4b7a7 vs #c4b7a7) — decoration, reported apart from the edge
+  FAIL       f1 dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 157.00 px²; fill 1.01:1; p95 1.07; items 1/0 82×75
+  info-fail  f1 dark · fill alone 1.01:1 (#1e170c vs #1d150a) — decoration, reported apart from the edge
+  FAIL       f1 prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 157.00 px²; fill 1.00:1; p95 1.00; items 1/0 82×75
+  info-fail  f1 prt · fill alone 1.00:1 (#fdefdd vs #fdefdd) — decoration, reported apart from the edge
+  info-fail  f1 forced · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 157.00 px²; fill 1.00:1; p95 1.00; items 1/0 82×75
+  info-fail  f1 forced · fill alone 1.00:1 (#ffffff vs #ffffff) — decoration, reported apart from the edge
+  info-pass  [unmigrated] f1-verbatim light · carrier ≥3:1 area 235.00 px² (perimeter band 216.00, interior 19.00) vs the bar 157.00 px²; fill 1.01:1; p95 1.24; items 1/0 82×75
+  info-fail  [unmigrated] f1-verbatim light · fill alone 1.01:1 (#fdf6ed vs #fdf5ec) — decoration, reported apart from the edge
+  info-fail  [unmigrated] f1-verbatim dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 157.00 px²; fill 1.02:1; p95 1.41; items 1/0 82×75
+  info-fail  [unmigrated] f1-verbatim dark · fill alone 1.02:1 (#372b23 vs #352a22) — decoration, reported apart from the edge
+  info-pass  [unmigrated] f1-verbatim prt · carrier ≥3:1 area 233.00 px² (perimeter band 215.00, interior 18.00) vs the bar 157.00 px²; fill 1.00:1; p95 1.19; items 1/0 82×75
+  info-fail  [unmigrated] f1-verbatim prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-fail  [unmigrated] f1-verbatim forced · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 157.00 px²; fill 1.00:1; p95 1.00; items 1/0 82×75
+  info-fail  [unmigrated] f1-verbatim forced · fill alone 1.00:1 (#ffffff vs #ffffff) — decoration, reported apart from the edge
+  PASS       [migrated] f1-migrated light · carrier ≥3:1 area 641.75 px² (perimeter band 574.00, interior 67.75) vs the bar 179.00 px²; fill 1.29:1; p95 12.77; items 1/0 74×105
+  info-fail  [migrated] f1-migrated light · fill alone 1.29:1 (#c6c3c1 vs #dfdcd7) — decoration, reported apart from the edge
+  PASS       [migrated] f1-migrated dark · carrier ≥3:1 area 654.50 px² (perimeter band 583.00, interior 71.50) vs the bar 179.00 px²; fill 1.30:1; p95 15.73; items 1/0 74×105
+  info-fail  [migrated] f1-migrated dark · fill alone 1.30:1 (#282521 vs #0d0a07) — decoration, reported apart from the edge
+  PASS       [migrated] f1-migrated prt · carrier ≥3:1 area 645.50 px² (perimeter band 577.00, interior 68.50) vs the bar 179.00 px²; fill 1.29:1; p95 16.20; items 1/0 74×105
+  info-fail  [migrated] f1-migrated prt · fill alone 1.29:1 (#e1dad2 vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  [migrated] f1-migrated forced · carrier ≥3:1 area 7226.75 px² (perimeter band 839.75, interior 6387.00) vs the bar 179.00 px²; fill 11.32:1; p95 17.87; items 1/0 74×105
+  info-pass  [migrated] f1-migrated forced · fill alone 11.32:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  FAIL       v2 light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 531.00 px²; fill 1.00:1; p95 1.00; items 1/0 460×71
+  info-fail  v2 light · fill alone 1.00:1 (#fbfaf8 vs #fbfaf8) — decoration, reported apart from the edge
+  FAIL       v2 dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 531.00 px²; fill 1.00:1; p95 1.00; items 1/0 460×71
+  info-fail  v2 dark · fill alone 1.00:1 (#0b0a09 vs #0b0a09) — decoration, reported apart from the edge
+  FAIL       v2 prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 531.00 px²; fill 1.00:1; p95 1.00; items 1/0 460×71
+  info-fail  v2 prt · fill alone 1.00:1 (#fbfaf8 vs #fbfaf8) — decoration, reported apart from the edge
+  info-pass  v2 forced · carrier ≥3:1 area 1196.00 px² (perimeter band 1196.00, interior 0.00) vs the bar 531.00 px²; fill 1.00:1; p95 1.00; items 1/0 460×71 (sizes differ by 4.0 px; cropped to the smaller)
+  info-fail  v2 forced · fill alone 1.00:1 (#ffffff vs #ffffff) — decoration, reported apart from the edge
+  info-fail  [unmigrated] v2-verbatim light · carrier ≥3:1 area 61.50 px² (perimeter band 61.50, interior 0.00) vs the bar 531.00 px²; fill 1.00:1; p95 1.00; items 1/0 460×71
+  info-fail  [unmigrated] v2-verbatim light · fill alone 1.00:1 (#fbfaf8 vs #fbfaf8) — decoration, reported apart from the edge
+  info-fail  [unmigrated] v2-verbatim dark · carrier ≥3:1 area 58.50 px² (perimeter band 58.50, interior 0.00) vs the bar 531.00 px²; fill 1.00:1; p95 1.00; items 1/0 460×71
+  info-fail  [unmigrated] v2-verbatim dark · fill alone 1.00:1 (#0b0a09 vs #0b0a09) — decoration, reported apart from the edge
+  info-fail  [unmigrated] v2-verbatim prt · carrier ≥3:1 area 61.50 px² (perimeter band 61.50, interior 0.00) vs the bar 531.00 px²; fill 1.00:1; p95 1.00; items 1/0 460×71
+  info-fail  [unmigrated] v2-verbatim prt · fill alone 1.00:1 (#fbfaf8 vs #fbfaf8) — decoration, reported apart from the edge
+  info-pass  [unmigrated] v2-verbatim forced · carrier ≥3:1 area 1171.75 px² (perimeter band 1154.25, interior 17.50) vs the bar 531.00 px²; fill 1.00:1; p95 1.00; items 1/0 460×71 (sizes differ by 4.0 px; cropped to the smaller)
+  info-fail  [unmigrated] v2-verbatim forced · fill alone 1.00:1 (#ffffff vs #ffffff) — decoration, reported apart from the edge
+  PASS       [migrated] v2-migrated light · carrier ≥3:1 area 549.00 px² (perimeter band 488.50, interior 60.50) vs the bar 154.00 px²; fill 1.28:1; p95 16.77; items 1/0 79×75
+  info-fail  [migrated] v2-migrated light · fill alone 1.28:1 (#dfdfdd vs #fbfaf8) — decoration, reported apart from the edge
+  PASS       [migrated] v2-migrated dark · carrier ≥3:1 area 557.00 px² (perimeter band 494.50, interior 62.50) vs the bar 154.00 px²; fill 1.30:1; p95 14.92; items 1/0 79×75
+  info-fail  [migrated] v2-migrated dark · fill alone 1.30:1 (#262523 vs #0b0a09) — decoration, reported apart from the edge
+  PASS       [migrated] v2-migrated prt · carrier ≥3:1 area 548.25 px² (perimeter band 488.00, interior 60.25) vs the bar 154.00 px²; fill 1.28:1; p95 16.77; items 1/0 79×75
+  info-fail  [migrated] v2-migrated prt · fill alone 1.28:1 (#dfdfdd vs #fbfaf8) — decoration, reported apart from the edge
+  info-pass  [migrated] v2-migrated forced · carrier ≥3:1 area 5454.50 px² (perimeter band 711.00, interior 4743.50) vs the bar 154.00 px²; fill 11.32:1; p95 17.80; items 1/0 79×75
+  info-pass  [migrated] v2-migrated forced · fill alone 11.32:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  FAIL       c1 light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 475.00 px²; fill 1.00:1; p95 1.01; items 1/0 442×33
+  info-fail  c1 light · fill alone 1.00:1 (#dfdcd8 vs #dfdcd7) — decoration, reported apart from the edge
+  FAIL       c1 dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 475.00 px²; fill 1.00:1; p95 1.00; items 1/0 442×33
+  info-fail  c1 dark · fill alone 1.00:1 (#0d0a07 vs #0d0a07) — decoration, reported apart from the edge
+  FAIL       c1 prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 475.00 px²; fill 1.00:1; p95 1.00; items 1/0 442×33
+  info-fail  c1 prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  c1 forced · carrier ≥3:1 area 1007.50 px² (perimeter band 1007.50, interior 0.00) vs the bar 475.00 px²; fill 1.00:1; p95 11.31; items 1/0 442×33 (sizes differ by 4.0 px; cropped to the smaller)
+  info-fail  c1 forced · fill alone 1.00:1 (#ffffff vs #ffffff) — decoration, reported apart from the edge
+  info-fail  [unmigrated] c1-verbatim light · carrier ≥3:1 area 22.50 px² (perimeter band 0.00, interior 22.50) vs the bar 475.00 px²; fill 1.23:1; p95 1.24; items 1/0 442×33
+  info-fail  [unmigrated] c1-verbatim light · fill alone 1.23:1 (#f5f2ee vs #dfdcd7) — decoration, reported apart from the edge
+  info-fail  [unmigrated] c1-verbatim dark · carrier ≥3:1 area 23.00 px² (perimeter band 0.00, interior 23.00) vs the bar 475.00 px²; fill 1.17:1; p95 1.16; items 1/0 442×33
+  info-fail  [unmigrated] c1-verbatim dark · fill alone 1.17:1 (#1f1c19 vs #0d0a07) — decoration, reported apart from the edge
+  info-fail  [unmigrated] c1-verbatim prt · carrier ≥3:1 area 22.50 px² (perimeter band 0.00, interior 22.50) vs the bar 475.00 px²; fill 1.03:1; p95 1.02; items 1/0 442×33
+  info-fail  [unmigrated] c1-verbatim prt · fill alone 1.03:1 (#f5f2ee vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  [unmigrated] c1-verbatim forced · carrier ≥3:1 area 1021.00 px² (perimeter band 998.50, interior 22.50) vs the bar 475.00 px²; fill 1.01:1; p95 11.31; items 1/0 442×33 (sizes differ by 4.0 px; cropped to the smaller)
+  info-fail  [unmigrated] c1-verbatim forced · fill alone 1.01:1 (#fefefe vs #ffffff) — decoration, reported apart from the edge
+  FAIL       [migrated] c1-migrated light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 224.00 px²; fill 1.18:1; p95 1.19; items 1/0 184×40
+  info-fail  [migrated] c1-migrated light · fill alone 1.18:1 (#b2aca5 vs #c2bbb3) — decoration, reported apart from the edge
+  FAIL       [migrated] c1-migrated dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 224.00 px²; fill 1.22:1; p95 1.28; items 1/0 184×40
+  info-fail  [migrated] c1-migrated dark · fill alone 1.22:1 (#28231c vs #150f09) — decoration, reported apart from the edge
+  FAIL       [migrated] c1-migrated prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 224.00 px²; fill 1.00:1; p95 1.00; items 1/0 184×40
+  info-fail  [migrated] c1-migrated prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  [migrated] c1-migrated forced · carrier ≥3:1 area 6606.00 px² (perimeter band 1032.50, interior 5573.50) vs the bar 224.00 px²; fill 11.34:1; p95 17.87; items 1/0 184×40
+  info-pass  [migrated] c1-migrated forced · fill alone 11.34:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  FAIL       preset-invalid light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.21:1; p95 1.23; items 1/0 204×40
+  info-fail  preset-invalid light · fill alone 1.21:1 (#bab5ae vs #ccc7be) — decoration, reported apart from the edge
+  FAIL       preset-invalid dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.22:1; p95 1.24; items 1/0 204×40
+  info-fail  preset-invalid dark · fill alone 1.22:1 (#28241d vs #141009) — decoration, reported apart from the edge
+  FAIL       preset-invalid prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.00:1; p95 1.00; items 1/0 204×40
+  info-fail  preset-invalid prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  preset-invalid forced · carrier ≥3:1 area 7291.25 px² (perimeter band 1141.50, interior 6149.75) vs the bar 242.00 px²; fill 11.34:1; p95 17.87; items 1/0 202×40
+  info-pass  preset-invalid forced · fill alone 11.34:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  PASS       [migrated] preset-invalid-migrated light · carrier ≥3:1 area 996.50 px² (perimeter band 937.00, interior 59.50) vs the bar 267.00 px²; fill 1.27:1; p95 13.86; items 1/0 204×63
+  info-fail  [migrated] preset-invalid-migrated light · fill alone 1.27:1 (#ceccc8 vs #e6e5e0) — decoration, reported apart from the edge
+  PASS       [migrated] preset-invalid-migrated dark · carrier ≥3:1 area 1008.25 px² (perimeter band 945.00, interior 63.25) vs the bar 267.00 px²; fill 1.29:1; p95 14.38; items 1/0 204×63
+  info-fail  [migrated] preset-invalid-migrated dark · fill alone 1.29:1 (#262522 vs #0c0b07) — decoration, reported apart from the edge
+  PASS       [migrated] preset-invalid-migrated prt · carrier ≥3:1 area 999.50 px² (perimeter band 939.50, interior 60.00) vs the bar 267.00 px²; fill 1.28:1; p95 16.20; items 1/0 204×63
+  info-fail  [migrated] preset-invalid-migrated prt · fill alone 1.28:1 (#e1dad2 vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  [migrated] preset-invalid-migrated forced · carrier ≥3:1 area 12210.75 px² (perimeter band 1551.25, interior 10659.50) vs the bar 265.00 px²; fill 11.31:1; p95 17.80; items 1/0 202×63
+  info-pass  [migrated] preset-invalid-migrated forced · fill alone 11.31:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  FAIL       preset-sibling light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.21:1; p95 1.23; items 1/0 204×40
+  info-fail  preset-sibling light · fill alone 1.21:1 (#bab5ae vs #cbc7be) — decoration, reported apart from the edge
+  FAIL       preset-sibling dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.22:1; p95 1.24; items 1/0 204×40
+  info-fail  preset-sibling dark · fill alone 1.22:1 (#28241d vs #141009) — decoration, reported apart from the edge
+  FAIL       preset-sibling prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.00:1; p95 1.00; items 1/0 204×40
+  info-fail  preset-sibling prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  preset-sibling forced · carrier ≥3:1 area 7367.25 px² (perimeter band 1153.50, interior 6213.75) vs the bar 244.00 px²; fill 11.34:1; p95 17.87; items 1/0 204×40
+  info-pass  preset-sibling forced · fill alone 11.34:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  PASS       [migrated] preset-sibling-migrated light · carrier ≥3:1 area 996.25 px² (perimeter band 936.75, interior 59.50) vs the bar 267.00 px²; fill 1.27:1; p95 13.86; items 1/0 204×63
+  info-fail  [migrated] preset-sibling-migrated light · fill alone 1.27:1 (#ceccc8 vs #e6e5e0) — decoration, reported apart from the edge
+  PASS       [migrated] preset-sibling-migrated dark · carrier ≥3:1 area 1006.50 px² (perimeter band 943.25, interior 63.25) vs the bar 267.00 px²; fill 1.29:1; p95 14.38; items 1/0 204×63
+  info-fail  [migrated] preset-sibling-migrated dark · fill alone 1.29:1 (#262522 vs #0c0b07) — decoration, reported apart from the edge
+  PASS       [migrated] preset-sibling-migrated prt · carrier ≥3:1 area 999.25 px² (perimeter band 939.25, interior 60.00) vs the bar 267.00 px²; fill 1.28:1; p95 16.20; items 1/0 204×63
+  info-fail  [migrated] preset-sibling-migrated prt · fill alone 1.28:1 (#e1dad2 vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  [migrated] preset-sibling-migrated forced · carrier ≥3:1 area 12334.75 px² (perimeter band 1565.25, interior 10769.50) vs the bar 267.00 px²; fill 11.31:1; p95 17.80; items 1/0 204×63
+  info-pass  [migrated] preset-sibling-migrated forced · fill alone 11.31:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  FAIL       preset-tone-translucent light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.03:1; p95 1.04; items 1/0 204×40
+  info-fail  preset-tone-translucent light · fill alone 1.03:1 (#c9c3c0 vs #cbc6be) — decoration, reported apart from the edge
+  FAIL       preset-tone-translucent dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.02:1; p95 1.04; items 1/0 204×40
+  info-fail  preset-tone-translucent dark · fill alone 1.02:1 (#171210 vs #140f09) — decoration, reported apart from the edge
+  FAIL       preset-tone-translucent prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.00:1; p95 1.00; items 1/0 204×40
+  info-fail  preset-tone-translucent prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  preset-tone-translucent forced · carrier ≥3:1 area 7366.00 px² (perimeter band 1152.50, interior 6213.50) vs the bar 244.00 px²; fill 11.34:1; p95 17.87; items 1/0 204×40
+  info-pass  preset-tone-translucent forced · fill alone 11.34:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  PASS       [migrated] preset-tone-translucent-migrated light · carrier ≥3:1 area 981.25 px² (perimeter band 926.75, interior 54.50) vs the bar 267.00 px²; fill 1.06:1; p95 7.32; items 1/0 204×63
+  info-fail  [migrated] preset-tone-translucent-migrated light · fill alone 1.06:1 (#e2dee0 vs #e6e5e0) — decoration, reported apart from the edge
+  PASS       [migrated] preset-tone-translucent-migrated dark · carrier ≥3:1 area 991.25 px² (perimeter band 933.25, interior 58.00) vs the bar 267.00 px²; fill 1.02:1; p95 8.54; items 1/0 204×63
+  info-fail  [migrated] preset-tone-translucent-migrated dark · fill alone 1.02:1 (#110d10 vs #0c0b07) — decoration, reported apart from the edge
+  PASS       [migrated] preset-tone-translucent-migrated prt · carrier ≥3:1 area 983.75 px² (perimeter band 928.75, interior 55.00) vs the bar 267.00 px²; fill 1.07:1; p95 8.55; items 1/0 204×63
+  info-fail  [migrated] preset-tone-translucent-migrated prt · fill alone 1.07:1 (#f7edeb vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  [migrated] preset-tone-translucent-migrated forced · carrier ≥3:1 area 12333.75 px² (perimeter band 1564.25, interior 10769.50) vs the bar 267.00 px²; fill 11.31:1; p95 17.80; items 1/0 204×63
+  info-pass  [migrated] preset-tone-translucent-migrated forced · fill alone 11.31:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  FAIL       preset-tone-unresolvable light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.19:1; p95 1.20; items 1/0 204×40
+  info-fail  preset-tone-unresolvable light · fill alone 1.19:1 (#bbb6af vs #cbc6be) — decoration, reported apart from the edge
+  FAIL       preset-tone-unresolvable dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.23:1; p95 1.28; items 1/0 204×40
+  info-fail  preset-tone-unresolvable dark · fill alone 1.23:1 (#27241c vs #140f09) — decoration, reported apart from the edge
+  FAIL       preset-tone-unresolvable prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.00:1; p95 1.00; items 1/0 204×40
+  info-fail  preset-tone-unresolvable prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  preset-tone-unresolvable forced · carrier ≥3:1 area 7366.00 px² (perimeter band 1152.50, interior 6213.50) vs the bar 244.00 px²; fill 11.34:1; p95 17.87; items 1/0 204×40
+  info-pass  preset-tone-unresolvable forced · fill alone 11.34:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  PASS       [migrated] preset-tone-unresolvable-migrated light · carrier ≥3:1 area 998.75 px² (perimeter band 939.50, interior 59.25) vs the bar 267.00 px²; fill 1.28:1; p95 13.86; items 1/0 204×63
+  info-fail  [migrated] preset-tone-unresolvable-migrated light · fill alone 1.28:1 (#cdccc8 vs #e6e5e0) — decoration, reported apart from the edge
+  PASS       [migrated] preset-tone-unresolvable-migrated dark · carrier ≥3:1 area 1009.75 px² (perimeter band 946.50, interior 63.25) vs the bar 267.00 px²; fill 1.30:1; p95 14.25; items 1/0 204×63
+  info-fail  [migrated] preset-tone-unresolvable-migrated dark · fill alone 1.30:1 (#272622 vs #0c0b07) — decoration, reported apart from the edge
+  PASS       [migrated] preset-tone-unresolvable-migrated prt · carrier ≥3:1 area 1000.75 px² (perimeter band 940.75, interior 60.00) vs the bar 267.00 px²; fill 1.28:1; p95 16.20; items 1/0 204×63
+  info-fail  [migrated] preset-tone-unresolvable-migrated prt · fill alone 1.28:1 (#e1dad2 vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  [migrated] preset-tone-unresolvable-migrated forced · carrier ≥3:1 area 12333.75 px² (perimeter band 1564.25, interior 10769.50) vs the bar 267.00 px²; fill 11.31:1; p95 17.80; items 1/0 204×63
+  info-pass  [migrated] preset-tone-unresolvable-migrated forced · fill alone 11.31:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  FAIL       preset-contents light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.19:1; p95 1.20; items 1/0 204×40
+  info-fail  preset-contents light · fill alone 1.19:1 (#bbb6af vs #cbc6be) — decoration, reported apart from the edge
+  FAIL       preset-contents dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.23:1; p95 1.28; items 1/0 204×40
+  info-fail  preset-contents dark · fill alone 1.23:1 (#27241c vs #140f09) — decoration, reported apart from the edge
+  FAIL       preset-contents prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.00:1; p95 1.00; items 1/0 204×40
+  info-fail  preset-contents prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  preset-contents forced · carrier ≥3:1 area 7366.00 px² (perimeter band 1152.50, interior 6213.50) vs the bar 244.00 px²; fill 11.34:1; p95 17.87; items 1/0 204×40
+  info-pass  preset-contents forced · fill alone 11.34:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  PASS       [migrated] preset-contents-migrated light · carrier ≥3:1 area 998.75 px² (perimeter band 939.50, interior 59.25) vs the bar 267.00 px²; fill 1.28:1; p95 13.86; items 1/0 204×63
+  info-fail  [migrated] preset-contents-migrated light · fill alone 1.28:1 (#cdccc8 vs #e6e5e0) — decoration, reported apart from the edge
+  PASS       [migrated] preset-contents-migrated dark · carrier ≥3:1 area 1009.75 px² (perimeter band 946.50, interior 63.25) vs the bar 267.00 px²; fill 1.30:1; p95 14.25; items 1/0 204×63
+  info-fail  [migrated] preset-contents-migrated dark · fill alone 1.30:1 (#272622 vs #0c0b07) — decoration, reported apart from the edge
+  PASS       [migrated] preset-contents-migrated prt · carrier ≥3:1 area 1000.75 px² (perimeter band 940.75, interior 60.00) vs the bar 267.00 px²; fill 1.28:1; p95 16.20; items 1/0 204×63
+  info-fail  [migrated] preset-contents-migrated prt · fill alone 1.28:1 (#e1dad2 vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  [migrated] preset-contents-migrated forced · carrier ≥3:1 area 12333.75 px² (perimeter band 1564.25, interior 10769.50) vs the bar 267.00 px²; fill 11.31:1; p95 17.80; items 1/0 204×63
+  info-pass  [migrated] preset-contents-migrated forced · fill alone 11.31:1 (#37336d vs #ffffff) — decoration, reported apart from the edge
+  FAIL       card light · no selected/unselected pair among 4 items (sel -1, unsel -1)
+  info-fail  card light · no selected/unselected pair among 4 items (sel -1, unsel -1)
+  FAIL       card dark · no selected/unselected pair among 4 items (sel -1, unsel -1)
+  info-fail  card dark · no selected/unselected pair among 4 items (sel -1, unsel -1)
+  FAIL       card prt · no selected/unselected pair among 4 items (sel -1, unsel -1)
+  info-fail  card prt · no selected/unselected pair among 4 items (sel -1, unsel -1)
+  info-fail  card forced · no selected/unselected pair among 4 items (sel -1, unsel -1)
+  info-fail  card forced · no selected/unselected pair among 4 items (sel -1, unsel -1)
+  FAIL       chipcell light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 99.00 px²; fill 1.49:1; p95 1.51; items 1/0 53×46 (sizes differ by 1.8 px; cropped to the smaller)
+  info-fail  chipcell light · fill alone 1.49:1 (#fffffc vs #dbd2c2) — decoration, reported apart from the edge
+  PASS       chipcell dark · carrier ≥3:1 area 1086.25 px² (perimeter band 12.00, interior 1074.25) vs the bar 99.00 px²; fill 3.20:1; p95 3.55; items 1/0 53×46 (sizes differ by 1.8 px; cropped to the smaller)
+  info-pass  chipcell dark · fill alone 3.20:1 (#7c5e6e vs #1a140c) — decoration, reported apart from the edge
+  FAIL       chipcell prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 99.00 px²; fill 1.13:1; p95 1.13; items 1/0 53×46 (sizes differ by 1.8 px; cropped to the smaller)
+  info-fail  chipcell prt · fill alone 1.13:1 (#fffffc vs #fdefdd) — decoration, reported apart from the edge
+  info-pass  chipcell forced · carrier ≥3:1 area 301.00 px² (perimeter band 207.00, interior 94.00) vs the bar 105.00 px²; fill 1.01:1; p95 11.31; items 1/3 55×50 (sizes differ by 1.3 px; cropped to the smaller)
+  info-fail  chipcell forced · fill alone 1.01:1 (#fefefe vs #ffffff) — decoration, reported apart from the edge
+  info-fail  single light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 94.00 px²; fill 1.20:1; p95 1.24; items 1/3 58×36 (sizes differ by 1.6 px; cropped to the smaller)
+  info-fail  single light · fill alone 1.20:1 (#d3d0cb vs #e7e4de) — decoration, reported apart from the edge
+  info-fail  single dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 94.00 px²; fill 1.21:1; p95 1.30; items 1/3 58×36 (sizes differ by 1.6 px; cropped to the smaller)
+  info-fail  single dark · fill alone 1.21:1 (#25221e vs #120e0b) — decoration, reported apart from the edge
+  info-fail  single prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 94.00 px²; fill 1.00:1; p95 1.05; items 1/3 58×36 (sizes differ by 1.6 px; cropped to the smaller)
+  info-fail  single prt · fill alone 1.00:1 (#fdf5ec vs #fdf5ec) — decoration, reported apart from the edge
+  info-pass  single forced · carrier ≥3:1 area 1737.75 px² (perimeter band 357.50, interior 1380.25) vs the bar 94.00 px²; fill 11.41:1; p95 17.87; items 1/3 58×36 (sizes differ by 1.6 px; cropped to the smaller)
+  info-pass  single forced · fill alone 11.41:1 (#36326d vs #ffffff) — decoration, reported apart from the edge
+  UNMEASURED preset paint containment (light) · selected edge uncontained 0.00 px (top 0.00, right 0.00, bottom 0.00, left 0.00) · under content-visibility: auto 0.00 px (top 0.00, right 0.00, bottom 0.00, left 0.00) · no perimeter carrier to contain: UNMEASURED
+  PASS       [migrated] preset-migrated paint containment (light) · selected edge uncontained 2.00 px (top 2.00, right 2.00, bottom 2.00, left 2.00) · under content-visibility: auto 2.00 px (top 2.00, right 2.00, bottom 2.00, left 2.00)
+  UNMEASURED specimen paint containment (light) · selected edge uncontained 0.00 px (top 0.00, right 0.00, bottom 0.00, left 0.00) · under content-visibility: auto 0.00 px (top 0.00, right 0.00, bottom 0.00, left 0.00) · no perimeter carrier to contain: UNMEASURED
+  PASS       [migrated] specimen-migrated paint containment (light) · selected edge uncontained 2.00 px (top 2.00, right 2.00, bottom 2.00, left 2.00) · under content-visibility: auto 2.00 px (top 2.00, right 2.00, bottom 2.00, left 2.00)
+  UNMEASURED strip paint containment (light) · selected edge uncontained 0.00 px (top 0.00, right 0.00, bottom 0.00, left 0.00) · under content-visibility: auto 0.00 px (top 0.00, right 0.00, bottom 0.00, left 0.00) · no perimeter carrier to contain: UNMEASURED
+  PASS       [migrated] strip-migrated paint containment (light) · selected edge uncontained 2.00 px (top 2.00, right 2.00, bottom 2.00, left 2.00) · under content-visibility: auto 2.00 px (top 2.00, right 2.00, bottom 2.00, left 2.00)
+  UNMEASURED f1 paint containment (light) · selected edge uncontained 0.00 px (top 0.00, right 0.00, bottom 0.00, left 0.00) · under content-visibility: auto 0.00 px (top 0.00, right 0.00, bottom 0.00, left 0.00) · no perimeter carrier to contain: UNMEASURED
+  PASS       [migrated] f1-migrated paint containment (light) · selected edge uncontained 2.00 px (top 2.00, right 2.00, bottom 2.00, left 2.00) · under content-visibility: auto 2.00 px (top 2.00, right 2.00, bottom 2.00, left 2.00)
+  UNMEASURED v2 paint containment (light) · selected edge uncontained 0.00 px (top 0.00, right 0.00, bottom 0.00, left 0.00) · under content-visibility: auto 0.00 px (top 0.00, right 0.00, bottom 0.00, left 0.00) · no perimeter carrier to contain: UNMEASURED
+  PASS       [migrated] v2-migrated paint containment (light) · selected edge uncontained 2.00 px (top 2.00, right 2.00, bottom 2.00, left 2.00) · under content-visibility: auto 2.00 px (top 2.00, right 2.00, bottom 2.00, left 2.00)
+  UNMEASURED preset-invalid paint containment (light) · selected edge uncontained 0.00 px (top 0.00, right 0.00, bottom 0.00, left 0.00) · under content-visibility: auto 0.00 px (top 0.00, right 0.00, bottom 0.00, left 0.00) · no perimeter carrier to contain: UNMEASURED
+  PASS       [migrated] preset-invalid-migrated paint containment (light) · selected edge uncontained 2.00 px (top 2.00, right 2.00, bottom 2.00, left 2.00) · under content-visibility: auto 2.00 px (top 2.00, right 2.00, bottom 2.00, left 2.00)
+  UNMEASURED preset-sibling paint containment (light) · selected edge uncontained 0.00 px (top 0.00, right 0.00, bottom 0.00, left 0.00) · under content-visibility: auto 0.00 px (top 0.00, right 0.00, bottom 0.00, left 0.00) · no perimeter carrier to contain: UNMEASURED
+  PASS       [migrated] preset-sibling-migrated paint containment (light) · selected edge uncontained 2.00 px (top 2.00, right 2.00, bottom 2.00, left 2.00) · under content-visibility: auto 2.00 px (top 2.00, right 2.00, bottom 2.00, left 2.00)
+  UNMEASURED preset-tone-translucent paint containment (light) · selected edge uncontained 0.00 px (top 0.00, right 0.00, bottom 0.00, left 0.00) · under content-visibility: auto 0.00 px (top 0.00, right 0.00, bottom 0.00, left 0.00) · no perimeter carrier to contain: UNMEASURED
+  PASS       [migrated] preset-tone-translucent-migrated paint containment (light) · selected edge uncontained 2.00 px (top 2.00, right 2.00, bottom 2.00, left 2.00) · under content-visibility: auto 2.00 px (top 2.00, right 2.00, bottom 2.00, left 2.00)
+  UNMEASURED preset-tone-unresolvable paint containment (light) · selected edge uncontained 0.00 px (top 0.00, right 0.00, bottom 0.00, left 0.00) · under content-visibility: auto 0.00 px (top 0.00, right 0.00, bottom 0.00, left 0.00) · no perimeter carrier to contain: UNMEASURED
+  PASS       [migrated] preset-tone-unresolvable-migrated paint containment (light) · selected edge uncontained 2.00 px (top 2.00, right 2.00, bottom 2.00, left 2.00) · under content-visibility: auto 2.00 px (top 2.00, right 2.00, bottom 2.00, left 2.00)
+  UNMEASURED preset-contents paint containment (light) · selected edge uncontained 0.00 px (top 0.00, right 0.00, bottom 0.00, left 0.00) · under content-visibility: auto 0.00 px (top 0.00, right 0.00, bottom 0.00, left 0.00) · no perimeter carrier to contain: UNMEASURED
+  PASS       [migrated] preset-contents-migrated paint containment (light) · selected edge uncontained 2.00 px (top 2.00, right 2.00, bottom 2.00, left 2.00) · under content-visibility: auto 2.00 px (top 2.00, right 2.00, bottom 2.00, left 2.00)
+  UNMEASURED card paint containment (light) · selected edge uncontained no selected/unselected pair · under content-visibility: auto no selected/unselected pair · no perimeter carrier to contain: UNMEASURED
+  UNMEASURED chipcell paint containment (light) · selected edge uncontained 0.00 px (top 0.00, right 0.00, bottom 0.00, left 0.00) · under content-visibility: auto 0.00 px (top 0.00, right 0.00, bottom 0.00, left 0.00) · no perimeter carrier to contain: UNMEASURED
+T-3 FAIL · 42/85 gating cells pass, 12 unmeasured [library 2/39 · unmigrated 12/48 · migrated 40/43]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/runs/dp-src/T-3-chromium.json
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:108> true
+exit 0 · 2026-10-18 23:48:47 · load { 20.08 25.21 26.51 }

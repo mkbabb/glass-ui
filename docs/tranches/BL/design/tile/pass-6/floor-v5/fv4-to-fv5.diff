@@ -1,0 +1,112 @@
+--- a/MIGRATION.md
++++ b/MIGRATION.md
+@@ -87,8 +87,11 @@
+   group and its options (a grid `div`, a `<section>` per family), whose options follow
+   it. On an ancestor of the group it has no effect, because every group resets it to
+   `none`. On an option or on content inside one it has no effect either: an option and
+-  its content inherit the value above the option, and only an inline
+-  `--selection-tile: … !important` outranks that. Under either tile value an option is a
++  its content inherit the value above the option. An inline
++  `--selection-tile: … !important` on an option outranks that, and it does not opt the
++  option out: it splits it. The option keeps the corner and the column of the value
++  above it, which read the value on the option's parent, while its clip and the one-row
++  law, which read the option's own value, follow the inline write. Under either tile value an option is a
+   card, whatever wrote the value:
+   it is not held to one row, and it takes the field corner (16px), a column,
+   start-aligned text at body leading, the card pad (`--space-atom` block,
+@@ -97,7 +100,8 @@
+   `rounded-*` utility, a scoped or unlayered rule, or an unlayered `!important` has no
+   effect; only an inline `border-radius: … !important` changes it. Under `flush` an
+   option also paints no plate, floor or blur at rest. A `ToggleGroup` nested inside a
+-  tile is pills again (every group resets the value).
++  tile is pills again (every group resets the value), and so is a `SegmentedTabs` strip
++  inside one (every strip resets it too).
+ - The selected perimeter of a `ToggleGroup` item paints inside its 1px border instead
+   of straddling it, so paint containment (`content-visibility: auto`, the pill's own
+   clip) keeps all 2px of it.
+@@ -111,7 +115,9 @@
+   `--selection-tone` (the label ink and the perimeter are the tone made solid and
+   floored to 3:1). `--selection-ink` is the item's ink (muted at rest, the selected
+   edge when on); media inside an item can stroke with it or with `currentColor` and
+-  drop their own `[data-state="on"]` rules. Unset, every value is what it was.
++  drop their own `[data-state="on"]` rules. A rest colour on an option's content is
++  deleted: the item's ink is already muted at rest, and content that sets its own
++  colour does not take the selected ink. Unset, every value is what it was.
+ - Under `prefers-contrast: more` and forced colours a selected `ToggleGroup` item keeps
+   its 1px border and paints its own 2px perimeter layer, instead of widening its border
+   to 2px and moving its content.
+--- a/src/components/tabs/styles/segmented.css
++++ b/src/components/tabs/styles/segmented.css
+@@ -57,6 +57,11 @@
+         /* The deform channels, at their rest values. `useSelectionIndicator` writes them
+            transiently on the indicator's own style and returns them here at arrival. */
+         --stretch: 1;
++        /* A STRIP IS A ROW OF PILLS WHEREVER IT SITS. It resets the tile fact as a
++           group does (utilities/base.css), so its tabs keep the one-row law inside a
++           tile option too; the ToggleGroup option's pin stops at the strip
++           (toggle-group/styles.css). */
++        --selection-tile: none;
+         position: relative;
+         display: inline-grid;
+         grid-auto-flow: column;
+--- a/src/components/toggle-group/styles.css
++++ b/src/components/toggle-group/styles.css
+@@ -57,8 +57,9 @@
+        value above the option, and a write there has no effect: `!important` in this
+        layer is the refusal, and an inline `!important` is the one thing above it. The
+        scope stops at a nested group, which resets the fact for its own options, and
+-       those options pin to it in turn. */
+-    @scope (.toggle-group__item) to (.toggle-group) {
++       those options pin to it in turn. It stops at a SegmentedTabs strip too, which
++       resets the fact for its tabs (tabs/styles/segmented.css). */
++    @scope (.toggle-group__item) to (.toggle-group, .segmented-tabs) {
+         :scope,
+         :scope * {
+             --selection-tile: inherit !important;
+--- a/src/styles/utilities/base.css
++++ b/src/styles/utilities/base.css
+@@ -53,8 +53,9 @@
+ 
+    `none` is a pill. `flush` and `plated` are a tile: a tile route sets one of them,
+    once, on the group, and nothing else declares that an option is a tile. Every
+-   group resets it to `none`, so a value on an ancestor of a group never reaches the
+-   group's options. An option and everything inside it inherit the value above the
++   group, and every SegmentedTabs strip, resets it to `none`, so a value on an
++   ancestor of a group never reaches the group's options, and a strip's tabs are
++   always pills. An option and everything inside it inherit the value above the
+    option and cannot write their own (the pin in toggle-group/styles.css), so each
+    option has one value, and every reader reads that one: the pill's one-row law
+    below and in toggle-group/styles.css, the tile's plate (`flush` paints no plate at
+--- a/tests/components/ui/toggle-group/ToggleGroup.test.ts
++++ b/tests/components/ui/toggle-group/ToggleGroup.test.ts
+@@ -582,8 +582,18 @@
+             }),
+         );
+         expect(groupReset).toBe("none");
++        // a SegmentedTabs strip resets it too, so a strip inside a tile option keeps its
++        // tabs on the one-row law (FV5-2)
++        let stripReset = "";
++        postcss.parse(read("src/components/tabs/styles/segmented.css")).walkRules(".segmented-tabs", (r) =>
++            r.walkDecls("--selection-tile", (d) => {
++                stripReset = d.value;
++            }),
++        );
++        expect(stripReset).toBe("none");
+         // the option and its content inherit the fact and cannot write it (FV4-1), bounded
+-        // at a nested group, which keeps its own reset (the pin's only rule)
++        // at a nested group or a SegmentedTabs strip, each of which keeps its own reset (the
++        // pin's only rule)
+         const pins: string[] = [];
+         root.walkDecls("--selection-tile", (d) => {
+             if (d.value !== "inherit") return;
+@@ -592,7 +602,9 @@
+                 `${scope?.type === "atrule" ? `@${scope.name} ${scope.params}` : "-"} ${(d.parent as { selector: string }).selector.replace(/\s+/g, " ")}${d.important ? " !important" : ""}`,
+             );
+         });
+-        expect(pins).toEqual(["@scope (.toggle-group__item) to (.toggle-group) :scope, :scope * !important"]);
++        expect(pins).toEqual([
++            "@scope (.toggle-group__item) to (.toggle-group, .segmented-tabs) :scope, :scope * !important",
++        ]);
+         // the kick: on the stamp, floored at the rest weight, stilled only by reduced motion
+         let kick = "";
+         root.walkRules(".toggle-group__item[data-commit]", (r) => {

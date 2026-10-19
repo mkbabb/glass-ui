@@ -1,0 +1,654 @@
+2026-10-18 23:54:56 · load { 19.58 22.37 24.78 }
+admitted · 2026-10-19 00:08:25 · load { 21.13 22.63 23.82 }
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:111> w=t1-corner-stops
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:112> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/t1-corner-stops.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/builds/dp-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out --engine chromium
+T-1 · past its rung, the used corner meets the ruled bound (tile: root --radius-field; wrapped control: rung/2), fine, coarse, --ui-scale
+  target dp-src (flavor src) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 21.13 / 22.63 / 23.82 at start, 20.27 / 22.45 / 23.68 at end · other headless browser processes at start: 7 (waited 0.4 s) · browser lock waited 0 s
+  UNMEASURED preset light #0 toggle-group-item (tile) rung 40.0 · 204.00×40.00 9999px→20.00 (÷h/2 1.00) | 204.00×40.00 9999px→20.00 (÷h/2 1.00) | 204.00×40.00 9999px→20.00 (÷h/2 1.00) · never past its rung
+  UNMEASURED preset light coarse #0 toggle-group-item (tile) rung 60.0 · 204.00×60.00 9999px→30.00 (÷h/2 1.00) | 204.00×60.00 9999px→30.00 (÷h/2 1.00) | 204.00×60.00 9999px→30.00 (÷h/2 1.00) · never past its rung
+  UNMEASURED preset light --ui-scale 1.25 #0 toggle-group-item (tile) rung 50.0 · 204.00×50.00 9999px→25.00 (÷h/2 1.00) | 204.00×50.00 9999px→25.00 (÷h/2 1.00) | 204.00×50.00 9999px→25.00 (÷h/2 1.00) · never past its rung
+  UNMEASURED [unmigrated] preset-verbatim light #0 toggle-group-item (tile) rung 40.0 · 208.00×40.00 16px→16.00 (÷h/2 0.80) | 208.00×40.00 16px→16.00 (÷h/2 0.80) | 208.00×40.00 16px→16.00 (÷h/2 0.80) · never past its rung
+  UNMEASURED [unmigrated] preset-verbatim light coarse #0 toggle-group-item (tile) rung 60.0 · 208.00×60.00 16px→16.00 (÷h/2 0.53) | 208.00×60.00 16px→16.00 (÷h/2 0.53) | 208.00×60.00 16px→16.00 (÷h/2 0.53) · never past its rung
+  UNMEASURED [unmigrated] preset-verbatim light --ui-scale 1.25 #0 toggle-group-item (tile) rung 50.0 · 208.00×50.00 16px→16.00 (÷h/2 0.64) | 208.00×50.00 16px→16.00 (÷h/2 0.64) | 208.00×50.00 16px→16.00 (÷h/2 0.64) · never past its rung
+  PASS       [migrated] preset-migrated light #0 toggle-group-item (tile) rung 40.0 · 204.00×63.58 16px→16.00 (÷h/2 0.50) | 204.00×83.75 16px→16.00 (÷h/2 0.38) | 204.00×103.92 16px→16.00 (÷h/2 0.31) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  PASS       [migrated] preset-migrated light coarse #0 toggle-group-item (tile) rung 60.0 · 204.00×63.58 16px→16.00 (÷h/2 0.50) | 204.00×83.75 16px→16.00 (÷h/2 0.38) | 204.00×103.92 16px→16.00 (÷h/2 0.31) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  PASS       [migrated] preset-migrated light --ui-scale 1.25 #0 toggle-group-item (tile) rung 50.0 · 204.00×63.58 16px→16.00 (÷h/2 0.50) | 204.00×83.75 16px→16.00 (÷h/2 0.38) | 204.00×103.92 16px→16.00 (÷h/2 0.31) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  UNMEASURED specimen light #0 toggle-group-item (tile) rung 36.0 · 207.00×36.00 9999px→18.00 (÷h/2 1.00) | 207.00×36.00 9999px→18.00 (÷h/2 1.00) | 207.00×36.00 9999px→18.00 (÷h/2 1.00) · never past its rung
+  UNMEASURED specimen light coarse #0 toggle-group-item (tile) rung 54.0 · 207.00×54.00 9999px→27.00 (÷h/2 1.00) | 207.00×54.00 9999px→27.00 (÷h/2 1.00) | 207.00×54.00 9999px→27.00 (÷h/2 1.00) · never past its rung
+  UNMEASURED specimen light --ui-scale 1.25 #0 toggle-group-item (tile) rung 45.0 · 207.00×45.00 9999px→22.50 (÷h/2 1.00) | 207.00×45.00 9999px→22.50 (÷h/2 1.00) | 207.00×45.00 9999px→22.50 (÷h/2 1.00) · never past its rung
+  UNMEASURED [unmigrated] specimen-verbatim light #0 toggle-group-item (tile) rung 36.0 · 207.00×36.00 16px→16.00 (÷h/2 0.89) | 207.00×36.00 16px→16.00 (÷h/2 0.89) | 207.00×36.00 16px→16.00 (÷h/2 0.89) · never past its rung
+  UNMEASURED [unmigrated] specimen-verbatim light coarse #0 toggle-group-item (tile) rung 54.0 · 207.00×54.00 16px→16.00 (÷h/2 0.59) | 207.00×54.00 16px→16.00 (÷h/2 0.59) | 207.00×54.00 16px→16.00 (÷h/2 0.59) · never past its rung
+  UNMEASURED [unmigrated] specimen-verbatim light --ui-scale 1.25 #0 toggle-group-item (tile) rung 45.0 · 207.00×45.00 16px→16.00 (÷h/2 0.71) | 207.00×45.00 16px→16.00 (÷h/2 0.71) | 207.00×45.00 16px→16.00 (÷h/2 0.71) · never past its rung
+  PASS       [migrated] specimen-migrated light #0 toggle-group-item (tile) rung 36.0 · 205.00×86.16 16px→16.00 (÷h/2 0.37) | 205.00×104.31 16px→16.00 (÷h/2 0.31) | 205.00×122.47 16px→16.00 (÷h/2 0.26) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  PASS       [migrated] specimen-migrated light coarse #0 toggle-group-item (tile) rung 54.0 · 205.00×86.16 16px→16.00 (÷h/2 0.37) | 205.00×104.31 16px→16.00 (÷h/2 0.31) | 205.00×122.47 16px→16.00 (÷h/2 0.26) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  PASS       [migrated] specimen-migrated light --ui-scale 1.25 #0 toggle-group-item (tile) rung 45.0 · 205.00×86.16 16px→16.00 (÷h/2 0.37) | 205.00×104.31 16px→16.00 (÷h/2 0.31) | 205.00×122.47 16px→16.00 (÷h/2 0.26) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  FAIL       f1 light #0 button (tile) rung 40.0 · 82.00×75.48 20px→20.00 (÷h/2 0.53) | 141.69×92.97 20px→20.00 (÷h/2 0.43) | 141.69×110.45 20px→20.00 (÷h/2 0.36) · bound root --radius-field = 16.00: missed; root names none
+  FAIL       f1 light coarse #0 button (tile) rung 44.0 · 102.00×75.48 30px→30.00 (÷h/2 0.79) | 161.69×92.97 30px→30.00 (÷h/2 0.65) | 161.69×110.45 30px→30.00 (÷h/2 0.54) · bound root --radius-field = 16.00: missed; root names none
+  FAIL       f1 light --ui-scale 1.25 #0 button (tile) rung 50.0 · 92.00×75.48 25px→25.00 (÷h/2 0.66) | 151.69×92.97 25px→25.00 (÷h/2 0.54) | 151.69×110.45 25px→25.00 (÷h/2 0.45) · bound root --radius-field = 16.00: missed; root names none
+  info-fail  [unmigrated] f1-verbatim light #0 button (tile) rung 40.0 · 82.00×75.48 20px→20.00 (÷h/2 0.53) | 141.69×92.97 20px→20.00 (÷h/2 0.43) | 141.69×110.45 20px→20.00 (÷h/2 0.36) · bound root --radius-field = 16.00: missed; root names none
+  info-fail  [unmigrated] f1-verbatim light coarse #0 button (tile) rung 44.0 · 102.00×75.48 30px→30.00 (÷h/2 0.79) | 161.69×92.97 30px→30.00 (÷h/2 0.65) | 161.69×110.45 30px→30.00 (÷h/2 0.54) · bound root --radius-field = 16.00: missed; root names none
+  info-fail  [unmigrated] f1-verbatim light --ui-scale 1.25 #0 button (tile) rung 50.0 · 92.00×75.48 25px→25.00 (÷h/2 0.66) | 151.69×92.97 25px→25.00 (÷h/2 0.54) | 151.69×110.45 25px→25.00 (÷h/2 0.45) · bound root --radius-field = 16.00: missed; root names none
+  PASS       [migrated] f1-migrated light #0 toggle-group-item (tile) rung 40.0 · 74.00×105.23 16px→16.00 (÷h/2 0.30) | 133.69×122.72 16px→16.00 (÷h/2 0.26) | 133.69×140.20 16px→16.00 (÷h/2 0.23) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  PASS       [migrated] f1-migrated light coarse #0 toggle-group-item (tile) rung 60.0 · 74.00×105.23 16px→16.00 (÷h/2 0.30) | 133.69×122.72 16px→16.00 (÷h/2 0.26) | 133.69×140.20 16px→16.00 (÷h/2 0.23) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  PASS       [migrated] f1-migrated light --ui-scale 1.25 #0 toggle-group-item (tile) rung 50.0 · 74.00×105.23 16px→16.00 (÷h/2 0.30) | 133.69×122.72 16px→16.00 (÷h/2 0.26) | 133.69×140.20 16px→16.00 (÷h/2 0.23) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  FAIL       v2 light #0 button (tile) rung 26.1 · 460.00×71.41 0px→0.00 (÷h/2 0.00) | 460.00×77.50 0px→0.00 (÷h/2 0.00) | 460.00×91.25 0px→0.00 (÷h/2 0.00) · bound root --radius-field = 16.00: missed; root names none
+  FAIL       v2 light coarse #0 button (tile) rung 26.1 · 460.00×71.41 0px→0.00 (÷h/2 0.00) | 460.00×77.50 0px→0.00 (÷h/2 0.00) | 460.00×91.25 0px→0.00 (÷h/2 0.00) · bound root --radius-field = 16.00: missed; root names none
+  FAIL       v2 light --ui-scale 1.25 #0 button (tile) rung 26.1 · 460.00×71.41 0px→0.00 (÷h/2 0.00) | 460.00×77.50 0px→0.00 (÷h/2 0.00) | 460.00×91.25 0px→0.00 (÷h/2 0.00) · bound root --radius-field = 16.00: missed; root names none
+  info-pass  [unmigrated] v2-verbatim light #0 button (tile) rung 26.1 · 460.00×71.41 16px→16.00 (÷h/2 0.45) | 460.00×77.50 16px→16.00 (÷h/2 0.41) | 460.00×91.25 16px→16.00 (÷h/2 0.35) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  info-pass  [unmigrated] v2-verbatim light coarse #0 button (tile) rung 26.1 · 460.00×71.41 16px→16.00 (÷h/2 0.45) | 460.00×77.50 16px→16.00 (÷h/2 0.41) | 460.00×91.25 16px→16.00 (÷h/2 0.35) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  info-pass  [unmigrated] v2-verbatim light --ui-scale 1.25 #0 button (tile) rung 26.1 · 460.00×71.41 16px→16.00 (÷h/2 0.45) | 460.00×77.50 16px→16.00 (÷h/2 0.41) | 460.00×91.25 16px→16.00 (÷h/2 0.35) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  PASS       [migrated] v2-migrated light #0 toggle-group-item (tile) rung 40.0 · 79.16×75.41 16px→16.00 (÷h/2 0.42) | 158.59×81.50 16px→16.00 (÷h/2 0.39) | 158.59×95.25 16px→16.00 (÷h/2 0.34) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  PASS       [migrated] v2-migrated light coarse #0 toggle-group-item (tile) rung 60.0 · 79.16×75.41 16px→16.00 (÷h/2 0.42) | 158.59×81.50 16px→16.00 (÷h/2 0.39) | 158.59×95.25 16px→16.00 (÷h/2 0.34) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  PASS       [migrated] v2-migrated light --ui-scale 1.25 #0 toggle-group-item (tile) rung 50.0 · 79.16×75.41 16px→16.00 (÷h/2 0.42) | 158.59×81.50 16px→16.00 (÷h/2 0.39) | 158.59×95.25 16px→16.00 (÷h/2 0.34) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  UNMEASURED preset-contents light #0 toggle-group-item (tile) rung 40.0 · 204.00×40.00 9999px→20.00 (÷h/2 1.00) | 204.00×40.00 9999px→20.00 (÷h/2 1.00) | 204.00×40.00 9999px→20.00 (÷h/2 1.00) · never past its rung
+  UNMEASURED preset-contents light coarse #0 toggle-group-item (tile) rung 60.0 · 204.00×60.00 9999px→30.00 (÷h/2 1.00) | 204.00×60.00 9999px→30.00 (÷h/2 1.00) | 204.00×60.00 9999px→30.00 (÷h/2 1.00) · never past its rung
+  UNMEASURED preset-contents light --ui-scale 1.25 #0 toggle-group-item (tile) rung 50.0 · 204.00×50.00 9999px→25.00 (÷h/2 1.00) | 204.00×50.00 9999px→25.00 (÷h/2 1.00) | 204.00×50.00 9999px→25.00 (÷h/2 1.00) · never past its rung
+  PASS       [migrated] preset-contents-migrated light #0 toggle-group-item (tile) rung 40.0 · 204.00×63.58 16px→16.00 (÷h/2 0.50) | 204.00×83.75 16px→16.00 (÷h/2 0.38) | 204.00×103.92 16px→16.00 (÷h/2 0.31) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  PASS       [migrated] preset-contents-migrated light coarse #0 toggle-group-item (tile) rung 60.0 · 204.00×63.58 16px→16.00 (÷h/2 0.50) | 204.00×83.75 16px→16.00 (÷h/2 0.38) | 204.00×103.92 16px→16.00 (÷h/2 0.31) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  PASS       [migrated] preset-contents-migrated light --ui-scale 1.25 #0 toggle-group-item (tile) rung 50.0 · 204.00×63.58 16px→16.00 (÷h/2 0.50) | 204.00×83.75 16px→16.00 (÷h/2 0.38) | 204.00×103.92 16px→16.00 (÷h/2 0.31) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  PASS       card light #0 card (tile) rung 70.4 · 224.00×70.41 16px→16.00 (÷h/2 0.45) | 224.00×93.58 16px→16.00 (÷h/2 0.34) | 224.00×116.75 16px→16.00 (÷h/2 0.27) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  PASS       card light coarse #0 card (tile) rung 70.4 · 224.00×70.41 16px→16.00 (÷h/2 0.45) | 224.00×93.58 16px→16.00 (÷h/2 0.34) | 224.00×116.75 16px→16.00 (÷h/2 0.27) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  PASS       card light --ui-scale 1.25 #0 card (tile) rung 70.4 · 224.00×70.41 16px→16.00 (÷h/2 0.45) | 224.00×93.58 16px→16.00 (÷h/2 0.34) | 224.00×116.75 16px→16.00 (÷h/2 0.27) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  FAIL       chipcell light #0 button (tile) rung 46.2 · 54.80×46.17 9999px→23.09 (÷h/2 1.00) | 97.92×60.47 9999px→30.23 (÷h/2 1.00) | 97.92×74.77 9999px→37.38 (÷h/2 1.00) · bound root --radius-field = 16.00: missed; root names none
+  FAIL       chipcell light #1 button (tile) rung 46.2 · 53.03×46.17 9999px→23.09 (÷h/2 1.00) | 97.92×60.47 9999px→30.23 (÷h/2 1.00) | 97.92×74.77 9999px→37.38 (÷h/2 1.00) · bound root --radius-field = 16.00: missed; root names none
+  FAIL       chipcell light #2 button (tile) rung 46.2 · 64.61×46.17 9999px→23.09 (÷h/2 1.00) | 97.92×60.47 9999px→30.23 (÷h/2 1.00) | 97.92×74.77 9999px→37.38 (÷h/2 1.00) · bound root --radius-field = 16.00: missed; root names none
+  FAIL       chipcell light #3 button (tile) rung 46.2 · 55.69×46.17 9999px→23.09 (÷h/2 1.00) | 97.92×60.47 9999px→30.23 (÷h/2 1.00) | 97.92×74.77 9999px→37.38 (÷h/2 1.00) · bound root --radius-field = 16.00: missed; root names none
+  FAIL       chipcell light coarse #0 button (tile) rung 44.0 · 54.80×46.17 9999px→23.09 (÷h/2 1.00) | 97.92×60.47 9999px→30.23 (÷h/2 1.00) | 97.92×74.77 9999px→37.38 (÷h/2 1.00) · bound root --radius-field = 16.00: missed; root names none
+  FAIL       chipcell light coarse #1 button (tile) rung 44.0 · 53.03×46.17 9999px→23.09 (÷h/2 1.00) | 97.92×60.47 9999px→30.23 (÷h/2 1.00) | 97.92×74.77 9999px→37.38 (÷h/2 1.00) · bound root --radius-field = 16.00: missed; root names none
+  FAIL       chipcell light coarse #2 button (tile) rung 44.0 · 64.61×46.17 9999px→23.09 (÷h/2 1.00) | 97.92×60.47 9999px→30.23 (÷h/2 1.00) | 97.92×74.77 9999px→37.38 (÷h/2 1.00) · bound root --radius-field = 16.00: missed; root names none
+  FAIL       chipcell light coarse #3 button (tile) rung 44.0 · 55.69×46.17 9999px→23.09 (÷h/2 1.00) | 97.92×60.47 9999px→30.23 (÷h/2 1.00) | 97.92×74.77 9999px→37.38 (÷h/2 1.00) · bound root --radius-field = 16.00: missed; root names none
+  FAIL       chipcell light --ui-scale 1.25 #0 button (tile) rung 46.2 · 54.80×46.17 9999px→23.09 (÷h/2 1.00) | 97.92×60.47 9999px→30.23 (÷h/2 1.00) | 97.92×74.77 9999px→37.38 (÷h/2 1.00) · bound root --radius-field = 16.00: missed; root names none
+  FAIL       chipcell light --ui-scale 1.25 #1 button (tile) rung 46.2 · 53.03×46.17 9999px→23.09 (÷h/2 1.00) | 97.92×60.47 9999px→30.23 (÷h/2 1.00) | 97.92×74.77 9999px→37.38 (÷h/2 1.00) · bound root --radius-field = 16.00: missed; root names none
+  FAIL       chipcell light --ui-scale 1.25 #2 button (tile) rung 46.2 · 64.61×46.17 9999px→23.09 (÷h/2 1.00) | 97.92×60.47 9999px→30.23 (÷h/2 1.00) | 97.92×74.77 9999px→37.38 (÷h/2 1.00) · bound root --radius-field = 16.00: missed; root names none
+  FAIL       chipcell light --ui-scale 1.25 #3 button (tile) rung 46.2 · 55.69×46.17 9999px→23.09 (÷h/2 1.00) | 97.92×60.47 9999px→30.23 (÷h/2 1.00) | 97.92×74.77 9999px→37.38 (÷h/2 1.00) · bound root --radius-field = 16.00: missed; root names none
+  UNMEASURED wrap light #0 ToggleGroupItem (control) rung 40.0 · 70.05×40.00 9999px→20.00 (÷h/2 1.00) | 110.00×40.00 9999px→20.00 (÷h/2 1.00) | 110.00×40.00 9999px→20.00 (÷h/2 1.00) · never past its rung
+  FAIL       wrap light #1 Chip pill (control) rung 33.4 · 53.91×33.41 9999px→16.70 (÷h/2 1.00) | 110.00×76.22 9999px→38.11 (÷h/2 1.00) | 110.00×119.03 9999px→55.00 (÷h/2 0.92) · bound rung/2 = 16.70: missed; root names none
+  PASS       wrap light #2 Button (control) rung 40.0 · 98.36×40.00 20px→20.00 (÷h/2 1.00) | 110.00×52.44 20px→20.00 (÷h/2 0.76) | 110.00×86.06 20px→20.00 (÷h/2 0.46) · bound rung/2 = 20.00: met; root names none
+  UNMEASURED wrap light coarse #0 ToggleGroupItem (control) rung 60.0 · 88.88×60.00 9999px→30.00 (÷h/2 1.00) | 110.00×60.00 9999px→30.00 (÷h/2 1.00) | 110.00×60.00 9999px→30.00 (÷h/2 1.00) · never past its rung
+  FAIL       wrap light coarse #1 Chip pill (control) rung 44.0 · 53.91×44.00 9999px→22.00 (÷h/2 1.00) | 110.00×76.22 9999px→38.11 (÷h/2 1.00) | 110.00×119.03 9999px→55.00 (÷h/2 0.92) · bound rung/2 = 22.00: missed; root names none
+  FAIL       wrap light coarse #2 Button (control) rung 44.0 · 110.00×44.00 30px→22.00 (÷h/2 1.00) | 110.00×102.94 30px→30.00 (÷h/2 0.58) | 110.00×178.64 30px→30.00 (÷h/2 0.34) · bound rung/2 = 22.00: missed; root names none
+  UNMEASURED wrap light --ui-scale 1.25 #0 ToggleGroupItem (control) rung 50.0 · 79.64×50.00 9999px→25.00 (÷h/2 1.00) | 110.00×50.00 9999px→25.00 (÷h/2 1.00) | 110.00×50.00 9999px→25.00 (÷h/2 1.00) · never past its rung
+  FAIL       wrap light --ui-scale 1.25 #1 Chip pill (control) rung 33.4 · 53.91×33.41 9999px→16.70 (÷h/2 1.00) | 110.00×76.22 9999px→38.11 (÷h/2 1.00) | 110.00×119.03 9999px→55.00 (÷h/2 0.92) · bound rung/2 = 16.70: missed; root names none
+  PASS       wrap light --ui-scale 1.25 #2 Button (control) rung 50.0 · 110.00×50.00 25px→25.00 (÷h/2 1.00) | 110.00×86.13 25px→25.00 (÷h/2 0.58) | 110.00×149.22 25px→25.00 (÷h/2 0.34) · bound rung/2 = 25.00: met; root names none
+  UNMEASURED strip light #0 button (tile) rung 44.0 · 44.00×44.00 9999px→22.00 (÷h/2 1.00) | 44.00×44.00 9999px→22.00 (÷h/2 1.00) | 44.00×44.00 9999px→22.00 (÷h/2 1.00) · never past its rung
+  UNMEASURED strip light coarse #0 button (tile) rung 44.0 · 44.00×44.00 9999px→22.00 (÷h/2 1.00) | 44.00×44.00 9999px→22.00 (÷h/2 1.00) | 44.00×44.00 9999px→22.00 (÷h/2 1.00) · never past its rung
+  UNMEASURED strip light --ui-scale 1.25 #0 button (tile) rung 44.0 · 44.00×44.00 9999px→22.00 (÷h/2 1.00) | 44.00×44.00 9999px→22.00 (÷h/2 1.00) | 44.00×44.00 9999px→22.00 (÷h/2 1.00) · never past its rung
+  UNMEASURED [unmigrated] strip-verbatim light #0 button (tile) rung 44.0 · 44.00×44.00 9999px→22.00 (÷h/2 1.00) | 44.00×44.00 9999px→22.00 (÷h/2 1.00) | 44.00×44.00 9999px→22.00 (÷h/2 1.00) · never past its rung
+  UNMEASURED [unmigrated] strip-verbatim light coarse #0 button (tile) rung 44.0 · 44.00×44.00 9999px→22.00 (÷h/2 1.00) | 44.00×44.00 9999px→22.00 (÷h/2 1.00) | 44.00×44.00 9999px→22.00 (÷h/2 1.00) · never past its rung
+  UNMEASURED [unmigrated] strip-verbatim light --ui-scale 1.25 #0 button (tile) rung 44.0 · 44.00×44.00 9999px→22.00 (÷h/2 1.00) | 44.00×44.00 9999px→22.00 (÷h/2 1.00) | 44.00×44.00 9999px→22.00 (÷h/2 1.00) · never past its rung
+  info-pass  [migrated] strip-migrated light #0 toggle-group-item (tile) rung 36.0 · 40.00×46.80 16px→16.00 (÷h/2 0.68) | 90.00×57.59 16px→16.00 (÷h/2 0.56) | 90.00×68.39 16px→16.00 (÷h/2 0.47) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  info-pass  [migrated] strip-migrated light #2 toggle-group-item (tile) rung 36.0 · 51.23×46.80 16px→16.00 (÷h/2 0.68) | 90.00×57.59 16px→16.00 (÷h/2 0.56) | 90.00×68.39 16px→16.00 (÷h/2 0.47) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  info-pass  [migrated] strip-migrated light coarse #0 toggle-group-item (tile) rung 54.0 · 54.00×54.00 16px→16.00 (÷h/2 0.59) | 90.00×57.59 16px→16.00 (÷h/2 0.56) | 90.00×68.39 16px→16.00 (÷h/2 0.47) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  info-pass  [migrated] strip-migrated light --ui-scale 1.25 #0 toggle-group-item (tile) rung 45.0 · 45.00×46.80 16px→16.00 (÷h/2 0.68) | 90.00×57.59 16px→16.00 (÷h/2 0.56) | 90.00×68.39 16px→16.00 (÷h/2 0.47) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+  info-pass  [migrated] strip-migrated light --ui-scale 1.25 #2 toggle-group-item (tile) rung 45.0 · 51.23×46.80 16px→16.00 (÷h/2 0.68) | 90.00×57.59 16px→16.00 (÷h/2 0.56) | 90.00×68.39 16px→16.00 (÷h/2 0.47) · bound root --radius-field = 16.00: met; root names --radius-card|--radius-ctx|--radius-dialog|--radius-field
+T-1 FAIL · 20/42 gating cells pass, 12 unmeasured [migrated 15/15 · library 5/27 · unmigrated 3/6]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/runs/dp-src/T-1-chromium.json
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:111> w=t4-ring-whole
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:112> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/t4-ring-whole.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/builds/dp-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out --engine chromium
+T-4 · focus paints whole, is the library's ring, and stands apart from selection
+  target dp-src (flavor src) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 20.27 / 22.45 / 23.68 at start, 15.94 / 20.07 / 22.60 at end · other headless browser processes at start: 7 (waited 0.3 s) · browser lock waited 0 s
+  PASS       preset light sel=none · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       preset light sel=1 · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       preset dark sel=none · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       preset dark sel=1 · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       preset forced sel=none · ring reach (H3-8) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.50 bottom 2.00 left 2.50 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       preset forced sel=1 · ring reach (H3-8) · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.50 bottom 2.00 left 2.50 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  info-fail  [unmigrated] preset-verbatim light sel=none · item 0 (unselected); outline dashed 1px offset -1px; painted ring px top 0.00 right 0.00 bottom 0.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  info-fail  [unmigrated] preset-verbatim light sel=1 · item 1 (selected); outline dashed 1px offset -1px; painted ring px top 0.00 right 0.00 bottom 0.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  info-fail  [unmigrated] preset-verbatim dark sel=none · item 0 (unselected); outline dashed 1px offset -1px; painted ring px top 0.00 right 0.00 bottom 0.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  info-fail  [unmigrated] preset-verbatim dark sel=1 · item 1 (selected); outline dashed 1px offset -1px; painted ring px top 0.00 right 0.00 bottom 0.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  info-fail  [unmigrated] preset-verbatim forced sel=none · ring reach (H3-8) · item 0 (unselected); outline dashed 1px offset -1px; painted ring px top 0.00 right 0.00 bottom 0.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  info-fail  [unmigrated] preset-verbatim forced sel=1 · ring reach (H3-8) · item 1 (selected); outline dashed 1px offset -1px; painted ring px top 0.00 right 0.00 bottom 0.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       [migrated] preset-migrated light sel=none · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       [migrated] preset-migrated light sel=1 · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       [migrated] preset-migrated dark sel=none · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       [migrated] preset-migrated dark sel=1 · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       [migrated] preset-migrated forced sel=none · ring reach (H3-8) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       [migrated] preset-migrated forced sel=1 · ring reach (H3-8) · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  FAIL       specimen light sel=none · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  FAIL       specimen light sel=1 · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 0.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  FAIL       specimen dark sel=none · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  FAIL       specimen dark sel=1 · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 0.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  FAIL       specimen forced sel=none · ring reach (H3-8) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.50 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  FAIL       specimen forced sel=1 · ring reach (H3-8) · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 0.50 bottom 2.00 left 2.50 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  info-fail  [unmigrated] specimen-verbatim light sel=none · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  info-fail  [unmigrated] specimen-verbatim light sel=1 · item 1 (selected); outline solid 1px offset -1px; painted ring px top 0.00 right 0.00 bottom 0.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  info-fail  [unmigrated] specimen-verbatim dark sel=none · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  info-fail  [unmigrated] specimen-verbatim dark sel=1 · item 1 (selected); outline solid 1px offset -1px; painted ring px top 0.00 right 0.00 bottom 0.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  info-fail  [unmigrated] specimen-verbatim forced sel=none · ring reach (H3-8) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  info-fail  [unmigrated] specimen-verbatim forced sel=1 · ring reach (H3-8) · item 1 (selected); outline solid 1px offset -1px; painted ring px top 0.00 right 0.00 bottom 0.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       [migrated] specimen-migrated light sel=none · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       [migrated] specimen-migrated light sel=1 · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       [migrated] specimen-migrated dark sel=none · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       [migrated] specimen-migrated dark sel=1 · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       [migrated] specimen-migrated forced sel=none · ring reach (H3-8) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       [migrated] specimen-migrated forced sel=1 · ring reach (H3-8) · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  FAIL       f1 light sel=none · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  FAIL       f1 light sel=1 · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  FAIL       f1 dark sel=none · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  FAIL       f1 dark sel=1 · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  FAIL       f1 forced sel=none · ring reach (H3-8) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  FAIL       f1 forced sel=1 · ring reach (H3-8) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  info-fail  [unmigrated] f1-verbatim light sel=none · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  info-fail  [unmigrated] f1-verbatim light sel=1 · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  info-fail  [unmigrated] f1-verbatim dark sel=none · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  info-fail  [unmigrated] f1-verbatim dark sel=1 · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  info-fail  [unmigrated] f1-verbatim forced sel=none · ring reach (H3-8) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  info-fail  [unmigrated] f1-verbatim forced sel=1 · ring reach (H3-8) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 0.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       [migrated] f1-migrated light sel=none · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       [migrated] f1-migrated light sel=1 · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       [migrated] f1-migrated dark sel=none · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       [migrated] f1-migrated dark sel=1 · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       [migrated] f1-migrated forced sel=none · ring reach (H3-8) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       [migrated] f1-migrated forced sel=1 · ring reach (H3-8) · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       c1 light sel=none · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       c1 light sel=1 · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       c1 dark sel=none · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       c1 dark sel=1 · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       c1 forced sel=none · ring reach (H3-8) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       c1 forced sel=1 · ring reach (H3-8) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  info-pass  [unmigrated] c1-verbatim light sel=none · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  info-fail  [unmigrated] c1-verbatim light sel=1 · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 0.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  info-pass  [unmigrated] c1-verbatim dark sel=none · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  info-fail  [unmigrated] c1-verbatim dark sel=1 · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 0.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  info-pass  [unmigrated] c1-verbatim forced sel=none · ring reach (H3-8) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  info-fail  [unmigrated] c1-verbatim forced sel=1 · ring reach (H3-8) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 0.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       [migrated] c1-migrated light sel=none · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       [migrated] c1-migrated light sel=1 · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       [migrated] c1-migrated dark sel=none · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       [migrated] c1-migrated dark sel=1 · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.00 bottom 2.00 left 2.00 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       [migrated] c1-migrated forced sel=none · ring reach (H3-8) · item 0 (unselected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.50 bottom 2.00 left 2.50 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  PASS       [migrated] c1-migrated forced sel=1 · ring reach (H3-8) · item 1 (selected); outline solid 2px offset 2px; painted ring px top 2.00 right 2.50 bottom 2.00 left 2.50 (whole: ≥ 1.50 of the 2 px ring on every side, 10th percentile)
+  FAIL       card light sel=none · Tab landed on after, not an item
+  FAIL       card light sel=1 · Tab landed on after, not an item
+  FAIL       card dark sel=none · Tab landed on after, not an item
+  FAIL       card dark sel=1 · Tab landed on after, not an item
+  FAIL       card forced sel=none · ring reach (H3-8) · Tab landed on after, not an item
+  FAIL       card forced sel=1 · ring reach (H3-8) · Tab landed on after, not an item
+T-4 FAIL · 36/54 gating cells pass [library 12/30 · unmigrated 3/24 · migrated 24/24]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/runs/dp-src/T-4-chromium.json
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:111> w=t5-one-of-n-keys
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:112> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/t5-one-of-n-keys.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/builds/dp-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out --engine chromium
+T-5 · one-of-N ARIA, one tab stop, all four arrows move and check (Q-4 b), no selection, reorder, descendants, N-of-M
+  target dp-src (flavor src) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 15.94 / 20.07 / 22.60 at start, 14.00 / 18.63 / 21.80 at end · other headless browser processes at start: 6 (waited 0.2 s) · browser lock waited 0 s
+  PASS       preset ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----
+  PASS       preset tab stops · 1 stop(s) between the sentinels, 1 of them items [1]
+  PASS       preset grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  PASS       preset grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true
+  PASS       preset grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true
+  PASS       preset grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true
+  info-pass  preset grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 3 · moved true · checked true
+  info-pass  preset grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 3 · moved true · checked true
+  PASS       preset no selection (Q-6 a) · checked falsefalsefalsefalse · stops [0] (want nothing checked and one stop, the first item)
+  PASS       preset keyed reorder · ArrowRight from DOM #0 · focus 0 → 1 (want 1, the new order's next) · checked true
+  PASS       preset keyed reorder · ArrowDown from DOM #3 (no item below: the linear step) · focus 3 → 0 (want 0) · checked true
+  info-pass  [unmigrated] preset-verbatim ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----
+  info-pass  [unmigrated] preset-verbatim tab stops · 1 stop(s) between the sentinels, 1 of them items [1]
+  info-pass  [unmigrated] preset-verbatim grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  info-pass  [unmigrated] preset-verbatim grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true
+  info-pass  [unmigrated] preset-verbatim grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true
+  info-pass  [unmigrated] preset-verbatim grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true
+  info-pass  [unmigrated] preset-verbatim grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 3 · moved true · checked true
+  info-pass  [unmigrated] preset-verbatim grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 3 · moved true · checked true
+  PASS       [migrated] preset-migrated ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----
+  PASS       [migrated] preset-migrated tab stops · 1 stop(s) between the sentinels, 1 of them items [1]
+  PASS       [migrated] preset-migrated grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  PASS       [migrated] preset-migrated grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true
+  PASS       [migrated] preset-migrated grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true
+  PASS       [migrated] preset-migrated grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true
+  info-pass  [migrated] preset-migrated grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 3 · moved true · checked true
+  info-pass  [migrated] preset-migrated grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 3 · moved true · checked true
+  PASS       specimen ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalsefalsefalsefalsefalse · pressed -------- · selected --------
+  PASS       specimen tab stops · 1 stop(s) between the sentinels, 1 of them items [1]
+  PASS       specimen grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  PASS       specimen grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true
+  PASS       specimen grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true
+  PASS       specimen grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true
+  info-pass  specimen grid edge ArrowDown from #6 (no item that way; reported) · focus 6 → 7 · moved true · checked true
+  info-pass  specimen grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 7 · moved true · checked true
+  info-pass  [unmigrated] specimen-verbatim ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalsefalsefalsefalsefalse · pressed -------- · selected --------
+  info-pass  [unmigrated] specimen-verbatim tab stops · 1 stop(s) between the sentinels, 1 of them items [1]
+  info-pass  [unmigrated] specimen-verbatim grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  info-pass  [unmigrated] specimen-verbatim grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true
+  info-pass  [unmigrated] specimen-verbatim grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true
+  info-pass  [unmigrated] specimen-verbatim grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true
+  info-pass  [unmigrated] specimen-verbatim grid edge ArrowDown from #6 (no item that way; reported) · focus 6 → 7 · moved true · checked true
+  info-pass  [unmigrated] specimen-verbatim grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 7 · moved true · checked true
+  PASS       [migrated] specimen-migrated ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalsefalsefalsefalsefalse · pressed -------- · selected --------
+  PASS       [migrated] specimen-migrated tab stops · 1 stop(s) between the sentinels, 1 of them items [1]
+  PASS       [migrated] specimen-migrated grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  PASS       [migrated] specimen-migrated grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true
+  PASS       [migrated] specimen-migrated grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true
+  PASS       [migrated] specimen-migrated grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true
+  info-pass  [migrated] specimen-migrated grid edge ArrowDown from #6 (no item that way; reported) · focus 6 → 7 · moved true · checked true (the click did not focus; focus placed by script)
+  info-pass  [migrated] specimen-migrated grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 7 · moved true · checked true (the click did not focus; focus placed by script)
+  FAIL       strip ARIA (CDP AX tree) · group group · items button · checked ------ · pressed falsetruefalsefalsefalsefalse · selected ------
+  FAIL       strip tab stops · 6 stop(s) between the sentinels, 6 of them items [0 → 1 → 2 → 3 → 4 → 5]
+  FAIL       strip row ArrowRight from #0 · focus 0 → 0 · moved false · checked true
+  FAIL       strip row ArrowLeft from #1 · focus 1 → 1 · moved false · checked true
+  FAIL       strip row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true
+  FAIL       strip row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 5 · moved false · checked true
+  info-fail  [unmigrated] strip-verbatim ARIA (CDP AX tree) · group group · items button · checked ------ · pressed falsetruefalsefalsefalsefalse · selected ------
+  info-fail  [unmigrated] strip-verbatim tab stops · 6 stop(s) between the sentinels, 6 of them items [0 → 1 → 2 → 3 → 4 → 5]
+  info-fail  [unmigrated] strip-verbatim row ArrowRight from #0 · focus 0 → 0 · moved false · checked true
+  info-fail  [unmigrated] strip-verbatim row ArrowLeft from #1 · focus 1 → 1 · moved false · checked true
+  info-fail  [unmigrated] strip-verbatim row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true
+  info-fail  [unmigrated] strip-verbatim row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 5 · moved false · checked true
+  PASS       [migrated] strip-migrated ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalsefalsefalse · pressed ------ · selected ------
+  PASS       [migrated] strip-migrated tab stops · 1 stop(s) between the sentinels, 1 of them items [1]
+  PASS       [migrated] strip-migrated row ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  PASS       [migrated] strip-migrated row ArrowLeft from #1 · focus 1 → 0 · moved true · checked true
+  PASS       [migrated] strip-migrated row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 1 · moved true · checked true
+  PASS       [migrated] strip-migrated row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 4 · moved true · checked true
+  FAIL       f1 ARIA (CDP AX tree) · group generic · items button · checked ------ · pressed ------ · selected ------
+  FAIL       f1 tab stops · 6 stop(s) between the sentinels, 6 of them items [0 → 1 → 2 → 3 → 4 → 5]
+  FAIL       f1 row ArrowRight from #0 · focus 0 → 0 · moved false · checked true
+  FAIL       f1 row ArrowLeft from #1 · focus 1 → 1 · moved false · checked true
+  FAIL       f1 row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true
+  FAIL       f1 row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 5 · moved false · checked false (the click did not focus; focus placed by script)
+  info-fail  [unmigrated] f1-verbatim ARIA (CDP AX tree) · group generic · items button · checked ------ · pressed ------ · selected ------
+  info-fail  [unmigrated] f1-verbatim tab stops · 6 stop(s) between the sentinels, 6 of them items [0 → 1 → 2 → 3 → 4 → 5]
+  info-fail  [unmigrated] f1-verbatim row ArrowRight from #0 · focus 0 → 0 · moved false · checked true
+  info-fail  [unmigrated] f1-verbatim row ArrowLeft from #1 · focus 1 → 1 · moved false · checked false
+  info-fail  [unmigrated] f1-verbatim row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true
+  info-fail  [unmigrated] f1-verbatim row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 5 · moved false · checked false (the click did not focus; focus placed by script)
+  PASS       [migrated] f1-migrated ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalsefalsefalse · pressed ------ · selected ------
+  PASS       [migrated] f1-migrated tab stops · 1 stop(s) between the sentinels, 1 of them items [1]
+  PASS       [migrated] f1-migrated row ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  PASS       [migrated] f1-migrated row ArrowLeft from #1 · focus 1 → 0 · moved true · checked true
+  PASS       [migrated] f1-migrated row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 1 · moved true · checked true
+  PASS       [migrated] f1-migrated row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 4 · moved true · checked true (the click did not focus; focus placed by script)
+  PASS       v2 N-of-M ARIA (CDP AX tree) · group none · items button · pressed falsetruefalsefalse · checked ----
+  PASS       v2 N-of-M Space toggles #0 · false → true → false
+  info-pass  v2 N-of-M tab stops (reported) · 4 [0 → 1 → 2 → 3]
+  info-pass  [unmigrated] v2-verbatim N-of-M ARIA (CDP AX tree) · group none · items button · pressed falsetruefalsefalse · checked ----
+  info-pass  [unmigrated] v2-verbatim N-of-M Space toggles #0 · false → true → false
+  info-pass  [unmigrated] v2-verbatim N-of-M tab stops (reported) · 4 [0 → 1 → 2 → 3]
+  PASS       [migrated] v2-migrated N-of-M ARIA (CDP AX tree) · group group · items button · pressed falsetruefalsefalse · checked ----
+  PASS       [migrated] v2-migrated N-of-M Space toggles #0 · false → true → false
+  info-pass  [migrated] v2-migrated N-of-M tab stops (reported) · 1 [1]
+  PASS       c1 ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalsefalse · pressed ----- · selected -----
+  FAIL       c1 tab stops · 5 stop(s) between the sentinels, 5 of them items [0 → 1 → 2 → 3 → 4]
+  FAIL       c1 column ArrowRight from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true
+  FAIL       c1 column ArrowLeft from #4 (linear step, Q-4 b) · focus 4 → 4 · moved false · checked true
+  FAIL       c1 column ArrowDown from #0 · focus 0 → 0 · moved false · checked true
+  FAIL       c1 column ArrowUp from #1 · focus 1 → 1 · moved false · checked true
+  info-pass  [unmigrated] c1-verbatim ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalsefalse · pressed ----- · selected -----
+  info-fail  [unmigrated] c1-verbatim tab stops · 5 stop(s) between the sentinels, 5 of them items [0 → 1 → 2 → 3 → 4]
+  info-fail  [unmigrated] c1-verbatim column ArrowRight from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true
+  info-fail  [unmigrated] c1-verbatim column ArrowLeft from #4 (linear step, Q-4 b) · focus 4 → 4 · moved false · checked true
+  info-fail  [unmigrated] c1-verbatim column ArrowDown from #0 · focus 0 → 0 · moved false · checked true
+  info-fail  [unmigrated] c1-verbatim column ArrowUp from #1 · focus 1 → 1 · moved false · checked true
+  PASS       [migrated] c1-migrated ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalsefalse · pressed ----- · selected -----
+  PASS       [migrated] c1-migrated tab stops · 1 stop(s) between the sentinels, 1 of them items [1]
+  PASS       [migrated] c1-migrated column ArrowRight from #0 (linear step, Q-4 b) · focus 0 → 1 · moved true · checked true
+  PASS       [migrated] c1-migrated column ArrowLeft from #4 (linear step, Q-4 b) · focus 4 → 3 · moved true · checked true
+  PASS       [migrated] c1-migrated column ArrowDown from #0 · focus 0 → 1 · moved true · checked true
+  PASS       [migrated] c1-migrated column ArrowUp from #1 · focus 1 → 0 · moved true · checked true
+  PASS       preset-contents ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----
+  PASS       preset-contents tab stops · 1 stop(s) between the sentinels, 1 of them items [1]
+  PASS       preset-contents grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  PASS       preset-contents grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true
+  PASS       preset-contents grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true
+  PASS       preset-contents grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true
+  info-pass  preset-contents grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 3 · moved true · checked true
+  info-pass  preset-contents grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 3 · moved true · checked true
+  PASS       [migrated] preset-contents-migrated ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----
+  PASS       [migrated] preset-contents-migrated tab stops · 1 stop(s) between the sentinels, 1 of them items [1]
+  PASS       [migrated] preset-contents-migrated grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  PASS       [migrated] preset-contents-migrated grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true
+  PASS       [migrated] preset-contents-migrated grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true
+  PASS       [migrated] preset-contents-migrated grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true
+  info-pass  [migrated] preset-contents-migrated grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 3 · moved true · checked true
+  info-pass  [migrated] preset-contents-migrated grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 3 · moved true · checked true
+  PASS       preset-input interactive descendant (flavor src) · ArrowRight typed in the <input> · focus inside:0 → inside:0 · selection "snappy" → "snappy"
+  PASS       preset-consumer-aria ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----
+  PASS       preset-consumer-aria tab stops · 1 stop(s) between the sentinels, 1 of them items [1]
+  PASS       preset-consumer-aria grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  PASS       preset-consumer-aria grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true
+  PASS       preset-consumer-aria grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true
+  PASS       preset-consumer-aria grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true
+  info-pass  preset-consumer-aria grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 3 · moved true · checked true
+  info-pass  preset-consumer-aria grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 3 · moved true · checked true
+  PASS       single ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----
+  PASS       single tab stops · 1 stop(s) between the sentinels, 1 of them items [1]
+  PASS       single row ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  PASS       single row ArrowLeft from #1 · focus 1 → 0 · moved true · checked true
+  PASS       single row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 1 · moved true · checked true
+  PASS       single row ArrowUp from #3 (linear step, Q-4 b) · focus 3 → 2 · moved true · checked true
+  PASS       vertical ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----
+  PASS       vertical tab stops · 1 stop(s) between the sentinels, 1 of them items [1]
+  PASS       vertical column ArrowRight from #0 (linear step, Q-4 b) · focus 0 → 1 · moved true · checked true
+  PASS       vertical column ArrowLeft from #3 (linear step, Q-4 b) · focus 3 → 2 · moved true · checked true
+  PASS       vertical column ArrowDown from #0 · focus 0 → 1 · moved true · checked true
+  PASS       vertical column ArrowUp from #1 · focus 1 → 0 · moved true · checked true
+  PASS       tabs ARIA (CDP AX tree) · group radiogroup · items radio · checked falsetruefalsefalse · pressed ---- · selected ----
+  PASS       tabs tab stops · 1 stop(s) between the sentinels, 1 of them items [1]
+  PASS       tabs row ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  PASS       tabs row ArrowLeft from #1 · focus 1 → 0 · moved true · checked true (the click did not focus; focus placed by script)
+  PASS       tabs row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 1 · moved true · checked true (the click did not focus; focus placed by script)
+  PASS       tabs row ArrowUp from #3 (linear step, Q-4 b) · focus 3 → 2 · moved true · checked true
+  info-pass  tabs-retired retired value semantics="toggle" (flavor src: a src alias build, reported, not gated) · refused: [tile] app error https://vuejs.org/error-reference/#runtime-3 TypeError: [SegmentedTabs] semantics="toggle" is not one o
+  FAIL       card ARIA (CDP AX tree) · group listbox · items generic · checked ---- · pressed ---- · selected ----
+  FAIL       card tab stops · 0 stop(s) between the sentinels, 0 of them items []
+  FAIL       card grid ArrowRight from #0 · focus body → body · moved false · checked false (the click did not focus; focus placed by script)
+  FAIL       card grid ArrowLeft from #1 · focus body → body · moved false · checked false (the click did not focus; focus placed by script)
+  FAIL       card grid ArrowDown from #0 · focus body → body · moved false · checked false (the click did not focus; focus placed by script)
+  FAIL       card grid ArrowUp from #2 · focus body → body · moved false · checked false (the click did not focus; focus placed by script)
+  info-fail  card grid edge ArrowDown from #2 (no item that way; reported) · focus body → body · moved false · checked false (the click did not focus; focus placed by script)
+  info-fail  card grid edge ArrowUp from #0 (no item that way; reported) · focus body → body · moved false · checked false (the click did not focus; focus placed by script)
+  FAIL       chipcell ARIA (CDP AX tree) · group group · items button · checked ---- · pressed falsetruefalsefalse · selected ----
+  FAIL       chipcell tab stops · 4 stop(s) between the sentinels, 4 of them items [0 → 1 → 2 → 3]
+  FAIL       chipcell row ArrowRight from #0 · focus 0 → 0 · moved false · checked true
+  FAIL       chipcell row ArrowLeft from #1 · focus 1 → 1 · moved false · checked true
+  FAIL       chipcell row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true
+  FAIL       chipcell row ArrowUp from #3 (linear step, Q-4 b) · focus 3 → 3 · moved false · checked true
+T-5 FAIL · 87/116 gating cells pass [library 49/78 · unmigrated 20/37 · migrated 38/38]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/runs/dp-src/T-5-chromium.json
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:111> w=t6-engagement
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:112> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/t6-engagement.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/builds/dp-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out --engine chromium
+T-6 · engagement: hover light + scale, press, the commit bar (keyboard, programmatic, pointer), no pop on Tab entry, no coarse latch
+  target dp-src (flavor src) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 14.00 / 18.63 / 21.80 at start, 17.87 / 17.80 / 20.40 at end · other headless browser processes at start: 7 (waited 0.2 s) · browser lock waited 0 s
+  PASS       preset Tab entry · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 13.51 / 18.45 / 21.72
+  PASS       preset commit bar, keyboard commit (ArrowRight, pointer never moved) on #2 · pop peak 1.03 at 88 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 14-196 ms; 97 frames, median 8.30 ms · load 13.51 / 18.45 / 21.72
+  PASS       preset commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.03 at 91 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 25-198 ms; 97 frames, median 8.30 ms · load 13.51 / 18.45 / 21.72
+  PASS       preset commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.03 at 79 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 5-187 ms; 98 frames, median 8.30 ms · load 12.99 / 18.26 / 21.63
+  PASS       preset hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0324 over the plate interior vs the bar 0.02 (reported: 70.89 % of pixels moved > 10 levels, p95 1.12:1)
+  PASS       preset hover scale · 1.01 (1.015); median frame 8.40 ms, load 12.43 / 18.05 / 21.54
+  PASS       preset press · scale 0.97×0.97; median frame 8.30 ms, load 12.43 / 18.05 / 21.54
+  PASS       preset commit bar, pointer commit (release of the press) on #0 · pop peak 1.04 at 110 ms, trough after it 1.01, settle 1.01 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 11-185 ms; 97 frames, median 8.40 ms · load 12.43 / 18.05 / 21.54
+  info-pass  preset commit motions at release (reported, the pass-1 cell) · 3 non-scale [CSSTransition:background-color@item 180ms, CSSTransition:color@item 180ms, CSSAnimation:toggle-group-commit@item 450ms] (all 4)
+  PASS       preset PRM hover light channel · mean ΔE(OKLab) 0.0324 over the plate interior vs the bar 0.02 (reported: 70.89 % of pixels moved > 10 levels, p95 1.12:1)
+  PASS       preset PRT hover light channel (prt) · mean ΔE(OKLab) 0.0332 over the plate interior vs the bar 0.02 (reported: 80.47 % of pixels moved > 10 levels, p95 1.11:1)
+  PASS       preset coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %
+  info-pass  [unmigrated] preset-verbatim Tab entry · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 12.23 / 17.82 / 21.42
+  info-pass  [unmigrated] preset-verbatim commit bar, keyboard commit (ArrowRight, pointer never moved) on #2 · pop peak 1.03 at 85 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 10-211 ms; 97 frames, median 8.40 ms · load 12.23 / 17.82 / 21.42
+  info-pass  [unmigrated] preset-verbatim commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.03 at 86 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 19-220 ms; 96 frames, median 8.40 ms · load 12.23 / 17.82 / 21.42
+  info-pass  [unmigrated] preset-verbatim commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.03 at 83 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 8-210 ms; 97 frames, median 8.40 ms · load 12.69 / 17.83 / 21.40
+  info-pass  [unmigrated] preset-verbatim hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0418 over the plate interior vs the bar 0.02 (reported: 86.86 % of pixels moved > 10 levels, p95 1.18:1)
+  info-pass  [unmigrated] preset-verbatim hover scale · 1.01 (1.015); median frame 8.50 ms, load 12.64 / 17.73 / 21.34
+  info-pass  [unmigrated] preset-verbatim press · scale 0.97×0.97; median frame 8.30 ms, load 12.64 / 17.73 / 21.34
+  info-pass  [unmigrated] preset-verbatim commit bar, pointer commit (release of the press) on #0 · pop peak 1.04 at 79 ms, trough after it 1.01, settle 1.01 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 12-212 ms; 97 frames, median 8.40 ms · load 12.64 / 17.73 / 21.34
+  info-pass  [unmigrated] preset-verbatim commit motions at release (reported, the pass-1 cell) · 3 non-scale [CSSTransition:background-color@item 200ms, CSSTransition:outline-color@item 200ms, CSSAnimation:toggle-group-commit@item 450ms] (all 3)
+  info-pass  [unmigrated] preset-verbatim PRM hover light channel · mean ΔE(OKLab) 0.0418 over the plate interior vs the bar 0.02 (reported: 86.86 % of pixels moved > 10 levels, p95 1.18:1)
+  info-pass  [unmigrated] preset-verbatim PRT hover light channel (prt) · mean ΔE(OKLab) 0.0245 over the plate interior vs the bar 0.02 (reported: 3.72 % of pixels moved > 10 levels, p95 1.05:1)
+  info-pass  [unmigrated] preset-verbatim coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %
+  PASS       [migrated] preset-migrated Tab entry · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 12.27 / 17.57 / 21.26
+  PASS       [migrated] preset-migrated commit bar, keyboard commit (ArrowRight, pointer never moved) on #2 · pop peak 1.03 at 81 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 6-189 ms; 98 frames, median 8.30 ms · load 11.76 / 17.37 / 21.17
+  PASS       [migrated] preset-migrated commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.03 at 91 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 25-200 ms; 97 frames, median 8.30 ms · load 11.76 / 17.37 / 21.17
+  PASS       [migrated] preset-migrated commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.03 at 82 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 7-189 ms; 98 frames, median 8.30 ms · load 11.30 / 17.19 / 21.08
+  PASS       [migrated] preset-migrated hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0946 over the plate interior vs the bar 0.02 (reported: 90.77 % of pixels moved > 10 levels, p95 1.36:1)
+  PASS       [migrated] preset-migrated hover scale · 1.01 (1.015); median frame 8.30 ms, load 11.30 / 17.19 / 21.08
+  PASS       [migrated] preset-migrated press · scale 0.97×0.97; median frame 8.30 ms, load 10.80 / 16.98 / 20.99
+  PASS       [migrated] preset-migrated commit bar, pointer commit (release of the press) on #0 · pop peak 1.04 at 129 ms, trough after it 1.01, settle 1.01 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 29-204 ms; 96 frames, median 8.30 ms · load 10.80 / 16.98 / 20.99
+  info-pass  [migrated] preset-migrated commit motions at release (reported, the pass-1 cell) · 4 non-scale [CSSTransition:background-color@item 180ms, CSSTransition:color@item 180ms, CSSTransition:opacity@item::before 60ms, CSSAnimation:toggle-group-commit@item 450ms] (all 5)
+  PASS       [migrated] preset-migrated PRM hover light channel · mean ΔE(OKLab) 0.0946 over the plate interior vs the bar 0.02 (reported: 90.77 % of pixels moved > 10 levels, p95 1.36:1)
+  PASS       [migrated] preset-migrated PRT hover light channel (prt) · mean ΔE(OKLab) 0.0332 over the plate interior vs the bar 0.02 (reported: 87.26 % of pixels moved > 10 levels, p95 1.11:1)
+  PASS       [migrated] preset-migrated coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %
+  PASS       specimen Tab entry · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 12.74 / 17.28 / 21.07
+  PASS       specimen commit bar, keyboard commit (ArrowRight, pointer never moved) on #2 · pop peak 1.03 at 86 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 11-194 ms; 97 frames, median 8.30 ms · load 13.00 / 17.26 / 21.04
+  PASS       specimen commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.03 at 86 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 20-194 ms; 96 frames, median 8.30 ms · load 13.00 / 17.26 / 21.04
+  PASS       specimen commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.03 at 81 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 7-189 ms; 98 frames, median 8.30 ms · load 15.16 / 17.64 / 21.15
+  PASS       specimen hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0301 over the plate interior vs the bar 0.02 (reported: 9.20 % of pixels moved > 10 levels, p95 1.11:1)
+  PASS       specimen hover scale · 1.01 (1.015); median frame 8.30 ms, load 15.16 / 17.64 / 21.15
+  PASS       specimen press · scale 0.97×0.97; median frame 8.40 ms, load 15.39 / 17.64 / 21.13
+  PASS       specimen commit bar, pointer commit (release of the press) on #0 · pop peak 1.04 at 144 ms, trough after it 1.01, settle 1.01 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 34-218 ms; 95 frames, median 8.30 ms · load 15.39 / 17.64 / 21.13
+  info-pass  specimen commit motions at release (reported, the pass-1 cell) · 3 non-scale [CSSTransition:background-color@item 180ms, CSSTransition:color@item 180ms, CSSAnimation:toggle-group-commit@item 450ms] (all 4)
+  PASS       specimen PRM hover light channel · mean ΔE(OKLab) 0.0301 over the plate interior vs the bar 0.02 (reported: 9.20 % of pixels moved > 10 levels, p95 1.11:1)
+  PASS       specimen PRT hover light channel (prt) · mean ΔE(OKLab) 0.0332 over the plate interior vs the bar 0.02 (reported: 77.75 % of pixels moved > 10 levels, p95 1.11:1)
+  PASS       specimen coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %
+  info-pass  [unmigrated] specimen-verbatim Tab entry · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 15.11 / 17.55 / 21.08
+  info-pass  [unmigrated] specimen-verbatim commit bar, keyboard commit (ArrowRight, pointer never moved) on #2 · pop peak 1.03 at 87 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 12-196 ms; 97 frames, median 8.30 ms · load 16.31 / 17.76 / 21.13
+  info-pass  [unmigrated] specimen-verbatim commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.03 at 87 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 21-194 ms; 96 frames, median 8.30 ms · load 16.31 / 17.76 / 21.13
+  info-pass  [unmigrated] specimen-verbatim commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.03 at 78 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 5-187 ms; 98 frames, median 8.30 ms · load 17.56 / 17.99 / 21.20
+  info-pass  [unmigrated] specimen-verbatim hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0301 over the plate interior vs the bar 0.02 (reported: 9.32 % of pixels moved > 10 levels, p95 1.11:1)
+  info-pass  [unmigrated] specimen-verbatim hover scale · 1.01 (1.015); median frame 8.30 ms, load 18.40 / 18.16 / 21.24
+  info-pass  [unmigrated] specimen-verbatim press · scale 0.97×0.97; median frame 8.30 ms, load 18.40 / 18.16 / 21.24
+  info-pass  [unmigrated] specimen-verbatim commit bar, pointer commit (release of the press) on #0 · pop peak 1.04 at 127 ms, trough after it 1.01, settle 1.01 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 35-210 ms; 95 frames, median 8.30 ms · load 18.40 / 18.16 / 21.24
+  info-pass  [unmigrated] specimen-verbatim commit motions at release (reported, the pass-1 cell) · 2 non-scale [CSSTransition:color@item 180ms, CSSAnimation:toggle-group-commit@item 450ms] (all 3)
+  info-pass  [unmigrated] specimen-verbatim PRM hover light channel · mean ΔE(OKLab) 0.0301 over the plate interior vs the bar 0.02 (reported: 9.32 % of pixels moved > 10 levels, p95 1.11:1)
+  info-pass  [unmigrated] specimen-verbatim PRT hover light channel (prt) · mean ΔE(OKLab) 0.0332 over the plate interior vs the bar 0.02 (reported: 78.40 % of pixels moved > 10 levels, p95 1.11:1)
+  info-pass  [unmigrated] specimen-verbatim coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %
+  PASS       [migrated] specimen-migrated Tab entry · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 18.29 / 18.15 / 21.20
+  PASS       [migrated] specimen-migrated commit bar, keyboard commit (ArrowRight, pointer never moved) on #2 · pop peak 1.03 at 83 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 10-191 ms; 98 frames, median 8.30 ms · load 18.29 / 18.15 / 21.20
+  PASS       [migrated] specimen-migrated commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.03 at 85 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 20-193 ms; 96 frames, median 8.30 ms · load 18.29 / 18.15 / 21.20
+  PASS       [migrated] specimen-migrated commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.03 at 82 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 7-191 ms; 97 frames, median 8.30 ms · load 19.15 / 18.33 / 21.24
+  PASS       [migrated] specimen-migrated hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0927 over the plate interior vs the bar 0.02 (reported: 91.55 % of pixels moved > 10 levels, p95 1.36:1)
+  PASS       [migrated] specimen-migrated hover scale · 1.01 (1.015); median frame 8.30 ms, load 19.70 / 18.46 / 21.27
+  PASS       [migrated] specimen-migrated press · scale 0.97×0.97; median frame 8.40 ms, load 19.70 / 18.46 / 21.27
+  PASS       [migrated] specimen-migrated commit bar, pointer commit (release of the press) on #0 · pop peak 1.04 at 136 ms, trough after it 1.01, settle 1.01 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 36-211 ms; 96 frames, median 8.30 ms · load 19.70 / 18.46 / 21.27
+  info-pass  [migrated] specimen-migrated commit motions at release (reported, the pass-1 cell) · 4 non-scale [CSSTransition:background-color@item 180ms, CSSTransition:color@item 180ms, CSSTransition:opacity@item::before 60ms, CSSAnimation:toggle-group-commit@item 450ms] (all 5)
+  PASS       [migrated] specimen-migrated PRM hover light channel · mean ΔE(OKLab) 0.0927 over the plate interior vs the bar 0.02 (reported: 91.55 % of pixels moved > 10 levels, p95 1.36:1)
+  PASS       [migrated] specimen-migrated PRT hover light channel (prt) · mean ΔE(OKLab) 0.0332 over the plate interior vs the bar 0.02 (reported: 88.68 % of pixels moved > 10 levels, p95 1.11:1)
+  PASS       [migrated] specimen-migrated coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %
+  PASS       f1 Tab entry · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 18.90 / 18.33 / 21.19
+  FAIL       f1 commit bar, keyboard commit (ArrowRight, pointer never moved) on #-1 · the input committed nothing (no item became selected) · load 18.90 / 18.33 / 21.19
+  FAIL       f1 commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.00 at 4 ms, trough after it 1.00, settle 1.00 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 14-305 ms; 97 frames, median 8.30 ms · load 18.90 / 18.33 / 21.19
+  FAIL       f1 commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.00 at 0 ms, trough after it 1.00, settle 1.00 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 11-302 ms; 98 frames, median 8.30 ms · load 18.75 / 18.30 / 21.17
+  FAIL       f1 hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0009 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.01:1)
+  PASS       f1 hover scale · 1.01 (1.015); median frame 8.30 ms, load 19.01 / 18.37 / 21.17
+  FAIL       f1 press · scale 1.02×0.97; median frame 8.30 ms, load 19.01 / 18.37 / 21.17
+  FAIL       f1 commit bar, pointer commit (release of the press) on #0 · pop peak 1.02 at 28 ms, trough after it 1.01, settle 1.01 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 12-295 ms; 97 frames, median 8.30 ms · load 19.01 / 18.37 / 21.17
+  info-pass  f1 commit motions at release (reported, the pass-1 cell) · 1 non-scale [CSSTransition:opacity@item::before 300ms] (all 2)
+  FAIL       f1 PRM hover light channel · mean ΔE(OKLab) 0.0009 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.01:1)
+  FAIL       f1 PRT hover light channel (prt) · mean ΔE(OKLab) 0.0000 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.00:1)
+  PASS       f1 coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %
+  info-pass  [unmigrated] f1-verbatim Tab entry · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 19.58 / 18.49 / 21.18
+  info-fail  [unmigrated] f1-verbatim commit bar, keyboard commit (ArrowRight, pointer never moved) on #-1 · the input committed nothing (no item became selected) · load 19.58 / 18.49 / 21.18
+  info-fail  [unmigrated] f1-verbatim commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.00 at 13 ms, trough after it 1.00, settle 1.00 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 21-320 ms; 96 frames, median 8.30 ms · load 19.58 / 18.49 / 21.18
+  info-fail  [unmigrated] f1-verbatim commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.00 at 0 ms, trough after it 1.00, settle 1.00 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 5-313 ms; 98 frames, median 8.30 ms · load 18.73 / 18.33 / 21.11
+  info-fail  [unmigrated] f1-verbatim hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0045 over the plate interior vs the bar 0.02 (reported: 14.06 % of pixels moved > 10 levels, p95 8.36:1)
+  info-pass  [unmigrated] f1-verbatim hover scale · 1.06 (1.015); median frame 8.30 ms, load 18.73 / 18.33 / 21.11
+  info-pass  [unmigrated] f1-verbatim press · scale 0.98×0.92; median frame 8.30 ms, load 17.71 / 18.13 / 21.02
+  info-fail  [unmigrated] f1-verbatim commit bar, pointer commit (release of the press) on #0 · pop peak 1.06 at 28 ms, trough after it 1.06, settle 1.06 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 25-294 ms; 96 frames, median 8.30 ms · load 17.71 / 18.13 / 21.02
+  info-pass  [unmigrated] f1-verbatim commit motions at release (reported, the pass-1 cell) · 5 non-scale [CSSTransition:border-bottom-color@item 180ms, CSSTransition:border-left-color@item 180ms, CSSTransition:border-right-color@item 180ms, CSSTransition:border-top-color@item 180ms, CSSTransition:opacity@item::before 300ms] (all 6)
+  info-fail  [unmigrated] f1-verbatim PRM hover light channel · mean ΔE(OKLab) 0.0045 over the plate interior vs the bar 0.02 (reported: 14.06 % of pixels moved > 10 levels, p95 8.36:1)
+  info-fail  [unmigrated] f1-verbatim PRT hover light channel (prt) · mean ΔE(OKLab) 0.0008 over the plate interior vs the bar 0.02 (reported: 11.07 % of pixels moved > 10 levels, p95 9.32:1)
+  info-pass  [unmigrated] f1-verbatim coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %
+  PASS       [migrated] f1-migrated Tab entry · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 17.41 / 18.06 / 20.98
+  PASS       [migrated] f1-migrated commit bar, keyboard commit (ArrowRight, pointer never moved) on #2 · pop peak 1.03 at 82 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 8-191 ms; 98 frames, median 8.30 ms · load 16.74 / 17.91 / 20.91
+  PASS       [migrated] f1-migrated commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.03 at 88 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 21-196 ms; 96 frames, median 8.30 ms · load 16.74 / 17.91 / 20.91
+  PASS       [migrated] f1-migrated commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.03 at 76 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 2-185 ms; 98 frames, median 8.30 ms · load 16.28 / 17.79 / 20.85
+  PASS       [migrated] f1-migrated hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0927 over the plate interior vs the bar 0.02 (reported: 88.02 % of pixels moved > 10 levels, p95 1.36:1)
+  PASS       [migrated] f1-migrated hover scale · 1.01 (1.015); median frame 8.30 ms, load 16.28 / 17.79 / 20.85
+  PASS       [migrated] f1-migrated press · scale 0.97×0.97; median frame 8.30 ms, load 15.70 / 17.65 / 20.78
+  PASS       [migrated] f1-migrated commit bar, pointer commit (release of the press) on #0 · pop peak 1.04 at 129 ms, trough after it 1.01, settle 1.01 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 29-204 ms; 96 frames, median 8.30 ms · load 15.70 / 17.65 / 20.78
+  info-pass  [migrated] f1-migrated commit motions at release (reported, the pass-1 cell) · 4 non-scale [CSSTransition:background-color@item 180ms, CSSTransition:color@item 180ms, CSSTransition:opacity@item::before 60ms, CSSAnimation:toggle-group-commit@item 450ms] (all 5)
+  PASS       [migrated] f1-migrated PRM hover light channel · mean ΔE(OKLab) 0.0927 over the plate interior vs the bar 0.02 (reported: 88.02 % of pixels moved > 10 levels, p95 1.36:1)
+  PASS       [migrated] f1-migrated PRT hover light channel (prt) · mean ΔE(OKLab) 0.0332 over the plate interior vs the bar 0.02 (reported: 84.25 % of pixels moved > 10 levels, p95 1.11:1)
+  PASS       [migrated] f1-migrated coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %
+  PASS       card Tab entry · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 15.24 / 17.52 / 20.72
+  FAIL       card commit bar, keyboard commit (ArrowRight, pointer never moved) on #undefined · keyboard traversal landed on after, not an item · load 14.82 / 17.39 / 20.65
+  FAIL       card commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.00 at 13 ms, trough after it 1.00, settle 1.00 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved never; 96 frames, median 8.50 ms · load 14.82 / 17.39 / 20.65
+  FAIL       card commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.00 at 0 ms, trough after it 1.00, settle 1.00 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved never; 98 frames, median 8.30 ms · load 14.82 / 17.39 / 20.65
+  FAIL       card hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0003 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.01:1)
+  FAIL       card hover scale · 1.00 (none); median frame 8.50 ms, load 14.67 / 17.32 / 20.61
+  FAIL       card press · scale 1.00×1.00; median frame 8.50 ms, load 14.67 / 17.32 / 20.61
+  FAIL       card commit bar, pointer commit (release of the press) on #0 · pop peak 1.00 at 3 ms, trough after it 1.00, settle 1.00 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 12-254 ms; 97 frames, median 8.40 ms · load 15.26 / 17.40 / 20.62
+  info-pass  card commit motions at release (reported, the pass-1 cell) · 1 non-scale [CSSTransition:opacity@item::before 258ms] (all 1)
+  FAIL       card PRM hover light channel · mean ΔE(OKLab) 0.0003 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.01:1)
+  FAIL       card PRT hover light channel (prt) · mean ΔE(OKLab) 0.0000 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.00:1)
+  PASS       card coarse · after tapping #0 then #1: #0 scale 1.00, :hover false, paint moved 0.00 %
+  PASS       chipcell Tab entry · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 16.68 / 17.66 / 20.69
+  FAIL       chipcell commit bar, keyboard commit (ArrowRight, pointer never moved) on #-1 · the input committed nothing (no item became selected) · load 15.99 / 17.50 / 20.61
+  FAIL       chipcell commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.09 at 214 ms, trough after it 1.07, settle 1.07 (amplitude ok, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 16-365 ms; 97 frames, median 8.40 ms · load 15.99 / 17.50 / 20.61
+  FAIL       chipcell commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.00 at 7 ms, trough after it 1.00, settle 1.00 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 15-372 ms; 97 frames, median 8.30 ms · load 15.99 / 17.50 / 20.61
+  FAIL       chipcell hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0000 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.00:1)
+  PASS       chipcell hover scale · 1.01 (1.015); median frame 8.30 ms, load 15.59 / 17.39 / 20.56
+  PASS       chipcell press · scale 0.97×0.97; median frame 8.30 ms, load 15.59 / 17.39 / 20.56
+  FAIL       chipcell commit bar, pointer commit (release of the press) on #0 · pop peak 1.02 at 202 ms, trough after it 1.01, settle 1.01 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 11-370 ms; 97 frames, median 8.30 ms · load 15.30 / 17.30 / 20.51
+  info-pass  chipcell commit motions at release (reported, the pass-1 cell) · 6 non-scale [CSSTransition:background-color@item 200ms, CSSTransition:border-bottom-color@item 200ms, CSSTransition:border-left-color@item 200ms, CSSTransition:border-right-color@item 200ms, CSSTransition:border-top-color@item 200ms, CSSTransition:opacity@item::after 300ms] (all 7)
+  FAIL       chipcell PRM hover light channel · mean ΔE(OKLab) 0.0000 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.00:1)
+  FAIL       chipcell PRT hover light channel (prt) · mean ΔE(OKLab) 0.0000 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.00:1)
+  PASS       chipcell coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %
+  info-pass  strip Tab entry · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 15.75 / 17.36 / 20.51
+  info-fail  strip commit bar, keyboard commit (ArrowRight, pointer never moved) on #-1 · the input committed nothing (no item became selected) · load 15.75 / 17.36 / 20.51
+  info-fail  strip commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.09 at 218 ms, trough after it 1.07, settle 1.07 (amplitude ok, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 18-376 ms; 96 frames, median 8.30 ms · load 15.93 / 17.37 / 20.49
+  info-fail  strip commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.00 at 4 ms, trough after it 1.00, settle 1.00 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 13-370 ms; 96 frames, median 8.40 ms · load 15.93 / 17.37 / 20.49
+  info-fail  strip hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0000 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.00:1)
+  info-pass  strip hover scale · 1.01 (1.015); median frame 8.40 ms, load 16.82 / 17.53 / 20.53
+  info-pass  strip press · scale 0.97×0.97; median frame 8.30 ms, load 16.82 / 17.53 / 20.53
+  info-fail  strip commit bar, pointer commit (release of the press) on #0 · pop peak 1.02 at 196 ms, trough after it 1.01, settle 1.01 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 12-370 ms; 97 frames, median 8.30 ms · load 16.51 / 17.45 / 20.49
+  info-pass  strip commit motions at release (reported, the pass-1 cell) · 6 non-scale [CSSTransition:background-color@item 200ms, CSSTransition:border-bottom-color@item 200ms, CSSTransition:border-left-color@item 200ms, CSSTransition:border-right-color@item 200ms, CSSTransition:border-top-color@item 200ms, CSSTransition:opacity@item::after 300ms] (all 7)
+  info-fail  strip PRM hover light channel · mean ΔE(OKLab) 0.0000 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.00:1)
+  info-fail  strip PRT hover light channel (prt) · mean ΔE(OKLab) 0.0000 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.00:1)
+  info-pass  strip coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %
+  info-pass  [unmigrated] strip-verbatim Tab entry · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 15.75 / 17.28 / 20.41
+  info-fail  [unmigrated] strip-verbatim commit bar, keyboard commit (ArrowRight, pointer never moved) on #-1 · the input committed nothing (no item became selected) · load 15.75 / 17.28 / 20.41
+  info-fail  [unmigrated] strip-verbatim commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.09 at 221 ms, trough after it 1.07, settle 1.07 (amplitude ok, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 22-380 ms; 96 frames, median 8.30 ms · load 16.97 / 17.51 / 20.47
+  info-fail  [unmigrated] strip-verbatim commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.00 at 5 ms, trough after it 1.00, settle 1.00 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 13-372 ms; 97 frames, median 8.30 ms · load 16.97 / 17.51 / 20.47
+  info-fail  [unmigrated] strip-verbatim hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0000 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.00:1)
+  info-pass  [unmigrated] strip-verbatim hover scale · 1.01 (1.015); median frame 8.30 ms, load 17.54 / 17.62 / 20.49
+  info-pass  [unmigrated] strip-verbatim press · scale 0.97×0.97; median frame 8.30 ms, load 17.54 / 17.62 / 20.49
+  info-fail  [unmigrated] strip-verbatim commit bar, pointer commit (release of the press) on #0 · pop peak 1.02 at 203 ms, trough after it 1.01, settle 1.01 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 28-387 ms; 96 frames, median 8.30 ms · load 17.01 / 17.51 / 20.44
+  info-pass  [unmigrated] strip-verbatim commit motions at release (reported, the pass-1 cell) · 6 non-scale [CSSTransition:background-color@item 200ms, CSSTransition:border-bottom-color@item 200ms, CSSTransition:border-left-color@item 200ms, CSSTransition:border-right-color@item 200ms, CSSTransition:border-top-color@item 200ms, CSSTransition:opacity@item::after 300ms] (all 7)
+  info-fail  [unmigrated] strip-verbatim PRM hover light channel · mean ΔE(OKLab) 0.0000 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.00:1)
+  info-fail  [unmigrated] strip-verbatim PRT hover light channel (prt) · mean ΔE(OKLab) 0.0000 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.00:1)
+  info-pass  [unmigrated] strip-verbatim coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %
+  info-pass  [migrated] strip-migrated Tab entry · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 17.89 / 17.68 / 20.48
+  info-pass  [migrated] strip-migrated commit bar, keyboard commit (ArrowRight, pointer never moved) on #2 · pop peak 1.03 at 84 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 9-192 ms; 97 frames, median 8.30 ms · load 17.89 / 17.68 / 20.48
+  info-pass  [migrated] strip-migrated commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.03 at 84 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 17-191 ms; 96 frames, median 8.30 ms · load 19.10 / 17.93 / 20.55
+  info-pass  [migrated] strip-migrated commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.03 at 80 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 6-187 ms; 98 frames, median 8.30 ms · load 19.10 / 17.93 / 20.55
+  info-pass  [migrated] strip-migrated hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.1003 over the plate interior vs the bar 0.02 (reported: 74.16 % of pixels moved > 10 levels, p95 1.36:1)
+  info-pass  [migrated] strip-migrated hover scale · 1.01 (1.015); median frame 8.40 ms, load 18.69 / 17.87 / 20.51
+  info-pass  [migrated] strip-migrated press · scale 0.97×0.97; median frame 8.30 ms, load 18.69 / 17.87 / 20.51
+  info-pass  [migrated] strip-migrated commit bar, pointer commit (release of the press) on #0 · pop peak 1.04 at 128 ms, trough after it 1.01, settle 1.01 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 29-203 ms; 96 frames, median 8.30 ms · load 18.69 / 17.87 / 20.51
+  info-pass  [migrated] strip-migrated commit motions at release (reported, the pass-1 cell) · 4 non-scale [CSSTransition:background-color@item 180ms, CSSTransition:color@item 180ms, CSSTransition:opacity@item::before 60ms, CSSAnimation:toggle-group-commit@item 450ms] (all 5)
+  info-pass  [migrated] strip-migrated PRM hover light channel · mean ΔE(OKLab) 0.1003 over the plate interior vs the bar 0.02 (reported: 74.16 % of pixels moved > 10 levels, p95 1.36:1)
+  info-pass  [migrated] strip-migrated PRT hover light channel (prt) · mean ΔE(OKLab) 0.0461 over the plate interior vs the bar 0.02 (reported: 73.77 % of pixels moved > 10 levels, p95 1.14:1)
+  info-pass  [migrated] strip-migrated coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %
+  info-pass  single Tab entry · largest scale motion 0.00, body moved 0.00 px (a Tab entry commits nothing) · load 19.01 / 17.97 / 20.52
+  info-pass  single commit bar, keyboard commit (ArrowRight, pointer never moved) on #2 · pop peak 1.03 at 88 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 13-196 ms; 97 frames, median 8.30 ms · load 19.01 / 17.97 / 20.52
+  info-pass  single commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.03 at 89 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 22-196 ms; 96 frames, median 8.30 ms · load 19.33 / 18.05 / 20.53
+  info-pass  single commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.03 at 82 ms, trough after it 1.00, settle 1.00 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 7-189 ms; 98 frames, median 8.30 ms · load 19.33 / 18.05 / 20.53
+  info-pass  single hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0361 over the plate interior vs the bar 0.02 (reported: 61.08 % of pixels moved > 10 levels, p95 1.12:1)
+  info-pass  single hover scale · 1.01 (1.015); median frame 8.40 ms, load 19.54 / 18.12 / 20.54
+  info-pass  single press · scale 0.97×0.97; median frame 8.30 ms, load 19.54 / 18.12 / 20.54
+  info-pass  single commit bar, pointer commit (release of the press) on #0 · pop peak 1.04 at 129 ms, trough after it 1.01, settle 1.01 (amplitude ok, bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 29-204 ms; 96 frames, median 8.30 ms · load 19.54 / 18.12 / 20.54
+  info-pass  single commit motions at release (reported, the pass-1 cell) · 3 non-scale [CSSTransition:background-color@item 180ms, CSSTransition:color@item 180ms, CSSAnimation:toggle-group-commit@item 450ms] (all 4)
+  info-pass  single PRM hover light channel · mean ΔE(OKLab) 0.0361 over the plate interior vs the bar 0.02 (reported: 61.08 % of pixels moved > 10 levels, p95 1.12:1)
+  info-pass  single PRT hover light channel (prt) · mean ΔE(OKLab) 0.0332 over the plate interior vs the bar 0.02 (reported: 56.92 % of pixels moved > 10 levels, p95 1.11:1)
+  info-pass  single coarse · after tapping #0 then #2: #0 scale 1.00, :hover false, paint moved 0.00 %
+T-6 FAIL · 64/88 gating cells pass [library 31/55 · unmigrated 34/48 · migrated 33/33]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/runs/dp-src/T-6-chromium.json
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:111> w=t7-no-consumer-paint
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:112> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/t7-no-consumer-paint.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/builds/dp-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out --engine chromium
+T-7 · no consumer paint on the tile (each consumer arm against its stripped twin)
+  target dp-src (flavor src) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 17.87 / 17.80 / 20.40 at start, 13.83 / 16.69 / 19.81 at end · other headless browser processes at start: 7 (waited 0.1 s) · browser lock waited 0 s
+  info-fail  [unmigrated] preset-verbatim vs its stripped twin · rest · border-top-left-radius: 9999px → 16px; border-top-right-radius: 9999px → 16px; border-bottom-right-radius: 9999px → 16px; border-bottom-left-radius: 9999px → 16px; outline-style: none → dashed; outline-width: 3px → 1px; outline-color: rgb(112, 89, 66) → rgba(0, 0, 0, 0); outline-offset: 0px → -1px; background-color: rgba(0, 0, 0, 0) → rgb(251, 250, 248); border-top-color: color(srgb 0.109804 0.0980392 0.0901961 / 0.14) → rgba(0, 0, 0, 0); border-right-color: color(srgb 0.109804 0.0980392 0.0901961 / 0.14) → rgba(0, 0, 0, 0); border-bottom-color: color(srgb 0.109804 0.0980392 0.0901961 / 0.14) → rgba(0, 0, 0, 0); border-left-color: color(srgb 0.109804 0.0980392 0.0901961 / 0.14) → rgba(0, 0, 0, 0)
+  info-fail  [unmigrated] preset-verbatim vs its stripped twin · on · border-top-left-radius: 9999px → 16px; border-top-right-radius: 9999px → 16px; border-bottom-right-radius: 9999px → 16px; border-bottom-left-radius: 9999px → 16px; outline-style: none → dashed; outline-width: 3px → 1px; outline-color: oklch(0.216114 0.00613456 55.9893) → color(srgb 0.493698 0.351392 0.798991 / 0.65); outline-offset: 0px → -1px; background-color: oklab(0.216114 0.00343135 0.00508514 / 0.12) → color(srgb 0.945064 0.930072 0.958664); background-image: linear-gradient(color(srgb 0.20397 0.148263 0.0829736 / 0... → none; box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srg... → none; border-top-color: color(srgb 0.109804 0.0980392 0.0901961 / 0.14) → rgba(0, 0, 0, 0); border-right-color: color(srgb 0.109804 0.0980392 0.0901961 / 0.14) → rgba(0, 0, 0, 0); border-bottom-color: color(srgb 0.109804 0.0980392 0.0901961 / 0.14) → rgba(0, 0, 0, 0); border-left-color: color(srgb 0.109804 0.0980392 0.0901961 / 0.14) → rgba(0, 0, 0, 0)
+  info-fail  [unmigrated] preset-verbatim on content ink · rgb(28, 25, 23) 400 / rgb(112, 89, 66) 600 → rgb(28, 25, 23) 400 / rgb(112, 89, 66) 500
+  info-fail  [unmigrated] preset-verbatim vs its stripped twin · focus · border-top-left-radius: 9999px → 16px; border-top-right-radius: 9999px → 16px; border-bottom-right-radius: 9999px → 16px; border-bottom-left-radius: 9999px → 16px; outline-style: solid → dashed; outline-width: 2px → 1px; outline-color: oklab(0.216114 0.00343135 0.00508514 / 0.48) → color(srgb 0.493698 0.351392 0.798991 / 0.65); outline-offset: 2px → -1px; background-color: oklab(0.216114 0.00343135 0.00508514 / 0.12) → color(srgb 0.945064 0.930072 0.958664); background-image: linear-gradient(color(srgb 0.20397 0.148263 0.0829736 / 0... → none; box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srg... → none; border-top-color: color(srgb 0.109804 0.0980392 0.0901961 / 0.14) → rgba(0, 0, 0, 0); border-right-color: color(srgb 0.109804 0.0980392 0.0901961 / 0.14) → rgba(0, 0, 0, 0); border-bottom-color: color(srgb 0.109804 0.0980392 0.0901961 / 0.14) → rgba(0, 0, 0, 0); border-left-color: color(srgb 0.109804 0.0980392 0.0901961 / 0.14) → rgba(0, 0, 0, 0)
+  info-fail  [unmigrated] preset-verbatim focus content ink · rgb(28, 25, 23) 400 / rgb(112, 89, 66) 600 → rgb(28, 25, 23) 400 / rgb(112, 89, 66) 500
+  info-fail  [unmigrated] preset-verbatim vs its stripped twin · hover · border-top-left-radius: 9999px → 16px; border-top-right-radius: 9999px → 16px; border-bottom-right-radius: 9999px → 16px; border-bottom-left-radius: 9999px → 16px; outline-style: none → dashed; outline-width: 3px → 1px; outline-color: rgb(112, 89, 66) → color(srgb 0.493698 0.351392 0.798991 / 0.35); outline-offset: 0px → -1px; background-color: rgba(0, 0, 0, 0) → color(srgb 0.954877 0.942652 0.962136); background-image: linear-gradient(color(srgb 0.109804 0.0980391 0.090196 / ... → none; border-top-color: color(srgb 0.109804 0.0980392 0.0901961 / 0.14) → rgba(0, 0, 0, 0); border-right-color: color(srgb 0.109804 0.0980392 0.0901961 / 0.14) → rgba(0, 0, 0, 0); border-bottom-color: color(srgb 0.109804 0.0980392 0.0901961 / 0.14) → rgba(0, 0, 0, 0); border-left-color: color(srgb 0.109804 0.0980392 0.0901961 / 0.14) → rgba(0, 0, 0, 0)
+  PASS       [migrated] preset-migrated vs its stripped twin · rest · no consumer paint
+  PASS       [migrated] preset-migrated vs its stripped twin · on · no consumer paint
+  PASS       [migrated] preset-migrated vs its stripped twin · focus · no consumer paint
+  PASS       [migrated] preset-migrated vs its stripped twin · hover · no consumer paint
+  info-fail  [unmigrated] specimen-verbatim vs its stripped twin · rest · border-top-left-radius: 9999px → 16px; border-top-right-radius: 9999px → 16px; border-bottom-right-radius: 9999px → 16px; border-bottom-left-radius: 9999px → 16px
+  info-fail  [unmigrated] specimen-verbatim vs its stripped twin · on · border-top-left-radius: 9999px → 16px; border-top-right-radius: 9999px → 16px; border-bottom-right-radius: 9999px → 16px; border-bottom-left-radius: 9999px → 16px; outline-style: none → solid; outline-width: 3px → 1px; outline-color: oklch(0.216114 0.00613456 55.9893) → rgb(28, 25, 23); outline-offset: 0px → -1px; background-color: oklab(0.216114 0.00343135 0.00508514 / 0.12) → rgba(0, 0, 0, 0)
+  info-fail  [unmigrated] specimen-verbatim on content ink · oklch(0.216114 0.00613456 55.9893) 600 / oklch(0.216114 0.00613456 55.9893) 600 → oklch(0.216114 0.00613456 55.9893) 600 / rgb(28, 25, 23) 600
+  info-fail  [unmigrated] specimen-verbatim vs its stripped twin · focus · border-top-left-radius: 9999px → 16px; border-top-right-radius: 9999px → 16px; border-bottom-right-radius: 9999px → 16px; border-bottom-left-radius: 9999px → 16px; outline-width: 2px → 1px; outline-color: oklab(0.216114 0.00343135 0.00508514 / 0.48) → rgb(28, 25, 23); outline-offset: 2px → -1px; background-color: oklab(0.216114 0.00343135 0.00508514 / 0.12) → rgba(0, 0, 0, 0)
+  info-fail  [unmigrated] specimen-verbatim focus content ink · oklch(0.216114 0.00613456 55.9893) 600 / oklch(0.216114 0.00613456 55.9893) 600 → oklch(0.216114 0.00613456 55.9893) 600 / rgb(28, 25, 23) 600
+  info-fail  [unmigrated] specimen-verbatim vs its stripped twin · hover · border-top-left-radius: 9999px → 16px; border-top-right-radius: 9999px → 16px; border-bottom-right-radius: 9999px → 16px; border-bottom-left-radius: 9999px → 16px
+  info-fail  [unmigrated] specimen-verbatim hover content ink · rgb(112, 89, 66) 500 / rgb(112, 89, 66) 500 → rgb(112, 89, 66) 500 / rgb(28, 25, 23) 500
+  PASS       [migrated] specimen-migrated vs its stripped twin · rest · no consumer paint
+  PASS       [migrated] specimen-migrated vs its stripped twin · on · no consumer paint
+  PASS       [migrated] specimen-migrated vs its stripped twin · focus · no consumer paint
+  PASS       [migrated] specimen-migrated vs its stripped twin · hover · no consumer paint
+  info-pass  [unmigrated] strip-verbatim vs its stripped twin · rest · no consumer paint
+  info-pass  [unmigrated] strip-verbatim vs its stripped twin · on · no consumer paint
+  info-fail  [unmigrated] strip-verbatim on content ink · rgb(91, 70, 51) 400 / rgb(91, 70, 51) 400 → rgb(91, 70, 51) 400 / rgb(28, 25, 23) 600
+  info-pass  [unmigrated] strip-verbatim vs its stripped twin · focus · no consumer paint
+  info-pass  [unmigrated] strip-verbatim vs its stripped twin · hover · no consumer paint
+  info-fail  [unmigrated] strip-verbatim hover content ink · rgb(91, 70, 51) 400 / rgb(91, 70, 51) 400 → rgb(91, 70, 51) 400 / rgb(28, 25, 23) 400
+  PASS       [migrated] strip-migrated vs its stripped twin · rest · no consumer paint
+  PASS       [migrated] strip-migrated vs its stripped twin · on · no consumer paint
+  PASS       [migrated] strip-migrated vs its stripped twin · focus · no consumer paint
+  PASS       [migrated] strip-migrated vs its stripped twin · hover · no consumer paint
+  info-fail  [unmigrated] f1-verbatim vs its stripped twin · rest · background-color: oklab(0.673443 0.0210928 0.0746619 / 0.244) → rgb(253, 245, 236); border-top-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-right-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-bottom-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-left-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23)
+  info-fail  [unmigrated] f1-verbatim rest content ink · rgb(28, 25, 23) 500 / rgb(28, 25, 23) 500 → rgb(28, 25, 23) 500 / rgb(91, 70, 51) 500
+  info-fail  [unmigrated] f1-verbatim vs its stripped twin · on · background-color: oklab(0.673443 0.0210928 0.0746619 / 0.244) → rgb(253, 245, 236); box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srg... → color(srgb 0.844106 0.201539 0.216977 / 0.15) 0px 0px 0px...; border-top-color: rgba(0, 0, 0, 0) → oklch(0.58 0.2 25); border-right-color: rgba(0, 0, 0, 0) → oklch(0.58 0.2 25); border-bottom-color: rgba(0, 0, 0, 0) → oklch(0.58 0.2 25); border-left-color: rgba(0, 0, 0, 0) → oklch(0.58 0.2 25)
+  info-fail  [unmigrated] f1-verbatim on content ink · rgb(28, 25, 23) 500 / rgb(28, 25, 23) 500 → rgb(28, 25, 23) 500 / oklch(0.58 0.2 25) 600
+  info-fail  [unmigrated] f1-verbatim vs its stripped twin · focus · background-color: oklab(0.673443 0.0210928 0.0746619 / 0.244) → rgb(253, 245, 236); border-top-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-right-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-bottom-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-left-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23)
+  info-fail  [unmigrated] f1-verbatim focus content ink · rgb(28, 25, 23) 500 / rgb(28, 25, 23) 500 → rgb(28, 25, 23) 500 / rgb(91, 70, 51) 500
+  info-fail  [unmigrated] f1-verbatim vs its stripped twin · hover · background-color: oklab(0.673443 0.0210928 0.0746619 / 0.244) → rgb(253, 245, 236); border-top-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-right-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-bottom-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23); border-left-color: rgba(0, 0, 0, 0) → rgb(28, 25, 23)
+  info-fail  [unmigrated] f1-verbatim hover content ink · rgb(28, 25, 23) 500 / rgb(28, 25, 23) 500 → rgb(28, 25, 23) 500 / rgb(91, 70, 51) 500
+  PASS       [migrated] f1-migrated vs its stripped twin · rest · no consumer paint
+  PASS       [migrated] f1-migrated vs its stripped twin · on · no consumer paint
+  PASS       [migrated] f1-migrated vs its stripped twin · focus · no consumer paint
+  PASS       [migrated] f1-migrated vs its stripped twin · hover · no consumer paint
+  info-fail  [unmigrated] v2-verbatim vs its stripped twin · rest · border-top-left-radius: 0px → 16px; border-top-right-radius: 0px → 16px; border-bottom-right-radius: 0px → 16px; border-bottom-left-radius: 0px → 16px
+  info-fail  [unmigrated] v2-verbatim vs its stripped twin · on · border-top-left-radius: 0px → 16px; border-top-right-radius: 0px → 16px; border-bottom-right-radius: 0px → 16px; border-bottom-left-radius: 0px → 16px; box-shadow: none → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0p...
+  info-fail  [unmigrated] v2-verbatim vs its stripped twin · focus · border-top-left-radius: 0px → 16px; border-top-right-radius: 0px → 16px; border-bottom-right-radius: 0px → 16px; border-bottom-left-radius: 0px → 16px; outline-style: auto → none; box-shadow: none → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0p...
+  info-fail  [unmigrated] v2-verbatim vs its stripped twin · hover · border-top-left-radius: 0px → 16px; border-top-right-radius: 0px → 16px; border-bottom-right-radius: 0px → 16px; border-bottom-left-radius: 0px → 16px
+  PASS       [migrated] v2-migrated vs its stripped twin · rest · no consumer paint
+  PASS       [migrated] v2-migrated vs its stripped twin · on · no consumer paint
+  PASS       [migrated] v2-migrated vs its stripped twin · focus · no consumer paint
+  PASS       [migrated] v2-migrated vs its stripped twin · hover · no consumer paint
+  info-fail  [unmigrated] c1-verbatim vs its stripped twin · rest · border-top-left-radius: 0px → 6px; border-top-right-radius: 0px → 6px; border-bottom-right-radius: 0px → 6px; border-bottom-left-radius: 0px → 6px
+  info-fail  [unmigrated] c1-verbatim vs its stripped twin · on · border-top-left-radius: 0px → 6px; border-top-right-radius: 0px → 6px; border-bottom-right-radius: 0px → 6px; border-bottom-left-radius: 0px → 6px; background-color: rgba(0, 0, 0, 0) → rgb(246, 243, 239)
+  info-fail  [unmigrated] c1-verbatim vs its stripped twin · focus · border-top-left-radius: 0px → 6px; border-top-right-radius: 0px → 6px; border-bottom-right-radius: 0px → 6px; border-bottom-left-radius: 0px → 6px; outline-style: auto → solid; outline-width: 1px → 2px; outline-color: rgb(0, 95, 204) → oklab(0.216114 0.00343135 0.00508514 / 0.48); outline-offset: 0px → 2px
+  info-fail  [unmigrated] c1-verbatim vs its stripped twin · hover · border-top-left-radius: 0px → 6px; border-top-right-radius: 0px → 6px; border-bottom-right-radius: 0px → 6px; border-bottom-left-radius: 0px → 6px; background-color: rgba(0, 0, 0, 0) → rgb(246, 243, 239)
+  PASS       [migrated] c1-migrated vs its stripped twin · rest · no consumer paint
+  PASS       [migrated] c1-migrated vs its stripped twin · on · no consumer paint
+  PASS       [migrated] c1-migrated vs its stripped twin · focus · no consumer paint
+  PASS       [migrated] c1-migrated vs its stripped twin · hover · no consumer paint
+T-7 PASS · 24/24 gating cells pass [unmigrated 4/35 · migrated 24/24]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/runs/dp-src/T-7-chromium.json
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:111> w=wb-choice-card
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:112> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/wb-choice-card.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/builds/dp-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out --engine chromium
+W-B · every multi-line one-of-N site composes the choice card (D4-B)
+  target dp-src (flavor src) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 13.83 / 16.69 / 19.81 at start, 16.59 / 17.09 / 19.86 at end · other headless browser processes at start: 7 (waited 0.2 s) · browser lock waited 0 s
+  FAIL       exports · RED by absence: no ChoiceGroup/ChoiceCard in the bundle (exports seen: [none])
+  FAIL       preset · 0 multi-line items · slots [] · roles [] (CDP AX tree) · used corner  · tab stops 1
+  PASS       preset arrows grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  PASS       preset arrows grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true
+  PASS       preset arrows grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true
+  PASS       preset arrows grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true
+  info-pass  preset arrows grid edge ArrowDown from #2 (no item that way; reported) · focus 2 → 3 · moved true · checked true
+  info-pass  preset arrows grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 3 · moved true · checked true
+  FAIL       specimen · 8 multi-line items · slots [toggle-group-item] · roles [radio] (CDP AX tree) · used corner 18.00 · tab stops 1
+  PASS       specimen arrows grid ArrowRight from #0 · focus 0 → 1 · moved true · checked true
+  PASS       specimen arrows grid ArrowLeft from #1 · focus 1 → 0 · moved true · checked true
+  PASS       specimen arrows grid ArrowDown from #0 · focus 0 → 2 · moved true · checked true
+  PASS       specimen arrows grid ArrowUp from #2 · focus 2 → 0 · moved true · checked true
+  info-pass  specimen arrows grid edge ArrowDown from #6 (no item that way; reported) · focus 6 → 7 · moved true · checked true
+  info-pass  specimen arrows grid edge ArrowUp from #0 (no item that way; reported) · focus 0 → 7 · moved true · checked true
+  FAIL       strip · 6 multi-line items · slots [] · roles [button] (CDP AX tree) · used corner 22.00 · tab stops 6
+  FAIL       strip arrows row ArrowRight from #0 · focus 0 → 0 · moved false · checked true
+  FAIL       strip arrows row ArrowLeft from #1 · focus 1 → 1 · moved false · checked true
+  FAIL       strip arrows row ArrowDown from #0 (linear step, Q-4 b) · focus 0 → 0 · moved false · checked true
+  FAIL       strip arrows row ArrowUp from #5 (linear step, Q-4 b) · focus 5 → 5 · moved false · checked true
+  FAIL       contract T-3 preset light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.19:1; p95 1.20; items 1/0 204×40
+  FAIL       contract T-3 preset dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.23:1; p95 1.28; items 1/0 204×40
+  FAIL       contract T-3 preset prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 244.00 px²; fill 1.00:1; p95 1.00; items 1/0 204×40
+  FAIL       contract T-3 specimen light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.19:1; p95 1.19; items 1/0 207×36
+  FAIL       contract T-3 specimen dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.22:1; p95 1.29; items 1/0 207×36
+  FAIL       contract T-3 specimen prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 243.00 px²; fill 1.00:1; p95 1.00; items 1/0 207×36
+  FAIL       contract T-3 strip light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 88.00 px²; fill 1.49:1; p95 1.50; items 1/0 44×44
+  PASS       contract T-3 strip dark · carrier ≥3:1 area 846.50 px² (perimeter band 0.00, interior 846.50) vs the bar 88.00 px²; fill 3.21:1; p95 3.53; items 1/0 44×44
+  FAIL       contract T-3 strip prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 88.00 px²; fill 1.13:1; p95 1.13; items 1/0 44×44
+W-B FAIL · 9/25 gating cells pass [library 9/25]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/runs/dp-src/W-B-chromium.json
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:111> w=we-one-line
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:112> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/we-one-line.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/builds/dp-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out --engine chromium
+W-E · every one-of-N option is one line, and what a consumer installs refuses one that is not (D4-E)
+  target dp-src (flavor src) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 16.59 / 17.09 / 19.86 at start, 15.99 / 16.95 / 19.80 at end · other headless browser processes at start: 7 (waited 0.3 s) · browser lock waited 0 s
+  PASS       preset · 4 items · 0 not one line · e.g. 40.00 px tall at rung 40.00 (1.00 rungs), 1 rows
+  info-fail  preset refusal (flavor src: a src alias build, reported, not gated) · a line added to item 0 → no refusal (no console error, no throw)
+  FAIL       specimen · 8 items · 8 not one line · e.g. 36.00 px tall at rung 36.00 (1.00 rungs), 3 rows
+  info-fail  specimen refusal (flavor src: a src alias build, reported, not gated) · a line added to item 0 → no refusal (no console error, no throw)
+  FAIL       strip · 6 items · 6 not one line · e.g. 44.00 px tall at rung 44.00 (1.00 rungs), 2 rows
+  info-fail  strip refusal (flavor src: a src alias build, reported, not gated) · a line added to item 0 → no refusal (no console error, no throw)
+W-E FAIL · 1/3 gating cells pass [library 1/3]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/out/runs/dp-src/W-E-chromium.json
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/run-fv5.sh:113> true
+exit 0 · 2026-10-19 00:19:21 · load { 16.07 16.95 19.78 }

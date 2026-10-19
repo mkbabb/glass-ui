@@ -1,0 +1,58 @@
+2026-10-18 23:14:21 · load { 39.92 35.06 29.49 }
++zsh:3> D0=+zsh:3> git diff HEAD --binary
++zsh:3> D0=+zsh:3> shasum
++zsh:3> D0=+zsh:3> cut -c1-12
++zsh:3> D0=5b6380a55152 
++zsh:4> python3 /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/mkpatch.py snap /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/wt /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-5/D4-Dp.patch /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/snap-dp
+snapped 8 paths (1 absent)
++zsh:5> git apply --check -v /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-5/D4-Dp.patch
+Checking patch MIGRATION.md...
+Checking patch src/components/toggle-group/ToggleGroup.vue...
+Checking patch src/components/toggle-group/index.ts...
+Checking patch src/components/toggle-group/styles.css...
+Checking patch src/index.ts...
+Checking patch tests/components/ui/toggle-group/ToggleGroup.test.ts...
+Checking patch tests/styles/radius-role-canon.test.ts...
+Checking patch src/components/toggle-group/shape.ts...
++zsh:5> git apply -v /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-5/D4-Dp.patch
+Checking patch MIGRATION.md...
+Checking patch src/components/toggle-group/ToggleGroup.vue...
+Checking patch src/components/toggle-group/index.ts...
+Checking patch src/components/toggle-group/styles.css...
+Checking patch src/index.ts...
+Checking patch tests/components/ui/toggle-group/ToggleGroup.test.ts...
+Checking patch tests/styles/radius-role-canon.test.ts...
+Checking patch src/components/toggle-group/shape.ts...
+Applied patch MIGRATION.md cleanly.
+Applied patch src/components/toggle-group/ToggleGroup.vue cleanly.
+Applied patch src/components/toggle-group/index.ts cleanly.
+Applied patch src/components/toggle-group/styles.css cleanly.
+Applied patch src/index.ts cleanly.
+Applied patch tests/components/ui/toggle-group/ToggleGroup.test.ts cleanly.
+Applied patch tests/styles/radius-role-canon.test.ts cleanly.
+Applied patch src/components/toggle-group/shape.ts cleanly.
++zsh:6> python3 /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5/mkpatch.py since /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/wt /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/floor5/snap-dp /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/D4-Dp.patch
+wrote /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/D4-Dp.patch: 8 files
++zsh:7> shasum /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-5/D4-Dp.patch /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/D4-Dp.patch
+b09d15e48696686fec188122153361f4d6820d1a  /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-5/D4-Dp.patch
+0046d3a636e713414702669ce7b0adcee8c055ff  /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/D4-Dp.patch
++zsh:7> git apply --numstat /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/D4-Dp.patch
++zsh:7> awk '{a+=$1; d+=$2; n++} END {print n" files, +"a" / -"d}'
+8 files, +291 / -9
++zsh:8> git apply -R --check /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/D4-Dp.patch
++zsh:8> git apply -R /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/D4-Dp.patch
++zsh:9> D1=+zsh:9> git diff HEAD --binary
++zsh:9> D1=+zsh:9> shasum
++zsh:9> D1=+zsh:9> cut -c1-12
++zsh:9> D1=5b6380a55152 
++zsh:9> [[ 5b6380a55152 == 5b6380a55152 ]]
++zsh:9> echo equal
++zsh:9> echo 'floor v5 tree before 5b6380a55152 after reverse 5b6380a55152 (equal)'
+floor v5 tree before 5b6380a55152 after reverse 5b6380a55152 (equal)
++zsh:10> git status --porcelain
++zsh:10> grep '^??'
++zsh:10> grep -v node_modules
++zsh:10> tr '\n' ' '
++zsh:10> echo 'untracked: ?? src/components/_shared/guard.ts ?? tests/components/custom/tabs/roving-grid.test.ts ?? tests/components/ui/toggle-group/item-attrs.test.ts ?? tests/utils/strongObservers.ts '
+untracked: ?? src/components/_shared/guard.ts ?? tests/components/custom/tabs/roving-grid.test.ts ?? tests/components/ui/toggle-group/item-attrs.test.ts ?? tests/utils/strongObservers.ts 
+exit 0 · 2026-10-18 23:14:22 · load { 39.92 35.06 29.49 }
