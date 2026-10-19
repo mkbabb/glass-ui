@@ -1,0 +1,55 @@
+{
+ "id": "E-7",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p4/C-A4/out/builds/plant"
+ },
+ "loadStart": "27.4/21.0/18.4",
+ "loadEnd": "26.3/20.9/18.3",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-7 writers data-engaged (static)",
+   "status": "PASS",
+   "line": "1 writer file(s): src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p4/C-A4/wt-plant",
+   "load": "27.4/21.0/18.4"
+  },
+  {
+   "name": "E-7 writers data-held (static)",
+   "status": "FAIL",
+   "line": "2 writer file(s): src/components/dock/GlassDock.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p4/C-A4/wt-plant",
+   "load": "27.4/21.0/18.4"
+  },
+  {
+   "name": "E-7 writers data-press (static)",
+   "status": "FAIL",
+   "line": "2 writer file(s): src/components/toggle-group/plantWriter.ts, src/composables/motion/engage/press.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p4/C-A4/wt-plant",
+   "load": "27.4/21.0/18.4"
+  },
+  {
+   "name": "E-7 writers data-commit (static)",
+   "status": "PASS",
+   "line": "1 writer file(s): src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p4/C-A4/wt-plant",
+   "load": "27.4/21.0/18.4"
+  },
+  {
+   "name": "E-7 slider held",
+   "status": "PASS",
+   "line": "[data-engaged] nodes while pointer-held 3 · bound ≥ 1",
+   "load": "27.4/21.0/18.4"
+  },
+  {
+   "name": "E-7 slider held PRM",
+   "status": "PASS",
+   "line": "reduce · [data-engaged] nodes while pointer-held 3 · bound ≥ 1",
+   "load": "27.4/21.0/18.4"
+  },
+  {
+   "name": "E-7 modal open, nothing held",
+   "status": "PASS",
+   "line": "dialog open true · veil nodes 1 · [data-engaged] nodes 0 · bound 0",
+   "load": "26.3/20.9/18.3"
+  }
+ ]
+}

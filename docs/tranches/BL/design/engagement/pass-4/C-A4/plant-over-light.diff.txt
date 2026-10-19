@@ -1,0 +1,41 @@
+55c55
+<         :class="cn('switch control-bit engage-chosen', props.class)"
+---
+>         :class="cn('switch control-bit', props.class)"
+66,67c66,67
+<         :role="selectable ? 'option' : undefined"
+<         :tabindex="selectable ? 0 : undefined"
+---
+>         role="option"
+>         tabindex="0"
+32c32
+< useEngage(() => (rootRef.value?.$el as HTMLElement | undefined) ?? null, { commit: "state" });
+---
+> // C-A4 PLANT P3 useEngage(() => (rootRef.value?.$el as HTMLElement | undefined) ?? null, { commit: "state" });
+237c237
+<         :where(.engage-chosen, .engage-pressed, .engage-disclosed):where(:not(.dock-trigger, .dock-select-trigger, .dock-dropdown-trigger))::after,
+---
+>         :where(.engage-chosen, .engage-pressed, .engage-disclosed)::after,
+298a299,300
+> 
+> @layer components { .button { --rung-light: transparent; } } /* C-A4 PLANT P6 */
+85c85
+<     .toggle-group__item:not(:disabled, [data-disabled])[data-press] {
+---
+>     .toggle-group__item:not(:disabled, [data-disabled]):active {
+135c135
+<     .toggle-group__item[data-state="on"]:not(:disabled, [data-disabled])[data-press] {
+---
+>     .toggle-group__item[data-state="on"]:not(:disabled, [data-disabled]):active {
+330c330
+<         transition-delay: var(--engage-press-drain-release);
+---
+>         transition-delay: 0s; /* C-A4 PLANT P9 */
+439a440,441
+> 
+> @layer components { .segmented-tab > .segmented-tab__light { display: none !important; } } /* C-A4 PLANT P8 */
+P10 (round 2): new file src/components/toggle-group/plantWriter.ts:
+// C-A4 PLANT P10: a second writer of data-press outside engage/
+export const plantPress = (el: HTMLElement) => el.setAttribute("data-press", "");
+P11 (round 2): appended to src/styles/glass/glass-chip.css:
+@layer components { .glass-chip--interactive[data-press] { opacity: 0.98; transition: opacity 77ms linear; } } /* C-A4 PLANT P11 */

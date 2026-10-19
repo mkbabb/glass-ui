@@ -1,0 +1,11 @@
+# start E-1 plant webkit 2026-10-19 03:07:17 load { 16.71 18.82 17.52 }
+E-1 webkit   exit 1 · E-1 webkit FAIL · 89 pass, 7 fail, 0 unmeasured of 96 gating cells (0 reported) · load 16.7/18.8/17.5 at start, 25.0/20.4/18.2 at end · 42 s, load at start 16.7/18.8/17.5
+    FAIL       E-1 adoption switch · declared chosen · 3 instance(s) in 3 scene(s) · NOT ADOPTED: switch: button[role=switch].switch.control-bit computes [unclassed] · press_switch: button[role=switch].switch.control-bit computes [unclassed] · s6: button[role=switch].switch.control-bit computes [unclassed] · load 15.9/18.5/17.4
+    FAIL       E-1 static-inert card · live static elements: gallery: div[role=option].glass-resting.card.engage-static (tabIndex 0, role option) · load 15.9/18.5/17.4
+    FAIL       E-1 static-inert surface · live static elements: gallery: div[role=option].glass-resting.card.engage-static (tabIndex 0, role option) · load 15.9/18.5/17.4
+    FAIL       E-1 adoption latch · 53 of 55 declared members seen adopting their recipe; unproven (not rendered by any scene, or not adopted): dock switch · load 15.9/18.5/17.4
+    FAIL       E-1 runtime presented (sheet) PRM press-light · scene sheet: no target while pressed · load 22.2/19.8/17.9
+    FAIL       E-1 runtime ambient (aurora) · scene ambient, rung rest · pointer moved across: mean pixel change 1.20 levels against 1.16 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift) · load 25.0/20.4/18.2
+    FAIL       E-1 runtime ambient (aurora) PRM press-light · scene ambient, reduce · pointer moved across: mean pixel change 0.00 levels against 0.00 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift) · load 25.0/20.4/18.2
+# exit 1
+# end E-1 plant webkit 2026-10-19 03:08:00 load { 25.03 20.43 18.15 }

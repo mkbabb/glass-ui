@@ -1,0 +1,61 @@
+{
+ "id": "E-9",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p4/C-A4/out/builds/plant"
+ },
+ "loadStart": "17.9/19.3/18.1",
+ "loadEnd": "17.5/19.1/18.1",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-9 tabs press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 20 frames (bound < 0.002)",
+   "load": "17.8/19.2/18.1"
+  },
+  {
+   "name": "E-9 tabs press-light light",
+   "status": "PASS",
+   "line": "press-only paint changes [background-color] (bound ≥ 1)",
+   "load": "17.8/19.2/18.1"
+  },
+  {
+   "name": "E-9 tabs commit-spatial light",
+   "status": "PASS",
+   "line": "commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 78.33 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 50 frames",
+   "load": "17.8/19.2/18.1"
+  },
+  {
+   "name": "E-9 tabs commit-light light",
+   "status": "FAIL",
+   "line": "commit(ArrowRight) under reduce, state \"a\" → \"b\": the transient · light rise 0.0000 on the layers channel (peak 0.7807 → rest 0.7807, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0077, tail spread 0.0000 against 0.0077)",
+   "load": "17.8/19.2/18.1"
+  },
+  {
+   "name": "E-9 tabs press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 20 frames (bound < 0.002)",
+   "load": "17.5/19.1/18.1"
+  },
+  {
+   "name": "E-9 tabs press-light dark",
+   "status": "PASS",
+   "line": "press-only paint changes [background-color] (bound ≥ 1)",
+   "load": "17.5/19.1/18.1"
+  },
+  {
+   "name": "E-9 tabs commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 50 frames",
+   "load": "17.5/19.1/18.1"
+  },
+  {
+   "name": "E-9 tabs commit-light dark",
+   "status": "FAIL",
+   "line": "commit(ArrowRight) under reduce, state \"a\" → \"b\": the transient · light rise 0.0000 on the layers channel (peak 0.0033 → rest 0.0033, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0003, tail spread 0.0000 against 0.0040)",
+   "load": "17.5/19.1/18.1"
+  }
+ ]
+}
