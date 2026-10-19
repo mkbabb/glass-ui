@@ -1,0 +1,11 @@
+2026-10-19 06:15:31 · load { 10.64 11.02 11.22 }
+CRIT-NAME-TRACE · X-2: which rule holds the selected K2 name at the rest ink (reported)
+  target f-src (flavor src) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 10.64 / 11.02 / 11.22 at start, 10.19 / 10.92 / 11.18 at end · other headless browser processes at start: 5 (waited 0.2 s) · browser lock waited 0 s
+  UNMEASURED light · [0] <span class="tile-name text-mono-caption" data-ink,data-line-slot,data-register> computed oklch(0.216114 0.00613456 55.9893) · 0 matched color rule(s), cascade order: none (inherits)
+  UNMEASURED light · [1] <button class="toggle-group__item pill-row control-surface glass-control-edge glass-capsule-hover tap-squish focus-ring" data-item,data-surface,data-slot,data-state,data-th-idx> computed oklch(0.216114 0.00613456 55.9893) · 2 matched color rule(s), cascade order: (1) «button, input, select, optgroup, textarea» [regular; base] color: inherit · (2) «.toggle-group__item» [regular; components] color: var(--selection-ink)
+  UNMEASURED dark · [0] <span class="tile-name text-mono-caption" data-ink,data-line-slot,data-register> computed oklch(0.926146 0.00632027 75.0765) · 0 matched color rule(s), cascade order: none (inherits)
+  UNMEASURED dark · [1] <button class="toggle-group__item pill-row control-surface glass-control-edge glass-capsule-hover tap-squish focus-ring" data-item,data-surface,data-slot,data-state,data-th-idx> computed oklch(0.926146 0.00632027 75.0765) · 2 matched color rule(s), cascade order: (1) «button, input, select, optgroup, textarea» [regular; base] color: inherit · (2) «.toggle-group__item» [regular; components] color: var(--selection-ink)
+CRIT-NAME-TRACE FAIL · 0/0 gating cells pass
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/D4-F-crit/out/runs/f-src/CRIT-NAME-TRACE-chromium.json
+exit 1 · 2026-10-19 06:15:33 · load { 10.19 10.92 11.18 }

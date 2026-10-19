@@ -1,0 +1,6 @@
+2026-10-19 06:43:32 · load { 8.65 8.28 8.90 }
+REPORT HARNESS ERROR Error: REPORT reads a route build, and f-atk-src is an attack build (migration H4-attack): its V2 and K2 carry no route tile, so the mark and the name read nothing. Pass the route build (build.mjs --route <route dir>), as run.mjs does (H5-6)
+    at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/report-h46.mjs:106:36
+    at async cli (file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/lib.mjs:799:17)
+    at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/report-h46.mjs:100:3
+exit 2 · 2026-10-19 06:43:33 · load { 8.76 8.30 8.91 }

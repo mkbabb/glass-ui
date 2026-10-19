@@ -1,0 +1,12 @@
+2026-10-19 06:05:59 · load { 9.86 10.72 11.29 }
+ATTACK · empty anatomy is pills, consumer attributes land under the engine, a superscript is not a second row, a nested group is named at mount (H4-1, H5-4; E-3, R-2, R-9, X-5)
+  target dp-atk-src-dev (flavor src-dev, DEV) · Chromium 149.0.7827.55 · harness H6 e2360106ad0d
+  load 9.86 / 10.72 / 11.29 at start, 10.51 / 10.84 / 11.33 at end · other headless browser processes at start: 7 (waited 0.2 s) · browser lock waited 0 s
+  PASS       empty · c1-migrated light · group fact none, item fact none · item 0 184.00×40.00 9999px → used 20.00 (h/2 20.00), row · anatomy rows rendered 0, empty 0 · want a pill (no tile fact, h/2)
+  PASS       empty · c1-migrated dark · group fact none, item fact none · item 0 184.00×40.00 9999px → used 20.00 (h/2 20.00), row · anatomy rows rendered 0, empty 0 · want a pill (no tile fact, h/2)
+  PASS       attrs · preset-migrated · pointer click on item 0: consumer @click ran 1× (want 1), aria-checked true, role radio (want radio), class true, style --atk-style "7", data-consumer yes, aria-label "preset smooth", tab stops 1 (want 1)
+  PASS       sup · strip-migrated [src-dev] · pill 40.00 px, used 20.00 · console errors 0 over 6 one-row pills (want 0)
+  PASS       x5 · matrix-migrated [src-dev] · console errors counted from navigation (5 in all) · option tc (holds a nested group) named 1× as holding an interactive descendant, 1 before ready; option pc (holds a nested group) named 1× as holding an interactive descendant, 1 before ready (want each ≥ 1)
+ATTACK PASS · 5/5 gating cells pass [library 5/5]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/D4-F-crit/out/runs/dp-atk-src-dev/ATTACK-chromium.json
+exit 0 · 2026-10-19 06:06:06 · load { 10.51 10.84 11.33 }

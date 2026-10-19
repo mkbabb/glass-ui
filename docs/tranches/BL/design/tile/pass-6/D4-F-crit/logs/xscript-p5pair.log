@@ -1,0 +1,28 @@
+2026-10-19 05:43:45 · load { 12.79 13.21 14.74 }
+admitted · 2026-10-19 05:43:45 · load { 12.79 13.21 14.74 }
+XSCRIPT · the routes' transcriptions differ only by the declaration, paint nothing, and the shared blocks set no ink on content (H5-5, H6-2; X-2, T-7)
+  target xscript-D4-Dp-p5-D4-F-p5 · engine-free (a static read of each route's migrated.mjs and scenes.mjs SHARED_CSS) · harness H6 e2360106ad0d
+  FAIL       site equal · preset · D4-Dp-p5 and D4-F-p5, each with its declaration removed · markup DIFFERS at char 244: «…alue="p.name" :title="p.blurb" data-item class="preset-cell w-full min-w-0"><span data-ink class="te» vs «…alue="p.name" :title="p.blurb" data-item><span data-ink class="text-small capitalize">{{ p.name }}</» · css equal
+  PASS       site equal · specimen · D4-Dp-p5 and D4-F-p5, each with its declaration removed · markup equal · css equal
+  FAIL       site equal · strip · D4-Dp-p5 and D4-F-p5, each with its declaration removed · markup DIFFERS at char 425: «…abel="fam.family + '-' + t[0]" data-item class="vj-tile"><svg data-ink class="tile-glyph" viewBox="0» vs «…abel="fam.family + '-' + t[0]" data-item><svg data-ink class="tile-glyph" viewBox="0 0 1 1" aria-hid» · css DIFFERS at char 24: «.tile-glyph path{stroke:var(--selection-ink);}.tile-label{color:var(--selection-ink)» vs «.tile-glyph path{stroke:currentColor;}.toggle-group__media{justify-content:center;}.»
+  FAIL       site equal · f1 · D4-Dp-p5 and D4-F-p5, each with its declaration removed · markup DIFFERS at char 27: «…<ToggleGroup type="single" size="sm" data-group aria-label="Harmonic level" class="f1-g» vs «…<ToggleGroup type="single" data-group aria-label="Harmonic level" class="f1-grid flex-n» · css DIFFERS at char 11: «.grid-label{color:var(--selection-ink);}» vs «.grid-label,.toggle-group__meta{align-self:center;}»
+  FAIL       site equal · v2 · D4-Dp-p5 and D4-F-p5, each with its declaration removed · markup DIFFERS at char 29: «…<ToggleGroup type="multiple" data-group aria-label="Mix sources" class="flex flex-col gap» vs «…<ToggleGroup type="multiple" orientation="vertical" data-group aria-label="Mix sources" c» · css equal
+  FAIL       site equal · c1 · D4-Dp-p5 and D4-F-p5, each with its declaration removed · markup DIFFERS at char 194: «…key="o.value" :value="o.value" data-item class="justify-start"><svg class="size-4 shrink-0" :class="» vs «…key="o.value" :value="o.value" data-item><span data-ink data-line-slot class="flex-1 text-left">{{ o» · css equal
+  FAIL       site paint · D4-Dp-p5 preset · CONSUMER PAINT: <span> class text-muted-foreground
+  PASS       site paint · D4-Dp-p5 specimen · no rule paints the option and no markup sets ink on its content
+  FAIL       site paint · D4-Dp-p5 strip · CONSUMER PAINT: .tile-glyph path { stroke: var(--selection-ink) }; .tile-label { color: var(--selection-ink) }
+  FAIL       site paint · D4-Dp-p5 f1 · CONSUMER PAINT: .grid-label { color: var(--selection-ink) }; <path> stroke="var(--accent-red)"
+  FAIL       site paint · D4-Dp-p5 v2 · CONSUMER PAINT: <span> class text-muted-foreground
+  FAIL       site paint · D4-Dp-p5 c1 · CONSUMER PAINT: <svg> :class bound to the selection model "model === o.value ? 'opacity-100' : 'opacity-0'"; <span> class text-muted-foreground
+  PASS       site paint · D4-F-p5 preset · no rule paints the option and no markup sets ink on its content
+  PASS       site paint · D4-F-p5 specimen · no rule paints the option and no markup sets ink on its content
+  PASS       site paint · D4-F-p5 strip · no rule paints the option and no markup sets ink on its content
+  PASS       site paint · D4-F-p5 f1 · no rule paints the option and no markup sets ink on its content
+  PASS       site paint · D4-F-p5 v2 · no rule paints the option and no markup sets ink on its content
+  PASS       site paint · D4-F-p5 c1 · no rule paints the option and no markup sets ink on its content
+  PASS       shared ink · scenes.mjs SHARED_CSS outside [data-arm="verbatim"] · no rule sets ink on content (49 content classes read from the markup)
+  info       shared paint on content (not ink) · .curve-ball { border-radius: var(--radius-pill) } (content: .curve-ball)
+  info       shared paint on content (not ink) · .curve-ball { background: var(--ball-tone,var(--color-progress)) } (content: .curve-ball)
+  info       shared paint on content (not ink) · .curve-ball { box-shadow: 0 2px 10px color-mix(in srgb,var(--ball-tone,var(--color-progress)) var(--ball-glow,35%),transparent) } (content: .curve-ball)
+XSCRIPT FAIL · 9/19 gating cells pass
+exit 1 · 2026-10-19 05:43:49 · load { 12.09 13.05 14.68 }
