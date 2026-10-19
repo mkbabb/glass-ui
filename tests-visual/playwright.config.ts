@@ -128,7 +128,7 @@ export default defineConfig({
             // run headless-WebKit in CI (the proof:visual-runner split — CI proves the
             // WIRING, the local WebKit run proves the PAINT).
             name: "webkit",
-            testMatch: ["safari-webgl.spec.ts", "aurora-swraster.spec.ts"],
+            testMatch: ["safari-webgl.spec.ts", "aurora-swraster.spec.ts", "release-10-1-1.spec.ts"],
             use: {
                 ...devices["Desktop Safari"],
                 viewport: { width: 1280, height: 800 },
