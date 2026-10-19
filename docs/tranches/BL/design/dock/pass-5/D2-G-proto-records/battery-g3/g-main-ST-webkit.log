@@ -1,0 +1,15 @@
+ 0:17  up 1 day, 12:09, 2 users, load averages: 19.33 18.05 20.53
+PASS  ST  Playwright WebKit  stall·same-task  same-task: a 1200 ms block 0 ms after the flip (video: trigger marker → block-end marker 1240 ms); D 379.19 px (101.84 → 481.03); first leaves its rest at 1240 ms, travels 0.53 px before the block-end marker, lands at 2560 ms (RECORD; video scale 0.982); worst one-frame step 145.95 px at 1280 ms (dt 40 ms) vs bound 192.47 px (×0.76)  [load 18.3]
+PASS  ST  Playwright WebKit  stall·1raf  1raf: a 1200 ms block 16 ms after the flip (video: trigger marker → block-end marker 1240 ms); D 378.98 px (101.83 → 480.82); first leaves its rest at 1240 ms, travels 0.48 px before the block-end marker, lands at 2560 ms (RECORD; video scale 0.983); worst one-frame step 177.76 px at 1280 ms (dt 40 ms) vs bound 192.37 px (×0.92)  [load 17.87]
+PASS  ST  Playwright WebKit  stall·2raf  2raf: a 1200 ms block 31 ms after the flip (video: trigger marker → block-end marker 1240 ms); D 378.81 px (101.8 → 480.61); first leaves its rest at 40 ms, travels 377.86 px before the block-end marker, lands at 2320 ms (RECORD; video scale 0.983); worst one-frame step 134.97 px at 80 ms (dt 40 ms) vs bound 192.28 px (×0.7)  [load 16.77]
+PASS  ST  Playwright WebKit  stall·100ms  100ms: a 1200 ms block 101 ms after the flip (video: trigger marker → block-end marker 1320 ms); D 379.84 px (101.98 → 481.82); first leaves its rest at 40 ms, travels 378.99 px before the block-end marker, lands at 2360 ms (RECORD; video scale 0.981); worst one-frame step 144.71 px at 80 ms (dt 40 ms) vs bound 192.8 px (×0.75)  [load 16.63]
+PASS  ST  Playwright WebKit  stall·mid-flight  mid-flight: a 1200 ms block 84 ms after the flip (video: trigger marker → block-end marker 1320 ms); D 379.17 px (101.9 → 481.07); first leaves its rest at 40 ms, travels 378.3 px before the block-end marker, lands at 2360 ms (RECORD; video scale 0.982); worst one-frame step 147.45 px at 80 ms (dt 40 ms) vs bound 192.46 px (×0.77)  [load 15.88]
+FAIL  ST  Playwright WebKit  stall·nb·same-task  not measured: the video shows no block-end marker  [load 15.81]
+FAIL  ST  Playwright WebKit  stall·nb·1raf  not measured: the video shows no block-end marker  [load 15.59]
+FAIL  ST  Playwright WebKit  stall·nb·2raf  not measured: the video shows no block-end marker  [load 14.97]
+FAIL  ST  Playwright WebKit  stall·nb·100ms  not measured: the video shows no block-end marker  [load 14.81]
+FAIL  ST  Playwright WebKit  stall·nb·mid-flight  not measured: the video shows no block-end marker  [load 13.83]
+FAIL  ST  g@ed39cbf5  5/10 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p5/G-proto/wt/.gout3/webkit/g/main/runs/ST-g/ST.json)
+exit 1
+ 0:18  up 1 day, 12:10, 2 users, load averages: 13.83 16.69 19.81
+reds: ^(stall·nb·100ms(·control)?|stall·nb·1raf(·control)?|stall·nb·2raf(·control)?|stall·nb·mid-flight(·control)?|stall·nb·same-task(·control)?)$
