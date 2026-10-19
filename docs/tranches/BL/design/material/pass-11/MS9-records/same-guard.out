@@ -1,0 +1,25 @@
+== same start 14:35:33 load { 22.11 25.69 30.63 }
+worktree = minor-split-v9.patch
+built the demo → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p11/minor9/wt/.d3out/builds/same/demo
+minor v9 built as 'same' 14:35:35 load { 22.11 25.69 30.63 }
+worktree = minor-split-v8.patch
+built the demo → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p11/minor9/wt/.d3out/builds/same/demo
+minor v8 built as 'same' 14:35:38 load { 20.98 25.40 30.49 }
+worktree = minor-split-v9.patch
+built the demo → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p11/minor9/wt/.d3out/builds/same/demo
+minor v9 rebuilt as 'same' (determinism) 14:35:40 load { 20.98 25.40 30.49 }
+dist minor v8 vs minor v9: diff -rq exit 0, 0 lines
+dist minor v9 vs minor v9 rebuilt: diff -rq exit 0
+dist files: m8 3, m9 3; sha256 list diff exit 0
+demo minor v8 vs minor v9: diff -rq exit 0, 0 lines
+demo minor v9 vs minor v9 rebuilt: diff -rq exit 0
+demo files: m8 346, m9 346; sha256 list diff exit 0
+m8 specimen css index-Bd1ws62N.css 398432 B sha256 e11613c3eeb45cab2ebe3e88245ba9a55a8c41b640f48d9a45df116bb3638b0a
+m9 specimen css index-Bd1ws62N.css 398432 B sha256 e11613c3eeb45cab2ebe3e88245ba9a55a8c41b640f48d9a45df116bb3638b0a
+m8 dist-demo css total 431116 B, files 347
+m9 dist-demo css total 431116 B, files 347
+-- R-27: the ties to pass 10's banked minor v8 (pass-10/MS8-records/same-m8-*.sha256): specimen CSS hash and dist-demo list only
+banked minor v8 specimen css: e11613c3eeb45cab2ebe3e88245ba9a55a8c41b640f48d9a45df116bb3638b0a  ./assets/index-Bd1ws62N.css
+minor v9 specimen css:        e11613c3eeb45cab2ebe3e88245ba9a55a8c41b640f48d9a45df116bb3638b0a  ./assets/index-Bd1ws62N.css
+demo banked m8 list vs m9 list: diff exit 0, 0 lines
+== same end 14:35:40 load { 20.98 25.40 30.49 }

@@ -1,0 +1,15 @@
+diff --git a/tests/styles/glass-subtlety.test.ts b/tests/styles/glass-subtlety.test.ts
+index 50cfe1f57..140d9476b 100644
+--- a/tests/styles/glass-subtlety.test.ts
++++ b/tests/styles/glass-subtlety.test.ts
+@@ -190,8 +190,8 @@ describe("glass veil ladder — light on the computed bound, dark the ink ladder
+ 
+     it("paints the light veil as the `--card` pole and DIMS in dark with a near-black ink", () => {
+         // Light: the plate is the theme's own ground at α, so it never darkens toward a
+-        // near-black ink over paper (O-62). Dark: the sign law holds, the rung darkens
+-        // what is behind it.
++        // near-black ink over paper (O-62). Dark: the ink stays near-black (L 0.17 < 0.5,
++        // asserted below), never the cream foreground.
+         expect(light.get("--glass-veil-ink")).toBe("var(--card)");
+         const darkInk = declMap(darkArm).get("--glass-veil-ink")!;
+         expect(Number.parseFloat(darkInk.match(/oklch\(\s*([\d.]+)/)![1])).toBeLessThan(0.5);

@@ -1,0 +1,12 @@
+MS9-rulings.json = MS8-rulings-proposed.json (cmp), sha1 7893e7d5
+SWEEP minor9 LIST exit 0: LIST (369 lines to read; no rulings given)
+SWEEP minor9 under MS9-rulings.json exit 0: PASS (369 lines: 351 ruled true, 18 reported)
+SWEEP · R-21 (b): every prose line of every touched file that carries a frozen word, a declared name, or a changed ladder's old tuple or rung number, printed with its context (static; H9-6, H10-1, H10-2)
+SWEEP lines=369 files=52 ruled=369 true=351 reported=18 unread=0 stale=0
+SWEEP minor8 under MS9-rulings.json (plant) exit 1: FAIL (2 unread, 0 stale of 371 lines)
+SWEEP minor9 under MS8-rulings.json (H10-2 plant) exit 1: FAIL (2 unread, 0 stale of 369 lines)
+sweep-minor8-plant.log:✗ unread src/styles/tokens/sizing.css:258 [word "darken"]
+sweep-minor8-plant.log:✗ unread src/styles/tokens/sizing.css:259 [word "darken"]
+sweep-minor9-under-ms8.log:✗ unread src/styles/glass/ladder.css:297 [word "bucket"]
+sweep-minor9-under-ms8.log:✗ unread src/styles/glass/ladder.css:299 [word "bucket"]
+SWEEP absent root exit 2: FAIL (nothing read: the tree does not exist)

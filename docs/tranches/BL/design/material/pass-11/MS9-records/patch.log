@@ -1,0 +1,26 @@
+minor-split-v8.patch + minor-split-v9-R29.diff = minor-split-v9.patch (cmp)
+# (the patch phase's own report block stopped at a GNU-only diff option; its report was re-run as the `patchlog` phase, below)
+minor-split-v8.patch + MS8-r26-proposed.diff (as banked) = minor-split-v9.patch (cmp)
+worktree = minor-split-v9.patch
+minor-split-v9-R29.diff: 2 files, +3/-3, sha1 6e095ae9
+MS8-r26-proposed.diff (R-29): 2 files, +3/-3, sha1 6e095ae9
+R-29 delta vs the worktree delta, hunk ranges and +/- lines: diff exit 0
+minor-split-v8.patch: 61 files, sha1 a843b388
+minor-split-v9.patch: 61 files, sha1 8cf39ccb; git diff --shortstat:  61 files changed, 730 insertions(+), 543 deletions(-)
+-- path list, minor v8 vs minor v9 (prints nothing = equal)
+paths diff exit 0
+-- line counts per R-29 file, minor v8 -> minor v9
+   src/styles/glass/ladder.css 306 -> 306
+   src/styles/tokens/sizing.css 342 -> 342
+-- .vue files in the R-29 delta: 0
+-- the R-29 delta's changed lines
+-           LIGHT page the content tiers paint the cream pole at the bound, so flipping the
++           LIGHT page the content tiers paint the cream pole at or above the bound, so flipping the
+-    /* The press DARKEN, read on `:active` alongside the scale-press so a press lands a
+-       brief darken rather than scaling alone. LIGHT: the one-ink SELECTED rung, ink over
++    /* The press FILL, read on `:active` alongside the scale-press so a press lands a
++       brief fill rather than scaling alone. LIGHT: the one-ink SELECTED rung, ink over
+-- every changed line of the delta sits inside a CSS block comment (minor v8 -> minor v9, difflib; comment state read on the minor v9 file)
+    src/styles/glass/ladder.css:298 in comment
+    src/styles/tokens/sizing.css:258 in comment
+    src/styles/tokens/sizing.css:259 in comment

@@ -1,0 +1,28 @@
+diff --git a/src/styles/glass/ladder.css b/src/styles/glass/ladder.css
+index 6902e8e8f..bf1872ac5 100644
+--- a/src/styles/glass/ladder.css
++++ b/src/styles/glass/ladder.css
+@@ -295,7 +295,7 @@
+            reconciled flip, not two forks (ladder.css stays the single source). */
+         /* The content-tier ink flip is GATED on the bright
+            signal (it moved INTO the @container bucket above), NOT unconditional. Over a calm
+-           LIGHT page the content tiers paint the cream pole at the bound, so flipping the
++           LIGHT page the content tiers paint the cream pole at or above the bound, so flipping the
+            ink to the contrast-color DARK ink there is correct only where the bucket
+            engages — the unconditional flip would force the contrast ink onto the calm
+            card. The content tiers therefore take NO unconditional contrast-color flip;
+diff --git a/src/styles/tokens/sizing.css b/src/styles/tokens/sizing.css
+index f14c3d1ec..9ef26de54 100644
+--- a/src/styles/tokens/sizing.css
++++ b/src/styles/tokens/sizing.css
+@@ -255,8 +255,8 @@
+        ring/accent defers so the consumer's indicator reads. */
+     --dock-ring: var(--focus-ring-shadow);
+ 
+-    /* The press DARKEN, read on `:active` alongside the scale-press so a press lands a
+-       brief darken rather than scaling alone. LIGHT: the one-ink SELECTED rung, ink over
++    /* The press FILL, read on `:active` alongside the scale-press so a press lands a
++       brief fill rather than scaling alone. LIGHT: the one-ink SELECTED rung, ink over
+        the control and never a plate colour. DARK: the resting plate stepped 7% toward
+        `--foreground`. */
+     --dock-control-press-bg: light-dark(
