@@ -139,10 +139,13 @@ describe("BK #87 · the inert-mark register", () => {
         const animations = css.match(/^\s*animation:\s*([^;]+);/gm) ?? [];
         const running = animations.filter((line) => !/animation:\s*none/.test(line));
 
-        expect(running).toHaveLength(1);
-        expect(running[0]).toContain("alternate");
-        expect(running[0]).toContain("var(--ease-standard)");
-        expect(running[0]).not.toMatch(/\blinear\b/);
+        // [2026-10-19 · O-102b (3)] Two arms now, the breathe and the owner-ruled
+        // shimmer; the full contract is `tests/components/ui/skeleton/Skeleton.test.ts`.
+        const breathe = running.filter((l) => l.includes("skeleton-breathe"));
+        expect(breathe).toHaveLength(1);
+        expect(breathe[0]).toContain("alternate");
+        expect(breathe[0]).toContain("var(--ease-standard)");
+        expect(breathe[0]).not.toMatch(/\blinear\b/);
         expect(css).not.toMatch(/translate3d|will-change|skeleton-scan/);
         expect(css).toContain("@keyframes skeleton-breathe");
     });

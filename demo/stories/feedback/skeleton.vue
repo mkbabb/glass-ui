@@ -49,6 +49,23 @@ import { Skeleton } from "@glass/components/skeleton";
             </ShowcaseFrame>
         </StorySection>
 
+        <StorySection label="shimmer">
+            <ShowcaseFrame
+                class="flex max-w-xl flex-col gap-3"
+                aria-busy="true"
+                aria-label="Loading the scene"
+            >
+                <p class="text-small text-muted-foreground">
+                    <code>shimmer</code> swaps the breathe for one sheen that travels
+                    across the shape. It is ink only, holds still under reduced motion,
+                    and pauses while the tile is off-screen.
+                </p>
+                <Skeleton shimmer data-testid="skeleton-shimmer" class="aspect-[16/9] w-full rounded-card" />
+                <Skeleton shimmer class="h-5 w-1/2" />
+                <Skeleton shimmer class="h-3.5 w-4/5" />
+            </ShowcaseFrame>
+        </StorySection>
+
         <StorySection label="light · dark · reduced motion">
             <ShowcaseFrame class="flex max-w-xl flex-col gap-4">
                 <p class="text-small text-muted-foreground">

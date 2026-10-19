@@ -72,25 +72,41 @@ describe("Skeleton breathes — F24 closed at the mechanism (BK #87 · S2)", () 
     // BORN-RED at HEAD: `SKELETON_SRC` carried `skeleton-scan`, `translate3d` and
     // `will-change` (5 matching lines) and its animation read
     // `skeleton-scan var(--duration-shimmer-fast) ease-in-out infinite`.
-    it("runs ONE animation, on an alternate cycle, on an ease — never a linear loop", () => {
+    // [2026-10-19 · O-102b (3)] The owner ruled a `shimmer` variant onto the tile, so the
+    // file now runs TWO animations, one per arm, and never both on one tile. The plain
+    // tile keeps the eased alternate breathe; the shimmer is a one-way loop, and a
+    // one-way loop runs `linear` because an ease stalls at its wrap seam.
+    it("runs ONE animation per arm: the plain tile breathes on an ease, the shimmer travels linear", () => {
         const declared = SKELETON_SRC.match(/^\s*animation:\s*([^;]+);/gm) ?? [];
         const running = declared.filter((line) => !/animation:\s*none/.test(line));
 
-        expect(running).toHaveLength(1);
-        expect(running[0]).toContain("skeleton-breathe");
-        // `alternate` is what lets an ease carry weight in BOTH directions. Easing a
-        // one-way loop is the shipped defect; a `linear` loop is weightless by
-        // construction under the liquid-weight edict. Only this pairing is honest.
-        expect(running[0]).toContain("alternate");
-        expect(running[0]).toContain("var(--ease-standard)");
-        expect(running[0]).not.toMatch(/\blinear\b/);
+        expect(running).toHaveLength(2);
+        const breathe = running.find((l) => l.includes("skeleton-breathe"))!;
+        const shimmer = running.find((l) => l.includes("skeleton-shimmer"))!;
+        expect(breathe).toContain("alternate");
+        expect(breathe).toContain("var(--ease-standard)");
+        expect(breathe).not.toMatch(/\blinear\b/);
+        expect(shimmer).toContain("var(--duration-shimmer-fast)");
+        expect(shimmer).toMatch(/\blinear\b/);
+        // One rest carrier per tile: the breathe is withheld from a shimmer tile.
+        expect(SKELETON_SRC).toMatch(/\.skeleton:not\(\[data-shimmer\]\)\s*\{\s*animation:\s*skeleton-breathe/);
     });
 
     // THE MUTATION THAT BITES, and the reason this row exists at all: retune the
     // clock while keeping the ±110% translate and this still REDS. The travel term
     // is what is measured, not the duration.
     it("animates no property whose travel scales with the box's own width", () => {
-        expect(SKELETON_SRC).not.toMatch(/translate3d|translateX|will-change|skeleton-scan/);
+        expect(SKELETON_SRC).not.toMatch(/translate3d|will-change|skeleton-scan/);
+        // The shimmer's travel is ONE fixed period, never a share of the box: every
+        // `translateX` reads `--skeleton-shimmer-period` and none spells a percentage.
+        const travels = (SKELETON_SRC.match(/translateX\([^;]*\)/g) ?? []).filter(
+            (t) => t !== "translateX(0)",
+        );
+        expect(travels.length).toBeGreaterThan(0);
+        for (const t of travels) {
+            expect(t).toContain("--skeleton-shimmer-period");
+            expect(t).not.toMatch(/%/);
+        }
         // Opacity is compositor-only and has no geometry to scale, so the breathe is
         // identical on a 213px chip and a 1246px block.
         expect(SKELETON_SRC).toMatch(/@keyframes skeleton-breathe\s*\{[^}]*opacity/);

@@ -1,12 +1,27 @@
 <script setup lang="ts">
-import { computed, type HTMLAttributes, useAttrs } from "vue";
+import {
+    computed,
+    effectScope,
+    ref,
+    useAttrs,
+    useTemplateRef,
+    watch,
+    type HTMLAttributes,
+} from "vue";
 import { cn } from "../_shared/class-names";
 import { fixedHostAttrs } from "../_shared/primitive";
+import { useIntersectionPause } from "../../composables/motion/core/useIntersectionPause";
 
 defineOptions({ inheritAttrs: false });
 
 const props = defineProps<{
     class?: HTMLAttributes["class"];
+    /**
+     * A travelling sheen across the reserved shape in place of the breathe. Ink
+     * only (the one-ink ladder, no hue), static under `prefers-reduced-motion`,
+     * paused while the tile is off-screen or the document is hidden.
+     */
+    shimmer?: boolean;
 }>();
 
 // CONTRACT FENCE, not a convenience strip (S8). `MIGRATION.md:121` is the
@@ -23,13 +38,40 @@ const hostAttrs = computed(() =>
         ),
     ),
 );
+
+// OFF-SCREEN PAUSE. A shimmer is a compositor loop, and a compositor loop on a tile
+// nobody can see still ticks. The observer exists only while the shimmer is on, so a
+// page of plain tiles pays for none.
+const el = useTemplateRef<HTMLElement>("el");
+const offscreen = ref(false);
+watch(
+    () => props.shimmer,
+    (on, _was, onCleanup) => {
+        if (!on) return;
+        const scope = effectScope();
+        scope.run(() =>
+            useIntersectionPause(el, {
+                pause: () => (offscreen.value = true),
+                resume: () => (offscreen.value = false),
+            }),
+        );
+        onCleanup(() => {
+            scope.stop();
+            offscreen.value = false;
+        });
+    },
+    { immediate: true },
+);
 </script>
 
 <template>
     <div
+        ref="el"
         v-bind="hostAttrs"
         data-slot="skeleton"
         aria-hidden="true"
+        :data-shimmer="shimmer || undefined"
+        :data-offscreen="(shimmer && offscreen) || undefined"
         :class="cn('skeleton', props.class)"
     />
 </template>
@@ -41,8 +83,14 @@ const hostAttrs = computed(() =>
    `--ink-{seam,edge,perimeter}` ladder. The reserved shape is an in-content
    stand-in, so it reads the in-content rung, `--ink-seam` — the same figure the
    separator paints, which is correct: they are the same kind of quiet mark on
-   the same plate. The shimmer/tinted-surface variant stays DECLINED (S2's four
-   falsifiers). */
+   the same plate.
+
+   THE SHIMMER, by OWNER RULING (2026-10-19, BL INBOUND O-102b (3)). The variant
+   was declined here on S2's falsifiers; the owner reversed the decline and ruled a
+   shimmer variant onto Skeleton, static under `prefers-reduced-motion` and
+   identity-neutral. It is the `shimmer` prop, and it is built against each of the
+   falsifiers that sank the old band rather than around them (see THE SHIMMER
+   below). The tinted-surface variant stays declined: the fill is ink. */
 @layer components {
     .skeleton {
         position: relative;
@@ -95,7 +143,7 @@ const hostAttrs = computed(() =>
    status-dot pulse as the register's two — and only two — rest carriers. */
 @layer components {
     @media (prefers-reduced-motion: no-preference) {
-        .skeleton {
+        .skeleton:not([data-shimmer]) {
             animation: skeleton-breathe 1.1s var(--ease-standard) infinite alternate;
         }
     }
@@ -107,12 +155,75 @@ const hostAttrs = computed(() =>
     }
 }
 
+/* ── THE SHIMMER — `shimmer`, the owner-ruled variant ───────────────────────────
+   One sheen replaces the breathe on the tile (a tile has one rest carrier, never
+   two). Each of the old band's falsifiers has its answer in a declaration:
+
+     · TRAVEL IS WIDTH-INVARIANT. The sheen is a repeating gradient of one fixed
+       PERIOD, and the layer that carries it translates by exactly one period per
+       cycle. Its speed is period ÷ duration on every tile, a 213px chip and a
+       1246px block alike, and the loop has no seam: after one period the pattern
+       is where it began.
+     · NO STALL AT THE SEAM. A one-way loop runs `linear`, because an ease on a
+       one-way loop decelerates to zero at the wrap seam. The weight is in the
+       band's profile, a soft rise and fall, not in its clock.
+     · ONE SHIMMER CLOCK. It rides `--duration-shimmer-fast`, the clock the
+       indeterminate flow band (`glass/track-flow.css`) already runs linear on; the
+       register has one shimmer clock, not two.
+     · COMPOSITOR-ONLY. `transform` on a pseudo-element; no repaint per frame.
+     · INK, NO HUE. The band is the foreground at the SEAM rung over the seam fill,
+       so its crest reads at about the EDGE rung of the one-ink ladder, in light and
+       in dark alike. No colour, no tint, no glow.
+     · STATIC UNDER REDUCE. The animation is gated on `no-preference`; under
+       `reduce` the sheen holds still as a static highlight across the shape.
+     · OFF-SCREEN IS PAUSED (`data-offscreen`, written by the script's observer). */
+@layer components {
+    .skeleton[data-shimmer]::after {
+        --skeleton-shimmer-period: 36rem;
+        content: "";
+        position: absolute;
+        inset-block: 0;
+        inset-inline-start: 0;
+        inline-size: calc(100% + var(--skeleton-shimmer-period));
+        pointer-events: none;
+        background-image: repeating-linear-gradient(
+            90deg,
+            transparent calc(var(--skeleton-shimmer-period) * 0.3),
+            color-mix(in oklab, var(--foreground) calc(var(--ink-seam) * 100%), transparent)
+                calc(var(--skeleton-shimmer-period) * 0.5),
+            transparent calc(var(--skeleton-shimmer-period) * 0.7),
+            transparent var(--skeleton-shimmer-period)
+        );
+        transform: translateX(calc(-1 * var(--skeleton-shimmer-period)));
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        .skeleton[data-shimmer]::after {
+            animation: skeleton-shimmer var(--duration-shimmer-fast) linear infinite;
+        }
+    }
+
+    .skeleton[data-offscreen]::after {
+        animation-play-state: paused;
+    }
+}
+
+@keyframes skeleton-shimmer {
+    to {
+        transform: translateX(0);
+    }
+}
+
 @layer components {
     @media (forced-colors: active) {
         .skeleton {
             animation: none;
             background: CanvasText;
             opacity: 0.18;
+        }
+
+        .skeleton[data-shimmer]::after {
+            content: none;
         }
     }
 }
