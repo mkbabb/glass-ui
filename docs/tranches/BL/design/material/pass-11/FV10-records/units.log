@@ -1,0 +1,91 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p11/floor10/wt
+
+(node:80817) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/components/menu/contract.test.ts (12 tests | 1 failed) 4075ms
+     × keeps the click branch to one portaled menu and restores focus on execute 1221ms
+ ❯ tests/components/slider.size-tokens.test.ts (3 tests) 12222ms
+(node:96333) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1331) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/slider.size-tokens.test.ts [ tests/components/slider.size-tokens.test.ts ]
+Error: Hook timed out in 10000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".
+ ❯ tests/components/slider.size-tokens.test.ts:52:1
+     50| }, 60_000);
+     51|
+     52| afterAll(async () => {
+       | ^
+     53|     await browser?.close();
+     54| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/menu/contract.test.ts > DropdownMenu contract > keeps the click branch to one portaled menu and restores focus on execute
+AssertionError: expected <body><div data-v-app>…(1)</div></body> to be <button …(7)></button> // Object.is equality
+
+- Expected
++ Received
+
+@@ -1,5 +1,13 @@
++ <body>
++   <div
++     data-v-app=""
++   >
++     
++     
++     
++     
+      <button
+        aria-expanded="false"
+        aria-haspopup="menu"
+        class="menu__trigger"
+        data-slot="menu-trigger"
+@@ -7,5 +15,22 @@
+        id="reka-dropdown-menu-trigger-v-0"
+        type="button"
+      >
+        Open commands
+      </button>
++     <!--teleport start-->
++     <!--teleport end-->
++     
++     
++     
++     
++   </div>
++   
++   
++   
++   
++   <!---->
++   
++   
++   
++   
++ </body>
+
+ ❯ tests/components/menu/contract.test.ts:118:40
+    116|         expect((wrapper.vm as unknown as { open: boolean }).open).toBe…
+    117|         await new Promise((resolve) => setTimeout(resolve, 30));
+    118|         expect(document.activeElement).toBe(trigger.element);
+       |                                        ^
+    119|     });
+    120|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 235 passed (237)
+      Tests  1 failed | 2317 passed | 10 expected fail | 1 skipped (2329)
+   Start at  13:06:10
+   Duration  747.36s (transform 30.18s, setup 99.57s, import 334.73s, tests 186.89s, environment 521.45s)
+

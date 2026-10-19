@@ -1,0 +1,16 @@
+seat: 205 rulings (198 true, 7 reported)
+seat-proposed: 207 rulings (200 true, 7 reported)
+src/styles/tokens/property-regs.css: 1 edit(s), 304 lines kept
+src/components/_shared/feedback/feedback-tone.css: 1 edit(s), 114 lines kept
+FV10-seat-proposed.diff: 2 files, +3/-3, sha1 df5ce784
+Files fv10tree/src/components/_shared/feedback/feedback-tone.css and fv10s/src/components/_shared/feedback/feedback-tone.css differ
+Files fv10tree/src/styles/tokens/property-regs.css and fv10s/src/styles/tokens/property-regs.css differ
+SWEEP floor v10 (copy) under FV10-rulings.json exit 0: PASS (207 lines: 200 ruled true, 7 reported)
+SWEEP floor v10 under FV10-rulings-seat.json exit 1: FAIL (2 unread, 0 stale of 207 lines)
+✗ unread src/components/_shared/feedback/feedback-tone.css:38 [word "tint"]
+✗ unread src/styles/tokens/property-regs.css:151 [word "sampled"]
+SWEEP floor v10 + seat delta under FV10-rulings-seat-proposed.json exit 0: PASS (207 lines: 200 ruled true, 7 reported)
+SWEEP floor v10 under FV10-rulings-seat-proposed.json (plant) exit 1: FAIL (2 unread, 2 stale of 207 lines)
+DEL floor v10 + seat delta exit 0: PASS (101 gated rows)
+DEL floor v10 (copy) exit 0: PASS (101 gated rows)
+NEIGHBOURHOOD floor v10 + seat delta exit 0: PRINT (1593 lines in 73 files; not gated)

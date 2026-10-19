@@ -1,0 +1,12 @@
+floor-v10-delta.diff: 3 files, +8/-8, sha1 4c9f5876
+crit-fv10-proposed.diff (R-28): 3 files, +8/-8, sha1 0976cf02
+R-28 delta vs the worktree delta, hunk ranges and +/- lines: diff exit 1
+floor-v9.patch: 88 files, sha1 697c5f78
+floor-v10.patch: 88 files, sha1 62f0e71f; git diff --shortstat:  88 files changed, 1004 insertions(+), 2338 deletions(-)
+same path list as floor v9: exit 0
+src/components/dock/styles/controls/icon-button.css lines: fv9 237 fv10 237
+src/styles/tokens/sizing.css lines: fv9 336 fv10 336
+src/styles/glass/overlay-plate.css lines: fv9 431 fv10 431
+files the delta touches: src/components/dock/styles/controls/icon-button.css src/styles/glass/overlay-plate.css src/styles/tokens/sizing.css 
+src/components/dock/styles/controls/tab-button.css in floor-v10.patch: 0
+src/components/dock/styles/controls/triggers.css in floor-v10.patch: 0

@@ -1,0 +1,1244 @@
+[
+ {
+  "at": "demo/stories/compositions/auth-shell.vue:223",
+  "says": "/* The muted body copy is darkened from the light-mode `38%` lightness: over",
+  "verdict": "reported",
+  "why": "'darkened from the light-mode `38%` lightness': the light-mode muted ink is `--neutral-5` = hsl(30 22% 40%) (color-radius.css:45, :97), 40%, at HEAD as on floor v9; the line is byte-identical at HEAD and the patch did not write it. The rest of the sentence (20% lands lighter than the 10% heading ink, :229) holds"
+ },
+ {
+  "at": "demo/stories/dock/_frame/DockStage.vue:106",
+  "says": "viewport-clamped field stays pinned as the page scrolls. */",
+  "verdict": "true",
+  "why": ":65, :106, :124 the field's backing store is sized to the viewport (`height: 100dvh`, :134; 'sized to `100dvh`', :67); :71 the DPR clamp is `resolveAuroraWashDpr` = min(dpr, AV_AURORA_DPR_MAX = 1.5) (aurora/constants/budget.ts:25, :54-57). Layout and raster sizing, not the deleted veil clamp"
+ },
+ {
+  "at": "demo/stories/dock/_frame/DockStage.vue:124",
+  "says": "/* The one shared aurora field is viewport-clamped. Sized to `100dvh` (not the full ~2365px scroll column), so the",
+  "verdict": "true",
+  "why": ":65, :106, :124 the field's backing store is sized to the viewport (`height: 100dvh`, :134; 'sized to `100dvh`', :67); :71 the DPR clamp is `resolveAuroraWashDpr` = min(dpr, AV_AURORA_DPR_MAX = 1.5) (aurora/constants/budget.ts:25, :54-57). Layout and raster sizing, not the deleted veil clamp"
+ },
+ {
+  "at": "demo/stories/dock/_frame/DockStage.vue:65",
+  "says": "is clamped to the viewport:",
+  "verdict": "true",
+  "why": ":65, :106, :124 the field's backing store is sized to the viewport (`height: 100dvh`, :134; 'sized to `100dvh`', :67); :71 the DPR clamp is `resolveAuroraWashDpr` = min(dpr, AV_AURORA_DPR_MAX = 1.5) (aurora/constants/budget.ts:25, :54-57). Layout and raster sizing, not the deleted veil clamp"
+ },
+ {
+  "at": "demo/stories/dock/_frame/DockStage.vue:71",
+  "says": "only ~one viewport is ever visible. The DPR clamp (sub-2× wash,",
+  "verdict": "true",
+  "why": ":65, :106, :124 the field's backing store is sized to the viewport (`height: 100dvh`, :134; 'sized to `100dvh`', :67); :71 the DPR clamp is `resolveAuroraWashDpr` = min(dpr, AV_AURORA_DPR_MAX = 1.5) (aurora/constants/budget.ts:25, :54-57). Layout and raster sizing, not the deleted veil clamp"
+ },
+ {
+  "at": "demo/stories/feedback/progress.vue:63",
+  "says": "<!-- the feedback-band identity COLOR EVENT (the tinted",
+  "verdict": "true",
+  "why": ":63 the tinted eyebrow and inline accent rail: the story's live colour event (typography/utilities.css:137-143, the eyebrow knob)"
+ },
+ {
+  "at": "demo/stories/substrates/glass-material.vue:104",
+  "says": "// The accent tints the RIM (silhouette edge) + the::before catch-light glint with",
+  "verdict": "true",
+  "why": ":6 the veil's one pole is `--card` (`glass-plate` = `--card` at α, glass/veil.css:64-72), so any tint reaches the plate through `--card`; :99, :104 `--glass-accent`/`--glass-accent-strength` tint the rim and the glint, the per-instance accent axis (property-regs.css:114-131); :185 a measurement note true of any plate: on a flat substrate a plate's blur radius and tint are both invisible"
+ },
+ {
+  "at": "demo/stories/substrates/glass-material.vue:185",
+  "says": "no high-frequency detail, so a plate's blur radius and its tint are both",
+  "verdict": "true",
+  "why": ":6 the veil's one pole is `--card` (`glass-plate` = `--card` at α, glass/veil.css:64-72), so any tint reaches the plate through `--card`; :99, :104 `--glass-accent`/`--glass-accent-strength` tint the rim and the glint, the per-instance accent axis (property-regs.css:114-131); :185 a measurement note true of any plate: on a flat substrate a plate's blur radius and tint are both invisible"
+ },
+ {
+  "at": "demo/stories/substrates/glass-material.vue:6",
+  "says": "// one pole, `--card`, carries any tint. The matrix is staged over a",
+  "verdict": "true",
+  "why": ":6 the veil's one pole is `--card` (`glass-plate` = `--card` at α, glass/veil.css:64-72), so any tint reaches the plate through `--card`; :99, :104 `--glass-accent`/`--glass-accent-strength` tint the rim and the glint, the per-instance accent axis (property-regs.css:114-131); :185 a measurement note true of any plate: on a flat substrate a plate's blur radius and tint are both invisible"
+ },
+ {
+  "at": "demo/stories/substrates/glass-material.vue:99",
+  "says": "// tint. Each swatch sets `--glass-accent: <data-hue>; --glass-accent-strength: <N%>`",
+  "verdict": "true",
+  "why": ":6 the veil's one pole is `--card` (`glass-plate` = `--card` at α, glass/veil.css:64-72), so any tint reaches the plate through `--card`; :99, :104 `--glass-accent`/`--glass-accent-strength` tint the rim and the glint, the per-instance accent axis (property-regs.css:114-131); :185 a measurement note true of any plate: on a flat substrate a plate's blur radius and tint are both invisible"
+ },
+ {
+  "at": "src/components/_shared/feedback/feedback-tone.css:108",
+  "says": "color event's saturated note over the tinted wash). A consumer composes it on its",
+  "verdict": "true",
+  "why": ":4 `.feedback-tone` has one shipped consumer, Toast (Toast.vue; Alert composes `.glass-quiet`, alert/index.ts:67); :8 Alert spends its tone on glyph and ink over `.glass-quiet`; :20-21 the wash is `color-mix(in oklab, …)` over the rung's own `--glass-veil` (:80-84), one mix; :25 body ink stays `--foreground`; :29 `--feedback-tone-strength` is the one knob (:59); :34 the tint mixes over `--glass-veil`; :38 so a composing surface tints its own rung, α and level surviving inside the mix; :43 history (past tense: 'used to mix over a RAW … plate token'); :56 18% is the declared strength (:59); :62 `--feedback-tone-rung` has no writer in src/ outside this file (grep: only alert/index.ts:67, a comment), the gate name G-FEEDBACK-TINT-SEAM (H9-1 site); :64 the border strength 40% (:65); :70 the wash and rim resolve off the one recipe; :108 the glyph carries the full-chroma tone over the tinted wash"
+ },
+ {
+  "at": "src/components/_shared/feedback/feedback-tone.css:20",
+  "says": "a tinted-glass wash (the rung bg mixed a BOUNDED % toward the tone,",
+  "verdict": "true",
+  "why": ":4 `.feedback-tone` has one shipped consumer, Toast (Toast.vue; Alert composes `.glass-quiet`, alert/index.ts:67); :8 Alert spends its tone on glyph and ink over `.glass-quiet`; :20-21 the wash is `color-mix(in oklab, …)` over the rung's own `--glass-veil` (:80-84), one mix; :25 body ink stays `--foreground`; :29 `--feedback-tone-strength` is the one knob (:59); :34 the tint mixes over `--glass-veil`; :38 so a composing surface tints its own rung, α and level surviving inside the mix; :43 history (past tense: 'used to mix over a RAW … plate token'); :56 18% is the declared strength (:59); :62 `--feedback-tone-rung` has no writer in src/ outside this file (grep: only alert/index.ts:67, a comment), the gate name G-FEEDBACK-TINT-SEAM (H9-1 site); :64 the border strength 40% (:65); :70 the wash and rim resolve off the one recipe; :108 the glyph carries the full-chroma tone over the tinted wash"
+ },
+ {
+  "at": "src/components/_shared/feedback/feedback-tone.css:21",
+  "says": "`color-mix(in oklab, <rung bg>, <tint> <strength>)` over the rung's own published",
+  "verdict": "true",
+  "why": ":4 `.feedback-tone` has one shipped consumer, Toast (Toast.vue; Alert composes `.glass-quiet`, alert/index.ts:67); :8 Alert spends its tone on glyph and ink over `.glass-quiet`; :20-21 the wash is `color-mix(in oklab, …)` over the rung's own `--glass-veil` (:80-84), one mix; :25 body ink stays `--foreground`; :29 `--feedback-tone-strength` is the one knob (:59); :34 the tint mixes over `--glass-veil`; :38 so a composing surface tints its own rung, α and level surviving inside the mix; :43 history (past tense: 'used to mix over a RAW … plate token'); :56 18% is the declared strength (:59); :62 `--feedback-tone-rung` has no writer in src/ outside this file (grep: only alert/index.ts:67, a comment), the gate name G-FEEDBACK-TINT-SEAM (H9-1 site); :64 the border strength 40% (:65); :70 the wash and rim resolve off the one recipe; :108 the glyph carries the full-chroma tone over the tinted wash"
+ },
+ {
+  "at": "src/components/_shared/feedback/feedback-tone.css:25",
+  "says": "`--card-foreground` for legibility (the Alert discipline — body never tone-tinted),",
+  "verdict": "true",
+  "why": ":4 `.feedback-tone` has one shipped consumer, Toast (Toast.vue; Alert composes `.glass-quiet`, alert/index.ts:67); :8 Alert spends its tone on glyph and ink over `.glass-quiet`; :20-21 the wash is `color-mix(in oklab, …)` over the rung's own `--glass-veil` (:80-84), one mix; :25 body ink stays `--foreground`; :29 `--feedback-tone-strength` is the one knob (:59); :34 the tint mixes over `--glass-veil`; :38 so a composing surface tints its own rung, α and level surviving inside the mix; :43 history (past tense: 'used to mix over a RAW … plate token'); :56 18% is the declared strength (:59); :62 `--feedback-tone-rung` has no writer in src/ outside this file (grep: only alert/index.ts:67, a comment), the gate name G-FEEDBACK-TINT-SEAM (H9-1 site); :64 the border strength 40% (:65); :70 the wash and rim resolve off the one recipe; :108 the glyph carries the full-chroma tone over the tinted wash"
+ },
+ {
+  "at": "src/components/_shared/feedback/feedback-tone.css:29",
+  "says": "THE ONE KNOB: `--feedback-tone-strength` tints all four tones at once (the bounded",
+  "verdict": "true",
+  "why": ":4 `.feedback-tone` has one shipped consumer, Toast (Toast.vue; Alert composes `.glass-quiet`, alert/index.ts:67); :8 Alert spends its tone on glyph and ink over `.glass-quiet`; :20-21 the wash is `color-mix(in oklab, …)` over the rung's own `--glass-veil` (:80-84), one mix; :25 body ink stays `--foreground`; :29 `--feedback-tone-strength` is the one knob (:59); :34 the tint mixes over `--glass-veil`; :38 so a composing surface tints its own rung, α and level surviving inside the mix; :43 history (past tense: 'used to mix over a RAW … plate token'); :56 18% is the declared strength (:59); :62 `--feedback-tone-rung` has no writer in src/ outside this file (grep: only alert/index.ts:67, a comment), the gate name G-FEEDBACK-TINT-SEAM (H9-1 site); :64 the border strength 40% (:65); :70 the wash and rim resolve off the one recipe; :108 the glyph carries the full-chroma tone over the tinted wash"
+ },
+ {
+  "at": "src/components/_shared/feedback/feedback-tone.css:34",
+  "says": "THE RUNG IS THE SURFACE'S OWN PLATE, NOT A SECOND ONE. The tint mixes over",
+  "verdict": "true",
+  "why": ":4 `.feedback-tone` has one shipped consumer, Toast (Toast.vue; Alert composes `.glass-quiet`, alert/index.ts:67); :8 Alert spends its tone on glyph and ink over `.glass-quiet`; :20-21 the wash is `color-mix(in oklab, …)` over the rung's own `--glass-veil` (:80-84), one mix; :25 body ink stays `--foreground`; :29 `--feedback-tone-strength` is the one knob (:59); :34 the tint mixes over `--glass-veil`; :38 so a composing surface tints its own rung, α and level surviving inside the mix; :43 history (past tense: 'used to mix over a RAW … plate token'); :56 18% is the declared strength (:59); :62 `--feedback-tone-rung` has no writer in src/ outside this file (grep: only alert/index.ts:67, a comment), the gate name G-FEEDBACK-TINT-SEAM (H9-1 site); :64 the border strength 40% (:65); :70 the wash and rim resolve off the one recipe; :108 the glyph carries the full-chroma tone over the tinted wash"
+ },
+ {
+  "at": "src/components/_shared/feedback/feedback-tone.css:36",
+  "says": "element (glass/veil.css:35-37 names \"a tone-tinted feedback panel\" as one of its two",
+  "verdict": "reported",
+  "why": "'glass/veil.css:35-37 names \"a tone-tinted feedback panel\"': the phrase is at veil.css:40 on floor v9 and at :46 at HEAD, so the line cite was false before the patch; the line is byte-identical at HEAD and the patch did not write it. The claim without the line numbers is true (veil.css:39-41)"
+ },
+ {
+  "at": "src/components/_shared/feedback/feedback-tone.css:38",
+  "says": "surface that composes a rung therefore tints ITS OWN rung: the rung's alpha at the",
+  "verdict": "true",
+  "why": ":4 `.feedback-tone` has one shipped consumer, Toast (Toast.vue; Alert composes `.glass-quiet`, alert/index.ts:67); :8 Alert spends its tone on glyph and ink over `.glass-quiet`; :20-21 the wash is `color-mix(in oklab, …)` over the rung's own `--glass-veil` (:80-84), one mix; :25 body ink stays `--foreground`; :29 `--feedback-tone-strength` is the one knob (:59); :34 the tint mixes over `--glass-veil`; :38 so a composing surface tints its own rung, α and level surviving inside the mix; :43 history (past tense: 'used to mix over a RAW … plate token'); :56 18% is the declared strength (:59); :62 `--feedback-tone-rung` has no writer in src/ outside this file (grep: only alert/index.ts:67, a comment), the gate name G-FEEDBACK-TINT-SEAM (H9-1 site); :64 the border strength 40% (:65); :70 the wash and rim resolve off the one recipe; :108 the glyph carries the full-chroma tone over the tinted wash"
+ },
+ {
+  "at": "src/components/_shared/feedback/feedback-tone.css:4",
+  "says": "through it [2026-08-08 · BK #33]: `.feedback-tone` — the tinted PLATE — has exactly ONE",
+  "verdict": "true",
+  "why": ":4 `.feedback-tone` has one shipped consumer, Toast (Toast.vue; Alert composes `.glass-quiet`, alert/index.ts:67); :8 Alert spends its tone on glyph and ink over `.glass-quiet`; :20-21 the wash is `color-mix(in oklab, …)` over the rung's own `--glass-veil` (:80-84), one mix; :25 body ink stays `--foreground`; :29 `--feedback-tone-strength` is the one knob (:59); :34 the tint mixes over `--glass-veil`; :38 so a composing surface tints its own rung, α and level surviving inside the mix; :43 history (past tense: 'used to mix over a RAW … plate token'); :56 18% is the declared strength (:59); :62 `--feedback-tone-rung` has no writer in src/ outside this file (grep: only alert/index.ts:67, a comment), the gate name G-FEEDBACK-TINT-SEAM (H9-1 site); :64 the border strength 40% (:65); :70 the wash and rim resolve off the one recipe; :108 the glyph carries the full-chroma tone over the tinted wash"
+ },
+ {
+  "at": "src/components/_shared/feedback/feedback-tone.css:43",
+  "says": "a single property the tinted result REPLACED the rung's own `background: var(--glass-veil)`",
+  "verdict": "true",
+  "why": ":4 `.feedback-tone` has one shipped consumer, Toast (Toast.vue; Alert composes `.glass-quiet`, alert/index.ts:67); :8 Alert spends its tone on glyph and ink over `.glass-quiet`; :20-21 the wash is `color-mix(in oklab, …)` over the rung's own `--glass-veil` (:80-84), one mix; :25 body ink stays `--foreground`; :29 `--feedback-tone-strength` is the one knob (:59); :34 the tint mixes over `--glass-veil`; :38 so a composing surface tints its own rung, α and level surviving inside the mix; :43 history (past tense: 'used to mix over a RAW … plate token'); :56 18% is the declared strength (:59); :62 `--feedback-tone-rung` has no writer in src/ outside this file (grep: only alert/index.ts:67, a comment), the gate name G-FEEDBACK-TINT-SEAM (H9-1 site); :64 the border strength 40% (:65); :70 the wash and rim resolve off the one recipe; :108 the glyph carries the full-chroma tone over the tinted wash"
+ },
+ {
+  "at": "src/components/_shared/feedback/feedback-tone.css:56",
+  "says": "(the backdrop shows through, the silhouette is unmistakably tinted) without",
+  "verdict": "true",
+  "why": ":4 `.feedback-tone` has one shipped consumer, Toast (Toast.vue; Alert composes `.glass-quiet`, alert/index.ts:67); :8 Alert spends its tone on glyph and ink over `.glass-quiet`; :20-21 the wash is `color-mix(in oklab, …)` over the rung's own `--glass-veil` (:80-84), one mix; :25 body ink stays `--foreground`; :29 `--feedback-tone-strength` is the one knob (:59); :34 the tint mixes over `--glass-veil`; :38 so a composing surface tints its own rung, α and level surviving inside the mix; :43 history (past tense: 'used to mix over a RAW … plate token'); :56 18% is the declared strength (:59); :62 `--feedback-tone-rung` has no writer in src/ outside this file (grep: only alert/index.ts:67, a comment), the gate name G-FEEDBACK-TINT-SEAM (H9-1 site); :64 the border strength 40% (:65); :70 the wash and rim resolve off the one recipe; :108 the glyph carries the full-chroma tone over the tinted wash"
+ },
+ {
+  "at": "src/components/_shared/feedback/feedback-tone.css:62",
+  "says": "`src/`, held by `G-FEEDBACK-TINT-SEAM` arm (b). */",
+  "verdict": "true",
+  "why": ":4 `.feedback-tone` has one shipped consumer, Toast (Toast.vue; Alert composes `.glass-quiet`, alert/index.ts:67); :8 Alert spends its tone on glyph and ink over `.glass-quiet`; :20-21 the wash is `color-mix(in oklab, …)` over the rung's own `--glass-veil` (:80-84), one mix; :25 body ink stays `--foreground`; :29 `--feedback-tone-strength` is the one knob (:59); :34 the tint mixes over `--glass-veil`; :38 so a composing surface tints its own rung, α and level surviving inside the mix; :43 history (past tense: 'used to mix over a RAW … plate token'); :56 18% is the declared strength (:59); :62 `--feedback-tone-rung` has no writer in src/ outside this file (grep: only alert/index.ts:67, a comment), the gate name G-FEEDBACK-TINT-SEAM (H9-1 site); :64 the border strength 40% (:65); :70 the wash and rim resolve off the one recipe; :108 the glyph carries the full-chroma tone over the tinted wash"
+ },
+ {
+  "at": "src/components/_shared/feedback/feedback-tone.css:64",
+  "says": "/* The rim weight — a tone-keyed border, a thin tinted rim (not a loud edge). */",
+  "verdict": "true",
+  "why": ":4 `.feedback-tone` has one shipped consumer, Toast (Toast.vue; Alert composes `.glass-quiet`, alert/index.ts:67); :8 Alert spends its tone on glyph and ink over `.glass-quiet`; :20-21 the wash is `color-mix(in oklab, …)` over the rung's own `--glass-veil` (:80-84), one mix; :25 body ink stays `--foreground`; :29 `--feedback-tone-strength` is the one knob (:59); :34 the tint mixes over `--glass-veil`; :38 so a composing surface tints its own rung, α and level surviving inside the mix; :43 history (past tense: 'used to mix over a RAW … plate token'); :56 18% is the declared strength (:59); :62 `--feedback-tone-rung` has no writer in src/ outside this file (grep: only alert/index.ts:67, a comment), the gate name G-FEEDBACK-TINT-SEAM (H9-1 site); :64 the border strength 40% (:65); :70 the wash and rim resolve off the one recipe; :108 the glyph carries the full-chroma tone over the tinted wash"
+ },
+ {
+  "at": "src/components/_shared/feedback/feedback-tone.css:70",
+  "says": "`.feedback-tone`; the tinted-glass wash + the tone-keyed rim resolve off the ONE",
+  "verdict": "true",
+  "why": ":4 `.feedback-tone` has one shipped consumer, Toast (Toast.vue; Alert composes `.glass-quiet`, alert/index.ts:67); :8 Alert spends its tone on glyph and ink over `.glass-quiet`; :20-21 the wash is `color-mix(in oklab, …)` over the rung's own `--glass-veil` (:80-84), one mix; :25 body ink stays `--foreground`; :29 `--feedback-tone-strength` is the one knob (:59); :34 the tint mixes over `--glass-veil`; :38 so a composing surface tints its own rung, α and level surviving inside the mix; :43 history (past tense: 'used to mix over a RAW … plate token'); :56 18% is the declared strength (:59); :62 `--feedback-tone-rung` has no writer in src/ outside this file (grep: only alert/index.ts:67, a comment), the gate name G-FEEDBACK-TINT-SEAM (H9-1 site); :64 the border strength 40% (:65); :70 the wash and rim resolve off the one recipe; :108 the glyph carries the full-chroma tone over the tinted wash"
+ },
+ {
+  "at": "src/components/_shared/feedback/feedback-tone.css:8",
+  "says": "rung (R-3, neutral glass + status ink — the tinted Alert plate is not built). Everything",
+  "verdict": "true",
+  "why": ":4 `.feedback-tone` has one shipped consumer, Toast (Toast.vue; Alert composes `.glass-quiet`, alert/index.ts:67); :8 Alert spends its tone on glyph and ink over `.glass-quiet`; :20-21 the wash is `color-mix(in oklab, …)` over the rung's own `--glass-veil` (:80-84), one mix; :25 body ink stays `--foreground`; :29 `--feedback-tone-strength` is the one knob (:59); :34 the tint mixes over `--glass-veil`; :38 so a composing surface tints its own rung, α and level surviving inside the mix; :43 history (past tense: 'used to mix over a RAW … plate token'); :56 18% is the declared strength (:59); :62 `--feedback-tone-rung` has no writer in src/ outside this file (grep: only alert/index.ts:67, a comment), the gate name G-FEEDBACK-TINT-SEAM (H9-1 site); :64 the border strength 40% (:65); :70 the wash and rim resolve off the one recipe; :108 the glyph carries the full-chroma tone over the tinted wash"
+ },
+ {
+  "at": "src/components/_shared/field/control.css:109",
+  "says": "The fluid clamp ALONE. `--control-text` is `--type-small × --ui-scale`,",
+  "verdict": "true",
+  "why": ":109-111 the type rung is the fluid clamp alone, and the arithmetic (16.40px × 1.5 = 24.60px past the 20px ceiling) is the reason `--ui-scale` is kept off it; :138 the engine clamps `--radius-pill` to half the block-size: live sizing, not the veil clamp"
+ },
+ {
+  "at": "src/components/_shared/field/control.css:110",
+  "says": "and the second factor escapes the clamp the first one exists to impose:",
+  "verdict": "true",
+  "why": ":109-111 the type rung is the fluid clamp alone, and the arithmetic (16.40px × 1.5 = 24.60px past the 20px ceiling) is the reason `--ui-scale` is kept off it; :138 the engine clamps `--radius-pill` to half the block-size: live sizing, not the veil clamp"
+ },
+ {
+  "at": "src/components/_shared/field/control.css:111",
+  "says": "16.40px at 1440 fine becomes 24.60px at coarse, past the clamp's own",
+  "verdict": "true",
+  "why": ":109-111 the type rung is the fluid clamp alone, and the arithmetic (16.40px × 1.5 = 24.60px past the 20px ceiling) is the reason `--ui-scale` is kept off it; :138 the engine clamps `--radius-pill` to half the block-size: live sizing, not the veil clamp"
+ },
+ {
+  "at": "src/components/_shared/field/control.css:138",
+  "says": "to name: a single-line field keeps the stadium (`--radius-pill`, clamped by",
+  "verdict": "true",
+  "why": ":109-111 the type rung is the fluid clamp alone, and the arithmetic (16.40px × 1.5 = 24.60px past the 20px ceiling) is the reason `--ui-scale` is kept off it; :138 the engine clamps `--radius-pill` to half the block-size: live sizing, not the veil clamp"
+ },
+ {
+  "at": "src/components/_shared/menu/menu.css:10",
+  "says": "fill darkened the cream row with no hue (C 0.010), which reads grey. The",
+  "verdict": "true",
+  "why": ":6 the row fill is an accent tint: `--menu-row-bg: oklch(from var(--section-color-5) l c h / var(--fill-selected))` (:17), the amber at the selected alpha; :10 'the ink fill darkened the cream row' is history, the reason the accent replaced it (past tense)"
+ },
+ {
+  "at": "src/components/_shared/menu/menu.css:117",
+  "says": "the ink is a `color-mix` on `--foreground` it re-tints under `.dark` through the",
+  "verdict": "true",
+  "why": ":6 the row fill is an accent tint: `--menu-row-bg: oklch(from var(--section-color-5) l c h / var(--fill-selected))` (:17), the amber at the selected alpha; :10 'the ink fill darkened the cream row' is history, the reason the accent replaced it (past tense)"
+ },
+ {
+  "at": "src/components/_shared/menu/menu.css:6",
+  "says": "nested in a plate for the width of one line of text. The fill is an ACCENT TINT:",
+  "verdict": "true",
+  "why": ":6 the row fill is an accent tint: `--menu-row-bg: oklch(from var(--section-color-5) l c h / var(--fill-selected))` (:17), the amber at the selected alpha; :10 'the ink fill darkened the cream row' is history, the reason the accent replaced it (past tense)"
+ },
+ {
+  "at": "src/components/button/styles.css:143",
+  "says": "/* ── Tone TINTS; it never replaces ────────────────────────────────────────",
+  "verdict": "true",
+  "why": ":60, :67, :72 the engine clamps the stadium radius to half the box, and a bare min() would re-derive that clamp; :143 Button's tone tints the emphasis plate, never replaces it (§5)"
+ },
+ {
+  "at": "src/components/button/styles.css:60",
+  "says": "box. `--radius-pill` (9999px) is clamped by the engine to half the",
+  "verdict": "true",
+  "why": ":60, :67, :72 the engine clamps the stadium radius to half the box, and a bare min() would re-derive that clamp; :143 Button's tone tints the emphasis plate, never replaces it (§5)"
+ },
+ {
+  "at": "src/components/button/styles.css:67",
+  "says": "still reads a circle: the engine's own radius scaling clamps the corner",
+  "verdict": "true",
+  "why": ":60, :67, :72 the engine clamps the stadium radius to half the box, and a bare min() would re-derive that clamp; :143 Button's tone tints the emphasis plate, never replaces it (§5)"
+ },
+ {
+  "at": "src/components/button/styles.css:72",
+  "says": "token to re-derive a clamp the engine already applies (GF-DOCK §STRIKE —",
+  "verdict": "true",
+  "why": ":60, :67, :72 the engine clamps the stadium radius to half the box, and a bare min() would re-derive that clamp; :143 Button's tone tints the emphasis plate, never replaces it (§5)"
+ },
+ {
+  "at": "src/components/card/styles.css:212",
+  "says": "re-typed — so the interval holds at the clamp floor, through the fluid arm",
+  "verdict": "true",
+  "why": ":212 the title interval holds at the type clamp's floor, through the fluid arm, and at the ceiling: type sizing"
+ },
+ {
+  "at": "src/components/configurator/styles.css:129",
+  "says": "*    tonal step (--configurator-section-tint, default transparent on light) reads",
+  "verdict": "true",
+  "why": ":129, :149 `--configurator-section-tint`, the live section step, and the section tint carrying the card read; :444, :462 the preset tile's clamp() terms (cqi middle term, 200px MIN)"
+ },
+ {
+  "at": "src/components/configurator/styles.css:149",
+  "says": "* sub-perceptual — the rounded border + section tint carry the card read. */",
+  "verdict": "true",
+  "why": ":129, :149 `--configurator-section-tint`, the live section step, and the section tint carrying the card read; :444, :462 the preset tile's clamp() terms (cqi middle term, 200px MIN)"
+ },
+ {
+  "at": "src/components/configurator/styles.css:444",
+  "says": "/* `cqi`, not `vw`. The middle term of a tile clamp is a share of the ribbon the",
+  "verdict": "true",
+  "why": ":129, :149 `--configurator-section-tint`, the live section step, and the section tint carrying the card read; :444, :462 the preset tile's clamp() terms (cqi middle term, 200px MIN)"
+ },
+ {
+  "at": "src/components/configurator/styles.css:462",
+  "says": "* placement so the aside inspector idiom stays byte-unchanged. The clamp MIN (200px)",
+  "verdict": "true",
+  "why": ":129, :149 `--configurator-section-tint`, the live section step, and the section tint carrying the card read; :444, :462 the preset tile's clamp() terms (cqi middle term, 200px MIN)"
+ },
+ {
+  "at": "src/components/dialog/styles.css:16",
+  "says": "* IS the consistency F48 asked for. The inline gutter clamp is load-bearing — at 393",
+  "verdict": "true",
+  "why": ":16, :19 the inline gutter clamp (512px cap, 20px gutter at 393); :67 the type interval holds at the clamp floor: layout and type"
+ },
+ {
+  "at": "src/components/dialog/styles.css:19",
+  "says": "* clamp yields 512px capped at wide widths and a real 20px gutter per side at 393. */",
+  "verdict": "true",
+  "why": ":16, :19 the inline gutter clamp (512px cap, 20px gutter at 393); :67 the type interval holds at the clamp floor: layout and type"
+ },
+ {
+  "at": "src/components/dialog/styles.css:67",
+  "says": "* holds at the clamp floor, through the fluid arm, and at the ceiling. Type takes NO",
+  "verdict": "true",
+  "why": ":16, :19 the inline gutter clamp (512px cap, 20px gutter at 393); :67 the type interval holds at the clamp floor: layout and type"
+ },
+ {
+  "at": "src/components/dock/GlassDock.vue:36",
+  "says": "// exactly when there is something to scroll, so the observer, the attribute and the",
+  "verdict": "true",
+  "why": ":36 history: the overflow observer, attribute and two CSS branches `overflow: auto` replaced, named as deleted, not the luminance observer"
+ },
+ {
+  "at": "src/components/dock/styles/controls/icon-button.css:16",
+  "says": "darken/specular legs read it via `calc()` (typed <number> so the calc interpolates),",
+  "verdict": "true",
+  "why": ":5 the base rule lists the press DARKEN-plus-shrink; :16 the coupled darken/specular legs read `--dock-press-t` via calc() (the `filter: brightness()` leg, :87-92); :87 the DARKEN leg is that `filter: brightness()` deepen; :95, :104 the hover fill is a translucent card-tinted fill (`--dock-icon-hover-bg`), not a second catch-light"
+ },
+ {
+  "at": "src/components/dock/styles/controls/icon-button.css:5",
+  "says": "fill, the iOS press DARKEN-plus-shrink",
+  "verdict": "true",
+  "why": ":5 the base rule lists the press DARKEN-plus-shrink; :16 the coupled darken/specular legs read `--dock-press-t` via calc() (the `filter: brightness()` leg, :87-92); :87 the DARKEN leg is that `filter: brightness()` deepen; :95, :104 the hover fill is a translucent card-tinted fill (`--dock-icon-hover-bg`), not a second catch-light"
+ },
+ {
+  "at": "src/components/dock/styles/controls/icon-button.css:87",
+  "says": "• the DARKEN leg — a sub-perceptual `filter: brightness()` deepen on the SAME",
+  "verdict": "true",
+  "why": ":5 the base rule lists the press DARKEN-plus-shrink; :16 the coupled darken/specular legs read `--dock-press-t` via calc() (the `filter: brightness()` leg, :87-92); :87 the DARKEN leg is that `filter: brightness()` deepen; :95, :104 the hover fill is a translucent card-tinted fill (`--dock-icon-hover-bg`), not a second catch-light"
+ },
+ {
+  "at": "src/components/dock/styles/controls/touch-floor.css:16",
+  "says": "is subsumed into the `--dock-scale` multiplier + the `max(…, 44px)` clamp in",
+  "verdict": "true",
+  "why": ":7, :16, :18 the in-dock floor is the `--dock-scale` × `max(…, 44px)` clamp, which holds 44px below 1.0×; :58 the vertical dock's active category takes an accent glyph tint and a leading-edge rule"
+ },
+ {
+  "at": "src/components/dock/styles/controls/touch-floor.css:18",
+  "says": "44px target, the clamp guarantees the floor even below 1.0× scale). This",
+  "verdict": "true",
+  "why": ":7, :16, :18 the in-dock floor is the `--dock-scale` × `max(…, 44px)` clamp, which holds 44px below 1.0×; :58 the vertical dock's active category takes an accent glyph tint and a leading-edge rule"
+ },
+ {
+  "at": "src/components/dock/styles/controls/touch-floor.css:58",
+  "says": "affordance (accent glyph tint + a leading-edge accent rule) from the shipped",
+  "verdict": "true",
+  "why": ":7, :16, :18 the in-dock floor is the `--dock-scale` × `max(…, 44px)` clamp, which holds 44px below 1.0×; :58 the vertical dock's active category takes an accent glyph tint and a leading-edge rule"
+ },
+ {
+  "at": "src/components/dock/styles/controls/touch-floor.css:7",
+  "says": "clamp; this is the no-`.glass-dock`-ancestor half).",
+  "verdict": "true",
+  "why": ":7, :16, :18 the in-dock floor is the `--dock-scale` × `max(…, 44px)` clamp, which holds 44px below 1.0×; :58 the vertical dock's active category takes an accent glyph tint and a leading-edge rule"
+ },
+ {
+  "at": "src/components/dock/styles/dock.css:105",
+  "says": "NO SEPARATE TINT VEIL. A permanently-zero-alpha gradient layer painted over",
+  "verdict": "true",
+  "why": ":105 states an absence (NO SEPARATE TINT VEIL), and 'had exactly one writer' is the deleted layer's history"
+ },
+ {
+  "at": "src/components/dock/styles/dock.css:15",
+  "says": "*        endpoints — one chromatic writer, no second tint layer. The shell partial re-points",
+  "verdict": "true",
+  "why": "R-24 (iii) as written. The sentence 'composed through `@utility glass-plate` AT THE ELEMENT, on the bound at both endpoints — one chromatic writer, no second tint layer' is true: the plate applies `glass-plate` over a tier lerped between `--dock-plate-{collapsed,expanded}-tier` (:108-112), both `--glass-veil-dock` = `--glass-bound` (shell.css:96, :98; tokens/glass.css:287). The next: 'The shell partial re-points the inheriting `--dock-surface-blur`/`--glass-veil-*` tokens on `.glass-dock`, so the dark arm reaches the layers via inheritance, ZERO re-author' is true on R-24's reading (shell.css:20, :96-98): on `.glass-dock` the shell declares `--dock-surface-blur` and points the plate's two tier endpoints at `--glass-veil-dock`; the plate inherits them, and the veil rungs are declared on `:root, .dark` (tokens/glass.css:256-257), so a dark scope reaches the plate with no dock re-author. The adaptive-legibility partial declares neither (its header, :4-7)"
+ },
+ {
+  "at": "src/components/dock/styles/layer-group.css:160",
+  "says": "`--surface-tint-8` filled plate + `--radius-md` rounded background",
+  "verdict": "true",
+  "why": ":160 the `--surface-tint-8` filled plate and `--radius-md` background are gone and the switcher paints no fill; :167 the hover/active affordance reads `--dock-layer-switcher-{hover,active}`, translucent tints declared in §sizing (sizing.css:222-223), so the ladder is tunable there; :242 the glyph ink is a strong warm-ink tint of the dock foreground; :283 the active glyph tint stays on the selected tab"
+ },
+ {
+  "at": "src/components/dock/styles/layer-group.css:167",
+  "says": "tints, so the whole switcher ladder is tunable from §sizing. */",
+  "verdict": "true",
+  "why": ":160 the `--surface-tint-8` filled plate and `--radius-md` background are gone and the switcher paints no fill; :167 the hover/active affordance reads `--dock-layer-switcher-{hover,active}`, translucent tints declared in §sizing (sizing.css:222-223), so the ladder is tunable there; :242 the glyph ink is a strong warm-ink tint of the dock foreground; :283 the active glyph tint stays on the selected tab"
+ },
+ {
+  "at": "src/components/dock/styles/layer-group.css:242",
+  "says": "backdrop) to the nav-glyph contrast register: a strong warm-ink tint of",
+  "verdict": "true",
+  "why": ":160 the `--surface-tint-8` filled plate and `--radius-md` background are gone and the switcher paints no fill; :167 the hover/active affordance reads `--dock-layer-switcher-{hover,active}`, translucent tints declared in §sizing (sizing.css:222-223), so the ladder is tunable there; :242 the glyph ink is a strong warm-ink tint of the dock foreground; :283 the active glyph tint stays on the selected tab"
+ },
+ {
+  "at": "src/components/dock/styles/layer-group.css:283",
+  "says": "/* KEEP the active glyph tint on the selected tab (reka emits",
+  "verdict": "true",
+  "why": ":160 the `--surface-tint-8` filled plate and `--radius-md` background are gone and the switcher paints no fill; :167 the hover/active affordance reads `--dock-layer-switcher-{hover,active}`, translucent tints declared in §sizing (sizing.css:222-223), so the ladder is tunable there; :242 the glyph ink is a strong warm-ink tint of the dock foreground; :283 the active glyph tint stays on the selected tab"
+ },
+ {
+  "at": "src/components/dock/styles/shape.css:122",
+  "says": "The `max(…, 0.06)` guard matches the layers.css `--dock-size-scale` clamp floor",
+  "verdict": "true",
+  "why": ":122 the `max(…, 0.06)` guard matches the `--dock-size-scale` clamp floor: geometry"
+ },
+ {
+  "at": "src/components/dock/styles/shell.css:162",
+  "says": "measured, so the cap was clamping the dock BELOW the width the viewport",
+  "verdict": "true",
+  "why": ":162 the `80vw` cap clamped the dock below the plate width at 393 (the reason for the cap's form); :292 vertical docks grow to fit, then clamp at `--dock-max-block-size`: layout"
+ },
+ {
+  "at": "src/components/dock/styles/shell.css:292",
+  "says": "/* Vertical docks grow-to-fit then clamp at `--dock-max-block-size` (the",
+  "verdict": "true",
+  "why": ":162 the `80vw` cap clamped the dock below the plate width at 393 (the reason for the cap's form); :292 vertical docks grow to fit, then clamp at `--dock-max-block-size`: layout"
+ },
+ {
+  "at": "src/components/music-staff/styles.css:372",
+  "says": "linear so the phase lock survives, so the rebound is sampled from the press",
+  "verdict": "true",
+  "why": ":58 the folio biases the veil's one pole `--card`, so the plate keeps exactly one plate-tint writer; :372 the strike's rebound is sampled from the press register into keyframe stops"
+ },
+ {
+  "at": "src/components/music-staff/styles.css:58",
+  "says": "rung: a plate carries exactly one plate-tint writer, and painting cream over",
+  "verdict": "true",
+  "why": ":58 the folio biases the veil's one pole `--card`, so the plate keeps exactly one plate-tint writer; :372 the strike's rebound is sampled from the press register into keyframe stops"
+ },
+ {
+  "at": "src/components/sheet/styles.css:320",
+  "says": "* sampler's `backdrop-filter` landed NOTHING and what painted was a masked gradient tint",
+  "verdict": "true",
+  "why": ":320 history in the past tense ('landed NOTHING and what painted was'); :356 the sampler sits one z-rung under the surface it grades; :496 'a clamp is not a fit' is about clipped rows: layout"
+ },
+ {
+  "at": "src/components/sheet/styles.css:356",
+  "says": "/* one rung under the surface it grades, so the plate is never sampled through it */",
+  "verdict": "true",
+  "why": ":320 history in the past tense ('landed NOTHING and what painted was'); :356 the sampler sits one z-rung under the surface it grades; :496 'a clamp is not a fit' is about clipped rows: layout"
+ },
+ {
+  "at": "src/components/sheet/styles.css:496",
+  "says": "* clamp is not a fit.",
+  "verdict": "true",
+  "why": ":320 history in the past tense ('landed NOTHING and what painted was'); :356 the sampler sits one z-rung under the surface it grades; :496 'a clamp is not a fit' is about clipped rows: layout"
+ },
+ {
+  "at": "src/components/tabs/styles/segmented.css:11",
+  "says": "across, inverts from a pressed well to a lit dome, and clamps at",
+  "verdict": "true",
+  "why": ":8 the indicator is a glass tint forward of the track, never a saturated hue or opaque `bg-card`; :11, :241, :242 the indicator clamps at the bar's inner edge and the writer reports the clamp; :49, :88 the engine clamps `--radius-tab` (9999px) to half the box height"
+ },
+ {
+  "at": "src/components/tabs/styles/segmented.css:241",
+  "says": "/* THE CLAMP. Driven into the end of the bar the body cannot span further, so it",
+  "verdict": "true",
+  "why": ":8 the indicator is a glass tint forward of the track, never a saturated hue or opaque `bg-card`; :11, :241, :242 the indicator clamps at the bar's inner edge and the writer reports the clamp; :49, :88 the engine clamps `--radius-tab` (9999px) to half the box height"
+ },
+ {
+  "at": "src/components/tabs/styles/segmented.css:242",
+  "says": "compresses against the inner edge instead. The writer REPORTS the clamp rather",
+  "verdict": "true",
+  "why": ":8 the indicator is a glass tint forward of the track, never a saturated hue or opaque `bg-card`; :11, :241, :242 the indicator clamps at the bar's inner edge and the writer reports the clamp; :49, :88 the engine clamps `--radius-tab` (9999px) to half the box height"
+ },
+ {
+  "at": "src/components/tabs/styles/segmented.css:49",
+  "says": "`--radius-tab` (= --radius-pill = 9999px) — on a short pill box this clamps to",
+  "verdict": "true",
+  "why": ":8 the indicator is a glass tint forward of the track, never a saturated hue or opaque `bg-card`; :11, :241, :242 the indicator clamps at the bar's inner edge and the writer reports the clamp; :49, :88 the engine clamps `--radius-tab` (9999px) to half the box height"
+ },
+ {
+  "at": "src/components/tabs/styles/segmented.css:8",
+  "says": "the selected-reads-as-glass body (a glass tint FORWARD of the",
+  "verdict": "true",
+  "why": ":8 the indicator is a glass tint forward of the track, never a saturated hue or opaque `bg-card`; :11, :241, :242 the indicator clamps at the bar's inner edge and the writer reports the clamp; :49, :88 the engine clamps `--radius-tab` (9999px) to half the box height"
+ },
+ {
+  "at": "src/components/tabs/styles/segmented.css:88",
+  "says": "on a tall multi-row box the stadium clamps its end-caps to a ~46px half-height",
+  "verdict": "true",
+  "why": ":8 the indicator is a glass tint forward of the track, never a saturated hue or opaque `bg-card`; :11, :241, :242 the indicator clamps at the bar's inner edge and the writer reports the clamp; :49, :88 the engine clamps `--radius-tab` (9999px) to half the box height"
+ },
+ {
+  "at": "src/styles/glass.css:116",
+  "says": "`.cartoon-cast`). Both compose `.glass-capsule` and read the `--glass-fill-tinted`",
+  "verdict": "true",
+  "why": ":116, :118 the chip and atom composers read the declared `--glass-fill-tinted` plate axis (tokens/glass.css:174-186), and their tinted-fill layers win by source order"
+ },
+ {
+  "at": "src/styles/glass.css:118",
+  "says": "(same `@layer components`, source-order-after so their tinted-fill layers win at equal",
+  "verdict": "true",
+  "why": ":116, :118 the chip and atom composers read the declared `--glass-fill-tinted` plate axis (tokens/glass.css:174-186), and their tinted-fill layers win by source order"
+ },
+ {
+  "at": "src/styles/glass/a11y-fallback.css:35",
+  "says": "transmission: 1 − α = (1 − rung) · level. The separate tint-darken this bracket",
+  "verdict": "true",
+  "why": ":35 R-24 (ii) as written: 1 − α = (1 − rung)·level is `glass-plate`'s α = 1 − (1 − rung)·level rearranged (glass/veil.css:64-72); at level 0.3 that keeps 30% of the rung's transmission, '70% of the way to solid' (:32-33); 'the separate tint-darken this bracket used to add was a second writer' is history in the past tense; the plate is `--card` at α with no ink (glass-subtlety.test.ts:184 passes)"
+ },
+ {
+  "at": "src/styles/glass/control-bit.css:177",
+  "says": "THE POLE IS BLACK. A recess must darken below the L* 0.1456 page floor, and",
+  "verdict": "true",
+  "why": ":177 the dark page is L* 0.1456 (:187-188) and the recess pole is `oklch(0 0 0)` (the dark fill `oklch(0 0 0 / 0.14)`, :192); :180 darkening toward black scales channels and keeps hue"
+ },
+ {
+  "at": "src/styles/glass/control-bit.css:180",
+  "says": "(tokens/glass-fx.css). Darkening toward black scales the host's channels and",
+  "verdict": "true",
+  "why": ":177 the dark page is L* 0.1456 (:187-188) and the recess pole is `oklch(0 0 0)` (the dark fill `oklch(0 0 0 / 0.14)`, :192); :180 darkening toward black scales channels and keeps hue"
+ },
+ {
+  "at": "src/styles/glass/control-surfaces.css:108",
+  "says": "KEEPS (a11y, not a ladder). The destructive/success tints reuse the",
+  "verdict": "true",
+  "why": ":17 `--control-h-md` is `max(calc(2.5rem × --ui-scale), --control-floor)` (sizing.css:28), the h-10 register with the 44px coarse clamp; :34 history: the pill left the srgb `--surface-tint-15` fork for the border seam (`--control-surface-border`, :45); :108 the destructive/success tints are `color-mix` of the semantic tokens (:116); :130 the 8% destructive bg arm (:116, over `--control-surface-bg`, the glass well) is `.input-pill`-local; :142 the Select trigger takes `--surface-tint-15` (:147), the lift the pill also took when its wash edge vanished on cream (:34 records the pill since moved off it)"
+ },
+ {
+  "at": "src/styles/glass/control-surfaces.css:130",
+  "says": "glass-tint substrate the bare-ring surfaces do not carry). */",
+  "verdict": "true",
+  "why": ":17 `--control-h-md` is `max(calc(2.5rem × --ui-scale), --control-floor)` (sizing.css:28), the h-10 register with the 44px coarse clamp; :34 history: the pill left the srgb `--surface-tint-15` fork for the border seam (`--control-surface-border`, :45); :108 the destructive/success tints are `color-mix` of the semantic tokens (:116); :130 the 8% destructive bg arm (:116, over `--control-surface-bg`, the glass well) is `.input-pill`-local; :142 the Select trigger takes `--surface-tint-15` (:147), the lift the pill also took when its wash edge vanished on cream (:34 records the pill since moved off it)"
+ },
+ {
+  "at": "src/styles/glass/control-surfaces.css:142",
+  "says": "like the input pill, so the same `--surface-tint-15` lift makes the",
+  "verdict": "true",
+  "why": ":17 `--control-h-md` is `max(calc(2.5rem × --ui-scale), --control-floor)` (sizing.css:28), the h-10 register with the 44px coarse clamp; :34 history: the pill left the srgb `--surface-tint-15` fork for the border seam (`--control-surface-border`, :45); :108 the destructive/success tints are `color-mix` of the semantic tokens (:116); :130 the 8% destructive bg arm (:116, over `--control-surface-bg`, the glass well) is `.input-pill`-local; :142 the Select trigger takes `--surface-tint-15` (:147), the lift the pill also took when its wash edge vanished on cream (:34 records the pill since moved off it)"
+ },
+ {
+  "at": "src/styles/glass/control-surfaces.css:17",
+  "says": "--control-floor)`, the h-10 register with the WCAG-44px coarse clamp), the",
+  "verdict": "true",
+  "why": ":17 `--control-h-md` is `max(calc(2.5rem × --ui-scale), --control-floor)` (sizing.css:28), the h-10 register with the 44px coarse clamp; :34 history: the pill left the srgb `--surface-tint-15` fork for the border seam (`--control-surface-border`, :45); :108 the destructive/success tints are `color-mix` of the semantic tokens (:116); :130 the 8% destructive bg arm (:116, over `--control-surface-bg`, the glass well) is `.input-pill`-local; :142 the Select trigger takes `--surface-tint-15` (:147), the lift the pill also took when its wash edge vanished on cream (:34 records the pill since moved off it)"
+ },
+ {
+  "at": "src/styles/glass/control-surfaces.css:34",
+  "says": "Moved off the srgb `--surface-tint-15` fork onto the glass",
+  "verdict": "true",
+  "why": ":17 `--control-h-md` is `max(calc(2.5rem × --ui-scale), --control-floor)` (sizing.css:28), the h-10 register with the 44px coarse clamp; :34 history: the pill left the srgb `--surface-tint-15` fork for the border seam (`--control-surface-border`, :45); :108 the destructive/success tints are `color-mix` of the semantic tokens (:116); :130 the 8% destructive bg arm (:116, over `--control-surface-bg`, the glass well) is `.input-pill`-local; :142 the Select trigger takes `--surface-tint-15` (:147), the lift the pill also took when its wash edge vanished on cream (:34 records the pill since moved off it)"
+ },
+ {
+  "at": "src/styles/glass/deep.css:18",
+  "says": "* tint axis + the a11y brackets all compose unchanged. The deep tier rides a base",
+  "verdict": "true",
+  "why": ":18 the fill-tint axis (tokens/glass.css:164) composes unchanged under deep; :69, :71 history: the predecessor LERPed floating 20px → 16px, so a deep overlay painted 16px against 22px (past tense; H8's upheld site, the rung reading)"
+ },
+ {
+  "at": "src/styles/glass/deep.css:69",
+  "says": "predecessor LERPed `--glass-blur-floating-radius` (20px) toward",
+  "verdict": "true",
+  "why": ":18 the fill-tint axis (tokens/glass.css:164) composes unchanged under deep; :69, :71 history: the predecessor LERPed floating 20px → 16px, so a deep overlay painted 16px against 22px (past tense; H8's upheld site, the rung reading)"
+ },
+ {
+  "at": "src/styles/glass/deep.css:71",
+  "says": "painted 16px against a plain overlay's 22px and the ladder graded",
+  "verdict": "true",
+  "why": ":18 the fill-tint axis (tokens/glass.css:164) composes unchanged under deep; :69, :71 history: the predecessor LERPed floating 20px → 16px, so a deep overlay painted 16px against 22px (past tense; H8's upheld site, the rung reading)"
+ },
+ {
+  "at": "src/styles/glass/grasp.css:131",
+  "says": "tinted MIX and no veil — declares `--glass-veil-rest: 1` and scales its tint",
+  "verdict": "true",
+  "why": ":131 `liquid-fill.css` paints a tinted mix and no veil, declares `--glass-veil-rest: 1` (:59) and scales `--liquid-fill-strength` by `--glass-veil-rung` (:71), so rung ÷ rest runs 1 → 0.6 there under the held rule (:135)"
+ },
+ {
+  "at": "src/styles/glass/ladder.css:171",
+  "says": "/* The on-glass MUTED lift EXTENDS to the mid-tone / tone-tinted / selected-",
+  "verdict": "true",
+  "why": ":171-189 the on-glass muted lift extends to `.feedback-tone`, `.glass-capsule` and `.glass-capsule-track` (the `:where()` at :198), which the content-tier re-point does not reach; Toast is `.feedback-tone`'s one consumer; the census and L figures are the recorded measurements that motivate the `-strong` rung (dark `--card` L 0.295, dark-arm.css:269)"
+ },
+ {
+  "at": "src/styles/glass/ladder.css:174",
+  "says": "composited TINTED / mid-tone glass plate exactly as it does on the calm content tier —",
+  "verdict": "true",
+  "why": ":171-189 the on-glass muted lift extends to `.feedback-tone`, `.glass-capsule` and `.glass-capsule-track` (the `:where()` at :198), which the content-tier re-point does not reach; Toast is `.feedback-tone`'s one consumer; the census and L figures are the recorded measurements that motivate the `-strong` rung (dark `--card` L 0.295, dark-arm.css:269)"
+ },
+ {
+  "at": "src/styles/glass/ladder.css:177",
+  "says": "TONE-TINTED plates (`.feedback-tone` — ~~Alert / Toast, the AlertDescription",
+  "verdict": "true",
+  "why": ":171-189 the on-glass muted lift extends to `.feedback-tone`, `.glass-capsule` and `.glass-capsule-track` (the `:where()` at :198), which the content-tier re-point does not reach; Toast is `.feedback-tone`'s one consumer; the census and L figures are the recorded measurements that motivate the `-strong` rung (dark `--card` L 0.295, dark-arm.css:269)"
+ },
+ {
+  "at": "src/styles/glass/ladder.css:189",
+  "says": "tone-tinted / selected chip plate",
+  "verdict": "true",
+  "why": ":171-189 the on-glass muted lift extends to `.feedback-tone`, `.glass-capsule` and `.glass-capsule-track` (the `:where()` at :198), which the content-tier re-point does not reach; Toast is `.feedback-tone`'s one consumer; the census and L figures are the recorded measurements that motivate the `-strong` rung (dark `--card` L 0.295, dark-arm.css:269)"
+ },
+ {
+  "at": "src/styles/glass/liquid-fill.css:17",
+  "says": "PHASE-COLOUR COMPOSABLE, ZERO PER-SITE GLASS KNOWLEDGE. A surface tints the",
+  "verdict": "true",
+  "why": ":4, :17-18, :22-23, :61-63 the warm tinted-glass fill and its one `--liquid-fill-tint` knob, the tint mixed against a warm 0-alpha leg at `--liquid-fill-strength` (88% default, :71); :47 this fill is not a plate and paints a tinted mix; :55 the held rule sheds 40% of the fill's tint (rung 0.6 × strength, grasp.css:135)"
+ },
+ {
+  "at": "src/styles/glass/liquid-fill.css:18",
+  "says": "fill by setting the ONE `--liquid-fill-tint` knob (a phase hue, a brand colour,",
+  "verdict": "true",
+  "why": ":4, :17-18, :22-23, :61-63 the warm tinted-glass fill and its one `--liquid-fill-tint` knob, the tint mixed against a warm 0-alpha leg at `--liquid-fill-strength` (88% default, :71); :47 this fill is not a plate and paints a tinted mix; :55 the held rule sheds 40% of the fill's tint (rung 0.6 × strength, grasp.css:135)"
+ },
+ {
+  "at": "src/styles/glass/liquid-fill.css:22",
+  "says": "· --liquid-fill-tint      — the fill hue (default the warm-cream capsule amber).",
+  "verdict": "true",
+  "why": ":4, :17-18, :22-23, :61-63 the warm tinted-glass fill and its one `--liquid-fill-tint` knob, the tint mixed against a warm 0-alpha leg at `--liquid-fill-strength` (88% default, :71); :47 this fill is not a plate and paints a tinted mix; :55 the held rule sheds 40% of the fill's tint (rung 0.6 × strength, grasp.css:135)"
+ },
+ {
+  "at": "src/styles/glass/liquid-fill.css:23",
+  "says": "· --liquid-fill-strength  — the tint mix % against the warm 0-alpha leg (88%),",
+  "verdict": "true",
+  "why": ":4, :17-18, :22-23, :61-63 the warm tinted-glass fill and its one `--liquid-fill-tint` knob, the tint mixed against a warm 0-alpha leg at `--liquid-fill-strength` (88% default, :71); :47 this fill is not a plate and paints a tinted mix; :55 the held rule sheds 40% of the fill's tint (rung 0.6 × strength, grasp.css:135)"
+ },
+ {
+  "at": "src/styles/glass/liquid-fill.css:4",
+  "says": "The warm glass-cylinder fill — a continuous rounded pill of warm tinted glass",
+  "verdict": "true",
+  "why": ":4, :17-18, :22-23, :61-63 the warm tinted-glass fill and its one `--liquid-fill-tint` knob, the tint mixed against a warm 0-alpha leg at `--liquid-fill-strength` (88% default, :71); :47 this fill is not a plate and paints a tinted mix; :55 the held rule sheds 40% of the fill's tint (rung 0.6 × strength, grasp.css:135)"
+ },
+ {
+  "at": "src/styles/glass/liquid-fill.css:47",
+  "says": "plate — it paints a tinted MIX, not a veil — so it declares the pair itself",
+  "verdict": "true",
+  "why": ":4, :17-18, :22-23, :61-63 the warm tinted-glass fill and its one `--liquid-fill-tint` knob, the tint mixed against a warm 0-alpha leg at `--liquid-fill-strength` (88% default, :71); :47 this fill is not a plate and paints a tinted mix; :55 the held rule sheds 40% of the fill's tint (rung 0.6 × strength, grasp.css:135)"
+ },
+ {
+  "at": "src/styles/glass/liquid-fill.css:55",
+  "says": "written for. Now held really does shed 40% of the fill's tint in paint, and",
+  "verdict": "true",
+  "why": ":4, :17-18, :22-23, :61-63 the warm tinted-glass fill and its one `--liquid-fill-tint` knob, the tint mixed against a warm 0-alpha leg at `--liquid-fill-strength` (88% default, :71); :47 this fill is not a plate and paints a tinted mix; :55 the held rule sheds 40% of the fill's tint (rung 0.6 × strength, grasp.css:135)"
+ },
+ {
+  "at": "src/styles/glass/liquid-fill.css:61",
+  "says": "/* The warm tinted glass fill — the tint mixes against a warm 0-alpha leg so",
+  "verdict": "true",
+  "why": ":4, :17-18, :22-23, :61-63 the warm tinted-glass fill and its one `--liquid-fill-tint` knob, the tint mixed against a warm 0-alpha leg at `--liquid-fill-strength` (88% default, :71); :47 this fill is not a plate and paints a tinted mix; :55 the held rule sheds 40% of the fill's tint (rung 0.6 × strength, grasp.css:135)"
+ },
+ {
+  "at": "src/styles/glass/liquid-fill.css:62",
+  "says": "the cylinder is a warm tinted `.glass-atom` over the field, not a flat bar.",
+  "verdict": "true",
+  "why": ":4, :17-18, :22-23, :61-63 the warm tinted-glass fill and its one `--liquid-fill-tint` knob, the tint mixed against a warm 0-alpha leg at `--liquid-fill-strength` (88% default, :71); :47 this fill is not a plate and paints a tinted mix; :55 the held rule sheds 40% of the fill's tint (rung 0.6 × strength, grasp.css:135)"
+ },
+ {
+  "at": "src/styles/glass/liquid-fill.css:63",
+  "says": "`--liquid-fill-tint` is the ONE phase-colour knob (default the warm-cream",
+  "verdict": "true",
+  "why": ":4, :17-18, :22-23, :61-63 the warm tinted-glass fill and its one `--liquid-fill-tint` knob, the tint mixed against a warm 0-alpha leg at `--liquid-fill-strength` (88% default, :71); :47 this fill is not a plate and paints a tinted mix; :55 the held rule sheds 40% of the fill's tint (rung 0.6 × strength, grasp.css:135)"
+ },
+ {
+  "at": "src/styles/glass/material.css:211",
+  "says": "/* `plus-lighter` (additive but HDR-clamped, Safari 16.4+), NOT",
+  "verdict": "true",
+  "why": ":95 the rim's accent tint is composed by re-pointing its ink; :211 `plus-lighter` is additive and HDR-clamped, not `screen`"
+ },
+ {
+  "at": "src/styles/glass/material.css:95",
+  "says": "accent tint), re-point the leg's own ink; do not rebuild the layer here. */",
+  "verdict": "true",
+  "why": ":95 the rim's accent tint is composed by re-pointing its ink; :211 `plus-lighter` is additive and HDR-clamped, not `screen`"
+ },
+ {
+  "at": "src/styles/glass/overlay-plate.css:112",
+  "says": "clamped too. Capping without the scroller would clip the tail silently, which is",
+  "verdict": "true",
+  "why": ":112 a placement-derived measure clamps a short hint against a viewport edge; :271 the listbox plate is two flat layers, the overlay veil (`--glass-veil-tier: var(--glass-veil-overlay)`, :278) and the capsule warm floor (the background-image mix, :290-296), with no second tint layer and no solidity knob"
+ },
+ {
+  "at": "src/styles/glass/overlay-plate.css:271",
+  "says": "layers, both reading the ONE recipe. There is no second tint layer and no",
+  "verdict": "true",
+  "why": "the sentence :270-274 under crit-fv10-proposed.diff: the listbox plate is two flat layers, the overlay veil (`--glass-veil-tier: var(--glass-veil-overlay)`, :278) and the capsule warm floor (:290-296), both read the one recipe; no second tint layer and no solidity knob is declared; the overlay rung is `--glass-bound` + 1 step (tokens/glass.css:284), a step above the bound; a second layer pushing the same plate is the double-writer the law forbids"
+ },
+ {
+  "at": "src/styles/glass/rim.css:16",
+  "says": "reads as a half-tinted edge rather than one accent silhouette.",
+  "verdict": "true",
+  "why": ":16 the accent reaches both rim and border, or the edge reads half-tinted; :27 the in-srgb `--surface-tint-*` brand fence is a separate axis"
+ },
+ {
+  "at": "src/styles/glass/rim.css:27",
+  "says": "`--surface-tint-*` brand-overlay family, a separate axis this never touches). At",
+  "verdict": "true",
+  "why": ":16 the accent reaches both rim and border, or the edge reads half-tinted; :27 the in-srgb `--surface-tint-*` brand fence is a separate axis"
+ },
+ {
+  "at": "src/styles/glass/surface-axis.css:124",
+  "says": "glass-tint family (NOT the in-srgb brand-overlay fence). The inset groove reads",
+  "verdict": "true",
+  "why": ":124 the well's tone-step is an oklab mix (`--glass-well-pole: color-mix(in oklab, …)`, tokens/glass.css:161), the perceptual family, not the in-srgb fence"
+ },
+ {
+  "at": "src/styles/glass/surfaces-pager.css:33",
+  "says": "with no ink, clamp or oklab mix.",
+  "verdict": "true",
+  "why": ":33 R-24 (i) as written: the sentence 'The composition is the same in both themes, with no ink, clamp or oklab mix.' is true: the pill applies `glass-plate`, `color-mix(in srgb, var(--card) calc((1 − (1 − rung)·level)·100%), transparent)` (veil.css:64-72), whose expression carries no ink token, no clamp and no oklab mix, and the pill's `.dark` arm is its box-shadow only (:59-63), so the composition is the same in both themes; R-24 struck the clause on per-theme inputs. :36 '`--glass-level` defaults to 1' (registered `initial-value: 1`, property-regs.css:154-158), so the pill paints the floating rung, `--glass-veil-floating` = `--glass-bound` (tokens/glass.css:283), the chrome bound; the in-srgb `--surface-tint-*` fence is untouched; the next sentence's `--glass-plate-dock` is struck (the only other mention in src/ is tokens/glass.css:144, a comment stating its absence)"
+ },
+ {
+  "at": "src/styles/glass/surfaces-pager.css:36",
+  "says": "`--surface-tint-*` brand fence is untouched). The dock plate's element-level",
+  "verdict": "true",
+  "why": ":33 R-24 (i) as written: the sentence 'The composition is the same in both themes, with no ink, clamp or oklab mix.' is true: the pill applies `glass-plate`, `color-mix(in srgb, var(--card) calc((1 − (1 − rung)·level)·100%), transparent)` (veil.css:64-72), whose expression carries no ink token, no clamp and no oklab mix, and the pill's `.dark` arm is its box-shadow only (:59-63), so the composition is the same in both themes; R-24 struck the clause on per-theme inputs. :36 '`--glass-level` defaults to 1' (registered `initial-value: 1`, property-regs.css:154-158), so the pill paints the floating rung, `--glass-veil-floating` = `--glass-bound` (tokens/glass.css:283), the chrome bound; the in-srgb `--surface-tint-*` fence is untouched; the next sentence's `--glass-plate-dock` is struck (the only other mention in src/ is tokens/glass.css:144, a comment stating its absence)"
+ },
+ {
+  "at": "src/styles/glass/veil.css:36",
+  "says": "`prefers-contrast: more` rides. No luma term and no clamp — nothing samples, so",
+  "verdict": "true",
+  "why": ":36 the recipe has no luma term and no clamp (:64-72), nothing samples, and no rung is thinner than the bound (each rung is the bound plus 0..2 positive steps, `--glass-veil-step = (1 − bound)/3`, tokens/glass.css:278-287, or 1); :40 a tone-tinted feedback panel is a consumer of `--glass-veil` (feedback-tone.css:80-84)"
+ },
+ {
+  "at": "src/styles/glass/veil.css:40",
+  "says": "plate INSIDE a bigger mix (the capsule's warm floor, a tone-tinted feedback panel)",
+  "verdict": "true",
+  "why": ":36 the recipe has no luma term and no clamp (:64-72), nothing samples, and no rung is thinner than the bound (each rung is the bound plus 0..2 positive steps, `--glass-veil-step = (1 − bound)/3`, tokens/glass.css:278-287, or 1); :40 a tone-tinted feedback panel is a consumer of `--glass-veil` (feedback-tone.css:80-84)"
+ },
+ {
+  "at": "src/styles/tokens/color-radius.css:162",
+  "says": "row (_shared/menu/menu.css, an accent tint at this alpha, not",
+  "verdict": "true",
+  "why": ":37 the L90 chip's chroma lift (C≈0.013) and the 'tinted not warm' bar; :77 the cream family, never a tinted cast; :93 an opaque `--card`-family surface, not a `--surface-tint-*` overlay; :162 the menu's highlighted row is an accent tint at `--fill-selected` (menu.css:17); :213, :231 the `--surface-tint-*` and muted-tinted rungs are the canonical handles (`--surface-tint-4..70` at :217-229, `--muted-soft`/`--muted-medium` at :235-236), and '36+' and '9' count the raw sites they were minted for, a provenance figure; :245, :265, :280 `--constellation-accent`, the anomaly tint, a consumer preset with a neutral default; :304 the well's max-speed cap is the no-slingshot clamp; :335 `--section-color-7` is the eyebrow knob's default (typography/utilities.css:137, :143)"
+ },
+ {
+  "at": "src/styles/tokens/color-radius.css:213",
+  "says": "/* Foreground-tint rungs — canonical handles for the 36+ raw",
+  "verdict": "true",
+  "why": ":37 the L90 chip's chroma lift (C≈0.013) and the 'tinted not warm' bar; :77 the cream family, never a tinted cast; :93 an opaque `--card`-family surface, not a `--surface-tint-*` overlay; :162 the menu's highlighted row is an accent tint at `--fill-selected` (menu.css:17); :213, :231 the `--surface-tint-*` and muted-tinted rungs are the canonical handles (`--surface-tint-4..70` at :217-229, `--muted-soft`/`--muted-medium` at :235-236), and '36+' and '9' count the raw sites they were minted for, a provenance figure; :245, :265, :280 `--constellation-accent`, the anomaly tint, a consumer preset with a neutral default; :304 the well's max-speed cap is the no-slingshot clamp; :335 `--section-color-7` is the eyebrow knob's default (typography/utilities.css:137, :143)"
+ },
+ {
+  "at": "src/styles/tokens/color-radius.css:231",
+  "says": "/* Muted-tinted surface rungs — canonical handles for the 9 raw",
+  "verdict": "true",
+  "why": ":37 the L90 chip's chroma lift (C≈0.013) and the 'tinted not warm' bar; :77 the cream family, never a tinted cast; :93 an opaque `--card`-family surface, not a `--surface-tint-*` overlay; :162 the menu's highlighted row is an accent tint at `--fill-selected` (menu.css:17); :213, :231 the `--surface-tint-*` and muted-tinted rungs are the canonical handles (`--surface-tint-4..70` at :217-229, `--muted-soft`/`--muted-medium` at :235-236), and '36+' and '9' count the raw sites they were minted for, a provenance figure; :245, :265, :280 `--constellation-accent`, the anomaly tint, a consumer preset with a neutral default; :304 the well's max-speed cap is the no-slingshot clamp; :335 `--section-color-7` is the eyebrow knob's default (typography/utilities.css:137, :143)"
+ },
+ {
+  "at": "src/styles/tokens/color-radius.css:245",
+  "says": "Only `--constellation-accent` (the anomaly tint) stays a CONSUMER preset",
+  "verdict": "true",
+  "why": ":37 the L90 chip's chroma lift (C≈0.013) and the 'tinted not warm' bar; :77 the cream family, never a tinted cast; :93 an opaque `--card`-family surface, not a `--surface-tint-*` overlay; :162 the menu's highlighted row is an accent tint at `--fill-selected` (menu.css:17); :213, :231 the `--surface-tint-*` and muted-tinted rungs are the canonical handles (`--surface-tint-4..70` at :217-229, `--muted-soft`/`--muted-medium` at :235-236), and '36+' and '9' count the raw sites they were minted for, a provenance figure; :245, :265, :280 `--constellation-accent`, the anomaly tint, a consumer preset with a neutral default; :304 the well's max-speed cap is the no-slingshot clamp; :335 `--section-color-7` is the eyebrow knob's default (typography/utilities.css:137, :143)"
+ },
+ {
+  "at": "src/styles/tokens/color-radius.css:265",
+  "says": "/* Anomaly tint — NEUTRAL library default (a desaturated warm accent). The",
+  "verdict": "true",
+  "why": ":37 the L90 chip's chroma lift (C≈0.013) and the 'tinted not warm' bar; :77 the cream family, never a tinted cast; :93 an opaque `--card`-family surface, not a `--surface-tint-*` overlay; :162 the menu's highlighted row is an accent tint at `--fill-selected` (menu.css:17); :213, :231 the `--surface-tint-*` and muted-tinted rungs are the canonical handles (`--surface-tint-4..70` at :217-229, `--muted-soft`/`--muted-medium` at :235-236), and '36+' and '9' count the raw sites they were minted for, a provenance figure; :245, :265, :280 `--constellation-accent`, the anomaly tint, a consumer preset with a neutral default; :304 the well's max-speed cap is the no-slingshot clamp; :335 `--section-color-7` is the eyebrow knob's default (typography/utilities.css:137, :143)"
+ },
+ {
+  "at": "src/styles/tokens/color-radius.css:280",
+  "says": "(above) is the edge TINT; `-edge-floor` is the neutral-edge alpha MINIMUM so a",
+  "verdict": "true",
+  "why": ":37 the L90 chip's chroma lift (C≈0.013) and the 'tinted not warm' bar; :77 the cream family, never a tinted cast; :93 an opaque `--card`-family surface, not a `--surface-tint-*` overlay; :162 the menu's highlighted row is an accent tint at `--fill-selected` (menu.css:17); :213, :231 the `--surface-tint-*` and muted-tinted rungs are the canonical handles (`--surface-tint-4..70` at :217-229, `--muted-soft`/`--muted-medium` at :235-236), and '36+' and '9' count the raw sites they were minted for, a provenance figure; :245, :265, :280 `--constellation-accent`, the anomaly tint, a consumer preset with a neutral default; :304 the well's max-speed cap is the no-slingshot clamp; :335 `--section-color-7` is the eyebrow knob's default (typography/utilities.css:137, :143)"
+ },
+ {
+  "at": "src/styles/tokens/color-radius.css:304",
+  "says": "--constellation-well-max-speed:   4.0;    /* base-width px/frame cap — the no-slingshot clamp */",
+  "verdict": "true",
+  "why": ":37 the L90 chip's chroma lift (C≈0.013) and the 'tinted not warm' bar; :77 the cream family, never a tinted cast; :93 an opaque `--card`-family surface, not a `--surface-tint-*` overlay; :162 the menu's highlighted row is an accent tint at `--fill-selected` (menu.css:17); :213, :231 the `--surface-tint-*` and muted-tinted rungs are the canonical handles (`--surface-tint-4..70` at :217-229, `--muted-soft`/`--muted-medium` at :235-236), and '36+' and '9' count the raw sites they were minted for, a provenance figure; :245, :265, :280 `--constellation-accent`, the anomaly tint, a consumer preset with a neutral default; :304 the well's max-speed cap is the no-slingshot clamp; :335 `--section-color-7` is the eyebrow knob's default (typography/utilities.css:137, :143)"
+ },
+ {
+  "at": "src/styles/tokens/color-radius.css:335",
+  "says": "--section-color-7:  oklch(0.532 0.180 317.5);  /* violet     — the tinted eyebrow's default rung */",
+  "verdict": "true",
+  "why": ":37 the L90 chip's chroma lift (C≈0.013) and the 'tinted not warm' bar; :77 the cream family, never a tinted cast; :93 an opaque `--card`-family surface, not a `--surface-tint-*` overlay; :162 the menu's highlighted row is an accent tint at `--fill-selected` (menu.css:17); :213, :231 the `--surface-tint-*` and muted-tinted rungs are the canonical handles (`--surface-tint-4..70` at :217-229, `--muted-soft`/`--muted-medium` at :235-236), and '36+' and '9' count the raw sites they were minted for, a provenance figure; :245, :265, :280 `--constellation-accent`, the anomaly tint, a consumer preset with a neutral default; :304 the well's max-speed cap is the no-slingshot clamp; :335 `--section-color-7` is the eyebrow knob's default (typography/utilities.css:137, :143)"
+ },
+ {
+  "at": "src/styles/tokens/color-radius.css:37",
+  "says": "carry 0.020 at L90 without a visible cast — the triumvirate \"tinted not",
+  "verdict": "true",
+  "why": ":37 the L90 chip's chroma lift (C≈0.013) and the 'tinted not warm' bar; :77 the cream family, never a tinted cast; :93 an opaque `--card`-family surface, not a `--surface-tint-*` overlay; :162 the menu's highlighted row is an accent tint at `--fill-selected` (menu.css:17); :213, :231 the `--surface-tint-*` and muted-tinted rungs are the canonical handles (`--surface-tint-4..70` at :217-229, `--muted-soft`/`--muted-medium` at :235-236), and '36+' and '9' count the raw sites they were minted for, a provenance figure; :245, :265, :280 `--constellation-accent`, the anomaly tint, a consumer preset with a neutral default; :304 the well's max-speed cap is the no-slingshot clamp; :335 `--section-color-7` is the eyebrow knob's default (typography/utilities.css:137, :143)"
+ },
+ {
+  "at": "src/styles/tokens/color-radius.css:77",
+  "says": "Bounded: the cream family, never a tinted cast (the triumvirate bar). */",
+  "verdict": "true",
+  "why": ":37 the L90 chip's chroma lift (C≈0.013) and the 'tinted not warm' bar; :77 the cream family, never a tinted cast; :93 an opaque `--card`-family surface, not a `--surface-tint-*` overlay; :162 the menu's highlighted row is an accent tint at `--fill-selected` (menu.css:17); :213, :231 the `--surface-tint-*` and muted-tinted rungs are the canonical handles (`--surface-tint-4..70` at :217-229, `--muted-soft`/`--muted-medium` at :235-236), and '36+' and '9' count the raw sites they were minted for, a provenance figure; :245, :265, :280 `--constellation-accent`, the anomaly tint, a consumer preset with a neutral default; :304 the well's max-speed cap is the no-slingshot clamp; :335 `--section-color-7` is the eyebrow knob's default (typography/utilities.css:137, :143)"
+ },
+ {
+  "at": "src/styles/tokens/color-radius.css:93",
+  "says": "a --surface-tint-* overlay. Consumer applies on /dashboard/* only. */",
+  "verdict": "true",
+  "why": ":37 the L90 chip's chroma lift (C≈0.013) and the 'tinted not warm' bar; :77 the cream family, never a tinted cast; :93 an opaque `--card`-family surface, not a `--surface-tint-*` overlay; :162 the menu's highlighted row is an accent tint at `--fill-selected` (menu.css:17); :213, :231 the `--surface-tint-*` and muted-tinted rungs are the canonical handles (`--surface-tint-4..70` at :217-229, `--muted-soft`/`--muted-medium` at :235-236), and '36+' and '9' count the raw sites they were minted for, a provenance figure; :245, :265, :280 `--constellation-accent`, the anomaly tint, a consumer preset with a neutral default; :304 the well's max-speed cap is the no-slingshot clamp; :335 `--section-color-7` is the eyebrow knob's default (typography/utilities.css:137, :143)"
+ },
+ {
+  "at": "src/styles/tokens/dark-arm.css:215",
+  "says": "pin's `clamp(0.28, l, 0.34)` clamps L UP to its 0.34 ceiling — a warm-brown dark",
+  "verdict": "reported",
+  "why": "'clamps L UP to its 0.34 ceiling': dark `--foreground` is hsl(30 14% 90%) (:86), so `clamp(0.28, l, 0.34)` brings a high L DOWN to the 0.34 ceiling. Byte-identical at HEAD (same `--foreground`, same pin, shadow.css:65); the patch did not write it"
+ },
+ {
+  "at": "src/styles/tokens/dark-arm.css:216",
+  "says": "sticker (the maroon `clamp(0.20, 1−l, 0.30) max(c, 0.11)` re-paste is retired; that",
+  "verdict": "reported",
+  "why": "R-26, the sentence of :214-217: its clause 'clamps L UP to its 0.34 ceiling' (:215) is false (dark `--foreground` hsl(30 14% 90%), :86, so `clamp(0.28, l, 0.34)` brings a high L DOWN); this line's own clause (the maroon re-paste is retired) is history and holds. Byte-identical at HEAD; the patch did not write it"
+ },
+ {
+  "at": "src/styles/tokens/dark-arm.css:304",
+  "says": "light arm's darkening) so it clears AA over the composited dark plate WHILE",
+  "verdict": "true",
+  "why": ":47 'a 0.003-luma band' is the recorded page/card gap, not the deleted luma term; :82 the listed registers re-resolve warm in lockstep; :216 history (the maroon re-paste is retired); :304 the dark on-glass muted ink lifts brighter (L 0.7904, :310, above the dark `--neutral-5` hsl(34 14% 62%)), mirroring the light arm's darker L 0.4811 (on-glass-fg.css:35); :328 the `--surface-tint-*` dark arm is `--foreground`-derived; :348 every `--surface-tint-*` consumer re-resolves in lockstep"
+ },
+ {
+  "at": "src/styles/tokens/dark-arm.css:328",
+  "says": "/* The --surface-tint-* dark arm,",
+  "verdict": "true",
+  "why": ":47 'a 0.003-luma band' is the recorded page/card gap, not the deleted luma term; :82 the listed registers re-resolve warm in lockstep; :216 history (the maroon re-paste is retired); :304 the dark on-glass muted ink lifts brighter (L 0.7904, :310, above the dark `--neutral-5` hsl(34 14% 62%)), mirroring the light arm's darker L 0.4811 (on-glass-fg.css:35); :328 the `--surface-tint-*` dark arm is `--foreground`-derived; :348 every `--surface-tint-*` consumer re-resolves in lockstep"
+ },
+ {
+  "at": "src/styles/tokens/dark-arm.css:331",
+  "says": "cream) tint composites to near-black: the 9-rung chip/hairline/divider scale is",
+  "verdict": "reported",
+  "why": "'the 9-rung chip/hairline/divider scale': the `--surface-tint-*` family declares 11 rungs in both arms (color-radius.css, dark-arm.css: 4/6/8/10/12/15/18/22/25/40/70), 11 at HEAD too; byte-identical at HEAD and not written by the patch"
+ },
+ {
+  "at": "src/styles/tokens/dark-arm.css:334",
+  "says": "tint). A hardcoded hsl(48 12% 96%) literal ×12 would sit at the",
+  "verdict": "reported",
+  "why": "'A hardcoded hsl(48 12% 96%) literal ×12': the family it would replace has 11 rungs (as :331), at HEAD too; byte-identical at HEAD and not written by the patch"
+ },
+ {
+  "at": "src/styles/tokens/dark-arm.css:347",
+  "says": "fence holds — the oklch(from …) is the INK SOURCE, not the tint mix space).",
+  "verdict": "reported",
+  "why": "the sentence's 'the SAME 12-rung α ladder' (:346): 11 rungs in both arms, at HEAD too; the line's own clause (the oklch(from …) is the ink source, not the mix space) holds. Byte-identical at HEAD and not written by the patch"
+ },
+ {
+  "at": "src/styles/tokens/dark-arm.css:348",
+  "says": "This re-resolves every --surface-tint-* consumer (chip backplates, the dock hairline",
+  "verdict": "true",
+  "why": ":47 'a 0.003-luma band' is the recorded page/card gap, not the deleted luma term; :82 the listed registers re-resolve warm in lockstep; :216 history (the maroon re-paste is retired); :304 the dark on-glass muted ink lifts brighter (L 0.7904, :310, above the dark `--neutral-5` hsl(34 14% 62%)), mirroring the light arm's darker L 0.4811 (on-glass-fg.css:35); :328 the `--surface-tint-*` dark arm is `--foreground`-derived; :348 every `--surface-tint-*` consumer re-resolves in lockstep"
+ },
+ {
+  "at": "src/styles/tokens/dark-arm.css:47",
+  "says": "so the page↔card gap widens from a 4-L collapse (card/page relL ≈ 2.0×, a 0.003-luma",
+  "verdict": "true",
+  "why": ":47 'a 0.003-luma band' is the recorded page/card gap, not the deleted luma term; :82 the listed registers re-resolve warm in lockstep; :216 history (the maroon re-paste is retired); :304 the dark on-glass muted ink lifts brighter (L 0.7904, :310, above the dark `--neutral-5` hsl(34 14% 62%)), mirroring the light arm's darker L 0.4811 (on-glass-fg.css:35); :328 the `--surface-tint-*` dark arm is `--foreground`-derived; :348 every `--surface-tint-*` consumer re-resolves in lockstep"
+ },
+ {
+  "at": "src/styles/tokens/dark-arm.css:82",
+  "says": "dock-selected-accent, the --surface-tint-* relative-color recipe below) re-resolves",
+  "verdict": "true",
+  "why": ":47 'a 0.003-luma band' is the recorded page/card gap, not the deleted luma term; :82 the listed registers re-resolve warm in lockstep; :216 history (the maroon re-paste is retired); :304 the dark on-glass muted ink lifts brighter (L 0.7904, :310, above the dark `--neutral-5` hsl(34 14% 62%)), mirroring the light arm's darker L 0.4811 (on-glass-fg.css:35); :328 the `--surface-tint-*` dark arm is `--foreground`-derived; :348 every `--surface-tint-*` consumer re-resolves in lockstep"
+ },
+ {
+  "at": "src/styles/tokens/glass-deep.css:55",
+  "says": "20px → 16px: a deep overlay painted 16px where the plain overlay painted 22,",
+  "verdict": "true",
+  "why": ":55 history in the past tense ('painted 16px where the plain overlay painted 22'); R-20 (iv) wrote :54 above it"
+ },
+ {
+  "at": "src/styles/tokens/glass-fx.css:120",
+  "says": "so it darkens the inner-top edge without re-coloring the warm fill. */",
+  "verdict": "true",
+  "why": ":120 the tab-track recess ink (`--tab-track-recess-ink`, :121) darkens the inner-top edge without re-colouring; :147 chart palette aliases for consumer phase tinting; :185 a shadow re-tints with `--foreground` by construction, a scrim must not"
+ },
+ {
+  "at": "src/styles/tokens/glass-fx.css:147",
+  "says": "/* Chart palette aliases — consumers read these for phase tinting; defaults map to",
+  "verdict": "true",
+  "why": ":120 the tab-track recess ink (`--tab-track-recess-ink`, :121) darkens the inner-top edge without re-colouring; :147 chart palette aliases for consumer phase tinting; :185 a shadow re-tints with `--foreground` by construction, a scrim must not"
+ },
+ {
+  "at": "src/styles/tokens/glass-fx.css:185",
+  "says": "rides `--shadow-color: var(--foreground)` — correct, a shadow re-tints under `.dark`",
+  "verdict": "true",
+  "why": ":120 the tab-track recess ink (`--tab-track-recess-ink`, :121) darkens the inner-top edge without re-colouring; :147 chart palette aliases for consumer phase tinting; :185 a shadow re-tints with `--foreground` by construction, a scrim must not"
+ },
+ {
+  "at": "src/styles/tokens/glass.css:133",
+  "says": "of a surface color), and the oklab/srgb fence is tint-vs-plate.",
+  "verdict": "true",
+  "why": ":133, :218-219 a plate is an alpha of `--card`, so `in srgb` is right; the oklab/srgb fence is tint-vs-plate; `--glass-floor-fill` is `--card` at definition × 15% (:222-223); :151 the well's tone-step is an oklab mix (:161), one knob `--glass-well-tone: 8%` (:155) inside the stated [6%, 10%] band; :164, :166 the per-instance fill-tint axis `--glass-fill-tint`/`--glass-fill-strength` beside the rim accent and the whole-plate veil; :174, :176 `--glass-fill-tinted` reads that axis directly for Badge and Chip; :195 the border rungs are ≤5% α in `--foreground` (4% wash..resting, 5% floating/overlay, :198-202); :304 a malformed override of a registered property computes to its initial value"
+ },
+ {
+  "at": "src/styles/tokens/glass.css:151",
+  "says": "The tone-step is an oklab mix (the perceptual glass-tint family, NOT the in-srgb",
+  "verdict": "true",
+  "why": ":133, :218-219 a plate is an alpha of `--card`, so `in srgb` is right; the oklab/srgb fence is tint-vs-plate; `--glass-floor-fill` is `--card` at definition × 15% (:222-223); :151 the well's tone-step is an oklab mix (:161), one knob `--glass-well-tone: 8%` (:155) inside the stated [6%, 10%] band; :164, :166 the per-instance fill-tint axis `--glass-fill-tint`/`--glass-fill-strength` beside the rim accent and the whole-plate veil; :174, :176 `--glass-fill-tinted` reads that axis directly for Badge and Chip; :195 the border rungs are ≤5% α in `--foreground` (4% wash..resting, 5% floating/overlay, :198-202); :304 a malformed override of a registered property computes to its initial value"
+ },
+ {
+  "at": "src/styles/tokens/glass.css:164",
+  "says": "/* THE PER-INSTANCE PLATE-FILL TINT AXIS (`--glass-fill-tint` /",
+  "verdict": "true",
+  "why": ":133, :218-219 a plate is an alpha of `--card`, so `in srgb` is right; the oklab/srgb fence is tint-vs-plate; `--glass-floor-fill` is `--card` at definition × 15% (:222-223); :151 the well's tone-step is an oklab mix (:161), one knob `--glass-well-tone: 8%` (:155) inside the stated [6%, 10%] band; :164, :166 the per-instance fill-tint axis `--glass-fill-tint`/`--glass-fill-strength` beside the rim accent and the whole-plate veil; :174, :176 `--glass-fill-tinted` reads that axis directly for Badge and Chip; :195 the border rungs are ≤5% α in `--foreground` (4% wash..resting, 5% floating/overlay, :198-202); :304 a malformed override of a registered property computes to its initial value"
+ },
+ {
+  "at": "src/styles/tokens/glass.css:166",
+  "says": "`--glass-accent` and the whole-plate veil (`--glass-veil-*`). It tints the",
+  "verdict": "true",
+  "why": ":133, :218-219 a plate is an alpha of `--card`, so `in srgb` is right; the oklab/srgb fence is tint-vs-plate; `--glass-floor-fill` is `--card` at definition × 15% (:222-223); :151 the well's tone-step is an oklab mix (:161), one knob `--glass-well-tone: 8%` (:155) inside the stated [6%, 10%] band; :164, :166 the per-instance fill-tint axis `--glass-fill-tint`/`--glass-fill-strength` beside the rim accent and the whole-plate veil; :174, :176 `--glass-fill-tinted` reads that axis directly for Badge and Chip; :195 the border rungs are ≤5% α in `--foreground` (4% wash..resting, 5% floating/overlay, :198-202); :304 a malformed override of a registered property computes to its initial value"
+ },
+ {
+  "at": "src/styles/tokens/glass.css:174",
+  "says": "/* `--glass-fill-tinted` is the ONE per-instance data-hue plate the fill-tint",
+  "verdict": "true",
+  "why": ":133, :218-219 a plate is an alpha of `--card`, so `in srgb` is right; the oklab/srgb fence is tint-vs-plate; `--glass-floor-fill` is `--card` at definition × 15% (:222-223); :151 the well's tone-step is an oklab mix (:161), one knob `--glass-well-tone: 8%` (:155) inside the stated [6%, 10%] band; :164, :166 the per-instance fill-tint axis `--glass-fill-tint`/`--glass-fill-strength` beside the rim accent and the whole-plate veil; :174, :176 `--glass-fill-tinted` reads that axis directly for Badge and Chip; :195 the border rungs are ≤5% α in `--foreground` (4% wash..resting, 5% floating/overlay, :198-202); :304 a malformed override of a registered property computes to its initial value"
+ },
+ {
+  "at": "src/styles/tokens/glass.css:176",
+  "says": "each re-spelling the mix. It reads the tint/strength axis DIRECTLY, so a",
+  "verdict": "true",
+  "why": ":133, :218-219 a plate is an alpha of `--card`, so `in srgb` is right; the oklab/srgb fence is tint-vs-plate; `--glass-floor-fill` is `--card` at definition × 15% (:222-223); :151 the well's tone-step is an oklab mix (:161), one knob `--glass-well-tone: 8%` (:155) inside the stated [6%, 10%] band; :164, :166 the per-instance fill-tint axis `--glass-fill-tint`/`--glass-fill-strength` beside the rim accent and the whole-plate veil; :174, :176 `--glass-fill-tinted` reads that axis directly for Badge and Chip; :195 the border rungs are ≤5% α in `--foreground` (4% wash..resting, 5% floating/overlay, :198-202); :304 a malformed override of a registered property computes to its initial value"
+ },
+ {
+  "at": "src/styles/tokens/glass.css:195",
+  "says": "hue stays `--foreground` (warm, not tinted), only the PRESENCE falls below the",
+  "verdict": "true",
+  "why": ":133, :218-219 a plate is an alpha of `--card`, so `in srgb` is right; the oklab/srgb fence is tint-vs-plate; `--glass-floor-fill` is `--card` at definition × 15% (:222-223); :151 the well's tone-step is an oklab mix (:161), one knob `--glass-well-tone: 8%` (:155) inside the stated [6%, 10%] band; :164, :166 the per-instance fill-tint axis `--glass-fill-tint`/`--glass-fill-strength` beside the rim accent and the whole-plate veil; :174, :176 `--glass-fill-tinted` reads that axis directly for Badge and Chip; :195 the border rungs are ≤5% α in `--foreground` (4% wash..resting, 5% floating/overlay, :198-202); :304 a malformed override of a registered property computes to its initial value"
+ },
+ {
+  "at": "src/styles/tokens/glass.css:218",
+  "says": "`--glass-floor-fill` is an ALPHA-OF-`--card` PLATE leg, not a chroma tint, so",
+  "verdict": "true",
+  "why": ":133, :218-219 a plate is an alpha of `--card`, so `in srgb` is right; the oklab/srgb fence is tint-vs-plate; `--glass-floor-fill` is `--card` at definition × 15% (:222-223); :151 the well's tone-step is an oklab mix (:161), one knob `--glass-well-tone: 8%` (:155) inside the stated [6%, 10%] band; :164, :166 the per-instance fill-tint axis `--glass-fill-tint`/`--glass-fill-strength` beside the rim accent and the whole-plate veil; :174, :176 `--glass-fill-tinted` reads that axis directly for Badge and Chip; :195 the border rungs are ≤5% α in `--foreground` (4% wash..resting, 5% floating/overlay, :198-202); :304 a malformed override of a registered property computes to its initial value"
+ },
+ {
+  "at": "src/styles/tokens/glass.css:219",
+  "says": "`in srgb` is CORRECT (the oklab/srgb fence is tint-vs-plate). At definition 0 it",
+  "verdict": "true",
+  "why": ":133, :218-219 a plate is an alpha of `--card`, so `in srgb` is right; the oklab/srgb fence is tint-vs-plate; `--glass-floor-fill` is `--card` at definition × 15% (:222-223); :151 the well's tone-step is an oklab mix (:161), one knob `--glass-well-tone: 8%` (:155) inside the stated [6%, 10%] band; :164, :166 the per-instance fill-tint axis `--glass-fill-tint`/`--glass-fill-strength` beside the rim accent and the whole-plate veil; :174, :176 `--glass-fill-tinted` reads that axis directly for Badge and Chip; :195 the border rungs are ≤5% α in `--foreground` (4% wash..resting, 5% floating/overlay, :198-202); :304 a malformed override of a registered property computes to its initial value"
+ },
+ {
+  "at": "src/styles/tokens/glass.css:304",
+  "says": "override CLAMPS to the initial-value — the typed fail-safe. */",
+  "verdict": "true",
+  "why": ":133, :218-219 a plate is an alpha of `--card`, so `in srgb` is right; the oklab/srgb fence is tint-vs-plate; `--glass-floor-fill` is `--card` at definition × 15% (:222-223); :151 the well's tone-step is an oklab mix (:161), one knob `--glass-well-tone: 8%` (:155) inside the stated [6%, 10%] band; :164, :166 the per-instance fill-tint axis `--glass-fill-tint`/`--glass-fill-strength` beside the rim accent and the whole-plate veil; :174, :176 `--glass-fill-tinted` reads that axis directly for Badge and Chip; :195 the border rungs are ≤5% α in `--foreground` (4% wash..resting, 5% floating/overlay, :198-202); :304 a malformed override of a registered property computes to its initial value"
+ },
+ {
+  "at": "src/styles/tokens/light-dark.css:12",
+  "says": "`--touch-target`, so every scaled control-height `max(scaled, floor)` clamps at",
+  "verdict": "true",
+  "why": ":12 the control floor lifts to `--touch-target`, so `max(scaled, floor)` clamps at ≥44px"
+ },
+ {
+  "at": "src/styles/tokens/property-regs.css:114",
+  "says": "/* The per-INSTANCE CHROMATIC-RIM tint. `--glass-accent` is a complete `<color>` (a",
+  "verdict": "true",
+  "why": ":114-115 `--glass-accent` OKLab-tints the rim (H9-1's homonym site at :115); :122-123 the accent never tints the plate background, and LEVEL · TINT · ACCENT name the three axes (:123's TINT label, Crit8 §5.2); :130, :185, :219 a malformed override of a registered property computes to its initial value; :151 each veil rung's α is held at the bound with nothing sampled, and level scales that α and the blur; :197 an OBSERVER subtree pins `--motion-weight: 0`"
+ },
+ {
+  "at": "src/styles/tokens/property-regs.css:115",
+  "says": "consumer DATA hue) that OKLab-tints a glass surface's RIM — the",
+  "verdict": "true",
+  "why": ":114-115 `--glass-accent` OKLab-tints the rim (H9-1's homonym site at :115); :122-123 the accent never tints the plate background, and LEVEL · TINT · ACCENT name the three axes (:123's TINT label, Crit8 §5.2); :130, :185, :219 a malformed override of a registered property computes to its initial value; :151 each veil rung's α is held at the bound with nothing sampled, and level scales that α and the blur; :197 an OBSERVER subtree pins `--motion-weight: 0`"
+ },
+ {
+  "at": "src/styles/tokens/property-regs.css:122",
+  "says": "accent is the RIM+GLINT chromatic decoration axis and it NEVER tints the plate",
+  "verdict": "true",
+  "why": ":114-115 `--glass-accent` OKLab-tints the rim (H9-1's homonym site at :115); :122-123 the accent never tints the plate background, and LEVEL · TINT · ACCENT name the three axes (:123's TINT label, Crit8 §5.2); :130, :185, :219 a malformed override of a registered property computes to its initial value; :151 each veil rung's α is held at the bound with nothing sampled, and level scales that α and the blur; :197 an OBSERVER subtree pins `--motion-weight: 0`"
+ },
+ {
+  "at": "src/styles/tokens/property-regs.css:123",
+  "says": "background. Three disjoint glass axes: LEVEL (opacity+blur) · TINT (whole-plate",
+  "verdict": "true",
+  "why": ":114-115 `--glass-accent` OKLab-tints the rim (H9-1's homonym site at :115); :122-123 the accent never tints the plate background, and LEVEL · TINT · ACCENT name the three axes (:123's TINT label, Crit8 §5.2); :130, :185, :219 a malformed override of a registered property computes to its initial value; :151 each veil rung's α is held at the bound with nothing sampled, and level scales that α and the blur; :197 an OBSERVER subtree pins `--motion-weight: 0`"
+ },
+ {
+  "at": "src/styles/tokens/property-regs.css:130",
+  "says": "CLAMPS to the initial value — the typed fail-safe. */",
+  "verdict": "true",
+  "why": ":114-115 `--glass-accent` OKLab-tints the rim (H9-1's homonym site at :115); :122-123 the accent never tints the plate background, and LEVEL · TINT · ACCENT name the three axes (:123's TINT label, Crit8 §5.2); :130, :185, :219 a malformed override of a registered property computes to its initial value; :151 each veil rung's α is held at the bound with nothing sampled, and level scales that α and the blur; :197 an OBSERVER subtree pins `--motion-weight: 0`"
+ },
+ {
+  "at": "src/styles/tokens/property-regs.css:151",
+  "says": "bound (`--glass-bound`), with nothing sampled from the backdrop. Level scales that α",
+  "verdict": "true",
+  "why": ":114-115 `--glass-accent` OKLab-tints the rim (H9-1's homonym site at :115); :122-123 the accent never tints the plate background, and LEVEL · TINT · ACCENT name the three axes (:123's TINT label, Crit8 §5.2); :130, :185, :219 a malformed override of a registered property computes to its initial value; :151 each veil rung's α is held at the bound with nothing sampled, and level scales that α and the blur; :197 an OBSERVER subtree pins `--motion-weight: 0`"
+ },
+ {
+  "at": "src/styles/tokens/property-regs.css:185",
+  "says": "`calc(<base> * var(--ui-scale))` is always valid — a malformed override CLAMPS to 1",
+  "verdict": "true",
+  "why": ":114-115 `--glass-accent` OKLab-tints the rim (H9-1's homonym site at :115); :122-123 the accent never tints the plate background, and LEVEL · TINT · ACCENT name the three axes (:123's TINT label, Crit8 §5.2); :130, :185, :219 a malformed override of a registered property computes to its initial value; :151 each veil rung's α is held at the bound with nothing sampled, and level scales that α and the blur; :197 an OBSERVER subtree pins `--motion-weight: 0`"
+ },
+ {
+  "at": "src/styles/tokens/property-regs.css:197",
+  "says": "the whole mechanism: a DRIVER ancestor pushes `--motion-weight: 1`; an OBSERVER",
+  "verdict": "true",
+  "why": ":114-115 `--glass-accent` OKLab-tints the rim (H9-1's homonym site at :115); :122-123 the accent never tints the plate background, and LEVEL · TINT · ACCENT name the three axes (:123's TINT label, Crit8 §5.2); :130, :185, :219 a malformed override of a registered property computes to its initial value; :151 each veil rung's α is held at the bound with nothing sampled, and level scales that α and the blur; :197 an OBSERVER subtree pins `--motion-weight: 0`"
+ },
+ {
+  "at": "src/styles/tokens/property-regs.css:219",
+  "says": "override CLAMPS to 1, and `motionTempo()` mirrors the ≤0 → 1 clamp JS-side.",
+  "verdict": "true",
+  "why": ":114-115 `--glass-accent` OKLab-tints the rim (H9-1's homonym site at :115); :122-123 the accent never tints the plate background, and LEVEL · TINT · ACCENT name the three axes (:123's TINT label, Crit8 §5.2); :130, :185, :219 a malformed override of a registered property computes to its initial value; :151 each veil rung's α is held at the bound with nothing sampled, and level scales that α and the blur; :197 an OBSERVER subtree pins `--motion-weight: 0`"
+ },
+ {
+  "at": "src/styles/tokens/scale-paper.css:101",
+  "says": "• `--control-checked-bg` — the SELECTED glass-tinted fill. The recipe is minted",
+  "verdict": "true",
+  "why": ":69-73, :82 `--invalid-ring-tint` is the one retint knob, read library-wide; :101 `--control-checked-bg` is `--primary` at 88% over transparent (:106), a selected fill whose 12% transmission carries the glass it sits on, minted once; :137, :158 grid ink is a `color-mix` on `--foreground`, so it re-tints with the theme; :152 the card interior ground is seen through the glass plate; :216, :248 the metal registers are material, not a tinted cast"
+ },
+ {
+  "at": "src/styles/tokens/scale-paper.css:137",
+  "says": "so it re-tints with the theme by construction (warm-ink on light, lifting",
+  "verdict": "true",
+  "why": ":69-73, :82 `--invalid-ring-tint` is the one retint knob, read library-wide; :101 `--control-checked-bg` is `--primary` at 88% over transparent (:106), a selected fill whose 12% transmission carries the glass it sits on, minted once; :137, :158 grid ink is a `color-mix` on `--foreground`, so it re-tints with the theme; :152 the card interior ground is seen through the glass plate; :216, :248 the metal registers are material, not a tinted cast"
+ },
+ {
+  "at": "src/styles/tokens/scale-paper.css:152",
+  "says": "the document-register card's INTERIOR ground, felt THROUGH the glass tint.",
+  "verdict": "true",
+  "why": ":69-73, :82 `--invalid-ring-tint` is the one retint knob, read library-wide; :101 `--control-checked-bg` is `--primary` at 88% over transparent (:106), a selected fill whose 12% transmission carries the glass it sits on, minted once; :137, :158 grid ink is a `color-mix` on `--foreground`, so it re-tints with the theme; :152 the card interior ground is seen through the glass plate; :216, :248 the metal registers are material, not a tinted cast"
+ },
+ {
+  "at": "src/styles/tokens/scale-paper.css:158",
+  "says": "shared. The ink stays a `color-mix(… var(--foreground) N%, …)` (re-tints with",
+  "verdict": "true",
+  "why": ":69-73, :82 `--invalid-ring-tint` is the one retint knob, read library-wide; :101 `--control-checked-bg` is `--primary` at 88% over transparent (:106), a selected fill whose 12% transmission carries the glass it sits on, minted once; :137, :158 grid ink is a `color-mix` on `--foreground`, so it re-tints with the theme; :152 the card interior ground is seen through the glass plate; :216, :248 the metal registers are material, not a tinted cast"
+ },
+ {
+  "at": "src/styles/tokens/scale-paper.css:216",
+  "says": "as polished metal, not a tinted cast, and the cool hue distinguishes it from",
+  "verdict": "true",
+  "why": ":69-73, :82 `--invalid-ring-tint` is the one retint knob, read library-wide; :101 `--control-checked-bg` is `--primary` at 88% over transparent (:106), a selected fill whose 12% transmission carries the glass it sits on, minted once; :137, :158 grid ink is a `color-mix` on `--foreground`, so it re-tints with the theme; :152 the card interior ground is seen through the glass plate; :216, :248 the metal registers are material, not a tinted cast"
+ },
+ {
+  "at": "src/styles/tokens/scale-paper.css:248",
+  "says": "\"warm-not-tinted\" bar). It is NOT a neutral — a low-chroma bronze would BE a",
+  "verdict": "true",
+  "why": ":69-73, :82 `--invalid-ring-tint` is the one retint knob, read library-wide; :101 `--control-checked-bg` is `--primary` at 88% over transparent (:106), a selected fill whose 12% transmission carries the glass it sits on, minted once; :137, :158 grid ink is a `color-mix` on `--foreground`, so it re-tints with the theme; :152 the card interior ground is seen through the glass plate; :216, :248 the metal registers are material, not a tinted cast"
+ },
+ {
+  "at": "src/styles/tokens/scale-paper.css:69",
+  "says": "inline. ONE geometry (the SAME `--focus-ring-width`), ONE tint knob",
+  "verdict": "true",
+  "why": ":69-73, :82 `--invalid-ring-tint` is the one retint knob, read library-wide; :101 `--control-checked-bg` is `--primary` at 88% over transparent (:106), a selected fill whose 12% transmission carries the glass it sits on, minted once; :137, :158 grid ink is a `color-mix` on `--foreground`, so it re-tints with the theme; :152 the card interior ground is seen through the glass plate; :216, :248 the metal registers are material, not a tinted cast"
+ },
+ {
+  "at": "src/styles/tokens/scale-paper.css:70",
+  "says": "(`--invalid-ring-tint`, the documented retint axis), resolving",
+  "verdict": "true",
+  "why": ":69-73, :82 `--invalid-ring-tint` is the one retint knob, read library-wide; :101 `--control-checked-bg` is `--primary` at 88% over transparent (:106), a selected fill whose 12% transmission carries the glass it sits on, minted once; :137, :158 grid ink is a `color-mix` on `--foreground`, so it re-tints with the theme; :152 the card interior ground is seen through the glass plate; :216, :248 the metal registers are material, not a tinted cast"
+ },
+ {
+  "at": "src/styles/tokens/scale-paper.css:73",
+  "says": "`:root { --invalid-ring-tint: … }` override — the token-first axis",
+  "verdict": "true",
+  "why": ":69-73, :82 `--invalid-ring-tint` is the one retint knob, read library-wide; :101 `--control-checked-bg` is `--primary` at 88% over transparent (:106), a selected fill whose 12% transmission carries the glass it sits on, minted once; :137, :158 grid ink is a `color-mix` on `--foreground`, so it re-tints with the theme; :152 the card interior ground is seen through the glass plate; :216, :248 the metal registers are material, not a tinted cast"
+ },
+ {
+  "at": "src/styles/tokens/scale-paper.css:82",
+  "says": "RadioGroupItem) reads it so a re-tint is ONE edit, library-wide.",
+  "verdict": "true",
+  "why": ":69-73, :82 `--invalid-ring-tint` is the one retint knob, read library-wide; :101 `--control-checked-bg` is `--primary` at 88% over transparent (:106), a selected fill whose 12% transmission carries the glass it sits on, minted once; :137, :158 grid ink is a `color-mix` on `--foreground`, so it re-tints with the theme; :152 the card interior ground is seen through the glass plate; :216, :248 the metal registers are material, not a tinted cast"
+ },
+ {
+  "at": "src/styles/tokens/shadow.css:103",
+  "says": "casts a faint tinted contact shade. Adaptive-by-construction: `--shadow-color`",
+  "verdict": "true",
+  "why": ":50-51 the cartoon ink pin is `oklch(from var(--foreground) clamp(0.28, l, 0.34) clamp(0.030, c, 0.050) h)` (:65), which lifts a near-black light `--foreground` into the brown band; :53-54 history of the retired out-of-gamut floor; :96, :103 the blob's ambient-tinted contact shade; :127, :143 contact-darkening and the hover lift's grounding darken"
+ },
+ {
+  "at": "src/styles/tokens/shadow.css:127",
+  "says": "the surface (the contact-darkening AO the satellites pick up where they merge into",
+  "verdict": "true",
+  "why": ":50-51 the cartoon ink pin is `oklch(from var(--foreground) clamp(0.28, l, 0.34) clamp(0.030, c, 0.050) h)` (:65), which lifts a near-black light `--foreground` into the brown band; :53-54 history of the retired out-of-gamut floor; :96, :103 the blob's ambient-tinted contact shade; :127, :143 contact-darkening and the hover lift's grounding darken"
+ },
+ {
+  "at": "src/styles/tokens/shadow.css:143",
+  "says": "contact band TIGHTENS toward the lifted base (a touch of extra grounding-darken",
+  "verdict": "true",
+  "why": ":50-51 the cartoon ink pin is `oklch(from var(--foreground) clamp(0.28, l, 0.34) clamp(0.030, c, 0.050) h)` (:65), which lifts a near-black light `--foreground` into the brown band; :53-54 history of the retired out-of-gamut floor; :96, :103 the blob's ambient-tinted contact shade; :127, :143 contact-darkening and the hover lift's grounding darken"
+ },
+ {
+  "at": "src/styles/tokens/shadow.css:50",
+  "says": "`clamp(0.28, l, 0.34)` lifts the near-black `--foreground` L into the brown",
+  "verdict": "true",
+  "why": ":50-51 the cartoon ink pin is `oklch(from var(--foreground) clamp(0.28, l, 0.34) clamp(0.030, c, 0.050) h)` (:65), which lifts a near-black light `--foreground` into the brown band; :53-54 history of the retired out-of-gamut floor; :96, :103 the blob's ambient-tinted contact shade; :127, :143 contact-darkening and the hover lift's grounding darken"
+ },
+ {
+  "at": "src/styles/tokens/shadow.css:51",
+  "says": "midtone band, and `clamp(0.030, c, 0.050)` holds chroma in the range sRGB can",
+  "verdict": "true",
+  "why": ":50-51 the cartoon ink pin is `oklch(from var(--foreground) clamp(0.28, l, 0.34) clamp(0.030, c, 0.050) h)` (:65), which lifts a near-black light `--foreground` into the brown band; :53-54 history of the retired out-of-gamut floor; :96, :103 the blob's ambient-tinted contact shade; :127, :143 contact-darkening and the hover lift's grounding darken"
+ },
+ {
+  "at": "src/styles/tokens/shadow.css:53",
+  "says": "`max(c, 0.11)` floor at `clamp(0.14, l, 0.18)` is OUT OF GAMUT at low L — sRGB",
+  "verdict": "true",
+  "why": ":50-51 the cartoon ink pin is `oklch(from var(--foreground) clamp(0.28, l, 0.34) clamp(0.030, c, 0.050) h)` (:65), which lifts a near-black light `--foreground` into the brown band; :53-54 history of the retired out-of-gamut floor; :96, :103 the blob's ambient-tinted contact shade; :127, :143 contact-darkening and the hover lift's grounding darken"
+ },
+ {
+  "at": "src/styles/tokens/shadow.css:54",
+  "says": "cannot hold C 0.11 at L 0.18, so the browser clamps each channel and the ink",
+  "verdict": "true",
+  "why": ":50-51 the cartoon ink pin is `oklch(from var(--foreground) clamp(0.28, l, 0.34) clamp(0.030, c, 0.050) h)` (:65), which lifts a near-black light `--foreground` into the brown band; :53-54 history of the retired out-of-gamut floor; :96, :103 the blob's ambient-tinted contact shade; :127, :143 contact-darkening and the hover lift's grounding darken"
+ },
+ {
+  "at": "src/styles/tokens/shadow.css:96",
+  "says": "shadow (small downward offset, a large soft blur, ambient-tinted), in the",
+  "verdict": "true",
+  "why": ":50-51 the cartoon ink pin is `oklch(from var(--foreground) clamp(0.28, l, 0.34) clamp(0.030, c, 0.050) h)` (:65), which lifts a near-black light `--foreground` into the brown band; :53-54 history of the retired out-of-gamut floor; :96, :103 the blob's ambient-tinted contact shade; :127, :143 contact-darkening and the hover lift's grounding darken"
+ },
+ {
+  "at": "src/styles/tokens/sizing.css:153",
+  "says": "`max(…, --dock-control-floor)` clamp. `--dock-mobile-scale` overrides this. */",
+  "verdict": "true",
+  "why": ":22 `--control-floor` is the 44px clamp seam (0 desktop, `--touch-target` coarse) for the 28/36/40/44px cohort (1.75/2.25/2.5/2.75rem, :26-29); :32-33, :40 type keeps its one fluid clamp and the comfort factor applies once; :153 0.78 × 1.5 ≈ 1.17, the floor held by the `max()` clamp; :212, :214 the switcher paints no fill and its hover/active are translucent glass tints (:222-223); :218-219 the hairline takes the dock's `--surface-tint-*` rung, which dark-arm.css re-resolves warm; :233 active (`--fill-selected` 0.12, :205) is a step above hover (`--fill-hover` 0.05, :204), translucent, never opaque; :256-257 the press darken `--dock-control-press-bg` is the one-ink selected rung, read on `:active` with the scale-press (icon-button.css:122-123)"
+ },
+ {
+  "at": "src/styles/tokens/sizing.css:212",
+  "says": "/* The layer switcher is a HAIRLINE register, not a fused tinted gutter: the",
+  "verdict": "true",
+  "why": ":22 `--control-floor` is the 44px clamp seam (0 desktop, `--touch-target` coarse) for the 28/36/40/44px cohort (1.75/2.25/2.5/2.75rem, :26-29); :32-33, :40 type keeps its one fluid clamp and the comfort factor applies once; :153 0.78 × 1.5 ≈ 1.17, the floor held by the `max()` clamp; :212, :214 the switcher paints no fill and its hover/active are translucent glass tints (:222-223); :218-219 the hairline takes the dock's `--surface-tint-*` rung, which dark-arm.css re-resolves warm; :233 active (`--fill-selected` 0.12, :205) is a step above hover (`--fill-hover` 0.05, :204), translucent, never opaque; :256-257 the press darken `--dock-control-press-bg` is the one-ink selected rung, read on `:active` with the scale-press (icon-button.css:122-123)"
+ },
+ {
+  "at": "src/styles/tokens/sizing.css:214",
+  "says": "edge. The hover/active affordance stays a translucent GLASS tint — the accent",
+  "verdict": "true",
+  "why": ":22 `--control-floor` is the 44px clamp seam (0 desktop, `--touch-target` coarse) for the 28/36/40/44px cohort (1.75/2.25/2.5/2.75rem, :26-29); :32-33, :40 type keeps its one fluid clamp and the comfort factor applies once; :153 0.78 × 1.5 ≈ 1.17, the floor held by the `max()` clamp; :212, :214 the switcher paints no fill and its hover/active are translucent glass tints (:222-223); :218-219 the hairline takes the dock's `--surface-tint-*` rung, which dark-arm.css re-resolves warm; :233 active (`--fill-selected` 0.12, :205) is a step above hover (`--fill-hover` 0.05, :204), translucent, never opaque; :256-257 the press darken `--dock-control-press-bg` is the one-ink selected rung, read on `:active` with the scale-press (icon-button.css:122-123)"
+ },
+ {
+  "at": "src/styles/tokens/sizing.css:218",
+  "says": "one thing with one name, and the value taken is the dock's OWN tint rung —",
+  "verdict": "true",
+  "why": ":22 `--control-floor` is the 44px clamp seam (0 desktop, `--touch-target` coarse) for the 28/36/40/44px cohort (1.75/2.25/2.5/2.75rem, :26-29); :32-33, :40 type keeps its one fluid clamp and the comfort factor applies once; :153 0.78 × 1.5 ≈ 1.17, the floor held by the `max()` clamp; :212, :214 the switcher paints no fill and its hover/active are translucent glass tints (:222-223); :218-219 the hairline takes the dock's `--surface-tint-*` rung, which dark-arm.css re-resolves warm; :233 active (`--fill-selected` 0.12, :205) is a step above hover (`--fill-hover` 0.05, :204), translucent, never opaque; :256-257 the press darken `--dock-control-press-bg` is the one-ink selected rung, read on `:active` with the scale-press (icon-button.css:122-123)"
+ },
+ {
+  "at": "src/styles/tokens/sizing.css:219",
+  "says": "`--surface-tint-*` is the ladder dark-arm.css re-resolves warm in dark by",
+  "verdict": "true",
+  "why": ":22 `--control-floor` is the 44px clamp seam (0 desktop, `--touch-target` coarse) for the 28/36/40/44px cohort (1.75/2.25/2.5/2.75rem, :26-29); :32-33, :40 type keeps its one fluid clamp and the comfort factor applies once; :153 0.78 × 1.5 ≈ 1.17, the floor held by the `max()` clamp; :212, :214 the switcher paints no fill and its hover/active are translucent glass tints (:222-223); :218-219 the hairline takes the dock's `--surface-tint-*` rung, which dark-arm.css re-resolves warm; :233 active (`--fill-selected` 0.12, :205) is a step above hover (`--fill-hover` 0.05, :204), translucent, never opaque; :256-257 the press darken `--dock-control-press-bg` is the one-ink selected rung, read on `:active` with the scale-press (icon-button.css:122-123)"
+ },
+ {
+  "at": "src/styles/tokens/sizing.css:22",
+  "says": "`--control-floor` is the WCAG-2.5.5 clamp seam: 0 at desktop, lifted to",
+  "verdict": "true",
+  "why": ":22 `--control-floor` is the 44px clamp seam (0 desktop, `--touch-target` coarse) for the 28/36/40/44px cohort (1.75/2.25/2.5/2.75rem, :26-29); :32-33, :40 type keeps its one fluid clamp and the comfort factor applies once; :153 0.78 × 1.5 ≈ 1.17, the floor held by the `max()` clamp; :212, :214 the switcher paints no fill and its hover/active are translucent glass tints (:222-223); :218-219 the hairline takes the dock's `--surface-tint-*` rung, which dark-arm.css re-resolves warm; :233 active (`--fill-selected` 0.12, :205) is a step above hover (`--fill-hover` 0.05, :204), translucent, never opaque; :256-257 the press darken `--dock-control-press-bg` is the one-ink selected rung, read on `:active` with the scale-press (icon-button.css:122-123)"
+ },
+ {
+  "at": "src/styles/tokens/sizing.css:233",
+  "says": "glass-correct translucent tint a ladder step above hover, never an opaque plate",
+  "verdict": "true",
+  "why": ":22 `--control-floor` is the 44px clamp seam (0 desktop, `--touch-target` coarse) for the 28/36/40/44px cohort (1.75/2.25/2.5/2.75rem, :26-29); :32-33, :40 type keeps its one fluid clamp and the comfort factor applies once; :153 0.78 × 1.5 ≈ 1.17, the floor held by the `max()` clamp; :212, :214 the switcher paints no fill and its hover/active are translucent glass tints (:222-223); :218-219 the hairline takes the dock's `--surface-tint-*` rung, which dark-arm.css re-resolves warm; :233 active (`--fill-selected` 0.12, :205) is a step above hover (`--fill-hover` 0.05, :204), translucent, never opaque; :256-257 the press darken `--dock-control-press-bg` is the one-ink selected rung, read on `:active` with the scale-press (icon-button.css:122-123)"
+ },
+ {
+  "at": "src/styles/tokens/sizing.css:32",
+  "says": "gentle `clamp(…vw…)`); the comfort scalar multiplies that fluid base exactly",
+  "verdict": "true",
+  "why": ":22 `--control-floor` is the 44px clamp seam (0 desktop, `--touch-target` coarse) for the 28/36/40/44px cohort (1.75/2.25/2.5/2.75rem, :26-29); :32-33, :40 type keeps its one fluid clamp and the comfort factor applies once; :153 0.78 × 1.5 ≈ 1.17, the floor held by the `max()` clamp; :212, :214 the switcher paints no fill and its hover/active are translucent glass tints (:222-223); :218-219 the hairline takes the dock's `--surface-tint-*` rung, which dark-arm.css re-resolves warm; :233 active (`--fill-selected` 0.12, :205) is a step above hover (`--fill-hover` 0.05, :204), translucent, never opaque; :256-257 the press darken `--dock-control-press-bg` is the one-ink selected rung, read on `:active` with the scale-press (icon-button.css:122-123)"
+ },
+ {
+  "at": "src/styles/tokens/sizing.css:321",
+  "says": "2. TYPE keeps its own clamp and never rides `--ui-scale`; no type rung appears",
+  "verdict": "true",
+  "why": ":22 `--control-floor` is the 44px clamp seam (0 desktop, `--touch-target` coarse) for the 28/36/40/44px cohort (1.75/2.25/2.5/2.75rem, :26-29); :32-33, :40 type keeps its one fluid clamp and the comfort factor applies once; :153 0.78 × 1.5 ≈ 1.17, the floor held by the `max()` clamp; :212, :214 the switcher paints no fill and its hover/active are translucent glass tints (:222-223); :218-219 the hairline takes the dock's `--surface-tint-*` rung, which dark-arm.css re-resolves warm; :233 active (`--fill-selected` 0.12, :205) is a step above hover (`--fill-hover` 0.05, :204), translucent, never opaque; :256-257 the press darken `--dock-control-press-bg` is the one-ink selected rung, read on `:active` with the scale-press (icon-button.css:122-123)"
+ },
+ {
+  "at": "src/styles/tokens/sizing.css:33",
+  "says": "ONCE, here. Do NOT inline a second clamp() and do NOT multiply the rung by",
+  "verdict": "true",
+  "why": ":22 `--control-floor` is the 44px clamp seam (0 desktop, `--touch-target` coarse) for the 28/36/40/44px cohort (1.75/2.25/2.5/2.75rem, :26-29); :32-33, :40 type keeps its one fluid clamp and the comfort factor applies once; :153 0.78 × 1.5 ≈ 1.17, the floor held by the `max()` clamp; :212, :214 the switcher paints no fill and its hover/active are translucent glass tints (:222-223); :218-219 the hairline takes the dock's `--surface-tint-*` rung, which dark-arm.css re-resolves warm; :233 active (`--fill-selected` 0.12, :205) is a step above hover (`--fill-hover` 0.05, :204), translucent, never opaque; :256-257 the press darken `--dock-control-press-bg` is the one-ink selected rung, read on `:active` with the scale-press (icon-button.css:122-123)"
+ },
+ {
+  "at": "src/styles/tokens/sizing.css:40",
+  "says": "ratio it rides the fluid clamp and the comfort factor exactly once, for free.",
+  "verdict": "true",
+  "why": ":22 `--control-floor` is the 44px clamp seam (0 desktop, `--touch-target` coarse) for the 28/36/40/44px cohort (1.75/2.25/2.5/2.75rem, :26-29); :32-33, :40 type keeps its one fluid clamp and the comfort factor applies once; :153 0.78 × 1.5 ≈ 1.17, the floor held by the `max()` clamp; :212, :214 the switcher paints no fill and its hover/active are translucent glass tints (:222-223); :218-219 the hairline takes the dock's `--surface-tint-*` rung, which dark-arm.css re-resolves warm; :233 active (`--fill-selected` 0.12, :205) is a step above hover (`--fill-hover` 0.05, :204), translucent, never opaque; :256-257 the press darken `--dock-control-press-bg` is the one-ink selected rung, read on `:active` with the scale-press (icon-button.css:122-123)"
+ },
+ {
+  "at": "src/styles/utilities/base.css:299",
+  "says": "consumer's own hover/active bg-tint cascade to acknowledge the",
+  "verdict": "true",
+  "why": ":299 under reduced motion the consumer's own hover/active bg-tint acknowledges the press"
+ },
+ {
+  "at": "tests/components/button/Button.test.ts:382",
+  "says": "describe(\"Button §5 TONE — it tints, it never replaces\", () => {",
+  "verdict": "true",
+  "why": ":382 Button §5's tone describe title"
+ },
+ {
+  "at": "tests/components/custom/dock/GlassDock.posture.test.ts:153",
+  "says": "// `backdropMode` is struck: the dock paints the chrome bound, and",
+  "verdict": "true",
+  "why": ":153 asserts the deletion: no `data-backdrop-mode` is stamped (:155); the dock paints the chrome bound and the solid plate is the level-0 escape class (adaptive-legibility.css:5-7)"
+ },
+ {
+  "at": "tests/components/field/forms-seam.test.ts:159",
+  "says": "// ONE type rung: the bounded clamp, never multiplied past its own ceiling.",
+  "verdict": "true",
+  "why": ":159 the type rung is the bounded clamp, asserted as `var(--type-small)` (:160)"
+ },
+ {
+  "at": "tests/components/ui/surface/Surface.test.ts:162",
+  "says": "/* RED at the first cut's bytes: the recipe LERPed the FLOATING radius (20px)",
+  "verdict": "true",
+  "why": ":162, :164 history: 'RED at the first cut's bytes' with that cut's numbers (H9 §2.4's site, the rung reading)"
+ },
+ {
+  "at": "tests/components/ui/surface/Surface.test.ts:164",
+  "says": "18.6 / 18.6 / 18.6 / 17.2 / 16.0px against plain 10 / 14 / 16 / 20 / 22 —",
+  "verdict": "true",
+  "why": ":162, :164 history: 'RED at the first cut's bytes' with that cut's numbers (H9 §2.4's site, the rung reading)"
+ },
+ {
+  "at": "tests/gates/feedback-tint-seam.test.ts:1",
+  "says": "// BK.#33 gate — the standing `G-FEEDBACK-TINT-SEAM` seat (TR §B.5, family SEAM), BOUND",
+  "verdict": "true",
+  "why": ":1, :121 the live gate G-FEEDBACK-TINT-SEAM (H9-1 sites); :7 its rule, a tone tints the surface's own plate; :19 veil.css's header names a tone-tinted feedback panel among its consumers (veil.css:39-41); :21 mixing over `--glass-veil` keeps the rung inside the tint"
+ },
+ {
+  "at": "tests/gates/feedback-tint-seam.test.ts:121",
+  "says": "describe(\"gate:G-FEEDBACK-TINT-SEAM — the tone register tints its own rung\", () => {",
+  "verdict": "true",
+  "why": ":1, :121 the live gate G-FEEDBACK-TINT-SEAM (H9-1 sites); :7 its rule, a tone tints the surface's own plate; :19 veil.css's header names a tone-tinted feedback panel among its consumers (veil.css:39-41); :21 mixing over `--glass-veil` keeps the rung inside the tint"
+ },
+ {
+  "at": "tests/gates/feedback-tint-seam.test.ts:19",
+  "says": "// recipe (`src/styles/glass/veil.css`, whose header names \"a tone-tinted feedback panel\"",
+  "verdict": "true",
+  "why": ":1, :121 the live gate G-FEEDBACK-TINT-SEAM (H9-1 sites); :7 its rule, a tone tints the surface's own plate; :19 veil.css's header names a tone-tinted feedback panel among its consumers (veil.css:39-41); :21 mixing over `--glass-veil` keeps the rung inside the tint"
+ },
+ {
+  "at": "tests/gates/feedback-tint-seam.test.ts:21",
+  "says": "// keeps the rung INSIDE the tint instead of underneath it.",
+  "verdict": "true",
+  "why": ":1, :121 the live gate G-FEEDBACK-TINT-SEAM (H9-1 sites); :7 its rule, a tone tints the surface's own plate; :19 veil.css's header names a tone-tinted feedback panel among its consumers (veil.css:39-41); :21 mixing over `--glass-veil` keeps the rung inside the tint"
+ },
+ {
+  "at": "tests/gates/feedback-tint-seam.test.ts:7",
+  "says": "// A tone register must tint the surface's OWN plate, never a plate of its own. This is a",
+  "verdict": "true",
+  "why": ":1, :121 the live gate G-FEEDBACK-TINT-SEAM (H9-1 sites); :7 its rule, a tone tints the surface's own plate; :19 veil.css's header names a tone-tinted feedback panel among its consumers (veil.css:39-41); :21 mixing over `--glass-veil` keeps the rung inside the tint"
+ },
+ {
+  "at": "tests/styles/contrast-computed.test.ts:260",
+  "says": "// `transparent` darkens nothing — it only thins.",
+  "verdict": "true",
+  "why": ":260 a premultiplied mix toward transparent only thins; :414 asserts `--surface-tint-35` deleted; :947 each rung is measured on `--card`; :984, :988 the tinted eyebrow reads the ramp through a knob whose default is a rung"
+ },
+ {
+  "at": "tests/styles/contrast-computed.test.ts:414",
+  "says": "it(\"the orphaned --surface-tint-35 register stays deleted (def + dark arm + bridge)\", () => {",
+  "verdict": "true",
+  "why": ":260 a premultiplied mix toward transparent only thins; :414 asserts `--surface-tint-35` deleted; :947 each rung is measured on `--card`; :984, :988 the tinted eyebrow reads the ramp through a knob whose default is a rung"
+ },
+ {
+  "at": "tests/styles/contrast-computed.test.ts:947",
+  "says": "// surface those labels sit on, `--card`, and each one is measured, not sampled.",
+  "verdict": "true",
+  "why": ":260 a premultiplied mix toward transparent only thins; :414 asserts `--surface-tint-35` deleted; :947 each rung is measured on `--card`; :984, :988 the tinted eyebrow reads the ramp through a knob whose default is a rung"
+ },
+ {
+  "at": "tests/styles/contrast-computed.test.ts:984",
+  "says": "// §6b · glass-ui is its own consumer here. The tinted eyebrow reads the ramp",
+  "verdict": "true",
+  "why": ":260 a premultiplied mix toward transparent only thins; :414 asserts `--surface-tint-35` deleted; :947 each rung is measured on `--card`; :984, :988 the tinted eyebrow reads the ramp through a knob whose default is a rung"
+ },
+ {
+  "at": "tests/styles/contrast-computed.test.ts:988",
+  "says": "it(\"the library's own tinted eyebrow reads the ramp, and that default clears the floor\", () => {",
+  "verdict": "true",
+  "why": ":260 a premultiplied mix toward transparent only thins; :414 asserts `--surface-tint-35` deleted; :947 each rung is measured on `--card`; :984, :988 the tinted eyebrow reads the ramp through a knob whose default is a rung"
+ },
+ {
+  "at": "tests/styles/glass-subtlety.test.ts:184",
+  "says": "it(\"paints ONE pole — the plate is `--card` at α, with no ink token and no luma term\", () => {",
+  "verdict": "true",
+  "why": ":96 the test evaluates calc/pow/min/max/clamp in JS; :184 asserts one pole with no ink token and no luma term (:186-188); :342 a wash pulls bright neighbours into every sampled pixel"
+ },
+ {
+  "at": "tests/styles/glass-subtlety.test.ts:342",
+  "says": "// two scrim blurs — a wash pulls bright neighbours into every sampled pixel, so the",
+  "verdict": "true",
+  "why": ":96 the test evaluates calc/pow/min/max/clamp in JS; :184 asserts one pole with no ink token and no luma term (:186-188); :342 a wash pulls bright neighbours into every sampled pixel"
+ },
+ {
+  "at": "tests/styles/glass-subtlety.test.ts:96",
+  "says": "// here: resolve every `var()`, then read calc/pow/min/max/clamp as JS.",
+  "verdict": "true",
+  "why": ":96 the test evaluates calc/pow/min/max/clamp in JS; :184 asserts one pole with no ink token and no luma term (:186-188); :342 a wash pulls bright neighbours into every sampled pixel"
+ },
+ {
+  "at": "tests/styles/proportion-register.test.ts:149",
+  "says": "// fluid clamp and --ui-scale for free; a px literal would drift out of ratio",
+  "verdict": "true",
+  "why": ":149 a ratio survives the fluid clamp and `--ui-scale`; :294-295 history (W-FROST executed the deletion) and the assertion of no observer residue (:296)"
+ },
+ {
+  "at": "tests/styles/proportion-register.test.ts:294",
+  "says": "// across 4 files incl. the luminance-observer writes) was executed by W-FROST",
+  "verdict": "true",
+  "why": ":149 a ratio survives the fluid clamp and `--ui-scale`; :294-295 history (W-FROST executed the deletion) and the assertion of no observer residue (:296)"
+ },
+ {
+  "at": "tests/styles/proportion-register.test.ts:295",
+  "says": "// at 4b1a9733. Verified, not re-opened: no CSS token AND no observer residue.",
+  "verdict": "true",
+  "why": ":149 a ratio survives the fluid clamp and `--ui-scale`; :294-295 history (W-FROST executed the deletion) and the assertion of no observer residue (:296)"
+ }
+]

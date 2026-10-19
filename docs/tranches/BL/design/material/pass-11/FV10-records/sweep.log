@@ -1,0 +1,6 @@
+SWEEP fv10 LIST exit 0: LIST (207 lines to read; no rulings given)
+SWEEP fv10 under FV10-rulings.json exit 0: PASS (207 lines: 200 ruled true, 7 reported)
+SWEEP fv10 under FV9-rulings.json exit 1: FAIL (0 unread, 4 stale of 207 lines)
+worktree = floor-v9.patch
+SWEEP fv9 under FV10-rulings.json (plant) exit 1: FAIL (7 unread, 0 stale of 214 lines)
+worktree = floor-v10.patch

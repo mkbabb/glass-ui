@@ -1,0 +1,28 @@
+diff --git a/src/components/_shared/feedback/feedback-tone.css b/src/components/_shared/feedback/feedback-tone.css
+index 0d04b0210..3e7ceb2db 100644
+--- a/src/components/_shared/feedback/feedback-tone.css
++++ b/src/components/_shared/feedback/feedback-tone.css
+@@ -35,7 +35,7 @@
+    `--glass-veil` — the nestable VALUE token `@utility glass-plate` publishes at the
+    element (glass/veil.css:35-37 names "a tone-tinted feedback panel" as one of its two
+    intended consumers, the other being the capsule's warm floor). A `.feedback-tone`
+-   surface that composes a rung therefore tints ITS OWN rung: the rung's alpha at the
++   surface that composes a rung therefore tints ITS OWN rung: the rung's alpha at or above the
+    bound and `--glass-level` both survive INSIDE the mix instead of being replaced by it.
+ 
+    That is the defect this seam closes, and it was structural, not cosmetic. The register
+diff --git a/src/styles/tokens/property-regs.css b/src/styles/tokens/property-regs.css
+index 90bf93b5b..ed2c2a064 100644
+--- a/src/styles/tokens/property-regs.css
++++ b/src/styles/tokens/property-regs.css
+@@ -147,8 +147,8 @@
+      • level 0  — the OPAQUE escape: solid `--card` + `blur(0)` through the SAME
+                   machinery (the `.glass-opaque` rung and the a11y brackets ride it).
+      • level >1 — clearer (more transparent, more diffuse) in lockstep.
+-   Legibility rides the SEPARATE `--glass-veil-*` axis: each rung's α, held at the
+-   bound (`--glass-bound`), with nothing sampled from the backdrop. Level scales that α
++   Legibility rides the SEPARATE `--glass-veil-*` axis: each rung's α, held at or
++   above the bound (`--glass-bound`), with nothing sampled. Level scales the rung's 1 − α
+    and the blur; the two never collapse — the a11y escape is level alone (0 under
+    `prefers-reduced-transparency`, 0.3 under `prefers-contrast: more`). */
+ @property --glass-level {
