@@ -1,0 +1,57 @@
+--- a/src/components/dock/styles/controls/icon-button.css	2026-10-18 20:12:17
++++ b/src/components/dock/styles/controls/icon-button.css	2026-10-18 20:24:04
+@@ -92,7 +92,7 @@
+         filter: brightness(calc(1 - var(--dock-press-t, 0) * 0.04));
+ 
+         /* Glass icon-hover. The icon-button hover reads as a glass
+-           surface, not a flat `--muted` plate: a translucent card-tinted fill is
++           surface, not a flat `--muted` plate: a translucent one-ink fill is
+            the hover affordance. A consumer retunes the fill via `--dock-icon-hover-bg`.
+ 
+            The dock control's SECOND specular (the struck highlight
+@@ -101,7 +101,7 @@
+            `::before` catch-light is now its SOLE specular owner — one light per
+            surface (the §0 "excise or fail" discipline). Stacking the
+            inset box-shadow on the most-hovered, floating
+-           surface was the worst-offending double-light blowout; the card-tinted
++           surface was the worst-offending double-light blowout; the one-ink
+            hover fill carries the affordance without a second catch-light, and
+            dropping it also removes the `:not(:focus-visible)` specular-vs-ring
+            juggle. */
+@@ -115,9 +115,9 @@
+             scale: var(--scale-hover-dock);
+         }
+ 
+-        /* The iOS press DARKEN-plus-shrink. Press lands the
+-           glass-darken (`--dock-control-press-bg`, a tier below resting) alongside
+-           the existing scale-press, so a tap reads "darken + shrink" (C4-INV-4 was
++        /* The iOS press FILL-plus-shrink. Press lands the
++           one-ink selected fill (`--dock-control-press-bg`) alongside
++           the existing scale-press, so a tap reads "fill + shrink" (C4-INV-4 was
+            scale-only). Token-first — a consumer retunes via `--dock-control-press-bg`. */
+         &:active:not(:disabled):not([aria-disabled="true"]) {
+             background: var(--dock-control-press-bg);
+--- a/src/styles/tokens/sizing.css	2026-10-18 20:12:17
++++ b/src/styles/tokens/sizing.css	2026-10-18 20:24:04
+@@ -253,8 +253,8 @@
+        ring/accent defers so the consumer's indicator reads. */
+     --dock-ring: var(--focus-ring-shadow);
+ 
+-    /* The press DARKEN, read on `:active` alongside the scale-press so a press lands a
+-       brief darken rather than scaling alone. The one-ink SELECTED rung
++    /* The press FILL, read on `:active` alongside the scale-press so a press lands a
++       brief fill rather than scaling alone. The one-ink SELECTED rung
+        (tokens/color-radius.css §1.3): ink over the control, never a plate colour. */
+     --dock-control-press-bg: oklch(from var(--foreground) l c h / var(--fill-selected));
+ 
+--- a/src/styles/glass/overlay-plate.css	2026-10-18 20:12:17
++++ b/src/styles/glass/overlay-plate.css	2026-10-18 20:24:04
+@@ -270,7 +270,7 @@
+        The overlay rung's veil with the capsule's warm floor over it — two flat
+        layers, both reading the ONE recipe. There is no second tint layer and no
+        solidity knob of its own: the veil already paints the overlay rung
+-       at the bound, and a second layer pushing the same plate the same way is the
++       a step above the bound, and a second layer pushing the same plate the same way is the
+        double-writer the material law forbids. A menu that needs more body needs a
+        heavier RUNG. `prefers-reduced-transparency` reaches this plate through
+        `--glass-level`, like every other. */

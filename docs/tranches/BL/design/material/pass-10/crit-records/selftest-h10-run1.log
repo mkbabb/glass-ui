@@ -1,0 +1,46 @@
+ok   H10-1 static   expect LOUD exit 2 · FAIL (nothing read: the tree does not exist) · H10-1 plant: DEL on an absent --root (pass-9 crit-records/del-absent.log's shape: was PASS (42 gated rows), exit 0)
+ok   H10-1 static   expect ROWS exit 0 · rows hold (3) · H10-1: the refusal says nothing was read, and prints no gated row
+ok   H10-1 static   expect LOUD exit 2 · FAIL (nothing read: no text file in scope) · H10-1 plant: a tree with no src/, demo/ or tests/ and no touched path: 0 text files in scope
+ok   H10-1 static   expect LOUD exit 2 · FAIL (nothing read: the tree does not exist) · H10-1 (SWEEP): the frozen list on an absent tree refuses too (was LIST (0 lines), exit 0)
+ok   H10-1 static   expect ROWS exit 0 · rows hold (2) · H10-1 (SWEEP): the refusal names the absent tree
+ok   H10-1 static   expect PASS exit 0 · PASS (42 gated rows) · H10-1 fixture: one text file in scope is read, and reads clean
+ok   H10-1 static   expect PASS exit 0 · PASS (101 gated rows) · H10-1 fixture: floor v8 under its own declaration and patch, as FV8 §2 read it
+ok   H10-1 static   expect ROWS exit 0 · rows hold (3) · H10-1 fixture: floor v8 reads PASS 101 over 1,089 text files, as banked (FV8-records/del-H9-fv8.log)
+ok   H10-1 static   expect PASS exit 0 · PASS (54 gated rows) · H10-1 fixture: the minor v7 over its own patch, as MS7 read it
+ok   H10-1 static   expect ROWS exit 0 · rows hold (3) · H10-1 fixture: the minor v7 reads PASS 54 over 1,095 text files, as banked (MS7-records/del-H9-minor7.log)
+ok   H10-2 static   expect PASS exit 0 · PASS (2 lines: 1 ruled true, 1 reported) · H10-2 fixture: one line ruled true, one reported: the reported line prints in its own tally and gates nothing
+ok   H10-2 static   expect ROWS exit 0 · rows hold (6) · H10-2: the tally separates true from reported; the verdict line never calls the reported line true
+ok   H10-2 static   expect FAIL exit 1 · FAIL (1 unread, 1 stale of 2 lines) · H10-2 plant: a reported ruling on a line that changed (R-24 (iii)'s shape) is stale, and the changed line is unread
+        ✗ unread src/a.css:5 [word "tint"]
+        ✗ stale reported ruling src/a.css:5 "The shell + legibility partials re-point": the line no longer prints or no longer says it (the first clause is true; the attribution was false before the patch, which did not write it
+ok   H10-2 static   expect ROWS exit 0 · rows hold (3) · H10-2: a reported ruling goes stale like any ruling
+ok   H10-2 static   expect LOUD exit 2 · FAIL (rulings refused: 1 malformed of 2; nothing read) · H10-2 plant: refused, a ruling with no verdict (the pass-9 shape)
+ok   H10-2 static   expect ROWS exit 0 · rows hold (3) · H10-2: the refusal names the entry and reads nothing
+ok   H10-2 static   expect LOUD exit 2 · FAIL (rulings refused: 1 malformed of 2; nothing read) · H10-2 plant: refused, a ruling with a verdict other than true or reported (a false line is rewritten, not ruled)
+ok   H10-2 static   expect ROWS exit 0 · rows hold (3) · H10-2: the refusal names the entry and reads nothing
+ok   H10-2 static   expect LOUD exit 2 · FAIL (rulings refused: 1 malformed of 2; nothing read) · H10-2 plant: refused, verdict true over a REPORTED why (the pass-9 workaround)
+ok   H10-2 static   expect ROWS exit 0 · rows hold (3) · H10-2: the refusal names the entry and reads nothing
+ok   H10-2 static   expect LOUD exit 2 · FAIL (rulings refused: 1 malformed of 2; nothing read) · H10-2 plant: refused, a ruling with no why
+ok   H10-2 static   expect ROWS exit 0 · rows hold (3) · H10-2: the refusal names the entry and reads nothing
+ok   H10-2 static   expect PASS exit 0 · PASS (214 lines: 213 ruled true, 1 reported) · H10-2 fixture: floor v8 under the migrated FV8-rulings.json
+ok   H10-2 static   expect ROWS exit 0 · rows hold (4) · H10-2: the floor seat's dock.css:15 reading ('true as to the patch', its clause reported in words) is verdict reported; the other 213 read true, as banked (FV8-records/sweep-fv8-ruled.log)
+ok   H10-2 static   expect FAIL exit 1 · FAIL (13 unread, 3 stale of 224 lines) · H10-2 plant: floor v7 under the migrated FV8-rulings.json, as FV8 §3 read it
+        ✗ unread src/components/_shared/feedback/feedback-tone.css:21 [word "tint"]
+        ✗ unread src/components/_shared/feedback/feedback-tone.css:22 [name "--veil-bg"]
+        ✗ unread src/components/dock/GlassDock.vue:467 [word "tint"; name "tint seam"]
+        ✗ unread src/components/dock/styles/index.css:80 [word "tint"; name "tint legibility seam"]
+ok   H10-2 static   expect ROWS exit 0 · rows hold (1) · H10-2: floor v7 reads 13 unread, 3 stale of 224, as banked (FV8-records/sweep-fv7-plant.log)
+ok   H10-2 static   expect FAIL exit 1 ·          48 | · H10-2 plant: the minor v7 under the migrated MS7-rulings.json (R-25's plant)
+        ✗ unread DESIGN.md:34 [word "tint"]
+        ✗ unread src/styles/glass/surface-axis.css:21 [word "tint"]
+BAD  H10-2 static   expect ROWS exit 1 · missing: ruled=369 true=359 reported=10 unread=2 stale=0 | FAIL (2 unread, 0 stale of 371 lines) · H10-2: the minor v7 reads 2 unread of 371 as banked, its ten REPORTED lines now the reported tally
+ok   H10-2 static   expect PASS exit 0 · PASS (371 lines: 361 ruled true, 10 reported) · H10-2 fixture: the minor v7 + MS7-r21b-proposed.diff under the migrated MS7-rulings-proposed.json
+ok   H10-2 static   expect ROWS exit 0 · rows hold (2) · H10-2: 371 lines read, 361 true and 10 reported, as banked (MS7-records/sweep-minor7p-ruled.log read 371 'each ruled true')
+ok   H10-2 static   expect PASS exit 0 · PASS (2 lines: 1 ruled true, 1 reported) · H10-2 fixture: floor v8's dock.css under its own rulings
+ok   H10-2 static   expect ROWS exit 0 · rows hold (2) · H10-2: dock.css:15 reported on floor v8's text
+ok   H10-2 static   expect FAIL exit 1 · FAIL (1 unread, 1 stale of 2 lines) · H10-2 plant: R-24 (iii) written on dock.css:15: the reported ruling is stale and the rewritten line unread, for the floor v9 seat to read
+        ✗ unread src/components/dock/styles/dock.css:15 [word "tint"]
+        ✗ stale reported ruling src/components/dock/styles/dock.css:15 "*        endpoints — one chromatic writer, no second tint layer. The shell + adaptive-legibility partials re-point": the line no longer prints or no longer 
+ok   H10-2 static   expect ROWS exit 0 · rows hold (3) · H10-2: the reported ruling does not outlive its line
+SELFTEST FAIL: 1 of 34 expectations missed
+selftest H10 exit 1: SELFTEST FAIL: 1 of 34 expectations missed

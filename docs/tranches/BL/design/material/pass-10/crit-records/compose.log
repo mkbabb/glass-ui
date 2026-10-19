@@ -1,0 +1,24 @@
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-10/floor-v9.patch:1266: trailing whitespace.
+       white app surface (the canonical G2 case the user reported). 
+warning: 1 line adds whitespace errors.
+floor-v8.patch + floor-v9-delta.diff = floor-v9.patch (worktree diff cmp exit 0)
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-9/floor-v8.patch:1266: trailing whitespace.
+       white app surface (the canonical G2 case the user reported). 
+warning: 1 line adds whitespace errors.
+minor-split-v7.patch + minor-split-v8-R25.diff = minor-split-v8.patch (worktree diff cmp exit 0)
+-- the minor v8 against the minor v7 + MS7-r21b-proposed.diff (R-25's 'nothing else'):
+< +           clamp's two-step ceiling keeps it translucent, in both themes; one
+> +           clamp's two-step ceiling keeps it translucent, in both themes); one
+floor-v8.patch: 88 files, sha1 0d104e63
+floor-v9.patch: 88 files, sha1 697c5f78
+minor-split-v7.patch: 61 files, sha1 3a7a8eec
+minor-split-v8.patch: 61 files, sha1 a843b388
+floor-v9-delta.diff: 3 files, sha1 1f9190a2
+minor-split-v8-R25.diff: 3 files, sha1 7540ff70
+MS7-r21b-proposed.diff: 2 files, sha1 ccee3e30
+MS8-r26-proposed.diff: 2 files, sha1 6e095ae9
+apply --check floor-v9 at checkout 503e81679 exit 0
+apply --check minor-v8 at checkout exit 0
+path list fv8 = fv9: exit 0
+path list m7 = m8: exit 0
+10.1.0 source diff to HEAD (empty above = none)

@@ -1,0 +1,71 @@
+DEL · no file in scope (src/, demo/, tests/, every path the patch touches) describes a mechanism the patch deletes, in any word form, or a value or ladder it changes (static; H6-1, H7-2, H8-1, H9-1..H9-3, H10-1)
+tree: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p10/crit/trees/minor8 · 1095 text files in scope (src/, demo/, tests/, plus 1 of 1 touched paths outside them that exist) · reported: 16 files · declaration: the minor split (R-13, the light law; REGISTRY P6-2.2 R-16 (ii) and (iii), P7-2.2 R-18 (ii)): the phrases R-13 renamed, the phrases of each MS4 §1.2 sentence the minor v5 seat ruled false in light (pass-7/MINOR-SPLIT-v5.md §2), and the phrases of each Crit A-3 sentence the pass-7 critic ruled false in light, rewritten in the minor v6 (pass-8/MINOR-SPLIT-v6.md §2), 'declarative darken' and 'darkened plate' among them; and three phrases of Crit8 §5.2's sentences rewritten in the minor v7 (R-23; pass-9/MINOR-SPLIT-v7.md §2), each hitting only an R-23 site on the minor v6. `exact` holds R-23's site entries, read in context (as H9 §3.2 amends R-23: sheet/styles.css:197 is arm-true under H9-3 and takes none; Surface.test.ts:164 takes one under the tuple's name). The clamp lives in the minor, so this declares renamed wording, not a deleted mechanism · 42 names, 0 exact only, 3 sites read in context
+patch: minor-split-v8.patch · 61 paths · 61 exist in the tree and are read
+  ✓ "earned darken": 0
+  ✓ "earned-darken clamp": 0
+  ✓ "whole dynamic darken": 0
+  ✓ "darkened by whatever": 0
+  ✓ "locally darken the glass": 0
+  ✓ "veil already writes warm near-black ink": 0
+  ✓ "plate darkened twice": 0
+  ✓ "darkened translucent plate": 0
+  ✓ "darkens the translucent plate": 0
+  ✓ "plate actually darkens": 0
+  ✓ "self-darkens unconditionally": 0
+  ✓ "tint-strength clamp": 0
+  ✓ "dark-on-darkened": 0
+  ✓ "silhouette floor": 0
+  ✓ "bright-condition darken": 0
+  ✓ "bright-bucket darken": 0
+  ✓ "overlay-band darken": 0
+  ✓ "legibility tint": 0
+  ✓ "darkens later": 0
+  ✓ "plate still darkens": 0
+  ✓ "legibility darken": 0
+  ✓ "darkens toward ink": 0
+  ✓ "backdrop to darken over": 0
+  ✓ "engages the darken": 0
+  ✓ "declarative darken": 0
+  ✓ "darkened plate": 0
+  ✓ "cannot self-darken": 0
+  ✓ "own darken": 0
+  ✓ "darkening moves the plate": 0
+  ✓ "darkens the dock plate": 0
+  ✓ "darken seam": 0
+  ✓ "does not darken": 0
+  ✓ "dock self-darkens": 0
+  ✓ "here darkens the plate": 0
+  ✓ "darken-over-light": 0
+  ✓ "backdrop-luma tint clamp": 0
+  ✓ "continuous darken": 0
+  ✓ "tint axis is zeroed": 0
+  ✓ "oklab tint seam": 0
+  ✓ "tint arm": 0
+  ✓ "tint toward ink": 0
+  ✓ "ladder's 0.48": 0
+changed values: 8 declarations in src/ · 8 tokens · 1 families · 1 arms still at an old value
+    · exempt src/styles/glass/overlay-plate.css:173 "0.48 · ink perimeter" (R-23 (Crit8 §5.2): 'the `--ink-perimeter` rung, which BK #80 measured at 3.0:1 at 0.48 against the retired shadow's 1.91:1' reports what the old value measured, R-17 (iii)'s named exemption; the live rule reads the token)
+  ✓ --ink-perimeter: 0.48 → 0.54 (literal 0.48; src/styles/tokens/color-radius.css): 0
+  ✓ --glass-veil-base: 0.14 → var(--glass-bound) (literal 0.14; src/styles/tokens/glass.css): 0
+    · arm-true src/components/sheet/styles.css:197 "0.04 · glass veil steps" (cites src/styles/tokens/dark-arm.css:277 (.dark) declares 0.04)
+  ✓ --glass-veil-step: 0.04 → calc((1 - var(--glass-bound)) / 3) (literal 0.04; src/styles/tokens/glass.css): 0
+  ✓ --glass-blur-wash-radius: 10px → 6px (literal 10px; src/styles/tokens/glass.css): 0
+  ✓ --glass-blur-quiet-radius: 14px → 10px (literal 14px; src/styles/tokens/glass.css): 0
+  ✓ --glass-blur-resting-radius: 16px → 12px (literal 16px; src/styles/tokens/glass.css): 0
+    · exempt src/styles/glass/deep.css:73 "20px · glass blur floating radius" (R-23 (Crit8 §5.2): 'The predecessor LERPed `--glass-blur-floating-radius` (20px) toward ...' reports the predecessor, the minor's twin of the floor's upheld site deep.css:69)
+  ✓ --glass-blur-floating-radius: 20px → 18px (literal 20px; src/styles/tokens/glass.css): 0
+  ✓ --glass-blur-overlay-radius: 22px → 20px (literal 22px; src/styles/tokens/glass.css): 0
+    · exempt tests/components/ui/surface/Surface.test.ts:164 "10 / 14 / 16 / 20 / 22" (H9 §2.4 and §3.2 (for the critic): the block comment at :161-167 opens 'RED at the first cut's bytes:' and reports what the first cut resolved 'against plain 10 / 14 / 16 / 20 / 22' in the past tense; the case below reads the shipped tokens. History, the floor's same site in pass-9/H9-exact-floor.json)
+  ✓ --glass-blur-*-radius tuple 10/14/16/20/22px → 6/10/12/18/20px (src/styles/tokens/glass.css): 0
+RUNG READING (not gated; R-21 (b) reads each line's tense): 4
+  [R-21 b] --glass-blur-floating-radius: src/styles/glass/deep.css:73 "floating-radius` (20px"
+  [R-21 b] --glass-blur-overlay-radius: src/styles/glass/deep.css:75 "overlay's 22px"
+  [R-21 b] --glass-blur-overlay-radius: src/styles/tokens/glass-deep.css:55 "overlay painted 22"
+  [R-21 b] --glass-blur-floating-radius: tests/components/ui/surface/Surface.test.ts:162 "FLOATING radius (20px"
+REPORTED (not gated; repo-root *.md and docs/canon/): 4
+  [reported] "overlay-band darken" · docs/canon/glass-system.md:49 "overlay band darken"
+  [reported] "legibility tint" · docs/canon/glass-system.md:78 "legibility tint"
+  [reported] "darken-over-light" · MIGRATION.md:4041 "darken over light"
+  [reported] --ink-perimeter: 0.48 → 0.54 (literal 0.48; src/styles/tokens/color-radius.css) · MIGRATION.md:1000 "0.48 · ink perimeter"
+DELETED-MECHANISMS names=42 hits=0 files=0 changed=8 families=1 sites=3 arm-true=1 rung=4 reported=4 · 
+PASS (54 gated rows)
