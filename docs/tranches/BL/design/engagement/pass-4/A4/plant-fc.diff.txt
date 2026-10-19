@@ -1,0 +1,304 @@
+diff --git a/src/styles/utilities/engage.css b/src/styles/utilities/engage.css
+new file mode 100644
+index 000000000..adfc3ed89
+--- /dev/null
++++ b/src/styles/utilities/engage.css
+@@ -0,0 +1,298 @@
++/* utilities/engage.css — ONE RECIPE PER ENGAGEMENT CLASS.
++ *
++ * `ENGAGE_DECLARATION` (composables/motion/engage/engageClasses.ts) says what each
++ * component directory is; this file says what each class does. A member composes its
++ * class's utility on the element it paints, and every utility stamps its class as the
++ * registered `--rung-class` (tokens/property-regs.css), which the runtime census reads
++ * to prove the member composes the recipe its row declares. Where a class's answer
++ * belongs to a substrate that already paints the member (the field's focus paint, the
++ * sortable row's fill, the modal veil), the substrate keeps it and the utility stamps.
++ *
++ * THE PRESS IS NEVER A CLASS'S GEOMETRY. A member presses in LIGHT on its own paint,
++ * or by script where the engage door owns the press (`useEngage`: the Button's squish
++ * on the one `--press-t` drive). No recipe here writes `scale` for a press, and none
++ * sets `scale: none` to silence another class: the press-snap and hover lift that used
++ * to ride `.tap-squish`, `.interactive-item` and `.glass-capsule-hover` are retired at
++ * their source, not overridden here.
++ *
++ * THE COMMIT IS LIGHT (CK-02 arm iii, Q-5's default). On the commit edge the painted
++ * face brightens and the light drains back to the committed rest, on the
++ * `control-engage` envelope ("the engagement wash and bloom on a control surface"):
++ * a GATE opens on the row's attack while a CHARGE drains on its release, and the light
++ * is their product. The two states swap which leg is fast, so the product rises and
++ * falls on EVERY edge, in either direction, from transitions alone:
++ *   · committed  (state on, open, or the parity "b"): the gate opens (opacity 0 → 1,
++ *     attack) over a charge that drains (light → none, release);
++ *   · released   (state off, closed, or the parity "a"): the charge returns (none →
++ *     light, attack) under a gate that closes (opacity 1 → 0, release).
++ * At rest in either state the product is zero, so a member that MOUNTS committed shows
++ * nothing (a transition needs a before-change style, and an inserted element has none),
++ * a commit from the model and one from a gesture take one path, and a second commit
++ * mid-flight retargets both legs. It is light, so it stays under reduced motion. Its
++ * seat is the member's PAINTED FACE: the element's own `::after`, under its content
++ * (`z-index: -1` in its own stacking context, so a label never washes out), or, on a
++ * face that carries a mark (the control bit's thumb, tick or dot), the face's last
++ * layer `[data-engage-light]`, over the mark, so the whole 20 px face brightens and
++ * not only the rim the mark leaves showing.
++ *
++ * Clocks: geometry on the spring table's generated tokens, light on the envelope
++ * table's (`--engage-*`). The commit's amplitude is the fill ladder's state rung
++ * (`--fill-selected`); its light is the page's own ground (`--neutral-0` in light,
++ * the ink in dark: the brighter of the two in each scheme). */
++
++@property --rung-grow {
++    syntax: "<number>";
++    inherits: false;
++    initial-value: 0;
++}
++
++/* PRESSED — an action with no state (button, action chip). The press is the member's
++   light or the door's script press; the commit edge is the door's parity
++   (`data-commit` "a" ↔ "b", `useEngage` `commit: "call"`). */
++@utility engage-pressed {
++    --rung-class: pressed;
++}
++
++/* CHOSEN — a control with a committed state (switch, checkbox, radio, selectable chip,
++   toggle item, segmented tabs). The press is LIGHT on the member's own paint; the
++   commit is the light below, or, where the member has a travelling body (the tabs'
++   indicator), that body's travel on its own row. */
++@utility engage-chosen {
++    --rung-class: chosen;
++}
++
++/* DISCLOSED — a trigger that opens a region (accordion, collapsible, popover, select,
++   menu). A row-width target answers a press in LIGHT only (a full-width squish reads
++   as the row collapsing), on the press envelope's attack; it commits in light when the
++   region opens and when it closes. Its hover is the substrate's
++   (components/_shared/disclosure/disclosure.css), under `(hover: hover)`.
++   The press is a WASH, not a slab: a press is a transient pointer answer, which is the
++   fill ladder's `--fill-hover` rung (tokens/color-radius.css §1.3); `--fill-selected` is
++   persistent state, and at 12 % across a 320 px row it read as an opaque grey bar
++   (D5 pass 3 C-A3 §3 item 2). It keys on the door's press mark (`data-press`), which
++   lands on `pointerdown`, not on `:active` (composables/motion/engage/useEngage.ts). */
++@utility engage-disclosed {
++    --rung-class: disclosed;
++    transition:
++        background-color var(--engage-press-drain-release) var(--ease-standard),
++        color var(--duration-control) var(--ease-standard),
++        box-shadow var(--duration-control) var(--ease-standard);
++
++    &[data-press]:not(:disabled, [data-disabled]) {
++        background-color: color-mix(
++            in oklab,
++            var(--foreground) calc(var(--fill-hover) * 100%),
++            transparent
++        );
++        transition-duration:
++            var(--engage-press-drain-attack), var(--duration-control),
++            var(--duration-control);
++    }
++
++    /* FL-3: under forced colours the system palette owns the fill, so the wash would
++       compute Canvas and the press would vanish; the press is the system's Highlight
++       ring instead, the disclosure's own focus idiom (disclosure.css). Under reduced
++       transparency the wash stays: it is an opaque-ink rung, not a material. */
++    @media (forced-colors: active) {
++        &[data-press]:not(:disabled, [data-disabled]) {
++            outline: 2px solid Highlight;
++            outline-offset: -2px;
++        }
++    }
++}
++
++/* HELD — a control the hand holds (slider, number-field scrub, timeline, the dock's
++   controls). The ENGAGED rung in place on a fine pointer: the host grows to
++   `--scale-engage` on the `dock` row while the door marks it engaged (`data-engaged`:
++   the hand is down, or a key brought the focus or acts on it), and leaves on the row's
++   exit clock. On a coarse pointer it does not grow in place: the rung there is a
++   promotion this class does not own (Q-3 (c)). */
++@utility engage-held {
++    --rung-class: held;
++    scale: calc(1 + (var(--scale-engage) - 1) * var(--rung-grow));
++    transform-origin: center;
++    /* the host's ink leg rides with the grow: the slider lane (unlayered) declares no
++       transition of its own, so this list is the host's one */
++    transition:
++        --rung-grow var(--spring-dock-exit-duration) var(--spring-dock),
++        color var(--duration-fast) var(--ease-standard);
++
++    @media (hover: hover) and (pointer: fine) {
++        &[data-engaged] {
++            --rung-grow: 1;
++            transition-duration: var(--spring-dock-duration), var(--duration-fast);
++        }
++    }
++
++    @media (prefers-reduced-motion: reduce) {
++        scale: none;
++    }
++
++    /* FL-3: the grow is geometry, which neither forced colours nor reduced transparency
++       repaints, so it stays under both; the control's own fills take the system palette
++       (slider/styles.css). */
++}
++
++/* DRAGGED — a surface the hand moves, whose job is momentum (the door's release rule).
++   Its press is the substrate's light rule; the utility stamps the class. */
++@utility engage-dragged {
++    --rung-class: dragged;
++}
++
++/* PRESENTED — a surface raised over the page (dialog, sheet, toast, tooltip). Its rung
++   is the modal one, and its paint is the veil's: the scrim keys on its overlay's open
++   state (glass/focus-veil.css), never on `data-engaged`. The utility stamps the class
++   on the presented plate. */
++@utility engage-presented {
++    --rung-class: presented;
++}
++
++/* FIELD — text entry. Its engagement is focus, painted by the field substrate
++   (components/_shared/field/control.css); the utility stamps the class. */
++@utility engage-field {
++    --rung-class: field;
++}
++
++/* AMBIENT — a field that answers the pointer's presence (aurora, blob, constellation,
++   the fourier field, the staff). Its rung is REST: the member's own field moves with
++   the pointer, and the utility stamps the class on the field's root. */
++@utility engage-ambient {
++    --rung-class: ambient;
++}
++
++/* STATIC — no input of its own. The class carries no rung; composing it is the
++   member's declaration that it was classified, read at runtime like any other. */
++@utility engage-static {
++    --rung-class: static;
++}
++
++@layer components {
++    /* THE COMMIT'S SEAT: the painted face's light layer. `:where()` keeps it at zero
++       specificity, so a member's own `position` (a dock control, an absolute chip
++       remove) wins. A face-less member's seat is its `::after`, and only where no other
++       rule claims that pseudo-element: the dock triggers' `::after` is their coarse
++       hit-slop (components/dock/controls/touch-floor.css, D2's), a 44 px target centred
++       on the face that must neither move nor paint, so the seat is not theirs (CK-14;
++       the dock's press and commit are D2's, CK-11). */
++    :where(.engage-chosen, .engage-pressed, .engage-disclosed):where(:not(:has([data-engage-face]))),
++    :where(.engage-chosen, .engage-pressed, .engage-disclosed) :where([data-engage-face]) {
++        position: relative;
++        isolation: isolate;
++    }
++
++    /* released: the charge returns on the attack under a gate closing on the release */
++    :where(.engage-chosen, .engage-pressed, .engage-disclosed):not(:has([data-engage-face])):where(:not(.dock-trigger, .dock-select-trigger, .dock-dropdown-trigger))::after,
++    :where(.engage-chosen, .engage-pressed, .engage-disclosed) [data-engage-light] {
++        content: "";
++        position: absolute;
++        inset: 0;
++        z-index: -1;
++        border-radius: inherit;
++        pointer-events: none;
++        background-color: color-mix(
++            in oklab,
++            var(--rung-light) calc(var(--fill-selected) * 100%),
++            transparent
++        );
++        opacity: 0;
++        transition:
++            opacity var(--engage-control-engage-release) var(--ease-standard),
++            background-color var(--engage-control-engage-attack) var(--ease-standard);
++    }
++
++    :where(.engage-chosen, .engage-pressed, .engage-disclosed) [data-engage-light] {
++        z-index: auto;
++    }
++
++    /* committed: the gate opens on the attack over a charge draining on the release. A
++       strip's member carries its own state (the tab's `data-active`), so its light keys
++       there, not on the host */
++    :where(.engage-chosen, .engage-disclosed):is([data-state="checked"], [data-state="on"], [data-state="open"]):not(:has([data-engage-face])):where(:not(.dock-trigger, .dock-select-trigger, .dock-dropdown-trigger))::after,
++    :where(.engage-chosen, .engage-disclosed):is([data-state="checked"], [data-state="on"], [data-state="open"]) [data-engage-light],
++    :where(.engage-chosen) [data-active] > [data-engage-light],
++    :where(.engage-pressed)[data-commit="b"]:where(:not(.dock-trigger, .dock-select-trigger, .dock-dropdown-trigger))::after {
++        background-color: color-mix(in oklab, var(--rung-light) 0%, transparent);
++        opacity: 1;
++        transition:
++            opacity var(--engage-control-engage-attack) var(--ease-standard),
++            background-color var(--engage-control-engage-release) var(--ease-standard);
++    }
++
++    /* the light is the brighter ground of each scheme */
++    :root {
++        --rung-light: var(--neutral-0);
++    }
++
++    .dark {
++        --rung-light: var(--foreground);
++    }
++
++    /* FL-3: under forced colours the system palette owns every fill, and a transient
++       wash would paint over it, so the seat is removed. Under reduced transparency the
++       light stays: it is an opaque-ink event on the face, not a translucent material.
++       The arm names the seat exactly as the recipes above do: a dock trigger's `::after`
++       is its coarse hit-slop, not a seat, and hiding it took the 44 px target with it
++       (D5 pass 3 C-A3 §0 item 2; E-12 `fcslop`). */
++    @media (forced-colors: active) {
++        :where(.engage-chosen, .engage-pressed, .engage-disclosed)::after,
++        :where(.engage-chosen, .engage-pressed, .engage-disclosed) [data-engage-light] {
++            display: none;
++        }
++    }
++}
++
++@layer components {
++    /* ── THE MOUNT FRAME (the one-frame commit arming) ──────────────────────────────
++       The engage door (composables/motion/engage/useEngage.ts) marks its host
++       `data-engage-arming` from mount until the first frame, where it flushes style
++       and lifts the mark. Until then nothing under the host transitions, so a state
++       that arrives with the mount (an async model set in the mount's own task, even
++       after something read style) is the rest the host mounts in, not a commit
++       (CK-03). Only `transition-property` is held: a duration or an authorization is
++       untouched, and an animation (an entrance keyframe) is not a transition. The
++       theme flip's `html.no-transition` (a11y-overrides.css) is the same idiom for
++       a different moment. */
++    [data-engage-arming],
++    [data-engage-arming] *,
++    [data-engage-arming]::before,
++    [data-engage-arming]::after,
++    [data-engage-arming] *::before,
++    [data-engage-arming] *::after {
++        transition-property: none !important;
++    }
++}
++
++/* AUTH-4 begin ── PRM-AUTHORIZED (docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md
++   §PRM-AUTHORIZED-SET, row AUTH-4): the engagement commit light keeps its envelope
++   clocks under reduced motion. The commit is light (CK-02 arm iii, Q-5's default),
++   and light is the channel reduced motion keeps (CK-10); the library's instant
++   fallback (a11y-overrides.css, `*, *::after { transition-duration: 0s !important }`)
++   would zero it. The rows name the commit seat exactly as the recipes do (the host's
++   `::after` on a face-less member, the face's `[data-engage-light]` layer otherwise)
++   and outrank the `*` fallback by specificity inside `@layer components`, as the
++   transitions.css fade rows do. The clocks are `ENGAGE_ENVELOPES`' `control-engage`
++   row, in each state's leg order (the gate's opacity, then the charge's
++   background-color): at rest the gate closes on the release over a charge that
++   returns on the attack; committed, the gate opens on the attack over a charge that
++   drains on the release. No transform rides it. CP's row (D5 pass 2,
++   `CP/css-prm-over-css.patch`), placed by F5' (F-9); the committed rows name every
++   committed state the seat's recipe names (`on` is the toggle item's, P-A3; the tab's
++   `data-active`, P-A4). */
++@layer components {
++    @media (prefers-reduced-motion: reduce) {
++        :where(.engage-chosen, .engage-pressed, .engage-disclosed):not(:has([data-engage-face]))::after,
++        :where(.engage-chosen, .engage-pressed, .engage-disclosed) [data-engage-light] {
++            transition-duration:
++                var(--engage-control-engage-release), var(--engage-control-engage-attack) !important;
++        }
++
++        :where(.engage-chosen, .engage-disclosed):is([data-state="checked"], [data-state="on"], [data-state="open"]):not(:has([data-engage-face]))::after,
++        :where(.engage-chosen, .engage-disclosed):is([data-state="checked"], [data-state="on"], [data-state="open"]) [data-engage-light],
++        :where(.engage-chosen) [data-active] > [data-engage-light],
++        :where(.engage-pressed)[data-commit="b"]::after {
++            transition-duration:
++                var(--engage-control-engage-attack), var(--engage-control-engage-release) !important;
++        }
++    }
++}
++/* AUTH-4 end */

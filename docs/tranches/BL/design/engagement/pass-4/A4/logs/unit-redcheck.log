@@ -1,0 +1,14 @@
+     × switch: marked on the primary pointerdown, cleared on pointerup 31ms
+     × toggle item: marked on the primary pointerdown, cleared on pointerup 6ms
+     × accordion trigger: marked on the primary pointerdown, cleared on pointerup 17ms
+     × chip (selectable): marked on the primary pointerdown, cleared on pointerup 5ms
+     × segmented tabs: the press marks the tab it landed on (the strip door's organ), not the strip 9ms
+     × names the dock triggers' exclusion on its `::after`, as the seat selectors do 4ms
+     × delays the light by the face's own fill clock, at a rank above the seat's shorthand 1ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+   not: the checkbox painted an unpainted absolute 44×44 span bleeding 14px past a
+   16px box (so `getBoundingClientRect` LIED — it read 16×16), and the radio used
+   PROPORTION's own stated tick law `r = 0.30 × h` EXACTLY (0.30 × 20 = 6; 0.30 × 18
+   44×24 track with `padding: 1px` was ALREADY symmetric at every size: rest inset
+   arithmetic survives the material cut unchanged. The competing 48×24/pad-2
+      Tests  7 failed | 5 passed (12)

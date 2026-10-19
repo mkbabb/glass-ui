@@ -1,0 +1,1093 @@
+{
+ "id": "E-2",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p4/A4/out/builds/geom"
+ },
+ "loadStart": "37.8/38.5/35.8",
+ "loadEnd": "33.4/37.0/35.9",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-2 switch Tab-entry light",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on switch",
+   "load": "37.4/38.4/35.8"
+  },
+  {
+   "name": "E-2 switch commit·keyboard(Space) light",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 20.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 44.0 px = 2.20 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.9224 → rest 0.9224, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0085, tail spread 0.0000 against 0.0085) on envelope clocks [] of the channel's [] ms; light anims [background-color@55ms, background-color@120ms, border-top-color@200ms] · 80 frames, median 10.0 ms",
+   "load": "37.4/38.4/35.8"
+  },
+  {
+   "name": "E-2 switch commit·programmatic light",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 19.90 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 44.0 px = 2.19 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.9224 → rest 0.9224, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0085, tail spread 0.0000 against 0.0085) on envelope clocks [] of the channel's [] ms; light anims [background-color@120ms, border-top-color@200ms] · 79 frames, median 10.0 ms",
+   "load": "36.2/38.1/35.7"
+  },
+  {
+   "name": "E-2 switch commit·pointer light",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 19.98 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 44.0 px = 2.19 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.9224 → rest 0.9224, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0085, tail spread 0.0000 against 0.0085) on envelope clocks [] of the channel's [] ms; light anims [background-color@120ms, border-top-color@200ms] · 79 frames, median 10.0 ms",
+   "load": "36.2/38.1/35.7"
+  },
+  {
+   "name": "E-2 switch commit·tap(coarse) light",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 20.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 44.0 px = 2.20 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.9224 → rest 0.9224, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0085, tail spread 0.0000 against 0.0085) on envelope clocks [] of the channel's [] ms; light anims [background-color@120ms, border-top-color@200ms] · 80 frames, median 10.0 ms",
+   "load": "36.2/38.1/35.7"
+  },
+  {
+   "name": "E-2 switch mount(committed) light",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames · 79 of 79 frames with the target present",
+   "load": "35.1/37.8/35.7"
+  },
+  {
+   "name": "E-2 switch arrival·pre light",
+   "status": "PASS",
+   "line": "state false → true · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames",
+   "load": "35.1/37.8/35.7"
+  },
+  {
+   "name": "E-2 switch arrival·own light",
+   "status": "PASS",
+   "line": "state false → true · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 80 frames",
+   "load": "35.1/37.8/35.7"
+  },
+  {
+   "name": "E-2 switch arrival·ownflush light",
+   "status": "PASS",
+   "line": "state false → true · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 80 frames",
+   "load": "35.1/37.8/35.7"
+  },
+  {
+   "name": "E-2 switch arrival·late light",
+   "status": "FAIL",
+   "line": "state false → true · after first paint, 1 commit wanted · arm none of [i,iii] · (i) body travel 19.69 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 44.0 px = 2.20 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.9224 → rest 0.9224, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0085, tail spread 0.0000 against 0.0085) on envelope clocks [] of the channel's [] ms; light anims [background-color@120ms, border-top-color@200ms] · 79 frames, median 10.0 ms",
+   "load": "35.1/37.8/35.6"
+  },
+  {
+   "name": "E-2 switch Tab-entry dark",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on switch",
+   "load": "35.1/37.8/35.6"
+  },
+  {
+   "name": "E-2 switch commit·keyboard(Space) dark",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 20.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 44.0 px = 2.20 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0253 → rest 0.0253, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0011, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [background-color@55ms, background-color@120ms, border-top-color@200ms] · 80 frames, median 10.0 ms",
+   "load": "35.1/37.8/35.6"
+  },
+  {
+   "name": "E-2 switch commit·programmatic dark",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 19.97 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 44.0 px = 2.20 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0253 → rest 0.0253, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0011, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [background-color@120ms, border-top-color@200ms] · 79 frames, median 10.0 ms",
+   "load": "33.3/37.4/35.5"
+  },
+  {
+   "name": "E-2 switch commit·pointer dark",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 19.98 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 44.0 px = 2.19 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0253 → rest 0.0253, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0011, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [background-color@120ms, border-top-color@200ms] · 79 frames, median 10.0 ms",
+   "load": "33.3/37.4/35.5"
+  },
+  {
+   "name": "E-2 switch commit·tap(coarse) dark",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 19.94 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 44.0 px = 2.20 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0253 → rest 0.0253, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0011, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [background-color@120ms, border-top-color@200ms] · 79 frames, median 10.0 ms",
+   "load": "33.3/37.4/35.5"
+  },
+  {
+   "name": "E-2 switch mount(committed) dark",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 80 frames · 80 of 80 frames with the target present",
+   "load": "33.1/37.3/35.5"
+  },
+  {
+   "name": "E-2 switch arrival·pre dark",
+   "status": "PASS",
+   "line": "state false → true · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 80 frames",
+   "load": "33.1/37.3/35.5"
+  },
+  {
+   "name": "E-2 switch arrival·own dark",
+   "status": "PASS",
+   "line": "state false → true · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 80 frames",
+   "load": "33.1/37.3/35.5"
+  },
+  {
+   "name": "E-2 switch arrival·ownflush dark",
+   "status": "PASS",
+   "line": "state false → true · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 80 frames",
+   "load": "33.3/37.2/35.5"
+  },
+  {
+   "name": "E-2 switch arrival·late dark",
+   "status": "FAIL",
+   "line": "state false → true · after first paint, 1 commit wanted · arm none of [i,iii] · (i) body travel 19.69 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 44.0 px = 2.20 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0253 → rest 0.0253, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0011, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [background-color@120ms, border-top-color@200ms] · 79 frames, median 10.0 ms",
+   "load": "33.3/37.2/35.5"
+  },
+  {
+   "name": "E-2 checkbox Tab-entry light",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on checkbox",
+   "load": "33.3/37.2/35.5"
+  },
+  {
+   "name": "E-2 checkbox commit·keyboard(Space) light",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0300 → rest 0.0300, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0012, tail spread 0.0000 against 0.0040) on envelope clocks [60] of the channel's [60] ms; light anims [background-color@55ms, background-color@120ms, border-top-color@200ms, opacity@60ms] · 80 frames, median 10.0 ms",
+   "load": "33.3/37.2/35.5"
+  },
+  {
+   "name": "E-2 checkbox commit·programmatic light",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0300 → rest 0.0300, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0012, tail spread 0.0000 against 0.0040) on envelope clocks [60] of the channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@60ms] · 79 frames, median 10.0 ms",
+   "load": "32.8/37.1/35.4"
+  },
+  {
+   "name": "E-2 checkbox commit·pointer light",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0283 → rest 0.0283, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0011, tail spread 0.0000 against 0.0040) on envelope clocks [60] of the channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@60ms] · 79 frames, median 10.0 ms",
+   "load": "32.8/37.1/35.4"
+  },
+  {
+   "name": "E-2 checkbox commit·tap(coarse) light",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0300 → rest 0.0300, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0012, tail spread 0.0000 against 0.0040) on envelope clocks [60] of the channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@60ms] · 79 frames, median 10.0 ms",
+   "load": "32.8/37.1/35.4"
+  },
+  {
+   "name": "E-2 checkbox mount(committed) light",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames · 79 of 79 frames with the target present",
+   "load": "34.0/37.3/35.5"
+  },
+  {
+   "name": "E-2 checkbox arrival·pre light",
+   "status": "PASS",
+   "line": "state false → true · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames",
+   "load": "34.0/37.3/35.5"
+  },
+  {
+   "name": "E-2 checkbox arrival·own light",
+   "status": "PASS",
+   "line": "state false → true · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 81 frames",
+   "load": "34.0/37.3/35.5"
+  },
+  {
+   "name": "E-2 checkbox arrival·ownflush light",
+   "status": "PASS",
+   "line": "state false → true · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 81 frames",
+   "load": "34.0/37.3/35.5"
+  },
+  {
+   "name": "E-2 checkbox arrival·late light",
+   "status": "FAIL",
+   "line": "state false → true · after first paint, 1 commit wanted · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0300 → rest 0.0300, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0012, tail spread 0.0000 against 0.0040) on envelope clocks [60] of the channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@60ms] · 79 frames, median 10.0 ms",
+   "load": "34.9/37.4/35.6"
+  },
+  {
+   "name": "E-2 checkbox Tab-entry dark",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on checkbox",
+   "load": "34.9/37.4/35.6"
+  },
+  {
+   "name": "E-2 checkbox commit·keyboard(Space) dark",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.2913 → rest 0.2913, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0043, tail spread 0.0000 against 0.0043) on envelope clocks [60] of the channel's [60] ms; light anims [background-color@55ms, background-color@120ms, border-top-color@200ms, opacity@60ms] · 80 frames, median 10.0 ms",
+   "load": "34.9/37.4/35.6"
+  },
+  {
+   "name": "E-2 checkbox commit·programmatic dark",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.2913 → rest 0.2913, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0043, tail spread 0.0000 against 0.0043) on envelope clocks [60] of the channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@60ms] · 79 frames, median 10.0 ms",
+   "load": "34.2/37.2/35.5"
+  },
+  {
+   "name": "E-2 checkbox commit·pointer dark",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.3098 → rest 0.3098, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0044, tail spread 0.0000 against 0.0044) on envelope clocks [60] of the channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@60ms] · 80 frames, median 10.0 ms",
+   "load": "34.2/37.2/35.5"
+  },
+  {
+   "name": "E-2 checkbox commit·tap(coarse) dark",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.2913 → rest 0.2913, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0043, tail spread 0.0000 against 0.0043) on envelope clocks [60] of the channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@60ms] · 80 frames, median 10.0 ms",
+   "load": "34.2/37.2/35.5"
+  },
+  {
+   "name": "E-2 checkbox mount(committed) dark",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames · 79 of 79 frames with the target present",
+   "load": "34.5/37.2/35.5"
+  },
+  {
+   "name": "E-2 checkbox arrival·pre dark",
+   "status": "PASS",
+   "line": "state false → true · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 80 frames",
+   "load": "34.5/37.2/35.5"
+  },
+  {
+   "name": "E-2 checkbox arrival·own dark",
+   "status": "PASS",
+   "line": "state false → true · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 81 frames",
+   "load": "34.5/37.2/35.5"
+  },
+  {
+   "name": "E-2 checkbox arrival·ownflush dark",
+   "status": "PASS",
+   "line": "state false → true · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 81 frames",
+   "load": "34.5/37.2/35.5"
+  },
+  {
+   "name": "E-2 checkbox arrival·late dark",
+   "status": "FAIL",
+   "line": "state false → true · after first paint, 1 commit wanted · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.2913 → rest 0.2913, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0043, tail spread 0.0000 against 0.0043) on envelope clocks [60] of the channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@60ms] · 79 frames, median 10.0 ms",
+   "load": "37.0/37.7/35.7"
+  },
+  {
+   "name": "E-2 radio Tab-entry light",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on radio",
+   "load": "37.0/37.7/35.7"
+  },
+  {
+   "name": "E-2 radio commit·keyboard(ArrowDown) light",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.9566 → rest 0.9566, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0087, tail spread 0.0000 against 0.0087) on envelope clocks [60] of the channel's [60] ms; light anims [outline-color@200ms, background-color@120ms, border-top-color@200ms, opacity@180ms, opacity@60ms] · 79 frames, median 10.0 ms",
+   "load": "37.0/37.7/35.7"
+  },
+  {
+   "name": "E-2 radio commit·programmatic light",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.9566 → rest 0.9566, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0087, tail spread 0.0000 against 0.0087) on envelope clocks [60] of the channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@180ms, opacity@60ms] · 79 frames, median 10.0 ms",
+   "load": "36.9/37.7/35.7"
+  },
+  {
+   "name": "E-2 radio commit·pointer light",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.9566 → rest 0.9566, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0087, tail spread 0.0000 against 0.0087) on envelope clocks [60] of the channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@180ms, opacity@60ms] · 80 frames, median 10.0 ms",
+   "load": "36.9/37.7/35.7"
+  },
+  {
+   "name": "E-2 radio commit·tap(coarse) light",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.9566 → rest 0.9566, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0087, tail spread 0.0000 against 0.0087) on envelope clocks [60] of the channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@180ms, opacity@60ms] · 78 frames, median 10.0 ms",
+   "load": "36.9/37.7/35.7"
+  },
+  {
+   "name": "E-2 radio mount(committed) light",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames · 79 of 79 frames with the target present",
+   "load": "36.9/37.7/35.7"
+  },
+  {
+   "name": "E-2 radio arrival·pre light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames",
+   "load": "36.2/37.5/35.7"
+  },
+  {
+   "name": "E-2 radio arrival·own light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 80 frames",
+   "load": "36.2/37.5/35.7"
+  },
+  {
+   "name": "E-2 radio arrival·ownflush light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 80 frames",
+   "load": "36.2/37.5/35.7"
+  },
+  {
+   "name": "E-2 radio arrival·late light",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · after first paint, 1 commit wanted · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 0.99 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.9566 → rest 0.9566, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0087, tail spread 0.0000 against 0.0087) on envelope clocks [60] of the channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@180ms, opacity@60ms] · 79 frames, median 10.0 ms",
+   "load": "37.5/37.8/35.8"
+  },
+  {
+   "name": "E-2 radio Tab-entry dark",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on radio",
+   "load": "37.5/37.8/35.8"
+  },
+  {
+   "name": "E-2 radio commit·keyboard(ArrowDown) dark",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.2822 → rest 0.0100, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0006, tail spread 0.0000 against 0.0040) on envelope clocks [60] of the channel's [60] ms; light anims [outline-color@200ms, background-color@120ms, border-top-color@200ms, opacity@180ms, opacity@60ms] · 80 frames, median 10.0 ms",
+   "load": "37.5/37.8/35.8"
+  },
+  {
+   "name": "E-2 radio commit·programmatic dark",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.2856 → rest 0.0100, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0006, tail spread 0.0000 against 0.0040) on envelope clocks [60] of the channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@180ms, opacity@60ms] · 79 frames, median 10.0 ms",
+   "load": "37.5/37.8/35.8"
+  },
+  {
+   "name": "E-2 radio commit·pointer dark",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.3098 → rest 0.0100, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0006, tail spread 0.0000 against 0.0040) on envelope clocks [60] of the channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@180ms, opacity@60ms] · 79 frames, median 10.0 ms",
+   "load": "40.1/38.3/36.0"
+  },
+  {
+   "name": "E-2 radio commit·tap(coarse) dark",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.2777 → rest 0.0100, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0006, tail spread 0.0000 against 0.0040) on envelope clocks [60] of the channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@180ms, opacity@60ms] · 79 frames, median 10.0 ms",
+   "load": "40.1/38.3/36.0"
+  },
+  {
+   "name": "E-2 radio mount(committed) dark",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames · 79 of 79 frames with the target present",
+   "load": "40.1/38.3/36.0"
+  },
+  {
+   "name": "E-2 radio arrival·pre dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 78 frames",
+   "load": "41.5/38.6/36.1"
+  },
+  {
+   "name": "E-2 radio arrival·own dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 81 frames",
+   "load": "41.5/38.6/36.1"
+  },
+  {
+   "name": "E-2 radio arrival·ownflush dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 80 frames",
+   "load": "41.5/38.6/36.1"
+  },
+  {
+   "name": "E-2 radio arrival·late dark",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · after first paint, 1 commit wanted · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.2722 → rest 0.0100, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0006, tail spread 0.0000 against 0.0040) on envelope clocks [60] of the channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@180ms, opacity@60ms] · 79 frames, median 10.0 ms",
+   "load": "41.8/38.7/36.1"
+  },
+  {
+   "name": "E-2 tabs Tab-entry light",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on BUTTON",
+   "load": "41.8/38.7/36.1"
+  },
+  {
+   "name": "E-2 tabs commit·keyboard(ArrowRight) light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · arm i of [i,iii] · (i) body travel 78.17 px overshoot 1.73 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 78.3 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0022 on the fill channel (peak 0.7829 → rest 0.7807, at rest true; bound ≥ 0.01; 0.3 quanta of 0.0077, tail spread 0.0000 against 0.0077) on envelope clocks [] of the channel's [] ms; light anims [background-color@60ms, color@200ms, background-color@180ms] · 79 frames, median 10.0 ms",
+   "load": "41.8/38.7/36.1"
+  },
+  {
+   "name": "E-2 tabs commit·programmatic light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · arm i of [i,iii] · (i) body travel 78.33 px overshoot 1.71 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 78.3 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0078 on the fill channel (peak 0.7885 → rest 0.7807, at rest true; bound ≥ 0.01; 1.0 quanta of 0.0077, tail spread 0.0000 against 0.0077) on envelope clocks [] of the channel's [] ms; light anims [background-color@60ms, color@200ms, background-color@180ms] · 80 frames, median 10.0 ms",
+   "load": "41.8/38.7/36.1"
+  },
+  {
+   "name": "E-2 tabs commit·pointer light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · arm i of [i,iii] · (i) body travel 78.33 px overshoot 1.71 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 78.3 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0078 on the fill channel (peak 0.7885 → rest 0.7807, at rest true; bound ≥ 0.01; 1.0 quanta of 0.0077, tail spread 0.0000 against 0.0077) on envelope clocks [120] of the channel's [120] ms; light anims [background-color@60ms, color@200ms, background-color@120ms, background-color@180ms] · 80 frames, median 10.0 ms",
+   "load": "42.6/38.9/36.2"
+  },
+  {
+   "name": "E-2 tabs commit·tap(coarse) light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · arm i of [i,iii] · (i) body travel 78.33 px overshoot 1.77 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 78.3 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0023 on the fill channel (peak 0.7830 → rest 0.7807, at rest true; bound ≥ 0.01; 0.3 quanta of 0.0077, tail spread 0.0000 against 0.0077) on envelope clocks [] of the channel's [] ms; light anims [background-color@60ms, color@200ms, background-color@180ms] · 80 frames, median 10.0 ms",
+   "load": "42.6/38.9/36.2"
+  },
+  {
+   "name": "E-2 tabs mount(committed) light",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 80 frames · 80 of 80 frames with the target present",
+   "load": "42.6/38.9/36.2"
+  },
+  {
+   "name": "E-2 tabs arrival·pre light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames",
+   "load": "42.6/39.0/36.3"
+  },
+  {
+   "name": "E-2 tabs arrival·own light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 80 frames",
+   "load": "42.6/39.0/36.3"
+  },
+  {
+   "name": "E-2 tabs arrival·ownflush light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 81 frames",
+   "load": "42.6/39.0/36.3"
+  },
+  {
+   "name": "E-2 tabs arrival·late light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · after first paint, 1 commit wanted · arm i of [i,iii] · (i) body travel 77.45 px overshoot 1.81 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 78.3 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0023 on the fill channel (peak 0.7830 → rest 0.7807, at rest true; bound ≥ 0.01; 0.3 quanta of 0.0077, tail spread 0.0000 against 0.0077) on envelope clocks [] of the channel's [] ms; light anims [background-color@60ms, color@200ms, background-color@180ms] · 80 frames, median 10.0 ms",
+   "load": "42.3/39.0/36.3"
+  },
+  {
+   "name": "E-2 tabs Tab-entry dark",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on BUTTON",
+   "load": "42.3/39.0/36.3"
+  },
+  {
+   "name": "E-2 tabs commit·keyboard(ArrowRight) dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · arm i of [i,iii] · (i) body travel 78.33 px overshoot 1.81 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 78.3 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0043 on the fill channel (peak 0.0076 → rest 0.0033, at rest true; bound ≥ 0.01; 13.2 quanta of 0.0003, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [background-color@60ms, color@200ms, background-color@180ms] · 80 frames, median 10.0 ms",
+   "load": "42.3/39.0/36.3"
+  },
+  {
+   "name": "E-2 tabs commit·programmatic dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · arm i of [i,iii] · (i) body travel 78.28 px overshoot 1.86 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 78.3 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0042 on the fill channel (peak 0.0076 → rest 0.0033, at rest true; bound ≥ 0.01; 12.9 quanta of 0.0003, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [background-color@60ms, color@200ms, background-color@180ms] · 79 frames, median 10.0 ms",
+   "load": "43.0/39.2/36.4"
+  },
+  {
+   "name": "E-2 tabs commit·pointer dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · arm i of [i,iii] · (i) body travel 78.30 px overshoot 1.83 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 78.3 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0011 on the fill channel (peak 0.0200 → rest 0.0033, at rest true; bound ≥ 0.01; 3.5 quanta of 0.0003, tail spread 0.0000 against 0.0040) on envelope clocks [120] of the channel's [120] ms; light anims [background-color@60ms, color@200ms, background-color@120ms, background-color@180ms] · 79 frames, median 10.0 ms",
+   "load": "43.0/39.2/36.4"
+  },
+  {
+   "name": "E-2 tabs commit·tap(coarse) dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · arm i of [i,iii] · (i) body travel 78.29 px overshoot 1.75 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 78.3 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0042 on the fill channel (peak 0.0076 → rest 0.0033, at rest true; bound ≥ 0.01; 12.9 quanta of 0.0003, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [background-color@60ms, color@200ms, background-color@180ms] · 79 frames, median 10.0 ms",
+   "load": "43.0/39.2/36.4"
+  },
+  {
+   "name": "E-2 tabs mount(committed) dark",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 78 frames · 78 of 78 frames with the target present",
+   "load": "40.8/38.8/36.2"
+  },
+  {
+   "name": "E-2 tabs arrival·pre dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 80 frames",
+   "load": "40.8/38.8/36.2"
+  },
+  {
+   "name": "E-2 tabs arrival·own dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames",
+   "load": "40.8/38.8/36.2"
+  },
+  {
+   "name": "E-2 tabs arrival·ownflush dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames",
+   "load": "40.8/38.8/36.2"
+  },
+  {
+   "name": "E-2 tabs arrival·late dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · after first paint, 1 commit wanted · arm i of [i,iii] · (i) body travel 76.69 px overshoot 1.77 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 78.3 px = 0.00 px (bound > 0.8) · (iii) light rise 0.0040 on the fill channel (peak 0.0076 → rest 0.0033, at rest true; bound ≥ 0.01; 12.2 quanta of 0.0003, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [background-color@60ms, color@200ms, background-color@180ms] · 79 frames, median 10.0 ms",
+   "load": "38.7/38.4/36.1"
+  },
+  {
+   "name": "E-2 toggle Tab-entry light",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on radio",
+   "load": "38.7/38.4/36.1"
+  },
+  {
+   "name": "E-2 toggle commit·keyboard(ArrowRight) light",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 59.1 px = 1.18 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.7357 → rest 0.7357, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0075, tail spread 0.0000 against 0.0075) on envelope clocks [] of the channel's [] ms; light anims [background-color@120ms, color@180ms] · 79 frames, median 10.0 ms",
+   "load": "38.7/38.4/36.1"
+  },
+  {
+   "name": "E-2 toggle commit·programmatic light",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 59.1 px = 1.18 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.7357 → rest 0.7357, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0075, tail spread 0.0000 against 0.0075) on envelope clocks [] of the channel's [] ms; light anims [background-color@120ms, color@180ms] · 79 frames, median 10.0 ms",
+   "load": "40.4/38.7/36.3"
+  },
+  {
+   "name": "E-2 toggle commit·pointer light",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 59.1 px = 1.18 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.6716 → rest 0.6716, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0071, tail spread 0.0000 against 0.0071) on envelope clocks [] of the channel's [] ms; light anims [background-color@120ms, color@180ms] · 80 frames, median 10.0 ms",
+   "load": "40.4/38.7/36.3"
+  },
+  {
+   "name": "E-2 toggle commit·tap(coarse) light",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 75.7 px = 1.51 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.6716 → rest 0.6716, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0071, tail spread 0.0000 against 0.0071) on envelope clocks [] of the channel's [] ms; light anims [background-color@120ms, color@180ms] · 79 frames, median 10.0 ms",
+   "load": "40.4/38.7/36.3"
+  },
+  {
+   "name": "E-2 toggle mount(committed) light",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames · 79 of 79 frames with the target present",
+   "load": "40.4/38.7/36.3"
+  },
+  {
+   "name": "E-2 toggle arrival·pre light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 80 frames",
+   "load": "40.3/38.8/36.3"
+  },
+  {
+   "name": "E-2 toggle arrival·own light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 80 frames",
+   "load": "40.3/38.8/36.3"
+  },
+  {
+   "name": "E-2 toggle arrival·ownflush light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 80 frames",
+   "load": "40.3/38.8/36.3"
+  },
+  {
+   "name": "E-2 toggle arrival·late light",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · after first paint, 1 commit wanted · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 59.1 px = 1.18 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.7357 → rest 0.7357, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0075, tail spread 0.0000 against 0.0075) on envelope clocks [] of the channel's [] ms; light anims [background-color@120ms, color@180ms] · 79 frames, median 10.0 ms",
+   "load": "42.0/39.1/36.4"
+  },
+  {
+   "name": "E-2 toggle Tab-entry dark",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on radio",
+   "load": "42.0/39.1/36.4"
+  },
+  {
+   "name": "E-2 toggle commit·keyboard(ArrowRight) dark",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 59.1 px = 1.18 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0183 → rest 0.0183, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0009, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [background-color@120ms, color@180ms] · 80 frames, median 10.0 ms",
+   "load": "42.0/39.1/36.4"
+  },
+  {
+   "name": "E-2 toggle commit·programmatic dark",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 59.1 px = 1.18 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0183 → rest 0.0183, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0009, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [background-color@120ms, color@180ms] · 80 frames, median 10.0 ms",
+   "load": "42.0/39.1/36.4"
+  },
+  {
+   "name": "E-2 toggle commit·pointer dark",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 59.1 px = 1.17 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0267 → rest 0.0267, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0011, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [background-color@120ms, color@180ms] · 80 frames, median 10.0 ms",
+   "load": "42.4/39.3/36.5"
+  },
+  {
+   "name": "E-2 toggle commit·tap(coarse) dark",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 75.7 px = 1.51 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0267 → rest 0.0267, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0011, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [background-color@120ms, color@180ms] · 80 frames, median 10.0 ms",
+   "load": "42.4/39.3/36.5"
+  },
+  {
+   "name": "E-2 toggle mount(committed) dark",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames · 79 of 79 frames with the target present",
+   "load": "42.4/39.3/36.5"
+  },
+  {
+   "name": "E-2 toggle arrival·pre dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 78 frames",
+   "load": "40.3/38.9/36.4"
+  },
+  {
+   "name": "E-2 toggle arrival·own dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 81 frames",
+   "load": "40.3/38.9/36.4"
+  },
+  {
+   "name": "E-2 toggle arrival·ownflush dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 80 frames",
+   "load": "40.3/38.9/36.4"
+  },
+  {
+   "name": "E-2 toggle arrival·late dark",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · after first paint, 1 commit wanted · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 59.1 px = 1.18 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0183 → rest 0.0183, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0009, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [background-color@120ms, color@180ms] · 79 frames, median 10.0 ms",
+   "load": "41.5/39.2/36.5"
+  },
+  {
+   "name": "E-2 chip Tab-entry light",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on BUTTON",
+   "load": "41.5/39.2/36.5"
+  },
+  {
+   "name": "E-2 chip commit·keyboard(Space) light",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.81 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.5269 → rest 0.5269, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0062, tail spread 0.0000 against 0.0062) on envelope clocks [] of the channel's [] ms; light anims [background-color@200ms, border-top-color@200ms] · 80 frames, median 10.0 ms",
+   "load": "41.5/39.2/36.5"
+  },
+  {
+   "name": "E-2 chip commit·programmatic light",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.82 px (bound > 0.8) · (iii) light rise 0.0018 on the fill channel (peak 0.5287 → rest 0.5269, at rest true; bound ≥ 0.01; 0.3 quanta of 0.0062, tail spread 0.0000 against 0.0062) on envelope clocks [] of the channel's [200] ms; light anims [background-color@200ms, border-top-color@200ms] · 80 frames, median 10.0 ms",
+   "load": "41.5/39.2/36.5"
+  },
+  {
+   "name": "E-2 chip commit·pointer light",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.81 px (bound > 0.8) · (iii) light rise 0.0014 on the fill channel (peak 0.5283 → rest 0.5269, at rest true; bound ≥ 0.01; 0.2 quanta of 0.0062, tail spread 0.0000 against 0.0062) on envelope clocks [] of the channel's [200] ms; light anims [background-color@200ms, border-top-color@200ms] · 78 frames, median 10.0 ms",
+   "load": "39.9/38.9/36.4"
+  },
+  {
+   "name": "E-2 chip commit·tap(coarse) light",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 44.0 px = 0.87 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.5269 → rest 0.5269, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0062, tail spread 0.0000 against 0.0062) on envelope clocks [] of the channel's [] ms; light anims [background-color@200ms, border-top-color@200ms] · 80 frames, median 10.0 ms",
+   "load": "39.9/38.9/36.4"
+  },
+  {
+   "name": "E-2 chip mount(committed) light",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames · 79 of 79 frames with the target present",
+   "load": "39.9/38.9/36.4"
+  },
+  {
+   "name": "E-2 chip arrival·pre light",
+   "status": "PASS",
+   "line": "state false → true · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames",
+   "load": "37.8/38.4/36.3"
+  },
+  {
+   "name": "E-2 chip arrival·own light",
+   "status": "PASS",
+   "line": "state false → true · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames",
+   "load": "37.8/38.4/36.3"
+  },
+  {
+   "name": "E-2 chip arrival·ownflush light",
+   "status": "PASS",
+   "line": "state false → true · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 80 frames",
+   "load": "37.8/38.4/36.3"
+  },
+  {
+   "name": "E-2 chip arrival·late light",
+   "status": "FAIL",
+   "line": "state false → true · after first paint, 1 commit wanted · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.81 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.5269 → rest 0.5269, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0062, tail spread 0.0000 against 0.0062) on envelope clocks [] of the channel's [] ms; light anims [background-color@200ms, border-top-color@200ms] · 79 frames, median 10.0 ms",
+   "load": "37.7/38.4/36.3"
+  },
+  {
+   "name": "E-2 chip Tab-entry dark",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on BUTTON",
+   "load": "37.7/38.4/36.3"
+  },
+  {
+   "name": "E-2 chip commit·keyboard(Space) dark",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.82 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0646 → rest 0.0646, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0018, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [background-color@200ms, border-top-color@200ms] · 80 frames, median 10.0 ms",
+   "load": "37.7/38.4/36.3"
+  },
+  {
+   "name": "E-2 chip commit·programmatic dark",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.81 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0646 → rest 0.0646, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0018, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [background-color@200ms, border-top-color@200ms] · 80 frames, median 10.0 ms",
+   "load": "37.7/38.4/36.3"
+  },
+  {
+   "name": "E-2 chip commit·pointer dark",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.81 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0646 → rest 0.0646, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0018, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [background-color@200ms, border-top-color@200ms] · 79 frames, median 10.0 ms",
+   "load": "37.0/38.3/36.2"
+  },
+  {
+   "name": "E-2 chip commit·tap(coarse) dark",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 44.0 px = 0.88 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0646 → rest 0.0646, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0018, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [background-color@200ms, border-top-color@200ms] · 80 frames, median 10.0 ms",
+   "load": "37.0/38.3/36.2"
+  },
+  {
+   "name": "E-2 chip mount(committed) dark",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames · 79 of 79 frames with the target present",
+   "load": "37.0/38.3/36.2"
+  },
+  {
+   "name": "E-2 chip arrival·pre dark",
+   "status": "PASS",
+   "line": "state false → true · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames",
+   "load": "37.8/38.4/36.3"
+  },
+  {
+   "name": "E-2 chip arrival·own dark",
+   "status": "PASS",
+   "line": "state false → true · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 80 frames",
+   "load": "37.8/38.4/36.3"
+  },
+  {
+   "name": "E-2 chip arrival·ownflush dark",
+   "status": "PASS",
+   "line": "state false → true · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 80 frames",
+   "load": "37.8/38.4/36.3"
+  },
+  {
+   "name": "E-2 chip arrival·late dark",
+   "status": "FAIL",
+   "line": "state false → true · after first paint, 1 commit wanted · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.81 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0646 → rest 0.0646, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0018, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [background-color@200ms, border-top-color@200ms] · 79 frames, median 10.0 ms",
+   "load": "37.8/38.4/36.3"
+  },
+  {
+   "name": "E-2 chipaction Tab-entry light",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on BUTTON",
+   "load": "36.5/38.1/36.2"
+  },
+  {
+   "name": "E-2 chipaction commit·keyboard(Space) light",
+   "status": "FAIL",
+   "line": "state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.82 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.6501 → rest 0.6501, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0070, tail spread 0.0000 against 0.0070) on envelope clocks [] of the channel's [] ms; light anims [] · 81 frames, median 10.0 ms",
+   "load": "36.5/38.1/36.2"
+  },
+  {
+   "name": "E-2 chipaction commit·programmatic light",
+   "status": "FAIL",
+   "line": "element.click() (stateless) · state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.81 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.6501 → rest 0.6501, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0070, tail spread 0.0000 against 0.0070) on envelope clocks [] of the channel's [] ms; light anims [] · 79 frames, median 10.0 ms",
+   "load": "36.5/38.1/36.2"
+  },
+  {
+   "name": "E-2 chipaction commit·pointer light",
+   "status": "FAIL",
+   "line": "state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.82 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.6501 → rest 0.6501, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0070, tail spread 0.0000 against 0.0070) on envelope clocks [] of the channel's [] ms; light anims [] · 79 frames, median 10.0 ms",
+   "load": "35.7/37.9/36.1"
+  },
+  {
+   "name": "E-2 chipaction commit·tap(coarse) light",
+   "status": "FAIL",
+   "line": "state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 44.0 px = 0.88 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.6501 → rest 0.6501, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0070, tail spread 0.0000 against 0.0070) on envelope clocks [] of the channel's [] ms; light anims [] · 80 frames, median 10.0 ms",
+   "load": "35.7/37.9/36.1"
+  },
+  {
+   "name": "E-2 chipaction mount(committed) light",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames · 79 of 79 frames with the target present",
+   "load": "35.7/37.9/36.1"
+  },
+  {
+   "name": "E-2 chipaction arrival·pre light",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "35.7/37.9/36.1"
+  },
+  {
+   "name": "E-2 chipaction arrival·own light",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "35.7/37.9/36.1"
+  },
+  {
+   "name": "E-2 chipaction arrival·ownflush light",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "35.7/37.9/36.1"
+  },
+  {
+   "name": "E-2 chipaction arrival·late light",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "35.7/37.9/36.1"
+  },
+  {
+   "name": "E-2 chipaction Tab-entry dark",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on BUTTON",
+   "load": "36.6/38.1/36.2"
+  },
+  {
+   "name": "E-2 chipaction commit·keyboard(Space) dark",
+   "status": "FAIL",
+   "line": "state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.82 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0073 → rest 0.0073, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0005, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [] · 80 frames, median 10.0 ms",
+   "load": "36.6/38.1/36.2"
+  },
+  {
+   "name": "E-2 chipaction commit·programmatic dark",
+   "status": "FAIL",
+   "line": "element.click() (stateless) · state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.81 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0073 → rest 0.0073, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0005, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [] · 80 frames, median 10.0 ms",
+   "load": "36.6/38.1/36.2"
+  },
+  {
+   "name": "E-2 chipaction commit·pointer dark",
+   "status": "FAIL",
+   "line": "state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.81 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0073 → rest 0.0073, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0005, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [] · 80 frames, median 10.0 ms",
+   "load": "36.6/38.1/36.2"
+  },
+  {
+   "name": "E-2 chipaction commit·tap(coarse) dark",
+   "status": "FAIL",
+   "line": "state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 44.0 px = 0.88 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0073 → rest 0.0073, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0005, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [] · 80 frames, median 10.0 ms",
+   "load": "35.6/37.8/36.1"
+  },
+  {
+   "name": "E-2 chipaction mount(committed) dark",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 80 frames · 80 of 80 frames with the target present",
+   "load": "35.6/37.8/36.1"
+  },
+  {
+   "name": "E-2 chipaction arrival·pre dark",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "35.6/37.8/36.1"
+  },
+  {
+   "name": "E-2 chipaction arrival·own dark",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "35.6/37.8/36.1"
+  },
+  {
+   "name": "E-2 chipaction arrival·ownflush dark",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "35.6/37.8/36.1"
+  },
+  {
+   "name": "E-2 chipaction arrival·late dark",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "35.6/37.8/36.1"
+  },
+  {
+   "name": "E-2 accordion Tab-entry light",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on BUTTON",
+   "load": "35.6/37.8/36.1"
+  },
+  {
+   "name": "E-2 accordion commit·keyboard(Enter) light",
+   "status": "FAIL",
+   "line": "state null → \"one\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 320.0 px = 6.39 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.9566 → rest 0.9566, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0087, tail spread 0.0000 against 0.0087) on envelope clocks [] of the channel's [] ms; light anims [background-color@55ms, opacity@200ms, background-color@120ms] · 77 frames, median 10.0 ms",
+   "load": "35.6/37.8/36.1"
+  },
+  {
+   "name": "E-2 accordion commit·programmatic light",
+   "status": "FAIL",
+   "line": "state null → \"one\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 320.0 px = 6.40 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.9566 → rest 0.9566, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0087, tail spread 0.0000 against 0.0087) on envelope clocks [] of the channel's [] ms; light anims [opacity@200ms] · 80 frames, median 10.0 ms",
+   "load": "36.1/37.9/36.2"
+  },
+  {
+   "name": "E-2 accordion commit·pointer light",
+   "status": "FAIL",
+   "line": "state null → \"one\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 320.0 px = 6.40 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.6921 → rest 0.6921, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0072, tail spread 0.0000 against 0.0072) on envelope clocks [] of the channel's [] ms; light anims [background-color@120ms, opacity@200ms] · 78 frames, median 10.0 ms",
+   "load": "36.1/37.9/36.2"
+  },
+  {
+   "name": "E-2 accordion commit·tap(coarse) light",
+   "status": "FAIL",
+   "line": "state null → \"one\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 320.0 px = 6.37 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.9566 → rest 0.9566, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0087, tail spread 0.0000 against 0.0087) on envelope clocks [] of the channel's [] ms; light anims [opacity@200ms] · 79 frames, median 10.0 ms",
+   "load": "36.0/37.9/36.1"
+  },
+  {
+   "name": "E-2 accordion mount(committed) light",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames · 79 of 79 frames with the target present",
+   "load": "36.0/37.9/36.1"
+  },
+  {
+   "name": "E-2 accordion arrival·pre light",
+   "status": "PASS",
+   "line": "state null → \"one\" · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 78 frames",
+   "load": "36.0/37.9/36.1"
+  },
+  {
+   "name": "E-2 accordion arrival·own light",
+   "status": "PASS",
+   "line": "state null → \"one\" · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames",
+   "load": "36.0/37.9/36.1"
+  },
+  {
+   "name": "E-2 accordion arrival·ownflush light",
+   "status": "PASS",
+   "line": "state null → \"one\" · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 81 frames",
+   "load": "36.6/38.0/36.2"
+  },
+  {
+   "name": "E-2 accordion arrival·late light",
+   "status": "FAIL",
+   "line": "state null → \"one\" · after first paint, 1 commit wanted · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 320.0 px = 6.39 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.9566 → rest 0.9566, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0087, tail spread 0.0000 against 0.0087) on envelope clocks [] of the channel's [] ms; light anims [opacity@200ms] · 79 frames, median 10.0 ms",
+   "load": "36.6/38.0/36.2"
+  },
+  {
+   "name": "E-2 accordion Tab-entry dark",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on BUTTON",
+   "load": "35.5/37.7/36.1"
+  },
+  {
+   "name": "E-2 accordion commit·keyboard(Enter) dark",
+   "status": "FAIL",
+   "line": "state null → \"one\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 320.0 px = 6.38 px (bound > 0.8) · (iii) light rise 0.0043 on the fill channel (peak 0.0074 → rest 0.0031, at rest true; bound ≥ 0.01; 13.8 quanta of 0.0003, tail spread 0.0000 against 0.0040) on envelope clocks [55,120] of the channel's [55,120] ms; light anims [background-color@55ms, opacity@200ms, background-color@120ms] · 80 frames, median 10.0 ms",
+   "load": "35.5/37.7/36.1"
+  },
+  {
+   "name": "E-2 accordion commit·programmatic dark",
+   "status": "FAIL",
+   "line": "state null → \"one\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 320.0 px = 6.40 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0031 → rest 0.0031, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0003, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [opacity@200ms] · 79 frames, median 10.0 ms",
+   "load": "35.5/37.7/36.1"
+  },
+  {
+   "name": "E-2 accordion commit·pointer dark",
+   "status": "FAIL",
+   "line": "state null → \"one\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 320.0 px = 6.40 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0346 → rest 0.0346, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0013, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [background-color@120ms, opacity@200ms] · 79 frames, median 10.0 ms",
+   "load": "35.5/37.7/36.1"
+  },
+  {
+   "name": "E-2 accordion commit·tap(coarse) dark",
+   "status": "FAIL",
+   "line": "state null → \"one\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 320.0 px = 6.36 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0031 → rest 0.0031, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0003, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [opacity@200ms] · 79 frames, median 10.0 ms",
+   "load": "35.5/37.7/36.1"
+  },
+  {
+   "name": "E-2 accordion mount(committed) dark",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames · 79 of 79 frames with the target present",
+   "load": "35.2/37.6/36.1"
+  },
+  {
+   "name": "E-2 accordion arrival·pre dark",
+   "status": "PASS",
+   "line": "state null → \"one\" · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames",
+   "load": "35.2/37.6/36.1"
+  },
+  {
+   "name": "E-2 accordion arrival·own dark",
+   "status": "PASS",
+   "line": "state null → \"one\" · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 81 frames",
+   "load": "35.2/37.6/36.1"
+  },
+  {
+   "name": "E-2 accordion arrival·ownflush dark",
+   "status": "PASS",
+   "line": "state null → \"one\" · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 81 frames",
+   "load": "34.8/37.5/36.1"
+  },
+  {
+   "name": "E-2 accordion arrival·late dark",
+   "status": "FAIL",
+   "line": "state null → \"one\" · after first paint, 1 commit wanted · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 320.0 px = 6.40 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0031 → rest 0.0031, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0003, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [opacity@200ms] · 79 frames, median 10.0 ms",
+   "load": "34.8/37.5/36.1"
+  },
+  {
+   "name": "E-2 button Tab-entry light",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on BUTTON",
+   "load": "34.8/37.5/36.1"
+  },
+  {
+   "name": "E-2 button commit·keyboard(Space) light",
+   "status": "FAIL",
+   "line": "state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.028 trough 0.997 settle 1.000 on 74.8 px = 2.11 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.7562 → rest 0.7562, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0076, tail spread 0.0000 against 0.0076) on envelope clocks [60,60,60,60,60,60,60,60,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180] of the channel's [60,60,60,60,60,60,60,60,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180] ms; light anims [opacity::before@60ms, opacity::before@180ms] · 81 frames, median 10.0 ms",
+   "load": "34.8/37.5/36.1"
+  },
+  {
+   "name": "E-2 button commit·programmatic light",
+   "status": "FAIL",
+   "line": "element.click() (stateless) · state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 74.8 px = 1.49 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.7562 → rest 0.7562, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0076, tail spread 0.0000 against 0.0076) on envelope clocks [] of the channel's [] ms; light anims [] · 80 frames, median 10.0 ms",
+   "load": "34.3/37.3/36.0"
+  },
+  {
+   "name": "E-2 button commit·pointer light",
+   "status": "FAIL",
+   "line": "state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.032 trough 0.997 settle 1.000 on 74.8 px = 2.41 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.7562 → rest 0.7562, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0076, tail spread 0.0000 against 0.0076) on envelope clocks [60] of the channel's [60] ms; light anims [opacity::before@60ms] · 79 frames, median 10.0 ms",
+   "load": "34.3/37.3/36.0"
+  },
+  {
+   "name": "E-2 button commit·tap(coarse) light",
+   "status": "FAIL",
+   "line": "state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 115.1 px = 2.30 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.7562 → rest 0.7562, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0076, tail spread 0.0000 against 0.0076) on envelope clocks [60] of the channel's [60] ms; light anims [opacity::before@60ms] · 80 frames, median 10.0 ms",
+   "load": "34.3/37.3/36.0"
+  },
+  {
+   "name": "E-2 button mount(committed) light",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames · 79 of 79 frames with the target present",
+   "load": "34.0/37.2/36.0"
+  },
+  {
+   "name": "E-2 button arrival·pre light",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "34.0/37.2/36.0"
+  },
+  {
+   "name": "E-2 button arrival·own light",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "34.0/37.2/36.0"
+  },
+  {
+   "name": "E-2 button arrival·ownflush light",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "34.0/37.2/36.0"
+  },
+  {
+   "name": "E-2 button arrival·late light",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "34.0/37.2/36.0"
+  },
+  {
+   "name": "E-2 button Tab-entry dark",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on BUTTON",
+   "load": "34.0/37.2/36.0"
+  },
+  {
+   "name": "E-2 button commit·keyboard(Space) dark",
+   "status": "FAIL",
+   "line": "state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.027 trough 0.997 settle 1.000 on 74.8 px = 2.02 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0076 → rest 0.0076, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0005, tail spread 0.0000 against 0.0040) on envelope clocks [60,60,60,60,60,60,60,60,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180] of the channel's [60,60,60,60,60,60,60,60,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180] ms; light anims [opacity::before@60ms, opacity::before@180ms] · 79 frames, median 10.0 ms",
+   "load": "34.0/37.2/36.0"
+  },
+  {
+   "name": "E-2 button commit·programmatic dark",
+   "status": "FAIL",
+   "line": "element.click() (stateless) · state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 74.8 px = 1.49 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0076 → rest 0.0076, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0005, tail spread 0.0000 against 0.0040) on envelope clocks [] of the channel's [] ms; light anims [] · 80 frames, median 10.0 ms",
+   "load": "34.0/37.2/36.0"
+  },
+  {
+   "name": "E-2 button commit·pointer dark",
+   "status": "FAIL",
+   "line": "state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.032 trough 0.997 settle 1.000 on 74.8 px = 2.39 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0076 → rest 0.0076, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0005, tail spread 0.0000 against 0.0040) on envelope clocks [60] of the channel's [60] ms; light anims [opacity::before@60ms] · 79 frames, median 10.0 ms",
+   "load": "33.4/37.0/35.9"
+  },
+  {
+   "name": "E-2 button commit·tap(coarse) dark",
+   "status": "FAIL",
+   "line": "state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 115.1 px = 2.29 px (bound > 0.8) · (iii) light rise 0.0000 on the layers channel (peak 0.0076 → rest 0.0076, at rest true; bound ≥ 0.01; 0.0 quanta of 0.0005, tail spread 0.0000 against 0.0040) on envelope clocks [60] of the channel's [60] ms; light anims [opacity::before@60ms] · 79 frames, median 10.0 ms",
+   "load": "33.4/37.0/35.9"
+  },
+  {
+   "name": "E-2 button mount(committed) dark",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 79 frames · 79 of 79 frames with the target present",
+   "load": "33.4/37.0/35.9"
+  },
+  {
+   "name": "E-2 button arrival·pre dark",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "33.4/37.0/35.9"
+  },
+  {
+   "name": "E-2 button arrival·own dark",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "33.4/37.0/35.9"
+  },
+  {
+   "name": "E-2 button arrival·ownflush dark",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "33.4/37.0/35.9"
+  },
+  {
+   "name": "E-2 button arrival·late dark",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "33.4/37.0/35.9"
+  }
+ ]
+}

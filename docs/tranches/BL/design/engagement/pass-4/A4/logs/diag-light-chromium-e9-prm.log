@@ -1,0 +1,85 @@
+# E-9 · the PRM arm
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p4/A4/out/builds/light · engine chromium · lock wait 0.0 s · other headless processes: chromium 0, webkit 2 · load 14.0/15.3/17.0 at start
+# scene app: harness scenes/App.vue (sha1 3c135d6264f8)
+# chromium 149.0.7827.55
+  PASS       E-9 switch press-spatial light · scale range while pressed 0.000 over 41 frames (bound < 0.002) · load 14.1/15.3/17.0
+  PASS       E-9 switch press-light light · press-only paint changes [child0 bg] (bound ≥ 1) · load 14.1/15.3/17.0
+  PASS       E-9 switch commit-spatial light · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 20.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 108 frames · load 14.1/15.3/17.0
+  FAIL       E-9 switch commit-light light · commit(Space) under reduce, state false → true: the transient · light rise 0.0060 on the layers channel (peak 0.9285 → rest 0.9224, at rest true; bound ≥ 0.01; 0.7 quanta of 0.0085, tail spread 0.0000 against 0.0085) · load 14.1/15.3/17.0
+  PASS       E-9 switch press-spatial dark · scale range while pressed 0.000 over 41 frames (bound < 0.002) · load 13.9/15.2/17.0
+  PASS       E-9 switch press-light dark · press-only paint changes [child0 bg] (bound ≥ 1) · load 13.9/15.2/17.0
+  PASS       E-9 switch commit-spatial dark · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 20.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 107 frames · load 13.9/15.2/17.0
+  PASS       E-9 switch commit-light dark · commit(Space) under reduce, state false → true: the transient · light rise 0.0215 on the layers channel (peak 0.0467 → rest 0.0253, at rest true; bound ≥ 0.01; 20.4 quanta of 0.0011, tail spread 0.0000 against 0.0040) · load 13.9/15.2/17.0
+  PASS       E-9 checkbox press-spatial light · scale range while pressed 0.000 over 41 frames (bound < 0.002) · load 13.9/15.2/17.0
+  PASS       E-9 checkbox press-light light · press-only paint changes [child0 bg] (bound ≥ 1) · load 13.9/15.2/17.0
+  PASS       E-9 checkbox commit-spatial light · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 109 frames · load 13.9/15.2/17.0
+  PASS       E-9 checkbox commit-light light · commit(Space) under reduce, state false → true: the transient · light rise 0.0266 on the layers channel (peak 0.0566 → rest 0.0300, at rest true; bound ≥ 0.01; 22.8 quanta of 0.0012, tail spread 0.0000 against 0.0040) · load 13.9/15.2/17.0
+  PASS       E-9 checkbox press-spatial dark · scale range while pressed 0.000 over 40 frames (bound < 0.002) · load 13.7/15.2/16.9
+  PASS       E-9 checkbox press-light dark · press-only paint changes [child0 bg] (bound ≥ 1) · load 13.7/15.2/16.9
+  PASS       E-9 checkbox commit-spatial dark · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 107 frames · load 13.7/15.2/16.9
+  PASS       E-9 checkbox commit-light dark · commit(Space) under reduce, state false → true: the transient · light rise 0.0326 on the layers channel (peak 0.3219 → rest 0.2893, at rest true; bound ≥ 0.01; 7.7 quanta of 0.0043, tail spread 0.0000 against 0.0043) · load 13.7/15.2/16.9
+  PASS       E-9 radio press-spatial light · scale range while pressed 0.000 over 42 frames (bound < 0.002) · load 13.7/15.2/16.9
+  PASS       E-9 radio press-light light · press-only paint changes [child0 bg] (bound ≥ 1) · load 13.7/15.2/16.9
+  PASS       E-9 radio commit-spatial light · commit(ArrowDown): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 108 frames · load 13.7/15.2/16.9
+  FAIL       E-9 radio commit-light light · commit(ArrowDown) under reduce, state "a" → "b": the transient · light rise 0.0032 on the layers channel (peak 0.9598 → rest 0.9566, at rest true; bound ≥ 0.01; 0.4 quanta of 0.0087, tail spread 0.0000 against 0.0087) · load 13.7/15.2/16.9
+  PASS       E-9 radio press-spatial dark · scale range while pressed 0.000 over 38 frames (bound < 0.002) · load 13.1/15.0/16.9
+  PASS       E-9 radio press-light dark · press-only paint changes [child0 bg] (bound ≥ 1) · load 13.1/15.0/16.9
+  PASS       E-9 radio commit-spatial dark · commit(ArrowDown): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 109 frames · load 13.1/15.0/16.9
+  PASS       E-9 radio commit-light dark · commit(ArrowDown) under reduce, state "a" → "b": the transient · light rise 0.0157 on the layers channel (peak 0.0257 → rest 0.0100, at rest true; bound ≥ 0.01; 25.3 quanta of 0.0006, tail spread 0.0000 against 0.0040) · load 13.1/15.0/16.9
+  PASS       E-9 tabs press-spatial light · scale range while pressed 0.000 over 41 frames (bound < 0.002) · load 12.6/14.9/16.8
+  PASS       E-9 tabs press-light light · press-only paint changes [background-color] (bound ≥ 1) · load 12.6/14.9/16.8
+  PASS       E-9 tabs commit-spatial light · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 108 frames · load 12.6/14.9/16.8
+  PASS       E-9 tabs commit-light light · commit(ArrowRight) under reduce, state "a" → "b": the transient · light rise 0.0172 on the layers channel (peak 0.7978 → rest 0.7807, at rest true; bound ≥ 0.01; 2.2 quanta of 0.0077, tail spread 0.0000 against 0.0077) · load 12.6/14.9/16.8
+  PASS       E-9 tabs press-spatial dark · scale range while pressed 0.000 over 40 frames (bound < 0.002) · load 12.6/14.9/16.8
+  PASS       E-9 tabs press-light dark · press-only paint changes [background-color] (bound ≥ 1) · load 12.6/14.9/16.8
+  PASS       E-9 tabs commit-spatial dark · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 107 frames · load 12.6/14.9/16.8
+  PASS       E-9 tabs commit-light dark · commit(ArrowRight) under reduce, state "a" → "b": the transient · light rise 0.0105 on the layers channel (peak 0.0138 → rest 0.0033, at rest true; bound ≥ 0.01; 32.1 quanta of 0.0003, tail spread 0.0000 against 0.0040) · load 12.6/14.9/16.8
+  PASS       E-9 toggle press-spatial light · scale range while pressed 0.000 over 40 frames (bound < 0.002) · load 12.3/14.8/16.8
+  PASS       E-9 toggle press-light light · press-only paint changes [background-color] (bound ≥ 1) · load 12.3/14.8/16.8
+  PASS       E-9 toggle commit-spatial light · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 108 frames · load 12.3/14.8/16.8
+  PASS       E-9 toggle commit-light light · commit(ArrowRight) under reduce, state "a" → "b": the transient · light rise 0.0210 on the layers channel (peak 0.7567 → rest 0.7357, at rest true; bound ≥ 0.01; 2.8 quanta of 0.0075, tail spread 0.0000 against 0.0075) · load 12.3/14.8/16.8
+  PASS       E-9 toggle press-spatial dark · scale range while pressed 0.000 over 41 frames (bound < 0.002) · load 12.3/14.8/16.8
+  PASS       E-9 toggle press-light dark · press-only paint changes [background-color] (bound ≥ 1) · load 12.3/14.8/16.8
+  PASS       E-9 toggle commit-spatial dark · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 109 frames · load 12.3/14.8/16.8
+  PASS       E-9 toggle commit-light dark · commit(ArrowRight) under reduce, state "a" → "b": the transient · light rise 0.0189 on the layers channel (peak 0.0372 → rest 0.0183, at rest true; bound ≥ 0.01; 21.5 quanta of 0.0009, tail spread 0.0000 against 0.0040) · load 12.3/14.8/16.8
+  PASS       E-9 chip press-spatial light · scale range while pressed 0.000 over 42 frames (bound < 0.002) · load 12.6/14.8/16.8
+  PASS       E-9 chip press-light light · press-only paint changes [background-image] (bound ≥ 1) · load 12.6/14.8/16.8
+  PASS       E-9 chip commit-spatial light · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 107 frames · load 12.6/14.8/16.8
+  PASS       E-9 chip commit-light light · commit(Space) under reduce, state false → true: the transient · light rise 0.0339 on the layers channel (peak 0.5607 → rest 0.5269, at rest true; bound ≥ 0.01; 5.5 quanta of 0.0062, tail spread 0.0000 against 0.0062) · load 12.6/14.8/16.8
+  PASS       E-9 chip press-spatial dark · scale range while pressed 0.000 over 41 frames (bound < 0.002) · load 12.6/14.8/16.7
+  PASS       E-9 chip press-light dark · press-only paint changes [background-image] (bound ≥ 1) · load 12.6/14.8/16.7
+  PASS       E-9 chip commit-spatial dark · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 108 frames · load 12.6/14.8/16.7
+  PASS       E-9 chip commit-light dark · commit(Space) under reduce, state false → true: the transient · light rise 0.0288 on the layers channel (peak 0.0934 → rest 0.0646, at rest true; bound ≥ 0.01; 15.9 quanta of 0.0018, tail spread 0.0000 against 0.0040) · load 12.6/14.8/16.7
+  PASS       E-9 chipaction press-spatial light · scale range while pressed 0.000 over 41 frames (bound < 0.002) · load 12.6/14.8/16.7
+  PASS       E-9 chipaction press-light light · press-only paint changes [background-image] (bound ≥ 1) · load 12.6/14.8/16.7
+  PASS       E-9 chipaction commit-spatial light · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 109 frames · load 12.6/14.8/16.7
+  PASS       E-9 chipaction commit-light light · commit(Space) under reduce, state 0 → 1: the transient · light rise 0.0267 on the layers channel (peak 0.6749 → rest 0.6482, at rest true; bound ≥ 0.01; 3.8 quanta of 0.0069, tail spread 0.0000 against 0.0069) · load 12.6/14.8/16.7
+  PASS       E-9 chipaction press-spatial dark · scale range while pressed 0.000 over 41 frames (bound < 0.002) · load 13.2/14.9/16.8
+  PASS       E-9 chipaction press-light dark · press-only paint changes [background-image] (bound ≥ 1) · load 13.2/14.9/16.8
+  PASS       E-9 chipaction commit-spatial dark · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 108 frames · load 13.2/14.9/16.8
+  PASS       E-9 chipaction commit-light dark · commit(Space) under reduce, state 0 → 1: the transient · light rise 0.0135 on the layers channel (peak 0.0208 → rest 0.0074, at rest true; bound ≥ 0.01; 26.2 quanta of 0.0005, tail spread 0.0000 against 0.0040) · load 13.2/14.9/16.8
+  PASS       E-9 accordion press-spatial light · scale range while pressed 0.000 over 40 frames (bound < 0.002) · load 13.2/14.9/16.8
+  PASS       E-9 accordion press-light light · press-only paint changes [background-color] (bound ≥ 1) · load 13.2/14.9/16.8
+  PASS       E-9 accordion commit-spatial light · commit(Enter): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 108 frames · load 13.2/14.9/16.8
+  FAIL       E-9 accordion commit-light light · commit(Enter) under reduce, state null → "one": the transient · light rise 0.0032 on the layers channel (peak 0.9598 → rest 0.9566, at rest true; bound ≥ 0.01; 0.4 quanta of 0.0087, tail spread 0.0000 against 0.0087) · load 13.2/14.9/16.8
+  PASS       E-9 accordion press-spatial dark · scale range while pressed 0.000 over 42 frames (bound < 0.002) · load 14.0/15.0/16.8
+  PASS       E-9 accordion press-light dark · press-only paint changes [background-color] (bound ≥ 1) · load 14.0/15.0/16.8
+  PASS       E-9 accordion commit-spatial dark · commit(Enter): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 108 frames · load 14.0/15.0/16.8
+  FAIL       E-9 accordion commit-light dark · commit(Enter) under reduce, state null → "one": the transient · light rise 0.0099 on the layers channel (peak 0.0130 → rest 0.0031, at rest true; bound ≥ 0.01; 31.5 quanta of 0.0003, tail spread 0.0000 against 0.0040) · load 14.0/15.0/16.8
+  PASS       E-9 button press-spatial light · scale range while pressed 0.000 over 41 frames (bound < 0.002) · load 14.0/15.0/16.8
+  PASS       E-9 button press-light light · press-only paint changes [::before opacity] (bound ≥ 1) · load 14.0/15.0/16.8
+  PASS       E-9 button commit-spatial light · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 108 frames · load 14.0/15.0/16.8
+  PASS       E-9 button commit-light light · commit(Space) under reduce, state 0 → 1: the transient · light rise 0.0199 on the layers channel (peak 0.7760 → rest 0.7562, at rest true; bound ≥ 0.01; 2.6 quanta of 0.0076, tail spread 0.0000 against 0.0076) · load 14.0/15.0/16.8
+  PASS       E-9 button press-spatial dark · scale range while pressed 0.000 over 41 frames (bound < 0.002) · load 14.7/15.1/16.8
+  PASS       E-9 button press-light dark · press-only paint changes [::before opacity] (bound ≥ 1) · load 14.7/15.1/16.8
+  PASS       E-9 button commit-spatial dark · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 108 frames · load 14.7/15.1/16.8
+  PASS       E-9 button commit-light dark · commit(Space) under reduce, state 0 → 1: the transient · light rise 0.0135 on the layers channel (peak 0.0211 → rest 0.0076, at rest true; bound ≥ 0.01; 25.7 quanta of 0.0005, tail spread 0.0000 against 0.0040) · load 14.7/15.1/16.8
+  PASS       E-9 slider press-spatial light · scale range while pressed 0.000 over 40 frames (bound < 0.002) · load 14.8/15.1/16.8
+  PASS       E-9 slider press-light light · press-only paint changes [child1 bg] (bound ≥ 1) · load 14.8/15.1/16.8
+  PASS       E-9 slider commit-spatial light · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 106 frames · load 14.8/15.1/16.8
+  REPORT     E-9 slider commit-light light · not a CK-02 commit member (no E-2 gate): its reduce light leg is read by E-3 · load 14.8/15.1/16.8
+  PASS       E-9 slider press-spatial dark · scale range while pressed 0.000 over 38 frames (bound < 0.002) · load 14.8/15.1/16.8
+  PASS       E-9 slider press-light dark · press-only paint changes [child1 bg] (bound ≥ 1) · load 14.8/15.1/16.8
+  PASS       E-9 slider commit-spatial dark · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 108 frames · load 14.8/15.1/16.8
+  REPORT     E-9 slider commit-light dark · not a CK-02 commit member (no E-2 gate): its reduce light leg is read by E-3 · load 14.8/15.1/16.8
+E-9 chromium FAIL · 74 pass, 4 fail, 0 unmeasured of 78 gating cells (2 reported) · load 14.0/15.3/17.0 at start, 14.8/15.1/16.8 at end

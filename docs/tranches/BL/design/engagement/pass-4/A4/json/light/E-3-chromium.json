@@ -1,0 +1,145 @@
+{
+ "id": "E-3",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p4/A4/out/builds/light"
+ },
+ "loadStart": "13.5/17.1/18.2",
+ "loadEnd": "14.6/17.0/18.2",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-3 slider desk pointer-held light",
+   "status": "PASS",
+   "line": "rest 360.0 px → held 381.6 px (×1.060; [data-engaged] 3) · bound ×1.03 sustained at 450 ms",
+   "load": "13.2/16.9/18.1"
+  },
+  {
+   "name": "E-3 slider desk keyboard-focused light",
+   "status": "PASS",
+   "line": "rest 360.0 px → focused 381.6 px (×1.060; focus on slider) · bound ×1.03",
+   "load": "13.2/16.9/18.1"
+  },
+  {
+   "name": "E-3 slider desk keyboard register light",
+   "status": "PASS",
+   "line": "Tab-engaged: [data-held] 0 · cursor grabbing false · root height ×1.060 body height ×1.060 (bound: no data-held, no grabbing, no squish < ×0.99: the hand's register is the pointer's)",
+   "load": "13.2/16.9/18.1"
+  },
+  {
+   "name": "E-3 slider afterdrag light",
+   "status": "PASS",
+   "line": "a pointer drag and release, +600 ms: ×1.000 × 1.000 · [data-held] 0 · veil 0 (bound ×1 ± 0.002, X-1)",
+   "load": "14.1/17.1/18.2"
+  },
+  {
+   "name": "E-3 slider modifier light",
+   "status": "PASS",
+   "line": "after a drag (focus on slider), each held alone 400 ms: Shift ×1.000 × 1.000 held 0 · Meta ×1.000 × 1.000 held 0 · Control ×1.000 × 1.000 held 0 · Alt ×1.000 × 1.000 held 0 (bound ×1 ± 0.002, no data-held)",
+   "load": "14.1/17.1/18.2"
+  },
+  {
+   "name": "E-3 slider unacted key light",
+   "status": "PASS",
+   "line": "after a drag, \"k\" +450 ms: ×1.000 × 1.000 · veil 0 (bound ×1 ± 0.002, no veil: a key the control does not act on engages nothing)",
+   "load": "14.1/17.1/18.2"
+  },
+  {
+   "name": "E-3 slider script focus light",
+   "status": "PASS",
+   "line": "element.focus() with no key event (focus on slider), +450 ms: ×1.000 × 1.000 · veil 0 (bound ×1 ± 0.002, no veil)",
+   "load": "14.1/17.1/18.2"
+  },
+  {
+   "name": "E-3 slider phone touch-held light",
+   "status": "FAIL",
+   "line": "390×844 coarse · rest 358.0 × 24.0 px → touch-held 358.0 × 24.0 px (inline ×1.000, block ×1.000; [data-engaged] 3) · bound ×1.03 on either axis",
+   "load": "14.1/17.1/18.2"
+  },
+  {
+   "name": "E-3 slider phone gutter light",
+   "status": "PASS",
+   "line": "engaged box 16.0..374.0 px in a 390 px viewport · bound 16..374 px",
+   "load": "14.1/17.1/18.2"
+  },
+  {
+   "name": "E-3 slider keyboard-focused PRM light",
+   "status": "PASS",
+   "line": "reduce · rest → focused ×1.000 × 1.000 (focus on slider) · bound ×1 ± 0.002",
+   "load": "14.1/17.1/18.2"
+  },
+  {
+   "name": "E-3 slider phone touch-held PRM light",
+   "status": "PASS",
+   "line": "reduce · rest → touch-held ×1.000 × 1.000 · light leg [root child1 bg] (bound ×1 ± 0.002 on both axes and ≥ 1 paint property)",
+   "load": "15.2/17.2/18.2"
+  },
+  {
+   "name": "E-3 slider desk pointer-held dark",
+   "status": "PASS",
+   "line": "rest 360.0 px → held 381.6 px (×1.060; [data-engaged] 3) · bound ×1.03 sustained at 450 ms",
+   "load": "15.2/17.2/18.2"
+  },
+  {
+   "name": "E-3 slider desk keyboard-focused dark",
+   "status": "PASS",
+   "line": "rest 360.0 px → focused 381.6 px (×1.060; focus on slider) · bound ×1.03",
+   "load": "15.2/17.2/18.2"
+  },
+  {
+   "name": "E-3 slider desk keyboard register dark",
+   "status": "PASS",
+   "line": "Tab-engaged: [data-held] 0 · cursor grabbing false · root height ×1.060 body height ×1.060 (bound: no data-held, no grabbing, no squish < ×0.99: the hand's register is the pointer's)",
+   "load": "15.2/17.2/18.2"
+  },
+  {
+   "name": "E-3 slider afterdrag dark",
+   "status": "PASS",
+   "line": "a pointer drag and release, +600 ms: ×1.000 × 1.000 · [data-held] 0 · veil 0 (bound ×1 ± 0.002, X-1)",
+   "load": "14.8/17.1/18.2"
+  },
+  {
+   "name": "E-3 slider modifier dark",
+   "status": "PASS",
+   "line": "after a drag (focus on slider), each held alone 400 ms: Shift ×1.000 × 1.000 held 0 · Meta ×1.000 × 1.000 held 0 · Control ×1.000 × 1.000 held 0 · Alt ×1.000 × 1.000 held 0 (bound ×1 ± 0.002, no data-held)",
+   "load": "14.8/17.1/18.2"
+  },
+  {
+   "name": "E-3 slider unacted key dark",
+   "status": "PASS",
+   "line": "after a drag, \"k\" +450 ms: ×1.000 × 1.000 · veil 0 (bound ×1 ± 0.002, no veil: a key the control does not act on engages nothing)",
+   "load": "14.8/17.1/18.2"
+  },
+  {
+   "name": "E-3 slider script focus dark",
+   "status": "PASS",
+   "line": "element.focus() with no key event (focus on slider), +450 ms: ×1.000 × 1.000 · veil 0 (bound ×1 ± 0.002, no veil)",
+   "load": "14.8/17.1/18.2"
+  },
+  {
+   "name": "E-3 slider phone touch-held dark",
+   "status": "FAIL",
+   "line": "390×844 coarse · rest 358.0 × 24.0 px → touch-held 358.0 × 24.0 px (inline ×1.000, block ×1.000; [data-engaged] 3) · bound ×1.03 on either axis",
+   "load": "14.8/17.1/18.2"
+  },
+  {
+   "name": "E-3 slider phone gutter dark",
+   "status": "PASS",
+   "line": "engaged box 16.0..374.0 px in a 390 px viewport · bound 16..374 px",
+   "load": "14.8/17.1/18.2"
+  },
+  {
+   "name": "E-3 slider keyboard-focused PRM dark",
+   "status": "PASS",
+   "line": "reduce · rest → focused ×1.000 × 1.000 (focus on slider) · bound ×1 ± 0.002",
+   "load": "14.6/17.0/18.2"
+  },
+  {
+   "name": "E-3 slider phone touch-held PRM dark",
+   "status": "PASS",
+   "line": "reduce · rest → touch-held ×1.000 × 1.000 · light leg [root child1 bg] (bound ×1 ± 0.002 on both axes and ≥ 1 paint property)",
+   "load": "14.6/17.0/18.2"
+  }
+ ]
+}
