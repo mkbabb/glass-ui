@@ -1,0 +1,65 @@
+2026-10-18 07:58:28 · load { 23.83 18.31 15.91 } CHAIN at 6afcac922 · harness H6 f89a00af0294 42
+2026-10-18 07:58:28 start xscript · load { 23.83 18.31 15.91 }
+2026-10-18 07:58:31 exit 0 xscript · load { 24.41 18.52 16.00 }
+2026-10-18 07:58:31 start unit · load { 24.41 18.52 16.00 }
+2026-10-18 08:02:30 exit 0 unit · load { 23.50 18.63 16.09 }
+2026-10-18 08:02:30 start route dp · load { 23.50 18.63 16.09 }
+2026-10-18 08:02:30 exit 0 route dp · load { 23.50 18.63 16.09 }
+2026-10-18 08:02:30 start build dp · load { 23.50 18.63 16.09 }
+2026-10-18 08:02:46 exit 0 build dp · load { 20.85 18.28 16.00 }
+2026-10-18 08:02:46 start stub dp webkit · load { 20.85 18.28 16.00 }
+2026-10-18 11:35:13 exit 0 stub dp webkit · load { 22.53 19.71 17.86 }
+2026-10-18 11:35:13 start route f · load { 22.53 19.71 17.86 }
+2026-10-18 11:35:13 exit 0 route f · load { 22.53 19.71 17.86 }
+2026-10-18 11:35:13 start build f · load { 22.53 19.71 17.86 }
+2026-10-18 11:40:29 exit 0 build f · load { 20.42 19.36 17.77 }
+2026-10-18 11:40:29 start stub f chromium · load { 20.42 19.36 17.77 }
+2026-10-18 11:46:03 exit 0 stub f chromium · load { 14.36 18.25 17.53 }
+2026-10-18 11:46:03 start stub f webkit · load { 14.36 18.25 17.53 }
+2026-10-18 12:56:13 chain.sh stopped while 'stub f webkit' waits for the WebKit lock (the stage runs on); chain2.sh regroups the remaining WebKit work into fewer holds · load { 11.54 14.32 15.87 }
+2026-10-18 12:56:47 · load { 10.82 13.81 15.62 } CHAIN2 · harness H6 f89a00af0294 42
+2026-10-18 13:29:37 exit (from stub-f-webkit.log) stub f webkit · load { 83.59 40.05 25.51 }
+2026-10-18 13:29:37 start reads dp chromium · load { 83.59 40.05 25.51 }
+2026-10-18 13:47:07 exit 0 reads dp · load { 45.51 40.29 30.32 }
+2026-10-18 13:47:07 start reads f chromium · load { 45.51 40.29 30.32 }
+2026-10-18 14:06:17 exit 0 reads f · load { 20.05 24.10 27.27 }
+2026-10-18 14:06:17 start selftest chromium h6 --only CANON,FACT,ATTACK,CORNER,REPORT · load { 20.05 24.10 27.27 }
+2026-10-18 14:14:27 exit 0 selftest chromium · load { 30.77 22.28 24.22 }
+2026-10-18 14:14:27 start selftest chromium t12 --only T-1,T-2 · load { 30.77 22.28 24.22 }
+2026-10-18 14:15:10 chain2 stopped during 'selftest chromium t12' (a Chromium run): the H6-3 fixture plant atk-st-noreset read PASS (selftest-chromium-h6.log, 2 BROKEN), the fixture's tab laid its two block rows out side by side (an inline-flex row); fixture fixed, new hash; chain3 re-runs every stage under it · load { 26.12 22.50 24.21 }
+2026-10-18 14:18:59 · load { 36.84 29.99 27.09 } CHAIN3 · harness H6 e2360106ad0d 42
+2026-10-18 14:19:00 start xscript · load { 36.84 29.99 27.09 }
+2026-10-18 14:19:04 exit 0 xscript · load { 38.53 30.45 27.27 }
+2026-10-18 14:19:04 start unit · load { 38.53 30.45 27.27 }
+2026-10-18 14:19:29 exit 0 unit · load { 50.14 33.81 28.57 }
+2026-10-18 14:19:29 start reads dp chromium · load { 50.14 33.81 28.57 }
+2026-10-18 14:37:43 exit 0 reads dp · load { 33.80 37.20 32.89 }
+2026-10-18 14:37:43 start reads f chromium · load { 33.80 37.20 32.89 }
+2026-10-18 14:56:44 exit 0 reads f · load { 23.12 24.03 26.83 }
+2026-10-18 14:56:45 start stubreads chromium · load { 23.12 24.03 26.83 }
+2026-10-18 14:59:03 exit 0 stubreads chromium · load { 28.62 25.36 26.92 }
+2026-10-18 14:59:03 start selftest chromium h6 --only CANON,FACT,ATTACK,CORNER,REPORT · load { 28.62 25.36 26.92 }
+2026-10-18 15:07:18 exit 0 selftest chromium · load { 14.57 21.98 25.29 }
+2026-10-18 15:07:18 start selftest chromium t12 --only T-1,T-2 · load { 14.57 21.98 25.29 }
+2026-10-18 15:22:45 exit 0 selftest chromium · load { 20.28 28.26 27.81 }
+2026-10-18 15:22:45 start selftest chromium t3 --only T-3 · load { 20.28 28.26 27.81 }
+2026-10-18 15:52:33 exit 0 selftest chromium · load { 22.07 24.50 23.66 }
+2026-10-18 15:52:33 start selftest chromium t457 --only T-4,T-5,T-7 · load { 22.07 24.50 23.66 }
+2026-10-18 16:16:08 exit 0 selftest chromium · load { 18.57 18.12 20.12 }
+2026-10-18 16:16:08 start selftest chromium t6 --only T-6 · load { 18.57 18.12 20.12 }
+2026-10-18 17:15:30 exit 0 selftest chromium · load { 19.29 19.98 21.75 }
+2026-10-18 17:15:30 start selftest chromium w --only W-A,W-B,W-C,W-D,W-E · load { 19.29 19.98 21.75 }
+2026-10-18 17:17:57 exit 0 selftest chromium · load { 18.76 20.30 21.66 }
+2026-10-18 17:17:57 start wk A node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/fact-split.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out/builds/dp-atk-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out --engine webkit; node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/fact-split.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out/builds/dp-atk-src-dev --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out --engine webkit; node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/attack.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out/builds/dp-atk-src-dev --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out --engine webkit; node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/corner-refusal.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out/builds/dp-atk-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out --engine webkit; node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/report-h46.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out/builds/dp-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out --engine webkit; node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/fact-split.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out/builds/f-atk-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out --engine webkit; node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/fact-split.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out/builds/f-atk-src-dev --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out --engine webkit; node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/attack.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out/builds/f-atk-src-dev --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out --engine webkit; node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/corner-refusal.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out/builds/f-atk-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out --engine webkit; node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/report-h46.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out/builds/f-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out --engine webkit; node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/fact-split.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out/builds/dp-stub-atk-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out/stub --engine webkit; node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/fact-split.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out/builds/dp-stub-atk-src-dev --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out/stub --engine webkit; node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/fact-split.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out/builds/f-stub-atk-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out/stub --engine webkit; node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/fact-split.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out/builds/f-stub-atk-src-dev --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out/stub --engine webkit · load { 18.76 20.30 21.66 }
+2026-10-18 17:55:30 exit 0 wk A · load { 16.96 19.29 20.41 }
+2026-10-18 17:55:30 start wk B node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/selftest.mjs --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out/selftest --engines webkit --only CANON,FACT,ATTACK,CORNER,REPORT,W-A,W-B,W-C,W-D,W-E,T-8 · load { 16.96 19.29 20.41 }
+2026-10-18 18:31:28 exit 0 wk B · load { 14.70 17.63 18.43 }
+2026-10-18 18:31:28 start wk C for w in t1-corner-stops t2-one-line-stadium t3-selected-separates t4-ring-whole t5-one-of-n-keys t6-engagement t7-no-consumer-paint wb-choice-card we-one-line; do node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/$w.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out/builds/dp-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out --engine webkit; done; for w in t1-corner-stops t2-one-line-stadium t3-selected-separates t4-ring-whole t5-one-of-n-keys t6-engagement t7-no-consumer-paint wb-choice-card we-one-line; do node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/$w.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out/builds/f-src --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out --engine webkit; done · load { 14.70 17.63 18.43 }
+2026-10-18 19:29:43 exit 0 wk C · load { 36.53 40.25 36.64 }
+2026-10-18 19:29:43 start wk D node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/selftest.mjs --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out/selftest --engines webkit --only T-1,T-2,T-4,T-5,T-7 · load { 36.53 40.25 36.64 }
+2026-10-18 21:19:32 exit 0 wk D · load { 13.71 14.91 16.32 }
+2026-10-18 21:19:32 start wk E node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/selftest.mjs --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out/selftest --engines webkit --only T-3 · load { 13.71 14.91 16.32 }
+2026-10-18 21:59:23 exit 0 wk E · load { 29.41 23.94 21.78 }
+2026-10-18 21:59:23 start wk F node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/selftest.mjs --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p6/h6/out/selftest --engines webkit --only T-6 · load { 29.41 23.94 21.78 }
+2026-10-18 23:05:37 exit 0 wk F · load { 28.42 23.87 22.63 }
+2026-10-18 23:05:37 · load { 28.42 23.87 22.63 } CHAIN3-DONE

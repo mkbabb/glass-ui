@@ -41,7 +41,7 @@ export const HASHED = (() => {
 export const HARNESS = (() => {
   const h = createHash("sha256");
   for (const f of HASHED) { h.update(f); h.update("\0"); h.update(fs.readFileSync(path.join(HERE, f))); h.update("\0"); }
-  return { hash: h.digest("hex").slice(0, 12), files: HASHED.length, rev: "H5" };
+  return { hash: h.digest("hex").slice(0, 12), files: HASHED.length, rev: "H6" };
 })();
 
 export const DSF = 2;

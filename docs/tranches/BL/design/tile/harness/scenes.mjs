@@ -220,6 +220,101 @@ const SITE_BUILD = {
   v2: { host: (g) => g, bare: () => v2Group(), verbatim: () => v2Group({ verbatim: true }) },
   c1: { host: c1Host, bare: () => c1Group(), verbatim: () => c1Group({ verbatim: true }) },
 };
+/** H6-2 · each consumer site's library and unmigrated group templates, for XSCRIPT's reading of which classes are content. */
+export const SITE_TEMPLATES = () => Object.fromEntries(Object.entries(SITE_BUILD).map(([k, b]) => [k, [b.bare(), b.verbatim()]]));
+
+/**
+ * H6-2 · THE SHARED TRANSCRIPTION BLOCKS: the consumer sites' own layout and type, written once and read by every
+ * arm. Content INK (a `color`, `fill` or `stroke` other than `currentColor` / `none` on an element inside an option)
+ * is written only under `[data-arm="verbatim"]`, the unmigrated arm: content that sets its own colour does not take
+ * the item's ink, so a rest colour here would reach the migrated arm unseen (X-2, REGISTRY §P5-2; FV5-1). XSCRIPT
+ * reads this block (transcribe.mjs) and gates that law. Exported so XSCRIPT reads the same text the build writes.
+ */
+export const SHARED_CSS = `/* ── consumer tokens (keyframes.js demo/styles/style.css:167,215; fourier-analysis; value.js) ── */
+:root { --accent-kf: light-dark(oklch(0.56 0.17 295), oklch(0.74 0.13 305)); --color-progress: var(--accent-kf);
+  --accent-red: light-dark(oklch(0.58 0.2 25), oklch(0.72 0.16 25)); }
+
+/* ── K1 · library arm: layout and type only (the utilities in the markup). Unmigrated paint: SpringPhysicsFacet.vue:197-215 ── */
+[data-arm="verbatim"] .preset-cell { border-radius: var(--radius-field); outline: 1px dashed transparent; outline-offset: -1px; border-color: transparent; transition: outline-color var(--duration-fast) ease, background-color var(--duration-fast) ease; }
+[data-arm="verbatim"] .preset-cell:hover { background: color-mix(in srgb, var(--color-progress) 6%, var(--background)); outline-color: color-mix(in srgb, var(--color-progress) 35%, transparent); }
+[data-arm="verbatim"] .preset-cell[data-state="on"] { background: color-mix(in srgb, var(--color-progress) 8%, var(--background)); outline-color: color-mix(in srgb, var(--color-progress) 65%, transparent); border-color: transparent; box-shadow: none; }
+/* H-3 · X-1: a sibling state at equal specificity, F1's bound endpoint (HarmonicLevelGrid.vue:327-329) without its :not(.active) */
+.preset-cell.is-bound { border-color: var(--foreground); }
+/* H3-11: the same sibling state on the migrated preset markup, at the same specificity (0,2,0) */
+:where(.tx-preset-sibling) [data-item].is-bound { border-color: var(--foreground); }
+
+/* ── K2 · EasingCatalogue.vue:304-438 layout and type, design-idioms.css:250-264 (the ball on the curve) ── */
+.easing-catalogue { --ball-tone: var(--color-progress); display: flex; flex-direction: column; gap: 0.75rem; min-height: 0; min-width: 0; }
+.specimen-drawer { max-block-size: 340px; }
+.specimen-grid-group { display: flex; flex-direction: column; flex-wrap: nowrap; align-items: stretch; gap: 1.25rem; inline-size: 100%; padding: 2px 2px 1rem; }
+.catalogue-section { display: flex; flex-direction: column; gap: 0.5rem; }
+.catalogue-family { color: var(--foreground); text-transform: none; }
+.specimen-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--tile-min, 9.5rem), 1fr)); gap: 0.5rem; }
+.specimen-tile { content-visibility: auto; contain-intrinsic-size: auto 104px; align-items: stretch; height: auto; }
+.tile-stage { position: relative; display: block; width: 100%; height: 3.25rem; }
+.tile-plot { position: absolute; inset: 18% 7px; }
+.tile-sparkline { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.tile-sparkline path { fill: none; stroke: currentColor; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
+.tile-carriage { will-change: transform; }
+.tile-ball { --ball-size: 14px; --ball-glow: 28%; }
+.tile-name { text-transform: none; text-align: center; letter-spacing: 0; white-space: normal; overflow-wrap: anywhere; text-wrap: balance; line-height: 1.35; padding-bottom: 0.125rem; }
+.curve-carriage { position: absolute; inset: 0; transform: var(--curve-rest, none); pointer-events: none; }
+.curve-ball { position: absolute; left: 0; top: 0; width: var(--ball-size, 36px); height: var(--ball-size, 36px); transform: translate(-50%, -50%); border-radius: var(--radius-pill); background: var(--ball-tone, var(--color-progress)); box-shadow: 0 2px 10px color-mix(in srgb, var(--ball-tone, var(--color-progress)) var(--ball-glow, 35%), transparent); }
+/* K2 unmigrated paint: EasingCatalogue.vue:340-353 (group reset), :375-376 (radius), :436-459 (hover ink, selection by outline + ink);
+   H6-1: the content's rest inks (EasingCatalogue.vue's .tile-name and sparkline colours) are the unmigrated arm's only */
+[data-arm="verbatim"] .tile-sparkline path { stroke: color-mix(in srgb, var(--foreground) 22%, transparent); }
+[data-arm="verbatim"] .tile-name { color: var(--muted-foreground); }
+[data-arm="verbatim"] .specimen-grid-group { border-radius: 0; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; }
+[data-arm="verbatim"] .specimen-tile { border-radius: var(--radius-field); }
+[data-arm="verbatim"] .specimen-tile:hover .tile-name { color: var(--foreground); }
+[data-arm="verbatim"] .specimen-tile[data-state="on"], [data-arm="verbatim"] .specimen-tile[data-state="on"]:hover:not(:disabled) { background-color: transparent; outline: 1.5px solid var(--foreground); outline-offset: -1.5px; }
+[data-arm="verbatim"] .specimen-tile[data-state="on"] .tile-sparkline path { stroke: var(--foreground); stroke-width: 1.5; }
+[data-arm="verbatim"] .specimen-tile[data-state="on"] .tile-name { color: var(--foreground); font-weight: 600; }
+@media (forced-colors: active) { [data-arm="verbatim"] .specimen-tile[data-state="on"] { outline-color: Highlight; } }
+
+/* ── V1 · EasingSpecimenStrip.vue:125-227 layout and type (the item class renamed vj-tile: K2 owns .specimen-tile on this page) ── */
+.strip-row { display: inline-flex; align-items: stretch; gap: 0.875rem; width: max-content; padding: 2px; }
+.strip-family { display: flex; flex-direction: column; gap: 0.2rem; }
+.strip-family + .strip-family { border-left: 1px solid var(--card-edge); padding-left: 0.875rem; }
+.family-eyebrow { font-family: var(--font-mono); font-size: 0.5625rem; line-height: 1; letter-spacing: 0.08em; color: var(--muted-foreground); opacity: 0.75; }
+.family-tiles { display: flex; align-items: flex-start; gap: 0.25rem; }
+.vj-tile { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.125rem; inline-size: 2.75rem; block-size: 2.75rem; padding: 0.25rem; }
+.tile-glyph { inline-size: 1.375rem; block-size: 1.375rem; overflow: visible; }
+.tile-glyph path { fill: none; stroke: currentColor; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
+.tile-label { font-family: var(--font-mono); font-size: 0.5625rem; line-height: 1.2; text-transform: none; white-space: nowrap; }
+/* V1 unmigrated paint: the content's rest inks (H6-2), then the selected and hover inks */
+[data-arm="verbatim"] .tile-glyph path { stroke: color-mix(in oklab, var(--foreground) 65%, transparent); }
+[data-arm="verbatim"] .tile-label { color: var(--muted-foreground); }
+[data-arm="verbatim"] .vj-tile[data-state="on"] .tile-glyph path { stroke: var(--motion-accent, var(--foreground)); stroke-width: 1.75; }
+[data-arm="verbatim"] .vj-tile[data-state="on"] .tile-label { color: var(--motion-accent, var(--foreground)); font-weight: 600; }
+[data-arm="verbatim"] .vj-tile:hover .tile-label { color: var(--foreground); }
+
+/* ── F1 · HarmonicLevelGrid.vue:214-364: the strip and the cell column are layout; the rest is paint ── */
+.f1-grid { display: flex; gap: 0.5rem; overflow-x: auto; overflow-y: hidden; padding-top: 0.375rem; padding-bottom: 0.375rem; scrollbar-width: thin; }
+.levels-card { padding: var(--space-family, 1rem); }
+.grid-cell { flex-direction: column; flex-shrink: 0; }
+.grid-svg { width: 48px; height: 48px; overflow: visible; }
+.grid-label { font-family: var(--font-mono); font-size: var(--type-caption); line-height: var(--type-leading-caption); transition: color 0.15s; }
+[data-arm="verbatim"] .grid-label { color: var(--muted-foreground); }
+@layer glass-overrides {
+  [data-arm="verbatim"] .grid-cell { border: 1.5px solid color-mix(in srgb, var(--foreground) 50%, transparent); background: var(--card); }
+  @media (hover: hover) { [data-arm="verbatim"] .grid-cell:hover { border-color: color-mix(in srgb, var(--accent-red) 50%, transparent); transform: scale(1.04); } }
+  [data-arm="verbatim"] .grid-cell:active { transform: scale(0.96); }
+  [data-arm="verbatim"] .grid-cell.is-bound:not(.active) { border-color: var(--foreground); }
+  [data-arm="verbatim"] .grid-cell.active { border-color: var(--accent-red); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent-red) 15%, transparent); }
+}
+[data-arm="verbatim"] .grid-label-active { color: var(--accent-red); font-weight: 600; }
+
+/* ── V2 · MixSourceSelector.vue: the thumbnail strip (PaletteColorStrip) is content; the rest-name ink is state paint ── */
+.tx-v2-strip { display: flex; block-size: 2rem; }
+.tx-v2-strip > span { flex: 1; }
+[data-arm="verbatim"] .mix-palette--rest .mix-palette-name { color: var(--muted-foreground); }
+[data-arm="verbatim"] .mix-palette--rest:hover .mix-palette-name { color: var(--foreground); }
+
+/* ── C1 · chicago src/style.css:106-109 ── */
+.tx-c1 { padding: 0.25rem; }
+[data-arm="verbatim"] .status-option:hover, [data-arm="verbatim"] .status-option[aria-checked="true"] { background: var(--muted); }
+`;
 
 /**
  * T-7's twin: remove the class attributes (static and bound) of every tag that carries data-item or data-group.
@@ -241,7 +336,7 @@ export function stripItemClasses(tpl) {
 }
 
 /** Every tag of a template, with its offsets: [{ start, end, text }] (quoted attribute values respected). */
-function tags(tpl) {
+export function tags(tpl) {
   const out = [];
   for (let i = tpl.indexOf("<"); i >= 0; i = tpl.indexOf("<", i + 1)) {
     let j = i + 1, q = null;
@@ -442,7 +537,11 @@ const tabsOptions = values.tabs.map((v) => ({ label: v, value: v }));
 // H5-2 · the matrix write: \`?w=<site>&v=<none|flush|plated>\` puts \`--selection-tile\` inline at mount on every element
 // a route template marks with \`:style="mx('<site>')"\`
 const MX = { w: q.get("w") ?? "", v: q.get("v") ?? "" };
-const mx = (site: string) => (MX.v && MX.w === site ? { "--selection-tile": MX.v } : undefined);
+// H6-4 · a value ending in \`!\` (\`none!\`) is written inline with \`!important\` at mount, before ready, through the CSSOM:
+// Vue hands a custom property's value to setProperty() whole (a string style on a component is parsed into the same
+// object), and the CSSOM drops a value that carries \`!important\`, so a bound write would never land
+const BANG = MX.v.endsWith("!");
+const mx = (site: string) => (MX.v && !BANG && MX.w === site ? { "--selection-tile": MX.v } : undefined);
 
 (window as any).__tile = {
   ready: false,
@@ -464,6 +563,7 @@ const mx = (site: string) => (MX.v && MX.w === site ? { "--selection-tile": MX.v
 
 onMounted(async () => {
   await nextTick();
+  if (BANG) for (const el of document.querySelectorAll(\`[data-mx-site="\${MX.w}"]\`)) (el as HTMLElement).style.setProperty("--selection-tile", MX.v.slice(0, -1), "important");
   requestAnimationFrame(() => requestAnimationFrame(() => { (window as any).__tile.ready = true; }));
 });
 </script>
@@ -509,84 +609,7 @@ body { background: var(--background); color: var(--foreground); font-family: sys
 .tx-contents { display: contents; }
 .tx-input { inline-size: 5rem; font: inherit; font-size: 12px; }
 
-/* ── consumer tokens (keyframes.js demo/styles/style.css:167,215; fourier-analysis; value.js) ── */
-:root { --accent-kf: light-dark(oklch(0.56 0.17 295), oklch(0.74 0.13 305)); --color-progress: var(--accent-kf);
-  --accent-red: light-dark(oklch(0.58 0.2 25), oklch(0.72 0.16 25)); }
-
-/* ── K1 · library arm: layout and type only (the utilities in the markup). Unmigrated paint: SpringPhysicsFacet.vue:197-215 ── */
-[data-arm="verbatim"] .preset-cell { border-radius: var(--radius-field); outline: 1px dashed transparent; outline-offset: -1px; border-color: transparent; transition: outline-color var(--duration-fast) ease, background-color var(--duration-fast) ease; }
-[data-arm="verbatim"] .preset-cell:hover { background: color-mix(in srgb, var(--color-progress) 6%, var(--background)); outline-color: color-mix(in srgb, var(--color-progress) 35%, transparent); }
-[data-arm="verbatim"] .preset-cell[data-state="on"] { background: color-mix(in srgb, var(--color-progress) 8%, var(--background)); outline-color: color-mix(in srgb, var(--color-progress) 65%, transparent); border-color: transparent; box-shadow: none; }
-/* H-3 · X-1: a sibling state at equal specificity, F1's bound endpoint (HarmonicLevelGrid.vue:327-329) without its :not(.active) */
-.preset-cell.is-bound { border-color: var(--foreground); }
-/* H3-11: the same sibling state on the migrated preset markup, at the same specificity (0,2,0) */
-:where(.tx-preset-sibling) [data-item].is-bound { border-color: var(--foreground); }
-
-/* ── K2 · EasingCatalogue.vue:304-438 layout and type, design-idioms.css:250-264 (the ball on the curve) ── */
-.easing-catalogue { --ball-tone: var(--color-progress); display: flex; flex-direction: column; gap: 0.75rem; min-height: 0; min-width: 0; }
-.specimen-drawer { max-block-size: 340px; }
-.specimen-grid-group { display: flex; flex-direction: column; flex-wrap: nowrap; align-items: stretch; gap: 1.25rem; inline-size: 100%; padding: 2px 2px 1rem; }
-.catalogue-section { display: flex; flex-direction: column; gap: 0.5rem; }
-.catalogue-family { color: var(--foreground); text-transform: none; }
-.specimen-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--tile-min, 9.5rem), 1fr)); gap: 0.5rem; }
-.specimen-tile { content-visibility: auto; contain-intrinsic-size: auto 104px; align-items: stretch; height: auto; }
-.tile-stage { position: relative; display: block; width: 100%; height: 3.25rem; }
-.tile-plot { position: absolute; inset: 18% 7px; }
-.tile-sparkline { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.tile-sparkline path { fill: none; stroke: color-mix(in srgb, var(--foreground) 22%, transparent); stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
-.tile-carriage { will-change: transform; }
-.tile-ball { --ball-size: 14px; --ball-glow: 28%; }
-.tile-name { text-transform: none; text-align: center; letter-spacing: 0; white-space: normal; overflow-wrap: anywhere; text-wrap: balance; line-height: 1.35; padding-bottom: 0.125rem; color: var(--muted-foreground); }
-.curve-carriage { position: absolute; inset: 0; transform: var(--curve-rest, none); pointer-events: none; }
-.curve-ball { position: absolute; left: 0; top: 0; width: var(--ball-size, 36px); height: var(--ball-size, 36px); transform: translate(-50%, -50%); border-radius: var(--radius-pill); background: var(--ball-tone, var(--color-progress)); box-shadow: 0 2px 10px color-mix(in srgb, var(--ball-tone, var(--color-progress)) var(--ball-glow, 35%), transparent); }
-/* K2 unmigrated paint: EasingCatalogue.vue:340-353 (group reset), :375-376 (radius), :436-459 (hover ink, selection by outline + ink) */
-[data-arm="verbatim"] .specimen-grid-group { border-radius: 0; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; }
-[data-arm="verbatim"] .specimen-tile { border-radius: var(--radius-field); }
-[data-arm="verbatim"] .specimen-tile:hover .tile-name { color: var(--foreground); }
-[data-arm="verbatim"] .specimen-tile[data-state="on"], [data-arm="verbatim"] .specimen-tile[data-state="on"]:hover:not(:disabled) { background-color: transparent; outline: 1.5px solid var(--foreground); outline-offset: -1.5px; }
-[data-arm="verbatim"] .specimen-tile[data-state="on"] .tile-sparkline path { stroke: var(--foreground); stroke-width: 1.5; }
-[data-arm="verbatim"] .specimen-tile[data-state="on"] .tile-name { color: var(--foreground); font-weight: 600; }
-@media (forced-colors: active) { [data-arm="verbatim"] .specimen-tile[data-state="on"] { outline-color: Highlight; } }
-
-/* ── V1 · EasingSpecimenStrip.vue:125-227 layout and type (the item class renamed vj-tile: K2 owns .specimen-tile on this page) ── */
-.strip-row { display: inline-flex; align-items: stretch; gap: 0.875rem; width: max-content; padding: 2px; }
-.strip-family { display: flex; flex-direction: column; gap: 0.2rem; }
-.strip-family + .strip-family { border-left: 1px solid var(--card-edge); padding-left: 0.875rem; }
-.family-eyebrow { font-family: var(--font-mono); font-size: 0.5625rem; line-height: 1; letter-spacing: 0.08em; color: var(--muted-foreground); opacity: 0.75; }
-.family-tiles { display: flex; align-items: flex-start; gap: 0.25rem; }
-.vj-tile { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.125rem; inline-size: 2.75rem; block-size: 2.75rem; padding: 0.25rem; }
-.tile-glyph { inline-size: 1.375rem; block-size: 1.375rem; overflow: visible; }
-.tile-glyph path { fill: none; stroke: color-mix(in oklab, var(--foreground) 65%, transparent); stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
-.tile-label { font-family: var(--font-mono); font-size: 0.5625rem; line-height: 1.2; text-transform: none; color: var(--muted-foreground); white-space: nowrap; }
-[data-arm="verbatim"] .vj-tile[data-state="on"] .tile-glyph path { stroke: var(--motion-accent, var(--foreground)); stroke-width: 1.75; }
-[data-arm="verbatim"] .vj-tile[data-state="on"] .tile-label { color: var(--motion-accent, var(--foreground)); font-weight: 600; }
-[data-arm="verbatim"] .vj-tile:hover .tile-label { color: var(--foreground); }
-
-/* ── F1 · HarmonicLevelGrid.vue:214-364: the strip and the cell column are layout; the rest is paint ── */
-.f1-grid { display: flex; gap: 0.5rem; overflow-x: auto; overflow-y: hidden; padding-top: 0.375rem; padding-bottom: 0.375rem; scrollbar-width: thin; }
-.levels-card { padding: var(--space-family, 1rem); }
-.grid-cell { flex-direction: column; flex-shrink: 0; }
-.grid-svg { width: 48px; height: 48px; overflow: visible; }
-.grid-label { font-family: var(--font-mono); font-size: var(--type-caption); line-height: var(--type-leading-caption); color: var(--muted-foreground); transition: color 0.15s; }
-@layer glass-overrides {
-  [data-arm="verbatim"] .grid-cell { border: 1.5px solid color-mix(in srgb, var(--foreground) 50%, transparent); background: var(--card); }
-  @media (hover: hover) { [data-arm="verbatim"] .grid-cell:hover { border-color: color-mix(in srgb, var(--accent-red) 50%, transparent); transform: scale(1.04); } }
-  [data-arm="verbatim"] .grid-cell:active { transform: scale(0.96); }
-  [data-arm="verbatim"] .grid-cell.is-bound:not(.active) { border-color: var(--foreground); }
-  [data-arm="verbatim"] .grid-cell.active { border-color: var(--accent-red); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent-red) 15%, transparent); }
-}
-[data-arm="verbatim"] .grid-label-active { color: var(--accent-red); font-weight: 600; }
-
-/* ── V2 · MixSourceSelector.vue: the thumbnail strip (PaletteColorStrip) is content; the rest-name ink is state paint ── */
-.tx-v2-strip { display: flex; block-size: 2rem; }
-.tx-v2-strip > span { flex: 1; }
-[data-arm="verbatim"] .mix-palette--rest .mix-palette-name { color: var(--muted-foreground); }
-[data-arm="verbatim"] .mix-palette--rest:hover .mix-palette-name { color: var(--foreground); }
-
-/* ── C1 · chicago src/style.css:106-109 ── */
-.tx-c1 { padding: 0.25rem; }
-[data-arm="verbatim"] .status-option:hover, [data-arm="verbatim"] .status-option[aria-checked="true"] { background: var(--muted); }
-
+${SHARED_CSS}
 /* owner-glance shape candidates (glance.mjs only; never read by a witness) */
 [data-shape-candidate="rungHalf"] .toggle-group__item { border-radius: calc(var(--toggle-group-item-size) / 2) !important; }
 [data-shape-candidate="field"] .toggle-group__item { border-radius: var(--radius-field) !important; }

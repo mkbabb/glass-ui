@@ -24,6 +24,12 @@ export const ATTACK_FAULTS = {
   // H5-4 · a mount-time name, counted from navigation (X-5)
   "atk-x5none": { why: "H5-4 plant (development flavour): an option that holds a nested group is never named as holding an interactive descendant", witnesses: ["ATTACK"], family: "atk", flavor: "src-dev", cell: /x5 ·/ },
   "h5-logs-ready": { why: "H5-4 instrument plant (development flavour): console errors counted from ready, not from navigation (TILE_HARNESS_LOGS_FROM=ready, the pass-4 probes' habit): the X-5 name logged at mount is lost", witnesses: ["ATTACK"], family: "atk", flavor: "src-dev", env: { TILE_HARNESS_LOGS_FROM: "ready" }, cell: /x5 ·/ },
+  // H6-3 · a SegmentedTabs in an option (R-2, FV-2)
+  "atk-st-noreset": { why: "H6-3 plant: the strip resets no fact and the pin's limit stops at groups only (HEAD + floor v4, floor v5's FV5-2 struck): a strip inside a tile option reads the option's tile fact and its tabs stack two rows (Fc5 §3.1)", witnesses: ["FACT"], family: "atk", cell: /strip in a tile option/ },
+  "atk-st-noreset-dev": { why: "H6-3 plant on a development flavour: the same, where the second-row names are read too", witnesses: ["FACT"], family: "atk", flavor: "src-dev", cell: /strip in a tile option/ },
+  // H6-4 · `none!` at option, reported against FV5-3's sentence (E-3; the cell is info, so the plant reads info-fail)
+  "atk-bang-soft": { why: "H6-4 plant: the `none!` write lands without its `!important`, so the pin refuses it and the option reads unchanged: not the split FV5-3 states", witnesses: ["FACT"], family: "atk", expect: "info-fail", cell: /none! light/ },
+  "atk-bang-ref": { why: "H6-4 CONTROL, must PASS with the reported cell info-pass: the clean page's `none!` paints the split FV5-3 states", witnesses: ["FACT"], family: "atk", expect: "pass", note: { chromium: /info-pass\s+none! light/, webkit: /info-pass\s+none! light/ } },
   "atk-corner": { why: "H4-1 corner-refusal plant: the tile corner is a plain layered declaration, so a consumer utility, a scoped rule, an unlayered !important and an inline style each re-round the tile", witnesses: ["CORNER"], family: "atk", cell: /preset-migrated (utility|scoped|important|inline) / },
 };
 
@@ -33,11 +39,14 @@ const PALETTES = ["Dusk", "Moss", "Tide", "Clay"];
 const STRIP = ["quad-in", "quad-out", "quad-in-out", "back-in", "back-out", "back-in-out"];
 export const ATTACK_SCENES = ["preset", "family-d-undeclared", "preset-migrated", "specimen-migrated", "v2-migrated", "c1-migrated", "strip-migrated", "matrix-migrated"];
 /** H5-2 · the matrix in fixture markup (attack-route `matrix`): options are role=radio divs, so a group can nest in one. */
-function matrixBody(params) {
+function matrixBody(params, fault = "") {
   const w = params.get("w") ?? "", v = params.get("v") ?? "";
-  const W = (site) => (v && w === site ? ` style="--selection-tile: ${v}"` : "");
+  // H6-4 · `none!` writes `none !important` inline; the `atk-bang-soft` plant drops the `!important` (the write the pin refuses)
+  const W = (site) => (v && w === site ? ` style="--selection-tile: ${v.endsWith("!") ? `${v.slice(0, -1)}${fault === "atk-bang-soft" ? "" : " !important"}` : v}"` : "");
   const content = (a, b, site = false) => `<span class="mx-c" data-mx-content${site ? ` data-mx-site="content"${W("content")}` : ""}><span class="mx-b">${a}</span><span class="mx-b">${b}</span></span>`;
   const meta = (on) => (on ? '<span class="meta t-meta">0.5 s</span>' : "");
+  // H6-3 · a SegmentedTabs-shaped strip (a `.pill-row` holder that is not a group); each tab carries two block rows
+  const strip = (which) => `<div class="st" role="tablist" aria-label="Strip ${which}" data-mx-st="${which}">${["All", "Power", "Back", "Elastic"].map((l, k) => `<button type="button" class="st-tab pill-row" role="tab" aria-selected="${k === 0}"><span class="st-b">${l}</span><span class="st-b st-m">two</span></button>`).join("")}</div>`;
   const opt = (id, inner, extra = "") => `<div class="it" role="radio" aria-checked="false" data-mx-item="${id}"${extra}>${inner}</div>`;
   const kind = (k) => {
     const tile = k === "tile", t = tile ? "t" : "p";
@@ -46,9 +55,12 @@ function matrixBody(params) {
         ${opt(`${t}a`, content("Smooth", "calm", true) + meta(tile), ` data-mx-site="option"${W("option")}`)}
         <div class="mx-wrap" data-mx-site="wrapper"${W("wrapper")}>${opt(`${t}b`, content("Snappy", "quick") + meta(tile))}</div>
         ${opt(`${t}c`, content("Bouncy", "lively") + `<div role="radiogroup" aria-label="Nested" class="g-row" data-mx-site="nested-group"${!tile ? " data-tile" : ""}${W("nested-group")}>${opt(`${t}n0`, content("Inner", "row") + meta(!tile), ` data-mx-site="nested-option"${W("nested-option")}`)}${opt(`${t}n1`, content("Other", "row") + meta(!tile))}</div>` + meta(tile))}
+        ${opt(`${t}d`, content("Gentle", "soft") + strip(t) + meta(tile), ' style="grid-column: 1 / -1"')}
       </div></div>`;
   };
-  return `<div class="mx-both">${kind("tile")}${kind("pill")}</div>`;
+  // the reference strip sits in a role=group wrapper: the fixture registers no fact, so the wrapper's reset gives it the
+  // `none` the library's root gives it (`@property`'s initial value)
+  return `<div class="mx-both">${kind("tile")}${kind("pill")}<div role="group" aria-label="Reference">${strip("ref")}</div></div>`;
 }
 
 export function attackFixturePage(params, fault = "", flavor = "dist") {
@@ -66,7 +78,7 @@ export function attackFixturePage(params, fault = "", flavor = "dist") {
     case "specimen-migrated": body = `<div class="atk-split"><div role="radiogroup" aria-label="Tiles" data-group data-tile class="g-grid2 atk-tile">${PRESETS.slice(0, 2).map(([n, m]) => tile(n, m)).join("")}<div class="atk-nest">${nested("atk-pill-in", "Nested pills")}</div></div>${nested("atk-pill-beside", "Pills beside")}</div>`; break;
     case "v2-migrated": body = `<div role="group" aria-label="Mix sources" data-group class="g-row atk-outer">${PALETTES.map((p, i) => pill(p, `aria-pressed="${i === 1}"`)).join("")}<div class="atk-nest"><div role="radiogroup" aria-label="Inner" data-tile class="atk-tile-in"><button type="button" class="it" role="radio" aria-checked="true" data-atk-item><span data-ink>Inner</span><span data-ink class="t-meta meta">tile</span></button></div></div></div>`; break;
     case "c1-migrated": body = `<div role="radiogroup" aria-label="Status" data-group class="g-col">${STATUSES.map((l) => `<button type="button" class="it" data-item><span class="media"></span><span data-ink data-line-slot>${l}</span><span class="meta"></span></button>`).join("")}</div>`; break;
-    case "matrix-migrated": body = matrixBody(params); break;
+    case "matrix-migrated": body = matrixBody(params, fault); break;
     case "strip-migrated": body = `<div role="radiogroup" aria-label="Area unit" data-group class="g-row">${STRIP.map((s) => pill(`m<sup>2</sup> ${s}`)).join("")}</div>`; break;
     default: body = `<p>${ATTACK_SCENES.join(" · ")}</p>`;
   }
@@ -89,7 +101,7 @@ section { width: 460px; }
 .g-col { display: flex; flex-direction: column; gap: 6px; width: 220px; }
 .atk-split { display: flex; flex-direction: column; gap: 12px; } .atk-nest { grid-column: 1 / -1; }
 /* the fact: reset on every group, written by a declaration or by a filled anatomy slot */
-[data-group], [role=radiogroup], [role=group] { --selection-tile: none; }
+[data-group], [role=radiogroup], [role=group]${fault.startsWith("atk-st-noreset") ? "" : ", .st"} { --selection-tile: none; }
 [data-tile] { --selection-tile: flush; }
 ${anatomy} { --selection-tile: flush; }
 .it { position: relative; appearance: none; font: inherit; color: inherit; box-sizing: border-box; min-block-size: var(--rung); padding: 8px 14px; margin: 0;
@@ -105,7 +117,15 @@ ${anatomy} { --selection-tile: flush; }
 /* H5-2 · the pin (floor v4, M-13): the option and its content carry their group's fact, bounded at a nested group */
 ${fault.startsWith("atk-nopin") ? "" : fault === "atk-unbounded" ? ":where(.it, .it *) { --selection-tile: inherit !important; }"
   : fault === "atk-optpin" ? ".it { --selection-tile: inherit !important; }"
-  : "@scope (.it) to ([data-group], [role=radiogroup], [role=group]) { :scope, :scope * { --selection-tile: inherit !important; } }"}
+  : `@scope (.it) to ([data-group], [role=radiogroup], [role=group]${fault.startsWith("atk-st-noreset") ? "" : ", .st"}) { :scope, :scope * { --selection-tile: inherit !important; } }`}
+/* H6-3 · the strip (SegmentedTabs' shape): a track of tabs, each a one-row \`.pill-row\` holder (floor v5's FV5-2 reset
+   is the \`.st\` in the reset and in the pin's limit above; the atk-st-noreset plant strikes both) */
+.st { display: flex; gap: 2px; padding: 3px; border: 1px solid var(--seam); border-radius: 9999px; inline-size: max-content; }
+/* a block-flow tab of a fixed size, so its two block rows stack (and are cut) unless the one-row law runs them inline */
+.st-tab { appearance: none; font: inherit; color: inherit; border: 0; background: none; padding: 0 10px; block-size: 30px; box-sizing: border-box; line-height: 30px; display: inline-block; white-space: nowrap; border-radius: 9999px; }
+.st-tab[aria-selected="true"] { background: var(--fill-on); }
+.st-b { display: block; } .st-m { font-size: 11px; }
+@container style(--selection-tile: none) { .pill-row * { display: inline !important; } }
 /* H5-2 · the floor's readers in the matrix, each at its own element, as floor v3 reads them: the pill's clamp at the
    option (its container is its parent), the label clip at the option's children (their container is the option), the
    one-row law at every descendant (its container is its parent) */

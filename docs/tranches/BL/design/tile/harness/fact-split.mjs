@@ -38,6 +38,23 @@
 //   nested-group    the value decides for the nested group's options (it is a group of its own)
 //   nested-option   unchanged (that option carries its own group's fact)
 // Light reads the whole matrix; dark reads the references and the two option cells.
+//
+// H6-3 · A SEGMENTEDTABS IN AN OPTION (REGISTRY §P5-6.2; rows R-2, FV-2). Every group resets the fact; the other
+// `.pill-row` holder, SegmentedTabs, reset nothing on floor v4, so a strip inside a tile option read the option's tile
+// fact and its tabs stacked two rows, silently in production (`Fc5` §3.1). The matrix's fourth options (`td`, `pd`) each
+// hold a strip whose tabs carry two block rows; the same strip beside the groups is the reference. In light and dark:
+//   strip in a tile option   the tab holds one row, the strip is the reference strip's height (± 0.5 px), nothing is
+//                            cut past the tab, and on a development flavour nothing names `td` a second row
+//   strip in a pill option   the tab holds one row, nothing is cut past the tab, the option keeps the block size of
+//                            its group's direct option `pa` (± 0.5 px), and on a development flavour nothing names `pd`
+//                            a second row
+// The X-5 name ("holds an interactive descendant") on `td` and `pd` is expected and not read here (ATTACK `x5` owns it).
+//
+// H6-4 · `none!` AT `option` (REGISTRY §P5-6.2; row E-3, REPORTED, not gating). An inline `--selection-tile: none
+// !important` on the tile group's direct option (`?w=option&v=none!`). CSS puts an inline `!important` above every
+// layer, so no floor can refuse it, and the floor states what it does instead (FV5-3): the option's geometry follows
+// the group (a tile: the field corner, a column) while the clip and the one-row law follow the option. The cell reads
+// the paint against that sentence: info-pass when the paint is the stated split, info-fail when it is anything else.
 //   node fact-split.mjs --build <out>/builds/<label>-atk | --fixture --family atk [--fault atk-split] [--engine webkit]
 import { cli, openPage, engineVersion, engineOf, f2 } from "./lib.mjs";
 import { ATTACK_LABEL } from "./attack-route/migrated.mjs";
@@ -130,20 +147,61 @@ export function judgeMx(want, r, ref, kindRef, tileRef, names) {
   const ok = want === "tile" ? tileOk(r, tileRef) : pillOk(r, kindRef === "pill" ? ref : null);
   return { pass: ok && nameOk, why: `${ok ? `a ${want}, as the value decides` : `NOT a ${want}: the value should decide`}${named}` };
 }
+// ── H6-3 · the strips ────────────────────────────────────────────────────────────────────────────────────────
+/** Paint reads of the matrix strips (`data-mx-st`): the first tab's text rows (the midpoint chain), its box, the strip's
+ *  box, the tab's spans cut past it, the strip's display and the tab's fact (printed, never judged). */
+export const READ_ST = async () => {
+  await window.__th.frame();
+  const out = {};
+  for (const which of ["t", "p", "ref"]) {
+    const strip = document.querySelector(`[data-mx-st="${which}"]`);
+    const tab = strip && strip.querySelector(".segmented-tab, .st-tab");
+    if (!tab) { out[which] = null; continue; }
+    const boxes = [], rg = document.createRange(), tw = document.createTreeWalker(tab, NodeFilter.SHOW_TEXT);
+    for (let n = tw.nextNode(); n; n = tw.nextNode()) { if (!n.textContent.trim()) continue; rg.selectNodeContents(n); for (const r of rg.getClientRects()) if (r.width > 1 && r.height > 1) boxes.push(r); }
+    boxes.sort((p, q) => p.bottom - q.bottom); let rows = 0, bottom = -Infinity;
+    for (const r of boxes) if ((r.top + r.bottom) / 2 > bottom) { rows++; bottom = r.bottom; }
+    const tb = tab.getBoundingClientRect(), sb = strip.getBoundingClientRect();
+    const past = [...tab.querySelectorAll("*")].filter((k) => { const r = k.getBoundingClientRect(); return r.height > 0 && (r.bottom > tb.bottom + 1 || r.top < tb.top - 1); }).length;
+    out[which] = { rows, tabW: tb.width, tabH: tb.height, stripH: sb.height, past, display: getComputedStyle(strip).display, fact: getComputedStyle(tab).getPropertyValue("--selection-tile").trim() };
+  }
+  return out;
+};
+const stDesc = (r) => `tab ${f2(r.tabW)}×${f2(r.tabH)}, ${r.rows} row(s), ${r.past} span(s) cut · strip ${f2(r.stripH)} (${r.display}) · tab fact ${r.fact || "(unset)"}`;
+/** judge one strip read against the reference strip: in a tile option the strip keeps its own height; in a pill option
+ *  the option keeps its pill's block size */
+export function judgeSt(kind, r, ref, opt, pillRef, names) {
+  if (!r || !ref) return { pass: false, why: !ref ? "no reference strip" : "no strip in the option" };
+  if (ref.rows !== 1) return { pass: false, why: `the REFERENCE strip's tab holds ${ref.rows} rows: the composition is broken` };
+  const one = r.rows === 1 && r.past === 0;
+  const named = names.length ? `; NAMED ${names.length}× «${names[0].slice(0, 90)}»` : "";
+  if (kind === "tile") {
+    const h = Math.abs(r.stripH - ref.stripH) <= 0.5;
+    return { pass: one && h && !names.length, why: `${one ? "the tab holds one row" : `the tab STACKS ${r.rows} rows${r.past ? `, ${r.past} cut` : ""}: the option's tile fact reached the strip`} · strip ${f2(r.stripH)} against the reference ${f2(ref.stripH)}${h ? "" : " (CHANGED)"}${named}` };
+  }
+  const held = opt && pillRef && Math.abs(opt.h - pillRef.h) <= 0.5;
+  return { pass: one && held && !names.length, why: `${one ? "the tab holds one row" : `the tab STACKS ${r.rows} rows${r.past ? `, ${r.past} cut` : ""}`} · option ${opt ? `${f2(opt.w)}×${f2(opt.h)}` : "?"} against the pill pa ${pillRef ? f2(pillRef.h) : "?"}${held ? "" : " (the pill GREW)"}${named}` };
+}
 async function matrix(target, engine, cells) {
   const dev = !!target.meta.dev;
   const namesFor = (P, id) => P.logs.filter((l) => (l.type === "error" || l.type === "pageerror") && l.text.includes(`value="${id}" asks for a second row`)).map((l) => l.text);
-  const read = async (mode, w, v) => {
+  const read = async (mode, w, v, st = false) => {
     const P = await openPage(target, engine, "matrix-migrated", { mode, query: w ? { w, v } : {} });
-    const ids = ["ta", "tb", "tn0", "pa", "pb", "pn0"];
+    const ids = ["ta", "tb", "tn0", "pa", "pb", "pn0", "td", "pd"];
     const r = await P.page.evaluate(READ_MX, ids);
+    const s = st ? await P.page.evaluate(READ_ST) : null;
     const names = Object.fromEntries(ids.map((id) => [id, namesFor(P, id)]));
     await P.close();
-    return { r, names };
+    return { r, s, names };
   };
   for (const mode of ["light", "dark"]) {
-    const ref = await read(mode, "", "");
+    const ref = await read(mode, "", "", true);
     const tileRef = ref.r.ta;
+    // H6-3 · the strips, on the unwritten page
+    for (const [k, which, id] of [["tile", "t", "td"], ["pill", "p", "pd"]]) {
+      const r = ref.s[which], j = judgeSt(k, r, ref.s.ref, ref.r[id], ref.r.pa, dev ? ref.names[id] : []);
+      cells.push({ gating: true, pass: j.pass, line: `matrix ${mode} · strip in a ${k} option (${id}) [segmented-in-${k}] · want one row, ${k === "tile" ? "the reference strip's height" : "the pill's block size"}${dev ? ", no second-row name" : ""} · ${j.why}${r ? ` · ${stDesc(r)}` : ""} · reference ${ref.s.ref ? stDesc(ref.s.ref) : "none"}${dev ? "" : " · names: production flavour, not read"}` });
+    }
     const kindOf = (k, slot) => (slot === "n0" ? (k === "tile" ? "pill" : "tile") : k);
     const push = (site, v, k, slot, want, got, refR) => {
       const id = `${k[0]}${slot}`, r = got.r[id], names = dev ? got.names[id] : [];
@@ -162,6 +220,14 @@ async function matrix(target, engine, cells) {
         push(site, v, k, slot, want === "same" ? "same" : want, got, refR);
         void base;
       }
+    }
+    // H6-4 · `none!` at option: reported against FV5-3's sentence (light only)
+    if (mode === "light") {
+      const got = await read(mode, "option", "none!"), r = got.r.ta;
+      const geomGroup = !!r && Math.abs(r.used - 16) <= 0.5 && r.dir === "column";
+      const pillReaders = !!r && (r.clip > tileRef.clip || r.crows !== tileRef.crows);
+      const stated = geomGroup && pillReaders;
+      cells.push({ gating: false, pass: stated, line: `none! light · option · tile group, option ta · an inline --selection-tile: none !important (above every layer; reported, not gating) · want FV5-3's stated split: the geometry follows the group (the field corner, a column), the clip and the one-row law follow the option · ${!r ? "no such option" : stated ? "the paint is the stated split" : geomGroup ? "NOT the stated split: the geometry follows the group and the option's readers do not take the write (the write did not land)" : pillReaders ? "NOT the stated split: the geometry follows the write too" : "NOT the stated split: neither reader takes the write"}${r ? ` · ${mxDesc(r)} · reference ${mxDesc(tileRef)}` : ""}` });
     }
   }
 }

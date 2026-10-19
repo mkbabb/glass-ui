@@ -1,0 +1,25 @@
+2026-10-18 16:16:08 · load { 18.57 18.12 20.12 }
+admitted · 2026-10-18 16:16:08 · load { 18.57 18.12 20.12 }
+selftest · harness H6 e2360106ad0d (42 files)
+OK     T-6  chromium clean exit 0 · T-6 PASS · 88/88 gating cells pass [library 55/55 · unmigrated 48/48 · migrated 33/33]
+OK     T-6  chromium fault   t6-fade (the commit is a 120 ms linear fade of the selected layer: no pop, no travel) exit 1 · T-6 FAIL · 56/88 gating cells pass [library 35/55 · unmigrated 32/48 · migrated 21/33]
+         first planted FAIL: FAIL       preset commit bar, keyboard commit (ArrowRight, pointer never moved) on #2 · pop peak 1.00 at 0 ms, trough after it 1.00, settle 1.00 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; pai
+OK     T-6  chromium fault   t6-tabpop (the pop also fires when Tab enters the checked tile) exit 1 · T-6 FAIL · 80/88 gating cells pass [library 50/55 · unmigrated 44/48 · migrated 30/33]
+         first planted FAIL: FAIL       preset Tab entry · largest scale motion 0.04 on #1, body moved 0.00 px (a Tab entry commits nothing) · load 18.34 / 18.46 / 19.58
+OK     T-6  chromium fault   t6-prog (the pop fires from pointer and key handlers only: a programmatic model change commits with none) exit 1 · T-6 FAIL · 72/88 gating cells pass [library 45/55 · unmigrated 40/48 · migrated 27/33]
+         first planted FAIL: FAIL       preset commit bar, programmatic commit (focus on the sentinel after the group) on #0 · pop peak 1.00 at 12 ms, trough after it 1.00, settle 1.00 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0
+OK     T-6  chromium control t6-body (CONTROL, must PASS: no pop; a selection body springs to the committed tile (travel with an overshoot) on every commit, pointer, key and programmatic, and stays put on Tab entry) exit 0 · T-6 PASS · 88/88 gating cells pass [library 55/55 · unmigrated 48/48 · migrated 33/33]
+OK     T-6  chromium control t6-rest (CONTROL, must PASS: the selected tile rests scaled (1.05) and its pop overshoots and bounces around that settle; a resting scale is neither a pop on Tab entry nor a pop amplitude) exit 0 · T-6 PASS · 88/88 gating cells pass [library 55/55 · unmigrated 48/48 · migrated 33/33]
+OK     T-6  chromium fault   t6-still (hover keeps its light channel but does not scale, and a press does not squish (the per-frame hover-scale and press reads must fail on smooth frames, not be re-read away)) exit 1 · T-6 FAIL · 72/88 gating cells pass [library 45/55 · unmigrated 40/48 · migrated 27/33]
+         first planted FAIL: FAIL       preset hover scale · 1.00 (none); median frame 7.80 ms, load 38.15 / 30.06 / 26.17
+OK     T-6  chromium fault   t6-glide (no pop; the selection body glides to the committed tile on a linear path and lands without overshoot (travel with no weight)) exit 1 · T-6 FAIL · 56/88 gating cells pass [library 35/55 · unmigrated 32/48 · migrated 21/33]
+         first planted FAIL: FAIL       preset commit bar, keyboard commit (ArrowRight, pointer never moved) on #2 · pop peak 1.00 at 0 ms, trough after it 1.00, settle 1.00 (amplitude < 0.015, no bounce); body travel 245.42 px, overshoot 0.00 px; p
+OK     T-6  chromium fault   t6-faint (H3-5: hover lifts the plate by a 1 % ink step: under the perceptual bar) exit 1 · T-6 FAIL · 63/88 gating cells pass [library 39/55 · unmigrated 36/48 · migrated 24/33]
+         first planted FAIL: FAIL       preset hover light channel (scale pinned, ink hidden) · mean ΔE(OKLab) 0.0059 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.02:1)
+OK     T-6  chromium control t6-rung (CONTROL, must PASS: hover lifts the plate by a 5 % ink step in oklab (the floor's rung, which sat on H2's 10-level threshold)) exit 0 · T-6 PASS · 88/88 gating cells pass [library 55/55 · unmigrated 48/48 · migrated 33/33]
+OK     T-6  chromium fault   t6-prt (H3-5: under reduced transparency the hover mixes by --glass-level, which PRT pins to 0: hover moves nothing) exit 1 · T-6 FAIL · 80/88 gating cells pass [library 50/55 · unmigrated 44/48 · migrated 30/33]
+         first planted FAIL: FAIL       preset PRT hover light channel (prt) · mean ΔE(OKLab) 0.0000 over the plate interior vs the bar 0.02 (reported: 0.00 % of pixels moved > 10 levels, p95 1.00:1)
+OK     T-6  chromium fault   t6-calm (H3-9: a calm observer ancestor ([data-reorder]) suppresses the commit pop on a programmatic commit) exit 1 · T-6 FAIL · 80/88 gating cells pass [library 50/55 · unmigrated 44/48 · migrated 30/33]
+         first planted FAIL: FAIL       preset commit bar, programmatic commit under a calm observer ([data-reorder] on the scene) on #0 · pop peak 1.00 at 0 ms, trough after it 1.00, settle 1.00 (amplitude < 0.015, no bounce); body travel 0.00 px, 
+selftest: 12 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
+exit 0 · 2026-10-18 17:15:30 · load { 19.29 19.98 21.75 }

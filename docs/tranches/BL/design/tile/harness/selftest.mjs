@@ -39,12 +39,15 @@ for (const [id, file, generic, opts = {}] of WITNESSES) {
       const r = runOne(file, ["--fixture", ...fam, "--fault", name, ...flv, ...eng, ...out], f.env ?? {}); runs++;
       if (r.retried) retried.push(`${tag.trim()} ${name}: ${r.retried}`);
       const expectPass = f.expect === "pass";
-      // H3-1: `expect: "error"` plants a stall: the witness must stop loud (exit 2) with the planted line in its output
-      const fails = f.expect === "error" ? r.out.split("\n").filter((l) => /HARNESS ERROR/.test(l)) : failLines(r.out);
+      // H3-1: `expect: "error"` plants a stall: the witness must stop loud (exit 2) with the planted line in its output.
+      // H6-4: `expect: "info-fail"` plants a reported cell: the witness keeps its verdict (exit 0) and the planted cell
+      // prints info-fail
+      const fails = f.expect === "error" ? r.out.split("\n").filter((l) => /HARNESS ERROR/.test(l))
+        : f.expect === "info-fail" ? r.out.split("\n").filter((l) => /^\s+info-fail\s/.test(l)) : failLines(r.out);
       const hit = !f.cell || fails.some((l) => f.cell.test(l));
       const noteRe = f.note?.[engine];
       const noted = !noteRe || noteRe.test(r.out);
-      const ok = expectPass ? r.code === 0 && noted : f.expect === "error" ? r.code === 2 && hit : r.code === 1 && hit;
+      const ok = expectPass ? r.code === 0 && noted : f.expect === "error" ? r.code === 2 && hit : f.expect === "info-fail" ? r.code === 0 && hit : r.code === 1 && hit;
       if (!ok) broken++;
       console.log(`${ok ? "OK    " : "BROKEN"} ${tag} ${expectPass ? "control" : "fault  "} ${name} (${f.why}) exit ${r.code}${!expectPass && r.code === 1 && !hit ? ` · the planted cell ${f.cell} is not among the ${fails.length} failing lines` : ""}${expectPass && noteRe ? ` · note ${noted ? "present" : "ABSENT"}: ${(r.out.match(noteRe) ?? ["—"])[0]}` : ""} · ${r.last}`);
       if (!ok) for (const l of (expectPass ? fails : fails.length ? fails : r.out.split("\n")).slice(0, 4)) console.log(`         ${l.trim()}`);

@@ -1,0 +1,25 @@
+2026-10-18 14:40:42 · load { 46.46 36.67 33.20 }
+[guarded] waiting for headroom (load 46 > 36)
+admitted · 2026-10-18 14:41:42 · load { 28.11 33.77 32.39 }
+  load 28.11 / 33.77 / 32.39 at start, 22.61 / 30.88 / 31.40 at end · other headless browser processes at start: 12 (waited 0.2 s) · browser lock waited 0 s
+T-1 FAIL · 20/42 gating cells pass, 12 unmeasured [migrated 15/15 · library 5/27 · unmigrated 3/6]
+  load 22.61 / 30.88 / 31.40 at start, 19.81 / 28.92 / 30.65 at end · other headless browser processes at start: 16 (waited 0.2 s) · browser lock waited 0 s
+T-2 PASS · 52/52 gating cells pass [library 52/52]
+  load 19.51 / 28.70 / 30.56 at start, 33.40 / 29.87 / 30.57 at end · other headless browser processes at start: 17 (waited 0.2 s) · browser lock waited 0 s
+  FAIL       [migrated] c1-migrated light · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 224.00 px²; fill 1.18:1; p95 1.19; items 1/0 184×40
+  FAIL       [migrated] c1-migrated dark · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 224.00 px²; fill 1.22:1; p95 1.28; items 1/0 184×40
+  FAIL       [migrated] c1-migrated prt · carrier ≥3:1 area 0.00 px² (perimeter band 0.00, interior 0.00) vs the bar 224.00 px²; fill 1.00:1; p95 1.00; items 1/0 184×40
+T-3 FAIL · 42/85 gating cells pass, 12 unmeasured [library 2/39 · unmigrated 12/48 · migrated 40/43]
+  load 33.40 / 29.87 / 30.57 at start, 17.83 / 25.48 / 28.78 at end · other headless browser processes at start: 16 (waited 0.3 s) · browser lock waited 0 s
+T-4 FAIL · 36/54 gating cells pass [library 12/30 · unmigrated 3/24 · migrated 24/24]
+  load 17.83 / 25.48 / 28.78 at start, 34.53 / 28.66 / 29.65 at end · other headless browser processes at start: 20 (waited 0.2 s) · browser lock waited 0 s
+T-5 FAIL · 87/116 gating cells pass [library 49/78 · unmigrated 20/37 · migrated 38/38]
+  load 32.89 / 28.42 / 29.56 at start, 24.69 / 25.62 / 27.72 at end · other headless browser processes at start: 16 (waited 0.3 s) · browser lock waited 0 s
+T-6 FAIL · 64/88 gating cells pass [library 31/55 · unmigrated 34/48 · migrated 33/33]
+  load 24.69 / 25.62 / 27.72 at start, 18.02 / 23.46 / 26.78 at end · other headless browser processes at start: 17 (waited 0.2 s) · browser lock waited 0 s
+T-7 PASS · 24/24 gating cells pass [unmigrated 4/35 · migrated 24/24]
+  load 17.38 / 23.23 / 26.68 at start, 19.98 / 23.46 / 26.68 at end · other headless browser processes at start: 11 (waited 0.2 s) · browser lock waited 0 s
+W-B FAIL · 9/25 gating cells pass [library 9/25]
+  load 19.98 / 23.46 / 26.68 at start, 22.94 / 24.02 / 26.86 at end · other headless browser processes at start: 11 (waited 0.3 s) · browser lock waited 0 s
+W-E FAIL · 1/3 gating cells pass [library 1/3]
+exit 0 · 2026-10-18 14:56:44 · load { 23.12 24.03 26.83 }

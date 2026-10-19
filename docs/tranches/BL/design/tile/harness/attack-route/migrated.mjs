@@ -20,7 +20,13 @@
 //             option). Every option's content holds two block rows (`[data-mx-content]`) the pill's one-row law runs
 //             inline, so a reader that splits the fact shows in the rows. Values are unique per option (the names
 //             carry them)
+//             H6-3: each group also has a fourth option (`td`, `pd`) holding a SegmentedTabs (`data-mx-st="t"` | `"p"`),
+//             the other `.pill-row` holder, whose tabs each carry two block rows through `#option`; the same strip
+//             beside the groups is the reference (`data-mx-st="ref"`). FACT reads the tab's rows, the strip's height
+//             and the development names (`Fc5` §3.1's `stnest`, moved into the matrix)
 export const ATTACK_LABEL = "H4-attack";
+/** H6-3: a SegmentedTabs whose tabs carry two block rows (a `.pill-row` holder that is not a group) */
+const mxStrip = (which) => `<SegmentedTabs data-mx-st="${which}" :model-value="tabsOptions[0].value" :options="tabsOptions" semantics="radio" aria-label="Strip ${which}"><template #option="{ option }"><span class="block">{{ option.label }}</span><span class="block text-micro">two</span></template></SegmentedTabs>`;
 /** H5-2: one option of the matrix: two block rows of content, a #meta row for a tile (F's declaration). */
 const mxContent = (a, b, site = false) => `<span data-mx-content${site ? ` data-mx-site="content" :style="mx('content')"` : ""} class="block"><span class="block">${a}</span><span class="block text-micro">${b}</span></span>`;
 const mxGroup = (kind) => {
@@ -41,6 +47,7 @@ const mxGroup = (kind) => {
             </ToggleGroup>
             ${meta(tile)}
           </ToggleGroupItem>
+          <ToggleGroupItem value="${t}d" data-mx-item="${t}d" class="mx-st-opt">${mxContent("Gentle", "soft")}${mxStrip(t)}${meta(tile)}</ToggleGroupItem>
         </ToggleGroup>
       </div>`;
 };
@@ -99,8 +106,9 @@ export default {
     group: `<div class="mx-both flex flex-col gap-6" data-mx>
       ${mxGroup("tile")}
       ${mxGroup("pill")}
+      ${mxStrip("ref")}
       </div>`,
-    css: `.mx-host { inline-size: 460px; } .mx-wrap { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }`,
+    css: `.mx-host { inline-size: 460px; } .mx-wrap, .mx-st-opt { grid-column: 1 / -1; } .mx-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }`,
   },
   strip: {
     group: `<ToggleGroup type="single" data-group aria-label="Area unit" v-model="model">
