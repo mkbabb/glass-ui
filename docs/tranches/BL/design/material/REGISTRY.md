@@ -3240,3 +3240,253 @@ If R-32 fails (ii) in either engine, or F-1 declines, row 23 stays open, and pas
 - **The fixed point after O-103a** is 43/44 with only row 23 open, and it waits on F-1. If pass 12 builds R-32 green and F-1 has not arrived by its close, pass 12 holds there. Pass 13 launches when F-1 arrives, or at once if F-1 declines with words.
 - **C″ stays banked.** Q-11's content clause is ruled accepted, so its live re-trigger is spent.
 - If the owner overrides R-32, pass 12 builds the arm the override names. If the owner overrides R-21 (b) to (a) or (c), rows 20 and FL-12 reopen on `grasp.css:131` until floor v11a is read, and under (c) no fixed point is promised.
+
+---
+
+# D3 · pass 12 · REGISTRY: the routes after pass 12
+
+**How pass 12 ran.** Pass 12 launched on the rulings in INBOUND (O-102b, O-103, O-103a), with no owner question gating it (P11-6.1). It was stopped once at the 01:06 kernel-zone hold, with the battery seat at `rerun-wk`, and resumed from its run id after the owner's 14:33 reboot. One ruling arrived during the pass: **O-103b** (`value-js-ed`, recorded as the delegate after the 2026-10-20 reboot). It (1) **accepts F-1** on `pass-12/frames-Q14/chromium-dark-aurora-state-veil-r2-vs-r32.png`, so row 23 closes on R-32 with frames 2-4, and (2) rules (a): the Playwright WebKit dark-veil legs (R-32 (iii), M-9's dark rows, row 12's dark-signed leg) are **engine-fact reports**, worded "WebKit headless paints no backdrop-filter; raw = veiled 4/4", and Chromium is the paint gate for this arm. This part reads every row under O-102b, O-103, O-103a and O-103b.
+
+| field | value |
+|---|---|
+| seat | D3 pass-12 agglomeration. It closes pass 12 with floor v11's status on the fixed 44 rows, whether the pass is clean and the two-clean count, R-32's per-engine readings, the minor v10's W-0.1 and W-0.11 readings, where each next-pass defect class goes, and the pass-13 plan. Passes 1-11 above stay as the record |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `d9c7016ca` at this seat (the pass-12 critic bank, docs only). **BASE: every pass-12 build was cut against HEAD of master at its launch** (owed cells and H12 at the 2026-10-19 HEADs, the battery at `7139b722e`, the minor v10 and the critic at `d72744360`). `git diff --stat 1da7eb17b HEAD -- src demo tests package.json` prints nothing at `d9c7016ca`, so every number below is the published 10.1.0 source plus the named patch. **`release/10.1.1` was NOT merged during pass 12** (P11-5). It is still not an ancestor of master (`git merge-base --is-ancestor` exits 1), and `release/10.1.2` is open beside it |
+| inputs, read in full | the pass-11 part (P11-0..P11-6) and the O-87 section; `pass-12/OWED.md`, `H12.md`, `FLOOR-V11.md`, `BATTERY-V11.md`, `MINOR-SPLIT-v10.md`, `D3-critique.md`, with the records they cite where this part quotes a number; `audit/INBOUND.md` through O-103b; `FORMATION-PROGRESS.md` through the 17:10 critic line; `waves/W-0.1.md` §3, `W-0.11.md` §3.3 |
+| owner rulings | **O-102b, O-103, O-103a, O-103b (RULED in INBOUND).** R-21 (b) sealed; Q-1 (a); Q-3 (a); Q-11 (a) chrome, grey content accepted off paper; Q-14 light arm (a); Q-14 dark arm built as R-32 and **accepted** (O-103b); the WebKit dark-veil legs are reports (O-103b). Re-checked at this seat's start: no INBOUND row after O-103b, and no cursor line after 17:10 that rules D3. `value-js-ed`'s standing rests on the same record reading as `value-js-a9`'s (O-102b names value-js-01; P11-4 D-1). The F-1 sheet asks it to confirm |
+| instruments | none run by this seat. It re-checked: the F-1 frames' sha256 (`b76658f5…773f`, `f83d97b2…cf06`, equal to BV11 §3 and the critic); `crit-records/M-9-r32-fv11-chromium-1.log` `PASS (24 gated rows)` and `-webkit-1.log` `FAIL (4 of 24 gated rows)`; `crit-records/wk-admission.log` (queued 16:09:36, admitted 16:54:47); `crit-records/teardown.log` (0 worktrees naming `D3/p12/crit`); and the OKLab conversion of the hexes it cites (`#ec9642` 0.746/0.142/61.6°, `#99560a` 0.521/0.118/60.4°, `#cc740c` 0.643/0.147/60.5°; the probe means in BV11 §2 are 0.002 higher in L, because a hex is the mean rounded to 8 bits) |
+| engines | Chromium 149 headless shell (the gate). Playwright WebKit 26.5 headless under `guarded --exclusive webkit`, the cell of record; its dark-veil legs are reports (O-103b). **Every real-Safari cell: UNMEASURED** (the safaridriver checkbox is not granted, O-103) |
+| fences | no source edit, no git write. This part and `pass-12/F1-SHEET.md` are the only writes |
+
+Short citations: `OWED`, `H12`, `FV11` (`FLOOR-V11.md`), `BV11` (`BATTERY-V11.md`), `MS10` (`MINOR-SPLIT-v10.md`), `Crit` (`pass-12/D3-critique.md`), `Reg11` (the pass-11 part).
+
+---
+
+## P12-0 · In brief
+
+| route or build | status | rows | clean? | reason in one line |
+|---|---|---:|---|---|
+| **floor v11** = floor v11a + R-32 (`floor-v11.patch` `8f838dcf`, 89 files; floor v11a `08c13d4e` = fv10s + `crit-floor-proposed.diff`) | **ADVANCE, clean** | **44/44 = 1.000** (pass 11: 43/44) | **yes** | R-32 passes (i)-(iii) in Chromium; the Playwright WebKit legs are reports (O-103b); F-1 accepted (O-103b). Every other row holds on a full two-engine battery, and the light arm is pixel-identical in both engines |
+| **the minor v10** (a build) | **every W-0.1 G1-G7 and W-0.11 G1-G6 PASS**; not shippable yet | — | — | raw-identical to the minor v9 (`e11613c3eeb45cab`); the two pass-11 comment deltas built; no delta pending |
+| C″ | BANK, unchanged | — | — | no re-trigger fired |
+| D3-G | BLOCK, unchanged | — | — | D3's own Q-13 (a) |
+| D3-BF, D3-D | BANK, unchanged | — | — | no re-trigger fired |
+| D3-E | RETIRE, unchanged | — | — | — |
+
+**Pass 12 is clean** (0 rows open of 44). **The two-clean count is 1 of 2.** Floor v11 reaches the convergence record only if pass 13 is also clean.
+
+Four findings shape the record.
+
+1. **R-32 does what O-103a's words ask, over the whole veiled field and not only the probe** (Crit §2.2). On 40,824 chromatic pixels in Chromium, C_veiled/C_raw reads p05 1.030 and p50 1.043, |Δh| p95 1.6°, and every pixel dims (ΔL p95 −0.052). R-2 on the same pixels kept less than 0.95 of its chroma on 93.7 % of them. The arm is one token, `--glass-focus-veil-tone`, at the end of the veil's one filter chain: `contrast(1.03) brightness(0.8)` in dark, the old `saturate()` bytes in light. The dark `-dim` is `transparent`. No layer, no second blur, no glow; census `0 0 0 0`.
+2. **Headless Playwright WebKit paints no `backdrop-filter`, so it cannot show this arm** (FV11 §2.3, predicted before the battery). It read raw = veiled to the bit 5 times: the battery, the F-1 capture, two re-runs, and the critic's run at load 25. No arm the rulings allow could pass (iii) there. A flat background pulls every pixel toward one colour, and a WebKit-only background dim was refused under E-2. O-103b turns those legs into reports. This is the first D3 row whose paint the cell of record cannot see. Real Safari, which paints the chain, stays unmeasured.
+3. **The light arm stands in paint as well as in tokens.** Five declarations differ in the specimen CSS, and the light veil's three properties resolve identical (FV11 §3, `LIGHTPROOF PASS`). Every light raw and full PNG of floor v11a and floor v11 is pixel-identical in both engines: 0 px differ (Crit §1).
+4. **The registry's frame-1 pair named the wrong ground** (H12 §2.1, upheld Crit §3). Frame 1, the PNG O-103a declined, is pass 5's WebGPU ground, `#e87237 → #993f09`. The pair Reg11 P11-4 printed, `#ec9642 → #99560a`, is pass 7's reading on the shell's `css` ground. The new F-1 frames pair R-2 and R-32 on one ground per engine, so the comparison the delegate accepted is like for like. **Correction recorded here (P-3):** where P11-4 and P11-5 say "frame 1's pair `#ec9642 → #99560a`", read "R-2's Chromium pair on the shell ground". Frame 1's own pair is `#e87237 → #993f09`.
+
+---
+
+## P12-1 · Per route
+
+### P12-1.1 · Floor v11 · ADVANCE, 1.000 (44/44), clean
+
+**Proved by running** (OWED, FV11, BV11, Crit §1-§5):
+- **Owed cells (R-35): paid, no red** (OWED §0). Floor v11a is raw-identical to floor v10 (CSS `347288745da7cf97`, 346 demo files). DEL 101. The list PASS 207 (197 true, 10 reported) under `crit-fv10-rulings.json`, and its plant FAILs 1 at `grasp.css:131`. Toolchain green: vitest 237 files, 2318 passed. The minor v9c is raw-identical to the minor v9 (`e11613c3eeb45cab`), and its list reads PASS 368 with the plant failing 1 at `grasp.css:135`. **Row 11 holds.**
+- **Composition:** floor v11a + `FV11-r32.diff` (`a02de136`, 4 files, +43/−20) = floor v11 (`cmp` exit 0, twice: FV11 and Crit). It touches `focus-veil.css`, `dark-arm.css`, `tokens/glass.css` and `focus-veil.test.ts`.
+- **Bytes:** floor v11 specimen CSS 391,252 B `4f56c2631ab5cdd4`. Floor v11a 391,121 B `347288745da7cf97`. Both rebuilt by the critic and equal to the bank.
+- **Static:** DEL PASS 101 under both declarations, HEAD bite 89/101, absent root exits 2. LAW PASS 91. Census `stacked=0 halo=0 blur=0 open=0` (HEAD `2/2/5/9`). HOV PASS 58. LIT the 19 inherited. The ladder `diff` is empty.
+- **Toolchain:** vue-tsc 0/0, library build 0, dist-demo 0, vitest 237 files and 2318 passed, `focus-veil.test.ts` 19/19. Its plant on R-2 bytes fails exactly the two rewritten assertions.
+- **Battery, both engines** (BV11 §1, §6): 70 cells, 4 live, 4 motion and 2 drift windows per engine. The baseline `diff` against FV6 prints one changed row: M-9 Playwright WebKit dark `PASS 10 → FAIL 2/10`, the engine fact. Every plant equals FV6's verdicts (`diff` exit 0). Every red was re-run twice with the same values, and no red is load-borne.
+- **Admissions:** every Playwright WebKit group was its own `--exclusive webkit --timeout 60` admission. The longest waits were 51 min (BV11) and 45 min (Crit), so **no cell is owed**.
+
+**R-32's readings, per engine** (BV11 §2, re-measured Crit §2.1; the Chromium probe means):
+
+| engine | ground | raw (L, C, h) · hex | R-2 veiled · ΔL · C× | **R-32 veiled · ΔL · C×** | (i) \|Δh\| ≤ 3° | (ii) C× ≥ 0.95 | (iii) ΔL < 0 | status |
+|---|---|---|---|---|---:|---:|---|---|
+| **Chromium** (gate) | aurora focus spot | 0.748, 0.142, 61.8° · `#ec9642` | 0.521, 0.118, 60.5° · `#99560a` · **−0.226** · 0.829 | **0.643, 0.147, 60.3° · `#cc740c` · −0.105 · 1.037** | **1.4° PASS** | **1.037 PASS** | **PASS** | **`PASS (24 gated rows)`** |
+| Chromium | dark page | 0.146, 0.003, 68.6° · `#0b0a09` | −0.025 | **0.116, 0.004, 70.6° · `#060504` · −0.029** | — | — | **PASS** | |
+| Playwright WebKit (cell of record) | spot (GL ground) | 0.682, 0.163, 44.6° · `#e87237` | 0.472, 0.108, 45.0° · `#8b4421` · −0.210 · 0.662 | 0.682, 0.163, 44.6° · `#e87237` · 0.000 · 1.000 | 0.0° | 1.000 | 0.000 | **REPORT (O-103b):** "WebKit headless paints no backdrop-filter; raw = veiled 4/4" |
+| Playwright WebKit | dark page | `#0b0a09` | −0.022 | `#0b0a09` · 0.000 | — | — | 0.000 | REPORT, as above |
+| real Safari | — | — | — | — | — | — | — | **UNMEASURED** (checkbox not granted) |
+
+The spot's ΔL is **−0.105**, against R-2's −0.226 measured here and the −0.225 Reg11 cited. The owner's eye read it as "orange, deeper and quieter, not brown" (O-103b). FV11's model predicted `#cc730c`, 1.8°, ×1.041, −0.105, −0.0295 on this ground, one 8-bit step from the paint. H12's gamut bound says no arm that keeps C ≥ 0.95 × C_raw can drop this spot below ΔL −0.163. R-32 sits inside it.
+
+**Row 19 gained the arm's own plant** (BV11 §4). FV3's `plant-R2` re-values `-dim`, which floor v11's dark arm no longer uses, so it now reds by a margin of only 0.003. `BV11-plant-r32-notone.css` removes the dark `-tone` and reds 3 of 3 in Chromium: the spot brightens +0.010, and the page reads −0.000 against M-9's floor. It is the row's evidence for the dark arm. Joining it to the plant table is C-3.
+
+**The printed lines (R-34, R-36): 0 false** (FV11 §4, Crit §4). R-32's 43 written lines and H11-2's 95-line print were read line by line. FV11 found and fixed three first-draft overstatements in the build (`focus-veil.css:16`, `glass.css:83`, `:110`). The critic read the rest true. R-36: `.glass-focus-veil` has two composers, `Slider.vue:288` and `ModalOverlay.vue:74` (through `DialogContent`). No consumer sentence is falsified. The list re-runs PASS 207 (197 true, 10 reported) under `FV11-rulings.json`, so rows 20 and FL-12 hold. Two landing-docs items: **L-1** `dark-arm.css:297-299` (restate the prediction as the Chromium measurement, and keep the GL-ground half labelled predicted) and **L-2** `dark-arm.css:298` (cites `FV11-model.py` from shipped source, in the class of the existing "D3 pass n" citations).
+
+**The fixed checklist** (Crit §5 is the source of record, with BV11 §6 for the battery; O-102b, O-103, O-103a, O-103b; no variant selected):
+
+| # | row | status | evidence | closed by |
+|---|---|---|---|---|
+| 1, 2, 4, 5, 7, 8, 10, 11, 13-18, 21, 24 | RAW … STACK | **PASS (16)** | BV11 §6; witness tallies equal FV6 per column. Row 11: OWED and FV11 toolchains, 19/19 (Crit) | — |
+| 3 | M-1x | **PASS (ruling)** | `--q11 a` PASS both engines | O-103 |
+| 6 | M-3 | **PASS** | Chromium 177/177; Playwright WebKit's 2 light checker rings are FV6's | — |
+| 9 | M-6 | **PASS (ruling)** | `--q1 a` 88/88 both engines | O-103 |
+| **12** | M-9, the dark veil signed | **PASS** | Chromium PASS 20: page −0.029, spot −0.105. The Playwright WebKit dark leg is a report | O-103b (the leg's reading) |
+| **19** | plants | **PASS** | every FV6 plant reds; R-32's tone plant reds 3/3 | — |
+| **20** | prose sweep | **PASS** | R-21 (b), R-34: list PASS 207; 43 + 95 lines, 0 false | — |
+| **22** | O-87 | **PASS** | census 0; one blur, no layer, no glow | — |
+| **23** | gestalt, O-62 frame | **PASS** | R-32 (i)-(iii) PASS in Chromium; Playwright WebKit legs reported; **F-1 accepted**; frames 2-4 accepted (O-103a) | **O-103b** |
+| FL-1..FL-11, FL-13..FL-16 | the floor | **PASS 15** | BV11 §4.1, §6. FL-6: the dark veil now reads no ink at all | — |
+| FL-12 | prose sweep | **PASS** | as row 20 | — |
+| N-1, N-2 | Q-1, Q-11 built | **PASS (ruling)** | (a) built | O-103 |
+| N-3 | the dock's held halo | **PASS (attributed)** | M-2h 2/68, the two halo legs, re-run twice | — |
+| N-4 | the minor's W-0.1 reading | **PASS** | P12-3 | — |
+
+**Count: 44 PASS, 0 OPEN. Closed this pass: row 23 (O-103b). Opened: none.** The seat counts (BV11 43/44 before O-103b arrived, Crit 44/44 after) agree once O-103b is read. The critic's count stands.
+
+### P12-1.2 · The owner options
+
+Every option O-103 ruled is the (a) already built. O-103a's arm is built as R-32 and accepted. The `pass-4/fv3` variants stay unapplied and selectable. No owner option is open on floor v11.
+
+### P12-1.3 · Banked and retired, re-checked
+
+C″ BANK; D3-G BLOCK on D3's Q-13 (a); D3-BF and D3-D not fired; D3-E retired. R-32 moves only the dark focus veil, which no banked family's re-trigger names.
+
+---
+
+## P12-2 · The harness after pass 12, and the rulings on measurement
+
+### P12-2.1 · H12
+
+| id | landed | evidence | open |
+|---|---|---|---|
+| H12-1 | `m9-state-registers.mjs` prints `oklch <cell>: raw … L C h → veiled … L C h` for every M-9 veil row. Under `--r32` it gates R-32 (i)-(iii) on the dark aurora spot and the dark page in each engine. Without `--r32` it reports, and M-9's verdict is unchanged | self-test H6..H12 **207/0**; H12-1 32/32 twice (seat) and once (critic); LAW 90. The plant (R-2) reds (ii) at 0.832 / 0.662; on live bytes 0.829 / 0.662 | C-1: the page leg (iii) passes a removed dim at −0.000 |
+| H12 FRAME1 | frame 1's PNGs are checked against their own pass-5 bank, with the gap to Reg11's pair printed | ΔE_OK 0.0817 raw / 0.0545 veiled against 0.005 noise: a change of ground, not noise | — (the correction in P12-0 finding 4) |
+| GAMUT | the sRGB bound on a chroma-keeping dim | −0.163 (Chromium shell ground), −0.142 (GL ground) | — |
+
+**Departures, ruled:**
+- **Upheld:** H12's fixture departure (frame 1 read against its own bank). FV11's refusal of a WebKit-only flat dim (E-2). BV11's added tone plant. The battery seat's resumption after the reboot, with a `cmp` of the worktree patch against `floor-v11.patch`.
+- **Recorded at no cost:** BV11 started a `--light` call of `BV11-frames.mjs` while its own `frames-wk` held the WebKit queue. The call sat unadmitted for 37 min, was stopped by hand, and produced no record. It was re-run as `compose` and admitted at once.
+
+**The machine law held.** Every phase ran under `guarded` as the literal command word. Browser runs never ran `--light`. Each WebKit capture group was its own `--exclusive webkit --timeout 60` admission, with one browser per run and every context closed in `capture.mjs`'s `finally`. vitest ran with `--maxWorkers=2`. No `guarded` refusal fired. The pass stopped cleanly at the 01:06 zone hold (12.0M) and resumed after the reboot. Every pass-12 worktree is removed and pruned.
+
+### P12-2.2 · Rulings on measurement (the owner may override any)
+
+| id | rows or gate | ruling | evidence |
+|---|---|---|---|
+| **R-37** | 12, 23, 19 (Playwright WebKit dark-veil legs) | **O-103b, operationalised.** The R-32 (iii) and M-9 dark-veil legs in Playwright WebKit are printed as reports with O-103b's wording and the measured raw → veiled pair. Chromium gates the arm. **The report is guarded by an engine-fact check, so it cannot hide a regression (E-2).** The leg is a report only while the same capture shows the engine painting no blur: the dark veil reads raw = veiled to the bit on the spot and on the page. If Playwright WebKit ever reads a veiled ≠ raw pixel there, the leg is a gate again with no new ruling (O-103b's last clause), and a red counts | O-103b; BV11 §2, §5; Crit §2.1 (5 readings, raw = veiled to the bit) |
+| **R-38** | 19 (H12-1's page leg) | **R-32 (iii) reads ΔL rounded to 3 decimals before the sign.** A page that reads −0.000 is not dimmed and FAILs (iii). No new threshold is invented: M-9's ≤ −0.02 floor stays row 12's, and (iii) stays "it dims". The plant is the tone plant, which must red (iii) on the page | Crit §3, §7 C-1; BV11 §4.2 |
+| **R-39** | none (a reading) | **R-32's chroma claim is gated on the spot and reported over the field.** The per-pixel field reading (`crit-offspot.mjs`) is reported each time the dark veil's bytes move. Off-orange hues (violet, blue, teal) are reported, never gated, unless the owner extends O-103a beyond the spot. FV11's model predicts C× 0.900-0.934 and 4-5° there, from the medium's `saturate(1.5)` clip that every rung already carries | Crit §2.2, §7 C-2 |
+
+R-32..R-36 stand as Reg11 P11-2.2 ruled them. R-32's "both engines" clause is read under O-103b and R-37.
+
+---
+
+## P12-3 · The minor split v10, measured against W-0.1 G1-G7 and W-0.11 G1-G6
+
+### P12-3.1 · The gates
+
+The build (MS10 §0): `minor-split-v10.patch` (61 files, sha1 `2aa0e5c9`) = the minor v9c + `crit-minor-proposed.diff` (`cmp` exact). The minor v9c is the minor v9 + `MS9-seat-proposed.diff`. The patch-of-patches is four comment lines. Specimen CSS 398,432 B `e11613c3eeb45cab`, built by the seat and again by the critic, equal to the minor v9's, so every paint verdict carries.
+
+| gate | verdict | basis |
+|---|---|---|
+| **W-0.1 G1** M-1 | **PASS** over paper (11/11 both engines); off paper 48/66 grey, **accepted** and reported (O-103) | carried |
+| **G2, G3** O-66 | **PASS** | carried; HOV 58 read fresh |
+| **G4** W-A light | **PASS** (108/108) | carried |
+| **G5** scope | **PASS**: roster 289 = 289, `terminal CLEAN` with the datum rebound; the ratchet owes **+2,333 B** over the 10.1.0 datum 2,919,057 | MS10 §4 |
+| **G6** per R-9 | **PASS** (13 dark composites, ΔE 0.0000) | carried |
+| **G7** M-2, M-3 halves | **PASS**, 0 regressions | carried |
+| **W-0.11 G1-G4** | **PASS**: census 0; 10.1.0 `2/2/5/9` | read fresh |
+| **W-0.11 G5, G6** | **PASS** | as G5; carried |
+| units | 239 files, **2321 passed**, 0 failed | MS10 §0 |
+| light-law prose | DEL PASS 54; the list PASS 368 (347 true, 21 reported); **0 false printed lines**; both pass-11 deltas built | MS10 §3, Crit §6 |
+
+R-32 does not touch the minor. The minor carries neither R-2 nor R-32, and the dark arm stays W-H.2's (P5-3.3).
+
+### P12-3.2 · The minor-split table: amendments to P5-3.3
+
+P5-3.3 stays the one table (P-3), as amended through P11-3.2. Pass 12 amends one row and adds one note:
+
+| row | amendment | lands in |
+|---|---|---|
+| light-law prose | **built** as the minor v10 (R-29, `glass-subtlety.test.ts:193-194`, `grasp.css:136-137`); no delta pending | W-0.1 |
+| the dark focus veil | **R-32 (accepted, O-103b)** is the dark arm of record. It replaces R-2 in the W-H.2 landing, with L-1 and L-2 in that landing's docs | W-H.2 |
+
+### P12-3.3 · Can W-0.1 and W-0.11 ship from the minor v10 in 10.2.0? Not yet
+
+Every gate passes on the minor v10. What remains:
+1. **The entry gate** (W-0.1 §3, W-0.11 §3.3): **1 of 2** clean passes after pass 12. The charter's other clauses are met: at least three full passes (twelve), zero open gaps on floor v11, and survival of a fresh adversarial critic that did not author the build. Pass 13 must also be clean.
+2. **D2 must converge.** O-103 gives the 10.2.0 go "once D2 and D3 converge". D2 reads B′ 29/38 under O-103 at its pass-6 H6 bank, so **D2, not D3, is the binding constraint on 10.2.0's date**.
+3. **`release/10.1.1` (published 10.1.1) and the `release/10.1.2` line merge into master.** The minor then rebases, its raw identity re-anchors on the new base, and it owes its own two-engine battery. Its G5 ratchet figure is re-read against the merged datum (10.1.1 rebound it to 2,925,581), not the +2,333 B over 10.1.0.
+4. **The landing's own items, unchanged** (MS10 §5.3 item 4): R-9's reading enters W-0.1 §5 G6; G1's text reads Q-11's ruling; each gate binds to one probe (`scripts/probes/band-0/*` still absent); `.bundle-ratchet` rebinds.
+5. **The landing docs pass** (MS10 §5.3 item 5), unchanged by pass 12. L-1, L-2 and the trailing whitespace at `floor-v11.patch:1266` go to the W-H.2 landing docs, because they sit in floor bytes.
+
+**Earliest landing for both: the close of pass 13 if it is clean, and in practice D2's convergence.**
+
+---
+
+## P12-4 · What the owner must rule
+
+**No question gates pass 13.** Row 23 is closed by O-103b. The F-1 sheet (`pass-12/F1-SHEET.md`) is a record confirmation, not an open ask. It names the frames and the numbers O-103b accepted, and it asks the delegate to re-accept or decline in words. A decline reopens row 23 and makes pass 13 build the arm the words name, which resets the two-clean count to 0.
+
+| id | ask | if no answer | answering it changes |
+|---|---|---|---|
+| **F-1′** | Confirm O-103b's acceptance of `pass-12/frames-Q14/chromium-dark-aurora-state-veil-r2-vs-r32.png` (re-accept), or decline it in words | O-103b stands. Row 23 stays closed and pass 13 proceeds | a decline reopens row 23 |
+| **D-1′** | Confirm `value-js-ed` (after `value-js-a9`, after `value-js-01`) as the owner's delegate | O-103b is read as the delegate's, as the cursor (14:50), MS10 and Crit read it | nothing by itself |
+| C-2 (optional) | Should O-103a's "keep chroma" extend beyond the orange spot to every hue the veil covers? | R-39: reported, not gated | if yes, a multi-hue veiled cell becomes a gate under R-32 (ii), and pass 13 would need a build only if it reds |
+
+**Owner actions, recorded:** the safaridriver checkbox is not granted (O-103). Real Safari, the one engine here that paints the dark arm besides Chromium, is UNMEASURED, and that is the arm's largest unmeasured cell. The 10.2.0 go is given on convergence (O-103). **Not owner questions:** R-37..R-39, C-1, C-3, C-4, L-1, L-2.
+
+---
+
+## P12-5 · Next-pass defect classes, placed
+
+The checklist stays at 44 rows. No class here holds a row.
+
+| id | class | found by | placed |
+|---|---|---|---|
+| **C-1** | H12-1's page leg (iii) is a strict ΔL < 0, so it passes a removed dim at −0.000 | BV11 §4.2, Crit §3 | **ruling R-38**; **instrument H13-1** (round to 3 decimals before the sign). **Plant:** the tone plant reds (iii) on the page |
+| **C-2** | R-32's chroma is measured only on raw hues 30-90°; the model predicts 0.900-0.934 and 4-5° on violet and blue | Crit §2.2 | **ruling R-39** (reported); **instrument H13-3**: a veiled multi-hue cell, per-pixel C× and Δh reported by `crit-offspot.mjs` promoted into `harness/`; **owner: C-2 (optional)** |
+| **C-3** | `plant-R2` reds by 0.003 on floor v11; R-32's own plant lives in a pass dir | BV11 §4.1, Crit §7 | **instrument H13-2**: join `BV11-plant-r32-notone.css` to `pass-4/FV3-plants.mjs`'s table as the dark arm's mechanism plant. `plant-R2` stays, reported with its margin |
+| **C-4** | the GL-ground half of `dark-arm.css:297-299` (−0.090, 1.3°, ×1.044) has no engine here that paints it | BV11 §2, Crit §7 | **landing docs L-1** (W-H.2). A WebGPU-ground Chromium cell, only if one is ever run under the GPU witness |
+| — | the Playwright WebKit dark-veil legs cannot read the arm | FV11 §2.3, BV11 | **ruled O-103b**; **R-37** keeps the report from hiding a regression |
+| — | the registry's frame-1 pair named the wrong ground | H12 §2.1 | **corrected here** (P12-0 finding 4) |
+| — | L-1, L-2, `floor-v11.patch:1266` trailing whitespace | Crit §4, §7; OWED | **W-H.2 landing docs** |
+| — | the sweep keys on the line, not the sentence | OWED | reading, as R-21 (b) and R-34 already scope it; no instrument |
+| — | a `--light` call queued behind its own seat's WebKit lock | BV11 §1 | **driver:** launch a seat's no-browser composition only after its WebKit group ends |
+| — | `release/10.1.1` and `release/10.1.2` stay unmerged while D3's patches are cut against 10.1.0 | P11-5, FORMATION-PROGRESS | **driver**; see P12-6.2 |
+| — | the minor's dark Close rings under 3.0 | MS5 §4.1 | **W-H.2's**, unchanged |
+| — | LIT's 19 inherited literals | H5 §3.3 | relays, as P5-5 placed them |
+| I-5 | the two-ground α estimator; W-S blind to a lie on an inert claim | P3-2 | C″'s bank entry, unchanged |
+| — | the pass-11 landing docs list (MS10 §5.3 item 5) | — | landing docs pass, unchanged |
+
+---
+
+## P12-6 · Pass-13 plan
+
+### P12-6.1 · When pass 13 launches
+
+**Now, on the rulings in INBOUND.** No owner question gates it (P12-4). Every seat re-checks INBOUND and FORMATION-PROGRESS on start and on resume, and a ruling found there replaces what this part says. **If F-1′ arrives as a decline, pass 13 instead builds the arm its words name.** The two-clean count then resets to 0, and this plan's battery runs on that build.
+
+### P12-6.2 · Routes and base
+
+| route | centre | judged on |
+|---|---|---|
+| **floor v11** (no new paint build) | the bound, static ink, FL-1..FL-16, the dark focus veil | **THE SAME 44 ROWS** (24 core + FL-1..FL-16 + N-1..N-4). None is added, struck or renamed. Rows 20 and FL-12 read under R-21 (b) and R-34. Row 23 under R-32, O-103b and R-37 |
+| **the minor v10** (a build, not a route) | unchanged | raw identity re-proved; on a moved base, its own two-engine battery (below) |
+| C″, D3-G, D3-BF, D3-D | BANK / BLOCK / BANK | not run unless a re-trigger fires |
+
+**BASE.** Every pass-13 build is cut against HEAD of master at its seat's launch, and every seat header says so. The merge of `release/10.1.1` (and `release/10.1.2` once tagged) is the driver's call, under the cursor's rule that it waits until the live design passes close. **The merge never happens while pass 13 runs.** So pass 13 has one base, recorded at launch:
+- **(a) Base still 10.1.0 source** (`git diff --stat 1da7eb17b HEAD -- src demo tests package.json` empty): floor v11 and the minor v10 re-prove raw identity to `4f56c2631ab5cdd4` and `e11613c3eeb45cab`. The battery re-runs in full in both engines, because a clean pass is measured, never carried. After convergence, the merge and the minor's rebase become W-0.1 landing items (P12-3.3 item 3).
+- **(b) Base moved (the merge landed between passes):** `git apply --check` for both patches, a rebase where it fails, the light proof against the new HEAD bite, the full two-engine battery on floor v11 **and** on the minor v10, and the toolchain on both. A rebase that moves a paint byte outside the merged files counts as a build, and its seat and critic read its lines under R-34. The registry recommends (b) if the merge is ready before pass 13 launches, so that the two clean passes and the landing share a base, and W-0.1 lands on bytes the loop measured.
+
+### P12-6.3 · Order
+
+**The browser law:** every WebKit capture group is its own `guarded --exclusive webkit --timeout 60` admission. Witnesses run `--light` only when they launch no browser, and never while their own seat's WebKit group waits. One browser per run, with every page and context closed in a `finally`. A cell not admitted in 90 min is OWED, is recorded as owed, and **holds pass 13 not clean** (it cannot count as the second clean pass on an unmeasured cell).
+
+1. **H13** (static, `--light`): H13-1 (R-38, with the tone plant as its plant), H13-2 (the tone plant joined to `FV3-plants.mjs`), H13-3 (the field reader in `harness/`, ungated), and R-37's engine-fact guard in M-9. Self-test H6..H13. These are instruments. They move no row and no paint byte.
+2. **Floor v11, re-measured** on the base recorded at launch (P12-6.2 (a) or (b)): byte proof, DEL, the list under `FV11-rulings.json` (PASS 207), LAW, census 0, HOV, the ladder `diff`, the toolchain. Then the **full battery in both engines**, H12-1/H13-1 `--r32` on the spot and the page, R-37's check, H13-3's field reading, every plant (the tone plant reds), and every red re-run twice.
+3. **The minor v10**: raw identity on (a); its own battery and toolchain on (b).
+4. **The critic**, one fresh adversarial seat that authored nothing in D3's pass 13. It checks the 44 rows, R-37's guard (a plant: a capture where Playwright WebKit's dark veil reads veiled ≠ raw must turn the report into a gate), H13's plants, R-34's scope on any rebase lines, and the minor's gates. It may not add rows. Under R-21 (b), a later false line goes to the next comment-only build.
+5. **The agglomeration.**
+
+### P12-6.4 · What would make pass 13 clean
+
+Floor v11 at **0 open rows of 44** on pass 13's own battery in both engines, with every cell admitted. Rows 20 and FL-12 hold under R-21 (b) and R-34. Row 23 holds under R-32 (i)-(iii) in Chromium, the WebKit legs reported under R-37 (engine fact confirmed in the same capture), and no decline of F-1′.
+
+### P12-6.5 · What would end the loop
+
+- **If pass 13 is clean: D3 converges** (two consecutive clean passes, 12 and 13). Floor v11 is then D3's converged specification. The convergence record names floor v11 (`8f838dcf`, CSS `4f56c2631ab5cdd4`), the minor v10 (`2aa0e5c9`, CSS `e11613c3eeb45cab`) and the base they were measured on. W-0.1's light arm and W-0.11's tokens land through the minor split (P5-3.3 as amended through P12-3.2) in 10.2.0, once D2 converges and the P12-3.3 items are done. R-32's dark arm lands in the W-H landing (W-H.2).
+- **If pass 13 opens a row,** the count resets to 0. Pass 14 builds to the red, on the same 44 rows.
+- **If F-1′ declines,** row 23 reopens. Pass 13 builds the named arm, and the count resets.
+- **If the owner overrides R-37** (WebKit legs as gates), row 23 cannot close in this engine on any arm the rulings allow (FV11 §2.3). It then waits on the safaridriver checkbox or a ruling.
