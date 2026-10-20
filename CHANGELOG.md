@@ -2,11 +2,12 @@
 
 ## 10.1.1 — 2026-10-19
 
-Four cures and one owner-ruled addition; one owner row returned open (O-102 (6), below). Asked by the atlas consumer (U batch
+Four cures, one guarded row and one owner-ruled addition. Asked by the atlas consumer (U batch
 G-1 to G-3, `docs/tranches/BK/coordination/ATLAS-TO-GLASS-2026-10-17-U-BATCH.md` and its
 addendum) and by the owner through value.js (records: `docs/tranches/BL/audit/INBOUND.md`
-O-99, O-99a, O-102, O-102b). `MIGRATION.md` §10.1.1 lists the behaviour a consumer may
-notice. Each witness below fails on the 10.1.0 bytes and passes on these; the engine
+O-99, O-99a, O-102, O-102b, O-102c). `MIGRATION.md` §10.1.1 lists the behaviour a consumer may
+notice. Each witness below fails on the 10.1.0 bytes and passes on these, except the O-102 (6)
+guard, which passes on both; the engine
 witnesses are `tests-visual/release-10-1-1.spec.ts` (harness `tests-visual/release-10-1-1/`),
 run in Chromium (desk and coarse projects) and Playwright WebKit 2287
 (`tests-visual/webkit-2287.config.ts`; 2311 crashes on any dock page, atlas N-1), at 1440
@@ -52,19 +53,26 @@ and 390 where width matters.
   clock, `linear`, compositor-only. Its profile has no transparent run, so a narrow tile
   carries moving ink for the whole cycle. Ink only: the foreground at the `--ink-seam` rung, no
   hue. Static under `prefers-reduced-motion`, paused while the tile is off-screen or the
-  document is hidden, absent under forced colors. The A-9 decline note in `Skeleton.vue` now
+  document is hidden, absent under forced colors. The sheen layer is anchored and sized on the same physical axis
+  it travels, so under `dir="rtl"` it covers the tile through the whole cycle, with no seam
+  and no flat chip. The A-9 decline note in `Skeleton.vue` now
   records the ruling. Demo: Feedback › Skeleton › shimmer. Engine: "Skeleton · shimmer
-  travels…" and "…holds still under reduced motion".
-- **Not cured here: the clipped dock popover (O-102 (6)), returned to the owner.** The
-  plate clipped in frame 12.51.30 is fourier's timeline caret, an absolutely positioned
-  float inside the dock run. The run is a scroll port (`dock/styles/run.css`), and a
-  scroll port clips its cross axis by CSS rule, so every float a seat hangs above itself is
-  cut, on 10.1.0 and 10.1.1 alike. Glass's own overlays escape it: a Popover or Tooltip
-  from a seat is unclipped at 390 and 1440, portalled or not (engine guard "O-102(6) · a
-  popover opened from a seat is not clipped", green on both versions), and fourier now
-  renders the caret as a portalled Tooltip anchored to the thumb. The root, a run that
-  does not clip its seats' cross-axis overhang, is dock run geometry, and whether glass
-  takes it, and in which vehicle, is the owner's call.
+  travels…", "…the shimmer layer covers the tile through its whole cycle (ltr, rtl)" and
+  "…holds still under reduced motion".
+- **Floats opened from a dock seat portal out of the run (O-102 (6), a guard).** The plate
+  clipped in frame 12.51.30 was fourier's timeline caret, an absolutely positioned float
+  inside the dock run. The run is a scroll port (`dock/styles/run.css`) and clips its
+  cross axis, so a consumer's own float inside it is cut. Fourier cured its caret by
+  moving it to glass's portalled Tooltip (976a704). The owner-delegate closed the row on
+  that cure (O-102c), on condition that every glass float a seat may host portals by
+  default, outside the run. Each already does, so no source changes. 10.1.1 ships the
+  guard for that condition, and the guard is green on 10.1.0 too. Tooltip, Popover, its
+  hover arm (HoverCard), DropdownMenu and its submenu, and the Select content are each
+  opened from a seat with no portal prop. Each lands outside `.dock-run`, unclipped at 390
+  and 1440, and so does Popover with `portal: false`. Guard:
+  `tests/components/custom/dock/GlassDock.seat-floats-portal.test.ts`; engine: "O-102(6)
+  · a … opened from a seat is portalled out of the run and not clipped". A run that
+  stops clipping overhang is the dock-run geometry of 10.2.0 (D2).
 
 ## 10.1.0 — 2026-09-24
 
