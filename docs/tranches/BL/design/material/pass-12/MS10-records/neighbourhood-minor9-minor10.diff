@@ -1,0 +1,16 @@
+602,606c602,606
+< src/styles/glass/grasp.css:133 [above the --glass-veil-rung declaration (:139)] |        plate. `@utility glass-plate` composes both names as the veil's alpha (the clamp
+< src/styles/glass/grasp.css:134 [above the --glass-veil-rung declaration (:139)] |        in glass/veil.css); `glass/liquid-fill.css` — the slider's host, which paints a
+< src/styles/glass/grasp.css:135 [above the --glass-veil-rung declaration (:139)] |        tinted MIX and no veil — declares `--glass-veil-rest: 1` and scales its tint
+< src/styles/glass/grasp.css:136 [above the --glass-veil-rung declaration (:139)] |        strength by the rung, so `rung ÷ rest` runs the same 1 → 0.6 there and "sheds 40%
+< src/styles/glass/grasp.css:137 [above the --glass-veil-rung declaration (:139)] |        of its ink" is a paint fact on BOTH shipped consumers rather than prose on one. */
+---
+> src/styles/glass/grasp.css:133 [above the --glass-veil-rung declaration (:139); sentence of :137] |        plate. `@utility glass-plate` composes both names as the veil's alpha (the clamp
+> src/styles/glass/grasp.css:134 [above the --glass-veil-rung declaration (:139); sentence of :137] |        in glass/veil.css); `glass/liquid-fill.css` — the slider's host, which paints a
+> src/styles/glass/grasp.css:135 [above the --glass-veil-rung declaration (:139); sentence of :137] |        tinted MIX and no veil — declares `--glass-veil-rest: 1` and scales its tint
+> src/styles/glass/grasp.css:136 [above the --glass-veil-rung declaration (:139); sentence of :137] |        strength by the rung, so `rung ÷ rest` runs 1 → 0.6 there and the fill sheds 40%
+> src/styles/glass/grasp.css:137 [above the --glass-veil-rung declaration (:139); carries "bound"] |        of its strength in paint; the dock keeps the bound in light and sheds 40% in dark. */
+1406c1406
+< NEIGHBOURHOOD lines=1363 files=59 declared=60 fallback=5 alias-prose=6 relation=361
+---
+> NEIGHBOURHOOD lines=1363 files=59 declared=60 fallback=5 alias-prose=6 relation=362

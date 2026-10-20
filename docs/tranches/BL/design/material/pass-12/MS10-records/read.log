@@ -1,0 +1,192 @@
+== minor9 grasp.css:128-140
+1+127	       any ground; what comes forward under the finger is the carrier's dilated optic.
+2+127	       The dark ink ladder declares 0 and sheds the whole band, and so does a host that
+3+127	       paints no plate.
+4+127	
+5+127	       THE PAIR IS A RATIO, NOT AN ALPHA, so the band holds on a host that is not a
+6+127	       plate. `@utility glass-plate` composes both names as the veil's alpha (the clamp
+7+127	       in glass/veil.css); `glass/liquid-fill.css` — the slider's host, which paints a
+8+127	       tinted MIX and no veil — declares `--glass-veil-rest: 1` and scales its tint
+9+127	       strength by the rung, so `rung ÷ rest` runs the same 1 → 0.6 there and "sheds 40%
+10+127	       of its ink" is a paint fact on BOTH shipped consumers rather than prose on one. */
+11+127	    [data-held]:has(> .glass-grasp-carrier[data-grasp="grasp"]) {
+12+127	        --glass-veil-rung: max(calc(var(--glass-veil-rest) * 0.6), var(--glass-veil-floor));
+13+127	    }
+== minor10 grasp.css:128-140
+1+127	       any ground; what comes forward under the finger is the carrier's dilated optic.
+2+127	       The dark ink ladder declares 0 and sheds the whole band, and so does a host that
+3+127	       paints no plate.
+4+127	
+5+127	       THE PAIR IS A RATIO, NOT AN ALPHA, so the band holds on a host that is not a
+6+127	       plate. `@utility glass-plate` composes both names as the veil's alpha (the clamp
+7+127	       in glass/veil.css); `glass/liquid-fill.css` — the slider's host, which paints a
+8+127	       tinted MIX and no veil — declares `--glass-veil-rest: 1` and scales its tint
+9+127	       strength by the rung, so `rung ÷ rest` runs 1 → 0.6 there and the fill sheds 40%
+10+127	       of its strength in paint; the dock keeps the bound in light and sheds 40% in dark. */
+11+127	    [data-held]:has(> .glass-grasp-carrier[data-grasp="grasp"]) {
+12+127	        --glass-veil-rung: max(calc(var(--glass-veil-rest) * 0.6), var(--glass-veil-floor));
+13+127	    }
+== minor9 glass-subtlety.test.ts:190-198
+
+    it("paints the light veil as the `--card` pole and DIMS in dark with a near-black ink", () => {
+        // Light: the plate is the theme's own ground at α, so it never darkens toward a
+        // near-black ink over paper (O-62). Dark: the sign law holds, the rung darkens
+        // what is behind it.
+        expect(light.get("--glass-veil-ink")).toBe("var(--card)");
+        const darkInk = declMap(darkArm).get("--glass-veil-ink")!;
+        expect(Number.parseFloat(darkInk.match(/oklch\(\s*([\d.]+)/)![1])).toBeLessThan(0.5);
+    });
+== minor10 glass-subtlety.test.ts:190-198
+
+    it("paints the light veil as the `--card` pole and DIMS in dark with a near-black ink", () => {
+        // Light: the plate is the theme's own ground at α, so it never darkens toward a
+        // near-black ink over paper (O-62). Dark: the ink stays near-black (L 0.17 < 0.5,
+        // asserted below), never the cream foreground.
+        expect(light.get("--glass-veil-ink")).toBe("var(--card)");
+        const darkInk = declMap(darkArm).get("--glass-veil-ink")!;
+        expect(Number.parseFloat(darkInk.match(/oklch\(\s*([\d.]+)/)![1])).toBeLessThan(0.5);
+    });
+== minor10 shell.css:140-152
+           never self-match, so this declaration is inert for the dock's OWN plate). */
+        --glass-backdrop: light;
+        /* The plate's morph endpoints are INK RUNGS, not composed colours: the plate
+           lerps its own veil alpha between them and composes the colour at the element
+           (dock/dock.css), which is what lets the observer's measured luminance reach
+           the paint. A `--glass-plate-*` colour endpoint bakes `:root`'s luma and
+           cannot. */
+        --dock-plate-collapsed-tier: var(--glass-veil-wash);
+        --dock-plate-collapsed-border: var(--glass-border-floating);
+        --dock-plate-expanded-tier: var(--glass-veil-dock);
+        --dock-plate-expanded-border: var(--glass-border-dock);
+        /* `contain: layout style` — the restyle-scope axes ONLY; `paint` is NOT in the
+           value and `.glass-dock` is NOT a clip aperture.
+== minor10 shell.css veil reads
+grep: --include=shell.css: No such file or directory
+/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p12/minor10/trees/minor10/src/styles/glass/veil.css:103:        --glass-veil-tier: var(--glass-veil-wash);
+/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p12/minor10/trees/minor10/src/styles/tokens/dark-arm.css:279:    --glass-veil-wash:     calc(var(--glass-veil-base) - 2 * var(--glass-veil-step));
+/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p12/minor10/trees/minor10/src/styles/tokens/dark-arm.css:287:    --glass-veil-dock:     calc(var(--glass-veil-base) - 1 * var(--glass-veil-step));
+/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p12/minor10/trees/minor10/src/styles/tokens/glass.css:54:    --glass-veil-wash:     var(--glass-veil-base);
+/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p12/minor10/trees/minor10/src/styles/tokens/glass.css:143:    --glass-veil-dock:    var(--glass-veil-base);
+/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p12/minor10/trees/minor10/src/styles/tokens/glass.css:182:    --glass-plate-wash:     color-mix(in srgb, oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-wash))     calc(var(--glass-level) * 100%), var(--card));
+/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p12/minor10/trees/minor10/src/styles/tokens/glass.css:189:       luminance can reach. The ink rung `--glass-veil-dock` above is the live one. */
+/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p12/minor10/trees/minor10/src/components/dock/styles/shell.css:147:        --dock-plate-collapsed-tier: var(--glass-veil-wash);
+/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p12/minor10/trees/minor10/src/components/dock/styles/shell.css:149:        --dock-plate-expanded-tier: var(--glass-veil-dock);
+/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p12/minor10/trees/minor10/src/components/dock/styles/shell.css:436:       re-declared here as the dock/wash pair — the SAME `--glass-veil-dock` /
+== minor10 tokens/glass.css:45-60, :140-158
+       every rung (tokens/dark-arm.css).
+
+       THE SUBSTITUTION-VS-INHERITANCE SEAM: the composed `--glass-plate-{rung}` colors
+       below resolve at THIS `:root`, so re-pointing `--glass-veil-base` on a DESCENDANT
+       does not re-compose an inherited plate color. A per-scope retune composes the
+       plate AT the element — `@utility glass-plate` (glass/veil.css) is that seam. */
+    --glass-veil-base: var(--glass-bound);
+    --glass-veil-step: calc((1 - var(--glass-bound)) / 3);
+
+    --glass-veil-wash:     var(--glass-veil-base);
+    --glass-veil-quiet:    calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
+    --glass-veil-resting:  calc(var(--glass-veil-base) + 2 * var(--glass-veil-step));
+    --glass-veil-floating: var(--glass-veil-base);
+    --glass-veil-overlay:  calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
+
+    /* THICKNESS — the rung's radius. The band is [6, 20], strictly ascending, each
+         dialog   α 1        the room: its plate composes over the modal scrim, and any
+                             thinner α transmits that scrim as grey */
+    --glass-veil-chassis: var(--glass-veil-base);
+    --glass-veil-dock:    var(--glass-veil-base);
+    --glass-veil-crown:   var(--glass-veil-base);
+    --glass-veil-dialog:  1;
+    --glass-veil-sheet:   calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
+
+    /* THE HELD FLOOR (glass/grasp.css). A held light plate sheds toward 0.6 × its rest
+       α and never below the bound: it still carries text, so it keeps the α that holds
+       that text over any ground, and what comes forward under the finger is the
+       carrier's dilated optic. The dark ink ladder sheds the whole band
+       (tokens/dark-arm.css), and a grasp host that paints no plate declares 0
+       (glass/liquid-fill.css). */
+    --glass-veil-floor:   var(--glass-bound);
+
+    /* The dock control's foreground base — a complete `hsl()` color consumed via
+       `var()`; for the muted icon weight the control mixes it down with
+       `--opacity-icon-muted`. A dock over an animated field sits on a shifting
+== minor10 dark-arm.css:270-298
+       rung; every rung is arithmetic on base and step.
+
+       (The state veils are the exception, and they are governed elsewhere: a grasp or
+       selection veil moves AWAY from the plate, which in dark means lighter. That is a
+       STATE law, not the medium's.) */
+    --glass-veil-ink:  oklch(0.17 0.03 70);
+    --glass-veil-base: 0.18;
+    --glass-veil-step: 0.04;
+
+    --glass-veil-wash:     calc(var(--glass-veil-base) - 2 * var(--glass-veil-step));
+    --glass-veil-quiet:    calc(var(--glass-veil-base) - 1 * var(--glass-veil-step));
+    --glass-veil-resting:  var(--glass-veil-base);
+    --glass-veil-floating: calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
+    --glass-veil-overlay:  calc(var(--glass-veil-base) + 2 * var(--glass-veil-step));
+    /* The off-ladder footprints in steps off resting: dock −1, crown +1, dialog +1,
+       sheet +2, chassis −2. */
+    --glass-veil-chassis:  calc(var(--glass-veil-base) - 2 * var(--glass-veil-step));
+    --glass-veil-dock:     calc(var(--glass-veil-base) - 1 * var(--glass-veil-step));
+    --glass-veil-crown:    calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
+    --glass-veil-dialog:   calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
+    --glass-veil-sheet:    calc(var(--glass-veil-base) + 2 * var(--glass-veil-step));
+    /* The held floor (glass/grasp.css): the dark ink ladder sheds the whole band, 0.6 ×
+       rest, so its floor is 0. The light arm holds its plates at the bound
+       (tokens/glass.css). */
+    --glass-veil-floor:    0;
+
+    /* The FOCUS-VEIL dim, DARK arm (glass/focus-veil.css; the light arm is the plain
+       per-mode pair in tokens/glass.css). A plain `.dark` re-declaration, never a
+       `light-dark()` fold — the dim is one leg of a per-mode pair and the fold is the
+== minor10 veil.css:66-92
+   every state. It is not a backdrop root, so the carriers still sample the ground.
+   Measured: the held floating plate's well read 2.64:1 over black without it and 3.28
+   with it (D3 pass 5, light, Chromium). */
+@utility glass-plate {
+    --glass-veil-rest: clamp(
+        var(--glass-veil-tier, var(--glass-veil-resting)),
+        calc(
+            var(--glass-veil-tier, var(--glass-veil-resting)) + 2 *
+                var(--glass-veil-step) *
+                max(
+                    0,
+                    (var(--glass-backdrop-luma, 0) - var(--glass-backdrop-luma-knee)) /
+                        (1 - var(--glass-backdrop-luma-knee))
+                )
+        ),
+        calc(
+            var(--glass-veil-tier, var(--glass-veil-resting)) + 2 *
+                var(--glass-veil-step)
+        )
+    );
+    --glass-veil-rung: var(--glass-veil-rest);
+    --glass-veil: color-mix(
+        in srgb,
+        oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-rung))
+            calc(var(--glass-level) * 100%),
+        var(--card)
+    );
+== minor10 liquid-fill.css veil-rest / rung reads
+24:           scaled at paint by the grasp register's `--glass-veil-rung` (below).
+44:           The register moves ONE scalar, `--glass-veil-rung`, between the host's rest
+48:           and reads the RATIO. `--glass-veil-rest: 1` is that: the fill's rest ink is
+57:           envelope (`--glass-veil-rung` is `@property`-registered `<number>`,
+59:        --glass-veil-rest: 1;
+60:        --glass-veil-rung: var(--glass-veil-rest);
+73:                calc(var(--liquid-fill-strength, 88%) * var(--glass-veil-rung)),
+91:        /* NO background channel in this shorthand. The ink rides `--glass-veil-rung`
+== every consumer of the grasp register (data-grasp, glass-grasp-carrier) in src/ demo/
+src/styles/glass/grasp.css
+src/components/slider/Slider.vue
+src/components/dock/GlassDock.vue
+src/components/dock/styles/dock.css
+== every reader of --glass-veil-rung / --glass-veil-floor in src/
+src/styles/glass/liquid-fill.css:62:        --glass-veil-floor: 0;
+src/styles/glass/liquid-fill.css:73:                calc(var(--liquid-fill-strength, 88%) * var(--glass-veil-rung)),
+src/styles/glass/grasp.css:139:        --glass-veil-rung: max(calc(var(--glass-veil-rest) * 0.6), var(--glass-veil-floor));
+src/styles/glass/veil.css:89:        oklch(from var(--glass-veil-ink) l c h / var(--glass-veil-rung))
+src/styles/tokens/dark-arm.css:294:    --glass-veil-floor:    0;
+src/styles/tokens/glass.css:154:    --glass-veil-floor:   var(--glass-bound);
+== old phrases (expect minor9 only) / new phrases (expect minor10 only)
+minor9: old 'paint fact on BOTH' 1, new 'keeps the bound in light' 0, old 'the rung darkens' 1, new 'never the cream foreground' 0
+minor10: old 'paint fact on BOTH' 0, new 'keeps the bound in light' 1, old 'the rung darkens' 0, new 'never the cream foreground' 1

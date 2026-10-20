@@ -1,0 +1,16 @@
+applied minor-split-v9 + MS9-seat + crit-minor (each --check exit 0 on its predecessor)
+back to HEAD
+git apply --check minor-split-v10.patch at HEAD: exit 0
+minor-split-v9c.patch + crit-minor = minor-split-v10.patch: cmp exit 0
+back to HEAD
+minor-split-v10.patch: sha1 2aa0e5c9, 61 files, +716/-539, 175419 B
+path list minor v9 = minor v10: exit 0
+-- patch-of-patches: every +/- line that differs between minor v9 and minor v10 (only comment lines may)
+m9->m10  > -       strength by the rung, so `rung ÷ rest` runs the same 1 → 0.6 there and "sheds 40%
+m9->m10  > -       of its ink" is a paint fact on BOTH shipped consumers rather than prose on one. */
+m9->m10  > +       strength by the rung, so `rung ÷ rest` runs 1 → 0.6 there and the fill sheds 40%
+m9->m10  > +       of its strength in paint; the dock keeps the bound in light and sheds 40% in dark. */
+m9->m10  < +        // near-black ink over paper (O-62). Dark: the sign law holds, the rung darkens
+m9->m10  < +        // what is behind it.
+m9->m10  > +        // near-black ink over paper (O-62). Dark: the ink stays near-black (L 0.17 < 0.5,
+m9->m10  > +        // asserted below), never the cream foreground.
