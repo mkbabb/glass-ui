@@ -1,0 +1,46 @@
+DEL fv11a (floor v10 decl+patch) exit 0: PASS (101 gated rows)
+DEL fv10s (floor v10 decl+patch) exit 0: PASS (101 gated rows)
+DEL fv10 (floor v10 decl+patch) exit 0: PASS (101 gated rows)
+DEL fv11a (floor v10 decl + floor-v11a.patch) exit 0: PASS (101 gated rows)
+DEL absent exit 2: FAIL (nothing read: no text file in scope)
+SWEEP fv11a-list exit 0: LIST (207 lines to read; no rulings given)
+SWEEP fv11a-crit exit 0: PASS (207 lines: 197 ruled true, 10 reported)
+SWEEP fv11a-crit-ownpatch exit 0: PASS (207 lines: 197 ruled true, 10 reported)
+SWEEP fv10s-plant exit 1: FAIL (1 unread, 0 stale of 207 lines)
+SWEEP fv11a-plant exit 1: FAIL (1 unread, 0 stale of 207 lines)
+SWEEP fv10s-under-crit exit 0: PASS (207 lines: 197 ruled true, 10 reported)
+SWEEP fv10-under-crit exit 1: FAIL (2 unread, 2 stale of 207 lines)
+DEL minor9c (deletes-minor + minor v9 patch) exit 0: PASS (54 gated rows)
+DEL minor9cc (deletes-minor + minor v9 patch) exit 0: PASS (54 gated rows)
+DEL minor9 (deletes-minor + minor v9 patch) exit 0: PASS (54 gated rows)
+H7-3 minor9c exit 0: PASS (42 gated rows)
+SWEEP minor9c-list exit 0: LIST (368 lines to read; no rulings given)
+SWEEP minor9c-crit exit 0: PASS (368 lines: 347 ruled true, 21 reported)
+SWEEP minor9c-crit-ownpatch exit 0: PASS (368 lines: 347 ruled true, 21 reported)
+SWEEP minor9c-plant exit 1: FAIL (1 unread, 0 stale of 368 lines)
+SWEEP minor9cc-crit exit 0: PASS (368 lines: 347 ruled true, 21 reported)
+SWEEP minor9-under-crit exit 1: FAIL (1 unread, 0 stale of 369 lines)
+NBHD fv11a exit 0: PRINT (1593 lines in 73 files; not gated)
+NBHD fv10s exit 0: PRINT (1593 lines in 73 files; not gated)
+NBHD minor9c exit 0: PRINT (1363 lines in 59 files; not gated)
+-- grasp.css:128-135 in the fv11a print:
+src/styles/glass/grasp.css:130 [above the --glass-veil-rung declaration (:135); sentence of :133] |        (glass/veil.css); `glass/liquid-fill.css` — the slider's host, which paints a
+src/styles/glass/grasp.css:131 [above the --glass-veil-rung declaration (:135); sentence of :133] |        tinted MIX and no veil — declares `--glass-veil-rest: 1` and scales its tint
+src/styles/glass/grasp.css:132 [above the --glass-veil-rung declaration (:135); sentence of :133] |        strength by the rung, so `rung ÷ rest` runs 1 → 0.6 there and the fill sheds 40%
+src/styles/glass/grasp.css:133 [above the --glass-veil-rung declaration (:135); carries "bound"] |        of its strength in paint; the dock, a plate at the bound, keeps its α when held. */
+src/styles/glass/grasp.css:135 [declares --glass-veil-rung] |         --glass-veil-rung: max(calc(var(--glass-veil-rest) * 0.6), var(--glass-veil-floor, 0));
+-- the plants' unread lines:
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-12/OWED-records/sweep-fv10s-plant.log:✗ unread src/styles/glass/grasp.css:131 [word "tint"]
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-12/OWED-records/sweep-fv10s-plant.log:SWEEP lines=207 files=54 ruled=206 true=196 reported=10 unread=1 stale=0
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-12/OWED-records/sweep-fv10s-plant.log:FAIL (1 unread, 0 stale of 207 lines)
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-12/OWED-records/sweep-minor9c-plant.log:    >    18 |        LIGHT materials is unreadable, darken DYNAMICALLY like iOS 27") ─────────────
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-12/OWED-records/sweep-minor9c-plant.log:    >   107 |            materials is unreadable, darken DYNAMICALLY like iOS 27" — resolves to a
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-12/OWED-records/sweep-minor9c-plant.log:         81 |      * as a static sample: a missing or unreadable canvas reports `unavailable`.
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-12/OWED-records/sweep-minor9c-plant.log:✗ unread src/styles/glass/grasp.css:135 [word "tint"]
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-12/OWED-records/sweep-minor9c-plant.log:SWEEP lines=368 files=52 ruled=367 true=346 reported=21 unread=1 stale=0
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-12/OWED-records/sweep-minor9c-plant.log:FAIL (1 unread, 0 stale of 368 lines)
+LAW exit 0: PASS (88 gated rows)
+HOV fv11a exit 0: PASS (58 gated rows)
+census fv11a exit 0: LIGHTING-CENSUS stacked=0 halo=0 blur=0 open=0
+HOV minor9c exit 0: PASS (58 gated rows)
+census minor9c exit 0: LIGHTING-CENSUS stacked=0 halo=0 blur=0 open=0

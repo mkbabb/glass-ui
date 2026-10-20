@@ -1,0 +1,27 @@
+applied floor-v10 + FV10-seat + crit-floor
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-12/floor-v11a.patch:1266: trailing whitespace.
+       white app surface (the canonical G2 case the user reported). 
+warning: 1 line adds whitespace errors.
+back to HEAD
+git apply --check floor-v11a.patch at HEAD: exit 0
+applied minor-split-v9 + MS9-seat
+back to HEAD
+git apply --check minor-split-v9c.patch at HEAD: exit 0
+floor-v11a.patch: sha1 08c13d4e, 88 files, +979/-2220
+minor-split-v9c.patch: sha1 7c771428, 61 files, +714/-537
+path list floor v10 = floor v11a: exit 0
+path list minor v9 = minor v9c: exit 0
+fv10->fv11a  < +   surface that composes a rung therefore tints ITS OWN rung: the rung's alpha at the
+fv10->fv11a  > +   surface that composes a rung therefore tints ITS OWN rung: the rung's alpha at or above the
+fv10->fv11a  > -       strength by the rung, so `rung ÷ rest` runs the same 1 → 0.6 there and "sheds 40%
+fv10->fv11a  > -       of its ink" is a paint fact on BOTH shipped consumers rather than prose on one. */
+fv10->fv11a  > +       strength by the rung, so `rung ÷ rest` runs 1 → 0.6 there and the fill sheds 40%
+fv10->fv11a  > +       of its strength in paint; the dock, a plate at the bound, keeps its α when held. */
+fv10->fv11a  < +   Legibility rides the SEPARATE `--glass-veil-*` axis: each rung's α, held at the
+fv10->fv11a  < +   bound (`--glass-bound`), with nothing sampled from the backdrop. Level scales that α
+fv10->fv11a  > +   Legibility rides the SEPARATE `--glass-veil-*` axis: each rung's α, held at or
+fv10->fv11a  > +   above the bound (`--glass-bound`), with nothing sampled. Level scales the rung's 1 − α
+m9->m9c  < +        // near-black ink over paper (O-62). Dark: the sign law holds, the rung darkens
+m9->m9c  < +        // what is behind it.
+m9->m9c  > +        // near-black ink over paper (O-62). Dark: the ink stays near-black (L 0.17 < 0.5,
+m9->m9c  > +        // asserted below), never the cream foreground.

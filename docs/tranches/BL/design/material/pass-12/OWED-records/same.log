@@ -1,0 +1,49 @@
+worktree = floor-v10.patch
+built the demo → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p12/owed/wt/.d3out/builds/same/demo
+fv10 built 19:53:49 load { 29.67 25.94 27.49 }
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-11/floor-v10.patch:1266: trailing whitespace.
+       white app surface (the canonical G2 case the user reported). 
+warning: 1 line adds whitespace errors.
+back to HEAD
+worktree = floor-v11a.patch
+built the demo → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p12/owed/wt/.d3out/builds/same/demo
+fv11a built 19:53:53 load { 32.17 26.52 27.69 }
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-12/floor-v11a.patch:1266: trailing whitespace.
+       white app surface (the canonical G2 case the user reported). 
+warning: 1 line adds whitespace errors.
+back to HEAD
+worktree = minor-split-v9.patch
+built the demo → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p12/owed/wt/.d3out/builds/same/demo
+minor9 built 19:53:59 load { 31.20 26.42 27.64 }
+back to HEAD
+worktree = minor-split-v9c.patch
+built the demo → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p12/owed/wt/.d3out/builds/same/demo
+minor9c built 19:54:05 load { 32.30 26.72 27.74 }
+back to HEAD
+built the demo → /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p12/owed/wt/.d3out/builds/same/demo
+head built 19:54:10 load { 32.76 26.91 27.80 }
+fv10 specimen css index-DyuSrJvX.css 391121 B sha256 347288745da7cf97
+fv10 dist-demo files: 346
+fv11a specimen css index-DyuSrJvX.css 391121 B sha256 347288745da7cf97
+fv11a dist-demo files: 346
+minor9 specimen css index-Bd1ws62N.css 398432 B sha256 e11613c3eeb45cab
+minor9 dist-demo files: 346
+minor9c specimen css index-Bd1ws62N.css 398432 B sha256 e11613c3eeb45cab
+minor9c dist-demo files: 346
+head specimen css index-BzMSs5Ab.css 394891 B sha256 b09b9e73a61b75b1
+head dist-demo files: 346
+dist fv10 vs fv11a: diff -rq exit 0
+demo fv10 vs fv11a: diff -rq exit 0
+dist minor9 vs minor9c: diff -rq exit 0
+demo minor9 vs minor9c: diff -rq exit 0
+bite dist HEAD vs fv11a: diff -rq exit 1, 5 lines
+bite demo HEAD vs fv11a: diff -rq exit 1, 261 lines
+bite dist HEAD vs minor9c: diff -rq exit 1, 5 lines
+bite demo HEAD vs minor9c: diff -rq exit 1, 229 lines
+-- R-27 tie: pass-11 critic's banked specimen css lines
+347288745da7cf97d5dd3140ab02fc772145d45ff453594b130bdad1e3001d29  ./assets/index-DyuSrJvX.css
+e11613c3eeb45cab2ebe3e88245ba9a55a8c41b640f48d9a45df116bb3638b0a  ./assets/index-Bd1ws62N.css
+banked fv10 dist-demo sha256 list vs fv11a: diff exit 0
+banked minor9 dist-demo sha256 list vs minor9c: diff exit 0
+banked fv10 dist sha256 list vs fv11a: diff exit 1
+banked minor9 dist sha256 list vs minor9c: diff exit 1
