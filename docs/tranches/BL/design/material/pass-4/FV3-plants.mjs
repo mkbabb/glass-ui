@@ -4,6 +4,7 @@
 // for one ruling and must red that ruling's row; the variants (Q-1 (c), Q-11 (b)) are read under their own text.
 //   node FV3-plants.mjs <dist> <worktree> [--only id,id] [--engines chromium|webkit] [--out <dir>]
 // --engines (H9-5, pass 9): as FV2-plants.mjs, every capture of a variant (its retunes too) in those engines only.
+// H13-2 (pass 13): the table also holds R-32's mechanism plant (plant-R32-notone); plant-R2 stays, reported with its margin.
 // Each variant is captured into its own capdir and relabelled `base`, so the unmodified witnesses read it; cells a
 // variant does not take print as MISSING. R-5's plant is static (lighting-census.mjs on the 10.1.0 and floor v2 tokens).
 import fs from "node:fs";
@@ -21,7 +22,17 @@ export const VARIANTS = {
   // R-1 · row 7: floor v2's dark -strong ink, hsl(36 13% 81%); M-4 must red the dark capsule at +0.067.
   "plant-R1": { ...LADDER, themes: "dark", css: ".dark { --on-glass-muted-strong: hsl(36 13% 81%); }" },
   // R-2 · row 12: FL-6's light declaration in dark too (the scrim ink at a tenth); M-9 must red the dark veil (+0.006).
+  // H13-2 (pass 13): it stays, REPORTED with its margin. Floor v11's dark arm no longer dims through -dim (R-32: -dim is
+  // transparent, the tone is the dim), so this plant now reds M-9's dark page dims row by a margin of 0.003 alone
+  // (Chromium ΔL −0.017 against the −0.02 floor; pass-12/BV11-records/plants/plant-R2-M-9-chromium.log). The dark arm's
+  // mechanism plant is plant-R32-notone, below.
   "plant-R2": { scenes: "state", themes: "dark", css: ".dark { --glass-focus-veil-dim: color-mix(in oklab, var(--overlay-scrim-ink) 10%, transparent); }" },
+  // H13-2 (pass 13, REGISTRY P12-5 C-3) · rows 12, 19, 23: R-32's mechanism plant, the dark --glass-focus-veil-tone
+  // removed (the file is the one source, pass-12/BV11-plant-r32-notone.css). Read by M-9 with --r32: in Chromium it
+  // must red M-9's dark dims rows and R-32 (iii) on the spot (+0.010) and on the page (−0.000 under R-38). Playwright
+  // WebKit paints no backdrop-filter, so there the plant is a no-op and R-37 reports the legs (raw = veiled to the bit);
+  // a WebKit that paints the chain turns them into gates and the plant must red there too.
+  "plant-R32-notone": { scenes: "state", themes: "dark", grounds: "paper,aurora", css: fs.readFileSync(path.join(HERE, "..", "pass-12", "BV11-plant-r32-notone.css"), "utf8") },
   // R-2's "least mix": the next 5% under the ruled 40%. Read, not a plant.
   "probe-R2-35": { scenes: "state", themes: "dark", css: ".dark { --glass-focus-veil-dim: color-mix(in oklab, #000 35%, transparent); }" },
   // R-3 · row 15: the trigger back on the quiet card plate with its own blur (floor v2's register); O-66 G2 must red.

@@ -1,0 +1,12 @@
+/* veil-hues.css · H13-3 (pass 13, R-39): the multi-hue veiled cell the field reader (field-reader.mjs) reads. Injected
+   as variant `veil-hues` on the state scene's paper ground, dark theme, into its own capture directory (never the
+   battery's): three off-orange hues R-39 names, violet, blue and teal, as 96 px vertical bands across the page, so the
+   focus veil's field (about 290 px wide in Chromium, REGISTRY P12-0 finding 1) covers all three. The bands sit where
+   .hx-stand sits for the other grounds (fixed, inset 0, behind the page). Not a ground of the battery: no row reads it. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: repeating-linear-gradient(90deg, oklch(0.55 0.15 295) 0 96px, oklch(0.55 0.13 260) 96px 192px, oklch(0.62 0.08 185) 192px 288px);
+}

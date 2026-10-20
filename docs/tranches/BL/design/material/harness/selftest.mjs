@@ -57,6 +57,11 @@
 // shell ground (pass-7 FV6-records/M-9-*.log; floor v6 = floor v10, specimen CSS 347288745da7cf97) and frame 1's own
 // banked pixels (pass-5/frames-H5-1); the fixture is an arm that dims by OKLCH lightness and keeps chroma; single-gate
 // plants for (i), (iii) and a missing spot. FRAME1 rows read frame 1's PNGs against their bank log.
+// H13 (pass 13, REGISTRY P12-5, P12-6.3 step 1), static, each with a fixture and a plant: H13-1, R-38 (R-32 (iii) on ΔL
+// rounded to 3 decimals; the plant is the tone plant, pass-12/BV11-plant-r32-notone.css, as BV11 read it); H13-2, the
+// tone plant joined to pass-4/FV3-plants.mjs's table, plant-R2 kept and printed with its margin; H13-3, the field reader
+// (field-reader.mjs, ungated) on laid-out captures with a multi-hue veiled cell (veil-hues.css); H13-4, R-37's engine-
+// fact guard in M-9 (a Playwright WebKit capture with one veiled ≠ raw probe pixel gates the dark-veil legs).
 // --reuse-green: keep an existing green capture (the plants are captured fresh).
 // --fields: a HEAD run's capture (its Chromium empty-scene aurora frames become the fixtures' field pixels).
 import fs from "node:fs";
@@ -1059,6 +1064,137 @@ if (want("H12-1")) {
     ? /R-32 chromium dark aurora state \(the spot\): raw L 0\.68\d C 0\.163 h 44\.\d° → veiled L 0\.48\d C 0\.134 h 44\.\d° · \(i\) hue held \|Δh\| 0\.\d° ≤ 3° · \(ii\) chroma kept C 0\.134\/0\.163 = 0\.82\d × raw ≥ 0\.95 ✗ · \(iii\) dims ΔL -0\.(?:19\d|200) < 0\n/
     : /R-32 webkit\+shim dark aurora state \(the spot\): raw L 0\.68\d C 0\.163 h 44\.\d° → veiled L 0\.47\d C 0\.108 h 45\.\d° · \(i\) hue held \|Δh\| 0\.\d° ≤ 3° · \(ii\) chroma kept C 0\.108\/0\.163 = 0\.66\d × raw ≥ 0\.95 ✗ · \(iii\) dims ΔL -0\.21\d < 0\n/, "FAIL (1 of 14 gated rows)"],
     "H12-1 plant: frame 1's own banked pixels (pass 5's ground): (i) PASS, (ii) FAIL, (iii) PASS");
+}
+
+// ── H13 (pass 13, REGISTRY P12-5, P12-6.3 step 1): R-38's rounding (H13-1), the tone plant joined to FV3's table (H13-2),
+// the field reader (H13-3) and R-37's engine-fact guard in M-9 (H13-4). Static: every capture is laid out from pixels or
+// from banked logs, no browser. The banked readings are pass-12/BV11-records (floor v11, 2026-10-20), parsed here.
+const P12R = path.join(HERE, "..", "pass-12", "BV11-records");
+const veilHex = (file, tg, ground) => { const m = fs.readFileSync(path.join(P12R, file), "utf8").match(new RegExp(`^  ${tg} dark ${ground} state(?: \\[[\\w-]+\\])?: .*focus veil (#[0-9a-f]{6}) → (#[0-9a-f]{6})`, "m")); if (!m) throw new Error(`${file}: no ${tg} dark ${ground} veil row`); return m.slice(1).map(hx); };
+// Four colours per engine from one banked log each: [spotRaw, spotVeiled, pageRaw, pageVeiled].
+const banked = (cr, wk) => ({ chromium: [...veilHex(cr, "chromium", "aurora"), ...veilHex(cr, "chromium", "paper")], webkit: [...veilHex(wk, "webkit\\+shim", "aurora"), ...veilHex(wk, "webkit\\+shim", "paper")] });
+// One M-9 run per gate engine, each with its own expectation: { chromium: [expect, must], webkit: [expect, must] }.
+const m9each = (id, capdir, extra, per, note) => { for (const engine of BOTH) { const [expect, must] = per[engine];
+  const out = staticWitness(id, "m9-state-registers", [capdir, "--gate", engine, ...DARK, ...extra], expect, `${note} (gate ${engine})`);
+  rowsHold(id, engine, out, must, `${note} (gate ${engine})`); } };
+// Floor v11 as the battery read it (BV11 M-9-r32-*.log): Chromium paints R-32; Playwright WebKit reads raw = veiled.
+const FV11 = () => banked("M-9-r32-chromium.log", "M-9-r32-webkit.log");
+const REPORT4 = `→ REPORT (O-103b): "WebKit headless paints no backdrop-filter; raw = veiled 4/4"`;
+if (want("H13-1") || want("H13-4") || want("H13-2")) {
+  const fv11 = FV11();
+  console.log(`     H13 floor v11 from BV11: chromium spot ${fv11.chromium.slice(0, 2).map(hex).join(" → ")} page ${fv11.chromium.slice(2).map(hex).join(" → ")} · webkit spot ${fv11.webkit.slice(0, 2).map(hex).join(" → ")} page ${fv11.webkit.slice(2).map(hex).join(" → ")}`);
+}
+if (want("H13-1")) {
+  // The tone plant (pass-12/BV11-plant-r32-notone.css) as BV11 read it in Chromium (plant-notone-1-M-9-r32.log); its
+  // Playwright WebKit cells are floor v11's (the plant is a no-op where no backdrop-filter paints, R-37 reports them).
+  const fv11 = FV11(), tone = { chromium: banked("plant-notone-1-M-9-r32.log", "M-9-r32-webkit.log").chromium, webkit: fv11.webkit };
+  const [, , pr, pv] = tone.chromium, dPage = lch(pv)[0] - lch(pr)[0];
+  row("H13-1", "R38", dPage < 0 && !(+f(dPage, 3) < 0), `the tone plant's page ${hex(pr)} → ${hex(pv)}: ΔL ${dPage.toFixed(5)}: a strict ΔL < 0 passes it (H12-1), ΔL at 3 decimals ${f(dPage, 3)} does not (R-38)`, "H13-1: C-1's case, measured: the page leg passed a removed dim at −0.000");
+  m9each("H13-1", veilCap("h13-tone", darkCells(tone)), ["--r32"], {
+    chromium: ["FAIL", [/R-32 chromium dark paper state \(the page\): .*\(iii\) dims ΔL -0\.000 < 0 ✗/, /R-32 chromium dark aurora state \(the spot\): .*\(iii\) dims ΔL 0\.01\d < 0 ✗/, "FAIL (4 of 14 gated rows)"]],
+    webkit: ["PASS", [`R-37 webkit dark veil: raw = veiled to the bit, spot 2400/2400 px raw = veiled, page 2400/2400 px raw = veiled ${REPORT4}`, "PASS (10 gated rows)"]] },
+    "H13-1 plant: the tone plant (R-32's dark -tone removed): (iii) reds on the page at −0.000 and on the spot at +0.011; M-9's two dims rows with them");
+  m9each("H13-1", veilCap("h13-fv11", darkCells(fv11)), ["--r32"], {
+    chromium: ["PASS", [/R-32 chromium dark paper state \(the page\): .*\(iii\) dims ΔL -0\.029 < 0 \(hue/, /\(iii\) dims ΔL -0\.10\d < 0\n/, { not: "✗" }, "PASS (14 gated rows)"]],
+    webkit: ["PASS", [REPORT4, "PASS (10 gated rows)"]] },
+    "H13-1 fixture: floor v11 as BV11 read it: R-32 (i)-(iii) PASS in Chromium at 3 decimals");
+}
+if (want("H13-2")) {
+  const { VARIANTS } = await import(path.join(HERE, "..", "pass-4", "FV3-plants.mjs"));
+  const { enginesFor } = await import(path.join(HERE, "..", "pass-3", "FV2-plants.mjs"));
+  const file = fs.readFileSync(path.join(HERE, "..", "pass-12", "BV11-plant-r32-notone.css"), "utf8"), v = VARIANTS["plant-R32-notone"], r2 = VARIANTS["plant-R2"];
+  const ok = !!v && v.css === file && v.scenes === "state" && v.themes === "dark" && list(v.grounds, []).sort().join() === "aurora,paper" && enginesFor(v).join() === "chromium,webkit"
+    && !!r2 && /--glass-focus-veil-dim: color-mix\(in oklab, var\(--overlay-scrim-ink\) 10%, transparent\)/.test(r2.css);
+  row("H13-2", "TABLE", ok, `FV3-plants.mjs VARIANTS: plant-R32-notone ${v ? `css ${v.css === file ? "byte-equal to" : "differs from"} pass-12/BV11-plant-r32-notone.css (${file.length} B), scenes ${v.scenes}, themes ${v.themes}, grounds ${v.grounds}, engines ${enginesFor(v).join(",")}` : "absent"}; plant-R2 ${r2 ? "kept" : "absent"}`, "H13-2: the dark arm's mechanism plant joins the table from its one file; plant-R2 stays");
+  // plant-R2 on floor v11, as BV11 read it (plants/plant-R2-M-9-*.log): it reds M-9's page dims row alone, by its margin.
+  const r2cap = veilCap("h13-plantR2", darkCells(banked("plants/plant-R2-M-9-chromium.log", "plants/plant-R2-M-9-webkit.log")));
+  const out = staticWitness("H13-2", "m9-state-registers", [r2cap, "--gate", "chromium", ...DARK, "--r32"], "FAIL", "H13-2: plant-R2 on floor v11 reds M-9's dark page dims row only (gate chromium)");
+  const m = out.match(/chromium dark paper state: .*focus veil #[0-9a-f]{6} → #[0-9a-f]{6} ΔL (-?\d\.\d{3}) \(dims ≥ 0\.02\) ✗/), dl = m && +m[1];
+  row("H13-2", "MARGIN", !!m && /FAIL \(1 of 14 gated rows\)\s*$/.test(out) && Math.abs(0.02 + dl - 0.003) < 1e-9, `plant-R2 (Chromium, floor v11): page dims ΔL ${m ? f(dl, 3) : "—"} against −0.02: reds by a margin of ${m ? f(0.02 + dl, 3) : "—"}; R-32 (i)-(iii) pass under it (FAIL 1 of 14, the dims row alone)`, "H13-2: plant-R2 stays, REPORTED with its margin (C-3)");
+}
+if (want("H13-4")) {
+  // R-37's guard, gated in Playwright WebKit over laid-out captures: floor v11's WebKit cells read raw = veiled (the fact
+  // holds, the legs report); one veiled ≠ raw pixel on the spot or the page, a spot not read, or plant-R2's painted
+  // background each turn the legs into gates. Chromium's cells are floor v11's throughout and gate PASS.
+  const fv11 = FV11(), CR = ["PASS", ["PASS (14 gated rows)", { not: "R-37 chromium" }]];
+  const one = (key) => (x, y) => (x === 0 && y === 0 ? key.map((c, i) => (i === 2 ? c + 1 : c)) : key);   // one probe pixel, blue + 1
+  const cellsOf = (wk) => [...darkCells({ chromium: fv11.chromium }), ...wk];
+  const [sr, , pr] = fv11.webkit;
+  const wkSame = [{ engine: "webkit", theme: "dark", ground: "aurora", raw: sr, veiled: sr }, { engine: "webkit", theme: "dark", ground: "paper", raw: pr, veiled: pr }];
+  m9each("H13-4", veilCap("h13-r37-fact", cellsOf(wkSame)), [], { chromium: ["PASS", ["PASS (10 gated rows)"]], webkit: ["PASS", [/webkit\+shim dark paper state: .*ΔL \+0\.000 \(dims ≥ 0\.02\) · REPORT \(R-37\)/, `raw = veiled 2/2"`, "PASS (8 gated rows)"]] },
+    "H13-4 fixture: floor v11's WebKit cells, raw = veiled to the bit, no --r32: M-9's two dark dims rows are reports (BV11 read FAIL 2 of 10)");
+  m9each("H13-4", veilCap("h13-r37-spotbit", cellsOf([{ ...wkSame[0], vPx: one(sr) }, wkSame[1]])), ["--r32"], { chromium: CR,
+    webkit: ["FAIL", ["R-37 webkit dark veil: spot 2399/2400 px raw = veiled (1 px veiled ≠ raw), page 2400/2400 px raw = veiled → GATE", /\(the page\): .*\(iii\) dims ΔL 0\.000 < 0 ✗/, "FAIL (4 of 14 gated rows)"]] },
+    "H13-4 plant: one spot pixel veiled ≠ raw (blue + 1): the engine fact fails, the four legs gate and red");
+  m9each("H13-4", veilCap("h13-r37-pagebit", cellsOf([wkSame[0], { ...wkSame[1], vPx: one(pr) }])), ["--r32"], { chromium: CR,
+    webkit: ["FAIL", ["R-37 webkit dark veil: spot 2400/2400 px raw = veiled, page 2399/2400 px raw = veiled (1 px veiled ≠ raw) → GATE", "FAIL (4 of 14 gated rows)"]] },
+    "H13-4 plant: one page pixel veiled ≠ raw, the spot bit-equal: the fact needs both, so the legs gate");
+  m9each("H13-4", veilCap("h13-r37-nospot", cellsOf([wkSame[1]])), ["--r32"], { chromium: CR,
+    webkit: ["FAIL", ["R-37 webkit dark veil: spot not read, page 2400/2400 px raw = veiled → GATE", /webkit\+shim dark paper state: .*ΔL \+0\.000 \(dims ≥ 0\.02\) ✗/, "FAIL (4 of 8 gated rows)"]] },
+    "H13-4 plant: no WebKit spot: the fact is not confirmed, so the page's legs gate (E-2)");
+  const r2wk = banked("plants/plant-R2-M-9-chromium.log", "plants/plant-R2-M-9-webkit.log").webkit;
+  m9each("H13-4", veilCap("h13-r37-painted", cellsOf(darkCells({ webkit: r2wk }))), ["--r32"], { chromium: CR,
+    webkit: ["FAIL", [/R-37 webkit dark veil: spot 0\/2400 px raw = veiled \(2400 px veiled ≠ raw\), page 0\/2400 px raw = veiled \(2400 px veiled ≠ raw\) → GATE/, /focus veil #0b0a09 → #0d0c0a ΔL \+0\.009 \(dims ≥ 0\.02\) brightens ✗/, "FAIL (3 of 14 gated rows)"]] },
+    "H13-4 plant: Playwright WebKit painting a veil (plant-R2's background on floor v11, BV11 plants/plant-R2-M-9-webkit.log): gated, and its reds count");
+}
+if (want("H13-3")) {
+  // The field reader over laid-out captures, 640 × 360 per cell: the plate [20,20,140,140] and the probe [200,100,60,40]
+  // (each dilated 48 px out of the mask), the veiled field [330,30,300,300]. The dark paper cell dims the field by the
+  // floor v11 page pair; the dark aurora cell carries the spot pair; the multi-hue cell carries veil-hues.css's three
+  // bands (96 px, from x 0), veiled per the case. WebKit's cells are raw = veiled (0 px in its mask).
+  const W = 640, H = 360, FIELD = [330, 30, 300, 300];
+  const BANDS = [[0.55, 0.15, 295], [0.55, 0.13, 260], [0.62, 0.08, 185]], planted = [];
+  const band = (x) => BANDS[Math.floor(x / 96) % 3];
+  const fv11 = FV11(), [csr, csv, cpr, cpv] = fv11.chromium;
+  const inF = (x, y) => x >= FIELD[0] && x < FIELD[0] + FIELD[2] && y >= FIELD[1] && y < FIELD[1] + FIELD[3];
+  const fieldCap = (name, cells) => {
+    const dir = path.join(ROOT, "caps", name); fs.rmSync(dir, { recursive: true, force: true }); fs.mkdirSync(path.join(dir, "png"), { recursive: true });
+    const out = cells.map((c) => {
+      const key = `${c.engine}-${c.theme}-${c.ground}-${c.variant || "base"}`, raw = new PNG({ width: W, height: H }), full = new PNG({ width: W, height: H });
+      for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const i = (y * W + x) * 4, r = c.raw(x, y), v = inF(x, y) ? c.veiled(x, y, r) : r; raw.data.set([...r, 255], i); full.data.set([...v, 255], i); }
+      fs.writeFileSync(path.join(dir, "png", `${key}-raw.png`), PNG.sync.write(raw)); fs.writeFileSync(path.join(dir, "png", `${key}-full.png`), PNG.sync.write(full));
+      return { engine: c.engine, shim: c.engine === "webkit", theme: c.theme, ground: c.ground, scene: "state", variant: c.variant || "base",
+        files: { full: `png/${key}-full.png`, noink: `png/${key}-full.png`, raw: `png/${key}-raw.png` }, specs: [{ id: "resting", rect: [20, 20, 140, 140], fills: [] }], veil: [PROBE] };
+    });
+    fs.writeFileSync(path.join(dir, "cells.json"), JSON.stringify({ meta: { target: `H13-3 ${name}` }, cells: out }, null, 1));
+    return dir;
+  };
+  const flat = (rgb) => () => rgb, to = (rgb) => () => rgb;
+  const hueRaw = (x) => { const [L, C, h] = band(x); return fromOklch(L, C, h); };
+  const keepC = (x) => { const [L, C, h] = band(x); planted.push(inGamut(L - 0.05, C, h)); return fromOklch(L - 0.05, C, h); };
+  const turn = (x) => { const [L, C, h] = band(x); planted.push(inGamut(L - 0.05, C, h + 8)); return fromOklch(L - 0.05, C, h + 8); };
+  const blacken = (x, y, r) => r.map((c) => enc8(0.6 * lin(c)));   // linear × 0.6: hue kept, C and L × 0.6^(1/3) = 0.843
+  const base = (eng, same) => [
+    { engine: eng, theme: "dark", ground: "paper", raw: flat(cpr), veiled: same ? flat(cpr) : to(cpv) },
+    { engine: eng, theme: "dark", ground: "aurora", raw: flat(csr), veiled: same ? flat(csr) : to(csv) }];
+  const hues = (eng, veiled) => ({ engine: eng, theme: "dark", ground: "paper", variant: "veil-hues", raw: hueRaw, veiled: (x, y, r) => veiled(x, y, r) });
+  const FR = (capdir, extra, expect, must, note) => { const out = staticWitness("H13-3", "field-reader", [capdir, ...extra], expect, note); rowsHold("H13-3", "static", out, must, note); };
+  const keepDir = fieldCap("h13-field-keep", [...base("chromium"), ...base("webkit", true), hues("chromium", (x) => keepC(x)), hues("webkit", (x, y, r) => r)]);
+  FR(keepDir, [], "PASS", [
+    "mask chromium: 90000 px where the dark paper veil dims ≤ −0.015 outside 2 spec/probe boxes dilated 48 px; bbox 330,30 → 629,329",
+    /chromium dark aurora field: 90000 chromatic px .*\n {5}C_v\/C_r p05 1\.03\d · p50 1\.03\d · p95 1\.03\d · per pixel < 0\.95 \(ii\): 0\.0 %/,
+    /chromium multi-hue veiled cell \(veil-hues\): 90000 chromatic px .*\n {5}C_v\/C_r p05 (?:0\.99\d|1\.0[01]\d) · p50 (?:0\.99\d|1\.0[01]\d) · p95 (?:0\.99\d|1\.0[01]\d) · per pixel < 0\.95 \(ii\): 0\.0 %/,
+    /raw hue 180-210°: +\d+ px/, /raw hue 240-270°: +\d+ px/, /raw hue 270-300°: +\d+ px/,
+    "mask webkit: 0 px where the dark paper veil dims ≤ −0.015 outside 2 spec/probe boxes dilated 48 px (no veiled field in this engine's capture)",
+    "PRINT (2 veiled fields read over 2 engines; REPORTED, never gated)"],
+    "H13-3 fixture: R-32's floor v11 pairs on the field and a multi-hue cell that keeps chroma: C× ≈ 1 over violet, blue and teal; WebKit's mask empty");
+  FR(fieldCap("h13-field-blacken", [...base("chromium"), hues("chromium", blacken)]), [], "PASS", [
+    /chromium multi-hue veiled cell \(veil-hues\): 90000 chromatic px .*\n {5}C_v\/C_r p05 0\.8[3-5]\d · p50 0\.84\d · p95 0\.8[3-5]\d · per pixel < 0\.95 \(ii\): 100\.0 %/, "PRINT (2 veiled fields"],
+    "H13-3 plant: the multi-hue cell veiled by a dim toward black (linear × 0.6, R-2's kind): the reader reports C× 0.843 on every hue (reported, not gated: R-39)");
+  FR(fieldCap("h13-field-turn", [...base("chromium"), hues("chromium", (x) => turn(x))]), [], "PASS", [
+    /chromium multi-hue veiled cell \(veil-hues\): .*\n.*\n {5}\|Δh\|° +p05 [78]\.\d{3} · p50 [78]\.\d{3} · p95 [78]\.\d{3} · per pixel > 3° \(i\): 100\.0 %/, "PRINT (2 veiled fields"],
+    "H13-3 plant: the multi-hue cell's hue turned +8°: the reader reports |Δh| ≈ 8° and 100 % of pixels past R-32 (i)");
+  const hueDir = fieldCap("h13-field-hues-apart", [hues("chromium", (x) => keepC(x))]);
+  FR(fieldCap("h13-field-base", base("chromium")), ["--hues", hueDir], "PASS", [/chromium multi-hue veiled cell \(veil-hues\): 90000 chromatic px/, `hues ${hueDir}`, "PRINT (2 veiled fields read over 1 engines"],
+    "H13-3: the multi-hue cell read from its own capture (--hues), apart from the battery's");
+  FR(fieldCap("h13-field-nohue", base("chromium")), [], "PASS", [`chromium multi-hue cell: not captured (variant veil-hues, veil-hues.css, in`, "PRINT (1 veiled fields read over 1 engines"],
+    "H13-3: no multi-hue cell: printed as not captured, the field still read");
+  FR(fieldCap("h13-field-none", [hues("chromium", (x) => keepC(x))]), [], "LOUD", ["chromium: no dark paper and aurora state cells of variant base: not read"],
+    "H13-3 plant: a capture with no dark paper and aurora state cell: the reader reads nothing and says so (exit 2), never a silent print");
+  row("H13-3", "GAMUT", planted.length > 0 && planted.every(Boolean), `${planted.filter(Boolean).length}/${planted.length} planted multi-hue colours inside sRGB before the 8-bit encode`, "H13-3: the fixture and the hue plant test the reader, not a gamut clip");
+  // The ground veil-hues.css paints is the one the bands above lay out (one source: the file).
+  const css = fs.readFileSync(path.join(HERE, "veil-hues.css"), "utf8"), want3 = BANDS.map(([L, C, h], i) => `oklch(${L} ${C} ${h}) ${i ? `${96 * i}px ` : "0 "}${96 * (i + 1)}px`);
+  row("H13-3", "HUES", want3.every((s) => css.includes(s)), `veil-hues.css carries the three bands the self-test lays out: ${want3.join(", ")}`, "H13-3: the multi-hue ground the floor seat captures is the one the reader is proved on");
 }
 
 if (want("W-B")) {

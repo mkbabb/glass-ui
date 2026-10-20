@@ -26,6 +26,13 @@
 //   and are never gated: "quieter, not brown" is the owner's eye (R-32). Hue and chroma are not read on the page: at
 //   C ≈ 0.003 its hue is noise (one 8-bit step moves it by tens of degrees). Without `--r32` the rows print REPORTED.
 //   The light arm is printed, not read by R-32 (Q-14's light arm stands, O-103a).
+//   H13-1 (pass 13, R-38): R-32 (iii) reads ΔL rounded to 3 decimals, as printed, before the sign. A spot or page that
+//   prints −0.000 is not dimmed and FAILs (iii). No threshold is added: M-9's ≤ −0.02 stays row 12's.
+//   H13-4 (pass 13, R-37, O-103b): the Playwright WebKit dark-veil legs (M-9's dims rows and R-32 (iii), dark spot and
+//   dark page) are REPORTS only while the same capture shows that engine painting no veil: every probe pixel of `full`
+//   equals `raw`, to the bit, on the dark spot AND the dark page. One veiled ≠ raw pixel on either, or a spot or page not
+//   read, and every one of those legs is a gate again (O-103b's last clause) and a red counts. Chromium is never
+//   reported this way. The `R-37` line prints the engine fact and the legs it reports.
 //   node m9-state-registers.mjs <capdir> [--gate chromium[,webkit]] [--dim-max 0.1] [--bank <dir>] [--r32]
 import fs from "node:fs";
 import path from "node:path";
@@ -41,6 +48,18 @@ const { have, lines, missing } = need(cap, gate, { themes: THEMES, grounds: SCEN
 const t = tally(); t.add(true, false, missing);
 const inset = ([x, y, w, h], k) => [x + w * k, y + h * k, w * (1 - 2 * k), h * (1 - 2 * k)];
 const inside = ([x, y, w, h], X, Y) => X >= x && X < x + w && Y >= y && Y < y + h;
+// H13-4 (R-37): the engine fact, per Playwright WebKit engine in the capture, read before any veil leg is tallied.
+const bits = (cell) => { let n = 0, d = 0; const raw = cap.img(cell, "raw"), ful = cap.img(cell, "full");
+  for (const p of cell.veil || []) { const r = region(raw, p), v = region(ful, p); n += r.length; for (let i = 0; i < r.length; i++) if (r[i].some((x, k) => x !== v[i][k])) d++; }
+  return { n, d }; };
+const fact = {};
+for (const engine of new Set(have.map((h) => h.cell.engine))) if (engine === "webkit") {
+  const at = (ground) => have.find((h) => h.cell.engine === engine && h.cell.theme === "dark" && h.cell.ground === ground)?.cell;
+  const spot = at("aurora") && bits(at("aurora")), page = at("paper") && bits(at("paper"));
+  fact[engine] = { spot, page, ok: !!(spot && page && spot.n && page.n && !spot.d && !page.d), legs: 0 };
+}
+const reported = (cell) => cell.theme === "dark" && (cell.ground === "aurora" || cell.ground === "paper") && !!fact[cell.engine]?.ok;
+const r3 = (dL) => +f(dL, 3);   // H13-1 (R-38): the printed 3-decimal value; −0.000 reads as −0, which is not < 0
 for (const { cell, gated } of have) {
   const noink = cap.img(cell, "noink"), parts = [];
   const fills = cell.specs.flatMap((s) => s.fills.map((fl) => ({ ...fl, spec: s })));
@@ -62,7 +81,9 @@ for (const { cell, gated } of have) {
   for (const probe of cell.veil || []) {
     const on = mean3(region(cap.img(cell, "full"), probe)), off = mean3(region(cap.img(cell, "raw"), probe));
     const dL = lch(on)[0] - lch(off)[0];
-    const ok = dL <= -0.02; t.add(gated, ok); parts.push(`focus veil ${hex(off)} → ${hex(on)} ΔL ${dL >= 0 ? "+" : ""}${f(dL, 3)} (dims ≥ 0.02)${ok ? "" : dL > 0 ? " brightens ✗" : " ✗"}`);
+    const ok = dL <= -0.02, rep = reported(cell);
+    if (rep) fact[cell.engine].legs++; else t.add(gated, ok);
+    parts.push(`focus veil ${hex(off)} → ${hex(on)} ΔL ${dL >= 0 ? "+" : ""}${f(dL, 3)} (dims ≥ 0.02)${rep ? " · REPORT (R-37)" : ok ? "" : dL > 0 ? " brightens ✗" : " ✗"}`);
     depth.push({ engine: cell.engine, theme: cell.theme, ground: cell.ground, dL, off, on, cell, probe, gated });
   }
   if (!(cell.veil || []).length) { t.add(gated, false); parts.push("focus veil probe not found ✗"); }
@@ -94,20 +115,27 @@ for (const engine of [...new Set([...gate, ...depth.map((d) => d.engine)])]) {
   if (spot) {
     const [Lr, Cr, hr] = lch(spot.off), [Lv, Cv, hv] = lch(spot.on);
     const dh = hueDiff(hr, hv), k = Cr > 0 ? Cv / Cr : null, dL = Lv - Lr;
-    const g1 = dh <= R32_DH, g2 = k != null && k >= R32_C, g3 = dL < 0;
-    if (r32) { t.add(spot.gated, g1); t.add(spot.gated, g2); t.add(spot.gated, g3); }
+    const g1 = dh <= R32_DH, g2 = k != null && k >= R32_C, g3 = r3(dL) < 0, rep = reported(spot.cell);
+    if (r32) { t.add(spot.gated, g1); t.add(spot.gated, g2); if (rep) fact[engine].legs++; else t.add(spot.gated, g3); }
     const x = (ok) => (r32 && !ok ? " ✗" : "");
-    lines.push(`R-32 ${tag(spot.cell)} (the spot)${how(spot.gated)}: raw ${ok3(spot.off)} → veiled ${ok3(spot.on)} · (i) hue held |Δh| ${f(dh, 1)}° ≤ ${R32_DH}°${x(g1)} · (ii) chroma kept C ${f(Cv, 3)}/${f(Cr, 3)} = ${f(k, 3)} × raw ≥ ${R32_C}${x(g2)} · (iii) dims ΔL ${f(dL, 3)} < 0${x(g3)}`);
+    lines.push(`R-32 ${tag(spot.cell)} (the spot)${how(spot.gated)}: raw ${ok3(spot.off)} → veiled ${ok3(spot.on)} · (i) hue held |Δh| ${f(dh, 1)}° ≤ ${R32_DH}°${x(g1)} · (ii) chroma kept C ${f(Cv, 3)}/${f(Cr, 3)} = ${f(k, 3)} × raw ≥ ${R32_C}${x(g2)} · (iii) dims ΔL ${f(dL, 3)} < 0${r32 && rep ? " · REPORT (R-37)" : x(g3)}`);
   }
   if (page) {
-    const dL = lch(page.on)[0] - lch(page.off)[0], g3 = dL < 0;
-    if (r32) t.add(page.gated, g3);
-    lines.push(`R-32 ${tag(page.cell)} (the page)${how(page.gated)}: raw ${ok3(page.off)} → veiled ${ok3(page.on)} · (iii) dims ΔL ${f(dL, 3)} < 0${r32 && !g3 ? " ✗" : ""} (hue and chroma not read: the page is near-neutral)`);
+    const dL = lch(page.on)[0] - lch(page.off)[0], g3 = r3(dL) < 0, rep = reported(page.cell);
+    if (r32) { if (rep) fact[engine].legs++; else t.add(page.gated, g3); }
+    lines.push(`R-32 ${tag(page.cell)} (the page)${how(page.gated)}: raw ${ok3(page.off)} → veiled ${ok3(page.on)} · (iii) dims ΔL ${f(dL, 3)} < 0${r32 && rep ? " · REPORT (R-37)" : r32 && !g3 ? " ✗" : ""} (hue and chroma not read: the page is near-neutral)`);
   }
   if (spot || page) {
     const dl = (d) => (d ? f(lch(d.on)[0] - lch(d.off)[0], 3) : "—");
     lines.push(`R-32 ${engine} dark ΔL, reported, never gated: spot ${dl(spot)} · page ${dl(page)} · beside R-2's spot ${R2_SPOT_DL} (the owner's eye decides "quieter, not brown")${gated ? "" : " [info]"}`);
   }
+}
+// H13-4 (R-37): the engine fact as read, and what it did to the dark-veil legs.
+for (const [engine, x] of Object.entries(fact)) {
+  const side = (what, b) => (!b ? `${what} not read` : `${what} ${b.n - b.d}/${b.n} px raw = veiled`);
+  lines.push(x.ok
+    ? `R-37 ${engine} dark veil: raw = veiled to the bit, ${side("spot", x.spot)}, ${side("page", x.page)} → REPORT (O-103b): "WebKit headless paints no backdrop-filter; raw = veiled ${x.legs}/${x.legs}" (Chromium gates the arm)`
+    : `R-37 ${engine} dark veil: ${side("spot", x.spot)}${x.spot?.d ? ` (${x.spot.d} px veiled ≠ raw)` : ""}, ${side("page", x.page)}${x.page?.d ? ` (${x.page.d} px veiled ≠ raw)` : ""} → GATE: the engine fact does not hold in this capture, so every dark-veil leg is gated and a red counts (O-103b's last clause)`);
 }
 if (a.bank) {
   const dir = path.resolve(a.bank); fs.mkdirSync(dir, { recursive: true });
