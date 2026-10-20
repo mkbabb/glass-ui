@@ -21,12 +21,17 @@ const active = (page: Page) =>
             null,
     );
 
-/** Tab from the `before` stop to the `after` stop, recording each stop on the way. */
-async function tabWalk(page: Page): Promise<(string | null)[]> {
+/**
+ * Tab from the `before` stop to the `after` stop, recording each stop on the way. WebKit's
+ * plain Tab skips buttons by default (Safari's "Press Tab to highlight each item" is off),
+ * so there the walk presses Option-Tab, which is Safari's full sequential focus order.
+ */
+async function tabWalk(page: Page, browserName: string): Promise<(string | null)[]> {
+    const key = browserName === "webkit" ? "Alt+Tab" : "Tab";
     await page.locator('[data-witness="before"]').focus();
     const walk: (string | null)[] = [];
     for (let i = 0; i < 16; i++) {
-        await page.keyboard.press("Tab");
+        await page.keyboard.press(key);
         const at = await active(page);
         walk.push(at);
         if (at === "after") break;
@@ -43,9 +48,12 @@ for (const [label, viewport] of [
     test.describe(`10.1.2 · ${label}`, () => {
         test.use({ viewport });
 
-        test("G-4 · the atlas shapes seated in a run are all Tab-reachable", async ({ page }) => {
+        test("G-4 · the atlas shapes seated in a run are all Tab-reachable", async ({
+            page,
+            browserName,
+        }) => {
             await open(page, "atlas");
-            expect(await tabWalk(page)).toEqual([
+            expect(await tabWalk(page, browserName)).toEqual([
                 "seat-0",
                 "filter",
                 "gear",
@@ -82,10 +90,11 @@ for (const [label, viewport] of [
         // Regression arm: green on 10.1.1 too, which claimed the role over every run.
         test("G-4 · an all-declared run is one toolbar stop with arrows across it", async ({
             page,
+            browserName,
         }) => {
             await open(page, "declared");
             expect(await run(page).getAttribute("role")).toBe("toolbar");
-            expect(await tabWalk(page)).toEqual(["seat-0", "after"]);
+            expect(await tabWalk(page, browserName)).toEqual(["seat-0", "after"]);
             await page.locator('[data-witness="seat-0"]').focus();
             await page.keyboard.press("ArrowRight");
             expect(await active(page)).toBe("seat-1");
