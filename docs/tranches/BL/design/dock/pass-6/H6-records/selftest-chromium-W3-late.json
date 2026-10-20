@@ -1,0 +1,26 @@
+{
+ "when": "2026-10-19T18:07:49.470Z",
+ "engines": [
+  "chromium"
+ ],
+ "rows": [
+  {
+   "witness": "W3",
+   "fixture": "late",
+   "expect": "exit ≠ 0; window fails in ^warm-expand",
+   "got": "exit 1, 1/1 FAIL; matching 1 (chromium)",
+   "ok": true,
+   "ms": 29242,
+   "load": 29.51
+  },
+  {
+   "witness": "W3",
+   "fixture": "late",
+   "expect": "exit ≠ 0; window fails in ^warm-expand; stdout ~ ^PASS {2}W3 {2}\\(faces merged\\) {2}ENGINE {2}warm-expand",
+   "got": "exit 1, 1/1 FAIL; matching 1 (chromium); line printed",
+   "ok": true,
+   "ms": 28930,
+   "load": 30.66
+  }
+ ]
+}

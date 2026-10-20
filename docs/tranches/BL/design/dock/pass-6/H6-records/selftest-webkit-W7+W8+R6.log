@@ -1,0 +1,19 @@
+19:29  up  5:32, 3 users, load averages: 20.96 24.13 34.25
+Mon Oct 19 19:29:46 EDT 2026
+OK   W7  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 18/18 PASS  [35 s, load 20.96]
+OK   W7  splitcaps       expect: exit 0, all cells PASS  ·  got: exit 0, 18/18 PASS  [35 s, load 20.51]
+OK   W7  edgecut         expect: exit ≠ 0; whole fails in ^(top|side|canvas)·  ·  got: exit 1, 18/18 FAIL; matching 18 (webkit)  [32 s, load 24.63]
+OK   W7  sideedge        expect: exit ≠ 0; same fails in ^side·  ·  got: exit 1, 6/6 FAIL; matching 6 (webkit)  [22 s, load 27.16]
+OK   W7  gutterless      expect: exit ≠ 0; gutter fails in ^(side|canvas)·  ·  got: exit 1, 12/12 FAIL; matching 12 (webkit)  [32 s, load 32.52]
+OK   W7  badgeover       expect: exit ≠ 0; badge fails in ^side·  ·  got: exit 1, 3/6 FAIL; matching 3 (webkit)  [21 s, load 27.99]
+OK   W7  lens            expect: exit ≠ 0; radius fails in ^(top|side)·  ·  got: exit 1, 12/12 FAIL; matching 12 (webkit)  [21 s, load 24.74]
+OK   W7  nocaps          expect: exit ≠ 0; whole fails in ^(top|side|canvas)·dark·dpr2  ·  got: exit 1, 3/3 FAIL; matching 3 (webkit)  [6 s, load 23.49]
+OK   W8  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 6/6 PASS  [12 s, load 23.69]
+OK   W8  squash          expect: exit ≠ 0; sharp fails in ^expand|^collapse  ·  got: exit 1, 2/2 FAIL; matching 2 (webkit)  [6 s, load 23.07]
+OK   W8  jank            expect: exit ≠ 0; pacing fails in ^expand|^collapse  ·  got: exit 1, 2/2 FAIL; matching 2 (webkit)  [7 s, load 27.87]
+OK   R6  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 1/1 PASS  [5 s, load 36.83]
+OK   R6  backdropmotion  expect: exit ≠ 0; ring·static  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [5 s, load 36.52]
+SELFTEST PASS  13/13 expectations hold
+exit 0
+19:33  up  5:36, 3 users, load averages: 36.80 28.28 33.38
+Mon Oct 19 19:33:48 EDT 2026

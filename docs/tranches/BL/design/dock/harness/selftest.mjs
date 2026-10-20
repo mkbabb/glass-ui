@@ -20,10 +20,16 @@
 // An expectation's 5th element narrows the engines it is judged in (the forced-GC plant: Chromium only, WebKit
 // exposes no gc() to a page; the ctxloss plant covers the context promise in both engines). The runner's own
 // re-run rule (reds.mjs) has its plants in `node reds.mjs --selftest` (witness RUN).
+// H6 (pass-6/H6.md) adds the H6-1..H6-11 plants; three fixture flags ("!unbounded": DOCK_HARNESS_INK_UNBOUNDED=1, the
+// pass-5 ink reading; "!rescale": DOCK_HARNESS_ST_RESCALE=0.98, a cast painted at 0.98; "!nomarker":
+// DOCK_HARNESS_ST_NOMARKER=1, no block-end marker); an expectation's 6th element (options) that also requires every
+// matching cell's summary to match `summary`, no matching cell to fail a check in `notFailed`, and the witness's stdout
+// to hold a line matching `line` per engine (ENGINE stands for the engine's label); and witness SYN (engine-independent:
+// plants/w8-time.mjs for H6-5's time bound on synthetic strips, `node cells.mjs --selftest` for H6-7's digest rule).
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
-import { HERE, parseArgs, outDir, loadAvg } from "./lib.mjs";
+import { HERE, parseArgs, outDir, loadAvg, ENGINE_LABEL } from "./lib.mjs";
 
 const args = parseArgs();
 const only = args.only ? String(args.only).split(",") : null;
@@ -42,8 +48,8 @@ const EXPECT = [
     ["W1", "cardlens", /card·/, ["corner"]],
     ["W1", "endlens", /rail·scrolled-end|rail·focus-end/, ["corner"]],
     ["W1", "endout", /rail·scrolled-end|rail·focus-end/, ["end"]],
-    ["W1", "cardspread", /card·warm-expand|card·warm-collapse|card·first-expand/, ["card"]],
-    ["W1", "cardlerp", /card·warm-expand|card·warm-collapse|card·first-expand/, [OB]],   // H3-11 · Q-12
+    ["W1", "cardspread", /card·warm-expand|card·warm-collapse|card·first-expand/, ["card"], null, { summary: /Q-12 \(b\) band \[[^\]]*\] px fails/ }],   // H6-11 · a radius outside the band
+    ["W1", "cardlerp", /card·warm-expand|card·warm-collapse|card·first-expand/, [OB], null, { summary: /Q-12 \(b\) band \[[^\]]*\] px holds/ }],   // H3-11 · Q-12; H6-11 · the band reading
     ["W1", "cardstep", /card·warm-expand|card·warm-collapse|card·first-expand/, [OB]],   // H4-7 · one step between the rests: Q-12's, in both engines
     ["W1", "hitpairunnamed", /morph·warm-expand|morph·warm-collapse/, ["ran"]],           // H4-9 · a hit layer the adapter does not name
     ["W2", "scroller", /route2|route3|route4/, ["scroller"]],
@@ -66,7 +72,7 @@ const EXPECT = [
     ["W3", "ease", /^warm-expand/, ["trajectory"]],
     ["W3", "snap", /^warm-expand/, ["terminal"]],
     ["W3", "wall", /^reversal/, ["trajectory"]],
-    ["W3", "slowclock", /^warm-expand/, ["window"]],
+    ["W3", "slowclock", /^warm-expand/, ["window"], null, { summary: /Q-4 \(a\) flag at the 2 % band fails .*Q-4 \(c\) 270 ms dock clock fails/ }],   // H6-11 · both branches fail a late morph
     ["W3", "seatjump", /^lead-add/, ["seatStep"]],
     ["W3", "doublex", /^lead-add/, ["seatOverlap"]],
     ["W3", "hiddengrow", /^hidden-shown/, null],
@@ -82,7 +88,7 @@ const EXPECT = [
     ["W3", "nostretch", /^stretch·lead-add/, ["seatStep"]],            // H3-6
     ["W3", "nbjump", /^neighbour·/, ["neighbour"]],                    // H3-7
     ["W3", "nboverlap", /^neighbour·warm-expand/, ["overlap"]],       // H3-7
-    ["W3", "bandclose", /^warm-expand|^warm-collapse/, [OB]],          // H3-11 · Q-4
+    ["W3", "bandclose", /^warm-expand|^warm-collapse/, [OB], null, { summary: /Q-4 \(a\) flag at the 2 % band holds .*Q-4 \(c\) 270 ms dock clock fails/ }],   // H3-11 · Q-4; H6-11 · (a) holds, (c) fails
     ["W3", "anchordrift", /^anchor-end/, ["anchor"]],
     ["W3", "wideout", /^wide·collapsed-rest/, null],
     ["W3", "twoowners", /^seat-transition/, ["owners"]],
@@ -157,7 +163,7 @@ const EXPECT = [
     ["W3", "seatsettle", /^warm-expand|^warm-collapse/, ["lanes"]],    // H5-7 · seat position after the flag
     ["FM", "stub", /^film·swap-/, ["stub"]],                           // H5-3 · the film read, gated
     ["W1", "cardblip", /card·warm-expand|card·warm-collapse|card·first-expand/, ["card"]],   // H5-12 · enough samples
-    ["W6", "bandclose", /form·expand|form·collapse/, [OB]],             // H5-5 · Q-4 lenient window
+    ["W6", "bandclose", /form·expand|form·collapse/, [OB], null, { summary: /Q-4 \(a\) flag at the 2 % band holds .*Q-4 \(c\) 270 ms dock clock fails/ }],   // H5-5 · Q-4 lenient window; H6-11
     ["W6", "slowclock", /form·expand|form·collapse/, ["window"]],       // H5-5 · a late morph still FAILS
     ["CF", "platesq", /^c1·shape·/, ["ownshape", "corner"]],            // H5-6 · C1 per painter + pixels
     ["CF", "prmfade", /^c2·prm/, ["content", "flag"]],                  // H5-6 · C2 per Q-18 (a)
@@ -170,10 +176,24 @@ const EXPECT = [
     ["F7", "gatered", /^f7·gate·boot-graph/, ["gate"]],                 // H5-10
     ["F7", "tscred", /^f7·typecheck/, ["typecheck"]],                   // H5-10
     ["F7", "gateskip", /^f7·gate·boot-graph/, ["UNMEASURED"]],          // H5-10 · a skipped build arm is never PASS
+    // H6 (pass-6/H6.md)
+    ["W3", "stubhalf", /^swap-/, ["stub"]],                             // H6-1 · a hard cut at opacity 0.5 (the routes' CUT_OPACITY)
+    ["FM", "stubhalf", /^film·swap-/, ["stub"]],                        // H6-1
+    ["W3", "hole", /^first-expand|^warm-expand/, ["hole"]],             // H6-2 · seat One empty while its sides paint
+    ["FM", "hole", /^film·(first|warm)-expand/, ["hole"]],              // H6-2
+    ["W3", "platewide!unbounded", /^content-remove/, ["ink"]],          // H6-3 · the pass-5 reading under a plate-wide clip: ink > 1
+    ["W3", "flag50", /^warm-expand|^warm-collapse/, ["window"]],        // H6-5 · the flag 50 ms after landing (3+ entries)
+    ["ST", "pass!rescale", /^stall·nb·/, ["UNMEASURED"], null, { summary: /markers at \d/ }],   // H6-4 · a 0.98 cast reads its markers, then UNMEASURED
+    ["ST", "pass!nomarker", /^stall·/, ["UNMEASURED"], null, { summary: /missing marker|no block-end marker/ }],   // H6-4 · no marker: UNMEASURED
+    ["CF", "hoverdead", /^c8·/, ["opens"]],                             // H6-6 · a hover on a collapsed dock that does not open it
+    ["CF", "pressstick", /^c8·/, ["collapses"], null, { notFailed: ["opens"] }],   // H6-6 · reps that started expanded are not judged for opens
+    ["W3", "late", /^warm-expand/, ["window"], null, { line: /^PASS {2}W3 {2}\(faces merged\) {2}ENGINE {2}warm-expand/ }],   // H6-8 · faces at 0 px print PASS on a red cell
+    ["W3", "overhang", /^warm-expand/, ["faces"], null, { line: /^FAIL {2}W3 {2}\(faces merged\) {2}ENGINE {2}warm-expand/ }],   // H6-8 · a faces red prints FAIL
+    ["PR", "harnesscite", /^prose·harness/, ["harness"]],               // H6-9
 ];
 // [witness, fixture, cells pattern (optional: the variant runs only those blocks)]
 const PASS_VARIANTS = [["W1", "csscarrier"], ["W7", "splitcaps"], ["W1", "hitpair"], ["ST", "pass@dark"], ["FM", "pass@dark"], ["W1", "pass@dark"],
-    ["W2", "roving"], ["W3", "ctxgc", "^retarget·context"]];
+    ["W2", "roving"], ["W3", "ctxgc", "^retarget·context"], ["W3", "platewide", "^content-remove"]];   // H6-3 · bounded, the plate-wide clip passes
 const SOURCE = new Set(["PR", "F7"]);
 const SCRIPT = { W1: "w1-corner.mjs", W2: "w2-run.mjs", W3: "w3-morph.mjs", W4: "w4-state.mjs", W5: "w5-rim.mjs", W6: "w6-collapsed-form.mjs", W7: "w7-edge.mjs", W8: "w8-motion.mjs", R6: "r6-probe.mjs", ST: "stall.mjs", FM: "film.mjs", R5: "r5-hit.mjs", CF: "c-facility.mjs", L1: "l1-light.mjs", PR: "prose.mjs", F7: "f7.mjs" };
 
@@ -184,6 +204,9 @@ function run(w, fixtureArg, cells = null) {
     const env = { ...process.env };
     if (theme) env.DOCK_HARNESS_THEME = theme;
     if (flag === "nohold") env.DOCK_HARNESS_CTX_NOHOLD = "1";
+    if (flag === "unbounded") env.DOCK_HARNESS_INK_UNBOUNDED = "1";
+    if (flag === "rescale") env.DOCK_HARNESS_ST_RESCALE = "0.98";
+    if (flag === "nomarker") env.DOCK_HARNESS_ST_NOMARKER = "1";
     if (fixture === "ctxgc") env.DOCK_HARNESS_EXPOSE_GC = "1";
     const argv = [path.join(HERE, SCRIPT[w]), "--fixture", fixture, "--engine", want.join(",")];
     if (outRoot) argv.push("--out", outRoot);
@@ -193,7 +216,7 @@ function run(w, fixtureArg, cells = null) {
     const dir = outDir({ out: outRoot, fixture }, w);
     let cellsOut = [];
     try { cellsOut = JSON.parse(fs.readFileSync(path.join(dir, `${w}.json`), "utf8")).cells; } catch { }
-    return { code: r.status, cells: cellsOut, ms: Date.now() - t0, load, err: (r.stderr || "").trim().split("\n").slice(-2).join(" ") };
+    return { code: r.status, cells: cellsOut, out: r.stdout || "", ms: Date.now() - t0, load, err: (r.stderr || "").trim().split("\n").slice(-2).join(" ") };
 }
 const counted = (cs) => cs.filter((c) => !c.unmeasured && !c.record);
 let bad = 0;
@@ -209,7 +232,7 @@ for (const w of Object.keys(SCRIPT)) {
         const ok = p.code === 0 && cs.length > 0 && cs.every((c) => c.pass) && (SOURCE.has(w) ? ["source"] : want).every((e) => engs.has(e));
         log({ witness: w, fixture: fx + (vcells ? ` (${vcells})` : ""), expect: "exit 0, all cells PASS", got: `exit ${p.code}, ${cs.filter((c) => c.pass).length}/${cs.length} PASS${ok ? "" : "; failing: " + cs.filter((c) => !c.pass).map((c) => `${c.engine}:${c.cell}${c.failed ? "[" + c.failed.join(",") + "]" : ""}`).slice(0, 6).join(" ")}${p.err && !cs.length ? " · " + p.err : ""}`, ok, ms: p.ms, load: p.load });
     }
-    for (const [ew, fault, pat, check, only1] of EXPECT) {
+    for (const [ew, fault, pat, check, only1, opts = {}] of EXPECT) {
         if (ew !== w) continue;
         if (onlyFaults && !onlyFaults.includes(fault) && !onlyFaults.includes(fault.split("!")[0])) continue;
         const f = run(w, fault, pat.source);
@@ -220,8 +243,13 @@ for (const w of Object.keys(SCRIPT)) {
             : um ? f.cells.filter((c) => pat.test(c.cell) && !c.pass && c.unmeasured)
             : f.cells.filter((c) => pat.test(c.cell) && !c.pass && !c.unmeasured && !c.record && !c.ownerBlocked && (!check || check.some((k) => (c.failed ?? []).includes(k))));
         const engs = new Set(hit.map((c) => c.engine));
-        const ok = (ob || um || f.code !== 0) && judged.every((e) => engs.has(e));
-        log({ witness: w, fixture: fault + (only1 ? ` [${only1.join(",")}]` : ""), expect: ob ? `an OWNER-BLOCKED cell in ${pat.source}` : um ? `an UNMEASURED (never PASS) cell in ${pat.source}` : `exit ≠ 0; ${check ? check.join("|") + " fails in " : ""}${pat.source}`, got: `exit ${f.code}, ${f.cells.filter((c) => !c.pass).length}/${f.cells.length} FAIL; matching ${hit.length} (${[...engs].join("+") || "none"})${ok ? "" : f.err ? " · " + f.err : ""}`, ok, ms: f.ms, load: f.load });
+        // H6 options: every matching cell's summary, no matching cell failing a named check, a stdout line per engine
+        const sumBad = opts.summary ? hit.filter((c) => !opts.summary.test(c.summary ?? "")) : [];
+        const nfBad = opts.notFailed ? f.cells.filter((c) => pat.test(c.cell) && opts.notFailed.some((k) => (c.failed ?? []).includes(k))) : [];
+        const lineBad = opts.line ? judged.filter((e) => !f.out.split("\n").some((l) => new RegExp(opts.line.source.replace("ENGINE", (ENGINE_LABEL[e] ?? e).replace(/[()]/g, "\\$&"))).test(l))) : [];
+        const ok = (ob || um || f.code !== 0) && judged.every((e) => engs.has(e)) && !sumBad.length && !nfBad.length && !lineBad.length;
+        const extra = [opts.summary ? `summary ${sumBad.length ? "MISSES in " + sumBad.length : "matches"}` : "", opts.notFailed ? `${opts.notFailed.join(",")} ${nfBad.length ? "FAILS in " + nfBad.length : "holds"}` : "", opts.line ? `line ${lineBad.length ? "MISSING in " + lineBad.join(",") : "printed"}` : ""].filter(Boolean).join("; ");
+        log({ witness: w, fixture: fault + (only1 ? ` [${only1.join(",")}]` : ""), expect: (ob ? `an OWNER-BLOCKED cell in ${pat.source}` : um ? `an UNMEASURED (never PASS) cell in ${pat.source}` : `exit ≠ 0; ${check ? check.join("|") + " fails in " : ""}${pat.source}`) + (opts.summary ? `; summary ~ ${opts.summary.source}` : "") + (opts.notFailed ? `; ${opts.notFailed.join(",")} not failed` : "") + (opts.line ? `; stdout ~ ${opts.line.source}` : ""), got: `exit ${f.code}, ${f.cells.filter((c) => !c.pass).length}/${f.cells.length} FAIL; matching ${hit.length} (${[...engs].join("+") || "none"})${extra ? "; " + extra : ""}${ok ? "" : f.err ? " · " + f.err : ""}`, ok, ms: f.ms, load: f.load });
     }
 }
 if (!only || only.includes("H6")) {
@@ -241,6 +269,15 @@ if (!only || only.includes("RUN")) {
     const r = spawnSync(process.execPath, [path.join(HERE, "reds.mjs"), "--selftest"], { encoding: "utf8" });
     const last = r.stdout.trim().split("\n").pop();
     log({ witness: "RUN", fixture: "reds+faces", expect: "merged reds and controls re-run; main W3 runs faces (exit 0)", got: `exit ${r.status}: ${last}`, ok: r.status === 0, ms: Date.now() - t0, load: loadAvg() });
+}
+// H6 (pass-6/H6.md) · witness SYN, engine-independent: H6-5's time-counted W-8 on synthetic strips (plants/w8-time.mjs)
+// and H6-7's digest rule (cells.mjs --selftest)
+if (!only || only.includes("SYN")) {
+    for (const [name, argv, expect] of [["w8-time", [path.join(HERE, "plants", "w8-time.mjs")], "3 entries in 21.4 ms pass, 3 in 50 ms fail; the pass-5 entry count reads the first FAIL (exit 0)"], ["digest", [path.join(HERE, "cells.mjs"), "--selftest"], "a re-run that reads the cell OB without the failing check counts it NOT-REPRODUCED (exit 0)"]]) {
+        const t0 = Date.now();
+        const r = spawnSync(process.execPath, argv, { encoding: "utf8" });
+        log({ witness: "SYN", fixture: name, expect, got: `exit ${r.status}: ${r.stdout.trim().split("\n").pop()}`, ok: r.status === 0, ms: Date.now() - t0, load: loadAvg() });
+    }
 }
 if (!only || only.includes("H8")) {
     const t0 = Date.now();

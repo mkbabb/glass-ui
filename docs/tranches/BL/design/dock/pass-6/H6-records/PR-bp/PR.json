@@ -1,0 +1,87 @@
+{
+ "witness": "PR",
+ "target": "wt",
+ "when": "2026-10-19T16:58:39.458Z",
+ "load": 18.68,
+ "cells": [
+  {
+   "engine": "source",
+   "cell": "prose·readers",
+   "pass": true,
+   "failed": [],
+   "dead": [],
+   "summary": "65 custom propert(ies) declared or written in the dock band; 0 with no reader in src/ or demo/",
+   "load": 18.68
+  },
+  {
+   "engine": "source",
+   "cell": "prose·count",
+   "pass": true,
+   "failed": [],
+   "counts": [
+    {
+     "at": "src/components/dock/GlassDock.vue:62",
+     "says": "SEVEN members",
+     "n": 7,
+     "ok": true
+    }
+   ],
+   "members": 7,
+   "summary": "DockProps has 7 member(s); 1 prose count(s) near it, 0 wrong",
+   "load": 18.68
+  },
+  {
+   "engine": "source",
+   "cell": "prose·partials",
+   "pass": true,
+   "failed": [],
+   "partials": [],
+   "summary": "0 partial count(s) in an @import file; 0 wrong",
+   "load": 18.68
+  },
+  {
+   "engine": "source",
+   "cell": "prose·citations",
+   "pass": true,
+   "failed": [],
+   "cites": [],
+   "summary": "0 design-pass record citation(s) in src/ or tests/",
+   "load": 18.68
+  },
+  {
+   "engine": "source",
+   "cell": "prose·harness",
+   "pass": false,
+   "failed": [
+    "harness"
+   ],
+   "harness": [
+    "src/components/dock/composables/useDockBody.ts:30 H3-4",
+    "src/components/dock/composables/useDockScene.ts:31 H3-1",
+    "src/components/dock/composables/useDockScene.ts:31 swap-long",
+    "src/components/dock/composables/useDockScene.ts:43 H4-1",
+    "src/components/dock/composables/useDockScene.ts:57 H5-3",
+    "src/components/dock/composables/useDockScene.ts:66 H4-2",
+    "src/components/dock/composables/useDockScene.ts:73 H3-7",
+    "src/components/dock/composables/useDockScene.ts:148 H5-4",
+    "src/components/dock/composables/useDockScene.ts:152 H5-3",
+    "src/components/dock/composables/useDockScene.ts:348 H3-7",
+    "src/components/dock/composables/useDockScene.ts:794 H4-1",
+    "src/components/dock/composables/useDockScene.ts:815 H4-2",
+    "src/components/dock/styles/shell.css:97 anchor-end",
+    "src/components/dock/styles/shell.css:251 H3-7"
+   ],
+   "summary": "14 harness row id(s) or witness cell name(s) in src/: src/components/dock/composables/useDockBody.ts:30 H3-4, src/components/dock/composables/useDockScene.ts:31 H3-1, src/components/dock/composables/useDockScene.ts:31 swap-long, src/components/dock/composables/useDockScene.ts:43 H4-1, src/components/dock/composables/useDockScene.ts:57 H5-3, src/components/dock/composables/useDockScene.ts:66 H4-2 … (+8)",
+   "load": 18.68
+  },
+  {
+   "engine": "source",
+   "cell": "prose·rows",
+   "pass": true,
+   "failed": [],
+   "dup": [],
+   "summary": "32 token(s) with a row in docs/design/tunable-anim.md; 0 with more than one",
+   "load": 18.68
+  }
+ ]
+}

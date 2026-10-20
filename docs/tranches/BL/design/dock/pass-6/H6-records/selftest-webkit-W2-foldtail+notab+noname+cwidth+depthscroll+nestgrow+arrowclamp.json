@@ -1,0 +1,71 @@
+{
+ "when": "2026-10-19T23:36:17.159Z",
+ "engines": [
+  "webkit"
+ ],
+ "rows": [
+  {
+   "witness": "W2",
+   "fixture": "foldtail",
+   "expect": "exit ≠ 0; pointer|keyboard|at fails in route1",
+   "got": "exit 1, 2/2 FAIL; matching 2 (webkit)",
+   "ok": true,
+   "ms": 9236,
+   "load": 30.48
+  },
+  {
+   "witness": "W2",
+   "fixture": "notab",
+   "expect": "exit ≠ 0; keyboard fails in route1|route5|route6|route7",
+   "got": "exit 1, 5/5 FAIL; matching 5 (webkit)",
+   "ok": true,
+   "ms": 13956,
+   "load": 31.16
+  },
+  {
+   "witness": "W2",
+   "fixture": "noname",
+   "expect": "exit ≠ 0; at fails in route1|route5|route6|route7",
+   "got": "exit 1, 5/5 FAIL; matching 5 (webkit)",
+   "ok": true,
+   "ms": 13892,
+   "load": 29.56
+  },
+  {
+   "witness": "W2",
+   "fixture": "cwidth",
+   "expect": "exit ≠ 0; plateOut fails in route5",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 1958,
+   "load": 27.46
+  },
+  {
+   "witness": "W2",
+   "fixture": "depthscroll",
+   "expect": "exit ≠ 0; scroller fails in route6",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 3084,
+   "load": 25.74
+  },
+  {
+   "witness": "W2",
+   "fixture": "nestgrow",
+   "expect": "exit ≠ 0; fits|faces|pointer fails in route7",
+   "got": "exit 1, 1/1 FAIL; matching 1 (webkit)",
+   "ok": true,
+   "ms": 2172,
+   "load": 25.74
+  },
+  {
+   "witness": "W2",
+   "fixture": "arrowclamp",
+   "expect": "exit ≠ 0; keyboard fails in route1",
+   "got": "exit 1, 2/2 FAIL; matching 2 (webkit)",
+   "ok": true,
+   "ms": 9176,
+   "load": 26
+  }
+ ]
+}

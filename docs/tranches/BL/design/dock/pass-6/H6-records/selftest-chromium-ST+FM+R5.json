@@ -1,0 +1,161 @@
+{
+ "when": "2026-10-19T18:29:17.396Z",
+ "engines": [
+  "chromium"
+ ],
+ "rows": [
+  {
+   "witness": "ST",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 10/10 PASS",
+   "ok": true,
+   "ms": 73169,
+   "load": 39.35
+  },
+  {
+   "witness": "ST",
+   "fixture": "pass@dark",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 10/10 PASS",
+   "ok": true,
+   "ms": 78839,
+   "load": 32.61
+  },
+  {
+   "witness": "ST",
+   "fixture": "leap",
+   "expect": "exit ≠ 0; leap fails in ^stall·",
+   "got": "exit 1, 8/10 FAIL; matching 4 (chromium)",
+   "ok": true,
+   "ms": 76376,
+   "load": 40.15
+  },
+  {
+   "witness": "ST",
+   "fixture": "nbjump",
+   "expect": "exit ≠ 0; neighbour fails in ^stall·nb·",
+   "got": "exit 1, 2/5 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 36661,
+   "load": 37.23
+  },
+  {
+   "witness": "ST",
+   "fixture": "nboverlap",
+   "expect": "exit ≠ 0; overlap fails in ^stall·nb·",
+   "got": "exit 1, 5/5 FAIL; matching 3 (chromium)",
+   "ok": true,
+   "ms": 36604,
+   "load": 34.57
+  },
+  {
+   "witness": "ST",
+   "fixture": "pass!rescale",
+   "expect": "an UNMEASURED (never PASS) cell in ^stall·nb·; summary ~ markers at \\d",
+   "got": "exit 0, 5/5 FAIL; matching 5 (chromium); summary matches",
+   "ok": true,
+   "ms": 40188,
+   "load": 31.33
+  },
+  {
+   "witness": "ST",
+   "fixture": "pass!nomarker",
+   "expect": "an UNMEASURED (never PASS) cell in ^stall·; summary ~ missing marker|no block-end marker",
+   "got": "exit 0, 10/10 FAIL; matching 10 (chromium); summary matches",
+   "ok": true,
+   "ms": 74016,
+   "load": 28.81
+  },
+  {
+   "witness": "FM",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 6/6 PASS",
+   "ok": true,
+   "ms": 30764,
+   "load": 33.75
+  },
+  {
+   "witness": "FM",
+   "fixture": "pass@dark",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 6/6 PASS",
+   "ok": true,
+   "ms": 30485,
+   "load": 32.99
+  },
+  {
+   "witness": "FM",
+   "fixture": "deadhooks",
+   "expect": "exit ≠ 0; tiles fails in ^film·",
+   "got": "exit 1, 6/6 FAIL; matching 6 (chromium)",
+   "ok": true,
+   "ms": 30348,
+   "load": 35.53
+  },
+  {
+   "witness": "FM",
+   "fixture": "stub",
+   "expect": "exit ≠ 0; stub fails in ^film·swap-",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 9620,
+   "load": 37.81
+  },
+  {
+   "witness": "FM",
+   "fixture": "stubhalf",
+   "expect": "exit ≠ 0; stub fails in ^film·swap-",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 9243,
+   "load": 37.68
+  },
+  {
+   "witness": "FM",
+   "fixture": "hole",
+   "expect": "exit ≠ 0; hole fails in ^film·(first|warm)-expand",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 10281,
+   "load": 35.38
+  },
+  {
+   "witness": "R5",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 4/4 PASS",
+   "ok": true,
+   "ms": 13112,
+   "load": 31.4
+  },
+  {
+   "witness": "R5",
+   "fixture": "nohit",
+   "expect": "exit ≠ 0; corner fails in ^hit·",
+   "got": "exit 1, 4/4 FAIL; matching 4 (chromium)",
+   "ok": true,
+   "ms": 13042,
+   "load": 32.45
+  },
+  {
+   "witness": "R5",
+   "fixture": "seatmiss",
+   "expect": "exit ≠ 0; seat fails in ^hit·warm-",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 7112,
+   "load": 32.58
+  },
+  {
+   "witness": "R5",
+   "fixture": "ghosthit",
+   "expect": "exit ≠ 0; ghost fails in ^hit·warm-",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 7118,
+   "load": 33.82
+  }
+ ]
+}

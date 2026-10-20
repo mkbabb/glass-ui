@@ -19,6 +19,8 @@
 //   form·expand, form·collapse  the shared morph: lib.mjs analyseMorph on the frame strip, plus
 //                        wraps on every sampled frame (screenshots in Chromium, the screencast
 //                        in Playwright WebKit, as W3)
+// H6 (pass-6/H6.md): a cell whose pinned window failed prints Q-4's (a) and (c) readings beside the lenient one (H6-11,
+// lib.mjs morphSummary); the window's W-8 bound is counted in time (H6-5). Verdicts unchanged.
 import path from "node:path";
 import { parseArgs, engines, openTarget, launch, openScene, makeReport, outDir, engineTag, startLog, stopLog, mark, waitRest, dockCenter, extentNow, probeMode, shoot, facesRead, FACE_DOM_SCREENCAST, screencast, readFrame, interiorGreen, pinnedRung, analyseMorph, morphChecks, morphSummary, r2, q4Blocked } from "./lib.mjs";
 

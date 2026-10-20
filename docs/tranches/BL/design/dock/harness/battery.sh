@@ -16,6 +16,16 @@
 #   · the re-run pattern keeps each cell's control: ^(<cell>(·control)?|…)$.
 # Plants: `node reds.mjs --selftest` (selftest witness RUN). Logs: $REC/<build>-<stage>-<W>-<ENG>[-rerun<k>].log;
 # witness JSON copied to $REC/json/<build>-<ENG>/.
+#
+# H6-10 (pass-6/H6.md): stage `theme` (THEME=light|dark) runs every stage of one theme in ONE guarded slot (for WebKit,
+# one --exclusive webkit slot per theme): light = main + rest, dark = dark + darkrest, the same witnesses, stage names
+# and records as the four stages. Pass 5 queued the machine-wide WebKit lock once per stage or group, and the lock waits
+# (70-105 min each) were most of a seat's wall clock (B′-crit §6, B′-proto §5); the witnesses ran in minutes. The slot
+# splits only where the 90-min clamp requires: before each witness the slot compares its elapsed time plus that witness's
+# estimate (EST, minutes: pass-5's measured WebKit time with its re-runs, × 3, floor 3) against BUDGET_MIN (default 80,
+# under the guard's 90); when it would not fit, the slot ends and the rest queues as the next slot. DRYRUN=1 prints the
+# slot plan from the estimates (EST_MIN=<n> sets every estimate) and runs nothing: the runner's plant
+# (`node reds.mjs --selftest`).
 set -u
 OUT=$1; STAGE=$2
 H=$(cd "$(dirname "$0")" && pwd); D=$(cd "$H/.." && pwd)
@@ -49,7 +59,44 @@ X=""; [ "$E" = webkit ] && X="--exclusive webkit"
 G="$HOME/.claude/guard/guarded $X --timeout ${TMIN:-90} --"
 [ -n "${NOGUARD:-}" ] && G=""
 export -f run one stage script json extra; export OUT B AD REF H D E BUILD REC WT=${WT:-}
+# H6-10 · per-witness estimates (minutes, Playwright WebKit with re-runs; pass-5/D2-Bp-crit-records/battery logs × 3)
+est() { [ -n "${EST_MIN:-}" ] && { echo "$EST_MIN"; return; }; case $1 in CF) echo 21;; W3) echo 9;; *) echo 3;; esac; }
+themed() { # runs "<stage>:<W> …" in order inside one slot; on a budget stop writes the rest to $REM and exits 75
+  local t0=$SECONDS item st w left=() stop=
+  for item in $SEG; do
+    if [ -n "$stop" ]; then left+=("$item"); continue; fi
+    st=${item%%:*}; w=${item#*:}
+    if [ $(( (SECONDS - t0) / 60 + $(est $w) )) -gt "${BUDGET_MIN:-80}" ]; then stop=1; left+=("$item"); continue; fi
+    one "$st" "$w"
+  done
+  if [ ${#left[@]} -gt 0 ]; then echo "${left[*]}" > "$REM"; exit 75; fi
+}
+segs() { # theme → "<stage>:<W> …"
+  if [ "$1" = dark ]; then for w in ST FM W1 W3 W2 R5 CF; do printf 'dark:%s ' $w; done; for w in W4 W5 W6 W7 W8 R6; do printf 'darkrest:%s ' $w; done
+  else for w in W3 ST R5 CF L1 FM W2 CASES; do printf 'main:%s ' $w; done; for w in W1 W4 W5 W6 W7 W8 R6; do printf 'rest:%s ' $w; done; fi
+}
+plan() { # DRYRUN: the slots the estimates give, one line per slot
+  local k=1 used=0 line="" item w e
+  for item in $SEG; do w=${item#*:}; e=$(est $w)
+    if [ $((used + e)) -gt "${BUDGET_MIN:-80}" ] && [ -n "$line" ]; then echo "slot $k:$line"; k=$((k + 1)); used=0; line=""; fi
+    used=$((used + e)); line="$line $item"; done
+  [ -n "$line" ] && echo "slot $k:$line"
+}
+export -f est themed
 case $STAGE in
+theme)
+  THEME=${THEME:-light}; REM=$REC/remain-$BUILD-$THEME-$E.txt; SEG=${SEG:-$(segs $THEME)}; export REM
+  if [ -n "${DRYRUN:-}" ]; then plan; exit 0; fi
+  k=0
+  while :; do
+    k=$((k + 1)); rm -f "$REM"; export SEG
+    echo "$(date) slot $k $BUILD $E $THEME [$SEG] · $(uptime)" >> "$REC/slots.log"
+    if [ "$THEME" = dark ]; then $G env DOCK_HARNESS_THEME=dark bash -c themed; else $G bash -c themed; fi
+    echo "$(date) slot $k end exit $? · $(uptime)" >> "$REC/slots.log"
+    [ -s "$REM" ] || break
+    SEG=$(cat "$REM")
+  done
+  STAGE=theme-$THEME ;;
 main) $G bash -c "stage main 'W3 ST R5 CF L1 FM W2 CASES'" ;;
 rest) $G bash -c "stage rest 'W1 W4 W5 W6 W7 W8 R6'" ;;
 dark) $G env DOCK_HARNESS_THEME=dark bash -c "stage dark 'ST FM W1 W3 W2 R5 CF'" ;;

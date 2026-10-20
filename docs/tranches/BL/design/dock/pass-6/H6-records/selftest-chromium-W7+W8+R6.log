@@ -1,0 +1,19 @@
+14:16  up 18 mins, 3 users, load averages: 35.84 37.22 36.36
+Mon Oct 19 14:16:01 EDT 2026
+OK   W7  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 18/18 PASS  [31 s, load 35.84]
+OK   W7  splitcaps       expect: exit 0, all cells PASS  ·  got: exit 0, 18/18 PASS  [31 s, load 34.5]
+OK   W7  edgecut         expect: exit ≠ 0; whole fails in ^(top|side|canvas)·  ·  got: exit 1, 18/18 FAIL; matching 18 (chromium)  [29 s, load 36.37]
+OK   W7  sideedge        expect: exit ≠ 0; same fails in ^side·  ·  got: exit 1, 6/6 FAIL; matching 6 (chromium)  [20 s, load 33.59]
+OK   W7  gutterless      expect: exit ≠ 0; gutter fails in ^(side|canvas)·  ·  got: exit 1, 12/12 FAIL; matching 12 (chromium)  [29 s, load 30.53]
+OK   W7  badgeover       expect: exit ≠ 0; badge fails in ^side·  ·  got: exit 1, 3/6 FAIL; matching 3 (chromium)  [20 s, load 30.66]
+OK   W7  lens            expect: exit ≠ 0; radius fails in ^(top|side)·  ·  got: exit 1, 12/12 FAIL; matching 12 (chromium)  [20 s, load 31.55]
+OK   W7  nocaps          expect: exit ≠ 0; whole fails in ^(top|side|canvas)·dark·dpr2  ·  got: exit 1, 3/3 FAIL; matching 3 (chromium)  [6 s, load 37.48]
+OK   W8  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 6/6 PASS  [12 s, load 38.24]
+OK   W8  squash          expect: exit ≠ 0; sharp fails in ^expand|^collapse  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium)  [6 s, load 41.93]
+OK   W8  jank            expect: exit ≠ 0; pacing fails in ^expand|^collapse  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium)  [6 s, load 42.18]
+OK   R6  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 1/1 PASS  [5 s, load 40.8]
+OK   R6  backdropmotion  expect: exit ≠ 0; ring·static  ·  got: exit 1, 1/1 FAIL; matching 1 (chromium)  [5 s, load 39.3]
+SELFTEST PASS  13/13 expectations hold
+exit 0
+14:19  up 22 mins, 3 users, load averages: 39.35 36.79 36.24
+Mon Oct 19 14:19:40 EDT 2026

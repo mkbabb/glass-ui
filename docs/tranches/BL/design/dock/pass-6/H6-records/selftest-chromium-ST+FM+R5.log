@@ -1,0 +1,23 @@
+14:19  up 22 mins, 3 users, load averages: 39.35 36.79 36.24
+Mon Oct 19 14:19:40 EDT 2026
+OK   ST  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 10/10 PASS  [73 s, load 39.35]
+OK   ST  pass@dark       expect: exit 0, all cells PASS  ·  got: exit 0, 10/10 PASS  [79 s, load 32.61]
+OK   ST  leap            expect: exit ≠ 0; leap fails in ^stall·  ·  got: exit 1, 8/10 FAIL; matching 4 (chromium)  [76 s, load 40.15]
+OK   ST  nbjump          expect: exit ≠ 0; neighbour fails in ^stall·nb·  ·  got: exit 1, 2/5 FAIL; matching 2 (chromium)  [37 s, load 37.23]
+OK   ST  nboverlap       expect: exit ≠ 0; overlap fails in ^stall·nb·  ·  got: exit 1, 5/5 FAIL; matching 3 (chromium)  [37 s, load 34.57]
+OK   ST  pass!rescale    expect: an UNMEASURED (never PASS) cell in ^stall·nb·; summary ~ markers at \d  ·  got: exit 0, 5/5 FAIL; matching 5 (chromium); summary matches  [40 s, load 31.33]
+OK   ST  pass!nomarker   expect: an UNMEASURED (never PASS) cell in ^stall·; summary ~ missing marker|no block-end marker  ·  got: exit 0, 10/10 FAIL; matching 10 (chromium); summary matches  [74 s, load 28.81]
+OK   FM  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 6/6 PASS  [31 s, load 33.75]
+OK   FM  pass@dark       expect: exit 0, all cells PASS  ·  got: exit 0, 6/6 PASS  [30 s, load 32.99]
+OK   FM  deadhooks       expect: exit ≠ 0; tiles fails in ^film·  ·  got: exit 1, 6/6 FAIL; matching 6 (chromium)  [30 s, load 35.53]
+OK   FM  stub            expect: exit ≠ 0; stub fails in ^film·swap-  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium)  [10 s, load 37.81]
+OK   FM  stubhalf        expect: exit ≠ 0; stub fails in ^film·swap-  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium)  [9 s, load 37.68]
+OK   FM  hole            expect: exit ≠ 0; hole fails in ^film·(first|warm)-expand  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium)  [10 s, load 35.38]
+OK   R5  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 4/4 PASS  [13 s, load 31.4]
+OK   R5  nohit           expect: exit ≠ 0; corner fails in ^hit·  ·  got: exit 1, 4/4 FAIL; matching 4 (chromium)  [13 s, load 32.45]
+OK   R5  seatmiss        expect: exit ≠ 0; seat fails in ^hit·warm-  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium)  [7 s, load 32.58]
+OK   R5  ghosthit        expect: exit ≠ 0; ghost fails in ^hit·warm-  ·  got: exit 1, 2/2 FAIL; matching 2 (chromium)  [7 s, load 33.82]
+SELFTEST PASS  17/17 expectations hold
+exit 0
+14:29  up 32 mins, 3 users, load averages: 33.31 34.07 35.00
+Mon Oct 19 14:29:17 EDT 2026

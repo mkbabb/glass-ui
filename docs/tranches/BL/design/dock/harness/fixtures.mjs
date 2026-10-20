@@ -44,6 +44,17 @@
 //   · facility: an outside press collapses the dock at once, mid-morph too (C8, O-91); under max-height 30rem the
 //     dock takes the short rung (pad 4 px: a 52 px pill of 44 px seats, C9, O-74e); a rail run whose roving tabindex
 //     arrows reach Seat 1 (`roving`, a PASS variant of W2).
+// H6 changes (pass-6/H6.md):
+//   · the wipe's seam is a ramp, not a hard cut: every clipped seat carries a mask that fades to zero at its clip edge over
+//     one glyph advance (feather()), so no glyph is cut by a hard edge at any opacity (H6-1). H5's soften() (a cut glyph
+//     at 0.4) is a hard cut at a lower opacity and would fail H6-1; it survives only as the `stubhalf` plant at 0.5;
+//   · plants: `stubhalf` (a hard cut at opacity 0.5, the pass-5 routes' CUT_OPACITY), `stub` (a hard cut at 1: no
+//     feather), `hole` (on expand, seat One paints nothing for 70 % of the episode while its neighbours paint, H6-2),
+//     `platewide` (a leaving seat's clip outsets 12 px across the plate: its painted rect outgrows its own box, H6-3; a
+//     PASS variant, and with `!unbounded` the pass-5 ink reading, the plant), `flag50` (the flag closes 50 ms after
+//     landing, H6-5), `pressstick` (an outside press during the morph is dropped and the facility dwell is 60 s, so reps
+//     after the first start expanded: H6-6's PASS side for `opens`), `hoverdead` (a hover never opens the facility dock,
+//     H6-6's FAIL side for `opens`).
 //
 // ?scene=  fit | rail | long | morph | vmorph | swap | menu | compact | rim | vrim | cwidth |
 //          depth | nested | tick | seatgrow | hidden | form | edge
@@ -70,6 +81,9 @@ export const FAULTS = {
     // H5 (pass-5/H5.md): W2 arrowclamp; W3 stub, vanishstep, seatsettle; W1 cardblip; CF platesq, prmfade, pressdrop,
     // shorttall, shortseat; W3 ctxgc (the forced-GC slot: a PASS variant with the hold, a FAIL without it)
     H5: ["arrowclamp", "stub", "vanishstep", "seatsettle", "cardblip", "platesq", "prmfade", "pressdrop", "shorttall", "shortseat", "ctxgc"],
+    // H6 (pass-6/H6.md): W3/FM stubhalf, hole; W3 platewide (PASS) and platewide!unbounded (the harness plant), flag50;
+    // CF pressstick (opens holds, collapses fails), hoverdead (opens fails)
+    H6: ["stubhalf", "hole", "platewide", "flag50", "pressstick", "hoverdead"],
     // variants that must PASS (they change the carrier, not the property)
     PASS: ["csscarrier", "splitcaps", "hitpair", "roving", "ctxgc"],
 };
@@ -173,7 +187,7 @@ const Q = new URLSearchParams(location.search);
 const scene = ${JSON.stringify(scene)}, fault = ${JSON.stringify(fault)}, V = ${V}, kind = ${JSON.stringify(kind)};
 const PRM = matchMedia("(prefers-reduced-motion: reduce)");
 const FINE = matchMedia("(hover: hover)");
-const DELAY = scene === "facility" ? (fault === "menucollapse" ? 1500 : 3600) : fault === "menucollapse" ? 1500 : 600;   // collapse dwell (fixture's own; the facility scene keeps the dock's own 3.6 s, so a scroll-driven collapse is told apart from the idle one)
+const DELAY = scene === "facility" ? (fault === "menucollapse" ? 1500 : fault === "pressstick" ? 60000 : 3600) : fault === "menucollapse" ? 1500 : 600;   // collapse dwell (fixture's own; the facility scene keeps the dock's own 3.6 s, so a scroll-driven collapse is told apart from the idle one)
 const RESP = 0.3, ZETA = fault === "subpx" ? 0.88 : 1.0, BAND = 0.02;
 const W0 = 2 * Math.PI / RESP;
 const err = (e0, v0, t) => { if (t <= 0) return e0; if (ZETA < 1) { const wd = W0 * Math.sqrt(1 - ZETA * ZETA); return Math.exp(-ZETA * W0 * t) * (e0 * Math.cos(wd * t) + ((v0 + ZETA * W0 * e0) / wd) * Math.sin(wd * t)); } return (e0 + (v0 + W0 * e0) * t) * Math.exp(-W0 * t); };
@@ -440,11 +454,28 @@ function swapTick(vt) {
   }
   return true;
 }
-// H5-3 · a glyph a moving clip edge cuts to between 5 and 95 % of its ink paints at 0.4 opacity: the seam has no
-// glyph-sharp edge (the rule's allowance: a stub paints above 0.5). stub: the hard cut stays
+// H6-1 · the seam is a ramp: a clipped seat's mask fades from full to zero over one glyph advance, ending exactly at
+// each clip edge that cuts it, so a glyph across a seam is painted by a ramp, never a hard edge. stub: no feather (a
+// hard cut at opacity 1); stubhalf: no feather, a cut glyph painted at 0.5 (H5's soften() at the routes' CUT_OPACITY)
+function feather() {
+  if (fault === "stub" || fault === "stubhalf") return;
+  const A = adv();
+  for (const s of seatsAll()) {
+    const cp = s.style.clipPath;
+    if (!cp) { if (s.__mask) { s.style.maskImage = ""; s.style.webkitMaskImage = ""; s.__mask = false; } continue; }
+    const v = (cp.match(/-?[\\d.]+px|\\b0\\b/g) || []).map((x) => parseFloat(x) || 0); const [t = 0, r = t, b = t, l = r] = v;
+    const L = V ? s.offsetHeight : s.offsetWidth, a0 = Math.max(0, V ? t : l), a1 = L - Math.max(0, V ? b : r);
+    // alpha(x) = min(1, (x - a0) / A at a cut start, (a1 - x) / A at a cut end): every ramp has slope 1 / A, so a segment
+    // narrower than two advances peaks below 1 instead of folding its stops into a hard step
+    const al = (x) => Math.max(0, Math.min(1, a0 > 0 ? (x - a0) / A : Infinity, a1 < L ? (a1 - x) / A : Infinity));
+    const xs = [...new Set([0, a0, a0 + A, (a0 + a1) / 2, a1 - A, a1, L].filter((x) => x >= 0 && x <= L).map((x) => +x.toFixed(2)))].sort((p, q) => p - q);
+    const m = "linear-gradient(" + (V ? "to bottom" : "to right") + ", " + xs.map((x) => "rgba(0, 0, 0, " + al(x).toFixed(3) + ") " + x + "px").join(", ") + ")";
+    s.style.maskImage = m; s.style.webkitMaskImage = m; s.__mask = true;
+  }
+}
 const gCv = document.createElement("canvas").getContext("2d"), gInk = new Map();
 function soften() {
-  if (fault === "stub") return;
+  if (fault !== "stubhalf") return;
   for (const s of seatsAll()) {
     const gs = s.querySelectorAll(":scope > .g"); if (!gs.length) continue;
     const cp = s.style.clipPath;
@@ -456,7 +487,7 @@ function soften() {
       if (V) { g0 = gq.top; g1 = gq.bottom; }
       else { const cs = getComputedStyle(g); const key = cs.fontWeight + cs.fontSize + cs.fontFamily + g.textContent; let m = gInk.get(key); if (!m) { gCv.font = cs.fontStyle + " " + cs.fontWeight + " " + cs.fontSize + " " + cs.fontFamily; const x = gCv.measureText(g.textContent); m = [x.actualBoundingBoxLeft || 0, x.actualBoundingBoxRight || x.width]; gInk.set(key, m); } g0 = gq.left - m[0]; g1 = gq.left + m[1]; }
       const frac = g1 - g0 > 0.5 ? Math.max(0, Math.min(g1, c1) - Math.max(g0, c0)) / (g1 - g0) : 1;
-      g.style.opacity = frac > 0.05 && frac < 0.95 ? "0.4" : "";
+      g.style.opacity = frac > 0.05 && frac < 0.95 ? "0.5" : "";
     }
     s.__soft = true;
   }
@@ -473,6 +504,7 @@ function tick(now) {
     const tau = now - L.ep.t0; const p = Math.max(0, Math.min(1, L.ep.pos(tau)));
     const cut = fault === "vanishstep" ? L.w * (0.8 + 0.2 * p) : p * L.w;   // vanishstep (H5-4): 0.8 of its ink goes in the first frame, the rest on the spring
     clipMain(s, false, noSliver() && L.w - cut < adv() ? L.w : cut);   // H4-1: under one advance it does not paint
+    if (fault === "platewide") { const c = (noSliver() && L.w - cut < adv() ? L.w : cut).toFixed(2) + "px"; s.style.clipPath = V ? "inset(0 -12px " + c + " -12px)" : "inset(-12px " + c + " -12px 0)"; }   // platewide (H6-3): the clip outsets across the plate
     if (tau >= L.ep.T) { s.remove(); leavers.delete(s); } else moving = true;
   }
   if (swapState && swapTick(now)) moving = true;
@@ -501,11 +533,14 @@ function tick(now) {
   }
   if (fault === "cardspread" && dock.classList.contains("card")) plate.style.borderRadius = moving ? "26px" : "";   // cardspread: the card radius swells mid-morph
   if (fault === "cardblip" && dock.classList.contains("card")) { const tau = ext ? now - ext.t0 : -1; plate.style.borderRadius = ext && tau > 0.2 * ext.T && tau < 0.7 * ext.T ? "26px" : ""; }   // cardblip (H5-12): 26 px through the middle half of the morph's time only
-  soften();
+  // H6-2 plant · hole: on an expand, seat One paints nothing for 70 % of the episode while its neighbours paint
+  if (fault === "hole") { const f1 = run.querySelector('[data-testid="f1"]'); if (f1) f1.style.opacity = ext && ext.to > ext.x0 && now - ext.t0 < 0.7 * ext.T ? "0" : ""; }
+  feather(); soften();
   if (fading && !moving) { dock.removeAttribute("data-morphing"); raf = requestAnimationFrame(tick); return; }   // the window is the spatial morph's; a fade is not
   const inBand = fault === "bandclose" && ext && Math.abs(cur - ext.to) <= BAND * Math.abs(ext.to - ext.x0);   // bandclose: the flag closes at the 2 % band (Q-4 (a))
   if (moving) { if (inBand) dock.removeAttribute("data-morphing"); else dock.setAttribute("data-morphing", ""); raf = requestAnimationFrame(tick); }
   else if (fault === "late") setTimeout(() => { if (!raf) dock.removeAttribute("data-morphing"); }, 250);
+  else if (fault === "flag50") setTimeout(() => { if (!raf) dock.removeAttribute("data-morphing"); }, 50);   // flag50 (H6-5): the flag closes 50 ms after landing
   else { if (fault === "seatsettle" && dock.hasAttribute("data-morphing")) { const f1 = run.querySelector('[data-testid="f1"]'); if (f1) { f1.style.left = "1px"; setTimeout(() => { f1.style.left = ""; }, 120); } } dock.removeAttribute("data-morphing"); }   // seatsettle (H5-7): a seat settles 1 px by layout after the flag closes
   if (!raf) lastTick = null;
 }
@@ -662,7 +697,7 @@ const schedule = () => { if (!collapsible) return; clearTimeout(timer); timer = 
 }, DELAY); };
 let releasedAt = -1e9;
 const release = () => { releasedAt = performance.now(); if (collapsible) schedule(); else setTimeout(evalCompact, 160); };
-dock.addEventListener("pointerenter", (e) => { if (e.pointerType !== "mouse" || !FINE.matches) return; engaged = true; clearTimeout(timer); if (collapsible) go("expanded"); else evalCompact(); });
+dock.addEventListener("pointerenter", (e) => { if (e.pointerType !== "mouse" || !FINE.matches) return; if (fault === "hoverdead" && scene === "facility") return; /* hoverdead (H6-6): a hover never opens the dock */ engaged = true; clearTimeout(timer); if (collapsible) go("expanded"); else evalCompact(); });
 dock.addEventListener("pointerleave", (e) => { if (e.pointerType !== "mouse") return; engaged = false; release(); });
 dock.addEventListener("focusin", (e) => { clearTimeout(timer); if (collapsible && posture === "collapsed" && dock.querySelector(":focus-visible") && fault !== "nofocus" && e.target?.dataset?.testid !== "disclosure") go("expanded"); evalCompact(); });   // nofocus: keyboard focus never opens the dock; the disclosure opens it on Enter, not on focus
 dock.addEventListener("focusout", (e) => { if (!dock.contains(e.relatedTarget)) release(); });
@@ -676,7 +711,7 @@ const menu = document.getElementById("menu");
 document.addEventListener("pointerdown", (e) => { if (dock.contains(e.target) || menu.contains(e.target)) return; if (!menu.hidden) { menu.hidden = true; held = false; }
   // H5-11 · the facility scene: an outside press collapses an expanded dock at once, mid-morph too (the integrator retargets).
   // pressdrop: a press that lands while the flag is up is dropped, and nothing re-arms the collapse (O-91)
-  if (scene === "facility") { if (fault === "pressdrop" && dock.hasAttribute("data-morphing")) return; if (posture !== "collapsed" && !held) { pinned = false; go("collapsed"); } return; }
+  if (scene === "facility") { if ((fault === "pressdrop" || fault === "pressstick") && dock.hasAttribute("data-morphing")) return; if (posture !== "collapsed" && !held) { pinned = false; go("collapsed"); } return; }
   if (pinned) { pinned = false; schedule(); } });
 run.querySelector('[data-testid="menu"]')?.addEventListener("click", () => { menu.hidden = !menu.hidden; held = !menu.hidden; if (!held || fault === "menucollapse") schedule(); });
 // H4-10 · the facility scene's keyboard and scroll: Escape closes an open menu (focus back to its trigger), else
@@ -758,7 +793,7 @@ window.__scene = {
     enter.forEach((s) => wiping.add(s));
     const widest = enter.reduce((m, e) => (!m || lenOf(e) > lenOf(m) ? e : m), null);
     swapState = { ep: episode(0, 0, 1, vnow()), faces, to, enter, widest, pop: fault === "retargetpop" && faces.length > 1, old: old.map((g) => ({ ...g, wipe: g.wipe !== false && (g.a + g.b) / 2 < newLen })) };
-    swapTick(vnow()); soften();
+    swapTick(vnow()); feather(); soften();
     changed(); kick();
     if (fault === "ctxgc" && faces.length > 1) queueMicrotask(() => queueMicrotask(() => { if (typeof gc === "function") gc(); }));   // ctxgc (H5-2): a full GC two microtasks after a retarget (ctx-diag's gc-slot), where V8's inspector collects an unheld evaluate promise
   },

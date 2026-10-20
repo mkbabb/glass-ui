@@ -1,0 +1,18 @@
+14:39  up 42 mins, 3 users, load averages: 23.86 27.24 21.06
+OK   SYN  ob-rerun  main FAIL [window, lanes], re-runs OB [window] ×2 → OWNER-BLOCKED, NOT-REPRODUCED checks [lanes]
+OK   SYN  ob-rerun-plant  the pass-5 rule (plant) keeps that cell FAIL on lanes, which no re-run showed
+OK   SYN  reproduced  main FAIL [window, stub], re-runs OB [window] and FAIL [window, stub] → FAIL [window,stub]
+OK   SYN  absent-in-ob  main FAIL [stub], re-runs PASS and OB [window] → NOT-REPRODUCED
+OK   SYN  both-pass  main FAIL [stub], re-runs PASS ×2 → NOT-REPRODUCED
+OK   SYN  one-rerun  main FAIL [stub], one re-run absent → FAIL (no re-run, no ruling)
+OK   SYN  ruled-q4c-holds  OB (Q-4), (c) holds → PASS
+OK   SYN  ruled-q4c-fails  OB (Q-4), (c) fails → FAIL [window]
+OK   SYN  ruled-q4c-seat  OB (Q-4) on a seat moving 340 ms after the flag, (c) allow 303 → FAIL [lanes]
+OK   SYN  ruled-fail-q4c  FAIL [window, stub], (c) holds → FAIL [stub]
+OK   SYN  ruled-fail-q4c-fails  FAIL [window, stub], (c) fails → FAIL [window,stub] (plant: the window stands)
+OK   SYN  ruled-q12b  OB (Q-12), band holds → PASS
+OK   SYN  ruled-q12b-fails  OB (Q-12), band fails → FAIL
+OK   SYN  unruled-plant  without --ruled the same cell reads OWNER-BLOCKED (the witness's verdict, unchanged)
+SYN DIGEST PASS  14/14
+exit 0
+14:39  up 42 mins, 3 users, load averages: 23.55 27.12 21.05

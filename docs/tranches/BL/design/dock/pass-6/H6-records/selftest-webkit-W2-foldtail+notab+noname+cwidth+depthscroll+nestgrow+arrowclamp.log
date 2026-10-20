@@ -1,0 +1,13 @@
+19:35  up  5:38, 3 users, load averages: 30.48 28.17 32.78
+Mon Oct 19 19:35:23 EDT 2026
+OK   W2  foldtail        expect: exit ≠ 0; pointer|keyboard|at fails in route1  ·  got: exit 1, 2/2 FAIL; matching 2 (webkit)  [9 s, load 30.48]
+OK   W2  notab           expect: exit ≠ 0; keyboard fails in route1|route5|route6|route7  ·  got: exit 1, 5/5 FAIL; matching 5 (webkit)  [14 s, load 31.16]
+OK   W2  noname          expect: exit ≠ 0; at fails in route1|route5|route6|route7  ·  got: exit 1, 5/5 FAIL; matching 5 (webkit)  [14 s, load 29.56]
+OK   W2  cwidth          expect: exit ≠ 0; plateOut fails in route5  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [2 s, load 27.46]
+OK   W2  depthscroll     expect: exit ≠ 0; scroller fails in route6  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [3 s, load 25.74]
+OK   W2  nestgrow        expect: exit ≠ 0; fits|faces|pointer fails in route7  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [2 s, load 25.74]
+OK   W2  arrowclamp      expect: exit ≠ 0; keyboard fails in route1  ·  got: exit 1, 2/2 FAIL; matching 2 (webkit)  [9 s, load 26]
+SELFTEST PASS  7/7 expectations hold
+exit 0
+19:36  up  5:39, 3 users, load averages: 27.44 27.71 32.35
+Mon Oct 19 19:36:17 EDT 2026

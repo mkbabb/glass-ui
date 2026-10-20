@@ -43,6 +43,14 @@
 //   H4-6  theme-aware: a marker counts only on a frame that already shows the plate probe (magenta),
 //         so a dark page before the probe can never read as a marker (pass 3: Playwright WebKit dark
 //         5/5 UNMEASURED, its "trigger" was the dark page itself)
+// H6 (pass-6/H6.md):
+//   H6-4  the markers are FOUND in the frame: the two dark runs on the marker row of a late frame (both shown), wherever the
+//         video painted them, so a cast the recorder scaled (Playwright WebKit painted D2-G's page at about 0.98) reads its
+//         markers instead of missing the fixed columns ("the video shows no trigger marker", counted FAIL as "not
+//         measured", G-crit §3.1). A missing marker, or a video scale outside 1 ± SCALE_TOL, reads UNMEASURED, named as such
+//         in the cell and the digest: never FAIL, never PASS. Self-test arms (DOCK_HARNESS_ST_RESCALE=<s>: every decoded
+//         frame resampled by s about its top-left, a cast painted at scale s; DOCK_HARNESS_ST_NOMARKER=1: the block-end
+//         marker is never shown) prove both readings
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { parseArgs, engines, openTarget, launch, makeReport, outDir, engineTag, screencast, readFrame, magentaCoverage, interiorGreen, probeMode, waitRest, extentNow, pinnedRung, springSpec, K_JITTER, r2 } from "./lib.mjs";
@@ -55,6 +63,26 @@ export const BLOCK_MS = 1200, FRAME_MS = 40, MID_FRAC = 0.35;
 export const LEAP_SLACK_PX = 2.0;
 /** the video's static rests against the DOM's: the screencast's static-length noise (~2 px) plus margin */
 export const REST_AGREE_PX = 4.0;
+/** H6-4 · the video scale the read accepts: a frame painted at another scale is not this instrument's reading */
+export const SCALE_TOL = 0.01;
+const RESCALE = Number(process.env.DOCK_HARNESS_ST_RESCALE) || 1;
+const NOMARKER = process.env.DOCK_HARNESS_ST_NOMARKER === "1";
+/** a cast painted at scale s about the frame's top-left (the self-test arm of H6-4) */
+function rescale(img, s) {
+    if (s === 1) return img;
+    const out = Buffer.alloc(img.w * img.h * 4, 255);
+    for (let y = 0; y < img.h; y++) for (let x = 0; x < img.w; x++) { const sx = Math.floor(x / s), sy = Math.floor(y / s); if (sx >= img.w || sy >= img.h) continue; img.data.copy(out, (y * img.w + x) * 4, (sy * img.w + sx) * 4, (sy * img.w + sx) * 4 + 4); }
+    return { ...img, data: out };
+}
+/** H6-4 · the marker runs on a frame: columns where some 3 consecutive rows are dark (mean RGB < 90), merged into runs at
+ *  least 8 px wide (a marker is 18 × 6 CSS px; at 0.9 scale 16 px). Returns [[x0, x1], …] in frame px */
+function markerRuns(img) {
+    const dark = new Uint8Array(img.w);
+    for (let x = 0; x < img.w; x++) { let run = 0; for (let y = 0; y < img.h; y++) { const i = (y * img.w + x) * 4; if ((img.data[i] + img.data[i + 1] + img.data[i + 2]) / 3 < 90) { if (++run >= 3) { dark[x] = 1; break; } } else run = 0; } }
+    const runs = []; let x0 = -1;
+    for (let x = 0; x <= img.w; x++) { if (x < img.w && dark[x]) { if (x0 < 0) x0 = x; } else if (x0 >= 0) { if (x - x0 >= 8) runs.push([x0, x - 1]); x0 = -1; } }
+    return runs;
+}
 const args = parseArgs();
 const target = await openTarget(args);
 const out = outDir(args, "ST");
@@ -85,10 +113,10 @@ for (const engine of engines(args)) {
                     await page.waitForTimeout(400);
                     await page.evaluate(() => new Promise((r) => { document.getElementById("hp-mark-a").style.setProperty("visibility", "visible", "important"); requestAnimationFrame(() => requestAnimationFrame(r)); }));
                     mark("go");
-                    marks = await page.evaluate(({ arm, BLOCK, frac, Lc, Le }) => new Promise((res) => {
+                    marks = await page.evaluate(({ arm, BLOCK, frac, Lc, Le, NOMARKER }) => new Promise((res) => {
                         const P = window.__dockProbe;
                         const t0 = performance.now();
-                        const block = () => { const b0 = performance.now(); while (performance.now() - b0 < BLOCK) { /* busy */ } document.getElementById("hp-mark-b").style.setProperty("visibility", "visible", "important"); res({ t0, b0, b1: performance.now() }); };
+                        const block = () => { const b0 = performance.now(); while (performance.now() - b0 < BLOCK) { /* busy */ } if (!NOMARKER) document.getElementById("hp-mark-b").style.setProperty("visibility", "visible", "important"); res({ t0, b0, b1: performance.now() }); };
                         window.__scene.expand();
                         if (arm === "same-task") return block();
                         if (arm === "1raf") return requestAnimationFrame(block);
@@ -96,7 +124,7 @@ for (const engine of engines(args)) {
                         if (arm === "100ms") return setTimeout(block, 100);
                         const poll = () => { const e = P.extent(); if ((e.r - e.l) - Lc >= frac * (Le - Lc) || performance.now() - t0 > 3000) block(); else requestAnimationFrame(poll); };
                         requestAnimationFrame(poll);
-                    }), { arm, BLOCK: BLOCK_MS, frac: MID_FRAC, Lc: rest.w, Le: big.w });
+                    }), { arm, BLOCK: BLOCK_MS, frac: MID_FRAC, Lc: rest.w, Le: big.w, NOMARKER });
                     mark("blockEnd");
                     await page.waitForTimeout(1800);   // the probe paint stays on to the end of the video: its last frames are the landed rest
                 });
@@ -104,22 +132,30 @@ for (const engine of engines(args)) {
                 let T = [];
                 try { T = execFileSync("ffprobe", ["-v", "error", "-select_streams", "v:0", "-show_entries", "frame=pts_time", "-of", "csv=p=0", cast.video], { encoding: "utf8" }).trim().split("\n").map((v) => 1000 * parseFloat(v)); } catch { }
                 if (T.length !== cast.frames.length) T = cast.frames.map((_, i) => i * FRAME_MS);
-                const reads = cast.frames.map((f) => {
-                    const img = readFrame(f); const cov = magentaCoverage(img, interiorGreen(img));
+                const imgs = cast.frames.map((f) => rescale(readFrame(f), RESCALE));
+                // H6-4 · the marker columns, found on a late frame that shows both (the last frames hold A and B); a cast where
+                // no late frame shows two runs has a missing marker: UNMEASURED
+                let found = null;
+                for (let i = imgs.length - 1; i >= Math.max(0, imgs.length - 12) && !found; i--) { const rs = markerRuns(imgs[i]); if (rs.length === 2) found = rs; }
+                const at = found ? found.map(([x0, x1]) => [x0 + 2, Math.min(x0 + 12, x1 - 1)]) : null;
+                const UM = (why, extra = {}) => rep.add({ engine, cell: cellName + tag, pass: false, unmeasured: true, failed: [], ...extra, summary: `UNMEASURED (${why}; H6-4: never FAIL, never PASS) · ${arm}` });
+                if (!found) return UM(`the video shows ${markerRuns(imgs.at(-1)).length} marker run(s) on its last frames, not the trigger and block-end pair: a missing marker`, { markers: null });
+                const reads = imgs.map((img) => {
+                    const cov = magentaCoverage(img, interiorGreen(img));
                     let best = 0, cross = 0;
                     for (let y = 0; y < img.h; y++) { let s = 0; for (let x = 0; x < img.w; x++) s += cov[y * img.w + x]; best = Math.max(best, s); }
                     for (let x = 60; x < img.w; x++) { let s = 0; for (let y = 0; y < img.h; y++) s += cov[y * img.w + x]; cross = Math.max(cross, s); }
-                    const dark = (x0) => { let lo = 255; for (let y = 0; y < img.h; y++) { let sum = 0; for (let x = x0; x < x0 + 10; x++) { const i = (y * img.w + x) * 4; sum += (img.data[i] + img.data[i + 1] + img.data[i + 2]) / 3; } lo = Math.min(lo, sum / 10); } return lo < 90; };
+                    const dark = ([x0, x1]) => { let lo = 255; for (let y = 0; y < img.h; y++) { let sum = 0; for (let x = x0; x < x1; x++) { const i = (y * img.w + x) * 4; sum += (img.data[i] + img.data[i + 1] + img.data[i + 2]) / 3; } lo = Math.min(lo, sum / (x1 - x0)); } return lo < 90; };
                     // H4-3 · the centre row: the plate's last magenta column and the neighbour's blue run
                     let magR = -1, bluL = -1, bluR = -1;
                     if (nb) { const y = Math.floor(img.h / 2); for (let x = 0; x < img.w; x++) { const i = (y * img.w + x) * 4, R = img.data[i], G = img.data[i + 1], B = img.data[i + 2]; if (R > 170 && B > 170 && G < 110) magR = x; if (B > 170 && R < 130 && G < 150 && B - R > 90) { if (bluL < 0) bluL = x; bluR = x; } } }
-                    return { Lv: best, cross, a: dark(MX[0] + 3), b: dark(MX[1] + 4), magR, bluL, bluR };
+                    return { Lv: best, cross, a: dark(at[0]), b: dark(at[1]), magR, bluL, bluR };
                 });
                 // a video opens on black frames before the first paint, and a dark page is dark everywhere: a
                 // marker counts only once a frame shows the plate probe (magenta) with both marker places light (H4-6)
                 const lit = reads.findIndex((r) => !r.a && !r.b && r.cross > 10);
                 const goF = reads.findIndex((r, i) => i > lit && r.a), endF = reads.findIndex((r, i) => i > goF && goF >= 0 && r.b);
-                if (goF < 0 || endF < 0) throw new Error(`the video shows no ${goF < 0 ? "trigger" : "block-end"} marker`);
+                if (goF < 0 || endF < 0) return UM(`the video shows no ${goF < 0 ? "trigger" : "block-end"} marker after its first lit frame (markers at ${found.map((r) => r.join("-")).join(", ")} px)`, { markers: found });
                 // the video's scale, from the frames after the trigger marker only: before it the page spends the
                 // warm cycle in its own colours (no probe paint), and under load those frames outnumber the rest
                 // (the median then read a 12 px "cross" and a scale of 0.2: pass-3/H3.md §3.0)
@@ -144,7 +180,9 @@ for (const engine of engines(args)) {
                 // scale near 1, or the video is not a reading of this dock (a truncated or blank tail under load
                 // read scale 0.196 and a 0 px rest in the H3 self-test): UNMEASURED, re-run, never judged
                 let instrumentOkNb = true;
-                const instrumentOk = Math.abs(scale - 1) <= 0.1 && Math.abs(L0 - rest.w) <= REST_AGREE_PX && Math.abs(L1 - big.w) <= REST_AGREE_PX;
+                // H6-4 · a scale outside 1 ± SCALE_TOL is not this instrument's reading (was 0.1, which admitted G's 0.98 cast)
+                const scaleOk = Math.abs(scale - 1) <= SCALE_TOL;
+                const instrumentOk = scaleOk && Math.abs(L0 - rest.w) <= REST_AGREE_PX && Math.abs(L1 - big.w) <= REST_AGREE_PX;
                 const checks = nb ? { travel: D >= 20 } : { travel: D >= 20, leap: D >= 20 && worst.ratio <= 1 };
                 // H4-3 · glass and flow on one clock
                 let nbRead = null;
@@ -170,10 +208,10 @@ for (const engine of engines(args)) {
                     if (!nbRestOk) instrumentOkNb = false;
                 }
                 const failed = instrumentOk && instrumentOkNb ? Object.entries(checks).filter(([, v]) => !v).map(([k]) => k) : [];
-                rep.add({ engine, cell: cellName + tag, nb: nbRead ?? undefined, pass: instrumentOk && instrumentOkNb && !failed.length, unmeasured: instrumentOk && instrumentOkNb ? undefined : true, failed, videoScale: +scale.toFixed(4), D: r2(D), rests: [r2(L0), r2(L1)], restsDom: [r2(rest.w), r2(big.w)], blockMs: marks ? r2(marks.b1 - marks.b0) : null, callToBlockMs: marks ? r2(marks.b0 - marks.t0) : null,
+                rep.add({ engine, cell: cellName + tag, nb: nbRead ?? undefined, pass: instrumentOk && instrumentOkNb && !failed.length, unmeasured: instrumentOk && instrumentOkNb ? undefined : true, failed, videoScale: +scale.toFixed(4), markers: found, D: r2(D), rests: [r2(L0), r2(L1)], restsDom: [r2(rest.w), r2(big.w)], blockMs: marks ? r2(marks.b1 - marks.b0) : null, callToBlockMs: marks ? r2(marks.b0 - marks.t0) : null,
                     blockEndMs: tAt(endF), firstMoveMs: i0 < 0 ? null : tAt(i0), landMs: tAt(iLand), travelInBlockPx: r2(travelInBlock), worstStepPx: r2(worst.step), worstStepAtMs: worst.at != null ? tAt(worst.at) : null, worstStepDtMs: worst.at != null ? r2(T[worst.at] - T[worst.at - 1]) : null, boundPx: r2(bound), ratio: r2(worst.ratio),
                     trace: L.slice(Math.max(0, goF - 2), Math.min(L.length, iLand + 3)).map((v, k) => [tAt(Math.max(0, goF - 2) + k), r2(v)]),
-                    summary: `${nbRead ? `the neighbour: ${nbRead.frames} frame(s) read; the plate over its box at worst ${nbRead.worstOverlapPx} px at ${nbRead.overlapAtMs} ms (bound ${NB_OVERLAP_PX}); it travels ${nbRead.Dnb} px, worst one-frame step ${nbRead.worstStepPx} px at ${nbRead.stepAtMs ?? "-"} ms vs bound ${nbRead.stepBoundPx} px (×${nbRead.stepRatio})${nbRead.restOk ? "" : " (its video rest disagrees with the DOM: UNMEASURED)"} · ` : ""}${instrumentOk ? "" : `UNMEASURED (the video's rests ${r2(L0)} / ${r2(L1)} px against the DOM's ${r2(rest.w)} / ${r2(big.w)} px, scale ${scale.toFixed(3)}: re-run) · `}${arm}: a ${marks ? Math.round(marks.b1 - marks.b0) : "?"} ms block ${marks ? r2(marks.b0 - marks.t0) : "?"} ms after the flip (video: trigger marker → block-end marker ${tAt(endF)} ms); D ${r2(D)} px (${r2(L0)} → ${r2(L1)}); first leaves its rest at ${i0 < 0 ? "never" : tAt(i0) + " ms"}, travels ${r2(travelInBlock)} px before the block-end marker, lands at ${tAt(iLand)} ms (RECORD; video scale ${scale.toFixed(3)}); worst one-frame step ${r2(worst.step)} px at ${worst.at != null ? tAt(worst.at) + " ms" : "-"} (dt ${worst.at != null ? r2(T[worst.at] - T[worst.at - 1]) : "-"} ms) vs bound ${r2(bound)} px (×${r2(worst.ratio)})${failed.length ? "  ⟶ FAILED: " + failed.join(", ") : ""}` });
+                    summary: `${nbRead ? `the neighbour: ${nbRead.frames} frame(s) read; the plate over its box at worst ${nbRead.worstOverlapPx} px at ${nbRead.overlapAtMs} ms (bound ${NB_OVERLAP_PX}); it travels ${nbRead.Dnb} px, worst one-frame step ${nbRead.worstStepPx} px at ${nbRead.stepAtMs ?? "-"} ms vs bound ${nbRead.stepBoundPx} px (×${nbRead.stepRatio})${nbRead.restOk ? "" : " (its video rest disagrees with the DOM: UNMEASURED)"} · ` : ""}${instrumentOk ? "" : `UNMEASURED (${scaleOk ? "" : `video scale ${scale.toFixed(4)} outside 1 ± ${SCALE_TOL}; `}the video's rests ${r2(L0)} / ${r2(L1)} px against the DOM's ${r2(rest.w)} / ${r2(big.w)} px; H6-4: never FAIL, never PASS) · `}markers at ${found.map((r) => r.join("-")).join(", ")} px · ${arm}: a ${marks ? Math.round(marks.b1 - marks.b0) : "?"} ms block ${marks ? r2(marks.b0 - marks.t0) : "?"} ms after the flip (video: trigger marker → block-end marker ${tAt(endF)} ms); D ${r2(D)} px (${r2(L0)} → ${r2(L1)}); first leaves its rest at ${i0 < 0 ? "never" : tAt(i0) + " ms"}, travels ${r2(travelInBlock)} px before the block-end marker, lands at ${tAt(iLand)} ms (RECORD; video scale ${scale.toFixed(3)}); worst one-frame step ${r2(worst.step)} px at ${worst.at != null ? tAt(worst.at) + " ms" : "-"} (dt ${worst.at != null ? r2(T[worst.at] - T[worst.at - 1]) : "-"} ms) vs bound ${r2(bound)} px (×${r2(worst.ratio)})${failed.length ? "  ⟶ FAILED: " + failed.join(", ") : ""}` });
             });
         }
     } finally {

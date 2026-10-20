@@ -259,6 +259,67 @@ export const HP_SRC = `(() => {
       }
       return o;
     },
+    /** H6-1 · the element's own CSS mask along the main axis ("x" | "y"): null when it has none; { at(x) } giving the mask
+     *  alpha at viewport coordinate x (linear-gradient layers along that axis, stops in px, % or calc(% ± px), mask-size
+     *  full, position at the origin, composite add); { unread: why } for any other mask, which the caller judges hard. */
+    maskOf(el, ax) {
+      const cs = getComputedStyle(el);
+      const img = (cs.maskImage || cs.webkitMaskImage || "none").trim();
+      if (!img || img === "none") return null;
+      const unread = (why) => ({ unread: why });
+      const split = (s) => { const out = []; let d = 0, cur = ""; for (const c of s) { if (c === "(") d++; else if (c === ")") d--; if (c === "," && d === 0) { out.push(cur.trim()); cur = ""; } else cur += c; } if (cur.trim()) out.push(cur.trim()); return out; };
+      const size = (cs.maskSize || cs.webkitMaskSize || "auto").trim(), pos = (cs.maskPosition || cs.webkitMaskPosition || "0% 0%").trim();
+      if (!["auto", "auto auto", "100% 100%", "100%", ""].includes(size)) return unread("mask-size " + size);
+      if (!["0% 0%", "0px 0px", "left top", "0%", "0px", "", "left", "0% 0px", "0px 0%"].includes(pos)) return unread("mask-position " + pos);
+      const mode = (cs.maskMode || "match-source").trim(); if (mode === "luminance") return unread("mask-mode luminance");
+      const comp = (cs.maskComposite || cs.webkitMaskComposite || "add").trim(); if (!["add", "source-over", ""].includes(comp)) return unread("mask-composite " + comp);
+      const r = el.getBoundingClientRect(); const W = ax === "y" ? el.offsetHeight : el.offsetWidth; if (!W) return unread("no box");
+      const k = (ax === "y" ? r.height : r.width) / W, o = ax === "y" ? r.top : r.left;
+      const alphaOf = (c) => {
+        c = c.trim().toLowerCase(); if (c === "transparent") return 0;
+        const i = c.indexOf("("); if (i < 0) return 1;
+        const body = c.slice(i + 1, c.lastIndexOf(")"));
+        let a = null; const sl = body.lastIndexOf("/");
+        if (sl >= 0) a = body.slice(sl + 1).trim(); else { const parts = body.split(","); if (parts.length === 4) a = parts[3].trim(); }
+        if (a == null || a === "") return 1; return a.endsWith("%") ? parseFloat(a) / 100 : parseFloat(a);
+      };
+      const lenOf = (t, L) => { t = t.trim(); if (t.startsWith("calc(")) { let s = 0; const inner = t.slice(5, -1).split(" ").filter(Boolean); let sign = 1; for (const tok of inner) { if (tok === "+") { sign = 1; continue; } if (tok === "-") { sign = -1; continue; } const v = lenOf(tok, L); if (v == null) return null; s += sign * v; sign = 1; } return s; } if (t.endsWith("%")) return parseFloat(t) / 100 * L; if (t.endsWith("px")) return parseFloat(t); if (t === "0") return 0; return null; };
+      const layers = [];
+      for (const layer of split(img)) {
+        if (layer === "none") continue;
+        if (!layer.startsWith("linear-gradient(")) return unread(layer.slice(0, 40));
+        const args = split(layer.slice(16, layer.lastIndexOf(")")));
+        let dir = ax === "y" ? "to bottom" : null, rev = false;
+        const d0 = args[0];
+        if (d0.startsWith("to ") || d0.endsWith("deg") || d0.endsWith("turn") || d0.endsWith("rad")) { dir = d0; args.shift(); }
+        else if (ax === "x") return unread("default direction across the main axis");
+        const deg = dir.endsWith("deg") ? ((parseFloat(dir) % 360) + 360) % 360 : dir.endsWith("turn") ? ((parseFloat(dir) * 360) % 360 + 360) % 360 : dir.endsWith("rad") ? ((parseFloat(dir) * 180 / Math.PI) % 360 + 360) % 360 : null;
+        if (ax === "x") { if (dir === "to right" || deg === 90) rev = false; else if (dir === "to left" || deg === 270) rev = true; else return unread("direction " + dir); }
+        else { if (dir === "to bottom" || deg === 180) rev = false; else if (dir === "to top" || deg === 0) rev = true; else return unread("direction " + dir); }
+        const stops = [];
+        for (const a of args) {
+          let c, rest;
+          const p = a.indexOf("(");
+          if (p >= 0 && p < (a.indexOf(" ") < 0 ? Infinity : a.indexOf(" "))) { let d = 0, j = p; for (; j < a.length; j++) { if (a[j] === "(") d++; else if (a[j] === ")") { d--; if (d === 0) break; } } c = a.slice(0, j + 1); rest = a.slice(j + 1).trim(); }
+          else { const sp = a.indexOf(" "); c = sp < 0 ? a : a.slice(0, sp); rest = sp < 0 ? "" : a.slice(sp + 1).trim(); }
+          // a stop's colour may follow its position (engines serialize "black 10px"; "10px black" is read too)
+          let al = alphaOf(c);
+          if (Number.isNaN(al) || (lenOf(c, W) != null && rest)) { const t = c; c = rest; rest = t; al = alphaOf(c); }
+          const ps = []; let d = 0, cur = ""; for (const ch of rest) { if (ch === "(") d++; else if (ch === ")") d--; if (ch === " " && d === 0) { if (cur) ps.push(cur); cur = ""; } else cur += ch; } if (cur) ps.push(cur);
+          if (!ps.length) stops.push([null, al]);
+          for (const q of ps) { const v = lenOf(q, W); if (v == null) return unread("stop " + q); stops.push([v, al]); }
+        }
+        if (stops.length < 2) return unread("one stop");
+        if (stops[0][0] == null) stops[0][0] = 0;
+        if (stops.at(-1)[0] == null) stops.at(-1)[0] = W;
+        for (let i = 1; i < stops.length; i++) if (stops[i][0] != null && stops[i][0] < stops[i - 1][0]) stops[i][0] = stops[i - 1][0];
+        for (let i = 1; i < stops.length - 1; i++) if (stops[i][0] == null) { let j = i; while (stops[j][0] == null) j++; const a = stops[i - 1][0], b = stops[j][0]; for (let m = i; m < j; m++) stops[m][0] = a + (b - a) * (m - i + 1) / (j - i + 1); }
+        layers.push({ stops, rev });
+      }
+      if (!layers.length) return null;
+      const one = (Ly, t) => { const s = Ly.stops; if (t <= s[0][0]) return s[0][1]; for (let i = 1; i < s.length; i++) if (t <= s[i][0]) { const [a0, v0] = s[i - 1], [a1, v1] = s[i]; return a1 - a0 < 1e-6 ? v1 : v0 + (v1 - v0) * (t - a0) / (a1 - a0); } return s.at(-1)[1]; };
+      return { at(x) { const t0 = (x - o) / k; let keep = 1; for (const Ly of layers) keep *= 1 - Math.max(0, Math.min(1, one(Ly, Ly.rev ? W - t0 : t0))); return 1 - keep; } };
+    },
     /** Effective opacity along the ancestor chain; 0 when not rendered or hidden. */
     visibleOpacity(el) {
       const cs0 = getComputedStyle(el);
@@ -534,7 +595,7 @@ export function readFrame(f) { const img = decodePng(fs.readFileSync(f.file)); r
  * writes sustained across frames, plus the extent-owner rule of K-13).
  */
 export async function startLog(page, opts = {}) {
-    opts = { stubLo: STUB_LO, stubHi: STUB_HI, cutPx: CUT_PX, ...opts };
+    opts = { stubLo: STUB_LO, stubHi: STUB_HI, cutPx: CUT_PX, hardPx: HARD_PX, showMin: STUB_SHOW, ...opts };
     await page.evaluate((opts) => {
         const P = window.__dockProbe, hp = window.__hp, root = P.root();
         const ids = new WeakMap(); let nid = 0; const idOf = (e) => { if (!ids.has(e)) ids.set(e, ++nid); return ids.get(e); };
@@ -637,24 +698,52 @@ export async function startLog(page, opts = {}) {
             // its ink is a STUB. f.gn = glyphs judged; f.st = the first stubs [label, char, fraction, cut px, opacity]
             if (opts.glyphs) {
                 const ax = P.axis(), e = P.extent(), pm0 = ax === "y" ? e.t : e.l, pm1 = ax === "y" ? e.b : e.r;
-                const pr = new Map(), op = new Map(), sk = new Map(), st = []; let n = 0;
+                const pr = new Map(), op = new Map(), sk = new Map(), mk = new Map(), st = []; let n = 0, unread = 0;
                 const paints = (el) => { if (!op.has(el)) op.set(el, hp.visibleOpacity(el)); return op.get(el); };
                 const clipOf = (el) => { if (!pr.has(el)) pr.set(el, hp.paintedRect(el)); return pr.get(el); };
                 const kOf = (el) => { if (!sk.has(el)) { const q = el.getBoundingClientRect(); const L = ax === "y" ? el.offsetHeight : el.offsetWidth; sk.set(el, L ? (ax === "y" ? q.height : q.width) / L : 1); } return sk.get(el); };
+                // H6-1 · the painted alpha across a glyph on the main axis, opacity aside: its element's clip (hard, from
+                // hp.paintedRect) times every mask on it and its ancestors (hp.maskAlpha: linear-gradient mask layers, read
+                // from the computed style). A mask the reader cannot parse is "unread" and the glyph is judged hard (E-2)
+                const masksOf = (el) => { if (!mk.has(el)) { const ls = []; for (let a = el; a && a !== document.documentElement; a = a.parentElement) { const m = hp.maskOf(a, ax); if (m) ls.push(m); } mk.set(el, ls); } return mk.get(el); };
+                const alphaAt = (el, x, c0, c1) => { if (x < c0 || x > c1) return 0; let a = 1; for (const m of masksOf(el)) { if (m.unread) return NaN; a *= m.at(x); } return a; };
                 const judge = (el, g0, g1, ch) => {
                     if (g1 - g0 < 0.5) return; n++;
                     const c = clipOf(el), c0 = ax === "y" ? c.t : c.l, c1 = ax === "y" ? c.b : c.r;
-                    const frac = Math.max(0, Math.min(g1, c1) - Math.max(g0, c0)) / (g1 - g0);
-                    if (frac <= opts.stubLo || frac >= opts.stubHi) return;
-                    const inner = (c0 > g0 && c0 < g1 && c0 > pm0 + opts.cutPx) ? c0 : (c1 > g0 && c1 < g1 && c1 < pm1 - opts.cutPx) ? c1 : null;
-                    if (inner == null) return;
-                    st.push([hp.label(el), ch, +frac.toFixed(2), +inner.toFixed(1), +paints(el).toFixed(2)]);
+                    const N = Math.max(8, Math.ceil((g1 - g0) / 0.25)), dx = (g1 - g0) / N;
+                    const xs = [], as = []; let sum = 0, bad = false;
+                    for (let i = 0; i <= N; i++) { const x = g0 + i * dx; const a = alphaAt(el, x, c0, c1); if (Number.isNaN(a)) { bad = true; break; } xs.push(x); as.push(a); if (i < N) sum += a; }
+                    if (bad) { unread++; const frac = Math.max(0, Math.min(g1, c1) - Math.max(g0, c0)) / (g1 - g0); if (frac > opts.stubLo && frac < opts.stubHi) st.push([hp.label(el), ch, +frac.toFixed(2), null, +paints(el).toFixed(2), null, "unread mask"]); return; }
+                    const share = sum / N;
+                    if (share <= opts.stubLo || share >= opts.stubHi) return;
+                    // the TRANSITIONS across the glyph: each run of samples strictly between 0.1 and 0.9 that joins a ≤ 0.1
+                    // sample to a ≥ 0.9 one (either way). Its width is the distance between those two samples (a step reads
+                    // one sample step, 0.25 px), its place the 0.5 crossing. A transition is HARD when its width ≤ HARD_PX
+                    // and its place lies more than CUT_PX inside the plate's main edges (the plate's own edge taking a
+                    // glyph is the leaving rule's). Every other transition's width is the ramp (RECORD)
+                    let hard = null, ramp = Infinity;
+                    for (let i = 0; i < as.length - 1; i++) {
+                        const lo = as[i] <= 0.1, hi = as[i] >= 0.9; if (!lo && !hi) continue;
+                        let j = i + 1; while (j < as.length && as[j] > 0.1 && as[j] < 0.9) j++;
+                        if (j >= as.length || (lo ? as[j] <= 0.1 : as[j] >= 0.9)) continue;
+                        let k = i; while (k < j && (as[k] < 0.5) === (as[i] < 0.5)) k++;
+                        const x0 = xs[Math.max(i, k - 1)], x1 = xs[k], a0 = as[Math.max(i, k - 1)], a1 = as[k];
+                        const at = Math.abs(a1 - a0) < 1e-9 ? x1 : x0 + (x1 - x0) * (0.5 - a0) / (a1 - a0);
+                        const width = xs[j] - xs[i];
+                        if (width <= opts.hardPx && at > pm0 + opts.cutPx && at < pm1 - opts.cutPx) { if (!hard) hard = [at, width]; }
+                        else if (width > opts.hardPx) ramp = Math.min(ramp, width);
+                        i = j - 1;
+                    }
+                    if (Number.isFinite(ramp)) f.rw = Math.min(f.rw ?? Infinity, +ramp.toFixed(2));
+                    if (!hard) return;
+                    st.push([hp.label(el), ch, +share.toFixed(2), +hard[0].toFixed(1), +paints(el).toFixed(2), +hard[1].toFixed(2)]);
                 };
                 const rng = document.createRange();
                 const tw = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
                 for (let t = tw.nextNode(); t; t = tw.nextNode()) {
                     const el = t.parentElement; const s = t.textContent;
-                    if (!el || !s.trim() || el.closest("svg") || paints(el) <= 0.5) continue;
+                    // H6-1 · every glyph the frame shows (above 5 % opacity), at any opacity: H5-3 judged only above 0.5
+                    if (!el || !s.trim() || el.closest("svg") || paints(el) <= opts.showMin) continue;
                     const cs = getComputedStyle(el); const font = cs.fontStyle + " " + cs.fontWeight + " " + cs.fontSize + " " + cs.fontFamily; const k = kOf(el);
                     for (let i = 0; i < s.length; i++) {
                         const code = s.charCodeAt(i); const w2 = code >= 0xd800 && code <= 0xdbff ? 2 : 1; const ch = s.slice(i, i + w2);
@@ -667,8 +756,8 @@ export async function startLog(page, opts = {}) {
                         else judge(el, rr.left - m.l * k, rr.left + m.r * k, ch);
                     }
                 }
-                for (const sv of root.querySelectorAll("svg")) { if (paints(sv) <= 0.5) continue; const q = sv.getBoundingClientRect(); judge(sv, ax === "y" ? q.top : q.left, ax === "y" ? q.bottom : q.right, "<svg>"); }
-                f.gn = n; if (st.length) { f.st = st.slice(0, 4); f.stn = st.length; }
+                for (const sv of root.querySelectorAll("svg")) { if (paints(sv) <= opts.showMin) continue; const q = sv.getBoundingClientRect(); judge(sv, ax === "y" ? q.top : q.left, ax === "y" ? q.bottom : q.right, "<svg>"); }
+                f.gn = n; if (unread) f.gu = unread; if (st.length) { f.st = st.slice(0, 4); f.stn = st.length; }
             }
             // H3-2 · the main-axis length of named seats' cells (the largest ancestor that holds
             // exactly that one seat, inside the root): the seat's own width, whoever carries it
@@ -939,14 +1028,15 @@ export const LEAVE_HI = 0.9, LEAVE_LO = 0.1, LEAVE_FRAC = 0.25, LEAVE_MIN_FRAMES
  */
 export function leavingRow(frames, lengthMs) {
     const maps = frames.map((f) => new Map((f.s ?? []).map((q) => [q[0], q])));
-    const inkOwn = (q, e) => { const bb = area4(q[1], q[2], q[3], q[4]); return bb < 1 ? 0 : q[9] * area4(...isect4([q[5], q[6], q[7], q[8]], e)) / bb; };
+    const inkOwn = (q, e) => unitInk(q[9], [q[5], q[6], q[7], q[8]], [q[1], q[2], q[3], q[4]], e);   // H6-3
     // a stand-in at the seat's place: a non-seat ink leaf (f.k), or a seat the strip's first frame did
     // not have (a carrier's clone that the adapter's own selectors match, as D2-G's ghosts do)
     const born = new Set(maps[0].keys());
+    // H6-3 · each stand-in's ink is bounded by its own box too: a leaf in the pre-H4-1 form (no box) keeps its clipped rect
     const inkPlace = (f, place) => Math.max(0,
-        ...(f.k ?? []).map((k) => k[5] < 1 ? 0 : k[4] * area4(...isect4(isect4([k[0], k[1], k[2], k[3]], place), f.e)) / k[5]),
-        ...(f.s ?? []).filter((q) => !born.has(q[0])).map((q) => { const bb = area4(q[1], q[2], q[3], q[4]); return bb < 1 ? 0 : q[9] * area4(...isect4(isect4([q[5], q[6], q[7], q[8]], place), f.e)) / bb; }));
-    const rows = [];
+        ...(f.k ?? []).map((k) => k[5] < 1 ? 0 : unitInk(k[4], isect4([k[0], k[1], k[2], k[3]], place), k.length >= 11 ? [k[6], k[7], k[8], k[9]] : null, f.e, k[5])),
+        ...(f.s ?? []).filter((q) => !born.has(q[0])).map((q) => unitInk(q[9], isect4([q[5], q[6], q[7], q[8]], place), [q[1], q[2], q[3], q[4]], f.e)));
+    const rows = []; let inkMax = 0;
     for (const [id, q0] of maps[0]) {
         if (inkOwn(q0, frames[0].e) < LEAVE_HI) continue;
         const place = [q0[5], q0[6], q0[7], q0[8]];
@@ -956,6 +1046,7 @@ export function leavingRow(frames, lengthMs) {
             if (q && area4(q[1], q[2], q[3], q[4]) >= 1) box = [q[1], q[2], q[3], q[4]];   // a seat taken out of the box tree (display: none) keeps its last box, as a removed one does
             const ink = Math.max(q ? inkOwn(q, f.e) : 0, inkPlace(f, place));
             const bb = area4(...box);
+            inkMax = Math.max(inkMax, ink);
             return { t: f.t, ink, cov: bb < 1 ? 0 : area4(...isect4(box, f.e)) / bb };
         });
         if (ser.at(-1).ink > LEAVE_LO) continue;
@@ -975,9 +1066,25 @@ export function leavingRow(frames, lengthMs) {
     const bound = +(LEAVE_FRAC * lengthMs).toFixed(1);
     const vw = rows.reduce((m, r) => (!m || r.vanish.drop > m.vanish.drop ? r : m), null);
     const vanish = { ok: !vw || vw.vanish.drop <= VANISH_MAX, drop: vw ? vw.vanish.drop : 0, seat: vw?.seat, from: vw?.vanish.from, to: vw?.vanish.to, atMs: vw?.vanish.atMs };
-    return { ok: bad.length === 0, leaving: rows.length, failing: bad.length, lengthMs: +lengthMs.toFixed(1), rows, vanish,
+    return { ok: bad.length === 0, leaving: rows.length, failing: bad.length, lengthMs: +lengthMs.toFixed(1), rows, vanish, inkMax: +inkMax.toFixed(3), inkOk: inkMax <= 1 + 1e-6,
         why: (rows.length ? `${rows.length} leaving seat(s), ${bad.length} failing${w ? `; ${bad.length ? "worst" : "tightest"} seat ${w.seat}: ink ${w.path.join(" → ")} over ${w.spanMs} ms / ${w.spanFrames} frame(s) (fade bound ≥ ${LEAVE_MIN_FRAMES} frames and ≥ ${bound} ms), coverage deficit ${w.deficit} (track bound ${LEAVE_TRACK_TOL})` : ""}` : "no seat leaves")
-            + (rows.length ? `; vanish worst one-frame drop beyond the closing edge ${vanish.drop}${vw && vanish.drop ? ` (seat ${vw.seat} ${vanish.from} → ${vanish.to} at +${vanish.atMs} ms)` : ""} (bound ${VANISH_MAX})` : "") };
+            + (rows.length ? `; vanish worst one-frame drop beyond the closing edge ${vanish.drop}${vw && vanish.drop ? ` (seat ${vw.seat} ${vanish.from} → ${vanish.to} at +${vanish.atMs} ms)` : ""} (bound ${VANISH_MAX})` : "")
+            + (rows.length ? `; largest unit ink read ${+inkMax.toFixed(3)} (an ink is a share of the unit's own box: ≤ 1, H6-3)` : "") };
+}
+/**
+ * H6-3 (pass-6/H6.md) · a unit's ink is its painted share of its OWN box, at most 1:
+ *   opacity × area(painted ∩ plate ∩ own box) / area(own box).
+ * The painted rect comes from hp.paintedRect, which a negative (outset) clip-path inset widens past the box: a unit
+ * whose clip spans the plate across read up to 1.56 (B′-proto §6.7), the instrument reading the clip's box in place of
+ * the unit's (ruled REGISTRY §P5-2.1). `area` is the own box's area when the box is not at hand (a leaf in the pre-H4-1
+ * form). DOCK_HARNESS_INK_UNBOUNDED=1 restores the pass-5 reading, for the plant only (selftest `platewide!unbounded`).
+ */
+const INK_UNBOUNDED = process.env.DOCK_HARNESS_INK_UNBOUNDED === "1";
+export function unitInk(opacity, painted, box, plate, area = null) {
+    const bb = box ? area4(...box) : area;
+    if (!(bb >= 1)) return 0;
+    const p = box && !INK_UNBOUNDED ? isect4(painted, box) : painted;
+    return opacity * area4(...isect4(p, plate)) / bb;
 }
 /** H5-4 · the one-frame ink drop a leaving seat may take beyond its coverage drop (H4-5's retarget bound, now on every leaving cell). */
 export const VANISH_MAX = 0.5;
@@ -1046,22 +1153,83 @@ export function spliceRow(frames, ax) {
  * the extent or of a seat's painted rect), no glyph painting above 0.5 opacity is cut by a clip edge inside the
  * plate to between STUB_LO and STUB_HI of its ink. The gate is 0 stub frames.
  */
-export const STUB_LO = 0.1, STUB_HI = 0.9;
+/**
+ * H6-1 (pass-6/H6.md) · the stub judges the EDGE, not the opacity. H5-3 judged a cut glyph only above 0.5 opacity, so a
+ * route that painted every cut glyph at exactly 0.5 passed by construction while its strips showed half-ink stubs
+ * ("\", "[", "ools": B′-crit §4, G-crit §4). Now, per frame, every glyph the frame shows (above STUB_SHOW opacity) is read
+ * across its ink box on the main axis as the painted alpha of its element's clip (hard) times every mask on it and its
+ * ancestors (startLog `glyphs`, hp.maskOf), opacity aside. A STUB is a glyph whose painted share is strictly between
+ * STUB_LO and STUB_HI and whose alpha goes from ≤ 0.1 to ≥ 0.9 (or back) inside HARD_PX, at a place more than CUT_PX
+ * inside the plate's main edges: a hard edge through the glyph, at ANY opacity. A ramp at least one advance wide passes
+ * (the fixture's mask ramp); the narrowest ramp a frame showed is RECORD (`ramp`). A mask the reader cannot parse is
+ * named "unread mask" and fails (E-2: never a silent green). The gate is 0 stub frames.
+ */
+export const STUB_LO = 0.1, STUB_HI = 0.9, HARD_PX = 2, STUB_SHOW = 0.05;
 export function stubRow(frames, ax) {
     if (!frames.some((f) => f.gn != null)) return null;
     const sig = (f) => [...f.e, ...(f.s ?? []).flatMap((q) => [q[5], q[6], q[7], q[8], q[9]])];
     let last = 0;
     for (let i = 1; i < frames.length; i++) { const a = sig(frames[i - 1]), b = sig(frames[i]); if (a.length !== b.length || a.some((v, k) => Math.abs(v - b[k]) > 0.25)) last = i; }
     const end = Math.min(frames.length - 1, last + 1);
-    let judged = 0, stubFrames = 0, first = null, glyphs = 0;
+    let judged = 0, stubFrames = 0, first = null, glyphs = 0, ramp = Infinity, unread = 0;
     for (let i = 1; i <= end; i++) {
         const f = frames[i]; if (f.gn == null) continue;
-        judged++; glyphs = Math.max(glyphs, f.gn);
-        if (f.st?.length) { stubFrames++; if (!first) { const [label, ch, frac, cut, op] = f.st[0]; first = { atMs: +(f.t - frames[0].t).toFixed(1), label, ch, frac, cutPx: cut, opacity: op, inFrame: f.stn }; } }
+        judged++; glyphs = Math.max(glyphs, f.gn); if (f.rw != null) ramp = Math.min(ramp, f.rw); unread += f.gu ?? 0;
+        if (f.st?.length) { stubFrames++; if (!first) { const [label, ch, frac, edge, op, widthPx, note] = f.st[0]; first = { atMs: +(f.t - frames[0].t).toFixed(1), label, ch, frac, edgePx: edge, opacity: op, edgeWidthPx: widthPx, note, inFrame: f.stn }; } }
     }
     void ax;
-    return { ok: stubFrames === 0, judged, stubFrames, glyphs, first,
-        why: `${stubFrames} stub frame(s) of ${judged} judged (up to ${glyphs} glyphs a frame)${first ? `; first at ${first.atMs} ms: "${first.ch}" in ${first.label} painted ${Math.round(first.frac * 100)} % at opacity ${first.opacity}, cut at ${first.cutPx} px (${first.inFrame} stub(s) in that frame)` : ""} (bound 0; a stub paints ${STUB_LO * 100}-${STUB_HI * 100} % of a glyph above 0.5 opacity, cut inside the plate)` };
+    return { ok: stubFrames === 0, judged, stubFrames, glyphs, first, rampPx: Number.isFinite(ramp) ? ramp : null, unreadGlyphs: unread,
+        why: `${stubFrames} stub frame(s) of ${judged} judged (up to ${glyphs} glyphs a frame)${first ? `; first at ${first.atMs} ms: "${first.ch}" in ${first.label} painted ${Math.round(first.frac * 100)} % at opacity ${first.opacity}, ${first.note ? first.note : `a hard edge (10→90 % alpha in ${first.edgeWidthPx} px) at ${first.edgePx} px`} (${first.inFrame} stub(s) in that frame)` : ""}${Number.isFinite(ramp) ? `; narrowest ramp across a glyph ${ramp} px (RECORD)` : ""} (bound 0; a stub is a glyph painted ${STUB_LO * 100}-${STUB_HI * 100} %, at any opacity, by an edge whose alpha goes 10→90 % inside ${HARD_PX} px, inside the plate)` };
+}
+
+// ── H6-2 · a hole in the run ──────────────────────────────────────────────────
+/**
+ * During an exchange (frames 1 .. one after the last change, as stubRow), the SLOTS are the seats that paint inside the
+ * plate on the strip's last frame, ordered by their last-frame centre on the main axis. A slot's ink per frame is the
+ * larger of its seat's own (unitInk: opacity × its painted rect ∩ the plate ∩ its own box / its box) and that of any
+ * non-seat ink leaf (a carrier's clone, frames[i].k) whose centre lies in the seat's box. A HOLE is a slot below
+ * HOLE_LO while a slot on each side of it paints at HOLE_HI or more. What other seats paint at the slot's place counts as its ink
+ * (a FLIP neighbour still at its old place covers the slot an inserted seat will open: the place is not empty). A slot's hole may last at most HOLE_RUN_MAX frame
+ * (B′-crit §4: on expand, seat 1's slot empty for 1-2 tiles while seats 2-3 paint at full ink).
+ */
+export const HOLE_LO = 0.1, HOLE_HI = 0.9, HOLE_RUN_MAX = 1;
+export function holeRow(frames, ax) {
+    if (!frames.some((f) => f.s)) return null;
+    const M0 = ax === "y" ? 2 : 1, M1 = ax === "y" ? 4 : 3;
+    const last = frames.at(-1);
+    const slots = (last.s ?? []).filter((q) => unitInk(q[9], [q[5], q[6], q[7], q[8]], [q[1], q[2], q[3], q[4]], last.e) >= HOLE_HI).sort((a, b) => (a[M0] + a[M1]) - (b[M0] + b[M1])).map((q) => q[0]);
+    if (slots.length < 3) return { ok: true, slots: slots.length, why: `${slots.length} slot(s) paint at the end: no slot has a side on each hand` };
+    const sig = (f) => [...f.e, ...(f.s ?? []).flatMap((q) => [q[5], q[6], q[7], q[8], q[9]])];
+    let lastCh = 0;
+    for (let i = 1; i < frames.length; i++) { const a = sig(frames[i - 1]), b = sig(frames[i]); if (a.length !== b.length || a.some((v, k) => Math.abs(v - b[k]) > 0.25)) lastCh = i; }
+    const end = Math.min(frames.length - 1, lastCh + 1);
+    const run = new Map(slots.map((id) => [id, 0]));
+    let worst = null, holeFrames = 0;
+    for (let i = 1; i <= end; i++) {
+        const f = frames[i]; const byId = new Map((f.s ?? []).map((q) => [q[0], q]));
+        const inks = slots.map((id) => {
+            const q = byId.get(id); if (!q) return 0;
+            const box = [q[1], q[2], q[3], q[4]];
+            const own = unitInk(q[9], [q[5], q[6], q[7], q[8]], box, f.e);
+            const leaf = Math.max(0, ...(f.k ?? []).filter((k) => { const c = ax === "y" ? (k[7] + k[9]) / 2 : (k[6] + k[8]) / 2; return c >= box[M0 - 1] && c <= box[M1 - 1]; }).map((k) => unitInk(k[4], [k[0], k[1], k[2], k[3]], [k[6], k[7], k[8], k[9]], f.e)));
+            // another seat painting at this slot's place (a FLIP neighbour still at its old place, a clone): the place is
+            // not empty. Its share of the slot's box: opacity × (its painted rect ∩ its own box ∩ the slot's box ∩ the plate)
+            const bb = area4(...box);
+            const others = bb < 1 ? 0 : Math.min(1, (f.s ?? []).filter((o) => o[0] !== id && o[9] > 0.05).reduce((sum, o) => sum + o[9] * area4(...isect4(isect4(isect4([o[5], o[6], o[7], o[8]], [o[1], o[2], o[3], o[4]]), box), f.e)) / bb, 0));
+            return Math.max(own, leaf, others);
+        });
+        let any = false;
+        slots.forEach((id, j) => {
+            const hole = inks[j] < HOLE_LO && inks.slice(0, j).some((v) => v >= HOLE_HI) && inks.slice(j + 1).some((v) => v >= HOLE_HI);
+            if (!hole) { run.set(id, 0); return; }
+            any = true; const n = run.get(id) + 1; run.set(id, n);
+            if (!worst || n > worst.frames) worst = { slot: id, index: j, frames: n, atMs: +(f.t - frames[0].t).toFixed(1), ink: +inks[j].toFixed(3), sides: [+Math.max(...inks.slice(0, j)).toFixed(3), +Math.max(...inks.slice(j + 1)).toFixed(3)] };
+        });
+        if (any) holeFrames++;
+    }
+    const ok = !worst || worst.frames <= HOLE_RUN_MAX;
+    return { ok, slots: slots.length, holeFrames, worst,
+        why: `${slots.length} slot(s); ${holeFrames} frame(s) with a hole${worst ? `, longest ${worst.frames} frame(s): slot ${worst.index + 1} (seat ${worst.slot}) at ink ${worst.ink} to ${worst.atMs} ms while its sides paint ${worst.sides.join(" / ")}` : ""} (bound ${HOLE_RUN_MAX} frame; a hole is a slot below ${HOLE_LO} between slots at ${HOLE_HI} or more)` };
 }
 
 // ── H4-2 · the window flag covers every lane ─────────────────────────────────
@@ -1220,6 +1388,8 @@ export const TRAJ_TOL = 0.04;
  *  allowance measured from its release velocity. A window that fails the pinned clock but holds
  *  under this reading is OWNER-BLOCKED (Q-4), never a route defect; one that fails both is FAIL. */
 export const Q4_DOCK_CLOCK_MS = 270;
+/** H6-5 · a frame-time comparison's rounding allowance (rAF timestamps are quantized to 0.1-1 ms) */
+export const W8_EPS_MS = 0.5;
 export function analyseMorph(frames, rung, { ax = "x", reversal = null, seats = true, paintFloor = false, laneLabels = null } = {}) {
     const spec = springSpec(rung);
     const clockMs = spec.settleS * 1000;
@@ -1274,11 +1444,14 @@ export function analyseMorph(frames, rung, { ax = "x", reversal = null, seats = 
         if (iClose < 0) { windowOk = false; windowWhy = "window never closed"; }
         else if (dur > allow) { windowOk = false; windowWhy = `window ${r2(dur)} ms${iR > 0 ? " after the retarget" : ""} > clock ${r2(clockMs)} + 2×${r2(F)} + stall ${r2(stall)} = ${r2(allow)} ms (O-64 R-4, H-3d)`; }
         if (iClose >= 0) q4 = { dur, stall, from };
+        // H6-5 · W-8 counted in TIME: the flag closes no later than 2 × the measured frame interval F after the extent
+        // lands, and no earlier than one F before it. H5 counted rAF log entries, so a crowded log read 3 entries in
+        // 21.4 ms (1.3 display frames) as 3 frames (pass-5/H5.md §2, the fixture's `lead-remove` borderline)
         if (windowOk && Dnet >= 0.5 && iClose >= 0) {
-            const gapFrames = iClose - iLand;
-            win.closeMinusLandFrames = gapFrames;
-            if (gapFrames < -1) { windowOk = false; windowWhy = `window closed ${-gapFrames} frames before the extent landed`; }
-            else if (gapFrames > 2) { windowOk = false; windowWhy = `window closed ${gapFrames} frames (${r2(frames[iClose].t - frames[iLand].t)} ms) after the extent landed (W-8)`; }
+            const gapMs = frames[iClose].t - frames[iLand].t;
+            win.closeMinusLandFrames = iClose - iLand; win.closeMinusLandMs = r2(gapMs);
+            if (gapMs < -(F + W8_EPS_MS)) { windowOk = false; windowWhy = `window closed ${r2(-gapMs)} ms (${iLand - iClose} log entries) before the extent landed (bound one frame, ${r2(F)} ms; W-8)`; }
+            else if (gapMs > 2 * F + W8_EPS_MS) { windowOk = false; windowWhy = `window closed ${r2(gapMs)} ms (${iClose - iLand} log entries) after the extent landed (bound 2 × ${r2(F)} = ${r2(2 * F)} ms; W-8)`; }
         }
     }
     // trajectory (H-3c)
@@ -1318,23 +1491,36 @@ export function analyseMorph(frames, rung, { ax = "x", reversal = null, seats = 
         if (st.length < 2) terminal = { ok: false, why: `the motion is ${st.length} step(s): ${r2(st[0]?.s ?? 0)} px` };
         else { const a = st.at(-2), b = st.at(-1); const bound = 1.5 * a.s * (b.dt / a.dt) + 0.5; terminal = { ok: b.s <= bound, last: r2(b.s), prev: r2(a.s), bound: r2(bound), why: `last step ${r2(b.s)} px after ${r2(a.s)} px (bound ${r2(bound)})` }; }
     }
-    // H3-11 · the Q-4 lenient reading (only where the pinned-clock window failed)
+    // H3-11 · the Q-4 lenient reading (only where the pinned-clock window failed), and H6-11's two branches beside it.
+    //   lenient  max(pinned clock, Q4_DOCK_CLOCK_MS) + 2F + stall, a reversal's band time from its release velocity, the flag
+    //            closing early only inside the 2 % band; the verdict (OWNER-BLOCKED when it holds) stands on this alone
+    //   (a)      the flag closes at the 2 % band and the tail paints after it: the pinned clock + 2F + stall (a reversal's
+    //            band time from its release velocity), early close only inside the band, late close ≤ 2F (time, H6-5)
+    //   (c)      a dock-only clock of Q4_DOCK_CLOCK_MS: 270 ms + 2F + stall (from the retarget for a reversal), and W-8 as
+    //            written (H6-5): the flag closes between one F before and 2F after the landing
+    // Both are RECORD: printed beside the lenient one so a ruling turns the cells without a re-run; no verdict changes.
     if (!windowOk && q4 && iOpen >= 0) {
         const w0 = (2 * Math.PI) / rung.response, z = rung.dampingFraction;
-        let allowL = Math.max(clockMs, Q4_DOCK_CLOCK_MS) + 2 * F + q4.stall;
+        let bandT = 0;
         if (iR > 0 && Number.isFinite(q4.xr)) {
             const e0 = q4.xr - tgt, band = rung.settleBand * Math.max(Math.abs(e0), Math.abs(tgt - start));
             let T = 0; for (let tt = 0; tt < 3; tt += 5e-4) if (Math.abs(springErr(w0, z, e0, q4.vr, tt)) > band) T = tt;
-            allowL = Math.max(allowL, T * 1000 + 2 * F + q4.stall);
+            bandT = T * 1000;
         }
-        let ok = q4.dur <= allowL;
-        if (ok && Dnet >= 0.5) {
-            const gap = iClose - iLand;
-            const Dl2 = iR > 0 ? Math.abs(tgt - L[iR]) : Dnet;
-            if (gap > 2) ok = false;
-            else if (gap < -1) ok = Math.abs(L[iClose] - tgt) <= rung.settleBand * Dl2 + 0.5;
-        }
-        win.q4 = ok; win.q4AllowMs = r2(allowL);
+        const gapMs = iClose >= 0 && iLand >= 0 ? frames[iClose].t - frames[iLand].t : 0;
+        const Dl2 = iR > 0 ? Math.abs(tgt - L[iR]) : Dnet;
+        const inBand = Math.abs(L[iClose] - tgt) <= rung.settleBand * Dl2 + 0.5;
+        const late = gapMs > 2 * F + W8_EPS_MS, early = gapMs < -(F + W8_EPS_MS);
+        const reading = (allow, bandEarly) => {
+            if (q4.dur > allow) return { ok: false, allowMs: r2(allow), why: `${r2(q4.dur)} ms > ${r2(allow)}` };
+            if (Dnet >= 0.5 && late) return { ok: false, allowMs: r2(allow), why: `closed ${r2(gapMs)} ms after landing` };
+            if (Dnet >= 0.5 && early && !(bandEarly && inBand)) return { ok: false, allowMs: r2(allow), why: `closed ${r2(-gapMs)} ms before landing${bandEarly ? ", outside the band" : ""}` };
+            return { ok: true, allowMs: r2(allow), why: `${r2(q4.dur)} ms ≤ ${r2(allow)}` };
+        };
+        const L4 = reading(Math.max(Math.max(clockMs, Q4_DOCK_CLOCK_MS) + 2 * F + q4.stall, bandT + 2 * F + q4.stall), true);
+        win.q4 = L4.ok; win.q4AllowMs = L4.allowMs;
+        win.q4a = reading(Math.max(clockMs + 2 * F + q4.stall, bandT + 2 * F + q4.stall), true);
+        win.q4c = reading(Q4_DOCK_CLOCK_MS + 2 * F + q4.stall, false);
     }
     // owners
     const dupFrames = frames.filter((f) => f.dup);
@@ -1351,8 +1537,10 @@ export function analyseMorph(frames, rung, { ax = "x", reversal = null, seats = 
         out.blank = blankRow(frames, ax);
         out.leaving = leavingRow(frames, out.travelMs != null && D >= 0.5 ? out.travelMs : clockMs);
         out.splice = spliceRow(frames, ax);   // H4-1
-        const st = stubRow(frames, ax);       // H5-3
+        const st = stubRow(frames, ax);       // H5-3, re-cut by H6-1
         if (st) out.stub = st;
+        const ho = holeRow(frames, ax);       // H6-2
+        if (ho) out.hole = ho;
     }
     const ln = lanesRow(frames, laneLabels ?? frames.laneLabels ?? {});   // H4-2
     if (ln?.judged) out.lanes = ln;
@@ -1364,6 +1552,8 @@ export function morphChecks(a) {
     if (a.blank) c.blank = a.blank.ok;
     if (a.leaving) c.leaving = a.leaving.ok;
     if (a.leaving?.vanish && a.leaving.leaving) c.vanish = a.leaving.vanish.ok;   // H5-4
+    if (a.leaving?.leaving) c.ink = a.leaving.inkOk;                           // H6-3 (the instrument: an ink is ≤ 1)
+    if (a.hole) c.hole = a.hole.ok;                                            // H6-2
     if (a.splice) c.splice = a.splice.ok;
     if (a.stub) c.stub = a.stub.ok;                                            // H5-3
     if (a.lanes) c.lanes = a.lanes.ok;
@@ -1379,8 +1569,9 @@ export function morphSummary(a) {
     if (a.leaving) s.push(`leaving ${a.leaving.why}`);
     if (a.splice) s.push(`splice ${a.splice.why}`);
     if (a.stub) s.push(`stub ${a.stub.why}`);
+    if (a.hole) s.push(`hole ${a.hole.why}`);
     if (a.lanes) s.push(`lanes ${a.lanes.why}`);
-    if (a.window.q4 != null) s.push(`Q-4 lenient window ${a.window.q4 ? "holds" : "fails"} (allow ${a.window.q4AllowMs} ms)`);
+    if (a.window.q4 != null) s.push(`Q-4 lenient window ${a.window.q4 ? "holds" : "fails"} (allow ${a.window.q4AllowMs} ms); Q-4 (a) flag at the 2 % band ${a.window.q4a.ok ? "holds" : "fails"} (${a.window.q4a.why}); Q-4 (c) 270 ms dock clock ${a.window.q4c.ok ? "holds" : "fails"} (${a.window.q4c.why})`);
     if (a.faces) s.push(`faces ${a.faces.why}`);
     return s.join("; ");
 }

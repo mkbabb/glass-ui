@@ -22,6 +22,10 @@
 //   prose·citations (H5-8) no file in src/ or tests/ cites a design-pass record (`pass-<n>/<file>.md`): the record is
 //                  rewritten pass by pass and the citation goes stale (B′-crit §6.6: a test citing pass-3/D2-Bp-proto.md
 //                  for a contract pass 4 rewrote)
+//   prose·harness  (H6-9, pass-6/H6.md) no line in src/ cites a harness row id (`H<n>-<n>`) or a witness cell name: a
+//                  `<word>·<word>` cell compound (`stretch·lead-add`, `retarget·40`) or one of HARNESS_CELLS (`swap-long`,
+//                  `first-expand`, …). Shipping source states its law, not the instrument that reads it; the row ids are
+//                  renumbered pass by pass (B′-crit §6: 14 citations; G-crit §6: 34)
 // Limits: a reader assembled at run time (`var(--${name})`) is not seen; such a token reads as
 // reader-less and the cell names it, so a false red is visible, never a silent green.
 import fs from "node:fs";
@@ -31,6 +35,12 @@ import { parseArgs, loadAvg } from "./lib.mjs";
 
 const args = parseArgs();
 const outRoot = path.resolve(args.out ?? process.env.DOCK_HARNESS_OUT ?? path.join(os.tmpdir(), "dock-harness"));
+/** H6-9 · the witnesses' plain cell names (W3, FM, R5, CF, CASES and the critics' promoted cells); a `·` compound is
+ *  matched by form, these by name, each as a whole hyphenated token */
+export const HARNESS_CELLS = ["first-expand", "warm-expand", "warm-collapse", "content-add", "content-remove", "lead-add", "lead-remove", "swap-long", "swap-short", "anchor-end", "hidden-shown", "viewport-resize", "seat-transition", "crit-corner", "crit-prm", "non-first-current", "long-run-h", "long-run-v", "collapsed-rest", "expanded-rest", "consumer-margin"];
+/** the cell families a `·` compound starts with (`·` alone is also source's multiplication sign: `c·e·cos`, `m·P`) */
+export const HARNESS_FAMILIES = ["stall", "retarget", "stretch", "neighbour", "vagree", "case", "film", "hit", "c[1-9]", "route[1-9]", "form", "card", "morph", "rail", "fit", "wide", "compact", "l1", "prose", "f7", "ring", "prm", "lattice", "infanim"];
+const HARNESS_RE = new RegExp(`(?<![\\w-])(H\\d+-\\d+|(?:${HARNESS_FAMILIES.join("|")})·[a-z0-9][\\w·-]*|${HARNESS_CELLS.join("|")})(?![\\w-])`, "g");
 const WORDS = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, eleven: 11, twelve: 12, thirteen: 13, fourteen: 14 };
 
 /** A tiny tree for the self-test: a pass and three plants, written under <out>/prose-fixture-<name>. */
@@ -43,6 +53,7 @@ function fixtureTree(name) {
     w("src/components/dock/styles/density.css", `/* a comment that names --dock-ghost: it is prose, not a declaration */\n.glass-dock {\n    --dock-gap: 8px;\n${name === "noreader" ? "    --dock-dead: 1.14;\n" : ""}}\n@property --dock-t { syntax: "<number>"; inherits: true; initial-value: 0; }\n`);
     w("src/components/dock/styles/run.css", `.dock-run { gap: var(--dock-gap); }\n`);
     w("src/components/dock/styles/index.css", `/* The ${name === "partials" ? "three" : "two"} partials @import in cascade order. */\n@import "./density.css";\n@import "./run.css";\n.glass-dock { display: flex; }\n`);
+    if (name === "harnesscite") w("src/components/dock/composables/useDockScene.ts", `// the seat wipe (H5-3, W3 \`swap-long\`): a cut glyph fades; the stretch·lead-add cell reads it\nexport const CUT = 0.5;\n`);
     w("tests/components/dock/run.test.ts", `// the run's gap token${name === "passcite" ? " (docs/tranches/BL/design/dock/pass-3/D2-Bp-proto.md §2)" : ""}\nimport { it } from "vitest";\nit("gap", () => {});\n`);
     w("docs/design/tunable-anim.md", `| spring | token | default |\n|---|---|---|\n| dock expand | \`--dock-t\` | 0 |\n| dock gap | \`--dock-gap\` | 8px |\n${name === "duprow" ? "| dock expand (again) | `--dock-t` | 0 |\n" : ""}`);
     return root;
@@ -115,11 +126,16 @@ function judge(tree) {
     for (const f of [...walk(src, [".css", ".vue", ".ts", ".js", ".mjs", ".md"]), ...walk(path.join(tree, "tests"), [".css", ".vue", ".ts", ".tsx", ".js", ".mjs", ".md"])]) {
         fs.readFileSync(f, "utf8").split("\n").forEach((line, k) => { for (const m of line.matchAll(/pass-\d+\/[\w.′'-]+\.md/g)) cites.push(`${path.relative(tree, f)}:${k + 1} ${m[0]}`); });
     }
-    return { declared: declared.size, readersSeen: readers.size, dead, members, counts, rowsSeen: rows.size, dup, mdFound: fs.existsSync(md), partials, cites };
+    // H6-9 · harness row ids and witness cell names in src/ (comments included: a comment is shipping prose)
+    const harness = [];
+    for (const f of walk(src, [".css", ".vue", ".ts", ".js", ".mjs", ".md"])) {
+        fs.readFileSync(f, "utf8").split("\n").forEach((line, k) => { for (const m of line.matchAll(HARNESS_RE)) harness.push(`${path.relative(tree, f)}:${k + 1} ${m[1]}`); });
+    }
+    return { declared: declared.size, readersSeen: readers.size, dead, members, counts, rowsSeen: rows.size, dup, mdFound: fs.existsSync(md), partials, cites, harness };
 }
 
 const tree = args.fixture ? fixtureTree(args.fixture) : path.resolve(args.positional[0] ?? "");
-if (!fs.existsSync(path.join(tree, "src"))) { console.error("usage: node prose.mjs <worktree> | --fixture pass|noreader|count|duprow"); process.exit(2); }
+if (!fs.existsSync(path.join(tree, "src"))) { console.error("usage: node prose.mjs <worktree> | --fixture pass|noreader|count|duprow|partials|passcite|harnesscite"); process.exit(2); }
 const r = judge(tree);
 const load = loadAvg();
 const label = args.fixture ? `fixture:${args.fixture}` : path.basename(tree);
@@ -129,6 +145,7 @@ const cells = [
     { engine: "source", cell: "prose·count", pass: r.members != null && badCounts.length === 0, failed: r.members == null || badCounts.length ? ["count"] : [], counts: r.counts, members: r.members, summary: `DockProps has ${r.members ?? "NO interface found"} member(s); ${r.counts.length} prose count(s) near it, ${badCounts.length} wrong${badCounts.length ? ": " + badCounts.map((c) => `${c.at} "${c.says}"`).join(", ") : ""}` },
     { engine: "source", cell: "prose·partials", pass: r.partials.every((c) => c.ok), failed: r.partials.every((c) => c.ok) ? [] : ["partials"], partials: r.partials, summary: `${r.partials.length} partial count(s) in an @import file; ${r.partials.filter((c) => !c.ok).length} wrong${r.partials.some((c) => !c.ok) ? ": " + r.partials.filter((c) => !c.ok).map((c) => `${c.at} "${c.says}" over ${c.imports} @import(s)`).join(", ") : ""}` },
     { engine: "source", cell: "prose·citations", pass: r.cites.length === 0, failed: r.cites.length ? ["citations"] : [], cites: r.cites, summary: `${r.cites.length} design-pass record citation(s) in src/ or tests/${r.cites.length ? ": " + r.cites.slice(0, 4).join(", ") + (r.cites.length > 4 ? ` … (+${r.cites.length - 4})` : "") : ""}` },
+    { engine: "source", cell: "prose·harness", pass: r.harness.length === 0, failed: r.harness.length ? ["harness"] : [], harness: r.harness, summary: `${r.harness.length} harness row id(s) or witness cell name(s) in src/${r.harness.length ? ": " + r.harness.slice(0, 6).join(", ") + (r.harness.length > 6 ? ` … (+${r.harness.length - 6})` : "") : ""}` },
     { engine: "source", cell: "prose·rows", pass: r.mdFound && r.dup.length === 0, failed: !r.mdFound || r.dup.length ? ["rows"] : [], dup: r.dup, summary: `${r.mdFound ? `${r.rowsSeen} token(s) with a row in docs/design/tunable-anim.md; ${r.dup.length} with more than one${r.dup.length ? ": " + r.dup.join(", ") : ""}` : "docs/design/tunable-anim.md not found"}` },
 ];
 for (const c of cells) { c.load = load; console.log(`${c.pass ? "PASS" : "FAIL"}  PR  source  ${c.cell}  ${c.summary}  [load ${load}]`); }

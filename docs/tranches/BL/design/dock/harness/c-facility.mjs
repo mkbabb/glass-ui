@@ -62,6 +62,11 @@
 //                       coarse seat (44 px) + 2 × the compact rung's block padding (C9_BLOCK_MAX = 52 px at today's
 //                       tokens, density.css: compact --dock-padding-block 0.25rem), every painting seat ≥ 44 px; no
 //                       consumer density prop is set by the harness; frame
+// H6 (pass-6/H6.md):
+//   H6-6  c8·outside-press: `opens` is judged only on the reps that started collapsed. A rep whose dock had not collapsed
+//         between reps (the press dropped and the dwell not yet run) has nothing to open; pass 5 counted its hover as
+//         "did not open" (pass-5/H5.md §5, FLOOR-V4 §5). Plants: `hoverdead` (a hover never opens: `opens` fails);
+//         `pressstick` (the press dropped and no dwell: `collapses` fails, `opens` holds on the reps that started collapsed)
 import fs from "node:fs";
 import path from "node:path";
 import { parseArgs, engines, openTarget, launch, openScene, makeReport, outDir, engineTag, r2, PNG } from "./lib.mjs";
@@ -495,7 +500,7 @@ for (const engine of engines(args)) {
                 });
                 const reps = []; let frameDir = null;
                 for (let k = 0; k < C8_TRIES && reps.filter((r) => r.mid).length < C8_REPS; k++) {
-                    await away(s.page); await until(s.page, (r) => r.posture === "collapsed" && !r.m, 6000); await s.page.waitForTimeout(250);
+                    await away(s.page); const st0 = await until(s.page, (r) => r.posture === "collapsed" && !r.m, 6000); await s.page.waitForTimeout(250);
                     const c = await read(s.page); const [cx, cy] = centre(c);
                     await s.page.evaluate(() => { window.__c8 = null; });
                     const shots = [];
@@ -509,11 +514,13 @@ for (const engine of engines(args)) {
                     const z = await until(s.page, (r) => r.posture === "collapsed" && !r.m, C8_AFTER_MS);
                     await shoot_("02-settled");
                     // a collapse that comes only after the 3.6 s dwell (the pointer left the dock to press) is the dwell's, not the press's
-                    reps.push({ k, opened: st.ok, mid: !!pr && (pr.m || pr.moving), press: pr, settleMs: settle.ms, collapsed: z.ok && settle.ms + z.ms < C8_DWELL_GUARD_MS, collapseMs: z.ms, posture: z.r.posture, shots });
+                    reps.push({ k, startedCollapsed: st0.ok, opened: st.ok, mid: !!pr && (pr.m || pr.moving), press: pr, settleMs: settle.ms, collapsed: z.ok && settle.ms + z.ms < C8_DWELL_GUARD_MS, collapseMs: z.ms, posture: z.r.posture, shots });
                 }
                 const mid = reps.filter((r) => r.mid), bad = mid.filter((r) => !r.collapsed);
-                const checks = { opens: reps.length > 0 && reps.every((r) => r.opened), collapses: bad.length ? false : mid.length >= C8_REPS ? true : null };
-                done(engine, "c8·outside-press", checks, `press point ${outPt.join(",")}; ${reps.length} attempt(s), ${mid.length} press(es) landed mid-morph (bound ${C8_REPS} of ${C8_REPS}); ${mid.length - bad.length}/${mid.length} collapsed within ${C8_AFTER_MS} ms of the morph settling${bad.length ? ` (stayed ${bad[0].posture}, attempt ${bad[0].k})` : ""}; ${reps.filter((r) => !r.opened).length} hover(s) that did not open the dock; frames ${frameDir ? path.relative(out, frameDir) : "-"}`, { reps, point: outPt });
+                // H6-6 · `opens` on the reps that started collapsed only
+                const fromCollapsed = reps.filter((r) => r.startedCollapsed);
+                const checks = { opens: fromCollapsed.length > 0 && fromCollapsed.every((r) => r.opened), collapses: bad.length ? false : mid.length >= C8_REPS ? true : null };
+                done(engine, "c8·outside-press", checks, `press point ${outPt.join(",")}; ${reps.length} attempt(s), ${mid.length} press(es) landed mid-morph (bound ${C8_REPS} of ${C8_REPS}); ${mid.length - bad.length}/${mid.length} collapsed within ${C8_AFTER_MS} ms of the morph settling${bad.length ? ` (stayed ${bad[0].posture}, attempt ${bad[0].k})` : ""}; ${fromCollapsed.filter((r) => !r.opened).length} of ${fromCollapsed.length} hover(s) on a collapsed dock did not open it (${reps.length - fromCollapsed.length} rep(s) started expanded: not judged for opens, H6-6); frames ${frameDir ? path.relative(out, frameDir) : "-"}`, { reps, point: outPt });
             } finally { await s.close(); }
         });
         // H5-11 · C9 (O-74e): the expanded dock at 844 × 390, coarse

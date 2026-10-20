@@ -1,0 +1,36 @@
+19:04  up  5:07, 3 users, load averages: 32.58 67.76 83.82
+Mon Oct 19 19:04:16 EDT 2026
+OK   W4  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 13/13 PASS  [55 s, load 32.58]
+OK   W4  nohyst          expect: exit ≠ 0; no-threshold-bounce  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [13 s, load 27.5]
+OK   W4  latch           expect: exit ≠ 0; no-hover-latch  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [5 s, load 27.27]
+OK   W4  menucollapse    expect: exit ≠ 0; menu-holds  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [10 s, load 26.85]
+OK   W4  noprm           expect: exit ≠ 0; prm·posture-morph|prm·compact  ·  got: exit 1, 2/2 FAIL; matching 2 (webkit)  [13 s, load 24.35]
+OK   W4  tapthrough      expect: exit ≠ 0; tap-pins  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [9 s, load 24.39]
+OK   W4  ungatedafter    expect: exit ≠ 0; no-hover-latch  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [5 s, load 24.28]
+OK   W4  pressgate       expect: exit ≠ 0; press-then-scroll  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [4 s, load 25.46]
+OK   W4  lategetter      expect: exit ≠ 0; late-getter  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [5 s, load 24.38]
+OK   W4  norefcount      expect: exit ≠ 0; shared-scroller  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [5 s, load 23.95]
+OK   W4  seatshrink      expect: exit ≠ 0; seat-scale  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [13 s, load 23.31]
+OK   W4  prmscrub        expect: exit ≠ 0; prm·compact  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [4 s, load 21.03]
+OK   W4  compactjump     expect: exit ≠ 0; non-first-current  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [4 s, load 20.71]
+OK   W4  nocompact       expect: exit ≠ 0; compact·compacts  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [12 s, load 20.71]
+OK   W4  noengage        expect: exit ≠ 0; engagement-expands  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [13 s, load 20]
+OK   W5  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 6/6 PASS  [18 s, load 21.09]
+OK   W5  rimout          expect: exit ≠ 0; inside fails in expanded|collapsed  ·  got: exit 1, 5/5 FAIL; matching 5 (webkit)  [16 s, load 20.12]
+OK   W5  deadfill        expect: exit ≠ 0; fill fails in h·expanded|v·expanded  ·  got: exit 1, 3/3 FAIL; matching 3 (webkit)  [10 s, load 17.89]
+OK   W5  rimshift        expect: exit ≠ 0; whole fails in expanded|collapsed  ·  got: exit 1, 5/5 FAIL; matching 5 (webkit)  [15 s, load 17.27]
+OK   W5  winonly         expect: exit ≠ 0; fill fails in el-source  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [4 s, load 14.7]
+OK   W6  pass            expect: exit 0, all cells PASS  ·  got: exit 0, 4/4 PASS  [11 s, load 17.12]
+OK   W6  formout         expect: exit ≠ 0; wraps fails in form·collapsed-rest  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [11 s, load 15.09]
+OK   W6  dismissout      expect: exit ≠ 0; wraps fails in form·collapsed-rest  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [11 s, load 17.69]
+OK   W6  twoplates       expect: exit ≠ 0; onePlate fails in form·collapsed-rest  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [11 s, load 16.82]
+OK   W6  formgone        expect: exit ≠ 0; present fails in form·collapsed-rest  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [11 s, load 18.17]
+OK   W6  dismissspan     expect: exit ≠ 0; dismissSeat fails in form·collapsed-rest  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [12 s, load 17.03]
+OK   W6  plateswap       expect: exit ≠ 0; samePlate fails in form·expanded-rest  ·  got: exit 1, 1/1 FAIL; matching 1 (webkit)  [11 s, load 17.71]
+OK   W6  jump            expect: exit ≠ 0; continuity fails in form·expand  ·  got: exit 1, 1/2 FAIL; matching 1 (webkit)  [11 s, load 18.44]
+OK   W6  bandclose       expect: an OWNER-BLOCKED cell in form·expand|form·collapse; summary ~ Q-4 \(a\) flag at the 2 % band holds .*Q-4 \(c\) 270 ms dock clock fails  ·  got: exit 0, 2/4 FAIL; matching 2 (webkit); summary matches  [11 s, load 17.71]
+OK   W6  slowclock       expect: exit ≠ 0; window fails in form·expand|form·collapse  ·  got: exit 1, 2/4 FAIL; matching 2 (webkit)  [17 s, load 17.91]
+SELFTEST PASS  30/30 expectations hold
+exit 0
+19:10  up  5:13, 3 users, load averages: 17.01 33.30 61.62
+Mon Oct 19 19:10:07 EDT 2026

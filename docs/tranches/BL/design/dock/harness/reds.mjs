@@ -11,8 +11,13 @@
 // The rule now reads the witness JSON (the cell's own verdict, after any merge) and names every counted FAIL cell
 // (not UNMEASURED, OWNER-BLOCKED or RECORD), engine tags stripped, each with its optional control:
 //   ^(<cell>(·control)?|…)$
+// H6-10 (pass-6/H6.md): the runner's slot plan joins the plants: `battery.sh theme` gives one slot per theme on the
+// measured estimates, splits only when the estimates exceed the budget, and the pass-5 stage plan (one lock queue per
+// stage) is the plant's control.
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
+import { spawnSync } from "node:child_process";
 import { HERE } from "./lib.mjs";
 
 const esc = (s) => s.replace(/[\][(){}.*+?^$|\\]/g, "\\$&");
@@ -51,6 +56,16 @@ if (process.argv[2] === "--selftest") {
     // 4 · OWNER-BLOCKED, UNMEASURED and RECORD cells are not re-run; a passing cell is not either
     const quiet = redsOf([{ cells: [{ cell: "a", pass: false, ownerBlocked: "Q-4" }, { cell: "b", pass: false, unmeasured: true }, { cell: "c", pass: true }, { cell: "d", pass: false, record: true }] }]);
     ok("counted-only", quiet === "", `→ '${quiet}'`);
+    // 5 · H6-10 · one --exclusive webkit slot per theme, split only where the 90-min clamp requires (DRYRUN: no browser)
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "reds-plan-"));
+    const planOf = (theme, extra = {}) => { const r = spawnSync("bash", [path.join(HERE, "battery.sh"), tmp, "theme"], { encoding: "utf8", env: { ...process.env, DRYRUN: "1", THEME: theme, BUILD: "x", ENG: "webkit", REC: tmp, ...extra } }); return (r.stdout || "").trim().split("\n").filter((l) => /^slot /.test(l)); };
+    const light = planOf("light"), dark = planOf("dark"), heavy = planOf("light", { EST_MIN: "30" });
+    fs.rmSync(tmp, { recursive: true, force: true });
+    const all = (p) => p.join(" ").split(/\s+/).filter((x) => /^(main|rest|dark|darkrest):/.test(x));
+    ok("one-slot-per-theme", light.length === 1 && dark.length === 1 && all(light).length === 15 && all(dark).length === 13, `light ${light.length} slot(s), ${all(light).length} witness runs; dark ${dark.length} slot(s), ${all(dark).length} witness runs`);
+    ok("split-on-clamp", heavy.length > 1 && all(heavy).length === 15, `every estimate 30 min: ${heavy.length} slot(s) for the light theme, ${all(heavy).length} witness runs, none dropped`);
+    const p5 = (plan.match(/^(main|rest|dark|darkrest)\) \$G/gm) ?? []).length;
+    ok("pass5-plan-plant", p5 === 4, `the pass-5 plan queues the lock once per stage: ${p5} WebKit slots per build where H6-10 needs 2`);
     console.log(`${rows.every(Boolean) ? "RUN SELFTEST PASS" : "RUN SELFTEST FAIL"}  ${rows.filter(Boolean).length}/${rows.length}`);
     process.exitCode = rows.every(Boolean) ? 0 : 1;
 } else if (process.argv[1] && path.resolve(process.argv[1]) === path.join(HERE, "reds.mjs")) {
