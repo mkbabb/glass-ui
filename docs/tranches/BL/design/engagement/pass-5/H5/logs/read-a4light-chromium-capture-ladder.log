@@ -1,0 +1,13 @@
+## 2026-10-19 20:13:48 load { 31.75 33.46 31.17 } · start cap a4light chromium accordion
+# capture · a4light · /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/H5/out/builds/a4light · scene app: harness scenes/App.vue (sha1 7c8bcdaafb44) · lock wait 0.0 s · other headless processes: chromium 12, webkit 0 · load 31.7/33.5/31.2 at start
+# chromium 149.0.7827.55
+  a4light-chromium-fine-light-accordion · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 31.7/33.5/31.2
+  PASS       CAP accordion fine light committed · chromium: pointer release after a 450 ms hold, state null → "one" · load 31.7/33.5/31.2
+  FAIL       CAP accordion ladder fine light · chromium: inset paint L rest 0.9566 (rgba(0, 0, 0, 0)) · hover 0.6872 (color(srgb 0.109804 0.0980391 0.090196 / 0.15); darker by 0.2694) · hover+press 0.8556 (oklab(0.216114 0.00343135 0.00508514 / 0.05)) · released, still hovered 0.6872 · the press moves BACK toward rest past the hover by 0.1684 (the press lighter than its hover: the ladder inverts) (bound: no step back past 0.002) · load 29.8/33.0/31.0
+  a4light-chromium-fine-dark-accordion · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 29.8/33.0/31.0
+  PASS       CAP accordion fine dark committed · chromium: pointer release after a 450 ms hold, state null → "one" · load 29.8/33.0/31.0
+  FAIL       CAP accordion ladder fine dark · chromium: inset paint L rest 0.0031 (rgba(0, 0, 0, 0)) · hover 0.0333 (color(srgb 0.913725 0.901961 0.886275 / 0.19); lighter by 0.0302) · hover+press 0.0076 (oklab(0.926146 0.00162765 0.00610709 / 0.05)) · released, still hovered 0.0333 · the press moves BACK toward rest past the hover by 0.0257 (the press lighter than its hover: the ladder inverts) (bound: no step back past 0.002) · load 29.5/32.9/31.0
+# capture done · load 29.5/32.9/31.0 at end
+CAP chromium FAIL · 2 pass, 2 fail, 0 unmeasured of 4 gating cells (0 reported) · load 31.7/33.5/31.2 at start, 29.5/32.9/31.0 at end
+exit 1
+## 2026-10-19 20:13:59 load { 29.46 32.91 31.00 } · end cap a4light chromium

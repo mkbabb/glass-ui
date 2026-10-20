@@ -1,0 +1,15 @@
+# Chromium phase 2: HEAD re-reads on the changed witnesses; the pass-4 defects on A4-light (the delay, the ladder, the
+# paint) and the P7/P9 plant build (P7: the toggle on :active; P9: no delay, the rebound's control)
+read1 head chromium e2-commit.mjs
+read1 head chromium e9-prm.mjs
+read1 head chromium e5-touch.mjs
+read1 head chromium e10-continuity.mjs
+read1 head chromium e1-census.mjs --gpu metal --scenes ambient
+read1 head chromium e1-census.mjs --scenes ambient
+cap head chromium accordion
+read1 a4light chromium e2-commit.mjs
+read1 a4light chromium e9-prm.mjs
+read1 a4light chromium e10-continuity.mjs
+cap a4light chromium accordion
+read1 a4plant chromium e5-touch.mjs --scenes toggle
+read1 a4plant chromium e10-continuity.mjs --scenes switch,checkbox,chip,accordion

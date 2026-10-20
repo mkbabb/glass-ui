@@ -1,0 +1,19 @@
+# WebKit acquisition C: the unchanged witnesses' clean fixtures, the HEAD re-reads, and the pass-4 defects on A4-light and the P7/P9 build (D folded in, 2026-10-20 01:05, to save one queue round on the shared lock)
+clean webkit E-3
+clean webkit E-4
+clean webkit E-6
+clean webkit E-7
+clean webkit E-8
+clean webkit E-11
+clean webkit E-12
+read1 head webkit e2-commit.mjs
+read1 head webkit e9-prm.mjs
+read1 head webkit e5-touch.mjs
+read1 head webkit e10-continuity.mjs
+cap head webkit accordion
+read1 a4light webkit e10-continuity.mjs
+cap a4light webkit accordion
+read1 a4plant webkit e5-touch.mjs --scenes toggle
+read1 a4plant webkit e10-continuity.mjs --scenes switch,checkbox,chip,accordion
+read1 a4light webkit e1-census.mjs --scenes ambient
+read1 a4light webkit e5-touch.mjs --scenes toggle

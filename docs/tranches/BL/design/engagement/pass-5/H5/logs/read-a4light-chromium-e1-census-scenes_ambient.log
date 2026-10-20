@@ -1,0 +1,33 @@
+## 2026-10-19 21:12:31 load { 14.09 13.55 15.24 } · start a4light chromium e1-census.mjs --scenes ambient
+# E-1 · CK-01 the census reads adoption
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/H5/out/builds/a4light · engine chromium · lock wait 0.0 s · other headless processes: chromium 28, webkit 0 · load 14.1/13.6/15.2 at start
+# scene app: harness scenes/App.vue (sha1 7c8bcdaafb44)
+# chromium 149.0.7827.55
+# narrowed to scenes ambient
+  PASS       E-1 declaration present · 55 members, 9 classes (pressed, chosen, held, dragged, disclosed, presented, field, ambient, static) · load 14.1/13.6/15.2
+  PASS       E-1 denominator declared · 55 of 55 directories declared · load 14.1/13.6/15.2
+  PASS       E-1 no stray member · every member is a directory of a declared class · load 14.1/13.6/15.2
+  PASS       E-1 class carries a rung · members per class: pressed 1, chosen 9, held 3, dragged 5, disclosed 6, presented 4, field 3, ambient 6, static 18 · ladder rungs rest/hover/press/engaged/modal · load 14.1/13.6/15.2
+  PASS       E-1 gallery rendered · no member caught by an error boundary in 1 scenes · load 15.7/13.9/15.4
+  PASS       E-1 adoption aurora · declared ambient · 1 instance(s) in 1 scene(s) · ambient: div.aurora-root.engage-ambient.h-full computes [ambient] (div.aurora-root.engage-ambient.h-full=ambient) · load 15.7/13.9/15.4
+  PASS       E-1 single · no element composes more than one engage-* class (1 scenes) · load 15.7/13.9/15.4
+  FAIL       E-1 adoption latch · 1 of 55 declared members seen adopting their recipe; unproven (not rendered by any scene, or not adopted): accordion alert avatar badge blob button card carousel checkbox chip collapsible command configurator constellation dark-mode-toggle data-table deck dialog dock easing expandable-container fading-scroll fourier-field handmark infinite-scroll input label labeled-field menu metric music-staff number-field pager-dots popover progress radio-group scroll-progress-rim select separator sheet skeleton slider sortable-list status-dot surface switch table tabs textarea timeline toast toggle-group tooltip typewriter · load 15.7/13.9/15.4
+  PASS       E-1 runtime pressed (button) · scene button, rung press · press: Δscale 0.033 · press-only paint [::before opacity] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 15.7/13.9/15.4
+  PASS       E-1 runtime pressed (button) PRM press-light · scene button, reduce · press: Δscale 0.000 · press-only paint [::before opacity] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 15.7/13.9/15.4
+  PASS       E-1 runtime chosen (switch) · scene switch, rung press · press: Δscale 0.000 · press-only paint [child0 bg] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 15.7/13.9/15.4
+  PASS       E-1 runtime chosen (switch) PRM press-light · scene switch, reduce · press: Δscale 0.000 · press-only paint [child0 bg] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 15.7/13.9/15.4
+  PASS       E-1 runtime held (slider) · scene slider, rung engaged · press: Δscale 0.060 · press-only paint [child1 bg] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 15.7/13.9/15.4
+  PASS       E-1 runtime held (slider) PRM press-light · scene slider, reduce · press: Δscale 0.000 · press-only paint [child1 bg] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 15.7/13.9/15.4
+  PASS       E-1 runtime dragged (sortable-list) · scene sortable, rung press · press: Δscale 0.000 · press-only paint [background-color] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 15.7/13.9/15.4
+  PASS       E-1 runtime dragged (sortable-list) PRM press-light · scene sortable, reduce · press: Δscale 0.000 · press-only paint [background-color] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 15.7/13.9/15.4
+  PASS       E-1 runtime disclosed (accordion) · scene accordion, rung press · press: Δscale 0.000 · press-only paint [background-color] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 15.7/13.9/15.4
+  PASS       E-1 runtime disclosed (accordion) PRM press-light · scene accordion, reduce · press: Δscale 0.000 · press-only paint [background-color] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 14.8/13.8/15.3
+  PASS       E-1 runtime presented (sheet) · scene sheet, rung modal · press: Δscale 0.000 · press-only paint [child0 opacity] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 14.8/13.8/15.3
+  FAIL       E-1 runtime presented (sheet) PRM press-light · scene sheet: no target while pressed · load 14.8/13.8/15.3
+  PASS       E-1 runtime field (input) · scene field, rung hover · hover: Δscale 0.000 · paint [box-shadow, backdrop-filter] (bound ≥ 1 property or |Δscale| ≥ 0.01) · load 14.8/13.8/15.3
+  PASS       E-1 runtime field (input) PRM press-light · scene field, reduce · hover: Δscale 0.000 · paint [box-shadow, backdrop-filter] (bound ≥ 1 property or |Δscale| ≥ 0.01) · load 14.5/13.7/15.3
+  UNMEASURED E-1 runtime ambient (aurora) · ENGINE LIMIT, scene ambient, rung rest: the Aurora resolved its "css" substrate (data-aurora-substrate="css": the software-raster guard, constants/renderMode.ts; WebGL2 renderer "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)"): a static palette ground with no pointer field in this engine · load 14.5/13.7/15.3
+  UNMEASURED E-1 runtime ambient (aurora) PRM press-light · ENGINE LIMIT, scene ambient, rung rest: the Aurora resolved its "css" substrate (data-aurora-substrate="css": the software-raster guard, constants/renderMode.ts; WebGL2 renderer "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)"): a static palette ground with no pointer field in this engine · load 14.5/13.7/15.3
+E-1 chromium FAIL · 20 pass, 2 fail, 2 unmeasured of 24 gating cells (0 reported) · load 14.1/13.6/15.2 at start, 14.5/13.7/15.3 at end
+exit 1
+## 2026-10-19 21:12:49 load { 14.47 13.71 15.26 } · end a4light chromium e1-census.mjs

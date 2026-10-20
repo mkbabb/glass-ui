@@ -80,17 +80,19 @@ const COMMIT = ["E-2", "E-8", "E-9"];
 const INDEX: Record<string, Record<string, unknown>> = {
   // CK-02: `face` is the painted face (arm ii's px, arm iii's light); `keys` the keyboard commit (a commit the state
   // precondition must see happen)
-  switch: { gates: [...COMMIT, "E-11"], key: "Space", target: '[role="switch"]', body: ".switch__thumb", face: '[role="switch"] .control-bit__face', failLoud: [{ token: "--scale-commit-pop", value: "1", act: "commit", on: '[role="switch"]' }] },
-  checkbox: { gates: COMMIT, key: "Space", target: '[role="checkbox"]', face: '[role="checkbox"] .control-bit__face' },
+  // H5: `rebound` (E-10's C-A4 rebound: a commit reversed 60/200 ms later, its light seat filmed) on the members whose
+  // programmatic commit toggles; `ladder` (capture.mjs's CK-25 ladder cell) on the disclosed exemplar
+  switch: { gates: [...COMMIT, "E-11", "E-10"], rebound: true, key: "Space", target: '[role="switch"]', body: ".switch__thumb", face: '[role="switch"] .control-bit__face', failLoud: [{ token: "--scale-commit-pop", value: "1", act: "commit", on: '[role="switch"]' }] },
+  checkbox: { gates: [...COMMIT, "E-10"], rebound: true, key: "Space", target: '[role="checkbox"]', face: '[role="checkbox"] .control-bit__face' },
   radio: { gates: COMMIT, key: "ArrowDown", target: '[role="radio"]:nth-of-type(2)', face: '[role="radio"]:nth-of-type(2) .control-bit__face' },
   tabs: { gates: [...COMMIT, "E-5"], key: "ArrowRight", target: ".segmented-tab:nth-of-type(2)", body: ".segmented-indicator", touch: ".segmented-tab:nth-of-type(3)" },
   toggle: { gates: [...COMMIT, "E-5"], key: "ArrowRight", target: '[data-t="item-b"]', pf1: "webkit pointer entry closes the page (D4 PF-1)" },
-  chip: { gates: [...COMMIT, "E-5"], key: "Space", target: ".glass-chip" },
+  chip: { gates: [...COMMIT, "E-5", "E-10"], rebound: true, key: "Space", target: ".glass-chip" },
   // `stateless`: no model to set. H3 rules the programmatic commit of a stateless control as its activation,
   // `element.click()` on the target, driven by E-2 itself (not by __e.commit, which the pass-2 app wired to `clicks++`
   // around the component, C-A2 §0.2); CK-03's arrival does not apply (nothing arrives)
   chipaction: { gates: COMMIT, key: "Space", target: ".glass-chip", stateless: true },
-  accordion: { gates: [...COMMIT, "E-5"], key: "Enter", target: ".disclosure-trigger", pf1: "webkit pointer entry closes the page (PORTFOLIO §1.3 item 7)" },
+  accordion: { gates: [...COMMIT, "E-5", "E-10"], rebound: true, ladder: true, key: "Enter", target: ".disclosure-trigger", pf1: "webkit pointer entry closes the page (PORTFOLIO §1.3 item 7)" },
   button: { gates: [...COMMIT, "E-5"], key: "Space", target: ".button", stateless: true },
   press_switch: { gates: ["E-5"], target: '[role="switch"]' },
   press_checkbox: { gates: ["E-5"], target: '[role="checkbox"]' },
@@ -100,6 +102,9 @@ const INDEX: Record<string, Record<string, unknown>> = {
   // count in E-10, the engagement precondition of E-12's MIGRATION cells); `floor` names the E-12 cells a scene carries
   slider: { gates: ["E-3", "E-4", "E-7", "E-9", "E-10", "E-11", "E-12"], key: "ArrowRight", target: ".glass-slider", root: ".glass-slider", thumb: '[role="slider"]', body: ".slider-range", point: ".slider-range", edge: "lead", veil: ".glass-focus-veil", engaged: "[data-engaged]", floor: ["wheel", "anchor"],
     failLoud: [{ token: "--space-section", value: "nonsense", act: "kbd" }, { token: "--scale-engage", value: "nonsense", act: "kbd" }, { token: "--spring-dock-settle", value: "nonsense", act: "fling" }] },
+  // H5: C-E4's stale place (CK-20): a paragraph that rewraps, a spacer the witness grows by a style write, the slider,
+  // a ticker below it the witness appends to (a childList mutation that moves nothing)
+  restale: { gates: ["E-10"], stale: true, root: '[data-t="slider-a"] .glass-slider', thumb: '[data-t="slider-a"] [role="slider"]', target: '[data-t="slider-a"] .glass-slider', veil: ".glass-focus-veil", engaged: "[data-engaged]" },
   slider2: { gates: ["E-10"], pair: ['[data-t="slider-a"] .glass-slider', '[data-t="slider-b"] .glass-slider'], veil: ".glass-focus-veil", engaged: "[data-engaged]" },
   // CK-05's repeat-run detent reads every detented Q-4 (b) surface: the tabs drag lands on a tab, the sortable row on a
   // slot (pass-2/H2.md §2.3, HEAD read only the Sheet and the Carousel)
@@ -156,7 +161,7 @@ const SCENE_OF_DIR: Record<string, string> = {
   card: "gallery", alert: "gallery", badge: "gallery", progress: "gallery", "status-dot": "gallery", "pager-dots": "gallery",
 };
 
-const v = ref([40]); const v2 = ref([60]); const extra = ref(false); const txt = ref(""); const sw = ref(on); const cb = ref(on); const rg = ref(on ? "b" : "a"); const tab = ref(on ? "b" : "a");
+const v = ref([40]); const v2 = ref([60]); const extra = ref(false); const ticks = ref<number[]>([]); const txt = ref(""); const sw = ref(on); const cb = ref(on); const rg = ref(on ? "b" : "a"); const tab = ref(on ? "b" : "a");
 const acc = ref<string | undefined>(on ? "one" : undefined); const chip = ref(on); const tg = ref(on ? "b" : "a"); const clicks = ref(0);
 const open = ref(false); const detent = ref(0.25);
 const rows = ref(["a", "b", "c", "d", "e", "f"].map((id) => ({ id, label: id.toUpperCase() }))); const slide = ref(0);
@@ -169,7 +174,7 @@ const commit: Record<string, () => void> = {
 const STATE: Record<string, () => unknown> = {
   switch: () => sw.value, checkbox: () => cb.value, radio: () => rg.value, tabs: () => tab.value, tabsdrag: () => tab.value,
   accordion: () => acc.value ?? null, chip: () => chip.value, chipaction: () => clicks.value, button: () => clicks.value, toggle: () => tg.value,
-  slider: () => v.value, slider2: () => [v.value, v2.value], sheet: () => detent.value, sortable: () => rows.value.map((r) => r.id).join(""), carousel: () => slide.value,
+  slider: () => v.value, restale: () => v.value, slider2: () => [v.value, v2.value], sheet: () => detent.value, sortable: () => rows.value.map((r) => r.id).join(""), carousel: () => slide.value,
 };
 // CK-01: the rendered members. The scene app walks its own component tree and attributes every element to the
 // innermost component a directory exports (members.ts maps each export to its directory); a component of the same
@@ -246,6 +251,10 @@ onMounted(async () => {
     members,
     // CK-20: a parent re-render puts a block before the slider during a hold
     insertSibling: scene === "slider" ? async () => { extra.value = true; await nextTick(); } : undefined,
+    // H5 (CK-20): a layout-only move (a style write on the spacer before the slider: no childList mutation), and on the
+    // restale scene a childList mutation below the slider that moves nothing
+    grow: scene === "slider" || scene === "restale" ? (px: number) => { const e = document.querySelector<HTMLElement>('[data-t="spacer"]'); if (e) e.style.height = `${px}px`; } : undefined,
+    tick: scene === "restale" ? async () => { ticks.value = [...ticks.value, ticks.value.length]; await nextTick(); } : undefined,
     mount: async () => { mounted.value = true; await nextTick(); tag(); },
   };
 });
@@ -258,7 +267,13 @@ onMounted(async () => {
   <main :style="(phone ? 'min-height:100vh;padding:48px 16px;box-sizing:border-box' : 'min-height:100vh;padding:48px;box-sizing:border-box') + ';background:var(--background)'" :data-scene="scene">
     <button data-sentinel="before" data-t="before">before</button>
     <div v-if="mounted" style="padding:24px 0">
-      <template v-if="scene === 'slider'"><div v-if="extra" data-t="inserted" style="height:40px"></div><div :style="phone ? 'width:100%' : 'width:360px'"><Slider v-model="v" :min="0" :max="100" aria-label="Probe" /></div></template>
+      <template v-if="scene === 'restale'">
+        <p style="margin:12px 0;max-width:600px">The world above the engaged control: a paragraph long enough to rewrap when the viewport narrows, so that a resize moves the control below it with no mutation of the document at all.</p>
+        <div data-t="spacer" style="height:0px"></div>
+        <div style="width:360px"><div data-t="slider-a"><Slider v-model="v" :min="0" :max="100" aria-label="Probe A" /></div></div>
+        <div data-t="ticker" style="height:20px;overflow:hidden"><span v-for="t in ticks" :key="t">·</span></div>
+      </template>
+      <template v-else-if="scene === 'slider'"><div data-t="spacer" style="height:0px"></div><div v-if="extra" data-t="inserted" style="height:40px"></div><div :style="phone ? 'width:100%' : 'width:360px'"><Slider v-model="v" :min="0" :max="100" aria-label="Probe" /></div></template>
       <div v-else-if="scene === 'slider2'" style="width:360px;display:grid;gap:48px">
         <div data-t="slider-a"><Slider v-model="v" :min="0" :max="100" aria-label="Probe A" /></div>
         <div data-t="slider-b"><Slider v-model="v2" :min="0" :max="100" aria-label="Probe B" /></div>

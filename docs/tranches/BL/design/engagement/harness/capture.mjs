@@ -20,12 +20,19 @@
 // <scene> <pointer> <theme> committed`): a frame is never shown as a commit that did not happen. A scene that is not a
 // CK-02 commit member (no E-2 gate: passive, field, ambient, presented, the slider) is REPORT. The run ends in a verdict line and exits 0/1/3 like a witness, so the self-test
 // runs it on the fixture with its plant (`cap-nocommit`).
+// H5 (pass 5), the LADDER cell (CK-25; C-A4's `ca4-ladder` made a cell, REGISTRY §P4-7 item 5): on every scene whose
+// index row carries `ladder` (the disclosed exemplar, the accordion; the fixture's pop), fine pointer, each theme, on its
+// own page: the target's inset paint (mean luminance of its box inset 12 % across and 25 % down, so a squish's edge and the
+// focus ring stay out) at rest (pointer away), hovered 400 ms, hovered and pressed 400 ms, released still hovered 400 ms.
+// An engagement ladder deepens from hover to press: `CAP <scene> ladder fine <theme>` FAILs when the press moves back
+// toward rest past the hover (by more than 0.002, the press lighter than the hover in the light theme), PASSes when it
+// holds or deepens it, and states the hover's direction. Plant `cap-ladder` (the press painted lighter than the hover)
 //   node capture.mjs --build <dir> --label <l> --frames <dir> --sheets <dir> [--engines chromium,webkit | --engine e]
 //                    [--pointers fine,coarse] [--themes light,dark] [--scenes button,switch,…]
 //   node capture.mjs --fixture [--fault cap-nocommit] [--engine e] [--out <dir>]   (pop, light, both pointers, no sheets)
 import fs from "node:fs";
 import path from "node:path";
-import { Engine, serveTarget, openPage, openTouchPage, acquireLock, load, parseArgs, center, tabKey, f, browserCensus, isClosed, sceneApp } from "./lib.mjs";
+import { Engine, serveTarget, openPage, openTouchPage, acquireLock, load, parseArgs, center, tabKey, f, browserCensus, isClosed, sceneApp, pngLum } from "./lib.mjs";
 
 const a = parseArgs();
 const fixture = !!a.fixture;
@@ -127,6 +134,35 @@ for (const engine of engines) {
       cell(nm, "FAIL", `${engine}: UNREAD (${msg(e)})`);
     }
     index.push({ engine, pointer, theme, scene: sc, shots, commit });
+    // H5: the ladder cell (fine pointer, scenes whose row carries `ladder`), on its own page under the same guard
+    if (pointer === "fine") {
+      const ln = `CAP ${sc} ladder fine ${theme}`;
+      const ladder = async () => {
+        const P = await openPage(E, T, sc, { theme });
+        try {
+          await P.page.waitForTimeout(300);
+          if (!(await P.page.evaluate(() => !!window.__e?.index?.[window.__e.scene]?.ladder))) return null;
+          const box = await P.page.evaluate(() => { const e = document.querySelector('[data-e~="target"]'); const r = e.getBoundingClientRect(); return { x: r.x + scrollX, y: r.y + scrollY, w: r.width, h: r.height }; });
+          const clip = { x: box.x + box.w * 0.12, y: box.y + box.h * 0.25, width: box.w * 0.76, height: box.h * 0.5 };
+          const rd = async () => ({ L: pngLum(await P.page.screenshot({ clip, animations: "allow", caret: "initial" })).L, bg: await P.page.evaluate(() => getComputedStyle(document.querySelector('[data-e~="target"]')).backgroundColor) });
+          await P.page.mouse.move(2, 2); await P.page.waitForTimeout(300); const rest = await rd();
+          await P.page.mouse.move(box.x + box.w * 0.3, box.y + box.h / 2); await P.page.waitForTimeout(400); const hover = await rd();
+          await P.page.mouse.down(); await P.page.waitForTimeout(400); const press = await rd();
+          await P.page.mouse.up(); await P.page.waitForTimeout(400); const after = await rd();
+          return { rest, hover, press, after };
+        } finally { await P.close(); }
+      };
+      const onceL = () => { let timer; return Promise.race([ladder(), new Promise((_, rej) => { timer = setTimeout(() => rej(new Error("CELL TIMEOUT 90 s")), 90000); })]).finally(() => clearTimeout(timer)); };
+      try {
+        let r, note = "";
+        try { r = await onceL(); } catch (e1) { if (!isClosed(e1)) throw e1; await E.kill(); r = await onceL(); note = ` · NOT-REPRODUCED: engine closed on the first run (${msg(e1)})`; }
+        if (r) {
+          const dh = r.hover.L - r.rest.L, s = Math.sign(dh); const back = s * (r.press.L - r.hover.L);
+          const fail = Math.abs(dh) >= 0.002 && back < -0.002;
+          cell(ln, fail ? "FAIL" : "PASS", `${engine}: inset paint L rest ${f(r.rest.L, 4)} (${r.rest.bg}) · hover ${f(r.hover.L, 4)} (${r.hover.bg}; ${Math.abs(dh) < 0.002 ? "the hover paints no rung" : dh < 0 ? "darker" : "lighter"} by ${f(Math.abs(dh), 4)}) · hover+press ${f(r.press.L, 4)} (${r.press.bg}) · released, still hovered ${f(r.after.L, 4)} · the press ${fail ? `moves BACK toward rest past the hover by ${f(-back, 4)} (the press lighter than its hover: the ladder inverts)` : back > 0.002 ? `deepens the hover by ${f(back, 4)}` : "holds the hover"} (bound: no step back past 0.002)${note}`);
+        }
+      } catch (e) { cell(ln, "FAIL", `${engine}: UNREAD (${msg(e)})`); }
+    }
   }
   for (const n of E.notes) console.log(`  note ${n}`);
   await E.close();

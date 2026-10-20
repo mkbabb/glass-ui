@@ -1,0 +1,21 @@
+# Chromium phase 3 (r2): the self-test again on the fixture whose press keys on the press mark alone (its :active leg
+# absorbed the tap path's commit light on near-white faces: e2-dither, e2-paintonly BROKEN in phase 1b). Every witness
+# whose fixture scenes carry the press reruns in full; E-2 in two calls so each fits 90 min
+clean chromium E-2
+stf chromium E-2 e2-fade,e2-tabpop,e2-prog,e2-glide,e2-mountpop,e2-nocoarse,e2-notdriven,e2-fillonly,e2-literalflash,e2-geompop,e2-bigpop r2p1
+stf chromium E-2 e2-smallpop,e2-arrival,e2-arrivalflush,e2-arrivalmute,e2-statelessclick,e2-noground,e2-dither,e2-shimmer,e2-paintless,e2-paintonly r2p2
+st chromium E-5 r2
+st chromium E-9 r2
+st chromium E-1 r2
+st chromium CAP r2
+clean chromium E-3
+clean chromium E-4
+clean chromium E-6
+clean chromium E-7
+clean chromium E-8
+clean chromium E-11
+clean chromium E-12
+# CK-19 on a build that carries the declaration (HEAD has none, so E-1 never reaches its runtime cells there): the GPU arm and the default arm
+read1 a4light chromium e1-census.mjs --gpu metal --scenes ambient
+read1 a4light chromium e1-census.mjs --scenes ambient
+read1 a4light chromium e5-touch.mjs --scenes toggle

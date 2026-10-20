@@ -1,0 +1,9 @@
+## 2026-10-20 14:40:49 load { 14.62 23.07 20.09 } · selftest webkit CAP 
+OK     CAP webkit   clean exit 0 · CAP webkit PASS · 3 pass, 0 fail, 0 unmeasured of 3 gating cells (0 reported) · load 17.7/23.6/20.3 at start, 18.9/23.6/20.3 at end
+OK     CAP webkit   fault   cap-nocommit (CK-25 (H3 capture): a touch tap does not commit the control: the coarse 'committed' frame must say NOT COMMITTED, never show a frame as a commit) exit 1
+         first planted FAIL: FAIL       CAP pop coarse light committed · webkit: short tap, state "off" → "off": NOT COMMITTED, the frame is labelled so · load 20.5/23.8/20.4
+OK     CAP webkit   fault   cap-ladder (CK-25 (H5, C-A4's ca4-ladder): on a fine pointer the press paints lighter than the hover it follows (the press wash under the hover rung, C-A4 §0.3)) exit 1
+         first planted FAIL: FAIL       CAP pop ladder fine light · webkit: inset paint L rest 0.5959 (rgb(216, 219, 226)) · hover 0.5478 (rgb(207, 211, 220); darker by 0.0481) · hover+press 0.6877 (rgb(230, 232, 238)) · released, still hovered 0.2969 · the press moves
+selftest: 3 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+exit 0
+## 2026-10-20 14:41:27 load { 27.63 25.21 21.00 } · end selftest webkit CAP

@@ -29,11 +29,20 @@
 //                  harness's own reads are not the style read. A `stateless` scene has no model to arrive: REPORT
 //   stateless      (H3 ruling) a scene marked `stateless` (Button, the action Chip) has no model: its programmatic
 //                  commit is its activation, `element.click()` on the target, driven here, not through __e.commit
+//   IN PAINT       (H5, pass 5; REGISTRY §P4-7 item 2) arm (iii) passes only on the committed face's PAINT: when no
+//                  earlier admitted arm (i, or ii when admitted) passes, the same gesture is driven again on its own page
+//                  and the face (inset 3 px) is screenshotted at lib.mjs PAINT_AT (0-900 ms); its mean luminance must rise
+//                  ≥ 0.01 above the committed rest from below and be back at rest (lib.mjs paintRise). The composite read
+//                  is printed beside it and decides nothing: it failed lights that paint (the Switch thumb and the Radio
+//                  dot read as whole-face layers, P-A4 §6.1) and passed lights that paint 0.0000 (the toggle's dark
+//                  commit, C-A4 §0.4). The film itself takes no screenshot. Plants: `e2-paintless` (a light the
+//                  composite sees and the paint does not) must FAIL; `e2-paintonly` (a light the paint sees under a dot
+//                  the composite reads as the whole face) is a control and must PASS
 // A commit that fails on janky frames (median interval > 20 ms) is re-read twice; a failure that does not reproduce
 // prints NOT-REPRODUCED and passes. An engine that closes or hangs (PF-1) is relaunched and the cell re-run once (H-3).
 //   node e2-commit.mjs --build <dir> | --fixture [--fault e2-prog] [--engine webkit] [--scenes a,b] [--themes light]
 //                      [--commit-arms i,ii,iii]
-import { witness, openPage, scenesFor, commitArms, commitsIn, quiet, medianDt, tabKey, center, BOUNCE, LIGHT_RISE, DEFAULT_ARMS, KEY_DWELL, f } from "./lib.mjs";
+import { witness, openPage, scenesFor, commitArms, commitsIn, quiet, medianDt, tabKey, center, paintFilm, paintRise, BOUNCE, LIGHT_RISE, DEFAULT_ARMS, KEY_DWELL, f } from "./lib.mjs";
 
 const JANK = 20;
 // A film the machine starved (under half its nominal frames, or one gap over 100 ms) is janky whatever its median reads:
@@ -54,10 +63,27 @@ await witness("E-2", "CK-02 the commit, by one arm, on a commit that happened", 
     for (let k = 0; k < 2; k++) { const again = await fn(); if (again.pass) return { ...again, line: `${again.line} · NOT-REPRODUCED: first read failed on janky frames (${Number.isFinite(r.med) ? `median ${r.med.toFixed(1)} ms` : "a starved film"}): ${r.line}` }; r = again; }
     return r;
   };
-  // the commit's verdict: NOT DRIVEN when the state did not change, else the arms
-  const judge = (s0, s1, fl, en) => {
+  // the commit's verdict: NOT DRIVEN when the state did not change, else the arms. H5: when no earlier admitted arm
+  // passes and arm (iii) is admitted, `paint()` drives the same gesture on its own page and reads the face in paint
+  const faceSel = (m) => (m.face ? '[data-e~="face"]' : '[data-e~="target"]');
+  const judge = async (s0, s1, fl, en, paint) => {
     if (s0 === s1) return { pass: false, notDriven: true, med: jank(fl), line: `NOT DRIVEN: the scene's state did not change (${String(s0).slice(0, 80)}); a commit that never happened is not graded` };
-    const r = commitArms(fl, arms, en); return { ...r, med: jank(fl), line: `state ${String(s0).slice(0, 40)} → ${String(s1).slice(0, 40)} · ${r.line}` };
+    let r = commitArms(fl, arms, en), pt = null;
+    if (!r.pass && arms.includes("iii") && paint) { pt = await paint(); r = commitArms(fl, arms, en, pt); }
+    // a starved paint read is janky: the reread rule takes it twice more (lib.mjs paintRise, PAINT_GAP)
+    return { ...r, med: pt?.starved ? Infinity : jank(fl), line: `state ${String(s0).slice(0, 40)} → ${String(s1).slice(0, 40)} · ${r.line}` };
+  };
+  // one paint read: open the page, `prep(P)` brings it to the gesture, `go(P)` drives it; the read is refused (a rise of
+  // NaN) when the gesture did not change the state on this page too
+  const paintRead = async (sc, m, o, prep, go) => {
+    const P = await openPage(E, T, sc, o);
+    try {
+      await prep(P); const s0 = await state(P);
+      const pts = await paintFilm(P.page, faceSel(m), () => go(P));
+      const s1 = await state(P);
+      if (s0 === s1 && !m.stateless) return { rise: NaN, rest: false, line: `in paint: NOT DRIVEN (the paint page's state did not change: ${String(s0).slice(0, 40)})` };
+      return paintRise(pts);
+    } finally { await P.close(); }
   };
   const emit = (name, r) => cell(name, r.crashed ? "FAIL" : r.unmeasured ? "UNMEASURED" : r.pass ? "PASS" : "FAIL", `${r.line}${r.note ? ` · ${r.note}` : ""}`);
   const keys = (m) => (Array.isArray(m.keys) ? m.keys : [m.key]);
@@ -77,7 +103,9 @@ await witness("E-2", "CK-02 the commit, by one arm, on a commit that happened", 
           const q = quiet(fl.fr); const lightQuiet = !(q.rise >= LIGHT_RISE);
           tabEntry = { pass: q.range < BOUNCE && q.moved < 1 && lightQuiet && s0 === s1, line: `scale range ${q.range.toFixed(3)} body moved ${q.moved.toFixed(2)} px light rise ${f(q.rise, 4)} (bounds < ${BOUNCE}, < 1 px, < ${LIGHT_RISE}) · state ${s0 === s1 ? "unchanged" : "CHANGED"} · focus on ${await P.page.evaluate(() => document.activeElement?.getAttribute("role") ?? document.activeElement?.tagName)}` };
           const pr2 = film(P, m); for (const k of keys(m)) await P.page.keyboard.press(k, KEY_DWELL); const fl2 = await pr2;
-          return judge(s1, await state(P), fl2, en);
+          return await judge(s1, await state(P), fl2, en, () => paintRead(sc, m, { theme },
+            async (Q) => { await Q.page.focus('[data-sentinel="before"]'); await Q.page.keyboard.press(tabKey(engine)); await Q.page.waitForTimeout(500); },
+            async (Q) => { for (const k of keys(m)) await Q.page.keyboard.press(k, KEY_DWELL); }));
         } finally { await P.close(); }
       }), 45000);
       if (tabEntry && !kb.crashed) emit(`E-2 ${sc} Tab-entry ${theme}`, tabEntry);
@@ -90,7 +118,10 @@ await witness("E-2", "CK-02 the commit, by one arm, on a commit that happened", 
           await P.page.focus('[data-sentinel="after"]'); const s0 = await state(P);
           // H3 ruling: a stateless control's programmatic commit is element.click() on its target
           const pr = film(P, m); await P.page.evaluate((sl) => (sl ? document.querySelector('[data-e~="target"]').click() : window.__e.commit()), !!m.stateless); const fl = await pr;
-          const r = judge(s0, await state(P), fl, en); return m.stateless ? { ...r, line: `element.click() (stateless) · ${r.line}` } : r;
+          const r = await judge(s0, await state(P), fl, en, () => paintRead(sc, m, { theme },
+            async (Q) => { await Q.page.focus('[data-sentinel="after"]'); },
+            (Q) => Q.page.evaluate((sl) => (sl ? document.querySelector('[data-e~="target"]').click() : window.__e.commit()), !!m.stateless)));
+          return m.stateless ? { ...r, line: `element.click() (stateless) · ${r.line}` } : r;
         } finally { await P.close(); }
       }), 45000));
       // pointer: press 150 ms, release; read from the release
@@ -101,7 +132,9 @@ await witness("E-2", "CK-02 the commit, by one arm, on a commit that happened", 
           const c = await center(P.page, '[data-e~="target"]'); const s0 = await state(P);
           await P.page.mouse.move(c.x, c.y); await P.page.mouse.down(); await P.page.waitForTimeout(150);
           const pr = film(P, m); await P.page.mouse.up(); const fl = await pr;
-          return judge(s0, await state(P), fl, en);
+          return await judge(s0, await state(P), fl, en, () => paintRead(sc, m, { theme },
+            async (Q) => { const q = await center(Q.page, '[data-e~="target"]'); await Q.page.mouse.move(q.x, q.y); await Q.page.mouse.down(); await Q.page.waitForTimeout(150); },
+            (Q) => Q.page.mouse.up()));
         } finally { await P.close(); }
       }), 45000));
       // tap on a coarse pointer
@@ -112,7 +145,8 @@ await witness("E-2", "CK-02 the commit, by one arm, on a commit that happened", 
           const en = await env(P);
           const c = await center(P.page, '[data-e~="target"]'); const s0 = await state(P);
           const pr = film(P, m); await P.page.touchscreen.tap(c.x, c.y); const fl = await pr;
-          return judge(s0, await state(P), fl, en);
+          return await judge(s0, await state(P), fl, en, () => paintRead(sc, m, { theme, coarse: true },
+            async () => {}, async (Q) => { const q = await center(Q.page, '[data-e~="target"]'); await Q.page.touchscreen.tap(q.x, q.y); }));
         } finally { await P.close(); }
       }), 45000));
       // the mount case (H-8)
@@ -148,7 +182,14 @@ await witness("E-2", "CK-02 the commit, by one arm, on a commit that happened", 
             }, [{ target: '[data-e~="target"]', body: '[data-e~="body"]', face: m.face ? '[data-e~="face"]' : '[data-e~="target"]', ms: 800 }, mode]);
             if (r.s0 === r.s1) return { pass: false, notDriven: true, med: jank(r.fl), line: `NOT DRIVEN: the scene's state did not change (${String(r.s0).slice(0, 60)}); an arrival that set nothing is not graded` };
             const head = `state ${String(r.s0).slice(0, 30)} → ${String(r.s1).slice(0, 30)}`;
-            if (mode === "late") { const a = commitArms(r.fl, arms, en); return { ...a, med: jank(r.fl), line: `${head} · after first paint, 1 commit wanted · ${a.line}` }; }
+            if (mode === "late") {
+              let a = commitArms(r.fl, arms, en);
+              // H5: the late arrival's arm (iii) in paint, on its own deferred page: mounted, two frames, the model set
+              let pt = null;
+              if (!a.pass && arms.includes("iii")) { pt = await paintRead(sc, m, { theme, q: { defer: "1" } }, async () => {},
+                (Q) => Q.page.evaluate(async () => { const raf = () => new Promise((ok) => requestAnimationFrame(ok)); await window.__e.mount(); await raf(); await raf(); window.__e.commit(); })); a = commitArms(r.fl, arms, en, pt); }
+              return { ...a, med: pt?.starved ? Infinity : jank(r.fl), line: `${head} · after first paint, 1 commit wanted · ${a.line}` };
+            }
             const c = commitsIn(r.fl);
             return { pass: c.n === 0 && c.ground, med: jank(r.fl), line: `${head} · ${mode === "pre" ? "set before the mount rendered" : mode === "own" ? "set in the mount's own task" : "set in the mount's own task after a style read"}, 0 commits wanted, ${c.n} read · ${c.line}` };
           } finally { await P.close(); }

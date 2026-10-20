@@ -19,8 +19,12 @@
 //                   zeroed by the library's PRM fallback (C-CP CK-27, CK-10). Precondition: the state changed (else
 //                   NOT DRIVEN, a FAIL). Read on the CK-02 commit members (scenes gated E-2); the slider's key step is
 //                   REPORT (its reduce light leg is E-3's)
+//                   H5 (pass 5): the transient is read IN PAINT (lib.mjs paintFilm/paintRise): the same reduce commit on
+//                   its own page, the face (inset 3 px) screenshotted 0-900 ms; the cell passes only on the paint read,
+//                   and the composite is printed beside it. The composite passed the tabs' dark light under reduce while
+//                   it painted 0.0016-0.0018 (C-A4 §0.4, CK-27). Plant `e2-paintless` must FAIL it
 //   node e9-prm.mjs --build <dir> | --fixture [--fault e9-scale|e9-dark|e9-glide|e9-fillonly] [--engine webkit]
-import { witness, openPage, scenesFor, center, quiet, lightLeg, paintDiff, tabKey, f, BOUNCE, KEY_DWELL } from "./lib.mjs";
+import { witness, openPage, scenesFor, center, quiet, lightLeg, paintDiff, tabKey, paintFilm, paintRise, f, BOUNCE, KEY_DWELL } from "./lib.mjs";
 
 await witness("E-9", "the PRM arm", async ({ E, T, cell, guard, idx, engine }) => {
   for (const [sc, m] of scenesFor(idx, "E-9")) {
@@ -49,8 +53,24 @@ await witness("E-9", "the PRM arm", async ({ E, T, cell, guard, idx, engine }) =
               const s0 = await st();
               const pr2 = Q.page.evaluate(([o]) => window.__film(o), [{ target: '[data-e~="target"]', body: '[data-e~="body"]', face: m.face ? '[data-e~="face"]' : '[data-e~="target"]', ms: 800 }]);
               await Q.page.keyboard.press(m.key, KEY_DWELL); const fl = await pr2;
-              commit = { q: quiet(fl.fr), leg: lightLeg(fl), s0, s1: await st() };
+              commit = { q: quiet(fl.fr), fl, s0, s1: await st() };
             } finally { await Q.close(); }
+            // H5: the same reduce commit IN PAINT, on its own page (a CK-02 commit member only; the film takes no shot)
+            let paint = null;
+            // a STARVED paint read (lib.mjs PAINT_GAP) is taken again, at most twice, and the line says so
+            for (let k = 0; k < 3 && (m.gates ?? []).includes("E-2") && commit.s0 !== commit.s1; k++) {
+              const R = await openPage(E, T, sc, { theme, prm: true });
+              try {
+                await R.page.focus('[data-sentinel="before"]'); await R.page.keyboard.press(tabKey(engine)); await R.page.waitForTimeout(200);
+                const st2 = () => R.page.evaluate(() => JSON.stringify(window.__e.state?.() ?? null)); const p0 = await st2();
+                const pts = await paintFilm(R.page, m.face ? '[data-e~="face"]' : '[data-e~="target"]', () => R.page.keyboard.press(m.key, KEY_DWELL));
+                const prev = paint;
+                paint = p0 === (await st2()) ? { rise: NaN, rest: false, line: "in paint: NOT DRIVEN (the paint page's state did not change)" } : paintRise(pts);
+                if (prev) paint = { ...paint, line: `${paint.line} (read ${k + 1}: the earlier read was STARVED)` };
+              } finally { await R.close(); }
+              if (!paint.starved) break;
+            }
+            commit.leg = lightLeg(commit.fl, paint); delete commit.fl;
           }
           return { press: quiet(fr), light, commit };
         } finally { await P.close(); }

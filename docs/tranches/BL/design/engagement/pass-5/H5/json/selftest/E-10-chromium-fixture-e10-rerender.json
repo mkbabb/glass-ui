@@ -1,0 +1,134 @@
+{
+ "id": "E-10",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e10-rerender"
+ },
+ "loadStart": "35.0/67.7/83.7",
+ "loadEnd": "28.2/62.5/81.2",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 slider own release",
+   "status": "REPORT",
+   "line": "Tab in: largest one-frame centre move 0.0 px · Tab out of the engaged slider: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0049, largest centre move 0.0 px (the references for the hand-off and Escape bounds)",
+   "load": "36.8/67.5/83.5"
+  },
+  {
+   "name": "E-10 slider escape release",
+   "status": "PASS",
+   "line": "Escape: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0049 (bound ≤ own release 0.0049 + 0.002), largest centre move 0.0 px (bound ≤ own release 0.0 + 1 px)",
+   "load": "36.8/67.5/83.5"
+  },
+  {
+   "name": "E-10 slider re-render landing",
+   "status": "FAIL",
+   "line": "a sibling inserted during the hold, then release: the root's largest one-frame move per 16.7 ms 40.0 px (without the insert 0.9 px; bound ≤ that + 1 px)",
+   "load": "35.2/66.7/83.2"
+  },
+  {
+   "name": "E-10 slider re-render landing (layout-only)",
+   "status": "FAIL",
+   "line": "a spacer before the slider grown 40 px by a style write during the hold (no childList mutation; the root's top read 92.4 → 92.4 px during the hold, 133.0 px at the film's end), then release: the root's largest one-frame move per 16.7 ms 40.0 px (without the move 0.8 px; bound ≤ that + 1 px)",
+   "load": "35.2/66.7/83.2"
+  },
+  {
+   "name": "E-10 slider2 hand-off drop",
+   "status": "PASS",
+   "line": "Tab A → B (focus on ProbeB) · outgoing A ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0047 (bound ≤ own release 0.0049 + 0.002), largest centre move 0.0 px at 157 ms (bound ≤ own release 0.0 + 1 px) · incoming B ×1.000 → ×1.060, largest centre move 0.0 px at 191 ms (bound ≤ own engage 0.0 + 1 px)",
+   "load": "33.7/65.8/82.8"
+  },
+  {
+   "name": "E-10 slider2 hand-off singleton fwd",
+   "status": "PASS",
+   "line": "110 frames: engaged roots per frame max 1, 0 frame(s) with none · first frame A engaged true, B false · last frame B engaged true, A false (bound: at most one engaged on every frame, the incoming one at the end; selector [data-held], [data-kbd])",
+   "load": "33.7/65.8/82.8"
+  },
+  {
+   "name": "E-10 slider2 hand-off veil",
+   "status": "PASS",
+   "line": "veil 1.00 before the Tab, minimum 1.00 across the hand-off, 1.00 at the end (bound ≥ 0.1× its level: it does not re-ramp from 0)",
+   "load": "33.7/65.8/82.8"
+  },
+  {
+   "name": "E-10 slider2 hand-off rev",
+   "status": "PASS",
+   "line": "Shift+Tab B → A (focus on ProbeA) · outgoing B ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0049 (bound ≤ own release 0.0049 + 0.002), largest centre move 0.0 px at 150 ms (bound ≤ own release 0.0 + 1 px) · incoming A ×1.000 → ×1.060, largest centre move 0.0 px at 67 ms (bound ≤ own engage 0.0 + 1 px)",
+   "load": "33.7/65.8/82.8"
+  },
+  {
+   "name": "E-10 slider2 hand-off singleton rev",
+   "status": "PASS",
+   "line": "109 frames: engaged roots per frame max 1, 0 frame(s) with none · first frame B engaged true, A false · last frame A engaged true, B false (bound: at most one engaged on every frame, the incoming one at the end; selector [data-held], [data-kbd])",
+   "load": "33.7/65.8/82.8"
+  },
+  {
+   "name": "E-10 restale stale place · keyboard",
+   "status": "PASS",
+   "line": "keyboard engaged · spacer +120 px by a style write: the root's centre 181.0 → 301.0 px · then a node appended below it (moves nothing): over 109 frames its centre spans 301.0..301.0 px, largest one-frame move per 16.7 ms 0.0 px (bound ≤ 4 px)",
+   "load": "32.6/65.1/82.4"
+  },
+  {
+   "name": "E-10 restale stale place control · keyboard",
+   "status": "PASS",
+   "line": "keyboard engaged · no layout move (the control): the root's centre 181.0 → 181.0 px · then a node appended below it (moves nothing): over 109 frames its centre spans 181.0..181.0 px, largest one-frame move per 16.7 ms 0.0 px (bound ≤ 4 px)",
+   "load": "32.6/65.1/82.4"
+  },
+  {
+   "name": "E-10 restale stale place (viewport resize) · keyboard",
+   "status": "PASS",
+   "line": "keyboard engaged · viewport 700 → 380 px wide (the paragraph above rewraps): the root's centre 181.0 → 217.0 px · then a node appended below it (moves nothing): over 109 frames its centre spans 217.0..217.0 px, largest one-frame move per 16.7 ms 0.0 px (bound ≤ 4 px)",
+   "load": "32.6/65.1/82.4"
+  },
+  {
+   "name": "E-10 restale stale place · pointer",
+   "status": "PASS",
+   "line": "pointer engaged · spacer +120 px by a style write: the root's centre 181.0 → 181.0 px · then a node appended below it (moves nothing): over 109 frames its centre spans 181.0..181.0 px, largest one-frame move per 16.7 ms 0.0 px (bound ≤ 4 px)",
+   "load": "31.0/64.2/82.0"
+  },
+  {
+   "name": "E-10 restale stale place control · pointer",
+   "status": "PASS",
+   "line": "pointer engaged · no layout move (the control): the root's centre 181.0 → 181.0 px · then a node appended below it (moves nothing): over 109 frames its centre spans 181.0..181.0 px, largest one-frame move per 16.7 ms 0.0 px (bound ≤ 4 px)",
+   "load": "31.0/64.2/82.0"
+  },
+  {
+   "name": "E-10 pop rebound single light",
+   "status": "REPORT",
+   "line": "seat span.flash · onset (> 0.004) +13 ms · peak 0.350 at +63 ms (ACKNOWLEDGE_WINDOW_MS 150: onset inside, peak inside) · pulses 1 · +1 0.000 +37 0.242 +71 0.334 +104 0.269 +138 0.204 +171 0.139 +204 0.075 +238 0.010 +271 0.000 +304 0.000 +338 0.000 +371 0.000 +404 0.000 +438 0.000 +471 0.000 +504 0.000 +537 0.000 +572 0.000 +604 0.000 +638 0.000 +671 0.000 +704 0.000 +738 0.000 +771 0.000 +804 0.000 +838 0.000 +871 0.000 +904 0.000",
+   "load": "29.3/63.3/81.6"
+  },
+  {
+   "name": "E-10 pop rebound reverse +60 light",
+   "status": "PASS",
+   "line": "seat span.flash · state \"off\" → \"on\" → back at +60 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 0 ms (bound < 60) · pulses 2 over the two commits (bound ≥ 2) · peak 0.350 at +63 · largest one-frame drop 0.067 (reported) · +1 0.000 +38 0.244 +71 0.295 +104 0.258 +138 0.334 +171 0.269 +205 0.204 +238 0.140 +271 0.075 +305 0.010 +338 0.000 +371 0.000 +405 0.000 +438 0.000 +471 0.000 +504 0.000 +538 0.000 +571 0.000 +604 0.000 +638 0.000 +671 0.000 +704 0.000 +738 0.000 +772 0.000 +805 0.000 +838 0.000 +871 0.000 +905 0.000",
+   "load": "29.3/63.3/81.6"
+  },
+  {
+   "name": "E-10 pop rebound reverse +200 light",
+   "status": "PASS",
+   "line": "seat span.flash · state \"off\" → \"on\" → back at +200 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 0 ms (bound < 60) · pulses 2 over the two commits (bound ≥ 2) · peak 0.350 at +62 · largest one-frame drop 0.018 (reported) · +1 0.000 +37 0.243 +71 0.334 +104 0.270 +137 0.204 +171 0.139 +204 0.075 +237 0.118 +271 0.350 +303 0.287 +337 0.220 +371 0.155 +404 0.091 +437 0.026 +472 0.000 +504 0.000 +537 0.000 +571 0.000 +604 0.000 +637 0.000 +671 0.000 +705 0.000 +737 0.000 +771 0.000 +804 0.000 +837 0.000 +871 0.000 +904 0.000",
+   "load": "29.3/63.3/81.6"
+  },
+  {
+   "name": "E-10 pop rebound single dark",
+   "status": "REPORT",
+   "line": "seat span.flash · onset (> 0.004) +13 ms · peak 0.350 at +63 ms (ACKNOWLEDGE_WINDOW_MS 150: onset inside, peak inside) · pulses 1 · +1 0.000 +38 0.243 +71 0.334 +105 0.269 +138 0.204 +171 0.139 +205 0.075 +238 0.010 +271 0.000 +305 0.000 +338 0.000 +371 0.000 +405 0.000 +438 0.000 +472 0.000 +505 0.000 +538 0.000 +571 0.000 +605 0.000 +638 0.000 +671 0.000 +705 0.000 +738 0.000 +771 0.000 +805 0.000 +838 0.000 +871 0.000 +905 0.000",
+   "load": "29.3/63.3/81.6"
+  },
+  {
+   "name": "E-10 pop rebound reverse +60 dark",
+   "status": "PASS",
+   "line": "seat span.flash · state \"off\" → \"on\" → back at +60 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 0 ms (bound < 60) · pulses 2 over the two commits (bound ≥ 2) · peak 0.350 at +62 · largest one-frame drop 0.064 (reported) · +1 0.000 +38 0.243 +71 0.286 +104 0.263 +137 0.335 +171 0.269 +204 0.204 +238 0.139 +270 0.076 +304 0.010 +338 0.000 +371 0.000 +404 0.000 +438 0.000 +471 0.000 +504 0.000 +538 0.000 +572 0.000 +605 0.000 +638 0.000 +671 0.000 +704 0.000 +738 0.000 +771 0.000 +804 0.000 +838 0.000 +871 0.000 +904 0.000",
+   "load": "28.2/62.5/81.2"
+  },
+  {
+   "name": "E-10 pop rebound reverse +200 dark",
+   "status": "PASS",
+   "line": "seat span.flash · state \"off\" → \"on\" → back at +200 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 0 ms (bound < 60) · pulses 2 over the two commits (bound ≥ 2) · peak 0.350 at +62 · largest one-frame drop 0.018 (reported) · +1 0.000 +37 0.243 +70 0.334 +103 0.269 +137 0.204 +170 0.139 +203 0.074 +237 0.118 +270 0.350 +303 0.285 +337 0.220 +370 0.156 +403 0.091 +437 0.026 +470 0.000 +503 0.000 +537 0.000 +570 0.000 +604 0.000 +637 0.000 +670 0.000 +703 0.000 +737 0.000 +770 0.000 +803 0.000 +837 0.000 +870 0.000 +903 0.000",
+   "load": "28.2/62.5/81.2"
+  }
+ ]
+}

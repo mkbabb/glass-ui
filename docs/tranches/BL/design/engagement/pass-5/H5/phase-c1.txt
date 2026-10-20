@@ -1,0 +1,20 @@
+# Chromium phase 1: the three builds, then the self-test of every changed witness (full plant set), then the clean
+# fixture of every unchanged witness (the regression read of the fixture and lib edits)
+build head
+applylight
+build a4light
+plant
+build a4plant
+st chromium E-2
+st chromium E-10
+st chromium E-5
+st chromium E-9
+st chromium E-1
+st chromium CAP
+clean chromium E-3
+clean chromium E-4
+clean chromium E-6
+clean chromium E-7
+clean chromium E-8
+clean chromium E-11
+clean chromium E-12

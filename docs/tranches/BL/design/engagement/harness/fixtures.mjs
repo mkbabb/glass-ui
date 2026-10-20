@@ -130,6 +130,18 @@ export const FAULTS = {
   "e12-wheelchain": { why: "CK-22 (H4): the keyboard-engaged slider is promoted to the top layer, so a wheel over it inside a scroller scrolls the page and not the box (C-E3 §0.3: +30 page, +0 box)", witnesses: ["E-12"], cell: /wheel over engaged control/ },
   "e12-wheelrow": { why: "CONTROL, must PASS (H4): the same promotion with the route's MIGRATION row cited (--migration wheel): the wheel cell REPORTs and the critic scores the row", witnesses: ["E-12"], expect: "pass", args: ["--migration", "wheel"] },
   "e12-anchorlost": { why: "CK-22 (H4): the engagement writes its own position-anchor on the root and removes the property on release, so a consumer's anchor is gone after the release (C-E3 §0.3, E-M1)", witnesses: ["E-12"], cell: /consumer anchor · escape/ },
+  // ── H5 (pass 5): a plant per new cell (REGISTRY §P4-8.3 wave 1) ──
+  "e2-paintless": { why: "CK-02/CK-10/CK-27 (H5): the commit light's layer animates its opacity on the envelope clocks but paints nothing (clip-path: inset(50%)): the composite reads a rise, the paint reads none (the toggle's dark commit, C-A4 §0.4)", witnesses: ["E-2", "E-9"], cell: /pop commit(·keyboard|-light)/ },
+  "e2-paintonly": { why: "CONTROL, must PASS (H5): an 8 px opaque dot sits on the face after the light layer; the composite stacks it as the whole face and reads no rise, while the light paints the face (the Switch thumb and the Radio dot, P-A4 §6.1)", witnesses: ["E-2", "E-9"], expect: "pass" },
+  "e5-late": { why: "CK-06 (H5 onset): the press mark is written 190 ms after the touch begins, so the press lands after its +200 ms reference and its light still rises at +1200 ms (a one-reference sustain passes it, C-A4's P7 class)", witnesses: ["E-5"], cell: /pop sustain/ },
+  "e5-active": { why: "CK-06 (H5 onset): the press keys on :active alone (C-A4's plant P7); Chromium's long-tap sets :active 175-200 ms after touch-down. WebKit's raw touch sets :active at touchStart, so the plant has no input there", witnesses: ["E-5"], cell: /pop sustain/, engines: ["chromium"] },
+  "e10-relayout": { why: "CK-20 (H5): the held slider is pinned over a placeholder that re-reads its place on a childList mutation only; a layout-only move during the hold makes the release land in its new slot in one frame (the insert landing passes it)", witnesses: ["E-10"], cell: /re-render landing \(layout-only\)/ },
+  "e10-stale": { why: "CK-20 (H5, C-E4 §0.1): the engaged slider's last-read place refreshes on a childList mutation only, and an unrelated append glides it from that stale place (a one-frame snap, then a slide back)", witnesses: ["E-10"], cell: /restale stale place · keyboard/ },
+  "e10-staleresize": { why: "CK-20 (H5): the place also refreshes on the spacer's style write, but not on a viewport resize: the resize cell alone must fail", witnesses: ["E-10"], cell: /stale place \(viewport resize\)/ },
+  "e10-rebound": { why: "CK-20 (H5, C-A4 §0.2): the commit light is a retargetable transition held by a 120 ms delay; a reverse within the window freezes it mid-flight, then it blooms on the face that went back (the fill-clock transition-delay)", witnesses: ["E-10"], cell: /pop rebound reverse \+200/ },
+  "cap-ladder": { why: "CK-25 (H5, C-A4's ca4-ladder): on a fine pointer the press paints lighter than the hover it follows (the press wash under the hover rung, C-A4 §0.3)", witnesses: ["CAP"], cell: /ladder fine/ },
+  "e1-gpuambient": { why: "CONTROL, must PASS (H5, CK-19): the clean fixture under the named GPU arm (--gpu metal): the arm launches, states a hardware renderer, and the ambient cell is graded", witnesses: ["E-1"], expect: "pass", args: ["--gpu", "metal"], engines: ["chromium"] },
+  "e1-gpuambientdead": { why: "CK-19 (H5): under the named GPU arm the ambient exemplar does not follow the pointer: the GPU-backed cell must FAIL, never pass", witnesses: ["E-1"], cell: /runtime ambient/, args: ["--gpu", "metal"], engines: ["chromium"] },
   "e11-silent": { why: "CK-21: the engagement reads --fx-scale-engage at runtime and, when it is unreadable, degrades to no grow with no console.error", witnesses: ["E-11"], cell: /fail-loud/ },
   "e11-unread": { why: "CONTROL: the grow spells its figure in place and reads no token, so an unreadable token degrades nothing: UNMEASURED, not a pass", witnesses: ["E-11"], cell: /fail-loud/, expect: "unmeasured" },
   "e11-noise": { why: "CONTROL (H2 §2.3): the grow spells its figure in place, reads no token, and varies run to run (1.060, 1.061, 1.066, 1.054, 1.060 on successive slider loads); one planted read outside a two-run spread is noise, not a degradation: UNMEASURED, never FAIL", witnesses: ["E-11"], cell: /fail-loud/, expect: "unmeasured" },
@@ -137,7 +149,8 @@ export const FAULTS = {
 
 const CONTROL_GATES = ["E-2", "E-8", "E-9"];
 export const FIXTURE_INDEX = {
-  pop: { gates: [...CONTROL_GATES, "E-5"], key: "Space", target: ".ctl" },
+  // H5: pop carries C-A4's rebound (E-10, its light seat the .flash) and the ladder (CAP)
+  pop: { gates: [...CONTROL_GATES, "E-5", "E-10"], key: "Space", target: ".ctl", rebound: true, light: ".flash", ladder: true },
   travel: { gates: CONTROL_GATES, key: "ArrowRight", target: '.seg[data-v="b"]' },
   rest: { gates: CONTROL_GATES, key: "Space", target: ".ctl" },
   // H3: a stateless control (a counter, no model): E-2 drives its programmatic commit as element.click()
@@ -145,6 +158,8 @@ export const FIXTURE_INDEX = {
   slider: { gates: ["E-3", "E-4", "E-7", "E-9", "E-10", "E-11", "E-12"], key: "ArrowRight", veil: ".fx-veil", engaged: "[data-held], [data-kbd]", floor: ["wheel", "anchor"], failLoud: [{ token: "--fx-scale-engage", value: "nonsense", act: "kbd" }] },
   // H4: the fixture slider marks its engagement as data-held (the hand) or data-kbd (the keyboard)
   slider2: { gates: ["E-10"], veil: ".fx-veil", engaged: "[data-held], [data-kbd]", pair: ['.fx-slider[data-n="A"]', '.fx-slider[data-n="B"]'] },
+  // H5: C-E4's stale place (a paragraph that rewraps, a spacer, the slider, a ticker below)
+  restale: { gates: ["E-10"], stale: true, engaged: "[data-held], [data-kbd]" },
   vsheet: { gates: ["E-4"], axis: "y", dir: -1, detents: true, fixed: ".fx-sheet" },
   strip: { gates: ["E-4"], input: "touch", dir: -1, platform: true },
   modal: { gates: ["E-7"] },
@@ -174,6 +189,11 @@ export function fixturePage(params, fault = "") {
   const F = (id) => fault === id;
   const nopress = F("e1-dead") || F("e5-hover");
   const sag = fault === "e5-flaky" && scene === "pop" && e5n++ % 3 === 2;
+  // H5: the press keys on the door's press mark alone (written on pointerdown/touchstart, cleared on the press's end), as
+  // P-A4 keys the library's presses; e5-active keys it on :active alone (C-A4's P7: Chromium sets a touch's :active 175-200
+  // ms late and holds it ~150 ms past a tap, so a commit light on a near-white face rides the press fill back up and is
+  // absorbed in paint), e5-late on a mark written 190 ms late
+  const PRESS = F("e5-active") ? ":active" : "[data-press]";
 
   const members = { alpha: "pressed", beta: "held", gamma: "static", delta: "static", eta: "field", theta: "ambient" };
   if (F("e1-undeclared")) delete members.delta;
@@ -209,11 +229,14 @@ main { min-height: 100vh; padding: ${phone ? "48px 16px" : "48px"}; box-sizing: 
   background-color: var(--ctl); user-select: none; cursor: pointer; position: relative;
   transition: scale ${F("e8-literal") ? "230ms" : "var(--spring-press-duration)"} var(--spring-press), background-color var(--engage-press-drain-attack) linear; }
 .ctl:hover, .seg:hover { background-color: var(--ctl-hover); }
-${nopress ? "" : `.ctl:active, .seg:active { scale: 0.96; background-color: var(--ctl-press); }`}
-${F("e5-decay") || sag ? `.ctl:active { animation: fx-sag 500ms linear forwards; } @keyframes fx-sag { to { background-color: var(--ctl); } }` : ""}
+${nopress ? "" : `.ctl${PRESS}, .seg${PRESS} { scale: 0.96; background-color: var(--ctl-press); }`}
+${F("cap-ladder") ? `.ctl${PRESS} { background-color: ${dark ? "#2e3139" : "#e6e8ee"}; }` : ""}
+${F("e5-decay") || sag ? `.ctl${PRESS} { animation: fx-sag 500ms linear forwards; } @keyframes fx-sag { to { background-color: var(--ctl); } }` : ""}
 .ctl[data-state="on"] { color: #fff; background-color: var(--accent); }
 .rest .ctl[data-state="on"] { scale: 1.05; }
 .flash { position: absolute; inset: 0; border-radius: inherit; background: #fff; opacity: 0; pointer-events: none; }
+${F("e2-paintless") ? ".flash { clip-path: inset(50%); }" : ""}
+.dot { position: absolute; right: 10px; top: 16px; width: 8px; height: 8px; border-radius: 4px; background: #fff; pointer-events: none; }
 button.ctl { border: 0; font: inherit; color: inherit; }
 /* H3: the one-frame arming covers the controls' own transitions too (F-7: A's seat transitions gated until a frame after
    mount): a model that arrives during the mount lands on its committed rest (the rest scene's 1.05) without a glide */
@@ -226,9 +249,9 @@ ${F("e2-shimmer") ? `.ctl { transition: scale var(--spring-press-duration) var(-
    css-prm-over-css.patch). E-8's PRM arm must read the authorized clock as a token (pass 2 read it minted) */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: 0s !important; }
-  ${F("e9-scale") ? "" : `.ctl:active, .seg:active, .rest .ctl[data-state="on"]:active { scale: 1; }`}
+  ${F("e9-scale") ? "" : `.ctl${PRESS}, .seg${PRESS}, .rest .ctl[data-state="on"]${PRESS} { scale: 1; }`}
   .ctl, .seg { transition: background-color var(--engage-press-drain-attack) linear; transition-duration: ${F("e8-prmliteral") ? "100ms" : "var(--engage-press-drain-attack)"} !important; }
-  ${F("e9-dark") ? `.ctl:active, .seg:active { background-color: var(--ctl-hover); }` : ""}
+  ${F("e9-dark") ? `.ctl${PRESS}, .seg${PRESS} { background-color: var(--ctl-hover); }` : ""}
 }
 .segs { position: relative; display: inline-flex; gap: 0; padding: 4px; border-radius: 24px; background: var(--ctl); }
 .seg { background-color: transparent; position: relative; z-index: 1; width: 78px; padding: 0; }
@@ -277,16 +300,19 @@ ${F("e12-fcreach") ? `.ctl::after { content: ""; position: absolute; inset: -6px
 .loop { width: 120px; height: 16px; border-radius: 8px; background: var(--ctl); animation: ${F("e12-restlayout") ? "fx-shimw" : "fx-shim"} 1.2s ease-in-out infinite; }
 @keyframes fx-shim { 50% { opacity: 0.5; } }
 @keyframes fx-shimw { 50% { width: 140px; } }
+.fx-ticker { height: 20px; overflow: hidden; }
+.fx-para { margin: 12px 0; max-width: 600px; }
 .fx-amb { width: 320px; height: 160px; border-radius: 16px; background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), #3b6cf0 0, #3b6cf000 60%), var(--ctl); }
 `;
 
-  const ctl = (extra = "") => `<div class="ctl ${ctlClass}" role="switch" tabindex="0" aria-checked="${on}" data-state="${on ? "on" : "off"}" data-member="alpha" data-e="target"${extra}>Probe<span class="flash"></span></div>`;
+  const ctl = (extra = "") => `<div class="ctl ${ctlClass}" role="switch" tabindex="0" aria-checked="${on}" data-state="${on ? "on" : "off"}" data-member="alpha" data-e="target"${extra}>Probe<span class="flash"></span>${F("e2-paintonly") ? '<span class="dot"></span>' : ""}</div>`;
   const slider = (n = "") => `<div class="fx-slider${F("e1-nullhost") ? "" : " engage-held"}" data-member="beta" data-e="${n ? "" : "root target"}" data-n="${n}"><div class="fx-thumb" role="slider" tabindex="0" aria-label="Probe${n}" aria-valuenow="40" data-e="${n ? "" : "thumb body"}"></div></div>`;
   let body = "";
   if (scene === "pop" || scene === "rest") body = F("e1-absent") && scene === "pop" ? `<div class="${scene}"><div class="ctl ${ctlClass}" data-member="alpha">Probe</div></div>` : `<div class="${scene}">${ctl()}</div>`;
   else if (scene === "act") body = `<button class="ctl ${ctlClass}" type="button" data-member="alpha" data-e="target" data-handler>Act<span class="flash"></span></button>`;
   else if (scene === "travel") body = `<div class="segs" role="radiogroup" aria-label="Probe" data-member="alpha"><span class="ind" data-e="body"></span>${["a", "b", "c"].map((v) => `<div class="seg ${ctlClass}" role="radio" data-v="${v}" aria-checked="${v === (on ? "b" : "a")}" tabindex="${v === (on ? "b" : "a") ? 0 : -1}"${v === "b" ? ' data-e="target"' : ""}>${v.toUpperCase()}<span class="flash"></span></div>`).join("")}</div>`;
-  else if (scene === "slider") body = `<div id="slot"></div>${slider()}`;
+  else if (scene === "slider") body = `<div id="spacer"></div><div id="slot"></div>${slider()}`;
+  else if (scene === "restale") body = `<p class="fx-para">The world above the engaged control: a paragraph long enough to rewrap when the viewport narrows, so that a resize moves the control below it with no mutation of the document at all.</p><div id="spacer"></div>${slider()}<div class="fx-ticker" id="ticker"></div>`;
   else if (scene === "slider2") body = `${slider("A")}${slider("B")}`;
   else if (scene === "modal") body = `<div class="fx-scrim" data-state="open" data-e="veil"${F("e7-veil") ? " data-engaged" : ""}></div><div class="fx-dialog" role="dialog" aria-label="Probe" data-e="modal">Body</div>`;
   else if (scene === "s6") body = `<span class="fx-switch" role="switch" aria-checked="false" aria-label="Probe" data-e="target"></span>`;
@@ -316,9 +342,19 @@ const SPRING = ${JSON.stringify(SPRING)};
 // release, two animations each on its row's clock
 async function flash(el) {
   const fl = el?.querySelector(".flash"); if (!fl) return;
+  // H5 e10-rebound: the light is a retargetable transition held by a 120 ms delay on its attack (the fill-clock class)
+  if (FAULT === "e10-rebound") { const A = ms("--engage-control-engage-attack"), R = ms("--engage-control-engage-release"); fl.style.transition = "opacity " + A + "ms linear 120ms"; fl.style.opacity = "0.35"; clearTimeout(fl._t); fl._t = setTimeout(() => { fl.style.transition = "opacity " + R + "ms linear"; fl.style.opacity = "0"; }, 120 + A); return; }
   const lit = FAULT === "e2-literalflash";
-  const up = fl.animate([{ opacity: 0 }, { opacity: 0.35 }], { duration: lit ? 300 : ms("--engage-control-engage-attack"), fill: "forwards" });
-  await up.finished; fl.animate([{ opacity: 0.35 }, { opacity: 0 }], { duration: lit ? 300 : ms("--engage-control-engage-release"), fill: "forwards" }); up.cancel();
+  // H5 (E-10 rebound): the light is retargetable. A commit inside the last one's light takes it from where it is (no
+  // restart from 0, no hold), dips it toward half before it rises again so each edge is its own pulse (C-A4's no-delay
+  // control: 2 pulses at a 60 ms reverse), and a superseded commit's release never runs
+  const g = (fl._g = (fl._g ?? 0) + 1); const cur = parseFloat(getComputedStyle(fl).opacity) || 0;
+  for (const x of fl.getAnimations()) x.cancel();
+  const kf = cur > 0.01 ? [{ opacity: cur }, { opacity: cur * 0.5, offset: 0.4 }, { opacity: 0.35 }] : [{ opacity: 0 }, { opacity: 0.35 }];
+  const up = fl.animate(kf, { duration: lit ? 300 : ms("--engage-control-engage-attack"), fill: "forwards" });
+  try { await up.finished; } catch { return; }
+  if (g !== fl._g) return;
+  fl.animate([{ opacity: 0.35 }, { opacity: 0 }], { duration: lit ? 300 : ms("--engage-control-engage-release"), fill: "forwards" }); up.cancel();
 }
 function geom(el, crest) { if (!el || prm()) return; el.animate([{ transform: "scale(1)" }, { transform: "scale(" + crest + ")", offset: 0.35 }, { transform: "scale(" + (2 - crest - (crest - 1) * 0.75) + ")", offset: 0.6 }, { transform: "scale(1.0005)", offset: 0.8 }, { transform: "scale(1)" }], { duration: tok("--spring-press-duration") }); }
 // e2-arrivalflush: the light is a CSS transition armed only by a before-change style. Reading the animations flushes
@@ -356,6 +392,12 @@ const ACTING = new Set(["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home
 const MODS = new Set(["Shift", "Meta", "Control", "Alt"]);
 let lastKey = { key: "", t: -1e9 };
 addEventListener("keydown", (e) => { lastKey = { key: e.key, t: performance.now() }; }, true);
+// H5: the door's press mark, written on the press's first event (pointerdown, or touchstart where a touch engine sends
+// no pointer event) and cleared on its end; e5-late writes it 190 ms late, e5-active writes none
+const pressOn = (e) => { const t = e.target?.closest?.(".ctl, .seg"); if (!t || FAULT === "e5-active") return; if (FAULT === "e5-late") { clearTimeout(t._pm); t._pm = setTimeout(() => { t.dataset.press = ""; }, 190); } else t.dataset.press = ""; };
+const pressOff = () => { for (const t of document.querySelectorAll(".ctl, .seg")) { clearTimeout(t._pm); delete t.dataset.press; } };
+addEventListener("pointerdown", pressOn, true); addEventListener("touchstart", pressOn, { capture: true, passive: true });
+for (const k of ["pointerup", "pointercancel", "touchend", "touchcancel"]) addEventListener(k, pressOff, true);
 let veil = null; let veilRaf = 0;
 function engagedAny() { return [...document.querySelectorAll(".fx-slider")].some((r) => r.dataset.held !== undefined || r.dataset.kbd !== undefined); }
 function settleVeil(now) {
@@ -413,10 +455,15 @@ function wireSlider(root) {
   });
   th.addEventListener("pointerdown", (e) => { cancelAnimationFrame(raf); th.setPointerCapture(e.pointerId); delete root.dataset.kbd; root.dataset.held = "pointer";
     if (FAULT === "e10-rerender") { const r = root.getBoundingClientRect(); root.style.left = r.left + "px"; root.style.top = r.top + "px"; root.classList.add("pinned"); }
+    // H5 e10-relayout: pinned over a placeholder whose place is re-read on a childList mutation only
+    if (FAULT === "e10-relayout") { const r = root.getBoundingClientRect(); const ph = document.createElement("div"); ph.style.cssText = "width:" + r.width + "px;height:" + r.height + "px"; root.before(ph); root.style.left = r.left + "px"; root.style.top = r.top + "px"; root.classList.add("pinned");
+      const mo = new MutationObserver((recs) => { if (recs.some((x) => x.type === "childList" && ![...x.addedNodes, ...x.removedNodes].includes(ph))) { const q = ph.getBoundingClientRect(); root.style.left = q.left + "px"; root.style.top = q.top + "px"; } });
+      mo.observe(document.getElementById("stage"), { childList: true, subtree: true }); root._unpin = () => { mo.disconnect(); ph.remove(); root.classList.remove("pinned"); root.style.left = root.style.top = ""; }; }
     settleVeil(true); drag = { x0: x, cx: e.clientX, hist: [{ t: performance.now(), x }] }; });
   th.addEventListener("pointermove", (e) => { if (!drag) return; x = Math.max(0, Math.min(W(), drag.x0 + e.clientX - drag.cx)); put(); drag.hist.push({ t: performance.now(), x }); if (drag.hist.length > 6) drag.hist.shift(); });
   const release = () => { if (!drag) return; delete root.dataset.held; if (FAULT === "e3-latch") root.dataset.kbd = "";
     if (FAULT === "e10-rerender") { root.classList.remove("pinned"); root.style.left = root.style.top = ""; }
+    if (root._unpin) { root._unpin(); root._unpin = null; }
     settleVeil(true);
     // the release velocity over the last three samples, zero when the hand stopped (stale(): the release long after the last move by the drive's own cadence):
     // a window keyed on the release time alone reads 0 when a loaded main thread delivers the release late
@@ -450,7 +497,10 @@ function mountScene() {
   arm();
   if (SCENE === "pop" || SCENE === "rest") {
     const el = stage.querySelector(".ctl");
-    const set = (v, how) => { model = v; el.dataset.state = v ? "on" : "off"; el.setAttribute("aria-checked", String(v));
+    // H5: the committed fill lands at once (the state's own paint; its transition is held off for the flip's frames) and
+    // the commit's light is the transient over it, so the light rises from below IN PAINT (a light that rides a fill
+    // moving the other way is absorbed in paint: the Radio dark's class, P-A4 §0.4; the composite could not see that)
+    const set = (v, how) => { model = v; el.style.transitionProperty = "scale"; requestAnimationFrame(() => requestAnimationFrame(() => { el.style.transitionProperty = ""; })); el.dataset.state = v ? "on" : "off"; el.setAttribute("aria-checked", String(v));
       if (v && FAULT === "e2-dither") flicker(el, "#eef0f4", "#eff1f5");
       if (v && FAULT === "e2-shimmer") flicker(el, "#3b6cf0", "#3f70f4");
       if (quietSet()) return;
@@ -497,11 +547,31 @@ function mountScene() {
     E.commit = () => { const th = stage.querySelector(".fx-thumb"); th.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowRight", bubbles: true })); };
     // CK-20: a sibling inserted before the slider during a hold (a parent re-render)
     E.insertSibling = () => { const s = document.getElementById("slot"); if (s) s.innerHTML = '<div style="height:40px"></div>'; };
+    // H5: a layout-only move (a style write on a spacer before the slider; no childList mutation)
+    E.grow = (px) => { const s = document.getElementById("spacer"); if (s) s.style.height = px + "px"; };
+  }
+  if (SCENE === "restale") {
+    const root = stage.querySelector(".fx-slider"); const val = wireSlider(root);
+    E.state = () => Math.round(val());
+    E.grow = (px) => { document.getElementById("spacer").style.height = px + "px"; };
+    E.tick = () => { const s = document.createElement("span"); s.textContent = "·"; document.getElementById("ticker").appendChild(s); };
+    // H5 plants: a stage that glides the engaged slider from its last-read place on a childList mutation (C-E4 §0.1);
+    // e10-staleresize also re-reads the place on the spacer's style write (a viewport resize stays unread)
+    if (FAULT === "e10-stale" || FAULT === "e10-staleresize") {
+      let at = null; const place = () => root.getBoundingClientRect().top + scrollY;
+      const engaged = () => root.dataset.held !== undefined || root.dataset.kbd !== undefined;
+      new MutationObserver(() => { if (engaged()) { if (at == null) at = place(); } else at = null; }).observe(root, { attributes: true, attributeFilter: ["data-held", "data-kbd"] });
+      new MutationObserver((recs) => {
+        if (!engaged() || at == null) return;
+        if (recs.some((r) => r.type === "childList")) { const now = place(); const d = at - now; at = now; if (Math.abs(d) > 0.5) root.animate([{ translate: "0 " + d + "px" }, { translate: "0 0" }], { duration: 300, easing: SPRING }); }
+        else at = place();
+      }).observe(stage, { childList: true, subtree: true, ...(FAULT === "e10-staleresize" ? { attributes: true, attributeFilter: ["style"] } : {}) });
+    }
   }
   if (SCENE === "passive" || SCENE === "field") E.state = () => null;
   if (SCENE === "ambient") {
     const a = stage.querySelector(".fx-amb");
-    if (FAULT !== "e1-ambientdead" && FAULT !== "e1-ambientlimit") a.addEventListener("pointermove", (e) => { const r = a.getBoundingClientRect(); a.style.setProperty("--mx", ((e.clientX - r.left) / r.width * 100).toFixed(1) + "%"); a.style.setProperty("--my", ((e.clientY - r.top) / r.height * 100).toFixed(1) + "%"); });
+    if (FAULT !== "e1-ambientdead" && FAULT !== "e1-gpuambientdead" && FAULT !== "e1-ambientlimit") a.addEventListener("pointermove", (e) => { const r = a.getBoundingClientRect(); a.style.setProperty("--mx", ((e.clientX - r.left) / r.width * 100).toFixed(1) + "%"); a.style.setProperty("--my", ((e.clientY - r.top) / r.height * 100).toFixed(1) + "%"); });
   }
   if (SCENE === "restloop" && FAULT !== "e12-restloop") {
     // the clean loop pauses while it is off-screen (CK-16)

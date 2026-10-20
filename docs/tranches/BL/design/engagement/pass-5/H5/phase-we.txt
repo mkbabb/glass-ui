@@ -1,0 +1,23 @@
+# WebKit acquisition E (2026-10-20, after the owner's reboot): wb2 + wc + wd, the stages the 01:06 zone hold cut, in ONE acquisition
+st webkit CAP
+st webkit E-1
+clean webkit E-3
+clean webkit E-4
+clean webkit E-6
+clean webkit E-7
+clean webkit E-8
+clean webkit E-11
+clean webkit E-12
+read1 head webkit e2-commit.mjs
+read1 head webkit e9-prm.mjs
+read1 head webkit e5-touch.mjs
+read1 head webkit e10-continuity.mjs
+cap head webkit accordion
+read1 a4light webkit e10-continuity.mjs
+cap a4light webkit accordion
+read1 a4plant webkit e5-touch.mjs --scenes toggle
+read1 a4plant webkit e10-continuity.mjs --scenes switch,checkbox,chip,accordion
+read1 a4light webkit e1-census.mjs --scenes ambient
+read1 a4light webkit e5-touch.mjs --scenes toggle
+read1 a4light webkit e2-commit.mjs
+read1 a4light webkit e9-prm.mjs

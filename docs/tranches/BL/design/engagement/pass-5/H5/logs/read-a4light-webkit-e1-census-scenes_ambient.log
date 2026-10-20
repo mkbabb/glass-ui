@@ -1,0 +1,33 @@
+## 2026-10-20 15:42:39 load { 24.12 22.96 24.81 } · start a4light webkit e1-census.mjs --scenes ambient
+# E-1 · CK-01 the census reads adoption
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/H5/out/builds/a4light · engine webkit · lock wait 0.0 s · other headless processes: chromium 9, webkit 1 · load 24.1/23.0/24.8 at start
+# scene app: harness scenes/App.vue (sha1 7c8bcdaafb44)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# narrowed to scenes ambient
+  PASS       E-1 declaration present · 55 members, 9 classes (pressed, chosen, held, dragged, disclosed, presented, field, ambient, static) · load 23.2/22.8/24.7
+  PASS       E-1 denominator declared · 55 of 55 directories declared · load 23.2/22.8/24.7
+  PASS       E-1 no stray member · every member is a directory of a declared class · load 23.2/22.8/24.7
+  PASS       E-1 class carries a rung · members per class: pressed 1, chosen 9, held 3, dragged 5, disclosed 6, presented 4, field 3, ambient 6, static 18 · ladder rungs rest/hover/press/engaged/modal · load 23.2/22.8/24.7
+  PASS       E-1 gallery rendered · no member caught by an error boundary in 1 scenes · load 23.2/22.8/24.7
+  PASS       E-1 adoption aurora · declared ambient · 1 instance(s) in 1 scene(s) · ambient: div.aurora-root.engage-ambient.h-full computes [ambient] (div.aurora-root.engage-ambient.h-full=ambient) · load 23.2/22.8/24.7
+  PASS       E-1 single · no element composes more than one engage-* class (1 scenes) · load 23.2/22.8/24.7
+  FAIL       E-1 adoption latch · 1 of 55 declared members seen adopting their recipe; unproven (not rendered by any scene, or not adopted): accordion alert avatar badge blob button card carousel checkbox chip collapsible command configurator constellation dark-mode-toggle data-table deck dialog dock easing expandable-container fading-scroll fourier-field handmark infinite-scroll input label labeled-field menu metric music-staff number-field pager-dots popover progress radio-group scroll-progress-rim select separator sheet skeleton slider sortable-list status-dot surface switch table tabs textarea timeline toast toggle-group tooltip typewriter · load 23.2/22.8/24.7
+  PASS       E-1 runtime pressed (button) · scene button, rung press · press: Δscale 0.033 · press-only paint [::before opacity] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 23.2/22.8/24.7
+  PASS       E-1 runtime pressed (button) PRM press-light · scene button, reduce · press: Δscale 0.000 · press-only paint [::before opacity] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 23.2/22.8/24.7
+  PASS       E-1 runtime chosen (switch) · scene switch, rung press · press: Δscale 0.000 · press-only paint [child0 bg] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 22.3/22.6/24.7
+  PASS       E-1 runtime chosen (switch) PRM press-light · scene switch, reduce · press: Δscale 0.000 · press-only paint [child0 bg] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 22.3/22.6/24.7
+  PASS       E-1 runtime held (slider) · scene slider, rung engaged · press: Δscale 0.060 · press-only paint [child1 bg] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 22.3/22.6/24.7
+  PASS       E-1 runtime held (slider) PRM press-light · scene slider, reduce · press: Δscale 0.000 · press-only paint [child1 bg] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 22.3/22.6/24.7
+  PASS       E-1 runtime dragged (sortable-list) · scene sortable, rung press · press: Δscale 0.000 · press-only paint [background-color] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 21.9/22.5/24.6
+  PASS       E-1 runtime dragged (sortable-list) PRM press-light · scene sortable, reduce · press: Δscale 0.000 · press-only paint [background-color] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 21.9/22.5/24.6
+  PASS       E-1 runtime disclosed (accordion) · scene accordion, rung press · press: Δscale 0.000 · press-only paint [background-color] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 21.9/22.5/24.6
+  PASS       E-1 runtime disclosed (accordion) PRM press-light · scene accordion, reduce · press: Δscale 0.000 · press-only paint [background-color] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 21.9/22.5/24.6
+  PASS       E-1 runtime presented (sheet) · scene sheet, rung modal · press: Δscale 0.000 · press-only paint [child0 opacity] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 21.7/22.5/24.6
+  FAIL       E-1 runtime presented (sheet) PRM press-light · scene sheet: no target while pressed · load 21.7/22.5/24.6
+  PASS       E-1 runtime field (input) · scene field, rung hover · hover: Δscale 0.000 · paint [box-shadow, backdrop-filter] (bound ≥ 1 property or |Δscale| ≥ 0.01) · load 21.7/22.5/24.6
+  PASS       E-1 runtime field (input) PRM press-light · scene field, reduce · hover: Δscale 0.000 · paint [box-shadow, backdrop-filter] (bound ≥ 1 property or |Δscale| ≥ 0.01) · load 21.7/22.5/24.6
+  FAIL       E-1 runtime ambient (aurora) · scene ambient, rung rest · pointer moved across: mean pixel change 1.18 levels against 1.13 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift) · load 22.6/22.6/24.6
+  FAIL       E-1 runtime ambient (aurora) PRM press-light · scene ambient, reduce · pointer moved across: mean pixel change 0.00 levels against 0.00 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift) · load 22.6/22.6/24.6
+E-1 webkit FAIL · 20 pass, 4 fail, 0 unmeasured of 24 gating cells (0 reported) · load 24.1/23.0/24.8 at start, 22.6/22.6/24.6 at end
+exit 1
+## 2026-10-20 15:43:02 load { 22.58 22.64 24.64 } · end a4light webkit e1-census.mjs

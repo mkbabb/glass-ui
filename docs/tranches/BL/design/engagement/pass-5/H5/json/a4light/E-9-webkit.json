@@ -1,0 +1,493 @@
+{
+ "id": "E-9",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/H5/out/builds/a4light"
+ },
+ "loadStart": "21.7/22.2/23.8",
+ "loadEnd": "20.1/22.2/23.7",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-9 switch press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 31 frames (bound < 0.002)",
+   "load": "24.1/22.7/24.0"
+  },
+  {
+   "name": "E-9 switch press-light light",
+   "status": "PASS",
+   "line": "press-only paint changes [child0 bg] (bound ≥ 1)",
+   "load": "24.1/22.7/24.0"
+  },
+  {
+   "name": "E-9 switch commit-spatial light",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 20.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 80 frames",
+   "load": "24.1/22.7/24.0"
+  },
+  {
+   "name": "E-9 switch commit-light light",
+   "status": "PASS",
+   "line": "commit(Space) under reduce, state false → true: the transient · in paint: rise 0.0183 (peak 0.4252 at +251 ms → rest 0.4070; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 50 ms in the first 400 ms (bound ≤ 75) · trace [+11 0.7698 +39 0.7698 +70 0.7698 +100 0.4070 +129 0.4070 +160 0.4070 +189 0.4070 +220 0.4070 +251 0.4252 +291 0.4125 +341 0.4083 +410 0.4070 +510 0.4070 +659 0.4070 +721 0.4070 +783 0.4070 +842 0.4070 +910 0.4070] · beside it the composite: light rise 0.0068 on the layers channel (peak 0.9292 → rest 0.9224, at rest true; bound ≥ 0.01; 0.8 quanta of 0.0085, tail spread 0.0000 against 0.0085; composite verdict fail DISAGREES with paint)",
+   "load": "24.1/22.7/24.0"
+  },
+  {
+   "name": "E-9 switch press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 31 frames (bound < 0.002)",
+   "load": "26.7/23.2/24.1"
+  },
+  {
+   "name": "E-9 switch press-light dark",
+   "status": "PASS",
+   "line": "press-only paint changes [child0 bg] (bound ≥ 1)",
+   "load": "26.7/23.2/24.1"
+  },
+  {
+   "name": "E-9 switch commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 20.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 80 frames",
+   "load": "26.7/23.2/24.1"
+  },
+  {
+   "name": "E-9 switch commit-light dark",
+   "status": "PASS",
+   "line": "commit(Space) under reduce, state false → true: the transient · in paint: rise 0.0251 (peak 0.2021 at +249 ms → rest 0.1771; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 49 ms in the first 400 ms (bound ≤ 75) · trace [+9 0.0210 +41 0.0210 +69 0.0210 +99 0.1771 +129 0.1771 +159 0.1771 +189 0.1771 +222 0.1822 +249 0.2021 +290 0.1874 +339 0.1801 +413 0.1771 +509 0.1771 +662 0.1771 +722 0.1771 +781 0.1771 +840 0.1771 +909 0.1771] · beside it the composite: light rise 0.0212 on the layers channel (peak 0.0465 → rest 0.0253, at rest true; bound ≥ 0.01; 20.2 quanta of 0.0011, tail spread 0.0000 against 0.0040; composite verdict pass)",
+   "load": "26.7/23.2/24.1"
+  },
+  {
+   "name": "E-9 checkbox press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 30 frames (bound < 0.002)",
+   "load": "27.0/23.3/24.2"
+  },
+  {
+   "name": "E-9 checkbox press-light light",
+   "status": "PASS",
+   "line": "press-only paint changes [child0 bg] (bound ≥ 1)",
+   "load": "27.0/23.3/24.2"
+  },
+  {
+   "name": "E-9 checkbox commit-spatial light",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 80 frames",
+   "load": "27.0/23.3/24.2"
+  },
+  {
+   "name": "E-9 checkbox commit-light light",
+   "status": "PASS",
+   "line": "commit(Space) under reduce, state false → true: the transient · in paint: rise 0.0253 (peak 0.1245 at +246 ms → rest 0.0992; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 50 ms in the first 400 ms (bound ≤ 75) · trace [+8 0.6802 +36 0.6802 +66 0.6802 +99 0.0992 +128 0.0992 +158 0.0992 +189 0.0992 +217 0.0992 +246 0.1245 +289 0.1098 +339 0.1017 +410 0.0992 +507 0.0992 +657 0.0992 +720 0.0992 +781 0.0992 +839 0.0992 +911 0.0992] · beside it the composite: light rise 0.0252 on the layers channel (peak 0.0552 → rest 0.0300, at rest true; bound ≥ 0.01; 21.6 quanta of 0.0012, tail spread 0.0000 against 0.0040; composite verdict pass)",
+   "load": "27.0/23.3/24.2"
+  },
+  {
+   "name": "E-9 checkbox press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 31 frames (bound < 0.002)",
+   "load": "25.9/23.2/24.1"
+  },
+  {
+   "name": "E-9 checkbox press-light dark",
+   "status": "PASS",
+   "line": "press-only paint changes [child0 bg] (bound ≥ 1)",
+   "load": "25.9/23.2/24.1"
+  },
+  {
+   "name": "E-9 checkbox commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 80 frames",
+   "load": "25.9/23.2/24.1"
+  },
+  {
+   "name": "E-9 checkbox commit-light dark",
+   "status": "PASS",
+   "line": "commit(Space) under reduce, state false → true: the transient · in paint: rise 0.0333 (peak 0.2926 at +247 ms → rest 0.2593; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 51 ms in the first 400 ms (bound ≤ 75) · trace [+8 0.0124 +37 0.0124 +67 0.0124 +98 0.2593 +127 0.2593 +158 0.2593 +187 0.2593 +218 0.2593 +247 0.2926 +286 0.2746 +337 0.2628 +407 0.2593 +509 0.2593 +659 0.2593 +718 0.2593 +779 0.2593 +838 0.2593 +909 0.2593] · beside it the composite: light rise 0.0319 on the layers channel (peak 0.3232 → rest 0.2913, at rest true; bound ≥ 0.01; 7.5 quanta of 0.0043, tail spread 0.0000 against 0.0043; composite verdict pass)",
+   "load": "25.9/23.2/24.1"
+  },
+  {
+   "name": "E-9 radio press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 31 frames (bound < 0.002)",
+   "load": "25.2/23.1/24.1"
+  },
+  {
+   "name": "E-9 radio press-light light",
+   "status": "PASS",
+   "line": "press-only paint changes [child0 bg] (bound ≥ 1)",
+   "load": "25.2/23.1/24.1"
+  },
+  {
+   "name": "E-9 radio commit-spatial light",
+   "status": "PASS",
+   "line": "commit(ArrowDown): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 80 frames",
+   "load": "25.2/23.1/24.1"
+  },
+  {
+   "name": "E-9 radio commit-light light",
+   "status": "PASS",
+   "line": "commit(ArrowDown) under reduce, state \"a\" → \"b\": the transient · in paint: rise 0.0140 (peak 0.2693 at +158 ms → rest 0.2553; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 52 ms in the first 400 ms (bound ≤ 75) · trace [+12 0.2553 +38 0.2553 +69 0.2553 +99 0.2553 +126 0.2553 +158 0.2693 +189 0.2681 +222 0.2595 +248 0.2573 +290 0.2553 +342 0.2553 +408 0.2553 +511 0.2553 +658 0.2553 +721 0.2553 +788 0.2553 +839 0.2553 +909 0.2553] · beside it the composite: light rise 0.0031 on the layers channel (peak 0.9597 → rest 0.9566, at rest true; bound ≥ 0.01; 0.4 quanta of 0.0087, tail spread 0.0000 against 0.0087; composite verdict fail DISAGREES with paint)",
+   "load": "25.2/23.1/24.1"
+  },
+  {
+   "name": "E-9 radio press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 31 frames (bound < 0.002)",
+   "load": "25.3/23.1/24.1"
+  },
+  {
+   "name": "E-9 radio press-light dark",
+   "status": "PASS",
+   "line": "press-only paint changes [child0 bg] (bound ≥ 1)",
+   "load": "25.3/23.1/24.1"
+  },
+  {
+   "name": "E-9 radio commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(ArrowDown): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 80 frames",
+   "load": "25.3/23.1/24.1"
+  },
+  {
+   "name": "E-9 radio commit-light dark",
+   "status": "PASS",
+   "line": "commit(ArrowDown) under reduce, state \"a\" → \"b\": the transient · in paint: rise 0.0254 (peak 0.2420 at +189 ms → rest 0.2166; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 58 ms in the first 400 ms (bound ≤ 75) · trace [+14 0.2166 +40 0.2166 +71 0.2166 +100 0.2166 +131 0.2166 +160 0.2304 +189 0.2420 +219 0.2272 +250 0.2217 +289 0.2166 +347 0.2166 +412 0.2166 +510 0.2166 +660 0.2166 +719 0.2166 +779 0.2166 +838 0.2166 +910 0.2166] · beside it the composite: light rise 0.0157 on the layers channel (peak 0.0258 → rest 0.0100, at rest true; bound ≥ 0.01; 25.4 quanta of 0.0006, tail spread 0.0000 against 0.0040; composite verdict pass)",
+   "load": "25.3/23.1/24.1"
+  },
+  {
+   "name": "E-9 tabs press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 31 frames (bound < 0.002)",
+   "load": "25.6/23.2/24.1"
+  },
+  {
+   "name": "E-9 tabs press-light light",
+   "status": "PASS",
+   "line": "press-only paint changes [background-color] (bound ≥ 1)",
+   "load": "25.6/23.2/24.1"
+  },
+  {
+   "name": "E-9 tabs commit-spatial light",
+   "status": "PASS",
+   "line": "commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 80 frames",
+   "load": "25.6/23.2/24.1"
+  },
+  {
+   "name": "E-9 tabs commit-light light",
+   "status": "PASS",
+   "line": "commit(ArrowRight) under reduce, state \"a\" → \"b\": the transient · in paint: rise 0.0275 (peak 0.5335 at +38 ms → rest 0.4940; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0057) · 18 reads, largest gap 45 ms in the first 400 ms (bound ≤ 75) · trace [+15 0.5060 +38 0.5335 +72 0.5270 +100 0.5120 +131 0.4944 +158 0.4940 +188 0.4940 +221 0.4940 +251 0.4940 +296 0.4940 +340 0.4940 +411 0.4940 +509 0.4940 +661 0.4940 +720 0.4940 +779 0.4940 +840 0.4940 +911 0.4940] · beside it the composite: light rise 0.0184 on the layers channel (peak 0.7992 → rest 0.7807, at rest true; bound ≥ 0.01; 2.4 quanta of 0.0077, tail spread 0.0000 against 0.0077; composite verdict pass)",
+   "load": "25.6/23.2/24.1"
+  },
+  {
+   "name": "E-9 tabs press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 30 frames (bound < 0.002)",
+   "load": "25.5/23.2/24.1"
+  },
+  {
+   "name": "E-9 tabs press-light dark",
+   "status": "PASS",
+   "line": "press-only paint changes [background-color] (bound ≥ 1)",
+   "load": "25.5/23.2/24.1"
+  },
+  {
+   "name": "E-9 tabs commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 78.33 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 80 frames",
+   "load": "25.5/23.2/24.1"
+  },
+  {
+   "name": "E-9 tabs commit-light dark",
+   "status": "FAIL",
+   "line": "commit(ArrowRight) under reduce, state \"a\" → \"b\": the transient · in paint: rise 0.0012 (peak 0.0726 at +131 ms → rest 0.0714; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 49 ms in the first 400 ms (bound ≤ 75) · trace [+14 0.0492 +40 0.0572 +71 0.0567 +101 0.0516 +131 0.0726 +159 0.0720 +188 0.0714 +220 0.0714 +252 0.0714 +290 0.0714 +339 0.0714 +409 0.0714 +511 0.0714 +661 0.0714 +721 0.0714 +780 0.0714 +840 0.0714 +910 0.0714] · beside it the composite: light rise 0.0102 on the layers channel (peak 0.0135 → rest 0.0033, at rest true; bound ≥ 0.01; 31.1 quanta of 0.0003, tail spread 0.0000 against 0.0040; composite verdict pass DISAGREES with paint)",
+   "load": "25.5/23.2/24.1"
+  },
+  {
+   "name": "E-9 toggle press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 30 frames (bound < 0.002)",
+   "load": "25.5/23.3/24.1"
+  },
+  {
+   "name": "E-9 toggle press-light light",
+   "status": "PASS",
+   "line": "press-only paint changes [background-color] (bound ≥ 1)",
+   "load": "25.5/23.3/24.1"
+  },
+  {
+   "name": "E-9 toggle commit-spatial light",
+   "status": "PASS",
+   "line": "commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 79 frames",
+   "load": "25.5/23.3/24.1"
+  },
+  {
+   "name": "E-9 toggle commit-light light",
+   "status": "PASS",
+   "line": "commit(ArrowRight) under reduce, state \"a\" → \"b\": the transient · in paint: rise 0.0226 (peak 0.5833 at +44 ms → rest 0.5606; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0060) · 18 reads, largest gap 48 ms in the first 400 ms (bound ≤ 75) · trace [+16 0.5575 +44 0.5833 +72 0.5771 +101 0.5662 +133 0.5606 +158 0.5582 +189 0.5582 +225 0.5606 +254 0.5606 +302 0.5606 +343 0.5606 +412 0.5606 +515 0.5606 +665 0.5606 +722 0.5606 +782 0.5606 +843 0.5606 +912 0.5606] · beside it the composite: light rise 0.0187 on the layers channel (peak 0.7546 → rest 0.7357, at rest true; bound ≥ 0.01; 2.5 quanta of 0.0075, tail spread 0.0000 against 0.0075; composite verdict pass)",
+   "load": "25.5/23.3/24.1"
+  },
+  {
+   "name": "E-9 toggle press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 31 frames (bound < 0.002)",
+   "load": "26.6/23.6/24.2"
+  },
+  {
+   "name": "E-9 toggle press-light dark",
+   "status": "PASS",
+   "line": "press-only paint changes [background-color] (bound ≥ 1)",
+   "load": "26.6/23.6/24.2"
+  },
+  {
+   "name": "E-9 toggle commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 79 frames",
+   "load": "26.6/23.6/24.2"
+  },
+  {
+   "name": "E-9 toggle commit-light dark",
+   "status": "PASS",
+   "line": "commit(ArrowRight) under reduce, state \"a\" → \"b\": the transient · in paint: rise 0.0133 (peak 0.1151 at +53 ms → rest 0.0988; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 56 ms in the first 400 ms (bound ≤ 75) · trace [+15 0.1018 +53 0.1151 +73 0.1098 +100 0.1027 +131 0.1003 +159 0.0988 +192 0.0988 +219 0.0988 +251 0.0988 +288 0.0988 +344 0.0988 +409 0.0988 +508 0.0988 +659 0.0988 +718 0.0988 +777 0.0988 +839 0.0988 +907 0.0988] · beside it the composite: light rise 0.0193 on the layers channel (peak 0.0377 → rest 0.0183, at rest true; bound ≥ 0.01; 22.0 quanta of 0.0009, tail spread 0.0000 against 0.0040; composite verdict pass)",
+   "load": "26.6/23.6/24.2"
+  },
+  {
+   "name": "E-9 chip press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 31 frames (bound < 0.002)",
+   "load": "25.4/23.3/24.1"
+  },
+  {
+   "name": "E-9 chip press-light light",
+   "status": "PASS",
+   "line": "press-only paint changes [background-image] (bound ≥ 1)",
+   "load": "25.4/23.3/24.1"
+  },
+  {
+   "name": "E-9 chip commit-spatial light",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 80 frames",
+   "load": "25.4/23.3/24.1"
+  },
+  {
+   "name": "E-9 chip commit-light light",
+   "status": "PASS",
+   "line": "commit(Space) under reduce, state false → true: the transient · in paint: rise 0.0244 (peak 0.4080 at +127 ms → rest 0.3835; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0048) · 18 reads, largest gap 52 ms in the first 400 ms (bound ≤ 75) · trace [+8 0.3694 +38 0.3694 +69 0.3694 +96 0.3835 +127 0.4080 +160 0.3994 +188 0.3909 +229 0.3867 +252 0.3835 +292 0.3835 +344 0.3835 +411 0.3835 +510 0.3835 +660 0.3835 +720 0.3835 +779 0.3835 +839 0.3835 +909 0.3835] · beside it the composite: light rise 0.0320 on the layers channel (peak 0.5588 → rest 0.5269, at rest true; bound ≥ 0.01; 5.2 quanta of 0.0062, tail spread 0.0000 against 0.0062; composite verdict pass)",
+   "load": "25.4/23.3/24.1"
+  },
+  {
+   "name": "E-9 chip press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 31 frames (bound < 0.002)",
+   "load": "25.1/23.3/24.1"
+  },
+  {
+   "name": "E-9 chip press-light dark",
+   "status": "PASS",
+   "line": "press-only paint changes [background-image] (bound ≥ 1)",
+   "load": "25.1/23.3/24.1"
+  },
+  {
+   "name": "E-9 chip commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 80 frames",
+   "load": "25.1/23.3/24.1"
+  },
+  {
+   "name": "E-9 chip commit-light dark",
+   "status": "PASS",
+   "line": "commit(Space) under reduce, state false → true: the transient · in paint: rise 0.0204 (peak 0.2494 at +128 ms → rest 0.2290; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 56 ms in the first 400 ms (bound ≤ 75) · trace [+9 0.1965 +39 0.1965 +70 0.1965 +97 0.2290 +128 0.2494 +160 0.2409 +190 0.2330 +220 0.2305 +249 0.2290 +288 0.2290 +344 0.2290 +410 0.2290 +509 0.2290 +658 0.2290 +720 0.2290 +780 0.2290 +838 0.2290 +908 0.2290] · beside it the composite: light rise 0.0279 on the layers channel (peak 0.0925 → rest 0.0646, at rest true; bound ≥ 0.01; 15.5 quanta of 0.0018, tail spread 0.0000 against 0.0040; composite verdict pass)",
+   "load": "25.1/23.3/24.1"
+  },
+  {
+   "name": "E-9 chipaction press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 30 frames (bound < 0.002)",
+   "load": "24.5/23.2/24.1"
+  },
+  {
+   "name": "E-9 chipaction press-light light",
+   "status": "PASS",
+   "line": "press-only paint changes [background-image] (bound ≥ 1)",
+   "load": "24.5/23.2/24.1"
+  },
+  {
+   "name": "E-9 chipaction commit-spatial light",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 81 frames",
+   "load": "24.5/23.2/24.1"
+  },
+  {
+   "name": "E-9 chipaction commit-light light",
+   "status": "PASS",
+   "line": "commit(Space) under reduce, state 0 → 1: the transient · in paint: rise 0.0133 (peak 0.4814 at +126 ms → rest 0.4680; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0054) · 18 reads, largest gap 50 ms in the first 400 ms (bound ≤ 75) · trace [+7 0.3694 +38 0.3694 +66 0.3694 +96 0.4680 +126 0.4814 +157 0.4777 +185 0.4727 +216 0.4680 +247 0.4680 +287 0.4680 +337 0.4680 +408 0.4680 +507 0.4680 +659 0.4680 +717 0.4680 +777 0.4680 +837 0.4680 +908 0.4680] · beside it the composite: light rise 0.0229 on the layers channel (peak 0.6730 → rest 0.6501, at rest true; bound ≥ 0.01; 3.3 quanta of 0.0070, tail spread 0.0000 against 0.0070; composite verdict pass)",
+   "load": "24.5/23.2/24.1"
+  },
+  {
+   "name": "E-9 chipaction press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 31 frames (bound < 0.002)",
+   "load": "23.3/23.0/24.0"
+  },
+  {
+   "name": "E-9 chipaction press-light dark",
+   "status": "PASS",
+   "line": "press-only paint changes [background-image] (bound ≥ 1)",
+   "load": "23.3/23.0/24.0"
+  },
+  {
+   "name": "E-9 chipaction commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 80 frames",
+   "load": "23.3/23.0/24.0"
+  },
+  {
+   "name": "E-9 chipaction commit-light dark",
+   "status": "PASS",
+   "line": "commit(Space) under reduce, state 0 → 1: the transient · in paint: rise 0.0149 (peak 0.1895 at +126 ms → rest 0.1746; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 51 ms in the first 400 ms (bound ≤ 75) · trace [+8 0.1965 +38 0.1965 +68 0.1965 +96 0.1746 +126 0.1895 +158 0.1837 +188 0.1779 +218 0.1759 +247 0.1746 +288 0.1746 +339 0.1746 +408 0.1746 +508 0.1746 +658 0.1746 +717 0.1746 +778 0.1746 +838 0.1746 +909 0.1746] · beside it the composite: light rise 0.0138 on the layers channel (peak 0.0212 → rest 0.0073, at rest true; bound ≥ 0.01; 26.9 quanta of 0.0005, tail spread 0.0000 against 0.0040; composite verdict pass)",
+   "load": "23.3/23.0/24.0"
+  },
+  {
+   "name": "E-9 accordion press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 32 frames (bound < 0.002)",
+   "load": "22.5/22.8/23.9"
+  },
+  {
+   "name": "E-9 accordion press-light light",
+   "status": "PASS",
+   "line": "press-only paint changes [background-color] (bound ≥ 1)",
+   "load": "22.5/22.8/23.9"
+  },
+  {
+   "name": "E-9 accordion commit-spatial light",
+   "status": "PASS",
+   "line": "commit(Enter): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 79 frames",
+   "load": "22.5/22.8/23.9"
+  },
+  {
+   "name": "E-9 accordion commit-light light",
+   "status": "FAIL",
+   "line": "commit(Enter) under reduce, state null → \"one\": the transient · in paint: rise 0.0000 (peak 0.9378 at +97 ms → rest 0.9378; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0086) · 18 reads, largest gap 48 ms in the first 400 ms (bound ≤ 75) · trace [+15 0.8399 +39 0.8462 +67 0.8479 +97 0.9378 +127 0.9378 +157 0.9378 +186 0.9378 +218 0.9378 +248 0.9378 +290 0.9378 +338 0.9378 +409 0.9378 +509 0.9378 +659 0.9378 +717 0.9378 +779 0.9378 +838 0.9378 +909 0.9378] · beside it the composite: light rise 0.0010 on the layers channel (peak 0.9576 → rest 0.9566, at rest true; bound ≥ 0.01; 0.1 quanta of 0.0087, tail spread 0.0000 against 0.0087; composite verdict fail)",
+   "load": "22.5/22.8/23.9"
+  },
+  {
+   "name": "E-9 accordion press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 31 frames (bound < 0.002)",
+   "load": "21.9/22.7/23.9"
+  },
+  {
+   "name": "E-9 accordion press-light dark",
+   "status": "PASS",
+   "line": "press-only paint changes [background-color] (bound ≥ 1)",
+   "load": "21.9/22.7/23.9"
+  },
+  {
+   "name": "E-9 accordion commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(Enter): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 79 frames",
+   "load": "21.9/22.7/23.9"
+  },
+  {
+   "name": "E-9 accordion commit-light dark",
+   "status": "PASS",
+   "line": "commit(Enter) under reduce, state null → \"one\": the transient · in paint: rise 0.0102 (peak 0.0283 at +67 ms → rest 0.0135; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 51 ms in the first 400 ms (bound ≤ 75) · trace [+14 0.0181 +37 0.0260 +67 0.0283 +99 0.0156 +126 0.0145 +157 0.0138 +186 0.0135 +217 0.0135 +247 0.0135 +288 0.0135 +339 0.0135 +408 0.0135 +509 0.0135 +658 0.0135 +719 0.0135 +777 0.0135 +837 0.0135 +908 0.0135] · beside it the composite: light rise 0.0099 on the layers channel (peak 0.0130 → rest 0.0031, at rest true; bound ≥ 0.01; 31.3 quanta of 0.0003, tail spread 0.0000 against 0.0040; composite verdict fail DISAGREES with paint)",
+   "load": "21.9/22.7/23.9"
+  },
+  {
+   "name": "E-9 button press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 30 frames (bound < 0.002)",
+   "load": "20.7/22.4/23.8"
+  },
+  {
+   "name": "E-9 button press-light light",
+   "status": "PASS",
+   "line": "press-only paint changes [::before opacity] (bound ≥ 1)",
+   "load": "20.7/22.4/23.8"
+  },
+  {
+   "name": "E-9 button commit-spatial light",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 80 frames",
+   "load": "20.7/22.4/23.8"
+  },
+  {
+   "name": "E-9 button commit-light light",
+   "status": "PASS",
+   "line": "commit(Space) under reduce, state 0 → 1: the transient · in paint: rise 0.0168 (peak 0.7062 at +126 ms → rest 0.6895; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0070) · 18 reads, largest gap 48 ms in the first 400 ms (bound ≤ 75) · trace [+9 0.6894 +40 0.6894 +67 0.6894 +96 0.6894 +126 0.7062 +155 0.6902 +187 0.6900 +217 0.6897 +247 0.6895 +289 0.6895 +337 0.6895 +407 0.6895 +508 0.6895 +659 0.6895 +717 0.6895 +777 0.6895 +838 0.6895 +908 0.6895] · beside it the composite: light rise 0.0202 on the layers channel (peak 0.7764 → rest 0.7562, at rest true; bound ≥ 0.01; 2.7 quanta of 0.0076, tail spread 0.0000 against 0.0076; composite verdict pass)",
+   "load": "20.7/22.4/23.8"
+  },
+  {
+   "name": "E-9 button press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 31 frames (bound < 0.002)",
+   "load": "19.8/22.2/23.7"
+  },
+  {
+   "name": "E-9 button press-light dark",
+   "status": "PASS",
+   "line": "press-only paint changes [::before opacity] (bound ≥ 1)",
+   "load": "19.8/22.2/23.7"
+  },
+  {
+   "name": "E-9 button commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 80 frames",
+   "load": "19.8/22.2/23.7"
+  },
+  {
+   "name": "E-9 button commit-light dark",
+   "status": "PASS",
+   "line": "commit(Space) under reduce, state 0 → 1: the transient · in paint: rise 0.0140 (peak 0.0768 at +127 ms → rest 0.0628; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 51 ms in the first 400 ms (bound ≤ 75) · trace [+8 0.0664 +39 0.0664 +67 0.0664 +96 0.0628 +127 0.0768 +158 0.0706 +187 0.0657 +218 0.0639 +248 0.0628 +287 0.0628 +338 0.0628 +408 0.0628 +509 0.0628 +657 0.0628 +717 0.0628 +779 0.0628 +837 0.0628 +908 0.0628] · beside it the composite: light rise 0.0136 on the layers channel (peak 0.0212 → rest 0.0076, at rest true; bound ≥ 0.01; 25.9 quanta of 0.0005, tail spread 0.0000 against 0.0040; composite verdict pass)",
+   "load": "19.8/22.2/23.7"
+  },
+  {
+   "name": "E-9 slider press-spatial light",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 30 frames (bound < 0.002)",
+   "load": "20.1/22.2/23.7"
+  },
+  {
+   "name": "E-9 slider press-light light",
+   "status": "PASS",
+   "line": "press-only paint changes [child1 bg] (bound ≥ 1)",
+   "load": "20.1/22.2/23.7"
+  },
+  {
+   "name": "E-9 slider commit-spatial light",
+   "status": "PASS",
+   "line": "commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 80 frames",
+   "load": "20.1/22.2/23.7"
+  },
+  {
+   "name": "E-9 slider commit-light light",
+   "status": "REPORT",
+   "line": "not a CK-02 commit member (no E-2 gate): its reduce light leg is read by E-3",
+   "load": "20.1/22.2/23.7"
+  },
+  {
+   "name": "E-9 slider press-spatial dark",
+   "status": "PASS",
+   "line": "scale range while pressed 0.000 over 31 frames (bound < 0.002)",
+   "load": "20.1/22.2/23.7"
+  },
+  {
+   "name": "E-9 slider press-light dark",
+   "status": "PASS",
+   "line": "press-only paint changes [child1 bg] (bound ≥ 1)",
+   "load": "20.1/22.2/23.7"
+  },
+  {
+   "name": "E-9 slider commit-spatial dark",
+   "status": "PASS",
+   "line": "commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 79 frames",
+   "load": "20.1/22.2/23.7"
+  },
+  {
+   "name": "E-9 slider commit-light dark",
+   "status": "REPORT",
+   "line": "not a CK-02 commit member (no E-2 gate): its reduce light leg is read by E-3",
+   "load": "20.1/22.2/23.7"
+  }
+ ]
+}

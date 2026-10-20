@@ -1,0 +1,16 @@
+## 2026-10-19 23:26:15 load { 5.44 5.17 5.62 } · selftest webkit E-9 
+OK     E-9 webkit   clean exit 0 · E-9 webkit PASS · 38 pass, 0 fail, 0 unmeasured of 38 gating cells (2 reported) · load 5.4/5.2/5.6 at start, 6.7/5.5/5.7 at end
+OK     E-9 webkit   fault   e9-scale (under reduced motion the press still squishes) exit 1
+         first planted FAIL: FAIL       E-9 pop press-spatial light · scale range while pressed 0.040 over 31 frames (bound < 0.002) · load 6.9/5.5/5.7
+OK     E-9 webkit   fault   e9-dark (under reduced motion the press retires its scale and keeps no light answer (its press paints the hover value): E-9's press, E-1's exemplar under reduce and E-5's held touch under reduce all read it (H-9)) exit 1
+         first planted FAIL: FAIL       E-9 pop press-light light · press-only paint changes [] (bound ≥ 1) · load 6.5/5.6/5.7
+OK     E-9 webkit   fault   e9-glide (under reduced motion the selection body still glides) exit 1
+         first planted FAIL: FAIL       E-9 travel commit-spatial light · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 78.00 px with 21 frame(s) in flight (bound ≤ 1 frame each) · 80 frames · load 5.2/5.4/5.7
+OK     E-9 webkit   fault   e9-fillonly (CK-10 (H3): under reduced motion the commit keeps only the committed state's fill change, its light transient zeroed (A2's light under the library's PRM fallback, C-CP CK-10)) exit 1
+         first planted FAIL: FAIL       E-9 pop commit-light light · commit(Space) under reduce, state "off" → "on": the transient · in paint: rise 0.0000 (peak 0.2428 at +4 ms → rest 0.2428; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18
+OK     E-9 webkit   fault   e2-paintless (CK-02/CK-10/CK-27 (H5): the commit light's layer animates its opacity on the envelope clocks but paints nothing (clip-path: inset(50%)): the composite reads a rise, the paint reads none (the toggle's dark commit, C-A4 §0.4)) exit 1
+         first planted FAIL: FAIL       E-9 pop commit-light light · commit(Space) under reduce, state "off" → "on": the transient · in paint: rise 0.0000 (peak 0.2428 at +7 ms → rest 0.2428; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18
+OK     E-9 webkit   control e2-paintonly (CONTROL, must PASS (H5): an 8 px opaque dot sits on the face after the light layer; the composite stacks it as the whole face and reads no rise, while the light paints the face (the Switch thumb and the Radio dot, P-A4 §6.1)) exit 0
+selftest: 7 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+exit 0
+## 2026-10-19 23:30:45 load { 4.82 5.14 5.51 } · end selftest webkit E-9

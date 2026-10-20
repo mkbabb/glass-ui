@@ -91,15 +91,37 @@ export const isClosed = (e) => /Target page, context or browser has been closed|
 // process. A WebKit browser (Playwright's, and the raw touch driver's, each its own process) is retired after NAV_CAP
 // navigations, below that wall; `D5_HARNESS_NAV_CAP` overrides it. Each retirement is noted in the witness's output.
 export const NAV_CAP = Number(process.env.D5_HARNESS_NAV_CAP ?? 60);
+// H5 (pass 5), CK-19: the GPU-backed Chromium witness, NAMED here as the 2026-10-16 machine law requires before any GPU
+// launch argument is used. THE NEED: the `ambient` exemplar (the Aurora) paints its pointer field in WebGL2, and the
+// default headless shell rasterises WebGL2 in SwiftShader, which the Aurora's software-raster guard
+// (constants/renderMode.ts isSoftwareWebGLRenderer) answers with its static "css" ground: E-1's ambient cell then reads
+// ENGINE LIMIT in Chromium (H4 §1.2). With these arguments the same headless shell reports "ANGLE Metal Renderer: Apple
+// M5 Max" (`../pass-5/H5/logs/gpu-renderer-chromium.log`), so the Aurora resolves its WebGL substrate and the cell is
+// graded. Used ONLY when a witness is run with `--gpu metal` (E-1's ambient cell, `--scenes ambient`); Chromium only; the
+// headless shell, never a headed browser or another channel; one browser per run like every witness. Every witness
+// header prints the renderer the arm got, and a GPU arm that comes up on a software renderer fails loud (exit 2)
+export const GPU_ARGS = { metal: ["--use-angle=metal", "--enable-gpu", "--ignore-gpu-blocklist"] };
 export class Engine {
-  constructor(name) { this.name = name; this.b = null; this.notes = []; this.version = "?"; this.raw = null; this.navs = 0; this.rawNavs = 0; this.retired = 0; }
+  constructor(name, gpu = null) {
+    this.name = name; this.b = null; this.notes = []; this.version = "?"; this.raw = null; this.navs = 0; this.rawNavs = 0; this.retired = 0;
+    if (gpu && !(name === "chromium" && GPU_ARGS[gpu])) throw new Error(`--gpu ${gpu}: the GPU arm is named for Chromium only (${Object.keys(GPU_ARGS).join(", ")})`);
+    this.gpu = gpu;
+  }
   async browser() {
     if (this.b && this.b.isConnected()) return this.b;
     if (this.b) this.notes.push(`${this.name} disconnected; relaunched (load ${load()})`);
     if (this.name === "webkit") await holdWebkit();
-    this.b = await pw[this.name].launch({ headless: true });
+    this.b = await pw[this.name].launch({ headless: true, ...(this.gpu ? { args: GPU_ARGS[this.gpu] } : {}) });
     this.version = this.b.version(); this.navs = 0;
     return this.b;
+  }
+  /** the WebGL2 renderer this engine's pages get (a blank page in its own context, closed) */
+  async renderer() {
+    const b = await this.browser(); const ctx = await b.newContext();
+    try {
+      const page = await ctx.newPage(); await page.setContent("<canvas></canvas>");
+      return await page.evaluate(() => { const gl = document.querySelector("canvas").getContext("webgl2"); if (!gl) return "no WebGL2 context"; const x = gl.getExtension("WEBGL_debug_renderer_info"); const r = String(x ? gl.getParameter(x.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER)); gl.getExtension("WEBGL_lose_context")?.loseContext(); return r; });
+    } finally { await ctx.close(); }
   }
   /** Count one navigation; a WebKit browser at the cap is retired first (its open pages are the caller's, closed). */
   async nav() {
@@ -349,9 +371,15 @@ export async function witness(id, title, body, defaultDeadlineS = 1500) {
     // H3 (pass 3): which scene app the build carries. A scoring read is on the harness's own app (REGISTRY §P2-7 item
     // 2: P-A2's fork moved 10 E-2 cells per engine); a fork built with `build.mjs --app` is named in every header
     if (!a.fixture) console.log(`# scene app: ${sceneApp(a.build)}`);
-    E = new Engine(engine);
+    E = new Engine(engine, typeof a.gpu === "string" ? a.gpu : null);
     await E.browser();
     console.log(`# ${engine} ${E.version}${engine === "webkit" ? " (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))" : ""}`);
+    // H5, CK-19: the named GPU arm states the renderer it got; a GPU arm on a software renderer is a harness error
+    if (E.gpu) {
+      const r = await E.renderer();
+      console.log(`# GPU arm ${E.gpu} [${GPU_ARGS[E.gpu].join(" ")}] (the named CK-19 witness, lib.mjs GPU_ARGS): WebGL2 renderer "${r}"`);
+      if (/swiftshader|llvmpipe|software|no WebGL2/i.test(r)) throw new Error(`the GPU arm ${E.gpu} came up on a software renderer ("${r}"): no GPU-backed read is possible`);
+    }
     const guard = async (name, fn, ms = 90000) => {
       const once = async () => {
         let timer;
@@ -457,8 +485,61 @@ export function commitsIn(film) {
   const lit = above >= LIGHT_RISE || fillRise >= LIGHT_RISE; const moved = qt.smid >= 2 || fsm >= 2 || qt.mid >= 2;
   return { n: lit || moved ? 1 : 0, lit, moved, ground, line: `light above its committed rest ${f(above, 4)} (layers) · fill flash ${f(fillRise, 4)} (bound < ${LIGHT_RISE} each${ground ? "" : "; NO PAINTED GROUND"}) · target scale in flight ${qt.smid} frame(s), face ${fsm}, body ${qt.mid} (bound < 2 each) · ${fr.length} frames` };
 }
-/** CK-02's three arms over one film ({ fr, anims } from __film) against the admitted arms. */
-export function commitArms(film, arms = DEFAULT_ARMS, env = []) {
+// ── H5 (pass 5): the committed face IN PAINT (CK-02 arm iii, CK-10 commit-light; REGISTRY §P4-7 item 2) ──────────
+// The composite (__light) stacks a face's first 12 descendants as whole-face layers, so a Switch's thumb or a Radio's
+// 8 px dot reads as covering the face: it failed lights that paint 0.014-0.020 (P-A4 §6.1) and passed lights that paint
+// 0.0000 (the toggle's dark commit, the tabs' dark light under reduce: C-A4 §0.4). Arm (iii) and E-9's commit-light now
+// pass only on PAINT: P-A4's `facefilm` method made a read. On its own page (never inside a per-frame film, which takes no
+// screenshot), the same gesture, then the face's box inset by PAINT_INSET px screenshotted at PAINT_AT ms after the
+// gesture starts; each shot's mean relative luminance (sRGB linearised, every pixel). The composite stays printed beside
+const { PNG } = (await import(`${GLASS}/node_modules/pngjs/lib/png.js`)).default;
+export const PAINT_AT = [0, 30, 60, 90, 120, 150, 180, 210, 240, 280, 330, 400, 500, 650, 710, 770, 830, 900];
+export const PAINT_INSET = 3, PAINT_TAIL_MS = 300, PAINT_GAP = 75, PAINT_EARLY = 400;
+const lin8 = (c) => { c /= 255; return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; };
+/** a PNG's mean relative luminance, and one 8-bit quantum of luminance at its mean colour (the read's resolution) */
+export function pngLum(buf) {
+  const p = PNG.sync.read(buf); let s = 0, n = 0, R = 0, G = 0, B = 0;
+  for (let i = 0; i < p.data.length; i += 4) { s += 0.2126 * lin8(p.data[i]) + 0.7152 * lin8(p.data[i + 1]) + 0.0722 * lin8(p.data[i + 2]); R += p.data[i]; G += p.data[i + 1]; B += p.data[i + 2]; n++; }
+  const m = [R / n, G / n, B / n]; const up = m.every((v) => v <= 254); const L0 = 0.2126 * lin8(m[0]) + 0.7152 * lin8(m[1]) + 0.0722 * lin8(m[2]);
+  const L1 = 0.2126 * lin8(m[0] + (up ? 1 : -1)) + 0.7152 * lin8(m[1] + (up ? 1 : -1)) + 0.0722 * lin8(m[2] + (up ? 1 : -1));
+  return { L: s / n, q: Math.abs(L1 - L0), n };
+}
+/** The paint read: `go()` starts the gesture (not awaited until the end); the face is re-boxed before each shot (a pop
+ *  or a grow moves its box). Returns [{ t, L, q } | { t, miss }] */
+export async function paintFilm(page, faceSel, go, at = PAINT_AT) {
+  const t0 = Date.now(); const pend = Promise.resolve().then(go); const pts = [];
+  try {
+    for (const t of at) {
+      while (Date.now() - t0 < t) await new Promise((r) => setTimeout(r, 2));
+      const bb = await page.evaluate((s) => { const e = document.querySelector(s); if (!e) return null; const r = e.getBoundingClientRect(); return { x: r.x + scrollX, y: r.y + scrollY, w: r.width, h: r.height }; }, faceSel);
+      if (!bb || bb.w <= 2 * PAINT_INSET + 1 || bb.h <= 2 * PAINT_INSET + 1) { pts.push({ t: Date.now() - t0, miss: true }); continue; }
+      const buf = await page.screenshot({ clip: { x: bb.x + PAINT_INSET, y: bb.y + PAINT_INSET, width: bb.w - 2 * PAINT_INSET, height: bb.h - 2 * PAINT_INSET }, animations: "allow", caret: "initial" });
+      pts.push({ t: Date.now() - t0, ...pngLum(buf) });
+    }
+  } finally { await pend; }
+  return pts;
+}
+/** The rise of a paint series, read like the composite's (riseOf): a read brighter than the darkest read before it (a
+ *  face that only returns to its rest from brighter rises nowhere, so the committed fill's own change toward rest is not
+ *  light) that also stands above the committed rest (the last read); at rest when the reads of the last PAINT_TAIL_MS
+ *  spread within max(LIGHT_REST, one 8-bit quantum at the tail's mean colour) */
+export function paintRise(pts) {
+  const P = pts.filter((x) => !x.miss && Number.isFinite(x.L));
+  if (P.length < 6) return { rise: NaN, rest: false, n: P.length, missed: pts.length - P.length, line: `in paint: ${P.length} of ${pts.length} reads found the face (bound ≥ 6): NOT READ` };
+  const settle = P.at(-1).L; let lo = P[0].L, best = -Infinity, pk = 0;
+  P.forEach((x, k) => { lo = Math.min(lo, x.L); if (x.L - lo > best) { best = x.L - lo; pk = k; } });
+  const tail = P.filter((x) => x.t >= P.at(-1).t - PAINT_TAIL_MS); const tl = tail.map((x) => x.L);
+  const spread = Math.max(...tl) - Math.min(...tl); const q = Math.max(0, ...tail.map((x) => x.q ?? 0)); const restBound = Math.max(LIGHT_REST, q);
+  // the read's cadence: a screenshot the loaded machine delays past PAINT_GAP ms in the first PAINT_EARLY ms can step over
+  // a light whose attack and release last 240 ms (the fixture's 60 + 180), so a starved read is re-read by the witness
+  // (E-2's janky rule; E-9 twice), never graded as a light that is not there
+  const early = P.filter((x) => x.t <= PAINT_EARLY); const gap = Math.max(0, ...early.slice(1).map((x, k) => x.t - early[k].t), P[0].t);
+  const r = { rise: Math.min(best, P[pk].L - settle), peak: P[pk].L, peakT: P[pk].t, settle, rest: spread <= restBound + 1e-9, spread, restBound, tailN: tail.length, n: P.length, missed: pts.length - P.length, gap, starved: gap > PAINT_GAP };
+  return { ...r, line: `in paint: rise ${f(r.rise, 4)} (peak ${f(r.peak, 4)} at +${r.peakT} ms → rest ${f(settle, 4)}; bound ≥ ${LIGHT_RISE}) · at rest ${r.rest} (last ${r.tailN} reads spread ${f(spread, 4)} against ${f(restBound, 4)}) · ${r.n} reads${r.missed ? `, ${r.missed} missed` : ""}, largest gap ${gap} ms in the first ${PAINT_EARLY} ms (bound ≤ ${PAINT_GAP}${r.starved ? ": STARVED, re-read" : ""}) · trace [${P.map((x) => `+${x.t} ${x.L.toFixed(4)}`).join(" ")}]` };
+}
+/** CK-02's three arms over one film ({ fr, anims } from __film) against the admitted arms. H5: `paint` (paintRise over the
+ *  same gesture on its own page) decides arm (iii); without it arm (iii) cannot pass (the composite is printed only). */
+export function commitArms(film, arms = DEFAULT_ARMS, env = [], paint = null) {
   const fr = film.fr ?? film; const anims = film.anims ?? [];
   const F = fr.filter((x) => x.a);
   if (F.length < 3) return { pass: false, line: `target absent in ${fr.length - F.length} of ${fr.length} frames` };
@@ -476,24 +557,33 @@ export function commitArms(film, arms = DEFAULT_ARMS, env = []) {
   // (iii) light
   const lr = lightRise(fr); const clocks = envelopeClocks(env);
   // the clock: the light animations of the rising channel (the face's layers: its pseudo-elements and descendants;
-  // the fill: the face's own background) all run on an envelope row's clock, and at least one runs
-  const chan = anims.filter((x) => (lr.ch === "fill" ? x.self && x.props.some((p) => /background/i.test(p)) : x.inFace && !x.self));
+  // the fill: the face's own background) all run on an envelope row's clock, and at least one runs. H5: the channel is
+  // the fill only when the composite saw the fill itself flash (≥ LIGHT_RISE); otherwise the layers, so a composite that
+  // cannot see the light (a thumb read as the whole face) does not pick the channel by noise
+  const ch = lr.ch === "fill" && lr.rise >= LIGHT_RISE ? "fill" : "layers";
+  const chan = anims.filter((x) => (ch === "fill" ? x.self && x.props.some((p) => /background/i.test(p)) : x.inFace && !x.self));
   const onRow = chan.filter((x) => Number.isFinite(x.dur) && clocks.some((c) => Math.abs(c - x.dur) <= 1));
+  const clockOk = onRow.length > 0 && onRow.length === chan.length;
   // H3: arm (iii) reads light only over a ground the page paints; without one the composite sits on an assumed white
-  // and is not graded (it can neither pass nor be called a rise)
-  const iii = lr.ground && lr.rise >= LIGHT_RISE && lr.rest && onRow.length > 0 && onRow.length === chan.length;
+  // and is not graded (it can neither pass nor be called a rise). H5: the rise and the rest are read IN PAINT
+  const iiiComposite = lr.ground && lr.rise >= LIGHT_RISE && lr.rest && clockOk;
+  const iii = !!paint && lr.ground && paint.rise >= LIGHT_RISE && paint.rest && clockOk;
   const ok = { i, ii, iii };
   const pass = arms.some((k) => ok[k]);
   const animTxt = [...new Set(anims.map((x) => `${x.props.join("+")}${x.pseudo}@${Math.round(x.dur)}ms`))].join(", ").slice(0, 160);
-  return { pass, arms: ok, line: `arm ${pass ? arms.filter((k) => ok[k]).join("+") : "none"} of [${arms.join(",")}] · (i) body travel ${f(travel, 2)} px overshoot ${f(over, 2)} px · (ii) face peak ${f(pkS)} trough ${f(trS)} settle ${f(stS)} on ${f(w0, 1)} px = ${f(exc, 2)} px (bound > ${FACE_PX}) · (iii) ${lr.ground ? "" : "NO PAINTED GROUND under the face (the light is not graded) · "}light rise ${f(lr.rise, 4)} on the ${lr.ch ?? "?"} channel (peak ${f(lr.peak, 4)} → rest ${f(lr.settle, 4)}, at rest ${lr.rest}; bound ≥ ${LIGHT_RISE}; ${quanta(lr)}) on envelope clocks [${onRow.map((x) => Math.round(x.dur)).join(",")}] of the channel's [${chan.map((x) => Math.round(x.dur)).join(",")}] ms; light anims [${animTxt}] · ${fr.length} frames, median ${f(medianDt(fr), 1)} ms` };
+  const paintTxt = paint ? `${paint.line}${paint.rise >= LIGHT_RISE && paint.rest ? "" : " (arm iii FAILS in paint)"}` : "in paint: NOT READ (an earlier admitted arm decides the cell; arm iii cannot pass without the paint read)";
+  return { pass, arms: ok, iiiComposite, line: `arm ${pass ? arms.filter((k) => ok[k]).join("+") : "none"} of [${arms.join(",")}] · (i) body travel ${f(travel, 2)} px overshoot ${f(over, 2)} px · (ii) face peak ${f(pkS)} trough ${f(trS)} settle ${f(stS)} on ${f(w0, 1)} px = ${f(exc, 2)} px (bound > ${FACE_PX}) · (iii) ${lr.ground ? "" : "NO PAINTED GROUND under the face (the light is not graded) · "}${paintTxt} · beside it the composite: light rise ${f(lr.rise, 4)} on the ${lr.ch ?? "?"} channel (peak ${f(lr.peak, 4)} → rest ${f(lr.settle, 4)}, at rest ${lr.rest}; ${quanta(lr)}; composite verdict ${iiiComposite ? "pass" : "fail"}${!!paint && iiiComposite !== iii ? " DISAGREES with paint" : ""}) on envelope clocks [${onRow.map((x) => Math.round(x.dur)).join(",")}] of the ${ch} channel's [${chan.map((x) => Math.round(x.dur)).join(",")}] ms; light anims [${animTxt}] · ${fr.length} frames, median ${f(medianDt(fr), 1)} ms` };
 }
 /** CK-10 (H3): a light leg kept under reduce, read on the TRANSIENT: lightRise over the film (the layers over the
  *  committed fill, or a fill that flashes above its rest and returns), so the committed state's own fill change does not
  *  count (C-CP CK-27: E-9 passed A with its commit light zeroed). No clock condition here: the clock is E-8's */
-export function lightLeg(film) {
+export function lightLeg(film, paint = null) {
   const lr = lightRise(film.fr ?? film);
-  const pass = lr.ground && lr.rise >= LIGHT_RISE && lr.rest;
-  return { pass, line: `${lr.ground ? "" : "NO PAINTED GROUND under the face · "}light rise ${f(lr.rise, 4)} on the ${lr.ch ?? "?"} channel (peak ${f(lr.peak, 4)} → rest ${f(lr.settle, 4)}, at rest ${lr.rest}; bound ≥ ${LIGHT_RISE}; ${quanta(lr)})` };
+  // H5: the transient is read IN PAINT (paintRise over the same reduce commit on its own page); the composite is printed
+  // beside it and decides nothing (it passed the tabs' dark light under reduce at 0.0016-0.0018 in paint, C-A4 §0.4)
+  const comp = lr.ground && lr.rise >= LIGHT_RISE && lr.rest;
+  const pass = !!paint && lr.ground && paint.rise >= LIGHT_RISE && paint.rest;
+  return { pass, line: `${lr.ground ? "" : "NO PAINTED GROUND under the face · "}${paint ? paint.line : "in paint: NOT READ"} · beside it the composite: light rise ${f(lr.rise, 4)} on the ${lr.ch ?? "?"} channel (peak ${f(lr.peak, 4)} → rest ${f(lr.settle, 4)}, at rest ${lr.rest}; bound ≥ ${LIGHT_RISE}; ${quanta(lr)}; composite verdict ${comp ? "pass" : "fail"}${paint && comp !== pass ? " DISAGREES with paint" : ""})` };
 }
 /** Scale range and body movement over frames (Tab entry, the mount case, PRM). */
 export function quiet(fr) {
@@ -552,11 +642,12 @@ export async function openTouchPage(E, T, scene, o = {}) {
       const g = cdp.send("Input.synthesizeTapGesture", { x, y, duration: readAtMs + 550, tapCount: 1, gestureSourceType: "touch" });
       await P.page.waitForTimeout(readAtMs); const r = await read(); await g; return r;
     };
-    // H2: one held touch read at several times (CK-06's sustain: +200 ms and +1 s), each read timed from the touch
+    // H2: one held touch read at several times (CK-06's sustain: +200 ms and +1 s), each read timed from the touch; H5: the
+    // read is passed the ms elapsed since the touch began (E-5's onset)
     P.holdAt = async (x, y, times, read) => {
       const g = cdp.send("Input.synthesizeTapGesture", { x, y, duration: Math.max(...times) + 550, tapCount: 1, gestureSourceType: "touch" });
       const t0 = Date.now(); const out = [];
-      for (const t of times) { await P.page.waitForTimeout(Math.max(0, t - (Date.now() - t0))); out.push(await read()); }
+      for (const t of times) { await P.page.waitForTimeout(Math.max(0, t - (Date.now() - t0))); out.push(await read(Date.now() - t0)); }
       await g; return out;
     };
     return P;
@@ -577,7 +668,7 @@ export async function openTouchPage(E, T, scene, o = {}) {
     hold: async (x, y, readAtMs, read) => { await R.touch("touchStart", x, y); await R.page.waitForTimeout(readAtMs); const r = await read(); await R.touch("touchEnd", x, y); return r; },
     holdAt: async (x, y, times, read) => {
       await R.touch("touchStart", x, y); const t0 = Date.now(); const out = [];
-      for (const t of times) { await R.page.waitForTimeout(Math.max(0, t - (Date.now() - t0))); out.push(await read()); }
+      for (const t of times) { await R.page.waitForTimeout(Math.max(0, t - (Date.now() - t0))); out.push(await read(Date.now() - t0)); }
       await R.touch("touchEnd", x, y); return out;
     },
     shot: R.shot,

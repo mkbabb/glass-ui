@@ -1,0 +1,62 @@
+{
+ "id": "E-5",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e9-dark"
+ },
+ "loadStart": "5.0/5.1/5.7",
+ "loadEnd": "3.9/4.8/5.6",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-5 pop sustain light",
+   "status": "PASS",
+   "line": "3 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [background-color]: read 1 0.185 → 0.185 ×1.00 · landed by +200 ms (read at +200: 0.185 of the landed 0.185 = ×1.00, bound ≥ ×0.9; onset at half +50 ms (read at +52); [+25 0.47 +50 0.83 +75 1.00 +100 1.00 +125 1.00 +150 1.00 +175 1.00 +200 1.00]) · read 2 0.185 → 0.185 ×1.00 · landed by +200 ms (read at +202: 0.185 of the landed 0.185 = ×1.00, bound ≥ ×0.9; onset at half +50 ms (read at +52); [+25 0.36 +50 0.90 +75 1.00 +100 1.00 +125 1.00 +150 1.00 +175 1.00 +200 1.00]) · read 3 0.185 → 0.185 ×1.00 · landed by +200 ms (read at +202: 0.185 of the landed 0.185 = ×1.00, bound ≥ ×0.9; onset at half +50 ms (read at +52); [+25 0.46 +50 0.81 +75 1.00 +100 1.00 +125 1.00 +150 1.00 +175 1.00 +200 1.00]) (bound ≥ ×0.95 on every read, and landed by +200 ms on every read)",
+   "load": "4.6/5.0/5.7"
+  },
+  {
+   "name": "E-5 pop press light",
+   "status": "PASS",
+   "line": ":active true · Δscale -0.040 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color]",
+   "load": "4.6/5.0/5.7"
+  },
+  {
+   "name": "E-5 pop sustain(PRM) light",
+   "status": "FAIL",
+   "line": "0 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over []: read 1 NOT DRIVEN (no press-only property at +1200 ms) · read 2 NOT DRIVEN (no press-only property at +1200 ms) · read 3 NOT DRIVEN (no press-only property at +1200 ms) (bound ≥ ×0.95 on every read, and landed by +200 ms on every read)",
+   "load": "4.6/5.0/5.7"
+  },
+  {
+   "name": "E-5 pop press-light(PRM) light",
+   "status": "FAIL",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce)",
+   "load": "4.6/5.0/5.7"
+  },
+  {
+   "name": "E-5 pop sustain dark",
+   "status": "PASS",
+   "line": "3 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [background-color]: read 1 0.179 → 0.179 ×1.00 · landed by +200 ms (read at +202: 0.179 of the landed 0.179 = ×1.00, bound ≥ ×0.9; onset at half +50 ms (read at +52); [+25 0.33 +50 0.89 +75 1.00 +100 1.00 +125 1.00 +150 1.00 +175 1.00 +200 1.00]) · read 2 0.179 → 0.179 ×1.00 · landed by +200 ms (read at +201: 0.179 of the landed 0.179 = ×1.00, bound ≥ ×0.9; onset at half +50 ms (read at +52); [+25 0.47 +50 0.84 +75 1.00 +100 1.00 +125 1.00 +150 1.00 +175 1.00 +200 1.00]) · read 3 0.179 → 0.179 ×1.00 · landed by +200 ms (read at +202: 0.179 of the landed 0.179 = ×1.00, bound ≥ ×0.9; onset at half +50 ms (read at +52); [+25 0.34 +50 0.91 +75 1.00 +100 1.00 +125 1.00 +150 1.00 +175 1.00 +200 1.00]) (bound ≥ ×0.95 on every read, and landed by +200 ms on every read)",
+   "load": "3.9/4.8/5.6"
+  },
+  {
+   "name": "E-5 pop press dark",
+   "status": "PASS",
+   "line": ":active true · Δscale -0.040 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color]",
+   "load": "3.9/4.8/5.6"
+  },
+  {
+   "name": "E-5 pop sustain(PRM) dark",
+   "status": "FAIL",
+   "line": "0 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over []: read 1 NOT DRIVEN (no press-only property at +1200 ms) · read 2 NOT DRIVEN (no press-only property at +1200 ms) · read 3 NOT DRIVEN (no press-only property at +1200 ms) (bound ≥ ×0.95 on every read, and landed by +200 ms on every read)",
+   "load": "3.9/4.8/5.6"
+  },
+  {
+   "name": "E-5 pop press-light(PRM) dark",
+   "status": "FAIL",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce)",
+   "load": "3.9/4.8/5.6"
+  }
+ ]
+}

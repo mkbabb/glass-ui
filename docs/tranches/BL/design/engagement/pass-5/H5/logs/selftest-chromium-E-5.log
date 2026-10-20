@@ -1,0 +1,17 @@
+## 2026-10-19 19:11:22 load { 31.87 34.18 59.54 } · selftest chromium E-5 
+OK     E-5 chromium clean exit 0 · E-5 chromium PASS · 8 pass, 0 fail, 0 unmeasured of 8 gating cells (0 reported) · load 31.9/34.2/59.5 at start, 26.4/32.6/58.1 at end
+OK     E-5 chromium fault   e5-hover (a held touch answers only through the hover background, leaked by sticky touch hover (the accordion trigger at HEAD)) exit 1
+         first planted FAIL: FAIL       E-5 pop press light · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] · load 23.8/31.7/57.3
+OK     E-5 chromium fault   e5-decay (CK-06: the held press light decays back toward rest within 500 ms while the touch is still held) exit 1
+         first planted FAIL: FAIL       E-5 pop sustain light · 0 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [background-color]: read 1 NOT DRIVEN (no press-only property at +1200 ms) · read 2 NO
+OK     E-5 chromium fault   e9-dark (under reduced motion the press retires its scale and keeps no light answer (its press paints the hover value): E-9's press, E-1's exemplar under reduce and E-5's held touch under reduce all read it (H-9)) exit 1
+         first planted FAIL: FAIL       E-5 pop press-light(PRM) light · :active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce) · load 20.8/29.2/54.6
+OK     E-5 chromium fault   e5-flaky (CK-06 (H4 three-read rule): the held press light sags back toward rest on one touch hold in three (every third page load of the scene); a one-read rule passes it two times in three) exit 1
+         first planted FAIL: FAIL       E-5 pop sustain light · 2 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [background-color]: read 1 0.185 → 0.185 ×1.00 · landed by +200 ms (read at +203: 0.18
+OK     E-5 chromium fault   e5-late (CK-06 (H5 onset): the press mark is written 190 ms after the touch begins, so the press lands after its +200 ms reference and its light still rises at +1200 ms (a one-reference sustain passes it, C-A4's P7 class)) exit 1
+         first planted FAIL: FAIL       E-5 pop sustain light · 0 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [background-color]: read 1 0.016 → 0.185 ×11.45 · NOT LANDED by +200 ms (read at +200:
+OK     E-5 chromium fault   e5-active (CK-06 (H5 onset): the press keys on :active alone (C-A4's plant P7); Chromium's long-tap sets :active 175-200 ms after touch-down. WebKit's raw touch sets :active at touchStart, so the plant has no input there) exit 1
+         first planted FAIL: FAIL       E-5 pop sustain light · 0 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [background-color]: read 1 0.112 → 0.185 ×1.65 · NOT LANDED by +200 ms (read at +203: 
+selftest: 7 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+exit 0
+## 2026-10-19 19:14:58 load { 25.09 27.17 50.68 } · end selftest chromium E-5

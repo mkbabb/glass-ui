@@ -1,0 +1,9 @@
+## 2026-10-19 19:38:39 load { 26.58 28.41 31.99 } · selftest chromium CAP 
+OK     CAP chromium clean exit 0 · CAP chromium PASS · 3 pass, 0 fail, 0 unmeasured of 3 gating cells (0 reported) · load 26.6/28.4/32.0 at start, 27.3/28.5/32.0 at end
+OK     CAP chromium fault   cap-nocommit (CK-25 (H3 capture): a touch tap does not commit the control: the coarse 'committed' frame must say NOT COMMITTED, never show a frame as a commit) exit 1
+         first planted FAIL: FAIL       CAP pop coarse light committed · chromium: short tap, state "off" → "off": NOT COMMITTED, the frame is labelled so · load 25.2/28.0/31.8
+OK     CAP chromium fault   cap-ladder (CK-25 (H5, C-A4's ca4-ladder): on a fine pointer the press paints lighter than the hover it follows (the press wash under the hover rung, C-A4 §0.3)) exit 1
+         first planted FAIL: FAIL       CAP pop ladder fine light · chromium: inset paint L rest 0.5979 (rgb(216, 219, 226)) · hover 0.5496 (rgb(207, 211, 220); darker by 0.0483) · hover+press 0.6910 (rgb(230, 232, 238)) · released, still hovered 0.2973 · the press mov
+selftest: 3 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+exit 0
+## 2026-10-19 19:39:07 load { 24.05 27.66 31.59 } · end selftest chromium CAP
