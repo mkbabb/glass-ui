@@ -17,15 +17,24 @@
 //   |ΔL| ≤ that bound on every veil row, for the self-test and for the day the owner rules one. `--bank <dir>` writes
 //   the cited frames: each state cell's `full` capture over a ground that is not paper, and one pair PNG per such cell
 //   (raw | full, 240 × 160 around the probe, 2×), with each file's sha256 in the log.
-//   node m9-state-registers.mjs <capdir> [--gate chromium[,webkit]] [--dim-max 0.1] [--bank <dir>]
+//   H12-1 (pass 12, REGISTRY P11-5, R-32): the veil's colour, printed and gated on the dark arm's own words. Every veil
+//   row also prints OKLCH L, C and h of the raw and the veiled probe (the mean colour under it), every theme and ground.
+//   R-32 reads the DARK arm on two grounds per engine: the aurora focus spot (the state scene's c1 ground, frame 1's
+//   ground) and the dark page (its paper ground). Under `--r32` it gates (i) hue held, |Δh| ≤ 3° on the spot; (ii) chroma
+//   kept, C_veiled ≥ 0.95 × C_raw on the spot; (iii) it dims, ΔL < 0 on the spot and on the page. A dark spot or page
+//   cell that was not read is a FAIL row under `--r32` (E-2). The spot's and the page's ΔL print beside R-2's −0.225
+//   and are never gated: "quieter, not brown" is the owner's eye (R-32). Hue and chroma are not read on the page: at
+//   C ≈ 0.003 its hue is noise (one 8-bit step moves it by tens of degrees). Without `--r32` the rows print REPORTED.
+//   The light arm is printed, not read by R-32 (Q-14's light arm stands, O-103a).
+//   node m9-state-registers.mjs <capdir> [--gate chromium[,webkit]] [--dim-max 0.1] [--bank <dir>] [--r32]
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
-import { cli, loadCapture, gateEngines, report, region, mean3, dE, lch, hex, f, tag, THEMES, SCENE_GROUNDS, PNG } from "./lib.mjs";
+import { cli, loadCapture, gateEngines, report, region, mean3, dE, lch, hex, f, tag, hueDiff, THEMES, SCENE_GROUNDS, PNG } from "./lib.mjs";
 import { need, tally } from "./rows.mjs";
 
 const REQUIRED = ["active", "hover", "checked", "selected"];
-const a = cli({ "dim-max": { type: "string" }, bank: { type: "string" } }), cap = loadCapture(a._[0]), gate = gateEngines(a);
+const a = cli({ "dim-max": { type: "string" }, bank: { type: "string" }, r32: { type: "boolean" } }), cap = loadCapture(a._[0]), gate = gateEngines(a);
 const dimMax = a["dim-max"] != null ? +a["dim-max"] : null;
 const depth = [];   // H5-1: { engine, theme, ground, dL, cell, probe }
 const { have, lines, missing } = need(cap, gate, { themes: THEMES, grounds: SCENE_GROUNDS.state, scenes: ["state"] });
@@ -67,6 +76,39 @@ for (const d of depth) {
   if (dimMax != null) t.add(d.gated, !over);
   lines.push(`veil depth ${tag(d.cell)}${d.gated ? "" : " [info]"}: ${hex(d.off)} → ${hex(d.on)} ΔL ${f(d.dL, 3)}${d.ground === "paper" ? " (the page: the ground the dim is solved on)" : k != null ? ` (${f(k, 1)}× the page's ${f(page.dL, 3)})` : ""} · ${dimMax == null ? "REPORTED (no owner bound)" : `bound |ΔL| ≤ ${dimMax}${over ? " ✗" : ""}`}`);
 }
+// H12-1: OKLCH raw → veiled for every veil, then R-32 on the dark arm's spot and page, per engine.
+const ok3 = (c) => { const [L, C, h] = lch(c); return `L ${f(L, 3)} C ${f(C, 3)} h ${f(h, 1)}°`; };
+for (const d of depth) lines.push(`oklch ${tag(d.cell)}${d.gated ? "" : " [info]"}: raw ${hex(d.off)} ${ok3(d.off)} → veiled ${hex(d.on)} ${ok3(d.on)}`);
+const R2_SPOT_DL = -0.225;   // R-2's ΔL on the spot, the record's reference (REGISTRY P11-0 finding 4, P11-2.2 R-32)
+const R32_DH = 3, R32_C = 0.95;
+const r32 = !!a.r32, how = (gated) => (!r32 ? " · REPORTED (gated under --r32)" : gated ? "" : " [info]");
+for (const engine of [...new Set([...gate, ...depth.map((d) => d.engine)])]) {
+  const gated = gate.includes(engine);
+  const spot = depth.find((d) => d.engine === engine && d.theme === "dark" && d.ground === "aurora");
+  const page = depth.find((d) => d.engine === engine && d.theme === "dark" && d.ground === "paper");
+  for (const [what, d] of [["spot (the aurora focus spot, frame 1's ground)", spot], ["page (the dark page)", page]]) {
+    if (d) continue;
+    if (r32) t.add(gated, false);
+    lines.push(`R-32 ${engine} dark ${what}: not read${r32 ? " ✗" : ""}${how(gated)}`);
+  }
+  if (spot) {
+    const [Lr, Cr, hr] = lch(spot.off), [Lv, Cv, hv] = lch(spot.on);
+    const dh = hueDiff(hr, hv), k = Cr > 0 ? Cv / Cr : null, dL = Lv - Lr;
+    const g1 = dh <= R32_DH, g2 = k != null && k >= R32_C, g3 = dL < 0;
+    if (r32) { t.add(spot.gated, g1); t.add(spot.gated, g2); t.add(spot.gated, g3); }
+    const x = (ok) => (r32 && !ok ? " ✗" : "");
+    lines.push(`R-32 ${tag(spot.cell)} (the spot)${how(spot.gated)}: raw ${ok3(spot.off)} → veiled ${ok3(spot.on)} · (i) hue held |Δh| ${f(dh, 1)}° ≤ ${R32_DH}°${x(g1)} · (ii) chroma kept C ${f(Cv, 3)}/${f(Cr, 3)} = ${f(k, 3)} × raw ≥ ${R32_C}${x(g2)} · (iii) dims ΔL ${f(dL, 3)} < 0${x(g3)}`);
+  }
+  if (page) {
+    const dL = lch(page.on)[0] - lch(page.off)[0], g3 = dL < 0;
+    if (r32) t.add(page.gated, g3);
+    lines.push(`R-32 ${tag(page.cell)} (the page)${how(page.gated)}: raw ${ok3(page.off)} → veiled ${ok3(page.on)} · (iii) dims ΔL ${f(dL, 3)} < 0${r32 && !g3 ? " ✗" : ""} (hue and chroma not read: the page is near-neutral)`);
+  }
+  if (spot || page) {
+    const dl = (d) => (d ? f(lch(d.on)[0] - lch(d.off)[0], 3) : "—");
+    lines.push(`R-32 ${engine} dark ΔL, reported, never gated: spot ${dl(spot)} · page ${dl(page)} · beside R-2's spot ${R2_SPOT_DL} (the owner's eye decides "quieter, not brown")${gated ? "" : " [info]"}`);
+  }
+}
 if (a.bank) {
   const dir = path.resolve(a.bank); fs.mkdirSync(dir, { recursive: true });
   const sha = (file) => crypto.createHash("sha256").update(fs.readFileSync(file)).digest("hex");
@@ -85,4 +127,4 @@ if (a.bank) {
     lines.push(`banked ${path.basename(fout)} sha256 ${sha(fout)} · ${path.basename(pout)} sha256 ${sha(pout)} (raw | full, crop ${cx},${cy} 240×160, probe ${d.probe.map(Math.round).join(",")})`);
   }
 }
-report(cap, { id: "M-9", title: `state registers (active, hover, checked and selected fills differ from their surface by ΔE_OK ≥ 0.02; the focus veil dims, both themes; its depth over every ground ${dimMax == null ? "REPORTED" : `gated at |ΔL| ≤ ${dimMax}`})`, lines, ...t, gate });
+report(cap, { id: "M-9", title: `state registers (active, hover, checked and selected fills differ from their surface by ΔE_OK ≥ 0.02; the focus veil dims, both themes; its depth over every ground ${dimMax == null ? "REPORTED" : `gated at |ΔL| ≤ ${dimMax}`}; R-32 on the dark spot and page ${r32 ? "gated" : "REPORTED"})`, lines, ...t, gate });

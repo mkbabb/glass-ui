@@ -52,12 +52,18 @@
 // pipe, which truncates and reads FAIL. Its fixtures: floor v9 and the minor v8 as banked (--h9-trees fv9, fv9p,
 // minor8, minor8p; --h7-trees minor8). H11-2, the printer of the re-valued tokens' neighbourhood (neighbourhood.mjs):
 // a tiny fixture, floor v9's six printed lines (P10-1.1) as its plant, and sweep-frozen.json byte-equal to HEAD's.
+// H12 (pass 12, REGISTRY P11-5): H12-1, M-9's OKLCH print and R-32's gates on the dark arm (--r32), on one-cell state
+// captures laid out from pixels (no browser): the plant is R-2 (floor v10's bytes) as the battery last read it on the
+// shell ground (pass-7 FV6-records/M-9-*.log; floor v6 = floor v10, specimen CSS 347288745da7cf97) and frame 1's own
+// banked pixels (pass-5/frames-H5-1); the fixture is an arm that dims by OKLCH lightness and keeps chroma; single-gate
+// plants for (i), (iii) and a missing spot. FRAME1 rows read frame 1's PNGs against their bank log.
 // --reuse-green: keep an existing green capture (the plants are captured fresh).
 // --fields: a HEAD run's capture (its Chromium empty-scene aurora frames become the fixtures' field pixels).
 import fs from "node:fs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
-import { OUT, HERE, CHECKOUT, RETUNES, FIELD_CLAIM_SCENES, cli, list, lin, oklchLin, PNG } from "./lib.mjs";
+import crypto from "node:crypto";
+import { OUT, HERE, CHECKOUT, RETUNES, FIELD_CLAIM_SCENES, cli, list, lin, oklchLin, PNG, readPng, region, mean3, dE, lch, hex, f } from "./lib.mjs";
 import { writeFixture, writeStoryFixture } from "./fixtures.mjs";
 import { capture } from "./capture.mjs";
 
@@ -939,6 +945,120 @@ if (want("H11-2")) {
   const head = spawnSync("git", ["-C", CHECKOUT, "show", "HEAD:docs/tranches/BL/design/material/harness/sweep-frozen.json"], { encoding: "utf8" }).stdout;
   const same = head === fs.readFileSync(path.join(HERE, "sweep-frozen.json"), "utf8"), opens = /sweep-frozen/.test(fs.readFileSync(path.join(HERE, "neighbourhood.mjs"), "utf8").replace(/^\/\/.*$/gm, ""));
   row("H11-2", "FROZEN", same && !opens && head.length > 0, `sweep-frozen.json ${same ? "byte-equal to" : "differs from"} HEAD's (${JSON.parse(head || "{\"words\":[]}").words.length} words); the printer's code ${opens ? "opens" : "does not open"} it`, "H11-2 adds no frozen word");
+}
+
+// ── H12 (pass 12, REGISTRY P11-5): H12-1, R-32's reading of the dark focus veil ─────────────────────────────────────
+// A one-cell-per-ground state capture laid out from pixels: a 400 × 240 frame, the raw ground everywhere in `raw`, the
+// veiled colour (or banked veiled pixels) inside the probe in `full`, and a plate carrying four distinct fills so M-9's
+// fill rows pass by construction and only the veil rows can red. M-9 runs unchanged on it, under --r32.
+const P5F = path.join(HERE, "..", "pass-5", "frames-H5-1"), P7F = path.join(HERE, "..", "pass-7", "FV6-records");
+const hx = (s) => [1, 3, 5].map((i) => parseInt(s.slice(i, i + 2), 16));
+const enc8 = (v) => Math.round(Math.max(0, Math.min(255, 255 * (v <= 0.0031308 ? 12.92 * v : 1.055 * v ** (1 / 2.4) - 0.055))));
+const fromOklch = (L, C, h) => oklchLin(L, C, h).map((v) => enc8(Math.max(0, v)));
+// A planted colour must be inside sRGB: a clipped channel moves hue and chroma, and the plant would test the clip.
+const inGamut = (L, C, h) => oklchLin(L, C, h).every((v) => v >= 0 && v <= 1);
+const PROBE = [200, 100, 60, 40];
+function veilCap(name, cells) {
+  const dir = path.join(ROOT, "caps", name); fs.rmSync(dir, { recursive: true, force: true }); fs.mkdirSync(path.join(dir, "png"), { recursive: true });
+  const W = 400, H = 240, plate = [0x33, 0x28, 0x21], fills = [["active", [40, 40, 40, 20], [0x63, 0x45, 0x39]], ["hover", [100, 40, 40, 20], [0x57, 0x38, 0x2c]], ["checked", [40, 100, 40, 20], [0x9d, 0x6e, 0xa4]], ["selected", [100, 100, 40, 20], [0x78, 0x6e, 0x65]]];
+  const out = [];
+  for (const c of cells) {
+    const key = `${c.engine}-${c.theme}-${c.ground}`, raw = new PNG({ width: W, height: H }), full = new PNG({ width: W, height: H });
+    const put = (png, x, y, rgb) => png.data.set([...rgb, 255], (y * W + x) * 4);
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { put(raw, x, y, c.raw); put(full, x, y, c.raw); }
+    for (let y = 20; y < 160; y++) for (let x = 20; x < 160; x++) put(full, x, y, plate);
+    for (const [, [x0, y0, w, h], rgb] of fills) for (let y = y0; y < y0 + h; y++) for (let x = x0; x < x0 + w; x++) put(full, x, y, rgb);
+    const [px, py, pw, ph] = PROBE;
+    for (let y = 0; y < ph; y++) for (let x = 0; x < pw; x++) {
+      if (c.rawPx) put(raw, px + x, py + y, c.rawPx(x, y));
+      put(full, px + x, py + y, c.vPx ? c.vPx(x, y) : c.veiled);
+    }
+    fs.writeFileSync(path.join(dir, "png", `${key}-raw.png`), PNG.sync.write(raw)); fs.writeFileSync(path.join(dir, "png", `${key}-full.png`), PNG.sync.write(full));
+    out.push({ engine: c.engine, shim: c.engine === "webkit", theme: c.theme, ground: c.ground, scene: "state", variant: "base",
+      files: { full: `png/${key}-full.png`, noink: `png/${key}-full.png`, raw: `png/${key}-raw.png` },
+      specs: [{ id: "resting", rect: [20, 20, 140, 140], fills: fills.map(([id, rect]) => ({ id, rect })) }], veil: [PROBE] });
+  }
+  fs.writeFileSync(path.join(dir, "cells.json"), JSON.stringify({ meta: { target: `H12-1 ${name}` }, cells: out }, null, 1));
+  return dir;
+}
+// The dark cells of both engines from four colours per engine: { chromium: [spotRaw, spotVeiled, pageRaw, pageVeiled], webkit: … }.
+const darkCells = (byEngine) => Object.entries(byEngine).flatMap(([engine, [sr, sv, pr, pv]]) => [
+  ...(sr ? [{ engine, theme: "dark", ground: "aurora", raw: sr, veiled: sv }] : []), { engine, theme: "dark", ground: "paper", raw: pr, veiled: pv }]);
+const DARK = ["--cells", "^\\w+ dark \\w+ state$"];
+const m9 = (capdir, extra, expect, must, note) => {
+  for (const engine of BOTH) {
+    const out = staticWitness("H12-1", "m9-state-registers", [capdir, "--gate", engine, ...DARK, ...extra], expect, `${note} (gate ${engine})`);
+    rowsHold("H12-1", engine, out, must(engine), `${note} (gate ${engine})`);
+  }
+};
+const rx = (s) => new RegExp(s.replace(/[()[\]+.?*|]/g, (c) => "\\" + c).replace(/<n>/g, "-?\\d+\\.\\d+"));
+if (want("H12-1")) {
+  // R-2 as the battery last read it on floor v10's bytes, per engine (pass-7 FV6-records/M-9-chromium.log:5,6 and
+  // M-9-webkit.log:5,6: the Chromium shell paints the aurora's css arm, Playwright WebKit its GL arm).
+  const LOGS = ["M-9-chromium.log", "M-9-webkit.log"].map((f) => fs.readFileSync(path.join(P7F, f), "utf8")).join("\n");
+  const veilOf = (eng, ground) => { const m = LOGS.match(new RegExp(`^  ${eng} dark ${ground} state: .*focus veil (#[0-9a-f]{6}) → (#[0-9a-f]{6})`, "m")); return m.slice(1).map(hx); };
+  const R2 = { chromium: [...veilOf("chromium", "aurora"), ...veilOf("chromium", "paper")], webkit: [...veilOf("webkit\\+shim", "aurora"), ...veilOf("webkit\\+shim", "paper")] };
+  console.log(`     H12-1 R-2 from the pass-7 logs: chromium spot ${R2.chromium.slice(0, 2).map(hex).join(" → ")} page ${R2.chromium.slice(2).map(hex).join(" → ")} · webkit spot ${R2.webkit.slice(0, 2).map(hex).join(" → ")} page ${R2.webkit.slice(2).map(hex).join(" → ")}`);
+  const r2 = veilCap("h12-r2", darkCells(R2));
+  m9(r2, ["--r32"], "FAIL", (e) => e === "chromium"
+    ? [rx("R-32 chromium dark aurora state (the spot): raw L 0.746 C 0.142 h 61.6° → veiled L 0.521 C 0.118 h 60.4° · (i) hue held |Δh| 1.3° ≤ 3° · (ii) chroma kept C 0.118/0.142 = 0.832 × raw ≥ 0.95 ✗ · (iii) dims ΔL -0.226 < 0\n"),
+       rx("R-32 chromium dark paper state (the page): raw L 0.146 C 0.003 h 68.6° → veiled L 0.121 C 0.007 h 107.3° · (iii) dims ΔL -0.025 < 0 (hue"),
+       "R-32 chromium dark ΔL, reported, never gated: spot -0.226 · page -0.025 · beside R-2's spot -0.225", "FAIL (1 of 14 gated rows)"]
+    : [rx("R-32 webkit+shim dark aurora state (the spot): raw L 0.681 C 0.163 h 44.8° → veiled L 0.470 C 0.108 h 44.9° · (i) hue held |Δh| 0.1° ≤ 3° · (ii) chroma kept C 0.108/0.163 = 0.662 × raw ≥ 0.95 ✗ · (iii) dims ΔL -0.211 < 0\n"),
+       "R-32 webkit dark ΔL, reported, never gated: spot -0.211 · page -0.022 · beside R-2's spot -0.225", "FAIL (1 of 14 gated rows)"],
+    "H12-1 plant: R-2 (floor v10's bytes, the pass-7 battery's reading): (i) PASS, (ii) FAIL, (iii) PASS on the spot and the page");
+  m9(r2, [], "PASS", (e) => [rx(`R-32 ${e === "chromium" ? "chromium" : "webkit+shim"} dark aurora state (the spot) · REPORTED (gated under --r32)`), "PASS (10 gated rows)"],
+    "H12-1: the same R-2 capture without --r32: the base M-9 passes (the veil dims ≥ 0.02) and R-32 prints REPORTED");
+  // The fixture: an arm that dims by OKLCH lightness and keeps chroma and hue (ΔL −0.10 on the spot, −0.02 on the page),
+  // each raw ground as R-2's. −0.10 stays inside sRGB on both grounds: with C kept, #ec9642 leaves the gamut past ΔL
+  // −0.133 and #e87237 past −0.114 (lib.mjs gamutMaxC; H12.md §2.3).
+  const planted = [];
+  const keep = (rgb, dl, dh = 0) => { const [L, C, h] = lch(rgb); planted.push(inGamut(L - dl, C, h + dh)); return fromOklch(L - dl, C, h + dh); };
+  const arm = (dh = 0, pageDl = 0.02) => Object.fromEntries(Object.entries(R2).map(([e, [sr, , pr]]) => [e, [sr, keep(sr, 0.10, dh), pr, keep(pr, pageDl)]]));
+  m9(veilCap("h12-keep", darkCells(arm())), ["--r32"], "PASS", (e) => [new RegExp(`R-32 ${e === "chromium" ? "chromium" : "webkit\\+shim"} dark aurora state \\(the spot\\): raw .* · \\(i\\) hue held \\|Δh\\| 0\\.\\d° ≤ 3° · \\(ii\\) chroma kept C [\\d.]+/[\\d.]+ = (?:0\\.99\\d|1\\.00\\d) × raw ≥ 0\\.95 · \\(iii\\) dims ΔL -0\\.(?:09\\d|10\\d) < 0\n`), { not: "✗" }, "PASS (14 gated rows)"],
+    "H12-1 fixture: an arm that dims by OKLCH lightness (spot −0.10, page −0.02) and keeps chroma and hue: (i)-(iii) PASS");
+  m9(veilCap("h12-hue", darkCells(arm(-5))), ["--r32"], "FAIL", () => [/\(i\) hue held \|Δh\| [45]\.\d° ≤ 3° ✗/, { not: /\(ii\)[^·]*✗/ }, "FAIL (1 of 14 gated rows)"],
+    "H12-1 plant: the same arm turned −5° in hue (in gamut; +5° leaves sRGB on both grounds and the clip pulls the hue back): (i) alone FAILs");
+  m9(veilCap("h12-bright", darkCells(arm(0, -0.02))), ["--r32"], "FAIL", () => [/\(the page\): .*\(iii\) dims ΔL 0\.019 < 0 ✗/, /dims ≥ 0\.02\) brightens ✗/, "FAIL (2 of 14 gated rows)"],
+    "H12-1 plant: the same arm lifting the page by 0.02: (iii) FAILs on the page (and the base M-9's dims row with it)");
+  row("H12-1", "GAMUT", planted.every(Boolean), `${planted.filter(Boolean).length}/${planted.length} planted arm colours inside sRGB before the 8-bit encode`, "H12-1: the fixture and the hue and page plants test the gate, not a gamut clip");
+  const noSpot = Object.fromEntries(Object.entries(arm()).map(([e, [, , pr, pv]]) => [e, [null, null, pr, pv]]));
+  m9(veilCap("h12-nospot", darkCells(noSpot)), ["--r32"], "FAIL", (e) => [`R-32 ${e} dark spot (the aurora focus spot, frame 1's ground): not read ✗`, `MISSING ${e} dark aurora state: not captured`],
+    "H12-1 plant: no dark aurora cell under --r32: the spot is a FAIL row, never a silent pass (E-2)");
+  // FRAME1: frame 1's banked pixels (pass-5/frames-H5-1, the frame O-103a declined) against their bank log
+  // (pass-5/H5-records/M-9-bank.log:20, :22: crop 780,120 240×160 at 2×, probe 870,180,60,40) and M-9 log.
+  const BANK = fs.readFileSync(path.join(HERE, "..", "pass-5", "H5-records", "M-9-bank.log"), "utf8");
+  const H5LOG = fs.readFileSync(path.join(HERE, "..", "pass-5", "H5-records", "M-9-webkit.log"), "utf8");
+  const NOISE = 0.005;   // ΔE_OK: a quarter of M-9's fill threshold, above the 8-bit rounding of a printed hex (≤ 0.0025)
+  const fr = {};
+  for (const engine of BOTH) {
+    const pairF = path.join(P5F, `${engine}-dark-aurora-state-veil-raw-vs-full.png`), fullF = path.join(P5F, `${engine}-dark-aurora-state-full.png`);
+    const sha = (p) => crypto.createHash("sha256").update(fs.readFileSync(p)).digest("hex");
+    const bl = BANK.match(new RegExp(`banked ${engine}-dark-aurora-state-full\\.png sha256 ([0-9a-f]{64}) · \\S+ sha256 ([0-9a-f]{64}) \\(raw \\| full, crop (\\d+),(\\d+) 240×160, probe (\\d+),(\\d+),(\\d+),(\\d+)\\)`));
+    const [, shaFull, shaPair, cx, cy, px, py, pw, ph] = bl, ox = (px - cx) * 2, oy = (py - cy) * 2;
+    const pair = readPng(pairF), full = readPng(fullF), half = 240 * 2 + 8;
+    const rawM = mean3(region(pair, [ox, oy, pw * 2, ph * 2])), vM = mean3(region(pair, [half + ox, oy, pw * 2, ph * 2])), vF = mean3(region(full, [+px, +py, +pw, +ph]));
+    const tg = engine === "webkit" ? "webkit\\+shim" : "chromium", lm = H5LOG.match(new RegExp(`veil depth ${tg} dark aurora state[^:]*: (#[0-9a-f]{6}) → (#[0-9a-f]{6})`));
+    const [lr, lv] = lm.slice(1).map(hx), d1 = dE(rawM, lr), d2 = dE(vM, lv), d3 = dE(vM, vF);
+    const shaOk = sha(fullF) === shaFull && sha(pairF) === shaPair;
+    row("H12-1", "FRAME1", shaOk && d1 <= NOISE && d2 <= NOISE && d3 <= NOISE, `${engine}: sha256 ${shaOk ? "equal to" : "differs from"} the bank log; the probe reads raw ${hex(rawM)} → veiled ${hex(vM)} (pair) / ${hex(vF)} (full frame); the pass-5 M-9 log ${hex(lr)} → ${hex(lv)}: ΔE ${f(d1, 4)}, ${f(d2, 4)}, pair vs frame ${f(d3, 4)} ≤ ${NOISE}`, `H12-1 fixture: frame 1's banked pixels reproduce their own bank (${engine})`);
+    fr[engine] = { rawM, vM, raw8: rawM.map(Math.round), v8: vM.map(Math.round), ox, oy, pw: +pw, ph: +ph, pair, half };
+  }
+  // The registry's pair for frame 1 (P11-4 F-1, P11-5 H12-1: #ec9642 → #99560a) is the Chromium shell-ground reading of
+  // pass 7 (FV6 M-9-chromium.log:6). Frame 1 was banked in pass 5 on the WebGPU field's ground, before H6-0 moved the
+  // ground (REGISTRY P6 finding 3). Printed, measured: the distance is the ground change, not paint noise.
+  const c = fr.chromium, dr = dE(c.rawM, hx("#ec9642")), dv = dE(c.vM, hx("#99560a"));
+  row("H12-1", "FRAME1", dr > NOISE && dv > NOISE && dE(c.rawM, hx("#e87237")) <= NOISE, `chromium frame 1 vs the registry's #ec9642 → #99560a: ΔE ${f(dr, 4)} raw, ${f(dv, 4)} veiled (> ${NOISE}: NOT reproduced); frame 1's raw is the WebGPU ground #e87237 (ΔE ${f(dE(c.rawM, hx("#e87237")), 4)})`, "H12-1 record: frame 1's pixels are pass 5's ground, not the shell ground the registry's pair was read on");
+  // Frame 1's own pixels as an R-2 plant: the probe laid out pixel for pixel from the pair (every other pixel of the 2×
+  // crop), the page from the pass-5 log's dark paper rows.
+  const pageOf = (tg) => { const m = H5LOG.match(new RegExp(`veil depth ${tg} dark paper state[^:]*: (#[0-9a-f]{6}) → (#[0-9a-f]{6})`)); return m.slice(1).map(hx); };
+  const px = (e, k) => (x, y) => { const p = fr[e].pair, X = (k ? fr[e].half : 0) + fr[e].ox + 2 * x, Y = fr[e].oy + 2 * y, i = (p.width * Y + X) * 4; return [p.data[i], p.data[i + 1], p.data[i + 2]]; };
+  const f1 = BOTH.flatMap((e) => { const [pr, pv] = pageOf(e === "webkit" ? "webkit\\+shim" : "chromium");
+    return [{ engine: e, theme: "dark", ground: "aurora", raw: fr[e].raw8, rawPx: px(e, 0), vPx: px(e, 1) }, { engine: e, theme: "dark", ground: "paper", raw: pr, veiled: pv }]; });
+  m9(veilCap("h12-frame1", f1), ["--r32"], "FAIL", (e) => [e === "chromium"
+    ? /R-32 chromium dark aurora state \(the spot\): raw L 0\.68\d C 0\.163 h 44\.\d° → veiled L 0\.48\d C 0\.134 h 44\.\d° · \(i\) hue held \|Δh\| 0\.\d° ≤ 3° · \(ii\) chroma kept C 0\.134\/0\.163 = 0\.82\d × raw ≥ 0\.95 ✗ · \(iii\) dims ΔL -0\.(?:19\d|200) < 0\n/
+    : /R-32 webkit\+shim dark aurora state \(the spot\): raw L 0\.68\d C 0\.163 h 44\.\d° → veiled L 0\.47\d C 0\.108 h 45\.\d° · \(i\) hue held \|Δh\| 0\.\d° ≤ 3° · \(ii\) chroma kept C 0\.108\/0\.163 = 0\.66\d × raw ≥ 0\.95 ✗ · \(iii\) dims ΔL -0\.21\d < 0\n/, "FAIL (1 of 14 gated rows)"],
+    "H12-1 plant: frame 1's own banked pixels (pass 5's ground): (i) PASS, (ii) FAIL, (iii) PASS");
 }
 
 if (want("W-B")) {
