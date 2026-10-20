@@ -21,6 +21,14 @@ import {
     DropdownMenuTrigger,
 } from "../../src/components/menu";
 import { Popover, PopoverContent } from "../../src/components/popover";
+import { RadioGroup, RadioGroupItem } from "../../src/components/radio-group";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "../../src/components/select";
 import ToggleGroup from "../../src/components/toggle-group/ToggleGroup.vue";
 import ToggleGroupItem from "../../src/components/toggle-group/ToggleGroupItem.vue";
 import { Skeleton } from "../../src/components/skeleton";
@@ -105,7 +113,34 @@ const scenes: Record<string, Component> = {
             ]);
     }),
 
-    // O-102 (3) — a menu and a popover opened from seats of a collapsible dock.
+    // G-3 — a run of [control seat, RadioGroup seated DIRECTLY, control seat]. The group
+    // root renders its own `tabindex` (reka's RovingFocusGroup), so "focusable" alone
+    // does not make it a seat that is its own control.
+    "seat-direct": defineComponent(() => {
+        const model = ref("x");
+        return () =>
+            bottomDock({ collapse: false }, () => [
+                h(DockControl, { "aria-label": "First", "data-witness": "seat-0" }, () => "A"),
+                h(
+                    RadioGroup,
+                    {
+                        modelValue: model.value,
+                        "onUpdate:modelValue": (v: string) => (model.value = v),
+                        orientation: "horizontal",
+                        "aria-label": "Mode",
+                        "data-witness": "seat-g",
+                        style: "display:flex;gap:8px",
+                    },
+                    () => [
+                        h(RadioGroupItem, { value: "x", "data-item": "x", "aria-label": "X" }),
+                        h(RadioGroupItem, { value: "y", "data-item": "y", "aria-label": "Y" }),
+                    ],
+                ),
+                h(DockControl, { "aria-label": "Last", "data-witness": "seat-2" }, () => "B"),
+            ]);
+    }),
+
+    // O-102 (3) — a menu, a popover and a select opened from seats of a collapsible dock.
     collapse: defineComponent(() => () =>
         bottomDock({ collapse: "open" }, () => [
             h(DropdownMenu, { modal: false }, () => [
@@ -118,6 +153,13 @@ const scenes: Record<string, Component> = {
             h(Popover, () => [
                 h(DockTrigger, { for: "popover", "aria-label": "Time", "data-witness": "pop-trigger" }, () => "P"),
                 h(PopoverContent, { side: "top", "aria-label": "Time" }, () => "0.42 s"),
+            ]),
+            h(Select, { modelValue: "a" }, () => [
+                h(SelectTrigger, { "aria-label": "Speed", "data-witness": "select-trigger" }, () => h(SelectValue)),
+                h(SelectContent, { side: "top" }, () => [
+                    h(SelectItem, { value: "a" }, () => "1×"),
+                    h(SelectItem, { value: "b" }, () => "2×"),
+                ]),
             ]),
         ]),
     ),

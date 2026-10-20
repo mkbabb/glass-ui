@@ -1,9 +1,11 @@
 // glass-ui 10.1.1 — the engine witnesses, one per cure. Each drives
 // `release-10-1-1/harness.html?scene=<name>` (the real components from `src/` under
 // the demo's own cascade) and reads layout, hit-testing and focus, never pixels.
-// Every test here is RED on a 10.1.0 tree carrying this spec and harness, and GREEN on
-// 10.1.1. Engines: the `chromium-headless-new` and `coarse-touch` projects, and the
-// `webkit` project (Playwright WebKit, run under `guarded --exclusive webkit`).
+// Every witness here is RED on a 10.1.0 tree carrying this spec and harness, and GREEN on
+// 10.1.1, except the O-102 (6) block, which is a GUARD and says so: it is green on both.
+// Engines: the `chromium-headless-new` and `coarse-touch` projects, and the `webkit`
+// project (Playwright WebKit 2287, `webkit-2287.config.ts`, under
+// `guarded --exclusive webkit`).
 import { expect, test, type Page } from "@playwright/test";
 
 async function open(page: Page, scene: string): Promise<void> {
@@ -34,7 +36,7 @@ async function hits(page: Page, sel: string, also?: string): Promise<boolean[]> 
     }, [sel, also] as const);
 }
 
-const DESK = { width: 1280, height: 800 };
+const DESK = { width: 1440, height: 900 };
 const PHONE = { width: 390, height: 844 };
 
 test.describe("10.1.1", () => {
@@ -101,10 +103,29 @@ test.describe("10.1.1", () => {
         );
     });
 
+    test("G-3 · a composite seated directly in the run keeps its arrows", async ({ page }) => {
+        await open(page, "seat-direct");
+        const radio = page.locator('[data-item="x"]');
+        await expect(radio).toBeVisible();
+        await radio.focus();
+        await page.keyboard.press("ArrowRight");
+        // The group's own roving takes the arrow; the run never moves to the next seat.
+        expect(await page.evaluate(() => document.activeElement?.getAttribute("data-item"))).toBe(
+            "y",
+        );
+        // And the run's arrows, from a seat that is its own control, skip the group.
+        await page.locator('[data-witness="seat-0"]').focus();
+        await page.keyboard.press("ArrowRight");
+        expect(
+            await page.evaluate(() => document.activeElement?.getAttribute("data-witness")),
+        ).toBe("seat-2");
+    });
+
     // ── (4) O-102 (3) ────────────────────────────────────────────────────────
     for (const [label, trigger, slot] of [
         ["dropdown", "menu-trigger", "menu-content"],
         ["popover", "pop-trigger", "popover-content"],
+        ["select", "select-trigger", "select-content"],
     ] as const) {
         test(`O-102(3) · a ${label} opened from a seat closes when the dock collapses`, async ({
             page,
@@ -122,12 +143,41 @@ test.describe("10.1.1", () => {
         });
     }
 
+    // A keyboard-opened menu closed by the collapse hands focus to the dock's summary.
+    // On 10.1.0 the menu stayed open; before the hand-off, the close dropped focus to
+    // <body> (the menu's own return aims at its trigger, inert in the collapsed face).
+    test("O-102(3) · a collapse-closed menu hands focus to the summary, not <body>", async ({
+        page,
+    }) => {
+        await open(page, "collapse");
+        const t = page.locator('[data-witness="menu-trigger"]');
+        await expect(t).toBeVisible();
+        await t.focus();
+        await page.keyboard.press("Enter");
+        await expect(page.locator('[data-slot="menu-content"]')).toBeVisible();
+        await expect
+            .poll(() => page.evaluate(() => document.activeElement?.getAttribute("role")))
+            .toBe("menuitem");
+        await page.evaluate(() =>
+            (window as unknown as { __dock: () => { collapse(): void } }).__dock().collapse(),
+        );
+        await expect(page.locator('[data-slot="menu-content"]')).toHaveCount(0, { timeout: 3000 });
+        await page.waitForTimeout(300); // past the menu's own (inert-refused) focus return
+        expect(
+            await page.evaluate(() =>
+                document.activeElement?.classList.contains("dock-layer--summary"),
+            ),
+        ).toBe(true);
+    });
+
     // ── (5) O-102 (6) — a GUARD, not a red/green witness ─────────────────────
-    // Measured on 10.1.0 and 10.1.1 alike: a glass Popover from a seat is unclipped at
-    // both widths, portalled or not (reka's wrapper is `position: fixed`, and the dock's
-    // `contain: layout` makes the dock, not the clipping run, its containing block). The
-    // plate clipped in the owner's frame is a consumer-authored absolute float inside
-    // the run's scroll port. This holds the glass half of that fact.
+    // Green on 10.1.0 and 10.1.1 alike: a glass Popover from a seat is unclipped at both
+    // widths, portalled or not (reka's wrapper is `position: fixed`, and the dock's
+    // `contain: layout` makes the dock, not the clipping run, its containing block).
+    // The row itself is NOT cured in 10.1.1 and is returned to the owner (CHANGELOG):
+    // the plate in frame 12.51.30 is an absolute float inside the run, and the run, a
+    // scroll port, clips every seat's cross-axis overhang (`dock/styles/run.css`). This
+    // guard holds only the overlay half, which the consumer's own cure now rides.
     for (const [label, viewport] of [
         ["desktop", DESK],
         ["phone", PHONE],

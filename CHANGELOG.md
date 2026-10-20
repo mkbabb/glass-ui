@@ -2,14 +2,15 @@
 
 ## 10.1.1 — 2026-10-19
 
-Five cures and one owner-ruled addition, no break. Asked by the atlas consumer (U batch
+Four cures and one owner-ruled addition; one owner row returned open (O-102 (6), below). Asked by the atlas consumer (U batch
 G-1 to G-3, `docs/tranches/BK/coordination/ATLAS-TO-GLASS-2026-10-17-U-BATCH.md` and its
 addendum) and by the owner through value.js (records: `docs/tranches/BL/audit/INBOUND.md`
 O-99, O-99a, O-102, O-102b). `MIGRATION.md` §10.1.1 lists the behaviour a consumer may
 notice. Each witness below fails on the 10.1.0 bytes and passes on these; the engine
 witnesses are `tests-visual/release-10-1-1.spec.ts` (harness `tests-visual/release-10-1-1/`),
 run in Chromium (desk and coarse projects) and Playwright WebKit 2287
-(`tests-visual/webkit-2287.config.ts`; 2311 crashes on any dock page, atlas N-1).
+(`tests-visual/webkit-2287.config.ts`; 2311 crashes on any dock page, atlas N-1), at 1440
+and 390 where width matters.
 
 - **Sheet renders fixed, not in document flow (G-1).** `.glass-floating` sets
   `position: relative` at 0,1,0, and the sheet's `position: fixed` sat in a `:where()` rule
@@ -23,36 +24,47 @@ run in Chromium (desk and coarse projects) and Playwright WebKit 2287
   no longer spell their own. Witness: `tests/components/menu/menu-z-rung.test.ts`; engine:
   "G-2 · a menu and its submenu paint above the dock's rung" (5 of 5 hit points on each).
 - **A composite in a dock seat keeps its tab stop and its arrows (G-3).** The run roves a
-  seat only when the seat is its own control (sequentially focusable, or carrying a
-  `tabindex`), and writes into nothing else. It used to write `tabIndex` onto a container
-  seat's first focusable descendant and claim arrows pressed inside it, so a nested
-  ToggleGroup had no tab stop and lost ArrowRight to the next seat. A container seat's
-  accessible name is still read from its first control. The `role="toolbar"` shape (G-4)
-  is unchanged and left to the owner; both of its arms extend this predicate. Witnesses:
+  seat only when the seat is its own control: sequentially focusable or carrying a
+  `tabindex`, and holding no control of its own. It writes into nothing else. It used to
+  write `tabIndex` onto a container seat's first focusable descendant and claim arrows
+  pressed inside it, so a nested ToggleGroup had no tab stop and lost ArrowRight to the
+  next seat; a composite root seated directly (RadioGroup, whose reka root renders its own
+  `tabindex`) lost its arrows the same way. A container seat's accessible name is still
+  read from its first control. The `role="toolbar"` shape (G-4) is unchanged and left to
+  the owner; both of its arms extend this predicate. Witnesses:
   `tests/components/custom/dock/g-dock-seat-rule.test.ts`, `crit-seat-cx.test.ts`; engine:
-  "G-3 · a composite in a container seat keeps its tab stop and its arrows".
-- **Collapsing the dock closes what its seats opened (O-102 (3)).** The dock context
-  publishes its posture (`expanded`), and `useDockParticipation` takes a `close`: on the
-  collapse edge every participating overlay closes. Popover closes at its root, the menu
-  through reka's root context. One path, no timer, and an expand opens nothing back.
-  Witness: `tests/components/custom/dock/GlassDock.collapse-closes-overlays.test.ts`;
-  engine: "O-102(3) · a dropdown / a popover opened from a seat closes when the dock
-  collapses".
+  "G-3 · a composite in a container seat keeps its tab stop and its arrows" and "G-3 · a
+  composite seated directly in the run keeps its arrows".
+- **Collapsing the dock closes the dropdowns and popovers its seats opened (O-102 (3)).**
+  The dock context publishes its posture (`expanded`), and `useDockParticipation` takes a
+  `close`: on the collapse edge each overlay that states one closes. Three do: Popover at
+  its root, the menu and the Select through their reka root contexts. A hint (Tooltip),
+  a submenu (closed with its menu) and the command list state none. One path, no timer,
+  and an expand opens nothing back. Focus held in the expanded face or in a closed
+  overlay moves to the dock's summary on the same edge, as the Escape path always did
+  (the overlay's own return aims at its trigger, inert in the collapsed face, and fell
+  to `<body>`); the Escape path now rides that one hand-off. Witness:
+  `tests/components/custom/dock/GlassDock.collapse-closes-overlays.test.ts`; engine:
+  "O-102(3) · a dropdown / a popover / a select opened from a seat closes when the dock
+  collapses" and "O-102(3) · a collapse-closed menu hands focus to the summary".
 - **Skeleton `shimmer` (owner ruling, O-102b (3)).** One prop. A sheen of one fixed period
   travels across the shape in place of the breathe, on the shared `--duration-shimmer-fast`
-  clock, `linear`, compositor-only. Ink only: the foreground at the `--ink-seam` rung, no
+  clock, `linear`, compositor-only. Its profile has no transparent run, so a narrow tile
+  carries moving ink for the whole cycle. Ink only: the foreground at the `--ink-seam` rung, no
   hue. Static under `prefers-reduced-motion`, paused while the tile is off-screen or the
   document is hidden, absent under forced colors. The A-9 decline note in `Skeleton.vue` now
   records the ruling. Demo: Feedback › Skeleton › shimmer. Engine: "Skeleton · shimmer
   travels…" and "…holds still under reduced motion".
-- **The clipped dock popover (O-102 (6)): measured, not a glass defect.** A glass Popover
-  opened from a seat is unclipped at 390 and 1280, portalled or not, on 10.1.0 and 10.1.1
-  alike: reka's wrapper is `position: fixed`, and the dock's `contain: layout` makes the dock,
-  not the run, its containing block. The plate clipped in the owner's frame is fourier's
-  timeline caret, an absolutely positioned float inside the run, which is a scroll port and
-  clips its cross axis by CSS rule (`run.css`). The engine guard "O-102(6) · a popover
-  opened from a seat is not clipped" holds the glass half at both widths and both portal
-  arms.
+- **Not cured here: the clipped dock popover (O-102 (6)), returned to the owner.** The
+  plate clipped in frame 12.51.30 is fourier's timeline caret, an absolutely positioned
+  float inside the dock run. The run is a scroll port (`dock/styles/run.css`), and a
+  scroll port clips its cross axis by CSS rule, so every float a seat hangs above itself is
+  cut, on 10.1.0 and 10.1.1 alike. Glass's own overlays escape it: a Popover or Tooltip
+  from a seat is unclipped at 390 and 1440, portalled or not (engine guard "O-102(6) · a
+  popover opened from a seat is not clipped", green on both versions), and fourier now
+  renders the caret as a portalled Tooltip anchored to the thumb. The root, a run that
+  does not clip its seats' cross-axis overhang, is dock run geometry, and whether glass
+  takes it, and in which vehicle, is the owner's call.
 
 ## 10.1.0 — 2026-09-24
 
