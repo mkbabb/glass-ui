@@ -1,5 +1,54 @@
 # Changelog
 
+## 10.1.2 — 2026-10-20
+
+One change: atlas G-4, arm (b-ii), the declared seat marker, by owner-delegate ruling
+(records: `docs/tranches/BL/audit/INBOUND.md` O-102d;
+`docs/tranches/BK/coordination/ATLAS-TO-GLASS-2026-10-17-U-BATCH.md` G-3/G-4 and its
+addendum 1). `MIGRATION.md` §10.1.2 says what a consumer with its own dock seats must do.
+
+- **The dock run roves only declared seats.** A direct child of the run is a seat when it
+  carries `data-glass-dock-seat`. `DockControl` and `DockTrigger` set it, and so does
+  `DockBackgroundToggle`, which renders a `DockControl`. The run writes `tabIndex` only
+  into declared seats and claims Arrow/Home/End only when they are pressed inside one.
+  Every other child keeps its natural tab stop and its own keys. 10.1.1 inferred a seat
+  from focusability (`isRovedSeat` in `useDockRun.ts`). That inference is deleted, with no
+  alias. It had written `-1` onto atlas's filter trigger, gear, provenance handle, year range
+  and dark toggle, which dropped them from the Tab order.
+- **`role="toolbar"` only over an all-declared run.** The run claims `role="toolbar"` and
+  `aria-orientation` only while every direct child is a declared seat. A
+  `role="separator"` child does not void the claim, since a toolbar may hold separators
+  (APG). A run with any undeclared child claims no role. Its declared seats still share
+  one stop and rove by arrow. The claim is re-derived when children or markers change.
+- **The contract**, for consumers that measure it (atlas: 8 routes x 390/1440 x 3 engines;
+  value.js and the other siblings marking their own seats):
+  1. A seat is a direct child of `.dock-run` with the attribute `data-glass-dock-seat`
+     (any value; glass writes `""`). It has no other test.
+  2. Declared seats share one tab stop: the focused seat, else the `aria-current` seat,
+     else the first. Arrow keys (Left/Right horizontal, Up/Down vertical), Home and End
+     move between declared seats only, with no wrap.
+  3. The run writes nothing into an undeclared child and claims no key pressed inside
+     one. A plain button, a trigger, a `[role=button][tabindex]` handle, an input, a
+     composite (RadioGroup, ToggleGroup) seated directly, or a container holding any of
+     these keeps its own tab stop and its own arrows.
+  4. `.dock-run` carries `role="toolbar"` (and `aria-orientation`) when it has at least
+     one declared seat and every child that is not `role="separator"` is declared.
+     Otherwise it carries no role.
+- **Build path.** Branch `release/10.1.2` (worktree `.claude/worktrees/release-10.1.2`).
+  `npm ci && npm run build` writes `dist/`, and `npm pack` writes
+  `mkbabb-glass-ui-10.1.2.tgz` for a consumer install before the registry carries 10.1.2.
+- **Witnesses.** Unit: `tests/components/custom/dock/g-dock-seat-rule.test.ts` and
+  `crit-seat-cx.test.ts`, on the (b-ii) contract, 7 of 12 RED on 10.1.1 and 12 of 12 GREEN.
+  The 5 that pass on both are regression arms: the declared crit arm, the all-declared toolbar
+  and the three composites. Engine: `tests-visual/release-10-1-2.spec.ts` (harness
+  `tests-visual/release-10-1-2/`) at 1440 and 390, in Chromium (`chromium-headless-new`)
+  and Playwright WebKit 2287 (`tests-visual/webkit-2287.config.ts`): "the atlas shapes
+  seated in a run are all Tab-reachable", "arrows rove only the declared seats", "a run
+  with an undeclared child claims no toolbar role", and two regression arms, "an
+  all-declared run is one toolbar stop" and "a RadioGroup and a ToggleGroup seated
+  directly keep their arrows". The lattice roving tests and the toolbar test now seat
+  declared controls.
+
 ## 10.1.1 — 2026-10-19
 
 Four cures, one guarded row and one owner-ruled addition. Asked by the atlas consumer (U batch

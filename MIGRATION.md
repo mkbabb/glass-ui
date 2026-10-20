@@ -5,6 +5,29 @@ records the breaking changes that landed in that cut, newest first. Clean breaks
 — no legacy aliases, no back-compat shims (L invariant 4); every break is a one-line
 rename or import re-point per call site.
 
+## 10.1.2
+
+One behaviour change, no type change. **A custom dock seat must now carry
+`data-glass-dock-seat` to rove.**
+
+- The dock run roves a direct child only when it carries `data-glass-dock-seat`.
+  `DockControl`, `DockTrigger` and `DockBackgroundToggle` set it. A consumer's own seat
+  that should share the run's one tab stop and answer its arrow keys (a `RouterLink`, a
+  bespoke button, a `[role=button]` element) adds the attribute itself:
+  `<RouterLink data-glass-dock-seat to="/a">`. A `DockControl as-child` already sets it
+  on the child.
+- An undeclared child is left alone. It keeps its natural tab stop and its own keys, so a
+  filter trigger, a settings button, a handle, an input pair, a dark toggle or a composite
+  stays in the Tab order. A consumer that pulled such a control out of its dock run, or
+  restored its `tabindex`, to get it back into the Tab order can undo that.
+- `.dock-run` carries `role="toolbar"` and `aria-orientation` only when every child is a
+  declared seat (`role="separator"` children aside). A dock whose run mixes declared seats
+  with other controls no longer announces as a toolbar. To keep the role, declare every
+  seat, or move the undeclared controls to `#persistent` / `#persistent-end`.
+- A test or probe that read `role="toolbar"` off an empty run, or off a run of plain
+  buttons, now finds no role. Seat the run with declared controls.
+- Atlas and value.js: the contract and the build path are in `CHANGELOG.md` §10.1.2.
+
 ## 10.1.1
 
 One type-level change, below; no runtime break. Behaviour a consumer may notice:
