@@ -1,0 +1,47 @@
+src/styles/glass/focus-veil.css:: ++ b/src/styles/glass/focus-veil.css
+src/styles/glass/focus-veil.css:16:    five values become the `--glass-focus-veil-*` cohort in tokens/glass.css, with the
+src/styles/glass/focus-veil.css:17:    chain's tone (`-tone`) as a sixth. The Dialog now BINDS this class instead of
+src/styles/glass/focus-veil.css:18:    re-spelling the recipe.
+src/styles/glass/focus-veil.css:44:    THE CROSS-ENGINE FLOOR. Plain `blur()` + the tone (`--glass-focus-veil-tone`:
+src/styles/glass/focus-veil.css:45:    `saturate()`, and in the dark arm `contrast()` + `brightness()`) under a
+src/styles/glass/focus-veil.css:46:    `mask-image`; no `url()` filter, no engine branch. The `-webkit-mask-*` arm is
+src/styles/glass/focus-veil.css:47:    SOURCE-AUTHORED (only the `backdrop-filter` pair is build-injected), and
+src/styles/glass/focus-veil.css:48:    `-webkit-mask-composite: source-in` is the legacy spelling of `mask-composite:
+src/styles/glass/focus-veil.css:49:    intersect` — the same product, not a fallback.
+src/styles/glass/focus-veil.css:76:             var(--glass-focus-veil-tone);
+src/styles/tokens/dark-arm.css:80: ++ b/src/styles/tokens/dark-arm.css
+src/styles/tokens/dark-arm.css:289:     /* The focus veil's dim, dark arm: it dims by lightness and keeps chroma (Q-14's
+src/styles/tokens/dark-arm.css:290:        dark arm, O-103a). The light declaration (tokens/glass.css) mixes the scrim ink at
+src/styles/tokens/dark-arm.css:291:        a tenth, and the scrim ink (L 0.216) is lighter than the dark page (`#0b0a09`,
+src/styles/tokens/dark-arm.css:292:        L 0.146), so over it the veil brightened: +0.006 measured. A black mix dims, but a
+src/styles/tokens/dark-arm.css:293:        flat mix pulls every ground toward black: 40% read the aurora's orange focus spot
+src/styles/tokens/dark-arm.css:294:        as brown (C 0.142 -> 0.118, L -0.226). So the dark veil paints no background and
+src/styles/tokens/dark-arm.css:295:        dims inside its one chain instead. After the medium's `saturate()`,
+src/styles/tokens/dark-arm.css:296:        `contrast(1.03)` lowers the near-black page most and `brightness(0.8)` scales the
+src/styles/tokens/dark-arm.css:297:        rest. Predicted from the filter maths, calibrated on the 40% black's measured pairs
+src/styles/tokens/dark-arm.css:298:        (D3 pass 12, FV11-model.py): the dark page L -0.030; the spot keeps its hue
+src/styles/tokens/dark-arm.css:299:        within 1.8 deg and its chroma at 1.04x, and drops L 0.090-0.105. */
+src/styles/tokens/dark-arm.css:300:     --glass-focus-veil-dim: transparent;
+src/styles/tokens/dark-arm.css:301:     --glass-focus-veil-tone: saturate(var(--glass-saturate)) contrast(1.03) brightness(0.8);
+src/styles/tokens/glass.css:305: ++ b/src/styles/tokens/glass.css
+src/styles/tokens/glass.css:83:        rung. The focus veil's `-tone` below carries the dark arm's dim in its own chain,
+src/styles/tokens/glass.css:84:        from tokens/dark-arm.css: a focus register, not a rung either.) */
+src/styles/tokens/glass.css:110:                        scrim ink, so the dark arm (tokens/dark-arm.css) does not mix it:
+src/styles/tokens/glass.css:111:                        it paints no background and dims in `-tone`, where the dim keeps
+src/styles/tokens/glass.css:112:                        chroma.
+src/styles/tokens/glass.css:113:          • `-tone`     the colour half of the veil's one filter chain, after the blur:
+src/styles/tokens/glass.css:114:                        the medium's `saturate()`, the same term every rung recipe
+src/styles/tokens/glass.css:115:                        carries. The dark arm adds its lightness dim here. */
+src/styles/tokens/glass.css:121:     --glass-focus-veil-tone: saturate(var(--glass-saturate));
+tests/styles/focus-veil.test.ts:125: ++ b/tests/styles/focus-veil.test.ts
+tests/styles/focus-veil.test.ts:107:         // The cross-engine floor: plain blur() + the tone under a mask, never url().
+tests/styles/focus-veil.test.ts:137:     it("mints the six-value --glass-focus-veil-* cohort, blur BOUND to the ladder", () => {
+tests/styles/focus-veil.test.ts:149:         // The light tone is the medium's one saturate, the term every rung recipe carries.
+tests/styles/focus-veil.test.ts:150:         expect(glassTokens).toMatch(/--glass-focus-veil-tone:\s*saturate\(var\(--glass-saturate\)\);/);
+tests/styles/focus-veil.test.ts:151:         expect(veil).toMatch(/backdrop-filter:\s*blur\(var\(--glass-focus-veil-blur\)\)\s+var\(--glass-focus-veil-tone\);/);
+tests/styles/focus-veil.test.ts:156:     it("dims in both modes — the scrim ink in light, the chain's lightness in dark, never a plate colour", () => {
+tests/styles/focus-veil.test.ts:158:         // The dark page is darker than the scrim ink, and a flat black mix pulls a bright
+tests/styles/focus-veil.test.ts:159:         // ground toward brown, so the dark arm paints no background and dims inside the
+tests/styles/focus-veil.test.ts:160:         // one chain: the medium's saturate, then contrast and brightness.
+tests/styles/focus-veil.test.ts:161:         expect(darkArm).toMatch(/--glass-focus-veil-dim:\s*transparent;/);
+tests/styles/focus-veil.test.ts:163:             /--glass-focus-veil-tone:\s*saturate\(var\(--glass-saturate\)\) contrast\(1\.03\) brightness\(0\.8\);/,

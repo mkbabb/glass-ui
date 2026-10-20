@@ -1,0 +1,385 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p12/floor11/wt
+
+ ❯ tests/styles/focus-veil.test.ts (19 tests | 2 failed) 53ms
+     × mints the six-value --glass-focus-veil-* cohort, blur BOUND to the ladder 4ms
+     × dims in both modes — the scrim ink in light, the chain's lightness in dark, never a plate colour 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/styles/focus-veil.test.ts > G-RUNG-ONLY · GRADIENT-BLUR arm — the primitive is token-driven > mints the six-value --glass-focus-veil-* cohort, blur BOUND to the ladder
+AssertionError: expected '\n:root {\n    \n\n    \n    --glass-…' to match /--glass-focus-veil-tone:\s*saturate\(…/
+
+- Expected:
+/--glass-focus-veil-tone:\s*saturate\(var\(--glass-saturate\)\);/
+
++ Received:
+"
+:root {
+    
+
+    
+    --glass-ink-target: 4.8;
+    --glass-bound-ground: 0;
+
+    
+    --glass-blur-wash-radius:      6px;
+    --glass-blur-quiet-radius:    10px;
+    --glass-blur-resting-radius:  12px;
+    --glass-blur-floating-radius: 18px;
+    --glass-blur-overlay-radius:  20px;
+
+    
+    --glass-saturate: 1.5;
+    
+    --glass-saturate-grasp: calc(var(--glass-saturate) * 7 / 6);
+
+    
+    --glass-blur-wash:     blur(calc(var(--glass-blur-wash-radius) * var(--glass-level))) saturate(var(--glass-saturate));
+    --glass-blur-quiet:    blur(calc(var(--glass-blur-quiet-radius) * var(--glass-level))) saturate(var(--glass-saturate));
+    --glass-blur-resting:  blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(var(--glass-saturate));
+    --glass-blur-floating: blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(var(--glass-saturate));
+    --glass-blur-overlay:  blur(calc(var(--glass-blur-overlay-radius) * var(--glass-level))) saturate(var(--glass-saturate));
+
+    
+    --glass-focus-veil-blur:   var(--glass-blur-floating-radius);
+    --glass-focus-veil-core-x: 13rem;
+    --glass-focus-veil-core-y: 13rem;
+    --glass-focus-veil-bloom:  7rem;
+    --glass-focus-veil-dim: color-mix(in oklab, var(--overlay-scrim-ink) 10%, transparent);
+
+    
+
+    
+    --dock-fg-on-aurora: var(--foreground);
+
+    
+    --glass-plate-wash:     color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-veil-wash)) * var(--glass-level)) * 100%), transparent);
+    --glass-plate-quiet:    color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-veil-quiet)) * var(--glass-level)) * 100%), transparent);
+    --glass-plate-resting:  color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-veil-resting)) * var(--glass-level)) * 100%), transparent);
+    --glass-plate-floating: color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-veil-floating)) * var(--glass-level)) * 100%), transparent);
+    --glass-plate-overlay:  color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-veil-overlay)) * var(--glass-level)) * 100%), transparent);
+    
+    --glass-plate-chassis:  color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-veil-chassis)) * var(--glass-level)) * 100%), transparent);
+    --glass-plate-dialog:   color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-veil-dialog)) * var(--glass-level)) * 100%), transparent);
+
+    
+    --glass-well-tone: 8%;
+    
+    --glass-well-toward: var(--foreground);
+    --glass-well-pole: color-mix(in oklab, var(--card), var(--glass-well-toward) var(--glass-well-tone));
+    --glass-well: color-mix(in srgb, var(--glass-well-pole) calc((1 - (1 - var(--glass-bound)) * var(--glass-level)) * 100%), transparent);
+
+    
+
+    
+    --glass-fill-tinted: color-mix(
+        in oklab,
+        var(--glass-fill-tint, oklch(0.9 0.05 75 / 0)) var(--glass-fill-strength, 0%),
+        oklch(0.9 0.05 75 / 0)
+    );
+
+    
+    --glass-border-wash:     color-mix(in srgb, var(--foreground) 4%, transparent);
+    --glass-border-quiet:    color-mix(in srgb, var(--foreground) 4%, transparent);
+    --glass-border-resting:  color-mix(in srgb, var(--foreground) 4%, transparent);
+    --glass-border-floating: color-mix(in srgb, var(--foreground) 5%, transparent);
+    --glass-border-overlay:  color-mix(in srgb, var(--foreground) 5%, transparent);
+    
+    --glass-border-dock:     color-mix(in srgb, var(--foreground) 8%, transparent);
+    --glass-border:          var(--glass-border-quiet);
+
+    
+    --glass-floor-fill-max:  15%;
+    --glass-floor-fill:      color-mix(in srgb, var(--card) calc(var(--glass-definition) * var(--glass-floor-fill-max)), transparent);
+    
+    --glass-border-defined:  color-mix(in srgb, var(--foreground) calc(var(--glass-definition) * 14%), transparent);
+
+    
+    --control-surface-bg:        var(--glass-well);
+    --control-surface-border:    var(--glass-border-floating);
+    --control-surface-bg-hover:  color-mix(in oklab, var(--glass-well), var(--foreground) calc(var(--fill-hover) * 100%));
+}
+
+
+:root,
+.dark {
+    --glass-ink-y: pow(var(--on-glass-muted-l), 3);
+    --glass-pole-y: pow(var(--card-l), 3);
+    --glass-need-y: calc(
+        (1 - var(--glass-bound-ground)) * (var(--glass-ink-target) * (var(--glass-ink-y) + 0.05) - 0.05) +
+            var(--glass-bound-ground) * ((var(--glass-ink-y) + 0.05) / var(--glass-ink-target) - 0.05)
+    );
+    --glass-need-e: calc(1.055 * pow(var(--glass-need-y), 0.416667) - 0.055);
+    --glass-pole-e: calc(1.055 * pow(var(--glass-pole-y), 0.416667) - 0.055);
+    --glass-bound: clamp(
+        0,
+        calc(
+            (var(--glass-need-e) - var(--glass-bound-ground)) /
+                (var(--glass-pole-e) - var(--glass-bound-ground))
+        ),
+        1
+    );
+
+    
+    --glass-veil-step: calc((1 - var(--glass-bound)) / 3);
+
+    --glass-veil-wash:     var(--glass-bound);
+    --glass-veil-quiet:    calc(var(--glass-bound) + 1 * var(--glass-veil-step));
+    --glass-veil-resting:  calc(var(--glass-bound) + 2 * var(--glass-veil-step));
+    --glass-veil-floating: var(--glass-bound);
+    --glass-veil-overlay:  calc(var(--glass-bound) + 1 * var(--glass-veil-step));
+
+    --glass-veil-chassis:  var(--glass-bound);
+    --glass-veil-dock:     var(--glass-bound);
+    --glass-veil-crown:    var(--glass-bound);
+    --glass-veil-sheet:    calc(var(--glass-bound) + 1 * var(--glass-veil-step));
+    --glass-veil-dialog:   1;
+}
+
+@property --glass-bound {
+    syntax: \"<number>\";
+    inherits: true;
+    initial-value: 1;
+}
+
+
+
+
+@property --glass-veil-rung {
+    syntax: \"<number>\";
+    inherits: true;
+    initial-value: 1;
+}
+
+@property --glass-fill-tint {
+    syntax: \"<color>\";
+    inherits: true;
+    initial-value: transparent;
+}
+
+@property --glass-fill-strength {
+    syntax: \"<percentage>\";
+    inherits: true;
+    initial-value: 0%;
+}
+"
+
+ ❯ tests/styles/focus-veil.test.ts:150:29
+    148|         );
+    149|         // The light tone is the medium's one saturate, the term every…
+    150|         expect(glassTokens).toMatch(/--glass-focus-veil-tone:\s*satura…
+       |                             ^
+    151|         expect(veil).toMatch(/backdrop-filter:\s*blur\(var\(--glass-fo…
+    152|         // The retired private cohort leaves no alias behind (no backw…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/styles/focus-veil.test.ts > G-RUNG-ONLY · GRADIENT-BLUR arm — the primitive is token-driven > dims in both modes — the scrim ink in light, the chain's lightness in dark, never a plate colour
+AssertionError: expected '\n\n\n.dark {\n    \n    color-scheme…' to match /--glass-focus-veil-dim:\s*transparent;/
+
+- Expected:
+/--glass-focus-veil-dim:\s*transparent;/
+
++ Received:
+"
+
+
+.dark {
+    
+    color-scheme: dark;
+    accent-color: var(--accent-color);
+
+    
+    
+    --neutral-0: hsl(24 9% 4%);    
+    --neutral-1: hsl(28 12% 11%);  
+    --neutral-2: hsl(28 14% 16%);  
+    --neutral-3: hsl(30 18% 22%);  
+    --neutral-4: hsl(30 16% 34%);  
+    --neutral-5: hsl(34 14% 62%);  
+    
+    --neutral-6: hsl(36 14% 72%);  
+
+    
+    
+    --foreground: hsl(30 14% 90%);
+    
+    
+    --card-l: 0.2949;
+    --card: oklch(var(--card-l) 0.0216 57.8);
+    --popover: var(--card);
+
+    
+    --surface-public-data-panel: hsl(36 9% 18%);
+
+    
+    --primary: oklch(0.739 0.134 318.1);
+    --primary-foreground: hsl(24 10% 10%);
+    
+    --destructive: oklch(0.702 0.184 27.5);
+    --destructive-foreground: hsl(24 10% 10%);
+    
+    --focus-ring-color: hsl(48 10% 70%);
+    --shadow: hsl(0 0% 5%);
+
+    
+    --section-color-0:  oklch(0.721 0.145 354.0);
+    --section-color-1:  oklch(0.733 0.113 308.2);
+    --section-color-2:  oklch(0.718 0.107 268.4);
+    --section-color-3:  oklch(0.767 0.091 219.9);
+    --section-color-4:  oklch(0.776 0.105 172.6);
+    --section-color-5:  oklch(0.813 0.109 78.2);
+    --section-color-6:  oklch(0.693 0.151 28.1);
+    --section-color-7:  oklch(0.739 0.134 318.1);
+    --section-color-8:  oklch(0.709 0.142 2.3);
+    --section-color-9:  oklch(0.763 0.032 239.0);
+    --section-color-10: oklch(0.794 0.116 127.9);
+    --section-color-11: oklch(0.805 0.095 206.7);
+    --section-color-12: oklch(0.719 0.115 295.6);
+
+    --accent-pink: oklch(0.683 0.131 354.7);
+    --section-heading: oklch(0.711 0.123 349.3);
+    --accent-red: oklch(0.644 0.165 22.9);
+
+    --viz-fourier:   oklch(0.693 0.151 28.1);
+    --viz-chebyshev: oklch(0.718 0.107 268.4);
+    --viz-legendre:  oklch(0.739 0.134 318.1);
+
+    
+    --configurator-divider: color-mix(in srgb, var(--foreground) 22%, transparent);
+    --configurator-divider-section: color-mix(in srgb, var(--foreground) 30%, transparent);
+    --configurator-section-tint: color-mix(in srgb, var(--foreground) 3%, transparent);
+    --tier-featured: oklch(0.867 0.165 88.7);
+    --tier-saved:    oklch(0.748 0.135 250.1);
+    --like:          oklch(0.690 0.162 22.2);
+    --success:       oklch(0.805 0.186 151.6);
+    --warning:       oklch(0.809 0.150 76.6);
+    --info:          oklch(0.713 0.138 259.5);
+    --delete:        oklch(0.644 0.170 23.1);
+
+    
+    --success-foreground: hsl(24 10% 10%);
+    --warning-foreground: hsl(24 10% 10%);
+    --info-foreground:    hsl(24 10% 10%);
+
+    
+    --cartoon-ink-lead:    color-mix(in oklab, var(--cartoon-ink) 46%, transparent);
+    --cartoon-ink-mid:     color-mix(in oklab, var(--cartoon-ink) 38%, transparent);
+    --cartoon-ink-contact: color-mix(in oklab, var(--cartoon-ink) 26%, transparent);
+    
+    --cartoon-ink-fallback: #413626;
+
+    --shadow-cartoon:       -3px 3px 0px 0px var(--cartoon-ink-lead);
+    --shadow-cartoon-hover: -4px 4px 0px 0px var(--cartoon-ink-lead);
+    --shadow-soft:     0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-elevated: 0 8px 24px rgba(0, 0, 0, 0.35);
+
+    
+    --constellation-node:      hsl(42 9% 72%);
+    --constellation-node-dim:  hsl(42 8% 56%);
+    --constellation-line:      hsl(45 12% 86%);
+    
+    --constellation-accent:    hsl(20 70% 60%);
+    
+    --constellation-edge-alpha:          0.20;
+    --constellation-edge-focus-alpha:  0.32;
+    
+    --constellation-alpha:               0.88;
+    
+    --constellation-edge-floor:          0;
+    --constellation-edge-accent-alpha:   0.34;
+
+    
+    --paper-grain-opacity: 0.16;
+
+    
+    --glass-bound-ground: 1;
+    --glass-well-toward:  var(--background);
+
+    
+    --ink-seam:      0.0923;
+    --ink-edge:      0.1846;
+    --ink-perimeter: 0.60;
+
+    
+    --glass-focus-veil-dim: color-mix(in oklab, #000 40%, transparent);
+
+
+    
+    --on-glass-muted-l:      0.7904;   
+    --on-glass-muted:        oklch(var(--on-glass-muted-l) 0.0213 74.62);
+    
+    --on-glass-muted-strong: oklch(0.835 0.0117 78.27);
+    
+
+    
+    --surface-tint-4:  color-mix(in srgb, oklch(from var(--foreground) 0.975 c h)  4%, transparent);
+    --surface-tint-6:  color-mix(in srgb, oklch(from var(--foreground) 0.975 c h)  6%, transparent);
+    --surface-tint-8:  color-mix(in srgb, oklch(from var(--foreground) 0.975 c h)  8%, transparent);
+    --surface-tint-10: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 10%, transparent);
+    --surface-tint-12: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 12%, transparent);
+    --surface-tint-15: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 15%, transparent);
+    --surface-tint-18: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 18%, transparent);
+    --surface-tint-22: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 22%, transparent);
+    --surface-tint-25: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 25%, transparent);
+    --surface-tint-40: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 40%, transparent);
+    --surface-tint-70: color-mix(in srgb, oklch(from var(--foreground) 0.975 c h) 70%, transparent);
+
+    
+    --hairline-catch-light: inset 0 0.5px 0 0 rgb(255 255 255 / 0.05);
+    --hairline-under-shadow: 0 0.5px 0 0 rgb(0 0 0 / 0.06);
+
+    
+
+    
+    --glass-rim-top: inset 0 var(--glass-key-lit-y) 0
+        hsl(0 0% 100% / calc(0.08 * var(--glass-level)));
+    --glass-rim-bottom:
+        inset 0 var(--glass-key-shade-y) 0
+            color-mix(in srgb, var(--foreground) calc(6% * var(--glass-level)), transparent),
+        inset var(--glass-key-shade-x) 0 0
+            color-mix(in srgb, var(--foreground) calc(4% * var(--glass-level)), transparent);
+
+    
+    --tab-track-recess-ink: color-mix(in srgb, var(--foreground) 11%, transparent);
+
+    
+    --glass-capsule-warm: oklch(0.42 0.06 75);
+
+    
+    --glass-curvature-intensity: 0.012;
+
+    
+    --gold: oklch(0.784 0.143 86.0);
+    --gold-light: oklch(0.898 0.182 97.4);
+    --gold-dark: oklch(0.678 0.150 63.8);
+
+    
+    --silver: oklch(0.792 0.012 255);
+    --silver-light: oklch(0.912 0.010 255);
+    --silver-dark: oklch(0.648 0.014 255);
+
+    
+    --bronze: oklch(0.650 0.090 54.0);
+    --bronze-light: oklch(0.790 0.110 60.0);
+    --bronze-dark: oklch(0.560 0.085 50.0);
+}
+"
+
+ ❯ tests/styles/focus-veil.test.ts:161:25
+    159|         // ground toward brown, so the dark arm paints no background a…
+    160|         // one chain: the medium's saturate, then contrast and brightn…
+    161|         expect(darkArm).toMatch(/--glass-focus-veil-dim:\s*transparent…
+       |                         ^
+    162|         expect(darkArm).toMatch(
+    163|             /--glass-focus-veil-tone:\s*saturate\(var\(--glass-saturat…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 17 passed (19)
+   Start at  20:45:19
+   Duration  1.03s (transform 341ms, setup 63ms, import 565ms, tests 53ms, environment 191ms)
+

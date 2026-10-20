@@ -1,0 +1,153 @@
+diff --git a/src/styles/glass/focus-veil.css b/src/styles/glass/focus-veil.css
+index 07c5262d3..3b18397e7 100644
+--- a/src/styles/glass/focus-veil.css
++++ b/src/styles/glass/focus-veil.css
+@@ -13,8 +13,9 @@
+    file is that plate lifted out and generalised: the centre becomes `--veil-x`/`--veil-y`
+    (registered, so it interpolates; 50% default = the centred-modal case byte-for-byte),
+    the core becomes a per-axis half-extent a consumer writes from its own rect, and the
+-   five values become the `--glass-focus-veil-*` cohort in tokens/glass.css. The Dialog
+-   now BINDS this class instead of re-spelling the recipe.
++   five values become the `--glass-focus-veil-*` cohort in tokens/glass.css, with the
++   chain's tone (`-tone`) as a sixth. The Dialog now BINDS this class instead of
++   re-spelling the recipe.
+ 
+    UNIFORM BLUR UNDER A GRADED MASK — NEVER A GRADED RADIUS. The archive's pixel study
+    of the reference read the radius itself grading with distance and proposed N stacked
+@@ -40,10 +41,12 @@
+    already collapses every transition to instant, and a second local arm would be a
+    parallel clock.
+ 
+-   THE CROSS-ENGINE FLOOR. Plain `blur()` + `saturate()` under a `mask-image`; no `url()`
+-   filter, no engine branch. The `-webkit-mask-*` arm is SOURCE-AUTHORED (only the
+-   `backdrop-filter` pair is build-injected), and `-webkit-mask-composite: source-in` is
+-   the legacy spelling of `mask-composite: intersect` — the same product, not a fallback.
++   THE CROSS-ENGINE FLOOR. Plain `blur()` + the tone (`--glass-focus-veil-tone`:
++   `saturate()`, and in the dark arm `contrast()` + `brightness()`) under a
++   `mask-image`; no `url()` filter, no engine branch. The `-webkit-mask-*` arm is
++   SOURCE-AUTHORED (only the `backdrop-filter` pair is build-injected), and
++   `-webkit-mask-composite: source-in` is the legacy spelling of `mask-composite:
++   intersect` — the same product, not a fallback.
+ 
+    A partial of the glass.css cascade; its own @layer components. */
+ 
+@@ -70,7 +73,7 @@
+         pointer-events: none;
+ 
+         backdrop-filter: blur(var(--glass-focus-veil-blur))
+-            saturate(var(--glass-saturate));
++            var(--glass-focus-veil-tone);
+         background: var(--glass-focus-veil-dim);
+ 
+         /* The box-following bloom-frame is the INTERSECT of an x double-ramp and a y
+diff --git a/src/styles/tokens/dark-arm.css b/src/styles/tokens/dark-arm.css
+index e63ae804d..321c4d577 100644
+--- a/src/styles/tokens/dark-arm.css
++++ b/src/styles/tokens/dark-arm.css
+@@ -286,12 +286,19 @@
+     --ink-edge:      0.1846;
+     --ink-perimeter: 0.60;
+ 
+-    /* The focus veil's dim, dark arm. The light declaration (tokens/glass.css) mixes the
+-       scrim ink at a tenth, and the scrim ink (L 0.216) is lighter than the dark page
+-       (`#0b0a09`, L 0.146), so over it the veil brightened: +0.006 measured. Here the
+-       dim is black at the least mix that reads OKLab L at least 0.02 under the dark
+-       page: 40% reads -0.022 over it, where 35% reads -0.018. */
+-    --glass-focus-veil-dim: color-mix(in oklab, #000 40%, transparent);
++    /* The focus veil's dim, dark arm: it dims by lightness and keeps chroma (Q-14's
++       dark arm, O-103a). The light declaration (tokens/glass.css) mixes the scrim ink at
++       a tenth, and the scrim ink (L 0.216) is lighter than the dark page (`#0b0a09`,
++       L 0.146), so over it the veil brightened: +0.006 measured. A black mix dims, but a
++       flat mix pulls every ground toward black: 40% read the aurora's orange focus spot
++       as brown (C 0.142 -> 0.118, L -0.226). So the dark veil paints no background and
++       dims inside its one chain instead. After the medium's `saturate()`,
++       `contrast(1.03)` lowers the near-black page most and `brightness(0.8)` scales the
++       rest. Predicted from the filter maths, calibrated on the 40% black's measured pairs
++       (D3 pass 12, FV11-model.py): the dark page L -0.030; the spot keeps its hue
++       within 1.8 deg and its chroma at 1.04x, and drops L 0.090-0.105. */
++    --glass-focus-veil-dim: transparent;
++    --glass-focus-veil-tone: saturate(var(--glass-saturate)) contrast(1.03) brightness(0.8);
+ 
+ 
+     /* The surface-aware FOREGROUND register, DARK arm (the N13
+diff --git a/src/styles/tokens/glass.css b/src/styles/tokens/glass.css
+index b0701a678..c01fbaf4b 100644
+--- a/src/styles/tokens/glass.css
++++ b/src/styles/tokens/glass.css
+@@ -80,7 +80,8 @@
+     /* The composed rung recipes. NO brightness leg — the ink is the single writer on
+        the L axis, and two writers on one axis is how a ladder stops being monotone.
+        (The grasp carrier keeps its measured `brightness(0.96)`: a STATE register, not a
+-       rung.) */
++       rung. The focus veil's `-tone` below carries the dark arm's dim in its own chain,
++       from tokens/dark-arm.css: a focus register, not a rung either.) */
+     --glass-blur-wash:     blur(calc(var(--glass-blur-wash-radius) * var(--glass-level))) saturate(var(--glass-saturate));
+     --glass-blur-quiet:    blur(calc(var(--glass-blur-quiet-radius) * var(--glass-level))) saturate(var(--glass-saturate));
+     --glass-blur-resting:  blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(var(--glass-saturate));
+@@ -106,12 +107,18 @@
+                        tokens/glass-fx.css) at a tenth. It reads the scrim ink and never
+                        a plate colour, because a plate is the theme's own ground and
+                        would brighten what it covers. The dark page is darker than the
+-                       scrim ink, so the dark arm (tokens/dark-arm.css) dims with black. */
++                       scrim ink, so the dark arm (tokens/dark-arm.css) does not mix it:
++                       it paints no background and dims in `-tone`, where the dim keeps
++                       chroma.
++         • `-tone`     the colour half of the veil's one filter chain, after the blur:
++                       the medium's `saturate()`, the same term every rung recipe
++                       carries. The dark arm adds its lightness dim here. */
+     --glass-focus-veil-blur:   var(--glass-blur-floating-radius);
+     --glass-focus-veil-core-x: 13rem;
+     --glass-focus-veil-core-y: 13rem;
+     --glass-focus-veil-bloom:  7rem;
+     --glass-focus-veil-dim: color-mix(in oklab, var(--overlay-scrim-ink) 10%, transparent);
++    --glass-focus-veil-tone: saturate(var(--glass-saturate));
+ 
+     /* (The rungs and the off-ladder footprints, `--glass-veil-*`, are declared in the
+        `:root, .dark` block at the foot of this file, beside the bound they derive
+diff --git a/tests/styles/focus-veil.test.ts b/tests/styles/focus-veil.test.ts
+index 39ddac2fe..0f0a8e49c 100644
+--- a/tests/styles/focus-veil.test.ts
++++ b/tests/styles/focus-veil.test.ts
+@@ -104,7 +104,7 @@ describe("G-RUNG-ONLY · GRADIENT-BLUR arm — the focus-veil primitive exists",
+         expect(veil.match(/linear-gradient\(\s*to right,/g)).toHaveLength(2);
+         expect(veil.match(/linear-gradient\(\s*to bottom,/g)).toHaveLength(2);
+ 
+-        // The cross-engine floor: plain blur()+saturate under a mask, never url().
++        // The cross-engine floor: plain blur() + the tone under a mask, never url().
+         expect(veil).not.toContain("url(");
+         // Per-mode arms only — an inset fragment inside light-dark() computes the whole
+         // declaration to none, and this file paints a dim.
+@@ -134,7 +134,7 @@ describe("G-RUNG-ONLY · GRADIENT-BLUR arm — the focus-veil primitive exists",
+ });
+ 
+ describe("G-RUNG-ONLY · GRADIENT-BLUR arm — the primitive is token-driven", () => {
+-    it("mints the five-value --glass-focus-veil-* cohort, blur BOUND to the ladder", () => {
++    it("mints the six-value --glass-focus-veil-* cohort, blur BOUND to the ladder", () => {
+         // The radius is a rung of the blur ladder, never an off-ladder literal — the
+         // whole point of a rung-only gate.
+         expect(glassTokens).toMatch(
+@@ -146,15 +146,21 @@ describe("G-RUNG-ONLY · GRADIENT-BLUR arm — the primitive is token-driven", (
+         expect(glassTokens).toMatch(
+             /--glass-focus-veil-dim:\s*color-mix\(in oklab, var\(--overlay-scrim-ink\) 10%, transparent\);/,
+         );
++        // The light tone is the medium's one saturate, the term every rung recipe carries.
++        expect(glassTokens).toMatch(/--glass-focus-veil-tone:\s*saturate\(var\(--glass-saturate\)\);/);
++        expect(veil).toMatch(/backdrop-filter:\s*blur\(var\(--glass-focus-veil-blur\)\)\s+var\(--glass-focus-veil-tone\);/);
+         // The retired private cohort leaves no alias behind (no backwards compat).
+         expect(glassTokens).not.toContain("--glass-halo-");
+     });
+ 
+-    it("dims in both modes — the scrim ink in light, black in dark, never a plate colour", () => {
++    it("dims in both modes — the scrim ink in light, the chain's lightness in dark, never a plate colour", () => {
+         expect(glassTokens).not.toMatch(/--glass-focus-veil-dim:[^;]*--glass-plate-/);
+-        // The dark page is darker than the scrim ink, so the dark arm dims with black.
++        // The dark page is darker than the scrim ink, and a flat black mix pulls a bright
++        // ground toward brown, so the dark arm paints no background and dims inside the
++        // one chain: the medium's saturate, then contrast and brightness.
++        expect(darkArm).toMatch(/--glass-focus-veil-dim:\s*transparent;/);
+         expect(darkArm).toMatch(
+-            /--glass-focus-veil-dim:\s*color-mix\(in oklab, #000 40%, transparent\);/,
++            /--glass-focus-veil-tone:\s*saturate\(var\(--glass-saturate\)\) contrast\(1\.03\) brightness\(0\.8\);/,
+         );
+     });
+ 

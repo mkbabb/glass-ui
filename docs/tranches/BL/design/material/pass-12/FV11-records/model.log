@@ -1,0 +1,64 @@
+== calibration: R-2 (floor v10) through the model vs the measured pairs (FV6 M-9-chromium.log:5,6; M-9-webkit.log:5,6)
+  chromium #ec9642 model #99560b measured #99560a  |ΔL model−measured| 0.0000
+  chromium #0b0a09 model #070605 measured #060604  |ΔL model−measured| 0.0024
+  webkit   #e87237 model #8b4421 measured #8b4421  |ΔL model−measured| 0.0000
+  webkit   #0b0a09 model #070605 measured #070605  |ΔL model−measured| 0.0000
+
+== search: chain blur() brightness(K) saturate(S), background transparent (Chromium paint; WebKit paints none of it)
+   rows: K, S, then the worst of the two Chromium spot grounds (shell #ec9642, GL #e87237): max |Δh|, min C×, and each ΔL
+   (none: a scale, before or after saturate(), cannot both keep the spot's chroma and dim the page 0.02; see --arm)
+
+== the arm: blur() saturate(1.5) contrast(1.03) brightness(0.8), background transparent (Playwright WebKit paints none of the chain)
+  chromium shell spot                #ec9642 → #cc730c  L 0.746→0.642  C 0.142→0.148  h 61.6°→59.9°  |Δh| 1.8°  C×1.041  ΔL -0.105
+  chromium GL spot (frame 1's ground) #e87237 → #cc5209  L 0.681→0.591  C 0.163→0.170  h 44.8°→43.5°  |Δh| 1.3°  C×1.044  ΔL -0.090
+  chromium page                      #0b0a09 → #060504  L 0.146→0.116  C 0.003→0.004  h 68.6°→70.6°  |Δh| 2.1°  C×1.583  ΔL -0.029
+  Playwright WebKit GL spot          #e87237 → #e87237  L 0.681→0.681  C 0.163→0.163  h 44.8°→44.8°  |Δh| 0.0°  C×1.000  ΔL +0.000
+  Playwright WebKit page             #0b0a09 → #0b0a09  L 0.146→0.146  C 0.003→0.003  h 68.6°→68.6°  |Δh| 0.0°  C×1.000  ΔL +0.000
+
+== R-2 beside it (floor v10)
+  chromium shell spot                #ec9642 → #99560b  L 0.746→0.521  C 0.142→0.118  h 61.6°→60.2°  |Δh| 1.4°  C×0.830  ΔL -0.226
+  chromium GL spot (frame 1's ground) #e87237 → #993e09  L 0.681→0.481  C 0.163→0.135  h 44.8°→44.1°  |Δh| 0.6°  C×0.827  ΔL -0.200
+  chromium page                      #0b0a09 → #070605  L 0.146→0.123  C 0.003→0.004  h 68.6°→70.2°  |Δh| 1.6°  C×1.398  ΔL -0.022
+  Playwright WebKit GL spot          #e87237 → #8b4421  L 0.681→0.470  C 0.163→0.108  h 44.8°→44.9°  |Δh| 0.1°  C×0.662  ΔL -0.211
+  Playwright WebKit page             #0b0a09 → #070605  L 0.146→0.123  C 0.003→0.004  h 68.6°→70.2°  |Δh| 1.6°  C×1.398  ΔL -0.022
+
+== search 2: saturate(1.5) contrast(c) brightness(K), the worst of both Chromium spot grounds; page ΔL ≤ -0.024 (M-9's 0.02 plus the calibration's 0.0024)
+   c 1.00 K 0.70  max|Δh| 1.2°  min C× 0.931  ΔL shell -0.164 GL -0.145 page -0.0161  -
+   c 1.00 K 0.75  max|Δh| 1.5°  min C× 0.983  ΔL shell -0.134 GL -0.116 page -0.0145  -
+   c 1.00 K 0.80  max|Δh| 1.9°  min C× 1.037  ΔL shell -0.105 GL -0.089 page -0.0103  -
+   c 1.00 K 0.85  max|Δh| 2.3°  min C× 1.091  ΔL shell -0.075 GL -0.062 page -0.0089  -
+   c 1.00 K 0.90  max|Δh| 2.6°  min C× 1.143  ΔL shell -0.046 GL -0.035 page -0.0050  -
+   c 1.01 K 0.70  max|Δh| 1.1°  min C× 0.932  ΔL shell -0.164 GL -0.145 page -0.0224  -
+   c 1.01 K 0.75  max|Δh| 1.5°  min C× 0.986  ΔL shell -0.134 GL -0.117 page -0.0166  -
+   c 1.01 K 0.80  max|Δh| 1.8°  min C× 1.038  ΔL shell -0.105 GL -0.089 page -0.0161  -
+   c 1.01 K 0.85  max|Δh| 2.2°  min C× 1.091  ΔL shell -0.075 GL -0.062 page -0.0145  -
+   c 1.01 K 0.90  max|Δh| 2.0°  min C× 1.140  ΔL shell -0.045 GL -0.035 page -0.0103  -
+   c 1.02 K 0.70  max|Δh| 1.0°  min C× 0.933  ΔL shell -0.164 GL -0.145 page -0.0295  -
+   c 1.02 K 0.75  max|Δh| 1.5°  min C× 0.987  ΔL shell -0.134 GL -0.117 page -0.0224  -
+   c 1.02 K 0.80  max|Δh| 1.8°  min C× 1.040  ΔL shell -0.105 GL -0.090 page -0.0224  -
+   c 1.02 K 0.85  max|Δh| 1.5°  min C× 1.090  ΔL shell -0.074 GL -0.062 page -0.0207  -
+   c 1.02 K 0.90  max|Δh| 1.9°  min C× 1.142  ΔL shell -0.045 GL -0.035 page -0.0166  -
+   c 1.03 K 0.70  max|Δh| 0.9°  min C× 0.935  ΔL shell -0.164 GL -0.145 page -0.0354  -
+   c 1.03 K 0.75  max|Δh| 1.4°  min C× 0.988  ΔL shell -0.134 GL -0.118 page -0.0295  PASS
+   c 1.03 K 0.80  max|Δh| 1.8°  min C× 1.041  ΔL shell -0.105 GL -0.090 page -0.0295  PASS
+   c 1.03 K 0.85  max|Δh| 1.5°  min C× 1.091  ΔL shell -0.074 GL -0.063 page -0.0276  PASS
+   c 1.03 K 0.90  max|Δh| 1.8°  min C× 1.143  ΔL shell -0.045 GL -0.035 page -0.0230  -
+   c 1.04 K 0.70  max|Δh| 0.8°  min C× 0.936  ΔL shell -0.164 GL -0.145 page -0.0375  -
+   c 1.04 K 0.75  max|Δh| 1.3°  min C× 0.989  ΔL shell -0.134 GL -0.118 page -0.0375  PASS
+   c 1.04 K 0.80  max|Δh| 1.2°  min C× 1.039  ΔL shell -0.103 GL -0.090 page -0.0375  PASS
+   c 1.04 K 0.85  max|Δh| 1.5°  min C× 1.092  ΔL shell -0.074 GL -0.063 page -0.0354  PASS
+   c 1.04 K 0.90  max|Δh| 1.8°  min C× 1.143  ΔL shell -0.045 GL -0.036 page -0.0302  PASS
+   c 1.05 K 0.70  max|Δh| 0.8°  min C× 0.936  ΔL shell -0.164 GL -0.145 page -0.0470  -
+   c 1.05 K 0.75  max|Δh| 0.9°  min C× 0.987  ΔL shell -0.133 GL -0.118 page -0.0470  PASS
+   c 1.05 K 0.80  max|Δh| 1.2°  min C× 1.040  ΔL shell -0.103 GL -0.090 page -0.0444  PASS
+   c 1.05 K 0.85  max|Δh| 1.4°  min C× 1.092  ΔL shell -0.074 GL -0.063 page -0.0444  PASS
+   c 1.05 K 0.90  max|Δh| 1.7°  min C× 1.144  ΔL shell -0.045 GL -0.036 page -0.0383  PASS
+   11 of 30 pass
+
+== off the spot, model only, REPORTED (R-32 gates the spot; these are other hues an aurora can carry), Chromium
+  other ground                       #8a5cf6 → #7940cc  L 0.605→0.518  C 0.219→0.204  h 292.4°→297.4°  |Δh| 5.0°  C×0.934  ΔL -0.087
+  other ground                       #3b82f6 → #136bcc  L 0.623→0.535  C 0.188→0.169  h 259.8°→255.5°  |Δh| 4.3°  C×0.900  ΔL -0.088
+  other ground                       #2bb3a3 → #009d89  L 0.693→0.623  C 0.114→0.114  h 183.1°→179.5°  |Δh| 3.6°  C×0.996  ΔL -0.070
+  other ground                       #e0559b → #cc358b  L 0.652→0.583  C 0.186→0.202  h 352.3°→350.4°  |Δh| 1.9°  C×1.086  ΔL -0.069
+  other ground                       #f4d35e → #ccab1b  L 0.873→0.749  C 0.140→0.148  h 93.5°→94.3°  |Δh| 0.8°  C×1.060  ΔL -0.124
+  other ground                       #5a3a2a → #522a17  L 0.382→0.334  C 0.053→0.067  h 47.3°→45.1°  |Δh| 2.1°  C×1.268  ΔL -0.048
