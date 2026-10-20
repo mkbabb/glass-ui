@@ -1,0 +1,22 @@
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-12/floor-v11.patch:1266: trailing whitespace.
+       white app surface (the canonical G2 case the user reported). 
+warning: 1 line adds whitespace errors.
+floor-v11a + FV11-r32.diff = floor-v11.patch (cmp exit 0)
+worktree = floor-v11.patch
+FV11-r32.diff files: a/src/styles/glass/focus-veil.css a/src/styles/tokens/dark-arm.css a/src/styles/tokens/glass.css a/tests/styles/focus-veil.test.ts 
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/material/pass-12/floor-v11.patch:1266: trailing whitespace.
+       white app surface (the canonical G2 case the user reported). 
+warning: 1 line adds whitespace errors.
+minor v9 + MS9-seat-proposed + crit-minor-proposed = minor-split-v10.patch (cmp exit 0)
+worktree = floor-v11.patch
+-- patch-of-patches minor v9 -> minor v10 (changed +/- lines only)
+> -       strength by the rung, so `rung ÷ rest` runs the same 1 → 0.6 there and "sheds 40%
+> -       of its ink" is a paint fact on BOTH shipped consumers rather than prose on one. */
+> +       strength by the rung, so `rung ÷ rest` runs 1 → 0.6 there and the fill sheds 40%
+> +       of its strength in paint; the dock keeps the bound in light and sheds 40% in dark. */
+< +        // near-black ink over paper (O-62). Dark: the sign law holds, the rung darkens
+< +        // what is behind it.
+> +        // near-black ink over paper (O-62). Dark: the ink stays near-black (L 0.17 < 0.5,
+> +        // asserted below), never the cream foreground.
+-- patch-of-patches floor v11a -> floor v11, added/removed lines that are not inside the 4 R-32 files: (none expected)
+files whose patch hunk differs: ['src/styles/glass/focus-veil.css', 'src/styles/tokens/dark-arm.css', 'src/styles/tokens/glass.css', 'tests/styles/focus-veil.test.ts']

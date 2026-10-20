@@ -1,0 +1,103 @@
+NEIGHBOURHOOD · R-30's reading aid (H11-2): for each token the patch re-values, its declarations and the comment block above each, every var() falling back to it and the prose naming that alias, and every sentence carrying "bound" or a rung name, over the touched files (printed, never gated)
+tree: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D3/p12/crit/wt · patch FV11-r32.diff: 4 touched files exist · 4 read as text
+re-valued: 1 declarations of 1 tokens
+  --glass-focus-veil-dim (src/styles/tokens/dark-arm.css): color-mix(in oklab, #000 40%, transparent) → transparent
+aliases (var(--A, …) falling back to a re-valued token): 0
+rung names (segments of two or more re-valued families of one file): none; and "bound"
+src/styles/tokens/dark-arm.css:270 [carries "bound"] |        page. The dark ink is light, so the worst ground is white: the bound
+src/styles/tokens/dark-arm.css:271 [sentence of :270] |        (tokens/glass.css) re-derives in this scope from that one fact and the dark
+src/styles/tokens/dark-arm.css:272 [sentence of :270] |        `--card-l` / `--on-glass-muted-l` above. The well deepens toward the page. */
+src/styles/tokens/dark-arm.css:289 [above the --glass-focus-veil-dim declaration (:300)] |     /* The focus veil's dim, dark arm: it dims by lightness and keeps chroma (Q-14's
+src/styles/tokens/dark-arm.css:290 [above the --glass-focus-veil-dim declaration (:300)] |        dark arm, O-103a). The light declaration (tokens/glass.css) mixes the scrim ink at
+src/styles/tokens/dark-arm.css:291 [above the --glass-focus-veil-dim declaration (:300)] |        a tenth, and the scrim ink (L 0.216) is lighter than the dark page (`#0b0a09`,
+src/styles/tokens/dark-arm.css:292 [above the --glass-focus-veil-dim declaration (:300)] |        L 0.146), so over it the veil brightened: +0.006 measured. A black mix dims, but a
+src/styles/tokens/dark-arm.css:293 [above the --glass-focus-veil-dim declaration (:300)] |        flat mix pulls every ground toward black: 40% read the aurora's orange focus spot
+src/styles/tokens/dark-arm.css:294 [above the --glass-focus-veil-dim declaration (:300)] |        as brown (C 0.142 -> 0.118, L -0.226). So the dark veil paints no background and
+src/styles/tokens/dark-arm.css:295 [above the --glass-focus-veil-dim declaration (:300)] |        dims inside its one chain instead. After the medium's `saturate()`,
+src/styles/tokens/dark-arm.css:296 [above the --glass-focus-veil-dim declaration (:300)] |        `contrast(1.03)` lowers the near-black page most and `brightness(0.8)` scales the
+src/styles/tokens/dark-arm.css:297 [above the --glass-focus-veil-dim declaration (:300)] |        rest. Predicted from the filter maths, calibrated on the 40% black's measured pairs
+src/styles/tokens/dark-arm.css:298 [above the --glass-focus-veil-dim declaration (:300)] |        (D3 pass 12, FV11-model.py): the dark page L -0.030; the spot keeps its hue
+src/styles/tokens/dark-arm.css:299 [above the --glass-focus-veil-dim declaration (:300)] |        within 1.8 deg and its chroma at 1.04x, and drops L 0.090-0.105. */
+src/styles/tokens/dark-arm.css:300 [declares --glass-focus-veil-dim] |     --glass-focus-veil-dim: transparent;
+src/styles/tokens/dark-arm.css:321 [sentence of :322] |        so fg - strong is 0.091 against M-4's 0.08 and strong - muted is 0.045. Its
+src/styles/tokens/dark-arm.css:322 [carries "bound"] |        legibility needs no plate set of its own: every plate carries the bound, which
+src/styles/tokens/dark-arm.css:323 [sentence of :322] |        is solved at the darker muted ink (tokens/glass.css), so an ink lighter than the
+src/styles/tokens/dark-arm.css:324 [sentence of :322; sentence of :325; sentence of :326] |        muted clears it wherever the muted does. The value it replaces, hsl(36 13% 81%)
+src/styles/tokens/dark-arm.css:325 [carries "bound"; sentence of :326] |        (L 0.859, #d5d0c8), was held at L81 for the thin capsule plates the bound has
+src/styles/tokens/dark-arm.css:326 [sentence of :325; carries "bound"] |        since retired; at the bound it left fg - strong at 0.067. The colour is #cdc8c1. */
+src/styles/tokens/glass.css:8 [carries "bound"] |        §8  GLASS — ONE medium, one pole, one bound
+src/styles/tokens/glass.css:11 [sentence of :12] |        (`@utility glass-plate`, glass/veil.css). A surface that does not know its
+src/styles/tokens/glass.css:12 [carries "bound"] |        ground paints THE BOUND: the α at which the muted ink clears its contrast target
+src/styles/tokens/glass.css:13 [sentence of :12] |        over ANY input (a black ground in light, a white one in dark). Nothing samples
+src/styles/tokens/glass.css:17 [carries "bound"] |        THE BOUND HAS ONE SOURCE: `--glass-bound`, computed in the `:root, .dark` block
+src/styles/tokens/glass.css:18 [sentence of :17] |        at the foot of this file from the ink (`--on-glass-muted-l`), the pole
+src/styles/tokens/glass.css:19 [sentence of :17] |        (`--card-l`) and the target (`--glass-ink-target`). No α is written as a
+src/styles/tokens/glass.css:24 [carries "bound"; sentence of :25; sentence of :26; sentence of :27; sentence of :29] |          wash · chassis       6px    bound             content
+src/styles/tokens/glass.css:25 [sentence of :24; carries "bound"; sentence of :26; sentence of :27; sentence of :29] |          quiet               10px    bound + 1 step    content
+src/styles/tokens/glass.css:26 [sentence of :24; sentence of :25; carries "bound"; sentence of :27; sentence of :29] |          resting (= card)    12px    bound + 2 steps   content
+src/styles/tokens/glass.css:27 [sentence of :24; sentence of :25; sentence of :26; carries "bound"; sentence of :29] |          floating · dock ·   18px    bound             chrome
+src/styles/tokens/glass.css:28 [sentence of :24; sentence of :25; sentence of :26; sentence of :27; sentence of :29] |            crown · well
+src/styles/tokens/glass.css:29 [sentence of :24; sentence of :25; sentence of :26; sentence of :27; carries "bound"] |          overlay · sheet     20px    bound + 1 step    chrome
+src/styles/tokens/glass.css:30 [sentence of :24; sentence of :25; sentence of :26; sentence of :27; sentence of :29] |          dialog              18px    1                 the room
+src/styles/tokens/glass.css:31 [sentence of :24; sentence of :25; sentence of :26; sentence of :27; sentence of :29] |          opaque (level 0)      0     1
+src/styles/tokens/glass.css:33 [carries "bound"] |        A surface may paint THINNER than the bound only where a mechanism knows its
+src/styles/tokens/glass.css:34 [sentence of :33] |        ground. None ships here.
+src/styles/tokens/glass.css:37 [sentence of :39] |     /* The solve's two authored inputs. The target is WCAG 4.5:1 plus 0.3 of raster
+src/styles/tokens/glass.css:38 [sentence of :39] |        margin: an engine's glyph antialiasing costs up to 0.22 of ratio at a solved
+src/styles/tokens/glass.css:39 [carries "bound"] |        bound, and the margin is stated in the unit it is lost in. `--glass-bound-ground`
+src/styles/tokens/glass.css:91 [above the --glass-focus-veil-dim declaration (:120)] |     /* The FOCUS-VEIL cohort (glass/focus-veil.css, `.glass-focus-veil`): ONE fixed
+src/styles/tokens/glass.css:92 [above the --glass-focus-veil-dim declaration (:120)] |        full-viewport plate, uniform blur under an intersect double-ramp mask centred on
+src/styles/tokens/glass.css:93 [above the --glass-focus-veil-dim declaration (:120)] |        the ENGAGED element — frost at the control, monotone falloff, far context
+src/styles/tokens/glass.css:94 [above the --glass-focus-veil-dim declaration (:120)] |        untouched.
+src/styles/tokens/glass.css:95 [above the --glass-focus-veil-dim declaration (:120)] | 
+src/styles/tokens/glass.css:96 [above the --glass-focus-veil-dim declaration (:120)] |        THE PREFIX IS `--glass-focus-veil-*`, NOT `--glass-veil-*`: that prefix is the
+src/styles/tokens/glass.css:97 [above the --glass-focus-veil-dim declaration (:120)] |        INK-VEIL PLATE REGISTER above. Two unrelated registers under one prefix is the
+src/styles/tokens/glass.css:98 [above the --glass-focus-veil-dim declaration (:120); sentence of :99] |        G-ONE-NAME class.
+src/styles/tokens/glass.css:99 [above the --glass-focus-veil-dim declaration (:120); carries "bound"] |          • `-blur`     the plate radius, BOUND to the ladder's floating rung rather than
+src/styles/tokens/glass.css:100 [above the --glass-focus-veil-dim declaration (:120); sentence of :99] |                        an off-ladder literal; the token is the authority.
+src/styles/tokens/glass.css:101 [above the --glass-focus-veil-dim declaration (:120)] |          • `-core-x/-y` the half-extents out to which the frost holds full, from the
+src/styles/tokens/glass.css:102 [above the --glass-focus-veil-dim declaration (:120)] |                        veil centre. JS-written from the engaged control's own
+src/styles/tokens/glass.css:103 [above the --glass-focus-veil-dim declaration (:120)] |                        half-extent; the 13rem default is the centred-modal case.
+src/styles/tokens/glass.css:104 [above the --glass-focus-veil-dim declaration (:120)] |          • `-bloom`    the transition band beyond the core out to which the frost eases
+src/styles/tokens/glass.css:105 [above the --glass-focus-veil-dim declaration (:120)] |                        to the sharp page.
+src/styles/tokens/glass.css:106 [above the --glass-focus-veil-dim declaration (:120)] |          • `-dim`      the centre-weighted dim: the scrim ink (`--overlay-scrim-ink`,
+src/styles/tokens/glass.css:107 [above the --glass-focus-veil-dim declaration (:120)] |                        tokens/glass-fx.css) at a tenth. It reads the scrim ink and never
+src/styles/tokens/glass.css:108 [above the --glass-focus-veil-dim declaration (:120)] |                        a plate colour, because a plate is the theme's own ground and
+src/styles/tokens/glass.css:109 [above the --glass-focus-veil-dim declaration (:120)] |                        would brighten what it covers. The dark page is darker than the
+src/styles/tokens/glass.css:110 [above the --glass-focus-veil-dim declaration (:120)] |                        scrim ink, so the dark arm (tokens/dark-arm.css) does not mix it:
+src/styles/tokens/glass.css:111 [above the --glass-focus-veil-dim declaration (:120)] |                        it paints no background and dims in `-tone`, where the dim keeps
+src/styles/tokens/glass.css:112 [above the --glass-focus-veil-dim declaration (:120)] |                        chroma.
+src/styles/tokens/glass.css:113 [above the --glass-focus-veil-dim declaration (:120)] |          • `-tone`     the colour half of the veil's one filter chain, after the blur:
+src/styles/tokens/glass.css:114 [above the --glass-focus-veil-dim declaration (:120)] |                        the medium's `saturate()`, the same term every rung recipe
+src/styles/tokens/glass.css:115 [above the --glass-focus-veil-dim declaration (:120)] |                        carries. The dark arm adds its lightness dim here. */
+src/styles/tokens/glass.css:120 [declares --glass-focus-veil-dim] |     --glass-focus-veil-dim: color-mix(in oklab, var(--overlay-scrim-ink) 10%, transparent);
+src/styles/tokens/glass.css:123 [sentence of :124] |     /* (The rungs and the off-ladder footprints, `--glass-veil-*`, are declared in the
+src/styles/tokens/glass.css:124 [carries "bound"] |        `:root, .dark` block at the foot of this file, beside the bound they derive
+src/styles/tokens/glass.css:125 [sentence of :124] |        from.) */
+src/styles/tokens/glass.css:127 [sentence of :128] |     /* The dock control's foreground base — a complete colour consumed via `var()`.
+src/styles/tokens/glass.css:128 [carries "bound"] |        The dock plate sits on the bound, so the static `--foreground` is AA over any
+src/styles/tokens/glass.css:129 [sentence of :128] |        input; the muted register is `--on-glass-muted` (dock/styles/
+src/styles/tokens/glass.css:130 [sentence of :128] |        adaptive-legibility.css). */
+src/styles/tokens/glass.css:163 [sentence of :165] |     /* THE FIELD WELL is a rung, not an opaque token: the pole one tone toward the
+src/styles/tokens/glass.css:164 [sentence of :165] |        recess (`--glass-well-toward`: the foreground in light, the page in dark, so the
+src/styles/tokens/glass.css:165 [carries "bound"] |        recess always DEEPENS), at the bound. It carries no `backdrop-filter` of its
+src/styles/tokens/glass.css:177 [sentence of :178] |        the rim, and a chip may carry BOTH. It rides ON TOP of the legibility composite,
+src/styles/tokens/glass.css:178 [carries "bound"] |        additively — the plate still holds its bound AND carries the data hue.
+src/styles/tokens/glass.css:248 [carries "bound"] | /* ── THE BOUND, and every rung that derives from it ───────────────────────────────
+src/styles/tokens/glass.css:249 [sentence of :248] |    Declared on `:root` AND on every `.dark` scope, because an unregistered custom
+src/styles/tokens/glass.css:250 [sentence of :248] |    property substitutes where it is declared: a dark island re-derives from its own
+src/styles/tokens/glass.css:251 [sentence of :248] |    `--card-l`, `--on-glass-muted-l` and `--glass-bound-ground`.
+src/styles/tokens/glass.css:253 [sentence of :257] |      Y        = L³ (OKLab; exact for a neutral)
+src/styles/tokens/glass.css:254 [sentence of :257] |      need     the composite luminance the muted ink needs at the target: above the ink
+src/styles/tokens/glass.css:255 [sentence of :257] |               under a dark ink (ground 0), below it under a light one (ground 1)
+src/styles/tokens/glass.css:256 [sentence of :257] |      E(y)     = 1.055·y^(1/2.4) − 0.055, the encoded tone the engines composite in
+src/styles/tokens/glass.css:257 [carries "bound"] |      bound    = (E(need) − ground) / (E(pole) − ground): the α of the pole that lifts
+src/styles/tokens/glass.css:258 [sentence of :257] |               the worst ground to `need`
+src/styles/tokens/glass.css:282 [carries "bound"; sentence of :283] |     /* One step: a third of what the bound leaves. Each band's thinnest rung IS the
+src/styles/tokens/glass.css:283 [carries "bound"] |        bound; thicker rungs add whole steps. The dialog is a room: its plate composes
+tests/styles/focus-veil.test.ts:136 [sentence of :137] | describe("G-RUNG-ONLY · GRADIENT-BLUR arm — the primitive is token-driven", () => {
+tests/styles/focus-veil.test.ts:137 [carries "bound"] |     it("mints the six-value --glass-focus-veil-* cohort, blur BOUND to the ladder", () => {
+tests/styles/focus-veil.test.ts:138 [sentence of :137] |         // The radius is a rung of the blur ladder, never an off-ladder literal — the
+tests/styles/focus-veil.test.ts:139 [sentence of :137] |         // whole point of a rung-only gate.
+NEIGHBOURHOOD lines=95 files=3 declared=2 fallback=0 alias-prose=0 relation=24
+PRINT (95 lines in 3 files; not gated)

@@ -1,0 +1,20 @@
+972:  .glass-focus-veil {
+975:    -webkit-backdrop-filter: blur(var(--glass-focus-veil-blur)) var(--glass-focus-veil-tone);
+976:    backdrop-filter: blur(var(--glass-focus-veil-blur)) var(--glass-focus-veil-tone);
+977:    background: var(--glass-focus-veil-dim);
+978:    -webkit-mask-image: linear-gradient(to right, transparent calc(var(--veil-x) - var(--glass-focus-veil-core-x) - var(--glass-focus-veil-bloom)), black calc(var(--veil-x) - var(--glass-focus-veil-core-x)), black calc(var(--veil-x) + var(--glass-focus-veil-core-x)), transparent calc(var(--veil-
+980:    -webkit-mask-image: linear-gradient(to right, transparent calc(var(--veil-x) - var(--glass-focus-veil-core-x) - var(--glass-focus-veil-bloom)), black calc(var(--veil-x) - var(--glass-focus-veil-core-x)), black calc(var(--veil-x) + var(--glass-focus-veil-core-x)), transparent calc(var(--veil-
+981:    -webkit-mask-image: linear-gradient(to right, transparent calc(var(--veil-x) - var(--glass-focus-veil-core-x) - var(--glass-focus-veil-bloom)), black calc(var(--veil-x) - var(--glass-focus-veil-core-x)), black calc(var(--veil-x) + var(--glass-focus-veil-core-x)), transparent calc(var(--veil-
+982:    mask-image: linear-gradient(to right, transparent calc(var(--veil-x) - var(--glass-focus-veil-core-x) - var(--glass-focus-veil-bloom)), black calc(var(--veil-x) - var(--glass-focus-veil-core-x)), black calc(var(--veil-x) + var(--glass-focus-veil-core-x)), transparent calc(var(--veil-x) + var
+992:  .glass-focus-veil[data-engaged] {
+998:    .glass-focus-veil[data-engaged] {
+1004:    .glass-focus-veil {
+9929:  --glass-focus-veil-blur: var(--glass-blur-floating-radius);
+9930:  --glass-focus-veil-core-x: 13rem;
+9931:  --glass-focus-veil-core-y: 13rem;
+9932:  --glass-focus-veil-bloom: 7rem;
+9933:  --glass-focus-veil-dim: var(--overlay-scrim-ink);
+9938:    --glass-focus-veil-dim: color-mix(in oklab, var(--overlay-scrim-ink) 10%, transparent);
+9943:  --glass-focus-veil-tone: saturate(var(--glass-saturate));
+10851:  --glass-focus-veil-dim: transparent;
+10852:  --glass-focus-veil-tone: saturate(var(--glass-saturate)) contrast(1.03) brightness(.8);

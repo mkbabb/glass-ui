@@ -1,0 +1,83 @@
+SWEEP fv11 under FV11-rulings.json exit 0: PASS (207 lines: 197 ruled true, 10 reported)
+DEL fv11 exit 0: PASS (101 gated rows)
+census fv11 exit 0: LIGHTING-CENSUS stacked=0 halo=0 blur=0 open=0
+HOV exit 0: PASS (58 gated rows)
+NEIGHBOURHOOD (FV11-r32.diff) exit 0: PRINT (95 lines in 3 files; not gated)
+-- every reader of the focus veil and its tokens (src demo tests docs/canon DESIGN.md README CHANGELOG)
+src/styles/glass/focus-veil.css:16:   five values become the `--glass-focus-veil-*` cohort in tokens/glass.css, with the
+src/styles/glass/focus-veil.css:44:   THE CROSS-ENGINE FLOOR. Plain `blur()` + the tone (`--glass-focus-veil-tone`:
+src/styles/glass/focus-veil.css:54:    .glass-focus-veil {
+src/styles/glass/focus-veil.css:75:        backdrop-filter: blur(var(--glass-focus-veil-blur))
+src/styles/glass/focus-veil.css:76:            var(--glass-focus-veil-tone);
+src/styles/glass/focus-veil.css:77:        background: var(--glass-focus-veil-dim);
+src/styles/glass/focus-veil.css:90:                        var(--veil-x) - var(--glass-focus-veil-core-x) -
+src/styles/glass/focus-veil.css:91:                            var(--glass-focus-veil-bloom)
+src/styles/glass/focus-veil.css:93:                black calc(var(--veil-x) - var(--glass-focus-veil-core-x)),
+src/styles/glass/focus-veil.css:94:                black calc(var(--veil-x) + var(--glass-focus-veil-core-x)),
+src/styles/glass/focus-veil.css:97:                        var(--veil-x) + var(--glass-focus-veil-core-x) +
+src/styles/glass/focus-veil.css:98:                            var(--glass-focus-veil-bloom)
+src/styles/glass/focus-veil.css:105:                        var(--veil-y) - var(--glass-focus-veil-core-y) -
+src/styles/glass/focus-veil.css:106:                            var(--glass-focus-veil-bloom)
+src/styles/glass/focus-veil.css:108:                black calc(var(--veil-y) - var(--glass-focus-veil-core-y)),
+src/styles/glass/focus-veil.css:109:                black calc(var(--veil-y) + var(--glass-focus-veil-core-y)),
+src/styles/glass/focus-veil.css:112:                        var(--veil-y) + var(--glass-focus-veil-core-y) +
+src/styles/glass/focus-veil.css:113:                            var(--glass-focus-veil-bloom)
+src/styles/glass/focus-veil.css:122:                        var(--veil-x) - var(--glass-focus-veil-core-x) -
+src/styles/glass/focus-veil.css:123:                            var(--glass-focus-veil-bloom)
+src/styles/glass/focus-veil.css:125:                black calc(var(--veil-x) - var(--glass-focus-veil-core-x)),
+src/styles/glass/focus-veil.css:126:                black calc(var(--veil-x) + var(--glass-focus-veil-core-x)),
+src/styles/glass/focus-veil.css:129:                        var(--veil-x) + var(--glass-focus-veil-core-x) +
+src/styles/glass/focus-veil.css:130:                            var(--glass-focus-veil-bloom)
+src/styles/glass/focus-veil.css:137:                        var(--veil-y) - var(--glass-focus-veil-core-y) -
+src/styles/glass/focus-veil.css:138:                            var(--glass-focus-veil-bloom)
+src/styles/glass/focus-veil.css:140:                black calc(var(--veil-y) - var(--glass-focus-veil-core-y)),
+src/styles/glass/focus-veil.css:141:                black calc(var(--veil-y) + var(--glass-focus-veil-core-y)),
+src/styles/glass/focus-veil.css:144:                        var(--veil-y) + var(--glass-focus-veil-core-y) +
+src/styles/glass/focus-veil.css:145:                            var(--glass-focus-veil-bloom)
+src/styles/glass/focus-veil.css:156:    .glass-focus-veil[data-engaged] {
+src/styles/glass/focus-veil.css:163:        .glass-focus-veil[data-engaged] {
+src/styles/glass/focus-veil.css:174:        .glass-focus-veil {
+src/styles/glass.css:75:   hand, so the two engagement registers sit adjacent. Its selector (`.glass-focus-veil`)
+src/styles/tokens/dark-arm.css:300:    --glass-focus-veil-dim: transparent;
+src/styles/tokens/dark-arm.css:301:    --glass-focus-veil-tone: saturate(var(--glass-saturate)) contrast(1.03) brightness(0.8);
+src/styles/tokens/glass.css:91:    /* The FOCUS-VEIL cohort (glass/focus-veil.css, `.glass-focus-veil`): ONE fixed
+src/styles/tokens/glass.css:96:       THE PREFIX IS `--glass-focus-veil-*`, NOT `--glass-veil-*`: that prefix is the
+src/styles/tokens/glass.css:116:    --glass-focus-veil-blur:   var(--glass-blur-floating-radius);
+src/styles/tokens/glass.css:117:    --glass-focus-veil-core-x: 13rem;
+src/styles/tokens/glass.css:118:    --glass-focus-veil-core-y: 13rem;
+src/styles/tokens/glass.css:119:    --glass-focus-veil-bloom:  7rem;
+src/styles/tokens/glass.css:120:    --glass-focus-veil-dim: color-mix(in oklab, var(--overlay-scrim-ink) 10%, transparent);
+src/styles/tokens/glass.css:121:    --glass-focus-veil-tone: saturate(var(--glass-saturate));
+src/components/slider/Slider.vue:138:    veil.style.setProperty("--glass-focus-veil-core-x", `${rect.width / 2}px`);
+src/components/slider/Slider.vue:139:    veil.style.setProperty("--glass-focus-veil-core-y", `${rect.height / 2}px`);
+src/components/slider/Slider.vue:288:                class="glass-focus-veil"
+src/components/dialog/ModalOverlay.vue:19: * `.glass-focus-veil` (styles/glass/focus-veil.css, MOTION-CANON §5) is a centre-weighted
+src/components/dialog/ModalOverlay.vue:20: * frost mask: a fixed `--glass-focus-veil-core-x/-y` 13rem core plus a 7rem bloom, sited
+src/components/dialog/ModalOverlay.vue:74:        <span v-if="props.veil" class="glass-focus-veil" data-engaged aria-hidden="true" />
+tests/components/dialog/ModalOverlay.test.ts:42:    // The shared `.glass-focus-veil` is the re-derived primitive the scrim composes, and
+tests/components/dialog/ModalOverlay.test.ts:49:        const veil = document.querySelector(".glass-focus-veil") as HTMLElement;
+tests/components/dialog/ModalOverlay.test.ts:57:        expect(document.querySelector(".glass-focus-veil")).toBeNull();
+tests/components/dialog/ModalOverlay.test.ts:96:        expect(document.querySelector(".glass-focus-veil")).not.toBeNull();
+tests/components/sheet/sheet-graded-edge.test.ts:249:    // THE VEIL IS NOT A SHEET'S. `.glass-focus-veil` is a centre-weighted mask with a
+tests/components/sheet/sheet-graded-edge.test.ts:283:            expect(document.querySelector(".glass-focus-veil"), edgeSide).toBeNull();
+-- prose naming the dark veil's black / 40% / darkening (R-36), floor v11
+src/styles/glass/focus-veil.css:93:                black calc(var(--veil-x) - var(--glass-focus-veil-core-x)),
+src/styles/glass/focus-veil.css:94:                black calc(var(--veil-x) + var(--glass-focus-veil-core-x)),
+src/styles/glass/focus-veil.css:108:                black calc(var(--veil-y) - var(--glass-focus-veil-core-y)),
+src/styles/glass/focus-veil.css:109:                black calc(var(--veil-y) + var(--glass-focus-veil-core-y)),
+src/styles/glass/focus-veil.css:125:                black calc(var(--veil-x) - var(--glass-focus-veil-core-x)),
+src/styles/glass/focus-veil.css:126:                black calc(var(--veil-x) + var(--glass-focus-veil-core-x)),
+src/styles/glass/focus-veil.css:140:                black calc(var(--veil-y) - var(--glass-focus-veil-core-y)),
+src/styles/glass/focus-veil.css:141:                black calc(var(--veil-y) + var(--glass-focus-veil-core-y)),
+-- @supports / fallback arms that read backdrop-filter near the veil
+src/styles/glass/focus-veil.css:5:   the engaged control: uniform `backdrop-filter` under the INTERSECT product of an x
+src/styles/glass/focus-veil.css:22:   `backdrop-filter` bands to approximate it. That construction is REJECTED (NOVELTIES
+src/styles/glass/focus-veil.css:28:   ONLY OPACITY ANIMATES. The blur radius field is STATIC. An animated `backdrop-filter`
+src/styles/glass/focus-veil.css:38:   to transition from. (A resident full-viewport `backdrop-filter` at rest is not
+src/styles/glass/focus-veil.css:47:   SOURCE-AUTHORED (only the `backdrop-filter` pair is build-injected), and
+src/styles/glass/focus-veil.css:64:           carries `backdrop-filter`, `transform`, `filter`, `contain: paint` or
+src/styles/glass/focus-veil.css:69:           carries `backdrop-filter`), so a consumer that mounts the veil from inside its
+src/styles/glass/focus-veil.css:75:        backdrop-filter: blur(var(--glass-focus-veil-blur))
+src/components/dialog/ModalOverlay.vue:9: * The `backdrop-filter` leg is gone. It measurably BRIGHTENED the page it was meant to
+src/components/slider/Slider.vue:279:            carries `backdrop-filter`/`transform`/`filter`/`contain: paint`, and a
+src/components/slider/Slider.vue:337:                `backdrop-filter: none` pair whose unprefixed half the build dropped,
