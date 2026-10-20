@@ -11,6 +11,7 @@ import { h, nextTick } from "vue";
 import GlassDock from "@glass/components/dock/GlassDock.vue";
 import ToggleGroup from "@glass/components/toggle-group/ToggleGroup.vue";
 import ToggleGroupItem from "@glass/components/toggle-group/ToggleGroupItem.vue";
+import { RadioGroup, RadioGroupItem } from "@glass/components/radio-group";
 
 function dockWithContainerSeat() {
     return mount(GlassDock, {
@@ -60,6 +61,65 @@ describe("dock run · seat rule", () => {
         await w.get("[data-inner]").trigger("keydown", { key: "ArrowRight" });
         await nextTick();
         expect(document.activeElement).toBe(inner);
+        w.unmount();
+    });
+
+    // A composite root seated DIRECTLY in the run renders its own `tabindex` (reka's
+    // RovingFocusGroup root; RadioGroup is one). Focusable is not "its own control":
+    // the root holds controls, so the run neither roves it nor claims its arrows.
+    // RED before the held-control clause: the run took the root for a seat, wrote its
+    // tabindex, and moved ArrowRight on the focused radio to the next seat.
+    function dockWithDirectComposite() {
+        return mount(GlassDock, {
+            props: { collapse: "open" as const },
+            slots: {
+                default: () => [
+                    h("button", { "data-seat": "0" }, "a"),
+                    h(
+                        RadioGroup,
+                        { modelValue: "x", orientation: "horizontal", "data-seat": "g" },
+                        () => [
+                            h(RadioGroupItem, { value: "x", "data-item": "x", "aria-label": "X" }),
+                            h(RadioGroupItem, { value: "y", "data-item": "y", "aria-label": "Y" }),
+                        ],
+                    ),
+                    h("button", { "data-seat": "2" }, "b"),
+                ],
+            },
+            attachTo: document.body,
+        });
+    }
+
+    it("a composite root seated directly is not roved, and its arrows stay its own", async () => {
+        const w = dockWithDirectComposite();
+        await nextTick();
+        await nextTick();
+        // The run's one stop is on a seat that is its own control, never the group.
+        const seat0 = w.get('[data-seat="0"]').element as HTMLElement;
+        const seat2 = w.get('[data-seat="2"]').element as HTMLElement;
+        expect([seat0.tabIndex, seat2.tabIndex].sort()).toEqual([-1, 0]);
+        // The group's own roving answers the arrow after the bubble, so the final
+        // activeElement alone cannot tell a claimed key from an unclaimed one: the
+        // witness is that the next seat never took focus at all.
+        let stolen = 0;
+        seat2.addEventListener("focus", () => stolen++);
+        const radio = w.get('[data-item="x"]').element as HTMLElement;
+        radio.focus();
+        await w.get('[data-item="x"]').trigger("keydown", { key: "ArrowRight" });
+        await nextTick();
+        expect(stolen).toBe(0);
+        expect(w.get('[data-seat="g"]').element.contains(document.activeElement)).toBe(true);
+        w.unmount();
+    });
+
+    it("arrows from a roved seat skip a directly seated composite", async () => {
+        const w = dockWithDirectComposite();
+        await nextTick();
+        const seat0 = w.get('[data-seat="0"]').element as HTMLElement;
+        seat0.focus();
+        await w.get('[data-seat="0"]').trigger("keydown", { key: "ArrowRight" });
+        await nextTick();
+        expect(document.activeElement?.getAttribute("data-seat")).toBe("2");
         w.unmount();
     });
 });
