@@ -180,6 +180,12 @@ watch(
      · ONE SHIMMER CLOCK. It rides `--duration-shimmer-fast`, the clock the
        indeterminate flow band (`glass/track-flow.css`) already runs linear on; the
        register has one shimmer clock, not two.
+     · ONE AXIS, PHYSICAL. The travel is `translateX`, a physical axis, so the layer
+       is anchored and sized on the same axis (`left`, `width`). A logical anchor
+       flips to the right edge under `dir="rtl"` while the travel does not, and the
+       layer then uncovers one period at the tile's end: a hard seam inside a wide
+       tile, a flat chip. The sheen runs left to right in both directions; it is
+       not reading-order content.
      · COMPOSITOR-ONLY. `transform` on a pseudo-element; no repaint per frame.
      · INK, NO HUE. The band is the foreground at the SEAM rung over the seam fill,
        so its crest reads at about the EDGE rung of the one-ink ladder, in light and
@@ -193,8 +199,8 @@ watch(
         content: "";
         position: absolute;
         inset-block: 0;
-        inset-inline-start: 0;
-        inline-size: calc(100% + var(--skeleton-shimmer-period));
+        left: 0;
+        width: calc(100% + var(--skeleton-shimmer-period));
         pointer-events: none;
         background-image: repeating-linear-gradient(
             90deg,

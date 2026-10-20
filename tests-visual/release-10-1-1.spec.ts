@@ -171,31 +171,43 @@ test.describe("10.1.1", () => {
     });
 
     // ── (5) O-102 (6) — a GUARD, not a red/green witness ─────────────────────
-    // Green on 10.1.0 and 10.1.1 alike: a glass Popover from a seat is unclipped at both
-    // widths, portalled or not (reka's wrapper is `position: fixed`, and the dock's
-    // `contain: layout` makes the dock, not the clipping run, its containing block).
-    // The row itself is NOT cured in 10.1.1 and is returned to the owner (CHANGELOG):
-    // the plate in frame 12.51.30 is an absolute float inside the run, and the run, a
-    // scroll port, clips every seat's cross-axis overhang (`dock/styles/run.css`). This
-    // guard holds only the overlay half, which the consumer's own cure now rides.
+    // Green on 10.1.0 and 10.1.1 alike. The row closes on the consumer's own cure
+    // (fourier 976a704: the caret in frame 12.51.30 is now glass's portalled Tooltip)
+    // under the owner-delegate's condition (INBOUND O-102c): every glass float a dock
+    // seat may host portals by default, outside the run, and lands unclipped. This
+    // guard holds that for each primitive at both widths: its content sits outside
+    // `.dock-run` and all five hit points land on it. `popover-inline` holds the
+    // Popover's `portal: false` opt-out too (reka's wrapper is `position: fixed`, and the
+    // dock's `contain: layout` makes the dock, not the clipping run, its containing
+    // block). A consumer's own absolutely placed float inside the run is still clipped:
+    // the run is a scroll port (`dock/styles/run.css`), and that geometry is D2's (10.2.0).
     for (const [label, viewport] of [
         ["desktop", DESK],
         ["phone", PHONE],
     ] as const) {
-        for (const portal of ["1", "0"]) {
-            test(`O-102(6) · a popover opened from a seat is not clipped (${label}, portal=${portal})`, async ({
+        for (const float of ["tooltip", "popover", "popover-inline", "hovercard", "menu", "select"]) {
+            test(`O-102(6) · a ${float} opened from a seat is portalled out of the run and not clipped (${label})`, async ({
                 page,
             }) => {
                 await page.setViewportSize(viewport);
-                await page.goto(`/tests-visual/release-10-1-1/harness.html?scene=clip&portal=${portal}`);
+                await page.goto(`/tests-visual/release-10-1-1/harness.html?scene=clip&float=${float}`);
                 await page.waitForFunction(() => (window as unknown as { __ready?: boolean }).__ready);
-                const t = page.locator('[data-witness="pop-trigger"]');
-                await expect(t).toBeVisible();
-                await t.click();
-                const pop = page.locator('[data-witness="pop"]');
-                await expect(pop).toBeVisible();
-                await page.waitForTimeout(400);
-                expect(await hits(page, '[data-witness="pop"]')).toEqual([true, true, true, true, true]);
+                const surfaces = float === "menu" ? ["float", "float-sub"] : ["float"];
+                for (const w of surfaces) {
+                    await expect(page.locator(`[data-witness="${w}"]`)).toBeVisible();
+                }
+                await page.waitForTimeout(400); // the entry spring settles
+                for (const w of surfaces) {
+                    const sel = `[data-witness="${w}"]`;
+                    const inRun = await page.evaluate(
+                        (s) => !!document.querySelector(s)?.closest(".dock-run"),
+                        sel,
+                    );
+                    if (float !== "popover-inline") expect(inRun, `${w} inside the run`).toBe(false);
+                    // A submenu may overlap its parent's edge, and the parent may overlap it.
+                    const also = w === "float-sub" ? '[data-witness="float"]' : w === "float" && float === "menu" ? '[data-witness="float-sub"]' : undefined;
+                    expect(await hits(page, sel, also)).toEqual([true, true, true, true, true]);
+                }
             });
         }
     }
@@ -227,6 +239,46 @@ test.describe("10.1.1", () => {
         await page.locator('[data-witness="far"]').scrollIntoViewIfNeeded();
         await expect.poll(async () => (await read("far")).state).toBe("running");
     });
+
+    // The sheen layer must cover the whole tile at every phase of its one-period
+    // travel, in both directions of text. RED on the first 10.1.1 bytes: the layer was
+    // anchored on the logical inline-start and moved on the physical X axis, so under
+    // `dir="rtl"` it uncovered the tile's last period (a seam inside a wide tile, a
+    // flat chip). Read as geometry: the layer's used left edge and width, and its
+    // translate at the cycle's two ends.
+    for (const dir of ["ltr", "rtl"]) {
+        test(`Skeleton · the shimmer layer covers the tile through its whole cycle (${dir})`, async ({
+            page,
+        }) => {
+            await page.setViewportSize(DESK);
+            await open(page, `skeleton&dir=${dir}`);
+            for (const w of ["shimmer", "chip"]) {
+                const m = await page.evaluate((sel) => {
+                    const el = document.querySelector<HTMLElement>(`[data-witness="${sel}"]`)!;
+                    const after = getComputedStyle(el, "::after");
+                    const probe = document.createElement("div");
+                    probe.style.inlineSize = after.getPropertyValue("--skeleton-shimmer-period");
+                    document.body.append(probe);
+                    const period = probe.getBoundingClientRect().width;
+                    probe.remove();
+                    return {
+                        tile: el.clientWidth,
+                        left: parseFloat(after.left),
+                        width: parseFloat(after.width),
+                        period,
+                    };
+                }, w);
+                expect(m.period).toBeGreaterThan(0);
+                // The travel runs translateX(-period) → translateX(0).
+                for (const shift of [-m.period, 0]) {
+                    const start = m.left + shift;
+                    const end = start + m.width;
+                    expect(start, `${w} start at shift ${shift}`).toBeLessThanOrEqual(0.5);
+                    expect(end, `${w} end at shift ${shift}`).toBeGreaterThanOrEqual(m.tile - 0.5);
+                }
+            }
+        });
+    }
 
     test("Skeleton · shimmer holds still under reduced motion", async ({ page }) => {
         await page.emulateMedia({ reducedMotion: "reduce" });

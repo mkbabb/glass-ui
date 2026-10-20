@@ -20,7 +20,7 @@ import {
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from "../../src/components/menu";
-import { Popover, PopoverContent } from "../../src/components/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "../../src/components/popover";
 import { RadioGroup, RadioGroupItem } from "../../src/components/radio-group";
 import {
     Select,
@@ -32,6 +32,12 @@ import {
 import ToggleGroup from "../../src/components/toggle-group/ToggleGroup.vue";
 import ToggleGroupItem from "../../src/components/toggle-group/ToggleGroupItem.vue";
 import { Skeleton } from "../../src/components/skeleton";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "../../src/components/tooltip";
 
 const params = new URLSearchParams(location.search);
 const scene = params.get("scene") ?? "";
@@ -164,27 +170,80 @@ const scenes: Record<string, Component> = {
         ]),
     ),
 
-    // O-102 (6) — a popover opened from a seat of an expanded dock, at phone and desk width.
-    clip: defineComponent(() => () =>
-        bottomDock({ collapse: false }, () => [
-            h(DockControl, { "aria-label": "Play" }, () => "▶"),
-            h(Popover, () => [
-                h(DockTrigger, { for: "popover", "aria-label": "Time", "data-witness": "pop-trigger" }, () => "T"),
-                h(
-                    PopoverContent,
-                    { side: "top", "aria-label": "Time", "data-witness": "pop", portal: params.get("portal") !== "0" },
-                    () => h("div", { style: "inline-size:12rem;block-size:6rem" }, "0.42 s"),
+    // O-102 (6) — a float opened from a seat of an expanded dock, at phone and desk width.
+    // `?float=` picks the primitive; each mounts with its own default portal (INBOUND
+    // O-102c), except `popover-inline`, the Popover's `portal: false` opt-out.
+    clip: defineComponent(() => {
+        const float = params.get("float") ?? "popover";
+        const panel = () => h("div", { style: "inline-size:12rem;block-size:6rem" }, "0.42 s");
+        const seats: Record<string, () => unknown> = {
+            tooltip: () =>
+                h(TooltipProvider, () =>
+                    h(Tooltip, { open: true }, () => [
+                        h(TooltipTrigger, { "aria-label": "Hint" }, () => "H"),
+                        h(TooltipContent, { side: "top", "data-witness": "float" }, () => "0.42 s"),
+                    ]),
                 ),
-            ]),
-            h(DockControl, { "aria-label": "More" }, () => "⋯"),
-        ]),
-    ),
+            popover: () =>
+                h(Popover, { open: true }, () => [
+                    h(DockTrigger, { for: "popover", "aria-label": "Time" }, () => "T"),
+                    h(PopoverContent, { side: "top", "aria-label": "Time", "data-witness": "float" }, panel),
+                ]),
+            "popover-inline": () =>
+                h(Popover, { open: true }, () => [
+                    h(DockTrigger, { for: "popover", "aria-label": "Time" }, () => "T"),
+                    h(
+                        PopoverContent,
+                        { side: "top", "aria-label": "Time", "data-witness": "float", portal: false },
+                        panel,
+                    ),
+                ]),
+            hovercard: () =>
+                h(Popover, { open: true, trigger: "hover" }, () => [
+                    h(PopoverTrigger, { "aria-label": "Preview" }, () => "V"),
+                    h(PopoverContent, { side: "top", "data-witness": "float" }, panel),
+                ]),
+            menu: () =>
+                h(DropdownMenu, { open: true, modal: false }, () => [
+                    h(DockTrigger, { for: "dropdown", "aria-label": "Menu" }, () => "M"),
+                    h(DropdownMenuContent, { side: "top", "data-witness": "float" }, () => [
+                        h(DropdownMenuItem, () => "One"),
+                        h(DropdownMenuItem, () => "Two"),
+                        h(DropdownMenuSub, { open: true }, () => [
+                            h(DropdownMenuSubTrigger, () => "More"),
+                            h(DropdownMenuSubContent, { "data-witness": "float-sub" }, () => [
+                                h(DropdownMenuItem, () => "Nested one"),
+                                h(DropdownMenuItem, () => "Nested two"),
+                            ]),
+                        ]),
+                    ]),
+                ]),
+            select: () =>
+                h(Select, { modelValue: "a", open: true }, () => [
+                    h(SelectTrigger, { "aria-label": "Speed" }, () => h(SelectValue)),
+                    h(SelectContent, { side: "top", "data-witness": "float" }, () => [
+                        h(SelectItem, { value: "a" }, () => "1×"),
+                        h(SelectItem, { value: "b" }, () => "2×"),
+                    ]),
+                ]),
+        };
+        const seat = seats[float];
+        if (!seat) throw new Error(`unknown float "${float}"`);
+        return () =>
+            bottomDock({ collapse: false }, () => [
+                h(DockControl, { "aria-label": "Play" }, () => "▶"),
+                seat(),
+                h(DockControl, { "aria-label": "More" }, () => "⋯"),
+            ]);
+    }),
 
-    // Skeleton shimmer — one shimmer tile, and one far below the fold.
+    // Skeleton shimmer — one shimmer tile, a narrow chip, and one far below the fold;
+    // `?dir=rtl` mounts the same tiles right to left.
     skeleton: defineComponent(() => () =>
-        h("div", { style: "padding:24px;min-height:4000px" }, [
+        h("div", { dir: params.get("dir") ?? "ltr", style: "padding:24px;min-height:4000px" }, [
             h(Skeleton, { shimmer: true, "data-witness": "shimmer", style: "block-size:48px;inline-size:480px" }),
             h(Skeleton, { "data-witness": "plain", style: "block-size:48px;inline-size:480px;margin-top:12px" }),
+            h(Skeleton, { shimmer: true, "data-witness": "chip", style: "block-size:24px;inline-size:213px;margin-top:12px" }),
             h(Skeleton, { shimmer: true, "data-witness": "far", style: "block-size:48px;inline-size:480px;margin-top:3600px" }),
         ]),
     ),
