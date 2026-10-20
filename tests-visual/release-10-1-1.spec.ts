@@ -2,7 +2,8 @@
 // `release-10-1-1/harness.html?scene=<name>` (the real components from `src/` under
 // the demo's own cascade) and reads layout, hit-testing and focus, never pixels.
 // Every witness here is RED on a 10.1.0 tree carrying this spec and harness, and GREEN on
-// 10.1.1, except the O-102 (6) block, which is a GUARD and says so: it is green on both.
+// 10.1.1, with two exceptions, each marked where it stands: the O-102 (3) `#persistent`
+// boundary, and the O-102 (6) GUARD, whose menu cells alone are red on 10.1.0 (G-2).
 // Engines: the `chromium-headless-new` and `coarse-touch` projects, and the `webkit`
 // project (Playwright WebKit 2287, `webkit-2287.config.ts`, under
 // `guarded --exclusive webkit`).
@@ -170,8 +171,41 @@ test.describe("10.1.1", () => {
         ).toBe(true);
     });
 
+    // The collapse's boundary. A `#persistent` control stays painted and live when the
+    // dock collapses, so the popover it opened stays open, focus stays in it, and the
+    // dock stays collapsed. A boundary, green on 10.1.0, which closed nothing on a
+    // collapse. RED on the first 10.1.1 bytes (critic-3 D-1): the collapse
+    // closed the popover and took focus to the summary, the popover's focus return
+    // landed on its live trigger, and the dock re-expanded and stayed expanded.
+    test("O-102(3) · a popover opened from #persistent outlives the collapse, and the dock stays collapsed", async ({
+        page,
+    }) => {
+        await open(page, "persistent");
+        const t = page.locator('[data-witness="p-trigger"]');
+        await expect(t).toBeVisible();
+        await t.click();
+        const content = page.locator('[data-slot="popover-content"]');
+        await expect(content).toBeVisible();
+        await page.locator('[data-witness="pinned-input"]').focus();
+        await page.evaluate(() =>
+            (window as unknown as { __dock: () => { collapse(): void } }).__dock().collapse(),
+        );
+        await page.waitForTimeout(1500); // past the popover's close and focus return
+        await expect(content).toBeVisible();
+        expect(
+            await page.evaluate(() => document.activeElement?.getAttribute("data-witness")),
+        ).toBe("pinned-input");
+        expect(
+            await page.evaluate(
+                () => (window as unknown as { __dock: () => { expanded: boolean } }).__dock().expanded,
+            ),
+        ).toBe(false);
+    });
+
     // ── (5) O-102 (6) — a GUARD, not a red/green witness ─────────────────────
-    // Green on 10.1.0 and 10.1.1 alike. The row closes on the consumer's own cure
+    // Its non-menu cells are green on 10.1.0 and 10.1.1 alike. Its menu cells are red on
+    // 10.1.0: the menu had no z rung, so its lower corners sat under the dock (G-2).
+    // The row closes on the consumer's own cure
     // (fourier 976a704: the caret in frame 12.51.30 is now glass's portalled Tooltip)
     // under the owner-delegate's condition (INBOUND O-102c): every glass float a dock
     // seat may host portals by default, outside the run, and lands unclipped. This

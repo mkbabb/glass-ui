@@ -170,6 +170,30 @@ const scenes: Record<string, Component> = {
         ]),
     ),
 
+    // O-102 (3), its boundary — a popover opened from the `#persistent` region, whose
+    // trigger stays painted and live in the collapsed posture, beside one face seat.
+    persistent: defineComponent(() => {
+        const dock = ref<InstanceType<typeof GlassDock> | null>(null);
+        w.__dock = () => dock.value;
+        return () =>
+            h(
+                "div",
+                {
+                    style: "position:fixed;inset-inline:0;bottom:16px;display:flex;justify-content:center;z-index:var(--z-dock)",
+                },
+                h(GlassDock, { ref: dock, collapse: "open" }, {
+                    persistent: () =>
+                        h(Popover, () => [
+                            h(DockTrigger, { for: "popover", "aria-label": "Pin", "data-witness": "p-trigger" }, () => "P"),
+                            h(PopoverContent, { side: "top", "aria-label": "Pin" }, () =>
+                                h("input", { "data-witness": "pinned-input", "aria-label": "Note" }),
+                            ),
+                        ]),
+                    default: () => [h(DockControl, { "aria-label": "Play" }, () => "▶")],
+                }),
+            );
+    }),
+
     // O-102 (6) — a float opened from a seat of an expanded dock, at phone and desk width.
     // `?float=` picks the primitive; each mounts with its own default portal (INBOUND
     // O-102c), except `popover-inline`, the Popover's `portal: false` opt-out.

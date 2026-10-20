@@ -9,6 +9,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { defineComponent, h, nextTick, ref } from "vue";
 
 import GlassDock from "@glass/components/dock/GlassDock.vue";
+import DockControl from "@glass/components/dock/DockControl.vue";
 import DockTrigger from "@glass/components/dock/DockTrigger.vue";
 import {
     DropdownMenu,
@@ -167,5 +168,48 @@ describe("GlassDock — the collapse closes what its seats opened", () => {
         expect(menuOpen.value).toBe(false);
         const summary = document.querySelector(".dock-layer--summary");
         expect(document.activeElement).toBe(summary);
+    });
+
+    // A `#persistent` control stays painted and live when the dock collapses, so what it
+    // opened is not the collapse's to close, and focus inside it is not the dock's to
+    // move (critic-3 D-1). RED on the first 10.1.1 bytes: the collapse closed every
+    // participating overlay whatever region its trigger sat in, and took focus to the
+    // summary; the popover's own focus return to its live trigger then re-expanded the
+    // dock.
+    it("a popover opened from #persistent stays open, and keeps focus, through a collapse", async () => {
+        const dock = ref<InstanceType<typeof GlassDock> | null>(null);
+        const popOpen = ref(false);
+        const Host = defineComponent(() => () =>
+            h(GlassDock, { ref: dock, collapse: "open" }, {
+                persistent: () =>
+                    h(
+                        Popover,
+                        { open: popOpen.value, "onUpdate:open": (v: boolean) => (popOpen.value = v) },
+                        () => [
+                            h(DockTrigger, { for: "popover", "aria-label": "Pin" }, () => "P"),
+                            h(PopoverContent, { "aria-label": "Pin" }, () =>
+                                h("input", { "data-witness": "pinned-input" }),
+                            ),
+                        ],
+                    ),
+                default: () => [h(DockControl, { "aria-label": "Seat" }, () => "S")],
+            }),
+        );
+        mounted.push(mount(Host, { attachTo: document.body, global: { stubs: { teleport: false } } }));
+        await settle();
+        popOpen.value = true;
+        await settleOpen();
+        const content = document.querySelector('[data-slot="popover-content"]');
+        expect(content).not.toBeNull();
+        expect(content!.hasAttribute("data-glass-dock-face")).toBe(false);
+        const input = document.querySelector<HTMLElement>('[data-witness="pinned-input"]')!;
+        input.focus();
+        expect(document.activeElement).toBe(input);
+
+        dock.value!.collapse();
+        await settle();
+        expect(dock.value!.expanded).toBe(false);
+        expect(popOpen.value).toBe(true);
+        expect(document.activeElement).toBe(input);
     });
 });

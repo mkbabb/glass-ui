@@ -6,8 +6,10 @@ Four cures, one guarded row and one owner-ruled addition. Asked by the atlas con
 G-1 to G-3, `docs/tranches/BK/coordination/ATLAS-TO-GLASS-2026-10-17-U-BATCH.md` and its
 addendum) and by the owner through value.js (records: `docs/tranches/BL/audit/INBOUND.md`
 O-99, O-99a, O-102, O-102b, O-102c). `MIGRATION.md` §10.1.1 lists the behaviour a consumer may
-notice. Each witness below fails on the 10.1.0 bytes and passes on these, except the O-102 (6)
-guard, which passes on both; the engine
+notice. Each witness below fails on the 10.1.0 bytes and passes on these, with two
+exceptions. The O-102 (6) guard's non-menu cells pass on both; its menu cells fail on 10.1.0,
+because the menu had no z rung there (G-2). The O-102 (3) `#persistent` boundary passes on
+both, because 10.1.0 closed nothing on a collapse. The engine
 witnesses are `tests-visual/release-10-1-1.spec.ts` (harness `tests-visual/release-10-1-1/`),
 run in Chromium (desk and coarse projects) and Playwright WebKit 2287
 (`tests-visual/webkit-2287.config.ts`; 2311 crashes on any dock page, atlas N-1), at 1440
@@ -44,10 +46,15 @@ and 390 where width matters.
   and an expand opens nothing back. Focus held in the expanded face or in a closed
   overlay moves to the dock's summary on the same edge, as the Escape path always did
   (the overlay's own return aims at its trigger, inert in the collapsed face, and fell
-  to `<body>`); the Escape path now rides that one hand-off. Witness:
+  to `<body>`); the Escape path now rides that one hand-off. Only the face's overlays
+  close: the dock renders its default slot inside a `DockFace` scope (no DOM), and an
+  overlay states `close` only under it. A popover opened from `#persistent` or
+  `#persistent-end`, whose trigger stays painted and live when collapsed, stays open and
+  keeps its focus, and the dock stays collapsed. Witness:
   `tests/components/custom/dock/GlassDock.collapse-closes-overlays.test.ts`; engine:
   "O-102(3) · a dropdown / a popover / a select opened from a seat closes when the dock
-  collapses" and "O-102(3) · a collapse-closed menu hands focus to the summary".
+  collapses", "O-102(3) · a collapse-closed menu hands focus to the summary" and "O-102(3)
+  · a popover opened from #persistent outlives the collapse, and the dock stays collapsed".
 - **Skeleton `shimmer` (owner ruling, O-102b (3)).** One prop. A sheen of one fixed period
   travels across the shape in place of the breathe, on the shared `--duration-shimmer-fast`
   clock, `linear`, compositor-only. Its profile has no transparent run, so a narrow tile
@@ -65,8 +72,10 @@ and 390 where width matters.
   cross axis, so a consumer's own float inside it is cut. Fourier cured its caret by
   moving it to glass's portalled Tooltip (976a704). The owner-delegate closed the row on
   that cure (O-102c), on condition that every glass float a seat may host portals by
-  default, outside the run. Each already does, so no source changes. 10.1.1 ships the
-  guard for that condition, and the guard is green on 10.1.0 too. Tooltip, Popover, its
+  default, outside the run. Each already portals, so this row changes no source. 10.1.1
+  ships the guard for that condition. On 10.1.0 its non-menu cells pass and its menu cells
+  fail at both widths in every engine project: the portalled menu's lower corners sat under
+  the dock, because the menu had no z rung (G-2). Tooltip, Popover, its
   hover arm (HoverCard), DropdownMenu and its submenu, and the Select content are each
   opened from a seat with no portal prop. Each lands outside `.dock-run`, unclipped at 390
   and 1440, and so does Popover with `portal: false`. Guard:

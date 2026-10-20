@@ -29,9 +29,8 @@ import { computed, nextTick, ref, useId, useTemplateRef, watch } from "vue";
 // (docs/consumer-evidence/use-glass-backdrop-luminance.md names the booked trigger).
 import { FOCUSABLE_SELECTOR } from "../_shared/focus";
 import { useGlassBackdropLuminance } from "../../composables/glass/useGlassBackdropLuminance";
-import { isTeleportedTarget } from "../_shared/overlay/isTeleportedTarget";
 import { OPEN_DISMISSABLE_LAYER_SELECTOR } from "./constants";
-import { provideDockContext } from "./composables/dockContext";
+import { DockFace, provideDockContext } from "./composables/dockContext";
 import { useDockState } from "./composables/useDockState";
 import { useDockMorphOrchestrator } from "./composables/useDockMorph";
 import { useDockExpandedSize } from "./composables/dockMorphMeasure";
@@ -271,7 +270,8 @@ function onFullKeydown(event: KeyboardEvent): void {
 }
 
 /* THE COLLAPSE HANDS FOCUS TO THE SUMMARY. On the collapse edge the expanded face goes
-   inert and every overlay its seats opened closes (`useDockParticipation`'s `close`).
+   inert and every overlay its seats opened closes (`useDockParticipation`'s `close`,
+   stamped `data-glass-dock-face`).
    Focus held in either place has nowhere left to stand: the face's controls are inert,
    and an overlay's own focus return aims at its trigger, which sits in that same inert
    face, so the engine drops it to <body>. Where focus stood is read on the edge itself
@@ -279,13 +279,17 @@ function onFullKeydown(event: KeyboardEvent): void {
    it takes focus, as the Escape path always gave it. One path for every collapse:
    Escape, `collapse()`, and the collapse-owned overlay close. Focus anywhere else (the
    persistent region, the page) is not the dock's and is left where it is. The
-   overlay's later return to its inert trigger is a no-op on an inert element. */
+   overlay's later return to its inert trigger is a no-op on an inert element. An
+   overlay a `#persistent` control opened is not the face's: it stays open, focus in it
+   stays, and taking it would send its own focus return to a live trigger and re-expand
+   the dock (critic-3 D-1). */
 watch(visualExpanded, async (isExpanded, was) => {
     if (!was || isExpanded) return;
     const active = document.activeElement;
     const held =
         (!!active && !!fullEl.value?.contains(active)) ||
-        isTeleportedTarget(active, dockId);
+        active?.closest("[data-glass-dock-face]")?.getAttribute("data-glass-dock-owner") ===
+            dockId;
     if (!held) return;
     await nextTick();
     const summary = summaryEl.value;
@@ -491,7 +495,7 @@ defineExpose({
                 tabindex="-1"
                 @keydown="onFullKeydown"
             >
-                <slot />
+                <DockFace><slot /></DockFace>
             </div>
             <div
                 ref="summaryEl"

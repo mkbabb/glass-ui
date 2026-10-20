@@ -14,8 +14,9 @@ One type-level change, below; no runtime break. Behaviour a consumer may notice:
   exported `provideDockContext` itself (none of the sibling repos does) passes it. A
   `GlassDock` provides it; nothing changes for a consumer that only reads the context.
 - **A dock collapse closes the menus, popovers and selects its seats opened, and focus
-  that stood in them moves to the dock's summary.** A consumer that closed them by hand on
-  collapse can delete that code. To keep the dock open while an overlay is up, use the
+  that stood in them moves to the dock's summary.** The seats are the default slot's; an
+  overlay opened from `#persistent` or `#persistent-end` stays open, since its trigger is
+  still there. A consumer that closed them by hand on collapse can delete that code. To keep the dock open while an overlay is up, use the
   existing `keepDockOpen` (Popover) or `keepOpen`/`release`.
 - **The dock run no longer roves a seat that holds controls.** A container seat (a `div`
   holding a ToggleGroup, a slider, a band of buttons) and a composite root seated directly
