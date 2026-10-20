@@ -1,0 +1,4 @@
+/* BV11 plant (row 19, R-32's mechanism): the dark arm's tone removed. The dark --glass-focus-veil-tone falls back to the
+   light arm's term (the medium's saturate alone), so the dark veil carries no dim term at all: -dim is transparent and
+   the chain only blurs and saturates. M-9's dark rows and R-32 (iii) must red where the chain paints (Chromium). */
+.dark { --glass-focus-veil-tone: saturate(var(--glass-saturate)); }

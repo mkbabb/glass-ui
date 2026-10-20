@@ -1,0 +1,8 @@
+demo-probe fv11 chromium exit 0 22:21:18 load { 6.17 6.41 7.40 }
+DEMO PASS chromium light fv11: rows 30 · pointer on row 1: highlighted [1] painting [1] bg oklch(0.53 0.124 69.6 / 0.12) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.53 0.124 69.6 / 0.12)
+DEMO PASS chromium dark fv11: rows 30 · pointer on row 1: highlighted [1] painting [1] bg oklch(0.813 0.109 78.2 / 0.12) · pointer on row 0: highlighted [0] painting [0] bg oklch(0.813 0.109 78.2 / 0.12)
+DEMO-PROBE fv11 · PASS (2 theme rows) · load 5.2 6.3 7.4 → 6.2 6.4 7.4
+crit-demo fv11 chromium exit 0 22:21:47 load { 5.77 6.29 7.32 }
+CRIT PASS chromium light fv11: P pointer→row1 ok highlighted [1] painting [1] · K ArrowDown with pointer on row 1 (still :hover true) ok highlighted [2] painting [2] bg oklch(0.53 0.124 69.6 / 0.12) ink rgb(28, 25, 23) · L pointer leaves ok highlighted [2] painting [2]
+CRIT PASS chromium dark fv11: P pointer→row1 ok highlighted [1] painting [1] · K ArrowDown with pointer on row 1 (still :hover true) ok highlighted [2] painting [2] bg oklch(0.813 0.109 78.2 / 0.12) ink rgb(233, 230, 226) · L pointer leaves ok highlighted [2] painting [2]
+CRIT-DEMO fv11 · PASS (2) · load 6.2 6.4 7.4 → 5.8 6.3 7.3

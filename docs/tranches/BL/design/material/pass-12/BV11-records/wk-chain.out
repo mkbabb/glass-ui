@@ -1,0 +1,22 @@
+[guarded] waiting for the 'webkit' lock
+== frames-wk start 23:18:33 load { 4.43 5.26 6.06 }
+admitted 23:18:33 load { 4.43 5.26 6.06 }
+capture fv11a webkit 1 exit 0 23:18:48 load { 4.33 5.19 6.03 }
+M-9 --r32 fv11a webkit 1: FAIL (3 of 16 gated rows)
+capture fv11 webkit 1 exit 0 23:19:02 load { 4.11 5.10 5.98 }
+M-9 --r32 fv11 webkit 1: FAIL (6 of 16 gated rows)
+== frames-wk end 23:19:02 load { 4.11 5.10 5.98 }
+frames-wk exit 0
+[guarded] waiting for the 'webkit' lock
+== plants-wk start 00:06:33 load { 5.75 6.22 6.06 }
+admitted 00:06:33 load { 5.75 6.22 6.06 }
+worktree = floor-v11.patch
+FV3-plants webkit exit 0 00:19:22 load { 4.77 6.26 6.39 }
+FV2-plants webkit exit 0 00:24:19 load { 6.96 6.36 6.37 }
+demo-probe fv11 webkit exit 1 00:24:20 load { 6.96 6.36 6.37 }
+DEMO FAIL webkit light fv11: rows — · pointer on row 1: — · pointer on row 0: — · ERROR Error: page.waitForTimeout: Page crashed
+DEMO FAIL webkit dark fv11: rows — · pointer on row 1: — · pointer on row 0: — · ERROR Error: page.waitForTimeout: Page crashed
+DEMO-PROBE fv11 · FAIL (2 of 2 theme rows) · load 7.0 6.4 6.4 → 7.0 6.4 6.4
+== plants-wk end 00:24:20 load { 6.96 6.36 6.37 }
+plants-wk exit 0
+[guarded] waiting for the 'webkit' lock
