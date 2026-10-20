@@ -106,7 +106,7 @@ const statusEl = useTemplateRef<HTMLElement>("statusEl");
    the port scrolls, and the common ancestor the cut-cap timeline scopes to. Reach,
    roving tabindex and the announcement all read the SAME lattice arithmetic, so they
    live in one composable rather than three that must agree. */
-useDockRun({ runEl: fullEl, statusEl, orientation });
+const { toolbar } = useDockRun({ runEl: fullEl, statusEl, orientation });
 
 /* Wire the sampled-luminance observer ON for
    the dock by default. It writes `--glass-backdrop-luma` + derives the
@@ -473,9 +473,10 @@ defineExpose({
                 cut-cap timeline scopes to. Interposing a wrapper would make every
                 consumer's seats grandchildren of the flex run and buy nothing.
 
-                `role="toolbar"` + `aria-orientation` are the semantics the seat run
-                always had and never declared (role present on 4/14 docks; the arrow-key
-                contract it promises is `useDockRun`'s roving tabindex). No `aria-label`
+                `role="toolbar"` + `aria-orientation` are claimed only while every child
+                of the run is a declared seat (`useDockRun`'s `toolbar`; atlas G-4, b-ii):
+                the arrow-key contract the role promises is the roving tabindex, and a run
+                holding an undeclared control does not keep it. No `aria-label`
                 is minted here: an unlabelled toolbar announces as "toolbar", which is
                 honest, whereas a hardcoded generic name would OVERRIDE whatever the
                 consumer put on the dock root via `$attrs` and read as the library's
@@ -484,8 +485,8 @@ defineExpose({
             <div
                 ref="fullEl"
                 :id="`${dockId}-full`"
-                role="toolbar"
-                :aria-orientation="orientation"
+                :role="toolbar ? 'toolbar' : undefined"
+                :aria-orientation="toolbar ? orientation : undefined"
                 :class="['dock-layer dock-layer--full dock-run', {
                     'is-active': outerCurrentLayer === 'full',
                     'is-leaving': outerLeavingLayer === 'full' || (pressKeepaliveLayer === 'full' && outerCurrentLayer !== 'full'),

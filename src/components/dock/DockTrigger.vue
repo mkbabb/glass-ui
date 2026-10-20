@@ -9,6 +9,7 @@ import { ChevronDown } from "@lucide/vue";
 import { cn } from "../_shared/class-names";
 import { vSpecular } from "../../composables/glass";
 import DropdownMenuTrigger from "../menu/DropdownMenuTrigger.vue";
+import { DOCK_SEAT_ATTR } from "./constants";
 
 /**
  * <DockTrigger> — the ONE dock overlay trigger (folds
@@ -27,6 +28,9 @@ import DropdownMenuTrigger from "../menu/DropdownMenuTrigger.vue";
  * greenfield trigger clamps its own label (the retired `clampLabel` prop's
  * disposition, decided-terminal: label-clamp is a native trigger concern). Reka's
  * props (`as`/`as-child`/`disabled`/…) fall through via `$attrs`.
+ *
+ * A DECLARED SEAT. Every arm carries `data-glass-dock-seat` (`DOCK_SEAT_ATTR`), so a
+ * trigger seated directly in a dock run is roved by it (atlas G-4, b-ii).
  */
 defineOptions({ inheritAttrs: false });
 
@@ -38,6 +42,8 @@ const props = withDefaults(
     }>(),
     { for: "select" },
 );
+
+const seat = { [DOCK_SEAT_ATTR]: "" };
 
 const triggerClass = computed(() =>
     cn(
@@ -53,7 +59,7 @@ const triggerClass = computed(() =>
     <SelectTrigger
         v-if="props.for === 'select'"
         v-specular
-        v-bind="$attrs"
+        v-bind="{ ...$attrs, ...seat }"
         :class="triggerClass"
     >
         <slot />
@@ -67,14 +73,14 @@ const triggerClass = computed(() =>
     <DropdownMenuTrigger
         v-else-if="props.for === 'dropdown'"
         v-specular
-        v-bind="$attrs"
+        v-bind="{ ...$attrs, ...seat }"
         action="pointerdown"
         :class="triggerClass"
     >
         <slot />
     </DropdownMenuTrigger>
 
-    <PopoverTrigger v-else v-specular v-bind="$attrs" :class="triggerClass">
+    <PopoverTrigger v-else v-specular v-bind="{ ...$attrs, ...seat }" :class="triggerClass">
         <slot />
     </PopoverTrigger>
 </template>

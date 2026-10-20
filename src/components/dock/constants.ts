@@ -71,3 +71,13 @@ export const DOCK_COLLAPSE_DELAY_MS = 3600;
  * settle signal, this caps the window so a never-settling morph can't trap clicks
  * forever. */
 export const MORPH_SETTLE_MS = 840;
+
+/**
+ * THE DECLARED SEAT MARKER (atlas G-4, arm b-ii; INBOUND O-102d). The dock run roves a
+ * direct child only when it carries this attribute, and claims `role="toolbar"` only
+ * when every direct child carries it (a `role="separator"` aside). Glass's seat
+ * primitives, `<DockControl>` and `<DockTrigger>`, set it; a consumer's own seat sets it
+ * by hand. Nothing is inferred from focusability: an undeclared child keeps its natural
+ * tab stop and its own keys.
+ */
+export const DOCK_SEAT_ATTR = "data-glass-dock-seat";

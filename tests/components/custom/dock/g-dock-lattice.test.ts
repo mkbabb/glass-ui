@@ -428,6 +428,7 @@ describe("G-DOCK-REACH — the anchor is closed-form, and its geometry ships wit
      * every focusable seat carried `tabIndex 0` across all five docks (13/13, 9/9, 7/7,
      * 5/5, 15/15) while `keydown` was bound 0/0. Tabbing a route dock cost one stop per
      * destination and arrow keys did nothing — neither the toolbar pattern nor any other.
+     * The seats are declared (`data-glass-dock-seat`, 10.1.2): the run roves nothing else.
      */
     function dockWithSeats(current = -1) {
         return mount(GlassDock, {
@@ -436,7 +437,7 @@ describe("G-DOCK-REACH — the anchor is closed-form, and its geometry ships wit
                 default: [0, 1, 2, 3]
                     .map(
                         (i) =>
-                            `<button data-seat="${i}"${i === current ? ' aria-current="page"' : ""}>s${i}</button>`,
+                            `<button data-glass-dock-seat data-seat="${i}"${i === current ? ' aria-current="page"' : ""}>s${i}</button>`,
                     )
                     .join(""),
             },
@@ -496,7 +497,9 @@ describe("G-DOCK-REACH — the anchor is closed-form, and its geometry ships wit
     it("a vertical dock answers the block-axis arrows", async () => {
         const w = mount(GlassDock, {
             props: { collapse: "open" as const, orientation: "vertical" as const },
-            slots: { default: `<button data-seat="0">a</button><button data-seat="1">b</button>` },
+            slots: {
+                default: `<button data-glass-dock-seat data-seat="0">a</button><button data-glass-dock-seat data-seat="1">b</button>`,
+            },
             attachTo: document.body,
         });
         await nextTick();

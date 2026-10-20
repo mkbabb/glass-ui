@@ -11,6 +11,7 @@ import { cn } from "../_shared/class-names";
 import { vSpecular } from "../../composables/glass";
 import { useLiquidPress } from "../../composables/motion/spring/useLiquidPress";
 import { springPreset } from "../../composables/motion/spring/springPresets";
+import { DOCK_SEAT_ATTR } from "./constants";
 
 /**
  * <DockControl> is the single dock control, with icon and tab geometry selected by
@@ -27,6 +28,9 @@ import { springPreset } from "../../composables/motion/spring/springPresets";
  * `--dock-control-safe-inset` fold, while the HIT CELL stays the full
  * `--dock-control-size` (≥44px on coarse via the density clamp) — hit box ≠ paint
  * box. `overflow: visible` keeps the painted inset unclipped.
+ *
+ * A DECLARED SEAT. The host carries `data-glass-dock-seat` (`DOCK_SEAT_ATTR`), so a
+ * control seated directly in a dock run is roved by it (atlas G-4, b-ii).
  *
  * Role rides the consumer: an `active` control stamps `aria-pressed` (the
  * AT-selectable semantic) + `data-active` (the CSS hook reading the
@@ -107,6 +111,7 @@ const classes = computed(() =>
 //     FOCUSABLE (PRESENT-but-disabled, AT-discoverable); `blockDisabledActivation`
 //     suppresses activation since `aria-disabled` does not block events.
 const stateAttrs = computed(() => ({
+    [DOCK_SEAT_ATTR]: "",
     ...(props.active !== undefined
         ? {
               "aria-pressed": String(props.active),
