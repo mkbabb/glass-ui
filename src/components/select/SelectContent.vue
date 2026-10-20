@@ -17,6 +17,7 @@ export interface SelectContentEmits {
 <script setup lang="ts">
 import { computed, useAttrs } from "vue";
 import {
+    injectSelectRootContext,
     SelectContent as RekaSelectContent,
     SelectPortal as RekaSelectPortal,
     SelectViewport as RekaSelectViewport,
@@ -57,8 +58,18 @@ const rootAttrs = computed(() => ({
 }));
 /* The stamp comes from the ONE module now, not from a hand-copied attribute
    pair. The listbox PLATE stays #81's (`[data-slot="select-content"]`,
-   glass/overlay-plate.css) — only the portal seam moves here. */
-const dock = useDockParticipation();
+   glass/overlay-plate.css) — only the portal seam moves here.
+   A listbox a dock seat opened is a dropdown, and it closes when that dock collapses,
+   through the select root's own open channel (O-102 (3)), as the menu does. The
+   inject is not the guard against a rootless part: reka's own content injects the
+   same context strictly and throws, so a rootless SelectContent still fails loud;
+   only a part rendered with reka stubbed out (the contract tests) reaches null. */
+const selectRoot = injectSelectRootContext(null);
+const dock = useDockParticipation({
+    close: () => {
+        if (selectRoot?.open.value) selectRoot.onOpenChange(false);
+    },
+});
 </script>
 
 <template>

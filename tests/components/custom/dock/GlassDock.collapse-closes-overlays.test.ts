@@ -16,6 +16,13 @@ import {
     DropdownMenuItem,
 } from "@glass/components/menu";
 import { Popover, PopoverContent } from "@glass/components/popover";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@glass/components/select";
 
 const mounted: { unmount(): void }[] = [];
 afterEach(() => {
@@ -26,10 +33,19 @@ async function settle() {
     for (let i = 0; i < 4; i++) await nextTick();
 }
 
-function mountDock() {
+/** Reka mounts portalled content a task after the open flips. */
+async function settleOpen() {
+    await settle();
+    await new Promise((resolve) => setTimeout(resolve, 30));
+}
+
+/** `portal`: mount reka's portals for real, for the tests that read the open content
+ *  (the Select listbox, the menu's items). The state-only tests keep the stub. */
+function mountDock(portal = false) {
     const dock = ref<InstanceType<typeof GlassDock> | null>(null);
     const menuOpen = ref(false);
     const popOpen = ref(false);
+    const selectOpen = ref(false);
     const Host = defineComponent(() => () =>
         h(GlassDock, { ref: dock, collapse: "open" }, () => [
             h(
@@ -52,11 +68,29 @@ function mountDock() {
                     h(PopoverContent, { "aria-label": "Pop" }, () => "panel"),
                 ],
             ),
+            h(
+                Select,
+                {
+                    modelValue: "a",
+                    open: selectOpen.value,
+                    "onUpdate:open": (v: boolean) => (selectOpen.value = v),
+                },
+                () => [
+                    h(SelectTrigger, { "aria-label": "Pick" }, () => h(SelectValue)),
+                    h(SelectContent, {}, () => [
+                        h(SelectItem, { value: "a" }, () => "A"),
+                        h(SelectItem, { value: "b" }, () => "B"),
+                    ]),
+                ],
+            ),
         ]),
     );
-    const wrapper = mount(Host, { attachTo: document.body });
+    const wrapper = mount(Host, {
+        attachTo: document.body,
+        ...(portal ? { global: { stubs: { teleport: false } } } : {}),
+    });
     mounted.push(wrapper);
-    return { dock, menuOpen, popOpen };
+    return { dock, menuOpen, popOpen, selectOpen };
 }
 
 describe("GlassDock — the collapse closes what its seats opened", () => {
@@ -98,5 +132,40 @@ describe("GlassDock — the collapse closes what its seats opened", () => {
         dock.value!.expand();
         await settle();
         expect(popOpen.value).toBe(false);
+    });
+
+    // A Select is a dropdown (O-102 (3) names dropdowns). RED before SelectContent took
+    // the participation's `close`: the listbox stayed open over the collapsed dock.
+    it("a select opened from a seat closes on collapse()", async () => {
+        const { dock, selectOpen } = mountDock(true);
+        await settle();
+        selectOpen.value = true;
+        await settleOpen();
+        expect(document.querySelector('[data-slot="select-content"]')).not.toBeNull();
+
+        dock.value!.collapse();
+        await settle();
+        expect(selectOpen.value).toBe(false);
+    });
+
+    // Focus held in an overlay a seat opened lands on the summary, not on <body>. The
+    // engine half (an inert trigger refuses the overlay's own focus return) is the
+    // engine witness's; here the collapse edge is read before any later focus return.
+    // RED before the collapse took focus: the closed menu's item left focus on <body>.
+    it("a collapse with focus inside a seat's menu hands focus to the summary", async () => {
+        const { dock, menuOpen } = mountDock(true);
+        await settle();
+        menuOpen.value = true;
+        await settleOpen();
+        const item = document.querySelector<HTMLElement>('[role="menuitem"]');
+        expect(item).not.toBeNull();
+        item!.focus();
+        expect(document.activeElement).toBe(item);
+
+        dock.value!.collapse();
+        await settle();
+        expect(menuOpen.value).toBe(false);
+        const summary = document.querySelector(".dock-layer--summary");
+        expect(document.activeElement).toBe(summary);
     });
 });
