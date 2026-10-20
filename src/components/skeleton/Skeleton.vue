@@ -164,9 +164,19 @@ watch(
        cycle. Its speed is period ÷ duration on every tile, a 213px chip and a
        1246px block alike, and the loop has no seam: after one period the pattern
        is where it began.
+     · NO DEAD TIME ON A NARROW TILE. The old band was ink over 40% of its travel
+       and nothing over the rest, so a chip sat blank for most of every cycle. This
+       profile has no flat transparent run: it rises from the period's one
+       transparent point to the crest and falls back to the next, so every tile, a
+       213px chip included, carries moving ink for the whole cycle. The 28rem period
+       puts the crest itself on such a chip about half the cycle and keeps a wide
+       block to a few crests, never a stripe train.
      · NO STALL AT THE SEAM. A one-way loop runs `linear`, because an ease on a
-       one-way loop decelerates to zero at the wrap seam. The weight is in the
-       band's profile, a soft rise and fall, not in its clock.
+       one-way loop decelerates to zero at the wrap seam, and with a full-period
+       profile the seam always falls on a visible slope. The weight is in the
+       profile, a soft rise and fall, not in the clock. The width-scaled
+       alternative (a period equal to the tile, which would let an ease swing it)
+       is the old band's own falsifier: its speed would differ per tile.
      · ONE SHIMMER CLOCK. It rides `--duration-shimmer-fast`, the clock the
        indeterminate flow band (`glass/track-flow.css`) already runs linear on; the
        register has one shimmer clock, not two.
@@ -179,7 +189,7 @@ watch(
      · OFF-SCREEN IS PAUSED (`data-offscreen`, written by the script's observer). */
 @layer components {
     .skeleton[data-shimmer]::after {
-        --skeleton-shimmer-period: 36rem;
+        --skeleton-shimmer-period: 28rem;
         content: "";
         position: absolute;
         inset-block: 0;
@@ -188,10 +198,13 @@ watch(
         pointer-events: none;
         background-image: repeating-linear-gradient(
             90deg,
-            transparent calc(var(--skeleton-shimmer-period) * 0.3),
+            transparent 0,
+            color-mix(in oklab, var(--foreground) calc(var(--ink-seam) * 35%), transparent)
+                calc(var(--skeleton-shimmer-period) * 0.25),
             color-mix(in oklab, var(--foreground) calc(var(--ink-seam) * 100%), transparent)
                 calc(var(--skeleton-shimmer-period) * 0.5),
-            transparent calc(var(--skeleton-shimmer-period) * 0.7),
+            color-mix(in oklab, var(--foreground) calc(var(--ink-seam) * 35%), transparent)
+                calc(var(--skeleton-shimmer-period) * 0.75),
             transparent var(--skeleton-shimmer-period)
         );
         transform: translateX(calc(-1 * var(--skeleton-shimmer-period)));
