@@ -21,6 +21,11 @@ rename or import re-point per call site.
   the ground the preset mounted with; the live canvas still moves. To change the ground,
   change the palette or the field shape. `.aurora-placeholder` is now two elements; a
   consumer selector that assumed one should select `[data-aurora-ground-active]`.
+- **A dock opened by its owner takes taps while it morphs.** A consumer that delayed its
+  own scrim or row handlers to wait out the click-integrity window can arm them on open.
+  The deferral still applies after a hover approach.
+- **A wheel over an expanded run that has reached its end no longer scrolls the page** in
+  Firefox, matching Chromium.
 - **New:** `auroraGroundKey(config)`; `GpuSubstrateOptions.prepare`.
 
 ## 10.1.1

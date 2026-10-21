@@ -286,6 +286,8 @@ const {
     onPointerCancelCapture,
     onClickCapture,
     markExpandFlip,
+    onPointerEnter,
+    onPointerLeave,
     pressKeepaliveLayer,
 } = useDockClickIntegrity({
     rootEl: dockEl,
@@ -349,6 +351,8 @@ defineExpose({
         @mouseleave="onMouseLeave($event)"
         @focusin="onFocusIn"
         @focusout="onFocusOut"
+        @pointerenter="onPointerEnter"
+        @pointerleave="onPointerLeave"
         @pointerdown.capture="onPointerDownCapture"
         @pointercancel.capture="onPointerCancelCapture"
         @click.capture="onClickCapture"

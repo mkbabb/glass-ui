@@ -35,6 +35,29 @@ decline each row (relay rows B7-G7 to B7-G9).
   re-encoded the PNG and swapped `background-image`: 30 to 2,183 rewrites per route pass
   in atlas (R-INTERACT §5). Witness: `tests/components/custom/aurora/ground-encode.test.ts`
   (substrate forced to WebGL; 12 nucleus moves, 1 encode, 0 style writes).
+- **A vertical dock's seats are inside its hit box while it morphs (B7-G9, atlas D-5).**
+  The first expand of a vertical dock took its expanded endpoint from the run while the
+  run was squeezed to the collapsed box, so `[data-morphing]` reserved the collapsed box
+  (58 px in the witness) and every seat below it hit-tested to the page until the spring
+  settled. `dockMorphMeasure` now takes the run's content span (`scrollHeight`), clamped at
+  the root's `max-block-size`. The cure sits in the measure, not in `layers.css`: the
+  `block-size: var(--dock-expanded-px)` rule there was right and its input was wrong.
+- **Click-integrity defers a mid-morph press only after a hover approach (B7-G9, atlas
+  D-5).** The deferral exists for race (b): a fine pointer arrives, its arrival opens the
+  dock, and the layer swaps under it. It now applies only to an expand opened that way.
+  An expand opened by the owner's `expand()`, a press inside the dock, or a touch or pen
+  pointer lets a press that starts and clicks on the same arriving control through. A
+  click that lands on a different control than it pressed is still swallowed. On 10.1.1 a
+  phone sheet dropped every row tap for its first ~800 ms.
+- **The vertical run keeps the wheel at its ends in Firefox.** Firefox ignores
+  `overscroll-behavior: contain` once a wheel transaction lapses, and the page behind an
+  expanded dock scrolled 840 px in the witness. `useDockRun` declines a wheel that pushes
+  past the end the run rests at, on its own axis, while the run overflows. Chromium was
+  already contained; arrows, drag and clicks were already correct in both engines.
+- Witnesses: `tests/components/custom/dock/dockMorphMeasure.test.ts`,
+  `GlassDock.click-integrity.test.ts`, `GlassDock.run-wheel.test.ts`; engine:
+  `tests-visual/u-b7.spec.ts` (`tests-visual/u-b7/playwright.config.ts`, Chromium desk and
+  coarse, Firefox desk and phone).
 
 ## 10.1.1 — 2026-10-19
 
