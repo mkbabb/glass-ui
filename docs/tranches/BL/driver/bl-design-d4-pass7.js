@@ -38,7 +38,6 @@ if (!floorv6) { log('FLOOR-V6 seat failed twice; stopping'); return { stopped: '
 phase('D4 P7 Critique')
 const ROUTES = [
  { id: 'D4-Dp', name: "D4-D' (the declared cell: shape=\"cell\" writes --selection-tile)" },
- { id: 'D4-F', name: 'D4-F (the anatomy declares the tile: a filled #media / #meta writes --selection-tile)' },
 ]
 const crits = []
 for (const r of ROUTES) {

@@ -1,0 +1,46 @@
+2026-10-20 22:41:06 · load { 37.83 32.25 29.34 }
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp-crit/run-crit.sh:55> git apply --check /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/floor-v6.patch
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp-crit/run-crit.sh:55> git apply /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/floor-v6.patch
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp-crit/run-crit.sh:55> cut -c1-8
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp-crit/run-crit.sh:55> shasum /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/floor-v6.patch
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp-crit/run-crit.sh:55> echo 'applied floor-v6.patch (09e74243)'
+applied floor-v6.patch (09e74243)
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp-crit/run-crit.sh:56> git apply --check /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp.patch
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp-crit/run-crit.sh:56> git apply /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp.patch
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp-crit/run-crit.sh:56> shasum /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp.patch
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp-crit/run-crit.sh:56> cut -c1-8
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp-crit/run-crit.sh:56> echo 'applied D4-Dp.patch (714cd3c0)'
+applied D4-Dp.patch (714cd3c0)
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp-crit/run-crit.sh:57> git apply --numstat /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/floor-v6.patch
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp-crit/run-crit.sh:57> awk '{a+=$1; d+=$2; n++} END {print "floor v6: "n" files, +"a" / -"d}'
+floor v6: 39 files, +1452 / -272
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp-crit/run-crit.sh:58> git apply --numstat /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp.patch
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp-crit/run-crit.sh:58> awk '{a+=$1; d+=$2; n++} END {print "D4-Dp: "n" files, +"a" / -"d}'
+D4-Dp: 8 files, +306 / -25
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp-crit/run-crit.sh:59> git rev-parse --short HEAD
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp-crit/run-crit.sh:59> git diff HEAD --binary
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp-crit/run-crit.sh:59> shasum
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp-crit/run-crit.sh:59> cut -c1-12
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp-crit/run-crit.sh:59> git status --porcelain -- src
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp-crit/run-crit.sh:59> wc -l
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp-crit/run-crit.sh:59> tr -d ' '
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp-crit/run-crit.sh:59> echo 'HEAD 00ebb0d03 · git diff HEAD df9f391ec4dd · src dirty paths 27'
+HEAD 00ebb0d03 · git diff HEAD df9f391ec4dd · src dirty paths 27
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp-crit/run-crit.sh:60> rg -n -- --selection-tile src
++/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp-crit/run-crit.sh:60> rg -v '^\S+:\s*\d+:\s*(\*|//|/\*)'
+src/styles/utilities/base.css:51:   THE TILE FACT — `--selection-tile`, one value read by every rule that differs
+src/styles/utilities/base.css:65:@property --selection-tile {
+src/styles/utilities/base.css:89:       second row (ToggleGroupItem.vue). A tile (`--selection-tile` other than
+src/styles/utilities/base.css:91:    @container style(--selection-tile: none) {
+src/components/toggle-group/ToggleGroupItem.vue:148:        const tile = getComputedStyle(b).getPropertyValue("--selection-tile").trim();
+src/components/toggle-group/styles.css:39:        --selection-tile: none;
+src/components/toggle-group/styles.css:59:        --selection-tile: flush;
+src/components/toggle-group/styles.css:63:       reads `--selection-tile` by a style query on the option, which reads the
+src/components/toggle-group/styles.css:74:            --selection-tile: inherit !important;
+src/components/toggle-group/styles.css:155:       A tile is none of these: the route that sets `--selection-tile` owns its
+src/components/toggle-group/styles.css:157:    @container style(--selection-tile: none) {
+src/components/toggle-group/styles.css:222:    @container not style(--selection-tile: none) {
+src/styles/glass/control-surfaces.css:95:       (`--selection-tile: flush`, utilities/base.css) paints no plate, no floor and no
+src/styles/glass/control-surfaces.css:103:    @container style(--selection-tile: flush) {
+src/components/tabs/styles/segmented.css:64:        --selection-tile: none;
+exit 0 · 2026-10-20 22:41:06 · load { 37.83 32.25 29.34 }
