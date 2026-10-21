@@ -21,7 +21,8 @@ One behaviour change, no type change. **A custom dock seat must now carry
   stays in the Tab order. A consumer that pulled such a control out of its dock run, or
   restored its `tabindex`, to get it back into the Tab order can undo that.
 - `.dock-run` carries `role="toolbar"` and `aria-orientation` only when every child is a
-  declared seat (`role="separator"` children aside). A dock whose run mixes declared seats
+  declared seat (glass's `<DockSeparator>` aside; a consumer's own `role="separator"`
+  splitter is an undeclared child and voids the claim). A dock whose run mixes declared seats
   with other controls no longer announces as a toolbar. To keep the role, declare every
   seat, or move the undeclared controls to `#persistent` / `#persistent-end`.
 - A test or probe that read `role="toolbar"` off an empty run, or off a run of plain

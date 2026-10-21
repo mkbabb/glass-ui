@@ -38,7 +38,7 @@ function page(seats: () => unknown[]) {
 const scenes: Record<string, Component> = {
     // The atlas shapes that lost Tab order (addendum 1, G-4 census), seated directly in
     // a run between two declared seats: a filter trigger, a gear button, a provenance
-    // handle, a year-range input pair and a dark toggle.
+    // handle, a year-range input pair (each input its own child) and a dark toggle.
     atlas: defineComponent(() => () =>
         page(() => [
             h(DockControl, { "aria-label": "Play", "data-witness": "seat-0" }, () => "A"),
@@ -54,10 +54,8 @@ const scenes: Record<string, Component> = {
                 "data-witness": "handle",
                 style: "inline-size:24px;block-size:24px",
             }),
-            h("div", { "data-witness": "year-range", style: "display:flex;gap:4px" }, [
-                h("input", { type: "number", value: 2019, "aria-label": "From", "data-witness": "year-from", style: "inline-size:5ch" }),
-                h("input", { type: "number", value: 2024, "aria-label": "To", "data-witness": "year-to", style: "inline-size:5ch" }),
-            ]),
+            h("input", { type: "number", value: 2019, "aria-label": "From", "data-witness": "year-from", style: "inline-size:5ch" }),
+            h("input", { type: "number", value: 2024, "aria-label": "To", "data-witness": "year-to", style: "inline-size:5ch" }),
             h(DarkModeToggle, { "data-witness": "dark" }),
             h(DockControl, { "aria-label": "Last", "data-witness": "seat-9" }, () => "B"),
         ]),
@@ -72,6 +70,23 @@ const scenes: Record<string, Component> = {
                 h(DockTrigger, { for: "popover", "aria-label": "Time", "data-witness": "seat-1" }, () => "T"),
                 h(PopoverContent, { side: "top", "aria-label": "Time" }, () => "0.42 s"),
             ]),
+            h(DockControl, { "aria-label": "Last", "data-witness": "seat-2" }, () => "B"),
+        ]),
+    ),
+
+    // A consumer's focusable splitter (APG window splitter) between two declared seats:
+    // a `role="separator"` child that is not glass's `<DockSeparator>`, so undeclared.
+    splitter: defineComponent(() => () =>
+        page(() => [
+            h(DockControl, { "aria-label": "Play", "data-witness": "seat-0" }, () => "A"),
+            h("div", {
+                role: "separator",
+                tabindex: "0",
+                "aria-valuenow": 50,
+                "aria-label": "Resize",
+                "data-witness": "splitter",
+                style: "inline-size:8px;block-size:24px",
+            }),
             h(DockControl, { "aria-label": "Last", "data-witness": "seat-2" }, () => "B"),
         ]),
     ),

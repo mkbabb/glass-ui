@@ -87,6 +87,17 @@ for (const [label, viewport] of [
             expect(await run(page).getAttribute("aria-orientation")).toBeNull();
         });
 
+        // RED on 10.1.1 (the splitter inferred a seat, -1, under a toolbar claim) and on
+        // the first 10.1.2 cuts (any role=separator waived from the claim).
+        test("G-4 · a focusable splitter is undeclared: its own stop, no toolbar role", async ({
+            page,
+            browserName,
+        }) => {
+            await open(page, "splitter");
+            expect(await run(page).getAttribute("role")).toBeNull();
+            expect(await tabWalk(page, browserName)).toEqual(["seat-0", "splitter", "after"]);
+        });
+
         // Regression arm: green on 10.1.1 too, which claimed the role over every run.
         test("G-4 · an all-declared run is one toolbar stop with arrows across it", async ({
             page,

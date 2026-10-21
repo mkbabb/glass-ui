@@ -3,7 +3,7 @@
 // `data-glass-dock-seat`, which glass's seat primitives (DockControl, DockTrigger) set.
 // Every other child keeps its natural tab stop and its own keys; the run writes into
 // nothing it was not told is a seat. `role="toolbar"` is claimed only by a run whose
-// every child is a declared seat (separators aside, which a toolbar holds).
+// every child is a declared seat (glass's DockSeparator aside, which a toolbar holds).
 //
 // RED on 10.1.1, which inferred a seat from focusability: a plain button, a reka trigger
 // and a `[role=button][tabindex]` handle seated in the run were roved and written to −1,
@@ -38,7 +38,10 @@ async function settle(): Promise<void> {
     await nextTick();
 }
 
-/** The atlas shapes that lost Tab order on 10.1.0/10.1.1, between two declared seats. */
+/**
+ * The atlas shapes that lost Tab order on 10.1.0/10.1.1, each seated directly in the run
+ * between two declared seats (the year-range pair too: 10.1.1 left a wrapped pair alone).
+ */
 function atlasRun() {
     return dock(() => [
         h(DockControl, { "aria-label": "Play", "data-witness": "seat-0" }, () => "A"),
@@ -47,10 +50,8 @@ function atlasRun() {
         ),
         h("button", { type: "button", "aria-label": "Settings", "data-witness": "gear" }, "G"),
         h("div", { role: "button", tabindex: "0", "aria-label": "Provenance", "data-witness": "handle" }),
-        h("div", { "data-witness": "year-range" }, [
-            h("input", { type: "number", "aria-label": "From", "data-witness": "year-from" }),
-            h("input", { type: "number", "aria-label": "To", "data-witness": "year-to" }),
-        ]),
+        h("input", { type: "number", "aria-label": "From", "data-witness": "year-from" }),
+        h("input", { type: "number", "aria-label": "To", "data-witness": "year-to" }),
         h(DarkModeToggle, { "data-witness": "dark" }),
         h(DockControl, { "aria-label": "Last", "data-witness": "seat-9" }, () => "B"),
     ]);
@@ -131,6 +132,28 @@ describe("dock run · the declared seat marker (b-ii)", () => {
         const run = w.get(".dock-run");
         expect(run.attributes("role")).toBe("toolbar");
         expect(run.attributes("aria-orientation")).toBe("horizontal");
+        w.unmount();
+    });
+
+    // A consumer's focusable splitter is a `role="separator"` child that is not glass's
+    // `<DockSeparator>`: undeclared, so it keeps its stop and voids the claim.
+    it("a focusable splitter is undeclared: its own stop, and no toolbar role", async () => {
+        const w = dock(() => [
+            h(DockControl, { "aria-label": "A", "data-witness": "seat-0" }),
+            h("div", {
+                role: "separator",
+                tabindex: "0",
+                "aria-valuenow": "50",
+                "aria-label": "Resize",
+                "data-witness": "splitter",
+            }),
+            h(DockControl, { "aria-label": "B", "data-witness": "seat-2" }),
+        ]);
+        await settle();
+        expect((w.get('[data-witness="splitter"]').element as HTMLElement).tabIndex).toBe(0);
+        const run = w.get(".dock-run");
+        expect(run.attributes("role")).toBeUndefined();
+        expect(run.attributes("aria-orientation")).toBeUndefined();
         w.unmount();
     });
 

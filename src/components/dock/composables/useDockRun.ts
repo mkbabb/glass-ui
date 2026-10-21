@@ -117,14 +117,20 @@ function declaredSeatsOf(run: HTMLElement): HTMLElement[] {
 }
 
 /**
+ * Glass's own `<DockSeparator>`, by the class it renders: a decorative divider that is
+ * never a stop. Not any `role="separator"`: a consumer's focusable splitter
+ * (`[role=separator][tabindex][aria-valuenow]`) is an undeclared child like any other.
+ */
+const DOCK_SEPARATOR = ".dock-separator";
+
+/**
  * THE TOOLBAR CLAIM. `role="toolbar"` promises one stop with arrows across the run, so
- * the run makes it only when every child is a declared seat. A separator is the one
- * non-seat a toolbar holds (APG), so it does not void the claim. A run with any
- * undeclared child claims no role: its declared seats still rove, and the rest keep
- * their own stops.
+ * the run makes it only when it has a declared seat and every child is one, glass's
+ * `<DockSeparator>` aside (a toolbar holds separators, APG). A run with any undeclared
+ * child claims no role: its declared seats still rove, and the rest keep their own stops.
  */
 function isToolbar(run: HTMLElement): boolean {
-    const children = seatsOf(run).filter((child) => child.getAttribute("role") !== "separator");
+    const children = seatsOf(run).filter((child) => !child.matches(DOCK_SEPARATOR));
     return children.length > 0 && children.every(isDeclaredSeat);
 }
 
