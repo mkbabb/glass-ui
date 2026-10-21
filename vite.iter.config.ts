@@ -7,12 +7,14 @@ import {
     libraryFileName,
 } from "./vite.library";
 import { publishStyleAssets } from "./vite.style-assets";
+import { componentSheets } from "./vite.component-sheets";
 import { glassCssTarget } from "./vite.targets";
 
 export default defineConfig({
     plugins: [
         tailwindcss(),
         vue(),
+        componentSheets(),
         publishStyleAssets(),
     ],
     build: {

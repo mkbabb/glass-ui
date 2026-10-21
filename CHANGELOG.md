@@ -1,5 +1,23 @@
 # Changelog
 
+## 10.2.0 (proposed by atlas U/B7)
+
+Built by the atlas formation on local branch `u/b7-glass-perf` off `release/10.1.1`
+bbf176f02. Nothing pushed or tagged; glass owns the version and may take, re-author or
+decline each row (relay rows B7-G7 to B7-G9).
+
+- **Per-component sheets leave the `/styles` entry (B7-G7, atlas F5).** Configurator,
+  MusicStaff, Metric, the Deck substrate, Carousel and SortableList import their own sheet
+  from script. The library build keeps that import external
+  (`vite.component-sheets.ts`), so `dist/<component>.js` carries
+  `import "./components/<component>/styles.css"` and a consumer's bundler loads the sheet
+  with the chunk that renders the component. A Tailwind consumer entry of
+  `@import "tailwindcss"; @import "tw-animate-css"; @import "@mkbabb/glass-ui/styles";`
+  compiles to 322,821 B decoded, down from 353,516 B (−30,695 B; brotli 46,200 → 42,052 B).
+  `@source "../*.js"` stays on the core entry: excluding the moved components' chunks from
+  it would save a further 2.0 KB but drop `.shadow-cartoon`, which only that scan emits
+  (Configurator's preset chips). Witness: `tests/styles/component-sheets.test.ts`.
+
 ## 10.1.1 — 2026-10-19
 
 Five cures and one owner-ruled addition, no break. Asked by the atlas consumer (U batch

@@ -188,6 +188,7 @@ function visitVue(
     visitCss: (path: string) => void,
     visitInlineCss: (style: InlineStyle) => void,
     visitScript: (path: string) => void,
+    visitScriptCss: (path: string) => void,
 ): void {
     const source = readFileSync(path, "utf8").replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
     for (const match of source.matchAll(/<style\b[^>]*\bsrc=["']([^"']+)["'][^>]*>/gi)) {
@@ -201,7 +202,7 @@ function visitVue(
         if (!reference.startsWith(".")) continue;
         const target = resolveSourceReference(path, reference);
         if (!target) throw new Error(`${path}: dangling SFC/script reference ${reference}`);
-        if (target.endsWith(".css")) visitCss(target);
+        if (target.endsWith(".css")) visitScriptCss(target);
         else if (/\.(?:vue|ts|js)$/.test(target)) visitScript(target);
     }
 }
@@ -334,13 +335,17 @@ export function collectStyleClosure(root: string): StyleClosure {
         const node = cssNodes.get(style.id);
         if (node) visitCssNode(node);
     };
+    // A sheet a script imports (`import "./styles.css"`) is a per-component sheet:
+    // the library build keeps the import external (vite.component-sheets.ts), so the
+    // sheet ships as its own published file under `dist/components/` (atlas U/B7 F5).
+    const visitScriptCss = (path: string): void => visitCss(path, true);
     const visitingScripts = new Set<string>();
     const visitScript = (path: string): void => {
         if (!path || visitingScripts.has(path) || !existsSync(path)) return;
         visitingScripts.add(path);
         sources.add(path);
         if (path.endsWith(".vue")) {
-            visitVue(path, visitCss, visitInlineCss, visitScript);
+            visitVue(path, visitCss, visitInlineCss, visitScript, visitScriptCss);
             return;
         }
         const source = readFileSync(path, "utf8").replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
@@ -349,7 +354,7 @@ export function collectStyleClosure(root: string): StyleClosure {
             if (!reference.startsWith(".")) continue;
             const target = resolveSourceReference(path, reference);
             if (!target) throw new Error(`${path}: dangling public reference ${reference}`);
-            if (target.endsWith(".css")) visitCss(target);
+            if (target.endsWith(".css")) visitScriptCss(target);
             else if (/\.(?:vue|ts|js)$/.test(target)) visitScript(target);
             else addCopySource(target, path);
         }

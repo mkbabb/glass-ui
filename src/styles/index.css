@@ -234,7 +234,6 @@
    menu row. */
 @import "../components/_shared/menu/menu.css";
 @import "../components/button/styles.css";
-@import "../components/configurator/styles.css";
 /* hover-popover.css deleted: <HoverPopover> folded onto the
    sealed <Popover trigger="hover"> union; its content rides the shared
    glass-floating + glass-reveal recipe, so the bespoke .hover-popover-panel
@@ -257,23 +256,15 @@
    UNLAYERED on purpose: it composes the `@layer components` well and fill registers
    and must outrank them without an `!important`. */
 @import "../components/slider/styles.css";
-/* The static numeric-readout family. */
-@import "../components/metric/styles.css";
-/* The finite notation ribbon: warm folio material plus SVG glyph draw-in.
-   Its visual recipe stays with the component while this import fixes its
-   cascade position after the base material/utility registers. */
-@import "../components/music-staff/styles.css";
 /* The thin, radius-following masked scroll-progress band. */
 @import "../components/scroll-progress-rim/styles.css";
-/* THE WINDOWED-SEQUENCE SUBSTRATE — the stage's room, the authored page turn, the
-   capture/settle block and the optional reveal sheet. Optional, tokens-first and
-   identity-free: every identity value belongs in a consumer's overlay over these
-   data-attributes. */
-@import "../components/deck/styles/index.css";
-/* The carousel register over that substrate: the ONE gutter token and the FIRED
-   half of the member projection's two-clock split. Loads after the substrate it
-   composes. */
-@import "../components/carousel/styles.css";
+/* Per-component sheets are not in this entry (atlas U/B7 F5). Configurator,
+   MusicStaff, Metric, the Deck substrate and Carousel each import their own sheet
+   from script (`import "./styles.css"`), and the library build keeps that import
+   external (vite.component-sheets.ts), so a consumer loads the sheet with the
+   chunk that renders the component. Every rule in those sheets sits in
+   `@layer components` or defines tokens, so loading after this entry keeps its
+   rank. */
 
 /* Accessibility is a terminal product mode, not a mid-cascade patch. This one
    import owns reduced transparency/contrast/motion, forced colors, and coarse

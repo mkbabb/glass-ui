@@ -9,6 +9,7 @@ import {
     libraryFileName,
 } from "./vite.library";
 import { publishStyleAssets } from "./vite.style-assets";
+import { componentSheets } from "./vite.component-sheets";
 import { glassCssTarget } from "./vite.targets";
 
 export default defineConfig({
@@ -33,6 +34,7 @@ export default defineConfig({
         // renamed into place. Declarations come from the repo-native `vue-tsc
         // --project tsconfig.build.json` (spawned inside the plugin), NOT from a
         // dts plugin with its own bundled TypeScript pin.
+        componentSheets(),
         publishStyleAssets(),
     ],
     // Cross-repo dev-resolution contract-v2
