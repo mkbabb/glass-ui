@@ -11,6 +11,7 @@ import DockControl from "../../src/components/dock/DockControl.vue";
 import DockSeparator from "../../src/components/dock/DockSeparator.vue";
 import DockTrigger from "../../src/components/dock/DockTrigger.vue";
 import { DarkModeToggle } from "../../src/components/dark-mode-toggle";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem } from "../../src/components/menu";
 import { Popover, PopoverContent, PopoverTrigger } from "../../src/components/popover";
 import { RadioGroup, RadioGroupItem } from "../../src/components/radio-group";
 import { Select, SelectContent, SelectItem } from "../../src/components/select";
@@ -258,6 +259,31 @@ const scenes: Record<string, Component> = {
                 ),
             ]);
     }),
+
+    // critique-b3 D-1 · Q1. A disabled Select's DockTrigger holds the run's stop, ahead of
+    // two DockControls. A declared seat stays focusable, so Tab still enters the run.
+    "disabled-first": defineComponent(() => () =>
+        page(() => [
+            h(Select, { disabled: true, modelValue: "s" }, () => [
+                h(DockTrigger, { for: "select", "aria-label": "Unit", "data-witness": "seat-0" }, () => "s"),
+                h(SelectContent, () => h(SelectItem, { value: "s" }, () => "s")),
+            ]),
+            h(DockControl, { "aria-label": "Play", "data-witness": "seat-1" }, () => "A"),
+            h(DockControl, { "aria-label": "Last", "data-witness": "seat-2" }, () => "B"),
+        ]),
+    ),
+
+    // critique-b3 D-1 · Q2. A disabled dropdown DockTrigger between two DockControls.
+    "disabled-mid": defineComponent(() => () =>
+        page(() => [
+            h(DockControl, { "aria-label": "Play", "data-witness": "seat-0" }, () => "A"),
+            h(DropdownMenu, () => [
+                h(DockTrigger, { for: "dropdown", disabled: true, "aria-label": "Menu", "data-witness": "seat-1" }, () => "M"),
+                h(DropdownMenuContent, () => h(DropdownMenuItem, () => "item")),
+            ]),
+            h(DockControl, { "aria-label": "Last", "data-witness": "seat-2" }, () => "B"),
+        ]),
+    ),
 
     // RadioGroup and ToggleGroup seated directly, between two declared seats.
     composites: defineComponent(() => {

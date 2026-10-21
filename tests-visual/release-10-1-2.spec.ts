@@ -179,6 +179,38 @@ for (const [label, viewport] of [
             expect(await tabWalk(page, browserName)).toEqual(["seat-0", "middle", "after"]);
         });
 
+        // critique-b3 D-1 · Q1. A declared seat stays focusable: a disabled Select's
+        // DockTrigger is `aria-disabled`, so holding the stop keeps the run in the Tab
+        // order. RED on 53c68dab7 (native `disabled` on the stop: the walk is `after`).
+        // 10.1.1 skipped the disabled trigger (`seat-1, after`); 10.1.2 keeps it, as
+        // `<DockControl disabled>` always was, a present-but-disabled stop.
+        test("G-4 · a disabled DockTrigger holding the stop keeps the run in the Tab order", async ({
+            page,
+            browserName,
+        }) => {
+            await open(page, "disabled-first");
+            const seat0 = page.locator('[data-witness="seat-0"]');
+            expect(await seat0.getAttribute("aria-disabled")).toBe("true");
+            expect(await seat0.evaluate((el) => (el as HTMLButtonElement).disabled)).toBe(false);
+            expect(await tabWalk(page, browserName)).toEqual(["seat-0", "after"]);
+            await seat0.focus();
+            await page.keyboard.press("ArrowRight");
+            expect(await active(page)).toBe("seat-1");
+        });
+
+        // critique-b3 D-1 · Q2. The arrows pass a disabled DockTrigger mid-run. RED on
+        // 53c68dab7 (seat-0 -> seat-0 -> seat-0: focus() on a native-disabled seat fails).
+        test("G-4 · the arrows pass a disabled DockTrigger mid-run", async ({ page, browserName }) => {
+            await open(page, "disabled-mid");
+            await page.locator('[data-witness="before"]').focus();
+            await page.keyboard.press(browserName === "webkit" ? "Alt+Tab" : "Tab");
+            expect(await active(page)).toBe("seat-0");
+            await page.keyboard.press("ArrowRight");
+            expect(await active(page)).toBe("seat-1");
+            await page.keyboard.press("ArrowRight");
+            expect(await active(page)).toBe("seat-2");
+        });
+
         // Regression arm: green on 10.1.1 too (its held-control clause), kept because the
         // (b-ii) contract must hold it without that clause.
         test("G-4 · a RadioGroup and a ToggleGroup seated directly keep their arrows", async ({

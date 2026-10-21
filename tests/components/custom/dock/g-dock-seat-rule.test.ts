@@ -20,6 +20,7 @@ import DockControl from "@glass/components/dock/DockControl.vue";
 import DockSeparator from "@glass/components/dock/DockSeparator.vue";
 import DockTrigger from "@glass/components/dock/DockTrigger.vue";
 import { DarkModeToggle } from "@glass/components/dark-mode-toggle";
+import { DropdownMenu } from "@glass/components/menu";
 import { Popover, PopoverTrigger } from "@glass/components/popover";
 import { RadioGroup, RadioGroupItem } from "@glass/components/radio-group";
 import { Select } from "@glass/components/select";
@@ -386,4 +387,93 @@ describe("dock run · the declared seat marker (b-ii)", () => {
             w.unmount();
         });
     }
+});
+
+// 10.1.2 critique-b3 D-1 · A DECLARED SEAT STAYS FOCUSABLE. A disabled `DockTrigger` is a
+// declared seat; on the round-2 cut it rendered the native `disabled` attribute, so one
+// holding the run's stop took every seat out of the Tab order, and one mid-run stopped
+// the arrows at it. Each arm now maps `disabled` to `aria-disabled`, as `DockControl`
+// does. RED on 53c68dab7 (native `disabled`, the stop on an unfocusable seat).
+describe("dock run · a disabled DockTrigger stays a focusable seat", () => {
+    for (const [label, trigger] of [
+        [
+            "a disabled Select's select trigger",
+            () => h(Select, { disabled: true }, () => h(DockTrigger, { for: "select", "aria-label": "Unit", "data-witness": "seat-0" }, () => "s")),
+        ],
+        [
+            "a disabled select trigger",
+            () => h(Select, () => h(DockTrigger, { for: "select", disabled: true, "aria-label": "Unit", "data-witness": "seat-0" }, () => "s")),
+        ],
+        [
+            "a disabled dropdown trigger",
+            () => h(DropdownMenu, () => h(DockTrigger, { for: "dropdown", disabled: true, "aria-label": "Menu", "data-witness": "seat-0" }, () => "M")),
+        ],
+        [
+            "a disabled popover trigger",
+            () => h(Popover, () => h(DockTrigger, { for: "popover", disabled: true, "aria-label": "Time", "data-witness": "seat-0" }, () => "T")),
+        ],
+    ] as const) {
+        it(`${label} is aria-disabled, never native disabled, and holds the stop`, async () => {
+            const w = dock(() => [
+                trigger(),
+                h(DockControl, { "aria-label": "A", "data-witness": "seat-1" }),
+                h(DockControl, { "aria-label": "B", "data-witness": "seat-2" }),
+            ]);
+            await settle();
+            const el = w.get('[data-witness="seat-0"]').element as HTMLButtonElement;
+            expect(el.tagName).toBe("BUTTON");
+            expect(el.hasAttribute(SEAT)).toBe(true);
+            expect(el.disabled).toBe(false);
+            expect(el.getAttribute("aria-disabled")).toBe("true");
+            expect(el.tabIndex).toBe(0);
+            el.focus();
+            expect(document.activeElement).toBe(el);
+            await w.get('[data-witness="seat-0"]').trigger("keydown", { key: "ArrowRight" });
+            await nextTick();
+            expect(document.activeElement?.getAttribute("data-witness")).toBe("seat-1");
+            w.unmount();
+        });
+    }
+
+    it("the arrows pass a disabled trigger mid-run (Q2)", async () => {
+        const w = dock(() => [
+            h(DockControl, { "aria-label": "A", "data-witness": "seat-0" }),
+            h(DropdownMenu, () => h(DockTrigger, { for: "dropdown", disabled: true, "aria-label": "Menu", "data-witness": "seat-1" }, () => "M")),
+            h(DockControl, { "aria-label": "B", "data-witness": "seat-2" }),
+        ]);
+        await settle();
+        (w.get('[data-witness="seat-0"]').element as HTMLElement).focus();
+        await w.get('[data-witness="seat-0"]').trigger("keydown", { key: "ArrowRight" });
+        await nextTick();
+        expect(document.activeElement?.getAttribute("data-witness")).toBe("seat-1");
+        await w.get('[data-witness="seat-1"]').trigger("keydown", { key: "ArrowRight" });
+        await nextTick();
+        expect(document.activeElement?.getAttribute("data-witness")).toBe("seat-2");
+        w.unmount();
+    });
+
+    it("a disabled popover trigger does not open on activation", async () => {
+        const w = dock(() => [
+            h(Popover, () => h(DockTrigger, { for: "popover", disabled: true, "aria-label": "Time", "data-witness": "seat-0" }, () => "T")),
+        ]);
+        await settle();
+        await w.get('[data-witness="seat-0"]').trigger("click");
+        await settle();
+        expect(w.get('[data-witness="seat-0"]').attributes("aria-expanded")).toBe("false");
+        w.unmount();
+    });
+
+    it("an enabled trigger carries neither disabled state", async () => {
+        const w = dock(() => [
+            h(Popover, () => h(DockTrigger, { for: "popover", "aria-label": "Time", "data-witness": "seat-0" }, () => "T")),
+        ]);
+        await settle();
+        const el = w.get('[data-witness="seat-0"]').element as HTMLButtonElement;
+        expect(el.disabled).toBe(false);
+        expect(el.hasAttribute("aria-disabled")).toBe(false);
+        await w.get('[data-witness="seat-0"]').trigger("click");
+        await settle();
+        expect(el.getAttribute("aria-expanded")).toBe("true");
+        w.unmount();
+    });
 });
