@@ -65,6 +65,55 @@ const scaleOf = (P) => P.page.evaluate(() => { const e = document.querySelector(
 const stateOf = (P) => P.page.evaluate(() => (window.__e?.index?.[window.__e.scene]?.gates ?? []).includes("E-2") ? JSON.stringify(window.__e.state?.() ?? null) : null);
 const index = []; const cells = [];
 const cell = (name, status, line) => { cells.push({ name, status }); console.log(`  ${status.padEnd(10)} ${name} · ${line} · load ${load()}`); };
+const msgOf = (e) => String(e?.message ?? e).split("\n")[0].slice(0, 100);
+// H5's ladder cell (CK-25), one theme on its own page under the witnesses' guard. H6 (REGISTRY §P5-7 item 10): the
+// pointer's hit is read before the hover: a hover point that hits another element (a layer over the trigger) makes the
+// ladder UNREAD, a FAIL, never a pass on a hover that paints no rung (P-A5's collapsible and menu went UNMEASURED so).
+// Plant `cap-ladderhit`
+async function ladderCell(E, engine, sc, theme) {
+  const msg = msgOf;
+  const ln = `CAP ${sc} ladder fine ${theme}`;
+  const ladder = async () => {
+    const P = await openPage(E, T, sc, { theme });
+    try {
+      await P.page.waitForTimeout(300);
+      if (!(await P.page.evaluate(() => !!window.__e?.index?.[window.__e.scene]?.ladder))) return null;
+      const box = await P.page.evaluate(() => { const e = document.querySelector('[data-e~="target"]'); if (!e) return null; e.scrollIntoView({ block: "center" }); const r = e.getBoundingClientRect(); return { x: r.x, y: r.y, w: r.width, h: r.height, sx: scrollX, sy: scrollY }; });
+      if (!box) return { miss: "no [data-e~=target] in the scene" };
+      const clip = { x: box.sx + box.x + box.w * 0.12, y: box.sy + box.y + box.h * 0.25, width: box.w * 0.76, height: box.h * 0.5 };
+      const rd = async () => ({ L: pngLum(await P.page.screenshot({ clip, animations: "allow", caret: "initial" })).L, bg: await P.page.evaluate(() => getComputedStyle(document.querySelector('[data-e~="target"]')).backgroundColor), st: await P.page.evaluate(() => document.querySelector('[data-e~="target"]').getAttribute("data-state")) });
+      const hp = { x: box.x + box.w * 0.3, y: box.y + box.h / 2 };
+      await P.page.mouse.move(2, 2); await P.page.waitForTimeout(300); const rest = await rd();
+      await P.page.mouse.move(hp.x, hp.y); await P.page.waitForTimeout(400);
+      const hit = await P.page.evaluate((p) => { const h = document.elementFromPoint(p.x, p.y); const t = document.querySelector('[data-e~="target"]'); return { ok: !!h && !!t && t.contains(h), d: h ? `${h.tagName.toLowerCase()}${h.getAttribute("data-t") ? `[${h.getAttribute("data-t")}]` : ""}${[...h.classList].slice(0, 2).map((c) => "." + c).join("")}` : "none" }; }, hp);
+      if (!hit.ok) return { miss: `the pointer at (${f(hp.x, 0)}, ${f(hp.y, 0)}) hits ${hit.d}, not the target` };
+      const hover = await rd();
+      await P.page.mouse.down(); await P.page.waitForTimeout(400); const press = await rd();
+      await P.page.mouse.up(); await P.page.waitForTimeout(400); const after = await rd();
+      return { rest, hover, press, after };
+    } finally { await P.close(); }
+  };
+  const onceL = () => { let timer; return Promise.race([ladder(), new Promise((_, rej) => { timer = setTimeout(() => rej(new Error("CELL TIMEOUT 90 s")), 90000); })]).finally(() => clearTimeout(timer)); };
+  try {
+    let r, note = "";
+    try { r = await onceL(); } catch (e1) { if (!isClosed(e1)) throw e1; await E.kill(); r = await onceL(); note = ` · NOT-REPRODUCED: engine closed on the first run (${msg(e1)})`; }
+    if (r?.miss) cell(ln, "FAIL", `${engine}: UNREAD: ${r.miss} (the ladder is read only through a hit on the trigger)${note}`);
+    else if (r) {
+      const dh = r.hover.L - r.rest.L, s = Math.sign(dh); const back = s * (r.press.L - r.hover.L);
+      const fail = Math.abs(dh) >= 0.002 && back < -0.002;
+      cell(ln, fail ? "FAIL" : "PASS", `${engine}: inset paint L rest ${f(r.rest.L, 4)} (${r.rest.bg}) · hover ${f(r.hover.L, 4)} (${r.hover.bg}; ${Math.abs(dh) < 0.002 ? "the hover paints no rung" : dh < 0 ? "darker" : "lighter"} by ${f(Math.abs(dh), 4)}) · hover+press ${f(r.press.L, 4)} (${r.press.bg}${r.press.st ? `, data-state ${r.press.st}` : ""}) · released, still hovered ${f(r.after.L, 4)} · the press ${fail ? `moves BACK toward rest past the hover by ${f(-back, 4)} (the press lighter than its hover: the ladder inverts)` : back > 0.002 ? `deepens the hover by ${f(back, 4)}` : "holds the hover"} (bound: no step back past 0.002)${note}`);
+    }
+  } catch (e) { cell(ln, "FAIL", `${engine}: UNREAD (${msg(e)})`); }
+}
+// the ladder-only scenes: every index row carrying `ladder` beyond the scene list, unless --scenes names the list
+// (--ladder-scenes a,b names them outright)
+const ladderOnly = await (async () => {
+  if (typeof a["ladder-scenes"] === "string") return a["ladder-scenes"].split(",");
+  if (typeof a.scenes === "string") return [];
+  const E0 = new Engine(engines[0]);
+  try { const P = await openPage(E0, T, "__index"); try { const ix = await P.page.evaluate(() => window.__e.index); return Object.keys(ix).filter((k) => ix[k].ladder && !scenes.includes(k)); } finally { await P.close(); } } finally { await E0.close(); }
+})();
+if (ladderOnly.length) console.log(`# ladder-only scenes: ${ladderOnly.join(", ")}`);
 for (const engine of engines) {
   const E = new Engine(engine); await E.browser();
   console.log(`# ${engine} ${E.version}${engine === "webkit" ? " (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))" : ""}`);
@@ -134,36 +183,11 @@ for (const engine of engines) {
       cell(nm, "FAIL", `${engine}: UNREAD (${msg(e)})`);
     }
     index.push({ engine, pointer, theme, scene: sc, shots, commit });
-    // H5: the ladder cell (fine pointer, scenes whose row carries `ladder`), on its own page under the same guard
-    if (pointer === "fine") {
-      const ln = `CAP ${sc} ladder fine ${theme}`;
-      const ladder = async () => {
-        const P = await openPage(E, T, sc, { theme });
-        try {
-          await P.page.waitForTimeout(300);
-          if (!(await P.page.evaluate(() => !!window.__e?.index?.[window.__e.scene]?.ladder))) return null;
-          const box = await P.page.evaluate(() => { const e = document.querySelector('[data-e~="target"]'); const r = e.getBoundingClientRect(); return { x: r.x + scrollX, y: r.y + scrollY, w: r.width, h: r.height }; });
-          const clip = { x: box.x + box.w * 0.12, y: box.y + box.h * 0.25, width: box.w * 0.76, height: box.h * 0.5 };
-          const rd = async () => ({ L: pngLum(await P.page.screenshot({ clip, animations: "allow", caret: "initial" })).L, bg: await P.page.evaluate(() => getComputedStyle(document.querySelector('[data-e~="target"]')).backgroundColor) });
-          await P.page.mouse.move(2, 2); await P.page.waitForTimeout(300); const rest = await rd();
-          await P.page.mouse.move(box.x + box.w * 0.3, box.y + box.h / 2); await P.page.waitForTimeout(400); const hover = await rd();
-          await P.page.mouse.down(); await P.page.waitForTimeout(400); const press = await rd();
-          await P.page.mouse.up(); await P.page.waitForTimeout(400); const after = await rd();
-          return { rest, hover, press, after };
-        } finally { await P.close(); }
-      };
-      const onceL = () => { let timer; return Promise.race([ladder(), new Promise((_, rej) => { timer = setTimeout(() => rej(new Error("CELL TIMEOUT 90 s")), 90000); })]).finally(() => clearTimeout(timer)); };
-      try {
-        let r, note = "";
-        try { r = await onceL(); } catch (e1) { if (!isClosed(e1)) throw e1; await E.kill(); r = await onceL(); note = ` · NOT-REPRODUCED: engine closed on the first run (${msg(e1)})`; }
-        if (r) {
-          const dh = r.hover.L - r.rest.L, s = Math.sign(dh); const back = s * (r.press.L - r.hover.L);
-          const fail = Math.abs(dh) >= 0.002 && back < -0.002;
-          cell(ln, fail ? "FAIL" : "PASS", `${engine}: inset paint L rest ${f(r.rest.L, 4)} (${r.rest.bg}) · hover ${f(r.hover.L, 4)} (${r.hover.bg}; ${Math.abs(dh) < 0.002 ? "the hover paints no rung" : dh < 0 ? "darker" : "lighter"} by ${f(Math.abs(dh), 4)}) · hover+press ${f(r.press.L, 4)} (${r.press.bg}) · released, still hovered ${f(r.after.L, 4)} · the press ${fail ? `moves BACK toward rest past the hover by ${f(-back, 4)} (the press lighter than its hover: the ladder inverts)` : back > 0.002 ? `deepens the hover by ${f(back, 4)}` : "holds the hover"} (bound: no step back past 0.002)${note}`);
-        }
-      } catch (e) { cell(ln, "FAIL", `${engine}: UNREAD (${msg(e)})`); }
-    }
+    if (pointer === "fine") await ladderCell(E, engine, sc, theme);
   }
+  // H6: the ladder-only scenes (rows carrying `ladder` that the capture's scene list does not frame: the library's
+  // collapsible and menu triggers, REGISTRY §P5-7 item 10), fine pointer, each theme
+  if (pointers.includes("fine")) for (const sc of ladderOnly) for (const theme of themes) await ladderCell(E, engine, sc, theme);
   for (const n of E.notes) console.log(`  note ${n}`);
   await E.close();
 }

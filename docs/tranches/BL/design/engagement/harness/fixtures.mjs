@@ -145,21 +145,42 @@ export const FAULTS = {
   "e11-silent": { why: "CK-21: the engagement reads --fx-scale-engage at runtime and, when it is unreadable, degrades to no grow with no console.error", witnesses: ["E-11"], cell: /fail-loud/ },
   "e11-unread": { why: "CONTROL: the grow spells its figure in place and reads no token, so an unreadable token degrades nothing: UNMEASURED, not a pass", witnesses: ["E-11"], cell: /fail-loud/, expect: "unmeasured" },
   "e11-noise": { why: "CONTROL (H2 §2.3): the grow spells its figure in place, reads no token, and varies run to run (1.060, 1.061, 1.066, 1.054, 1.060 on successive slider loads); one planted read outside a two-run spread is noise, not a degradation: UNMEASURED, never FAIL", witnesses: ["E-11"], cell: /fail-loud/, expect: "unmeasured" },
+  // ── H6 (pass 6): a plant per new cell (REGISTRY §P5-8.3 wave 1) ──
+  "e10-ratio1": { why: "CK-20 (H6, C-A5 §0.1, REGISTRY §P5-7 item 1): the engaged slider's place is watched by an observer armed at ratio 1 (the box cut to its own rect): a move whose new rect lies inside the old one never changes the ratio, so the next unrelated append glides it from the stale place (the inward move and the centred shrink)", witnesses: ["E-10"], cell: /restale stale place \(inset\) · keyboard/ },
+  "e10-clipratio": { why: "CK-20 (H6, C-E5 §0.1): the same observer inside a clipping scroller, armed at the clipped ratio: a move toward the visible side keeps that ratio, so the next unrelated append glides the slider from the stale place", witnesses: ["E-10"], cell: /clipstale clipped stale place · keyboard · (top|bottom) · reveal/ },
+  "e11-rename": { why: "CK-21 (H6, C-E5 §0.2, REGISTRY §P5-7 item 4): the fixture's loud clock read follows a hand-kept list that a rename left behind: it no longer names --engage-control-engage-*, which the stylesheet still transitions on, so planting it degrades the veil's and the dialog's fades with no console.error", witnesses: ["E-11"], cell: /clock --engage-control-engage-release/ },
+  "e12-capsulelift": { why: "CK-11/CK-14/CK-27 (H6, C-A5 §0.2): the capsule composer keeps its hover lift (scale 1.015 on :hover, outside any (hover: hover) guard), so a hover writes geometry and a coarse tap latches it", witnesses: ["E-12"], cell: /capsule kappa hover fine/ },
+  "e12-capsulesnap": { why: "CK-11 (H6): the capsule composer keeps its :active press snap (scale 0.97) with no door press mark: a class rung writes the press's geometry", witnesses: ["E-12"], cell: /capsule kappa press fine/ },
+  "e12-capsulelatch": { why: "CK-14 (H6): after a touch the capsule composer holds scale 1.015 for 2 s (a hover latch written by script on touchend): the coarse tap does not settle at 1", witnesses: ["E-12"], cell: /capsule kappa tap coarse/ },
+  "e12-capsuleunrendered": { why: "CK-27 (H6, REGISTRY §P5-7 item 2): the source tree has a second composer of .glass-capsule-hover (lambda) that the capsule scene does not render, so no cell can see it (the source-comment closure class)", witnesses: ["E-12"], cell: /capsule composers rendered/ },
+  "e9-fadecut": { why: "CK-10 (H6, O-100 R-1 placed by O-103): under reduce the presented dialog's opacity fade is zeroed by the PRM fallback (no authorization row), so it cuts on open and on close", witnesses: ["E-9"], cell: /presented fade \(PRM\) open/ },
+  "e9-fadespatial": { why: "CK-10 (H6): under reduce the presented dialog keeps its fade AND its 0.95 → 1 scale, a spatial leg the reduce arm must retire", witnesses: ["E-9"], cell: /presented fade \(PRM\) open/ },
+  "e4-carryflaky": { why: "CK-05 (H6, REGISTRY §P5-7 item 8): the slider drops its release velocity on one fling in five (the third), so its carry is bimodal; a one-read rule passes it four times in five", witnesses: ["E-4"], cell: /slider fling carries velocity/ },
+  "cap-ladderhit": { why: "CK-25 (H6, REGISTRY §P5-7 item 10): a transparent layer sits over the control, so the ladder's pointer never reaches it; a hit test that misses must FAIL the ladder as unread, never pass it as a hover that paints no rung", witnesses: ["CAP"], cell: /pop ladder fine/ },
 };
 
 const CONTROL_GATES = ["E-2", "E-8", "E-9"];
 export const FIXTURE_INDEX = {
   // H5: pop carries C-A4's rebound (E-10, its light seat the .flash) and the ladder (CAP)
   pop: { gates: [...CONTROL_GATES, "E-5", "E-10"], key: "Space", target: ".ctl", rebound: true, light: ".flash", ladder: true },
-  travel: { gates: CONTROL_GATES, key: "ArrowRight", target: '.seg[data-v="b"]' },
+  // H6: travel carries the ladder too (capture.mjs reads it as a ladder-only scene: the path the library's collapsible
+  // and menu take)
+  travel: { gates: CONTROL_GATES, key: "ArrowRight", target: '.seg[data-v="b"]', ladder: true },
   rest: { gates: CONTROL_GATES, key: "Space", target: ".ctl" },
   // H3: a stateless control (a counter, no model): E-2 drives its programmatic commit as element.click()
   act: { gates: CONTROL_GATES, key: "Space", target: ".ctl", stateless: true },
-  slider: { gates: ["E-3", "E-4", "E-7", "E-9", "E-10", "E-11", "E-12"], key: "ArrowRight", veil: ".fx-veil", engaged: "[data-held], [data-kbd]", floor: ["wheel", "anchor"], failLoud: [{ token: "--fx-scale-engage", value: "nonsense", act: "kbd" }] },
+  // H6: `reads: 5` (CK-05: E-4's fling read five times, every read must pass)
+  slider: { gates: ["E-3", "E-4", "E-7", "E-9", "E-10", "E-11", "E-12"], key: "ArrowRight", veil: ".fx-veil", engaged: "[data-held], [data-kbd]", floor: ["wheel", "anchor"], reads: 5, failLoud: [{ token: "--fx-scale-engage", value: "nonsense", act: "kbd" }] },
   // H4: the fixture slider marks its engagement as data-held (the hand) or data-kbd (the keyboard)
   slider2: { gates: ["E-10"], veil: ".fx-veil", engaged: "[data-held], [data-kbd]", pair: ['.fx-slider[data-n="A"]', '.fx-slider[data-n="B"]'] },
   // H5: C-E4's stale place (a paragraph that rewraps, a spacer, the slider, a ticker below)
   restale: { gates: ["E-10"], stale: true, engaged: "[data-held], [data-kbd]" },
+  // H6 (CK-20): C-E5's clipped stale place: the slider inside a 120 px clipping scroller
+  clipstale: { gates: ["E-10"], clip: { box: '[data-t="box"]', rest: '[data-t="slider-a"]', spacer: 60 }, engaged: "[data-held], [data-kbd]" },
+  // H6 (CK-10, O-100 R-1): a presented dialog whose opacity fade is its light leg
+  presented: { gates: [], fade: { plate: ".fx-pdialog", scrim: ".fx-pscrim" } },
+  // H6 (CK-11, CK-14, CK-27): every composer of the capsule class the source tree names, by directory
+  capsule: { gates: ["E-12"], floor: ["capsule"], caps: { kappa: '[data-t="cap-kappa"]' } },
   vsheet: { gates: ["E-4"], axis: "y", dir: -1, detents: true, fixed: ".fx-sheet" },
   strip: { gates: ["E-4"], input: "touch", dir: -1, platform: true },
   modal: { gates: ["E-7"] },
@@ -178,9 +199,13 @@ export const FIXTURE_INDEX = {
 const E11_NOISE = [1.060, 1.061, 1.066, 1.054, 1.060]; let e11n = 0;
 // e5-flaky (H4): every third page load of the press scene sags its held light (E-5 takes three holds on three loads)
 let e5n = 0;
+// e4-carryflaky (H6): E-4 loads the slider fling, still, fling, still, … (five reads, then PRM); the fifth load is the
+// third fling, which drops its velocity
+let e4n = 0;
 export function fixturePage(params, fault = "") {
   const scene = params.get("scene") ?? "__index";
   const noise = fault === "e11-noise" && scene === "slider" ? E11_NOISE[e11n++ % E11_NOISE.length] : null;
+  const carryDrop = fault === "e4-carryflaky" && scene === "slider" && e4n++ === 4;
   const dark = params.get("theme") === "dark";
   const on = params.get("on") === "1";
   const defer = params.get("defer") === "1";
@@ -303,16 +328,37 @@ ${F("e12-fcreach") ? `.ctl::after { content: ""; position: absolute; inset: -6px
 .fx-ticker { height: 20px; overflow: hidden; }
 .fx-para { margin: 12px 0; max-width: 600px; }
 .fx-amb { width: 320px; height: 160px; border-radius: 16px; background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), #3b6cf0 0, #3b6cf000 60%), var(--ctl); }
+/* H6: the stale cells' wrapper (the slider follows its width), the clipping scroller, the presented dialog, the capsule
+   composer, and cap-ladderhit's layer over the control */
+[data-t="wrap"] { width: 360px; } [data-t="wrap"] .fx-slider { width: 100%; }
+.fx-box { width: 400px; height: 120px; overflow: auto; overflow-anchor: none; border: 1px solid #8884; }
+.fx-pscrim { position: fixed; inset: 0; background: #0003; pointer-events: none; }
+.fx-pdialog { position: fixed; left: 50%; top: 50%; translate: -50% -50%; width: 280px; padding: 24px; border-radius: 20px; background: var(--bg); opacity: 0; scale: 0.95;
+  transition: opacity var(--engage-control-engage-release) linear, scale var(--spring-press-duration) var(--spring-press); }
+.fx-pdialog.open { opacity: 1; scale: 1; }
+@media (prefers-reduced-motion: reduce) {
+  ${F("e9-fadespatial") ? "" : ".fx-pdialog { scale: 1; }"}
+  ${F("e9-fadecut") ? "" : `.fx-pdialog { transition: opacity var(--engage-control-engage-release) linear${F("e9-fadespatial") ? ", scale var(--spring-press-duration) linear" : ""}; transition-duration: var(--engage-control-engage-release)${F("e9-fadespatial") ? ", var(--spring-press-duration)" : ""} !important; }`}
+}
+.capx { display: inline-flex; align-items: center; height: 32px; padding: 0 14px; border: 0; border-radius: 16px; background-color: var(--ctl); font: inherit; color: inherit; }
+.capx:hover { background-color: var(--ctl-hover); }
+${F("e12-capsulelift") ? ".capx:hover { scale: 1.015; }" : ""}
+${F("e12-capsulesnap") ? ".capx:active { scale: 0.97; }" : ""}
+.capx.lat { scale: 1.015; }
+${F("cap-ladderhit") ? ".fx-cover { position: absolute; inset: -8px; z-index: 5; }" : ""}
 `;
 
   const ctl = (extra = "") => `<div class="ctl ${ctlClass}" role="switch" tabindex="0" aria-checked="${on}" data-state="${on ? "on" : "off"}" data-member="alpha" data-e="target"${extra}>Probe<span class="flash"></span>${F("e2-paintonly") ? '<span class="dot"></span>' : ""}</div>`;
   const slider = (n = "") => `<div class="fx-slider${F("e1-nullhost") ? "" : " engage-held"}" data-member="beta" data-e="${n ? "" : "root target"}" data-n="${n}"><div class="fx-thumb" role="slider" tabindex="0" aria-label="Probe${n}" aria-valuenow="40" data-e="${n ? "" : "thumb body"}"></div></div>`;
   let body = "";
-  if (scene === "pop" || scene === "rest") body = F("e1-absent") && scene === "pop" ? `<div class="${scene}"><div class="ctl ${ctlClass}" data-member="alpha">Probe</div></div>` : `<div class="${scene}">${ctl()}</div>`;
+  if (scene === "pop" || scene === "rest") body = F("e1-absent") && scene === "pop" ? `<div class="${scene}"><div class="ctl ${ctlClass}" data-member="alpha">Probe</div></div>` : F("cap-ladderhit") && scene === "pop" ? `<div class="${scene}" style="position:relative;display:inline-block">${ctl()}<span class="fx-cover" data-t="cover"></span></div>` : `<div class="${scene}">${ctl()}</div>`;
   else if (scene === "act") body = `<button class="ctl ${ctlClass}" type="button" data-member="alpha" data-e="target" data-handler>Act<span class="flash"></span></button>`;
   else if (scene === "travel") body = `<div class="segs" role="radiogroup" aria-label="Probe" data-member="alpha"><span class="ind" data-e="body"></span>${["a", "b", "c"].map((v) => `<div class="seg ${ctlClass}" role="radio" data-v="${v}" aria-checked="${v === (on ? "b" : "a")}" tabindex="${v === (on ? "b" : "a") ? 0 : -1}"${v === "b" ? ' data-e="target"' : ""}>${v.toUpperCase()}<span class="flash"></span></div>`).join("")}</div>`;
   else if (scene === "slider") body = `<div id="spacer"></div><div id="slot"></div>${slider()}`;
-  else if (scene === "restale") body = `<p class="fx-para">The world above the engaged control: a paragraph long enough to rewrap when the viewport narrows, so that a resize moves the control below it with no mutation of the document at all.</p><div id="spacer"></div>${slider()}<div class="fx-ticker" id="ticker"></div>`;
+  else if (scene === "restale") body = `<p class="fx-para">The world above the engaged control: a paragraph long enough to rewrap when the viewport narrows, so that a resize moves the control below it with no mutation of the document at all.</p><div id="spacer"></div><div data-t="wrap">${slider()}</div><div class="fx-ticker" id="ticker"></div>`;
+  else if (scene === "clipstale") body = `<p class="fx-para">A scrolling card holds the control; the card's edge clips it.</p><div class="fx-box" data-t="box"><div style="height:200px"></div><div id="spacer" data-t="spacer" style="height:60px"></div><div data-t="slider-a" style="padding:0 20px">${slider()}</div><div style="height:400px"></div></div><div class="fx-ticker" id="ticker"></div>`;
+  else if (scene === "presented") body = `<div class="fx-pscrim" data-t="scrim"></div><div class="fx-pdialog open" role="dialog" aria-label="Probe" data-e="target">Body</div>`;
+  else if (scene === "capsule") body = `<div role="group" aria-label="Presets" style="display:flex;gap:12px"><button class="capx glass-capsule-hover" type="button" data-t="cap-kappa" aria-pressed="false">Kappa</button></div>`;
   else if (scene === "slider2") body = `${slider("A")}${slider("B")}`;
   else if (scene === "modal") body = `<div class="fx-scrim" data-state="open" data-e="veil"${F("e7-veil") ? " data-engaged" : ""}></div><div class="fx-dialog" role="dialog" aria-label="Probe" data-e="modal">Body</div>`;
   else if (scene === "s6") body = `<span class="fx-switch" role="switch" aria-checked="false" aria-label="Probe" data-e="target"></span>`;
@@ -324,8 +370,18 @@ ${F("e12-fcreach") ? `.ctl::after { content: ""; position: absolute; inset: -6px
   else if (scene === "vsheet") body = `<div class="fx-vroot" data-e="root"></div><div class="fx-sheet"><div class="fx-grip" role="slider" aria-label="Probe" aria-valuenow="25" tabindex="0" data-e="thumb"></div></div>`;
   else if (scene === "strip") body = `<div class="fx-strip" data-e="root">${[0, 1, 2, 3].map((i) => `<div class="fx-cell"${i ? "" : ' data-e="thumb"'}></div>`).join("")}</div>`;
 
+  // H6 (CK-21): the fixture's loud clock read covers every --engage-* clock its own stylesheet transitions on, read from
+  // the stylesheet text (no hand-kept list); e11-rename's list is the one a rename left behind (the control-engage pair
+  // dropped, C-E5 §0.2's class)
+  const CLOCKS = [...new Set([...css.matchAll(/(?:transition|animation)[\w-]*\s*:[^;{}]*/g)].flatMap((m) => [...m[0].matchAll(/var\((--engage-[\w-]+)\)/g)].map((x) => x[1])))].filter((t) => !(F("e11-rename") && t.startsWith("--engage-control-engage-")));
   const script = `
 const FAULT = ${JSON.stringify(fault)}; const SCENE = ${JSON.stringify(scene)}; const DEFER = ${defer}; const ON = ${on}; const RUN = ${run}; const PHONE = ${phone};
+const DROP = ${carryDrop}; const CLOCKS = ${JSON.stringify(CLOCKS)};
+// H6 (CK-21): every clock the stylesheet transitions on is read loudly at mount and on every act
+function checkClocks() {
+  const cs = getComputedStyle(document.documentElement);
+  for (const t of CLOCKS) { const raw = cs.getPropertyValue(t).trim(); if (!/^[\\d.]+m?s$/.test(raw)) console.error("[fixture] " + t + " is unreadable (" + JSON.stringify(raw) + "): the clock it times cannot run"); }
+}
 const E = ${JSON.stringify(E)};
 const prm = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 // the hand stopped before the release: the release came more than 700 ms after the last move. E-4's still release
@@ -377,6 +433,7 @@ const arm = () => requestAnimationFrame(() => requestAnimationFrame(() => { if (
 const quietSet = () => !armed && FAULT !== "e2-arrival" && FAULT !== "e2-arrivalflush";
 function pop(el) {
   if (!el) return;
+  checkClocks();
   if (FAULT === "e2-fillonly") return;
   if (FAULT === "e9-fillonly" && prm()) return;
   if (FAULT === "e2-arrivalflush") return flashCss(el);
@@ -394,7 +451,7 @@ let lastKey = { key: "", t: -1e9 };
 addEventListener("keydown", (e) => { lastKey = { key: e.key, t: performance.now() }; }, true);
 // H5: the door's press mark, written on the press's first event (pointerdown, or touchstart where a touch engine sends
 // no pointer event) and cleared on its end; e5-late writes it 190 ms late, e5-active writes none
-const pressOn = (e) => { const t = e.target?.closest?.(".ctl, .seg"); if (!t || FAULT === "e5-active") return; if (FAULT === "e5-late") { clearTimeout(t._pm); t._pm = setTimeout(() => { t.dataset.press = ""; }, 190); } else t.dataset.press = ""; };
+const pressOn = (e) => { const t = e.target?.closest?.(".ctl, .seg"); if (!t || FAULT === "e5-active") return; checkClocks(); if (FAULT === "e5-late") { clearTimeout(t._pm); t._pm = setTimeout(() => { t.dataset.press = ""; }, 190); } else t.dataset.press = ""; };
 const pressOff = () => { for (const t of document.querySelectorAll(".ctl, .seg")) { clearTimeout(t._pm); delete t.dataset.press; } };
 addEventListener("pointerdown", pressOn, true); addEventListener("touchstart", pressOn, { capture: true, passive: true });
 for (const k of ["pointerup", "pointercancel", "touchend", "touchcancel"]) addEventListener(k, pressOff, true);
@@ -421,7 +478,7 @@ function promote(root, on) {
   else if (!on && root.matches(":popover-open")) { root.hidePopover(); root.removeAttribute("popover"); for (const k of ["position", "inset", "left", "top", "margin", "padding", "border", "overflow", "width", "height", "background"]) root.style.removeProperty(k); }
 }
 function kbd(root, on) {
-  if (on) { if (root.dataset.kbd === undefined) checkToken(root); root.dataset.kbd = ""; if (FAULT === "e3-tabhand") root.dataset.held = "key"; }
+  if (on) { if (root.dataset.kbd === undefined) { checkToken(root); checkClocks(); } root.dataset.kbd = ""; if (FAULT === "e3-tabhand") root.dataset.held = "key"; }
   else { delete root.dataset.kbd; if (FAULT === "e3-tabhand") delete root.dataset.held; }
   if (FAULT === "e12-wheelchain" || FAULT === "e12-wheelrow") promote(root, on);
   if (FAULT === "e12-anchorlost") { if (on) root.style.setProperty("position-anchor", "--fx-footprint"); else root.style.removeProperty("position-anchor"); }
@@ -469,7 +526,7 @@ function wireSlider(root) {
     // a window keyed on the release time alone reads 0 when a loaded main thread delivers the release late
     const now = performance.now(), H = drag.hist, h = H.slice(-3); drag = null;
     let v = h.length > 1 && !stale(H, now) ? (h.at(-1).x - h[0].x) / Math.max(1, h.at(-1).t - h[0].t) * 1000 : 0; // px/s
-    if (FAULT === "e4-drop" || (prm() && FAULT !== "e4-prmbounce")) v = 0;
+    if (FAULT === "e4-drop" || DROP || (prm() && FAULT !== "e4-prmbounce")) v = 0;
     // the plant's bounce at any load: ≥ 1500 px/s seeds the spring (a load-slowed drive measured too little to overshoot)
     if (FAULT === "e4-prmbounce" && prm()) v = (v < 0 ? -1 : 1) * Math.max(Math.abs(v), 1500);
     if (FAULT === "e4-hold") { const D3 = W() / 3, tgt = Math.round(x / D3) * D3; const k = 322, c = 2 * 0.75 * Math.sqrt(k); let vv = 0, t1;
@@ -492,9 +549,31 @@ function wireSlider(root) {
   th.addEventListener("pointerup", release); th.addEventListener("pointercancel", release);
   return () => x;
 }
+// H6 plants e10-ratio1 / e10-clipratio (CK-20, REGISTRY §P5-7 item 1): a stage that watches the engaged slider's place
+// with an observer armed at the ratio it first sees: the box's area inside (the rect it was armed on ∩ the clip: the
+// viewport, or the clipping scroller), over its own area. It re-reads the place only when that ratio leaves its armed
+// value, so a move whose new rect lies inside the armed rect (ratio 1), or one toward a scroller's visible side (the
+// clipped ratio unchanged), is never heard; the next childList mutation glides the slider from the stale place
+function ratioStage(root, clipEl) {
+  let armed = null, at = null, r0 = null;
+  const R = () => { const q = root.getBoundingClientRect(); return { l: q.left, t: q.top, r: q.right, b: q.bottom }; };
+  const clipR = () => { if (!clipEl) return { l: 0, t: 0, r: innerWidth, b: innerHeight }; const b = clipEl.getBoundingClientRect(); const l = b.left + clipEl.clientLeft, t = b.top + clipEl.clientTop; return { l, t, r: l + clipEl.clientWidth, b: t + clipEl.clientHeight }; };
+  const cut = (a, b) => ({ l: Math.max(a.l, b.l), t: Math.max(a.t, b.t), r: Math.min(a.r, b.r), b: Math.min(a.b, b.b) });
+  const area = (x) => Math.max(0, x.r - x.l) * Math.max(0, x.b - x.t);
+  const ratio = (q) => area(cut(cut(q, armed), clipR())) / Math.max(1, area(q));
+  const arm = () => { armed = R(); at = { x: armed.l, y: armed.t }; r0 = ratio(armed); };
+  const engaged = () => root.dataset.held !== undefined || root.dataset.kbd !== undefined;
+  const tick = () => { if (!engaged()) armed = null; else if (!armed) arm(); else if (Math.abs(ratio(R()) - r0) > 1e-3) arm(); requestAnimationFrame(tick); };
+  requestAnimationFrame(tick);
+  new MutationObserver((recs) => {
+    if (!engaged() || !armed || !recs.some((x) => x.type === "childList")) return;
+    const q = R(); const dx = at.x - q.l, dy = at.y - q.t; arm();
+    if (Math.hypot(dx, dy) > 0.5) root.animate([{ translate: dx + "px " + dy + "px" }, { translate: "0 0" }], { duration: 300, easing: SPRING });
+  }).observe(document.getElementById("stage"), { childList: true, subtree: true });
+}
 function mountScene() {
   const stage = document.getElementById("stage"); stage.innerHTML = ${JSON.stringify(body)};
-  arm();
+  arm(); checkClocks();
   if (SCENE === "pop" || SCENE === "rest") {
     const el = stage.querySelector(".ctl");
     // H5: the committed fill lands at once (the state's own paint; its transition is held off for the flip's frames) and
@@ -567,6 +646,25 @@ function mountScene() {
         else at = place();
       }).observe(stage, { childList: true, subtree: true, ...(FAULT === "e10-staleresize" ? { attributes: true, attributeFilter: ["style"] } : {}) });
     }
+    if (FAULT === "e10-ratio1") ratioStage(root, null);
+  }
+  if (SCENE === "clipstale") {
+    const root = stage.querySelector(".fx-slider"); const val = wireSlider(root);
+    E.state = () => Math.round(val());
+    E.grow = (px) => { document.getElementById("spacer").style.height = px + "px"; };
+    E.tick = () => { const s = document.createElement("span"); s.textContent = "·"; document.getElementById("ticker").appendChild(s); };
+    if (FAULT === "e10-clipratio") ratioStage(root, stage.querySelector('[data-t="box"]'));
+  }
+  if (SCENE === "presented") {
+    // H6 (CK-10): the dialog presents and dismisses on its class; its clock is read loudly like every act's
+    const d = stage.querySelector(".fx-pdialog");
+    E.open = (v) => { checkClocks(); d.classList.toggle("open", !!v); };
+  }
+  if (SCENE === "capsule") {
+    const c = stage.querySelector(".capx");
+    c.addEventListener("click", () => c.setAttribute("aria-pressed", String(c.getAttribute("aria-pressed") !== "true")));
+    // the latch on a coarse pointer's activation (the tap's click: both engines deliver it)
+    if (FAULT === "e12-capsulelatch") c.addEventListener("click", () => { if (!matchMedia("(pointer: coarse)").matches) return; c.classList.add("lat"); setTimeout(() => c.classList.remove("lat"), 2000); });
   }
   if (SCENE === "passive" || SCENE === "field") E.state = () => null;
   if (SCENE === "ambient") {
@@ -629,6 +727,7 @@ E.limit = () => (SCENE === "ambient" && FAULT === "e1-ambientlimit" ? "the fixtu
 if (SCENE === "pop" || SCENE === "rest") E.state = () => (model ? "on" : "off");
 if (SCENE === "travel") E.state = () => selIdx;
 if (SCENE === "act") E.state = () => count;
+if (SCENE === "capsule") E.state = () => document.querySelector(".capx")?.getAttribute("aria-pressed") ?? null;
 // H3: the deferred mount renders in the caller's task (await __e.mount() resolves in a microtask), as the scene app's
 // does: CK-03's "own" arrival is the mount's own task
 E.mount = async () => { mountScene(); };

@@ -35,9 +35,29 @@
 //                            Tab away) is driven to its END: polled until the root is not engaged, not in the top
 //                            layer and back at ×1 ± 0.002, then +300 ms (FAIL when it never ends within 4 s). PASS when
 //                            the consumer's value is the root's inline value after the release
+//   capsule (CK-11, CK-14, CK-27; H6, REGISTRY §P5-7 item 2, C-A5 §0.2)   scenes with floor "capsule": the row's
+//                            `caps` names, per composer directory, the element the scene renders for it (the library's
+//                            capsule scene renders the Configurator's preset strip beside every other composer).
+//     composers rendered     the source tree's composers of .glass-capsule-hover outside the dock (every non-comment
+//                            line of a .vue/.ts/.tsx file under src/components/<dir>/ that names the class; dock/ is D2's
+//                            fence) must each be a key of `caps` whose element the scene renders: FAIL names a composer
+//                            no cell can see (a row closed on a source comment). The tree is --wt; under --fixture it is
+//                            fixtures/capsule/clean, or the tree a fault names; UNMEASURED with no tree
+//     hover fine <theme>     each composer's element (and any other element in the scene composing the class) at rest,
+//                            then hovered 400 ms: FAIL when the hover writes geometry (its painted/layout scale or its
+//                            computed `scale` moves > 0.002): the lift is not retired
+//     press fine <theme>     hovered, then the primary button held 250 ms: FAIL when the press writes geometry while the
+//                            element carries no door press mark ([data-press] / [data-press-armed]): a class rung (the
+//                            :active snap) writes the press. A door's press is REPORT (E-2/E-5 grade it)
+//     tap coarse <theme>     a coarse page (hasTouch; isMobile in Chromium), a tap on the element, +900 ms with no pointer:
+//                            FAIL when it is off ×1 by > 0.002 (the hover latch; FL-4's "the Button's coarse tap settling
+//                            at 1.015 fails"); UNMEASURED when the engine applies no coarse, hover-less pointer
+//                            Plants `e12-capsulelift`, `e12-capsulesnap`, `e12-capsulelatch`, `e12-capsuleunrendered`
 // Real Safari: UNMEASURED (owner's safaridriver checkbox).
 //   node e12-floor.mjs --build <dir> | --fixture [--fault e12-fcslop] [--engine webkit] [--migration wheel]
-import { witness, openPage, tabKey, f } from "./lib.mjs";
+import fs from "node:fs";
+import path from "node:path";
+import { witness, openPage, tabKey, f, HERE } from "./lib.mjs";
 
 const ENG = 1.03, TOL = 0.002;
 const raf2 = (page) => page.evaluate(() => new Promise((ok) => requestAnimationFrame(() => requestAnimationFrame(ok))));
@@ -230,5 +250,87 @@ await witness("E-12", "the floor's and MIGRATION's cells (CK-14, CK-16, CK-22, C
     if (!r.e0.eng) { cell(nm, "FAIL", `NOT DRIVEN: Tab did not engage the root (×${f(r.e0.s)}, engaged attribute ${r.e0.attr})`); continue; }
     if (r.end === null) { cell(nm, "FAIL", `the release never ended within 4 s (still engaged, in the top layer or off ×1) · consumer value while engaged "${r.during}"`); continue; }
     cell(nm, r.after === "--consumer-own" ? "PASS" : "FAIL", `a consumer's inline position-anchor --consumer-own · while engaged (×${f(r.e0.s)}, top layer ${r.e0.pop}) "${r.during || "(removed)"}" · ${how === "escape" ? "Escape" : "Tab away"}: the release ended at ${r.end} ms, then +300 ms: "${r.after || "(removed)"}" (bound: the consumer's own value)`);
+  }
+
+  // ── H6: the capsule's hover lift, press snap and coarse latch, on every composer (CK-11, CK-14, CK-27) ──
+  const capScenes = floor("capsule");
+  if (capScenes.length) {
+    const tree = a.fixture ? path.join(HERE, "fixtures", "capsule", a.fault === "e12-capsuleunrendered" ? "missing" : "clean") : typeof a.wt === "string" ? path.resolve(a.wt) : null;
+    const composers = () => {
+      const C = path.join(tree, "src", "components"); const found = {};
+      const walk = (d) => { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); if (e.isDirectory()) walk(p); else if (/\.(vue|ts|tsx)$/.test(e.name)) fs.readFileSync(p, "utf8").split("\n").forEach((l, i) => { const t = l.trim(); if (!t.includes("glass-capsule-hover") || /^(\/\/|\*|\/\*|<!--)/.test(t)) return; const dir = path.relative(C, p).split(path.sep)[0]; (found[dir] ??= []).push(`${path.relative(tree, p)}:${i + 1}`); }); } };
+      if (fs.existsSync(C)) walk(C);
+      return found;
+    };
+    const capRead = ([sel]) => { const e = document.querySelector(sel); if (!e) return null; const cs = getComputedStyle(e); const q = window.__eff(e); return { s: q.s, scale: cs.scale, hover: e.matches(":hover"), active: e.matches(":active"), door: !!e.closest("[data-press], [data-press-armed]"), cls: [...e.classList].filter((c) => /capsule|engage/.test(c)).join(" ") }; };
+    const num = (s) => (s === "none" ? 1 : Number.parseFloat(s));
+    const geo = (x, y) => Math.max(Math.abs(x.s - y.s), Math.abs(num(x.scale) - num(y.scale)));
+    for (const [sc, m] of capScenes) {
+      const caps = m.caps ?? {};
+      // every element the scene renders composing the class, beside the named ones (a composer the row does not name)
+      const extra = await guard(`${sc} capsule census`, async () => { const P = await openPage(E, T, sc); try { await P.page.waitForTimeout(300); return await P.page.evaluate((named) => { const els = [...document.querySelectorAll(".glass-capsule-hover")].filter((e) => !e.closest(".glass-dock") && !named.some((s) => document.querySelector(s) === e)); return els.map((e, i) => ({ key: `extra${i}`, sel: `extra #${i}`, d: `${e.tagName.toLowerCase()}.${[...e.classList].slice(0, 2).join(".")}` })); }, Object.values(caps)); } finally { await P.close(); } });
+      const rendered = await guard(`${sc} capsule rendered`, async () => { const P = await openPage(E, T, sc); try { await P.page.waitForTimeout(300); return await P.page.evaluate((c) => Object.fromEntries(Object.entries(c).map(([k, s]) => [k, !!document.querySelector(s)])), caps); } finally { await P.close(); } });
+      const cn = `E-12 ${sc} composers rendered`;
+      if (!tree) cell(cn, "UNMEASURED", "no --wt given: the composer census reads a source tree");
+      else {
+        const found = composers(); const dirs = Object.keys(found).filter((d) => d !== "dock").sort();
+        const missing = dirs.filter((d) => !(d in caps) || !(rendered.crashed ? false : rendered[d]));
+        cell(cn, missing.length ? "FAIL" : "PASS", `${dirs.length} composer director${dirs.length === 1 ? "y" : "ies"} of .glass-capsule-hover outside dock/ in ${a.fixture ? path.relative(HERE, tree) : tree}: ${dirs.map((d) => `${d} (${found[d][0]}${found[d].length > 1 ? ` +${found[d].length - 1}` : ""})`).join(", ") || "none"}${found.dock ? ` · dock/ (D2's fence, not read): ${found.dock.length} line(s)` : ""} · the scene renders: ${Object.entries(caps).map(([k, s]) => `${k} ${rendered[k] ? "yes" : "NO"} (${s})`).join(", ")}${missing.length ? ` · NOT RENDERED by any cell: ${missing.join(", ")}` : ""}`);
+      }
+      const targets = [...Object.entries(caps).map(([k, s]) => ({ key: k, sel: s })), ...(extra.crashed ? [] : extra)];
+      if (extra.crashed) cell(`E-12 ${sc} composer census`, "FAIL", extra.line);
+      else if (extra.length) cell(`E-12 ${sc} composer census`, "REPORT", `${extra.length} element(s) compose .glass-capsule-hover beyond the row's named composers, each read below: ${extra.map((x) => x.d).join(", ")}`);
+      for (const tg of targets) for (const theme of ["light", "dark"]) {
+        const isExtra = tg.key.startsWith("extra");
+        // the element is pinned when the page opens ([data-capsel]), so a tap that moves the selector's match (the
+        // preset strip's :not(.is-active)) still reads the element it tapped
+        const named = Object.values(caps);
+        const tag = (page) => page.evaluate(([sel, extraIdx, named]) => { const el = extraIdx == null ? document.querySelector(sel) : [...document.querySelectorAll(".glass-capsule-hover")].filter((e) => !e.closest(".glass-dock") && !named.some((s) => document.querySelector(s) === e))[extraIdx]; el?.setAttribute("data-capsel", ""); }, [tg.sel, isExtra ? Number(tg.key.slice(5)) : null, named]);
+        const SEL = "[data-capsel]";
+        const fine = await guard(`${sc} capsule ${tg.key} fine ${theme}`, async () => {
+          const P = await openPage(E, T, sc, { theme });
+          try {
+            const { page } = P; await page.waitForTimeout(250); await tag(page);
+            await page.mouse.move(2, 2); await page.waitForTimeout(200);
+            const r0 = await page.evaluate(capRead, [SEL]); if (!r0) return { none: true };
+            const c = await page.evaluate((s) => { const e = document.querySelector(s); e.scrollIntoView({ block: "center" }); const r = e.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }, SEL);
+            await page.waitForTimeout(100); const rr = await page.evaluate(capRead, [SEL]);
+            await page.mouse.move(c.x, c.y); await page.waitForTimeout(400);
+            const r1 = await page.evaluate(capRead, [SEL]);
+            await page.mouse.down(); await page.waitForTimeout(250);
+            const r2 = await page.evaluate(capRead, [SEL]);
+            await page.mouse.up();
+            return { r0: rr, r1, r2 };
+          } finally { await P.close(); }
+        });
+        const hn = `E-12 ${sc} ${tg.key} hover fine ${theme}`, pn = `E-12 ${sc} ${tg.key} press fine ${theme}`;
+        if (fine.crashed) { cell(hn, "FAIL", fine.line); cell(pn, "FAIL", fine.line); }
+        else if (fine.none) { cell(hn, "FAIL", `no target: ${tg.sel} renders nothing`); cell(pn, "FAIL", `no target: ${tg.sel}`); }
+        else {
+          const { r0, r1, r2 } = fine; const dh = geo(r1, r0), dp = geo(r2, r1);
+          cell(hn, r1.hover && dh <= TOL ? "PASS" : "FAIL", `${tg.sel} (${r0.cls || "no capsule class"}) · rest ×${f(r0.s, 4)} (scale ${r0.scale}) → hovered 400 ms (:hover ${r1.hover}) ×${f(r1.s, 4)} (scale ${r1.scale}) · geometry moved ${f(dh, 4)} (bound ≤ ${TOL}: the hover writes no geometry)${r1.hover ? "" : " · NOT DRIVEN: the pointer did not hover it"}`);
+          if (!r2.active && !r2.door) cell(pn, "FAIL", `NOT DRIVEN: held 250 ms, the element is neither :active nor marked by a door (${tg.sel})`);
+          else if (r2.door) cell(pn, "REPORT", `the press carries the door's mark ([data-press]/[data-press-armed]): ×${f(r1.s, 4)} → ×${f(r2.s, 4)} (scale ${r2.scale}); the door's press is E-2/E-5's to grade`);
+          else cell(pn, dp <= TOL ? "PASS" : "FAIL", `held 250 ms (:active ${r2.active}, no door mark) · hovered ×${f(r1.s, 4)} (scale ${r1.scale}) → pressed ×${f(r2.s, 4)} (scale ${r2.scale}) · geometry moved ${f(dp, 4)} (bound ≤ ${TOL}: no class rung writes the press's geometry)`);
+        }
+        const tn = `E-12 ${sc} ${tg.key} tap coarse ${theme}`;
+        const tap = await guard(tn, async () => {
+          const P = await openPage(E, T, sc, { theme, coarse: true });
+          try {
+            const { page } = P; if (!P.modeOk) return { mode: P.modeLine };
+            await page.waitForTimeout(250); await tag(page);
+            const c = await page.evaluate((s) => { const e = document.querySelector(s); if (!e) return null; e.scrollIntoView({ block: "center" }); const r = e.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }, SEL);
+            if (!c) return { none: true };
+            await page.waitForTimeout(100); const r0 = await page.evaluate(capRead, [SEL]);
+            await page.touchscreen.tap(c.x, c.y); await page.waitForTimeout(900);
+            return { r0, r1: await page.evaluate(capRead, [SEL]), line: P.modeLine };
+          } finally { await P.close(); }
+        });
+        if (tap.crashed) cell(tn, "FAIL", tap.line);
+        else if (tap.mode) cell(tn, "UNMEASURED", `the engine applies no coarse, hover-less pointer (${tap.mode}): engine emulation limit`);
+        else if (tap.none || !tap.r1) cell(tn, "FAIL", `no target after the tap: ${tg.sel}`);
+        else { const d = Math.max(Math.abs(tap.r1.s - 1), Math.abs(num(tap.r1.scale) - 1)); cell(tn, d <= TOL ? "PASS" : "FAIL", `${tap.line} · rest ×${f(tap.r0.s, 4)} → a tap, +900 ms with no pointer: ×${f(tap.r1.s, 4)} (scale ${tap.r1.scale}), :hover ${tap.r1.hover} (bound: ×1 ± ${TOL}, no hover latch)`); }
+      }
+    }
   }
 });

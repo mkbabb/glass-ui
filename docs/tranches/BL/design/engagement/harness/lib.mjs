@@ -315,6 +315,12 @@ export async function openPage(E, T, scene, o = {}) {
   // console errors (CK-21's fail-loud read) and page errors, kept per page
   const errors = []; page.on("console", (m) => { if (m.type() === "error") errors.push(m.text().slice(0, 200)); }); page.on("pageerror", (e) => errors.push(`pageerror: ${String(e.message ?? e).slice(0, 200)}`));
   await page.addInitScript(INIT);
+  // H6 (E-11's clock census): `plant` [token, value] is set on <html> before any page script runs, so the page reads it
+  // unreadable from its first read (a mount-time read included)
+  if (o.plant) await page.addInitScript(([t, v]) => {
+    const set = () => { if (!document.documentElement) return false; document.documentElement.style.setProperty(t, v); return true; };
+    if (!set()) new MutationObserver((_, ob) => { if (set()) ob.disconnect(); }).observe(document, { childList: true });
+  }, o.plant);
   const q = new URLSearchParams({ scene, theme: o.theme ?? "light", ...(o.q ?? {}) });
   await page.goto(`${T.url}?${q}`);
   await page.waitForFunction(() => window.__e && window.__e.ready === true, null, { timeout: 60000 });

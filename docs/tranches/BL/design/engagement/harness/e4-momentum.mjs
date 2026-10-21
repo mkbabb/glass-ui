@@ -26,6 +26,11 @@
 //   repeat        on a surface whose row says `detents: true`: three fling runs land within 2 px of one another (the
 //                 same drive lands on the same detent; C-B §1's Sheet landed on 130 or 255 px)
 //   PRM (H-9)     the fling under reduced motion: at rest within 2000 ms and no overshoot past its rest (≤ 0.5 px)
+//   H6 (pass 6; REGISTRY §P5-7 item 8, F-13): a row's `reads: n` (the slider: 5) takes the fling-and-still pair n times on
+//                 fresh pages, and `fling carries velocity` passes only when EVERY read passes (E-5's three-read rule):
+//                 the slider's carry read 1.87-2.80 px on 4 of 14 Chromium reads in pass 5 and 6.5-6.7 px on the others,
+//                 so one read could pass a bimodal carry. The line prints every read's differential; continuity takes
+//                 the worst jump over every read. Plant `e4-carryflaky` (the velocity dropped on one fling in five)
 // Surfaces (H-7): every scene gated "E-4"; its row may name axis "x" | "y", dir ±1, input "mouse" | "touch", a press
 // point [data-e~=grip], `edge`, `detents` and `fixed`. Light only: the read is geometry.
 //   node e4-momentum.mjs --build <dir> | --fixture [--fault e4-drop] [--engine webkit]
@@ -80,7 +85,10 @@ async function release(E, T, sc, m, still, prm = false, run = 0) {
 await witness("E-4", "CK-05 momentum on the visible body, without a teleport", async ({ E, T, cell, guard, idx, engine }) => {
   for (const [sc, m] of scenesFor(idx, "E-4")) {
     const name = `E-4 ${sc} fling carries velocity`, cont = `E-4 ${sc} release continuity`;
+    const nReads = Math.max(1, Number(m.reads ?? 1));
     const r = await guard(`${sc} fling`, async () => ({ fl: await release(E, T, sc, m, false), st: await release(E, T, sc, m, true) }), 90000);
+    // H6: the further reads of the pair (fresh pages each), taken only when the first is driven and read
+    const more = [];
     const undriven = (x) => !(Math.abs(x.moved) >= DRIVEN);
     let driven = false;
     if (r.crashed) { cell(name, "FAIL", r.line); cell(cont, "FAIL", r.line); }
@@ -93,11 +101,21 @@ await witness("E-4", "CK-05 momentum on the visible body, without a teleport", a
       else { cell(name, "FAIL", `NOT DRIVEN: ${why}`); cell(cont, "FAIL", `NOT DRIVEN: ${why}`); }
     } else {
       driven = true;
-      const dc = r.fl.carry - r.st.carry, de = r.fl.end - r.st.end, d = Math.max(dc, de);
+      for (let k = 1; k < nReads; k++) {
+        const q = await guard(`${sc} fling read ${k + 1}`, async () => ({ fl: await release(E, T, sc, m, false), st: await release(E, T, sc, m, true) }), 90000);
+        more.push(q.crashed ? { bad: q.line } : q.fl.bad || q.st.bad || q.fl.inflow || q.st.inflow ? { bad: q.fl.bad ?? q.st.bad ?? q.fl.inflow ?? q.st.inflow } : q.fl.invisible || q.st.invisible ? { bad: `INVISIBLE body on ${q.fl.invisible + q.st.invisible} frame(s)` } : undriven(q.fl) || undriven(q.st) ? { bad: `NOT DRIVEN: moved ${f(q.fl.moved, 1)} / ${f(q.st.moved, 1)} px` } : q);
+      }
+      const reads = [r, ...more];
+      const grade = (x) => { if (x.bad) return { ok: false, txt: `unreadable (${String(x.bad).slice(0, 80)})` }; const dc = x.fl.carry - x.st.carry, de = x.fl.end - x.st.end, d = Math.max(dc, de); const atRest = x.fl.rest && x.st.rest; return { ok: atRest && d >= TRAVEL, d, txt: `${atRest ? "" : "NOT AT REST · "}carry ${f(dc, 2)} / settle ${f(de, 2)} px` }; };
+      const gs = reads.map(grade); const allOk = gs.every((g) => g.ok);
+      const dc = r.fl.carry - r.st.carry, de = r.fl.end - r.st.end;
       const atRest = r.fl.rest && r.st.rest;
-      cell(name, atRest && d >= TRAVEL ? "PASS" : "FAIL", `${m.axis === "y" ? "axis y" : "axis x"}${m.dir === -1 ? ", dir −1" : ""}${m.input === "touch" ? ", touch" : ""}${m.edge === "lead" ? ", leading edge" : ""}, page frame · ${atRest ? "" : `NOT AT REST at ${WINDOW} ms (fling ${r.fl.rest}, still ${r.st.rest}) · `}fling: carry ${f(r.fl.carry, 2)} px, settles ${f(r.fl.end, 2)} px past release · still: carry ${f(r.st.carry, 2)} px, settles ${f(r.st.end, 2)} px · difference: carry ${f(dc, 2)} px, settle ${f(de, 2)} px (bound: either ≥ ${TRAVEL}, both at rest) · body opacity ≥ ${f(Math.min(r.fl.minOp, r.st.minOp), 3)} · ${r.fl.n} frames, median ${f(r.fl.med, 1)} ms${r.note ? ` · ${r.note}` : ""}`);
-      const bound = Math.max(r.fl.driveMax, r.st.driveMax) * 1.5 + 2; const worst = Math.max(r.fl.jump, r.st.jump);
-      cell(cont, m.platform ? "REPORT" : worst <= bound ? "PASS" : "FAIL", `${m.platform ? "the platform's own scroll fling (CK-18: the Carousel is the platform's, stated), reported not gated · " : ""}largest one-frame move on release: fling ${f(r.fl.jump, 1)} px, still ${f(r.st.jump, 1)} px · during the drive: fling ${f(r.fl.driveMax, 1)} px, still ${f(r.st.driveMax, 1)} px (bound ≤ drive × 1.5 + 2 = ${f(bound, 1)} px)`);
+      cell(name, allOk ? "PASS" : "FAIL", `${m.axis === "y" ? "axis y" : "axis x"}${m.dir === -1 ? ", dir −1" : ""}${m.input === "touch" ? ", touch" : ""}${m.edge === "lead" ? ", leading edge" : ""}, page frame · ${nReads > 1 ? `${nReads} reads, every one must pass: [${gs.map((g, i) => `${i + 1}: ${g.txt} ${g.ok ? "pass" : "FAIL"}`).join(" · ")}] (${gs.filter((g) => g.ok).length} of ${nReads} pass) · read 1 in full: ` : ""}${atRest ? "" : `NOT AT REST at ${WINDOW} ms (fling ${r.fl.rest}, still ${r.st.rest}) · `}fling: carry ${f(r.fl.carry, 2)} px, settles ${f(r.fl.end, 2)} px past release · still: carry ${f(r.st.carry, 2)} px, settles ${f(r.st.end, 2)} px · difference: carry ${f(dc, 2)} px, settle ${f(de, 2)} px (bound: either ≥ ${TRAVEL}, both at rest) · body opacity ≥ ${f(Math.min(r.fl.minOp, r.st.minOp), 3)} · ${r.fl.n} frames, median ${f(r.fl.med, 1)} ms${r.note ? ` · ${r.note}` : ""}`);
+      const ok = reads.filter((x) => !x.bad);
+      // each read's release against its own drive's bound
+      const over = ok.map((x) => ({ j: Math.max(x.fl.jump, x.st.jump), b: Math.max(x.fl.driveMax, x.st.driveMax) * 1.5 + 2 }));
+      const bound = over[0].b, bad = over.filter((x) => x.j > x.b);
+      cell(cont, m.platform ? "REPORT" : !bad.length ? "PASS" : "FAIL", `${m.platform ? "the platform's own scroll fling (CK-18: the Carousel is the platform's, stated), reported not gated · " : ""}${ok.length > 1 ? `over ${ok.length} reads, each against its own drive (${over.map((x) => `${f(x.j, 1)}/${f(x.b, 1)}`).join(", ")} px; ${bad.length} over) · read 1: ` : ""}largest one-frame move on release: fling ${f(r.fl.jump, 1)} px, still ${f(r.st.jump, 1)} px · during the drive: fling ${f(r.fl.driveMax, 1)} px, still ${f(r.st.driveMax, 1)} px (bound ≤ drive × 1.5 + 2 = ${f(bound, 1)} px)`);
     }
     if (m.detents) {
       const rn = `E-4 ${sc} repeat landing`;

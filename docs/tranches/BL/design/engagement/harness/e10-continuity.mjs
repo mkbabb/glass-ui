@@ -55,6 +55,27 @@
 //                    UNMEASURED when the single commit lights no seat (> 0.02): the cell films a light that exists, and
 //                    E-2 owns its existence. Plant `e10-rebound` (a light transition held by a 120 ms delay, the
 //                    fill-clock class C-A4 §0.2 found)
+//   H6 (pass 6; REGISTRY §P5-7 items 1, 5, 6; C-A5 §0.1, C-E5 §0.1): the moves a change detector armed at its own rest
+//   reading cannot hear, each inside CK-20 with a plant:
+//   stale place (inset) / (centred shrink)   on `stale` scenes, keyboard and in-place pointer, the same film as the stale
+//                    place but the move is the wrapper's ([data-t="wrap"], 360 px): inset 360 → 300 px with a +60 px left
+//                    margin (the left edge in, the right kept), centred shrink 360 → 240 px with +60 px (the centre kept).
+//                    The wrapper's new rect lies inside its old one: a ratio-1 observer hears nothing. Same bound; NOT
+//                    DRIVEN unless engaged before and on every frame and the wrapper's new rect lies inside the old.
+//                    Plant `e10-ratio1` (an observer armed at ratio 1)
+//   clipped stale place · keyboard · top|bottom · reveal|conceal|control   on `clip` scenes (the row names the
+//                    scroller `box`, the in-flow `rest` box it clips, and the spacer's height): Tab engages, the
+//                    scroller is scrolled so 70 % of the rest box's top (or bottom) is hidden past its edge, +500 ms,
+//                    the spacer above moves the rest box d = hidden − 2 px by a style write, toward the visible side
+//                    (reveal: the visible fraction of the box against its old rect is unchanged, so a clipped-ratio
+//                    observer hears nothing) or away from it (conceal), or not at all (control), +400 ms, then filmed
+//                    900 ms across an append below the scroller: the root's largest one-frame centre move ≤ 4 px per
+//                    16.7 ms. NOT DRIVEN unless engaged throughout, the rest box clipped before the move and the move
+//                    landed (|Δ| within 1 px of d; 0 for the control). Plant `e10-clipratio` (an observer armed at the
+//                    clipped ratio)
+//   clipped stale place · pointer   UNMEASURED with its reason (REGISTRY §P5-7 item 6, C-E5 §4.3): scrolling the box
+//                    while a mouse hold is down ends the hold in both engines, and clipping before the press lets the
+//                    press scroll the box back, so no driver reaches the in-place pointer path inside a scroller yet
 // The sortable and tabs teleports are CK-05's continuity cell (E-4).
 //   node e10-continuity.mjs --build <dir> | --fixture [--fault e10-snap|e10-teleport|e10-teleportin] [--engine webkit]
 import { witness, openPage, scenesFor, center, tabKey, f } from "./lib.mjs";
@@ -90,10 +111,11 @@ const shiftAt = (fr, i = 0) => { let b = { d: 0, t: NaN }; fr.slice(1).forEach((
 
 await witness("E-10", "CK-20 no one-frame discontinuity on an engagement path", async ({ E, T, cell, guard, idx, engine }) => {
   const all = scenesFor(idx, "E-10");
-  const single = all.filter(([, m]) => !m.pair && !m.stale && !m.rebound);
+  const single = all.filter(([, m]) => !m.pair && !m.stale && !m.rebound && !m.clip);
   const pairs = all.filter(([, m]) => m.pair);
   const stales = all.filter(([, m]) => m.stale);
   const rebounds = all.filter(([, m]) => m.rebound);
+  const clips = all.filter(([, m]) => m.clip);
   const shift = engine === "webkit" ? "Alt+Shift+Tab" : "Shift+Tab";
   let ref = null;
   for (const [sc, m] of single) {
@@ -208,8 +230,9 @@ await witness("E-10", "CK-20 no one-frame discontinuity on an engagement path", 
   for (const [sc, m] of stales) {
     const root = '[data-e~="root"]', eng = m.engaged ?? "[data-engaged]";
     for (const how of ["keyboard", "pointer"]) {
-      for (const grow of how === "keyboard" ? [120, 0, "resize"] : [120, 0]) {
-        const name = `E-10 ${sc} stale place${grow === "resize" ? " (viewport resize)" : grow ? "" : " control"} · ${how}`;
+      for (const grow of how === "keyboard" ? [120, 0, "resize", "inset", "shrink"] : [120, 0, "inset", "shrink"]) {
+        const wrapMove = grow === "inset" || grow === "shrink";
+        const name = `E-10 ${sc} stale place${grow === "resize" ? " (viewport resize)" : grow === "inset" ? " (inset)" : grow === "shrink" ? " (centred shrink)" : grow ? "" : " control"} · ${how}`;
         const r = await guard(name, async () => {
           const P = await openPage(E, T, sc);
           try {
@@ -220,25 +243,77 @@ await witness("E-10", "CK-20 no one-frame discontinuity on an engagement path", 
               await page.waitForTimeout(600);
               const at = () => page.evaluate(([s, e]) => { const el = document.querySelector(s); const b = el.getBoundingClientRect(); return { y: b.top + b.height / 2 + scrollY, x: b.left + b.width / 2 + scrollX, eng: el.matches(e) }; }, [root, eng]);
               const s0 = await at();
-              if (grow === "resize") await page.setViewportSize({ width: 380, height: 500 });
+              // H6: the wrapper's inward moves (its new rect inside its old one)
+              const wrapRect = () => page.evaluate(() => { const w = document.querySelector('[data-t="wrap"]'); if (!w) return null; const b = w.getBoundingClientRect(); return { l: b.left, t: b.top, r: b.right, b: b.bottom }; });
+              let w0 = null, w1 = null;
+              if (wrapMove) { w0 = await wrapRect(); if (!w0) return { nowrap: true }; await page.evaluate((k) => { const w = document.querySelector('[data-t="wrap"]'); w.style.width = k === "inset" ? "300px" : "240px"; w.style.marginLeft = "60px"; }, grow); }
+              else if (grow === "resize") await page.setViewportSize({ width: 380, height: 500 });
               else if (grow) await page.evaluate((g) => window.__e.grow(g), grow);
               await page.waitForTimeout(400);
-              const s1 = await at();
+              const s1 = await at(); if (wrapMove) w1 = await wrapRect();
               const pr = page.evaluate(filmFn, [[root], m.veil ?? null, 900, eng]);
               await page.waitForTimeout(80);
               await page.evaluate(() => window.__e.tick());
-              return { s0, s1, fr: await pr };
+              return { s0, s1, w0, w1, fr: await pr };
             } finally { if (held) await page.mouse.up(); }
           } finally { await P.close(); }
         });
         if (r.crashed) { cell(name, "FAIL", r.line); continue; }
+        if (r.nowrap) { cell(name, "UNMEASURED", "the scene renders no [data-t=\"wrap\"] around the control: the inward move cannot be driven"); continue; }
         const { s0, s1, fr } = r; const w = shiftAt(fr);
-        const ys = fr.map((x) => x.cy[0]).filter(Number.isFinite);
-        const driven = s0.eng && fr.every((x) => x.eng[0]);
-        const what = grow === "resize" ? "viewport 700 → 380 px wide (the paragraph above rewraps)" : grow ? `spacer +${grow} px by a style write` : "no layout move (the control)";
-        cell(name, !driven ? "FAIL" : w.d <= STALE ? "PASS" : "FAIL", `${driven ? "" : `NOT DRIVEN: the root was not engaged before and on every frame (${eng}: before ${s0.eng}, ${fr.filter((x) => x.eng[0]).length} of ${fr.length} frames) · `}${how} engaged · ${what}: the root's centre ${f(s0.y, 1)} → ${f(s1.y, 1)} px · then a node appended below it (moves nothing): over ${fr.length} frames its centre spans ${f(Math.min(...ys), 1)}..${f(Math.max(...ys), 1)} px, largest one-frame move per 16.7 ms ${f(w.d, 1)} px${w.d > 0 ? ` at +${f(w.t, 0)} ms` : ""} (bound ≤ ${STALE} px)`);
+        const ys = fr.map((x) => x.cy[0]).filter(Number.isFinite), xs = fr.map((x) => x.cx[0]).filter(Number.isFinite);
+        const inside = !wrapMove || (r.w1 && r.w1.l >= r.w0.l - 0.5 && r.w1.r <= r.w0.r + 0.5 && r.w1.t >= r.w0.t - 0.5 && r.w1.b <= r.w0.b + 0.5 && r.w1.r - r.w1.l < r.w0.r - r.w0.l - 1);
+        const driven = s0.eng && fr.every((x) => x.eng[0]) && inside;
+        const what = grow === "resize" ? "viewport 700 → 380 px wide (the paragraph above rewraps)" : wrapMove ? `the wrapper ${grow === "inset" ? "360 → 300 px with +60 px left margin (left edge in, right edge kept)" : "360 → 240 px with +60 px left margin (centred)"} by a style write: its rect ${f(r.w0.l, 1)}..${f(r.w0.r, 1)} → ${f(r.w1?.l, 1)}..${f(r.w1?.r, 1)} px (${inside ? "inside the old" : "NOT inside the old"})` : grow ? `spacer +${grow} px by a style write` : "no layout move (the control)";
+        cell(name, !driven ? "FAIL" : w.d <= STALE ? "PASS" : "FAIL", `${driven ? "" : `NOT DRIVEN: ${inside ? "" : "the wrapper's new rect does not lie inside its old one; "}the root engaged before ${s0.eng}, on ${fr.filter((x) => x.eng[0]).length} of ${fr.length} frames (${eng}) · `}${how} engaged · ${what}: the root's centre (${f(s0.x, 1)}, ${f(s0.y, 1)}) → (${f(s1.x, 1)}, ${f(s1.y, 1)}) px · then a node appended below it (moves nothing): over ${fr.length} frames its centre spans x ${f(Math.min(...xs), 1)}..${f(Math.max(...xs), 1)}, y ${f(Math.min(...ys), 1)}..${f(Math.max(...ys), 1)} px, largest one-frame move per 16.7 ms ${f(w.d, 1)} px${w.d > 0 ? ` at +${f(w.t, 0)} ms` : ""} (bound ≤ ${STALE} px)`);
       }
     }
+  }
+  // ── H6: C-E5's clipped stale place (a clipping scroller; a move toward its visible side keeps the clipped ratio) ──
+  const clipRead = ([boxSel, restSel, root, eng]) => {
+    const b = document.querySelector(boxSel), rest = document.querySelector(restSel), h = document.querySelector(root);
+    if (!b || !rest || !h) return null;
+    const br = b.getBoundingClientRect(); const visTop = br.top + b.clientTop, visBot = visTop + b.clientHeight; const r = rest.getBoundingClientRect();
+    return { top: r.top, h: r.height, vis: Math.max(0, Math.min(r.bottom, visBot) - Math.max(r.top, visTop)), eng: h.matches(eng) };
+  };
+  const clipScroll = ([boxSel, restSel, side, frac]) => {
+    const b = document.querySelector(boxSel), rest = document.querySelector(restSel);
+    const br = b.getBoundingClientRect(); const visTop = br.top + b.clientTop, visBot = visTop + b.clientHeight; const r = rest.getBoundingClientRect(); const hidden = Math.round(r.height * frac);
+    b.scrollTop += side === "top" ? r.top - (visTop - hidden) : r.bottom - (visBot + hidden);
+    return hidden;
+  };
+  for (const [sc, m] of clips) {
+    const root = '[data-e~="root"]', eng = m.engaged ?? "[data-engaged]"; const { box, rest, spacer } = m.clip;
+    for (const side of ["top", "bottom"]) for (const dir of ["reveal", "conceal", "control"]) {
+      const name = `E-10 ${sc} clipped stale place · keyboard · ${side} · ${dir}`;
+      const r = await guard(name, async () => {
+        const P = await openPage(E, T, sc);
+        try {
+          const { page } = P;
+          await page.focus('[data-sentinel="before"]'); await page.keyboard.press(tabKey(engine)); await page.waitForTimeout(600);
+          const hidden = await page.evaluate(clipScroll, [box, rest, side, 0.7]);
+          await page.waitForTimeout(500);
+          const s0 = await page.evaluate(clipRead, [box, rest, root, eng]);
+          const d = Math.max(2, hidden - 2);
+          // top clip: down reveals (the spacer grows); bottom clip: up reveals (the spacer shrinks)
+          const sign = dir === "control" ? 0 : (side === "top") === (dir === "reveal") ? 1 : -1;
+          if (sign) await page.evaluate((g) => window.__e.grow(g), spacer + sign * d);
+          await page.waitForTimeout(400);
+          const s1 = await page.evaluate(clipRead, [box, rest, root, eng]);
+          const pr = page.evaluate(filmFn, [[root], m.veil ?? null, 900, eng]);
+          await page.waitForTimeout(80);
+          await page.evaluate(() => window.__e.tick());
+          return { s0, s1, d, sign, fr: await pr };
+        } finally { await P.close(); }
+      });
+      if (r.crashed) { cell(name, "FAIL", r.line); continue; }
+      if (!r.s0 || !r.s1) { cell(name, "FAIL", `NOT DRIVEN: the scene renders no ${box} / ${rest} / root`); continue; }
+      const { s0, s1, fr, d, sign } = r; const w = shiftAt(fr);
+      const moved = s1.top - s0.top; const clipped = s0.vis > 0 && s0.vis < s0.h - 0.5; const landed = Math.abs(Math.abs(moved) - (sign ? d : 0)) <= 1;
+      const driven = s0.eng && fr.every((x) => x.eng[0]) && clipped && landed;
+      cell(name, !driven ? "FAIL" : w.d <= STALE ? "PASS" : "FAIL", `${driven ? "" : `NOT DRIVEN: engaged before ${s0.eng} and on ${fr.filter((x) => x.eng[0]).length} of ${fr.length} frames, rest box clipped ${clipped} (${f(s0.vis, 1)} of ${f(s0.h, 1)} px visible), move landed ${landed} · `}keyboard engaged · the rest box ${f(s0.h, 1)} px tall, ${f(s0.vis, 1)} px visible in the scroller · ${sign ? `spacer ${sign > 0 ? "+" : "−"}${d} px by a style write (${dir})` : "no move (the control)"}: its top ${f(s0.top, 1)} → ${f(s1.top, 1)} px (Δ ${f(moved, 1)}), ${f(s1.vis, 1)} px visible · then a node appended below the scroller (moves nothing): the root's largest one-frame centre move per 16.7 ms ${f(w.d, 1)} px${w.d > 0 ? ` at +${f(w.t, 0)} ms` : ""} over ${fr.length} frames (bound ≤ ${STALE} px)`);
+    }
+    cell(`E-10 ${sc} clipped stale place · pointer`, "UNMEASURED", "no driver (REGISTRY §P5-7 item 6, C-E5 §4.3): scrolling the scroller while a mouse hold is down ends the hold in both engines, and clipping before the press lets the press scroll the box back, so the in-place pointer path inside a scroller is not reached; the keyboard cells above read the clipped place");
   }
   // ── H5: C-A4's rebound, a commit reversed G ms later, made a cell (CK-20 × CK-12) ───────────────────────
   const reboundFilm = ([gap, lightSel, ms]) => new Promise((res) => {

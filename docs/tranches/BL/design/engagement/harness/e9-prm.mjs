@@ -23,10 +23,67 @@
 //                   its own page, the face (inset 3 px) screenshotted 0-900 ms; the cell passes only on the paint read,
 //                   and the composite is printed beside it. The composite passed the tabs' dark light under reduce while
 //                   it painted 0.0016-0.0018 (C-A4 §0.4, CK-27). Plant `e2-paintless` must FAIL it
+//   H6 (pass 6; O-100 R-1 placed in D5 by O-103, REGISTRY §P5-7 item 13): the PRESENTED rung's light leg is its opacity
+//   fade, and the reduce arm keeps it (it is not vestibular) while it retires the plate's spatial leg. On scenes whose
+//   row carries `fade` ({ plate, scrim }: the presented scene), under reduce, light and dark: the open plate is
+//   dismissed (`__e.open(false)`) and filmed per frame for 700 ms, then presented again (`__e.open(true)`) and filmed:
+//   presented fade (PRM) close|open   PASS when the plate's or the scrim's effective opacity passes through ≥ 2 frames
+//                    strictly between 0.03 and 0.97 (a fade, not a cut) and the plate, wherever it paints (opacity >
+//                    0.03), holds its scale (range < 0.002) and its centre (≤ 1 px): FAIL on a cut, or on a spatial leg
+//                    kept. The same open and close without reduce are REPORT (the fade the rung has). NOT DRIVEN (FAIL)
+//                    when the scene has no `__e.open`. Plants `e9-fadecut` (the fade zeroed by the PRM fallback),
+//                    `e9-fadespatial` (the plate's 0.95 → 1 scale kept under reduce)
 //   node e9-prm.mjs --build <dir> | --fixture [--fault e9-scale|e9-dark|e9-glide|e9-fillonly] [--engine webkit]
 import { witness, openPage, scenesFor, center, quiet, lightLeg, paintDiff, tabKey, paintFilm, paintRise, f, BOUNCE, KEY_DWELL } from "./lib.mjs";
 
+const FADE_LO = 0.03, FADE_HI = 0.97, FADE_FRAMES = 2;
+// the presented plate's and scrim's effective opacity, the plate's scale and centre, every frame for ms after `go`
+const fadeFilm = ([plate, scrim, ms, open]) => new Promise((ok) => {
+  const fr = []; const t0 = performance.now();
+  const rd = (sel) => { const e = document.querySelector(sel); if (!e) return { op: 0, s: NaN, x: NaN, y: NaN }; const v = window.__vis(e); const q = window.__eff(e); return { op: v.op, s: q ? q.s : NaN, x: q ? q.x : NaN, y: q ? q.y : NaN }; };
+  const tick = () => { const p = rd(plate); fr.push({ t: performance.now() - t0, p, sc: scrim ? rd(scrim).op : NaN }); if (performance.now() - t0 < ms) requestAnimationFrame(tick); else ok(fr); };
+  Promise.resolve(window.__e.open(open)).then(() => {});
+  requestAnimationFrame(tick);
+});
+const fadeVerdict = (fr) => {
+  const mid = (v) => v > FADE_LO && v < FADE_HI;
+  const pf = fr.filter((x) => mid(x.p.op)).length, sf = fr.filter((x) => Number.isFinite(x.sc) && mid(x.sc)).length;
+  const lit = fr.filter((x) => x.p.op > FADE_LO && Number.isFinite(x.p.s));
+  const ss = lit.map((x) => x.p.s); const range = ss.length ? Math.max(...ss) - Math.min(...ss) : 0;
+  const cx = lit.map((x) => x.p.x), cy = lit.map((x) => x.p.y); const drift = lit.length ? Math.hypot(Math.max(...cx) - Math.min(...cx), Math.max(...cy) - Math.min(...cy)) : 0;
+  const fades = pf >= FADE_FRAMES || sf >= FADE_FRAMES; const spatial = range >= BOUNCE || drift > 1;
+  const ops = (k) => fr.filter((_, i) => i % 3 === 0).map((x) => `+${x.t.toFixed(0)} ${(k === "p" ? x.p.op : x.sc).toFixed(2)}`).join(" ");
+  return { fades, spatial, line: `plate opacity strictly between ${FADE_LO} and ${FADE_HI} on ${pf} frame(s), scrim on ${sf} (bound ≥ ${FADE_FRAMES} on either: a fade, not a cut) · the plate where it paints: scale range ${f(range, 4)} (bound < ${BOUNCE}), centre drift ${f(drift, 1)} px (bound ≤ 1) · ${fr.length} frames · plate [${ops("p")}]${fr.some((x) => Number.isFinite(x.sc)) ? ` · scrim [${ops("s")}]` : ""}`.slice(0, 900) };
+};
+
 await witness("E-9", "the PRM arm", async ({ E, T, cell, guard, idx, engine }) => {
+  // ── H6: the presented fade under reduce (CK-10 × O-100 R-1) ──
+  for (const [sc, m] of Object.entries(idx).filter(([, x]) => x.fade)) {
+    for (const prm of [true, false]) for (const theme of prm ? ["light", "dark"] : ["light"]) {
+      const r = await guard(`${sc} fade ${prm} ${theme}`, async () => {
+        const P = await openPage(E, T, sc, { theme, prm });
+        try {
+          if (prm && !P.modeOk) return { mode: P.modeLine };
+          if (!(await P.page.evaluate(() => typeof window.__e.open === "function"))) return { none: true };
+          await P.page.waitForTimeout(300);
+          const close = await P.page.evaluate(fadeFilm, [m.fade.plate, m.fade.scrim ?? null, 700, false]);
+          await P.page.waitForTimeout(200);
+          const open = await P.page.evaluate(fadeFilm, [m.fade.plate, m.fade.scrim ?? null, 700, true]);
+          return { close, open };
+        } finally { await P.close(); }
+      }, 60000);
+      for (const how of ["close", "open"]) {
+        const nm = prm ? `E-9 ${sc} fade (PRM) ${how} ${theme}` : `E-9 ${sc} fade (no reduce) ${how} ${theme}`;
+        if (r.crashed) { cell(nm, prm ? "FAIL" : "REPORT", r.line); continue; }
+        if (r.mode) { cell(nm, "FAIL", `MODE NOT APPLIED ${r.mode}`); continue; }
+        if (r.none) { cell(nm, prm ? "FAIL" : "REPORT", "NOT DRIVEN: the scene has no __e.open (the presentation cannot be driven)"); continue; }
+        const v = fadeVerdict(r[how]);
+        if (!prm) { cell(nm, "REPORT", `the rung's own ${how} without reduce (the reference): ${v.fades ? "fades" : "cuts"}, ${v.spatial ? "with" : "no"} spatial leg · ${v.line}`); continue; }
+        cell(nm, v.fades && !v.spatial ? "PASS" : "FAIL", `under reduce the ${how} ${v.fades ? "fades" : "CUTS (the opacity fade is zeroed)"}${v.spatial ? " and KEEPS A SPATIAL LEG on the plate" : ""} · ${v.line}`);
+      }
+    }
+  }
+
   for (const [sc, m] of scenesFor(idx, "E-9")) {
     for (const theme of ["light", "dark"]) {
       const r = await guard(`${sc} ${theme}`, async () => {
