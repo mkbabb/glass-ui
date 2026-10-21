@@ -1,4 +1,10 @@
-import type { ComputedRef } from "vue";
+import {
+    defineComponent,
+    inject,
+    provide,
+    type ComputedRef,
+    type InjectionKey,
+} from "vue";
 import { createStrictContext } from "../../../composables/context";
 import { DOCK_CONTEXT_LABEL } from "../constants";
 
@@ -58,10 +64,11 @@ export interface DockContext {
     held: ComputedRef<boolean>;
     /**
      * The dock's POSTURE — `true` while the expanded face is the one painted. Its
-     * falling edge IS the collapse, and every overlay a seat opened closes on it
-     * (`useDockParticipation`'s `close`): a menu left standing over a collapsed dock
-     * points at a control that is no longer there. One writer (the dock), one edge,
-     * no timer.
+     * falling edge IS the collapse, and every overlay a seat OF THE FACE opened closes
+     * on it (`useDockParticipation`'s `close`): a menu left standing over a collapsed
+     * dock points at a control that is no longer there. A `#persistent` control is
+     * still there, so what it opened stays (`DockFace`, below). One writer (the dock),
+     * one edge, no timer.
      */
     expanded: ComputedRef<boolean>;
 }
@@ -85,3 +92,27 @@ export const useDockContext = ctx.use;
 
 /** Befitting silent default for primitives that may render outside a dock. */
 export const useOptionalDockContext = ctx.useOptional;
+
+/**
+ * THE FACE. The seats the collapse takes away are the ones authored in the dock's
+ * default slot: `<GlassDock>` renders that slot, and only that slot, inside
+ * `<DockFace>`, which adds no DOM. `#persistent`, `#persistent-end`, `#collapsed` and
+ * `#search` stay painted and live in the collapsed posture, so an overlay opened
+ * from them is not the collapse's to close (O-102 (3) names the expanded UI's
+ * dropdowns). Where a control was authored is a fact of the component tree, so it is
+ * read by injection, the way the dock context itself is, and never off the DOM.
+ */
+const DOCK_FACE_KEY: InjectionKey<boolean> = Symbol("glass-dock-face");
+
+export const DockFace = defineComponent({
+    name: "DockFace",
+    setup(_, { slots }) {
+        provide(DOCK_FACE_KEY, true);
+        return () => slots.default?.();
+    },
+});
+
+/** `true` for a descendant of the dock's face, the region the collapse takes away. */
+export function useInDockFace(): boolean {
+    return inject(DOCK_FACE_KEY, false);
+}

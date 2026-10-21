@@ -107,12 +107,22 @@ function openIndexOf(seats: HTMLElement[]): number {
  * `FOCUSABLE_SELECTOR` alone would drop a `[role=button][tabindex]` seat from the run
  * the moment the run demoted it (the b-i counterexample, `crit-seat-cx`).
  *
+ * A seat that HOLDS a control is not one, whatever it carries itself. A composite root
+ * seated directly in the run (a reka `RovingFocusGroup` root such as RadioGroup's, which
+ * renders its own `tabindex`) is focusable and still a container: its items are its
+ * controls, and the arrows between them are its own. The descendant probe is wider
+ * than the sequential selector (`[tabindex]` at any value), because a composite's
+ * non-stop items sit at −1.
+ *
  * How a container seat should count toward the run's `role="toolbar"` claim is the
  * seat-shape question (G-4), and it is not decided here: a declared seat target and a
  * run that drops the claim both extend this predicate rather than replace it.
  */
+const HELD_CONTROL_SELECTOR = `${FOCUSABLE_SELECTOR}, [tabindex]`;
+
 function isRovedSeat(seat: HTMLElement): boolean {
-    return seat.matches(FOCUSABLE_SELECTOR) || seat.hasAttribute("tabindex");
+    const focusable = seat.matches(FOCUSABLE_SELECTOR) || seat.hasAttribute("tabindex");
+    return focusable && !seat.querySelector(HELD_CONTROL_SELECTOR);
 }
 
 /** The seats the run roves, in document order. */

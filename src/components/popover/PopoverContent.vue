@@ -59,6 +59,7 @@ const placementProps = computed(() => ({
     align: props.align,
     alignOffset: props.alignOffset,
     avoidCollisions: true,
+    collisionPadding: 16,
 }));
 
 /* THE HOVER/CLICK FORK IS A COMPONENT SELECTION, and that is ALL it is. Three

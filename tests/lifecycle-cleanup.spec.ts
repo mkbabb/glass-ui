@@ -26,8 +26,11 @@ describe("lifecycle cleanup", () => {
         expect(wrapper.emitted("start")).toBeUndefined();
     });
 
-    it("restores body overflow after all expandable container locks release", async () => {
-        document.body.style.overflow = "auto";
+    // U/B7 D-2: the lock sits on the root element; `body` is never written.
+    it("restores root overflow after all expandable container locks release", async () => {
+        const root = document.documentElement;
+        root.style.overflow = "auto";
+        document.body.style.overflow = "";
 
         const first = mount(ExpandableContainer, {
             props: { open: true },
@@ -38,14 +41,17 @@ describe("lifecycle cleanup", () => {
             slots: { default: "Second" },
         });
 
-        expect(document.body.style.overflow).toBe("hidden");
+        expect(root.style.overflow).toBe("hidden");
+        expect(document.body.style.overflow).toBe("");
 
         first.unmount();
-        expect(document.body.style.overflow).toBe("hidden");
+        expect(root.style.overflow).toBe("hidden");
+        expect(document.body.style.overflow).toBe("");
 
         await second.setProps({ open: false });
-        expect(document.body.style.overflow).toBe("auto");
+        expect(root.style.overflow).toBe("auto");
 
         second.unmount();
+        root.style.overflow = "";
     });
 });

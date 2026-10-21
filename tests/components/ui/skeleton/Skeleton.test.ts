@@ -115,6 +115,34 @@ describe("Skeleton breathes — F24 closed at the mechanism (BK #87 · S2)", () 
         expect(SKELETON_SRC).not.toContain("prefers-reduced-transparency");
     });
 
+    // [10.1.1 · critic D-8] The old band parked off-box for 71.3% of its cycle; a
+    // fixed-period sheen with a flat transparent run does the same on a narrow tile
+    // (a 40% band on a 36rem period left a 213px chip without its crest for well
+    // over half the cycle). The profile may be transparent only at its two period
+    // endpoints, so no stretch of the period is dead ink.
+    it("the shimmer's profile has no dead run: transparent only at the period's ends", () => {
+        const profile = SKELETON_SRC.match(/repeating-linear-gradient\(([\s\S]*?)\);/)?.[1] ?? "";
+        expect(profile).not.toBe("");
+        // Split on top-level commas: `color-mix(…, transparent)` spells the word inside
+        // parentheses, and only a top-level STOP reads `transparent <position>`.
+        const stops: string[] = [];
+        let depth = 0;
+        let cur = "";
+        for (const ch of profile) {
+            if (ch === "(") depth++;
+            if (ch === ")") depth--;
+            if (ch === "," && depth === 0) {
+                stops.push(cur.trim());
+                cur = "";
+            } else cur += ch;
+        }
+        stops.push(cur.trim());
+        const clear = stops
+            .filter((t) => t.startsWith("transparent"))
+            .map((t) => t.replace(/^transparent\s+/, ""));
+        expect(clear).toEqual(["0", "var(--skeleton-shimmer-period)"]);
+    });
+
     it("stills under reduced motion and under forced colors", () => {
         expect(SKELETON_SRC).toMatch(
             /@media \(prefers-reduced-motion: no-preference\)\s*\{[^}]*animation:/,

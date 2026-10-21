@@ -137,26 +137,24 @@ test("W3 — the indicator settles inside the calibrated clock with no dead tail
         // The indicator transition does NOT route through --duration-normal.
         const trans = getComputedStyle(ind).transitionDuration;
 
-        // Far-jump from idx0 to the last; sample peak --stretch + settle time.
+        // Far-jump from idx0 to the last; sample the width and the settle time.
         btns[0].click();
         await new Promise((r) => setTimeout(r, 450));
         const startRect = ind.getBoundingClientRect();
-        let peakStretch = 1;
-        let peakAt = 0;
+        const restW = startRect.width;
+        let outOfBand = 0;
         const t0 = performance.now();
         btns[btns.length - 1].click();
         const target = btns[btns.length - 1].getBoundingClientRect();
+        const lo = Math.min(restW, target.width) - 0.5;
+        const hi = Math.max(restW, target.width) + 0.5;
         let settledAt = -1;
         // Sample for up to 700ms.
         await new Promise<void>((resolve) => {
             function frame() {
                 const now = performance.now() - t0;
-                const s = Number(getComputedStyle(ind).getPropertyValue("--stretch")) || 1;
-                if (s > peakStretch) {
-                    peakStretch = s;
-                    peakAt = now;
-                }
                 const r = ind.getBoundingClientRect();
+                outOfBand = Math.max(outOfBand, lo - r.width, r.width - hi);
                 if (settledAt < 0 && Math.abs(r.left - target.left) <= 1.5) {
                     settledAt = now;
                 }
@@ -169,14 +167,16 @@ test("W3 — the indicator settles inside the calibrated clock with no dead tail
             ok: true,
             clockMs,
             trans,
-            peakStretch,
-            peakAt,
+            outOfBand,
+            stretchVar: getComputedStyle(ind).getPropertyValue("--stretch").trim(),
             settledAt,
         };
     });
     expect(probe.ok, probe.reason).toBeTruthy();
-    // The squish opened (peaked above rest) during travel.
-    expect(probe.peakStretch!).toBeGreaterThan(1.0);
+    // U/B7 G1-1/G1-2: the indicator glides between the two tab widths and never past
+    // them; the stretch law is gone.
+    expect(probe.outOfBand!).toBeLessThanOrEqual(0);
+    expect(probe.stretchVar).toBe("");
     // Settled within ~1px of target before/at the calibrated clock + a small frame slop.
     expect(probe.settledAt!).toBeGreaterThanOrEqual(0);
     expect(probe.settledAt!).toBeLessThanOrEqual(probe.clockMs! + 120);

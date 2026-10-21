@@ -264,11 +264,13 @@ describe("W-TOGGLE-ROW — the selection row", () => {
             "control-surface",
             "glass-control-edge",
             "glass-capsule-hover",
-            "tap-squish",
             "focus-ring",
         ]) {
             expect(item, `the item must compose .${composed}`).toContain(composed);
         }
+        // U/B7 §4.2: a toggle press carries no scale, so the item composes no
+        // `.tap-squish` (the press rung it used to reconcile is gone with it).
+        expect(item).not.toContain("tap-squish");
         for (const file of [...LANE_SFCS, ...LANE_TS]) {
             expect(code(file), `${file} still reaches for reka`).not.toContain(
                 "reka-ui",
@@ -311,8 +313,9 @@ describe("W-TOGGLE-ROW — the selection row", () => {
         expect(css).not.toContain("scroll-padding-inline");
         expect(css).not.toContain("overscroll-behavior-inline");
         expect(css).not.toContain("safe center");
-        // The ONE spelling of the stadium that survives is the item's role rung.
-        expect(css).toContain("border-radius: var(--radius-pill)");
+        // The ONE spelling of the stadium that survives is half the item's rung (U/B7
+        // G1-7, the Button's bound).
+        expect(css).toContain("border-radius: calc(var(--toggle-group-item-size) / 2)");
         // Rules whose selector ENDS at the group host — a descendant rule
         // (`.toggle-group[data-size="sm"] .toggle-group__item`) paints the item and
         // is not the group's silhouette.

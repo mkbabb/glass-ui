@@ -26,31 +26,10 @@
     --scale-press-dock: var(--scale-press);
     --scale-press-sm: 0.97;
 
-    /* The SegmentedTabs travel-squish cap. The active indicator
-       (segmented/pill slider OR the underline rule) STRETCHES along its travel
-       axis as it glides between tabs, then settles to fit — the Material 3
-       ELASTIC / Apple Liquid-Glass "controls insist on animating themselves"
-       register. A consumer dials the elasticity (or to 1 for none) without
-       touching source.
-       The click travel deform AND the liquid-tab pull-morph read this ONE cap (in
-       lockstep with the no-token floor DEFAULT_INDICATOR_MAX_STRETCH, the SOLE cap
-       source — constant + token never fork); a FAST pull visibly swells the pill so
-       the gel-squish READS as liquid — still capped LOW (the anti-taffy-pull bar;
-       the pill swells, never taffy-pulls).
-       THIS IS THE PLAIN-LENGTH CAP, and it is the whole of what a surface gets
-       unless it arms the eyeglass. The old companion area-inflation cap is GONE
-       with its channel: two multiplying scalars needed a composed-area fence to
-       keep them from arguing, and the organ that replaced them is one law with its
-       own geometric fences (a span ceiling and the track's inner edge). A surface
-       that wants the organ declares `--eyeglass-span-max`; see
-       `composables/motion/morph/eyeglass.ts`. */
-    --tab-indicator-max-stretch: 1.11;
-
     /* The indicator's OWN travel clock, re-pointed off the generic
        `--duration-normal` (which dragged a sub-pixel undershoot tail past the
        90%-travel point — the "too slow" read) onto `--spring-dock-duration`, the
-       settle clock of the row that owns coordinated travel. The glide + squish both
-       read this ONE clock so they cannot desync; consume, never re-mint the
+       settle clock of the row that owns coordinated travel. Consume, never re-mint the
        spring-duration primitive (owns it). */
     --tab-indicator-duration: var(--spring-dock-duration);
     --opacity-disabled: 0.5;

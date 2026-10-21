@@ -107,6 +107,42 @@
         will-change: transform;
     }
 
+    /* `anchor`: the edge the morph grows from (GlassDock `anchor` prop). The size
+       scale and the rigid-content counter-scale pivot on the same edge, so a handle
+       seated at that edge stays put. Logical: `dir="rtl"` mirrors the inline edge. */
+    .glass-dock[data-morphing][data-anchor="end"]:not(.vertical),
+    .glass-dock[data-morphing][data-anchor="end"]:not(.vertical)
+        > .dock-controls
+        > :is(.dock-persistent, .dock-layers),
+    .glass-dock[data-morphing][data-anchor="start"]:not(.vertical):dir(rtl),
+    .glass-dock[data-morphing][data-anchor="start"]:not(.vertical):dir(rtl)
+        > .dock-controls
+        > :is(.dock-persistent, .dock-layers) {
+        transform-origin: right center;
+    }
+    .glass-dock[data-morphing][data-anchor="start"]:not(.vertical),
+    .glass-dock[data-morphing][data-anchor="start"]:not(.vertical)
+        > .dock-controls
+        > :is(.dock-persistent, .dock-layers),
+    .glass-dock[data-morphing][data-anchor="end"]:not(.vertical):dir(rtl),
+    .glass-dock[data-morphing][data-anchor="end"]:not(.vertical):dir(rtl)
+        > .dock-controls
+        > :is(.dock-persistent, .dock-layers) {
+        transform-origin: left center;
+    }
+    .glass-dock[data-morphing][data-anchor="end"].vertical,
+    .glass-dock[data-morphing][data-anchor="end"].vertical
+        > .dock-controls
+        > :is(.dock-persistent, .dock-layers) {
+        transform-origin: center bottom;
+    }
+    .glass-dock[data-morphing][data-anchor="start"].vertical,
+    .glass-dock[data-morphing][data-anchor="start"].vertical
+        > .dock-controls
+        > :is(.dock-persistent, .dock-layers) {
+        transform-origin: center top;
+    }
+
     /* The box RESERVES its expanded footprint (ONE layout solve — the page reflows
        ONCE to the final size, CDP-Layout stays FLAT) while the visible size scales
        toward it. Horizontal reserves `inline-size`, vertical reserves `block-size`,

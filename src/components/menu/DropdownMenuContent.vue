@@ -53,6 +53,7 @@ const placementProps = computed(() =>
         ? {
               alignOffset: props.alignOffset,
               avoidCollisions: true,
+              collisionPadding: 16,
           }
         : {
               side: props.side,
@@ -60,6 +61,7 @@ const placementProps = computed(() =>
               align: props.align,
               alignOffset: props.alignOffset,
               avoidCollisions: true,
+              collisionPadding: 16,
           },
 );
 /* Both menu roots publish `open` and `modal`, and which one is overhead depends on

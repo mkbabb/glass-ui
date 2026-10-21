@@ -110,14 +110,14 @@ const props = withDefaults(
     .feedback-mark::before {
         inset: 0;
         border: 1px dashed currentColor;
-        border-radius: var(--mark-stadium, var(--radius-pill));
+        border-radius: var(--radius-circle);
         background: transparent;
     }
 
     .feedback-mark::after {
         inline-size: 22%;
         block-size: 22%;
-        border-radius: var(--mark-stadium, var(--radius-pill));
+        border-radius: var(--radius-circle);
         background: currentColor;
     }
 
@@ -166,9 +166,8 @@ const props = withDefaults(
 
     /* The 18% / 22% shape radii below are SILHOUETTE GEOMETRY, not corner tokens: they
        are what make a rotated square read as a warning lozenge and a square read as an
-       error tile. They are the enumerated exemptions to the one-stadium law — every
-       OTHER corner in this file is `--radius-pill` now, where four hand-spelled `50%`
-       literals used to sit in a file that already read the token correctly elsewhere. */
+       error tile. Every other round corner in this file is `--radius-circle` (the dot
+       and its ring), except the warning's 1px bar, which is a stadium. */
     .feedback-mark[data-state="warning"]::before {
         inset: 8%;
         border-style: solid;
@@ -180,7 +179,7 @@ const props = withDefaults(
     .feedback-mark[data-state="warning"]::after {
         inline-size: 1px;
         block-size: 45%;
-        border-radius: var(--mark-stadium, var(--radius-pill));
+        border-radius: var(--radius-pill);
         background: var(--feedback-state-ink);
     }
 
@@ -220,7 +219,7 @@ const props = withDefaults(
         inline-size: auto;
         block-size: auto;
         border: 1px solid var(--feedback-state-ink);
-        border-radius: var(--mark-stadium, var(--radius-pill));
+        border-radius: var(--radius-circle);
         background: transparent;
     }
 
@@ -257,7 +256,7 @@ const props = withDefaults(
         inline-size: auto;
         block-size: auto;
         border: 1px solid currentColor;
-        border-radius: var(--mark-stadium, var(--radius-pill));
+        border-radius: var(--radius-circle);
         background: transparent;
         opacity: 0.28;
         scale: 1;

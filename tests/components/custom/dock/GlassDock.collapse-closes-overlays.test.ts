@@ -9,6 +9,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { defineComponent, h, nextTick, ref } from "vue";
 
 import GlassDock from "@glass/components/dock/GlassDock.vue";
+import DockControl from "@glass/components/dock/DockControl.vue";
 import DockTrigger from "@glass/components/dock/DockTrigger.vue";
 import {
     DropdownMenu,
@@ -16,6 +17,13 @@ import {
     DropdownMenuItem,
 } from "@glass/components/menu";
 import { Popover, PopoverContent } from "@glass/components/popover";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@glass/components/select";
 
 const mounted: { unmount(): void }[] = [];
 afterEach(() => {
@@ -26,10 +34,19 @@ async function settle() {
     for (let i = 0; i < 4; i++) await nextTick();
 }
 
-function mountDock() {
+/** Reka mounts portalled content a task after the open flips. */
+async function settleOpen() {
+    await settle();
+    await new Promise((resolve) => setTimeout(resolve, 30));
+}
+
+/** `portal`: mount reka's portals for real, for the tests that read the open content
+ *  (the Select listbox, the menu's items). The state-only tests keep the stub. */
+function mountDock(portal = false) {
     const dock = ref<InstanceType<typeof GlassDock> | null>(null);
     const menuOpen = ref(false);
     const popOpen = ref(false);
+    const selectOpen = ref(false);
     const Host = defineComponent(() => () =>
         h(GlassDock, { ref: dock, collapse: "open" }, () => [
             h(
@@ -52,11 +69,29 @@ function mountDock() {
                     h(PopoverContent, { "aria-label": "Pop" }, () => "panel"),
                 ],
             ),
+            h(
+                Select,
+                {
+                    modelValue: "a",
+                    open: selectOpen.value,
+                    "onUpdate:open": (v: boolean) => (selectOpen.value = v),
+                },
+                () => [
+                    h(SelectTrigger, { "aria-label": "Pick" }, () => h(SelectValue)),
+                    h(SelectContent, {}, () => [
+                        h(SelectItem, { value: "a" }, () => "A"),
+                        h(SelectItem, { value: "b" }, () => "B"),
+                    ]),
+                ],
+            ),
         ]),
     );
-    const wrapper = mount(Host, { attachTo: document.body });
+    const wrapper = mount(Host, {
+        attachTo: document.body,
+        ...(portal ? { global: { stubs: { teleport: false } } } : {}),
+    });
     mounted.push(wrapper);
-    return { dock, menuOpen, popOpen };
+    return { dock, menuOpen, popOpen, selectOpen };
 }
 
 describe("GlassDock — the collapse closes what its seats opened", () => {
@@ -98,5 +133,83 @@ describe("GlassDock — the collapse closes what its seats opened", () => {
         dock.value!.expand();
         await settle();
         expect(popOpen.value).toBe(false);
+    });
+
+    // A Select is a dropdown (O-102 (3) names dropdowns). RED before SelectContent took
+    // the participation's `close`: the listbox stayed open over the collapsed dock.
+    it("a select opened from a seat closes on collapse()", async () => {
+        const { dock, selectOpen } = mountDock(true);
+        await settle();
+        selectOpen.value = true;
+        await settleOpen();
+        expect(document.querySelector('[data-slot="select-content"]')).not.toBeNull();
+
+        dock.value!.collapse();
+        await settle();
+        expect(selectOpen.value).toBe(false);
+    });
+
+    // Focus held in an overlay a seat opened lands on the summary, not on <body>. The
+    // engine half (an inert trigger refuses the overlay's own focus return) is the
+    // engine witness's; here the collapse edge is read before any later focus return.
+    // RED before the collapse took focus: the closed menu's item left focus on <body>.
+    it("a collapse with focus inside a seat's menu hands focus to the summary", async () => {
+        const { dock, menuOpen } = mountDock(true);
+        await settle();
+        menuOpen.value = true;
+        await settleOpen();
+        const item = document.querySelector<HTMLElement>('[role="menuitem"]');
+        expect(item).not.toBeNull();
+        item!.focus();
+        expect(document.activeElement).toBe(item);
+
+        dock.value!.collapse();
+        await settle();
+        expect(menuOpen.value).toBe(false);
+        const summary = document.querySelector(".dock-layer--summary");
+        expect(document.activeElement).toBe(summary);
+    });
+
+    // A `#persistent` control stays painted and live when the dock collapses, so what it
+    // opened is not the collapse's to close, and focus inside it is not the dock's to
+    // move (critic-3 D-1). RED on the first 10.1.1 bytes: the collapse closed every
+    // participating overlay whatever region its trigger sat in, and took focus to the
+    // summary; the popover's own focus return to its live trigger then re-expanded the
+    // dock.
+    it("a popover opened from #persistent stays open, and keeps focus, through a collapse", async () => {
+        const dock = ref<InstanceType<typeof GlassDock> | null>(null);
+        const popOpen = ref(false);
+        const Host = defineComponent(() => () =>
+            h(GlassDock, { ref: dock, collapse: "open" }, {
+                persistent: () =>
+                    h(
+                        Popover,
+                        { open: popOpen.value, "onUpdate:open": (v: boolean) => (popOpen.value = v) },
+                        () => [
+                            h(DockTrigger, { for: "popover", "aria-label": "Pin" }, () => "P"),
+                            h(PopoverContent, { "aria-label": "Pin" }, () =>
+                                h("input", { "data-witness": "pinned-input" }),
+                            ),
+                        ],
+                    ),
+                default: () => [h(DockControl, { "aria-label": "Seat" }, () => "S")],
+            }),
+        );
+        mounted.push(mount(Host, { attachTo: document.body, global: { stubs: { teleport: false } } }));
+        await settle();
+        popOpen.value = true;
+        await settleOpen();
+        const content = document.querySelector('[data-slot="popover-content"]');
+        expect(content).not.toBeNull();
+        expect(content!.hasAttribute("data-glass-dock-face")).toBe(false);
+        const input = document.querySelector<HTMLElement>('[data-witness="pinned-input"]')!;
+        input.focus();
+        expect(document.activeElement).toBe(input);
+
+        dock.value!.collapse();
+        await settle();
+        expect(dock.value!.expanded).toBe(false);
+        expect(popOpen.value).toBe(true);
+        expect(document.activeElement).toBe(input);
     });
 });

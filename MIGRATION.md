@@ -5,17 +5,99 @@ records the breaking changes that landed in that cut, newest first. Clean breaks
 — no legacy aliases, no back-compat shims (L invariant 4); every break is a one-line
 rename or import re-point per call site.
 
+## 10.2.0 (proposed by atlas U/B7)
+
+Proposed by the atlas formation on local branch `u/b7-glass-shape` off `release/10.1.1`; glass takes, re-authors or declines each row. Clean breaks, no aliases. The browser witnesses are `tests-visual/b7-shape.config.ts` (harness `tests-visual/b7-shape/`), run in Chromium and Firefox; each fails on the `v10.1.1` tag (bbf176f02) unless the row says otherwise.
+
+- **SegmentedTabs glides; the eyeglass, the press squish and the capsule hover are removed
+  (B7-G1).** The indicator moves by `translate`/`width`/`height` on `--spring-dock` and keeps
+  its size; neither material deforms. Removed with no replacement: the documented arming hook
+  `--eyeglass-span-max`, the `data-eyeglass-wake` and `data-eyeglass-clamped` attributes, the
+  `--stretch` channel on the tabs indicator, the label `transition-delay`, the press
+  animation and `.glass-capsule-hover` on inactive tabs. A consumer that declared
+  `--eyeglass-span-max` deletes the declaration (atlas and sci have none). The drag
+  (`motion="full"`) still follows the pointer and snaps; it no longer squishes.
+- **New token `--hover-ink-mix: 45%`.** The colour-only hover weight: an inactive label moves
+  from `--muted-foreground` toward `--foreground` by this weight. Additive.
+
+- **The selection engine no longer deforms (B7-G2).** With SegmentedTabs gliding, the dock
+  layer switcher was the last `plate` consumer; it now glides the same way. Removed from
+  `@mkbabb/glass-ui/motion-core` with no replacement: the `deform` parameter and the
+  `SelectionDeform` type, `squishOnTravel` (from both `useSelectionIndicator` and
+  `useSelectionGroup`), the `activeValues` parameter of `useSelectionIndicator`, the
+  `onSelect` parameter of `useSelectionGroup` (no caller left), and the constants
+  `DEFAULT_INDICATOR_MAX_STRETCH` and `INDICATOR_RELEASE_AT_ARRIVAL`. The token
+  `--tab-indicator-max-stretch` is deleted. A caller passing any of these deletes the
+  argument; atlas and sci pass none.
+
+- **`.glass-capsule-hover` has no spatial leg; ToggleGroupItem does not squish (B7-G3).**
+  Hover no longer scales a capsule composer (1.015 on `--ease-cartoon-punch`), and the
+  capsule's `:active` press snap is gone; the specular catch-light stays. ToggleGroupItem
+  drops `.tap-squish` and its `--scale-press` reconciliation. Paint and motion only; no API
+  change. `.tap-squish` and `useLiquidPress` on Button, Switch, Checkbox, Radio and the dock
+  controls are unchanged.
+
+- **`--radius-pill` is `1rem`; new `--radius-circle: 50%` (B7-G4).** A box up to 32 px tall
+  still renders a full stadium (the engine clamps a radius to half the shorter side); a
+  taller box shows 16 px corners. Circles move to `--radius-circle`: avatar, status dot,
+  dot ring, pager dot, switch thumb, radio dot, dark-mode toggle, dock icon button, dialog
+  close, icon chip and chip remove, menu radio dot, expandable trigger and the collapsed
+  dock at rest. `--mark-stadium` is set for `.badge-atom` only. The dock's cut cap rests on
+  `--radius-dock` and cuts to `--radius-xs`. No literal `9999px` remains in `src`. Visual
+  break: a consumer box taller than 32 px that read `--radius-pill`, `--radius-control`,
+  `--radius-tab`, `--radius-badge` or `--radius-dock` now shows corners; a consumer circle
+  that used the pill on a box above 32 px moves to `--radius-circle`.
+
+- **`GlassDock` gains `expandOn`, `anchor` and `collapsedLabel` (B7-G5).** Additive; each
+  defaults to today's behaviour (`"hover"`, `"center"`, `"Expand dock"`). New exported types
+  `DockExpandOn` and `DockAnchor`. Under `anchor` other than `"center"` the root carries
+  `data-anchor`. With a `#persistent` group under `anchor="end"`, that group pivots on the
+  same edge during the morph.
+
+- **The one dropdown system (B7-G6).**
+  - `DropdownMenu` defaults to `modal: false`. Pass `modal` for a menu that must make the
+    page inert; a modal menu still takes reka's body scroll lock.
+  - `SelectContent` passes `bodyLock: false`, and its 4px gap to the trigger is now
+    `sideOffset: 4` (the default was `0` plus a `translate-*-1` nudge, which is gone).
+  - `ExpandableContainer` locks scroll on `<html>` instead of `<body>`.
+  - The root carries `scrollbar-gutter: stable` (`:where(html)`, zero specificity).
+  - `DropdownMenuContent`, `PopoverContent` and `SelectContent` pass `collisionPadding: 16`.
+  - The menu, panel and listbox plates: `max-inline-size: min(22rem, 100vw - 2rem)`;
+    `max-block-size` is reka's measured available height with no `--overlay-max-block`
+    clamp; `overflow-y: auto` and `overscroll-behavior: contain` on the scroll owner.
+    `--overlay-max-block` remains for the command list and the hint. The select viewport
+    loses `max-h-[inherit]`.
+  - Below 30rem, `SelectContent` opens as a bottom sheet (`data-form="sheet"`).
+  Consumer action: a consumer that relied on a dropdown making the page inert passes
+  `modal`. A consumer that styled `[data-slot="select-content"]` by `data-side` translate
+  drops that.
+
+- **`--radius-bar` and `data-shape="bar"` (B7-G7).** New token `--radius-bar:
+  var(--radius-panel)` (12px). `Button`, `ToggleGroupItem` and `SegmentedTabs` carry
+  `data-shape="bar"` when the label wraps, the box is taller than its rung
+  (`min-block-size`), or it is wider than 20rem, and then take `--radius-bar`. A
+  single-line control on its rung keeps the stadium; `ToggleGroupItem` now bounds its
+  stadium at half its rung, as the Button does. Consumer action: a consumer that keyed its
+  own CSS on a wide or wrapping button's round corner reads `[data-shape="bar"]` instead.
+
 ## 10.1.1
 
-No break. Behaviour a consumer may notice:
+One type-level change, below; no runtime break. Behaviour a consumer may notice:
 
-- **A dock collapse closes the menus and popovers its seats opened.** A consumer that
-  closed them by hand on collapse can delete that code. To keep the dock open while an
-  overlay is up, use the existing `keepDockOpen` (Popover) or `keepOpen`/`release`.
-- **The dock run no longer roves a container seat.** A seat that is not itself a control
-  (a `div` holding a ToggleGroup, a slider, a band of buttons) keeps its own tab order and
-  its own arrow keys. Arrows travel only the seats that are controls. Nothing to change
-  unless a consumer relied on the run focusing a container's first control.
+- **`DockContext` gains a required `expanded: ComputedRef<boolean>`.** The dock's posture,
+  whose falling edge closes the overlays its seats opened. A consumer that calls the
+  exported `provideDockContext` itself (none of the sibling repos does) passes it. A
+  `GlassDock` provides it; nothing changes for a consumer that only reads the context.
+- **A dock collapse closes the menus, popovers and selects its seats opened, and focus
+  that stood in them moves to the dock's summary.** The seats are the default slot's; an
+  overlay opened from `#persistent` or `#persistent-end` stays open, since its trigger is
+  still there. A consumer that closed them by hand on collapse can delete that code. To keep the dock open while an overlay is up, use the
+  existing `keepDockOpen` (Popover) or `keepOpen`/`release`.
+- **The dock run no longer roves a seat that holds controls.** A container seat (a `div`
+  holding a ToggleGroup, a slider, a band of buttons) and a composite root seated directly
+  (a RadioGroup) keep their own tab order and their own arrow keys. Arrows travel only the
+  seats that are controls. Nothing to change unless a consumer relied on the run focusing
+  a container's first control.
 - **Overlay content takes its z rung from its role.** `DropdownMenuContent` and
   `DropdownMenuSubContent` now paint at `--z-popover`. A consumer that added `z-popover` (or
   any z class) through `class` keeps its class: the consumer class merges last.

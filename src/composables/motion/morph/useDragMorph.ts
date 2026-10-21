@@ -30,8 +30,8 @@
 // value domain the engine has no knowledge of).
 //
 // The squish rides the SHARED `useLiquidFlex` `"tanh"` velocity register (the
-// metaball/morph-showcase law), capped at the live `--tab-indicator-max-stretch`
-// getter (≤1.08, the anti-taffy-pull bar). The spring is the coordinated-travel `dock`
+// metaball/morph-showcase law), capped by the `maxStretch` getter (≤1.08, the
+// anti-taffy-pull bar). The spring is the coordinated-travel `dock`
 // row, read from the table, never a new clock.
 //
 // COMPOSITOR-ONLY. The follow maps the spring's live position onto a
@@ -91,8 +91,8 @@ export interface UseDragMorphParams<V = string> {
      */
     snapTargets: readonly DragMorphSnapTarget<V>[] | (() => readonly DragMorphSnapTarget<V>[]);
     /**
-     * The live cap getter for the squish (`--tab-indicator-max-stretch`, ≤1.08).
-     * Defaults to the shared 1.08 fence; a getter re-reads the cascade override.
+     * The live cap getter for the squish (≤1.08). Defaults to the shared 1.08
+     * fence; a getter can re-read a cascade override.
      */
     maxStretch?: () => number;
     /**

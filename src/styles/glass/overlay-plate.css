@@ -68,17 +68,25 @@
         overflow: hidden;
     }
 
-    /* The MENU role — an anchored list. `--overlay-max-block` is the family's
-       comfortable ceiling; reka's measured `--reka-popper-available-height`
-       tightens it on a short viewport, and when reka has not measured yet the
-       ceiling stands alone. */
+    /* THE SIZING LAW (U/B7 D-1..D-3), one statement for DropdownMenu, Select and
+       Popover. The plate is never wider than 22rem or than the viewport less 1rem a
+       side. Its height is the room reka measured on the side it opened, which
+       already excludes the 16px collision padding every one of the three passes
+       (`collisionPadding: 16`), so the plate ends 16px short of the viewport edge.
+       There is no fixed ceiling under it: a list that fits the room shows whole,
+       and a longer one scrolls inside the plate without scrolling the page. Before
+       reka measures, the plate takes the dynamic viewport height. */
+    .glass-overlay-plate[data-reveal="menu"],
+    .glass-overlay-plate[data-reveal="overlay"] {
+        max-inline-size: min(22rem, 100vw - 2rem);
+        max-block-size: var(--reka-popper-available-height, 100dvh);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+
+    /* The MENU role — an anchored list with a minimum measure. */
     .glass-overlay-plate[data-reveal="menu"] {
         min-inline-size: var(--overlay-min-width);
-        max-block-size: min(
-            var(--overlay-max-block),
-            var(--reka-popper-available-height, var(--overlay-max-block))
-        );
-        overflow-y: auto;
     }
 
     /* The PANEL role — a body with a real measure. The retired `w-72` was a flat
@@ -238,7 +246,7 @@
         display: inline-block;
         width: 0.5rem;
         height: 0.5rem;
-        border-radius: var(--radius-pill);
+        border-radius: var(--radius-circle);
         background: currentColor;
     }
 
@@ -317,15 +325,13 @@
             var(--glass-material-rim), var(--glass-under-shadow-vivid),
             var(--glass-shadow-floating), var(--shadow-cartoon-lg);
 
-        /* THE COLLISION BOUND. `--overlay-max-block` is the family's comfortable
-           ceiling; reka's measured `--reka-popper-available-height` tightens it on
-           a short viewport, and when reka has not measured yet the ceiling stands
-           alone. The plate clips; the viewport inside is the only scroll owner,
-           which is what keeps reka's active-option scrolling correct. */
-        max-height: min(
-            var(--overlay-max-block),
-            var(--reka-popper-available-height, var(--overlay-max-block))
-        );
+        /* THE COLLISION BOUND is the sizing law above (U/B7 D-3): the room reka
+           measured below or above the trigger, less the 16px collision padding it
+           already subtracted, with no fixed clamp. A twelve-row list that fits the
+           room shows whole. The plate clips; the viewport inside is the only scroll
+           owner, which is what keeps reka's active-option scrolling correct. */
+        max-inline-size: min(22rem, 100vw - 2rem);
+        max-block-size: var(--reka-select-content-available-height, 100dvh);
         overflow: hidden;
 
         /* THE BLOOM ANCHOR. Reka writes the measured anchor edge into this custom
@@ -341,6 +347,19 @@
        plate is: a portalled surface may not depend on a consumer's content scan. */
     [data-slot="select-viewport"] {
         padding: var(--overlay-viewport-inset);
+        overscroll-behavior: contain;
+    }
+
+    /* THE SHEET FORM (U/B7 D-6): below 30rem the listbox rises from the foot of
+       the viewport at full width. Only the top corners round; the bottom edge
+       meets the screen edge. */
+    [data-slot="select-content"][data-form="sheet"] {
+        inline-size: 100vw;
+        max-inline-size: none;
+        border-end-start-radius: 0;
+        border-end-end-radius: 0;
+        border-block-end: 0;
+        transform-origin: bottom center;
     }
     [data-slot="select-viewport"] [role="option"] {
         border-radius: var(--overlay-option-radius);

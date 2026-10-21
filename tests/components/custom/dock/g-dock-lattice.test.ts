@@ -163,16 +163,33 @@ function interfaceMembers(rel: string, name: string): string[] {
 // G-DOCK-BUDGET
 // ═════════════════════════════════════════════════════════════════════════════
 
-describe("G-DOCK-BUDGET — the run is the sole flexible member, and the surface is six", () => {
+describe("G-DOCK-BUDGET — the run is the sole flexible member, and the surface is named", () => {
     /**
      * BORN-RED at `ac471032^` (pre-W1): `DockProps` carried **14** members. The six
      * survivors are GF-DOCK §4's Keep list exactly; the eight struck (`overflow`,
      * `collapseDelay`, `search`, `position`, `size`, `layout`, `interaction`, and the
      * `alwaysExpanded`/`startCollapsed` pair folded into `collapse`) are its Delete list.
      */
-    it("DockProps is at most six members", () => {
+    /**
+     * [U/B7, proposed for 10.2.0] Three members join for the per-figure dock (atlas
+     * R-FIGDOCK §3 G-1..G-3): `expandOn`, `anchor`, `collapsedLabel`, each defaulting to
+     * the behaviour the six already had. The set is named, so a tenth member still fails.
+     */
+    it("DockProps is the six GF-DOCK members plus the three figure-dock members", () => {
         const props = interfaceMembers(`${DOCK}/composables/useDockShellProps.ts`, "DockProps");
-        expect(props.length, `DockProps: ${props.join(", ")}`).toBeLessThanOrEqual(6);
+        expect([...props].sort(), `DockProps: ${props.join(", ")}`).toEqual(
+            [
+                "fitContent",
+                "backdropMode",
+                "shape",
+                "orientation",
+                "collapse",
+                "backgroundCanvas",
+                "expandOn",
+                "anchor",
+                "collapsedLabel",
+            ].sort(),
+        );
     });
 
     /**
@@ -317,10 +334,8 @@ describe("G-DOCK-RUN — the platform is the detent engine", () => {
 
     /**
      * BOTH ENDPOINTS ARRIVE THROUGH THE TOKEN PAIR, so retargeting a shape is a token
-     * line and never a keyframe edit — and `from: 9999px`, which the half-box clamp pins
-     * until t=0.9988 (measured: t=0.999 still reads 25.98px), appears nowhere.
-     * `--dock-cap-rest` is `50%` on the stadium precisely because 50% IS the resolved
-     * corner with no plate-height token to couple to.
+     * line and never a keyframe edit. U/B7: the pill shape rests on `--radius-dock`
+     * (the 1rem pill rung), a finite corner no clamp pins.
      */
     it("the cap keyframes only through the rest/cut token pair", () => {
         const run = read(`${STYLES}/run.css`);
@@ -332,7 +347,7 @@ describe("G-DOCK-RUN — the platform is the detent engine", () => {
             }
         }
         const decls = declarations(`${STYLES}/run.css`);
-        expect(decls).toMatch(/--dock-cap-rest:\s*50%/);
+        expect(decls).toMatch(/--dock-cap-rest:\s*var\(--radius-dock\)/);
         // Declarations only: `from: 9999px` is NAMED in the docblock as the rejected
         // alternative, and a detector that cannot tell a rejection from a declaration
         // would RED the file for explaining itself.

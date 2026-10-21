@@ -19,14 +19,12 @@
         flex-flow: row wrap;
     }
 
-    /* The dot composes `.control-bit__mark`, so its entrance is the register's. The
-     * `50%` spelling this file used three times against a `9999px` elsewhere — two
-     * struck spellings of one stadium (PROPORTION §4) — is now spelled once, on the
-     * register's `--control-bit-radius` default. */
+    /* The dot composes `.control-bit__mark`, so its entrance is the register's. It is a
+     * circle, spelled `--radius-circle` (U/B7: circles leave the pill rung). */
     .radio-group__dot {
         inline-size: 0.5rem;
         block-size: 0.5rem;
-        border-radius: var(--radius-pill);
+        border-radius: var(--radius-circle);
         background-color: currentcolor;
     }
 }

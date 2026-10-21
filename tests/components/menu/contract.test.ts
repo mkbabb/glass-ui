@@ -16,9 +16,13 @@ import {
 
 const mounted: Array<ReturnType<typeof mount>> = [];
 
-afterEach(() => {
+afterEach(async () => {
     vi.useRealTimers();
     while (mounted.length) mounted.pop()?.unmount();
+    // reka's FocusScope restores focus on unmount from a zero-delay timer. Let it land
+    // here: a non-modal menu (the default since U/B7 D-2) dismisses on focus outside,
+    // so a restore landing in the next test closes that test's menu.
+    await new Promise((resolve) => setTimeout(resolve, 0));
 });
 
 function mountMenu(trigger: "click" | "context" = "click") {

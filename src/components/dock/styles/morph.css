@@ -101,7 +101,7 @@
     .glass-dock:not(.vertical) {
         /* The collapsed inline-pad endpoint is the EXPANDED block pad (max'd with the
            consumer `--dock-collapsed-padding` handle) so the height-pinned collapsed
-           pill is SYMMETRIC → a clean circle at the `--radius-dock` 9999px. The block
+           pill is SYMMETRIC → a clean circle at `--radius-circle` (below). The block
            axis is pinned to the expanded pad (below), so matching the inline collapsed
            endpoint to it keeps the box square (the B4 "symmetric collapsed padding
            keeps the pill a circle" intent, preserved through the §1 height-pin). The
@@ -165,6 +165,14 @@
         cursor: pointer;
         justify-content: center;
         box-shadow: var(--shadow-dock-override, var(--shadow-dock-collapsed));
+    }
+
+    /* The collapsed horizontal dock at rest is a square box, and it is drawn as a
+       circle (`--radius-circle`). `--radius-dock` (the pill rung, 1rem) is a corner on
+       anything taller than 32px, so the circle is stated here, for the settled box
+       only: mid-morph the box carries the expanded footprint under a scale. */
+    .glass-dock.collapsed:not([data-morphing]):not(.vertical) {
+        border-radius: var(--radius-circle);
     }
 
     /* The collapsed summary is a PERFECT CIRCLE. The `.dock-layer`

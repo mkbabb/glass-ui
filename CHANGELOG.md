@@ -1,15 +1,78 @@
 # Changelog
 
+## 10.2.0 (proposed by atlas U/B7)
+
+Proposed by the atlas formation (U/B7, the owner's order of 2026-10-19 in sci-report `atlas/docs/tranches/U/owner-2026-10-19/ORDER.md`). Local branch `u/b7-glass-shape`; no version bump. Engine witnesses: `tests-visual/b7-shape.config.ts`, Chromium and Firefox.
+
+- **SegmentedTabs: one quiet glide (B7-G1).** One object moves, the indicator, in one
+  monotone leg at its own size; labels change colour on `--duration-fast` with no delay;
+  hover is colour only; a press does not squish. `eyeglass.ts` and its arm in
+  `useSelectionIndicator` are deleted. Witness: `tests-visual/SegmentedTabs.glide.spec.ts`
+  (an adjacent and a far hop sampled every frame, width and height within 0.5 px, x
+  monotone, strip edge fixed, pressed tab at scale 1; hover moves colour only). On the
+  `v10.1.1` tag all 6 cells fail (indicator width up to 167.2 px in transit; hover scale
+  1.015); here all 6 pass. Gate: `tests/gates/tabs-seam.test.ts` arm (e) now asserts the
+  absence.
+
+- **DockLayerGroup glides; the velocity stretch law is deleted (B7-G2).** A layer switch
+  writes geometry only: no `--stretch`, no `--motion-weight` boost, and no computed-style
+  read for the cap. Witness: `tests/components/custom/dock/DockLayerGroup.glide.test.ts`
+  (fails on `v10.1.1`: the indicator carried `--stretch: 1` after a switch).
+
+- **Hover and press without scale on the capsule register and the ToggleGroup (B7-G3).**
+  Witness: `tests-visual/press-scale.spec.ts` (hover on a ToggleGroupItem and an action
+  Chip, and a held ToggleGroupItem press, all at computed scale 1). On `v10.1.1` all 6 cells
+  fail (hover 1.015, press 0.97); here all 6 pass.
+
+- **Radius scales with size (B7-G4).** `--radius-pill: 1rem`, `--radius-circle: 50%`, and a
+  circle / stadium / corner disposition for all 91 uses in 43 files (the table is in the
+  U/B7 lane doc, sci-report `atlas/docs/tranches/U/build/B7-GLASS-SHAPE.md`). Witness:
+  `tests-visual/radius-scale.spec.ts`, light and dark: 8 circles compute 50%, a 24 px chip
+  stays a stadium, a 44 px bar and a 40 px field show 16 px corners. On `v10.1.1` all 44
+  cells fail; here all 44 pass.
+
+- **Per-figure dock props (B7-G5).** `expandOn="press"`: hover, focus-in and the idle timer
+  are inert; a press or Enter/Space on the summary opens the dock pinned; Escape, a press
+  outside, or focus leaving the dock and its portals closes it. `anchor="start" | "end"`:
+  the size morph and the rigid-content counter-scale pivot on that edge (logical, mirrored
+  under `dir="rtl"`). `collapsedLabel`: the summary disclosure's accessible name. Witness:
+  `tests/components/custom/dock/GlassDock.figure-props.test.ts` (4 of its 10 cases fail on
+  `v10.1.1`; the default cases pass on both). The dock README props table is brought up to
+  the shipped surface.
+
+- **One dropdown system (B7-G6).** D-1: the side sheet stays fixed to the viewport inside a
+  consumer cascade layer (`Sheet.position.spec.ts`: passes on `v10.1.1`, where the cure
+  shipped, and fails 4 of 4 against the `v10.1.0` `SheetContent`). D-2: no glass overlay
+  writes `overflow` onto `body`; DropdownMenu is non-modal by default, Select takes no lock,
+  ExpandableContainer locks the root, and the root keeps a stable gutter, so a sticky filter
+  row and its menu hold their place (`DropdownMenu.scroll-lock.spec.ts`). D-3: a Select
+  listbox is as tall as the room it opened into, with no fixed clamp (`Select.bound.spec.ts`).
+  The sizing law (collision avoidance on both axes, 16px padding, at most
+  `min(22rem, 100vw - 2rem)` wide, internal scroll, card radius) holds for DropdownMenu,
+  Select and Popover (`overlay-sizing.spec.ts`). Below 30rem the Select opens as a bottom
+  sheet at full width. On `v10.1.1` 16 of the 22 cells fail; all 22 pass here.
+
+- **Large controls are bars (B7-G7).** A Button, ToggleGroupItem or SegmentedTabs strip
+  past its rung takes the 12px `--radius-bar`; one on its rung stays a stadium. One
+  ResizeObserver per control (`_shared/shape/useBarShape.ts`) keeps the attribute live.
+  Witness: `tests-visual/radius-scale.spec.ts` (the bar cases), light and dark, Chromium
+  and Firefox: 16 of 20 cells fail on `v10.1.1`; the four single-line Button cells pass on
+  both and guard the stadium. All 20 pass here.
+
 ## 10.1.1 — 2026-10-19
 
-Five cures and one owner-ruled addition, no break. Asked by the atlas consumer (U batch
+Four cures, one guarded row and one owner-ruled addition. Asked by the atlas consumer (U batch
 G-1 to G-3, `docs/tranches/BK/coordination/ATLAS-TO-GLASS-2026-10-17-U-BATCH.md` and its
 addendum) and by the owner through value.js (records: `docs/tranches/BL/audit/INBOUND.md`
-O-99, O-99a, O-102, O-102b). `MIGRATION.md` §10.1.1 lists the behaviour a consumer may
-notice. Each witness below fails on the 10.1.0 bytes and passes on these; the engine
+O-99, O-99a, O-102, O-102b, O-102c). `MIGRATION.md` §10.1.1 lists the behaviour a consumer may
+notice. Each witness below fails on the 10.1.0 bytes and passes on these, with two
+exceptions. The O-102 (6) guard's non-menu cells pass on both; its menu cells fail on 10.1.0,
+because the menu had no z rung there (G-2). The O-102 (3) `#persistent` boundary passes on
+both, because 10.1.0 closed nothing on a collapse. The engine
 witnesses are `tests-visual/release-10-1-1.spec.ts` (harness `tests-visual/release-10-1-1/`),
 run in Chromium (desk and coarse projects) and Playwright WebKit 2287
-(`tests-visual/webkit-2287.config.ts`; 2311 crashes on any dock page, atlas N-1).
+(`tests-visual/webkit-2287.config.ts`; 2311 crashes on any dock page, atlas N-1), at 1440
+and 390 where width matters.
 
 - **Sheet renders fixed, not in document flow (G-1).** `.glass-floating` sets
   `position: relative` at 0,1,0, and the sheet's `position: fixed` sat in a `:where()` rule
@@ -23,36 +86,61 @@ run in Chromium (desk and coarse projects) and Playwright WebKit 2287
   no longer spell their own. Witness: `tests/components/menu/menu-z-rung.test.ts`; engine:
   "G-2 · a menu and its submenu paint above the dock's rung" (5 of 5 hit points on each).
 - **A composite in a dock seat keeps its tab stop and its arrows (G-3).** The run roves a
-  seat only when the seat is its own control (sequentially focusable, or carrying a
-  `tabindex`), and writes into nothing else. It used to write `tabIndex` onto a container
-  seat's first focusable descendant and claim arrows pressed inside it, so a nested
-  ToggleGroup had no tab stop and lost ArrowRight to the next seat. A container seat's
-  accessible name is still read from its first control. The `role="toolbar"` shape (G-4)
-  is unchanged and left to the owner; both of its arms extend this predicate. Witnesses:
+  seat only when the seat is its own control: sequentially focusable or carrying a
+  `tabindex`, and holding no control of its own. It writes into nothing else. It used to
+  write `tabIndex` onto a container seat's first focusable descendant and claim arrows
+  pressed inside it, so a nested ToggleGroup had no tab stop and lost ArrowRight to the
+  next seat; a composite root seated directly (RadioGroup, whose reka root renders its own
+  `tabindex`) lost its arrows the same way. A container seat's accessible name is still
+  read from its first control. The `role="toolbar"` shape (G-4) is unchanged and left to
+  the owner; both of its arms extend this predicate. Witnesses:
   `tests/components/custom/dock/g-dock-seat-rule.test.ts`, `crit-seat-cx.test.ts`; engine:
-  "G-3 · a composite in a container seat keeps its tab stop and its arrows".
-- **Collapsing the dock closes what its seats opened (O-102 (3)).** The dock context
-  publishes its posture (`expanded`), and `useDockParticipation` takes a `close`: on the
-  collapse edge every participating overlay closes. Popover closes at its root, the menu
-  through reka's root context. One path, no timer, and an expand opens nothing back.
-  Witness: `tests/components/custom/dock/GlassDock.collapse-closes-overlays.test.ts`;
-  engine: "O-102(3) · a dropdown / a popover opened from a seat closes when the dock
-  collapses".
+  "G-3 · a composite in a container seat keeps its tab stop and its arrows" and "G-3 · a
+  composite seated directly in the run keeps its arrows".
+- **Collapsing the dock closes the dropdowns and popovers its seats opened (O-102 (3)).**
+  The dock context publishes its posture (`expanded`), and `useDockParticipation` takes a
+  `close`: on the collapse edge each overlay that states one closes. Three do: Popover at
+  its root, the menu and the Select through their reka root contexts. A hint (Tooltip),
+  a submenu (closed with its menu) and the command list state none. One path, no timer,
+  and an expand opens nothing back. Focus held in the expanded face or in a closed
+  overlay moves to the dock's summary on the same edge, as the Escape path always did
+  (the overlay's own return aims at its trigger, inert in the collapsed face, and fell
+  to `<body>`); the Escape path now rides that one hand-off. Only the face's overlays
+  close: the dock renders its default slot inside a `DockFace` scope (no DOM), and an
+  overlay states `close` only under it. A popover opened from `#persistent` or
+  `#persistent-end`, whose trigger stays painted and live when collapsed, stays open and
+  keeps its focus, and the dock stays collapsed. Witness:
+  `tests/components/custom/dock/GlassDock.collapse-closes-overlays.test.ts`; engine:
+  "O-102(3) · a dropdown / a popover / a select opened from a seat closes when the dock
+  collapses", "O-102(3) · a collapse-closed menu hands focus to the summary" and "O-102(3)
+  · a popover opened from #persistent outlives the collapse, and the dock stays collapsed".
 - **Skeleton `shimmer` (owner ruling, O-102b (3)).** One prop. A sheen of one fixed period
   travels across the shape in place of the breathe, on the shared `--duration-shimmer-fast`
-  clock, `linear`, compositor-only. Ink only: the foreground at the `--ink-seam` rung, no
+  clock, `linear`, compositor-only. Its profile has no transparent run, so a narrow tile
+  carries moving ink for the whole cycle. Ink only: the foreground at the `--ink-seam` rung, no
   hue. Static under `prefers-reduced-motion`, paused while the tile is off-screen or the
-  document is hidden, absent under forced colors. The A-9 decline note in `Skeleton.vue` now
+  document is hidden, absent under forced colors. The sheen layer is anchored and sized on the same physical axis
+  it travels, so under `dir="rtl"` it covers the tile through the whole cycle, with no seam
+  and no flat chip. The A-9 decline note in `Skeleton.vue` now
   records the ruling. Demo: Feedback › Skeleton › shimmer. Engine: "Skeleton · shimmer
-  travels…" and "…holds still under reduced motion".
-- **The clipped dock popover (O-102 (6)): measured, not a glass defect.** A glass Popover
-  opened from a seat is unclipped at 390 and 1280, portalled or not, on 10.1.0 and 10.1.1
-  alike: reka's wrapper is `position: fixed`, and the dock's `contain: layout` makes the dock,
-  not the run, its containing block. The plate clipped in the owner's frame is fourier's
-  timeline caret, an absolutely positioned float inside the run, which is a scroll port and
-  clips its cross axis by CSS rule (`run.css`). The engine guard "O-102(6) · a popover
-  opened from a seat is not clipped" holds the glass half at both widths and both portal
-  arms.
+  travels…", "…the shimmer layer covers the tile through its whole cycle (ltr, rtl)" and
+  "…holds still under reduced motion".
+- **Floats opened from a dock seat portal out of the run (O-102 (6), a guard).** The plate
+  clipped in frame 12.51.30 was fourier's timeline caret, an absolutely positioned float
+  inside the dock run. The run is a scroll port (`dock/styles/run.css`) and clips its
+  cross axis, so a consumer's own float inside it is cut. Fourier cured its caret by
+  moving it to glass's portalled Tooltip (976a704). The owner-delegate closed the row on
+  that cure (O-102c), on condition that every glass float a seat may host portals by
+  default, outside the run. Each already portals, so this row changes no source. 10.1.1
+  ships the guard for that condition. On 10.1.0 its non-menu cells pass and its menu cells
+  fail at both widths in every engine project: the portalled menu's lower corners sat under
+  the dock, because the menu had no z rung (G-2). Tooltip, Popover, its
+  hover arm (HoverCard), DropdownMenu and its submenu, and the Select content are each
+  opened from a seat with no portal prop. Each lands outside `.dock-run`, unclipped at 390
+  and 1440, and so does Popover with `portal: false`. Guard:
+  `tests/components/custom/dock/GlassDock.seat-floats-portal.test.ts`; engine: "O-102(6)
+  · a … opened from a seat is portalled out of the run and not clipped". A run that
+  stops clipping overhang is the dock-run geometry of 10.2.0 (D2).
 
 ## 10.1.0 — 2026-09-24
 

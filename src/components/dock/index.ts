@@ -3,8 +3,10 @@ export { default as GlassDock } from "./GlassDock.vue";
    prop (a type-only export — the runtime `/dock` barrel is unmoved). `DockCollapse`
    takes its place on the surface as the folded collapse member's union. */
 export type {
+    DockAnchor,
     DockBackdropMode,
     DockCollapse,
+    DockExpandOn,
     DockProps,
 } from "./composables/useDockShellProps";
 export { default as DockLayerGroup } from "./DockLayerGroup.vue";

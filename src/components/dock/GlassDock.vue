@@ -30,7 +30,7 @@ import { computed, nextTick, ref, useId, useTemplateRef, watch } from "vue";
 import { FOCUSABLE_SELECTOR } from "../_shared/focus";
 import { useGlassBackdropLuminance } from "../../composables/glass/useGlassBackdropLuminance";
 import { OPEN_DISMISSABLE_LAYER_SELECTOR } from "./constants";
-import { provideDockContext } from "./composables/dockContext";
+import { DockFace, provideDockContext } from "./composables/dockContext";
 import { useDockState } from "./composables/useDockState";
 import { useDockMorphOrchestrator } from "./composables/useDockMorph";
 import { useDockExpandedSize } from "./composables/dockMorphMeasure";
@@ -83,6 +83,9 @@ defineOptions({ inheritAttrs: false });
 const props = withDefaults(defineProps<DockProps>(), {
     backdropMode: "live",
     collapse: "closed",
+    expandOn: "hover",
+    anchor: "center",
+    collapsedLabel: "Expand dock",
 });
 
 /* The resolved shell-prop computeds — shape/orientation, the collapse surface
@@ -155,6 +158,7 @@ const {
 } = useDockState({
     rootEl: dockEl,
     alwaysExpanded,
+    expandOn: computed(() => props.expandOn),
     initialExpanded: !startCollapsed.value,
     isTransitioning,
     dockId,
@@ -260,17 +264,41 @@ async function onSummaryKeydown(event: KeyboardEvent) {
 // so it must not eat the collapse. By SCOPE: the matched layer must live INSIDE
 // `fullEl`. `closest()` walks the whole ancestor chain, so a dock hosted inside an open
 // Dialog would otherwise match the DIALOG and never Escape-collapse.
-async function onFullKeydown(event: KeyboardEvent) {
+function onFullKeydown(event: KeyboardEvent): void {
     if (event.key !== "Escape") return;
     const layer = (event.target as Element | null)?.closest?.(
         OPEN_DISMISSABLE_LAYER_SELECTOR,
     );
     if (layer && fullEl.value?.contains(layer)) return;
     collapse();
+}
+
+/* THE COLLAPSE HANDS FOCUS TO THE SUMMARY. On the collapse edge the expanded face goes
+   inert and every overlay its seats opened closes (`useDockParticipation`'s `close`,
+   stamped `data-glass-dock-face`).
+   Focus held in either place has nowhere left to stand: the face's controls are inert,
+   and an overlay's own focus return aims at its trigger, which sits in that same inert
+   face, so the engine drops it to <body>. Where focus stood is read on the edge itself
+   (a `pre` watcher, before the patch that writes `inert`), and once the summary is live
+   it takes focus, as the Escape path always gave it. One path for every collapse:
+   Escape, `collapse()`, and the collapse-owned overlay close. Focus anywhere else (the
+   persistent region, the page) is not the dock's and is left where it is. The
+   overlay's later return to its inert trigger is a no-op on an inert element. An
+   overlay a `#persistent` control opened is not the face's: it stays open, focus in it
+   stays, and taking it would send its own focus return to a live trigger and re-expand
+   the dock (critic-3 D-1). */
+watch(visualExpanded, async (isExpanded, was) => {
+    if (!was || isExpanded) return;
+    const active = document.activeElement;
+    const held =
+        (!!active && !!fullEl.value?.contains(active)) ||
+        active?.closest("[data-glass-dock-face]")?.getAttribute("data-glass-dock-owner") ===
+            dockId;
+    if (!held) return;
     await nextTick();
     const summary = summaryEl.value;
     if (summary && !summary.hasAttribute("inert")) summary.focus({ preventScroll: true });
-}
+});
 
 /* The CLICK-INTEGRITY guard. Scopes the collapsed-tap / hover-
    approach pass-through to the TAPPED ELEMENT'S IDENTITY (captured at pointerdown)
@@ -344,6 +372,7 @@ defineExpose({
             { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded },
         ]"
         :data-backdrop-mode="props.backdropMode"
+        :data-anchor="props.anchor === 'center' ? undefined : props.anchor"
         :data-held="graspHeld || undefined"
         @mouseenter="onMouseEnter"
         @mouseleave="onMouseLeave($event)"
@@ -471,7 +500,7 @@ defineExpose({
                 tabindex="-1"
                 @keydown="onFullKeydown"
             >
-                <slot />
+                <DockFace><slot /></DockFace>
             </div>
             <div
                 ref="summaryEl"
@@ -483,7 +512,7 @@ defineExpose({
                 :inert="(outerCurrentLayer !== 'summary') || undefined"
                 :role="summaryIsDisclosure ? 'button' : undefined"
                 :tabindex="summaryIsDisclosure ? 0 : undefined"
-                :aria-label="summaryIsDisclosure ? 'Expand dock' : undefined"
+                :aria-label="summaryIsDisclosure ? props.collapsedLabel : undefined"
                 :aria-expanded="summaryIsDisclosure ? 'false' : undefined"
                 :aria-controls="summaryIsDisclosure ? `${dockId}-full` : undefined"
                 @focusin.stop

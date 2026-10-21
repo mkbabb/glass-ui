@@ -15,8 +15,9 @@ export interface SelectContentEmits {
 </script>
 
 <script setup lang="ts">
-import { computed, useAttrs } from "vue";
+import { computed, onBeforeUnmount, shallowRef, useAttrs, watch } from "vue";
 import {
+    injectSelectRootContext,
     SelectContent as RekaSelectContent,
     SelectPortal as RekaSelectPortal,
     SelectViewport as RekaSelectViewport,
@@ -32,7 +33,10 @@ defineOptions({
 
 const props = withDefaults(defineProps<SelectContentProps>(), {
     side: "bottom",
-    sideOffset: 0,
+    /* The 4px gap to the trigger is a placement offset, as it is on the menu and the
+       popover, so the collision measure counts it. It used to be a translate that
+       moved the plate after reka measured, eating 4px of the 16px padding. */
+    sideOffset: 4,
     align: "start",
     alignOffset: 0,
 });
@@ -45,20 +49,83 @@ const attrs = useAttrs();
  * winning an argument the spread order already settles is a second authority on
  * the same question. (The library-wide retired-attribute list is W-OVERLAY's one
  * home; this component owes it nothing.) */
+const selectRoot = injectSelectRootContext(null);
+
+/* THE SHEET FORM (U/B7 D-6). Below 30rem a listbox anchored to a trigger has no
+ * width to grow into and covers what the reader was choosing for, so it opens as a
+ * bottom sheet: anchored to a virtual edge at the foot of the viewport, opening
+ * upward, at full width. The reference reads the viewport on every call, so a
+ * resize or a URL-bar retraction re-anchors it through floating-ui's own update.
+ * The query is held only while the listbox is open, so a closed Select keeps no
+ * listener; it is read synchronously on open, before the content renders. */
+const SHEET_QUERY = "(width < 30rem)";
+const sheet = shallowRef(false);
+let sheetQuery: MediaQueryList | null = null;
+const syncSheet = () => {
+    sheet.value = sheetQuery?.matches ?? false;
+};
+const releaseSheetQuery = () => {
+    sheetQuery?.removeEventListener("change", syncSheet);
+    sheetQuery = null;
+};
+watch(
+    () => selectRoot?.open.value ?? false,
+    (open) => {
+        releaseSheetQuery();
+        if (open && typeof window !== "undefined" && typeof window.matchMedia === "function") {
+            sheetQuery = window.matchMedia(SHEET_QUERY);
+            sheetQuery.addEventListener("change", syncSheet);
+        }
+        syncSheet();
+    },
+    { immediate: true, flush: "sync" },
+);
+onBeforeUnmount(releaseSheetQuery);
+const viewportFoot = {
+    getBoundingClientRect: () =>
+        new DOMRect(0, window.innerHeight, document.documentElement.clientWidth, 0),
+};
+
+/* Body scroll stays free (U/B7 D-2). reka's lock writes `overflow: hidden` onto
+ * `body`; under a root whose overflow is not `visible` that turns `body` into the
+ * scroll container and drops every sticky ancestor, and the listbox with it, to
+ * its in-flow position. The viewport inside the plate holds its own scroll and
+ * contains overscroll, so the page behind it does not move. */
 const rootAttrs = computed(() => ({
     ...attrs,
     position: "popper" as const,
-    side: props.side,
-    sideOffset: props.sideOffset,
-    align: props.align,
-    alignOffset: props.alignOffset,
-    avoidCollisions: true,
+    bodyLock: false,
     collisionPadding: 16,
+    ...(sheet.value
+        ? {
+              reference: viewportFoot,
+              side: "top" as const,
+              sideOffset: 0,
+              align: "start" as const,
+              alignOffset: 0,
+              avoidCollisions: false,
+          }
+        : {
+              side: props.side,
+              sideOffset: props.sideOffset,
+              align: props.align,
+              alignOffset: props.alignOffset,
+              avoidCollisions: true,
+          }),
 }));
 /* The stamp comes from the ONE module now, not from a hand-copied attribute
    pair. The listbox PLATE stays #81's (`[data-slot="select-content"]`,
-   glass/overlay-plate.css) — only the portal seam moves here. */
-const dock = useDockParticipation();
+   glass/overlay-plate.css) — only the portal seam moves here.
+   A listbox a dock seat opened is a dropdown, and it closes when that dock collapses,
+   through the select root's own open channel (O-102 (3)), as the menu does. The
+   inject is not the guard against a rootless part: reka's own content injects the
+   same context strictly and throws, so a rootless SelectContent still fails loud;
+   only a part rendered with reka stubbed out (the contract tests) reaches null. */
+const dock = useDockParticipation({
+    close: () => {
+        if (selectRoot?.open.value) selectRoot.onOpenChange(false);
+    },
+});
 </script>
 
 <template>
@@ -79,10 +146,11 @@ const dock = useDockParticipation();
             v-bind="{ ...rootAttrs, ...dock.portalAttrs.value }"
             data-reveal="menu"
             data-slot="select-content"
+            :data-form="sheet ? 'sheet' : undefined"
             :class="
                 cn(
-                    'relative z-popover min-w-(--overlay-min-width) overflow-hidden rounded-card text-popover-foreground glass-reveal',
-                    'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
+                    'relative z-popover min-w-(--overlay-min-width) overflow-hidden text-popover-foreground glass-reveal',
+                    sheet ? 'rounded-t-card' : 'rounded-card',
                     'glass-floating glass-field-portal',
                     props.class,
                 )
@@ -103,7 +171,7 @@ const dock = useDockParticipation();
                 data-fade-end
                 :class="
                     cn(
-                        'fading-scroll fading-scroll--y max-h-[inherit] w-full min-w-(--reka-select-trigger-width)',
+                        'fading-scroll fading-scroll--y w-full min-w-(--reka-select-trigger-width)',
                     )
                 "
             >
