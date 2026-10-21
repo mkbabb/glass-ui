@@ -77,7 +77,13 @@ const auroraScroll = defineComponent(() => {
             h(Aurora, {
                 config: config.value,
                 renderMode: (params.get("mode") as "webgl" | "css" | "auto") ?? "auto",
-                runtimeOptions: { initStrategy: "eager" },
+                runtimeOptions: {
+                    initStrategy: "eager",
+                    ...(params.get("engine") === "webgl2" ? { forceBackend: "webgl2" as const } : {}),
+                },
+                onRendererStatus: (status: unknown) => {
+                    w.__auroraStatus = status;
+                },
                 style: "position:fixed;inset:0;z-index:0",
             }),
             h("div", { style: "position:relative;z-index:1" }, page()),

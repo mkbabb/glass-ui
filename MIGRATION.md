@@ -10,12 +10,10 @@ rename or import re-point per call site.
 - **Per-component sheets are no longer in `@mkbabb/glass-ui/styles`.** The Configurator,
   MusicStaff, Metric, Deck (stage, turn, capture, reveal), Carousel and SortableList rules
   load with their component's module. A consumer that imports the component from its
-  subpath or the root needs no change. A consumer that renders these class names without
-  importing the component, or that imported `dist/components/<name>/styles.css` by path
-  for its cascade position, imports the sheet itself:
-  `import "@mkbabb/glass-ui/dist/components/metric/styles.css"` is not an export; render
-  the component, or copy the rules it needs. The sheets still sit in `@layer components`,
-  so their rank against the entry is unchanged.
+  subpath or the root needs no change. A consumer that writes these class names on its
+  own markup without importing the component loses their rules; the sheets are not
+  package exports, so render the component or copy the rules it needs. The sheets still
+  sit in `@layer components`, so their rank against the entry is unchanged.
 - **The aurora ground does not follow nuclei positions.** A consumer that moved nuclei to
   shift the static ground (on the `"css"` substrate, or before the canvas arms) now sees
   the ground the preset mounted with; the live canvas still moves. To change the ground,

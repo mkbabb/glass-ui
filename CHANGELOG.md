@@ -58,6 +58,13 @@ decline each row (relay rows B7-G7 to B7-G9).
   `GlassDock.click-integrity.test.ts`, `GlassDock.run-wheel.test.ts`; engine:
   `tests-visual/u-b7.spec.ts` (`tests-visual/u-b7/playwright.config.ts`, Chromium desk and
   coarse, Firefox desk and phone).
+- **The aurora WebGL path, measured (R-INTERACT §7).** `tests-visual/u-b7/witness/aurora-webgl.mjs`
+  runs Chrome for Testing 149 headless on ANGLE Metal (the named GPU witness) and arms the
+  live field: WebGL 2 forced and WebGPU both report `ready` with `data-aurora-substrate=
+  "webgl"`. Over 12 scroll steps on the scroll-leaned harness, 10.1.1 encoded the ground
+  12 times and wrote the placeholder 15 times; this branch encodes 0 and writes 0. One
+  run per tree at 1-minute load ≈ 25: main-thread time per step, median, WebGL 2
+  7.6 → 7.6 ms, WebGPU 11.2 → 8.8 ms.
 
 ## 10.1.1 — 2026-10-19
 
