@@ -33,6 +33,28 @@ const TAB_OPTIONS = [
 ];
 
 const scenes: Record<string, () => Promise<Component>> = {
+    // O-4/§4.2: capsule hover and ToggleGroup press carry no spatial leg.
+    press: async () => {
+        const { default: ToggleGroup } = await import("../../src/components/toggle-group/ToggleGroup.vue");
+        const { default: ToggleGroupItem } = await import("../../src/components/toggle-group/ToggleGroupItem.vue");
+        const { Chip } = await import("../../src/components/chip");
+        return defineComponent(() => {
+            const pick = ref("a");
+            return () =>
+                h("div", { style: "padding:48px;display:flex;gap:24px;align-items:center" }, [
+                    h(
+                        ToggleGroup,
+                        { type: "single", modelValue: pick.value, "onUpdate:modelValue": (v: string) => (pick.value = v), "aria-label": "Program" },
+                        () => [
+                            h(ToggleGroupItem, { value: "a", "data-witness": "toggle-a" }, () => "E-Rate"),
+                            h(ToggleGroupItem, { value: "b", "data-witness": "toggle-b" }, () => "ECF"),
+                        ],
+                    ),
+                    h(Chip, { mode: "action", "data-witness": "chip" }, () => "Download"),
+                ]);
+        });
+    },
+
     // The O-4 strip: five equal tabs on the pill material.
     tabs: async () =>
         defineComponent(() => {

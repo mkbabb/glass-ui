@@ -264,11 +264,13 @@ describe("W-TOGGLE-ROW — the selection row", () => {
             "control-surface",
             "glass-control-edge",
             "glass-capsule-hover",
-            "tap-squish",
             "focus-ring",
         ]) {
             expect(item, `the item must compose .${composed}`).toContain(composed);
         }
+        // U/B7 §4.2: a toggle press carries no scale, so the item composes no
+        // `.tap-squish` (the press rung it used to reconcile is gone with it).
+        expect(item).not.toContain("tap-squish");
         for (const file of [...LANE_SFCS, ...LANE_TS]) {
             expect(code(file), `${file} still reaches for reka`).not.toContain(
                 "reka-ui",

@@ -7,7 +7,7 @@ import { useOptionalToggleGroupContext, type ToggleItemEntry } from "./context";
 /* A BOUNDED PILL, and nothing else. The item owns its own silhouette and composes
  * the control chassis for its material — `.control-surface` (fill + border + blur),
  * `.glass-control-edge` (the keyed two-stop warm rim), `.glass-capsule-hover` (the
- * specular catch-light lift + press-snap), `.tap-squish`, `.focus-ring`. It declares
+ * specular catch-light), `.focus-ring`. It does not scale on press. It declares
  * ZERO of those values itself: the register owns them, and the item that used to
  * re-declare six of them drifted from the register the moment the register moved
  * (its copied hover rule was missing the `[data-disabled]` guard the real one has).
@@ -81,7 +81,7 @@ const isDisabled = computed(() => entry.disabled());
         data-slot="toggle-group-item"
         :class="
             cn(
-                'toggle-group__item control-surface glass-control-edge glass-capsule-hover tap-squish focus-ring',
+                'toggle-group__item control-surface glass-control-edge glass-capsule-hover focus-ring',
                 props.class,
             )
         "

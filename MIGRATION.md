@@ -30,6 +30,13 @@ Proposed by the atlas formation on local branch `u/b7-glass-shape` off `release/
   `--tab-indicator-max-stretch` is deleted. A caller passing any of these deletes the
   argument; atlas and sci pass none.
 
+- **`.glass-capsule-hover` has no spatial leg; ToggleGroupItem does not squish (B7-G3).**
+  Hover no longer scales a capsule composer (1.015 on `--ease-cartoon-punch`), and the
+  capsule's `:active` press snap is gone; the specular catch-light stays. ToggleGroupItem
+  drops `.tap-squish` and its `--scale-press` reconciliation. Paint and motion only; no API
+  change. `.tap-squish` and `useLiquidPress` on Button, Switch, Checkbox, Radio and the dock
+  controls are unchanged.
+
 ## 10.1.1
 
 One type-level change, below; no runtime break. Behaviour a consumer may notice:

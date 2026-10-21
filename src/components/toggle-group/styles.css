@@ -45,16 +45,11 @@
 
     /* THE ITEM DECLARES GEOMETRY AND TYPE ONLY. Fill, border and blur are
        `.control-surface`'s; the resting rim is `.glass-control-edge`'s; the hover
-       specular + press-snap are `.glass-capsule-hover`'s; the focus ring is
+       specular is `.glass-capsule-hover`'s; nothing scales on press; the focus ring is
        `.focus-ring`'s `outline`. This file authors ZERO border values and ZERO
        backdrop-filter, by construction — that is what G-TOGGLE-REGISTER asserts. */
     .toggle-group__item {
         --toggle-group-item-size: var(--control-h-md);
-        /* The F-3 reconciliation: `.tap-squish` and `.glass-capsule-hover` both write
-           a press scale, and this one declaration is what makes them agree on 0.96
-           instead of racing 0.96 against 0.97. It is load-bearing — do not remove it
-           because it looks like a lone token restatement. */
-        --scale-press: var(--scale-press-sm);
 
         display: inline-flex;
         flex: none;

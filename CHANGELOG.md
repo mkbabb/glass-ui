@@ -19,6 +19,11 @@ Proposed by the atlas formation (U/B7, the owner's order of 2026-10-19 in sci-re
   read for the cap. Witness: `tests/components/custom/dock/DockLayerGroup.glide.test.ts`
   (fails on `v10.1.1`: the indicator carried `--stretch: 1` after a switch).
 
+- **Hover and press without scale on the capsule register and the ToggleGroup (B7-G3).**
+  Witness: `tests-visual/press-scale.spec.ts` (hover on a ToggleGroupItem and an action
+  Chip, and a held ToggleGroupItem press, all at computed scale 1). On `v10.1.1` all 6 cells
+  fail (hover 1.015, press 0.97); here all 6 pass.
+
 ## 10.1.1 — 2026-10-19
 
 Four cures, one guarded row and one owner-ruled addition. Asked by the atlas consumer (U batch
