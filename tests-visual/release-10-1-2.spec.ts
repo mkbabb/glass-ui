@@ -102,6 +102,21 @@ for (const [label, viewport] of [
             expect(await active(page)).toBe("seat-2");
         });
 
+        // A seat that drops its marker while mounted gets back the tab stop the run took.
+        // RED on 10.1.1 (an inferred seat, held at -1) and on the first 10.1.2 cut.
+        test("G-4 · a child that drops its declaration is Tab-reachable again", async ({
+            page,
+            browserName,
+        }) => {
+            await open(page, "reactive");
+            expect(await run(page).getAttribute("role")).toBe("toolbar");
+            expect(await tabWalk(page, browserName)).toEqual(["seat-0", "after"]);
+            await page.evaluate(() => (window as unknown as { __undeclare: () => void }).__undeclare());
+            await expect(run(page)).not.toHaveAttribute("role", "toolbar");
+            expect(await page.locator('[data-witness="middle"]').getAttribute("tabindex")).toBeNull();
+            expect(await tabWalk(page, browserName)).toEqual(["seat-0", "middle", "after"]);
+        });
+
         // Regression arm: green on 10.1.1 too (its held-control clause), kept because the
         // (b-ii) contract must hold it without that clause.
         test("G-4 · a RadioGroup and a ToggleGroup seated directly keep their arrows", async ({

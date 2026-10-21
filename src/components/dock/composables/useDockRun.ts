@@ -236,6 +236,27 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
     }
 
     /**
+     * THE RUN'S WRITES, keyed by element, valued by the `tabindex` attribute the element
+     * carried before the run's first write (null when it had none). Every `tabIndex` the
+     * run sets goes through `writeStop`, so `release` can hand a child that stops being a
+     * declared seat exactly the tab stop it had before the run touched it.
+     */
+    const authored = new WeakMap<HTMLElement, string | null>();
+
+    function writeStop(seat: HTMLElement, value: 0 | -1): void {
+        if (!authored.has(seat)) authored.set(seat, seat.getAttribute("tabindex"));
+        seat.tabIndex = value;
+    }
+
+    function release(child: HTMLElement): void {
+        if (!authored.has(child)) return;
+        const original = authored.get(child) ?? null;
+        authored.delete(child);
+        if (original === null) child.removeAttribute("tabindex");
+        else child.setAttribute("tabindex", original);
+    }
+
+    /**
      * ROVING TABINDEX. Exactly one seat is in the tab order; the rest are reachable by
      * arrow key. The RED this replaces was total — every focusable seat carried
      * `tabIndex 0` across all five docks (13/13, 9/9, 7/7, 5/5, 15/15) and `keydown`
@@ -249,6 +270,12 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
         const run = runEl.value;
         if (!run) return;
         toolbar.value = isToolbar(run);
+        // A child the run wrote into and that has since dropped its declaration gets
+        // its authored `tabindex` back: the run writes nothing into an undeclared child,
+        // and that includes not leaving its own past write behind.
+        for (const child of seatsOf(run)) {
+            if (!isDeclaredSeat(child)) release(child);
+        }
         const seats = declaredSeatsOf(run);
         if (seats.length === 0) return;
         const openIdx = openIndexOf(seats);
@@ -257,7 +284,7 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
         const focusedIdx = seats.findIndex((seat) => seat.contains(document.activeElement));
         const stop = focusedIdx >= 0 ? focusedIdx : openIdx >= 0 ? openIdx : 0;
         seats.forEach((seat, idx) => {
-            seat.tabIndex = idx === stop ? 0 : -1;
+            writeStop(seat, idx === stop ? 0 : -1);
         });
     }
 
@@ -269,7 +296,7 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
         // the lattice's and then fights the spring for the same scroll offset.
         // `preventScroll` refuses that, and reach owns the travel.
         reach(seat);
-        seat.tabIndex = 0;
+        writeStop(seat, 0);
         seat.focus({ preventScroll: true });
         syncRoving();
     }

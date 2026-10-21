@@ -76,6 +76,28 @@ const scenes: Record<string, Component> = {
         ]),
     ),
 
+    // A consumer seat whose declaration is reactive: a button declared between two
+    // DockControls, undeclared by `window.__undeclare()` while it stays mounted.
+    reactive: defineComponent(() => {
+        const declared = ref(true);
+        w.__undeclare = () => (declared.value = false);
+        return () =>
+            page(() => [
+                h(DockControl, { "aria-label": "Play", "data-witness": "seat-0" }, () => "A"),
+                h(
+                    "button",
+                    {
+                        type: "button",
+                        "aria-label": "Middle",
+                        "data-witness": "middle",
+                        ...(declared.value ? { "data-glass-dock-seat": "" } : {}),
+                    },
+                    "M",
+                ),
+                h(DockControl, { "aria-label": "Last", "data-witness": "seat-2" }, () => "B"),
+            ]);
+    }),
+
     // RadioGroup and ToggleGroup seated directly, between two declared seats.
     composites: defineComponent(() => {
         const radio = ref("x");

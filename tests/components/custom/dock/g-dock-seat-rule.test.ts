@@ -158,6 +158,53 @@ describe("dock run · the declared seat marker (b-ii)", () => {
         w.unmount();
     });
 
+    // A seat whose declaration is reactive: the run wrote −1 into it while it was declared,
+    // and once the marker is gone that write must go with it. RED before the release:
+    // the button kept tabindex=-1 and left the Tab order.
+    for (const [label, authored] of [
+        ["a button with no authored tabindex", null],
+        ["a [role=button] handle with an authored tabindex", "0"],
+    ] as const) {
+        it(`a child that drops its declaration gets its own tab stop back (${label})`, async () => {
+            const state = { declared: true };
+            const w = mount(
+                {
+                    data: () => state,
+                    render() {
+                        const declared = (this as unknown as { declared: boolean }).declared;
+                        const attrs: Record<string, unknown> = { "data-witness": "middle", "aria-label": "M" };
+                        if (declared) attrs[SEAT] = "";
+                        if (authored !== null) {
+                            attrs.role = "button";
+                            attrs.tabindex = authored;
+                        }
+                        return h(GlassDock, { collapse: "open" }, () => [
+                            h(DockControl, { "aria-label": "A", "data-witness": "seat-0" }),
+                            authored === null ? h("button", attrs, "M") : h("div", attrs),
+                            h(DockControl, { "aria-label": "B", "data-witness": "seat-2" }),
+                        ]);
+                    },
+                },
+                { attachTo: document.body },
+            );
+            await settle();
+            const middle = w.get('[data-witness="middle"]').element as HTMLElement;
+            expect(middle.getAttribute("tabindex")).toBe("-1");
+            expect(w.get(".dock-run").attributes("role")).toBe("toolbar");
+
+            (w.vm as unknown as { declared: boolean }).declared = false;
+            await settle();
+            await new Promise((r) => setTimeout(r));
+            await settle();
+
+            expect(w.get('[data-witness="middle"]').element).toBe(middle);
+            expect(middle.getAttribute("tabindex")).toBe(authored);
+            expect(middle.tabIndex).toBe(0);
+            expect(w.get(".dock-run").attributes("role")).toBeUndefined();
+            w.unmount();
+        });
+    }
+
     it("a composite nested in an undeclared container keeps its one tab stop and its arrows", async () => {
         const w = dock(() => [
             h(DockControl, { "aria-label": "A", "data-witness": "seat-0" }),

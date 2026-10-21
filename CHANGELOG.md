@@ -30,7 +30,9 @@ addendum 1). `MIGRATION.md` §10.1.2 says what a consumer with its own dock seat
   3. The run writes nothing into an undeclared child and claims no key pressed inside
      one. A plain button, a trigger, a `[role=button][tabindex]` handle, an input, a
      composite (RadioGroup, ToggleGroup) seated directly, or a container holding any of
-     these keeps its own tab stop and its own arrows.
+     these keeps its own tab stop and its own arrows. A child that drops the attribute
+     while mounted gets back the `tabindex` it carried before the run first wrote to it
+     (none, or its authored value).
   4. `.dock-run` carries `role="toolbar"` (and `aria-orientation`) when it has at least
      one declared seat and every child that is not `role="separator"` is declared.
      Otherwise it carries no role.
@@ -38,13 +40,14 @@ addendum 1). `MIGRATION.md` §10.1.2 says what a consumer with its own dock seat
   `npm ci && npm run build` writes `dist/`, and `npm pack` writes
   `mkbabb-glass-ui-10.1.2.tgz` for a consumer install before the registry carries 10.1.2.
 - **Witnesses.** Unit: `tests/components/custom/dock/g-dock-seat-rule.test.ts` and
-  `crit-seat-cx.test.ts`, on the (b-ii) contract, 7 of 12 RED on 10.1.1 and 12 of 12 GREEN.
+  `crit-seat-cx.test.ts`, on the (b-ii) contract, 9 of 14 RED on 10.1.1 and 14 of 14 GREEN.
   The 5 that pass on both are regression arms: the declared crit arm, the all-declared toolbar
   and the three composites. Engine: `tests-visual/release-10-1-2.spec.ts` (harness
   `tests-visual/release-10-1-2/`) at 1440 and 390, in Chromium (`chromium-headless-new`)
   and Playwright WebKit 2287 (`tests-visual/webkit-2287.config.ts`): "the atlas shapes
   seated in a run are all Tab-reachable", "arrows rove only the declared seats", "a run
-  with an undeclared child claims no toolbar role", and two regression arms, "an
+  with an undeclared child claims no toolbar role", "a child that drops its declaration
+  is Tab-reachable again", and two regression arms, "an
   all-declared run is one toolbar stop" and "a RadioGroup and a ToggleGroup seated
   directly keep their arrows". The lattice roving tests and the toolbar test now seat
   declared controls.
