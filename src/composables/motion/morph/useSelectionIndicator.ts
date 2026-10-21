@@ -18,14 +18,6 @@ import { effectiveCap, writeVelocityWeight } from "../core/writeVelocityWeight";
 // alternative was a second spelling of `string | number` living here, which the
 // grammar law forbids outright.
 import type { SelectionValue } from "../../../components/_shared/selection";
-// The EYEGLASS organ's law — pure geometry, no cascade, no DOM. This writer applies
-// it; `eyeglass.ts` states it and owns every figure in it.
-import {
-    eyeglassSpan,
-    eyeglassSwell,
-    eyeglassOriginPercent,
-    EYEGLASS_SPAN_MAX,
-} from "./eyeglass";
 
 /**
  * useSelectionIndicator is the library's single traveling-indicator writer. The dock
@@ -50,19 +42,12 @@ import {
  * "this group has no single slider" to `useSelectionGroup` and "this material does
  * not squish" here, so neither meaning could be stated without lying about the
  * other. `deform` says it outright:
- *   • `"plate"` (default) — the full body: `--stretch` plus, where the surface arms
- *     the organ, the EYEGLASS span/swell/lean. A body of glass with area to move.
+ *   • `"plate"` (default) — `--stretch` on the travelling body.
  *   • `"mark"` — `--stretch` only. A hairline lengthens along its travel; it has no
  *     area to inflate and no cross axis to swell.
  *   • `"none"` — no deform at all (a multi-toggle group has no single travelling
  *     body to deform).
  * The `if (!el)` guard below stays what it always should have been: null-safety.
- *
- * THE EYEGLASS is armed by the SURFACE, in its own cascade, by declaring
- * `--eyeglass-span-max`. Where it is armed the deform stops being a centre-pump and
- * becomes the measured organ — it spans origin and destination, leans 2:1 into its
- * travel, swells across, and clamps at the track's inner edge. Where it is not
- * declared the fraction law is byte-identical to what shipped. See `eyeglass.ts`.
  *
  * The writer emits the selected item's full physical border box from the
  * container's padding-box origin. Measuring both axes keeps the resting fill
@@ -269,9 +254,8 @@ export function useSelectionIndicator<O extends SelectionOption>(
     // THE SEPARATE AREA-INFLATION CHANNEL IS GONE, not disabled. It drove a second
     // uniform scalar (`--tab-blob`) that composed multiplicatively with this one, so
     // the surface carried two area laws and a fence (`blob × stretch ≤ ~1.14`) whose
-    // only job was to keep them from arguing. The eyeglass is one law: the body spans
-    // and swells, and the fences are its own geometry — the span ceiling and the
-    // track's inner edge. Its last painter and its token left with it.
+    // only job was to keep them from arguing. Its last painter and its token left
+    // with it.
 
     function prefersReducedMotion() {
         return (
@@ -341,60 +325,6 @@ export function useSelectionIndicator<O extends SelectionOption>(
         capForSquish = effectiveCap(el, capToken);
         liquidSquish.squish(frac);
 
-        // ── THE EYEGLASS ARM ──
-        //
-        // Armed by the SURFACE: a strip that wants the organ declares
-        // `--eyeglass-span-max` in its own cascade. Absent, everything below is
-        // skipped and the fraction law above is what paints — the same bytes that
-        // shipped, on every surface that has not asked for the organ.
-        const spanMaxRaw = cs.getPropertyValue("--eyeglass-span-max").trim();
-        const armed = spanMaxRaw !== "" && deformOf() === "plate";
-        if (armed) {
-            const spanMax = effectiveCap(el, Number(spanMaxRaw) || EYEGLASS_SPAN_MAX);
-            // The organ is measured on the TRAVEL axis in the container's own
-            // coordinates, and clamps against the container's PADDING box — the
-            // "bar's inner edge" §C1 photographs it compressing into.
-            const axis = (r: DOMRect) =>
-                vertical.value
-                    ? { start: r.top, end: r.bottom }
-                    : { start: r.left, end: r.right };
-            const track = containerRect
-                ? vertical.value
-                    ? {
-                          start: containerRect.top + (containerRef.value?.clientTop ?? 0),
-                          end: containerRect.bottom,
-                      }
-                    : {
-                          start: containerRect.left + (containerRef.value?.clientLeft ?? 0),
-                          end: containerRect.right,
-                      }
-                : undefined;
-            const organ = eyeglassSpan({
-                from: axis(fromRect),
-                to: axis(toRect),
-                track,
-                spanMax,
-            });
-            // The lean: ONE transform-origin write produces the 2:1 edge asymmetry.
-            el.style.setProperty(
-                "--eyeglass-origin",
-                `${eyeglassOriginPercent(organ.direction)}%`,
-            );
-            el.style.setProperty("--eyeglass-span", String(organ.span));
-            el.style.setProperty("--eyeglass-swell", String(eyeglassSwell(frac)));
-            // The clamp is REPORTED, never silently absorbed — the paint reads it to
-            // compress against the wall instead of pretending it spanned freely.
-            if (organ.clamped) el.dataset.eyeglassClamped = "";
-            else delete el.dataset.eyeglassClamped;
-            // The WAKE. §C1: "the whole bar lifts in chroma one frame BEFORE the pill
-            // moves", fast-in ~120ms / slow-out ~400ms. Those are not new constants:
-            // they are `control-engage`'s own t90 pair (60·ln10 = 138ms attack,
-            // 180·ln10 = 414ms release), which is the envelope register's first
-            // honest consumer. The container wears it, because the wake is the ORGAN
-            // of the bar and not of the pill.
-            containerRef.value?.setAttribute("data-eyeglass-wake", "");
-        }
-
         // Fold the travel velocity into the transient `--motion-weight` boost on
         // the SAME element so a far jump deepens its own deform + self-extinguishes.
         writeVelocityWeight(el, liquidSquish.flexVel.value);
@@ -407,15 +337,6 @@ export function useSelectionIndicator<O extends SelectionOption>(
         releaseTimer = setTimeout(() => {
             liquidSquish.squish(0);
             el.style.setProperty("--stretch", String(liquidSquish.stretch.value));
-            if (armed) {
-                // Position is monotone with zero overshoot (§C1); the elasticity is
-                // entirely in the deform, so the retraction is these two scalars
-                // returning to 1 and nothing moving back.
-                el.style.setProperty("--eyeglass-span", "1");
-                el.style.setProperty("--eyeglass-swell", "1");
-                delete el.dataset.eyeglassClamped;
-                containerRef.value?.removeAttribute("data-eyeglass-wake");
-            }
             writeVelocityWeight(el, 0);
             releaseTimer = null;
         }, releaseAt);

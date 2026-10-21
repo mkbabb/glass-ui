@@ -155,6 +155,12 @@
        byte-equal to hover. */
     --fill-hover: 0.05;    /* transient pointer answer */
     --fill-selected: 0.12; /* persistent state — hover cannot mint it */
+    /* The colour-only hover. An inactive label or row moves from
+       `--muted-foreground` toward `--foreground` by this weight on hover, with no
+       scale or lift: `color-mix(in oklab, var(--muted-foreground), var(--foreground)
+       var(--hover-ink-mix))`. It is a weight, not a colour, so the mix resolves on
+       the element and follows any surface that rebinds `--muted-foreground`. */
+    --hover-ink-mix: 45%;
 
     --primary: hsl(24 10% 10%);
     --primary-foreground: var(--neutral-0);

@@ -21,8 +21,10 @@
 //   (d) NO ANCHOR PATH. The second engine was CSS anchor positioning behind an
 //       `@supports not` arm that substituted a static border — a fallback hiding a dead
 //       primary, and the reason the underline never had an engine-independent paint.
-//   (e) THE EYEGLASS, born-RED at zero: `rg -i 'eyeglass|loupe' src demo` returned
-//       nothing at the base commit, for a default the owner ruled standing.
+//   (e) THE GLIDE (U/B7, the owner's order of 2026-10-19: "The tabs animations on the
+//       filter on the homepage is flashy and too gaudy--more glass-ui and subtle").
+//       The eyeglass organ, the `--stretch` deform, the press squish, the capsule hover
+//       and the label delay are deleted; this arm asserts their absence.
 //
 // BOTH SOURCE-SCANNING ARMS STRIP COMMENTS FIRST, and that is not hygiene — it is the
 // difference between a gate that can go green and one that cannot. Simulate the
@@ -31,24 +33,11 @@
 // what one that self-certifies is worth.
 
 import { describe, it, expect } from "vitest";
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { mount } from "@vue/test-utils";
 import { nextTick } from "vue";
 import SegmentedTabs from "../../src/components/tabs/SegmentedTabs.vue";
-import {
-    EYEGLASS_SPAN_MAX,
-    EYEGLASS_SWELL_MAX,
-    EYEGLASS_EDGE_RATIO,
-    EYEGLASS_ORIGIN_FRACTION,
-    EYEGLASS_OVERFLOW_LICENSE,
-    CASCADE_RANKS,
-    CASCADE_RANK_MS,
-    cascadeRankMs,
-    eyeglassSpan,
-    eyeglassSwell,
-    eyeglassOriginPercent,
-} from "../../src/composables/motion/morph/eyeglass";
 
 const TABS_STYLES = join(process.cwd(), "src/components/tabs/styles");
 const SEGMENTED = join(TABS_STYLES, "segmented.css");
@@ -77,7 +66,7 @@ const COMBINATIONS = [
     { variant: "underline", semantics: "tabs" },
 ] as const;
 
-describe("gate:G-TABS-SEAM — one selected-state seam, one indicator, one deform law", () => {
+describe("gate:G-TABS-SEAM — one selected-state seam, one indicator, one glide", () => {
     // ── (a) ──────────────────────────────────────────────────────────────────
     describe("G-TABS-SEAM arm (a) — `[data-active]` is the state, on all four combinations", () => {
         it.each(COMBINATIONS)(
@@ -207,169 +196,84 @@ describe("gate:G-TABS-SEAM — one selected-state seam, one indicator, one defor
     });
 
     // ── (e) ──────────────────────────────────────────────────────────────────
-    describe("G-TABS-SEAM arm (e) — the EYEGLASS is the default, and it is one law", () => {
+    describe("G-TABS-SEAM arm (e) — the indicator glides; nothing else moves", () => {
         const css = stripComments(readFileSync(SEGMENTED, "utf8"));
+        const sfc = readFileSync(
+            join(process.cwd(), "src/components/tabs/SegmentedTabs.vue"),
+            "utf8",
+        );
 
-        it("the pill arms the organ, ONCE, and the paper strip does not", () => {
-            // Exactly one declaration in the family, and it is the pill-only rule —
-            // a second site is a second authority over the ceiling.
-            expect([...css.matchAll(/--eyeglass-span-max\s*:/g)]).toHaveLength(1);
+        it("no eyeglass survives anywhere in src", () => {
+            const hits: string[] = [];
+            const walk = (dir: string): void => {
+                for (const entry of readdirSync(dir, { withFileTypes: true })) {
+                    const path = join(dir, entry.name);
+                    if (entry.isDirectory()) walk(path);
+                    else if (/eyeglass/i.test(readFileSync(path, "utf8"))) hits.push(path);
+                }
+            };
+            walk(join(process.cwd(), "src"));
+            expect(hits).toEqual([]);
+            expect(existsSync(join(process.cwd(), "src/composables/motion/morph/eyeglass.ts"))).toBe(
+                false,
+            );
+        });
+
+        it("the indicator transition is translate/width/height on the dock spring, plus opacity", () => {
+            const block = css.match(/\.segmented-indicator--js\s*\{[^}]*transition:([^;]*);/);
+            expect(block).not.toBeNull();
+            const legs = block![1]!
+                .split(/,(?![^(]*\))/)
+                .map((leg) => leg.trim().split(/\s+/)[0]);
+            expect(legs).toEqual(["translate", "width", "height", "opacity"]);
+            expect(block![1]).not.toMatch(/cartoon-punch/);
+            for (const leg of ["translate", "width", "height"]) {
+                expect(block![1]).toMatch(
+                    new RegExp(`${leg} var\\(--tab-indicator-duration\\) var\\(--spring-dock\\)`),
+                );
+            }
+        });
+
+        it("no scale, deform channel or label delay in the tabs sheet", () => {
+            expect(css).not.toMatch(/\bscale\s*:/);
+            expect(css).not.toMatch(/transform-origin/);
+            expect(css).not.toMatch(/--stretch/);
+            expect(css).not.toMatch(/transition-delay/);
+        });
+
+        it("the SFC carries no press animation and no capsule hover, and deforms nothing", () => {
+            expect(sfc).not.toMatch(/animate\(/);
+            expect(sfc).not.toContain("glass-capsule-hover");
+            expect(sfc).not.toContain("animatePress");
+            expect(sfc).not.toContain("onSelect");
+            expect(sfc).toMatch(/deform:\s*computed\(\(\)\s*=>\s*"none"/);
+        });
+
+        it("hover on an inactive pill tab is colour only, on the shared hover weight", () => {
             expect(css).toMatch(
-                /\.segmented-tabs:not\(\.segmented-tabs--underline\)\s*\{[^}]*--eyeglass-span-max:\s*1\.6/,
+                /\.segmented-tab:not\(\[data-active\]\):hover\s*\{\s*color:\s*color-mix\(in oklab, var\(--muted-foreground\), var\(--foreground\) var\(--hover-ink-mix\)\);\s*\}/,
             );
-        });
-
-        it("the declared ceiling IS the measured one — no second authority", () => {
-            const declared = css.match(/--eyeglass-span-max:\s*([\d.]+)/);
-            expect(declared).not.toBeNull();
-            expect(Number(declared![1])).toBe(EYEGLASS_SPAN_MAX);
-            const clamp = css.match(
-                /\[data-eyeglass-clamped\]\s*\{[^}]*--eyeglass-swell:\s*([\d.]+)/,
+            const tokens = readFileSync(
+                join(process.cwd(), "src/styles/tokens/color-radius.css"),
+                "utf8",
             );
-            expect(clamp).not.toBeNull();
-            expect(Number(clamp![1])).toBe(EYEGLASS_SWELL_MAX);
+            expect(tokens).toMatch(/--hover-ink-mix:\s*45%/);
         });
 
-        it("the track may not clip the organ — the swell's own overflow licence", () => {
-            expect(css).toMatch(/\.segmented-tabs\s*\{[^}]*overflow:\s*visible/);
-            // The licence is DERIVED from the swell, and the two measurements agree:
-            // a symmetric 1.22 swell hangs 11% per side against the seat's own ~10%.
-            expect(EYEGLASS_OVERFLOW_LICENSE).toBeCloseTo(0.11, 5);
-            expect(EYEGLASS_OVERFLOW_LICENSE).toBeGreaterThan(0.09);
-            expect(EYEGLASS_OVERFLOW_LICENSE).toBeLessThan(0.13);
-        });
-
-        it("the 2:1 lead falls out of ONE transform-origin, and the algebra closes", () => {
-            expect(css).toMatch(/transform-origin:\s*var\(--eyeglass-origin/);
-            // Scaling by k about f-from-the-leading-edge: leading travels (1−f)(k−1)w,
-            // trailing f(k−1)w. The ratio must be the measured one, exactly.
-            const f = EYEGLASS_ORIGIN_FRACTION;
-            expect((1 - f) / f).toBeCloseTo(EYEGLASS_EDGE_RATIO, 12);
-            expect(eyeglassOriginPercent(1)).toBeCloseTo(100 - f * 100, 12);
-            expect(eyeglassOriginPercent(-1)).toBeCloseTo(f * 100, 12);
-            expect(eyeglassOriginPercent(0)).toBe(50);
-        });
-
-        it("the span is the UNION of origin and destination, capped, never a fraction pump", () => {
-            // Two 100-wide tabs, 100 apart: the union is 300 wide, so the geometric
-            // span is 3× — well past the ceiling, which is what the ceiling is for.
-            const far = eyeglassSpan({
-                from: { start: 0, end: 100 },
-                to: { start: 200, end: 300 },
-            });
-            expect(far.span).toBe(EYEGLASS_SPAN_MAX);
-            expect(far.clamped).toBe(true);
-            expect(far.direction).toBe(1);
-            // A short hop spans its REAL distance and stops there — the law is
-            // geometry-true first and capped second, never a fixed inflation.
-            const near = eyeglassSpan({
-                from: { start: 0, end: 100 },
-                to: { start: 40, end: 140 },
-            });
-            expect(near.span).toBeCloseTo(1.4, 12);
-            expect(near.clamped).toBe(false);
-            // No travel is no span — a same-tab commit may not lean or stretch.
-            const still = eyeglassSpan({
-                from: { start: 0, end: 100 },
-                to: { start: 0, end: 100 },
-            });
-            expect(still).toEqual({ span: 1, clamped: false, direction: 0 });
-        });
-
-        it("the boundary CLAMPS rather than spanning through the bar's inner edge", () => {
-            // Destination flush against the track's end. The leading edge has ZERO
-            // headroom and a scale is symmetric about its origin, so any growth at all
-            // would put that edge through the wall: the longitudinal channel goes to
-            // nothing and the clamp is REPORTED, which is what routes the whole deform
-            // into the cross-axis pile-up the paint answers with.
-            const wall = eyeglassSpan({
-                from: { start: 0, end: 100 },
-                to: { start: 100, end: 200 },
-                track: { start: 0, end: 200 },
-            });
-            expect(wall).toEqual({ span: 1, clamped: true, direction: 1 });
-            // With headroom the same hop spans partially — the clamp is a boundary,
-            // not a switch that kills the organ near the ends.
-            const roomy = eyeglassSpan({
-                from: { start: 0, end: 100 },
-                to: { start: 100, end: 200 },
-                track: { start: 0, end: 220 },
-            });
-            expect(roomy.clamped).toBe(true);
-            expect(roomy.span).toBeGreaterThan(1);
-            expect(roomy.span).toBeLessThan(2);
-            // Unfenced, the same hop would have spanned its full geometric union.
-            expect(
-                eyeglassSpan({
-                    from: { start: 0, end: 100 },
-                    to: { start: 100, end: 200 },
-                    spanMax: 4,
-                }).span,
-            ).toBeCloseTo(2, 12);
-        });
-
-        it("the swell is largest at travel extremes and absent at rest", () => {
-            expect(eyeglassSwell(0)).toBe(1);
-            expect(eyeglassSwell(1)).toBeCloseTo(EYEGLASS_SWELL_MAX, 12);
-            expect(eyeglassSwell(0.5)).toBeCloseTo(1 + (EYEGLASS_SWELL_MAX - 1) / 2, 12);
-            // Out-of-band input clamps rather than extrapolating into taffy.
-            expect(eyeglassSwell(4)).toBeCloseTo(EYEGLASS_SWELL_MAX, 12);
-        });
-
-        it("the wake and the well ride the ENVELOPE clock, never the travel spring", () => {
-            expect(css).toMatch(
-                /--eyeglass-light-clock:\s*var\(--engage-control-engage-release\)/,
-            );
-            expect(css).toMatch(
-                /\[data-eyeglass-wake\][^{]*\{[^}]*--eyeglass-light-clock:\s*var\(--engage-control-engage-attack\)/,
-            );
-        });
-
-        it("the cascade delay is DERIVED from the rank ladder, not remembered", () => {
-            const declared = css.match(/--eyeglass-cascade-annotation:\s*(\d+)ms/);
-            expect(declared).not.toBeNull();
-            expect(Number(declared![1])).toBe(
-                Math.round(cascadeRankMs(CASCADE_RANKS.annotation)),
-            );
-            // The frame is the unit that reconciles the ladder with the milliseconds
-            // the same seat measured — all three of them, or the unit is wrong.
-            expect(CASCADE_RANK_MS).toBeCloseTo(1000 / 60, 12);
-            expect(cascadeRankMs(CASCADE_RANKS.annotation)).toBeGreaterThanOrEqual(80);
-            expect(cascadeRankMs(CASCADE_RANKS.annotation)).toBeLessThanOrEqual(160);
-            expect(cascadeRankMs(CASCADE_RANKS.content)).toBeCloseTo(250, 0);
-            expect(cascadeRankMs(CASCADE_RANKS.light)).toBeCloseTo(500, 0);
-            expect(css).toMatch(
-                /transition-delay:\s*var\(--eyeglass-cascade-annotation/,
-            );
-        });
-
-        it("the organ actually writes itself onto the node on a real commit", async () => {
+        it("a real commit writes geometry and no deform onto the node", async () => {
             const wrapper = mount(SegmentedTabs, {
                 props: { options: OPTIONS, modelValue: "one", variant: "pill" },
                 attachTo: document.body,
             });
-            const indicator = wrapper.get(".segmented-indicator")
-                .element as HTMLElement;
+            const indicator = wrapper.get(".segmented-indicator").element as HTMLElement;
             const buttons = wrapper.findAll(".segmented-tab");
-            // jsdom reports zero rects, so the span law resolves to no travel; what is
-            // asserted here is that the writer REACHES the node under the default
-            // policy — the geometry itself is a paint obligation, measured live.
             await buttons[2]!.trigger("click");
             await nextTick();
-            expect(indicator.style.getPropertyValue("--stretch")).not.toBe("");
+            await nextTick();
+            expect(indicator.style.getPropertyValue("--stretch")).toBe("");
+            expect(indicator.style.getPropertyValue("--motion-weight")).toBe("");
+            expect(wrapper.element.hasAttribute("data-eyeglass-wake")).toBe(false);
             wrapper.unmount();
-        });
-
-        it("the paper strip has no body to swell — `mark` deforms in length only", () => {
-            expect(
-                readFileSync(
-                    join(process.cwd(), "src/components/tabs/SegmentedTabs.vue"),
-                    "utf8",
-                ),
-            ).toMatch(/deform:\s*computed\(\(\)\s*=>\s*\(isUnderline\.value\s*\?\s*"mark"/);
-            expect(css).toMatch(
-                /\.segmented-tabs--underline\s+\.segmented-indicator\s*\{[^}]*scale:\s*var\(--stretch\)\s*1/,
-            );
         });
     });
 

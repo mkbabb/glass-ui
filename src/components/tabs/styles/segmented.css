@@ -3,14 +3,10 @@
    The standardized SegmentedTabs grammar. ONE indicator engine, ONE indicator
    NODE, TWO materials, ONE orientation axis.
 
-     · PILL    (DEFAULT) — THE GLASS MATERIAL, and the EYEGLASS. The track rides
+     · PILL    (DEFAULT) — THE GLASS MATERIAL. The track rides
                  `--glass-plate-quiet` + a hairline edge; the measured indicator is
                  the selected-reads-as-glass body (a glass tint FORWARD of the
-                 track, NEVER a saturated hue, never an opaque `bg-card`). On a hop
-                 it SPANS origin and destination, leans 2:1 into its travel, swells
-                 across, inverts from a pressed well to a lit dome, and clamps at
-                 the bar's inner edge. The organ is armed HERE, by declaring
-                 `--eyeglass-span-max`; the writer reads it off the cascade.
+                 track, NEVER a saturated hue, never an opaque `bg-card`).
      · UNDERLINE — THE PAPER MATERIAL. NO plate, NO blur, NO track surface — the
                  2px `--foreground` ink hairline. It COMPOSES `.paper-ink-mark`
                  (minted in glass/surface-axis.css) on the SAME measured node the
@@ -29,11 +25,11 @@
 
    `--bouncy-track-trim` is the track's responsive inset; the indicator measures
    the selected button's complete border box instead of reproducing that inset.
-   The DEFORM channels are JS-written and 1 at rest: `--stretch` (the hairline's
-   length), `--eyeglass-span` / `--eyeglass-swell` / `--eyeglass-origin` (the
-   body's). The glide + the deform read ONE clock — `--tab-indicator-duration`
-   (= `--spring-dock-duration`, the travel row's own settle) — so the channels
-   cannot desync and the generic wall-clock tail is gone.
+   THE GLIDE. A selection moves one object: the indicator, by `translate` and
+   `width`/`height` on `--spring-dock` over `--tab-indicator-duration` (zero
+   overshoot). It never deforms, the track never changes, and the tabs never scale
+   on hover or press. Labels change colour on `--duration-fast` with no delay.
+   Under reduced motion the indicator snaps and the colour fade stays.
 
    STATE IS `[data-active]`, PRESENCE-GATED, on both semantics. `[aria-pressed]`
    and `[aria-selected]` are two spellings of one state and a paint rule that picks
@@ -54,20 +50,12 @@
            not change radius across viewports (clean break, the 640px radius lines gone). */
         --bouncy-slider-radius: var(--radius-tab);
         --bouncy-track-radius: calc(var(--bouncy-slider-radius) + var(--bouncy-track-trim));
-        /* The deform channels, at their rest values. `useSelectionIndicator` writes them
-           transiently on the indicator's own style and returns them here at arrival. */
-        --stretch: 1;
         position: relative;
         display: inline-grid;
         grid-auto-flow: column;
         grid-auto-columns: 1fr;
         padding: var(--bouncy-track-trim);
         border-radius: var(--bouncy-track-radius);
-        /* THE ORGAN'S LICENCE. The moving body is taller than the bar it rides in —
-           that is the swell, and it is the whole read: `overflow: hidden` here does not
-           make a tidier track, it decapitates the organ. Stated as a declaration rather
-           than as an absence so nothing "tidies" it back. */
-        overflow: visible;
         /* The warm-glass quiet surface + the rim + the iOS-27
            sunken recess now live in the SHARED `.glass-capsule-track` register (the SFC
            composes it onto the pill track). The track is a thin warm-glass quiet capsule
@@ -121,36 +109,17 @@
         }
     }
 
-    /* ── The measured indicator — ONE node, both materials ──
-       THE LEAN lives in `transform-origin`: scaling a box about the point 1/3 in from
-       its leading edge moves that edge exactly twice as far as the trailing one, which
-       is the 2:1 asymmetry that makes mid-travel read as an egg leaning into its travel
-       rather than a balloon. ONE compositor write; the JS computes the percentage and
-       flips it with the direction, and the cross axis stays centred so the swell is
-       symmetric about the track. */
+    /* ── The measured indicator — ONE node, both materials ── */
     .segmented-indicator {
         position: absolute;
         z-index: 0;
         border-radius: var(--bouncy-slider-radius);
-        /* The material composes onto this same measured node. Motion deforms it in
-           transit; every scalar returns to 1 at rest. */
-        transform-origin: var(--eyeglass-origin, 50%) center;
-        scale: var(--eyeglass-span, var(--stretch)) var(--eyeglass-swell, 1);
-    }
-
-    /* Vertical: the travel axis is the BLOCK axis, so the span and the swell trade
-       places, and so do the two halves of the origin. Same law, read down the other
-       axis — the engine keys off a computed `dim`, never a second sheet. */
-    .segmented-tabs--vertical .segmented-indicator {
-        transform-origin: center var(--eyeglass-origin, 50%);
-        scale: var(--eyeglass-swell, 1) var(--eyeglass-span, var(--stretch));
     }
 
     /* ── The PAPER material, drawn on the SAME measured node ──
-       The mark IS the indicator, painted as its edge rather than as a fill. It
-       lengthens along its travel (`--stretch`) and never thickens: no swell, because a
-       hairline has no body to pile up. The radius reset is load-bearing — the base's
-       9999px turns a `border-block-end` into a pronounced swoop.
+       The mark IS the indicator, painted as its edge rather than as a fill. The
+       radius reset is load-bearing: the base radius turns a `border-block-end` into
+       a pronounced swoop.
 
        PLACEMENT IS LOAD-BEARING TOO. At (0,2,0) this arm already beats the base
        `.segmented-indicator` (0,1,0) wherever it sits, but it TIES the vertical arm
@@ -160,54 +129,15 @@
         background: none;
         border-radius: 0;
         border-block-end: var(--paper-ink-mark-weight) solid var(--paper-ink-mark-color);
-        scale: var(--stretch) 1;
     }
 
     .segmented-tabs--underline.segmented-tabs--vertical .segmented-indicator {
         border-block-end: none;
         border-inline-start: var(--paper-ink-mark-weight) solid var(--paper-ink-mark-color);
-        scale: 1 var(--stretch);
     }
 
-    /* ════════════════════════════════════════════════════════════════════════
-       THE EYEGLASS — the pill's organ. Armed HERE, on the PILL track only, by
-       declaring the span ceiling the writer reads off the cascade. A surface that
-       declares nothing keeps the plain length law: nothing is switched on behind a
-       consumer's back, and nothing degrades to a quieter effect when the organ is
-       absent — it is either declared and alive, or undeclared and honestly not there.
-
-       The figures are transcriptions and their home is
-       `composables/motion/morph/eyeglass.ts`, which owns every one of them and states
-       where each was measured. This sheet declares the ceiling and paints the light. */
-    .segmented-tabs:not(.segmented-tabs--underline) {
-        --eyeglass-span-max: 1.6;
-        /* THE COMMIT CASCADE, rank +6. The object arrives first and everything else is
-           late on purpose: the pill lands at t0, the label takes its ink a beat after,
-           and the light is still decaying when both have stopped. Content-last is the
-           feature — the pill already promised the answer, so the annotation confirming
-           it has nothing to race.
-           The ladder is counted in FRAMES, and the frame is where its two statements
-           reconcile: rank +6 × 16.67ms = 100ms, inside the measured 80–160ms recolour
-           band; +15 = 250ms, the content band's own opening edge; +30 = 500ms, the glow
-           decay exactly. So this is not a second clock — it is the same clock, counted.
-           `composables/motion/morph/eyeglass.ts` holds the ranks and the conversion;
-           this value is their CSS projection and the seam gate derives it from them
-           rather than remembering it. */
-        --eyeglass-cascade-annotation: 100ms;
-        /* The wake's clock, swapped by the state below. Light exits SLOWER than it
-           enters (the envelope register's own charter), so the resting value is the
-           RELEASE and the travelling state substitutes the ATTACK. Both are
-           `control-engage`'s own time constants — the envelope table is the authority
-           for this channel exactly as the spring table is for geometry, and this is the
-           register's first consumer that reads it rather than restating it. */
-        --eyeglass-light-clock: var(--engage-control-engage-release);
-        transition: background var(--eyeglass-light-clock) var(--ease-standard);
-    }
-
-    /* THE POLARITY INVERSION. At rest the selected body is a pressed WELL — it sits
-       down into the track, lit on its top edge only. In motion it becomes a lit DOME.
-       That inversion is the most legible thing the organ does, and it is a LIGHT
-       channel, so it rides the envelope clock above rather than the travel spring. */
+    /* The pill's rest paint: the capsule rim over the inset recess it sits in. It is
+       one paint, never transitioned, in both themes. */
     .segmented-tabs:not(.segmented-tabs--underline) .segmented-indicator {
         box-shadow:
             var(--glass-rim-top),
@@ -215,51 +145,14 @@
             inset 0 1px 2px var(--tab-track-recess-ink);
     }
 
-    /* THE WAKE, and the DOME it carries. The whole bar lifts in chroma ONE FRAME
-       before the pill moves: the writer sets this attribute synchronously inside
-       `select` while the measured geometry lands on the following tick, so the lead is
-       STRUCTURAL — it falls out of when each write happens, not out of a timer someone
-       has to keep true. The same mark raises the body out of its well, because the bar
-       and the pill are one organ and the light arrives together. */
-    .segmented-tabs[data-eyeglass-wake]:not(.segmented-tabs--underline) {
-        --eyeglass-light-clock: var(--engage-control-engage-attack);
-        background: color-mix(
-            in oklab,
-            var(--glass-plate-quiet),
-            var(--glass-capsule-warm) var(--glass-capsule-warm-floor)
-        );
-    }
-
-    .segmented-tabs[data-eyeglass-wake]:not(.segmented-tabs--underline)
-        .segmented-indicator {
-        box-shadow:
-            var(--glass-rim-top),
-            var(--glass-rim-bottom),
-            var(--glass-shadow-capsule);
-    }
-
-    /* THE CLAMP. Driven into the end of the bar the body cannot span further, so it
-       compresses against the inner edge instead. The writer REPORTS the clamp rather
-       than silently shortening the span, and this is the paint that answers it: the
-       pile-up reads as a body meeting a wall, which is the only honest thing a
-       travelling object can do at a boundary. */
-    .segmented-indicator[data-eyeglass-clamped] {
-        --eyeglass-swell: 1.22;
-    }
-
     /* The JS-measured glide. The indicator is moved by inline `translate`/`width`
-       writes; every channel it owns is animated HERE, in ONE list, so nothing later
-       re-declares `transition` and silently drops a leg. Geometry rides the travel
-       spring; the light legs ride the envelope clock the state above swaps. */
+       writes; every channel it owns is animated here, in one list. */
     @media (prefers-reduced-motion: no-preference) {
         .segmented-indicator--js {
             transition:
                 translate var(--tab-indicator-duration) var(--spring-dock),
                 width var(--tab-indicator-duration) var(--spring-dock),
                 height var(--tab-indicator-duration) var(--spring-dock),
-                scale var(--tab-indicator-duration) var(--ease-cartoon-punch),
-                box-shadow var(--eyeglass-light-clock, var(--duration-fast))
-                    var(--ease-standard),
                 opacity var(--duration-fast) ease;
         }
     }
@@ -297,12 +190,7 @@
            the token that table certifies — and the 36:1 is honoured on the LIFT
            channel, where the active label's step to full ink is the whole budget. */
         color: color-mix(in oklab, var(--muted-foreground), var(--glass-capsule-warm) 12%);
-        transition: color var(--duration-fast) ease;
-        /* identity base — keep `scale:1; translate:0` so a hover/press transform never
-           mints a stacking context under the measured indicator (the WAAPI press writes
-           `transform` transiently — harmless). */
-        scale: 1;
-        translate: 0;
+        transition: color var(--duration-fast) var(--ease-standard);
     }
 
     @media (min-width: 640px) {
@@ -313,13 +201,16 @@
     }
 
     /* ONE state seam, both semantics. `[aria-pressed]` and `[aria-selected]` are two
-       spellings of one fact and a paint rule that picks one is dead on the other.
-       The recolour is the cascade's ANNOTATION rank — it follows the body rather than
-       racing it (the delay is 0 where no cascade is declared, i.e. on the paper strip,
-       which has no body to follow). */
+       spellings of one fact and a paint rule that picks one is dead on the other. The
+       arriving label takes full ink with no delay. */
     .segmented-tab[data-active] {
         color: var(--foreground);
-        transition-delay: var(--eyeglass-cascade-annotation, 0s);
+    }
+
+    /* Hover on an inactive pill tab is colour only: the label moves toward full ink
+       by `--hover-ink-mix`. No scale, no lift, no catch-light. */
+    .segmented-tabs:not(.segmented-tabs--underline) .segmented-tab:not([data-active]):hover {
+        color: color-mix(in oklab, var(--muted-foreground), var(--foreground) var(--hover-ink-mix));
     }
 
     .segmented-tab.is-disabled {

@@ -1,9 +1,10 @@
 <script setup lang="ts" generic="T extends string = string">
 // SegmentedTabs has two materials, one orientation axis, one indicator engine, and
-// ONE indicator NODE. `pill` is the eyeglass — the glass body that spans its travel;
-// `underline` is the paper ink mark drawn as that same body's edge. Both measure
-// through the same JS writer, so there is no engine branch and no second element to
-// keep in sync. CSS owns paint; this SFC owns markup and the measured position.
+// ONE indicator NODE. `pill` fills the measured box with glass; `underline` draws its
+// edge as a paper hairline. Both measure through the same JS writer. A selection
+// moves one object, the indicator, by translate/width/height on `--spring-dock`; it
+// never deforms, and the tabs themselves never scale. CSS owns paint; this SFC owns
+// markup and the measured position.
 import { ref, computed, onBeforeUpdate } from "vue";
 import { cn } from "../_shared/class-names";
 import {
@@ -30,15 +31,6 @@ import { useTabResponsive } from "./composables/useTabResponsive";
 import type { SegmentedTabOption, SegmentedTabsProps } from "./types";
 // Motion weight is the sole drag-enrichment axis.
 import { useMotionAxis } from "../_shared/useMotionAxis";
-// WAAPI keyframes can't dereference custom properties — resolve literals at
-// runtime via the cascade root.
-function readToken(name: string, fallback: string): string {
-    if (typeof document === "undefined") return fallback;
-    return (
-        getComputedStyle(document.documentElement).getPropertyValue(name).trim() ||
-        fallback
-    );
-}
 
 const props = withDefaults(defineProps<SegmentedTabsProps<T>>(), {
     variant: "pill",
@@ -66,21 +58,6 @@ const isVertical = computed(() => props.orientation === "vertical");
 const isTabsSemantic = computed(
     () => props.semantics === "tabs" || (!props.semantics && isUnderline.value),
 );
-
-// A non-selected pill tab composes the shared
-// `.glass-capsule-hover` register (specular catch-light lift + press-snap, the iOS
-// "ready to receive" read). Only the PILL material (the underline is paper — a
-// hairline does not lift), only non-selected (the selected tab's indicator carries
-// the lift; hovering it would double-lift), only enabled. The SAME register the
-// buttons greenfield composes wholesale.
-function pillHoverClass(option: SegmentedTabOption<T>): string | false {
-    return (
-        !isUnderline.value &&
-        !isActive(option.value) &&
-        !option.disabled &&
-        "glass-capsule-hover"
-    );
-}
 
 // ONE indicator node, both materials. It used to exist only on the pill, with the
 // underline drawn as a `::before` pseudo position-anchored to `[aria-selected]` —
@@ -119,8 +96,8 @@ const stripModel = computed<T | undefined>({
 //
 // Model + roving machine (exactly-one-tabstop, axis-derived arrows, Home/End, wrap,
 // disabled-skip, manual/automatic activation) + the ONE traveling-indicator writer +
-// the recenter call, assembled once. The press squish rides `onSelect`, so it fires on
-// the pointer AND keyboard commit paths through the same `select`.
+// the recenter call, assembled once. A press acknowledges nothing by itself: the
+// indicator starting to move is the answer.
 const selection = useSelectionGroup<SegmentedTabOption<T>>({
     options: stripOptions,
     model: stripModel,
@@ -130,17 +107,11 @@ const selection = useSelectionGroup<SegmentedTabOption<T>>({
     containerRef,
     indicatorRef,
     buttonRefs,
-    // The material IS the deform policy. The pill is a body of glass with area to
-    // span and swell; the hairline lengthens along its travel and has neither.
-    deform: computed(() => (isUnderline.value ? "mark" : "plate")),
-    onSelect: (_value, idx) => {
-        const btn = buttonRefs.value[idx];
-        if (btn) animatePress(btn);
-    },
+    // Neither material deforms: the glass body and the hairline both glide at their
+    // own size.
+    deform: computed(() => "none" as const),
 });
 
-// The travel deform fires INSIDE the engine's `select` on every commit, on the policy
-// the `deform` param above states.
 const { select, rovingTabindex, singleSliderStyle } = selection;
 const onStripKeydown = selection.onKeydown;
 const isActive = (value: T) => selection.isSelected(value);
@@ -155,7 +126,7 @@ onBeforeUpdate(() => {
 // ── Liquid tab motion ───────────────────────────────────────────────────
 //
 // The drag-morph wiring (the center-anchored snap targets, the `useDragMorph` call,
-// the `--stretch` write + the option/axis refresh watchers) lives in the colocated
+// the option/axis refresh watchers) lives in the colocated
 // `useTabDragMorph` composable. The SFC binds `drag.dragging` and `dragEnabled`;
 // useElementMorph owns
 // the gesture transform.
@@ -170,34 +141,6 @@ const { dragEnabled, drag } = useTabDragMorph({
     buttonRefs,
     model,
 });
-
-// ── Button press animation (Web Animations API) ──
-// The press rides the travel register (`--spring-dock`), one
-// settle-into squish (no double-spring overshoot past the rest scale). Honors
-// reduced-motion.
-
-function animatePress(btn: HTMLElement) {
-    if (
-        typeof window !== "undefined" &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-        return;
-    }
-    btn.getAnimations().forEach((a) => a.cancel());
-    const easing = readToken("--spring-dock", "ease");
-    // The press rung by NAME, with no literal standing behind it: a hand-copied
-    // "0.97" beside the token that declares 0.97 is a second authority free to
-    // disagree with the first, and it is the shape that hides a token going missing.
-    const press = readToken("--scale-press-sm", "");
-    btn.animate(
-        [
-            { transform: "scale(1)" },
-            { transform: `scale(${press})`, offset: 0.4 },
-            { transform: "scale(1)" },
-        ],
-        { duration: 220, easing },
-    );
-}
 
 // The mobile Select emits an untyped value; it resolves through the options, so
 // the model only ever receives one of them.
@@ -320,7 +263,7 @@ function onMobileUpdate(value: unknown) {
                         : { 'aria-pressed': isActive(option.value) ? 'true' : 'false' }),
                 }"
                 :disabled="option.disabled"
-                :class="[option.disabled && 'is-disabled', pillHoverClass(option)]"
+                :class="[option.disabled && 'is-disabled']"
                 @click="select(option.value, idx)"
             >
                 <slot name="option" :option="option" :active="isActive(option.value)">

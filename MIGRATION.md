@@ -5,6 +5,21 @@ records the breaking changes that landed in that cut, newest first. Clean breaks
 — no legacy aliases, no back-compat shims (L invariant 4); every break is a one-line
 rename or import re-point per call site.
 
+## 10.2.0 (proposed by atlas U/B7)
+
+Proposed by the atlas formation on local branch `u/b7-glass-shape` off `release/10.1.1`; glass takes, re-authors or declines each row. Clean breaks, no aliases. The browser witnesses are `tests-visual/b7-shape.config.ts` (harness `tests-visual/b7-shape/`), run in Chromium and Firefox; each fails on the `v10.1.1` tag (bbf176f02) unless the row says otherwise.
+
+- **SegmentedTabs glides; the eyeglass, the press squish and the capsule hover are removed
+  (B7-G1).** The indicator moves by `translate`/`width`/`height` on `--spring-dock` and keeps
+  its size; neither material deforms. Removed with no replacement: the documented arming hook
+  `--eyeglass-span-max`, the `data-eyeglass-wake` and `data-eyeglass-clamped` attributes, the
+  `--stretch` channel on the tabs indicator, the label `transition-delay`, the press
+  animation and `.glass-capsule-hover` on inactive tabs. A consumer that declared
+  `--eyeglass-span-max` deletes the declaration (atlas and sci have none). The drag
+  (`motion="full"`) still follows the pointer and snaps; it no longer squishes.
+- **New token `--hover-ink-mix: 45%`.** The colour-only hover weight: an inactive label moves
+  from `--muted-foreground` toward `--foreground` by this weight. Additive.
+
 ## 10.1.1
 
 One type-level change, below; no runtime break. Behaviour a consumer may notice:

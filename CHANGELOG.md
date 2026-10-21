@@ -1,5 +1,19 @@
 # Changelog
 
+## 10.2.0 (proposed by atlas U/B7)
+
+Proposed by the atlas formation (U/B7, the owner's order of 2026-10-19 in sci-report `atlas/docs/tranches/U/owner-2026-10-19/ORDER.md`). Local branch `u/b7-glass-shape`; no version bump. Engine witnesses: `tests-visual/b7-shape.config.ts`, Chromium and Firefox.
+
+- **SegmentedTabs: one quiet glide (B7-G1).** One object moves, the indicator, in one
+  monotone leg at its own size; labels change colour on `--duration-fast` with no delay;
+  hover is colour only; a press does not squish. `eyeglass.ts` and its arm in
+  `useSelectionIndicator` are deleted. Witness: `tests-visual/SegmentedTabs.glide.spec.ts`
+  (an adjacent and a far hop sampled every frame, width and height within 0.5 px, x
+  monotone, strip edge fixed, pressed tab at scale 1; hover moves colour only). On the
+  `v10.1.1` tag all 6 cells fail (indicator width up to 167.2 px in transit; hover scale
+  1.015); here all 6 pass. Gate: `tests/gates/tabs-seam.test.ts` arm (e) now asserts the
+  absence.
+
 ## 10.1.1 — 2026-10-19
 
 Four cures, one guarded row and one owner-ruled addition. Asked by the atlas consumer (U batch

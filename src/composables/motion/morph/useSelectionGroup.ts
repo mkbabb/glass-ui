@@ -89,7 +89,7 @@ export interface UseSelectionGroupParams<O extends SelectionOption> {
      * unconditionally — that is the Safari-identical guarantee — and
      * `updateSingleSlider` keeps writing a `singleSliderStyle` such a caller never
      * reads. Economizing it is the indicator writer's own change to make.~~
-     * [2026-08-08 · BK #71 W-EYEGLASS, RT-84O: the change was made, in the file this
+     * [2026-08-08 · BK #71, RT-84O: the change was made, in the file this
      * text routed it to. `updateSingleSlider` now returns before its first rect read
      * when `indicatorRef` is null, so such a caller runs ZERO layout. What #84 wrote
      * was true of #84's HEAD and is false of this one — the `ResizeObserver` still
@@ -99,8 +99,7 @@ export interface UseSelectionGroupParams<O extends SelectionOption> {
      */
     indicatorRef?: Ref<HTMLElement | null>;
     /**
-     * What the travelling body is made of — `"plate"` (default, the full body and
-     * the eyeglass host), `"mark"` (a hairline: length only), `"none"`. STATED, not
+     * What the travelling body is made of — `"plate"` (default, the full body), `"mark"` (a hairline: length only), `"none"`. STATED, not
      * inferred: a multi-toggle group has no single travelling body, and that is a
      * different fact from a hairline having no area, even though the old null-ref
      * sentinel spelled both the same way.
