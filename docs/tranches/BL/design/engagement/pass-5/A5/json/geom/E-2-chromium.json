@@ -1,0 +1,1093 @@
+{
+ "id": "E-2",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/A5/out/builds/geom"
+ },
+ "loadStart": "13.2/13.6/16.2",
+ "loadEnd": "14.4/14.1/15.6",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-2 switch Tab-entry light",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on switch",
+   "load": "12.9/13.6/16.2"
+  },
+  {
+   "name": "E-2 switch commit·keyboard(Space) light",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 20.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 44.0 px = 2.20 px (bound > 0.8) · (iii) in paint: rise 0.0082 (peak 0.4118 at +259 ms → rest 0.4036; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 53 ms in the first 400 ms (bound ≤ 75) · trace [+19 0.8065 +61 0.7668 +74 0.7668 +105 0.7095 +140 0.4730 +171 0.4236 +199 0.3964 +238 0.4063 +259 0.4118 +294 0.3983 +347 0.4088 +413 0.4088 +513 0.4091 +659 0.4036 +727 0.4036 +788 0.4036 +842 0.4036 +906 0.4036] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.9224 → rest 0.9224, at rest true; 0.0 quanta of 0.0085, tail spread 0.0000 against 0.0085; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@55ms, background-color@120ms, border-top-color@200ms] · 107 frames, median 7.7 ms",
+   "load": "12.9/13.6/16.2"
+  },
+  {
+   "name": "E-2 switch commit·programmatic light",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 20.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 44.0 px = 2.20 px (bound > 0.8) · (iii) in paint: rise 0.0053 (peak 0.4090 at +349 ms → rest 0.4037; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 55 ms in the first 400 ms (bound ≤ 75) · trace [+18 0.8361 +44 0.5592 +73 0.4365 +107 0.4004 +137 0.3952 +166 0.4042 +196 0.4042 +226 0.4037 +257 0.4089 +294 0.4087 +349 0.4090 +414 0.4089 +518 0.4037 +668 0.4037 +721 0.4037 +788 0.4037 +847 0.4037 +904 0.4037] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.9224 → rest 0.9224, at rest true; 0.0 quanta of 0.0085, tail spread 0.0000 against 0.0085; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@120ms, border-top-color@200ms] · 107 frames, median 7.8 ms",
+   "load": "12.9/13.6/16.2"
+  },
+  {
+   "name": "E-2 switch commit·pointer light",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 20.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 44.0 px = 2.19 px (bound > 0.8) · (iii) in paint: rise 0.0052 (peak 0.4083 at +343 ms → rest 0.4031; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 47 ms in the first 400 ms (bound ≤ 75) · trace [+17 0.7612 +46 0.5715 +76 0.4419 +107 0.4016 +131 0.3926 +168 0.4062 +197 0.4070 +229 0.4031 +258 0.4082 +296 0.4080 +343 0.4083 +417 0.4083 +506 0.4031 +664 0.4031 +716 0.4031 +780 0.4031 +848 0.4031 +907 0.4031] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.9224 → rest 0.9224, at rest true; 0.0 quanta of 0.0085, tail spread 0.0000 against 0.0085; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@120ms, border-top-color@200ms] · 107 frames, median 7.7 ms",
+   "load": "12.5/13.5/16.1"
+  },
+  {
+   "name": "E-2 switch commit·tap(coarse) light",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 20.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 44.0 px = 2.19 px (bound > 0.8) · (iii) in paint: rise 0.0052 (peak 0.4090 at +258 ms → rest 0.4037; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 52 ms in the first 400 ms (bound ≤ 75) · trace [+14 0.8778 +44 0.8448 +72 0.5432 +115 0.4242 +140 0.3992 +168 0.4033 +200 0.4047 +221 0.4069 +258 0.4090 +295 0.4087 +347 0.4089 +417 0.4089 +513 0.4037 +667 0.4037 +728 0.4037 +783 0.4037 +838 0.4037 +906 0.4037] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.9224 → rest 0.9224, at rest true; 0.0 quanta of 0.0085, tail spread 0.0000 against 0.0085; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@120ms, border-top-color@200ms] · 106 frames, median 7.8 ms",
+   "load": "12.5/13.5/16.1"
+  },
+  {
+   "name": "E-2 switch mount(committed) light",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 107 frames · 107 of 107 frames with the target present",
+   "load": "12.1/13.4/16.1"
+  },
+  {
+   "name": "E-2 switch arrival·pre light",
+   "status": "PASS",
+   "line": "state false → true · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 106 frames",
+   "load": "12.1/13.4/16.1"
+  },
+  {
+   "name": "E-2 switch arrival·own light",
+   "status": "PASS",
+   "line": "state false → true · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 106 frames",
+   "load": "12.1/13.4/16.1"
+  },
+  {
+   "name": "E-2 switch arrival·ownflush light",
+   "status": "PASS",
+   "line": "state false → true · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 106 frames",
+   "load": "12.1/13.4/16.1"
+  },
+  {
+   "name": "E-2 switch arrival·late light",
+   "status": "FAIL",
+   "line": "state false → true · after first paint, 1 commit wanted · arm none of [i,iii] · (i) body travel 19.76 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 44.0 px = 2.19 px (bound > 0.8) · (iii) in paint: rise 0.0053 (peak 0.4090 at +414 ms → rest 0.4037; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 17 reads, 1 missed, largest gap 52 ms in the first 400 ms (bound ≤ 75) · trace [+50 0.6027 +79 0.4470 +111 0.4022 +140 0.3923 +169 0.4048 +202 0.4081 +230 0.4038 +253 0.4090 +297 0.4087 +349 0.4090 +414 0.4090 +519 0.4037 +662 0.4037 +728 0.4037 +776 0.4037 +838 0.4037 +910 0.4037] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.9224 → rest 0.9224, at rest true; 0.0 quanta of 0.0085, tail spread 0.0000 against 0.0085; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@120ms, border-top-color@200ms] · 108 frames, median 7.6 ms",
+   "load": "11.8/13.3/16.0"
+  },
+  {
+   "name": "E-2 switch Tab-entry dark",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on switch",
+   "load": "12.0/13.3/16.0"
+  },
+  {
+   "name": "E-2 switch commit·keyboard(Space) dark",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 20.00 px overshoot 0.01 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 44.0 px = 2.20 px (bound > 0.8) · (iii) in paint: rise 0.0000 (peak 0.1762 at +665 ms → rest 0.1762; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 48 ms in the first 400 ms (bound ≤ 75) · trace [+23 0.0183 +43 0.0208 +73 0.0209 +103 0.0220 +133 0.0720 +164 0.1454 +194 0.1705 +222 0.1715 +256 0.1701 +293 0.1718 +341 0.1751 +415 0.1751 +511 0.1751 +665 0.1762 +722 0.1762 +778 0.1762 +845 0.1762 +913 0.1762] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0253 → rest 0.0253, at rest true; 0.0 quanta of 0.0011, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@55ms, background-color@120ms, border-top-color@200ms] · 106 frames, median 7.8 ms",
+   "load": "12.0/13.3/16.0"
+  },
+  {
+   "name": "E-2 switch commit·programmatic dark",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 20.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 44.0 px = 2.20 px (bound > 0.8) · (iii) in paint: rise 0.0000 (peak 0.1761 at +507 ms → rest 0.1761; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 54 ms in the first 400 ms (bound ≤ 75) · trace [+14 0.0140 +49 0.0536 +79 0.1339 +107 0.1683 +138 0.1744 +166 0.1699 +198 0.1709 +227 0.1761 +256 0.1751 +294 0.1752 +348 0.1751 +416 0.1751 +507 0.1761 +673 0.1761 +727 0.1761 +775 0.1761 +836 0.1761 +913 0.1761] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0253 → rest 0.0253, at rest true; 0.0 quanta of 0.0011, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@120ms, border-top-color@200ms] · 103 frames, median 7.9 ms",
+   "load": "12.0/13.3/16.0"
+  },
+  {
+   "name": "E-2 switch commit·pointer dark",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 20.00 px overshoot 0.01 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 44.0 px = 2.20 px (bound > 0.8) · (iii) in paint: rise 0.0000 (peak 0.1870 at +505 ms → rest 0.1870; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 43 ms in the first 400 ms (bound ≤ 75) · trace [+19 0.0265 +41 0.0753 +73 0.1514 +103 0.1801 +136 0.1820 +165 0.1806 +198 0.1821 +227 0.1861 +256 0.1860 +298 0.1861 +341 0.1860 +415 0.1860 +505 0.1870 +670 0.1870 +722 0.1870 +775 0.1870 +836 0.1870 +912 0.1870] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0253 → rest 0.0253, at rest true; 0.0 quanta of 0.0011, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@120ms, border-top-color@200ms] · 107 frames, median 7.7 ms",
+   "load": "12.8/13.5/16.1"
+  },
+  {
+   "name": "E-2 switch commit·tap(coarse) dark",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 20.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 44.0 px = 2.20 px (bound > 0.8) · (iii) in paint: rise 0.0000 (peak 0.1761 at +514 ms → rest 0.1761; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 49 ms in the first 400 ms (bound ≤ 75) · trace [+20 0.0148 +43 0.0168 +73 0.0872 +111 0.1585 +140 0.1737 +162 0.1703 +191 0.1691 +221 0.1716 +257 0.1751 +295 0.1752 +344 0.1751 +417 0.1752 +514 0.1761 +675 0.1761 +715 0.1761 +777 0.1761 +837 0.1761 +910 0.1761] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0253 → rest 0.0253, at rest true; 0.0 quanta of 0.0011, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@120ms, border-top-color@200ms] · 105 frames, median 7.7 ms",
+   "load": "12.8/13.5/16.1"
+  },
+  {
+   "name": "E-2 switch mount(committed) dark",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 107 frames · 107 of 107 frames with the target present",
+   "load": "12.8/13.5/16.1"
+  },
+  {
+   "name": "E-2 switch arrival·pre dark",
+   "status": "PASS",
+   "line": "state false → true · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 108 frames",
+   "load": "17.1/14.3/16.3"
+  },
+  {
+   "name": "E-2 switch arrival·own dark",
+   "status": "PASS",
+   "line": "state false → true · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 108 frames",
+   "load": "17.1/14.3/16.3"
+  },
+  {
+   "name": "E-2 switch arrival·ownflush dark",
+   "status": "PASS",
+   "line": "state false → true · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 108 frames",
+   "load": "17.1/14.3/16.3"
+  },
+  {
+   "name": "E-2 switch arrival·late dark",
+   "status": "FAIL",
+   "line": "state false → true · after first paint, 1 commit wanted · arm none of [i,iii] · (i) body travel 19.76 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 44.0 px = 2.20 px (bound > 0.8) · (iii) in paint: rise 0.0000 (peak 0.1762 at +225 ms → rest 0.1761; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 17 reads, 1 missed, largest gap 53 ms in the first 400 ms (bound ≤ 75) · trace [+43 0.0240 +75 0.1116 +104 0.1607 +133 0.1737 +171 0.1707 +200 0.1706 +225 0.1762 +255 0.1751 +292 0.1752 +345 0.1751 +418 0.1751 +508 0.1761 +659 0.1761 +714 0.1761 +786 0.1761 +838 0.1761 +904 0.1761] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0253 → rest 0.0253, at rest true; 0.0 quanta of 0.0011, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@120ms, border-top-color@200ms] · 107 frames, median 7.7 ms",
+   "load": "16.4/14.2/16.3"
+  },
+  {
+   "name": "E-2 checkbox Tab-entry light",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on checkbox",
+   "load": "16.4/14.2/16.3"
+  },
+  {
+   "name": "E-2 checkbox commit·keyboard(Space) light",
+   "status": "PASS",
+   "line": "state false → true · arm iii of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) in paint: rise 0.0111 (peak 0.1074 at +514 ms → rest 0.0963; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 47 ms in the first 400 ms (bound ≤ 75) · trace [+23 0.7443 +47 0.6872 +76 0.6800 +102 0.6038 +140 0.1504 +162 0.1095 +199 0.0893 +228 0.1039 +256 0.0975 +296 0.0963 +343 0.1065 +418 0.1068 +514 0.1074 +667 0.0963 +723 0.0963 +778 0.0963 +835 0.0963 +910 0.0963] · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0300 → rest 0.0300, at rest true; 0.0 quanta of 0.0012, tail spread 0.0000 against 0.0040; composite verdict fail DISAGREES with paint) on envelope clocks [60] of the layers channel's [60] ms; light anims [background-color@55ms, background-color@120ms, border-top-color@200ms, opacity@60ms] · 108 frames, median 7.7 ms",
+   "load": "16.4/14.2/16.3"
+  },
+  {
+   "name": "E-2 checkbox commit·programmatic light",
+   "status": "PASS",
+   "line": "state false → true · arm iii of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) in paint: rise 0.0137 (peak 0.1100 at +139 ms → rest 0.0963; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 46 ms in the first 400 ms (bound ≤ 75) · trace [+18 0.8019 +48 0.2555 +78 0.1139 +107 0.0930 +139 0.1100 +164 0.0978 +193 0.0974 +231 0.0964 +260 0.1065 +297 0.1065 +343 0.1069 +423 0.1073 +511 0.0963 +662 0.0963 +715 0.0963 +780 0.0963 +842 0.0963 +906 0.0963] · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0300 → rest 0.0300, at rest true; 0.0 quanta of 0.0012, tail spread 0.0000 against 0.0040; composite verdict fail DISAGREES with paint) on envelope clocks [60] of the layers channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@60ms] · 109 frames, median 7.5 ms",
+   "load": "16.3/14.2/16.3"
+  },
+  {
+   "name": "E-2 checkbox commit·pointer light",
+   "status": "PASS",
+   "line": "state false → true · arm iii of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) in paint: rise 0.0142 (peak 0.1094 at +138 ms → rest 0.0952; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 53 ms in the first 400 ms (bound ≤ 75) · trace [+20 0.6675 +45 0.3976 +77 0.1233 +103 0.0946 +138 0.1094 +167 0.0976 +197 0.0961 +226 0.0951 +258 0.1057 +293 0.1054 +346 0.1057 +420 0.1060 +504 0.0952 +661 0.0952 +715 0.0952 +787 0.0952 +840 0.0952 +908 0.0952] · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0283 → rest 0.0283, at rest true; 0.0 quanta of 0.0011, tail spread 0.0000 against 0.0040; composite verdict fail DISAGREES with paint) on envelope clocks [60] of the layers channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@60ms] · 109 frames, median 7.7 ms",
+   "load": "15.7/14.2/16.3"
+  },
+  {
+   "name": "E-2 checkbox commit·tap(coarse) light",
+   "status": "PASS",
+   "line": "state false → true · arm iii of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) in paint: rise 0.0103 (peak 0.1071 at +417 ms → rest 0.0963; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 52 ms in the first 400 ms (bound ≤ 75) · trace [+20 0.8802 +51 0.5203 +81 0.1492 +102 0.1027 +138 0.0976 +167 0.1038 +190 0.0977 +231 0.0968 +253 0.1068 +291 0.1065 +343 0.1067 +417 0.1071 +505 0.0963 +665 0.0963 +719 0.0963 +784 0.0963 +844 0.0963 +906 0.0963] · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0300 → rest 0.0300, at rest true; 0.0 quanta of 0.0012, tail spread 0.0000 against 0.0040; composite verdict fail DISAGREES with paint) on envelope clocks [60] of the layers channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@60ms] · 106 frames, median 7.8 ms",
+   "load": "15.7/14.2/16.3"
+  },
+  {
+   "name": "E-2 checkbox mount(committed) light",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 106 frames · 106 of 106 frames with the target present",
+   "load": "15.7/14.2/16.3"
+  },
+  {
+   "name": "E-2 checkbox arrival·pre light",
+   "status": "PASS",
+   "line": "state false → true · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 106 frames",
+   "load": "15.2/14.1/16.2"
+  },
+  {
+   "name": "E-2 checkbox arrival·own light",
+   "status": "PASS",
+   "line": "state false → true · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 104 frames",
+   "load": "15.2/14.1/16.2"
+  },
+  {
+   "name": "E-2 checkbox arrival·ownflush light",
+   "status": "PASS",
+   "line": "state false → true · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 107 frames",
+   "load": "15.2/14.1/16.2"
+  },
+  {
+   "name": "E-2 checkbox arrival·late light",
+   "status": "PASS",
+   "line": "state false → true · after first paint, 1 commit wanted · arm iii of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) in paint: rise 0.0148 (peak 0.1111 at +136 ms → rest 0.0963; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 17 reads, 1 missed, largest gap 49 ms in the first 400 ms (bound ≤ 75) · trace [+49 0.4638 +81 0.1298 +106 0.0963 +136 0.1111 +165 0.0994 +195 0.0974 +223 0.0967 +254 0.1068 +299 0.1065 +348 0.1068 +415 0.1072 +505 0.0963 +668 0.0963 +723 0.0963 +782 0.0963 +838 0.0963 +903 0.0963] · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0300 → rest 0.0300, at rest true; 0.0 quanta of 0.0012, tail spread 0.0000 against 0.0040; composite verdict fail DISAGREES with paint) on envelope clocks [60] of the layers channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@60ms] · 107 frames, median 7.7 ms",
+   "load": "15.2/14.1/16.2"
+  },
+  {
+   "name": "E-2 checkbox Tab-entry dark",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on checkbox",
+   "load": "14.7/14.0/16.2"
+  },
+  {
+   "name": "E-2 checkbox commit·keyboard(Space) dark",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) in paint: rise 0.0000 (peak 0.2580 at +673 ms → rest 0.2580; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 54 ms in the first 400 ms (bound ≤ 75) · trace [+20 0.0044 +40 0.0111 +82 0.0122 +103 0.0142 +139 0.1184 +166 0.2140 +197 0.2472 +224 0.2547 +255 0.2575 +292 0.2577 +346 0.2530 +418 0.2530 +518 0.2528 +673 0.2580 +715 0.2580 +779 0.2580 +846 0.2580 +913 0.2580] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.2893 → rest 0.2893, at rest true; 0.0 quanta of 0.0043, tail spread 0.0000 against 0.0043; composite verdict fail) on envelope clocks [60] of the layers channel's [60] ms; light anims [background-color@55ms, background-color@120ms, border-top-color@200ms, opacity@60ms] · 107 frames, median 7.6 ms",
+   "load": "14.7/14.0/16.2"
+  },
+  {
+   "name": "E-2 checkbox commit·programmatic dark",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) in paint: rise 0.0000 (peak 0.2580 at +505 ms → rest 0.2580; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 46 ms in the first 400 ms (bound ≤ 75) · trace [+15 0.0025 +44 0.0464 +82 0.2043 +102 0.2416 +139 0.2547 +169 0.2575 +198 0.2577 +228 0.2579 +260 0.2530 +298 0.2531 +344 0.2530 +410 0.2528 +505 0.2580 +662 0.2580 +716 0.2580 +779 0.2580 +842 0.2580 +910 0.2580] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.2893 → rest 0.2893, at rest true; 0.0 quanta of 0.0043, tail spread 0.0000 against 0.0043; composite verdict fail) on envelope clocks [60] of the layers channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@60ms] · 109 frames, median 7.7 ms",
+   "load": "14.2/13.9/16.1"
+  },
+  {
+   "name": "E-2 checkbox commit·pointer dark",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) in paint: rise 0.0000 (peak 0.2760 at +516 ms → rest 0.2760; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 51 ms in the first 400 ms (bound ≤ 75) · trace [+12 0.0149 +43 0.1086 +73 0.2244 +102 0.2641 +136 0.2725 +165 0.2756 +198 0.2758 +226 0.2760 +249 0.2707 +294 0.2707 +345 0.2707 +412 0.2705 +516 0.2760 +663 0.2760 +722 0.2760 +778 0.2760 +848 0.2760 +910 0.2760] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.3094 → rest 0.3094, at rest true; 0.0 quanta of 0.0044, tail spread 0.0000 against 0.0044; composite verdict fail) on envelope clocks [60] of the layers channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@60ms] · 107 frames, median 7.6 ms",
+   "load": "14.2/13.9/16.1"
+  },
+  {
+   "name": "E-2 checkbox commit·tap(coarse) dark",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) in paint: rise 0.0000 (peak 0.2580 at +505 ms → rest 0.2580; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 46 ms in the first 400 ms (bound ≤ 75) · trace [+22 0.0027 +43 0.0074 +73 0.1194 +102 0.2176 +131 0.2502 +169 0.2571 +198 0.2577 +220 0.2577 +259 0.2530 +297 0.2531 +343 0.2530 +416 0.2529 +505 0.2580 +663 0.2580 +727 0.2580 +777 0.2580 +837 0.2580 +904 0.2580] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.2893 → rest 0.2893, at rest true; 0.0 quanta of 0.0043, tail spread 0.0000 against 0.0043; composite verdict fail) on envelope clocks [60] of the layers channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@60ms] · 108 frames, median 7.8 ms",
+   "load": "14.4/14.0/16.1"
+  },
+  {
+   "name": "E-2 checkbox mount(committed) dark",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 107 frames · 107 of 107 frames with the target present",
+   "load": "14.4/14.0/16.1"
+  },
+  {
+   "name": "E-2 checkbox arrival·pre dark",
+   "status": "PASS",
+   "line": "state false → true · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 107 frames",
+   "load": "14.4/14.0/16.1"
+  },
+  {
+   "name": "E-2 checkbox arrival·own dark",
+   "status": "PASS",
+   "line": "state false → true · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 108 frames",
+   "load": "14.7/14.0/16.1"
+  },
+  {
+   "name": "E-2 checkbox arrival·ownflush dark",
+   "status": "PASS",
+   "line": "state false → true · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 109 frames",
+   "load": "14.7/14.0/16.1"
+  },
+  {
+   "name": "E-2 checkbox arrival·late dark",
+   "status": "FAIL",
+   "line": "state false → true · after first paint, 1 commit wanted · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) in paint: rise 0.0000 (peak 0.2580 at +517 ms → rest 0.2580; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 17 reads, 1 missed, largest gap 51 ms in the first 400 ms (bound ≤ 75) · trace [+51 0.0575 +72 0.1616 +105 0.2398 +134 0.2545 +164 0.2573 +196 0.2576 +224 0.2579 +254 0.2530 +296 0.2531 +346 0.2530 +421 0.2528 +517 0.2580 +669 0.2580 +722 0.2580 +786 0.2580 +838 0.2580 +912 0.2580] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.2893 → rest 0.2893, at rest true; 0.0 quanta of 0.0043, tail spread 0.0000 against 0.0043; composite verdict fail) on envelope clocks [60] of the layers channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@60ms] · 104 frames, median 7.8 ms",
+   "load": "14.7/14.0/16.1"
+  },
+  {
+   "name": "E-2 radio Tab-entry light",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on radio",
+   "load": "14.4/14.0/16.1"
+  },
+  {
+   "name": "E-2 radio commit·keyboard(ArrowDown) light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · arm iii of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) in paint: rise 0.0362 (peak 0.2985 at +414 ms → rest 0.2623; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 45 ms in the first 400 ms (bound ≤ 75) · trace [+17 0.8371 +45 0.4445 +87 0.2465 +108 0.2441 +144 0.2537 +180 0.2562 +201 0.2629 +234 0.2612 +264 0.2968 +302 0.2964 +347 0.2968 +414 0.2985 +517 0.2623 +669 0.2623 +717 0.2623 +782 0.2623 +833 0.2623 +913 0.2623] · beside it the composite: light rise 0.0000 on the layers channel (peak 0.9566 → rest 0.9566, at rest true; 0.0 quanta of 0.0087, tail spread 0.0000 against 0.0087; composite verdict fail DISAGREES with paint) on envelope clocks [60] of the layers channel's [60] ms; light anims [outline-color@200ms, background-color@120ms, border-top-color@200ms, opacity@180ms, opacity@60ms] · 104 frames, median 7.8 ms",
+   "load": "14.4/14.0/16.1"
+  },
+  {
+   "name": "E-2 radio commit·programmatic light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · arm iii of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) in paint: rise 0.0362 (peak 0.2985 at +413 ms → rest 0.2623; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 44 ms in the first 400 ms (bound ≤ 75) · trace [+16 0.8444 +45 0.4367 +77 0.2473 +100 0.2448 +138 0.2534 +167 0.2549 +199 0.2622 +230 0.2612 +257 0.2968 +298 0.2964 +342 0.2968 +413 0.2985 +508 0.2623 +673 0.2623 +719 0.2623 +781 0.2623 +842 0.2623 +905 0.2623] · beside it the composite: light rise 0.0000 on the layers channel (peak 0.9566 → rest 0.9566, at rest true; 0.0 quanta of 0.0087, tail spread 0.0000 against 0.0087; composite verdict fail DISAGREES with paint) on envelope clocks [60] of the layers channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@180ms, opacity@60ms] · 106 frames, median 7.7 ms",
+   "load": "13.7/13.8/16.0"
+  },
+  {
+   "name": "E-2 radio commit·pointer light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · arm iii of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) in paint: rise 0.0362 (peak 0.2975 at +413 ms → rest 0.2613; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 54 ms in the first 400 ms (bound ≤ 75) · trace [+17 0.5843 +46 0.2785 +79 0.2400 +104 0.2249 +139 0.2597 +164 0.2498 +201 0.2610 +227 0.2595 +259 0.2953 +293 0.2953 +347 0.2959 +413 0.2975 +517 0.2613 +675 0.2613 +719 0.2613 +786 0.2613 +839 0.2613 +911 0.2613] · beside it the composite: light rise 0.0000 on the layers channel (peak 0.9566 → rest 0.9566, at rest true; 0.0 quanta of 0.0087, tail spread 0.0000 against 0.0087; composite verdict fail DISAGREES with paint) on envelope clocks [60] of the layers channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@180ms, opacity@60ms] · 106 frames, median 7.8 ms",
+   "load": "13.7/13.8/16.0"
+  },
+  {
+   "name": "E-2 radio commit·tap(coarse) light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · arm iii of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) in paint: rise 0.0362 (peak 0.2985 at +417 ms → rest 0.2623; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 43 ms in the first 400 ms (bound ≤ 75) · trace [+21 0.8598 +44 0.7161 +79 0.2690 +104 0.2439 +139 0.2523 +170 0.2499 +198 0.2506 +229 0.2618 +261 0.2969 +299 0.2964 +342 0.2968 +417 0.2985 +511 0.2623 +667 0.2623 +719 0.2623 +779 0.2623 +843 0.2623 +908 0.2623] · beside it the composite: light rise 0.0000 on the layers channel (peak 0.9566 → rest 0.9566, at rest true; 0.0 quanta of 0.0087, tail spread 0.0000 against 0.0087; composite verdict fail DISAGREES with paint) on envelope clocks [60] of the layers channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@180ms, opacity@60ms] · 108 frames, median 7.8 ms",
+   "load": "13.3/13.7/16.0"
+  },
+  {
+   "name": "E-2 radio mount(committed) light",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 105 frames · 105 of 105 frames with the target present",
+   "load": "13.3/13.7/16.0"
+  },
+  {
+   "name": "E-2 radio arrival·pre light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 108 frames",
+   "load": "13.3/13.7/16.0"
+  },
+  {
+   "name": "E-2 radio arrival·own light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 109 frames",
+   "load": "13.3/13.7/16.0"
+  },
+  {
+   "name": "E-2 radio arrival·ownflush light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 106 frames",
+   "load": "12.9/13.7/16.0"
+  },
+  {
+   "name": "E-2 radio arrival·late light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · after first paint, 1 commit wanted · arm iii of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) in paint: rise 0.0362 (peak 0.2985 at +415 ms → rest 0.2623; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 17 reads, 1 missed, largest gap 47 ms in the first 400 ms (bound ≤ 75) · trace [+47 0.5529 +77 0.2605 +115 0.2512 +144 0.2538 +175 0.2472 +203 0.2624 +235 0.2618 +264 0.2968 +308 0.2964 +343 0.2968 +415 0.2985 +511 0.2623 +666 0.2623 +727 0.2623 +777 0.2623 +843 0.2623 +916 0.2623] · beside it the composite: light rise 0.0000 on the layers channel (peak 0.9566 → rest 0.9566, at rest true; 0.0 quanta of 0.0087, tail spread 0.0000 against 0.0087; composite verdict fail DISAGREES with paint) on envelope clocks [60] of the layers channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@180ms, opacity@60ms] · 106 frames, median 7.7 ms",
+   "load": "12.9/13.7/16.0"
+  },
+  {
+   "name": "E-2 radio Tab-entry dark",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on radio",
+   "load": "12.1/13.5/15.9"
+  },
+  {
+   "name": "E-2 radio commit·keyboard(ArrowDown) dark",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) in paint: rise 0.0001 (peak 0.2135 at +224 ms → rest 0.2134; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 45 ms in the first 400 ms (bound ≤ 75) · trace [+18 0.0048 +47 0.0477 +75 0.1569 +107 0.2060 +137 0.2069 +166 0.2038 +194 0.2126 +224 0.2135 +253 0.2001 +298 0.2002 +342 0.2001 +416 0.1999 +515 0.2134 +667 0.2134 +717 0.2134 +784 0.2134 +838 0.2134 +913 0.2134] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.2893 → rest 0.0100, at rest true; 0.0 quanta of 0.0006, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [60] of the layers channel's [60] ms; light anims [outline-color@200ms, background-color@120ms, border-top-color@200ms, opacity@180ms, opacity@60ms] · 107 frames, median 7.8 ms",
+   "load": "12.1/13.5/15.9"
+  },
+  {
+   "name": "E-2 radio commit·programmatic dark",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) in paint: rise 0.0000 (peak 0.2134 at +515 ms → rest 0.2134; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 44 ms in the first 400 ms (bound ≤ 75) · trace [+13 0.0048 +42 0.0426 +80 0.1736 +104 0.2058 +134 0.2067 +165 0.2039 +193 0.2127 +222 0.2134 +254 0.2001 +298 0.2002 +342 0.2001 +422 0.1999 +515 0.2134 +673 0.2134 +734 0.2134 +777 0.2134 +842 0.2134 +917 0.2134] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.2893 → rest 0.0100, at rest true; 0.0 quanta of 0.0006, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [60] of the layers channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@180ms, opacity@60ms] · 107 frames, median 7.8 ms",
+   "load": "12.1/13.5/15.9"
+  },
+  {
+   "name": "E-2 radio commit·pointer dark",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) in paint: rise 0.0003 (peak 0.2276 at +229 ms → rest 0.2274; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 50 ms in the first 400 ms (bound ≤ 75) · trace [+16 0.0184 +49 0.1098 +77 0.1931 +107 0.2185 +136 0.2158 +166 0.2148 +199 0.2270 +229 0.2276 +261 0.2137 +299 0.2137 +349 0.2137 +414 0.2134 +507 0.2274 +664 0.2274 +720 0.2274 +774 0.2274 +841 0.2274 +912 0.2274] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.3094 → rest 0.0100, at rest true; 0.0 quanta of 0.0006, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [60] of the layers channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@180ms, opacity@60ms] · 109 frames, median 7.7 ms",
+   "load": "11.7/13.4/15.8"
+  },
+  {
+   "name": "E-2 radio commit·tap(coarse) dark",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) in paint: rise 0.0000 (peak 0.2134 at +511 ms → rest 0.2134; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 47 ms in the first 400 ms (bound ≤ 75) · trace [+21 0.0060 +42 0.0087 +75 0.1114 +104 0.1863 +133 0.2103 +170 0.2031 +199 0.2061 +221 0.2128 +258 0.2002 +295 0.2002 +342 0.2001 +417 0.1999 +511 0.2134 +668 0.2134 +721 0.2134 +791 0.2134 +836 0.2134 +911 0.2134] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.2893 → rest 0.0100, at rest true; 0.0 quanta of 0.0006, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [60] of the layers channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@180ms, opacity@60ms] · 105 frames, median 7.8 ms",
+   "load": "11.7/13.4/15.8"
+  },
+  {
+   "name": "E-2 radio mount(committed) dark",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 107 frames · 107 of 107 frames with the target present",
+   "load": "11.5/13.3/15.8"
+  },
+  {
+   "name": "E-2 radio arrival·pre dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 106 frames",
+   "load": "11.5/13.3/15.8"
+  },
+  {
+   "name": "E-2 radio arrival·own dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 109 frames",
+   "load": "11.5/13.3/15.8"
+  },
+  {
+   "name": "E-2 radio arrival·ownflush dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 107 frames",
+   "load": "11.5/13.3/15.8"
+  },
+  {
+   "name": "E-2 radio arrival·late dark",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · after first paint, 1 commit wanted · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.050 trough 0.993 settle 1.000 on 20.0 px = 1.00 px (bound > 0.8) · (iii) in paint: rise 0.0002 (peak 0.2136 at +230 ms → rest 0.2134; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 17 reads, 1 missed, largest gap 59 ms in the first 400 ms (bound ≤ 75) · trace [+49 0.0414 +77 0.1511 +100 0.1933 +138 0.2067 +166 0.2039 +199 0.2126 +230 0.2136 +260 0.2001 +293 0.2002 +352 0.2002 +412 0.1999 +507 0.2134 +670 0.2134 +723 0.2134 +773 0.2134 +840 0.2134 +906 0.2134] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.2537 → rest 0.0100, at rest true; 0.0 quanta of 0.0006, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [60] of the layers channel's [60] ms; light anims [background-color@120ms, border-top-color@200ms, opacity@180ms, opacity@60ms] · 104 frames, median 7.9 ms",
+   "load": "11.0/13.2/15.7"
+  },
+  {
+   "name": "E-2 tabs Tab-entry light",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on BUTTON",
+   "load": "11.0/13.2/15.7"
+  },
+  {
+   "name": "E-2 tabs commit·keyboard(ArrowRight) light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · arm i of [i,iii] · (i) body travel 78.31 px overshoot 1.79 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 78.3 px = 0.00 px (bound > 0.8) · (iii) in paint: NOT READ (an earlier admitted arm decides the cell; arm iii cannot pass without the paint read) · beside it the composite: light rise 0.0023 on the fill channel (peak 0.7830 → rest 0.7807, at rest true; 0.3 quanta of 0.0077, tail spread 0.0000 against 0.0077; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@60ms, color@200ms, background-color@180ms] · 107 frames, median 7.8 ms",
+   "load": "11.0/13.2/15.7"
+  },
+  {
+   "name": "E-2 tabs commit·programmatic light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · arm i of [i,iii] · (i) body travel 78.31 px overshoot 1.84 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 78.3 px = 0.00 px (bound > 0.8) · (iii) in paint: NOT READ (an earlier admitted arm decides the cell; arm iii cannot pass without the paint read) · beside it the composite: light rise 0.0023 on the fill channel (peak 0.7830 → rest 0.7807, at rest true; 0.3 quanta of 0.0077, tail spread 0.0000 against 0.0077; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@60ms, color@200ms, background-color@180ms] · 107 frames, median 7.7 ms",
+   "load": "10.8/13.1/15.7"
+  },
+  {
+   "name": "E-2 tabs commit·pointer light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · arm i of [i,iii] · (i) body travel 78.31 px overshoot 1.68 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 78.3 px = 0.00 px (bound > 0.8) · (iii) in paint: NOT READ (an earlier admitted arm decides the cell; arm iii cannot pass without the paint read) · beside it the composite: light rise 0.0022 on the fill channel (peak 0.7829 → rest 0.7807, at rest true; 0.3 quanta of 0.0077, tail spread 0.0000 against 0.0077; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@60ms, color@200ms, background-color@120ms, background-color@180ms] · 107 frames, median 7.9 ms",
+   "load": "10.8/13.1/15.7"
+  },
+  {
+   "name": "E-2 tabs commit·tap(coarse) light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · arm i of [i,iii] · (i) body travel 78.31 px overshoot 1.87 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 78.3 px = 0.00 px (bound > 0.8) · (iii) in paint: NOT READ (an earlier admitted arm decides the cell; arm iii cannot pass without the paint read) · beside it the composite: light rise 0.0023 on the fill channel (peak 0.7830 → rest 0.7807, at rest true; 0.3 quanta of 0.0077, tail spread 0.0000 against 0.0077; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@60ms, color@200ms, background-color@180ms] · 108 frames, median 7.7 ms",
+   "load": "10.8/13.1/15.7"
+  },
+  {
+   "name": "E-2 tabs mount(committed) light",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 106 frames · 106 of 106 frames with the target present",
+   "load": "10.8/13.1/15.7"
+  },
+  {
+   "name": "E-2 tabs arrival·pre light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 105 frames",
+   "load": "11.0/13.1/15.7"
+  },
+  {
+   "name": "E-2 tabs arrival·own light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 107 frames",
+   "load": "11.0/13.1/15.7"
+  },
+  {
+   "name": "E-2 tabs arrival·ownflush light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 108 frames",
+   "load": "11.0/13.1/15.7"
+  },
+  {
+   "name": "E-2 tabs arrival·late light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · after first paint, 1 commit wanted · arm i of [i,iii] · (i) body travel 77.68 px overshoot 1.74 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 78.3 px = 0.00 px (bound > 0.8) · (iii) in paint: NOT READ (an earlier admitted arm decides the cell; arm iii cannot pass without the paint read) · beside it the composite: light rise 0.0023 on the fill channel (peak 0.7830 → rest 0.7807, at rest true; 0.3 quanta of 0.0077, tail spread 0.0000 against 0.0077; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@60ms, color@200ms, background-color@180ms] · 106 frames, median 7.8 ms",
+   "load": "11.0/13.1/15.7"
+  },
+  {
+   "name": "E-2 tabs Tab-entry dark",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on BUTTON",
+   "load": "11.4/13.1/15.7"
+  },
+  {
+   "name": "E-2 tabs commit·keyboard(ArrowRight) dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · arm i of [i,iii] · (i) body travel 78.31 px overshoot 1.79 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 78.3 px = 0.00 px (bound > 0.8) · (iii) in paint: NOT READ (an earlier admitted arm decides the cell; arm iii cannot pass without the paint read) · beside it the composite: light rise 0.0043 on the fill channel (peak 0.0076 → rest 0.0033, at rest true; 13.2 quanta of 0.0003, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@60ms, color@200ms, background-color@180ms] · 107 frames, median 7.8 ms",
+   "load": "11.4/13.1/15.7"
+  },
+  {
+   "name": "E-2 tabs commit·programmatic dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · arm i of [i,iii] · (i) body travel 78.31 px overshoot 1.99 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 78.3 px = 0.00 px (bound > 0.8) · (iii) in paint: NOT READ (an earlier admitted arm decides the cell; arm iii cannot pass without the paint read) · beside it the composite: light rise 0.0043 on the fill channel (peak 0.0076 → rest 0.0033, at rest true; 13.2 quanta of 0.0003, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@60ms, color@200ms, background-color@180ms] · 107 frames, median 7.7 ms",
+   "load": "11.4/13.1/15.7"
+  },
+  {
+   "name": "E-2 tabs commit·pointer dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · arm i of [i,iii] · (i) body travel 78.31 px overshoot 1.82 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 78.3 px = 0.00 px (bound > 0.8) · (iii) in paint: NOT READ (an earlier admitted arm decides the cell; arm iii cannot pass without the paint read) · beside it the composite: light rise 0.0020 on the fill channel (peak 0.0202 → rest 0.0033, at rest true; 6.2 quanta of 0.0003, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@60ms, color@200ms, background-color@120ms, background-color@180ms] · 109 frames, median 7.6 ms",
+   "load": "11.4/13.1/15.7"
+  },
+  {
+   "name": "E-2 tabs commit·tap(coarse) dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · arm i of [i,iii] · (i) body travel 78.31 px overshoot 1.84 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 78.3 px = 0.00 px (bound > 0.8) · (iii) in paint: NOT READ (an earlier admitted arm decides the cell; arm iii cannot pass without the paint read) · beside it the composite: light rise 0.0043 on the fill channel (peak 0.0076 → rest 0.0033, at rest true; 13.2 quanta of 0.0003, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@60ms, color@200ms, background-color@180ms] · 108 frames, median 7.8 ms",
+   "load": "11.4/13.1/15.7"
+  },
+  {
+   "name": "E-2 tabs mount(committed) dark",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 106 frames · 106 of 106 frames with the target present",
+   "load": "10.8/13.0/15.6"
+  },
+  {
+   "name": "E-2 tabs arrival·pre dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 108 frames",
+   "load": "10.8/13.0/15.6"
+  },
+  {
+   "name": "E-2 tabs arrival·own dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 108 frames",
+   "load": "10.8/13.0/15.6"
+  },
+  {
+   "name": "E-2 tabs arrival·ownflush dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 109 frames",
+   "load": "10.8/13.0/15.6"
+  },
+  {
+   "name": "E-2 tabs arrival·late dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · after first paint, 1 commit wanted · arm i of [i,iii] · (i) body travel 76.83 px overshoot 1.80 px · (ii) face peak 1.000 trough 1.000 settle 1.000 on 78.3 px = 0.00 px (bound > 0.8) · (iii) in paint: NOT READ (an earlier admitted arm decides the cell; arm iii cannot pass without the paint read) · beside it the composite: light rise 0.0040 on the fill channel (peak 0.0076 → rest 0.0033, at rest true; 12.2 quanta of 0.0003, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@60ms, color@200ms, background-color@180ms] · 107 frames, median 7.7 ms",
+   "load": "11.6/13.1/15.6"
+  },
+  {
+   "name": "E-2 toggle Tab-entry light",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on radio",
+   "load": "11.6/13.1/15.6"
+  },
+  {
+   "name": "E-2 toggle commit·keyboard(ArrowRight) light",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 57.4 px = 1.15 px (bound > 0.8) · (iii) in paint: rise 0.0008 (peak 0.5692 at +297 ms → rest 0.5685; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0062) · 18 reads, largest gap 53 ms in the first 400 ms (bound ≤ 75) · trace [+19 0.6846 +52 0.6060 +80 0.5775 +109 0.5687 +137 0.5675 +167 0.5671 +196 0.5655 +227 0.5685 +260 0.5687 +297 0.5692 +350 0.5689 +416 0.5672 +520 0.5685 +676 0.5685 +722 0.5685 +776 0.5685 +842 0.5685 +909 0.5685] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.7357 → rest 0.7357, at rest true; 0.0 quanta of 0.0075, tail spread 0.0000 against 0.0075; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@120ms, color@180ms] · 107 frames, median 7.8 ms",
+   "load": "11.6/13.1/15.6"
+  },
+  {
+   "name": "E-2 toggle commit·programmatic light",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 57.4 px = 1.15 px (bound > 0.8) · (iii) in paint: rise 0.0001 (peak 0.5765 at +222 ms → rest 0.5764; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0063) · 18 reads, largest gap 46 ms in the first 400 ms (bound ≤ 75) · trace [+18 0.7057 +47 0.6334 +76 0.5913 +105 0.5760 +136 0.5747 +164 0.5756 +193 0.5730 +222 0.5765 +254 0.5750 +297 0.5754 +343 0.5750 +420 0.5731 +512 0.5764 +667 0.5764 +721 0.5764 +785 0.5764 +840 0.5764 +910 0.5764] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.7357 → rest 0.7357, at rest true; 0.0 quanta of 0.0075, tail spread 0.0000 against 0.0075; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [color@180ms, background-color@120ms] · 107 frames, median 7.5 ms",
+   "load": "11.1/13.0/15.6"
+  },
+  {
+   "name": "E-2 toggle commit·pointer light",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 57.4 px = 1.15 px (bound > 0.8) · (iii) in paint: rise 0.0000 (peak 0.6084 at +511 ms → rest 0.6084; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0065) · 18 reads, largest gap 52 ms in the first 400 ms (bound ≤ 75) · trace [+40 0.6722 +54 0.6570 +77 0.6283 +105 0.6173 +136 0.6093 +166 0.6100 +199 0.6076 +230 0.6084 +258 0.6071 +294 0.6078 +346 0.6071 +416 0.6053 +511 0.6084 +666 0.6084 +729 0.6084 +794 0.6084 +849 0.6084 +913 0.6084] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.6731 → rest 0.6731, at rest true; 0.0 quanta of 0.0071, tail spread 0.0000 against 0.0071; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [color@180ms, background-color@120ms] · 107 frames, median 7.7 ms",
+   "load": "11.1/13.0/15.6"
+  },
+  {
+   "name": "E-2 toggle commit·tap(coarse) light",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 73.1 px = 1.46 px (bound > 0.8) · (iii) in paint: rise 0.0000 (peak 0.5411 at +510 ms → rest 0.5411; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0059) · 18 reads, largest gap 50 ms in the first 400 ms (bound ≤ 75) · trace [+29 0.7154 +51 0.6927 +80 0.5998 +102 0.5638 +139 0.5429 +168 0.5420 +200 0.5407 +228 0.5418 +254 0.5413 +300 0.5354 +350 0.5354 +417 0.5381 +510 0.5411 +669 0.5411 +730 0.5411 +777 0.5411 +837 0.5411 +912 0.5411] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.6731 → rest 0.6731, at rest true; 0.0 quanta of 0.0071, tail spread 0.0000 against 0.0071; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [color@180ms, background-color@120ms] · 108 frames, median 7.6 ms",
+   "load": "11.1/13.0/15.6"
+  },
+  {
+   "name": "E-2 toggle mount(committed) light",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 108 frames · 108 of 108 frames with the target present",
+   "load": "11.1/13.0/15.6"
+  },
+  {
+   "name": "E-2 toggle arrival·pre light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 108 frames",
+   "load": "11.1/12.9/15.5"
+  },
+  {
+   "name": "E-2 toggle arrival·own light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 108 frames",
+   "load": "11.1/12.9/15.5"
+  },
+  {
+   "name": "E-2 toggle arrival·ownflush light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 109 frames",
+   "load": "11.1/12.9/15.5"
+  },
+  {
+   "name": "E-2 toggle arrival·late light",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · after first paint, 1 commit wanted · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 57.4 px = 1.15 px (bound > 0.8) · (iii) in paint: rise 0.0000 (peak 0.5764 at +508 ms → rest 0.5764; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0063) · 17 reads, 1 missed, largest gap 53 ms in the first 400 ms (bound ≤ 75) · trace [+44 0.6769 +75 0.6043 +108 0.5770 +137 0.5754 +166 0.5755 +196 0.5725 +225 0.5738 +257 0.5750 +294 0.5754 +347 0.5750 +414 0.5731 +508 0.5764 +660 0.5764 +714 0.5764 +784 0.5764 +834 0.5764 +910 0.5764] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.7357 → rest 0.7357, at rest true; 0.0 quanta of 0.0075, tail spread 0.0000 against 0.0075; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [color@180ms, background-color@120ms] · 106 frames, median 7.6 ms",
+   "load": "10.5/12.8/15.5"
+  },
+  {
+   "name": "E-2 toggle Tab-entry dark",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on radio",
+   "load": "10.5/12.8/15.5"
+  },
+  {
+   "name": "E-2 toggle commit·keyboard(ArrowRight) dark",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 57.4 px = 1.15 px (bound > 0.8) · (iii) in paint: rise 0.0016 (peak 0.0866 at +409 ms → rest 0.0851; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 51 ms in the first 400 ms (bound ≤ 75) · trace [+24 0.0340 +43 0.0373 +76 0.0607 +107 0.0751 +139 0.0821 +173 0.0838 +200 0.0856 +229 0.0851 +259 0.0859 +296 0.0854 +347 0.0859 +409 0.0866 +508 0.0851 +668 0.0851 +728 0.0851 +781 0.0851 +844 0.0851 +915 0.0851] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0183 → rest 0.0183, at rest true; 0.0 quanta of 0.0009, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@120ms, color@180ms] · 108 frames, median 7.4 ms",
+   "load": "10.5/12.8/15.5"
+  },
+  {
+   "name": "E-2 toggle commit·programmatic dark",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 57.4 px = 1.15 px (bound > 0.8) · (iii) in paint: rise 0.0020 (peak 0.0855 at +414 ms → rest 0.0835; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 49 ms in the first 400 ms (bound ≤ 75) · trace [+20 0.0336 +41 0.0409 +78 0.0664 +100 0.0746 +137 0.0816 +166 0.0829 +199 0.0837 +229 0.0834 +261 0.0847 +299 0.0842 +348 0.0847 +414 0.0855 +518 0.0835 +674 0.0835 +724 0.0835 +783 0.0835 +843 0.0835 +915 0.0835] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0183 → rest 0.0183, at rest true; 0.0 quanta of 0.0009, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@120ms, color@180ms] · 107 frames, median 7.6 ms",
+   "load": "10.3/12.7/15.4"
+  },
+  {
+   "name": "E-2 toggle commit·pointer dark",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 57.4 px = 1.15 px (bound > 0.8) · (iii) in paint: rise 0.0020 (peak 0.0956 at +414 ms → rest 0.0936; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 48 ms in the first 400 ms (bound ≤ 75) · trace [+32 0.0469 +48 0.0507 +76 0.0645 +106 0.0816 +137 0.0901 +166 0.0924 +197 0.0944 +220 0.0939 +259 0.0947 +298 0.0942 +346 0.0947 +414 0.0956 +509 0.0936 +665 0.0936 +722 0.0936 +783 0.0936 +836 0.0936 +908 0.0936] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0267 → rest 0.0267, at rest true; 0.0 quanta of 0.0011, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [color@180ms, background-color@120ms] · 106 frames, median 7.7 ms",
+   "load": "10.3/12.7/15.4"
+  },
+  {
+   "name": "E-2 toggle commit·tap(coarse) dark",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 73.1 px = 1.46 px (bound > 0.8) · (iii) in paint: rise 0.0031 (peak 0.0999 at +298 ms → rest 0.0968; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 46 ms in the first 400 ms (bound ≤ 75) · trace [+26 0.0374 +57 0.0433 +73 0.0609 +109 0.0861 +140 0.0938 +169 0.0976 +192 0.0987 +224 0.0974 +253 0.0984 +298 0.0999 +344 0.0997 +414 0.0985 +513 0.0968 +662 0.0968 +716 0.0968 +786 0.0968 +835 0.0968 +907 0.0968] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0267 → rest 0.0267, at rest true; 0.0 quanta of 0.0011, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@120ms, color@180ms] · 110 frames, median 7.7 ms",
+   "load": "10.3/12.7/15.4"
+  },
+  {
+   "name": "E-2 toggle mount(committed) dark",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 106 frames · 106 of 106 frames with the target present",
+   "load": "10.3/12.7/15.4"
+  },
+  {
+   "name": "E-2 toggle arrival·pre dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 105 frames",
+   "load": "10.3/12.7/15.4"
+  },
+  {
+   "name": "E-2 toggle arrival·own dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 109 frames",
+   "load": "10.0/12.5/15.3"
+  },
+  {
+   "name": "E-2 toggle arrival·ownflush dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 107 frames",
+   "load": "10.0/12.5/15.3"
+  },
+  {
+   "name": "E-2 toggle arrival·late dark",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · after first paint, 1 commit wanted · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 57.4 px = 1.15 px (bound > 0.8) · (iii) in paint: rise 0.0020 (peak 0.0855 at +418 ms → rest 0.0835; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 17 reads, 1 missed, largest gap 47 ms in the first 400 ms (bound ≤ 75) · trace [+43 0.0362 +77 0.0598 +105 0.0728 +137 0.0806 +166 0.0823 +198 0.0841 +228 0.0834 +256 0.0847 +298 0.0842 +345 0.0847 +418 0.0855 +506 0.0835 +665 0.0835 +727 0.0835 +776 0.0835 +850 0.0835 +916 0.0835] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0183 → rest 0.0183, at rest true; 0.0 quanta of 0.0009, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@120ms, color@180ms] · 105 frames, median 7.7 ms",
+   "load": "10.0/12.5/15.3"
+  },
+  {
+   "name": "E-2 chip Tab-entry light",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on BUTTON",
+   "load": "10.3/12.6/15.3"
+  },
+  {
+   "name": "E-2 chip commit·keyboard(Space) light",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.81 px (bound > 0.8) · (iii) in paint: rise 0.0742 (peak 0.4543 at +111 ms → rest 0.3800; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0048) · 18 reads, largest gap 52 ms in the first 400 ms (bound ≤ 75) · trace [+25 0.3675 +45 0.3675 +79 0.3675 +111 0.4543 +134 0.4421 +164 0.4122 +202 0.3879 +223 0.3835 +253 0.3795 +296 0.3800 +348 0.3805 +416 0.3805 +511 0.3803 +673 0.3800 +730 0.3800 +783 0.3800 +842 0.3800 +915 0.3800] · beside it the composite: light rise 0.0000 on the fill channel (peak 0.5269 → rest 0.5269, at rest true; 0.0 quanta of 0.0062, tail spread 0.0000 against 0.0062; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@200ms, border-top-color@200ms] · 107 frames, median 7.7 ms",
+   "load": "10.3/12.6/15.3"
+  },
+  {
+   "name": "E-2 chip commit·programmatic light",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.81 px (bound > 0.8) · (iii) in paint: rise 0.0008 (peak 0.3808 at +299 ms → rest 0.3800; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0048) · 18 reads, largest gap 49 ms in the first 400 ms (bound ≤ 75) · trace [+13 0.4626 +50 0.4433 +80 0.4100 +108 0.3918 +137 0.3860 +165 0.3794 +196 0.3789 +227 0.3803 +257 0.3805 +299 0.3808 +348 0.3805 +415 0.3803 +511 0.3800 +670 0.3800 +729 0.3800 +783 0.3800 +848 0.3800 +916 0.3800] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the fill channel (peak 0.5269 → rest 0.5269, at rest true; 0.0 quanta of 0.0062, tail spread 0.0000 against 0.0062; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@200ms, border-top-color@200ms] · 108 frames, median 7.5 ms",
+   "load": "10.3/12.5/15.3"
+  },
+  {
+   "name": "E-2 chip commit·pointer light",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.81 px (bound > 0.8) · (iii) in paint: rise 0.0008 (peak 0.3808 at +299 ms → rest 0.3800; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0048) · 18 reads, largest gap 45 ms in the first 400 ms (bound ≤ 75) · trace [+22 0.4579 +43 0.4459 +75 0.4100 +104 0.3913 +136 0.3831 +167 0.3795 +196 0.3794 +225 0.3803 +254 0.3805 +299 0.3808 +341 0.3805 +416 0.3803 +506 0.3800 +665 0.3800 +726 0.3800 +779 0.3800 +835 0.3800 +916 0.3800] (arm iii FAILS in paint) · beside it the composite: light rise 0.0014 on the fill channel (peak 0.5283 → rest 0.5269, at rest true; 0.2 quanta of 0.0062, tail spread 0.0000 against 0.0062; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@200ms, border-top-color@200ms] · 106 frames, median 7.7 ms",
+   "load": "10.3/12.5/15.3"
+  },
+  {
+   "name": "E-2 chip commit·tap(coarse) light",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 44.0 px = 0.88 px (bound > 0.8) · (iii) in paint: rise 0.0000 (peak 0.4911 at +518 ms → rest 0.4911; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0057) · 18 reads, largest gap 53 ms in the first 400 ms (bound ≤ 75) · trace [+27 0.5895 +45 0.5856 +78 0.5592 +107 0.5238 +136 0.5026 +166 0.4962 +202 0.4898 +223 0.4925 +262 0.4911 +298 0.4856 +351 0.4854 +413 0.4850 +518 0.4911 +682 0.4911 +727 0.4911 +780 0.4911 +849 0.4911 +913 0.4911] (arm iii FAILS in paint) · beside it the composite: light rise 0.0014 on the fill channel (peak 0.5283 → rest 0.5269, at rest true; 0.2 quanta of 0.0062, tail spread 0.0000 against 0.0062; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@200ms, border-top-color@200ms] · 109 frames, median 7.7 ms",
+   "load": "12.7/13.0/15.4"
+  },
+  {
+   "name": "E-2 chip mount(committed) light",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 107 frames · 107 of 107 frames with the target present",
+   "load": "12.7/13.0/15.4"
+  },
+  {
+   "name": "E-2 chip arrival·pre light",
+   "status": "PASS",
+   "line": "state false → true · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 107 frames",
+   "load": "12.7/13.0/15.4"
+  },
+  {
+   "name": "E-2 chip arrival·own light",
+   "status": "PASS",
+   "line": "state false → true · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 106 frames",
+   "load": "12.7/13.0/15.4"
+  },
+  {
+   "name": "E-2 chip arrival·ownflush light",
+   "status": "PASS",
+   "line": "state false → true · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 108 frames",
+   "load": "14.2/13.3/15.5"
+  },
+  {
+   "name": "E-2 chip arrival·late light",
+   "status": "FAIL",
+   "line": "state false → true · after first paint, 1 commit wanted · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.81 px (bound > 0.8) · (iii) in paint: rise 0.0008 (peak 0.3808 at +300 ms → rest 0.3800; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0048) · 17 reads, 1 missed, largest gap 64 ms in the first 400 ms (bound ≤ 75) · trace [+49 0.4538 +73 0.4370 +109 0.3997 +140 0.3864 +168 0.3839 +197 0.3747 +228 0.3798 +258 0.3805 +300 0.3808 +364 0.3805 +418 0.3803 +508 0.3800 +670 0.3800 +715 0.3800 +780 0.3800 +838 0.3800 +907 0.3800] (arm iii FAILS in paint) · beside it the composite: light rise 0.0014 on the fill channel (peak 0.5283 → rest 0.5269, at rest true; 0.2 quanta of 0.0062, tail spread 0.0000 against 0.0062; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@200ms, border-top-color@200ms] · 104 frames, median 7.8 ms",
+   "load": "14.2/13.3/15.5"
+  },
+  {
+   "name": "E-2 chip Tab-entry dark",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on BUTTON",
+   "load": "16.7/13.8/15.7"
+  },
+  {
+   "name": "E-2 chip commit·keyboard(Space) dark",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.81 px (bound > 0.8) · (iii) in paint: rise 0.0000 (peak 0.2315 at +300 ms → rest 0.2315; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 46 ms in the first 400 ms (bound ≤ 75) · trace [+24 0.1996 +62 0.1996 +78 0.1996 +104 0.1807 +134 0.1854 +163 0.2036 +196 0.2193 +231 0.2262 +261 0.2315 +300 0.2315 +346 0.2310 +420 0.2310 +516 0.2313 +666 0.2315 +721 0.2315 +779 0.2315 +840 0.2315 +914 0.2315] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0646 → rest 0.0646, at rest true; 0.0 quanta of 0.0018, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@200ms, border-top-color@200ms] · 107 frames, median 7.6 ms",
+   "load": "16.7/13.8/15.7"
+  },
+  {
+   "name": "E-2 chip commit·programmatic dark",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.81 px (bound > 0.8) · (iii) in paint: rise 0.0005 (peak 0.2321 at +196 ms → rest 0.2315; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 44 ms in the first 400 ms (bound ≤ 75) · trace [+19 0.1807 +54 0.1838 +77 0.2024 +110 0.2184 +136 0.2257 +168 0.2292 +196 0.2321 +226 0.2313 +256 0.2310 +300 0.2307 +342 0.2310 +416 0.2313 +512 0.2315 +667 0.2315 +714 0.2315 +791 0.2315 +839 0.2315 +916 0.2315] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0646 → rest 0.0646, at rest true; 0.0 quanta of 0.0018, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@200ms, border-top-color@200ms] · 107 frames, median 7.6 ms",
+   "load": "16.7/13.8/15.7"
+  },
+  {
+   "name": "E-2 chip commit·pointer dark",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.81 px (bound > 0.8) · (iii) in paint: rise 0.0013 (peak 0.2328 at +190 ms → rest 0.2315; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 51 ms in the first 400 ms (bound ≤ 75) · trace [+18 0.1807 +47 0.1823 +75 0.1980 +109 0.2173 +138 0.2246 +166 0.2292 +190 0.2328 +227 0.2313 +259 0.2310 +295 0.2307 +346 0.2310 +416 0.2313 +513 0.2315 +662 0.2315 +716 0.2315 +778 0.2315 +834 0.2315 +911 0.2315] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0646 → rest 0.0646, at rest true; 0.0 quanta of 0.0018, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@200ms, border-top-color@200ms] · 106 frames, median 7.6 ms",
+   "load": "16.4/13.8/15.7"
+  },
+  {
+   "name": "E-2 chip commit·tap(coarse) dark",
+   "status": "FAIL",
+   "line": "state false → true · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 44.0 px = 0.88 px (bound > 0.8) · (iii) in paint: rise 0.0025 (peak 0.1299 at +420 ms → rest 0.1274; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 46 ms in the first 400 ms (bound ≤ 75) · trace [+18 0.0766 +54 0.0770 +81 0.0855 +108 0.1022 +139 0.1151 +169 0.1229 +197 0.1252 +227 0.1262 +255 0.1299 +293 0.1296 +339 0.1297 +420 0.1299 +530 0.1274 +664 0.1274 +721 0.1274 +778 0.1274 +834 0.1274 +914 0.1274] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0646 → rest 0.0646, at rest true; 0.0 quanta of 0.0018, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@200ms, border-top-color@200ms] · 103 frames, median 8.1 ms",
+   "load": "15.7/13.7/15.6"
+  },
+  {
+   "name": "E-2 chip mount(committed) dark",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 108 frames · 108 of 108 frames with the target present",
+   "load": "15.7/13.7/15.6"
+  },
+  {
+   "name": "E-2 chip arrival·pre dark",
+   "status": "PASS",
+   "line": "state false → true · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 108 frames",
+   "load": "15.7/13.7/15.6"
+  },
+  {
+   "name": "E-2 chip arrival·own dark",
+   "status": "PASS",
+   "line": "state false → true · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 109 frames",
+   "load": "15.7/13.7/15.6"
+  },
+  {
+   "name": "E-2 chip arrival·ownflush dark",
+   "status": "PASS",
+   "line": "state false → true · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 105 frames",
+   "load": "15.7/13.7/15.6"
+  },
+  {
+   "name": "E-2 chip arrival·late dark",
+   "status": "FAIL",
+   "line": "state false → true · after first paint, 1 commit wanted · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.81 px (bound > 0.8) · (iii) in paint: rise 0.0007 (peak 0.2323 at +196 ms → rest 0.2315; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 17 reads, 1 missed, largest gap 49 ms in the first 400 ms (bound ≤ 75) · trace [+48 0.1816 +82 0.2010 +103 0.2126 +136 0.2236 +167 0.2292 +196 0.2323 +228 0.2315 +253 0.2310 +295 0.2307 +344 0.2310 +419 0.2313 +514 0.2315 +663 0.2315 +716 0.2315 +782 0.2315 +849 0.2315 +908 0.2315] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0646 → rest 0.0646, at rest true; 0.0 quanta of 0.0018, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@200ms, border-top-color@200ms] · 107 frames, median 7.6 ms",
+   "load": "15.0/13.6/15.6"
+  },
+  {
+   "name": "E-2 chipaction Tab-entry light",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on BUTTON",
+   "load": "14.4/13.5/15.5"
+  },
+  {
+   "name": "E-2 chipaction commit·keyboard(Space) light",
+   "status": "FAIL",
+   "line": "state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.81 px (bound > 0.8) · (iii) in paint: rise 0.0006 (peak 0.4635 at +354 ms → rest 0.4629; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0053) · 18 reads, largest gap 52 ms in the first 400 ms (bound ≤ 75) · trace [+23 0.3675 +53 0.3675 +89 0.3675 +108 0.4620 +151 0.4622 +171 0.4610 +202 0.4605 +234 0.4617 +269 0.4607 +302 0.4624 +354 0.4635 +420 0.4635 +526 0.4632 +664 0.4629 +718 0.4629 +784 0.4629 +851 0.4629 +908 0.4629] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.6482 → rest 0.6482, at rest true; 0.0 quanta of 0.0069, tail spread 0.0000 against 0.0069; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [] · 104 frames, median 7.7 ms",
+   "load": "14.4/13.5/15.5"
+  },
+  {
+   "name": "E-2 chipaction commit·programmatic light",
+   "status": "FAIL",
+   "line": "element.click() (stateless) · state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.81 px (bound > 0.8) · (iii) in paint: rise 0.0010 (peak 0.4639 at +300 ms → rest 0.4629; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0053) · 18 reads, largest gap 46 ms in the first 400 ms (bound ≤ 75) · trace [+15 0.4624 +46 0.4617 +83 0.4610 +104 0.4605 +132 0.4608 +163 0.4610 +194 0.4621 +230 0.4632 +254 0.4635 +300 0.4639 +344 0.4635 +420 0.4632 +520 0.4629 +664 0.4629 +715 0.4629 +787 0.4629 +837 0.4629 +912 0.4629] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.6482 → rest 0.6482, at rest true; 0.0 quanta of 0.0069, tail spread 0.0000 against 0.0069; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [] · 106 frames, median 7.5 ms",
+   "load": "14.4/13.5/15.5"
+  },
+  {
+   "name": "E-2 chipaction commit·pointer light",
+   "status": "FAIL",
+   "line": "state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.81 px (bound > 0.8) · (iii) in paint: rise 0.0010 (peak 0.4639 at +296 ms → rest 0.4629; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0053) · 18 reads, largest gap 52 ms in the first 400 ms (bound ≤ 75) · trace [+25 0.4621 +45 0.4611 +77 0.4610 +106 0.4605 +136 0.4613 +167 0.4614 +197 0.4620 +220 0.4629 +250 0.4635 +296 0.4639 +348 0.4635 +416 0.4632 +506 0.4629 +666 0.4629 +720 0.4629 +778 0.4629 +836 0.4629 +918 0.4629] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.6482 → rest 0.6482, at rest true; 0.0 quanta of 0.0069, tail spread 0.0000 against 0.0069; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [] · 104 frames, median 7.8 ms",
+   "load": "14.2/13.5/15.5"
+  },
+  {
+   "name": "E-2 chipaction commit·tap(coarse) light",
+   "status": "FAIL",
+   "line": "state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 44.0 px = 0.88 px (bound > 0.8) · (iii) in paint: rise 0.0000 (peak 0.5895 at +510 ms → rest 0.5895; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0064) · 18 reads, largest gap 52 ms in the first 400 ms (bound ≤ 75) · trace [+20 0.5895 +43 0.5904 +78 0.5892 +109 0.5877 +138 0.5893 +169 0.5877 +198 0.5890 +226 0.5906 +256 0.5849 +293 0.5856 +345 0.5853 +415 0.5849 +510 0.5895 +670 0.5895 +722 0.5895 +776 0.5895 +837 0.5895 +909 0.5895] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.6482 → rest 0.6482, at rest true; 0.0 quanta of 0.0069, tail spread 0.0000 against 0.0069; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [] · 108 frames, median 7.7 ms",
+   "load": "14.2/13.5/15.5"
+  },
+  {
+   "name": "E-2 chipaction mount(committed) light",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 108 frames · 108 of 108 frames with the target present",
+   "load": "13.5/13.3/15.5"
+  },
+  {
+   "name": "E-2 chipaction arrival·pre light",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "13.5/13.3/15.5"
+  },
+  {
+   "name": "E-2 chipaction arrival·own light",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "13.5/13.3/15.5"
+  },
+  {
+   "name": "E-2 chipaction arrival·ownflush light",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "13.5/13.3/15.5"
+  },
+  {
+   "name": "E-2 chipaction arrival·late light",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "13.5/13.3/15.5"
+  },
+  {
+   "name": "E-2 chipaction Tab-entry dark",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on BUTTON",
+   "load": "13.5/13.3/15.5"
+  },
+  {
+   "name": "E-2 chipaction commit·keyboard(Space) dark",
+   "status": "FAIL",
+   "line": "state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.81 px (bound > 0.8) · (iii) in paint: rise 0.0003 (peak 0.1801 at +293 ms → rest 0.1798; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 54 ms in the first 400 ms (bound ≤ 75) · trace [+23 0.1996 +44 0.1996 +85 0.1996 +109 0.1804 +140 0.1771 +170 0.1790 +195 0.1794 +223 0.1785 +255 0.1783 +293 0.1801 +347 0.1795 +413 0.1795 +518 0.1797 +660 0.1798 +732 0.1798 +779 0.1798 +849 0.1798 +923 0.1798] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0074 → rest 0.0074, at rest true; 0.0 quanta of 0.0005, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [] · 108 frames, median 7.5 ms",
+   "load": "13.5/13.3/15.5"
+  },
+  {
+   "name": "E-2 chipaction commit·programmatic dark",
+   "status": "FAIL",
+   "line": "element.click() (stateless) · state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.81 px (bound > 0.8) · (iii) in paint: rise 0.0006 (peak 0.1804 at +199 ms → rest 0.1798; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 55 ms in the first 400 ms (bound ≤ 75) · trace [+19 0.1804 +49 0.1771 +71 0.1794 +112 0.1790 +137 0.1782 +167 0.1783 +199 0.1804 +227 0.1797 +257 0.1795 +294 0.1792 +349 0.1795 +416 0.1797 +514 0.1798 +666 0.1798 +728 0.1798 +786 0.1798 +841 0.1798 +914 0.1798] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0074 → rest 0.0074, at rest true; 0.0 quanta of 0.0005, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [] · 107 frames, median 7.8 ms",
+   "load": "13.0/13.2/15.4"
+  },
+  {
+   "name": "E-2 chipaction commit·pointer dark",
+   "status": "FAIL",
+   "line": "state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 40.8 px = 0.81 px (bound > 0.8) · (iii) in paint: rise 0.0003 (peak 0.1801 at +202 ms → rest 0.1798; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 45 ms in the first 400 ms (bound ≤ 75) · trace [+17 0.1801 +41 0.1778 +76 0.1790 +116 0.1790 +141 0.1785 +179 0.1780 +202 0.1801 +232 0.1797 +266 0.1795 +303 0.1792 +348 0.1795 +421 0.1797 +519 0.1798 +662 0.1798 +716 0.1798 +791 0.1798 +841 0.1798 +908 0.1798] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0074 → rest 0.0074, at rest true; 0.0 quanta of 0.0005, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [] · 109 frames, median 7.4 ms",
+   "load": "13.0/13.2/15.4"
+  },
+  {
+   "name": "E-2 chipaction commit·tap(coarse) dark",
+   "status": "FAIL",
+   "line": "state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 44.0 px = 0.88 px (bound > 0.8) · (iii) in paint: rise 0.0016 (peak 0.0782 at +420 ms → rest 0.0766; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 51 ms in the first 400 ms (bound ≤ 75) · trace [+22 0.0766 +43 0.0754 +79 0.0762 +110 0.0767 +133 0.0767 +168 0.0754 +201 0.0756 +224 0.0755 +255 0.0770 +299 0.0781 +350 0.0782 +420 0.0782 +513 0.0766 +661 0.0766 +719 0.0766 +780 0.0766 +842 0.0766 +911 0.0766] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0074 → rest 0.0074, at rest true; 0.0 quanta of 0.0005, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [] · 107 frames, median 8.0 ms",
+   "load": "12.7/13.2/15.4"
+  },
+  {
+   "name": "E-2 chipaction mount(committed) dark",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 107 frames · 107 of 107 frames with the target present",
+   "load": "12.7/13.2/15.4"
+  },
+  {
+   "name": "E-2 chipaction arrival·pre dark",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "12.7/13.2/15.4"
+  },
+  {
+   "name": "E-2 chipaction arrival·own dark",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "12.7/13.2/15.4"
+  },
+  {
+   "name": "E-2 chipaction arrival·ownflush dark",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "12.7/13.2/15.4"
+  },
+  {
+   "name": "E-2 chipaction arrival·late dark",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "12.7/13.2/15.4"
+  },
+  {
+   "name": "E-2 accordion Tab-entry light",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on BUTTON",
+   "load": "18.9/14.5/15.8"
+  },
+  {
+   "name": "E-2 accordion commit·keyboard(Enter) light",
+   "status": "FAIL",
+   "line": "state null → \"one\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 320.0 px = 6.39 px (bound > 0.8) · (iii) in paint: rise 0.0003 (peak 0.9401 at +418 ms → rest 0.9399; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0086) · 18 reads, largest gap 45 ms in the first 400 ms (bound ≤ 75) · trace [+22 0.9316 +43 0.7881 +75 0.7626 +105 0.7669 +133 0.8574 +167 0.9226 +197 0.9395 +226 0.9399 +255 0.9398 +300 0.9398 +343 0.9398 +418 0.9401 +513 0.9399 +668 0.9399 +721 0.9399 +776 0.9399 +842 0.9399 +910 0.9399] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.9566 → rest 0.9566, at rest true; 0.0 quanta of 0.0087, tail spread 0.0000 against 0.0087; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@55ms, opacity@200ms, background-color@120ms] · 108 frames, median 7.6 ms",
+   "load": "18.9/14.5/15.8"
+  },
+  {
+   "name": "E-2 accordion commit·programmatic light",
+   "status": "FAIL",
+   "line": "state null → \"one\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 320.0 px = 6.38 px (bound > 0.8) · (iii) in paint: rise 0.0002 (peak 0.9446 at +109 ms → rest 0.9444; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0086) · 18 reads, largest gap 52 ms in the first 400 ms (bound ≤ 75) · trace [+19 0.9443 +49 0.9443 +77 0.9443 +109 0.9446 +138 0.9444 +171 0.9445 +198 0.9446 +226 0.9444 +255 0.9444 +296 0.9444 +348 0.9444 +417 0.9444 +516 0.9444 +666 0.9444 +716 0.9444 +775 0.9444 +838 0.9444 +917 0.9444] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.9566 → rest 0.9566, at rest true; 0.0 quanta of 0.0087, tail spread 0.0000 against 0.0087; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [opacity@200ms] · 109 frames, median 7.6 ms",
+   "load": "18.9/14.5/15.8"
+  },
+  {
+   "name": "E-2 accordion commit·pointer light",
+   "status": "FAIL",
+   "line": "state null → \"one\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 320.0 px = 6.40 px (bound > 0.8) · (iii) in paint: rise 0.0005 (peak 0.8467 at +143 ms → rest 0.8462; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0081) · 18 reads, largest gap 51 ms in the first 400 ms (bound ≤ 75) · trace [+48 0.7636 +81 0.8222 +97 0.8397 +113 0.8460 +143 0.8467 +171 0.8466 +193 0.8464 +223 0.8466 +251 0.8463 +297 0.8463 +348 0.8462 +414 0.8461 +512 0.8462 +673 0.8462 +719 0.8462 +780 0.8462 +843 0.8462 +917 0.8462] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.8578 → rest 0.8578, at rest true; 0.0 quanta of 0.0082, tail spread 0.0000 against 0.0082; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@120ms, opacity@200ms] · 106 frames, median 7.7 ms",
+   "load": "18.4/14.5/15.8"
+  },
+  {
+   "name": "E-2 accordion commit·tap(coarse) light",
+   "status": "FAIL",
+   "line": "state null → \"one\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 320.0 px = 6.40 px (bound > 0.8) · (iii) in paint: rise 0.0003 (peak 0.9446 at +136 ms → rest 0.9444; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0086) · 18 reads, largest gap 44 ms in the first 400 ms (bound ≤ 75) · trace [+24 0.9444 +45 0.9442 +77 0.9443 +105 0.9443 +136 0.9446 +165 0.9445 +194 0.9445 +229 0.9446 +258 0.9444 +298 0.9444 +342 0.9444 +416 0.9444 +508 0.9444 +665 0.9444 +724 0.9444 +781 0.9444 +835 0.9444 +911 0.9444] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.9566 → rest 0.9566, at rest true; 0.0 quanta of 0.0087, tail spread 0.0000 against 0.0087; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [opacity@200ms] · 108 frames, median 7.6 ms",
+   "load": "18.4/14.5/15.8"
+  },
+  {
+   "name": "E-2 accordion mount(committed) light",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 105 frames · 105 of 105 frames with the target present",
+   "load": "18.4/14.5/15.8"
+  },
+  {
+   "name": "E-2 accordion arrival·pre light",
+   "status": "PASS",
+   "line": "state null → \"one\" · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 107 frames",
+   "load": "17.4/14.3/15.7"
+  },
+  {
+   "name": "E-2 accordion arrival·own light",
+   "status": "PASS",
+   "line": "state null → \"one\" · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 109 frames",
+   "load": "17.4/14.3/15.7"
+  },
+  {
+   "name": "E-2 accordion arrival·ownflush light",
+   "status": "PASS",
+   "line": "state null → \"one\" · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 107 frames",
+   "load": "17.4/14.3/15.7"
+  },
+  {
+   "name": "E-2 accordion arrival·late light",
+   "status": "FAIL",
+   "line": "state null → \"one\" · after first paint, 1 commit wanted · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 320.0 px = 6.40 px (bound > 0.8) · (iii) in paint: rise 0.0003 (peak 0.9446 at +229 ms → rest 0.9444; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0086) · 17 reads, 1 missed, largest gap 50 ms in the first 400 ms (bound ≤ 75) · trace [+43 0.9444 +79 0.9443 +101 0.9443 +131 0.9446 +161 0.9444 +200 0.9445 +229 0.9446 +257 0.9444 +295 0.9444 +345 0.9444 +424 0.9444 +507 0.9444 +670 0.9444 +722 0.9444 +787 0.9444 +839 0.9444 +908 0.9444] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.9566 → rest 0.9566, at rest true; 0.0 quanta of 0.0087, tail spread 0.0000 against 0.0087; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [opacity@200ms] · 106 frames, median 7.5 ms",
+   "load": "18.4/14.6/15.8"
+  },
+  {
+   "name": "E-2 accordion Tab-entry dark",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on BUTTON",
+   "load": "18.4/14.6/15.8"
+  },
+  {
+   "name": "E-2 accordion commit·keyboard(Enter) dark",
+   "status": "PASS",
+   "line": "state null → \"one\" · arm iii of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 320.0 px = 6.40 px (bound > 0.8) · (iii) in paint: rise 0.0110 (peak 0.0226 at +73 ms → rest 0.0110; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 52 ms in the first 400 ms (bound ≤ 75) · trace [+25 0.0116 +44 0.0190 +73 0.0226 +109 0.0217 +139 0.0140 +161 0.0119 +189 0.0109 +226 0.0109 +257 0.0111 +294 0.0111 +346 0.0111 +415 0.0111 +520 0.0110 +661 0.0110 +723 0.0110 +789 0.0110 +847 0.0110 +909 0.0110] · beside it the composite: light rise 0.0116 on the fill channel (peak 0.0147 → rest 0.0031, at rest true; 37.0 quanta of 0.0003, tail spread 0.0000 against 0.0040; composite verdict pass) on envelope clocks [55,120] of the fill channel's [55,120] ms; light anims [background-color@55ms, opacity@200ms, background-color@120ms] · 106 frames, median 7.7 ms",
+   "load": "18.4/14.6/15.8"
+  },
+  {
+   "name": "E-2 accordion commit·programmatic dark",
+   "status": "FAIL",
+   "line": "state null → \"one\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 320.0 px = 6.40 px (bound > 0.8) · (iii) in paint: rise 0.0001 (peak 0.0107 at +264 ms → rest 0.0106; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 49 ms in the first 400 ms (bound ≤ 75) · trace [+20 0.0106 +49 0.0106 +86 0.0107 +116 0.0105 +146 0.0105 +173 0.0105 +205 0.0105 +234 0.0107 +264 0.0107 +302 0.0107 +351 0.0107 +418 0.0107 +509 0.0106 +674 0.0106 +721 0.0106 +777 0.0106 +842 0.0106 +909 0.0106] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0031 → rest 0.0031, at rest true; 0.0 quanta of 0.0003, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [opacity@200ms] · 107 frames, median 7.6 ms",
+   "load": "17.9/14.6/15.8"
+  },
+  {
+   "name": "E-2 accordion commit·pointer dark",
+   "status": "FAIL",
+   "line": "state null → \"one\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 320.0 px = 6.40 px (bound > 0.8) · (iii) in paint: rise 0.0001 (peak 0.0153 at +340 ms → rest 0.0152; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 45 ms in the first 400 ms (bound ≤ 75) · trace [+36 0.0206 +52 0.0180 +73 0.0162 +105 0.0150 +135 0.0151 +164 0.0151 +194 0.0150 +222 0.0152 +252 0.0153 +297 0.0152 +340 0.0153 +413 0.0153 +514 0.0152 +667 0.0152 +720 0.0152 +781 0.0152 +840 0.0152 +914 0.0152] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0078 → rest 0.0078, at rest true; 0.0 quanta of 0.0005, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [background-color@120ms, opacity@200ms] · 106 frames, median 7.7 ms",
+   "load": "17.9/14.6/15.8"
+  },
+  {
+   "name": "E-2 accordion commit·tap(coarse) dark",
+   "status": "FAIL",
+   "line": "state null → \"one\" · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 320.0 px = 6.40 px (bound > 0.8) · (iii) in paint: rise 0.0001 (peak 0.0107 at +347 ms → rest 0.0106; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 52 ms in the first 400 ms (bound ≤ 75) · trace [+32 0.0106 +48 0.0106 +78 0.0106 +114 0.0107 +140 0.0104 +162 0.0105 +191 0.0105 +230 0.0105 +257 0.0107 +295 0.0107 +347 0.0107 +414 0.0107 +508 0.0106 +670 0.0106 +723 0.0106 +787 0.0106 +847 0.0106 +906 0.0106] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0031 → rest 0.0031, at rest true; 0.0 quanta of 0.0003, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [opacity@200ms] · 106 frames, median 7.5 ms",
+   "load": "17.2/14.5/15.8"
+  },
+  {
+   "name": "E-2 accordion mount(committed) dark",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 106 frames · 106 of 106 frames with the target present",
+   "load": "17.2/14.5/15.8"
+  },
+  {
+   "name": "E-2 accordion arrival·pre dark",
+   "status": "PASS",
+   "line": "state null → \"one\" · set before the mount rendered, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 107 frames",
+   "load": "17.2/14.5/15.8"
+  },
+  {
+   "name": "E-2 accordion arrival·own dark",
+   "status": "PASS",
+   "line": "state null → \"one\" · set in the mount's own task, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 108 frames",
+   "load": "17.2/14.5/15.8"
+  },
+  {
+   "name": "E-2 accordion arrival·ownflush dark",
+   "status": "PASS",
+   "line": "state null → \"one\" · set in the mount's own task after a style read, 0 commits wanted, 0 read · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 108 frames",
+   "load": "17.2/14.5/15.8"
+  },
+  {
+   "name": "E-2 accordion arrival·late dark",
+   "status": "FAIL",
+   "line": "state null → \"one\" · after first paint, 1 commit wanted · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 320.0 px = 6.39 px (bound > 0.8) · (iii) in paint: rise 0.0001 (peak 0.0107 at +344 ms → rest 0.0106; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 17 reads, 1 missed, largest gap 50 ms in the first 400 ms (bound ≤ 75) · trace [+49 0.0106 +70 0.0106 +99 0.0107 +137 0.0106 +167 0.0106 +198 0.0104 +226 0.0105 +260 0.0107 +294 0.0107 +344 0.0107 +415 0.0107 +513 0.0106 +662 0.0106 +724 0.0106 +784 0.0106 +839 0.0106 +905 0.0106] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0031 → rest 0.0031, at rest true; 0.0 quanta of 0.0003, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [opacity@200ms] · 107 frames, median 7.7 ms",
+   "load": "17.2/14.5/15.8"
+  },
+  {
+   "name": "E-2 button Tab-entry light",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on BUTTON",
+   "load": "17.7/14.6/15.8"
+  },
+  {
+   "name": "E-2 button commit·keyboard(Space) light",
+   "status": "FAIL",
+   "line": "state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.027 trough 0.997 settle 1.000 on 74.8 px = 2.04 px (bound > 0.8) · (iii) in paint: rise 0.0003 (peak 0.6902 at +258 ms → rest 0.6899; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0070) · 18 reads, largest gap 57 ms in the first 400 ms (bound ≤ 75) · trace [+24 0.6898 +50 0.6897 +79 0.6889 +103 0.6870 +140 0.6883 +169 0.6891 +198 0.6893 +230 0.6891 +258 0.6902 +294 0.6897 +351 0.6894 +417 0.6892 +516 0.6891 +658 0.6899 +716 0.6899 +783 0.6899 +850 0.6899 +924 0.6899] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.7562 → rest 0.7562, at rest true; 0.0 quanta of 0.0076, tail spread 0.0000 against 0.0076; composite verdict fail) on envelope clocks [60,60,60,60,60,60,60,60,60,60,60,60,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180] of the layers channel's [60,60,60,60,60,60,60,60,60,60,60,60,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180] ms; light anims [opacity::before@60ms, opacity::before@180ms] · 110 frames, median 7.7 ms",
+   "load": "17.7/14.6/15.8"
+  },
+  {
+   "name": "E-2 button commit·programmatic light",
+   "status": "FAIL",
+   "line": "element.click() (stateless) · state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 74.8 px = 1.49 px (bound > 0.8) · (iii) in paint: rise 0.0011 (peak 0.6948 at +196 ms → rest 0.6937; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0070) · 18 reads, largest gap 50 ms in the first 400 ms (bound ≤ 75) · trace [+19 0.6934 +48 0.6933 +78 0.6923 +106 0.6934 +137 0.6942 +168 0.6940 +196 0.6948 +225 0.6939 +254 0.6922 +294 0.6924 +344 0.6922 +413 0.6920 +510 0.6937 +674 0.6937 +717 0.6937 +778 0.6937 +839 0.6937 +913 0.6937] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.7562 → rest 0.7562, at rest true; 0.0 quanta of 0.0076, tail spread 0.0000 against 0.0076; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [] · 105 frames, median 7.6 ms",
+   "load": "17.8/14.7/15.8"
+  },
+  {
+   "name": "E-2 button commit·pointer light",
+   "status": "FAIL",
+   "line": "state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.032 trough 0.997 settle 1.000 on 74.8 px = 2.41 px (bound > 0.8) · (iii) in paint: rise 0.0008 (peak 0.6944 at +195 ms → rest 0.6935; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0070) · 18 reads, largest gap 52 ms in the first 400 ms (bound ≤ 75) · trace [+17 0.6914 +46 0.6899 +82 0.6922 +105 0.6933 +140 0.6940 +171 0.6936 +195 0.6944 +229 0.6937 +258 0.6920 +296 0.6922 +348 0.6920 +415 0.6918 +519 0.6935 +676 0.6935 +719 0.6935 +786 0.6935 +842 0.6935 +908 0.6935] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.7562 → rest 0.7562, at rest true; 0.0 quanta of 0.0076, tail spread 0.0000 against 0.0076; composite verdict fail) on envelope clocks [60] of the layers channel's [60] ms; light anims [opacity::before@60ms] · 106 frames, median 7.5 ms",
+   "load": "17.8/14.7/15.8"
+  },
+  {
+   "name": "E-2 button commit·tap(coarse) light",
+   "status": "FAIL",
+   "line": "state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 115.1 px = 2.30 px (bound > 0.8) · (iii) in paint: rise 0.0000 (peak 0.6832 at +513 ms → rest 0.6832; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0069) · 18 reads, largest gap 50 ms in the first 400 ms (bound ≤ 75) · trace [+23 0.6833 +43 0.6831 +75 0.6808 +105 0.6803 +140 0.6822 +172 0.6825 +199 0.6827 +229 0.6828 +258 0.6831 +297 0.6805 +347 0.6803 +414 0.6800 +513 0.6832 +664 0.6832 +717 0.6832 +796 0.6832 +847 0.6832 +915 0.6832] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.7562 → rest 0.7562, at rest true; 0.0 quanta of 0.0076, tail spread 0.0000 against 0.0076; composite verdict fail) on envelope clocks [60] of the layers channel's [60] ms; light anims [opacity::before@60ms] · 108 frames, median 7.6 ms",
+   "load": "16.8/14.6/15.8"
+  },
+  {
+   "name": "E-2 button mount(committed) light",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 107 frames · 107 of 107 frames with the target present",
+   "load": "16.8/14.6/15.8"
+  },
+  {
+   "name": "E-2 button arrival·pre light",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "16.8/14.6/15.8"
+  },
+  {
+   "name": "E-2 button arrival·own light",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "16.8/14.6/15.8"
+  },
+  {
+   "name": "E-2 button arrival·ownflush light",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "16.8/14.6/15.8"
+  },
+  {
+   "name": "E-2 button arrival·late light",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "16.8/14.6/15.8"
+  },
+  {
+   "name": "E-2 button Tab-entry dark",
+   "status": "PASS",
+   "line": "scale range 0.000 body moved 0.00 px light rise 0.0000 (bounds < 0.002, < 1 px, < 0.01) · state unchanged · focus on BUTTON",
+   "load": "16.0/14.4/15.7"
+  },
+  {
+   "name": "E-2 button commit·keyboard(Space) dark",
+   "status": "FAIL",
+   "line": "state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.028 trough 0.997 settle 1.000 on 74.8 px = 2.08 px (bound > 0.8) · (iii) in paint: rise 0.0022 (peak 0.0676 at +105 ms → rest 0.0648; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 51 ms in the first 400 ms (bound ≤ 75) · trace [+20 0.0654 +46 0.0657 +73 0.0654 +105 0.0676 +135 0.0672 +162 0.0656 +201 0.0644 +232 0.0641 +253 0.0641 +296 0.0653 +347 0.0662 +415 0.0662 +519 0.0662 +661 0.0648 +727 0.0648 +789 0.0648 +839 0.0648 +913 0.0648] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0076 → rest 0.0076, at rest true; 0.0 quanta of 0.0005, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [60,60,60,60,60,60,60,60,60,60,60,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180] of the layers channel's [60,60,60,60,60,60,60,60,60,60,60,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180,180] ms; light anims [opacity::before@60ms, opacity::before@180ms] · 108 frames, median 7.5 ms",
+   "load": "16.0/14.4/15.7"
+  },
+  {
+   "name": "E-2 button commit·programmatic dark",
+   "status": "FAIL",
+   "line": "element.click() (stateless) · state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 74.8 px = 1.49 px (bound > 0.8) · (iii) in paint: rise 0.0016 (peak 0.0656 at +421 ms → rest 0.0639; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 45 ms in the first 400 ms (bound ≤ 75) · trace [+17 0.0641 +48 0.0631 +76 0.0630 +107 0.0624 +137 0.0619 +167 0.0620 +195 0.0632 +226 0.0639 +255 0.0655 +300 0.0654 +344 0.0655 +421 0.0656 +518 0.0639 +660 0.0639 +725 0.0639 +778 0.0639 +836 0.0639 +911 0.0639] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0076 → rest 0.0076, at rest true; 0.0 quanta of 0.0005, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [] of the layers channel's [] ms; light anims [] · 106 frames, median 7.6 ms",
+   "load": "16.0/14.4/15.7"
+  },
+  {
+   "name": "E-2 button commit·pointer dark",
+   "status": "FAIL",
+   "line": "state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.032 trough 0.997 settle 1.000 on 74.8 px = 2.39 px (bound > 0.8) · (iii) in paint: rise 0.0017 (peak 0.0679 at +418 ms → rest 0.0662; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 51 ms in the first 400 ms (bound ≤ 75) · trace [+16 0.0666 +48 0.0690 +78 0.0660 +106 0.0645 +137 0.0643 +172 0.0644 +194 0.0656 +230 0.0662 +254 0.0678 +298 0.0677 +349 0.0678 +418 0.0679 +513 0.0662 +670 0.0662 +727 0.0662 +780 0.0662 +838 0.0662 +908 0.0662] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0076 → rest 0.0076, at rest true; 0.0 quanta of 0.0005, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [60] of the layers channel's [60] ms; light anims [opacity::before@60ms] · 105 frames, median 8.0 ms",
+   "load": "15.1/14.3/15.6"
+  },
+  {
+   "name": "E-2 button commit·tap(coarse) dark",
+   "status": "FAIL",
+   "line": "state 0 → 1 · arm none of [i,iii] · (i) body travel 0.00 px overshoot 0.00 px · (ii) face peak 1.020 trough 0.997 settle 1.000 on 115.1 px = 2.30 px (bound > 0.8) · (iii) in paint: rise 0.0032 (peak 0.0822 at +105 ms → rest 0.0789; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0040) · 18 reads, largest gap 53 ms in the first 400 ms (bound ≤ 75) · trace [+20 0.0766 +44 0.0774 +75 0.0815 +105 0.0822 +133 0.0816 +167 0.0807 +202 0.0799 +232 0.0790 +254 0.0788 +300 0.0813 +353 0.0814 +429 0.0816 +513 0.0789 +664 0.0789 +718 0.0789 +782 0.0789 +847 0.0789 +906 0.0789] (arm iii FAILS in paint) · beside it the composite: light rise 0.0000 on the layers channel (peak 0.0076 → rest 0.0076, at rest true; 0.0 quanta of 0.0005, tail spread 0.0000 against 0.0040; composite verdict fail) on envelope clocks [60] of the layers channel's [60] ms; light anims [opacity::before@60ms] · 106 frames, median 7.6 ms",
+   "load": "15.1/14.3/15.6"
+  },
+  {
+   "name": "E-2 button mount(committed) dark",
+   "status": "PASS",
+   "line": "after mount: scale range 0.000 body moved 0.00 px · light above its committed rest 0.0000 (layers) · fill flash 0.0000 (bound < 0.01 each) · target scale in flight 0 frame(s), face 0, body 0 (bound < 2 each) · 106 frames · 106 of 106 frames with the target present",
+   "load": "14.4/14.1/15.6"
+  },
+  {
+   "name": "E-2 button arrival·pre dark",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "14.4/14.1/15.6"
+  },
+  {
+   "name": "E-2 button arrival·own dark",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "14.4/14.1/15.6"
+  },
+  {
+   "name": "E-2 button arrival·ownflush dark",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "14.4/14.1/15.6"
+  },
+  {
+   "name": "E-2 button arrival·late dark",
+   "status": "REPORT",
+   "line": "stateless: no model to arrive (H3 ruling)",
+   "load": "14.4/14.1/15.6"
+  }
+ ]
+}

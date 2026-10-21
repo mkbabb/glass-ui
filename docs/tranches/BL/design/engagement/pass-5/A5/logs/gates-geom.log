@@ -1,0 +1,28 @@
+## 2026-10-20 19:46:13 load { 21.64 20.47 23.00 } · build
+exit build 0
+## 2026-10-20 19:46:23 load { 24.95 21.21 23.24 } · typecheck
+
+> @mkbabb/glass-ui@10.1.0 typecheck
+> vue-tsc --noEmit && vue-tsc --noEmit -p tsconfig.test.json
+
+exit typecheck 0
+## 2026-10-20 19:46:43 load { 25.26 21.47 23.28 } · demo:dist:build
+exit demo:dist:build 0
+## 2026-10-20 19:46:46 load { 25.26 21.47 23.28 } · vitest
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/A5/wt-geom
+
+(node:53997) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:56758) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:57916) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+ Test Files  244 passed (244)
+      Tests  2382 passed | 10 expected fail | 1 skipped (2393)
+   Start at  19:46:46
+   Duration  90.53s (transform 7.26s, setup 11.58s, import 45.27s, tests 30.27s, environment 54.34s)
+
+exit vitest 0
+## 2026-10-20 19:48:17 load { 24.28 22.16 23.35 } · end

@@ -1,0 +1,31 @@
+## 2026-10-20 17:59:32 load { 20.89 21.22 19.89 } · phase line: build light
+## 2026-10-20 17:59:32 load { 20.89 21.22 19.89 } · build light
+/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/A5/out/builds/light · 55 component directories (55 with an index.ts mapped for the member walk) · declaration composables/motion#ENGAGE_DECLARATION · scene app harness 7c8bcdaafb44
+exit 0
+## 2026-10-20 17:59:34 load { 20.89 21.22 19.89 } · end build light
+## 2026-10-20 17:59:34 load { 20.89 21.22 19.89 } · phase line: one light chromium e9-prm.mjs dev3 --scenes tabs,toggle,radio,switch,accordion
+## 2026-10-20 17:59:34 load { 20.89 21.22 19.89 } · start e9-prm.mjs light chromium --scenes tabs,toggle,radio,switch,accordion
+37
+  FAIL       E-9 switch commit-light light · commit(Space) under reduce, state false → true: the transient · in paint: rise 0.0090 (peak 0.4236 at +152 ms → rest 0.4036; bound ≥ 0.01) · at rest true (last 5 reads spread 
+  FAIL       E-9 tabs commit-light light · commit(ArrowRight) under reduce, state "a" → "b": the transient · in paint: rise 0.0095 (peak 0.4736 at +75 ms → rest 0.4282; bound ≥ 0.01) · at rest true (last 5 reads spread 0
+  FAIL       E-9 accordion commit-light light · commit(Enter) under reduce, state null → "one": the transient · in paint: rise 0.0000 (peak 0.9399 at +168 ms → rest 0.9399; bound ≥ 0.01) · at rest true (last 5 reads spre
+E-9 chromium FAIL · 37 pass, 3 fail, 0 unmeasured of 40 gating cells (0 reported) · load 20.9/21.2/19.9 at start, 19.9/20.9/19.9 at end
+## 2026-10-20 18:00:20 load { 19.90 20.94 19.86 } · phase line: one light chromium e10-continuity.mjs dev3 --scenes switch,checkbox,chip,accordion
+## 2026-10-20 18:00:20 load { 19.90 20.94 19.86 } · start e10-continuity.mjs light chromium --scenes switch,checkbox,chip,accordion
+14
+  FAIL       E-10 switch rebound reverse +60 dark · seat span.control-bit__light · state false → true → back at +60 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 16 ms from +70 (bound < 60) · pulses 1 over the two 
+  FAIL       E-10 accordion rebound reverse +60 dark · seat button.disclosure-trigger.disclosure-group-trigger::after · state null → "one" → back at +60 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 13 ms from +70 
+E-10 chromium FAIL · 14 pass, 2 fail, 0 unmeasured of 16 gating cells (8 reported) · load 19.9/20.9/19.9 at start, 15.1/19.6/19.4 at end
+## 2026-10-20 18:01:00 load { 15.13 19.58 19.41 } · phase line: probe a5-ladder light chromium dev3
+## 2026-10-20 18:01:00 load { 15.13 19.58 19.41 } · start probe a5-ladder light chromium 
+  PASS       ladder accordion light fine · rest L 0.9566 (rgba(0, 0, 0, 0)) · hover 0.8556 (oklab(0.216114 0.00343135 0.00508514 / 0.05)) · hover+press 0.7681 (oklab(0.216114 0.00343135 0.00508514 / 0.1)) · released, still hovered 0.8556 · the press deepens th
+  PASS       ladder accordion dark fine · rest L 0.0031 (rgba(0, 0, 0, 0)) · hover 0.0076 (oklab(0.926146 0.00162765 0.00610709 / 0.05)) · hover+press 0.0140 (oklab(0.926146 0.00162765 0.00610709 / 0.1)) · released, still hovered 0.0076 · the press deepens the
+  FAIL       ladder select light fine · rest L 0.4260 (rgba(0, 0, 0, 0)) · hover 0.3486 (color(srgb 0.109804 0.0980391 0.090196 / 0.15)) · hover+press 0.4261 (rgba(0, 0, 0, 0)) · released, still hovered 0.4261 · the press moves back toward rest past the hover 
+  FAIL       ladder select dark fine · rest L 0.0288 (rgba(0, 0, 0, 0)) · hover 0.0664 (color(srgb 0.913725 0.901961 0.886275 / 0.19)) · hover+press 0.0289 (rgba(0, 0, 0, 0)) · released, still hovered 0.0289 · the press moves back toward rest past the hover by
+  PASS       ladder collapsible light fine · rest L 0.2627 (rgba(0, 0, 0, 0)) · hover 0.2627 (rgba(0, 0, 0, 0)) · hover+press 0.2627 (rgba(0, 0, 0, 0)) · released, still hovered 0.2627 · the press deepens the hover by 0.0000 · load 15.5/19.4/19.4
+  PASS       ladder collapsible dark fine · rest L 0.1885 (rgba(0, 0, 0, 0)) · hover 0.1885 (rgba(0, 0, 0, 0)) · hover+press 0.1885 (rgba(0, 0, 0, 0)) · released, still hovered 0.1885 · the press deepens the hover by 0.0000 · load 15.5/19.4/19.4
+  PASS       ladder configurator light fine · rest L 0.5766 (rgba(0, 0, 0, 0)) · hover 0.5200 (oklab(0.216114 0.00343135 0.00508514 / 0.05)) · hover+press 0.5200 (oklab(0.216114 0.00343135 0.00508514 / 0.05)) · released, still hovered 0.6604 · the press deepen
+  PASS       ladder configurator dark fine · rest L 0.0529 (rgba(0, 0, 0, 0)) · hover 0.0595 (oklab(0.926146 0.00162765 0.00610709 / 0.05)) · hover+press 0.0595 (oklab(0.926146 0.00162765 0.00610709 / 0.05)) · released, still hovered 0.0035 · the press deepens
+  PASS       ladder menu light fine · rest L 0.6376 (rgba(0, 0, 0, 0)) · hover 0.6376 (rgba(0, 0, 0, 0)) · hover+press 0.6376 (rgba(0, 0, 0, 0)) · released, still hovered 0.6376 · the press deepens the hover by 0.0000 · load 17.6/19.8/19.5
+  PASS       ladder menu dark fine · rest L 0.0038 (rgba(0, 0, 0, 0)) · hover 0.0038 (rgba(0, 0, 0, 0)) · hover+press 0.0038 (rgba(0, 0, 0, 0)) · released, still hovered 0.0038 · the press deepens the hover by 0.0000 · load 19.0/20.0/19.6
+# a5-ladder done · 2 FAIL · load 19.0/20.0/19.6

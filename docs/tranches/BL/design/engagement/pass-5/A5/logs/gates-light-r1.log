@@ -1,0 +1,53 @@
+## 2026-10-20 18:46:15 load { 29.23 29.22 30.40 } · build
+exit build 0
+## 2026-10-20 18:46:28 load { 33.07 30.12 30.70 } · typecheck
+
+> @mkbabb/glass-ui@10.1.0 typecheck
+> vue-tsc --noEmit && vue-tsc --noEmit -p tsconfig.test.json
+
+exit typecheck 0
+## 2026-10-20 18:46:51 load { 33.55 30.40 30.79 } · demo:dist:build
+exit demo:dist:build 0
+## 2026-10-20 18:46:53 load { 34.23 30.59 30.85 } · vitest
+    196|         w.wrapper.unmount();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  tests/composables/motion/engage-door.test.ts > the commit's inputs fail loud (CK-21, F5' F-8) > a state member whose class commits is read on its state edges, --rung-light included
+AssertionError: expected "error" to not be called at all, but actually been called 2 times
+
+Received:
+
+  1st error call:
+
+    Array [
+      "[glass-ui] useEngage: --engage-commit-light-attack is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui stylesheet loaded?",
+    ]
+
+  2nd error call:
+
+    Array [
+      "[glass-ui] useEngage: --engage-commit-light-release is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui stylesheet loaded?",
+    ]
+
+
+Number of calls: 2
+
+ ❯ tests/composables/motion/engage-door.test.ts:206:25
+    204|         await frame();
+    205|         await frame();
+    206|         expect(err).not.toHaveBeenCalled();
+       |                         ^
+    207|         w.host.style.setProperty("--rung-light", "");
+    208|         w.host.setAttribute("data-state", "checked");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  2 failed | 242 passed (244)
+      Tests  4 failed | 2379 passed | 10 expected fail | 1 skipped (2394)
+   Start at  18:46:54
+   Duration  118.97s (transform 7.54s, setup 16.68s, import 58.65s, tests 35.77s, environment 79.86s)
+
+exit vitest 1
+## 2026-10-20 18:48:53 load { 34.21 31.96 31.37 } · end

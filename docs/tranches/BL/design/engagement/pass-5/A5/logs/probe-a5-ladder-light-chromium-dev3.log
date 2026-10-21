@@ -1,0 +1,15 @@
+## 2026-10-20 18:01:00 load { 15.13 19.58 19.41 } · start probe a5-ladder light chromium 
+# a5-ladder engine chromium load 15.1/19.6/19.4 at start
+  PASS       ladder accordion light fine · rest L 0.9566 (rgba(0, 0, 0, 0)) · hover 0.8556 (oklab(0.216114 0.00343135 0.00508514 / 0.05)) · hover+press 0.7681 (oklab(0.216114 0.00343135 0.00508514 / 0.1)) · released, still hovered 0.8556 · the press deepens the hover by 0.0874 · load 15.6/19.6/19.4
+  PASS       ladder accordion dark fine · rest L 0.0031 (rgba(0, 0, 0, 0)) · hover 0.0076 (oklab(0.926146 0.00162765 0.00610709 / 0.05)) · hover+press 0.0140 (oklab(0.926146 0.00162765 0.00610709 / 0.1)) · released, still hovered 0.0076 · the press deepens the hover by 0.0064 · load 15.6/19.6/19.4
+  FAIL       ladder select light fine · rest L 0.4260 (rgba(0, 0, 0, 0)) · hover 0.3486 (color(srgb 0.109804 0.0980391 0.090196 / 0.15)) · hover+press 0.4261 (rgba(0, 0, 0, 0)) · released, still hovered 0.4261 · the press moves back toward rest past the hover by 0.0775 · load 15.0/19.4/19.3
+  FAIL       ladder select dark fine · rest L 0.0288 (rgba(0, 0, 0, 0)) · hover 0.0664 (color(srgb 0.913725 0.901961 0.886275 / 0.19)) · hover+press 0.0289 (rgba(0, 0, 0, 0)) · released, still hovered 0.0289 · the press moves back toward rest past the hover by 0.0376 · load 15.0/19.4/19.3
+  PASS       ladder collapsible light fine · rest L 0.2627 (rgba(0, 0, 0, 0)) · hover 0.2627 (rgba(0, 0, 0, 0)) · hover+press 0.2627 (rgba(0, 0, 0, 0)) · released, still hovered 0.2627 · the press deepens the hover by 0.0000 · load 15.5/19.4/19.4
+  PASS       ladder collapsible dark fine · rest L 0.1885 (rgba(0, 0, 0, 0)) · hover 0.1885 (rgba(0, 0, 0, 0)) · hover+press 0.1885 (rgba(0, 0, 0, 0)) · released, still hovered 0.1885 · the press deepens the hover by 0.0000 · load 15.5/19.4/19.4
+  PASS       ladder configurator light fine · rest L 0.5766 (rgba(0, 0, 0, 0)) · hover 0.5200 (oklab(0.216114 0.00343135 0.00508514 / 0.05)) · hover+press 0.5200 (oklab(0.216114 0.00343135 0.00508514 / 0.05)) · released, still hovered 0.6604 · the press deepens the hover by 0.0000 · load 15.5/19.4/19.3
+  PASS       ladder configurator dark fine · rest L 0.0529 (rgba(0, 0, 0, 0)) · hover 0.0595 (oklab(0.926146 0.00162765 0.00610709 / 0.05)) · hover+press 0.0595 (oklab(0.926146 0.00162765 0.00610709 / 0.05)) · released, still hovered 0.0035 · the press deepens the hover by 0.0000 · load 17.6/19.8/19.5
+  PASS       ladder menu light fine · rest L 0.6376 (rgba(0, 0, 0, 0)) · hover 0.6376 (rgba(0, 0, 0, 0)) · hover+press 0.6376 (rgba(0, 0, 0, 0)) · released, still hovered 0.6376 · the press deepens the hover by 0.0000 · load 17.6/19.8/19.5
+  PASS       ladder menu dark fine · rest L 0.0038 (rgba(0, 0, 0, 0)) · hover 0.0038 (rgba(0, 0, 0, 0)) · hover+press 0.0038 (rgba(0, 0, 0, 0)) · released, still hovered 0.0038 · the press deepens the hover by 0.0000 · load 19.0/20.0/19.6
+# a5-ladder done · 2 FAIL · load 19.0/20.0/19.6
+exit 1
+## 2026-10-20 18:01:29 load { 19.02 20.01 19.56 } · end probe a5-ladder

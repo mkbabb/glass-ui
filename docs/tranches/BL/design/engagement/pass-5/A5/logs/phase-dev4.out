@@ -1,0 +1,30 @@
+## 2026-10-20 18:22:54 load { 31.03 35.98 33.53 } · phase line: build light
+## 2026-10-20 18:22:54 load { 31.03 35.98 33.53 } · build light
+/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/A5/out/builds/light · 55 component directories (55 with an index.ts mapped for the member walk) · declaration composables/motion#ENGAGE_DECLARATION · scene app harness 7c8bcdaafb44
+exit 0
+## 2026-10-20 18:22:56 load { 32.31 36.16 33.60 } · end build light
+## 2026-10-20 18:22:56 load { 32.31 36.16 33.60 } · phase line: probe a5-tune light chromium dev4 --clocks 60/480 --scenes toggle,radio,switch,checkbox,chip,accordion
+## 2026-10-20 18:22:56 load { 32.31 36.16 33.60 } · start probe a5-tune light chromium --clocks 60/480 --scenes toggle,radio,switch,checkbox,chip,accordion
+  REPORT 60/480 toggle light · paint rise 0.0009 peak@+142 rest true · +60: pulses 6 frozen 16 ms · +200: pulses 7 frozen 14 ms · load 32.4/36.1/33.6
+  REPORT 60/480 toggle dark · paint rise 0.0142 peak@+137 rest true · +60: pulses 5 frozen 16 ms · +200: pulses 7 frozen 15 ms · load 31.5/35.9/33.5
+  REPORT 60/480 radio light · paint rise 0.0112 peak@+141 rest true · +60: pulses 7 frozen 15 ms · +200: pulses 6 frozen 13 ms · load 32.5/36.0/33.6
+  REPORT 60/480 radio dark · paint rise 0.0308 peak@+111 rest true · +60: pulses 5 frozen 15 ms · +200: pulses 7 frozen 15 ms · load 30.5/35.5/33.4
+  REPORT 60/480 switch light · paint rise 0.0000 peak@+21 rest true · +60: pulses 2 frozen 7 ms · +200: pulses 5 frozen 12 ms · load 30.9/35.5/33.5
+  REPORT 60/480 switch dark · paint rise 0.0241 peak@+139 rest true · +60: pulses 2 frozen 9 ms · +200: pulses 6 frozen 9 ms · load 31.7/35.6/33.5
+  REPORT 60/480 checkbox light · paint rise 0.0000 peak@+19 rest true · +60: pulses 2 frozen 19 ms · +200: pulses 4 frozen 7 ms · load 30.5/35.3/33.4
+  REPORT 60/480 checkbox dark · paint rise 0.0313 peak@+122 rest true · +60: pulses 1 frozen 17 ms · +200: pulses 5 frozen 7 ms · load 30.5/35.2/33.4
+  REPORT 60/480 chip light · paint rise 0.0000 peak@+26 rest true · +60: pulses 2 frozen 23 ms · +200: pulses 5 frozen 24 ms · load 29.1/34.9/33.3
+  REPORT 60/480 chip dark · paint rise 0.0127 peak@+137 rest true · +60: pulses 2 frozen 8 ms · +200: pulses 6 frozen 9 ms · load 28.5/34.6/33.2
+  REPORT 60/480 accordion light · paint rise 0.0000 peak@+239 rest true · +60: pulses 2 frozen 19 ms · +200: pulses 5 frozen 9 ms · load 27.0/34.2/33.1
+  REPORT 60/480 accordion dark · paint rise 0.0037 peak@+81 rest true · +60: pulses 1 frozen 15 ms · +200: pulses 5 frozen 8 ms · load 27.0/34.2/33.1
+## 2026-10-20 18:24:01 load { 32.20 35.11 33.38 } · phase line: one light chromium e10-continuity.mjs dev4 --scenes switch,checkbox,chip,accordion
+## 2026-10-20 18:24:01 load { 32.20 35.11 33.38 } · start e10-continuity.mjs light chromium --scenes switch,checkbox,chip,accordion
+17
+## 2026-10-20 18:24:41 load { 29.94 34.18 33.12 } · phase line: one light chromium e9-prm.mjs dev4 --scenes tabs,toggle,radio,switch,checkbox,chip,accordion
+## 2026-10-20 18:24:41 load { 29.94 34.18 33.12 } · start e9-prm.mjs light chromium --scenes tabs,toggle,radio,switch,checkbox,chip,accordion
+52
+  FAIL       E-9 switch commit-light light · commit(Space) under reduce, state false → true: the transient · in paint: rise 0.0052 (peak 0.4236 at +157 ms → rest 0.4036; bound ≥ 0.01) · at rest true (last 5 reads spread 
+  FAIL       E-9 checkbox commit-light light · commit(Space) under reduce, state false → true: the transient · in paint: rise 0.0087 (peak 0.1304 at +141 ms → rest 0.0963; bound ≥ 0.01) · at rest true (last 5 reads sprea
+  FAIL       E-9 toggle commit-light dark · commit(ArrowRight) under reduce, state "a" → "b": the transient · in paint: rise 0.0072 (peak 0.1088 at +55 ms → rest 0.0851; bound ≥ 0.01) · at rest true (last 5 reads spread 
+  FAIL       E-9 accordion commit-light light · commit(Enter) under reduce, state null → "one": the transient · in paint: rise 0.0000 (peak 0.9399 at +170 ms → rest 0.9399; bound ≥ 0.01) · at rest true (last 5 reads spre
+E-9 chromium FAIL · 52 pass, 4 fail, 0 unmeasured of 56 gating cells (0 reported) · load 29.9/34.2/33.1 at start, 34.2/34.3/33.2 at end

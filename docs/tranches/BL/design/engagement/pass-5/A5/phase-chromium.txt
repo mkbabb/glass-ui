@@ -1,0 +1,28 @@
+# P-A5 Chromium phase: each line its own guarded call (chain-a5.sh); one heavy run at a time
+build light
+build geom
+bat light chromium E-1
+bat light chromium E-2
+bat light chromium E-3
+bat light chromium E-4
+bat light chromium E-5
+bat light chromium E-6
+bat light chromium E-7
+bat light chromium E-8
+bat light chromium E-9
+bat light chromium E-10
+bat light chromium E-11
+bat light chromium E-12
+bat geom chromium E-1
+bat geom chromium E-2
+TAG=-arms bat geom chromium E-2 --commit-arms i,ii,iii
+bat geom chromium E-5
+bat geom chromium E-9
+bat geom chromium E-10
+bat geom chromium E-12
+probe a5-ladder light chromium bat
+probe a5-ladder geom chromium bat
+xprobe pass-4/C-A4/probe ca4-probe light chromium bat --only cardpress,rebound
+xprobe pass-4/C-A4/probe ca4-probe geom chromium bat --only cardpress,rebound
+cap light chromium
+cap geom chromium

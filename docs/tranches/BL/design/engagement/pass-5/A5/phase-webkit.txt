@@ -1,0 +1,22 @@
+# P-A5 WebKit phase: the whole file in ONE `guarded --exclusive webkit` acquisition (chain-a5.sh ... webkit)
+bat light webkit E-1
+bat light webkit E-2
+bat light webkit E-3
+bat light webkit E-4
+bat light webkit E-5
+bat light webkit E-6
+bat light webkit E-7
+bat light webkit E-8
+bat light webkit E-9
+bat light webkit E-10
+bat light webkit E-11
+bat light webkit E-12
+bat geom webkit E-2
+TAG=-arms bat geom webkit E-2 --commit-arms i,ii,iii
+bat geom webkit E-9
+bat geom webkit E-10
+probe a5-ladder light webkit bat
+probe a5-ladder geom webkit bat
+xprobe pass-4/C-A4/probe ca4-probe light webkit bat --only cardpress,rebound
+cap light webkit
+cap geom webkit

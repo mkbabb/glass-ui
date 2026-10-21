@@ -1,0 +1,573 @@
+diff --git a/wt-base/docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md b/wt/docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md
+index 114f1b41c..66de99f41 100644
+--- a/wt-base/docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md
++++ b/wt/docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md
+@@ -192,7 +192,7 @@ fallback; index.css:1 layer order):
+ | AUTH-1 | `transitions.css:120-130` | `.fade-*`/`.tab-fade-*`/`.pane-swap-*`/`.metric-swap-*` -active/-leave | opacity fade / 0.1s | `9e04f749…` |
+ | AUTH-2 | `transitions.css:132-140` | `.pane-swap-*`/`.metric-swap-*` -active | `transition-property: opacity` / 0.15s | `d3f21adf…` |
+ | AUTH-3 | `glass/dissolve.css:266-279` | `.glass-vaporize[data-state="closed"]` + its `> *` | `animation-name` (the three material channels / the reduced ink) + `animation-duration: var(--vap-clock)` | `c3333028…` |
+-| AUTH-4 | `utilities/engage.css:265-298` | the engagement commit seat: `:where(.engage-chosen, .engage-pressed, .engage-disclosed)` face-less `::after` and `[data-engage-light]`, at rest and committed (`[data-state="checked"\|"on"\|"open"]`, a strip member's `[data-active]`, `[data-commit="b"]`) | `transition-duration: var(--engage-control-engage-{release,attack})` in the seat's leg order / the `control-engage` envelope | `e4cd4240…` |
++| AUTH-4 | `utilities/engage.css:290-324` | the engagement commit seat: `:where(.engage-chosen, .engage-pressed, .engage-disclosed)` face-less `::after` and `[data-engage-light]`, at rest and committed (`[data-state="checked"\|"on"\|"open"]`, a strip member's `[data-active]`, `[data-commit="b"]`) | `transition-duration: var(--engage-commit-light-{release,attack})` in the seat's leg order / the `commit-light` envelope | `140508ec…` |
+ 
+ **[AMENDED 2026-08-05 — BK #30 W-DISSOLVE cure, CURE-3.]** AUTH-3 is the vaporize dismissal's own
+ reduced-motion exit, and it needs BOTH halves of the escape for two different reasons: `!important`
+@@ -230,6 +230,13 @@ reduced motion retires, so each tab carries a light seat that paints under reduc
+ the tab's `data-active` (D5 CK-10). The block sits at `utilities/engage.css` lines 265-298; digest
+ `e4cd4240dafdc45fe2cfd59e0f918fd5c7c4145d04ccc317e76e3a68077fbdec`.
+ 
++**[AMENDED 2026-10-20 — BL D5 pass 5, P-A5.]** The seat's clocks are the commit's own envelope row,
++`ENGAGE_ENVELOPES` `commit-light` (attack 60 ms, release 480 ms, four of the face fill's
++`press-drain` releases), not `control-engage`: the light now outlives the fill it rides over with
++no delay, and the row's retarget rule (`from-current`) is what a reverse inside its life obeys
++(D5 CK-12, CK-20). The block sits at `utilities/engage.css` lines 290-324; digest
++`140508ec014f93d6cf1878fe123da69a12f845b1dd1b3309b49705981f771762`.
++
+ Subordinate (dead-in-effect, unchanged): `animations.css:300-305`
+ `.glass-top-layer[popover], dialog.glass-top-layer` — its non-`!important`
+ `transition-duration: var(--duration-fast)` is overridden to `0s` by the instant wildcard (as it
+diff --git a/wt-base/src/components/_shared/disclosure/disclosure.css b/wt/src/components/_shared/disclosure/disclosure.css
+index d8d5f0f73..788fde912 100644
+--- a/wt-base/src/components/_shared/disclosure/disclosure.css
++++ b/wt/src/components/_shared/disclosure/disclosure.css
+@@ -74,10 +74,18 @@
+ 
+     /* Hover is a pointer's approach, and a coarse pointer has none: under touch a tap
+        leaves `:hover` stuck on the trigger, so the lift latched after every tap (FL-4).
+-       The fill is the hover rung `--control-surface-bg-hover`, which reads `--fill-hover`. */
++       The fill is the ladder's transient rung, `--fill-hover` ink over the row: a wash.
++       The control plate's hover (`--control-surface-bg-hover`, the veil and the card
++       under it) across a 320 px row read as an opaque slab, and it outweighed the press
++       that followed it (D5 pass 4 C-A4 §0 item 3). The press deepens this rung
++       (utilities/engage.css `engage-disclosed`). */
+     @media (hover: hover) {
+         .disclosure-group-trigger:hover:not(:disabled, [data-disabled]) {
+-            background: var(--control-surface-bg-hover);
++            background: color-mix(
++                in oklab,
++                var(--foreground) calc(var(--fill-hover) * 100%),
++                transparent
++            );
+         }
+     }
+ 
+diff --git a/wt-base/src/components/button/styles.css b/wt/src/components/button/styles.css
+index df44862b5..f24b0ce9e 100644
+--- a/wt-base/src/components/button/styles.css
++++ b/wt/src/components/button/styles.css
+@@ -201,8 +201,13 @@
+     /* The press answers on EVERY carrier, not only the glass ones: the glass arms take
+        the gleam LERP at the foot of this file, the quiet arm steps its fill from the
+        transient rung to the persistent one, the text arm gains the transient fill under
+-       its accent. One drive, three carriers. */
+-    .button[data-emphasis="quiet"]:active:not(:disabled, [aria-disabled="true"]) {
++       its accent. One drive, three carriers. The quiet and text arms key on the door's
++       press mark (`data-press`, written on `pointerdown` by the press part,
++       engage/press.ts), not `:active`: a touch long-press sets `:active` 175-200 ms in,
++       past the acknowledge window, and iOS Safari sets it only under a `touchstart`
++       listener. The gleam's arm keys where the glass material's own press does
++       (glass/material.css `:active`), so its opacity and its intensity land together. */
++    .button[data-emphasis="quiet"][data-press]:not(:disabled, [aria-disabled="true"]) {
+         background: color-mix(
+             in oklab,
+             var(--button-tone) calc(var(--fill-selected) * 100%),
+@@ -210,7 +215,7 @@
+         );
+     }
+ 
+-    .button[data-emphasis="text"]:active:not(:disabled, [aria-disabled="true"]) {
++    .button[data-emphasis="text"][data-press]:not(:disabled, [aria-disabled="true"]) {
+         background: color-mix(
+             in oklab,
+             var(--button-accent) calc(var(--fill-hover) * 100%),
+diff --git a/wt-base/src/components/card/Card.vue b/wt/src/components/card/Card.vue
+index 17900a9ab..e299b43a6 100644
+--- a/wt-base/src/components/card/Card.vue
++++ b/wt/src/components/card/Card.vue
+@@ -1,5 +1,7 @@
+ <script setup lang="ts">
+-import { computed } from "vue";
++import { computed, ref, type ComponentPublicInstance } from "vue";
++import { asElement } from "../../composables/motion/core/asElement";
++import { usePressMark } from "../../composables/motion/engage/press";
+ import { cn } from "../_shared/class-names";
+ import Surface, { type SurfaceProps } from "../surface/Surface.vue";
+ 
+@@ -50,10 +52,19 @@ const props = withDefaults(defineProps<CardProps>(), {
+ /* PRESENCE, not truth, is the signal: `selected` unset leaves a card inert prose;
+    `selected="false"` is an unselected OPTION, which owes a role and a tab stop. */
+ const selectable = computed(() => props.selected !== undefined);
++
++/* The option's press keys on the engage door's press mark (`data-press`, press.ts, its
++   one writer), written on the primary `pointerdown` and the activation keys, not on
++   `:active`: a touch long-press sets `:active` 175-200 ms in, past the acknowledge
++   window, and iOS Safari sets it only under a `touchstart` listener. An inert card is
++   not pressed. */
++const surfaceRef = ref<ComponentPublicInstance | null>(null);
++usePressMark(() => asElement(surfaceRef.value), { disabled: () => !selectable.value });
+ </script>
+ 
+ <template>
+     <Surface
++        ref="surfaceRef"
+         v-bind="$attrs"
+         data-slot="card"
+         :tier="tier"
+diff --git a/wt-base/src/components/card/styles.css b/wt/src/components/card/styles.css
+index 77256affa..746f51f53 100644
+--- a/wt-base/src/components/card/styles.css
++++ b/wt/src/components/card/styles.css
+@@ -193,8 +193,9 @@
+ 
+     /* Press is the SHIPPED vocabulary — `--scale-press-sm` (0.97) on the spatial
+        spring leg, the same rung the button and slider recipes consume. No
+-       literal, no composable, no per-atom press token. */
+-    .card[role="option"]:active {
++       literal, no per-atom press token. It keys on the door's press mark
++       (`data-press`, Card.vue), not `:active`. */
++    .card[role="option"][data-press] {
+         scale: var(--scale-press-sm);
+     }
+ 
+diff --git a/wt-base/src/composables/motion/engage/engageEnvelopes.ts b/wt/src/composables/motion/engage/engageEnvelopes.ts
+index d63cf1b71..acc32e156 100644
+--- a/wt-base/src/composables/motion/engage/engageEnvelopes.ts
++++ b/wt/src/composables/motion/engage/engageEnvelopes.ts
+@@ -19,6 +19,7 @@ export type EngageRole =
+     | "press-drain"
+     | "medium-exit"
+     | "control-engage"
++    | "commit-light"
+     | "signal-decay";
+ 
+ /** One envelope row: the (attack, release) time constants + who rides it. */
+@@ -33,6 +34,16 @@ export interface EngageEnvelopeRow {
+     readonly rider: string;
+     /** The register this envelope serves. */
+     readonly comment: string;
++    /**
++     * What a second edge inside the envelope's life does: `"from-current"`, the light
++     * turns from where it is on the new edge's leg at once. No delay may hold it (a
++     * `transition-delay` on a retargeted transition holds the current value while the
++     * target changes: the light freezes, then blooms on a face that has already gone
++     * back) and no restart may drop it to zero. Every row is played by CSS transitions,
++     * which retarget from the current value by construction, so the rule is what keeps
++     * a delay or a keyframe restart off any seat an envelope clocks.
++     */
++    readonly retarget: "from-current";
+ }
+ 
+ /**
+@@ -61,6 +72,7 @@ export const ENGAGE_ENVELOPES: readonly EngageEnvelopeRow[] = [
+         attackMs: 55,
+         releaseMs: 120,
+         rider: "the perch charge",
++        retarget: "from-current",
+         comment:
+             "A felt cancel — the charge drains rather than cutting, so an abandoned press reads as released, not as never-seen.",
+     },
+@@ -69,6 +81,7 @@ export const ENGAGE_ENVELOPES: readonly EngageEnvelopeRow[] = [
+         attackMs: 55,
+         releaseMs: 160,
+         rider: "the ambient lens",
++        retarget: "from-current",
+         comment:
+             "The world un-softens after a recruited medium lets go; the backdrop returns slower than it yielded.",
+     },
+@@ -77,16 +90,27 @@ export const ENGAGE_ENVELOPES: readonly EngageEnvelopeRow[] = [
+         attackMs: 60,
+         releaseMs: 180,
+         rider: "the frosted control wash",
++        retarget: "from-current",
+         comment:
+             "The engagement wash and bloom on a control surface, cooling well after the finger leaves.",
+     },
++    {
++        role: "commit-light",
++        attackMs: 60,
++        releaseMs: 480,
++        rider: "the commit light over a landing fill",
++        retarget: "from-current",
++        comment:
++            "The commit's light on its painted face. The face's state fill lands on press-drain's release (120 ms) under it, and a light that drains faster than the fill lands is absorbed by the fill's own rise (the dark Radio rose 0.0065 above its rest in paint, the dark toggle 0.0000). It rises on the commit edge, inside the acknowledge window, and drains on four of the fill's clocks, so when the fill lands it still holds about three quarters of its charge (ease-standard is 0.24 through at one quarter). Three clocks (360 ms) left the dark toggle at 0.0076 in paint, under the 0.01 bound. Nothing delays it: a reverse inside its life turns it from where it is.",
++    },
+     {
+         role: "signal-decay",
+         attackMs: 40,
+         releaseMs: 220,
+         rider: "the level meter",
++        retarget: "from-current",
+         comment:
+-            "A level DRAINS, never vanishes — the slowest release in the register, because a signal that cuts reads as a dropped connection.",
++            "A level DRAINS, never vanishes, because a signal that cuts reads as a dropped connection.",
+     },
+ ] as const;
+ 
+diff --git a/wt-base/src/composables/motion/engage/useEngage.ts b/wt/src/composables/motion/engage/useEngage.ts
+index df089c48f..2893293ab 100644
+--- a/wt-base/src/composables/motion/engage/useEngage.ts
++++ b/wt/src/composables/motion/engage/useEngage.ts
+@@ -162,8 +162,8 @@ function loud(token: string, on: Element): void {
+     );
+ }
+ 
+-/** The commit envelope's clocks, in `ENGAGE_ENVELOPES`' CSS mirror (`control-engage`). */
+-const COMMIT_CLOCKS = ["--engage-control-engage-attack", "--engage-control-engage-release"] as const;
++/** The commit envelope's clocks, in `ENGAGE_ENVELOPES`' CSS mirror (`commit-light`). */
++const COMMIT_CLOCKS = ["--engage-commit-light-attack", "--engage-commit-light-release"] as const;
+ 
+ const supports = (prop: string, v: string): boolean =>
+     v !== "" && (typeof CSS === "undefined" || typeof CSS.supports !== "function" || CSS.supports(prop, v));
+diff --git a/wt-base/src/styles/glass/control-bit.css b/wt/src/styles/glass/control-bit.css
+index ee81af214..a7f9992e8 100644
+--- a/wt-base/src/styles/glass/control-bit.css
++++ b/wt/src/styles/glass/control-bit.css
+@@ -318,18 +318,6 @@
+             var(--engage-press-drain-attack), var(--duration-fast), var(--duration-fast);
+     }
+ 
+-    /* THE COMMIT LIGHT WAITS FOR THE FILL. The face's light layer (utilities/engage.css)
+-       peaks on the `control-engage` attack, about 40 ms in, and the state's fill lands on
+-       this face's own fill clock (`press-drain` release, above). A light that peaks inside
+-       the fill's transition is absorbed by it: the dark Radio's seat reached 0.97 opacity
+-       while its fill was a third of the way in, and the face's pixels rose 0.005 above
+-       the fill's own rise (D5 pass 3 C-A3 §0 item 3). The light therefore starts when the
+-       fill has landed, on both edges. A longhand at a higher rank than the seat's
+-       shorthand, so the order of the two sheets does not decide it. */
+-    .control-bit .control-bit__face > .control-bit__light {
+-        transition-delay: var(--engage-press-drain-release);
+-    }
+-
+     /* FOCUS — PROPORTION A1 verbatim, ON THE FACE: a 2px perimeter-ink outline at
+        offset 2 PLUS the 8px @15% glow leg. `outline` is a channel nothing else in
+        this cascade competes for, so the ring sits BESIDE the material instead of
+@@ -374,8 +362,8 @@
+         scale: 0.6;
+         opacity: 0;
+         /* The mark's light is light: it arrives on the `control-engage` envelope's
+-           attack and leaves on its release, the same clocks the face's commit light
+-           rides, so the face's whole light answer reads one register. */
++           attack and leaves on its release. It is the state's own light; the commit's
++           transient over it rides `commit-light` (utilities/engage.css). */
+         transition:
+             scale var(--spring-press-duration) var(--transition-liquid-spatial),
+             opacity var(--engage-control-engage-release) var(--ease-standard);
+diff --git a/wt-base/src/styles/tokens/motion-registers.css b/wt/src/styles/tokens/motion-registers.css
+index 43358c68b..73f868f52 100644
+--- a/wt-base/src/styles/tokens/motion-registers.css
++++ b/wt/src/styles/tokens/motion-registers.css
+@@ -183,6 +183,8 @@
+     --engage-medium-exit-release: 160ms;
+     --engage-control-engage-attack: 60ms;
+     --engage-control-engage-release: 180ms;
++    --engage-commit-light-attack: 60ms;
++    --engage-commit-light-release: 480ms;
+     --engage-signal-decay-attack: 40ms;
+     --engage-signal-decay-release: 220ms;
+ }
+diff --git a/wt-base/src/styles/utilities/engage.css b/wt/src/styles/utilities/engage.css
+index 619906ce8..ab658948f 100644
+--- a/wt-base/src/styles/utilities/engage.css
++++ b/wt/src/styles/utilities/engage.css
+@@ -17,9 +17,16 @@
+  *
+  * THE COMMIT IS LIGHT (CK-02 arm iii, Q-5's default). On the commit edge the painted
+  * face brightens and the light drains back to the committed rest, on the
+- * `control-engage` envelope ("the engagement wash and bloom on a control surface"):
+- * a GATE opens on the row's attack while a CHARGE drains on its release, and the light
+- * is their product. The two states swap which leg is fast, so the product rises and
++ * `commit-light` envelope ("the commit light over a landing fill"): a GATE opens on
++ * the row's attack while a CHARGE drains on its release, and the light is their
++ * product. The release is four of the face fill's clocks, so a light that rises with
++ * the state's fill is still lit when the fill lands, and no delay holds it: the row's
++ * retarget rule (`from-current`) is what a reverse inside its life obeys. Each attack
++ * leg runs first-order (`--ease-decelerate`: steepest at the edge, as an envelope's
++ * attack is), so the light peaks before the fill has moved far and a reverse 60 ms in
++ * finds it already falling: the reverse's own attack lifts it again, two pulses for
++ * two commits. A release keeps the standard curve. The two states swap which leg is
++ * fast, so the product rises and
+  * falls on EVERY edge, in either direction, from transitions alone:
+  *   · committed  (state on, open, or the parity "b"): the gate opens (opacity 0 → 1,
+  *     attack) over a charge that drains (light → none, release);
+@@ -67,7 +74,8 @@
+    region opens and when it closes. Its hover is the substrate's
+    (components/_shared/disclosure/disclosure.css), under `(hover: hover)`.
+    The press is a WASH, not a slab: a press is a transient pointer answer, which is the
+-   fill ladder's `--fill-hover` rung (tokens/color-radius.css §1.3); `--fill-selected` is
++   fill ladder's `--fill-hover` rung (tokens/color-radius.css §1.3), summed over the
++   hover's own `--fill-hover` wash so the press deepens the hover; `--fill-selected` is
+    persistent state, and at 12 % across a 320 px row it read as an opaque grey bar
+    (D5 pass 3 C-A3 §3 item 2). It keys on the door's press mark (`data-press`), which
+    lands on `pointerdown`, not on `:active` (composables/motion/engage/useEngage.ts). */
+@@ -81,7 +89,7 @@
+     &[data-press]:not(:disabled, [data-disabled]) {
+         background-color: color-mix(
+             in oklab,
+-            var(--foreground) calc(var(--fill-hover) * 100%),
++            var(--foreground) calc(var(--fill-hover) * 200%),
+             transparent
+         );
+         transition-duration:
+@@ -89,6 +97,23 @@
+             var(--duration-control);
+     }
+ 
++    /* The press is the hover rung's ink and the press rung's, summed (one mix, no nested
++       endpoint): on a pointer that hovers it lands on the hover wash and DEEPENS it, the
++       hand going down and the row taking more ink, never less (D5 pass 4 C-A4 §0 item 3:
++       a press at 0.05 under a hover at 0.15 un-painted the row); on a touch, which has
++       no hover, it is the same transient ink, which a held touch can tell from the
++       sticky hover a tap leaves (E-5). A plate member (the select trigger) hovers on the
++       plate's own rung, so its press inks over that rung rather than replacing it. */
++    @media (hover: hover) {
++        &.control-surface[data-press]:hover:not(:disabled, [data-disabled]) {
++            background-color: color-mix(
++                in oklab,
++                var(--foreground) calc(var(--fill-hover) * 100%),
++                var(--control-surface-bg-hover)
++            );
++        }
++    }
++
+     /* FL-3: under forced colours the system palette owns the fill, so the wash would
+        compute Canvas and the press would vanish; the press is the system's Highlight
+        ring instead, the disclosure's own focus idiom (disclosure.css). Under reduced
+@@ -196,8 +221,8 @@
+         );
+         opacity: 0;
+         transition:
+-            opacity var(--engage-control-engage-release) var(--ease-standard),
+-            background-color var(--engage-control-engage-attack) var(--ease-standard);
++            opacity var(--engage-commit-light-release) var(--ease-standard),
++            background-color var(--engage-commit-light-attack) var(--ease-decelerate);
+     }
+ 
+     :where(.engage-chosen, .engage-pressed, .engage-disclosed) [data-engage-light] {
+@@ -214,8 +239,8 @@
+         background-color: color-mix(in oklab, var(--rung-light) 0%, transparent);
+         opacity: 1;
+         transition:
+-            opacity var(--engage-control-engage-attack) var(--ease-standard),
+-            background-color var(--engage-control-engage-release) var(--ease-standard);
++            opacity var(--engage-commit-light-attack) var(--ease-decelerate),
++            background-color var(--engage-commit-light-release) var(--ease-standard);
+     }
+ 
+     /* the light is the brighter ground of each scheme */
+@@ -270,20 +295,21 @@
+    would zero it. The rows name the commit seat exactly as the recipes do (the host's
+    `::after` on a face-less member, the face's `[data-engage-light]` layer otherwise)
+    and outrank the `*` fallback by specificity inside `@layer components`, as the
+-   transitions.css fade rows do. The clocks are `ENGAGE_ENVELOPES`' `control-engage`
++   transitions.css fade rows do. The clocks are `ENGAGE_ENVELOPES`' `commit-light`
+    row, in each state's leg order (the gate's opacity, then the charge's
+    background-color): at rest the gate closes on the release over a charge that
+    returns on the attack; committed, the gate opens on the attack over a charge that
+    drains on the release. No transform rides it. CP's row (D5 pass 2,
+    `CP/css-prm-over-css.patch`), placed by F5' (F-9); the committed rows name every
+    committed state the seat's recipe names (`on` is the toggle item's, P-A3; the tab's
+-   `data-active`, P-A4). */
++   `data-active`, P-A4); the clocks moved from `control-engage` to the commit's own row,
++   `commit-light`, at D5 pass 5 (P-A5). */
+ @layer components {
+     @media (prefers-reduced-motion: reduce) {
+         :where(.engage-chosen, .engage-pressed, .engage-disclosed):not(:has([data-engage-face]))::after,
+         :where(.engage-chosen, .engage-pressed, .engage-disclosed) [data-engage-light] {
+             transition-duration:
+-                var(--engage-control-engage-release), var(--engage-control-engage-attack) !important;
++                var(--engage-commit-light-release), var(--engage-commit-light-attack) !important;
+         }
+ 
+         :where(.engage-chosen, .engage-disclosed):is([data-state="checked"], [data-state="on"], [data-state="open"]):not(:has([data-engage-face]))::after,
+@@ -291,7 +317,7 @@
+         :where(.engage-chosen) [data-active] > [data-engage-light],
+         :where(.engage-pressed)[data-commit="b"]::after {
+             transition-duration:
+-                var(--engage-control-engage-attack), var(--engage-control-engage-release) !important;
++                var(--engage-commit-light-attack), var(--engage-commit-light-release) !important;
+         }
+     }
+ }
+diff --git a/wt-base/tests/components/engage-light-press.test.ts b/wt/tests/components/engage-light-press.test.ts
+index 8145d978f..a56a4453b 100644
+--- a/wt-base/tests/components/engage-light-press.test.ts
++++ b/wt/tests/components/engage-light-press.test.ts
+@@ -16,6 +16,9 @@ import { ToggleGroup, ToggleGroupItem } from "@glass/components/toggle-group";
+ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@glass/components/accordion";
+ import { SegmentedTabs } from "@glass/components/tabs";
+ import { Chip } from "@glass/components/chip";
++import { Card } from "@glass/components/card";
++import { Button } from "@glass/components/button";
++import { ENGAGE_ENVELOPES, engageEnvelope } from "@glass/composables/motion/engage/engageEnvelopes";
+ 
+ const SRC = path.resolve(__dirname, "../../src");
+ const read = (p: string): string => fs.readFileSync(path.join(SRC, p), "utf8");
+@@ -39,6 +42,9 @@ const MEMBERS: Array<[string, () => ReturnType<typeof h>, string]> = [
+         '[data-slot="accordion-trigger"]',
+     ],
+     ["chip (selectable)", () => h(Chip as Component, { mode: "selectable" }, () => "Chip"), ".engage-chosen"],
++    // D5 pass 5 (P-A5): the members that still pressed on `:active` (CK-17's naming half)
++    ["card (selectable)", () => h(Card as Component, { selected: false }, () => "Card"), '[role="option"]'],
++    ["button (quiet)", () => h(Button as Component, { emphasis: "quiet" }, () => "Go"), "button"],
+ ];
+ 
+ describe("a light press is the door's mark, from pointerdown (CK-06)", () => {
+@@ -56,6 +62,16 @@ describe("a light press is the door's mark, from pointerdown (CK-06)", () => {
+         });
+     }
+ 
++    it("an inert card is not a control: no press mark", async () => {
++        const w = mount(defineComponent({ setup: () => () => h(Card as Component, null, () => "Prose") }), { attachTo: document.body });
++        await nextTick();
++        const card = document.querySelector('[data-slot="card"]') as HTMLElement;
++        expect(card).not.toBeNull();
++        down(card);
++        expect(card.hasAttribute("data-press")).toBe(false);
++        w.unmount();
++    });
++
+     it("segmented tabs: the press marks the tab it landed on (the strip door's organ), not the strip", async () => {
+         const w = mount(
+             defineComponent({
+@@ -84,17 +100,39 @@ describe("the press sheets read the mark, not :active (CK-06, CK-25)", () => {
+         ["components/toggle-group/styles.css", /\.toggle-group__item:not\(:disabled, \[data-disabled\]\)\[data-press\]/],
+         ["components/tabs/styles/segmented.css", /\.segmented-tab:not\(\.is-disabled\)\[data-press\]/],
+         ["styles/glass/glass-chip.css", /\.glass-chip--interactive:not\(:disabled, \[data-disabled\]\)\[data-press\]/],
++        ["components/card/styles.css", /\.card\[role="option"\]\[data-press\] \{/],
++        ["components/button/styles.css", /\.button\[data-emphasis="quiet"\]\[data-press\]/],
++        ["components/button/styles.css", /\.button\[data-emphasis="text"\]\[data-press\]/],
+     ] as const;
+     for (const [file, rx] of SHEETS) {
+-        it(`${file}: the press rung keys on [data-press]`, () => {
++        it(`${file}: the press rung keys on [data-press] (${rx.source.slice(0, 40)})`, () => {
+             expect(read(file)).toMatch(rx);
+         });
+     }
+ 
++    it("the Card and the Button's quiet and text emphases press on no `:active` rule (CK-17)", () => {
++        const bare = (f: string): string => read(f).replace(/\/\*[\s\S]*?\*\//g, "");
++        expect(bare("components/card/styles.css")).not.toMatch(/:active/);
++        // the gleam's `:active` arm is the glass material's (glass/material.css), named, not the emphases' press
++        expect(bare("components/button/styles.css")).not.toMatch(/data-emphasis="(quiet|text)"\]:active/);
++    });
++
++    it("engage-disclosed: the press DEEPENS the hover rung (the two inks summed), a plate member's over its plate, CK-25", () => {
++        const css = read("styles/utilities/engage.css");
++        const block = css.slice(css.indexOf("@utility engage-disclosed"), css.indexOf("@utility engage-held"));
++        const hover = block.slice(block.indexOf("@media (hover: hover)"));
++        expect(hover).toMatch(/&\.control-surface\[data-press\]:hover:not\(:disabled, \[data-disabled\]\) \{\s*background-color: color-mix\(\s*in oklab,\s*var\(--foreground\) calc\(var\(--fill-hover\) \* 100%\),\s*var\(--control-surface-bg-hover\)/);
++        // the hover it deepens is the same transient rung, never the plate's slab
++        const disc = read("components/_shared/disclosure/disclosure.css");
++        const rung = disc.slice(disc.indexOf(".disclosure-group-trigger:hover"));
++        expect(rung.slice(0, rung.indexOf("}"))).toMatch(/var\(--foreground\) calc\(var\(--fill-hover\) \* 100%\)/);
++        expect(rung.slice(0, rung.indexOf("}"))).not.toContain("--control-surface-bg-hover");
++    });
++
+     it("engage-disclosed: the press is the hover rung's wash on the mark, never :active", () => {
+         const css = read("styles/utilities/engage.css");
+         const block = css.slice(css.indexOf("@utility engage-disclosed"), css.indexOf("@utility engage-held"));
+-        expect(block).toMatch(/&\[data-press\]:not\(:disabled, \[data-disabled\]\) \{\s*background-color: color-mix\(\s*in oklab,\s*var\(--foreground\) calc\(var\(--fill-hover\) \* 100%\)/);
++        expect(block).toMatch(/&\[data-press\]:not\(:disabled, \[data-disabled\]\) \{\s*background-color: color-mix\(\s*in oklab,\s*var\(--foreground\) calc\(var\(--fill-hover\) \* 200%\)/);
+         expect(block).not.toMatch(/:active/);
+     });
+ });
+@@ -109,11 +147,25 @@ describe("the forced-colours arm reaches the seats only (CK-14, CK-27)", () => {
+     });
+ });
+ 
+-describe("the control bit's commit light waits for its fill (CK-02, CK-10)", () => {
+-    it("delays the light by the face's own fill clock, at a rank above the seat's shorthand", () => {
+-        const css = read("styles/glass/control-bit.css");
+-        expect(css).toMatch(/\.control-bit \.control-bit__face > \.control-bit__light \{\s*transition-delay: var\(--engage-press-drain-release\);/);
+-        // the face's fill rides that same clock
+-        expect(css).toMatch(/background-color var\(--engage-press-drain-release\) var\(--ease-standard\),\s*border-color/);
++describe("the commit light rides its own envelope row, retargeted from where it is (CK-20, CK-12)", () => {
++    it("the row: inside the attack class, its release four of the face fill's clocks, retarget from-current", () => {
++        const row = engageEnvelope("commit-light");
++        expect(row.attackMs).toBeLessThanOrEqual(60);
++        expect(row.releaseMs).toBe(4 * engageEnvelope("press-drain").releaseMs);
++        for (const r of ENGAGE_ENVELOPES) expect(r.retarget).toBe("from-current");
++    });
++
++    it("the seat's legs read the row on both edges, and nothing delays the light", () => {
++        const css = read("styles/utilities/engage.css");
++        const seat = css.slice(css.indexOf("/* released: the charge returns"), css.indexOf("/* the light is the brighter ground"));
++        expect(seat).toMatch(/opacity var\(--engage-commit-light-release\) var\(--ease-standard\),\s*background-color var\(--engage-commit-light-attack\)/);
++        expect(seat).toMatch(/opacity var\(--engage-commit-light-attack\) var\(--ease-decelerate\),\s*background-color var\(--engage-commit-light-release\) var\(--ease-standard\)/);
++        // each attack leg is first-order (steepest at the edge), each release the standard curve
++        expect(seat).toMatch(/background-color var\(--engage-commit-light-attack\) var\(--ease-decelerate\)/);
++        const bare = (f: string): string => read(f).replace(/\/\*[\s\S]*?\*\//g, "");
++        // a delay on a retargeted transition holds the light while its target changes (D5 pass 4 C-A4 §0 item 2)
++        expect(bare("styles/utilities/engage.css")).not.toMatch(/transition-delay/);
++        expect(bare("styles/glass/control-bit.css")).not.toMatch(/transition-delay/);
++        expect(bare("components/toggle-group/styles.css")).not.toMatch(/transition-delay/);
+     });
+ });
+diff --git a/wt-base/tests/composables/motion/engage-door.test.ts b/wt/tests/composables/motion/engage-door.test.ts
+index 801cea99c..18e05675e 100644
+--- a/wt-base/tests/composables/motion/engage-door.test.ts
++++ b/wt/tests/composables/motion/engage-door.test.ts
+@@ -177,8 +177,8 @@ describe("the commit's inputs fail loud (CK-21, F5' F-8)", () => {
+     afterEach(() => vi.restoreAllMocks());
+ 
+     const tokens = (h: HTMLElement, attack: string): void => {
+-        h.style.setProperty("--engage-control-engage-attack", attack);
+-        h.style.setProperty("--engage-control-engage-release", "180ms");
++        h.style.setProperty("--engage-commit-light-attack", attack);
++        h.style.setProperty("--engage-commit-light-release", "480ms");
+         h.style.setProperty("--rung-light", "white");
+     };
+ 
+@@ -192,7 +192,7 @@ describe("the commit's inputs fail loud (CK-21, F5' F-8)", () => {
+         tokens(w.host, "");
+         w.api.door!.commit();
+         expect(err).toHaveBeenCalledTimes(1);
+-        expect(String(err.mock.calls[0]![0])).toContain("--engage-control-engage-attack");
++        expect(String(err.mock.calls[0]![0])).toContain("--engage-commit-light-attack");
+         w.wrapper.unmount();
+     });
+ 
+diff --git a/wt-base/tests/composables/motion/engageEnvelopes.test.ts b/wt/tests/composables/motion/engageEnvelopes.test.ts
+index d02b8752c..9d3ecec35 100644
+--- a/wt-base/tests/composables/motion/engageEnvelopes.test.ts
++++ b/wt/tests/composables/motion/engageEnvelopes.test.ts
+@@ -41,6 +41,14 @@ describe("engageEnvelope", () => {
+         }
+     });
+ 
++    it("retargets every row from where it is: no delay, no restart (D5 pass 5, CK-20)", () => {
++        for (const row of ENGAGE_ENVELOPES) expect(row.retarget).toBe("from-current");
++    });
++
++    it("the commit light outlives the face fill it rides over: four of press-drain's releases", () => {
++        expect(engageEnvelope("commit-light").releaseMs).toBe(4 * engageEnvelope("press-drain").releaseMs);
++    });
++
+     it("carries no duplicate role and no duplicate rider", () => {
+         const roles = ENGAGE_ENVELOPES.map((row) => row.role);
+         expect(new Set(roles).size).toBe(roles.length);
+diff --git a/wt-base/tests/styles/engage-floor.test.ts b/wt/tests/styles/engage-floor.test.ts
+index 9a39581f0..b7ec07d6f 100644
+--- a/wt-base/tests/styles/engage-floor.test.ts
++++ b/wt/tests/styles/engage-floor.test.ts
+@@ -70,7 +70,7 @@ describe("AUTH-4 (CK-10): the commit light keeps its envelope under reduced moti
+             expect(r.body).not.toMatch(/transition-property|transform|scale|translate/);
+             const values = r.body.replace(/^transition-duration:/, "").replace(/!important;?/, "");
+             for (const v of values.split(","))
+-                expect(v.trim()).toMatch(/^var\(--engage-control-engage-(attack|release)\)$/);
++                expect(v.trim()).toMatch(/^var\(--engage-commit-light-(attack|release)\)$/);
+         }
+     });
+ 
+diff --git a/wt-base/tests/styles/engage-ladder.test.ts b/wt/tests/styles/engage-ladder.test.ts
+index 98f7fb025..5c5c1a0fc 100644
+--- a/wt-base/tests/styles/engage-ladder.test.ts
++++ b/wt/tests/styles/engage-ladder.test.ts
+@@ -372,7 +372,7 @@ describe("G-ENGAGE-RUNG · PRM arm — every rung has a reduced-motion terminal
+             .filter((block) => block.includes("::after") || block.includes("[data-engage-light]"));
+         expect(seated.length).toBe(1);
+         expect(seated[0]).not.toMatch(/opacity|background|display|content|transition-property|transform|scale/);
+-        expect(seated[0]).toMatch(/transition-duration:\s*var\(--engage-control-engage-(attack|release)\)/);
++        expect(seated[0]).toMatch(/transition-duration:\s*var\(--engage-commit-light-(attack|release)\)/);
+     });
+ 
+     it("the pointer-fine rung is guarded at the menu row, by containment", () => {

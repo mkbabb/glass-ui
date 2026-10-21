@@ -1,0 +1,5 @@
+## 2026-10-20 21:43:03 load { 23.46 21.83 24.56 } · start E-9 geom webkit 
+E-9 webkit   exit 1 · E-9 webkit FAIL · 77 pass, 1 fail, 0 unmeasured of 78 gating cells (2 reported) · load 23.5/21.8/24.6 at start, 24.8/22.7/24.6 at end · 101 s, load at start 23.5/21.8/24.6
+    FAIL       E-9 accordion commit-light light · commit(Enter) under reduce, state null → "one": the transient · in paint: rise 0.0006 (peak 0.9384 at +160 ms → rest 0.9378; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0086) · 18 reads, largest gap 52 ms in the first 400 ms (bound ≤ 75) · trace [+20 0.7611 +40 0.7766 +72 0.7766 +103 0.9360 +130 0.9378 +160 0.9384 +190 0.9378 +221 0.9312 +255 0.9378 +292 0.9378 +344 0.9378 +413 0.9378 +512 0.9378 +661 0.9378 +722 0.9378 +782 0.9378 +841 0.9378 +912 0.9378] · beside it the composite: light rise 0.0045 on the layers channel (peak 0.9611 → rest 0.9566, at rest true; bound ≥ 0.01; 0.5 quanta of 0.0087, tail spread 0.0000 against 0.0087; composite verdict fail) · load 24.5/22.5/24.6
+exit 1
+## 2026-10-20 21:44:44 load { 24.77 22.65 24.57 } · end E-9 geom webkit
