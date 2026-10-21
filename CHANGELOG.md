@@ -83,7 +83,8 @@ O-101, O-101a; `docs/tranches/BK/coordination/valuejs-outbound-2026-10-19-dock-s
   it only by the engine's own re-snap. It is GREEN on 10.1.1 and RED on the round-1 cure
   in WebKit 2287, whose `max-content` read reset the run from 312 to 72 at 390 and to 0
   at 1440. On 10.1.2 all 22 O-101 and O-101a cells, both scroll cells and the 10.1.1
-  spec are GREEN in Chromium and WebKit 2287 (69 of 69 per engine).
+  spec are GREEN in Chromium and WebKit 2287 (73 of 73 per engine, the two disabled
+  trigger cells below included).
 
 - **The dock run roves only declared seats.** A direct child of the run is a seat when it
   carries `data-glass-dock-seat`. `DockControl` and `DockTrigger` set it, and so does
@@ -93,6 +94,14 @@ O-101, O-101a; `docs/tranches/BK/coordination/valuejs-outbound-2026-10-19-dock-s
   from focusability (`isRovedSeat` in `useDockRun.ts`). That inference is deleted, with no
   alias. It had written `-1` onto atlas's filter trigger, gear, provenance handle, year range
   and dark toggle, which dropped them from the Tab order.
+- **A declared seat stays focusable.** A disabled `DockTrigger` (its own `disabled`, or a
+  disabled `Select` root's) renders `aria-disabled="true"` and blocks its own activation,
+  as `DockControl` always has, never the native `disabled` attribute. A native-disabled
+  seat cannot take focus, so one holding the run's stop took every declared seat out of
+  the Tab order, and one mid-run stopped the arrow keys at it. 10.1.1 skipped a
+  native-disabled trigger through the focusability inference this release deletes. On
+  10.1.2 a disabled trigger is a present-but-disabled stop, reachable by Tab and arrows
+  and announced as disabled, like a disabled `DockControl`.
 - **`role="toolbar"` only over an all-declared run.** The run claims `role="toolbar"` and
   `aria-orientation` only while every direct child is a declared seat. Glass's own
   `<DockSeparator>` (class `dock-separator`) does not void the claim, since a toolbar may
@@ -107,7 +116,10 @@ O-101, O-101a; `docs/tranches/BK/coordination/valuejs-outbound-2026-10-19-dock-s
 - **The contract**, for consumers that measure it (atlas: 8 routes x 390/1440 x 3 engines;
   value.js and the other siblings marking their own seats):
   1. A seat is a direct child of `.dock-run` with the attribute `data-glass-dock-seat`
-     (any value; glass writes `""`). It has no other test.
+     (any value; glass writes `""`). It has no other test. A declared seat must stay
+     focusable: a disabled seat carries `aria-disabled="true"` and blocks its own
+     activation, never the native `disabled` attribute, which would leave the run's stop
+     on an element that cannot take focus.
   2. Declared seats share one tab stop: the focused seat, else the `aria-current` seat,
      else the first. Arrow keys (Left/Right horizontal, Up/Down vertical), Home and End
      move between declared seats only, with no wrap.
@@ -129,7 +141,11 @@ O-101, O-101a; `docs/tranches/BK/coordination/valuejs-outbound-2026-10-19-dock-s
   `crit-seat-cx.test.ts`, on the (b-ii) contract, 13 of 19 RED on 10.1.1 and 19 of 19 GREEN.
   The 6 that pass on both are regression arms: the declared crit arm, the all-declared toolbar,
   the form-seated select trigger (10.1.1 claimed the role over every run) and the three
-  composites. Engine: `tests-visual/release-10-1-2.spec.ts` (harness
+  composites. Seven more pin a disabled `DockTrigger` as a focusable seat (each arm:
+  a disabled `Select` root, a disabled select, dropdown and popover trigger; the arrows
+  passing a disabled trigger mid-run; a disabled popover trigger not opening; an enabled
+  trigger carrying neither state). 5 of the 7 are RED on the round-2 cut `53c68dab7`, which
+  rendered the native `disabled`; the last two are regression arms. Engine: `tests-visual/release-10-1-2.spec.ts` (harness
   `tests-visual/release-10-1-2/`) at 1440 and 390, in Chromium (`chromium-headless-new`)
   and Playwright WebKit 2287 (`tests-visual/webkit-2287.config.ts`): "the atlas shapes
   seated in a run are all Tab-reachable", "arrows rove only the declared seats", "a run
@@ -139,7 +155,14 @@ O-101, O-101a; `docs/tranches/BK/coordination/valuejs-outbound-2026-10-19-dock-s
   roved ArrowRight onto reka's hidden `<select>`), "the toolbar claim follows a child's
   aria-hidden and tabindex in place", "a child that drops its declaration is Tab-reachable
   again", and two regression arms, "an all-declared run is one toolbar stop" and "a
-  RadioGroup and a ToggleGroup seated directly keep their arrows". Every atlas shape, the year-range input
+  RadioGroup and a ToggleGroup seated directly keep their arrows". Two more pin the
+  focusable disabled seat: "a disabled DockTrigger holding the stop keeps the run in the
+  Tab order" (scene `disabled-first`: a disabled `Select`'s trigger ahead of two
+  `DockControl`s; the walk is `seat-0, after`, and ArrowRight reaches `seat-1`) and "the
+  arrows pass a disabled DockTrigger mid-run" (scene `disabled-mid`: a disabled dropdown
+  trigger between two `DockControl`s; `seat-0 -> seat-1 -> seat-2`). Both are RED on
+  `53c68dab7` in Chromium and WebKit 2287 at both widths: the walk skipped the dock
+  (`after`, then `BODY`) and the arrows stayed on `seat-0`. Every atlas shape, the year-range input
   pair included, is seated directly in the run, the shape 10.1.1 broke. The lattice roving tests and the toolbar test now seat
   declared controls.
 

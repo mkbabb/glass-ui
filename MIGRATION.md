@@ -27,6 +27,12 @@ Two behaviour changes, no type change. **A custom dock seat must now carry
   bespoke button, a `[role=button]` element) adds the attribute itself:
   `<RouterLink data-glass-dock-seat to="/a">`. A `DockControl as-child` already sets it
   on the child.
+- A declared seat must stay focusable. A custom seat that is disabled carries
+  `aria-disabled="true"` and blocks its own activation, never the native `disabled`
+  attribute: `<button data-glass-dock-seat aria-disabled="true">`. A native-disabled seat
+  that holds the run's stop takes every seat out of the Tab order. A disabled
+  `DockTrigger` now renders `aria-disabled`, like `DockControl`, so it stays in the Tab
+  and arrow order as a disabled stop where 10.1.1 skipped it.
 - An undeclared child is left alone. It keeps its natural tab stop and its own keys, so a
   filter trigger, a settings button, a handle, an input pair, a dark toggle or a composite
   stays in the Tab order. A consumer that pulled such a control out of its dock run, or
