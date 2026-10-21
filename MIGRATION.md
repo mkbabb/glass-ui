@@ -54,6 +54,24 @@ Proposed by the atlas formation on local branch `u/b7-glass-shape` off `release/
   `data-anchor`. With a `#persistent` group under `anchor="end"`, that group pivots on the
   same edge during the morph.
 
+- **The one dropdown system (B7-G6).**
+  - `DropdownMenu` defaults to `modal: false`. Pass `modal` for a menu that must make the
+    page inert; a modal menu still takes reka's body scroll lock.
+  - `SelectContent` passes `bodyLock: false`, and its 4px gap to the trigger is now
+    `sideOffset: 4` (the default was `0` plus a `translate-*-1` nudge, which is gone).
+  - `ExpandableContainer` locks scroll on `<html>` instead of `<body>`.
+  - The root carries `scrollbar-gutter: stable` (`:where(html)`, zero specificity).
+  - `DropdownMenuContent`, `PopoverContent` and `SelectContent` pass `collisionPadding: 16`.
+  - The menu, panel and listbox plates: `max-inline-size: min(22rem, 100vw - 2rem)`;
+    `max-block-size` is reka's measured available height with no `--overlay-max-block`
+    clamp; `overflow-y: auto` and `overscroll-behavior: contain` on the scroll owner.
+    `--overlay-max-block` remains for the command list and the hint. The select viewport
+    loses `max-h-[inherit]`.
+  - Below 30rem, `SelectContent` opens as a bottom sheet (`data-form="sheet"`).
+  Consumer action: a consumer that relied on a dropdown making the page inert passes
+  `modal`. A consumer that styled `[data-slot="select-content"]` by `data-side` translate
+  drops that.
+
 ## 10.1.1
 
 One type-level change, below; no runtime break. Behaviour a consumer may notice:

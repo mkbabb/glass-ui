@@ -5,7 +5,8 @@ import type { MenuTrigger } from "./context";
 interface DropdownMenuBaseProps {
     /** Logical reading direction for roving focus and submenu keys. */
     dir?: Direction;
-    /** Whether opening the menu makes outside content inert. */
+    /** Whether opening the menu makes outside content inert (and locks page scroll).
+     *  Default `false`. */
     modal?: boolean;
 }
 
@@ -51,7 +52,13 @@ defineOptions({ name: "DropdownMenu", inheritAttrs: false });
 
 const props = withDefaults(defineProps<DropdownMenuComponentProps>(), {
     defaultOpen: undefined,
-    modal: true,
+    /* Non-modal by default (U/B7 D-2). A modal menu takes reka's scroll lock, which
+       writes `overflow: hidden` onto `body`; under a root whose overflow is not
+       `visible` that makes `body` the scroll container, every sticky ancestor drops
+       to its in-flow position and the menu follows its trigger off screen. An action
+       menu needs neither the lock nor the inert page. Pass `modal` for a menu that
+       must make the page inert. */
+    modal: false,
     open: undefined,
     trigger: "click",
 });

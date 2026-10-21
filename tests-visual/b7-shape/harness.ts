@@ -22,6 +22,11 @@ if (params.get("layered") === "1") {
 }
 if (params.get("theme") === "dark") document.documentElement.classList.add("dark");
 
+/** atlas's base sheet: the root clips horizontal overflow on both html and body. */
+function clipRoot(): void {
+    for (const el of [document.documentElement, document.body]) el.style.overflowX = "clip";
+}
+
 const { default: SegmentedTabs } = await import("../../src/components/tabs/SegmentedTabs.vue");
 
 const TAB_OPTIONS = [
@@ -102,6 +107,119 @@ const scenes: Record<string, () => Promise<Component>> = {
                     h(Chip, { mode: "action", "data-witness": "chip" }, () => "Download"),
                 ]);
         });
+    },
+
+    // D-1: a side sheet opened from deep in a long page, under the consumer layer wrap
+    // and atlas's root `overflow-x: clip`, stays on screen.
+    sheet: async () => {
+        const { Dialog, DialogTitle, DialogDescription } = await import("../../src/components/dialog");
+        const { SheetContent } = await import("../../src/components/sheet");
+        clipRoot();
+        return defineComponent(() => {
+            const open = ref(false);
+            w.__open = () => (open.value = true);
+            return () =>
+                h("div", { style: "height:4000px;padding:32px" }, [
+                    h("p", "Long page"),
+                    h(Dialog, { open: open.value, "onUpdate:open": (v: boolean) => (open.value = v) }, () => [
+                        h(SheetContent, { side: "right", "data-witness": "sheet" }, () => [
+                            h(DialogTitle, () => "Filters"),
+                            h(DialogDescription, () => "Narrow the map."),
+                        ]),
+                    ]),
+                ]);
+        });
+    },
+
+    // D-2: a sticky filter row holding a DropdownMenu and a Select, in a long page under
+    // atlas's root `overflow-x: clip`. Opening either leaves the page's scroll alone.
+    sticky: async () => {
+        const menu = await import("../../src/components/menu");
+        const sel = await import("../../src/components/select");
+        clipRoot();
+        return defineComponent(() => {
+            const value = ref("a");
+            return () =>
+                h("div", { style: "height:4000px" }, [
+                    h("div", { style: "height:600px" }),
+                    h(
+                        "div",
+                        {
+                            "data-witness": "sticky-row",
+                            style: "position:sticky;top:0;display:flex;gap:16px;padding:12px;background:var(--background);z-index:5",
+                        },
+                        [
+                            h(menu.DropdownMenu, null, () => [
+                                h(menu.DropdownMenuTrigger, { "data-witness": "menu-trigger" }, () => "Actions"),
+                                h(menu.DropdownMenuContent, { "data-witness": "menu" }, () => [
+                                    h(menu.DropdownMenuItem, () => "Download CSV"),
+                                    h(menu.DropdownMenuItem, () => "Copy link"),
+                                ]),
+                            ]),
+                            h(sel.Select, { modelValue: value.value, "onUpdate:modelValue": (v: string) => (value.value = v) }, () => [
+                                h(sel.SelectTrigger, { "data-witness": "select-trigger", style: "width:180px" }, () => h(sel.SelectValue)),
+                                h(sel.SelectContent, { "data-witness": "select" }, () =>
+                                    ["a", "b", "c"].map((v) => h(sel.SelectItem, { value: v }, () => `Year ${v}`)),
+                                ),
+                            ]),
+                        ],
+                    ),
+                ]);
+        });
+    },
+
+    // D-3 and D-6: a twelve-row Select near the top of the page.
+    select: async () => {
+        const sel = await import("../../src/components/select");
+        return defineComponent(() => {
+            const value = ref("1");
+            const rows = Array.from({ length: 12 }, (_, i) => String(i + 1));
+            return () =>
+                h("div", { style: "padding:24px" }, [
+                    h(sel.Select, { modelValue: value.value, "onUpdate:modelValue": (v: string) => (value.value = v) }, () => [
+                        h(sel.SelectTrigger, { "data-witness": "select-trigger", style: "width:200px" }, () => h(sel.SelectValue)),
+                        h(sel.SelectContent, { "data-witness": "select" }, () =>
+                            rows.map((v) => h(sel.SelectItem, { value: v }, () => `School year 20${10 + Number(v)}`)),
+                        ),
+                    ]),
+                ]);
+        });
+    },
+
+    // The sizing law: a menu with a long label and a popover, both opened from a
+    // trigger at the right edge; a forty-row menu opened low in the viewport.
+    sizing: async () => {
+        const menu = await import("../../src/components/menu");
+        const pop = await import("../../src/components/popover");
+        const long =
+            "Download the per-school funding table with every commitment line as a spreadsheet";
+        return defineComponent(() => () =>
+            h("div", { style: "position:relative;height:100vh" }, [
+                h("div", { style: "position:absolute;top:24px;right:4px;display:flex;flex-direction:column;align-items:flex-end;gap:12px" }, [
+                    h(menu.DropdownMenu, null, () => [
+                        h(menu.DropdownMenuTrigger, { "data-witness": "long-trigger" }, () => "More"),
+                        h(menu.DropdownMenuContent, { "data-witness": "long-menu" }, () => [
+                            h(menu.DropdownMenuItem, () => long),
+                            h(menu.DropdownMenuItem, () => "Copy link"),
+                        ]),
+                    ]),
+                    h(pop.Popover, null, () => [
+                        h(pop.PopoverTrigger, { "data-witness": "pop-trigger" }, () => "About"),
+                        h(pop.PopoverContent, { "data-witness": "pop" }, () =>
+                            h("p", `${long}. ${long}.`),
+                        ),
+                    ]),
+                ]),
+                h("div", { style: "position:absolute;top:60vh;left:24px" }, [
+                    h(menu.DropdownMenu, null, () => [
+                        h(menu.DropdownMenuTrigger, { "data-witness": "tall-trigger" }, () => "Districts"),
+                        h(menu.DropdownMenuContent, { "data-witness": "tall-menu" }, () =>
+                            Array.from({ length: 40 }, (_, i) => h(menu.DropdownMenuItem, () => `District ${i + 1}`)),
+                        ),
+                    ]),
+                ]),
+            ]),
+        );
     },
 
     // The O-4 strip: five equal tabs on the pill material.

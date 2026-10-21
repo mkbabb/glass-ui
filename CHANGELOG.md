@@ -40,6 +40,18 @@ Proposed by the atlas formation (U/B7, the owner's order of 2026-10-19 in sci-re
   `v10.1.1`; the default cases pass on both). The dock README props table is brought up to
   the shipped surface.
 
+- **One dropdown system (B7-G6).** D-1: the side sheet stays fixed to the viewport inside a
+  consumer cascade layer (`Sheet.position.spec.ts`: passes on `v10.1.1`, where the cure
+  shipped, and fails 4 of 4 against the `v10.1.0` `SheetContent`). D-2: no glass overlay
+  writes `overflow` onto `body`; DropdownMenu is non-modal by default, Select takes no lock,
+  ExpandableContainer locks the root, and the root keeps a stable gutter, so a sticky filter
+  row and its menu hold their place (`DropdownMenu.scroll-lock.spec.ts`). D-3: a Select
+  listbox is as tall as the room it opened into, with no fixed clamp (`Select.bound.spec.ts`).
+  The sizing law (collision avoidance on both axes, 16px padding, at most
+  `min(22rem, 100vw - 2rem)` wide, internal scroll, card radius) holds for DropdownMenu,
+  Select and Popover (`overlay-sizing.spec.ts`). Below 30rem the Select opens as a bottom
+  sheet at full width. On `v10.1.1` 16 of the 22 cells fail; all 22 pass here.
+
 ## 10.1.1 — 2026-10-19
 
 Four cures, one guarded row and one owner-ruled addition. Asked by the atlas consumer (U batch

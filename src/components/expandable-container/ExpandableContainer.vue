@@ -66,27 +66,36 @@
 </template>
 
 <script lang="ts">
-let bodyOverflowLockDepth = 0;
-let bodyOverflowBeforeLock: string | null = null;
+/* THE SCROLL LOCK RIDES THE ROOT, NOT `body` (U/B7 D-2). `overflow: hidden` on `body`,
+ * under a root whose own overflow is not `visible` (a consumer's `overflow-x: clip`),
+ * makes `body` a scroll container, so every sticky element on the page drops to its
+ * in-flow position while the lock holds. On the root element the value propagates to
+ * the viewport, which stays the page's one scroller, and the root's
+ * `scrollbar-gutter: stable` keeps the layout from shifting when the bar hides. It also
+ * no longer shares `body` with reka's own modal lock, so the two cannot restore each
+ * other's stale value when they close out of order (U-F04). */
+let rootOverflowLockDepth = 0;
+let rootOverflowBeforeLock: string | null = null;
 
-function acquireBodyOverflowLock() {
+function acquireRootOverflowLock() {
     if (typeof document === "undefined") return false;
 
-    if (bodyOverflowLockDepth === 0) {
-        bodyOverflowBeforeLock = document.body.style.overflow;
-        document.body.style.overflow = "hidden";
+    const root = document.documentElement;
+    if (rootOverflowLockDepth === 0) {
+        rootOverflowBeforeLock = root.style.overflow;
+        root.style.overflow = "hidden";
     }
-    bodyOverflowLockDepth += 1;
+    rootOverflowLockDepth += 1;
     return true;
 }
 
-function releaseBodyOverflowLock() {
-    if (typeof document === "undefined" || bodyOverflowLockDepth === 0) return;
+function releaseRootOverflowLock() {
+    if (typeof document === "undefined" || rootOverflowLockDepth === 0) return;
 
-    bodyOverflowLockDepth -= 1;
-    if (bodyOverflowLockDepth === 0) {
-        document.body.style.overflow = bodyOverflowBeforeLock ?? "";
-        bodyOverflowBeforeLock = null;
+    rootOverflowLockDepth -= 1;
+    if (rootOverflowLockDepth === 0) {
+        document.documentElement.style.overflow = rootOverflowBeforeLock ?? "";
+        rootOverflowBeforeLock = null;
     }
 }
 </script>
@@ -148,16 +157,16 @@ function collapse() {
     open.value = false;
 }
 
-let holdsBodyOverflowLock = false;
+let holdsRootOverflowLock = false;
 let unregEsc: (() => void) | null = null;
 let restoreTarget: HTMLElement | null = null;
 
-function syncBodyOverflowLock(fullscreen: boolean) {
-    if (fullscreen && !holdsBodyOverflowLock) {
-        holdsBodyOverflowLock = acquireBodyOverflowLock();
-    } else if (!fullscreen && holdsBodyOverflowLock) {
-        releaseBodyOverflowLock();
-        holdsBodyOverflowLock = false;
+function syncRootOverflowLock(fullscreen: boolean) {
+    if (fullscreen && !holdsRootOverflowLock) {
+        holdsRootOverflowLock = acquireRootOverflowLock();
+    } else if (!fullscreen && holdsRootOverflowLock) {
+        releaseRootOverflowLock();
+        holdsRootOverflowLock = false;
     }
 }
 
@@ -204,7 +213,7 @@ function onScopeMountAutoFocus(event: Event) {
 watch(
     open,
     (isOpen, wasOpen) => {
-        syncBodyOverflowLock(isOpen);
+        syncRootOverflowLock(isOpen);
 
         if (isOpen && !wasOpen) {
             const active =
@@ -228,7 +237,7 @@ watch(
 onUnmounted(() => {
     unregEsc?.();
     unregEsc = null;
-    syncBodyOverflowLock(false);
+    syncRootOverflowLock(false);
 });
 </script>
 
