@@ -1,0 +1,19 @@
+# start capture plant chromium 2026-10-21 02:58:31 load { 8.63 8.20 10.91 }
+# capture · ca5-plant · /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/out/builds/plant · scene app: harness scenes/App.vue (sha1 7c8bcdaafb44) · lock wait 55.7 s · other headless processes: chromium 8, webkit 2 · load 7.8/8.0/10.7 at start
+# chromium 149.0.7827.55
+  ca5-plant-chromium-fine-light-accordion · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 7.8/8.0/10.7
+  PASS       CAP accordion fine light committed · chromium: pointer release after a 450 ms hold, state null → "one" · load 7.8/8.0/10.7
+  FAIL       CAP accordion ladder fine light · chromium: inset paint L rest 0.9566 (rgba(0, 0, 0, 0)) · hover 0.8556 (oklab(0.216114 0.00343135 0.00508514 / 0.05); darker by 0.1010) · hover+press 0.9137 (oklab(0.216114 0.00343135 0.00508514 / 0.025)) · released, still hovered 0.8556 · the press moves BACK toward rest past the hover by 0.0581 (the press lighter than its hover: the ladder inverts) (bound: no step back past 0.002) · load 7.5/8.0/10.6
+  ca5-plant-chromium-fine-dark-accordion · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 7.9/8.1/10.7
+  PASS       CAP accordion fine dark committed · chromium: pointer release after a 450 ms hold, state null → "one" · load 7.9/8.1/10.7
+  FAIL       CAP accordion ladder fine dark · chromium: inset paint L rest 0.0031 (rgba(0, 0, 0, 0)) · hover 0.0076 (oklab(0.926146 0.00162765 0.00610709 / 0.05); lighter by 0.0045) · hover+press 0.0044 (oklab(0.926146 0.00162765 0.00610709 / 0.025)) · released, still hovered 0.0076 · the press moves BACK toward rest past the hover by 0.0031 (the press lighter than its hover: the ladder inverts) (bound: no step back past 0.002) · load 7.9/8.1/10.7
+  ca5-plant-chromium-coarse-light-accordion · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 7.5/8.0/10.6
+  PASS       CAP accordion coarse light committed · chromium: short tap, state null → "one" · load 7.5/8.0/10.6
+  ca5-plant-chromium-coarse-dark-accordion · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 7.9/8.0/10.6
+  PASS       CAP accordion coarse dark committed · chromium: short tap, state null → "one" · load 7.9/8.0/10.6
+# sheet /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-5/C-A5/glance/ca5-plant-chromium-fine.png · 2 rows
+# sheet /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-5/C-A5/glance/ca5-plant-chromium-coarse.png · 2 rows
+# capture done · load 7.9/8.0/10.6 at end
+CAP chromium FAIL · 4 pass, 2 fail, 0 unmeasured of 6 gating cells (0 reported) · load 7.8/8.0/10.7 at start, 7.9/8.0/10.6 at end
+# exit 1
+# end capture plant chromium 2026-10-21 02:59:53 load { 8.03 8.07 10.61 }

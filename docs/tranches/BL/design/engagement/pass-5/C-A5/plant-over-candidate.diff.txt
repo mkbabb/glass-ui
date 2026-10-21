@@ -1,0 +1,93 @@
+diff -ru /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt/src/components/card/Card.vue /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt-plant/src/components/card/Card.vue
+--- /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt/src/components/card/Card.vue	2026-10-21 01:59:03
++++ /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt-plant/src/components/card/Card.vue	2026-10-21 02:01:37
+@@ -74,8 +74,8 @@
+         :data-shadow="shadow || undefined"
+         :data-size="size"
+         :data-selected="selected ? 'true' : undefined"
+-        :role="selectable ? 'option' : undefined"
+-        :tabindex="selectable ? 0 : undefined"
++        role="option"
++        tabindex="0"
+         :aria-selected="selectable ? (selected ? 'true' : 'false') : undefined"
+         :class="cn('card', selectable ? 'engage-chosen' : 'engage-static', props.class)"
+     >
+diff -ru /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt/src/components/checkbox/Checkbox.vue /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt-plant/src/components/checkbox/Checkbox.vue
+--- /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt/src/components/checkbox/Checkbox.vue	2026-10-21 01:59:03
++++ /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt-plant/src/components/checkbox/Checkbox.vue	2026-10-21 02:01:37
+@@ -29,7 +29,7 @@
+  * the mount, even after a style read, is the rest it mounts in, and the commit's tokens
+  * are read loudly on every `data-state` edge (CK-03, CK-21). It paints nothing. */
+ const rootRef = ref<{ $el: Element } | null>(null);
+-useEngage(() => (rootRef.value?.$el as HTMLElement | undefined) ?? null, { commit: "state" });
++// C-A5 PLANT Q3 useEngage(() => (rootRef.value?.$el as HTMLElement | undefined) ?? null, { commit: "state" });
+ </script>
+ 
+ <template>
+diff -ru /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt/src/components/switch/Switch.vue /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt-plant/src/components/switch/Switch.vue
+--- /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt/src/components/switch/Switch.vue	2026-10-21 01:59:03
++++ /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt-plant/src/components/switch/Switch.vue	2026-10-21 02:01:36
+@@ -52,7 +52,7 @@
+         ref="rootRef"
+         data-slot="switch"
+         v-bind="{ ...forwarded, ...controlStateAttrs(props.invalid) }"
+-        :class="cn('switch control-bit engage-chosen', props.class)"
++        :class="cn('switch control-bit', props.class)"
+     >
+         <span class="control-bit__face" data-engage-face aria-hidden="true">
+             <!-- The thumb IS the switch's mark and keeps its own translate channel;
+diff -ru /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt/src/components/tabs/styles/segmented.css /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt-plant/src/components/tabs/styles/segmented.css
+--- /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt/src/components/tabs/styles/segmented.css	2026-10-21 01:59:03
++++ /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt-plant/src/components/tabs/styles/segmented.css	2026-10-21 02:01:37
+@@ -437,3 +437,5 @@
+         color: color-mix(in oklab, var(--foreground) 70%, transparent);
+     }
+ }
++
++@layer components { .segmented-tab > .segmented-tab__light { display: none !important; } } /* C-A5 PLANT Q8 */
+Only in /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt-plant/src/components/toggle-group: plantWriter.ts
+diff -ru /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt/src/styles/glass/control-bit.css /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt-plant/src/styles/glass/control-bit.css
+--- /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt/src/styles/glass/control-bit.css	2026-10-21 01:59:03
++++ /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt-plant/src/styles/glass/control-bit.css	2026-10-21 02:01:37
+@@ -413,3 +413,5 @@
+         }
+     }
+ }
++
++@layer components { .control-bit .control-bit__face > .control-bit__light { transition-delay: var(--engage-press-drain-release); } } /* C-A5 PLANT Q5 */
+diff -ru /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt/src/styles/glass/glass-chip.css /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt-plant/src/styles/glass/glass-chip.css
+--- /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt/src/styles/glass/glass-chip.css	2026-10-21 01:59:03
++++ /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt-plant/src/styles/glass/glass-chip.css	2026-10-21 02:01:37
+@@ -121,3 +121,5 @@
+         }
+     }
+ }
++
++@layer components { .glass-chip--interactive[data-press] { opacity: 0.98; transition: opacity 77ms linear; } } /* C-A5 PLANT Q10 */
+diff -ru /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt/src/styles/utilities/engage.css /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt-plant/src/styles/utilities/engage.css
+--- /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt/src/styles/utilities/engage.css	2026-10-21 01:59:03
++++ /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/wt-plant/src/styles/utilities/engage.css	2026-10-21 02:01:37
+@@ -101,7 +101,7 @@
+     &[data-press]:not(:disabled, [data-disabled]) {
+         background-color: color-mix(
+             in oklab,
+-            var(--foreground) calc(var(--fill-hover) * 200%),
++            var(--foreground) calc(var(--fill-hover) * 50%) /* C-A5 PLANT Q7 */,
+             transparent
+         );
+         transition-duration:
+@@ -274,7 +274,7 @@
+        is its coarse hit-slop, not a seat, and hiding it took the 44 px target with it
+        (D5 pass 3 C-A3 §0 item 2; E-12 `fcslop`). */
+     @media (forced-colors: active) {
+-        :where(.engage-chosen, .engage-pressed, .engage-disclosed):where(:not(.dock-trigger, .dock-select-trigger, .dock-dropdown-trigger))::after,
++        :where(.engage-chosen, .engage-pressed, .engage-disclosed)::after,
+         :where(.engage-chosen, .engage-pressed, .engage-disclosed) [data-engage-light] {
+             display: none;
+         }
+@@ -337,3 +337,5 @@
+     }
+ }
+ /* AUTH-4 end */
++
++@layer components { .button { --rung-light: transparent; } } /* C-A5 PLANT Q6 */

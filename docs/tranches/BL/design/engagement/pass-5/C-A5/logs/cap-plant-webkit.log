@@ -1,0 +1,19 @@
+# start capture plant webkit 2026-10-21 04:03:56 load { 10.36 8.66 8.49 }
+# capture · ca5-plant · /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-A5/out/builds/plant · scene app: harness scenes/App.vue (sha1 7c8bcdaafb44) · lock wait 34.1 s · other headless processes: chromium 14, webkit 0 · load 8.9/8.5/8.4 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  ca5-plant-webkit-fine-light-accordion · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 8.8/8.5/8.4
+  PASS       CAP accordion fine light committed · webkit: pointer release after a 450 ms hold, state null → "one" · load 8.8/8.5/8.4
+  FAIL       CAP accordion ladder fine light · webkit: inset paint L rest 0.9566 (rgba(0, 0, 0, 0)) · hover 0.8556 (oklab(0.216115 0.003422 0.005081 / 0.05); darker by 0.1010) · hover+press 0.9137 (oklab(0.216115 0.003422 0.005081 / 0.025)) · released, still hovered 0.8492 · the press moves BACK toward rest past the hover by 0.0581 (the press lighter than its hover: the ladder inverts) (bound: no step back past 0.002) · load 8.8/8.5/8.4
+  ca5-plant-webkit-fine-dark-accordion · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 8.6/8.4/8.4
+  PASS       CAP accordion fine dark committed · webkit: pointer release after a 450 ms hold, state null → "one" · load 8.6/8.4/8.4
+  PASS       CAP accordion ladder fine dark · webkit: inset paint L rest 0.0031 (rgba(0, 0, 0, 0)) · hover 0.0072 (oklab(0.926152 0.001586 0.006089 / 0.05); lighter by 0.0041) · hover+press 0.0052 (oklab(0.926152 0.001586 0.006089 / 0.025)) · released, still hovered 0.0072 · the press holds the hover (bound: no step back past 0.002) · load 8.6/8.4/8.4
+  ca5-plant-webkit-coarse-light-accordion · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 8.1/8.4/8.4
+  PASS       CAP accordion coarse light committed · webkit: short tap, state null → "one" · load 8.1/8.4/8.4
+  ca5-plant-webkit-coarse-dark-accordion · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 7.7/8.2/8.3
+  PASS       CAP accordion coarse dark committed · webkit: short tap, state null → "one" · load 7.7/8.2/8.3
+# sheet /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-5/C-A5/glance/ca5-plant-webkit-fine.png · 2 rows
+# sheet /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-5/C-A5/glance/ca5-plant-webkit-coarse.png · 2 rows
+# capture done · load 7.4/8.2/8.3 at end
+CAP webkit FAIL · 5 pass, 1 fail, 0 unmeasured of 6 gating cells (0 reported) · load 8.9/8.5/8.4 at start, 7.4/8.2/8.3 at end
+# exit 1
+# end capture plant webkit 2026-10-21 04:04:53 load { 7.44 8.19 8.33 }

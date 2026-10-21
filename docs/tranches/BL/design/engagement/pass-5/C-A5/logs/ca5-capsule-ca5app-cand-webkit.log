@@ -1,0 +1,11 @@
+# start ca5-capsule ca5app-cand webkit 2026-10-21 04:09:53 load { 16.39 13.84 10.85 }
+C-A5 capsule probe · webkit · load 16.4/13.8/10.9 at start
+  FAIL       capsule hover · fine · light · chip (glass-capsule glass-capsule-hover) rest scale none (painted/layout 0.9951) → hovered 400 ms (:hover true) scale 1.015 (1.0100) (bound: the hover writes no geometry, |scale − 1| ≤ 0.002) · load 16.4/13.8/10.9
+  FAIL       capsule press · fine · light · held 250 ms (:active true): scale 0.97 (0.9653) · released +600 ms still hovered: scale 1.015 (bound: no :active class rung writes the press's geometry) · load 16.4/13.8/10.9
+  FAIL       capsule hover · fine · dark · chip (glass-capsule glass-capsule-hover) rest scale none (painted/layout 0.9951) → hovered 400 ms (:hover true) scale 1.015 (1.0100) (bound: the hover writes no geometry, |scale − 1| ≤ 0.002) · load 16.4/13.8/10.9
+  FAIL       capsule press · fine · dark · held 250 ms (:active true): scale 0.97 (0.9653) · released +600 ms still hovered: scale 1.015 (bound: no :active class rung writes the press's geometry) · load 16.6/13.9/10.9
+  FAIL       capsule tap · coarse · light · (hover:none) true (pointer:coarse) true · tap committed (state b) · +900 ms: scale 1.015 (1.0100), :hover true (bound: no hover latch, settles at 1 ± 0.002) · load 16.6/13.9/10.9
+  FAIL       capsule tap · coarse · dark · (hover:none) true (pointer:coarse) true · tap committed (state b) · +900 ms: scale 1.015 (1.0100), :hover true (bound: no hover latch, settles at 1 ± 0.002) · load 16.6/13.9/10.9
+C-A5 capsule probe · webkit · 0 other, 6 fail · load 16.6/13.9/10.9 at end
+# exit 0
+# end ca5-capsule ca5app-cand webkit 2026-10-21 04:10:00 load { 16.60 13.93 10.90 }
