@@ -388,6 +388,7 @@ this table must agree). Five classes: **primitive** (the numeric ladder), **sema
 | `--radius-card`     | var(--radius-2xl)  | 16 px | Content card / popover                                     |
 | `--radius-dialog`   | var(--radius-card) | 16 px | Dialog (matches the card — F48)                            |
 | `--radius-panel`    | var(--radius-xl)   | 12 px | Panel / configurator / Command panel                      |
+| `--radius-bar`      | var(--radius-panel) | 12 px | Button, ToggleGroupItem, SegmentedTabs past their rung (`data-shape="bar"`, U/B7) |
 | `--radius-strip`    | 0.75rem            | 12 px | Bounded column-stack segmented track (vertical)            |
 | `--radius-tab`      | var(--radius-pill) | 16 px | Segmented control (horizontal; a stadium up to 32 px tall) |
 | `--radius-badge`    | var(--radius-pill) | 16 px | Badge (a stadium at badge height)                          |

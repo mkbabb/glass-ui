@@ -59,10 +59,11 @@
         justify-content: center;
         gap: 0.5rem;
         padding-inline: 0.75rem;
-        /* ONE spelling of the stadium. The old `calc(var(--radius-pill) + 0.25rem)`
-           pair upstairs is what made this component the sole author of the ×32
-           `10003px` census; the role rung is the whole answer here. */
-        border-radius: var(--radius-pill);
+        /* ONE spelling of the stadium: half the item's rung, the Button's bound. A
+           single-line item on its rung is a stadium at every size; past the rung it
+           is a bar (below). The old `calc(var(--radius-pill) + 0.25rem)` pair was the
+           sole author of the ×32 `10003px` census. */
+        border-radius: calc(var(--toggle-group-item-size) / 2);
         color: var(--muted-foreground);
         font: inherit;
         font-size: var(--control-text);
@@ -72,6 +73,11 @@
         appearance: none;
         touch-action: manipulation;
         user-select: none;
+    }
+
+    /* Past its rung the item is a bar (U/B7 G1-7, `useBarShape`). */
+    .toggle-group__item[data-shape="bar"] {
+        border-radius: var(--radius-bar);
     }
 
     .toggle-group[data-size="sm"] .toggle-group__item {

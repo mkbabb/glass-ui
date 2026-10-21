@@ -2,6 +2,7 @@
 import { computed, onBeforeUnmount, onMounted, ref, type HTMLAttributes } from "vue";
 import { cn } from "../_shared/class-names";
 import type { SelectionValue } from "../_shared/selection";
+import { useBarShape } from "../_shared/shape/useBarShape";
 import { useOptionalToggleGroupContext, type ToggleItemEntry } from "./context";
 
 /* A BOUNDED PILL, and nothing else. The item owns its own silhouette and composes
@@ -39,6 +40,7 @@ defineSlots<{
 }>();
 
 const el = ref<HTMLElement | null>(null);
+const barShape = useBarShape(el);
 const group = useOptionalToggleGroupContext();
 
 /* EITHER disables — never `??`. Vue casts an ABSENT Boolean prop to `false`, not to
@@ -86,6 +88,7 @@ const isDisabled = computed(() => entry.disabled());
             )
         "
         :data-state="selected ? 'on' : 'off'"
+        :data-shape="barShape"
         :disabled="isDisabled || undefined"
         :tabindex="group?.tabindex(entry) ?? 0"
         v-bind="group?.itemAttrs(props.value)"

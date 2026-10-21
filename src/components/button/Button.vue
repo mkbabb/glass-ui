@@ -35,6 +35,7 @@ import DotRing from "../_shared/feedback/DotRing.vue";
 import { vSpecular } from "../../composables/glass";
 import { asElement } from "../../composables/motion/core/asElement";
 import { useLiquidPress } from "../../composables/motion/spring/useLiquidPress";
+import { useBarShape } from "../_shared/shape/useBarShape";
 
 export type ButtonEmphasis = "primary" | "secondary" | "quiet" | "text";
 export type ButtonSize = Extract<Size, "xs" | "sm" | "md" | "lg">;
@@ -107,6 +108,8 @@ function captureHost(value: Element | ComponentPublicInstance | null): void {
     hostEl.value = asElement(value as HTMLElement | ComponentPublicInstance | null);
 }
 
+const barShape = useBarShape(hostEl);
+
 const press = useLiquidPress({
     el: hostEl,
     disabled: () => activationBlocked.value,
@@ -168,6 +171,7 @@ function guardDisabledActivation(event: MouseEvent): void {
         :data-tone="tone"
         :data-size="size"
         :data-icon-only="iconOnly || undefined"
+        :data-shape="barShape"
         data-control-target=""
         :data-loading="loading || undefined"
         :data-press-armed="press.armed ? '' : undefined"

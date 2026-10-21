@@ -52,6 +52,13 @@ Proposed by the atlas formation (U/B7, the owner's order of 2026-10-19 in sci-re
   Select and Popover (`overlay-sizing.spec.ts`). Below 30rem the Select opens as a bottom
   sheet at full width. On `v10.1.1` 16 of the 22 cells fail; all 22 pass here.
 
+- **Large controls are bars (B7-G7).** A Button, ToggleGroupItem or SegmentedTabs strip
+  past its rung takes the 12px `--radius-bar`; one on its rung stays a stadium. One
+  ResizeObserver per control (`_shared/shape/useBarShape.ts`) keeps the attribute live.
+  Witness: `tests-visual/radius-scale.spec.ts` (the bar cases), light and dark, Chromium
+  and Firefox: 16 of 20 cells fail on `v10.1.1`; the four single-line Button cells pass on
+  both and guard the stadium. All 20 pass here.
+
 ## 10.1.1 — 2026-10-19
 
 Four cures, one guarded row and one owner-ruled addition. Asked by the atlas consumer (U batch

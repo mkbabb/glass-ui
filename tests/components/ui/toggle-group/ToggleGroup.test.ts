@@ -313,8 +313,9 @@ describe("W-TOGGLE-ROW — the selection row", () => {
         expect(css).not.toContain("scroll-padding-inline");
         expect(css).not.toContain("overscroll-behavior-inline");
         expect(css).not.toContain("safe center");
-        // The ONE spelling of the stadium that survives is the item's role rung.
-        expect(css).toContain("border-radius: var(--radius-pill)");
+        // The ONE spelling of the stadium that survives is half the item's rung (U/B7
+        // G1-7, the Button's bound).
+        expect(css).toContain("border-radius: calc(var(--toggle-group-item-size) / 2)");
         // Rules whose selector ENDS at the group host — a descendant rule
         // (`.toggle-group[data-size="sm"] .toggle-group__item`) paints the item and
         // is not the group's silhouette.

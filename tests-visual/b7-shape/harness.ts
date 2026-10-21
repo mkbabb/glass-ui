@@ -87,6 +87,54 @@ const scenes: Record<string, () => Promise<Component>> = {
         });
     },
 
+    // G1-7: past its rung a control is a bar; on its rung it stays a stadium.
+    bar: async () => {
+        const { Button } = await import("../../src/components/button");
+        const { default: ToggleGroup } = await import("../../src/components/toggle-group/ToggleGroup.vue");
+        const { default: ToggleGroupItem } = await import("../../src/components/toggle-group/ToggleGroupItem.vue");
+        return defineComponent(() => {
+            const pick = ref("a");
+            const strip = ref("all");
+            const pair = ref("on");
+            return () =>
+                h("div", { style: "padding:32px;display:flex;flex-direction:column;gap:20px;align-items:flex-start" }, [
+                    h(Button, { "data-witness": "btn-line" }, () => "Download"),
+                    h("div", { style: "inline-size:150px" }, [
+                        h(Button, { "data-witness": "btn-wrap" }, () => "Download the school funding table"),
+                    ]),
+                    h(Button, { "data-witness": "btn-wide", style: "inline-size:22rem" }, () => "Apply filters"),
+                    h(ToggleGroup, { type: "single", modelValue: pick.value, "aria-label": "Program" }, () => [
+                        h(ToggleGroupItem, { value: "a", "data-witness": "toggle-line" }, () => "E-Rate"),
+                        h(ToggleGroupItem, { value: "b", "data-witness": "toggle-wrap", style: "max-inline-size:120px" }, () => "Rural schools in urban districts"),
+                    ]),
+                    h(SegmentedTabs, {
+                        options: [
+                            { label: "All programs", value: "all" },
+                            { label: "Funding requests", value: "funding" },
+                            { label: "Schools", value: "schools" },
+                            { label: "Networks", value: "networks" },
+                            { label: "Speeds", value: "speeds" },
+                        ],
+                        modelValue: strip.value,
+                        "onUpdate:modelValue": (v: string) => (strip.value = v),
+                        ariaLabel: "Subject",
+                        "data-witness": "strip-wide",
+                        style: "min-inline-size:24rem",
+                    }),
+                    h(SegmentedTabs, {
+                        options: [
+                            { label: "On", value: "on" },
+                            { label: "Off", value: "off" },
+                        ],
+                        modelValue: pair.value,
+                        "onUpdate:modelValue": (v: string) => (pair.value = v),
+                        ariaLabel: "Power",
+                        "data-witness": "strip-short",
+                    }),
+                ]);
+        });
+    },
+
     // O-4/§4.2: capsule hover and ToggleGroup press carry no spatial leg.
     press: async () => {
         const { default: ToggleGroup } = await import("../../src/components/toggle-group/ToggleGroup.vue");

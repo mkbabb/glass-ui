@@ -7,6 +7,7 @@
 // markup and the measured position.
 import { ref, computed, onBeforeUpdate } from "vue";
 import { cn } from "../_shared/class-names";
+import { useBarShape } from "../_shared/shape/useBarShape";
 import {
     Select,
     SelectContent,
@@ -48,6 +49,9 @@ const motionAxis = useMotionAxis(() => props.motion);
 const model = defineModel<T>({ required: true });
 
 const containerRef = ref<HTMLElement | null>(null);
+/* Past 20rem the strip is a bar (U/B7 G1-7): the track, the tabs and the indicator
+ * take `--radius-bar` through the one `--bouncy-slider-radius` seam. */
+const barShape = useBarShape(containerRef);
 const indicatorRef = ref<HTMLElement | null>(null);
 const buttonRefs = ref<HTMLElement[]>([]);
 
@@ -190,6 +194,7 @@ function onMobileUpdate(value: unknown) {
             isTabsSemantic ? (isVertical ? 'vertical' : 'horizontal') : undefined
         "
         :data-motion="motionAxis.dataMotion.value"
+        :data-shape="barShape"
         :style="motionAxis.hostStyle.value"
         :class="
             cn(

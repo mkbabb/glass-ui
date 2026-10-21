@@ -133,6 +133,10 @@
     --radius-lg:      var(--radius);
     --radius-card:    var(--radius-2xl);
     --radius-panel:   var(--radius-xl);
+    /* The bar: a Button, ToggleGroupItem or SegmentedTabs past its rung (a wrapped
+       label, a box taller than its rung, or wider than 20rem) carries
+       `data-shape="bar"` and takes this corner (U/B7 G1-7). */
+    --radius-bar:     var(--radius-panel);
     /* The dialog SURFACE is a ROOM (24), not a card — `dialog/styles.css` and
        `sheet/styles.css` read the room rung directly. This ALIAS still binds card, and
        moving it is not W-DIALOG's byte: two active register seats state the card bind by

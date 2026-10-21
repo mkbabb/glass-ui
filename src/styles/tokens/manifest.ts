@@ -33,7 +33,7 @@ export const semanticTokens = {
     ],
     radius: [
         "--radius", "--radius-sm", "--radius-xl", "--radius-2xl",
-        "--radius-pill", "--radius-circle", "--radius-card", "--radius-media",
+        "--radius-pill", "--radius-circle", "--radius-bar", "--radius-card", "--radius-media",
         "--radius-button",
     ],
     shadow: [

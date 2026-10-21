@@ -69,6 +69,7 @@ stops; everything else changes state without moving.
 | Focus | The house focus ring, instant. |
 | Reduced motion | The indicator snaps in one frame; the label colour fade stays. |
 | Phone (`:responsive`) | The `<Select>` form, unchanged. |
+| Shape | A strip up to 20rem wide is a stadium (`--radius-tab`). Wider, the root carries `data-shape="bar"` and the track, tabs and indicator take `--radius-bar` (12px). |
 
 The writer is `useSelectionIndicator`, the library's ONE traveling-indicator writer,
 reached through `useSelectionGroup`. It writes geometry only; nothing in the engine

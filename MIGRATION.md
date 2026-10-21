@@ -72,6 +72,14 @@ Proposed by the atlas formation on local branch `u/b7-glass-shape` off `release/
   `modal`. A consumer that styled `[data-slot="select-content"]` by `data-side` translate
   drops that.
 
+- **`--radius-bar` and `data-shape="bar"` (B7-G7).** New token `--radius-bar:
+  var(--radius-panel)` (12px). `Button`, `ToggleGroupItem` and `SegmentedTabs` carry
+  `data-shape="bar"` when the label wraps, the box is taller than its rung
+  (`min-block-size`), or it is wider than 20rem, and then take `--radius-bar`. A
+  single-line control on its rung keeps the stadium; `ToggleGroupItem` now bounds its
+  stadium at half its rung, as the Button does. Consumer action: a consumer that keyed its
+  own CSS on a wide or wrapping button's round corner reads `[data-shape="bar"]` instead.
+
 ## 10.1.1
 
 One type-level change, below; no runtime break. Behaviour a consumer may notice:

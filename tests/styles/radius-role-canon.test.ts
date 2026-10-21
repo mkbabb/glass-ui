@@ -73,6 +73,7 @@ const RADIUS_ROLE_INVENTORY: Readonly<Record<string, RadiusClass>> = Object.free
     "--radius-card": "semantic-role",
     "--radius-dialog": "semantic-role",
     "--radius-panel": "semantic-role",
+    "--radius-bar": "semantic-role",
     "--radius-strip": "semantic-role",
     "--radius-tab": "semantic-role",
     "--radius-badge": "semantic-role",
@@ -395,7 +396,7 @@ const ROLE_PX: Readonly<Record<Exclude<RadiusRole, "relay">, number>> = Object.f
 });
 
 /** The 12px rung the role spine has no seat for. Named, not hidden. */
-const OFF_ROLE_12 = ["--radius-xl", "--radius-panel", "--radius-strip"] as const;
+const OFF_ROLE_12 = ["--radius-xl", "--radius-panel", "--radius-strip", "--radius-bar"] as const;
 
 /** Every paintable source file under `src/`, repo-relative. A census, not a list —
  *  a fourth squircle fork added anywhere is found without editing this suite. */
@@ -573,9 +574,13 @@ describe("7. this wave's role bindings", () => {
         // …and the sentinel-producing calc goes with it, in EITHER spelling: the
         // literal D-5 recorded and the relay #23 re-expressed it as.
         expect(strippedSheet).not.toMatch(/var\(--radius-pill\)\s*\+/);
-        // The segment keeps its own role rung (law B) — one stadium, one spelling.
+        // One stadium, one spelling: half the item's rung, the Button's bound (U/B7
+        // G1-7). Past the rung the item is a bar.
         const item = rule(sheet, "\\.toggle-group__item");
-        expect(item).toContain("border-radius: var(--radius-pill)");
+        expect(item).toContain("border-radius: calc(var(--toggle-group-item-size) / 2)");
+        expect(strippedSheet).toMatch(
+            /\.toggle-group__item\[data-shape="bar"\]\s*\{\s*border-radius:\s*var\(--radius-bar\);/,
+        );
     });
 
     it("mints no radius token to do any of it", () => {

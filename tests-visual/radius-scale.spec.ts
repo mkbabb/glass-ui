@@ -75,3 +75,78 @@ for (const theme of ["light", "dark"]) {
         });
     });
 }
+
+// U/B7 G1 (7) — past its rung a control is a bar. Button, ToggleGroupItem and
+// SegmentedTabs carry `data-shape="bar"` and take `--radius-bar` (12 px) when the label
+// wraps, the box is taller than its rung, or it is wider than 20rem; on the rung they
+// stay stadiums. On the v10.1.1 tag no control carries the attribute and every bar cell
+// below fails there.
+async function shape(page: Page, sel: string) {
+    return page.evaluate((sel) => {
+        const el = document.querySelector<HTMLElement>(sel)!;
+        const r = el.getBoundingClientRect();
+        return {
+            shape: el.getAttribute("data-shape"),
+            radius: getComputedStyle(el).borderTopLeftRadius,
+            h: r.height,
+            w: r.width,
+            rung: parseFloat(getComputedStyle(el).minBlockSize),
+        };
+    }, sel);
+}
+
+for (const theme of ["light", "dark"]) {
+    test.describe(`${theme} bar`, () => {
+        test.beforeEach(async ({ page }) => {
+            await page.goto(`/tests-visual/b7-shape/harness.html?scene=bar&theme=${theme}`);
+            await page.waitForFunction(() => (window as unknown as { __ready?: boolean }).__ready);
+            await page.waitForTimeout(300);
+        });
+
+        test("a single-line Button on its rung is a stadium", async ({ page }) => {
+            const c = await shape(page, '[data-witness="btn-line"]');
+            expect(c.shape).toBeNull();
+            expect(c.h).toBeCloseTo(c.rung, 0);
+            expect(parseFloat(c.radius)).toBeGreaterThanOrEqual(c.h / 2 - 0.5);
+        });
+
+        test("a Button whose label wraps is a bar", async ({ page }) => {
+            const c = await shape(page, '[data-witness="btn-wrap"]');
+            expect(c.h).toBeGreaterThan(c.rung + 1);
+            expect(c.shape).toBe("bar");
+            expect(c.radius).toBe("12px");
+        });
+
+        test("a Button wider than 20rem is a bar", async ({ page }) => {
+            const c = await shape(page, '[data-witness="btn-wide"]');
+            expect(c.w).toBeGreaterThan(320);
+            expect(c.shape).toBe("bar");
+            expect(c.radius).toBe("12px");
+        });
+
+        test("a ToggleGroupItem on its rung is a stadium, a wrapped one a bar", async ({ page }) => {
+            const line = await shape(page, '[data-witness="toggle-line"]');
+            expect(line.shape).toBeNull();
+            expect(parseFloat(line.radius)).toBeGreaterThanOrEqual(line.h / 2 - 0.5);
+            const wrap = await shape(page, '[data-witness="toggle-wrap"]');
+            expect(wrap.h).toBeGreaterThan(wrap.rung + 1);
+            expect(wrap.shape).toBe("bar");
+            expect(wrap.radius).toBe("12px");
+        });
+
+        test("a SegmentedTabs strip wider than 20rem is a bar; a short one a stadium", async ({ page }) => {
+            const wide = await shape(page, '[data-witness="strip-wide"]');
+            expect(wide.w).toBeGreaterThan(320);
+            expect(wide.shape).toBe("bar");
+            const wideTab = await shape(page, '[data-witness="strip-wide"] .segmented-tab');
+            expect(wideTab.radius).toBe("12px");
+            const short = await shape(page, '[data-witness="strip-short"]');
+            expect(short.shape).toBeNull();
+            const shortTab = await shape(page, '[data-witness="strip-short"] .segmented-tab');
+            // The tab reads `--radius-tab` (1rem); a caption tab is about 33 px tall, so
+            // its corner sits within 1 px of a full stadium.
+            expect(shortTab.radius).toBe("16px");
+            expect(parseFloat(shortTab.radius)).toBeGreaterThanOrEqual(shortTab.h / 2 - 1);
+        });
+    });
+}
