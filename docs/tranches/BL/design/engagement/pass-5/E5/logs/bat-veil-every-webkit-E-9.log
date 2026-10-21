@@ -1,0 +1,5 @@
+## 2026-10-21 00:47:27 load { 7.36 7.88 11.16 } · start E-9 veil-every webkit 
+E-9 webkit   exit 1 · E-9 webkit FAIL · 77 pass, 1 fail, 0 unmeasured of 78 gating cells (2 reported) · load 7.4/7.9/11.2 at start, 7.4/7.7/10.7 at end · 92 s, load at start 7.4/7.9/11.2
+    FAIL       E-9 accordion commit-light light · commit(Enter) under reduce, state null → "one": the transient · in paint: rise 0.0067 (peak 0.9445 at +95 ms → rest 0.9378; bound ≥ 0.01) · at rest true (last 5 reads spread 0.0000 against 0.0086) · 18 reads, largest gap 46 ms in the first 400 ms (bound ≤ 75) · trace [+12 0.7685 +35 0.7836 +65 0.7836 +95 0.9445 +125 0.9318 +157 0.9372 +185 0.9312 +216 0.9378 +246 0.9378 +289 0.9378 +335 0.9378 +408 0.9378 +507 0.9378 +658 0.9378 +716 0.9378 +775 0.9378 +838 0.9378 +909 0.9378] · beside it the composite: light rise 0.0008 on the layers channel (peak 0.9574 → rest 0.9566, at rest true; bound ≥ 0.01; 0.1 quanta of 0.0087, tail spread 0.0000 against 0.0087; composite verdict fail) · load 7.3/7.7/10.8
+exit 1
+## 2026-10-21 00:49:00 load { 7.40 7.73 10.75 } · end E-9 veil-every webkit

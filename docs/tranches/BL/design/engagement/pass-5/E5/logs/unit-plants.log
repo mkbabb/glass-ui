@@ -1,0 +1,15 @@
+## 2026-10-21 00:13:38 plant watch-dead: watchPlace observes nothing · load { 13.06 13.57 17.17 }
+195:    // PLANT: arm(1);
+     × a layout move the observer reports is not glided again on the next unrelated mutation 7ms
+     × plant: the same move unreported is glided back from the stale place (the case above is not vacuous) 2ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  2 failed | 21 passed (23)
+## plant veil-on-noveil: the noveil arm still shows the veil
+     × the engaged Slider is promoted in place, over the stage's one veil on the veil arm and over none on the noveil arm 101ms
+     × re-takes the centre when the page scrolls under a live grasp (veil arm); raises nothing on a scroll (noveil arm) 22ms
+     × Tab A → B: A leaves on its own exit still promoted, B engages, the veil never drops 48ms
+     × plant: a release with nothing taking over drops the veil (the case above is not vacuous) 57ms
+     × a touch's hold is promoted on either arm, with its footprint; the veil rises only on STAGE_VEIL 3ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  5 failed | 37 passed (42)
+restored 99f681d1811d (was 99f681d1811d)

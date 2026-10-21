@@ -1,0 +1,8 @@
+## 2026-10-21 00:44:32 load { 7.05 8.29 12.02 } · start E-1 veil-every webkit 
+E-1 webkit   exit 1 · E-1 webkit FAIL · 92 pass, 4 fail, 0 unmeasured of 96 gating cells (0 reported) · load 7.1/8.3/12.0 at start, 8.1/8.4/11.9 at end · 41 s, load at start 7.1/8.3/12.0
+    FAIL       E-1 adoption latch · 54 of 55 declared members seen adopting their recipe; unproven (not rendered by any scene, or not adopted): dock · load 8.7/8.5/12.0
+    FAIL       E-1 runtime presented (sheet) PRM press-light · scene sheet: no target while pressed · load 8.1/8.4/11.9
+    FAIL       E-1 runtime ambient (aurora) · scene ambient, rung rest · pointer moved across: mean pixel change 1.17 levels against 1.13 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift) · load 8.1/8.4/11.9
+    FAIL       E-1 runtime ambient (aurora) PRM press-light · scene ambient, reduce · pointer moved across: mean pixel change 0.00 levels against 0.00 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift) · load 8.1/8.4/11.9
+exit 1
+## 2026-10-21 00:45:13 load { 8.06 8.39 11.88 } · end E-1 veil-every webkit

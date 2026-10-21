@@ -1,0 +1,12 @@
+## 2026-10-21 01:33:58 load { 12.65 16.38 16.29 } · start capture bat veil-coarse chromium E-10
+file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/lib.mjs:73
+    if (!fs.existsSync(path.join(dir, "index.html"))) throw new Error(`no build at ${dir} (index.html missing)`);
+                                                            ^
+
+Error: no build at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/E5/out/builds/bat (index.html missing)
+    at serveTarget (file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/lib.mjs:73:61)
+    at file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/capture.mjs:52:17
+
+Node.js v26.0.0
+exit 1
+## 2026-10-21 01:33:58 load { 12.65 16.38 16.29 } · end capture bat veil-coarse

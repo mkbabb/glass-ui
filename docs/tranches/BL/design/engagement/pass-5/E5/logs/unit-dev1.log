@@ -1,0 +1,40 @@
+ FAIL  tests/composables/motion/engage-stage.test.ts > fail loud (CK-21) > readable figures: silent
+ FAIL  tests/composables/motion/engage-stage.test.ts > fail loud (CK-21) > plant: the reach at its registered initial (an invalid --space-section) is loud, not the answer
+ FAIL  tests/composables/motion/engage-stage.test.ts > fail loud (CK-21) > plant: an unreadable --scale-engage is loud
+ FAIL  tests/composables/motion/engage-stage.test.ts > one anchor name per footprint (CK-20, pass 3) > two controls on the stage pin to their own footprints, never to a shared name
+RangeError: Maximum call stack size exceeded
+ ❯ tests/composables/motion/engage-stage.test.ts:214:24
+    212|         const native = window.getComputedStyle;
+    213|         const gcs = vi.spyOn(window, "getComputedStyle").mockImplement…
+    214|             const cs = native(el, p);
+       |                        ^
+    215|             return new Proxy(cs, {
+    216|                 get(t, k) {
+ ❯ tests/composables/motion/engage-stage.test.ts:214:24
+ ❯ tests/composables/motion/engage-stage.test.ts:214:24
+ ❯ tests/composables/motion/engage-stage.test.ts:214:24
+ ❯ tests/composables/motion/engage-stage.test.ts:214:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ FAIL  tests/composables/motion/engage-stage.test.ts > the stage's second client: the NumberField scrub (CK-27) > a press that does not travel past the slop is a click: no hand, no promotion, no step
+RangeError: Maximum call stack size exceeded
+ ❯ tests/composables/motion/engage-stage.test.ts:301:24
+    299|         const native = window.getComputedStyle;
+    300|         return vi.spyOn(window, "getComputedStyle").mockImplementation…
+    301|             const cs = native(el, p);
+       |                        ^
+    302|             return new Proxy(cs, {
+    303|                 get(t, k) {
+ ❯ tests/composables/motion/engage-stage.test.ts:301:24
+ ❯ tests/composables/motion/engage-stage.test.ts:301:24
+ ❯ tests/composables/motion/engage-stage.test.ts:301:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  7 failed | 74 passed (81)
+   Start at  22:11:43
+   Duration  6.06s (transform 715ms, setup 212ms, import 1.72s, tests 4.40s, environment 1.09s)
+

@@ -1,0 +1,20 @@
+74:export const STAGE_VEIL = false;
+77:export const POINTER_STAGE: "every" | "coarse" = "coarse";
+## 2026-10-21 00:12:53 arm noveil-coarse load { 12.15 13.59 17.38 }
+ Test Files  7 passed (7)
+      Tests  98 passed (98)
+74:export const STAGE_VEIL = true;
+77:export const POINTER_STAGE: "every" | "coarse" = "coarse";
+## 2026-10-21 00:13:04 arm veil-coarse load { 12.33 13.59 17.33 }
+ Test Files  7 passed (7)
+      Tests  98 passed (98)
+74:export const STAGE_VEIL = false;
+77:export const POINTER_STAGE: "every" | "coarse" = "every";
+## 2026-10-21 00:13:13 arm noveil-every load { 11.58 13.39 17.22 }
+ Test Files  7 passed (7)
+      Tests  98 passed (98)
+74:export const STAGE_VEIL = true;
+77:export const POINTER_STAGE: "every" | "coarse" = "every";
+## 2026-10-21 00:13:22 arm veil-every load { 11.77 13.40 17.20 }
+ Test Files  7 passed (7)
+      Tests  98 passed (98)

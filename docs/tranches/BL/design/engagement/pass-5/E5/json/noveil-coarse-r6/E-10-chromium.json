@@ -1,0 +1,241 @@
+{
+ "id": "E-10",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/E5/out/builds/noveil-coarse"
+ },
+ "loadStart": "21.7/20.4/17.3",
+ "loadEnd": "14.5/18.6/16.9",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 slider own release",
+   "status": "REPORT",
+   "line": "Tab in: largest one-frame centre move 0.0 px · Tab out of the engaged slider: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0068, largest centre move 0.0 px (the references for the hand-off and Escape bounds)",
+   "load": "20.6/20.2/17.2"
+  },
+  {
+   "name": "E-10 slider escape release",
+   "status": "PASS",
+   "line": "Escape: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0067 (bound ≤ own release 0.0068 + 0.002), largest centre move 0.0 px (bound ≤ own release 0.0 + 1 px)",
+   "load": "20.6/20.2/17.2"
+  },
+  {
+   "name": "E-10 slider re-render landing",
+   "status": "PASS",
+   "line": "a sibling inserted during the hold, then release: the root's largest one-frame move per 16.7 ms 1.4 px (without the insert 1.2 px; bound ≤ that + 1 px)",
+   "load": "20.4/20.2/17.2"
+  },
+  {
+   "name": "E-10 slider re-render landing (layout-only)",
+   "status": "PASS",
+   "line": "a spacer before the slider grown 40 px by a style write during the hold (no childList mutation; the root's top read 96.3 → 136.3 px during the hold, 136.9 px at the film's end), then release: the root's largest one-frame move per 16.7 ms 1.3 px (without the move 1.4 px; bound ≤ that + 1 px)",
+   "load": "19.8/20.1/17.2"
+  },
+  {
+   "name": "E-10 slider2 hand-off drop",
+   "status": "PASS",
+   "line": "Tab A → B (focus on Probe B) · outgoing A ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0069 (bound ≤ own release 0.0068 + 0.002), largest centre move 0.0 px at 42 ms (bound ≤ own release 0.0 + 1 px) · incoming B ×1.000 → ×1.060, largest centre move 0.0 px at 222 ms (bound ≤ own engage 0.0 + 1 px)",
+   "load": "19.8/20.1/17.2"
+  },
+  {
+   "name": "E-10 slider2 hand-off singleton fwd",
+   "status": "PASS",
+   "line": "120 frames: engaged roots per frame max 1, 0 frame(s) with none · first frame A engaged true, B false · last frame B engaged true, A false (bound: at most one engaged on every frame, the incoming one at the end; selector [data-engaged])",
+   "load": "19.8/20.1/17.2"
+  },
+  {
+   "name": "E-10 slider2 hand-off veil",
+   "status": "REPORT",
+   "line": "no veil up before the Tab (0.00): this route veils no keyboard engagement",
+   "load": "19.8/20.1/17.2"
+  },
+  {
+   "name": "E-10 slider2 hand-off rev",
+   "status": "PASS",
+   "line": "Shift+Tab B → A (focus on Probe A) · outgoing B ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0071 (bound ≤ own release 0.0068 + 0.002), largest centre move 0.0 px at 166 ms (bound ≤ own release 0.0 + 1 px) · incoming A ×1.000 → ×1.060, largest centre move 0.0 px at 131 ms (bound ≤ own engage 0.0 + 1 px)",
+   "load": "19.8/20.1/17.2"
+  },
+  {
+   "name": "E-10 slider2 hand-off singleton rev",
+   "status": "PASS",
+   "line": "115 frames: engaged roots per frame max 1, 0 frame(s) with none · first frame B engaged true, A false · last frame A engaged true, B false (bound: at most one engaged on every frame, the incoming one at the end; selector [data-engaged])",
+   "load": "19.8/20.1/17.2"
+  },
+  {
+   "name": "E-10 restale stale place · keyboard",
+   "status": "PASS",
+   "line": "keyboard engaged · spacer +120 px by a style write: the root's centre 205.6 → 325.6 px · then a node appended below it (moves nothing): over 115 frames its centre spans 325.6..325.6 px, largest one-frame move per 16.7 ms 0.0 px (bound ≤ 4 px)",
+   "load": "19.1/19.9/17.2"
+  },
+  {
+   "name": "E-10 restale stale place control · keyboard",
+   "status": "PASS",
+   "line": "keyboard engaged · no layout move (the control): the root's centre 205.6 → 205.6 px · then a node appended below it (moves nothing): over 122 frames its centre spans 205.6..205.6 px, largest one-frame move per 16.7 ms 0.0 px (bound ≤ 4 px)",
+   "load": "19.1/19.9/17.2"
+  },
+  {
+   "name": "E-10 restale stale place (viewport resize) · keyboard",
+   "status": "PASS",
+   "line": "keyboard engaged · viewport 700 → 380 px wide (the paragraph above rewraps): the root's centre 205.6 → 250.0 px · then a node appended below it (moves nothing): over 116 frames its centre spans 250.0..250.0 px, largest one-frame move per 16.7 ms 0.0 px (bound ≤ 4 px)",
+   "load": "18.9/19.9/17.2"
+  },
+  {
+   "name": "E-10 restale stale place · pointer",
+   "status": "PASS",
+   "line": "pointer engaged · spacer +120 px by a style write: the root's centre 205.6 → 325.6 px · then a node appended below it (moves nothing): over 117 frames its centre spans 325.6..325.6 px, largest one-frame move per 16.7 ms 0.0 px (bound ≤ 4 px)",
+   "load": "18.9/19.9/17.2"
+  },
+  {
+   "name": "E-10 restale stale place control · pointer",
+   "status": "PASS",
+   "line": "pointer engaged · no layout move (the control): the root's centre 205.6 → 205.6 px · then a node appended below it (moves nothing): over 119 frames its centre spans 205.6..205.6 px, largest one-frame move per 16.7 ms 0.0 px (bound ≤ 4 px)",
+   "load": "17.9/19.6/17.1"
+  },
+  {
+   "name": "E-10 switch rebound single light",
+   "status": "REPORT",
+   "line": "seat span.control-bit__light · onset (> 0.004) +8 ms · peak 0.117 at +54 ms (ACKNOWLEDGE_WINDOW_MS 150: onset inside, peak inside) · pulses 5 · +2 0.000 +29 0.099 +58 0.114 +91 0.106 +121 0.090 +150 0.071 +180 0.051 +215 0.035 +250 0.024 +279 0.016 +309 0.012 +340 0.008 +373 0.004 +406 0.000 +436 0.000 +467 0.000 +494 0.000 +527 0.000 +555 0.000 +584 0.000 +613 0.000 +645 0.000 +675 0.000 +704 0.000 +735 0.000 +763 0.000 +792 0.000 +823 0.000 +853 0.000 +885 0.000",
+   "load": "17.9/19.6/17.1"
+  },
+  {
+   "name": "E-10 switch rebound reverse +60 light",
+   "status": "PASS",
+   "line": "seat span.control-bit__light · state false → true → back at +60 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 13 ms from +75 (bound < 60) · pulses 2 over the two commits (bound ≥ 2) · peak 0.121 at +75 · largest one-frame drop 0.006 (reported) · +2 0.000 +30 0.084 +58 0.115 +88 0.121 +118 0.118 +147 0.111 +177 0.098 +206 0.080 +236 0.060 +268 0.042 +298 0.030 +328 0.021 +357 0.014 +389 0.009 +419 0.006 +448 0.003 +477 0.001 +518 0.000 +545 0.000 +574 0.000 +606 0.000 +634 0.000 +666 0.000 +696 0.000 +725 0.000 +755 0.000 +784 0.000 +812 0.000 +849 0.000 +879 0.000",
+   "load": "17.9/19.6/17.1"
+  },
+  {
+   "name": "E-10 switch rebound reverse +200 light",
+   "status": "PASS",
+   "line": "seat span.control-bit__light · state false → true → back at +200 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 8 ms from +74 (bound < 60) · pulses 4 over the two commits (bound ≥ 2) · peak 0.120 at +246 · largest one-frame drop 0.008 (reported) · +1 0.000 +29 0.099 +62 0.114 +90 0.106 +126 0.086 +158 0.067 +187 0.047 +225 0.102 +254 0.119 +283 0.112 +313 0.101 +349 0.079 +383 0.056 +413 0.041 +442 0.029 +472 0.020 +502 0.014 +530 0.009 +559 0.006 +591 0.003 +620 0.001 +650 0.000 +679 0.000 +711 0.000 +739 0.000 +773 0.000 +805 0.000 +835 0.000 +867 0.000 +902 0.000",
+   "load": "17.1/19.4/17.1"
+  },
+  {
+   "name": "E-10 switch rebound single dark",
+   "status": "REPORT",
+   "line": "seat span.control-bit__light · onset (> 0.004) +8 ms · peak 0.117 at +53 ms (ACKNOWLEDGE_WINDOW_MS 150: onset inside, peak inside) · pulses 5 · +2 0.000 +33 0.105 +62 0.114 +91 0.106 +128 0.086 +158 0.067 +188 0.047 +216 0.035 +249 0.024 +280 0.016 +309 0.012 +338 0.008 +370 0.004 +400 0.000 +429 0.000 +458 0.000 +487 0.000 +521 0.000 +547 0.000 +580 0.000 +608 0.000 +638 0.000 +668 0.000 +697 0.000 +727 0.000 +757 0.000 +785 0.000 +819 0.000 +853 0.000 +883 0.000",
+   "load": "17.1/19.4/17.1"
+  },
+  {
+   "name": "E-10 switch rebound reverse +60 dark",
+   "status": "PASS",
+   "line": "seat span.control-bit__light · state false → true → back at +60 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 17 ms from +79 (bound < 60) · pulses 2 over the two commits (bound ≥ 2) · peak 0.121 at +79 · largest one-frame drop 0.007 (reported) · +2 0.000 +33 0.104 +60 0.114 +96 0.121 +128 0.117 +157 0.109 +195 0.090 +225 0.070 +257 0.050 +287 0.036 +316 0.025 +345 0.018 +376 0.012 +405 0.008 +434 0.005 +463 0.002 +495 0.001 +524 0.000 +554 0.000 +586 0.000 +615 0.000 +643 0.000 +675 0.000 +704 0.000 +734 0.000 +767 0.000 +797 0.000 +832 0.000 +863 0.000 +893 0.000",
+   "load": "17.1/19.4/17.1"
+  },
+  {
+   "name": "E-10 switch rebound reverse +200 dark",
+   "status": "PASS",
+   "line": "seat span.control-bit__light · state false → true → back at +200 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 11 ms from +57 (bound < 60) · pulses 5 over the two commits (bound ≥ 2) · peak 0.120 at +240 · largest one-frame drop 0.008 (reported) · +2 0.000 +33 0.105 +68 0.114 +100 0.102 +129 0.086 +158 0.067 +187 0.047 +216 0.094 +246 0.119 +275 0.114 +307 0.102 +340 0.082 +369 0.062 +398 0.045 +428 0.033 +457 0.023 +486 0.016 +522 0.010 +553 0.006 +582 0.003 +612 0.002 +641 0.001 +673 0.000 +705 0.000 +732 0.000 +761 0.000 +791 0.000 +823 0.000 +855 0.000 +886 0.000",
+   "load": "18.0/19.6/17.1"
+  },
+  {
+   "name": "E-10 checkbox rebound single light",
+   "status": "REPORT",
+   "line": "seat span.control-bit__light · onset (> 0.004) +16 ms · peak 0.117 at +60 ms (ACKNOWLEDGE_WINDOW_MS 150: onset inside, peak inside) · pulses 6 · +2 0.000 +32 0.092 +60 0.117 +89 0.110 +119 0.094 +156 0.071 +188 0.051 +223 0.035 +255 0.024 +284 0.016 +315 0.012 +342 0.008 +373 0.004 +406 0.004 +436 0.000 +469 0.000 +499 0.000 +531 0.000 +564 0.000 +597 0.000 +627 0.000 +657 0.000 +684 0.000 +717 0.000 +753 0.000 +782 0.000 +812 0.000 +846 0.000 +882 0.000",
+   "load": "18.0/19.6/17.1"
+  },
+  {
+   "name": "E-10 checkbox rebound reverse +60 light",
+   "status": "PASS",
+   "line": "seat span.control-bit__light · state false → true → back at +60 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 18 ms from +72 (bound < 60) · pulses 2 over the two commits (bound ≥ 2) · peak 0.121 at +72 · largest one-frame drop 0.006 (reported) · +1 0.000 +31 0.100 +72 0.121 +98 0.120 +127 0.115 +156 0.106 +186 0.090 +218 0.069 +248 0.050 +280 0.035 +309 0.025 +338 0.018 +368 0.012 +397 0.008 +427 0.005 +456 0.002 +486 0.001 +515 0.000 +546 0.000 +577 0.000 +606 0.000 +637 0.000 +666 0.000 +695 0.000 +726 0.000 +756 0.000 +790 0.000 +818 0.000 +847 0.000 +877 0.000 +905 0.000",
+   "load": "18.0/19.6/17.1"
+  },
+  {
+   "name": "E-10 checkbox rebound reverse +200 light",
+   "status": "PASS",
+   "line": "seat span.control-bit__light · state false → true → back at +200 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 9 ms from +70 (bound < 60) · pulses 5 over the two commits (bound ≥ 2) · peak 0.120 at +237 · largest one-frame drop 0.008 (reported) · +1 0.000 +33 0.093 +62 0.117 +91 0.110 +118 0.098 +147 0.078 +180 0.059 +208 0.078 +237 0.120 +268 0.116 +298 0.108 +330 0.091 +360 0.071 +390 0.052 +419 0.038 +451 0.026 +480 0.019 +509 0.013 +543 0.008 +572 0.005 +606 0.002 +635 0.001 +665 0.000 +694 0.000 +728 0.000 +757 0.000 +785 0.000 +816 0.000 +845 0.000 +873 0.000 +903 0.000",
+   "load": "17.4/19.4/17.1"
+  },
+  {
+   "name": "E-10 checkbox rebound single dark",
+   "status": "REPORT",
+   "line": "seat span.control-bit__light · onset (> 0.004) +13 ms · peak 0.115 at +47 ms (ACKNOWLEDGE_WINDOW_MS 150: onset inside, peak inside) · pulses 5 · +1 0.000 +37 0.109 +75 0.110 +104 0.098 +133 0.082 +167 0.059 +205 0.039 +234 0.027 +266 0.020 +295 0.012 +323 0.008 +355 0.004 +386 0.004 +417 0.000 +445 0.000 +476 0.000 +508 0.000 +537 0.000 +567 0.000 +594 0.000 +626 0.000 +656 0.000 +685 0.000 +723 0.000 +752 0.000 +782 0.000 +811 0.000 +842 0.000 +871 0.000 +904 0.000",
+   "load": "17.4/19.4/17.1"
+  },
+  {
+   "name": "E-10 checkbox rebound reverse +60 dark",
+   "status": "PASS",
+   "line": "seat span.control-bit__light · state false → true → back at +60 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 20 ms from +75 (bound < 60) · pulses 2 over the two commits (bound ≥ 2) · peak 0.121 at +75 · largest one-frame drop 0.006 (reported) · +1 0.000 +38 0.108 +66 0.114 +95 0.121 +123 0.117 +155 0.108 +185 0.094 +213 0.075 +247 0.053 +278 0.038 +307 0.027 +336 0.019 +365 0.013 +398 0.008 +432 0.004 +464 0.002 +495 0.001 +527 0.000 +558 0.000 +591 0.000 +623 0.000 +654 0.000 +683 0.000 +712 0.000 +741 0.000 +771 0.000 +800 0.000 +833 0.000 +862 0.000 +891 0.000",
+   "load": "17.4/19.4/17.1"
+  },
+  {
+   "name": "E-10 checkbox rebound reverse +200 dark",
+   "status": "PASS",
+   "line": "seat span.control-bit__light · state false → true → back at +200 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 16 ms from +67 (bound < 60) · pulses 4 over the two commits (bound ≥ 2) · peak 0.120 at +241 · largest one-frame drop 0.008 (reported) · +1 0.000 +35 0.090 +73 0.114 +104 0.106 +135 0.090 +166 0.067 +197 0.051 +227 0.113 +255 0.119 +286 0.113 +314 0.102 +345 0.084 +375 0.063 +407 0.045 +436 0.033 +470 0.022 +505 0.014 +532 0.009 +563 0.006 +597 0.003 +634 0.001 +664 0.000 +693 0.000 +724 0.000 +752 0.000 +784 0.000 +811 0.000 +841 0.000 +872 0.000 +903 0.000",
+   "load": "16.9/19.3/17.1"
+  },
+  {
+   "name": "E-10 chip rebound single light",
+   "status": "REPORT",
+   "line": "seat button.glass-chip.glass-capsule::after · onset (> 0.004) +22 ms · peak 0.117 at +66 ms (ACKNOWLEDGE_WINDOW_MS 150: onset inside, peak inside) · pulses 6 · +1 0.000 +37 0.088 +66 0.117 +91 0.110 +125 0.098 +154 0.078 +184 0.059 +216 0.043 +243 0.031 +274 0.020 +304 0.016 +333 0.008 +362 0.008 +392 0.004 +424 0.000 +454 0.000 +484 0.000 +516 0.000 +554 0.000 +584 0.000 +612 0.000 +642 0.000 +671 0.000 +701 0.000 +729 0.000 +759 0.000 +789 0.000 +820 0.000 +850 0.000 +879 0.000 +910 0.000",
+   "load": "16.9/19.3/17.1"
+  },
+  {
+   "name": "E-10 chip rebound reverse +60 light",
+   "status": "PASS",
+   "line": "seat button.glass-chip.glass-capsule::after · state false → true → back at +60 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 21 ms from +70 (bound < 60) · pulses 2 over the two commits (bound ≥ 2) · peak 0.122 at +70 · largest one-frame drop 0.007 (reported) · +2 0.000 +34 0.106 +63 0.114 +91 0.121 +122 0.117 +151 0.108 +181 0.094 +209 0.075 +239 0.055 +269 0.040 +299 0.028 +328 0.020 +360 0.013 +389 0.009 +418 0.005 +448 0.003 +477 0.001 +510 0.000 +538 0.000 +574 0.000 +603 0.000 +632 0.000 +662 0.000 +691 0.000 +725 0.000 +753 0.000 +785 0.000 +815 0.000 +845 0.000 +875 0.000 +907 0.000",
+   "load": "16.9/19.3/17.1"
+  },
+  {
+   "name": "E-10 chip rebound reverse +200 light",
+   "status": "PASS",
+   "line": "seat button.glass-chip.glass-capsule::after · state false → true → back at +200 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 9 ms from +60 (bound < 60) · pulses 4 over the two commits (bound ≥ 2) · peak 0.119 at +242 · largest one-frame drop 0.008 (reported) · +2 0.000 +39 0.110 +69 0.114 +100 0.102 +129 0.086 +159 0.067 +193 0.047 +226 0.113 +256 0.117 +286 0.109 +314 0.097 +345 0.077 +375 0.057 +404 0.042 +433 0.030 +462 0.021 +492 0.014 +524 0.009 +555 0.006 +587 0.003 +620 0.001 +649 0.000 +682 0.000 +719 0.000 +753 0.000 +784 0.000 +813 0.000 +845 0.000 +876 0.000",
+   "load": "16.3/19.1/17.0"
+  },
+  {
+   "name": "E-10 chip rebound single dark",
+   "status": "REPORT",
+   "line": "seat button.glass-chip.glass-capsule::after · onset (> 0.004) +14 ms · peak 0.116 at +49 ms (ACKNOWLEDGE_WINDOW_MS 150: onset inside, peak inside) · pulses 5 · +1 0.000 +37 0.109 +67 0.114 +96 0.102 +126 0.086 +155 0.067 +185 0.051 +213 0.035 +245 0.024 +274 0.016 +302 0.012 +333 0.008 +362 0.004 +395 0.004 +425 0.000 +453 0.000 +484 0.000 +516 0.000 +545 0.000 +575 0.000 +604 0.000 +635 0.000 +663 0.000 +693 0.000 +723 0.000 +754 0.000 +783 0.000 +811 0.000 +841 0.000 +871 0.000 +903 0.000",
+   "load": "16.3/19.1/17.0"
+  },
+  {
+   "name": "E-10 chip rebound reverse +60 dark",
+   "status": "PASS",
+   "line": "seat button.glass-chip.glass-capsule::after · state false → true → back at +60 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 23 ms from +71 (bound < 60) · pulses 2 over the two commits (bound ≥ 2) · peak 0.122 at +71 · largest one-frame drop 0.006 (reported) · +1 0.000 +34 0.108 +64 0.114 +94 0.120 +129 0.115 +160 0.105 +190 0.089 +222 0.067 +255 0.047 +293 0.031 +329 0.020 +361 0.013 +391 0.009 +423 0.005 +452 0.003 +481 0.001 +510 0.000 +543 0.000 +580 0.000 +612 0.000 +644 0.000 +670 0.000 +700 0.000 +731 0.000 +761 0.000 +790 0.000 +819 0.000 +849 0.000 +879 0.000",
+   "load": "16.3/19.1/17.0"
+  },
+  {
+   "name": "E-10 chip rebound reverse +200 dark",
+   "status": "PASS",
+   "line": "seat button.glass-chip.glass-capsule::after · state false → true → back at +200 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 10 ms from +58 (bound < 60) · pulses 6 over the two commits (bound ≥ 2) · peak 0.120 at +241 · largest one-frame drop 0.008 (reported) · +1 0.000 +35 0.105 +68 0.114 +111 0.098 +143 0.078 +174 0.055 +197 0.043 +224 0.109 +257 0.118 +285 0.111 +314 0.099 +342 0.081 +372 0.060 +403 0.043 +437 0.030 +469 0.020 +498 0.014 +527 0.009 +559 0.005 +595 0.003 +630 0.001 +657 0.000 +688 0.000 +719 0.000 +755 0.000 +787 0.000 +815 0.000 +845 0.000 +874 0.000 +905 0.000",
+   "load": "15.6/18.9/17.0"
+  },
+  {
+   "name": "E-10 accordion rebound single light",
+   "status": "REPORT",
+   "line": "seat button.disclosure-trigger.disclosure-group-trigger::after · onset (> 0.004) +20 ms · peak 0.117 at +67 ms (ACKNOWLEDGE_WINDOW_MS 150: onset inside, peak inside) · pulses 6 · +3 0.000 +38 0.089 +67 0.117 +96 0.110 +125 0.098 +158 0.075 +189 0.055 +221 0.039 +250 0.027 +282 0.020 +316 0.012 +350 0.008 +381 0.004 +412 0.004 +440 0.000 +470 0.000 +499 0.000 +531 0.000 +559 0.000 +591 0.000 +620 0.000 +650 0.000 +683 0.000 +714 0.000 +741 0.000 +772 0.000 +801 0.000 +831 0.000 +863 0.000 +895 0.000",
+   "load": "15.6/18.9/17.0"
+  },
+  {
+   "name": "E-10 accordion rebound reverse +60 light",
+   "status": "FAIL",
+   "line": "seat button.disclosure-trigger.disclosure-group-trigger::after · state null → \"one\" → back at +60 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 11 ms from +70 (bound < 60) · pulses 1 over the two commits (bound ≥ 2) · peak 0.121 at +70 · largest one-frame drop 0.006 (reported) · +3 0.000 +33 0.091 +62 0.117 +91 0.120 +121 0.116 +150 0.108 +180 0.093 +211 0.072 +240 0.054 +273 0.037 +303 0.026 +336 0.018 +365 0.012 +395 0.008 +430 0.004 +462 0.002 +491 0.001 +521 0.000 +551 0.000 +586 0.000 +616 0.000 +645 0.000 +681 0.000 +711 0.000 +742 0.000 +773 0.000 +804 0.000 +836 0.000 +867 0.000 +896 0.000",
+   "load": "15.6/18.9/17.0"
+  },
+  {
+   "name": "E-10 accordion rebound reverse +200 light",
+   "status": "PASS",
+   "line": "seat button.disclosure-trigger.disclosure-group-trigger::after · state null → \"one\" → back at +200 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 13 ms from +56 (bound < 60) · pulses 4 over the two commits (bound ≥ 2) · peak 0.120 at +242 · largest one-frame drop 0.008 (reported) · +3 0.000 +32 0.103 +65 0.114 +93 0.106 +132 0.082 +162 0.063 +191 0.047 +220 0.098 +249 0.119 +279 0.113 +313 0.099 +345 0.079 +375 0.059 +404 0.043 +433 0.031 +465 0.021 +494 0.015 +523 0.010 +556 0.006 +586 0.003 +615 0.001 +646 0.000 +681 0.000 +716 0.000 +742 0.000 +775 0.000 +803 0.000 +833 0.000 +862 0.000 +892 0.000",
+   "load": "14.7/18.7/16.9"
+  },
+  {
+   "name": "E-10 accordion rebound single dark",
+   "status": "REPORT",
+   "line": "seat button.disclosure-trigger.disclosure-group-trigger::after · onset (> 0.004) +22 ms · peak 0.117 at +69 ms (ACKNOWLEDGE_WINDOW_MS 150: onset inside, peak inside) · pulses 6 · +4 0.000 +34 0.082 +62 0.115 +89 0.110 +115 0.102 +145 0.086 +181 0.059 +213 0.043 +243 0.031 +272 0.020 +302 0.016 +331 0.012 +364 0.004 +394 0.004 +423 0.000 +455 0.000 +485 0.000 +514 0.000 +545 0.000 +574 0.000 +603 0.000 +633 0.000 +666 0.000 +694 0.000 +724 0.000 +752 0.000 +782 0.000 +812 0.000 +841 0.000 +872 0.000 +903 0.000",
+   "load": "14.7/18.7/16.9"
+  },
+  {
+   "name": "E-10 accordion rebound reverse +60 dark",
+   "status": "PASS",
+   "line": "seat button.disclosure-trigger.disclosure-group-trigger::after · state null → \"one\" → back at +60 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 14 ms from +78 (bound < 60) · pulses 2 over the two commits (bound ≥ 2) · peak 0.121 at +78 · largest one-frame drop 0.007 (reported) · +4 0.000 +37 0.092 +69 0.114 +101 0.120 +129 0.116 +159 0.108 +194 0.090 +227 0.067 +263 0.046 +295 0.032 +324 0.023 +352 0.016 +387 0.010 +419 0.006 +448 0.003 +480 0.001 +509 0.000 +538 0.000 +570 0.000 +599 0.000 +630 0.000 +661 0.000 +690 0.000 +723 0.000 +755 0.000 +786 0.000 +815 0.000 +846 0.000 +877 0.000 +907 0.000",
+   "load": "14.7/18.7/16.9"
+  },
+  {
+   "name": "E-10 accordion rebound reverse +200 dark",
+   "status": "PASS",
+   "line": "seat button.disclosure-trigger.disclosure-group-trigger::after · state null → \"one\" → back at +200 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 7 ms from +74 (bound < 60) · pulses 5 over the two commits (bound ≥ 2) · peak 0.120 at +239 · largest one-frame drop 0.008 (reported) · +4 0.000 +33 0.103 +74 0.110 +101 0.102 +126 0.086 +159 0.067 +188 0.047 +218 0.102 +247 0.119 +276 0.113 +306 0.101 +335 0.084 +367 0.062 +399 0.044 +427 0.032 +458 0.022 +488 0.015 +518 0.010 +547 0.006 +576 0.004 +606 0.002 +635 0.001 +665 0.000 +694 0.000 +728 0.000 +759 0.000 +790 0.000 +818 0.000 +849 0.000 +878 0.000",
+   "load": "14.5/18.6/16.9"
+  }
+ ]
+}

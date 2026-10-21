@@ -1,0 +1,44 @@
+## 2026-10-21 01:34:31 buildplant activeonly · load { 11.59 15.69 16.04 }
+## 2026-10-21 01:34:31 load { 11.59 15.69 16.04 } · build plant activeonly
+exit 0
+restored 31d041c668cf (was 31d041c668cf)
+## 2026-10-21 01:34:33 load { 11.59 15.69 16.04 } · end build plant activeonly
+   guarded exit 0
+## 2026-10-21 01:34:37 own slider-press noveil-coarse chromium · load { 11.95 15.70 16.04 }
+## 2026-10-21 01:34:51 load { 10.76 15.26 15.88 } · start probe slider-press noveil-coarse chromium
+  PASS       slider touch press light · (hover:none) true (pointer:coarse) true · +26 held true sy 1.000 · +52 held true sy 0.993 · +78 held true sy 0.968 · +103 held true sy 0.954 · +153 held true sy 0.940 · +202 held true sy 0.940 · +1203 held true sy 0.940 (want held by +25, sy < 0.995 by +100, ≤
+  PASS       slider touch press dark · (hover:none) true (pointer:coarse) true · +27 held true sy 1.000 · +52 held true sy 0.989 · +77 held true sy 0.966 · +101 held true sy 0.952 · +153 held true sy 0.940 · +202 held true sy 0.940 · +1201 held true sy 0.940 (want held by +25, sy < 0.995 by +100, ≤ 
+P-E5 slider-press chromium PASS · 2 pass, 0 fail, 0 unmeasured of 2 gating cells (0 reported) · load 10.8/15.3/15.9 at start, 11.9/15.4/15.9 at end
+   guarded exit 0
+## 2026-10-21 01:35:00 own slider-press plant-activeonly chromium · load { 11.75 15.33 15.90 }
+## 2026-10-21 01:35:01 load { 11.75 15.33 15.90 } · start probe slider-press plant-activeonly chromium
+  FAIL       slider touch press light · (hover:none) true (pointer:coarse) true · +28 held true sy 1.000 · +52 held true sy 1.000 · +77 held true sy 1.000 · +102 held true sy 1.000 · +150 held true sy 1.000 · +202 held true sy 0.990 · +1202 held true sy 0.940 (want held by +25, sy < 0.995 by +100, ≤
+  FAIL       slider touch press dark · (hover:none) true (pointer:coarse) true · +27 held false sy 1.000 · +53 held true sy 1.000 · +78 held true sy 1.000 · +102 held true sy 1.000 · +151 held true sy 1.000 · +200 held true sy 1.000 · +1200 held true sy 0.940 (want held by +25, sy < 0.995 by +100, ≤
+P-E5 slider-press chromium FAIL · 0 pass, 2 fail, 0 unmeasured of 2 gating cells (0 reported) · load 11.7/15.3/15.9 at start, 11.4/15.2/15.8 at end
+   guarded exit 0
+## 2026-10-21 01:35:10 TAG=-p4 bat plant-nowatch chromium E-10 · load { 11.18 15.08 15.80 }
+## 2026-10-21 01:35:10 load { 11.18 15.08 15.80 } · start E-10 plant-nowatch chromium 
+E-10 chromium exit 1 · E-10 chromium FAIL · 24 pass, 4 fail, 0 unmeasured of 28 gating cells (10 reported) · load 11.2/15.1/15.8 at start, 12.5/14.5/15.5 at end · 67 s, load at start 11.2/15.1/15.8
+   guarded exit 0
+## 2026-10-21 01:36:21 TAG=-r7 bat noveil-coarse chromium E-10 · load { 11.94 14.38 15.47 }
+## 2026-10-21 01:36:21 load { 11.94 14.38 15.47 } · start E-10 noveil-coarse chromium 
+E-10 chromium exit 1 · E-10 chromium FAIL · 24 pass, 4 fail, 0 unmeasured of 28 gating cells (10 reported) · load 11.9/14.4/15.5 at start, 11.4/13.7/15.1 at end · 68 s, load at start 11.9/14.4/15.5
+   guarded exit 0
+## 2026-10-21 01:37:34 TAG=-p5 bat plant-nowatch chromium E-10 · load { 11.01 13.61 15.09 }
+## 2026-10-21 01:37:34 load { 11.01 13.61 15.09 } · start E-10 plant-nowatch chromium 
+E-10 chromium exit 1 · E-10 chromium FAIL · 22 pass, 6 fail, 0 unmeasured of 28 gating cells (10 reported) · load 11.0/13.6/15.1 at start, 8.4/12.3/14.5 at end · 67 s, load at start 11.0/13.6/15.1
+   guarded exit 0
+## 2026-10-21 01:38:45 TAG=-r8 bat noveil-coarse chromium E-10 · load { 8.38 12.34 14.50 }
+## 2026-10-21 01:38:45 load { 8.19 12.24 14.45 } · start E-10 noveil-coarse chromium 
+E-10 chromium exit 1 · E-10 chromium FAIL · 26 pass, 2 fail, 0 unmeasured of 28 gating cells (10 reported) · load 8.2/12.2/14.4 at start, 7.7/11.2/13.9 at end · 66 s, load at start 8.2/12.2/14.4
+   guarded exit 0
+## 2026-10-21 01:39:57 TAG=-p6 bat plant-nowatch chromium E-10 · load { 7.79 11.20 13.88 }
+## 2026-10-21 01:39:57 load { 7.79 11.20 13.88 } · start E-10 plant-nowatch chromium 
+E-10 chromium exit 1 · E-10 chromium FAIL · 22 pass, 6 fail, 0 unmeasured of 28 gating cells (10 reported) · load 7.8/11.2/13.9 at start, 7.4/10.4/13.4 at end · 66 s, load at start 7.8/11.2/13.9
+   guarded exit 0
+## 2026-10-21 01:41:09 TAG=-r9 bat noveil-coarse chromium E-10 · load { 7.23 10.29 13.32 }
+## 2026-10-21 01:41:09 load { 7.23 10.29 13.32 } · start E-10 noveil-coarse chromium 
+E-10 chromium exit 1 · E-10 chromium FAIL · 25 pass, 3 fail, 0 unmeasured of 28 gating cells (10 reported) · load 6.8/10.2/13.3 at start, 12.9/11.0/13.3 at end · 67 s, load at start 6.8/10.2/13.3
+   guarded exit 0
+## 2026-10-21 01:42:21 chain phase-chromium-last.txt done · load { 12.55 10.99 13.31 }
+CHAIN-DONE

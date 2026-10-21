@@ -1,0 +1,10 @@
+## 2026-10-21 01:35:01 load { 11.75 15.33 15.90 } · start probe slider-press plant-activeonly chromium
+# P-E5 slider-press · the slider's press on the door's hand mark (CK-17, CK-06 latency)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/E5/out/builds/plant-activeonly · engine chromium · lock wait 0.0 s · other headless processes: chromium 8, webkit 2 · load 11.7/15.3/15.9 at start
+# scene app: harness scenes/App.vue (sha1 7c8bcdaafb44)
+# chromium 149.0.7827.55
+  FAIL       slider touch press light · (hover:none) true (pointer:coarse) true · +28 held true sy 1.000 · +52 held true sy 1.000 · +77 held true sy 1.000 · +102 held true sy 1.000 · +150 held true sy 1.000 · +202 held true sy 0.990 · +1202 held true sy 0.940 (want held by +25, sy < 0.995 by +100, ≤ 0.97 at +1200) · load 11.7/15.3/15.9
+  FAIL       slider touch press dark · (hover:none) true (pointer:coarse) true · +27 held false sy 1.000 · +53 held true sy 1.000 · +78 held true sy 1.000 · +102 held true sy 1.000 · +151 held true sy 1.000 · +200 held true sy 1.000 · +1200 held true sy 0.940 (want held by +25, sy < 0.995 by +100, ≤ 0.97 at +1200) · load 11.4/15.2/15.8
+P-E5 slider-press chromium FAIL · 0 pass, 2 fail, 0 unmeasured of 2 gating cells (0 reported) · load 11.7/15.3/15.9 at start, 11.4/15.2/15.8 at end
+exit 1
+## 2026-10-21 01:35:06 load { 11.37 15.19 15.84 } · end probe slider-press
