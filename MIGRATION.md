@@ -48,6 +48,12 @@ Proposed by the atlas formation on local branch `u/b7-glass-shape` off `release/
   `--radius-tab`, `--radius-badge` or `--radius-dock` now shows corners; a consumer circle
   that used the pill on a box above 32 px moves to `--radius-circle`.
 
+- **`GlassDock` gains `expandOn`, `anchor` and `collapsedLabel` (B7-G5).** Additive; each
+  defaults to today's behaviour (`"hover"`, `"center"`, `"Expand dock"`). New exported types
+  `DockExpandOn` and `DockAnchor`. Under `anchor` other than `"center"` the root carries
+  `data-anchor`. With a `#persistent` group under `anchor="end"`, that group pivots on the
+  same edge during the morph.
+
 ## 10.1.1
 
 One type-level change, below; no runtime break. Behaviour a consumer may notice:

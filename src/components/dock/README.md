@@ -34,23 +34,23 @@ the existing Reka-backed menu, select, or popover families.
 | Prop | Values | Default |
 | --- | --- | --- |
 | `orientation` | `horizontal`, `vertical` | `horizontal` |
-| `size` | `sm`, `md`, `lg`, `xl` | `md` |
 | `shape` | `pill`, `rounded`, `card` | `pill` |
-| `layout` | `linear`, `grid` | `linear` |
-| `position` | `fixed`, `inline`, `sticky` | `inline` |
-| `overflow` | `grow`, `wrap` | `grow` |
+| `collapse` | `"closed"`, `"open"`, `false` | `"closed"` |
+| `expandOn` | `hover`, `press` | `hover` |
+| `anchor` | `center`, `start`, `end` | `center` |
+| `collapsedLabel` | string | `"Expand dock"` |
 | `backdropMode` | `live`, `static` | `live` |
-| `alwaysExpanded` | boolean | `false` |
-| `startCollapsed` | boolean | `true` |
-| `collapseDelay` | milliseconds | `2000` |
 | `fitContent` | boolean | `false` |
 | `backgroundCanvas` | canvas, getter, selector, or `null` | `null` |
-| `search` | boolean | `false` |
 
-`layout="grid"` is always expanded. `overflow="wrap"` applies to horizontal docks;
-capped horizontal and vertical runs otherwise use native scrolling only when measured
-content exceeds the relevant size cap. `backdropMode="static"` avoids backdrop sampling
-and filtering (a `"live"` dock samples the painted backdrop by default).
+`collapse: false` never collapses. `expandOn="press"` opens only on a press or
+Enter/Space on the collapsed summary, pinned; hover, focus and the idle timer are inert,
+and Escape, a press outside or focus leaving the dock closes it. Use it where a page
+carries many docks (one per figure). `anchor="end"` keeps the inline end fixed while the
+box grows toward the start (the block end on a vertical dock; `dir="rtl"` mirrors it).
+`collapsedLabel` names the collapsed summary, e.g. "Tools for Fund balance by year".
+`backdropMode="static"` avoids backdrop sampling and filtering (a `"live"` dock samples
+the painted backdrop by default).
 
 ## Slots
 

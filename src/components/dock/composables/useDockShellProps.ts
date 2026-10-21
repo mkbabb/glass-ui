@@ -33,6 +33,12 @@ export type DockBackdropMode = "live" | "static";
  */
 export type DockCollapse = false | "closed" | "open";
 
+/** What opens a collapsible dock: a hover dwell (default) or a press. */
+export type DockExpandOn = "hover" | "press";
+
+/** The edge the size morph grows from, on the dock's own axis (logical, RTL-aware). */
+export type DockAnchor = "center" | "start" | "end";
+
 /**
  * The GlassDock prop shape. Every dock—horizontal or vertical—reads the same
  * surface; orientation is the single layout axis and the collapse surface applies
@@ -84,6 +90,30 @@ export interface DockProps {
      * Applies on BOTH orientations: a vertical dock morphs its block axis too.
      */
     collapse?: DockCollapse;
+    /**
+     * What opens a collapsible dock.
+     *   `"hover"` (default) — a hover dwell or focus inside expands it, and it collapses
+     *                         after the idle window once the pointer leaves.
+     *   `"press"`           — only a press, or Enter/Space on the collapsed summary,
+     *                         opens it, pinned. Hover, focus and the idle timer are
+     *                         inert; Escape, a press outside, or focus leaving the dock
+     *                         and its portals collapses it. For many docks on one page
+     *                         (one per figure), where a pointer sweep must open none.
+     */
+    expandOn?: DockExpandOn;
+    /**
+     * The edge the size morph grows from. `"center"` (default) grows both ways;
+     * `"end"` keeps the inline end (the block end on a vertical dock) fixed so the box
+     * grows toward the start, `"start"` the reverse. Logical: `dir="rtl"` mirrors it.
+     * The rigid-content counter-scale pivots on the same edge.
+     */
+    anchor?: DockAnchor;
+    /**
+     * Accessible name of the collapsed summary (a disclosure button). Default
+     * `"Expand dock"`. Name the thing the dock holds when a page carries more than one
+     * dock, e.g. `"Tools for Fund balance by year"`.
+     */
+    collapsedLabel?: string;
     /**
      * The KNOWN background-layer canvas the dock floats over (an aurora/blob
      * `<canvas>`) — an element, a getter, or a CSS selector. When present, the

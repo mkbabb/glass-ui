@@ -83,6 +83,9 @@ defineOptions({ inheritAttrs: false });
 const props = withDefaults(defineProps<DockProps>(), {
     backdropMode: "live",
     collapse: "closed",
+    expandOn: "hover",
+    anchor: "center",
+    collapsedLabel: "Expand dock",
 });
 
 /* The resolved shell-prop computeds — shape/orientation, the collapse surface
@@ -155,6 +158,7 @@ const {
 } = useDockState({
     rootEl: dockEl,
     alwaysExpanded,
+    expandOn: computed(() => props.expandOn),
     initialExpanded: !startCollapsed.value,
     isTransitioning,
     dockId,
@@ -368,6 +372,7 @@ defineExpose({
             { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded },
         ]"
         :data-backdrop-mode="props.backdropMode"
+        :data-anchor="props.anchor === 'center' ? undefined : props.anchor"
         :data-held="graspHeld || undefined"
         @mouseenter="onMouseEnter"
         @mouseleave="onMouseLeave($event)"
@@ -507,7 +512,7 @@ defineExpose({
                 :inert="(outerCurrentLayer !== 'summary') || undefined"
                 :role="summaryIsDisclosure ? 'button' : undefined"
                 :tabindex="summaryIsDisclosure ? 0 : undefined"
-                :aria-label="summaryIsDisclosure ? 'Expand dock' : undefined"
+                :aria-label="summaryIsDisclosure ? props.collapsedLabel : undefined"
                 :aria-expanded="summaryIsDisclosure ? 'false' : undefined"
                 :aria-controls="summaryIsDisclosure ? `${dockId}-full` : undefined"
                 @focusin.stop

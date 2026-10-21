@@ -3,6 +3,7 @@ import type { ComputedRef, Ref } from "vue";
 import { isTeleportedTarget } from "../../_shared/overlay/isTeleportedTarget";
 import type { DockHoldKind } from "./dockContext";
 import { DOCK_COLLAPSE_DELAY_MS, HOVER_INTENT_MS } from "../constants";
+import type { DockExpandOn } from "./useDockShellProps";
 
 export interface UseDockStateOptions {
     /** Delay before auto-collapse after mouse leaves (ms). Defaults to
@@ -12,6 +13,10 @@ export interface UseDockStateOptions {
     rootEl: Ref<HTMLElement | null>;
     /** Disable collapse behavior and keep the dock expanded. */
     alwaysExpanded?: Ref<boolean> | boolean;
+    /** What opens the dock: a hover dwell (default) or a press. Under `"press"` the
+     *  hover, focus-in and idle-timer writers are inert, and focus leaving the dock
+     *  and its portals collapses it. */
+    expandOn?: Ref<DockExpandOn> | DockExpandOn;
     /* ~~`interaction`: `"manual"` suppresses every environmental writer at BOTH
        poles, leaving only `expand()`/`collapse()` — the consumer owns posture~~ —
        [2026-08-12 · BK #47 W1 SURFACE] STRUCK with the `interaction` dock prop. The
@@ -103,6 +108,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         collapseDelay = DOCK_COLLAPSE_DELAY_MS,
         rootEl,
         alwaysExpanded = false,
+        expandOn = "hover",
         initialExpanded = false,
         isTransitioning,
         dockId,
@@ -114,6 +120,10 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     /* The ONE predicate every environmental posture writer early-returns under: the
        force-pinned pole. The imperative `expand()`/`collapse()` pair crosses it. */
     const isQuiet = () => getAlwaysExpanded();
+    /* Under `expandOn: "press"` only a press (or Enter/Space on the summary) opens the
+       dock; the hover and focus-in writers and the idle timer never run. */
+    const pressOnly = () =>
+        (typeof expandOn === "string" ? expandOn : expandOn.value) === "press";
 
     const state = ref<DockState>(
         getAlwaysExpanded() ? "pinned" : initialExpanded ? "hover" : "collapsed",
@@ -249,7 +259,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     // --- Mouse handlers ---
 
     function onMouseEnter() {
-        if (isQuiet()) return;
+        if (isQuiet() || pressOnly()) return;
         clearTimer();
         if (state.value === "collapsed") {
             // Defer collapsed→hover expansion by the intent
@@ -273,7 +283,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     }
 
     function onMouseLeave(e?: MouseEvent) {
-        if (isQuiet()) return;
+        if (isQuiet() || pressOnly()) return;
         // A leave cancels any pending hover-intent dwell: a
         // sweeping-edge enter immediately chased by a leave never commits the expand.
         clearHoverIntent();
@@ -299,7 +309,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     // --- Focus handlers ---
 
     function onFocusIn() {
-        if (isQuiet()) return;
+        if (isQuiet() || pressOnly()) return;
         clearTimer();
         if (state.value === "collapsed") {
             state.value = "hover";
@@ -309,6 +319,16 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
 
     function onFocusOut(e: FocusEvent) {
         if (isQuiet()) return;
+        if (pressOnly()) {
+            // Focus leaving the dock and its portals closes a press-opened dock at once.
+            if (!expanded.value || keepOpenCount.value > 0) return;
+            const root = e.currentTarget as HTMLElement;
+            if (e.relatedTarget && root.contains(e.relatedTarget as Node)) return;
+            if (isTeleportedTarget(e.relatedTarget, dockId)) return;
+            if (!e.relatedTarget) return;
+            collapse();
+            return;
+        }
         if (state.value !== "hover") return;
         if (keepOpenCount.value > 0) return;
         const root = e.currentTarget as HTMLElement;

@@ -31,6 +31,15 @@ Proposed by the atlas formation (U/B7, the owner's order of 2026-10-19 in sci-re
   stays a stadium, a 44 px bar and a 40 px field show 16 px corners. On `v10.1.1` all 44
   cells fail; here all 44 pass.
 
+- **Per-figure dock props (B7-G5).** `expandOn="press"`: hover, focus-in and the idle timer
+  are inert; a press or Enter/Space on the summary opens the dock pinned; Escape, a press
+  outside, or focus leaving the dock and its portals closes it. `anchor="start" | "end"`:
+  the size morph and the rigid-content counter-scale pivot on that edge (logical, mirrored
+  under `dir="rtl"`). `collapsedLabel`: the summary disclosure's accessible name. Witness:
+  `tests/components/custom/dock/GlassDock.figure-props.test.ts` (4 of its 10 cases fail on
+  `v10.1.1`; the default cases pass on both). The dock README props table is brought up to
+  the shipped surface.
+
 ## 10.1.1 — 2026-10-19
 
 Four cures, one guarded row and one owner-ruled addition. Asked by the atlas consumer (U batch

@@ -163,16 +163,33 @@ function interfaceMembers(rel: string, name: string): string[] {
 // G-DOCK-BUDGET
 // ═════════════════════════════════════════════════════════════════════════════
 
-describe("G-DOCK-BUDGET — the run is the sole flexible member, and the surface is six", () => {
+describe("G-DOCK-BUDGET — the run is the sole flexible member, and the surface is named", () => {
     /**
      * BORN-RED at `ac471032^` (pre-W1): `DockProps` carried **14** members. The six
      * survivors are GF-DOCK §4's Keep list exactly; the eight struck (`overflow`,
      * `collapseDelay`, `search`, `position`, `size`, `layout`, `interaction`, and the
      * `alwaysExpanded`/`startCollapsed` pair folded into `collapse`) are its Delete list.
      */
-    it("DockProps is at most six members", () => {
+    /**
+     * [U/B7, proposed for 10.2.0] Three members join for the per-figure dock (atlas
+     * R-FIGDOCK §3 G-1..G-3): `expandOn`, `anchor`, `collapsedLabel`, each defaulting to
+     * the behaviour the six already had. The set is named, so a tenth member still fails.
+     */
+    it("DockProps is the six GF-DOCK members plus the three figure-dock members", () => {
         const props = interfaceMembers(`${DOCK}/composables/useDockShellProps.ts`, "DockProps");
-        expect(props.length, `DockProps: ${props.join(", ")}`).toBeLessThanOrEqual(6);
+        expect([...props].sort(), `DockProps: ${props.join(", ")}`).toEqual(
+            [
+                "fitContent",
+                "backdropMode",
+                "shape",
+                "orientation",
+                "collapse",
+                "backgroundCanvas",
+                "expandOn",
+                "anchor",
+                "collapsedLabel",
+            ].sort(),
+        );
     });
 
     /**
