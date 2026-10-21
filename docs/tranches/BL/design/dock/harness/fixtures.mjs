@@ -533,7 +533,8 @@ function tick(now) {
   }
   if (fault === "cardspread" && dock.classList.contains("card")) plate.style.borderRadius = moving ? "26px" : "";   // cardspread: the card radius swells mid-morph
   if (fault === "cardblip" && dock.classList.contains("card")) { const tau = ext ? now - ext.t0 : -1; plate.style.borderRadius = ext && tau > 0.2 * ext.T && tau < 0.7 * ext.T ? "26px" : ""; }   // cardblip (H5-12): 26 px through the middle half of the morph's time only
-  // H6-2 plant · hole: on an expand, seat One paints nothing for 70 % of the episode while its neighbours paint
+  // H6-2 plant · hole: on an expand, seat One paints nothing for 70 % of the episode while its neighbours paint (FM reads it
+  // from paint since H7-1)
   if (fault === "hole") { const f1 = run.querySelector('[data-testid="f1"]'); if (f1) f1.style.opacity = ext && ext.to > ext.x0 && now - ext.t0 < 0.7 * ext.T ? "0" : ""; }
   feather(); soften();
   if (fading && !moving) { dock.removeAttribute("data-morphing"); raf = requestAnimationFrame(tick); return; }   // the window is the spatial morph's; a fade is not

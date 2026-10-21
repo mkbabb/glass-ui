@@ -26,6 +26,10 @@
 # under the guard's 90); when it would not fit, the slot ends and the rest queues as the next slot. DRYRUN=1 prints the
 # slot plan from the estimates (EST_MIN=<n> sets every estimate) and runs nothing: the runner's plant
 # (`node reds.mjs --selftest`).
+#
+# H7-3 (pass-7/H7.md): FM's six B2 cells (B2_CELLS) are re-run twice after every FM run, red or not, in every stage that
+# runs FM (main and dark, both engines), so B2's hole is read from paint on the main run and both re-runs inside the
+# battery. The digest (cells.mjs) reads a PASS main whose two re-runs both fail one check as reproduced (H7-3).
 set -u
 OUT=$1; STAGE=$2
 H=$(cd "$(dirname "$0")" && pwd); D=$(cd "$H/.." && pwd)
@@ -47,6 +51,9 @@ one() { # stage witness
   local o="$OUT/$E/$BUILD/$1" log="$REC/$BUILD-$1-$2-$E.log" r
   run "$log" $2 "$o"
   r=$(node "$H/reds.mjs" $(json "$o" $2))
+  # H7-3 (pass-7/H7.md) · FM's six B2 cells are re-run twice on EVERY run, red or not, so the hole read from paint (H7-1)
+  # is read three times per column inside the battery (pass 6's critic re-ran them outside it, fmre.sh)
+  [ "$2" = FM ] && r="$B2_CELLS"
   echo "reds: ${r:-none}" >> "$log"
   if [ -n "$r" ]; then for k in 1 2; do run "$REC/$BUILD-$1-$2-$E-rerun$k.log" $2 "$o/rerun$k" "$r"; done; fi
 }
@@ -58,9 +65,11 @@ extra() {
 X=""; [ "$E" = webkit ] && X="--exclusive webkit"
 G="$HOME/.claude/guard/guarded $X --timeout ${TMIN:-90} --"
 [ -n "${NOGUARD:-}" ] && G=""
-export -f run one stage script json extra; export OUT B AD REF H D E BUILD REC WT=${WT:-}
-# H6-10 · per-witness estimates (minutes, Playwright WebKit with re-runs; pass-5/D2-Bp-crit-records/battery logs × 3)
-est() { [ -n "${EST_MIN:-}" ] && { echo "$EST_MIN"; return; }; case $1 in CF) echo 21;; W3) echo 9;; *) echo 3;; esac; }
+B2_CELLS='^film·(first-expand|warm-expand|warm-collapse|content-add|swap-short|swap-long)$'
+export -f run one stage script json extra; export OUT B AD REF H D E BUILD REC WT=${WT:-} B2_CELLS
+# H6-10 · per-witness estimates (minutes, Playwright WebKit with re-runs; pass-5/D2-Bp-crit-records/battery logs × 3).
+# H7-3: FM runs three times on every run (main + two re-runs), so its estimate is three runs' worth
+est() { [ -n "${EST_MIN:-}" ] && { echo "$EST_MIN"; return; }; case $1 in CF) echo 21;; W3) echo 9;; FM) echo 9;; *) echo 3;; esac; }
 themed() { # runs "<stage>:<W> …" in order inside one slot; on a budget stop writes the rest to $REM and exits 75
   local t0=$SECONDS item st w left=() stop=
   for item in $SEG; do

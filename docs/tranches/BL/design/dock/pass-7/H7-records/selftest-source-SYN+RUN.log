@@ -1,0 +1,4 @@
+OK   RUN  reds+faces      expect: merged reds and controls re-run; main W3 runs faces (exit 0)  ·  got: exit 0: RUN SELFTEST PASS  11/11  [0 s, load 10.44]
+OK   SYN  w8-time         expect: 3 entries in 21.4 ms pass, 3 in 50 ms fail; the pass-5 entry count reads the first FAIL (exit 0)  ·  got: exit 0: SYN W8-TIME PASS  3/3  [0 s, load 10.44]
+OK   SYN  digest          expect: a re-run that reads the cell OB without the failing check counts it NOT-REPRODUCED (exit 0)  ·  got: exit 0: SYN DIGEST PASS  17/17  [0 s, load 10.44]
+SELFTEST PASS  3/3 expectations hold

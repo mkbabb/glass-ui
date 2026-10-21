@@ -52,10 +52,16 @@ export function ruled(c) {
     return { ...c, pass: !failed.length, ownerBlocked: undefined, failed, ruled: `${c.ownerBlocked} ${c.ownerBlocked === "Q-4" ? "(c)" : "(b)"}` };
 }
 
-/** H6-7 · the re-run rule. main: the main run's cell; re: the two re-runs' cells (null when absent). */
-export function rerunRule(main, re) {
+/** H6-7 · the re-run rule. main: the main run's cell; re: the two re-runs' cells (null when absent).
+ *  H7-3 · `always`: the cell is re-run on every run, red or not (FM's B2 cells). A PASS main whose two re-runs both FAIL on
+ *  a common check reads FAIL on those checks: the read reproduced twice, as a red main with one reproducing re-run does. */
+export function rerunRule(main, re, { always = false } = {}) {
     let v = verdict(main); const failed = [...(main.failed ?? [])];
     const rr = re.map((x) => (x ? verdict(x) : null));
+    if (always && v === "PASS" && re.every((x) => x && verdict(x) === "FAIL")) {
+        const both = (re[0].failed ?? []).filter((k) => (re[1].failed ?? []).includes(k));
+        if (both.length) return { v: "FAIL", failed: both, nrChecks: [], fromReruns: true };
+    }
     if (v !== "FAIL") return { v, failed, nrChecks: [] };
     if (rr.every((x) => x === "PASS")) return { v: "NOT-REPRODUCED", failed: [], nrChecks: failed };
     if (!failed.length || re.some((x) => !x)) return { v, failed, nrChecks: [] };
@@ -67,7 +73,9 @@ export function rerunRule(main, re) {
     return { v, failed: stand, nrChecks };
 }
 
-// the 38 rows (REGISTRY §P5-7.5; H6 re-cuts the witnesses, no row is added): [row, witness, predicate, checks]
+/** H7-3 · FM's B2 cells, re-run on every run by the battery (battery.sh B2_CELLS) */
+export const B2_FM = /^film·(first-expand|warm-expand|warm-collapse|content-add|swap-short|swap-long)$/;
+// the 38 rows (REGISTRY §P5-7.5; H6 and H7 re-cut the witnesses, no row is added): [row, witness, predicate, checks]
 // checks: null (any failure bears), "CRASH", a list, or a function of the cell giving one of those
 const W3R1 = ["continuity", "landing", "seatStep", "seatOverlap", "blank", "faces", "terminal", "trajectory", "rest", "seatWidth", "errors", "vagree", "owners", "rung"];
 export const ROWS = [
@@ -97,7 +105,7 @@ export const ROWS = [
     ["R7", "W3 lanes + seat positions (H5-7) + CASES rotated", (c) => c.w === "W3" || (c.w === "CASES" && /^case·rotated/.test(c.cell)), ["lanes"]],
     ["R8", "W3 neighbour + ST nb (markers found, H6-4) + CASES consumer-margin", (c) => (c.w === "W3" && /^neighbour·/.test(c.cell)) || (c.w === "ST" && /^stall·nb·/.test(c.cell)) || (c.w === "CASES" && /^case·consumer-margin/.test(c.cell)), null],
     ["B1", "W3 retarget·context (H5-2)", (c) => c.w === "W3" && /^retarget·context/.test(c.cell), null],
-    ["B2", "FM strips (tiles, stub, hole) + W3 stub, hole (H6-1, H6-2)", (c) => c.w === "FM" || c.w === "W3", (c) => (c.w === "FM" ? null : ["stub", "hole"])],
+    ["B2", "FM strips (tiles, stub, hole from paint: H7-1, three reads: H7-3) + W3 stub (H6-1)", (c) => c.w === "FM" || c.w === "W3", (c) => (c.w === "FM" ? null : ["stub"])],
     ["B3", "PR count, rows, partials, citations, harness (H6-9)", (c) => c.w === "PR" && /count|rows|partials|citations|harness/.test(c.cell), null],
     ["C1", "CF c1·shape·h (ownshape, corner: H5-6)", (c) => c.w === "CF" && /^c1·shape·h/.test(c.cell), null],
     ["C2", "CF c2 (prm per Q-18 (a): H5-6)", (c) => c.w === "CF" && /^c2·(morph·h|prm|rapid)/.test(c.cell), null],
@@ -129,6 +137,13 @@ if (process.argv[2] === "--selftest") {
     ok("both-pass", d.v === "NOT-REPRODUCED", `main FAIL [stub], re-runs PASS ×2 → ${d.v}`);
     const e = rerunRule(F(["stub"]), [P, null]);
     ok("one-rerun", e.v === "FAIL", `main FAIL [stub], one re-run absent → ${e.v} (no re-run, no ruling)`);
+    // H7-3 · a cell re-run on every run: a PASS main whose two re-runs both fail one check is reproduced
+    const h1 = rerunRule(P, [F(["hole"]), F(["hole", "stub"])], { always: true });
+    ok("always-reruns", h1.v === "FAIL" && h1.failed.join() === "hole", `FM B2 cell: main PASS, re-runs FAIL [hole] and FAIL [hole, stub] → ${h1.v} [${h1.failed}]`);
+    const h2 = rerunRule(P, [F(["hole"]), P], { always: true });
+    ok("always-one-rerun", h2.v === "PASS", `FM B2 cell: main PASS, one re-run FAIL [hole] → ${h2.v} (once is not reproduced)`);
+    const h3 = rerunRule(P, [F(["hole"]), F(["hole"])]);
+    ok("always-plant", h3.v === "PASS", `the H6 rule (plant): main PASS, re-runs FAIL [hole] ×2 → ${h3.v}: the re-runs are never read`);
     // O-103 · the ruled branch (--ruled)
     const OB4 = (q4c, extra = {}) => ({ pass: false, ownerBlocked: "Q-4", failed: ["window"], window: { q4c, open: 0 }, ...extra });
     const r1 = ruled(OB4({ ok: true, allowMs: 303 }));
@@ -174,7 +189,7 @@ if (process.argv[2] === "--selftest") {
                 if (/^__/.test(c0.cell)) continue;
                 const c = rule(c0);
                 const reC = re.map((r) => rule(r?.cells.find((y) => y.engine === c.engine && strip(y.cell) === strip(c.cell)) ?? null));
-                const rr = rerunRule(c, reC);
+                const rr = rerunRule(c, reC, { always: w === "FM" && B2_FM.test(strip(c.cell)) });
                 cells.push({ w, stage: st, theme, build: b, engine: c.engine, cell: c.cell, verdict: rr.v, mainVerdict: verdict(c), reruns: reC.map((x) => (x ? verdict(x) : null)), reLoads: reC.map((x) => x?.load ?? null), failed: rr.failed, mainFailed: c.failed ?? [], nrChecks: rr.nrChecks, ownerBlocked: c.ownerBlocked, ruled: c.ruled, crashed: /not measured: .*(crash|closed)|Page crashed|Target closed/i.test(c.summary ?? ""), load: c.load, summary: (c.summary ?? "").slice(0, 900) });
             }
         }

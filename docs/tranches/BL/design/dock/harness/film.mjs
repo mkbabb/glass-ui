@@ -32,10 +32,13 @@
 // opacity cut by a clip edge inside the plate to 10-90 % of its ink, the class B2's gestalt read found by eye.
 // H6 (pass-6/H6.md): `stub` judges the edge at any opacity (H6-1, lib.mjs stubRow); `hole` (H6-2, lib.mjs holeRow): no
 // slot of the painted run empty for more than one frame while slots on both sides paint.
+// H7 (pass-7/H7.md): H7-1 reads `hole` from the cast, each slot's ink the paint inside its own laid box against the frame's
+// own ground (lib.mjs holePaint), replacing H6-2's DOM credit; FM is the hole's one witness. The cell records the per-frame
+// slot inks (`hole.frames`). H7-3: the battery runs FM's six cells three times (main + two re-runs) in every column.
 import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
-import { parseArgs, engines, openTarget, launch, makeReport, outDir, engineTag, screencast, readFrame, waitRest, extentNow, r2, startLog, stopLog, stubRow, holeRow } from "./lib.mjs";
+import { parseArgs, engines, openTarget, launch, makeReport, outDir, engineTag, screencast, readFrame, waitRest, extentNow, r2, startLog, stopLog, stubRow, holePaint } from "./lib.mjs";
 
 export const TILES = 14, NOISE_PX = 40, MARK_PX = 8, FRAME_MS = 40;
 export const SEQ = [
@@ -109,10 +112,13 @@ for (const engine of engines(args)) {
                 const counted = distinct >= 2 && moved;
                 const z = strip?.at(-1), ax = z && z.e[3] - z.e[1] > z.e[2] - z.e[0] ? "y" : "x";
                 const stub = strip ? stubRow(strip, ax) : null;
-                const hole = strip ? holeRow(strip, ax) : null;   // H6-2 · the run assembles in order
-                const failed = [...(counted ? [] : ["tiles"]), ...(stub && !stub.ok ? ["stub"] : []), ...(hole && !hole.ok ? ["hole"] : [])];
-                const pass = counted && !!stub && stub.ok && (!hole || hole.ok);
-                rep.add({ engine, cell: "film·" + q.name + tag, pass, failed, stub, hole, strip: png, tiles: pick.length, distinctTiles: distinct, markerFrame: start, wallClockFrame: goF, alignShiftMs: (start - goF) * FRAME_MS, motionFrames: end - start + 1,
+                // H7-1 · the run assembles in order, read from the cast at each slot's own laid box (lib.mjs holePaint); a
+                // strip it cannot read fails `hole` (never a silent green)
+                const hole = holePaint(strip, imgs, { start, frameMs: FRAME_MS, ax });
+                if (process.env.DOCK_HARNESS_RAW) fs.writeFileSync(path.join(dir, "strip.json"), JSON.stringify(strip));
+                const failed = [...(counted ? [] : ["tiles"]), ...(stub && !stub.ok ? ["stub"] : []), ...(hole && hole.ok ? [] : ["hole"])];
+                const pass = counted && !!stub && stub.ok && !!hole && hole.ok;
+                rep.add({ engine, cell: "film·" + q.name + tag, pass, failed, stub, hole, castOrigin: cast.frames[0]?.origin, strip: png, tiles: pick.length, distinctTiles: distinct, markerFrame: start, wallClockFrame: goF, alignShiftMs: (start - goF) * FRAME_MS, motionFrames: end - start + 1,
                     summary: `${pick.length} tiles from frame ${s0} (the trigger marker first shows on frame ${start}, ${(start - goF) * FRAME_MS} ms from the wall-clock mark), ${distinct} distinct; motion to frame ${end} (${(end - start + 1) * FRAME_MS} ms); strip ${path.basename(png)}; stub ${stub ? stub.why : "NOT READ (no glyph strip)"}; hole ${hole ? hole.why : "not read"}${counted ? "" : "  ⟶ FAILED: tiles (the strip does not count)"}${stub && !stub.ok ? "  ⟶ FAILED: stub" : ""}${hole && !hole.ok ? "  ⟶ FAILED: hole" : ""}` });
             });
         }

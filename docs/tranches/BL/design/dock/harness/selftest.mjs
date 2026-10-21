@@ -26,6 +26,11 @@
 // matching cell's summary to match `summary`, no matching cell to fail a check in `notFailed`, and the witness's stdout
 // to hold a line matching `line` per engine (ENGINE stands for the engine's label); and witness SYN (engine-independent:
 // plants/w8-time.mjs for H6-5's time bound on synthetic strips, `node cells.mjs --selftest` for H6-7's digest rule).
+// H7 (pass-7/H7.md): H7-1 strikes W3's DOM `hole` plant (FM's fixture `hole` stays, now read from paint) and adds witness
+// FMB, today's B′ as the hole's build plant (`--bp <build> --bp-adapter <file>`: first-expand and warm-collapse FAIL `hole`
+// in every engine and theme, swap-short and swap-long hold it); H7-2 moves `pass!rescale` to a PASS variant (a 0.98 cast
+// whose divided rests agree is measured) and adds `pass!skew` (DOCK_HARNESS_ST_SKEW=1.02: UNMEASURED); H7-3's plants are in
+// RUN (reds.mjs) and SYN (cells.mjs).
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
@@ -179,11 +184,10 @@ const EXPECT = [
     // H6 (pass-6/H6.md)
     ["W3", "stubhalf", /^swap-/, ["stub"]],                             // H6-1 · a hard cut at opacity 0.5 (the routes' CUT_OPACITY)
     ["FM", "stubhalf", /^film·swap-/, ["stub"]],                        // H6-1
-    ["W3", "hole", /^first-expand|^warm-expand/, ["hole"]],             // H6-2 · seat One empty while its sides paint
-    ["FM", "hole", /^film·(first|warm)-expand/, ["hole"]],              // H6-2
+    ["FM", "hole", /^film·(first|warm)-expand/, ["hole"]],              // H6-2 plant, read from paint by H7-1 (W3's DOM hole is struck)
     ["W3", "platewide!unbounded", /^content-remove/, ["ink"]],          // H6-3 · the pass-5 reading under a plate-wide clip: ink > 1
     ["W3", "flag50", /^warm-expand|^warm-collapse/, ["window"]],        // H6-5 · the flag 50 ms after landing (3+ entries)
-    ["ST", "pass!rescale", /^stall·nb·/, ["UNMEASURED"], null, { summary: /markers at \d/ }],   // H6-4 · a 0.98 cast reads its markers, then UNMEASURED
+    ["ST", "pass!skew", /^stall·(?!nb·)/, ["UNMEASURED"], null, { summary: /residual scale .* outside 1 ± 0\.01/ }],   // H7-2 · rests 2 % off after division: UNMEASURED
     ["ST", "pass!nomarker", /^stall·/, ["UNMEASURED"], null, { summary: /missing marker|no block-end marker/ }],   // H6-4 · no marker: UNMEASURED
     ["CF", "hoverdead", /^c8·/, ["opens"]],                             // H6-6 · a hover on a collapsed dock that does not open it
     ["CF", "pressstick", /^c8·/, ["collapses"], null, { notFailed: ["opens"] }],   // H6-6 · reps that started expanded are not judged for opens
@@ -193,7 +197,8 @@ const EXPECT = [
 ];
 // [witness, fixture, cells pattern (optional: the variant runs only those blocks)]
 const PASS_VARIANTS = [["W1", "csscarrier"], ["W7", "splitcaps"], ["W1", "hitpair"], ["ST", "pass@dark"], ["FM", "pass@dark"], ["W1", "pass@dark"],
-    ["W2", "roving"], ["W3", "ctxgc", "^retarget·context"], ["W3", "platewide", "^content-remove"]];   // H6-3 · bounded, the plate-wide clip passes
+    ["W2", "roving"], ["W3", "ctxgc", "^retarget·context"], ["W3", "platewide", "^content-remove"],   // H6-3 · bounded, the plate-wide clip passes
+    ["ST", "pass!rescale", "^stall·(same-task|1raf|2raf|100ms|mid-flight)$"]];   // H7-2 · a 0.98 cast whose divided rests agree is measured (and passes)
 const SOURCE = new Set(["PR", "F7"]);
 const SCRIPT = { W1: "w1-corner.mjs", W2: "w2-run.mjs", W3: "w3-morph.mjs", W4: "w4-state.mjs", W5: "w5-rim.mjs", W6: "w6-collapsed-form.mjs", W7: "w7-edge.mjs", W8: "w8-motion.mjs", R6: "r6-probe.mjs", ST: "stall.mjs", FM: "film.mjs", R5: "r5-hit.mjs", CF: "c-facility.mjs", L1: "l1-light.mjs", PR: "prose.mjs", F7: "f7.mjs" };
 
@@ -206,6 +211,7 @@ function run(w, fixtureArg, cells = null) {
     if (flag === "nohold") env.DOCK_HARNESS_CTX_NOHOLD = "1";
     if (flag === "unbounded") env.DOCK_HARNESS_INK_UNBOUNDED = "1";
     if (flag === "rescale") env.DOCK_HARNESS_ST_RESCALE = "0.98";
+    if (flag === "skew") env.DOCK_HARNESS_ST_SKEW = "1.02";
     if (flag === "nomarker") env.DOCK_HARNESS_ST_NOMARKER = "1";
     if (fixture === "ctxgc") env.DOCK_HARNESS_EXPOSE_GC = "1";
     const argv = [path.join(HERE, SCRIPT[w]), "--fixture", fixture, "--engine", want.join(",")];
@@ -250,6 +256,27 @@ for (const w of Object.keys(SCRIPT)) {
         const ok = (ob || um || f.code !== 0) && judged.every((e) => engs.has(e)) && !sumBad.length && !nfBad.length && !lineBad.length;
         const extra = [opts.summary ? `summary ${sumBad.length ? "MISSES in " + sumBad.length : "matches"}` : "", opts.notFailed ? `${opts.notFailed.join(",")} ${nfBad.length ? "FAILS in " + nfBad.length : "holds"}` : "", opts.line ? `line ${lineBad.length ? "MISSING in " + lineBad.join(",") : "printed"}` : ""].filter(Boolean).join("; ");
         log({ witness: w, fixture: fault + (only1 ? ` [${only1.join(",")}]` : ""), expect: (ob ? `an OWNER-BLOCKED cell in ${pat.source}` : um ? `an UNMEASURED (never PASS) cell in ${pat.source}` : `exit ≠ 0; ${check ? check.join("|") + " fails in " : ""}${pat.source}`) + (opts.summary ? `; summary ~ ${opts.summary.source}` : "") + (opts.notFailed ? `; ${opts.notFailed.join(",")} not failed` : "") + (opts.line ? `; stdout ~ ${opts.line.source}` : ""), got: `exit ${f.code}, ${f.cells.filter((c) => !c.pass).length}/${f.cells.length} FAIL; matching ${hit.length} (${[...engs].join("+") || "none"})${extra ? "; " + extra : ""}${ok ? "" : f.err ? " · " + f.err : ""}`, ok, ms: f.ms, load: f.load });
+    }
+}
+// H7-1 (pass-7/H7.md) · today's B′ is the hole's build plant: FM on --bp <build> (HEAD + pass-6/floor-v5.patch +
+// pass-6/D2-Bp-proto.patch, adapter --bp-adapter), light and dark. first-expand and warm-collapse must FAIL `hole` in every
+// engine and theme; swap-short and swap-long must not fail `hole` (pass 6's critic read 0 hole frames there in every run).
+if ((!only || only.includes("FMB")) && args.bp) {
+    for (const theme of ["light", "dark"]) {
+        const env = { ...process.env, DOCK_HARNESS_THEME: theme };
+        const o = path.join(outRoot ?? ".", `fmb-${theme}`);
+        const argv = [path.join(HERE, "film.mjs"), "--build", String(args.bp), "--engine", want.join(","), "--out", o];
+        if (args["bp-adapter"]) argv.push("--adapter", String(args["bp-adapter"]));
+        const t0 = Date.now(), load = loadAvg();
+        const r = spawnSync(process.execPath, argv, { encoding: "utf8", maxBuffer: 1 << 26, env });
+        let cs = []; try { const d = fs.readdirSync(path.join(o, "runs")).find((x) => x.startsWith("FM-")); cs = JSON.parse(fs.readFileSync(path.join(o, "runs", d, "FM.json"), "utf8")).cells; } catch { }
+        const of = (re) => cs.filter((c) => re.test(c.cell));
+        const red = of(/^film·(first-expand|warm-collapse)/).filter((c) => !c.pass && (c.failed ?? []).includes("hole"));
+        const fe = want.every((e) => ["first-expand", "warm-collapse"].every((n) => red.some((c) => c.engine === e && c.cell.startsWith("film·" + n))));
+        log({ witness: "FMB", fixture: `bp@${theme}`, expect: "first-expand and warm-collapse FAIL hole in every engine", got: `exit ${r.status}; ${red.map((c) => `${c.engine}:${c.cell}[${c.hole?.worst ? c.hole.worst.frames + " frames" : "-"}]`).join(" ")}`, ok: fe, ms: Date.now() - t0, load });
+        const sw = of(/^film·swap-(short|long)/);
+        const swOk = want.every((e) => sw.filter((c) => c.engine === e).length === 2) && sw.every((c) => c.hole && c.hole.ok);
+        log({ witness: "FMB", fixture: `bp@${theme}`, expect: "swap-short and swap-long do not fail hole", got: sw.map((c) => `${c.engine}:${c.cell} hole ${c.hole ? (c.hole.ok ? "holds" : "FAILS") + " (" + c.hole.holeFrames + " frame(s))" : "not read"}`).join(" "), ok: swOk, ms: Date.now() - t0, load });
     }
 }
 if (!only || only.includes("H6")) {

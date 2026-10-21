@@ -51,6 +51,13 @@
 //         in the cell and the digest: never FAIL, never PASS. Self-test arms (DOCK_HARNESS_ST_RESCALE=<s>: every decoded
 //         frame resampled by s about its top-left, a cast painted at scale s; DOCK_HARNESS_ST_NOMARKER=1: the block-end
 //         marker is never shown) prove both readings
+// H7 (pass-7/H7.md):
+//   H7-2  the scale judged is the RESIDUAL one: every length is divided by the video's measured scale (its plate's cross
+//         extent over the DOM's), as before, and the divided rests are then judged against the DOM's rests within
+//         1 ± SCALE_TOL. A cast whose divided rests agree is MEASURED at any recorder scale (Playwright WebKit's ≈ 0.98 is a
+//         per-session fact on every build, H6 §3.3); one whose rests disagree, or with a missing marker, reads UNMEASURED.
+//         Self-test arms: `pass!rescale` (0.98, rests agree: measured), `pass!skew` (DOCK_HARNESS_ST_SKEW=1.02: the main
+//         axis alone painted 2 % long, so the divided rests are 2 % off: UNMEASURED), `pass!nomarker` (UNMEASURED)
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { parseArgs, engines, openTarget, launch, makeReport, outDir, engineTag, screencast, readFrame, magentaCoverage, interiorGreen, probeMode, waitRest, extentNow, pinnedRung, springSpec, K_JITTER, r2 } from "./lib.mjs";
@@ -63,15 +70,18 @@ export const BLOCK_MS = 1200, FRAME_MS = 40, MID_FRAC = 0.35;
 export const LEAP_SLACK_PX = 2.0;
 /** the video's static rests against the DOM's: the screencast's static-length noise (~2 px) plus margin */
 export const REST_AGREE_PX = 4.0;
-/** H6-4 · the video scale the read accepts: a frame painted at another scale is not this instrument's reading */
+/** H7-2 · the RESIDUAL scale the read accepts: each scale-divided rest over the DOM's rest, within 1 ± SCALE_TOL. A cast the
+ *  recorder painted at any scale is measured once its divided rests agree; one whose rests disagree is not this
+ *  instrument's reading (H6-4 judged the raw scale, so a whole 0.98 session left R4 and R8 unread in WebKit: H6 §3.3) */
 export const SCALE_TOL = 0.01;
 const RESCALE = Number(process.env.DOCK_HARNESS_ST_RESCALE) || 1;
+const SKEW = Number(process.env.DOCK_HARNESS_ST_SKEW) || 1;
 const NOMARKER = process.env.DOCK_HARNESS_ST_NOMARKER === "1";
-/** a cast painted at scale s about the frame's top-left (the self-test arm of H6-4) */
-function rescale(img, s) {
-    if (s === 1) return img;
-    const out = Buffer.alloc(img.w * img.h * 4, 255);
-    for (let y = 0; y < img.h; y++) for (let x = 0; x < img.w; x++) { const sx = Math.floor(x / s), sy = Math.floor(y / s); if (sx >= img.w || sy >= img.h) continue; img.data.copy(out, (y * img.w + x) * 4, (sy * img.w + sx) * 4, (sy * img.w + sx) * 4 + 4); }
+/** a cast painted at scale s (main axis sx, cross axis sy) about the frame's top-left: the self-test arms of H6-4 and H7-2 */
+function rescale(img, s, k = 1) {
+    if (s === 1 && k === 1) return img;
+    const out = Buffer.alloc(img.w * img.h * 4, 255), sx0 = s * k;
+    for (let y = 0; y < img.h; y++) for (let x = 0; x < img.w; x++) { const sx = Math.floor(x / sx0), sy = Math.floor(y / s); if (sx >= img.w || sy >= img.h) continue; img.data.copy(out, (y * img.w + x) * 4, (sy * img.w + sx) * 4, (sy * img.w + sx) * 4 + 4); }
     return { ...img, data: out };
 }
 /** H6-4 · the marker runs on a frame: columns where some 3 consecutive rows are dark (mean RGB < 90), merged into runs at
@@ -132,7 +142,7 @@ for (const engine of engines(args)) {
                 let T = [];
                 try { T = execFileSync("ffprobe", ["-v", "error", "-select_streams", "v:0", "-show_entries", "frame=pts_time", "-of", "csv=p=0", cast.video], { encoding: "utf8" }).trim().split("\n").map((v) => 1000 * parseFloat(v)); } catch { }
                 if (T.length !== cast.frames.length) T = cast.frames.map((_, i) => i * FRAME_MS);
-                const imgs = cast.frames.map((f) => rescale(readFrame(f), RESCALE));
+                const imgs = cast.frames.map((f) => rescale(readFrame(f), RESCALE, SKEW));
                 // H6-4 · the marker columns, found on a late frame that shows both (the last frames hold A and B); a cast where
                 // no late frame shows two runs has a missing marker: UNMEASURED
                 let found = null;
@@ -176,13 +186,14 @@ for (const engine of engines(args)) {
                 const bound = worst.bound;
                 const inBlock = L.slice(goF, endF);
                 const travelInBlock = inBlock.length ? Math.max(...inBlock) - Math.min(...inBlock) : 0;
-                // the instrument read itself: the video's two rests must be the DOM's (± REST_AGREE_PX) and its
-                // scale near 1, or the video is not a reading of this dock (a truncated or blank tail under load
-                // read scale 0.196 and a 0 px rest in the H3 self-test): UNMEASURED, re-run, never judged
+                // the instrument read itself: the video's two rests, divided by the video's own scale, must be the DOM's,
+                // or the video is not a reading of this dock (a truncated or blank tail under load read scale 0.196 and a
+                // 0 px rest in the H3 self-test): UNMEASURED, re-run, never judged.
+                // H7-2 · the RESIDUAL scale is judged: each divided rest over the DOM's within 1 ± SCALE_TOL, at any raw
+                // video scale (H6-4 judged the raw scale and left a whole 0.98 session unread)
                 let instrumentOkNb = true;
-                // H6-4 · a scale outside 1 ± SCALE_TOL is not this instrument's reading (was 0.1, which admitted G's 0.98 cast)
-                const scaleOk = Math.abs(scale - 1) <= SCALE_TOL;
-                const instrumentOk = scaleOk && Math.abs(L0 - rest.w) <= REST_AGREE_PX && Math.abs(L1 - big.w) <= REST_AGREE_PX;
+                const residual = [L0 / rest.w, L1 / big.w];
+                const instrumentOk = rest.w > 0 && big.w > 0 && residual.every((v) => Math.abs(v - 1) <= SCALE_TOL);
                 const checks = nb ? { travel: D >= 20 } : { travel: D >= 20, leap: D >= 20 && worst.ratio <= 1 };
                 // H4-3 · glass and flow on one clock
                 let nbRead = null;
@@ -211,7 +222,7 @@ for (const engine of engines(args)) {
                 rep.add({ engine, cell: cellName + tag, nb: nbRead ?? undefined, pass: instrumentOk && instrumentOkNb && !failed.length, unmeasured: instrumentOk && instrumentOkNb ? undefined : true, failed, videoScale: +scale.toFixed(4), markers: found, D: r2(D), rests: [r2(L0), r2(L1)], restsDom: [r2(rest.w), r2(big.w)], blockMs: marks ? r2(marks.b1 - marks.b0) : null, callToBlockMs: marks ? r2(marks.b0 - marks.t0) : null,
                     blockEndMs: tAt(endF), firstMoveMs: i0 < 0 ? null : tAt(i0), landMs: tAt(iLand), travelInBlockPx: r2(travelInBlock), worstStepPx: r2(worst.step), worstStepAtMs: worst.at != null ? tAt(worst.at) : null, worstStepDtMs: worst.at != null ? r2(T[worst.at] - T[worst.at - 1]) : null, boundPx: r2(bound), ratio: r2(worst.ratio),
                     trace: L.slice(Math.max(0, goF - 2), Math.min(L.length, iLand + 3)).map((v, k) => [tAt(Math.max(0, goF - 2) + k), r2(v)]),
-                    summary: `${nbRead ? `the neighbour: ${nbRead.frames} frame(s) read; the plate over its box at worst ${nbRead.worstOverlapPx} px at ${nbRead.overlapAtMs} ms (bound ${NB_OVERLAP_PX}); it travels ${nbRead.Dnb} px, worst one-frame step ${nbRead.worstStepPx} px at ${nbRead.stepAtMs ?? "-"} ms vs bound ${nbRead.stepBoundPx} px (×${nbRead.stepRatio})${nbRead.restOk ? "" : " (its video rest disagrees with the DOM: UNMEASURED)"} · ` : ""}${instrumentOk ? "" : `UNMEASURED (${scaleOk ? "" : `video scale ${scale.toFixed(4)} outside 1 ± ${SCALE_TOL}; `}the video's rests ${r2(L0)} / ${r2(L1)} px against the DOM's ${r2(rest.w)} / ${r2(big.w)} px; H6-4: never FAIL, never PASS) · `}markers at ${found.map((r) => r.join("-")).join(", ")} px · ${arm}: a ${marks ? Math.round(marks.b1 - marks.b0) : "?"} ms block ${marks ? r2(marks.b0 - marks.t0) : "?"} ms after the flip (video: trigger marker → block-end marker ${tAt(endF)} ms); D ${r2(D)} px (${r2(L0)} → ${r2(L1)}); first leaves its rest at ${i0 < 0 ? "never" : tAt(i0) + " ms"}, travels ${r2(travelInBlock)} px before the block-end marker, lands at ${tAt(iLand)} ms (RECORD; video scale ${scale.toFixed(3)}); worst one-frame step ${r2(worst.step)} px at ${worst.at != null ? tAt(worst.at) + " ms" : "-"} (dt ${worst.at != null ? r2(T[worst.at] - T[worst.at - 1]) : "-"} ms) vs bound ${r2(bound)} px (×${r2(worst.ratio)})${failed.length ? "  ⟶ FAILED: " + failed.join(", ") : ""}` });
+                    summary: `${nbRead ? `the neighbour: ${nbRead.frames} frame(s) read; the plate over its box at worst ${nbRead.worstOverlapPx} px at ${nbRead.overlapAtMs} ms (bound ${NB_OVERLAP_PX}); it travels ${nbRead.Dnb} px, worst one-frame step ${nbRead.worstStepPx} px at ${nbRead.stepAtMs ?? "-"} ms vs bound ${nbRead.stepBoundPx} px (×${nbRead.stepRatio})${nbRead.restOk ? "" : " (its video rest disagrees with the DOM: UNMEASURED)"} · ` : ""}${instrumentOk ? "" : `UNMEASURED (residual scale ${residual.map((v) => v.toFixed(4)).join(" / ")} outside 1 ± ${SCALE_TOL}: the video's rests ${r2(L0)} / ${r2(L1)} px, divided by its scale ${scale.toFixed(4)}, against the DOM's ${r2(rest.w)} / ${r2(big.w)} px; H7-2: never FAIL, never PASS) · `}markers at ${found.map((r) => r.join("-")).join(", ")} px · ${arm}: a ${marks ? Math.round(marks.b1 - marks.b0) : "?"} ms block ${marks ? r2(marks.b0 - marks.t0) : "?"} ms after the flip (video: trigger marker → block-end marker ${tAt(endF)} ms); D ${r2(D)} px (${r2(L0)} → ${r2(L1)}); first leaves its rest at ${i0 < 0 ? "never" : tAt(i0) + " ms"}, travels ${r2(travelInBlock)} px before the block-end marker, lands at ${tAt(iLand)} ms (RECORD; video scale ${scale.toFixed(3)}); worst one-frame step ${r2(worst.step)} px at ${worst.at != null ? tAt(worst.at) + " ms" : "-"} (dt ${worst.at != null ? r2(T[worst.at] - T[worst.at - 1]) : "-"} ms) vs bound ${r2(bound)} px (×${r2(worst.ratio)})${failed.length ? "  ⟶ FAILED: " + failed.join(", ") : ""}` });
             });
         }
     } finally {

@@ -1182,54 +1182,170 @@ export function stubRow(frames, ax) {
         why: `${stubFrames} stub frame(s) of ${judged} judged (up to ${glyphs} glyphs a frame)${first ? `; first at ${first.atMs} ms: "${first.ch}" in ${first.label} painted ${Math.round(first.frac * 100)} % at opacity ${first.opacity}, ${first.note ? first.note : `a hard edge (10→90 % alpha in ${first.edgeWidthPx} px) at ${first.edgePx} px`} (${first.inFrame} stub(s) in that frame)` : ""}${Number.isFinite(ramp) ? `; narrowest ramp across a glyph ${ramp} px (RECORD)` : ""} (bound 0; a stub is a glyph painted ${STUB_LO * 100}-${STUB_HI * 100} %, at any opacity, by an edge whose alpha goes 10→90 % inside ${HARD_PX} px, inside the plate)` };
 }
 
-// ── H6-2 · a hole in the run ──────────────────────────────────────────────────
+// ── H7-1 · a hole in the run, read from paint ─────────────────────────────────
 /**
- * During an exchange (frames 1 .. one after the last change, as stubRow), the SLOTS are the seats that paint inside the
- * plate on the strip's last frame, ordered by their last-frame centre on the main axis. A slot's ink per frame is the
- * larger of its seat's own (unitInk: opacity × its painted rect ∩ the plate ∩ its own box / its box) and that of any
- * non-seat ink leaf (a carrier's clone, frames[i].k) whose centre lies in the seat's box. A HOLE is a slot below
- * HOLE_LO while a slot on each side of it paints at HOLE_HI or more. What other seats paint at the slot's place counts as its ink
- * (a FLIP neighbour still at its old place covers the slot an inserted seat will open: the place is not empty). A slot's hole may last at most HOLE_RUN_MAX frame
- * (B′-crit §4: on expand, seat 1's slot empty for 1-2 tiles while seats 2-3 paint at full ink).
+ * H7-1 (pass-7/H7.md) replaces H6-2's DOM credit. H6-2 read a slot's ink from the DOM and counted what OTHER seats paint at
+ * the slot's place as the slot's own (a FLIP neighbour at its old place, a leaving face's seat under a mask the DOM cannot
+ * see), so on B′ it read 0 hole frames where the cast shows seat 1's slot empty for 2-3 frames between "H" and "2" at full
+ * ink (B′-crit §2). The hole is now read from the CAST (the screencast FM records), as the critic's holes.py read it:
+ *
+ *   SLOTS     the seats laid at rest in either face of the exchange: those painting ≥ HOLE_HI (DOM unitInk, a rest frame
+ *             has no seam to hide) on the strip's first frame (the face that leaves) or its last (the face being assembled).
+ *   PLACE     each frame, each slot's own laid box (the DOM rect of the seat, the slot's place in the face being laid,
+ *             from the log frame nearest the cast frame's time), mapped into the cast: the cast's scale fitted once on the
+ *             rest frame (glyph clusters against seat centres), its per-frame shift the median offset of the glyph
+ *             clusters from the DOM-full seats' centres (a 40 ms frame and the rAF log need not share a phase). Nothing
+ *             another seat's DOM rect says is read: only pixels inside the slot's own box.
+ *   INK       per frame, the slot's ink mass: the sum over its box's columns of max(0, c − HOLE_NOISE), c the column's
+ *             largest contrast |L − ground| on the seat row, ground the frame's own plate tone (the median of the row
+ *             band across the plate), over the same mass at the slot's own rest frame. So a dark ground reads as a light
+ *             one does: full ink is the slot's own rest contrast in its own frame's terms (the critic's fixed threshold
+ *             missed dark first-expand frames).
+ *   HOLE      a slot laid inside the plate reading below HOLE_LO while the nearest painting (≥ HOLE_LO) slot on each side
+ *             reads HOLE_HI or more. A slot that reads below HOLE_LO at its own rest is no place of the run and is dropped.
+ *   GATE      judged from the trigger's frame to one cast frame past the strip's last DOM change. A cast frame is 40 ms:
+ *             one hole frame cannot show the hole outlived one display frame, two consecutive frames show it outlived
+ *             40 ms. So no slot may be a hole in more than HOLE_RUN_MAX = 1 consecutive cast frame.
+ * Returns null when the strip or the cast cannot be read (the caller fails the cell: never a silent green).
  */
 export const HOLE_LO = 0.1, HOLE_HI = 0.9, HOLE_RUN_MAX = 1;
-export function holeRow(frames, ax) {
-    if (!frames.some((f) => f.s)) return null;
-    const M0 = ax === "y" ? 2 : 1, M1 = ax === "y" ? 4 : 3;
-    const last = frames.at(-1);
-    const slots = (last.s ?? []).filter((q) => unitInk(q[9], [q[5], q[6], q[7], q[8]], [q[1], q[2], q[3], q[4]], last.e) >= HOLE_HI).sort((a, b) => (a[M0] + a[M1]) - (b[M0] + b[M1])).map((q) => q[0]);
-    if (slots.length < 3) return { ok: true, slots: slots.length, why: `${slots.length} slot(s) paint at the end: no slot has a side on each hand` };
-    const sig = (f) => [...f.e, ...(f.s ?? []).flatMap((q) => [q[5], q[6], q[7], q[8], q[9]])];
-    let lastCh = 0;
-    for (let i = 1; i < frames.length; i++) { const a = sig(frames[i - 1]), b = sig(frames[i]); if (a.length !== b.length || a.some((v, k) => Math.abs(v - b[k]) > 0.25)) lastCh = i; }
-    const end = Math.min(frames.length - 1, lastCh + 1);
-    const run = new Map(slots.map((id) => [id, 0]));
-    let worst = null, holeFrames = 0;
-    for (let i = 1; i <= end; i++) {
-        const f = frames[i]; const byId = new Map((f.s ?? []).map((q) => [q[0], q]));
-        const inks = slots.map((id) => {
-            const q = byId.get(id); if (!q) return 0;
-            const box = [q[1], q[2], q[3], q[4]];
-            const own = unitInk(q[9], [q[5], q[6], q[7], q[8]], box, f.e);
-            const leaf = Math.max(0, ...(f.k ?? []).filter((k) => { const c = ax === "y" ? (k[7] + k[9]) / 2 : (k[6] + k[8]) / 2; return c >= box[M0 - 1] && c <= box[M1 - 1]; }).map((k) => unitInk(k[4], [k[0], k[1], k[2], k[3]], [k[6], k[7], k[8], k[9]], f.e)));
-            // another seat painting at this slot's place (a FLIP neighbour still at its old place, a clone): the place is
-            // not empty. Its share of the slot's box: opacity × (its painted rect ∩ its own box ∩ the slot's box ∩ the plate)
-            const bb = area4(...box);
-            const others = bb < 1 ? 0 : Math.min(1, (f.s ?? []).filter((o) => o[0] !== id && o[9] > 0.05).reduce((sum, o) => sum + o[9] * area4(...isect4(isect4(isect4([o[5], o[6], o[7], o[8]], [o[1], o[2], o[3], o[4]]), box), f.e)) / bb, 0));
-            return Math.max(own, leaf, others);
+/** VP8 luma noise near glyph edges reaches 12-20/255 (FACE_DOM_SCREENCAST); a column below this contrast carries no ink */
+export const HOLE_NOISE = 24;
+/** a glyph cluster farther than this from a seat centre is not that seat's (seat pitch at rest is 37-52 px) */
+export const HOLE_MATCH_PX = 18;
+export function holePaint(strip, cast, { start, frameMs = 40, ax = "x" } = {}) {
+    if (ax !== "x" || !strip?.length || !cast?.length) return null;
+    const iGo = strip.findIndex((f) => f.mk === "go");
+    if (iGo < 1 || !strip.some((f) => f.s)) return null;
+    const first = strip[0], last = strip.at(-1);
+    const inkDom = (q, e) => unitInk(q[9], [q[5], q[6], q[7], q[8]], [q[1], q[2], q[3], q[4]], e);
+    const restIds = (f) => new Set((f.s ?? []).filter((q) => inkDom(q, f.e) >= HOLE_HI).map((q) => q[0]));
+    const endIds = restIds(last), startIds = restIds(first);
+    const ids = [...new Set([...startIds, ...endIds])];
+    if (ids.length < 3) return { ok: true, slots: ids.length, holeFrames: 0, why: `${ids.length} slot(s) at rest: no slot has a side on each hand` };
+    // the cast frame ↔ the log frame: frame `start` is the first painted after the trigger, the log's go frame
+    const tGo = strip[iGo].t;
+    const logAt = (k) => { if (k < start) return first; const T = tGo + (k - start) * frameMs; let b = strip[iGo]; for (const f of strip) if (Math.abs(f.t - T) < Math.abs(b.t - T)) b = f; return b; };
+    const sig = (f) => [...f.e, ...(f.s ?? []).flatMap((q) => [q[1], q[3], q[5], q[6], q[7], q[8], q[9]])];
+    let lastCh = iGo;
+    for (let i = 1; i < strip.length; i++) { const a = sig(strip[i - 1]), b = sig(strip[i]); if (a.length !== b.length || a.some((v, k) => Math.abs(v - b[k]) > 0.25)) lastCh = i; }
+    const kOf = (t) => start + Math.round((t - tGo) / frameMs);
+    const kEnd = Math.min(cast.length - 1, kOf(strip[Math.min(strip.length - 1, lastCh)].t) + 1);
+    const kRest = Math.min(cast.length - 1, Math.max(kEnd, kOf(last.t)));
+    const kPre = Math.max(0, start - 1);
+    if (kEnd <= start) return null;
+    // per frame: the seat row's band and ground, and each column's largest contrast
+    const lum = (img, x, y) => { const i = (y * img.w + x) * 4; return (img.data[i] + img.data[i + 1] + img.data[i + 2]) / 3; };
+    const profile = (img, f, a, b) => {
+        const qs = (f.s ?? []).filter((q) => q[3] - q[1] >= 1 && q[4] - q[2] >= 1);
+        if (!qs.length) return null;
+        const Y0 = Math.max(0, Math.floor(a * Math.min(...qs.map((q) => q[2])) - img.clip.y)), Y1 = Math.min(img.h - 1, Math.ceil(a * Math.max(...qs.map((q) => q[4])) - img.clip.y));
+        const X0 = Math.max(0, Math.floor(a * f.e[0] + b)), X1 = Math.min(img.w - 1, Math.ceil(a * f.e[2] + b));
+        if (Y1 <= Y0 || X1 <= X0) return null;
+        const ls = []; for (let y = Y0; y <= Y1; y += 2) for (let x = X0; x <= X1; x += 2) ls.push(lum(img, x, y));
+        ls.sort((p, q) => p - q); const ground = ls[ls.length >> 1];
+        const col = new Float64Array(img.w);
+        for (let x = 0; x < img.w; x++) { let m = 0; for (let y = Y0; y <= Y1; y++) m = Math.max(m, Math.abs(lum(img, x, y) - ground)); col[x] = m; }
+        return { col, ground };
+    };
+    // glyph clusters on a profile: runs of columns above the noise, joined across gaps ≤ 6 px (holes.py's rule)
+    const clusters = (col) => { const out = []; let s = -1, p = -1; for (let x = 0; x <= col.length; x++) { const on = x < col.length && col[x] > 2 * HOLE_NOISE; if (on) { if (s < 0) s = x; else if (x - p > 6) { out.push((s + p) / 2); s = x; } p = x; } } if (s >= 0) out.push((s + p) / 2); return out; };
+    const fullSeats = (f) => (f.s ?? []).filter((q) => inkDom(q, f.e) >= 0.99).map((q) => (q[1] + q[3]) / 2);
+    const match = (ps, cs, a, b) => ps.map((p) => { const x = a * p + b; let best = null; for (const c of cs) if (Math.abs(c - x) <= HOLE_MATCH_PX && (best == null || Math.abs(c - x) < Math.abs(best - x))) best = c; return best == null ? null : [p, best]; }).filter(Boolean);
+    // the cast's scale and offset, fitted on the rest frame: frame x = a · css x + b (Playwright WebKit's recorder may paint
+    // the page at about 0.98, a per-session fact: H6 §3.3)
+    let a = 1, b = -cast[kRest].clip.x;
+    const restProf = profile(cast[kRest], last, a, b);
+    if (!restProf) return null;
+    for (let it = 0; it < 3; it++) {
+        const m = match(fullSeats(last), clusters(restProf.col), a, b);
+        if (m.length < 2) break;
+        const n = m.length, mx = m.reduce((s, [p]) => s + p, 0) / n, my = m.reduce((s, [, c]) => s + c, 0) / n;
+        const sxx = m.reduce((s, [p]) => s + (p - mx) ** 2, 0), sxy = m.reduce((s, [p, c]) => s + (p - mx) * (c - my), 0);
+        if (n >= 3 && sxx > 100 ** 2) a = Math.min(1.04, Math.max(0.96, sxy / sxx));
+        b = my - a * mx;
+    }
+    const mass = (prof, q, dx) => { const x0 = Math.max(0, Math.round(a * q[1] + b + dx)), x1 = Math.min(prof.col.length - 1, Math.round(a * q[3] + b + dx)); let s = 0; for (let x = x0; x <= x1; x++) s += Math.max(0, prof.col[x] - HOLE_NOISE); return s; };
+    // the log frame a cast frame shows. The recorder's frames and the rAF log share no phase, and the video may lag the paint
+    // by a frame or more, so ONE lag is fitted per cast: of the lags in ±LAG_MS (5 ms steps), the one under which the
+    // DOM-full seats' centres meet the most glyph clusters over the judged frames (a fraction per frame, less a residual
+    // term). Each frame's shift is then the median residual of its matched seats
+    const LAG_MS = 2 * frameMs;
+    const profs = new Map();
+    const profAt = (k) => { if (!profs.has(k)) { const p = profile(cast[k], logAt(k), a, b); profs.set(k, p ? { ...p, cs: clusters(p.col) } : null); } return profs.get(k); };
+    const nearest = (T) => { let best = strip[iGo]; for (const f of strip) if (f.t >= strip[iGo].t - frameMs && Math.abs(f.t - T) < Math.abs(best.t - T)) best = f; return best; };
+    let lag = 0, lagScore = -Infinity;
+    for (let L = -LAG_MS; L <= 2 * LAG_MS; L += 5) {
+        let s = 0;
+        for (let k = start; k <= kEnd; k++) {
+            const p = profAt(k); if (!p) continue;
+            const f = nearest(tGo + (k - start) * frameMs + L), ps = fullSeats(f); if (!ps.length) continue;
+            const m = match(ps, p.cs, a, b);
+            s += m.length / ps.length - 0.5 * m.reduce((t, [q, c]) => t + Math.abs(c - (a * q + b)), 0) / Math.max(1, m.length) / HOLE_MATCH_PX;
+        }
+        if (s > lagScore + 1e-9) { lagScore = s; lag = L; }
+    }
+    // a judged frame whose seats meet fewer than two clusters under the cast's lag (a fast frame the one lag misplaces by a
+    // seat pitch) is matched on its own among the log frames within one cast frame of that time; a judged frame where no
+    // DOM-full seat meets a glyph is UNREAD: it is not judged, and it ends any hole run (it never lengthens one). The rest
+    // frames are always read (a face of one seat meets one cluster)
+    const resid = (f, prof) => match(fullSeats(f), prof.cs, a, b).map(([p, c]) => c - (a * p + b)).sort((p, q) => p - q);
+    let judging = false;
+    const at = (k) => {
+        const prof = profAt(k); if (!prof) return null;
+        let f = k < start ? first : nearest(tGo + (k - start) * frameMs + lag), d = resid(f, prof);
+        if (d.length < 2 && judging) {
+            const T = tGo + (k - start) * frameMs + lag;
+            for (const g of strip.slice(iGo)) { if (Math.abs(g.t - T) > frameMs) continue; const e = resid(g, prof); if (e.length > d.length || (e.length === d.length && e.length && Math.abs(e[e.length >> 1]) < Math.abs(d[d.length >> 1]))) { f = g; d = e; } }
+        }
+        if (!d.length && judging) return { unread: true };
+        return { f, prof, n: d.length, dx: d.length ? d[d.length >> 1] : 0 };
+    };
+    // each slot's rest mass: the face being assembled at its rest frame, the face that leaves at the frame before the trigger
+    const R = at(kRest), P = at(kPre);
+    if (!R || !P || R.unread || P.unread) return null;
+    const restMass = new Map(), dropped = [];
+    for (const id of ids) {
+        const [fr, rf] = endIds.has(id) ? [R, last] : [P, first];
+        const q = (rf.s ?? []).find((x) => x[0] === id);
+        const m = q ? mass(fr.prof, q, fr.dx) : 0;
+        if (m < 4 * HOLE_NOISE) { dropped.push({ slot: id, why: "no ink at its own rest" }); continue; }
+        restMass.set(id, m);
+    }
+    // a slot laid inside the plate at the end that reads empty there is no place of the run
+    for (const q of last.s ?? []) if (restMass.has(q[0]) && !endIds.has(q[0])) {
+        const c = (q[1] + q[3]) / 2;
+        if (c > last.e[0] && c < last.e[2] && mass(R.prof, q, R.dx) / restMass.get(q[0]) < HOLE_LO) { restMass.delete(q[0]); dropped.push({ slot: q[0], why: "laid inside the plate and empty at rest" }); }
+    }
+    const run = new Map([...restMass.keys()].map((id) => [id, 0]));
+    let worst = null, holeFrames = 0, judged = 0, unread = 0; const dxs = [], frames = [];
+    judging = true;
+    for (let k = start; k <= kEnd; k++) {
+        const r = at(k); if (!r) continue;
+        if (r.unread) { unread++; for (const id of run.keys()) run.set(id, 0); frames.push([+((k - start) * frameMs).toFixed(0), "unread"]); continue; }
+        judged++; dxs.push(r.dx);
+        const laid = (r.f.s ?? []).filter((q) => restMass.has(q[0]) && q[3] - q[1] >= 1).filter((q) => { const c = (q[1] + q[3]) / 2; return c > r.f.e[0] && c < r.f.e[2]; })
+            .sort((p, q) => (p[1] + p[3]) - (q[1] + q[3]));
+        const inks = laid.map((q) => mass(r.prof, q, r.dx) / restMass.get(q[0]));
+        frames.push([+((k - start) * frameMs).toFixed(0), r2(r.dx), r2(r.prof.ground), laid.map((q, j) => [q[0], +inks[j].toFixed(2)])]);
+        const holeNow = new Set();
+        laid.forEach((q, j) => {
+            if (inks[j] >= HOLE_LO) return;
+            let L = -1, Rr = -1;
+            for (let i = j - 1; i >= 0; i--) if (inks[i] >= HOLE_LO) { L = i; break; }
+            for (let i = j + 1; i < laid.length; i++) if (inks[i] >= HOLE_LO) { Rr = i; break; }
+            if (L < 0 || Rr < 0 || inks[L] < HOLE_HI || inks[Rr] < HOLE_HI) return;
+            holeNow.add(q[0]);
+            const n = run.get(q[0]) + 1; run.set(q[0], n);
+            if (!worst || n > worst.frames) worst = { slot: q[0], frames: n, atMs: (k - start) * frameMs, ink: +inks[j].toFixed(3), sides: [+inks[L].toFixed(2), +inks[Rr].toFixed(2)] };
         });
-        let any = false;
-        slots.forEach((id, j) => {
-            const hole = inks[j] < HOLE_LO && inks.slice(0, j).some((v) => v >= HOLE_HI) && inks.slice(j + 1).some((v) => v >= HOLE_HI);
-            if (!hole) { run.set(id, 0); return; }
-            any = true; const n = run.get(id) + 1; run.set(id, n);
-            if (!worst || n > worst.frames) worst = { slot: id, index: j, frames: n, atMs: +(f.t - frames[0].t).toFixed(1), ink: +inks[j].toFixed(3), sides: [+Math.max(...inks.slice(0, j)).toFixed(3), +Math.max(...inks.slice(j + 1)).toFixed(3)] };
-        });
-        if (any) holeFrames++;
+        for (const id of run.keys()) if (!holeNow.has(id)) run.set(id, 0);
+        if (holeNow.size) holeFrames++;
     }
     const ok = !worst || worst.frames <= HOLE_RUN_MAX;
-    return { ok, slots: slots.length, holeFrames, worst,
-        why: `${slots.length} slot(s); ${holeFrames} frame(s) with a hole${worst ? `, longest ${worst.frames} frame(s): slot ${worst.index + 1} (seat ${worst.slot}) at ink ${worst.ink} to ${worst.atMs} ms while its sides paint ${worst.sides.join(" / ")}` : ""} (bound ${HOLE_RUN_MAX} frame; a hole is a slot below ${HOLE_LO} between slots at ${HOLE_HI} or more)` };
+    const dxAbs = dxs.length ? Math.max(...dxs.map(Math.abs)) : 0;
+    return { ok, slots: restMass.size, dropped, judged, unread, holeFrames, worst, scale: +a.toFixed(4), lagMs: lag, worstShiftPx: r2(dxAbs), frames,
+        why: `${restMass.size} slot(s) read from paint over ${judged} cast frame(s)${unread ? ` (${unread} unread: no seat met its glyph)` : ""} (scale ${a.toFixed(3)}, video lag ${lag} ms, shift ≤ ${r2(dxAbs)} px); ${holeFrames} frame(s) with a hole${worst ? `, longest ${worst.frames} consecutive frame(s): seat ${worst.slot} at ink ${worst.ink} at +${worst.atMs} ms while the nearest painting slots read ${worst.sides.join(" / ")}` : ""}${dropped.length ? `; ${dropped.length} slot(s) dropped (${dropped.map((d) => d.why).join("; ")})` : ""} (bound ${HOLE_RUN_MAX} cast frame of ${frameMs} ms; a hole is a slot below ${HOLE_LO} of its own rest ink whose nearest painting slots read ${HOLE_HI} or more)` };
 }
 
 // ── H4-2 · the window flag covers every lane ─────────────────────────────────
@@ -1539,8 +1655,6 @@ export function analyseMorph(frames, rung, { ax = "x", reversal = null, seats = 
         out.splice = spliceRow(frames, ax);   // H4-1
         const st = stubRow(frames, ax);       // H5-3, re-cut by H6-1
         if (st) out.stub = st;
-        const ho = holeRow(frames, ax);       // H6-2
-        if (ho) out.hole = ho;
     }
     const ln = lanesRow(frames, laneLabels ?? frames.laneLabels ?? {});   // H4-2
     if (ln?.judged) out.lanes = ln;
@@ -1553,7 +1667,6 @@ export function morphChecks(a) {
     if (a.leaving) c.leaving = a.leaving.ok;
     if (a.leaving?.vanish && a.leaving.leaving) c.vanish = a.leaving.vanish.ok;   // H5-4
     if (a.leaving?.leaving) c.ink = a.leaving.inkOk;                           // H6-3 (the instrument: an ink is ≤ 1)
-    if (a.hole) c.hole = a.hole.ok;                                            // H6-2
     if (a.splice) c.splice = a.splice.ok;
     if (a.stub) c.stub = a.stub.ok;                                            // H5-3
     if (a.lanes) c.lanes = a.lanes.ok;
@@ -1569,7 +1682,6 @@ export function morphSummary(a) {
     if (a.leaving) s.push(`leaving ${a.leaving.why}`);
     if (a.splice) s.push(`splice ${a.splice.why}`);
     if (a.stub) s.push(`stub ${a.stub.why}`);
-    if (a.hole) s.push(`hole ${a.hole.why}`);
     if (a.lanes) s.push(`lanes ${a.lanes.why}`);
     if (a.window.q4 != null) s.push(`Q-4 lenient window ${a.window.q4 ? "holds" : "fails"} (allow ${a.window.q4AllowMs} ms); Q-4 (a) flag at the 2 % band ${a.window.q4a.ok ? "holds" : "fails"} (${a.window.q4a.why}); Q-4 (c) 270 ms dock clock ${a.window.q4c.ok ? "holds" : "fails"} (${a.window.q4c.why})`);
     if (a.faces) s.push(`faces ${a.faces.why}`);

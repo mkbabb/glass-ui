@@ -1,0 +1,98 @@
+{
+ "when": "2026-10-21T11:01:28.482Z",
+ "engines": [
+  "chromium"
+ ],
+ "rows": [
+  {
+   "witness": "FM",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 6/6 PASS",
+   "ok": true,
+   "ms": 27183,
+   "load": 10.24
+  },
+  {
+   "witness": "FM",
+   "fixture": "pass@dark",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 6/6 PASS",
+   "ok": true,
+   "ms": 27112,
+   "load": 9.98
+  },
+  {
+   "witness": "FM",
+   "fixture": "deadhooks",
+   "expect": "exit ≠ 0; tiles fails in ^film·",
+   "got": "exit 1, 6/6 FAIL; matching 6 (chromium)",
+   "ok": true,
+   "ms": 25987,
+   "load": 10.85
+  },
+  {
+   "witness": "FM",
+   "fixture": "stub",
+   "expect": "exit ≠ 0; stub fails in ^film·swap-",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 8507,
+   "load": 9.87
+  },
+  {
+   "witness": "FM",
+   "fixture": "stubhalf",
+   "expect": "exit ≠ 0; stub fails in ^film·swap-",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 8563,
+   "load": 9.72
+  },
+  {
+   "witness": "FM",
+   "fixture": "hole",
+   "expect": "exit ≠ 0; hole fails in ^film·(first|warm)-expand",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 9444,
+   "load": 9.87
+  },
+  {
+   "witness": "FMB",
+   "fixture": "bp@light",
+   "expect": "first-expand and warm-collapse FAIL hole in every engine",
+   "got": "exit 1; chromium:film·first-expand[3 frames] chromium:film·warm-collapse[3 frames]",
+   "ok": true,
+   "ms": 27425,
+   "load": 10.14
+  },
+  {
+   "witness": "FMB",
+   "fixture": "bp@light",
+   "expect": "swap-short and swap-long do not fail hole",
+   "got": "chromium:film·swap-long hole holds (0 frame(s)) chromium:film·swap-short hole holds (0 frame(s))",
+   "ok": true,
+   "ms": 27425,
+   "load": 10.14
+  },
+  {
+   "witness": "FMB",
+   "fixture": "bp@dark",
+   "expect": "first-expand and warm-collapse FAIL hole in every engine",
+   "got": "exit 1; chromium:film·first-expand[3 frames] chromium:film·warm-collapse[3 frames]",
+   "ok": true,
+   "ms": 27409,
+   "load": 11.63
+  },
+  {
+   "witness": "FMB",
+   "fixture": "bp@dark",
+   "expect": "swap-short and swap-long do not fail hole",
+   "got": "chromium:film·swap-long hole holds (0 frame(s)) chromium:film·swap-short hole holds (0 frame(s))",
+   "ok": true,
+   "ms": 27409,
+   "load": 11.63
+  }
+ ]
+}

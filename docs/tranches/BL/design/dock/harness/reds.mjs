@@ -66,6 +66,13 @@ if (process.argv[2] === "--selftest") {
     ok("split-on-clamp", heavy.length > 1 && all(heavy).length === 15, `every estimate 30 min: ${heavy.length} slot(s) for the light theme, ${all(heavy).length} witness runs, none dropped`);
     const p5 = (plan.match(/^(main|rest|dark|darkrest)\) \$G/gm) ?? []).length;
     ok("pass5-plan-plant", p5 === 4, `the pass-5 plan queues the lock once per stage: ${p5} WebKit slots per build where H6-10 needs 2`);
+    // 6 · H7-3 · FM's six B2 cells re-run twice on every FM run, red or not (the plant: the H6 runner, which re-runs reds only)
+    const fmRe = (text) => { const def = (/^B2_CELLS='([^']*)'/m.exec(text) ?? [])[1] ?? ""; return /\[ "\$2" = FM \] && r="\$B2_CELLS"/.test(text) ? def : ""; };
+    const B2 = ["first-expand", "warm-expand", "warm-collapse", "content-add", "swap-short", "swap-long"];
+    const fr = fmRe(plan), frx = fr ? new RegExp(fr) : null;
+    ok("fm-b2-reruns", !!frx && B2.every((n) => frx.test("film·" + n)) && !frx.test("film·other"), `battery.sh FM re-runs ${fr || "(reds only)"} on every run`);
+    const h6 = plan.replace(/^\s*\[ "\$2" = FM \] && r="\$B2_CELLS"\n/m, "");
+    ok("fm-b2-reruns-plant", fmRe(h6) === "", "the H6 runner (plant: no FM line) re-runs FM's reds only, so a passing main is read once");
     console.log(`${rows.every(Boolean) ? "RUN SELFTEST PASS" : "RUN SELFTEST FAIL"}  ${rows.filter(Boolean).length}/${rows.length}`);
     process.exitCode = rows.every(Boolean) ? 0 : 1;
 } else if (process.argv[1] && path.resolve(process.argv[1]) === path.join(HERE, "reds.mjs")) {

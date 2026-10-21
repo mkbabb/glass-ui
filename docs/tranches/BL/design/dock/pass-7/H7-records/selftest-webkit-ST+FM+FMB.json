@@ -1,0 +1,170 @@
+{
+ "when": "2026-10-21T08:20:36.809Z",
+ "engines": [
+  "webkit"
+ ],
+ "rows": [
+  {
+   "witness": "ST",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 10/10 PASS",
+   "ok": true,
+   "ms": 71422,
+   "load": 15.23
+  },
+  {
+   "witness": "ST",
+   "fixture": "pass@dark",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 10/10 PASS",
+   "ok": true,
+   "ms": 72199,
+   "load": 19.38
+  },
+  {
+   "witness": "ST",
+   "fixture": "pass!rescale (^stall·(same-task|1raf|2raf|100ms|mid-flight)$)",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 5/5 PASS",
+   "ok": true,
+   "ms": 38841,
+   "load": 18.83
+  },
+  {
+   "witness": "ST",
+   "fixture": "leap",
+   "expect": "exit ≠ 0; leap fails in ^stall·",
+   "got": "exit 1, 8/10 FAIL; matching 4 (webkit)",
+   "ok": true,
+   "ms": 69659,
+   "load": 13.6
+  },
+  {
+   "witness": "ST",
+   "fixture": "nbjump",
+   "expect": "exit ≠ 0; neighbour fails in ^stall·nb·",
+   "got": "exit 1, 3/5 FAIL; matching 3 (webkit)",
+   "ok": true,
+   "ms": 35331,
+   "load": 11.56
+  },
+  {
+   "witness": "ST",
+   "fixture": "nboverlap",
+   "expect": "exit ≠ 0; overlap fails in ^stall·nb·",
+   "got": "exit 1, 5/5 FAIL; matching 3 (webkit)",
+   "ok": true,
+   "ms": 35142,
+   "load": 12.05
+  },
+  {
+   "witness": "ST",
+   "fixture": "pass!skew",
+   "expect": "an UNMEASURED (never PASS) cell in ^stall·(?!nb·); summary ~ residual scale .* outside 1 ± 0\\.01",
+   "got": "exit 0, 5/5 FAIL; matching 5 (webkit); summary matches",
+   "ok": true,
+   "ms": 38045,
+   "load": 12.71
+  },
+  {
+   "witness": "ST",
+   "fixture": "pass!nomarker",
+   "expect": "an UNMEASURED (never PASS) cell in ^stall·; summary ~ missing marker|no block-end marker",
+   "got": "exit 0, 10/10 FAIL; matching 10 (webkit); summary matches",
+   "ok": true,
+   "ms": 71301,
+   "load": 11.65
+  },
+  {
+   "witness": "FM",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 6/6 PASS",
+   "ok": true,
+   "ms": 29328,
+   "load": 13.9
+  },
+  {
+   "witness": "FM",
+   "fixture": "pass@dark",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 6/6 PASS",
+   "ok": true,
+   "ms": 28716,
+   "load": 14.82
+  },
+  {
+   "witness": "FM",
+   "fixture": "deadhooks",
+   "expect": "exit ≠ 0; tiles fails in ^film·",
+   "got": "exit 1, 6/6 FAIL; matching 6 (webkit)",
+   "ok": true,
+   "ms": 27591,
+   "load": 13.66
+  },
+  {
+   "witness": "FM",
+   "fixture": "stub",
+   "expect": "exit ≠ 0; stub fails in ^film·swap-",
+   "got": "exit 1, 2/2 FAIL; matching 2 (webkit)",
+   "ok": true,
+   "ms": 9658,
+   "load": 13.37
+  },
+  {
+   "witness": "FM",
+   "fixture": "stubhalf",
+   "expect": "exit ≠ 0; stub fails in ^film·swap-",
+   "got": "exit 1, 2/2 FAIL; matching 2 (webkit)",
+   "ok": true,
+   "ms": 9768,
+   "load": 12.61
+  },
+  {
+   "witness": "FM",
+   "fixture": "hole",
+   "expect": "exit ≠ 0; hole fails in ^film·(first|warm)-expand",
+   "got": "exit 1, 2/2 FAIL; matching 2 (webkit)",
+   "ok": true,
+   "ms": 10009,
+   "load": 12.36
+  },
+  {
+   "witness": "FMB",
+   "fixture": "bp@light",
+   "expect": "first-expand and warm-collapse FAIL hole in every engine",
+   "got": "exit 1; webkit:film·first-expand[3 frames] webkit:film·warm-collapse[3 frames]",
+   "ok": true,
+   "ms": 28497,
+   "load": 12.09
+  },
+  {
+   "witness": "FMB",
+   "fixture": "bp@light",
+   "expect": "swap-short and swap-long do not fail hole",
+   "got": "webkit:film·swap-long hole holds (0 frame(s)) webkit:film·swap-short hole holds (0 frame(s))",
+   "ok": true,
+   "ms": 28497,
+   "load": 12.09
+  },
+  {
+   "witness": "FMB",
+   "fixture": "bp@dark",
+   "expect": "first-expand and warm-collapse FAIL hole in every engine",
+   "got": "exit 1; webkit:film·warm-collapse[2 frames]",
+   "ok": false,
+   "ms": 29579,
+   "load": 11.1
+  },
+  {
+   "witness": "FMB",
+   "fixture": "bp@dark",
+   "expect": "swap-short and swap-long do not fail hole",
+   "got": "webkit:film·swap-long hole holds (0 frame(s)) webkit:film·swap-short hole holds (0 frame(s))",
+   "ok": true,
+   "ms": 29579,
+   "load": 11.1
+  }
+ ]
+}

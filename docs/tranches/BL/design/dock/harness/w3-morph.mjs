@@ -65,8 +65,8 @@
 // H6 (pass-6/H6.md):
 //   H6-1  `stub` judges the edge: a glyph painted 10-90 % by an edge whose alpha goes 10→90 % inside 2 px fails at any
 //         opacity; a mask ramp at least one advance wide passes (lib.mjs stubRow, hp.maskOf)
-//   H6-2  `hole` on every strip cell with seats and on `retarget·*`: no slot of the painted run reads below 0.1 ink for more
-//         than one frame while slots on both sides paint at 0.9 or more (lib.mjs holeRow)
+//   H6-2  `hole` (DOM credit): struck by H7-1, which reads the hole from paint in FM (film.mjs, lib.mjs holePaint). W3's
+//         strips are a rAF DOM log with no cast to read paint from, and one fact keeps one witness (P-3)
 //   H6-3  `ink`: every unit's ink is its painted share of its own box, ≤ 1 (lib.mjs unitInk); the check is the instrument's
 //   H6-5  `window` W-8 counted in time: the flag closes within 2 × the measured frame interval after landing
 //   H6-8  the "(faces merged)" line prints the faces reading's own verdict and the engine; the cell's verdict in brackets
@@ -76,7 +76,7 @@
 // trajectory, terminal, owners, seat row, blank, leaving) and FACES_PX / FACES_PX_SCREENCAST below.
 import fs from "node:fs";
 import path from "node:path";
-import { parseArgs, engines, openTarget, launch, openScene, makeReport, outDir, engineTag, startLog, stopLog, mark, waitRest, dockCenter, extentNow, probeMode, shoot, facesRead, FACE_DOM_SCREENCAST, screencast, readFrame, interiorGreen, pinnedRung, analyseMorph, morphChecks, morphSummary, springSpec, r2, K_JITTER, STEP_SLACK_PX, magentaCoverage, scrollSource, blankRow, leavingRow, seatRow, spliceRow, stubRow, holeRow, unitInk, VANISH_MAX, q4Blocked, ENGINE_LABEL } from "./lib.mjs";
+import { parseArgs, engines, openTarget, launch, openScene, makeReport, outDir, engineTag, startLog, stopLog, mark, waitRest, dockCenter, extentNow, probeMode, shoot, facesRead, FACE_DOM_SCREENCAST, screencast, readFrame, interiorGreen, pinnedRung, analyseMorph, morphChecks, morphSummary, springSpec, r2, K_JITTER, STEP_SLACK_PX, magentaCoverage, scrollSource, blankRow, leavingRow, seatRow, spliceRow, stubRow, unitInk, VANISH_MAX, q4Blocked, ENGINE_LABEL } from "./lib.mjs";
 
 /** Faces: 0.5 px (W-7) plus one device pixel of edge anti-aliasing at DSF 2. */
 export const FACES_PX = 1.0;
@@ -587,7 +587,6 @@ for (const engine of engines(args)) {
                 const leave = leavingRow(fr, lengthMs);
                 const splice = spliceRow(fr, ax);
                 const stub = stubRow(fr, ax);   // H5-3, re-cut by H6-1
-                const hole = holeRow(fr, ax);   // H6-2
                 const inkOwn = (q, e) => unitInk(q[9], [q[5], q[6], q[7], q[8]], [q[1], q[2], q[3], q[4]], e);   // H6-3
                 let vanish = { drop: 0 };
                 if (i0 > 0) {
@@ -599,10 +598,10 @@ for (const engine of engines(args)) {
                 }
                 // H5-4 · the retarget's own vanish (every seat painting ≥ 0.5 at the retarget) and the leaving rule's (every
                 // seat that leaves over the whole strip, first and last steps included)
-                const checks = { retarget: i0 > 0, blank: blank.ok, seatOverlap: seat.overlap.ok, leaving: leave.ok, vanish: vanish.drop <= VANISH_MAX && leave.vanish.ok, splice: splice.ok, stub: stub ? stub.ok : true, hole: hole ? hole.ok : true, ink: leave.leaving ? leave.inkOk : true, errors: s.errors.length === 0 };
+                const checks = { retarget: i0 > 0, blank: blank.ok, seatOverlap: seat.overlap.ok, leaving: leave.ok, vanish: vanish.drop <= VANISH_MAX && leave.vanish.ok, splice: splice.ok, stub: stub ? stub.ok : true, ink: leave.leaving ? leave.inkOk : true, errors: s.errors.length === 0 };
                 const failed = Object.entries(checks).filter(([, v]) => !v).map(([k]) => k);
-                rep.add({ engine, cell: `retarget·${after}` + tag, pass: !failed.length, failed, frames: fr.length, retargetFrame: i0, blank, overlap: seat.overlap, leaving: leave, splice, vanish, stub, hole, pageErrors: s.errors.slice(0, 3),
-                    summary: `swap to long retargeted to mid ${after} ms later (scheduled in the page; frame ${i0}): blank ${blank.why}; seat overlap ${seat.overlap.frames} frame(s); leaving ${leave.why}; vanish worst one-frame drop from the retarget ${vanish.drop}${vanish.seat ? ` (seat ${vanish.seat} ${vanish.from} → ${vanish.to} at +${vanish.atMs} ms)` : ""} (bound ${VANISH_MAX}), over the strip ${leave.vanish.drop}; splice ${splice.why}; stub ${stub ? stub.why : "not read"}; hole ${hole ? hole.why : "not read"}; page errors ${s.errors.length}${failed.length ? "  ⟶ FAILED: " + failed.join(", ") : ""}` });
+                rep.add({ engine, cell: `retarget·${after}` + tag, pass: !failed.length, failed, frames: fr.length, retargetFrame: i0, blank, overlap: seat.overlap, leaving: leave, splice, vanish, stub, pageErrors: s.errors.slice(0, 3),
+                    summary: `swap to long retargeted to mid ${after} ms later (scheduled in the page; frame ${i0}): blank ${blank.why}; seat overlap ${seat.overlap.frames} frame(s); leaving ${leave.why}; vanish worst one-frame drop from the retarget ${vanish.drop}${vanish.seat ? ` (seat ${vanish.seat} ${vanish.from} → ${vanish.to} at +${vanish.atMs} ms)` : ""} (bound ${VANISH_MAX}), over the strip ${leave.vanish.drop}; splice ${splice.why}; stub ${stub ? stub.why : "not read"}; page errors ${s.errors.length}${failed.length ? "  ⟶ FAILED: " + failed.join(", ") : ""}` });
                 await s.close();
             }
         });
