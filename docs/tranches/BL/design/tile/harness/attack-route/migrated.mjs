@@ -24,9 +24,20 @@
 //             the other `.pill-row` holder, whose tabs each carry two block rows through `#option`; the same strip
 //             beside the groups is the reference (`data-mx-st="ref"`). FACT reads the tab's rows, the strip's height
 //             and the development names (`Fc5` §3.1's `stnest`, moved into the matrix)
+//             H7: three compositions read beside the matrix's own cells. H7-1 (B-1): a pill group whose parent is a
+//             Card (`.card`), options `ca`, `cb`: a rule outside the route that writes the tile fact on a group by its
+//             ancestor (`.card > .toggle-group { --selection-tile: flush }`) turns them into tiles, and paint reads it.
+//             H7-2 (O-1): a strip a consumer writes `flush` on, by an unlayered rule on the strip itself
+//             (`data-mx-st="cf"`, `.mx-st-consumer`): FACT reads its tabs against the floor's own sentence on strips.
+//             H7-3 (B-3): the tile group's fifth option (`te`) holds a responsive SegmentedTabs rendered below its
+//             breakpoint (a breakpoint wider than any viewport), so the strip is `.segmented-tabs__mobile` and a
+//             SelectTrigger (`data-mx-stm="t"`); the same responsive strip beside the groups is the reference
+//             (`data-mx-stm="ref"`)
 export const ATTACK_LABEL = "H4-attack";
 /** H6-3: a SegmentedTabs whose tabs carry two block rows (a `.pill-row` holder that is not a group) */
-const mxStrip = (which) => `<SegmentedTabs data-mx-st="${which}" :model-value="tabsOptions[0].value" :options="tabsOptions" semantics="radio" aria-label="Strip ${which}"><template #option="{ option }"><span class="block">{{ option.label }}</span><span class="block text-micro">two</span></template></SegmentedTabs>`;
+const mxStrip = (which, cls = "") => `<SegmentedTabs data-mx-st="${which}"${cls ? ` class="${cls}"` : ""} :model-value="tabsOptions[0].value" :options="tabsOptions" semantics="radio" aria-label="Strip ${which}"><template #option="{ option }"><span class="block">{{ option.label }}</span><span class="block text-micro">two</span></template></SegmentedTabs>`;
+/** H7-3: a responsive SegmentedTabs below its breakpoint: `.segmented-tabs__mobile` holding a SelectTrigger */
+const mxMobile = (which) => `<SegmentedTabs data-mx-stm="${which}" :model-value="tabsOptions[0].value" :options="tabsOptions" semantics="radio" :responsive="{ breakpoint: '100000px' }" aria-label="Responsive strip ${which}" />`;
 /** H5-2: one option of the matrix: two block rows of content, a #meta row for a tile (F's declaration). */
 const mxContent = (a, b, site = false) => `<span data-mx-content${site ? ` data-mx-site="content" :style="mx('content')"` : ""} class="block"><span class="block">${a}</span><span class="block text-micro">${b}</span></span>`;
 const mxGroup = (kind) => {
@@ -48,6 +59,7 @@ const mxGroup = (kind) => {
             ${meta(tile)}
           </ToggleGroupItem>
           <ToggleGroupItem value="${t}d" data-mx-item="${t}d" class="mx-st-opt">${mxContent("Gentle", "soft")}${mxStrip(t)}${meta(tile)}</ToggleGroupItem>
+          ${tile ? `<ToggleGroupItem value="${t}e" data-mx-item="${t}e" class="mx-st-opt">${mxContent("Steady", "even")}${mxMobile(t)}${meta(tile)}</ToggleGroupItem>` : ""}
         </ToggleGroup>
       </div>`;
 };
@@ -107,8 +119,15 @@ export default {
       ${mxGroup("tile")}
       ${mxGroup("pill")}
       ${mxStrip("ref")}
+      ${mxStrip("cf", "mx-st-consumer")}
+      ${mxMobile("ref")}
+      <Card class="mx-card"><ToggleGroup type="single" aria-label="Pills in a card" model-value="ca" class="mx-card-group">
+          <ToggleGroupItem value="ca" data-mx-item="ca">${mxContent("Linear", "flat")}</ToggleGroupItem>
+          <ToggleGroupItem value="cb" data-mx-item="cb">${mxContent("Eased", "curved")}</ToggleGroupItem>
+        </ToggleGroup></Card>
       </div>`,
-    css: `.mx-host { inline-size: 460px; } .mx-wrap, .mx-st-opt { grid-column: 1 / -1; } .mx-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }`,
+    // H7-2: the consumer's unlayered write on a strip (O-1), outside every layer as a consumer's sheet is
+    css: `.mx-host, .mx-card { inline-size: 460px; } .mx-wrap, .mx-st-opt { grid-column: 1 / -1; } .mx-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; } .mx-st-consumer { --selection-tile: flush; }`,
   },
   strip: {
     group: `<ToggleGroup type="single" data-group aria-label="Area unit" v-model="model">

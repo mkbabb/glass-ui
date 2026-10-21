@@ -1,0 +1,11 @@
+2026-10-19 14:13:32 · load { 31.98 36.81 36.05 }
+admitted · 2026-10-19 14:13:32 · load { 31.98 36.81 36.05 }
+OK     XSCRIPT clean · exit 0 (want 0) · XSCRIPT PASS · 19/19 gating cells pass
+OK     XSCRIPT xs-paint (D′'s pass-4 name ink, consumer paint) · exit 1 (want 1) · XSCRIPT FAIL · 17/19 gating cells pass · first FAIL: FAIL       site equal · specimen · fixture-shape and fixture-anatomy, each with its declaration removed · markup equal · css DIFFERS at char 227: «tile-name{align-self:stretch;}.tile-name{color:var(--selection-ink);}» vs
+OK     XSCRIPT xs-drift (a class on one route's K2 items) · exit 1 (want 1) · XSCRIPT FAIL · 18/19 gating cells pass · first FAIL: FAIL       site equal · specimen · fixture-shape and fixture-anatomy, each with its declaration removed · markup DIFFERS at char 432: «… c.name" data-item data-surface="opaque" class="specimen-tile"><span data-ink class=
+OK     XSCRIPT xs-none (a route with no K2 site) · exit 2 (want 2) · XSCRIPT HARNESS ERROR no specimen (K2) site in fixture-anatomy
+OK     XSCRIPT xs-shared (the shared K2 block's rest colour outside verbatim) · exit 1 (want 1) · XSCRIPT FAIL · 18/19 gating cells pass · first FAIL: FAIL       shared ink · scenes.mjs SHARED_CSS outside [data-arm="verbatim"] · INK ON CONTENT: .tile-name { color: var(--muted-foreground) } (content: .tile-name)
+OK     XSCRIPT xs-ink (one route-only var(--selection-ink) line) · exit 1 (want 1) · XSCRIPT FAIL · 17/19 gating cells pass · first FAIL: FAIL       site equal · strip · fixture-shape and fixture-anatomy, each with its declaration removed · markup equal · css DIFFERS at char 32: «ata-item]{align-items:center;}.tile-label{color:var(--selection-ink);}» vs «a
+OK     XSCRIPT xs-utility (a rest-colour utility on content in both routes) · exit 1 (want 1) · XSCRIPT FAIL · 17/19 gating cells pass · first FAIL: FAIL       site paint · fixture-shape preset · CONSUMER PAINT: <span> class text-muted-foreground
+xscript selftest: 7 runs; the check passes every site under two declarations, fails consumer paint, a drift, a shared rest colour, a route-only ink line and a rest-colour utility on the planted cell, and stops on a missing K2
+exit 0 · 2026-10-19 14:13:41 · load { 31.74 36.68 36.01 }

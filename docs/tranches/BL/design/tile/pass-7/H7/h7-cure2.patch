@@ -1,0 +1,93 @@
+--- a/src/styles/glass/control-surfaces.css
++++ b/src/styles/glass/control-surfaces.css
+@@ -96,9 +96,11 @@
+        plate, no floor and no blur at rest, so the set reads as options on one card
+        rather than slabs on a slab; `plated` keeps all three. The hover above outranks
+        this and still paints the plate's layer, and the option's selected state (a tint
+-       and a perimeter) is its own. `[data-state]` is what makes a control an option. */
++       and a perimeter) is its own. The rule names the option itself: a control inside
++       an option (a Select, a switch, a responsive strip's trigger) carries
++       `[data-state]` too, and keeps its own plate. */
+     @container style(--selection-tile: flush) {
+-        .control-surface[data-state] {
++        .toggle-group__item.control-surface[data-state] {
+             --glass-defined-plate: transparent;
+             --glass-floor-fill: transparent;
+             backdrop-filter: none;
+--- a/src/styles/utilities/base.css
++++ b/src/styles/utilities/base.css
+@@ -54,13 +54,13 @@
+    `none` is a pill. `flush` and `plated` are a tile: a tile route sets one of them,
+    once, on the group, and nothing else declares that an option is a tile. Every
+    group, and every SegmentedTabs strip, resets it to `none`, so a value on an
+-   ancestor of a group never reaches the group's options, and a strip's tabs are
+-   always pills. An option and everything inside it inherit the value above the
+-   option and cannot write their own (the pin in toggle-group/styles.css), so each
+-   option has one value, and every reader reads that one: the pill's one-row law
+-   below and in toggle-group/styles.css, the tile's plate (`flush` paints no plate at
+-   rest, Q-2 (b); `plated` keeps the control plate), the selected perimeter, and the
+-   development names in ToggleGroupItem.vue.
++   ancestor of a group never reaches the group's options, and a strip's tabs are pills
++   unless a rule of yours writes on the strip. An option and everything inside it
++   inherit the value above the option and cannot write their own (the pin in
++   toggle-group/styles.css), so each option has one value, and every reader reads that
++   one: the pill's one-row law below and in toggle-group/styles.css, the tile's plate
++   (`flush` paints no plate at rest, Q-2 (b); `plated` keeps the control plate), the
++   selected perimeter, and the development names in ToggleGroupItem.vue.
+    ═══════════════════════════════════════════════ */
+ @property --selection-tile {
+     syntax: "none | flush | plated";
+--- a/MIGRATION.md
++++ b/MIGRATION.md
+@@ -98,29 +98,28 @@
+   read `process.env.NODE_ENV`, which your bundler resolves (Vite and webpack do by
+   default).
+ - `--selection-tile` (`none` | `flush` | `plated`, inherited) says whether a set of
+-  options are tiles. It is `none` on every `ToggleGroup` and `flush` on a `<ToggleGroup
+-  shape="cell">`. A rule of yours on the group element itself (an unlayered or scoped
+-  rule, or a utility such as `[--selection-tile:plated]`) writes over either: `plated`
+-  for a plate at rest, `none` for pills. A value takes effect on the group element,
+-  or on an element between the
+-  group and its options (a grid `div`, a `<section>` per family), whose options follow
+-  it. On an ancestor of the group it has no effect, because every group resets it to
+-  `none`. On an option or on content inside one it has no effect either: an option and
+-  its content inherit the value above the option. An inline
+-  `--selection-tile: … !important` on an option outranks that, and it does not opt the
+-  option out: it splits it. The option keeps the corner and the column of the value
+-  above it, which read the value on the option's parent, while its clip and the one-row
+-  law, which read the option's own value, follow the inline write. Under either tile value an option is a
+-  card, whatever wrote the value:
+-  it is not held to one row, and it takes the field corner (16px), a column,
+-  start-aligned text at body leading, the card pad (`--space-atom` block,
+-  `--space-body` inline; `sm` `--space-residue` / `--space-atom`), the height of the
+-  tallest option in its row, and its selected perimeter. A corner you give a tile by a
+-  `rounded-*` utility, a scoped or unlayered rule, or an unlayered `!important` has no
+-  effect; only an inline `border-radius: … !important` changes it. Under `flush` an
+-  option also paints no plate, floor or blur at rest. A `ToggleGroup` nested inside a
+-  tile is pills again (every group resets the value), and so is a `SegmentedTabs` strip
+-  inside one (every strip resets it too).
++  options are tiles. It is `none` on every `ToggleGroup` and `flush` on a
++  `<ToggleGroup shape="cell">`. A rule of yours on the group element itself (an
++  unlayered or scoped rule, or a utility such as `[--selection-tile:plated]`) writes
++  over either: `plated` for a plate at rest, `none` for pills. A value takes effect on
++  the group element, or on an element between the group and its options (a grid `div`, a
++  `<section>` per family), whose options follow it. On an ancestor of the group it has
++  no effect, because every group resets it to `none`. On an option or on content inside
++  one it has no effect either: an option and its content inherit the value above the
++  option. An inline `--selection-tile: … !important` on an option outranks that, and it
++  does not opt the option out: it splits it. The option keeps the corner and the column
++  of the value above it, which read the value on the option's parent, while its clip and
++  the one-row law, which read the option's own value, follow the inline write. Under
++  either tile value an option is a card, whatever wrote the value: it is not held to one
++  row, and it takes the field corner (16px), a column, start-aligned text at body
++  leading, the card pad (`--space-atom` block, `--space-body` inline; `sm`
++  `--space-residue` / `--space-atom`), the height of the tallest option in its row, and
++  its selected perimeter. A corner you give a tile by a `rounded-*` utility, a scoped or
++  unlayered rule, or an unlayered `!important` has no effect; only an inline
++  `border-radius: … !important` changes it. Under `flush` an option also paints no
++  plate, floor or blur at rest. A `ToggleGroup` nested inside a tile is pills again
++  unless it declares `shape="cell"` (every group resets the value), and so is a
++  `SegmentedTabs` strip inside one (every strip resets it too).
+ - The selected perimeter of a `ToggleGroup` item paints inside its 1px border instead
+   of straddling it, so paint containment (`content-visibility: auto`, the pill's own
+   clip) keeps all 2px of it.

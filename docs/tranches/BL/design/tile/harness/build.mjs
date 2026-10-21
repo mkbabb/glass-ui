@@ -34,6 +34,14 @@ import { REPO, parseArgs, outRoot } from "./lib.mjs";
 import { sceneApp } from "./scenes.mjs";
 
 const FLAVORS = ["src", "src-dev", "dist", "dist-dev"];
+/** H7-2 · the floor's registration comment on the tile fact, in the worktree's `src/styles/utilities/base.css`: the comment
+ *  block that names `THE TILE FACT`, its rules and stars stripped and its whitespace collapsed; null when there is none
+ *  (HEAD). FACT reads the strip sentence in it against what the strip paints (the comment-truth cell). */
+export function floorText(wt) {
+  let css = ""; try { css = fs.readFileSync(path.join(wt, "src/styles/utilities/base.css"), "utf8"); } catch { return null; }
+  const block = (css.match(/\/\*[^]*?\*\//g) ?? []).find((c) => c.includes("THE TILE FACT"));
+  return block ? block.replace(/^\/\*|\*\/$/g, "").replace(/[═]+/g, " ").replace(/\s+/g, " ").trim() : null;
+}
 
 /** Resolve `@glass/components/<x>` through the worktree's package exports, as a consumer's resolver would. */
 function distAliases(wt, dev) {
@@ -80,7 +88,8 @@ export async function buildScenes(worktree, { label = "head", out, flavor = "src
   const familyModules = Object.fromEntries((routeCfg.familyDirs ?? [])
     .filter((d) => fs.existsSync(path.join(wt, "src/components", d, "index.ts")))
     .map((d) => [d.replace(/[^A-Za-z0-9_]/g, "_"), d]));
-  for (const [name, body] of Object.entries(sceneApp(wt, nm, { familyModules, migration, flavor }))) fs.writeFileSync(path.join(app, name), body);
+  const floor = floorText(wt);
+  for (const [name, body] of Object.entries(sceneApp(wt, nm, { familyModules, migration, flavor, floor }))) fs.writeFileSync(path.join(app, name), body);
 
   process.env.NODE_ENV = dev ? "development" : "production";
   const { build } = await import(path.join(nm, "vite/dist/node/index.js"));
@@ -105,7 +114,7 @@ export async function buildScenes(worktree, { label = "head", out, flavor = "src
   let distBuilt = null; if (dist) try { distBuilt = fs.statSync(path.join(wt, "dist/toggle-group.js")).mtime.toISOString(); } catch {}
   const meta = { label, worktree: wt, sha, srcDirtyFiles: dirty, flavor, dev, distBuilt, developmentConditions: da?.developmentConditions ?? null,
     route: route ? path.resolve(route) : null, migration: migration ? { label: migration.label, sites: Object.keys(migration.sites) } : null,
-    familyModules: Object.values(familyModules), built: new Date().toISOString(), seconds: +((Date.now() - t0) / 1000).toFixed(1) };
+    familyModules: Object.values(familyModules), floor, built: new Date().toISOString(), seconds: +((Date.now() - t0) / 1000).toFixed(1) };
   fs.writeFileSync(path.join(root, "build.json"), JSON.stringify(meta, null, 1));
   return { root, dist: outDist, meta };
 }

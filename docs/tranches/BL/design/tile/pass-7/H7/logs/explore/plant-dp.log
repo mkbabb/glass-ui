@@ -1,0 +1,19 @@
+2026-10-19 12:45:46 · load { 33.61 34.19 33.52 }
+plant crit-foreign-writer appended to base.css; git diff before 90fe6bea3132
+
+@layer components {
+    .card > .toggle-group {
+        --selection-tile: flush;
+    }
+}
+SHEET · the tile fact has one writer in src, and MIGRATION's tile bullet is one wrapped paragraph (H7-1, H7-4; R-10, E-3)
+  target wt · route D4-Dp-p7: its one rule src/components/toggle-group/styles.css «.toggle-group[data-shape="cell"]» · engine-free (a static read of the worktree's src and MIGRATION.md) · harness H7 8537bcfa6f4f
+  FAIL       writers · every --selection-tile: flush | plated in src is the route's one rule · route D4-Dp-p7: its one rule src/components/toggle-group/styles.css «.toggle-group[data-shape="cell"]» · 2 write(s) found, the route's rule 1× · 1 OTHER: src/styles/utilities/base.css «.card > .toggle-group» flush (css)
+  FAIL       wrap · MIGRATION.md:100-123, the --selection-tile bullet (24 lines) is one paragraph filled at 88 columns · RAGGED: line 104 breaks at 83 columns while the next word «or» (2) fits; line 105 breaks at 30 columns while the next word «group» (5) fits; line 113 is 105 columns (over 88); line 114 breaks at 33 columns while the next word «it» (2) fits; line 116 breaks at 73 columns while the next word «`--space-body`» (14) fits
+SHEET FAIL · 0/2 gating cells pass
+sheet exit 1
+
+a:b referenced in a:b didn't resolve at build time, it will remain unchanged to be resolved at runtime
+built dp-plant-atk-src from /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p7/h7/wt @ 7d55398c (flavor src, src dirty files 27, migration H4-attack [preset,specimen,v2,c1,matrix,strip], family modules []) in 1.1s → --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p7/h7/out/builds/dp-plant-atk-src
+base.css restored; git diff after 90fe6bea3132 (equal)
+exit 0 · 2026-10-19 12:52:28 · load { 31.48 33.00 33.32 }

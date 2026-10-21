@@ -85,6 +85,7 @@ export const FAULTS = {
   "h46-kick": { why: "H4-6 plant: the commit pop peaks at 1.035, so a 300 px tile pushes 5.25 px into a 4 px neighbour gap", witnesses: ["REPORT"], family: "h46", cell: /kick ·/ },
   "h46-mark": { why: "H4-6 plant: in dark the selection mark is near-white over the pale swatch (Fc §2.4's washed-out check)", witnesses: ["REPORT"], family: "h46", cell: /mark .*dark/ },
   "h46-nameink": { why: "H5-5 plant: the migrated K2 name pins its own ink (consumer paint, D′'s pass-4 `.tile-name { color }` class), so the selected name is not its item's ink", witnesses: ["REPORT"], family: "h46", cell: /name-ink ·/ },
+  "h47-spring-glide": { why: "H7-5 plant (B-5): the commit pop overshoots and glides back to rest with no bounce under it (no undershoot keyframe): the kick's spring reads no bounce (ζ ≥ 1), a commit without weight", witnesses: ["REPORT"], family: "h46", cell: /kick-spring ·/ },
   "h46-attack": { why: "H5-6 plant: REPORT handed an attack build (the F spec's pass-4 misdirection): it must stop loud, exit 2, and name the route build to pass", witnesses: ["REPORT"], family: "h46", expect: "error", cell: /REPORT reads a route build/ },
   ...ATTACK_FAULTS,
   "t8-migrated": { why: "H3-2: a WebKit-only rule turns the MIGRATED tiles back into stadiums (the library arm and Chromium stay green)", witnesses: ["T-8"], cell: /Playwright WebKit T-1 .*-migrated/ },
@@ -242,7 +243,7 @@ ${fault === "t7" ? '[data-arm="migrated"] .c-cell { outline: 1px dashed transpar
 /* the commit: a spring pop on the committed tile (overshoot, bounce, settle) */
 @keyframes pop { 0% { scale: 1; } 45% { scale: 1.035; } 70% { scale: 0.99; } 85% { scale: 1.003; } 100% { scale: 1; } }
 .it.pop { animation: pop 420ms linear; }
-${h46 && fault !== "h46-kick" ? "@keyframes pop { 0% { scale: 1; } 45% { scale: 1.02; } 70% { scale: 0.994; } 85% { scale: 1.002; } 100% { scale: 1; } }" : ""}
+${fault === "h47-spring-glide" ? "@keyframes pop { 0% { scale: 1; } 45% { scale: 1.02; } 100% { scale: 1; } }" : h46 && fault !== "h46-kick" ? "@keyframes pop { 0% { scale: 1; } 45% { scale: 1.02; } 70% { scale: 0.994; } 85% { scale: 1.002; } 100% { scale: 1; } }" : ""}
 ${h46 ? `.t-strip i, .t-strip i:nth-child(2n) { background: #ecfccb; }
 .it[aria-pressed="true"]::after { content: ""; position: absolute; top: 12px; right: 18px; width: 16px; height: 16px; border-radius: 50%; background: #1c1917; pointer-events: none; }
 ${fault === "h46-mark" ? ':root.dark .it[aria-pressed="true"]::after { background: #f5f5f4; }' : ""}

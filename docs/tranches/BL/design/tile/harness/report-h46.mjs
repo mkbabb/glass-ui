@@ -16,6 +16,14 @@
 //          its own item's ink. PASS when the name's computed colour is the item's (it inherits the library's
 //          `--selection-ink`); the selected and unselected name inks and their contrast are printed. Light and dark.
 //          A build that does not migrate K2 reads UNMEASURED
+//   kick-spring  H7-5 (B-5) · the kick stays reported, and its spring is named: the animation that runs on the committed
+//          tile (its name, duration and easing, from the item's running animations at the commit's first frame; a CSS
+//          animation's easing is the item's animation-timing-function, a transition's its effect's) and
+//          the spring its frames trace (the scale per frame on the forced read: the peak over the settle, the dip under
+//          it after the peak, and the damping ratio that overshoot ratio implies for a damped spring's impulse response,
+//          ζ = −ln r / √(π² + ln² r), r = dip / peak). PASS when an animation is named and the frames overshoot and
+//          bounce under the settle (ζ < 1: weight and bounce, D-1); a read on janky frames (median interval > 20 ms)
+//          that fails is re-read twice and prints NOT-REPRODUCED when it does not reproduce
 // H5-6 · REPORT READS A ROUTE BUILD. Pass 4's F spec ran it on the attack build in Playwright WebKit, whose V2 has no
 // tile, and banked "no mark painted" as a reading (`Fs` §6). An attack build (`migration.attack`, label H4-attack) is
 // now refused: exit 2, naming the build to pass instead. run.mjs hands REPORT `--build`, never `--attack`.
@@ -33,10 +41,16 @@ async function kick(target, engine, scene, force) {
     if (force) Object.assign(g.style, force);
     await th.frame();
     const rest = its.map((e) => e.getBoundingClientRect());
-    const u = 1, frames = [];
+    const u = 1, frames = [], times = [];
+    let anims = null;
     const t0 = performance.now();
     await new Promise((done) => {
-      const tick = () => { frames.push(its.map((e) => e.getBoundingClientRect())); if (performance.now() - t0 < 800) requestAnimationFrame(tick); else done(); };
+      const tick = () => {
+        frames.push(its.map((e) => e.getBoundingClientRect())); times.push(performance.now() - t0);
+        // H7-5 · the animations running on the committed tile at the first frame that has any
+        if (!anims) { const a = its[u].getAnimations(); if (a.length) anims = a.map((x) => ({ name: x.animationName ?? x.transitionProperty ?? x.id ?? "(unnamed)", kind: x.constructor.name, duration: x.effect?.getTiming?.().duration ?? null, easing: x.constructor.name === "CSSAnimation" ? getComputedStyle(its[u]).animationTimingFunction : x.effect?.getTiming?.().easing ?? "?" })); }
+        if (performance.now() - t0 < 800) requestAnimationFrame(tick); else done();
+      };
       requestAnimationFrame(tick);
       window.__tile.select(u);
     });
@@ -50,7 +64,12 @@ async function kick(target, engine, scene, force) {
       });
     }
     const gaps = rest.map((b, k) => (k === u ? Infinity : Math.max(b.left - rest[u].right, rest[u].left - b.right, b.top - rest[u].bottom, rest[u].top - b.bottom))).filter((x) => x >= 0);
-    return { w: rest[u].width, h: rest[u].height, gap: Math.min(...gaps), push, peak, frames: frames.length, on: th.on(its[u]) };
+    // H7-5 · the spring the frames trace: scale per frame, the peak over the settle, the dip under it after the peak
+    const sc = frames.map((f) => f[u].width / rest[u].width), settle = sc[sc.length - 1];
+    let ip = 0; sc.forEach((v, i) => { if (v > sc[ip]) ip = i; });
+    const dip = Math.min(...sc.slice(ip)), iv = times.slice(1).map((t, i) => t - times[i]).sort((a, b) => a - b);
+    const spring = { anims, peak: sc[ip] - settle, peakAt: times[ip], dip: settle - dip, dipAt: times[ip + sc.slice(ip).indexOf(dip)], settle, medianMs: iv.length ? iv[Math.floor(iv.length / 2)] : null };
+    return { w: rest[u].width, h: rest[u].height, gap: Math.min(...gaps), push, peak, frames: frames.length, on: th.on(its[u]), spring };
   }, force ? FORCE : null);
   await P.close();
   return r;
@@ -107,7 +126,15 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     const own = (site) => (migration && !isAttack(migration) && (migration.sites ?? []).includes(site)) || target.kind === "fixture" ? `${site}-migrated` : site;
     const kp = own("preset");
     const k = await kick(target, engine, kp, true);
-    cells.push({ gating: true, pass: k.push <= 0.05, line: `kick · ${kp} forced to two 300 px columns at a 4 px gap · item 1 ${f2(k.w)}×${f2(k.h)}, rest gap ${f2(k.gap)} px · programmatic commit (checked ${k.on}), ${k.frames} frames · peak scale ${k.peak.toFixed(4)} · deepest push into a neighbour ${f2(k.push)} px (want ≤ 0.05)` });
+    cells.push({ gating: true, pass: k.push <= 0.05, line: `kick · ${kp} forced to two 300 px columns at a 4 px gap · item 1 ${f2(k.w)}×${f2(k.h)}, rest gap ${f2(k.gap)} px · programmatic commit (checked ${k.on}), ${k.frames} frames · peak scale ${k.peak.toFixed(4)} · deepest push into a neighbour ${f2(k.push)} px (want ≤ 0.05) · the commit's spring ${k.spring.anims?.length ? `«${k.spring.anims.map((a) => a.name).join(", ")}»` : "(none named)"}` });
+    // H7-5 · the kick's spring, named (B-5: the kick stays reported)
+    const zeta = (sp) => { const r = sp.peak > 0 ? sp.dip / sp.peak : 0; return r > 0 ? -Math.log(r) / Math.sqrt(Math.PI ** 2 + Math.log(r) ** 2) : null; };
+    const named = (sp) => (sp.anims ?? []).filter((a) => a.kind === "CSSAnimation" || /^(transform|scale|all)$/.test(a.name));
+    const springOk = (sp) => named(sp).length > 0 && sp.peak >= 0.002 && sp.dip >= 0.0005;
+    const springLine = (sp) => `${sp.anims?.length ? sp.anims.map((a) => `${a.kind} «${a.name}» ${a.duration ?? "?"} ms, easing ${String(a.easing).replace(/\s+/g, " ").slice(0, 60)}${String(a.easing).length > 60 ? "…" : ""}`).join("; ") : "NO animation runs on the commit"} · traced: peak +${sp.peak.toFixed(4)} at ${f2(sp.peakAt)} ms, dip −${sp.dip.toFixed(4)} at ${f2(sp.dipAt)} ms, settle ${sp.settle.toFixed(4)} · ζ ${zeta(sp) === null ? "— (no bounce)" : `≈ ${zeta(sp).toFixed(2)}`} · median frame ${f2(sp.medianMs)} ms`;
+    let ks = k, rereads = [];
+    if (!springOk(ks.spring) && ks.spring.medianMs > 20) for (let i = 0; i < 2 && !springOk(ks.spring); i++) { ks = await kick(target, engine, kp, true); rereads.push(springOk(ks.spring)); }
+    cells.push({ gating: true, pass: springOk(ks.spring), line: `kick-spring · ${kp} · the commit's spring, named (reported with the kick, B-5) · ${springLine(ks.spring)}${springOk(ks.spring) ? " · an overshoot and a bounce under the settle" : !named(ks.spring).length ? " · NO named animation of the scale" : " · NO bounce: the commit lands without weight (D-1)"}${rereads.length ? ` · janky first read (median ${f2(k.spring.medianMs)} ms), re-read ${rereads.length}×: ${springOk(ks.spring) ? "NOT-REPRODUCED" : "REPRODUCED"}` : ""}` });
     const k0 = await kick(target, engine, kp, false);
     cells.push({ gating: false, pass: k0.push <= 0.05, line: `kick · ${kp} at the scene's own geometry · item 1 ${f2(k0.w)}×${f2(k0.h)}, rest gap ${f2(k0.gap)} px · peak scale ${k0.peak.toFixed(4)} · deepest push ${f2(k0.push)} px` });
     const mp = own("v2");

@@ -30,9 +30,18 @@ export const ATTACK_FAULTS = {
   // H6-4 · `none!` at option, reported against FV5-3's sentence (E-3; the cell is info, so the plant reads info-fail)
   "atk-bang-soft": { why: "H6-4 plant: the `none!` write lands without its `!important`, so the pin refuses it and the option reads unchanged: not the split FV5-3 states", witnesses: ["FACT"], family: "atk", expect: "info-fail", cell: /none! light/ },
   "atk-bang-ref": { why: "H6-4 CONTROL, must PASS with the reported cell info-pass: the clean page's `none!` paints the split FV5-3 states", witnesses: ["FACT"], family: "atk", expect: "pass", note: { chromium: /info-pass\s+none! light/, webkit: /info-pass\s+none! light/ } },
+  // H7 · the backlog's compositions (REGISTRY §P6-4: B-1, O-1, B-3)
+  "atk-foreign-writer": { why: "H7-1 plant (B-1, `crit-foreign-writer`): a rule outside the route writes the tile fact on a group by its ancestor, `.card > [role=radiogroup] { --selection-tile: flush }` in the base layer (the library's spelling is `.card > .toggle-group` in base.css): the pill group under the card turns into tiles", witnesses: ["FACT"], family: "atk", cell: /foreign-ancestor/ },
+  "atk-o1-pin": { why: "H7-2 plant (O-1): the floor's sentence says a strip's tabs are pills unless a rule of yours writes on the strip, but the strip pins its tabs (`.st-tab { --selection-tile: none !important }`), so the consumer's write is refused and the sentence is false", witnesses: ["FACT"], family: "atk", cell: /strip-write/ },
+  "atk-o1-always": { why: "H7-2 plant (O-1, floor v5's sentence): the floor says a strip's tabs are always pills while the consumer's write lands: the comment-truth cell is reported on this form, so it reads info-fail", witnesses: ["FACT"], family: "atk", expect: "info-fail", cell: /strip-write/ },
+  "atk-stm-nolimit": { why: "H7-3 plant (B-3): the reset and the pin's limit name the strip (`.st`) but not the responsive strip's mobile root (`.stm`): the tile option's fact reaches its trigger, whose plate the flush rule strips", witnesses: ["FACT"], family: "atk", cell: /mobile-in-tile/ },
   "atk-corner": { why: "H4-1 corner-refusal plant: the tile corner is a plain layered declaration, so a consumer utility, a scoped rule, an unlayered !important and an inline style each re-round the tile", witnesses: ["CORNER"], family: "atk", cell: /preset-migrated (utility|scoped|important|inline) / },
 };
 
+// H7-2 · the floor's sentence on strips, as the fixture's floor states it: O-1's ruled (a) (O-103) on the clean page; floor v5's
+// "always pills" on the atk-o1-always plant (the comment-truth cell is reported on that form)
+const FLOOR_A_STRIP = "THE TILE FACT — `--selection-tile`. Every group, and every SegmentedTabs strip, resets it to `none`, so a value on an ancestor of a group never reaches the group's options, and a strip's tabs are pills unless a rule of yours writes on the strip.";
+const FLOOR_V5_STRIP = "THE TILE FACT — `--selection-tile`. Every group, and every SegmentedTabs strip, resets it to `none`, so a value on an ancestor of a group never reaches the group's options, and a strip's tabs are always pills.";
 const PRESETS = [["smooth", "0.5 s · ζ 1"], ["snappy", "0.35 s · ζ 0.78"], ["bouncy", "0.5 s · ζ 0.5"], ["gentle", "0.7 s · ζ 0.95"]];
 const STATUSES = ["Any status", "Messaged", "Not messaged", "Seen", "Not seen"];
 const PALETTES = ["Dusk", "Moss", "Tide", "Clay"];
@@ -47,6 +56,9 @@ function matrixBody(params, fault = "") {
   const meta = (on) => (on ? '<span class="meta t-meta">0.5 s</span>' : "");
   // H6-3 · a SegmentedTabs-shaped strip (a `.pill-row` holder that is not a group); each tab carries two block rows
   const strip = (which) => `<div class="st" role="tablist" aria-label="Strip ${which}" data-mx-st="${which}">${["All", "Power", "Back", "Elastic"].map((l, k) => `<button type="button" class="st-tab pill-row" role="tab" aria-selected="${k === 0}"><span class="st-b">${l}</span><span class="st-b st-m">two</span></button>`).join("")}</div>`;
+  // H7-3 · a responsive strip below its breakpoint (SegmentedTabs' mobile root and its SelectTrigger, a `[data-state]`
+  // control whose plate the flush option's rule strips)
+  const mobile = (which) => `<div class="stm" data-mx-stm="${which}"><button type="button" class="stm-trigger ctl" role="combobox" aria-label="Responsive strip ${which}" data-state="closed"><span>All</span></button></div>`;
   const opt = (id, inner, extra = "") => `<div class="it" role="radio" aria-checked="false" data-mx-item="${id}"${extra}>${inner}</div>`;
   const kind = (k) => {
     const tile = k === "tile", t = tile ? "t" : "p";
@@ -56,11 +68,16 @@ function matrixBody(params, fault = "") {
         <div class="mx-wrap" data-mx-site="wrapper"${W("wrapper")}>${opt(`${t}b`, content("Snappy", "quick") + meta(tile))}</div>
         ${opt(`${t}c`, content("Bouncy", "lively") + `<div role="radiogroup" aria-label="Nested" class="g-row" data-mx-site="nested-group"${!tile ? " data-tile" : ""}${W("nested-group")}>${opt(`${t}n0`, content("Inner", "row") + meta(!tile), ` data-mx-site="nested-option"${W("nested-option")}`)}${opt(`${t}n1`, content("Other", "row") + meta(!tile))}</div>` + meta(tile))}
         ${opt(`${t}d`, content("Gentle", "soft") + strip(t) + meta(tile), ' style="grid-column: 1 / -1"')}
+        ${tile ? opt(`${t}e`, content("Steady", "even") + mobile(t) + meta(tile), ' style="grid-column: 1 / -1"') : ""}
       </div></div>`;
   };
   // the reference strip sits in a role=group wrapper: the fixture registers no fact, so the wrapper's reset gives it the
   // `none` the library's root gives it (`@property`'s initial value)
-  return `<div class="mx-both">${kind("tile")}${kind("pill")}<div role="group" aria-label="Reference">${strip("ref")}</div></div>`;
+  // H7-2 · a strip a consumer writes flush on (`.st-consumer`, unlayered); H7-3 · the reference responsive strip; H7-1 · a
+  // pill group whose parent is a card
+  const cf = strip("cf").replace('class="st"', 'class="st st-consumer"');
+  const card = `<div class="card mx-card"><div role="radiogroup" aria-label="Pills in a card" class="g-grid2">${opt("ca", content("Linear", "flat"))}${opt("cb", content("Eased", "curved"))}</div></div>`;
+  return `<div class="mx-both">${kind("tile")}${kind("pill")}<div role="group" aria-label="Reference">${strip("ref")}${cf}${mobile("ref")}</div>${card}</div>`;
 }
 
 export function attackFixturePage(params, fault = "", flavor = "dist") {
@@ -101,7 +118,7 @@ section { width: 460px; }
 .g-col { display: flex; flex-direction: column; gap: 6px; width: 220px; }
 .atk-split { display: flex; flex-direction: column; gap: 12px; } .atk-nest { grid-column: 1 / -1; }
 /* the fact: reset on every group, written by a declaration or by a filled anatomy slot */
-[data-group], [role=radiogroup], [role=group]${fault.startsWith("atk-st-noreset") ? "" : ", .st"} { --selection-tile: none; }
+[data-group], [role=radiogroup], [role=group]${fault.startsWith("atk-st-noreset") ? "" : ", .st"}${fault === "atk-stm-nolimit" ? "" : ", .stm"} { --selection-tile: none; }
 [data-tile] { --selection-tile: flush; }
 ${anatomy} { --selection-tile: flush; }
 .it { position: relative; appearance: none; font: inherit; color: inherit; box-sizing: border-box; min-block-size: var(--rung); padding: 8px 14px; margin: 0;
@@ -117,7 +134,7 @@ ${anatomy} { --selection-tile: flush; }
 /* H5-2 · the pin (floor v4, M-13): the option and its content carry their group's fact, bounded at a nested group */
 ${fault.startsWith("atk-nopin") ? "" : fault === "atk-unbounded" ? ":where(.it, .it *) { --selection-tile: inherit !important; }"
   : fault === "atk-optpin" ? ".it { --selection-tile: inherit !important; }"
-  : `@scope (.it) to ([data-group], [role=radiogroup], [role=group]${fault.startsWith("atk-st-noreset") ? "" : ", .st"}) { :scope, :scope * { --selection-tile: inherit !important; } }`}
+  : `@scope (.it) to ([data-group], [role=radiogroup], [role=group]${fault.startsWith("atk-st-noreset") ? "" : ", .st"}${fault === "atk-stm-nolimit" ? "" : ", .stm"}) { :scope, :scope * { --selection-tile: inherit !important; } }`}
 /* H6-3 · the strip (SegmentedTabs' shape): a track of tabs, each a one-row \`.pill-row\` holder (floor v5's FV5-2 reset
    is the \`.st\` in the reset and in the pin's limit above; the atk-st-noreset plant strikes both) */
 .st { display: flex; gap: 2px; padding: 3px; border: 1px solid var(--seam); border-radius: 9999px; inline-size: max-content; }
@@ -125,6 +142,13 @@ ${fault.startsWith("atk-nopin") ? "" : fault === "atk-unbounded" ? ":where(.it, 
 .st-tab { appearance: none; font: inherit; color: inherit; border: 0; background: none; padding: 0 10px; block-size: 30px; box-sizing: border-box; line-height: 30px; display: inline-block; white-space: nowrap; border-radius: 9999px; }
 .st-tab[aria-selected="true"] { background: var(--fill-on); }
 .st-b { display: block; } .st-m { font-size: 11px; }
+/* H7-3 · the mobile root and its trigger, a \`[data-state]\` control with a plate the flush option strips (control-surfaces.css) */
+.stm { inline-size: max-content; } .ctl { font: inherit; color: inherit; border: 1px solid var(--seam); border-radius: 9999px; padding: 0 12px; block-size: 32px; background: var(--fill-on); }
+@container style(--selection-tile: flush) { .ctl[data-state] { background: transparent; } }
+/* H7-1 · the card and the foreign writer the plant adds */
+.mx-card { width: 460px; padding: 8px; border: 1px solid var(--seam); border-radius: 12px; }
+${fault === "atk-foreign-writer" ? ".card > [role=radiogroup] { --selection-tile: flush; }" : ""}
+${fault === "atk-o1-pin" ? ".st-tab { --selection-tile: none !important; }" : ""}
 @container style(--selection-tile: none) { .pill-row * { display: inline !important; } }
 /* H5-2 · the floor's readers in the matrix, each at its own element, as floor v3 reads them: the pill's clamp at the
    option (its container is its parent), the label clip at the option's children (their container is the option), the
@@ -141,6 +165,8 @@ ${fault.startsWith("atk-nopin") ? "" : fault === "atk-unbounded" ? ":where(.it, 
 ${fault === "atk-split" ? `[data-tile] .it { ${geometry} }` : `@container not style(--selection-tile: none) { .it { ${geometry} } }`}
 }
 .sentinel { font: 12px system-ui; padding: 2px 6px; }
+/* H7-2 · a consumer's unlayered write on a strip (O-1) */
+.st-consumer { --selection-tile: flush; }
 `;
   const js = `
 const FAULT = ${JSON.stringify(fault)}, FLAVOR = ${JSON.stringify(flavor)}, DEV = FLAVOR === "src-dev";
@@ -175,6 +201,7 @@ if (DEV) for (const el of document.querySelectorAll(".mx-both .it")) {
 }
 window.__tile = { ready: false, dev: DEV, flavor: FLAVOR, scenes: ${JSON.stringify(ATTACK_SCENES.map((id) => ({ id })))}, scene: ${JSON.stringify(scene)}, exports: [],
   migration: { label: "fixture", attack: true, sites: ["preset", "specimen", "v2", "c1", "strip", "matrix"] },
+  floor: { tileFact: ${JSON.stringify(fault === "atk-o1-always" ? FLOOR_V5_STRIP : FLOOR_A_STRIP)} },
   async select(i) { if (RADIO) select(i === null ? -1 : i); }, selected: () => (current ? live().indexOf(current) : -1), async reorder() {} };
 requestAnimationFrame(() => requestAnimationFrame(() => { window.__tile.ready = true; }));
 `;

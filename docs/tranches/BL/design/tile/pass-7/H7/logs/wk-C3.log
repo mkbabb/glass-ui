@@ -1,0 +1,14 @@
+2026-10-20 19:25:18 · load { 41.83 33.85 31.12 }
+[guarded] waiting for the 'webkit' lock
+admitted · 2026-10-20 19:53:55 · load { 21.10 20.50 22.05 }
++zsh:1> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/selftest.mjs --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p7/h7/out/selftest --engines webkit --only T-5 --faults t5-multi,t5-consumer,t5-retired
+selftest · harness H7 6d6184295110 (43 files)
+OK     T-5  webkit   fault   t5-multi (N-of-M: Space on a focused tile does not toggle it) exit 1 · T-5 FAIL · 115/117 gating cells pass [library 78/79 · unmigrated 36/37 · migrated 37/38]
+         first planted FAIL: FAIL       v2 N-of-M Space toggles #0 · false → false → false
+OK     T-5  webkit   fault   t5-consumer (H3-12: a consumer role=option and tabindex=0 on every item override the engine: no radio, N tab stops) exit 1 · T-5 FAIL · 115/117 gating cells pass [library 77/79 · unmigrated 37/37 · migrated 38/38]
+         first planted FAIL: FAIL       preset-consumer-aria ARIA (Playwright aria snapshot + DOM states) · group radiogroup · items option · checked falsetruefalsefalse · pressed ---- · selected ----
+OK     T-5  webkit   fault   t5-retired (H3-10: semantics="toggle" falls through to the default with no signal) exit 1 · T-5 FAIL · 116/117 gating cells pass [library 78/79 · unmigrated 37/37 · migrated 38/38]
+         first planted FAIL: FAIL       tabs-retired retired value semantics="toggle" (flavor dist) · not refused (no console error, no throw): a silent fall-through
+selftest: 3 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
++zsh:1> true
+exit 0 · 2026-10-20 19:58:55 · load { 11.20 16.72 20.14 }

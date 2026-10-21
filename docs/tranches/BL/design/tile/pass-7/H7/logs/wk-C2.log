@@ -1,0 +1,12 @@
+2026-10-20 14:33:08 · load { 34.92 13.99 13.90 }
+[guarded] waiting for the 'webkit' lock
+[guarded] waiting for headroom (load 38 > 36)
+admitted · 2026-10-20 14:38:36 · load { 30.56 28.67 21.28 }
++zsh:1> node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/selftest.mjs --out /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p7/h7/out/selftest --engines webkit --only T-7
+selftest · harness H7 6d6184295110 (43 files)
+OK     T-7  webkit   clean exit 0 · T-7 PASS · 24/24 gating cells pass [unmigrated 0/24 · migrated 24/24]
+OK     T-7  webkit   fault   t7 (the migrated arm keeps the consumer's dashed outline on the tile) exit 1 · T-7 FAIL · 0/24 gating cells pass [unmigrated 0/24 · migrated 0/24]
+         first planted FAIL: FAIL       [migrated] preset-migrated vs its stripped twin · rest · outline-style: none → dashed; outline-width: 3px → 1px; outline-color: rgb(28, 25, 23) → rgba(0, 0, 0, 0); outline-offset: 0px → -1px
+selftest: 2 runs; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine
++zsh:1> true
+exit 0 · 2026-10-20 14:40:49 · load { 14.62 23.07 20.09 }

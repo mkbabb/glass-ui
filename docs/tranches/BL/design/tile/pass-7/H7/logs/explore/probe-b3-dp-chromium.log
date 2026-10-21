@@ -1,0 +1,18 @@
+2026-10-19 14:05:58 load { 42.11 57.95 39.99 }
+[guarded] waiting for headroom (load 42 > 36)
+B3PROBE · why the mobile root in a tile option is taller (H7 seat probe, info only)
+  target dp-atk-src (flavor src) · Chromium 149.0.7827.55 · harness H7 8537bcfa6f4f
+  load 29.27 / 51.64 / 38.87 at start, 29.27 / 51.64 / 38.87 at end · other headless browser processes at start: 21 (waited 0.3 s) · browser lock waited 0 s
+  info-pass  light · te option fact flush · flex · font 15.3px / line 22.95px · 431.84×98.69
+  info-pass  light · te mobile root («segmented-tabs__mobile w-fit») fact flush · block · font 15.3px / line 22.95px · 80.00×40.00 · its trigger fact flush · flex · font 15.3px / line 21.42px · 80.00×40.00
+  info-pass  light · reference mobile root fact none · block · font 17.42px / line 26.13px · 80.00×40.00 · its trigger fact none · flex · font 15.3px / line 21.42px · 80.00×40.00
+  info-pass  light · LEADING test: te root with the reference root's line-height (26.13px) reads 40.00 against the reference 40.00 · LEADING explains the height
+  info-pass  light · FACT test (trigger only): --selection-tile: none !important inline on te's trigger: root 40.00, trigger height 40.00
+  info-pass  dark · te option fact flush · flex · font 15.3px / line 22.95px · 431.84×98.69
+  info-pass  dark · te mobile root («segmented-tabs__mobile w-fit») fact flush · block · font 15.3px / line 22.95px · 80.00×40.00 · its trigger fact flush · flex · font 15.3px / line 21.42px · 80.00×40.00
+  info-pass  dark · reference mobile root fact none · block · font 17.42px / line 26.13px · 80.00×40.00 · its trigger fact none · flex · font 15.3px / line 21.42px · 80.00×40.00
+  info-pass  dark · LEADING test: te root with the reference root's line-height (26.13px) reads 40.00 against the reference 40.00 · LEADING explains the height
+  info-pass  dark · FACT test (trigger only): --selection-tile: none !important inline on te's trigger: root 40.00, trigger height 40.00
+B3PROBE FAIL · 0/0 gating cells pass
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p7/h7/out/runs/dp-atk-src/B3PROBE-chromium.json
+exit 1 2026-10-19 14:07:06 load { 29.56 51.33 38.84 }

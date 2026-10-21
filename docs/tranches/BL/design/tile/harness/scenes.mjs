@@ -388,7 +388,7 @@ const STATE_OPTS = {
   "preset-contents": { contents: true },
 };
 
-export function sceneApp(wt, nm, { familyModules = {}, migration = null, flavor = "src" } = {}) {
+export function sceneApp(wt, nm, { familyModules = {}, migration = null, flavor = "src", floor = null } = {}) {
   const famImports = Object.entries(familyModules)
     .map(([k, dir]) => `import * as fam_${k} from "@glass/components/${dir}";`).join("\n");
   const famExports = Object.keys(familyModules).map((k) => `...Object.keys(fam_${k})`).join(", ");
@@ -499,6 +499,9 @@ const LEVELS = ${JSON.stringify(LEVELS)};
 const PALETTES = ${JSON.stringify(PALETTES)};
 const STATUSES = ${JSON.stringify(STATUSES)};
 const MIGRATION = ${JSON.stringify(migration ? { label: migration.label, sites: Object.keys(mig) } : null)};
+// H7-2 · the floor's own words on the tile fact (build.mjs \`floorText\`: the registration comment in the worktree's
+// utilities/base.css, whitespace collapsed; null when the worktree has none). FACT reads its strip sentence against paint
+const FLOOR = ${JSON.stringify({ tileFact: floor })};
 const q = new URLSearchParams(location.search);
 const scene = q.get("scene") ?? "__index";
 const shape = q.get("shape") ?? "stadium";
@@ -550,6 +553,7 @@ const mx = (site: string) => (MX.v && !BANG && MX.w === site ? { "--selection-ti
   scenes: SCENES,
   scene,
   migration: MIGRATION,
+  floor: FLOOR,
   exports: (window as any).__tileExports ?? [],
   async select(i: number | null) {
     const v = valsNow();
