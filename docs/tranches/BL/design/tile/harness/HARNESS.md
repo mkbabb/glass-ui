@@ -1,11 +1,11 @@
-# D4 · the tile witness battery (H7, pass 7)
+# D4 · the tile witness battery (H8, pass 8)
 
 | field | value |
 |---|---|
 | seat | D4 pass 2, H2 seat, landed REGISTRY §3.2 rows H-1..H-11 over the pass-1 battery (T-1..T-8, W-A..W-E). D4 pass 3, H3 seat, landed REGISTRY §P2-6.2 rows H3-1..H3-13 in place (§2.2). D4 pass 4, H4 seat, landed REGISTRY §P3-6.2 rows H4-1..H4-6 in place (§2.3). D4 pass 5, H5 seat, landed REGISTRY §P4-6.2 rows H5-1..H5-6 in place (§2.4). D4 pass 6, H6 seat, landed REGISTRY §P5-6.2 rows H6-1..H6-4 in place and retired the pass-4 `canon-fact.mjs` forks (§2.5). D4 pass 7, H7 seat, landed the pass-6 backlog's instruments H7-1..H7-5 (REGISTRY §P6-4 B-1, O-1, B-3, B-4, B-5) in place (§2.6) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | engines | Chromium (Playwright's default headless shell; `channel: "chromium"` only when `BL_GPU_CHROME` is set, which no H7 run sets) and Playwright WebKit, from `glass-ui/node_modules/playwright`, headless, 1000×900 at DSF 2. Playwright WebKit is not Safari. Real Safari runs through `safari.mjs` (H-11), and every cell reads **UNMEASURED (owner's safaridriver checkbox)** until the owner ticks Develop ▸ Allow Remote Automation |
-| results | not here. The H7 self-test and the H7 cells read on floor v5 and on the rebased pass-6 D′ route (Q-13 ruled D′, O-103) are recorded once, in `../pass-7/H7.md`. The H6 self-test and the H6 cells read on both rebased pass-5 routes are recorded once, in `../pass-6/H6.md`. The H5 self-test and the H5 cells read on both pass-4 routes are recorded once, in `../pass-5/H5.md`. The self-test and the HEAD and HEAD + floor v2 baselines under H4 are recorded once, in `../pass-4/H4.md`; under H3, in `../pass-3/H3.md`; under H2, in `../pass-2/H2.md` (P-3). Every run JSON carries `harness.hash` (H3-10, H4-4): two tallies compare cell for cell only when their hashes match, and a route seat never edits this directory |
+| results | not here. The H8 read (SHEET `writers` widened, L-1) and its self-test are recorded once, in `../pass-8/H8.md`. The H7 self-test and the H7 cells read on floor v5 and on the rebased pass-6 D′ route (Q-13 ruled D′, O-103) are recorded once, in `../pass-7/H7.md`. The H6 self-test and the H6 cells read on both rebased pass-5 routes are recorded once, in `../pass-6/H6.md`. The H5 self-test and the H5 cells read on both pass-4 routes are recorded once, in `../pass-5/H5.md`. The self-test and the HEAD and HEAD + floor v2 baselines under H4 are recorded once, in `../pass-4/H4.md`; under H3, in `../pass-3/H3.md`; under H2, in `../pass-2/H2.md` (P-3). Every run JSON carries `harness.hash` (H3-10, H4-4): two tallies compare cell for cell only when their hashes match, and a route seat never edits this directory |
 
 ## 1 · What it is
 
@@ -244,7 +244,17 @@ H7 builds the pass-6 backlog's instruments (REGISTRY §P6-4) under the owner's 2
 | H7-4 (B-4) | `sheet.mjs` (SHEET `wrap`) | MIGRATION's `--selection-tile` bullet: every line within 88 columns, every break where a fill puts it (the next first word, a code span whole, does not fit) | SHEET `sh-ragged` |
 | H7-5 (B-5) | `report-h46.mjs` (`kick-spring`), `fixtures.mjs` | REPORT names the commit's spring beside the kick: the animations running on the committed tile at the commit's first frame (name, duration, easing), and the spring its frames trace on the forced read (peak over the settle, dip under it, ζ from their ratio). PASS when a scale animation is named and the frames overshoot and bounce; a janky failing read is re-read twice. The kick itself stays reported | `h47-spring-glide` (the pop glides back with no undershoot) |
 
-`lib.mjs` `HARNESS.rev` is `H7`. The route dir is `../pass-7/H7/routes/D4-Dp`: pass 6's one-line `MIGRATED("shape")` dir, its `route.json` now naming its `tileWriter`. Q-13 is ruled D′ (`audit/INBOUND.md` O-103), so pass 7 runs one route and F's directory is struck from pass 7; `sites.mjs` keeps `MIGRATED("anatomy")` because XSCRIPT's self-test and the pass-6 record read it.
+`lib.mjs` `HARNESS.rev` was `H7` (now `H8`, §2.7). The route dir is `../pass-7/H7/routes/D4-Dp`: pass 6's one-line `MIGRATED("shape")` dir, its `route.json` now naming its `tileWriter`. Q-13 is ruled D′ (`audit/INBOUND.md` O-103), so pass 7 runs one route and F's directory is struck from pass 7; `sites.mjs` keeps `MIGRATED("anatomy")` because XSCRIPT's self-test and the pass-6 record read it.
+
+### 2.7 · H8 (pass 8)
+
+H8 is H7 plus one read: SHEET `writers`, B-1's static half, widened by REGISTRY §P7-4 L-1 (`../pass-8/H8.md`). It adds no row (L-1 folds into R-10) and no cell; every other witness is byte-identical to H7, and `lib.mjs` changes only its `HARNESS.rev` label (`H7` → `H8`).
+
+| row | where | what the harness now does | plants and controls |
+|---|---|---|---|
+| H8-1 (L-1) | `sheet.mjs` (SHEET `writers`) | a write of `--selection-tile` is any value other than `none` or `inherit` (quotes and `!important` aside), not only the literals `flush` and `plated`. In `.vue` and `.ts` source, comments stripped, the name in a writing position (followed by `:` or `,`) is a write and its value is read to the declaration's end; a read (`getPropertyValue`, `var()`, a `style()` query) is not. So `var(--card-tile, flush)` in a sheet, a static `style="--selection-tile: plated"` and `setProperty("--selection-tile", on ? "flush" : "none")` each count | SHEET `sh-var`, `sh-static`, `sh-ternary` (the pass-7 critic's `crit-var-writer`, `crit-static-style`, `crit-ts-ternary`); control `sh-reads` (reads, `none`/`inherit` writes in code, a comment naming `--selection-tile: flush`) |
+
+The route's unit twin of this read is floor v6's sheet-wide case in `tests/components/ui/toggle-group/ToggleGroup.test.ts`, widened the same way in `../pass-8/D4-Dp8.patch`. The pass-8 route dir is `../pass-8/routes/D4-Dp8` (`MIGRATED("shape")` with C1 declaring `shape="cell"`, O-103c); its probes (`../pass-8/probes/c1-box.mjs`, `l3-bare.mjs`) are pass-8 artifacts, not harness cells.
 
 ## 3 · Notes for the route seats
 

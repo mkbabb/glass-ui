@@ -1,0 +1,13 @@
+2026-10-21 02:35:27 · load { 13.72 14.88 14.36 }
+C1BOX · C1 is a cell at rest and selected, and selection moves no box (O-103c's condition; pass-8 BUILD probe)
+  target dp8-dist (flavor dist) · Chromium 149.0.7827.55 · harness H8 4159e027cdcf
+  load 13.72 / 14.88 / 14.36 at start, 15.13 / 15.15 / 14.46 at end · other headless browser processes at start: 14 (waited 0.3 s) · browser lock waited 0 s
+  PASS       light · cell-both-states · 6 states (none, then each of 5 options selected; options on per state 0,1,1,1,1,1) · every option's corner and direction: 16px, column in every state
+  PASS       light · no-shift · options at rest 184.00×40.94, 184.00×67.88, 184.00×67.88, 184.00×67.88, 184.00×67.88; group 192.00×352.44 · each option rest vs its own selected (max of layout and settled box) 0.00 · 0.00 · 0.00 · 0.00 · 0.00 px · max deviation over every option and the group, every state 0.00 px · want ≤ 0.50 · settle waits 314/581/635/634/589/608 ms
+  PASS       dark · cell-both-states · 6 states (none, then each of 5 options selected; options on per state 0,1,1,1,1,1) · every option's corner and direction: 16px, column in every state
+  PASS       dark · no-shift · options at rest 184.00×40.94, 184.00×67.88, 184.00×67.88, 184.00×67.88, 184.00×67.88; group 192.00×352.44 · each option rest vs its own selected (max of layout and settled box) 0.00 · 0.00 · 0.00 · 0.00 · 0.00 px · max deviation over every option and the group, every state 0.00 px · want ≤ 0.50 · settle waits 363/578/578/579/579/578 ms
+  PASS       prt · cell-both-states · 6 states (none, then each of 5 options selected; options on per state 0,1,1,1,1,1) · every option's corner and direction: 16px, column in every state
+  PASS       prt · no-shift · options at rest 184.00×40.94, 184.00×67.88, 184.00×67.88, 184.00×67.88, 184.00×67.88; group 192.00×352.44 · each option rest vs its own selected (max of layout and settled box) 0.00 · 0.00 · 0.00 · 0.00 · 0.00 px · max deviation over every option and the group, every state 0.00 px · want ≤ 0.50 · settle waits 364/575/576/628/630/573 ms
+C1BOX PASS · 6/6 gating cells pass [library 6/6]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p8/build8/out/runs/dp8-dist/C1BOX-chromium.json
+exit 0 · 2026-10-21 02:35:40 · load { 15.13 15.15 14.46 }

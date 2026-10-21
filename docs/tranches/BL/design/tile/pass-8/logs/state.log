@@ -1,0 +1,31 @@
+2026-10-21 02:03:03 · load { 10.15 10.10 11.02 }
+HEAD 78fc8f3b8 · floor-v6.patch 09e74243 · D4-Dp8.patch b5f4ae22
+floor v6: 39 files, +1452 / -272
+D4-Dp8: 8 files, +461 / -52
+git diff HEAD 5d08df87ebbe · src dirty paths 27
+── every --selection-tile / --selection-paint line in src (comments included)
+src/components/toggle-group/ToggleGroupItem.vue:148:        const tile = getComputedStyle(b).getPropertyValue("--selection-tile").trim();
+src/components/toggle-group/shape.ts:4: * tile fact (`--selection-tile: flush`, styles.css), and the floor derives the tile's
+src/components/toggle-group/styles.css:1:/* THE SELECTION PAINT — `--selection-paint` (`auto` | `bare`, inherited), the tile
+src/components/toggle-group/styles.css:10:@property --selection-paint {
+src/components/toggle-group/styles.css:54:        --selection-tile: none;
+src/components/toggle-group/styles.css:56:        --selection-paint: auto;
+src/components/toggle-group/styles.css:75:        --selection-tile: flush;
+src/components/toggle-group/styles.css:79:       reads `--selection-tile` by a style query on the option, which reads the
+src/components/toggle-group/styles.css:90:            --selection-tile: inherit !important;
+src/components/toggle-group/styles.css:91:            --selection-paint: inherit !important;
+src/components/toggle-group/styles.css:156:    @container not style(--selection-paint: bare) {
+src/components/toggle-group/styles.css:166:    /* THE PILL IS ONE ROW (`--selection-tile: none`, base.css). A stadium whose
+src/components/toggle-group/styles.css:178:       A tile is none of these: the route that sets `--selection-tile` owns its
+src/components/toggle-group/styles.css:180:    @container style(--selection-tile: none) {
+src/components/toggle-group/styles.css:227:    /* THE TILE (`--selection-tile` other than `none`, base.css). Whatever writes the
+src/components/toggle-group/styles.css:245:    @container not style(--selection-tile: none) {
+src/components/toggle-group/styles.css:367:    @container not style(--selection-paint: bare) {
+src/components/tabs/styles/segmented.css:64:        --selection-tile: none;
+src/styles/utilities/base.css:51:   THE TILE FACT — `--selection-tile`, one value read by every rule that differs
+src/styles/utilities/base.css:65:@property --selection-tile {
+src/styles/utilities/base.css:89:       second row (ToggleGroupItem.vue). A tile (`--selection-tile` other than
+src/styles/utilities/base.css:91:    @container style(--selection-tile: none) {
+src/styles/glass/control-surfaces.css:95:       (`--selection-tile: flush`, utilities/base.css) paints no plate, no floor and no
+src/styles/glass/control-surfaces.css:103:    @container style(--selection-tile: flush) {
+exit 0 · 2026-10-21 02:03:03 · load { 10.15 10.10 11.02 }
