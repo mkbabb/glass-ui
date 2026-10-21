@@ -9,30 +9,49 @@ addendum 1). And value.js O-101, the dock's stale expanded endpoint (records: IN
 O-101, O-101a; `docs/tranches/BK/coordination/valuejs-outbound-2026-10-19-dock-stale-expanded-endpoint.md`).
 `MIGRATION.md` §10.1.2 says what a consumer with its own dock seats must do.
 
-- **An expand reserves the box it settles at (O-101).** The expanded endpoint
-  (`--dock-expanded-px`, which `[data-morphing]` reserves as the dock's inline size, or
-  block size on a vertical dock) was latched while the dock was expanded. A consumer
-  breakpoint that changed the full pane while the dock was collapsed left it at the old
-  pane's span, and the next expand reserved that. value.js measured a 508px dock at a
-  390px viewport, with the document scrolling for 51 to 386 frames until the morph
-  settled and snapped to 188. Now the morph arms after the patch (post-flush), and before
-  it sets `[data-morphing]` it measures the root. Read with no morph on it, the root lays
-  out as the settled expanded dock with the new pane, under whatever constrains it (a
-  host, a breakpoint, a fixed width). That border box is the endpoint the morph reserves.
-  This holds when the breakpoint expands the dock in the same render as the pane change
-  (value.js's shape) and when the expand comes later. The W7 guard stands: the pre-flush
-  posture flip still writes no endpoint. Nothing is clipped and no overflow is hidden.
-  Witnesses: unit `tests/components/custom/dock/dockMorphMeasure.test.ts` "the morph
-  reserves the expanded box of the pane patched in with the expand" (RED on 10.1.1: 592
-  reserved for 160). Engine: `tests-visual/release-10-1-2.spec.ts` "O-101 · the expanded
-  endpoint follows a pane changed while collapsed" (scene `stale-endpoint`: 12 seats at
-  768px and above, 3 below, the dock in flow), at 1440->390 and 390->1440, with the
-  expand in the breakpoint's render and after it. In Chromium and Playwright WebKit 2287
-  they assert that `--dock-expanded-px` on the first morphing frame equals the settled
-  `offsetWidth` (+-1 px), and that no sampled frame has `scrollWidth > clientWidth`. On
-  10.1.1 all four are RED in both engines: 592px reserved for a 160px dock at
-  1440->390, where the document reached `scrollWidth` 491 at `clientWidth` 390, and 160
-  reserved for 592 at 390->1440.
+- **A morph reserves the box it settles at, whenever the pane changes (O-101).** The
+  expanded endpoint (`--dock-expanded-px`, which `[data-morphing]` reserves as the dock's
+  inline size, or block size on a vertical dock) was latched while the dock was
+  expanded. A consumer breakpoint that changed the full pane while the dock was collapsed
+  left it at the old pane's span, and the next expand reserved that. value.js measured a
+  508px dock at a 390px viewport, with the document scrolling for 51 to 386 frames until
+  the morph settled and snapped to 188. A pane that changed while a morph was in flight
+  did the same: the measure skipped every capture under `[data-morphing]`.
+
+  Now neither endpoint is latched. `useDockExpandedSize` keeps one frame per posture, the
+  settled root's box less its active pane's natural span (padding, border, gaps, the
+  persistent regions, any slack a host adds), taken only from a root laid out at rest in
+  that posture. Every capture, collapsed, expanded or mid-morph, publishes frame plus the
+  pane's live natural span for both endpoints. The natural span is the pane laid out at
+  `max-content`, set inline and restored in the same task, because the pane's own box is
+  stretched (the inactive pane over the root, the expanded full pane to the box). A
+  ResizeObserver on the root, the layers, both panes and every pane's direct child, and
+  a MutationObserver on both panes, run the capture whenever the content changes, so the
+  endpoint follows the pane in either posture and retargets the reserved box during a
+  morph. The morph also measures when it arms, after the patch (post-flush): with no
+  morph in flight the root is read as the settled box of the posture it opens onto,
+  under whatever constrains it. The W7 guard stands: the pre-flush posture flip takes no
+  frame. Nothing is clipped, no overflow is hidden, and nothing is overridden.
+
+  Witnesses: unit `tests/components/custom/dock/dockMorphMeasure.test.ts`: "the morph
+  reserves the expanded box of the pane patched in with the expand", "re-bases the
+  expanded endpoint when the pane changes while collapsed", "retargets the reserved
+  endpoint when the pane changes mid-morph" and "a reversed morph reserves the expanded
+  box of the pane it opens onto". All are RED on 10.1.1. Engine:
+  `tests-visual/release-10-1-2.spec.ts` "O-101 · {horizontal, vertical} · {pinned,
+  collapsed, reversal, mid-expand}" (scene `stale-endpoint`: 12 seats at 768px and above,
+  3 below, the dock in flow; `?axis=vertical` for the vertical dock), each at 1440->390
+  and 390->1440, 16 cells per engine. `pinned` and `collapsed` change the pane while the
+  dock is collapsed and expand in the breakpoint's render or after it. They assert that
+  `--dock-expanded-px` on the first morphing frame equals the settled size (+-1 px).
+  `reversal` changes the pane 60 ms into a collapse and expands again. `mid-expand`
+  changes it 60 ms into an expand. They assert that every morphing frame after the change
+  reserves the settled size (+-1 px). Every cell asserts that no sampled frame has the
+  document scrolling on the morph axis. In Chromium and Playwright WebKit 2287 all 16 are
+  RED on 10.1.1: 592px reserved for a 160px dock at 1440->390, with the document at
+  `scrollWidth` 491 for `clientWidth` 390, 160 reserved for 592 at 390->1440, and 584
+  for 152 (and back) on the vertical dock. The `reversal` and `mid-expand` cells are RED
+  on the first 10.1.2 cure, which measured only when a morph armed with none in flight.
 
 - **The dock run roves only declared seats.** A direct child of the run is a seat when it
   carries `data-glass-dock-seat`. `DockControl` and `DockTrigger` set it, and so does
