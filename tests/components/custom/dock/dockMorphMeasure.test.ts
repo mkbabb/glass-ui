@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
-import { nextTick, ref } from "vue";
+import { computed, createApp, defineComponent, h, nextTick, ref } from "vue";
 import { useDockExpandedSize } from "@glass/components/dock/composables/dockMorphMeasure";
+import { useDockMorphOrchestrator } from "@glass/components/dock/composables/useDockMorph";
 import { mountComposable } from "../../../utils/mountComposable";
 
 function rect(width: number, height = 48): DOMRect {
@@ -167,5 +168,71 @@ describe("useDockExpandedSize", () => {
         expect(root.style.getPropertyValue("--dock-collapsed-px")).toBe("80px");
         unmount();
         vi.unstubAllGlobals();
+    });
+
+    // O-101 · DOCK-STALE-EXPANDED-ENDPOINT. The pane changes while the dock is
+    // collapsed, and the expand comes in the same render (value.js's breakpoint). The
+    // render function stands in for the DOM patch: the mock layout it writes is what a
+    // read after the patch sees. The arm must reserve the new pane's expanded box. RED
+    // on 10.1.1, which reserved the endpoint latched while the old pane was expanded.
+    it("the morph reserves the expanded box of the pane patched in with the expand", async () => {
+        const CHROME = 24;
+        const layout = { expanded: true, span: 568 };
+        const root = element(() => (layout.expanded ? CHROME + layout.span : 56));
+        const content = element(() => (layout.expanded ? layout.span : 40));
+        const full = element(() => (layout.expanded ? layout.span : 56));
+        const summary = element(40);
+        root.append(content);
+        const expanded = ref(true);
+        const wide = ref(true);
+        // Read when the morph arms: `onMorphActiveChange(true)` fires as `play` sets
+        // `[data-morphing]`, after the arm's measure.
+        let reserved = "";
+
+        const host = document.createElement("div");
+        document.body.append(host);
+        const app = createApp(
+            defineComponent({
+                setup() {
+                    const sized = useDockExpandedSize({
+                        rootEl: ref(root),
+                        contentEl: ref(content),
+                        expandedEl: ref(full),
+                        collapsedEl: ref(summary),
+                        axis: ref("horizontal"),
+                        expanded,
+                    }) as { measure?: () => void } | undefined;
+                    useDockMorphOrchestrator({
+                        rootEl: ref(root),
+                        outerActiveLayer: computed(() => (expanded.value ? "full" : "summary")),
+                        measure: () => sized?.measure?.(),
+                        onMorphActiveChange: (active) => {
+                            if (active) reserved = root.style.getPropertyValue("--dock-expanded-px");
+                        },
+                    });
+                    return () => {
+                        layout.expanded = expanded.value;
+                        layout.span = wide.value ? 568 : 136;
+                        return h("div");
+                    };
+                },
+            }),
+        );
+        app.mount(host);
+        expect(root.style.getPropertyValue("--dock-expanded-px")).toBe("592px");
+
+        expanded.value = false;
+        await nextTick();
+        root.removeAttribute("data-morphing");
+        await nextTick();
+
+        reserved = "";
+        wide.value = false;
+        expanded.value = true;
+        await nextTick();
+
+        expect(reserved, "the endpoint the armed morph reserves").toBe(`${CHROME + 136}px`);
+        app.unmount();
+        host.remove();
     });
 });

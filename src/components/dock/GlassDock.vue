@@ -192,8 +192,12 @@ provideDockContext({
    [2026-08-24 · BK #47 W7 MORPH] The endpoint-poisoning cure lives inside
    `dockMorphMeasure` — a posture flip no longer writes an endpoint from a root that has
    not laid out in that posture. Nothing is needed HERE: see the composable for why the
-   spec's proposed one-frame hold is the wrong mechanism for the right defect. */
-useDockExpandedSize({
+   spec's proposed one-frame hold is the wrong mechanism for the right defect.
+
+   [2026-10-21 · 10.1.2 · O-101] `measure` goes to the morph orchestrator below, which
+   calls it when it arms (post-flush, before `[data-morphing]`), so an expand reserves
+   the box of the pane it opens onto, not a span latched before the pane changed. */
+const { measure } = useDockExpandedSize({
     rootEl: dockEl,
     contentEl: layersEl,
     expandedEl: fullEl,
@@ -227,6 +231,7 @@ const {
     onMorphActiveChange: (active) => {
         isTransitioning.value = active;
     },
+    measure,
 });
 
 const summaryIsDisclosure = computed(() => outerCurrentLayer.value === "summary");

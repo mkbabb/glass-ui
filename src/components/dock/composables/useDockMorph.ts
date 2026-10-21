@@ -16,6 +16,11 @@ export interface UseDockMorphOrchestratorOptions {
     outerActiveLayer: Ref<string>;
     /** Notifies the shell when the spring arms and settles. */
     onMorphActiveChange?: (active: boolean) => void;
+    /**
+     * Measures the endpoints from the posture just patched in (`useDockExpandedSize`'s
+     * `measure`). Called when the morph arms, before `[data-morphing]` reserves one.
+     */
+    measure: () => void;
 }
 
 export interface UseDockMorphOrchestratorReturn {
@@ -86,22 +91,30 @@ export function useDockMorphOrchestrator(
         });
     }
 
-    const stop = watch(outerActiveLayer, (next, previous) => {
+    // The face swap is pre-flush, so the patch that follows carries it. The ARM is
+    // post-flush: by then the new posture and its content are in the DOM, and
+    // `measure` reads the root laid out in that posture before `[data-morphing]`
+    // reserves an endpoint (O-101). Both land before the frame paints.
+    const stopSwap = watch(outerActiveLayer, (next, previous) => {
         if (next === previous) return;
 
-        const element = root();
         currentLayer.value = next;
-        if (!element) {
-            leavingLayer.value = null;
-            return;
-        }
-
-        leavingLayer.value = previous;
-        play();
+        leavingLayer.value = root() ? previous : null;
     });
 
+    const stopArm = watch(
+        outerActiveLayer,
+        (next, previous) => {
+            if (next === previous || !root()) return;
+            options.measure();
+            play();
+        },
+        { flush: "post" },
+    );
+
     onUnmounted(() => {
-        stop();
+        stopSwap();
+        stopArm();
         dockSpring.dispose();
     });
 

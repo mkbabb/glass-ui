@@ -15,13 +15,25 @@ export interface UseDockExpandedSizeOptions {
     expanded: Ref<boolean>;
 }
 
+export interface UseDockExpandedSizeReturn {
+    /**
+     * Measure the posture the dock now names, from the root's own layout in it. The
+     * morph calls this when it arms, after the posture's DOM is patched and before
+     * `[data-morphing]` reserves an endpoint, so the endpoint it reserves is the box
+     * this expand settles at (O-101).
+     */
+    measure: () => void;
+}
+
 /**
  * Measure the dock's two rendered pane compositions. The inactive pane remains
  * laid out (visibility, never display, hides it), so the first morph can derive
  * both endpoints from real content—coarse controls bring their own 44px floor;
  * non-interactive visuals receive no invented one.
  */
-export function useDockExpandedSize(options: UseDockExpandedSizeOptions): void {
+export function useDockExpandedSize(
+    options: UseDockExpandedSizeOptions,
+): UseDockExpandedSizeReturn {
     const { rootEl, contentEl, expandedEl, collapsedEl, axis, expanded } = options;
     let observer: ResizeObserver | null = null;
     let expandedPx = 0;
@@ -30,8 +42,9 @@ export function useDockExpandedSize(options: UseDockExpandedSizeOptions): void {
 
     /**
      * `"layout"` — the root has actually laid out in the posture `expanded` names, so
-     * its border box IS that posture's endpoint. Only a ResizeObserver callback and the
-     * initial attach can claim this.
+     * its border box IS that posture's endpoint. Only a ResizeObserver callback, the
+     * initial attach and the morph's arm (`measure`, which runs after the posture's DOM
+     * is patched, so reading the root lays it out in that posture) can claim this.
      *
      * `"flip"` — the posture ref just changed and NOTHING has re-laid out yet.
      */
@@ -81,7 +94,27 @@ export function useDockExpandedSize(options: UseDockExpandedSizeOptions): void {
            Nothing is masked by this: the fallback path below (`chrome + fullSize`)
            reads the FULL PANE'S OWN rendered span, which is real from mount because the
            inactive pane stays laid out under `visibility`. The old flip write was
-           strictly worse than the fallback it overrode. */
+           strictly worse than the fallback it overrode.
+
+           [2026-10-21 · 10.1.2 · O-101 DOCK-STALE-EXPANDED-ENDPOINT] ~~The expanded
+           endpoint is latched by a `"layout"` capture taken while expanded, and that
+           latch is what every later expand reserves.~~ A latch outlives the content
+           it measured: a consumer breakpoint that changed the full pane while the dock
+           was collapsed left `--dock-expanded-px` at the old pane's span, and the next
+           expand reserved it (value.js: 508px reserved at a 390px viewport, the
+           document scrolling for ~380 frames, then a snap to 188). The breakpoint
+           often expands the dock in the same render, so the morph arms before any
+           collapsed re-layout reaches the ResizeObserver; no capture before the arm
+           sees the new pane. And no derivation from the collapsed geometry is the
+           expanded box: a host that constrains the dock, or a fixed width, makes the
+           expanded span something other than chrome plus the pane's natural span.
+
+           So the expand measures its own endpoint. The morph arms after the patch
+           (useDockMorph) and calls `measure` first: the root, read with no
+           `[data-morphing]` on it, lays out as the settled expanded dock with the
+           new pane, and that border box is the endpoint the morph reserves. This is
+           a `"layout"` capture in the W7 sense, a root whose posture and size agree;
+           the pre-flush `"flip"` capture above still writes no endpoint. */
         if (source === "layout") {
             if (expanded.value) expandedPx = rootSize;
             else collapsedPx = rootSize;
@@ -139,4 +172,6 @@ export function useDockExpandedSize(options: UseDockExpandedSizeOptions): void {
         observer?.disconnect();
         observer = null;
     });
+
+    return { measure: () => capture("layout") };
 }
