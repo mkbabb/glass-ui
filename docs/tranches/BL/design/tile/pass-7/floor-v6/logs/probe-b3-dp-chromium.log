@@ -1,0 +1,21 @@
+2026-10-20 21:21:59 · load { 36.70 34.73 31.12 }
+[guarded] waiting for headroom (load 37 > 36)
+admitted · 2026-10-20 21:22:30 · load { 35.18 34.55 31.18 }
+B3PROBE · why the mobile root in a tile option is taller (H7 seat probe, info only)
+  target dp-atk-src (flavor src) · Chromium 149.0.7827.55 · harness H7 6d6184295110
+  load 35.18 / 34.55 / 31.18 at start, 34.69 / 34.46 / 31.17 at end · other headless browser processes at start: 13 (waited 0.5 s) · browser lock waited 0 s
+  info-pass  light · te option fact flush · flex · font 15.3px / line 22.95px · 431.84×98.69
+  info-pass  light · te mobile root («segmented-tabs__mobile w-fit») fact flush · block · font 15.3px / line 22.95px · 80.00×40.00 · its trigger fact flush · flex · font 15.3px / line 21.42px · 80.00×40.00
+  info-pass  light · reference mobile root fact none · block · font 17.42px / line 26.13px · 80.00×40.00 · its trigger fact none · flex · font 15.3px / line 21.42px · 80.00×40.00
+  info-pass  light · the trigger's children, te: span flow-root @13.00,9.30 17.86×21.41 | svg block @51.00,12.00 16.00×16.00 · reference: span flow-root @13.00,9.30 17.86×21.41 | svg block @51.00,12.00 16.00×16.00 · the same layout
+  info-pass  light · LEADING test: te root with the reference root's line-height (26.13px) reads 40.00 against the reference 40.00 · LEADING explains the height
+  info-pass  light · FACT test (trigger only): --selection-tile: none !important inline on te's trigger: root 40.00, trigger height 40.00
+  info-pass  dark · te option fact flush · flex · font 15.3px / line 22.95px · 431.84×98.69
+  info-pass  dark · te mobile root («segmented-tabs__mobile w-fit») fact flush · block · font 15.3px / line 22.95px · 80.00×40.00 · its trigger fact flush · flex · font 15.3px / line 21.42px · 80.00×40.00
+  info-pass  dark · reference mobile root fact none · block · font 17.42px / line 26.13px · 80.00×40.00 · its trigger fact none · flex · font 15.3px / line 21.42px · 80.00×40.00
+  info-pass  dark · the trigger's children, te: span flow-root @13.00,9.30 17.86×21.41 | svg block @51.00,12.00 16.00×16.00 · reference: span flow-root @13.00,9.30 17.86×21.41 | svg block @51.00,12.00 16.00×16.00 · the same layout
+  info-pass  dark · LEADING test: te root with the reference root's line-height (26.13px) reads 40.00 against the reference 40.00 · LEADING explains the height
+  info-pass  dark · FACT test (trigger only): --selection-tile: none !important inline on te's trigger: root 40.00, trigger height 40.00
+B3PROBE FAIL · 0/0 gating cells pass
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p7/floor6/out/runs/dp-atk-src/B3PROBE-chromium.json
+exit 1 · 2026-10-20 21:22:38 · load { 33.91 34.30 31.13 }

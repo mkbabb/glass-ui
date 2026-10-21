@@ -1,0 +1,41 @@
+2026-10-20 20:07:32 · load { 13.44 13.23 16.45 }
++zsh:3> git apply -R --check /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp.patch
++zsh:4> git apply -R --check /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/floor-v6.patch
++zsh:4> git apply -R /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/floor-v6.patch
++zsh:5> git diff HEAD --binary
++zsh:5> wc -c
++zsh:5> tr -d ' '
++zsh:5> git status --porcelain
++zsh:5> wc -l
++zsh:5> tr -d ' '
++zsh:5> echo 'HEAD 8799da564 tree: git diff HEAD 0 bytes; untracked 1'
+HEAD 8799da564 tree: git diff HEAD 0 bytes; untracked 1
++zsh:6> git apply --check /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/floor-v6.patch
++zsh:6> echo 'floor-v6.patch: apply --check clean on HEAD'
+floor-v6.patch: apply --check clean on HEAD
++zsh:6> git apply /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/floor-v6.patch
++zsh:7> git apply --check /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp.patch
++zsh:7> echo 'D4-Dp.patch (pass 7): apply --check clean on HEAD + floor v6'
+D4-Dp.patch (pass 7): apply --check clean on HEAD + floor v6
++zsh:7> git apply /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp.patch
++zsh:8> git apply --check -R /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/D4-Dp.patch
++zsh:8> tail -1
+error: MIGRATION.md: patch does not apply
++zsh:8> true
++zsh:9> shasum /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/floor-v6.patch /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp.patch /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5.patch /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/D4-Dp.patch
+58b37674d366e477cce301071cded9c7452c0ddb  /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/floor-v6.patch
+714cd3c0dbd49de4f17cea52ee0a4488abcd4f27  /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp.patch
+de0189668f6578dda1c8ab3ef5eee9e7947d19ab  /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/floor-v5.patch
+0046d3a636e713414702669ce7b0adcee8c055ff  /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-6/D4-Dp.patch
++zsh:10> git apply --numstat /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/floor-v6.patch
++zsh:10> awk '{a+=$1; d+=$2; n++} END {print "floor v6: "n" files, +"a" / -"d}'
+floor v6: 39 files, +1451 / -272
++zsh:11> git apply --numstat /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/pass-7/D4-Dp.patch
++zsh:11> awk '{a+=$1; d+=$2; n++} END {print "D4-Dp: "n" files, +"a" / -"d}'
+D4-Dp: 8 files, +306 / -25
++zsh:12> git diff HEAD --binary
++zsh:12> shasum
++zsh:12> cut -c1-12
++zsh:12> echo 'state dp · git diff HEAD b0040224a755'
+state dp · git diff HEAD b0040224a755
+exit 0 · 2026-10-20 20:07:33 · load { 13.44 13.23 16.45 }

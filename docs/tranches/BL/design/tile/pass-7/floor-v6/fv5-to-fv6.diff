@@ -1,0 +1,196 @@
+diff --git a/MIGRATION.md b/MIGRATION.md
+index 38ce40da3..a348495bb 100644
+--- a/MIGRATION.md
++++ b/MIGRATION.md
+@@ -46,8 +46,7 @@ one-tab-stop radio group (`option` inside a `radiogroup`, one stop per item); it
+ dropped, in production as in development. In a `type="multiple"` group the option's role
+ is its button's own, so a consumer `role` is dropped there too. Every other attribute
+ (class, style, `data-*`, `aria-label`, `title`, listeners) still lands on the button.
+-Delete the five. Detector: in a development build, `[ToggleGroupItem] value=… sets role,
+-tabindex: the group's engine owns an option's role, state and tab stop …`;
++Delete the five. Detector:
+ `rg 'ToggleGroupItem[^>]*(role=|tabindex=|aria-(checked|pressed|selected)=)'`.
+ 
+ _Behaviour and paint, nothing to change_
+@@ -73,14 +72,9 @@ _Behaviour and paint, nothing to change_
+   `inline-flex` runs inline, so its `gap` no longer spaces its children. Three things
+   keep their own display: a `Badge`, which sits on the row as one inline box; an
+   element hidden by the `hidden` attribute, by `v-show` or by the `hidden` utility;
+-  and an inline `display: … !important`, the one spelling that outranks the row. In a
+-  development build of your app a `ToggleGroupItem` whose content asks for a second
+-  row (a `<br>`, content past the rung, or text painted on two rows inside it), or
+-  holds an interactive element, logs `[ToggleGroupItem] value=… asks for a second row
+-  …` or `… holds an interactive descendant …`, at mount and whenever its content, its
+-  classes or its inline styles change; a production build logs nothing. These checks
+-  read `process.env.NODE_ENV`, which your bundler resolves (Vite and webpack do by
+-  default).
++  and an inline `display: … !important`, the one spelling that outranks the row. The
++  row refuses a second row by layout alone, and the library you install logs nothing
++  about it, in a development build of your app or a production one.
+ - `--selection-tile` (`none` | `flush` | `plated`, inherited) says whether a set of
+   options are tiles. It is `none` on every `ToggleGroup`, and nothing in the library
+   sets it yet. A value takes effect on the group element, or on an element between the
+@@ -91,17 +85,17 @@ _Behaviour and paint, nothing to change_
+   `--selection-tile: … !important` on an option outranks that, and it does not opt the
+   option out: it splits it. The option keeps the corner and the column of the value
+   above it, which read the value on the option's parent, while its clip and the one-row
+-  law, which read the option's own value, follow the inline write. Under either tile value an option is a
+-  card, whatever wrote the value:
+-  it is not held to one row, and it takes the field corner (16px), a column,
+-  start-aligned text at body leading, the card pad (`--space-atom` block,
+-  `--space-body` inline; `sm` `--space-residue` / `--space-atom`), the height of the
+-  tallest option in its row, and its selected perimeter. A corner you give a tile by a
+-  `rounded-*` utility, a scoped or unlayered rule, or an unlayered `!important` has no
+-  effect; only an inline `border-radius: … !important` changes it. Under `flush` an
+-  option also paints no plate, floor or blur at rest. A `ToggleGroup` nested inside a
+-  tile is pills again (every group resets the value), and so is a `SegmentedTabs` strip
+-  inside one (every strip resets it too).
++  law, which read the option's own value, follow the inline write. Under either tile
++  value an option is a card, whatever wrote the value: it is not held to one row, and it
++  takes the field corner (16px), a column, start-aligned text at body leading, the card
++  pad (`--space-atom` block, `--space-body` inline; `sm` `--space-residue` /
++  `--space-atom`), the height of the tallest option in its row, and its selected
++  perimeter. A corner you give a tile by a `rounded-*` utility, a scoped or unlayered
++  rule, or an unlayered `!important` has no effect; only an inline
++  `border-radius: … !important` changes it. Under `flush` an option also paints no
++  plate, floor or blur at rest. A `ToggleGroup` nested inside a tile is pills again
++  (every group resets the value), and so is a `SegmentedTabs` strip inside one (every
++  strip resets it too).
+ - The selected perimeter of a `ToggleGroup` item paints inside its 1px border instead
+   of straddling it, so paint containment (`content-visibility: auto`, the pill's own
+   clip) keeps all 2px of it.
+diff --git a/src/components/toggle-group/ToggleGroupItem.vue b/src/components/toggle-group/ToggleGroupItem.vue
+index 410d40bb6..16312d463 100644
+--- a/src/components/toggle-group/ToggleGroupItem.vue
++++ b/src/components/toggle-group/ToggleGroupItem.vue
+@@ -109,10 +109,10 @@ function onAnimationEnd(event: AnimationEvent) {
+  * descendant stays the descendant's (the engine), and the engine's role, state and
+  * tab stop stand over a consumer's (`bound`). None of them says anything, so in
+  * development the item names each, at mount and again whenever its content changes.
+- * The gate is `process.env.NODE_ENV`, which the library build leaves in place and the
+- * consumer's bundler resolves, so a consumer's development build hears these and its
+- * production build drops them (Q-5 (d), without a `development` export condition). */
+-if (process.env.NODE_ENV !== "production") {
++ * The gate is `import.meta.env.DEV`, as every development check in the library: the
++ * library build drops the branch, so what a consumer installs refuses by structure
++ * alone and names nothing. */
++if (import.meta.env.DEV) {
+     let watcher: MutationObserver | null = null;
+     let queued = 0;
+     const said = new Set<string>();
+diff --git a/src/styles/glass/control-surfaces.css b/src/styles/glass/control-surfaces.css
+index cebf19a5a..00f1512e3 100644
+--- a/src/styles/glass/control-surfaces.css
++++ b/src/styles/glass/control-surfaces.css
+@@ -91,14 +91,17 @@
+         }
+     }
+ 
+-    /* THE FLUSH OPTION (Q-2 (b), the default until the owner rules). An option among
+-       tiles on a host's plate (`--selection-tile: flush`, utilities/base.css) paints no
+-       plate, no floor and no blur at rest, so the set reads as options on one card
+-       rather than slabs on a slab; `plated` keeps all three. The hover above outranks
+-       this and still paints the plate's layer, and the option's selected state (a tint
+-       and a perimeter) is its own. `[data-state]` is what makes a control an option. */
++    /* THE FLUSH OPTION (Q-2 (b)). An option among tiles on a host's plate
++       (`--selection-tile: flush`, utilities/base.css) paints no plate, no floor and no
++       blur at rest, so the set reads as options on one card rather than slabs on a
++       slab; `plated` keeps all three. The hover above outranks this and still paints
++       the plate's layer, and the option's selected state (a tint and a perimeter) is
++       its own. The rule names the option itself: a control inside an option (a Select,
++       a switch, a responsive strip's trigger) inherits the fact and carries
++       `[data-state]` too, and keeps its own plate. The option is named in a `:where()`,
++       so the rule stays below the hover's specificity. */
+     @container style(--selection-tile: flush) {
+-        .control-surface[data-state] {
++        .control-surface[data-state]:where(.toggle-group__item) {
+             --glass-defined-plate: transparent;
+             --glass-floor-fill: transparent;
+             backdrop-filter: none;
+diff --git a/src/styles/utilities/base.css b/src/styles/utilities/base.css
+index 2d842e909..3c21e89f8 100644
+--- a/src/styles/utilities/base.css
++++ b/src/styles/utilities/base.css
+@@ -54,13 +54,13 @@
+    `none` is a pill. `flush` and `plated` are a tile: a tile route sets one of them,
+    once, on the group, and nothing else declares that an option is a tile. Every
+    group, and every SegmentedTabs strip, resets it to `none`, so a value on an
+-   ancestor of a group never reaches the group's options, and a strip's tabs are
+-   always pills. An option and everything inside it inherit the value above the
+-   option and cannot write their own (the pin in toggle-group/styles.css), so each
+-   option has one value, and every reader reads that one: the pill's one-row law
+-   below and in toggle-group/styles.css, the tile's plate (`flush` paints no plate at
+-   rest, Q-2 (b); `plated` keeps the control plate), the selected perimeter, and the
+-   development names in ToggleGroupItem.vue.
++   ancestor of a group never reaches the group's options, and a strip's tabs are pills
++   unless a rule of yours writes the fact on the strip. An option and everything inside
++   it inherit the value above the option and cannot write their own (the pin in
++   toggle-group/styles.css), so each option has one value, and every reader reads that
++   one: the pill's one-row law below and in toggle-group/styles.css, the tile's plate
++   (`flush` paints no plate at rest, Q-2 (b); `plated` keeps the control plate), the
++   selected perimeter, and the development names in ToggleGroupItem.vue.
+    ═══════════════════════════════════════════════ */
+ @property --selection-tile {
+     syntax: "none | flush | plated";
+diff --git a/tests/components/ui/toggle-group/ToggleGroup.test.ts b/tests/components/ui/toggle-group/ToggleGroup.test.ts
+index 15951ab07..a694c9799 100644
+--- a/tests/components/ui/toggle-group/ToggleGroup.test.ts
++++ b/tests/components/ui/toggle-group/ToggleGroup.test.ts
+@@ -624,3 +624,57 @@ describe("floor v2 — the commit, the names and the tile fact", () => {
+         expect(peak).toContain("max(var(--motion-weight), 0.618)");
+     });
+ });
++
++/* R-10 · "IS A TILE" IS WRITTEN IN ONE SHEET, BY ONE RULE (B-1). The units above read the
++ * lane sheet, so a second writer of the tile fact in another sheet (`.card > .toggle-group
++ * { --selection-tile: flush }` in base.css) passed every one of them. This case reads all
++ * of `src`: every stylesheet, every `.vue` `<style>` block, and every other spelling of a
++ * write in `.vue` and `.ts` source (a style binding, a `setProperty`, a utility). A tile
++ * value is written in the lane sheet only, by one rule at most: the route's, which the
++ * route's own unit names. */
++describe("floor v6 — one writer of the tile fact, sheet-wide", () => {
++    it("every --selection-tile: flush | plated in src is the lane sheet's one rule", async () => {
++        const postcss = (await import("postcss")).default;
++        const { readdirSync } = await import("node:fs");
++        const files = (dir: string): string[] =>
++            readdirSync(resolve(ROOT, dir), { withFileTypes: true }).flatMap((d) =>
++                d.isDirectory() ? files(`${dir}/${d.name}`) : /\.(css|vue|ts)$/.test(d.name) ? [`${dir}/${d.name}`] : [],
++            );
++        const TILE = /^(flush|plated)$/;
++        const writers: string[] = [];
++        for (const file of files("src")) {
++            const text = read(file);
++            if (!text.includes("--selection-tile")) continue;
++            const styles = file.endsWith(".css")
++                ? [text]
++                : [...text.matchAll(/<style\b[^>]*>([^]*?)<\/style>/g)].map((m) => m[1]);
++            for (const css of styles)
++                postcss.parse(css).walkDecls("--selection-tile", (d) => {
++                    if (TILE.test(d.value.replace(/!important/, "").trim()))
++                        writers.push(`${file} ${(d.parent as { selector?: string }).selector?.replace(/\s+/g, " ")}`);
++                });
++            const code = file.endsWith(".css") ? "" : text.replace(/<style\b[^>]*>[^]*?<\/style>/g, "");
++            for (const m of code.matchAll(
++                /["'`]?--selection-tile["'`]?\s*[:,]\s*["'`]\s*(flush|plated)\b|\[--selection-tile:\s*(flush|plated)\]/g,
++            ))
++                writers.push(`${file} «${m[0]}»`);
++        }
++        expect(writers.filter((w) => !w.startsWith(`${LANE_SHEET} `))).toEqual([]);
++        expect(writers.length).toBeLessThanOrEqual(1);
++    });
++
++    /* B-3 · a control inside a tile option (a Select, a switch, a responsive strip's
++     * trigger) inherits the option's fact and carries `[data-state]` too. The flush plate
++     * rule names the option itself, so that control keeps its own plate. */
++    it("the flush plate rule names the option, not every control inside it", async () => {
++        const postcss = (await import("postcss")).default;
++        const flush: string[] = [];
++        postcss.parse(read("src/styles/glass/control-surfaces.css")).walkAtRules("container", (q) => {
++            if (/style\(--selection-tile:\s*flush\)/.test(q.params))
++                q.walkRules((r) => {
++                    flush.push(r.selector.replace(/\s+/g, " "));
++                });
++        });
++        expect(flush).toEqual([".control-surface[data-state]:where(.toggle-group__item)"]);
++    });
++});

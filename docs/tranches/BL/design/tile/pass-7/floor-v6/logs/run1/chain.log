@@ -1,0 +1,46 @@
+=== chain 2026-10-20 20:07:32
+2026-10-20 20:07:32 · load { 13.44 13.23 16.45 } · start check
+2026-10-20 20:07:33 · load { 13.44 13.23 16.45 } · exit 0 check
+2026-10-20 20:07:33 · load { 13.44 13.23 16.45 } · start state fv6
+2026-10-20 20:07:33 · load { 13.44 13.23 16.45 } · exit 0 state fv6
+2026-10-20 20:07:33 · load { 13.44 13.23 16.45 } · start sheet fv6
+2026-10-20 20:07:38 · load { 13.57 13.26 16.44 } · exit 0 sheet fv6
+2026-10-20 20:07:38 · load { 13.57 13.26 16.44 } · start tsc fv6
+2026-10-20 20:08:07 · load { 18.42 14.45 16.76 } · exit 0 tsc fv6
+2026-10-20 20:08:07 · load { 18.42 14.45 16.76 } · start unit fv6
+2026-10-20 20:10:07 · load { 33.37 21.38 19.20 } · exit 0 unit fv6
+2026-10-20 20:10:07 · load { 33.37 21.38 19.20 } · start build fv6
+2026-10-20 20:10:27 · load { 33.61 22.22 19.55 } · exit 0 build fv6
+2026-10-20 20:10:27 · load { 33.61 22.22 19.55 } · start plant fv6
+2026-10-20 20:10:39 · load { 29.83 21.78 19.42 } · exit 0 plant fv6
+2026-10-20 20:10:39 · load { 29.83 21.78 19.42 } · start state dp
+2026-10-20 20:10:39 · load { 29.83 21.78 19.42 } · exit 0 state dp
+2026-10-20 20:10:39 · load { 29.83 21.78 19.42 } · start sheet dp
+2026-10-20 20:10:43 · load { 29.44 21.83 19.46 } · exit 0 sheet dp
+2026-10-20 20:10:43 · load { 29.44 21.83 19.46 } · start tsc dp
+2026-10-20 20:11:07 · load { 28.97 22.34 19.71 } · exit 0 tsc dp
+2026-10-20 20:11:07 · load { 28.97 22.34 19.71 } · start libbuild dp
+2026-10-20 20:11:20 · load { 28.00 22.35 19.74 } · exit 0 libbuild dp
+2026-10-20 20:11:20 · load { 28.00 22.35 19.74 } · start unit dp
+2026-10-20 20:12:52 · load { 20.95 21.81 19.83 } · exit 0 unit dp
+2026-10-20 20:12:52 · load { 20.95 21.81 19.83 } · start unit-plants
+2026-10-20 20:13:28 · load { 21.51 21.86 19.93 } · exit 0 unit-plants
+2026-10-20 20:13:28 · load { 21.51 21.86 19.93 } · start build dp
+2026-10-20 20:13:55 · load { 22.17 21.94 20.01 } · exit 0 build dp
+2026-10-20 20:13:55 · load { 22.17 21.94 20.01 } · start plant dp
+2026-10-20 20:14:06 · load { 24.39 22.41 20.21 } · exit 0 plant dp
+2026-10-20 20:14:06 · load { 24.39 22.41 20.21 } · start reads fv6 chromium
+2026-10-20 20:33:41 · load { 19.35 15.96 16.11 } · exit 0 reads fv6 chromium
+2026-10-20 20:33:41 · load { 19.35 15.96 16.11 } · start reads dp chromium
+2026-10-20 20:40:20 · load { 15.68 18.44 17.57 } · exit 0 reads dp chromium
+2026-10-20 20:40:20 · load { 15.68 18.44 17.57 } · start probe dp chromium
+2026-10-20 20:40:26 · load { 15.87 18.43 17.57 } · exit 0 probe dp chromium
+2026-10-20 20:40:26 · load { 15.87 18.43 17.57 } · start battery dp chromium
+2026-10-20 20:55:33 · load { 21.21 15.83 15.90 } · exit 0 battery dp chromium
+=== chain part 1 done 2026-10-20 20:55:33
+2026-10-20 20:55:33 · load { 21.21 15.83 15.90 } · start wk A reads:fv6 reads:dp probe:dp
+2026-10-20 20:56:15 · load { 31.56 19.22 17.14 } · exit 0 wk A reads:fv6 reads:dp probe:dp
+2026-10-20 20:56:15 · load { 31.56 19.22 17.14 } · start wk B battery:dp
+2026-10-20 20:56:18 · load { 32.31 19.58 17.28 } · STOPPED by the seat before admission: T-6 migrated hover-light 9 FAIL on the battery traced to FV6-3's specificity (the narrowed flush rule outranks the hover); hold A never admitted, chain2 never started
+2026-10-20 20:56:24 · load { 33.97 20.14 17.49 } · exit 0 wk B battery:dp
+=== CHAIN-DONE 2026-10-20 20:56:24
