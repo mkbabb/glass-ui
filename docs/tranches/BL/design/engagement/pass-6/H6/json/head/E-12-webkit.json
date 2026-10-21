@@ -1,0 +1,397 @@
+{
+ "id": "E-12",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p6/H6/out/builds/head"
+ },
+ "loadStart": "16.3/13.2/11.0",
+ "loadEnd": "29.4/17.2/14.5",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-12 capsule fc-reach fine",
+   "status": "PASS",
+   "line": "1 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "16.3/13.2/11.0"
+  },
+  {
+   "name": "E-12 capsule fc-reach coarse",
+   "status": "PASS",
+   "line": "1 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area)",
+   "load": "16.3/13.2/11.0"
+  },
+  {
+   "name": "E-12 capsule composers rendered",
+   "status": "PASS",
+   "line": "6 composer directories of .glass-capsule-hover outside dock/ in /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p6/H6/wt: button (src/components/button/Button.vue:121), chip (src/components/chip/chipVariants.ts:6), configurator (src/components/configurator/Configurator.vue:430), select (src/components/select/SelectTrigger.vue:42 +1), tabs (src/components/tabs/SegmentedTabs.vue:81), toggle-group (src/components/toggle-group/ToggleGroupItem.vue:84) · dock/ (D2's fence, not read): 1 line(s) · the scene renders: configurator yes ([data-t=\"cap-configurator\"] .configurator-preset-chip:not(.is-active)), button yes ([data-t=\"cap-button\"] .button), chip yes ([data-t=\"cap-chip\"] .glass-chip), toggle-group yes ([data-t=\"cap-toggle\"] [data-t=\"cap-toggle-b\"]), tabs yes ([data-t=\"cap-tabs\"] .segmented-tab:nth-of-type(2)), select yes ([data-t=\"cap-select\"] [data-slot=\"select-trigger\"])",
+   "load": "16.3/13.2/11.0"
+  },
+  {
+   "name": "E-12 capsule composer census",
+   "status": "REPORT",
+   "line": "4 element(s) compose .glass-capsule-hover beyond the row's named composers, each read below: button.configurator-preset-chip.glass-capsule, button.configurator-preset-chip.glass-capsule, button.toggle-group__item.control-surface, button.segmented-tab.glass-capsule-hover",
+   "load": "16.3/13.2/11.0"
+  },
+  {
+   "name": "E-12 capsule configurator hover fine light",
+   "status": "FAIL",
+   "line": "[data-t=\"cap-configurator\"] .configurator-preset-chip:not(.is-active) (glass-capsule glass-capsule-hover) · rest ×1.0000 (scale none) → hovered 400 ms (:hover true) ×1.0150 (scale 1.015) · geometry moved 0.0150 (bound ≤ 0.002: the hover writes no geometry)",
+   "load": "15.4/13.1/10.9"
+  },
+  {
+   "name": "E-12 capsule configurator press fine light",
+   "status": "FAIL",
+   "line": "held 250 ms (:active true, no door mark) · hovered ×1.0150 (scale 1.015) → pressed ×0.9700 (scale 0.97) · geometry moved 0.0450 (bound ≤ 0.002: no class rung writes the press's geometry)",
+   "load": "15.4/13.1/10.9"
+  },
+  {
+   "name": "E-12 capsule configurator tap coarse light",
+   "status": "FAIL",
+   "line": "(hover:none) true (pointer:coarse) true · rest ×1.0000 → a tap, +900 ms with no pointer: ×1.0150 (scale 1.015), :hover true (bound: ×1 ± 0.002, no hover latch)",
+   "load": "15.4/13.1/10.9"
+  },
+  {
+   "name": "E-12 capsule configurator hover fine dark",
+   "status": "FAIL",
+   "line": "[data-t=\"cap-configurator\"] .configurator-preset-chip:not(.is-active) (glass-capsule glass-capsule-hover) · rest ×1.0000 (scale none) → hovered 400 ms (:hover true) ×1.0150 (scale 1.015) · geometry moved 0.0150 (bound ≤ 0.002: the hover writes no geometry)",
+   "load": "15.4/13.1/10.9"
+  },
+  {
+   "name": "E-12 capsule configurator press fine dark",
+   "status": "FAIL",
+   "line": "held 250 ms (:active true, no door mark) · hovered ×1.0150 (scale 1.015) → pressed ×0.9700 (scale 0.97) · geometry moved 0.0450 (bound ≤ 0.002: no class rung writes the press's geometry)",
+   "load": "15.4/13.1/10.9"
+  },
+  {
+   "name": "E-12 capsule configurator tap coarse dark",
+   "status": "FAIL",
+   "line": "(hover:none) true (pointer:coarse) true · rest ×1.0000 → a tap, +900 ms with no pointer: ×1.0150 (scale 1.015), :hover true (bound: ×1 ± 0.002, no hover latch)",
+   "load": "14.9/13.0/10.9"
+  },
+  {
+   "name": "E-12 capsule button hover fine light",
+   "status": "FAIL",
+   "line": "[data-t=\"cap-button\"] .button (glass-capsule glass-capsule-hover) · rest ×1.0000 (scale 1) → hovered 400 ms (:hover true) ×1.0150 (scale 1.015) · geometry moved 0.0150 (bound ≤ 0.002: the hover writes no geometry)",
+   "load": "14.9/13.0/10.9"
+  },
+  {
+   "name": "E-12 capsule button press fine light",
+   "status": "REPORT",
+   "line": "the press carries the door's mark ([data-press]/[data-press-armed]): ×1.0150 → ×1.0253 (scale 1.025311 0.944072); the door's press is E-2/E-5's to grade",
+   "load": "14.9/13.0/10.9"
+  },
+  {
+   "name": "E-12 capsule button tap coarse light",
+   "status": "FAIL",
+   "line": "(hover:none) true (pointer:coarse) true · rest ×1.0000 → a tap, +900 ms with no pointer: ×1.0150 (scale 1.015), :hover true (bound: ×1 ± 0.002, no hover latch)",
+   "load": "14.9/13.0/10.9"
+  },
+  {
+   "name": "E-12 capsule button hover fine dark",
+   "status": "FAIL",
+   "line": "[data-t=\"cap-button\"] .button (glass-capsule glass-capsule-hover) · rest ×1.0000 (scale 1) → hovered 400 ms (:hover true) ×1.0150 (scale 1.015) · geometry moved 0.0150 (bound ≤ 0.002: the hover writes no geometry)",
+   "load": "14.5/13.0/10.9"
+  },
+  {
+   "name": "E-12 capsule button press fine dark",
+   "status": "REPORT",
+   "line": "the press carries the door's mark ([data-press]/[data-press-armed]): ×1.0150 → ×1.0254 (scale 1.0254 0.943659); the door's press is E-2/E-5's to grade",
+   "load": "14.5/13.0/10.9"
+  },
+  {
+   "name": "E-12 capsule button tap coarse dark",
+   "status": "FAIL",
+   "line": "(hover:none) true (pointer:coarse) true · rest ×1.0000 → a tap, +900 ms with no pointer: ×1.0150 (scale 1.015), :hover true (bound: ×1 ± 0.002, no hover latch)",
+   "load": "14.5/13.0/10.9"
+  },
+  {
+   "name": "E-12 capsule chip hover fine light",
+   "status": "FAIL",
+   "line": "[data-t=\"cap-chip\"] .glass-chip (glass-capsule glass-capsule-hover) · rest ×1.0000 (scale 1) → hovered 400 ms (:hover true) ×1.0150 (scale 1.015) · geometry moved 0.0150 (bound ≤ 0.002: the hover writes no geometry)",
+   "load": "13.8/12.8/10.9"
+  },
+  {
+   "name": "E-12 capsule chip press fine light",
+   "status": "FAIL",
+   "line": "held 250 ms (:active true, no door mark) · hovered ×1.0150 (scale 1.015) → pressed ×0.9654 (scale 0.965425) · geometry moved 0.0496 (bound ≤ 0.002: no class rung writes the press's geometry)",
+   "load": "13.8/12.8/10.9"
+  },
+  {
+   "name": "E-12 capsule chip tap coarse light",
+   "status": "FAIL",
+   "line": "(hover:none) true (pointer:coarse) true · rest ×1.0000 → a tap, +900 ms with no pointer: ×1.0150 (scale 1.015), :hover true (bound: ×1 ± 0.002, no hover latch)",
+   "load": "13.8/12.8/10.9"
+  },
+  {
+   "name": "E-12 capsule chip hover fine dark",
+   "status": "FAIL",
+   "line": "[data-t=\"cap-chip\"] .glass-chip (glass-capsule glass-capsule-hover) · rest ×1.0000 (scale 1) → hovered 400 ms (:hover true) ×1.0150 (scale 1.015) · geometry moved 0.0150 (bound ≤ 0.002: the hover writes no geometry)",
+   "load": "13.8/12.8/10.9"
+  },
+  {
+   "name": "E-12 capsule chip press fine dark",
+   "status": "FAIL",
+   "line": "held 250 ms (:active true, no door mark) · hovered ×1.0150 (scale 1.015) → pressed ×0.9656 (scale 0.965612) · geometry moved 0.0494 (bound ≤ 0.002: no class rung writes the press's geometry)",
+   "load": "13.8/12.8/10.9"
+  },
+  {
+   "name": "E-12 capsule chip tap coarse dark",
+   "status": "FAIL",
+   "line": "(hover:none) true (pointer:coarse) true · rest ×1.0000 → a tap, +900 ms with no pointer: ×1.0150 (scale 1.015), :hover true (bound: ×1 ± 0.002, no hover latch)",
+   "load": "13.8/12.8/10.9"
+  },
+  {
+   "name": "E-12 capsule toggle-group hover fine light",
+   "status": "FAIL",
+   "line": "ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s)",
+   "load": "20.2/17.0/13.0"
+  },
+  {
+   "name": "E-12 capsule toggle-group press fine light",
+   "status": "FAIL",
+   "line": "ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s)",
+   "load": "20.2/17.0/13.0"
+  },
+  {
+   "name": "E-12 capsule toggle-group tap coarse light",
+   "status": "FAIL",
+   "line": "ENGINE CLOSED, REPRODUCED 2/2 (page.waitForTimeout: Page crashed; then page.waitForTimeout: Page crashed)",
+   "load": "20.2/17.0/13.0"
+  },
+  {
+   "name": "E-12 capsule toggle-group hover fine dark",
+   "status": "FAIL",
+   "line": "ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s)",
+   "load": "16.9/17.3/13.9"
+  },
+  {
+   "name": "E-12 capsule toggle-group press fine dark",
+   "status": "FAIL",
+   "line": "ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s)",
+   "load": "16.9/17.3/13.9"
+  },
+  {
+   "name": "E-12 capsule toggle-group tap coarse dark",
+   "status": "FAIL",
+   "line": "ENGINE CLOSED, REPRODUCED 2/2 (page.waitForTimeout: Page crashed; then page.waitForTimeout: Page crashed)",
+   "load": "17.8/17.5/14.0"
+  },
+  {
+   "name": "E-12 capsule tabs hover fine light",
+   "status": "FAIL",
+   "line": "[data-t=\"cap-tabs\"] .segmented-tab:nth-of-type(2) (glass-capsule-hover) · rest ×1.0000 (scale 1) → hovered 400 ms (:hover true) ×1.0150 (scale 1.015) · geometry moved 0.0150 (bound ≤ 0.002: the hover writes no geometry)",
+   "load": "17.8/17.5/14.0"
+  },
+  {
+   "name": "E-12 capsule tabs press fine light",
+   "status": "FAIL",
+   "line": "held 250 ms (:active true, no door mark) · hovered ×1.0150 (scale 1.015) → pressed ×0.9700 (scale 0.97) · geometry moved 0.0450 (bound ≤ 0.002: no class rung writes the press's geometry)",
+   "load": "17.8/17.5/14.0"
+  },
+  {
+   "name": "E-12 capsule tabs tap coarse light",
+   "status": "PASS",
+   "line": "(hover:none) true (pointer:coarse) true · rest ×1.0000 → a tap, +900 ms with no pointer: ×1.0000 (scale 1), :hover true (bound: ×1 ± 0.002, no hover latch)",
+   "load": "17.8/17.5/14.0"
+  },
+  {
+   "name": "E-12 capsule tabs hover fine dark",
+   "status": "FAIL",
+   "line": "[data-t=\"cap-tabs\"] .segmented-tab:nth-of-type(2) (glass-capsule-hover) · rest ×1.0000 (scale 1) → hovered 400 ms (:hover true) ×1.0150 (scale 1.015) · geometry moved 0.0150 (bound ≤ 0.002: the hover writes no geometry)",
+   "load": "18.9/17.7/14.1"
+  },
+  {
+   "name": "E-12 capsule tabs press fine dark",
+   "status": "FAIL",
+   "line": "held 250 ms (:active true, no door mark) · hovered ×1.0150 (scale 1.015) → pressed ×0.9700 (scale 0.97) · geometry moved 0.0450 (bound ≤ 0.002: no class rung writes the press's geometry)",
+   "load": "18.9/17.7/14.1"
+  },
+  {
+   "name": "E-12 capsule tabs tap coarse dark",
+   "status": "PASS",
+   "line": "(hover:none) true (pointer:coarse) true · rest ×1.0000 → a tap, +900 ms with no pointer: ×1.0000 (scale 1), :hover true (bound: ×1 ± 0.002, no hover latch)",
+   "load": "18.9/17.7/14.1"
+  },
+  {
+   "name": "E-12 capsule select hover fine light",
+   "status": "FAIL",
+   "line": "ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s)",
+   "load": "10.3/14.0/13.2"
+  },
+  {
+   "name": "E-12 capsule select press fine light",
+   "status": "FAIL",
+   "line": "ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s)",
+   "load": "10.3/14.0/13.2"
+  },
+  {
+   "name": "E-12 capsule select tap coarse light",
+   "status": "PASS",
+   "line": "(hover:none) true (pointer:coarse) true · rest ×1.0000 → a tap, +900 ms with no pointer: ×1.0000 (scale 1), :hover false (bound: ×1 ± 0.002, no hover latch)",
+   "load": "9.7/13.8/13.1"
+  },
+  {
+   "name": "E-12 capsule select hover fine dark",
+   "status": "FAIL",
+   "line": "ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s)",
+   "load": "13.6/13.5/13.1"
+  },
+  {
+   "name": "E-12 capsule select press fine dark",
+   "status": "FAIL",
+   "line": "ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 90 s; then CELL TIMEOUT 90 s)",
+   "load": "13.6/13.5/13.1"
+  },
+  {
+   "name": "E-12 capsule select tap coarse dark",
+   "status": "PASS",
+   "line": "(hover:none) true (pointer:coarse) true · rest ×1.0000 → a tap, +900 ms with no pointer: ×1.0000 (scale 1), :hover false (bound: ×1 ± 0.002, no hover latch)",
+   "load": "13.6/13.5/13.1"
+  },
+  {
+   "name": "E-12 capsule extra0 hover fine light",
+   "status": "FAIL",
+   "line": "extra #0 (glass-capsule glass-capsule-hover) · rest ×1.0000 (scale none) → hovered 400 ms (:hover true) ×1.0150 (scale 1.015) · geometry moved 0.0150 (bound ≤ 0.002: the hover writes no geometry)",
+   "load": "13.6/13.5/13.1"
+  },
+  {
+   "name": "E-12 capsule extra0 press fine light",
+   "status": "FAIL",
+   "line": "held 250 ms (:active true, no door mark) · hovered ×1.0150 (scale 1.015) → pressed ×0.9700 (scale 0.97) · geometry moved 0.0450 (bound ≤ 0.002: no class rung writes the press's geometry)",
+   "load": "13.6/13.5/13.1"
+  },
+  {
+   "name": "E-12 capsule extra0 tap coarse light",
+   "status": "FAIL",
+   "line": "(hover:none) true (pointer:coarse) true · rest ×1.0000 → a tap, +900 ms with no pointer: ×1.0150 (scale 1.015), :hover true (bound: ×1 ± 0.002, no hover latch)",
+   "load": "13.0/13.4/13.1"
+  },
+  {
+   "name": "E-12 capsule extra0 hover fine dark",
+   "status": "FAIL",
+   "line": "extra #0 (glass-capsule glass-capsule-hover) · rest ×1.0000 (scale none) → hovered 400 ms (:hover true) ×1.0150 (scale 1.015) · geometry moved 0.0150 (bound ≤ 0.002: the hover writes no geometry)",
+   "load": "13.0/13.4/13.1"
+  },
+  {
+   "name": "E-12 capsule extra0 press fine dark",
+   "status": "FAIL",
+   "line": "held 250 ms (:active true, no door mark) · hovered ×1.0150 (scale 1.015) → pressed ×0.9700 (scale 0.97) · geometry moved 0.0450 (bound ≤ 0.002: no class rung writes the press's geometry)",
+   "load": "13.0/13.4/13.1"
+  },
+  {
+   "name": "E-12 capsule extra0 tap coarse dark",
+   "status": "FAIL",
+   "line": "(hover:none) true (pointer:coarse) true · rest ×1.0000 → a tap, +900 ms with no pointer: ×1.0150 (scale 1.015), :hover true (bound: ×1 ± 0.002, no hover latch)",
+   "load": "13.0/13.4/13.1"
+  },
+  {
+   "name": "E-12 capsule extra1 hover fine light",
+   "status": "FAIL",
+   "line": "extra #1 (glass-capsule glass-capsule-hover) · rest ×1.0000 (scale none) → hovered 400 ms (:hover true) ×1.0150 (scale 1.015) · geometry moved 0.0150 (bound ≤ 0.002: the hover writes no geometry)",
+   "load": "18.7/14.5/13.5"
+  },
+  {
+   "name": "E-12 capsule extra1 press fine light",
+   "status": "FAIL",
+   "line": "held 250 ms (:active true, no door mark) · hovered ×1.0150 (scale 1.015) → pressed ×0.9700 (scale 0.97) · geometry moved 0.0450 (bound ≤ 0.002: no class rung writes the press's geometry)",
+   "load": "18.7/14.5/13.5"
+  },
+  {
+   "name": "E-12 capsule extra1 tap coarse light",
+   "status": "FAIL",
+   "line": "(hover:none) true (pointer:coarse) true · rest ×1.0000 → a tap, +900 ms with no pointer: ×1.0150 (scale 1.015), :hover true (bound: ×1 ± 0.002, no hover latch)",
+   "load": "18.7/14.5/13.5"
+  },
+  {
+   "name": "E-12 capsule extra1 hover fine dark",
+   "status": "FAIL",
+   "line": "extra #1 (glass-capsule glass-capsule-hover) · rest ×1.0000 (scale none) → hovered 400 ms (:hover true) ×1.0150 (scale 1.015) · geometry moved 0.0150 (bound ≤ 0.002: the hover writes no geometry)",
+   "load": "20.7/15.0/13.6"
+  },
+  {
+   "name": "E-12 capsule extra1 press fine dark",
+   "status": "FAIL",
+   "line": "held 250 ms (:active true, no door mark) · hovered ×1.0150 (scale 1.015) → pressed ×0.9700 (scale 0.97) · geometry moved 0.0450 (bound ≤ 0.002: no class rung writes the press's geometry)",
+   "load": "20.7/15.0/13.6"
+  },
+  {
+   "name": "E-12 capsule extra1 tap coarse dark",
+   "status": "FAIL",
+   "line": "(hover:none) true (pointer:coarse) true · rest ×1.0000 → a tap, +900 ms with no pointer: ×1.0150 (scale 1.015), :hover true (bound: ×1 ± 0.002, no hover latch)",
+   "load": "20.7/15.0/13.6"
+  },
+  {
+   "name": "E-12 capsule extra2 hover fine light",
+   "status": "FAIL",
+   "line": "extra #2 (glass-capsule-hover) · rest ×1.0000 (scale 1) → hovered 400 ms (:hover true) ×1.0150 (scale 1.015) · geometry moved 0.0150 (bound ≤ 0.002: the hover writes no geometry)",
+   "load": "20.7/15.0/13.6"
+  },
+  {
+   "name": "E-12 capsule extra2 press fine light",
+   "status": "FAIL",
+   "line": "held 250 ms (:active true, no door mark) · hovered ×1.0150 (scale 1.015) → pressed ×0.9700 (scale 0.97) · geometry moved 0.0450 (bound ≤ 0.002: no class rung writes the press's geometry)",
+   "load": "20.7/15.0/13.6"
+  },
+  {
+   "name": "E-12 capsule extra2 tap coarse light",
+   "status": "FAIL",
+   "line": "(hover:none) true (pointer:coarse) true · rest ×1.0000 → a tap, +900 ms with no pointer: ×1.0150 (scale 1.015), :hover true (bound: ×1 ± 0.002, no hover latch)",
+   "load": "24.7/15.9/14.0"
+  },
+  {
+   "name": "E-12 capsule extra2 hover fine dark",
+   "status": "FAIL",
+   "line": "extra #2 (glass-capsule-hover) · rest ×1.0000 (scale 1) → hovered 400 ms (:hover true) ×1.0150 (scale 1.015) · geometry moved 0.0150 (bound ≤ 0.002: the hover writes no geometry)",
+   "load": "24.7/15.9/14.0"
+  },
+  {
+   "name": "E-12 capsule extra2 press fine dark",
+   "status": "FAIL",
+   "line": "held 250 ms (:active true, no door mark) · hovered ×1.0150 (scale 1.015) → pressed ×0.9700 (scale 0.97) · geometry moved 0.0450 (bound ≤ 0.002: no class rung writes the press's geometry)",
+   "load": "24.7/15.9/14.0"
+  },
+  {
+   "name": "E-12 capsule extra2 tap coarse dark",
+   "status": "FAIL",
+   "line": "(hover:none) true (pointer:coarse) true · rest ×1.0000 → a tap, +900 ms with no pointer: ×1.0150 (scale 1.015), :hover true (bound: ×1 ± 0.002, no hover latch)",
+   "load": "24.7/15.9/14.0"
+  },
+  {
+   "name": "E-12 capsule extra3 hover fine light",
+   "status": "FAIL",
+   "line": "extra #3 (glass-capsule-hover) · rest ×1.0000 (scale 1) → hovered 400 ms (:hover true) ×1.0150 (scale 1.015) · geometry moved 0.0150 (bound ≤ 0.002: the hover writes no geometry)",
+   "load": "25.9/16.3/14.1"
+  },
+  {
+   "name": "E-12 capsule extra3 press fine light",
+   "status": "FAIL",
+   "line": "held 250 ms (:active true, no door mark) · hovered ×1.0150 (scale 1.015) → pressed ×0.9700 (scale 0.97) · geometry moved 0.0450 (bound ≤ 0.002: no class rung writes the press's geometry)",
+   "load": "25.9/16.3/14.1"
+  },
+  {
+   "name": "E-12 capsule extra3 tap coarse light",
+   "status": "PASS",
+   "line": "(hover:none) true (pointer:coarse) true · rest ×1.0000 → a tap, +900 ms with no pointer: ×1.0000 (scale 1), :hover true (bound: ×1 ± 0.002, no hover latch)",
+   "load": "25.9/16.3/14.1"
+  },
+  {
+   "name": "E-12 capsule extra3 hover fine dark",
+   "status": "FAIL",
+   "line": "extra #3 (glass-capsule-hover) · rest ×1.0000 (scale 1) → hovered 400 ms (:hover true) ×1.0150 (scale 1.015) · geometry moved 0.0150 (bound ≤ 0.002: the hover writes no geometry)",
+   "load": "25.9/16.3/14.1"
+  },
+  {
+   "name": "E-12 capsule extra3 press fine dark",
+   "status": "FAIL",
+   "line": "held 250 ms (:active true, no door mark) · hovered ×1.0150 (scale 1.015) → pressed ×0.9700 (scale 0.97) · geometry moved 0.0450 (bound ≤ 0.002: no class rung writes the press's geometry)",
+   "load": "25.9/16.3/14.1"
+  },
+  {
+   "name": "E-12 capsule extra3 tap coarse dark",
+   "status": "PASS",
+   "line": "(hover:none) true (pointer:coarse) true · rest ×1.0000 → a tap, +900 ms with no pointer: ×1.0000 (scale 1), :hover true (bound: ×1 ± 0.002, no hover latch)",
+   "load": "29.4/17.2/14.5"
+  }
+ ]
+}

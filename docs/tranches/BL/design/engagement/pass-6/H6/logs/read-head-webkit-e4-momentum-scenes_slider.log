@@ -1,0 +1,12 @@
+## 2026-10-21 09:25:30 load { 26.51 17.00 14.42 } · start head webkit e4-momentum.mjs --scenes slider
+# E-4 · CK-05 momentum on the visible body, without a teleport
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p6/H6/out/builds/head · engine webkit · lock wait 0.0 s · other headless processes: chromium 4, webkit 0 · load 26.5/17.0/14.4 at start
+# scene app: harness scenes/App.vue (sha1 d020f4946adb)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# narrowed to scenes slider
+  FAIL       E-4 slider fling carries velocity · axis x, leading edge, page frame · 5 reads, every one must pass: [1: carry 0.03 / settle -0.98 px FAIL · 2: carry 0.04 / settle -1.12 px FAIL · 3: carry 0.04 / settle -1.07 px FAIL · 4: carry 0.03 / settle -1.05 px FAIL · 5: carry 0.04 / settle -1.05 px FAIL] (0 of 5 pass) · read 1 in full: fling: carry 0.10 px, settles -3.21 px past release · still: carry 0.07 px, settles -2.23 px · difference: carry 0.03 px, settle -0.98 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 196 frames, median 10.0 ms · load 20.2/16.4/14.3
+  PASS       E-4 slider release continuity · over 5 reads, each against its own drive (3.2/63.7, 3.4/63.9, 3.3/63.7, 3.3/63.7, 3.3/63.6 px; 0 over) · read 1: largest one-frame move on release: fling 3.2 px, still 2.2 px · during the drive: fling 41.2 px, still 41.2 px (bound ≤ drive × 1.5 + 2 = 63.7 px) · load 20.2/16.4/14.3
+  PASS       E-4 slider release PRM · reduce · moved 79.2 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px · load 19.3/16.3/14.3
+E-4 webkit FAIL · 2 pass, 1 fail, 0 unmeasured of 3 gating cells (0 reported) · load 26.5/17.0/14.4 at start, 19.3/16.3/14.3 at end
+exit 1
+## 2026-10-21 09:26:11 load { 19.29 16.30 14.27 } · end head webkit e4-momentum.mjs

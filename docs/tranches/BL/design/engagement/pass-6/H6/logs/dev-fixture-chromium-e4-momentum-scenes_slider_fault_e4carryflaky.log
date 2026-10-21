@@ -1,0 +1,11 @@
+## 2026-10-21 06:19:59 load { 7.52 8.35 7.71 } · fixture chromium e4-momentum.mjs --scenes slider --fault e4-carryflaky
+# E-4 · CK-05 momentum on the visible body, without a teleport
+# target fixture fault e4-carryflaky · engine chromium · lock wait 0.0 s · other headless processes: chromium 0, webkit 2 · load 7.5/8.4/7.7 at start
+# chromium 149.0.7827.55
+# narrowed to scenes slider
+  FAIL       E-4 slider fling carries velocity · axis x, page frame · 5 reads, every one must pass: [1: carry 95.01 / settle 96.04 px pass · 2: carry 94.45 / settle 96.12 px pass · 3: carry 0.00 / settle 0.15 px FAIL · 4: carry 95.02 / settle 96.10 px pass · 5: carry 93.28 / settle 95.77 px pass] (4 of 5 pass) · read 1 in full: fling: carry 95.01 px, settles 91.00 px past release · still: carry 0.00 px, settles -5.04 px · difference: carry 95.01 px, settle 96.04 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 260 frames, median 7.9 ms · load 7.7/8.3/7.7
+  PASS       E-4 slider release continuity · over 5 reads, each against its own drive (13.8/65.9, 13.2/65.9, 0.5/65.8, 13.3/65.9, 11.8/65.9 px; 0 over) · read 1: largest one-frame move on release: fling 13.8 px, still 0.5 px · during the drive: fling 42.6 px, still 42.6 px (bound ≤ drive × 1.5 + 2 = 65.9 px) · load 7.7/8.3/7.7
+  PASS       E-4 slider release PRM · reduce · moved 120.0 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px · load 7.5/8.3/7.7
+E-4 chromium FAIL · 2 pass, 1 fail, 0 unmeasured of 3 gating cells (0 reported) · load 7.5/8.4/7.7 at start, 7.5/8.3/7.7 at end
+exit 1
+## 2026-10-21 06:20:35 load { 7.47 8.25 7.70 } · end

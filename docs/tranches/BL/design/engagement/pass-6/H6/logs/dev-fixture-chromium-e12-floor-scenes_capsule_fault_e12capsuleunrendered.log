@@ -1,0 +1,17 @@
+## 2026-10-21 06:18:25 load { 7.79 8.45 7.65 } · fixture chromium e12-floor.mjs --scenes capsule --fault e12-capsuleunrendered
+# E-12 · the floor's and MIGRATION's cells (CK-14, CK-16, CK-22, CK-27)
+# target fixture fault e12-capsuleunrendered · engine chromium · lock wait 0.0 s · other headless processes: chromium 0, webkit 2 · load 7.6/8.4/7.6 at start
+# chromium 149.0.7827.55
+# narrowed to scenes capsule
+  PASS       E-12 capsule fc-reach fine · 0 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area) · load 7.6/8.4/7.6
+  PASS       E-12 capsule fc-reach coarse · 0 element(s) render an ::after; forced colours removes 0 · hit area lost under forced colours: none (bound: the arm removes paint, never a hit area) · load 7.6/8.4/7.6
+  FAIL       E-12 capsule capsule composers rendered · 2 composer directories of .glass-capsule-hover outside dock/ in fixtures/capsule/missing: kappa (src/components/kappa/Kappa.vue:2), lambda (src/components/lambda/lambdaVariants.ts:2) · dock/ (D2's fence, not read): 1 line(s) · the scene renders: kappa yes ([data-t="cap-kappa"]) · NOT RENDERED by any cell: lambda · load 7.6/8.4/7.6
+  PASS       E-12 capsule capsule kappa hover fine light · [data-t="cap-kappa"] (glass-capsule-hover) · rest ×1.0000 (scale none) → hovered 400 ms (:hover true) ×1.0000 (scale none) · geometry moved 0.0000 (bound ≤ 0.002: the hover writes no geometry) · load 7.6/8.4/7.6
+  PASS       E-12 capsule capsule kappa press fine light · held 250 ms (:active true, no door mark) · hovered ×1.0000 (scale none) → pressed ×1.0000 (scale none) · geometry moved 0.0000 (bound ≤ 0.002: no class rung writes the press's geometry) · load 7.6/8.4/7.6
+  PASS       E-12 capsule capsule kappa tap coarse light · (hover:none) true (pointer:coarse) true · rest ×1.0000 → a tap, +900 ms with no pointer: ×1.0000 (scale none), :hover true (bound: ×1 ± 0.002, no hover latch) · load 7.8/8.4/7.7
+  PASS       E-12 capsule capsule kappa hover fine dark · [data-t="cap-kappa"] (glass-capsule-hover) · rest ×1.0000 (scale none) → hovered 400 ms (:hover true) ×1.0000 (scale none) · geometry moved 0.0000 (bound ≤ 0.002: the hover writes no geometry) · load 7.8/8.4/7.7
+  PASS       E-12 capsule capsule kappa press fine dark · held 250 ms (:active true, no door mark) · hovered ×1.0000 (scale none) → pressed ×1.0000 (scale none) · geometry moved 0.0000 (bound ≤ 0.002: no class rung writes the press's geometry) · load 7.8/8.4/7.7
+  PASS       E-12 capsule capsule kappa tap coarse dark · (hover:none) true (pointer:coarse) true · rest ×1.0000 → a tap, +900 ms with no pointer: ×1.0000 (scale none), :hover true (bound: ×1 ± 0.002, no hover latch) · load 7.8/8.4/7.7
+E-12 chromium FAIL · 8 pass, 1 fail, 0 unmeasured of 9 gating cells (0 reported) · load 7.6/8.4/7.6 at start, 7.8/8.4/7.7 at end
+exit 1
+## 2026-10-21 06:18:33 load { 7.75 8.42 7.65 } · end

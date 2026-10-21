@@ -1,0 +1,7 @@
+# WebKit acquisition 2: HEAD re-reads of the changed witnesses, narrowed to the scenes whose cells changed
+read1 head webkit e10-continuity.mjs --scenes restale,clipstale
+read1 head webkit e12-floor.mjs --scenes capsule
+read1 head webkit e9-prm.mjs --scenes presented
+read1 head webkit e4-momentum.mjs --scenes slider
+cap head webkit accordion,collapsible,menu
+read1 head webkit e11-fail-loud.mjs

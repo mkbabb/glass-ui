@@ -1,0 +1,13 @@
+## 2026-10-21 07:00:21 load { 9.87 10.63 9.67 } · selftest chromium E-11 
+OK     E-11 chromium clean exit 0 · E-11 chromium PASS · 3 pass, 0 fail, 0 unmeasured of 3 gating cells (1 reported) · load 9.9/10.6/9.7 at start, 12.8/12.1/10.5 at end
+OK     E-11 chromium fault   e11-silent (CK-21: the engagement reads --fx-scale-engage at runtime and, when it is unreadable, degrades to no grow with no console.error) exit 1
+         first planted FAIL: FAIL       E-11 slider fail-loud --fx-scale-engage (kbd) · SILENT DEGRADATION · --fx-scale-engage: "nonsense" on the root · clean {"s":1.0599999321831597,"veil":1,"n":1} {"s":1.0599999321831597,"veil":1,"n":1} {"s":1.0599999321831597,"veil"
+OK     E-11 chromium unmeas  e11-unread (CONTROL: the grow spells its figure in place and reads no token, so an unreadable token degrades nothing: UNMEASURED, not a pass) exit 0
+         planted UNMEASURED: UNMEASURED E-11 slider fail-loud --fx-scale-engage (kbd) · no degradation, no error: the token is not read on this path · --fx-scale-engage: "nonsense" on the root · clean {"s":1.0599999321831597,"veil":1,"n":1} {"s":1.0599999321831597,"vei
+OK     E-11 chromium unmeas  e11-noise (CONTROL (H2 §2.3): the grow spells its figure in place, reads no token, and varies run to run (1.060, 1.061, 1.066, 1.054, 1.060 on successive slider loads); one planted read outside a two-run spread is noise, not a degradation: UNMEASURED, never FAIL) exit 0
+         planted UNMEASURED: UNMEASURED E-11 slider fail-loud --fx-scale-engage (kbd) · no degradation, no error: the token is not read on this path · --fx-scale-engage: "nonsense" on the root · clean {"s":1.0599999321831597,"veil":1,"n":1} {"s":1.0609998914930556,"vei
+OK     E-11 chromium fault   e11-rename (CK-21 (H6, C-E5 §0.2, REGISTRY §P5-7 item 4): the fixture's loud clock read follows a hand-kept list that a rename left behind: it no longer names --engage-control-engage-*, which the stylesheet still transitions on, so planting it degrades the veil's and the dialog's fades with no console.error) exit 1
+         first planted FAIL: FAIL       E-11 clock --engage-control-engage-release (enumerated) · --engage-control-engage-release: nonsense on <html> before the first script · SILENT DEGRADATION: a consumer's timing changed in the act with no error naming the clock · s
+selftest: 5 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+exit 0
+## 2026-10-21 07:21:19 load { 8.22 8.49 9.25 } · end selftest chromium E-11

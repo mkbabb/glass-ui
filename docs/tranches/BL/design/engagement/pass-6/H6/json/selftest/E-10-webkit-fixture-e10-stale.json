@@ -1,0 +1,200 @@
+{
+ "id": "E-10",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e10-stale"
+ },
+ "loadStart": "5.0/5.7/6.9",
+ "loadEnd": "5.4/5.7/6.8",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 slider own release",
+   "status": "REPORT",
+   "line": "Tab in: largest one-frame centre move 0.0 px · Tab out of the engaged slider: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0065, largest centre move 0.0 px (the references for the hand-off and Escape bounds)",
+   "load": "4.7/5.6/6.8"
+  },
+  {
+   "name": "E-10 slider escape release",
+   "status": "PASS",
+   "line": "Escape: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0065 (bound ≤ own release 0.0065 + 0.002), largest centre move 0.0 px (bound ≤ own release 0.0 + 1 px)",
+   "load": "4.7/5.6/6.8"
+  },
+  {
+   "name": "E-10 slider re-render landing",
+   "status": "PASS",
+   "line": "a sibling inserted during the hold, then release: the root's largest one-frame move per 16.7 ms 1.2 px (without the insert 1.2 px; bound ≤ that + 1 px)",
+   "load": "5.1/5.7/6.8"
+  },
+  {
+   "name": "E-10 slider re-render landing (layout-only)",
+   "status": "PASS",
+   "line": "a spacer before the slider grown 40 px by a style write during the hold (no childList mutation; the root's top read 91.4 → 131.4 px during the hold, 132.0 px at the film's end), then release: the root's largest one-frame move per 16.7 ms 1.3 px (without the move 1.3 px; bound ≤ that + 1 px)",
+   "load": "4.8/5.6/6.8"
+  },
+  {
+   "name": "E-10 slider2 hand-off drop",
+   "status": "PASS",
+   "line": "Tab A → B (focus on ProbeB) · outgoing A ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0065 (bound ≤ own release 0.0065 + 0.002), largest centre move 0.0 px at 117 ms (bound ≤ own release 0.0 + 1 px) · incoming B ×1.000 → ×1.060, largest centre move 0.0 px at 300 ms (bound ≤ own engage 0.0 + 1 px)",
+   "load": "4.8/5.6/6.8"
+  },
+  {
+   "name": "E-10 slider2 hand-off singleton fwd",
+   "status": "PASS",
+   "line": "89 frames: engaged roots per frame max 1, 0 frame(s) with none · first frame A engaged true, B false · last frame B engaged true, A false (bound: at most one engaged on every frame, the incoming one at the end; selector [data-held], [data-kbd])",
+   "load": "4.8/5.6/6.8"
+  },
+  {
+   "name": "E-10 slider2 hand-off veil",
+   "status": "PASS",
+   "line": "veil 1.00 before the Tab, minimum 1.00 across the hand-off, 1.00 at the end (bound ≥ 0.1× its level: it does not re-ramp from 0)",
+   "load": "4.8/5.6/6.8"
+  },
+  {
+   "name": "E-10 slider2 hand-off rev",
+   "status": "PASS",
+   "line": "Shift+Tab B → A (focus on ProbeA) · outgoing B ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0065 (bound ≤ own release 0.0065 + 0.002), largest centre move 0.0 px at 349 ms (bound ≤ own release 0.0 + 1 px) · incoming A ×1.000 → ×1.060, largest centre move 0.0 px at 135 ms (bound ≤ own engage 0.0 + 1 px)",
+   "load": "4.8/5.6/6.8"
+  },
+  {
+   "name": "E-10 slider2 hand-off singleton rev",
+   "status": "PASS",
+   "line": "89 frames: engaged roots per frame max 1, 0 frame(s) with none · first frame B engaged true, A false · last frame A engaged true, B false (bound: at most one engaged on every frame, the incoming one at the end; selector [data-held], [data-kbd])",
+   "load": "4.8/5.6/6.8"
+  },
+  {
+   "name": "E-10 restale stale place · keyboard",
+   "status": "FAIL",
+   "line": "keyboard engaged · spacer +120 px by a style write: the root's centre (228.0, 180.0) → (228.0, 300.0) px · then a node appended below it (moves nothing): over 90 frames its centre spans x 228.0..228.0, y 180.6..306.4 px, largest one-frame move per 16.7 ms 119.4 px at +86 ms (bound ≤ 4 px)",
+   "load": "4.5/5.6/6.8"
+  },
+  {
+   "name": "E-10 restale stale place control · keyboard",
+   "status": "PASS",
+   "line": "keyboard engaged · no layout move (the control): the root's centre (228.0, 180.0) → (228.0, 180.0) px · then a node appended below it (moves nothing): over 90 frames its centre spans x 228.0..228.0, y 180.0..180.6 px, largest one-frame move per 16.7 ms 0.6 px at +88 ms (bound ≤ 4 px)",
+   "load": "4.5/5.6/6.8"
+  },
+  {
+   "name": "E-10 restale stale place (viewport resize) · keyboard",
+   "status": "FAIL",
+   "line": "keyboard engaged · viewport 700 → 380 px wide (the paragraph above rewraps): the root's centre (228.0, 180.0) → (228.0, 216.0) px · then a node appended below it (moves nothing): over 89 frames its centre spans x 228.0..228.0, y 180.6..217.9 px, largest one-frame move per 16.7 ms 35.4 px at +87 ms (bound ≤ 4 px)",
+   "load": "5.6/5.8/6.8"
+  },
+  {
+   "name": "E-10 restale stale place (inset) · keyboard",
+   "status": "PASS",
+   "line": "keyboard engaged · the wrapper 360 → 300 px with +60 px left margin (left edge in, right edge kept) by a style write: its rect 48.0..408.0 → 108.0..408.0 px (inside the old): the root's centre (228.0, 180.0) → (258.0, 180.0) px · then a node appended below it (moves nothing): over 90 frames its centre spans x 258.0..258.0, y 180.0..180.6 px, largest one-frame move per 16.7 ms 0.6 px at +86 ms (bound ≤ 4 px)",
+   "load": "5.6/5.8/6.8"
+  },
+  {
+   "name": "E-10 restale stale place (centred shrink) · keyboard",
+   "status": "PASS",
+   "line": "keyboard engaged · the wrapper 360 → 240 px with +60 px left margin (centred) by a style write: its rect 48.0..408.0 → 108.0..348.0 px (inside the old): the root's centre (228.0, 180.0) → (228.0, 180.0) px · then a node appended below it (moves nothing): over 90 frames its centre spans x 228.0..228.0, y 180.0..180.6 px, largest one-frame move per 16.7 ms 0.6 px at +89 ms (bound ≤ 4 px)",
+   "load": "5.4/5.7/6.8"
+  },
+  {
+   "name": "E-10 restale stale place · pointer",
+   "status": "FAIL",
+   "line": "pointer engaged · spacer +120 px by a style write: the root's centre (228.0, 180.0) → (228.0, 300.0) px · then a node appended below it (moves nothing): over 90 frames its centre spans x 228.0..228.0, y 180.6..306.6 px, largest one-frame move per 16.7 ms 119.4 px at +87 ms (bound ≤ 4 px)",
+   "load": "5.4/5.7/6.8"
+  },
+  {
+   "name": "E-10 restale stale place control · pointer",
+   "status": "PASS",
+   "line": "pointer engaged · no layout move (the control): the root's centre (228.0, 180.0) → (228.0, 180.0) px · then a node appended below it (moves nothing): over 90 frames its centre spans x 228.0..228.0, y 180.0..180.6 px, largest one-frame move per 16.7 ms 0.6 px at +83 ms (bound ≤ 4 px)",
+   "load": "5.4/5.7/6.8"
+  },
+  {
+   "name": "E-10 restale stale place (inset) · pointer",
+   "status": "PASS",
+   "line": "pointer engaged · the wrapper 360 → 300 px with +60 px left margin (left edge in, right edge kept) by a style write: its rect 48.0..408.0 → 108.0..408.0 px (inside the old): the root's centre (228.0, 180.0) → (258.0, 180.0) px · then a node appended below it (moves nothing): over 90 frames its centre spans x 258.0..258.0, y 180.0..180.6 px, largest one-frame move per 16.7 ms 0.6 px at +91 ms (bound ≤ 4 px)",
+   "load": "5.3/5.7/6.8"
+  },
+  {
+   "name": "E-10 restale stale place (centred shrink) · pointer",
+   "status": "PASS",
+   "line": "pointer engaged · the wrapper 360 → 240 px with +60 px left margin (centred) by a style write: its rect 48.0..408.0 → 108.0..348.0 px (inside the old): the root's centre (228.0, 180.0) → (228.0, 180.0) px · then a node appended below it (moves nothing): over 90 frames its centre spans x 228.0..228.0, y 180.0..180.6 px, largest one-frame move per 16.7 ms 0.6 px at +89 ms (bound ≤ 4 px)",
+   "load": "5.3/5.7/6.8"
+  },
+  {
+   "name": "E-10 clipstale clipped stale place · keyboard · top · reveal",
+   "status": "PASS",
+   "line": "keyboard engaged · the rest box 20.0 px tall, 6.0 px visible in the scroller · spacer +12 px by a style write (reveal): its top 121.0 → 133.0 px (Δ 12.0), 18.0 px visible · then a node appended below the scroller (moves nothing): the root's largest one-frame centre move per 16.7 ms 0.0 px over 88 frames (bound ≤ 4 px)",
+   "load": "5.3/5.7/6.8"
+  },
+  {
+   "name": "E-10 clipstale clipped stale place · keyboard · top · conceal",
+   "status": "PASS",
+   "line": "keyboard engaged · the rest box 20.0 px tall, 6.0 px visible in the scroller · spacer −12 px by a style write (conceal): its top 121.0 → 109.0 px (Δ -12.0), 0.0 px visible · then a node appended below the scroller (moves nothing): the root's largest one-frame centre move per 16.7 ms 0.0 px over 89 frames (bound ≤ 4 px)",
+   "load": "5.3/5.7/6.8"
+  },
+  {
+   "name": "E-10 clipstale clipped stale place · keyboard · top · control",
+   "status": "PASS",
+   "line": "keyboard engaged · the rest box 20.0 px tall, 6.0 px visible in the scroller · no move (the control): its top 121.0 → 121.0 px (Δ 0.0), 6.0 px visible · then a node appended below the scroller (moves nothing): the root's largest one-frame centre move per 16.7 ms 0.0 px over 90 frames (bound ≤ 4 px)",
+   "load": "6.1/5.8/6.9"
+  },
+  {
+   "name": "E-10 clipstale clipped stale place · keyboard · bottom · reveal",
+   "status": "PASS",
+   "line": "keyboard engaged · the rest box 20.0 px tall, 6.0 px visible in the scroller · spacer −12 px by a style write (reveal): its top 249.0 → 237.0 px (Δ -12.0), 18.0 px visible · then a node appended below the scroller (moves nothing): the root's largest one-frame centre move per 16.7 ms 0.0 px over 89 frames (bound ≤ 4 px)",
+   "load": "5.9/5.8/6.8"
+  },
+  {
+   "name": "E-10 clipstale clipped stale place · keyboard · bottom · conceal",
+   "status": "PASS",
+   "line": "keyboard engaged · the rest box 20.0 px tall, 6.0 px visible in the scroller · spacer +12 px by a style write (conceal): its top 249.0 → 261.0 px (Δ 12.0), 0.0 px visible · then a node appended below the scroller (moves nothing): the root's largest one-frame centre move per 16.7 ms 0.0 px over 89 frames (bound ≤ 4 px)",
+   "load": "5.9/5.8/6.8"
+  },
+  {
+   "name": "E-10 clipstale clipped stale place · keyboard · bottom · control",
+   "status": "PASS",
+   "line": "keyboard engaged · the rest box 20.0 px tall, 6.0 px visible in the scroller · no move (the control): its top 249.0 → 249.0 px (Δ 0.0), 6.0 px visible · then a node appended below the scroller (moves nothing): the root's largest one-frame centre move per 16.7 ms 0.0 px over 89 frames (bound ≤ 4 px)",
+   "load": "5.7/5.8/6.8"
+  },
+  {
+   "name": "E-10 clipstale clipped stale place · pointer",
+   "status": "UNMEASURED",
+   "line": "no driver (REGISTRY §P5-7 item 6, C-E5 §4.3): scrolling the scroller while a mouse hold is down ends the hold in both engines, and clipping before the press lets the press scroll the box back, so the in-place pointer path inside a scroller is not reached; the keyboard cells above read the clipped place",
+   "load": "5.7/5.8/6.8"
+  },
+  {
+   "name": "E-10 pop rebound single light",
+   "status": "REPORT",
+   "line": "seat span.flash · onset (> 0.004) +2 ms · peak 0.350 at +72 ms (ACKNOWLEDGE_WINDOW_MS 150: onset inside, peak inside) · pulses 1 · +2 0.012 +51 0.286 +92 0.309 +133 0.229 +175 0.148 +214 0.070 +255 0.000 +295 0.000 +337 0.000 +378 0.000 +418 0.000 +459 0.000 +500 0.000 +540 0.000 +582 0.000 +625 0.000 +663 0.000 +704 0.000 +745 0.000 +786 0.000 +827 0.000 +868 0.000 +910 0.000",
+   "load": "5.7/5.8/6.8"
+  },
+  {
+   "name": "E-10 pop rebound reverse +60 light",
+   "status": "PASS",
+   "line": "seat span.flash · state \"off\" → \"on\" → back at +60 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 0 ms (bound < 60) · pulses 2 over the two commits (bound ≥ 2) · peak 0.350 at +64 · largest one-frame drop 0.080 (reported) · +1 0.006 +43 0.251 +83 0.204 +125 0.350 +164 0.274 +206 0.193 +246 0.115 +287 0.035 +327 0.000 +369 0.000 +410 0.000 +451 0.000 +492 0.000 +533 0.000 +573 0.000 +614 0.000 +655 0.000 +696 0.000 +737 0.000 +776 0.000 +818 0.000 +859 0.000 +901 0.000",
+   "load": "5.7/5.8/6.8"
+  },
+  {
+   "name": "E-10 pop rebound reverse +200 light",
+   "status": "PASS",
+   "line": "seat span.flash · state \"off\" → \"on\" → back at +200 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 0 ms (bound < 60) · pulses 2 over the two commits (bound ≥ 2) · peak 0.350 at +63 · largest one-frame drop 0.023 (reported) · +1 0.000 +43 0.245 +84 0.309 +124 0.229 +165 0.152 +206 0.072 +247 0.184 +288 0.309 +329 0.229 +369 0.152 +410 0.072 +451 0.000 +492 0.000 +533 0.000 +574 0.000 +614 0.000 +655 0.000 +696 0.000 +738 0.000 +778 0.000 +819 0.000 +859 0.000 +900 0.000",
+   "load": "5.4/5.7/6.8"
+  },
+  {
+   "name": "E-10 pop rebound single dark",
+   "status": "REPORT",
+   "line": "seat span.flash · onset (> 0.004) +2 ms · peak 0.350 at +64 ms (ACKNOWLEDGE_WINDOW_MS 150: onset inside, peak inside) · pulses 1 · +2 0.006 +43 0.245 +84 0.309 +125 0.229 +165 0.150 +208 0.068 +247 0.000 +287 0.000 +328 0.000 +371 0.000 +410 0.000 +451 0.000 +491 0.000 +535 0.000 +574 0.000 +614 0.000 +655 0.000 +697 0.000 +737 0.000 +776 0.000 +818 0.000 +859 0.000 +900 0.000",
+   "load": "5.4/5.7/6.8"
+  },
+  {
+   "name": "E-10 pop rebound reverse +60 dark",
+   "status": "PASS",
+   "line": "seat span.flash · state \"off\" → \"on\" → back at +60 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 0 ms (bound < 60) · pulses 2 over the two commits (bound ≥ 2) · peak 0.350 at +62 · largest one-frame drop 0.087 (reported) · +1 0.006 +42 0.239 +83 0.197 +124 0.350 +163 0.272 +205 0.191 +246 0.111 +287 0.031 +329 0.000 +368 0.000 +408 0.000 +450 0.000 +491 0.000 +533 0.000 +571 0.000 +613 0.000 +652 0.000 +695 0.000 +736 0.000 +777 0.000 +817 0.000 +858 0.000 +900 0.000",
+   "load": "5.4/5.7/6.8"
+  },
+  {
+   "name": "E-10 pop rebound reverse +200 dark",
+   "status": "PASS",
+   "line": "seat span.flash · state \"off\" → \"on\" → back at +200 · light frozen mid-flight (> 0.01, ±0.0005 a frame) 0 ms (bound < 60) · pulses 2 over the two commits (bound ≥ 2) · peak 0.350 at +63 · largest one-frame drop 0.023 (reported) · +1 0.006 +41 0.239 +81 0.315 +124 0.231 +165 0.152 +206 0.072 +246 0.176 +287 0.331 +328 0.251 +369 0.171 +410 0.091 +451 0.012 +493 0.000 +532 0.000 +573 0.000 +613 0.000 +655 0.000 +695 0.000 +736 0.000 +777 0.000 +818 0.000 +858 0.000 +898 0.000",
+   "load": "5.4/5.7/6.8"
+  }
+ ]
+}

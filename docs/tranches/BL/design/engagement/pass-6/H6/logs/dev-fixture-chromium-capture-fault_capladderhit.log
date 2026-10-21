@@ -1,0 +1,14 @@
+## 2026-10-21 06:20:47 load { 7.17 8.16 7.68 } · fixture chromium capture.mjs --fault cap-ladderhit
+# capture · fixture-cap-ladderhit · fixture fault cap-ladderhit · lock wait 0.0 s · other headless processes: chromium 0, webkit 2 · load 7.2/8.2/7.7 at start
+# ladder-only scenes: travel
+# chromium 149.0.7827.55
+  fixture-cap-ladderhit-chromium-fine-light-pop · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 7.3/8.2/7.7
+  FAIL       CAP pop fine light committed · chromium: pointer release after a 450 ms hold, state "off" → "off": NOT COMMITTED, the frame is labelled so · load 7.3/8.2/7.7
+  FAIL       CAP pop ladder fine light · chromium: UNREAD: the pointer at (71, 113) hits span[cover].fx-cover, not the target (the ladder is read only through a hit on the trigger) · load 7.3/8.2/7.7
+  fixture-cap-ladderhit-chromium-coarse-light-pop · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 7.4/8.2/7.7
+  FAIL       CAP pop coarse light committed · chromium: short tap, state "off" → "off": NOT COMMITTED, the frame is labelled so · load 7.4/8.2/7.7
+  PASS       CAP travel ladder fine light · chromium: inset paint L rest 0.6734 (rgba(0, 0, 0, 0)) · hover 0.6189 (rgb(207, 211, 220); darker by 0.0545) · hover+press 0.4965 (rgb(185, 191, 204)) · released, still hovered 0.6189 · the press deepens the hover by 0.1224 (bound: no step back past 0.002) · load 7.4/8.2/7.7
+# capture done · load 7.4/8.2/7.7 at end
+CAP chromium FAIL · 1 pass, 3 fail, 0 unmeasured of 4 gating cells (0 reported) · load 7.2/8.2/7.7 at start, 7.4/8.2/7.7 at end
+exit 1
+## 2026-10-21 06:20:57 load { 7.37 8.17 7.68 } · end
