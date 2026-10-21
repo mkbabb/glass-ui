@@ -1,11 +1,38 @@
 # Changelog
 
-## 10.1.2 — 2026-10-20
+## 10.1.2 — 2026-10-21
 
-One change: atlas G-4, arm (b-ii), the declared seat marker, by owner-delegate ruling
+Two changes. Atlas G-4, arm (b-ii), the declared seat marker, by owner-delegate ruling
 (records: `docs/tranches/BL/audit/INBOUND.md` O-102d;
 `docs/tranches/BK/coordination/ATLAS-TO-GLASS-2026-10-17-U-BATCH.md` G-3/G-4 and its
-addendum 1). `MIGRATION.md` §10.1.2 says what a consumer with its own dock seats must do.
+addendum 1). And value.js O-101, the dock's stale expanded endpoint (records: INBOUND
+O-101, O-101a; `docs/tranches/BK/coordination/valuejs-outbound-2026-10-19-dock-stale-expanded-endpoint.md`).
+`MIGRATION.md` §10.1.2 says what a consumer with its own dock seats must do.
+
+- **An expand reserves the box it settles at (O-101).** The expanded endpoint
+  (`--dock-expanded-px`, which `[data-morphing]` reserves as the dock's inline size, or
+  block size on a vertical dock) was latched while the dock was expanded. A consumer
+  breakpoint that changed the full pane while the dock was collapsed left it at the old
+  pane's span, and the next expand reserved that. value.js measured a 508px dock at a
+  390px viewport, with the document scrolling for 51 to 386 frames until the morph
+  settled and snapped to 188. Now the morph arms after the patch (post-flush), and before
+  it sets `[data-morphing]` it measures the root. Read with no morph on it, the root lays
+  out as the settled expanded dock with the new pane, under whatever constrains it (a
+  host, a breakpoint, a fixed width). That border box is the endpoint the morph reserves.
+  This holds when the breakpoint expands the dock in the same render as the pane change
+  (value.js's shape) and when the expand comes later. The W7 guard stands: the pre-flush
+  posture flip still writes no endpoint. Nothing is clipped and no overflow is hidden.
+  Witnesses: unit `tests/components/custom/dock/dockMorphMeasure.test.ts` "the morph
+  reserves the expanded box of the pane patched in with the expand" (RED on 10.1.1: 592
+  reserved for 160). Engine: `tests-visual/release-10-1-2.spec.ts` "O-101 · the expanded
+  endpoint follows a pane changed while collapsed" (scene `stale-endpoint`: 12 seats at
+  768px and above, 3 below, the dock in flow), at 1440->390 and 390->1440, with the
+  expand in the breakpoint's render and after it. In Chromium and Playwright WebKit 2287
+  they assert that `--dock-expanded-px` on the first morphing frame equals the settled
+  `offsetWidth` (+-1 px), and that no sampled frame has `scrollWidth > clientWidth`. On
+  10.1.1 all four are RED in both engines: 592px reserved for a 160px dock at
+  1440->390, where the document reached `scrollWidth` 491 at `clientWidth` 390, and 160
+  reserved for 592 at 390->1440.
 
 - **The dock run roves only declared seats.** A direct child of the run is a seat when it
   carries `data-glass-dock-seat`. `DockControl` and `DockTrigger` set it, and so does
