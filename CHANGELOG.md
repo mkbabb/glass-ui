@@ -24,6 +24,13 @@ Proposed by the atlas formation (U/B7, the owner's order of 2026-10-19 in sci-re
   Chip, and a held ToggleGroupItem press, all at computed scale 1). On `v10.1.1` all 6 cells
   fail (hover 1.015, press 0.97); here all 6 pass.
 
+- **Radius scales with size (B7-G4).** `--radius-pill: 1rem`, `--radius-circle: 50%`, and a
+  circle / stadium / corner disposition for all 91 uses in 43 files (the table is in the
+  U/B7 lane doc, sci-report `atlas/docs/tranches/U/build/B7-GLASS-SHAPE.md`). Witness:
+  `tests-visual/radius-scale.spec.ts`, light and dark: 8 circles compute 50%, a 24 px chip
+  stays a stadium, a 44 px bar and a 40 px field show 16 px corners. On `v10.1.1` all 44
+  cells fail; here all 44 pass.
+
 ## 10.1.1 — 2026-10-19
 
 Four cures, one guarded row and one owner-ruled addition. Asked by the atlas consumer (U batch

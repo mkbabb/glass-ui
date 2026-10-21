@@ -34,7 +34,7 @@ function getRtlScrollType(): RtlScrollType {
     const content = document.createElement("div");
     port.dir = "rtl";
     port.style.cssText =
-        "position:absolute;inset:-9999px auto auto -9999px;width:4px;height:1px;overflow:scroll";
+        "position:absolute;inset:0 auto auto 0;visibility:hidden;width:4px;height:1px;overflow:scroll";
     content.style.width = "8px";
     port.append(content);
     document.body.append(port);

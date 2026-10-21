@@ -65,6 +65,7 @@ const RADIUS_ROLE_INVENTORY: Readonly<Record<string, RadiusClass>> = Object.free
     "--radius-2xl": "primitive",
     "--radius-3xl": "primitive",
     "--radius-pill": "primitive",
+    "--radius-circle": "primitive",
     // semantic-role — what the surface IS
     "--radius-media": "semantic-role",
     "--radius-control": "semantic-role",
@@ -377,6 +378,9 @@ const ROLE_OF: Readonly<Record<string, RadiusRole>> = Object.freeze({
     "--radius-inset": "relay",
 });
 
+/** U/B7: the circle is its own value, a percentage, outside the px role spine. */
+const CIRCLE = "--radius-circle";
+
 /** The role values, verbatim from the settlement's terminal table. */
 const ROLE_PX: Readonly<Record<Exclude<RadiusRole, "relay">, number>> = Object.freeze({
     floor: 4,
@@ -384,7 +388,10 @@ const ROLE_PX: Readonly<Record<Exclude<RadiusRole, "relay">, number>> = Object.f
     control: 10,
     card: 16,
     room: 24,
-    pill: 9999,
+    // U/B7: the pill rung is 1rem — a stadium on a box up to 32px tall, a 16px
+    // corner above (the owner's order of 2026-10-19, "this pill is too rounded to be
+    // that large").
+    pill: 16,
 });
 
 /** The 12px rung the role spine has no seat for. Named, not hidden. */
@@ -424,9 +431,13 @@ describe("6. the role spine — 7 roles, and every member of a role is ONE value
 
     it("assigns every live radius rung to a role (a new rung with no role fails)", () => {
         const roleless = radiusRungs.filter(
-            (t) => !(t in ROLE_OF) && !OFF_ROLE_12.includes(t as never),
+            (t) => !(t in ROLE_OF) && !OFF_ROLE_12.includes(t as never) && t !== CIRCLE,
         );
         expect(roleless).toEqual([]);
+    });
+
+    it("declares the circle as 50%, apart from the pill rung", () => {
+        expect(RADIUS_DECLS.get(CIRCLE)).toBe("50%");
     });
 
     it("declares every rung the role spine names (deleting one silently fails)", () => {
@@ -481,7 +492,7 @@ describe("7. this wave's role bindings", () => {
         expect(toast).not.toMatch(/[\s'"]rounded-panel[\s'"]/);
     });
 
-    it("Dialog close ✕ wears the pill role (the settlement's pill row names it)", () => {
+    it("Dialog close ✕ is a circle (U/B7: a square tap target is a circle, not the pill rung)", () => {
         // The bind is unchanged; only its ADDRESS moved. W-DIALOG folded the dialog's
         // five CSS lanes into one partial, so the ✕'s corner is a declaration in
         // `dialog/styles.css` rather than a utility on the SFC's class string. The role
@@ -490,7 +501,7 @@ describe("7. this wave's role bindings", () => {
             /:where\(\[data-slot="dialog-close"\]\)\s*\{([^}]*)\}/,
         );
         expect(close, "the ✕ rule exists").not.toBeNull();
-        expect(close![1]).toMatch(/border-radius:\s*var\(--radius-pill\);/);
+        expect(close![1]).toMatch(/border-radius:\s*var\(--radius-circle\);/);
         expect(close![1]).not.toMatch(/--radius-(?:xs|sm)\b/);
     });
 
@@ -573,7 +584,7 @@ describe("7. this wave's role bindings", () => {
         const inventoried = Object.keys(RADIUS_ROLE_INVENTORY).filter((t) =>
             t.startsWith("--radius"),
         );
-        const spined = [...Object.keys(ROLE_OF), ...OFF_ROLE_12];
+        const spined = [...Object.keys(ROLE_OF), ...OFF_ROLE_12, CIRCLE];
         expect([...spined].sort()).toEqual([...inventoried].sort());
     });
 });

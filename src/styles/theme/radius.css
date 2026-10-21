@@ -16,8 +16,12 @@
    the band's siblings cite THIS, not scattered inline comments.
 
    Role                            Token             Value    Shape       Grammar
-   ─ icon / single tap-target      50% / --radius-pill  circle   round    single tap-target
-   ─ control / field / mode / cta  --radius-control  stadium  round       primary action = pill
+   ─ icon / single tap-target      --radius-circle   50%      round       single tap-target
+   ─ control / field / mode / cta  --radius-control  1rem     round       a stadium up to 32px tall,
+                                                                          a 16px corner above
+   ─ wrapping or wide control      --radius-bar      12px     round       Button, ToggleGroupItem,
+                                                                          SegmentedTabs past their
+                                                                          rung (data-shape="bar")
    ─ multi-line field / stepper    --radius-field    16px     soft-rect   a box is not a stadium
    ─ content card / popover        --radius-card     16px     squircle@lg content container (R28-40)
    ─ alert                         --radius-card     16px     round       a presented plate — the
@@ -46,15 +50,19 @@
    ─ media tile (skeleton/avatar/  --radius-media    10px     soft-rect   media/tile surface —
      command)                      (= --radius)                           NOT the Input pill
 
+   RADIUS SCALES WITH SIZE (U/B7, the owner's order of 2026-10-19: "this pill is too
+   rounded to be that large"). `--radius-pill` is `1rem`. The engine clamps a radius to
+   half the box's shorter side, so a box 32px tall or less still renders a full
+   stadium, and a 44px bar renders 16px corners. A circle is `--radius-circle` (50%),
+   never the pill.
+
    THE BUTTON STADIUM BOUND. A stadium is `h/2` OF THE CONTROL RUNG, not of the box.
-   `--radius-pill` (9999px) is clamped by the engine to half the ACTUAL block-size,
-   so a control whose label wraps grows a balloon — the curvature tracks the content
-   instead of the control. Any control that can wrap resolves its corner against its
+   A radius larger than half the box is clamped by the engine to half the ACTUAL
+   block-size, so a control whose label wraps grows a balloon — the curvature tracks
+   the content instead of the control. Any control that can wrap resolves its corner against its
    own control rung (`.button` → `calc(var(--button-size) / 2)`, where --button-size
    IS `--control-h-{xs,sm,md,lg}`); single-line is byte-identical to the stadium it
-   replaces, and wrapped/multi-line keeps single-line curvature. A `min(9999px, …)`
-   bound is REFUSED — it couples the corner to a second token to re-derive a clamp
-   the engine already applies.
+   replaces, and wrapped/multi-line keeps single-line curvature.
 
    THE NESTING LAW (boundary-sharing, not an absolute silhouette ban). Concentric
    subtraction applies when two painted surfaces SHARE A BOUNDARY: an inner plate
@@ -110,10 +118,13 @@
     --radius-md: 6px;
     --radius-xl: 12px;
     --radius-2xl: 1rem;
-    /* A finite radius rung above --radius-2xl (16px), below
-       --radius-pill (the stadium). The big-dock card shell's corner geometry. */
+    /* A finite radius rung above --radius-2xl (16px). The big-dock card shell's
+       corner geometry. */
     --radius-3xl: 1.5rem;
-    --radius-pill: 9999px;
+    /* The pill rung: a stadium on a box up to 32px tall, a 16px corner above. */
+    --radius-pill: 1rem;
+    /* The circle: icons, dots, thumbs, avatars, the collapsed dock. */
+    --radius-circle: 50%;
 
     /* Semantic radius aliases — plain @theme (not inline; see header note).
        Value-identical siblings (e.g. --radius-card + --radius-dialog) would
@@ -138,7 +149,7 @@
     --radius-button:  var(--radius);
     /* Form-radius unification. `--radius-field` is the non-pill field
        rung the multi-line / stepper form atoms (Textarea, NumberFieldInput)
-       resolve so a multi-line box stops inheriting the `9999px` stadium pill;
+       resolve so a multi-line box stops inheriting the stadium pill;
        single-line controls (Input, SelectTrigger) keep the pill — INCLUDING inside a
        dialog: the former modal-scoped `field/control.css` override was the operative
        producer of the concentric inversion and is deleted. `--radius-control`
@@ -148,8 +159,7 @@
     --radius-field:   var(--radius-2xl);
     /* (Law 2 — capsule-vs-card) — the BOUNDED strip rung a
        COLUMN-STACK variant of a stadium base re-binds onto. A multi-row segmented
-       track cannot wear the `9999px` pill: on a tall box the stadium clamps its
-       end-caps to a ~46px half-height balloon. ≈12px sits between
+       track cannot wear the pill rung, which is a 16px corner on a tall box. ≈12px sits between
        --radius-control (the stadium pill) and --radius-card (1rem) — a soft
        rounded-rect, never a stadium. The vertical SegmentedTabs track reads it;
        the shipped concentric track calc re-resolves the corner off it for free. */
@@ -158,8 +168,8 @@
        fixed small px. A fixed `--radius-md` (6px) reads SQUARE on a 16-24px control
        (6px on a 16px box = 0.38-of-height — a rounded-rect, not a pill); the iOS-27
        small-control silhouette is a near-stadium pill where the radius SCALES with the
-       control (clamped to half-height by `--radius-pill`'s 9999px geometry, so a 16px
-       control reads an 8px-radius pill — soft at every size). This retires the raw
+       control (clamped to half-height by the engine, so a 16px control reads an
+       8px-radius pill — soft at every size). This retires the raw
        `rounded-sm` (4px) on Checkbox + base Tabs AND the small-control square class in
        ONE rung. The `card` toggle TILE keeps `--radius-card` (the large glass surface
        keeps its 1rem squircle — only the small inline controls re-round). The corner-
@@ -168,9 +178,8 @@
     --radius-control: var(--radius-pill);
     --radius-badge:   var(--radius-pill);
     --radius-dock:    var(--radius-pill);
-    /* The iOS-27 segmented-control stadium register. The pill is a
-       stadium by construction (--radius-pill clamps to half-height on a short box →
-       a true end-cap), so the tab strip stops being a squared rounded-rect. The
+    /* The segmented-control register. On a strip up to 32px tall the pill rung
+       clamps to half-height (a true end-cap); a taller strip takes 16px corners. The
        value.js DESIGN.md idiom: the role-bearing pill token, NOT a hand-rolled
        `rounded-full`. A consumer retunes the tab geometry via `:root { --radius-tab }`. */
     --radius-tab:     var(--radius-pill);

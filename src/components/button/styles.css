@@ -57,7 +57,7 @@
            box beside it, at the same `size`. */
         border: 1px solid var(--button-edge);
         /* The stadium bound, resolved against the CONTROL RUNG rather than the
-           box. `--radius-pill` (9999px) is clamped by the engine to half the
+           box. A radius above half the box is clamped by the engine to half the
            ACTUAL block-size, so a button whose label wraps to two lines grows a
            balloon: the curvature tracks the content instead of the control. The
            corner is half the control rung `--button-size` (which the size arms
@@ -68,9 +68,7 @@
            to half the short edge, which is the resolved-corner precedent — and it is
            the `icon / single tap-target → 50%` row of the radius role spine, so the
            icon arm mints no corner of its own.
-           A bare `min(9999px, …)` is REFUSED: it couples the corner to a second
-           token to re-derive a clamp the engine already applies (GF-DOCK §STRIKE —
-           `from: 50%` IS the resolved corner). */
+           */
         border-radius: calc(var(--button-size) / 2);
         color: var(--button-ink);
         font: inherit;

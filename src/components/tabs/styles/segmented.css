@@ -41,10 +41,9 @@
 @layer components {
     .segmented-tabs {
         --bouncy-track-trim: 0.1875rem;
-        /* The iOS-27 stadium register. The pill reads the role-bearing
-           `--radius-tab` (= --radius-pill = 9999px) — on a short pill box this clamps to
-           half-height → a TRUE stadium end-cap (not the squared `0.3125rem` rounded-rect
-           form). The TRACK corner is CONCENTRIC with the pill (Apple's
+        /* The pill reads the role-bearing `--radius-tab` (= `--radius-pill`, 1rem): on
+           a strip up to 32px tall it clamps to half-height, a true stadium end-cap; a
+           taller strip takes 16px corners. The TRACK corner is CONCENTRIC with the pill (Apple's
            `.containerConcentric`): the pill radius + the trim inset, so a stadium pill
            sits inside a near-stadium track. No breakpoint radius bump — a stadium does
            not change radius across viewports (clean break, the 640px radius lines gone). */
@@ -72,9 +71,8 @@
         grid-auto-columns: unset;
         align-items: stretch;
         /* (Law 2 — capsule-vs-card). A COLUMN-STACK track cannot
-           wear the horizontal arm's stadium `--radius-tab` (= --radius-pill = 9999px):
-           on a tall multi-row box the stadium clamps its end-caps to a ~46px half-height
-           balloon (the live-measured 10003px→46px defect). The vertical arm
+           wear the horizontal arm's `--radius-tab`: a multi-row box needs the bounded
+           strip corner. The vertical arm
            re-binds the family radius var onto the BOUNDED `--radius-strip` (≈12px); the
            shipped concentric track calc (`--bouncy-track-radius`, above) re-resolves the
            track corner off it for free. The horizontal `.segmented-tabs` is byte-untouched

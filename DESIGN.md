@@ -375,22 +375,23 @@ this table must agree). Five classes: **primitive** (the numeric ladder), **sema
 | `--radius-xl`   | 12px     | 12 px             | Panel rung                    |
 | `--radius-2xl`  | 1rem     | 16 px             | Large-card rung               |
 | `--radius-3xl`  | 1.5rem   | 24 px             | Big-dock/sheet rung           |
-| `--radius-pill` | 9999px   | stadium           | Stadium/capsule (half-height) |
+| `--radius-pill` | 1rem     | 16 px             | Pill rung: a stadium up to 32 px tall, a 16 px corner above (U/B7) |
+| `--radius-circle` | 50%    | circle            | Icons, dots, thumbs, avatars, the collapsed dock (U/B7) |
 
 ### Semantic roles — what the surface IS
 
 | Token               | Resolves to        | Pixel | Role                                                        |
 | ------------------- | ------------------ | ----- | ---------------------------------------------------------- |
 | `--radius-media`    | var(--radius)      | 10 px | Media tile — Skeleton default, Avatar square. NOT the Input |
-| `--radius-control`  | var(--radius-pill) | stadium | Control/field/mode/action pill (input-bar, tag delete)   |
+| `--radius-control`  | var(--radius-pill) | 16 px | Control/field/mode/action pill (a stadium up to 32 px tall) |
 | `--radius-field`    | var(--radius-2xl)  | 16 px | Multi-line field / stepper / dialog-nested input, TagsInput container |
 | `--radius-card`     | var(--radius-2xl)  | 16 px | Content card / popover                                     |
 | `--radius-dialog`   | var(--radius-card) | 16 px | Dialog (matches the card — F48)                            |
 | `--radius-panel`    | var(--radius-xl)   | 12 px | Panel / configurator / Command panel                      |
 | `--radius-strip`    | 0.75rem            | 12 px | Bounded column-stack segmented track (vertical)            |
-| `--radius-tab`      | var(--radius-pill) | stadium | Segmented-control stadium (horizontal)                   |
-| `--radius-badge`    | var(--radius-pill) | stadium | Badge                                                    |
-| `--radius-dock`     | var(--radius-pill) | stadium | Dock container                                           |
+| `--radius-tab`      | var(--radius-pill) | 16 px | Segmented control (horizontal; a stadium up to 32 px tall) |
+| `--radius-badge`    | var(--radius-pill) | 16 px | Badge (a stadium at badge height)                          |
+| `--radius-dock`     | var(--radius-pill) | 16 px | Dock container (the collapsed dock is `--radius-circle`)   |
 | `--radius-dock-card`| var(--radius-3xl)  | 24 px | Big-dock card shell (density-scaled)                       |
 | `--radius-tooltip`  | var(--radius-lg)   | 10 px | Tooltip                                                    |
 

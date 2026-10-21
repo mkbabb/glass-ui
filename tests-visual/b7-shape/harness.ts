@@ -33,6 +33,55 @@ const TAB_OPTIONS = [
 ];
 
 const scenes: Record<string, () => Promise<Component>> = {
+    // O-17: radius scales with size; circles are circles.
+    radius: async () => {
+        const { Avatar, AvatarFallback } = await import("../../src/components/avatar");
+        const { StatusDot } = await import("../../src/components/status-dot");
+        const { Switch } = await import("../../src/components/switch");
+        const { RadioGroup, RadioGroupItem } = await import("../../src/components/radio-group");
+        const { DarkModeToggle } = await import("../../src/components/dark-mode-toggle");
+        const { PagerDots } = await import("../../src/components/pager-dots");
+        const { Chip } = await import("../../src/components/chip");
+        const { Input } = await import("../../src/components/input");
+        const { default: GlassDock } = await import("../../src/components/dock/GlassDock.vue");
+        const { default: DockControl } = await import("../../src/components/dock/DockControl.vue");
+        const { default: ToggleGroup } = await import("../../src/components/toggle-group/ToggleGroup.vue");
+        const { default: ToggleGroupItem } = await import("../../src/components/toggle-group/ToggleGroupItem.vue");
+        return defineComponent(() => {
+            const on = ref(true);
+            const radio = ref("a");
+            const pick = ref("a");
+            return () =>
+                h("div", { style: "padding:32px;display:flex;flex-direction:column;gap:20px;align-items:flex-start" }, [
+                    h(Avatar, { size: "lg", "data-witness": "avatar" }, () => h(AvatarFallback, () => "MB")),
+                    h(StatusDot, { state: "online", "data-witness": "status-dot" }),
+                    h(Switch, { modelValue: on.value, "onUpdate:modelValue": (v: boolean) => (on.value = v), "aria-label": "On", "data-witness": "switch" }),
+                    h(RadioGroup, { modelValue: radio.value, "aria-label": "Pick", "data-witness": "radio" }, () => [
+                        h(RadioGroupItem, { value: "a", "aria-label": "A" }),
+                    ]),
+                    h(DarkModeToggle, { "data-witness": "dark-toggle" }),
+                    h(PagerDots, { count: 3, modelValue: 0, "data-witness": "pager" }),
+                    h(Chip, { size: "sm", "data-witness": "chip" }, () => "Funding"),
+                    h("div", { style: "width:320px" }, [h(Input, { "aria-label": "Search", "data-witness": "input" })]),
+                    h("div", { class: "rounded-pill", "data-witness": "bar44", style: "height:44px;width:320px;background:var(--muted)" }),
+                    h(ToggleGroup, { type: "single", modelValue: pick.value, "aria-label": "Program", "data-witness": "toggles" }, () => [
+                        h(ToggleGroupItem, { value: "a" }, () => "E-Rate"),
+                    ]),
+                    h("div", { style: "position:relative;height:80px" }, [
+                        h(GlassDock, { collapse: "closed", "data-witness": "dock-collapsed" }, () => [
+                            h(DockControl, { "aria-label": "Play" }, () => "▶"),
+                        ]),
+                    ]),
+                    h("div", { style: "position:relative;height:80px" }, [
+                        h(GlassDock, { collapse: false, "data-witness": "dock-open" }, () => [
+                            h(DockControl, { "aria-label": "Play", "data-witness": "dock-icon" }, () => "▶"),
+                            h(DockControl, { "aria-label": "Stop" }, () => "■"),
+                        ]),
+                    ]),
+                ]);
+        });
+    },
+
     // O-4/§4.2: capsule hover and ToggleGroup press carry no spatial leg.
     press: async () => {
         const { default: ToggleGroup } = await import("../../src/components/toggle-group/ToggleGroup.vue");

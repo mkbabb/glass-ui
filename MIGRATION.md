@@ -37,6 +37,17 @@ Proposed by the atlas formation on local branch `u/b7-glass-shape` off `release/
   change. `.tap-squish` and `useLiquidPress` on Button, Switch, Checkbox, Radio and the dock
   controls are unchanged.
 
+- **`--radius-pill` is `1rem`; new `--radius-circle: 50%` (B7-G4).** A box up to 32 px tall
+  still renders a full stadium (the engine clamps a radius to half the shorter side); a
+  taller box shows 16 px corners. Circles move to `--radius-circle`: avatar, status dot,
+  dot ring, pager dot, switch thumb, radio dot, dark-mode toggle, dock icon button, dialog
+  close, icon chip and chip remove, menu radio dot, expandable trigger and the collapsed
+  dock at rest. `--mark-stadium` is set for `.badge-atom` only. The dock's cut cap rests on
+  `--radius-dock` and cuts to `--radius-xs`. No literal `9999px` remains in `src`. Visual
+  break: a consumer box taller than 32 px that read `--radius-pill`, `--radius-control`,
+  `--radius-tab`, `--radius-badge` or `--radius-dock` now shows corners; a consumer circle
+  that used the pill on a box above 32 px moves to `--radius-circle`.
+
 ## 10.1.1
 
 One type-level change, below; no runtime break. Behaviour a consumer may notice:
