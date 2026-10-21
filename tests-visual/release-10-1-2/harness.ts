@@ -4,7 +4,7 @@
 // so the same file mounts unchanged on a 10.1.1 tree: that is how each witness is shown
 // RED on 10.1.1 and GREEN on 10.1.2.
 import "../../demo/demo.css";
-import { createApp, defineComponent, h, ref, type Component } from "vue";
+import { createApp, defineComponent, h, onUnmounted, ref, type Component } from "vue";
 
 import GlassDock from "../../src/components/dock/GlassDock.vue";
 import DockControl from "../../src/components/dock/DockControl.vue";
@@ -159,6 +159,47 @@ const scenes: Record<string, Component> = {
                 ),
                 h(DockControl, { "aria-label": "Last", "data-witness": "seat-2" }, () => "B"),
             ]);
+    }),
+
+    // O-101 · DOCK-STALE-EXPANDED-ENDPOINT. A collapsible dock whose full pane is a
+    // consumer breakpoint's: 12 seats at >= 768px, 3 below. `?pin=narrow` pins the dock
+    // open (`collapse: false`) below the breakpoint and `?pin=wide` above it, so one
+    // resize changes the full pane and expands the dock in the same render (value.js's
+    // shape). Without `pin` the dock stays collapsible; `window.__expand()` and
+    // `window.__collapse()` move it.
+    "stale-endpoint": defineComponent(() => {
+        const query = matchMedia("(min-width: 768px)");
+        const wide = ref(query.matches);
+        const onChange = () => (wide.value = query.matches);
+        query.addEventListener("change", onChange);
+        onUnmounted(() => query.removeEventListener("change", onChange));
+        const pin = params.get("pin");
+        const dock = ref<{ expand: () => void; collapse: () => void } | null>(null);
+        w.__expand = () => dock.value?.expand();
+        w.__collapse = () => dock.value?.collapse();
+        return () => {
+            const pinned = (pin === "narrow" && !wide.value) || (pin === "wide" && wide.value);
+            const count = wide.value ? 12 : 3;
+            // In flow, centred on a grid track: a reserved box wider than the viewport
+            // overflows the document here, as value.js's dock band did.
+            return h("div", { style: "display:grid;justify-content:center;padding-block:24px" }, [
+                h(
+                    GlassDock,
+                    { ref: dock, collapse: pinned ? false : "closed" },
+                    {
+                        default: () =>
+                            Array.from({ length: count }, (_, i) =>
+                                h(
+                                    DockControl,
+                                    { "aria-label": `Seat ${i}`, "data-witness": `seat-${i}` },
+                                    () => String.fromCharCode(65 + i),
+                                ),
+                            ),
+                        collapsed: () => h("span", { "data-witness": "summary" }, "≡"),
+                    },
+                ),
+            ]);
+        };
     }),
 
     // RadioGroup and ToggleGroup seated directly, between two declared seats.
