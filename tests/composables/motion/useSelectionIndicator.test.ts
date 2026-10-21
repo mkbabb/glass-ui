@@ -84,7 +84,6 @@ function harness(withIndicator: Ref<boolean>, present: Ref<boolean> = ref(true))
                 buttonRefs,
                 options: computed(() => OPTIONS),
                 model,
-                activeValues: computed(() => (model.value ? [model.value] : [])),
                 vertical: computed(() => false),
             });
             expose({ singleSliderStyle: api.singleSliderStyle });
