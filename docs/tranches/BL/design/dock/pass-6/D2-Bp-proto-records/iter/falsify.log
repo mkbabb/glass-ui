@@ -1,0 +1,14 @@
+D2 pass 6, B′ prototype: falsification of the two test edits (transcribed from the seat's runs, 2026-10-20 ~22:2x, guarded --light vitest)
+
+1. g-dock-lattice.test.ts "a cut is a mask ramp, never an opacity"
+   plant: setMask's `m.mask = mask;` -> `m.mask = mask; m.el.style.opacity = "0.5";` (useDockScene.ts)
+   result:  × a cut is a mask ramp, never an opacity 8ms
+            Tests  1 failed | 41 passed | 1 expected fail (43)
+   restore: scene copied back from the seat's backup; the file then passes (64 passed | 1 expected fail over
+            GlassDock.posture + g-dock-lattice)
+
+2. GlassDock.posture.test.ts "an outside press right after an expand folds the dock at once (O-91 C8)"
+   plant: useDockState.ts:147 hover's `"click.away": (c) => (c.held ? null : "collapsed")` -> `"click.away": () => null`
+   result:  × an outside press right after an expand folds the dock at once (O-91 C8) 12ms
+            Tests  1 failed | 21 passed (22)
+   restore: useDockState.ts copied back; `diff wt/.../useDockState.ts ref/.../useDockState.ts` (ref = HEAD + floor v5): identical

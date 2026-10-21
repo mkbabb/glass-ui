@@ -1,0 +1,161 @@
+{
+ "witness": "F7",
+ "target": "wt",
+ "when": "2026-10-21T02:32:02.520Z",
+ "load": 36.81,
+ "steps": {
+  "lib": {
+   "exit": 0,
+   "ms": 10063,
+   "load": [
+    30.83,
+    30.56
+   ],
+   "tail": ".glass-generation-HRzqoQ/aurora.js                                                     203.50 kB │ gzip: 65.43 kB |  | \u001b[32m✓ built in 1.30s\u001b[39m | declaration entries: projected 63 public entries | gen-component-styles: wrote /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p6/Bp-proto/wt/.glass-generation-HRzqoQ/component-styles.css | {\"type\":\"glass-ui:ready\",\"generation\":\"f762029d7ec8fb3a012b539419a92a0357637098ccfe10a196d1942199515ea3\",\"output\":\"/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p6/Bp-proto/wt/dist\",\"tuple\":\"js/sfc-css/declarations/relays/styles/fonts/uti"
+  },
+  "demo": {
+   "exit": 0,
+   "ms": 2525,
+   "load": [
+    30.56,
+    30.56
+   ],
+   "tail": "dist-demo/assets/Blob-BFTlViB_.js                                               93.77 kB │ gzip: 34.33 kB | dist-demo/assets/Aurora-BOppQyYQ.js                                            207.96 kB │ gzip: 69.28 kB |  | \u001b[32m✓ built in 1.89s\u001b[39m |  | a:b referenced in a:b didn't resolve at build time, it will remain unchanged to be resolved at runtime"
+  },
+  "typecheck": {
+   "exit": 0,
+   "ms": 23763,
+   "load": [
+    30.56,
+    35.11
+   ],
+   "tail": "> @mkbabb/glass-ui@10.1.0 typecheck | > vue-tsc --noEmit && vue-tsc --noEmit -p tsconfig.test.json"
+  },
+  "units": {
+   "exit": 0,
+   "ms": 92065,
+   "load": [
+    35.11,
+    36.81
+   ],
+   "tail": "stderr | tests/composables/sidebar/useSidebarFollow.test.ts > useSidebarFollow — the manual-override exemption > matches no consumer class name — a .sidebar-top-btn press suspends | [Vue warn]: Invalid watch source:  { value: null } A watch source can only be a getter/effect function, a ref, a reactive object, or an array of these types.  |   at <App> |  | stderr | tests/composables/sidebar/useSidebarFollow.test.ts > useSidebarFollow — the manual-override exemption > matches no consumer class name — a .sidebar-top-btn press suspends | [Vue warn]: Invalid watch source:  { value: null } A watch "
+  }
+ },
+ "cells": [
+  {
+   "engine": "source",
+   "cell": "f7·typecheck",
+   "pass": true,
+   "failed": [],
+   "summary": "typecheck exit 0",
+   "load": 36.81
+  },
+  {
+   "engine": "source",
+   "cell": "f7·build",
+   "pass": true,
+   "failed": [],
+   "summary": "lib build exit 0, demo dist build exit 0",
+   "load": 36.81
+  },
+  {
+   "engine": "source",
+   "cell": "f7·units",
+   "pass": true,
+   "failed": [],
+   "summary": "232 test file(s) outside tests/gates/, 2241 test(s); 0 file(s) failing",
+   "load": 36.81,
+   "failingFiles": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·boot-graph",
+   "pass": true,
+   "failed": [],
+   "summary": "14 assertion(s), 14 ran, 0 failing; build arm 3/3 ran",
+   "load": 36.81,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·comment-ratio",
+   "pass": true,
+   "failed": [],
+   "summary": "15 assertion(s), 15 ran, 0 failing",
+   "load": 36.81,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·feedback-tint-seam",
+   "pass": true,
+   "failed": [],
+   "summary": "3 assertion(s), 3 ran, 0 failing",
+   "load": 36.81,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·gate-register",
+   "pass": true,
+   "failed": [],
+   "summary": "21 assertion(s), 21 ran, 0 failing",
+   "load": 36.81,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·orphan-css-partial",
+   "pass": true,
+   "failed": [],
+   "summary": "9 assertion(s), 9 ran, 0 failing",
+   "load": 36.81,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·overfit-structure",
+   "pass": true,
+   "failed": [],
+   "summary": "15 assertion(s), 15 ran, 0 failing",
+   "load": 36.81,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·tabs-seam",
+   "pass": true,
+   "failed": [],
+   "summary": "26 assertion(s), 26 ran, 0 failing",
+   "load": 36.81,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·token-hygiene",
+   "pass": true,
+   "failed": [],
+   "summary": "4 assertion(s), 4 ran, 0 failing",
+   "load": 36.81,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·trap-gates",
+   "pass": true,
+   "failed": [],
+   "summary": "6 assertion(s), 6 ran, 0 failing",
+   "load": 36.81,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·type-hygiene",
+   "pass": true,
+   "failed": [],
+   "summary": "7 assertion(s), 7 ran, 0 failing",
+   "load": 36.81,
+   "failing": []
+  }
+ ]
+}

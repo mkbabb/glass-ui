@@ -1,0 +1,25 @@
+FAIL first-expand [] load 20.47
+FAIL warm-collapse [window] load 20.47
+   window: window 262.6 ms > clock 214.2 + 2×16.7 + stall 10.7 = 258.3 ms (O-64 R-4, H-3d)
+FAIL warm-expand [window] load 20.47
+   window: window 258.3 ms > clock 214.2 + 2×16.7 + stall 9.1 = 256.7 ms (O-64 R-4, H-3d)
+FAIL content-add [] load 20.47
+FAIL content-remove [] load 20.47
+FAIL lead-add [] load 20.47
+FAIL lead-remove [] load 20.47
+FAIL reversal [window] load 20.47
+   window: window 273.9 ms after the retarget > clock 214.2 + 2×16.7 + stall 10.1 = 257.7 ms (O-64 R-4, H-3d)
+FAIL swap-long [] load 20.47
+FAIL swap-short [] load 20.47
+FAIL anchor-end·warm-expand [window] load 18.41
+   window: window 262.3 ms > clock 214.2 + 2×16.7 + stall 10 = 257.6 ms (O-64 R-4, H-3d)
+FAIL anchor-end·warm-collapse [window] load 18.41
+   window: window 262.2 ms > clock 214.2 + 2×16.7 + stall 9.7 = 257.3 ms (O-64 R-4, H-3d)
+FAIL seat-transition [terminal] load 17.06
+   terminal: last step 0.84 px after 0.37 px (bound 0.84)
+FAIL wide·collapsed-rest [] load 13.57
+FAIL wide·warm-expand [] load 13.57
+FAIL wide·warm-collapse [] load 13.57
+FAIL  W3  bp6@75df1f16  17/33 cells pass, 10 UNMEASURED, 5 OWNER-BLOCKED  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/
+22:18  up  8:21, 3 users, load averages: 18.98 22.25 22.78
+22:20  up  8:23, 3 users, load averages: 14.81 19.85 21.79

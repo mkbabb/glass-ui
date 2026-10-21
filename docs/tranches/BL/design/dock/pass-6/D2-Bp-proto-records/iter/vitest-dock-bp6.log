@@ -1,0 +1,33 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p6/Bp-proto/wt
+
+ ❯ tests/components/custom/dock/GlassDock.posture.test.ts (22 tests | 1 failed) 120ms
+     × an outside press during the morph folds the dock at once, the morph reversing (O-91 C8) 11ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/custom/dock/GlassDock.posture.test.ts > GlassDock — collapsed-face disclosure contract > an outside press during the morph folds the dock at once, the morph reversing (O-91 C8)
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/components/custom/dock/GlassDock.posture.test.ts:470:36
+    468|         // Past the outside listener's install frame, still inside the…
+    469|         await vi.advanceTimersByTimeAsync(40);
+    470|         expect(vm.isTransitioning).toBe(true);
+       |                                    ^
+    471|         expect(root.classes()).toContain("expanded");
+    472|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 17 passed (18)
+      Tests  1 failed | 157 passed | 1 expected fail (159)
+   Start at  22:11:31
+   Duration  6.40s (transform 1.30s, setup 779ms, import 3.78s, tests 1.37s, environment 3.53s)
+
