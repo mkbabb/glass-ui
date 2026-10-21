@@ -1,0 +1,69 @@
+# C-E5 WebKit: as the Chromium phase, minus the GPU arm (Chromium only), inside one guarded --exclusive webkit acquisition
+# (ce5-probe is v2 here: the pointer path clips after the press)
+# on the rows their constants move; the plants. One guarded call per line.
+bat noveil-coarse webkit E-1
+bat noveil-coarse webkit E-2
+bat noveil-coarse webkit E-3
+bat noveil-coarse webkit E-4
+bat noveil-coarse webkit E-5
+bat noveil-coarse webkit E-6
+bat noveil-coarse webkit E-7
+bat noveil-coarse webkit E-8
+bat noveil-coarse webkit E-9
+bat noveil-coarse webkit E-10
+bat noveil-coarse webkit E-11
+bat noveil-coarse webkit E-12
+xp pass-4/C-E4/probe ce4-probe ce4 noveil-coarse webkit
+xp pass-4/E4/probe e4-probe probe noveil-coarse webkit
+xp pass-5/C-E5/probe ce5-probe ce5 noveil-coarse webkit
+xb pass-4/C-A4/probe ca4-probe noveil-coarse webkit --only cardpress,rebound
+xb pass-5/A5/probe a5-ladder noveil-coarse webkit
+xb pass-5/E5/probe slider-press noveil-coarse webkit
+xb pass-3/A3/probe a3-probe noveil-coarse webkit --only ck13,ck21
+cap noveil-coarse webkit
+bat veil-coarse webkit E-1
+bat veil-coarse webkit E-3
+bat veil-coarse webkit E-4
+bat veil-coarse webkit E-10
+bat veil-coarse webkit E-11
+bat veil-coarse webkit E-12
+bat noveil-every webkit E-1
+bat noveil-every webkit E-3
+bat noveil-every webkit E-4
+bat noveil-every webkit E-10
+bat noveil-every webkit E-11
+bat noveil-every webkit E-12
+bat veil-every webkit E-1
+bat veil-every webkit E-3
+bat veil-every webkit E-4
+bat veil-every webkit E-10
+bat veil-every webkit E-11
+bat veil-every webkit E-12
+xp pass-4/C-E4/probe ce4-probe ce4 veil-coarse webkit
+xp pass-4/E4/probe e4-probe probe veil-coarse webkit
+xp pass-5/C-E5/probe ce5-probe ce5 veil-coarse webkit
+xp pass-4/C-E4/probe ce4-probe ce4 noveil-every webkit
+xp pass-4/E4/probe e4-probe probe noveil-every webkit
+xp pass-5/C-E5/probe ce5-probe ce5 noveil-every webkit
+xp pass-4/C-E4/probe ce4-probe ce4 veil-every webkit
+xp pass-4/E4/probe e4-probe probe veil-every webkit
+xp pass-5/C-E5/probe ce5-probe ce5 veil-every webkit
+cap veil-coarse webkit
+cap noveil-every webkit
+cap veil-every webkit
+bat plant-x1 webkit E-1
+bat plant-x1 webkit E-2 --scenes button,checkbox
+bat plant-x1 webkit E-5 --scenes toggle
+bat plant-x1 webkit E-8 --scenes chip
+bat plant-x1 webkit E-9 --scenes tabs
+bat plant-x1 webkit E-12
+one plant-x1 webkit capture.mjs ladder --label plant-x1 --frames /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-E5/out/plantframes --pointers fine --scenes accordion --no-sheets
+p10 webkit
+bat plant-x2 webkit E-10
+bat plant-x3 webkit E-10
+bat plant-x4 webkit E-11
+bat plant-k-char webkit E-3
+bat plant-k-script webkit E-3
+bat plant-k-tabhand webkit E-3
+bat plant-k-mod webkit E-3
+xb pass-5/E5/probe slider-press plant-act webkit

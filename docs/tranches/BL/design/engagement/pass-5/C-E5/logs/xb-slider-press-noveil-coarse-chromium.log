@@ -1,0 +1,10 @@
+## 2026-10-21 02:52:50 load { 7.44 9.73 12.78 } · start pass-5/E5/probe/slider-press noveil-coarse chromium 
+# P-E5 slider-press · the slider's press on the door's hand mark (CK-17, CK-06 latency)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-E5/out/builds/noveil-coarse · engine chromium · lock wait 27.1 s · other headless processes: chromium 4, webkit 0 · load 6.3/9.2/12.5 at start
+# scene app: harness scenes/App.vue (sha1 7c8bcdaafb44)
+# chromium 149.0.7827.55
+  FAIL       slider touch press light · (hover:none) true (pointer:coarse) true · +28 held false sy 1.000 · +53 held true sy 0.998 · +77 held true sy 0.978 · +100 held true sy 0.962 · +152 held true sy 0.943 · +202 held true sy 0.940 · +1201 held true sy 0.940 (want held by +25, sy < 0.995 by +100, ≤ 0.97 at +1200) · load 6.3/9.2/12.5
+  PASS       slider touch press dark · (hover:none) true (pointer:coarse) true · +28 held true sy 1.000 · +53 held true sy 0.988 · +78 held true sy 0.971 · +103 held true sy 0.953 · +152 held true sy 0.940 · +202 held true sy 0.940 · +1202 held true sy 0.940 (want held by +25, sy < 0.995 by +100, ≤ 0.97 at +1200) · load 6.1/9.1/12.4
+P-E5 slider-press chromium FAIL · 1 pass, 1 fail, 0 unmeasured of 2 gating cells (0 reported) · load 6.3/9.2/12.5 at start, 6.1/9.1/12.4 at end
+exit 1
+## 2026-10-21 02:53:22 load { 6.06 9.12 12.43 } · end slider-press noveil-coarse chromium

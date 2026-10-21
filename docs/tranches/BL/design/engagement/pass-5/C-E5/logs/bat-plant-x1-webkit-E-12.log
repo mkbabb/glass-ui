@@ -1,0 +1,11 @@
+## 2026-10-21 05:19:04 load { 11.39 9.85 11.46 } · start E-12 plant-x1 webkit 
+E-12 webkit   exit 1 · E-12 webkit FAIL · 58 pass, 6 fail, 1 unmeasured of 65 gating cells (0 reported) · load 11.4/9.8/11.5 at start, 23.4/13.7/12.8 at end · 59 s, load at start 11.4/9.8/11.5
+    FAIL       E-12 docktrig fcslop dt-dropdown coarse light · slop 44.0×44.0 px on a 32.0×24.0 px face; a tap 5.0 px above the face hits the trigger · forced colours: ::after display none, content "", 0.0×0.0 px, the same tap hits div (bound: the slop and its hit unchanged) · load 11.4/9.8/11.5
+    FAIL       E-12 docktrig fcslop dt-dropdown coarse dark · slop 44.0×44.0 px on a 32.0×24.0 px face; a tap 5.0 px above the face hits the trigger · forced colours: ::after display none, content "", 0.0×0.0 px, the same tap hits div (bound: the slop and its hit unchanged) · load 11.4/9.8/11.5
+    FAIL       E-12 docktrig fc-reach coarse · 3 element(s) render an ::after; forced colours removes 1: button[dt-dropdown].menu__trigger.engage-disclosed.dock-trigger (pointer-events auto) · hit area lost under forced colours: button[dt-dropdown].menu__trigger.engage-disclosed.dock-trigger: 4 of 4 out-of-box hit point(s) lost with its ::after (bound: the arm removes paint, never a hit area) · load 22.9/13.3/12.7
+    UNMEASURED E-12 restloop rest layouts · no layout counter in this engine (CDP Performance is Chromium's) · load 22.3/13.4/12.7
+    FAIL       E-12 slider wheel over engaged control · nothing engaged: box +30, page +0 · keyboard-engaged (×1.060, top layer true): a 30 px wheel over the control scrolls the box +0, the page +30 (bound: the box scrolls, the page does not) · load 23.4/13.7/12.8
+    FAIL       E-12 slider consumer anchor · escape · a consumer's inline position-anchor --consumer-own · while engaged (×1.060, top layer true) "--engage-footprint-vnxh9d-1" · Escape: the release ended at 161 ms, then +300 ms: "(removed)" (bound: the consumer's own value) · load 23.4/13.7/12.8
+    FAIL       E-12 slider consumer anchor · blur · a consumer's inline position-anchor --consumer-own · while engaged (×1.060, top layer true) "--engage-footprint-fx3jg7-1" · Tab away: the release ended at 163 ms, then +300 ms: "(removed)" (bound: the consumer's own value) · load 23.4/13.7/12.8
+exit 1
+## 2026-10-21 05:20:03 load { 23.40 13.73 12.82 } · end E-12 plant-x1 webkit

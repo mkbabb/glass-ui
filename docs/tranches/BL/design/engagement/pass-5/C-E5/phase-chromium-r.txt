@@ -1,0 +1,14 @@
+# C-E5 Chromium re-reads after the WebKit acquisition: my probe v2 on the four arms; the candidate's E-10 (the hand-off
+# drop, A's +60 rebound), E-4 (F-5's carry) and E-9 (the reduce lights) twice more; P-E5's slider-press twice more.
+xp pass-5/C-E5/probe ce5-probe ce5 noveil-coarse chromium
+xp pass-5/C-E5/probe ce5-probe ce5 veil-coarse chromium
+xp pass-5/C-E5/probe ce5-probe ce5 noveil-every chromium
+xp pass-5/C-E5/probe ce5-probe ce5 veil-every chromium
+TAG=-r2 bat noveil-coarse chromium E-10
+TAG=-r3 bat noveil-coarse chromium E-10
+TAG=-r2 bat noveil-coarse chromium E-4
+TAG=-r3 bat noveil-coarse chromium E-4
+TAG=-r2 bat noveil-coarse chromium E-9
+TAG=-r3 bat noveil-coarse chromium E-9
+TAG=-r2 xb pass-5/E5/probe slider-press noveil-coarse chromium
+TAG=-r3 xb pass-5/E5/probe slider-press noveil-coarse chromium

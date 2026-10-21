@@ -1,0 +1,66 @@
+build noveil-coarse: exit 0 · scene app harness 7c8bcdaafb44 · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+build probe-noveil-coarse: exit 0 ·  · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+build ce4-noveil-coarse: exit 0 ·  · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+build ce5-noveil-coarse: exit 0 ·  · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+build veil-coarse: exit 0 · scene app harness 7c8bcdaafb44 · export const STAGE_VEIL = true; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+build probe-veil-coarse: exit 0 ·  · export const STAGE_VEIL = true; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+build ce4-veil-coarse: exit 0 ·  · export const STAGE_VEIL = true; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+build ce5-veil-coarse: exit 0 ·  · export const STAGE_VEIL = true; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+build noveil-every: exit 0 · scene app harness 7c8bcdaafb44 · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "every"; 
+build probe-noveil-every: exit 0 ·  · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "every"; 
+build ce4-noveil-every: exit 0 ·  · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "every"; 
+build ce5-noveil-every: exit 0 ·  · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "every"; 
+build veil-every: exit 0 · scene app harness 7c8bcdaafb44 · export const STAGE_VEIL = true; export const POINTER_STAGE: "every" | "coarse" = "every"; 
+build probe-veil-every: exit 0 ·  · export const STAGE_VEIL = true; export const POINTER_STAGE: "every" | "coarse" = "every"; 
+build ce4-veil-every: exit 0 ·  · export const STAGE_VEIL = true; export const POINTER_STAGE: "every" | "coarse" = "every"; 
+build ce5-veil-every: exit 0 ·  · export const STAGE_VEIL = true; export const POINTER_STAGE: "every" | "coarse" = "every"; 
+worktree back on: export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+== plant-x1 · before:  143 files changed, 3005 insertions(+), 1237 deletions(-)
+  applied: src/components/switch/Switch.vue (55:        :class="cn('switch control-bit', props.class)")
+  applied: src/components/card/Card.vue (78:        tabindex="0")
+  applied: src/components/checkbox/Checkbox.vue (32:// C-E5 PLANT P3 useEngage(() => (rootRef.value?.$el as HTMLElement | undefined) ?? null, { commit: "state")
+  applied: src/styles/utilities/engage.css (277:        :where(.engage-chosen, .engage-pressed, .engage-disclosed)::after,)
+  appended: src/styles/utilities/engage.css
+  applied: src/components/toggle-group/styles.css (85:    .toggle-group__item:not(:disabled, [data-disabled]):active {)
+  appended: src/components/tabs/styles/segmented.css
+  appended: src/styles/glass/glass-chip.css
+  applied: src/styles/utilities/engage.css (104:            var(--foreground) calc(var(--fill-hover) * 30%),)
+  applied: src/composables/motion/engage/stage.ts (366:    if (false) host.style.setProperty("position-anchor", h.own[0], h.own[1]);)
+  applied: src/composables/motion/engage/stage.ts (343:    void onWheel; // C-E5 plant WHL)
+build plant-x1: exit 0 · scene app harness 7c8bcdaafb44 · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+== plant-x1 · restored:  143 files changed, 3005 insertions(+), 1237 deletions(-) · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+== plant-x2 · before:  143 files changed, 3005 insertions(+), 1237 deletions(-)
+  applied: src/styles/utilities/engage.css (259:        transition-delay: var(--engage-press-drain-release); /* C-E5 PLANT RBD */)
+  applied: src/composables/motion/engage/stage.ts (195:    // C-E5 PLANT NOW: arm(1);)
+build plant-x2: exit 0 · scene app harness 7c8bcdaafb44 · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+== plant-x2 · restored:  143 files changed, 3005 insertions(+), 1237 deletions(-) · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+== plant-x3 · before:  143 files changed, 3005 insertions(+), 1237 deletions(-)
+  applied: src/composables/motion/engage/stage.ts (320:    const anchor = "--engage-footprint"; void page; void anchors;)
+build plant-x3: exit 0 · scene app harness 7c8bcdaafb44 · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+== plant-x3 · restored:  143 files changed, 3005 insertions(+), 1237 deletions(-) · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+== plant-x4 · before:  143 files changed, 3005 insertions(+), 1237 deletions(-)
+  applied: src/composables/motion/engage/settle.ts (23:    console.debug( // C-E5 PLANT LOUD)
+build plant-x4: exit 0 · scene app harness 7c8bcdaafb44 · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+== plant-x4 · restored:  143 files changed, 3005 insertions(+), 1237 deletions(-) · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+== plant-k-char · before:  143 files changed, 3005 insertions(+), 1237 deletions(-)
+  applied: src/composables/motion/engage/useEngage.ts (256:                } else if (keys.has(k) || k.length === 1) keyed.value = true;)
+build plant-k-char: exit 0 · scene app harness 7c8bcdaafb44 · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+== plant-k-char · restored:  143 files changed, 3005 insertions(+), 1237 deletions(-) · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+== plant-k-script · before:  143 files changed, 3005 insertions(+), 1237 deletions(-)
+  applied: src/composables/motion/engage/useEngage.ts (248:            ["focusin", () => { keyed.value = !pointed; }],)
+build plant-k-script: exit 0 · scene app harness 7c8bcdaafb44 · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+== plant-k-script · restored:  143 files changed, 3005 insertions(+), 1237 deletions(-) · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+== plant-k-tabhand · before:  143 files changed, 3005 insertions(+), 1237 deletions(-)
+  applied: src/composables/motion/engage/useEngage.ts (229:    const isHeld = computed(() => hand.value || scrubbing.value || keyed.value);)
+build plant-k-tabhand: exit 0 · scene app harness 7c8bcdaafb44 · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+== plant-k-tabhand · restored:  143 files changed, 3005 insertions(+), 1237 deletions(-) · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+== plant-k-mod · before:  143 files changed, 3005 insertions(+), 1237 deletions(-)
+  applied: src/composables/motion/engage/useEngage.ts (256:                } else if (keys.has(k) || ["Shift", "Meta", "Control", "Alt"].includes(k)) keyed.value = t)
+build plant-k-mod: exit 0 · scene app harness 7c8bcdaafb44 · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+== plant-k-mod · restored:  143 files changed, 3005 insertions(+), 1237 deletions(-) · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+== plant-act · before:  143 files changed, 3005 insertions(+), 1237 deletions(-)
+  applied: src/components/slider/styles.css (193:.glass-slider:active .slider-range { /* C-E5 PLANT act */)
+build plant-act: exit 0 · scene app harness 7c8bcdaafb44 · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+== plant-act · restored:  143 files changed, 3005 insertions(+), 1237 deletions(-) · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 
+P10 tree: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-E5/out/p10 (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-E5/out/p10/src/components/toggle-group/plantWriter.ts)
+worktree vs HEAD after plants:  143 files changed, 3005 insertions(+), 1237 deletions(-) · export const STAGE_VEIL = false; export const POINTER_STAGE: "every" | "coarse" = "coarse"; 

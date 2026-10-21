@@ -1,0 +1,69 @@
+# C-E5 Chromium: the candidate's full battery, its probes and capture; the GPU-named CK-19 witness; the other three arms
+# on the rows their constants move; the plants. One guarded call per line.
+bat noveil-coarse chromium E-1
+bat noveil-coarse chromium E-2
+bat noveil-coarse chromium E-3
+bat noveil-coarse chromium E-4
+bat noveil-coarse chromium E-5
+bat noveil-coarse chromium E-6
+bat noveil-coarse chromium E-7
+bat noveil-coarse chromium E-8
+bat noveil-coarse chromium E-9
+bat noveil-coarse chromium E-10
+bat noveil-coarse chromium E-11
+bat noveil-coarse chromium E-12
+one noveil-coarse chromium e1-census.mjs gpu --gpu metal --scenes ambient
+xp pass-4/C-E4/probe ce4-probe ce4 noveil-coarse chromium
+xp pass-4/E4/probe e4-probe probe noveil-coarse chromium
+xp pass-5/C-E5/probe ce5-probe ce5 noveil-coarse chromium
+xb pass-4/C-A4/probe ca4-probe noveil-coarse chromium --only cardpress,rebound
+xb pass-5/A5/probe a5-ladder noveil-coarse chromium
+xb pass-5/E5/probe slider-press noveil-coarse chromium
+xb pass-3/A3/probe a3-probe noveil-coarse chromium --only ck13,ck21
+cap noveil-coarse chromium
+bat veil-coarse chromium E-1
+bat veil-coarse chromium E-3
+bat veil-coarse chromium E-4
+bat veil-coarse chromium E-10
+bat veil-coarse chromium E-11
+bat veil-coarse chromium E-12
+bat noveil-every chromium E-1
+bat noveil-every chromium E-3
+bat noveil-every chromium E-4
+bat noveil-every chromium E-10
+bat noveil-every chromium E-11
+bat noveil-every chromium E-12
+bat veil-every chromium E-1
+bat veil-every chromium E-3
+bat veil-every chromium E-4
+bat veil-every chromium E-10
+bat veil-every chromium E-11
+bat veil-every chromium E-12
+xp pass-4/C-E4/probe ce4-probe ce4 veil-coarse chromium
+xp pass-4/E4/probe e4-probe probe veil-coarse chromium
+xp pass-5/C-E5/probe ce5-probe ce5 veil-coarse chromium
+xp pass-4/C-E4/probe ce4-probe ce4 noveil-every chromium
+xp pass-4/E4/probe e4-probe probe noveil-every chromium
+xp pass-5/C-E5/probe ce5-probe ce5 noveil-every chromium
+xp pass-4/C-E4/probe ce4-probe ce4 veil-every chromium
+xp pass-4/E4/probe e4-probe probe veil-every chromium
+xp pass-5/C-E5/probe ce5-probe ce5 veil-every chromium
+cap veil-coarse chromium
+cap noveil-every chromium
+cap veil-every chromium
+bat plant-x1 chromium E-1
+bat plant-x1 chromium E-2 --scenes button,checkbox
+bat plant-x1 chromium E-5 --scenes toggle
+bat plant-x1 chromium E-8 --scenes chip
+bat plant-x1 chromium E-9 --scenes tabs
+bat plant-x1 chromium E-12
+one plant-x1 chromium capture.mjs ladder --label plant-x1 --frames /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-E5/out/plantframes --pointers fine --scenes accordion --no-sheets
+p10 chromium
+bat plant-x2 chromium E-10
+bat plant-x3 chromium E-10
+bat plant-x4 chromium E-11
+bat plant-k-char chromium E-3
+bat plant-k-script chromium E-3
+bat plant-k-tabhand chromium E-3
+bat plant-k-mod chromium E-3
+xb pass-5/E5/probe slider-press plant-act chromium

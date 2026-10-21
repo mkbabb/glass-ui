@@ -1,0 +1,34 @@
+## 2026-10-21 02:40:33 load { 20.45 19.15 16.56 } · start e1-census.mjs noveil-coarse chromium --gpu metal --scenes ambient
+# E-1 · CK-01 the census reads adoption
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-E5/out/builds/noveil-coarse · engine chromium · lock wait 222.9 s · other headless processes: chromium 12, webkit 2 · load 13.3/16.0/15.8 at start
+# scene app: harness scenes/App.vue (sha1 7c8bcdaafb44)
+# chromium 149.0.7827.55
+# GPU arm metal [--use-angle=metal --enable-gpu --ignore-gpu-blocklist] (the named CK-19 witness, lib.mjs GPU_ARGS): WebGL2 renderer "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Max, Unspecified Version)"
+# narrowed to scenes ambient
+  PASS       E-1 declaration present · 55 members, 9 classes (pressed, chosen, held, dragged, disclosed, presented, field, ambient, static) · load 13.3/16.0/15.8
+  PASS       E-1 denominator declared · 55 of 55 directories declared · load 13.3/16.0/15.8
+  PASS       E-1 no stray member · every member is a directory of a declared class · load 13.3/16.0/15.8
+  PASS       E-1 class carries a rung · members per class: pressed 1, chosen 9, held 3, dragged 5, disclosed 6, presented 4, field 3, ambient 6, static 18 · ladder rungs rest/hover/press/engaged/modal · load 13.3/16.0/15.8
+  PASS       E-1 gallery rendered · no member caught by an error boundary in 1 scenes · load 13.3/16.0/15.8
+  PASS       E-1 adoption aurora · declared ambient · 1 instance(s) in 1 scene(s) · ambient: div.aurora-root.engage-ambient.h-full computes [ambient] (div.aurora-root.engage-ambient.h-full=ambient) · load 13.3/16.0/15.8
+  PASS       E-1 single · no element composes more than one engage-* class (1 scenes) · load 13.3/16.0/15.8
+  FAIL       E-1 adoption latch · 1 of 55 declared members seen adopting their recipe; unproven (not rendered by any scene, or not adopted): accordion alert avatar badge blob button card carousel checkbox chip collapsible command configurator constellation dark-mode-toggle data-table deck dialog dock easing expandable-container fading-scroll fourier-field handmark infinite-scroll input label labeled-field menu metric music-staff number-field pager-dots popover progress radio-group scroll-progress-rim select separator sheet skeleton slider sortable-list status-dot surface switch table tabs textarea timeline toast toggle-group tooltip typewriter · load 13.3/16.0/15.8
+  PASS       E-1 runtime pressed (button) · scene button, rung press · press: Δscale 0.033 · press-only paint [::before opacity] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 13.3/16.0/15.8
+  PASS       E-1 runtime pressed (button) PRM press-light · scene button, reduce · press: Δscale 0.000 · press-only paint [::before opacity] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 13.3/16.0/15.8
+  PASS       E-1 runtime chosen (switch) · scene switch, rung press · press: Δscale 0.000 · press-only paint [child0 bg] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 14.4/16.2/15.9
+  PASS       E-1 runtime chosen (switch) PRM press-light · scene switch, reduce · press: Δscale 0.000 · press-only paint [child0 bg] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 14.4/16.2/15.9
+  PASS       E-1 runtime held (slider) · scene slider, rung engaged · press: Δscale 0.060 · press-only paint [child0 bg, child0 shadow, child1 bg, child1 shadow, child2 bg, child2 opacity] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 14.4/16.2/15.9
+  PASS       E-1 runtime held (slider) PRM press-light · scene slider, reduce · press: Δscale 0.000 · press-only paint [child0 bg, child0 shadow, child1 bg, child1 shadow, child2 bg, child2 opacity] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 14.4/16.2/15.9
+  PASS       E-1 runtime dragged (sortable-list) · scene sortable, rung press · press: Δscale 0.000 · press-only paint [background-color] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 14.4/16.2/15.9
+  PASS       E-1 runtime dragged (sortable-list) PRM press-light · scene sortable, reduce · press: Δscale 0.000 · press-only paint [background-color] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 13.8/16.0/15.8
+  PASS       E-1 runtime disclosed (accordion) · scene accordion, rung press · press: Δscale 0.000 · press-only paint [background-color] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 13.8/16.0/15.8
+  PASS       E-1 runtime disclosed (accordion) PRM press-light · scene accordion, reduce · press: Δscale 0.000 · press-only paint [background-color] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 13.8/16.0/15.8
+  PASS       E-1 runtime presented (sheet) · scene sheet, rung modal · press: Δscale 0.000 · press-only paint [child0 opacity] (bound |Δscale| ≥ 0.01 or ≥ 1 property) · load 13.8/16.0/15.8
+  FAIL       E-1 runtime presented (sheet) PRM press-light · scene sheet: no target while pressed · load 13.5/15.9/15.8
+  PASS       E-1 runtime field (input) · scene field, rung hover · hover: Δscale 0.000 · paint [box-shadow, backdrop-filter] (bound ≥ 1 property or |Δscale| ≥ 0.01) · load 13.5/15.9/15.8
+  PASS       E-1 runtime field (input) PRM press-light · scene field, reduce · hover: Δscale 0.000 · paint [box-shadow, backdrop-filter] (bound ≥ 1 property or |Δscale| ≥ 0.01) · load 13.5/15.9/15.8
+  FAIL       E-1 runtime ambient (aurora) · scene ambient, rung rest · pointer moved across: mean pixel change 1.16 levels against 1.14 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift) · load 13.5/15.9/15.8
+  FAIL       E-1 runtime ambient (aurora) PRM press-light · scene ambient, reduce · pointer moved across: mean pixel change 0.00 levels against 0.00 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift) · load 13.5/15.9/15.8
+E-1 chromium FAIL · 20 pass, 4 fail, 0 unmeasured of 24 gating cells (0 reported) · load 13.3/16.0/15.8 at start, 13.5/15.9/15.8 at end
+exit 1
+## 2026-10-21 02:44:36 load { 13.55 15.92 15.78 } · end e1-census.mjs noveil-coarse chromium

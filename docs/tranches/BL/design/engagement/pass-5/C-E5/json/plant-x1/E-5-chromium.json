@@ -1,0 +1,61 @@
+{
+ "id": "E-5",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p5/C-E5/out/builds/plant-x1"
+ },
+ "loadStart": "19.9/13.9/10.7",
+ "loadEnd": "17.4/14.0/10.9",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-5 toggle sustain light",
+   "status": "FAIL",
+   "line": "1 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [background-color]: read 1 0.008 → 0.209 ×26.63 · NOT LANDED by +200 ms (read at +202: 0.008 of the landed 0.209 = ×0.04, bound ≥ ×0.9; onset at half not by +200 ms; [+25 0.00 +50 0.00 +75 0.00 +100 0.00 +125 0.00 +150 0.00 +175 0.00 +200 0.04]) · read 2 0.008 → 0.209 ×26.63 · NOT LANDED by +200 ms (read at +202: 0.008 of the landed 0.209 = ×0.04, bound ≥ ×0.9; onset at half not by +200 ms; [+25 0.00 +50 0.00 +75 0.00 +100 0.00 +125 0.00 +150 0.00 +175 0.00 +200 0.04]) · read 3 0.220 → 0.209 ×0.95 · landed by +200 ms (read at +203: 0.220 of the landed 0.209 = ×1.05, bound ≥ ×0.9; onset at half +200 ms (read at +203); [+25 0.00 +50 0.00 +75 0.00 +100 0.00 +125 0.00 +150 0.00 +175 0.00 +200 1.05]) (bound ≥ ×0.95 on every read, and landed by +200 ms on every read)",
+   "load": "19.3/14.1/10.8"
+  },
+  {
+   "name": "E-5 toggle press light",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color, background-image] · press-only [background-color]",
+   "load": "19.3/14.1/10.8"
+  },
+  {
+   "name": "E-5 toggle sustain(PRM) light",
+   "status": "PASS",
+   "line": "3 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [background-color]: read 1 0.209 → 0.209 ×1.00 · landed by +200 ms (read at +203: 0.209 of the landed 0.209 = ×1.00, bound ≥ ×0.9; onset at half +200 ms (read at +203); [+25 0.00 +50 0.00 +75 0.00 +100 0.00 +125 0.00 +150 0.00 +175 0.00 +200 1.00]) · read 2 0.209 → 0.209 ×1.00 · landed by +200 ms (read at +202: 0.209 of the landed 0.209 = ×1.00, bound ≥ ×0.9; onset at half +175 ms (read at +176); [+25 0.00 +50 0.00 +75 0.00 +100 0.00 +125 0.00 +150 0.00 +175 1.00 +200 1.00]) · read 3 0.209 → 0.209 ×1.00 · landed by +200 ms (read at +202: 0.209 of the landed 0.209 = ×1.00, bound ≥ ×0.9; onset at half +175 ms (read at +178); [+25 0.00 +50 0.00 +75 0.00 +100 0.00 +125 0.00 +150 0.00 +175 1.00 +200 1.00]) (bound ≥ ×0.95 on every read, and landed by +200 ms on every read)",
+   "load": "19.3/14.1/10.8"
+  },
+  {
+   "name": "E-5 toggle press-light(PRM) light",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color, background-image] · press-only [background-color] (bound ≥ 1 press-only property under reduce)",
+   "load": "19.3/14.1/10.8"
+  },
+  {
+   "name": "E-5 toggle sustain dark",
+   "status": "PASS",
+   "line": "3 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [background-color]: read 1 1.552 → 1.549 ×1.00 · landed by +200 ms (read at +202: 1.552 of the landed 1.549 = ×1.00, bound ≥ ×0.9; onset at half +200 ms (read at +202); [+25 0.00 +50 0.00 +75 0.00 +100 0.00 +125 0.00 +150 0.00 +175 0.00 +200 1.00]) · read 2 1.575 → 1.549 ×0.98 · landed by +200 ms (read at +201: 1.575 of the landed 1.549 = ×1.02, bound ≥ ×0.9; onset at half +200 ms (read at +201); [+25 0.00 +50 0.00 +75 0.00 +100 0.00 +125 0.00 +150 0.00 +175 0.00 +200 1.02]) · read 3 1.575 → 1.549 ×0.98 · landed by +200 ms (read at +202: 1.575 of the landed 1.549 = ×1.02, bound ≥ ×0.9; onset at half +200 ms (read at +202); [+25 0.00 +50 0.00 +75 0.00 +100 0.00 +125 0.00 +150 0.00 +175 0.00 +200 1.02]) (bound ≥ ×0.95 on every read, and landed by +200 ms on every read)",
+   "load": "17.4/14.0/10.9"
+  },
+  {
+   "name": "E-5 toggle press dark",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color, background-image] · press-only [background-color]",
+   "load": "17.4/14.0/10.9"
+  },
+  {
+   "name": "E-5 toggle sustain(PRM) dark",
+   "status": "PASS",
+   "line": "3 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [background-color]: read 1 1.549 → 1.549 ×1.00 · landed by +200 ms (read at +202: 1.549 of the landed 1.549 = ×1.00, bound ≥ ×0.9; onset at half +175 ms (read at +178); [+25 0.00 +50 0.00 +75 0.00 +100 0.00 +125 0.00 +150 0.00 +175 1.00 +200 1.00]) · read 2 1.549 → 1.549 ×1.00 · landed by +200 ms (read at +202: 1.549 of the landed 1.549 = ×1.00, bound ≥ ×0.9; onset at half +175 ms (read at +177); [+25 0.00 +50 0.00 +75 0.00 +100 0.00 +125 0.00 +150 0.00 +175 1.00 +200 1.00]) · read 3 1.549 → 1.549 ×1.00 · landed by +200 ms (read at +202: 1.549 of the landed 1.549 = ×1.00, bound ≥ ×0.9; onset at half +175 ms (read at +177); [+25 0.00 +50 0.00 +75 0.00 +100 0.00 +125 0.00 +150 0.00 +175 1.00 +200 1.00]) (bound ≥ ×0.95 on every read, and landed by +200 ms on every read)",
+   "load": "17.4/14.0/10.9"
+  },
+  {
+   "name": "E-5 toggle press-light(PRM) dark",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color, background-image] · press-only [background-color] (bound ≥ 1 press-only property under reduce)",
+   "load": "17.4/14.0/10.9"
+  }
+ ]
+}
