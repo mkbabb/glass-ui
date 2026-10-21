@@ -1791,3 +1791,206 @@ This sheet replaces §P5-5 as the current one (P-3); §P5-5 stays as pass 5's re
 | **what restarts it** | an owner input from §P6-5. Q-13 alone strikes one route's directory and leaves one route at 34/40; Q-10, Q-5 + Q-15, Q-2 + Q-3 and the checkbox each close their rows. On all five, one prototype and one critique on one route, on floor v5 and H6, with O-2's clause and the backlog items the rulings select (B-1, B-4, B-5 always; B-2 under Q-3 (b); B-3 if a site holds a responsive strip in an option; O-1 as ruled) |
 | **what does not restart it** | a class found by a later reading that no H6 or H5 cell reads. It goes to the sheet or the backlog, as in §P6-4 |
 | **the checklist** | §P2-6.3's 40 rows, unchanged through six passes |
+
+---
+---
+
+# D4 · pass 7 · REGISTRY: one route, under the owner's rulings
+
+| field | value |
+|---|---|
+| seat | D4 pass-7 agglomeration. It closes pass 7 with: the ruled route's measured score of 40; which pass-6 backlog items are built and witnessed; whether D′ sits at the owner-gated fixed point; the convergence history; and the refreshed ruling sheet as one message. It runs no instrument and picks no route (O-103 picked it) |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `96674652a`. `git diff --stat 8799da564 HEAD -- src package.json MIGRATION.md tests demo vite.config.ts` is empty, so the floor-v6 seat and the critic measured this library. Since pass 6 the tile record changed only in `harness/` (H7, 10 files) and `pass-7/` |
+| inputs, read in full | §P6 of this file (and §P2-6.3, §P5-5, and pass 1 §5, the Q-table); `pass-7/H7.md`, `FLOOR-V6.md`, `D4-Dp-critique.md`; patch sha1s `floor-v6.patch` **`09e74243`** and `D4-Dp.patch` **`714cd3c0`**, each matching its report; `audit/INBOUND.md` (80 lines, through O-104a) and `FORMATION-PROGRESS.md` (through 2026-10-21) |
+| owner | **The computed task said every owner question stays UNRULED. That is false on the record, so the record wins.** The same task also says that "a real ruling overrides its default". **INBOUND O-102b** (typed by the owner, 2026-10-19) accepts value-js-01 as the owner's delegate. **O-103** applies that delegate's answers as rulings: Q-13 **D′**; Q-10 **(b)**; Q-5 **(b) only, not (d)**; Q-15 **(a)**; Q-2 **(b)** flush; Q-3 **(a)**; O-1 **(a)**; the safaridriver checkbox **not granted** (E-4 and every Safari cell are read against the darwin headless `guarded --exclusive webkit` run of record; Safari-only engine facts are reported, not gated); O-94/O-94a R-2 **placed in D4**. Every pass-7 seat read O-103 as a ruling, and so does this part. Nothing here is labelled DEFAULT except Q-11 (a), which O-103 does not answer |
+| instruments | none run. Every number cites the report that measured it, and that report stays the source of record (P-3) |
+| fences | no source edit, no git write; this part is the only write |
+| engines | every WebKit number is **Playwright WebKit 26.5**. Every real-Safari cell is **UNMEASURED (owner's safaridriver checkbox)**. The checkbox was not granted, so E-4 is scored against the Playwright WebKit run of record, as O-103 rules |
+| harness | **H7 `6d6184295110`** (43 files, `sheet.mjs` added) on every pass-7 seat after H7. No seat edited it after H7 landed |
+
+Short citations: `H7` is `pass-7/H7.md`; `FV6` is `pass-7/FLOOR-V6.md`; `D′c7` is `pass-7/D4-Dp-critique.md`; `D′c6` and `Fc6` are pass 6's critiques.
+
+---
+
+## P7-0 · In brief
+
+| id | route | status | checklist (critic, measured) | pass 6 | open rows | owner-gated fixed point? |
+|---|---|---|---:|---:|---|---|
+| D4-D′ | the declared cell | **ADVANCE (owner-gated)** | **38 / 40** (95 %) | 34 | T-3, E-2: one cell, T-3 `c1-migrated` (Q-10's remainder) | **yes**, on one owner input |
+| D4-F | the anatomy declares the tile | **STRUCK by Q-13 (O-103)** | not scored in pass 7 | 34 | — | — |
+| D4-G | the selection is a body | **BLOCK**, unchanged | not scored | — | — | Q-11 unanswered; (a) holds as DEFAULT |
+| D4-A, D4-C | | BANK, unchanged | — | — | — | |
+| D4-B, D4-E | | RETIRE, unchanged | — | — | — | |
+
+**The loop is STOPPED again, this time at a smaller owner-gated fixed point.** One route sits at 38/40. The two open rows read one cell, and that cell waits on one owner input. No critic opened a non-owner row, so no pass 8 is planned. **No pass after this one can move a row without an owner input.**
+
+Five findings close pass 7.
+
+1. **The owner's delegate ruled the whole pass-6 sheet except the checkbox, which it did not grant, and Q-11, which it did not answer** (O-102b, O-103, 2026-10-19). Pass 7 ran one route (D′), and F's pass-7 directory is struck (`H7/routes/` holds `D4-Dp` only; there is no `pass-7/D4-F.patch`). The task's "UNRULED / DEFAULT" frame was written before O-103 landed, and every seat overrode it on the record.
+2. **Every pass-6 backlog item that the rulings select is built and witnessed** in both engines and both flavours (§P7-2): B-1, B-3, B-4, O-1 (a) and O-2's clause. Each has a fixture PASS and a planted FAIL. FACT reads **80/80** on `src`, `src-dev` and `dist` in both engines (`D′c7` §1.2).
+3. **Four owner rows closed on the critic's own measurement under the rulings: R-1, R-8, G and E-4** (`D′c7` §2.1-§2.4). Nothing reopened.
+4. **T-3 and E-2 stay open on one cell, T-3 `c1-migrated`** (light, dark and PRT, both engines). C1's selected pill has a carrier of 0.00 px² at 3:1 against a 224 px² bar. Q-10 (b) is ruled, but this registry has said since pass 3 that (b) "leaves C1 RED, or C1 declares a tile" (§P3-5, §P5-5, §P6-5 row 2). The ruling did not choose between the two. That choice is the one input left (§P7-5).
+5. **Q-5 (b) only changed the floor.** The development names now gate on `import.meta.env.DEV`, so what a consumer installs refuses by structure and names nothing (W-E `dist-dev` 1/6, equal to `dist`). T-2 stays 52/52 on `dist` and `dist-dev`. D′'s unpacked bundle drops to **2,934,850 B**: +15,793 over the datum, and 2,510 B under pass 6's D′ (`D′c7` §1.3).
+
+---
+
+## P7-1 · Registry
+
+**Floor v6 and D′, as built** (`FV6` §0, §3):
+- **floor v6** is floor v5 plus five files: 39 files, +1452 / −272, `09e74243`. The delta is `floor-v6/fv5-to-fv6.diff`, +90 / −39;
+- **D′** is 8 files, +306 / −25, `714cd3c0`. Its `src` and test blocks carry pass 6's lines exactly. Only MIGRATION changed: O-2's clause, the refill, and the detector trued under Q-5;
+- both patches pass `git apply --check` clean, on HEAD and on HEAD + floor v6 respectively.
+
+**D′ on floor v6, critic's re-run** (`D′c7` §1). Cells read Chromium · Playwright WebKit:
+
+| witness | D′, pass 7 | D′, pass 6 (`D′c6`) |
+|---|---|---|
+| T-1 migrated | 15/15 · 18/18 | the same |
+| T-2 `src` · `dist` · `dist-dev` | 52/52 each, both engines | 52/52 (`src`, `dist`) |
+| T-3 migrated | 40/43 · 40/43 (C1 ×3 at 0.00 px² against 224) | the same |
+| T-4 · T-5 (`src`, `dist`) · T-6 · T-7 | 24/24 · 38/38 · **33/33** · 24/24 | the same |
+| T-8 (one run) | 27/27 | 27/27 |
+| W-D | 8/8 · 8/8 | the same |
+| FACT `src` · `src-dev` · `dist` | **80/80 each, both engines** (H7-1, H7-2, H7-3 included) | 72/72 (H6's matrix) |
+| SHEET `writers` · `wrap` | PASS (the route's rule 1×) · PASS `MIGRATION.md:94-116` | — (no SHEET in H6) |
+| CANON clean · plants | 4/4 · `a` 3, `s` 3, `h` 3, `layer` 2, `foreign` 3, `unlayered` 3, `cq` 3; controls 4, 4 | the same |
+| ATTACK `src-dev` · `dist` · CORNER `src` · `dist` | 5/5 · 3/3 · 5/5 · 5/5 | the same |
+| REPORT `name-ink` · `kick-spring` | PASS light and dark · PASS, ζ ≈ 0.50 | PASS · — |
+| REPORT kick (B-5, reported) | FAIL 0.17 · 0.12 px (want ≤ 0.05) | 0.16 · 0.11 |
+| XSCRIPT | 19/19 | 19/19 |
+| units clean · whole suite | **65/65** · 2,354 ran, HEAD's 3 `boot-graph` fail | 63/63 · 2,352 |
+| vue-tsc | 0 · 0 | 0 · 0 |
+| bundle (unpacked) | **2,934,850 B** (+15,793 over 2,919,057) | 2,937,360 B (+18,303) |
+
+| id | status | checklist | vacuous greens found | strongest counterexample |
+|---|---|---:|---|---|
+| D4-D′ | ADVANCE (owner-gated) | **38/40** | three writer spellings pass both static halves of B-1: `var(--card-tile, flush)` in a sheet, a static `style="--selection-tile: plated"`, and a computed `setProperty(…, on ? "flush" : "none")`. FACT catches the first (76/80). None exists in `src` (`rg` finds only `styles.css:59`), so R-10 stays met (`D′c7` §3.1, §4.1) | C1, the one-line status filter: a selected pill with no 3:1 carrier under Q-10 (b) (`D′c7` §2.5) |
+| D4-F | STRUCK (Q-13) | — | — | — |
+| D4-G | BLOCK | — | — | `Gb` §3.3 (pass 2), unchanged |
+
+**Machine.** Every seat ran under `guarded --rss-gb 8`, and every Playwright WebKit read sat inside an `--exclusive webkit` hold. No wait was cancelled.
+- **Two machine events interrupted pass 7.** The 14:01 reboot on 2026-10-19 killed the first H7 run, which the resumed H7 seat re-verified line by line. The **01:06 kernel-zone hold on 2026-10-20** (12.0M) stopped H7 inside WebKit hold C. After the owner's 14:33 reboot, H7 resumed under the same hash. It counted runs per witness per engine and ran the three T-5 plants hold C had not reached (`H7` §1.6, H7-d).
+- **Lock and guard waits** reached 3 h 59 min for one Chromium admission (load 141 > 36, the post-reboot relaunch storm) and 89 min for one WebKit hold (`H7` §2.1). The critic's hold B waited 50 min 45 s.
+- **No tally moved with load** (4.9-141). The one BROKEN self-test line, Chromium `t6-rung` 87/88, is NOT-REPRODUCED: it read 88/88 twice in Chromium and 88/88 in Playwright WebKit.
+- **One defective subject was caught by the battery, not by a new cell.** FV6-3's first spelling raised the flush plate rule to (0,3,0) and lost T-6's nine hover-light cells (24/33). The `:where()` respelling restores 33/33 in both engines (`FV6` §2.1).
+- **Slips, all self-reported, none touching a measurement:**
+  - two oversized outputs spilled to tool-result files, unopened (H7);
+  - two SHEET reads ran outside `guarded`, and one `ls` hit the guard's run directory (FV6);
+  - the critic read one line of the guard's zone log, and once listed the guard directory with its output discarded.
+- **Scratch left behind.** The permission system refused the seats' `rm -rf` of `.claude/worktrees/bl/D4/p7/h7/` (25 MB) and `…/floor6/` (15 MB). Both are untracked scratch, nothing depends on them, and they are the orchestrator's or owner's to delete. The critic's scratch was deleted.
+
+---
+
+## P7-2 · The pass-6 backlog: built, witnessed, or ruled away
+
+Each item lands in an existing row (§P2-6.3, unchanged): B-1 in R-10; O-1 and B-3 in R-2/FV-2; B-4 in E-3. B-5 stays reported.
+
+| id | status | how it is built | witnessed by (fixture PASS · planted FAIL), both engines unless engine-free |
+|---|---|---|---|
+| **B-1** | **BUILT, witnessed** (R-10) | FV6-1: a sheet-wide floor unit. No `flush`/`plated` write outside the lane sheet, and at most one in it. H7-1 adds SHEET `writers` and FACT `foreign-ancestor` | SHEET 6/6 self-test; FV6-1 fails `crit-foreign-writer` (it passed 63/63 in pass 6) and FV6's three writer plants; FACT `foreign-ancestor` drops to 76/80 on the real-library plant (`FV6` §3, `D′c7` §1.3). **Coverage hole:** three indirect spellings pass the static halves (§P7-4, L-1) |
+| **B-3** | **BUILT, witnessed** (R-2/FV-2) | FV6-3: the flush plate rule names the option, `.control-surface[data-state]:where(.toggle-group__item)`. Nothing is reset. This is H7's measured cure v2, chosen over the backlog's literal spelling (v1: name the mobile root in the reset and the limit), because v1 passes the cell while the pill one-row law reflows the trigger's label and chevron by about 10 px (`H7` §4) | H7-3 `mobile-in-tile` 80/80 on `src` · `src-dev` · `dist`; the `b3-mobile` probe reads the trigger's children as the reference's; the unit plant `flush-rule-wide` FAILs FV6-1 case 2; FACT `atk-stm-nolimit` 78/80 |
+| **B-4** | **BUILT, witnessed** (E-3) | FV6-4: the `--selection-tile` bullet refilled at 88 columns, prose only | SHEET `wrap` PASS (`MIGRATION.md:94-116` on D′); plant `sh-ragged` FAILs |
+| **O-1** | **RULED (a) (O-103), BUILT, witnessed** (R-2/FV-2) | FV6-2: `base.css:56-57` says "a strip's tabs are pills unless a rule of yours writes the fact on the strip" | H7-2 `strip-write` now **gates** and passes ×4 (the write lands, with the tab on 2 rows and the strip 54.69 against 40.94); plant `atk-o1-pin` FAILs (78/80) |
+| **O-2** | **RULED with Q-13 (D′), clause BUILT** | MIGRATION: "A `ToggleGroup` nested inside a tile is pills again unless it declares `shape="cell"` (every group resets the value)" | FACT `nest` cells (E-3 re-measured, `D′c7` §5.5). **Residue:** D′'s own sheet comment (`toggle-group/styles.css:53-57`) states the rule a second time without the exception. No cell reads it (§P7-4, L-2) |
+| B-2 | **ruled away**: Q-3 (a) builds no mark | nothing | REPORT `mark` UNMEASURED, as ruled |
+| O-3 | **closed by Q-5 (b)** (O-103: "O-3 named the same way") | structural in production, named in development | ATTACK `src-dev` 5/5, X-5 named before ready |
+| B-5 | **reported, floor-owned**, unchanged in kind | H7-5 names the spring: `toggle-group-commit`, 450 ms `linear()`, ζ ≈ 0.50 (weight and bounce, D-1) | `kick-spring` PASS; plant `h47-spring-glide` FAILs. The kick itself is 0.16 · 0.13 px (`FV6`) and 0.17 · 0.12 px (`D′c7`) against ≤ 0.05 |
+
+**What remains the owner's from the backlog:** nothing. Every item is built, or a ruling disposed of it.
+
+---
+
+## P7-3 · The stop rule, applied
+
+§P5-6.4's condition was "only the six owner rows open". Four of those six now close by ruling and measurement, so the test becomes: **every open row's blocker is an owner input, and no non-owner row is open on an H7, H6 or H5 cell.**
+
+| test | D′ |
+|---|---|
+| measured score | **38/40** (`D′c7` §5.7) |
+| owner rows closed in pass 7, each on the critic's own instrument | R-1 (Q-5 (b) + Q-15 (a); `D′c7` §2.1); R-8 (Q-5 (b); §2.2); G (Q-2 (b), Q-3 (a), 16 stills in `D4-Dp-crit/frames/`; §2.3); E-4 (checkbox not granted, read against the Playwright WebKit run of record; §2.4) |
+| open rows | T-3, E-2, on one cell: **T-3 `c1-migrated`** (H3/H5 battery, run under H7), light, dark and PRT, both engines |
+| the open rows' blocker | **Q-10's remainder**: (b) leaves C1 a pill, and T-3 asks its selected state for a 3:1 carrier that (b) does not paint (§P7-5) |
+| a non-owner row open on an H7, H6 or H5 cell | **none** |
+| a critic added a row, or ruled a row PASS against its own instrument | no. `crit-ink`'s Playwright WebKit light cell is the documented 1 px canvas artefact; REPORT `name-ink` is X-2's cell, and it passes. The critic kept T-3 open on its own reading and did not adopt its measured C1 variant as a pass |
+
+**Why T-3 is the owner's and not a pass 8.** Pass 8 is planned only for a non-owner row whose cure is one floor declaration or one harness line. T-3/E-2 has been owner-gated on Q-10 since pass 2 (§P2-6.3: "cannot pass for either route until Q-10 is ruled"), and it still is.
+- **Cure (i)**, C1 declaring `shape="cell"`, is one string in `harness/sites.mjs`. It is a design ruling on a consumer site: a one-line status filter becomes a 184×67 two-row card. That runs against the role table's one-line → stadium row (O-58).
+- **Cure (ii)** changes what T-3's instrument accepts as a carrier on a pill. That changes a row's bar, and no critic or agglomerate may move a bar.
+
+So both cures are the owner's to pick.
+
+**Ruling: STOPPED at the owner-gated fixed point**, with one input left. No pass 8 is planned.
+
+**Convergence history** on the 40-row list fixed in §P2-6.3, never extended or edited:
+
+| pass | D′ | F | what moved |
+|---|---:|---:|---|
+| 2 | 23/35 | 22/34 | (scored on pass 2's own shorter list) |
+| 3 | 33 | 32 | the fixed list |
+| 4 | 33 | 31 | floor v3, H4 |
+| 5 | 33 | 33 | floor v4 (bounded pin), H5 |
+| 6 | 34 | 34 | X-2 and H6-3 closed; fixed point on six owner rows |
+| 7 | **38** | struck (Q-13) | O-103 rulings: R-1, R-8, G and E-4 closed by measurement; backlog built under H7 and floor v6 |
+
+---
+
+## P7-4 · Routing: what pass 7 found that no H7, H6 or H5 cell reads
+
+None of these opens a pass 8 or changes the score. Each is placed once. Each **L-n** is a landing item: specified here and built when D′ lands on floor v6, under the floor's witness rule (a fixture PASS and a planted FAIL). That makes it part of the landing patch, not a deferred design question.
+
+| id | class | found by | placement | cure |
+|---|---|---|---|---|
+| **L-1** | B-1's static halves (`sheet.mjs:61`, FV6-1's twin) match only the literal values `flush`/`plated` and a quoted markup value. `var(--card-tile, flush)`, a static `style="--selection-tile: plated"` and a computed `setProperty(…, on ? "flush" : "none")` each pass | `D′c7` §3.1 | landing, route-neutral (R-10 holds: no such writer in `src`) | Count any `--selection-tile` write outside the lane sheet whose value is not `none` or `inherit`. That is one change in each of the two readers. The witnesses are the critic's three plants, each of which must FAIL |
+| **L-2** | D′'s sheet comment (`toggle-group/styles.css:53-57`, "a group nested inside stays pills") states the nesting rule a second time and drops the `shape="cell"` exception, which MIGRATION's O-2 clause states | `FV6` §1.6, `D′c7` §4.2 | landing, the route's | **Drop the clause** from the comment. Under P-3 the one statement is MIGRATION's O-2 clause, and a comment that restates it is the second writer of the fact. Comment only; no cell reads it |
+| **L-3** | **O-94/O-94a R-2**, which O-103 places in D4 ("on D′ the selected fill is a sibling fact on the group"). It asks for an opt-out of the bare item's selected fill and pill radius. **No pass-7 seat built or measured it**: the pass-7 driver was written before O-103 | O-103, this seat | landing, owner-placed; **not a row** (§P4-5, §P6-5) | A second registered fact on the group, beside `--selection-tile`. It is written on the group and refused on the item (FV4-1's bounded pin), and it turns off the item's selected fill and pill radius. Witness: a FACT cell (fixture PASS, plant writing it on the item FAILs) in both engines. The value names are the landing's to choose. **Unbuilt and unmeasured: an open gap until the landing seat reads it** |
+| info | inside a tile option, the mobile root takes the tile's leading (15.3 / 22.95 px against 17.42 / 26.13). Root, trigger and children measure as the reference's | `D′c7` §4.3 | reported | none: nothing visible differs |
+| reported | R-5: the dark selected ink reads 1.56:1 against unselected; the perimeter carries the state | every pass | reported | — |
+| reported | B-5: the kick, 0.12-0.17 px | every pass since H4 | floor-owned, reported | — |
+
+**Not earned, and not routed anywhere:** v1's mobile-root reset (measured to reflow the trigger); a widened H7-3 judge (`H7` H7-a: no floor resets the mobile root, so the probe suffices); a T-6 SegmentedTabs scene; any change to the kick's amplitude.
+
+---
+
+## P7-5 · What the owner must rule: the ruling sheet
+
+This sheet replaces §P6-5 as the current one (P-3); §P6-5 stays as pass 6's record.
+
+**The five pass-6 inputs, with what is now built beside each:**
+
+| # | input | ruling (O-103 unless named) | built in pass 7 | rows |
+|---|---|---|---|---|
+| 1 | Q-13 declaration or anatomy | **RULED: D′** | one route rebased (`714cd3c0`); F's pass-7 directory struck; O-2's D′ clause in MIGRATION; L-2 at landing | picks the route |
+| 2 | Q-10 the edge on a selected pill | **RULED: (b)** tiles only | unchanged from floor v5: pills carry no floor edge | T-3, E-2 **open on C1**: the remainder below |
+| 3 | Q-5 DEV-only guards, with Q-15 | **RULED: Q-5 (b) only, not (d); Q-15 (a)** | FV6-5: `import.meta.env.DEV` gate; installed library names nothing (W-E `dist-dev` = `dist`, 1/6); structural refusal T-2 52/52 on `dist`/`dist-dev`; MIGRATION's development-build detectors removed | R-1, R-8 **met** |
+| 4 | Q-2 plate in a plate, Q-3 the register's look | **RULED: Q-2 (b) flush, `plated` one value away; Q-3 (a)** | unchanged; the floor comment no longer calls flush a default; no mark (B-2 struck) | G **met** |
+| 5 | the safaridriver checkbox | **NOT GRANTED** | E-4 read against the Playwright WebKit run of record; Safari-only engine facts reported: the pseudo-element style-query re-match, `@container style()` on a registered property, `@scope` with a selector-list lower boundary, and `:where()` in a style-query rule (long baseline) | E-4 **met under the ruling** |
+
+**O-1:** RULED (a), built (FV6-2), gating and passing (H7-2). **O-2:** RULED with Q-13, clause built; L-2 removes its second statement at landing.
+
+**The one question left, as one message the owner can answer:**
+
+> **D4 (the tile) is 38/40 under your delegate's rulings. One answer closes it.** Q-10 (b) keeps pills without the floor edge. C1, keyframes' one-line status filter, is a pill, so its selected option has no 3:1 carrier (0.00 px² against 224 in light, dark and PRT, both engines). Pick one:
+> **(i)** C1 declares `shape="cell"`. Measured: T-3 43/43 in both engines, and T-4, T-5 and T-7 hold. C1's options become 184×67 two-row cards with the count under the label, where today they are one-line pills (`D′c7` §2.5, `crit-route/`).
+> **(ii)** T-3 accepts (b)'s pill co-carriers, ink and weight, on a selected pill. This is closer to (b)'s own words. It is unmeasured: it needs a new harness read, and the dark ink co-carrier read only 1.56:1 on K2 (R-5), so it may not close the row.
+> With (i), the expected pass is one transcription line under a new hash and one critic: **40/40, CONVERGED**. With (ii), it is one harness seat and one critic, outcome unknown.
+
+**Owed, not blocking a row:**
+- **Q-14, the bundle datum.** D′ is now 2,934,850 B, +15,793 over `.bundle-ratchet` (2,919,057). R-9 is met as stated, and the rebind at the cut is the owner's.
+- **Q-11, a travelling body.** O-103 does not answer it. (a) "hold the header" stays in force as the **DEFAULT**, and G stays BLOCK.
+- **An on-device capture of Apple's option cards**, owed since pass 1.
+- **Real Safari.** Not gated by ruling. A real-Safari pass stays the owner's to run whenever they choose. Playwright WebKit and shipping Safari have disagreed on this library before.
+
+---
+
+## P7-6 · Loop state
+
+| | |
+|---|---|
+| **state** | **STOPPED at the owner-gated fixed point**: D′ 38/40, two rows open on one cell, waiting on Q-10's remainder (§P7-5). F struck. G BLOCK |
+| **record to build on** | `pass-7/floor-v6.patch` `09e74243`; `pass-7/D4-Dp.patch` `714cd3c0`; H7 `6d6184295110` with route dir `pass-7/H7/routes/D4-Dp`; the critic's run JSON `pass-7/D4-Dp-crit/run-json.tgz` and its `crit-route/` (cure (i), measured) |
+| **what restarts it** | the owner's answer on Q-10's remainder, and nothing else. **No pass after this one can move a row without an owner input.** Every non-owner row is met, and every backlog item is built or ruled away |
+| **what does not restart it** | a class found by a later reading that no H7, H6 or H5 cell reads. It goes to the sheet or the landing list, as in §P7-4 |
+| **landing list** (built with D′ on floor v6, each with its witness pair) | L-1 (widen B-1's writer read), L-2 (drop D′'s second nesting statement), L-3 (O-94 R-2's sibling fact: unbuilt, unmeasured) |
+| **housekeeping** | delete `.claude/worktrees/bl/D4/p7/h7/` (25 MB) and `…/floor6/` (15 MB); the seats' `rm` was refused |
+| **the checklist** | §P2-6.3's 40 rows, unchanged through seven passes |
