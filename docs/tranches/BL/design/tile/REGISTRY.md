@@ -1994,3 +1994,166 @@ This sheet replaces §P6-5 as the current one (P-3); §P6-5 stays as pass 6's re
 | **landing list** (built with D′ on floor v6, each with its witness pair) | L-1 (widen B-1's writer read), L-2 (drop D′'s second nesting statement), L-3 (O-94 R-2's sibling fact: unbuilt, unmeasured) |
 | **housekeeping** | delete `.claude/worktrees/bl/D4/p7/h7/` (25 MB) and `…/floor6/` (15 MB); the seats' `rm` was refused |
 | **the checklist** | §P2-6.3's 40 rows, unchanged through seven passes |
+
+---
+
+# D4 · pass 8 · REGISTRY: D′ v8 at 40/40, the first clean pass on one build
+
+| field | value |
+|---|---|
+| seat | D4 pass-8 agglomeration. It closes pass 8 with: D′ v8's measured score of 40; whether the pass is clean; the convergence history; the landing list's status; and the pass-9 plan. It runs no instrument, adds no row, and picks no route |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `dff455e66` (the critique's commit). `git diff --stat 78fc8f3b8 HEAD -- src package.json MIGRATION.md tests demo vite.config.ts` is empty, so the BUILD seat (at `78fc8f3b8`) and the critic (at `35951fc05`) measured the same library |
+| inputs, read in full | §P7 of this file (and §P2-6.3); `pass-8/BUILD.md`, `H8.md`, `D4-Dp8-critique.md`; `audit/INBOUND.md` (85 lines, through O-107; O-94, O-94a, O-103, O-103c read in full). The pass-8 logs were spot-read against the cited lines: `c1box-dp8-*`, `src-T-3-webkit.log` (both seats), `crit-c1-*`, `crit-l3-*`, `unit-plant-crit-const-name.log`, `chain.log` |
+| patches | `pass-7/floor-v6.patch` sha1 **`09e74243`**; `pass-8/D4-Dp8.patch` sha1 **`b5f4ae22`** (8 files, +461 / −52). This seat recomputed both, and each matches its report |
+| owner | **INBOUND O-103c** (`value-js-ed`, the owner's delegate per O-102b, 2026-10-21): Q-10's remainder **(i)**, C1 declares `shape="cell"`, on the condition that C1 is a cell at rest and selected and that selection shifts no layout. Every other ruling stands as O-102b/O-103 record it: Q-13 D′ (F struck); Q-10 (b)+(i); Q-5 (b) only; Q-15 (a); Q-2 (b); Q-3 (a); O-1 (a). **Q-11 (a) is a DEFAULT**, and G stays BLOCK. L-3 (O-94/O-94a R-2) is confirmed in D4 |
+| harness | **H8 `4159e027cdcf`** (43 files, `rev` H8; H7 plus the widened SHEET `writers` read). It is printed on every BUILD and critic line, and no seat edited it after it landed |
+| engines | Chromium 149.0.7827.55, headless shell; **Playwright WebKit 26.5**. Every real-Safari cell is **UNMEASURED (owner's safaridriver checkbox)**: not granted, so E-4 is read against the Playwright WebKit run of record (O-103) |
+| fences | no source edit and no git write; this part is the only write |
+
+Short citations: `B8` is `pass-8/BUILD.md`, `H8` is `pass-8/H8.md`, and `D′c8` is `pass-8/D4-Dp8-critique.md`.
+
+---
+
+## P8-0 · In brief
+
+| id | route | status | checklist (critic, measured) | pass 7 | open rows | clean? |
+|---|---|---|---:|---:|---|---|
+| D4-D′ | the declared cell | **ADVANCE** | **40 / 40** (100 %) | 38 | **none** | **yes, the first clean pass on this build** |
+| D4-F | the anatomy declares the tile | STRUCK by Q-13 (O-103) | — | — | — | — |
+| D4-G | the selection is a body | **BLOCK**, unchanged | — | — | — | Q-11 (a) a DEFAULT |
+| D4-A, D4-C · D4-B, D4-E | | BANK · RETIRE, unchanged | — | — | — | |
+
+1. **O-103c closed the last two rows.** C1 declares `shape="cell"` (a consumer-site string in the pass-8 route, `routes/D4-Dp8/migrated.mjs`). On the critic's own instrument, T-3 `c1-migrated` reads 933.50 · 932.00 px² (light), 946.50 · 942.25 (dark) and 937.75 · 934.50 (PRT) of ≥ 3:1 carrier, Chromium · Playwright WebKit, against a 251 px² bar. In pass 7 it read 0.00. **T-3 is 43/43 · 43/43, and E-2 reads the same three cells. Both rows are met** (`D′c8` §2.2).
+2. **The condition holds, folded into T-3/T-4 as the task fixes it.** C1 is a cell at rest and selected (16 px, column, every option, every state). Its box does not move between rest and selected: **0.00 px** against a 0.50 bar, in both engines, in light, dark and PRT, on `src` and `dist`.
+   - BUILD read it on model writes at 1000×900 (C1BOX 6/6 ×4, `B8` §2.1).
+   - The critic read it on real input at 390×844 and 1440×900: clicks, hover, a held press, Tab and ArrowDown. ResizeObserver saw 0 size changes, and Chromium's Layout Instability API saw 0 entries.
+   - T-4's ring is whole at 2.00 px at rest and selected (`D′c8` §2.3).
+   - T-4 24/24, T-5 38/38 and T-7 24/24 hold in both engines, so O-103c's re-read clause is satisfied.
+3. **L-1, L-2 and L-3 are built, each with a fixture PASS and a planted FAIL** (§P8-2). L-3 removes the selected fill and the pill corner and nothing else, and it keeps every 3:1 carrier the library painted (`D′c8` §3.2).
+4. **The critic opened no row.** It found one more writer spelling that both static readers miss, **L-1a**: the property name held in a constant. It also found one record contradiction, **L-4**: `harness/sites.mjs:19` still says C1 has no declaration. No `src` writer or failing cell rests on either, so both go to the landing list (§P8-4).
+5. **Pass 8 is clean, and this is the first of the two clean passes the convergence rule needs** (§P8-3). Pass 9 is a confirmation pass: the same build and the same H8, re-measured fresh, under a fresh critic.
+
+---
+
+## P8-1 · Registry
+
+**D′ v8, as built** (`B8` §1.5): pass 7's D′ (`714cd3c0`) plus L-1's widened unit twin, L-2's two dropped comment clauses, and L-3's `--selection-paint` fact. That is 8 files, +461 / −52, `b5f4ae22`, on HEAD + floor v6 (`09e74243`), and `git apply --check` is clean. The C1 declaration lives in the route's transcription, not in the library.
+
+**The critic's re-run** (`D′c8` §1). Cells read Chromium · Playwright WebKit. Every BUILD number reproduced:
+
+| witness | D′ v8, pass 8 (critic) | D′, pass 7 (`D′c7`) |
+|---|---|---|
+| T-1 migrated | 15/15 · 18/18 | the same |
+| T-2 `src` · `dist` · `dist-dev` | 52/52 each, both engines | the same |
+| **T-3 migrated** | **43/43 · 43/43** (C1 932-947 px² against 251) | 40/43 · 40/43 (C1 0.00 against 224) |
+| T-4 · T-5 (`src`, `dist`) · T-6 · T-7 | 24/24 · 38/38 · 33/33 · 24/24 | the same |
+| T-8 (one run) | 27/27 | 27/27 |
+| W-D | 8/8 · 8/8 | the same |
+| FACT `src` · `src-dev` · `dist` | 80/80 each, both engines; 76/80 on the `foreign` and `var` plants | 80/80; 76/80 on `foreign` only |
+| SHEET self-test · on D′ v8 · plants | 10/10 · PASS 2/2 · `foreign`, `var`, `static`, `ts` FAIL; **`const` PASS (L-1a)** | 6/6 · PASS · `foreign` FAIL only |
+| CANON · ATTACK · CORNER | 4/4 with every plant at its tally · 5/5, 3/3 · 5/5, 5/5 | the same |
+| REPORT `name-ink` · `kick-spring` · kick (B-5) | PASS · PASS, ζ ≈ 0.50 · 0.16 · 0.13 px (want ≤ 0.05, reported) | PASS · PASS · 0.17 · 0.12 |
+| C1BOX (BUILD) · CRIT-C1 (critic) | 6/6 ×4 · 18/18 measured per engine and build (6 WebKit layout-shift cells UNMEASURED) | — |
+| `l3-bare` (BUILD) · CRIT-L3 (critic) | 12/12 on `l3-src`/`l3-dist`; plants 8/12, 10/12 · 32/32; plant 20/32; both engines | — |
+| XSCRIPT self · pair | 19/19 · 19/19 | 19/19 |
+| units clean · whole suite | **67/67** · 2,356 ran, HEAD's 3 `boot-graph` fail | 65/65 · 2,354 |
+| vue-tsc | 0 · 0 | 0 · 0 |
+| bundle (unpacked) | **2,935,932 B** (+16,875 over 2,919,057; +1,082 over pass 7, L-3's rules and bullet) | 2,934,850 B |
+
+| id | status | checklist | vacuous greens found | strongest counterexample |
+|---|---|---:|---|---|
+| D4-D′ | ADVANCE | **40/40** | the critic's own: its first CRIT-C1 run counted Playwright WebKit's `layout-shift` as PASS on 0 entries from an API WebKit lacks. It relabels those 6 cells UNMEASURED and fixed the probe, but did not re-run them, so `crit-c1-*-webkit.log` still prints them PASS (24/24). No row rests on them, because the box read (0.00 px) and the ResizeObserver (0) measure the same property in WebKit (`D′c8` §3.1) | `crit-const-name`, a write through a name held in a constant, passes both static readers. `src` holds no such writer, so R-10 stays met (`D′c8` §3.3) |
+| D4-F | STRUCK | — | — | — |
+| D4-G | BLOCK | — | — | `Gb` §3.3 (pass 2), unchanged |
+
+**Machine.** Every stage ran under `guarded --rss-gb 8`, and every Playwright WebKit read sat inside an `--exclusive webkit` hold. BUILD's two holds waited 0 and 2 min; the critic's waited 48 min 54 s and 39 min 12 s. One plant-builds stage queued 31 min for admission. No wait was cancelled. Loads stayed between 5.25 and 20.99, and no tally moved with load. The critic's chain ends `CHAIN-DONE` at 06:47:56.
+- **Slip, self-reported by the critic:** one `ls ~/.claude/guard/runs | wc -l`, a read across the `~/.claude` fence. No measurement rests on it.
+- **Scratch left behind.** The permission system refused BUILD's `rm -rf` of `.claude/worktrees/bl/D4/p8/build8/` (42 MB, present at this seat). Pass 7's `p7/h7/` (25 MB) and `p7/floor6/` (15 MB) also remain. All three are untracked, and nothing depends on them. The critic deleted its own `crit8/`.
+
+---
+
+## P8-2 · The landing list: built, witnessed
+
+The rows they fold into come from the task and §P7-4. No row was added.
+
+| id | row | status | how it is built | witnessed by (fixture PASS · planted FAIL), both engines unless engine-free |
+|---|---|---|---|---|
+| **L-1** | R-10 | **BUILT, witnessed** | H8 widens SHEET `writers`, and `D4-Dp8.patch` widens FV6-1 (the unit twin) the same way. Any `--selection-tile` write outside the lane sheet whose value is not `none` or `inherit` counts. Comments are stripped, and the value is read to the end of its declaration | SHEET self-test 10/10, with `sh-var`, `sh-static` and `sh-ternary` failing and `sh-reads` passing. On the real library, the plants `var`, `static` and `ts` FAIL SHEET and the unit, and `ctl-reads` PASSes both (`H8` §2-§4, `D′c8` §1.2, §1.4). **Coverage hole: L-1a** (§P8-4) |
+| **L-2** | E-3 (P-3) | **BUILT** (comment only) | D′'s declaration comment and the floor's tile-geometry comment each drop their restatement of the nesting rule. The one statement left is MIGRATION's O-2 clause | no cell reads a comment. `D′c8` `state.log`: `styles.css:84` names the reset mechanism, not the outcome |
+| **L-3** | R-2 / FV-2 (E-3 for its MIGRATION bullet) | **BUILT, witnessed** | `@property --selection-paint { syntax: "auto \| bare"; inherits: true; initial-value: auto }` in the lane sheet. Every group resets it, and FV4-1's pin pins it on the option. It is read by exactly two rules under `@container not style(--selection-paint: bare)`: the pill stadium and the selected 12 %/16 % tint. It is the tile fact's sibling on the group, as O-103 places it. The library writes no `bare` | Unit: 2 cases, with the 4 BUILD mutations and the critic's `crit-l3-alias` and `crit-l3-third-rule` each failing. Paint: `l3-bare` 12/12 on `src` and `dist`; the write-on-option plant 8/12; the unpinned library 10/12. CRIT-L3 32/32, with only the four corner longhands (pill) and `b`'s `background-color` differing; the plant reads 20/32. A `bare` tile keeps its perimeter, 474-483 px² against 138. No alias exists in `src` (`B8` §2.4, `D′c8` §3.2) |
+| **Q-14** | R-9 | **owed at release**, not this pass | — | 2,935,932 B, +16,875 over `.bundle-ratchet`. R-9 is met as stated, and the rebind at the cut is the owner's |
+
+**What L-3 does not do, by design** (`B8` §1.4, `D′c8` §3.2): it leaves state, keys, roving, the one tab stop, the ink and weight, the rest plate, forced colours, the kick, a tile's corner and a tile's perimeter alone. A `bare` pill in normal contrast has no 3:1 carrier, but neither does an `auto` pill under Q-10 (b): the 1.2:1 tint `bare` removes was never a carrier. So L-3 masks nothing (E-2).
+
+---
+
+## P8-3 · Clean, and the convergence rule
+
+| test | D′ v8 |
+|---|---|
+| measured score | **40/40** (`D′c8` §5.7), each row on the critic's own instrument |
+| open rows | **none** |
+| a non-owner row opened by the critic | **none**. L-1a and L-4 are coverage and record items. Neither is a writer in `src` or a failing cell (`D′c8` §4) |
+| a row added, struck or renamed | no. L-1 folds into R-10, L-3 into R-2/FV-2, and the no-shift condition into T-3/T-4, as fixed |
+| a row ruled PASS against its own instrument | no. The critic kept the 6 vacuous WebKit `layout-shift` cells out of every tally and scored T-3/T-4 on the box read and the ResizeObserver, which do measure in WebKit. R-10 rests on SHEET and the unit failing every writer that `src` could hold today. `crit-const-name` is a writer `src` does not hold |
+
+**Ruling: pass 8 is CLEAN.**
+
+**Why pass 8 is the first clean pass and not the second.** By the letter of the definition, pass 7 was clean as well: its two open rows were owner-gated, and the owner's input was still outstanding. But the rule asks for two consecutive clean passes **on the fixed rows**, and pass 7's clean was the gated kind: two rows were open, waiting on Q-10's remainder. Between the passes the owner ruled, the build changed (`714cd3c0` → `b5f4ae22`), the harness changed (H7 → H8), and two rows moved from open to met. Two readings of different builds, one of them with rows open, do not confirm each other. So the count starts at pass 8, the first pass with 40/40 and no gate. **CONVERGED waits on pass 9.**
+
+**Convergence history** on §P2-6.3's 40 rows, never extended or edited:
+
+| pass | D′ | F | what moved | clean? |
+|---|---:|---:|---|---|
+| 2 | 23/35 | 22/34 | (scored on pass 2's own shorter list) | no |
+| 3 | 33 | 32 | the fixed list | no |
+| 4 | 33 | 31 | floor v3, H4 | no |
+| 5 | 33 | 33 | floor v4 (bounded pin), H5 | no (X-2 open, non-owner) |
+| 6 | 34 | 34 | X-2 and H6-3 closed | gated: six owner rows open |
+| 7 | 38 | struck (Q-13) | O-103: R-1, R-8, G, E-4 closed; floor v6, H7 | gated: two owner rows on Q-10's remainder |
+| 8 | **40** | — | O-103c (i) closed T-3 and E-2; L-1, L-2, L-3 built; H8 | **yes (1 of 2)** |
+
+---
+
+## P8-4 · Routing: what pass 8 found that no H8, H7, H6 or H5 cell reads
+
+None of these opens a row or changes the score. Each is placed once. They are built at landing under H9, each with its witness pair. They are not built in pass 9, which re-measures this build unchanged (§P8-6).
+
+| id | class | found by | placement | cure |
+|---|---|---|---|---|
+| **L-1a** | B-1's static readers miss a write whose property name sits in a constant: `const TILE_FACT = "--selection-tile"; el.style.setProperty(TILE_FACT, "flush")` passes SHEET 2/2 and the unit 67/67. Both regexes want `:` or `,` right after the name (`harness/sheet.mjs:77`; `ToggleGroup.test.ts:704` in the patched tree) | `D′c8` §3.3 | landing, route-neutral (R-10 holds: `src` has the route's rule and one `getPropertyValue` read, nothing else) | **Read the name, not the shape of the write.** In `.ts`/`.vue` code outside the lane sheet, count every `"--selection-tile"` string literal that is not the first argument of `getPropertyValue(`. That ends the spelling chase L-1 began: a fifth or sixth spelling still has to name the property. One change in each reader. Witness: `crit-const-name` FAILs both; `ctl-reads` and the H8 `sh-reads` control still PASS |
+| **L-4** | `harness/sites.mjs:19` (hashed) says C1 has "no declaration on either route (Q-10 (b))", and the ruled declaration lives only in `pass-8/routes/D4-Dp8/migrated.mjs`. That is two records of C1's site, and they disagree (P-3) | `D′c8` §3.4; `B8` §1.1 and `H8` §5 named it | landing, with L-1a, as one H9 | C1's `<ToggleGroup>` gains `shape="cell"` in `sites.mjs`, and the route dir drops its override. Witness: XSCRIPT self and pair stay 19/19, and T-3 `c1-migrated` reads the same on the base transcription |
+| info | L-3's paint witness is a pass-8 probe (`l3-bare`, CRIT-L3), not a hashed FACT cell | `B8` §3 | with H9 | fold `l3-bare`'s six cells into FACT, so the landing's witness is hashed |
+| info | the critic's `crit-c1` probe fix (asking `supportedEntryTypes` first) is on disk, but its WebKit logs predate it and print 6 vacuous PASS cells | `D′c8` §3.1, this seat | pass 9 | pass 9's critic runs the fixed probe, so its log and its tally agree |
+| info | forced colours, Chromium: an `auto` group's selected-hover tint (16 %) computes over `Highlight`. The perimeter carries the state. It predates L-3 | `D′c8` §3.2 | floor, reported (the forced arm is reported, PORTFOLIO §2.5) | none required |
+| info | C1's box follows the viewport (fluid type): 184×56 at 390, 184×67.88 at 1000, 184×71 at 1440. Selection moves none of them | `D′c8` §2.3 | reported | — |
+| reported | R-5: the dark selected ink is 1.56:1 against unselected on K2; the perimeter carries the state | every pass | reported | — |
+| reported | B-5: the kick, 0.13-0.16 px (want ≤ 0.05); the spring is named, ζ ≈ 0.50 | every pass since H4 | floor-owned | — |
+
+---
+
+## P8-5 · What the owner must rule
+
+**Nothing gates a row.** §P7-5's one question is answered (O-103c). What stays owed is not a row:
+- **Q-14, the bundle datum.** 2,935,932 B, +16,875 over 2,919,057. It is rebound at the release cut, not in this pass.
+- **Q-11, a travelling body.** Still unanswered. (a) "hold the header" holds as the DEFAULT, and D4-G stays BLOCK.
+- **Real Safari.** UNMEASURED (owner's safaridriver checkbox). It does not gate under O-103. Playwright WebKit and shipping Safari have disagreed on this library before, so a real-Safari pass stays the owner's to run whenever they choose.
+- **An on-device capture of Apple's option cards**, owed since pass 1.
+- **Housekeeping:** delete `.claude/worktrees/bl/D4/p8/build8/` (42 MB), `…/p7/h7/` (25 MB) and `…/p7/floor6/` (15 MB). The seats' `rm` was refused.
+
+---
+
+## P8-6 · Pass-9 plan: confirmation
+
+| | |
+|---|---|
+| **kind** | **confirmation**: a fresh re-measure of the same build, and a fresh critic. **No new build** unless the critic opens a row |
+| **the build** | HEAD + `pass-7/floor-v6.patch` `09e74243` + `pass-8/D4-Dp8.patch` `b5f4ae22`. The C1 declaration rides `pass-8/routes/D4-Dp8`. Before measuring, the seat checks that `git diff HEAD` reads `5d08df87ebbe` |
+| **the harness** | **H8 `4159e027cdcf`, unedited.** L-1a, L-4 and the `l3-bare` fold are H9, and H9 belongs to the landing (§P8-4). Changing the instrument here would mean pass 9 no longer re-measures pass 8 |
+| **seats** | (1) **one re-measure seat** (not BUILD's or the critic's author): it re-runs `B8`'s battery, both probes and the units in both engines, light, dark and PRT, on `src`, `src-dev` and `dist`. (2) **one fresh critic** (no prior D4 seat) on the fixed 40 rows, with its own attacks and the fixed `crit-c1` probe. (3) agglomeration |
+| **clean, for pass 9** | 40/40 on the critic's own instrument; no row opened; no row added, struck or renamed; any new coverage or record item routed to the landing list as in §P8-4 |
+| **then** | Two consecutive clean passes on the same build mean **CONVERGED**. The landing then builds D′ v8 on floor v6 with H9 (L-1a, L-4, the FACT fold), each item with its witness pair, and Q-14's rebind waits for the release cut |
+| **if the critic opens a non-owner row** | pass 10 is planned around the cell that reads it, and the clean count restarts at 0 |
+| **machine** | `guarded --rss-gb 8` throughout; `--light` for engine-free reads only; every Playwright WebKit read inside `guarded --exclusive webkit`; one heavy run at a time per seat |
+| **the checklist** | §P2-6.3's 40 rows, unchanged through eight passes |
