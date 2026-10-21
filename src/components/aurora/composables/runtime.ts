@@ -26,9 +26,9 @@ import {
 import { rendererFailure } from "../../../composables/glass/webgpu/rendererStatus";
 import { isSoftwareWebGLRenderer } from "../constants/renderMode";
 import type { AuroraConfig, AuroraInstance } from "../constants/presets";
-import { createAuroraGLSetup } from "./glSetup";
 import type { AuroraCursorScalars } from "./frameLoop";
-import { createAuroraWGPUSetup } from "./wgpuSetup";
+import type { createAuroraGLSetup } from "./glSetup";
+import type { createAuroraWGPUSetup } from "./wgpuSetup";
 import { usePointerVelocityField } from "../../../composables/motion/pointer/usePointerVelocityField";
 
 export type AuroraRuntimeMode = "live" | "capture";
@@ -336,6 +336,24 @@ export function createAurora(
         reducedMotion: false,
     };
 
+    // The two engine setups (program, shaders, uniform bridge) are separate dynamic
+    // imports, loaded when the substrate is about to arm that backend (atlas U/B7 F6).
+    // A host that resolves WebGPU never fetches the GLSL path, and a page that never
+    // arms (the "css" substrate) fetches neither. Each factory is built once, on the
+    // first setup call; a device or context restore reuses it.
+    let glSetup: ReturnType<typeof createAuroraGLSetup> | null = null;
+    let wgpuSetup: ReturnType<typeof createAuroraWGPUSetup> | null = null;
+    let glModule: typeof import("./glSetup") | null = null;
+    let wgpuModule: typeof import("./wgpuSetup") | null = null;
+    const loaded = <T>(module: T | null, name: string): T => {
+        if (!module) throw new Error(`[Aurora] ${name} setup ran before its module loaded`);
+        return module;
+    };
+    const prepare = async (backend: "webgpu" | "webgl2"): Promise<void> => {
+        if (backend === "webgpu") wgpuModule ??= await import("./wgpuSetup");
+        else glModule ??= await import("./glSetup");
+    };
+
     const canvasHandle: GpuSubstrateHandle = wedgeBlocked
         ? unavailableHandle
         : createGpuSubstrate(canvas, {
@@ -365,44 +383,51 @@ export function createAurora(
         // Withheld entirely under `forceBackend: "webgl2"` — the picker's own
         // `attemptWebGPU` test is `supportsWebGPU() && setupWGPU != null`, so absence
         // here IS the forcing. Nothing downstream needs a second switch.
-        setupWGPU: forceWebGL2 ? undefined : createAuroraWGPUSetup({
-            canvas,
-            opaquePresentation: presentation.opaque,
-            getCursorScalars,
-            getConfig: () => config,
-            getReducedMotion: () => canvasHandle.reducedMotion,
-            getRenderTime: (elapsedSec) =>
-                resolveAuroraRenderTime(
-                    config,
-                    elapsedSec,
-                    scrollProgress,
-                    canvasHandle.reducedMotion,
-                ),
-            // the shared pointer field, FED tick() from the WGPU frame
-            // callback (the SAME field instance the WebGL2 loop feeds — one source).
-            pointerField,
-            // the image-source seam (no-op on a palette config).
-            getDecodedImage: () => imageCoord.getDecodedImage(),
-            registerImageUploader: (fn) => imageCoord.setImageUploader(fn),
-        }),
-        setupGL: createAuroraGLSetup({
-            opaquePresentation: presentation.opaque,
-            getConfig: () => config,
-            getReducedMotion: () => canvasHandle.reducedMotion,
-            getRenderTime: (elapsedSec) =>
-                resolveAuroraRenderTime(
-                    config,
-                    elapsedSec,
-                    scrollProgress,
-                    canvasHandle.reducedMotion,
-                ),
-            getCursorScalars,
-            pointerField,
-            imageCoordinator: imageCoord,
-            registerConfigUploader: (upload) => {
-                setConfig = upload;
-            },
-        }),
+        prepare,
+        setupWGPU: forceWebGL2 ? undefined : (device, context, format) => {
+            wgpuSetup ??= loaded(wgpuModule, "WebGPU").createAuroraWGPUSetup({
+                canvas,
+                opaquePresentation: presentation.opaque,
+                getCursorScalars,
+                getConfig: () => config,
+                getReducedMotion: () => canvasHandle.reducedMotion,
+                getRenderTime: (elapsedSec) =>
+                    resolveAuroraRenderTime(
+                        config,
+                        elapsedSec,
+                        scrollProgress,
+                        canvasHandle.reducedMotion,
+                    ),
+                // the shared pointer field, FED tick() from the WGPU frame
+                // callback (the SAME field instance the WebGL2 loop feeds — one source).
+                pointerField,
+                // the image-source seam (no-op on a palette config).
+                getDecodedImage: () => imageCoord.getDecodedImage(),
+                registerImageUploader: (fn) => imageCoord.setImageUploader(fn),
+            });
+            return wgpuSetup(device, context, format);
+        },
+        setupGL: (gl) => {
+            glSetup ??= loaded(glModule, "WebGL 2").createAuroraGLSetup({
+                opaquePresentation: presentation.opaque,
+                getConfig: () => config,
+                getReducedMotion: () => canvasHandle.reducedMotion,
+                getRenderTime: (elapsedSec) =>
+                    resolveAuroraRenderTime(
+                        config,
+                        elapsedSec,
+                        scrollProgress,
+                        canvasHandle.reducedMotion,
+                    ),
+                getCursorScalars,
+                pointerField,
+                imageCoordinator: imageCoord,
+                registerConfigUploader: (upload) => {
+                    setConfig = upload;
+                },
+            });
+            return glSetup(gl);
+        },
         onInitError: options.onInitError
             ? (error) => options.onInitError?.(error instanceof Error ? error : new Error(String(error)))
             : undefined,

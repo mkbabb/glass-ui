@@ -17,6 +17,24 @@ decline each row (relay rows B7-G7 to B7-G9).
   `@source "../*.js"` stays on the core entry: excluding the moved components' chunks from
   it would save a further 2.0 KB but drop `.shadow-cartoon`, which only that scan emits
   (Configurator's preset chips). Witness: `tests/styles/component-sheets.test.ts`.
+- **Aurora engines load on arm, one backend at a time (B7-G8, atlas F6).** `runtime.ts`
+  imports `glSetup` and `wgpuSetup` with `import()`, and `createGpuSubstrate` takes an
+  optional `prepare(backend)` it awaits before that backend's setup runs. `dist/aurora.js`
+  drops from 203,503 B to 27,037 B (brotli 52,758 → 8,305 B); the WebGPU path
+  (48,759 B) and the WebGL 2 path (116,450 B) are separate chunks, fetched only when that
+  backend arms. A `"css"` substrate fetches neither. Witnesses:
+  `tests/components/custom/aurora/engine-split.test.ts`, the `prepare` case in
+  `tests/composables/glass/webgpu/useWebGPUCanvas.test.ts`.
+- **The aurora ground is encoded once per palette and preset (B7-G8, atlas O-16).**
+  `Aurora.vue` keys the fallback ground on the new `auroraGroundKey(config)` (palette,
+  softmax, value variance and each nucleus's shape, without positions). A config change
+  that only moves nuclei encodes nothing and writes nothing to `.aurora-placeholder`; the
+  nuclei move on the GPU path only. A palette or preset change writes the new ground to a
+  second layer that fades in over the first in `--duration-fast` (a cut under reduced
+  motion), with the outgoing layer opaque beneath it. On 10.1.1 every config change
+  re-encoded the PNG and swapped `background-image`: 30 to 2,183 rewrites per route pass
+  in atlas (R-INTERACT §5). Witness: `tests/components/custom/aurora/ground-encode.test.ts`
+  (substrate forced to WebGL; 12 nucleus moves, 1 encode, 0 style writes).
 
 ## 10.1.1 — 2026-10-19
 

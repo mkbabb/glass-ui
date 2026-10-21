@@ -16,6 +16,12 @@ rename or import re-point per call site.
   `import "@mkbabb/glass-ui/dist/components/metric/styles.css"` is not an export; render
   the component, or copy the rules it needs. The sheets still sit in `@layer components`,
   so their rank against the entry is unchanged.
+- **The aurora ground does not follow nuclei positions.** A consumer that moved nuclei to
+  shift the static ground (on the `"css"` substrate, or before the canvas arms) now sees
+  the ground the preset mounted with; the live canvas still moves. To change the ground,
+  change the palette or the field shape. `.aurora-placeholder` is now two elements; a
+  consumer selector that assumed one should select `[data-aurora-ground-active]`.
+- **New:** `auroraGroundKey(config)`; `GpuSubstrateOptions.prepare`.
 
 ## 10.1.1
 
