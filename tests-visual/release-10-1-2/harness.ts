@@ -207,6 +207,58 @@ const scenes: Record<string, Component> = {
         };
     }),
 
+    // An always-open dock whose run scrolls: `?n=` seats in a viewport-wide fixed host.
+    // `window.__tick()` changes seat 1's text; `window.__grow()` widens seat 2.
+    scroll: defineComponent(() => {
+        const n = Number(params.get("n") ?? 20);
+        const label = ref("T");
+        const wide = ref(false);
+        w.__tick = () => (label.value += "x");
+        w.__grow = () => (wide.value = !wide.value);
+        return () =>
+            h(
+                "div",
+                { style: "position:fixed;inset-inline:0;bottom:16px;display:flex;justify-content:center" },
+                h(GlassDock, { collapse: false }, () =>
+                    Array.from({ length: n }, (_, i) =>
+                        h(
+                            DockControl,
+                            {
+                                "aria-label": `Seat ${i}`,
+                                "data-witness": `seat-${i}`,
+                                style: i === 2 && wide.value ? "min-inline-size:80px" : undefined,
+                            },
+                            () => (i === 1 ? label.value : String.fromCharCode(65 + (i % 26))),
+                        ),
+                    ),
+                ),
+            );
+    }),
+
+    // A collapsible dock with a constant pane of 20 seats (a natural span of 960px), in
+    // flow on a centred grid track: at 390 the run scrolls, at 1440 it fits.
+    overflow: defineComponent(() => {
+        const dock = ref<{ expand: () => void; collapse: () => void } | null>(null);
+        w.__expand = () => dock.value?.expand();
+        w.__collapse = () => dock.value?.collapse();
+        return () =>
+            h("div", { style: "display:grid;justify-content:center;padding-block:24px" }, [
+                h(
+                    GlassDock,
+                    { ref: dock, collapse: "closed" },
+                    {
+                        default: () =>
+                            Array.from({ length: 20 }, (_, i) =>
+                                h(DockControl, { "aria-label": `Seat ${i}`, "data-witness": `seat-${i}` }, () =>
+                                    String.fromCharCode(65 + i),
+                                ),
+                            ),
+                        collapsed: () => h("span", { "data-witness": "summary" }, "≡"),
+                    },
+                ),
+            ]);
+    }),
+
     // RadioGroup and ToggleGroup seated directly, between two declared seats.
     composites: defineComponent(() => {
         const radio = ref("x");

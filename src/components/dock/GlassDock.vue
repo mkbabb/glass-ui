@@ -203,7 +203,6 @@ const { measure } = useDockExpandedSize({
     expandedEl: fullEl,
     collapsedEl: summaryEl,
     axis: orientation,
-    expanded: visualExpanded,
 });
 
 /* The dock morph orchestrator owns the built-in collapsed↔expanded pair and writes

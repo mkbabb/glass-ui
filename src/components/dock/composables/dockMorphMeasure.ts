@@ -1,28 +1,97 @@
 import { onScopeDispose, watch, type Ref } from "vue";
 
-function getSize(el: HTMLElement, axis: "horizontal" | "vertical"): number {
+type Axis = "horizontal" | "vertical";
+
+function getSize(el: HTMLElement, axis: Axis): number {
     // Endpoints are layout border boxes. `getBoundingClientRect()` includes the dock's
     // live scale and can expose one stale transformed frame as the morph flag clears.
     return axis === "vertical" ? el.offsetHeight : el.offsetWidth;
 }
 
+type Override = readonly [el: HTMLElement, property: string, value: string];
+
 /**
- * A pane's natural span on the morph axis: its border box laid out at `max-content`.
- * The pane's own box is not it. The inactive pane is absolutely positioned over the
- * root (`inset: 0`), and the expanded full pane fills the box (`width: 100%`), so both
- * report the box they stretch to, not the content they hold. The size is set inline,
- * read, and restored in the same task: no frame paints it, and no computed value a
- * transition watches (a seat's own `inline-size`) changes.
+ * Set `overrides` inline (`!important`), run `read`, restore them. Set, read and restore
+ * run in one task, so no frame paints the overridden layout.
  */
-function naturalSize(el: HTMLElement, axis: "horizontal" | "vertical"): number {
-    const property = axis === "vertical" ? "block-size" : "inline-size";
-    const value = el.style.getPropertyValue(property);
-    const priority = el.style.getPropertyPriority(property);
-    el.style.setProperty(property, "max-content", "important");
-    const size = getSize(el, axis);
-    if (value) el.style.setProperty(property, value, priority);
-    else el.style.removeProperty(property);
-    return size;
+function withOverrides<T>(overrides: readonly Override[], read: () => T): T {
+    const saved = overrides.map(
+        ([el, property]) =>
+            [
+                el,
+                property,
+                el.style.getPropertyValue(property),
+                el.style.getPropertyPriority(property),
+            ] as const,
+    );
+    for (const [el, property, value] of overrides) el.style.setProperty(property, value, "important");
+    try {
+        return read();
+    } finally {
+        for (const [el, property, value, priority] of saved.reverse()) {
+            if (value) el.style.setProperty(property, value, priority);
+            else el.style.removeProperty(property);
+        }
+    }
+}
+
+/**
+ * Run `measure` and give the run back its scroll position. A forced layout that resizes
+ * a scroll container clamps its scroll offset in WebKit, which keeps the clamped value
+ * after the box is restored, so a scrolled run would jump to its leading edge.
+ */
+function keepScroll<T>(scroller: HTMLElement, measure: () => T): T {
+    const left = scroller.scrollLeft;
+    const top = scroller.scrollTop;
+    try {
+        return measure();
+    } finally {
+        if (scroller.scrollLeft !== left || scroller.scrollTop !== top) {
+            scroller.scrollTo({ left, top, behavior: "instant" });
+        }
+    }
+}
+
+/**
+ * The root's box at rest in one posture, read now, in any posture and mid-morph.
+ *
+ * The root is laid out with the posture's pane in flow and the other pane out of flow,
+ * as each posture's own CSS places them (`.dock-layer.is-active` / `:not(.is-active)`),
+ * and with the morph's reservation lifted (`--dock-expanded-px` made invalid, so the
+ * `[data-morphing]` size rule computes to `auto`). Whatever constrains or stretches the
+ * root (the host, a consumer width) applies to it as it would at rest.
+ *
+ * Two things the current DOM may still carry are not that posture's: the root's padding,
+ * which interpolates on `--dock-expand-t` mid-morph, and the rules gated on the posture
+ * class (`.collapsed`) when the other posture is the one being read. Both sit in the
+ * CHROME, the root less its pane. `chrome` is the posture's own, read at rest; the
+ * difference is added to the pane's end margin and the root laid out again, so a
+ * content-sized root grows by it while a root the host constrains or stretches does not.
+ */
+function restSize(
+    root: HTMLElement,
+    pane: HTMLElement,
+    other: HTMLElement,
+    axis: Axis,
+    chrome: number | null,
+): number {
+    const margin = axis === "vertical" ? "margin-block-end" : "margin-inline-end";
+    return withOverrides(
+        [
+            [root, "--dock-expanded-px", "initial"],
+            [pane, "position", "relative"],
+            [pane, "inset", "auto"],
+            [other, "position", "absolute"],
+        ],
+        () => {
+            const size = getSize(root, axis);
+            if (chrome === null) return size;
+            const delta = chrome - (size - getSize(pane, axis));
+            if (Math.abs(delta) < 0.5) return size;
+            const base = Number.parseFloat(getComputedStyle(pane).getPropertyValue(margin)) || 0;
+            return withOverrides([[pane, margin, `${base + delta}px`]], () => getSize(root, axis));
+        },
+    );
 }
 
 export interface UseDockExpandedSizeOptions {
@@ -30,159 +99,96 @@ export interface UseDockExpandedSizeOptions {
     contentEl: Ref<HTMLElement | null>;
     expandedEl: Ref<HTMLElement | null>;
     collapsedEl: Ref<HTMLElement | null>;
-    axis: Ref<"horizontal" | "vertical">;
-    expanded: Ref<boolean>;
+    axis: Ref<Axis>;
 }
 
 export interface UseDockExpandedSizeReturn {
     /**
-     * Measure both endpoints now. The morph calls this when it arms, after the posture's
-     * DOM is patched: with no morph in flight the root is read as the settled box of the
-     * posture it opens onto; with one in flight (a reversal) both endpoints re-base on
-     * the panes' live spans (O-101).
+     * Measure the endpoints now. The morph calls this when it arms, after the posture's
+     * DOM is patched and before `[data-morphing]` reserves one.
      */
     measure: () => void;
 }
 
 /**
- * Measure the dock's two endpoints from its two rendered pane compositions. The
- * inactive pane remains laid out (visibility, never display, hides it), so either
- * endpoint can be derived from real content in either posture—coarse controls bring
- * their own 44px floor; non-interactive visuals receive no invented one.
+ * Measure the dock's two endpoints, `--dock-expanded-px` and `--dock-collapsed-px`.
  *
- * Each endpoint is a posture's FRAME (the root's box less its active pane's natural
- * span: padding, border, gaps, persistent regions, any host slack) plus that pane's
- * live natural span. A frame is taken only from a root laid out at rest in its
- * posture; the spans are read on every capture. So an endpoint follows its pane in
- * every posture and through a morph, and is never a box latched before the pane
- * changed (O-101).
+ * An endpoint is the root's box at rest in its posture, laid out from the live DOM on
+ * every capture (`restSize`). Nothing is latched but each posture's chrome, the root
+ * less its pane, read only from a root at rest in that posture (no `[data-morphing]`).
+ * The chrome holds padding, border, gaps and the persistent regions, none of which
+ * depends on the host. So an endpoint follows the pane and the host in every posture and
+ * through a morph (O-101, O-101a).
+ *
+ * The expanded endpoint is read in both postures, since a morph reserves it in both
+ * directions. The collapsed endpoint is read while the dock is collapsed, where its pane
+ * lays out; while expanded it keeps the last value, which the next collapse re-reads
+ * when it arms. The posture is the DOM's (the full pane's `.is-active`), never the
+ * posture ref, which flips before the DOM is patched: no endpoint can be read from a
+ * box laid out in the other posture (the W7 MORPH guard, BK #47).
+ *
+ * The capture runs when the morph arms (`measure`), on a ResizeObserver hit on the root,
+ * its parent (the host constraint), the layers, both panes or any pane's direct child,
+ * on a MutationObserver record in either pane, on a window resize (in the resize step,
+ * before the frame's layout), and once fonts are ready.
  */
 export function useDockExpandedSize(
     options: UseDockExpandedSizeOptions,
 ): UseDockExpandedSizeReturn {
-    const { rootEl, contentEl, expandedEl, collapsedEl, axis, expanded } = options;
+    const { rootEl, contentEl, expandedEl, collapsedEl, axis } = options;
     let observer: ResizeObserver | null = null;
     let mutations: MutationObserver | null = null;
-    let expandedFrame: number | null = null;
-    let collapsedFrame: number | null = null;
+    let expandedChrome: number | null = null;
+    let collapsedChrome: number | null = null;
+    let collapsedPx: number | null = null;
     let disposed = false;
 
-    /**
-     * `"layout"` — the DOM is patched to the posture `expanded` names, so reading the
-     * root lays it out in that posture: with no `[data-morphing]` on it, its border box
-     * IS that posture's endpoint and its frame is taken. Only a ResizeObserver callback,
-     * a pane mutation (a microtask after the patch), the initial attach and the morph's
-     * arm (`measure`) can claim this.
-     *
-     * `"flip"` — the posture ref just changed and NOTHING has re-laid out yet. It takes
-     * no frame; it only re-publishes from the frames already taken.
-     */
-    type CaptureSource = "layout" | "flip";
-
-    function capture(source: CaptureSource = "layout"): void {
+    function capture(): void {
         const root = rootEl.value;
-        const content = contentEl.value;
         const full = expandedEl.value;
         const summary = collapsedEl.value;
-        if (!root || !content || !full || !summary) return;
-
-        // A morphing root reserves an endpoint (`[data-morphing]` sets its size) and is
-        // not one, so it gives no frame. Its panes still lay out at their natural span,
-        // so both endpoints re-base on them below: a pane that changes mid-morph
-        // retargets the reserved box rather than leaving it.
-        const settled = source === "layout" && !root.hasAttribute("data-morphing");
+        if (!root || !contentEl.value || !full || !summary) return;
 
         const a = axis.value;
-        const rootSize = getSize(root, a);
-        const fullSize = naturalSize(full, a);
-        const summarySize = naturalSize(summary, a);
-        if (rootSize <= 0 || fullSize < 0 || summarySize < 0) return;
-
-        /* THE PRE-MEASURE GUARD, and the endpoint poisoning it stops.
-           [2026-08-24 · BK #47 W7 MORPH]
-
-           ~~`if (expanded.value) expandedPx = rootSize; else collapsedPx = rootSize;`,
-           run unconditionally including from the `watch(expanded, …)` flip~~ — the flip
-           arm is REFUSED here, and it was the bug.
-
-           On a collapsed→expanded flip the watcher fires in the same tick the ref
-           changes: `expanded.value` is already `true` while the root is still laid out
-           at its COLLAPSED span. The old line read that collapsed number and stored it
-           as `expandedPx` — the EXPANDED endpoint seeded with the collapsed box. The
-           morph then armed against it and ran to the wrong target, held there while the
-           spring settled, and snapped to the real span the moment the ResizeObserver
-           delivered an honest measurement. That is precisely the traced defect: the
-           expand runs to 186 of 311, holds ~350ms past settle, then jumps +125px in a
-           single frame at t≈657 — the largest motion defect in the component.
-
-           A posture flip is therefore not a measurement event; it is the event a
-           measurement must already have PRECEDED. A frame is taken only by a settled
-           `"layout"` capture, whose root size and posture actually agree. The flip arm
-           still runs the rest of this function and re-publishes the two custom
-           properties — it just no longer invents one of them.
-
-           Nothing is masked by this: the re-base below (frame + the full pane's
-           natural span) reads the FULL PANE'S OWN laid-out span, which is real from
-           mount because the inactive pane stays laid out under `visibility`.
-
-           [2026-10-21 · 10.1.2 · O-101 DOCK-STALE-EXPANDED-ENDPOINT] ~~The expanded
-           endpoint is latched by a `"layout"` capture taken while expanded, and that
-           latch is what every later expand reserves.~~ A latch outlives the content
-           it measured: a consumer breakpoint that changed the full pane while the dock
-           was collapsed left `--dock-expanded-px` at the old pane's span, and the next
-           expand reserved it (value.js: 508px reserved at a 390px viewport, the
-           document scrolling for ~380 frames, then a snap to 188). The breakpoint
-           often expands the dock in the same render, so the morph arms before any
-           collapsed re-layout reaches the ResizeObserver; no capture before the arm
-           sees the new pane.
-
-           ~~So the expand measures its own endpoint at the arm, and the latch stands
-           otherwise.~~ [10.1.2 round 1] The arm-time read cured only a pane that
-           changed at rest. A pane that changed mid-morph kept the latch: the capture
-           returned early under `[data-morphing]`, and the reversal's arm runs under
-           it too, so 1440→390 reserved 592 for a 160 box for ~60 frames, the
-           document scrolling sideways, then a snap at settle.
-
-           So no endpoint is latched. A settled `"layout"` capture takes its posture's
-           FRAME, the root's box less the active pane's natural span; every capture,
-           collapsed, expanded, mid-morph or flip, publishes frame + live span for
-           both postures. The ResizeObserver and a MutationObserver on the panes run
-           it whenever the content changes, so the endpoint follows the pane in every
-           posture. The W7 guard stands: a `"flip"` capture takes no frame, so it can
-           never seed one posture's endpoint with the other's box. */
-        if (settled) {
-            if (expanded.value) expandedFrame = rootSize - fullSize;
-            else collapsedFrame = rootSize - summarySize;
+        const expanded = full.classList.contains("is-active");
+        if (!root.hasAttribute("data-morphing")) {
+            const chrome = getSize(root, a) - getSize(expanded ? full : summary, a);
+            if (expanded) expandedChrome = chrome;
+            else collapsedChrome = chrome;
         }
 
-        // Before a posture has settled once, its frame is the other posture's: the
-        // chrome around the panes is shared, and the first arm in that posture reads
-        // the settled box before it reserves anything.
-        const eFrame = expandedFrame ?? collapsedFrame;
-        const cFrame = collapsedFrame ?? expandedFrame;
-        if (eFrame === null || cFrame === null) return;
-        const expandedEndpoint = eFrame + fullSize;
-        const collapsedEndpoint = cFrame + summarySize;
-        if (expandedEndpoint <= 0 || collapsedEndpoint <= 0) return;
+        const expandedPx = keepScroll(full, () =>
+            restSize(root, full, summary, a, expandedChrome),
+        );
+        if (!expanded) {
+            collapsedPx = keepScroll(full, () =>
+                restSize(root, summary, full, a, collapsedChrome),
+            );
+        }
+        if (expandedPx <= 0) return;
 
-        root.style.setProperty("--dock-collapsed-px", `${collapsedEndpoint}px`);
+        if (collapsedPx !== null && collapsedPx > 0) {
+            root.style.setProperty("--dock-collapsed-px", `${collapsedPx}px`);
+        }
         root.style.setProperty(
             "--dock-expanded-px",
-            `${Math.max(expandedEndpoint, collapsedEndpoint)}px`,
+            `${Math.max(expandedPx, collapsedPx ?? 0)}px`,
         );
     }
 
     /**
-     * Observe the boxes whose size an endpoint depends on: the root, the layers, both
-     * panes and every pane's direct child. A pane stretched over the root does not
+     * Observe the boxes an endpoint depends on. A pane stretched over the root does not
      * resize when its content does, so its children are observed too, and re-observed
-     * whenever the pane's child list changes.
+     * whenever the pane's child list changes. The root's parent is observed because a
+     * morphing root is held at its reserved size, so a host that resizes under it
+     * resizes nothing else observed.
      */
     function observe(): void {
         if (!observer) return;
         observer.disconnect();
         const panes = [expandedEl.value, collapsedEl.value];
-        for (const el of [rootEl.value, contentEl.value, ...panes]) {
+        const root = rootEl.value;
+        for (const el of [root, root?.parentElement, contentEl.value, ...panes]) {
             if (el) observer.observe(el);
         }
         for (const pane of panes) {
@@ -195,23 +201,17 @@ export function useDockExpandedSize(
         observer = null;
         mutations?.disconnect();
         mutations = null;
-        const root = rootEl.value;
-        if (!root) return;
+        if (!rootEl.value) return;
         if (typeof ResizeObserver !== "undefined") {
-            // A ResizeObserver callback is by definition a post-layout event: the box
-            // it reports has already been laid out at the size it reports. Passed as a
-            // lambda so the observer's `(entries, observer)` arguments cannot arrive as
-            // the `source` parameter.
-            observer = new ResizeObserver(() => capture("layout"));
+            observer = new ResizeObserver(() => capture());
             observe();
         }
         if (typeof MutationObserver !== "undefined") {
-            // A pane's content changed: the patch that changed it is complete when this
-            // microtask runs, before the frame lays out or paints, so the endpoint the
-            // frame reserves is already the new pane's.
+            // A pane's content changed: the patch is complete when this microtask runs,
+            // before the frame lays out or paints.
             mutations = new MutationObserver(() => {
                 observe();
-                capture("layout");
+                capture();
             });
             for (const pane of [expandedEl.value, collapsedEl.value]) {
                 if (pane) {
@@ -229,10 +229,12 @@ export function useDockExpandedSize(
     watch([rootEl, contentEl, expandedEl, collapsedEl, axis], attach, {
         immediate: true,
     });
-    watch(expanded, () => capture("flip"));
+
+    const onResize = () => capture();
+    if (typeof window !== "undefined") window.addEventListener("resize", onResize);
 
     const fonts = typeof document !== "undefined" ? document.fonts : undefined;
-    if (fonts) void fonts.ready.then(() => !disposed && capture("layout"));
+    if (fonts) void fonts.ready.then(() => !disposed && capture());
 
     onScopeDispose(() => {
         disposed = true;
@@ -240,7 +242,8 @@ export function useDockExpandedSize(
         observer = null;
         mutations?.disconnect();
         mutations = null;
+        if (typeof window !== "undefined") window.removeEventListener("resize", onResize);
     });
 
-    return { measure: () => capture("layout") };
+    return { measure: capture };
 }

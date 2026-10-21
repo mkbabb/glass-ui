@@ -232,10 +232,17 @@ type Sequence = "collapsed" | "pinned" | "reversal" | "mid-expand";
 
 const viewport = (width: number) => ({ width, height: 844 });
 
-async function driveStaleEndpoint(page: Page, axis: Axis, from: number, to: number, sequence: Sequence) {
+async function driveStaleEndpoint(
+    page: Page,
+    axis: Axis,
+    from: number,
+    to: number,
+    sequence: Sequence,
+    scene: "stale-endpoint" | "overflow" = "stale-endpoint",
+) {
     await page.setViewportSize(viewport(from));
     const pin = sequence === "pinned" ? (to < 768 ? "narrow" : "wide") : "";
-    await page.goto(`/tests-visual/release-10-1-2/harness.html?scene=stale-endpoint&pin=${pin}&axis=${axis}`);
+    await page.goto(`/tests-visual/release-10-1-2/harness.html?scene=${scene}&pin=${pin}&axis=${axis}`);
     await page.waitForFunction(() => (window as unknown as { __ready?: boolean }).__ready);
     const settled = (posture: "expanded" | "collapsed") =>
         page.waitForFunction(
@@ -351,4 +358,78 @@ for (const axis of ["horizontal", "vertical"] as const) {
             });
         }
     }
+}
+
+// O-101a, 10.1.2 critique b2 D-2. A constant pane wider than the narrow host (scene
+// `overflow`: 20 seats, natural span 960, so the run scrolls at 390 and fits at 1440),
+// with the HOST changing during the morph rather than the pane. No observed box but the
+// host moves while the root is held at its reservation. Same sequences and assertions
+// as the O-101 cells above. RED on 10.1.1 and on the round-1 cure, whose per-posture
+// frame (root less natural span) encoded the old host: 976 reserved for 390 with the
+// document at `scrollWidth` 683, and 390 reserved for 976, then a 586 px snap at settle.
+for (const [from, to] of [
+    [1440, 390],
+    [390, 1440],
+] as const) {
+    for (const sequence of ["collapsed", "reversal", "mid-expand"] as const) {
+        test(`O-101a · a host change during the morph · ${sequence} (${from}->${to})`, async ({ page }) => {
+            const seq = await driveStaleEndpoint(page, "horizontal", from, to, sequence, "overflow");
+            const rest = seq[seq.length - 1];
+            expect(rest.morphing).toBe(false);
+            const stale = seq.filter(
+                (f) =>
+                    f.morphing &&
+                    f.changed &&
+                    (sequence !== "collapsed" || f === seq.find((g) => g.morphing)) &&
+                    Math.abs(f.reserved - rest.size) > 1,
+            );
+            expect.soft(
+                stale.length,
+                `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+            ).toBe(0);
+            const over = seq.filter((f) => f.scroll > f.client);
+            expect
+                .soft(
+                    over.length,
+                    `frames with the document scrolling, of ${seq.length} (max ${Math.max(0, ...over.map((f) => f.scroll))}, client ${rest.client})`,
+                )
+                .toBe(0);
+        });
+    }
+}
+
+// 10.1.2 critique b2 D-1. A capture lays panes out to read an endpoint; it must leave a
+// scrolled run where it is. Scene `scroll`: an always-open dock whose run scrolls, scrolled
+// to an interior rest, then one seat's text changes (a MutationObserver capture) and one
+// seat widens (a ResizeObserver capture). The text change leaves the offset; the resize
+// moves it only by the engine's own re-snap, never to the leading edge. RED on the
+// round-1 cure in WebKit (312 -> 24 at 390, 312 -> 0 at 1440); GREEN on 10.1.1.
+for (const [width, n] of [
+    [390, 20],
+    [1440, 60],
+] as const) {
+    test(`O-101 · a capture keeps a scrolled run's scroll position (${width})`, async ({ page }) => {
+        await page.setViewportSize(viewport(width));
+        await page.goto(`/tests-visual/release-10-1-2/harness.html?scene=scroll&n=${n}`);
+        await page.waitForFunction(() => (window as unknown as { __ready?: boolean }).__ready);
+        await page.locator('[data-witness="seat-0"]').waitFor();
+        await page.waitForTimeout(600);
+        const frames2 = () =>
+            page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+        const offset = () => run(page).evaluate((el) => el.scrollLeft);
+        await run(page).evaluate((el) => el.scrollTo({ left: 300, behavior: "instant" }));
+        await page.waitForTimeout(400);
+        const at = await offset();
+        expect(at, "the run scrolled to an interior rest").toBeGreaterThan(0);
+
+        await page.evaluate(() => (window as unknown as { __tick: () => void }).__tick());
+        await frames2();
+        await page.waitForTimeout(200);
+        expect(await offset(), "after a seat's text changed").toBe(at);
+
+        await page.evaluate(() => (window as unknown as { __grow: () => void }).__grow());
+        await frames2();
+        await page.waitForTimeout(200);
+        expect(await offset(), "after a seat resized").toBeGreaterThanOrEqual(at);
+    });
 }
