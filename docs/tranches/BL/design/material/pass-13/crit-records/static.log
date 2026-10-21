@@ -1,0 +1,31 @@
+SWEEP fv11 under FV11-rulings.json exit 0: PASS (207 lines: 197 ruled true, 10 reported)
+DEL fv11 exit 0: PASS (101 gated rows)
+census fv11 exit 0: LIGHTING-CENSUS stacked=0 halo=0 blur=0 open=0
+HOV exit 0: PASS (58 gated rows)
+LAW exit 0: PASS (103 gated rows)
+-- O-87 on the veil: every backdrop-filter / blur / box-shadow / ::before / ::after in focus-veil.css (floor v11)
+5:   the engaged control: uniform `backdrop-filter` under the INTERSECT product of an x
+22:   `backdrop-filter` bands to approximate it. That construction is REJECTED (NOVELTIES
+28:   ONLY OPACITY ANIMATES. The blur radius field is STATIC. An animated `backdrop-filter`
+38:   to transition from. (A resident full-viewport `backdrop-filter` at rest is not
+44:   THE CROSS-ENGINE FLOOR. Plain `blur()` + the tone (`--glass-focus-veil-tone`:
+47:   SOURCE-AUTHORED (only the `backdrop-filter` pair is build-injected), and
+64:           carries `backdrop-filter`, `transform`, `filter`, `contain: paint` or
+69:           carries `backdrop-filter`), so a consumer that mounts the veil from inside its
+75:        backdrop-filter: blur(var(--glass-focus-veil-blur))
+-- the tone token, every writer (src)
+src/styles/tokens/dark-arm.css:300:    --glass-focus-veil-dim: transparent;
+src/styles/tokens/dark-arm.css:301:    --glass-focus-veil-tone: saturate(var(--glass-saturate)) contrast(1.03) brightness(0.8);
+src/styles/tokens/glass.css:120:    --glass-focus-veil-dim: color-mix(in oklab, var(--overlay-scrim-ink) 10%, transparent);
+src/styles/tokens/glass.css:121:    --glass-focus-veil-tone: saturate(var(--glass-saturate));
+-- every composer of .glass-focus-veil (src demo)
+src/components/slider/Slider.vue:138:    veil.style.setProperty("--glass-focus-veil-core-x", `${rect.width / 2}px`);
+src/components/slider/Slider.vue:139:    veil.style.setProperty("--glass-focus-veil-core-y", `${rect.height / 2}px`);
+src/components/slider/Slider.vue:288:                class="glass-focus-veil"
+src/components/dialog/ModalOverlay.vue:19: * `.glass-focus-veil` (styles/glass/focus-veil.css, MOTION-CANON §5) is a centre-weighted
+src/components/dialog/ModalOverlay.vue:20: * frost mask: a fixed `--glass-focus-veil-core-x/-y` 13rem core plus a 7rem bloom, sited
+src/components/dialog/ModalOverlay.vue:74:        <span v-if="props.veil" class="glass-focus-veil" data-engaged aria-hidden="true" />
+worktree = minor-split-v10.patch
+SWEEP minor10 under crit-ms9-rulings.json exit 0: PASS (368 lines: 347 ruled true, 21 reported)
+census minor10 exit 0: LIGHTING-CENSUS stacked=0 halo=0 blur=0 open=0
+worktree = floor-v11.patch

@@ -1,0 +1,9 @@
+worktree HEAD c8ffc41a7 (master at launch; release/10.1.1, release/10.1.2 not merged, P12-6.2 (a))
+base diff 1da7eb17b..HEAD -- src demo tests package.json (empty = base (a)): []
+wider list: []
+release/10.1.1 ancestor of HEAD: exit 1 (1 = not merged)
+release/10.1.2 ancestor of HEAD: exit 1 (1 = not merged)
+git apply --check floor-v11a.patch at HEAD: exit 0 sha1 08c13d4e files 88
+git apply --check floor-v11.patch at HEAD: exit 0 sha1 8f838dcf files 89
+git apply --check minor-split-v10.patch at HEAD: exit 0 sha1 2aa0e5c9 files 61
+worktree = floor-v11.patch

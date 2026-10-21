@@ -1,0 +1,61 @@
+declarations: floor v11a 5584, floor v11 5586
+  DARK                 .dark { --glass-focus-veil-dim }#1
+      floor v11a: oklab(0% none none / .4)
+      floor v11:  transparent
+  DARK                 .dark { --glass-focus-veil-tone }#1
+      floor v11a: None
+      floor v11:  saturate(var(--glass-saturate)) contrast(1.03) brightness(.8)
+  TONE-LIGHT           :root { --glass-focus-veil-tone }#1
+      floor v11a: None
+      floor v11:  saturate(var(--glass-saturate))
+  CHAIN                @layer components » .glass-focus-veil { -webkit-backdrop-filter }#1
+      floor v11a: blur(var(--glass-focus-veil-blur)) saturate(var(--glass-saturate))
+      floor v11:  blur(var(--glass-focus-veil-blur)) var(--glass-focus-veil-tone)
+  CHAIN                @layer components » .glass-focus-veil { backdrop-filter }#1
+      floor v11a: blur(var(--glass-focus-veil-blur)) saturate(var(--glass-saturate))
+      floor v11:  blur(var(--glass-focus-veil-blur)) var(--glass-focus-veil-tone)
+differing declarations: 5 (DARK 2, TONE-LIGHT 1, CHAIN 2)
+
+every block that declares a token the veil's chain or background reads (both trees):
+  --glass-focus-veil-tone · floor v11a: 0 — 
+  --glass-focus-veil-tone · floor v11: 2 — [:root] saturate(var(--glass-saturate)) | [.dark] saturate(var(--glass-saturate)) contrast(1.03) brightness(.8)
+  --glass-focus-veil-dim · floor v11a: 3 — [:root] var(--overlay-scrim-ink) | [@supports (color: color-mix(in lab, red, red)) » :root] color-mix(in oklab, var(--overlay-scrim-ink) 10%, transparent) | [.dark] oklab(0% none none / .4)
+  --glass-focus-veil-dim · floor v11: 3 — [:root] var(--overlay-scrim-ink) | [@supports (color: color-mix(in lab, red, red)) » :root] color-mix(in oklab, var(--overlay-scrim-ink) 10%, transparent) | [.dark] transparent
+  --glass-focus-veil-blur · floor v11a: 1 — [:root] var(--glass-blur-floating-radius)
+  --glass-focus-veil-blur · floor v11: 1 — [:root] var(--glass-blur-floating-radius)
+  --glass-blur-floating-radius · floor v11a: 1 — [:root] 18px
+  --glass-blur-floating-radius · floor v11: 1 — [:root] 18px
+  --glass-saturate · floor v11a: 1 — [:root] 1.5
+  --glass-saturate · floor v11: 1 — [:root] 1.5
+  --overlay-scrim-ink · floor v11a: 1 — [:root] #1c1917
+  --overlay-scrim-ink · floor v11: 1 — [:root] #1c1917
+
+source order on <html> of every declaration of the two re-valued tokens (equal specificity: the later wins):
+  floor v11a #4184  [:root] --glass-focus-veil-dim: var(--overlay-scrim-ink)
+  floor v11a #4185  [@supports (color: color-mix(in lab, red, red)) » :root] --glass-focus-veil-dim: color-mix(in oklab, var(--overlay-scrim-ink) 10%, transparent)
+  floor v11a #4658  [.dark] --glass-focus-veil-dim: oklab(0% none none / .4)
+  floor v11  #4184  [:root] --glass-focus-veil-dim: var(--overlay-scrim-ink)
+  floor v11  #4185  [@supports (color: color-mix(in lab, red, red)) » :root] --glass-focus-veil-dim: color-mix(in oklab, var(--overlay-scrim-ink) 10%, transparent)
+  floor v11  #4186  [:root] --glass-focus-veil-tone: saturate(var(--glass-saturate))
+  floor v11  #4659  [.dark] --glass-focus-veil-dim: transparent
+  floor v11  #4660  [.dark] --glass-focus-veil-tone: saturate(var(--glass-saturate)) contrast(1.03) brightness(.8)
+
+resolved on the veil (light: the light :root blocks; dark: those and the `.dark` blocks, in source order):
+  floor v11a light backdrop-filter          blur(var(--glass-focus-veil-blur)) saturate(var(--glass-saturate))  →  blur(18px) saturate(1.5)
+  floor v11a light -webkit-backdrop-filter  blur(var(--glass-focus-veil-blur)) saturate(var(--glass-saturate))  →  blur(18px) saturate(1.5)
+  floor v11a light background               var(--glass-focus-veil-dim)  →  color-mix(in oklab, #1c1917 10%, transparent)
+  floor v11a dark  backdrop-filter          blur(var(--glass-focus-veil-blur)) saturate(var(--glass-saturate))  →  blur(18px) saturate(1.5)
+  floor v11a dark  -webkit-backdrop-filter  blur(var(--glass-focus-veil-blur)) saturate(var(--glass-saturate))  →  blur(18px) saturate(1.5)
+  floor v11a dark  background               var(--glass-focus-veil-dim)  →  oklab(0% none none / .4)
+  floor v11  light backdrop-filter          blur(var(--glass-focus-veil-blur)) var(--glass-focus-veil-tone)  →  blur(18px) saturate(1.5)
+  floor v11  light -webkit-backdrop-filter  blur(var(--glass-focus-veil-blur)) var(--glass-focus-veil-tone)  →  blur(18px) saturate(1.5)
+  floor v11  light background               var(--glass-focus-veil-dim)  →  color-mix(in oklab, #1c1917 10%, transparent)
+  floor v11  dark  backdrop-filter          blur(var(--glass-focus-veil-blur)) var(--glass-focus-veil-tone)  →  blur(18px) saturate(1.5) contrast(1.03) brightness(.8)
+  floor v11  dark  -webkit-backdrop-filter  blur(var(--glass-focus-veil-blur)) var(--glass-focus-veil-tone)  →  blur(18px) saturate(1.5) contrast(1.03) brightness(.8)
+  floor v11  dark  background               var(--glass-focus-veil-dim)  →  transparent
+  light backdrop-filter: floor v11a = floor v11
+  light -webkit-backdrop-filter: floor v11a = floor v11
+  light background: floor v11a = floor v11
+  dark: moved ['backdrop-filter', 'background']
+
+LIGHTPROOF PASS: 5 differing declarations, 0 outside the dark arm, the chain and the light tone; light chain and background identical after resolution

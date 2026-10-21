@@ -1,0 +1,82 @@
+{
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "load_start": "21.2 21.3 24.6",
+ "cells": {
+  "blur": {
+   "load": "21.2 21.3 24.6",
+   "computed": [
+    "blur(8px)",
+    null
+   ],
+   "inside": {
+    "mean": 127.5,
+    "sd": 15.66,
+    "rgb": [
+     128,
+     128,
+     128
+    ]
+   },
+   "outside": {
+    "mean": 127.5,
+    "sd": 127.5,
+    "rgb": [
+     128,
+     128,
+     128
+    ]
+   }
+  },
+  "bright": {
+   "load": "21.2 21.3 24.6",
+   "computed": [
+    "brightness(0.5)",
+    null
+   ],
+   "inside": {
+    "mean": 67.45,
+    "sd": 0,
+    "rgb": [
+     116,
+     57,
+     28
+    ]
+   },
+   "outside": {
+    "mean": 134.83,
+    "sd": 0,
+    "rgb": [
+     232,
+     114,
+     55
+    ]
+   }
+  },
+  "veil-dark": {
+   "load": "20.8 21.3 24.5",
+   "computed": {
+    "backdropFilter": "blur(18px) saturate(1.5) contrast(1.03) brightness(0.8)",
+    "background": "rgba(0, 0, 0, 0)",
+    "tone": "saturate(1.5) contrast(1.03) brightness(.8)",
+    "dim": "transparent"
+   }
+  },
+  "veil-light": {
+   "load": "20.8 21.3 24.5",
+   "computed": {
+    "backdropFilter": "blur(18px) saturate(1.5)",
+    "background": "oklab(0.216114 0.00343135 0.00508514 / 0.1)",
+    "tone": "saturate(1.5)",
+    "dim": "color-mix(in oklab, #1c1917 10%, transparent)"
+   }
+  }
+ },
+ "load_end": "20.8 21.3 24.5",
+ "verdict": {
+  "blur_painted": true,
+  "brightness_painted": true,
+  "blur_declaration_accepted": true,
+  "veil_dark_declaration_accepted": true
+ }
+}

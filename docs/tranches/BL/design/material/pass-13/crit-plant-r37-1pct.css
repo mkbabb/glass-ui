@@ -1,0 +1,5 @@
+/* crit-plant-r37-1pct.css · D3 pass-13 CRITIC: R-37's guard plant in live paint, the smallest one.
+   A dark-veil background of 1 % black (one-fortieth of R-2's 40 %, one-tenth of plant-R2's scrim). Playwright WebKit paints
+   a background even where it paints no backdrop-filter, so the dark spot's veiled pixels move by about one 8-bit step while
+   the page's barely move. M-9's R-37 fact must read veiled != raw on the spot and turn every dark-veil leg into a gate. */
+.dark { --glass-focus-veil-dim: color-mix(in oklab, #000 1%, transparent); }
