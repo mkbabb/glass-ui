@@ -126,6 +126,19 @@ const scenes: Record<string, Component> = {
         ]),
     ),
 
+    // An `aria-hidden` wrapper around a button that still takes Tab, between two declared
+    // seats: undeclared (an authoring error, axe `aria-hidden-focus`, but a Tab stop all
+    // the same), so the run claims no toolbar over it.
+    "hidden-wrapper": defineComponent(() => () =>
+        page(() => [
+            h(DockControl, { "aria-label": "Play", "data-witness": "seat-0" }, () => "A"),
+            h("div", { "aria-hidden": "true" }, [
+                h("button", { type: "button", "aria-label": "Hidden", "data-witness": "hid" }, "H"),
+            ]),
+            h(DockControl, { "aria-label": "Last", "data-witness": "seat-2" }, () => "B"),
+        ]),
+    ),
+
     // A consumer seat whose declaration is reactive: a button declared between two
     // DockControls, undeclared by `window.__undeclare()` while it stays mounted.
     reactive: defineComponent(() => {

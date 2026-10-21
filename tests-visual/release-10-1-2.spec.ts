@@ -113,9 +113,9 @@ for (const [label, viewport] of [
             expect(await active(page)).toBe("seat-2");
         });
 
-        // RED on the first three 10.1.2 cuts, which counted reka's hidden native
-        // `<select>` as an undeclared child and claimed no role. Regression arm against
-        // 10.1.1, which claimed the role over every run.
+        // RED on 10.1.1, which roved ArrowRight from seat-1 onto reka's hidden native
+        // `<select>` (an inferred seat), and on the first three 10.1.2 cuts, which counted
+        // that `<select>` as an undeclared child and claimed no role.
         test("G-4 · a DockTrigger for=select in a form keeps an all-declared run's toolbar", async ({
             page,
             browserName,
@@ -129,6 +129,39 @@ for (const [label, viewport] of [
             expect(await active(page)).toBe("seat-1");
             await page.keyboard.press("ArrowRight");
             expect(await active(page)).toBe("seat-3");
+        });
+
+        // The claim follows the form select's `aria-hidden` and `tabindex` changed in
+        // place, both ways. RED on 10.1.1 (the role over every run) and on the fourth
+        // 10.1.2 cut, which observed neither (critique-4 D-2).
+        test("G-4 · the toolbar claim follows a child's aria-hidden and tabindex in place", async ({
+            page,
+        }) => {
+            await open(page, "form-select");
+            const native = page.locator('.dock-run > select[aria-hidden="true"]');
+            const handle = await native.elementHandle();
+            expect(await run(page).getAttribute("role")).toBe("toolbar");
+            await handle!.evaluate((el) => {
+                el.removeAttribute("aria-hidden");
+                el.removeAttribute("tabindex");
+            });
+            await expect(run(page)).not.toHaveAttribute("role", "toolbar");
+            await handle!.evaluate((el) => {
+                el.setAttribute("aria-hidden", "true");
+                el.setAttribute("tabindex", "-1");
+            });
+            await expect(run(page)).toHaveAttribute("role", "toolbar");
+        });
+
+        // RED on 10.1.1 (the role over every run) and on the fourth 10.1.2 cut, which
+        // waived any `aria-hidden` child with a negative `tabIndex`, a wrapper included.
+        test("G-4 · an aria-hidden wrapper around a Tab stop voids the toolbar claim", async ({
+            page,
+            browserName,
+        }) => {
+            await open(page, "hidden-wrapper");
+            expect(await run(page).getAttribute("role")).toBeNull();
+            expect(await tabWalk(page, browserName)).toEqual(["seat-0", "hid", "after"]);
         });
 
         // A seat that drops its marker while mounted gets back the tab stop the run took.

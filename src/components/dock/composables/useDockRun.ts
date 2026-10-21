@@ -124,27 +124,25 @@ function declaredSeatsOf(run: HTMLElement): HTMLElement[] {
 const DOCK_SEPARATOR = ".dock-separator";
 
 /**
- * A child that is in neither the accessibility tree nor the Tab sequence:
- * `aria-hidden="true"` and a negative `tabIndex`. reka's `<Select>` renders one beside
- * its trigger when it has a `name` inside a `<form>` (its native `<select>` for form
- * submission, `aria-hidden="true" tabindex="-1"`), so a `DockTrigger for="select"`
- * seated in a form puts it in the run. No user reaches it, so it is no toolbar member.
- * An `aria-hidden` child that can still take Tab is not this: it is undeclared.
+ * reka's FORM `<select>`, by the exact shape it renders: reka's `<Select>` with a `name`
+ * inside a `<form>` puts a native `<select aria-hidden="true" tabindex="-1">` beside its
+ * trigger for form submission, so a `DockTrigger for="select"` seated in a form puts it in
+ * the run. It is in neither the accessibility tree nor the Tab sequence and holds no
+ * control, so it is no toolbar member. Only this shape: an `aria-hidden` wrapper or
+ * control that still holds a Tab stop is undeclared, and focusability is not read.
  */
-function isInert(child: HTMLElement): boolean {
-    return child.getAttribute("aria-hidden") === "true" && child.tabIndex < 0;
-}
+const FORM_SELECT = 'select[aria-hidden="true"][tabindex="-1"]';
 
 /**
  * THE TOOLBAR CLAIM. `role="toolbar"` promises one stop with arrows across the run, so
  * the run makes it only when it has a declared seat and every child is one, glass's
- * `<DockSeparator>` (a toolbar holds separators, APG) and inert children (`isInert`)
- * aside. A run with any other undeclared child claims no role: its declared seats still
+ * `<DockSeparator>` (a toolbar holds separators, APG) and reka's form `<select>`
+ * (`FORM_SELECT`) aside. A run with any other undeclared child claims no role: its declared seats still
  * rove, and the rest keep their own stops.
  */
 function isToolbar(run: HTMLElement): boolean {
     const children = seatsOf(run).filter(
-        (child) => !child.matches(DOCK_SEPARATOR) && !isInert(child),
+        (child) => !child.matches(DOCK_SEPARATOR) && !child.matches(FORM_SELECT),
     );
     return children.length > 0 && children.every(isDeclaredSeat);
 }
@@ -378,6 +376,14 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
 
     let mo: MutationObserver | null = null;
 
+    function feedsRun(run: HTMLElement, record: MutationRecord): boolean {
+        if (record.type !== "attributes") return true;
+        if (record.attributeName === "aria-current" || record.attributeName === DOCK_SEAT_ATTR)
+            return true;
+        const target = record.target as HTMLElement;
+        return target.parentElement === run && !isDeclaredSeat(target);
+    }
+
     onMounted(() => {
         const run = runEl.value;
         if (!run) return;
@@ -386,16 +392,22 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
         run.addEventListener("focusin", onActivate, { capture: true });
         syncRoving();
         // The seat set is consumer content: it changes when a route list changes, when a
-        // face swaps, when `aria-current` moves, when a child declares itself a seat.
-        // Re-derive the tab stop and the toolbar claim on those, and on nothing else —
-        // no scroll listener, no resize observer, because the lattice makes both
-        // irrelevant (the anchor is arithmetic, not a measurement).
-        mo = new MutationObserver(() => syncRoving());
+        // face swaps, when `aria-current` moves, when a child declares itself a seat, and
+        // when a direct child's `aria-hidden` or `tabindex` moves it into or out of the
+        // `FORM_SELECT` shape the toolbar claim waives. Re-derive the tab stop and the
+        // claim on those, and on nothing else: no scroll listener, no resize observer,
+        // because the lattice makes both irrelevant (the anchor is arithmetic, not a
+        // measurement). A `tabindex` record on a declared seat is the run's own write and
+        // one deeper in the tree is a seat's interior; neither feeds the claim, and
+        // reacting to the first would loop.
+        mo = new MutationObserver((records) => {
+            if (records.some((record) => feedsRun(run, record))) syncRoving();
+        });
         mo.observe(run, {
             childList: true,
             subtree: true,
             attributes: true,
-            attributeFilter: ["aria-current", DOCK_SEAT_ATTR],
+            attributeFilter: ["aria-current", DOCK_SEAT_ATTR, "aria-hidden", "tabindex"],
         });
     });
 

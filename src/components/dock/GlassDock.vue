@@ -474,7 +474,8 @@ defineExpose({
                 consumer's seats grandchildren of the flex run and buy nothing.
 
                 `role="toolbar"` + `aria-orientation` are claimed only while every child
-                of the run is a declared seat (`useDockRun`'s `toolbar`; atlas G-4, b-ii):
+                of the run is a declared seat, glass's DockSeparator and reka's form
+                `<select>` aside (`useDockRun`'s `toolbar`; atlas G-4, b-ii):
                 the arrow-key contract the role promises is the roving tabindex, and a run
                 holding an undeclared control does not keep it. No `aria-label`
                 is minted here: an unlabelled toolbar announces as "toolbar", which is

@@ -3,7 +3,9 @@
 // `data-glass-dock-seat`, which glass's seat primitives (DockControl, DockTrigger) set.
 // Every other child keeps its natural tab stop and its own keys; the run writes into
 // nothing it was not told is a seat. `role="toolbar"` is claimed only by a run whose
-// every child is a declared seat (glass's DockSeparator aside, which a toolbar holds).
+// every child is a declared seat, glass's DockSeparator (a toolbar holds separators) and
+// reka's form `<select aria-hidden="true" tabindex="-1">` beside a named Select's trigger
+// aside.
 //
 // RED on 10.1.1, which inferred a seat from focusability: a plain button, a reka trigger
 // and a `[role=button][tabindex]` handle seated in the run were roved and written to −1,
@@ -201,6 +203,48 @@ describe("dock run · the declared seat marker (b-ii)", () => {
         await settle();
         expect((w.get('[data-witness="hidden"]').element as HTMLElement).tabIndex).toBe(0);
         expect(w.get(".dock-run").attributes("role")).toBeUndefined();
+        w.unmount();
+    });
+
+    // The waiver is reka's exact shape, not "aria-hidden and a negative tabIndex": a
+    // non-focusable wrapper reads tabIndex −1, so that test waived an `aria-hidden` div
+    // whose button still takes Tab. RED on 10.1.1 (the role over every run) and on the
+    // fourth 10.1.2 cut (critique-4 D-1).
+    it("an aria-hidden wrapper around a Tab stop voids the claim", async () => {
+        const w = dock(() => [
+            h(DockControl, { "aria-label": "A" }),
+            h("div", { "aria-hidden": "true" }, [
+                h("button", { type: "button", "data-witness": "hid" }, "H"),
+            ]),
+            h(DockControl, { "aria-label": "B" }),
+        ]);
+        await settle();
+        expect((w.get('[data-witness="hid"]').element as HTMLElement).tabIndex).toBe(0);
+        expect(w.get(".dock-run").attributes("role")).toBeUndefined();
+        w.unmount();
+    });
+
+    // The claim reads a direct child's `aria-hidden` and `tabindex` (the form-select
+    // shape), so a change to either in place re-derives it. RED on 10.1.1 and on the
+    // fourth 10.1.2 cut, which observed neither (critique-4 D-2).
+    it("the toolbar claim follows a child's aria-hidden and tabindex changed in place", async () => {
+        const w = dock(() => [
+            h(DockControl, { "aria-label": "A" }),
+            h("select", { "aria-hidden": "true", tabindex: "-1", "data-witness": "native" }, [
+                h("option", { value: "s" }, "s"),
+            ]),
+            h(DockControl, { "aria-label": "B" }),
+        ]);
+        await settle();
+        const run = w.get(".dock-run");
+        expect(run.attributes("role")).toBe("toolbar");
+        const native = w.get('[data-witness="native"]').element as HTMLElement;
+        native.removeAttribute("aria-hidden");
+        native.removeAttribute("tabindex");
+        await new Promise((r) => setTimeout(r));
+        await settle();
+        expect(native.tabIndex).toBe(0);
+        expect(run.attributes("role")).toBeUndefined();
         w.unmount();
     });
 

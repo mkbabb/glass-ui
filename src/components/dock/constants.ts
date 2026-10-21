@@ -75,9 +75,10 @@ export const MORPH_SETTLE_MS = 840;
 /**
  * THE DECLARED SEAT MARKER (atlas G-4, arm b-ii; INBOUND O-102d). The dock run roves a
  * direct child only when it carries this attribute, and claims `role="toolbar"` only
- * when every direct child carries it (glass's `<DockSeparator>` aside). Glass's seat
- * primitives, `<DockControl>` and `<DockTrigger>`, set it; a consumer's own seat sets it
- * by hand. Nothing is inferred from focusability: an undeclared child keeps its natural
- * tab stop and its own keys.
+ * when it has one and every direct child carries it, glass's `<DockSeparator>` and
+ * reka's form `<select aria-hidden="true" tabindex="-1">` (beside a named `Select`'s
+ * trigger) aside. Glass's seat primitives, `<DockControl>` and `<DockTrigger>`, set it;
+ * a consumer's own seat sets it by hand. Nothing is inferred from focusability: an
+ * undeclared child keeps its natural tab stop and its own keys.
  */
 export const DOCK_SEAT_ATTR = "data-glass-dock-seat";
