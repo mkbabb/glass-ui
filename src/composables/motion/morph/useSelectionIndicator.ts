@@ -7,12 +7,6 @@ import {
     type Ref,
     type ComputedRef,
 } from "vue";
-// The indicator squish consumes the
-// shared `useLiquidFlex` primitive. The reciprocal-stretch cap-clamp + the `--stretch`
-// value computation are the SHARED reconcile; the geometry-relative travel FRACTION
-// (the load-bearing local detail) is fed via `squish(frac)` under the `"linear"` law.
-import { useLiquidFlex } from "../spring/useLiquidFlex";
-import { effectiveCap, writeVelocityWeight } from "../core/writeVelocityWeight";
 // The library's ONE scalar selection identity, imported `type`-only so it is erased
 // at emit — `/motion-core` still ships zero component-tree BYTES (BK #84 C-1). The
 // alternative was a second spelling of `string | number` living here, which the
@@ -31,28 +25,16 @@ import type { SelectionValue } from "../../../components/_shared/selection";
  * indicator writer in the library.
  *
  * It owns the JS-measured single-select slider style (the slider geometry, the
- * offset measure, the model/options re-measure watchers, the RO lifecycle) AND
- * the travel deform: a velocity-driven `--stretch` scalar the active indicator
- * reads so it lengthens along its travel axis as it glides and settles to fit
- * (the Material-3 ELASTIC, Apple Liquid-Glass register). Honors
- * `prefers-reduced-motion` (no deform under reduce).
- *
- * WHAT DEFORMS IS A POLICY, AND IT IS A PARAMETER. It used to be inferred from
- * `indicatorRef` being null, which was an OVERLOADED sentinel: the same null meant
- * "this group has no single slider" to `useSelectionGroup` and "this material does
- * not squish" here, so neither meaning could be stated without lying about the
- * other. `deform` says it outright:
- *   • `"plate"` (default) — `--stretch` on the travelling body.
- *   • `"mark"` — `--stretch` only. A hairline lengthens along its travel; it has no
- *     area to inflate and no cross axis to swell.
- *   • `"none"` — no deform at all (a multi-toggle group has no single travelling
- *     body to deform).
- * The `if (!el)` guard below stays what it always should have been: null-safety.
+ * offset measure, the model/options re-measure watchers, the RO lifecycle). The
+ * indicator glides by CSS on the inline `translate`/`width`/`height` this writes, at
+ * its own size: nothing here deforms it. The velocity `--stretch` law it once wrote
+ * (the `plate` and `mark` deforms, the `--tab-indicator-max-stretch` cap) is gone
+ * with its last consumer.
  *
  * The writer emits the selected item's full physical border box from the
  * container's padding-box origin. Measuring both axes keeps the resting fill
- * exact across orientation, fractional geometry, and writing direction; the
- * `vertical` param only selects the transient squish axis.
+ * exact across orientation, fractional geometry, and writing direction; a change
+ * of `vertical` re-measures.
  *
  * Generic over the minimal `SelectionOption` shape (`value` + optional
  * `disabled`), so it is decoupled from any consumer's option type. ~~the
@@ -79,34 +61,10 @@ export interface SelectionOption {
     disabled?: boolean;
 }
 
-/**
- * Fallback for `--tab-indicator-max-stretch` when the cascade leaves it unset —
- * the default travel-squish cap. `--stretch = 1 + frac · (cap − 1)`, so a
- * full-width jump reaches the cap and a tiny hop stays near 1. The token is the
- * authority; this is the no-token floor (the SOLE cap source, shared by the
- * click travel-squish AND the drag pull-morph — the constant + the token in
- * lockstep, never a fork).
- */
-export const DEFAULT_INDICATOR_MAX_STRETCH = 1.11;
-
-/**
- * The travel-progress fraction at which the squish RELEASES — the Material
- * "grow then shrink" close, keyed to ARRIVAL. The squish opens with the glide
- * and releases when the indicator is within this fraction of its target, so the
- * stretch peaks DURING travel and shrinks to fit AT arrival, never before.
- */
-export const INDICATOR_RELEASE_AT_ARRIVAL = 0.82;
-
-/**
- * The deform POLICY — what the travelling body is made of, stated rather than
- * inferred from a null ref. See the module docstring for why the sentinel had to go.
- */
-export type SelectionDeform = "plate" | "mark" | "none";
-
 export interface UseSelectionIndicatorParams<O extends SelectionOption> {
     /** The container scroller root (observed by the ResizeObserver). */
     containerRef: Ref<HTMLElement | null>;
-    /** The active indicator element (the squish `--stretch` write target). */
+    /** The active indicator element (the measured node). */
     indicatorRef: Ref<HTMLElement | null>;
     /** Per-option item refs, index-aligned to `options`. */
     buttonRefs: Ref<HTMLElement[]>;
@@ -114,34 +72,19 @@ export interface UseSelectionIndicatorParams<O extends SelectionOption> {
     options: ComputedRef<O[]>;
     /** The active value (re-measure on change), at the option type's own scalar. */
     model: Ref<O["value"] | undefined>;
-    /** The active option values (used by the initial squish seed). */
-    activeValues: ComputedRef<O["value"][]>;
     /** True for the vertical (block-axis) orientation. */
     vertical: ComputedRef<boolean>;
-    /** What the travelling body is made of. Defaults to `"plate"`. */
-    deform?: ComputedRef<SelectionDeform>;
 }
 
 export interface UseSelectionIndicatorReturn {
     /** Inline style for the single-select JS slider — the ONE writer. */
     singleSliderStyle: Ref<Record<string, string>>;
-    /** Imperatively kick the travel-squish on a selection at `idx`. */
-    squishOnTravel: (toIdx: number) => void;
 }
 
 export function useSelectionIndicator<O extends SelectionOption>(
     params: UseSelectionIndicatorParams<O>,
 ): UseSelectionIndicatorReturn {
-    const {
-        containerRef,
-        indicatorRef,
-        buttonRefs,
-        options,
-        model,
-        activeValues,
-        vertical,
-    } = params;
-    const deformOf = (): SelectionDeform => params.deform?.value ?? "plate";
+    const { containerRef, indicatorRef, buttonRefs, options, model, vertical } = params;
 
     // ── The single-select slider style (the ONE JS writer — no anchor branch) ──
 
@@ -168,8 +111,8 @@ export function useSelectionIndicator<O extends SelectionOption>(
         // THIS IS ONLY SAYABLE BECAUSE THE SENTINEL WAS DE-OVERLOADED. `indicatorRef`
         // used to mean two things at once — "this group has no single slider" to
         // `useSelectionGroup` and "this material does not squish" here — so acting on
-        // either meaning lied about the other. `deform` took the second one, and what
-        // is left means exactly one thing: whether an indicator element exists.
+        // either meaning lied about the other. What is left means exactly one thing:
+        // whether an indicator element exists.
         //
         // The `ResizeObserver` still attaches UNCONDITIONALLY. The Safari-identical
         // guarantee is about there being one measure PATH, not about running it into
@@ -228,120 +171,6 @@ export function useSelectionIndicator<O extends SelectionOption>(
         updateSingleSlider();
     }
 
-    // ──  travel-squish (release-at-arrival) ──
-    //
-    // On selection, the active indicator STRETCHES along the travel axis and
-    // compresses the cross axis in inverse proportion (volume-preserving), then
-    // releases back to 1 so the CSS glide settles it to fit.
-
-    let lastIdx = -1;
-    let releaseTimer: ReturnType<typeof setTimeout> | null = null;
-
-    // The shared liquid-flex squish ( consumer). Squish-only (no size
-    // span — the indicator travels via CSS `transform`, not this primitive): the
-    // travel FRACTION is fed via `squish(frac)` under the `"linear"` law. The cap
-    // is read LIVE from the cascade via the `maxStretch` getter, so the primitive
-    // owns the cap-clamp + the reciprocal `--stretch` value.
-    let capForSquish = DEFAULT_INDICATOR_MAX_STRETCH;
-    const liquidSquish = useLiquidFlex({
-        from: 0,
-        to: 0,
-        axis: "width",
-        squishLaw: "linear",
-        maxStretch: () => capForSquish,
-    });
-
-    // THE SEPARATE AREA-INFLATION CHANNEL IS GONE, not disabled. It drove a second
-    // uniform scalar (`--tab-blob`) that composed multiplicatively with this one, so
-    // the surface carried two area laws and a fence (`blob × stretch ≤ ~1.14`) whose
-    // only job was to keep them from arguing. Its last painter and its token left
-    // with it.
-
-    function prefersReducedMotion() {
-        return (
-            typeof window !== "undefined" &&
-            window.matchMedia("(prefers-reduced-motion: reduce)").matches
-        );
-    }
-
-    // Resolve the calibrated clock (ms) from the cascade so the release lands at
-    // ARRIVAL. `--tab-indicator-duration` resolves to a `<time>`; parse to ms.
-    function clockMs(el: HTMLElement): number {
-        const raw = getComputedStyle(el)
-            .getPropertyValue("--tab-indicator-duration")
-            .trim();
-        // The no-token floor is the travel/indicator row's own settle
-        // (`--spring-dock-settle`), which is what `--tab-indicator-duration` resolves
-        // to. It is NOT the retired snappy clock this fallback used to name.
-        if (!raw) return 220;
-        if (raw.endsWith("ms")) return Number.parseFloat(raw) || 220;
-        if (raw.endsWith("s")) return (Number.parseFloat(raw) || 0.22) * 1000;
-        return Number.parseFloat(raw) || 220;
-    }
-
-    function squishOnTravel(toIdx: number) {
-        const el = indicatorRef.value;
-        // Null-safety, not policy — the policy is `deform`.
-        if (!el) {
-            lastIdx = toIdx;
-            return;
-        }
-        if (deformOf() === "none") {
-            lastIdx = toIdx;
-            return;
-        }
-        if (prefersReducedMotion()) {
-            lastIdx = toIdx;
-            return;
-        }
-        const fromBtn = buttonRefs.value[lastIdx];
-        const toBtn = buttonRefs.value[toIdx];
-        lastIdx = toIdx;
-        if (!fromBtn || !toBtn) return;
-
-        // Travel distance on the active axis drives the stretch ratio, normalized
-        // by the container extent so the curve is geometry-relative.
-        const containerRect = containerRef.value?.getBoundingClientRect();
-        const fromRect = fromBtn.getBoundingClientRect();
-        const toRect = toBtn.getBoundingClientRect();
-        const axisExtent = vertical.value
-            ? containerRect?.height || 1
-            : containerRect?.width || 1;
-        const travel = vertical.value
-            ? Math.abs(
-                  toRect.top + toRect.height / 2 - (fromRect.top + fromRect.height / 2),
-              )
-            : Math.abs(
-                  toRect.left + toRect.width / 2 - (fromRect.left + fromRect.width / 2),
-              );
-        const frac = axisExtent > 0 ? Math.min(travel / axisExtent, 1) : 0;
-
-        // Resolve the cap SITE-LOCALLY off the live `--motion-weight` via
-        // `effectiveCap` (rest weight → byte-identical feel; weight 0 → 1.0, the
-        // observer/PRM fence). Reads the EXISTING `--tab-indicator-max-stretch`.
-        const cs = getComputedStyle(el);
-        const capRaw = cs.getPropertyValue("--tab-indicator-max-stretch").trim();
-        const capToken = Number(capRaw) || DEFAULT_INDICATOR_MAX_STRETCH;
-        capForSquish = effectiveCap(el, capToken);
-        liquidSquish.squish(frac);
-
-        // Fold the travel velocity into the transient `--motion-weight` boost on
-        // the SAME element so a far jump deepens its own deform + self-extinguishes.
-        writeVelocityWeight(el, liquidSquish.flexVel.value);
-
-        if (releaseTimer) clearTimeout(releaseTimer);
-        // Open the stretch synchronously with the glide…
-        el.style.setProperty("--stretch", String(liquidSquish.stretch.value));
-        // …and release AT ARRIVAL (the ONE timer — every channel in lockstep).
-        const releaseAt = clockMs(el) * INDICATOR_RELEASE_AT_ARRIVAL;
-        releaseTimer = setTimeout(() => {
-            liquidSquish.squish(0);
-            el.style.setProperty("--stretch", String(liquidSquish.stretch.value));
-            writeVelocityWeight(el, 0);
-            releaseTimer = null;
-        }, releaseAt);
-    }
-
     // ── Watchers (the ONE writer re-measures on every model/options/axis change) ──
 
     watch(
@@ -361,9 +190,7 @@ export function useSelectionIndicator<O extends SelectionOption>(
     // ── Lifecycle ──
     //
     // The `ResizeObserver` + the initial measure attach ALWAYS (the ONE writer,
-    // no anchor gate — the Safari-identical guarantee). The initial `lastIdx` is
-    // seeded from the active option so the FIRST selection squishes relative to
-    // the mounted position.
+    // no anchor gate — the Safari-identical guarantee).
 
     let resizeObserver: ResizeObserver | null = null;
 
@@ -381,17 +208,12 @@ export function useSelectionIndicator<O extends SelectionOption>(
     );
 
     onMounted(() => {
-        lastIdx = options.value.findIndex((o) => activeValues.value.includes(o.value));
         nextTick(updateSliders);
     });
 
     onUnmounted(() => {
         resizeObserver?.disconnect();
-        if (releaseTimer) clearTimeout(releaseTimer);
     });
 
-    return {
-        singleSliderStyle,
-        squishOnTravel,
-    };
+    return { singleSliderStyle };
 }

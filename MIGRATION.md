@@ -20,6 +20,16 @@ Proposed by the atlas formation on local branch `u/b7-glass-shape` off `release/
 - **New token `--hover-ink-mix: 45%`.** The colour-only hover weight: an inactive label moves
   from `--muted-foreground` toward `--foreground` by this weight. Additive.
 
+- **The selection engine no longer deforms (B7-G2).** With SegmentedTabs gliding, the dock
+  layer switcher was the last `plate` consumer; it now glides the same way. Removed from
+  `@mkbabb/glass-ui/motion-core` with no replacement: the `deform` parameter and the
+  `SelectionDeform` type, `squishOnTravel` (from both `useSelectionIndicator` and
+  `useSelectionGroup`), the `activeValues` parameter of `useSelectionIndicator`, the
+  `onSelect` parameter of `useSelectionGroup` (no caller left), and the constants
+  `DEFAULT_INDICATOR_MAX_STRETCH` and `INDICATOR_RELEASE_AT_ARRIVAL`. The token
+  `--tab-indicator-max-stretch` is deleted. A caller passing any of these deletes the
+  argument; atlas and sci pass none.
+
 ## 10.1.1
 
 One type-level change, below; no runtime break. Behaviour a consumer may notice:

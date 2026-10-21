@@ -14,6 +14,11 @@ Proposed by the atlas formation (U/B7, the owner's order of 2026-10-19 in sci-re
   1.015); here all 6 pass. Gate: `tests/gates/tabs-seam.test.ts` arm (e) now asserts the
   absence.
 
+- **DockLayerGroup glides; the velocity stretch law is deleted (B7-G2).** A layer switch
+  writes geometry only: no `--stretch`, no `--motion-weight` boost, and no computed-style
+  read for the cap. Witness: `tests/components/custom/dock/DockLayerGroup.glide.test.ts`
+  (fails on `v10.1.1`: the indicator carried `--stretch: 1` after a switch).
+
 ## 10.1.1 — 2026-10-19
 
 Four cures, one guarded row and one owner-ruled addition. Asked by the atlas consumer (U batch

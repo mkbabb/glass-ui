@@ -71,8 +71,8 @@ stops; everything else changes state without moving.
 | Phone (`:responsive`) | The `<Select>` form, unchanged. |
 
 The writer is `useSelectionIndicator`, the library's ONE traveling-indicator writer,
-reached through `useSelectionGroup`. SegmentedTabs passes `deform: "none"` for both
-materials.
+reached through `useSelectionGroup`. It writes geometry only; nothing in the engine
+deforms the indicator.
 
 State is `[data-active]`, presence-gated, on both semantics. `[aria-pressed]` and
 `[aria-selected]` are two spellings of one fact, and a paint rule that picks one is

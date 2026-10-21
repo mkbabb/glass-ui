@@ -107,9 +107,6 @@ const selection = useSelectionGroup<SegmentedTabOption<T>>({
     containerRef,
     indicatorRef,
     buttonRefs,
-    // Neither material deforms: the glass body and the hairline both glide at their
-    // own size.
-    deform: computed(() => "none" as const),
 });
 
 const { select, rovingTabindex, singleSliderStyle } = selection;

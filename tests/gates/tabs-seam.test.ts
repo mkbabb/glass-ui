@@ -246,7 +246,7 @@ describe("gate:G-TABS-SEAM — one selected-state seam, one indicator, one glide
             expect(sfc).not.toContain("glass-capsule-hover");
             expect(sfc).not.toContain("animatePress");
             expect(sfc).not.toContain("onSelect");
-            expect(sfc).toMatch(/deform:\s*computed\(\(\)\s*=>\s*"none"/);
+            expect(sfc).not.toMatch(/deform:/);
         });
 
         it("hover on an inactive pill tab is colour only, on the shared hover weight", () => {
