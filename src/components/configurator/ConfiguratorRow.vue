@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import "./styles.css";
 import { computed, useId, type HTMLAttributes } from "vue";
 import { RotateCcw } from "@lucide/vue";
 import { Label } from "../label";

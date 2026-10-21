@@ -327,12 +327,38 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
         if (seat) reach(seat);
     }
 
+    /**
+     * WHEEL CONTAINMENT AT THE ENDS [atlas U/B7, R-INTERACT §7]. `overscroll-behavior:
+     * contain` (run.css) keeps a wheel that reaches the run's end from scrolling the page in
+     * Chromium. Firefox honours it only inside one wheel transaction: once the run sits at
+     * its end and the transaction lapses (about 1.5 s), Firefox picks the next scroller
+     * that can move, and the page behind the dock scrolls (measured: 10 of 20 wheel steps
+     * scrolled the page 600 px at 1440 and 390). The platform cannot express "contain
+     * across transactions", so the run declines the wheel itself, on its own axis, only
+     * while it is a real scroller and only at the end the wheel pushes against. Mid-run
+     * wheels are untouched, so native momentum and the mandatory snap still own the glide.
+     */
+    function onWheel(event: WheelEvent): void {
+        const run = runEl.value;
+        if (!run || event.ctrlKey) return;
+        const vertical = orientation.value === "vertical";
+        const delta = vertical ? event.deltaY : event.deltaX;
+        if (delta === 0) return;
+        const pos = vertical ? run.scrollTop : run.scrollLeft;
+        const max = vertical
+            ? run.scrollHeight - run.clientHeight
+            : run.scrollWidth - run.clientWidth;
+        if (max <= 0) return;
+        if ((delta > 0 && pos >= max - 0.5) || (delta < 0 && pos <= 0.5)) event.preventDefault();
+    }
+
     let mo: MutationObserver | null = null;
 
     onMounted(() => {
         const run = runEl.value;
         if (!run) return;
         run.addEventListener("keydown", onKeydown);
+        run.addEventListener("wheel", onWheel, { passive: false });
         run.addEventListener("click", onActivate, { capture: true });
         run.addEventListener("focusin", onActivate, { capture: true });
         syncRoving();
@@ -352,6 +378,7 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
     onUnmounted(() => {
         const run = runEl.value;
         run?.removeEventListener("keydown", onKeydown);
+        run?.removeEventListener("wheel", onWheel);
         run?.removeEventListener("click", onActivate, { capture: true });
         run?.removeEventListener("focusin", onActivate, { capture: true });
         mo?.disconnect();

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import "./styles.css";
 import { computed, useAttrs, type ButtonHTMLAttributes } from "vue";
 
 import { useSortableItemContext } from "./context";

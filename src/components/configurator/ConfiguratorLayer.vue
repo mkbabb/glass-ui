@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import "./styles.css";
 import { computed, useId, useSlots, type HTMLAttributes } from "vue";
 import { ChevronDown } from "@lucide/vue";
 import { cn } from "../_shared/class-names";

@@ -7,6 +7,10 @@ rename or import re-point per call site.
 
 ## 10.2.0 (proposed by atlas U/B7)
 
+Merged on local branch `u/b7-glass` (off `release/10.1.1` bbf176f02) from `u/b7-glass-shape` (rows B7-G1 to B7-G6) and `u/b7-glass-perf` (rows B7-G7 to B7-G9). Row numbers follow the relay letter.
+
+### Shape, glide and the dropdown system (`u/b7-glass-shape`)
+
 Proposed by the atlas formation on local branch `u/b7-glass-shape` off `release/10.1.1`; glass takes, re-authors or declines each row. Clean breaks, no aliases. The browser witnesses are `tests-visual/b7-shape.config.ts` (harness `tests-visual/b7-shape/`), run in Chromium and Firefox; each fails on the `v10.1.1` tag (bbf176f02) unless the row says otherwise.
 
 - **SegmentedTabs glides; the eyeglass, the press squish and the capsule hover are removed
@@ -72,13 +76,34 @@ Proposed by the atlas formation on local branch `u/b7-glass-shape` off `release/
   `modal`. A consumer that styled `[data-slot="select-content"]` by `data-side` translate
   drops that.
 
-- **`--radius-bar` and `data-shape="bar"` (B7-G7).** New token `--radius-bar:
+- **`--radius-bar` and `data-shape="bar"` (B7-G4).** New token `--radius-bar:
   var(--radius-panel)` (12px). `Button`, `ToggleGroupItem` and `SegmentedTabs` carry
   `data-shape="bar"` when the label wraps, the box is taller than its rung
   (`min-block-size`), or it is wider than 20rem, and then take `--radius-bar`. A
   single-line control on its rung keeps the stadium; `ToggleGroupItem` now bounds its
   stadium at half its rung, as the Button does. Consumer action: a consumer that keyed its
   own CSS on a wide or wrapping button's round corner reads `[data-shape="bar"]` instead.
+
+### Styles, aurora and the dock hit box (`u/b7-glass-perf`)
+
+- **Per-component sheets are no longer in `@mkbabb/glass-ui/styles`.** The Configurator,
+  MusicStaff, Metric, Deck (stage, turn, capture, reveal), Carousel and SortableList rules
+  load with their component's module. A consumer that imports the component from its
+  subpath or the root needs no change. A consumer that writes these class names on its
+  own markup without importing the component loses their rules; the sheets are not
+  package exports, so render the component or copy the rules it needs. The sheets still
+  sit in `@layer components`, so their rank against the entry is unchanged.
+- **The aurora ground does not follow nuclei positions.** A consumer that moved nuclei to
+  shift the static ground (on the `"css"` substrate, or before the canvas arms) now sees
+  the ground the preset mounted with; the live canvas still moves. To change the ground,
+  change the palette or the field shape. `.aurora-placeholder` is now two elements; a
+  consumer selector that assumed one should select `[data-aurora-ground-active]`.
+- **A dock opened by its owner takes taps while it morphs.** A consumer that delayed its
+  own scrim or row handlers to wait out the click-integrity window can arm them on open.
+  The deferral still applies after a hover approach.
+- **A wheel over an expanded run that has reached its end no longer scrolls the page** in
+  Firefox, matching Chromium.
+- **New:** `auroraGroundKey(config)`; `GpuSubstrateOptions.prepare`.
 
 ## 10.1.1
 

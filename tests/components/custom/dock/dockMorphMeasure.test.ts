@@ -169,3 +169,65 @@ describe("useDockExpandedSize", () => {
         vi.unstubAllGlobals();
     });
 });
+
+// atlas U/B7 D-5. A vertical dock's full pane is the run, a block-axis scroller squeezed
+// to the collapsed box until the dock seats. Its first expand had no layout capture, so
+// the endpoint came from the squeezed pane: the box reserved during `[data-morphing]` was
+// the collapsed box and the seats below it were outside the hit box until settle.
+describe("useDockExpandedSize — the first expand of a vertical dock", () => {
+    function verticalPane(laidOut: number, content: number): HTMLElement {
+        const el = element(120, laidOut);
+        Object.defineProperty(el, "scrollHeight", { get: () => content });
+        return el;
+    }
+
+    it("reserves the run's content span, clamped at the root's max-block-size", () => {
+        const root = element(129, 58);
+        root.style.maxHeight = "480px";
+        document.body.append(root);
+        const content = element(120, 42);
+        const full = verticalPane(42, 16 * 46);
+        const summary = element(44, 42);
+        root.append(content);
+
+        const { unmount } = mountComposable(() =>
+            useDockExpandedSize({
+                rootEl: ref(root),
+                contentEl: ref(content),
+                expandedEl: ref(full),
+                collapsedEl: ref(summary),
+                axis: ref("vertical"),
+                expanded: ref(false),
+            }),
+        );
+
+        expect(root.style.getPropertyValue("--dock-collapsed-px")).toBe("58px");
+        expect(root.style.getPropertyValue("--dock-expanded-px")).toBe("480px");
+        unmount();
+        root.remove();
+    });
+
+    it("reserves chrome plus the content span when it fits under the cap", () => {
+        const root = element(129, 58);
+        root.style.maxHeight = "480px";
+        const content = element(120, 42);
+        const full = verticalPane(42, 3 * 46);
+        const summary = element(44, 42);
+        root.append(content);
+
+        const { unmount } = mountComposable(() =>
+            useDockExpandedSize({
+                rootEl: ref(root),
+                contentEl: ref(content),
+                expandedEl: ref(full),
+                collapsedEl: ref(summary),
+                axis: ref("vertical"),
+                expanded: ref(false),
+            }),
+        );
+
+        // chrome = 58 − 42 = 16; 16 + 138 = 154
+        expect(root.style.getPropertyValue("--dock-expanded-px")).toBe("154px");
+        unmount();
+    });
+});

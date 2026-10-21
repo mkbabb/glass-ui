@@ -507,3 +507,33 @@ describe("createGpuSubstrate — the try-WebGPU-then-rebuild-WebGL2 picker", () 
         expect(gpuContext.unconfigure).toHaveBeenCalledOnce();
     });
 });
+
+// atlas U/B7 F6 — a viz whose setup lives in a dynamic import loads it through
+// `prepare`, so each backend's code is fetched only when that backend arms.
+describe("useGpuSubstrate — prepare runs before the resolved backend's setup", () => {
+    it("awaits prepare('webgl2') before the GL setup runs", async () => {
+        vi.stubGlobal("navigator", {});
+        const glStub = { getExtension: () => null } as unknown as WebGL2RenderingContext;
+        const canvas = makeCanvas((id) => (id === "webgl2" ? glStub : null));
+        let release!: () => void;
+        const loaded = new Promise<void>((resolve) => (release = resolve));
+        const prepared: string[] = [];
+        const setupGL = vi.fn(() => ({ frame: () => {}, shouldContinue: () => false, resize: vi.fn() }));
+        const substrate = createGpuSubstrate(canvas, {
+            dprPolicy: 1,
+            prepare: async (backend) => {
+                prepared.push(backend);
+                await loaded;
+            },
+            setupGL,
+        });
+        const armed = substrate.armAsync();
+        await Promise.resolve();
+        expect(prepared).toEqual(["webgl2"]);
+        expect(setupGL).not.toHaveBeenCalled();
+        release();
+        await armed;
+        expect(setupGL).toHaveBeenCalledTimes(1);
+        substrate.dispose();
+    });
+});

@@ -6,6 +6,26 @@ function getSize(el: HTMLElement, axis: "horizontal" | "vertical"): number {
     return axis === "vertical" ? el.offsetHeight : el.offsetWidth;
 }
 
+/**
+ * The span the full pane will occupy once seated. A horizontal pane grows to fit, so its
+ * laid-out width is that span. A vertical pane is the run (`.dock-run`, a block-axis
+ * scroller with `min-block-size: 0`): while the dock is collapsed it is squeezed to the
+ * collapsed box, so its border box understates it. Its content span is `scrollHeight`,
+ * and the seated dock clamps that at the root's `max-block-size`.
+ */
+function seatedFullSpan(
+    root: HTMLElement,
+    full: HTMLElement,
+    axis: "horizontal" | "vertical",
+    chrome: number,
+): number {
+    const laidOut = getSize(full, axis);
+    if (axis !== "vertical") return chrome + laidOut;
+    const natural = chrome + Math.max(laidOut, full.scrollHeight);
+    const cap = Number.parseFloat(getComputedStyle(root).maxHeight);
+    return Number.isFinite(cap) && cap > 0 ? Math.min(natural, cap) : natural;
+}
+
 export interface UseDockExpandedSizeOptions {
     rootEl: Ref<HTMLElement | null>;
     contentEl: Ref<HTMLElement | null>;
@@ -91,7 +111,12 @@ export function useDockExpandedSize(options: UseDockExpandedSizeOptions): void {
         // stays in the composition. Swap only the measured pane span.
         const activeSize = expanded.value ? fullSize : summarySize;
         const chrome = Math.max(0, rootSize - activeSize);
-        const expandedEndpoint = expandedPx || chrome + fullSize;
+        // [atlas U/B7 D-5] The first expand of a vertical dock has no layout capture yet,
+        // so its endpoint comes from here. It used the squeezed run (the collapsed box),
+        // so the box reserved during `[data-morphing]` was the collapsed box and every
+        // seat below it fell outside the dock's hit box (taps landed on the page) until
+        // the spring settled.
+        const expandedEndpoint = expandedPx || seatedFullSpan(root, full, a, chrome);
         const collapsedEndpoint = collapsedPx || chrome + summarySize;
         if (expandedEndpoint <= 0 || collapsedEndpoint <= 0) return;
 

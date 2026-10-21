@@ -2,6 +2,10 @@
 
 ## 10.2.0 (proposed by atlas U/B7)
 
+Merged on local branch `u/b7-glass` (off `release/10.1.1` bbf176f02) from `u/b7-glass-shape` (rows B7-G1 to B7-G6) and `u/b7-glass-perf` (rows B7-G7 to B7-G9). Row numbers follow the relay letter.
+
+### Shape, glide and the dropdown system (`u/b7-glass-shape`)
+
 Proposed by the atlas formation (U/B7, the owner's order of 2026-10-19 in sci-report `atlas/docs/tranches/U/owner-2026-10-19/ORDER.md`). Local branch `u/b7-glass-shape`; no version bump. Engine witnesses: `tests-visual/b7-shape.config.ts`, Chromium and Firefox.
 
 - **SegmentedTabs: one quiet glide (B7-G1).** One object moves, the indicator, in one
@@ -52,12 +56,78 @@ Proposed by the atlas formation (U/B7, the owner's order of 2026-10-19 in sci-re
   Select and Popover (`overlay-sizing.spec.ts`). Below 30rem the Select opens as a bottom
   sheet at full width. On `v10.1.1` 16 of the 22 cells fail; all 22 pass here.
 
-- **Large controls are bars (B7-G7).** A Button, ToggleGroupItem or SegmentedTabs strip
+- **Large controls are bars (B7-G4).** A Button, ToggleGroupItem or SegmentedTabs strip
   past its rung takes the 12px `--radius-bar`; one on its rung stays a stadium. One
   ResizeObserver per control (`_shared/shape/useBarShape.ts`) keeps the attribute live.
   Witness: `tests-visual/radius-scale.spec.ts` (the bar cases), light and dark, Chromium
   and Firefox: 16 of 20 cells fail on `v10.1.1`; the four single-line Button cells pass on
   both and guard the stadium. All 20 pass here.
+
+### Styles, aurora and the dock hit box (`u/b7-glass-perf`)
+
+Built by the atlas formation on local branch `u/b7-glass-perf` off `release/10.1.1`
+bbf176f02. Nothing pushed or tagged; glass owns the version and may take, re-author or
+decline each row (relay rows B7-G7 to B7-G9).
+
+- **Per-component sheets leave the `/styles` entry (B7-G7, atlas F5).** Configurator,
+  MusicStaff, Metric, the Deck substrate, Carousel and SortableList import their own sheet
+  from script. The library build keeps that import external
+  (`vite.component-sheets.ts`), so `dist/<component>.js` carries
+  `import "./components/<component>/styles.css"` and a consumer's bundler loads the sheet
+  with the chunk that renders the component. A Tailwind consumer entry of
+  `@import "tailwindcss"; @import "tw-animate-css"; @import "@mkbabb/glass-ui/styles";`
+  compiles to 322,821 B decoded, down from 353,516 B (−30,695 B; brotli 46,200 → 42,052 B).
+  `@source "../*.js"` stays on the core entry: excluding the moved components' chunks from
+  it would save a further 2.0 KB but drop `.shadow-cartoon`, which only that scan emits
+  (Configurator's preset chips). Witness: `tests/styles/component-sheets.test.ts`.
+- **Aurora engines load on arm, one backend at a time (B7-G8, atlas F6).** `runtime.ts`
+  imports `glSetup` and `wgpuSetup` with `import()`, and `createGpuSubstrate` takes an
+  optional `prepare(backend)` it awaits before that backend's setup runs. `dist/aurora.js`
+  drops from 203,503 B to 27,037 B (brotli 52,758 → 8,305 B); the WebGPU path
+  (48,759 B) and the WebGL 2 path (116,450 B) are separate chunks, fetched only when that
+  backend arms. A `"css"` substrate fetches neither. Witnesses:
+  `tests/components/custom/aurora/engine-split.test.ts`, the `prepare` case in
+  `tests/composables/glass/webgpu/useWebGPUCanvas.test.ts`.
+- **The aurora ground is encoded once per palette and preset (B7-G8, atlas O-16).**
+  `Aurora.vue` keys the fallback ground on the new `auroraGroundKey(config)` (palette,
+  softmax, value variance and each nucleus's shape, without positions). A config change
+  that only moves nuclei encodes nothing and writes nothing to `.aurora-placeholder`; the
+  nuclei move on the GPU path only. A palette or preset change writes the new ground to a
+  second layer that fades in over the first in `--duration-fast` (a cut under reduced
+  motion), with the outgoing layer opaque beneath it. On 10.1.1 every config change
+  re-encoded the PNG and swapped `background-image`: 30 to 2,183 rewrites per route pass
+  in atlas (R-INTERACT §5). Witness: `tests/components/custom/aurora/ground-encode.test.ts`
+  (substrate forced to WebGL; 12 nucleus moves, 1 encode, 0 style writes).
+- **A vertical dock's seats are inside its hit box while it morphs (B7-G9, atlas D-5).**
+  The first expand of a vertical dock took its expanded endpoint from the run while the
+  run was squeezed to the collapsed box, so `[data-morphing]` reserved the collapsed box
+  (58 px in the witness) and every seat below it hit-tested to the page until the spring
+  settled. `dockMorphMeasure` now takes the run's content span (`scrollHeight`), clamped at
+  the root's `max-block-size`. The cure sits in the measure, not in `layers.css`: the
+  `block-size: var(--dock-expanded-px)` rule there was right and its input was wrong.
+- **Click-integrity defers a mid-morph press only after a hover approach (B7-G9, atlas
+  D-5).** The deferral exists for race (b): a fine pointer arrives, its arrival opens the
+  dock, and the layer swaps under it. It now applies only to an expand opened that way.
+  An expand opened by the owner's `expand()`, a press inside the dock, or a touch or pen
+  pointer lets a press that starts and clicks on the same arriving control through. A
+  click that lands on a different control than it pressed is still swallowed. On 10.1.1 a
+  phone sheet dropped every row tap for its first ~800 ms.
+- **The vertical run keeps the wheel at its ends in Firefox.** Firefox ignores
+  `overscroll-behavior: contain` once a wheel transaction lapses, and the page behind an
+  expanded dock scrolled 840 px in the witness. `useDockRun` declines a wheel that pushes
+  past the end the run rests at, on its own axis, while the run overflows. Chromium was
+  already contained; arrows, drag and clicks were already correct in both engines.
+- Witnesses: `tests/components/custom/dock/dockMorphMeasure.test.ts`,
+  `GlassDock.click-integrity.test.ts`, `GlassDock.run-wheel.test.ts`; engine:
+  `tests-visual/u-b7.spec.ts` (`tests-visual/u-b7/playwright.config.ts`, Chromium desk and
+  coarse, Firefox desk and phone).
+- **The aurora WebGL path, measured (R-INTERACT §7).** `tests-visual/u-b7/witness/aurora-webgl.mjs`
+  runs Chrome for Testing 149 headless on ANGLE Metal (the named GPU witness) and arms the
+  live field: WebGL 2 forced and WebGPU both report `ready` with `data-aurora-substrate=
+  "webgl"`. Over 12 scroll steps on the scroll-leaned harness, 10.1.1 encoded the ground
+  12 times and wrote the placeholder 15 times; this branch encodes 0 and writes 0. One
+  run per tree at 1-minute load ≈ 25: main-thread time per step, median, WebGL 2
+  7.6 → 7.6 ms, WebGPU 11.2 → 8.8 ms.
 
 ## 10.1.1 — 2026-10-19
 

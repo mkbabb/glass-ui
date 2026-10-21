@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import "./styles.css";
 import { onBeforeUnmount, onMounted, watch } from "vue";
 import { cn } from "../_shared/class-names";
 import { useReducedMotion } from "../../composables/motion/core/useReducedMotion";

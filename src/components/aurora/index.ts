@@ -94,6 +94,7 @@ export {
 // static composite mirror the certify π measures.
 export {
     auroraFallbackGround,
+    auroraGroundKey,
     sampleAuroraField,
     nucleiFieldStatic,
     relativeLuminance,
