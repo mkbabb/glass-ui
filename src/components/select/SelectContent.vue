@@ -15,8 +15,7 @@ export interface SelectContentEmits {
 </script>
 
 <script setup lang="ts">
-import { computed, useAttrs } from "vue";
-import { useMediaQuery } from "@vueuse/core";
+import { computed, onBeforeUnmount, shallowRef, useAttrs, watch } from "vue";
 import {
     injectSelectRootContext,
     SelectContent as RekaSelectContent,
@@ -50,12 +49,38 @@ const attrs = useAttrs();
  * winning an argument the spread order already settles is a second authority on
  * the same question. (The library-wide retired-attribute list is W-OVERLAY's one
  * home; this component owes it nothing.) */
+const selectRoot = injectSelectRootContext(null);
+
 /* THE SHEET FORM (U/B7 D-6). Below 30rem a listbox anchored to a trigger has no
  * width to grow into and covers what the reader was choosing for, so it opens as a
  * bottom sheet: anchored to a virtual edge at the foot of the viewport, opening
  * upward, at full width. The reference reads the viewport on every call, so a
- * resize or a URL-bar retraction re-anchors it through floating-ui's own update. */
-const sheet = useMediaQuery("(width < 30rem)");
+ * resize or a URL-bar retraction re-anchors it through floating-ui's own update.
+ * The query is held only while the listbox is open, so a closed Select keeps no
+ * listener; it is read synchronously on open, before the content renders. */
+const SHEET_QUERY = "(width < 30rem)";
+const sheet = shallowRef(false);
+let sheetQuery: MediaQueryList | null = null;
+const syncSheet = () => {
+    sheet.value = sheetQuery?.matches ?? false;
+};
+const releaseSheetQuery = () => {
+    sheetQuery?.removeEventListener("change", syncSheet);
+    sheetQuery = null;
+};
+watch(
+    () => selectRoot?.open.value ?? false,
+    (open) => {
+        releaseSheetQuery();
+        if (open && typeof window !== "undefined" && typeof window.matchMedia === "function") {
+            sheetQuery = window.matchMedia(SHEET_QUERY);
+            sheetQuery.addEventListener("change", syncSheet);
+        }
+        syncSheet();
+    },
+    { immediate: true, flush: "sync" },
+);
+onBeforeUnmount(releaseSheetQuery);
 const viewportFoot = {
     getBoundingClientRect: () =>
         new DOMRect(0, window.innerHeight, document.documentElement.clientWidth, 0),
@@ -96,7 +121,6 @@ const rootAttrs = computed(() => ({
    inject is not the guard against a rootless part: reka's own content injects the
    same context strictly and throws, so a rootless SelectContent still fails loud;
    only a part rendered with reka stubbed out (the contract tests) reaches null. */
-const selectRoot = injectSelectRootContext(null);
 const dock = useDockParticipation({
     close: () => {
         if (selectRoot?.open.value) selectRoot.onOpenChange(false);

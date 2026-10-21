@@ -99,11 +99,10 @@
         flex: none;
     }
 
-    /* (3) LAW: one stadium spelling, published as the register's own rung so a
-       member names the register rather than re-spelling the token. */
-    :where(.badge-atom) {
-        --mark-stadium: var(--radius-pill);
-    }
+    /* (3) LAW: one stadium spelling. The badge publishes it as the register's own
+       rung (`--mark-stadium`, in the badge box below) so a member names the register
+       rather than re-spelling the token. The circular members (avatar, status dot)
+       take `--radius-circle` directly. */
 
     /* (4) LAW: the one engagement is the state change (§3.1's two channels). */
     :where(.badge-atom, .feedback-mark) {
@@ -126,6 +125,7 @@
        `--mark-pad-{block,inline}` from the spacing series; the values below are
        the default rung, md); the register states the BOX. */
     :where(.badge-atom) {
+        --mark-stadium: var(--radius-pill);
         --mark-pad-block: 0.25rem;
         --mark-pad-inline: 0.75rem;
         /* the badge's own box height: one content line + the two block legs */
