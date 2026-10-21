@@ -10,13 +10,16 @@ rename or import re-point per call site.
 Two behaviour changes, no type change. **A custom dock seat must now carry
 `data-glass-dock-seat` to rove.**
 
-- **O-101: a morph reserves the size it settles at.** A dock whose full pane changes
-  while it is collapsed, or while it morphs (a breakpoint that swaps its controls), no
-  longer reserves the old pane's width on the next expand or for the rest of the morph,
-  so the page no longer scrolls sideways for the length of the morph. A consumer that
-  clipped the page or the dock band, or overrode `--dock-expanded-px`, to hide that
-  overflow can delete the workaround. Both endpoints now follow the panes' natural spans
-  in every posture. Nothing changes for a dock whose pane is stable.
+- **O-101: a morph reserves the size it settles at.** The dock no longer reserves an
+  old width on an expand or for the rest of a morph when its full pane changes (a
+  breakpoint that swaps its controls) or its host changes (a viewport or container that
+  resizes) while it is collapsed or morphing. So the page no longer scrolls sideways
+  for the length of the morph, and the box no longer snaps at settle. Both endpoints are
+  the root laid out at rest in their posture, read from the live layout on every
+  capture, under whatever constrains the dock, including while it morphs. A consumer
+  that clipped the page or the dock band, or overrode `--dock-expanded-px`, to hide that
+  overflow can delete the workaround. A dock whose pane and host are stable morphs as
+  before.
 
 - The dock run roves a direct child only when it carries `data-glass-dock-seat`.
   `DockControl`, `DockTrigger` and `DockBackgroundToggle` set it. A consumer's own seat

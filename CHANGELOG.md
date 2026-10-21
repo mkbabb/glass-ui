@@ -18,26 +18,41 @@ O-101, O-101a; `docs/tranches/BK/coordination/valuejs-outbound-2026-10-19-dock-s
   the morph settled and snapped to 188. A pane that changed while a morph was in flight
   did the same: the measure skipped every capture under `[data-morphing]`.
 
-  Now neither endpoint is latched. `useDockExpandedSize` keeps one frame per posture, the
-  settled root's box less its active pane's natural span (padding, border, gaps, the
-  persistent regions, any slack a host adds), taken only from a root laid out at rest in
-  that posture. Every capture, collapsed, expanded or mid-morph, publishes frame plus the
-  pane's live natural span for both endpoints. The natural span is the pane laid out at
-  `max-content`, set inline and restored in the same task, because the pane's own box is
-  stretched (the inactive pane over the root, the expanded full pane to the box). A
-  ResizeObserver on the root, the layers, both panes and every pane's direct child, and
-  a MutationObserver on both panes, run the capture whenever the content changes, so the
-  endpoint follows the pane in either posture and retargets the reserved box during a
-  morph. The morph also measures when it arms, after the patch (post-flush): with no
-  morph in flight the root is read as the settled box of the posture it opens onto,
-  under whatever constrains it. The W7 guard stands: the pre-flush posture flip takes no
-  frame. Nothing is clipped, no overflow is hidden, and nothing is overridden.
+  Now neither endpoint is latched. Each is the root's box at rest in its posture, read
+  from the live layout on every capture: `useDockExpandedSize` lays the root out with
+  that posture's pane in flow and the other pane out of flow, with the morph's
+  reservation lifted (`--dock-expanded-px` made invalid inline, so the `[data-morphing]`
+  size rule computes to `auto`), reads it, and restores everything in the same task. So
+  whatever constrains or stretches the root at rest (the host's width, a consumer's
+  width) applies to the endpoint, mid-morph included. The one thing kept is each
+  posture's chrome (the root less its pane: padding, border, gaps, persistent regions),
+  read from a root at rest in that posture. Where the current DOM's chrome differs (the
+  padding interpolates mid-morph, and `.collapsed` rules apply while the expanded
+  endpoint is read from a collapsed dock), the difference goes on the pane's end margin
+  and the root is read again, so a content-sized root takes it and a host-bound one does
+  not. The expanded endpoint is read in both postures, since a morph reserves it in both
+  directions. The collapsed endpoint is read while collapsed and kept while expanded,
+  and every collapse re-reads it when it arms. The run's scroll offset is restored after
+  a read that moved it, since WebKit clamps it in the forced layout and keeps the clamped
+  value. At rest expanded the read changes no layout at all.
 
-  Witnesses: unit `tests/components/custom/dock/dockMorphMeasure.test.ts`: "the morph
-  reserves the expanded box of the pane patched in with the expand", "re-bases the
-  expanded endpoint when the pane changes while collapsed", "retargets the reserved
-  endpoint when the pane changes mid-morph" and "a reversed morph reserves the expanded
-  box of the pane it opens onto". All are RED on 10.1.1. Engine:
+  The capture runs on a ResizeObserver hit on the root, its parent (a morphing root is
+  held at its reservation, so only the host moves), the layers, both panes and every
+  pane's direct child; on a MutationObserver record in either pane; on a window resize,
+  in the resize step before the frame lays out; when fonts are ready; and when the morph
+  arms, after the patch. The posture is the DOM's (the full pane's `.is-active`), not the
+  posture ref, so the W7 guard holds by construction: no endpoint is read from a box laid
+  out in the other posture, and the pre-flush posture flip is not a capture. Nothing is
+  clipped, no overflow is hidden, and nothing is overridden.
+
+  Witnesses: unit `tests/components/custom/dock/dockMorphMeasure.test.ts`, on a layout
+  model that obeys the overrides the measure sets: "the morph reserves the expanded box
+  of the pane patched in with the expand", "re-reads the expanded endpoint when the pane
+  changes while collapsed", "retargets the reserved endpoint when the pane changes
+  mid-morph", "a reversed morph reserves the expanded box of the pane it opens onto",
+  "follows a host that narrows while the dock is {expanding, collapsing}", "reads the
+  expanded endpoint with the expanded posture's chrome while collapsed" and "a capture
+  keeps the run's scroll position". Engine:
   `tests-visual/release-10-1-2.spec.ts` "O-101 · {horizontal, vertical} · {pinned,
   collapsed, reversal, mid-expand}" (scene `stale-endpoint`: 12 seats at 768px and above,
   3 below, the dock in flow; `?axis=vertical` for the vertical dock), each at 1440->390
@@ -52,6 +67,23 @@ O-101, O-101a; `docs/tranches/BK/coordination/valuejs-outbound-2026-10-19-dock-s
   `scrollWidth` 491 for `clientWidth` 390, 160 reserved for 592 at 390->1440, and 584
   for 152 (and back) on the vertical dock. The `reversal` and `mid-expand` cells are RED
   on the first 10.1.2 cure, which measured only when a morph armed with none in flight.
+
+  "O-101a · a host change during the morph · {collapsed, reversal, mid-expand}" (scene
+  `overflow`: a constant 20-seat pane with a natural span of 960px, so the run scrolls at
+  390 and fits at 1440) changes the HOST, not the pane, at 1440->390 and 390->1440: 6
+  cells per engine, the same assertions. All 6 are RED on 10.1.1 in Chromium, and the
+  4 `reversal` and `mid-expand` cells are RED on the round-1 cure (per-posture frames,
+  `74a679351`) in Chromium and WebKit 2287: 976 reserved for 390 with the document at
+  `scrollWidth` 683 for 390 (49 to 56 frames), and 390 reserved for 976, then a 586 px
+  snap at settle. A frame counts as reserving the settled size only when its reservation
+  is a length within 1px of it, so a missing reservation fails.
+  "O-101 · a capture keeps a scrolled run's scroll position (390, 1440)" (scene
+  `scroll`: an always-open dock whose run scrolls) scrolls the run to an interior rest,
+  then changes one seat's text and widens another: the offset stays, and the resize moves
+  it only by the engine's own re-snap. It is GREEN on 10.1.1 and RED on the round-1 cure
+  in WebKit 2287, whose `max-content` read reset the run from 312 to 72 at 390 and to 0
+  at 1440. On 10.1.2 all 22 O-101 and O-101a cells, both scroll cells and the 10.1.1
+  spec are GREEN in Chromium and WebKit 2287 (69 of 69 per engine).
 
 - **The dock run roves only declared seats.** A direct child of the run is a seat when it
   carries `data-glass-dock-seat`. `DockControl` and `DockTrigger` set it, and so does
