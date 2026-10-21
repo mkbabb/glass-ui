@@ -1,0 +1,19 @@
+2026-10-21 07:22:21 · load { 10.14 8.99 9.39 }
+L3BARE · L-3: --selection-paint: bare on the group turns off the tint and the pill corner, and nothing else (pass-8 BUILD probe)
+  target l3-unpinned-src (flavor src) · Chromium 149.0.7827.55 · harness H8 4159e027cdcf
+  load 10.21 / 9.02 / 9.40 at start, 10.99 / 9.20 / 9.46 at end · other headless browser processes at start: 7 (waited 0.1 s) · browser lock waited 0 s
+  PASS       light · ref (control) · ref-pill fill #d3d0cb on #e7e3de = 1.20:1, selected 59.33×40.00 corner 9999px bg oklab(0.216114 0.00343135 0.00508514 / 0.12) fact auto · ref-tile fill #dededc on #fbfaf8 = 1.29:1, selected 80.72×58.69 corner 16px bg oklab(0.216114 0.00343135 0.00508514 / 0.12) fact auto · want both ≥ 1.08, a stadium and 16px
+  PASS       light · bare-pill · fill #e7e4de on #e7e4de = 1.00:1 · rest 66.81×40.00 corner 0px bg rgba(0, 0, 0, 0) fact bare · selected 59.33×40.00 corner 0px bg rgba(0, 0, 0, 0) fact bare · want the same paint (< 1.03, equal computed backgrounds) and no corner (0px)
+  PASS       light · bare-tile · fill #f9f8f6 on #fbfaf8 = 1.01:1 · rest 80.72×58.69 corner 16px bg rgba(0, 0, 0, 0) fact bare · selected 80.72×58.69 corner 16px bg rgba(0, 0, 0, 0) fact bare · want the same paint and the field corner (16px)
+  FAIL       light · item-write (refused) · fill #d3d0cb on #e7e3de = 1.20:1 · selected 59.33×40.00 corner 9999px bg oklab(0.216114 0.00343135 0.00508514 / 0.12) fact bare · want the fact auto on every option, the tint (≥ 1.08) and the stadium
+  PASS       light · ancestor (no effect) · fill #d3d0cb on #e7e3de = 1.20:1 · selected 59.33×40.00 corner 9999px bg oklab(0.216114 0.00343135 0.00508514 / 0.12) fact auto · want the tint, the stadium and the fact auto
+  PASS       light · state (bare-pill) · b checked true, data-state on, weight 600; a checked false; tab stops 1 · ArrowRight from b → checked false/false/true · want b on at 600, one tab stop, c checked after the key
+  PASS       dark · ref (control) · ref-pill fill #26221e on #120e0b = 1.22:1, selected 59.33×40.00 corner 9999px bg oklab(0.926146 0.00162765 0.00610709 / 0.12) fact auto · ref-tile fill #272624 on #0b0a09 = 1.31:1, selected 80.72×58.69 corner 16px bg oklab(0.926146 0.00162765 0.00610709 / 0.12) fact auto · want both ≥ 1.08, a stadium and 16px
+  PASS       dark · bare-pill · fill #120e0b on #120e0b = 1.00:1 · rest 66.81×40.00 corner 0px bg rgba(0, 0, 0, 0) fact bare · selected 59.33×40.00 corner 0px bg rgba(0, 0, 0, 0) fact bare · want the same paint (< 1.03, equal computed backgrounds) and no corner (0px)
+  PASS       dark · bare-tile · fill #0d0c0b on #0b0a09 = 1.01:1 · rest 80.72×58.69 corner 16px bg rgba(0, 0, 0, 0) fact bare · selected 80.72×58.69 corner 16px bg rgba(0, 0, 0, 0) fact bare · want the same paint and the field corner (16px)
+  FAIL       dark · item-write (refused) · fill #26221e on #120e0b = 1.22:1 · selected 59.33×40.00 corner 9999px bg oklab(0.926146 0.00162765 0.00610709 / 0.12) fact bare · want the fact auto on every option, the tint (≥ 1.08) and the stadium
+  PASS       dark · ancestor (no effect) · fill #26221e on #120e0b = 1.22:1 · selected 59.33×40.00 corner 9999px bg oklab(0.926146 0.00162765 0.00610709 / 0.12) fact auto · want the tint, the stadium and the fact auto
+  PASS       dark · state (bare-pill) · b checked true, data-state on, weight 600; a checked false; tab stops 1 · ArrowRight from b → checked false/false/true · want b on at 600, one tab stop, c checked after the key
+L3BARE FAIL · 10/12 gating cells pass [library 10/12]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p9/remeasure9/out/runs/l3-unpinned-src/L3BARE-chromium.json
+exit 1 · 2026-10-21 07:22:26 · load { 10.99 9.20 9.46 }

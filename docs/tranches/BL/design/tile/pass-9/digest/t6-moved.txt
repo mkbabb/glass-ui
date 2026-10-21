@@ -1,0 +1,16 @@
+T-6 moved: load only 75 · loads, ms timings and frame counts only 131 · other 5
+dp8-src/T-6-chromium.json · FAIL · gate
+  p8 f1 press · scale 1.02×0.96; median frame 8.30 ms, load 17.02 / 16.85 / 13.77
+  p9 f1 press · scale 1.02×0.97; median frame 7.40 ms, load 9.99 / 10.59 / 10.33
+dp8-src/T-6-chromium.json · PASS · info
+  p8 f1-verbatim press · scale 0.98×0.92; median frame 8.00 ms, load 16.80 / 16.83 / 13.84
+  p9 f1-verbatim press · scale 0.98×0.93; median frame 7.70 ms, load 11.74 / 10.94 / 10.46
+dp8-src/T-6-chromium.json · FAIL · gate
+  p8 chipcell commit bar, pointer commit (release of the press) on #0 · pop peak 1.03 at 205 ms, trough after it 1.01, settle 1.01 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 9-369 ms; 98 frames, median 8.60 ms · load 18.66 / 17.14 / 14.14
+  p9 chipcell commit bar, pointer commit (release of the press) on #0 · pop peak 1.02 at 210 ms, trough after it 1.01, settle 1.01 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 9-366 ms; 105 frames, median 7.80 ms · load 10.39 / 10.72 / 10.40
+dp8-src/T-6-chromium.json · FAIL · info
+  p8 strip-verbatim commit bar, pointer commit (release of the press) on #0 · pop peak 1.03 at 214 ms, trough after it 1.01, settle 1.01 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 28-388 ms; 105 frames, median 7.90 ms · load 17.58 / 17.03 / 14.24
+  p9 strip-verbatim commit bar, pointer commit (release of the press) on #0 · pop peak 1.02 at 193 ms, trough after it 1.01, settle 1.01 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 26-384 ms; 107 frames, median 7.80 ms · load 9.74 / 10.52 / 10.35
+dp8-src/T-6-webkit.json · FAIL · info
+  p8 strip-verbatim commit bar, pointer commit (release of the press) on #0 · pop peak 1.02 at 221 ms, trough after it 1.01, settle 1.01 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 17-375 ms; 79 frames, median 10.00 ms · load 7.58 / 11.73 / 13.95
+  p9 strip-verbatim commit bar, pointer commit (release of the press) on #0 · pop peak 1.03 at 219 ms, trough after it 1.01, settle 1.01 (amplitude < 0.015, no bounce); body travel 0.00 px, overshoot 0.00 px; paint moved 14-363 ms; 79 frames, median 10.00 ms · load 8.89 / 8.06 / 8.46
