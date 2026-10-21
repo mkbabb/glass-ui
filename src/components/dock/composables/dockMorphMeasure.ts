@@ -11,8 +11,12 @@ function getSize(el: HTMLElement, axis: Axis): number {
 type Override = readonly [el: HTMLElement, property: string, value: string];
 
 /**
- * Set `overrides` inline (`!important`), run `read`, restore them. Set, read and restore
- * run in one task, so no frame paints the overridden layout.
+ * Set `overrides` inline, run `read`, restore them. Set, read and restore run in one
+ * task, so no frame paints the overridden layout. A property is set `!important` so it
+ * beats the stylesheet, except a custom property, which only this module sets inline:
+ * WebKit replaces neither an `!important` inline custom property on restore nor the
+ * plain one published after it, so the measure's own `--dock-expanded-px` stayed
+ * `initial`.
  */
 function withOverrides<T>(overrides: readonly Override[], read: () => T): T {
     const saved = overrides.map(
@@ -24,7 +28,9 @@ function withOverrides<T>(overrides: readonly Override[], read: () => T): T {
                 el.style.getPropertyPriority(property),
             ] as const,
     );
-    for (const [el, property, value] of overrides) el.style.setProperty(property, value, "important");
+    for (const [el, property, value] of overrides) {
+        el.style.setProperty(property, value, property.startsWith("--") ? "" : "important");
+    }
     try {
         return read();
     } finally {

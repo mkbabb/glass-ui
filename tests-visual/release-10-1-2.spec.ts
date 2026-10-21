@@ -341,7 +341,7 @@ for (const axis of ["horizontal", "vertical"] as const) {
                         "the pane changed while the morph ran",
                     ).toBe(true);
                     const stale = seq.filter(
-                        (f) => f.morphing && f.changed && Math.abs(f.reserved - rest.size) > 1,
+                        (f) => f.morphing && f.changed && !(Math.abs(f.reserved - rest.size) <= 1),
                     );
                     expect.soft(
                         stale.length,
@@ -381,7 +381,7 @@ for (const [from, to] of [
                     f.morphing &&
                     f.changed &&
                     (sequence !== "collapsed" || f === seq.find((g) => g.morphing)) &&
-                    Math.abs(f.reserved - rest.size) > 1,
+                    !(Math.abs(f.reserved - rest.size) <= 1),
             );
             expect.soft(
                 stale.length,
