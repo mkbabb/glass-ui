@@ -551,10 +551,10 @@ describe("G-DOCK-MORPH — a morph never starts against an unmeasured target", (
      * delivers an honest measurement: 186 of 311, ~350ms of hold, then +125px in one frame
      * at t≈657.
      *
-     * THE BITE. Make `capture()` unconditional again (delete the `if (source === "layout")`
-     * arm) and the root below publishes `--dock-expanded-px: 64px` — identical to
-     * `--dock-collapsed-px`, i.e. a dock whose expand travels nowhere and then jumps. With
-     * the guard, the fallback path reads the FULL PANE'S own rendered span (220 + chrome),
+     * THE BITE. Make `capture()` take a frame on the flip too (drop the `source ===
+     * "layout"` term) and the root below publishes `--dock-expanded-px: 64px` — identical
+     * to `--dock-collapsed-px`, i.e. a dock whose expand travels nowhere and then jumps.
+     * With the guard, the re-base reads the FULL PANE'S own natural span (220 + chrome),
      * which is real from mount because the inactive pane stays laid out under
      * `visibility`. The guard is not masking a measurement — the flip write was strictly
      * worse than the fallback it overrode.
@@ -596,12 +596,12 @@ describe("G-DOCK-MORPH — a morph never starts against an unmeasured target", (
         unmount();
     });
 
-    /** The source half: only a post-layout event may move an endpoint. */
-    it("only the ResizeObserver and the initial attach claim a layout capture", () => {
+    /** The source half: a flip capture never takes a frame. */
+    it("only a settled layout capture takes a frame", () => {
         const src = read(`${DOCK}/composables/dockMorphMeasure.ts`);
         expect(src).toMatch(/new ResizeObserver\(\(\) => capture\("layout"\)\)/);
         expect(src).toMatch(/watch\(expanded, \(\) => capture\("flip"\)\)/);
-        expect(src).toMatch(/if \(source === "layout"\)/);
+        expect(src).toMatch(/source === "layout" && !root\.hasAttribute\("data-morphing"\)/);
     });
 
     /**

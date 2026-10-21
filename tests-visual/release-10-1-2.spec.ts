@@ -198,107 +198,157 @@ for (const [label, viewport] of [
 }
 
 // O-101 · DOCK-STALE-EXPANDED-ENDPOINT (value.js letter 2026-10-19; INBOUND O-101,
-// O-101a). Expand at one width, collapse, resize across the scene's 768px breakpoint so
-// the full pane changes while collapsed, expand. Every frame is sampled from the resize
-// on. The witness: `--dock-expanded-px` on the first morphing frame equals the settled
-// `offsetWidth` (+-1 px), and no frame has `scrollWidth > clientWidth`. `pin` expands the
-// dock in the same render as the breakpoint (value.js's shape); without it the dock
-// expands by `__expand()` after the collapsed dock has re-laid out. RED on 10.1.1, which
-// latched the expanded endpoint only while expanded, so the next expand reserved the
-// old pane's width.
+// O-101a). The scene's full pane is a breakpoint's (12 seats at >= 768px, 3 below), so a
+// resize across 768px changes it. Every frame is sampled from just before the change.
+// RED on 10.1.1, which latched the expanded endpoint only while expanded, so a morph
+// reserved the old pane's span.
+//
+// Three sequences, each at 1440->390 and 390->1440:
+// - `collapsed`: expand and collapse at the first width, change the pane while collapsed,
+//   expand (`pin` expands it in the same render as the breakpoint, value.js's shape;
+//   otherwise `__expand()` after the collapsed dock re-lays out). Witness:
+//   `--dock-expanded-px` on the first morphing frame equals the settled size (+-1 px).
+// - `reversal`: expand and collapse at the first width, then 60 ms into a collapse change
+//   the pane and expand again.
+// - `mid-expand`: collapsed at the first width, expand, and 60 ms in change the pane.
+//   Witness for both: every morphing frame after the change reserves the settled size
+//   (+-1 px), so the pane retargets the reserved box rather than leaving it.
+// All three: no frame has the document scrolling on the morph axis.
+//
+// The horizontal dock reserves `inline-size`; the vertical one (`?axis=vertical`)
+// reserves `block-size`. The vertical dock is capped at `--dock-max-block-size`, so a
+// stale reservation there shows as the reserved size, not as document scroll.
 interface Frame {
     morphing: boolean;
+    changed: boolean;
     reserved: number;
-    width: number;
-    scrollWidth: number;
-    clientWidth: number;
+    size: number;
+    scroll: number;
+    client: number;
 }
 
-async function frames(page: Page): Promise<Frame[]> {
-    return page.evaluate(() => (window as unknown as { __frames: Frame[] }).__frames);
-}
+type Axis = "horizontal" | "vertical";
+type Sequence = "collapsed" | "pinned" | "reversal" | "mid-expand";
 
-for (const [from, to] of [
-    [1440, 390],
-    [390, 1440],
-] as const) {
-    for (const coupled of [true, false]) {
-        const label = `${from}->${to}${coupled ? ", expanded by the breakpoint" : ", expanded after"}`;
-        test(`O-101 · the expanded endpoint follows a pane changed while collapsed (${label})`, async ({
-            page,
-        }) => {
-            await page.setViewportSize({ width: from, height: 844 });
-            const pin = coupled ? (to < 768 ? "narrow" : "wide") : "";
-            await page.goto(`/tests-visual/release-10-1-2/harness.html?scene=stale-endpoint&pin=${pin}`);
-            await page.waitForFunction(() => (window as unknown as { __ready?: boolean }).__ready);
-            const dock = page.locator(".glass-dock");
-            const settled = (posture: "expanded" | "collapsed") =>
-                page.waitForFunction(
-                    (p) => {
-                        const el = document.querySelector(".glass-dock");
-                        return !!el && el.classList.contains(p) && !el.hasAttribute("data-morphing");
-                    },
-                    posture,
-                );
-            const call = (name: string) =>
-                page.evaluate((n) => (window as unknown as Record<string, () => void>)[n](), name);
+const viewport = (width: number) => ({ width, height: 844 });
 
-            // Expand and collapse at the first width, so the expanded endpoint is the
-            // first pane's.
-            await settled("collapsed");
-            await call("__expand");
-            await settled("expanded");
-            await page.waitForTimeout(150);
+async function driveStaleEndpoint(page: Page, axis: Axis, from: number, to: number, sequence: Sequence) {
+    await page.setViewportSize(viewport(from));
+    const pin = sequence === "pinned" ? (to < 768 ? "narrow" : "wide") : "";
+    await page.goto(`/tests-visual/release-10-1-2/harness.html?scene=stale-endpoint&pin=${pin}&axis=${axis}`);
+    await page.waitForFunction(() => (window as unknown as { __ready?: boolean }).__ready);
+    const settled = (posture: "expanded" | "collapsed") =>
+        page.waitForFunction(
+            (p) => {
+                const el = document.querySelector(".glass-dock");
+                return !!el && el.classList.contains(p) && !el.hasAttribute("data-morphing");
+            },
+            posture,
+        );
+    const call = (name: string) =>
+        page.evaluate((n) => (window as unknown as Record<string, () => void>)[n](), name);
+
+    await settled("collapsed");
+    if (sequence !== "mid-expand") {
+        // Expand and collapse at the first width, so the endpoints are the first pane's.
+        await call("__expand");
+        await settled("expanded");
+        await page.waitForTimeout(150);
+        if (sequence !== "reversal") {
             await call("__collapse");
             await settled("collapsed");
             await page.waitForTimeout(150);
+        }
+    }
 
-            await page.evaluate(() => {
-                const w = window as unknown as { __frames: Frame[]; __stop: boolean };
-                w.__frames = [];
-                w.__stop = false;
-                const tick = () => {
-                    const el = document.querySelector<HTMLElement>(".glass-dock")!;
-                    const root = document.documentElement;
-                    w.__frames.push({
-                        morphing: el.hasAttribute("data-morphing"),
-                        reserved: Number.parseFloat(el.style.getPropertyValue("--dock-expanded-px")),
-                        width: el.offsetWidth,
-                        scrollWidth: root.scrollWidth,
-                        clientWidth: root.clientWidth,
-                    });
-                    if (!w.__stop) requestAnimationFrame(tick);
-                };
-                requestAnimationFrame(tick);
+    await page.evaluate(
+        ({ vertical, to }) => {
+            const w = window as unknown as { __frames: Frame[]; __stop: boolean };
+            w.__frames = [];
+            w.__stop = false;
+            const tick = () => {
+                const el = document.querySelector<HTMLElement>(".glass-dock")!;
+                const root = document.documentElement;
+                w.__frames.push({
+                    morphing: el.hasAttribute("data-morphing"),
+                    changed: innerWidth === to,
+                    reserved: Number.parseFloat(el.style.getPropertyValue("--dock-expanded-px")),
+                    size: vertical ? el.offsetHeight : el.offsetWidth,
+                    scroll: vertical ? root.scrollHeight : root.scrollWidth,
+                    client: vertical ? root.clientHeight : root.clientWidth,
+                });
+                if (!w.__stop) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+        },
+        { vertical: axis === "vertical", to },
+    );
+
+    if (sequence === "reversal") {
+        await call("__collapse");
+        await page.waitForTimeout(60);
+        await page.setViewportSize(viewport(to));
+        await call("__expand");
+    } else if (sequence === "mid-expand") {
+        await call("__expand");
+        await page.waitForTimeout(60);
+        await page.setViewportSize(viewport(to));
+    } else {
+        await page.setViewportSize(viewport(to));
+        if (sequence === "collapsed") {
+            await page.waitForTimeout(250);
+            await expect(page.locator(".glass-dock")).toHaveClass(/collapsed/);
+            await call("__expand");
+        }
+    }
+    await page.waitForFunction(() =>
+        (window as unknown as { __frames: Frame[] }).__frames.some((f) => f.morphing),
+    );
+    await settled("expanded");
+    await page.waitForTimeout(200);
+    await page.evaluate(() => ((window as unknown as { __stop: boolean }).__stop = true));
+    return page.evaluate(() => (window as unknown as { __frames: Frame[] }).__frames);
+}
+
+for (const axis of ["horizontal", "vertical"] as const) {
+    for (const [from, to] of [
+        [1440, 390],
+        [390, 1440],
+    ] as const) {
+        for (const sequence of ["pinned", "collapsed", "reversal", "mid-expand"] as const) {
+            test(`O-101 · ${axis} · ${sequence} · the expanded endpoint follows the pane (${from}->${to})`, async ({
+                page,
+            }) => {
+                const seq = await driveStaleEndpoint(page, axis, from, to, sequence);
+                const rest = seq[seq.length - 1];
+                expect(rest.morphing).toBe(false);
+                if (sequence === "pinned" || sequence === "collapsed") {
+                    const start = seq.find((f) => f.morphing)!;
+                    expect.soft(
+                        Math.abs(start.reserved - rest.size),
+                        `reserved ${start.reserved}px at morph start, settled at ${rest.size}px`,
+                    ).toBeLessThanOrEqual(1);
+                } else {
+                    expect(
+                        seq.some((f) => f.morphing && f.changed),
+                        "the pane changed while the morph ran",
+                    ).toBe(true);
+                    const stale = seq.filter(
+                        (f) => f.morphing && f.changed && Math.abs(f.reserved - rest.size) > 1,
+                    );
+                    expect.soft(
+                        stale.length,
+                        `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+                    ).toBe(0);
+                }
+                const over = seq.filter((f) => f.scroll > f.client);
+                expect
+                    .soft(
+                        over.length,
+                        `frames with the document scrolling on the ${axis} axis, of ${seq.length} (max ${Math.max(0, ...over.map((f) => f.scroll))}, client ${rest.client})`,
+                    )
+                    .toBe(0);
             });
-            await page.setViewportSize({ width: to, height: 844 });
-            if (!coupled) {
-                await page.waitForTimeout(250);
-                await expect(dock).toHaveClass(/collapsed/);
-                await call("__expand");
-            }
-            await page.waitForFunction(() =>
-                (window as unknown as { __frames: Frame[] }).__frames.some((f) => f.morphing),
-            );
-            await settled("expanded");
-            await page.waitForTimeout(200);
-            await page.evaluate(() => ((window as unknown as { __stop: boolean }).__stop = true));
-
-            const seq = await frames(page);
-            const start = seq.find((f) => f.morphing)!;
-            const rest = seq[seq.length - 1];
-            expect(rest.morphing).toBe(false);
-            expect.soft(
-                Math.abs(start.reserved - rest.width),
-                `reserved ${start.reserved}px at morph start, settled at ${rest.width}px`,
-            ).toBeLessThanOrEqual(1);
-            const over = seq.filter((f) => f.scrollWidth > f.clientWidth);
-            expect
-                .soft(
-                    over.length,
-                    `frames with scrollWidth > clientWidth, of ${seq.length} (max scrollWidth ${Math.max(0, ...over.map((f) => f.scrollWidth))}, clientWidth ${rest.clientWidth})`,
-                )
-                .toBe(0);
-        });
+        }
     }
 }

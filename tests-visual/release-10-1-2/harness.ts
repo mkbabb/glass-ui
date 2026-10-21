@@ -166,7 +166,8 @@ const scenes: Record<string, Component> = {
     // open (`collapse: false`) below the breakpoint and `?pin=wide` above it, so one
     // resize changes the full pane and expands the dock in the same render (value.js's
     // shape). Without `pin` the dock stays collapsible; `window.__expand()` and
-    // `window.__collapse()` move it.
+    // `window.__collapse()` move it. `?axis=vertical` seats a vertical dock, whose morph
+    // reserves `block-size`.
     "stale-endpoint": defineComponent(() => {
         const query = matchMedia("(min-width: 768px)");
         const wide = ref(query.matches);
@@ -185,7 +186,11 @@ const scenes: Record<string, Component> = {
             return h("div", { style: "display:grid;justify-content:center;padding-block:24px" }, [
                 h(
                     GlassDock,
-                    { ref: dock, collapse: pinned ? false : "closed" },
+                    {
+                        ref: dock,
+                        collapse: pinned ? false : "closed",
+                        orientation: params.get("axis") === "vertical" ? "vertical" : "horizontal",
+                    },
                     {
                         default: () =>
                             Array.from({ length: count }, (_, i) =>

@@ -52,7 +52,10 @@ export interface UseDockRunReturn {
     reach: (seat: HTMLElement) => void;
     /** Re-derive the tab stop. Called on mount, on focus moves, and on content change. */
     syncRoving: () => void;
-    /** True while every child of the run is a declared seat: the run's `role="toolbar"`. */
+    /**
+     * True while the run has a declared seat and every child is one, glass's
+     * `<DockSeparator>` and reka's form `<select>` aside: the run's `role="toolbar"`.
+     */
     toolbar: Readonly<Ref<boolean>>;
 }
 
