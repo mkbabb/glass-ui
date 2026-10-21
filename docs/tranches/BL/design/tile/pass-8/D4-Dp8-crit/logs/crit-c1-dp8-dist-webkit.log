@@ -1,0 +1,31 @@
+2026-10-21 06:37:57 · load { 33.56 14.93 10.44 }
+CRIT-C1 · C1 a cell in every interaction state, no layout shift by pointer, hover, press, focus or keys, at 390 and 1440 (pass-8 CRITIC probe)
+  target dp8-dist (flavor dist) · Playwright WebKit 26.5 · harness H8 4159e027cdcf
+  load 33.56 / 14.93 / 10.44 at start, 16.37 / 13.39 / 10.16 at end · other headless browser processes at start: 9 (waited 0.1 s) · browser lock waited 0 s
+  PASS       390×844 light · cell-every-state · 16 states read · every option 16px, column, in every state · states rest[on -1] click 0[on 0] click 1[on 1] click 2[on 2] click 3[on 3] click 4[on 4] hover rest 0[on 4 hov 0] hover selected 4[on 4 hov 4] press rest 1 (held)[on 4 hov 1 act 1] after press: 1 selected[on 1] focus-visible (Tab)[on 1 fv 1] ArrowDown 1[on 2 fv 2] ArrowDown 2[on 3 fv 3] ArrowDown 3[on 4 fv 4] ArrowDown 4[on 0 fv 0] ArrowDown 5[on 1 fv 1]
+  PASS       390×844 light · no-shift · rest options 184×40, 184×56, 184×56, 184×56, 184×56 (offset px); group 192×288 · max layout deviation over every option and the group in every state 0.00 px · want ≤ 0.50
+  PASS       390×844 light · resize-observer · size changes seen on the group and 5 options after the initial entries: 0 · want 0
+  PASS       390×844 light · layout-shift · 0 entries, sum 0.00000 over the walk (input-driven included) · want 0
+  PASS       390×844 dark · cell-every-state · 16 states read · every option 16px, column, in every state · states rest[on -1] click 0[on 0] click 1[on 1] click 2[on 2] click 3[on 3] click 4[on 4] hover rest 0[on 4 hov 0] hover selected 4[on 4 hov 4] press rest 1 (held)[on 4 hov 1 act 1] after press: 1 selected[on 1] focus-visible (Tab)[on 1 fv 1] ArrowDown 1[on 2 fv 2] ArrowDown 2[on 3 fv 3] ArrowDown 3[on 4 fv 4] ArrowDown 4[on 0 fv 0] ArrowDown 5[on 1 fv 1]
+  PASS       390×844 dark · no-shift · rest options 184×40, 184×56, 184×56, 184×56, 184×56 (offset px); group 192×288 · max layout deviation over every option and the group in every state 0.00 px · want ≤ 0.50
+  PASS       390×844 dark · resize-observer · size changes seen on the group and 5 options after the initial entries: 0 · want 0
+  PASS       390×844 dark · layout-shift · 0 entries, sum 0.00000 over the walk (input-driven included) · want 0
+  PASS       390×844 prt (forced level-0 path) · cell-every-state · 16 states read · every option 16px, column, in every state · states rest[on -1] click 0[on 0] click 1[on 1] click 2[on 2] click 3[on 3] click 4[on 4] hover rest 0[on 4 hov 0] hover selected 4[on 4 hov 4] press rest 1 (held)[on 4 hov 1 act 1] after press: 1 selected[on 1] focus-visible (Tab)[on 1 fv 1] ArrowDown 1[on 2 fv 2] ArrowDown 2[on 3 fv 3] ArrowDown 3[on 4 fv 4] ArrowDown 4[on 0 fv 0] ArrowDown 5[on 1 fv 1]
+  PASS       390×844 prt (forced level-0 path) · no-shift · rest options 184×40, 184×56, 184×56, 184×56, 184×56 (offset px); group 192×288 · max layout deviation over every option and the group in every state 0.00 px · want ≤ 0.50
+  PASS       390×844 prt (forced level-0 path) · resize-observer · size changes seen on the group and 5 options after the initial entries: 0 · want 0
+  PASS       390×844 prt (forced level-0 path) · layout-shift · 0 entries, sum 0.00000 over the walk (input-driven included) · want 0
+  PASS       1440×900 light · cell-every-state · 16 states read · every option 16px, column, in every state · states rest[on -1] click 0[on 0] click 1[on 1] click 2[on 2] click 3[on 3] click 4[on 4] hover rest 0[on 4 hov 0] hover selected 4[on 4 hov 4] press rest 1 (held)[on 4 hov 1 act 1] after press: 1 selected[on 1] focus-visible (Tab)[on 1 fv 1] ArrowDown 1[on 2 fv 2] ArrowDown 2[on 3 fv 3] ArrowDown 3[on 4 fv 4] ArrowDown 4[on 0 fv 0] ArrowDown 5[on 1 fv 1]
+  PASS       1440×900 light · no-shift · rest options 184×43, 184×71, 184×71, 184×71, 184×71 (offset px); group 192×367 · max layout deviation over every option and the group in every state 0.00 px · want ≤ 0.50
+  PASS       1440×900 light · resize-observer · size changes seen on the group and 5 options after the initial entries: 0 · want 0
+  PASS       1440×900 light · layout-shift · 0 entries, sum 0.00000 over the walk (input-driven included) · want 0
+  PASS       1440×900 dark · cell-every-state · 16 states read · every option 16px, column, in every state · states rest[on -1] click 0[on 0] click 1[on 1] click 2[on 2] click 3[on 3] click 4[on 4] hover rest 0[on 4 hov 0] hover selected 4[on 4 hov 4] press rest 1 (held)[on 4 hov 1 act 1] after press: 1 selected[on 1] focus-visible (Tab)[on 1 fv 1] ArrowDown 1[on 2 fv 2] ArrowDown 2[on 3 fv 3] ArrowDown 3[on 4 fv 4] ArrowDown 4[on 0 fv 0] ArrowDown 5[on 1 fv 1]
+  PASS       1440×900 dark · no-shift · rest options 184×43, 184×71, 184×71, 184×71, 184×71 (offset px); group 192×367 · max layout deviation over every option and the group in every state 0.00 px · want ≤ 0.50
+  PASS       1440×900 dark · resize-observer · size changes seen on the group and 5 options after the initial entries: 0 · want 0
+  PASS       1440×900 dark · layout-shift · 0 entries, sum 0.00000 over the walk (input-driven included) · want 0
+  PASS       1440×900 prt (forced level-0 path) · cell-every-state · 16 states read · every option 16px, column, in every state · states rest[on -1] click 0[on 0] click 1[on 1] click 2[on 2] click 3[on 3] click 4[on 4] hover rest 0[on 4 hov 0] hover selected 4[on 4 hov 4] press rest 1 (held)[on 4 hov 1 act 1] after press: 1 selected[on 1] focus-visible (Tab)[on 1 fv 1] ArrowDown 1[on 2 fv 2] ArrowDown 2[on 3 fv 3] ArrowDown 3[on 4 fv 4] ArrowDown 4[on 0 fv 0] ArrowDown 5[on 1 fv 1]
+  PASS       1440×900 prt (forced level-0 path) · no-shift · rest options 184×43, 184×71, 184×71, 184×71, 184×71 (offset px); group 192×367 · max layout deviation over every option and the group in every state 0.00 px · want ≤ 0.50
+  PASS       1440×900 prt (forced level-0 path) · resize-observer · size changes seen on the group and 5 options after the initial entries: 0 · want 0
+  PASS       1440×900 prt (forced level-0 path) · layout-shift · 0 entries, sum 0.00000 over the walk (input-driven included) · want 0
+CRIT-C1 PASS · 24/24 gating cells pass [library 24/24]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p8/crit8/out/runs/dp8-dist/CRIT-C1-webkit.json
+exit 0 · 2026-10-21 06:38:56 · load { 16.37 13.39 10.16 }
