@@ -1,0 +1,22 @@
+[guarded] waiting for the 'webkit' lock
+== rerun-wk start 21:04:23 load { 28.98 29.48 23.88 }
+admitted 21:04:23 load { 28.98 29.48 23.88 }
+rerun webkit 1 m3-non-text 21:07:03 load { 30.03 30.47 25.29 }: FAIL (24 of 174 gated rows)
+rerun webkit 1 m8-chrome-calm 21:07:03 load { 30.03 30.47 25.29 }: FAIL (1 of 8 gated rows)
+rerun webkit 1 m9-state-registers 21:07:04 load { 30.03 30.47 25.29 }: PASS (18 gated rows)
+rerun webkit 1 m9 --r32 21:07:04 load { 30.03 30.47 25.29 }: PASS (20 gated rows)
+  webkit+shim dark paper state: active #463e37 on #2d241e ΔE 0.101 · hover #3a3029 on #2f261f ΔE 0.040 · checked #9d6fa4 on #332821 ΔE 0.335 · selected #776d64 on #3a2f28 ΔE 0.228 · focus veil #0b0a09 → #0b0a09 ΔL +0.000 (dims ≥ 0.02) · REPORT (R-37)
+  webkit+shim dark aurora state: active #5e463d on #553227 ΔE 0.064 · hover #53392f on #4a2f25 ΔE 0.035 · checked #a06fa5 on #3d2b23 ΔE 0.319 · selected #786d64 on #43322a ΔE 0.209 · focus veil #e87237 → #e87237 ΔL +0.000 (dims ≥ 0.02) · REPORT (R-37)
+  R-32 webkit+shim dark aurora state (the spot): raw L 0.682 C 0.163 h 44.6° → veiled L 0.682 C 0.163 h 44.6° · (i) hue held |Δh| 0.0° ≤ 3° · (ii) chroma kept C 0.163/0.163 = 1.000 × raw ≥ 0.95 · (iii) dims ΔL 0.000 < 0 · REPORT (R-37)
+  R-32 webkit+shim dark paper state (the page): raw L 0.146 C 0.003 h 68.6° → veiled L 0.146 C 0.003 h 68.6° · (iii) dims ΔL 0.000 < 0 · REPORT (R-37) (hue and chroma not read: the page is near-neutral)
+  R-37 webkit dark veil: raw = veiled to the bit, spot 2400/2400 px raw = veiled, page 2400/2400 px raw = veiled → REPORT (O-103b): "WebKit headless paints no backdrop-filter; raw = veiled 4/4" (Chromium gates the arm)
+rerun webkit 2 m3-non-text 21:09:46 load { 29.23 30.77 26.39 }: FAIL (24 of 174 gated rows)
+rerun webkit 2 m8-chrome-calm 21:09:47 load { 31.06 31.12 26.54 }: FAIL (1 of 8 gated rows)
+rerun webkit 2 m9-state-registers 21:09:48 load { 31.06 31.12 26.54 }: PASS (18 gated rows)
+rerun webkit 2 m9 --r32 21:09:50 load { 31.06 31.12 26.54 }: PASS (20 gated rows)
+  webkit+shim dark paper state: active #463e37 on #2d241e ΔE 0.101 · hover #3a3029 on #2f261f ΔE 0.040 · checked #9d6fa4 on #332821 ΔE 0.335 · selected #776d64 on #3a2f28 ΔE 0.228 · focus veil #0b0a09 → #0b0a09 ΔL +0.000 (dims ≥ 0.02) · REPORT (R-37)
+  webkit+shim dark aurora state: active #5e463d on #553227 ΔE 0.064 · hover #53392f on #4a2f25 ΔE 0.035 · checked #a06fa5 on #3d2b23 ΔE 0.319 · selected #786d64 on #43322a ΔE 0.209 · focus veil #e87237 → #e87237 ΔL +0.000 (dims ≥ 0.02) · REPORT (R-37)
+  R-32 webkit+shim dark aurora state (the spot): raw L 0.682 C 0.163 h 44.6° → veiled L 0.682 C 0.163 h 44.6° · (i) hue held |Δh| 0.0° ≤ 3° · (ii) chroma kept C 0.163/0.163 = 1.000 × raw ≥ 0.95 · (iii) dims ΔL 0.000 < 0 · REPORT (R-37)
+  R-32 webkit+shim dark paper state (the page): raw L 0.146 C 0.003 h 68.6° → veiled L 0.146 C 0.003 h 68.6° · (iii) dims ΔL 0.000 < 0 · REPORT (R-37) (hue and chroma not read: the page is near-neutral)
+  R-37 webkit dark veil: raw = veiled to the bit, spot 2400/2400 px raw = veiled, page 2400/2400 px raw = veiled → REPORT (O-103b): "WebKit headless paints no backdrop-filter; raw = veiled 4/4" (Chromium gates the arm)
+== rerun-wk end 21:09:50 load { 31.06 31.12 26.54 }

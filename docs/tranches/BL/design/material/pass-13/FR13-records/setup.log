@@ -1,0 +1,8 @@
+worktree HEAD 8c26bb904 (master at launch; release/10.1.1, release/10.1.2 not merged, P12-6.2 (a))
+10.1.0 source diff 1da7eb17b..HEAD -- src demo tests package.json (empty = base (a)): []
+wider list (+ scripts tests-visual vite.targets.ts .bundle-ratchet .published-roster DESIGN.md docs/canon): []
+git apply --check floor-v11a.patch at HEAD: exit 0 sha1 08c13d4e files 88
+git apply --check floor-v11.patch at HEAD: exit 0 sha1 8f838dcf files 89
+worktree = floor-v11a.patch
+floor-v11a.patch + FV11-r32.diff = floor-v11.patch (cmp exit 0)
+worktree = floor-v11.patch

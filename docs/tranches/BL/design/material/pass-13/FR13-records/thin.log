@@ -1,0 +1,9 @@
+capture fv11a chromium exit 0 19:31:56 load { 21.10 29.04 30.20 }
+M-9 --r32 fv11a chromium: FAIL (1 of 24 gated rows)
+capture fv11 chromium exit 0 19:32:24 load { 22.00 28.46 29.94 }
+M-9 --r32 fv11 chromium: PASS (24 gated rows)
+capture veil-hues chromium exit 0 19:32:29 load { 21.92 28.33 29.89 }
+capture fv11a webkit exit 0 20:31:17 load { 17.78 14.71 15.82 }
+M-9 --r32 fv11a webkit: FAIL (1 of 24 gated rows)
+capture fv11 webkit exit 0 20:31:46 load { 15.52 14.38 15.67 }
+M-9 --r32 fv11 webkit: PASS (20 gated rows)
