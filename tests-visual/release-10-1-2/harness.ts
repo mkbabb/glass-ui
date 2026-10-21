@@ -13,6 +13,7 @@ import DockTrigger from "../../src/components/dock/DockTrigger.vue";
 import { DarkModeToggle } from "../../src/components/dark-mode-toggle";
 import { Popover, PopoverContent, PopoverTrigger } from "../../src/components/popover";
 import { RadioGroup, RadioGroupItem } from "../../src/components/radio-group";
+import { Select, SelectContent, SelectItem } from "../../src/components/select";
 import ToggleGroup from "../../src/components/toggle-group/ToggleGroup.vue";
 import ToggleGroupItem from "../../src/components/toggle-group/ToggleGroupItem.vue";
 
@@ -20,9 +21,12 @@ const params = new URLSearchParams(location.search);
 const scene = params.get("scene") ?? "";
 const w = window as unknown as Record<string, unknown>;
 
-/** A focusable stop before and after a dock pinned to the bottom of the viewport. */
-function page(seats: () => unknown[]) {
-    return h("div", { style: "padding:24px" }, [
+/**
+ * A focusable stop before and after a dock pinned to the bottom of the viewport, inside
+ * a `<form>` when `form` is set.
+ */
+function page(seats: () => unknown[], form = false) {
+    return h(form ? "form" : "div", { style: "padding:24px" }, [
         h("button", { type: "button", "data-witness": "before" }, "before"),
         h(
             "div",
@@ -73,6 +77,37 @@ const scenes: Record<string, Component> = {
             h(DockControl, { "aria-label": "Last", "data-witness": "seat-2" }, () => "B"),
         ]),
     ),
+
+    // A run of glass seat primitives inside a `<form>`, the select trigger's Select named:
+    // reka renders its native `<select aria-hidden="true" tabindex="-1">` beside the
+    // trigger, as a child of the run.
+    "form-select": defineComponent(() => {
+        const unit = ref("s");
+        return () =>
+            page(
+                () => [
+                    h(DockControl, { "aria-label": "Play", "data-witness": "seat-0" }, () => "A"),
+                    h(
+                        Select,
+                        {
+                            name: "unit",
+                            modelValue: unit.value,
+                            "onUpdate:modelValue": (v: string) => (unit.value = v),
+                        },
+                        () => [
+                            h(DockTrigger, { for: "select", "aria-label": "Unit", "data-witness": "seat-1" }, () => unit.value),
+                            h(SelectContent, () => [
+                                h(SelectItem, { value: "s" }, () => "s"),
+                                h(SelectItem, { value: "ms" }, () => "ms"),
+                            ]),
+                        ],
+                    ),
+                    h(DockSeparator),
+                    h(DockControl, { "aria-label": "Last", "data-witness": "seat-3" }, () => "B"),
+                ],
+                true,
+            );
+    }),
 
     // A consumer's focusable splitter (APG window splitter) between two declared seats:
     // a `role="separator"` child that is not glass's `<DockSeparator>`, so undeclared.

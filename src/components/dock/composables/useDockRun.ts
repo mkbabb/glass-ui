@@ -124,13 +124,28 @@ function declaredSeatsOf(run: HTMLElement): HTMLElement[] {
 const DOCK_SEPARATOR = ".dock-separator";
 
 /**
+ * A child that is in neither the accessibility tree nor the Tab sequence:
+ * `aria-hidden="true"` and a negative `tabIndex`. reka's `<Select>` renders one beside
+ * its trigger when it has a `name` inside a `<form>` (its native `<select>` for form
+ * submission, `aria-hidden="true" tabindex="-1"`), so a `DockTrigger for="select"`
+ * seated in a form puts it in the run. No user reaches it, so it is no toolbar member.
+ * An `aria-hidden` child that can still take Tab is not this: it is undeclared.
+ */
+function isInert(child: HTMLElement): boolean {
+    return child.getAttribute("aria-hidden") === "true" && child.tabIndex < 0;
+}
+
+/**
  * THE TOOLBAR CLAIM. `role="toolbar"` promises one stop with arrows across the run, so
  * the run makes it only when it has a declared seat and every child is one, glass's
- * `<DockSeparator>` aside (a toolbar holds separators, APG). A run with any undeclared
- * child claims no role: its declared seats still rove, and the rest keep their own stops.
+ * `<DockSeparator>` (a toolbar holds separators, APG) and inert children (`isInert`)
+ * aside. A run with any other undeclared child claims no role: its declared seats still
+ * rove, and the rest keep their own stops.
  */
 function isToolbar(run: HTMLElement): boolean {
-    const children = seatsOf(run).filter((child) => !child.matches(DOCK_SEPARATOR));
+    const children = seatsOf(run).filter(
+        (child) => !child.matches(DOCK_SEPARATOR) && !isInert(child),
+    );
     return children.length > 0 && children.every(isDeclaredSeat);
 }
 

@@ -113,6 +113,24 @@ for (const [label, viewport] of [
             expect(await active(page)).toBe("seat-2");
         });
 
+        // RED on the first three 10.1.2 cuts, which counted reka's hidden native
+        // `<select>` as an undeclared child and claimed no role. Regression arm against
+        // 10.1.1, which claimed the role over every run.
+        test("G-4 · a DockTrigger for=select in a form keeps an all-declared run's toolbar", async ({
+            page,
+            browserName,
+        }) => {
+            await open(page, "form-select");
+            expect(await page.locator('.dock-run > select[aria-hidden="true"]').count()).toBe(1);
+            expect(await run(page).getAttribute("role")).toBe("toolbar");
+            expect(await tabWalk(page, browserName)).toEqual(["seat-0", "after"]);
+            await page.locator('[data-witness="seat-0"]').focus();
+            await page.keyboard.press("ArrowRight");
+            expect(await active(page)).toBe("seat-1");
+            await page.keyboard.press("ArrowRight");
+            expect(await active(page)).toBe("seat-3");
+        });
+
         // A seat that drops its marker while mounted gets back the tab stop the run took.
         // RED on 10.1.1 (an inferred seat, held at -1) and on the first 10.1.2 cut.
         test("G-4 · a child that drops its declaration is Tab-reachable again", async ({

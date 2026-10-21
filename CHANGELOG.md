@@ -18,8 +18,11 @@ addendum 1). `MIGRATION.md` §10.1.2 says what a consumer with its own dock seat
 - **`role="toolbar"` only over an all-declared run.** The run claims `role="toolbar"` and
   `aria-orientation` only while every direct child is a declared seat. Glass's own
   `<DockSeparator>` (class `dock-separator`) does not void the claim, since a toolbar may
-  hold separators (APG). Any other child, a consumer's focusable `role="separator"`
-  splitter included, is undeclared. A run with any undeclared child claims no role. Its declared seats still share
+  hold separators (APG), and neither does an inert child (`aria-hidden="true"` and a
+  negative `tabIndex`), which no user reaches: the native `<select>` reka renders beside a
+  `DockTrigger for="select"` whose `Select` has a `name` inside a `<form>`. Any other
+  child, a consumer's focusable `role="separator"` splitter or an `aria-hidden` control
+  that still takes Tab included, is undeclared. A run with any undeclared child claims no role. Its declared seats still share
   one stop and rove by arrow. The claim is re-derived when children or markers change.
 - **The contract**, for consumers that measure it (atlas: 8 routes x 390/1440 x 3 engines;
   value.js and the other siblings marking their own seats):
@@ -35,22 +38,26 @@ addendum 1). `MIGRATION.md` §10.1.2 says what a consumer with its own dock seat
      while mounted gets back the `tabindex` it carried before the run first wrote to it
      (none, or its authored value).
   4. `.dock-run` carries `role="toolbar"` (and `aria-orientation`) when it has at least
-     one declared seat and every child other than glass's `<DockSeparator>` (a child
-     with class `dock-separator`) is declared. Otherwise it carries no role.
+     one declared seat and every child is declared, except glass's `<DockSeparator>` (a
+     child with class `dock-separator`) and inert children (`aria-hidden="true"` and a
+     negative `tabIndex`, such as reka's form `<select>` beside a named `Select`'s
+     trigger). Otherwise it carries no role.
 - **Build path.** Branch `release/10.1.2` (worktree `.claude/worktrees/release-10.1.2`).
   `npm ci && npm run build` writes `dist/`, and `npm pack` writes
   `mkbabb-glass-ui-10.1.2.tgz` for a consumer install before the registry carries 10.1.2.
 - **Witnesses.** Unit: `tests/components/custom/dock/g-dock-seat-rule.test.ts` and
-  `crit-seat-cx.test.ts`, on the (b-ii) contract, 10 of 15 RED on 10.1.1 and 15 of 15 GREEN.
-  The 5 that pass on both are regression arms: the declared crit arm, the all-declared toolbar
-  and the three composites. Engine: `tests-visual/release-10-1-2.spec.ts` (harness
+  `crit-seat-cx.test.ts`, on the (b-ii) contract, 11 of 17 RED on 10.1.1 and 17 of 17 GREEN.
+  The 6 that pass on both are regression arms: the declared crit arm, the all-declared toolbar,
+  the form-seated select trigger (10.1.1 claimed the role over every run) and the three
+  composites. Engine: `tests-visual/release-10-1-2.spec.ts` (harness
   `tests-visual/release-10-1-2/`) at 1440 and 390, in Chromium (`chromium-headless-new`)
   and Playwright WebKit 2287 (`tests-visual/webkit-2287.config.ts`): "the atlas shapes
   seated in a run are all Tab-reachable", "arrows rove only the declared seats", "a run
   with an undeclared child claims no toolbar role", "a focusable splitter is undeclared: its
   own stop, no toolbar role", "a child that drops its declaration is Tab-reachable again",
-  and two regression arms, "an all-declared run is one toolbar stop" and "a RadioGroup and
-  a ToggleGroup seated directly keep their arrows". Every atlas shape, the year-range input
+  and three regression arms, "an all-declared run is one toolbar stop", "a DockTrigger
+  for=select in a form keeps an all-declared run's toolbar" and "a RadioGroup and a
+  ToggleGroup seated directly keep their arrows". Every atlas shape, the year-range input
   pair included, is seated directly in the run, the shape 10.1.1 broke. The lattice roving tests and the toolbar test now seat
   declared controls.
 

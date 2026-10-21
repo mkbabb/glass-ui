@@ -20,6 +20,7 @@ import DockTrigger from "@glass/components/dock/DockTrigger.vue";
 import { DarkModeToggle } from "@glass/components/dark-mode-toggle";
 import { Popover, PopoverTrigger } from "@glass/components/popover";
 import { RadioGroup, RadioGroupItem } from "@glass/components/radio-group";
+import { Select } from "@glass/components/select";
 import ToggleGroup from "@glass/components/toggle-group/ToggleGroup.vue";
 import ToggleGroupItem from "@glass/components/toggle-group/ToggleGroupItem.vue";
 
@@ -154,6 +155,52 @@ describe("dock run · the declared seat marker (b-ii)", () => {
         const run = w.get(".dock-run");
         expect(run.attributes("role")).toBeUndefined();
         expect(run.attributes("aria-orientation")).toBeUndefined();
+        w.unmount();
+    });
+
+    // reka's Select, given a `name` inside a `<form>`, renders its native `<select>`
+    // (`aria-hidden="true" tabindex="-1"`) beside the trigger, so it is a child of the
+    // run. Nobody reaches it, so it does not void the claim. RED on the first three 10.1.2
+    // cuts, which counted it as an undeclared child (role=null); green on 10.1.1, which
+    // claimed the role over every run.
+    it("a DockTrigger for=select in a form keeps the toolbar claim of a declared run", async () => {
+        const w = mount(
+            () =>
+                h("form", [
+                    h(GlassDock, { collapse: "open" }, () => [
+                        h(DockControl, { "aria-label": "A", "data-witness": "seat-0" }),
+                        h(Select, { name: "unit", modelValue: "s" }, () =>
+                            h(DockTrigger, { for: "select", "aria-label": "Unit", "data-witness": "seat-1" }, () => "s"),
+                        ),
+                        h(DockSeparator),
+                        h(DockControl, { "aria-label": "B", "data-witness": "seat-3" }),
+                    ]),
+                ]),
+            { attachTo: document.body },
+        );
+        await settle();
+        await new Promise((r) => setTimeout(r));
+        await settle();
+        const run = w.get(".dock-run");
+        const bubble = run.element.querySelector(":scope > select");
+        expect(bubble?.getAttribute("aria-hidden")).toBe("true");
+        expect(run.attributes("role")).toBe("toolbar");
+        (w.get('[data-witness="seat-0"]').element as HTMLElement).focus();
+        await w.get('[data-witness="seat-0"]').trigger("keydown", { key: "ArrowRight" });
+        await nextTick();
+        expect(document.activeElement?.getAttribute("data-witness")).toBe("seat-1");
+        w.unmount();
+    });
+
+    // `aria-hidden` alone is not inert: a child that still takes Tab is undeclared.
+    it("an aria-hidden child that still takes Tab voids the claim", async () => {
+        const w = dock(() => [
+            h(DockControl, { "aria-label": "A" }),
+            h("button", { type: "button", "aria-hidden": "true", "data-witness": "hidden" }, "H"),
+        ]);
+        await settle();
+        expect((w.get('[data-witness="hidden"]').element as HTMLElement).tabIndex).toBe(0);
+        expect(w.get(".dock-run").attributes("role")).toBeUndefined();
         w.unmount();
     });
 
