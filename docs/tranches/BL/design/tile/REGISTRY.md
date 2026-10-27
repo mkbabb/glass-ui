@@ -2157,3 +2157,164 @@ None of these opens a row or changes the score. Each is placed once. They are bu
 | **if the critic opens a non-owner row** | pass 10 is planned around the cell that reads it, and the clean count restarts at 0 |
 | **machine** | `guarded --rss-gb 8` throughout; `--light` for engine-free reads only; every Playwright WebKit read inside `guarded --exclusive webkit`; one heavy run at a time per seat |
 | **the checklist** | §P2-6.3's 40 rows, unchanged through eight passes |
+
+---
+---
+
+# D4 · pass 9 · REGISTRY: D′ v8 re-measured at 40/40, and O-103e opens T-4
+
+| field | value |
+|---|---|
+| seat | D4 pass-9 agglomeration. It closes pass 9 with: D′ v8's measured score; the score under O-103e; whether the pass is clean; the convergence history; the landing list's status; and the pass-10 plan. It runs no instrument, adds no row, and picks no route |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `5010dab9c`. `git diff --stat 78fc8f3b8 HEAD -- . ':!docs'` is empty, so the re-measure seat (at `bd396ecfd`), the critic (at `c905a7919`) and pass 8 measured the same library |
+| inputs, read in full | §P8 of this file (and §P2-6.3); `pass-9/REMEASURE.md`, `compare.txt`, `D4-Dp9-critique.md`; `audit/INBOUND.md` (88 lines; O-102b, O-103, O-103c, **O-103e** read in full). Spot-read against the cited lines: `D4-Dp9-crit/logs/crit9-c1-diag-*`, `D4-Dp9-crit/routes/A9/migrated.mjs`, `harness/measure.mjs:516-530`, `pass-8/probes/l3-bare.mjs:20,83`, `src/components/toggle-group/styles.css:74,100-102,119` and the selected rule in both patches |
+| patches | `pass-7/floor-v6.patch` sha1 **`09e74243`**; `pass-8/D4-Dp8.patch` **`b5f4ae22`**; this seat recomputed both. Both pass-9 seats read `git diff HEAD` **`5d08df87ebbe`** before measuring and after every plant |
+| owner | **INBOUND O-103e** (`value-js-c2`, the owner's delegate per O-102b, 2026-10-27), on O-103c's scope: **(A), any content.** "Selection changes no geometry" is a property of the primitive, not of today's strings. L-5 becomes a cell in T-4's fold, its falsifier the critic's planted 25-character case, and **the clean count restarts**. Preferred cure: selection does not change font weight. Fallback, only if the weight step is shown load-bearing: a hidden selected-weight twin, with a T-4 cell on the 25-character label at 390 in both engines. O-103c stands (Q-10 (i), C1 a cell in both states). Every other ruling stands as O-102b/O-103 record it: Q-13 D′ (F struck); Q-10 (b)+(i); Q-5 (b) only; Q-15 (a); Q-2 (b); Q-3 (a); O-1 (a). **Q-11 (a) is a DEFAULT**, and G stays BLOCK |
+| harness | **H8 `4159e027cdcf`** (43 files), unedited through both pass-9 seats |
+| engines | Chromium 149.0.7827.55, headless shell; **Playwright WebKit 26.5**. Every real-Safari cell is **UNMEASURED (owner's safaridriver checkbox)**: not granted, so E-4 is read against the Playwright WebKit run of record (O-103) |
+| fences | no source edit and no git write; this part is the only write |
+
+Short citations: `RM9` is `pass-9/REMEASURE.md`, `D′c9` is `pass-9/D4-Dp9-critique.md`, `crit/` is `pass-9/D4-Dp9-crit/`.
+
+---
+
+## P9-0 · In brief
+
+| id | route | status | critic's measured score | under O-103e | open rows | clean? |
+|---|---|---|---:|---:|---|---|
+| D4-D′ | the declared cell | **ADVANCE** | 40 / 40 | **39 / 40** | **T-4** (L-5, O-103e) | **no.** The count restarts at 0 |
+| D4-F | the anatomy declares the tile | STRUCK by Q-13 (O-103) | — | — | — | — |
+| D4-G | the selection is a body | **BLOCK**, unchanged | — | — | — | Q-11 (a) a DEFAULT |
+| D4-A, D4-C · D4-B, D4-E | | BANK · RETIRE, unchanged | — | — | — | |
+
+1. **Pass 9 reproduced pass 8 exactly.** The re-measure seat paired all 116 logs and 3,617 run-JSON cells against pass 8's: 0 verdicts flipped, every tally equal, the bundle byte-equal (`RM9` §0). The critic re-ran the whole order to `CHAIN-DONE` at two to four times pass 8's load, and every pass-8 number reproduced (`D′c9` §1).
+2. **The critic scored 40/40 and opened no row,** reading O-103c as binding C1's strings. On C1 as every consumer and scene carries it, selection moves nothing, read sub-pixel and inside every option by real input: 0.000 px, ResizeObserver 0, Layout Instability 0 entries (`D′c9` §2.2).
+3. **It also found L-5 and put the scope question to the owner.** C1's anatomy at its own 192 px, holding a 25-character label ("Awaiting a reply from the") that sits at a wrap boundary at 390×844, re-wraps from 1 to 2 lines when the selected weight (500 → 600) widens it. The option grows 184×56 → 184×77, +21.00 px scroll-free, by click and by ArrowDown, on `src` and `dist`, in both engines (`crit/logs/crit9-c1-diag-*`, this seat spot-read the line).
+4. **O-103e answered: any content.** L-5 is a cell in T-4's fold, and D′ v8 fails it. **T-4 is open, the ruled score is 39/40, and pass 9 is not clean.** Pass 8's clean stands as recorded, but it was clean on a scope the owner has since widened, and the build that cures L-5 is a new build. So the count restarts at 0 and **D4 has not converged.**
+5. **Pass 10 is a BUILD** (§P9-6): D′ v9 removes the selected weight step (O-103e's preferred cure), and H9 carries the T-4 falsifier and L-1a widened by L-1b. Passes 11 and 12 are confirmations on that build.
+
+---
+
+## P9-1 · Registry
+
+**The re-measure** (`RM9`): the same patch bytes, the same `5d08df87ebbe`, H8 unedited, the same 116 stages. `compare.mjs` finds 115 logs identical after stripping loads and times, and the 116th (`state.log`) differs only by the docs-only HEAD line. Of 3,617 cells, 3,360 have identical lines and 257 hold their verdict while a number moved: loads, ms, frame counts, settle waits, ±0.01 scale readings and 1-LSB WebKit samples. **0 flips.** The re-measure seat found no new item.
+
+**The critic's re-run** (`D′c9` §1), Chromium · Playwright WebKit:
+
+| witness | D′ v8, pass 9 (critic) | pass 8 (`D′c8`) |
+|---|---|---|
+| T-1 migrated | 15/15 · 18/18 | the same |
+| T-2 `src` · `dist` · `dist-dev` | 52/52 each, both engines | the same |
+| T-3 migrated | **43/43 · 43/43** (C1 932-947 px² against 251; bare C1 877-951 against 240-255) | 43/43 · 43/43 |
+| T-4 · T-5 (`src`, `dist`) · T-6 · T-7 | 24/24 · 38/38 · 33/33 · 24/24 | the same |
+| T-8 (one run) | 27/27 | 27/27 |
+| FACT `src` · `src-dev` · `dist` | 80/80 each; 76/80 on `foreign`, `var`, and on pass 9's `esc` and `apply` plants | 80/80; 76/80 on `foreign`, `var` |
+| SHEET self-test · on D′ v8 · plants | 10/10 · PASS 2/2 · `foreign`, `var`, `static`, `ts` FAIL; `const`, **`concat`, `esc`, `apply` PASS** (L-1a, L-1b) | 10/10 · PASS · `const` PASS |
+| CANON · ATTACK · CORNER · XSCRIPT | 4/4 with every plant at its tally · 5/5, 3/3 · 5/5, 5/5 · 19/19, 19/19 | the same |
+| REPORT kick (B-5, reported) | 0.17 · 0.14 px (re-measure 0.15 · 0.13), want ≤ 0.05 | 0.16 · 0.13 |
+| C1BOX · CRIT-C1 | 6/6 · 24/24 · 18/18 + 6 **UNMEASURED** (the fixed probe; its log and tally now agree) | 6/6 · 24/24 printed, 6 vacuous |
+| CRIT9-C1 (pass 9) | `c1-migrated` 30/30 · 24/24 (+6 UNMEASURED), `c1bare` 36/36 · 30/30; **`c1long` 12/30 · 9/24** (§P9-2) | — |
+| units clean · whole suite · vue-tsc | 67/67; `concat`, `css-escape`, `apply` plants PASS 67/67 (miss) · 2,356 ran, HEAD's 3 `boot-graph` fail · 0 · 0 | 67/67 · 2,356 · 0 · 0 |
+| bundle (unpacked) | **2,935,932 B**, byte-equal | 2,935,932 B |
+
+**Instrument faults, reported by the critic against itself** (`D′c9` §3.3), none carrying a score:
+- `crit9-c1` adds the window scroll twice (its ancestor walk reaches `<html>`). Its `box-no-shift` and `content-no-shift` cells on `c1long` (413, 821 px) and the 72-94 px info reads are artefacts, proved by the diagnostic: the excess equals `scrollY` exactly. No C1 cell is affected (C1 never scrolls the page). L-5 rests on the scroll-free diagnostic, not on these cells.
+- The diagnostic's first model-write pass left every `c1long` option `off` (weight 500 → 500), so its "no re-wrap" was vacuous. Only the click pass is cited, and it prints each option's weight and state.
+- The driver's `git diff HEAD` restore check cannot see the patches' new untracked files (`shape.ts`, `_shared/guard.ts`). The critic checked them by content (`9455d073`, `53c233af`).
+
+**Machine.** Every stage ran under `guarded --rss-gb 8`; `--light` only for engine-free reads; both seats' Playwright WebKit reads sat inside `--exclusive webkit` holds. The re-measure's hold B queued **94 min 27 s** (past 90) and was waited out, not cancelled. The critic's holds waited 6 min 48 s and 11 min 58 s, and its diagnostic 27 min 53 s. Loads ran 5.25-18.15 (re-measure) and 20.99-44.01 (critic). No tally moved with load. **Scratch:** the re-measure seat removed its worktree. The critic's `rm` of `.claude/worktrees/bl/D4/p9/crit9/` (26 MB) was refused, and pass 8's `p8/build8/` (42 MB) and pass 7's `p7/h7/`, `p7/floor6/` remain.
+
+---
+
+## P9-2 · L-5 under O-103e: the opened cell
+
+**What fails.** `.toggle-group__item[data-state="on"]` sets `font-weight: 600` on every shape (`styles.css:119`, kept by both patches), over the rest weight 500 (`:74`). A cell has a fixed inline size (184 px for C1 at 390), so a label within a weight's widening of its line end takes a second line when selected. The option grows 21 px and every option below it moves 21 px. At 1440 the ladder's labels happen to miss a boundary. That is where the content falls, not a property of the viewport. **F1** shows the same mechanism under the box: its count «bound» widens 33.88 → 34.58 px and moves 0.36 px at 1440 (info).
+
+**The cell, as O-103e places it (T-4's fold, no 41st row):** C1's anatomy at its own width, holding the critic's ladder (labels of 14 to 30 characters from `routes/A9/migrated.mjs:16`), on the migrated arm, at 390×844 and 1440×900, light, dark and PRT, `src` and `dist`, both engines. Each option is selected by click and by ArrowDown. Gating: every option's scroll-free box (the `offsetTop` chain to the group), its label's line count and the group's box are equal at rest and selected, ±0.5 px. **The named falsifier is the 25-character label at 390** in both engines.
+
+**The falsifier has to keep its edge.** The label sits at a wrap boundary only because of today's fluid type and font metrics, so the witness pair must prove the ladder still reaches one: the planted FAIL (`weight-step`, the 600 restored) must read the re-wrap, +21 px or whatever the H9 type gives, in both engines. If a type change moves the ladder off every boundary, the plant passes, and the cell is vacuous by its own witness.
+
+**Is the weight step load-bearing? On cells, no.** Since O-103c, a cell's selected state is carried by its 2 px full-ink perimeter: 932-947 px² at ≥ 3:1 against a 251 px² bar, a non-colour carrier (T-3). The weight is a second carrier, and it is the one that costs geometry. So O-103e's preferred cure applies, and the fallback is not reached.
+
+**The fallback as written would not cure L-5 on a cell.** A twin with `height: 0; overflow: hidden` reserves inline size, not block size. A cell's inline size is fixed by the column, so the twin changes nothing there, and the visible label still wraps at 600. A working twin would stack in the label's own grid area at full height, so every cell would rest at its selected label's height. It would also need the label repeated in `data-label` on every consumer site, which makes two records of one string (P-3). This seat records it so that no later pass reaches for the fallback on cells.
+
+**Pills, the open edge of "the primitive".** The same 600 widens a pill, and in a row a wider pill moves its siblings sideways. O-103e's letter is C1's layout, and its reason is "a property of the primitive". The library's own records say a pill carries its state on ink and weight (the floor's tile comment: "a pill carries its state on ink and weight"; `styles.css:100-102`: "the 0.12 is licensed only because ink and weight co-carry"). Pills have no 3:1 carrier under Q-10 (b), and the dark selected ink reads 1.56:1 (R-5). So on pills the weight step may be load-bearing, and only G reads it. That is recorded, not asserted: pass 10 measures it (§P9-6).
+
+---
+
+## P9-3 · Clean, and the convergence rule
+
+| test | D′ v8, pass 9 |
+|---|---|
+| measured score (critic) | 40/40 (`D′c9` §5.7), on the scope "C1 as written" |
+| score under O-103e | **39/40**: T-4 not met (L-5, +21.00 px at 390, both engines). The other 39 rows read as the critic scored them |
+| open rows | **T-4** |
+| a row added, struck or renamed | no. L-5 is a cell in T-4's fold (O-103e). The list stays §P2-6.3's 40 |
+| a row ruled PASS against its own instrument | no. The critic routed L-5 out of T-4 on scope and put the scope question to the owner, rather than scoring it. O-103e settles the scope |
+
+**Ruling: pass 9 is NOT clean. D4 has NOT converged. The clean count restarts at 0.**
+
+**Pass 8's clean stands on the record but does not carry.** It was 40/40 on the scope as then read. O-103e widens that scope, and under it D′ v8 also fails T-4. D′ v9 is a different build, and passes only confirm each other on one build. **No convergence record is written.**
+
+**Convergence history** on §P2-6.3's 40 rows, never extended or edited:
+
+| pass | D′ | F | what moved | clean? |
+|---|---:|---:|---|---|
+| 2 | 23/35 | 22/34 | (scored on pass 2's own shorter list) | no |
+| 3 | 33 | 32 | the fixed list | no |
+| 4 | 33 | 31 | floor v3, H4 | no |
+| 5 | 33 | 33 | floor v4 (bounded pin), H5 | no (X-2 open, non-owner) |
+| 6 | 34 | 34 | X-2 and H6-3 closed | gated: six owner rows open |
+| 7 | 38 | struck (Q-13) | O-103: R-1, R-8, G, E-4 closed; floor v6, H7 | gated: two owner rows on Q-10's remainder |
+| 8 | 40 | — | O-103c (i) closed T-3 and E-2; L-1, L-2, L-3 built; H8 | yes, 1 of 2, on O-103c as then read |
+| 9 | 40 measured · **39 under O-103e** | — | none: the same build and H8. The critic found L-5; O-103e opened T-4 on it | **no; count restarts at 0** |
+
+---
+
+## P9-4 · Routing: what pass 9 found
+
+| id | class | found by | placement | cure |
+|---|---|---|---|---|
+| **L-5** | the selected weight re-wraps a cell's label at a wrap boundary; +21 px at 390, both engines | `D′c9` §3.1 | **T-4 (O-103e)**, built in **pass 10** | §P9-6: D′ v9 drops the weight step; H9 holds the ladder cell and its `weight-step` plant |
+| **L-1a + L-1b** | writer spellings that pass both static readers: a name held in a constant (L-1a), a name built by concatenation, a CSS escape (`--selection\-tile`), Tailwind `@apply [--selection-tile:flush]` (L-1b). L-1a's planned literal reader misses all three L-1b spellings. The pipeline compiles both CSS spellings to the plain declaration, and FACT catches them in paint (76/80, both engines). `src` holds none, so R-10 stays met | `D′c8` §3.3, `D′c9` §3.2 | **pass 10** (H9 and D′ v9), as O-103e plans | **CSS: read the built stylesheet**, which has one spelling once the pipeline has run. **Script: a string-literal reader for the name** (catches `const`), with **paint as the backstop** for names built at run time (`concat`), since no static reader resolves them. One CSS reader of record: SHEET and the unit twin read the same built sheet, or the twin drops its CSS arm and cites SHEET (P-3) |
+| L-4 | `harness/sites.mjs:19` says C1 has no declaration; the ruled one lives only in the pass-8 route | `D′c8` §3.4 | **pass 10**, with H9 (this seat moves it from landing: §P9-6) | C1's `<ToggleGroup>` gains `shape="cell"` in `sites.mjs`; the route dir drops its override |
+| `l3-bare` FACT fold | L-3's paint witness is a pass-8 probe, not a hashed cell | `B8` §3 | **pass 10**, with H9 | fold its six cells into FACT. **Its `state` cell asserts `weight === "600"`** (`l3-bare.mjs:83`), so under D′ v9 the fold reads state by `aria-checked`, `data-state` and the ink, and reads the weight equal at rest and selected |
+| info | `crit9-c1` adds the window scroll twice | `D′c9` §3.3 | whichever seat re-runs it | stop the ancestor walk before `document.scrollingElement` |
+| info | the driver's restore check cannot see untracked new files | `D′c9` §1.4 | the pass-10 driver | hash the patches' new files before and after every plant |
+| info | T-7's non-gating `content ink` cells read `color` and `fontWeight` (`measure.mjs:520`) | this seat | pass 10, reported | expect them to move under D′ v9; they gate nothing |
+| info | forced colours, Chromium: an `auto` group's selected-hover tint over `Highlight` | `D′c8` §3.2 | floor, reported | none required |
+| reported | R-5: dark selected ink 1.56:1 on K2; the perimeter carries | every pass | reported | — |
+| reported | B-5: the kick, 0.13-0.17 px (want ≤ 0.05); the spring is named | floor-owned | — | — |
+
+---
+
+## P9-5 · What the owner must rule, and what stays owed
+
+**Nothing gates pass 10's build.** O-103e answered the one question pass 9 put.
+- **Pills, if the measurement asks.** If pass 10 shows the weight step load-bearing on pills (§P9-6, the G pill read), the question is whether "a property of the primitive" binds a pill's sideways shift as it binds a cell's. The cell-shaped fallback does not apply to a pill; a width-reserving twin does, because a pill sizes to its content. That question is put only on pass-10 evidence.
+- **Q-14, the bundle datum.** 2,935,932 B, +16,875 over 2,919,057. It is rebound at the release cut.
+- **Q-11, a travelling body.** Unanswered. (a) holds as the DEFAULT, and D4-G stays BLOCK.
+- **Real Safari.** UNMEASURED (owner's safaridriver checkbox). It does not gate under O-103. Playwright WebKit and shipping Safari have disagreed on this library before, so a real-Safari pass stays the owner's to run.
+- **An on-device capture of Apple's option cards**, owed since pass 1.
+- **Housekeeping:** delete `.claude/worktrees/bl/D4/p9/crit9/` (26 MB), `…/p8/build8/` (42 MB), `…/p7/h7/` (25 MB) and `…/p7/floor6/` (15 MB). The seats' `rm` was refused. The p3-p6 directories (about 400 MB in all) are also untracked, and nothing reads them.
+
+---
+
+## P9-6 · Pass-10 plan: a BUILD, then two confirmations
+
+| | |
+|---|---|
+| **kind** | **BUILD** (D′ v9 and H9), a fresh critic, agglomeration. Passes 11 and 12 are **confirmations** on the pass-10 build and H9, each run as §P8-6 ran pass 9 (one re-measure seat, one fresh critic, agglomeration) |
+| **the base** | HEAD + `pass-7/floor-v6.patch` `09e74243`. D′ v9 is written as one whole patch, `pass-10/D4-Dp10.patch`, in `D4-Dp8.patch`'s place: D′ v8 (`b5f4ae22`) plus the items below. The BUILD seat prints its sha1 and the post-apply `git diff HEAD --binary \| shasum`, hashes the patches' new files (`shape.ts`, `_shared/guard.ts`) beside it, and every later seat checks all three before measuring |
+| **D′ v9: L-5** | **Delete `font-weight: 600` from `.toggle-group__item[data-state="on"]`**, for every shape. The rest weight (500) holds in both states. This is O-103e's preferred cure as written, one declaration removed, with no shape-conditional rule. It is not scoped to cells, because a pill's weight step moves its row the same way (§P9-2) |
+| **D′ v9: the records that change with it** (E-3, P-3) | `styles.css:100-102` ("licensed only because ink and weight co-carry") and the floor's tile comment ("a pill carries its state on ink and weight") name the selected carriers once, without weight; MIGRATION's `--selection-paint` bullet drops "and weight". A breaking note in MIGRATION says the selected option no longer changes weight, in one clause (E-1: no alias, no opt-in to the old weight) |
+| **D′ v9: L-1a + L-1b** (the unit twin) | the twin reads `"--selection-tile"` string literals in `.ts`/`.vue` that are not `getPropertyValue(`'s first argument (L-1a). Its CSS arm reads the same built sheet SHEET reads, or drops out and cites SHEET: one CSS reader of record |
+| **H9** | H8 plus: (1) **T-4's L-5 cell** (§P9-2), the ladder at 390 and 1440, click and ArrowDown, scroll-free, both engines, falsifier the 25-character label at 390; (2) **SHEET reads the built stylesheet** for CSS writes (L-1b) and the script literal reader (L-1a); (3) **FACT gains a reached-script plant** (`concat` called by a composition), so paint is witnessed as the backstop for run-time names; (4) **the `l3-bare` fold into FACT**, its state cell rewritten as in §P9-4; (5) **L-4**, C1's declaration in `sites.mjs`, the route override dropped. H9's hash is printed on every line from the BUILD seat on, and no seat edits it after it lands. **This moves §P8-4's landing H9 into pass 10.** The instrument changes at pass 10 whatever happens, and if it carried the whole landing list the two confirmations confirm the instrument the landing ships with, and nothing is left to build after convergence but Q-14 |
+| **witness pairs** (fixture PASS · planted FAIL, both engines unless engine-free) | **L-5:** the ladder 0.00 px and lines unchanged · plant `weight-step` (the 600 restored) re-wraps the 25-character label at 390. **L-1a:** `crit-const-name` FAILs the literal reader and the twin · `ctl-reads`, `sh-reads` PASS. **L-1b:** `esc`, `apply` FAIL the built-sheet reader · the clean build PASSes; `concat`, reached by a composition, FAILs FACT. **fold:** `l3-bare`'s six cells PASS on `src` and `dist` · the pass-8 plants (`plant-on-item`, `unpinned`) at their pass-8 tallies. **L-4:** XSCRIPT self and pair 19/19, and T-3 `c1-migrated` reads the same on the base transcription |
+| **re-reads the cure owes** | (a) **G on a pill row**, a frame pair light and dark, fine and coarse, both engines: is the selected pill unmistakable without colour, carried by ink and the tint without weight? (b) **a pill's width at rest and selected**, both engines, reported, so the pill question (§P9-5) is asked on a number. (c) T-3 and E-2's C1 cells unchanged (the perimeter never read the weight). (d) X-2's `name-ink` and X-7's tone probe still read the label ink move. (e) T-7's non-gating ink cells, reported. If (a) fails, the critic records the weight step as shown load-bearing on pills, and pass 11 becomes a build for the pill arm (§P9-5). It does not reopen the cell cure |
+| **clean, for pass 10 and each confirmation** | 40/40 on the critic's own instrument with T-4 including the L-5 cell; no row opened; none added, struck or renamed; new coverage or record items routed to a landing list as in §P8-4 |
+| **CONVERGED** | passes 11 and 12 both clean on the pass-10 build and H9, as O-103e plans. Pass 10's own clean, if it is clean, is recorded but does not count (it is the build pass). The convergence record is written then: the build of record with its sha1s, H9's hash, this history, and Q-14 at the release cut |
+| **if a critic opens a non-owner row** | the next pass is a build around that cell, and the count restarts at 0 |
+| **machine** | `guarded --rss-gb 8` throughout; `--light` for engine-free reads only; every Playwright WebKit read inside `guarded --exclusive webkit`; one heavy run at a time per seat. A hold that queues past 90 min is waited out, not cancelled, as pass 9's was |
+| **the checklist** | §P2-6.3's 40 rows, unchanged through nine passes. L-5 is a cell in T-4's fold, not a 41st row |
