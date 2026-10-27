@@ -1,0 +1,113 @@
+--- a/src/components/skeleton/Skeleton.vue
++++ b/src/components/skeleton/Skeleton.vue
+@@ -1,16 +1,8 @@
+ <script setup lang="ts">
+-import {
+-    computed,
+-    effectScope,
+-    ref,
+-    useAttrs,
+-    useTemplateRef,
+-    watch,
+-    type HTMLAttributes,
+-} from "vue";
++import { computed, useAttrs, useTemplateRef, type HTMLAttributes } from "vue";
+ import { cn } from "../_shared/class-names";
+ import { fixedHostAttrs } from "../_shared/primitive";
+-import { useIntersectionPause } from "../../composables/motion/core/useIntersectionPause";
++import { useRestLoop } from "../_shared/useRestLoop";
+ 
+ defineOptions({ inheritAttrs: false });
+ 
+@@ -39,29 +31,10 @@
+     ),
+ );
+ 
+-// OFF-SCREEN PAUSE. A shimmer is a compositor loop, and a compositor loop on a tile
+-// nobody can see still ticks. The observer exists only while the shimmer is on, so a
+-// page of plain tiles pays for none.
+-const el = useTemplateRef<HTMLElement>("el");
+-const offscreen = ref(false);
+-watch(
+-    () => props.shimmer,
+-    (on, _was, onCleanup) => {
+-        if (!on) return;
+-        const scope = effectScope();
+-        scope.run(() =>
+-            useIntersectionPause(el, {
+-                pause: () => (offscreen.value = true),
+-                resume: () => (offscreen.value = false),
+-            }),
+-        );
+-        onCleanup(() => {
+-            scope.stop();
+-            offscreen.value = false;
+-        });
+-    },
+-    { immediate: true },
+-);
++// OFF-SCREEN PAUSE (FL-6, `_shared/useRestLoop.ts`). Both arms are rest loops, the breathe
++// and the shimmer, so the one observer runs on every tile and writes the one mark; the
++// sheet pauses whichever loop the tile carries.
++const offscreen = useRestLoop(useTemplateRef<HTMLElement>("el"));
+ </script>
+ 
+ <template>
+@@ -71,7 +44,7 @@
+         data-slot="skeleton"
+         aria-hidden="true"
+         :data-shimmer="shimmer || undefined"
+-        :data-offscreen="(shimmer && offscreen) || undefined"
++        :data-offscreen="offscreen ? '' : undefined"
+         :class="cn('skeleton', props.class)"
+     />
+ </template>
+@@ -192,7 +165,7 @@
+        in dark alike. No colour, no tint, no glow.
+      · STATIC UNDER REDUCE. The animation is gated on `no-preference`; under
+        `reduce` the sheen holds still as a static highlight across the shape.
+-     · OFF-SCREEN IS PAUSED (`data-offscreen`, written by the script's observer). */
++     · OFF-SCREEN IS PAUSED (`data-offscreen`, the one rest-loop mark the breathe shares). */
+ @layer components {
+     .skeleton[data-shimmer]::after {
+         --skeleton-shimmer-period: 28rem;
+@@ -222,6 +195,10 @@
+         }
+     }
+ 
++    .skeleton[data-offscreen] {
++        animation-play-state: paused;
++    }
++
+     .skeleton[data-offscreen]::after {
+         animation-play-state: paused;
+     }
+--- a/tests/components/rest-loop.test.ts
++++ b/tests/components/rest-loop.test.ts
+@@ -29,6 +29,26 @@
+         w.unmount();
+     });
+ 
++    // F-14 (CK-16): the shimmer is a rest loop too, so it rides the same observer and the
++    // same mark as the breathe; one tile, one observer, one writer of `data-offscreen`
++    it("a shimmer Skeleton pauses through the one observer, and the sheet pauses its sheen", async () => {
++        const w = mount(Skeleton, { props: { shimmer: true }, attachTo: document.body });
++        await nextTick();
++        const ios = observing(w.element);
++        expect(ios, "one observer per tile").toHaveLength(1);
++        ios[0]!.trigger(w.element, false);
++        await nextTick();
++        expect(w.attributes("data-offscreen")).toBe("");
++        ios[0]!.trigger(w.element, true);
++        await nextTick();
++        expect(w.attributes("data-offscreen")).toBeUndefined();
++        const strip = (s: string) => s.replace(/\/\*[\s\S]*?\*\//g, "");
++        expect(strip(SkeletonSfc as unknown as string)).toMatch(
++            /\.skeleton\[data-offscreen\]::after\s*\{\s*animation-play-state:\s*paused;\s*\}/,
++        );
++        w.unmount();
++    });
++
+     it("a StatusDot observes only its live pulse, and pauses it off-screen", async () => {
+         const quiet = mount(StatusDot, { props: { state: "online" }, attachTo: document.body });
+         await nextTick();
