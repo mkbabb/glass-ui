@@ -624,3 +624,4 @@ Outage log:
 - 2026-10-27 D4 p9: O-103e (value-js-c2) rules L-5 = (A) any content → row in T-4 fold, clean count restarts; preferred cure constant weight on select. Agglomerate stopped before writing and re-prompted with the ruling; resuming wf_6ff0602b-477.
 - 2026-10-27 D5 p6: P-A6 banked — patch sha1 2464bf18 on arm (ii) (F5ppp + geometric pop; commit light retired, PRM instant state 23/0 both engines); CK-06/10/11/14/17/21/25 met; open CK-20 (Chromium reverse step outlier 2-3/16, cause unmeasured), CK-19 (aurora pointer amplitude, D3s); D2 owes dock hover/presses/data-held/latch; H7 re-points E-9 to O-103d(1). E6 running.
 - 2026-10-27 D4 p9 CLOSED: REGISTRY §P9 (26f08973a) 39/40 under O-103e, clean count 0; pass 10 = BUILD (D′ v9 weight step deleted, H9) per §P9-6, then passes 11-12 confirm. Driver bl-design-d4-pass10.js launched.
+- 2026-10-27 D4 p10 run id wf_142f9e06-852.
