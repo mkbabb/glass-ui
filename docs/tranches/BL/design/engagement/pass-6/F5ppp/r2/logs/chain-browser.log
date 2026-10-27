@@ -1,0 +1,43 @@
+probe f5pp12 chromium:   PASS       F-13 default distribution px · min 6.23 median 6.30 max 6.81 · under 4 px: 0 · load 25.8/30.1/32.5;  FAIL       F-13 preframe distribution px · min 0.29 median 0.35 max 1.27 · under 4 px: 8 · load 28.6/30.5/32.5;  FAIL       F-13 carry0 distribution px · min 0.00 median 0.03 max 0.05 · under 4 px: 8 · load 27.6/29.7/32.1;
+probe f5ppp chromium:   PASS       F-13 default distribution px · min 12.51 median 13.11 max 13.79 · under 4 px: 0 · load 31.8/30.1/32.0;  PASS       F-13 preframe distribution px · min 8.64 median 9.42 max 12.41 · under 4 px: 0 · load 36.2/31.4/32.4;  FAIL       F-13 carry0 distribution px · min -0.00 median 0.05 max 0.06 · under 4 px: 8 · load 26.4/29.5/31.6;
+bat f5ppp chromium E-1: E-1 chromium exit 1 · E-1 chromium FAIL · 31 pass, 63 fail, 2 unmeasured of 96 gating cells (0 reported) · load 25.8/29.3/31.5 at start, 25.3/28.7/31.2 at end · 38 s, load at start 25.8/29.3/31.5
+bat f5ppp chromium E-2: E-2 chromium exit 1 · E-2 chromium FAIL · 72 pass, 92 fail, 0 unmeasured of 164 gating cells (16 reported) · load 24.7/28.6/31.1 at start, 31.3/29.7/30.8 at end · 318 s, load at start 24.7/28.6/31.1
+bat f5ppp chromium E-3: E-3 chromium exit 1 · E-3 chromium FAIL · 16 pass, 6 fail, 0 unmeasured of 22 gating cells (0 reported) · load 30.0/29.4/30.7 at start, 30.7/29.6/30.7 at end · 24 s, load at start 30.0/29.4/30.7
+bat f5ppp chromium E-4: E-4 chromium exit 1 · E-4 chromium FAIL · 17 pass, 1 fail, 0 unmeasured of 18 gating cells (1 reported) · load 32.4/30.0/30.8 at start, 34.3/32.2/31.7 at end · 108 s, load at start 32.4/30.0/30.8
+bat f5ppp chromium E-5: E-5 chromium exit 1 · E-5 chromium FAIL · 28 pass, 28 fail, 0 unmeasured of 56 gating cells (0 reported) · load 31.3/31.6/31.5 at start, 33.1/31.8/31.5 at end · 229 s, load at start 31.3/31.6/31.5
+bat f5ppp chromium E-6: E-6 chromium exit 1 · E-6 chromium FAIL · 4 pass, 2 fail, 8 unmeasured of 14 gating cells (0 reported) · load 33.4/31.9/31.5 at start, 43.5/34.1/32.3 at end · 14 s, load at start 33.4/31.9/31.5
+bat f5ppp chromium E-7: E-7 chromium exit 1 · E-7 chromium FAIL · 6 pass, 1 fail, 0 unmeasured of 7 gating cells (0 reported) · load 36.3/38.3/34.8 at start, 34.7/37.9/34.7 at end · 5 s, load at start 36.3/38.3/34.8
+bat f5ppp chromium E-8: E-8 chromium exit 0 · E-8 chromium PASS · 19 pass, 0 fail, 0 unmeasured of 19 gating cells (0 reported) · load 35.3/38.0/34.8 at start, 39.8/38.6/35.1 at end · 41 s, load at start 35.3/38.0/34.8
+bat f5ppp chromium E-9: E-9 chromium exit 1 · E-9 chromium FAIL · 50 pass, 32 fail, 0 unmeasured of 82 gating cells (4 reported) · load 35.6/39.1/36.3 at start, 36.0/38.4/36.3 at end · 97 s, load at start 35.6/39.1/36.3
+bat f5ppp chromium E-10: E-10 chromium exit 1 · E-10 chromium FAIL · 19 pass, 3 fail, 17 unmeasured of 39 gating cells (10 reported) · load 33.9/37.9/36.1 at start, 35.5/36.9/35.9 at end · 95 s, load at start 33.9/37.9/36.1
+bat f5ppp chromium E-11: E-11 chromium exit 1 · E-11 chromium FAIL · 1 pass, 2 fail, 3 unmeasured of 6 gating cells (1 reported) · load 35.6/36.8/35.9 at start, 29.5/34.6/35.3 at end · 326 s, load at start 35.6/36.8/35.9
+bat f5ppp chromium E-12: E-12 chromium exit 1 · E-12 chromium FAIL · 80 pass, 52 fail, 0 unmeasured of 132 gating cells (3 reported) · load 32.0/35.0/35.5 at start, 21.5/30.3/33.5 at end · 124 s, load at start 32.0/35.0/35.5
+bat f5pp chromium E-1: E-1 chromium exit 1 · E-1 chromium FAIL · 32 pass, 62 fail, 2 unmeasured of 96 gating cells (0 reported) · load 21.0/30.0/33.4 at start, 20.3/28.8/32.8 at end · 38 s, load at start 21.0/30.0/33.4
+bat f5pp chromium E-4: E-4 chromium exit 0 · E-4 chromium PASS · 14 pass, 0 fail, 4 unmeasured of 18 gating cells (1 reported) · load 19.5/28.5/32.7 at start, 24.6/27.5/31.9 at end · 89 s, load at start 19.5/28.5/32.7
+# run-f5ppp done 2026-10-27 14:44:08
+# webkit queued 2026-10-27 14:44:08 load { 23.42 27.21 31.73 }
+[guarded] waiting for the 'webkit' lock
+admitted 2026-10-27 14:51:52 load { 17.08 20.81 26.50 }
+probe f5pp12 webkit:   PASS       F-13 default distribution px · min 8.25 median 11.93 max 12.22 · under 4 px: 0 · load 16.4/19.8/25.7;  PASS       F-13 preframe distribution px · min 7.26 median 7.74 max 8.31 · under 4 px: 0 · load 25.3/21.3/25.8;  FAIL       F-13 carry0 distribution px · min 0.03 median 0.04 max 1.17 · under 4 px: 8 · load 22.9/21.3/25.6;
+stage probe:f5pp12 done 2026-10-27 14:54:54 load { 22.87 21.34 25.55 }
+probe f5ppp webkit:   PASS       F-13 default distribution px · min 14.35 median 15.27 max 15.29 · under 4 px: 0 · load 22.9/21.7/25.4;  PASS       F-13 preframe distribution px · min 13.65 median 14.50 max 14.72 · under 4 px: 0 · load 30.0/23.2/25.6;  FAIL       F-13 carry0 distribution px · min 0.06 median 0.09 max 0.10 · under 4 px: 8 · load 27.8/23.6/25.6;
+stage probe:f5ppp done 2026-10-27 14:57:55 load { 27.77 23.60 25.63 }
+bat f5ppp webkit E-1: E-1 webkit   exit 1 · E-1 webkit FAIL · 31 pass, 65 fail, 0 unmeasured of 96 gating cells (0 reported) · load 27.0/23.5/25.6 at start, 23.0/23.1/25.3 at end · 49 s, load at start 27.0/23.5/25.6
+bat f5ppp webkit E-2: E-2 webkit   exit 1 · E-2 webkit FAIL · 72 pass, 92 fail, 0 unmeasured of 164 gating cells (16 reported) · load 23.0/23.1/25.3 at start, 19.7/19.4/22.6 at end · 354 s, load at start 23.0/23.1/25.3
+bat f5ppp webkit E-3: E-3 webkit   exit 1 · E-3 webkit FAIL · 16 pass, 6 fail, 0 unmeasured of 22 gating cells (0 reported) · load 19.7/19.4/22.6 at start, 23.2/20.3/22.8 at end · 31 s, load at start 19.7/19.4/22.6
+bat f5ppp webkit E-4: E-4 webkit   exit 0 · E-4 webkit PASS · 15 pass, 0 fail, 4 unmeasured of 19 gating cells (0 reported) · load 23.2/20.3/22.8 at start, 29.6/24.5/24.2 at end · 108 s, load at start 23.2/20.3/22.8
+bat f5ppp webkit E-5: E-5 webkit   exit 1 · E-5 webkit FAIL · 28 pass, 28 fail, 0 unmeasured of 56 gating cells (0 reported) · load 29.6/24.5/24.2 at start, 20.7/21.2/22.7 at end · 338 s, load at start 29.6/24.5/24.2
+bat f5ppp webkit E-6: E-6 webkit   exit 1 · E-6 webkit FAIL · 2 pass, 2 fail, 8 unmeasured of 12 gating cells (2 reported) · load 20.7/21.2/22.7 at start, 20.3/21.1/22.7 at end · 6 s, load at start 20.7/21.2/22.7
+bat f5ppp webkit E-7: E-7 webkit   exit 1 · E-7 webkit FAIL · 6 pass, 1 fail, 0 unmeasured of 7 gating cells (0 reported) · load 20.3/21.1/22.7 at start, 24.9/22.0/23.0 at end · 6 s, load at start 20.3/21.1/22.7
+bat f5ppp webkit E-8: E-8 webkit   exit 0 · E-8 webkit PASS · 19 pass, 0 fail, 0 unmeasured of 19 gating cells (0 reported) · load 24.9/22.0/23.0 at start, 22.1/21.9/22.9 at end · 44 s, load at start 24.9/22.0/23.0
+bat f5ppp webkit E-9: E-9 webkit   exit 1 · E-9 webkit FAIL · 50 pass, 32 fail, 0 unmeasured of 82 gating cells (4 reported) · load 22.1/21.9/22.9 at start, 17.9/20.9/22.4 at end · 108 s, load at start 22.1/21.9/22.9
+bat f5ppp webkit E-10: E-10 webkit   exit 1 · E-10 webkit FAIL · 19 pass, 3 fail, 17 unmeasured of 39 gating cells (10 reported) · load 17.9/20.9/22.4 at start, 19.1/21.2/22.4 at end · 103 s, load at start 17.9/20.9/22.4
+bat f5ppp webkit E-11: E-11 webkit   exit 1 · E-11 webkit FAIL · 1 pass, 2 fail, 3 unmeasured of 6 gating cells (1 reported) · load 19.1/21.2/22.4 at start, 22.7/21.3/21.9 at end · 334 s, load at start 19.1/21.2/22.4
+bat f5ppp webkit E-12: E-12 webkit   exit 1 · E-12 webkit FAIL · 79 pass, 52 fail, 1 unmeasured of 132 gating cells (3 reported) · load 22.7/21.3/21.9 at start, 21.4/21.8/22.1 at end · 140 s, load at start 22.7/21.3/21.9
+stage bat:f5ppp done 2026-10-27 15:24:59 load { 21.41 21.84 22.09 }
+bat f5pp webkit E-1: E-1 webkit   exit 1 · E-1 webkit FAIL · 32 pass, 64 fail, 0 unmeasured of 96 gating cells (0 reported) · load 21.4/21.8/22.1 at start, 20.3/21.4/21.9 at end · 49 s, load at start 21.4/21.8/22.1
+bat f5pp webkit E-4: E-4 webkit   exit 0 · E-4 webkit PASS · 11 pass, 0 fail, 8 unmeasured of 19 gating cells (0 reported) · load 20.3/21.4/21.9 at start, 25.2/22.5/22.3 at end · 90 s, load at start 20.3/21.4/21.9
+stage bat:f5pp:E-1,E-4 done 2026-10-27 15:27:19 load { 25.15 22.54 22.28 }
+released 2026-10-27 15:27:19 load { 25.15 22.54 22.28 }
+# run-f5ppp done 2026-10-27 15:27:19
+# webkit guarded exit 0 2026-10-27 15:27:24 load { 23.94 22.33 22.21 }

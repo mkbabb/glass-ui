@@ -1,0 +1,55 @@
+{
+ "id": "E-11",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p6/F5ppp/out/builds/f5ppp"
+ },
+ "loadStart": "35.6/36.8/35.9",
+ "loadEnd": "29.5/34.6/35.3",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-11 switch fail-loud --scale-commit-pop=1 (commit)",
+   "status": "UNMEASURED",
+   "line": "no degradation, no error: the token is not read on this path · --scale-commit-pop: \"1\" on the root · clean {\"peak\":0,\"rise\":0} {\"peak\":0,\"rise\":0} · planted {\"peak\":0,\"rise\":0} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 0",
+   "load": "34.7/36.6/35.8"
+  },
+  {
+   "name": "E-11 slider fail-loud --space-section (kbd)",
+   "status": "UNMEASURED",
+   "line": "no degradation, no error: the token is not read on this path · --space-section: \"nonsense\" on the root · clean {\"s\":1,\"veil\":0,\"n\":1} {\"s\":1,\"veil\":0,\"n\":1} · planted {\"s\":1,\"veil\":0,\"n\":1} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 0",
+   "load": "34.7/36.6/35.8"
+  },
+  {
+   "name": "E-11 slider fail-loud --scale-engage (kbd)",
+   "status": "UNMEASURED",
+   "line": "no degradation, no error: the token is not read on this path · --scale-engage: \"nonsense\" on the root · clean {\"s\":1,\"veil\":0,\"n\":1} {\"s\":1,\"veil\":0,\"n\":1} · planted {\"s\":1,\"veil\":0,\"n\":1} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 0",
+   "load": "36.5/36.9/36.0"
+  },
+  {
+   "name": "E-11 slider fail-loud --spring-dock-settle (fling)",
+   "status": "PASS",
+   "line": "fails loud · --spring-dock-settle: \"nonsense\" on the root · clean {\"x\":291.38458251953125} {\"x\":292.95794677734375} · planted {\"x\":279.16082763671875} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 1: [glass-ui] useEngage: --spring-dock-settle is unreadable on the host; the engagement it drives paints nothing. Is the gl",
+   "load": "35.7/36.8/35.9"
+  },
+  {
+   "name": "E-11 clock census",
+   "status": "REPORT",
+   "line": "2 --engage-* clock(s) read by a transition or animation declaration in the loaded stylesheets: --engage-control-engage-attack (10 rule(s), e.g. transition: --card-fill var(--engage-control-engage-attack) var(--ease-standard), box-shadow) · --engage-control-engage-release (12 rule(s), e.g. transition: box-shadow var(--engage-control-engage-release) var(--ease-standard), border-col)",
+   "load": "29.6/35.2/35.5"
+  },
+  {
+   "name": "E-11 clock --engage-control-engage-attack (enumerated)",
+   "status": "FAIL",
+   "line": "--engage-control-engage-attack: nonsense on <html> before the first script · SILENT DEGRADATION: a consumer's timing changed in the act with no error naming the clock · gallery: 18 consumer read(s), 18 reading the clock unreadable, 9 with its timing changed in the act (rest | .interactive-item:hover #0: background-color, color, border-color, box-shadow, translate, scale / 0.06s, 0.06s, 0.06s, 0.06s, 0.21s, 0.12s / 0s, 0s, 0s, 0s, 0s, 0s / none / 0s → all / 0s / 0s / none / 0s), console errors naming the clock 0 of 0, on the clean page 0",
+   "load": "37.7/36.4/35.9"
+  },
+  {
+   "name": "E-11 clock --engage-control-engage-release (enumerated)",
+   "status": "FAIL",
+   "line": "--engage-control-engage-release: nonsense on <html> before the first script · SILENT DEGRADATION: a consumer's timing changed in the act with no error naming the clock · gallery: 45 consumer read(s), 45 reading the clock unreadable, 39 with its timing changed in the act (rest | .card #0: box-shadow, border-color / 0.18s, 0.18s / 0s, 0s / none / 0s → all / 0s / 0s / none / 0s), console errors naming the clock 0 of 0, on the clean page 0",
+   "load": "29.5/34.6/35.3"
+  }
+ ]
+}

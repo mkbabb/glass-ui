@@ -1,0 +1,49 @@
+commit 70d502aceaf570096a8367806b5d62bcefb617c4
+Author: Mike Babb <mike7400@gmail.com>
+Date:   Mon Oct 19 15:07:38 2026 -0400
+
+    fix(sheet): SheetContent renders fixed, not in document flow (atlas G-1)
+    
+    .glass-floating authors position: relative at 0,1,0; the sheet's position: fixed sat
+    in a :where() rule at 0,0,0 in the same layer and always lost. The content now carries
+    the fixed utility, as DialogContent does, and the :where() rule declares no position.
+    
+    Witness: tests/components/sheet/sheet-position.test.ts (red on 10.1.0).
+
+diff --git a/src/components/sheet/SheetContent.vue b/src/components/sheet/SheetContent.vue
+index 6dc6aa801..f0eaa65c7 100644
+--- a/src/components/sheet/SheetContent.vue
++++ b/src/components/sheet/SheetContent.vue
+@@ -102,8 +102,14 @@ const SIDE_BORDER: Record<SidePlacement, string> = {
+     right: "border-l",
+ };
+ 
++// POSITION IS IDENTITY, stated as a utility the way `DialogContent` states it. The
++// material classes author `position: relative` for their own rims (material.css,
++// ladder.css) at 0,1,0 in `@layer components`, and the sheet's `position: fixed` sat
++// in a `:where()` rule at 0,0,0 in the same layer, so every sheet rendered in document
++// flow, below the fold (atlas G-1). The `fixed` utility rides `@layer utilities`, which
++// outranks every material rule by layer, not by a specificity race.
+ const contentClass = computed(() =>
+-    cn(SIDE_BORDER[props.side], surfaceClass("floating"), props.class),
++    cn("fixed", SIDE_BORDER[props.side], surfaceClass("floating"), props.class),
+ );
+ 
+ const dialogRoot = injectDialogRootContext();
+diff --git a/src/components/sheet/styles.css b/src/components/sheet/styles.css
+index 45a4cb726..dea388b00 100644
+--- a/src/components/sheet/styles.css
++++ b/src/components/sheet/styles.css
+@@ -26,8 +26,11 @@
+  * name — no logical-vs-physical cascade ambiguity.
+  */
+ @layer components {
++    /* `position: fixed` is NOT here. A `:where()` rule at 0,0,0 always lost to the
++       material class on the same element (`.glass-floating { position: relative }`,
++       0,1,0, same layer), so the sheet rendered in flow. The position rides the
++       `fixed` utility on the content's class list (SheetContent.vue), one path. */
+     :where([data-slot="sheet-content"]) {
+-        position: fixed;
+         z-index: var(--z-modal);
+     }
+ }
