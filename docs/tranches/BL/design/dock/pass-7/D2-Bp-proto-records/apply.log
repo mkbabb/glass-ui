@@ -1,0 +1,8 @@
+seat worktree HEAD c085f3b0b75a1a85456d0cbf180a83d6ecce796e
+cba6bdc249bedaf59bae78ac75e76bc1e2b917ce4040aeb726053ddab77667fe  /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/dock/pass-6/floor-v5.patch
+460452f3f91a319552c239c9023b28a89396e4579b76e0175e921bb9d66931c6  /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/dock/pass-6/D2-Bp-proto.patch
+637d1625d7b39b5d4f496fffc8a6a039e162f39facd07e0e57b812f7ec23d9b1  /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/dock/pass-4/floor-v3.patch
+062544baa192a8bdf0f128a7052fbb8a3253775e6839b0d25fd4ffc397c0e9ec  /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p7/Bp-proto/out/D2-Bp-proto.patch
+wt = HEAD + floor-v5.patch + pass-6/D2-Bp-proto.patch, then the pass-7 change (useDockScene.ts, useDockBody.ts)
+check: archive of HEAD (chk/) + floor-v5.patch: git apply --check pass-7 patch: CLEAN; applied, diff -rq vs wt over src demo tests docs/design: empty
+numstat on HEAD + floor v5: 61 files +2454 / -2406
