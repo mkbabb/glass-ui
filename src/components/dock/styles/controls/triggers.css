@@ -75,17 +75,13 @@
     /* Hover lifts the FILL only; the hover-SCALE is RETIRED across
        the whole trigger family so portaled content anchors smoothly (the SelectTrigger's
        documented no-scale reason, generalized — clean break, no alias). */
-    .dock-trigger:hover:not(:disabled),
-    .dock-select-trigger:hover:not(:disabled),
-    .dock-dropdown-trigger:hover:not(:disabled) {
+    .dock-trigger:hover:not([aria-disabled="true"]) {
         background: var(--dock-control-hover-bg);
         color: var(--btn-hover-color, var(--foreground));
     }
 
     /* The iOS press darken-plus-shrink (see the icon-button). */
-    .dock-trigger:active:not(:disabled),
-    .dock-select-trigger:active:not(:disabled),
-    .dock-dropdown-trigger:active:not(:disabled) {
+    .dock-trigger:active:not([aria-disabled="true"]) {
         background: var(--dock-control-press-bg);
         scale: var(--scale-press-dock);
     }
