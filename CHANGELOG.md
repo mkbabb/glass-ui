@@ -83,8 +83,8 @@ O-101, O-101a; `docs/tranches/BK/coordination/valuejs-outbound-2026-10-19-dock-s
   it only by the engine's own re-snap. It is GREEN on 10.1.1 and RED on the round-1 cure
   in WebKit 2287, whose `max-content` read reset the run from 312 to 72 at 390 and to 0
   at 1440. On 10.1.2 all 22 O-101 and O-101a cells, both scroll cells and the 10.1.1
-  spec are GREEN in Chromium and WebKit 2287 (73 of 73 per engine, the two disabled
-  trigger cells below included).
+  spec are GREEN in Chromium and WebKit 2287 (77 of 77 per engine, the two disabled
+  trigger cells and the four disabled-paint cells below included).
 
 - **The dock run roves only declared seats.** A direct child of the run is a seat when it
   carries `data-glass-dock-seat`. `DockControl` and `DockTrigger` set it, and so does
@@ -101,7 +101,10 @@ O-101, O-101a; `docs/tranches/BK/coordination/valuejs-outbound-2026-10-19-dock-s
   the Tab order, and one mid-run stopped the arrow keys at it. 10.1.1 skipped a
   native-disabled trigger through the focusability inference this release deletes. On
   10.1.2 a disabled trigger is a present-but-disabled stop, reachable by Tab and arrows
-  and announced as disabled, like a disabled `DockControl`.
+  and announced as disabled, like a disabled `DockControl`. It paints disabled as one
+  too: the dock's disabled paint and the trigger hover and press rules key on
+  `.dock-trigger[aria-disabled="true"]`, so it reads `opacity: var(--opacity-disabled)`
+  and `cursor: not-allowed`, and a hover or press leaves its fill and scale at rest.
 - **`role="toolbar"` only over an all-declared run.** The run claims `role="toolbar"` and
   `aria-orientation` only while every direct child is a declared seat. Glass's own
   `<DockSeparator>` (class `dock-separator`) does not void the claim, since a toolbar may
@@ -162,7 +165,13 @@ O-101, O-101a; `docs/tranches/BK/coordination/valuejs-outbound-2026-10-19-dock-s
   arrows pass a disabled DockTrigger mid-run" (scene `disabled-mid`: a disabled dropdown
   trigger between two `DockControl`s; `seat-0 -> seat-1 -> seat-2`). Both are RED on
   `53c68dab7` in Chromium and WebKit 2287 at both widths: the walk skipped the dock
-  (`after`, then `BODY`) and the arrows stayed on `seat-0`. Every atlas shape, the year-range input
+  (`after`, then `BODY`) and the arrows stayed on `seat-0`. Four more read the disabled
+  trigger's paint, at 1440 and 390 in light and dark: "a disabled DockTrigger paints
+  disabled and takes no hover or press fill" (scene `disabled-paint`: a disabled select,
+  dropdown and popover trigger, and an enabled trigger whose hover fill shows the pointer
+  reaches the run). All four are RED on `abd829944` in Chromium and WebKit 2287, where the
+  paint keyed on `:disabled`: opacity 1 for 0.5, cursor `pointer`, and the enabled hover
+  and press fills. Every atlas shape, the year-range input
   pair included, is seated directly in the run, the shape 10.1.1 broke. The lattice roving tests and the toolbar test now seat
   declared controls.
 

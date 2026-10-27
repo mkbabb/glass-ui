@@ -32,7 +32,9 @@ Two behaviour changes, no type change. **A custom dock seat must now carry
   attribute: `<button data-glass-dock-seat aria-disabled="true">`. A native-disabled seat
   that holds the run's stop takes every seat out of the Tab order. A disabled
   `DockTrigger` now renders `aria-disabled`, like `DockControl`, so it stays in the Tab
-  and arrow order as a disabled stop where 10.1.1 skipped it.
+  and arrow order as a disabled stop where 10.1.1 skipped it, and paints disabled from
+  `.dock-trigger[aria-disabled="true"]`. A rule of yours that dims or suppresses a dock
+  trigger on `:disabled` keys on `[aria-disabled="true"]` instead.
 - An undeclared child is left alone. It keeps its natural tab stop and its own keys, so a
   filter trigger, a settings button, a handle, an input pair, a dark toggle or a composite
   stays in the Tab order. A consumer that pulled such a control out of its dock run, or

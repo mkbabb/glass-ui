@@ -285,6 +285,31 @@ const scenes: Record<string, Component> = {
         ]),
     ),
 
+    // critique-b4 D-1. A disabled DockTrigger of each arm (select, dropdown, popover),
+    // each by its own `disabled`, then an enabled popover trigger whose hover fill shows
+    // the pointer reaches the run.
+    "disabled-paint": defineComponent(() => () =>
+        page(() => [
+            h(DockControl, { "aria-label": "Play", "data-witness": "seat-0" }, () => "A"),
+            h(Select, { modelValue: "s" }, () => [
+                h(DockTrigger, { for: "select", disabled: true, "aria-label": "Unit", "data-witness": "select" }, () => "s"),
+                h(SelectContent, () => h(SelectItem, { value: "s" }, () => "s")),
+            ]),
+            h(DropdownMenu, () => [
+                h(DockTrigger, { for: "dropdown", disabled: true, "aria-label": "Menu", "data-witness": "dropdown" }, () => "M"),
+                h(DropdownMenuContent, () => h(DropdownMenuItem, () => "item")),
+            ]),
+            h(Popover, () => [
+                h(DockTrigger, { for: "popover", disabled: true, "aria-label": "Time", "data-witness": "popover" }, () => "T"),
+                h(PopoverContent, { side: "top", "aria-label": "Time" }, () => "0.42 s"),
+            ]),
+            h(Popover, () => [
+                h(DockTrigger, { for: "popover", "aria-label": "Live", "data-witness": "live" }, () => "L"),
+                h(PopoverContent, { side: "top", "aria-label": "Live" }, () => "live"),
+            ]),
+        ]),
+    ),
+
     // RadioGroup and ToggleGroup seated directly, between two declared seats.
     composites: defineComponent(() => {
         const radio = ref("x");

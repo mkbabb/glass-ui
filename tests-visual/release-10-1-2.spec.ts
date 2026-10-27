@@ -229,6 +229,80 @@ for (const [label, viewport] of [
     });
 }
 
+// critique-b4 D-1 · a disabled DockTrigger paints disabled. Scene `disabled-paint`: a
+// select, dropdown and popover DockTrigger, each disabled, then an enabled popover
+// trigger. Each disabled arm computes `opacity` equal to `--opacity-disabled` and
+// `cursor: not-allowed`, and a hover and a press over it leave its fill and scale at
+// rest. The enabled trigger takes the hover fill, so the pointer is known to reach the
+// run. These cells read computed style, the one place in this spec that reads paint, in
+// both schemes. RED on abd829944 (the trigger paint keyed on `:disabled`, which 2b4efe77e
+// had moved to `aria-disabled`: opacity 1, cursor pointer, the enabled hover fill).
+type Paint = { opacity: string; token: string; cursor: string; background: string; scale: string };
+
+async function paintOf(page: Page, name: string): Promise<Paint> {
+    return page.locator(`[data-witness="${name}"]`).evaluate(async (el) => {
+        await Promise.all(el.getAnimations().map((a) => a.finished.catch(() => undefined)));
+        const cs = getComputedStyle(el);
+        return {
+            opacity: cs.opacity,
+            token: cs.getPropertyValue("--opacity-disabled").trim(),
+            cursor: cs.cursor,
+            background: cs.backgroundColor,
+            scale: cs.scale,
+        };
+    });
+}
+
+for (const [label, viewport] of [
+    ["1440", { width: 1440, height: 900 }],
+    ["390", { width: 390, height: 844 }],
+] as const) {
+    for (const scheme of ["light", "dark"] as const) {
+        test.describe(`10.1.2 · ${label} · ${scheme}`, () => {
+            test.use({ viewport, colorScheme: scheme });
+
+            test("D-1 · a disabled DockTrigger paints disabled and takes no hover or press fill", async ({
+                page,
+            }) => {
+                await open(page, "disabled-paint");
+                expect(
+                    await page.evaluate(() => document.documentElement.classList.contains("dark")),
+                    "the scheme reached the page",
+                ).toBe(scheme === "dark");
+
+                const live = page.locator('[data-witness="live"]');
+                const liveRest = await paintOf(page, "live");
+                await live.hover();
+                expect((await paintOf(page, "live")).background, "the enabled trigger's hover fill").not.toBe(
+                    liveRest.background,
+                );
+
+                for (const arm of ["select", "dropdown", "popover"]) {
+                    const seat = page.locator(`[data-witness="${arm}"]`);
+                    await page.mouse.move(0, 0);
+                    const rest = await paintOf(page, arm);
+                    expect(await seat.getAttribute("aria-disabled"), arm).toBe("true");
+                    expect(Number(rest.token), `${arm} --opacity-disabled`).toBeLessThan(1);
+                    expect(Number(rest.opacity), `${arm} opacity`).toBeCloseTo(Number(rest.token), 3);
+                    expect(rest.cursor, `${arm} cursor`).toBe("not-allowed");
+
+                    await seat.hover();
+                    const hovered = await paintOf(page, arm);
+                    expect(hovered.background, `${arm} hover fill`).toBe(rest.background);
+                    expect(hovered.opacity, `${arm} hover opacity`).toBe(rest.opacity);
+
+                    await page.mouse.down();
+                    const pressed = await paintOf(page, arm);
+                    await page.mouse.up();
+                    expect(pressed.background, `${arm} press fill`).toBe(rest.background);
+                    expect(pressed.scale, `${arm} press scale`).toBe(rest.scale);
+                    await page.keyboard.press("Escape");
+                }
+            });
+        });
+    }
+}
+
 // O-101 · DOCK-STALE-EXPANDED-ENDPOINT (value.js letter 2026-10-19; INBOUND O-101,
 // O-101a). The scene's full pane is a breakpoint's (12 seats at >= 768px, 3 below), so a
 // resize across 768px changes it. Every frame is sampled from just before the change.
