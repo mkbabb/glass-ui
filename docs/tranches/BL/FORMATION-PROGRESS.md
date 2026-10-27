@@ -618,3 +618,4 @@ Outage log:
 - 2026-10-27 10.1.2b: critic-b4 banked — 1 medium defect D-1 (disabled DockTrigger paints enabled since 2b4efe77e); release-close stopped mid-run (its uncommitted CSS draft reviewed and committed as the cure on release/10.1.2); driver adds witness-b4 (paint witness RED→GREEN both engines) before release-close; resuming wf_5f34f05d-64a.
 - 2026-10-27 INBOUND O-108 (value-js-c2 perf sub-rows V3-s, V5-h, keyframes warm-swap reads, dock.js per-swap re-measure) rowed and placed in W-G.3, W-G.6, W-0.8.
 - 2026-10-27 INBOUND O-109 (value-js-c2 plate text floor over mid-tone aurora: dock band + 390 resting plate) rowed; placed W-0.1 (plate rung) + W-0.8 (dock band).
+- 2026-10-27 10.1.2b: witness-b4 banked — D-1 cure cf634d203 reviewed and holds; paint witness f0fc080e6 RED on abd829944, GREEN at tip, Chromium + WebKit 2287, 77/77 per engine; 0 defects; release-close running (rebind, cut date, dist-demo rebuild before vitest).
