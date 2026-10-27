@@ -1,0 +1,28 @@
+2026-10-27 17:13:28 · load { 35.07 26.68 24.65 }
+admitted · 2026-10-27 17:13:28 · load { 35.07 26.68 24.65 }
+CRIT9-C1-DIAG · crit9-c1's c1long reading split: the weight re-wrap (scroll-free) against the scroll double count (pass-9 CRITIC diagnostic, info only)
+  target a9-src (flavor src) · Chromium 149.0.7827.55 · harness H8 4159e027cdcf
+  load 35.07 / 26.68 / 24.65 at start, 29.36 / 26.17 / 24.55 at end · other headless browser processes at start: 7 (waited 0.3 s) · browser lock waited 0 s
+  info-fail  c1long-migrated 390×844 light · rewrap · none: no option's label line count or height changes when it is selected
+  info-fail  c1long-migrated 390×844 light · reflow (offset chain to the group, scroll-free; model writes, no pointer) · max 0.00 px
+  info-pass  c1long-migrated 390×844 light · scroll-2x · after a pointer click on the last option: scrollY 413, <html>.scrollTop 413 (scrollingElement HTML); group y doc 64.00 vs crit9-c1's sum 477.00 (extra 413.00); group x doc 29.00 vs sum 29.00; rest group y doc 64.00
+  info-pass  c1long-migrated 390×844 light · rewrap-click · OBSERVED in 1: opt 11 «Awaiting a reply from the» 1→2 lines, h 56→77 (weight 500→600) · weight of each option when it is selected, rest→selected/state: by click 0:500→600/on 1:500→600/on 2:500→600/on 3:500→600/on 4:500→600/on 5:500→600/on 6:500→600/on 7:500→600/on 8:500→600/on 9:500→600/on 10:500→600/on 11:500→600/on 12:500→600/on 13:500→600/on 14:500→600/on 15:500→600/on 16:500→600/on · by model write 0:500→500/off 1:500→500/off 2:500→500/off 3:500→500/off 4:500→500/off 5:500→500/off 6:500→500/off 7:500→500/off 8:500→500/off 9:500→500/off 10:500→500/off 11:500→500/off 12:500→500/off 13:500→500/off 14:500→500/off 15:500→500/off 16:500→500/off
+  info-pass  c1long-migrated 390×844 light · reflow-click (scroll-free) · max 21.00 px (opt 11 (32,727 184×56 → 32,727 184×77), opt 11 clicked)
+  info-fail  c1long-migrated 1440×900 light · rewrap · none: no option's label line count or height changes when it is selected
+  info-fail  c1long-migrated 1440×900 light · reflow (offset chain to the group, scroll-free; model writes, no pointer) · max 0.00 px
+  info-pass  c1long-migrated 1440×900 light · scroll-2x · after a pointer click on the last option: scrollY 821, <html>.scrollTop 821 (scrollingElement HTML); group y doc 64.00 vs crit9-c1's sum 885.00 (extra 821.00); group x doc 29.00 vs sum 29.00; rest group y doc 64.00
+  info-fail  c1long-migrated 1440×900 light · rewrap-click · none · weight of each option when it is selected, rest→selected/state: by click 0:500→600/on 1:500→600/on 2:500→600/on 3:500→600/on 4:500→600/on 5:500→600/on 6:500→600/on 7:500→600/on 8:500→600/on 9:500→600/on 10:500→600/on 11:500→600/on 12:500→600/on 13:500→600/on 14:500→600/on 15:500→600/on 16:500→600/on · by model write 0:500→500/off 1:500→500/off 2:500→500/off 3:500→500/off 4:500→500/off 5:500→500/off 6:500→500/off 7:500→500/off 8:500→500/off 9:500→500/off 10:500→500/off 11:500→500/off 12:500→500/off 13:500→500/off 14:500→500/off 15:500→500/off 16:500→500/off
+  info-fail  c1long-migrated 1440×900 light · reflow-click (scroll-free) · max 0.00 px
+  info-fail  c1-migrated 390×844 light · rewrap · none: no option's label line count or height changes when it is selected
+  info-fail  c1-migrated 390×844 light · reflow (offset chain to the group, scroll-free; model writes, no pointer) · max 0.00 px
+  info-fail  c1-migrated 390×844 light · scroll-2x · after a pointer click on the last option: scrollY 0, <html>.scrollTop 0 (scrollingElement HTML); group y doc 68.00 vs crit9-c1's sum 68.00 (extra 0.00); group x doc 33.00 vs sum 33.00; rest group y doc 68.00
+  info-fail  c1-migrated 390×844 light · rewrap-click · none · weight of each option when it is selected, rest→selected/state: by click 0:500→600/on 1:500→600/on 2:500→600/on 3:500→600/on 4:500→600/on · by model write 0:500→600/on 1:500→600/on 2:500→600/on 3:500→600/on 4:500→600/on
+  info-fail  c1-migrated 390×844 light · reflow-click (scroll-free) · max 0.00 px
+  info-fail  preset-migrated 390×844 light · rewrap · none: no option's label line count or height changes when it is selected
+  info-fail  preset-migrated 390×844 light · reflow (offset chain to the group, scroll-free; model writes, no pointer) · max 0.00 px
+  info-fail  preset-migrated 390×844 light · scroll-2x · after a pointer click on the last option: scrollY 0, <html>.scrollTop 0 (scrollingElement HTML); group y doc 73.00 vs crit9-c1's sum 73.00 (extra 0.00); group x doc 42.00 vs sum 114.00; rest group y doc 73.00
+  info-fail  preset-migrated 390×844 light · rewrap-click · none · weight of each option when it is selected, rest→selected/state: by click 0:500→600/on 1:500→600/on 2:500→600/on 3:500→600/on · by model write 0:500→600/on 1:500→600/on 2:500→600/on 3:500→600/on
+  info-fail  preset-migrated 390×844 light · reflow-click (scroll-free) · max 0.00 px
+CRIT9-C1-DIAG FAIL · 0/0 gating cells pass
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p9/crit9/out/runs/a9-src/CRIT9-C1-DIAG-chromium.json
+exit 1 · 2026-10-27 17:14:14 · load { 29.49 26.25 24.58 }

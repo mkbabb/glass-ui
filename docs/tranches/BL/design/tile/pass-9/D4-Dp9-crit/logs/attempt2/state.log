@@ -1,0 +1,53 @@
+2026-10-21 14:03:44 · load { 27.63 11.88 6.84 }
+HEAD d67ce520e · floor-v6.patch 09e74243 · D4-Dp8.patch b5f4ae22
+floor v6: 39 files, +1452 / -272
+D4-Dp8: 8 files, +461 / -52
+git diff HEAD 5d08df87ebbe · src dirty paths 27
+── harness
+{"hash":"4159e027cdcf","files":43,"rev":"H8"}
+── every --selection-tile / --selection-paint line in src (comments included)
+src/styles/utilities/base.css:51:   THE TILE FACT — `--selection-tile`, one value read by every rule that differs
+src/styles/utilities/base.css:65:@property --selection-tile {
+src/styles/utilities/base.css:89:       second row (ToggleGroupItem.vue). A tile (`--selection-tile` other than
+src/styles/utilities/base.css:91:    @container style(--selection-tile: none) {
+src/styles/glass/control-surfaces.css:95:       (`--selection-tile: flush`, utilities/base.css) paints no plate, no floor and no
+src/styles/glass/control-surfaces.css:103:    @container style(--selection-tile: flush) {
+src/components/toggle-group/ToggleGroupItem.vue:148:        const tile = getComputedStyle(b).getPropertyValue("--selection-tile").trim();
+src/components/toggle-group/shape.ts:4: * tile fact (`--selection-tile: flush`, styles.css), and the floor derives the tile's
+src/components/toggle-group/styles.css:1:/* THE SELECTION PAINT — `--selection-paint` (`auto` | `bare`, inherited), the tile
+src/components/toggle-group/styles.css:10:@property --selection-paint {
+src/components/toggle-group/styles.css:54:        --selection-tile: none;
+src/components/toggle-group/styles.css:56:        --selection-paint: auto;
+src/components/toggle-group/styles.css:75:        --selection-tile: flush;
+src/components/toggle-group/styles.css:79:       reads `--selection-tile` by a style query on the option, which reads the
+src/components/toggle-group/styles.css:90:            --selection-tile: inherit !important;
+src/components/toggle-group/styles.css:91:            --selection-paint: inherit !important;
+src/components/toggle-group/styles.css:156:    @container not style(--selection-paint: bare) {
+src/components/toggle-group/styles.css:166:    /* THE PILL IS ONE ROW (`--selection-tile: none`, base.css). A stadium whose
+src/components/toggle-group/styles.css:178:       A tile is none of these: the route that sets `--selection-tile` owns its
+src/components/toggle-group/styles.css:180:    @container style(--selection-tile: none) {
+src/components/toggle-group/styles.css:227:    /* THE TILE (`--selection-tile` other than `none`, base.css). Whatever writes the
+src/components/toggle-group/styles.css:245:    @container not style(--selection-tile: none) {
+src/components/toggle-group/styles.css:367:    @container not style(--selection-paint: bare) {
+src/components/tabs/styles/segmented.css:64:        --selection-tile: none;
+── L-3 alias census: any other name, attribute or prop for the paint fact in src (want none)
+src/components/music-staff/README.md:62:the rung's own. `material="bare"` drops the rung. The ink follows the host's
+src/components/music-staff/MusicStaff.vue:23:export type MusicStaffMaterial = "folio" | "bare";
+src/components/easing/EasingPicker.vue:58:export type EasingSurface = "card" | "bare";
+src/components/easing/README.md:13:<EasingPicker v-model="curve" surface="bare" :playback="false" />
+── ToggleGroup props
+src/components/toggle-group/ToggleGroup.vue:50:    shape?: ToggleGroupShape;
+src/components/toggle-group/ToggleGroup.vue:59:    shape: "pill",
+── the nesting rule's statements (L-2): 'nested' near pills in src and MIGRATION
+src/components/toggle-group/styles.css:84:       scope stops at a nested group, which resets the fact for its own options, and
+MIGRATION.md:114:  plate, floor or blur at rest. A `ToggleGroup` nested inside a tile is pills again
+MIGRATION.md:462:nested port — later, never a drain. `useInfiniteScroll`'s `scrollContainer` option is
+MIGRATION.md:3369:- Nested `composables/dark` + `composables/keyboard` subpaths RETIRED—flat
+MIGRATION.md:3475:(the v0.9.4 nested form `composables/dark` is RETIRED—see §2).
+MIGRATION.md:3539:v0.9.4 introduced nested `composables/dark` + `composables/keyboard`
+MIGRATION.md:3580:nested form to the flat one.
+MIGRATION.md:4385:  call sites to rewrite—only the nested `composables/{dark,keyboard}`
+MIGRATION.md:4462:# 4. No retired nested subpath imports remain
+── sites.mjs c1 (the transcription of record)
+19://   c1        C1  label / count                      one-row pills, no declaration on either route (Q-10 (b))
+exit 0 · 2026-10-21 14:03:47 · load { 27.34 12.08 6.94 }

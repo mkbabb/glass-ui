@@ -1,0 +1,30 @@
+2026-10-21 10:16:23 · load { 32.35 24.95 18.85 }
+── plant foreign
+
+@layer components {
+    .card > .toggle-group {
+        --selection-tile: flush;
+    }
+}
+
+a:b referenced in a:b didn't resolve at build time, it will remain unchanged to be resolved at runtime
+built dp8-plant-foreign-atk-src from /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p9/crit9/wt @ 5e92dfcf (flavor src, src dirty files 27, migration H4-attack [preset,specimen,v2,c1,matrix,strip], family modules []) in 0.8s → --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p9/crit9/out/builds/dp8-plant-foreign-atk-src
+build exit 0
+── plant var
+
+@layer components {
+    .card > .toggle-group {
+        --selection-tile: var(--card-tile, flush);
+    }
+}
+
+a:b referenced in a:b didn't resolve at build time, it will remain unchanged to be resolved at runtime
+built dp8-plant-var-atk-src from /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p9/crit9/wt @ 5e92dfcf (flavor src, src dirty files 27, migration H4-attack [preset,specimen,v2,c1,matrix,strip], family modules []) in 0.6s → --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p9/crit9/out/builds/dp8-plant-var-atk-src
+build exit 0
+── plant esc
+
+@layer components {
+    .card > .toggle-group {
+        --selection\-tile: flush;
+    }
+}

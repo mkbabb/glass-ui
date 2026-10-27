@@ -1,0 +1,101 @@
+CRIT9-C1 · C1 under O-103c, sub-pixel and inside the option, by real input; C1 with long labels; C1 under L-3 bare (pass-9 CRITIC probe)
+  target a9-src (flavor src) · Chromium 149.0.7827.55 · harness H8 4159e027cdcf
+  load 14.91 / 15.24 / 14.42 at start, 10.52 / 12.57 / 13.45 at end · other headless browser processes at start: 7 (waited 0.2 s) · browser lock waited 0 s
+  PASS       c1-migrated 390×844 light · cell-every-state · 16 states, 5 options · every option 16px, column, in every state · on per state -1,0,1,2,3,4,4,4,4,1,1,2,3,4,0,1
+  FAIL       c1-migrated 390×844 light · box-no-shift (sub-pixel, transforms neutralised) · rest option sizes 184.00×40.00, 184.00×56.00; group 192.00×288.00 · max deviation 5.520 px (opt 1 (184.00×56.00 → 178.48×54.32), press rest 1 (held)) · want ≤ 0.50
+  FAIL       c1-migrated 390×844 light · content-no-shift · 9 children · max deviation 4.980 px (opt 1 child 0 (x 46.00→48.49, w 166.00→161.02, h 21.00→20.37; weight 500→500), press rest 1 (held)) · label line counts unchanged (rest 11111) · want ≤ 0.50, no re-wrap
+  PASS       c1-migrated 390×844 light · resize-observer · size changes after the initial entries: 0 · want 0
+  PASS       c1-migrated 390×844 light · layout-shift · 0 entries, sum 0.00000 · want 0
+  PASS       c1-migrated 390×844 dark · cell-every-state · 16 states, 5 options · every option 16px, column, in every state · on per state -1,0,1,2,3,4,4,4,4,1,1,2,3,4,0,1
+  FAIL       c1-migrated 390×844 dark · box-no-shift (sub-pixel, transforms neutralised) · rest option sizes 184.00×40.00, 184.00×56.00; group 192.00×288.00 · max deviation 5.520 px (opt 1 (184.00×56.00 → 178.48×54.32), press rest 1 (held)) · want ≤ 0.50
+  FAIL       c1-migrated 390×844 dark · content-no-shift · 9 children · max deviation 4.980 px (opt 1 child 0 (x 46.00→48.49, w 166.00→161.02, h 21.00→20.37; weight 500→500), press rest 1 (held)) · label line counts unchanged (rest 11111) · want ≤ 0.50, no re-wrap
+  PASS       c1-migrated 390×844 dark · resize-observer · size changes after the initial entries: 0 · want 0
+  PASS       c1-migrated 390×844 dark · layout-shift · 0 entries, sum 0.00000 · want 0
+  PASS       c1-migrated 390×844 prt · cell-every-state · 16 states, 5 options · every option 16px, column, in every state · on per state -1,0,1,2,3,4,4,4,4,1,1,2,3,4,0,1
+  FAIL       c1-migrated 390×844 prt · box-no-shift (sub-pixel, transforms neutralised) · rest option sizes 184.00×40.00, 184.00×56.00; group 192.00×288.00 · max deviation 5.520 px (opt 1 (184.00×56.00 → 178.48×54.32), press rest 1 (held)) · want ≤ 0.50
+  FAIL       c1-migrated 390×844 prt · content-no-shift · 9 children · max deviation 4.980 px (opt 1 child 0 (x 46.00→48.49, w 166.00→161.02, h 21.00→20.37; weight 500→500), press rest 1 (held)) · label line counts unchanged (rest 11111) · want ≤ 0.50, no re-wrap
+  PASS       c1-migrated 390×844 prt · resize-observer · size changes after the initial entries: 0 · want 0
+  PASS       c1-migrated 390×844 prt · layout-shift · 0 entries, sum 0.00000 · want 0
+  PASS       c1-migrated 1440×900 light · cell-every-state · 16 states, 5 options · every option 16px, column, in every state · on per state -1,0,1,2,3,4,4,4,4,1,1,2,3,4,0,1
+  FAIL       c1-migrated 1440×900 light · box-no-shift (sub-pixel, transforms neutralised) · rest option sizes 184.00×42.61, 184.00×71.22; group 192.00×367.48 · max deviation 5.520 px (opt 1 (184.00×71.22 → 178.48×69.08), press rest 1 (held)) · want ≤ 0.50
+  FAIL       c1-migrated 1440×900 light · content-no-shift · 9 children · max deviation 4.740 px (opt 1 child 0 (x 50.00→52.37, w 158.00→153.26, h 24.61→23.87; weight 500→500), press rest 1 (held)) · label line counts unchanged (rest 11111) · want ≤ 0.50, no re-wrap
+  PASS       c1-migrated 1440×900 light · resize-observer · size changes after the initial entries: 0 · want 0
+  PASS       c1-migrated 1440×900 light · layout-shift · 0 entries, sum 0.00000 · want 0
+  PASS       c1-migrated 1440×900 dark · cell-every-state · 16 states, 5 options · every option 16px, column, in every state · on per state -1,0,1,2,3,4,4,4,4,1,1,2,3,4,0,1
+  FAIL       c1-migrated 1440×900 dark · box-no-shift (sub-pixel, transforms neutralised) · rest option sizes 184.00×42.61, 184.00×71.22; group 192.00×367.48 · max deviation 5.520 px (opt 1 (184.00×71.22 → 178.48×69.08), press rest 1 (held)) · want ≤ 0.50
+  FAIL       c1-migrated 1440×900 dark · content-no-shift · 9 children · max deviation 4.740 px (opt 1 child 0 (x 50.00→52.37, w 158.00→153.26, h 24.61→23.87; weight 500→500), press rest 1 (held)) · label line counts unchanged (rest 11111) · want ≤ 0.50, no re-wrap
+  PASS       c1-migrated 1440×900 dark · resize-observer · size changes after the initial entries: 0 · want 0
+  PASS       c1-migrated 1440×900 dark · layout-shift · 0 entries, sum 0.00000 · want 0
+  PASS       c1-migrated 1440×900 prt · cell-every-state · 16 states, 5 options · every option 16px, column, in every state · on per state -1,0,1,2,3,4,4,4,4,1,1,2,3,4,0,1
+  FAIL       c1-migrated 1440×900 prt · box-no-shift (sub-pixel, transforms neutralised) · rest option sizes 184.00×42.61, 184.00×71.22; group 192.00×367.48 · max deviation 5.520 px (opt 1 (184.00×71.22 → 178.48×69.08), press rest 1 (held)) · want ≤ 0.50
+  FAIL       c1-migrated 1440×900 prt · content-no-shift · 9 children · max deviation 4.740 px (opt 1 child 0 (x 50.00→52.37, w 158.00→153.26, h 24.61→23.87; weight 500→500), press rest 1 (held)) · label line counts unchanged (rest 11111) · want ≤ 0.50, no re-wrap
+  PASS       c1-migrated 1440×900 prt · resize-observer · size changes after the initial entries: 0 · want 0
+  PASS       c1-migrated 1440×900 prt · layout-shift · 0 entries, sum 0.00000 · want 0
+  PASS       c1long-migrated 390×844 light · cell-every-state · 40 states, 17 options · every option 16px, column, in every state · on per state -1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,16,16,16,1,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,0,1
+  FAIL       c1long-migrated 390×844 light · box-no-shift (sub-pixel, transforms neutralised) · rest option sizes 184.00×56.00, 184.00×77.00; group 192.00×1129.00 · max deviation 21.000 px (group, click 11) · want ≤ 0.50
+  FAIL       c1long-migrated 390×844 light · content-no-shift · 34 children · max deviation 21.000 px (opt 11 child 0 (x 42.00→42.00, w 166.00→166.00, h 21.00→42.00; weight 500→600), click 11) · label line counts CHANGE in 2: opt 11 child 0 1→2 lines (click 11); opt 11 child 0 1→2 lines (ArrowDown 10) · want ≤ 0.50, no re-wrap
+  FAIL       c1long-migrated 390×844 light · resize-observer · size changes after the initial entries: 12 · want 0
+  FAIL       c1long-migrated 390×844 light · layout-shift · 4 entries, sum 0.00444 · want 0
+  PASS       c1long-migrated 390×844 dark · cell-every-state · 40 states, 17 options · every option 16px, column, in every state · on per state -1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,16,16,16,1,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,0,1
+  FAIL       c1long-migrated 390×844 dark · box-no-shift (sub-pixel, transforms neutralised) · rest option sizes 184.00×56.00, 184.00×77.00; group 192.00×1129.00 · max deviation 21.000 px (group, click 11) · want ≤ 0.50
+  FAIL       c1long-migrated 390×844 dark · content-no-shift · 34 children · max deviation 21.000 px (opt 11 child 0 (x 42.00→42.00, w 166.00→166.00, h 21.00→42.00; weight 500→600), click 11) · label line counts CHANGE in 2: opt 11 child 0 1→2 lines (click 11); opt 11 child 0 1→2 lines (ArrowDown 10) · want ≤ 0.50, no re-wrap
+  FAIL       c1long-migrated 390×844 dark · resize-observer · size changes after the initial entries: 12 · want 0
+  FAIL       c1long-migrated 390×844 dark · layout-shift · 4 entries, sum 0.00444 · want 0
+  PASS       c1long-migrated 390×844 prt · cell-every-state · 40 states, 17 options · every option 16px, column, in every state · on per state -1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,16,16,16,1,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,0,1
+  FAIL       c1long-migrated 390×844 prt · box-no-shift (sub-pixel, transforms neutralised) · rest option sizes 184.00×56.00, 184.00×77.00; group 192.00×1129.00 · max deviation 21.000 px (group, click 11) · want ≤ 0.50
+  FAIL       c1long-migrated 390×844 prt · content-no-shift · 34 children · max deviation 21.000 px (opt 11 child 0 (x 42.00→42.00, w 166.00→166.00, h 21.00→42.00; weight 500→600), click 11) · label line counts CHANGE in 2: opt 11 child 0 1→2 lines (click 11); opt 11 child 0 1→2 lines (ArrowDown 10) · want ≤ 0.50, no re-wrap
+  FAIL       c1long-migrated 390×844 prt · resize-observer · size changes after the initial entries: 12 · want 0
+  FAIL       c1long-migrated 390×844 prt · layout-shift · 4 entries, sum 0.00444 · want 0
+  PASS       c1long-migrated 1440×900 light · cell-every-state · 40 states, 17 options · every option 16px, column, in every state · on per state -1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,16,16,16,1,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,0,1
+  FAIL       c1long-migrated 1440×900 light · box-no-shift (sub-pixel, transforms neutralised) · rest option sizes 184.00×71.22, 184.00×95.83; group 192.00×1592.81 · max deviation 5.520 px (opt 1 (184.00×71.22 → 178.48×69.08), press rest 1 (held)) · want ≤ 0.50
+  FAIL       c1long-migrated 1440×900 light · content-no-shift · 34 children · max deviation 4.740 px (opt 1 child 0 (x 46.00→48.37, w 158.00→153.26, h 24.61→23.87; weight 500→500), press rest 1 (held)) · label line counts unchanged (rest 11111112222222222) · want ≤ 0.50, no re-wrap
+  PASS       c1long-migrated 1440×900 light · resize-observer · size changes after the initial entries: 0 · want 0
+  PASS       c1long-migrated 1440×900 light · layout-shift · 0 entries, sum 0.00000 · want 0
+  PASS       c1long-migrated 1440×900 dark · cell-every-state · 40 states, 17 options · every option 16px, column, in every state · on per state -1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,16,16,16,1,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,0,1
+  FAIL       c1long-migrated 1440×900 dark · box-no-shift (sub-pixel, transforms neutralised) · rest option sizes 184.00×71.22, 184.00×95.83; group 192.00×1592.81 · max deviation 5.520 px (opt 1 (184.00×71.22 → 178.48×69.08), press rest 1 (held)) · want ≤ 0.50
+  FAIL       c1long-migrated 1440×900 dark · content-no-shift · 34 children · max deviation 4.740 px (opt 1 child 0 (x 46.00→48.37, w 158.00→153.26, h 24.61→23.87; weight 500→500), press rest 1 (held)) · label line counts unchanged (rest 11111112222222222) · want ≤ 0.50, no re-wrap
+  PASS       c1long-migrated 1440×900 dark · resize-observer · size changes after the initial entries: 0 · want 0
+  PASS       c1long-migrated 1440×900 dark · layout-shift · 0 entries, sum 0.00000 · want 0
+  PASS       c1long-migrated 1440×900 prt · cell-every-state · 40 states, 17 options · every option 16px, column, in every state · on per state -1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,16,16,16,1,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,0,1
+  FAIL       c1long-migrated 1440×900 prt · box-no-shift (sub-pixel, transforms neutralised) · rest option sizes 184.00×71.22, 184.00×95.83; group 192.00×1592.81 · max deviation 5.520 px (opt 1 (184.00×71.22 → 178.48×69.08), press rest 1 (held)) · want ≤ 0.50
+  FAIL       c1long-migrated 1440×900 prt · content-no-shift · 34 children · max deviation 4.740 px (opt 1 child 0 (x 46.00→48.37, w 158.00→153.26, h 24.61→23.87; weight 500→500), press rest 1 (held)) · label line counts unchanged (rest 11111112222222222) · want ≤ 0.50, no re-wrap
+  PASS       c1long-migrated 1440×900 prt · resize-observer · size changes after the initial entries: 0 · want 0
+  PASS       c1long-migrated 1440×900 prt · layout-shift · 0 entries, sum 0.00000 · want 0
+  PASS       c1bare-migrated 390×844 light · cell-every-state · 16 states, 5 options · every option 16px, column, in every state · on per state -1,0,1,2,3,4,4,4,4,1,1,2,3,4,0,1
+  FAIL       c1bare-migrated 390×844 light · box-no-shift (sub-pixel, transforms neutralised) · rest option sizes 184.00×40.00, 184.00×56.00; group 192.00×288.00 · max deviation 5.520 px (opt 1 (184.00×56.00 → 178.48×54.32), press rest 1 (held)) · want ≤ 0.50
+  FAIL       c1bare-migrated 390×844 light · content-no-shift · 9 children · max deviation 4.980 px (opt 1 child 0 (x 42.00→44.49, w 166.00→161.02, h 21.00→20.37; weight 500→500), press rest 1 (held)) · label line counts unchanged (rest 11111) · want ≤ 0.50, no re-wrap
+  PASS       c1bare-migrated 390×844 light · resize-observer · size changes after the initial entries: 0 · want 0
+  PASS       c1bare-migrated 390×844 light · layout-shift · 0 entries, sum 0.00000 · want 0
+  PASS       c1bare-migrated 390×844 light · carrier (bare C1: selected opt 1 vs rest opt 2, content hidden) · 881.50 px² ≥3:1 (band 815.75) vs bar 240.00 on 184×56 · fill 1.00:1 · bg selected rgba(0, 0, 0, 0) rest rgba(0, 0, 0, 0)
+  PASS       c1bare-migrated 390×844 dark · cell-every-state · 16 states, 5 options · every option 16px, column, in every state · on per state -1,0,1,2,3,4,4,4,4,1,1,2,3,4,0,1
+  FAIL       c1bare-migrated 390×844 dark · box-no-shift (sub-pixel, transforms neutralised) · rest option sizes 184.00×40.00, 184.00×56.00; group 192.00×288.00 · max deviation 5.520 px (opt 1 (184.00×56.00 → 178.48×54.32), press rest 1 (held)) · want ≤ 0.50
+  FAIL       c1bare-migrated 390×844 dark · content-no-shift · 9 children · max deviation 4.980 px (opt 1 child 0 (x 42.00→44.49, w 166.00→161.02, h 21.00→20.37; weight 500→500), press rest 1 (held)) · label line counts unchanged (rest 11111) · want ≤ 0.50, no re-wrap
+  PASS       c1bare-migrated 390×844 dark · resize-observer · size changes after the initial entries: 0 · want 0
+  PASS       c1bare-migrated 390×844 dark · layout-shift · 0 entries, sum 0.00000 · want 0
+  PASS       c1bare-migrated 390×844 dark · carrier (bare C1: selected opt 1 vs rest opt 2, content hidden) · 891.50 px² ≥3:1 (band 823.00) vs bar 240.00 on 184×56 · fill 1.00:1 · bg selected rgba(0, 0, 0, 0) rest rgba(0, 0, 0, 0)
+  PASS       c1bare-migrated 390×844 prt · cell-every-state · 16 states, 5 options · every option 16px, column, in every state · on per state -1,0,1,2,3,4,4,4,4,1,1,2,3,4,0,1
+  FAIL       c1bare-migrated 390×844 prt · box-no-shift (sub-pixel, transforms neutralised) · rest option sizes 184.00×40.00, 184.00×56.00; group 192.00×288.00 · max deviation 5.520 px (opt 1 (184.00×56.00 → 178.48×54.32), press rest 1 (held)) · want ≤ 0.50
+  FAIL       c1bare-migrated 390×844 prt · content-no-shift · 9 children · max deviation 4.980 px (opt 1 child 0 (x 42.00→44.49, w 166.00→161.02, h 21.00→20.37; weight 500→500), press rest 1 (held)) · label line counts unchanged (rest 11111) · want ≤ 0.50, no re-wrap
+  PASS       c1bare-migrated 390×844 prt · resize-observer · size changes after the initial entries: 0 · want 0
+  PASS       c1bare-migrated 390×844 prt · layout-shift · 0 entries, sum 0.00000 · want 0
+  PASS       c1bare-migrated 390×844 prt · carrier (bare C1: selected opt 1 vs rest opt 2, content hidden) · 883.00 px² ≥3:1 (band 816.75) vs bar 240.00 on 184×56 · fill 1.00:1 · bg selected rgba(0, 0, 0, 0) rest rgba(0, 0, 0, 0)
+  PASS       c1bare-migrated 1440×900 light · cell-every-state · 16 states, 5 options · every option 16px, column, in every state · on per state -1,0,1,2,3,4,4,4,4,1,1,2,3,4,0,1
+  FAIL       c1bare-migrated 1440×900 light · box-no-shift (sub-pixel, transforms neutralised) · rest option sizes 184.00×42.61, 184.00×71.22; group 192.00×367.48 · max deviation 5.520 px (opt 1 (184.00×71.22 → 178.48×69.08), press rest 1 (held)) · want ≤ 0.50
+  FAIL       c1bare-migrated 1440×900 light · content-no-shift · 9 children · max deviation 4.740 px (opt 1 child 0 (x 46.00→48.37, w 158.00→153.26, h 24.61→23.87; weight 500→500), press rest 1 (held)) · label line counts unchanged (rest 11111) · want ≤ 0.50, no re-wrap
+  PASS       c1bare-migrated 1440×900 light · resize-observer · size changes after the initial entries: 0 · want 0
+  PASS       c1bare-migrated 1440×900 light · layout-shift · 0 entries, sum 0.00000 · want 0
+  PASS       c1bare-migrated 1440×900 light · carrier (bare C1: selected opt 1 vs rest opt 2, content hidden) · 939.50 px² ≥3:1 (band 874.25) vs bar 255.00 on 184×71 · fill 1.00:1 · bg selected rgba(0, 0, 0, 0) rest rgba(0, 0, 0, 0)
+  PASS       c1bare-migrated 1440×900 dark · cell-every-state · 16 states, 5 options · every option 16px, column, in every state · on per state -1,0,1,2,3,4,4,4,4,1,1,2,3,4,0,1
+  FAIL       c1bare-migrated 1440×900 dark · box-no-shift (sub-pixel, transforms neutralised) · rest option sizes 184.00×42.61, 184.00×71.22; group 192.00×367.48 · max deviation 5.520 px (opt 1 (184.00×71.22 → 178.48×69.08), press rest 1 (held)) · want ≤ 0.50
+  FAIL       c1bare-migrated 1440×900 dark · content-no-shift · 9 children · max deviation 4.740 px (opt 1 child 0 (x 46.00→48.37, w 158.00→153.26, h 24.61→23.87; weight 500→500), press rest 1 (held)) · label line counts unchanged (rest 11111) · want ≤ 0.50, no re-wrap
+  PASS       c1bare-migrated 1440×900 dark · resize-observer · size changes after the initial entries: 0 · want 0
+  PASS       c1bare-migrated 1440×900 dark · layout-shift · 0 entries, sum 0.00000 · want 0
+  PASS       c1bare-migrated 1440×900 dark · carrier (bare C1: selected opt 1 vs rest opt 2, content hidden) · 950.75 px² ≥3:1 (band 882.00) vs bar 255.00 on 184×71 · fill 1.00:1 · bg selected rgba(0, 0, 0, 0) rest rgba(0, 0, 0, 0)
+  PASS       c1bare-migrated 1440×900 prt · cell-every-state · 16 states, 5 options · every option 16px, column, in every state · on per state -1,0,1,2,3,4,4,4,4,1,1,2,3,4,0,1
+  FAIL       c1bare-migrated 1440×900 prt · box-no-shift (sub-pixel, transforms neutralised) · rest option sizes 184.00×42.61, 184.00×71.22; group 192.00×367.48 · max deviation 5.520 px (opt 1 (184.00×71.22 → 178.48×69.08), press rest 1 (held)) · want ≤ 0.50
+  FAIL       c1bare-migrated 1440×900 prt · content-no-shift · 9 children · max deviation 4.740 px (opt 1 child 0 (x 46.00→48.37, w 158.00→153.26, h 24.61→23.87; weight 500→500), press rest 1 (held)) · label line counts unchanged (rest 11111) · want ≤ 0.50, no re-wrap
+  PASS       c1bare-migrated 1440×900 prt · resize-observer · size changes after the initial entries: 0 · want 0
+  PASS       c1bare-migrated 1440×900 prt · layout-shift · 0 entries, sum 0.00000 · want 0
+  PASS       c1bare-migrated 1440×900 prt · carrier (bare C1: selected opt 1 vs rest opt 2, content hidden) · 941.50 px² ≥3:1 (band 875.25) vs bar 255.00 on 184×71 · fill 1.00:1 · bg selected rgba(0, 0, 0, 0) rest rgba(0, 0, 0, 0)
+CRIT9-C1 FAIL · 54/96 gating cells pass [library 54/96]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p9/crit9/out/smoke/runs/a9-src/CRIT9-C1-chromium.json

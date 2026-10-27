@@ -1,0 +1,13 @@
+2026-10-27 16:19:16 · load { 29.19 26.38 24.79 }
+CORNER · a consumer corner on a tile is refused in paint (H4-1; FV3-4, E-3)
+  target dp8-atk-dist (flavor dist) · Playwright WebKit 26.5 · harness H8 4159e027cdcf
+  load 29.19 / 26.38 / 24.79 at start, 27.81 / 26.14 / 24.72 at end · other headless browser processes at start: 13 (waited 0.3 s) · browser lock waited 0 s
+  PASS       preset-migrated utility · computed 16px · used 16.00 on 204.00×40.00 · want the field corner kept (16px)
+  PASS       preset-migrated scoped · computed 16px · used 16.00 on 204.00×40.00 · want the field corner kept (16px)
+  PASS       preset-migrated important · computed 16px · used 16.00 on 204.00×40.00 · want the field corner kept (16px)
+  PASS       preset-migrated inline · computed 16px · used 16.00 on 204.00×40.00 · want the field corner kept (16px)
+  info-fail  preset-migrated inline-important · computed 9999px · used 20.00 on 204.00×40.00 · want the field corner kept (16px) · INFO: no stylesheet rule outranks an inline !important
+  PASS       family-d-undeclared scoped-control · computed 7px (want 7px: the selector reaches an item) · 195.28×40.00
+CORNER PASS · 5/5 gating cells pass [library 5/5]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p9/crit9/out/runs/dp8-atk-dist/CORNER-webkit.json
+exit 0 · 2026-10-27 16:19:24 · load { 27.81 26.14 24.72 }
