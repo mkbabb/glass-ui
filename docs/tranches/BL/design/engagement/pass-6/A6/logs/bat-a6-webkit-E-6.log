@@ -1,0 +1,22 @@
+# 2026-10-27 17:24:54 start · load { 19.97 24.70 25.27 }
+# cmd: node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/e6-idle.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p6/A6/wt/.a6out/builds/a6 --wt /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p6/A6/wt --engine webkit --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/A6/json/a6
+# E-6 · the idle rung under the compositor-only bound
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p6/A6/wt/.a6out/builds/a6 · engine webkit · lock wait 0.0 s · other headless processes: chromium 13, webkit 0 · load 20.0/24.7/25.3 at start
+# scene app: harness scenes/App.vue (sha1 d020f4946adb)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  FAIL       E-6 s6 present light · 0 running infinite animation(s) at rest · load 19.3/24.5/25.2
+  UNMEASURED E-6 s6 channel light · no idle animation to read · load 19.3/24.5/25.2
+  UNMEASURED E-6 s6 shape light · no idle animation to read · load 19.3/24.5/25.2
+  UNMEASURED E-6 s6 amplitude light · no idle animation to read · load 19.3/24.5/25.2
+  UNMEASURED E-6 s6 period light · no idle animation to read · load 19.3/24.5/25.2
+  REPORT     E-6 s6 layouts/s light · n/a: Playwright WebKit exposes no layout counter · load 19.3/24.5/25.2
+  PASS       E-6 s6 PRM light · 0 idle animation(s) under reduced motion, 0 spatial · load 19.3/24.5/25.2
+  FAIL       E-6 s6 present dark · 0 running infinite animation(s) at rest · load 19.3/24.5/25.2
+  UNMEASURED E-6 s6 channel dark · no idle animation to read · load 19.3/24.5/25.2
+  UNMEASURED E-6 s6 shape dark · no idle animation to read · load 19.3/24.5/25.2
+  UNMEASURED E-6 s6 amplitude dark · no idle animation to read · load 19.3/24.5/25.2
+  UNMEASURED E-6 s6 period dark · no idle animation to read · load 19.3/24.5/25.2
+  REPORT     E-6 s6 layouts/s dark · n/a: Playwright WebKit exposes no layout counter · load 19.3/24.5/25.2
+  PASS       E-6 s6 PRM dark · 0 idle animation(s) under reduced motion, 0 spatial · load 19.3/24.5/25.2
+E-6 webkit FAIL · 2 pass, 2 fail, 8 unmeasured of 12 gating cells (2 reported) · load 20.0/24.7/25.3 at start, 19.3/24.5/25.2 at end
+# 2026-10-27 17:25:01 end · exit 1 · load { 19.33 24.49 25.19 }
