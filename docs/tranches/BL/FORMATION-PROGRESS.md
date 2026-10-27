@@ -617,3 +617,4 @@ Outage log:
 - 2026-10-27 D4 p9: critic D4-Dp-P9-crit returned incomplete (stage 3/16, no cell run, no row scored); run stopped; driver adds D4-Dp-P9-crit-complete before the agglomerate; resuming wf_6ff0602b-477.
 - 2026-10-27 10.1.2b: critic-b4 banked — 1 medium defect D-1 (disabled DockTrigger paints enabled since 2b4efe77e); release-close stopped mid-run (its uncommitted CSS draft reviewed and committed as the cure on release/10.1.2); driver adds witness-b4 (paint witness RED→GREEN both engines) before release-close; resuming wf_5f34f05d-64a.
 - 2026-10-27 INBOUND O-108 (value-js-c2 perf sub-rows V3-s, V5-h, keyframes warm-swap reads, dock.js per-swap re-measure) rowed and placed in W-G.3, W-G.6, W-0.8.
+- 2026-10-27 INBOUND O-109 (value-js-c2 plate text floor over mid-tone aurora: dock band + 390 resting plate) rowed; placed W-0.1 (plate rung) + W-0.8 (dock band).
