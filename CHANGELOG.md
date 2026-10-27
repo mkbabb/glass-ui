@@ -1,6 +1,6 @@
 # Changelog
 
-## 10.1.2 — 2026-10-21
+## 10.1.2 — 2026-10-27
 
 Two changes. Atlas G-4, arm (b-ii), the declared seat marker, by owner-delegate ruling
 (records: `docs/tranches/BL/audit/INBOUND.md` O-102d;
