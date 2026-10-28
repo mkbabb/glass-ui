@@ -33,6 +33,9 @@
 //             breakpoint (a breakpoint wider than any viewport), so the strip is `.segmented-tabs__mobile` and a
 //             SelectTrigger (`data-mx-stm="t"`); the same responsive strip beside the groups is the reference
 //             (`data-mx-stm="ref"`)
+//             H9: L-3's compositions (`l3`, and its planted twin `l3onitem`), from `l3.mjs`: FACT's `paint-*` cells, the
+//             `l3-bare` fold (REGISTRY §P9-4)
+import { compose as l3 } from "./l3.mjs";
 export const ATTACK_LABEL = "H4-attack";
 /** H6-3: a SegmentedTabs whose tabs carry two block rows (a `.pill-row` holder that is not a group) */
 const mxStrip = (which, cls = "") => `<SegmentedTabs data-mx-st="${which}"${cls ? ` class="${cls}"` : ""} :model-value="tabsOptions[0].value" :options="tabsOptions" semantics="radio" aria-label="Strip ${which}"><template #option="{ option }"><span class="block">{{ option.label }}</span><span class="block text-micro">two</span></template></SegmentedTabs>`;
@@ -129,6 +132,8 @@ export default {
     // H7-2: the consumer's unlayered write on a strip (O-1), outside every layer as a consumer's sheet is
     css: `.mx-host, .mx-card { inline-size: 460px; } .mx-wrap, .mx-st-opt { grid-column: 1 / -1; } .mx-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; } .mx-st-consumer { --selection-tile: flush; }`,
   },
+  l3: l3(),
+  l3onitem: l3({ plantOnItem: true }),
   strip: {
     group: `<ToggleGroup type="single" data-group aria-label="Area unit" v-model="model">
         <ToggleGroupItem v-for="fam in STRIP.flatMap((f) => f.tiles.map((t) => f.family + '-' + t[0]))" :key="fam" :value="fam" data-item>

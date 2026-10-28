@@ -80,8 +80,27 @@
 //                            its backdrop filter, string-equal: the flush option's rule strips a `[data-state]` control's
 //                            plate, control-surfaces.css), and on a development flavour nothing names `te` a second row.
 //                            The trigger's fact is printed, never judged
+//
+// H9 · THE SELECTION PAINT, `--selection-paint` (REGISTRY §P9-4, §P9-6: L-3's paint witness, the pass-8 probe
+// `../pass-8/probes/l3-bare.mjs`, folded here; rows R-2, FV-2). On `l3-migrated` (attack-route/l3.mjs), light and dark,
+// after one pointer commit (option `b` of ref-pill; every group shares the model, so `b` is selected in each), the pointer
+// leaves and the page settles; then for each composition options `a` (rest) and `b` (selected) are read: the painted
+// fill (the mean of each option's inner box, inset 6 px, its content hidden) as a contrast ratio selected against rest,
+// and the computed background, corner, ink, weight and `--selection-paint` of each option.
+//   paint-ref         control: ref-pill and ref-tile separate (≥ 1.08) on the library's tint; a stadium, and 16px
+//   paint-bare-pill   the opt-out lands: the same paint (< 1.03, equal computed backgrounds) and no corner (0px)
+//   paint-bare-tile   the opt-out lands on a tile: the same paint, and the field corner (16px)
+//   paint-item-write  refused on the option: the fact `auto` on every option, the tint (≥ 1.08) and the stadium
+//   paint-ancestor    no effect from an ancestor: the tint, the stadium and the fact `auto`
+//   paint-state       a bare group keeps its selection: `b` checked and `on`, `a` not; `b`'s ink is the selected ink
+//                     (its computed colour differs from `a`'s); the weight is EQUAL at rest and selected (O-103e:
+//                     selection changes no weight; pass 8 read `weight === "600"` here); one tab stop; ArrowRight from
+//                     `b` checks `c`
+// `--l3 on-item` reads the planted composition `l3onitem-migrated` (the write on each option): bare-pill and bare-tile
+// FAIL. A library without the pin's paint line (plants.mjs `unpinned`) FAILs paint-item-write.
 //   node fact-split.mjs --build <out>/builds/<label>-atk | --fixture --family atk [--fault atk-split] [--engine webkit]
-import { cli, openPage, engineVersion, engineOf, f2 } from "./lib.mjs";
+//                       [--l3 on-item]
+import { cli, openPage, engineVersion, engineOf, f2, shot, meanRect, contrast, hex } from "./lib.mjs";
 import { ATTACK_LABEL } from "./attack-route/migrated.mjs";
 
 export const isAttack = (m) => !!m && (m.label === ATTACK_LABEL || m.attack === true);
@@ -331,6 +350,63 @@ async function matrix(target, engine, cells) {
   }
 }
 
+// ── H9 · the selection paint (the `l3-bare` fold) ─────────────────────────────────────────────────────────────
+const L3_CASES = ["ref-pill", "bare-pill", "ref-tile", "bare-tile", "item-write", "ancestor"];
+const L3_READ = (cases) => Object.fromEntries(cases.map((k) => {
+  const g = document.querySelector(`[data-l3-case="${k}"] [data-l3-group]`);
+  const items = g ? [...g.querySelectorAll("[data-item]")] : [];
+  return [k, items.map((el) => {
+    const c = getComputedStyle(el), r = el.getBoundingClientRect();
+    return { x: r.x, y: r.y, w: r.width, h: r.height, bg: c.backgroundColor, radius: c.borderTopLeftRadius, paint: c.getPropertyValue("--selection-paint").trim(), state: el.dataset.state, checked: el.getAttribute("aria-checked"), tab: el.tabIndex, weight: c.fontWeight, ink: c.color };
+  })];
+}));
+async function selectionPaint(target, engine, cells, onItem) {
+  const scene = onItem ? "l3onitem-migrated" : "l3-migrated";
+  for (const mode of ["light", "dark"]) {
+    const P = await openPage(target, engine, scene, { mode });
+    let r, fills = {}, keys = null;
+    try {
+      const { page } = P;
+      await page.locator('[data-l3-case="ref-pill"] [data-item]').nth(1).click();
+      await page.mouse.move(2, 2);
+      await page.waitForTimeout(900);
+      r = await page.evaluate(L3_READ, L3_CASES);
+      await page.addStyleTag({ content: "[data-l3] [data-item] * { visibility: hidden !important; }" });
+      await page.waitForTimeout(250);
+      for (const k of L3_CASES) {
+        const [a, b] = r[k];
+        if (!a || !b) continue;
+        const inner = (o) => ({ x: o.x + 6, y: o.y + 6, w: Math.max(1, o.w - 12), h: Math.max(1, o.h - 12) });
+        const clip = (o) => ({ x: Math.floor(o.x), y: Math.floor(o.y), width: Math.ceil(o.w), height: Math.ceil(o.h) });
+        const sa = await shot(page, clip(a)), sb = await shot(page, clip(b));
+        const ma = meanRect(sa, inner(a)), mb = meanRect(sb, inner(b));
+        fills[k] = { a: ma, b: mb, ratio: contrast(ma, mb) };
+      }
+      const bp = page.locator('[data-l3-case="bare-pill"] [data-item]');
+      await bp.nth(1).focus();
+      await page.keyboard.press("ArrowRight");
+      await page.waitForTimeout(300);
+      keys = await page.evaluate(() => [...document.querySelectorAll('[data-l3-case="bare-pill"] [data-item]')].map((el) => el.getAttribute("aria-checked")));
+    } finally { await P.close(); }
+    const tag = `paint ${mode}${P.modeOk ? "" : " (MODE NOT VERIFIED)"}${onItem ? " · PLANTED composition (the write on each option)" : ""}`;
+    const f = (k) => (fills[k] ? `fill ${hex(fills[k].b)} on ${hex(fills[k].a)} = ${f2(fills[k].ratio)}:1` : "fill unread");
+    const opt = (o) => `${f2(o.w)}×${f2(o.h)} corner ${o.radius} bg ${o.bg} fact ${o.paint || "(unset)"}`;
+    const stadium = (o) => parseFloat(o.radius) >= o.h / 2 - 0.01;
+    const sep = (k) => (fills[k]?.ratio ?? 0) >= 1.08;
+    const same = (k) => (fills[k]?.ratio ?? 9) < 1.03 && r[k][0].bg === r[k][1].bg;
+    if (!L3_CASES.every((k) => r[k]?.length === 3)) { cells.push({ gating: true, pass: false, line: `${tag} · composition missing on ${scene}: ${L3_CASES.map((k) => `${k} ${r[k]?.length ?? 0}`).join(", ")}` }); continue; }
+    const [rp, bpl, rt, bt, iw, an] = L3_CASES.map((k) => r[k]);
+    cells.push({ gating: true, pass: P.modeOk && sep("ref-pill") && sep("ref-tile") && stadium(rp[0]) && stadium(rp[1]) && rt[1].radius === "16px", line: `${tag} · paint-ref (control) · ref-pill ${f("ref-pill")}, selected ${opt(rp[1])} · ref-tile ${f("ref-tile")}, selected ${opt(rt[1])} · want both ≥ 1.08, a stadium and 16px` });
+    cells.push({ gating: true, pass: same("bare-pill") && bpl[0].radius === "0px" && bpl[1].radius === "0px", line: `${tag} · paint-bare-pill · ${f("bare-pill")} · rest ${opt(bpl[0])} · selected ${opt(bpl[1])} · want the same paint (< 1.03, equal computed backgrounds) and no corner (0px)` });
+    cells.push({ gating: true, pass: same("bare-tile") && bt[0].radius === "16px" && bt[1].radius === "16px", line: `${tag} · paint-bare-tile · ${f("bare-tile")} · rest ${opt(bt[0])} · selected ${opt(bt[1])} · want the same paint and the field corner (16px)` });
+    cells.push({ gating: true, pass: iw.every((o) => o.paint === "auto") && sep("item-write") && stadium(iw[1]), line: `${tag} · paint-item-write (refused) · ${f("item-write")} · selected ${opt(iw[1])} · want the fact auto on every option, the tint (≥ 1.08) and the stadium` });
+    cells.push({ gating: true, pass: sep("ancestor") && stadium(an[1]) && an.every((o) => o.paint === "auto"), line: `${tag} · paint-ancestor (no effect) · ${f("ancestor")} · selected ${opt(an[1])} · want the tint, the stadium and the fact auto` });
+    const tabs = bpl.filter((o) => o.tab === 0).length;
+    const okState = bpl[1].checked === "true" && bpl[1].state === "on" && bpl[0].checked === "false" && bpl[0].state !== "on" && bpl[1].ink !== bpl[0].ink && bpl[1].weight === bpl[0].weight && tabs === 1 && keys?.[2] === "true" && keys?.[1] === "false";
+    cells.push({ gating: true, pass: okState, line: `${tag} · paint-state (bare-pill) · b checked ${bpl[1].checked}, data-state ${bpl[1].state}, ink ${bpl[1].ink}, weight ${bpl[1].weight}; a checked ${bpl[0].checked}, ink ${bpl[0].ink}, weight ${bpl[0].weight}; tab stops ${tabs} · ArrowRight from b → checked ${keys?.join("/")} · want b on with the selected ink (≠ a's), the weight equal at rest and selected (O-103e), one tab stop, c checked after the key` });
+  }
+}
+
 if (import.meta.url === `file://${process.argv[1]}`) {
   await cli("FACT", async (args, target) => {
     const engine = engineOf(args);
@@ -351,6 +427,8 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     }
     if (attack) await matrix(target, engine, cells);
     else cells.push({ gating: true, pass: null, line: `matrix · UNMEASURED: not an attack build (migration ${migration?.label ?? "none"}); build with --route <harness>/attack-route` });
-    return { id: "FACT", title: "is a tile has one spelling: the fact and the tile geometry agree under nesting, a written fact, and every write site × read site of the matrix, judged by paint (H4-1, H5-2; R-10, R-2)", engine, engineLabel: await engineVersion(engine), target: target.label, dev: target.meta.dev, cells };
+    if (attack && (migration.sites ?? []).includes("l3")) await selectionPaint(target, engine, cells, args.l3 === "on-item");
+    else cells.push({ gating: true, pass: null, line: `paint · UNMEASURED: ${attack ? "this attack target carries no `l3` composition (the fixture; an H9 attack build always does)" : `not an attack build (migration ${migration?.label ?? "none"}); build with --route <harness>/attack-route`}` });
+    return { id: "FACT", title: "is a tile has one spelling: the fact and the tile geometry agree under nesting, a written fact, and every write site × read site of the matrix, judged by paint; the selection paint's opt-out turns off the tint and the stadium only (H4-1, H5-2, H9; R-10, R-2)", engine, engineLabel: await engineVersion(engine), target: target.label, dev: target.meta.dev, cells };
   });
 }

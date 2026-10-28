@@ -1,0 +1,13 @@
+2026-10-27 18:37:17 · load { 26.11 26.22 27.39 } · harness H9 932637d53662 (45 files)
+D4-Dp10.patch sha1 538b034c754bce9263019b2ac1f4fba1852bd11a
+reversed D4-Dp10.patch
+src equals HEAD + floor v6
+tests equals HEAD + floor v6
+demo equals HEAD + floor v6
+MIGRATION.md equals HEAD + floor v6
+git apply --check D4-Dp10.patch on HEAD + floor v6: clean
+before: STATE git diff HEAD 80ab066d67f8 · status 9a89e9747069 · new files guard.ts 53c233af, shape.ts 9455d073 · harness H9 932637d53662
+after:  STATE git diff HEAD 80ab066d67f8 · status 9a89e9747069 · new files guard.ts 53c233af, shape.ts 9455d073 · harness H9 932637d53662 (equal)
+post-apply git diff HEAD --binary | shasum: 80ab066d67f89cca14b2eaeb901ac7871cb8f75d  -
+shape.ts 9455d07303dc65badf401dc88b9c3ddcc75c6cf0  src/components/toggle-group/shape.ts · guard.ts 53c233af2d7a6c5c2e04088ff2c4b09fc79bdf02  src/components/_shared/guard.ts
+exit 0 · 2026-10-27 18:37:20 · load { 26.11 26.22 27.39 }

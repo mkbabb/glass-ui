@@ -1,0 +1,791 @@
+diff -ruN harness-H8/attack-route/l3.mjs harness/attack-route/l3.mjs
+--- harness-H8/attack-route/l3.mjs	1969-12-31 19:00:00
++++ harness/attack-route/l3.mjs	2026-10-27 18:13:54
+@@ -0,0 +1,35 @@
++// attack-route/l3.mjs · H9 · L-3's compositions, folded into FACT (REGISTRY §P9-4, §P9-6: the `l3-bare` fold). Moved here
++// unchanged from the pass-8 BUILD seat's `../../pass-8/routes/L3/compose.mjs`, so the paint witness of
++// `--selection-paint` is a hashed FACT cell read on every attack build instead of a pass probe. Two non-site keys, each
++// rendered by build.mjs as `<key>-migrated` as written (no host, no twin):
++//   l3        six groups of three options (`a`, `b`, `c`), all on the scene's one model, so one write selects `b` in each:
++//               ref-pill   a pill group, nothing written: the library's tint and stadium (the reference)
++//               bare-pill  a pill group whose group element is written `--selection-paint: bare`
++//               ref-tile   a `shape="cell"` group, nothing written
++//               bare-tile  a `shape="cell"` group written `bare` on the group
++//               item-write a pill group whose OPTIONS are each written `bare` (inline, as a consumer would): refused by
++//                          the pin
++//               ancestor   a pill group inside a `div` written `bare`: no effect, the group resets the fact
++//   l3onitem  the planted composition (pass 8's `L3-plant-on-item`): bare-pill's and bare-tile's write moves from the
++//             group to each option, so the opt-out never lands; FACT reads it with `--l3 on-item`, and its bare cells FAIL
++const BARE = 'style="--selection-paint: bare"';
++const opts = (tile, itemAttr = "") => ["a", "b", "c"].map((v, k) => {
++  const name = ["Alpha", "Beta", "Gamma"][k];
++  const inner = tile ? `<span>${name}</span><span class="text-micro">${k + 1} s</span>` : `<span>${name}</span>`;
++  return `<ToggleGroupItem value="${v}" data-item${itemAttr ? ` ${itemAttr}` : ""}>${inner}</ToggleGroupItem>`;
++}).join("");
++const group = (kase, { tile = false, onGroup = false, onItem = false } = {}) =>
++  `<ToggleGroup type="single" v-model="model"${tile ? ' shape="cell"' : ""} aria-label="L-3 ${kase}" data-l3-group${onGroup ? ` ${BARE}` : ""}${tile ? ' class="grid grid-cols-3"' : ""}>${opts(tile, onItem ? BARE : "")}</ToggleGroup>`;
++export function compose({ plantOnItem = false } = {}) {
++  const w = (tile) => (plantOnItem ? { tile, onItem: true } : { tile, onGroup: true });
++  return {
++    group: `<div class="flex flex-col gap-6 p-4" data-l3>
++        <div data-l3-case="ref-pill">${group("ref-pill")}</div>
++        <div data-l3-case="bare-pill">${group("bare-pill", w(false))}</div>
++        <div data-l3-case="ref-tile">${group("ref-tile", { tile: true })}</div>
++        <div data-l3-case="bare-tile">${group("bare-tile", w(true))}</div>
++        <div data-l3-case="item-write">${group("item-write", { onItem: true })}</div>
++        <div data-l3-case="ancestor" ${BARE}>${group("ancestor")}</div>
++      </div>`,
++  };
++}
+diff -ruN harness-H8/attack-route/migrated.mjs harness/attack-route/migrated.mjs
+--- harness-H8/attack-route/migrated.mjs	2026-10-27 18:12:17
++++ harness/attack-route/migrated.mjs	2026-10-27 18:13:54
+@@ -33,6 +33,9 @@
+ //             breakpoint (a breakpoint wider than any viewport), so the strip is `.segmented-tabs__mobile` and a
+ //             SelectTrigger (`data-mx-stm="t"`); the same responsive strip beside the groups is the reference
+ //             (`data-mx-stm="ref"`)
++//             H9: L-3's compositions (`l3`, and its planted twin `l3onitem`), from `l3.mjs`: FACT's `paint-*` cells, the
++//             `l3-bare` fold (REGISTRY §P9-4)
++import { compose as l3 } from "./l3.mjs";
+ export const ATTACK_LABEL = "H4-attack";
+ /** H6-3: a SegmentedTabs whose tabs carry two block rows (a `.pill-row` holder that is not a group) */
+ const mxStrip = (which, cls = "") => `<SegmentedTabs data-mx-st="${which}"${cls ? ` class="${cls}"` : ""} :model-value="tabsOptions[0].value" :options="tabsOptions" semantics="radio" aria-label="Strip ${which}"><template #option="{ option }"><span class="block">{{ option.label }}</span><span class="block text-micro">two</span></template></SegmentedTabs>`;
+@@ -129,6 +132,8 @@
+     // H7-2: the consumer's unlayered write on a strip (O-1), outside every layer as a consumer's sheet is
+     css: `.mx-host, .mx-card { inline-size: 460px; } .mx-wrap, .mx-st-opt { grid-column: 1 / -1; } .mx-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; } .mx-st-consumer { --selection-tile: flush; }`,
+   },
++  l3: l3(),
++  l3onitem: l3({ plantOnItem: true }),
+   strip: {
+     group: `<ToggleGroup type="single" data-group aria-label="Area unit" v-model="model">
+         <ToggleGroupItem v-for="fam in STRIP.flatMap((f) => f.tiles.map((t) => f.family + '-' + t[0]))" :key="fam" :value="fam" data-item>
+diff -ruN harness-H8/fact-split.mjs harness/fact-split.mjs
+--- harness-H8/fact-split.mjs	2026-10-27 18:12:17
++++ harness/fact-split.mjs	2026-10-27 18:14:43
+@@ -80,8 +80,27 @@
+ //                            its backdrop filter, string-equal: the flush option's rule strips a `[data-state]` control's
+ //                            plate, control-surfaces.css), and on a development flavour nothing names `te` a second row.
+ //                            The trigger's fact is printed, never judged
++//
++// H9 · THE SELECTION PAINT, `--selection-paint` (REGISTRY §P9-4, §P9-6: L-3's paint witness, the pass-8 probe
++// `../pass-8/probes/l3-bare.mjs`, folded here; rows R-2, FV-2). On `l3-migrated` (attack-route/l3.mjs), light and dark,
++// after one pointer commit (option `b` of ref-pill; every group shares the model, so `b` is selected in each), the pointer
++// leaves and the page settles; then for each composition options `a` (rest) and `b` (selected) are read: the painted
++// fill (the mean of each option's inner box, inset 6 px, its content hidden) as a contrast ratio selected against rest,
++// and the computed background, corner, ink, weight and `--selection-paint` of each option.
++//   paint-ref         control: ref-pill and ref-tile separate (≥ 1.08) on the library's tint; a stadium, and 16px
++//   paint-bare-pill   the opt-out lands: the same paint (< 1.03, equal computed backgrounds) and no corner (0px)
++//   paint-bare-tile   the opt-out lands on a tile: the same paint, and the field corner (16px)
++//   paint-item-write  refused on the option: the fact `auto` on every option, the tint (≥ 1.08) and the stadium
++//   paint-ancestor    no effect from an ancestor: the tint, the stadium and the fact `auto`
++//   paint-state       a bare group keeps its selection: `b` checked and `on`, `a` not; `b`'s ink is the selected ink
++//                     (its computed colour differs from `a`'s); the weight is EQUAL at rest and selected (O-103e:
++//                     selection changes no weight; pass 8 read `weight === "600"` here); one tab stop; ArrowRight from
++//                     `b` checks `c`
++// `--l3 on-item` reads the planted composition `l3onitem-migrated` (the write on each option): bare-pill and bare-tile
++// FAIL. A library without the pin's paint line (plants.mjs `unpinned`) FAILs paint-item-write.
+ //   node fact-split.mjs --build <out>/builds/<label>-atk | --fixture --family atk [--fault atk-split] [--engine webkit]
+-import { cli, openPage, engineVersion, engineOf, f2 } from "./lib.mjs";
++//                       [--l3 on-item]
++import { cli, openPage, engineVersion, engineOf, f2, shot, meanRect, contrast, hex } from "./lib.mjs";
+ import { ATTACK_LABEL } from "./attack-route/migrated.mjs";
+ 
+ export const isAttack = (m) => !!m && (m.label === ATTACK_LABEL || m.attack === true);
+@@ -331,6 +350,63 @@
+   }
+ }
+ 
++// ── H9 · the selection paint (the `l3-bare` fold) ─────────────────────────────────────────────────────────────
++const L3_CASES = ["ref-pill", "bare-pill", "ref-tile", "bare-tile", "item-write", "ancestor"];
++const L3_READ = (cases) => Object.fromEntries(cases.map((k) => {
++  const g = document.querySelector(`[data-l3-case="${k}"] [data-l3-group]`);
++  const items = g ? [...g.querySelectorAll("[data-item]")] : [];
++  return [k, items.map((el) => {
++    const c = getComputedStyle(el), r = el.getBoundingClientRect();
++    return { x: r.x, y: r.y, w: r.width, h: r.height, bg: c.backgroundColor, radius: c.borderTopLeftRadius, paint: c.getPropertyValue("--selection-paint").trim(), state: el.dataset.state, checked: el.getAttribute("aria-checked"), tab: el.tabIndex, weight: c.fontWeight, ink: c.color };
++  })];
++}));
++async function selectionPaint(target, engine, cells, onItem) {
++  const scene = onItem ? "l3onitem-migrated" : "l3-migrated";
++  for (const mode of ["light", "dark"]) {
++    const P = await openPage(target, engine, scene, { mode });
++    let r, fills = {}, keys = null;
++    try {
++      const { page } = P;
++      await page.locator('[data-l3-case="ref-pill"] [data-item]').nth(1).click();
++      await page.mouse.move(2, 2);
++      await page.waitForTimeout(900);
++      r = await page.evaluate(L3_READ, L3_CASES);
++      await page.addStyleTag({ content: "[data-l3] [data-item] * { visibility: hidden !important; }" });
++      await page.waitForTimeout(250);
++      for (const k of L3_CASES) {
++        const [a, b] = r[k];
++        if (!a || !b) continue;
++        const inner = (o) => ({ x: o.x + 6, y: o.y + 6, w: Math.max(1, o.w - 12), h: Math.max(1, o.h - 12) });
++        const clip = (o) => ({ x: Math.floor(o.x), y: Math.floor(o.y), width: Math.ceil(o.w), height: Math.ceil(o.h) });
++        const sa = await shot(page, clip(a)), sb = await shot(page, clip(b));
++        const ma = meanRect(sa, inner(a)), mb = meanRect(sb, inner(b));
++        fills[k] = { a: ma, b: mb, ratio: contrast(ma, mb) };
++      }
++      const bp = page.locator('[data-l3-case="bare-pill"] [data-item]');
++      await bp.nth(1).focus();
++      await page.keyboard.press("ArrowRight");
++      await page.waitForTimeout(300);
++      keys = await page.evaluate(() => [...document.querySelectorAll('[data-l3-case="bare-pill"] [data-item]')].map((el) => el.getAttribute("aria-checked")));
++    } finally { await P.close(); }
++    const tag = `paint ${mode}${P.modeOk ? "" : " (MODE NOT VERIFIED)"}${onItem ? " · PLANTED composition (the write on each option)" : ""}`;
++    const f = (k) => (fills[k] ? `fill ${hex(fills[k].b)} on ${hex(fills[k].a)} = ${f2(fills[k].ratio)}:1` : "fill unread");
++    const opt = (o) => `${f2(o.w)}×${f2(o.h)} corner ${o.radius} bg ${o.bg} fact ${o.paint || "(unset)"}`;
++    const stadium = (o) => parseFloat(o.radius) >= o.h / 2 - 0.01;
++    const sep = (k) => (fills[k]?.ratio ?? 0) >= 1.08;
++    const same = (k) => (fills[k]?.ratio ?? 9) < 1.03 && r[k][0].bg === r[k][1].bg;
++    if (!L3_CASES.every((k) => r[k]?.length === 3)) { cells.push({ gating: true, pass: false, line: `${tag} · composition missing on ${scene}: ${L3_CASES.map((k) => `${k} ${r[k]?.length ?? 0}`).join(", ")}` }); continue; }
++    const [rp, bpl, rt, bt, iw, an] = L3_CASES.map((k) => r[k]);
++    cells.push({ gating: true, pass: P.modeOk && sep("ref-pill") && sep("ref-tile") && stadium(rp[0]) && stadium(rp[1]) && rt[1].radius === "16px", line: `${tag} · paint-ref (control) · ref-pill ${f("ref-pill")}, selected ${opt(rp[1])} · ref-tile ${f("ref-tile")}, selected ${opt(rt[1])} · want both ≥ 1.08, a stadium and 16px` });
++    cells.push({ gating: true, pass: same("bare-pill") && bpl[0].radius === "0px" && bpl[1].radius === "0px", line: `${tag} · paint-bare-pill · ${f("bare-pill")} · rest ${opt(bpl[0])} · selected ${opt(bpl[1])} · want the same paint (< 1.03, equal computed backgrounds) and no corner (0px)` });
++    cells.push({ gating: true, pass: same("bare-tile") && bt[0].radius === "16px" && bt[1].radius === "16px", line: `${tag} · paint-bare-tile · ${f("bare-tile")} · rest ${opt(bt[0])} · selected ${opt(bt[1])} · want the same paint and the field corner (16px)` });
++    cells.push({ gating: true, pass: iw.every((o) => o.paint === "auto") && sep("item-write") && stadium(iw[1]), line: `${tag} · paint-item-write (refused) · ${f("item-write")} · selected ${opt(iw[1])} · want the fact auto on every option, the tint (≥ 1.08) and the stadium` });
++    cells.push({ gating: true, pass: sep("ancestor") && stadium(an[1]) && an.every((o) => o.paint === "auto"), line: `${tag} · paint-ancestor (no effect) · ${f("ancestor")} · selected ${opt(an[1])} · want the tint, the stadium and the fact auto` });
++    const tabs = bpl.filter((o) => o.tab === 0).length;
++    const okState = bpl[1].checked === "true" && bpl[1].state === "on" && bpl[0].checked === "false" && bpl[0].state !== "on" && bpl[1].ink !== bpl[0].ink && bpl[1].weight === bpl[0].weight && tabs === 1 && keys?.[2] === "true" && keys?.[1] === "false";
++    cells.push({ gating: true, pass: okState, line: `${tag} · paint-state (bare-pill) · b checked ${bpl[1].checked}, data-state ${bpl[1].state}, ink ${bpl[1].ink}, weight ${bpl[1].weight}; a checked ${bpl[0].checked}, ink ${bpl[0].ink}, weight ${bpl[0].weight}; tab stops ${tabs} · ArrowRight from b → checked ${keys?.join("/")} · want b on with the selected ink (≠ a's), the weight equal at rest and selected (O-103e), one tab stop, c checked after the key` });
++  }
++}
++
+ if (import.meta.url === `file://${process.argv[1]}`) {
+   await cli("FACT", async (args, target) => {
+     const engine = engineOf(args);
+@@ -351,6 +427,8 @@
+     }
+     if (attack) await matrix(target, engine, cells);
+     else cells.push({ gating: true, pass: null, line: `matrix · UNMEASURED: not an attack build (migration ${migration?.label ?? "none"}); build with --route <harness>/attack-route` });
+-    return { id: "FACT", title: "is a tile has one spelling: the fact and the tile geometry agree under nesting, a written fact, and every write site × read site of the matrix, judged by paint (H4-1, H5-2; R-10, R-2)", engine, engineLabel: await engineVersion(engine), target: target.label, dev: target.meta.dev, cells };
++    if (attack && (migration.sites ?? []).includes("l3")) await selectionPaint(target, engine, cells, args.l3 === "on-item");
++    else cells.push({ gating: true, pass: null, line: `paint · UNMEASURED: ${attack ? "this attack target carries no `l3` composition (the fixture; an H9 attack build always does)" : `not an attack build (migration ${migration?.label ?? "none"}); build with --route <harness>/attack-route`}` });
++    return { id: "FACT", title: "is a tile has one spelling: the fact and the tile geometry agree under nesting, a written fact, and every write site × read site of the matrix, judged by paint; the selection paint's opt-out turns off the tint and the stadium only (H4-1, H5-2, H9; R-10, R-2)", engine, engineLabel: await engineVersion(engine), target: target.label, dev: target.meta.dev, cells };
+   });
+ }
+diff -ruN harness-H8/lib.mjs harness/lib.mjs
+--- harness-H8/lib.mjs	2026-10-27 18:12:17
++++ harness/lib.mjs	2026-10-27 18:12:17
+@@ -41,7 +41,7 @@
+ export const HARNESS = (() => {
+   const h = createHash("sha256");
+   for (const f of HASHED) { h.update(f); h.update("\0"); h.update(fs.readFileSync(path.join(HERE, f))); h.update("\0"); }
+-  return { hash: h.digest("hex").slice(0, 12), files: HASHED.length, rev: "H8" };
++  return { hash: h.digest("hex").slice(0, 12), files: HASHED.length, rev: "H9" };
+ })();
+ 
+ export const DSF = 2;
+diff -ruN harness-H8/plants.mjs harness/plants.mjs
+--- harness-H8/plants.mjs	1969-12-31 19:00:00
++++ harness/plants.mjs	2026-10-27 18:17:16
+@@ -0,0 +1,111 @@
++#!/usr/bin/env node
++// plants.mjs · H9 · the planted libraries every build-level witness pair names, written once (P-3). Until H8 each seat's
++// driver carried its own copy of these mutations (pass-8 `run-b8.sh`, the pass-9 critic's `run-crit9.sh`), and its
++// restore check (`git diff HEAD`) could not see the patches' new untracked files (`shape.ts`, `_shared/guard.ts`): a
++// plant in `shape.ts` printed the clean hash while planted (`D′c9` §1.4). Here a plant is applied to a worktree with a
++// restore copy of every file it touches, and the restore is CHECKED: the worktree's `git diff HEAD --binary`, its
++// `git status --porcelain --untracked-files=all`, and the sha1 of every untracked file under `src` are read before
++// the plant and after the restore, and any difference is exit 2 with the paths. Every apply and restore prints them.
++//   node plants.mjs <worktree> apply <name>     plant (refuses a worktree that already holds a plant)
++//   node plants.mjs <worktree> restore          write the copies back and check the worktree against its pre-plant state
++//   node plants.mjs <worktree> state            print the state line (diff hash, status hash, new files' hashes)
++//   node plants.mjs list
++// The plants (each a real write a later wave might make, or a deletion of the cure under test):
++//   foreign    `.card > .toggle-group { --selection-tile: flush }` in base.css, `@layer components` (B-1, `D′c6` §4.1)
++//   var        the same rule written `var(--card-tile, flush)` (L-1, `crit-var-writer`)
++//   esc        the same rule with the name CSS-escaped, `--selection\-tile` (L-1b, the pass-9 critic)
++//   apply      `.card > .toggle-group { @apply [--selection-tile:flush]; }` in base.css, unlayered (L-1b)
++//   static     `style="--selection-tile: plated"` on ToggleGroup.vue's root (L-1, `crit-static-style`)
++//   ts         `setProperty("--selection-tile", on ? "flush" : "none")` in a shape.ts helper (L-1, `crit-ts-ternary`)
++//   const      the name held in a shape.ts constant and written through it (L-1a, `crit-const-name`)
++//   concat     REACHED: a shape.ts helper builds the name (`"--selection-" + "tile"`) and writes `flush`, and
++//              ToggleGroup.vue calls it on every group whose parent is a `.card` (the composition FACT's
++//              `foreign-ancestor` cells read). No static reader resolves the name; paint is its backstop (H9 (3))
++//   unpinned   the pin's `--selection-paint: inherit !important` line deleted (L-3: FACT `paint-item-write` FAILs)
++//   weight-step  `font-weight: 600` restored on `.toggle-group__item[data-state="on"]` (O-103e: the L-5 cure deleted;
++//              T-4's L-5 falsifier FAILs)
++import fs from "node:fs";
++import path from "node:path";
++import { execFileSync } from "node:child_process";
++import { createHash } from "node:crypto";
++import { HARNESS } from "./lib.mjs";
++
++const BS = "src/styles/utilities/base.css", TGV = "src/components/toggle-group/ToggleGroup.vue";
++const SHP = "src/components/toggle-group/shape.ts", SH = "src/components/toggle-group/styles.css";
++const SHAPE_END = "export type ToggleGroupShape = (typeof TOGGLE_GROUP_SHAPES)[number];";
++const append = (text) => (t) => t + text;
++const sub = (o, n) => (t) => { if (t.split(o).length !== 2) throw new Error(`anchor not unique (${t.split(o).length - 1}×): ${o.slice(0, 80)}`); return t.replace(o, n); };
++const CARD = (decl) => `\n@layer components {\n    .card > .toggle-group {\n        ${decl};\n    }\n}\n`;
++export const PLANTS = {
++  foreign: { [BS]: append(CARD("--selection-tile: flush")) },
++  var: { [BS]: append(CARD("--selection-tile: var(--card-tile, flush)")) },
++  esc: { [BS]: append(CARD("--selection\\-tile: flush")) },
++  apply: { [BS]: append("\n.card > .toggle-group {\n    @apply [--selection-tile:flush];\n}\n") },
++  static: { [TGV]: sub('        :data-size="props.size"', '        :data-size="props.size"\n        style="--selection-tile: plated"') },
++  ts: { [SHP]: sub(SHAPE_END, `${SHAPE_END}\nexport const writeTile = (el: HTMLElement, on: boolean) => el.style.setProperty("--selection-tile", on ? "flush" : "none");`) },
++  const: { [SHP]: sub(SHAPE_END, `${SHAPE_END}\nexport const TILE_FACT = "--selection-tile";\nexport const writeTile = (el: HTMLElement) => el.style.setProperty(TILE_FACT, "flush");`) },
++  concat: {
++    [SHP]: sub(SHAPE_END, `${SHAPE_END}\n/** a helper a later wave might add, the name built from parts */\nexport const writeTile = (el: HTMLElement) => el.style.setProperty("--selection-" + "tile", "flush");`),
++    [TGV]: (t) => sub('import { TOGGLE_GROUP_SHAPES, type ToggleGroupShape } from "./shape";', 'import { TOGGLE_GROUP_SHAPES, type ToggleGroupShape, writeTile } from "./shape";')(t)
++      .replace(/\n<\/script>/, () => '\nwatchEffect(() => {\n    const el = containerRef.value;\n    if (el?.parentElement?.classList.contains("card")) writeTile(el);\n});\n</script>'),
++  },
++  unpinned: { [SH]: sub("            --selection-paint: inherit !important;\n", "") },
++  "weight-step": { [SH]: sub('        --selection-ink: var(--selection-edge);\n    }', '        --selection-ink: var(--selection-edge);\n        font-weight: 600;\n    }') },
++};
++
++const RESTORE = ".h9-plant-restore";
++const sha1 = (b) => createHash("sha1").update(b).digest("hex");
++/** the worktree as git sees it, plus every untracked file under src by content (the patches' new files among them) */
++export function state(wt) {
++  const git = (args) => execFileSync("git", ["-C", wt, ...args], { encoding: "buffer", maxBuffer: 512 << 20 });
++  const status = git(["status", "--porcelain", "--untracked-files=all"]).toString().split("\n").filter((l) => l && !l.includes(RESTORE) && !l.includes(".vite-cache/") && !l.includes(".glass-generation")).join("\n");
++  const untracked = git(["ls-files", "--others", "--exclude-standard", "--", "src"]).toString().split("\n").filter(Boolean).sort();
++  return { diff: sha1(git(["diff", "HEAD", "--binary"])).slice(0, 12), status: sha1(status).slice(0, 12), statusText: status, files: Object.fromEntries(untracked.map((r) => [r, sha1(fs.readFileSync(path.join(wt, r))).slice(0, 8)])) };
++}
++export const stateLine = (s) => `git diff HEAD ${s.diff} · status ${s.status} · new files ${Object.entries(s.files).map(([f, h]) => `${path.basename(f)} ${h}`).join(", ") || "(none)"}`;
++
++export function apply(wt, name) {
++  const plant = PLANTS[name];
++  if (!plant) throw new Error(`no plant ${name}: one of ${Object.keys(PLANTS).join(", ")}`);
++  const rd = path.join(wt, RESTORE);
++  if (fs.existsSync(rd)) throw new Error(`${wt} already holds a plant (${RESTORE} exists): restore it first`);
++  const before = state(wt);
++  const next = Object.fromEntries(Object.entries(plant).map(([rel, fn]) => [rel, fn(fs.readFileSync(path.join(wt, rel), "utf8"))])); // every anchor checked before anything is written
++  fs.mkdirSync(rd);
++  const man = {};
++  Object.keys(plant).forEach((rel, k) => { fs.copyFileSync(path.join(wt, rel), path.join(rd, `f${k}`)); man[rel] = `f${k}`; });
++  fs.writeFileSync(path.join(rd, "manifest.json"), JSON.stringify({ name, before, files: man }, null, 1));
++  for (const [rel, text] of Object.entries(next)) fs.writeFileSync(path.join(wt, rel), text);
++  return { before, after: state(wt), files: Object.keys(plant) };
++}
++export function restore(wt) {
++  const rd = path.join(wt, RESTORE), mf = path.join(rd, "manifest.json");
++  if (!fs.existsSync(mf)) throw new Error(`${wt} holds no plant to restore`);
++  const man = JSON.parse(fs.readFileSync(mf, "utf8"));
++  for (const [rel, copy] of Object.entries(man.files)) fs.copyFileSync(path.join(rd, copy), path.join(wt, rel));
++  fs.rmSync(rd, { recursive: true, force: true });
++  const after = state(wt), b = man.before;
++  const bad = [];
++  if (after.diff !== b.diff) bad.push(`git diff HEAD ${b.diff} → ${after.diff}`);
++  if (after.status !== b.status) bad.push(`status ${b.status} → ${after.status}`);
++  for (const f of new Set([...Object.keys(b.files), ...Object.keys(after.files)])) if (b.files[f] !== after.files[f]) bad.push(`${f} ${b.files[f] ?? "(absent)"} → ${after.files[f] ?? "(absent)"}`);
++  return { name: man.name, before: b, after, bad };
++}
++
++if (import.meta.url === `file://${process.argv[1]}`) {
++  const [wtArg, verb, name] = process.argv.slice(2);
++  try {
++    if (wtArg === "list") { for (const k of Object.keys(PLANTS)) console.log(k); process.exit(0); }
++    const wt = path.resolve(wtArg ?? "");
++    if (!fs.existsSync(path.join(wt, "src"))) throw new Error(`${wt} is no worktree with src`);
++    if (verb === "apply") {
++      const r = apply(wt, name);
++      console.log(`PLANT ${name} applied (${r.files.join(", ")}) · before ${stateLine(r.before)} · planted ${stateLine(r.after)} · harness ${HARNESS.rev} ${HARNESS.hash}`);
++    } else if (verb === "restore") {
++      const r = restore(wt);
++      console.log(`PLANT ${r.name} restored · before ${stateLine(r.before)} · after ${stateLine(r.after)} · ${r.bad.length ? `MISMATCH: ${r.bad.join("; ")}` : "equal"} · harness ${HARNESS.rev} ${HARNESS.hash}`);
++      process.exit(r.bad.length ? 2 : 0);
++    } else if (verb === "state") console.log(`STATE ${stateLine(state(wt))} · harness ${HARNESS.rev} ${HARNESS.hash}`);
++    else throw new Error("usage: plants.mjs <worktree> apply <name> | restore | state; plants.mjs list");
++  } catch (e) { console.error(`PLANT HARNESS ERROR ${e.message ?? e}`); process.exit(2); }
++}
+diff -ruN harness-H8/scenes.mjs harness/scenes.mjs
+--- harness-H8/scenes.mjs	2026-10-27 18:12:17
++++ harness/scenes.mjs	2026-10-27 18:12:36
+@@ -121,6 +121,25 @@
+   { value: "any", label: "Any status" }, { value: "messaged", label: "Messaged", count: 12 },
+   { value: "unmessaged", label: "Not messaged", count: 30 }, { value: "seen", label: "Seen", count: 7 }, { value: "unseen", label: "Not seen", count: 35 },
+ ];
++/**
++ * H9 · T-4's L-5 cell (O-103e): C1's anatomy holding content C1 could carry, not only its five strings. The pass-9
++ * critic's ladder (`../pass-9/D4-Dp9-crit/routes/A9/migrated.mjs:16`), verbatim: 17 labels one character apart, 14 to 30
++ * characters, each with a count, so some label sits at a wrap boundary at some viewport. The 25-character label
++ * («Awaiting a reply from the», value `l25`) is the named falsifier: at 390×844 the selected weight 600 re-wrapped it
++ * 1 → 2 lines (+21 px, both engines, pass 9).
++ */
++export const LADDER = Array.from({ length: 17 }, (_, k) => {
++  const n = 14 + k;
++  return { value: `l${n}`, label: "Awaiting a reply from the reviewer".slice(0, n).trimEnd().padEnd(n, "s"), count: String(10 + k * 7) };
++});
++export const LADDER_FALSIFIER = "l25";
++/** The route's C1 group as the ladder: C1's own width (`w-48`, its 192 px min held fixed) over LADDER. Every anchor is
++ *  the route's C1 as `sites.mjs` writes it; a route whose C1 lacks one stops the build. */
++export function c1Ladder(group) {
++  const anchors = [['class="min-w-48"', 'class="w-48"'], ['aria-label="Status"', 'aria-label="Status ladder"'], ['v-for="o in STATUSES"', 'v-for="o in LADDER"']];
++  for (const [a] of anchors) if (!group.includes(a)) throw new Error(`c1Ladder: the route's C1 has no ${a}; the ladder cannot be derived from it`);
++  return anchors.reduce((g, [a, b]) => g.replace(a, b), group);
++}
+ 
+ // ── the groups, per site and arm ──────────────────────────────────────────────
+ function presetGroup({ verbatim = false, invalid = false, sibling = false, tone = null, contents = false, input = false, consumerAria = false } = {}) {
+@@ -405,6 +424,8 @@
+       sections.push([`${site}-migrated-stripped`, "stripped", b.host(stripItemClasses(mig[site].group))]);
+     }
+   }
++  // H9 · T-4's L-5 ladder on the route's C1, in C1's host (`c1-ladder-migrated`)
++  if (mig.c1) sections.push(["c1-ladder-migrated", "migrated", c1Host(c1Ladder(mig.c1.group))]);
+   // H5-2 · a route site that is no consumer site (the attack route's `matrix`) renders as `<site>-migrated` as written
+   for (const [site, m] of Object.entries(mig)) if (!SITE_BUILD[site]) sections.push([`${site}-migrated`, "migrated", m.group]);
+   sections.push(["preset-invalid", "library", presetHost(presetGroup({ invalid: true }))]);
+@@ -498,6 +519,7 @@
+ const LEVELS = ${JSON.stringify(LEVELS)};
+ const PALETTES = ${JSON.stringify(PALETTES)};
+ const STATUSES = ${JSON.stringify(STATUSES)};
++const LADDER = ${JSON.stringify(LADDER)};
+ const MIGRATION = ${JSON.stringify(migration ? { label: migration.label, sites: Object.keys(mig) } : null)};
+ // H7-2 · the floor's own words on the tile fact (build.mjs \`floorText\`: the registration comment in the worktree's
+ // utilities/base.css, whitespace collapsed; null when the worktree has none). FACT reads its strip sentence against paint
+diff -ruN harness-H8/sheet.mjs harness/sheet.mjs
+--- harness-H8/sheet.mjs	2026-10-27 18:12:17
++++ harness/sheet.mjs	2026-10-27 18:16:21
+@@ -2,41 +2,57 @@
+ // SHEET · H7-1, H7-4 · two static readings of a worktree that no paint read can make (REGISTRY §P6-4 B-1, B-4; rows R-10,
+ // E-3). It opens no browser, so it runs once, engine-free, like XSCRIPT. Paint's half of H7-1 is FACT's
+ // `foreign-ancestor` cell (fact-split.mjs), read on the attack build in both engines.
+-//   writers  H7-1 (B-1; R-10), widened by H8 (L-1) · every write of `--selection-tile` in the worktree's `src` is the
++//   writers  H7-1 (B-1; R-10), widened by H8 (L-1) and H9 (L-1a, L-1b) · every write of `--selection-tile` is the
+ //            route's one rule. A write is any value other than `none` or `inherit` (quotes and `!important` aside):
+-//            `var(--card-tile, flush)` and `on ? "flush" : "none"` write a tile as surely as the literal does, and
+-//            H7 counted only the literals `flush` and `plated`, so the pass-7 critic's three spellings passed
+-//            (`crit-var-writer`, `crit-static-style`, `crit-ts-ternary`; REGISTRY §P7-4 L-1). Read: every `.css`
+-//            file and every `.vue` `<style>` block under `src`, parsed with postcss (each declaration with its rule's
+-//            selector, whitespace collapsed, and its file); and every other spelling of a write in `.vue` and `.ts`
+-//            source, comments stripped: the property name in a writing position (followed by `:` or `,`, so a
+-//            style binding `'--selection-tile': x`, a static `style="--selection-tile: plated"`, a
+-//            `setProperty("--selection-tile", on ? "flush" : "none")`, a utility `[--selection-tile:flush]`), its
+-//            value read to the declaration's end. A read (`getPropertyValue("--selection-tile")`, `var(...)`, a
+-//            `style(--selection-tile: …)` query) is not a write. The route names its
+-//            one rule in its `route.json` (`tileWriter: { file, selector }`); with no route (HEAD, a floor alone) the
+-//            want is no writer at all. Gating. The units in a route's own test file read its lane sheet only, so a
+-//            second writer in another sheet (`.card > .toggle-group { --selection-tile: flush }` in base.css,
+-//            `crit-foreign-writer`, `D′c6` §4.1) passed every one of them
++//            `var(--card-tile, flush)` and `on ? "flush" : "none"` write a tile as surely as the literal does (L-1).
++//            H9 reads each language where it has one spelling:
++//              CSS     THE BUILT STYLESHEET (L-1b), never the source. `--built <build dir>` names a build.mjs output of
++//                      the same worktree; every `.css` file under its `dist/assets` is parsed with postcss, and each
++//                      declaration whose property is `--selection-tile` (CSS escapes resolved) is read with its
++//                      rule's selector. The consumer's pipeline compiles a CSS-escaped name (`--selection\-tile`) and
++//                      a Tailwind `@apply [--selection-tile:flush]` to the plain declaration, so the pass-9 critic's
++//                      two CSS spellings, which passed every source reader, are one spelling here; and a `.vue`
++//                      `<style>` block is in it once its component is in the app. Rules under a `[data-arm…]` selector
++//                      are the harness's own scene CSS (scenes.mjs, a route's `css`) and are not the library's. The
++//                      route's rule is matched by its selector (attribute quotes and whitespace normalised): a built
++//                      sheet carries no file. A build older than the newest file in the worktree's `src`, or of
++//                      another worktree, stops the read loud (exit 2): a stale sheet is not read
++//              script  `.vue` outside `<style>` and `.ts`, in the worktree's `src`, comments stripped (line numbers
++//                      kept): (1) the property name in a writing position (followed by `:` or `,`: a style binding's
++//                      key, a static `style="--selection-tile: plated"`, a `setProperty`'s first argument, a utility),
++//                      its value read to the declaration's end (L-1); (2) the name as a quoted string literal anywhere
++//                      but `getPropertyValue`'s argument or a writing position (L-1a): a name held in a constant is
++//                      written later where no reader resolves it. A name built at run time (`"--selection-" + "tile"`)
++//                      is no literal and no static reader resolves it; FACT's paint cells are its backstop wherever
++//                      a composition reaches it (plants.mjs `concat`)
++//            A read (`getPropertyValue("--selection-tile")`, `var(...)`, a `style(--selection-tile: …)` query) is not a
++//            write. The route names its one rule in its `route.json` (`tileWriter: { file, selector }`); with no route
++//            (HEAD, a floor alone) the want is no writer at all. Gating
+ //   wrap     H7-4 (B-4; E-3) · MIGRATION.md's `--selection-tile` bullet is one wrapped paragraph: every line fits the
+ //            repository's measure (`.prettierrc.json` printWidth, 88) and every break is where a fill would put it (the
+ //            next line's first word, a backtick code span counted whole, would not fit on the line). The bullet runs
+ //            from its `- \`--selection-tile\`` line to the next line that is not a two-space continuation. Gating;
+ //            a worktree whose MIGRATION.md has no such bullet reads UNMEASURED (HEAD)
+-//   node sheet.mjs --wt <worktree> [--route <route dir>] [--out <dir>]
+-//   node sheet.mjs --fixture [--fault sh-foreign|sh-markup|sh-missing|sh-ragged|sh-floor|sh-var|sh-static|sh-ternary|sh-reads] [--out <dir>]
++//   node sheet.mjs --wt <worktree> --built <build dir> [--route <route dir>] [--out <dir>]
++//   node sheet.mjs --fixture [--fault <name>] [--out <dir>]
+ //   node sheet.mjs --selftest [--out <dir>]
+ //   node sheet.mjs --fill --wt <worktree>     prints the worktree's bullet filled at the measure (not a witness)
+ // The fixture is a small tree the script writes under <out>/sheet-fixture/<fault>/: the floor's registration and reset
+-// (base.css), a lane sheet with one route rule, a component that reads the fact, and a filled MIGRATION bullet. Plants:
+-// `sh-foreign` the critic's foreign writer in base.css; `sh-markup` a style binding that writes `plated` in a `.vue`
+-// template; `sh-missing` the route names a rule the sheet does not have; `sh-ragged` the bullet with one line over the
+-// measure and one broken short (floor v5's seam). Control `sh-floor`: no route and no writer (a floor alone), PASS.
+-// H8 (L-1), the pass-7 critic's three spellings: `sh-var` `var(--card-tile, flush)` in base.css; `sh-static` a static
+-// `style="--selection-tile: plated"` in a `.vue` template; `sh-ternary` a `.ts` helper that writes
+-// `setProperty("--selection-tile", on ? "flush" : "none")`. Control `sh-reads`: reads (`getPropertyValue`, `var()`,
+-// a style query), `none`/`inherit` writes in code and a comment that names `--selection-tile: flush`, PASS.
+-// Exit 0 PASS, 1 FAIL, 2 on a harness error (no worktree, an unreadable route).
++// (base.css), a lane sheet with one route rule, a component that reads the fact, a filled MIGRATION bullet, and its
++// built stylesheet (`build/dist/assets/index.css`, the fixture's CSS as the pipeline emits it: minified, attribute
++// quotes dropped, escapes and `@apply` resolved). Plants: `sh-foreign` the critic's foreign writer in base.css;
++// `sh-markup` a style binding that writes `plated` in a `.vue` template; `sh-missing` the route names a rule the sheet
++// does not have; `sh-ragged` the bullet with one line over the measure and one broken short (floor v5's seam). Control
++// `sh-floor`: no route and no writer (a floor alone), PASS. H8 (L-1), the pass-7 critic's three spellings: `sh-var`
++// `var(--card-tile, flush)` in base.css; `sh-static` a static `style="--selection-tile: plated"` in a `.vue` template;
++// `sh-ternary` a `.ts` helper that writes `setProperty("--selection-tile", on ? "flush" : "none")`. Control `sh-reads`:
++// reads (`getPropertyValue`, `var()`, a style query), `none`/`inherit` writes in code and a comment that names
++// `--selection-tile: flush`, PASS. H9: `sh-const` (L-1a, `crit-const-name`) the name held in a constant and written
++// through it; `sh-esc` (L-1b) a built sheet that still carries the escaped name `--selection\-tile: flush` (the reader
++// resolves CSS escapes, so no pipeline's spelling of the ident hides it); control `sh-scene`: a write under a
++// `[data-arm]` scene rule (the harness's CSS) is not the library's, PASS; `sh-stale`: the built sheet is older than
++// `src`, HARNESS ERROR (exit 2).
++// Exit 0 PASS, 1 FAIL, 2 on a harness error (no worktree, an unreadable route, no built sheet, a stale built sheet).
+ import fs from "node:fs";
+ import path from "node:path";
+ import { spawnSync } from "node:child_process";
+@@ -54,32 +70,60 @@
+   if (!fs.existsSync(dir)) return [];
+   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(path.join(dir, e.name)) : [path.join(dir, e.name)]));
+ }
+-/** every write of a tile value in the worktree's src: { file, selector | where, value, kind } */
+-export function tileWriters(wt) {
++/** CSS escapes resolved (`--selection\\-tile`, `--selection\\2d tile`): the ident the engine reads */
++const unescape = (s) => s.replace(/\\([0-9a-fA-F]{1,6}\s?|[^\n0-9a-fA-F])/g, (_, e) => (/^[0-9a-fA-F]/.test(e) ? String.fromCodePoint(parseInt(e, 16)) : e));
++/** a selector as a built sheet and a source both spell it: whitespace collapsed, attribute-value quotes dropped */
++export const normSel = (s) => ws(s).replace(/\[([\w-]+)([~|^$*]?=)(["'])([^"']*)\3\]/g, "[$1$2$4]").replace(/\s*([>+~,])\s*/g, "$1");
++/** H9 (L-1b) · every CSS write of a tile value in a build's built stylesheet: { file, selector, value, kind: "css" } */
++export function builtWriters(buildDir, wt) {
++  const metaFile = path.join(buildDir, "build.json"), assets = path.join(buildDir, "dist", "assets");
++  if (!fs.existsSync(metaFile) || !fs.existsSync(assets)) return { error: `${buildDir} is no build.mjs output (no build.json or dist/assets)` };
++  const meta = JSON.parse(fs.readFileSync(metaFile, "utf8"));
++  if (wt && path.resolve(meta.worktree) !== path.resolve(wt)) return { error: `the built sheet ${buildDir} is of ${meta.worktree}, not of ${wt}` };
++  const files = fs.readdirSync(assets).filter((f) => f.endsWith(".css"));
++  if (!files.length) return { error: `${assets} holds no .css: no built sheet to read` };
++  if (wt) {
++    const newest = walk(path.join(wt, "src")).reduce((m, f) => Math.max(m, fs.statSync(f).mtimeMs), 0), built = Date.parse(meta.built);
++    if (!(built >= newest)) return { error: `the built sheet ${buildDir} (built ${meta.built}) is older than the worktree's src (newest file ${new Date(newest).toISOString()}): rebuild before reading` };
++  }
+   const out = [];
++  for (const f of files) {
++    postcss.parse(fs.readFileSync(path.join(assets, f), "utf8")).walkDecls((d) => {
++      if (unescape(d.prop) !== "--selection-tile") return;
++      const v = ws(d.value.replace(/!important/, ""));
++      if (!isWrite(v)) return;
++      const chain = [];
++      for (let p = d.parent; p && p.type !== "root"; p = p.parent) chain.push(p.type === "rule" ? p.selector : `@${p.name} ${p.params}`);
++      if (chain.some((s) => /\[data-arm\b/.test(s))) return; // the harness's scene CSS, not the library's
++      out.push({ file: `${path.basename(buildDir)}/dist/assets/${f}`, selector: d.parent?.type === "rule" ? normSel(d.parent.selector) : `@${d.parent?.name} ${d.parent?.params}`, value: v, kind: "css", prop: d.prop });
++    });
++  }
++  return { writers: out, meta, files };
++}
++/** H9 (L-1, L-1a) · every script write, and every held name, in the worktree's src: { file, selector, value, kind } */
++export function scriptWriters(wt) {
++  const out = [];
+   for (const f of walk(path.join(wt, "src"))) {
+     const rel = path.relative(wt, f);
+-    if (!/\.(css|vue|ts)$/.test(f)) continue;
++    if (!/\.(vue|ts)$/.test(f)) continue;
+     const text = fs.readFileSync(f, "utf8");
+     if (!text.includes("--selection-tile")) continue;
+-    const sheets = f.endsWith(".css") ? [text] : f.endsWith(".vue") ? [...text.matchAll(/<style\b[^>]*>([^]*?)<\/style>/g)].map((m) => m[1]) : [];
+-    for (const css of sheets) {
+-      postcss.parse(css).walkDecls("--selection-tile", (d) => {
+-        const v = ws(d.value.replace(/!important/, ""));
+-        if (isWrite(v)) out.push({ file: rel, selector: ws(d.parent?.selector ?? `@${d.parent?.name ?? "?"} ${d.parent?.params ?? ""}`), value: v, kind: "css" });
+-      });
+-    }
+-    // other spellings, outside a stylesheet, comments stripped (line numbers kept): the name in a writing position (a
+-    // style binding's key, a static declaration, a setProperty's first argument, a utility), its value to the end
++    // comments stripped (line numbers kept), outside a stylesheet
+     const blank = (s) => s.replace(/[^\n]/g, " ");
+-    const code = (f.endsWith(".vue") ? text.replace(/<style\b[^>]*>[^]*?<\/style>/g, blank) : f.endsWith(".ts") ? text : "")
++    const code = (f.endsWith(".vue") ? text.replace(/<style\b[^>]*>[^]*?<\/style>/g, blank) : text)
+       .replace(/<!--[^]*?-->|\/\*[^]*?\*\//g, blank).replace(/(^|[^:])(\/\/.*)$/gm, (_, a, c) => a + blank(c));
++    const lineOf = (i) => code.slice(0, i).split("\n").length;
++    // (1) the name in a writing position, its value to the declaration's end (L-1)
+     for (const m of code.matchAll(/(?<!style\(\s*)--selection-tile["'`]?\s*[:,]\s*([^;"}\]\n]*(?:"[^"\n]*"[^;"}\]\n]*)*)/g)) {
+       const v = m[1].replace(/\)\s*$/, "").trim();
+       if (!isWrite(v)) continue;
+-      const line = code.slice(0, m.index).split("\n").length;
+-      out.push({ file: rel, selector: `${rel}:${line} «${ws(m[0])}»`, value: v, kind: "markup" });
++      out.push({ file: rel, selector: `${rel}:${lineOf(m.index)} «${ws(m[0])}»`, value: v, kind: "markup" });
+     }
++    // (2) the name held: a quoted literal that is neither getPropertyValue's argument nor in a writing position (L-1a)
++    for (const m of code.matchAll(/(getPropertyValue\(\s*)?(["'`])--selection-tile\2(\s*[:,])?/g)) {
++      if (m[1] || m[3]) continue;
++      out.push({ file: rel, selector: `${rel}:${lineOf(m.index)} «${ws(m[0])}»`, value: "(the name held: written where no reader resolves it)", kind: "literal" });
++    }
+   }
+   return out;
+ }
+@@ -100,33 +144,36 @@
+ }
+ function width(wt) { try { return JSON.parse(fs.readFileSync(path.join(wt, ".prettierrc.json"), "utf8")).printWidth ?? 88; } catch { return 88; } }
+ 
+-export function read(wt, route) {
++export function read(wt, route, built) {
+   if (!fs.existsSync(path.join(wt, "src"))) return { error: `${wt} has no src` };
++  if (!built) return { error: "pass --built <build dir>: SHEET reads CSS writes on the built stylesheet (H9, L-1b), never the source" };
+   let rule = null, label = "no route (a floor alone: no writer is the want)";
+   if (route) {
+     const cfg = path.join(route, "route.json");
+     if (!fs.existsSync(cfg)) return { error: `${route} has no route.json` };
+     const j = JSON.parse(fs.readFileSync(cfg, "utf8"));
+     if (!j.tileWriter?.file || !j.tileWriter?.selector) return { error: `${cfg} names no tileWriter { file, selector }: the route's one rule` };
+-    rule = { file: j.tileWriter.file, selector: ws(j.tileWriter.selector) };
+-    label = `route ${j.label ?? path.basename(route)}: its one rule ${rule.file} «${rule.selector.slice(0, 120)}»`;
++    rule = { file: j.tileWriter.file, selector: normSel(j.tileWriter.selector) };
++    label = `route ${j.label ?? path.basename(route)}: its one rule «${rule.selector.slice(0, 120)}» (${rule.file})`;
+   }
++  const b = builtWriters(built, wt);
++  if (b.error) return { error: b.error };
+   const cells = [];
+-  const ws_ = tileWriters(wt);
+-  const isRule = (w) => rule && w.kind === "css" && w.file === rule.file && w.selector === rule.selector;
++  const ws_ = [...b.writers, ...scriptWriters(wt)];
++  const isRule = (w) => rule && w.kind === "css" && w.selector === rule.selector;
+   const foreign = ws_.filter((w) => !isRule(w)), mine = ws_.filter(isRule);
+   const okW = foreign.length === 0 && (rule ? mine.length === 1 : true);
+-  cells.push({ gating: true, pass: okW, line: `writers · every --selection-tile write in src (any value but none | inherit; H8) is the route's one rule ·${label} · ${ws_.length} write(s) found${rule ? `, the route's rule ${mine.length}×${mine.length === 1 ? "" : " (WANT exactly 1)"}` : ""}${foreign.length ? ` · ${foreign.length} OTHER: ${foreign.map((w) => `${w.file} «${w.selector.slice(0, 80)}» ${w.value} (${w.kind})`).join("; ")}` : " · no other writer"}` });
+-  const W = width(wt), b = bulletWrap(wt, W);
+-  if (!b) cells.push({ gating: true, pass: null, line: `wrap · MIGRATION.md's --selection-tile bullet · UNMEASURED: no such bullet (the floor has not written it)` });
+-  else cells.push({ gating: true, pass: b.bad.length === 0, line: `wrap · MIGRATION.md:${b.from}-${b.to}, the --selection-tile bullet (${b.lines} lines) is one paragraph filled at ${W} columns · ${b.bad.length ? `RAGGED: ${b.bad.join("; ")}` : "every line fits and every break is a fill's"}` });
++  cells.push({ gating: true, pass: okW, line: `writers · every --selection-tile write (any value but none | inherit; H8) is the route's one rule · CSS on the built sheet ${path.basename(built)} (${b.files.join(", ")}; H9 L-1b), script and held names in src (H9 L-1a) · ${label} · ${ws_.length} write(s) found${rule ? `, the route's rule ${mine.length}×${mine.length === 1 ? "" : " (WANT exactly 1)"}` : ""}${foreign.length ? ` · ${foreign.length} OTHER: ${foreign.map((w) => `${w.kind === "css" ? `${w.file} «${w.selector.slice(0, 80)}»${w.prop !== "--selection-tile" ? ` (written ${w.prop})` : ""}` : w.selector.slice(0, 120)} ${w.value} (${w.kind})`).join("; ")}` : " · no other writer"}` });
++  const W = width(wt), bw = bulletWrap(wt, W);
++  if (!bw) cells.push({ gating: true, pass: null, line: `wrap · MIGRATION.md's --selection-tile bullet · UNMEASURED: no such bullet (the floor has not written it)` });
++  else cells.push({ gating: true, pass: bw.bad.length === 0, line: `wrap · MIGRATION.md:${bw.from}-${bw.to}, the --selection-tile bullet (${bw.lines} lines) is one paragraph filled at ${W} columns · ${bw.bad.length ? `RAGGED: ${bw.bad.join("; ")}` : "every line fits and every break is a fill's"}` });
+   return { cells, label };
+ }
+ 
+ function report(cells, label, out) {
+   const g = cells.filter((c) => c.gating && c.pass !== null), passed = g.filter((c) => c.pass).length, pass = g.length > 0 && passed === g.length;
+-  console.log(`SHEET · the tile fact has one writer in src, and MIGRATION's tile bullet is one wrapped paragraph (H7-1, H7-4; R-10, E-3)`);
+-  console.log(`  target ${label} · engine-free (a static read of the worktree's src and MIGRATION.md) · harness ${HARNESS.rev} ${HARNESS.hash}`);
++  console.log(`SHEET · the tile fact has one writer, and MIGRATION's tile bullet is one wrapped paragraph (H7-1, H7-4, H9; R-10, E-3)`);
++  console.log(`  target ${label} · engine-free (a static read of the built stylesheet, the worktree's script and MIGRATION.md) · harness ${HARNESS.rev} ${HARNESS.hash}`);
+   for (const c of cells) console.log(`  ${(c.pass === null ? "UNMEASURED" : c.pass ? "PASS" : "FAIL").padEnd(10)} ${c.line}`);
+   console.log(`SHEET ${pass ? "PASS" : "FAIL"} · ${passed}/${g.length} gating cells pass`);
+   if (out) { fs.mkdirSync(path.join(out, "runs", "sheet"), { recursive: true }); fs.writeFileSync(path.join(out, "runs", "sheet", `SHEET-${label.replace(/[^\w.-]+/g, "_").slice(0, 80)}.json`), JSON.stringify({ id: "SHEET", harness: HARNESS, label, cells, pass }, null, 1)); }
+@@ -154,13 +201,25 @@
+   // H8 (L-1): the three spellings the H7 read missed, and a control of reads and non-writes in code
+   if (fault === "sh-static") put("src/components/toggle-group/ToggleGroup.vue", `<template><div class="toggle-group" style="--selection-tile: plated"><slot /></div></template>\n`);
+   if (fault === "sh-ternary") put("src/components/toggle-group/shape.ts", `/** a helper a later wave might add: write the tile fact from script */\nexport const writeTile = (el: HTMLElement, on: boolean) => el.style.setProperty("--selection-tile", on ? "flush" : "none");\n`);
++  // H9 (L-1a): the name held in a constant and written through it (`crit-const-name`)
++  if (fault === "sh-const") put("src/components/toggle-group/shape.ts", `/** the property name held once, as a later wave might spell it */\nexport const TILE_FACT = "--selection-tile";\nexport const writeTile = (el: HTMLElement) => el.style.setProperty(TILE_FACT, "flush");\n`);
+   if (fault === "sh-reads") put("src/components/toggle-group/shape.ts", `// --selection-tile: flush is written by the lane sheet\n/* el.style.setProperty("--selection-tile", "flush") */\nexport const read = (el: HTMLElement) => getComputedStyle(el).getPropertyValue("--selection-tile").trim();\nexport const reset = (el: HTMLElement) => el.style.setProperty("--selection-tile", "none");\nexport const pin = { "--selection-tile": "inherit" };\n`);
+   put("src/components/toggle-group/styles.css", `@layer components {\n    .toggle-group { --selection-tile: none; }\n${fault === "sh-floor" ? "" : '    .toggle-group[data-shape="cell"] {\n        --selection-tile: flush;\n    }\n'}    @scope (.toggle-group__item) to (.toggle-group, .segmented-tabs) { :scope, :scope * { --selection-tile: inherit !important; } }\n}\n`);
+   put("src/components/toggle-group/ToggleGroupItem.vue", `<script setup lang="ts">\nconst tile = (b: HTMLElement) => getComputedStyle(b).getPropertyValue("--selection-tile").trim();\n</script>\n<template><button class="toggle-group__item"${fault === "sh-markup" ? ` :style="{ '--selection-tile': 'plated' }"` : ""}><slot /></button></template>\n<style>\n.toggle-group__item { --selection-tile: inherit; }\n</style>\n`);
+   put("MIGRATION.md", ["# Migration", "", ...(fault === "sh-ragged" ? RAGGED : FILLED), "- The next bullet.", ""].join("\n"));
++  // H9 (L-1b) · the built stylesheet, as the consumer's pipeline emits the fixture's CSS: every sheet and `.vue` `<style>`
++  // block in src, comments and `@property` dropped, whitespace collapsed, attribute-value quotes dropped. `sh-esc`: a
++  // built sheet that kept an escaped name; `sh-scene`: the harness's own scene rule under `[data-arm]`
++  const css = walk(path.join(dir, "src")).flatMap((f) => (f.endsWith(".css") ? [fs.readFileSync(f, "utf8")] : f.endsWith(".vue") ? [...fs.readFileSync(f, "utf8").matchAll(/<style\b[^>]*>([^]*?)<\/style>/g)].map((m) => m[1]) : []))
++    .join("\n").replace(/\/\*[^]*?\*\//g, "").replace(/@property[^{]*\{[^}]*\}/g, "").replace(/\[([\w-]+)="([^"]*)"\]/g, "[$1=$2]").replace(/\s+/g, " ")
++    + (fault === "sh-esc" ? " @layer components{.card>.toggle-group{--selection\\-tile:flush}}" : "")
++    + (fault === "sh-scene" ? ' [data-arm="migrated"].tx-matrix{.mx-st-consumer{--selection-tile:flush}}' : "");
++  put("build/dist/assets/index-fixture.css", css);
++  const newest = walk(path.join(dir, "src")).reduce((m, f) => Math.max(m, fs.statSync(f).mtimeMs), 0);
++  put("build/build.json", JSON.stringify({ label: "sheet-fixture", worktree: dir, built: new Date(fault === "sh-stale" ? 946684800000 : Math.ceil(newest)).toISOString() }));
+   const route = path.join(dir, "route");
+   put("route/route.json", JSON.stringify({ label: "fixture", tileWriter: { file: "src/components/toggle-group/styles.css", selector: fault === "sh-missing" ? ".toggle-group[data-shape=\"tile\"]" : '.toggle-group[data-shape="cell"]' } }));
+-  return { wt: dir, route: fault === "sh-floor" ? null : route };
++  return { wt: dir, route: fault === "sh-floor" ? null : route, built: path.join(dir, "build") };
+ }
+ export const SHEET_FAULTS = {
+   "sh-foreign": { why: "H7-1 plant (`crit-foreign-writer`): `.card > .toggle-group { --selection-tile: flush }` in base.css, a second writer outside the lane sheet", cell: /^\s+FAIL\s+writers/ },
+@@ -172,6 +231,10 @@
+   "sh-static": { why: "H8 plant (L-1, `crit-static-style`): a static `style=\"--selection-tile: plated\"` in a `.vue` template", cell: /^\s+FAIL\s+writers/ },
+   "sh-ternary": { why: "H8 plant (L-1, `crit-ts-ternary`): `setProperty(\"--selection-tile\", on ? \"flush\" : \"none\")` in a `.ts` helper", cell: /^\s+FAIL\s+writers/ },
+   "sh-reads": { why: "H8 CONTROL, must PASS: reads (getPropertyValue, var(), a style query), none/inherit writes in code, and comments that name a tile value are no writer", expect: "pass" },
++  "sh-const": { why: "H9 plant (L-1a, `crit-const-name`): the name held in a `.ts` constant and written through it, a write no value reader sees", cell: /^\s+FAIL\s+writers/ },
++  "sh-esc": { why: "H9 plant (L-1b): a built sheet that kept the escaped name `--selection\\-tile: flush` on `.card > .toggle-group`; the reader resolves CSS escapes", cell: /^\s+FAIL\s+writers/ },
++  "sh-scene": { why: "H9 CONTROL, must PASS: a write under a `[data-arm]` scene rule in the built sheet is the harness's CSS, not the library's", expect: "pass" },
++  "sh-stale": { why: "H9 plant: the built sheet is older than src; the read stops loud (exit 2) instead of reading a stale sheet", expect: "error", cell: /stale|older than/ },
+ };
+ 
+ const a = parseArgs();
+@@ -184,13 +247,13 @@
+     for (const [name, f] of cases) {
+       const r = spawnSync(process.execPath, [new URL(import.meta.url).pathname, "--fixture", ...(f ? ["--fault", name] : []), "--out", out], { encoding: "utf8" });
+       const o = (r.stdout ?? "") + (r.stderr ?? ""), last = o.trim().split("\n").reverse().find((l) => /^SHEET (PASS|FAIL)|HARNESS ERROR/.test(l)) ?? "(no verdict)";
+-      const want = !f || f.expect === "pass" ? 0 : 1;
+-      const fails = o.split("\n").filter((l) => /^\s+FAIL\s/.test(l)), hit = !f?.cell || fails.some((l) => f.cell.test(l));
++      const want = !f || f.expect === "pass" ? 0 : f.expect === "error" ? 2 : 1;
++      const fails = o.split("\n").filter((l) => (want === 2 ? /HARNESS ERROR/ : /^\s+FAIL\s/).test(l)), hit = !f?.cell || fails.some((l) => f.cell.test(l));
+       const ok = r.status === want && (want === 0 || hit);
+       if (!ok) broken++;
+       console.log(`${ok ? "OK    " : "BROKEN"} SHEET ${name}${f ? ` (${f.why})` : ""} · exit ${r.status} (want ${want})${f && want && !hit ? ` · the planted cell ${f.cell} is not among the failing lines` : ""} · ${last}${fails[0] ? ` · first FAIL: ${fails[0].trim().slice(0, 200)}` : ""}`);
+     }
+-    console.log(broken ? `sheet selftest: ${broken} BROKEN` : `sheet selftest: ${cases.length} runs; the check passes the fixture and the floor-alone and reads controls, and fails a foreign writer, a markup writer, a missing route rule, a ragged bullet and the three L-1 spellings (var, static style, ternary) on the planted cell`);
++    console.log(broken ? `sheet selftest: ${broken} BROKEN` : `sheet selftest: ${cases.length} runs; the check passes the fixture and the floor-alone and reads controls, and fails a foreign writer, a markup writer, a missing route rule, a ragged bullet and the three L-1 spellings (var, static style, ternary), the held name (L-1a) and an escaped name in the built sheet (L-1b) on the planted cell, passes a harness scene rule, and stops loud on a stale built sheet`);
+     process.exit(broken ? 1 : 0);
+   }
+   if (a.fill && typeof a.wt === "string") { // print the worktree's bullet filled at the measure (for the floor's editor)
+@@ -198,16 +261,16 @@
+     const lines = [md[at]]; for (let i = at + 1; i < md.length && /^ {2}\S/.test(md[i]); i++) lines.push(md[i]);
+     console.log(fill(lines.map((l) => l.trim()).join(" ").replace(/^- /, ""), width(a.wt)).join("\n")); process.exit(0);
+   }
+-  let wt, route, label;
++  let wt, route, built, label;
+   if (a.fixture) {
+     const fault = typeof a.fault === "string" ? a.fault : "";
+-    ({ wt, route } = fixtureTree(path.join(out, "sheet-fixture", fault || "clean"), fault));
++    ({ wt, route, built } = fixtureTree(path.join(out, "sheet-fixture", fault || "clean"), fault));
+     label = `fixture${fault ? "+" + fault : ""}`;
+   } else {
+-    if (typeof a.wt !== "string") throw new Error("pass --wt <worktree> [--route <route dir>], --fixture or --selftest");
+-    wt = path.resolve(a.wt); route = typeof a.route === "string" ? path.resolve(a.route) : null;
++    if (typeof a.wt !== "string") throw new Error("pass --wt <worktree> --built <build dir> [--route <route dir>], --fixture or --selftest");
++    wt = path.resolve(a.wt); route = typeof a.route === "string" ? path.resolve(a.route) : null; built = typeof a.built === "string" ? path.resolve(a.built) : null;
+   }
+-  const j = read(wt, route);
++  const j = read(wt, route, built);
+   if (j.error) { console.error(`SHEET HARNESS ERROR ${j.error}`); process.exit(2); }
+   process.exit(report(j.cells, label ?? `${path.basename(wt)} · ${j.label}`, out));
+ } catch (e) { console.error(`SHEET HARNESS ERROR ${e.stack ?? e}`); process.exit(2); }
+diff -ruN harness-H8/sites.mjs harness/sites.mjs
+--- harness-H8/sites.mjs	2026-10-27 18:12:17
++++ harness/sites.mjs	2026-10-27 18:12:22
+@@ -16,7 +16,9 @@
+ //   strip     V1  glyph / label                      glyph above the label; the column centred (the consumer's)
+ //   f1        F1  thumbnail / label / bound word     thumbnail above, the bound endpoint a word below; centred
+ //   v2        V2  swatches / name and count          swatches above; the name and count one row (the consumer's)
+-//   c1        C1  label / count                      one-row pills, no declaration on either route (Q-10 (b))
++//   c1        C1  label / count                      D′ declares `shape="cell"` (Q-10 (i), O-103c): a cell at rest and
++//                                                   selected; H9 (L-4) moved the ruled declaration here from the
++//                                                   pass-8 route dir, which carried it as an override
+ import { K2_SPECIMEN, K2_DECLARATIONS } from "./k2.mjs";
+ 
+ export const DECLARATIONS = K2_DECLARATIONS;
+@@ -72,7 +74,7 @@
+       </ToggleGroup>`,
+     },
+     c1: {
+-      group: `<ToggleGroup type="single" orientation="vertical" data-group aria-label="Status" class="min-w-48" v-model="model">
++      group: `<ToggleGroup type="single"${shape} orientation="vertical" data-group aria-label="Status" class="min-w-48" v-model="model">
+         <ToggleGroupItem v-for="o in STATUSES" :key="o.value" :value="o.value" data-item>
+           <span data-ink data-line-slot class="flex-1 text-start">{{ o.label }}</span>
+           <span v-if="o.count !== undefined" data-ink class="num">{{ o.count }}</span>
+diff -ruN harness-H8/t4-ring-whole.mjs harness/t4-ring-whole.mjs
+--- harness-H8/t4-ring-whole.mjs	2026-10-27 18:12:17
++++ harness/t4-ring-whole.mjs	2026-10-27 18:36:45
+@@ -7,22 +7,132 @@
+ // in light). Two cells per scene: nothing selected and an item selected, so selection paint cannot stand in for
+ // the ring. Light and dark gate. H3-8: forced colours gate the ring's reach (≥ 1.5 px on every side, so a host that
+ // pads less than the forced-colours ring reaches fails; pass 2 read 1.00 px on one side of specimen-migrated, `D′c` §7).
++//
++// H9 · L-5, SELECTION CHANGES NO GEOMETRY FOR ANY CONTENT (INBOUND O-103e, in T-4's fold; REGISTRY §P9-2, §P9-6). On a
++// build whose route migrates C1, the ladder scene `c1-ladder-migrated` (scenes.mjs `LADDER`, `c1Ladder`: the route's
++// C1 group at its own 192 px holding 17 labels of 14 to 30 characters) is read at 390×844 and 1440×900, light, dark
++// and PRT. Each option is selected in turn by a real click (pointer parked after), and again by keys (Tab in from the
++// sentinel, Space on the first option, then ArrowDown through the rest). After each selection the page settles (no
++// running animation) and every option, its label's line count and the group are read with transforms, transitions
++// and animations neutralised for the read. Two boxes per element, both scroll-free: the `offsetTop` chain to the group
++// (integers), and the border box relative to the group's (sub-pixel; the page scrolls under a click and both terms
++// move with it, so no scroll is counted). The group's own box is its size and its offset from the scene root.
++//   ladder      gating per viewport × mode × path: every option, every label's line count and the group equal at rest
++//               and with each option selected, ±0.5 px; every selection must land (`data-state="on"` on the option the
++//               step selects) or the cell fails as vacuous
++//   falsifier   gating at 390×844 per mode × path: the 25-character label («Awaiting a reply from the», `l25`) keeps its
++//               line count and its option's box when it is selected. Pass 9 read it 1 → 2 lines, +21 px, under the
++//               selected weight 600; the planted library `weight-step` (plants.mjs) must FAIL it in both engines
++// A build with no migrated C1 (HEAD, a route without C1, the fixture) has no ladder and prints one note.
+ //   node t4-ring-whole.mjs --build <dir> | --fixture [--fault t4] [--engine chromium|webkit] [--save <dir>]
+ import path from "node:path";
+-import { cli, openPage, sceneList, scenesFor, engineVersion, engineOf } from "./lib.mjs";
++import { cli, openPage, sceneList, scenesFor, engineVersion, engineOf, f2 } from "./lib.mjs";
+ import { ringCoverage, judgeT4 } from "./measure.mjs";
++import { LADDER, LADDER_FALSIFIER } from "./scenes.mjs";
+ 
++export const L5_VIEWPORTS = [{ width: 390, height: 844 }, { width: 1440, height: 900 }];
++export const L5_MODES = ["light", "dark", "prt"];
++const NEUTRAL = "[data-scene], [data-scene] *, [data-scene] *::before, [data-scene] *::after { transform: none !important; scale: none !important; translate: none !important; rotate: none !important; transition: none !important; animation: none !important; }";
++/** every option's two scroll-free boxes, its label's line count, weight and state; the group's size and offset */
++const L5_READ = (neutral) => {
++  const st = document.createElement("style"); st.textContent = neutral; document.head.append(st);
++  const scene = document.querySelector("[data-scene]"), group = scene.querySelector("[data-group]");
++  const g = group.getBoundingClientRect(), s = scene.getBoundingClientRect();
++  const chain = (el) => { let x = 0, y = 0; for (let e = el; e && e !== group; e = e.offsetParent) { x += e.offsetLeft; y += e.offsetTop; } return { x, y, w: el.offsetWidth, h: el.offsetHeight }; };
++  const rel = (el) => { const b = el.getBoundingClientRect(); return { x: b.left - g.left, y: b.top - g.top, w: b.width, h: b.height }; };
++  const lines = (el) => { const t = el && [...el.childNodes].find((n) => n.nodeType === 3 && n.textContent.trim()); if (!t) return 0; const rg = document.createRange(); rg.selectNodeContents(t); return new Set([...rg.getClientRects()].filter((q) => q.width > 0).map((q) => Math.round(q.top))).size; };
++  const out = {
++    group: { chain: { x: 0, y: 0, w: group.offsetWidth, h: group.offsetHeight }, rel: { x: g.left - s.left, y: g.top - s.top, w: g.width, h: g.height } },
++    items: [...group.querySelectorAll("[data-item]")].map((el) => ({ chain: chain(el), rel: rel(el), lines: lines(el.querySelector("[data-line-slot]")), text: (el.querySelector("[data-line-slot]")?.textContent ?? "").trim(), fw: getComputedStyle(el).fontWeight, on: el.dataset.state === "on" })),
++    scrollY,
++  };
++  st.remove(); return out;
++};
++const settle = async (page) => { await page.waitForTimeout(120); for (let t = 0; t < 80; t++) { if (!(await page.evaluate(() => document.getAnimations().some((a) => a.playState === "running")))) break; await page.waitForTimeout(50); } await page.evaluate(() => window.__th.frame()); };
++const dev = (a, b) => Math.max(...["x", "y", "w", "h"].map((k) => Math.abs(a[k] - b[k])));
++/** the largest move of any option or the group between rest and one selected state, and any line-count change */
++function compare(rest, now) {
++  let max = 0, where = "", wraps = [];
++  const gd = Math.max(dev(rest.group.chain, now.group.chain), dev(rest.group.rel, now.group.rel));
++  if (gd > max) { max = gd; where = `group ${f2(rest.group.rel.w)}×${f2(rest.group.rel.h)} → ${f2(now.group.rel.w)}×${f2(now.group.rel.h)}`; }
++  now.items.forEach((it, j) => {
++    const r0 = rest.items[j], d = Math.max(dev(r0.chain, it.chain), dev(r0.rel, it.rel));
++    if (d > max) { max = d; where = `option ${j} «${r0.text}» ${f2(r0.rel.w)}×${f2(r0.rel.h)} @${f2(r0.rel.y)} → ${f2(it.rel.w)}×${f2(it.rel.h)} @${f2(it.rel.y)}`; }
++    if (it.lines !== r0.lines) wraps.push(`option ${j} «${r0.text}» ${r0.lines} → ${it.lines} lines`);
++  });
++  return { max, where, wraps };
++}
++
++/** H9 · L-5: one viewport × mode, both input paths; returns { click, keys } per-step reads and the rest read */
++async function ladderRun(target, engine, vp, mode) {
++  const P = await openPage(target, engine, "c1-ladder-migrated", { mode, query: { sel: "none" } });
++  const { page } = P, n = LADDER.length;
++  const run = { modeOk: P.modeOk, modeLabel: P.modeLabel, keyNote: P.keys.note, click: [], keys: [], restClick: null, restKeys: null };
++  try {
++    await page.setViewportSize(vp); await page.mouse.move(2, 2); await settle(page);
++    if (await page.evaluate(() => !document.querySelector('[data-scene="c1-ladder-migrated"] [data-group]'))) throw new Error("c1-ladder-migrated renders no group");
++    run.restClick = await page.evaluate(L5_READ, NEUTRAL);
++    if (run.restClick.items.length !== n || run.restClick.items.some((it) => it.on)) throw new Error(`the ladder at rest has ${run.restClick.items.length} options (want ${n}) and ${run.restClick.items.filter((it) => it.on).length} on (want 0)`);
++    const opts = page.locator("[data-scene] [data-item]");
++    for (let k = 0; k < n; k++) { await opts.nth(k).click(); await page.mouse.move(2, 2); await settle(page); run.click.push({ k, read: await page.evaluate(L5_READ, NEUTRAL) }); }
++    // keys: nothing selected, back to the top, Tab in from the sentinel, Space on the first option, ArrowDown on
++    await page.evaluate(async () => { await window.__tile.select(null); document.activeElement?.blur?.(); scrollTo(0, 0); }); await settle(page);
++    run.restKeys = await page.evaluate(L5_READ, NEUTRAL);
++    await page.evaluate(() => document.querySelector('[data-sentinel="before"]').focus());
++    let first = -1;
++    for (let t = 0; t < 4 && first < 0; t++) { // a focusable host may take the first stop, as measure.mjs tabIn allows
++      await page.keyboard.press(P.keys.tab); await settle(page);
++      first = await page.evaluate(() => { const a = document.activeElement; return a?.matches?.("[data-scene] [data-item]") ? [...document.querySelectorAll("[data-scene] [data-item]")].indexOf(a) : -1; });
++    }
++    if (first !== 0) throw new Error(`${P.keys.tab} from the sentinel landed on ${first < 0 ? "no ladder option" : `option ${first}`}, not option 0`);
++    await page.keyboard.press("Space"); await settle(page);
++    run.keys.push({ k: 0, key: "Space", read: await page.evaluate(L5_READ, NEUTRAL) });
++    for (let k = 1; k < n; k++) { await page.keyboard.press("ArrowDown"); await settle(page); run.keys.push({ k, key: "ArrowDown", read: await page.evaluate(L5_READ, NEUTRAL) }); }
++  } finally { await P.close(); }
++  return run;
++}
++/** the ladder and falsifier cells of one run */
++function ladderCells(run, vp, mode, engine) {
++  const cells = [], fi = LADDER.findIndex((o) => o.value === LADDER_FALSIFIER), tag = `c1-ladder-migrated ${vp.width}×${vp.height} ${run.modeLabel}${run.modeOk ? "" : " (MODE NOT APPLIED)"}`;
++  for (const [path, steps, rest] of [["click", run.click, run.restClick], ["keys", run.keys, run.restKeys]]) {
++    let max = 0, where = "", wraps = [], missed = [];
++    for (const { k, read } of steps) {
++      if (!read.items[k]?.on || read.items.filter((it) => it.on).length !== 1) missed.push(k);
++      const c = compare(rest, read);
++      if (c.max > max) { max = c.max; where = `${c.where}, option ${k} selected`; }
++      for (const w of c.wraps) wraps.push(`${w} (option ${k} selected, weight ${rest.items[k].fw} → ${read.items[k].fw})`);
++    }
++    const ok = run.modeOk && max <= 0.5 && wraps.length === 0 && missed.length === 0 && steps.length === LADDER.length;
++    const how = path === "click" ? "each option by a real click" : `Space on option 0, then ArrowDown${run.keyNote ? ` (Tab in: ${engine === "webkit" ? "Option+Tab" : "Tab"})` : ""}`;
++    cells.push({ gating: true, pass: ok, what: "L-5 ladder", line: `${tag} · L-5 ladder (O-103e) · ${how}, ${steps.length} selection(s) · want every option, every label's line count and the group unchanged from rest (±0.50 px; offset chain and border box to the group, scroll-free) · max ${f2(max)} px${where ? ` (${where})` : ""} · ${wraps.length ? `RE-WRAP ${wraps.length}: ${wraps.slice(0, 2).join("; ")}` : "no label re-wraps"}${missed.length ? ` · VACUOUS: the selection did not land on option(s) ${missed.join(", ")}` : ""} · rest group ${f2(rest.group.rel.w)}×${f2(rest.group.rel.h)}, weight rest → selected ${rest.items[0].fw} → ${steps[0]?.read.items[steps[0].k].fw ?? "?"}` });
++    if (vp.width === 390) {
++      const st = steps.find((s) => s.k === fi), r0 = rest.items[fi], r1 = st?.read.items[fi];
++      const okF = run.modeOk && !!r1 && r1.on && r1.lines === r0.lines && Math.max(dev(r0.chain, r1.chain), dev(r0.rel, r1.rel)) <= 0.5;
++      cells.push({ gating: true, pass: okF, what: "L-5 falsifier", line: `${tag} · L-5 falsifier «${r0.text}» (${r0.text.length} characters) by ${path} · want its line count and its option's box unchanged when it is selected · rest ${r0.lines} line(s), ${f2(r0.rel.w)}×${f2(r0.rel.h)}, weight ${r0.fw} → selected ${r1 ? `${r1.lines} line(s), ${f2(r1.rel.w)}×${f2(r1.rel.h)}, weight ${r1.fw}, ${r1.on ? "on" : "NOT ON (vacuous)"}` : "unread"}` });
++    }
++  }
++  return cells;
++}
++
+ if (import.meta.url === `file://${process.argv[1]}`) {
+   await cli("T-4", async (args, target) => {
+     const engine = engineOf(args);
+-    const cells = [];
+-    for (const sc of scenesFor(await sceneList(target, engine), "T-4")) for (const mode of ["light", "dark", "forced"]) for (const sel of ["none", "1"]) {
++    const cells = [], notes = [];
++    const list = await sceneList(target, engine);
++    for (const sc of scenesFor(list, "T-4")) for (const mode of ["light", "dark", "forced"]) for (const sel of ["none", "1"]) {
+       const P = await openPage(target, engine, sc.id, { mode, query: { sel } });
+       const m = await ringCoverage(P, { save: typeof args.save === "string" ? path.join(args.save, `${sc.id}-${engine}-${mode}-sel${sel}`) : null });
+       const j = judgeT4(m, { forced: mode === "forced" });
+       cells.push({ gating: sc.gating, pass: P.modeOk ? j.pass : false, scene: sc.id, arm: sc.arm, mode, sel, m, line: `${sc.id} ${P.modeLabel}${P.modeOk ? "" : " (MODE NOT APPLIED)"} sel=${sel}${P.keys.note} · ${mode === "forced" ? "ring reach (H3-8) · " : ""}${j.line}` });
+       await P.close();
+     }
+-    return { id: "T-4", title: "focus paints whole, is the library's ring, and stands apart from selection", engine, engineLabel: await engineVersion(engine), target: target.label, dev: target.meta.dev, cells };
++    // H9 · L-5 (O-103e), on the migrated arm when the route migrates C1
++    if (target.kind === "build" && (list.migration?.sites ?? []).includes("c1")) {
++      for (const vp of L5_VIEWPORTS) for (const mode of L5_MODES) {
++        const run = await ladderRun(target, engine, vp, mode);
++        for (const c of ladderCells(run, vp, mode, engine)) cells.push({ ...c, scene: "c1-ladder-migrated", arm: "migrated", mode, vp: `${vp.width}x${vp.height}` });
++      }
++    } else notes.push(`L-5 (H9): not read, ${target.kind === "build" ? `the build's route does not migrate C1 (migration ${list.migration?.label ?? "none"})` : "the fixture carries no ladder"}; the ladder is C1's anatomy on a route's migrated arm`);
++    return { id: "T-4", title: "focus paints whole, is the library's ring, and stands apart from selection; selection changes no geometry for any content C1 holds (H9, L-5)", engine, engineLabel: await engineVersion(engine), target: target.label, dev: target.meta.dev, cells, notes };
+   });
+ }

@@ -1,11 +1,11 @@
-# D4 · the tile witness battery (H8, pass 8)
+# D4 · the tile witness battery (H9, pass 10)
 
 | field | value |
 |---|---|
 | seat | D4 pass 2, H2 seat, landed REGISTRY §3.2 rows H-1..H-11 over the pass-1 battery (T-1..T-8, W-A..W-E). D4 pass 3, H3 seat, landed REGISTRY §P2-6.2 rows H3-1..H3-13 in place (§2.2). D4 pass 4, H4 seat, landed REGISTRY §P3-6.2 rows H4-1..H4-6 in place (§2.3). D4 pass 5, H5 seat, landed REGISTRY §P4-6.2 rows H5-1..H5-6 in place (§2.4). D4 pass 6, H6 seat, landed REGISTRY §P5-6.2 rows H6-1..H6-4 in place and retired the pass-4 `canon-fact.mjs` forks (§2.5). D4 pass 7, H7 seat, landed the pass-6 backlog's instruments H7-1..H7-5 (REGISTRY §P6-4 B-1, O-1, B-3, B-4, B-5) in place (§2.6) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | engines | Chromium (Playwright's default headless shell; `channel: "chromium"` only when `BL_GPU_CHROME` is set, which no H7 run sets) and Playwright WebKit, from `glass-ui/node_modules/playwright`, headless, 1000×900 at DSF 2. Playwright WebKit is not Safari. Real Safari runs through `safari.mjs` (H-11), and every cell reads **UNMEASURED (owner's safaridriver checkbox)** until the owner ticks Develop ▸ Allow Remote Automation |
-| results | not here. The H8 read (SHEET `writers` widened, L-1) and its self-test are recorded once, in `../pass-8/H8.md`. The H7 self-test and the H7 cells read on floor v5 and on the rebased pass-6 D′ route (Q-13 ruled D′, O-103) are recorded once, in `../pass-7/H7.md`. The H6 self-test and the H6 cells read on both rebased pass-5 routes are recorded once, in `../pass-6/H6.md`. The H5 self-test and the H5 cells read on both pass-4 routes are recorded once, in `../pass-5/H5.md`. The self-test and the HEAD and HEAD + floor v2 baselines under H4 are recorded once, in `../pass-4/H4.md`; under H3, in `../pass-3/H3.md`; under H2, in `../pass-2/H2.md` (P-3). Every run JSON carries `harness.hash` (H3-10, H4-4): two tallies compare cell for cell only when their hashes match, and a route seat never edits this directory |
+| results | not here. H9 (pass 10) is recorded once, in `../pass-10/H9.md`. The H8 read (SHEET `writers` widened, L-1) and its self-test are recorded once, in `../pass-8/H8.md`. The H7 self-test and the H7 cells read on floor v5 and on the rebased pass-6 D′ route (Q-13 ruled D′, O-103) are recorded once, in `../pass-7/H7.md`. The H6 self-test and the H6 cells read on both rebased pass-5 routes are recorded once, in `../pass-6/H6.md`. The H5 self-test and the H5 cells read on both pass-4 routes are recorded once, in `../pass-5/H5.md`. The self-test and the HEAD and HEAD + floor v2 baselines under H4 are recorded once, in `../pass-4/H4.md`; under H3, in `../pass-3/H3.md`; under H2, in `../pass-2/H2.md` (P-3). Every run JSON carries `harness.hash` (H3-10, H4-4): two tallies compare cell for cell only when their hashes match, and a route seat never edits this directory |
 
 ## 1 · What it is
 
@@ -256,7 +256,22 @@ H8 is H7 plus one read: SHEET `writers`, B-1's static half, widened by REGISTRY 
 
 The route's unit twin of this read is floor v6's sheet-wide case in `tests/components/ui/toggle-group/ToggleGroup.test.ts`, widened the same way in `../pass-8/D4-Dp8.patch`. The pass-8 route dir is `../pass-8/routes/D4-Dp8` (`MIGRATED("shape")` with C1 declaring `shape="cell"`, O-103c); its probes (`../pass-8/probes/c1-box.mjs`, `l3-bare.mjs`) are pass-8 artifacts, not harness cells.
 
+### 2.8 · H9 (pass 10)
+
+H9 is H8 plus the five items of REGISTRY §P9-6, built by the pass-10 BUILD seat (`../pass-10/H9.md`, which records the hash, the self-tests and every witness pair). **H9 `932637d53662`, 45 files.** It adds no row: L-5 is a cell in T-4's fold (O-103e), L-1a and L-1b fold into R-10, the paint fold into R-2/FV-2, L-4 into T-3/T-7.
+
+| row | where | what the harness now does | plants and controls |
+|---|---|---|---|
+| H9-1 (L-5, O-103e) | `t4-ring-whole.mjs`, `scenes.mjs` (`LADDER`, `c1Ladder`, scene `c1-ladder-migrated`) | on a build whose route migrates C1, T-4 reads C1's anatomy at its own 192 px holding the pass-9 critic's ladder (17 labels, 14 to 30 characters) at 390×844 and 1440×900, light, dark and PRT: each option selected by a real click and by keys (Space, then ArrowDown), every option's two scroll-free boxes (offset chain, border box to the group), its label's line count and the group equal to rest ±0.5 px. The falsifier is the 25-character label at 390. A selection that does not land fails the cell as vacuous | plants.mjs `weight-step` (the 600 restored) FAILs the 390 cells in both engines |
+| H9-2 (L-1b, L-1a) | `sheet.mjs` | SHEET `writers` reads CSS writes on the BUILT stylesheet (`--built <build dir>`, its `dist/assets/*.css`; CSS escapes resolved; `[data-arm]` scene rules excluded; a stale or foreign build stops loud), never the source; and script writes in `src` by the value reader (L-1) and the held-name reader (a quoted `"--selection-tile"` that is neither `getPropertyValue`'s argument nor in a writing position, L-1a). It is the one CSS reader of record: the route's unit twin reads script only and cites it | fixture `sh-const`, `sh-esc`, control `sh-scene`, plant `sh-stale` (exit 2); on the library, plants.mjs `esc`, `apply`, `const` FAIL |
+| H9-3 | `fact-split.mjs` (no code), `plants.mjs` `concat` | FACT's reached-script plant: a name built by concatenation, written by a helper ToggleGroup.vue calls on a group whose parent is a `.card`; FACT's `foreign-ancestor` cells read it in paint, the backstop no static reader can be | `concat` FAILs `foreign-ancestor` ×4 |
+| H9-4 | `fact-split.mjs` (`paint-*` cells), `attack-route/l3.mjs` | the pass-8 `l3-bare` probe's six cells, light and dark, read by FACT on every attack build; the state cell reads `aria-checked`, `data-state` and the ink, and the weight EQUAL at rest and selected (it asserted 600) | `--l3 on-item` (the planted composition) FAILs `paint-bare-pill`, `paint-bare-tile`; plants.mjs `unpinned` FAILs `paint-item-write` |
+| H9-5 (L-4) | `sites.mjs` | C1's ruled `shape="cell"` (Q-10 (i), O-103c) is in the transcription of record; a route dir carries no override (`../pass-10/routes/D4-Dp10`) | XSCRIPT self and pairs 19/19 |
+| H9-6 | `plants.mjs` | the library plants every build-level witness pair names, written once, applied and restored with a check of `git diff HEAD`, `git status` and every untracked file under `src` by content (the pass-9 driver's restore check could not see `shape.ts`, `_shared/guard.ts`) | each restore prints `equal` or exits 2 |
+
 ## 3 · Notes for the route seats
+
+- H9: the route dir is `../pass-10/routes/D4-Dp10` (`MIGRATED("shape")`, no override). Run `sheet.mjs --wt <wt> --route <dir> --built <a build of the same worktree>`, rebuilt after any change to `src`. Plant the library through `plants.mjs`, never by hand. T-4 on a route build reads the L-5 ladder; FACT on an attack build reads the paint cells.
 
 - A route builds in its own worktree and passes `--route <its dir>` with a `route.json`. Its migrated compositions live there and nowhere else. A route never edits `scenes.mjs`'s verbatim transcriptions (H-7).
 - Report every witness with its arm tally, so the unmigrated and migrated consumer read side by side.

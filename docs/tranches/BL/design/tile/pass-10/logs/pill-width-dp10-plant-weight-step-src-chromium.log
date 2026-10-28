@@ -1,0 +1,15 @@
+2026-10-27 19:55:52 · load { 22.71 22.17 21.38 } · harness H9 932637d53662 (45 files)
+PILL-WIDTH · re-read (b): a pill's width at rest and selected, and its row's move (pass-10 BUILD probe, info only)
+  target dp10-plant-weight-step-src (flavor src) · Chromium 149.0.7827.55 · harness H9 932637d53662
+  load 22.97 / 22.23 / 21.41 at start, 22.84 / 22.21 / 21.42 at end · other headless browser processes at start: 10 (waited 0.2 s) · browser lock waited 0 s
+  info-fail  single light · 4 pills · own width selected − rest: max 1.20 px («Elastic» 60.03 → 61.23) · largest move in the row 1.20 px (pill 3 «Elastic» (170.88,4.00 60.03×36.00 → 170.88,4.00 61.23×36.00) with pill 3 selected) · weight rest→selected 500→600 500→600 500→600 500→600 · widths at rest 36.00, 57.47, 49.41, 60.03
+  info-fail  single dark · 4 pills · own width selected − rest: max 1.20 px («Elastic» 60.03 → 61.23) · largest move in the row 1.20 px (pill 3 «Elastic» (170.88,4.00 60.03×36.00 → 170.88,4.00 61.23×36.00) with pill 3 selected) · weight rest→selected 500→600 500→600 500→600 500→600 · widths at rest 36.00, 57.47, 49.41, 60.03
+  info-fail  pill-icon light · 3 pills · own width selected − rest: max 1.00 px («Board» 92.27 → 93.27) · largest move in the row 1.00 px (pill 2 «Board» (175.91,4.00 92.27×40.00 → 175.91,4.00 93.27×40.00) with pill 2 selected) · weight rest→selected 500→600 500→600 500→600 · widths at rest 80.14, 75.77, 92.27
+  info-fail  pill-icon dark · 3 pills · own width selected − rest: max 1.00 px («Board» 92.27 → 93.27) · largest move in the row 1.00 px (pill 2 «Board» (175.91,4.00 92.27×40.00 → 175.91,4.00 93.27×40.00) with pill 2 selected) · weight rest→selected 500→600 500→600 500→600 · widths at rest 80.14, 75.77, 92.27
+  info-fail  pill-badge light · 3 pills · own width selected − rest: max 1.27 px («Drafts6» 100.80 → 102.06) · largest move in the row 1.27 px (pill 2 «Drafts6» (204.89,4.00 100.80×40.00 → 204.89,4.00 102.06×40.00) with pill 2 selected) · weight rest→selected 500→600 500→600 500→600 · widths at rest 95.34, 89.55, 100.80
+  info-fail  pill-badge dark · 3 pills · own width selected − rest: max 1.27 px («Drafts6» 100.80 → 102.06) · largest move in the row 1.27 px (pill 2 «Drafts6» (204.89,4.00 100.80×40.00 → 204.89,4.00 102.06×40.00) with pill 2 selected) · weight rest→selected 500→600 500→600 500→600 · widths at rest 95.34, 89.55, 100.80
+  info-pass  vertical light · 4 pills · own width selected − rest: max 0.00 px · largest move in the row 0.00 px · weight rest→selected 500→600 500→600 500→600 500→600 · widths at rest 56.00, 56.00, 56.00, 56.00
+  info-pass  vertical dark · 4 pills · own width selected − rest: max 0.00 px · largest move in the row 0.00 px · weight rest→selected 500→600 500→600 500→600 500→600 · widths at rest 56.00, 56.00, 56.00, 56.00
+PILL-WIDTH FAIL · 0/0 gating cells pass
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p10/build10/out/runs/dp10-plant-weight-step-src/PILL-WIDTH-chromium.json
+exit 1 · 2026-10-27 19:56:15 · load { 22.84 22.21 21.42 }

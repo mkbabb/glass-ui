@@ -121,6 +121,25 @@ const STATUSES = [
   { value: "any", label: "Any status" }, { value: "messaged", label: "Messaged", count: 12 },
   { value: "unmessaged", label: "Not messaged", count: 30 }, { value: "seen", label: "Seen", count: 7 }, { value: "unseen", label: "Not seen", count: 35 },
 ];
+/**
+ * H9 · T-4's L-5 cell (O-103e): C1's anatomy holding content C1 could carry, not only its five strings. The pass-9
+ * critic's ladder (`../pass-9/D4-Dp9-crit/routes/A9/migrated.mjs:16`), verbatim: 17 labels one character apart, 14 to 30
+ * characters, each with a count, so some label sits at a wrap boundary at some viewport. The 25-character label
+ * («Awaiting a reply from the», value `l25`) is the named falsifier: at 390×844 the selected weight 600 re-wrapped it
+ * 1 → 2 lines (+21 px, both engines, pass 9).
+ */
+export const LADDER = Array.from({ length: 17 }, (_, k) => {
+  const n = 14 + k;
+  return { value: `l${n}`, label: "Awaiting a reply from the reviewer".slice(0, n).trimEnd().padEnd(n, "s"), count: String(10 + k * 7) };
+});
+export const LADDER_FALSIFIER = "l25";
+/** The route's C1 group as the ladder: C1's own width (`w-48`, its 192 px min held fixed) over LADDER. Every anchor is
+ *  the route's C1 as `sites.mjs` writes it; a route whose C1 lacks one stops the build. */
+export function c1Ladder(group) {
+  const anchors = [['class="min-w-48"', 'class="w-48"'], ['aria-label="Status"', 'aria-label="Status ladder"'], ['v-for="o in STATUSES"', 'v-for="o in LADDER"']];
+  for (const [a] of anchors) if (!group.includes(a)) throw new Error(`c1Ladder: the route's C1 has no ${a}; the ladder cannot be derived from it`);
+  return anchors.reduce((g, [a, b]) => g.replace(a, b), group);
+}
 
 // ── the groups, per site and arm ──────────────────────────────────────────────
 function presetGroup({ verbatim = false, invalid = false, sibling = false, tone = null, contents = false, input = false, consumerAria = false } = {}) {
@@ -405,6 +424,8 @@ export function sceneApp(wt, nm, { familyModules = {}, migration = null, flavor 
       sections.push([`${site}-migrated-stripped`, "stripped", b.host(stripItemClasses(mig[site].group))]);
     }
   }
+  // H9 · T-4's L-5 ladder on the route's C1, in C1's host (`c1-ladder-migrated`)
+  if (mig.c1) sections.push(["c1-ladder-migrated", "migrated", c1Host(c1Ladder(mig.c1.group))]);
   // H5-2 · a route site that is no consumer site (the attack route's `matrix`) renders as `<site>-migrated` as written
   for (const [site, m] of Object.entries(mig)) if (!SITE_BUILD[site]) sections.push([`${site}-migrated`, "migrated", m.group]);
   sections.push(["preset-invalid", "library", presetHost(presetGroup({ invalid: true }))]);
@@ -498,6 +519,7 @@ const STRIP = ${JSON.stringify(STRIP)};
 const LEVELS = ${JSON.stringify(LEVELS)};
 const PALETTES = ${JSON.stringify(PALETTES)};
 const STATUSES = ${JSON.stringify(STATUSES)};
+const LADDER = ${JSON.stringify(LADDER)};
 const MIGRATION = ${JSON.stringify(migration ? { label: migration.label, sites: Object.keys(mig) } : null)};
 // H7-2 · the floor's own words on the tile fact (build.mjs \`floorText\`: the registration comment in the worktree's
 // utilities/base.css, whitespace collapsed; null when the worktree has none). FACT reads its strip sentence against paint

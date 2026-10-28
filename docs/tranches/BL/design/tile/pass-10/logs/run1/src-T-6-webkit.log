@@ -1,0 +1,25 @@
+2026-10-27 20:33:40 · load { 10.10 12.26 14.92 } · harness H9 932637d53662 (45 files)
+T-6 HARNESS ERROR browserType.launch: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh --inspector-pipe --headless --no-startup-window
+<launched> pid=42981
+[pid=42981][err] /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh: line 7: 42987 Abort trap: 6           DYLD_FRAMEWORK_PATH="$DYLIB_PATH" DYLD_LIBRARY_PATH="$DYLIB_PATH" "$PLAYWRIGHT" "$@"
+Call log:
+[2m  - <launching> /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh --inspector-pipe --headless --no-startup-window[22m
+[2m  - <launched> pid=42981[22m
+[2m  - [pid=42981][err] /Users/mkbabb/Library/Caches/ms-playwright/webkit-2311/pw_run.sh: line 7: 42987 Abort trap: 6           DYLD_FRAMEWORK_PATH="$DYLIB_PATH" DYLD_LIBRARY_PATH="$DYLIB_PATH" "$PLAYWRIGHT" "$@"[22m
+[2m  - [pid=42981] <gracefully close start>[22m
+[2m  - [pid=42981] <kill>[22m
+[2m  - [pid=42981] <will force kill>[22m
+[2m  - [pid=42981] exception while trying to kill process: Error: kill EPERM[22m
+[2m  - [pid=42981] <process did exit: exitCode=134, signal=null>[22m
+[2m  - [pid=42981] starting temporary directories cleanup[22m
+[2m  - [pid=42981] finished temporary directories cleanup[22m
+[2m  - [pid=42981] <gracefully close end>[22m
+
+    at browser (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/lib.mjs:231:62)
+    at async engineVersion (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/lib.mjs:284:38)
+    at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/t6-engagement.mjs:195:183
+    at async cli (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/lib.mjs:799:17)
+    at async file:///Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/tile/harness/t6-engagement.mjs:116:3

@@ -16,7 +16,9 @@
 //   strip     V1  glyph / label                      glyph above the label; the column centred (the consumer's)
 //   f1        F1  thumbnail / label / bound word     thumbnail above, the bound endpoint a word below; centred
 //   v2        V2  swatches / name and count          swatches above; the name and count one row (the consumer's)
-//   c1        C1  label / count                      one-row pills, no declaration on either route (Q-10 (b))
+//   c1        C1  label / count                      D′ declares `shape="cell"` (Q-10 (i), O-103c): a cell at rest and
+//                                                   selected; H9 (L-4) moved the ruled declaration here from the
+//                                                   pass-8 route dir, which carried it as an override
 import { K2_SPECIMEN, K2_DECLARATIONS } from "./k2.mjs";
 
 export const DECLARATIONS = K2_DECLARATIONS;
@@ -72,7 +74,7 @@ export function MIGRATED(declaration) {
       </ToggleGroup>`,
     },
     c1: {
-      group: `<ToggleGroup type="single" orientation="vertical" data-group aria-label="Status" class="min-w-48" v-model="model">
+      group: `<ToggleGroup type="single"${shape} orientation="vertical" data-group aria-label="Status" class="min-w-48" v-model="model">
         <ToggleGroupItem v-for="o in STATUSES" :key="o.value" :value="o.value" data-item>
           <span data-ink data-line-slot class="flex-1 text-start">{{ o.label }}</span>
           <span v-if="o.count !== undefined" data-ink class="num">{{ o.count }}</span>
