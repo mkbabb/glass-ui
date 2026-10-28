@@ -1,0 +1,13 @@
+2026-10-28 00:12:00 · load { 28.84 31.84 26.60 } · harness H9 932637d53662 (45 files)
+W-E · every one-of-N option is one line, and what a consumer installs refuses one that is not (D4-E)
+  target dp10-dist (flavor dist) · Chromium 149.0.7827.55 · harness H9 932637d53662
+  load 29.25 / 31.87 / 26.64 at start, 28.51 / 31.67 / 26.60 at end · other headless browser processes at start: 15 (waited 0.8 s) · browser lock waited 0 s
+  PASS       preset · 4 items · 0 not one line · e.g. 40.00 px tall at rung 40.00 (1.00 rungs), 1 rows
+  FAIL       preset refusal (flavor dist) · a line added to item 0 → no refusal (no console error, no throw)
+  FAIL       specimen · 8 items · 8 not one line · e.g. 36.00 px tall at rung 36.00 (1.00 rungs), 3 rows
+  FAIL       specimen refusal (flavor dist) · a line added to item 0 → no refusal (no console error, no throw)
+  FAIL       strip · 6 items · 6 not one line · e.g. 44.00 px tall at rung 44.00 (1.00 rungs), 2 rows
+  FAIL       strip refusal (flavor dist) · a line added to item 0 → no refusal (no console error, no throw)
+W-E FAIL · 1/6 gating cells pass [library 1/6]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p10/crit10/out/runs/dp10-dist/W-E-chromium.json
+exit 1 · 2026-10-28 00:12:10 · load { 28.51 31.67 26.60 }
