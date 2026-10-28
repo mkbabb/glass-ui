@@ -14,6 +14,17 @@ Merged on local branch `u/b7-glass` (off `release/10.1.1` bbf176f02) from `u/b7-
   `"glass"`), the same axis `SheetContent` and `Card` carry. Additive; no existing
   menu changes. A consumer whose menu stands in for a phone sheet passes `"opaque"`.
 - Witness: `tests/components/select/sheet-opaque.test.ts` (2 of 4 fail on 1dc80a3d6).
+- **A closed sheet lets go of the page when it leaves the screen (O-11, O-19; repair
+  round 1).** `useSpringMount` held `present` until the exit spring settled: the `panel`
+  preset is underdamped (ζ 0.71) and its tail rang until the velocity fell under 1e-3
+  units/s, 1.5–1.9 s after the sheet had left the screen. Through that window the scrim
+  stayed mounted and reka kept the body scroll-locked, so a reader's next scroll or tap on
+  the page did nothing (served /bead at 390, 16 of 16 closes; the O-11 census found 3
+  cells of 72 still locked at 4.7 s). The hold now ends when the position reaches the
+  dismissed edge (within 1e-3 of 1, under a pixel). The drag-dismiss callback still waits
+  for the settle.
+- Witness: `tests/composables/useSpringMount.test.ts`, "releases present on the frame the
+  exit reaches its dismissed edge" (37 frames late before, at most 1 after).
 
 ### Shape, glide and the dropdown system (`u/b7-glass-shape`)
 
