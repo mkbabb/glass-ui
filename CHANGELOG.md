@@ -2,8 +2,55 @@
 
 ## 10.1.3 — unreleased
 
-A patch for value.js O-110 (records: `docs/tranches/BL/audit/INBOUND.md` O-110), a
-regression in 10.1.2. No public API is removed or renamed.
+A patch for value.js O-110 (records: `docs/tranches/BL/audit/INBOUND.md` O-110;
+`docs/release-10.1.3/implement.md`), a regression in 10.1.2. No public API is removed
+or renamed, and a consumer has nothing to change.
+
+- **An edge-anchored dock grows from its anchored edge from the first morph frame
+  (O-110).** The morph reserves the expanded box from its first frame (10.1.2, O-101) and
+  paints the visible box with `scale`. The scale's `transform-origin` was a fixed
+  `center`, and the persistent regions and the layers carried the inverse scale about
+  their own centres. For a dock pinned to its host's edge by that edge alone (fourier's
+  canvas dock: `position: absolute; right: 0.5rem`, its box the dock's width), the
+  reserved box grows away from the edge, so the first frame painted the collapsed box
+  centred in it and its controls with it. A press on the persistent "Edit contour"
+  focuses it, the focus expands the dock, and the morph arms before pointerup: the seat
+  moved (326 -> 225 at 390 in the glass-side port; 317 -> 215 in fourier) and the click
+  went to the common ancestor, so the editor never opened. 10.1.1 escaped because a
+  first expand there reserved about the collapsed width (its unmeasured endpoint, the
+  O-101 defect), so nothing scaled.
+
+  Each origin is now measured when the morph arms. The orchestrator has
+  `useDockExpandedSize` read the boxes painted before the posture patch (`first`) and,
+  once `[data-morphing]` and the start scalar are set, write `--dock-morph-origin` on the
+  root, each persistent region and the layers (`anchor`; cleared at settle by
+  `release`). The root's origin is the fixed point of the map from the painted box to
+  the reserved one, so the first frame paints exactly the collapsed box and each edge
+  moves linearly to rest: the anchored edge of an edge-anchored dock, the centre of a
+  centred one (unchanged there), read from the layout. A persistent region's origin
+  holds the box it painted, so a seat on the anchored side stays under the pointer and
+  one on the open side rides the growing edge. The layers take the root's origin, so the
+  two scales cancel and the pane lays out where it rests, inside the reserved box (no
+  frame overflows it, as before). The leaving pane is shifted back to the box it painted
+  and fades there. `--dock-morph-origin` is a registered, non-inheriting
+  `<length-percentage>` whose initial value is `50%`.
+
+  The click guard needed no change, and none is made: it never saw fourier's click. The
+  pointerup landed off the moved seat, so the engine dispatched the click to the common
+  ancestor, outside the dock. With the seat held, a press at rest and a press mid-expand
+  on a persistent seat both pass the guard on identity, as its persistent arm provides.
+
+  Witnesses: unit `tests/components/custom/dock/dockMorphMeasure.test.ts` "the morph's
+  origins (O-110)" (right-anchored, left-anchored, centred). Engine
+  `tests-visual/release-10-1-3.spec.ts`, scene `edge-anchor` (fourier's canvas dock,
+  right-anchored, and its left-anchored mirror), at 360/390/430 (fourier `f-w14v-au2`
+  L2-15) and 1440 (fourier `f-w14-control-row` G-h): Playwright's click on the collapsed
+  dock's seat reaches it; the hover expand read per frame (first frame = the collapsed
+  box, the anchored edge holds, the pointer stays on the seat, no frame widens the
+  document or leaves the viewport); a press mid-expand is kept. Chromium 24/24 GREEN,
+  24/24 RED on v10.1.2; WebKit 2287 24/24 GREEN, 16/24 RED on v10.1.2 (the click cell is
+  Chromium's: WebKit does not focus a button on press). The 10.1.1 and 10.1.2 release
+  specs, the O-101 no-overflow cells among them, stay 77/77 per engine.
 
 ## 10.1.2 — 2026-10-27
 
