@@ -1,5 +1,10 @@
 # Changelog
 
+## 10.1.3 — unreleased
+
+A patch for value.js O-110 (records: `docs/tranches/BL/audit/INBOUND.md` O-110), a
+regression in 10.1.2. No public API is removed or renamed.
+
 ## 10.1.2 — 2026-10-27
 
 Two changes. Atlas G-4, arm (b-ii), the declared seat marker, by owner-delegate ruling
