@@ -41,7 +41,8 @@ const scenes: Record<string, Component> = {
     // `#persistent`, again on the anchored side. `?anchor=bottom` pins a vertical dock
     // by `bottom` (and `left`), its anchored side the end. `?seat=open` seats "Edit
     // contour" on the open side instead, the side the expand grows toward. A click on
-    // "Edit contour" counts in `window.__edits`.
+    // "Edit contour" counts in `window.__edits`. The dock's component instance is
+    // `window.__dock`, so a witness can call its public `collapse()`.
     "edge-anchor": defineComponent(() => {
         const edits = ref(0);
         w.__edits = 0;
@@ -76,7 +77,13 @@ const scenes: Record<string, Component> = {
                             },
                             h(
                                 GlassDock,
-                                { fitContent: true, orientation },
+                                {
+                                    fitContent: true,
+                                    orientation,
+                                    ref: (dock: unknown) => {
+                                        w.__dock = dock;
+                                    },
+                                },
                                 {
                                     default: () => [
                                         seat("View layers"),

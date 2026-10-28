@@ -17,7 +17,14 @@ type W = {
     __frames: Frame[];
 };
 type Box = { left: number; right: number; top: number; bottom: number };
-type Frame = { morphing: boolean; dock: Box; edit: Box; scrollWidth: number };
+type Frame = {
+    morphing: boolean;
+    dock: Box;
+    edit: Box;
+    summary: Box;
+    collapsed: boolean;
+    scrollWidth: number;
+};
 
 const EDIT = '[data-witness="Edit contour"]';
 
@@ -76,6 +83,7 @@ async function record(page: Page, ms: number): Promise<void> {
             w.__frames = [];
             const dock = document.querySelector<HTMLElement>(".glass-dock")!;
             const edit = document.querySelector<HTMLElement>(sel)!;
+            const summary = document.querySelector<HTMLElement>('[data-witness="summary"]')!;
             const box = (el: Element): Box => {
                 const r = el.getBoundingClientRect();
                 return { left: r.left, right: r.right, top: r.top, bottom: r.bottom };
@@ -86,6 +94,8 @@ async function record(page: Page, ms: number): Promise<void> {
                     morphing: dock.hasAttribute("data-morphing"),
                     dock: box(dock),
                     edit: box(edit),
+                    summary: box(summary),
+                    collapsed: (w as unknown as { __collapsedAt?: number }).__collapsedAt !== undefined,
                     scrollWidth: document.scrollingElement!.scrollWidth,
                 });
                 if (performance.now() - t0 < ms) requestAnimationFrame(tick);
@@ -339,6 +349,64 @@ for (const anchor of ["right", "left", "bottom"] as const) {
                     f.edit.bottom > f.dock.bottom + 1,
             );
             expect(outside.length, "frames whose seat paints outside the plate").toBe(0);
+        });
+    });
+}
+
+// D-1 (critique-3): a collapse that reverses an expand mid-morph. The public `collapse()`
+// lands 120 ms into a hover expand; the reversal starts scaled. From then on the entering
+// summary glyph paints inside the plate on every frame and settles without a jump. RED on
+// 10.1.2 and on the round-2 branch for the right- and bottom-anchored docks (the summary
+// laid out at the reserved box's start, outside the plate, and jumped ~245 px at settle);
+// the left-anchored dock held there already, since its reserved start is the rest.
+for (const anchor of ["right", "left", "bottom"] as const) {
+    test.describe(`10.1.3 · 390 · ${anchor}-anchored reversal`, () => {
+        test.use({ viewport: { width: 390, height: 844 } });
+        test("D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate", async ({
+            page,
+        }) => {
+            await open(page, anchor);
+            await page.evaluate(() => {
+                const w = window as unknown as {
+                    __dock: { collapse: () => void };
+                    __collapsedAt?: number;
+                };
+                const dock = document.querySelector(".glass-dock")!;
+                const seen = new MutationObserver(() => {
+                    if (!dock.hasAttribute("data-morphing")) return;
+                    seen.disconnect();
+                    setTimeout(() => {
+                        w.__collapsedAt = performance.now();
+                        w.__dock.collapse();
+                    }, 120);
+                });
+                seen.observe(dock, { attributes: true, attributeFilter: ["data-morphing"] });
+            });
+            await record(page, 2200);
+            const { x, y } = mid(await rect(page, '[data-witness="summary"]'));
+            await page.mouse.move(x, y);
+            await page.waitForTimeout(400);
+            // The pointer leaves, so nothing re-expands the dock once it has collapsed.
+            await page.mouse.move(4, 700);
+            await page.waitForTimeout(2000);
+            await expect(page.locator(".glass-dock")).toHaveClass(/collapsed/);
+            const all = await frames(page);
+            const settled = await rect(page, '[data-witness="summary"]');
+            const after = all.filter((f) => f.collapsed && f.morphing);
+            expect(after.length, "the reversal morphed").toBeGreaterThan(3);
+            expect(all.at(-1)!.morphing, "the morph settled").toBe(false);
+            const outside = after.filter(
+                (f) =>
+                    f.summary.left < f.dock.left - 1 ||
+                    f.summary.right > f.dock.right + 1 ||
+                    f.summary.top < f.dock.top - 1 ||
+                    f.summary.bottom > f.dock.bottom + 1,
+            );
+            expect(outside.length, "frames whose summary glyph paints outside the plate").toBe(0);
+            expect(
+                boxDistance(after.at(-1)!.summary, settled),
+                "the summary glyph's last morph frame is its rest",
+            ).toBeLessThan(1);
         });
     });
 }

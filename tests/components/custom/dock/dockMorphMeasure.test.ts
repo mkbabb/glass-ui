@@ -604,4 +604,86 @@ describe("the morph's origins (O-110)", () => {
         expect(root.style.getPropertyValue("--dock-expanded-px")).not.toBe("initial");
         unmount();
     });
+
+    // critique-3 D-1: a collapse that reverses an expand mid-morph starts SCALED (the
+    // root paints the part-grown box 200-374 inside the reserved 36-374), so the origins
+    // hold the first boxes; the entering summary must still be shifted to its rest, or
+    // it lays out at the reserved box's start (44), outside the shrinking plate, and
+    // jumps 250 px at settle. Its shift is read where it paints at the end scalar, so the
+    // settle is exact. RED on the round-2 cure, which read the rest only for an unscaled
+    // start.
+    it("a right-anchored collapse that reverses an expand shifts the entering summary to its rest", () => {
+        const root = document.createElement("div");
+        const controls = document.createElement("div");
+        const content = document.createElement("div");
+        const full = document.createElement("div");
+        const summary = document.createElement("div");
+        const seat = document.createElement("div");
+        controls.className = "dock-controls";
+        content.className = "dock-layers";
+        seat.className = "dock-persistent dock-persistent-end";
+        full.className = "dock-layer dock-layer--full is-active";
+        summary.className = "dock-layer dock-layer--summary is-leaving";
+        root.append(controls);
+        controls.append(content, seat);
+        content.append(full, summary);
+        let armed = false;
+        const rest = () => root.style.getPropertyValue("--dock-expanded-px") === "initial";
+        const unscaled = () => root.style.getPropertyValue("scale") === "none";
+        const rect = ([l, r]: [number, number]) => ({ left: l, right: r, width: r - l, x: l, top: 0, bottom: 40, height: 40, y: 0 }) as DOMRect;
+        const boxes = new Map<HTMLElement, () => [number, number]>([
+            [root, () => (rest() ? [278, 374] : unscaled() ? [36, 374] : [200, 374])],
+            [seat, () => [326, 366]],
+            [content, () => (rest() ? [286, 318] : [44, 326])],
+            [full, () => [44, 302]],
+            // Before the reversal the leaving summary paints at its rest (its leave
+            // shift); once the collapse arms it lays out in the reserved box, at 44, and
+            // paints at 47 at the end scalar (the root's padding interpolates on it and
+            // moves the layers under their origin).
+            [
+                summary,
+                () =>
+                    rest() || !armed
+                        ? [294, 318]
+                        : root.style.getPropertyValue("--dock-morph-t") === "1" && !unscaled()
+                          ? [47, 71]
+                          : [44, 68],
+            ],
+        ]);
+        for (const [el, at] of boxes) {
+            el.getBoundingClientRect = () => rect(at());
+            Object.defineProperty(el, "offsetWidth", {
+                get: () => (el === root && !rest() ? 338 : at()[1] - at()[0]),
+            });
+            Object.defineProperty(el, "offsetHeight", { get: () => 40 });
+        }
+        const { result, unmount } = mountComposable(() =>
+            useDockExpandedSize({
+                rootEl: ref(root),
+                contentEl: ref(content),
+                expandedEl: ref(full),
+                collapsedEl: ref(summary),
+                axis: ref("horizontal"),
+            }),
+        );
+        const origin = (el: HTMLElement) => el.style.getPropertyValue("--dock-morph-origin");
+
+        result.first();
+        full.classList.replace("is-active", "is-leaving");
+        summary.classList.replace("is-leaving", "is-active");
+        root.setAttribute("data-morphing", "");
+        root.style.setProperty("--dock-morph-t", "0.4");
+        armed = true;
+        result.anchor();
+
+        // The scaled start holds the right edge: (164 - 0) / (1 - 164/338) = 338.
+        expect(Number.parseFloat(origin(root))).toBeCloseTo(100, 6);
+        // The entering summary paints at its rest on the last frame: 294 - 47.
+        expect(summary.style.getPropertyValue("--dock-pane-shift")).toBe("247px");
+        expect(root.style.getPropertyValue("--dock-morph-t")).toBe("0.4");
+        // The leaving full pane where it painted.
+        expect(full.style.getPropertyValue("--dock-pane-shift")).toBe("0px");
+        expect(root.style.getPropertyValue("--dock-expanded-px")).not.toBe("initial");
+        unmount();
+    });
 });
