@@ -112,8 +112,11 @@ morph axis; the leaving pane reads `--dock-leave-shift`).
   glyph no longer jumps to the reserved box's start: 294 -> 66.3 on 10.1.2 at 390).
 - Ask (2), the click guard: no change. With the seat held, Playwright's click and a press
   mid-expand both land on the seat, and the guard's persistent arm passes them on
-  identity. Its tolerance is not widened; no movement exemption was needed, because the
-  movement is gone.
+  identity. Its tolerance is not widened. ~~no movement exemption was needed, because the
+  movement is gone.~~ [critique-1 D-1] The movement is gone for an anchored-side seat
+  only. An open-side seat rides the growing edge, so a press-triggered expand still moved
+  it before the release; the cure for that is the press rule under "Round 1" below, not
+  the guard.
 
 No public API is removed or renamed: the composables are internal (not in the dock
 subpath's exports); `--dock-morph-origin` and `--dock-leave-shift` are new internal
@@ -156,3 +159,56 @@ Logs (beside the worktree, `.claude/worktrees/`): `pw-chromium-10.1.3-witness.lo
   witnessed in paint.
 - The `red-10.1.2` worktree stays for critics' RED reruns; remove it with
   `git worktree remove .claude/worktrees/red-10.1.2` when the close is done.
+
+## Round 1 (critique-1)
+
+- **D-1, ask (2): the press holds the posture.** `useDockState` holds an environmental
+  expand (a focus-in, a hover-intent dwell) that lands while a press on the dock is in
+  flight and runs it when the press resolves: at its `click` (the engine has already
+  hit-tested it), its `pointercancel`, or, for a mouse or pen press with no click, when
+  its `pointerup` task ends. A touch press waits for the tap's click, because the
+  compatibility mousedown that focuses comes after the pointerup. The deferred expand
+  runs only if the focus is still inside (`focusout` to outside drops it) or the pointer
+  has not left (`mouseleave` drops a deferred dwell). A keyboard focus expands at once.
+  The press listener is attached with the root ref (`flush: "sync"`), so no press can
+  precede it. The guard is unchanged. A hover expand still moves an open-side seat away
+  from a resting pointer (it must reach the open edge); a press that then lands on an
+  arriving control is the guard's race (b), still dropped.
+- **D-2: a collapse holds its end.** A collapse starts unscaled, where every origin is a
+  fixed point, so the root's origin fell back to the centre (snap 121 px at 390, seat
+  outside the plate; 10.1.1 and 10.1.2 the same). `anchor` now reads, when the start is
+  unscaled, the END boxes: the root, regions and panes laid out with `scale: none`,
+  `--dock-expanded-px: initial` and `--dock-morph-t: 1`, in the same task. The root's and
+  regions' origins hold those; the entering pane is shifted to its rest and the leaving
+  pane to the box it painted, through one property, `--dock-pane-shift` (registered,
+  non-inheriting, `0px`), which replaces the unreleased `--dock-leave-shift`.
+- **D-3: not a dock defect.** `reducedMotion` is a Playwright context option, not a test
+  option: `test.use({ reducedMotion: "reduce" })` is ignored without a word, and the
+  critic's page read `matchMedia("(prefers-reduced-motion: reduce)").matches === false`
+  (asserted in the corrected cell). Under a real reduce (`contextOptions`) the spring
+  jumps on this branch and on 10.1.2: data-morphing is set and cleared in one task, and
+  the box goes from rest to rest. The witness cell now uses `contextOptions` and asserts
+  the page reads reduce. (`tests-visual/playwright.config.ts`'s own top-level
+  `reducedMotion: "no-preference"` is dead for the same reason; it matches the default,
+  so nothing changes, and it is left for its owner.)
+
+
+### Round 1 gates
+
+| gate | result |
+|---|---|
+| `npm run typecheck` (guarded `--light`) | exit 0 |
+| `npm run build`, `npm run demo:dist:build` (guarded) | exit 0 |
+| `npx vitest run --maxWorkers=2` (guarded) | 246 files, 2383 passed, 10 expected fail, 1 skipped; `gate:boot-graph` failed only on a stale `dist-demo`, 14/14 after `demo:dist:build` |
+| unit `GlassDock.press-posture.test.ts` | 5/5 GREEN; 4/5 RED on the pre-cure source (the keyboard cell is an invariant) |
+| unit "a right-anchored collapse…" (`dockMorphMeasure.test.ts`) | GREEN; RED on the pre-cure source |
+| `release-10-1-3.spec.ts`, Chromium | 35/35 GREEN (the 24 O-110 cells and 11 critique-1 cells). On the pre-cure branch the 11 cells were 10 RED (left-anchored open seat GREEN). On v10.1.2 dock source they were 10 RED (D-3 GREEN: reduce jumps there too) |
+| the same, WebKit 2287 (`guarded --exclusive webkit`) | 35/35 GREEN. On v10.1.2 the critique-1 cells were 3 RED (D-2, all three anchors); D-1 is GREEN there because WebKit does not focus on press |
+| `release-10-1-2.spec.ts` + `release-10-1-1.spec.ts` | Chromium 77/77, WebKit 2287 77/77 (the O-101 no-overflow cells 1440->390 and 390->1440 among them) |
+| `npm run verify:package` | terminal CLEAN after the bundle-ratchet rebind 2938017 -> 2939290 (+1,273 B) |
+
+Logs, beside the worktree: `fix1-pre-chromium.log`, `fix1-post-chromium.log`,
+`fix1-post-webkit.log`, `fix1-red1012-chromium.log`, `fix1-red1012-webkit.log`,
+`fix1-release-chromium.log`, `fix1-release-webkit.log`, `fix1-vitest.log`,
+`fix1-typecheck.log`, `fix1-build.log`, `fix1-verify.log`. The RED arms swapped
+`src/components/dock` to the named tree inside this worktree and restored it to HEAD.

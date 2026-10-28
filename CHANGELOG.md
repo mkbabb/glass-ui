@@ -52,6 +52,41 @@ or renamed, and a consumer has nothing to change.
   Chromium's: WebKit does not focus a button on press). The 10.1.1 and 10.1.2 release
   specs, the O-101 no-overflow cells among them, stay 77/77 per engine.
 
+- **A press holds the dock's posture until it resolves (O-110, ask 2; critique-1
+  D-1).** A seat on the open side of an edge-anchored dock (the side the expand grows
+  toward) has to move with the expand, so holding the origin cannot keep it under a
+  press. In Chromium the press focused it (on mousedown, or on a tap's compatibility
+  mousedown), the focus-in expanded the dock before the release was hit-tested, and the
+  engine sent the click to the common ancestor: lost by pointer and by touch on 10.1.2
+  (it landed on 10.1.1, where nothing scaled). `useDockState` now holds an
+  environmental expand (a focus-in, a hover-intent dwell) that lands while a press on
+  the dock is in flight, and runs it when the press resolves: at the press's `click`
+  (already hit-tested), at its `pointercancel`, or, for a mouse or pen press that
+  produces no click, when its `pointerup` task ends. The expand runs only if the focus
+  is still inside or the pointer has not left. A keyboard focus still expands at once.
+  The click guard is unchanged.
+
+- **A collapse shrinks toward the anchored edge and settles without a snap (critique-1
+  D-2).** A collapse starts unscaled (its reserved box is the box it painted), where
+  every origin is a fixed point, so the origins fell back to the centre: an
+  edge-anchored dock shrank toward the reserved box's centre and snapped 121 px at
+  settle, its persistent seat painting outside the plate. This was true of 10.1.1 and
+  10.1.2 too. `anchor` now takes a collapse's origins from its END box (the root laid out
+  at rest in the collapsed posture, read in the same task with the reservation lifted
+  and the scalar at its end), so the root, each persistent region and the entering pane
+  (`--dock-pane-shift`, which replaces the unreleased `--dock-leave-shift` and also
+  carries the leaving pane) hold their rest.
+
+  Witnesses (critique-1): unit `GlassDock.press-posture.test.ts` (a focus-in during a
+  press waits for its click; a touch press past its pointerup; a mouse press with no
+  click; a focus that leaves first; a keyboard focus at once) and the collapse cell in
+  `dockMorphMeasure.test.ts`, RED before the cure. Engine `release-10-1-3.spec.ts`, scene
+  `edge-anchor` with `?seat=open` and `?anchor=bottom`: the click on an open-side seat
+  (right 390/1440, left 390, bottom-anchored vertical 390) and the touch tap on one
+  (360/390/430) reach it; the collapse per frame (right, left, bottom at 390) holds the
+  anchored edge, ends on the settled box and keeps the seat inside the plate; under a
+  real `prefers-reduced-motion: reduce` the expand paints no box between the two rests.
+
 ## 10.1.2 — 2026-10-27
 
 Two changes. Atlas G-4, arm (b-ii), the declared seat marker, by owner-delegate ruling
