@@ -29,6 +29,9 @@
 //                    3/3 sustain "rising from a late attack" (×1.05-×1.39). Plants: `e5-late` (the press mark written
 //                    190 ms after the touch, both engines) and `e5-active` (the press on `:active` alone: Chromium's
 //                    late `:active`; WebKit's raw touch sets `:active` at touchStart, so the plant has no input there)
+//   H7 (pass 7; CK-06, REGISTRY §P6-7 item 14, P-E6 §3): in Chromium every onset and sustain read is timed from the FIRST
+//                    TOUCH EVENT the page receives (lib.mjs holdAt), not from the gesture's send; the line prints each
+//                    hold's send → touchstart lag. WebKit's raw driver sends touchStart itself and its clock starts there
 // Real Safari: UNMEASURED (owner's safaridriver checkbox).
 //   node e5-touch.mjs --build <dir> | --fixture [--fault e5-hover] [--engine webkit]
 import { witness, openPage, openTouchPage, scenesFor, center, paintDiff, f } from "./lib.mjs";
@@ -76,7 +79,7 @@ await witness("E-5", "a held touch answers through a press rung, and sustains (C
           const on = xs.slice(0, ONSET.length).map((x, i) => ({ at: ONSET[i], el: x.el, d: dist.on[i] }));
           const half = on.find((x) => dist.dz > 0 && x.d >= 0.5 * dist.dz);
           const land = { keysZ, dz: dist.dz, d200: dist.on.at(-1), el200: on.at(-1).el, landed: dist.dz > 0 && dist.on.at(-1) >= LANDED * dist.dz - 1e-9, onset: half ? `+${half.at} ms (read at +${half.el})` : "not by +200 ms", trace: on.map((x) => `+${x.at} ${dist.dz > 0 ? f(x.d / dist.dz, 2) : "-"}`).join(" ") };
-          return { t: paintDiff(p0.p, p1.p), only: onlyAt(p1), ds: p1.s - p0.s, act: p1.act, sus: { keys, a: dist.a, z: dist.z, actZ: pz.act, land } };
+          return { t: paintDiff(p0.p, p1.p), only: onlyAt(p1), ds: p1.s - p0.s, act: p1.act, lag: Q.lastLag, sus: { keys, a: dist.a, z: dist.z, actZ: pz.act, land } };
         } finally { await Q.close(); }
       };
       // a hold whose engine closed twice (REPRODUCED) ends that mode's reads: the cell fails on it, and the remaining
@@ -103,7 +106,7 @@ await witness("E-5", "a held touch answers through a press rung, and sustains (C
           if (!L.keysZ.length) return { ok: false, t: "NOT DRIVEN (no press-only property at +1200 ms)" };
           const landTxt = `${L.landed ? "landed" : "NOT LANDED"} by +200 ms (read at +${L.el200}: ${f(L.d200, 3)} of the landed ${f(L.dz, 3)} = ×${f(L.d200 / L.dz, 2)}, bound ≥ ×${LANDED}; onset at half ${L.onset}; [${L.trace}])`;
           if (!y.sus.keys.length) return { ok: false, t: `NOT DRIVEN (no press-only property at +200 ms) · ${landTxt}` };
-          return { ok: L.landed && y.sus.z >= 0.95 * y.sus.a - 1e-9, t: `${f(y.sus.a, 3)} → ${f(y.sus.z, 3)} ${y.sus.a ? `×${f(y.sus.z / y.sus.a, 2)}` : "(rising from 0)"}${y.sus.actZ ? "" : " (:active lost)"} · ${landTxt}${y.note ? ` (${y.note.slice(0, 60)})` : ""}` };
+          return { ok: L.landed && y.sus.z >= 0.95 * y.sus.a - 1e-9, t: `${f(y.sus.a, 3)} → ${f(y.sus.z, 3)} ${y.sus.a ? `×${f(y.sus.z / y.sus.a, 2)}` : "(rising from 0)"}${y.sus.actZ ? "" : " (:active lost)"} · ${landTxt}${y.lag != null ? ` · clock from the first touchstart, ${f(y.lag, 1)} ms after the send` : ""}${y.note ? ` (${y.note.slice(0, 60)})` : ""}` };
         };
         const reads = xs.map(one); while (reads.length < READS) reads.push({ ok: false, t: "not taken" }); const nOk = reads.filter((y) => y.ok).length;
         cell(sn, nOk === reads.length ? "PASS" : "FAIL", `${nOk} of ${reads.length} reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [${x.sus.keys.join(", ").slice(0, 100)}]: ${reads.map((y, i) => `read ${i + 1} ${y.t}`).join(" · ")} (bound ≥ ×0.95 on every read, and landed by +200 ms on every read)`);

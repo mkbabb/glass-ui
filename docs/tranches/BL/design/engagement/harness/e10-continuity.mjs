@@ -46,15 +46,7 @@
 //                    move a person makes) in place of the spacer write. Precondition: engaged before and on every frame of
 //                    the film, else NOT DRIVEN. Plants `e10-stale` (place re-read on childList only), `e10-staleresize`
 //                    (re-read on the spacer's style too, but not on a viewport resize)
-//   rebound          C-A4's `rebound` made a cell (CK-20 × CK-12), on scenes with `rebound` (members whose
-//                    programmatic commit toggles): a commit, then its reverse G ms later (G = 60, 200), filmed 900 ms per
-//                    frame: the light seat's opacity × alpha (the row's `light` selector, else the face's
-//                    [data-engage-light], else the target's ::after). FAIL when the light, mid-flight (> 0.01), holds
-//                    still (±0.0005 a frame) for ≥ 60 ms, or the two commits give fewer than 2 pulses (local maxima
-//                    above 0.02). The single commit is REPORT: its onset and peak against ACKNOWLEDGE_WINDOW_MS (150).
-//                    UNMEASURED when the single commit lights no seat (> 0.02): the cell films a light that exists, and
-//                    E-2 owns its existence. Plant `e10-rebound` (a light transition held by a 120 ms delay, the
-//                    fill-clock class C-A4 §0.2 found)
+//   rebound          (H5, C-A4's light rebound) RETIRED by H7 with the commit light it filmed (O-103d (1)); see H7 below
 //   H6 (pass 6; REGISTRY §P5-7 items 1, 5, 6; C-A5 §0.1, C-E5 §0.1): the moves a change detector armed at its own rest
 //   reading cannot hear, each inside CK-20 with a plant:
 //   stale place (inset) / (centred shrink)   on `stale` scenes, keyboard and in-place pointer, the same film as the stale
@@ -76,13 +68,52 @@
 //   clipped stale place · pointer   UNMEASURED with its reason (REGISTRY §P5-7 item 6, C-E5 §4.3): scrolling the box
 //                    while a mouse hold is down ends the hold in both engines, and clipping before the press lets the
 //                    press scroll the box back, so no driver reaches the in-place pointer path inside a scroller yet
+//   H7 (pass 7; REGISTRY §P6-8.3 wave 1, §P6-7 items 4, 6, 7, 9, 14; C-E6 §0.1, §0.2, §0.6):
+//   own release (the reference)  read on THREE fresh pages, and the hand-off and Escape bounds take the LARGEST of the
+//                    three (drop, centre move, engage move): the margin + 0.002 is then the scale read's resolution on
+//                    the 360 px slider (0.72 px, under one device pixel), above the engine's own release scatter, not
+//                    inside it. Pass 6 graded the WebKit hand-off against ONE own-release read + 0.002 and read 4 fail
+//                    cells at loads 21-39 (0.0116-0.0144 against 0.0105-0.0111) while P-E6's no-read control, a build
+//                    with no frame read at all, scattered 0.0082-0.0106 over the same drive (§P6-7 item 9). The line
+//                    prints the three reads. A pair scene with no single scene in the run (`--scenes slider2` alone)
+//                    FAILS LOUD: "NO REFERENCE", never a NaN bound (P-E6's -h reads). Plant `e10-noref`
+//   clipped stale place · pointer · top|bottom · reveal|conceal|control   C-E6's `clip-pointer` driver: the scroller is
+//                    scrolled BEFORE the press so the control stands fully in view 2 px inside the named edge, the
+//                    mouse is pressed on its thumb and held, and only then the spacer (a style write) moves the rest box
+//                    70 % past that edge; +500 ms the spacer moves it toward the visible side by hidden − 2 px (reveal),
+//                    away (conceal), or not at all (control); +400 ms a node is appended below the scroller and the root
+//                    is filmed 900 ms. Same bound (≤ 4 px per 16.7 ms). NOT DRIVEN unless engaged throughout, clipped
+//                    before the move, the move landed (±1 px) and the box never scrolled under the hold. It replaces
+//                    H6's UNMEASURED cell (scrolling the box under a mouse hold ends the hold; this driver never does).
+//                    Plant `e10-clipratioptr`
+//   clip-vanish · keyboard   C-E6's cell (CK-20; a promoted control and its scroller's clip, §P6-7 item 7): Tab engages,
+//                    then per 1 px step the scroller puts hid = 14..22 px of the 20 px rest box past its top edge, two
+//                    frames, and ONE still of the 24 px strip above the scroller (no film); the same steps after Escape
+//                    (not engaged: the scroller clips it) are the reference. The control's painted-outside area per step
+//                    is the strip's pixels differing by ≥ 16 levels of luma. Bound (C-E6's): between adjacent 1 px steps
+//                    the area changes by at most 3 rows × the control's width (a 1 px scroll moves ≤ 1 px of the
+//                    control; 3 rows allow the edge's antialiasing). A larger drop is the control leaving the paint in
+//                    one step. The line prints every step's area. Plant `e10-clipvanish`; on the pass-6 candidate (the
+//                    current construction: promoted, `position-visibility: anchors-visible`) it must FAIL
+//   rebound (re-pointed to O-103d (1); REGISTRY §P6-7 item 4): the commit is a geometric pop, and under reduce an
+//                    instant state change, so no light seat is filmed. single (REPORT): the face's scale per frame, its
+//                    peak and largest one-frame step. reverse +60|+200 (REPORT, §P6-7 item 12 "a slope, not a
+//                    discontinuity"): the largest step against the single pop's, the pops counted. reverse (PRM) +60|+200
+//                    (GRADED, the instant-state form, `a6-probe prm`'s shape): under reduce a commit and its reverse G ms
+//                    later: the face's scale range < 0.002 and in flight on ≤ 1 frame across both edges, the state back,
+//                    and the face's settled paint 300 ms after the reverse within 5 % of its pixels (≥ 16 levels) of
+//                    its paint before the commit (it rests where it began: no stale light, no stuck fill). Plant
+//                    `e10-prmrebound` (the commit pops under reduce). The H5 light cells and `e10-rebound` are retired
 // The sortable and tabs teleports are CK-05's continuity cell (E-4).
 //   node e10-continuity.mjs --build <dir> | --fixture [--fault e10-snap|e10-teleport|e10-teleportin] [--engine webkit]
-import { witness, openPage, scenesFor, center, tabKey, f } from "./lib.mjs";
+import { witness, openPage, scenesFor, center, tabKey, f, GLASS } from "./lib.mjs";
+const { PNG } = (await import(`${GLASS}/node_modules/pngjs/lib/png.js`)).default;
+const luma = (buf) => { const p = PNG.sync.read(buf); const o = new Float32Array(p.width * p.height); for (let i = 0, j = 0; i < p.data.length; i += 4, j++) o[j] = 0.2126 * p.data[i] + 0.7152 * p.data[i + 1] + 0.0722 * p.data[i + 2]; return { w: p.width, h: p.height, o }; };
+const LUMA_STEP = 16, LUMA_FRAC = 0.05, REF_READS = 3, VANISH_ROWS = 3;
 
 const TOL = 0.002, POS = 1, ENG = 1.03, VEIL_KEEP = 0.1;
-// H5: C-E4's stale-place step bound (px per 16.7 ms), and C-A4's rebound bounds
-const STALE = 4, FREEZE = 60, PULSE = 0.02, LIT = 0.01, FLAT = 0.0005, ACK = 150;
+// H5: C-E4's stale-place step bound (px per 16.7 ms)
+const STALE = 4;
 // a film of each root's scale (effective: box width over its untransformed width), its box (left/top), its box centre,
 // and the veil's opacity
 const filmFn = ([roots, veilSel, ms, engSel]) => new Promise((ok) => {
@@ -121,25 +152,28 @@ await witness("E-10", "CK-20 no one-frame discontinuity on an engagement path", 
   for (const [sc, m] of single) {
     const root = '[data-e~="root"]';
     const r = await guard(`${sc} release`, async () => {
-      const out = {};
-      for (const how of ["tab", "escape"]) {
+      const out = { tab: [], tabIn: [] };
+      // H7: the own release on REF_READS fresh pages (the reference's own scatter), then the Escape release
+      for (const how of [...Array(REF_READS).fill("tab"), "escape"]) {
         const P = await openPage(E, T, sc);
         try {
           await P.page.focus('[data-sentinel="before"]');
           const pe = P.page.evaluate(filmFn, [[root], m.veil ?? null, 560]); await P.page.waitForTimeout(32);
-          await P.page.keyboard.press(tabKey(engine)); out[`${how}In`] = await pe; await P.page.waitForTimeout(40);
+          await P.page.keyboard.press(tabKey(engine)); const fin = await pe; await P.page.waitForTimeout(40);
           const pr = P.page.evaluate(filmFn, [[root], m.veil ?? null, 900]); await P.page.waitForTimeout(32);
           if (how === "tab") await P.page.keyboard.press(tabKey(engine)); else await P.page.keyboard.press("Escape");
-          out[how] = await pr;
+          const fr = await pr;
+          if (how === "tab") { out.tab.push(fr); out.tabIn.push(fin); } else { out.escape = fr; out.escapeIn = fin; }
         } finally { await P.close(); }
       }
       return out;
-    });
+    }, 150000);
     if (r.crashed) { cell(`E-10 ${sc} escape release`, "FAIL", r.line); continue; }
-    ref = { step: maxDrop(r.tab), move: maxShift(r.tab), inMove: Math.max(maxShift(r.tabIn), maxShift(r.escapeIn)), s0: r.tab[0].s[0] };
+    const drops = r.tab.map((fr) => maxDrop(fr)), moves = r.tab.map((fr) => maxShift(fr));
+    ref = { step: Math.max(...drops), move: Math.max(...moves), inMove: Math.max(...r.tabIn.map((fr) => maxShift(fr)), maxShift(r.escapeIn)), s0: Math.min(...r.tab.map((fr) => fr[0].s[0])), drops, moves };
     const e0 = r.escape[0].s[0]; const ed = maxDrop(r.escape), em = maxShift(r.escape);
     if (!(ref.s0 >= ENG)) cell(`E-10 ${sc} own release`, "REPORT", `Tab-engaged scale ×${f(ref.s0)} < ×${ENG}: the keyboard does not engage this slider, so the release has no step to film (the hand-off and Escape cells read NOT DRIVEN)`);
-    else cell(`E-10 ${sc} own release`, "REPORT", `Tab in: largest one-frame centre move ${f(ref.inMove, 1)} px · Tab out of the engaged slider: ×${f(ref.s0)} → ×${f(r.tab.at(-1).s[0])}, largest one-frame drop per 16.7 ms ${f(ref.step, 4)}, largest centre move ${f(ref.move, 1)} px (the references for the hand-off and Escape bounds)`);
+    else cell(`E-10 ${sc} own release`, "REPORT", `Tab in: largest one-frame centre move ${f(ref.inMove, 1)} px · Tab out of the engaged slider on ${REF_READS} fresh pages: largest one-frame drop per 16.7 ms ${drops.map((x) => f(x, 4)).join(" / ")} (reference: the largest, ${f(ref.step, 4)}), largest centre move ${moves.map((x) => f(x, 1)).join(" / ")} px (reference ${f(ref.move, 1)}), ×${f(ref.s0)} → ×${f(r.tab[0].at(-1).s[0])} (the references for the hand-off and Escape bounds: the engine's own release scatter, the margin + ${TOL} the scale read's resolution)`);
     if (!(e0 >= ENG)) cell(`E-10 ${sc} escape release`, "FAIL", `NOT DRIVEN: the slider was not keyboard-engaged at the Escape (×${f(e0)} < ×${ENG})`);
     else cell(`E-10 ${sc} escape release`, ed <= ref.step + TOL && em <= ref.move + POS ? "PASS" : "FAIL", `Escape: ×${f(e0)} → ×${f(r.escape.at(-1).s[0])}, largest one-frame drop per 16.7 ms ${f(ed, 4)} (bound ≤ own release ${f(ref.step, 4)} + ${TOL}), largest centre move ${f(em, 1)} px (bound ≤ own release ${f(ref.move, 1)} + ${POS} px)`);
     // the re-render landing
@@ -190,7 +224,15 @@ await witness("E-10", "CK-20 no one-frame discontinuity on an engagement path", 
     }
   }
   for (const [sc, m] of pairs) {
-    const step = ref?.step ?? NaN, move = ref?.move ?? NaN, inMove = ref?.inMove ?? NaN;
+    // H7: no own-release reference in this run (no single scene read, or its read crashed): the hand-off cannot be
+    // graded and says so loudly, never a NaN bound (P-E6's -h reads, REGISTRY §P6-7 item 14)
+    if (!ref) {
+      const why = `NO REFERENCE: the hand-off is graded against the single slider scene's own release, and this run read none (${single.length ? `its read failed` : `no single scene in the run: --scenes ${Object.keys(idx).join(",")}`}); run it with the slider scene (--scenes slider,${sc})`;
+      console.error(`[E-10] ${why}`);
+      for (const n of ["hand-off drop", "hand-off rev"]) cell(`E-10 ${sc} ${n}`, "FAIL", why);
+      continue;
+    }
+    const step = ref.step, move = ref.move, inMove = ref.inMove;
     for (const dir of ["fwd", "rev"]) {
       const r = await guard(`${sc} hand-off ${dir}`, async () => {
         const P = await openPage(E, T, sc);
@@ -210,7 +252,7 @@ await witness("E-10", "CK-20 no one-frame discontinuity on an engagement path", 
       else {
         const dO = maxDrop(fr, o), mO = shiftAt(fr, o), mN = shiftAt(fr, n);
         const ok = dO <= step + TOL && mO.d <= move + POS && mN.d <= inMove + POS;
-        cell(name, ok ? "PASS" : "FAIL", `${dir === "fwd" ? "Tab A → B" : "Shift+Tab B → A"} (focus on ${r.focus}) · outgoing ${ON} ×${f(o0)} → ×${f(fr.at(-1).s[o])}, largest one-frame drop per 16.7 ms ${f(dO, 4)} (bound ≤ own release ${f(step, 4)} + ${TOL}), largest centre move ${f(mO.d, 1)} px at ${f(mO.t, 0)} ms (bound ≤ own release ${f(move, 1)} + ${POS} px) · incoming ${IN} ×${f(fr[0].s[n])} → ×${f(fr.at(-1).s[n])}, largest centre move ${f(mN.d, 1)} px at ${f(mN.t, 0)} ms (bound ≤ own engage ${f(inMove, 1)} + ${POS} px)`);
+        cell(name, ok ? "PASS" : "FAIL", `${dir === "fwd" ? "Tab A → B" : "Shift+Tab B → A"} (focus on ${r.focus}) · outgoing ${ON} ×${f(o0)} → ×${f(fr.at(-1).s[o])}, largest one-frame drop per 16.7 ms ${f(dO, 4)} (bound ≤ own release ${f(step, 4)}, the largest of ${REF_READS} reads [${ref.drops.map((x) => f(x, 4)).join(", ")}], + ${TOL}), largest centre move ${f(mO.d, 1)} px at ${f(mO.t, 0)} ms (bound ≤ own release ${f(move, 1)} + ${POS} px) · incoming ${IN} ×${f(fr[0].s[n])} → ×${f(fr.at(-1).s[n])}, largest centre move ${f(mN.d, 1)} px at ${f(mN.t, 0)} ms (bound ≤ own engage ${f(inMove, 1)} + ${POS} px)`);
       }
       // CK-15: the engaged count at every frame of the hand-off
       {
@@ -313,57 +355,148 @@ await witness("E-10", "CK-20 no one-frame discontinuity on an engagement path", 
       const driven = s0.eng && fr.every((x) => x.eng[0]) && clipped && landed;
       cell(name, !driven ? "FAIL" : w.d <= STALE ? "PASS" : "FAIL", `${driven ? "" : `NOT DRIVEN: engaged before ${s0.eng} and on ${fr.filter((x) => x.eng[0]).length} of ${fr.length} frames, rest box clipped ${clipped} (${f(s0.vis, 1)} of ${f(s0.h, 1)} px visible), move landed ${landed} · `}keyboard engaged · the rest box ${f(s0.h, 1)} px tall, ${f(s0.vis, 1)} px visible in the scroller · ${sign ? `spacer ${sign > 0 ? "+" : "−"}${d} px by a style write (${dir})` : "no move (the control)"}: its top ${f(s0.top, 1)} → ${f(s1.top, 1)} px (Δ ${f(moved, 1)}), ${f(s1.vis, 1)} px visible · then a node appended below the scroller (moves nothing): the root's largest one-frame centre move per 16.7 ms ${f(w.d, 1)} px${w.d > 0 ? ` at +${f(w.t, 0)} ms` : ""} over ${fr.length} frames (bound ≤ ${STALE} px)`);
     }
-    cell(`E-10 ${sc} clipped stale place · pointer`, "UNMEASURED", "no driver (REGISTRY §P5-7 item 6, C-E5 §4.3): scrolling the scroller while a mouse hold is down ends the hold in both engines, and clipping before the press lets the press scroll the box back, so the in-place pointer path inside a scroller is not reached; the keyboard cells above read the clipped place");
+    // ── H7: C-E6's clip-pointer driver (the box scrolled BEFORE the press; the clip made by the spacer after it) ──
+    for (const side of ["top", "bottom"]) for (const dir of ["reveal", "conceal", "control"]) {
+      const name = `E-10 ${sc} clipped stale place · pointer · ${side} · ${dir}`;
+      const r = await guard(name, async () => {
+        const P = await openPage(E, T, sc);
+        try {
+          const { page } = P;
+          // before the press: the rest box fully in view, 2 px inside the named edge
+          await page.evaluate(([boxSel, restSel, side]) => {
+            const b = document.querySelector(boxSel), rest = document.querySelector(restSel); const br = b.getBoundingClientRect(); const visTop = br.top + b.clientTop, visBot = visTop + b.clientHeight;
+            const q = rest.getBoundingClientRect(); b.scrollTop += side === "top" ? q.top - (visTop + 2) : q.bottom - (visBot - 2);
+          }, [box, rest, side]);
+          await page.waitForTimeout(200);
+          const st0 = await page.evaluate((b) => document.querySelector(b).scrollTop, box);
+          const c = await center(page, '[data-e~="thumb"]');
+          await page.mouse.move(c.x, c.y); await page.mouse.down();
+          try {
+            await page.waitForTimeout(400);
+            const sA = await page.evaluate(clipRead, [box, rest, root, eng]);
+            const hidden = Math.round(sA.h * 0.7);
+            // the clip by a style write: top → the spacer shrinks by 2 + hidden; bottom → it grows by 2 + hidden
+            const sp1 = side === "top" ? spacer - (2 + hidden) : spacer + (2 + hidden);
+            await page.evaluate((g) => window.__e.grow(g), sp1);
+            await page.waitForTimeout(500);
+            const s0 = await page.evaluate(clipRead, [box, rest, root, eng]);
+            const d = Math.max(2, hidden - 2);
+            const sign = dir === "control" ? 0 : (side === "top") === (dir === "reveal") ? 1 : -1;
+            if (sign) await page.evaluate((g) => window.__e.grow(g), sp1 + sign * d);
+            await page.waitForTimeout(400);
+            const s1 = await page.evaluate(clipRead, [box, rest, root, eng]);
+            const pr = page.evaluate(filmFn, [[root], m.veil ?? null, 900, eng]);
+            await page.waitForTimeout(80);
+            await page.evaluate(() => window.__e.tick());
+            const fr = await pr;
+            const st1 = await page.evaluate((b) => document.querySelector(b).scrollTop, box);
+            return { sA, s0, s1, d, sign, fr, st0, st1 };
+          } finally { await page.mouse.up(); }
+        } finally { await P.close(); }
+      });
+      if (r.crashed) { cell(name, "FAIL", r.line); continue; }
+      if (!r.s0 || !r.s1) { cell(name, "FAIL", `NOT DRIVEN: the scene renders no ${box} / ${rest} / root`); continue; }
+      const { sA, s0, s1, fr, d, sign } = r; const w = shiftAt(fr);
+      const moved = s1.top - s0.top; const clipped = s0.vis > 0 && s0.vis < s0.h - 0.5; const landed = Math.abs(Math.abs(moved) - (sign ? d : 0)) <= 1;
+      const still = r.st0 === r.st1;
+      const driven = sA.eng && s0.eng && fr.every((x) => x.eng[0]) && clipped && landed && still;
+      cell(name, !driven ? "FAIL" : w.d <= STALE ? "PASS" : "FAIL", `${driven ? "" : `NOT DRIVEN: engaged at the press ${sA.eng}, before the move ${s0.eng}, on ${fr.filter((x) => x.eng[0]).length} of ${fr.length} frames, rest box clipped ${clipped} (${f(s0.vis, 1)} of ${f(s0.h, 1)} px visible), move landed ${landed}, box never scrolled under the hold ${still} · `}pointer held (the box scrolled to ${r.st0} BEFORE the press, ${r.st1} after the film) · clipped by the spacer to ${f(s0.vis, 1)} of ${f(s0.h, 1)} px visible · ${sign ? `then the spacer ${sign > 0 ? "+" : "−"}${d} px by a style write (${dir})` : "no move (the control)"}: the rest box's top ${f(s0.top, 1)} → ${f(s1.top, 1)} px (Δ ${f(moved, 1)}) · then a node appended below the scroller (moves nothing): the root's largest one-frame centre move per 16.7 ms ${f(w.d, 1)} px${w.d > 0 ? ` at +${f(w.t, 0)} ms` : ""} over ${fr.length} frames (bound ≤ ${STALE} px)`);
+    }
+    // ── H7: C-E6's clip-vanish (the promoted control against the scroller that clips its place) ──
+    {
+      const name = `E-10 ${sc} clip-vanish · keyboard`;
+      const HIDS = [14, 15, 16, 17, 18, 19, 20, 21, 22];
+      const r = await guard(name, async () => {
+        const P = await openPage(E, T, sc);
+        try {
+          const { page } = P;
+          await page.focus('[data-sentinel="before"]'); await page.keyboard.press(tabKey(engine)); await page.waitForTimeout(600);
+          const setHid = (hid) => page.evaluate(([boxSel, restSel, rootSel, engSel, hid]) => {
+            const b = document.querySelector(boxSel), q = document.querySelector(restSel), h = document.querySelector(rootSel);
+            const br = b.getBoundingClientRect(); const visTop = br.top + b.clientTop; const rr = q.getBoundingClientRect();
+            b.scrollTop += rr.top - (visTop - hid);
+            return new Promise((ok) => requestAnimationFrame(() => requestAnimationFrame(() => { const b2 = b.getBoundingClientRect(); ok({ visTop: b2.top + b.clientTop, l: b2.left + b.clientLeft, w: b.clientWidth, eng: h.matches(engSel), hw: h.offsetWidth, restH: q.getBoundingClientRect().height }); })));
+          }, [box, rest, root, eng, hid]);
+          const g0 = await setHid(HIDS[0]);
+          const clipR = { x: Math.max(0, Math.floor(g0.l)), y: Math.max(0, Math.floor(g0.visTop) - 26), width: Math.floor(g0.w), height: 24 };
+          const engShots = []; let engAll = true;
+          for (const hid of HIDS) { const g = await setHid(hid); engAll = engAll && g.eng; await page.waitForTimeout(60); engShots.push(luma(await page.screenshot({ clip: clipR }))); }
+          await page.keyboard.press("Escape"); await page.waitForTimeout(700);
+          const relEng = await page.evaluate(([rootSel, engSel]) => document.querySelector(rootSel).matches(engSel), [root, eng]);
+          const restShots = [];
+          for (const hid of HIDS) { await setHid(hid); await page.waitForTimeout(60); restShots.push(luma(await page.screenshot({ clip: clipR }))); }
+          const area = engShots.map((e, k) => { let n = 0; const z = restShots[k]; for (let i = 0; i < e.o.length; i++) if (Math.abs(e.o[i] - z.o[i]) >= LUMA_STEP) n++; return n; });
+          return { area, engAll, relEng, hw: g0.hw, restH: g0.restH };
+        } finally { await P.close(); }
+      }, 120000);
+      if (r.crashed) cell(name, "FAIL", r.line);
+      else {
+        const steps = r.area.slice(1).map((x, k) => r.area[k] - x); const worst = Math.max(...steps.map(Math.abs)); const bound = VANISH_ROWS * r.hw;
+        const driven = r.engAll && !r.relEng;
+        cell(name, !driven ? "FAIL" : worst <= bound ? "PASS" : "FAIL", `${driven ? "" : `NOT DRIVEN: engaged on every step ${r.engAll}, released after Escape ${!r.relEng} · `}keyboard engaged · px² of the strip above the scroller that differ from the released strip (the control painted outside its card; a page-wide engaged paint such as a veil reads as a constant) per 1 px step of the ${f(r.restH, 1)} px rest box past its top edge (hidden ${HIDS.join("/")}): ${r.area.join(" / ")} (largest ${Math.max(...r.area)}) · largest change between adjacent steps ${worst} px² (bound ≤ ${VANISH_ROWS} rows × the control's ${r.hw} px = ${bound}: a 1 px scroll moves ≤ 1 px of the control; a larger drop is the control leaving the paint in one step)`);
+      }
+    }
   }
-  // ── H5: C-A4's rebound, a commit reversed G ms later, made a cell (CK-20 × CK-12) ───────────────────────
-  const reboundFilm = ([gap, lightSel, ms]) => new Promise((res) => {
-    const target = document.querySelector('[data-e~="target"]'); const face = document.querySelector('[data-e~="face"]') ?? target;
-    const seat = () => { const s = lightSel ? face?.querySelector(lightSel) ?? document.querySelector(lightSel) : face?.querySelector("[data-engage-light]"); return s ? [s, null] : [target, "::after"]; };
-    const rd = () => { const [el, ps] = seat(); if (!el) return null; const cs = getComputedStyle(el, ps); if (ps && (cs.content === "none" || cs.display === "none")) return 0; const c = window.__rgba(cs.backgroundColor); return +cs.opacity * (c ? c[3] : 0); };
+  // ── H7: the rebound re-pointed to O-103d (1): the pop's reverse (REPORT) and the instant reverse under reduce (graded) ──
+  const popFilm = ([gap, ms]) => new Promise((res) => {
+    const face = document.querySelector('[data-e~="face"]') ?? document.querySelector('[data-e~="target"]');
     const st = () => JSON.stringify(window.__e.state?.() ?? null);
-    const fr = []; const s0 = st(); const [el0, ps0] = seat(); const seatName = el0 ? `${el0.tagName.toLowerCase()}${[...el0.classList].slice(0, 2).map((c) => "." + c).join("")}${ps0 ?? ""}` : "none";
-    const t0 = performance.now(); window.__e.commit(); const s1 = st(); let flipped = gap == null, s2 = null;
+    const fr = []; const s0 = st(); const t0 = performance.now(); window.__e.commit(); const s1 = st(); let flipped = gap == null, s2 = null;
     const tick = () => {
       const t = performance.now() - t0;
-      if (!flipped && t >= gap) { window.__e.commit(); flipped = true; s2 = st(); fr.push({ t, flip: true }); }
-      fr.push({ t, light: rd() });
-      if (t < ms) requestAnimationFrame(tick); else res({ fr, s0, s1, s2, seat: seatName });
+      if (!flipped && t >= gap) { window.__e.commit(); flipped = true; s2 = st(); }
+      fr.push({ t, s: face ? window.__eff(face).s : NaN });
+      if (t < ms) requestAnimationFrame(tick); else res({ fr, s0, s1, s2 });
     };
     requestAnimationFrame(tick);
   });
-  for (const [sc, m] of rebounds) {
+  const faceBox = (page) => page.evaluate(() => { const e = document.querySelector('[data-e~="face"]') ?? document.querySelector('[data-e~="target"]'); if (!e) return null; const r = e.getBoundingClientRect(); return { x: Math.max(0, Math.floor(r.x) - 2), y: Math.max(0, Math.floor(r.y) - 2), width: Math.ceil(r.width) + 4, height: Math.ceil(r.height) + 4 }; });
+  const stepOf = (S) => Math.max(0, ...S.slice(1).map((x, k) => (Math.abs(x.s - S[k].s) * NOM) / Math.max(NOM, x.t - S[k].t)));
+  const popsOf = (S) => S.filter((x, k) => k > 0 && k < S.length - 1 && x.s > 1 + TOL && x.s >= S[k - 1].s && x.s > S[k + 1].s).length;
+  for (const [sc] of rebounds) {
     for (const theme of ["light", "dark"]) {
-      let lit = null;
+      let stepRef = null;
       for (const gap of [null, 60, 200]) {
         const name = gap == null ? `E-10 ${sc} rebound single ${theme}` : `E-10 ${sc} rebound reverse +${gap} ${theme}`;
         const r = await guard(name, async () => {
           const P = await openPage(E, T, sc, { theme });
-          try { await P.page.waitForTimeout(300); return await P.page.evaluate(reboundFilm, [gap, m.light ?? null, 900]); } finally { await P.close(); }
+          try { await P.page.waitForTimeout(300); return await P.page.evaluate(popFilm, [gap, 900]); } finally { await P.close(); }
+        });
+        if (r.crashed) { cell(name, "REPORT", r.line); continue; }
+        const S = r.fr.filter((x) => Number.isFinite(x.s)); const step = stepOf(S); const pops = popsOf(S);
+        const peak = S.reduce((q, x) => (x.s > q.s ? x : q), { s: -1, t: 0 });
+        const trace = S.filter((_, k) => k % 4 === 0).map((x) => `+${x.t.toFixed(0)} ${x.s.toFixed(4)}`).join(" ");
+        if (gap == null) { stepRef = step; cell(name, "REPORT", `${r.s0 !== r.s1 ? "" : "NOT DRIVEN · "}the single commit's pop (O-103d (1), arm ii): peak ×${f(peak.s, 4)} at +${f(peak.t, 0)} ms, largest one-frame step ${f(step, 4)} per 16.7 ms, pops ${pops} · ${trace}`); continue; }
+        const back = r.s2 === r.s0 && r.s1 !== r.s0;
+        cell(name, "REPORT", `state ${r.s0} → ${r.s1} → ${back ? "back" : "NOT BACK"} at +${gap} · largest one-frame step ${f(step, 4)} against the single pop's ${f(stepRef, 4)} (a retarget from zero velocity: REGISTRY §P6-7 item 12, recorded, not scored) · rests ×${f(S.at(-1)?.s, 4)} · pops ${pops} · ${trace}`);
+      }
+      // the instant-state form under reduce (CK-02 PRM, CK-10): graded
+      for (const gap of [60, 200]) {
+        const name = `E-10 ${sc} rebound reverse (PRM) +${gap} ${theme}`;
+        const r = await guard(name, async () => {
+          const P = await openPage(E, T, sc, { theme, prm: true });
+          try {
+            if (!P.modeOk) return { mode: P.modeLine };
+            await P.page.waitForTimeout(300);
+            const bb = await faceBox(P.page); if (!bb) return { none: true };
+            const before = luma(await P.page.screenshot({ clip: bb }));
+            const fl = await P.page.evaluate(popFilm, [gap, 600]);
+            await P.page.waitForTimeout(300);
+            const after = luma(await P.page.screenshot({ clip: bb }));
+            let n = 0; for (let i = 0; i < before.o.length; i++) if (Math.abs(before.o[i] - after.o[i]) >= LUMA_STEP) n++;
+            return { ...fl, frac: before.o.length ? n / before.o.length : NaN };
+          } finally { await P.close(); }
         });
         if (r.crashed) { cell(name, "FAIL", r.line); continue; }
-        const rows = r.fr.filter((x) => !x.flip && Number.isFinite(x.light));
-        const peak = rows.reduce((q, x) => (x.light > q.light ? x : q), { light: -1, t: 0 });
-        const onset = rows.find((x) => x.light > 0.004);
-        const pulses = rows.filter((x, k) => k > 0 && k < rows.length - 1 && x.light > PULSE && x.light >= rows[k - 1].light && x.light > rows[k + 1].light).length;
-        let fz = 0, f0 = null, fzAt = null;
-        for (let k = 1; k < rows.length; k++) {
-          const flat = rows[k].light > LIT && Math.abs(rows[k].light - rows[k - 1].light) <= FLAT;
-          if (flat) { if (f0 == null) f0 = rows[k - 1].t; if (rows[k].t - f0 > fz) { fz = rows[k].t - f0; fzAt = f0; } } else f0 = null;
-        }
-        // reported beside the graded pair: the light's largest one-frame drop per 16.7 ms (a restart from 0 shows here)
-        const drop = Math.max(0, ...rows.slice(1).map((x, k) => ((rows[k].light - x.light) * (1000 / 60)) / Math.max(1000 / 60, x.t - rows[k].t)));
-        const trace = rows.filter((_, k) => k % 4 === 0).map((x) => `+${x.t.toFixed(0)} ${x.light.toFixed(3)}`).join(" ");
-        if (gap == null) {
-          lit = peak.light > PULSE;
-          if (r.s0 === r.s1) cell(name, "FAIL", `NOT DRIVEN: the commit did not change the state (${r.s0})`);
-          else cell(name, "REPORT", `seat ${r.seat} · onset (> 0.004) ${onset ? `+${onset.t.toFixed(0)}` : "none"} ms · peak ${f(peak.light)} at +${peak.t.toFixed(0)} ms (ACKNOWLEDGE_WINDOW_MS ${ACK}: onset ${onset && onset.t <= ACK ? "inside" : "OUTSIDE"}, peak ${peak.t <= ACK ? "inside" : "OUTSIDE"}) · pulses ${pulses} · ${trace}`);
-          continue;
-        }
-        if (!lit) { cell(name, "UNMEASURED", `the single commit lights no seat above ${PULSE} (seat ${r.seat}): no commit light to film, so no reversal of one; E-2 grades the light's existence`); continue; }
+        if (r.mode) { cell(name, "FAIL", `MODE NOT APPLIED ${r.mode}`); continue; }
+        if (r.none) { cell(name, "FAIL", "no face or target to read"); continue; }
+        const S = r.fr.filter((x) => Number.isFinite(x.s)); const ss = S.map((x) => x.s);
+        const range = ss.length ? Math.max(...ss) - Math.min(...ss) : NaN;
+        const inFlight = S.filter((x) => Math.abs(x.s - S[0].s) >= TOL && Math.abs(x.s - S.at(-1).s) >= TOL).length;
         const back = r.s2 === r.s0 && r.s1 !== r.s0;
-        if (!back) { cell(name, "FAIL", `NOT DRIVEN: the reverse did not restore the state (${r.s0} → ${r.s1} → ${r.s2})`); continue; }
-        const ok = fz < FREEZE && pulses >= 2;
-        cell(name, ok ? "PASS" : "FAIL", `seat ${r.seat} · state ${r.s0} → ${r.s1} → back at +${gap} · light frozen mid-flight (> ${LIT}, ±${FLAT} a frame) ${f(fz, 0)} ms${fzAt != null && fz > 0 ? ` from +${f(fzAt, 0)}` : ""} (bound < ${FREEZE}) · pulses ${pulses} over the two commits (bound ≥ 2) · peak ${f(peak.light)} at +${peak.t.toFixed(0)} · largest one-frame drop ${f(drop)} (reported) · ${trace}`);
+        if (!back) { cell(name, "FAIL", `NOT DRIVEN: the state did not go and come back (${r.s0} → ${r.s1} → ${r.s2})`); continue; }
+        const instant = range < TOL && inFlight <= 1; const rests = r.frac < LUMA_FRAC;
+        cell(name, instant && rests ? "PASS" : "FAIL", `reduce · state ${r.s0} → ${r.s1} → back at +${gap} · instant: the face's scale range ${f(range, 4)} (bound < ${TOL}), in flight on ${inFlight} frame(s) (bound ≤ 1) over ${S.length} frames · rests where it began: 300 ms after the reverse ${f(r.frac * 100, 1)} % of the face's pixels differ by ≥ ${LUMA_STEP} levels from before the commit (bound < ${LUMA_FRAC * 100} %)`);
       }
     }
   }

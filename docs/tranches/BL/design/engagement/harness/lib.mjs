@@ -300,6 +300,30 @@ export const INIT = () => {
 export const paintDiff = (a, z) => (a && z ? Object.keys(a).filter((k) => a[k] !== z[k]) : []);
 
 /**
+ * H7 (CK-27, REGISTRY §P6-7 item 6): the reduce arm REMOVED, in page, after the page is open and its PRM mode verified.
+ * Every `@media` rule in the loaded CSSOM (nested rules followed: layers, supports, containers) that names
+ * `prefers-reduced-motion: reduce` is switched off (`not all`) and every one that names `no-preference` is switched on
+ * (`all`), and script asking `matchMedia("(prefers-reduced-motion: reduce)")` is told `false`. A face whose reduce arm is
+ * CSS (the pop's instant state, the tabs indicator's travel gated on `no-preference`) or script asked at the act gets its
+ * motion back. C-A6's plant resurrected the pop on `.engage-*` classes only and read 0.0000 on the tabs face, whose
+ * commit is its indicator's travel. Returns how many rules each way it switched (a plant that switched nothing says so)
+ */
+export const PRM_PLANT = () => {
+  let off = 0, on = 0;
+  const walk = (rules) => { for (const r of rules) {
+    if (r.media && typeof r.media.mediaText === "string" && /prefers-reduced-motion/.test(r.media.mediaText)) {
+      if (/reduce/.test(r.media.mediaText) && !/no-preference/.test(r.media.mediaText)) { r.media.mediaText = "not all"; off++; }
+      else if (/no-preference/.test(r.media.mediaText)) { r.media.mediaText = "all"; on++; }
+    }
+    let kids = null; try { kids = r.cssRules; } catch {} if (kids) walk(kids);
+  } };
+  for (const s of [...document.styleSheets, ...(document.adoptedStyleSheets ?? [])]) { let rs = null; try { rs = s.cssRules; } catch {} if (rs) walk(rs); }
+  const mm = window.matchMedia.bind(window);
+  window.matchMedia = (q) => (/prefers-reduced-motion:\s*reduce/.test(q) ? ({ matches: false, media: q, onchange: null, addListener() {}, removeListener() {}, addEventListener() {}, removeEventListener() {}, dispatchEvent: () => false }) : mm(q));
+  return { off, on };
+};
+
+/**
  * Open a scene. Modes: theme light|dark, coarse (hasTouch; isMobile in Chromium; verified as (hover: none) and
  * (pointer: coarse)), prm (reducedMotion reduce, verified), vp {width,height}, q (extra query).
  * Returns { page, ctx, close, modeOk, modeLine }.
@@ -650,9 +674,23 @@ export async function openTouchPage(E, T, scene, o = {}) {
     };
     // H2: one held touch read at several times (CK-06's sustain: +200 ms and +1 s), each read timed from the touch; H5: the
     // read is passed the ms elapsed since the touch began (E-5's onset)
+    // H7 (CK-06; P-E6 §3, REGISTRY §P6-7 item 14): the clock starts at the FIRST TOUCH EVENT the page receives, not at the
+    // send. The gesture synthesizer delivers touchstart some ms after `Input.synthesizeTapGesture` is sent (P-E6 read the
+    // slider press 2.5-3.7 ms after the touch, and the +25 ms read missed it), so a clock started at the send read the
+    // onset early by the delivery lag. The page stamps its first touchstart (capture, before any page listener) on its
+    // own clock; the harness polls for it and maps it onto its clock with the round trip's midpoint. P.lastLag holds the
+    // send → touchstart lag of the last hold (E-5 prints it). No touchstart within 1 s fails loud (the clock cannot start)
     P.holdAt = async (x, y, times, read) => {
+      await P.page.evaluate(() => { window.__touch0 = null; addEventListener("touchstart", () => { if (window.__touch0 == null) window.__touch0 = performance.now(); }, { capture: true, once: true, passive: true }); });
+      const sent = Date.now();
       const g = cdp.send("Input.synthesizeTapGesture", { x, y, duration: Math.max(...times) + 550, tapCount: 1, gestureSourceType: "touch" });
-      const t0 = Date.now(); const out = [];
+      let t0 = null;
+      while (t0 == null && Date.now() - sent < 1000) {
+        const a = Date.now(); const q = await P.page.evaluate(() => (window.__touch0 == null ? null : performance.now() - window.__touch0)); const b = Date.now();
+        if (q != null) t0 = (a + b) / 2 - q;
+      }
+      if (t0 == null) { await g.catch(() => {}); throw new Error("touch clock: no touchstart reached the page within 1000 ms of the gesture's send"); }
+      P.lastLag = t0 - sent; const out = [];
       for (const t of times) { await P.page.waitForTimeout(Math.max(0, t - (Date.now() - t0))); out.push(await read(Date.now() - t0)); }
       await g; return out;
     };

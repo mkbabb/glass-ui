@@ -37,8 +37,9 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const only = typeof a.only === "string" ? new Set(a.only.split(",")) : null;
   const engines = typeof a.engines === "string" ? a.engines.split(",") : ["chromium", "webkit"];
   const pass = [];
-  for (const k of ["build", "out", "fault", "wt", "deadline", "scenes", "commit-arms", "unowned", "migration"]) if (typeof a[k] === "string") pass.push(`--${k}`, a[k]);
+  for (const k of ["build", "out", "fault", "wt", "deadline", "scenes", "commit-arms", "unowned", "migration", "repeat", "repeat-gaps"]) if (typeof a[k] === "string") pass.push(`--${k}`, a[k]);
   if (a.fixture) pass.push("--fixture");
+  if (a["prm-plant"] === true) pass.push("--prm-plant");
   let bad = 0;
   for (const [id, file] of WITNESSES) {
     if (only && !only.has(id)) continue;

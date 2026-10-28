@@ -1,0 +1,20 @@
+# H7 st-E-9 webkit · 2026-10-28 07:36:43 · load { 17.75 15.45 15.01 } · 
+OK     E-9 webkit   clean exit 0 · E-9 webkit PASS · 43 pass, 0 fail, 0 unmeasured of 43 gating cells (6 reported) · load 17.8/15.4/15.0 at start, 19.5/16.3/15.3 at end
+OK     E-9 webkit   fault   e9-scale (under reduced motion the press still squishes) exit 1
+         first planted FAIL: FAIL       E-9 pop press-spatial light · scale range while pressed 0.040 over 31 frames (bound < 0.002) · load 18.4/16.2/15.3
+OK     E-9 webkit   fault   e9-dark (under reduced motion the press retires its scale and keeps no light answer (its press paints the hover value): E-9's press, E-1's exemplar under reduce and E-5's held touch under reduce all read it (H-9)) exit 1
+         first planted FAIL: FAIL       E-9 pop press-light light · press-only paint changes [] (bound ≥ 1) · load 21.0/17.2/15.7
+OK     E-9 webkit   fault   e9-glide (under reduced motion the selection body still glides) exit 1
+         first planted FAIL: FAIL       E-9 travel commit-spatial light · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 77.29 px with 21 frame(s) in flight (bound ≤ 1 frame each) · 60 frames · load 17.5/16.8/15.7
+OK     E-9 webkit   fault   e9-fadecut (CK-10 (H6, O-100 R-1 placed by O-103): under reduce the presented dialog's opacity fade is zeroed by the PRM fallback (no authorization row), so it cuts on open and on close) exit 1
+         first planted FAIL: FAIL       E-9 presented fade (PRM) open light · under reduce the open CUTS (the opacity fade is zeroed) · plate opacity strictly between 0.03 and 0.97 on 0 frame(s), scrim on 0 (bound ≥ 2 on either: a fade, not a cut) · the plate where it 
+OK     E-9 webkit   fault   e9-fadespatial (CK-10 (H6): under reduce the presented dialog keeps its fade AND its 0.95 → 1 scale, a spatial leg the reduce arm must retire) exit 1
+         first planted FAIL: FAIL       E-9 presented fade (PRM) open light · under reduce the open fades and KEEPS A SPATIAL LEG on the plate · plate opacity strictly between 0.03 and 0.97 on 17 frame(s), scrim on 0 (bound ≥ 2 on either: a fade, not a cut) · the plate
+OK     E-9 webkit   fault   e9-prmpop (CK-02/CK-10 (H7, O-103d (1)): under reduce the commit still pops geometrically (1.08): not an instant state change) exit 1
+         first planted FAIL: FAIL       E-9 pop commit-instant light · commit(Space) under reduce · NOT INSTANT · state "off" → "on" · instant: the scale's excursion past its endpoints 0.1340 (bound < 0.002), scale in flight 25 frame(s), body in flight 0 frame(s) (boun
+OK     E-9 webkit   fault   e9-illegible (CK-02/CK-10 (H7, O-103d (1)): under reduce the committed state paints nothing on the face (its fill held at rest): the commit is instant and illegible) exit 1
+         first planted FAIL: FAIL       E-9 pop commit-instant light · commit(Space) under reduce · NOT LEGIBLE · state "off" → "on" · instant: the scale's excursion past its endpoints 0.0000 (bound < 0.002), scale in flight 0 frame(s), body in flight 0 frame(s) (bound
+OK     E-9 webkit   fault   e9-prmplant (CK-27 (H7, REGISTRY §P6-7 item 6): the witness removes the page's reduce arm (lib.mjs PRM_PLANT): the travelling face (the tabs' class) must fail its commit-instant cell) exit 1
+         first planted FAIL: FAIL       E-9 travel commit-instant light · PLANT (the reduce arm removed): commit(ArrowRight) under reduce · NOT INSTANT · state 0 → 1 · instant: the scale's excursion past its endpoints 0.0000 (bound < 0.002), scale in flight 0 frame(s),
+selftest: 9 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 07:43:07 · load { 14.08 15.81 15.53 }

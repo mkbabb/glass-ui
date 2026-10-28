@@ -1,0 +1,66 @@
+# chain phase-c.txt (guarded) start 2026-10-28 03:21:49 load { 15.84 17.30 17.59 }
+## clean chromium  · 03:21:49 · load { 15.84 17.30 17.59 }
+E-11 chromium PASS · 3 pass, 0 fail, 0 unmeasured of 3 gating cells (1 reported) · load 18.4/18.6/18.1 at start, 22.7/20.4/19.0 at end
+# exit 0 · 03:29:02 · load { 22.74 20.44 18.95 }
+## guarded exit 0
+## st-E-4 chromium  · 03:29:06 · load { 22.60 20.45 18.96 }
+selftest: 14 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 03:43:08 · load { 16.15 16.82 17.12 }
+## guarded exit 0
+## st-E-5 chromium  · 03:43:13 · load { 15.66 16.70 17.08 }
+selftest: 7 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 03:46:48 · load { 17.46 16.54 16.86 }
+## guarded exit 0
+## st-E-9 chromium  · 03:46:54 · load { 17.42 16.55 16.86 }
+selftest: 9 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 03:52:42 · load { 21.08 20.91 18.79 }
+## guarded exit 0
+## st-E-10 chromium  · 03:52:46 · load { 20.99 20.89 18.80 }
+selftest: 17 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 04:16:08 · load { 11.92 15.02 16.45 }
+## guarded exit 0
+## st-E-12 chromium  · 04:16:12 · load { 11.92 14.97 16.42 }
+selftest: 15 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 04:25:26 · load { 15.26 14.66 15.42 }
+## guarded exit 0
+## head-e4 chromium  · 04:25:30 · load { 15.26 14.66 15.42 }
+E-4 chromium FAIL · 6 pass, 5 fail, 4 unmeasured of 15 gating cells (1 reported) · load 15.3/14.7/15.4 at start, 13.3/14.2/15.2 at end
+# exit 1 · 04:26:22 · load { 13.26 14.18 15.19 }
+## guarded exit 0
+## head-e5 chromium  · 04:26:27 · load { 13.16 14.14 15.17 }
+E-5 chromium FAIL · 28 pass, 28 fail, 0 unmeasured of 56 gating cells (0 reported) · load 13.2/14.1/15.2 at start, 11.2/13.1/14.5 at end
+# exit 1 · 04:30:14 · load { 11.24 13.07 14.48 }
+## guarded exit 0
+## head-e9 chromium  · 04:30:19 · load { 11.22 13.04 14.46 }
+E-9 chromium FAIL · 71 pass, 14 fail, 0 unmeasured of 85 gating cells (8 reported) · load 11.2/13.0/14.5 at start, 15.9/14.2/14.8 at end
+# exit 1 · 04:31:44 · load { 15.86 14.17 14.76 }
+## guarded exit 0
+## head-e10 chromium  · 04:31:49 · load { 15.47 14.12 14.74 }
+E-10 chromium FAIL · 18 pass, 18 fail, 0 unmeasured of 36 gating cells (26 reported) · load 15.5/14.1/14.7 at start, 16.8/14.5/14.8 at end
+# exit 1 · 04:33:54 · load { 16.77 14.53 14.79 }
+## guarded exit 0
+## head-e12 chromium  · 04:34:00 · load { 16.23 14.45 14.76 }
+E-12 chromium FAIL · 9 pass, 54 fail, 0 unmeasured of 63 gating cells (3 reported) · load 16.2/14.5/14.8 at start, 13.9/14.1/14.6 at end
+# exit 1 · 04:35:15 · load { 13.94 14.10 14.59 }
+## guarded exit 0
+## cand-e9 chromium  · 04:35:21 · load { 13.34 13.96 14.54 }
+E-9 chromium PASS · 85 pass, 0 fail, 0 unmeasured of 85 gating cells (8 reported) · load 13.3/14.0/14.5 at start, 13.8/14.0/14.5 at end
+# exit 0 · 04:36:46 · load { 13.78 13.99 14.49 }
+## guarded exit 0
+## cand-e9p chromium  · 04:36:52 · load { 15.32 14.30 14.60 }
+E-9 chromium FAIL · 40 pass, 32 fail, 0 unmeasured of 72 gating cells (7 reported) · load 15.3/14.3/14.6 at start, 18.3/15.4/15.0 at end
+# exit 1 · 04:38:00 · load { 18.29 15.35 14.97 }
+## guarded exit 0
+## cand-e10 chromium  · 04:38:06 · load { 17.77 15.34 14.97 }
+E-10 chromium FAIL · 35 pass, 1 fail, 0 unmeasured of 36 gating cells (26 reported) · load 17.8/15.3/15.0 at start, 18.1/16.8/15.6 at end
+# exit 1 · 04:40:12 · load { 18.14 16.83 15.65 }
+## guarded exit 0
+## cand-e12 chromium  · 04:40:17 · load { 17.57 16.73 15.62 }
+E-12 chromium FAIL · 31 pass, 2 fail, 0 unmeasured of 33 gating cells (8 reported) · load 17.6/16.7/15.6 at start, 20.3/17.5/16.0 at end
+# exit 1 · 04:41:06 · load { 20.31 17.54 15.98 }
+## guarded exit 0
+## f5-sheet chromium 10 · 04:41:13 · load { 19.97 17.52 15.98 }
+E-4 chromium FAIL · 3 pass, 1 fail, 0 unmeasured of 4 gating cells (0 reported) · load 20.0/17.5/16.0 at start, 20.0/17.8/16.2 at end
+# exit 1 · 04:41:59 · load { 19.99 17.79 16.15 }
+## guarded exit 0
+# chain phase-c.txt end 2026-10-28 04:42:06 load { 19.19 17.66 16.12 }

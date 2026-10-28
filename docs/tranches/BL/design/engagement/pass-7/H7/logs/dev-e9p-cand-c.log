@@ -1,0 +1,34 @@
+# e9p-cand-c · 2026-10-28 03:20:30 · load { 16.42 17.48 17.66 } · node ../../harness/e9-prm.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/H7/wt/out/builds/cand6 --prm-plant --scenes tabs,switch,accordion
+# E-9 · the PRM arm
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/H7/wt/out/builds/cand6 · engine chromium · lock wait 0.0 s · other headless processes: chromium 4, webkit 2 · load 16.4/17.5/17.7 at start
+# scene app: harness scenes/App.vue (sha1 9e68012e9522)
+# chromium 149.0.7827.55
+# narrowed to scenes tabs, switch, accordion
+# PLANT --prm-plant: the reduce arm removed on every commit page (lib.mjs PRM_PLANT); every stateful commit-instant cell must FAIL
+  PASS       E-9 switch press-spatial light · scale range while pressed 0.000 over 41 frames (bound < 0.002) · load 16.5/17.5/17.7
+  PASS       E-9 switch press-light light · press-only paint changes [child0 bg, child1 bg] (bound ≥ 1) · load 16.5/17.5/17.7
+  FAIL       E-9 switch commit-spatial light · commit(Space): scale range 0.057 with 51 frame(s) in flight · body moved 20.00 px with 22 frame(s) in flight (bound ≤ 1 frame each) · 82 frames · load 16.5/17.5/17.7
+  FAIL       E-9 switch commit-instant light · PLANT (the reduce arm removed): commit(Space) under reduce · NOT INSTANT · state false → true · instant: the scale's excursion past its endpoints 0.0500 (bound < 0.002), scale in flight 51 frame(s), body in flight 22 frame(s) (bound ≤ 1 each) over 82 frames · legible: 50.1 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %) · PLANT switched 51 reduce rule(s) off and 13 no-preference rule(s) on · load 16.5/17.5/17.7
+  PASS       E-9 switch press-spatial dark · scale range while pressed 0.000 over 41 frames (bound < 0.002) · load 16.4/17.4/17.6
+  PASS       E-9 switch press-light dark · press-only paint changes [child0 bg, child1 bg] (bound ≥ 1) · load 16.4/17.4/17.6
+  FAIL       E-9 switch commit-spatial dark · commit(Space): scale range 0.057 with 50 frame(s) in flight · body moved 20.00 px with 21 frame(s) in flight (bound ≤ 1 frame each) · 80 frames · load 16.4/17.4/17.6
+  FAIL       E-9 switch commit-instant dark · PLANT (the reduce arm removed): commit(Space) under reduce · NOT INSTANT · state false → true · instant: the scale's excursion past its endpoints 0.0500 (bound < 0.002), scale in flight 50 frame(s), body in flight 21 frame(s) (bound ≤ 1 each) over 80 frames · legible: 69.6 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %) · PLANT switched 51 reduce rule(s) off and 13 no-preference rule(s) on · load 16.4/17.4/17.6
+  PASS       E-9 tabs press-spatial light · scale range while pressed 0.000 over 41 frames (bound < 0.002) · load 16.9/17.5/17.7
+  PASS       E-9 tabs press-light light · press-only paint changes [background-color] (bound ≥ 1) · load 16.9/17.5/17.7
+  FAIL       E-9 tabs commit-spatial light · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 78.31 px with 44 frame(s) in flight (bound ≤ 1 frame each) · 81 frames · load 16.9/17.5/17.7
+  FAIL       E-9 tabs commit-instant light · PLANT (the reduce arm removed): commit(ArrowRight) under reduce · NOT INSTANT · state "a" → "b" · instant: the scale's excursion past its endpoints 0.0000 (bound < 0.002), scale in flight 0 frame(s), body in flight 44 frame(s) (bound ≤ 1 each) over 81 frames · legible: 89.3 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %) · PLANT switched 51 reduce rule(s) off and 13 no-preference rule(s) on · load 16.9/17.5/17.7
+  PASS       E-9 tabs press-spatial dark · scale range while pressed 0.000 over 41 frames (bound < 0.002) · load 16.9/17.5/17.7
+  PASS       E-9 tabs press-light dark · press-only paint changes [background-color] (bound ≥ 1) · load 16.9/17.5/17.7
+  FAIL       E-9 tabs commit-spatial dark · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 78.31 px with 43 frame(s) in flight (bound ≤ 1 frame each) · 79 frames · load 16.9/17.5/17.7
+  FAIL       E-9 tabs commit-instant dark · PLANT (the reduce arm removed): commit(ArrowRight) under reduce · NOT INSTANT · state "a" → "b" · instant: the scale's excursion past its endpoints 0.0000 (bound < 0.002), scale in flight 0 frame(s), body in flight 43 frame(s) (bound ≤ 1 each) over 79 frames · legible: 25.6 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %) · PLANT switched 51 reduce rule(s) off and 13 no-preference rule(s) on · load 16.9/17.5/17.7
+  PASS       E-9 accordion press-spatial light · scale range while pressed 0.000 over 41 frames (bound < 0.002) · load 17.8/17.7/17.7
+  PASS       E-9 accordion press-light light · press-only paint changes [background-color] (bound ≥ 1) · load 17.8/17.7/17.7
+  FAIL       E-9 accordion commit-spatial light · commit(Enter): scale range 0.023 with 36 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 80 frames · load 17.8/17.7/17.7
+  FAIL       E-9 accordion commit-instant light · PLANT (the reduce arm removed): commit(Enter) under reduce · NOT INSTANT · state null → "one" · instant: the scale's excursion past its endpoints 0.0200 (bound < 0.002), scale in flight 36 frame(s), body in flight 0 frame(s), region in flight 24 frame(s) (bound ≤ 1 each) over 80 frames · legible: region 0.0 → 37.8 px (bound from ≤ 1 to ≥ 16; the face changed 0.2 %, printed) · PLANT switched 51 reduce rule(s) off and 13 no-preference rule(s) on · load 17.8/17.7/17.7
+  PASS       E-9 accordion press-spatial dark · scale range while pressed 0.000 over 41 frames (bound < 0.002) · load 17.8/17.7/17.7
+  PASS       E-9 accordion press-light dark · press-only paint changes [background-color] (bound ≥ 1) · load 17.8/17.7/17.7
+  FAIL       E-9 accordion commit-spatial dark · commit(Enter): scale range 0.023 with 35 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 79 frames · load 17.8/17.7/17.7
+  FAIL       E-9 accordion commit-instant dark · PLANT (the reduce arm removed): commit(Enter) under reduce · NOT INSTANT · state null → "one" · instant: the scale's excursion past its endpoints 0.0200 (bound < 0.002), scale in flight 35 frame(s), body in flight 0 frame(s), region in flight 22 frame(s) (bound ≤ 1 each) over 79 frames · legible: region 0.3 → 37.8 px (bound from ≤ 1 to ≥ 16; the face changed 0.2 %, printed) · PLANT switched 51 reduce rule(s) off and 13 no-preference rule(s) on · load 17.8/17.7/17.7
+  REPORT     E-9 PLANT reach · the reduce arm removed: commit-instant FAILED on 6 stateful face(s) [switch light, switch dark, tabs light, tabs dark, accordion light, accordion dark]; NOT REACHED (still passing) on 0 [] · load 17.8/17.7/17.7
+E-9 chromium FAIL · 12 pass, 12 fail, 0 unmeasured of 24 gating cells (1 reported) · load 16.4/17.5/17.7 at start, 17.8/17.7/17.7 at end
+# exit 1 · 03:20:50 · load { 17.76 17.69 17.74 }

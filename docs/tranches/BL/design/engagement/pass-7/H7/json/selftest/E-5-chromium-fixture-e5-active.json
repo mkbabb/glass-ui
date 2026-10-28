@@ -1,0 +1,62 @@
+{
+ "id": "E-5",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e5-active"
+ },
+ "loadStart": "17.2/16.3/16.8",
+ "loadEnd": "17.5/16.5/16.9",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-5 pop sustain light",
+   "status": "FAIL",
+   "line": "1 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [background-color]: read 1 0.153 → 0.185 ×1.21 · NOT LANDED by +200 ms (read at +200.300048828125: 0.153 of the landed 0.185 = ×0.83, bound ≥ ×0.9; onset at half +200 ms (read at +200.300048828125); [+25 0.00 +50 0.00 +75 0.00 +100 0.00 +125 0.00 +150 0.00 +175 0.22 +200 0.83]) · clock from the first touchstart, 24.7 ms after the send · read 2 0.185 → 0.185 ×1.00 · landed by +200 ms (read at +202.199951171875: 0.185 of the landed 0.185 = ×1.00, bound ≥ ×0.9; onset at half +200 ms (read at +202.199951171875); [+25 0.00 +50 0.00 +75 0.00 +100 0.00 +125 0.00 +150 0.00 +175 0.42 +200 1.00]) · clock from the first touchstart, 21.8 ms after the send · read 3 0.157 → 0.185 ×1.18 · NOT LANDED by +200 ms (read at +201.5: 0.157 of the landed 0.185 = ×0.85, bound ≥ ×0.9; onset at half +200 ms (read at +201.5); [+25 0.00 +50 0.00 +75 0.00 +100 0.00 +125 0.00 +150 0.00 +175 0.25 +200 0.85]) · clock from the first touchstart, 33.5 ms after the send (bound ≥ ×0.95 on every read, and landed by +200 ms on every read)",
+   "load": "18.9/16.8/16.9"
+  },
+  {
+   "name": "E-5 pop press light",
+   "status": "PASS",
+   "line": ":active true · Δscale -0.042 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color]",
+   "load": "18.9/16.8/16.9"
+  },
+  {
+   "name": "E-5 pop sustain(PRM) light",
+   "status": "FAIL",
+   "line": "0 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [background-color]: read 1 0.156 → 0.185 ×1.19 · NOT LANDED by +200 ms (read at +201.60009765625: 0.156 of the landed 0.185 = ×0.84, bound ≥ ×0.9; onset at half +200 ms (read at +201.60009765625); [+25 0.00 +50 0.00 +75 0.00 +100 0.00 +125 0.00 +150 0.00 +175 0.23 +200 0.84]) · clock from the first touchstart, 34.4 ms after the send · read 2 0.151 → 0.185 ×1.23 · NOT LANDED by +200 ms (read at +202.300048828125: 0.151 of the landed 0.185 = ×0.81, bound ≥ ×0.9; onset at half +200 ms (read at +202.300048828125); [+25 0.00 +50 0.00 +75 0.00 +100 0.00 +125 0.00 +150 0.00 +175 0.21 +200 0.81]) · clock from the first touchstart, 27.7 ms after the send · read 3 0.153 → 0.185 ×1.21 · NOT LANDED by +200 ms (read at +202: 0.153 of the landed 0.185 = ×0.83, bound ≥ ×0.9; onset at half +200 ms (read at +202); [+25 0.00 +50 0.00 +75 0.00 +100 0.00 +125 0.00 +150 0.00 +175 0.48 +200 0.83]) · clock from the first touchstart, 35.0 ms after the send (bound ≥ ×0.95 on every read, and landed by +200 ms on every read)",
+   "load": "18.9/16.8/16.9"
+  },
+  {
+   "name": "E-5 pop press-light(PRM) light",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color] (bound ≥ 1 press-only property under reduce)",
+   "load": "18.9/16.8/16.9"
+  },
+  {
+   "name": "E-5 pop sustain dark",
+   "status": "FAIL",
+   "line": "2 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [background-color]: read 1 0.166 → 0.179 ×1.08 · landed by +200 ms (read at +201.300048828125: 0.166 of the landed 0.179 = ×0.92, bound ≥ ×0.9; onset at half +175 ms (read at +175.300048828125); [+25 0.00 +50 0.00 +75 0.00 +100 0.00 +125 0.00 +150 0.00 +175 0.53 +200 0.92]) · clock from the first touchstart, 21.7 ms after the send · read 2 0.175 → 0.179 ×1.03 · landed by +200 ms (read at +200.5: 0.175 of the landed 0.179 = ×0.97, bound ≥ ×0.9; onset at half +200 ms (read at +200.5); [+25 0.00 +50 0.00 +75 0.00 +100 0.00 +125 0.00 +150 0.00 +175 0.47 +200 0.97]) · clock from the first touchstart, 28.5 ms after the send · read 3 0.154 → 0.179 ×1.16 · NOT LANDED by +200 ms (read at +201.699951171875: 0.154 of the landed 0.179 = ×0.86, bound ≥ ×0.9; onset at half +200 ms (read at +201.699951171875); [+25 0.00 +50 0.00 +75 0.00 +100 0.00 +125 0.00 +150 0.00 +175 0.24 +200 0.86]) · clock from the first touchstart, 35.3 ms after the send (bound ≥ ×0.95 on every read, and landed by +200 ms on every read)",
+   "load": "17.5/16.5/16.9"
+  },
+  {
+   "name": "E-5 pop press dark",
+   "status": "PASS",
+   "line": ":active true · Δscale -0.042 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color]",
+   "load": "17.5/16.5/16.9"
+  },
+  {
+   "name": "E-5 pop sustain(PRM) dark",
+   "status": "FAIL",
+   "line": "1 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [background-color]: read 1 0.179 → 0.179 ×1.00 · landed by +200 ms (read at +200.60009765625: 0.179 of the landed 0.179 = ×1.00, bound ≥ ×0.9; onset at half +200 ms (read at +200.60009765625); [+25 0.00 +50 0.00 +75 0.00 +100 0.00 +125 0.00 +150 0.00 +175 0.49 +200 1.00]) · clock from the first touchstart, 23.4 ms after the send · read 2 0.150 → 0.179 ×1.20 · NOT LANDED by +200 ms (read at +201.5: 0.150 of the landed 0.179 = ×0.84, bound ≥ ×0.9; onset at half +200 ms (read at +201.5); [+25 0.00 +50 0.00 +75 0.00 +100 0.00 +125 0.00 +150 0.00 +175 0.24 +200 0.84]) · clock from the first touchstart, 33.5 ms after the send · read 3 0.150 → 0.179 ×1.20 · NOT LANDED by +200 ms (read at +201.5: 0.150 of the landed 0.179 = ×0.84, bound ≥ ×0.9; onset at half +200 ms (read at +201.5); [+25 0.00 +50 0.00 +75 0.00 +100 0.00 +125 0.00 +150 0.00 +175 0.46 +200 0.84]) · clock from the first touchstart, 29.5 ms after the send (bound ≥ ×0.95 on every read, and landed by +200 ms on every read)",
+   "load": "17.5/16.5/16.9"
+  },
+  {
+   "name": "E-5 pop press-light(PRM) dark",
+   "status": "PASS",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color] (bound ≥ 1 press-only property under reduce)",
+   "load": "17.5/16.5/16.9"
+  }
+ ]
+}

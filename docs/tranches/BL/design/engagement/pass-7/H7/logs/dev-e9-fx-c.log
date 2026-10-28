@@ -1,0 +1,42 @@
+# e9-fx-c · 2026-10-28 03:03:23 · load { 10.13 13.07 17.95 } · node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/e9-prm.mjs --fixture --scenes pop,travel,rest,act
+# E-9 · the PRM arm
+# target fixture · engine chromium · lock wait 0.0 s · other headless processes: chromium 0, webkit 2 · load 10.1/13.1/18.0 at start
+# chromium 149.0.7827.55
+# narrowed to scenes pop, travel, rest, act
+  PASS       E-9 pop press-spatial light · scale range while pressed 0.000 over 39 frames (bound < 0.002) · load 10.2/13.0/17.9
+  PASS       E-9 pop press-light light · press-only paint changes [background-color] (bound ≥ 1) · load 10.2/13.0/17.9
+  PASS       E-9 pop commit-spatial light · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 81 frames · load 10.2/13.0/17.9
+  PASS       E-9 pop commit-instant light · commit(Space) under reduce · state "off" → "on" · instant: the scale's excursion past its endpoints 0.0000 (bound < 0.002), scale in flight 0 frame(s), body in flight 0 frame(s) (bound ≤ 1 each) over 81 frames · legible: 72.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %) · load 10.2/13.0/17.9
+  PASS       E-9 pop commit-instant control (Shift) light · Shift commits nothing; the legibility read must say NOT legible (the read can fail): state "off" → "off" · instant: the scale's excursion past its endpoints 0.0000 (bound < 0.002), scale in flight 0 frame(s), body in flight 0 frame(s) (bound ≤ 1 each) over 79 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %) · load 10.2/13.0/17.9
+  PASS       E-9 pop press-spatial dark · scale range while pressed 0.000 over 40 frames (bound < 0.002) · load 10.6/13.1/17.9
+  PASS       E-9 pop press-light dark · press-only paint changes [background-color] (bound ≥ 1) · load 10.6/13.1/17.9
+  PASS       E-9 pop commit-spatial dark · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 80 frames · load 10.6/13.1/17.9
+  PASS       E-9 pop commit-instant dark · commit(Space) under reduce · state "off" → "on" · instant: the scale's excursion past its endpoints 0.0000 (bound < 0.002), scale in flight 0 frame(s), body in flight 0 frame(s) (bound ≤ 1 each) over 80 frames · legible: 71.7 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %) · load 10.6/13.1/17.9
+  PASS       E-9 travel press-spatial light · scale range while pressed 0.000 over 38 frames (bound < 0.002) · load 10.7/13.0/17.9
+  PASS       E-9 travel press-light light · press-only paint changes [background-color] (bound ≥ 1) · load 10.7/13.0/17.9
+  PASS       E-9 travel commit-spatial light · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 81 frames · load 10.7/13.0/17.9
+  PASS       E-9 travel commit-instant light · commit(ArrowRight) under reduce · state 0 → 1 · instant: the scale's excursion past its endpoints 0.0000 (bound < 0.002), scale in flight 0 frame(s), body in flight 0 frame(s) (bound ≤ 1 each) over 81 frames · legible: 86.1 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %) · load 10.7/13.0/17.9
+  PASS       E-9 travel commit-instant control (Shift) light · Shift commits nothing; the legibility read must say NOT legible (the read can fail): state 0 → 0 · instant: the scale's excursion past its endpoints 0.0000 (bound < 0.002), scale in flight 0 frame(s), body in flight 0 frame(s) (bound ≤ 1 each) over 78 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %) · load 10.7/13.0/17.9
+  PASS       E-9 travel press-spatial dark · scale range while pressed 0.000 over 41 frames (bound < 0.002) · load 10.7/13.0/17.9
+  PASS       E-9 travel press-light dark · press-only paint changes [background-color] (bound ≥ 1) · load 10.7/13.0/17.9
+  PASS       E-9 travel commit-spatial dark · commit(ArrowRight): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 80 frames · load 10.7/13.0/17.9
+  PASS       E-9 travel commit-instant dark · commit(ArrowRight) under reduce · state 0 → 1 · instant: the scale's excursion past its endpoints 0.0000 (bound < 0.002), scale in flight 0 frame(s), body in flight 0 frame(s) (bound ≤ 1 each) over 80 frames · legible: 89.7 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %) · load 10.7/13.0/17.9
+  PASS       E-9 rest press-spatial light · scale range while pressed 0.000 over 40 frames (bound < 0.002) · load 10.7/13.0/17.8
+  PASS       E-9 rest press-light light · press-only paint changes [background-color] (bound ≥ 1) · load 10.7/13.0/17.8
+  PASS       E-9 rest commit-spatial light · commit(Space): scale range 0.050 with 1 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 79 frames · load 10.7/13.0/17.8
+  PASS       E-9 rest commit-instant light · commit(Space) under reduce · state "off" → "on" · instant: the scale's excursion past its endpoints 0.0000 (bound < 0.002), scale in flight 1 frame(s), body in flight 0 frame(s) (bound ≤ 1 each) over 79 frames · legible: 86.6 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %) · load 10.7/13.0/17.8
+  PASS       E-9 rest commit-instant control (Shift) light · Shift commits nothing; the legibility read must say NOT legible (the read can fail): state "off" → "off" · instant: the scale's excursion past its endpoints 0.0000 (bound < 0.002), scale in flight 0 frame(s), body in flight 0 frame(s) (bound ≤ 1 each) over 77 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %) · load 10.7/13.0/17.8
+  PASS       E-9 rest press-spatial dark · scale range while pressed 0.000 over 42 frames (bound < 0.002) · load 10.7/13.0/17.8
+  PASS       E-9 rest press-light dark · press-only paint changes [background-color] (bound ≥ 1) · load 10.7/13.0/17.8
+  PASS       E-9 rest commit-spatial dark · commit(Space): scale range 0.050 with 1 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 77 frames · load 10.7/13.0/17.8
+  PASS       E-9 rest commit-instant dark · commit(Space) under reduce · state "off" → "on" · instant: the scale's excursion past its endpoints 0.0000 (bound < 0.002), scale in flight 1 frame(s), body in flight 0 frame(s) (bound ≤ 1 each) over 77 frames · legible: 90.2 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %) · load 10.7/13.0/17.8
+  PASS       E-9 act press-spatial light · scale range while pressed 0.000 over 39 frames (bound < 0.002) · load 10.7/13.0/17.8
+  PASS       E-9 act press-light light · press-only paint changes [background-color] (bound ≥ 1) · load 10.7/13.0/17.8
+  PASS       E-9 act commit-spatial light · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 81 frames · load 10.7/13.0/17.8
+  REPORT     E-9 act commit-instant light · stateless (no state to show; the action's effect is the consumer's) · state 0 → 1 · instant: the scale's excursion past its endpoints 0.0000 (bound < 0.002), scale in flight 0 frame(s), body in flight 0 frame(s) (bound ≤ 1 each) over 81 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %) · load 10.7/13.0/17.8
+  PASS       E-9 act press-spatial dark · scale range while pressed 0.000 over 40 frames (bound < 0.002) · load 10.9/13.0/17.8
+  PASS       E-9 act press-light dark · press-only paint changes [background-color] (bound ≥ 1) · load 10.9/13.0/17.8
+  PASS       E-9 act commit-spatial dark · commit(Space): scale range 0.000 with 0 frame(s) in flight · body moved 0.00 px with 0 frame(s) in flight (bound ≤ 1 frame each) · 80 frames · load 10.9/13.0/17.8
+  REPORT     E-9 act commit-instant dark · stateless (no state to show; the action's effect is the consumer's) · state 0 → 1 · instant: the scale's excursion past its endpoints 0.0000 (bound < 0.002), scale in flight 0 frame(s), body in flight 0 frame(s) (bound ≤ 1 each) over 80 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %) · load 10.9/13.0/17.8
+E-9 chromium PASS · 33 pass, 0 fail, 0 unmeasured of 33 gating cells (2 reported) · load 10.1/13.1/18.0 at start, 10.9/13.0/17.8 at end
+# exit 0 · 03:03:50 · load { 10.93 12.98 17.75 }

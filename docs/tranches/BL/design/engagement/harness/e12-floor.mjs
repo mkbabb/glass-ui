@@ -53,11 +53,29 @@
 //                            FAIL when it is off ×1 by > 0.002 (the hover latch; FL-4's "the Button's coarse tap settling
 //                            at 1.015 fails"); UNMEASURED when the engine applies no coarse, hover-less pointer
 //                            Plants `e12-capsulelift`, `e12-capsulesnap`, `e12-capsulelatch`, `e12-capsuleunrendered`
+//     H7 (pass 7; CK-11, REGISTRY §P6-7 item 14, C-E6 §5.2): a composer the row names in `quiet` (the SelectTrigger, which
+//                            opens on pointerdown) is pressed with pointerdown WITHHELD from the page's handlers (a
+//                            window capture listener stops it before the element's own): the browser's `:active` still
+//                            applies, the element does not open, and no door marks it, so the cell reads the class rung
+//                            alone. Pass 6 read the open's pop as a press in Chromium (×0.9978) and NOT DRIVEN in WebKit (the
+//                            open took the press). The line says the open did not happen (`data-state`, `aria-expanded`),
+//                            else NOT DRIVEN. Control `e12-openpop` (the fixture composer pops on its pointerdown open)
+//   answers (CK-27, CK-25; H7, C-A6's `chip` cell, REGISTRY §P6-7 item 1)   on scenes whose row names `answers` (the
+//                            Configurator preset chip, an aria-pressed toggle), light and dark, fine pointer:
+//     <name> answers <theme> PASS when (a) a 400 ms hover changes ≥ 1 paint property (lib `__paint`), (b) a 250 ms held
+//                            press changes ≥ 1 property its hover does not paint, or its scale by ≥ 0.01, and (c) the
+//                            element composes a declared class (an `engage-*` class in its own classList). The line
+//                            prints the pixel fractions C-A6 read (≥ 16 levels: 0.0 % / 0.0 % on the pass-6 candidate).
+//                            Plants `e12-chipmute` (no hover, no press paint), `e12-chipundeclared` (paints both through a
+//                            literal rule, no declared class)
 // Real Safari: UNMEASURED (owner's safaridriver checkbox).
 //   node e12-floor.mjs --build <dir> | --fixture [--fault e12-fcslop] [--engine webkit] [--migration wheel]
 import fs from "node:fs";
 import path from "node:path";
-import { witness, openPage, tabKey, f, HERE } from "./lib.mjs";
+import { witness, openPage, tabKey, f, HERE, GLASS, paintDiff } from "./lib.mjs";
+const { PNG } = (await import(`${GLASS}/node_modules/pngjs/lib/png.js`)).default;
+const luma = (buf) => { const p = PNG.sync.read(buf); const o = new Float32Array(p.width * p.height); for (let i = 0, j = 0; i < p.data.length; i += 4, j++) o[j] = 0.2126 * p.data[i] + 0.7152 * p.data[i + 1] + 0.0722 * p.data[i + 2]; return { w: p.width, h: p.height, o }; };
+const changedPx = (a, b) => { if (!a || !b || a.w !== b.w || a.h !== b.h) return NaN; let n = 0; for (let i = 0; i < a.o.length; i++) if (Math.abs(a.o[i] - b.o[i]) >= 16) n++; return n / a.o.length; };
 
 const ENG = 1.03, TOL = 0.002;
 const raf2 = (page) => page.evaluate(() => new Promise((ok) => requestAnimationFrame(() => requestAnimationFrame(ok))));
@@ -297,10 +315,17 @@ await witness("E-12", "the floor's and MIGRATION's cells (CK-14, CK-16, CK-22, C
             await page.waitForTimeout(100); const rr = await page.evaluate(capRead, [SEL]);
             await page.mouse.move(c.x, c.y); await page.waitForTimeout(400);
             const r1 = await page.evaluate(capRead, [SEL]);
+            // H7: a composer that opens on pointerdown is pressed with pointerdown withheld from the page's handlers
+            const quiet = (m.quiet ?? []).includes(tg.key);
+            const openOf = () => page.evaluate((s) => { const e = document.querySelector(s); return `${e?.getAttribute("data-state") ?? "-"}/${e?.getAttribute("aria-expanded") ?? "-"}`; }, SEL);
+            const o0 = quiet ? await openOf() : null;
+            if (quiet) await page.evaluate((s) => { window.__quiet = (e) => { if (e.target instanceof Element && e.target.closest(s)) e.stopImmediatePropagation(); }; addEventListener("pointerdown", window.__quiet, true); }, SEL);
             await page.mouse.down(); await page.waitForTimeout(250);
             const r2 = await page.evaluate(capRead, [SEL]);
+            const o1 = quiet ? await openOf() : null;
             await page.mouse.up();
-            return { r0: rr, r1, r2 };
+            if (quiet) await page.evaluate(() => removeEventListener("pointerdown", window.__quiet, true));
+            return { r0: rr, r1, r2, quiet: quiet ? { o0, o1 } : null };
           } finally { await P.close(); }
         });
         const hn = `E-12 ${sc} ${tg.key} hover fine ${theme}`, pn = `E-12 ${sc} ${tg.key} press fine ${theme}`;
@@ -309,9 +334,11 @@ await witness("E-12", "the floor's and MIGRATION's cells (CK-14, CK-16, CK-22, C
         else {
           const { r0, r1, r2 } = fine; const dh = geo(r1, r0), dp = geo(r2, r1);
           cell(hn, r1.hover && dh <= TOL ? "PASS" : "FAIL", `${tg.sel} (${r0.cls || "no capsule class"}) · rest ×${f(r0.s, 4)} (scale ${r0.scale}) → hovered 400 ms (:hover ${r1.hover}) ×${f(r1.s, 4)} (scale ${r1.scale}) · geometry moved ${f(dh, 4)} (bound ≤ ${TOL}: the hover writes no geometry)${r1.hover ? "" : " · NOT DRIVEN: the pointer did not hover it"}`);
-          if (!r2.active && !r2.door) cell(pn, "FAIL", `NOT DRIVEN: held 250 ms, the element is neither :active nor marked by a door (${tg.sel})`);
+          const qt = fine.quiet ? ` · pointerdown withheld from the page's handlers (the element opens on pointerdown): open state ${fine.quiet.o0} → ${fine.quiet.o1}` : "";
+          if (fine.quiet && fine.quiet.o1 !== fine.quiet.o0) cell(pn, "FAIL", `NOT DRIVEN: the element opened under the press${qt}`);
+          else if (!r2.active && !r2.door) cell(pn, "FAIL", `NOT DRIVEN: held 250 ms, the element is neither :active nor marked by a door (${tg.sel})${qt}`);
           else if (r2.door) cell(pn, "REPORT", `the press carries the door's mark ([data-press]/[data-press-armed]): ×${f(r1.s, 4)} → ×${f(r2.s, 4)} (scale ${r2.scale}); the door's press is E-2/E-5's to grade`);
-          else cell(pn, dp <= TOL ? "PASS" : "FAIL", `held 250 ms (:active ${r2.active}, no door mark) · hovered ×${f(r1.s, 4)} (scale ${r1.scale}) → pressed ×${f(r2.s, 4)} (scale ${r2.scale}) · geometry moved ${f(dp, 4)} (bound ≤ ${TOL}: no class rung writes the press's geometry)`);
+          else cell(pn, dp <= TOL ? "PASS" : "FAIL", `held 250 ms (:active ${r2.active}, no door mark) · hovered ×${f(r1.s, 4)} (scale ${r1.scale}) → pressed ×${f(r2.s, 4)} (scale ${r2.scale}) · geometry moved ${f(dp, 4)} (bound ≤ ${TOL}: no class rung writes the press's geometry)${qt}`);
         }
         const tn = `E-12 ${sc} ${tg.key} tap coarse ${theme}`;
         const tap = await guard(tn, async () => {
@@ -330,6 +357,38 @@ await witness("E-12", "the floor's and MIGRATION's cells (CK-14, CK-16, CK-22, C
         else if (tap.mode) cell(tn, "UNMEASURED", `the engine applies no coarse, hover-less pointer (${tap.mode}): engine emulation limit`);
         else if (tap.none || !tap.r1) cell(tn, "FAIL", `no target after the tap: ${tg.sel}`);
         else { const d = Math.max(Math.abs(tap.r1.s - 1), Math.abs(num(tap.r1.scale) - 1)); cell(tn, d <= TOL ? "PASS" : "FAIL", `${tap.line} · rest ×${f(tap.r0.s, 4)} → a tap, +900 ms with no pointer: ×${f(tap.r1.s, 4)} (scale ${tap.r1.scale}), :hover ${tap.r1.hover} (bound: ×1 ± ${TOL}, no hover latch)`); }
+      }
+      // ── H7: the answer of a composer the capsule left (CK-27 × D-2; C-A6's `chip` cell) ──
+      for (const [nmA, selA] of Object.entries(m.answers ?? {})) for (const theme of ["light", "dark"]) {
+        const name = `E-12 ${sc} ${nmA} answers ${theme}`;
+        const r = await guard(name, async () => {
+          const P = await openPage(E, T, sc, { theme });
+          try {
+            const { page } = P; await page.waitForTimeout(300);
+            const ok = await page.evaluate((s) => { const e = document.querySelector(s); if (!e) return false; e.setAttribute("data-anssel", ""); e.scrollIntoView({ block: "center" }); return true; }, selA);
+            if (!ok) return { none: true };
+            const S = "[data-anssel]";
+            await page.mouse.move(2, 2); await page.waitForTimeout(250);
+            const bb = await page.evaluate((s) => { const r = document.querySelector(s).getBoundingClientRect(); return { x: r.x, y: r.y, w: r.width, h: r.height }; }, S);
+            const clip = { x: Math.max(0, Math.floor(bb.x) - 4), y: Math.max(0, Math.floor(bb.y) - 4), width: Math.ceil(bb.w) + 8, height: Math.ceil(bb.h) + 8 };
+            const snap = async () => ({ p: await page.evaluate((s) => window.__paint(s), S), s: await page.evaluate((s) => window.__eff(document.querySelector(s)).s, S), px: luma(await page.screenshot({ clip, animations: "allow", caret: "initial" })), hov: await page.evaluate((s) => document.querySelector(s).matches(":hover"), S) });
+            const r0 = await snap();
+            await page.mouse.move(bb.x + bb.w / 2, bb.y + bb.h / 2); await page.waitForTimeout(400);
+            const r1 = await snap();
+            await page.mouse.down(); await page.waitForTimeout(250);
+            const r2 = await snap(); const door = await page.evaluate((s) => !!document.querySelector(s).closest("[data-press], [data-press-armed]"), S);
+            await page.mouse.up();
+            const cls = await page.evaluate((s) => [...document.querySelector(s).classList].filter((c) => c.startsWith("engage-")), S);
+            const rung = await page.evaluate((s) => getComputedStyle(document.querySelector(s)).getPropertyValue("--rung-class").trim(), S);
+            return { r0, r1, r2, door, cls, rung };
+          } finally { await P.close(); }
+        });
+        if (r.crashed) { cell(name, "FAIL", r.line); continue; }
+        if (r.none) { cell(name, "FAIL", `no target: ${selA} renders nothing`); continue; }
+        const hov = paintDiff(r.r0.p, r.r1.p); const prs = paintDiff(r.r1.p, r.r2.p).filter((k) => r.r2.p[k] !== r.r0.p[k]); const ds = r.r2.s - r.r1.s;
+        const pxH = changedPx(r.r0.px, r.r1.px), pxP = changedPx(r.r1.px, r.r2.px);
+        const okH = r.r1.hov && hov.length > 0, okP = prs.length > 0 || Math.abs(ds) >= 0.01, okD = r.cls.length > 0;
+        cell(name, okH && okP && okD ? "PASS" : "FAIL", `${selA} · hover 400 ms (:hover ${r.r1.hov}): ${okH ? "" : "NO ANSWER · "}paint changed [${hov.join(", ").slice(0, 120)}], ${f(pxH * 100, 1)} % of its pixels by ≥ 16 levels · held press 250 ms (door mark ${r.door}): ${okP ? "" : "NO ANSWER · "}press-only paint [${prs.join(", ").slice(0, 120)}], scale ×${f(r.r1.s, 4)} → ×${f(r.r2.s, 4)}, ${f(pxP * 100, 1)} % of its pixels · ${okD ? "" : "NO DECLARED CLASS · "}declared class [${r.cls.join(" ")}] (--rung-class "${r.rung}") (bound: the hover paints ≥ 1 property, the press ≥ 1 property its hover does not or Δscale ≥ 0.01, the element composes an engage-* class)`);
       }
     }
   }

@@ -11,18 +11,7 @@
 //                   (≥ 0.002 from both its first and its last frame) on ≤ 1 frame, and the body ([data-e=body]) in
 //                   flight (> 1 px from both its start and its landing) on ≤ 1 frame: a state change lands (a new
 //                   resting scale may jump), it does not glide or pop
-//   commit-light    (H3, pass 3; CK-10 "keeps a light leg") the same commit's light TRANSIENT on the painted face
-//                   ([data-e~=face], default the target): lib.mjs lightLeg, arm (iii)'s rise without its clock
-//                   condition (the clock is E-8's): the face's light layers over its committed fill rise ≥ 0.01 and
-//                   return to rest, or its fill flashes above its rest and returns. The committed state's own fill
-//                   change does not count: pass 2 graded no light on the commit, so A passed with its commit light
-//                   zeroed by the library's PRM fallback (C-CP CK-27, CK-10). Precondition: the state changed (else
-//                   NOT DRIVEN, a FAIL). Read on the CK-02 commit members (scenes gated E-2); the slider's key step is
-//                   REPORT (its reduce light leg is E-3's)
-//                   H5 (pass 5): the transient is read IN PAINT (lib.mjs paintFilm/paintRise): the same reduce commit on
-//                   its own page, the face (inset 3 px) screenshotted 0-900 ms; the cell passes only on the paint read,
-//                   and the composite is printed beside it. The composite passed the tabs' dark light under reduce while
-//                   it painted 0.0016-0.0018 (C-A4 §0.4, CK-27). Plant `e2-paintless` must FAIL it
+//   commit-light    (H3, H5) RETIRED by H7 with the commit light it read (O-103d (1)); see commit-instant below
 //   H6 (pass 6; O-100 R-1 placed in D5 by O-103, REGISTRY §P5-7 item 13): the PRESENTED rung's light leg is its opacity
 //   fade, and the reduce arm keeps it (it is not vestibular) while it retires the plate's spatial leg. On scenes whose
 //   row carries `fade` ({ plate, scrim }: the presented scene), under reduce, light and dark: the open plate is
@@ -33,8 +22,31 @@
 //                    kept. The same open and close without reduce are REPORT (the fade the rung has). NOT DRIVEN (FAIL)
 //                    when the scene has no `__e.open`. Plants `e9-fadecut` (the fade zeroed by the PRM fallback),
 //                    `e9-fadespatial` (the plate's 0.95 → 1 scale kept under reduce)
-//   node e9-prm.mjs --build <dir> | --fixture [--fault e9-scale|e9-dark|e9-glide|e9-fillonly] [--engine webkit]
-import { witness, openPage, scenesFor, center, quiet, lightLeg, paintDiff, tabKey, paintFilm, paintRise, f, BOUNCE, KEY_DWELL } from "./lib.mjs";
+//   H7 (pass 7; O-103d (1), REGISTRY §P6-7 items 4, 6): `commit-light` and its paint read are RETIRED with the commit
+//   light (under reduce the pop is an instant state change, the commit legible through the face's own state). In their
+//   place, on the CK-02 commit members (scenes gated E-2), light and dark, `a6-probe prm`'s shape made a cell:
+//   commit-instant   under reduce, Tab in, the scene's key, filmed 600 ms: INSTANT (the target's scale excursion past its first and last frames < 0.002, a pop, and
+//                    in flight on ≤ 1 frame; the body in flight on ≤ 1 frame; a row's `region` in flight on ≤ 1 frame)
+//                    and LEGIBLE: the face's settled paint 300 ms after the key differs from before it on ≥ 5 % of its
+//                    pixels by ≥ 16 levels of 8-bit luma; a disclosure's state is its region (`region` on the row: from
+//                    ≤ 1 px to ≥ 16 px tall). A stateless member is REPORT; a key that changed no state is NOT DRIVEN
+//                    (FAIL). Plants `e9-prmpop` (the commit pops under reduce), `e9-illegible` (the state paints nothing)
+//   commit-instant control (Shift)   light: the same reads with Shift, which commits nothing: PASS only when it reads NOT
+//                    legible (the legibility read can fail on every face, in band)
+//   --prm-plant      (CK-27, REGISTRY §P6-7 item 6) the reduce arm REMOVED on the commit page after its mode is verified
+//                    (lib.mjs PRM_PLANT: every reduce @media rule off, every no-preference one on, script told no-reduce):
+//                    every stateful commit-instant cell must then FAIL, the tabs face's travel included (C-A6's plant
+//                    resurrected the pop only and read 0.0000 there). A `PLANT reach` line names the faces it failed and
+//                    the faces it did not reach. Fixture plant `e9-prmplant`
+//   node e9-prm.mjs --build <dir> | --fixture [--fault e9-scale|e9-dark|e9-glide|e9-prmpop] [--engine webkit] [--prm-plant]
+import { witness, openPage, scenesFor, center, quiet, paintDiff, tabKey, f, BOUNCE, KEY_DWELL, PRM_PLANT, GLASS } from "./lib.mjs";
+const { PNG } = (await import(`${GLASS}/node_modules/pngjs/lib/png.js`)).default;
+const LUMA_STEP = 16, LUMA_FRAC = 0.05, REGION_LINE = 16;
+const luma = (buf) => { const p = PNG.sync.read(buf); const o = new Float32Array(p.width * p.height); for (let i = 0, j = 0; i < p.data.length; i += 4, j++) o[j] = 0.2126 * p.data[i] + 0.7152 * p.data[i + 1] + 0.0722 * p.data[i + 2]; return { w: p.width, h: p.height, o }; };
+const changed = (a, b) => { if (!a || !b || a.w !== b.w || a.h !== b.h) return NaN; let n = 0; for (let i = 0; i < a.o.length; i++) if (Math.abs(a.o[i] - b.o[i]) >= LUMA_STEP) n++; return n / a.o.length; };
+const faceShot = async (page, sel) => { const bb = await page.evaluate((s) => { const e = document.querySelector(s); if (!e) return null; const r = e.getBoundingClientRect(); return { x: Math.max(0, Math.floor(r.x) - 2), y: Math.max(0, Math.floor(r.y) - 2), width: Math.ceil(r.width) + 4, height: Math.ceil(r.height) + 4 }; }, sel); return bb; };
+// a row's region height every frame for ms (a disclosure's state)
+const regionFilm = ([sel, ms]) => new Promise((ok) => { const fr = []; const t0 = performance.now(); const tick = () => { const g = document.querySelector(sel); fr.push(g ? g.getBoundingClientRect().height : 0); if (performance.now() - t0 < ms) requestAnimationFrame(tick); else ok(fr); }; requestAnimationFrame(tick); });
 
 const FADE_LO = 0.03, FADE_HI = 0.97, FADE_FRAMES = 2;
 // the presented plate's and scrim's effective opacity, the plate's scale and centre, every frame for ms after `go`
@@ -56,7 +68,10 @@ const fadeVerdict = (fr) => {
   return { fades, spatial, line: `plate opacity strictly between ${FADE_LO} and ${FADE_HI} on ${pf} frame(s), scrim on ${sf} (bound ≥ ${FADE_FRAMES} on either: a fade, not a cut) · the plate where it paints: scale range ${f(range, 4)} (bound < ${BOUNCE}), centre drift ${f(drift, 1)} px (bound ≤ 1) · ${fr.length} frames · plate [${ops("p")}]${fr.some((x) => Number.isFinite(x.sc)) ? ` · scrim [${ops("s")}]` : ""}`.slice(0, 900) };
 };
 
-await witness("E-9", "the PRM arm", async ({ E, T, cell, guard, idx, engine }) => {
+await witness("E-9", "the PRM arm", async ({ a, E, T, cell, guard, idx, engine }) => {
+  const plant = a["prm-plant"] === true;
+  if (plant) console.log("# PLANT --prm-plant: the reduce arm removed on every commit page (lib.mjs PRM_PLANT); every stateful commit-instant cell must FAIL");
+  const reach = { failed: [], passed: [] };
   // ── H6: the presented fade under reduce (CK-10 × O-100 R-1) ──
   for (const [sc, m] of Object.entries(idx).filter(([, x]) => x.fade)) {
     for (const prm of [true, false]) for (const theme of prm ? ["light", "dark"] : ["light"]) {
@@ -85,6 +100,7 @@ await witness("E-9", "the PRM arm", async ({ E, T, cell, guard, idx, engine }) =
   }
 
   for (const [sc, m] of scenesFor(idx, "E-9")) {
+    if (plant && !(m.gates ?? []).includes("E-2")) continue;
     for (const theme of ["light", "dark"]) {
       const r = await guard(`${sc} ${theme}`, async () => {
         const P = await openPage(E, T, sc, { theme, prm: true });
@@ -103,31 +119,36 @@ await witness("E-9", "the PRM arm", async ({ E, T, cell, guard, idx, engine }) =
           const light = [...paintDiff(h, p), ...paintDiff(hs, ps).map((k) => `thumb ${k}`)];
           let commit = null;
           if (m.key) {
-            const Q = await openPage(E, T, sc, { theme, prm: true });
-            try {
-              await Q.page.focus('[data-sentinel="before"]'); await Q.page.keyboard.press(tabKey(engine)); await Q.page.waitForTimeout(200);
-              const st = () => Q.page.evaluate(() => JSON.stringify(window.__e.state?.() ?? null));
-              const s0 = await st();
-              const pr2 = Q.page.evaluate(([o]) => window.__film(o), [{ target: '[data-e~="target"]', body: '[data-e~="body"]', face: m.face ? '[data-e~="face"]' : '[data-e~="target"]', ms: 800 }]);
-              await Q.page.keyboard.press(m.key, KEY_DWELL); const fl = await pr2;
-              commit = { q: quiet(fl.fr), fl, s0, s1: await st() };
-            } finally { await Q.close(); }
-            // H5: the same reduce commit IN PAINT, on its own page (a CK-02 commit member only; the film takes no shot)
-            let paint = null;
-            // a STARVED paint read (lib.mjs PAINT_GAP) is taken again, at most twice, and the line says so
-            for (let k = 0; k < 3 && (m.gates ?? []).includes("E-2") && commit.s0 !== commit.s1; k++) {
-              const R = await openPage(E, T, sc, { theme, prm: true });
+            // H7: the reduce commit, filmed (spatial: E-9's quiet read) with the face shot before and after (legible)
+            const stateful = (m.gates ?? []).includes("E-2") && !m.stateless;
+            const one = async (key, usePlant) => {
+              const Q = await openPage(E, T, sc, { theme, prm: true });
               try {
-                await R.page.focus('[data-sentinel="before"]'); await R.page.keyboard.press(tabKey(engine)); await R.page.waitForTimeout(200);
-                const st2 = () => R.page.evaluate(() => JSON.stringify(window.__e.state?.() ?? null)); const p0 = await st2();
-                const pts = await paintFilm(R.page, m.face ? '[data-e~="face"]' : '[data-e~="target"]', () => R.page.keyboard.press(m.key, KEY_DWELL));
-                const prev = paint;
-                paint = p0 === (await st2()) ? { rise: NaN, rest: false, line: "in paint: NOT DRIVEN (the paint page's state did not change)" } : paintRise(pts);
-                if (prev) paint = { ...paint, line: `${paint.line} (read ${k + 1}: the earlier read was STARVED)` };
-              } finally { await R.close(); }
-              if (!paint.starved) break;
-            }
-            commit.leg = lightLeg(commit.fl, paint); delete commit.fl;
+                const pl = usePlant ? await Q.page.evaluate(PRM_PLANT) : null;
+                await Q.page.focus('[data-sentinel="before"]'); await Q.page.keyboard.press(tabKey(engine)); await Q.page.waitForTimeout(300);
+                const st = () => Q.page.evaluate(() => JSON.stringify(window.__e.state?.() ?? null));
+                const face = m.face ? '[data-e~="face"]' : '[data-e~="target"]';
+                // the region's rest height is read here, before the key: the film's first frame can land after an
+                // instant commit (WebKit, cand6 accordion light: 37.8 → 37.8 px read NOT LEGIBLE on an open region)
+                const rh = (sel) => Q.page.evaluate((s) => document.querySelector(s)?.getBoundingClientRect().height ?? 0, sel);
+                const s0 = await st(); const rh0 = m.region ? await rh(m.region) : null; const bb = await faceShot(Q.page, face); const before = bb ? luma(await Q.page.screenshot({ clip: bb, animations: "allow", caret: "initial" })) : null;
+                const pr2 = Q.page.evaluate(([o]) => window.__film(o), [{ target: '[data-e~="target"]', body: '[data-e~="body"]', face, ms: 600 }]);
+                const prg = m.region ? Q.page.evaluate(regionFilm, [m.region, 600]) : null;
+                await Q.page.keyboard.press(key, KEY_DWELL); const fl = await pr2; const rg = prg ? await prg : null;
+                await Q.page.waitForTimeout(300);
+                const after = bb ? luma(await Q.page.screenshot({ clip: bb, animations: "allow", caret: "initial" })) : null;
+                const rh1 = m.region ? await rh(m.region) : null;
+                const S = fl.fr.map((x) => x.a?.s).filter(Number.isFinite);
+                // the pop: the scale's excursion past both its first and its last frame (a new resting scale may jump
+                // in one frame, as commit-spatial allows; a pop leaves the span of its endpoints and comes back)
+                const range = S.length ? Math.max(Math.max(...S) - Math.max(S[0], S.at(-1)), Math.min(S[0], S.at(-1)) - Math.min(...S)) : NaN;
+                const reg = rg ? { h0: rh0, h1: rh1, mid: rg.filter((v) => Math.abs(v - rh0) > 1 && Math.abs(v - rh1) > 1).length } : null;
+                return { q: quiet(fl.fr), range, s0, s1: await st(), frac: changed(before, after), reg, pl };
+              } finally { await Q.close(); }
+            };
+            commit = await one(m.key, plant);
+            commit.stateful = stateful;
+            if (stateful && !plant && theme === "light") commit.ctl = await one("Shift", false);
           }
           return { press: quiet(fr), light, commit };
         } finally { await P.close(); }
@@ -139,12 +160,21 @@ await witness("E-9", "the PRM arm", async ({ E, T, cell, guard, idx, engine }) =
       if (r.commit) {
         const q = r.commit.q;
         cell(nm("commit-spatial"), q.smid <= 1 && q.mid <= 1 ? "PASS" : "FAIL", `commit(${m.key}): scale range ${f(q.range)} with ${q.smid} frame(s) in flight · body moved ${f(q.moved, 2)} px with ${q.mid} frame(s) in flight (bound ≤ 1 frame each) · ${q.frames} frames`);
-        // the transient is the CK-02 commit's: read on the commit members (scenes gated E-2); a slider's key step is
-        // a value change, and its reduce light leg is E-3's (phone touch-held PRM keeps a light leg)
-        if (!(m.gates ?? []).includes("E-2")) cell(nm("commit-light"), "REPORT", `not a CK-02 commit member (no E-2 gate): its reduce light leg is read by E-3`);
-        else if (r.commit.s0 === r.commit.s1) cell(nm("commit-light"), "FAIL", `NOT DRIVEN: commit(${m.key}) left the state ${String(r.commit.s0).slice(0, 60)}; a commit that never happened keeps no light to read`);
-        else cell(nm("commit-light"), r.commit.leg.pass ? "PASS" : "FAIL", `commit(${m.key}) under reduce, state ${String(r.commit.s0).slice(0, 30)} → ${String(r.commit.s1).slice(0, 30)}: the transient · ${r.commit.leg.line}`);
+        // H7: the instant-state form (O-103d (1)); a slider's key step is a value change, its reduce light leg E-3's
+        const cm = r.commit; const cn = nm("commit-instant");
+        const legibleOf = (x) => (m.region && x.reg ? x.reg.h0 <= 1 && x.reg.h1 >= REGION_LINE : x.frac >= LUMA_FRAC);
+        const line = (x) => `state ${String(x.s0).slice(0, 24)} → ${String(x.s1).slice(0, 24)} · instant: the scale's excursion past its endpoints ${f(x.range, 4)} (bound < ${BOUNCE}), scale in flight ${x.q.smid} frame(s), body in flight ${x.q.mid} frame(s)${x.reg ? `, region in flight ${x.reg.mid} frame(s)` : ""} (bound ≤ 1 each) over ${x.q.frames} frames · legible: ${x.reg ? `region ${f(x.reg.h0, 1)} → ${f(x.reg.h1, 1)} px (bound from ≤ 1 to ≥ ${REGION_LINE}; the face changed ${f(x.frac * 100, 1)} %, printed)` : `${f(x.frac * 100, 1)} % of the face's pixels changed by ≥ ${LUMA_STEP} levels (bound ≥ ${LUMA_FRAC * 100} %)`}${x.pl ? ` · PLANT switched ${x.pl.off} reduce rule(s) off and ${x.pl.on} no-preference rule(s) on` : ""}`;
+        if (!cm.stateful) cell(cn, "REPORT", `${(m.gates ?? []).includes("E-2") ? "stateless (no state to show; the action's effect is the consumer's)" : "not a CK-02 commit member (no E-2 gate): its reduce light leg is read by E-3"} · ${line(cm)}`);
+        else if (cm.s0 === cm.s1) cell(cn, "FAIL", `NOT DRIVEN: commit(${m.key}) left the state unchanged · ${line(cm)}`);
+        else {
+          const instant = cm.range < BOUNCE && cm.q.smid <= 1 && cm.q.mid <= 1 && (!cm.reg || cm.reg.mid <= 1);
+          const ok = instant && legibleOf(cm);
+          if (plant) (ok ? reach.passed : reach.failed).push(`${sc} ${theme}`);
+          cell(cn, ok ? "PASS" : "FAIL", `${plant ? "PLANT (the reduce arm removed): " : ""}commit(${m.key}) under reduce · ${instant ? "" : "NOT INSTANT · "}${legibleOf(cm) ? "" : "NOT LEGIBLE · "}${line(cm)}`);
+        }
+        if (cm.ctl) cell(nm("commit-instant control (Shift)"), legibleOf(cm.ctl) ? "FAIL" : "PASS", `Shift commits nothing; the legibility read must say NOT legible (the read can fail): ${line(cm.ctl)}`);
       }
     }
   }
+  if (plant) cell("E-9 PLANT reach", "REPORT", `the reduce arm removed: commit-instant FAILED on ${reach.failed.length} stateful face(s) [${reach.failed.join(", ")}]; NOT REACHED (still passing) on ${reach.passed.length} [${reach.passed.join(", ")}]`);
 });

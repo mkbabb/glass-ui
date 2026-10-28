@@ -1,0 +1,74 @@
+{
+ "id": "E-4",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e4-velsplit"
+ },
+ "loadStart": "13.0/15.6/16.5",
+ "loadEnd": "11.7/14.8/16.1",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "E-4 slider fling carries velocity",
+   "status": "PASS",
+   "line": "axis x, page frame · 5 reads, every one must pass: [1: carry 94.85 / settle 95.77 px pass · 2: carry 94.84 / settle 95.77 px pass · 3: carry 94.35 / settle 95.77 px pass · 4: carry 95.19 / settle 95.74 px pass · 5: carry 95.16 / settle 95.74 px pass] (5 of 5 pass) · read 1 in full: fling: carry 94.85 px, settles 90.73 px past release · still: carry 0.00 px, settles -5.04 px · difference: carry 94.85 px, settle 95.77 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 197 frames, median 10.0 ms",
+   "load": "13.7/15.5/16.4"
+  },
+  {
+   "name": "E-4 slider release continuity",
+   "status": "PASS",
+   "line": "over 5 reads, each against its own drive (20.2/65.9, 16.9/65.8, 21.8/65.8, 20.2/65.9, 18.4/65.9 px; 0 over) · read 1: largest one-frame move on release: fling 20.2 px, still 0.5 px · during the drive: fling 42.5 px, still 42.6 px (bound ≤ drive × 1.5 + 2 = 65.9 px)",
+   "load": "13.7/15.5/16.4"
+  },
+  {
+   "name": "E-4 slider release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 120.0 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px",
+   "load": "13.7/15.5/16.4"
+  },
+  {
+   "name": "E-4 vsheet fling carries velocity",
+   "status": "PASS",
+   "line": "axis y, dir −1, page frame · fling: carry 133.78 px, settles 130.00 px past release · still: carry 0.00 px, settles -20.00 px · difference: carry 133.78 px, settle 150.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 196 frames, median 10.0 ms",
+   "load": "13.5/15.4/16.4"
+  },
+  {
+   "name": "E-4 vsheet release continuity",
+   "status": "PASS",
+   "line": "largest one-frame move on release: fling 19.8 px, still 1.8 px · during the drive: fling 40.0 px, still 40.0 px (bound ≤ drive × 1.5 + 2 = 62.0 px)",
+   "load": "13.5/15.4/16.4"
+  },
+  {
+   "name": "E-4 vsheet repeat landing",
+   "status": "PASS",
+   "line": "6 fling runs, the same drive (move gaps 16/250 ms by run): 1: v 1356 px/s (80 px / 59.0 ms over 4 samples), carry 133.78, land -139.0 · 2: v 0 px/s (0 px / 0.0 ms over 1 samples), carry 0.56, land -289.0 · 3: v 1270 px/s (80 px / 63.0 ms over 4 samples), carry 132.97, land -139.0 · 4: v 0 px/s (0 px / 0.0 ms over 1 samples), carry 0.55, land -289.0 · 5: v 1333 px/s (80 px / 60.0 ms over 4 samples), carry 133.28, land -139.0 · 6: v 0 px/s (0 px / 0.0 ms over 1 samples), carry 0.64, land -289.0 · by landing: land -289.0 px: 3 run(s) at 0, 0, 0 px/s · land -139.0 px: 3 run(s) at 1356, 1270, 1333 px/s · landings ordered by velocity; the drive's spread crosses the rule's threshold at 0..1270 px/s (-289.0 → -139.0 px) · (bound: two runs the event clock cannot tell apart (|Δv| ≤ the sum of their ±2q/dt bands, q 1 ms) land within 2 px, and no faster run lands short of a slower one; a fling ≥ 100 px/s carries > 0.00 px; velocity: the release rule's chord over 100 ms, ring 8, replicated from the page's input events)",
+   "load": "12.5/15.1/16.3"
+  },
+  {
+   "name": "E-4 vsheet release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 120.0 px · fling: carry 130.00 px, settles 130.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 130.0 px",
+   "load": "12.5/15.1/16.3"
+  },
+  {
+   "name": "E-4 strip fling carries velocity",
+   "status": "UNMEASURED",
+   "line": "the touch drag moved the body 0.0 px (fling) and 0.0 px (still), bound ≥ 20 px: macOS WebKit has no touch scrolling, so a touch drag cannot drive this surface (H-4); real Safari UNMEASURED (owner's safaridriver checkbox)",
+   "load": "11.7/14.8/16.1"
+  },
+  {
+   "name": "E-4 strip release continuity",
+   "status": "UNMEASURED",
+   "line": "not driven in this engine (above)",
+   "load": "11.7/14.8/16.1"
+  },
+  {
+   "name": "E-4 strip release PRM",
+   "status": "UNMEASURED",
+   "line": "the surface is not driven or not read in this engine (above)",
+   "load": "11.7/14.8/16.1"
+  }
+ ]
+}

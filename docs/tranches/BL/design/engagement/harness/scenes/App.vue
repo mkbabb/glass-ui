@@ -92,7 +92,7 @@ const INDEX: Record<string, Record<string, unknown>> = {
   // `element.click()` on the target, driven by E-2 itself (not by __e.commit, which the pass-2 app wired to `clicks++`
   // around the component, C-A2 §0.2); CK-03's arrival does not apply (nothing arrives)
   chipaction: { gates: COMMIT, key: "Space", target: ".glass-chip", stateless: true },
-  accordion: { gates: [...COMMIT, "E-5", "E-10"], rebound: true, ladder: true, key: "Enter", target: ".disclosure-trigger", pf1: "webkit pointer entry closes the page (PORTFOLIO §1.3 item 7)" },
+  accordion: { gates: [...COMMIT, "E-5", "E-10"], rebound: true, ladder: true, region: '[role="region"]', key: "Enter", target: ".disclosure-trigger", pf1: "webkit pointer entry closes the page (PORTFOLIO §1.3 item 7)" },
   button: { gates: [...COMMIT, "E-5"], key: "Space", target: ".button", stateless: true },
   press_switch: { gates: ["E-5"], target: '[role="switch"]' },
   press_checkbox: { gates: ["E-5"], target: '[role="checkbox"]' },
@@ -116,7 +116,7 @@ const INDEX: Record<string, Record<string, unknown>> = {
   // H-7: the Sheet's detents (a bottom sheet dragged up by its grip; UNMEASURED while it paints in flow, §P1-7), the
   // sortable list (row a's handle dragged down; the drag ghost while it flies, then the landed row), one scroll-snap
   // surface (the Carousel, a touch drag)
-  sheet: { gates: ["E-4"], axis: "y", dir: -1, detents: true, fixed: '[role="dialog"]', root: "main[data-scene]", thumb: '[data-slot="sheet-detent-handle"]', target: '[data-slot="sheet-detent-handle"]' },
+  sheet: { gates: ["E-4"], axis: "y", dir: -1, detents: true, repeat: 8, fixed: '[role="dialog"]', root: "main[data-scene]", thumb: '[data-slot="sheet-detent-handle"]', target: '[data-slot="sheet-detent-handle"]' },
   sortable: { gates: ["E-4"], axis: "y", dir: 1, detents: true, root: ".sortable-list", grip: '[data-sortable-id="a"] [data-sortable-handle]', thumb: ".sortable-ghost", land: '[data-sortable-id="a"]', target: '[data-sortable-id="a"]' },
   carousel: { gates: ["E-4"], input: "touch", dir: -1, detents: true, platform: true, root: '[data-slot="carousel-content"]', thumb: '[data-slot="carousel-item"]', target: '[data-slot="carousel-item"]' },
   modal: { gates: ["E-7"], modal: '[role="dialog"]', veil: ".glass-focus-veil" },
@@ -143,7 +143,11 @@ const INDEX: Record<string, Record<string, unknown>> = {
   capsule: { gates: ["E-12"], floor: ["capsule"], caps: {
     configurator: '[data-t="cap-configurator"] .configurator-preset-chip:not(.is-active)', button: '[data-t="cap-button"] .button',
     chip: '[data-t="cap-chip"] .glass-chip', "toggle-group": '[data-t="cap-toggle"] [data-t="cap-toggle-b"]',
-    tabs: '[data-t="cap-tabs"] .segmented-tab:nth-of-type(2)', select: '[data-t="cap-select"] [data-slot="select-trigger"]' } },
+    tabs: '[data-t="cap-tabs"] .segmented-tab:nth-of-type(2)', select: '[data-t="cap-select"] [data-slot="select-trigger"]' },
+    // H7 (CK-11): the SelectTrigger opens on pointerdown, so E-12 reads its press with pointerdown withheld from the page's
+    // handlers (the press without the open); H7 (CK-27, C-A6's `chip` cell): the preset chip, an aria-pressed toggle,
+    // answers hover and press through a declared class
+    quiet: ["select"], answers: { "preset chip": '[data-t="cap-configurator"] .configurator-preset-chip:not(.is-active)' } },
   // H6 (CK-25; REGISTRY §P5-7 item 10): the collapsible's and the menu's triggers alone, so capture.mjs's ladder cell
   // reaches them (in the gallery P-A5's ladder probe hit another element and left them UNMEASURED)
   collapsible: { gates: [], ladder: true, target: '[data-slot="collapsible-trigger"]' },

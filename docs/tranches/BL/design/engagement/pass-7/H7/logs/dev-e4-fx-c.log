@@ -1,0 +1,11 @@
+# e4-fx-c · 2026-10-28 03:03:50 · load { 10.93 12.98 17.75 } · node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/e4-momentum.mjs --fixture --scenes vsheet
+# E-4 · CK-05 momentum on the visible body, without a teleport
+# target fixture · engine chromium · lock wait 0.0 s · other headless processes: chromium 0, webkit 2 · load 10.9/13.0/17.8 at start
+# chromium 149.0.7827.55
+# narrowed to scenes vsheet
+  PASS       E-4 vsheet fling carries velocity · axis y, dir −1, page frame · fling: carry 132.81 px, settles 130.00 px past release · still: carry 0.00 px, settles -20.00 px · difference: carry 132.81 px, settle 150.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 260 frames, median 7.8 ms · load 11.7/13.1/17.8
+  PASS       E-4 vsheet release continuity · largest one-frame move on release: fling 13.2 px, still 1.4 px · during the drive: fling 40.0 px, still 40.0 px (bound ≤ drive × 1.5 + 2 = 62.0 px) · load 11.7/13.1/17.8
+  PASS       E-4 vsheet repeat landing · 3 fling runs, the same drive: 1: v 868 px/s (80 px / 92.2 ms over 4 samples), carry 132.81, land -139.0 · 2: v 1008 px/s (80 px / 79.4 ms over 4 samples), carry 133.17, land -139.0 · 3: v 1099 px/s (80 px / 72.8 ms over 4 samples), carry 133.17, land -139.0 · by landing: land -139.0 px: 3 run(s) at 868, 1008, 1099 px/s · (bound: two runs within 5 % of each other's release velocity land within 2 px; a fling ≥ 100 px/s carries > 0.00 px; velocity: the release rule's chord over 100 ms, ring 8, replicated from the page's input events) · load 12.1/13.2/17.8
+  PASS       E-4 vsheet release PRM · reduce · moved 250.0 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 130.0 px · load 12.0/13.1/17.7
+E-4 chromium PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 10.9/13.0/17.8 at start, 12.0/13.1/17.7 at end
+# exit 0 · 03:04:06 · load { 12.00 13.13 17.72 }

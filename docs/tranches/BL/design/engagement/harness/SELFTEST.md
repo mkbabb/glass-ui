@@ -10,6 +10,10 @@
 | load | 7-31 (1-minute) across the pass-3 runs; other seats shared the machine. Every cell line carries its own load |
 | verdict | **GREEN in both engines** (pass 3): 204 runs, 203 OK, 1 N/A (`e4-stripstop` in WebKit), 0 BROKEN, 0 UNREAD on each witness's last run on its final code |
 
+## Pass 7 (H7)
+
+H7 changed E-4, E-5, E-9, E-10 and E-12 (and `fixtures.mjs`, `lib.mjs`, the scene app). Its self-test of record for those five witnesses, both engines, with loads and the superseded runs, is `../pass-7/H7.md` §2 (logs `../pass-7/H7/logs/st-*.log`). The unchanged witnesses were re-read on the clean fixture in both engines; CAP is unchanged. The tables below are pass 3's and stand for the witnesses H7 did not change.
+
 ## 0 · Pass 3's reading of record (H3)
 
 `node ../pass-3/H3/tabulate.mjs` on `../pass-3/H3/logs/selftest-<engine>-<id>[-rN].log`: the last run of each witness on its final code stands; a superseded run is named beside it. `zsh ../pass-3/H3/run-h3.sh st-chromium st-webkit` produced the first reads, `rerun-<engine>-<id>` the re-runs.
