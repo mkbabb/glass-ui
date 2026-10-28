@@ -1,0 +1,106 @@
+# 2026-10-28 09:43:37 start · load { 19.73 16.97 15.52 }
+# cmd: --timeout 60 -- npx vitest run --maxWorkers=2
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/A7/wt
+
+(node:59440) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/styles/color-mix-endpoints.test.ts (1 test | 1 failed) 88ms
+     × rejects literal nested endpoints across executable CSS and CSS Vue style blocks 87ms
+ ❯ tests/gates/boot-graph.test.ts (14 tests | 3 failed) 105ms
+     × the built demo has a dist-demo to measure 5ms
+     × the dist-demo it measures is NEWER than every source it is built from 1ms
+     × the eager graph stays under the modulepreload and byte ceilings 1ms
+(node:60338) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:60862) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the built demo has a dist-demo to measure
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:566:34
+    564|
+    565|     it("the built demo has a dist-demo to measure", () => {
+    566|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    567|     });
+    568|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:570:34
+    568|
+    569|     it("the dist-demo it measures is NEWER than every source it is bui…
+    570|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    571|         const builtAt = statSync(indexHtml).mtimeMs;
+    572|         const newestSrc = newestSourceMtime();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the eager graph stays under the modulepreload and byte ceilings
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:580:34
+    578|
+    579|     it("the eager graph stays under the modulepreload and byte ceiling…
+    580|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    581|         const html = readFileSync(indexHtml, "utf8");
+    582|         const graph = measureEagerGraph(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  tests/styles/color-mix-endpoints.test.ts > gate:G-WK-COLORMIX-BUDGET — color-mix endpoint structure > rejects literal nested endpoints across executable CSS and CSS Vue style blocks
+AssertionError: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/A7/wt/src/styles/glass/glass-capsule.css:background endpoint 2",
++   "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/A7/wt/src/styles/glass/glass-capsule.css:background endpoint 2 fallback",
++ ]
+
+ ❯ tests/styles/color-mix-endpoints.test.ts:126:38
+    124|
+    125|         const report = analyze(styles);
+    126|         expect(report.literalNested).toEqual([]);
+       |                                      ^
+    127|
+    128|         // BK #39 (2026-08-06): `components/drawer/styles.css` struck …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  2 failed | 244 passed (246)
+      Tests  4 failed | 2391 passed | 10 expected fail | 1 skipped (2406)
+   Start at  09:47:21
+   Duration  77.63s (transform 4.99s, setup 10.20s, import 35.96s, tests 26.61s, environment 46.00s)
+
+# 2026-10-28 09:48:44 end · exit 1 · load { 13.74 15.74 15.42 }

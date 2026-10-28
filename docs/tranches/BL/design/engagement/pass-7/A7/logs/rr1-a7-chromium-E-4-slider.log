@@ -1,0 +1,12 @@
+# 2026-10-28 15:12:14 start · load { 28.90 31.58 31.67 }
+# cmd: --timeout 30 -- node ../../harness/e4-momentum.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/A7/wt/.a7out/builds/a7 --wt /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/A7/wt --engine chromium --out json/a7-rr1 --scenes slider
+# E-4 · CK-05 momentum on the visible body, without a teleport
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/A7/wt/.a7out/builds/a7 · engine chromium · lock wait 0.0 s · other headless processes: chromium 5, webkit 2 · load 26.6/30.5/31.3 at start
+# scene app: harness scenes/App.vue (sha1 9e68012e9522)
+# chromium 149.0.7827.55
+# narrowed to scenes slider
+  FAIL       E-4 slider fling carries velocity · axis x, leading edge, page frame · 5 reads, every one must pass: [1: carry 4.00 / settle -6.01 px pass · 2: carry 3.72 / settle -6.57 px FAIL · 3: carry 0.33 / settle -9.89 px FAIL · 4: carry 3.52 / settle -5.05 px FAIL · 5: carry 4.83 / settle -4.33 px pass] (2 of 5 pass) · read 1 in full: fling: carry 4.00 px, settles -13.33 px past release · still: carry 0.00 px, settles -7.32 px · difference: carry 4.00 px, settle -6.01 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 241 frames, median 8.3 ms · load 25.3/29.8/31.0
+  PASS       E-4 slider release continuity · over 5 reads, each against its own drive (4.5/72.7, 3.5/72.3, 3.9/69.2, 4.1/71.5, 3.5/73.2 px; 0 over) · read 1: largest one-frame move on release: fling 4.5 px, still 1.7 px · during the drive: fling 47.1 px, still 44.6 px (bound ≤ drive × 1.5 + 2 = 72.7 px) · load 25.3/29.8/31.0
+  PASS       E-4 slider release PRM · reduce · moved 79.2 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px · load 24.8/29.7/30.9
+E-4 chromium FAIL · 2 pass, 1 fail, 0 unmeasured of 3 gating cells (0 reported) · load 26.6/30.5/31.3 at start, 24.8/29.7/30.9 at end
+# 2026-10-28 15:14:07 end · exit 1 · load { 30.32 30.69 31.27 }

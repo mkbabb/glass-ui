@@ -1,0 +1,88 @@
+# 2026-10-28 15:03:55 start · load { 30.46 31.48 31.98 }
+# cmd: node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/capture.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/A7/wt/.a7out/builds/a7 --label a7 --engine webkit --frames /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7/A7/glance/frames --sheets /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7/A7/glance
+# capture · a7 · /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/A7/wt/.a7out/builds/a7 · scene app: harness scenes/App.vue (sha1 9e68012e9522) · lock wait 0.0 s · other headless processes: chromium 9, webkit 0 · load 30.5/31.5/32.0 at start
+# ladder-only scenes: collapsible, menu
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  a7-webkit-fine-light-button · rest ×1.000 · pressed ×1.032 · held ×1.033 · engaged ×1.000 · committed ×1.061 · released ×1.000 · load 31.9/31.8/32.1
+  PASS       CAP button fine light committed · webkit: pointer release after a 450 ms hold, state 0 → 1 · load 31.9/31.8/32.1
+  a7-webkit-fine-light-switch · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.059 · released ×1.000 · load 30.1/31.4/31.9
+  PASS       CAP switch fine light committed · webkit: pointer release after a 450 ms hold, state false → true · load 30.1/31.4/31.9
+  a7-webkit-fine-light-slider · rest ×1.000 · pressed ×1.050 · held ×1.060 · engaged ×1.060 · committed ×1.010 · released ×1.000 · load 29.4/31.2/31.9
+  REPORT     CAP slider fine light committed · webkit: not a CK-02 commit member (pointer release after a 450 ms hold); the committed frame shows the gesture, not a commit · load 29.4/31.2/31.9
+  a7-webkit-fine-light-sortable · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 27.6/30.8/31.7
+  REPORT     CAP sortable fine light committed · webkit: not a CK-02 commit member (pointer release after a 450 ms hold); the committed frame shows the gesture, not a commit · load 27.6/30.8/31.7
+  a7-webkit-fine-light-accordion · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.040 · released ×1.000 · load 27.6/30.8/31.7
+  PASS       CAP accordion fine light committed · webkit: pointer release after a 450 ms hold, state null → "one" · load 27.6/30.8/31.7
+  PASS       CAP accordion ladder fine light · webkit: inset paint L rest 0.9566 (rgba(0, 0, 0, 0)) · hover 0.8556 (oklab(0.216115 0.003422 0.005081 / 0.05); darker by 0.1010) · hover+press 0.7742 (oklab(0.216115 0.003422 0.005081 / 0.1), data-state closed) · released, still hovered 0.8556 · the press deepens the hover by 0.0814 (bound: no step back past 0.002) · load 28.5/31.0/31.8
+  a7-webkit-fine-light-presented · rest ×1.000 · pressed ×1.033 · held ×1.033 · engaged ×1.000 · committed ×1.060 · released ×1.000 · load 29.4/31.1/31.8
+  REPORT     CAP presented fine light committed · webkit: not a CK-02 commit member (pointer release after a 450 ms hold); the committed frame shows the gesture, not a commit · load 29.4/31.1/31.8
+  a7-webkit-fine-light-field · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 30.5/31.3/31.9
+  REPORT     CAP field fine light committed · webkit: not a CK-02 commit member (pointer release after a 450 ms hold); the committed frame shows the gesture, not a commit · load 30.5/31.3/31.9
+  a7-webkit-fine-light-ambient · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 30.9/31.4/31.9
+  REPORT     CAP ambient fine light committed · webkit: not a CK-02 commit member (pointer release after a 450 ms hold); the committed frame shows the gesture, not a commit · load 30.9/31.4/31.9
+  a7-webkit-fine-light-passive · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 32.7/31.7/32.0
+  REPORT     CAP passive fine light committed · webkit: not a CK-02 commit member (pointer release after a 450 ms hold); the committed frame shows the gesture, not a commit · load 32.7/31.7/32.0
+  a7-webkit-fine-dark-button · rest ×1.000 · pressed ×1.032 · held ×1.033 · engaged ×1.000 · committed ×1.056 · released ×1.000 · load 32.2/31.6/32.0
+  PASS       CAP button fine dark committed · webkit: pointer release after a 450 ms hold, state 0 → 1 · load 32.2/31.6/32.0
+  a7-webkit-fine-dark-switch · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.060 · released ×1.000 · load 30.7/31.3/31.9
+  PASS       CAP switch fine dark committed · webkit: pointer release after a 450 ms hold, state false → true · load 30.7/31.3/31.9
+  a7-webkit-fine-dark-slider · rest ×1.000 · pressed ×1.048 · held ×1.060 · engaged ×1.060 · committed ×1.008 · released ×1.000 · load 29.8/31.1/31.8
+  REPORT     CAP slider fine dark committed · webkit: not a CK-02 commit member (pointer release after a 450 ms hold); the committed frame shows the gesture, not a commit · load 29.8/31.1/31.8
+  a7-webkit-fine-dark-sortable · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 29.6/31.1/31.8
+  REPORT     CAP sortable fine dark committed · webkit: not a CK-02 commit member (pointer release after a 450 ms hold); the committed frame shows the gesture, not a commit · load 29.6/31.1/31.8
+  a7-webkit-fine-dark-accordion · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.040 · released ×1.000 · load 29.1/31.0/31.7
+  PASS       CAP accordion fine dark committed · webkit: pointer release after a 450 ms hold, state null → "one" · load 29.1/31.0/31.7
+  PASS       CAP accordion ladder fine dark · webkit: inset paint L rest 0.0031 (rgba(0, 0, 0, 0)) · hover 0.0072 (oklab(0.926152 0.001586 0.006089 / 0.05); lighter by 0.0041) · hover+press 0.0146 (oklab(0.926152 0.001586 0.006089 / 0.1), data-state closed) · released, still hovered 0.0072 · the press deepens the hover by 0.0073 (bound: no step back past 0.002) · load 30.6/31.2/31.8
+  a7-webkit-fine-dark-presented · rest ×1.000 · pressed ×1.032 · held ×1.033 · engaged ×1.000 · committed ×1.061 · released ×1.000 · load 30.6/31.2/31.8
+  REPORT     CAP presented fine dark committed · webkit: not a CK-02 commit member (pointer release after a 450 ms hold); the committed frame shows the gesture, not a commit · load 30.6/31.2/31.8
+  a7-webkit-fine-dark-field · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 33.4/31.8/32.0
+  REPORT     CAP field fine dark committed · webkit: not a CK-02 commit member (pointer release after a 450 ms hold); the committed frame shows the gesture, not a commit · load 33.4/31.8/32.0
+  a7-webkit-fine-dark-ambient · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 32.7/31.7/32.0
+  REPORT     CAP ambient fine dark committed · webkit: not a CK-02 commit member (pointer release after a 450 ms hold); the committed frame shows the gesture, not a commit · load 32.7/31.7/32.0
+  a7-webkit-fine-dark-passive · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 32.7/31.7/32.0
+  REPORT     CAP passive fine dark committed · webkit: not a CK-02 commit member (pointer release after a 450 ms hold); the committed frame shows the gesture, not a commit · load 32.7/31.7/32.0
+  a7-webkit-coarse-light-button · rest ×1.000 · pressed ×1.032 · held ×1.033 · engaged ×1.033 · committed ×1.060 · released ×1.000 · load 29.9/31.1/31.8
+  PASS       CAP button coarse light committed · webkit: short tap, state 0 → 1 · load 29.9/31.1/31.8
+  a7-webkit-coarse-light-switch · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.059 · released ×1.000 · load 30.3/31.2/31.8
+  PASS       CAP switch coarse light committed · webkit: short tap, state false → true · load 30.3/31.2/31.8
+  a7-webkit-coarse-light-slider · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 29.9/31.1/31.7
+  REPORT     CAP slider coarse light committed · webkit: not a CK-02 commit member (short tap); the committed frame shows the gesture, not a commit · load 29.9/31.1/31.7
+  a7-webkit-coarse-light-sortable · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 30.3/31.1/31.8
+  REPORT     CAP sortable coarse light committed · webkit: not a CK-02 commit member (short tap); the committed frame shows the gesture, not a commit · load 30.3/31.1/31.8
+  a7-webkit-coarse-light-accordion · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.038 · released ×1.000 · load 30.3/31.1/31.8
+  PASS       CAP accordion coarse light committed · webkit: short tap, state null → "one" · load 30.3/31.1/31.8
+  a7-webkit-coarse-light-presented · rest ×1.000 · pressed ×1.032 · held ×1.033 · engaged ×1.033 · committed ×1.060 · released ×1.000 · load 28.5/30.7/31.6
+  REPORT     CAP presented coarse light committed · webkit: not a CK-02 commit member (short tap); the committed frame shows the gesture, not a commit · load 28.5/30.7/31.6
+  a7-webkit-coarse-light-field · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 28.4/30.6/31.6
+  REPORT     CAP field coarse light committed · webkit: not a CK-02 commit member (short tap); the committed frame shows the gesture, not a commit · load 28.4/30.6/31.6
+  a7-webkit-coarse-light-ambient · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 27.9/30.5/31.5
+  REPORT     CAP ambient coarse light committed · webkit: not a CK-02 commit member (short tap); the committed frame shows the gesture, not a commit · load 27.9/30.5/31.5
+  a7-webkit-coarse-light-passive · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 27.4/30.3/31.5
+  REPORT     CAP passive coarse light committed · webkit: not a CK-02 commit member (short tap); the committed frame shows the gesture, not a commit · load 27.4/30.3/31.5
+  a7-webkit-coarse-dark-button · rest ×1.000 · pressed ×1.032 · held ×1.033 · engaged ×1.033 · committed ×1.059 · released ×1.000 · load 28.2/30.4/31.5
+  PASS       CAP button coarse dark committed · webkit: short tap, state 0 → 1 · load 28.2/30.4/31.5
+  a7-webkit-coarse-dark-switch · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.059 · released ×1.000 · load 29.1/30.6/31.5
+  PASS       CAP switch coarse dark committed · webkit: short tap, state false → true · load 29.1/30.6/31.5
+  a7-webkit-coarse-dark-slider · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 28.5/30.4/31.5
+  REPORT     CAP slider coarse dark committed · webkit: not a CK-02 commit member (short tap); the committed frame shows the gesture, not a commit · load 28.5/30.4/31.5
+  a7-webkit-coarse-dark-sortable · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 27.3/30.1/31.4
+  REPORT     CAP sortable coarse dark committed · webkit: not a CK-02 commit member (short tap); the committed frame shows the gesture, not a commit · load 27.3/30.1/31.4
+  a7-webkit-coarse-dark-accordion · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.038 · released ×1.000 · load 24.6/29.4/31.1
+  PASS       CAP accordion coarse dark committed · webkit: short tap, state null → "one" · load 24.6/29.4/31.1
+  a7-webkit-coarse-dark-presented · rest ×1.000 · pressed ×1.032 · held ×1.033 · engaged ×1.033 · committed ×1.060 · released ×1.000 · load 24.6/29.4/31.1
+  REPORT     CAP presented coarse dark committed · webkit: not a CK-02 commit member (short tap); the committed frame shows the gesture, not a commit · load 24.6/29.4/31.1
+  a7-webkit-coarse-dark-field · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 24.4/29.3/31.0
+  REPORT     CAP field coarse dark committed · webkit: not a CK-02 commit member (short tap); the committed frame shows the gesture, not a commit · load 24.4/29.3/31.0
+  a7-webkit-coarse-dark-ambient · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 22.2/28.6/30.8
+  REPORT     CAP ambient coarse dark committed · webkit: not a CK-02 commit member (short tap); the committed frame shows the gesture, not a commit · load 22.2/28.6/30.8
+  a7-webkit-coarse-dark-passive · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 22.0/28.5/30.7
+  REPORT     CAP passive coarse dark committed · webkit: not a CK-02 commit member (short tap); the committed frame shows the gesture, not a commit · load 22.0/28.5/30.7
+  PASS       CAP collapsible ladder fine light · webkit: inset paint L rest 0.5308 (rgba(0, 0, 0, 0)) · hover 0.5308 (rgba(0, 0, 0, 0); the hover paints no rung by 0.0000) · hover+press 0.4315 (oklab(0.216115 0.003422 0.005081 / 0.1), data-state closed) · released, still hovered 0.5308 · the press holds the hover (bound: no step back past 0.002) · load 22.0/28.5/30.7
+  PASS       CAP collapsible ladder fine dark · webkit: inset paint L rest 0.3000 (rgba(0, 0, 0, 0)) · hover 0.3000 (rgba(0, 0, 0, 0); the hover paints no rung by 0.0000) · hover+press 0.3154 (oklab(0.926152 0.001586 0.006089 / 0.1), data-state closed) · released, still hovered 0.3000 · the press holds the hover (bound: no step back past 0.002) · load 23.1/28.6/30.7
+  PASS       CAP menu ladder fine light · webkit: inset paint L rest 0.5267 (rgba(0, 0, 0, 0)) · hover 0.5267 (rgba(0, 0, 0, 0); the hover paints no rung by 0.0000) · hover+press 0.4283 (oklab(0.216115 0.003422 0.005081 / 0.1), data-state closed) · released, still hovered 0.5254 · the press holds the hover (bound: no step back past 0.002) · load 23.1/28.6/30.7
+  PASS       CAP menu ladder fine dark · webkit: inset paint L rest 0.2961 (rgba(0, 0, 0, 0)) · hover 0.2961 (rgba(0, 0, 0, 0); the hover paints no rung by 0.0000) · hover+press 0.3120 (oklab(0.926152 0.001586 0.006089 / 0.1), data-state closed) · released, still hovered 0.2955 · the press holds the hover (bound: no step back past 0.002) · load 23.3/28.5/30.7
+# sheet /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7/A7/glance/a7-webkit-fine.png · 18 rows
+# sheet /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7/A7/glance/a7-webkit-coarse.png · 18 rows
+# capture done · load 23.4/28.5/30.7 at end
+CAP webkit PASS · 18 pass, 0 fail, 0 unmeasured of 18 gating cells (24 reported) · load 30.5/31.5/32.0 at start, 23.4/28.5/30.7 at end
+# 2026-10-28 15:07:43 end · exit 0 · load { 23.40 28.48 30.66 }

@@ -17,6 +17,7 @@
 //   shrink reach · keyboard   REPORT/FAIL: after the centred shrink and 400 ms, the promoted host's layout width against
 //        its footprint's, and `--stage-w`. The stage claims the observer re-reads "the reach (--stage-room, --stage-w)"
 //        on any layout move (P-E5 §0 item 1); bound |host − footprint| ≤ 1 px
+//   (the two commit-light fail-loud cells were retired by H7, pass 7: the light is deleted, O-103d (1))
 import { parseArgs, serveTarget, Engine, openPage, acquireLock, load, f, tabKey, center } from "../../../harness/lib.mjs";
 
 const a = parseArgs();
@@ -75,22 +76,9 @@ try {
       } finally { await P.close(); }
     }
   }
-  // CK-21 on A5's new row: the commit light's clocks are read loudly on the host (useEngage readCommit). Planted
-  // unreadable on the Switch's root, a commit must raise ≥ 1 console.error; the clean commit must raise none
-  for (const tok of ["--engage-commit-light-attack", "--engage-commit-light-release"]) {
-    const r = {};
-    for (const plant of [false, true]) {
-      const P = await openPage(E, T, "switch");
-      try {
-        await P.page.waitForTimeout(150); const e0 = P.errors.length;
-        if (plant) await P.page.evaluate((t) => document.querySelector('[role="switch"]').style.setProperty(t, "nonsense"), tok);
-        await P.page.evaluate(() => window.__e.commit()); await P.page.waitForTimeout(700);
-        r[plant] = { errs: P.errors.slice(e0).map((x) => String(x).slice(0, 140)), st: await P.page.evaluate(() => JSON.stringify(window.__e.state?.() ?? null)) };
-      } finally { await P.close(); }
-    }
-    cell(`fail-loud ${tok} (commit)`, r[false].errs.length === 0 && r[true].errs.length >= 1 ? "PASS" : "FAIL",
-      `clean commit: ${r[false].errs.length} error(s), state ${r[false].st} · planted ${tok}: nonsense on the root: ${r[true].errs.length} error(s)${r[true].errs.length ? ` ("${r[true].errs[0]}")` : ""}, state ${r[true].st}`);
-  }
+  // RETIRED by H7 (D5 pass 7, REGISTRY §P6-8.3 wave 1; O-103d (1)): the two `fail-loud --engage-commit-light-*
+  // (commit)` cells read the commit light's clocks, which P-A6 deleted with the light (no alias). The clocks a build
+  // still transitions on are enumerated and planted by E-11's census (harness/e11-fail-loud.mjs, H6), with no list
 } finally { await E.close?.(); await T.close?.(); }
 const fails = out.filter((s) => /^\s+FAIL/.test(s)).length;
 console.log(`C-A5 probe · ${engine} · ${out.length - fails} pass/report, ${fails} fail · load ${load()} at end`);

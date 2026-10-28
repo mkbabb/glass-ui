@@ -1,0 +1,188 @@
+# 2026-10-28 09:55:08 start · load { 17.10 17.58 16.40 }
+# cmd: --light --timeout 10 -- npx vitest run --maxWorkers=2 tests/styles/engage-ladder.test.ts -t crest carries a reason
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/A7/wt
+
+ ❯ tests/styles/engage-ladder.test.ts (28 tests | 1 failed | 27 skipped) 8ms
+     × the crest carries a reason, not a witness's figure: the press mirrored, or the engaged rung (CK-12) 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/styles/engage-ladder.test.ts > G-ENGAGE-RUNG · PRM arm — every rung has a reduced-motion terminal parity > the crest carries a reason, not a witness's figure: the press mirrored, or the engaged rung (CK-12)
+AssertionError: expected '\n\n@property --rung-commit {\n    sy…' to match /:where\(\.engage-pressed, \.engage-ch…/
+
+- Expected:
+/:where\(\.engage-pressed, \.engage-chosen\.control-bit\)\s*\{\s*--rung-crest:\s*var\(--scale-engage\);/
+
++ Received:
+"
+
+@property --rung-commit {
+    syntax: \"<number>\";
+    inherits: false;
+    initial-value: 0;
+}
+
+@property --rung-grow {
+    syntax: \"<number>\";
+    inherits: false;
+    initial-value: 0;
+}
+
+
+@property --rung-crest {
+    syntax: \"<number>\";
+    inherits: false;
+    initial-value: 1;
+}
+
+
+@utility engage-pressed {
+    --rung-class: pressed;
+}
+
+
+@utility engage-chosen {
+    --rung-class: chosen;
+}
+
+
+@utility engage-disclosed {
+    --rung-class: disclosed;
+    transition:
+        --rung-commit var(--spring-panel-duration) var(--spring-panel),
+        background-color var(--engage-press-drain-release) var(--ease-standard),
+        color var(--duration-control) var(--ease-standard),
+        box-shadow var(--duration-control) var(--ease-standard);
+
+    &[data-press]:not(:disabled, [data-disabled]) {
+        background-color: color-mix(
+            in oklab,
+            var(--foreground) calc(var(--fill-hover) * 200%),
+            transparent
+        );
+        transition-duration:
+            var(--spring-panel-duration), var(--engage-press-drain-attack),
+            var(--duration-control), var(--duration-control);
+    }
+
+    
+    @media (hover: hover) {
+        &.control-surface[data-press]:hover:not(:disabled, [data-disabled]) {
+            background-color: color-mix(
+                in oklab,
+                var(--foreground) calc(var(--fill-hover) * 100%),
+                var(--control-surface-bg-hover)
+            );
+        }
+    }
+
+    
+    @media (forced-colors: active) {
+        &[data-press]:not(:disabled, [data-disabled]) {
+            outline: 2px solid Highlight;
+            outline-offset: -2px;
+        }
+    }
+}
+
+
+@utility engage-held {
+    --rung-class: held;
+    scale: calc(1 + (var(--scale-engage) - 1) * var(--rung-grow));
+    transform-origin: center;
+    
+    transition:
+        --rung-grow var(--spring-dock-exit-duration) var(--spring-dock),
+        color var(--duration-fast) var(--ease-standard);
+
+    @media (hover: hover) and (pointer: fine) {
+        &[data-engaged] {
+            --rung-grow: 1;
+            transition-duration: var(--spring-dock-duration), var(--duration-fast);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        scale: none;
+    }
+
+    
+}
+
+
+@utility engage-dragged {
+    --rung-class: dragged;
+}
+
+
+@utility engage-presented {
+    --rung-class: presented;
+}
+
+
+@utility engage-field {
+    --rung-class: field;
+}
+
+
+@utility engage-ambient {
+    --rung-class: ambient;
+}
+
+
+@utility engage-static {
+    --rung-class: static;
+}
+
+@layer components {
+    
+    :where(.engage-chosen, .engage-pressed, .engage-disclosed) {
+        --rung-crest: 1.02;
+        transform: scale(calc(1 + (var(--rung-crest) - 1) * sin(var(--rung-commit) * 180deg)));
+        transform-origin: center;
+        transition: --rung-commit var(--spring-panel-duration) var(--spring-panel);
+    }
+
+    
+    :where(.engage-chosen.control-bit) {
+        --rung-crest: 1.05;
+    }
+
+    
+    :where(.engage-chosen, .engage-disclosed):where([data-state=\"checked\"], [data-state=\"on\"], [data-state=\"open\"]),
+    :where(.engage-pressed):where([data-commit=\"b\"]) {
+        --rung-commit: 1;
+    }
+}
+
+@layer components {
+    
+    [data-engage-arming],
+    [data-engage-arming] *,
+    [data-engage-arming]::before,
+    [data-engage-arming]::after,
+    [data-engage-arming] *::before,
+    [data-engage-arming] *::after {
+        transition-property: none !important;
+    }
+}
+"
+
+ ❯ tests/styles/engage-ladder.test.ts:392:21
+    390|         expect(paper).not.toMatch(/--scale-commit-pop-bit/);
+    391|         const css = decomment(ENGAGE_CSS);
+    392|         expect(css).toMatch(/:where\(\.engage-pressed, \.engage-chosen…
+       |                     ^
+    393|         expect(css).not.toMatch(/--rung-crest:\s*\d/);
+    394|         expect(css).toMatch(/@property --rung-crest\s*\{\s*syntax:\s*"…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 27 skipped (28)
+   Start at  09:55:10
+   Duration  683ms (transform 61ms, setup 80ms, import 48ms, tests 8ms, environment 341ms)
+
+# 2026-10-28 09:55:15 end · exit 1 · load { 16.87 17.51 16.39 }

@@ -1,0 +1,12 @@
+# 2026-10-28 15:20:19 start · load { 18.84 22.76 27.14 }
+# cmd: --timeout 30 -- node ../../harness/e4-momentum.mjs --build /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/a6ctl/out/builds/a6ctl --engine chromium --out json/ab1-a6ctl --scenes slider
+# E-4 · CK-05 momentum on the visible body, without a teleport
+# target /private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/a6ctl/out/builds/a6ctl · engine chromium · lock wait 0.0 s · other headless processes: chromium 1, webkit 2 · load 17.9/22.1/26.7 at start
+# scene app: harness scenes/App.vue (sha1 9e68012e9522)
+# chromium 149.0.7827.55
+# narrowed to scenes slider
+  FAIL       E-4 slider fling carries velocity · axis x, leading edge, page frame · 5 reads, every one must pass: [1: carry 6.63 / settle -6.44 px pass · 2: carry 3.54 / settle -7.59 px FAIL · 3: carry 6.26 / settle -6.67 px pass · 4: carry 3.28 / settle -8.82 px FAIL · 5: carry 0.00 / settle -10.17 px FAIL] (2 of 5 pass) · read 1 in full: fling: carry 6.63 px, settles -13.76 px past release · still: carry 0.00 px, settles -7.32 px · difference: carry 6.63 px, settle -6.44 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 239 frames, median 8.3 ms · load 17.3/21.3/26.2
+  PASS       E-4 slider release continuity · over 5 reads, each against its own drive (6.4/72.0, 4.2/71.6, 5.1/71.7, 7.9/71.4, 6.3/75.9 px; 0 over) · read 1: largest one-frame move on release: fling 6.4 px, still 1.4 px · during the drive: fling 45.3 px, still 46.6 px (bound ≤ drive × 1.5 + 2 = 72.0 px) · load 17.3/21.3/26.2
+  PASS       E-4 slider release PRM · reduce · moved 79.2 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px · load 16.2/21.0/26.1
+E-4 chromium FAIL · 2 pass, 1 fail, 0 unmeasured of 3 gating cells (0 reported) · load 17.9/22.1/26.7 at start, 16.2/21.0/26.1 at end
+# 2026-10-28 15:21:42 end · exit 1 · load { 17.08 21.14 26.10 }

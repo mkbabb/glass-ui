@@ -1,0 +1,130 @@
+# 2026-10-28 09:35:03 start · load { 18.21 16.55 14.52 }
+# cmd: --timeout 15 -- npx vitest run --maxWorkers=2 tests/styles/engage-ladder.test.ts tests/composables/motion/engage-door.test.ts tests/components/custom/configurator tests/public-surface.spec.ts tests/styles/engage-light-press.test.ts
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/A7/wt
+
+ ❯ tests/styles/engage-ladder.test.ts (27 tests | 1 failed) 84ms
+     × the commit pops, and under reduced motion it is an instant state change: no transform, no light seat, no authorization (O-103d (1)) 1ms
+ ❯ tests/public-surface.spec.ts (97 tests | 5 failed) 1566ms
+     × G-NO-ORPHAN-EXPORT: the committed .published-roster equals the emitted roster 7ms
+     × has a built dist/ to accept 1ms
+     × ships exactly the style closure plus the three generated members 0ms
+     × rejects packed CSS drift against the built artifact 0ms
+     × keeps raw code-bearing sources out of the built artifact 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/public-surface.spec.ts > Row 8 package falsifiers > G-NO-ORPHAN-EXPORT: the committed .published-roster equals the emitted roster
+AssertionError: dist/ is absent — run `npm run build` first: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/public-surface.spec.ts:942:83
+    940|     // here), so what it measures is exactly what `npm run verify:pack…
+    941|     it("G-NO-ORPHAN-EXPORT: the committed .published-roster equals the…
+    942|         expect(existsSync("dist"), "dist/ is absent — run `npm run bui…
+       |                                                                                   ^
+    943|         const verifier = pathToFileURL(resolve("scripts/verify-export-…
+    944|         const probe = `
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  tests/public-surface.spec.ts > Row 8 built-artifact acceptance > has a built dist/ to accept
+AssertionError: dist/ is absent — run `npm run build` first; the dist arm is load-bearing: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/public-surface.spec.ts:967:34
+    965|
+    966|     it("has a built dist/ to accept", () => {
+    967|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    968|     });
+    969|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  tests/public-surface.spec.ts > Row 8 built-artifact acceptance > ships exactly the style closure plus the three generated members
+AssertionError: dist/ is absent — run `npm run build` first; the dist arm is load-bearing: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/public-surface.spec.ts:979:34
+    977|
+    978|     it("ships exactly the style closure plus the three generated membe…
+    979|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    980|         const closure = collectStyleClosure(process.cwd());
+    981|         const sourceRoot = resolve(process.cwd(), "src");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  tests/public-surface.spec.ts > Row 8 built-artifact acceptance > rejects packed CSS drift against the built artifact
+AssertionError: dist/ is absent — run `npm run build` first; the dist arm is load-bearing: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/public-surface.spec.ts:998:34
+    996|
+    997|     it("rejects packed CSS drift against the built artifact", () => {
+    998|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    999|         const verifier = pathToFileURL(resolve("scripts/verify-export-…
+    1000|         const probe = `
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  tests/public-surface.spec.ts > Row 8 built-artifact acceptance > keeps raw code-bearing sources out of the built artifact
+AssertionError: dist/ is absent — run `npm run build` first; the dist arm is load-bearing: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/public-surface.spec.ts:1028:34
+    1026|
+    1027|     it("keeps raw code-bearing sources out of the built artifact", () …
+    1028|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    1029|         const files = filesUnder("dist");
+    1030|         expect(files.filter((file) => /\.vue$/.test(file))).toEqual([]…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  tests/styles/engage-ladder.test.ts > G-ENGAGE-RUNG · PRM arm — every rung has a reduced-motion terminal parity > the commit pops, and under reduced motion it is an instant state change: no transform, no light seat, no authorization (O-103d (1))
+TypeError: .toMatch() expects to receive a string, but got undefined
+ ❯ tests/styles/engage-ladder.test.ts:372:21
+    370|         const reduce = [...css.matchAll(/@media \(prefers-reduced-moti…
+    371|         const pop = reduce.find((b) => b.includes(".engage-chosen"));
+    372|         expect(pop).toMatch(/transform:\s*none/);
+       |                     ^
+    373|         expect(pop).not.toMatch(/content:|opacity|background|transitio…
+    374|         expect(css).not.toMatch(/data-engage-light|data-engage-face|--…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  2 failed | 3 passed (5)
+      Tests  6 failed | 145 passed | 1 expected fail (152)
+   Start at  09:36:08
+   Duration  5.62s (transform 3.01s, setup 286ms, import 4.34s, tests 1.81s, environment 1.48s)
+
+# 2026-10-28 09:36:18 end · exit 1 · load { 15.10 15.97 14.47 }

@@ -1,0 +1,52 @@
+# 2026-10-28 12:32:43 start · load { 30.34 29.53 27.42 }
+# cmd: --timeout 60 -- npx vitest run --maxWorkers=2
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/A7/wt
+
+ ❯ tests/public-surface.spec.ts (97 tests | 1 failed) 2795ms
+     × keeps the exact root runtime surface 9ms
+(node:54801) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:55826) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:56689) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/public-surface.spec.ts > public runtime surface > keeps the exact root runtime surface
+AssertionError: expected [ 'Accordion', …(142) ] to deeply equal [ 'Accordion', …(143) ]
+
+- Expected
++ Received
+
+@@ -31,11 +31,10 @@
+    "CommandList",
+    "CommandSeparator",
+    "CommandShortcut",
+    "Configurator",
+    "ConfiguratorLayer",
+-   "ConfiguratorPresetChip",
+    "ConfiguratorRow",
+    "DataTable",
+    "Dialog",
+    "DialogClose",
+    "DialogContent",
+
+ ❯ tests/public-surface.spec.ts:577:43
+    575|
+    576|     it("keeps the exact root runtime surface", () => {
+    577|         expect(Object.keys(Glass).sort()).toEqual([...rootRuntimeExpor…
+       |                                           ^
+    578|     });
+    579|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 245 passed (246)
+      Tests  1 failed | 2394 passed | 10 expected fail | 1 skipped (2406)
+   Start at  12:40:20
+   Duration  116.77s (transform 7.58s, setup 16.94s, import 49.24s, tests 31.10s, environment 79.13s)
+
+# 2026-10-28 12:42:23 end · exit 1 · load { 32.89 29.02 28.18 }
