@@ -1,0 +1,14 @@
+# resume verification, entry 2, Tue Oct 27 21:39:57 EDT 2026
+old worktree HEAD 80e5bdeb9 (fv5+bp applied) src/demo/tests/package.json/docs/design/scripts tree sha (sha256 of sorted per-file sha list):
+11439549e46ce547a1ee496a3beb9130ae4f1c5e915e8c712cd368313433c2fb
+new worktree HEAD fdea480e70d9dde264058d85b8192039a172d5b6 + fv5 + pass-7 bp, same list:
+11439549e46ce547a1ee496a3beb9130ae4f1c5e915e8c712cd368313433c2fb
+diff of per-file lists: empty (TREES-EQUAL)
+git diff --name-only 80e5bdeb9 fdea480e7 -- src demo tests package.json docs/design scripts dock/harness pass-2 pass-3: empty
+old build content hashes (all files but build.json):
+3131ccdd593ff34de4816c1ac3dca8b119ef544dfc376aeac8cad85712357951  bp
+2a5d46bebeacc6bf953762d3f3571acdcc3dd1956617bc468ed2442d030ae228  fv5
+251779e4372f0ecdfae58972f814abd770dcb11e81ab2173d9e5b7394dca8239  fv3
+3c21602279f9a62db6a0a2487ca59a5b7e6052e8f7276a758dab7e5abad35208  bp6
+rebuild bpv on the new tree: 3131ccdd593ff34de4816c1ac3dca8b119ef544dfc376aeac8cad85712357951 (= old bp)
+harness lib.mjs sha256 2dd81a2a7111d549f03e2f9bdb0ad6fa0ab3bba8d63d7bd301e4517d6f944440 (H7 final)
