@@ -1,0 +1,13 @@
+#!/bin/zsh
+# P-E7 gates, one heavy run at a time, in the seat's worktree: build, typecheck (after the build), the harness scene
+# app (e7), demo:dist:build, vitest (--maxWorkers=2). `gates.sh [tag]` writes gate-<step>[-tag].log.
+A=/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7/E7
+H=/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness
+WT=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/E7/wt
+T=${1:+-$1}
+cd $WT
+$A/run.sh gate-build$T --timeout 30 -- npm run build || exit 1
+$A/run.sh gate-typecheck$T --light --timeout 20 -- npm run typecheck || exit 2
+$A/run.sh build-e7$T --timeout 30 -- node $H/build.mjs $WT --label e7 --out $WT/.e7out || exit 3
+$A/run.sh gate-demo-dist$T --timeout 45 -- npm run demo:dist:build || exit 4
+$A/run.sh gate-vitest$T --timeout 60 -- npx vitest run --maxWorkers=2 || exit 5

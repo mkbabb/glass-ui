@@ -1,0 +1,1235 @@
+diff -ruN a7e6/src/components/slider/Slider.vue /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/E7/wt/src/components/slider/Slider.vue
+--- a7e6/src/components/slider/Slider.vue	2026-10-28 16:03:21
++++ /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/E7/wt/src/components/slider/Slider.vue	2026-10-28 15:50:30
+@@ -58,10 +58,10 @@
+ /* The engage door (composables/motion/engage/useEngage.ts) owns this slider's
+    engagement: `data-held` (the hand, on the root and the range, never the dock's posture
+    count), and the engagement (the hand or the keyboard driving it), which promotes the
+-   slider onto the engaged stage (engage/stage.ts): in place into the top layer over the
+-   stage's one veil (or, a fine pointer's hold on `POINTER_STAGE` "coarse", grown where it
+-   stands in flow), grown by the held class (`engage-held`). The stage writes
+-   `data-engaged`, owns the veil and its centre, and needs no z raise and no teleport.
++   slider onto the engaged stage (engage/stage.ts): in place into the top layer, clipped
++   to the box that clips its place (or, a fine pointer's hold, grown where it stands in
++   flow: Q-3 (c)), grown by the held class (`engage-held`). The stage writes
++   `data-engaged` and needs no z raise, no teleport and no veil.
+    Nothing in this template writes an engagement attribute. Its hand is
+    `useHold`: NATIVE `pointerdown`/`touchstart` on the RESOLVED host, one acquire, a
+    window-scoped release that survives reka's `setPointerCapture` retarget. reka's
+@@ -85,11 +85,10 @@
+ /* The weight-train velocity bridge rides the door's drag part: the bounded
+    `--atom-drag-v` and the ONE registered velocity term `--flex-vel` on the host during
+    the drag window only (the loupe mirrored, being teleported out of the host's
+-   inheritance), and on release the release rule's velocity carried by the visible body:
+-   the promoted slider itself, its leading edge running on with the fling while its
+-   trailing edge holds, and the `dock` row brings it home (stage.ts `flingStage`; a slider
+-   not on the stage, the spectrum, carries on its range). The value the finger chose
+-   does not move. */
++   inheritance), and on release the release rule's velocity carried by the visible body,
++   the range: its leading edge (the value point) runs on with the fling from its own
++   transform origin and the release row brings it home, on the stage or off it. The value
++   the finger chose does not move. */
+ const motionAxis = useMotionAxis(() => props.motion);
+ const dock = useOptionalDockContext();
+ const { isHeld } = useEngage(getRootEl, {
+@@ -125,8 +124,8 @@
+ }
+ 
+ // ── The LOUPE (slider/styles.css) ────────────────────────────────────────────────
+-// The lens organ over the scrub site, the promoted host's own child (no teleport: the
+-// host is in the top layer, so nothing clips it). Its geometry is measured ONCE per
++// The lens organ over the scrub site, the promoted host's own child (no teleport: it
++// rides the host into the top layer and inside the host's clip). Its geometry is measured ONCE per
+ // grasp — the track's own width — and the per-value write is two custom properties,
+ // no layout read. `--loupe-x` is the value point in TRACK
+ // coordinates: the clone is laid out at 3× and transformed down by k/3, so
+@@ -222,11 +221,13 @@
+     >
+         <!--
+             The loupe rides INSIDE the host: promoted, the host is in the top layer, so no
+-            ancestor clips or traps it and no teleport is needed. The clone is a SECOND
++            ancestor traps it and no teleport is needed; it is clipped where its host is,
++            to the box that clips the host's place (engage/stage.ts). The clone is a SECOND
+             RENDER of the track at `--s: 3`, laid out once; only its transform moves per
+             value. It is seen through a window inset from the housing, so the housing's
+-            own glass rims the magnified track. `loupeShown` is the one predicate
+-            (scrubber, horizontal).
++            own glass rims the magnified track. The value point is the magnified fill's own
++            tip at the window's centre: no mark is drawn over it. `loupeShown` is the one
++            predicate (scrubber, horizontal).
+         -->
+         <span v-if="loupeShown" ref="loupeRef" class="glass-loupe glass-plate" aria-hidden="true">
+             <span class="glass-loupe-window">
+@@ -234,7 +235,6 @@
+                     <span class="glass-loupe-fill"></span>
+                 </span>
+             </span>
+-            <span class="glass-loupe-mark"></span>
+         </span>
+         <SliderTrack class="slider-track track-well">
+             <span
+diff -ruN a7e6/src/components/slider/styles.css /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/E7/wt/src/components/slider/styles.css
+--- a7e6/src/components/slider/styles.css	2026-10-28 16:03:21
++++ /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/E7/wt/src/components/slider/styles.css	2026-10-28 15:50:30
+@@ -385,8 +385,14 @@
+      the housing by `--loupe-ring`, so the plate's own material rims the lens on every
+      side. Without the rim the clone covered the housing edge to edge and the lens read
+      as a split block of fill and track, not as glass (C-E4 §3, CK-25).
+-   · The magnified fill ends as the real fill ends, on its pill cap, so the value point
+-     reads as the fill's own tip under the mark, not as a hard seam.
++   · The magnified fill ends as the real fill ends, on its pill cap, and that tip at the
++     window's centre IS the value point. No mark is drawn over it: a ruled line across
++     the window is harder than any edge the track has, and with the fill cap on one side
++     and the grey run on the other it read as a toggle's seam (C-A6 §4, C-E6 §4, CK-25).
++   · WHAT IT SHOWS CONTINUES PAST IT. The window's two ends dissolve the band over one
++     band's length (a mask, not a light: no paint is added), so the magnified track runs
++     out of the lens on both sides rather than ending on the window's pill ends, which
++     closed the fill and the grey run into the two halves of a switch (CK-25).
+    · THE LENS IS SIZED FROM WHAT IT MAGNIFIES. At `k` max the magnified track (the
+      BAND, `--loupe-band`) crosses the window through its middle half, with clear glass
+      above and below it, and the window runs four bands long. A lens reads as a lens when
+@@ -479,6 +485,13 @@
+     inset: var(--loupe-ring);
+     overflow: hidden;
+     border-radius: var(--radius-pill);
++    mask-image: linear-gradient(
++        to right,
++        transparent,
++        black var(--loupe-band),
++        black calc(100% - var(--loupe-band)),
++        transparent
++    );
+ }
+ 
+ .glass-loupe-clone {
+@@ -521,18 +534,6 @@
+     inline-size: var(--loupe-fill-w, 0px);
+     border-radius: calc(var(--radius-pill) * var(--s));
+     background: var(--slider-range-bg, var(--glass-capsule-warm));
+-}
+-
+-/* The value mark is PURE SIGNAL — full-strength ink on the housing's own axis, never
+-   clipped by its housing. */
+-.glass-loupe-mark {
+-    position: absolute;
+-    inset-block: var(--loupe-ring);
+-    inset-inline-start: 50%;
+-    inline-size: 2px;
+-    translate: -50% 0;
+-    background: var(--foreground);
+-    opacity: 0.24;
+ }
+ 
+ @media (prefers-reduced-motion: reduce) {
+diff -ruN a7e6/src/composables/motion/engage/stage.ts /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/E7/wt/src/composables/motion/engage/stage.ts
+--- a7e6/src/composables/motion/engage/stage.ts	2026-10-28 16:03:21
++++ /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/E7/wt/src/composables/motion/engage/stage.ts	2026-10-28 15:52:42
+@@ -16,21 +16,24 @@
+ // The grow is the held class's own recipe (utilities/engage.css `engage-held`), capped
+ // along the inline axis by the reach the stage computes (glass/engage-stage.css).
+ //
+-// PROMOTED OR IN PLACE (Q-3's pointer arm, `POINTER_STAGE`). The keyboard and a touch
+-// always promote. A fine pointer's hold promotes on `"every"`; on `"coarse"` it grows in
+-// place: the same holder, the same grow and reach, the same singleton and exit clock, but
+-// no top layer, no footprint and no veil, so the control stays in its own stacking
+-// context and its scroller's wheel. A holder keeps the mode it was engaged in until it
+-// leaves: a mode never changes under a held control (D-1).
++// PROMOTED OR IN PLACE (Q-3 (c), O-103d (5)). The keyboard and a touch promote; a fine
++// pointer's hold grows in place: the same holder, the same grow and reach, the same
++// singleton and exit clock, but no top layer and no footprint, so the control stays in
++// its own stacking context and its scroller's wheel. A holder keeps the mode it was
++// engaged in until it leaves: a mode never changes under a held control (D-1). No
++// engagement veils the world: the promoted control stands on its own plate and the world
++// stays legible (O-87).
+ //
+-// THE WORLD RECEDES, ON ONE ARM. `STAGE_VEIL` (Q-3's veil arm) says whether a promotion
+-// raises ONE stage-owned veil (`.glass-focus-veil`), a manual popover shown under the
+-// first promoted control and kept open while any control is on the stage. On the veil
+-// arm the hand's promotion raises it, and so does a keyboard engagement; a scrub never
+-// does. On the noveil arm no promotion raises it and the veil is never shown: the
+-// promoted control stands on its own plate and the world stays legible (O-87). A control
+-// engaged in place never raises it on either arm: the veil sits in the top layer, above
+-// anything in flow.
++// PROMOTED, STILL INSIDE ITS PLACE'S CLIP (CK-20). The top layer lifts the control out of
++// every ancestor that would trap a fixed box, and with them out of every ancestor that
++// clips (a scroller, a card with `overflow: hidden`). A promotion is not licence to paint
++// over the card: the control is clipped to the box that clips its footprint (the
++// intersection of the footprint's clipping ancestors' padding boxes), written as a
++// `clip-path` in the control's own frame on every frame the stage reads. So as its place
++// scrolls under its scroller's edge the control is cut by that edge row by row, exactly as
++// it would be at rest, and it leaves the paint continuously. The UA's own one-step answer
++// (`position-visibility: anchors-visible`, which drops the whole control when the last
++// pixel of its anchor leaves) is turned off: the clip is the one mechanism.
+ //
+ // WHAT A PROMOTION BORROWS, IT GIVES BACK. A consumer's own inline `position-anchor` on
+ // the host is set aside while the host is pinned to its footprint and written back when
+@@ -38,14 +41,12 @@
+ // sits in, as it would at rest: the top layer's fixed box would otherwise chain the
+ // wheel straight to the viewport.
+ //
+-// ONE WRITER of `data-engaged` (on the control and on the veil): this module.
++// ONE WRITER of `data-engaged`: this module.
+ //
+ // HANDED OVER, NEVER HIDDEN (D-1, CK-20). The ladder's rung is a singleton: a second
+ // engagement releases the first. The first does not leave in a frame: it springs home on
+ // its own exit clock while still promoted, exactly as its own release does, and leaves
+-// the top layer when its animations finish. The shared veil is not dropped across a
+-// hand-off: its centre glides to the incoming control (`--veil-x`/`--veil-y` are
+-// registered) and its level never re-ramps from 0.
++// the top layer when its animations finish.
+ //
+ // THE FOOTPRINT HOLDS THE PLACE. A parent re-render during a hold can insert a node
+ // between the footprint and the control, or move either. The stage re-seats the
+@@ -60,8 +61,8 @@
+ // each frame re-observes each holder's rest box (its footprint, or an in-place host), so
+ // that step reports it every frame whether or not its size changed, and the report reads
+ // the rest place (a footprint's page box, an in-place host's flow box, both free of
+-// transforms) and the viewport, and re-reads the place, the reach (`--stage-room`,
+-// `--stage-w`) and the veil centre when any of them changed. A read that compares the box
++// transforms) and the viewport, and re-reads the place and the reach (`--stage-room`,
++// `--stage-w`) when any of them changed, and a promoted control's clip when it moved. A read that compares the box
+ // hears every move, whatever its cause or direction (a style write, a viewport resize, a
+ // font load, an inward move, a centred shrink, a move inside a clipping scroller, a
+ // spring written from an animation-frame callback). A change detector armed at its own
+@@ -81,12 +82,6 @@
+ 
+ import { loud, reducedMotion, rowClockMs, settleFrames } from "./settle";
+ 
+-/** Q-3's veil arm: a promotion by the hand or the keyboard raises the veil (true), or no promotion raises it (false). */
+-export const STAGE_VEIL = false;
+-
+-/** Q-3's pointer arm: a pointer engagement promotes on every pointer (`"every"`), or only a touch's (`"coarse"`: a fine pointer's grows in place). */
+-export const POINTER_STAGE: "every" | "coarse" = "coarse";
+-
+ interface Holder {
+     host: HTMLElement;
+     /** The in-flow place a promoted host is pinned to; null for a host engaged in place. */
+@@ -95,6 +90,8 @@
+     own: [string, string];
+     /** The rest place at the last read, free of transforms (a footprint's page-frame box, an in-place host's flow box), and the viewport it was read in. */
+     at: Place;
++    /** The `clip-path` last written on a promoted host ("" when nothing clips its place). */
++    clip: string;
+     generation: number;
+     engaged: boolean;
+ }
+@@ -113,23 +110,12 @@
+ let generation = 0;
+ let anchors = 0;
+ const page = Math.random().toString(36).slice(2, 8);
+-let veil: HTMLElement | null = null;
+ let observer: MutationObserver | null = null;
+ let frame = 0;
+ let sizes: ResizeObserver | null = null;
+ /** A holder's place before its first read. */
+ const NOWHERE: Place = { x: NaN, y: NaN, w: NaN, h: NaN, vw: NaN, vh: NaN };
+ 
+-function stageVeil(): HTMLElement {
+-    if (veil?.isConnected) return veil;
+-    veil = document.createElement("span");
+-    veil.className = "glass-focus-veil";
+-    veil.setAttribute("popover", "manual");
+-    veil.setAttribute("aria-hidden", "true");
+-    document.body.append(veil);
+-    return veil;
+-}
+-
+ /** A host's place in flow, without its transforms (the grow, a glide in flight): its offset chain. */
+ const flowBox = (el: HTMLElement): { x: number; y: number } => {
+     let x = 0;
+@@ -175,14 +161,70 @@
+     h.host.style.setProperty("--stage-room", `${Math.max(0, Math.min(rect.left, vw - rect.right))}px`);
+     h.host.style.setProperty("--stage-w", `${rect.width}px`);
+     h.at = at;
+-    if (!h.footprint || current !== h || !STAGE_VEIL) return;
+-    const v = stageVeil();
+-    v.style.setProperty("--veil-x", `${((rect.left + rect.width / 2) / vw) * 100}%`);
+-    v.style.setProperty("--veil-y", `${((rect.top + rect.height / 2) / window.innerHeight) * 100}%`);
+-    v.style.setProperty("--glass-focus-veil-core-x", `${rect.width / 2}px`);
+-    v.style.setProperty("--glass-focus-veil-core-y", `${rect.height / 2}px`);
+ }
+ 
++const CLIPS_PAINT = /paint|content|strict/;
++const CLIPS = /hidden|clip|scroll|auto/;
++
++/**
++ * The box that clips `place` where it stands: the intersection of the padding boxes of
++ * every ancestor that clips it (an `overflow` other than `visible` on an axis, or paint
++ * containment), in the viewport frame; null when nothing below the root clips it.
++ */
++function clipBox(place: Element): { l: number; t: number; r: number; b: number } | null {
++    let l = -Infinity;
++    let t = -Infinity;
++    let r = Infinity;
++    let b = Infinity;
++    const root = document.scrollingElement;
++    for (let el = place.parentElement; el && el !== root && el !== document.body; el = el.parentElement) {
++        const cs = getComputedStyle(el);
++        const paint = CLIPS_PAINT.test(cs.contain);
++        const cx = paint || CLIPS.test(cs.overflowX);
++        const cy = paint || CLIPS.test(cs.overflowY);
++        if (!cx && !cy) continue;
++        const box = el.getBoundingClientRect();
++        const x0 = box.left + el.clientLeft;
++        const y0 = box.top + el.clientTop;
++        if (cx) {
++            l = Math.max(l, x0);
++            r = Math.min(r, x0 + el.clientWidth);
++        }
++        if (cy) {
++            t = Math.max(t, y0);
++            b = Math.min(b, y0 + el.clientHeight);
++        }
++    }
++    return l === -Infinity && t === -Infinity && r === Infinity && b === Infinity ? null : { l, t, r, b };
++}
++
++/**
++ * Clip a promoted host to the box that clips its footprint (the header, CK-20). The clip
++ * is the host's own `clip-path`, in its untransformed frame, so the grow and any glide in
++ * flight are mapped back through the painted box: an inset may be negative (the host may
++ * paint past its border box, its loupe and its shadow, anywhere inside its place's clip).
++ * An axis nothing clips is left unbounded. Written only when it changes.
++ */
++function writeClip(h: Holder): void {
++    if (!h.footprint) return;
++    const c = clipBox(h.footprint);
++    let clip = "";
++    if (c) {
++        const p = h.host.getBoundingClientRect();
++        const w = h.host.offsetWidth;
++        const ht = h.host.offsetHeight;
++        const ax = w ? p.width / w : 1;
++        const ay = ht ? p.height / ht : 1;
++        const FAR = 1e5;
++        const px = (v: number): string => `${Number.isFinite(v) ? Math.round(v * 100) / 100 : -FAR}px`;
++        clip = `inset(${px((c.t - p.top) / ay)} ${px((p.right - c.r) / ax)} ${px((p.bottom - c.b) / ay)} ${px((c.l - p.left) / ax)})`;
++    }
++    if (clip === h.clip) return;
++    h.clip = clip;
++    if (clip) h.host.style.setProperty("clip-path", clip);
++    else h.host.style.removeProperty("clip-path");
++}
++
+ /** Each frame while the stage holds anything: re-observe every rest box, so the frame's resize step reports it. */
+ function hear(): void {
+     frame = requestAnimationFrame(hear);
+@@ -193,11 +235,12 @@
+     }
+ }
+ 
+-/** The frame's resize step (after layout, before paint): re-read every holder whose rest place moved. */
++/** The frame's resize step (after layout, before paint): re-read every holder whose rest place moved, and re-clip every promoted one. */
+ function heard(): void {
+     for (const h of holders.values()) {
+         const at = restPlace(h);
+         if (!samePlace(at, h.at)) writeGeometry(h, at);
++        writeClip(h);
+     }
+ }
+ 
+@@ -263,23 +306,6 @@
+     to.scrollBy({ left: dx, top: dy, behavior: "instant" });
+ }
+ 
+-function setVeil(on: boolean): void {
+-    if (!STAGE_VEIL) return;
+-    const v = stageVeil();
+-    v.toggleAttribute("data-engaged", on);
+-    if (!on) settleVeil();
+-}
+-
+-/** The veil leaves the top layer once nothing is on the stage and its fade has run. */
+-function settleVeil(): void {
+-    const v = stageVeil();
+-    const fades = v.getAnimations().filter((a) => a.effect?.getComputedTiming().endTime !== Infinity);
+-    void Promise.all(fades.map((a) => a.finished.catch(() => undefined))).then(() => {
+-        if (holders.size || v.hasAttribute("data-engaged")) return;
+-        if (v.matches(":popover-open")) v.hidePopover();
+-    });
+-}
+-
+ /** Read back what the grow depends on; say so once if it cannot be read (CK-21). */
+ function readBack(host: HTMLElement): void {
+     const cs = getComputedStyle(host);
+@@ -302,7 +328,7 @@
+ 
+ /** Put `host` on the stage in place: the grow and its reach, no top layer, no footprint. */
+ function inPlace(host: HTMLElement): Holder {
+-    const h: Holder = { host, footprint: null, own: ["", ""], at: NOWHERE, generation, engaged: false };
++    const h: Holder = { host, footprint: null, own: ["", ""], at: NOWHERE, clip: "", generation, engaged: false };
+     holders.set(host, h);
+     host.setAttribute("data-engage-stage", "");
+     watchWorld();
+@@ -329,21 +355,13 @@
+     ];
+     host.style.setProperty("position-anchor", anchor);
+     host.before(footprint);
+-    const h: Holder = { host, footprint, own, at: NOWHERE, generation, engaged: false };
++    const h: Holder = { host, footprint, own, at: NOWHERE, clip: "", generation, engaged: false };
+     holders.set(host, h);
+-    // Top-layer order is show order: on the veil arm the veil is open beneath every
+-    // promoted control. On the noveil arm it is never shown.
+-    if (STAGE_VEIL) {
+-        const v = stageVeil();
+-        if (!v.matches(":popover-open")) {
+-            v.showPopover();
+-            // resolve its rest style, so its in-clock has a value to transition FROM
+-            void getComputedStyle(v).opacity;
+-        }
+-    }
+     host.setAttribute("popover", "manual");
+     host.setAttribute("data-engage-stage", "");
+     host.showPopover();
++    // clipped in the frame it is promoted, before it first paints in the top layer
++    writeClip(h);
+     host.addEventListener("wheel", onWheel, { passive: false });
+     watchWorld();
+     return h;
+@@ -369,6 +387,7 @@
+     if (!h.footprint) return;
+     if (host.matches(":popover-open")) host.hidePopover();
+     host.removeAttribute("popover");
++    host.style.removeProperty("clip-path");
+     host.removeEventListener("wheel", onWheel);
+     // the consumer's own anchor, back as it was (or none, as it was)
+     if (h.own[0]) host.style.setProperty("position-anchor", h.own[0], h.own[1]);
+@@ -380,7 +399,6 @@
+         const after = host.getBoundingClientRect();
+         glide(host, before.left - after.left, before.top - after.top);
+     }
+-    if (STAGE_VEIL && holders.size === 0 && veil && !veil.hasAttribute("data-engaged")) settleVeil();
+ }
+ 
+ /** Release `h` on its own exit clock; it leaves the top layer when its animations have run. */
+@@ -400,10 +418,10 @@
+ }
+ 
+ /**
+- * Engage `host` on the stage, with or without the veil: promoted, or in place when
+- * `promoted` is false. A host already on the stage keeps the mode it is in.
++ * Engage `host` on the stage: promoted, or in place when `promoted` is false. A host
++ * already on the stage keeps the mode it is in.
+  */
+-function engageStage(host: HTMLElement, withVeil: boolean, promoted: boolean): void {
++function engageStage(host: HTMLElement, promoted: boolean): void {
+     generation += 1;
+     if (current && current.host !== host) leave(current);
+     const h = holders.get(host) ?? (promoted ? promote(host) : inPlace(host));
+@@ -411,9 +429,6 @@
+     h.engaged = true;
+     current = h;
+     writeGeometry(h);
+-    // the veil is a top-layer plate: it never rises under a control engaged in place, and
+-    // on the noveil arm it never rises at all
+-    setVeil(withVeil && h.footprint !== null);
+     host.setAttribute("data-engaged", "");
+     readBack(host);
+ }
+@@ -422,70 +437,29 @@
+ function releaseStage(host: HTMLElement, immediate = false): void {
+     const h = holders.get(host);
+     if (!h) return;
+-    const was = current === h;
+     leave(h);
+     if (immediate && holders.get(host) === h) hide(h);
+-    // A hand-off releases the outgoing control and engages the incoming one in the same
+-    // task (a Tab's focusout, then its focusin): the veil drops only if nothing took
+-    // the engagement by the end of that task's microtasks.
+-    if (was) queueMicrotask(() => {
+-        if (!current) setVeil(false);
+-    });
+ }
+ 
+ /**
+- * The release fling: `host`, still promoted, leaves the hand at `v` (px/s along `axis`)
+- * and the `dock` row brings it home. The leading edge travels, the trailing edge holds
+- * (a stretch: the value the control shows does not move), soft-limited (tanh) to the
+- * reach the grow is allowed along that axis. Returns false when `host` is not on the stage.
+- */
+-export function flingStage(host: HTMLElement, axis: "x" | "y", v: number): boolean {
+-    const h = holders.get(host);
+-    if (!h) return false;
+-    if (!v || reducedMotion()) return true;
+-    const ms = rowClockMs("dock", host);
+-    const cs = getComputedStyle(host);
+-    const reach = Number.parseFloat(cs.getPropertyValue(axis === "x" ? "--stage-reach" : "--scale-engage"));
+-    const rest = h.footprint ?? host;
+-    const size = axis === "x" ? rest.offsetWidth : rest.offsetHeight;
+-    const cap = (reach - 1) * size;
+-    if (!ms || !(cap > 0) || !size) return true;
+-    const dir = Math.sign(v);
+-    host.animate(
+-        settleFrames("dock", 0, v, ms).map((d) => {
+-            const t = cap * Math.tanh(d / cap);
+-            const s = 1 + (dir * t) / size;
+-            return {
+-                transform: axis === "x" ? `translateX(${t / 2}px) scaleX(${s})` : `translateY(${t / 2}px) scaleY(${s})`,
+-            };
+-        }),
+-        { duration: ms, composite: "add" },
+-    );
+-    return true;
+-}
+-
+-/**
+  * Bind a control's engagement to the stage: `engaged` true puts the host on the stage,
+- * false releases it; `veil` says whether this engagement asks for the veil (it rises only
+- * on `STAGE_VEIL`), `promote`
+- * whether it promotes (else it is engaged in place). The engagement is the door's; the
+- * stage owns the rung.
++ * false releases it; `promote` says whether it promotes (else it is engaged in place).
++ * The engagement is the door's; the stage owns the rung.
+  */
+ export function useEngageStage(
+     resolveHost: () => HTMLElement | null,
+     engaged: Readonly<Ref<boolean>>,
+-    veilWanted: () => boolean,
+     enabled: () => boolean = () => true,
+     promoteWanted: () => boolean = () => true,
+ ): void {
+     let on = false;
+     watch(
+-        () => [engaged.value, veilWanted(), promoteWanted()] as const,
+-        ([e, v, p]) => {
++        () => [engaged.value, promoteWanted()] as const,
++        ([e, p]) => {
+             const host = resolveHost();
+             if (!host || typeof window === "undefined") return;
+             if (e && enabled()) {
+-                engageStage(host, v, p);
++                engageStage(host, p);
+                 on = true;
+             } else if (on) {
+                 releaseStage(host);
+diff -ruN a7e6/src/composables/motion/engage/useEngage.ts /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/E7/wt/src/composables/motion/engage/useEngage.ts
+--- a7e6/src/composables/motion/engage/useEngage.ts	2026-10-28 16:03:21
++++ /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/E7/wt/src/composables/motion/engage/useEngage.ts	2026-10-28 15:49:37
+@@ -45,17 +45,14 @@
+ //                   alone, or a key the control does not act on, does nothing
+ //   · the stage     `stage`: the engagement puts the host on the engaged stage
+ //                   (stage.ts). The keyboard and a touch promote it; a fine pointer
+-//                   promotes it on `POINTER_STAGE` "every" and grows it in place on
+-//                   "coarse" (Q-3's pointer arm). On `STAGE_VEIL` (Q-3's veil arm) a
+-//                   promoted hand or keyboard engagement raises the veil; on the noveil
+-//                   arm nothing does
++//                   grows it in place (Q-3 (c), O-103d (5)). No engagement veils the
++//                   world
+ //   · the scrub     `scrub`: a press that starts on the scrub's surface and travels past
+ //                   the hand's slop (`HOLD_SLOP_PX`, the activation threshold) takes the
+ //                   control (a number field's value scrub): one `step` per pitch travelled.
+ //                   The pitch is its own figure, `--scrub-pitch` on the surface (one glyph
+-//                   cell of the value, `1ch`), read loudly; never the slop (CK-12). The
+-//                   scrub promotes the host without the veil: what the hand tunes is read
+-//                   in the world, so the world stays legible (CK-25)
++//                   cell of the value, `1ch`), read loudly; never the slop (CK-12). A
++//                   touch's scrub promotes the host, a fine pointer's grows it in place
+ //   · the press     `useLiquidPress`, on its one `--press-t` drive with its own defaults:
+ //                   the door takes no press options beyond `disabled`. It binds the
+ //                   handlers natively and writes the press style on the host, so an
+@@ -76,11 +73,12 @@
+ //                   commit loudly; it plays nothing.
+ //                   The door paints nothing for it; a class recipe reads the parity
+ //   · the release   `useDragVelocity` measures the release on the release rule
+-//                   (release.ts) and the door carries it: a host on the stage stretches
+-//                   toward the fling with its trailing edge held (stage.ts
+-//                   `flingStage`); a fill in flow stretches from its own transform
+-//                   origin. The `dock` row (the engaged rung's spring) brings either
+-//                   home. The value the finger chose does not move
++//                   (release.ts) and the door carries it on the visible body: the fill's
++//                   leading edge stretches toward the fling from its own transform
++//                   origin, on the host's stage or off it, and the release row brings it
++//                   home. The value the finger chose does not move. One carry: the body
++//                   is the value point, so a stretch of the whole host (which moves the
++//                   value point by its fraction of the host's width) is not a second one
+ 
+ import {
+     computed,
+@@ -98,7 +96,7 @@
+ import { listen, usePressMark } from "./press";
+ import { RELEASE_RULE } from "./release";
+ import { loud, reducedMotion as reduced, rowClockMs, settleFrames } from "./settle";
+-import { flingStage, POINTER_STAGE, useEngageStage } from "./stage";
++import { useEngageStage } from "./stage";
+ 
+ /** The keys a range control acts on: the acting-key set a held range engages on. */
+ const RANGE_ACTING_KEYS: ReadonlySet<string> = new Set([
+@@ -291,14 +289,9 @@
+         useEngageStage(
+             host,
+             isEngaged,
+-            // the hand and the keyboard ask for the veil (the stage raises it on
+-            // `STAGE_VEIL` only); a scrub never does
+-            () => hand.value || keyed.value,
+             () => o.stage?.() !== false,
+-            // Q-3's pointer arm: the keyboard and a touch promote; a fine pointer on "every"
+-            () =>
+-                POINTER_STAGE === "every" ||
+-                (hand.value ? held!.byTouch.value : scrubbing.value ? scrubTouch : true),
++            // Q-3 (c): the keyboard and a touch promote; a fine pointer grows in place
++            () => (hand.value ? held!.byTouch.value : scrubbing.value ? scrubTouch : true),
+         );
+     }
+ 
+@@ -406,8 +399,6 @@
+             mirror: d.mirror,
+             axis: d.axis,
+             onRelease: (v) => {
+-                const h = host();
+-                if (h && flingStage(h, d.axis(), v)) return;
+                 const body = d.body();
+                 if (body && !reduced()) carry(body, d.axis(), v);
+             },
+diff -ruN a7e6/src/styles/glass/engage-stage.css /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/E7/wt/src/styles/glass/engage-stage.css
+--- a7e6/src/styles/glass/engage-stage.css	2026-10-28 16:03:21
++++ /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/E7/wt/src/styles/glass/engage-stage.css	2026-10-28 15:50:13
+@@ -9,9 +9,15 @@
+    on its control (`position-anchor`): a name shared by two footprints pins both controls
+    to the last one in tree order, which is every hand-off. The grow is the
+    held class's (utilities/engage.css `engage-held`); this file pins the box and computes
+-   the reach the grow may spend inline. The world's half is the stage's one veil, a
+-   manual popover beneath the control (glass/focus-veil.css).
++   the reach the grow may spend inline. The world is not veiled (Q-3 (c), O-103d (5)).
+ 
++   THE CLIP IS THE STAGE'S. A promoted control is clipped to the box that clips its
++   footprint (stage.ts `writeClip`, an inline `clip-path`), so it never paints over the
++   card its place sits in and leaves the paint row by row as its place scrolls away.
++   `position-visibility: always` turns off the UA's one-step answer
++   (`anchors-visible`, the initial value, drops the whole control in the frame the last
++   pixel of its anchor leaves): one mechanism, the clip (CK-20).
++
+    TWO STRENGTHS, ON PURPOSE. The popover UA sheet paints a box (border, padding, margin,
+    Canvas, CanvasText) the host never asked for: those are neutralized at the LOWEST
+    author strength (`@layer base`, zero specificity), so any paint or box the host
+@@ -20,7 +26,7 @@
+    at (0,1,0) (slider/styles.css). */
+ 
+ @layer base {
+-    :where([popover][data-engage-stage], [popover].glass-focus-veil) {
++    :where([popover][data-engage-stage]) {
+         margin: 0;
+         border: 0;
+         padding: 0;
+@@ -28,14 +34,6 @@
+         background: transparent;
+         color: inherit;
+     }
+-    /* The stage's veil is a manual popover too: the UA's fit-content box would collapse
+-       the full-viewport plate the recipe's `inset: 0` asks for. */
+-    :where([popover].glass-focus-veil) {
+-        inline-size: auto;
+-        block-size: auto;
+-        max-inline-size: none;
+-        max-block-size: none;
+-    }
+ }
+ 
+ .engage-footprint {
+@@ -50,17 +48,17 @@
+     top: anchor(top);
+     inline-size: anchor-size(width);
+     block-size: anchor-size(height);
++    position-visibility: always;
+ }
+ 
+ /* THE GUTTER CAP, AND THE REACH. Inline, the grow may spend only the clearance the
+    control has beyond the page gutter (`--space-section`, the spacing register's "page
+    gutter" rung): 1 + 2·max(0, room − gutter)/width, at most `--scale-engage`. A control
+    already on its gutter (a full-width phone slider) keeps its width and grows along the
+-   block axis alone. Registered so it computes to a number the stage reads back: the
+-   release fling (stage.ts `flingStage`) spends the same reach and no more. Its initial
++   block axis alone. Registered so it computes to a number the stage reads back. Its initial
+    value is 0, which no valid input computes to, so an unreadable input can never pass
+    for an answer: the stage reads it back and says so (CK-21). A host engaged IN PLACE
+-   (a fine pointer's hold on `POINTER_STAGE` "coarse") carries `[data-engage-stage]`
++   (a fine pointer's hold, Q-3 (c)) carries `[data-engage-stage]`
+    without the popover: the same reach, from its own box, and no pin. */
+ @property --stage-reach {
+     syntax: "<number>";
+diff -ruN a7e6/src/styles/glass/focus-veil.css /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/E7/wt/src/styles/glass/focus-veil.css
+--- a7e6/src/styles/glass/focus-veil.css	2026-10-28 16:03:21
++++ /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/E7/wt/src/styles/glass/focus-veil.css	2026-10-28 15:50:13
+@@ -2,11 +2,12 @@
+    The FOCUS VEIL — the gradient-blur focus primitive (MOTION-CANON §5).
+ 
+    ONE fixed full-viewport plate, `pointer-events: none`, sitting between the world and
+-   the engaged control: uniform `backdrop-filter` under the INTERSECT product of an x
+-   double-ramp and a y double-ramp centred on the engaged element. Content directly
+-   behind the control is fully diffused; the bloom band restores legibility outward;
+-   beyond it nothing is touched. The engaged control sits ABOVE the veil and stays
+-   perfectly crisp.
++   the presented plate: uniform `backdrop-filter` under the INTERSECT product of an x
++   double-ramp and a y double-ramp centred on the plate. Content directly behind the
++   plate is fully diffused; the bloom band restores legibility outward; beyond it
++   nothing is touched. The plate sits ABOVE the veil and stays perfectly crisp. Its one
++   reader is the Dialog's overlay (`ModalOverlay`'s `veil`): no engagement veils the
++   world (Q-3 (c) with no veil, O-103d (5)).
+ 
+    IT WAS ALREADY BUILT, HIDDEN INSIDE THE DIALOG. `dialog/placement.css` FORM 2 was
+    this exact geometry, `data-backdrop="graded"`-private and hard-centred at 50%. This
+@@ -51,10 +52,9 @@
+     .glass-focus-veil {
+         position: fixed;
+         inset: 0;
+-        /* ONE RUNG UNDER THE PRESENTED PLATE. A modal's veil sits at `--z-overlay - 1`:
+-           over every world band (content 10 · controls 20 · bar 30 · header 35 · dock 40
+-           · panel 45), under the plate at 50. The engaged stage's veil needs no z: it is
+-           in the top layer, under its control by show order (engage/stage.ts).
++        /* ONE RUNG UNDER THE PRESENTED PLATE: `--z-overlay - 1`, over every world band
++           (content 10 · controls 20 · bar 30 · header 35 · dock 40 · panel 45), under
++           the plate at 50.
+ 
+            `position: fixed` resolves against the VIEWPORT only while no ancestor
+            carries `backdrop-filter`, `transform`, `filter`, `contain: paint` or
+@@ -63,8 +63,7 @@
+            own siblings and the world it exists to quiet is untouched, silently. In a
+            glass library such ancestors are ordinary (the Configurator's own aside
+            carries `backdrop-filter`), so the veil never mounts inside a consumer's
+-           tree: the engaged stage's veil is a `<body>` child in the top layer, the
+-           Dialog's overlay is a portal child. */
++           tree: the Dialog's overlay is a portal child. */
+         z-index: calc(var(--z-overlay) - 1);
+         pointer-events: none;
+ 
+@@ -143,45 +142,19 @@
+             );
+         mask-composite: intersect;
+ 
+-        /* THE OUT CLOCK — with the geometry, no lag. A plate at rest is not painted:
+-           `visibility` turns at the END of the out-fade (a discrete transition), so the
+-           stage's veil, open beneath every promoted control to keep top-layer order, holds
+-           no live `backdrop-filter` while no engagement wants it (the keyboard on the
+-           noveil arm, a scrub). */
++        /* THE OUT CLOCK — with the geometry, no lag. */
+         opacity: 0;
+-        visibility: hidden;
+-        transition:
+-            opacity var(--duration-fast) var(--ease-standard),
+-            visibility 0s linear var(--duration-fast);
++        transition: opacity var(--duration-fast) var(--ease-standard);
+     }
+ 
+-    /* THE IN CLOCK — behind the geometry by one rank-6 beat. Two readers, two facts:
+-       the engaged stage's one veil carries `data-engaged` (composables/motion/engage/
+-       stage.ts writes it, and nothing else does); a modal's veil reads its overlay's own
+-       open state, because an open modal is presented, not engaged. */
+-    .glass-focus-veil[data-engaged],
++    /* THE IN CLOCK — behind the geometry by one rank-6 beat. The veil reads its
++       overlay's own open state: an open modal is presented, not engaged. */
+     [data-state="open"] > .glass-focus-veil {
+         opacity: 1;
+-        visibility: visible;
+-        transition:
+-            opacity var(--duration-normal) var(--ease-standard) var(--duration-instant),
+-            visibility 0s;
++        transition: opacity var(--duration-normal) var(--ease-standard)
++            var(--duration-instant);
+     }
+ 
+-    /* THE HAND-OFF. The stage's veil stays up when the engagement passes from one control
+-       to the next, and its pool travels to the incoming control on the engaged rung's own
+-       row (`--veil-x`/`--veil-y` are registered, so they interpolate): it never drops
+-       and re-ramps from 0. */
+-    .glass-focus-veil[data-engaged] {
+-        transition:
+-            opacity var(--duration-normal) var(--ease-standard) var(--duration-instant),
+-            visibility 0s,
+-            --veil-x var(--spring-dock-duration) var(--spring-dock),
+-            --veil-y var(--spring-dock-duration) var(--spring-dock);
+-    }
+-
+-    /* The modal's veil mounts with its overlay, so its ramp needs a starting style. The
+-       stage's veil does not: the stage resolves it at rest before it engages. */
+     @starting-style {
+         [data-state="open"] > .glass-focus-veil {
+             opacity: 0;
+diff -ruN a7e6/src/styles/utilities/engage.css /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/E7/wt/src/styles/utilities/engage.css
+--- a7e6/src/styles/utilities/engage.css	2026-10-28 16:03:21
++++ /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/E7/wt/src/styles/utilities/engage.css	2026-10-28 15:50:13
+@@ -162,8 +162,8 @@
+ /* HELD — a control the hand holds (slider, number-field scrub, timeline, the dock's
+    controls). The ENGAGED rung is the stage's (composables/motion/engage/stage.ts): the
+    door's engagement (the hand down, or a key that brought the focus or acts on it)
+-   promotes the host in place into the top layer (or, for a fine pointer's hold on
+-   `POINTER_STAGE` "coarse", leaves it in flow), and this recipe is its grow: to
++   promotes the host in place into the top layer (or, for a fine pointer's hold, leaves
++   it in flow: Q-3 (c)), and this recipe is its grow: to
+    `--scale-engage` (the ladder's engaged row) on the block axis, and inline to the reach
+    the stage computes from the page gutter (`--stage-reach`, glass/engage-stage.css), on
+    the `dock` row, leaving on the row's exit clock. A host off the stage reads reach 0 and
+diff -ruN a7e6/tests/components/ui/slider/release-carry.test.ts /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/E7/wt/tests/components/ui/slider/release-carry.test.ts
+--- a7e6/tests/components/ui/slider/release-carry.test.ts	2026-10-28 16:03:20
++++ /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/E7/wt/tests/components/ui/slider/release-carry.test.ts	2026-10-28 15:52:21
+@@ -75,3 +75,46 @@
+         body.remove();
+     });
+ });
++
++describe("one carry, on the body, on the stage too (D5 pass 7, CK-05)", () => {
++    // The pass-6 composition carried a host on the stage by stretching the whole host with
++    // its trailing edge held (`flingStage`), so the value point, which sits at its value's
++    // fraction of the host's width, carried that fraction of the stretch: about half at a
++    // mid value (WebKit 4.35-7.44 px against the floor's 13.65). The carry is the body's,
++    // promoted or in place: the host plays no release animation of its own.
++    it.each(["mouse", "touch"])("a %s hold's fling carries on the body, never on the host", async (pointerType) => {
++        const body = document.body.appendChild(document.createElement("div"));
++        body.style.setProperty("--spring-dock-settle", "0.21s");
++        body.getBoundingClientRect = () => ({ x: 0, y: 0, left: 0, top: 0, right: 223, bottom: 8, width: 223, height: 8, toJSON: () => ({}) }) as DOMRect;
++        const bodyAnimate = vi.fn(() => ({ cancel() {} }) as unknown as Animation);
++        body.animate = bodyAnimate as unknown as typeof body.animate;
++        const C = defineComponent({
++            setup() {
++                const el = ref<HTMLElement | null>(null);
++                useEngage(() => el.value, { hold: {}, drag: { axis: () => "x", body: () => body } });
++                return () => h("div", { ref: el, tabindex: 0 });
++            },
++        });
++        const w = mount(C, { attachTo: document.body });
++        await nextTick();
++        const host = w.element as HTMLElement;
++        const hostAnimate = vi.fn(() => ({ cancel() {}, finished: Promise.resolve() }) as unknown as Animation);
++        host.animate = hostAnimate as unknown as typeof host.animate;
++        const at = (type: string, x: number, t: number, target: EventTarget): void => {
++            const e = new PointerEvent(type, { clientX: x, clientY: 0, bubbles: true, button: 0, pointerType });
++            Object.defineProperty(e, "timeStamp", { value: t });
++            target.dispatchEvent(e);
++        };
++        at("pointerdown", 0, 0, host);
++        await nextTick();
++        // on the stage while held: promoted on a touch, in place on a fine pointer (Q-3 (c))
++        expect(host.hasAttribute("data-engage-stage")).toBe(true);
++        expect(host.matches(":popover-open")).toBe(pointerType === "touch");
++        for (let k = 1; k <= 3; k++) at("pointermove", 40 * k, 120 + 16 * k, window);
++        at("pointerup", 120, 172, window);
++        expect(bodyAnimate).toHaveBeenCalledTimes(1);
++        expect(hostAnimate).not.toHaveBeenCalled();
++        w.unmount();
++        body.remove();
++    });
++});
+diff -ruN a7e6/tests/composables/motion/engage-stage.test.ts /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/E7/wt/tests/composables/motion/engage-stage.test.ts
+--- a7e6/tests/composables/motion/engage-stage.test.ts	2026-10-28 16:03:21
++++ /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/E7/wt/tests/composables/motion/engage-stage.test.ts	2026-10-28 15:54:15
+@@ -3,8 +3,10 @@
+ // CK-22), the footprint re-seated under a re-render (CK-20), the loud read-back (CK-21),
+ // the grow figure on the ladder's row (CK-12), one anchor name per footprint (CK-20,
+ // pass 3), and the stage's second client, the NumberField scrub (CK-27), with its own
+-// pitch (CK-12), its arming surface (CK-22) and no veil (CK-25). Pass 4: Q-3's pointer arm (`POINTER_STAGE`), the
+-// consumer's own `position-anchor` given back on release, and the wheel over a promoted control (CK-22). Paint is the D5
++// pitch (CK-12), its arming surface (CK-22) and no veil (CK-25). Pass 4: Q-3's pointer arm, the consumer's own
++// `position-anchor` given back on release, and the wheel over a promoted control (CK-22). Pass 7: Q-3 (c) with no veil
++// (O-103d (5)) is the one construction (no veil element, no "every" arm), and a promoted control is clipped to the box
++// that clips its place (CK-20). Paint is the D5
+ // battery's; each case here has the input that must NOT do the thing beside the one that must.
+ 
+ import { readFileSync } from "node:fs";
+@@ -15,7 +17,6 @@
+ 
+ import { useEngage } from "@glass/composables/motion/engage/useEngage";
+ import { engageRung } from "@glass/composables/motion/engage/engageLadder";
+-import { POINTER_STAGE, STAGE_VEIL } from "@glass/composables/motion/engage/stage";
+ import { NumberField, NumberFieldInput } from "@glass/components/number-field";
+ 
+ function mountPair() {
+@@ -49,7 +50,10 @@
+     return down;
+ }
+ 
+-const veil = (): HTMLElement | null => document.querySelector(".glass-focus-veil");
++/** No engagement veils the world (O-103d (5)): the stage creates no veil element. */
++const noVeil = (): void => {
++    expect(document.querySelector(".glass-focus-veil")).toBeNull();
++};
+ 
+ describe("the hand-off (CK-20): handed over, never hidden", () => {
+     let w: ReturnType<typeof mountPair> | null = null;
+@@ -58,44 +62,37 @@
+         w = null;
+     });
+ 
+-    it("Tab A → B: A leaves on its own exit still promoted, B engages, the veil never drops", async () => {
++    it("Tab A → B: A leaves on its own exit still promoted, B engages, and no veil is ever made", async () => {
+         w = mountPair();
+         await press("Tab", () => w!.a.focus());
+         expect(w.a.hasAttribute("data-engaged")).toBe(true);
+-        // any write of the veil's attribute across the hand-off is a drop and a re-raise
+-        // (on the noveil arm there is no veil to drop: it is never created)
+-        expect(veil() !== null).toBe(STAGE_VEIL);
+-        const log: (string | null)[] = [];
+-        const mo = new MutationObserver((rs) => rs.forEach((r) => log.push(r.oldValue)));
+-        if (veil()) mo.observe(veil()!, { attributes: true, attributeOldValue: true, attributeFilter: ["data-engaged"] });
++        noVeil();
+         // A's exit: one finite animation the stage must wait for (happy-dom runs none)
+         let exitDone: () => void = () => {};
+         const exit = { effect: { getComputedTiming: () => ({ endTime: 300 }) }, finished: new Promise<void>((r) => (exitDone = r)) };
+         w.a.getAnimations = (() => [exit]) as unknown as HTMLElement["getAnimations"];
+         await press("Tab", () => w!.b.focus());
+         await Promise.resolve();
+-        mo.disconnect();
+         expect(w.b.hasAttribute("data-engaged")).toBe(true);
+         expect(w.a.hasAttribute("data-engaged")).toBe(false);
+         // A is still on the stage: it leaves when its exit has run, not in this frame
+         expect(w.a.hasAttribute("data-engage-stage")).toBe(true);
+         expect(w.a.matches(":popover-open")).toBe(true);
+-        expect(log, "the veil dropped across the hand-off").toHaveLength(0);
+-        // Q-3's veil arm: the keyboard raises the veil only on STAGE_VEIL
+-        expect(veil()?.hasAttribute("data-engaged") ?? false).toBe(STAGE_VEIL);
++        noVeil();
+         exitDone();
+         await new Promise((r) => setTimeout(r, 0));
+         expect(w.a.hasAttribute("data-engage-stage")).toBe(false);
+         expect(w.b.hasAttribute("data-engage-stage")).toBe(true);
+     });
+ 
+-    it("plant: a release with nothing taking over drops the veil (the case above is not vacuous)", async () => {
++    it("an Escape with nothing taking over releases the control, and still makes no veil", async () => {
+         w = mountPair();
+         await press("Tab", () => w!.a.focus());
+-        expect(veil()?.hasAttribute("data-engaged") ?? false).toBe(STAGE_VEIL);
++        expect(w.a.hasAttribute("data-engaged")).toBe(true);
+         await press("Escape");
+         await Promise.resolve();
+-        expect(veil()?.hasAttribute("data-engaged") ?? false).toBe(false);
++        expect(w.a.hasAttribute("data-engaged")).toBe(false);
++        noVeil();
+     });
+ });
+ 
+@@ -449,8 +446,8 @@
+         await nextTick();
+         expect(f.root.hasAttribute("data-held")).toBe(true);
+         expect(f.root.hasAttribute("data-engaged")).toBe(true);
+-        // a fine pointer's scrub (pointerType unset: not a touch) promotes only on "every"
+-        expect(f.root.matches(":popover-open")).toBe(POINTER_STAGE === "every");
++        // a fine pointer's scrub (pointerType unset: not a touch) grows in place (Q-3 (c))
++        expect(f.root.matches(":popover-open")).toBe(false);
+         expect(f.n.value).toBe(52);
+         window.dispatchEvent(at("pointermove", 84));
+         await nextTick();
+@@ -471,7 +468,7 @@
+         await nextTick();
+         await nextTick();
+         expect(f.root.hasAttribute("data-engaged")).toBe(true);
+-        expect(veil()?.hasAttribute("data-engaged") ?? false).toBe(false);
++        noVeil();
+         window.dispatchEvent(at("pointerup", 140));
+         await nextTick();
+         f.w.unmount();
+@@ -519,18 +516,17 @@
+     window.dispatchEvent(new PointerEvent("pointerup", { bubbles: true, button: 0 }));
+ };
+ 
+-describe("Q-3's pointer arm (POINTER_STAGE)", () => {
+-    it("a fine pointer's hold: promoted on \"every\", engaged IN PLACE on \"coarse\" (no footprint, no veil)", async () => {
++describe("Q-3 (c): in place on a fine pointer, promoted on touch and keys", () => {
++    it("a fine pointer's hold is engaged IN PLACE (no top layer, no footprint, no veil)", async () => {
+         const w = mountPair();
+         down(w.a, "mouse");
+         await nextTick();
+         expect(w.a.hasAttribute("data-held")).toBe(true);
+         expect(w.a.hasAttribute("data-engaged")).toBe(true);
+         expect(w.a.hasAttribute("data-engage-stage")).toBe(true);
+-        const promoted = POINTER_STAGE === "every";
+-        expect(w.a.matches(":popover-open")).toBe(promoted);
+-        expect(w.a.previousElementSibling?.classList.contains("engage-footprint") ?? false).toBe(promoted);
+-        expect(veil()?.hasAttribute("data-engaged") ?? false).toBe(promoted && STAGE_VEIL);
++        expect(w.a.matches(":popover-open")).toBe(false);
++        expect(w.a.previousElementSibling?.classList.contains("engage-footprint") ?? false).toBe(false);
++        noVeil();
+         // the reach is written from the host's own box either way
+         expect(w.a.style.getPropertyValue("--stage-w")).not.toBe("");
+         up();
+@@ -541,15 +537,15 @@
+         w.w.unmount();
+     });
+ 
+-    it("a touch's hold is promoted on either arm, with its footprint; the veil rises only on STAGE_VEIL", async () => {
++    it("a touch's hold is promoted, with its footprint, and makes no veil", async () => {
+         const w = mountPair();
+         down(w.a, "touch");
+         await nextTick();
+         expect(w.a.hasAttribute("data-engaged")).toBe(true);
+         expect(w.a.matches(":popover-open")).toBe(true);
+         expect(w.a.previousElementSibling?.classList.contains("engage-footprint")).toBe(true);
+-        // the noveil arm is noveil on every promotion, a touch's included (CK-25, O-87)
+-        expect(veil()?.hasAttribute("data-engaged") ?? false).toBe(STAGE_VEIL);
++        // no promotion veils the world, a touch's included (CK-25, O-87, O-103d (5))
++        noVeil();
+         up();
+         await nextTick();
+         await settled();
+@@ -557,7 +553,7 @@
+         w.w.unmount();
+     });
+ 
+-    it("the keyboard promotes on either arm; a mode never changes under an engaged control", async () => {
++    it("the keyboard promotes; a mode never changes under an engaged control", async () => {
+         const w = mountPair();
+         await press("Tab", () => w.a.focus());
+         expect(w.a.matches(":popover-open")).toBe(true);
+@@ -640,5 +636,86 @@
+         await settled();
+         w.w.unmount();
+         box.remove();
++    });
++});
++
++describe("a promoted control stays inside its place's clip (CK-20, pass 7)", () => {
++    // happy-dom lays nothing out: the boxes are given here. The card clips at y 100..164
++    // (its padding box); the control's rest box (its footprint) spans y 90..110, so its top
++    // 10 px are past the card's edge. The painted host is its rest box grown ×1.06 about
++    // its centre (height 21.2, top 89.4).
++    const rect = (l: number, t: number, w: number, h: number) =>
++        ({ left: l, top: t, right: l + w, bottom: t + h, width: w, height: h, x: l, y: t, toJSON: () => ({}) }) as DOMRect;
++    function card(overflow: string) {
++        const box = document.createElement("div");
++        // the longhands (happy-dom does not expand the shorthand)
++        box.style.overflowX = overflow;
++        box.style.overflowY = overflow;
++        Object.defineProperties(box, {
++            clientWidth: { value: 400, configurable: true },
++            clientHeight: { value: 64, configurable: true },
++            clientLeft: { value: 0, configurable: true },
++            clientTop: { value: 0, configurable: true },
++        });
++        box.getBoundingClientRect = () => rect(0, 100, 400, 64);
++        return box;
++    }
++    function sized(host: HTMLElement) {
++        Object.defineProperties(host, {
++            offsetWidth: { value: 360, configurable: true },
++            offsetHeight: { value: 20, configurable: true },
++        });
++        host.getBoundingClientRect = () => rect(20 - 10.8, 89.4, 381.6, 21.2);
++    }
++    /** One frame of the stage's loop and its resize step (happy-dom runs no rendering steps). */
++    async function frame(): Promise<void> {
++        await new Promise((r) => setTimeout(r, 40));
++    }
++
++    it("the clip is the card's box in the host's own frame: its top cut at the card's edge, every other side unbounded", async () => {
++        const w = mountPair();
++        const box = card("auto");
++        w.w.element.before(box);
++        box.append(w.w.element);
++        sized(w.a);
++        await press("Tab", () => w.a.focus());
++        await frame();
++        expect(w.a.matches(":popover-open")).toBe(true);
++        const clip = w.a.style.getPropertyValue("clip-path");
++        // top: (100 − 89.4) / 1.06 = 10 px into the host; right/bottom/left reach the card's edges
++        expect(clip).toMatch(/^inset\(10px /);
++        const [t, r, b, l] = clip.slice(6, -1).split(" ").map((x) => Number.parseFloat(x));
++        expect(t).toBeCloseTo(10, 1);
++        expect(r).toBeLessThan(0);
++        expect(b).toBeLessThan(0);
++        expect(l).toBeLessThan(0);
++        await press("Escape");
++        await settled();
++        // released: the clip leaves with the promotion
++        expect(w.a.style.getPropertyValue("clip-path")).toBe("");
++        w.w.unmount();
++        box.remove();
++    });
++
++    it("plant: a card that clips nothing (overflow visible) leaves the promoted control unclipped", async () => {
++        const w = mountPair();
++        const box = card("visible");
++        w.w.element.before(box);
++        box.append(w.w.element);
++        sized(w.a);
++        await press("Tab", () => w.a.focus());
++        await frame();
++        expect(w.a.matches(":popover-open")).toBe(true);
++        expect(w.a.style.getPropertyValue("clip-path")).toBe("");
++        await press("Escape");
++        await settled();
++        w.w.unmount();
++        box.remove();
++    });
++
++    it("the stylesheet turns off the UA's one-step drop: the clip is the one mechanism", () => {
++        const css = readFileSync(join(process.cwd(), "src/styles/glass/engage-stage.css"), "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
++        const pin = css.slice(css.indexOf("[popover][data-engage-stage] {"));
++        expect(pin.slice(0, pin.indexOf("}"))).toMatch(/position-visibility:\s*always;/);
+     });
+ });
+diff -ruN a7e6/tests/styles/focus-veil.test.ts /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/E7/wt/tests/styles/focus-veil.test.ts
+--- a7e6/tests/styles/focus-veil.test.ts	2026-10-28 16:03:21
++++ /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/E7/wt/tests/styles/focus-veil.test.ts	2026-10-28 15:53:46
+@@ -46,7 +46,6 @@
+ import { describe, expect, it } from "vitest";
+ 
+ import { Slider } from "@glass/components/slider";
+-import { STAGE_VEIL } from "@glass/composables/motion/engage/stage";
+ 
+ const read = (rel: string): string => readFileSync(join(process.cwd(), rel), "utf8");
+ const stripComments = (css: string): string => css.replace(/\/\*[\s\S]*?\*\//g, "");
+@@ -74,7 +73,6 @@
+     // deleted, and a centred modal IS the definitional focus event — it sits at the
+     // veil's own 50% rest, so the overlay composes the class and writes no centre.
+     ["src/components/dialog/ModalOverlay.vue", "the modal scrim's focus veil"],
+-    ["src/composables/motion/engage/stage.ts", "the engaged stage's one veil (the Slider, the NumberField scrub)"],
+ ];
+ 
+ describe("G-RUNG-ONLY · GRADIENT-BLUR arm — the focus-veil primitive exists", () => {
+@@ -121,17 +119,13 @@
+             expect(declaration).not.toContain("backdrop-filter");
+             expect(declaration).not.toContain("filter");
+         }
+-        // OUT — with the geometry, no lag (the base rule's clock). The plate's
+-        // `visibility` is a discrete flip at the END of the out-fade, not an animation: a
+-        // plate at rest paints no `backdrop-filter` (D5 pass 3, the noveil arm's open plate).
++        // OUT — with the geometry, no lag (the base rule's clock).
+         expect(veil).toMatch(
+-            /opacity:\s*0;\s*visibility:\s*hidden;\s*transition:\s*opacity\s+var\(--duration-fast\)\s+var\(--ease-standard\),\s*visibility\s+0s\s+linear\s+var\(--duration-fast\);/,
++            /opacity:\s*0;\s*transition:\s*opacity\s+var\(--duration-fast\)\s+var\(--ease-standard\);/,
+         );
+-        // IN — visible at once, so the fade-in is seen
+-        expect(veil).toMatch(/opacity:\s*1;\s*visibility:\s*visible;/);
+-        // IN — one rank-6 beat (100ms) behind the geometry.
++        // IN — one rank-6 beat (100ms) behind the geometry, on the overlay's open state.
+         expect(veil).toMatch(
+-            /\[data-engaged\][\s\S]*?transition:\s*opacity\s+var\(--duration-normal\)\s+var\(--ease-standard\)\s+var\(--duration-instant\)/,
++            /\[data-state="open"\] > \.glass-focus-veil[\s\S]*?transition:\s*opacity\s+var\(--duration-normal\)\s+var\(--ease-standard\)\s+var\(--duration-instant\)/,
+         );
+         // Mounted-only-while-engaged has no prior computed style to ramp from.
+         expect(veil).toMatch(/@starting-style/);
+@@ -190,11 +184,16 @@
+         expect(read(path)).toContain("glass-focus-veil");
+     });
+ 
+-    it("the shared class has at least the two composers §5 requires", () => {
++    // The engaged Slider was the class's second composer until Q-3 was ruled (c) with no
++    // veil (O-103d (5)): no engagement veils the world, so the Dialog's overlay is the
++    // one library composer of this public class (D5 pass 7, a MIGRATION row).
++    it("the shared class keeps its library composer, and no engagement composes it", () => {
+         const composers = consumers.filter(([path]) =>
+             read(path).includes("glass-focus-veil"),
+         );
+-        expect(composers.length).toBeGreaterThanOrEqual(2);
++        expect(composers.length).toBe(1);
++        for (const p of ["src/composables/motion/engage/stage.ts", "src/components/slider/Slider.vue"])
++            expect(stripComments(read(p)).replace(/\/\/.*$/gm, "")).not.toContain("glass-focus-veil");
+     });
+ 
+     it("the Dialog BINDS the shared class instead of re-spelling the recipe", () => {
+@@ -213,15 +212,12 @@
+         expect(overlay).not.toContain("mask-composite");
+     });
+ 
+-    // THE RENDER-LEVEL DETECTOR. It mounts a real Slider, grasps it, and reads the
+-    // DOM — so it reds on a dead binding (an engagement that never reaches the stage), on
+-    // a veil left nested in the host's own subtree (where a `backdrop-filter` ancestor
+-    // would collapse the fixed plate to that ancestor's box), and on a promotion that
+-    // moves the node. A source scan can see none of the three.
+-    // Q-3's veil arm (stage.ts `STAGE_VEIL`): on the veil arm the promoted Slider stands
+-    // over the stage's one veil; on the noveil arm it is promoted with no veil anywhere
+-    // in the document. Each arm asserts its own plate, so neither branch is vacuous.
+-    it("the engaged Slider is promoted in place, over the stage's one veil on the veil arm and over none on the noveil arm", async () => {
++    // THE RENDER-LEVEL DETECTOR. It mounts a real Slider, grasps it, and reads the DOM, so
++    // it reds on a dead binding (an engagement that never reaches the stage), on a veil
++    // raised by an engagement (Q-3 (c) with no veil, O-103d (5): no engagement veils the
++    // world, and the stage makes no veil element), and on a promotion that moves the node.
++    // A source scan can see none of the three.
++    it("the engaged Slider is promoted in place and raises no veil", async () => {
+         const wrapper = mount(Slider, {
+             props: { modelValue: [40], "aria-label": "Grasp" },
+             attachTo: document.body,
+@@ -229,26 +225,16 @@
+         const root = wrapper.element as HTMLElement;
+         const parent = root.parentElement;
+ 
+-        // At rest: nothing promoted, no veil engaged.
++        // At rest: nothing promoted, no veil.
+         expect(root.hasAttribute("data-engage-stage")).toBe(false);
+-        expect(document.querySelectorAll(".glass-focus-veil[data-engaged]")).toHaveLength(0);
++        expect(document.querySelector(".glass-focus-veil")).toBeNull();
+ 
+-        // a touch's hold: promoted on either pointer arm (stage.ts `POINTER_STAGE`)
++        // a touch's hold promotes (Q-3 (c))
+         root.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true, button: 0, pointerType: "touch" }));
+         await nextTick();
+         await nextTick();
+ 
+-        const veil = document.querySelector<HTMLElement>(".glass-focus-veil");
+-        if (STAGE_VEIL) {
+-            expect(veil, "the engaged Slider raises no focus veil").not.toBeNull();
+-            // the plate is a body child and NOT inside the host
+-            expect(veil!.parentElement).toBe(document.body);
+-            expect(root.contains(veil!)).toBe(false);
+-            expect(veil!.hasAttribute("data-engaged")).toBe(true);
+-            expect(veil!.style.getPropertyValue("--veil-x")).not.toBe("");
+-        } else {
+-            expect(veil, "the noveil arm raised a veil under a touch's promotion").toBeNull();
+-        }
++        expect(document.querySelector(".glass-focus-veil"), "an engagement raised a veil").toBeNull();
+         // promoted where it stands: same parent, a footprint before it, in the top layer
+         expect(root.parentElement).toBe(parent);
+         expect(root.previousElementSibling?.classList.contains("engage-footprint")).toBe(true);
+@@ -258,48 +244,30 @@
+ 
+         wrapper.unmount();
+         expect(document.querySelectorAll(".engage-footprint")).toHaveLength(0);
+-        // the veil drops at the end of the task, once nothing took the engagement over
+-        await Promise.resolve();
+-        expect(document.querySelectorAll(".glass-focus-veil[data-engaged]")).toHaveLength(0);
++        expect(document.querySelector(".glass-focus-veil")).toBeNull();
+     });
+ 
+-    it("re-takes the centre when the page scrolls under a live grasp (veil arm); raises nothing on a scroll (noveil arm)", async () => {
++    it("a scroll under a live grasp re-reads the rest box and raises nothing", async () => {
+         const wrapper = mount(Slider, {
+             props: { modelValue: [40], "aria-label": "Grasp" },
+             attachTo: document.body,
+         });
+         const root = wrapper.element as HTMLElement;
+-        // a touch's hold: promoted on either pointer arm (stage.ts `POINTER_STAGE`)
+         root.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true, button: 0, pointerType: "touch" }));
+         await nextTick();
+         await nextTick();
+         // The rect is viewport-space and the test environment paints nothing, so the
+         // footprint's own rect is the thing to drive: the page moves under the control.
+         const footprint = root.previousElementSibling as HTMLElement;
+-        let top = -184;
+         footprint.getBoundingClientRect = (() => ({
+-            x: 100, y: top, left: 100, top, right: 300, bottom: top + 20, width: 200, height: 20,
++            x: 100, y: -184, left: 100, top: -184, right: 300, bottom: -164, width: 200, height: 20,
+             toJSON: () => ({}),
+         })) as HTMLElement["getBoundingClientRect"];
+-        if (!STAGE_VEIL) {
+-            window.dispatchEvent(new Event("scroll"));
+-            expect(document.querySelector(".glass-focus-veil")).toBeNull();
+-            // the stage still re-reads the rest box on the scroll: the reach follows it
+-            expect(root.style.getPropertyValue("--stage-w")).toBe("200px");
+-            wrapper.unmount();
+-            return;
+-        }
+-        const veil = document.querySelector<HTMLElement>(".glass-focus-veil")!;
+-        const atGrasp = veil.style.getPropertyValue("--veil-y");
+         window.dispatchEvent(new Event("scroll"));
+-        expect(
+-            veil.style.getPropertyValue("--veil-y"),
+-            "the pool stranded at the grasp position after a scroll",
+-        ).not.toBe(atGrasp);
++        expect(document.querySelector(".glass-focus-veil")).toBeNull();
++        // the stage still re-reads the rest box on the scroll: the reach follows it
++        expect(root.style.getPropertyValue("--stage-w")).toBe("200px");
+         wrapper.unmount();
+-        top = 900;
+-        window.dispatchEvent(new Event("scroll"));
+-        expect(veil.style.getPropertyValue("--veil-y")).not.toContain("900");
+     });
+ });
+ 
+@@ -327,8 +295,8 @@
+ 
+     it("bite[animated-blur]: a transitioned filter reds the OPACITY-ONLY arm", () => {
+         const planted = veil.replace(
+-            /transition:\s*opacity var\(--duration-fast\) var\(--ease-standard\),/,
+-            "transition: backdrop-filter var(--duration-fast) var(--ease-standard),",
++            /transition:\s*opacity var\(--duration-fast\) var\(--ease-standard\);/,
++            "transition: backdrop-filter var(--duration-fast) var(--ease-standard);",
+         );
+         const plantedTransitions = planted.match(/transition:[^;]+;/g) ?? [];
+         expect(
