@@ -16,12 +16,12 @@ const impl = await retry(() => agent(ID + '\n' + LAW + '\n' + SCOPE + '\nTASK: t
 if (!impl) return { stopped: 'implement-missing' }
 
 let crit = null
-for (let round = 1; round <= 4; round++) {
+for (let round = 1; round <= 6; round++) {
   phase('Verify')
   crit = await retry(() => agent(ID + '\n' + LAW + '\n' + SCOPE + '\nYou are a FRESH ADVERSARIAL CRITIC (round ' + round + ') of branch release/10.1.3 in ' + WT + '. Read every commit on it (git -C ' + WT + ' log v10.1.2..release/10.1.3) and ' + WT + '/docs/release-10.1.3/ in full. Try to REFUTE the cure in paint, headless Chromium and Playwright WebKit (guarded; --exclusive webkit), light and dark, 360/390/430/1440: reproduce the jump on a v10.1.2 build and confirm it is gone on the branch for every anchor (left, right, top, bottom, centred) and every dock form; confirm a click on a seat lands through the expand, by pointer and touch; attack the click guard (a click whose target moved for a reason OTHER than the dock\'s own morph must still be dropped as before; no tolerance widening); re-run the O-101 no-overflow gate and the 10.1.2 release spec (77 per engine); attack morph regressions (collapse/expand animation, vertical dock, detached and canvas docks, reduced motion). Write ' + WT + '/docs/release-10.1.3/critique-' + round + '.md. Return defects only for what you reproduced, with evidence.', { label: 'critic-1013-' + round, phase: 'Verify', model: 'opus', schema: REP }))
   if (!crit) break
   if (!(crit.defects || []).length) break
-  if (round === 4) break
+  if (round === 6) break
   phase('Fix')
   const fx = await retry(() => agent(ID + '\n' + LAW + '\n' + SCOPE + '\nYou are the FIX seat (round ' + round + ') on release/10.1.3 in ' + WT + '. Read ' + WT + '/docs/release-10.1.3/critique-' + round + '.md. Cure every defect below at its root, add or correct a witness for each (RED before the cure, GREEN after, both engines), re-run typecheck, build, vitest and the affected e2e in both engines (guarded), and commit on the branch. Defects:\n' + JSON.stringify(crit.defects, null, 1) + '\nReturn commits and results.', { label: 'fix-1013-' + round, phase: 'Fix', model: 'opus', schema: REP }))
   if (fx && !(fx.commits || []).length) {
