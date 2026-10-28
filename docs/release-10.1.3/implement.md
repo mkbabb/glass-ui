@@ -154,9 +154,10 @@ Logs (beside the worktree, `.claude/worktrees/`): `pw-chromium-10.1.3-witness.lo
 
 - fourier's own cells are not run here (sibling repos are read-only); fourier re-adopts at
   10.1.3 and runs them.
-- A reversal mid-expand re-anchors from the painted boxes, but the summary pane, active
+- ~~A reversal mid-expand re-anchors from the painted boxes, but the summary pane, active
   again, drops its leave shift at that moment; it is partly faded by the stagger then. Not
-  witnessed in paint.
+  witnessed in paint.~~ [critique-3 D-1] Measured, it was opaque and outside the plate
+  for most of the collapse. Cured in Round 3 below.
 - The `red-10.1.2` worktree stays for critics' RED reruns; remove it with
   `git worktree remove .claude/worktrees/red-10.1.2` when the close is done.
 
@@ -250,3 +251,74 @@ Logs, beside the worktree: `fix2-pre-chromium.log`, `fix2-post-chromium.log`,
 `fix2-release-chromium.log`, `fix2-vitest.log`, `fix2-typecheck.log`, `fix2-build.log`,
 `fix2-demo-build.log`, `fix2-verify.log`. For the RED arms, `useDockState.ts` was swapped
 to its `9a768746b` version inside this worktree and then restored.
+
+## Round 3 (critique-3)
+
+- **D-1: a collapse that reverses an expand keeps the summary inside the plate.** Two
+  causes, both in `anchor`.
+  - The rest boxes (`end`) were read only for an unscaled start. A reversal starts
+    scaled, so the entering summary got no `--dock-pane-shift`. It laid out at the
+    reserved box's start, outside the plate and opaque, and jumped about 245 px at
+    settle. `end` is now read for every collapse, which is the full pane no longer
+    `.is-active` in the patched DOM, and for any unscaled start as before.
+  - The pane's shift was read from its laid box at the start scalar. The root's
+    `padding-inline` interpolates on `--dock-expand-t` (11.3 px to 8 px at 390). It moves
+    and resizes the layers under their percentage origin, so a pane painted (1 - s)·e
+    plus the padding delta away from its laid box by the end. Traced in Chromium:
+    e = 5.06 px, s = 0.284, 6.9 px short of rest.
+  - The fix: the entering pane of a collapse is shifted against the box it paints at
+    the end scalar, with the origins written, so the settle is exact. The leaving pane
+    keeps the first-frame read, where it is opaque.
+  - This also cures the 3 to 7 px settle residual that an unscaled collapse, and a
+    left-anchored reversal, left on the summary. Nothing is widened, and the click guard
+    is unchanged.
+
+### Round 3 gates
+
+Run by the round-3 completion seat on the final source (`d98a2f5ae`). Every run went
+through `guarded`.
+
+| gate | result |
+|---|---|
+| `npm run typecheck` (guarded `--light`) | exit 0 |
+| `npm run build`, `npm run demo:dist:build` (guarded) | exit 0 |
+| `npx vitest run --maxWorkers=2` (guarded) | 246 files, 2388 passed, 10 expected fail, 1 skipped |
+| unit `dockMorphMeasure.test.ts` | 18/18 GREEN; the new reversal cell is RED on the round-2 source (shift `''`, want `247px`) |
+| `release-10-1-3.spec.ts` + `release-10-1-2.spec.ts` + `release-10-1-1.spec.ts`, Chromium | 118/118 GREEN (41 in the 10.1.3 spec, the 3 reversal cells among them; 77 release cells, the O-101 no-overflow cells among them) |
+| reversal cells (right, left, bottom at 390), Chromium, RED arms in `red-10.1.2` | v10.1.2 dock 3/3 RED (72, 64 and 72 frames outside the plate); round-2 dock (`10234c77c`) 3/3 RED (right and bottom 73 frames outside; left a 3.4 px settle jump) |
+| the same three specs, WebKit 2287 (`guarded --exclusive webkit`) | NOT PROVEN on the final source: see the WebKit crash below. The round-3 fix seat's run at 10:18 (116 passed, 2 skipped) predates its last edit to `dockMorphMeasure.ts` (10:29) |
+| reversal cells, WebKit 2287, RED arms | NOT RUN: the same crash |
+| `npm run verify:package` | the ratchet refused +154 B (2939741 > 2939587); rebound on the committed tree in `2706e08ba`, then terminal CLEAN |
+
+**The WebKit crash (environmental, not this round's).** From about 12:37 on 2026-10-28,
+every Playwright WebKit 2287 page that mounts a `GlassDock` crashes at load ("Page
+crashed"). It crashes on the v10.1.2 tree in `red-10.1.2` exactly as on the branch, and
+the same code was GREEN in WebKit at 23:38, 03:35, 08:40 and 10:18. Pages without a dock
+pass, for example 10.1.1's G-1, G-2 and Skeleton cells. The WebContent crash reports
+(`~/Library/Logs/DiagnosticReports/com.apple.WebKit.WebContent.Development-2026-10-28-12*.ips`)
+abort in `WebCore::Style::Color::resolvedColor()`, called from
+`toStyleColor(CSS::ColorMix)` while applying `border-top-color`.
+
+A probe that rewrites the dev-served `demo/demo.css` traced it to `color-mix` values:
+- Neutralising every value `color-mix(` stops the crash.
+- Neutralising either half of them also stops it, so the abort needs `color-mix` values
+  from both halves together, which suggests a nested `color-mix` resolved through a
+  custom property.
+
+This is the BL registry's PF-2 class ("the glass-ui demo crashes Playwright WebKit on
+boot"). Nothing in either tree's Tailwind sources changed between the green run and the
+crashes, so the trigger is machine state outside both trees, not yet identified. The
+WebKit cells stay owed. Rerun the three specs and the two RED arms in WebKit once a dock
+page loads there again.
+
+Logs, beside the worktree:
+- Branch runs: `fix4-post-chromium.log`, `fix4-post-webkit.log` (the crash).
+- RED arms: `fix4-red-{v10.1.2,10234c77c}-{chromium-headless-new,webkit}.log`.
+- Unit RED and GREEN: `fix4-unit-red.log`, `fix4-unit-green.log`.
+- Builds and checks: `fix4-typecheck.log`, `fix4-build.log`, `fix4-demo-build.log`,
+  `fix4-vitest.log`, `fix4-verify.log` (the refusal), `fix4-verify-rebind.log` (CLEAN).
+
+The RED arms ran in `red-10.1.2` with this spec and harness copied in. They ran first on
+its own v10.1.2 dock and then on `10234c77c`'s. The dock was then restored to v10.1.2,
+checked with `git diff --quiet v10.1.2`. The unit RED arm swapped `dockMorphMeasure.ts` to
+its `10234c77c` version inside this worktree and then restored it.

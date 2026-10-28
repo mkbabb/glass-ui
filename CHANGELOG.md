@@ -101,6 +101,25 @@ or renamed, and a consumer has nothing to change.
   focus or a hover expands the collapsed dock (Chromium); a script-dispatched touch
   `pointerdown` and `pointerup` with no click, then a focus, expands it (both engines).
 
+- **A collapse that reverses an expand keeps the summary inside the plate (critique-3
+  D-1).** A collapse called mid-expand starts scaled, so `anchor` read the rest boxes only
+  for an unscaled start, and the entering summary got no shift. It laid out at the
+  reserved box's start, outside the shrinking plate, fully opaque, and jumped about 245 px
+  at settle (right-anchored at 390; 253 px bottom-anchored). 10.1.2 did the same (228 px).
+  `anchor` now reads the rest for every collapse. Separately, the root's padding
+  interpolates on the scalar and moves the layers under their origin. So the entering
+  pane's shift is read where it paints at the end scalar, with the origins written, not
+  from its laid box at the start. The settle is now exact for every collapse; an unscaled
+  collapse left the summary 3 to 7 px short of its rest before.
+
+  Witnesses: unit `dockMorphMeasure.test.ts` (a right-anchored collapse that reverses an
+  expand shifts the entering summary to its rest at the end scalar), RED on the round-2
+  cure. Engine `release-10-1-3.spec.ts`: `collapse()` 120 ms into a hover expand, right,
+  left and bottom at 390. The summary glyph paints inside the plate on every frame after
+  it and its last morph frame is its rest. RED on 10.1.2 and on the round-2 cure in
+  Chromium. The WebKit cells are owed: Playwright WebKit 2287 crashes on every dock page
+  at load, on v10.1.2 alike (`docs/release-10.1.3/implement.md`, Round 3).
+
 ## 10.1.2 — 2026-10-27
 
 Two changes. Atlas G-4, arm (b-ii), the declared seat marker, by owner-delegate ruling
