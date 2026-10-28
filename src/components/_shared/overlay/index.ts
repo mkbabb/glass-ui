@@ -21,4 +21,5 @@ export type {
     FloatingPlacementProps,
     FloatingSide,
 } from "./placement";
+export { SHEET_QUERY, useSheetWidth } from "./sheet-width";
 export { useModalShortcutBarrier } from "./shortcuts";

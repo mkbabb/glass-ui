@@ -15,7 +15,7 @@ export interface SelectContentEmits {
 </script>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, shallowRef, useAttrs, watch } from "vue";
+import { computed, useAttrs } from "vue";
 import {
     injectSelectRootContext,
     SelectContent as RekaSelectContent,
@@ -24,7 +24,7 @@ import {
 } from "reka-ui";
 import SelectScrollButton from "./SelectScrollButton.vue";
 import { cn } from "../_shared/class-names";
-import { useDockParticipation } from "../_shared/overlay";
+import { useDockParticipation, useSheetWidth } from "../_shared/overlay";
 
 defineOptions({
     name: "SelectContent",
@@ -51,37 +51,13 @@ const attrs = useAttrs();
  * home; this component owes it nothing.) */
 const selectRoot = injectSelectRootContext(null);
 
-/* THE SHEET FORM (U/B7 D-6). Below 30rem a listbox anchored to a trigger has no
- * width to grow into and covers what the reader was choosing for, so it opens as a
- * bottom sheet: anchored to a virtual edge at the foot of the viewport, opening
- * upward, at full width. A sheet hides the page, so it wears the surface axis's
- * opaque rung (the solid `--card` plate, no backdrop); the anchored form keeps glass. The reference reads the viewport on every call, so a
- * resize or a URL-bar retraction re-anchors it through floating-ui's own update.
- * The query is held only while the listbox is open, so a closed Select keeps no
- * listener; it is read synchronously on open, before the content renders. */
-const SHEET_QUERY = "(width < 30rem)";
-const sheet = shallowRef(false);
-let sheetQuery: MediaQueryList | null = null;
-const syncSheet = () => {
-    sheet.value = sheetQuery?.matches ?? false;
-};
-const releaseSheetQuery = () => {
-    sheetQuery?.removeEventListener("change", syncSheet);
-    sheetQuery = null;
-};
-watch(
-    () => selectRoot?.open.value ?? false,
-    (open) => {
-        releaseSheetQuery();
-        if (open && typeof window !== "undefined" && typeof window.matchMedia === "function") {
-            sheetQuery = window.matchMedia(SHEET_QUERY);
-            sheetQuery.addEventListener("change", syncSheet);
-        }
-        syncSheet();
-    },
-    { immediate: true, flush: "sync" },
-);
-onBeforeUnmount(releaseSheetQuery);
+/* THE SHEET FORM (U/B7 D-6). Below 30rem (`useSheetWidth`) a listbox anchored to a
+ * trigger has no width to grow into and covers what the reader was choosing for, so
+ * it opens as a bottom sheet: anchored to a virtual edge at the foot of the viewport,
+ * opening upward, at full width, on the opaque rung; the anchored form keeps glass.
+ * The reference reads the viewport on every call, so a resize or a URL-bar retraction
+ * re-anchors it through floating-ui's own update. */
+const sheet = useSheetWidth(() => selectRoot?.open.value ?? false);
 const viewportFoot = {
     getBoundingClientRect: () =>
         new DOMRect(0, window.innerHeight, document.documentElement.clientWidth, 0),

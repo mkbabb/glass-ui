@@ -2,15 +2,17 @@
 // viewport foot at full width (the sheet form); it must take the opaque rung of the surface
 // axis (`data-surface="opaque"`: the solid `--card` plate, no backdrop), or the page behind
 // it reads through the rows. The anchored popover form above 30rem keeps the glass rung.
-// The DropdownMenu content takes the same axis as a `surface` prop, so a consumer whose
-// menu is a phone sheet (the atlas dock's More) can ask for the opaque rung.
+// A DropdownMenu a dock opened is the same sheet below 30rem (the atlas dock's More on a
+// phone), so the register stamps the opaque rung from the dock stamp and the width. The
+// content carries no `surface` prop (BK #66, public-contracts.test-d.ts).
 //
-// RED on u/b7-glass 1dc80a3d6: the sheet form stamped no surface, and DropdownMenuContent
-// had no `surface` prop (the attribute never reached the plate).
+// RED on u/b7-glass 1dc80a3d6: the sheet form stamped no surface. RED on d44311a30: a dock
+// menu below 30rem stamped no surface unless the consumer passed a re-minted `surface` prop.
 import { mount } from "@vue/test-utils";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { defineComponent, h, nextTick, ref } from "vue";
 
+import { GlassDock } from "@glass/components/dock";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@glass/components/menu";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@glass/components/select";
 
@@ -77,13 +79,15 @@ describe("Select sheet form takes the opaque rung (D-6)", () => {
     });
 });
 
-async function openMenu(props: Record<string, unknown>) {
+async function openMenu(inDock: boolean) {
     const open = ref(false);
-    const Host = defineComponent(() => () =>
+    const menu = () =>
         h(DropdownMenu, { open: open.value, modal: false, "onUpdate:open": (v: boolean) => (open.value = v) }, () => [
             h(DropdownMenuTrigger, { "aria-label": "More" }, () => "M"),
-            h(DropdownMenuContent, props, () => [h(DropdownMenuItem, {}, () => "One")]),
-        ]),
+            h(DropdownMenuContent, {}, () => [h(DropdownMenuItem, {}, () => "One")]),
+        ]);
+    const Host = defineComponent(() => () =>
+        h("div", null, [inDock ? h(GlassDock, null, { default: () => [menu()] }) : menu()]),
     );
     mounted.push(mount(Host, { attachTo: document.body, global: { stubs: { teleport: false } } }));
     await settleOpen();
@@ -92,17 +96,25 @@ async function openMenu(props: Record<string, unknown>) {
     return document.querySelector<HTMLElement>("[data-slot='menu-content']");
 }
 
-describe("DropdownMenuContent carries the surface axis", () => {
-    it('surface="opaque" stamps the opaque rung on the menu plate', async () => {
-        narrow(false);
-        const plate = await openMenu({ surface: "opaque" });
+describe("a dock menu at sheet width takes the opaque rung", () => {
+    it("below 30rem a menu a dock opened is data-surface=opaque", async () => {
+        narrow(true);
+        const plate = await openMenu(true);
         expect(plate).not.toBeNull();
+        expect(plate!.hasAttribute("data-glass-dock-portal")).toBe(true);
         expect(plate!.getAttribute("data-surface")).toBe("opaque");
     });
 
-    it("by default the menu plate stays glass (no surface stamp)", async () => {
+    it("above 30rem a dock menu keeps the glass rung", async () => {
         narrow(false);
-        const plate = await openMenu({});
+        const plate = await openMenu(true);
+        expect(plate).not.toBeNull();
+        expect(plate!.hasAttribute("data-surface")).toBe(false);
+    });
+
+    it("below 30rem a menu outside a dock keeps the glass rung", async () => {
+        narrow(true);
+        const plate = await openMenu(false);
         expect(plate).not.toBeNull();
         expect(plate!.hasAttribute("data-surface")).toBe(false);
     });

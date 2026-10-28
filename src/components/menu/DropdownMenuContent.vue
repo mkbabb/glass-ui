@@ -12,16 +12,13 @@ import {
     overlayContentAttrs,
     useDockParticipation,
     useModalShortcutBarrier,
+    useSheetWidth,
     type FloatingPlacementProps,
 } from "../_shared/overlay";
-import type { Surface } from "../_shared/axes";
 import { useMenuPart, useMenuTrigger } from "./context";
 
 export interface DropdownMenuContentProps extends FloatingPlacementProps {
     class?: HTMLAttributes["class"];
-    /** The surface axis. `"opaque"` gives the menu a solid `--card` plate, for a menu
-     *  that stands in for a sheet over page content (a phone bar's settings menu). */
-    surface?: Surface;
 }
 
 export interface DropdownMenuContentEmits {
@@ -91,6 +88,13 @@ const dock = useDockParticipation({
         if (root?.open.value) root.onOpenChange(false);
     },
 });
+/* A DOCK MENU AT SHEET WIDTH (U/B7 D-6). Below 30rem a menu a dock opened covers the
+   page it sits over, as the Select's sheet form does, so it wears the opaque rung. The
+   register decides from two facts it already holds (the dock stamp and the viewport);
+   the content carries no material prop (BK #66). An anchored menu outside a dock, or
+   any menu above 30rem, keeps glass. */
+const sheetWidth = useSheetWidth(() => openModalRoot.value?.open.value ?? false);
+const opaque = computed(() => sheetWidth.value && "data-glass-dock-portal" in dock.portalAttrs.value);
 /* ONE CLASS SPELLING. The root used to carry BOTH `dropdown-menu-content` and
    `menu__content` — two names for one element, feeding two different
    unlayered sheets. Both are gone; the register is `.glass-overlay-plate`, which
@@ -110,7 +114,7 @@ const contentAttrs = computed(() =>
         <component
             :is="ContentComp"
             v-bind="{ ...placementProps, ...forwardedAttrs, ...contentAttrs }"
-            :data-surface="props.surface === 'glass' ? undefined : props.surface"
+            :data-surface="opaque ? 'opaque' : undefined"
             @escape-key-down="emit('escapeKeyDown', $event)"
             @pointer-down-outside="emit('pointerDownOutside', $event)"
             @focus-outside="emit('focusOutside', $event)"

@@ -10,10 +10,13 @@ Merged on local branch `u/b7-glass` (off `release/10.1.1` bbf176f02) from `u/b7-
   full-width sheet at the viewport foot; it now wears the surface axis's opaque rung
   (`data-surface="opaque"`: solid `--card`, no backdrop), so the page no longer reads
   through its rows. The anchored form above 30rem is unchanged (glass).
-- **`DropdownMenuContent` takes `surface`** (`"glass" | "veil" | "opaque"`, default
-  `"glass"`), the same axis `SheetContent` and `Card` carry. Additive; no existing
-  menu changes. A consumer whose menu stands in for a phone sheet passes `"opaque"`.
-- Witness: `tests/components/select/sheet-opaque.test.ts` (2 of 4 fail on 1dc80a3d6).
+- **A dock menu at sheet width is opaque (D-6, U/B7b L).** Below 30rem a
+  `DropdownMenuContent` opened from a dock (the `data-glass-dock-portal` stamp) covers
+  the page as a sheet, so it wears the same opaque rung. The register decides from the
+  dock stamp and the viewport; `DropdownMenuContent` carries no `surface` prop, as the
+  BK #66 contract (`public-contracts.test-d.ts`) states. The Select and the menu read
+  the width through one `useSheetWidth` in `_shared/overlay`.
+- Witness: `tests/components/select/sheet-opaque.test.ts` (Select: 2 of 4 fail on 1dc80a3d6; dock menu: fails on d44311a30).
 - **A closed sheet lets go of the page when it leaves the screen (O-11, O-19; repair
   round 1).** `useSpringMount` held `present` until the exit spring settled: the `panel`
   preset is underdamped (ζ 0.71) and its tail rang until the velocity fell under 1e-3
