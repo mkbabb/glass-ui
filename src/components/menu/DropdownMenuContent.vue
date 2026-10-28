@@ -14,10 +14,14 @@ import {
     useModalShortcutBarrier,
     type FloatingPlacementProps,
 } from "../_shared/overlay";
+import type { Surface } from "../_shared/axes";
 import { useMenuPart, useMenuTrigger } from "./context";
 
 export interface DropdownMenuContentProps extends FloatingPlacementProps {
     class?: HTMLAttributes["class"];
+    /** The surface axis. `"opaque"` gives the menu a solid `--card` plate, for a menu
+     *  that stands in for a sheet over page content (a phone bar's settings menu). */
+    surface?: Surface;
 }
 
 export interface DropdownMenuContentEmits {
@@ -106,6 +110,7 @@ const contentAttrs = computed(() =>
         <component
             :is="ContentComp"
             v-bind="{ ...placementProps, ...forwardedAttrs, ...contentAttrs }"
+            :data-surface="props.surface === 'glass' ? undefined : props.surface"
             @escape-key-down="emit('escapeKeyDown', $event)"
             @pointer-down-outside="emit('pointerDownOutside', $event)"
             @focus-outside="emit('focusOutside', $event)"

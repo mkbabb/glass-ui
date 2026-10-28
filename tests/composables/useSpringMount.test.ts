@@ -266,6 +266,29 @@ describe("useSpringMount — present mount-hold (SHEET-INTERRUPTIBLE-MOTION)", (
         wrapper.unmount();
     });
 
+    // U/B7b M1 repair round 1 (O-11, O-19): the hold ends when the surface reaches its dismissed
+    // edge, not when the underdamped tail's velocity falls under 1e-3 units/s. Held to the tail, a
+    // closed phone sheet kept its scrim mounted and the body scroll-locked for 1.5–1.9 s after it had
+    // left the screen (served /bead, 16 of 16 closes), so the page ate the reader's next scroll or tap.
+    it("releases present on the frame the exit reaches its dismissed edge, not after the velocity tail", async () => {
+        const { sm, open, wrapper } = mountHost({ initialOpen: true });
+        await nextTick();
+        for (let i = 0; i < 80; i++) await vi.advanceTimersByTimeAsync(16);
+        open.value = false;
+        await nextTick();
+        let edgeFrame = -1;
+        let releaseFrame = -1;
+        for (let i = 0; i < 400 && releaseFrame < 0; i++) {
+            await vi.advanceTimersByTimeAsync(16);
+            if (edgeFrame < 0 && sm.position.value >= 1 - 1e-3) edgeFrame = i;
+            if (!sm.present.value) releaseFrame = i;
+        }
+        expect(edgeFrame).toBeGreaterThanOrEqual(0);
+        expect(releaseFrame).toBeGreaterThanOrEqual(0);
+        expect(releaseFrame - edgeFrame).toBeLessThanOrEqual(1);
+        wrapper.unmount();
+    });
+
     it("re-open before the exit settles keeps present true throughout (never unmounts mid-exit)", async () => {
         const { sm, open, wrapper } = mountHost({ initialOpen: true });
         await nextTick();
