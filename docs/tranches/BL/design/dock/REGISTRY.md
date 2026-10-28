@@ -2067,3 +2067,243 @@ Every class a pass-6 seat recorded is placed. None is left unassigned, and none 
 | scratch: `.claude/worktrees/bl/D2/p6/H6/` (1.5 GB) and `floor5/` (644 MB), plus pass 5's leftovers | H6 §4; FV5 §5 | the owner's chore (§P6-6). Not a row |
 | the computed task text said no D2 ruling had arrived | every pass-6 report; this seat | false: O-103 (RULED) is in INBOUND. Every pass-6 seat built and scored on it; this part does the same |
 | real Safari | every report | not granted (O-103); Safari cells read against the guarded Playwright WebKit run of record |
+
+---
+
+# D2 · pass 7 · REGISTRY: B′ at 37/38, the hole closed in Chromium and held in Playwright WebKit
+
+Everything above this line is the record of passes 1-6 and the owner's rulings. It is left as written. This part closes pass 7.
+
+| field | value |
+|---|---|
+| seat | D2 pass-7 agglomeration. It closes pass 7 with B′'s status on the fixed 38-row list, the §P6-7.5 rule applied, the O-88 facility status (C1-C9) as 10.2.0's critical path, the owner's open items as one message, every next-pass defect class placed, and the pass-8 plan with the list held fixed |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `235ebe14f`. `git diff --name-only fdea480e7 HEAD -- src demo tests package.json` is empty, so every pass-7 reading describes today's HEAD + `pass-6/floor-v5.patch` (`cba6bdc2…`) + `pass-7/D2-Bp-proto.patch`. This seat re-hashed the B′ patch: `184a971541ed5192bc2162e2635814583bbf367b676431ffc0f8d8332aae9ad2`, as both pass-7 B′ seats state |
+| inputs, read in full | pass 6 above (§P6-0..§P6-8), and the earlier parts' in-brief sections for the history; `pass-7/H7.md`, `D2-Bp-proto.md`, `D2-Bp-critique.md`; `audit/INBOUND.md` (through O-110); `FORMATION-PROGRESS.md` through 2026-10-28. Read for single facts: `D2-Bp-crit-records/tilediff.txt`, `REVEAL_GAIN` and `sliver()` in the B′ patch (lines 1937, 2338, 2511-2512), `git branch` (release/10.1.3 exists) |
+| instruments | none. This seat re-measures nothing; every number cites the report that measured it, and that record stays the source of record (P-3) |
+| fences | no source edit, no git write; this part is the only write. Nothing under `~/.claude` was read |
+| engines | every WebKit number is **Playwright WebKit**, unshimmed. Real Safari is **UNMEASURED (owner's safaridriver checkbox)**: O-103, not granted |
+| owner rulings | **O-103** (RULED, the owner's delegate per O-102b): Q-4 (c), Q-12 (b), Q-18 (a), Q-15 (a), Q-16 confirm, Q-17 (a), Q-1..Q-3 and Q-5..Q-10 confirm; the 10.2.0 go once D2 and D3 converge. Since §P6: O-103a..e, O-104a, O-105..O-109 rule or ask D3, D4, D5 and value.js rows, none a D2 question. **O-110** (2026-10-28) is a 10.1.2 regression on the dock's first expand frame; it is not a D2 question and does not touch the 38 rows, but it binds the landing (§P7-5) |
+
+Short citations: `H7`, `B′-proto`, `B′-crit` are the three `pass-7/*.md` reports.
+
+---
+
+## P7-0 · In brief
+
+| build | status | 38 rows (ruled, of record) | first 36 | first 24 | default digest | open rows | reason in one line |
+|---|---|---:|---:|---:|---|---|---|
+| D2-B′ (`184a9715…`) | **ADVANCE**, not CONVERGED | **37/38 (97 %)** | **35/36** | **23/24** | 35/38 (P1, P3 OWNER-BLOCKED with 0 red cells, both closed by O-103; B2) | **B2** | in Playwright WebKit, seat 2's slot is empty for 2 consecutive 40 ms cast frames while H, 2 and 3 paint, in 6 of 36 reads (load 9.59-21.56), on three cells, in both themes, read by two seats |
+| D2-B′ under `cells.mjs` alone | — | 38/38 | 36/36 | 24/24 | 36/38 | — | H7-3 and H6-7 forgive the WebKit reds one cell at a time; the strips are B2's reading (§P6-7.5) |
+| pass 6's B′ under H7 (baseline) | reference | 35/38 | 33/36 | 21/24 | 34/38 | P3, R1, B2 | the hole 2-4 cast frames in all 36 reads |
+| D2-G | BANKED (§P5-4); its seats did not run | — | — | — | — | — | no re-trigger fired (§P7-4) |
+
+**B′ does not converge. Clean-pass count: 0.** The one open row is the route's. Pass 8 runs now and waits on no owner input.
+
+Five findings shape pass 8.
+1. **The order cure is real.** `SEAM_AT` is gone; a leaving front sweeps at ω·L·p², one 60 Hz frame of step at most (Q-15 (a)). In Chromium the hole fell from 2-4 cast frames in every read to at most 1 frame in all 18 critic reads and all 36 prototype reads, and the display-frame probe reads one 8.3 ms empty frame where pass 6's B′ read 11-12 (B′-proto §1.1, B′-crit §2.1). The strips assemble "H P 2 3", "H ↄ 2 3", "H 1 2 3".
+2. **Playwright WebKit still shows the hole. The critic is upheld.** 6 of 36 critic reads and 3 of 72 prototype reads hold seat 2's slot empty for 2 cast frames, at loads as low as 9.59 (W·l `warm-expand` re-run 2) and 13.83 / 13.85 (W·d low-load re-read). It is not load-borne. Five casts are one painted empty frame held 40 ms or more (tile difference 0.03-0.09 grey levels against 0.00-0.08 at rest). One, W·d `first-expand` main, shows the slot empty on two different painted frames (tile difference 8.01, `tilediff.txt`). Either way §P6-7.3 obligation 1 forbids it ("no slot inside the painted run is empty for more than one display frame while the slots on both sides paint"), and the prototype itself did not claim obligation 1 in WebKit. **B2 FAIL, read on the strips. B2 PASS in Chromium.**
+3. **The cause is located: one structural empty display frame.** Between the frame a leaving unit reaches its sliver cut and the frame the arriving unit's first uncovered edge paints (`REVEAL_GAIN`'s first step, patch lines 2511-2512), the slot holds nothing, in both engines (B′-proto §5; B′-crit §5). Chromium never lets the cast see it. WebKit holds it, or repeats it. The cure is to leave no such frame, so a paint hold has nothing empty to hold (§P7-7.3).
+4. **The witness forgave a class it should have read.** H7-3 (a PASS main reads FAIL only when both re-runs fail) and H6-7 (one red in three is NOT-REPRODUCED) were cut to forgive load noise, one cell at a time. The WebKit hole is the same slot, the same offset and the same picture across three cells, two themes and two seats. The digest read 38/38 while the strips read 37. Two witnesses disagreeing on one fact is the P-3 defect; H8-1 re-cuts B2's hole read to the class (§P7-7.1). No row is added.
+5. **Obligation 3's lead cost is not the sweep's.** The prototype read 4× lead at 40 seats at 1, 3, 3 frames over 25 ms against pass 6's 1, 1, 1 from a different session. The critic ran `bp`, `bp6` and `fv5` alternating in one session: at matched load the two B′ builds read alike (1 at 8.6-9.2, 2 at 14.1-15.1), and the excess grows with load in both (B′-crit §4). **The critic's matched-load reading is of record.** Nothing is owed; cost is not a row (Q-15 (a)).
+
+---
+
+## P7-1 · How pass 7 ran
+
+| step | record | what it established |
+|---|---|---|
+| H7 | `H7.md`; `H7-records/`; `harness/HARNESS.md` §12 | H7-1 (the hole read from the cast at each slot's laid box against the frame's own ground; replaces H6-2's DOM credit; W3's `hole` struck), H7-2 (ST's residual scale), H7-3 (FM's six B2 cells re-run twice every run). Every plant fails, every PASS variant passes, both engines (Chromium 18/18 + 10/10, Playwright WebKit 10/10 after the entry-1 per-frame-match cure). Baseline: pass 6's B′ 35/38 ruled (P3, R1 on one Chromium dark `swap-long` [faces] cell; B2 2-4 frames ×36) |
+| B′ prototype | `D2-Bp-proto.md`; `D2-Bp-proto.patch` (`184a9715…`, 61 files, +2,454 / −2,406 on HEAD + floor v5; two files changed against pass 6's: `useDockScene.ts`, `useDockBody.ts`) | three deployments (two died at the 2026-10-21 usage limit; `c8` reconstructed from its diff). `cells.mjs` 38/38 ruled, 36/38 default. Seat's own verdict ADVANCE: obligation 1 not met in WebKit, obligation 3 not met on 4× lead at 40 seats |
+| B′ critique | `D2-Bp-critique.md`; `D2-Bp-crit-records/` | two entries across a reboot; entry 1's three slots kept by build hash (`3131ccdd…` equal). Mechanical 38/38; **37/38 with B2 read on the strips**. Upholds the WebKit hole, overturns the lead cost by a matched-load session, closes the W·d ST UNMEASURED cells by re-read |
+
+Every seat ran one heavy run at a time under the guard; browser runs never `--light`; Playwright WebKit under `--exclusive webkit`, queued and never cancelled. No slot split, no WebKit page close, no zone refusal. G's seats did not run.
+
+---
+
+## P7-2 · Registry: D2-B′, ADVANCE, 37/38
+
+**The reading of record is the critic's ruled digest with B2 read on the strips: 37/38, 35/36, 23/24 (default 35/38).** §P6-7.5 makes B2 "read on the strips included", so the mechanical 38/38 is not the score.
+
+**What held** (B′-crit §0, §3, source of record; B′-proto §3 agrees cell for cell but for the strip read):
+- P1-P5 (P1 under Q-12 (b), 42/42 per theme; P3 under Q-4 (c), every OB cell `window` alone with (c) holding, `reversal` 274-275 ms against 312.6-315.4). The one P3/R1 cell H7 found on pass 6's B′ (C·d `swap-long` [faces] 1.5 px) reads 0 px in both seats.
+- F1-F7: F6 0 crashes (W8 `consumer·*` UNMEASURED 12, the value.js fence, as every pass); F7 13/13 in both seats, 232 files, 2,241 tests, boot graph **503,389 B against 503,808 B, margin 419 B** (pass 6: 589 B; the sweep, the lead rule and `dt` cost 170 B).
+- N1-N5; N3's `seat-transition` borderline did not appear.
+- R1-R8 ×4. R2 worst 0.384-0.387 (critic), 0.374-0.400 (prototype, at load to 64.8), bound 0.5: **margin 0.113-0.116 of record** (pass 6: 0.133-0.142). R6 splice 0, sliver 0, stub 0. R4 and R8: ST 5/5 per column; the two W·d ST cells the digest left UNMEASURED read measured and PASS ×2 on re-read (`st-wd/`). C·d `lead-remove` [terminal] 0.95 px is NOT-REPRODUCED (both re-runs PASS), the borderline the prototype saw on `c8`.
+- B1, B3 (PR 6/6, `prose·harness` 0).
+- C1-C9 ×4 (§P7-5).
+- L1 6/6 per engine, equal to `fv3`; the twelve frames read flat and deft, one soft shadow, a hairline edge, no rim or glow (O-87).
+
+**The open row:**
+
+| row | owner | counterexample |
+|---|---|---|
+| B2 | route | Playwright WebKit only. Seat 2's slot (the "1", where the leaving "P" was) empty for 2 consecutive cast frames, H, 2, 3 at full ink. Critic: W·l `warm-collapse` main (load 15.01), W·l `warm-expand` re-run 2 (**9.59**), W·d `first-expand` main (21.56, two distinct painted frames), W·d `warm-collapse` re-run 2 (17.3), `fmlow` W·d r2 `warm-expand` (**13.83**), r3 `warm-collapse` (**13.85**). Prototype: W·d `warm-expand` main (42.9), W·d `warm-collapse` re-run 2 (31.1), `fmlow` W·l r2 `warm-collapse` (**13.55**). Chromium: 0 of 36 hole-cell reads over 1 frame across both seats (18 per seat) |
+
+**Rulings on the seats' disagreements.**
+- **B2 on the strips (critic) over the digest (prototype's 38/38).** Upheld for the critic. The forgiveness rules exist for load noise; this class recurs at the lowest loads measured, across cells, themes and seats. The prototype's own §0 and §5 decline to claim obligation 1 in WebKit, so the two seats agree on the facts and differ only on the digest.
+- **"A held frame" (prototype) against "two distinct frames" (critic) on W·d `first-expand`.** Both stand. The prototype's account covers five of six critic casts; the sixth shows an empty slot on two painted frames. Either reading is the same defect: an empty display frame exists to be shown. The cure removes the frame; it does not argue the hold.
+- **Obligation 3, 4× lead at 40 seats.** The critic's same-session matched-load reading is of record (finding 5). Not laid on the sweep.
+- **The comment edit after the battery** (B′-proto §1.3: "is never empty while its neighbours paint" corrected to "keeps pace with its neighbours"). **Accepted.** The chunk is byte-identical and F7 and PR were re-run on the final tree. The corrected comment states what the code does, which is what the pass-8 cure must make true in the stronger form.
+- **The `r = 1` guard** (B′-proto §1.2, replacing `|| 1`). **Accepted** under E-2: it states the law (no lead on either side, none to take) instead of masking a zero divisor.
+
+**Recorded, not scored.** Soft partial glyphs ("ↄ", "Bols", "ɔls", a faint "\" of "A") remain as §P6-2 ruled them: not B2. The owner's glance (§P6-6) stands, unanswered, default unchanged.
+
+---
+
+## P7-3 · The cost row (not a row; for the record under Q-15 (a))
+
+| measure | B′ pass 7 (`bp`) | B′ pass 6 (`bp6`) | floor v5 | source |
+|---|---|---|---|---|
+| 4×, 20 / 40 seats, expand: frames > 25 ms | 0-1 / 1 in every run | 0-1 / 1 | 0 / 0-1 | B′-crit §4 (one session, alternating) |
+| 4×, 20 seats, lead | 0 (9.2) · 2 (14.2) | 0 (9.0) · 1 (15.1) | no lead morph | B′-crit §4 |
+| 4×, 40 seats, lead | 1 (9.0) · 2 (14.1) | 1 (8.6) · 2 (15.1) | no lead morph | B′-crit §4 |
+| 1×, 40 seats | 0 (max ≤ 10.5) | 0 (≤ 11.2) | 0 (≤ 10.9) | B′-crit §4 |
+| boot graph | 503,389 B, 419 B under | 503,219 B, 589 B under | 484,853 B | B′-crit §0; §P6-3 |
+
+**Reading.** Expand holds at one trigger frame, as in pass 6. On lead, both B′ builds read 1 frame at load about 9 and 2 at about 14-15 in the same session; the excess is the machine's, not the sweep's. Under Q-15 (a), ruled, a stall delays and never leaps; R4 and R8 pass ×4. Nothing is owed. Pass 8's cure must not add per-frame work that separates `bp8` from `bp7` at matched load (§P7-7.3, obligation 3).
+
+---
+
+## P7-4 · The §P6-7.5 rule, applied, and the convergence history
+
+| clause | holds? | evidence |
+|---|---|---|
+| B′ CONVERGED at 0 open rows of 38 on the ruled digest, B2 read on the strips | **no** | B2 open in Playwright WebKit (§P7-2) |
+| owner-gated fixed point | **no** | B2 is the route's; every D2 question is ruled (O-103) |
+| G re-trigger (only the WebKit-clock condition remains, Q-15 (a) being ruled) | **no** | no pass-7 seat recorded WebKit running a keyframed custom property on the main-thread clock |
+| no winner rule while G is banked | holds | G stays BANKED (`pass-5/D2-G-proto.patch`, `8abc0ec2…`) |
+| two consecutive clean passes | **0 of 2** | pass 7 is not clean |
+
+**The convergence history (B′, the route of record from pass 3).**
+
+| pass | list | score of record | first 24 | open | what closed |
+|---|---|---:|---:|---|---|
+| 3 | 24 rows | 19/24 (79 %) | 19/24 | P1, P2, P3, B2, B3 | the H3 content defects (blank swap, one-step exchange, warm collapse) |
+| 4 | 36 rows | 25/36 (69 %) | 16/24 | P1, P2, N5, P3, R1, R2, R6, R7, B1, B2, B3 | the O-88 facility on both routes; the splice → stub |
+| 5 | 38 rows | 32/38 (84 %) | 20/24 | P1, P3 (OB), F7, B2, C8, C9 | R1-R8 ×4; G banked |
+| 6 | 38 rows | 37/38 (97 %); default 35/38 | 23/24 | B2 (the run hole) | P1, P3 by O-103; C8, C9 by floor v5; the half-ink cut by the mask ramp; F7 under its ceiling |
+| H7 baseline | 38 rows | 35/38 (pass 6's B′ under H7) | 21/24 | P3, R1, B2 | — (re-read) |
+| **7** | 38 rows | **37/38 (97 %); default 35/38** | **23/24** | **B2 (Playwright WebKit only)** | the hole in Chromium (2-4 frames → ≤ 1); P3/R1's faces cell; `SEAM_AT` deleted |
+
+The list grew from 24 to 38 rows through pass 5 and has been fixed since; pass 6 and pass 7 read the same 37 because the hole moved from four columns to two, not because nothing moved.
+
+---
+
+## P7-5 · O-88: the facility status, and 10.2.0's critical path
+
+| row | D2-B′ pass 7 (critic) | what closes it |
+|---|---|---|
+| C1 content-sized collapsed form, never a square tile | PASS ×4 (102 × 56 stadium) | closed |
+| C2 one continuous morph; reduced motion instant; rapid toggles | PASS ×4 (`c2·prm` under Q-18 (a)) | closed |
+| C3 triggers (pointer, focus, coarse tap, scroll) | PASS ×4 | closed |
+| C4 `#persistent` | PASS | closed |
+| C5 keyboard, focus kept, name and state | PASS ×4 | closed |
+| C6 menus from a collapsed or expanding dock | PASS ×4 | closed |
+| C7 side, vertical, 390 px, coarse | PASS ×4 | closed |
+| C8 an outside press during the morph (O-91) | PASS ×4, 10/10 per column | closed |
+| C9 the pill at 844 × 390 coarse (O-74e) | PASS ×4, 52 px, seats 44 px | closed |
+
+**C1-C9 hold on B′ in both engines and both themes for the second pass running.** O-88's facility is complete on the carrier; what stands between it and 10.2.0 is B2 and the landing.
+
+**The critical path to 10.2.0.** D3 converged on 2026-10-20; O-103 gives the go once D2 converges. So D2 alone binds the date:
+1. **Pass 8: B2's handoff cure in Playwright WebKit** (§P7-7.3, obligation 1), under H8. If pass 8 is clean, it is the first of two.
+2. **Pass 9: the confirmation pass** (a fresh re-measure and a fresh critic, no new build unless the critic opens a row). D2 converges at its close if it is clean too.
+3. **The landing (W-0.8)**, outside the 38 rows, after convergence. It now carries:
+   - **the 10.1.x merge**: `release/10.1.1`, `release/10.1.2` **and `release/10.1.3`** (O-110's driver, run `wf_cde0774b-67a`) into master, then floor v5 + B′ rebased on it. B′ deletes `useDockMorph.ts` and `dockMorphMeasure.ts`, where 10.1.2 lands O-101's cure and 10.1.3 will land O-110's;
+   - **O-101's law and gate**: the expanded endpoint is re-measured whenever the content box changes, collapsed or not; no frame of collapse → breakpoint → expand exceeds the viewport at 1440 → 390 and 390 → 1440;
+   - **O-110's law and gate (new)**: an edge-anchored dock grows toward its open side from its first morph frame, and the click guard does not drop a click whose target moved only by the dock's own morph; fourier `f-w14v-au2` L2-15 at 360 / 390 / 430 and `f-w14-control-row` G-h at 1440 green on the landed scene, with O-101's gate still green. Whether B′'s scene already meets it is unmeasured; the landing measures it;
+   - **O-102d's declared seat marker** (`useDockRun.ts`, `DockControl.vue`, `DockTrigger.vue`) and **10.1.1's menu and focus cures**, and 10.1.2's G-4 b-ii, O-101 and disabled-trigger cures (`2b4efe77e`);
+   - **O-104's Z-Dock-16** (DockLayerGroup `reserve`) and **Z-LG-7** (the coarse rung on DockTrigger and tab DockControl), as the O-104 triage placed them.
+4. **Nothing from the owner.**
+
+The earliest D2 convergence is pass 9's close.
+
+---
+
+## P7-6 · What the owner must rule
+
+**Nothing blocks.** Every D2 question is ruled by O-103; O-110 is placed on the 10.1.3 driver and the landing. Pass 8 runs on those rulings.
+
+**One message for the owner** (neither item gates):
+- **Glance (optional, carried from §P6-6):** the soft partial glyph. Mid-ramp a glyph shows its near half, which can read as another letter ("Tools" as "ɔols", "B" as "Bols", "P" as "ↄ") for 1-3 frames of 40 ms. Frames: `pass-6/D2-Bp-crit-records/strip-read/sl.png`, `sl-wk.png`, `wc-wkd.png`; pass 7's strips under `pass-7/D2-Bp-crit-records/filmstrips/`. Default until you say otherwise: the one-advance ramp stands.
+- **Chore:** delete the untracked scratch the seats' permission check would not let them remove: `.claude/worktrees/bl/D2/p7/Bp-crit/` (411 MB), and from earlier passes `.claude/worktrees/bl/D2/p6/H6/` (1.5 GB) and `.claude/worktrees/bl/D2/p6/floor5/` (644 MB) if still present. No record reads them.
+
+---
+
+## P7-7 · The pass-8 plan
+
+### 7.1 · H8: the harness revision (before the pass-8 prototype)
+
+Every row ships with a fixture PASS and a planted FAIL in both engines. Each re-cuts a witness a pass-7 seat recorded; none is minted, and no checklist row is added.
+
+| id | witness | change | exposed by |
+|---|---|---|---|
+| H8-1 | FM `hole` (B2) | **the hole is read as a class across a column's B2 cells, not forgiven per cell.** H7-1's per-cast read is unchanged (a slot < 0.1 between painting slots ≥ 0.9, gate: no run over 1 consecutive cast frame). What changes is reproduction: for `hole`, H7-3's per-cell rule and H6-7's one-in-three forgiveness are **replaced** (one rule per fact, P-3) by a column rule: a column FAILs `hole` when two or more of its reads (`first-expand`, `warm-expand`, `warm-collapse`, `content-add`, `swap-short`, `swap-long`; main and both re-runs; any cell) show a run over 1 frame at the same slot. A single such read in the column is NOT-REPRODUCED, as before. Each hole run reports its consecutive-tile difference (the critic's `tilediff.py` measure), so a held frame and a repeated empty frame are told apart in the record; both fail alike. Plants: pass 7's B′ (`184a9715…`) FAILs in W·l and W·d on the critic's records (2 and 4 reads); pass 6's B′ FAILs in four columns; a synthetic column with one isolated 2-frame read reads NOT-REPRODUCED. PASS: pass 7's B′ in Chromium light and dark (0 reads over 1), and the fixture's `pass`, `pass@dark` | B′-crit §2, §5 |
+| H8-2 | the low-load B2 re-read (`fmlow`) | **the load gate is read at admission, not at queue time.** A low-load slot whose 1-minute load exceeds 15 when the `--exclusive webkit` lock admits it waits for headroom again before its first cell; each cell logs its own load. `fmlow` becomes a battery stage (one slot per WebKit theme, three runs of the six B2 cells), so the prototype and the critic read it under one script. Plant: a slot admitted above 15 reads "deferred", never a reading of record | B′-crit §1, §5 |
+
+H8 lands with its self-test. Then pass 7's B′ is re-read under H8 as the baseline. Every red cell is re-run twice.
+
+### 7.2 · Floor
+
+**No floor v6.** Floor v5 (`cba6bdc2…`) is the base. Base (a): no merge into the base during the pass; the 10.1.x merge (now with 10.1.3) is the landing's.
+
+### 7.3 · Route obligations: D2-B′
+
+1. **B2: no empty display frame at the exchange.** The arriving unit's first uncovered edge paints no later than the frame on which the leaving unit reaches its sliver cut, so the slot never holds nothing for even one display frame, and a WebKit paint hold or repeat has no empty frame to show. The handoff comes from the exchange's own motion (D-1): the arriving reveal is keyed to the leaving front, not to a constant tuned to the cast (the pass-5 `LEAD_DROP` lesson, §P5-0 finding 4). R6's seam (no two faces abutting inside a glyph run, no sliver) and R2's bound hold while doing it; report R2's margin. Judged on H8-1 and the strips, both engines and both themes, including the low-load stage. Report the display-frame probe (`slotink.mjs`): target 0 empty frames on every B2 cell in both engines (a reading, not a row).
+2. **Keep every pass-7 row.** Chromium's B2 (0 reads over 1 frame), the mask ramp, no opacity write, R8, C1-C9, PR 6/6, L1.
+3. **F7 and cost.** The boot graph stays under its ceiling with a stated margin (419 B today); no raise, no split that delays the first morph. Cost: `bp8`, `bp7` and `fv5` alternating in one session, three runs at load ≤ 15, the critic's method. At matched load `bp8` reads no more frames over 25 ms than `bp7` on expand and lead at 20 and 40 seats.
+4. **Prose:** no harness id or cell name in `src/`; each comment states its law. The `useDockScene` header's "keeps pace with its neighbours" says what the cure makes true, no more.
+
+**G's seats do not run.**
+
+### 7.4 · Order
+
+1. H8 with its self-test, and the H8 baseline on pass 7's B′.
+2. B′ on HEAD + floor v5: prototype, then a fresh critic. One heavy run at a time, every browser run under the guard and never `--light`, WebKit under `--exclusive webkit`.
+3. The pass-8 agglomeration. If pass 8 is clean (0 open rows of 38 on the ruled digest, B2 read on the strips included), it counts one of two, and pass 9 is the confirmation pass: a fresh re-measure of the same patch on the same harness, a fresh critic, no new build unless that critic opens a row. If pass 8 is not clean, its agglomeration plans pass 9 as a build pass with the list held fixed.
+4. After convergence, outside the passes: the landing (W-0.8, §P7-5 step 3).
+
+### 7.5 · The pass-8 checklist (fixed; critics may not add rows)
+
+The same 38 rows as §P6-7.5, with B2's hole witness re-cut by H8-1. Critics report the 38, the first 36 and the first 24 on the ruled digest (O-103), with the default digest beside it.
+
+| # | row | witness |
+|---|---|---|
+| P1-P5, F1-F7, N1-N5, R1-R8, B1, B3, C1-C9, L1 | as §P6-7.5 | as §P6-7.5 (P1 under Q-12 (b), P3 under Q-4 (c), C2 under Q-18 (a), all ruled; R4 and R8 via H7-2) |
+| B2 | the filmstrip gestalt in both engines (first expand, warm pair, swap, content change) against D-1 and D-2: no hard-cut partial glyph (H6-1) and no hole in the run | H6-1, H7-1 read as a class by H8-1, H7-3 re-runs, H8-2 low-load stage, FM strips |
+
+**The convergence rule for pass 8.** B′ is clean at 0 open rows of 38 on the ruled digest, B2 read on the strips included. D2 is **CONVERGED** at two consecutive clean passes. There is no winner rule while G is banked; if WebKit's clock condition re-triggers G, the §P4-7.5 rule returns with G measured under H8 on the same arm set.
+
+---
+
+## P7-8 · Next-pass defect classes, placed
+
+Every class a pass-7 seat recorded is placed. None is left unassigned, and none was minted into pass 7's list.
+
+| class | recorded in | placed in |
+|---|---|---|
+| Playwright WebKit: seat 2's slot empty for 2 cast frames (held or repeated empty frame), 6/36 critic and 3/72 prototype reads, load 9.59-42.9 | B′-crit §2, §5; B′-proto §0, §5 | B2; B′ obligation 1 (no empty display frame) |
+| the structural empty display frame between the sliver cut and `REVEAL_GAIN`'s first step, both engines | B′-proto §5; B′-crit §2.1, §5 | B′ obligation 1; the probe reported |
+| H7-3 and H6-7 forgive a non-load-borne class one cell at a time, so the digest and the strips disagree | B′-crit §5 | H8-1 (column rule replaces the per-cell rule for `hole`) |
+| held frame against two distinct empty frames (W·d `first-expand`) | B′-crit §2.2; `tilediff.txt` | H8-1 reports the tile difference per hole run; both fail alike |
+| `fmlow`'s load gate holds at queue time (light admitted at 35.94) | B′-crit §1, §5 | H8-2 |
+| 4× lead at 20 / 40 seats, 2-3 frames over 25 ms | B′-proto §2, §5; B′-crit §4 | load-borne in `bp` and `bp6` alike at matched load (critic of record); obligation 3 compares `bp8` with `bp7` in one session. Not a row |
+| R2 margin 0.113-0.116 (pass 6: 0.133-0.142) | B′-crit §0; B′-proto §5 | inside the bound; obligation 1 reports it |
+| boot-graph margin 419 B (pass 6: 589 B) | B′-proto §2; B′-crit §0 | obligation 3 states it |
+| W3 C·d `lead-remove` [terminal] 0.95 px | B′-crit §1; B′-proto §1.1 (`c8`) | NOT-REPRODUCED both seats' re-runs; recorded |
+| ST Playwright WebKit dark: one undefined rest, one missing marker | B′-crit §1 | measured and PASS on re-read ×2 (`st-wd/`); recorded instrument flake |
+| W·d FM `warm-expand` main at load 42.9, cast motion 1,640 ms; W3 W·d `warm-expand` [lanes] | B′-proto §3.1 | NOT-REPRODUCED; the hole class itself is B2's above |
+| H7's C·d `swap-long` [faces] 1.5 px (P3, R1 on pass 6's B′) | H7 §3.2 | 0 px on pass 7's B′ in both seats; closed |
+| the cast lag (−35 to +70 ms) and fitted scale 0.986-1.005 | H7 §1.1 | absorbed by H7-1's per-cast lag and per-frame shift; recorded |
+| ST nb cells disagreeing after division in a ≈ 0.98 session | H7 §1.1 | H7-2 reads them UNMEASURED as written; did not arise in pass 7 |
+| the entry-1 WebKit FMB misread a seat pitch off | H7 §2.1 | cured in `lib.mjs` `2dd81a2a…` before the baseline |
+| W3 fixture `retarget·120` [splice]; B′ W·l `retarget·120` [splice] | H7 §2, §3.2 | NOT-REPRODUCED; closed |
+| soft partial glyphs | B′-proto §4; B′-crit §2.2 | not B2 (§P6-2); the owner's glance (§P7-6) |
+| CASES `case·rotated` [jerk] C·l, W·l | B′-crit §1 | outside the 38, as passes 5-6 |
+| the WebKit lock wait (0-59 min) and the usage-limit deaths of the prototype's first two deployments | H7 §3.1; B′-proto §6 | the machine-wide queue and the drivers' retry; not a row |
+| **O-110**: 10.1.2's edge-anchored dock lays its first expand frame at the final width with controls centred; the click guard drops the click | INBOUND O-110; FORMATION-PROGRESS 2026-10-28 | the 10.1.3 driver (`release/10.1.3`), then **the D2 landing (W-0.8)**: the merge takes 10.1.3, and the landed scene carries O-110's law and fourier's L2-15 / G-h gates beside O-101's (§P7-5). Not a row |
+| the landing base: `release/10.1.1`, `10.1.2` (published) and `10.1.3` unmerged; B′ deletes the files carrying O-101's (and soon O-110's) cures | §P6-5; this seat (`git branch`) | the D2 landing (W-0.8) |
+| O-104 Z-Dock-16, Z-LG-7 | INBOUND O-104; triage | the D2 landing (W-0.8) |
+| scratch: `.claude/worktrees/bl/D2/p7/Bp-crit/` (411 MB) | B′-crit §6 | the owner's chore (§P7-6) |
+| real Safari | every report | **UNMEASURED (owner's safaridriver checkbox)**; O-103: not granted. Safari cells read against the guarded Playwright WebKit run of record |
