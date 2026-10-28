@@ -170,22 +170,31 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
        sent the click to the common ancestor. No click guard sees that click, so the cure
        is here: the morph never moves a press's target before the press resolves.
 
-       A press is in flight from a `pointerdown` inside the dock to the `click` it
-       produces, or its `pointercancel`. A mouse or pen press that produces no click (a
-       release off the control) resolves when its `pointerup` task ends: that task
-       dispatches the click, when there is one. A touch press waits for its click, which
-       the tap dispatches in a later task, after the compatibility mousedown that focuses.
-       The deferred expand runs as the press resolves, before the click reaches its
-       target, which the engine has already hit-tested. A focus that has left the dock
-       (`onFocusOut`) or a pointer that has left it (`onMouseLeave`) withdraws what it
-       asked for. A keyboard focus, with no press in flight, expands at once. */
-    let pressInFlight = false;
+       A press holds from a `pointerdown` inside the dock while its pointer is down. A
+       mouse or pen press resolves at its `click`, or, with no click (a release off the
+       control), when its `pointerup` task ends: that task dispatches the click, when
+       there is one. A touch press lets go at its `pointerup`, because a touch gesture
+       need not tap: a swipe the run's `touch-action` refuses ends in a `pointerup` with
+       no click and no cancel, and a hold kept past it would defer every later focus and
+       hover. A tap then holds again for its own compatibility mouse dispatch: from the
+       `mousedown` (no `pointerdown` precedes it, and it is what focuses) to its `click`,
+       or the end of its `mouseup` task. The touch press resolves at that click, at a
+       `pointercancel`, or, unresolved, at the next `pointerdown` anywhere. The deferred
+       expand runs as the press resolves, before the click reaches its target, which
+       the engine has already hit-tested. A focus that has left the dock (`onFocusOut`)
+       or a pointer that has left it (`onMouseLeave`) withdraws what it asked for. A
+       keyboard focus, with no press holding, expands at once. */
+    let press: "down" | "tap" | "compat" | null = null;
     let expandOnPressEnd: "focus" | "hover" | null = null;
     let pressEndTimer: ReturnType<typeof setTimeout> | null = null;
 
+    /** An environmental expand waits: the press's pointer is down, or its tap's
+     *  compatibility mouse dispatch is running. */
+    const pressHolds = () => press === "down" || press === "compat";
+
     function endPress() {
-        if (!pressInFlight) return;
-        pressInFlight = false;
+        if (!press) return;
+        press = null;
         if (pressEndTimer) {
             clearTimeout(pressEndTimer);
             pressEndTimer = null;
@@ -202,25 +211,52 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         }
     }
 
+    /** End the press when the current task ends (after the click it dispatches). */
+    function endPressAtTaskEnd() {
+        pressEndTimer ??= setTimeout(endPress, 0);
+    }
+
+    /** A press that never resolved is superseded; what it deferred lapses. */
+    function dropPress() {
+        expandOnPressEnd = null;
+        endPress();
+    }
+
     const pressListeners: ReadonlyArray<readonly [string, (e: Event) => void]> = [
         ["click", () => endPress()],
         ["pointercancel", () => endPress()],
         [
             "pointerup",
             (e) => {
-                if ((e as PointerEvent).pointerType === "touch" || pressEndTimer) return;
-                pressEndTimer = setTimeout(endPress, 0);
+                if (press !== "down") return;
+                if ((e as PointerEvent).pointerType === "touch") press = "tap";
+                else endPressAtTaskEnd();
+            },
+        ],
+        [
+            "mousedown",
+            () => {
+                if (press === "tap") press = "compat";
+            },
+        ],
+        [
+            "mouseup",
+            () => {
+                if (press === "compat") endPressAtTaskEnd();
+            },
+        ],
+        // A new pointer goes down while a touch press waits for a tap that never came.
+        [
+            "pointerdown",
+            () => {
+                if (press === "tap") dropPress();
             },
         ],
     ];
 
     function onPressStart() {
-        // A new press supersedes one that never resolved; what it deferred lapses.
-        if (pressInFlight) {
-            expandOnPressEnd = null;
-            endPress();
-        }
-        pressInFlight = true;
+        if (press) dropPress();
+        press = "down";
         for (const [type, listener] of pressListeners) {
             window.addEventListener(type, listener, true);
         }
@@ -340,7 +376,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
                 hoverIntentTimer = null;
                 if (isQuiet()) return;
                 if (state.value === "collapsed") {
-                    if (pressInFlight) {
+                    if (pressHolds()) {
                         expandOnPressEnd ??= "hover";
                         return;
                     }
@@ -383,7 +419,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         if (isQuiet()) return;
         clearTimer();
         if (state.value === "collapsed") {
-            if (pressInFlight) {
+            if (pressHolds()) {
                 expandOnPressEnd = "focus";
                 return;
             }
@@ -522,8 +558,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         clearTimer();
         clearHoverIntent();
         removeClickAwayListener();
-        expandOnPressEnd = null;
-        endPress();
+        dropPress();
     });
 
     return {

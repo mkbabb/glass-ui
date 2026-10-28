@@ -10,6 +10,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { defineComponent, h } from "vue";
 
 import GlassDock from "@glass/components/dock/GlassDock.vue";
+import { HOVER_INTENT_MS } from "@glass/components/dock/constants";
 
 function mountDock() {
     const onSeat = vi.fn();
@@ -61,6 +62,7 @@ describe("GlassDock — a press holds the posture until it resolves", () => {
         await seat.trigger("pointerup", { button: 0, pointerType: "touch" });
         await new Promise((resolve) => setTimeout(resolve, 10));
         // The tap's compatibility mousedown focuses the seat after the pointerup.
+        await seat.trigger("mousedown", { button: 0 });
         seat.element.focus();
         await wrapper.vm.$nextTick();
         expect(root.classes()).toContain("collapsed");
@@ -68,6 +70,53 @@ describe("GlassDock — a press holds the posture until it resolves", () => {
         await seat.trigger("click");
         expect(onSeat).toHaveBeenCalledOnce();
         expect(root.classes()).toContain("expanded");
+        wrapper.unmount();
+    });
+
+    // critique-2 D-1: a touch gesture need not tap. A swipe that the run's `touch-action`
+    // refuses ends in a `pointerup` with no click and no cancel; the press must not hold
+    // past it, or every later focus and hover is deferred until some click anywhere.
+    it("a touch press with no tap lets go at its pointerup: a later focus expands at once", async () => {
+        const { wrapper, root, seat } = mountDock();
+
+        await seat.trigger("pointerdown", { button: 0, pointerType: "touch" });
+        await seat.trigger("pointerup", { button: 0, pointerType: "touch" });
+        await new Promise((resolve) => setTimeout(resolve, 10));
+        seat.element.focus();
+        await wrapper.vm.$nextTick();
+        expect(root.classes()).toContain("expanded");
+        wrapper.unmount();
+    });
+
+    it("a touch press with no tap lets go at its pointerup: a later hover dwell expands", async () => {
+        const { wrapper, root, seat } = mountDock();
+
+        await seat.trigger("pointerdown", { button: 0, pointerType: "touch" });
+        await seat.trigger("pointerup", { button: 0, pointerType: "touch" });
+        await root.trigger("mouseenter");
+        await new Promise((resolve) => setTimeout(resolve, HOVER_INTENT_MS + 20));
+        await wrapper.vm.$nextTick();
+        expect(root.classes()).toContain("expanded");
+        wrapper.unmount();
+    });
+
+    it("a touch press whose tap never came is dropped by the next pointerdown, with what it deferred", async () => {
+        const { wrapper, root, seat } = mountDock();
+        const outside = document.createElement("button");
+        document.body.append(outside);
+
+        // The press defers a hover while the finger is down; no tap follows.
+        await seat.trigger("pointerdown", { button: 0, pointerType: "touch" });
+        await root.trigger("mouseenter");
+        await new Promise((resolve) => setTimeout(resolve, HOVER_INTENT_MS + 20));
+        await seat.trigger("pointerup", { button: 0, pointerType: "touch" });
+        expect(root.classes()).toContain("collapsed");
+        // A later press elsewhere supersedes it; its click does not run the stale expand.
+        outside.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true, pointerType: "mouse" }));
+        outside.dispatchEvent(new PointerEvent("pointerup", { bubbles: true, pointerType: "mouse" }));
+        outside.click();
+        await wrapper.vm.$nextTick();
+        expect(root.classes()).toContain("collapsed");
         wrapper.unmount();
     });
 
