@@ -276,6 +276,41 @@ function resolveCssReference(from, reference, files, extensions = []) {
     return candidates.find((candidate) => files.has(candidate)) ?? false;
 }
 
+// A component sheet a published chunk imports (`import "./components/carousel/styles.css"`)
+// is a CSS entry exactly as a `./styles` export is: the consumer's bundler loads it with
+// the chunk that renders the component (atlas U/B7 F5, `vite.component-sheets.ts`). So
+// the CSS closure is seeded from both: the exported sheets, and every sheet a chunk
+// reachable from a code export imports. Without the second seed the packed comparison
+// below calls those sheets unreachable while the shipped JS loads them.
+const scriptImportPattern = /(?:^|[;\s])(?:import|export)\s*(?:[^"'`;]*?\s*from\s*)?["']([^"']+)["']|\bimport\(\s*["']([^"']+)["']\s*\)/g;
+
+export function scriptCssEntries({ artifactRoot, files, claims, failures }) {
+    const pending = [];
+    for (const target of claims.keys()) {
+        for (const file of targetMatches(target, files)) if (/\.m?js$/.test(file)) pending.push(file);
+    }
+    const visited = new Set();
+    const sheets = new Set();
+    while (pending.length > 0) {
+        const file = pending.pop();
+        if (visited.has(file)) continue;
+        visited.add(file);
+        const source = readFileSync(resolve(artifactRoot, file), "utf8");
+        for (const match of source.matchAll(scriptImportPattern)) {
+            const reference = cleanReference(match[1] ?? match[2]);
+            if (!reference.startsWith(".")) continue;
+            const target = posix.normalize(posix.join(posix.dirname(file), reference));
+            if (!files.has(target)) {
+                failures.push(`${file}: unresolved script import ${reference}`);
+                continue;
+            }
+            if (target.endsWith(".css")) sheets.add(target);
+            else if (/\.m?js$/.test(target)) pending.push(target);
+        }
+    }
+    return sheets;
+}
+
 function validateCss({ artifactRoot, files, entries, failures, pkg }) {
     const pending = [...entries];
     const visited = new Set();
@@ -1008,7 +1043,8 @@ export function verifyExportTypes({
     const files = new Set(listFiles(artifactRoot));
     const { failures, claims, declarationEntries, cssEntries } = packageClaims(pkg, files);
     const declarationCount = validateDeclarations({ artifactRoot, pkg, files, entries: declarationEntries, failures });
-    const cssClosure = validateCss({ artifactRoot, files, entries: cssEntries, failures, pkg });
+    const scriptSheets = scriptCssEntries({ artifactRoot, files, claims, failures });
+    const cssClosure = validateCss({ artifactRoot, files, entries: new Set([...cssEntries, ...scriptSheets]), failures, pkg });
     // The published-NAME ratchet rides the same closure the CSS walk just produced, so
     // it costs one pass over files already read and cannot drift from what validateCss
     // considers published.

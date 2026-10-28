@@ -742,6 +742,57 @@ describe("Row 8 package falsifiers", () => {
         // Subprocess probe — verifier module load flakes vitest's 5s default under the full battery.
     }, 30_000);
 
+    // U/B7b X3: a component sheet a published chunk imports is a CSS entry. The packed
+    // comparison called the six F5 sheets (and the deck partials) unreachable because
+    // the closure was seeded from the `exports` sheets alone.
+    it("seeds the CSS closure from sheets a published chunk imports", () => {
+        const fixture = mkdtempSync(resolve(tmpdir(), "glass-script-css-"));
+        try {
+            const verifier = pathToFileURL(resolve("scripts/verify-export-types.mjs")).href;
+            const probe = `
+                import { mkdirSync, writeFileSync } from "node:fs";
+                import { verifyExportTypes } from ${JSON.stringify(verifier)};
+                const root = process.argv[1];
+                mkdirSync(root + "/dist/styles", { recursive: true });
+                mkdirSync(root + "/dist/components/widget", { recursive: true });
+                writeFileSync(root + "/package.json", JSON.stringify({
+                    name: "fixture",
+                    version: "1.0.0",
+                    exports: { "./widget": "./dist/widget.js", "./styles": "./dist/styles/index.css" },
+                }));
+                writeFileSync(root + "/package-lock.json", JSON.stringify({
+                    packages: { "": { name: "fixture", version: "1.0.0" } },
+                }));
+                writeFileSync(root + "/dist/styles/index.css", ":root{--probe:1px}");
+                writeFileSync(root + "/dist/widget.js", 'import { t as e } from "./chunk-A.js";\\nexport { e as Widget };');
+                writeFileSync(root + "/dist/components/widget/part.css", ".widget__part{color:red}");
+                writeFileSync(root + "/dist/components/widget/styles.css", '@import "./part.css";.widget{color:blue}');
+                const attempt = (chunk) => {
+                    writeFileSync(root + "/dist/chunk-A.js", chunk);
+                    try {
+                        const evidence = verifyExportTypes({ repositoryRoot: root, artifactRoot: root + "/dist", allowMissingRatchet: true });
+                        return { terminal: "CLEAN", css: evidence.css };
+                    } catch (error) {
+                        return { terminal: "FAILED", message: error.message };
+                    }
+                };
+                console.log(JSON.stringify({
+                    sheet: attempt('import "./components/widget/styles.css";\\nconst t = 1;\\nexport { t };'),
+                    dangling: attempt('import "./components/widget/missing.css";\\nconst t = 1;\\nexport { t };'),
+                }));
+            `;
+            const results = JSON.parse(runVerifierProbe(probe, fixture));
+            // index.css, the chunk's sheet and the partial it imports
+            expect(results.sheet).toEqual({ terminal: "CLEAN", css: 3 });
+            expect(results.dangling.terminal).toBe("FAILED");
+            expect(results.dangling.message).toContain(
+                "chunk-A.js: unresolved script import ./components/widget/missing.css",
+            );
+        } finally {
+            rmSync(fixture, { recursive: true, force: true });
+        }
+    }, 30_000);
+
     it("G-BARREL-EXPLICIT: keeps the root barrel explicit", () => {
         const source = readFileSync("src/index.ts", "utf8");
         expect(source).not.toMatch(/^\s*export\s+\*\s+from/m);
@@ -1019,6 +1070,17 @@ describe("Row 8 built-artifact acceptance", () => {
         expect(results.addedCss).toEqual(["packed CSS closure has unreachable member orphan.css"]);
         expect(results.removedCss).toEqual(["packed CSS closure is missing component-styles.css"]);
         // Subprocess probe — verifier module load flakes vitest's 5s default under the full battery.
+    }, 30_000);
+
+    it("walks every shipped sheet from an export or a published chunk (U/B7b X3)", () => {
+        expect(built, buildHint).toBe(true);
+        const verifier = pathToFileURL(resolve("scripts/verify-export-types.mjs")).href;
+        const probe = `
+            import { verifyExportTypes } from ${JSON.stringify(verifier)};
+            console.log(JSON.stringify(verifyExportTypes({}).css));
+        `;
+        const shipped = filesUnder("dist").filter((file) => file.endsWith(".css"));
+        expect(JSON.parse(runVerifierProbe(probe))).toBe(shipped.length);
     }, 30_000);
 
     it("keeps raw code-bearing sources out of the built artifact", () => {

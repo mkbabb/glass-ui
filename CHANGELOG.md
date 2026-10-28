@@ -129,6 +129,26 @@ decline each row (relay rows B7-G7 to B7-G9).
   run per tree at 1-minute load ≈ 25: main-thread time per step, median, WebGL 2
   7.6 → 7.6 ms, WebGPU 11.2 → 8.8 ms.
 
+### Package closure, the cartoon shadow and the entry diet (`u/b7-glass`, U/B7b X3)
+
+Built by the atlas formation's B7b pass on `u/b7-glass` after the G1 and G2 merge. No
+version bump. Each row has a test that fails on b54f5e13d and passes here.
+
+- **`verify:package` walks the sheets a published chunk imports.** The F5 split moved six
+  component sheets (and the four deck partials) to script imports, and the packed-CSS
+  check then called all of them unreachable, because the CSS closure was seeded from the
+  `exports` sheets alone. `scriptCssEntries` now walks every chunk reachable from a code
+  export and seeds the closure with each `.css` it imports; a chunk import that does not
+  resolve fails the package. The style closure also stopped publishing
+  `components/_shared/field/control.css`: `NumberFieldInput.vue` imports
+  `../_shared/field/control` (the `.ts` module), and the CSS-first resolver read that
+  specifier as the sheet beside it. Script specifiers now resolve the way the bundler
+  resolves them (exact path, then `.ts`, `.js`, `.vue`, then a directory index). The
+  sheet's rules still ship through its `<style src>` in the SFC bundle. Witnesses:
+  `tests/public-surface.spec.ts` (a fixture chunk and its sheet; the built `dist` walks
+  every shipped sheet: 115 of 126 before, 125 of 125 after) and
+  `tests/styles/component-sheets.test.ts`.
+
 ## 10.1.1 — 2026-10-19
 
 Four cures, one guarded row and one owner-ruled addition. Asked by the atlas consumer (U batch

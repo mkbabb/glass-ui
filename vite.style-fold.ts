@@ -139,6 +139,28 @@ function resolveSourceReference(from: string, reference: string): string | null 
     return candidates.find((path) => existsSync(path) && statSync(path).isFile()) ?? null;
 }
 
+/**
+ * A script specifier resolves the way the bundler resolves it: the exact path, else a
+ * module extension or a directory index. An extensionless specifier never names a
+ * sheet, so `import { isAriaInvalid } from "../_shared/field/control"` is `control.ts`,
+ * not the `control.css` beside it (which ships only through its `<style src>` in the
+ * SFC bundle). The CSS-first order of `resolveSourceReference` is for CSS references.
+ */
+function resolveScriptReference(from: string, reference: string): string | null {
+    const clean = reference.split(/[?#]/, 1)[0];
+    if (!clean.startsWith(".")) return null;
+    const base = resolve(dirname(from), clean);
+    const candidates = [
+        base,
+        `${base}.ts`,
+        `${base}.js`,
+        `${base}.vue`,
+        resolve(base, "index.ts"),
+        resolve(base, "index.js"),
+    ];
+    return candidates.find((path) => existsSync(path) && statSync(path).isFile()) ?? null;
+}
+
 function isCodeBearingSource(path: string): boolean {
     return /\.(?:vue|jsx?|tsx?|mjs|mts|cjs|cts)$/.test(path);
 }
@@ -200,7 +222,7 @@ function visitVue(
     for (const match of source.matchAll(/(?:import|export)\s+(?:[^"']*?\s+from\s+)?["']([^"']+)["']|import\(\s*["']([^"']+)["']\s*\)/g)) {
         const reference = match[1] ?? match[2];
         if (!reference.startsWith(".")) continue;
-        const target = resolveSourceReference(path, reference);
+        const target = resolveScriptReference(path, reference);
         if (!target) throw new Error(`${path}: dangling SFC/script reference ${reference}`);
         if (target.endsWith(".css")) visitScriptCss(target);
         else if (/\.(?:vue|ts|js)$/.test(target)) visitScript(target);
@@ -352,7 +374,7 @@ export function collectStyleClosure(root: string): StyleClosure {
         for (const match of source.matchAll(/(?:import|export)\s+(?:[^"']*?\s+from\s+)?["']([^"']+)["']|import\(\s*["']([^"']+)["']\s*\)/g)) {
             const reference = match[1] ?? match[2];
             if (!reference.startsWith(".")) continue;
-            const target = resolveSourceReference(path, reference);
+            const target = resolveScriptReference(path, reference);
             if (!target) throw new Error(`${path}: dangling public reference ${reference}`);
             if (target.endsWith(".css")) visitScriptCss(target);
             else if (/\.(?:vue|ts|js)$/.test(target)) visitScript(target);

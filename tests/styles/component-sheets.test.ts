@@ -94,6 +94,15 @@ describe("per-component sheets (atlas U/B7 F5)", () => {
         }
     });
 
+    it("never publishes a sheet for an extensionless script import (U/B7b X3)", () => {
+        // `NumberFieldInput.vue` imports `../_shared/field/control` (the .ts module).
+        // A CSS-first resolver read it as `control.css` and shipped that sheet as an
+        // orphan file nothing loads: its rules ride the SFC bundle via `<style src>`.
+        const closure = collectStyleClosure(ROOT);
+        const published = new Set([...closure.copySources].map((f) => relative(SRC, f)));
+        expect(published.has("components/_shared/field/control.css")).toBe(false);
+    });
+
     describe("the build plugin", () => {
         const plugin = componentSheets() as unknown as {
             configResolved: (c: { root: string }) => void;
