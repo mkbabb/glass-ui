@@ -8,8 +8,8 @@ import { fileURLToPath } from "node:url";
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
-/* The shared component-structure registers a consumer loses if it imports the raw
-   SFC bundle alone: the groove (`.track-well`), the indeterminate flow band
+/* The shared component-structure registers a consumer loses if it has only the
+   chunk sheets (U/B7b X3: each chunk imports its own SFC sheet): the groove (`.track-well`), the indeterminate flow band
    (`.track-flow`) and the checkpoint dots (`.glass-value-marks`). Each is emitted
    as a CLASS by an SFC template but declared in a partial, so the manifest has to
    fold the partial in. `.track-flow` was missing from this predicate while
@@ -45,10 +45,10 @@ export function generateComponentStyles(outputRoot, orderedSources) {
         .filter((source) => source.endsWith(".css"))
         .filter(hasComponentStyles)
         .map((source) => outputMember(outputRoot, source));
-    const imports = [...new Set([...members, "./glass-ui.css"])]
+    const imports = [...new Set(members)]
         .map((member) => `@import ${JSON.stringify(member)};`)
         .join("\n");
-    const missing = [...new Set([...members, "./glass-ui.css"])]
+    const missing = [...new Set(members)]
         .filter((member) => !existsSync(resolve(outputRoot, member)));
     if (missing.length) {
         throw new Error(`gen-component-styles: closure target(s) absent from output — ${missing.join(", ")}`);
@@ -56,5 +56,5 @@ export function generateComponentStyles(outputRoot, orderedSources) {
     const output = resolve(outputRoot, "component-styles.css");
     writeFileSync(output, `${declaredLayerOrder()}\n${imports}\n`, "utf8");
     console.log(`gen-component-styles: wrote ${output}`);
-    return { output, members: [...new Set([...members, "./glass-ui.css"])] };
+    return { output, members: [...new Set(members)] };
 }

@@ -86,13 +86,11 @@ export async function emitComponentUtilities(
     if (!existsSync(dist) || !existsSync(themePath)) return;
 
     // 1. Extract the distinct class-token set from every dist/*.js render
-    //    function + the folded SFC bundle (dist/glass-ui.css). Class strings
+    //    function + the per-chunk SFC sheets beside them (U/B7b X3). Class strings
     //    are quoted literals; split on whitespace and keep class-shaped tokens.
     const scanPaths = readdirSync(dist)
-        .filter((f) => f.endsWith(".js"))
+        .filter((f) => f.endsWith(".js") || f.endsWith(".css"))
         .map((f) => resolve(dist, f));
-    const sfcBundle = resolve(dist, "glass-ui.css");
-    if (existsSync(sfcBundle)) scanPaths.push(sfcBundle);
 
     const classish = /^-?[a-z][a-z0-9]*(?:[-/:][\w./:\-\[\]%(),#=&*~+]*)*$/i;
     // Arbitrary-PROPERTY setter tokens (`[--overlay-pad-inline:--spacing(6)]`) are

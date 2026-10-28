@@ -1023,18 +1023,28 @@ describe("Row 8 built-artifact acceptance", () => {
                 : [name];
         });
 
-    it("ships exactly the style closure plus the three generated members", () => {
+    it("ships exactly the style closure, the chunk sheets and the two generated members", () => {
         expect(built, buildHint).toBe(true);
         const closure = collectStyleClosure(process.cwd());
         const sourceRoot = resolve(process.cwd(), "src");
         // src/styles and src/components are copied whole-tree, so the src-relative
-        // path IS the dist-relative path; the lifecycle then writes three members
-        // that have no source file (SFC bundle, utility emit, component entry).
+        // path IS the dist-relative path; the lifecycle then writes two members that
+        // have no source file (utility emit, component entry), and the library build
+        // writes one SFC sheet beside each chunk that owns styles, which that chunk
+        // imports (U/B7b X3).
+        const chunkSheets = filesUnder("dist")
+            .filter((file) => !file.includes("/") && file.endsWith(".js"))
+            .flatMap((chunk) =>
+                [...readFileSync(resolve("dist", chunk), "utf8").matchAll(/^import\s+"\.\/([^"/]+\.css)";$/gm)].map(
+                    (match) => match[1],
+                ),
+            );
+        expect(chunkSheets.length).toBeGreaterThan(0);
         const expected = new Set([
             ...[...closure.copySources]
                 .filter((path) => path.endsWith(".css"))
                 .map((path) => relative(sourceRoot, path)),
-            "glass-ui.css",
+            ...chunkSheets,
             "styles/components.css",
             "component-styles.css",
         ]);

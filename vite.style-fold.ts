@@ -439,42 +439,6 @@ function cssFilesUnder(...roots: string[]): string[] {
 }
 
 /**
- * foldSfcBundle — AN.W1: fold the SFC scoped component CSS into the `/styles`
- * bundle so a single `@import "@mkbabb/glass-ui/styles"` carries the COMPLETE
- * stylesheet: the token cascade (index.css's @import chain) PLUS the
- * per-component `<style scoped>` payload Vite extracts to `dist/glass-ui.css`
- * (Aurora's `.aurora-root` grid layering, Progress/Slider/etc. scoped rules).
- *
- * The two artefacts sit behind two exports — `./styles` (cascade) and
- * `./styles.css` (SFC scoped). The fold appends an `@import` of the SFC bundle
- * into the dist copy of `index.css` (Shape A): least-invasive, the cascade
- * authoring is untouched, and `./styles.css` stays reachable as a transparent
- * SFC-only export. The `@import` is injected into the DIST copy only —
- * `src/styles/index.css` references no built sibling, so the `proof:theme`
- * source-read stays valid.
- *
- * CSS ordering: the SFC `@import` is inserted before the terminal accessibility
- * import (or the trailing `@source` in an older source tree). The SFC bundle
- * lives one dir up from `dist/styles/`, hence `../glass-ui.css`.
- */
-export function foldSfcBundle(root: string, distStyles: string): void {
-    const distIndex = resolve(distStyles, "index.css");
-    const sfcBundle = resolve(dirname(distStyles), "glass-ui.css");
-    if (existsSync(distIndex) && existsSync(sfcBundle)) {
-        const indexSrc = readFileSync(distIndex, "utf-8");
-        const sfcImport = '@import "../glass-ui.css";';
-        if (!indexSrc.includes(sfcImport)) {
-            const sourceAt = terminalImportIndex(indexSrc);
-            const folded =
-                sourceAt === -1
-                    ? `${indexSrc}\n${sfcImport}\n`
-                    : `${indexSrc.slice(0, sourceAt)}/* AN.W1 — SFC scoped component CSS (folded so a single\n   @import "@mkbabb/glass-ui/styles" carries cascade + components) */\n${sfcImport}\n\n${indexSrc.slice(sourceAt)}`;
-            writeFileSync(distIndex, folded, "utf-8");
-        }
-    }
-}
-
-/**
  * inlineFonts — inline every `url(... .woff2)` reference in the published CSS as
  * a base64 data URI sourced from `src/fonts/`. The URL form expected here is the
  * canonical authored shape: `url("@mkbabb/glass-ui/fonts/<family>/<face>.woff2")`.

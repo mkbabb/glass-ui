@@ -165,6 +165,21 @@ version bump. Each row has a test that fails on b54f5e13d and passes here.
   `emitted-utility-vars` accepts a tempo-scaled house clock
   (`calc(var(--duration-panel) * var(--motion-tempo))`) as a clock, not a literal.
 
+- **SFC styles load with their component; `dist/glass-ui.css` is gone.** Library mode
+  folded every SFC `<style>` into one `glass-ui.css`, and the build imported it into
+  `dist/styles/index.css`, so every `/styles` consumer paid for the status dot, timeline,
+  pager-dot goo, progress, data table and the rest on first paint. The build now sets
+  `cssCodeSplit`; `componentSheets` writes `import "./<chunk>.css";` at the head of each
+  of the 25 chunks that own styles and opens each sheet with the layer order `/styles`
+  declares. Every rule still sits in `@layer components`. `foldSfcBundle` is deleted;
+  the utility emit scans the chunk sheets; `component-styles.css` (`./styles.css`) folds
+  the three shared registers only. Consumer entry (Tailwind, tw-animate-css and
+  `/styles`, decoded and minified): 325,055 → 282,605 B, brotli 42,092 → 36,548. Against
+  b54f5e13d (323,178 B) the X3 rows together save 40,573 B. Witness:
+  `tests/styles/sfc-sheets.test.ts` (3 cases fail on b54f5e13d: the entry imports
+  `glass-ui.css`, 16 scope ids load with no chunk import, no chunk sheet opens with the
+  layer order).
+
 ## 10.1.1 — 2026-10-19
 
 Four cures, one guarded row and one owner-ruled addition. Asked by the atlas consumer (U batch

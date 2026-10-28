@@ -140,7 +140,7 @@ describe("W4 typed-seam — the component-only export is completed (§4.1)", () 
         expect(pkg.exports["./styles"]).toBe("./dist/styles/index.css");
     });
 
-    it("the generated manifest folds both register partials BEFORE the SFC bundle", () => {
+    it("the generated manifest folds the three register partials", () => {
         const manifest = resolve(ROOT, "dist/component-styles.css");
         const generator = resolve(ROOT, "scripts/gen-component-styles.mjs");
         if (!existsSync(manifest) || statSync(manifest).mtimeMs < statSync(generator).mtimeMs) {
@@ -165,8 +165,10 @@ describe("W4 typed-seam — the component-only export is completed (§4.1)", () 
         expect(order).toContain("./styles/track-well.css");
         expect(order).toContain("./styles/glass/track-flow.css");
         expect(order).toContain("./styles/glass/value-marks.css");
-        expect(order.at(-1)).toBe("./glass-ui.css");
-        expect(order).toHaveLength(4);
+        // U/B7b X3: the SFC sheets ride their chunks, so the manifest carries the
+        // registers alone; no SFC bundle is left to fold.
+        expect(order).not.toContain("./glass-ui.css");
+        expect(order).toHaveLength(3);
     });
 
     it("the generated manifest declares the layer order `./styles` declares, before any import", () => {

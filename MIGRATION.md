@@ -105,6 +105,29 @@ Proposed by the atlas formation on local branch `u/b7-glass-shape` off `release/
   Firefox, matching Chromium.
 - **New:** `auroraGroundKey(config)`; `GpuSubstrateOptions.prepare`.
 
+### Package closure, the cartoon shadow and the entry diet (`u/b7-glass`, U/B7b X3)
+
+- **`dist/glass-ui.css` is removed, and `@mkbabb/glass-ui/styles` no longer carries any
+  component's SFC rules.** Each component chunk imports its own sheet
+  (`dist/<chunk>.css`), so a bundler consumer needs no change: the sheet loads with the
+  component. A Node-run test suite that imports a glass component now meets a `.css`
+  import in many more chunks (25, up from the 6 F5 sheets). Let the test runner's
+  bundler transform glass-ui, for example vitest `server.deps.inline: [/@mkbabb\/glass-ui/]`
+  (atlas's `vitest.config.ts` already does). A consumer that styled glass markup
+  through the SFC rules without rendering the component (copied markup, server HTML)
+  loses those rules; render the component or import its chunk.
+- **The SFC rules now load after the `/styles` entry, not inside it.** They stay in
+  `@layer components`, so a consumer's `utilities` layer still wins. Within
+  `components`, an SFC rule now follows `components.css` and `accessibility.css` in
+  document order; the B7b census found no element that carries an a11y-overridden class
+  together with an SFC rule that sets the same property.
+- **`./styles.css` (`dist/component-styles.css`) folds the three shared registers
+  only** (`track-well`, `track-flow`, `value-marks`). The SFC rules it used to pull in
+  through `glass-ui.css` ride their chunks.
+- **`dist/components/_shared/field/control.css` is no longer published.** It was never
+  loaded: its rules ship through the field components' `<style src>`, now in
+  `dist/control.css`.
+
 ## 10.1.1
 
 One type-level change, below; no runtime break. Behaviour a consumer may notice:

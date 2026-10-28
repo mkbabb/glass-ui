@@ -53,6 +53,10 @@ export default defineConfig({
     // `dist/` resolves inside `node_modules`, no widening needed.
     build: {
         cssTarget: glassCssTarget,
+        // U/B7b X3 — each chunk keeps its own SFC sheet, and `componentSheets`
+        // makes the chunk import it, so `/styles` carries no component's scoped
+        // rules (they were one 40 KB `glass-ui.css` folded into the entry).
+        cssCodeSplit: true,
         lib: {
             entry: libraryEntries(__dirname),
             name: "GlassUI",

@@ -10,14 +10,13 @@
  *   @import "@mkbabb/glass-ui/styles/fonts";  (OFL woff2 corpus, loaded once)
  *   (then add your project-specific token overrides locally)
  *
- * The single `@mkbabb/glass-ui/styles` import resolves the complete
- * stylesheet: this @import cascade PLUS the per-component `<style scoped>`
- * payload (Aurora grid layering, Progress/Slider/Toast/… scoped rules).
- * The build folds the SFC bundle (`dist/glass-ui.css`) into the dist copy of
- * this file (vite.config.ts `publishStyleAssets`), so a consumer never needs
- * a second `@import "@mkbabb/glass-ui/styles.css"` line. The `./styles.css`
- * export stays reachable as a transparent SFC-only entry (NOT a back-compat
- * alias) for a cascade-free consumer.
+ * The single `@mkbabb/glass-ui/styles` import resolves the shared cascade:
+ * tokens, materials, registers and the component sheets every page needs. A
+ * component's own SFC `<style>` rules (Aurora grid layering, Progress, Timeline,
+ * the pager-dot goo, …) are not in it: the library build writes one sheet per
+ * chunk and the chunk imports it, so a page pays for a component's rules only
+ * when it loads that component (U/B7b X3). The `./styles.css` export carries the
+ * shared registers a cascade-free consumer needs beside those chunk sheets.
  */
 
 /*

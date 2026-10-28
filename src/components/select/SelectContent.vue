@@ -137,7 +137,7 @@ const dock = useDockParticipation({
       in `styles/glass/overlay-plate.css` as plain attribute-selector CSS keyed on
       `[data-slot="select-content"]`. A Tailwind utility here would compile only
       into a `dist/*.js` render chunk that no consumer content-scan reaches; a
-      precompiled rule ships in `dist/glass-ui.css` whatever the consumer's JIT
+      precompiled rule ships in the `/styles` cascade whatever the consumer's JIT
       does. SelectContent clips at the bound and SelectViewport is the only
       vertical scroll owner, which is what keeps reka's active-option scrolling
       correct (one scroll port, never nested).

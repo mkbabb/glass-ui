@@ -20,12 +20,11 @@ import { collectStyleClosure } from "../../vite.style-fold";
 const DIST = join(process.cwd(), "dist");
 const COMPONENTS = join(DIST, "styles/components.css");
 
-/** Every class token a shipped chunk or the SFC bundle carries in a string literal. */
+/** Every class token a shipped chunk or a chunk's SFC sheet carries in a string literal. */
 function shippedClassTokens(): Set<string> {
     const sources = readdirSync(DIST)
-        .filter((file) => file.endsWith(".js"))
+        .filter((file) => file.endsWith(".js") || file.endsWith(".css"))
         .map((file) => readFileSync(join(DIST, file), "utf8"));
-    sources.push(readFileSync(join(DIST, "glass-ui.css"), "utf8"));
     const tokens = new Set<string>();
     for (const source of sources) {
         for (const match of source.matchAll(/["'`]([^"'`\n]*?)["'`]/g)) {
