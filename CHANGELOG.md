@@ -62,9 +62,16 @@ or renamed, and a consumer has nothing to change.
   environmental expand (a focus-in, a hover-intent dwell) that lands while a press on
   the dock is in flight, and runs it when the press resolves: at the press's `click`
   (already hit-tested), at its `pointercancel`, or, for a mouse or pen press that
-  produces no click, when its `pointerup` task ends. The expand runs only if the focus
-  is still inside or the pointer has not left. A keyboard focus still expands at once.
-  The click guard is unchanged.
+  produces no click, when its `pointerup` task ends. A touch press holds while the
+  finger is down and again through its tap's compatibility mouse dispatch (from the
+  `mousedown` that focuses to the `click`), and not between them: a touch gesture need
+  not tap, and a swipe the run's `touch-action: pan-x` refuses ends in a `pointerup`
+  with no click and no cancel (critique-2 D-1; the round-1 hold kept such a press in
+  flight, so a later keyboard focus or hover no longer expanded the collapsed dock until
+  some click anywhere). An unresolved touch press is dropped, with what it deferred, by
+  the next `pointerdown`. The expand runs only if the focus is still inside or the
+  pointer has not left. A keyboard focus still expands at once. The click guard is
+  unchanged.
 
 - **A collapse shrinks toward the anchored edge and settles without a snap (critique-1
   D-2).** A collapse starts unscaled (its reserved box is the box it painted), where
@@ -86,6 +93,13 @@ or renamed, and a consumer has nothing to change.
   (360/390/430) reach it; the collapse per frame (right, left, bottom at 390) holds the
   anchored edge, ends on the settled box and keeps the seat inside the plate; under a
   real `prefers-reduced-motion: reduce` the expand paints no box between the two rests.
+
+  Witnesses (critique-2 D-1): unit `GlassDock.press-posture.test.ts` (a touch press with
+  no tap, then a focus, then a hover dwell, each expands; an unresolved touch press is
+  dropped with its deferral by the next pointerdown), RED on the round-1 cure. Engine
+  `release-10-1-3.spec.ts`: a CDP touch swipe across the expanded run, Escape, then a
+  focus or a hover expands the collapsed dock (Chromium); a script-dispatched touch
+  `pointerdown` and `pointerup` with no click, then a focus, expands it (both engines).
 
 ## 10.1.2 — 2026-10-27
 

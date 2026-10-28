@@ -212,3 +212,41 @@ Logs, beside the worktree: `fix1-pre-chromium.log`, `fix1-post-chromium.log`,
 `fix1-release-chromium.log`, `fix1-release-webkit.log`, `fix1-vitest.log`,
 `fix1-typecheck.log`, `fix1-build.log`, `fix1-verify.log`. The RED arms swapped
 `src/components/dock` to the named tree inside this worktree and restored it to HEAD.
+
+## Round 2 (critique-2)
+
+- **D-1: a touch press lets go at its pointerup.** The round-1 rule ignored a touch
+  `pointerup` and held the press until the tap's `click`. A touch gesture need not tap: a
+  vertical swipe across the run (`touch-action: pan-x`) dispatches `pointerdown` and
+  `pointerup` and nothing else. The press stayed in flight, and every later focus-in and
+  hover dwell was deferred until some click anywhere. After Escape, a keyboard focus or a
+  mouse hover no longer expanded the collapsed dock. 10.1.2 behaves correctly here. The
+  press now has phases:
+  - `down`: the pointer is down.
+  - `tap`: after a touch `pointerup`. Nothing is held.
+  - `compat`: from the tap's compatibility `mousedown` to its `click`, or to the end of
+    its `mouseup` task. No `pointerdown` precedes that `mousedown`, and the
+    `mousedown` is what focuses the seat.
+
+  Environmental expands defer only in `down` and `compat`. The next `pointerdown`
+  anywhere drops an unresolved touch press, with what it deferred. There is no timeout
+  or tolerance, and the click guard is unchanged.
+
+### Round 2 gates
+
+| gate | result |
+|---|---|
+| `npm run typecheck` (guarded `--light`) | exit 0 |
+| `npm run build`, `npm run demo:dist:build` (guarded) | exit 0 |
+| `npx vitest run --maxWorkers=2` (guarded) | 246 files, 2387 passed, 10 expected fail, 1 skipped |
+| unit `GlassDock.press-posture.test.ts` | 8/8 GREEN; the 3 new cells are RED on the round-1 source (touch press with no tap then focus; then hover dwell; a stale touch press dropped with its deferral by the next pointerdown). The touch-tap cell now dispatches the compatibility mousedown the engine sends |
+| `release-10-1-3.spec.ts`, Chromium | 38/38 GREEN; the 3 critique-2 cells (CDP swipe across the run, Escape, then focus or hover; script touch press with no tap, then focus) are 3/3 RED on the round-1 source |
+| the same, WebKit 2287 (`guarded --exclusive webkit`) | 36 passed, 2 skipped (the CDP swipe cells are Chromium's); the script touch press cell is RED on the round-1 source |
+| `release-10-1-2.spec.ts` + `release-10-1-1.spec.ts` | Chromium 77/77, WebKit 2287 77/77 (the O-101 no-overflow cells among them) |
+| `npm run verify:package` | terminal CLEAN after the bundle-ratchet rebind 2939290 -> 2939587 (+297 B) |
+
+Logs, beside the worktree: `fix2-pre-chromium.log`, `fix2-post-chromium.log`,
+`fix2-pre-webkit.log`, `fix2-post-webkit.log` (the 10.1.3 spec and the two release specs),
+`fix2-release-chromium.log`, `fix2-vitest.log`, `fix2-typecheck.log`, `fix2-build.log`,
+`fix2-demo-build.log`, `fix2-verify.log`. For the RED arms, `useDockState.ts` was swapped
+to its `9a768746b` version inside this worktree and then restored.
