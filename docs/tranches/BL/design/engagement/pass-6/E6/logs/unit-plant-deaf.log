@@ -1,0 +1,60 @@
+# 2026-10-27 17:59:53 start · load { 30.36 30.90 28.82 }
+# cmd: --light --timeout 10 -- npx vitest run --maxWorkers=2 tests/composables/motion/engage-stage.test.ts
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p6/E6/wt
+
+ ❯ tests/composables/motion/engage-stage.test.ts (27 tests | 4 failed) 176ms
+     × a layout move outward (down 120 px) is heard in the frame that paints it: no glide on the next unrelated mutation 12ms
+     × a layout move inward (left edge in 60 px, right edge kept) is heard in the frame that paints it: no glide on the next unrelated mutation 7ms
+     × a layout move centred shrink (120 px narrower, centre kept) is heard in the frame that paints it: no glide on the next unrelated mutation 7ms
+     × a move written by an animation-frame callback after the stage's own is heard in that frame's resize step 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/composables/motion/engage-stage.test.ts > the stage hears every move of the rest box before the next frame it paints (CK-20) > a layout move outward (down 120 px) is heard in the frame that paints it: no glide on the next unrelated mutation
+ FAIL  tests/composables/motion/engage-stage.test.ts > the stage hears every move of the rest box before the next frame it paints (CK-20) > a layout move inward (left edge in 60 px, right edge kept) is heard in the frame that paints it: no glide on the next unrelated mutation
+ FAIL  tests/composables/motion/engage-stage.test.ts > the stage hears every move of the rest box before the next frame it paints (CK-20) > a layout move centred shrink (120 px narrower, centre kept) is heard in the frame that paints it: no glide on the next unrelated mutation
+AssertionError: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/composables/motion/engage-stage.test.ts:240:30
+    238|         it(`a layout move ${name} is heard in the frame that paints it…
+    239|             const r = await engagedOverMovedLayout(move, true);
+    240|             expect(r.glides).toBe(0);
+       |                              ^
+    241|             expect(r.w, "the reach is re-read with the place").toBe(`$…
+    242|         });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tests/composables/motion/engage-stage.test.ts > the stage hears every move of the rest box before the next frame it paints (CK-20) > a move written by an animation-frame callback after the stage's own is heard in that frame's resize step
+AssertionError: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/composables/motion/engage-stage.test.ts:282:19
+    280|             }
+    281|         })();
+    282|         expect(r).toBe(0);
+       |                   ^
+    283|     });
+    284|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 23 passed (27)
+   Start at  17:59:54
+   Duration  1.69s (transform 601ms, setup 74ms, import 1.00s, tests 176ms, environment 249ms)
+
+# 2026-10-27 18:00:00 end · exit 1 · load { 30.73 30.97 28.86 }

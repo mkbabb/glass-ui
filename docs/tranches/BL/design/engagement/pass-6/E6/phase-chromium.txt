@@ -1,0 +1,59 @@
+bat noveil-coarse chromium E-1
+bat noveil-coarse chromium E-2 --commit-arms i,ii
+bat noveil-coarse chromium E-3
+bat noveil-coarse chromium E-4
+bat noveil-coarse chromium E-5
+bat noveil-coarse chromium E-6
+bat noveil-coarse chromium E-7
+bat noveil-coarse chromium E-8
+bat noveil-coarse chromium E-9
+bat noveil-coarse chromium E-10
+bat noveil-coarse chromium E-11
+bat noveil-coarse chromium E-12
+bat veil-coarse chromium E-1
+bat veil-coarse chromium E-3
+bat veil-coarse chromium E-4
+bat veil-coarse chromium E-10
+bat veil-coarse chromium E-12
+bat noveil-every chromium E-1
+bat noveil-every chromium E-3
+bat noveil-every chromium E-4
+bat noveil-every chromium E-10
+bat noveil-every chromium E-12
+bat veil-every chromium E-1
+bat veil-every chromium E-3
+bat veil-every chromium E-4
+bat veil-every chromium E-10
+bat veil-every chromium E-12
+xp pass-5/C-A5/probe ca5-probe noveil-coarse chromium
+xp pass-5/C-E5/probe ce5-probe ce5-noveil-coarse chromium --label noveil-coarse
+xp pass-6/E6/probe e6-place noveil-coarse chromium
+xp pass-5/C-A5/probe ca5-probe veil-coarse chromium
+xp pass-5/C-E5/probe ce5-probe ce5-veil-coarse chromium --label veil-coarse
+xp pass-6/E6/probe e6-place veil-coarse chromium
+xp pass-5/C-A5/probe ca5-probe noveil-every chromium
+xp pass-5/C-E5/probe ce5-probe ce5-noveil-every chromium --label noveil-every
+xp pass-6/E6/probe e6-place noveil-every chromium
+xp pass-5/C-A5/probe ca5-probe veil-every chromium
+xp pass-5/C-E5/probe ce5-probe ce5-veil-every chromium --label veil-every
+xp pass-6/E6/probe e6-place veil-every chromium
+xp pass-6/E6/probe slider-press noveil-coarse chromium
+one plant-deaf chromium e10-continuity.mjs deaf --scenes restale,clipstale
+xp pass-6/E6/probe e6-place plant-deaf chromium
+xp pass-6/E6/probe e6-place plant-rafread chromium
+TAG=-h1 one noveil-coarse chromium e10-continuity.mjs handoff --scenes slider2
+TAG=-h2 one noveil-coarse chromium e10-continuity.mjs handoff --scenes slider2
+TAG=-h3 one noveil-coarse chromium e10-continuity.mjs handoff --scenes slider2
+TAG=-h4 one noveil-coarse chromium e10-continuity.mjs handoff --scenes slider2
+TAG=-h5 one noveil-coarse chromium e10-continuity.mjs handoff --scenes slider2
+TAG=-h6 one noveil-coarse chromium e10-continuity.mjs handoff --scenes slider2
+TAG=-h7 one noveil-coarse chromium e10-continuity.mjs handoff --scenes slider2
+TAG=-h8 one noveil-coarse chromium e10-continuity.mjs handoff --scenes slider2
+TAG=-h1 one veil-coarse chromium e10-continuity.mjs handoff --scenes slider2
+TAG=-h2 one veil-coarse chromium e10-continuity.mjs handoff --scenes slider2
+TAG=-h1 one noveil-every chromium e10-continuity.mjs handoff --scenes slider2
+TAG=-h2 one noveil-every chromium e10-continuity.mjs handoff --scenes slider2
+TAG=-h1 one veil-every chromium e10-continuity.mjs handoff --scenes slider2
+TAG=-h2 one veil-every chromium e10-continuity.mjs handoff --scenes slider2
+cap noveil-coarse chromium
+cap veil-coarse chromium

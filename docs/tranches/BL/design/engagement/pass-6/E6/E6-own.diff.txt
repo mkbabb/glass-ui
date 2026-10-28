@@ -1,0 +1,550 @@
+diff --git a/src/components/slider/styles.css b/src/components/slider/styles.css
+index 41c2c4cc2..e56db490e 100644
+--- a/src/components/slider/styles.css
++++ b/src/components/slider/styles.css
+@@ -387,11 +387,19 @@
+      as a split block of fill and track, not as glass (C-E4 §3, CK-25).
+    · The magnified fill ends as the real fill ends, on its pill cap, so the value point
+      reads as the fill's own tip under the mark, not as a hard seam.
++   · THE LENS IS SIZED FROM WHAT IT MAGNIFIES. At `k` max the magnified track (the
++     BAND, `--loupe-band`) crosses the window through its middle half, with clear glass
++     above and below it, and the window runs four bands long. A lens reads as a lens when
++     what it shows continues past it: a band through glass, its fill a length that ends
++     on its tip at the mark. When the band filled the window edge to edge, its cap's
++     radius was half the window and the visible fill closed into a round bead, so the
++     lens read as a toggle switch (C-A5 §4, C-E5 §3, CK-25). The band is the one figure
++     the housing derives from; `--loupe-k-max` is the one magnification it derives from.
+    ════════════════════════════════════════════════════════════════════════ */
+ 
+ .glass-loupe {
+     /* The k-band. K_MAX at rest, K_MIN at speed, both below the 3× layout scale. */
+-    --loupe-k-max: 2.6;
++    --loupe-k-max: 1.6;
+     --loupe-k-min: 1.15;
+     --loupe-k: calc(
+         var(--loupe-k-max) - (var(--loupe-k-max) - var(--loupe-k-min)) *
+@@ -409,17 +417,17 @@
+        the clone reads directly. Never a second velocity pole; the same measurement,
+        carried one level down. */
+     --loupe-vel: var(--flex-vel, 0);
+-    --loupe-span: calc(var(--slider-track-height, 1.25rem) * 6);
++    /* The band: the track at `k` max, the figure the lens is sized from (above). */
++    --loupe-band: calc(var(--slider-track-height, 1.25rem) * var(--loupe-k-max));
+     /* The glass rim: the housing's material seen around the window, a fraction of the
+        track's own thickness so it scales with the size rung. */
+     --loupe-ring: calc(var(--slider-track-height, 1.25rem) * 0.3);
++    --loupe-span: calc(var(--loupe-band) * 4 + 2 * var(--loupe-ring));
+     /* Host-relative: the loupe is the promoted host's own child (engage/stage.ts), hung
+        from the track's top edge at the track's centre. */
+     position: absolute;
+     inline-size: var(--loupe-span);
+-    block-size: calc(
+-        var(--slider-track-height, 1.25rem) * var(--loupe-k-max) + 2 * var(--loupe-ring)
+-    );
++    block-size: calc(var(--loupe-band) * 2 + 2 * var(--loupe-ring));
+     inset-block-start: calc(50% - var(--slider-track-height, 1.25rem) / 2);
+     inset-inline-start: 50%;
+     /* The raise: a `present` spring from a 0.13 seed anchored on the well's centre. The
+diff --git a/src/composables/motion/engage/stage.ts b/src/composables/motion/engage/stage.ts
+index 241990b6f..a46036b47 100644
+--- a/src/composables/motion/engage/stage.ts
++++ b/src/composables/motion/engage/stage.ts
+@@ -52,15 +52,26 @@
+ // footprint against the control, and any change of the footprint's place glides the
+ // control from where it was on the `dock` row, during the hold and at the landing.
+ //
+-// THE PLACE IS OBSERVED, NOT REMEMBERED (CK-20). "Where it was" is the place last
+-// painted, so the stage keeps it current: each holder's rest box (its footprint, or an
+-// in-place host) is watched by an IntersectionObserver whose root margin is cut to that
+-// box, so a layout move of any cause (a style write, a viewport resize, a font load, a
+-// CSS-driven change) re-reads the place, the reach (`--stage-room`, `--stage-w`) and the
+-// veil centre, with no frame loop and no listener per cause. A move the layout made is
+-// not glided: it has already painted, and the control moved with its world. Only a move
+-// the stage sees before it paints (a re-render's mutation, handled in its own microtask)
+-// is travelled, from the place the person last saw.
++// THE STAGE HEARS EVERY MOVE OF THE REST BOX BEFORE THE NEXT FRAME IT PAINTS (CK-20).
++// "Where it was" is the place last painted, so the stage keeps it current by reading the
++// quantity itself, in the one step of a frame where script sees the layout that frame
++// will paint: its resize observations, after every task, animation and animation-frame
++// callback has written and layout has run, before paint. While anything is on the stage,
++// each frame re-observes each holder's rest box (its footprint, or an in-place host), so
++// that step reports it every frame whether or not its size changed, and the report reads
++// the rest place (a footprint's page box, an in-place host's flow box, both free of
++// transforms) and the viewport, and re-reads the place, the reach (`--stage-room`,
++// `--stage-w`) and the veil centre when any of them changed. A read that compares the box
++// hears every move, whatever its cause or direction (a style write, a viewport resize, a
++// font load, an inward move, a centred shrink, a move inside a clipping scroller, a
++// spring written from an animation-frame callback). A change detector armed at its own
++// rest reading (an observer's ratio) hears only the moves that change that reading,
++// which three passes found the hard way. A write the read makes is laid out before the
++// same paint, so the reach is right in the frame that first paints the move. The loop
++// stops when the stage empties: nothing runs at rest. A move the layout made is not
++// glided: it paints, and the control moves with its world. Only a move the stage sees
++// before it paints (a re-render's mutation, handled in its own microtask) is travelled,
++// from the place the person last saw.
+ //
+ // FAILS LOUD (CK-21). The grow figure and the reach are read back on every engagement;
+ // an unreadable one says so once (settle.ts `loud`). The registered reach's initial
+@@ -82,12 +93,19 @@ interface Holder {
+     footprint: HTMLElement | null;
+     /** The consumer's own inline `position-anchor` (value, priority), set aside while promoted. */
+     own: [string, string];
+-    /** The rest place at the last read (a footprint's page-frame box, an in-place host's flow box), to tell a re-render's move from a scroll. */
+-    at: { x: number; y: number };
++    /** The rest place at the last read, free of transforms (a footprint's page-frame box, an in-place host's flow box), and the viewport it was read in. */
++    at: Place;
+     generation: number;
+     engaged: boolean;
+-    /** Stops the layout watch on the rest box. */
+-    unwatch: () => void;
++}
++
++interface Place {
++    x: number;
++    y: number;
++    w: number;
++    h: number;
++    vw: number;
++    vh: number;
+ }
+ 
+ const holders = new Map<HTMLElement, Holder>();
+@@ -97,6 +115,10 @@ let anchors = 0;
+ const page = Math.random().toString(36).slice(2, 8);
+ let veil: HTMLElement | null = null;
+ let observer: MutationObserver | null = null;
++let frame = 0;
++let sizes: ResizeObserver | null = null;
++/** A holder's place before its first read. */
++const NOWHERE: Place = { x: NaN, y: NaN, w: NaN, h: NaN, vw: NaN, vh: NaN };
+ 
+ function stageVeil(): HTMLElement {
+     if (veil?.isConnected) return veil;
+@@ -108,11 +130,6 @@ function stageVeil(): HTMLElement {
+     return veil;
+ }
+ 
+-const pageBox = (el: Element): { x: number; y: number } => {
+-    const r = el.getBoundingClientRect();
+-    return { x: r.left + window.scrollX, y: r.top + window.scrollY };
+-};
+-
+ /** A host's place in flow, without its transforms (the grow, a glide in flight): its offset chain. */
+ const flowBox = (el: HTMLElement): { x: number; y: number } => {
+     let x = 0;
+@@ -124,6 +141,21 @@ const flowBox = (el: HTMLElement): { x: number; y: number } => {
+     return { x, y };
+ };
+ 
++/** Where the rest box stands, free of transforms: a footprint's page-frame box, an in-place host's flow box; and the viewport. */
++function restPlace(h: Holder): Place {
++    const vw = window.innerWidth;
++    const vh = window.innerHeight;
++    if (h.footprint) {
++        const r = h.footprint.getBoundingClientRect();
++        return { x: r.left + window.scrollX, y: r.top + window.scrollY, w: r.width, h: r.height, vw, vh };
++    }
++    const { x, y } = flowBox(h.host);
++    return { x, y, w: h.host.offsetWidth, h: h.host.offsetHeight, vw, vh };
++}
++
++const samePlace = (a: Place, b: Place): boolean =>
++    a.x === b.x && a.y === b.y && a.w === b.w && a.h === b.h && a.vw === b.vw && a.vh === b.vh;
++
+ /** The host's rest box: its footprint's, or (in place) its own layout box about its painted centre. */
+ function restBox(h: Holder): { left: number; right: number; top: number; bottom: number; width: number; height: number } {
+     if (h.footprint) return h.footprint.getBoundingClientRect();
+@@ -135,18 +167,15 @@ function restBox(h: Holder): { left: number; right: number; top: number; bottom:
+     return { left: cx - w / 2, right: cx + w / 2, top: cy - ht / 2, bottom: cy + ht / 2, width: w, height: ht };
+ }
+ 
+-function writeGeometry(h: Holder): void {
+-    // One layout read per engagement, scroll or re-render, never per frame.
++function writeGeometry(h: Holder, at = restPlace(h)): void {
++    // Written on an engagement, a scroll, a re-render or a frame whose place moved; a
++    // frame where nothing moved writes nothing.
+     const rect = restBox(h);
+     const vw = window.innerWidth;
+     h.host.style.setProperty("--stage-room", `${Math.max(0, Math.min(rect.left, vw - rect.right))}px`);
+     h.host.style.setProperty("--stage-w", `${rect.width}px`);
+-    if (!h.footprint) {
+-        h.at = flowBox(h.host);
+-        return;
+-    }
+-    h.at = pageBox(h.footprint);
+-    if (current !== h || !STAGE_VEIL) return;
++    h.at = at;
++    if (!h.footprint || current !== h || !STAGE_VEIL) return;
+     const v = stageVeil();
+     v.style.setProperty("--veil-x", `${((rect.left + rect.width / 2) / vw) * 100}%`);
+     v.style.setProperty("--veil-y", `${((rect.top + rect.height / 2) / window.innerHeight) * 100}%`);
+@@ -154,49 +183,22 @@ function writeGeometry(h: Holder): void {
+     v.style.setProperty("--glass-focus-veil-core-y", `${rect.height / 2}px`);
+ }
+ 
+-/**
+- * Watch `h`'s rest box for a layout move: an IntersectionObserver on the box (its footprint,
+- * or an in-place host) with a root margin cut to the box itself, so any move changes the
+- * ratio. Each change re-reads the geometry and re-cuts the margin; nothing runs per frame
+- * while the box stands still. A box wholly outside the viewport is re-armed on any
+- * re-entry (threshold just above 0).
+- */
+-function watchPlace(h: Holder): void {
+-    const el = h.footprint ?? h.host;
+-    let io: IntersectionObserver | null = null;
+-    const arm = (threshold: number): void => {
+-        io?.disconnect();
+-        io = null;
+-        if (!el.isConnected || !holders.has(h.host)) return;
+-        const r = el.getBoundingClientRect();
+-        if (!r.width || !r.height) return;
+-        const de = document.documentElement;
+-        const cut = [r.top, de.clientWidth - r.right, de.clientHeight - r.bottom, r.left];
+-        let first = true;
+-        io = new IntersectionObserver(
+-            ([e]) => {
+-                const ratio = e!.intersectionRatio;
+-                if (first) {
+-                    first = false;
+-                    // the first report states where the box stands: re-cut only if a
+-                    // clipping scroller left the ratio off its threshold (wholly clipped:
+-                    // wait for any re-entry)
+-                    if (ratio === threshold || (ratio === 0 && threshold < 1)) return;
+-                    arm(ratio > 0 ? ratio : 1e-7);
+-                    return;
+-                }
+-                writeGeometry(h);
+-                arm(1);
+-            },
+-            { root: document, rootMargin: cut.map((v) => `${-Math.floor(v)}px`).join(" "), threshold },
+-        );
+-        io.observe(el);
+-    };
+-    arm(1);
+-    h.unwatch = () => {
+-        io?.disconnect();
+-        io = null;
+-    };
++/** Each frame while the stage holds anything: re-observe every rest box, so the frame's resize step reports it. */
++function hear(): void {
++    frame = requestAnimationFrame(hear);
++    for (const h of holders.values()) {
++        const el = h.footprint ?? h.host;
++        sizes?.unobserve(el);
++        sizes?.observe(el);
++    }
++}
++
++/** The frame's resize step (after layout, before paint): re-read every holder whose rest place moved. */
++function heard(): void {
++    for (const h of holders.values()) {
++        const at = restPlace(h);
++        if (!samePlace(at, h.at)) writeGeometry(h, at);
++    }
+ }
+ 
+ /** Carry `host` from an offset of (dx, dy) px home on the `dock` row: a moved place is travelled, never jumped. */
+@@ -288,17 +290,19 @@ function readBack(host: HTMLElement): void {
+         loud("--stage-reach (from --space-section, --stage-room, --stage-w)", host, "engage stage");
+ }
+ 
+-/** While anything is on the stage: re-renders and scrolls re-read its geometry. */
++/** While anything is on the stage: re-renders, scrolls and every frame's place re-read its geometry. */
+ function watchWorld(): void {
+     if (observer) return;
+     observer = new MutationObserver(onMutation);
+     observer.observe(document.body, { childList: true, subtree: true });
+     window.addEventListener("scroll", onScroll, { passive: true, capture: true });
++    sizes = new ResizeObserver(heard);
++    frame = requestAnimationFrame(hear);
+ }
+ 
+ /** Put `host` on the stage in place: the grow and its reach, no top layer, no footprint. */
+ function inPlace(host: HTMLElement): Holder {
+-    const h: Holder = { host, footprint: null, own: ["", ""], at: { x: 0, y: 0 }, generation, engaged: false, unwatch: () => {} };
++    const h: Holder = { host, footprint: null, own: ["", ""], at: NOWHERE, generation, engaged: false };
+     holders.set(host, h);
+     host.setAttribute("data-engage-stage", "");
+     watchWorld();
+@@ -325,7 +329,7 @@ function promote(host: HTMLElement): Holder {
+     ];
+     host.style.setProperty("position-anchor", anchor);
+     host.before(footprint);
+-    const h: Holder = { host, footprint, own, at: { x: 0, y: 0 }, generation, engaged: false, unwatch: () => {} };
++    const h: Holder = { host, footprint, own, at: NOWHERE, generation, engaged: false };
+     holders.set(host, h);
+     // Top-layer order is show order: on the veil arm the veil is open beneath every
+     // promoted control. On the noveil arm it is never shown.
+@@ -348,12 +352,16 @@ function promote(host: HTMLElement): Holder {
+ function hide(h: Holder): void {
+     const { host } = h;
+     const before = host.getBoundingClientRect();
++    sizes?.unobserve(h.footprint ?? host);
+     holders.delete(host);
+-    h.unwatch();
+     if (holders.size === 0) {
+         observer?.disconnect();
+         observer = null;
+         window.removeEventListener("scroll", onScroll, true);
++        cancelAnimationFrame(frame);
++        frame = 0;
++        sizes?.disconnect();
++        sizes = null;
+     }
+     host.removeAttribute("data-engage-stage");
+     host.style.removeProperty("--stage-room");
+@@ -398,13 +406,11 @@ function leave(h: Holder): void {
+ function engageStage(host: HTMLElement, withVeil: boolean, promoted: boolean): void {
+     generation += 1;
+     if (current && current.host !== host) leave(current);
+-    const fresh = !holders.has(host);
+     const h = holders.get(host) ?? (promoted ? promote(host) : inPlace(host));
+     h.generation = generation;
+     h.engaged = true;
+     current = h;
+     writeGeometry(h);
+-    if (fresh) watchPlace(h);
+     // the veil is a top-layer plate: it never rises under a control engaged in place, and
+     // on the noveil arm it never rises at all
+     setVeil(withVeil && h.footprint !== null);
+diff --git a/src/composables/motion/engage/useEngage.ts b/src/composables/motion/engage/useEngage.ts
+index fbc31ba57..7d4b01245 100644
+--- a/src/composables/motion/engage/useEngage.ts
++++ b/src/composables/motion/engage/useEngage.ts
+@@ -93,12 +93,8 @@ import {
+ import { useDragVelocity } from "../../dom/useDragVelocity";
+ import { useLiquidPress } from "../spring/useLiquidPress";
+ import { ENGAGE_DECLARATION, type EngageClassRow } from "./engageClasses";
+-<<<<<<< 887bdbc28
+ import { ENGAGE_ENVELOPES } from "./engageEnvelopes";
+-import { useHold, type HoldTarget } from "./hold";
+-=======
+ import { HOLD_SLOP_PX, useHold, type HoldTarget } from "./hold";
+->>>>>>> 48133f79e
+ import { listen, usePressMark } from "./press";
+ import { RELEASE_RULE } from "./release";
+ import { loud, reducedMotion as reduced, rowClockMs, settleFrames } from "./settle";
+@@ -230,13 +226,8 @@ function carry(body: HTMLElement, axis: "x" | "y", v: number): void {
+     const dir = (origin ?? 0) <= length / 2 ? 1 : -1;
+     const s = (d: number): number => Math.max(0, 1 + (dir * d) / length);
+     body.animate(
+-<<<<<<< 887bdbc28
+-        impulseFrames(v, ms).map((d) => ({
+-            scale: axis === "x" ? `${s(d)} 1` : `1 ${s(d)}`,
+-=======
+         settleFrames(RELEASE_RULE.row, 0, v, ms).map((d) => ({
+-            transform: axis === "x" ? `scaleX(${s(d)})` : `scaleY(${s(d)})`,
+->>>>>>> 48133f79e
++            scale: axis === "x" ? `${s(d)} 1` : `1 ${s(d)}`,
+         })),
+         { duration: ms },
+     );
+diff --git a/tests/composables/motion/engage-door.test.ts b/tests/composables/motion/engage-door.test.ts
+index 14e095212..a9964cc3e 100644
+--- a/tests/composables/motion/engage-door.test.ts
++++ b/tests/composables/motion/engage-door.test.ts
+@@ -219,16 +219,11 @@ describe("the engagement's inputs fail loud (CK-21, F5' F-8)", () => {
+         w.host.style.setProperty("--rung-crest", "1");
+         w.host.setAttribute("data-state", "checked");
+         await nextTick();
+-<<<<<<< 887bdbc28
+-        await new Promise((ok) => setTimeout(ok, 0));
+-        expect(err.mock.calls.map((c) => String(c[0])).join(" ")).toContain("--rung-crest");
+-=======
+         // happy-dom delivers a MutationObserver's records on its own microtask queue: wait
+         // on its window clock (a frame), not on Node's timer, before reading what it said
+         await frame();
+         await frame();
+-        expect(err.mock.calls.map((c) => String(c[0])).join(" ")).toContain("--rung-light");
+->>>>>>> 48133f79e
++        expect(err.mock.calls.map((c) => String(c[0])).join(" ")).toContain("--rung-crest");
+         w.wrapper.unmount();
+     });
+ 
+diff --git a/tests/composables/motion/engage-stage.test.ts b/tests/composables/motion/engage-stage.test.ts
+index 421a5de57..05b755d69 100644
+--- a/tests/composables/motion/engage-stage.test.ts
++++ b/tests/composables/motion/engage-stage.test.ts
+@@ -11,7 +11,7 @@ import { readFileSync } from "node:fs";
+ import { join } from "node:path";
+ import { mount } from "@vue/test-utils";
+ import { defineComponent, h, nextTick, ref } from "vue";
+-import { afterEach, describe, expect, it, vi } from "vitest";
++import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+ 
+ import { useEngage } from "@glass/composables/motion/engage/useEngage";
+ import { engageRung } from "@glass/composables/motion/engage/engageLadder";
+@@ -144,7 +144,7 @@ describe("the footprint under a re-render (CK-20)", () => {
+     });
+ });
+ 
+-describe("the place is observed, not remembered (CK-20, C-E4 §0.1)", () => {
++describe("the stage hears every move of the rest box before the next frame it paints (CK-20)", () => {
+     // the dock row's clock and the grow figures, as the stylesheet computes them; happy-dom
+     // resolves no registered property
+     function withClocks() {
+@@ -161,37 +161,66 @@ describe("the place is observed, not remembered (CK-20, C-E4 §0.1)", () => {
+             });
+         });
+     }
+-    type IO = { observe: { mock: { calls: unknown[][] } }; trigger: (t: Element, i?: boolean) => void };
+-    const watcherOf = (el: Element): IO | undefined =>
+-        ((globalThis.IntersectionObserver as unknown as { instances: IO[] }).instances ?? [])
+-            .filter((o) => o.observe.mock.calls.some((c) => c[0] === el))
+-            .at(-1);
+-    async function engagedOverMovedLayout(observerReports: boolean) {
++    // one animation frame (tests/setup.ts: a frame is a timer turn)
++    const nextFrame = () => new Promise<void>((ok) => requestAnimationFrame(() => ok()));
++    // the frame's resize step: happy-dom lays nothing out, so the step is played by hand
++    // after the frame's callbacks, for every box observed in it
++    const steps = new Set<{ cb: ResizeObserverCallback; boxes: Set<Element> }>();
++    class FrameResizeObserver {
++        private readonly own: { cb: ResizeObserverCallback; boxes: Set<Element> };
++        constructor(cb: ResizeObserverCallback) {
++            this.own = { cb, boxes: new Set() };
++            steps.add(this.own);
++        }
++        observe(el: Element) {
++            this.own.boxes.add(el);
++        }
++        unobserve(el: Element) {
++            this.own.boxes.delete(el);
++        }
++        disconnect() {
++            steps.delete(this.own);
++        }
++    }
++    const paint = async () => {
++        await nextFrame();
++        for (const s of [...steps]) if (s.boxes.size) s.cb([], s as unknown as ResizeObserver);
++    };
++    beforeEach(() => vi.stubGlobal("ResizeObserver", FrameResizeObserver));
++    afterEach(() => {
++        vi.unstubAllGlobals();
++        steps.clear();
++    });
++    /**
++     * A engaged by the keyboard (promoted, so its rest box is the footprint), the footprint's
++     * box moved by layout alone (`move`: left, top, width), then an unrelated append. Returns
++     * the glides the append started, and the stage-room/width the host carries.
++     */
++    async function engagedOverMovedLayout(move: { left: number; top: number; width: number }, framePaints: boolean) {
+         const gcs = withClocks();
+         // the footprint's box, as layout places it (happy-dom lays nothing out)
+-        let top = 100;
++        let r = { left: 100, top: 100, width: 200 };
+         const native = HTMLElement.prototype.getBoundingClientRect;
+         const box = vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockImplementation(function (this: HTMLElement) {
+             if (!this.classList.contains("engage-footprint")) return native.call(this);
+-            return { x: 0, y: top, left: 0, top, right: 200, bottom: top + 20, width: 200, height: 20, toJSON: () => ({}) } as DOMRect;
++            const { left, top, width } = r;
++            return { x: left, y: top, left, top, right: left + width, bottom: top + 20, width, height: 20, toJSON: () => ({}) } as DOMRect;
+         });
+         const w = mountPair();
+         try {
+             await press("Tab", () => w.a.focus());
+-            const fp = w.a.previousElementSibling as HTMLElement;
+-            const io = watcherOf(fp);
+-            expect(io, "the footprint's place is not observed").toBeDefined();
+-            io!.trigger(fp, true); // the first report: where the box stands
++            await paint();
+             const anim = vi.fn();
+             w.a.animate = anim as unknown as HTMLElement["animate"];
+-            // a layout move with no mutation: a spacer above grows 120 px by a style write
+-            top = 220;
+-            if (observerReports) io!.trigger(fp, false);
+-            // then an unrelated append elsewhere: a childList mutation that moves nothing
++            // a layout move with no mutation (a style write elsewhere)
++            r = move;
++            // the frame that paints it: the stage reads the rest box in its resize step
++            if (framePaints) await paint();
++            // then an unrelated append: a childList mutation that moves nothing
+             document.body.append(document.createElement("i"));
+             await Promise.resolve();
+             await Promise.resolve();
+-            return anim.mock.calls.length;
++            return { glides: anim.mock.calls.length, w: w.a.style.getPropertyValue("--stage-w") };
+         } finally {
+             w.w.unmount();
+             box.mockRestore();
+@@ -199,12 +228,76 @@ describe("the place is observed, not remembered (CK-20, C-E4 §0.1)", () => {
+         }
+     }
+ 
+-    it("a layout move the observer reports is not glided again on the next unrelated mutation", async () => {
+-        expect(await engagedOverMovedLayout(true)).toBe(0);
++    // every direction a rest box can move: out of its old rect, into it, a centred shrink
++    const moves = {
++        "outward (down 120 px)": { left: 100, top: 220, width: 200 },
++        "inward (left edge in 60 px, right edge kept)": { left: 160, top: 100, width: 140 },
++        "centred shrink (120 px narrower, centre kept)": { left: 160, top: 100, width: 80 },
++    };
++    for (const [name, move] of Object.entries(moves)) {
++        it(`a layout move ${name} is heard in the frame that paints it: no glide on the next unrelated mutation`, async () => {
++            const r = await engagedOverMovedLayout(move, true);
++            expect(r.glides).toBe(0);
++            expect(r.w, "the reach is re-read with the place").toBe(`${move.width}px`);
++        });
++    }
++
++    it("control: the same move made before any frame paints it is travelled from the place last painted (the cases above are not vacuous)", async () => {
++        const r = await engagedOverMovedLayout(moves["inward (left edge in 60 px, right edge kept)"], false);
++        expect(r.glides).toBe(1);
+     });
+ 
+-    it("plant: the same move unreported is glided back from the stale place (the case above is not vacuous)", async () => {
+-        expect(await engagedOverMovedLayout(false)).toBe(1);
++    it("a move written by an animation-frame callback after the stage's own is heard in that frame's resize step", async () => {
++        // the stage's frame callback runs first; a spring elsewhere then moves the box in a
++        // later callback of the same frame. The read after layout still sees it.
++        const r = await (async () => {
++            const gcs = withClocks();
++            let r = { left: 100, top: 100, width: 200 };
++            const native = HTMLElement.prototype.getBoundingClientRect;
++            const box = vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockImplementation(function (this: HTMLElement) {
++                if (!this.classList.contains("engage-footprint")) return native.call(this);
++                const { left, top, width } = r;
++                return { x: left, y: top, left, top, right: left + width, bottom: top + 20, width, height: 20, toJSON: () => ({}) } as DOMRect;
++            });
++            const w = mountPair();
++            try {
++                await press("Tab", () => w.a.focus());
++                await paint();
++                const anim = vi.fn();
++                w.a.animate = anim as unknown as HTMLElement["animate"];
++                requestAnimationFrame(() => {
++                    r = { left: 160, top: 100, width: 140 };
++                });
++                await paint();
++                document.body.append(document.createElement("i"));
++                await Promise.resolve();
++                await Promise.resolve();
++                return anim.mock.calls.length;
++            } finally {
++                w.w.unmount();
++                box.mockRestore();
++                gcs.mockRestore();
++            }
++        })();
++        expect(r).toBe(0);
++    });
++
++    it("nothing runs at rest: the frame read stops when the stage empties", async () => {
++        const raf = vi.spyOn(globalThis, "requestAnimationFrame");
++        const w = mountPair();
++        try {
++            await press("Tab", () => w.a.focus());
++            await nextFrame();
++            expect(raf).toHaveBeenCalled();
++        } finally {
++            w.w.unmount();
++        }
++        await nextFrame();
++        await nextFrame();
++        raf.mockClear();
++        await new Promise((ok) => setTimeout(ok, 10));
++        expect(raf, "a frame loop outlived the stage").not.toHaveBeenCalled();
++        raf.mockRestore();
+     });
+ });
+ 

@@ -1,0 +1,9 @@
+## 2026-10-27 18:57:13 load { 17.62 18.14 20.79 } · start pass-6/E6/probe/e6-place veil-coarse chromium 
+P-E6 place probe · chromium · load 17.6/18.1/20.8 at start
+  PASS       late frame write · keyboard · engaged true · flow x 48 → 108 px (want +60) · the move painted in one frame of 60.0 px at +107 ms; after it, over 101 frames, the largest one-frame move 0.0 px at +0 ms (dx 0.0) (bound ≤ 4) · load 17.6/18.1/20.8
+  PASS       transition move · keyboard · engaged true · flow x 48 → 168 px (want +120) · over 92 frames the largest one-frame move 3.7 px at +623 ms (dx 4.4) (bound ≤ 7.3: 4 + the transition's own 3.3) · load 17.2/18.0/20.7
+  PASS       late frame write · pointer · engaged true · flow x 48 → 108 px (want +60) · the move painted in one frame of 60.0 px at +100 ms; after it, over 108 frames, the largest one-frame move 0.0 px at +0 ms (dx 0.0) (bound ≤ 4) · load 17.2/18.0/20.7
+  PASS       transition move · pointer · engaged true · flow x 48 → 168 px (want +120) · over 119 frames the largest one-frame move 1.9 px at +281 ms (dx 1.9) (bound ≤ 7.3: 4 + the transition's own 3.3) · load 17.2/18.0/20.7
+P-E6 place probe · chromium · 4 pass, 0 fail · load 17.2/18.0/20.7 at end
+exit 0
+## 2026-10-27 18:57:21 load { 17.17 18.04 20.73 } · end e6-place veil-coarse chromium

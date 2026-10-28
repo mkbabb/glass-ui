@@ -1,0 +1,26 @@
+noveil-coarse apply --check: clean on a HEAD tree (4f27195b0)
+8f952538771b3825d405dc4e87fab271939726ea  /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/P-E6-noveil-coarse.patch
++export const STAGE_VEIL = false;
++export const POINTER_STAGE: "every" | "coarse" = "coarse";
+191 files, +4879/-1561
+src: 148 files, +3135/-1290
+veil-coarse apply --check: clean on a HEAD tree (4f27195b0)
+4b34d8331ccd034f0402def4974f29edf9a034e0  /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/P-E6-veil-coarse.patch
++export const STAGE_VEIL = true;
++export const POINTER_STAGE: "every" | "coarse" = "coarse";
+191 files, +4879/-1561
+src: 148 files, +3135/-1290
+noveil-every apply --check: clean on a HEAD tree (4f27195b0)
+b143542101fd0affa9ed822813b8ec8be62e0dc8  /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/P-E6-noveil-every.patch
++export const STAGE_VEIL = false;
++export const POINTER_STAGE: "every" | "coarse" = "every";
+191 files, +4879/-1561
+src: 148 files, +3135/-1290
+veil-every apply --check: clean on a HEAD tree (4f27195b0)
+ae2a7e7ffcc560ec2882bca56f9252dcc46ad36c  /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/P-E6-veil-every.patch
++export const STAGE_VEIL = true;
++export const POINTER_STAGE: "every" | "coarse" = "every";
+191 files, +4879/-1561
+src: 148 files, +3135/-1290
+85:export const STAGE_VEIL = false;
+88:export const POINTER_STAGE: "every" | "coarse" = "coarse";

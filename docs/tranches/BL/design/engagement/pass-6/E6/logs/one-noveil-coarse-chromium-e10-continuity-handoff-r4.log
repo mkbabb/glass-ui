@@ -1,0 +1,18 @@
+## 2026-10-27 20:10:53 load { 24.76 22.85 22.59 } · start e10-continuity.mjs noveil-coarse chromium --scenes slider,slider2
+# E-10 · CK-20 no one-frame discontinuity on an engagement path
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p6/E6/out/builds/noveil-coarse · engine chromium · lock wait 0.0 s · other headless processes: chromium 8, webkit 2 · load 24.8/22.8/22.6 at start
+# scene app: harness scenes/App.vue (sha1 d020f4946adb)
+# chromium 149.0.7827.55
+# narrowed to scenes slider, slider2
+  REPORT     E-10 slider own release · Tab in: largest one-frame centre move 0.0 px · Tab out of the engaged slider: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0075, largest centre move 0.0 px (the references for the hand-off and Escape bounds) · load 23.8/22.7/22.5
+  PASS       E-10 slider escape release · Escape: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0070 (bound ≤ own release 0.0075 + 0.002), largest centre move 0.0 px (bound ≤ own release 0.0 + 1 px) · load 23.8/22.7/22.5
+  PASS       E-10 slider re-render landing · a sibling inserted during the hold, then release: the root's largest one-frame move per 16.7 ms 1.3 px (without the insert 1.1 px; bound ≤ that + 1 px) · load 23.9/22.7/22.6
+  PASS       E-10 slider re-render landing (layout-only) · a spacer before the slider grown 40 px by a style write during the hold (no childList mutation; the root's top read 96.3 → 136.3 px during the hold, 136.9 px at the film's end), then release: the root's largest one-frame move per 16.7 ms 1.2 px (without the move 1.4 px; bound ≤ that + 1 px) · load 23.9/22.7/22.6
+  PASS       E-10 slider2 hand-off drop · Tab A → B (focus on Probe B) · outgoing A ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0065 (bound ≤ own release 0.0075 + 0.002), largest centre move 0.0 px at 53 ms (bound ≤ own release 0.0 + 1 px) · incoming B ×1.000 → ×1.060, largest centre move 0.0 px at 237 ms (bound ≤ own engage 0.0 + 1 px) · load 22.9/22.5/22.5
+  PASS       E-10 slider2 hand-off singleton fwd · 121 frames: engaged roots per frame max 1, 0 frame(s) with none · first frame A engaged true, B false · last frame B engaged true, A false (bound: at most one engaged on every frame, the incoming one at the end; selector [data-engaged]) · load 22.9/22.5/22.5
+  REPORT     E-10 slider2 hand-off veil · no veil up before the Tab (0.00): this route veils no keyboard engagement · load 22.9/22.5/22.5
+  PASS       E-10 slider2 hand-off rev · Shift+Tab B → A (focus on Probe A) · outgoing B ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0066 (bound ≤ own release 0.0075 + 0.002), largest centre move 0.0 px at 64 ms (bound ≤ own release 0.0 + 1 px) · incoming A ×1.000 → ×1.060, largest centre move 0.0 px at 116 ms (bound ≤ own engage 0.0 + 1 px) · load 22.9/22.5/22.5
+  PASS       E-10 slider2 hand-off singleton rev · 121 frames: engaged roots per frame max 1, 0 frame(s) with none · first frame B engaged true, A false · last frame A engaged true, B false (bound: at most one engaged on every frame, the incoming one at the end; selector [data-engaged]) · load 22.9/22.5/22.5
+E-10 chromium PASS · 7 pass, 0 fail, 0 unmeasured of 7 gating cells (2 reported) · load 24.8/22.8/22.6 at start, 22.9/22.5/22.5 at end
+exit 0
+## 2026-10-27 20:11:11 load { 22.88 22.53 22.48 } · end e10-continuity.mjs noveil-coarse chromium

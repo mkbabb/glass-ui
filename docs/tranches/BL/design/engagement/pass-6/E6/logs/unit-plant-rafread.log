@@ -1,0 +1,37 @@
+# 2026-10-27 18:00:00 start · load { 30.73 30.97 28.86 }
+# cmd: --light --timeout 10 -- npx vitest run --maxWorkers=2 tests/composables/motion/engage-stage.test.ts
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p6/E6/wt
+
+ ❯ tests/composables/motion/engage-stage.test.ts (27 tests | 1 failed) 195ms
+     × a move written by an animation-frame callback after the stage's own is heard in that frame's resize step 12ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/composables/motion/engage-stage.test.ts > the stage hears every move of the rest box before the next frame it paints (CK-20) > a move written by an animation-frame callback after the stage's own is heard in that frame's resize step
+AssertionError: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/composables/motion/engage-stage.test.ts:282:19
+    280|             }
+    281|         })();
+    282|         expect(r).toBe(0);
+       |                   ^
+    283|     });
+    284|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 26 passed (27)
+   Start at  18:00:01
+   Duration  1.97s (transform 773ms, setup 92ms, import 1.22s, tests 195ms, environment 266ms)
+
+# 2026-10-27 18:00:08 end · exit 1 · load { 31.62 31.15 28.95 }
+restored 23945121321c was 23945121321c

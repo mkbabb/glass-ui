@@ -1,0 +1,43 @@
+{
+ "id": "E-10",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p6/E6/out/builds/noveil-every"
+ },
+ "loadStart": "16.1/17.8/19.9",
+ "loadEnd": "15.6/17.7/19.8",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 slider2 hand-off drop",
+   "status": "FAIL",
+   "line": "Tab A → B (focus on Probe B) · outgoing A ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0078 (bound ≤ own release NaN + 0.002), largest centre move 0.0 px at 71 ms (bound ≤ own release NaN + 1 px) · incoming B ×1.000 → ×1.060, largest centre move 0.0 px at 116 ms (bound ≤ own engage NaN + 1 px)",
+   "load": "15.6/17.7/19.8"
+  },
+  {
+   "name": "E-10 slider2 hand-off singleton fwd",
+   "status": "PASS",
+   "line": "121 frames: engaged roots per frame max 1, 0 frame(s) with none · first frame A engaged true, B false · last frame B engaged true, A false (bound: at most one engaged on every frame, the incoming one at the end; selector [data-engaged])",
+   "load": "15.6/17.7/19.8"
+  },
+  {
+   "name": "E-10 slider2 hand-off veil",
+   "status": "REPORT",
+   "line": "no veil up before the Tab (0.00): this route veils no keyboard engagement",
+   "load": "15.6/17.7/19.8"
+  },
+  {
+   "name": "E-10 slider2 hand-off rev",
+   "status": "FAIL",
+   "line": "Shift+Tab B → A (focus on Probe A) · outgoing B ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0072 (bound ≤ own release NaN + 0.002), largest centre move 0.0 px at 82 ms (bound ≤ own release NaN + 1 px) · incoming A ×1.000 → ×1.060, largest centre move 0.0 px at 208 ms (bound ≤ own engage NaN + 1 px)",
+   "load": "15.6/17.7/19.8"
+  },
+  {
+   "name": "E-10 slider2 hand-off singleton rev",
+   "status": "PASS",
+   "line": "117 frames: engaged roots per frame max 1, 0 frame(s) with none · first frame B engaged true, A false · last frame A engaged true, B false (bound: at most one engaged on every frame, the incoming one at the end; selector [data-engaged])",
+   "load": "15.6/17.7/19.8"
+  }
+ ]
+}

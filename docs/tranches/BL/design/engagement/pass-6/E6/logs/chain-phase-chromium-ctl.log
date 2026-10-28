@@ -1,0 +1,45 @@
+# 2026-10-27 21:43:38 chain phase-chromium-ctl.txt start · load { 17.42 16.74 19.32 }
+## 2026-10-27 21:43:38 TAG=-c1 one plant-noread chromium e10-continuity.mjs handoff --scenes slider,slider2 · load { 17.42 16.74 19.32 }
+## 2026-10-27 21:43:38 load { 17.42 16.74 19.32 } · start e10-continuity.mjs plant-noread chromium --scenes slider,slider2
+8 PASS · 0 FAIL
+## guarded exit 0 · 2026-10-27 21:44:01 · load { 17.45 16.78 19.27 }
+## 2026-10-27 21:44:01 TAG=-c1 one noveil-coarse chromium e10-continuity.mjs handoff --scenes slider,slider2 · load { 17.45 16.78 19.27 }
+## 2026-10-27 21:44:02 load { 17.45 16.78 19.27 } · start e10-continuity.mjs noveil-coarse chromium --scenes slider,slider2
+8 PASS · 0 FAIL
+## guarded exit 0 · 2026-10-27 21:44:23 · load { 21.15 17.72 19.54 }
+## 2026-10-27 21:44:23 TAG=-c2 one plant-noread chromium e10-continuity.mjs handoff --scenes slider,slider2 · load { 21.15 17.72 19.54 }
+## 2026-10-27 21:44:23 load { 21.15 17.72 19.54 } · start e10-continuity.mjs plant-noread chromium --scenes slider,slider2
+8 PASS · 0 FAIL
+## guarded exit 0 · 2026-10-27 21:44:44 · load { 18.67 17.38 19.38 }
+## 2026-10-27 21:44:44 TAG=-c2 one noveil-coarse chromium e10-continuity.mjs handoff --scenes slider,slider2 · load { 18.67 17.38 19.38 }
+## 2026-10-27 21:44:44 load { 18.67 17.38 19.38 } · start e10-continuity.mjs noveil-coarse chromium --scenes slider,slider2
+8 PASS · 0 FAIL
+## guarded exit 0 · 2026-10-27 21:45:06 · load { 21.91 18.17 19.61 }
+## 2026-10-27 21:45:06 TAG=-c3 one plant-noread chromium e10-continuity.mjs handoff --scenes slider,slider2 · load { 21.91 18.17 19.61 }
+## 2026-10-27 21:45:06 load { 21.91 18.17 19.61 } · start e10-continuity.mjs plant-noread chromium --scenes slider,slider2
+8 PASS · 0 FAIL
+## guarded exit 0 · 2026-10-27 21:45:27 · load { 19.83 17.92 19.49 }
+## 2026-10-27 21:45:27 TAG=-c3 one noveil-coarse chromium e10-continuity.mjs handoff --scenes slider,slider2 · load { 19.83 17.92 19.49 }
+## 2026-10-27 21:45:27 load { 19.83 17.92 19.49 } · start e10-continuity.mjs noveil-coarse chromium --scenes slider,slider2
+8 PASS · 0 FAIL
+## guarded exit 0 · 2026-10-27 21:45:47 · load { 20.76 18.28 19.58 }
+## 2026-10-27 21:45:47 TAG=-c4 one plant-noread chromium e10-continuity.mjs handoff --scenes slider,slider2 · load { 20.76 18.28 19.58 }
+## 2026-10-27 21:45:47 load { 20.46 18.26 19.56 } · start e10-continuity.mjs plant-noread chromium --scenes slider,slider2
+8 PASS · 0 FAIL
+## guarded exit 0 · 2026-10-27 21:46:08 · load { 22.68 18.89 19.76 }
+## 2026-10-27 21:46:08 TAG=-c5 one plant-noread chromium e10-continuity.mjs handoff --scenes slider,slider2 · load { 22.68 18.89 19.76 }
+## 2026-10-27 21:46:09 load { 22.68 18.89 19.76 } · start e10-continuity.mjs plant-noread chromium --scenes slider,slider2
+8 PASS · 0 FAIL
+## guarded exit 0 · 2026-10-27 21:46:31 · load { 27.66 20.35 20.27 }
+## 2026-10-27 21:46:31 xp pass-6/E6/probe slider-press-ctl noveil-coarse chromium · load { 27.66 20.35 20.27 }
+## 2026-10-27 21:46:32 load { 27.66 20.35 20.27 } · start pass-6/E6/probe/slider-press-ctl noveil-coarse chromium 
+0 PASS · 0 FAIL
+## guarded exit 0 · 2026-10-27 21:46:44 · load { 24.01 19.91 20.11 }
+## 2026-10-27 21:46:44 TAG=-r4 xp pass-6/E6/probe slider-press noveil-coarse chromium · load { 24.01 19.91 20.11 }
+## 2026-10-27 21:46:45 load { 24.01 19.91 20.11 } · start pass-6/E6/probe/slider-press noveil-coarse chromium 
+0 PASS · 3 FAIL
+  FAIL       slider touch press light · (hover:none) true (pointer:coarse) true · +26 held false sy 1.000 · +51 held true sy 0.994 · +77 held true sy 0.975 · +102 held true sy 0.958 · +150 held true sy 0.942 · +201 held true sy 0.940 · +120
+  FAIL       slider touch press dark · (hover:none) true (pointer:coarse) true · +25 held false sy 1.000 · +51 held true sy 0.998 · +76 held true sy 0.982 · +102 held true sy 0.963 · +151 held true sy 0.943 · +202 held true sy 0.940 · +1201
+P-E6 slider-press chromium FAIL · 0 pass, 2 fail, 0 unmeasured of 2 gating cells (0 reported) · load 24.0/19.9/20.1 at start, 23.0/19.8/20.1 at end
+## guarded exit 0 · 2026-10-27 21:46:54 · load { 23.05 19.83 20.08 }
+# 2026-10-27 21:46:54 chain end · load { 23.05 19.83 20.08 }

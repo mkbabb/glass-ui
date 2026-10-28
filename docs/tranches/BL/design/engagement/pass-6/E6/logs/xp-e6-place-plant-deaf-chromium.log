@@ -1,0 +1,9 @@
+## 2026-10-27 19:00:52 load { 16.20 18.35 20.38 } · start pass-6/E6/probe/e6-place plant-deaf chromium 
+P-E6 place probe · chromium · load 16.2/18.4/20.4 at start
+  FAIL       late frame write · keyboard · engaged true · flow x 48 → 108 px (want +60) · the move painted in one frame of NaN px at +NaN ms; after it, over 115 frames, the largest one-frame move 5.3 px at +149 ms (dx 5.3) (bound ≤ 4) · load 16.2/18.4/20.4
+  FAIL       transition move · keyboard · engaged true · flow x 48 → 168 px (want +120) · over 123 frames the largest one-frame move 61.4 px at +387 ms (dx -61.4) (bound ≤ 7.3: 4 + the transition's own 3.3) · load 16.2/18.4/20.4
+  FAIL       late frame write · pointer · engaged true · flow x 48 → 108 px (want +60) · the move painted in one frame of NaN px at +NaN ms; after it, over 118 frames, the largest one-frame move 5.5 px at +172 ms (dx 5.5) (bound ≤ 4) · load 15.6/18.2/20.3
+  FAIL       transition move · pointer · engaged true · flow x 48 → 168 px (want +120) · over 122 frames the largest one-frame move 60.8 px at +389 ms (dx -60.8) (bound ≤ 7.3: 4 + the transition's own 3.3) · load 15.6/18.2/20.3
+P-E6 place probe · chromium · 0 pass, 4 fail · load 15.6/18.2/20.3 at end
+exit 1
+## 2026-10-27 19:01:00 load { 15.62 18.19 20.31 } · end e6-place plant-deaf chromium

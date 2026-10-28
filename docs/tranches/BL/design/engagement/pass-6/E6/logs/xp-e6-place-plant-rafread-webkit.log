@@ -1,0 +1,9 @@
+## 2026-10-27 19:45:00 load { 26.73 24.05 21.07 } · start pass-6/E6/probe/e6-place plant-rafread webkit 
+P-E6 place probe · webkit · load 26.7/24.1/21.1 at start
+  FAIL       late frame write · keyboard · engaged true · flow x 48 → 108 px (want +60) · the move painted in one frame of NaN px at +NaN ms; after it, over 88 frames, the largest one-frame move 6.0 px at +151 ms (dx 6.0) (bound ≤ 4) · load 26.5/24.1/21.1
+  PASS       transition move · keyboard · engaged true · flow x 48 → 168 px (want +120) · over 89 frames the largest one-frame move 2.6 px at +507 ms (dx 2.6) (bound ≤ 7.3: 4 + the transition's own 3.3) · load 26.5/24.1/21.1
+  FAIL       late frame write · pointer · engaged true · flow x 48 → 108 px (want +60) · the move painted in one frame of NaN px at +NaN ms; after it, over 88 frames, the largest one-frame move 6.3 px at +166 ms (dx 6.3) (bound ≤ 4) · load 25.4/23.9/21.0
+  PASS       transition move · pointer · engaged true · flow x 48 → 168 px (want +120) · over 89 frames the largest one-frame move 2.4 px at +158 ms (dx 2.4) (bound ≤ 7.3: 4 + the transition's own 3.3) · load 25.4/23.9/21.0
+P-E6 place probe · webkit · 2 pass, 2 fail · load 25.4/23.9/21.0 at end
+exit 1
+## 2026-10-27 19:45:09 load { 25.35 23.85 21.03 } · end e6-place plant-rafread webkit

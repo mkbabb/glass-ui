@@ -1,0 +1,9 @@
+## 2026-10-27 19:01:05 load { 15.09 18.04 20.25 } · start pass-6/E6/probe/e6-place plant-rafread chromium 
+P-E6 place probe · chromium · load 15.1/18.0/20.2 at start
+  FAIL       late frame write · keyboard · engaged true · flow x 48 → 108 px (want +60) · the move painted in one frame of NaN px at +NaN ms; after it, over 118 frames, the largest one-frame move 4.6 px at +164 ms (dx 4.6) (bound ≤ 4) · load 14.7/17.9/20.2
+  PASS       transition move · keyboard · engaged true · flow x 48 → 168 px (want +120) · over 121 frames the largest one-frame move 2.0 px at +475 ms (dx 2.0) (bound ≤ 7.3: 4 + the transition's own 3.3) · load 14.7/17.9/20.2
+  FAIL       late frame write · pointer · engaged true · flow x 48 → 108 px (want +60) · the move painted in one frame of NaN px at +NaN ms; after it, over 118 frames, the largest one-frame move 4.7 px at +154 ms (dx 4.7) (bound ≤ 4) · load 14.7/17.9/20.2
+  PASS       transition move · pointer · engaged true · flow x 48 → 168 px (want +120) · over 117 frames the largest one-frame move 2.1 px at +385 ms (dx 2.1) (bound ≤ 7.3: 4 + the transition's own 3.3) · load 14.7/17.9/20.2
+P-E6 place probe · chromium · 2 pass, 2 fail · load 14.7/17.9/20.2 at end
+exit 1
+## 2026-10-27 19:01:13 load { 14.71 17.86 20.15 } · end e6-place plant-rafread chromium

@@ -1,0 +1,43 @@
+{
+ "id": "E-10",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p6/E6/out/builds/veil-coarse"
+ },
+ "loadStart": "16.4/17.9/19.9",
+ "loadEnd": "16.4/17.9/19.9",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 slider2 hand-off drop",
+   "status": "FAIL",
+   "line": "Tab A → B (focus on Probe B) · outgoing A ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0074 (bound ≤ own release NaN + 0.002), largest centre move 0.0 px at 55 ms (bound ≤ own release NaN + 1 px) · incoming B ×1.000 → ×1.060, largest centre move 0.0 px at 85 ms (bound ≤ own engage NaN + 1 px)",
+   "load": "16.4/17.9/19.9"
+  },
+  {
+   "name": "E-10 slider2 hand-off singleton fwd",
+   "status": "PASS",
+   "line": "116 frames: engaged roots per frame max 1, 0 frame(s) with none · first frame A engaged true, B false · last frame B engaged true, A false (bound: at most one engaged on every frame, the incoming one at the end; selector [data-engaged])",
+   "load": "16.4/17.9/19.9"
+  },
+  {
+   "name": "E-10 slider2 hand-off veil",
+   "status": "PASS",
+   "line": "veil 1.00 before the Tab, minimum 1.00 across the hand-off, 1.00 at the end (bound ≥ 0.1× its level: it does not re-ramp from 0)",
+   "load": "16.4/17.9/19.9"
+  },
+  {
+   "name": "E-10 slider2 hand-off rev",
+   "status": "FAIL",
+   "line": "Shift+Tab B → A (focus on Probe A) · outgoing B ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0067 (bound ≤ own release NaN + 0.002), largest centre move 0.0 px at 84 ms (bound ≤ own release NaN + 1 px) · incoming A ×1.000 → ×1.060, largest centre move 0.0 px at 64 ms (bound ≤ own engage NaN + 1 px)",
+   "load": "16.4/17.9/19.9"
+  },
+  {
+   "name": "E-10 slider2 hand-off singleton rev",
+   "status": "PASS",
+   "line": "112 frames: engaged roots per frame max 1, 0 frame(s) with none · first frame B engaged true, A false · last frame A engaged true, B false (bound: at most one engaged on every frame, the incoming one at the end; selector [data-engaged])",
+   "load": "16.4/17.9/19.9"
+  }
+ ]
+}

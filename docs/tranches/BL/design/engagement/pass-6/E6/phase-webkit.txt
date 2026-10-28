@@ -1,0 +1,53 @@
+bat noveil-coarse webkit E-1
+bat noveil-coarse webkit E-2 --commit-arms i,ii
+bat noveil-coarse webkit E-3
+bat noveil-coarse webkit E-4
+bat noveil-coarse webkit E-5
+bat noveil-coarse webkit E-6
+bat noveil-coarse webkit E-7
+bat noveil-coarse webkit E-8
+bat noveil-coarse webkit E-9
+bat noveil-coarse webkit E-10
+bat noveil-coarse webkit E-11
+bat noveil-coarse webkit E-12
+bat veil-coarse webkit E-10
+bat noveil-every webkit E-10
+bat veil-every webkit E-10
+xp pass-5/C-A5/probe ca5-probe noveil-coarse webkit
+xp pass-5/C-E5/probe ce5-probe ce5-noveil-coarse webkit --label noveil-coarse
+xp pass-6/E6/probe e6-place noveil-coarse webkit
+xp pass-5/C-A5/probe ca5-probe veil-coarse webkit
+xp pass-5/C-E5/probe ce5-probe ce5-veil-coarse webkit --label veil-coarse
+xp pass-6/E6/probe e6-place veil-coarse webkit
+xp pass-5/C-A5/probe ca5-probe noveil-every webkit
+xp pass-5/C-E5/probe ce5-probe ce5-noveil-every webkit --label noveil-every
+xp pass-6/E6/probe e6-place noveil-every webkit
+xp pass-5/C-A5/probe ca5-probe veil-every webkit
+xp pass-5/C-E5/probe ce5-probe ce5-veil-every webkit --label veil-every
+xp pass-6/E6/probe e6-place veil-every webkit
+xp pass-6/E6/probe slider-press noveil-coarse webkit
+one plant-deaf webkit e10-continuity.mjs deaf --scenes restale,clipstale
+xp pass-6/E6/probe e6-place plant-rafread webkit
+cap noveil-coarse webkit
+bat veil-coarse webkit E-3
+bat veil-coarse webkit E-4
+bat veil-coarse webkit E-12
+bat veil-coarse webkit E-1
+bat noveil-every webkit E-3
+bat noveil-every webkit E-4
+bat noveil-every webkit E-12
+bat noveil-every webkit E-1
+bat veil-every webkit E-3
+bat veil-every webkit E-4
+bat veil-every webkit E-12
+bat veil-every webkit E-1
+cap veil-coarse webkit
+xp pass-6/E6/probe loupe-frame noveil-coarse webkit --label e6-noveil-coarse --frames /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/E6/glance/loupe
+TAG=-r1 one noveil-coarse webkit e10-continuity.mjs handoff --scenes slider,slider2
+TAG=-r2 one noveil-coarse webkit e10-continuity.mjs handoff --scenes slider,slider2
+TAG=-r1 one veil-coarse webkit e10-continuity.mjs handoff --scenes slider,slider2
+TAG=-r2 one veil-coarse webkit e10-continuity.mjs handoff --scenes slider,slider2
+TAG=-r1 one noveil-every webkit e10-continuity.mjs handoff --scenes slider,slider2
+TAG=-r2 one noveil-every webkit e10-continuity.mjs handoff --scenes slider,slider2
+TAG=-r1 one veil-every webkit e10-continuity.mjs handoff --scenes slider,slider2
+TAG=-r2 one veil-every webkit e10-continuity.mjs handoff --scenes slider,slider2

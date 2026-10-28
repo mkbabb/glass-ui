@@ -1,0 +1,14 @@
+## 2026-10-27 19:01:56 load { 18.88 18.51 20.28 } · start e10-continuity.mjs noveil-coarse chromium --scenes slider2
+# E-10 · CK-20 no one-frame discontinuity on an engagement path
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p6/E6/out/builds/noveil-coarse · engine chromium · lock wait 0.0 s · other headless processes: chromium 0, webkit 0 · load 18.9/18.5/20.3 at start
+# scene app: harness scenes/App.vue (sha1 d020f4946adb)
+# chromium 149.0.7827.55
+# narrowed to scenes slider2
+  FAIL       E-10 slider2 hand-off drop · Tab A → B (focus on Probe B) · outgoing A ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0083 (bound ≤ own release NaN + 0.002), largest centre move 0.0 px at 70 ms (bound ≤ own release NaN + 1 px) · incoming B ×1.000 → ×1.060, largest centre move 0.0 px at 88 ms (bound ≤ own engage NaN + 1 px) · load 18.4/18.4/20.2
+  PASS       E-10 slider2 hand-off singleton fwd · 114 frames: engaged roots per frame max 1, 0 frame(s) with none · first frame A engaged true, B false · last frame B engaged true, A false (bound: at most one engaged on every frame, the incoming one at the end; selector [data-engaged]) · load 18.4/18.4/20.2
+  REPORT     E-10 slider2 hand-off veil · no veil up before the Tab (0.00): this route veils no keyboard engagement · load 18.4/18.4/20.2
+  FAIL       E-10 slider2 hand-off rev · Shift+Tab B → A (focus on Probe A) · outgoing B ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0067 (bound ≤ own release NaN + 0.002), largest centre move 0.0 px at 73 ms (bound ≤ own release NaN + 1 px) · incoming A ×1.000 → ×1.060, largest centre move 0.0 px at 102 ms (bound ≤ own engage NaN + 1 px) · load 18.4/18.4/20.2
+  PASS       E-10 slider2 hand-off singleton rev · 120 frames: engaged roots per frame max 1, 0 frame(s) with none · first frame B engaged true, A false · last frame A engaged true, B false (bound: at most one engaged on every frame, the incoming one at the end; selector [data-engaged]) · load 18.4/18.4/20.2
+E-10 chromium FAIL · 2 pass, 2 fail, 0 unmeasured of 4 gating cells (1 reported) · load 18.9/18.5/20.3 at start, 18.4/18.4/20.2 at end
+exit 1
+## 2026-10-27 19:02:01 load { 18.41 18.42 20.24 } · end e10-continuity.mjs noveil-coarse chromium
