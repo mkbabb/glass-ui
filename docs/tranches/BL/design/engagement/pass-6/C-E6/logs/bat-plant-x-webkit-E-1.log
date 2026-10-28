@@ -1,0 +1,8 @@
+## 2026-10-28 01:41:18 load { 31.39 21.42 21.66 } · start E-1 plant-x webkit 
+E-1 webkit   exit 1 · E-1 webkit FAIL · 92 pass, 4 fail, 0 unmeasured of 96 gating cells (0 reported) · load 32.6/21.8/21.8 at start, 37.3/26.2/23.5 at end · 75 s, load at start 32.6/21.8/21.8
+    FAIL       E-1 adoption switch · declared chosen · 3 instance(s) in 3 scene(s) · NOT ADOPTED: switch: button[role=switch].switch.control-bit computes [unclassed] · press_switch: button[role=switch].switch.control-bit computes [unclassed] · s6: button[role=switch].switch.control-bit computes [unclassed] · load 42.1/25.8/23.3
+    FAIL       E-1 adoption latch · 53 of 55 declared members seen adopting their recipe; unproven (not rendered by any scene, or not adopted): dock switch · load 42.1/25.8/23.3
+    FAIL       E-1 runtime ambient (aurora) · scene ambient, rung rest · pointer moved across: mean pixel change 1.80 levels against 1.25 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift) · load 38.8/26.3/23.5
+    FAIL       E-1 runtime ambient (aurora) PRM press-light · scene ambient, reduce · pointer moved across: mean pixel change 0.00 levels against 0.00 at rest over the same interval (bound ≥ 0.5 and ≥ 2× drift) · load 37.3/26.2/23.5
+exit 1
+## 2026-10-28 01:42:35 load { 37.31 26.24 23.51 } · end E-1 plant-x webkit

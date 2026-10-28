@@ -1,0 +1,127 @@
+{
+ "id": "E-4",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p6/C-E6/out/builds/noveil-every"
+ },
+ "loadStart": "35.5/38.6/38.0",
+ "loadEnd": "33.9/36.9/37.4",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-4 slider fling carries velocity",
+   "status": "PASS",
+   "line": "axis x, leading edge, page frame · 5 reads, every one must pass: [1: carry 7.01 / settle -2.89 px pass · 2: carry 5.35 / settle -4.11 px pass · 3: carry 6.20 / settle -4.61 px pass · 4: carry 6.73 / settle -3.75 px pass · 5: carry 4.43 / settle -4.98 px pass] (5 of 5 pass) · read 1 in full: fling: carry 7.01 px, settles -10.22 px past release · still: carry 0.00 px, settles -7.32 px · difference: carry 7.01 px, settle -2.89 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 196 frames, median 10.0 ms",
+   "load": "33.2/37.7/37.7"
+  },
+  {
+   "name": "E-4 slider release continuity",
+   "status": "PASS",
+   "line": "over 5 reads, each against its own drive (2.6/67.5, 3.5/72.9, 3.0/69.4, 4.2/67.4, 3.0/72.8 px; 0 over) · read 1: largest one-frame move on release: fling 2.6 px, still 0.7 px · during the drive: fling 43.6 px, still 43.6 px (bound ≤ drive × 1.5 + 2 = 67.5 px)",
+   "load": "33.2/37.7/37.7"
+  },
+  {
+   "name": "E-4 slider release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 79.2 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px",
+   "load": "34.3/37.9/37.7"
+  },
+  {
+   "name": "E-4 tabsdrag fling carries velocity",
+   "status": "PASS",
+   "line": "axis x, page frame · fling: carry 38.41 px, settles 36.66 px past release · still: carry 31.74 px, settles 31.54 px · difference: carry 6.67 px, settle 5.12 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 196 frames, median 10.0 ms",
+   "load": "35.4/38.0/37.8"
+  },
+  {
+   "name": "E-4 tabsdrag release continuity",
+   "status": "PASS",
+   "line": "largest one-frame move on release: fling 13.7 px, still 30.6 px · during the drive: fling 41.7 px, still 41.7 px (bound ≤ drive × 1.5 + 2 = 64.6 px)",
+   "load": "35.4/38.0/37.8"
+  },
+  {
+   "name": "E-4 tabsdrag repeat landing",
+   "status": "PASS",
+   "line": "3 fling runs, the same drive, land at 247.8, 247.8, 247.8 px (page frame, signed) · spread 0.00 px (bound ≤ 2 px: the same detent)",
+   "load": "35.9/38.1/37.8"
+  },
+  {
+   "name": "E-4 tabsdrag release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 156.7 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 36.7 px",
+   "load": "35.7/38.0/37.8"
+  },
+  {
+   "name": "E-4 sheet fling carries velocity",
+   "status": "PASS",
+   "line": "axis y, dir −1, page frame · fling: carry 255.00 px, settles 255.00 px past release · still: carry 5.00 px, settles 5.00 px · difference: carry 250.00 px, settle 250.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 191 frames, median 10.0 ms",
+   "load": "34.7/37.7/37.7"
+  },
+  {
+   "name": "E-4 sheet release continuity",
+   "status": "PASS",
+   "line": "largest one-frame move on release: fling 38.6 px, still 0.8 px · during the drive: fling 40.0 px, still 40.0 px (bound ≤ drive × 1.5 + 2 = 62.0 px)",
+   "load": "34.7/37.7/37.7"
+  },
+  {
+   "name": "E-4 sheet repeat landing",
+   "status": "FAIL",
+   "line": "3 fling runs, the same drive, land at -35.0, -160.0, -35.0 px (page frame, signed) · spread 125.00 px (bound ≤ 2 px: the same detent)",
+   "load": "33.4/37.4/37.6"
+  },
+  {
+   "name": "E-4 sheet release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 73.1 px · fling: carry 130.00 px, settles 130.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 130.0 px",
+   "load": "33.5/37.3/37.5"
+  },
+  {
+   "name": "E-4 sortable fling carries velocity",
+   "status": "PASS",
+   "line": "axis y, page frame · fling: carry 20.80 px, settles -36.69 px past release · still: carry 0.00 px, settles -36.69 px · difference: carry 20.80 px, settle 0.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 0.035 · 196 frames, median 10.0 ms",
+   "load": "32.6/37.0/37.4"
+  },
+  {
+   "name": "E-4 sortable release continuity",
+   "status": "PASS",
+   "line": "largest one-frame move on release: fling 16.7 px, still 3.3 px · during the drive: fling 40.0 px, still 40.0 px (bound ≤ drive × 1.5 + 2 = 62.0 px)",
+   "load": "32.6/37.0/37.4"
+  },
+  {
+   "name": "E-4 sortable repeat landing",
+   "status": "PASS",
+   "line": "3 fling runs, the same drive, land at 201.7, 201.7, 201.7 px (page frame, signed) · spread 0.00 px (bound ≤ 2 px: the same detent)",
+   "load": "33.1/37.0/37.4"
+  },
+  {
+   "name": "E-4 sortable release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 120.0 px · fling: carry 0.00 px, settles -36.69 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 36.2 px",
+   "load": "33.3/37.0/37.4"
+  },
+  {
+   "name": "E-4 carousel fling carries velocity",
+   "status": "UNMEASURED",
+   "line": "the touch drag moved the body 0.0 px (fling) and 0.0 px (still), bound ≥ 20 px: macOS WebKit has no touch scrolling, so a touch drag cannot drive this surface (H-4); real Safari UNMEASURED (owner's safaridriver checkbox)",
+   "load": "33.9/36.9/37.4"
+  },
+  {
+   "name": "E-4 carousel release continuity",
+   "status": "UNMEASURED",
+   "line": "not driven in this engine (above)",
+   "load": "33.9/36.9/37.4"
+  },
+  {
+   "name": "E-4 carousel repeat landing",
+   "status": "UNMEASURED",
+   "line": "the surface is not read in this engine (above)",
+   "load": "33.9/36.9/37.4"
+  },
+  {
+   "name": "E-4 carousel release PRM",
+   "status": "UNMEASURED",
+   "line": "the surface is not driven or not read in this engine (above)",
+   "load": "33.9/36.9/37.4"
+  }
+ ]
+}

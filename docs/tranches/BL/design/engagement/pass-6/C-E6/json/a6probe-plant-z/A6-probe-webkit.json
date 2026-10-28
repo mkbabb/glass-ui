@@ -1,0 +1,175 @@
+{
+ "id": "A6-probe",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p6/C-E6/out/builds/plant-z"
+ },
+ "loadStart": "27.2/28.4/26.5",
+ "loadEnd": "43.6/32.2/28.0",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "prm switch light",
+   "status": "FAIL",
+   "line": "state false → true · instant: scale range 0.0564 (bound < 0.002), scale in flight 36 frame(s), body moved 20.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 59 frames · legible: 50.1 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 83.73 levels · face [role=\"switch\"] .control-bit__face",
+   "load": "28.2/28.6/26.6"
+  },
+  {
+   "name": "prm-control switch (Shift, no commit)",
+   "status": "PASS",
+   "line": "the control must read NOT legible (the read can fail): state false → false · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 60 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face [role=\"switch\"] .control-bit__face",
+   "load": "28.2/28.6/26.6"
+  },
+  {
+   "name": "prm switch dark",
+   "status": "FAIL",
+   "line": "state false → true · instant: scale range 0.0559 (bound < 0.002), scale in flight 35 frame(s), body moved 20.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 59 frames · legible: 71.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 54.31 levels · face [role=\"switch\"] .control-bit__face",
+   "load": "28.6/28.7/26.6"
+  },
+  {
+   "name": "prm checkbox light",
+   "status": "FAIL",
+   "line": "state false → true · instant: scale range 0.0566 (bound < 0.002), scale in flight 38 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 60 frames · legible: 64.6 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 107.07 levels · face [role=\"checkbox\"] .control-bit__face",
+   "load": "28.6/28.7/26.6"
+  },
+  {
+   "name": "prm-control checkbox (Shift, no commit)",
+   "status": "PASS",
+   "line": "the control must read NOT legible (the read can fail): state false → false · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 61 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face [role=\"checkbox\"] .control-bit__face",
+   "load": "29.0/28.8/26.7"
+  },
+  {
+   "name": "prm checkbox dark",
+   "status": "FAIL",
+   "line": "state false → true · instant: scale range 0.0564 (bound < 0.002), scale in flight 37 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 60 frames · legible: 65.3 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 71.56 levels · face [role=\"checkbox\"] .control-bit__face",
+   "load": "29.0/28.8/26.7"
+  },
+  {
+   "name": "prm radio light",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · instant: scale range 0.0563 (bound < 0.002), scale in flight 37 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 60 frames · legible: 73.3 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 99.37 levels · face [role=\"radio\"]:nth-of-type(2) .control-bit__face",
+   "load": "29.1/28.8/26.7"
+  },
+  {
+   "name": "prm-control radio (Shift, no commit)",
+   "status": "PASS",
+   "line": "the control must read NOT legible (the read can fail): state \"a\" → \"a\" · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 61 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face [role=\"radio\"]:nth-of-type(2) .control-bit__face",
+   "load": "29.1/28.8/26.7"
+  },
+  {
+   "name": "prm radio dark",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · instant: scale range 0.0566 (bound < 0.002), scale in flight 36 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 59 frames · legible: 79.5 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 73.07 levels · face [role=\"radio\"]:nth-of-type(2) .control-bit__face",
+   "load": "29.5/28.9/26.7"
+  },
+  {
+   "name": "prm tabs light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 60 frames · legible: 92.8 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 40.56 levels · face .segmented-tab:nth-of-type(2)",
+   "load": "29.5/28.9/26.7"
+  },
+  {
+   "name": "prm-control tabs (Shift, no commit)",
+   "status": "PASS",
+   "line": "the control must read NOT legible (the read can fail): state \"a\" → \"a\" · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 59 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face .segmented-tab:nth-of-type(2)",
+   "load": "29.3/28.8/26.7"
+  },
+  {
+   "name": "prm tabs dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 60 frames · legible: 34.9 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 24.98 levels · face .segmented-tab:nth-of-type(2)",
+   "load": "29.3/28.8/26.7"
+  },
+  {
+   "name": "prm toggle light",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · instant: scale range 0.0226 (bound < 0.002), scale in flight 28 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 59 frames · legible: 80.9 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 34.89 levels · face [data-t=\"item-b\"]",
+   "load": "28.2/28.6/26.7"
+  },
+  {
+   "name": "prm-control toggle (Shift, no commit)",
+   "status": "PASS",
+   "line": "the control must read NOT legible (the read can fail): state \"a\" → \"a\" · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 60 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face [data-t=\"item-b\"]",
+   "load": "28.2/28.6/26.7"
+  },
+  {
+   "name": "prm toggle dark",
+   "status": "FAIL",
+   "line": "state \"a\" → \"b\" · instant: scale range 0.0226 (bound < 0.002), scale in flight 27 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 59 frames · legible: 79.1 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 35.12 levels · face [data-t=\"item-b\"]",
+   "load": "28.2/28.6/26.7"
+  },
+  {
+   "name": "prm chip light",
+   "status": "FAIL",
+   "line": "state false → true · instant: scale range 0.0225 (bound < 0.002), scale in flight 27 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 60 frames · legible: 42.5 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 9.46 levels · face .glass-chip",
+   "load": "28.2/28.6/26.7"
+  },
+  {
+   "name": "prm-control chip (Shift, no commit)",
+   "status": "PASS",
+   "line": "the control must read NOT legible (the read can fail): state false → false · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 61 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face .glass-chip",
+   "load": "28.2/28.6/26.7"
+  },
+  {
+   "name": "prm chip dark",
+   "status": "FAIL",
+   "line": "state false → true · instant: scale range 0.0225 (bound < 0.002), scale in flight 26 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 60 frames · legible: 52.4 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 23.84 levels · face .glass-chip",
+   "load": "32.3/29.5/27.0"
+  },
+  {
+   "name": "prm chipaction light",
+   "status": "REPORT",
+   "line": "stateless (no state to show; the action's effect is the consumer's): state 0 → 1 · instant: scale range 0.0226 (bound < 0.002), scale in flight 27 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 60 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face .glass-chip",
+   "load": "32.3/29.5/27.0"
+  },
+  {
+   "name": "prm-control chipaction (Shift, no commit)",
+   "status": "PASS",
+   "line": "the control must read NOT legible (the read can fail): state 0 → 0 · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 60 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face .glass-chip",
+   "load": "35.5/30.2/27.3"
+  },
+  {
+   "name": "prm chipaction dark",
+   "status": "REPORT",
+   "line": "stateless (no state to show; the action's effect is the consumer's): state 0 → 1 · instant: scale range 0.0225 (bound < 0.002), scale in flight 26 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 57 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face .glass-chip",
+   "load": "35.5/30.2/27.3"
+  },
+  {
+   "name": "prm accordion light",
+   "status": "FAIL",
+   "line": "state null → \"one\" · instant: scale range 0.0225 (bound < 0.002), scale in flight 27 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 59 frames · legible: 0.2 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.22 levels · face .disclosure-trigger · region height 0.0 → 37.8 px (read before the key and after the settle) (bound from ≤ 1 to ≥ 16), in flight on 0 frame(s) (bound ≤ 1) (the region is the disclosure's state; the face read is printed)",
+   "load": "38.6/30.9/27.5"
+  },
+  {
+   "name": "prm-control accordion (Shift, no commit)",
+   "status": "PASS",
+   "line": "the control must read NOT legible (the read can fail): state null → null · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 60 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face .disclosure-trigger · region height 0.0 → 0.0 px (read before the key and after the settle) (bound from ≤ 1 to ≥ 16), in flight on 0 frame(s) (bound ≤ 1) (the region is the disclosure's state; the face read is printed)",
+   "load": "38.6/30.9/27.5"
+  },
+  {
+   "name": "prm accordion dark",
+   "status": "FAIL",
+   "line": "state null → \"one\" · instant: scale range 0.0225 (bound < 0.002), scale in flight 25 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 58 frames · legible: 0.2 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.23 levels · face .disclosure-trigger · region height 0.0 → 37.8 px (read before the key and after the settle) (bound from ≤ 1 to ≥ 16), in flight on 0 frame(s) (bound ≤ 1) (the region is the disclosure's state; the face read is printed)",
+   "load": "39.7/31.3/27.7"
+  },
+  {
+   "name": "prm button light",
+   "status": "REPORT",
+   "line": "stateless (no state to show; the action's effect is the consumer's): state 0 → 1 · instant: scale range 0.0226 (bound < 0.002), scale in flight 27 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 60 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face .button",
+   "load": "39.7/31.3/27.7"
+  },
+  {
+   "name": "prm-control button (Shift, no commit)",
+   "status": "PASS",
+   "line": "the control must read NOT legible (the read can fail): state 0 → 0 · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 60 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face .button",
+   "load": "43.6/32.2/28.0"
+  },
+  {
+   "name": "prm button dark",
+   "status": "REPORT",
+   "line": "stateless (no state to show; the action's effect is the consumer's): state 0 → 1 · instant: scale range 0.0226 (bound < 0.002), scale in flight 27 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 59 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face .button",
+   "load": "43.6/32.2/28.0"
+  }
+ ]
+}

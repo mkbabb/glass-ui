@@ -1,0 +1,13 @@
+## 2026-10-28 02:35:44 load { 31.30 37.13 37.32 } · start e4-momentum.mjs noveil-coarse chromium --scenes sheet
+# E-4 · CK-05 momentum on the visible body, without a teleport
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p6/C-E6/out/builds/noveil-coarse · engine chromium · lock wait 0.0 s · other headless processes: chromium 0, webkit 2 · load 31.0/37.0/37.3 at start
+# scene app: harness scenes/App.vue (sha1 d020f4946adb)
+# chromium 149.0.7827.55
+# narrowed to scenes sheet
+  PASS       E-4 sheet fling carries velocity · axis y, dir −1, page frame · fling: carry 130.38 px, settles 130.00 px past release · still: carry 5.00 px, settles 5.00 px · difference: carry 125.38 px, settle 125.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 224 frames, median 8.0 ms · load 30.0/36.7/37.2
+  PASS       E-4 sheet release continuity · largest one-frame move on release: fling 17.5 px, still 0.5 px · during the drive: fling 40.0 px, still 40.0 px (bound ≤ drive × 1.5 + 2 = 62.0 px) · load 30.0/36.7/37.2
+  FAIL       E-4 sheet repeat landing · 3 fling runs, the same drive, land at -160.0, -35.0, -35.0 px (page frame, signed) · spread 125.00 px (bound ≤ 2 px: the same detent) · load 29.0/36.2/37.0
+  PASS       E-4 sheet release PRM · reduce · moved 328.1 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 255.0 px · load 28.3/36.0/36.9
+E-4 chromium FAIL · 3 pass, 1 fail, 0 unmeasured of 4 gating cells (0 reported) · load 31.0/37.0/37.3 at start, 28.3/36.0/36.9 at end
+exit 1
+## 2026-10-28 02:36:05 load { 28.28 35.96 36.89 } · end e4-momentum.mjs noveil-coarse chromium

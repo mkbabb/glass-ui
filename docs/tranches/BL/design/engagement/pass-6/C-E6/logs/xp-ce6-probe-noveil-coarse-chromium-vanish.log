@@ -1,0 +1,7 @@
+## 2026-10-28 00:50:26 load { 37.16 28.40 27.59 } · start pass-6/C-E6/probe/ce6-probe noveil-coarse chromium --label noveil-coarse --only clip-vanish,idle-loop
+C-E6 probe noveil-coarse · chromium · load 25.2/26.4/26.9 at start
+  PASS       idle loop · keyboard · before any engagement: 0.0 rAF/s, 0.0 layouts/s, 0.0 style recalcs/s · engaged by Tab (true) and idle: 120.5 rAF/s, 0.0 layouts/s, 0.0 style recalcs/s · 1.5 s after Escape (engaged false): 0.0 rAF/s, 0.0 layouts/s, 0.0 style recalcs/s (graded: after ≤ before + 2 rAF/s) · load 25.2/26.3/26.9
+  FAIL       clip-vanish · keyboard · engaged throughout true · px of the control painted above the card per 1-px step of the rest box past the card's top edge (hidden 14/15/16/17/18/19/20/21/22 of 20 px): 3191 / 3348 / 3505 / 3663 / 3820 / 3976 / 0 / 0 / 0 · largest change between adjacent steps 3976 px² (bound ≤ 3 rows × 358 px = 1074) · load 24.9/26.3/26.9
+ce6-probe noveil-coarse chromium · 1 pass, 1 fail, 0 other · load 24.9/26.3/26.9 at end
+exit 1
+## 2026-10-28 00:54:17 load { 24.92 26.26 26.85 } · end ce6-probe noveil-coarse chromium

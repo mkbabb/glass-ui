@@ -1,0 +1,32 @@
+# 2026-10-28 00:54:29 chain /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-E6/phase-chromium-extra.txt start · load { 23.81 25.95 26.73 }
+## 2026-10-28 00:54:29 buildplanty · load { 23.81 25.95 26.73 }
+## 2026-10-28 01:03:29 load { 33.25 33.24 30.17 } · build plant-y
+exit 0
+restored f245802ddaaa (was f245802ddaaa)
+## 2026-10-28 01:03:38 load { 32.80 33.14 30.16 } · end build plant-y
+## guarded exit 0 · 2026-10-28 01:03:45 · load { 31.31 32.81 30.08 }
+## 2026-10-28 01:03:45 xp pass-6/A6/probe a6-probe plant-y chromium --only prm --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-E6/json/a6probe-plant-y · load { 31.31 32.81 30.08 }
+## 2026-10-28 01:03:46 load { 31.31 32.81 30.08 } · start pass-6/A6/probe/a6-probe plant-y chromium --only prm --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-E6/json/a6probe-plant-y
+24 PASS · 0 FAIL
+## guarded exit 0 · 2026-10-28 01:04:50 · load { 33.87 33.46 30.53 }
+## 2026-10-28 01:04:50 TAG=-r3 xp pass-6/A6/probe a6-probe noveil-coarse chromium --only reverse --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-E6/json/a6probe-noveil-coarse-r3 · load { 33.87 33.46 30.53 }
+## 2026-10-28 01:04:50 load { 33.87 33.46 30.53 } · start pass-6/A6/probe/a6-probe noveil-coarse chromium --only reverse --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-E6/json/a6probe-noveil-coarse-r3
+14 PASS · 3 FAIL
+  FAIL       reverse switch +200 light · state false → true → back at +200 · largest one-frame step 0.0098 against the single pop's 0.0076 (bound ≤ +0.002) · rests ×1.0000 (bound ±0.002) · pops 2 (printed) · peak ×1.0499 at +296 · +2 1.0000
+  FAIL       reverse checkbox +60 dark · state false → true → back at +60 · largest one-frame step 0.0108 against the single pop's 0.0070 (bound ≤ +0.002) · rests ×1.0000 (bound ±0.002) · pops 1 (printed) · peak ×1.0424 at +65 · +2 1.0000 +
+A6-probe chromium FAIL · 14 pass, 2 fail, 0 unmeasured of 16 gating cells (8 reported) · load 33.9/33.5/30.5 at start, 28.3/32.2/30.2 at end
+## guarded exit 0 · 2026-10-28 01:05:36 · load { 27.60 31.97 30.15 }
+## 2026-10-28 01:05:36 TAG=-r4 xp pass-6/A6/probe a6-probe noveil-coarse chromium --only reverse --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-E6/json/a6probe-noveil-coarse-r4 · load { 27.60 31.97 30.15 }
+## 2026-10-28 01:05:36 load { 27.60 31.97 30.15 } · start pass-6/A6/probe/a6-probe noveil-coarse chromium --only reverse --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-E6/json/a6probe-noveil-coarse-r4
+13 PASS · 4 FAIL
+  FAIL       reverse switch +60 light · state false → true → back at +60 · largest one-frame step 0.0099 against the single pop's 0.0074 (bound ≤ +0.002) · rests ×1.0000 (bound ±0.002) · pops 1 (printed) · peak ×1.0467 at +69 · +2 1.0000 +2
+  FAIL       reverse checkbox +60 light · state false → true → back at +60 · largest one-frame step 0.0105 against the single pop's 0.0072 (bound ≤ +0.002) · rests ×1.0000 (bound ±0.002) · pops 1 (printed) · peak ×1.0430 at +65 · +2 1.0000 
+  FAIL       reverse checkbox +200 light · state false → true → back at +200 · largest one-frame step 0.0104 against the single pop's 0.0072 (bound ≤ +0.002) · rests ×1.0000 (bound ±0.002) · pops 2 (printed) · peak ×1.0500 at +90 · +2 1.000
+A6-probe chromium FAIL · 13 pass, 3 fail, 0 unmeasured of 16 gating cells (8 reported) · load 39.3/34.2/31.0 at start, 31.9/33.0/30.8 at end
+## guarded exit 0 · 2026-10-28 01:07:08 · load { 28.15 32.20 30.49 }
+## 2026-10-28 01:07:08 TAG=-x xp pass-6/C-E6/probe ce6-probe noveil-coarse chromium --label noveil-coarse --only clip-vanish,select-press · load { 28.15 32.20 30.49 }
+## 2026-10-28 01:07:08 load { 28.15 32.20 30.49 } · start pass-6/C-E6/probe/ce6-probe noveil-coarse chromium --label noveil-coarse --only clip-vanish,select-press
+0 PASS · 1 FAIL
+  FAIL       clip-vanish · keyboard · engaged throughout true · px of the control painted above the card per 1-px step of the rest box past the card's top edge (hidden 14/15/16/17/18/19/20/21/22 of 20 px): 3191 / 3348 / 3505 / 3663 / 3820 /
+## guarded exit 0 · 2026-10-28 01:08:05 · load { 35.32 33.25 30.97 }
+# 2026-10-28 01:08:05 chain end · load { 35.32 33.25 30.97 }

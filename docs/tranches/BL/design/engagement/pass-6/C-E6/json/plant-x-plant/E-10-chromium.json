@@ -1,0 +1,109 @@
+{
+ "id": "E-10",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p6/C-E6/out/builds/plant-x"
+ },
+ "loadStart": "13.8/13.3/14.5",
+ "loadEnd": "10.3/12.4/14.1",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 restale stale place · keyboard",
+   "status": "FAIL",
+   "line": "keyboard engaged · spacer +120 px by a style write: the root's centre (228.0, 205.6) → (228.0, 325.6) px · then a node appended below it (moves nothing): over 121 frames its centre spans x 228.0..228.0, y 198.4..325.6 px, largest one-frame move per 16.7 ms 127.2 px at +87 ms (bound ≤ 4 px)",
+   "load": "12.9/13.1/14.5"
+  },
+  {
+   "name": "E-10 restale stale place control · keyboard",
+   "status": "PASS",
+   "line": "keyboard engaged · no layout move (the control): the root's centre (228.0, 205.6) → (228.0, 205.6) px · then a node appended below it (moves nothing): over 121 frames its centre spans x 228.0..228.0, y 205.6..205.6 px, largest one-frame move per 16.7 ms 0.0 px (bound ≤ 4 px)",
+   "load": "12.9/13.1/14.5"
+  },
+  {
+   "name": "E-10 restale stale place (viewport resize) · keyboard",
+   "status": "FAIL",
+   "line": "keyboard engaged · viewport 700 → 380 px wide (the paragraph above rewraps): the root's centre (228.0, 205.6) → (228.0, 250.0) px · then a node appended below it (moves nothing): over 119 frames its centre spans x 228.0..228.0, y 203.0..250.0 px, largest one-frame move per 16.7 ms 47.0 px at +86 ms (bound ≤ 4 px)",
+   "load": "12.3/12.9/14.4"
+  },
+  {
+   "name": "E-10 restale stale place (inset) · keyboard",
+   "status": "FAIL",
+   "line": "keyboard engaged · the wrapper 360 → 300 px with +60 px left margin (left edge in, right edge kept) by a style write: its rect 48.0..408.0 → 108.0..408.0 px (inside the old): the root's centre (228.0, 205.6) → (288.0, 205.6) px · then a node appended below it (moves nothing): over 121 frames its centre spans x 224.4..288.0, y 205.6..205.6 px, largest one-frame move per 16.7 ms 63.6 px at +85 ms (bound ≤ 4 px)",
+   "load": "12.3/12.9/14.4"
+  },
+  {
+   "name": "E-10 restale stale place (centred shrink) · keyboard",
+   "status": "FAIL",
+   "line": "keyboard engaged · the wrapper 360 → 240 px with +60 px left margin (centred) by a style write: its rect 48.0..408.0 → 108.0..348.0 px (inside the old): the root's centre (228.0, 205.6) → (288.0, 205.6) px · then a node appended below it (moves nothing): over 121 frames its centre spans x 224.4..288.0, y 205.6..205.6 px, largest one-frame move per 16.7 ms 63.6 px at +87 ms (bound ≤ 4 px)",
+   "load": "11.7/12.8/14.3"
+  },
+  {
+   "name": "E-10 restale stale place · pointer",
+   "status": "FAIL",
+   "line": "pointer engaged · spacer +120 px by a style write: the root's centre (228.0, 205.6) → (228.0, 325.6) px · then a node appended below it (moves nothing): over 119 frames its centre spans x 228.0..228.0, y 198.4..325.6 px, largest one-frame move per 16.7 ms 127.2 px at +90 ms (bound ≤ 4 px)",
+   "load": "11.7/12.8/14.3"
+  },
+  {
+   "name": "E-10 restale stale place control · pointer",
+   "status": "PASS",
+   "line": "pointer engaged · no layout move (the control): the root's centre (228.0, 205.6) → (228.0, 205.6) px · then a node appended below it (moves nothing): over 122 frames its centre spans x 228.0..228.0, y 205.6..205.6 px, largest one-frame move per 16.7 ms 0.0 px (bound ≤ 4 px)",
+   "load": "11.6/12.8/14.3"
+  },
+  {
+   "name": "E-10 restale stale place (inset) · pointer",
+   "status": "FAIL",
+   "line": "pointer engaged · the wrapper 360 → 300 px with +60 px left margin (left edge in, right edge kept) by a style write: its rect 48.0..408.0 → 108.0..408.0 px (inside the old): the root's centre (228.0, 205.6) → (258.0, 205.6) px · then a node appended below it (moves nothing): over 119 frames its centre spans x 194.4..258.0, y 205.6..205.6 px, largest one-frame move per 16.7 ms 63.6 px at +90 ms (bound ≤ 4 px)",
+   "load": "11.6/12.8/14.3"
+  },
+  {
+   "name": "E-10 restale stale place (centred shrink) · pointer",
+   "status": "FAIL",
+   "line": "pointer engaged · the wrapper 360 → 240 px with +60 px left margin (centred) by a style write: its rect 48.0..408.0 → 108.0..348.0 px (inside the old): the root's centre (228.0, 205.6) → (228.0, 205.6) px · then a node appended below it (moves nothing): over 121 frames its centre spans x 164.4..228.0, y 205.6..205.6 px, largest one-frame move per 16.7 ms 63.6 px at +84 ms (bound ≤ 4 px)",
+   "load": "10.8/12.6/14.3"
+  },
+  {
+   "name": "E-10 clipstale clipped stale place · keyboard · top · reveal",
+   "status": "FAIL",
+   "line": "keyboard engaged · the rest box 20.0 px tall, 6.0 px visible in the scroller · spacer +12 px by a style write (reveal): its top 157.7 → 169.7 px (Δ 12.0), 18.0 px visible · then a node appended below the scroller (moves nothing): the root's largest one-frame centre move per 16.7 ms 12.7 px at +92 ms over 120 frames (bound ≤ 4 px)",
+   "load": "10.8/12.6/14.3"
+  },
+  {
+   "name": "E-10 clipstale clipped stale place · keyboard · top · conceal",
+   "status": "FAIL",
+   "line": "keyboard engaged · the rest box 20.0 px tall, 6.0 px visible in the scroller · spacer −12 px by a style write (conceal): its top 157.7 → 145.7 px (Δ -12.0), 0.0 px visible · then a node appended below the scroller (moves nothing): the root's largest one-frame centre move per 16.7 ms 12.7 px at +83 ms over 120 frames (bound ≤ 4 px)",
+   "load": "10.1/12.4/14.2"
+  },
+  {
+   "name": "E-10 clipstale clipped stale place · keyboard · top · control",
+   "status": "PASS",
+   "line": "keyboard engaged · the rest box 20.0 px tall, 6.0 px visible in the scroller · no move (the control): its top 157.7 → 157.7 px (Δ 0.0), 6.0 px visible · then a node appended below the scroller (moves nothing): the root's largest one-frame centre move per 16.7 ms 0.0 px over 120 frames (bound ≤ 4 px)",
+   "load": "10.1/12.4/14.2"
+  },
+  {
+   "name": "E-10 clipstale clipped stale place · keyboard · bottom · reveal",
+   "status": "FAIL",
+   "line": "keyboard engaged · the rest box 20.0 px tall, 6.0 px visible in the scroller · spacer −12 px by a style write (reveal): its top 283.7 → 271.7 px (Δ -12.0), 18.0 px visible · then a node appended below the scroller (moves nothing): the root's largest one-frame centre move per 16.7 ms 12.7 px at +84 ms over 121 frames (bound ≤ 4 px)",
+   "load": "10.3/12.4/14.2"
+  },
+  {
+   "name": "E-10 clipstale clipped stale place · keyboard · bottom · conceal",
+   "status": "FAIL",
+   "line": "keyboard engaged · the rest box 20.0 px tall, 6.0 px visible in the scroller · spacer +12 px by a style write (conceal): its top 283.7 → 295.7 px (Δ 12.0), 0.0 px visible · then a node appended below the scroller (moves nothing): the root's largest one-frame centre move per 16.7 ms 12.7 px at +84 ms over 120 frames (bound ≤ 4 px)",
+   "load": "10.3/12.4/14.2"
+  },
+  {
+   "name": "E-10 clipstale clipped stale place · keyboard · bottom · control",
+   "status": "PASS",
+   "line": "keyboard engaged · the rest box 20.0 px tall, 6.0 px visible in the scroller · no move (the control): its top 283.7 → 283.7 px (Δ 0.0), 6.0 px visible · then a node appended below the scroller (moves nothing): the root's largest one-frame centre move per 16.7 ms 0.0 px over 118 frames (bound ≤ 4 px)",
+   "load": "10.3/12.4/14.1"
+  },
+  {
+   "name": "E-10 clipstale clipped stale place · pointer",
+   "status": "UNMEASURED",
+   "line": "no driver (REGISTRY §P5-7 item 6, C-E5 §4.3): scrolling the scroller while a mouse hold is down ends the hold in both engines, and clipping before the press lets the press scroll the box back, so the in-place pointer path inside a scroller is not reached; the keyboard cells above read the clipped place",
+   "load": "10.3/12.4/14.1"
+  }
+ ]
+}

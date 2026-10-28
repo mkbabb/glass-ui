@@ -1,0 +1,307 @@
+{
+ "id": "E-10",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p6/C-E6/out/builds/noveil-coarse"
+ },
+ "loadStart": "16.0/12.8/15.2",
+ "loadEnd": "25.6/16.2/16.2",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "E-10 slider own release",
+   "status": "REPORT",
+   "line": "Tab in: largest one-frame centre move 0.0 px · Tab out of the engaged slider: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0073, largest centre move 0.0 px (the references for the hand-off and Escape bounds)",
+   "load": "15.2/12.7/15.1"
+  },
+  {
+   "name": "E-10 slider escape release",
+   "status": "PASS",
+   "line": "Escape: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0067 (bound ≤ own release 0.0073 + 0.002), largest centre move 0.0 px (bound ≤ own release 0.0 + 1 px)",
+   "load": "15.2/12.7/15.1"
+  },
+  {
+   "name": "E-10 slider re-render landing",
+   "status": "PASS",
+   "line": "a sibling inserted during the hold, then release: the root's largest one-frame move per 16.7 ms 1.3 px (without the insert 1.6 px; bound ≤ that + 1 px)",
+   "load": "15.9/12.8/15.2"
+  },
+  {
+   "name": "E-10 slider re-render landing (layout-only)",
+   "status": "PASS",
+   "line": "a spacer before the slider grown 40 px by a style write during the hold (no childList mutation; the root's top read 96.3 → 136.3 px during the hold, 136.9 px at the film's end), then release: the root's largest one-frame move per 16.7 ms 1.2 px (without the move 1.5 px; bound ≤ that + 1 px)",
+   "load": "15.9/12.8/15.2"
+  },
+  {
+   "name": "E-10 slider2 hand-off drop",
+   "status": "PASS",
+   "line": "Tab A → B (focus on Probe B) · outgoing A ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0088 (bound ≤ own release 0.0073 + 0.002), largest centre move 0.0 px at 61 ms (bound ≤ own release 0.0 + 1 px) · incoming B ×1.000 → ×1.060, largest centre move 0.0 px at 128 ms (bound ≤ own engage 0.0 + 1 px)",
+   "load": "16.5/13.0/15.2"
+  },
+  {
+   "name": "E-10 slider2 hand-off singleton fwd",
+   "status": "PASS",
+   "line": "120 frames: engaged roots per frame max 1, 0 frame(s) with none · first frame A engaged true, B false · last frame B engaged true, A false (bound: at most one engaged on every frame, the incoming one at the end; selector [data-engaged])",
+   "load": "16.5/13.0/15.2"
+  },
+  {
+   "name": "E-10 slider2 hand-off veil",
+   "status": "REPORT",
+   "line": "no veil up before the Tab (0.00): this route veils no keyboard engagement",
+   "load": "16.5/13.0/15.2"
+  },
+  {
+   "name": "E-10 slider2 hand-off rev",
+   "status": "PASS",
+   "line": "Shift+Tab B → A (focus on Probe A) · outgoing B ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0071 (bound ≤ own release 0.0073 + 0.002), largest centre move 0.0 px at 135 ms (bound ≤ own release 0.0 + 1 px) · incoming A ×1.000 → ×1.060, largest centre move 0.0 px at 97 ms (bound ≤ own engage 0.0 + 1 px)",
+   "load": "16.5/13.0/15.2"
+  },
+  {
+   "name": "E-10 slider2 hand-off singleton rev",
+   "status": "PASS",
+   "line": "116 frames: engaged roots per frame max 1, 0 frame(s) with none · first frame B engaged true, A false · last frame A engaged true, B false (bound: at most one engaged on every frame, the incoming one at the end; selector [data-engaged])",
+   "load": "16.5/13.0/15.2"
+  },
+  {
+   "name": "E-10 restale stale place · keyboard",
+   "status": "PASS",
+   "line": "keyboard engaged · spacer +120 px by a style write: the root's centre (228.0, 205.6) → (228.0, 325.6) px · then a node appended below it (moves nothing): over 114 frames its centre spans x 228.0..228.0, y 325.6..325.6 px, largest one-frame move per 16.7 ms 0.0 px (bound ≤ 4 px)",
+   "load": "15.4/12.8/15.1"
+  },
+  {
+   "name": "E-10 restale stale place control · keyboard",
+   "status": "PASS",
+   "line": "keyboard engaged · no layout move (the control): the root's centre (228.0, 205.6) → (228.0, 205.6) px · then a node appended below it (moves nothing): over 113 frames its centre spans x 228.0..228.0, y 205.6..205.6 px, largest one-frame move per 16.7 ms 0.0 px (bound ≤ 4 px)",
+   "load": "15.4/12.8/15.1"
+  },
+  {
+   "name": "E-10 restale stale place (viewport resize) · keyboard",
+   "status": "PASS",
+   "line": "keyboard engaged · viewport 700 → 380 px wide (the paragraph above rewraps): the root's centre (228.0, 205.6) → (228.0, 250.0) px · then a node appended below it (moves nothing): over 115 frames its centre spans x 228.0..228.0, y 250.0..250.0 px, largest one-frame move per 16.7 ms 0.0 px (bound ≤ 4 px)",
+   "load": "16.0/13.0/15.2"
+  },
+  {
+   "name": "E-10 restale stale place (inset) · keyboard",
+   "status": "PASS",
+   "line": "keyboard engaged · the wrapper 360 → 300 px with +60 px left margin (left edge in, right edge kept) by a style write: its rect 48.0..408.0 → 108.0..408.0 px (inside the old): the root's centre (228.0, 205.6) → (288.0, 205.6) px · then a node appended below it (moves nothing): over 114 frames its centre spans x 288.0..288.0, y 205.6..205.6 px, largest one-frame move per 16.7 ms 0.0 px (bound ≤ 4 px)",
+   "load": "16.0/13.0/15.2"
+  },
+  {
+   "name": "E-10 restale stale place (centred shrink) · keyboard",
+   "status": "PASS",
+   "line": "keyboard engaged · the wrapper 360 → 240 px with +60 px left margin (centred) by a style write: its rect 48.0..408.0 → 108.0..348.0 px (inside the old): the root's centre (228.0, 205.6) → (288.0, 205.6) px · then a node appended below it (moves nothing): over 116 frames its centre spans x 288.0..288.0, y 205.6..205.6 px, largest one-frame move per 16.7 ms 0.0 px (bound ≤ 4 px)",
+   "load": "15.1/12.9/15.1"
+  },
+  {
+   "name": "E-10 restale stale place · pointer",
+   "status": "PASS",
+   "line": "pointer engaged · spacer +120 px by a style write: the root's centre (228.0, 205.6) → (228.0, 325.6) px · then a node appended below it (moves nothing): over 112 frames its centre spans x 228.0..228.0, y 325.6..325.6 px, largest one-frame move per 16.7 ms 0.0 px (bound ≤ 4 px)",
+   "load": "15.1/12.9/15.1"
+  },
+  {
+   "name": "E-10 restale stale place control · pointer",
+   "status": "PASS",
+   "line": "pointer engaged · no layout move (the control): the root's centre (228.0, 205.6) → (228.0, 205.6) px · then a node appended below it (moves nothing): over 115 frames its centre spans x 228.0..228.0, y 205.6..205.6 px, largest one-frame move per 16.7 ms 0.0 px (bound ≤ 4 px)",
+   "load": "15.1/12.9/15.1"
+  },
+  {
+   "name": "E-10 restale stale place (inset) · pointer",
+   "status": "PASS",
+   "line": "pointer engaged · the wrapper 360 → 300 px with +60 px left margin (left edge in, right edge kept) by a style write: its rect 48.0..408.0 → 108.0..408.0 px (inside the old): the root's centre (228.0, 205.6) → (258.0, 205.6) px · then a node appended below it (moves nothing): over 114 frames its centre spans x 258.0..258.0, y 205.6..205.6 px, largest one-frame move per 16.7 ms 0.0 px (bound ≤ 4 px)",
+   "load": "15.7/13.0/15.2"
+  },
+  {
+   "name": "E-10 restale stale place (centred shrink) · pointer",
+   "status": "PASS",
+   "line": "pointer engaged · the wrapper 360 → 240 px with +60 px left margin (centred) by a style write: its rect 48.0..408.0 → 108.0..348.0 px (inside the old): the root's centre (228.0, 205.6) → (228.0, 205.6) px · then a node appended below it (moves nothing): over 116 frames its centre spans x 228.0..228.0, y 205.6..205.6 px, largest one-frame move per 16.7 ms 0.0 px (bound ≤ 4 px)",
+   "load": "15.7/13.0/15.2"
+  },
+  {
+   "name": "E-10 clipstale clipped stale place · keyboard · top · reveal",
+   "status": "PASS",
+   "line": "keyboard engaged · the rest box 20.0 px tall, 6.0 px visible in the scroller · spacer +12 px by a style write (reveal): its top 157.7 → 169.7 px (Δ 12.0), 18.0 px visible · then a node appended below the scroller (moves nothing): the root's largest one-frame centre move per 16.7 ms 0.0 px over 112 frames (bound ≤ 4 px)",
+   "load": "16.9/13.3/15.2"
+  },
+  {
+   "name": "E-10 clipstale clipped stale place · keyboard · top · conceal",
+   "status": "PASS",
+   "line": "keyboard engaged · the rest box 20.0 px tall, 6.0 px visible in the scroller · spacer −12 px by a style write (conceal): its top 157.7 → 145.7 px (Δ -12.0), 0.0 px visible · then a node appended below the scroller (moves nothing): the root's largest one-frame centre move per 16.7 ms 0.0 px over 118 frames (bound ≤ 4 px)",
+   "load": "16.3/13.3/15.2"
+  },
+  {
+   "name": "E-10 clipstale clipped stale place · keyboard · top · control",
+   "status": "PASS",
+   "line": "keyboard engaged · the rest box 20.0 px tall, 6.0 px visible in the scroller · no move (the control): its top 157.7 → 157.7 px (Δ 0.0), 6.0 px visible · then a node appended below the scroller (moves nothing): the root's largest one-frame centre move per 16.7 ms 0.0 px over 119 frames (bound ≤ 4 px)",
+   "load": "16.3/13.3/15.2"
+  },
+  {
+   "name": "E-10 clipstale clipped stale place · keyboard · bottom · reveal",
+   "status": "PASS",
+   "line": "keyboard engaged · the rest box 20.0 px tall, 6.0 px visible in the scroller · spacer −12 px by a style write (reveal): its top 283.7 → 271.7 px (Δ -12.0), 18.0 px visible · then a node appended below the scroller (moves nothing): the root's largest one-frame centre move per 16.7 ms 0.0 px over 115 frames (bound ≤ 4 px)",
+   "load": "17.4/13.5/15.3"
+  },
+  {
+   "name": "E-10 clipstale clipped stale place · keyboard · bottom · conceal",
+   "status": "PASS",
+   "line": "keyboard engaged · the rest box 20.0 px tall, 6.0 px visible in the scroller · spacer +12 px by a style write (conceal): its top 283.7 → 295.7 px (Δ 12.0), 0.0 px visible · then a node appended below the scroller (moves nothing): the root's largest one-frame centre move per 16.7 ms 0.0 px over 111 frames (bound ≤ 4 px)",
+   "load": "17.4/13.5/15.3"
+  },
+  {
+   "name": "E-10 clipstale clipped stale place · keyboard · bottom · control",
+   "status": "PASS",
+   "line": "keyboard engaged · the rest box 20.0 px tall, 6.0 px visible in the scroller · no move (the control): its top 283.7 → 283.7 px (Δ 0.0), 6.0 px visible · then a node appended below the scroller (moves nothing): the root's largest one-frame centre move per 16.7 ms 0.0 px over 114 frames (bound ≤ 4 px)",
+   "load": "16.7/13.5/15.3"
+  },
+  {
+   "name": "E-10 clipstale clipped stale place · pointer",
+   "status": "UNMEASURED",
+   "line": "no driver (REGISTRY §P5-7 item 6, C-E5 §4.3): scrolling the scroller while a mouse hold is down ends the hold in both engines, and clipping before the press lets the press scroll the box back, so the in-place pointer path inside a scroller is not reached; the keyboard cells above read the clipped place",
+   "load": "16.7/13.5/15.3"
+  },
+  {
+   "name": "E-10 switch rebound single light",
+   "status": "REPORT",
+   "line": "seat button.switch.control-bit::after · onset (> 0.004) none ms · peak 0.000 at +2 ms (ACKNOWLEDGE_WINDOW_MS 150: onset OUTSIDE, peak inside) · pulses 0 · +2 0.000 +36 0.000 +74 0.000 +106 0.000 +135 0.000 +168 0.000 +197 0.000 +230 0.000 +260 0.000 +292 0.000 +323 0.000 +355 0.000 +392 0.000 +424 0.000 +459 0.000 +490 0.000 +519 0.000 +549 0.000 +584 0.000 +614 0.000 +651 0.000 +682 0.000 +719 0.000 +750 0.000 +784 0.000 +818 0.000 +855 0.000 +886 0.000",
+   "load": "16.7/13.5/15.3"
+  },
+  {
+   "name": "E-10 switch rebound reverse +60 light",
+   "status": "UNMEASURED",
+   "line": "the single commit lights no seat above 0.02 (seat button.switch.control-bit::after): no commit light to film, so no reversal of one; E-2 grades the light's existence",
+   "load": "16.2/13.4/15.2"
+  },
+  {
+   "name": "E-10 switch rebound reverse +200 light",
+   "status": "UNMEASURED",
+   "line": "the single commit lights no seat above 0.02 (seat button.switch.control-bit::after): no commit light to film, so no reversal of one; E-2 grades the light's existence",
+   "load": "16.2/13.4/15.2"
+  },
+  {
+   "name": "E-10 switch rebound single dark",
+   "status": "REPORT",
+   "line": "seat button.switch.control-bit::after · onset (> 0.004) none ms · peak 0.000 at +2 ms (ACKNOWLEDGE_WINDOW_MS 150: onset OUTSIDE, peak inside) · pulses 0 · +2 0.000 +29 0.000 +70 0.000 +96 0.000 +123 0.000 +155 0.000 +183 0.000 +214 0.000 +248 0.000 +276 0.000 +307 0.000 +336 0.000 +365 0.000 +395 0.000 +427 0.000 +457 0.000 +491 0.000 +520 0.000 +549 0.000 +578 0.000 +607 0.000 +637 0.000 +668 0.000 +700 0.000 +733 0.000 +765 0.000 +795 0.000 +824 0.000 +853 0.000 +883 0.000",
+   "load": "16.2/13.4/15.2"
+  },
+  {
+   "name": "E-10 switch rebound reverse +60 dark",
+   "status": "UNMEASURED",
+   "line": "the single commit lights no seat above 0.02 (seat button.switch.control-bit::after): no commit light to film, so no reversal of one; E-2 grades the light's existence",
+   "load": "16.2/13.4/15.2"
+  },
+  {
+   "name": "E-10 switch rebound reverse +200 dark",
+   "status": "UNMEASURED",
+   "line": "the single commit lights no seat above 0.02 (seat button.switch.control-bit::after): no commit light to film, so no reversal of one; E-2 grades the light's existence",
+   "load": "18.8/14.0/15.4"
+  },
+  {
+   "name": "E-10 checkbox rebound single light",
+   "status": "REPORT",
+   "line": "seat button.checkbox.control-bit::after · onset (> 0.004) none ms · peak 0.000 at +2 ms (ACKNOWLEDGE_WINDOW_MS 150: onset OUTSIDE, peak inside) · pulses 0 · +2 0.000 +36 0.000 +72 0.000 +103 0.000 +137 0.000 +166 0.000 +199 0.000 +229 0.000 +266 0.000 +294 0.000 +325 0.000 +360 0.000 +391 0.000 +421 0.000 +457 0.000 +489 0.000 +518 0.000 +549 0.000 +583 0.000 +614 0.000 +645 0.000 +684 0.000 +713 0.000 +742 0.000 +772 0.000 +801 0.000 +836 0.000 +869 0.000 +903 0.000",
+   "load": "18.8/14.0/15.4"
+  },
+  {
+   "name": "E-10 checkbox rebound reverse +60 light",
+   "status": "UNMEASURED",
+   "line": "the single commit lights no seat above 0.02 (seat button.checkbox.control-bit::after): no commit light to film, so no reversal of one; E-2 grades the light's existence",
+   "load": "18.8/14.0/15.4"
+  },
+  {
+   "name": "E-10 checkbox rebound reverse +200 light",
+   "status": "UNMEASURED",
+   "line": "the single commit lights no seat above 0.02 (seat button.checkbox.control-bit::after): no commit light to film, so no reversal of one; E-2 grades the light's existence",
+   "load": "20.5/14.4/15.6"
+  },
+  {
+   "name": "E-10 checkbox rebound single dark",
+   "status": "REPORT",
+   "line": "seat button.checkbox.control-bit::after · onset (> 0.004) none ms · peak 0.000 at +2 ms (ACKNOWLEDGE_WINDOW_MS 150: onset OUTSIDE, peak inside) · pulses 0 · +2 0.000 +41 0.000 +68 0.000 +102 0.000 +130 0.000 +156 0.000 +191 0.000 +222 0.000 +251 0.000 +281 0.000 +309 0.000 +340 0.000 +370 0.000 +400 0.000 +431 0.000 +458 0.000 +491 0.000 +519 0.000 +548 0.000 +578 0.000 +612 0.000 +639 0.000 +669 0.000 +703 0.000 +732 0.000 +761 0.000 +792 0.000 +818 0.000 +850 0.000 +880 0.000",
+   "load": "20.5/14.4/15.6"
+  },
+  {
+   "name": "E-10 checkbox rebound reverse +60 dark",
+   "status": "UNMEASURED",
+   "line": "the single commit lights no seat above 0.02 (seat button.checkbox.control-bit::after): no commit light to film, so no reversal of one; E-2 grades the light's existence",
+   "load": "20.5/14.4/15.6"
+  },
+  {
+   "name": "E-10 checkbox rebound reverse +200 dark",
+   "status": "UNMEASURED",
+   "line": "the single commit lights no seat above 0.02 (seat button.checkbox.control-bit::after): no commit light to film, so no reversal of one; E-2 grades the light's existence",
+   "load": "21.7/14.8/15.7"
+  },
+  {
+   "name": "E-10 chip rebound single light",
+   "status": "REPORT",
+   "line": "seat button.glass-chip.glass-capsule::after · onset (> 0.004) none ms · peak 0.000 at +2 ms (ACKNOWLEDGE_WINDOW_MS 150: onset OUTSIDE, peak inside) · pulses 0 · +2 0.000 +34 0.000 +62 0.000 +96 0.000 +134 0.000 +163 0.000 +193 0.000 +229 0.000 +260 0.000 +296 0.000 +334 0.000 +364 0.000 +394 0.000 +423 0.000 +452 0.000 +483 0.000 +516 0.000 +549 0.000 +582 0.000 +615 0.000 +644 0.000 +673 0.000 +709 0.000 +748 0.000 +778 0.000 +807 0.000 +843 0.000 +874 0.000 +903 0.000",
+   "load": "21.7/14.8/15.7"
+  },
+  {
+   "name": "E-10 chip rebound reverse +60 light",
+   "status": "UNMEASURED",
+   "line": "the single commit lights no seat above 0.02 (seat button.glass-chip.glass-capsule::after): no commit light to film, so no reversal of one; E-2 grades the light's existence",
+   "load": "21.7/14.8/15.7"
+  },
+  {
+   "name": "E-10 chip rebound reverse +200 light",
+   "status": "UNMEASURED",
+   "line": "the single commit lights no seat above 0.02 (seat button.glass-chip.glass-capsule::after): no commit light to film, so no reversal of one; E-2 grades the light's existence",
+   "load": "26.5/15.9/16.1"
+  },
+  {
+   "name": "E-10 chip rebound single dark",
+   "status": "REPORT",
+   "line": "seat button.glass-chip.glass-capsule::after · onset (> 0.004) none ms · peak 0.000 at +2 ms (ACKNOWLEDGE_WINDOW_MS 150: onset OUTSIDE, peak inside) · pulses 0 · +2 0.000 +32 0.000 +69 0.000 +105 0.000 +134 0.000 +163 0.000 +197 0.000 +233 0.000 +268 0.000 +297 0.000 +326 0.000 +357 0.000 +387 0.000 +424 0.000 +461 0.000 +491 0.000 +525 0.000 +561 0.000 +593 0.000 +628 0.000 +658 0.000 +695 0.000 +724 0.000 +755 0.000 +785 0.000 +819 0.000 +852 0.000 +881 0.000",
+   "load": "26.5/15.9/16.1"
+  },
+  {
+   "name": "E-10 chip rebound reverse +60 dark",
+   "status": "UNMEASURED",
+   "line": "the single commit lights no seat above 0.02 (seat button.glass-chip.glass-capsule::after): no commit light to film, so no reversal of one; E-2 grades the light's existence",
+   "load": "26.5/15.9/16.1"
+  },
+  {
+   "name": "E-10 chip rebound reverse +200 dark",
+   "status": "UNMEASURED",
+   "line": "the single commit lights no seat above 0.02 (seat button.glass-chip.glass-capsule::after): no commit light to film, so no reversal of one; E-2 grades the light's existence",
+   "load": "26.0/16.0/16.1"
+  },
+  {
+   "name": "E-10 accordion rebound single light",
+   "status": "REPORT",
+   "line": "seat button.disclosure-trigger.disclosure-group-trigger::after · onset (> 0.004) none ms · peak 0.000 at +4 ms (ACKNOWLEDGE_WINDOW_MS 150: onset OUTSIDE, peak inside) · pulses 0 · +4 0.000 +44 0.000 +71 0.000 +98 0.000 +129 0.000 +158 0.000 +187 0.000 +217 0.000 +246 0.000 +276 0.000 +305 0.000 +335 0.000 +364 0.000 +396 0.000 +425 0.000 +458 0.000 +489 0.000 +519 0.000 +548 0.000 +577 0.000 +606 0.000 +637 0.000 +673 0.000 +702 0.000 +731 0.000 +759 0.000 +788 0.000 +819 0.000 +848 0.000 +877 0.000",
+   "load": "26.0/16.0/16.1"
+  },
+  {
+   "name": "E-10 accordion rebound reverse +60 light",
+   "status": "UNMEASURED",
+   "line": "the single commit lights no seat above 0.02 (seat button.disclosure-trigger.disclosure-group-trigger::after): no commit light to film, so no reversal of one; E-2 grades the light's existence",
+   "load": "26.0/16.0/16.1"
+  },
+  {
+   "name": "E-10 accordion rebound reverse +200 light",
+   "status": "UNMEASURED",
+   "line": "the single commit lights no seat above 0.02 (seat button.disclosure-trigger.disclosure-group-trigger::after): no commit light to film, so no reversal of one; E-2 grades the light's existence",
+   "load": "25.5/16.0/16.1"
+  },
+  {
+   "name": "E-10 accordion rebound single dark",
+   "status": "REPORT",
+   "line": "seat button.disclosure-trigger.disclosure-group-trigger::after · onset (> 0.004) none ms · peak 0.000 at +3 ms (ACKNOWLEDGE_WINDOW_MS 150: onset OUTSIDE, peak inside) · pulses 0 · +3 0.000 +32 0.000 +66 0.000 +107 0.000 +140 0.000 +173 0.000 +201 0.000 +232 0.000 +261 0.000 +291 0.000 +327 0.000 +361 0.000 +398 0.000 +428 0.000 +461 0.000 +491 0.000 +523 0.000 +557 0.000 +590 0.000 +623 0.000 +656 0.000 +684 0.000 +719 0.000 +750 0.000 +780 0.000 +815 0.000 +850 0.000 +876 0.000 +906 0.000",
+   "load": "25.5/16.0/16.1"
+  },
+  {
+   "name": "E-10 accordion rebound reverse +60 dark",
+   "status": "UNMEASURED",
+   "line": "the single commit lights no seat above 0.02 (seat button.disclosure-trigger.disclosure-group-trigger::after): no commit light to film, so no reversal of one; E-2 grades the light's existence",
+   "load": "25.5/16.0/16.1"
+  },
+  {
+   "name": "E-10 accordion rebound reverse +200 dark",
+   "status": "UNMEASURED",
+   "line": "the single commit lights no seat above 0.02 (seat button.disclosure-trigger.disclosure-group-trigger::after): no commit light to film, so no reversal of one; E-2 grades the light's existence",
+   "load": "25.6/16.2/16.2"
+  }
+ ]
+}

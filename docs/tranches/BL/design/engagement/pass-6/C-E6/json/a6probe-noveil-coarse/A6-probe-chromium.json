@@ -1,0 +1,319 @@
+{
+ "id": "A6-probe",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p6/C-E6/out/builds/noveil-coarse"
+ },
+ "loadStart": "10.9/13.9/15.4",
+ "loadEnd": "11.4/13.5/15.1",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "prm switch light",
+   "status": "PASS",
+   "line": "state false → true · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 20.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 79 frames · legible: 50.1 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 84.46 levels · face [role=\"switch\"] .control-bit__face",
+   "load": "10.9/13.9/15.4"
+  },
+  {
+   "name": "prm-control switch (Shift, no commit)",
+   "status": "PASS",
+   "line": "the control must read NOT legible (the read can fail): state false → false · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 80 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face [role=\"switch\"] .control-bit__face",
+   "load": "10.9/13.9/15.4"
+  },
+  {
+   "name": "prm switch dark",
+   "status": "PASS",
+   "line": "state false → true · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 20.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 80 frames · legible: 69.6 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 54.18 levels · face [role=\"switch\"] .control-bit__face",
+   "load": "10.7/13.8/15.3"
+  },
+  {
+   "name": "prm checkbox light",
+   "status": "PASS",
+   "line": "state false → true · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 79 frames · legible: 64.1 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 106.00 levels · face [role=\"checkbox\"] .control-bit__face",
+   "load": "10.7/13.8/15.3"
+  },
+  {
+   "name": "prm-control checkbox (Shift, no commit)",
+   "status": "PASS",
+   "line": "the control must read NOT legible (the read can fail): state false → false · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 78 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face [role=\"checkbox\"] .control-bit__face",
+   "load": "10.7/13.8/15.3"
+  },
+  {
+   "name": "prm checkbox dark",
+   "status": "PASS",
+   "line": "state false → true · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 77 frames · legible: 63.9 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 70.29 levels · face [role=\"checkbox\"] .control-bit__face",
+   "load": "10.3/13.7/15.3"
+  },
+  {
+   "name": "prm radio light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 77 frames · legible: 72.4 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 95.67 levels · face [role=\"radio\"]:nth-of-type(2) .control-bit__face",
+   "load": "10.3/13.7/15.3"
+  },
+  {
+   "name": "prm-control radio (Shift, no commit)",
+   "status": "PASS",
+   "line": "the control must read NOT legible (the read can fail): state \"a\" → \"a\" · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 82 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face [role=\"radio\"]:nth-of-type(2) .control-bit__face",
+   "load": "10.3/13.7/15.3"
+  },
+  {
+   "name": "prm radio dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 80 frames · legible: 77.6 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 69.21 levels · face [role=\"radio\"]:nth-of-type(2) .control-bit__face",
+   "load": "11.4/13.9/15.3"
+  },
+  {
+   "name": "prm tabs light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 80 frames · legible: 89.3 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 53.29 levels · face .segmented-tab:nth-of-type(2)",
+   "load": "11.4/13.9/15.3"
+  },
+  {
+   "name": "prm-control tabs (Shift, no commit)",
+   "status": "PASS",
+   "line": "the control must read NOT legible (the read can fail): state \"a\" → \"a\" · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 80 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face .segmented-tab:nth-of-type(2)",
+   "load": "11.4/13.9/15.3"
+  },
+  {
+   "name": "prm tabs dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 77 frames · legible: 25.6 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 34.56 levels · face .segmented-tab:nth-of-type(2)",
+   "load": "12.3/14.0/15.4"
+  },
+  {
+   "name": "prm toggle light",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 80 frames · legible: 79.5 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 25.63 levels · face [data-t=\"item-b\"]",
+   "load": "12.3/14.0/15.4"
+  },
+  {
+   "name": "prm-control toggle (Shift, no commit)",
+   "status": "PASS",
+   "line": "the control must read NOT legible (the read can fail): state \"a\" → \"a\" · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 80 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face [data-t=\"item-b\"]",
+   "load": "12.3/14.0/15.4"
+  },
+  {
+   "name": "prm toggle dark",
+   "status": "PASS",
+   "line": "state \"a\" → \"b\" · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 77 frames · legible: 79.9 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 27.51 levels · face [data-t=\"item-b\"]",
+   "load": "12.6/14.0/15.4"
+  },
+  {
+   "name": "prm chip light",
+   "status": "PASS",
+   "line": "state false → true · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 80 frames · legible: 42.4 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 9.32 levels · face .glass-chip",
+   "load": "12.6/14.0/15.4"
+  },
+  {
+   "name": "prm-control chip (Shift, no commit)",
+   "status": "PASS",
+   "line": "the control must read NOT legible (the read can fail): state false → false · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 82 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face .glass-chip",
+   "load": "12.6/14.0/15.4"
+  },
+  {
+   "name": "prm chip dark",
+   "status": "PASS",
+   "line": "state false → true · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 80 frames · legible: 51.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 23.92 levels · face .glass-chip",
+   "load": "11.9/13.9/15.3"
+  },
+  {
+   "name": "prm chipaction light",
+   "status": "REPORT",
+   "line": "stateless (no state to show; the action's effect is the consumer's): state 0 → 1 · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 81 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face .glass-chip",
+   "load": "11.9/13.9/15.3"
+  },
+  {
+   "name": "prm-control chipaction (Shift, no commit)",
+   "status": "PASS",
+   "line": "the control must read NOT legible (the read can fail): state 0 → 0 · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 78 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face .glass-chip",
+   "load": "11.9/13.9/15.3"
+  },
+  {
+   "name": "prm chipaction dark",
+   "status": "REPORT",
+   "line": "stateless (no state to show; the action's effect is the consumer's): state 0 → 1 · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 79 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face .glass-chip",
+   "load": "12.2/13.9/15.3"
+  },
+  {
+   "name": "prm accordion light",
+   "status": "PASS",
+   "line": "state null → \"one\" · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 81 frames · legible: 0.2 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.23 levels · face .disclosure-trigger · region height 0.0 → 37.8 px (read before the key and after the settle) (bound from ≤ 1 to ≥ 16), in flight on 0 frame(s) (bound ≤ 1) (the region is the disclosure's state; the face read is printed)",
+   "load": "12.2/13.9/15.3"
+  },
+  {
+   "name": "prm-control accordion (Shift, no commit)",
+   "status": "PASS",
+   "line": "the control must read NOT legible (the read can fail): state null → null · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 81 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face .disclosure-trigger · region height 0.0 → 0.0 px (read before the key and after the settle) (bound from ≤ 1 to ≥ 16), in flight on 0 frame(s) (bound ≤ 1) (the region is the disclosure's state; the face read is printed)",
+   "load": "12.2/13.9/15.3"
+  },
+  {
+   "name": "prm accordion dark",
+   "status": "PASS",
+   "line": "state null → \"one\" · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 76 frames · legible: 0.2 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.23 levels · face .disclosure-trigger · region height 0.0 → 37.8 px (read before the key and after the settle) (bound from ≤ 1 to ≥ 16), in flight on 0 frame(s) (bound ≤ 1) (the region is the disclosure's state; the face read is printed)",
+   "load": "11.8/13.8/15.3"
+  },
+  {
+   "name": "prm button light",
+   "status": "REPORT",
+   "line": "stateless (no state to show; the action's effect is the consumer's): state 0 → 1 · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 78 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face .button",
+   "load": "11.8/13.8/15.3"
+  },
+  {
+   "name": "prm-control button (Shift, no commit)",
+   "status": "PASS",
+   "line": "the control must read NOT legible (the read can fail): state 0 → 0 · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 78 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face .button",
+   "load": "11.8/13.8/15.3"
+  },
+  {
+   "name": "prm button dark",
+   "status": "REPORT",
+   "line": "stateless (no state to show; the action's effect is the consumer's): state 0 → 1 · instant: scale range 0.0000 (bound < 0.002), scale in flight 0 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 79 frames · legible: 0.0 % of the face's pixels changed by ≥ 16 levels (bound ≥ 5 %), mean |Δ| 0.00 levels · face .button",
+   "load": "12.0/13.8/15.3"
+  },
+  {
+   "name": "reverse switch single light",
+   "status": "REPORT",
+   "line": "the single pop: peak ×1.0499 at +89 ms · largest one-frame step 0.0097 per 16.7 ms · pops 1 · +2 1.0000 +32 1.0201 +73 1.0481 +105 1.0463 +135 1.0308 +163 1.0158 +195 1.0033 +223 0.9970 +252 0.9941 +282 0.9934 +311 0.9941 +341 0.9953 +370 0.9967 +400 0.9979 +434 0.9990 +470 1.0000 +499 1.0000 +528 1.0000 +558 1.0000 +594 1.0000 +625 1.0000 +655 1.0000 +684 1.0000 +711 1.0000 +746 1.0000 +776 1.0000 +805 1.0000 +836 1.0000 +865 1.0000 +894 1.0000",
+   "load": "12.0/13.8/15.3"
+  },
+  {
+   "name": "reverse switch +60 light",
+   "status": "PASS",
+   "line": "state false → true → back at +60 · largest one-frame step 0.0085 against the single pop's 0.0097 (bound ≤ +0.002) · rests ×1.0000 (bound ±0.002) · pops 1 (printed) · peak ×1.0407 at +62 · +1 1.0000 +35 1.0188 +62 1.0407 +92 1.0216 +124 1.0008 +151 0.9980 +184 0.9993 +211 1.0000 +243 1.0000 +271 1.0000 +300 1.0000 +331 1.0000 +360 1.0000 +390 1.0000 +419 1.0000 +450 1.0000 +480 1.0000 +509 1.0000 +538 1.0000 +567 1.0000 +598 1.0000 +627 1.0000 +657 1.0000 +684 1.0000 +718 1.0000 +746 1.0000 +775 1.0000 +805 1.0000 +832 1.0000 +862 1.0000 +892 1.0000",
+   "load": "12.0/13.8/15.3"
+  },
+  {
+   "name": "reverse switch +200 light",
+   "status": "PASS",
+   "line": "state false → true → back at +200 · largest one-frame step 0.0085 against the single pop's 0.0097 (bound ≤ +0.002) · rests ×1.0000 (bound ±0.002) · pops 2 (printed) · peak ×1.0500 at +90 · +2 1.0000 +32 1.0168 +62 1.0407 +90 1.0500 +124 1.0394 +155 1.0220 +186 1.0080 +217 1.0070 +248 1.0303 +280 1.0487 +308 1.0464 +341 1.0298 +371 1.0138 +400 1.0028 +433 0.9962 +463 0.9938 +496 0.9937 +532 0.9950 +563 0.9964 +593 0.9977 +624 0.9988 +658 1.0000 +689 1.0000 +717 1.0000 +748 1.0000 +776 1.0000 +808 1.0000 +837 1.0000 +865 1.0000 +894 1.0000",
+   "load": "12.9/14.0/15.3"
+  },
+  {
+   "name": "reverse switch single dark",
+   "status": "REPORT",
+   "line": "the single pop: peak ×1.0500 at +90 ms · largest one-frame step 0.0067 per 16.7 ms · pops 1 · +1 1.0000 +32 1.0181 +60 1.0404 +90 1.0500 +120 1.0409 +152 1.0229 +183 1.0084 +212 0.9997 +244 0.9949 +273 0.9935 +310 0.9940 +340 0.9952 +369 0.9966 +399 0.9978 +428 0.9988 +458 1.0000 +487 1.0000 +521 1.0000 +548 1.0000 +585 1.0000 +617 1.0000 +646 1.0000 +677 1.0000 +714 1.0000 +746 1.0000 +775 1.0000 +805 1.0000 +835 1.0000 +863 1.0000 +892 1.0000",
+   "load": "12.9/14.0/15.3"
+  },
+  {
+   "name": "reverse switch +60 dark",
+   "status": "PASS",
+   "line": "state false → true → back at +60 · largest one-frame step 0.0077 against the single pop's 0.0067 (bound ≤ +0.002) · rests ×1.0000 (bound ±0.002) · pops 1 (printed) · peak ×1.0334 at +67 · +1 1.0000 +34 1.0071 +67 1.0334 +96 1.0107 +126 0.9987 +155 0.9993 +184 1.0000 +216 1.0000 +245 1.0000 +274 1.0000 +303 1.0000 +336 1.0000 +364 1.0000 +394 1.0000 +423 1.0000 +453 1.0000 +483 1.0000 +512 1.0000 +541 1.0000 +574 1.0000 +603 1.0000 +635 1.0000 +664 1.0000 +693 1.0000 +724 1.0000 +753 1.0000 +785 1.0000 +816 1.0000 +847 1.0000 +879 1.0000",
+   "load": "12.9/14.0/15.3"
+  },
+  {
+   "name": "reverse switch +200 dark",
+   "status": "PASS",
+   "line": "state false → true → back at +200 · largest one-frame step 0.0081 against the single pop's 0.0067 (bound ≤ +0.002) · rests ×1.0000 (bound ±0.002) · pops 2 (printed) · peak ×1.0500 at +293 · +2 1.0000 +34 1.0171 +67 1.0431 +100 1.0491 +130 1.0371 +161 1.0196 +190 1.0067 +220 1.0071 +249 1.0287 +278 1.0475 +308 1.0476 +337 1.0337 +366 1.0173 +396 1.0050 +427 0.9974 +457 0.9942 +490 0.9935 +520 0.9943 +549 0.9956 +578 0.9970 +608 0.9981 +637 0.9990 +669 1.0000 +703 1.0000 +733 1.0000 +766 1.0000 +795 1.0000 +828 1.0000 +857 1.0000 +887 1.0000",
+   "load": "12.6/13.9/15.3"
+  },
+  {
+   "name": "reverse checkbox single light",
+   "status": "REPORT",
+   "line": "the single pop: peak ×1.0499 at +84 ms · largest one-frame step 0.0070 per 16.7 ms · pops 1 · +1 1.0000 +35 1.0220 +62 1.0428 +92 1.0496 +122 1.0386 +151 1.0223 +181 1.0084 +213 0.9991 +249 0.9944 +284 0.9934 +312 0.9941 +340 0.9953 +369 0.9966 +401 0.9980 +430 0.9989 +460 1.0000 +492 1.0000 +521 1.0000 +550 1.0000 +578 1.0000 +612 1.0000 +640 1.0000 +668 1.0000 +703 1.0000 +733 1.0000 +760 1.0000 +792 1.0000 +821 1.0000 +848 1.0000 +883 1.0000",
+   "load": "12.6/13.9/15.3"
+  },
+  {
+   "name": "reverse checkbox +60 light",
+   "status": "PASS",
+   "line": "state false → true → back at +60 · largest one-frame step 0.0088 against the single pop's 0.0070 (bound ≤ +0.002) · rests ×1.0000 (bound ±0.002) · pops 1 (printed) · peak ×1.0400 at +60 · +1 1.0000 +32 1.0170 +60 1.0400 +87 1.0222 +117 1.0019 +146 0.9981 +177 0.9993 +206 1.0000 +238 1.0000 +268 1.0000 +297 1.0000 +330 1.0000 +360 1.0000 +389 1.0000 +419 1.0000 +448 1.0000 +479 1.0000 +509 1.0000 +540 1.0000 +568 1.0000 +597 1.0000 +627 1.0000 +655 1.0000 +685 1.0000 +714 1.0000 +747 1.0000 +777 1.0000 +804 1.0000 +837 1.0000 +868 1.0000 +900 1.0000",
+   "load": "12.6/13.9/15.3"
+  },
+  {
+   "name": "reverse checkbox +200 light",
+   "status": "PASS",
+   "line": "state false → true → back at +200 · largest one-frame step 0.0077 against the single pop's 0.0070 (bound ≤ +0.002) · rests ×1.0000 (bound ±0.002) · pops 2 (printed) · peak ×1.0500 at +296 · +1 1.0000 +30 1.0172 +64 1.0437 +92 1.0497 +113 1.0437 +143 1.0273 +173 1.0118 +206 1.0008 +236 1.0147 +265 1.0387 +296 1.0500 +326 1.0417 +358 1.0240 +390 1.0086 +419 0.9998 +449 0.9952 +478 0.9935 +509 0.9937 +537 0.9948 +567 0.9961 +596 0.9974 +627 0.9986 +655 1.0000 +687 1.0000 +721 1.0000 +750 1.0000 +783 1.0000 +813 1.0000 +844 1.0000 +875 1.0000 +909 1.0000",
+   "load": "12.5/13.8/15.3"
+  },
+  {
+   "name": "reverse checkbox single dark",
+   "status": "REPORT",
+   "line": "the single pop: peak ×1.0500 at +91 ms · largest one-frame step 0.0074 per 16.7 ms · pops 1 · +1 1.0000 +30 1.0142 +64 1.0408 +91 1.0500 +120 1.0421 +149 1.0263 +179 1.0112 +209 1.0012 +241 0.9954 +271 0.9936 +300 0.9936 +330 0.9946 +362 0.9961 +390 0.9973 +420 0.9984 +450 1.0000 +480 1.0000 +510 1.0000 +539 1.0000 +571 1.0000 +600 1.0000 +629 1.0000 +658 1.0000 +689 1.0000 +718 1.0000 +750 1.0000 +779 1.0000 +810 1.0000 +839 1.0000 +871 1.0000 +900 1.0000",
+   "load": "12.5/13.8/15.3"
+  },
+  {
+   "name": "reverse checkbox +60 dark",
+   "status": "PASS",
+   "line": "state false → true → back at +60 · largest one-frame step 0.0083 against the single pop's 0.0074 (bound ≤ +0.002) · rests ×1.0000 (bound ±0.002) · pops 1 (printed) · peak ×1.0296 at +60 · +1 1.0000 +32 1.0071 +60 1.0296 +94 1.0034 +124 0.9988 +153 1.0000 +181 1.0000 +211 1.0000 +239 1.0000 +274 1.0000 +303 1.0000 +331 1.0000 +364 1.0000 +393 1.0000 +423 1.0000 +453 1.0000 +482 1.0000 +511 1.0000 +542 1.0000 +573 1.0000 +602 1.0000 +631 1.0000 +660 1.0000 +689 1.0000 +721 1.0000 +747 1.0000 +778 1.0000 +807 1.0000 +841 1.0000 +872 1.0000 +902 1.0000",
+   "load": "12.5/13.8/15.3"
+  },
+  {
+   "name": "reverse checkbox +200 dark",
+   "status": "PASS",
+   "line": "state false → true → back at +200 · largest one-frame step 0.0070 against the single pop's 0.0074 (bound ≤ +0.002) · rests ×1.0000 (bound ±0.002) · pops 2 (printed) · peak ×1.0500 at +294 · +2 1.0000 +34 1.0100 +61 1.0328 +92 1.0492 +118 1.0469 +148 1.0321 +180 1.0146 +210 1.0059 +243 1.0224 +272 1.0436 +302 1.0495 +330 1.0388 +361 1.0212 +390 1.0076 +420 0.9990 +449 0.9950 +481 0.9937 +510 0.9941 +538 0.9953 +569 0.9967 +597 0.9979 +627 0.9989 +659 1.0000 +690 1.0000 +718 1.0000 +747 1.0000 +778 1.0000 +808 1.0000 +836 1.0000 +870 1.0000 +899 1.0000",
+   "load": "12.5/13.8/15.2"
+  },
+  {
+   "name": "reverse chip single light",
+   "status": "REPORT",
+   "line": "the single pop: peak ×1.0199 at +94 ms · largest one-frame step 0.0031 per 16.7 ms · pops 1 · +1 1.0000 +32 1.0064 +61 1.0157 +94 1.0199 +125 1.0157 +162 1.0077 +193 1.0022 +220 0.9994 +250 0.9978 +285 0.9974 +316 0.9976 +352 0.9983 +384 0.9988 +414 0.9993 +441 0.9997 +473 1.0000 +504 1.0000 +533 1.0000 +564 1.0000 +594 1.0000 +626 1.0000 +662 1.0000 +692 1.0000 +723 1.0000 +754 1.0000 +780 1.0000 +813 1.0000 +841 1.0000 +870 1.0000 +901 1.0000",
+   "load": "12.5/13.8/15.2"
+  },
+  {
+   "name": "reverse chip +60 light",
+   "status": "PASS",
+   "line": "state false → true → back at +60 · largest one-frame step 0.0050 against the single pop's 0.0031 (bound ≤ +0.002) · rests ×1.0000 (bound ±0.002) · pops 1 (printed) · peak ×1.0183 at +68 · +1 1.0000 +36 1.0092 +75 1.0178 +102 1.0105 +132 1.0019 +161 0.9992 +196 0.9994 +230 0.9999 +260 1.0000 +291 1.0000 +317 1.0000 +348 1.0000 +383 1.0000 +410 1.0000 +443 1.0000 +473 1.0000 +506 1.0000 +544 1.0000 +573 1.0000 +604 1.0000 +635 1.0000 +664 1.0000 +693 1.0000 +723 1.0000 +751 1.0000 +783 1.0000 +811 1.0000 +841 1.0000 +870 1.0000 +899 1.0000",
+   "load": "12.5/13.8/15.2"
+  },
+  {
+   "name": "reverse chip +200 light",
+   "status": "PASS",
+   "line": "state false → true → back at +200 · largest one-frame step 0.0029 against the single pop's 0.0031 (bound ≤ +0.002) · rests ×1.0000 (bound ±0.002) · pops 2 (printed) · peak ×1.0200 at +83 · +1 1.0000 +39 1.0107 +66 1.0183 +96 1.0195 +122 1.0152 +153 1.0084 +182 1.0030 +215 1.0006 +244 1.0082 +273 1.0171 +302 1.0199 +332 1.0158 +365 1.0084 +395 1.0030 +424 0.9996 +456 0.9978 +487 0.9974 +519 0.9976 +550 0.9981 +581 0.9987 +611 0.9992 +640 0.9995 +669 1.0000 +700 1.0000 +729 1.0000 +758 1.0000 +790 1.0000 +821 1.0000 +850 1.0000 +879 1.0000",
+   "load": "12.2/13.7/15.2"
+  },
+  {
+   "name": "reverse chip single dark",
+   "status": "REPORT",
+   "line": "the single pop: peak ×1.0200 at +83 ms · largest one-frame step 0.0029 per 16.7 ms · pops 1 · +2 1.0000 +38 1.0103 +65 1.0180 +111 1.0175 +144 1.0103 +171 1.0048 +201 1.0007 +230 0.9984 +258 0.9975 +286 0.9974 +315 0.9977 +347 0.9983 +376 0.9988 +406 0.9993 +435 0.9996 +466 1.0000 +497 1.0000 +528 1.0000 +562 1.0000 +594 1.0000 +627 1.0000 +657 1.0000 +690 1.0000 +719 1.0000 +747 1.0000 +780 1.0000 +812 1.0000 +839 1.0000 +870 1.0000 +903 1.0000",
+   "load": "12.2/13.7/15.2"
+  },
+  {
+   "name": "reverse chip +60 dark",
+   "status": "PASS",
+   "line": "state false → true → back at +60 · largest one-frame step 0.0035 against the single pop's 0.0029 (bound ≤ +0.002) · rests ×1.0000 (bound ±0.002) · pops 1 (printed) · peak ×1.0168 at +61 · +1 1.0000 +32 1.0076 +61 1.0168 +92 1.0088 +124 1.0006 +151 0.9992 +181 0.9996 +210 1.0000 +240 1.0000 +273 1.0000 +302 1.0000 +330 1.0000 +360 1.0000 +389 1.0000 +421 1.0000 +451 1.0000 +481 1.0000 +511 1.0000 +543 1.0000 +572 1.0000 +601 1.0000 +631 1.0000 +659 1.0000 +689 1.0000 +718 1.0000 +749 1.0000 +778 1.0000 +810 1.0000 +838 1.0000 +868 1.0000 +898 1.0000",
+   "load": "12.2/13.7/15.2"
+  },
+  {
+   "name": "reverse chip +200 dark",
+   "status": "PASS",
+   "line": "state false → true → back at +200 · largest one-frame step 0.0045 against the single pop's 0.0029 (bound ≤ +0.002) · rests ×1.0000 (bound ±0.002) · pops 2 (printed) · peak ×1.0200 at +91 · +1 1.0000 +45 1.0106 +72 1.0183 +100 1.0197 +128 1.0151 +159 1.0082 +188 1.0030 +218 1.0029 +247 1.0114 +280 1.0194 +310 1.0185 +338 1.0128 +371 1.0056 +402 1.0010 +433 0.9985 +465 0.9975 +497 0.9975 +530 0.9980 +560 0.9985 +593 0.9991 +622 0.9995 +655 1.0000 +686 1.0000 +715 1.0000 +745 1.0000 +774 1.0000 +807 1.0000 +836 1.0000 +865 1.0000 +894 1.0000",
+   "load": "11.7/13.6/15.1"
+  },
+  {
+   "name": "reverse accordion single light",
+   "status": "REPORT",
+   "line": "the single pop: peak ×1.0200 at +87 ms · largest one-frame step 0.0029 per 16.7 ms · pops 1 · +3 1.0000 +34 1.0084 +62 1.0170 +90 1.0199 +120 1.0159 +149 1.0094 +180 1.0035 +209 0.9999 +251 0.9977 +279 0.9974 +308 0.9976 +337 0.9981 +366 0.9986 +400 0.9992 +434 0.9996 +467 1.0000 +498 1.0000 +527 1.0000 +560 1.0000 +595 1.0000 +629 1.0000 +658 1.0000 +692 1.0000 +723 1.0000 +754 1.0000 +782 1.0000 +815 1.0000 +844 1.0000 +874 1.0000 +908 1.0000",
+   "load": "11.7/13.6/15.1"
+  },
+  {
+   "name": "reverse accordion +60 light",
+   "status": "PASS",
+   "line": "state null → \"one\" → back at +60 · largest one-frame step 0.0030 against the single pop's 0.0029 (bound ≤ +0.002) · rests ×1.0000 (bound ±0.002) · pops 1 (printed) · peak ×1.0170 at +63 · +3 1.0000 +38 1.0092 +71 1.0165 +100 1.0073 +132 1.0000 +171 0.9993 +201 0.9998 +231 1.0000 +260 1.0000 +290 1.0000 +325 1.0000 +357 1.0000 +386 1.0000 +419 1.0000 +447 1.0000 +477 1.0000 +507 1.0000 +534 1.0000 +566 1.0000 +595 1.0000 +626 1.0000 +653 1.0000 +683 1.0000 +715 1.0000 +743 1.0000 +773 1.0000 +800 1.0000 +833 1.0000 +861 1.0000 +891 1.0000",
+   "load": "11.7/13.6/15.1"
+  },
+  {
+   "name": "reverse accordion +200 light",
+   "status": "PASS",
+   "line": "state null → \"one\" → back at +200 · largest one-frame step 0.0029 against the single pop's 0.0029 (bound ≤ +0.002) · rests ×1.0000 (bound ±0.002) · pops 2 (printed) · peak ×1.0200 at +88 · +3 1.0000 +35 1.0084 +67 1.0180 +97 1.0197 +127 1.0148 +156 1.0082 +185 1.0030 +214 1.0024 +244 1.0109 +275 1.0190 +304 1.0191 +334 1.0136 +363 1.0071 +392 1.0021 +422 0.9992 +454 0.9977 +484 0.9974 +514 0.9977 +543 0.9982 +575 0.9988 +604 0.9992 +633 0.9996 +666 1.0000 +698 1.0000 +730 1.0000 +761 1.0000 +789 1.0000 +820 1.0000 +851 1.0000 +880 1.0000",
+   "load": "11.7/13.6/15.1"
+  },
+  {
+   "name": "reverse accordion single dark",
+   "status": "REPORT",
+   "line": "the single pop: peak ×1.0200 at +90 ms · largest one-frame step 0.0028 per 16.7 ms · pops 1 · +3 1.0000 +38 1.0083 +66 1.0170 +100 1.0196 +131 1.0145 +160 1.0080 +191 1.0025 +219 0.9995 +248 0.9979 +278 0.9974 +311 0.9976 +341 0.9981 +370 0.9986 +401 0.9991 +429 0.9995 +461 1.0000 +492 1.0000 +520 1.0000 +553 1.0000 +583 1.0000 +615 1.0000 +647 1.0000 +680 1.0000 +709 1.0000 +742 1.0000 +774 1.0000 +804 1.0000 +836 1.0000 +866 1.0000 +895 1.0000",
+   "load": "11.4/13.5/15.1"
+  },
+  {
+   "name": "reverse accordion +60 dark",
+   "status": "PASS",
+   "line": "state null → \"one\" → back at +60 · largest one-frame step 0.0034 against the single pop's 0.0028 (bound ≤ +0.002) · rests ×1.0000 (bound ±0.002) · pops 1 (printed) · peak ×1.0178 at +63 · +4 1.0000 +33 1.0086 +63 1.0178 +94 1.0111 +123 1.0022 +152 0.9992 +183 0.9993 +213 0.9998 +241 1.0000 +271 1.0000 +300 1.0000 +333 1.0000 +362 1.0000 +391 1.0000 +421 1.0000 +450 1.0000 +482 1.0000 +509 1.0000 +541 1.0000 +573 1.0000 +602 1.0000 +632 1.0000 +662 1.0000 +691 1.0000 +721 1.0000 +757 1.0000 +788 1.0000 +818 1.0000 +845 1.0000 +875 1.0000 +909 1.0000",
+   "load": "11.4/13.5/15.1"
+  },
+  {
+   "name": "reverse accordion +200 dark",
+   "status": "PASS",
+   "line": "state null → \"one\" → back at +200 · largest one-frame step 0.0029 against the single pop's 0.0028 (bound ≤ +0.002) · rests ×1.0000 (bound ±0.002) · pops 2 (printed) · peak ×1.0200 at +83 · +3 1.0000 +38 1.0103 +65 1.0181 +95 1.0195 +129 1.0137 +164 1.0059 +194 1.0013 +227 1.0046 +257 1.0144 +290 1.0200 +320 1.0169 +348 1.0107 +381 1.0042 +409 1.0005 +440 0.9983 +469 0.9975 +497 0.9974 +528 0.9978 +557 0.9984 +587 0.9989 +616 0.9993 +648 1.0000 +681 1.0000 +710 1.0000 +740 1.0000 +770 1.0000 +798 1.0000 +830 1.0000 +861 1.0000 +891 1.0000",
+   "load": "11.4/13.5/15.1"
+  }
+ ]
+}

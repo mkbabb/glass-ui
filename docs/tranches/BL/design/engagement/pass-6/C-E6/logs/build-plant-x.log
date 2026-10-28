@@ -1,0 +1,17 @@
+## 2026-10-27 22:33:44 load { 24.61 29.75 25.52 } · build plant-x
+85:export const STAGE_VEIL = false;
+88:export const POINTER_STAGE: "every" | "coarse" = "coarse";
+ src/components/configurator/Configurator.vue | 14 ++++++++------
+ src/components/switch/Switch.vue             | 13 +++++++++++--
+ 2 files changed, 19 insertions(+), 8 deletions(-)
+src/components/configurator/Configurator.vue:432:                                'configurator-preset-chip glass-capsule glass-capsule-hover shadow-cartoon focus-ring shrink-0 px-3 py-1 text-micro font-medium text-foreground',
+src/composables/motion/engage/useEngage.ts:198:    for (const t of ENGAGE_CLOCKS) if (!supports("transition-duration", cs.getPropertyValue(t).trim())) void t; // PLANT P2 silent clocks
+src/styles/utilities/engage.css:237:    /* PLANT P3 no PRM pop rule */
+src/composables/motion/engage/stage.ts:198:    return; // PLANT P4 deaf
+src/components/switch/Switch.vue:55:        :class="cn('switch control-bit', props.class)"
+
+a:b referenced in a:b didn't resolve at build time, it will remain unchanged to be resolved at runtime
+/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p6/C-E6/out/builds/plant-x · 55 component directories (55 with an index.ts mapped for the member walk) · declaration composables/motion#ENGAGE_DECLARATION · scene app harness d020f4946adb
+exit 0
+restored f245802ddaaa (was f245802ddaaa)
+## 2026-10-27 22:33:46 load { 24.61 29.75 25.52 } · end build plant-x

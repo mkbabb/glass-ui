@@ -1,0 +1,52 @@
+# C-E6 WebKit phase: ONE --exclusive webkit acquisition. Candidate first (scored rows), then probes, plants, arms.
+bat noveil-coarse webkit E-1
+bat noveil-coarse webkit E-2 --commit-arms i,ii
+bat noveil-coarse webkit E-3
+bat noveil-coarse webkit E-4
+bat noveil-coarse webkit E-5
+bat noveil-coarse webkit E-6
+bat noveil-coarse webkit E-7
+bat noveil-coarse webkit E-8
+bat noveil-coarse webkit E-9
+bat noveil-coarse webkit E-10
+bat noveil-coarse webkit E-11
+bat noveil-coarse webkit E-12
+xp pass-5/C-A5/probe ca5-probe noveil-coarse webkit
+xp pass-5/C-E5/probe ce5-probe ce5-noveil-coarse webkit --label noveil-coarse
+xp pass-6/E6/probe e6-place noveil-coarse webkit
+xp pass-6/C-E6/probe ce6-probe noveil-coarse webkit --label noveil-coarse --frames /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-E6/glance/clip
+xp pass-6/A6/probe a6-probe noveil-coarse webkit --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-E6/json/a6probe-noveil-coarse
+TAG=-r1 one noveil-coarse webkit e10-continuity.mjs handoff --scenes slider,slider2
+xp pass-6/E6/probe slider-press noveil-coarse webkit
+bat plant-x webkit E-1
+one plant-x webkit e10-continuity.mjs plant --scenes restale,clipstale
+bat plant-x webkit E-11
+one plant-x webkit e12-floor.mjs plant --scenes capsule
+xp pass-6/A6/probe a6-probe plant-x webkit --only prm --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-E6/json/a6probe-plant-x
+xp pass-6/A6/probe a6-probe plant-y webkit --only prm --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-E6/json/a6probe-plant-y
+xp pass-6/A6/probe a6-probe plant-z webkit --only prm --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-E6/json/a6probe-plant-z
+cap noveil-coarse webkit
+xp pass-6/E6/probe loupe-frame noveil-coarse webkit --label ce6-noveil-coarse --frames /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-E6/glance/loupe
+bat veil-coarse webkit E-10
+bat noveil-every webkit E-10
+bat veil-every webkit E-10
+xp pass-6/C-E6/probe ce6-probe veil-coarse webkit --label veil-coarse --only clip-pointer,page-scroll
+xp pass-6/C-E6/probe ce6-probe noveil-every webkit --label noveil-every --only clip-pointer,page-scroll
+xp pass-6/C-E6/probe ce6-probe veil-every webkit --label veil-every --only clip-pointer,page-scroll
+bat veil-coarse webkit E-3
+bat noveil-every webkit E-3
+bat veil-every webkit E-3
+bat veil-coarse webkit E-12
+bat noveil-every webkit E-12
+bat veil-every webkit E-12
+bat veil-coarse webkit E-1
+bat noveil-every webkit E-1
+bat veil-every webkit E-1
+bat veil-coarse webkit E-4
+bat noveil-every webkit E-4
+bat veil-every webkit E-4
+xp pass-5/C-A5/probe ca5-probe veil-coarse webkit
+xp pass-5/C-E5/probe ce5-probe ce5-veil-coarse webkit --label veil-coarse
+TAG=-r2 one noveil-coarse webkit e10-continuity.mjs handoff --scenes slider,slider2
+TAG=-r3 one noveil-coarse webkit e10-continuity.mjs handoff --scenes slider,slider2
+TAG=-sel xp pass-6/C-E6/probe ce6-probe noveil-coarse webkit --label noveil-coarse --only select-press

@@ -1,0 +1,41 @@
+# 2026-10-28 02:30:30 chain /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-E6/phase-chromium-post.txt start · load { 45.60 38.56 37.64 }
+## 2026-10-28 02:30:31 TAG=-s1 one noveil-coarse chromium e4-momentum.mjs sheet --scenes sheet · load { 45.60 38.56 37.64 }
+[guarded] waiting for headroom (load 46 > 36)
+## 2026-10-28 02:32:34 load { 34.91 36.85 37.09 } · start e4-momentum.mjs noveil-coarse chromium --scenes sheet
+2 PASS · 3 FAIL
+  FAIL       E-4 sheet fling carries velocity · axis y, dir −1, page frame · fling: carry 5.00 px, settles 5.00 px past release · still: carry 5.00 px, settles 5.00 px · difference: carry 0.00 px, settle 0.00 px (bound: either ≥ 4, both at 
+  FAIL       E-4 sheet repeat landing · 3 fling runs, the same drive, land at -285.0, -160.0, -160.0 px (page frame, signed) · spread 125.00 px (bound ≤ 2 px: the same detent) · load 35.5/36.9/37.1
+E-4 chromium FAIL · 2 pass, 2 fail, 0 unmeasured of 4 gating cells (0 reported) · load 34.9/36.8/37.1 at start, 36.4/37.1/37.2 at end
+## guarded exit 0 · 2026-10-28 02:33:13 · load { 36.70 37.13 37.19 }
+## 2026-10-28 02:33:13 TAG=-s2 one noveil-coarse chromium e4-momentum.mjs sheet --scenes sheet · load { 36.70 37.13 37.19 }
+[guarded] waiting for headroom (load 37 > 36)
+## 2026-10-28 02:35:44 load { 31.30 37.13 37.32 } · start e4-momentum.mjs noveil-coarse chromium --scenes sheet
+3 PASS · 2 FAIL
+  FAIL       E-4 sheet repeat landing · 3 fling runs, the same drive, land at -160.0, -35.0, -35.0 px (page frame, signed) · spread 125.00 px (bound ≤ 2 px: the same detent) · load 29.0/36.2/37.0
+E-4 chromium FAIL · 3 pass, 1 fail, 0 unmeasured of 4 gating cells (0 reported) · load 31.0/37.0/37.3 at start, 28.3/36.0/36.9 at end
+## guarded exit 0 · 2026-10-28 02:36:11 · load { 28.34 35.84 36.85 }
+## 2026-10-28 02:36:11 TAG=-s3 one noveil-coarse chromium e4-momentum.mjs sheet --scenes sheet · load { 28.34 35.84 36.85 }
+## 2026-10-28 02:36:11 load { 28.34 35.84 36.85 } · start e4-momentum.mjs noveil-coarse chromium --scenes sheet
+5 PASS · 0 FAIL
+## guarded exit 0 · 2026-10-28 02:36:37 · load { 30.61 35.83 36.81 }
+## 2026-10-28 02:36:37 xp pass-6/A6/probe a6-probe plant-z chromium --only prm --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-E6/json/a6probe-plant-z · load { 30.61 35.83 36.81 }
+## 2026-10-28 02:36:38 load { 30.61 35.83 36.81 } · start pass-6/A6/probe/a6-probe plant-z chromium --only prm --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-E6/json/a6probe-plant-z
+11 PASS · 13 FAIL
+  FAIL       prm switch light · state false → true · instant: scale range 0.0566 (bound < 0.002), scale in flight 50 frame(s), body moved 20.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 79 frames · legible: 50.1 % of the face's pixe
+  FAIL       prm switch dark · state false → true · instant: scale range 0.0564 (bound < 0.002), scale in flight 50 frame(s), body moved 20.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 78 frames · legible: 69.6 % of the face's pixel
+  FAIL       prm checkbox light · state false → true · instant: scale range 0.0566 (bound < 0.002), scale in flight 50 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 80 frames · legible: 64.1 % of the face's pix
+  FAIL       prm checkbox dark · state false → true · instant: scale range 0.0565 (bound < 0.002), scale in flight 48 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 77 frames · legible: 63.9 % of the face's pixe
+  FAIL       prm radio light · state "a" → "b" · instant: scale range 0.0565 (bound < 0.002), scale in flight 50 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 81 frames · legible: 72.4 % of the face's pixels ch
+  FAIL       prm radio dark · state "a" → "b" · instant: scale range 0.0564 (bound < 0.002), scale in flight 50 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 80 frames · legible: 77.6 % of the face's pixels cha
+  FAIL       prm toggle light · state "a" → "b" · instant: scale range 0.0226 (bound < 0.002), scale in flight 36 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 80 frames · legible: 79.5 % of the face's pixels c
+  FAIL       prm toggle dark · state "a" → "b" · instant: scale range 0.0226 (bound < 0.002), scale in flight 37 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 81 frames · legible: 79.9 % of the face's pixels ch
+  FAIL       prm chip light · state false → true · instant: scale range 0.0226 (bound < 0.002), scale in flight 37 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 79 frames · legible: 42.4 % of the face's pixels 
+  FAIL       prm chip dark · state false → true · instant: scale range 0.0226 (bound < 0.002), scale in flight 36 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 79 frames · legible: 51.0 % of the face's pixels c
+  FAIL       prm accordion light · state null → "one" · instant: scale range 0.0226 (bound < 0.002), scale in flight 36 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 79 frames · legible: 0.2 % of the face's pix
+  FAIL       prm accordion dark · state null → "one" · instant: scale range 0.0226 (bound < 0.002), scale in flight 36 frame(s), body moved 0.0 px with 0 frame(s) in flight (bound ≤ 1 each) over 79 frames · legible: 0.2 % of the face's pixe
+## guarded exit 0 · 2026-10-28 02:37:32 · load { 27.37 34.17 36.14 }
+## 2026-10-28 02:37:32 TAG=-sel xp pass-6/C-E6/probe ce6-probe noveil-coarse chromium --label noveil-coarse --only select-press · load { 27.37 34.17 36.14 }
+## 2026-10-28 02:37:32 load { 27.37 34.17 36.14 } · start pass-6/C-E6/probe/ce6-probe noveil-coarse chromium --label noveil-coarse --only select-press
+0 PASS · 0 FAIL
+## guarded exit 0 · 2026-10-28 02:37:41 · load { 25.36 33.52 35.89 }
+# 2026-10-28 02:37:41 chain end · load { 25.36 33.52 35.89 }

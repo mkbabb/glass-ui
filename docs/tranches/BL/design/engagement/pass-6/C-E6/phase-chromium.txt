@@ -1,0 +1,56 @@
+# C-E6 Chromium phase: the candidate's whole battery, every path the pass-5 critics found, the plants, the other three arms
+bat noveil-coarse chromium E-1
+bat noveil-coarse chromium E-2 --commit-arms i,ii
+bat noveil-coarse chromium E-3
+bat noveil-coarse chromium E-4
+bat noveil-coarse chromium E-5
+bat noveil-coarse chromium E-6
+bat noveil-coarse chromium E-7
+bat noveil-coarse chromium E-8
+bat noveil-coarse chromium E-9
+bat noveil-coarse chromium E-10
+bat noveil-coarse chromium E-11
+bat noveil-coarse chromium E-12
+xp pass-5/C-A5/probe ca5-probe noveil-coarse chromium
+xp pass-5/C-E5/probe ce5-probe ce5-noveil-coarse chromium --label noveil-coarse
+xp pass-6/E6/probe e6-place noveil-coarse chromium
+xp pass-6/C-E6/probe ce6-probe noveil-coarse chromium --label noveil-coarse --frames /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-E6/glance/clip
+xp pass-6/A6/probe a6-probe noveil-coarse chromium --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-E6/json/a6probe-noveil-coarse
+TAG=-r2 xp pass-6/A6/probe a6-probe noveil-coarse chromium --only reverse --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-E6/json/a6probe-noveil-coarse-r2
+TAG=-r1 one noveil-coarse chromium e10-continuity.mjs handoff --scenes slider,slider2
+TAG=-r2 one noveil-coarse chromium e10-continuity.mjs handoff --scenes slider,slider2
+TAG=-r3 one noveil-coarse chromium e10-continuity.mjs handoff --scenes slider,slider2
+xp pass-6/E6/probe slider-press noveil-coarse chromium
+bat plant-x chromium E-1
+one plant-x chromium e10-continuity.mjs plant --scenes restale,clipstale
+bat plant-x chromium E-11
+one plant-x chromium e12-floor.mjs plant --scenes capsule
+xp pass-6/A6/probe a6-probe plant-x chromium --only prm --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-E6/json/a6probe-plant-x
+xp pass-6/C-E6/probe ce6-probe plant-x chromium --label plant-x --only clip-pointer
+cap noveil-coarse chromium
+bat veil-coarse chromium E-1
+bat veil-coarse chromium E-3
+bat veil-coarse chromium E-4
+bat veil-coarse chromium E-10
+bat veil-coarse chromium E-12
+bat noveil-every chromium E-1
+bat noveil-every chromium E-3
+bat noveil-every chromium E-4
+bat noveil-every chromium E-10
+bat noveil-every chromium E-12
+bat veil-every chromium E-1
+bat veil-every chromium E-3
+bat veil-every chromium E-4
+bat veil-every chromium E-10
+bat veil-every chromium E-12
+xp pass-5/C-A5/probe ca5-probe veil-coarse chromium
+xp pass-5/C-E5/probe ce5-probe ce5-veil-coarse chromium --label veil-coarse
+xp pass-6/C-E6/probe ce6-probe veil-coarse chromium --label veil-coarse --frames /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-E6/glance/clip
+xp pass-5/C-A5/probe ca5-probe noveil-every chromium
+xp pass-5/C-E5/probe ce5-probe ce5-noveil-every chromium --label noveil-every
+xp pass-6/C-E6/probe ce6-probe noveil-every chromium --label noveil-every --frames /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-E6/glance/clip
+xp pass-5/C-A5/probe ca5-probe veil-every chromium
+xp pass-5/C-E5/probe ce5-probe ce5-veil-every chromium --label veil-every
+xp pass-6/C-E6/probe ce6-probe veil-every chromium --label veil-every --frames /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-E6/glance/clip
+xp pass-6/E6/probe loupe-frame noveil-coarse chromium --label ce6-noveil-coarse --frames /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-E6/glance/loupe
+TAG=-vanish xp pass-6/C-E6/probe ce6-probe noveil-coarse chromium --label noveil-coarse --only clip-vanish,idle-loop,select-press
