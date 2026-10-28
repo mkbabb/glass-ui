@@ -501,11 +501,11 @@ describe("the morph's origins (O-110)", () => {
         // The layers scale about the root's origin, so the two cancel.
         expect(dock.origin(dock.content)).toBe(`${((338 - 8) / 258) * 100}%`);
         // The leaving summary is shifted back to the box it painted.
-        expect(dock.summary.style.getPropertyValue("--dock-leave-shift")).toBe("250px");
+        expect(dock.summary.style.getPropertyValue("--dock-pane-shift")).toBe("250px");
 
         dock.result.release();
         expect(dock.origin(dock.root)).toBe("");
-        expect(dock.summary.style.getPropertyValue("--dock-leave-shift")).toBe("");
+        expect(dock.summary.style.getPropertyValue("--dock-pane-shift")).toBe("");
         dock.unmount();
     });
 
@@ -524,7 +524,7 @@ describe("the morph's origins (O-110)", () => {
         const s = 96 / 338;
         const held = (48 - 290) / (1 - s);
         expect(Number.parseFloat(dock.origin(dock.seat))).toBeCloseTo(((0 - held - 290) / 40) * 100, 6);
-        expect(dock.summary.style.getPropertyValue("--dock-leave-shift")).toBe("0px");
+        expect(dock.summary.style.getPropertyValue("--dock-pane-shift")).toBe("0px");
         dock.unmount();
     });
 
@@ -539,5 +539,69 @@ describe("the morph's origins (O-110)", () => {
         dock.expand();
         expect(Number.parseFloat(dock.origin(dock.root))).toBeCloseTo(50, 6);
         dock.unmount();
+    });
+
+    // critique-1 D-2: a collapse starts unscaled (the reserved box is the expanded box it
+    // painted), where every origin is a fixed point, so the origins hold the END: the
+    // root at rest in the collapsed posture, read with the reservation lifted. RED on the
+    // first cure, whose origin fell back to the centre.
+    it("a right-anchored collapse shrinks toward its right edge and holds its rest", () => {
+        const root = document.createElement("div");
+        const controls = document.createElement("div");
+        const content = document.createElement("div");
+        const full = document.createElement("div");
+        const summary = document.createElement("div");
+        const seat = document.createElement("div");
+        controls.className = "dock-controls";
+        content.className = "dock-layers";
+        seat.className = "dock-persistent dock-persistent-end";
+        full.className = "dock-layer dock-layer--full is-active";
+        summary.className = "dock-layer dock-layer--summary";
+        root.append(controls);
+        controls.append(content, seat);
+        content.append(full, summary);
+        // At rest (the reservation lifted) the collapsed box is 278-374, its summary
+        // 294-318; reserved at the expanded box, 36-374, the summary lays out at 44-68.
+        const rest = () => root.style.getPropertyValue("--dock-expanded-px") === "initial";
+        const rect = ([l, r]: [number, number]) => ({ left: l, right: r, width: r - l, x: l, top: 0, bottom: 40, height: 40, y: 0 }) as DOMRect;
+        const boxes = new Map<HTMLElement, () => [number, number]>([
+            [root, () => (rest() ? [278, 374] : [36, 374])],
+            [seat, () => [326, 366]],
+            [content, () => (rest() ? [286, 318] : [44, 326])],
+            [full, () => [44, 302]],
+            [summary, () => (rest() ? [294, 318] : [44, 68])],
+        ]);
+        for (const [el, at] of boxes) {
+            el.getBoundingClientRect = () => rect(at());
+            Object.defineProperty(el, "offsetWidth", { get: () => at()[1] - at()[0] });
+            Object.defineProperty(el, "offsetHeight", { get: () => 40 });
+        }
+        const { result, unmount } = mountComposable(() =>
+            useDockExpandedSize({
+                rootEl: ref(root),
+                contentEl: ref(content),
+                expandedEl: ref(full),
+                collapsedEl: ref(summary),
+                axis: ref("horizontal"),
+            }),
+        );
+        const origin = (el: HTMLElement) => el.style.getPropertyValue("--dock-morph-origin");
+
+        result.first();
+        full.classList.replace("is-active", "is-leaving");
+        summary.classList.add("is-active");
+        root.setAttribute("data-morphing", "");
+        result.anchor();
+
+        expect(origin(root)).toBe("100%");
+        // The anchored seat holds its rest: the origin is the root's (338 root-local) in
+        // its own box (start 290).
+        expect(origin(seat)).toBe(`${((338 - 290) / 40) * 100}%`);
+        // The entering summary paints at its rest; the leaving full pane where it was.
+        expect(summary.style.getPropertyValue("--dock-pane-shift")).toBe("250px");
+        expect(full.style.getPropertyValue("--dock-pane-shift")).toBe("0px");
+        // The lifted reservation is restored.
+        expect(root.style.getPropertyValue("--dock-expanded-px")).not.toBe("initial");
+        unmount();
     });
 });

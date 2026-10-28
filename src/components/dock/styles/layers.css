@@ -185,13 +185,14 @@
         opacity: calc(1 - var(--dock-morph-t));
     }
 
-    /* The leaving pane holds the box it painted (O-110): `anchor` writes the shift from
-       where the reserved layout puts it back to where it was, and it fades there. */
-    .glass-dock[data-morphing]:not(.vertical) > .dock-controls > .dock-layers > .dock-layer.is-leaving {
-        translate: var(--dock-leave-shift) 0;
+    /* Each pane paints the box it holds (O-110): `anchor` writes the shift from where
+       the reserved layout puts it to that box. The leaving pane holds the box it painted
+       and fades there; a collapse's entering pane holds its rest. */
+    .glass-dock[data-morphing]:not(.vertical) > .dock-controls > .dock-layers > .dock-layer {
+        translate: var(--dock-pane-shift) 0;
     }
-    .glass-dock[data-morphing].vertical > .dock-controls > .dock-layers > .dock-layer.is-leaving {
-        translate: 0 var(--dock-leave-shift);
+    .glass-dock[data-morphing].vertical > .dock-controls > .dock-layers > .dock-layer {
+        translate: 0 var(--dock-pane-shift);
     }
 
     /* GU-4 — retain only the witnessed press control through a collapse-triggered

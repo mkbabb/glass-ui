@@ -161,6 +161,82 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         }
     }
 
+    /* THE PRESS HOLDS THE POSTURE (value.js O-110, ask 2). An environmental expand (a
+       focus-in, a hover-intent dwell) that lands while a press on the dock is still in
+       flight waits for that press to resolve. Chromium focuses a button on press, by
+       pointer (mousedown) and by touch (the tap's compatibility mousedown), and the
+       focus-in expanded the dock before the release was hit-tested: the expand moved a
+       persistent seat on the dock's open side out from under the pointer, and the engine
+       sent the click to the common ancestor. No click guard sees that click, so the cure
+       is here: the morph never moves a press's target before the press resolves.
+
+       A press is in flight from a `pointerdown` inside the dock to the `click` it
+       produces, or its `pointercancel`. A mouse or pen press that produces no click (a
+       release off the control) resolves when its `pointerup` task ends: that task
+       dispatches the click, when there is one. A touch press waits for its click, which
+       the tap dispatches in a later task, after the compatibility mousedown that focuses.
+       The deferred expand runs as the press resolves, before the click reaches its
+       target, which the engine has already hit-tested. A focus that has left the dock
+       (`onFocusOut`) or a pointer that has left it (`onMouseLeave`) withdraws what it
+       asked for. A keyboard focus, with no press in flight, expands at once. */
+    let pressInFlight = false;
+    let expandOnPressEnd: "focus" | "hover" | null = null;
+    let pressEndTimer: ReturnType<typeof setTimeout> | null = null;
+
+    function endPress() {
+        if (!pressInFlight) return;
+        pressInFlight = false;
+        if (pressEndTimer) {
+            clearTimeout(pressEndTimer);
+            pressEndTimer = null;
+        }
+        for (const [type, listener] of pressListeners) {
+            window.removeEventListener(type, listener, true);
+        }
+        const deferred = expandOnPressEnd;
+        expandOnPressEnd = null;
+        if (deferred && !isQuiet() && state.value === "collapsed") {
+            clearTimer();
+            state.value = "hover";
+            syncDerived();
+        }
+    }
+
+    const pressListeners: ReadonlyArray<readonly [string, (e: Event) => void]> = [
+        ["click", () => endPress()],
+        ["pointercancel", () => endPress()],
+        [
+            "pointerup",
+            (e) => {
+                if ((e as PointerEvent).pointerType === "touch" || pressEndTimer) return;
+                pressEndTimer = setTimeout(endPress, 0);
+            },
+        ],
+    ];
+
+    function onPressStart() {
+        // A new press supersedes one that never resolved; what it deferred lapses.
+        if (pressInFlight) {
+            expandOnPressEnd = null;
+            endPress();
+        }
+        pressInFlight = true;
+        for (const [type, listener] of pressListeners) {
+            window.addEventListener(type, listener, true);
+        }
+    }
+
+    watch(
+        rootEl,
+        (root, _, onCleanup) => {
+            if (!root) return;
+            root.addEventListener("pointerdown", onPressStart, true);
+            onCleanup(() => root.removeEventListener("pointerdown", onPressStart, true));
+        },
+        // Attached with the ref itself, so no press can precede it.
+        { immediate: true, flush: "sync" },
+    );
+
     let prevState: DockState = state.value;
     function syncDerived() {
         if (getAlwaysExpanded()) {
@@ -264,6 +340,10 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
                 hoverIntentTimer = null;
                 if (isQuiet()) return;
                 if (state.value === "collapsed") {
+                    if (pressInFlight) {
+                        expandOnPressEnd ??= "hover";
+                        return;
+                    }
                     state.value = "hover";
                     syncDerived();
                 }
@@ -277,6 +357,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         // A leave cancels any pending hover-intent dwell: a
         // sweeping-edge enter immediately chased by a leave never commits the expand.
         clearHoverIntent();
+        if (expandOnPressEnd === "hover") expandOnPressEnd = null;
         if (state.value === "hover") {
             // Something is explicitly holding the dock open (dropdown, edit, etc.)
             if (keepOpenCount.value > 0) return;
@@ -302,6 +383,10 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         if (isQuiet()) return;
         clearTimer();
         if (state.value === "collapsed") {
+            if (pressInFlight) {
+                expandOnPressEnd = "focus";
+                return;
+            }
             state.value = "hover";
             syncDerived();
         }
@@ -309,12 +394,16 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
 
     function onFocusOut(e: FocusEvent) {
         if (isQuiet()) return;
+        const root = e.currentTarget as HTMLElement;
+        const stays =
+            (!!e.relatedTarget && root.contains(e.relatedTarget as Node)) ||
+            // Focus moved to a teleported element (dropdown content, select, popover)
+            isTeleportedTarget(e.relatedTarget, dockId);
+        // A focus that leaves before its press resolves no longer asks for the expand.
+        if (!stays && expandOnPressEnd === "focus") expandOnPressEnd = null;
         if (state.value !== "hover") return;
         if (keepOpenCount.value > 0) return;
-        const root = e.currentTarget as HTMLElement;
-        if (e.relatedTarget && root.contains(e.relatedTarget as Node)) return;
-        // Focus moved to a teleported element (dropdown content, select, popover)
-        if (isTeleportedTarget(e.relatedTarget, dockId)) return;
+        if (stays) return;
         scheduleCollapse();
     }
 
@@ -433,6 +522,8 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         clearTimer();
         clearHoverIntent();
         removeClickAwayListener();
+        expandOnPressEnd = null;
+        endPress();
     });
 
     return {
