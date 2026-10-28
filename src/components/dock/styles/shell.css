@@ -299,6 +299,33 @@
         overflow: visible;
     }
 
+    /* [2026-10-28 · 10.1.3 · O-110, critique-4 D-1] THE MORPH CLIPS ITS CONTENT TO THE
+       PLATE, on the morph axis, while `[data-morphing]` is set. The layers lay out where
+       they rest (the reserved box) and the plate grows over them from the measured origin
+       (`useDockExpandedSize`'s `anchor`), so a pane's controls past the plate's moving
+       edge painted on the bare stage: ahead of the plate on an expand, behind it on a
+       collapse. On an edge-anchored dock all of that spill sits on the open side, one
+       control and more fully outside at full opacity. The box's own `overflow: clip` is
+       that plate exactly: the plate is the box's padding box (`.dock-plate`,
+       `position: absolute; inset: 0`), and the clip is drawn in the box's coordinates,
+       so the morph's `scale` carries it with the plate on every frame. Not `clip-path`,
+       which forms a backdrop root and would flatten an active `.glass-capsule` lens
+       mid-morph (the grasp gate's capture, glass-subtlety.test.ts); `overflow: clip` is
+       paint-only, forms none, and is no scroll container. The cross axis stays
+       `visible`, and at rest nothing clips (the block above), so a control's hover plate
+       overhangs the settled dock as before.
+
+       The one exception is the press the click guard keeps alive across a collapse
+       (`.is-press-keepalive`, layers.css GU-4): its pressed control must stay painted and
+       hit-testable where the pointer is until the click resolves, so the box does not
+       clip while it is held. */
+    .glass-dock[data-morphing]:not(.vertical):not(:has(.is-press-keepalive)) {
+        overflow-x: clip;
+    }
+    .glass-dock[data-morphing].vertical:not(:has(.is-press-keepalive)) {
+        overflow-y: clip;
+    }
+
     /* The vertical-dock max-block-size + internal-scroll CONTRACT.
        A vertical dock caps at `--dock-max-block-size` (the `.vertical` rule), but
        at rest the `overflow: visible` above let over-cap content SPILL — forcing a
@@ -395,23 +422,26 @@
            box-size morph, no discrete snap. NO root CSS-transition on the morph-
            chrome props is re-added (a `transition: padding/background/border-color`
            arm is the second-clock smell the single-scalar rebuild forbids — the
-           `--dock-expand-t` interp is the single authority). KEPT: the DECORATIVE
-           hover-scale + press-squish (the individual `scale`/`transform`) and the
-           box-shadow fade — interaction polish on the vertical dock, NOT the morph chrome. */
+           `--dock-expand-t` interp is the single authority). KEPT: the press-squish
+           (`transform`) and the box-shadow fade — interaction polish on the vertical
+           dock, NOT the morph chrome.
+
+           [2026-10-28 · 10.1.3 · O-110, critique-4 D-2] ~~`scale
+           var(--dock-motion-resize)`~~ and the `[data-morphing]` rule that held it off
+           — the `scale` leg had no at-rest writer (the hover pre-scale it eased was
+           struck at BK #47 W7, morph.css), so its one remaining input was the morph's
+           own release: at settle `[data-morphing]` cleared, the morph's `scale: 1 0.32`
+           dropped to `none` with the leg re-armed in the same style change, and the
+           settled collapsed box eased back from a third of its height (the anchored
+           edge jumped ~36 px, then re-grew over ~200 ms). The morph is `scale`'s only
+           owner, so no transition on it remains. */
         transition:
             box-shadow var(--dock-motion-standard),
-            transform var(--dock-motion-resize),
-            scale var(--dock-motion-resize);
-    }
-
-    /* The morph writes `scale` from the dock spring every frame; do not re-ease that
-       value through the vertical dock's separate at-rest hover transition. */
-    .glass-dock.vertical[data-morphing] {
-        transition-property: box-shadow, transform;
+            transform var(--dock-motion-resize);
     }
 
     /* The vertical-dock polish transition is COMPOSITOR-PROMOTED
-       only while its hover/press/held state is ARMED (the transform/scale legs ride
+       only while its hover/press/held state is ARMED (the transform leg rides
        the compositor channel; `will-change: transform` hints the layer for the
        gesture). NEVER a resting `will-change` (a permanent promotion pins a wasted
        compositor layer at rest — the motion-canon P5 no-resting-promotion floor):
