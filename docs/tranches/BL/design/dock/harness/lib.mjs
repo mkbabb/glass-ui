@@ -1324,10 +1324,12 @@ export function holePaint(strip, cast, { start, frameMs = 40, ax = "x" } = {}) {
         const r = at(k); if (!r) continue;
         if (r.unread) { unread++; for (const id of run.keys()) run.set(id, 0); frames.push([+((k - start) * frameMs).toFixed(0), "unread"]); continue; }
         judged++; dxs.push(r.dx);
+        // H8-1 · the frame's tile difference against the cast frame before it (tileDiff), so a hole run's record tells a held
+        // painted frame from two distinct empty frames
         const laid = (r.f.s ?? []).filter((q) => restMass.has(q[0]) && q[3] - q[1] >= 1).filter((q) => { const c = (q[1] + q[3]) / 2; return c > r.f.e[0] && c < r.f.e[2]; })
             .sort((p, q) => (p[1] + p[3]) - (q[1] + q[3]));
         const inks = laid.map((q) => mass(r.prof, q, r.dx) / restMass.get(q[0]));
-        frames.push([+((k - start) * frameMs).toFixed(0), r2(r.dx), r2(r.prof.ground), laid.map((q, j) => [q[0], +inks[j].toFixed(2)])]);
+        frames.push([+((k - start) * frameMs).toFixed(0), r2(r.dx), r2(r.prof.ground), laid.map((q, j) => [q[0], +inks[j].toFixed(3)]), k > 0 ? tileDiff(cast[k - 1], cast[k]) : null]);
         const holeNow = new Set();
         laid.forEach((q, j) => {
             if (inks[j] >= HOLE_LO) return;
@@ -1345,7 +1347,56 @@ export function holePaint(strip, cast, { start, frameMs = 40, ax = "x" } = {}) {
     const ok = !worst || worst.frames <= HOLE_RUN_MAX;
     const dxAbs = dxs.length ? Math.max(...dxs.map(Math.abs)) : 0;
     return { ok, slots: restMass.size, dropped, judged, unread, holeFrames, worst, scale: +a.toFixed(4), lagMs: lag, worstShiftPx: r2(dxAbs), frames,
+        restDiff: kRest > 0 ? tileDiff(cast[kRest - 1], cast[kRest]) : null,
         why: `${restMass.size} slot(s) read from paint over ${judged} cast frame(s)${unread ? ` (${unread} unread: no seat met its glyph)` : ""} (scale ${a.toFixed(3)}, video lag ${lag} ms, shift ≤ ${r2(dxAbs)} px); ${holeFrames} frame(s) with a hole${worst ? `, longest ${worst.frames} consecutive frame(s): seat ${worst.slot} at ink ${worst.ink} at +${worst.atMs} ms while the nearest painting slots read ${worst.sides.join(" / ")}` : ""}${dropped.length ? `; ${dropped.length} slot(s) dropped (${dropped.map((d) => d.why).join("; ")})` : ""} (bound ${HOLE_RUN_MAX} cast frame of ${frameMs} ms; a hole is a slot below ${HOLE_LO} of its own rest ink whose nearest painting slots read ${HOLE_HI} or more)` };
+}
+
+/**
+ * H8-1 (pass-8/H8.md) · the tile difference: the mean absolute grey difference of two cast frames, rows inset TILE_INSET px
+ * top and bottom, grey the ITU-R 601 luma as PIL's "L" rounds it. It is the pass-7 critic's tilediff.py measure
+ * (pass-7/D2-Bp-crit-records/scripts/tilediff.py) on the same frames the strip tiles are cut from. A held painted frame reads
+ * at the level of two rest frames (0.00-0.09 there); two distinct painted frames read far above it (8.01 on Playwright
+ * WebKit dark first-expand). HELD_GREY divides them in the record; both fail `hole` alike.
+ */
+export const TILE_INSET = 4, HELD_GREY = 1;
+/** PIL's "L" conversion, integer as PIL rounds it: (299 R + 587 G + 114 B + 500) / 1000 */
+const grey = (d, i) => Math.floor((299 * d[i] + 587 * d[i + 1] + 114 * d[i + 2] + 500) / 1000);
+export function tileDiff(a, b) {
+    if (!a || !b || a.w !== b.w || a.h !== b.h || a.h <= 2 * TILE_INSET) return null;
+    let s = 0, n = 0;
+    for (let y = TILE_INSET; y < a.h - TILE_INSET; y++) for (let x = 0; x < a.w; x++) {
+        const i = (y * a.w + x) * 4;
+        s += Math.abs(grey(a.data, i) - grey(b.data, i)); n++;
+    }
+    return +(s / n).toFixed(2);
+}
+/**
+ * H8-1 · every hole run of a read, from the frames H7-1 recorded (`hole.frames`: [ms, shift, ground, [[slot, ink]…], dPrev],
+ * or [ms, "unread"]). The rule is holePaint's own, applied to its own record: a laid slot below HOLE_LO whose nearest
+ * painting (≥ HOLE_LO) slot on each side reads HOLE_HI or more is a hole in that frame; an unread frame ends every run.
+ * Returns the runs longer than HOLE_RUN_MAX: { slot, frames, fromMs, toMs, diffs } (diffs: the tile differences inside the
+ * run, from the frame's dPrev where the record holds it). One derivation for records of every pass since H7.
+ */
+export function holeRuns(hole) {
+    const fr = hole?.frames ?? []; const open = new Map(), out = [];
+    const close = (id) => { const r = open.get(id); if (r && r.frames > HOLE_RUN_MAX) out.push(r); open.delete(id); };
+    for (const f of fr) {
+        if (f[1] === "unread") { for (const id of [...open.keys()]) close(id); continue; }
+        const laid = f[3] ?? [], now = new Set();
+        laid.forEach(([id, ink], j) => {
+            if (ink >= HOLE_LO) return;
+            let L = -1, R = -1;
+            for (let i = j - 1; i >= 0; i--) if (laid[i][1] >= HOLE_LO) { L = i; break; }
+            for (let i = j + 1; i < laid.length; i++) if (laid[i][1] >= HOLE_LO) { R = i; break; }
+            if (L < 0 || R < 0 || laid[L][1] < HOLE_HI || laid[R][1] < HOLE_HI) return;
+            now.add(id);
+            const r = open.get(id);
+            if (r) { r.frames++; r.toMs = f[0]; r.diffs.push(f[4] ?? null); } else open.set(id, { slot: id, frames: 1, fromMs: f[0], toMs: f[0], diffs: [] });
+        });
+        for (const id of [...open.keys()]) if (!now.has(id)) close(id);
+    }
+    for (const id of [...open.keys()]) close(id);
+    return out;
 }
 
 // ── H4-2 · the window flag covers every lane ─────────────────────────────────

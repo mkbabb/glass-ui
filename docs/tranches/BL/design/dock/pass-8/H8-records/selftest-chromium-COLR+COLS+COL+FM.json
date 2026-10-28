@@ -1,0 +1,206 @@
+{
+ "when": "2026-10-28T03:45:17.266Z",
+ "engines": [
+  "chromium"
+ ],
+ "rows": [
+  {
+   "witness": "FM",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 6/6 PASS",
+   "ok": true,
+   "ms": 28234,
+   "load": 10.78
+  },
+  {
+   "witness": "FM",
+   "fixture": "pass@dark",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 6/6 PASS",
+   "ok": true,
+   "ms": 28535,
+   "load": 11.05
+  },
+  {
+   "witness": "FM",
+   "fixture": "deadhooks",
+   "expect": "exit ≠ 0; tiles fails in ^film·",
+   "got": "exit 1, 6/6 FAIL; matching 6 (chromium)",
+   "ok": true,
+   "ms": 27199,
+   "load": 19.31
+  },
+  {
+   "witness": "FM",
+   "fixture": "stub",
+   "expect": "exit ≠ 0; stub fails in ^film·swap-",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 9352,
+   "load": 16.22
+  },
+  {
+   "witness": "FM",
+   "fixture": "stubhalf",
+   "expect": "exit ≠ 0; stub fails in ^film·swap-",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 9390,
+   "load": 15.21
+  },
+  {
+   "witness": "FM",
+   "fixture": "hole",
+   "expect": "exit ≠ 0; hole fails in ^film·(first|warm)-expand",
+   "got": "exit 1, 2/2 FAIL; matching 2 (chromium)",
+   "ok": true,
+   "ms": 9967,
+   "load": 14.25
+  },
+  {
+   "witness": "COLR",
+   "fixture": "bp7 W·l",
+   "expect": "column FAIL, 2 read(s) over 1 frame",
+   "got": "FAIL: 18 read(s); 4 hole run(s) over 1 frame: warm-collapse main slot 2 2 frames at +80-120 ms (tile diff 0.05, held) [load 15.01]; warm-collapse main slot 8 2 frames at +80-120 ms (tile diff 0.05, held) [load 15.01]; warm-expand rerun2 slot 2 2 frames at +80-120 ms (tile diff 0.09, held) [load 9.59]; warm-expand rerun2 slot 8 2 frames at +80-120 ms (tile diff 0.09, held) [load 9.59]; reproduced at morph:2, morph:8",
+   "ok": true,
+   "ms": 230,
+   "load": 12.98
+  },
+  {
+   "witness": "COLR",
+   "fixture": "bp7 W·d",
+   "expect": "column FAIL, 4 read(s) over 1 frame",
+   "got": "FAIL: 36 read(s); 8 hole run(s) over 1 frame: first-expand main slot 2 2 frames at +80-120 ms (tile diff 8.01, distinct) [load 21.56]; first-expand main slot 8 2 frames at +80-120 ms (tile diff 8.01, distinct) [load 21.56]; warm-collapse rerun2 slot 2 2 frames at +80-120 ms (tile diff 0.03, held) [load 17.3]; warm-collapse rerun2 slot 8 2 frames at +80-120 ms (tile diff 0.03, held) [load 17.3]; warm-collapse low r3 slot 2 2 frames at +80-120 ms (tile diff 0.04, held) [load 13.85]; warm-collapse low r3 slot 8 2 frames at +80-120 ms (tile diff 0.04, held) [load 13.85]; warm-expand low r2 slot 2 2 frames at +80-120 ms (tile diff 0.07, held) [load 13.83]; warm-expand low r2 slot 8 2 frames at +80-120 ",
+   "ok": true,
+   "ms": 230,
+   "load": 12.98
+  },
+  {
+   "witness": "COLR",
+   "fixture": "bp7 C·l",
+   "expect": "column PASS, 0 read(s) over 1 frame",
+   "got": "PASS: 18 read(s); 0 hole run(s) over 1 frame",
+   "ok": true,
+   "ms": 230,
+   "load": 12.98
+  },
+  {
+   "witness": "COLR",
+   "fixture": "bp7 C·d",
+   "expect": "column PASS, 0 read(s) over 1 frame",
+   "got": "PASS: 18 read(s); 0 hole run(s) over 1 frame",
+   "ok": true,
+   "ms": 230,
+   "load": 12.98
+  },
+  {
+   "witness": "COLR",
+   "fixture": "bp7 fmlow light",
+   "expect": "the critic's light low-load slot (admitted at 35.94) reads deferred and enters no column",
+   "got": "light: deferred: admitted at load 35.94 > 15 (H8-2: never a reading of record)",
+   "ok": true,
+   "ms": 230,
+   "load": 12.98
+  },
+  {
+   "witness": "COLR",
+   "fixture": "bp7 tile diff",
+   "expect": "each 2-frame run's tile difference equals tilediff.txt (8.01 two distinct frames; 0.03-0.09 held)",
+   "got": "d:first-expand:main=8.01(distinct) d:warm-collapse:low-r3=0.04(held) d:warm-collapse:rerun2=0.03(held) d:warm-expand:low-r2=0.07(held) l:warm-collapse:main=0.05(held) l:warm-expand:rerun2=0.09(held)",
+   "ok": true,
+   "ms": 230,
+   "load": 12.98
+  },
+  {
+   "witness": "COLR",
+   "fixture": "bp7 per-cell (control)",
+   "expect": "the replaced per-cell rule reads no B2 cell FAIL in W·l or W·d (the forgiveness H8-1 removes)",
+   "got": "l:first-expand=PASS l:warm-collapse=NOT-REPRODUCED l:warm-expand=PASS l:swap-long=PASS l:swap-short=PASS l:content-add=PASS d:first-expand=NOT-REPRODUCED d:warm-collapse=PASS d:warm-expand=PASS d:swap-long=PASS d:swap-short=PASS d:content-add=PASS",
+   "ok": true,
+   "ms": 231,
+   "load": 12.98
+  },
+  {
+   "witness": "COLR",
+   "fixture": "bp6 (H7 records)",
+   "expect": "pass 6's B′ FAILs hole in four columns",
+   "got": "C·l FAIL (9 reads); C·d FAIL (9 reads); W·l FAIL (9 reads); W·d FAIL (9 reads)",
+   "ok": true,
+   "ms": 265,
+   "load": 12.98
+  },
+  {
+   "witness": "COLS",
+   "fixture": "isolated",
+   "expect": "18 reads, one isolated 2-frame read: NOT-REPRODUCED",
+   "got": "NOT-REPRODUCED: 18 read(s); 1 hole run(s) over 1 frame: warm-expand rerun2 slot 2 2 frames at +40-80 ms (tile diff 0.05, held) [load 9]; no slot read twice",
+   "ok": true,
+   "ms": 0,
+   "load": 12.98
+  },
+  {
+   "witness": "COLS",
+   "fixture": "two-same-slot",
+   "expect": "two reads (two cells) at one slot: FAIL",
+   "got": "FAIL: 18 read(s); 2 hole run(s) over 1 frame: first-expand main slot 2 2 frames at +40-80 ms (tile diff 0.05, held) [load 9]; warm-expand rerun2 slot 2 2 frames at +40-80 ms (tile diff 0.05, held) [load 9]; reproduced at morph:2",
+   "ok": true,
+   "ms": 0,
+   "load": 12.98
+  },
+  {
+   "witness": "COLS",
+   "fixture": "two-slots",
+   "expect": "two reads at two different slots: NOT-REPRODUCED",
+   "got": "NOT-REPRODUCED: 18 read(s); 2 hole run(s) over 1 frame: first-expand main slot 4 2 frames at +40-80 ms (tile diff 0.05, held) [load 9]; warm-expand rerun2 slot 2 2 frames at +40-80 ms (tile diff 0.05, held) [load 9]; no slot read twice",
+   "ok": true,
+   "ms": 0,
+   "load": 12.98
+  },
+  {
+   "witness": "COLS",
+   "fixture": "unread×2",
+   "expect": "two strips that cannot be read: FAIL (never a silent green)",
+   "got": "FAIL: 18 read(s); 2 hole run(s) over 1 frame: first-expand main slot unread [load 9]; first-expand rerun1 slot unread [load 9]; reproduced at unread",
+   "ok": true,
+   "ms": 0,
+   "load": 12.98
+  },
+  {
+   "witness": "COLS",
+   "fixture": "quiet",
+   "expect": "18 reads with one-frame holes only: PASS",
+   "got": "PASS: 18 read(s); 0 hole run(s) over 1 frame",
+   "ok": true,
+   "ms": 1,
+   "load": 12.98
+  },
+  {
+   "witness": "COL",
+   "fixture": "pass Chromium",
+   "expect": "column PASS over 18 reads",
+   "got": "PASS: 18 read(s); 0 hole run(s) over 1 frame",
+   "ok": true,
+   "ms": 85030,
+   "load": 12.98
+  },
+  {
+   "witness": "COL",
+   "fixture": "pass@dark Chromium",
+   "expect": "column PASS over 18 reads",
+   "got": "PASS: 18 read(s); 0 hole run(s) over 1 frame",
+   "ok": true,
+   "ms": 85359,
+   "load": 16.31
+  },
+  {
+   "witness": "COL",
+   "fixture": "hole Chromium",
+   "expect": "column FAIL over 18 reads",
+   "got": "FAIL: 18 read(s); 9 hole run(s) over 1 frame: first-expand low r1 slot 2 4 frames at +40-160 ms (tile diff 4.36/5.07/4.43, distinct) [load 16.1]; first-expand low r2 slot 2 4 frames at +40-160 ms (tile diff 4.48/4.81/4.4, distinct) [load 16.13]; first-expand low r3 slot 2 4 frames at +40-160 ms (tile diff 4.28/4.71/5.15, distinct) [load 16.21]; warm-expand low r1 slot 2 4 frames at +40-160 ms (tile diff 3.91/4.02/4.37, distinct) [load 15.49]; warm-expand low r2 slot 2 4 frames at +40-160 ms (tile diff 4.15/4.98/4.89, distinct) [load 15.13]; warm-expand low r3 slot 2 4 frames at +40-160 ms (tile diff",
+   "ok": true,
+   "ms": 85056,
+   "load": 16.8
+  }
+ ]
+}

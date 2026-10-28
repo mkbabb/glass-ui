@@ -1,0 +1,26 @@
+{
+ "when": "2026-10-28T03:54:36.436Z",
+ "engines": [
+  "chromium"
+ ],
+ "rows": [
+  {
+   "witness": "LOW",
+   "fixture": "admitted-above Chromium",
+   "expect": "a slot admitted above its bound (0) reads deferred, runs no cell and enters no column",
+   "got": "admit {\"stage\":\"fmlow-light\",\"build\":\"fixture-pass\",\"engine\":\"chromium\",\"max\":0,\"deferred\":true,\"load\":18.57,\"attempts\":[{\"try\":1,\"at\":\"2026-10-27 23:52:01\",\"load\":18.57,\"deferred\":true}]}; deferred: admitted at load 18.57 > 0 (H8-2: never a reading of record); column absent (0 reads)",
+   "ok": true,
+   "ms": 4866,
+   "load": 18.57
+  },
+  {
+   "witness": "LOW",
+   "fixture": "admitted-under Chromium",
+   "expect": "a slot admitted at load ≤ 15 is read: 18 reads, every cell with its load, column PASS",
+   "got": "admit {\"stage\":\"fmlow-light\",\"build\":\"fixture-pass\",\"engine\":\"chromium\",\"max\":15,\"deferred\":false,\"load\":11.78,\"attempts\":[{\"try\":1,\"at\":\"2026-10-27 23:53:06\",\"load\":11.78,\"deferred\":false}]}; column PASS (18 reads); cell loads 11.09-11.56",
+   "ok": true,
+   "ms": 150108,
+   "load": 18.12
+  }
+ ]
+}

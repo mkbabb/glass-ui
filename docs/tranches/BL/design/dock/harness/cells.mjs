@@ -22,9 +22,17 @@
 // OWNER-BLOCKED cell, in the main run and in each re-run, on the ruled branch the witness printed beside it (`window.q4c`,
 // `q12.b`), so the ruling turns cells without a re-run (REGISTRY §P5-6). Without `--ruled` the digest reads the witnesses'
 // own verdicts (OWNER-BLOCKED stands).
+// H8-1 (pass-8/H8.md): FM's `hole` is read as a CLASS per column (build, engine, theme), not per cell. The per-cell rule
+// (H7-3, H6-7) is REPLACED for `hole`: it is struck from every FM B2 cell's failures before rerunRule, and one column cell
+// `film·hole·column` carries it. A column FAILs `hole` when two or more of its reads (the six B2 cells, main and both
+// re-runs, and the low-load stage's three runs when admitted) show a run over HOLE_RUN_MAX frames at the same slot (the
+// scene and the slot); one such read is NOT-REPRODUCED. Each run reports its tile differences (lib.mjs holeRuns, tileDiff).
+// H8-2 (pass-8/H8.md): stages `fmlow-light` and `fmlow-dark` (battery.sh stage `fmlow`) enter the digest only when their
+// `admit.json` records an admission at or under the bound; a deferred slot is named, never read.
 import fs from "node:fs";
 import path from "node:path";
-import { parseArgs } from "./lib.mjs";
+import { fileURLToPath } from "node:url";
+import { parseArgs, holeRuns, tileDiff, decodePng, HOLE_RUN_MAX, HELD_GREY } from "./lib.mjs";
 
 export const verdict = (c) => (c.record ? "RECORD" : c.pass ? "PASS" : c.unmeasured ? "UNMEASURED" : c.ownerBlocked ? "OWNER-BLOCKED" : "FAIL");
 const strip = (n) => n.replace(/(\+shim|-unshimmed)$/, "");
@@ -75,6 +83,55 @@ export function rerunRule(main, re, { always = false } = {}) {
 
 /** H7-3 · FM's B2 cells, re-run on every run by the battery (battery.sh B2_CELLS) */
 export const B2_FM = /^film·(first-expand|warm-expand|warm-collapse|content-add|swap-short|swap-long)$/;
+
+/** H8-1 · the scene a B2 cell runs in (film.mjs SEQ): a slot is the same slot only inside one scene */
+const sceneOf = (cell) => (/^film·swap-/.test(strip(cell)) ? "swap" : "morph");
+/** H8-1 · a B2 cell with `hole` struck from its failures: the column, not the cell, judges the hole */
+export function withoutHole(c) {
+    if (!c || !(c.failed ?? []).includes("hole")) return c;
+    const failed = c.failed.filter((k) => k !== "hole");
+    return { ...c, failed, pass: !failed.length && !c.unmeasured && !c.ownerBlocked && !c.record };
+}
+/** H8-1 · the tile differences inside a run, cut from a strip PNG (14 tiles, the strip starting one cast frame before the
+ *  marker frame) where the record carries no per-frame dPrev (records before H8). The tile crop is tilediff.py's */
+export function stripDiffs(png, c, run) {
+    try {
+        const img = decodePng(fs.readFileSync(png)), T = c.tiles ?? 14, th = img.h / T, s0 = Math.max(0, (c.markerFrame ?? 1) - 1), off = (c.markerFrame ?? 1) - s0;
+        const tile = (i) => { const y0 = Math.floor(i * th), y1 = Math.floor((i + 1) * th); return { w: img.w, h: y1 - y0, data: img.data.subarray(y0 * img.w * 4, y1 * img.w * 4) }; };
+        const out = [];
+        for (let ms = run.fromMs; ms < run.toMs; ms += 40) {
+            const i = off + ms / 40; if (i + 1 >= T) { out.push(null); continue; }
+            const a = tile(i), b = tile(i + 1), h = Math.min(a.h, b.h);
+            out.push(tileDiff({ ...a, h, data: a.data.subarray(0, h * a.w * 4) }, { ...b, h, data: b.data.subarray(0, h * b.w * 4) }));
+        }
+        return out;
+    } catch { return null; }
+}
+/**
+ * H8-1 · the column rule. reads: [{ cell, run, stage, load, c }] (c: the witness's cell as recorded, `hole` not struck).
+ * A read that shows a run over HOLE_RUN_MAX at a slot counts once for that slot (scene:slot); a read whose strip could not
+ * be read (failed `hole` with no hole record) counts once for "unread". FAIL: a key with two or more reads. NOT-REPRODUCED:
+ * reads exist but none on a key with two. PASS: no such read. stripOf(read) may name a strip PNG for records without dPrev.
+ */
+export function holeColumn(reads, { stripOf = null } = {}) {
+    const hits = [];
+    for (const r of reads) {
+        const c = r.c; if (!c) continue;
+        if (!c.hole) { if ((c.failed ?? []).includes("hole")) hits.push({ ...r, key: "unread", run: r.run, slot: "unread", frames: null, fromMs: null, diffs: [] }); continue; }
+        const runs = holeRuns(c.hole);
+        for (const h of runs) {
+            let diffs = h.diffs, from = "dPrev";
+            if (diffs.some((d) => d == null)) { const png = stripOf?.(r) ?? (c.strip && fs.existsSync(c.strip) ? c.strip : null); const sd = png ? stripDiffs(png, c, h) : null; diffs = sd ?? diffs; from = sd ? "strip" : "not in record"; }
+            hits.push({ ...r, key: `${sceneOf(c.cell)}:${h.slot}`, slot: h.slot, frames: h.frames, fromMs: h.fromMs, toMs: h.toMs, diffs, diffFrom: from,
+                kind: diffs.length && diffs.every((d) => d != null) ? (diffs.every((d) => d < HELD_GREY) ? "held" : "distinct") : "unknown" });
+        }
+    }
+    const by = new Map(); for (const h of hits) { if (!by.has(h.key)) by.set(h.key, new Set()); by.get(h.key).add(`${strip(h.cell)}|${h.stage}|${h.run}`); }
+    const reproduced = [...by].filter(([, s]) => s.size >= 2).map(([k]) => k);
+    const v = reproduced.length ? "FAIL" : hits.length ? "NOT-REPRODUCED" : "PASS";
+    const desc = (h) => `${strip(h.cell).replace(/^film·/, "")} ${h.stage === "fmlow" ? "low " : ""}${h.run} slot ${h.slot}${h.frames ? ` ${h.frames} frames at +${h.fromMs}-${h.toMs} ms` : ""}${h.diffs?.length ? ` (tile diff ${h.diffs.map((d) => (d == null ? "?" : d)).join("/")}, ${h.kind})` : ""} [load ${h.load ?? "?"}]`;
+    return { v, reads: reads.length, hits, reproduced, summary: `${reads.length} read(s); ${hits.length} hole run(s) over ${HOLE_RUN_MAX} frame${hits.length ? ": " + hits.map(desc).join("; ") : ""}${reproduced.length ? `; reproduced at ${reproduced.join(", ")}` : hits.length ? "; no slot read twice" : ""}` };
+}
 // the 38 rows (REGISTRY §P5-7.5; H6 and H7 re-cut the witnesses, no row is added): [row, witness, predicate, checks]
 // checks: null (any failure bears), "CRASH", a list, or a function of the cell giving one of those
 const W3R1 = ["continuity", "landing", "seatStep", "seatOverlap", "blank", "faces", "terminal", "trajectory", "rest", "seatWidth", "errors", "vagree", "owners", "rung"];
@@ -105,7 +162,7 @@ export const ROWS = [
     ["R7", "W3 lanes + seat positions (H5-7) + CASES rotated", (c) => c.w === "W3" || (c.w === "CASES" && /^case·rotated/.test(c.cell)), ["lanes"]],
     ["R8", "W3 neighbour + ST nb (markers found, H6-4) + CASES consumer-margin", (c) => (c.w === "W3" && /^neighbour·/.test(c.cell)) || (c.w === "ST" && /^stall·nb·/.test(c.cell)) || (c.w === "CASES" && /^case·consumer-margin/.test(c.cell)), null],
     ["B1", "W3 retarget·context (H5-2)", (c) => c.w === "W3" && /^retarget·context/.test(c.cell), null],
-    ["B2", "FM strips (tiles, stub, hole from paint: H7-1, three reads: H7-3) + W3 stub (H6-1)", (c) => c.w === "FM" || c.w === "W3", (c) => (c.w === "FM" ? null : ["stub"])],
+    ["B2", "FM strips (tiles, stub; hole from paint: H7-1, read as a class per column: H8-1, with the low-load stage: H8-2) + W3 stub (H6-1)", (c) => c.w === "FM" || c.w === "W3", (c) => (c.w === "FM" ? null : ["stub"])],
     ["B3", "PR count, rows, partials, citations, harness (H6-9)", (c) => c.w === "PR" && /count|rows|partials|citations|harness/.test(c.cell), null],
     ["C1", "CF c1·shape·h (ownshape, corner: H5-6)", (c) => c.w === "CF" && /^c1·shape·h/.test(c.cell), null],
     ["C2", "CF c2 (prm per Q-18 (a): H5-6)", (c) => c.w === "CF" && /^c2·(morph·h|prm|rapid)/.test(c.cell), null],
@@ -120,6 +177,63 @@ export const ROWS = [
 ];
 const R38 = ROWS.map((r) => r[0]), R36 = R38.filter((r) => r !== "C8" && r !== "C9");
 const R24 = ["P1", "P2", "P3", "P4", "P5", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "N1", "N2", "N3", "N4", "R1", "R2", "R3", "R4", "R5", "B1", "B2", "B3"];
+
+/** H8-2 · the low-load stage's bound (battery.sh FMLOW_MAX): a slot admitted above it is deferred, never read */
+export const FMLOW_MAX = 15;
+const readJ = (f) => { try { return JSON.parse(fs.readFileSync(f, "utf8")); } catch { return null; } };
+/**
+ * The battery records of one build as digest cells: every witness cell through rerunRule (H6-7, H7-3), with FM's B2 cells'
+ * `hole` struck (H8-1) and one `film·hole·column` cell per engine and theme judged by holeColumn over the battery's B2 reads
+ * and the admitted low-load stage (H8-2). A deferred or unrecorded low-load slot is a RECORD cell `film·low-slot`.
+ * opts.rule: the O-103 reading (or identity); opts.stripOf: a strip resolver for records without dPrev.
+ */
+export function readRecords(dir, b, { rule = (c) => c, stripOf = null, engines = ["chromium", "webkit"] } = {}) {
+    const STAGES = [["main", "light"], ["rest", "light"], ["dark", "dark"], ["darkrest", "dark"], ["fmlow-light", "light"], ["fmlow-dark", "dark"]];
+    const cells = [], columns = [], b2 = new Map();
+    for (const e of engines) for (const [st, theme] of STAGES) {
+        const base = path.join(dir, "battery", "json", `${b}-${e}`, st);
+        let ws = []; try { ws = fs.readdirSync(path.join(base, "runs")); } catch { }
+        const low = st.startsWith("fmlow-");
+        if (low) {
+            const adm = readJ(path.join(base, "admit.json"));
+            const of = adm && adm.deferred === false && typeof adm.load === "number" && adm.load <= (adm.max ?? FMLOW_MAX);
+            if (!adm && !ws.length) continue;
+            if (!of) {
+                cells.push({ w: "FM", stage: st, theme, build: b, engine: e, cell: "film·low-slot", verdict: "RECORD", reruns: [], failed: [], mainFailed: [], nrChecks: [], crashed: false, load: null,
+                    summary: adm ? `deferred: ${(adm.attempts ?? []).map((a) => `admitted at load ${a.load} ${a.load > (adm.max ?? FMLOW_MAX) ? ">" : "≤"} ${adm.max ?? FMLOW_MAX}`).join("; ") || "no admission"} (H8-2: never a reading of record)` : "no admission record: not a reading of record (H8-2)" });
+                continue;
+            }
+        }
+        for (const d of ws) {
+            const w = d.slice(0, d.lastIndexOf(`-${b}`));
+            const main = readJ(path.join(base, "runs", d, `${w}.json`));
+            if (!main) continue;
+            const re = [1, 2].map((k) => readJ(path.join(base, `rerun${k}`, "runs", d, `${w}.json`)));
+            for (const c0 of main.cells) {
+                if (/^__/.test(c0.cell)) continue;
+                const isB2 = w === "FM" && B2_FM.test(strip(c0.cell));
+                const reRaw = re.map((r) => r?.cells.find((y) => y.engine === c0.engine && strip(y.cell) === strip(c0.cell)) ?? null);
+                if (isB2) {
+                    const k = `${c0.engine}|${theme}`; if (!b2.has(k)) b2.set(k, []);
+                    const runs = low ? ["r1", "r2", "r3"] : ["main", "rerun1", "rerun2"];
+                    [c0, ...reRaw].forEach((x, i) => x && b2.get(k).push({ cell: x.cell, run: runs[i], stage: low ? "fmlow" : st, load: x.load, c: x, theme, engine: c0.engine }));
+                }
+                const c = rule(isB2 ? withoutHole(c0) : c0);
+                const reC = reRaw.map((x) => rule(isB2 ? withoutHole(x) : x));
+                const rr = rerunRule(c, reC, { always: isB2 });
+                cells.push({ w, stage: st, theme, build: b, engine: c.engine, cell: c.cell, verdict: rr.v, mainVerdict: verdict(c), reruns: reC.map((x) => (x ? verdict(x) : null)), reLoads: reC.map((x) => x?.load ?? null), failed: rr.failed, mainFailed: c.failed ?? [], nrChecks: rr.nrChecks, ownerBlocked: c.ownerBlocked, ruled: c.ruled, crashed: /not measured: .*(crash|closed)|Page crashed|Target closed/i.test(c.summary ?? ""), load: c.load, summary: (c.summary ?? "").slice(0, 900) });
+            }
+        }
+    }
+    for (const [k, reads] of b2) {
+        const [engine, theme] = k.split("|"), col = holeColumn(reads, { stripOf });
+        columns.push({ engine, theme, ...col });
+        const loads = reads.map((r) => r.load).filter((v) => typeof v === "number");
+        cells.push({ w: "FM", stage: theme === "dark" ? "dark" : "main", theme, build: b, engine, cell: "film·hole·column", verdict: col.v, reruns: [], failed: col.v === "FAIL" ? ["hole"] : [], mainFailed: col.v === "PASS" ? [] : ["hole"], nrChecks: col.v === "NOT-REPRODUCED" ? ["hole"] : [], crashed: false,
+            load: loads.length ? Math.min(...loads) : null, reLoads: loads.length ? [Math.max(...loads)] : [], hits: col.hits.map(({ c, ...h }) => h), summary: col.summary.slice(0, 2000) });
+    }
+    return { cells, columns };
+}
 
 if (process.argv[2] === "--selftest") {
     const rows = [];
@@ -163,7 +277,7 @@ if (process.argv[2] === "--selftest") {
     ok("unruled-plant", verdict(OB4({ ok: true })) === "OWNER-BLOCKED", "without --ruled the same cell reads OWNER-BLOCKED (the witness's verdict, unchanged)");
     console.log(`${rows.every(Boolean) ? "SYN DIGEST PASS" : "SYN DIGEST FAIL"}  ${rows.filter(Boolean).length}/${rows.length}`);
     process.exitCode = rows.every(Boolean) ? 0 : 1;
-} else {
+} else if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
     const args = parseArgs();
     const list = (v) => (v == null || v === true ? [] : String(v).split(","));
     const pairs = (k) => Object.fromEntries(list(args[k]).map((s) => { const i = String(s).indexOf("="); return [String(s).slice(0, i), String(s).slice(i + 1)]; }));
@@ -174,26 +288,9 @@ if (process.argv[2] === "--selftest") {
     const OUTD = path.resolve(String(args.out)), TAG = (args.tag ?? BUILDS.join("-")) + (RULED ? "-ruled" : "");
     fs.mkdirSync(OUTD, { recursive: true });
     const ENGS = ["chromium", "webkit"];
-    const STAGES = [["main", "light"], ["rest", "light"], ["dark", "dark"], ["darkrest", "dark"]];
     const read = (f) => { try { return JSON.parse(fs.readFileSync(f, "utf8")); } catch { return null; } };
     const cells = [];
-    for (const b of BUILDS) for (const e of ENGS) for (const [st, theme] of STAGES) {
-        const base = path.join(SRC[b], "battery", "json", `${b}-${e}`, st);
-        let ws = []; try { ws = fs.readdirSync(path.join(base, "runs")); } catch { continue; }
-        for (const dir of ws) {
-            const w = dir.slice(0, dir.lastIndexOf(`-${b}`));
-            const main = read(path.join(base, "runs", dir, `${w}.json`));
-            if (!main) continue;
-            const re = [1, 2].map((k) => read(path.join(base, `rerun${k}`, "runs", dir, `${w}.json`)));
-            for (const c0 of main.cells) {
-                if (/^__/.test(c0.cell)) continue;
-                const c = rule(c0);
-                const reC = re.map((r) => rule(r?.cells.find((y) => y.engine === c.engine && strip(y.cell) === strip(c.cell)) ?? null));
-                const rr = rerunRule(c, reC, { always: w === "FM" && B2_FM.test(strip(c.cell)) });
-                cells.push({ w, stage: st, theme, build: b, engine: c.engine, cell: c.cell, verdict: rr.v, mainVerdict: verdict(c), reruns: reC.map((x) => (x ? verdict(x) : null)), reLoads: reC.map((x) => x?.load ?? null), failed: rr.failed, mainFailed: c.failed ?? [], nrChecks: rr.nrChecks, ownerBlocked: c.ownerBlocked, ruled: c.ruled, crashed: /not measured: .*(crash|closed)|Page crashed|Target closed/i.test(c.summary ?? ""), load: c.load, summary: (c.summary ?? "").slice(0, 900) });
-            }
-        }
-    }
+    for (const b of BUILDS) cells.push(...readRecords(SRC[b], b, { rule }).cells);
     for (const b of BUILDS) {
         for (const [w, f] of [["F7", F7[b] ?? path.join(SRC[b], `F7-${b}`, "F7.json")], ["PR", PR[b] ?? path.join(SRC[b], `PR-${b}`, "PR.json")]]) {
             const j = read(f); if (!j) continue;

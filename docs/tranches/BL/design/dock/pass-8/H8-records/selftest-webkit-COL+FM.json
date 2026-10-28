@@ -1,0 +1,89 @@
+{
+ "when": "2026-10-28T03:51:56.216Z",
+ "engines": [
+  "webkit"
+ ],
+ "rows": [
+  {
+   "witness": "FM",
+   "fixture": "pass",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 6/6 PASS",
+   "ok": true,
+   "ms": 31682,
+   "load": 13.24
+  },
+  {
+   "witness": "FM",
+   "fixture": "pass@dark",
+   "expect": "exit 0, all cells PASS",
+   "got": "exit 0, 6/6 PASS",
+   "ok": true,
+   "ms": 30874,
+   "load": 19.23
+  },
+  {
+   "witness": "FM",
+   "fixture": "deadhooks",
+   "expect": "exit ≠ 0; tiles fails in ^film·",
+   "got": "exit 1, 6/6 FAIL; matching 6 (webkit)",
+   "ok": true,
+   "ms": 28351,
+   "load": 18.88
+  },
+  {
+   "witness": "FM",
+   "fixture": "stub",
+   "expect": "exit ≠ 0; stub fails in ^film·swap-",
+   "got": "exit 1, 2/2 FAIL; matching 2 (webkit)",
+   "ok": true,
+   "ms": 9932,
+   "load": 16.97
+  },
+  {
+   "witness": "FM",
+   "fixture": "stubhalf",
+   "expect": "exit ≠ 0; stub fails in ^film·swap-",
+   "got": "exit 1, 2/2 FAIL; matching 2 (webkit)",
+   "ok": true,
+   "ms": 9897,
+   "load": 16.28
+  },
+  {
+   "witness": "FM",
+   "fixture": "hole",
+   "expect": "exit ≠ 0; hole fails in ^film·(first|warm)-expand",
+   "got": "exit 1, 2/2 FAIL; matching 2 (webkit)",
+   "ok": true,
+   "ms": 10865,
+   "load": 16.26
+  },
+  {
+   "witness": "COL",
+   "fixture": "pass Playwright WebKit",
+   "expect": "column PASS over 18 reads",
+   "got": "PASS: 18 read(s); 0 hole run(s) over 1 frame",
+   "ok": true,
+   "ms": 90019,
+   "load": 15.29
+  },
+  {
+   "witness": "COL",
+   "fixture": "pass@dark Playwright WebKit",
+   "expect": "column PASS over 18 reads",
+   "got": "PASS: 18 read(s); 0 hole run(s) over 1 frame",
+   "ok": true,
+   "ms": 90354,
+   "load": 17.54
+  },
+  {
+   "witness": "COL",
+   "fixture": "hole Playwright WebKit",
+   "expect": "column FAIL over 18 reads",
+   "got": "FAIL: 18 read(s); 9 hole run(s) over 1 frame: first-expand low r1 slot 2 4 frames at +40-160 ms (tile diff 4.43/5.33/0.08, distinct) [load 16.5]; first-expand low r2 slot 2 3 frames at +40-120 ms (tile diff 4.99/5.04, distinct) [load 17.64]; first-expand low r3 slot 2 4 frames at +40-160 ms (tile diff 4.84/0.07/5.42, distinct) [load 15.5]; warm-expand low r1 slot 2 3 frames at +80-160 ms (tile diff 4.79/5.44, distinct) [load 19.38]; warm-expand low r2 slot 2 4 frames at +40-160 ms (tile diff 0.04/4.41/5.24, distinct) [load 16.32]; warm-expand low r3 slot 2 3 frames at +40-120 ms (tile diff 4.93/5.04",
+   "ok": true,
+   "ms": 91192,
+   "load": 16.45
+  }
+ ]
+}

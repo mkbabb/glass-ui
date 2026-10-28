@@ -35,6 +35,8 @@
 // H7 (pass-7/H7.md): H7-1 reads `hole` from the cast, each slot's ink the paint inside its own laid box against the frame's
 // own ground (lib.mjs holePaint), replacing H6-2's DOM credit; FM is the hole's one witness. The cell records the per-frame
 // slot inks (`hole.frames`). H7-3: the battery runs FM's six cells three times (main + two re-runs) in every column.
+// H8-1 (pass-8/H8.md): each judged frame also records its tile difference against the cast frame before it (lib.mjs
+// tileDiff), and the digest reads `hole` as a class per column (cells.mjs holeColumn), not per cell.
 import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";

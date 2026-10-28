@@ -31,10 +31,20 @@
 // in every engine and theme, swap-short and swap-long hold it); H7-2 moves `pass!rescale` to a PASS variant (a 0.98 cast
 // whose divided rests agree is measured) and adds `pass!skew` (DOCK_HARNESS_ST_SKEW=1.02: UNMEASURED); H7-3's plants are in
 // RUN (reds.mjs) and SYN (cells.mjs).
+// H8 (pass-8/H8.md; witness H8 below stays the Safari status, an older row of that name): H8-1's column rule has three
+// witnesses. COLR (source, records): pass 7's B′ on the pass-7 critic's records (W·l and W·d FAIL `hole`, C·l and C·d PASS;
+// the tile differences equal tilediff.txt; the per-cell rule H8-1 replaces, the plant's control, read W·l and W·d PASS),
+// pass 6's B′ on H7's records (FAIL in four columns). COLS (source, synthetic): one isolated 2-frame read is
+// NOT-REPRODUCED; two reads at one slot FAIL; two reads at two slots are NOT-REPRODUCED; two unreadable strips FAIL. COL
+// (browser, per engine): the fixture's `pass` and `pass@dark` columns PASS and its `hole` column FAILs, each a three-run
+// column through battery.sh stage `fmlow` (NOGUARD: the self-test's own slot holds the engine). H8-2's witness LOW (browser,
+// per engine; NOT inside a guarded slot, the stage queues its own): a slot admitted above its bound reads "deferred" and
+// enters no column; a slot admitted at or under 15 is read.
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { HERE, parseArgs, outDir, loadAvg, ENGINE_LABEL } from "./lib.mjs";
+import { readRecords, holeColumn, rerunRule, verdict, B2_FM } from "./cells.mjs";
 
 const args = parseArgs();
 const only = args.only ? String(args.only).split(",") : null;
@@ -305,6 +315,91 @@ if (!only || only.includes("SYN")) {
         const r = spawnSync(process.execPath, argv, { encoding: "utf8" });
         log({ witness: "SYN", fixture: name, expect, got: `exit ${r.status}: ${r.stdout.trim().split("\n").pop()}`, ok: r.status === 0, ms: Date.now() - t0, load: loadAvg() });
     }
+}
+// H8-1 · witness COLR: the column rule on recorded batteries (no browser)
+const DOCK = path.resolve(HERE, "..");
+const colOf = (cols, e, t) => cols.find((c) => c.engine === e && c.theme === t) ?? { v: "absent", summary: "no reads", hits: [] };
+if (only && only.includes("COLR")) {
+    const t0 = Date.now(), CR = path.join(DOCK, "pass-7", "D2-Bp-crit-records"), st = path.join(outRoot ?? ".", "col-crit");
+    // stage the critic's records in the battery layout: its battery stages as they are; its fmlow runs r1-r3 as stage
+    // fmlow-<theme> (runs, rerun1, rerun2) with admit.json from its own log's "admitted" line (H8-2 reads that line)
+    fs.rmSync(st, { recursive: true, force: true });
+    for (const e of ["chromium", "webkit"]) for (const sg of ["main", "rest", "dark", "darkrest"]) { const d = path.join(st, "battery", "json", `bp-${e}`); fs.mkdirSync(d, { recursive: true }); const src = path.join(CR, "battery", "json", `bp-${e}`, sg); if (fs.existsSync(src)) fs.symlinkSync(src, path.join(d, sg)); }
+    for (const t of ["light", "dark"]) {
+        const d = path.join(st, "battery", "json", "bp-webkit", `fmlow-${t}`);
+        ["runs", "rerun1/runs", "rerun2/runs"].forEach((r, i) => { const x = path.join(d, r, "FM-bp"); fs.mkdirSync(x, { recursive: true }); fs.symlinkSync(path.join(CR, "fmlow", `${t}-r${i + 1}`, "FM.json"), path.join(x, "FM.json")); });
+        const lg = fs.readFileSync(path.join(CR, "fmlow", `fmlow-webkit-${t}.log`), "utf8"), m = /^admitted (.*?) \d+:\d+ +up .*load averages: ([\d.]+)/m.exec(lg), l = m ? +m[2] : null;
+        fs.writeFileSync(path.join(d, "admit.json"), JSON.stringify({ stage: `fmlow-${t}`, max: 15, deferred: !(l != null && l <= 15), load: l, attempts: [{ try: 1, at: m?.[1] ?? null, load: l, deferred: !(l != null && l <= 15) }], from: `pass-7/D2-Bp-crit-records/fmlow/fmlow-webkit-${t}.log` }));
+    }
+    const stripOf = (r) => { const sub = r.stage === "fmlow" ? path.join("fmlow", `${r.theme}-${r.run}`) : path.join("filmstrips", `${r.engine}-${r.theme === "dark" ? "dark" : "main"}`, r.run); const f = path.join(CR, sub, `strip-${r.engine}-${r.cell.replace(/^film·/, "").replace(/(\+shim|-unshimmed)$/, "")}.png`); return fs.existsSync(f) ? f : null; };
+    const { cells: cc, columns: c7 } = readRecords(st, "bp", { stripOf });
+    const nReads = (col, n) => new Set(col.hits.map((h) => `${h.cell}|${h.stage}|${h.run}`)).size === n;
+    for (const [e, t, want_, n] of [["webkit", "light", "FAIL", 2], ["webkit", "dark", "FAIL", 4], ["chromium", "light", "PASS", 0], ["chromium", "dark", "PASS", 0]]) {
+        const col = colOf(c7, e, t);
+        log({ witness: "COLR", fixture: `bp7 ${e === "webkit" ? "W" : "C"}·${t[0]}`, expect: `column ${want_}, ${n} read(s) over 1 frame`, got: `${col.v}: ${col.summary.slice(0, 700)}`, ok: col.v === want_ && nReads(col, n), ms: Date.now() - t0, load: loadAvg() });
+    }
+    const low = cc.filter((c) => c.cell === "film·low-slot");
+    log({ witness: "COLR", fixture: "bp7 fmlow light", expect: "the critic's light low-load slot (admitted at 35.94) reads deferred and enters no column", got: low.map((c) => `${c.theme}: ${c.summary}`).join(" | ") || "none", ok: low.length === 1 && low[0].theme === "light" && /deferred/.test(low[0].summary) && !colOf(c7, "webkit", "light").hits.some((h) => h.stage === "fmlow"), ms: Date.now() - t0, load: loadAvg() });
+    const td = colOf(c7, "webkit", "dark").hits.concat(colOf(c7, "webkit", "light").hits).filter((h) => h.slot === 2).map((h) => `${h.theme[0]}:${h.cell.replace(/^film·/, "")}:${h.stage === "fmlow" ? "low-" : ""}${h.run}=${h.diffs.join("/")}(${h.kind})`).sort();
+    const want = ["d:first-expand:main=8.01(distinct)", "d:warm-collapse:low-r3=0.04(held)", "d:warm-collapse:rerun2=0.03(held)", "d:warm-expand:low-r2=0.07(held)", "l:warm-collapse:main=0.05(held)", "l:warm-expand:rerun2=0.09(held)"];
+    log({ witness: "COLR", fixture: "bp7 tile diff", expect: "each 2-frame run's tile difference equals tilediff.txt (8.01 two distinct frames; 0.03-0.09 held)", got: td.join(" "), ok: td.join() === want.join(), ms: Date.now() - t0, load: loadAvg() });
+    // the plant's control: H7-3 + H6-7 per cell (the rule H8-1 replaces) forgives every one of those reads
+    const perCell = [];
+    for (const e of ["webkit"]) for (const [sg, t] of [["main", "light"], ["dark", "dark"]]) {
+        const j = (k) => { try { return JSON.parse(fs.readFileSync(path.join(CR, "battery", "json", `bp-${e}`, sg, ...(k ? [`rerun${k}`] : []), "runs", "FM-bp", "FM.json"), "utf8")).cells; } catch { return []; } };
+        const [m0, r1, r2] = [j(0), j(1), j(2)];
+        for (const c of m0.filter((x) => B2_FM.test(x.cell))) { const rr = rerunRule(c, [r1, r2].map((r) => r.find((y) => y.cell === c.cell) ?? null), { always: true }); perCell.push(`${t[0]}:${c.cell.replace(/^film·/, "")}=${rr.v}`); }
+    }
+    log({ witness: "COLR", fixture: "bp7 per-cell (control)", expect: "the replaced per-cell rule reads no B2 cell FAIL in W·l or W·d (the forgiveness H8-1 removes)", got: perCell.join(" "), ok: perCell.length === 12 && perCell.every((x) => !/=FAIL$/.test(x)), ms: Date.now() - t0, load: loadAvg() });
+    const { columns: c6 } = readRecords(path.join(DOCK, "pass-7", "H7-records"), "bp");
+    const four = [["chromium", "light"], ["chromium", "dark"], ["webkit", "light"], ["webkit", "dark"]].map(([e, t]) => `${e === "webkit" ? "W" : "C"}·${t[0]} ${colOf(c6, e, t).v} (${new Set(colOf(c6, e, t).hits.map((h) => h.cell + h.run)).size} reads)`);
+    log({ witness: "COLR", fixture: "bp6 (H7 records)", expect: "pass 6's B′ FAILs hole in four columns", got: four.join("; "), ok: four.every((x) => / FAIL /.test(x)), ms: Date.now() - t0, load: loadAvg() });
+}
+// H8-1 · witness COLS: synthetic columns (no browser)
+if (only && only.includes("COLS")) {
+    const t0 = Date.now();
+    const fr = (slots) => [[0, 0, 200, [[1, 1], [2, 1], [3, 1]], 1], ...slots.map((s, i) => [40 * (i + 1), 0, 200, [[1, 1], [2, s], [3, 1]], 0.05]), [40 * (slots.length + 1), 0, 200, [[1, 1], [2, 1], [3, 1]], 3]];
+    const rd = (cell, run, slots) => ({ cell: "film·" + cell, run, stage: "main", load: 9, c: { cell: "film·" + cell, hole: { frames: fr(slots) }, failed: slots.filter((x) => x < 0.1).length > 1 ? ["hole"] : [] } });
+    const quiet = ["first-expand", "warm-expand", "warm-collapse", "content-add", "swap-short", "swap-long"].flatMap((c) => ["main", "rerun1", "rerun2"].map((r) => rd(c, r, [1, 0.05, 1])));
+    const one = quiet.map((r) => (r.cell === "film·warm-expand" && r.run === "rerun2" ? rd("warm-expand", "rerun2", [0.02, 0.03, 1]) : r));
+    const a = holeColumn(one);
+    log({ witness: "COLS", fixture: "isolated", expect: "18 reads, one isolated 2-frame read: NOT-REPRODUCED", got: `${a.v}: ${a.summary}`, ok: a.v === "NOT-REPRODUCED" && a.hits.length === 1, ms: Date.now() - t0, load: loadAvg() });
+    const two = one.map((r) => (r.cell === "film·first-expand" && r.run === "main" ? rd("first-expand", "main", [0.01, 0.02, 0.5]) : r));
+    const b = holeColumn(two);
+    log({ witness: "COLS", fixture: "two-same-slot", expect: "two reads (two cells) at one slot: FAIL", got: `${b.v}: ${b.summary}`, ok: b.v === "FAIL", ms: Date.now() - t0, load: loadAvg() });
+    const other = (r) => ({ ...r, c: { ...r.c, hole: { frames: r.c.hole.frames.map((f) => [f[0], f[1], f[2], [f[3][0], [2, 1], [4, f[3][1][1]], f[3][2]], f[4]]) } } });
+    const c2 = holeColumn(two.map((r) => (r.cell === "film·first-expand" && r.run === "main" ? other(r) : r)));
+    log({ witness: "COLS", fixture: "two-slots", expect: "two reads at two different slots: NOT-REPRODUCED", got: `${c2.v}: ${c2.summary}`, ok: c2.v === "NOT-REPRODUCED" && c2.hits.length === 2, ms: Date.now() - t0, load: loadAvg() });
+    const un = quiet.map((r, i) => (i < 2 ? { ...r, c: { cell: r.cell, hole: null, failed: ["hole"] } } : r));
+    const d = holeColumn(un);
+    log({ witness: "COLS", fixture: "unread×2", expect: "two strips that cannot be read: FAIL (never a silent green)", got: `${d.v}: ${d.summary}`, ok: d.v === "FAIL", ms: Date.now() - t0, load: loadAvg() });
+    const q = holeColumn(quiet);
+    log({ witness: "COLS", fixture: "quiet", expect: "18 reads with one-frame holes only: PASS", got: `${q.v}: ${q.summary}`, ok: q.v === "PASS", ms: Date.now() - t0, load: loadAvg() });
+}
+// H8-1 · witness COL (browser): fixture columns through the low-load stage's runner, three runs of the six B2 cells
+// H8-2 · witness LOW (browser): the admission gate
+const lowStage = (e, fixture, theme, env, guard) => {
+    const lab = `fixture-${fixture}`, rec = path.join(outRoot ?? ".", `low-${e}-${fixture}-${theme}-${env.FMLOW_MAX}`);
+    fs.rmSync(rec, { recursive: true, force: true });
+    const t0 = Date.now(), load = loadAvg();
+    const r = spawnSync("bash", [path.join(HERE, "battery.sh"), path.join(rec, "out"), "fmlow"], { encoding: "utf8", maxBuffer: 1 << 26, env: { ...process.env, ...(guard ? {} : { NOGUARD: "1" }), BUILD: lab, FIXTURE: fixture, ENG: e, THEME: theme, REC: path.join(rec, "battery"), ...env } });
+    const { cells, columns } = readRecords(rec, lab, { engines: [e] });
+    let adm = null; try { adm = JSON.parse(fs.readFileSync(path.join(rec, "battery", "json", `${lab}-${e}`, `fmlow-${theme}`, "admit.json"), "utf8")); } catch { }
+    return { code: r.status, cells, col: colOf(columns, e, theme), adm, ms: Date.now() - t0, load };
+};
+if (only && only.includes("COL")) for (const e of want) {
+    for (const [fx, theme, wantV] of [["pass", "light", "PASS"], ["pass", "dark", "PASS"], ["hole", "light", "FAIL"]]) {
+        const x = lowStage(e, fx, theme, { FMLOW_MAX: "1000", FMLOW_QUEUE_MIN: "0", FMLOW_TRIES: "1" }, false);
+        log({ witness: "COL", fixture: `${fx}${theme === "dark" ? "@dark" : ""} ${ENGINE_LABEL[e]}`, expect: `column ${wantV} over 18 reads`, got: `${x.col.v}: ${x.col.summary.slice(0, 600)}`, ok: x.col.v === wantV && x.col.reads === 18, ms: x.ms, load: x.load });
+    }
+}
+if (only && only.includes("LOW")) for (const e of want) {
+    const p = lowStage(e, "pass", "light", { FMLOW_MAX: "0", FMLOW_QUEUE_MIN: "0", FMLOW_TRIES: "1" }, true);
+    const sl = p.cells.find((c) => c.cell === "film·low-slot");
+    log({ witness: "LOW", fixture: `admitted-above ${ENGINE_LABEL[e]}`, expect: "a slot admitted above its bound (0) reads deferred, runs no cell and enters no column", got: `admit ${JSON.stringify(p.adm)}; ${sl ? sl.summary : "no low-slot record"}; column ${p.col.v} (${p.col.reads ?? 0} reads)`, ok: !!p.adm && p.adm.deferred === true && !!sl && /deferred/.test(sl.summary) && !(p.col.reads > 0), ms: p.ms, load: p.load });
+    const g = lowStage(e, "pass", "light", { FMLOW_MAX: "15", FMLOW_QUEUE_MIN: "60", FMLOW_TRIES: "3" }, true);
+    const loads = g.cells.filter((c) => /^film·/.test(c.cell) && c.cell !== "film·hole·column" && c.cell !== "film·low-slot").map((c) => c.load);
+    log({ witness: "LOW", fixture: `admitted-under ${ENGINE_LABEL[e]}`, expect: "a slot admitted at load ≤ 15 is read: 18 reads, every cell with its load, column PASS", got: `admit ${JSON.stringify(g.adm)}; column ${g.col.v} (${g.col.reads ?? 0} reads); cell loads ${loads.length ? Math.min(...loads) + "-" + Math.max(...loads) : "none"}`, ok: !!g.adm && g.adm.deferred === false && g.adm.load <= 15 && g.col.v === "PASS" && g.col.reads === 18 && loads.every((v) => typeof v === "number"), ms: g.ms, load: g.load });
 }
 if (!only || only.includes("H8")) {
     const t0 = Date.now();
