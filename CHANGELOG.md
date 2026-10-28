@@ -4,6 +4,17 @@
 
 Merged on local branch `u/b7-glass` (off `release/10.1.1` bbf176f02) from `u/b7-glass-shape` (rows B7-G1 to B7-G6) and `u/b7-glass-perf` (rows B7-G7 to B7-G9). Row numbers follow the relay letter.
 
+### Opaque sheets (`u/b7b-glass-dock`, U/B7b M1)
+
+- **Select sheet form is opaque (D-6).** Below 30rem the Select listbox opens as a
+  full-width sheet at the viewport foot; it now wears the surface axis's opaque rung
+  (`data-surface="opaque"`: solid `--card`, no backdrop), so the page no longer reads
+  through its rows. The anchored form above 30rem is unchanged (glass).
+- **`DropdownMenuContent` takes `surface`** (`"glass" | "veil" | "opaque"`, default
+  `"glass"`), the same axis `SheetContent` and `Card` carry. Additive; no existing
+  menu changes. A consumer whose menu stands in for a phone sheet passes `"opaque"`.
+- Witness: `tests/components/select/sheet-opaque.test.ts` (2 of 4 fail on 1dc80a3d6).
+
 ### Shape, glide and the dropdown system (`u/b7-glass-shape`)
 
 Proposed by the atlas formation (U/B7, the owner's order of 2026-10-19 in sci-report `atlas/docs/tranches/U/owner-2026-10-19/ORDER.md`). Local branch `u/b7-glass-shape`; no version bump. Engine witnesses: `tests-visual/b7-shape.config.ts`, Chromium and Firefox.
