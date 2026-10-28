@@ -120,6 +120,43 @@ or renamed, and a consumer has nothing to change.
   Chromium. The WebKit cells are owed: Playwright WebKit 2287 crashes on every dock page
   at load, on v10.1.2 alike (`docs/release-10.1.3/implement.md`, Round 3).
 
+- **The morph clips its content to the plate (critique-4 D-1).** The layers lay out where
+  they rest and the plate grows over them from the measured origin, so a pane's controls
+  past the plate's moving edge painted on the bare stage: ahead of the plate on an
+  expand, behind it on a collapse. On 10.1.2 the centred origin split that spill between
+  both ends; with the anchored origin all of it sits on the open side (right-anchored at
+  390, expand frame 6: "View layers" and "Publish" opaque left of the plate). While
+  `[data-morphing]` is set, the dock box now clips on the morph axis with `overflow:
+  clip`. The plate is the box's padding box, and the clip is drawn in the box's own
+  coordinates, so the morph's `scale` carries it with the plate on every frame. It is
+  not `clip-path`, which forms a backdrop root and would flatten an active
+  `.glass-capsule` lens mid-morph. The cross axis stays visible, nothing clips at rest,
+  and a press the click guard keeps alive across a collapse (`.is-press-keepalive`)
+  suspends the clip so its control stays painted and hit-testable under the pointer.
+
+  Witnesses, engine `release-10-1-3.spec.ts`: per frame, every witnessed control with
+  painted opacity above 0.1 lies inside the plate once cut by its clipping ancestors, on
+  the hover expand and the click-away collapse (right, left, bottom at 390; right at
+  1440) and through a double reversal (right, bottom at 390); and in paint, a frame
+  frozen mid-morph (at 40 % of the expand's travel and 30 % of the collapse's, right at
+  390) puts no control ink on the stage beside the plate. RED on the round-3 branch and
+  on 10.1.2, in Chromium and WebKit 2287.
+
+- **A vertical dock's collapse settles without a snap (critique-4 D-2).** The vertical
+  root kept a `scale var(--dock-motion-resize)` transition leg, held off only under
+  `[data-morphing]`. Its at-rest writer, the collapsed hover pre-scale, was struck at BK
+  #47 W7, so its one remaining input was the morph's own release: at settle the
+  attribute cleared, the morph's `scale: 1 0.32` dropped to `none` with the leg re-armed
+  in the same style change, and the collapsed box eased back from a third of its height
+  (the anchored edge jumped about 36 px, then re-grew over about 200 ms). The same on
+  10.1.2. The leg and its `[data-morphing]` override are deleted; the morph is `scale`'s
+  only owner.
+
+  Witness: the D-2 collapse cells now read every frame after the morph settles, and run
+  top- and bottom-anchored as well as right and left. The top and bottom cells are RED
+  on the round-3 branch (Chromium: bottom 35.9 px, top 37.3 px; WebKit: 31.0, 29.6) and
+  GREEN with the leg removed.
+
 ## 10.1.2 — 2026-10-27
 
 Two changes. Atlas G-4, arm (b-ii), the declared seat marker, by owner-delegate ruling

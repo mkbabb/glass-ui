@@ -108,6 +108,8 @@ morph axis; the leaving pane reads `--dock-leave-shift`).
   anchored side stays under the pointer; one on the open side rides the growing edge.
 - The layers take the root's origin, so the two scales cancel and the pane lays out where
   it rests, inside the reserved box; no frame paints content outside it (the O-101 gate).
+  ~~That was true of the reserved box, not of the plate the user sees~~ (critique-4 D-1;
+  Round 4 below: the box now clips to the plate while it morphs).
 - The leaving pane is shifted back to the box it painted and fades there (the summary
   glyph no longer jumps to the reserved box's start: 294 -> 66.3 on 10.1.2 at 390).
 - Ask (2), the click guard: no change. With the seat held, Playwright's click and a press
@@ -322,3 +324,93 @@ The RED arms ran in `red-10.1.2` with this spec and harness copied in. They ran 
 its own v10.1.2 dock and then on `10234c77c`'s. The dock was then restored to v10.1.2,
 checked with `git diff --quiet v10.1.2`. The unit RED arm swapped `dockMorphMeasure.ts` to
 its `10234c77c` version inside this worktree and then restored it.
+
+## Round 4 (critique-4)
+
+Implementer: claude-opus-5-5. Both cures are in `src/components/dock/styles/shell.css`;
+no script changed, and the click guard is untouched.
+
+- **D-1: the morph clips its content to the plate.** The layers lay out where they rest
+  and the plate grows over them from the measured origin, so the full pane's controls
+  past the plate's moving edge painted on the bare stage. Nothing clipped them: the box,
+  `.dock-controls` (`display: contents`) and `.dock-layers` were all `overflow: visible`.
+  - The cure: `.glass-dock[data-morphing]` clips on its morph axis with `overflow: clip`
+    (`overflow-x` horizontal, `overflow-y` vertical; the cross axis stays `visible`).
+    The plate is the box's padding box (`.dock-plate`, `position: absolute; inset: 0`),
+    and the clip is drawn in the box's coordinates, so the morph's `scale` carries the
+    clip with the plate on every frame. At rest nothing clips, as before.
+  - Not `clip-path` on `.dock-layers`: it forms a backdrop root (the grasp gate's own
+    capture, `tests/styles/glass-subtlety.test.ts`), so an active `.glass-capsule` lens
+    in the pane would blur nothing mid-morph and pop at settle. `overflow: clip` forms
+    none and is no scroll container.
+  - Not an opacity ramp: it would only approximate the plate's edge.
+  - The one exception is the GU-4 press keepalive (`.is-press-keepalive`, armed when a
+    press is in flight as the dock collapses). Its pressed control must stay painted and
+    hit-testable under the pointer until the click resolves, and an overflow clip cuts
+    hit testing too, so the box does not clip while it is held (`:not(:has(...))`).
+- **D-2: a vertical collapse settles without a snap.** The vertical root's transition
+  carried `scale var(--dock-motion-resize)`, held off only by a `[data-morphing]` rule.
+  The leg's at-rest writer, the collapsed hover pre-scale, was struck at BK #47 W7, so its
+  only input was the morph's own release. At settle the attribute cleared, the morph's
+  `scale: 1 0.32` dropped to `none`, and the re-armed leg eased the settled collapsed box
+  back from 32 % of its height. The leg and the `[data-morphing]` rule are deleted; the
+  morph is the only writer of the root's `scale`. The `transform` leg (press-squish) and
+  the box-shadow fade stay.
+
+### Witnesses (`tests-visual/release-10-1-3.spec.ts`)
+
+- The D-2 collapse cells read every frame after the morph settles ("every frame after the
+  morph paints the settled box"), and run top-anchored as well (the harness gains
+  `?anchor=top`). Before, the witness compared the last morph frame with a box read
+  1.7 s later, after the re-grow, and passed while the snap painted.
+- D-1 (critique-4), per frame. Every `[data-witness]` element with painted opacity above
+  0.1 (the product up to the dock, 0 when hidden), cut by each ancestor whose computed
+  `overflow` clips, lies within 1 px of the plate's box. Read on the hover expand and the
+  click-away collapse (right, left, bottom at 390; right at 1440), and through a double
+  reversal (hover, `collapse()` 120 ms in, re-hover; right and bottom at 390).
+- D-1 (critique-4), in paint. The page's rAF is frozen mid-morph, set by the plate's
+  travel (40 % of the expand's, 30 % of the collapse's; right-anchored at 390), not by a
+  frame count: a first draft froze on expand frame 6 and collapse frame 4, and in WebKit
+  those are different geometry (its frames advance further apart), so the expand cell
+  failed its own setup check and the collapse cell passed on the round-3 source. The
+  stage strip left of the frozen plate, less a 6 px margin, is compared with the same
+  strip at rest: no pixel may differ by more than 48 in a channel.
+
+### Round 4 gates
+
+Every run went through `guarded`; WebKit is build 2287 through
+`tests-visual/webkit-2287.config.ts` under `guarded --exclusive webkit`. The pre-cure arm
+swapped `shell.css` to the round-3 source (`fa096339a`) inside this worktree and restored
+it (`cmp` checked). The v10.1.2 arm ran in `red-10.1.2` with this spec and harness copied
+in, its `src/` checked against `v10.1.2` before and after.
+
+| gate | result |
+|---|---|
+| `npm run typecheck` (guarded `--light`) | exit 0 |
+| `npm run build`, `npm run demo:dist:build` (guarded) | exit 0 |
+| `npx vitest run --maxWorkers=2` (guarded) | 246 files; 2387 passed, 10 expected fail, 1 skipped, 1 failed: the aurora `resolveAtoms` fuzz timed out at 5 s under machine load (load about 35). Rerun alone: 24/24 |
+| `release-10-1-1` + `release-10-1-2` + `release-10-1-3` specs, Chromium | 127/127 GREEN (77 release cells, the O-101 no-overflow cells among them; 50 in the 10.1.3 spec) |
+| the same, WebKit 2287 | 125 passed, 2 skipped (the CDP swipe cells are Chromium's). This includes the critique-3 reversal cells that round 3 left owed |
+| new and changed cells, round-3 source, Chromium | 10/12 RED: D-2 bottom 35.9 px, top 37.3 px; D-1 per frame 6/6 (right: "View layers" up to 218 px outside the plate); the right and left D-2 cells pass (a horizontal dock has no such leg) |
+| the same, WebKit 2287 | 10/12 RED: D-2 bottom 31.0 px, top 29.6 px; D-1 per frame 6/6; the right and left D-2 cells pass |
+| the same, v10.1.2, Chromium and WebKit 2287 | the per-frame cells and all four D-2 cells RED in both engines. The D-2 cells fail first on the earlier anchored-edge drift (121 and 116 px), before the settle check |
+| frozen paint cells (by travel), Chromium | branch 2/2 GREEN; round-3 source 2/2 RED (180 and 68 ink pixels); v10.1.2 2/2 RED (160, 152) |
+| the same, WebKit 2287 | branch 2/2 GREEN; round-3 source 2/2 RED (318, 720); v10.1.2 2/2 RED (356, 612) |
+| `npm run verify:package` | the ratchet refused +65 B (2939806 > 2939741); rebound on the committed tree in `49bf38296`, then terminal CLEAN |
+
+**The WebKit crash that round 3 recorded.** Round 3's chain (`fix4-chain.sh`) ran its
+WebKit cells through `tests-visual/playwright.config.ts`, which resolves Playwright's
+bundled WebKit 2311. `webkit-2287.config.ts` documents that 2311 crashes every page that
+mounts a `GlassDock`. Every WebKit run this round, and critique-4's, used the 2287 config,
+and no dock page crashed.
+
+Logs, beside the worktree in `fix5/`: `chain.sh` and `chain2.sh` (the serial runs),
+`chain.log`, `chain2.log`; `pre-chromium.log`, `post-chromium.log` (the first RED and
+GREEN pair); `release-{chromium,webkit}.log`; `pre-webkit.log`;
+`red1012-{chromium,webkit}.log`; `frozen-{post,pre,red1012}-*.log`; `typecheck.log`,
+`build.log`, `build-committed.log`, `demo-build.log`, `vitest.log`,
+`vitest-aurora-rerun.log`, `verify.log` (the refusal), `verify-rebind.log` (CLEAN).
+
+Housekeeping: `release-10.1.3/fix5/` (two Playwright JSON reports from the first runs,
+whose relative `PI_REPORT` resolved inside the worktree) is untracked and not committed.
+Removing it was refused by the permission system; delete it by hand.
