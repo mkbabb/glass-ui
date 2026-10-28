@@ -1,0 +1,14 @@
+## 2026-10-28 00:42:40 load { 22.14 25.06 27.86 } · start pass-6/E6/probe/slider-press-ctl cand webkit 
+# P-E6 slider-press-ctl · driver latency against library latency on the slider's touch press (CK-06)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p6/C-A6/out/builds/cand · engine webkit · lock wait 30.2 s · other headless processes: chromium 4, webkit 0 · load 18.9/24.0/27.4 at start
+# scene app: harness scenes/App.vue (sha1 d020f4946adb)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  REPORT     slider touch press ctl light #1 · (hover:none) true (pointer:coarse) true raw WebKit touch · first touch event touchstart / pointerdown · library latency (held − first event) 11.0 ms · driver latency (send → first event) ≈ -19.0 ms · reads +27 held true · +52 held true · +103 held true · +201 held true · load 18.1/23.7/27.3
+  REPORT     slider touch press ctl light #2 · (hover:none) true (pointer:coarse) true raw WebKit touch · first touch event touchstart / pointerdown · library latency (held − first event) 12.0 ms · driver latency (send → first event) ≈ -17.0 ms · reads +27 held true · +52 held true · +103 held true · +201 held true · load 18.1/23.7/27.3
+  REPORT     slider touch press ctl light #3 · (hover:none) true (pointer:coarse) true raw WebKit touch · first touch event touchstart / pointerdown · library latency (held − first event) 12.0 ms · driver latency (send → first event) ≈ -17.0 ms · reads +26 held true · +52 held true · +102 held true · +204 held true · load 17.6/23.5/27.2
+  REPORT     slider touch press ctl dark #1 · (hover:none) true (pointer:coarse) true raw WebKit touch · first touch event touchstart / pointerdown · library latency (held − first event) 11.0 ms · driver latency (send → first event) ≈ -16.0 ms · reads +26 held true · +52 held true · +101 held true · +202 held true · load 17.0/23.3/27.1
+  REPORT     slider touch press ctl dark #2 · (hover:none) true (pointer:coarse) true raw WebKit touch · first touch event touchstart / pointerdown · library latency (held − first event) 19.0 ms · driver latency (send → first event) ≈ -25.0 ms · reads +27 held true · +52 held true · +102 held true · +202 held true · load 17.0/23.3/27.1
+  REPORT     slider touch press ctl dark #3 · (hover:none) true (pointer:coarse) true raw WebKit touch · first touch event touchstart / pointerdown · library latency (held − first event) 18.0 ms · driver latency (send → first event) ≈ -25.0 ms · reads +28 held true · +53 held true · +102 held true · +202 held true · load 16.1/23.0/26.9
+P-E6 slider-press-ctl webkit UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (6 reported) · load 18.9/24.0/27.4 at start, 16.1/23.0/26.9 at end
+exit 3
+## 2026-10-28 00:43:30 load { 16.08 23.00 26.94 } · end slider-press-ctl cand webkit

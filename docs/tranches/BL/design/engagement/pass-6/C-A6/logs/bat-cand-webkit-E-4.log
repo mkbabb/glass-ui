@@ -1,0 +1,11 @@
+## 2026-10-28 00:00:08 load { 27.93 21.46 17.39 } · start E-4 cand webkit 
+E-4 webkit   exit 1 · E-4 webkit FAIL · 12 pass, 3 fail, 4 unmeasured of 19 gating cells (0 reported) · load 30.2/23.0/18.4 at start, 36.3/28.0/21.0 at end · 233 s, load at start 30.2/23.0/18.4
+    FAIL       E-4 slider fling carries velocity · axis x, leading edge, page frame · 5 reads, every one must pass: [1: carry 0.00 / settle -8.71 px FAIL · 2: carry 5.73 / settle -4.75 px pass · 3: carry 4.60 / settle -5.21 px pass · 4: carry 5.35 / settle -5.19 px pass · 5: carry 5.68 / settle -4.90 px pass] (4 of 5 pass) · read 1 in full: fling: carry 0.00 px, settles -16.03 px past release · still: carry 0.00 px, settles -7.32 px · difference: carry 0.00 px, settle -8.71 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 196 frames, median 10.0 ms · load 34.7/25.3/19.5
+    FAIL       E-4 tabsdrag fling carries velocity · axis x, page frame · fling: carry 33.59 px, settles 31.54 px past release · still: carry 31.75 px, settles 31.54 px · difference: carry 1.84 px, settle 0.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 197 frames, median 10.0 ms · load 36.0/25.8/19.8
+    FAIL       E-4 sheet repeat landing · 3 fling runs, the same drive, land at -160.0, -35.0, -35.0 px (page frame, signed) · spread 125.00 px (bound ≤ 2 px: the same detent) · load 36.9/27.0/20.4
+    UNMEASURED E-4 carousel fling carries velocity · the touch drag moved the body 0.0 px (fling) and 0.0 px (still), bound ≥ 20 px: macOS WebKit has no touch scrolling, so a touch drag cannot drive this surface (H-4); real Safari UNMEASURED (owner's safaridriver checkbox) · load 36.3/28.0/21.0
+    UNMEASURED E-4 carousel release continuity · not driven in this engine (above) · load 36.3/28.0/21.0
+    UNMEASURED E-4 carousel repeat landing · the surface is not read in this engine (above) · load 36.3/28.0/21.0
+    UNMEASURED E-4 carousel release PRM · the surface is not driven or not read in this engine (above) · load 36.3/28.0/21.0
+exit 1
+## 2026-10-28 00:04:01 load { 36.26 28.04 21.04 } · end E-4 cand webkit

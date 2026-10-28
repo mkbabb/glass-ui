@@ -1,0 +1,30 @@
+bat cand chromium E-1
+bat cand chromium E-2 --commit-arms i,ii
+bat cand chromium E-3
+bat cand chromium E-4
+bat cand chromium E-5
+bat cand chromium E-6
+bat cand chromium E-7
+bat cand chromium E-8
+bat cand chromium E-9
+bat cand chromium E-10
+bat cand chromium E-11
+bat cand chromium E-12
+cap cand chromium
+xp pass-6/A6/probe a6-probe cand chromium
+TAG=-r2 xp pass-6/A6/probe a6-probe cand chromium --only reverse
+TAG=-r3 xp pass-6/A6/probe a6-probe cand chromium --only reverse
+xp pass-5/C-A5/probe ca5-probe cand chromium
+xp pass-5/C-A5/probe ca5-capsule ca5-cand chromium
+xp pass-5/C-E5/probe ce5-probe ce5-cand chromium --label cand
+xp pass-6/E6/probe e6-place cand chromium
+TAG=-r1 one cand chromium e10-continuity.mjs handoff --scenes slider,slider2
+TAG=-r2 one cand chromium e10-continuity.mjs handoff --scenes slider,slider2
+TAG=-r3 one cand chromium e10-continuity.mjs handoff --scenes slider,slider2
+xp pass-6/E6/probe slider-press-ctl cand chromium
+xp pass-6/E6/probe loupe-frame cand chromium --label ca6-cand --frames /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-A6/glance/loupe
+xp pass-6/C-A6/probe ca6-probe cand chromium
+one plant-deaf chromium e10-continuity.mjs deaf --scenes restale,clipstale
+one plant-capsule chromium e12-floor.mjs capsule --scenes capsule
+one cand chromium e1-census.mjs gpu --gpu metal --scenes ambient
+TAG=-r2 one cand chromium e4-momentum.mjs sheet --scenes sheet

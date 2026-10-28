@@ -1,0 +1,9 @@
+## 2026-10-28 00:39:32 load { 22.58 24.11 28.10 } · start pass-6/E6/probe/e6-place cand webkit 
+P-E6 place probe · webkit · load 28.7/25.7/28.5 at start
+  PASS       late frame write · keyboard · engaged true · flow x 48 → 108 px (want +60) · the move painted in one frame of 60.0 px at +108 ms; after it, over 78 frames, the largest one-frame move 0.0 px at +0 ms (dx 0.0) (bound ≤ 4) · load 28.7/25.7/28.5
+  PASS       transition move · keyboard · engaged true · flow x 48 → 168 px (want +120) · over 89 frames the largest one-frame move 3.2 px at +415 ms (dx 3.2) (bound ≤ 7.3: 4 + the transition's own 3.3) · load 29.7/25.9/28.6
+  PASS       late frame write · pointer · engaged true · flow x 48 → 108 px (want +60) · the move painted in one frame of 60.0 px at +115 ms; after it, over 76 frames, the largest one-frame move 0.0 px at +0 ms (dx 0.0) (bound ≤ 4) · load 29.7/25.9/28.6
+  PASS       transition move · pointer · engaged true · flow x 48 → 168 px (want +120) · over 89 frames the largest one-frame move 3.3 px at +658 ms (dx 3.4) (bound ≤ 7.3: 4 + the transition's own 3.3) · load 30.2/26.1/28.6
+P-E6 place probe · webkit · 4 pass, 0 fail · load 30.2/26.1/28.6 at end
+exit 0
+## 2026-10-28 00:40:16 load { 30.17 26.08 28.63 } · end e6-place cand webkit

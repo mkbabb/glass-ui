@@ -1,0 +1,14 @@
+## 2026-10-27 23:32:58 load { 8.88 11.92 13.94 } · start pass-6/E6/probe/slider-press-ctl cand chromium 
+# P-E6 slider-press-ctl · driver latency against library latency on the slider's touch press (CK-06)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p6/C-A6/out/builds/cand · engine chromium · lock wait 369.5 s · other headless processes: chromium 0, webkit 0 · load 10.8/11.4/13.0 at start
+# scene app: harness scenes/App.vue (sha1 d020f4946adb)
+# chromium 149.0.7827.55
+  REPORT     slider touch press ctl light #1 · (hover:none) true (pointer:coarse) true · first touch event touchstart / pointerdown · library latency (held − first event) 2.6 ms · driver latency (send → first event) ≈ 18.7 ms · reads +27 held true · +53 held true · +103 held true · +203 held true · load 10.8/11.3/12.9
+  REPORT     slider touch press ctl light #2 · (hover:none) true (pointer:coarse) true · first touch event touchstart / pointerdown · library latency (held − first event) 2.8 ms · driver latency (send → first event) ≈ 21.6 ms · reads +27 held true · +51 held true · +103 held true · +203 held true · load 10.8/11.3/12.9
+  REPORT     slider touch press ctl light #3 · (hover:none) true (pointer:coarse) true · first touch event touchstart / pointerdown · library latency (held − first event) 2.8 ms · driver latency (send → first event) ≈ 12.3 ms · reads +26 held true · +52 held true · +100 held true · +203 held true · load 10.8/11.3/12.9
+  REPORT     slider touch press ctl dark #1 · (hover:none) true (pointer:coarse) true · first touch event touchstart / pointerdown · library latency (held − first event) 2.7 ms · driver latency (send → first event) ≈ 37.1 ms · reads +28 held false · +52 held true · +103 held true · +202 held true · load 10.8/11.3/12.9
+  REPORT     slider touch press ctl dark #2 · (hover:none) true (pointer:coarse) true · first touch event touchstart / pointerdown · library latency (held − first event) 2.7 ms · driver latency (send → first event) ≈ 28.7 ms · reads +26 held false · +53 held true · +102 held true · +202 held true · load 10.7/11.3/12.9
+  REPORT     slider touch press ctl dark #3 · (hover:none) true (pointer:coarse) true · first touch event touchstart / pointerdown · library latency (held − first event) 2.5 ms · driver latency (send → first event) ≈ 18.4 ms · reads +28 held true · +53 held true · +102 held true · +203 held true · load 10.7/11.3/12.9
+P-E6 slider-press-ctl chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (6 reported) · load 10.8/11.4/13.0 at start, 10.7/11.3/12.9 at end
+exit 3
+## 2026-10-27 23:39:15 load { 10.71 11.32 12.93 } · end slider-press-ctl cand chromium

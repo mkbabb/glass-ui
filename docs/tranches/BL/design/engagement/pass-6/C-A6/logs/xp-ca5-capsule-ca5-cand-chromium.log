@@ -1,0 +1,11 @@
+## 2026-10-27 23:29:12 load { 13.79 13.61 14.94 } · start pass-5/C-A5/probe/ca5-capsule ca5-cand chromium 
+C-A5 capsule probe · chromium · load 13.5/13.6/14.9 at start
+  PASS       capsule hover · fine · light · chip (glass-capsule) rest scale none (painted/layout 0.9948) → hovered 400 ms (:hover true) scale none (0.9948) (bound: the hover writes no geometry, |scale − 1| ≤ 0.002) · load 13.5/13.6/14.9
+  PASS       capsule press · fine · light · held 250 ms (:active true): scale none (0.9948) · released +600 ms still hovered: scale none (bound: no :active class rung writes the press's geometry) · load 13.5/13.6/14.9
+  PASS       capsule hover · fine · dark · chip (glass-capsule) rest scale none (painted/layout 0.9948) → hovered 400 ms (:hover true) scale none (0.9948) (bound: the hover writes no geometry, |scale − 1| ≤ 0.002) · load 13.5/13.6/14.9
+  PASS       capsule press · fine · dark · held 250 ms (:active true): scale none (0.9948) · released +600 ms still hovered: scale none (bound: no :active class rung writes the press's geometry) · load 13.5/13.6/14.9
+  PASS       capsule tap · coarse · light · (hover:none) true (pointer:coarse) true · tap committed (state b) · +900 ms: scale none (0.9948), :hover true (bound: no hover latch, settles at 1 ± 0.002) · load 13.5/13.6/14.9
+  PASS       capsule tap · coarse · dark · (hover:none) true (pointer:coarse) true · tap committed (state b) · +900 ms: scale none (0.9948), :hover true (bound: no hover latch, settles at 1 ± 0.002) · load 12.8/13.4/14.8
+C-A5 capsule probe · chromium · 6 other, 0 fail · load 12.8/13.4/14.8 at end
+exit 0
+## 2026-10-27 23:29:29 load { 12.75 13.40 14.84 } · end ca5-capsule ca5-cand chromium

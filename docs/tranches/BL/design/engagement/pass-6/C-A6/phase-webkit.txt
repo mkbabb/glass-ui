@@ -1,0 +1,27 @@
+bat cand webkit E-1
+bat cand webkit E-2 --commit-arms i,ii
+bat cand webkit E-3
+bat cand webkit E-4
+bat cand webkit E-5
+bat cand webkit E-6
+bat cand webkit E-7
+bat cand webkit E-8
+bat cand webkit E-9
+bat cand webkit E-10
+bat cand webkit E-11
+bat cand webkit E-12
+xp pass-6/A6/probe a6-probe cand webkit
+xp pass-5/C-A5/probe ca5-probe cand webkit
+xp pass-5/C-A5/probe ca5-capsule ca5-cand webkit
+xp pass-5/C-E5/probe ce5-probe ce5-cand webkit --label cand
+xp pass-6/E6/probe e6-place cand webkit
+TAG=-r1 one cand webkit e10-continuity.mjs handoff --scenes slider,slider2
+TAG=-r2 one cand webkit e10-continuity.mjs handoff --scenes slider,slider2
+TAG=-r3 one cand webkit e10-continuity.mjs handoff --scenes slider,slider2
+xp pass-6/E6/probe slider-press-ctl cand webkit
+xp pass-6/E6/probe slider-press cand webkit
+xp pass-6/E6/probe loupe-frame cand webkit --label ca6-cand --frames /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-A6/glance/loupe
+xp pass-6/C-A6/probe ca6-probe cand webkit
+one plant-deaf webkit e10-continuity.mjs deaf --scenes restale,clipstale
+one plant-capsule webkit e12-floor.mjs capsule --scenes capsule
+cap cand webkit
