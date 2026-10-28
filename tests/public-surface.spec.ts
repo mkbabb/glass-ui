@@ -1093,6 +1093,17 @@ describe("Row 8 built-artifact acceptance", () => {
         expect(JSON.parse(runVerifierProbe(probe))).toBe(shipped.length);
     }, 30_000);
 
+    // U/B7b X3: vue-tsc copies an SFC's `import "./styles.css"` into its `.d.ts`. A
+    // declaration needs no side effect, and an installed consumer's TypeScript
+    // rejects it (TS2882, no declarations for the side-effect import).
+    it("keeps side-effect stylesheet imports out of the declarations", () => {
+        expect(built, buildHint).toBe(true);
+        const carriers = filesUnder("dist")
+            .filter((file) => /\.d\.(?:ts|mts|cts)$/.test(file))
+            .filter((file) => /^\s*import\s+["'][^"']+\.css["']/m.test(readFileSync(resolve("dist", file), "utf8")));
+        expect(carriers).toEqual([]);
+    });
+
     it("keeps raw code-bearing sources out of the built artifact", () => {
         expect(built, buildHint).toBe(true);
         const files = filesUnder("dist");

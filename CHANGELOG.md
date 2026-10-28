@@ -180,6 +180,14 @@ version bump. Each row has a test that fails on b54f5e13d and passes here.
   `glass-ui.css`, 16 scope ids load with no chunk import, no chunk sheet opens with the
   layer order).
 
+- **Declarations drop side-effect stylesheet imports.** vue-tsc copied each F5
+  component's `import "./styles.css";` into its `.vue.d.ts` (14 files), and an installed
+  consumer's TypeScript failed with TS2882. `flatten-subpath-types` now removes a
+  side-effect `.css` import from every declaration; the runtime chunk keeps it. Found when
+  `verify:package` first reached its install arm on this branch. Witness:
+  `tests/public-surface.spec.ts` "keeps side-effect stylesheet imports out of the
+  declarations" (14 files before, 0 after).
+
 ## 10.1.1 — 2026-10-19
 
 Four cures, one guarded row and one owner-ruled addition. Asked by the atlas consumer (U batch
