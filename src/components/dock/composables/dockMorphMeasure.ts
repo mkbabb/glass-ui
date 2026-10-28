@@ -307,8 +307,10 @@ export function useDockExpandedSize(
      * one on the open side rides the moving edge, inside the plate on every frame. The
      * layers take the root's own fixed point, so the root's scale and theirs cancel and a
      * pane lays out where the reserved layout puts it; each pane is then shifted to the
-     * box it paints: the leaving pane to the box it painted, the entering pane of a
-     * collapse to its rest (an expand's entering pane already lays out at its rest).
+     * box it paints: the leaving pane to the box it painted, at the first frame; the
+     * entering pane of a collapse to its rest, at the last frame, whether the collapse
+     * starts unscaled or reverses an expand mid-morph (an expand's entering pane already
+     * paints its rest there, at scale 1).
      */
     let firstBoxes: FirstBoxes | null = null;
 
@@ -359,15 +361,26 @@ export function useDockExpandedSize(
         if (!(k > 0)) return;
         const unit = (s: number) => Math.abs(1 - s) < 1e-4;
 
+        // The rest boxes, read for every collapse (its entering pane is shifted to its
+        // rest, from an unscaled start and from a reversal alike) and for any unscaled
+        // start, whose origins hold them. The DOM is the posture's: a collapse is the
+        // full pane no longer active.
+        let s = painted.size / box.size;
+        const collapsing = !expandedEl.value?.classList.contains("is-active");
+        const end =
+            collapsing || unit(s)
+                ? withOverrides(
+                      [
+                          ...unscaled,
+                          [root, "--dock-expanded-px", "initial"],
+                          [root, "--dock-morph-t", "1"],
+                      ],
+                      read,
+                  )
+                : null;
         // The end the origins hold: the first boxes, or for an unscaled start the rest.
         let target: Map<Element, Span> = boxes;
-        let s = painted.size / box.size;
-        let end: Map<Element, Span> | null = null;
-        if (unit(s)) {
-            end = withOverrides(
-                [...unscaled, [root, "--dock-expanded-px", "initial"], [root, "--dock-morph-t", "1"]],
-                read,
-            );
+        if (end && unit(s)) {
             target = end;
             s = end.get(root)!.size / box.size;
         }
@@ -404,10 +417,22 @@ export function useDockExpandedSize(
             );
         }
 
+        // Each pane is shifted so that it paints its box at the end of the morph where it
+        // is opaque. The leaving pane is opaque at the first frame, where it paints its
+        // laid box, since the origins were just derived from that layout. The entering pane
+        // of a collapse is opaque at the last frame, so its shift is read there: the pane
+        // painted at the end scalar, with the origins now written. Its laid box is not used,
+        // because the root's padding interpolates on the scalar and moves the layers
+        // under their origin, so a pane's laid box at the start is not where it paints at
+        // the end.
         for (const pane of panes()) {
-            const to = pane.classList.contains("is-leaving") ? boxes.get(pane) : end?.get(pane);
-            const now = laid.get(pane);
-            if (!to || !now) continue;
+            const leaving = pane.classList.contains("is-leaving");
+            const to = leaving ? boxes.get(pane) : end?.get(pane);
+            if (!to) continue;
+            const now = leaving
+                ? laid.get(pane)
+                : withOverrides([[root, "--dock-morph-t", "1"]], () => span(pane, a));
+            if (!now) continue;
             pane.style.setProperty(PANE_SHIFT, `${(to.start - now.start) / k}px`);
         }
     }
