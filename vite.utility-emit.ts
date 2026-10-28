@@ -121,10 +121,38 @@ export async function emitComponentUtilities(
     if (safelist.length === 0) return;
 
     // 2. Compile via the proven recipe.
+    // glass-ui's own `@utility` declarations join the compile context. Without them a
+    // shipped class that names one (`shadow-cartoon` on the Configurator preset chips,
+    // `glass-plate`, `transition-control`, …) compiled to nothing here and reached a
+    // consumer only through the `@source "../*.js"` scan this emit exists to replace
+    // (U/B7b X3). Only the `@utility` at-rules are taken, in closure order, so nothing
+    // else in those sheets enters the emitted bytes.
+    const ownUtilities = closure.orderedCssSources
+        .flatMap((path) => {
+            const rules: string[] = [];
+            postcss.parse(readFileSync(path, "utf-8")).walkAtRules("utility", (rule) => {
+                rules.push(rule.toString());
+            });
+            return rules;
+        })
+        .join("\n");
+    // `sheet-animate` applies tw-animate-css utilities, so the peer is in context by
+    // `@reference`. Its own vocabulary stays the consumer's: the consumer imports
+    // tw-animate-css itself (the `src/styles/index.css` header), so a token that names
+    // a tw-animate utility is not safelisted here.
+    const twAnimate = twAnimateSheet(root);
+    const peerUtilities = [...readFileSync(twAnimate, "utf-8").matchAll(/@utility\s+([^\s{]+)/g)].map((m) => m[1]);
+    const peerOwned = (token: string): boolean => {
+        const base = utilityBase(token);
+        return peerUtilities.some((name) =>
+            name.endsWith("-*") ? base.startsWith(name.slice(0, -1)) : base === name,
+        );
+    };
     const inlineLines = safelist
+        .filter((t) => !peerOwned(t))
         .map((t) => `@source inline("${t}");`)
         .join("\n");
-    const input = `@import "tailwindcss" source(none);\n@import "${themePath}";\n${inlineLines}\n`;
+    const input = `@import "tailwindcss" source(none);\n@import "${themePath}";\n@reference "${twAnimate}";\n${ownUtilities}\n${inlineLines}\n`;
     const compiled = await postcss([tailwindcss()]).process(input, {
         from: themePath,
         to: undefined,
@@ -314,4 +342,31 @@ export async function emitComponentUtilities(
             ? `${indexSrc}\n${comment}${compImport}\n`
             : `${indexSrc.slice(0, sourceAt)}${comment}${compImport}\n\n${indexSrc.slice(sourceAt)}`;
     writeFileSync(distIndex, folded, "utf-8");
+}
+
+/** The utility a candidate names: the part after its last top-level variant `:`. */
+function utilityBase(token: string): string {
+    let depth = 0;
+    let last = -1;
+    for (let index = 0; index < token.length; index++) {
+        const char = token[index];
+        if (char === "[" || char === "(") depth++;
+        else if (char === "]" || char === ")") depth--;
+        else if (char === ":" && depth === 0) last = index;
+    }
+    return token.slice(last + 1).replace(/^!/, "");
+}
+
+/** tw-animate-css's stylesheet, found the way a CSS `@import "tw-animate-css"` finds it. */
+function twAnimateSheet(root: string): string {
+    for (let directory = root; ; directory = dirname(directory)) {
+        const manifest = resolve(directory, "node_modules/tw-animate-css/package.json");
+        if (existsSync(manifest)) {
+            const pkg = JSON.parse(readFileSync(manifest, "utf-8"));
+            return resolve(dirname(manifest), pkg.exports?.["."]?.style ?? pkg.main);
+        }
+        if (dirname(directory) === directory) {
+            throw new Error("utility emit: tw-animate-css (an optional peer, a devDependency here) is not installed");
+        }
+    }
 }

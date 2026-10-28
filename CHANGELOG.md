@@ -149,6 +149,22 @@ version bump. Each row has a test that fails on b54f5e13d and passes here.
   every shipped sheet: 115 of 126 before, 125 of 125 after) and
   `tests/styles/component-sheets.test.ts`.
 
+- **The utility emit carries glass-ui's own `@utility` classes.** `dist/styles/components.css`
+  is compiled from the class tokens the shipped chunks carry, but its compile context held
+  the `@theme` and nothing else, so a token naming a glass `@utility` compiled to nothing:
+  `shadow-cartoon` (the Configurator preset chips), `glass-plate`, `sheet-animate`,
+  `table-head`, `text-mono-caption`, `transition-control` and `transition-disclosure`.
+  They reached a consumer only through the `@source "../*.js"` scan. The emit now
+  compiles with every `@utility` in the style closure, and with tw-animate-css by
+  `@reference` so `sheet-animate` resolves its `@apply`. A token that names a
+  tw-animate-css utility is not safelisted: the consumer imports that peer itself. The
+  emitted `.table-cell`, `.text-caption`, `.text-small` and `.text-micro` now carry the
+  glass definition as well, which is what a consumer's own build already produced from
+  the same `@utility`. `components.css` grows 23,129 → 25,633 B. Witness:
+  `tests/styles/emitted-own-utilities.test.ts` (7 names missing before, 0 after).
+  `emitted-utility-vars` accepts a tempo-scaled house clock
+  (`calc(var(--duration-panel) * var(--motion-tempo))`) as a clock, not a literal.
+
 ## 10.1.1 — 2026-10-19
 
 Four cures, one guarded row and one owner-ruled addition. Asked by the atlas consumer (U batch
