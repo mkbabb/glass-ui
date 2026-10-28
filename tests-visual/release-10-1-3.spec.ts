@@ -21,15 +21,21 @@ type Frame = { morphing: boolean; dock: Box; edit: Box; scrollWidth: number };
 
 const EDIT = '[data-witness="Edit contour"]';
 
-async function open(page: Page, anchor: "right" | "left"): Promise<void> {
+type Anchor = "right" | "left" | "bottom";
+
+async function open(
+    page: Page,
+    anchor: Anchor,
+    seat: "anchored" | "open" = "anchored",
+): Promise<void> {
     await page.goto(
-        `/tests-visual/release-10-1-3/harness.html?scene=edge-anchor&anchor=${anchor}`,
+        `/tests-visual/release-10-1-3/harness.html?scene=edge-anchor&anchor=${anchor}&seat=${seat}`,
     );
     await page.waitForFunction(() => (window as unknown as W).__ready);
     await page.locator(EDIT).waitFor();
     await page.evaluate(() => document.fonts.ready);
     // The pointer starts off the dock, which rests collapsed.
-    await page.mouse.move(4, 600);
+    await page.mouse.move(4, 700);
     await page.waitForTimeout(300);
     await expect(page.locator(".glass-dock")).toHaveClass(/collapsed/);
     await expect(page.locator(".glass-dock")).not.toHaveAttribute("data-morphing");
@@ -225,3 +231,142 @@ for (const [width, cell] of [
         });
     }
 }
+
+// ── critique-1 (round 1) ─────────────────────────────────────────────────────────────
+
+const mid = (b: Box) => ({ x: (b.left + b.right) / 2, y: (b.top + b.bottom) / 2 });
+const anchoredEdge = (anchor: Anchor) => (b: Box) =>
+    anchor === "right" ? b.right : anchor === "left" ? b.left : b.bottom;
+const sides = ["left", "right", "top", "bottom"] as const;
+const boxDistance = (a: Box, b: Box) => Math.max(...sides.map((k) => Math.abs(a[k] - b[k])));
+
+// D-1 (ask 2): a persistent seat on the OPEN side, the side the expand grows toward.
+// The expand has to move it; the press that began on it must still reach it. In
+// Chromium the press focuses the seat and the focus expands the dock before pointerup
+// (pointer), or before the gesture's click is hit-tested (touch): RED on 10.1.2 and on
+// the first 10.1.3 cure, GREEN on 10.1.1. WebKit does not focus on press, so it is
+// GREEN on every tree.
+for (const [anchor, width] of [
+    ["right", 390],
+    ["right", 1440],
+    ["left", 390],
+    ["bottom", 390],
+] as const) {
+    test.describe(`10.1.3 · ${width} · ${anchor}-anchored, open-side seat`, () => {
+        test.use({ viewport: { width, height: width > 1000 ? 900 : 844 } });
+        test("D-1 · a click on the open-side persistent seat of a collapsed dock reaches it", async ({
+            page,
+        }) => {
+            await open(page, anchor, "open");
+            await listen(page);
+            await page.locator(EDIT).click();
+            await page.waitForTimeout(900);
+            expect(await events(page), "pointerdown, pointerup and click all on the seat").toEqual([
+                ["pointerdown", "edit"],
+                ["pointerup", "edit"],
+                ["click", "edit"],
+            ]);
+            expect(await edits(page), "the seat's own click handler ran once").toBe(1);
+            await expect(page.locator(".glass-dock"), "the press still expands the dock").toHaveClass(
+                /expanded/,
+            );
+        });
+    });
+}
+
+for (const width of [360, 390, 430]) {
+    test.describe(`10.1.3 · ${width} · touch · right-anchored, open-side seat`, () => {
+        test.use({ viewport: { width, height: 844 }, hasTouch: true });
+        test("D-1 · a tap on the open-side persistent seat of a collapsed dock reaches it", async ({
+            page,
+        }) => {
+            await open(page, "right", "open");
+            await listen(page);
+            const { x, y } = mid(await rect(page, EDIT));
+            await page.touchscreen.tap(x, y);
+            await page.waitForTimeout(900);
+            const seen = await events(page);
+            expect(seen.filter(([type]) => type === "click"), "the tap's click is on the seat").toEqual([
+                ["click", "edit"],
+            ]);
+            expect(await edits(page), "the seat's own click handler ran once").toBe(1);
+        });
+    });
+}
+
+// D-2: the collapse, read per frame. The anchored edge holds, the box does not snap at
+// settle, and the persistent seat never paints outside the shrinking plate. RED on
+// 10.1.1, 10.1.2 and the first 10.1.3 cure (the collapse shrank toward the reserved
+// box's centre).
+for (const anchor of ["right", "left", "bottom"] as const) {
+    test.describe(`10.1.3 · 390 · ${anchor}-anchored collapse`, () => {
+        test.use({ viewport: { width: 390, height: 844 } });
+        test("D-2 · the collapse shrinks toward the anchored edge and settles without a snap", async ({
+            page,
+        }) => {
+            await open(page, anchor);
+            const { x, y } = mid(await rect(page, EDIT));
+            await page.mouse.move(x, y);
+            await page.waitForTimeout(1300);
+            await expect(page.locator(".glass-dock")).toHaveClass(/expanded/);
+            await expect(page.locator(".glass-dock")).not.toHaveAttribute("data-morphing");
+            const expanded = await rect(page, ".glass-dock");
+            await record(page, 1600);
+            // The click-away: a press outside the dock collapses it at once.
+            await page.mouse.move(4, 700);
+            await page.mouse.down();
+            await page.mouse.up();
+            await page.waitForTimeout(1700);
+            const all = await frames(page);
+            const settled = await rect(page, ".glass-dock");
+            const morph = all.filter((f) => f.morphing);
+            expect(morph.length, "the click-away armed a morph").toBeGreaterThan(3);
+            expect(all.at(-1)!.morphing, "the morph settled").toBe(false);
+            const edge = anchoredEdge(anchor);
+            expect(
+                Math.max(...morph.map((f) => Math.abs(edge(f.dock) - edge(expanded)))),
+                "the anchored edge holds through the collapse",
+            ).toBeLessThan(0.5);
+            expect(
+                boxDistance(morph.at(-1)!.dock, settled),
+                "the last morph frame is the settled box",
+            ).toBeLessThan(1);
+            const outside = morph.filter(
+                (f) =>
+                    f.edit.left < f.dock.left - 1 ||
+                    f.edit.right > f.dock.right + 1 ||
+                    f.edit.top < f.dock.top - 1 ||
+                    f.edit.bottom > f.dock.bottom + 1,
+            );
+            expect(outside.length, "frames whose seat paints outside the plate").toBe(0);
+        });
+    });
+}
+
+// D-3: under `prefers-reduced-motion: reduce` the morph jumps (useDockSpring): no frame
+// paints a box between the two rests. `reducedMotion` is a context option, not a test
+// option: `test.use({ reducedMotion })` is ignored without a word and the page reads
+// no-preference, which is how critique-1 saw a 530 ms morph. Under a real reduce the
+// morph jumps on 10.1.2 and on 10.1.3; the cell guards that.
+test.describe("10.1.3 · 390 · reduced motion", () => {
+    test.use({ viewport: { width: 390, height: 844 }, contextOptions: { reducedMotion: "reduce" } });
+    test("D-3 · under reduced motion the expand jumps to its rest", async ({ page }) => {
+        await open(page, "right");
+        expect(
+            await page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches),
+            "the page reads reduce",
+        ).toBe(true);
+        const rest = await rect(page, ".glass-dock");
+        const { x, y } = mid(await rect(page, EDIT));
+        await record(page, 900);
+        await page.mouse.move(x, y);
+        await page.waitForTimeout(1000);
+        const all = await frames(page);
+        const settled = await rect(page, ".glass-dock");
+        expect(boxDistance(rest, settled), "the hover expanded the dock").toBeGreaterThan(10);
+        const between = all.filter(
+            (f) => boxDistance(f.dock, rest) > 0.5 && boxDistance(f.dock, settled) > 0.5,
+        );
+        expect(between.length, "frames that paint a box between the two rests").toBe(0);
+    });
+});

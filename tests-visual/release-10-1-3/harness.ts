@@ -38,12 +38,23 @@ const scenes: Record<string, Component> = {
     // equation, export and fullscreen; its summary a neutral glyph; and "Edit contour"
     // is its one `#persistent-end` control, present in both postures, on the anchored
     // side. `?anchor=left` pins the box by `left` instead, and seats "Edit contour" in
-    // `#persistent`, again on the anchored side. A click on "Edit contour" counts in
-    // `window.__edits`.
+    // `#persistent`, again on the anchored side. `?anchor=bottom` pins a vertical dock
+    // by `bottom` (and `left`), its anchored side the end. `?seat=open` seats "Edit
+    // contour" on the open side instead, the side the expand grows toward. A click on
+    // "Edit contour" counts in `window.__edits`.
     "edge-anchor": defineComponent(() => {
         const edits = ref(0);
         w.__edits = 0;
-        const edge = params.get("anchor") === "left" ? "left" : "right";
+        const anchor = params.get("anchor");
+        const edge = anchor === "left" || anchor === "bottom" ? anchor : "right";
+        const orientation = edge === "bottom" ? "vertical" : "horizontal";
+        const anchoredIsEnd = edge !== "left";
+        const open = params.get("seat") === "open";
+        const slot = anchoredIsEnd !== open ? "persistent-end" : "persistent";
+        const pin =
+            edge === "bottom"
+                ? "bottom:0.5rem;left:0.5rem"
+                : `top:0.5rem;${edge}:0.5rem`;
         const onEdit = () => {
             edits.value += 1;
             w.__edits = edits.value;
@@ -54,18 +65,18 @@ const scenes: Record<string, Component> = {
                     "div",
                     {
                         "data-witness": "stage",
-                        style: "position:relative;block-size:480px;border-radius:12px;background:color-mix(in srgb, var(--foreground) 6%, transparent)",
+                        style: "position:relative;block-size:560px;border-radius:12px;background:color-mix(in srgb, var(--foreground) 6%, transparent)",
                     },
                     [
                         h(
                             "div",
                             {
                                 "data-witness": "anchor",
-                                style: `position:absolute;top:0.5rem;${edge}:0.5rem;z-index:var(--z-controls)`,
+                                style: `position:absolute;${pin};z-index:var(--z-controls)`,
                             },
                             h(
                                 GlassDock,
-                                { fitContent: true },
+                                { fitContent: true, orientation },
                                 {
                                     default: () => [
                                         seat("View layers"),
@@ -82,10 +93,7 @@ const scenes: Record<string, Component> = {
                                             { "data-witness": "summary" },
                                             glyph(),
                                         ),
-                                    [edge === "right"
-                                        ? "persistent-end"
-                                        : "persistent"]: () =>
-                                        seat("Edit contour", onEdit),
+                                    [slot]: () => seat("Edit contour", onEdit),
                                 },
                             ),
                         ),
