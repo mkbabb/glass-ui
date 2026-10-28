@@ -175,7 +175,7 @@ version bump. Each row has a test that fails on b54f5e13d and passes here.
   the utility emit scans the chunk sheets; `component-styles.css` (`./styles.css`) folds
   the three shared registers only. Consumer entry (Tailwind, tw-animate-css and
   `/styles`, decoded and minified): 325,055 → 282,605 B, brotli 42,092 → 36,548. Against
-  b54f5e13d (323,178 B) the X3 rows together save 40,573 B. Witness:
+  b54f5e13d (322,551 B, brotli 42,129) the X3 rows together save 39,946 B. Witness:
   `tests/styles/sfc-sheets.test.ts` (3 cases fail on b54f5e13d: the entry imports
   `glass-ui.css`, 16 scope ids load with no chunk import, no chunk sheet opens with the
   layer order).
