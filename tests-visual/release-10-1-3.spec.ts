@@ -370,3 +370,78 @@ test.describe("10.1.3 · 390 · reduced motion", () => {
         expect(between.length, "frames that paint a box between the two rests").toBe(0);
     });
 });
+
+// ── critique-2 (round 2) ─────────────────────────────────────────────────────────────
+
+// D-1: a touch gesture need not tap. A vertical swipe across the expanded run, whose
+// `touch-action` is `pan-x`, dispatches `pointerdown` and `pointerup` and nothing else:
+// no click, no cancel. Escape then collapses the dock without a click anywhere, and a
+// keyboard focus or a mouse hover must still expand it. RED on the round-1 cure (the
+// touch press held until some later click), GREEN on 10.1.2 and here. The swipe is a
+// CDP touch sequence, so this cell is Chromium's; the next one witnesses WebKit.
+for (const after of ["focus", "hover"] as const) {
+    test.describe(`10.1.3 · 390 · touch · run swipe, Escape, then ${after}`, () => {
+        test.use({ viewport: { width: 390, height: 844 }, hasTouch: true });
+        test(`D-1 (critique-2) · after a clickless, cancel-less touch press, a ${after} expands the collapsed dock`, async ({
+            page,
+            browserName,
+        }) => {
+            test.skip(browserName !== "chromium", "a CDP touch swipe");
+            await open(page, "right");
+            const dock = page.locator(".glass-dock");
+            const { x, y } = mid(await rect(page, EDIT));
+            await page.touchscreen.tap(x, y);
+            await page.waitForTimeout(1300);
+            await expect(dock).toHaveClass(/expanded/);
+            await listen(page);
+            const cdp = await page.context().newCDPSession(page);
+            const q = mid(await rect(page, '[data-witness="Equation"]'));
+            const at = (dy: number) => [{ x: q.x, y: q.y + dy, id: 1 }];
+            await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: at(0) });
+            for (let i = 1; i <= 8; i++) {
+                await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: at(i * 8) });
+                await page.waitForTimeout(16);
+            }
+            await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+            await page.waitForTimeout(400);
+            expect(
+                (await events(page)).map(([type]) => type),
+                "the swipe dispatched a press with no click",
+            ).toEqual(["pointerdown", "pointerup"]);
+            await page.locator('[data-witness="Equation"]').focus();
+            await page.keyboard.press("Escape");
+            await page.waitForTimeout(1300);
+            await expect(dock, "Escape collapsed the dock").toHaveClass(/collapsed/);
+            if (after === "focus") {
+                await page.locator(EDIT).focus();
+            } else {
+                await page.mouse.move(4, 700);
+                const s = mid(await rect(page, '[data-witness="summary"]'));
+                await page.mouse.move(s.x, s.y, { steps: 3 });
+            }
+            await page.waitForTimeout(1000);
+            await expect(dock).toHaveClass(/expanded/);
+        });
+    });
+}
+
+// The same state in any engine: a touch `pointerdown` and `pointerup` on the collapsed
+// seat with no click (dispatched by script), then a keyboard focus.
+test.describe("10.1.3 · 390 · a touch press with no tap, then focus", () => {
+    test.use({ viewport: { width: 390, height: 844 } });
+    test("D-1 (critique-2) · a focus after a clickless touch press expands the collapsed dock", async ({
+        page,
+    }) => {
+        await open(page, "right");
+        await page.evaluate((sel) => {
+            const seat = document.querySelector(sel)!;
+            const init = { bubbles: true, composed: true, pointerType: "touch", pointerId: 7, isPrimary: true };
+            seat.dispatchEvent(new PointerEvent("pointerdown", init));
+            seat.dispatchEvent(new PointerEvent("pointerup", init));
+        }, EDIT);
+        await page.waitForTimeout(200);
+        await page.locator(EDIT).focus();
+        await page.waitForTimeout(1000);
+        await expect(page.locator(".glass-dock")).toHaveClass(/expanded/);
+    });
+});
