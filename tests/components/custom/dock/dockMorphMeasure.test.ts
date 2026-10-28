@@ -151,9 +151,12 @@ function orchestrated(dock: ReturnType<typeof dockModel>) {
                 useDockMorphOrchestrator({
                     rootEl: ref(dock.root),
                     outerActiveLayer: computed(() => (expanded.value ? "full" : "summary")),
-                    measure: () => {
-                        state.armedMidMorph = dock.root.hasAttribute("data-morphing");
-                        sized.measure();
+                    geometry: {
+                        ...sized,
+                        measure: () => {
+                            state.armedMidMorph = dock.root.hasAttribute("data-morphing");
+                            sized.measure();
+                        },
                     },
                     onMorphActiveChange: (active) => {
                         if (active) {
@@ -411,5 +414,130 @@ describe("useDockExpandedSize", () => {
         expect(dock.full.scrollTo).toHaveBeenCalled();
         expect(dock.model.scroll).toBe(312);
         unmount();
+    });
+});
+
+/**
+ * O-110 — the morph's origins. A dock whose collapsed box sits at `collapsed` in the
+ * frame before the expand, and whose reserved box lays out at `reserved` once it arms
+ * (viewport px, horizontal). `seat` is a `#persistent-end` region's box in both, `layers`
+ * the pane container's box in the reserved layout, `summary` the summary pane's box
+ * before and after. The painted root is the collapsed box until the scale is lifted.
+ */
+function anchoredDock(o: {
+    collapsed: [number, number];
+    reserved: [number, number];
+    seat: { before: [number, number]; after: [number, number] };
+    layers: [number, number];
+    summary: { before: [number, number]; after: [number, number] };
+}) {
+    const root = document.createElement("div");
+    const controls = document.createElement("div");
+    const content = document.createElement("div");
+    const full = document.createElement("div");
+    const summary = document.createElement("div");
+    const seat = document.createElement("div");
+    controls.className = "dock-controls";
+    content.className = "dock-layers";
+    seat.className = "dock-persistent dock-persistent-end";
+    summary.className = "dock-layer dock-layer--summary is-active";
+    full.className = "dock-layer dock-layer--full";
+    root.append(controls);
+    controls.append(content, seat);
+    content.append(full, summary);
+    let armed = false;
+    const rect = ([l, r]: [number, number]) => ({ left: l, right: r, width: r - l, x: l, top: 0, bottom: 40, height: 40, y: 0 }) as DOMRect;
+    const boxes = new Map<HTMLElement, () => [number, number]>([
+        [root, () => (!armed ? o.collapsed : root.style.getPropertyValue("scale") === "none" ? o.reserved : o.collapsed)],
+        [seat, () => (armed ? o.seat.after : o.seat.before)],
+        [content, () => o.layers],
+        [summary, () => (armed ? o.summary.after : o.summary.before)],
+        [full, () => o.layers],
+    ]);
+    for (const [el, at] of boxes) {
+        el.getBoundingClientRect = () => rect(at());
+        Object.defineProperty(el, "offsetWidth", {
+            get: () => (el === root && armed ? o.reserved[1] - o.reserved[0] : at()[1] - at()[0]),
+        });
+        Object.defineProperty(el, "offsetHeight", { get: () => 40 });
+    }
+    const { result, unmount } = mountComposable(() =>
+        useDockExpandedSize({
+            rootEl: ref(root),
+            contentEl: ref(content),
+            expandedEl: ref(full),
+            collapsedEl: ref(summary),
+            axis: ref("horizontal"),
+        }),
+    );
+    const expand = () => {
+        result.first();
+        summary.classList.replace("is-active", "is-leaving");
+        full.classList.add("is-active");
+        root.setAttribute("data-morphing", "");
+        armed = true;
+        result.anchor();
+    };
+    const origin = (el: HTMLElement) => el.style.getPropertyValue("--dock-morph-origin");
+    return { root, seat, content, summary, result, expand, origin, unmount };
+}
+
+describe("the morph's origins (O-110)", () => {
+    // fourier's canvas dock at 390: pinned to the stage's right edge by `right`, so the
+    // reserved box grows leftward from that edge. RED on 10.1.2, whose origin was the
+    // centre (no origin was written at all).
+    it("a right-anchored dock scales from its right edge and its anchored seat holds", () => {
+        const dock = anchoredDock({
+            collapsed: [278, 374],
+            reserved: [36, 374],
+            seat: { before: [326, 366], after: [326, 366] },
+            layers: [44, 302],
+            summary: { before: [294, 318], after: [44, 68] },
+        });
+        dock.expand();
+        expect(dock.origin(dock.root)).toBe("100%");
+        // The seat's origin is the root's (338 root-local) in its own box (start 290).
+        expect(dock.origin(dock.seat)).toBe(`${((338 - 290) / 40) * 100}%`);
+        // The layers scale about the root's origin, so the two cancel.
+        expect(dock.origin(dock.content)).toBe(`${((338 - 8) / 258) * 100}%`);
+        // The leaving summary is shifted back to the box it painted.
+        expect(dock.summary.style.getPropertyValue("--dock-leave-shift")).toBe("250px");
+
+        dock.result.release();
+        expect(dock.origin(dock.root)).toBe("");
+        expect(dock.summary.style.getPropertyValue("--dock-leave-shift")).toBe("");
+        dock.unmount();
+    });
+
+    it("a left-anchored dock scales from its left edge", () => {
+        const dock = anchoredDock({
+            collapsed: [16, 112],
+            reserved: [16, 354],
+            seat: { before: [64, 104], after: [306, 346] },
+            layers: [24, 298],
+            summary: { before: [24, 48], after: [24, 48] },
+        });
+        dock.expand();
+        expect(dock.origin(dock.root)).toBe("0%");
+        // The trailing seat rides the open edge: its origin holds its start at 48
+        // (root-local) at the start scale, moving linearly to 290.
+        const s = 96 / 338;
+        const held = (48 - 290) / (1 - s);
+        expect(Number.parseFloat(dock.origin(dock.seat))).toBeCloseTo(((0 - held - 290) / 40) * 100, 6);
+        expect(dock.summary.style.getPropertyValue("--dock-leave-shift")).toBe("0px");
+        dock.unmount();
+    });
+
+    it("a centred dock scales from its centre", () => {
+        const dock = anchoredDock({
+            collapsed: [147, 243],
+            reserved: [26, 364],
+            seat: { before: [195, 235], after: [316, 356] },
+            layers: [34, 308],
+            summary: { before: [155, 179], after: [34, 58] },
+        });
+        dock.expand();
+        expect(Number.parseFloat(dock.origin(dock.root))).toBeCloseTo(50, 6);
+        dock.unmount();
     });
 });

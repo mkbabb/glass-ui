@@ -120,20 +120,25 @@
        structurally gone with it).
 
        The `max(…, 0.06)` guard matches the layers.css `--dock-size-scale` clamp floor
-       exactly (a math fence, not a masking fallback). The children default
-       `transform-origin: 50% 50%`, the SAME centre the root scales from, so the inverse
-       un-does the box's outward scale about the shared centroid. SCOPED to
+       exactly (a math fence, not a masking fallback). ~~The children default
+       `transform-origin: 50% 50%`, the SAME centre the root scales from~~ — [2026-10-28 ·
+       10.1.3 · O-110] each child scales about its own measured `--dock-morph-origin`
+       (dockMorphMeasure's `anchor`): the layers about the root's origin, so the two
+       scales cancel and the pane lays out where it rests; a persistent region about the
+       point that holds the box it painted before the morph. SCOPED to
        `[data-morphing]` (the residual transform lives ONLY mid-morph); at settle the
        attr clears → both rules drop to `scale: none` over the TRUE box, content
        byte-rigid, ZERO compositing cost at rest (`proof:no-layout-animation` holds). */
     .glass-dock[data-morphing]:not(.vertical) > .dock-controls > .dock-persistent,
     .glass-dock[data-morphing]:not(.vertical) > .dock-controls > .dock-layers {
         scale: calc(1 / max(var(--dock-size-scale, 1), 0.06)) 1;
+        transform-origin: var(--dock-morph-origin) center;
         will-change: transform;
     }
     .glass-dock[data-morphing].vertical > .dock-controls > .dock-persistent,
     .glass-dock[data-morphing].vertical > .dock-controls > .dock-layers {
         scale: 1 calc(1 / max(var(--dock-size-scale, 1), 0.06));
+        transform-origin: center var(--dock-morph-origin);
         will-change: transform;
     }
 

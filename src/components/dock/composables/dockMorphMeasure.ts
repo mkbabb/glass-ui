@@ -114,7 +114,32 @@ export interface UseDockExpandedSizeReturn {
      * DOM is patched and before `[data-morphing]` reserves one.
      */
     measure: () => void;
+    /**
+     * Read the painted boxes the morph starts from: the root, each persistent region and
+     * both panes. The morph calls this before the posture's DOM is patched.
+     */
+    first: () => void;
+    /**
+     * Pin the morph's origins so its first frame paints the boxes `first` read. The
+     * morph calls this once `[data-morphing]` and the start scalar are set.
+     */
+    anchor: () => void;
+    /** Clear the origins `anchor` wrote. The morph calls this when it settles. */
+    release: () => void;
 }
+
+type Span = { start: number; size: number };
+
+function span(el: Element, axis: Axis): Span {
+    const r = el.getBoundingClientRect();
+    return axis === "vertical" ? { start: r.top, size: r.height } : { start: r.left, size: r.width };
+}
+
+/** The boxes `first` reads, keyed by element: what the frame before the morph painted. */
+type FirstBoxes = Map<Element, Span>;
+
+const ORIGIN = "--dock-morph-origin";
+const LEAVE_SHIFT = "--dock-leave-shift";
 
 /**
  * Measure the dock's two endpoints, `--dock-expanded-px` and `--dock-collapsed-px`.
@@ -251,5 +276,124 @@ export function useDockExpandedSize(
         if (typeof window !== "undefined") window.removeEventListener("resize", onResize);
     });
 
-    return { measure: capture };
+    /*
+     * THE MORPH'S ORIGINS (value.js O-110). The morph reserves the expanded box from its
+     * first frame and paints the visible box with `scale` about the root's
+     * `transform-origin`; the persistent regions and the layers carry the inverse scale
+     * about their own. A fixed `center` origin is right only for a dock centred on its
+     * host: an edge-anchored dock (a box pinned to its host's right edge by `right` alone,
+     * whose width is the dock's) reserves the expanded box leftward from that edge, and
+     * its first frame painted the collapsed box centred in it, its controls centred with
+     * it. A seat under the pointer moved between pointerdown and pointerup, and the click
+     * went to their common ancestor (fourier /v at 390: "Edit contour" x 317 -> 215).
+     *
+     * Each origin is instead the fixed point of the map from the box the frame before the
+     * morph painted (`first`) to the box the morph lays out (`anchor`), so the first
+     * frame paints exactly what was painted and every later frame moves each edge
+     * linearly to its rest. In an element's own coordinates, with `s` the root's scale at
+     * the start scalar, the root's origin is `(first - laid) / (1 - s)`: the anchored
+     * edge for an edge-anchored dock, the centre for a centred one, read from the layout
+     * rather than told. A persistent region (rigid, the same box in both postures) takes
+     * the origin that holds its own first box, so a region on the anchored side stays put
+     * and one on the open side rides the growing edge. The layers take the root's own
+     * fixed point, so the root's scale and theirs cancel and the pane lays out where it
+     * rests, inside the reserved box; the leaving pane is shifted back to the box it
+     * painted and fades there.
+     */
+    let firstBoxes: FirstBoxes | null = null;
+
+    function rigidRegions(root: HTMLElement): HTMLElement[] {
+        return [...root.querySelectorAll<HTMLElement>(":scope > .dock-controls > .dock-persistent")];
+    }
+
+    function panes(): HTMLElement[] {
+        return [expandedEl.value, collapsedEl.value].filter((el): el is HTMLElement => !!el);
+    }
+
+    function first(): void {
+        const root = rootEl.value;
+        if (!root) return;
+        const a = axis.value;
+        firstBoxes = new Map(
+            [root, ...rigidRegions(root), ...panes()].map((el) => [el, span(el, a)] as const),
+        );
+    }
+
+    function release(): void {
+        const root = rootEl.value;
+        if (!root) return;
+        for (const el of [root, ...rigidRegions(root), contentEl.value]) el?.style.removeProperty(ORIGIN);
+        for (const pane of panes()) pane.style.removeProperty(LEAVE_SHIFT);
+    }
+
+    function anchor(): void {
+        const root = rootEl.value;
+        const layers = contentEl.value;
+        const boxes = firstBoxes;
+        firstBoxes = null;
+        release();
+        if (!root || !layers || !boxes) return;
+        const before = boxes.get(root);
+        if (!before) return;
+
+        const a = axis.value;
+        const rigid = rigidRegions(root);
+        const painted = span(root, a);
+        // The laid-out boxes: the root's and the regions' morph scale lifted, in one task.
+        const laid = withOverrides(
+            [root, ...rigid, layers].map((el) => [el, "scale", "none"] as const),
+            () =>
+                new Map([root, ...rigid, layers, ...panes()].map((el) => [el, span(el, a)] as const)),
+        );
+        const box = laid.get(root)!;
+        const local = getSize(root, a);
+        // Viewport px per root-local px (an ancestor's transform), and the root's scale.
+        const k = box.size / local;
+        const s = painted.size / box.size;
+        if (!(k > 0) || !Number.isFinite(s)) return;
+
+        const toLocal = (viewport: number) => (viewport - box.start) / k;
+        const fixedPoint = (from: number, to: number) =>
+            Math.abs(1 - s) < 1e-4 ? null : (from - to) / (1 - s);
+        // The root's origin, root-local; a no-op scale takes any (the centre).
+        const origin = fixedPoint(toLocal(before.start), 0) ?? local / 2;
+        const percent = (px: number, size: number) => `${(px / size) * 100}%`;
+        root.style.setProperty(ORIGIN, percent(origin, local));
+
+        for (const region of rigid) {
+            const was = boxes.get(region);
+            const now = laid.get(region)!;
+            const size = getSize(region, a);
+            if (!was || !(size > 0)) continue;
+            const start = toLocal(now.start);
+            // The origin that holds the region's centre at its first box at scale `s`
+            // (the region is rigid, so its centre is its box; a glyph floor that sizes it
+            // differently per posture splits the difference evenly).
+            const held = fixedPoint(
+                toLocal(was.start + was.size / 2),
+                toLocal(now.start + now.size / 2),
+            );
+            region.style.setProperty(
+                ORIGIN,
+                percent((held === null ? origin : origin - held) - start, size),
+            );
+        }
+
+        const layersSize = getSize(layers, a);
+        if (layersSize > 0) {
+            layers.style.setProperty(
+                ORIGIN,
+                percent(origin - toLocal(laid.get(layers)!.start), layersSize),
+            );
+        }
+
+        for (const pane of panes()) {
+            const was = boxes.get(pane);
+            const now = laid.get(pane);
+            if (!was || !now || !pane.classList.contains("is-leaving")) continue;
+            pane.style.setProperty(LEAVE_SHIFT, `${(was.start - now.start) / k}px`);
+        }
+    }
+
+    return { measure: capture, first, anchor, release };
 }

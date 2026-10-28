@@ -108,6 +108,17 @@
     initial-value: 0;
 }
 
+/* The morph's origin on its axis (O-110), written per element by `useDockExpandedSize`'s
+   `anchor` while `[data-morphing]` is set: on the root, each persistent region and the
+   layers, each in its own box. `inherits: false` because each element's value is in its
+   own coordinates, so a descendant must never read its parent's. Where none is written
+   (a dock with no layout) it is the centre. */
+@property --dock-morph-origin {
+    syntax: "<length-percentage>";
+    inherits: false;
+    initial-value: 50%;
+}
+
 /* The plate scalar the `clip-path` visible-extent morph reads. `inherits: false` is
    LOAD-BEARING (the opposite of `--dock-morph-t`, which MUST inherit to its descendant
    readers): the plate scalar has NO descendant reader, so un-inherited is correct.

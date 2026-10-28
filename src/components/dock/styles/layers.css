@@ -103,8 +103,19 @@
             calc(var(--dock-live) / max(var(--dock-expanded-px, 1px), 1px)),
             1
         );
-        transform-origin: center center;
         will-change: transform;
+    }
+
+    /* [2026-10-28 · 10.1.3 · O-110] ~~`transform-origin: center center`~~ — the scale
+       grows from the morph's measured origin (`--dock-morph-origin`, the fixed point of
+       the painted box and the reserved one, `useDockExpandedSize`'s `anchor`): the
+       anchored edge of an edge-anchored dock, the centre of a centred one. A fixed
+       centre painted an edge-anchored dock's first frame centred in its reserved box. */
+    .glass-dock[data-morphing]:not(.vertical) {
+        transform-origin: var(--dock-morph-origin) center;
+    }
+    .glass-dock[data-morphing].vertical {
+        transform-origin: center var(--dock-morph-origin);
     }
 
     /* The box RESERVES its expanded footprint (ONE layout solve — the page reflows
@@ -172,6 +183,15 @@
 
     .glass-dock[data-morphing] .dock-layer.is-leaving {
         opacity: calc(1 - var(--dock-morph-t));
+    }
+
+    /* The leaving pane holds the box it painted (O-110): `anchor` writes the shift from
+       where the reserved layout puts it back to where it was, and it fades there. */
+    .glass-dock[data-morphing]:not(.vertical) > .dock-controls > .dock-layers > .dock-layer.is-leaving {
+        translate: var(--dock-leave-shift) 0;
+    }
+    .glass-dock[data-morphing].vertical > .dock-controls > .dock-layers > .dock-layer.is-leaving {
+        translate: 0 var(--dock-leave-shift);
     }
 
     /* GU-4 — retain only the witnessed press control through a collapse-triggered
