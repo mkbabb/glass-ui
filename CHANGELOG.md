@@ -188,6 +188,12 @@ version bump. Each row has a test that fails on b54f5e13d and passes here.
   `tests/public-surface.spec.ts` "keeps side-effect stylesheet imports out of the
   declarations" (14 files before, 0 after).
 
+- **`verify:package` loads a stylesheet as an empty module in its install arm.** The
+  arm imports every public code specifier in plain Node; since F5 a component chunk
+  imports its sheet, and the arm failed with `ERR_UNKNOWN_FILE_EXTENSION` on the root
+  barrel. Resolution still runs, so a chunk that imports a sheet the package omits still
+  fails. MIGRATION records the consumer side.
+
 ## 10.1.1 — 2026-10-19
 
 Four cures, one guarded row and one owner-ruled addition. Asked by the atlas consumer (U batch

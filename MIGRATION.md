@@ -116,6 +116,15 @@ Proposed by the atlas formation on local branch `u/b7-glass-shape` off `release/
   (atlas's `vitest.config.ts` already does). A consumer that styled glass markup
   through the SFC rules without rendering the component (copied markup, server HTML)
   loses those rules; render the component or import its chunk.
+- **A component subpath, and the root barrel, are no longer importable in plain Node
+  without a CSS loader.** Their chunks import stylesheets. The F5 sheets already made
+  the root barrel, `/carousel`, `/configurator`, `/deck`, `/metric`, `/music-staff` and
+  `/sortable-list` so on this branch; the X3 split extends it to every subpath whose
+  components own styles (`/aurora`, `/status-dot`, `/toggle-group`, `/timeline`, …).
+  Composable and utility subpaths are unchanged. A Node script or test that imports
+  them registers a loader that maps `.css` to an empty module, or runs through a
+  bundler (vitest with glass-ui inlined). `verify:package` does the former in its
+  install arm.
 - **The SFC rules now load after the `/styles` entry, not inside it.** They stay in
   `@layer components`, so a consumer's `utilities` layer still wins. Within
   `components`, an SFC rule now follows `components.css` and `accessibility.css` in

@@ -934,7 +934,19 @@ function installedEvidence({ consumerRoot, installed, pkg, sourceSurface, codeSp
     }
     for (const file of files) if (/^dist\/fonts\/.*\.(?:woff2?|ttf|otf)$/.test(file)) fonts.push(file);
     if (fonts.length === 0) throw new Error("installed consumer has no reachable font files");
+    // A component chunk imports its own stylesheet (`import "./aurora.css";`, the F5
+    // sheets and the U/B7b X3 SFC sheets): CSS is a bundler-loaded asset of the
+    // runtime, as `sideEffects: ["*.css"]` declares. Plain Node has no CSS loader, so
+    // the arm loads a `.css` module as empty. Resolution is untouched: a chunk that
+    // imports a sheet the package does not ship still fails here.
     const runtime = spawnSync(process.execPath, ["--input-type=module", "-e", `
+      const { registerHooks } = await import("node:module");
+      registerHooks({
+        load(url, context, nextLoad) {
+          if (new URL(url).pathname.endsWith(".css")) return { format: "module", source: "", shortCircuit: true };
+          return nextLoad(url, context);
+        },
+      });
       const specifiers = ${JSON.stringify(codeSpecifiers)};
       const expected = ${JSON.stringify(sourceSurface.values)};
       const results = await Promise.all(specifiers.map(async (specifier) => ({
