@@ -9,6 +9,7 @@
 // under `guarded --exclusive webkit`). RED on a 10.1.2 tree carrying this spec and
 // harness, GREEN on 10.1.3; the click cell is RED in Chromium only (see it).
 import { expect, test, type Page } from "@playwright/test";
+import { PNG } from "pngjs";
 
 type W = {
     __ready?: boolean;
@@ -28,7 +29,7 @@ type Frame = {
 
 const EDIT = '[data-witness="Edit contour"]';
 
-type Anchor = "right" | "left" | "bottom";
+type Anchor = "right" | "left" | "bottom" | "top";
 
 async function open(
     page: Page,
@@ -246,7 +247,7 @@ for (const [width, cell] of [
 
 const mid = (b: Box) => ({ x: (b.left + b.right) / 2, y: (b.top + b.bottom) / 2 });
 const anchoredEdge = (anchor: Anchor) => (b: Box) =>
-    anchor === "right" ? b.right : anchor === "left" ? b.left : b.bottom;
+    anchor === "right" ? b.right : anchor === "left" ? b.left : anchor === "top" ? b.top : b.bottom;
 const sides = ["left", "right", "top", "bottom"] as const;
 const boxDistance = (a: Box, b: Box) => Math.max(...sides.map((k) => Math.abs(a[k] - b[k])));
 
@@ -307,8 +308,10 @@ for (const width of [360, 390, 430]) {
 // D-2: the collapse, read per frame. The anchored edge holds, the box does not snap at
 // settle, and the persistent seat never paints outside the shrinking plate. RED on
 // 10.1.1, 10.1.2 and the first 10.1.3 cure (the collapse shrank toward the reserved
-// box's centre).
-for (const anchor of ["right", "left", "bottom"] as const) {
+// box's centre). The settle is read on every frame after the morph (critique-4 D-2):
+// a vertical dock (bottom, top) re-eased its `scale` from a third of its height when
+// `[data-morphing]` cleared, on 10.1.2 and on every 10.1.3 round before round 4.
+for (const anchor of ["right", "left", "bottom", "top"] as const) {
     test.describe(`10.1.3 · 390 · ${anchor}-anchored collapse`, () => {
         test.use({ viewport: { width: 390, height: 844 } });
         test("D-2 · the collapse shrinks toward the anchored edge and settles without a snap", async ({
@@ -349,6 +352,14 @@ for (const anchor of ["right", "left", "bottom"] as const) {
                     f.edit.bottom > f.dock.bottom + 1,
             );
             expect(outside.length, "frames whose seat paints outside the plate").toBe(0);
+            let last = all.length - 1;
+            while (last >= 0 && !all[last].morphing) last -= 1;
+            const settling = all.slice(last + 1);
+            expect(settling.length, "frames read after the morph settled").toBeGreaterThan(10);
+            expect(
+                Math.max(...settling.map((f) => boxDistance(f.dock, settled))),
+                "every frame after the morph paints the settled box (no snap)",
+            ).toBeLessThan(1);
         });
     });
 }
@@ -513,3 +524,259 @@ test.describe("10.1.3 · 390 · a touch press with no tap, then focus", () => {
         await expect(page.locator(".glass-dock")).toHaveClass(/expanded/);
     });
 });
+
+// ── critique-4 (round 4) ─────────────────────────────────────────────────────────────
+
+// D-1: nothing the dock paints shows outside its plate during a morph. The layers lay
+// out where they rest and the plate grows over them from the anchored edge, so on an
+// edge-anchored dock the full pane's open-side controls painted on the bare stage:
+// ahead of the plate on an expand, behind it on a collapse, and on both legs of a
+// reversal. fourier's L2-15 predicate (every visible control inside the dock) applied
+// to every frame. Per frame and per witnessed element: its painted opacity (the
+// product up to the dock), and its box cut by every ancestor that clips it (computed
+// `overflow`), against the plate's box. RED on the round-3 branch (right and bottom:
+// "Publish" and "View layers" fully outside at full opacity) and on 10.1.2 (the
+// symmetric overhang); GREEN once the box clips to the plate while it morphs. The
+// frozen-frame cell below shows the same in paint.
+type Spill = { label: string; by: number; opacity: number };
+
+async function recordSpill(page: Page, ms: number): Promise<void> {
+    await page.evaluate((ms) => {
+        const w = window as unknown as { __spill: { morphing: boolean; spill: Spill[] }[] };
+        w.__spill = [];
+        const dock = document.querySelector<HTMLElement>(".glass-dock")!;
+        const plate = dock.querySelector<HTMLElement>(":scope > .dock-plate")!;
+        const seen = [...dock.querySelectorAll<HTMLElement>("[data-witness]")];
+        const visible = (el: HTMLElement) => {
+            const r = el.getBoundingClientRect();
+            let [l, t, rr, b] = [r.left, r.top, r.right, r.bottom];
+            for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) {
+                const cs = getComputedStyle(a);
+                const box = a.getBoundingClientRect();
+                if (cs.overflowX !== "visible") [l, rr] = [Math.max(l, box.left), Math.min(rr, box.right)];
+                if (cs.overflowY !== "visible") [t, b] = [Math.max(t, box.top), Math.min(b, box.bottom)];
+            }
+            return { l, t, r: rr, b };
+        };
+        const opacity = (el: HTMLElement) => {
+            let o = 1;
+            for (let q: HTMLElement | null = el; q && q !== dock.parentElement; q = q.parentElement) {
+                const cs = getComputedStyle(q);
+                if (cs.visibility === "hidden") return 0;
+                o *= Number(cs.opacity);
+            }
+            return o;
+        };
+        const t0 = performance.now();
+        const tick = () => {
+            const p = plate.getBoundingClientRect();
+            const spill: Spill[] = [];
+            for (const el of seen) {
+                const o = opacity(el);
+                if (o <= 0.1) continue;
+                const v = visible(el);
+                if (v.r - v.l <= 0 || v.b - v.t <= 0) continue;
+                const by = Math.max(p.left - v.l, v.r - p.right, p.top - v.t, v.b - p.bottom);
+                if (by > 1) spill.push({ label: el.dataset.witness!, by: Math.round(by), opacity: Math.round(o * 100) / 100 });
+            }
+            w.__spill.push({ morphing: dock.hasAttribute("data-morphing"), spill });
+            if (performance.now() - t0 < ms) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+    }, ms);
+}
+
+const spillFrames = (page: Page) =>
+    page.evaluate(
+        () => (window as unknown as { __spill: { morphing: boolean; spill: Spill[] }[] }).__spill,
+    );
+
+for (const [anchor, width] of [
+    ["right", 390],
+    ["right", 1440],
+    ["left", 390],
+    ["bottom", 390],
+] as const) {
+    test.describe(`10.1.3 · ${width} · ${anchor}-anchored, the plate holds what it paints`, () => {
+        test.use({ viewport: { width, height: width > 1000 ? 900 : 844 } });
+        test("D-1 (critique-4) · no control paints outside the plate on the expand or the collapse", async ({
+            page,
+        }) => {
+            await open(page, anchor);
+            const { x, y } = mid(await rect(page, EDIT));
+            await recordSpill(page, 1300);
+            await page.mouse.move(x, y);
+            await page.waitForTimeout(1400);
+            await expect(page.locator(".glass-dock")).toHaveClass(/expanded/);
+            const expand = (await spillFrames(page)).filter((f) => f.morphing);
+            await recordSpill(page, 1300);
+            await page.mouse.move(4, 700);
+            await page.mouse.down();
+            await page.mouse.up();
+            await page.waitForTimeout(1400);
+            await expect(page.locator(".glass-dock")).toHaveClass(/collapsed/);
+            const collapse = (await spillFrames(page)).filter((f) => f.morphing);
+            expect(expand.length, "the hover morphed").toBeGreaterThan(3);
+            expect(collapse.length, "the click-away morphed").toBeGreaterThan(3);
+            expect(
+                expand.filter((f) => f.spill.length).map((f) => f.spill),
+                "expand frames that paint a control outside the plate",
+            ).toEqual([]);
+            expect(
+                collapse.filter((f) => f.spill.length).map((f) => f.spill),
+                "collapse frames that paint a control outside the plate",
+            ).toEqual([]);
+        });
+    });
+}
+
+// The double reversal (critique-4 R): a hover expand, `collapse()` 120 ms in, then the
+// pointer re-hovers 120 ms into that collapse. Three legs, every frame inside the plate.
+for (const anchor of ["right", "bottom"] as const) {
+    test.describe(`10.1.3 · 390 · ${anchor}-anchored double reversal, the plate holds what it paints`, () => {
+        test.use({ viewport: { width: 390, height: 844 } });
+        test("D-1 (critique-4) · no control paints outside the plate through a double reversal", async ({
+            page,
+        }) => {
+            await open(page, anchor);
+            await page.evaluate(() => {
+                const w = window as unknown as { __dock: { collapse: () => void } };
+                const dock = document.querySelector(".glass-dock")!;
+                const seen = new MutationObserver(() => {
+                    if (!dock.hasAttribute("data-morphing")) return;
+                    seen.disconnect();
+                    setTimeout(() => w.__dock.collapse(), 120);
+                });
+                seen.observe(dock, { attributes: true, attributeFilter: ["data-morphing"] });
+            });
+            const s = mid(await rect(page, '[data-witness="summary"]'));
+            await recordSpill(page, 2000);
+            await page.mouse.move(s.x, s.y);
+            await page.waitForTimeout(240);
+            // Off the dock and back: the re-hover lands mid-collapse.
+            await page.mouse.move(4, 700);
+            await page.mouse.move(s.x, s.y);
+            await page.waitForTimeout(1900);
+            const morph = (await spillFrames(page)).filter((f) => f.morphing);
+            expect(morph.length, "the legs morphed").toBeGreaterThan(10);
+            expect(
+                morph.filter((f) => f.spill.length).map((f) => f.spill),
+                "frames that paint a control outside the plate",
+            ).toEqual([]);
+        });
+    });
+}
+
+// The same in paint: the page's rAF is frozen mid-morph (the spring stops on that
+// frame) and the stage beside the plate's open side is compared with the same stage at
+// rest. Any control there paints ink; a box shadow does not reach the threshold. The
+// freeze is set by the plate's travel, not a frame count, so both engines stop on the
+// same geometry (WebKit's frames advance further apart): the expand at 40 % of its
+// travel, the collapse at 30 %. RED on the round-3 branch ("View layers" and "Publish"
+// opaque on the stage on the expand, their ghosts on the collapse), GREEN with the
+// plate clip.
+async function freezeAt(page: Page, leg: "expand" | "collapse", travel: number): Promise<void> {
+    await page.evaluate(
+        ({ leg, travel }) => {
+            const w = window as unknown as { __frozen?: boolean };
+            const dock = document.querySelector<HTMLElement>(".glass-dock")!;
+            const plate = dock.querySelector<HTMLElement>(":scope > .dock-plate")!;
+            const raf = window.requestAnimationFrame.bind(window);
+            const from = plate.getBoundingClientRect().width;
+            const seen = new MutationObserver(() => {
+                if (!dock.hasAttribute("data-morphing")) return;
+                seen.disconnect();
+                // The plate's other end: the reserved box on an expand (its layout width,
+                // which the morph's scale leaves alone), the collapsed plate on a collapse.
+                const to = leg === "expand" ? dock.offsetWidth : Number(dock.dataset.restWidth);
+                const tick = () => {
+                    const at = plate.getBoundingClientRect().width;
+                    if ((at - from) / (to - from) >= travel) {
+                        window.requestAnimationFrame = (() => 0) as typeof window.requestAnimationFrame;
+                        w.__frozen = true;
+                        return;
+                    }
+                    raf(tick);
+                };
+                raf(tick);
+            });
+            seen.observe(dock, { attributes: true, attributeFilter: ["data-morphing"] });
+        },
+        { leg, travel },
+    );
+}
+
+/** Pixels whose colour differs between the two images by more than 48 in a channel. */
+function inkDelta(pa: PNG, pb: PNG): number {
+    let n = 0;
+    for (let i = 0; i < pa.data.length; i += 4) {
+        const d = Math.max(
+            Math.abs(pa.data[i] - pb.data[i]),
+            Math.abs(pa.data[i + 1] - pb.data[i + 1]),
+            Math.abs(pa.data[i + 2] - pb.data[i + 2]),
+        );
+        if (d > 48) n += 1;
+    }
+    return n;
+}
+
+for (const [leg, travel] of [
+    ["expand", 0.4],
+    ["collapse", 0.3],
+] as const) {
+    test.describe(`10.1.3 · 390 · right-anchored ${leg}, frozen at ${travel * 100} % of its travel`, () => {
+        test.use({ viewport: { width: 390, height: 844 } });
+        test(`D-1 (critique-4) · the stage beside the plate paints no control mid-${leg}`, async ({
+            page,
+        }) => {
+            await open(page, "right");
+            const { x, y } = mid(await rect(page, EDIT));
+            const stage = await rect(page, '[data-witness="stage"]');
+            const rest = await rect(page, ".dock-plate");
+            // The stage left of the collapsed plate, over the dock's row, read at rest.
+            const strip = {
+                x: Math.ceil(stage.left + 2),
+                y: Math.floor(rest.top),
+                width: Math.floor(rest.left - 4 - (stage.left + 2)),
+                height: Math.ceil(rest.bottom - rest.top),
+            };
+            const base = PNG.sync.read(await page.screenshot({ clip: strip }));
+            if (leg === "collapse") {
+                await page.mouse.move(x, y);
+                await page.waitForTimeout(1400);
+                await expect(page.locator(".glass-dock")).toHaveClass(/expanded/);
+                await expect(page.locator(".glass-dock")).not.toHaveAttribute("data-morphing");
+                await page.evaluate(
+                    (w) => (document.querySelector<HTMLElement>(".glass-dock")!.dataset.restWidth = `${w}`),
+                    rest.right - rest.left,
+                );
+            }
+            await freezeAt(page, leg, travel);
+            if (leg === "expand") {
+                await page.mouse.move(x, y);
+            } else {
+                await page.mouse.move(4, 700);
+                await page.evaluate(() =>
+                    (window as unknown as { __dock: { collapse: () => void } }).__dock.collapse(),
+                );
+            }
+            await page.waitForFunction(() => (window as unknown as { __frozen?: boolean }).__frozen);
+            await page.waitForTimeout(150);
+            expect(
+                await page.evaluate(() =>
+                    document.querySelector(".glass-dock")!.hasAttribute("data-morphing"),
+                ),
+                "frozen mid-morph",
+            ).toBe(true);
+            const plate = await rect(page, ".dock-plate");
+            // Only the stage the frozen plate does not cover, less a margin for its rim.
+            const width = Math.min(strip.width, Math.floor(plate.left - 6 - strip.x));
+            expect(width, "the frozen plate leaves stage to read").toBeGreaterThan(30);
+            const shot = PNG.sync.read(await page.screenshot({ clip: { ...strip, width } }));
+            // The rest strip cut to the same width, in device pixels.
+            const ref = new PNG({ width: shot.width, height: shot.height });
+            PNG.bitblt(base, ref, 0, 0, shot.width, shot.height, 0, 0);
+            expect(inkDelta(shot, ref), "control ink on the stage beside the plate").toBe(0);
+        });
+    });
+}

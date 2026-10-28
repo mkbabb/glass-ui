@@ -39,7 +39,8 @@ const scenes: Record<string, Component> = {
     // is its one `#persistent-end` control, present in both postures, on the anchored
     // side. `?anchor=left` pins the box by `left` instead, and seats "Edit contour" in
     // `#persistent`, again on the anchored side. `?anchor=bottom` pins a vertical dock
-    // by `bottom` (and `left`), its anchored side the end. `?seat=open` seats "Edit
+    // by `bottom` (and `left`), its anchored side the end; `?anchor=top` pins it by `top`
+    // (and `left`), its anchored side the start. `?seat=open` seats "Edit
     // contour" on the open side instead, the side the expand grows toward. A click on
     // "Edit contour" counts in `window.__edits`. The dock's component instance is
     // `window.__dock`, so a witness can call its public `collapse()`.
@@ -47,14 +48,15 @@ const scenes: Record<string, Component> = {
         const edits = ref(0);
         w.__edits = 0;
         const anchor = params.get("anchor");
-        const edge = anchor === "left" || anchor === "bottom" ? anchor : "right";
-        const orientation = edge === "bottom" ? "vertical" : "horizontal";
-        const anchoredIsEnd = edge !== "left";
+        const edge =
+            anchor === "left" || anchor === "bottom" || anchor === "top" ? anchor : "right";
+        const orientation = edge === "bottom" || edge === "top" ? "vertical" : "horizontal";
+        const anchoredIsEnd = edge === "right" || edge === "bottom";
         const open = params.get("seat") === "open";
         const slot = anchoredIsEnd !== open ? "persistent-end" : "persistent";
         const pin =
-            edge === "bottom"
-                ? "bottom:0.5rem;left:0.5rem"
+            edge === "bottom" || edge === "top"
+                ? `${edge}:0.5rem;left:0.5rem`
                 : `top:0.5rem;${edge}:0.5rem`;
         const onEdit = () => {
             edits.value += 1;
