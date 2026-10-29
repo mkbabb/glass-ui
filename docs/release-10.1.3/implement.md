@@ -414,3 +414,53 @@ GREEN pair); `release-{chromium,webkit}.log`; `pre-webkit.log`;
 Housekeeping: `release-10.1.3/fix5/` (two Playwright JSON reports from the first runs,
 whose relative `PI_REPORT` resolved inside the worktree) is untracked and not committed.
 Removing it was refused by the permission system; delete it by hand.
+
+## Round 5 (critique-5)
+
+Implementer: claude-opus-5-5. Both defects are records; no rule, script or spec changed,
+and the click guard is untouched.
+
+- **R-1: the comments now match the morph clip.** Four comments said the dock box never
+  clips, beside the round-4 rule that clips it on the morph axis while `[data-morphing]`
+  is set:
+  - `shell.css`, the block above the rule (it said the "MORPH APERTURE is DELETED" and
+    "`.glass-dock` NEVER clips its descendants now");
+  - `dock.css`, the L1 rule ("structurally impossible") and the file header's L1 entry;
+  - `GlassDock.vue`, the `.dock-controls` template comment ("NO ancestor clips them");
+  - `shape.css`, which quoted the `shell.css` sentence.
+
+  Each now says that at rest nothing clips, and points to the morph clip in `shell.css`
+  as the one place the box clips, with its scope: the morph axis only, only while
+  `[data-morphing]` is set, lifted under the press keepalive. The stale transitional-window
+  note in `shell.css` is struck; it described a mid-morph spill that round 4 clips.
+- **R-2: the CHANGELOG states the WebKit result.** The critique-3 bullet said its WebKit
+  cells were owed. They are RED on v10.1.2 in WebKit 2287 (critique-5,
+  `red-1013spec-webkit.log`, cells 36 to 38) and GREEN on the branch (this round's
+  `release-webkit.log`, cells 113 to 115). The sentence now says so.
+
+Witness: `fix-r5/records-witness.sh`, beside the worktree. It fails on any of the struck
+claims in the four dock files or on "WebKit cells are owed" in the CHANGELOG, and checks
+that both `[data-morphing]` clip rules are present. RED before the cure
+(`records-witness-pre.log`: 7 hits), GREEN after. It is a record check, so it has no
+engine arm; the engine gates below show the comment edits changed nothing in paint or
+behaviour.
+
+### Round 5 gates
+
+| gate | result |
+|---|---|
+| `npm run typecheck` (guarded `--light`) | exit 0 |
+| `npm run build`, `npm run demo:dist:build` (guarded) | exit 0 |
+| `npm run verify:package` | terminal CLEAN, no ratchet refusal |
+| `npx vitest run --maxWorkers=2` (guarded) | 246 files; 2387 passed, 10 expected fail, 1 skipped, 1 failed: `comment-ratio.test.ts` "the COMMITTED figure is derivable at a named revision" timed out at 5 s (load about 45). It reads `HEAD` twice, so the uncommitted edits cannot reach it; rerun alone it timed out again at 5.1 s, with the file's other 13 cells passing |
+| `release-10-1-1` + `release-10-1-2` + `release-10-1-3` specs, Chromium | 127/127 GREEN (the 77 release cells with the O-101 no-overflow cells, and the 10.1.3 fourier cells) |
+| the same, WebKit 2287 (`webkit-2287.config.ts`, `guarded --exclusive webkit`) | 125 passed, 2 skipped (the CDP swipe cells are Chromium's) |
+
+Logs, beside the worktree in `fix-r5/`: `chain.sh`, `chain.log`, `typecheck.log`,
+`build.log`, `demo-build.log`, `vitest.log`, `vitest-comment-ratio-rerun.log`,
+`verify.log`, `release-{chromium,webkit}.{log,json}`, `records-witness.sh`,
+`records-witness-{pre,post}.log`.
+
+Housekeeping: `release-10.1.3/fix5/` (round 4's two stray Playwright JSON reports) is
+still untracked; removing it was refused by the permission system again. Delete it by hand
+before the tag.
