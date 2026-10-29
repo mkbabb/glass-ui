@@ -5,17 +5,13 @@ import type {
     PointerDownOutsideEvent,
 } from "../_shared/interaction";
 import {
-    injectContextMenuRootContext,
-    injectDropdownMenuRootContext,
-} from "reka-ui";
-import {
     overlayContentAttrs,
     useDockParticipation,
     useModalShortcutBarrier,
     useSheetWidth,
     type FloatingPlacementProps,
 } from "../_shared/overlay";
-import { useMenuPart, useMenuTrigger } from "./context";
+import { useMenuFamily } from "./context";
 
 export interface DropdownMenuContentProps extends FloatingPlacementProps {
     class?: HTMLAttributes["class"];
@@ -46,11 +42,11 @@ const forwardedAttrs = computed(() => {
     return forwarded;
 });
 
-const trigger = useMenuTrigger();
-const ContentComp = useMenuPart("Content");
-const PortalComp = useMenuPart("Portal");
+const family = useMenuFamily();
+const ContentComp = family.parts.Content;
+const PortalComp = family.parts.Portal;
 const placementProps = computed(() =>
-    trigger.value === "context"
+    family.trigger === "context"
         ? {
               alignOffset: props.alignOffset,
               avoidCollisions: true,
@@ -65,27 +61,19 @@ const placementProps = computed(() =>
               collisionPadding: 16,
           },
 );
-/* Both menu roots publish `open` and `modal`, and which one is overhead depends on
-   the trigger — so both are injected with a `null` fallback and the live one answers.
-   `modal` is the measurement, as everywhere else: a `modal={false}` menu leaves the
-   page operable and keeps its accelerators. */
-const menuRoot = injectDropdownMenuRootContext(null);
-const contextRoot = injectContextMenuRootContext(null);
-const openModalRoot = computed(() =>
-    trigger.value === "context" ? contextRoot : menuRoot,
-);
+/* The root overhead publishes `open` and `modal`; the family reads its own reka root
+   context. `modal` is the measurement, as everywhere else: a `modal={false}` menu
+   leaves the page operable and keeps its accelerators. */
+const menuRoot = family.injectRoot();
 useModalShortcutBarrier(
-    () =>
-        (openModalRoot.value?.open.value ?? false) &&
-        (openModalRoot.value?.modal.value ?? false),
+    () => (menuRoot?.open.value ?? false) && (menuRoot?.modal.value ?? false),
 );
 
 /* A menu a dock seat opened closes when that dock collapses: the collapse owns the
    close, through the menu root's own open channel (O-102 (3)). */
 const dock = useDockParticipation({
     close: () => {
-        const root = openModalRoot.value;
-        if (root?.open.value) root.onOpenChange(false);
+        if (menuRoot?.open.value) menuRoot.onOpenChange(false);
     },
 });
 /* A DOCK MENU AT SHEET WIDTH (U/B7 D-6). Below 30rem a menu a dock opened covers the
@@ -93,7 +81,7 @@ const dock = useDockParticipation({
    register decides from two facts it already holds (the dock stamp and the viewport);
    the content carries no material prop (BK #66). An anchored menu outside a dock, or
    any menu above 30rem, keeps glass. */
-const sheetWidth = useSheetWidth(() => openModalRoot.value?.open.value ?? false);
+const sheetWidth = useSheetWidth(() => menuRoot?.open.value ?? false);
 const opaque = computed(() => sheetWidth.value && "data-glass-dock-portal" in dock.portalAttrs.value);
 /* ONE CLASS SPELLING. The root used to carry BOTH `dropdown-menu-content` and
    `menu__content` — two names for one element, feeding two different

@@ -2,6 +2,7 @@ import { mount } from "@vue/test-utils";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { defineComponent, nextTick, ref } from "vue";
 import {
+    ContextMenu,
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
@@ -28,6 +29,7 @@ afterEach(async () => {
 function mountMenu(trigger: "click" | "context" = "click") {
     const Host = defineComponent({
         components: {
+            ContextMenu,
             DropdownMenu,
             DropdownMenuCheckboxItem,
             DropdownMenuContent,
@@ -48,9 +50,9 @@ function mountMenu(trigger: "click" | "context" = "click") {
             };
         },
         template: `
-            <DropdownMenu
-                :trigger="'${trigger}'"
-                :open="'${trigger}' === 'click' ? open : undefined"
+            <component
+                :is="'${trigger}' === 'click' ? 'DropdownMenu' : 'ContextMenu'"
+                v-bind="'${trigger}' === 'click' ? { open } : {}"
                 @update:open="open = $event"
             >
                 <DropdownMenuTrigger as-child>
@@ -71,7 +73,7 @@ function mountMenu(trigger: "click" | "context" = "click") {
                         </DropdownMenuSubContent>
                     </DropdownMenuSub>
                 </DropdownMenuContent>
-            </DropdownMenu>
+            </component>
         `,
     });
     const wrapper = mount(Host, {
@@ -95,7 +97,7 @@ async function openClickMenu(wrapper: ReturnType<typeof mount>) {
 describe("DropdownMenu contract", () => {
     it("rejects menu parts without an owning root", () => {
         expect(() => mount(DropdownMenuItem)).toThrow(
-            "DropdownMenu parts must be used within DropdownMenu",
+            "Menu parts must be used within DropdownMenu or ContextMenu",
         );
     });
 
@@ -238,25 +240,17 @@ describe("DropdownMenu contract", () => {
         ).toHaveLength(1);
     });
 
-    it("rejects synthetic context state before rendering an anchorless menu", () => {
-        expect(() =>
-            mount(DropdownMenu, {
-                props: { trigger: "context", open: true },
-            }),
-        ).toThrow("Context menus open from an invocation anchor");
-    });
-
     it.each(["click", "context"] as const)(
         "renders the default %s trigger as a non-submitting button",
         (trigger) => {
             const Host = defineComponent({
-                components: { DropdownMenu, DropdownMenuTrigger },
-                setup: () => ({ trigger }),
+                components: { ContextMenu, DropdownMenu, DropdownMenuTrigger },
+                setup: () => ({ root: trigger === "click" ? "DropdownMenu" : "ContextMenu" }),
                 template: `
                     <form>
-                        <DropdownMenu :trigger="trigger">
+                        <component :is="root">
                             <DropdownMenuTrigger>Open</DropdownMenuTrigger>
-                        </DropdownMenu>
+                        </component>
                     </form>
                 `,
             });

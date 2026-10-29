@@ -4,7 +4,7 @@ import { injectDropdownMenuRootContext } from "reka-ui";
 import type { PrimitiveProps } from "../_shared/primitive";
 import { fixedHostAttrs } from "../_shared/primitive";
 import { cn } from "../_shared/class-names";
-import { useMenuPart, useMenuTrigger } from "./context";
+import { useMenuFamily } from "./context";
 
 export type DropdownMenuTriggerAction = "click" | "pointerdown";
 
@@ -31,8 +31,8 @@ const forwardedAttrs = computed(() => {
     const forwarded = fixedHostAttrs(attrs);
     return props.asChild ? forwarded : { ...forwarded, type: "button" };
 });
-const menuTrigger = useMenuTrigger();
-const TriggerComp = useMenuPart("Trigger");
+const family = useMenuFamily();
+const TriggerComp = family.parts.Trigger;
 const root = injectDropdownMenuRootContext(null);
 
 let suppressTrailingClick = false;
@@ -40,7 +40,7 @@ let suppressTrailingClick = false;
 function onPointerDown(event: PointerEvent): void {
     if (
         props.action !== "pointerdown" ||
-        menuTrigger.value !== "click" ||
+        family.trigger !== "click" ||
         !root ||
         props.disabled ||
         event.button !== 0 ||

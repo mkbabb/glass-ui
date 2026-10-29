@@ -225,7 +225,9 @@ export {
     type DropdownMenuSubTriggerProps,
     type DropdownMenuTriggerAction,
     type DropdownMenuTriggerProps,
-    type MenuTrigger,
+    ContextMenu,
+    type ContextMenuEmits,
+    type ContextMenuProps,
 } from "./components/menu";
 // `ui/hover-card` retired as a name (the reka HoverCardRoot
 // substrate stays, imported by the sealed `<Popover trigger="hover">` union). The

@@ -1,62 +1,17 @@
 import {
-    computed,
     inject,
     provide,
-    type ComputedRef,
-    type InjectionKey,
     type Component,
+    type InjectionKey,
     type Ref,
 } from "vue";
-import {
-    ContextMenuCheckboxItem,
-    ContextMenuContent,
-    ContextMenuGroup,
-    ContextMenuItem,
-    ContextMenuItemIndicator,
-    ContextMenuLabel,
-    ContextMenuPortal,
-    ContextMenuRadioGroup,
-    ContextMenuRadioItem,
-    ContextMenuSeparator,
-    ContextMenuSub,
-    ContextMenuSubContent,
-    ContextMenuSubTrigger,
-    ContextMenuTrigger,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
-    DropdownMenuItemIndicator,
-    DropdownMenuLabel,
-    DropdownMenuPortal,
-    DropdownMenuRadioGroup,
-    DropdownMenuRadioItem,
-    DropdownMenuSeparator,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
-    DropdownMenuTrigger,
-} from "reka-ui";
 
-/** How the menu is anchored. */
+/** How the menu is anchored: a button (`DropdownMenu`) or a region (`ContextMenu`). */
 export type MenuTrigger = "click" | "context";
 
-const MENU_TRIGGER_KEY: InjectionKey<Ref<MenuTrigger>> = Symbol("glass-menu-trigger");
-
-export function provideMenuTrigger(trigger: Ref<MenuTrigger>): void {
-    provide(MENU_TRIGGER_KEY, trigger);
-}
-
-export function useMenuTrigger(): Ref<MenuTrigger> {
-    const trigger = inject(MENU_TRIGGER_KEY, null);
-    if (!trigger) {
-        throw new Error("DropdownMenu parts must be used within DropdownMenu");
-    }
-    return trigger;
-}
-
-// Reka exposes separate click and context primitives. Each public part selects the
-// matching primitive while the public Glass family stays singular.
+// Reka exposes separate click and context primitives. The public parts are one family;
+// each root provides the table of its own primitives, so a part imports neither family
+// and a page that renders only `DropdownMenu` never bundles reka's ContextMenu.
 export type MenuPart =
     | "Trigger"
     | "Portal"
@@ -73,24 +28,35 @@ export type MenuPart =
     | "SubContent"
     | "ItemIndicator";
 
-const PART_PAIRS: Record<MenuPart, readonly [Component, Component]> = {
-    Trigger: [DropdownMenuTrigger, ContextMenuTrigger],
-    Portal: [DropdownMenuPortal, ContextMenuPortal],
-    Content: [DropdownMenuContent, ContextMenuContent],
-    Item: [DropdownMenuItem, ContextMenuItem],
-    CheckboxItem: [DropdownMenuCheckboxItem, ContextMenuCheckboxItem],
-    RadioItem: [DropdownMenuRadioItem, ContextMenuRadioItem],
-    RadioGroup: [DropdownMenuRadioGroup, ContextMenuRadioGroup],
-    Group: [DropdownMenuGroup, ContextMenuGroup],
-    Separator: [DropdownMenuSeparator, ContextMenuSeparator],
-    Label: [DropdownMenuLabel, ContextMenuLabel],
-    Sub: [DropdownMenuSub, ContextMenuSub],
-    SubTrigger: [DropdownMenuSubTrigger, ContextMenuSubTrigger],
-    SubContent: [DropdownMenuSubContent, ContextMenuSubContent],
-    ItemIndicator: [DropdownMenuItemIndicator, ContextMenuItemIndicator],
-};
+/** The live root state a part needs: open, modal, and the root's own close channel. */
+export interface MenuRootState {
+    readonly open: Readonly<Ref<boolean>>;
+    readonly modal: Readonly<Ref<boolean>>;
+    onOpenChange: (open: boolean) => void;
+}
 
-export function useMenuPart(part: MenuPart): ComputedRef<unknown> {
-    const trigger = useMenuTrigger();
-    return computed(() => PART_PAIRS[part][trigger.value === "context" ? 1 : 0]);
+/** One reka menu family: its anchoring, its primitives, and its root-context reader. */
+export interface MenuFamily {
+    readonly trigger: MenuTrigger;
+    readonly parts: Readonly<Record<MenuPart, Component>>;
+    /** Read the reka root context. Call it in a part's setup, inside the root. */
+    readonly injectRoot: () => MenuRootState | null;
+}
+
+const MENU_FAMILY_KEY: InjectionKey<MenuFamily> = Symbol("glass-menu-family");
+
+export function provideMenuFamily(family: MenuFamily): void {
+    provide(MENU_FAMILY_KEY, family);
+}
+
+export function useMenuFamily(): MenuFamily {
+    const family = inject(MENU_FAMILY_KEY, null);
+    if (!family) {
+        throw new Error("Menu parts must be used within DropdownMenu or ContextMenu");
+    }
+    return family;
+}
+
+export function useMenuPart(part: MenuPart): Component {
+    return useMenuFamily().parts[part];
 }

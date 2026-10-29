@@ -79,6 +79,7 @@ const uiRuntimeExports = [
     "Command",
     "DataTable",
     "Dialog",
+    "ContextMenu",
     "DropdownMenu",
     // HoverCard folded onto <Popover trigger="hover"> (clean break).
     "Label",
@@ -476,6 +477,9 @@ const exactSubpathRuntimeSurfaces = [
         subpath: "menu",
         surface: MenuSurface,
         names: [
+            // [U/B7c C3-3] The region-anchored root: `<DropdownMenu trigger="context">`
+            // became its own root, so a click-only consumer bundles no reka ContextMenu.
+            "ContextMenu",
             "DropdownMenu",
             "DropdownMenuCheckboxItem",
             "DropdownMenuContent",
