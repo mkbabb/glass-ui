@@ -1,0 +1,133 @@
+--- /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p8/Bp-crit/diffwork/bp7/src/components/dock/composables/useDockScene.ts	2026-10-29 09:49:23
++++ /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p8/Bp-crit/diffwork/bp8/src/components/dock/composables/useDockScene.ts	2026-10-29 09:49:23
+@@ -54,10 +54,16 @@
+ // Past the lead the front sweeps on the exchange's own motion: its speed is the rung's
+ // natural speed across the unit's box times the square of the lane's progress, in frame
+ // time. So the leaving unit holds while the glass sets off and goes with gathering speed as
+-// it lands, and the slot it leaves is crossed in the frames the sweep is fastest: the unit
+-// coming in behind it takes the place as the last of the leaving ink goes, so the slot
+-// keeps pace with its neighbours. The front ends two seams past the place the two
+-// meet, so the arriving unit is whole before the exchange lands.
++// it lands. The front ends two seams past the place the two meet, so the arriving unit is
++// whole before the exchange lands.
++//
++// The handoff. Where a unit comes in on the very place a unit leaves (centred on it), the
++// seam between them would cross both glyphs, and for as long as it did the place would
++// show neither. So the leaving unit's two fronts close on the place's middle, each on half
++// the sweep: it keeps the ink at its middle to its last frame and is cut below its seam no
++// sooner than one front alone would cut it. On the frame it is cut, the unit coming in
++// takes at once the part it gave up, and eases on from there. Every frame of the exchange
++// shows one of the two on that place.
+ //
+ // The seam edge is a ramp. A hard edge inside the plate cuts glyphs, and a cut glyph reads
+ // as another glyph ("B" as "3") at any ink. So every edge a seam puts inside the plate is
+@@ -260,6 +266,9 @@
+     /** The fronts' path, unit-local, armed with `to`: from [s0, e0], less the lead on
+         each side a unit arrives from, to `to` plus two seams on that side. */
+     path?: { from: [number, number]; lead: [number, number]; to: [number, number]; cut: [boolean, boolean] };
++    /** The unit arriving on its own place (The handoff): the fronts close on that place's
++        middle, each on half the sweep, and it takes what this one gives up. */
++    heir?: Mover;
+     /** It was already coming in or going out when this exchange took it (a retarget). */
+     moving?: boolean;
+     /** How much of its lead the fronts have taken, 0 → 1. */
+@@ -507,8 +516,9 @@
+         const x = m.exit!;
+         if (!x.to || !x.path) return [box.lo + x.s0, box.lo + x.e0];
+         const { from, lead, to } = x.path;
+-        const s = from[0] + Math.min(to[0] - from[0], Math.max(x.r * lead[0], x.d));
+-        const e = from[1] - Math.min(from[1] - to[1], Math.max(x.r * lead[1], x.d));
++        const d = x.heir ? x.d / 2 : x.d;
++        const s = from[0] + Math.min(to[0] - from[0], Math.max(x.r * lead[0], d));
++        const e = from[1] - Math.min(from[1] - to[1], Math.max(x.r * lead[1], d));
+         return [box.lo + s, box.lo + e];
+     }
+ 
+@@ -613,6 +623,8 @@
+         const visOf = new Map<Mover, [number, number]>();
+         const ownOf = new Map<Mover, [number, number]>();
+         const frontOf = new Map<Mover, [number, number]>();
++        /** What a unit going out on a unit's own place gave up this frame (root-local). */
++        const gift = new Map<Mover, [number, number]>();
+         for (const { m, box } of units) {
+             if (!painting(m)) {
+                 visOf.set(m, [box.lo, box.lo]);
+@@ -635,8 +647,15 @@
+                 [a, b] = exitFronts(m, box);
+                 // A front holds the units coming in only while its unit still paints: once
+                 // its fronts have met, or what is left is less than a seam, nothing of it
+-                // can meet them.
+-                if (b > a && !sliver(m, box, [Math.max(a, P.lo), Math.min(b, P.hi)], P)) frontOf.set(m, [a, b]);
++                // can meet them. A unit closing on a place a unit arrives on (The handoff)
++                // paints nothing from that frame, and the part it gives up is the arriving
++                // unit's on the same frame.
++                const v: [number, number] = [Math.max(a, P.lo), Math.min(b, P.hi)];
++                const cut = b > a && sliver(m, box, v, P);
++                if (cut && x.heir) {
++                    gift.set(x.heir, v);
++                    b = a;
++                } else if (b > a && !cut) frontOf.set(m, [a, b]);
+                 if (b < a) b = a;
+             }
+             visOf.set(m, [Math.max(a, P.lo), Math.min(b, P.hi)]);
+@@ -709,7 +728,9 @@
+         // A unit coming in uncovers with weight: each edge, a seam's or the opening plate's,
+         // gives way at most twice as far as it did the frame before (half its cut on the
+         // first frame), so an edge that a neighbour or a long frame releases eases back
+-        // instead of stepping. The glass leads; the unit follows a frame behind.
++        // instead of stepping. The glass leads; the unit follows a frame behind. The one
++        // edge that does not wait is the place a unit going out gives up: the unit coming
++        // in takes it on the frame it is given, so the place is never left to no unit.
+         for (const { m, box } of units) {
+             if (!(m.enter || m.joined) || !painting(m)) {
+                 m.reveal = null;
+@@ -723,8 +744,9 @@
+             let ce = ce0;
+             const r = m.reveal;
+             if (r) {
+-                cs = Math.max(cs, r.s - (r.ds > 0.05 ? REVEAL_GAIN * r.ds : r.s / 2));
+-                ce = Math.max(ce, r.e - (r.de > 0.05 ? REVEAL_GAIN * r.de : r.e / 2));
++                const [g0, g1] = gift.get(m) ?? [Infinity, -Infinity];
++                cs = Math.max(cs, Math.min(r.s - (r.ds > 0.05 ? REVEAL_GAIN * r.ds : r.s / 2), g0 - box.lo));
++                ce = Math.max(ce, Math.min(r.e - (r.de > 0.05 ? REVEAL_GAIN * r.de : r.e / 2), box.hi - g1));
+             }
+             m.reveal = { s: cs, e: ce, ds: r ? Math.max(0, r.s - cs) : 0, de: r ? Math.max(0, r.e - ce) : 0 };
+             const a = box.lo + cs;
+@@ -945,6 +967,8 @@
+             // …and the least that lets any one of them paint.
+             let useS = Infinity;
+             let useE = Infinity;
++            // …and the unit arriving on this one's own place (centred on it), if any.
++            let heir: Mover | undefined;
+             let seam = m.seam;
+             for (const o of units) {
+                 if (o === m || o.exit) continue;
+@@ -957,6 +981,7 @@
+                 if (Math.abs(end) <= TOUCH_PX) {
+                     const theirs = o.vis ?? [now.lo, now.hi];
+                     end = (theirs[0] + theirs[1]) / 2 - (mine[0] + mine[1]) / 2;
++                    if (Math.abs(end) <= TOUCH_PX) heir = o;
+                 }
+                 const S2 = 2 * (Math.max(m.seam, o.seam) + SEAM_SLACK_PX);
+                 if (end > TOUCH_PX) {
+@@ -1007,10 +1032,18 @@
+             const ls = ds > 0 ? Math.max(2 * S, needS - x.s0) : 0;
+             const le = de > 0 ? Math.max(2 * S, needE - (w - x.e0)) : 0;
+             const k = ls + le > room ? room / (ls + le) : 1;
++            // A unit arriving on this one's own place (and nothing on its far side) can paint
++            // its ink only where this one's has gone (The handoff): the two fronts close on
++            // the middle they share, each on half the sweep, with no lead, so this unit keeps
++            // the ink at its middle to its last frame and is cut there no sooner than one
++            // front alone would cut it.
++            const h = de > 0 ? undefined : heir;
++            const c = Math.min(x.e0, Math.max(x.s0, w / 2));
++            x.heir = h;
+             x.path = {
+                 from: [x.s0, x.e0],
+-                lead: [ls * k < useS - x.s0 ? 0 : ls * k, le * k < useE - (w - x.e0) ? 0 : le * k],
+-                to: [ds > 0 ? Math.max(x.to[0], ds) + 2 * S : x.to[0], de > 0 ? Math.min(x.to[1], w - de) - 2 * S : x.to[1]],
++                lead: h ? [0, 0] : [ls * k < useS - x.s0 ? 0 : ls * k, le * k < useE - (w - x.e0) ? 0 : le * k],
++                to: h ? [c, c] : [ds > 0 ? Math.max(x.to[0], ds) + 2 * S : x.to[0], de > 0 ? Math.min(x.to[1], w - de) - 2 * S : x.to[1]],
+                 cut: [ds > 0, de > 0],
+             };
+         }
