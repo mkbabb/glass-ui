@@ -1,0 +1,21 @@
+# 2026-10-29 01:59:57 start · load { 7.75 8.61 9.15 }
+# cmd: node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-A6/probe/ca6-probe.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt/.c7out/builds/c7 --engine webkit --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7/C-A7/json/c7-ca6 --only idle,chip,prmplant
+# CA6-probe · C-A6's adversarial cells (CK-02 PRM plant, CK-16 idle engaged, CK-21 crest inputs, D-2 preset chip)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt/.c7out/builds/c7 · engine webkit · lock wait 0.0 s · other headless processes: chromium 8, webkit 0 · load 7.8/8.6/9.1 at start
+# scene app: harness scenes/App.vue (sha1 9e68012e9522)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  PASS       prmplant switch light · PLANT (pop resurrected under reduce): scale range 0.0679 over 70 frames · PASS here means the PRM cell's bound (< 0.002) sees the planted pop; FAIL means the plant did not reach the face (the PRM cell would pass a resurrected pop) · load 7.8/8.6/9.1
+  PASS       prmplant checkbox light · PLANT (pop resurrected under reduce): scale range 0.0678 over 70 frames · PASS here means the PRM cell's bound (< 0.002) sees the planted pop; FAIL means the plant did not reach the face (the PRM cell would pass a resurrected pop) · load 7.8/8.6/9.1
+  PASS       prmplant radio light · PLANT (pop resurrected under reduce): scale range 0.0679 over 70 frames · PASS here means the PRM cell's bound (< 0.002) sees the planted pop; FAIL means the plant did not reach the face (the PRM cell would pass a resurrected pop) · load 7.9/8.6/9.2
+  FAIL       prmplant tabs light · PLANT (pop resurrected under reduce): scale range 0.0000 over 69 frames · PASS here means the PRM cell's bound (< 0.002) sees the planted pop; FAIL means the plant did not reach the face (the PRM cell would pass a resurrected pop) · load 7.9/8.6/9.2
+  PASS       prmplant toggle light · PLANT (pop resurrected under reduce): scale range 0.0450 over 69 frames · PASS here means the PRM cell's bound (< 0.002) sees the planted pop; FAIL means the plant did not reach the face (the PRM cell would pass a resurrected pop) · load 7.9/8.6/9.2
+  PASS       prmplant chip light · PLANT (pop resurrected under reduce): scale range 0.0453 over 70 frames · PASS here means the PRM cell's bound (< 0.002) sees the planted pop; FAIL means the plant did not reach the face (the PRM cell would pass a resurrected pop) · load 7.5/8.5/9.1
+  PASS       prmplant accordion light · PLANT (pop resurrected under reduce): scale range 0.0453 over 70 frames · PASS here means the PRM cell's bound (< 0.002) sees the planted pop; FAIL means the plant did not reach the face (the PRM cell would pass a resurrected pop) · load 7.5/8.5/9.1
+  REPORT     idle slider keyboard-engaged · rest · rAF calls 0.0/s · ResizeObserver callbacks 0.0/s · layouts n/a (no counter)/s · style recalcs n/a/s · [data-engaged] 0 · load 10.0/9.0/9.3
+  REPORT     idle slider keyboard-engaged · engaged idle · rAF calls 98.3/s · ResizeObserver callbacks 98.3/s · layouts n/a (no counter)/s · style recalcs n/a/s · [data-engaged] 1 · load 10.0/9.0/9.3
+  REPORT     idle slider keyboard-engaged · engaged idle, scrolled off-screen · rAF calls 98.0/s · ResizeObserver callbacks 98.0/s · layouts n/a (no counter)/s · style recalcs n/a/s · [data-engaged] 1 · engaged box -2904..-2882 of 500 · load 10.0/9.0/9.3
+  REPORT     idle slider keyboard-engaged · after Escape · rAF calls 0.0/s · ResizeObserver callbacks 0.0/s · layouts n/a (no counter)/s · style recalcs n/a/s · [data-engaged] 0 · load 10.0/9.0/9.3
+  REPORT     chip preset light · rest → hover: 0.0 % of pixels changed ≥ 16 levels, scale ×1.0000 → ×1.0000 · hover → held press 250 ms: 47.0 %, scale ×1.0000 · load 10.0/9.1/9.3
+  REPORT     chip preset dark · rest → hover: 0.0 % of pixels changed ≥ 16 levels, scale ×1.0000 → ×1.0000 · hover → held press 250 ms: 48.3 %, scale ×1.0000 · load 10.0/9.1/9.3
+CA6-probe webkit FAIL · 6 pass, 1 fail, 0 unmeasured of 7 gating cells (6 reported) · load 7.8/8.6/9.1 at start, 10.0/9.1/9.3 at end
+# 2026-10-29 02:00:29 end · exit 1 · load { 10.04 9.06 9.29 }

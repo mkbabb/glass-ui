@@ -1,0 +1,63 @@
+# 2026-10-28 17:37:47 C-A7 consumer greps · glass-ui HEAD 71a668bbf
+## atlas HEAD 069708a
+## bbnf-buddy HEAD 2857c2f
+## chicago HEAD 
+## keyframes.js HEAD 5c48e3da
+## slides HEAD 7dcbb3b
+## speedtest HEAD e2d9444d
+## value.js HEAD d98e6ae45
+## fourier-analysis HEAD 3a0e709
+## sci-report HEAD bbcbd503
+# G1 .glass-card/.glass-specular-track in .vue/.ts/.html · G2 material classes in TS/TSX strings · G3 material classes inside :class bindings
+# G4 material class on an element with a handler/role (any line of its open tag) · G5 :active on any material class in consumer CSS
+atlas G1=0 G2=0 G3=0 G5=0
+bbnf-buddy G1=0 G2=0 G3=0 G5=0
+chicago G1=0 G2=0 G3=0 G5=0
+keyframes.js G1=1 G2=1 G3=0 G5=0
+slides G1=0 G2=0 G3=0 G5=0
+speedtest G1=3 G2=1 G3=0 G5=0
+value.js G1=4 G2=2 G3=0 G5=0
+fourier-analysis G1=0 G2=7 G3=0 G5=0
+sci-report G1=0 G2=0 G3=0 G5=1
+## G1 listing
+keyframes.js/demo/app/scene/scenes.ts:53: *                    background. The stage keeps its glass-card register (W11
+speedtest/src/features/speedtest/ui/CompleteBadge.vue:16:        class="complete-badge glass-specular-track"
+speedtest/src/features/speedtest/ui/CompleteBadge.vue:97:       `glass-specular-track`: the medallion carries glass-ui's pointer-
+speedtest/src/features/speedtest/ui/CompleteBadge.vue:101:       `.glass-specular-track` now owns. `isolation: isolate` keeps the
+value.js/demo/workbenches/gradient/GradientVisualizer/easing/EasingAuthoringStage.vue:15: * 2. Wells, not cards — the hardcoded `.glass-card` internals become flat
+value.js/demo/workbenches/gradient/GradientVisualizer/easing/EasingAuthoringStage.vue:112: * 10.1.0 the root wears `glass-resting` and no `.glass-card` exists, so the
+value.js/demo/workbenches/gradient/GradientVisualizer/easing/EasingAuthoringStage.vue:113: * former `.glass-card` selector matched nothing and the well painted as a
+value.js/e2e/smoke/oracles/o17-easing-composition.spec.ts:249:    // `[data-slot="easing-picker"]`; no `.glass-card` exists (re-baselined
+## G2 listing
+keyframes.js/demo/app/scene/scenes.ts:53: *                    background. The stage keeps its glass-card register (W11
+speedtest/tests/e2e/chassis-contract.spec.ts:34:    // meter card to the `quiet` tier (`glass-quiet`); the values are
+value.js/e2e/smoke/a11y-modality-support.spec.ts:249:        `[BR-7] --glass-level: '${glassLevelBefore}' → '${glassLevelAfter}'; --glass-tint-strength: '${tintBefore}' → '${tintAfter}'; glass-resting
+value.js/e2e/smoke/views/gradient.spec.ts:350:    //    The chip is a SIBLING of the bar (its glass-wash contain:paint
+fourier-analysis/web/e2e/f-w14u-paper.spec.ts:86:    test("UIA-F-61: the article is glass Card, the rail glass-quiet, one light source, one top line", async ({ page }) => {
+fourier-analysis/web/e2e/f-w14u-paper.spec.ts:98:                navQuiet: nav.classList.contains("glass-quiet"),
+fourier-analysis/web/e2e/f-w14u-paper.spec.ts:154:    // a glass-quiet chip pinned to the viewport corner, over the running text
+fourier-analysis/web/e2e/f-w14u-paper.spec.ts:167:                plate: el.classList.contains("glass-quiet"),
+fourier-analysis/web/e2e/f-w14v-pd.spec.ts:14: * timeline caret, which is its own `glass-floating` surface shown only while
+fourier-analysis/web/e2e/f-w14-uia-r2.spec.ts:200:                plate: el.classList.contains("glass-overlay-plate") && el.getAttribute("data-reveal") === "menu",
+fourier-analysis/web/e2e/f-w14v-u4.spec.ts:289:                floating: plate.classList.contains("glass-floating"),
+## G3 listing
+## setCursor/clearCursor receivers
+keyframes.js/demo/app/hero/HeroAurora.vue:223:    auroraRef.value?.setCursor(e.clientX / (width.value || 1), e.clientY / (height.value || 1));
+keyframes.js/demo/app/hero/HeroAurora.vue:227:    auroraRef.value?.clearCursor();
+value.js/demo/app/composables/boot/useAtmosphere.ts:315:                aurora.setCursor(x, y, ATMOSPHERE_POINTER_STRENGTH);
+value.js/demo/app/composables/boot/useAtmosphere.ts:320:            aurora.clearCursor(); // decay-to-rest, never a snap
+## <Aurora component sites (the root leg exists only on the component)
+atlas/src/platform/chrome/background/Atmosphere.vue:44:// THE FIELDS. <Aurora> is the platform's thin glass-ui consumer (it keeps the oklab
+atlas/src/platform/chrome/background/Atmosphere.vue:137:        <Aurora v-if="field === 'aurora'" class="atmosphere__field" />
+atlas/src/platform/chrome/background/Aurora.vue:2:// Aurora — a THIN glass-ui <Aurora> consumer (C.W6.a Scope 2; fd-atmosphere-suffusion §3
+atlas/src/platform/chrome/background/Aurora.vue:12:// derives from and hand glass-ui's <Aurora> the pole-derived reactive AuroraConfig.
+atlas/src/platform/chrome/background/Aurora.vue:97:// is a reactive AuroraConfig glass-ui deep-watches; we hand it straight to <Aurora :config>. The
+atlas/src/platform/chrome/background/Aurora.vue:114:// THE O-F4 ACTIVITY BELT (motion-arch §2.1 MOVE 4). glass-ui's <Aurora> exposes imperative
+atlas/src/platform/chrome/background/Aurora.vue:163:   <Aurora> fills this wrapper (its own canvas + CSS placeholder size to the container via
+keyframes.js/demo/app/hero/HeroAurora.vue:25:    <Aurora
+speedtest/src/App.vue:48:            <Aurora
+speedtest/src/App.vue:307:// `0.5` muted ceiling is reversed (see the `<Aurora>` mount comment), so the
+speedtest/src/App.vue:363:// `<Aurora>` adapts its substrate via `renderMode` ("webgl" | "css" | "auto").
+speedtest/src/App.vue:404:// AH.W3-C: rIC hydration gate for Aurora. Holding the `<Aurora>` mount off
+speedtest/src/App.vue:420:// catches synchronous reactivity/lifecycle errors) cannot see it. `<Aurora>`'s
+sci-report/dashboards/home/DashboardView.vue:196:             <Aurora> field beneath the content plates, with the paper grain at the floor

@@ -1,0 +1,51 @@
+# 2026-10-29 00:14:12 start · load { 49.95 33.66 34.03 }
+# cmd: --light --timeout 15 -- node /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt/node_modules/vitest/vitest.mjs run --maxWorkers=2 tests/components/custom/aurora/Aurora.cursor-writer.test.ts
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt
+
+ ❯ tests/components/custom/aurora/Aurora.cursor-writer.test.ts (2 tests | 1 failed) 82ms
+     × a consumer's write takes the cursor: the root leg stands down for the mount's life 12ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/custom/aurora/Aurora.cursor-writer.test.ts > Aurora · one cursor writer > a consumer's write takes the cursor: the root leg stands down for the mount's life
+AssertionError: expected [ [ 'set', 0.9, 0.1, 0.6 ], …(3) ] to deeply equal [ [ 'set', 0.9, 0.1, 0.6 ], …(1) ]
+
+- Expected
++ Received
+
+@@ -4,8 +4,16 @@
+      0.9,
+      0.1,
+      0.6,
+    ],
+    [
++     "set",
++     0.25,
++     0.25,
++   ],
++   [
++     "clear",
++   ],
++   [
+      "clear",
+    ],
+  ]
+
+ ❯ tests/components/custom/aurora/Aurora.cursor-writer.test.ts:62:23
+     60|         await root.trigger("pointerleave");
+     61|         (w.vm as unknown as Exposed).clearCursor();
+     62|         expect(calls).toEqual([["set", 0.9, 0.1, 0.6], ["clear"]]);
+       |                       ^
+     63|         w.unmount();
+     64|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  00:14:14
+   Duration  2.16s (transform 872ms, setup 214ms, import 870ms, tests 82ms, environment 690ms)
+
+# 2026-10-29 00:14:22 end · exit 1 · load { 46.22 33.40 33.93 }

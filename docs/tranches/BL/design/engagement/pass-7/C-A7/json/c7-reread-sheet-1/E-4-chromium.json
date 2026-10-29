@@ -1,0 +1,37 @@
+{
+ "id": "E-4",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt/.c7out/builds/c7"
+ },
+ "loadStart": "14.6/13.8/12.6",
+ "loadEnd": "12.4/13.3/12.5",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "E-4 sheet fling carries velocity",
+   "status": "PASS",
+   "line": "axis y, dir −1, page frame · fling: carry 255.00 px, settles 255.00 px past release · still: carry 5.00 px, settles 5.00 px · difference: carry 250.00 px, settle 250.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 230 frames, median 7.8 ms",
+   "load": "13.8/13.7/12.6"
+  },
+  {
+   "name": "E-4 sheet release continuity",
+   "status": "PASS",
+   "line": "largest one-frame move on release: fling 44.7 px, still 0.3 px · during the drive: fling 40.0 px, still 40.0 px (bound ≤ drive × 1.5 + 2 = 62.0 px)",
+   "load": "13.8/13.7/12.6"
+  },
+  {
+   "name": "E-4 sheet repeat landing",
+   "status": "PASS",
+   "line": "8 fling runs, the same drive: 1: v 952 px/s (80 px / 84.0 ms over 4 samples), carry 255.00, land -35.0 · 2: v 1018 px/s (80 px / 78.6 ms over 4 samples), carry 255.00, land -35.0 · 3: v 1054 px/s (80 px / 75.9 ms over 4 samples), carry 255.00, land -35.0 · 4: v 1028 px/s (80 px / 77.8 ms over 4 samples), carry 255.00, land -35.0 · 5: v 969 px/s (80 px / 82.6 ms over 4 samples), carry 255.00, land -35.0 · 6: v 996 px/s (80 px / 80.3 ms over 4 samples), carry 255.00, land -35.0 · 7: v 1008 px/s (80 px / 79.4 ms over 4 samples), carry 255.00, land -35.0 · 8: v 1043 px/s (80 px / 76.7 ms over 4 samples), carry 255.00, land -35.0 · by landing: land -35.0 px: 8 run(s) at 952, 1018, 1054, 1028, 969, 996, 1008, 1043 px/s · (bound: two runs the event clock cannot tell apart (|Δv| ≤ the sum of their ±2q/dt bands, q 0.1 ms) land within 2 px, and no faster run lands short of a slower one; a fling ≥ 100 px/s carries > 0.00 px; velocity: the release rule's chord over 100 ms, ring 8, replicated from the page's input events)",
+   "load": "12.8/13.4/12.5"
+  },
+  {
+   "name": "E-4 sheet release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 328.1 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 255.0 px",
+   "load": "12.4/13.3/12.5"
+  }
+ ]
+}

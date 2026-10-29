@@ -1,0 +1,13 @@
+# 2026-10-29 00:05:44 start · load { 25.71 34.61 37.63 }
+# cmd: --timeout 60 -- node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/e4-momentum.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt/.c7out/builds/c7 --wt /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt --engine chromium --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7/C-A7/json/c7-tabs4-2 --scenes tabsdrag
+# E-4 · CK-05 momentum on the visible body, without a teleport
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt/.c7out/builds/c7 · engine chromium · lock wait 0.0 s · other headless processes: chromium 4, webkit 2 · load 25.7/34.6/37.6 at start
+# scene app: harness scenes/App.vue (sha1 9e68012e9522)
+# chromium 149.0.7827.55
+# narrowed to scenes tabsdrag
+  PASS       E-4 tabsdrag fling carries velocity · axis x, page frame · fling: carry 39.28 px, settles 36.63 px past release · still: carry 1.21 px, settles 1.00 px · difference: carry 38.07 px, settle 35.63 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 256 frames, median 8.0 ms · load 23.5/33.8/37.3
+  PASS       E-4 tabsdrag release continuity · largest one-frame move on release: fling 15.0 px, still 28.5 px · during the drive: fling 43.7 px, still 43.7 px (bound ≤ drive × 1.5 + 2 = 67.5 px) · load 23.5/33.8/37.3
+  PASS       E-4 tabsdrag repeat landing · 3 fling runs, the same drive: 1: v 1078 px/s (80 px / 74.2 ms over 4 samples), carry 39.28, land 247.8 · 2: v 1048 px/s (80 px / 76.3 ms over 4 samples), carry 31.92, land 247.8 · 3: v 1161 px/s (80 px / 68.9 ms over 4 samples), carry 40.13, land 247.8 · by landing: land 247.8 px: 3 run(s) at 1078, 1048, 1161 px/s · (bound: two runs the event clock cannot tell apart (|Δv| ≤ the sum of their ±2q/dt bands, q 0.1 ms) land within 2 px, and no faster run lands short of a slower one; a fling ≥ 100 px/s carries > 0.00 px; velocity: the release rule's chord over 100 ms, ring 8, replicated from the page's input events) · load 23.9/33.8/37.3
+  PASS       E-4 tabsdrag release PRM · reduce · moved 156.6 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 36.6 px · load 23.4/33.5/37.2
+E-4 chromium PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 25.7/34.6/37.6 at start, 23.4/33.5/37.2 at end
+# 2026-10-29 00:06:07 end · exit 0 · load { 23.07 33.25 37.05 }

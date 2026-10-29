@@ -1,0 +1,31 @@
+{
+ "id": "E-4",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt/.c7out/builds/c7"
+ },
+ "loadStart": "8.2/9.0/9.1",
+ "loadEnd": "7.2/8.6/9.0",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "E-4 slider fling carries velocity",
+   "status": "PASS",
+   "line": "axis x, leading edge, page frame · 5 reads, every one must pass: [1: carry 13.46 / settle -2.08 px pass · 2: carry 13.51 / settle -1.93 px pass · 3: carry 13.49 / settle -2.09 px pass · 4: carry 13.46 / settle -2.10 px pass · 5: carry 13.38 / settle -2.08 px pass] (5 of 5 pass) · read 1 in full: fling: carry 13.46 px, settles -9.40 px past release · still: carry 0.00 px, settles -7.32 px · difference: carry 13.46 px, settle -2.08 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 196 frames, median 10.0 ms",
+   "load": "7.2/8.6/9.0"
+  },
+  {
+   "name": "E-4 slider release continuity",
+   "status": "PASS",
+   "line": "over 5 reads, each against its own drive (6.9/67.4, 7.8/67.3, 6.9/67.3, 7.3/67.2, 6.4/67.2 px; 0 over) · read 1: largest one-frame move on release: fling 6.9 px, still 0.7 px · during the drive: fling 43.6 px, still 43.4 px (bound ≤ drive × 1.5 + 2 = 67.4 px)",
+   "load": "7.2/8.6/9.0"
+  },
+  {
+   "name": "E-4 slider release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 79.2 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px",
+   "load": "7.2/8.6/9.0"
+  }
+ ]
+}

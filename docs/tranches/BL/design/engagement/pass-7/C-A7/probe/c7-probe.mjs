@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// C-A7 adversarial probe (D5 pass 7, the fresh critic of the candidate HEAD + P-E7.patch). Not a witness: each cell is
+// C-A7 adversarial probe (C-A7b: stateless controls driven by element.click(), as E-2 drives them; an undriven control is UNMEASURED) (D5 pass 7, the fresh critic of the candidate HEAD + P-E7.patch). Not a witness: each cell is
 // scored in C-A7.md against the CK row it would break, or recorded as a next-pass class. App: the harness's own scene
 // app. Through the harness's lib: one browser per run, a fresh context per cell, every page/context closed in a
 // finally (P.close), the browser closed by witness(); WebKit relaunches every NAV_CAP navigations (H3-1). Stills only.
@@ -81,7 +81,7 @@ await witness("C-A7 probe", "C-A7's adversarial cells (chip hover/press fine rea
         const P = await openPage(E, T, sc, { theme: "light", ...(plant ? { plant } : {}) });
         try {
           await P.page.waitForTimeout(400);
-          const fr = await P.page.evaluate(([tg, face]) => new Promise((ok) => { const el = () => document.querySelector(face) ?? document.querySelector(tg); const fr = []; const t0 = performance.now(); window.__e.commit(); const tick = () => { const e = el(); fr.push(e ? window.__eff(e).s : NaN); if (performance.now() - t0 < 800) requestAnimationFrame(tick); else ok(fr); }; requestAnimationFrame(tick); }), [m.target, m.face ?? m.target]);
+          const fr = await P.page.evaluate(([tg, face, stateless]) => new Promise((ok) => { const el = () => document.querySelector(face) ?? document.querySelector(tg); const fr = []; const t0 = performance.now(); if (stateless) document.querySelector(tg).click(); else window.__e.commit(); const tick = () => { const e = el(); fr.push(e ? window.__eff(e).s : NaN); if (performance.now() - t0 < 800) requestAnimationFrame(tick); else ok(fr); }; requestAnimationFrame(tick); }), [m.target, m.face ?? m.target, !!m.stateless]);
           const s = fr.filter(Number.isFinite);
           const crest = await P.page.evaluate(([tg, face]) => { const e = document.querySelector(face) ?? document.querySelector(tg); return e ? getComputedStyle(e).getPropertyValue("--rung-crest").trim() : "none"; }, [m.target, m.face ?? m.target]);
           return { peak: s.length ? Math.max(...s) : NaN, errs: P.errors.slice(), crest };
@@ -89,6 +89,8 @@ await witness("C-A7 probe", "C-A7's adversarial cells (chip hover/press fine rea
       };
       const ctl = await guard(`crestinput control ${sc}`, () => runOnce(null), 60000);
       if (ctl.crashed) { cell(`crestinput control ${sc}`, "FAIL", ctl.line); continue; }
+      // C-A7b: a control that did not pop drove nothing; its planted cells would read "intact" vacuously
+      if (!(ctl.peak > 1.005)) { cell(`crestinput ${sc}`, "UNMEASURED", `NOT DRIVEN: the unplanted commit popped ×${f(ctl.peak, 4)}`); continue; }
       cell(`crestinput control ${sc}`, "REPORT", `unplanted: peak ×${f(ctl.peak, 4)} · --rung-crest ${ctl.crest} · console errors ${ctl.errs.length}`);
       for (const tok of ["--scale-press", "--scale-engage"]) {
         const name = `crestinput ${tok} ${sc}`;

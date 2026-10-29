@@ -1,0 +1,12 @@
+# 2026-10-29 02:09:21 start · load { 7.20 8.60 8.97 }
+# cmd: node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/e4-momentum.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt/.c7out/builds/c7 --wt /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt --engine webkit --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7/C-A7/json/c7-reread-slider-2 --scenes slider
+# E-4 · CK-05 momentum on the visible body, without a teleport
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt/.c7out/builds/c7 · engine webkit · lock wait 0.0 s · other headless processes: chromium 0, webkit 0 · load 7.2/8.6/9.0 at start
+# scene app: harness scenes/App.vue (sha1 9e68012e9522)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# narrowed to scenes slider
+  PASS       E-4 slider fling carries velocity · axis x, leading edge, page frame · 5 reads, every one must pass: [1: carry 13.56 / settle -2.12 px pass · 2: carry 12.90 / settle -2.20 px pass · 3: carry 13.64 / settle -2.01 px pass · 4: carry 13.30 / settle -2.10 px pass · 5: carry 13.28 / settle -2.11 px pass] (5 of 5 pass) · read 1 in full: fling: carry 13.56 px, settles -9.45 px past release · still: carry 0.00 px, settles -7.32 px · difference: carry 13.56 px, settle -2.12 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 196 frames, median 10.0 ms · load 10.7/9.2/9.2
+  PASS       E-4 slider release continuity · over 5 reads, each against its own drive (7.8/67.0, 4.9/67.2, 7.0/67.0, 6.4/66.9, 6.4/67.3 px; 0 over) · read 1: largest one-frame move on release: fling 7.8 px, still 0.7 px · during the drive: fling 43.4 px, still 43.4 px (bound ≤ drive × 1.5 + 2 = 67.0 px) · load 10.7/9.2/9.2
+  PASS       E-4 slider release PRM · reduce · moved 79.2 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px · load 10.7/9.2/9.2
+E-4 webkit PASS · 3 pass, 0 fail, 0 unmeasured of 3 gating cells (0 reported) · load 7.2/8.6/9.0 at start, 10.7/9.2/9.2 at end
+# 2026-10-29 02:10:02 end · exit 0 · load { 10.73 9.24 9.18 }

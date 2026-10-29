@@ -1,0 +1,13 @@
+# 2026-10-29 02:01:27 start · load { 8.29 8.92 9.24 }
+# cmd: node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/e4-momentum.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt/.c7out/builds/c7 --wt /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt --engine webkit --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7/C-A7/json/c7-tabs4-2 --scenes tabsdrag
+# E-4 · CK-05 momentum on the visible body, without a teleport
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt/.c7out/builds/c7 · engine webkit · lock wait 0.0 s · other headless processes: chromium 8, webkit 0 · load 8.3/8.9/9.2 at start
+# scene app: harness scenes/App.vue (sha1 9e68012e9522)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# narrowed to scenes tabsdrag
+  PASS       E-4 tabsdrag fling carries velocity · axis x, page frame · fling: carry 37.15 px, settles 31.54 px past release · still: carry 1.19 px, settles 0.98 px · difference: carry 35.97 px, settle 30.55 px (bound: either ≥ 4, both at rest) · body opacity ≥ 1.000 · 197 frames, median 10.0 ms · load 8.0/8.9/9.2
+  PASS       E-4 tabsdrag release continuity · largest one-frame move on release: fling 18.1 px, still 30.6 px · during the drive: fling 41.7 px, still 41.7 px (bound ≤ drive × 1.5 + 2 = 64.6 px) · load 8.0/8.9/9.2
+  PASS       E-4 tabsdrag repeat landing · 3 fling runs, the same drive: 1: v 1333 px/s (80 px / 60.0 ms over 4 samples), carry 37.15, land 247.8 · 2: v 1379 px/s (80 px / 58.0 ms over 4 samples), carry 37.78, land 247.8 · 3: v 1356 px/s (80 px / 59.0 ms over 4 samples), carry 42.58, land 247.8 · by landing: land 247.8 px: 3 run(s) at 1333, 1379, 1356 px/s · (bound: two runs the event clock cannot tell apart (|Δv| ≤ the sum of their ±2q/dt bands, q 1 ms) land within 2 px, and no faster run lands short of a slower one; a fling ≥ 100 px/s carries > 0.00 px; velocity: the release rule's chord over 100 ms, ring 8, replicated from the page's input events) · load 9.9/9.2/9.3
+  PASS       E-4 tabsdrag release PRM · reduce · moved 120.0 px · fling: carry 36.66 px, settles 36.66 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 36.7 px · load 9.6/9.2/9.3
+E-4 webkit PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 8.3/8.9/9.2 at start, 9.6/9.2/9.3 at end
+# 2026-10-29 02:01:45 end · exit 0 · load { 9.56 9.17 9.32 }

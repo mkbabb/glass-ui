@@ -1,0 +1,91 @@
+{
+ "id": "CA6-probe",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt/.c7out/builds/c7"
+ },
+ "loadStart": "7.8/8.6/9.1",
+ "loadEnd": "10.0/9.1/9.3",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "prmplant switch light",
+   "status": "PASS",
+   "line": "PLANT (pop resurrected under reduce): scale range 0.0679 over 70 frames · PASS here means the PRM cell's bound (< 0.002) sees the planted pop; FAIL means the plant did not reach the face (the PRM cell would pass a resurrected pop)",
+   "load": "7.8/8.6/9.1"
+  },
+  {
+   "name": "prmplant checkbox light",
+   "status": "PASS",
+   "line": "PLANT (pop resurrected under reduce): scale range 0.0678 over 70 frames · PASS here means the PRM cell's bound (< 0.002) sees the planted pop; FAIL means the plant did not reach the face (the PRM cell would pass a resurrected pop)",
+   "load": "7.8/8.6/9.1"
+  },
+  {
+   "name": "prmplant radio light",
+   "status": "PASS",
+   "line": "PLANT (pop resurrected under reduce): scale range 0.0679 over 70 frames · PASS here means the PRM cell's bound (< 0.002) sees the planted pop; FAIL means the plant did not reach the face (the PRM cell would pass a resurrected pop)",
+   "load": "7.9/8.6/9.2"
+  },
+  {
+   "name": "prmplant tabs light",
+   "status": "FAIL",
+   "line": "PLANT (pop resurrected under reduce): scale range 0.0000 over 69 frames · PASS here means the PRM cell's bound (< 0.002) sees the planted pop; FAIL means the plant did not reach the face (the PRM cell would pass a resurrected pop)",
+   "load": "7.9/8.6/9.2"
+  },
+  {
+   "name": "prmplant toggle light",
+   "status": "PASS",
+   "line": "PLANT (pop resurrected under reduce): scale range 0.0450 over 69 frames · PASS here means the PRM cell's bound (< 0.002) sees the planted pop; FAIL means the plant did not reach the face (the PRM cell would pass a resurrected pop)",
+   "load": "7.9/8.6/9.2"
+  },
+  {
+   "name": "prmplant chip light",
+   "status": "PASS",
+   "line": "PLANT (pop resurrected under reduce): scale range 0.0453 over 70 frames · PASS here means the PRM cell's bound (< 0.002) sees the planted pop; FAIL means the plant did not reach the face (the PRM cell would pass a resurrected pop)",
+   "load": "7.5/8.5/9.1"
+  },
+  {
+   "name": "prmplant accordion light",
+   "status": "PASS",
+   "line": "PLANT (pop resurrected under reduce): scale range 0.0453 over 70 frames · PASS here means the PRM cell's bound (< 0.002) sees the planted pop; FAIL means the plant did not reach the face (the PRM cell would pass a resurrected pop)",
+   "load": "7.5/8.5/9.1"
+  },
+  {
+   "name": "idle slider keyboard-engaged · rest",
+   "status": "REPORT",
+   "line": "rAF calls 0.0/s · ResizeObserver callbacks 0.0/s · layouts n/a (no counter)/s · style recalcs n/a/s · [data-engaged] 0",
+   "load": "10.0/9.0/9.3"
+  },
+  {
+   "name": "idle slider keyboard-engaged · engaged idle",
+   "status": "REPORT",
+   "line": "rAF calls 98.3/s · ResizeObserver callbacks 98.3/s · layouts n/a (no counter)/s · style recalcs n/a/s · [data-engaged] 1",
+   "load": "10.0/9.0/9.3"
+  },
+  {
+   "name": "idle slider keyboard-engaged · engaged idle, scrolled off-screen",
+   "status": "REPORT",
+   "line": "rAF calls 98.0/s · ResizeObserver callbacks 98.0/s · layouts n/a (no counter)/s · style recalcs n/a/s · [data-engaged] 1 · engaged box -2904..-2882 of 500",
+   "load": "10.0/9.0/9.3"
+  },
+  {
+   "name": "idle slider keyboard-engaged · after Escape",
+   "status": "REPORT",
+   "line": "rAF calls 0.0/s · ResizeObserver callbacks 0.0/s · layouts n/a (no counter)/s · style recalcs n/a/s · [data-engaged] 0",
+   "load": "10.0/9.0/9.3"
+  },
+  {
+   "name": "chip preset light",
+   "status": "REPORT",
+   "line": "rest → hover: 0.0 % of pixels changed ≥ 16 levels, scale ×1.0000 → ×1.0000 · hover → held press 250 ms: 47.0 %, scale ×1.0000",
+   "load": "10.0/9.1/9.3"
+  },
+  {
+   "name": "chip preset dark",
+   "status": "REPORT",
+   "line": "rest → hover: 0.0 % of pixels changed ≥ 16 levels, scale ×1.0000 → ×1.0000 · hover → held press 250 ms: 48.3 %, scale ×1.0000",
+   "load": "10.0/9.1/9.3"
+  }
+ ]
+}

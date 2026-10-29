@@ -4,7 +4,7 @@
 C=/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7/C-A7
 P7=/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7
 H=/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness
-WT=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7/wt
+WT=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt
 cd $WT
 th() { { git diff HEAD; git status --short; for f in $(git ls-files --others --exclude-standard -- src tests); do cat $f; done; } | shasum | cut -c1-12; }
 T0=$(th); echo "# $(date '+%F %T') candidate tree $T0"

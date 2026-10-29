@@ -1,0 +1,31 @@
+{
+ "id": "C-A7 probe",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt/.c7out/builds/plant-clip6"
+ },
+ "loadStart": "10.9/9.4/9.3",
+ "loadEnd": "10.8/9.4/9.3",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "clipwheel · keyboard promoted, wheel-scrolled (CK-20)",
+   "status": "FAIL",
+   "line": "scrollTop per wheel event 261/264/267/270/273/276/279/282/285/288/291/294/297/300 · px² of the strip above the scroller differing from the released strip: 365 / 1259 / 1717 / 2182 / 2653 / 3124 / 3589 / 0 / 0 / 0 / 0 / 0 / 0 / 0 · largest 3589, largest adjacent change 3589 (bound 1074 = 3 rows × 358 px) · clip at the last step \"\"",
+   "load": "10.9/9.4/9.3"
+  },
+  {
+   "name": "cliploupe · touch hold, rest box 4 px below the scroller's top edge",
+   "status": "REPORT",
+   "line": "promoted true engaged true · loupe 96.6..177.1 px (opacity 1.00), the scroller's clip edge at 171.7 px · 75.2 of 80.6 px of the loupe lie above the edge (93 % cut by the clip) · clip-path \"\"",
+   "load": "10.4/9.3/9.2"
+  },
+  {
+   "name": "cliploupe · touch hold, rest box mid-box (control)",
+   "status": "REPORT",
+   "line": "promoted true engaged true · loupe 139.6..220.1 px (opacity 1.00), the scroller's clip edge at 171.7 px · 32.2 of 80.6 px of the loupe lie above the edge (40 % cut by the clip) · clip-path \"\"",
+   "load": "10.8/9.4/9.3"
+  }
+ ]
+}

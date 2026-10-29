@@ -1,0 +1,22 @@
+# 2026-10-29 00:02:15 start · load { 38.74 37.75 39.15 }
+# cmd: --timeout 60 -- node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6/C-A6/probe/ca6-probe.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt/.c7out/builds/c7 --engine chromium --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7/C-A7/json/c7-ca6 --only idle,chip,prmplant
+[guarded] waiting for headroom (load 37 > 36)
+# CA6-probe · C-A6's adversarial cells (CK-02 PRM plant, CK-16 idle engaged, CK-21 crest inputs, D-2 preset chip)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt/.c7out/builds/c7 · engine chromium · lock wait 0.0 s · other headless processes: chromium 4, webkit 2 · load 34.1/36.6/38.7 at start
+# scene app: harness scenes/App.vue (sha1 9e68012e9522)
+# chromium 149.0.7827.55
+  PASS       prmplant switch light · PLANT (pop resurrected under reduce): scale range 0.0679 over 86 frames · PASS here means the PRM cell's bound (< 0.002) sees the planted pop; FAIL means the plant did not reach the face (the PRM cell would pass a resurrected pop) · load 33.9/36.6/38.6
+  PASS       prmplant checkbox light · PLANT (pop resurrected under reduce): scale range 0.0677 over 86 frames · PASS here means the PRM cell's bound (< 0.002) sees the planted pop; FAIL means the plant did not reach the face (the PRM cell would pass a resurrected pop) · load 33.9/36.6/38.6
+  PASS       prmplant radio light · PLANT (pop resurrected under reduce): scale range 0.0678 over 92 frames · PASS here means the PRM cell's bound (< 0.002) sees the planted pop; FAIL means the plant did not reach the face (the PRM cell would pass a resurrected pop) · load 33.9/36.6/38.6
+  FAIL       prmplant tabs light · PLANT (pop resurrected under reduce): scale range 0.0000 over 91 frames · PASS here means the PRM cell's bound (< 0.002) sees the planted pop; FAIL means the plant did not reach the face (the PRM cell would pass a resurrected pop) · load 33.0/36.3/38.6
+  PASS       prmplant toggle light · PLANT (pop resurrected under reduce): scale range 0.0452 over 93 frames · PASS here means the PRM cell's bound (< 0.002) sees the planted pop; FAIL means the plant did not reach the face (the PRM cell would pass a resurrected pop) · load 33.0/36.3/38.6
+  PASS       prmplant chip light · PLANT (pop resurrected under reduce): scale range 0.0452 over 92 frames · PASS here means the PRM cell's bound (< 0.002) sees the planted pop; FAIL means the plant did not reach the face (the PRM cell would pass a resurrected pop) · load 33.0/36.3/38.6
+  PASS       prmplant accordion light · PLANT (pop resurrected under reduce): scale range 0.0452 over 90 frames · PASS here means the PRM cell's bound (< 0.002) sees the planted pop; FAIL means the plant did not reach the face (the PRM cell would pass a resurrected pop) · load 37.7/37.3/38.9
+  REPORT     idle slider keyboard-engaged · rest · rAF calls 0.0/s · ResizeObserver callbacks 0.0/s · layouts 0.0/s · style recalcs 0.0/s · [data-engaged] 0 · load 34.5/36.6/38.6
+  REPORT     idle slider keyboard-engaged · engaged idle · rAF calls 124.3/s · ResizeObserver callbacks 124.3/s · layouts 0.0/s · style recalcs 0.0/s · [data-engaged] 1 · load 34.5/36.6/38.6
+  REPORT     idle slider keyboard-engaged · engaged idle, scrolled off-screen · rAF calls 122.3/s · ResizeObserver callbacks 122.3/s · layouts 0.0/s · style recalcs 0.0/s · [data-engaged] 1 · engaged box -2904..-2882 of 500 · load 34.5/36.6/38.6
+  REPORT     idle slider keyboard-engaged · after Escape · rAF calls 0.0/s · ResizeObserver callbacks 0.0/s · layouts 0.0/s · style recalcs 0.0/s · [data-engaged] 0 · load 34.5/36.6/38.6
+  REPORT     chip preset light · rest → hover: 0.0 % of pixels changed ≥ 16 levels, scale ×1.0000 → ×1.0000 · hover → held press 250 ms: 46.5 %, scale ×1.0000 · load 34.5/36.6/38.6
+  REPORT     chip preset dark · rest → hover: 0.0 % of pixels changed ≥ 16 levels, scale ×1.0000 → ×1.0000 · hover → held press 250 ms: 48.0 %, scale ×1.0000 · load 32.5/36.2/38.4
+CA6-probe chromium FAIL · 6 pass, 1 fail, 0 unmeasured of 7 gating cells (6 reported) · load 34.1/36.6/38.7 at start, 32.5/36.2/38.4 at end
+# 2026-10-29 00:03:30 end · exit 1 · load { 31.90 35.97 38.35 }

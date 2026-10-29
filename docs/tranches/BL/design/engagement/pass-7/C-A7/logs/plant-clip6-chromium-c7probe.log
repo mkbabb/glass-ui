@@ -1,0 +1,11 @@
+# 2026-10-29 00:12:00 start · load { 29.67 28.15 32.73 }
+# cmd: --timeout 60 -- node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7/C-A7/probe/c7-probe.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt/.c7out/builds/plant-clip6 --engine chromium --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7/C-A7/json/plant-clip6-c7 --frames /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7/C-A7/plants/probe --only cliploupe,clipwheel
+# C-A7 probe · C-A7's adversarial cells (chip hover/press fine read, crest inputs, clip under wheel scroll, loupe at a clip edge)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt/.c7out/builds/plant-clip6 · engine chromium · lock wait 0.0 s · other headless processes: chromium 4, webkit 2 · load 28.3/27.9/32.6 at start
+# scene app: harness scenes/App.vue (sha1 9e68012e9522)
+# chromium 149.0.7827.55
+  FAIL       clipwheel · keyboard promoted, wheel-scrolled (CK-20) · scrollTop per wheel event 261/264/267/270/273/276/279/282/285/288/291/294/297/300 · px² of the strip above the scroller differing from the released strip: 728 / 1627 / 2088 / 2557 / 3032 / 3505 / 3976 / 0 / 0 / 0 / 0 / 0 / 0 / 0 · largest 3976, largest adjacent change 3976 (bound 1074 = 3 rows × 358 px) · clip at the last step "" · load 28.2/27.9/32.6
+  REPORT     cliploupe · touch hold, rest box 4 px below the scroller's top edge · promoted true engaged true · loupe 96.6..177.1 px (opacity 1.00), the scroller's clip edge at 171.7 px · 75.2 of 80.6 px of the loupe lie above the edge (93 % cut by the clip) · clip-path "" · load 28.2/27.9/32.6
+  REPORT     cliploupe · touch hold, rest box mid-box (control) · promoted true engaged true · loupe 139.6..220.1 px (opacity 1.00), the scroller's clip edge at 171.7 px · 32.2 of 80.6 px of the loupe lie above the edge (40 % cut by the clip) · clip-path "" · load 28.0/27.8/32.5
+C-A7 probe chromium FAIL · 0 pass, 1 fail, 0 unmeasured of 1 gating cells (2 reported) · load 28.3/27.9/32.6 at start, 28.0/27.8/32.5 at end
+# 2026-10-29 00:12:17 end · exit 1 · load { 26.30 27.49 32.38 }

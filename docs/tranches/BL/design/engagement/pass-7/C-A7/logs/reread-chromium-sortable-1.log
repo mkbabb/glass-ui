@@ -1,0 +1,13 @@
+# 2026-10-29 02:10:23 start · load { 10.08 9.19 9.16 }
+# cmd: --timeout 30 -- node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/e4-momentum.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt/.c7out/builds/c7 --wt /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt --engine chromium --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7/C-A7/json/c7-reread-sortable-1 --scenes sortable
+# E-4 · CK-05 momentum on the visible body, without a teleport
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt/.c7out/builds/c7 · engine chromium · lock wait 0.0 s · other headless processes: chromium 4, webkit 0 · load 20.9/16.2/12.6 at start
+# scene app: harness scenes/App.vue (sha1 9e68012e9522)
+# chromium 149.0.7827.55
+# narrowed to scenes sortable
+  PASS       E-4 sortable fling carries velocity · axis y, page frame · fling: carry 24.35 px, settles -36.69 px past release · still: carry 0.00 px, settles -36.69 px · difference: carry 24.35 px, settle 0.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 0.002 · 263 frames, median 7.9 ms · load 18.8/15.9/12.5
+  PASS       E-4 sortable release continuity · largest one-frame move on release: fling 19.0 px, still 2.6 px · during the drive: fling 40.0 px, still 40.0 px (bound ≤ drive × 1.5 + 2 = 62.0 px) · load 18.8/15.9/12.5
+  PASS       E-4 sortable repeat landing · 3 fling runs, the same drive: 1: v 1046 px/s (80 px / 76.5 ms over 4 samples), carry 24.35, land 201.7 · 2: v 1060 px/s (80 px / 75.5 ms over 4 samples), carry 23.39, land 201.7 · 3: v 902 px/s (80 px / 88.7 ms over 4 samples), carry 20.95, land 201.7 · by landing: land 201.7 px: 3 run(s) at 1046, 1060, 902 px/s · (bound: two runs the event clock cannot tell apart (|Δv| ≤ the sum of their ±2q/dt bands, q 0.1 ms) land within 2 px, and no faster run lands short of a slower one; a fling ≥ 100 px/s carries > 0.00 px; velocity: the release rule's chord over 100 ms, ring 8, replicated from the page's input events) · load 18.2/15.8/12.5
+  PASS       E-4 sortable release PRM · reduce · moved 83.8 px · fling: carry 0.00 px, settles -0.50 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 36.2 px · load 17.0/15.6/12.5
+E-4 chromium PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 20.9/16.2/12.6 at start, 17.0/15.6/12.5 at end
+# 2026-10-29 02:16:54 end · exit 0 · load { 15.98 15.45 12.43 }

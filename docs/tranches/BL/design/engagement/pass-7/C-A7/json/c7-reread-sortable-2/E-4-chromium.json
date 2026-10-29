@@ -1,0 +1,37 @@
+{
+ "id": "E-4",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt/.c7out/builds/c7"
+ },
+ "loadStart": "16.0/15.4/12.4",
+ "loadEnd": "13.5/14.9/12.3",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "E-4 sortable fling carries velocity",
+   "status": "PASS",
+   "line": "axis y, page frame · fling: carry 24.16 px, settles -36.69 px past release · still: carry 0.00 px, settles -36.69 px · difference: carry 24.16 px, settle 0.00 px (bound: either ≥ 4, both at rest) · body opacity ≥ 0.004 · 264 frames, median 7.8 ms",
+   "load": "14.3/15.1/12.3"
+  },
+  {
+   "name": "E-4 sortable release continuity",
+   "status": "PASS",
+   "line": "largest one-frame move on release: fling 18.9 px, still 2.9 px · during the drive: fling 40.0 px, still 40.0 px (bound ≤ drive × 1.5 + 2 = 62.0 px)",
+   "load": "14.3/15.1/12.3"
+  },
+  {
+   "name": "E-4 sortable repeat landing",
+   "status": "PASS",
+   "line": "3 fling runs, the same drive: 1: v 1023 px/s (80 px / 78.2 ms over 4 samples), carry 24.16, land 201.7 · 2: v 1187 px/s (80 px / 67.4 ms over 4 samples), carry 26.65, land 201.7 · 3: v 1018 px/s (80 px / 78.6 ms over 4 samples), carry 21.96, land 201.7 · by landing: land 201.7 px: 3 run(s) at 1023, 1187, 1018 px/s · (bound: two runs the event clock cannot tell apart (|Δv| ≤ the sum of their ±2q/dt bands, q 0.1 ms) land within 2 px, and no faster run lands short of a slower one; a fling ≥ 100 px/s carries > 0.00 px; velocity: the release rule's chord over 100 ms, ring 8, replicated from the page's input events)",
+   "load": "13.5/14.9/12.3"
+  },
+  {
+   "name": "E-4 sortable release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 83.8 px · fling: carry 0.00 px, settles -0.50 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 36.2 px",
+   "load": "13.5/14.9/12.3"
+  }
+ ]
+}

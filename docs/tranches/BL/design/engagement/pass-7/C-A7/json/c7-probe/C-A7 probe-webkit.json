@@ -1,0 +1,127 @@
+{
+ "id": "C-A7 probe",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt/.c7out/builds/c7"
+ },
+ "loadStart": "10.0/9.1/9.3",
+ "loadEnd": "9.8/9.2/9.3",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "chipfine preset chip light",
+   "status": "REPORT",
+   "line": "chip 47.8×21.8 px, class \"configurator-preset-chip glass-capsule engage-chosen shadow-cartoon focus-ring shrink-0 px-3 py-1 text-micro font-medium text-foreground\" · rest → hover: ≥16: 0.0 % · ≥8: 0.6 % · ≥4: 50.9 % · mean |Δ| 3.78 levels · hover → held press 300 ms: ≥16: 47.0 % · ≥8: 51.7 % · ≥4: 53.1 % · mean |Δ| 9.81 levels (data-press true) · rest → press: ≥16: 49.7 % · ≥8: 52.6 % · ≥4: 53.9 % · mean |Δ| 13.59 levels",
+   "load": "11.6/9.4/9.4"
+  },
+  {
+   "name": "chipfine reference button hover light",
+   "status": "REPORT",
+   "line": "button 74.8×40.0 px · rest → hover: ≥16: 0.0 % · ≥8: 0.2 % · ≥4: 1.0 % · mean |Δ| 0.11 levels",
+   "load": "11.6/9.4/9.4"
+  },
+  {
+   "name": "chipfine preset chip dark",
+   "status": "REPORT",
+   "line": "chip 47.8×21.8 px, class \"configurator-preset-chip glass-capsule engage-chosen shadow-cartoon focus-ring shrink-0 px-3 py-1 text-micro font-medium text-foreground\" · rest → hover: ≥16: 0.0 % · ≥8: 47.0 % · ≥4: 51.5 % · mean |Δ| 5.22 levels · hover → held press 300 ms: ≥16: 48.3 % · ≥8: 51.8 % · ≥4: 52.8 % · mean |Δ| 12.65 levels (data-press true) · rest → press: ≥16: 50.7 % · ≥8: 52.0 % · ≥4: 53.8 % · mean |Δ| 17.87 levels",
+   "load": "11.6/9.4/9.4"
+  },
+  {
+   "name": "chipfine reference button hover dark",
+   "status": "REPORT",
+   "line": "button 74.8×40.0 px · rest → hover: ≥16: 0.0 % · ≥8: 0.2 % · ≥4: 5.2 % · mean |Δ| 0.42 levels",
+   "load": "11.7/9.5/9.4"
+  },
+  {
+   "name": "crestinput control switch",
+   "status": "REPORT",
+   "line": "unplanted: peak ×1.0598 · --rung-crest 1 · console errors 0",
+   "load": "11.7/9.5/9.4"
+  },
+  {
+   "name": "crestinput --scale-press switch",
+   "status": "PASS",
+   "line": "planted nonsense: peak ×1.0600 (unplanted ×1.0598; intact) · --rung-crest 1 · console errors naming it 0 of 0",
+   "load": "11.7/9.5/9.4"
+  },
+  {
+   "name": "crestinput --scale-engage switch",
+   "status": "PASS",
+   "line": "planted nonsense: peak ×1.0000 (unplanted ×1.0598; DEGRADED) · --rung-crest 1 · console errors naming it 1 of 1 · \"[glass-ui] engage: --rung-crest is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui stylesheet loaded?\"",
+   "load": "11.5/9.5/9.4"
+  },
+  {
+   "name": "crestinput control checkbox",
+   "status": "REPORT",
+   "line": "unplanted: peak ×1.0599 · --rung-crest 1 · console errors 0",
+   "load": "11.5/9.5/9.4"
+  },
+  {
+   "name": "crestinput --scale-press checkbox",
+   "status": "PASS",
+   "line": "planted nonsense: peak ×1.0598 (unplanted ×1.0599; intact) · --rung-crest 1 · console errors naming it 0 of 0",
+   "load": "11.5/9.5/9.4"
+  },
+  {
+   "name": "crestinput --scale-engage checkbox",
+   "status": "PASS",
+   "line": "planted nonsense: peak ×1.0000 (unplanted ×1.0599; DEGRADED) · --rung-crest 1 · console errors naming it 1 of 1 · \"[glass-ui] engage: --rung-crest is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui stylesheet loaded?\"",
+   "load": "10.9/9.4/9.4"
+  },
+  {
+   "name": "crestinput control chip",
+   "status": "REPORT",
+   "line": "unplanted: peak ×1.0400 · --rung-crest 1.04 · console errors 0",
+   "load": "10.9/9.4/9.4"
+  },
+  {
+   "name": "crestinput --scale-press chip",
+   "status": "PASS",
+   "line": "planted nonsense: peak ×1.0000 (unplanted ×1.0400; DEGRADED) · --rung-crest 1 · console errors naming it 1 of 1 · \"[glass-ui] engage: --rung-crest is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui stylesheet loaded?\"",
+   "load": "10.9/9.4/9.4"
+  },
+  {
+   "name": "crestinput --scale-engage chip",
+   "status": "PASS",
+   "line": "planted nonsense: peak ×1.0400 (unplanted ×1.0400; intact) · --rung-crest 1.04 · console errors naming it 0 of 0",
+   "load": "10.5/9.3/9.4"
+  },
+  {
+   "name": "crestinput control button",
+   "status": "REPORT",
+   "line": "unplanted: peak ×1.0599 · --rung-crest 1.06 · console errors 0",
+   "load": "10.5/9.3/9.4"
+  },
+  {
+   "name": "crestinput --scale-press button",
+   "status": "PASS",
+   "line": "planted nonsense: peak ×1.0600 (unplanted ×1.0599; intact) · --rung-crest 1.06 · console errors naming it 0 of 0",
+   "load": "10.5/9.3/9.4"
+  },
+  {
+   "name": "crestinput --scale-engage button",
+   "status": "PASS",
+   "line": "planted nonsense: peak ×1.0000 (unplanted ×1.0599; DEGRADED) · --rung-crest 1 · console errors naming it 1 of 1 · \"[glass-ui] engage: --rung-crest is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui stylesheet loaded?\"",
+   "load": "10.6/9.4/9.4"
+  },
+  {
+   "name": "clipwheel · keyboard promoted, wheel-scrolled (CK-20)",
+   "status": "PASS",
+   "line": "scrollTop per wheel event 261/264/267/270/273/276/279/282/285/288/291/294/297/300 · px² of the strip above the scroller differing from the released strip: 0 / 0 / 0 / 0 / 0 / 0 / 0 / 0 / 0 / 0 / 0 / 0 / 0 / 0 · largest 0, largest adjacent change 0 (bound 1074 = 3 rows × 358 px) · clip at the last step \"inset(35.47px -8.74px -126.79px)\"",
+   "load": "10.6/9.4/9.4"
+  },
+  {
+   "name": "cliploupe · touch hold, rest box 4 px below the scroller's top edge",
+   "status": "REPORT",
+   "line": "promoted true engaged true · loupe 96.6..177.1 px (opacity 1.00), the scroller's clip edge at 171.7 px · 75.2 of 80.6 px of the loupe lie above the edge (93 % cut by the clip) · clip-path \"inset(-3.09px -8.74px -84.23px)\"",
+   "load": "10.5/9.4/9.4"
+  },
+  {
+   "name": "cliploupe · touch hold, rest box mid-box (control)",
+   "status": "REPORT",
+   "line": "promoted true engaged true · loupe 139.6..220.1 px (opacity 1.00), the scroller's clip edge at 171.7 px · 32.2 of 80.6 px of the loupe lie above the edge (40 % cut by the clip) · clip-path \"inset(-43.66px -8.74px)\"",
+   "load": "9.8/9.2/9.3"
+  }
+ ]
+}

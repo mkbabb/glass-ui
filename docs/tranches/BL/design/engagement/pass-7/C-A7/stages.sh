@@ -2,11 +2,13 @@
 # C-A7 stages. `ENGINE=chromium stages.sh <stage...>` runs each stage in its own guarded call (never --light: each starts
 # a browser); `ENGINE=webkit INSIDE=1 stages.sh <stage...>` runs them bare inside the ONE `guarded --exclusive webkit`
 # acquisition (chain-webkit.sh). Every log opens and closes with the 1/5/15-min load.
+# C-A7b (the completion seat): worktree C-A7b/wt; stages tabs4 (CK-05 tabs re-read), plant-clip6-loupe (the loupe and the
+# wheel cell on the pass-6 construction, as reference), plant-chipfaint-probe (chipfine on the chipfaint plant).
 C=/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7/C-A7
 H=/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness
 P6=/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-6
 P7=/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7
-WT=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7/wt
+WT=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-A7b/wt
 O=$WT/.c7out/builds; B=$O/c7; E=${ENGINE:-chromium}
 typeset -A F; F=(E-1 e1-census E-2 e2-commit E-3 e3-slider E-4 e4-momentum E-5 e5-touch E-6 e6-idle E-7 e7-one-writer E-8 e8-clock E-9 e9-prm E-10 e10-continuity E-11 e11-fail-loud E-12 e12-floor)
 st() {
@@ -39,6 +41,10 @@ for s in ${@}; do
     plant-clip6) st plant-clip6-$E-E-10 node $H/e10-continuity.mjs --build $O/plant-clip6 --wt $WT --engine $E --out $C/json/plant-clip6 --scenes clipstale
                  st plant-clip6-$E-probe node $P7/E7/probe/e7-probe.mjs --build $O/plant-clip6 --engine $E --out $C/json/plant-clip6 --only cliptouch ;;
     plant-loupe6) st plant-loupe6-$E-probe node $P7/E7/probe/e7-probe.mjs --build $O/plant-loupe6 --engine $E --out $C/json/plant-loupe6 --only loupe --frames $C/plants/loupe --label plant-loupe6 ;;
+    tabs4) st tabs4-$E-${RUN:-1} node $H/e4-momentum.mjs --build $B --wt $WT --engine $E --out $C/json/c7-tabs4-${RUN:-1} --scenes tabsdrag ;;
+    tabs4b) st tabs4-$E-2 node $H/e4-momentum.mjs --build $B --wt $WT --engine $E --out $C/json/c7-tabs4-2 --scenes tabsdrag ;;
+    plant-clip6-loupe) st plant-clip6-$E-c7probe node $C/probe/c7-probe.mjs --build $O/plant-clip6 --engine $E --out $C/json/plant-clip6-c7 --frames $C/plants/probe --only cliploupe,clipwheel ;;
+    plant-chipfaint-probe) st plant-chipfaint-$E-c7probe node $C/probe/c7-probe.mjs --build $O/plant-chipfaint --engine $E --out $C/json/plant-chipfaint-c7 --only chipfine ;;
     plant-fling6) st plant-fling6-$E-probe node $P7/E7/probe/e7-probe.mjs --build $O/plant-fling6 --engine $E --out $C/json/plant-fling6 --only carry ;;
   esac
 done
