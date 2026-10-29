@@ -1,0 +1,14 @@
+2026-10-29 09:26:48 · load { 11.91 11.85 10.30 } · harness H9 932637d53662 (45 files)
+REPORT · H4-6, H5-5, H5-6, reported: the commit on wide tiles against a 4 px gap; the selection mark over light media; the selected K2 name's ink; on a route build only
+  target dp10-src (flavor src) · Playwright WebKit 26.5 · harness H9 932637d53662
+  load 11.91 / 11.85 / 10.30 at start, 10.85 / 11.62 / 10.24 at end · other headless browser processes at start: 9 (waited 0.1 s) · browser lock waited 0 s
+  FAIL       kick · preset-migrated forced to two 300 px columns at a 4 px gap · item 1 300.00×63.58, rest gap 4.00 px · programmatic commit (checked true), 79 frames · peak scale 1.0275 · deepest push into a neighbour 0.13 px (want ≤ 0.05) · the commit's spring «background-color, color, toggle-group-commit»
+  PASS       kick-spring · preset-migrated · the commit's spring, named (reported with the kick, B-5) · CSSTransition «background-color» 180 ms, easing cubic-bezier(0.4, 0, 0.2, 1); CSSTransition «color» 180 ms, easing cubic-bezier(0.4, 0, 0.2, 1); CSSAnimation «toggle-group-commit» 450 ms, easing linear(0 0%, 0.4703 4.17%, 0.7811 8.33%, 0.9497 12.5%, 1 16.… · traced: peak +0.0275 at 82.00 ms, dip −0.0045 at 306.00 ms, settle 1.0000 · ζ ≈ 0.50 · median frame 10.00 ms · an overshoot and a bounce under the settle
+  info-pass  kick · preset-migrated at the scene's own geometry · item 1 204.00×63.58, rest gap 8.00 px · peak scale 1.0275 · deepest push 0.00 px
+  UNMEASURED mark · v2-migrated dark · UNMEASURED: no mark painted (0 device px change with ::after hidden; FV3-6 is built only if Q-3 rules (b))
+  UNMEASURED mark · v2-migrated light · UNMEASURED: no mark painted (0 device px change with ::after hidden; FV3-6 is built only if Q-3 rules (b))
+  PASS       name-ink · specimen-migrated light · the selected name oklch(0.216115 0.006126 56.043385) is its item's ink oklch(0.216115 0.006126 56.043385) (sRGB 28, 25, 23; --selection-ink oklch(from light-dark(#1c1917, #e9e6e2) min(l, 0.42) c h / 1)) · unselected name rgb(112, 89, 66), item rgb(112, 89, 66) · the name's ink selected against unselected 2.66:1
+  PASS       name-ink · specimen-migrated dark · the selected name oklch(0.926152 0.006292 75.403397) is its item's ink oklch(0.926152 0.006292 75.403397) (sRGB 233, 230, 226; --selection-ink oklch(from #e9e6e2 max(l, 0.8) c h / 1)) · unselected name rgb(195, 185, 172), item rgb(195, 185, 172) · the name's ink selected against unselected 1.56:1
+REPORT FAIL · 3/4 gating cells pass, 1 unmeasured [library 3/4]
+  json /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D4/p12/remeasure12/out/runs/dp10-src/REPORT-webkit.json
+exit 1 · 2026-10-29 09:26:57 · load { 10.85 11.62 10.24 }
