@@ -3,7 +3,9 @@
 // The atlas homepage school finder (a modal CommandDialog) set `body` overflow to
 // hidden in 4 of 4 cells per engine (B7B-DOCK O-11): reka's DialogOverlay takes
 // `useBodyScrollLock`, which writes `overflow: hidden`, padding and pointer-events onto
-// `body`. Under a consumer root with `overflow-x: clip` that makes `body` the scroller,
+// `body` and blanks `body` pointer-events on release. reka's DismissableLayer still sets
+// `body` pointer-events to none while a modal is open; that block is modal semantics and
+// stays, and with the body lock gone the consumer's own value comes back on close. Under a consumer root with `overflow-x: clip` that makes `body` the scroller,
 // so sticky elements drop and the page can jump on release. The glass scrim now takes
 // the one counted root lock, shared with ExpandableContainer.
 import { mount } from "@vue/test-utils";
@@ -74,6 +76,30 @@ describe("modal scroll lock", () => {
             expect(document.body.style.overflow).toBe("");
             // The consumer's own inline root value comes back, not a blank.
             expect(document.documentElement.style.overflow).toBe("clip");
+            wrapper.unmount();
+        },
+        10_000,
+    );
+
+    // The one body write a modal keeps is reka's DismissableLayer outside-pointer block
+    // (modal semantics: the page behind is not clickable). It must be the layer's write
+    // alone, so the consumer's own inline value comes back on close, not a blank.
+    it.each(["dialog", "sheet"] as const)(
+        "a modal %s blocks outside pointers on body and restores the consumer value",
+        async (kind) => {
+            document.body.style.pointerEvents = "auto";
+            const open = ref(false);
+            const wrapper = mount(modalHost(kind, open), mountOpts);
+
+            open.value = true;
+            await settle();
+            expect(document.querySelector('[data-state="open"]')).not.toBeNull();
+            expect(document.body.style.pointerEvents).toBe("none");
+            expect(document.body.style.overflow).toBe("");
+
+            await closeAndSettle(open);
+            expect(document.body.style.pointerEvents).toBe("auto");
+            expect(document.body.style.overflow).toBe("");
             wrapper.unmount();
         },
         10_000,
