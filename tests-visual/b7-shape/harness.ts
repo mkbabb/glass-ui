@@ -216,6 +216,51 @@ const scenes: Record<string, () => Promise<Component>> = {
         });
     },
 
+    // B7c C3-1 and C3-2: the atlas homepage school finder. A sticky row holds the trigger
+    // of a modal CommandDialog with a short first group and a long second one.
+    palette: async () => {
+        const cmd = await import("../../src/components/command");
+        const dlg = await import("../../src/components/dialog");
+        clipRoot();
+        const dashboards = ["SCI", "USF", "ECF", "Demand", "BEAD", "Speedtest", "VFT"];
+        const units = Array.from({ length: 60 }, (_, i) => `School unit ${String(i + 1).padStart(2, "0")}`);
+        return defineComponent(() => {
+            const open = ref(false);
+            w.__open = (v: boolean) => (open.value = v);
+            return () =>
+                h("div", { style: "height:4000px" }, [
+                    h("div", { style: "height:600px" }),
+                    h(
+                        "div",
+                        {
+                            "data-witness": "sticky-row",
+                            style: "position:sticky;top:0;display:flex;gap:16px;padding:12px;background:var(--background);z-index:5",
+                        },
+                        [
+                            h("button", { "data-witness": "finder", onClick: () => (open.value = true) }, "Find a school unit"),
+                        ],
+                    ),
+                    h(
+                        cmd.CommandDialog,
+                        { open: open.value, surface: "opaque", "onUpdate:open": (v: boolean) => (open.value = v) },
+                        () => [
+                            h(dlg.DialogTitle, { class: "sr-only" }, () => "Find a school unit"),
+                            h(dlg.DialogDescription, { class: "sr-only" }, () => "Search dashboards and school units."),
+                            h(cmd.CommandInput, { placeholder: "Search dashboards and school units" }),
+                            h(cmd.CommandList, { "data-witness": "palette-list" }, () => [
+                                h(cmd.CommandGroup, { heading: "Dashboards", "data-witness": "group-dashboards" }, () =>
+                                    dashboards.map((d) => h(cmd.CommandItem, { value: d, textValue: d }, () => d)),
+                                ),
+                                h(cmd.CommandGroup, { heading: "School units", "data-witness": "group-units" }, () =>
+                                    units.map((u) => h(cmd.CommandItem, { value: u, textValue: u }, () => u)),
+                                ),
+                            ]),
+                        ],
+                    ),
+                ]);
+        });
+    },
+
     // D-3 and D-6: a twelve-row Select near the top of the page.
     select: async () => {
         const sel = await import("../../src/components/select");

@@ -22,5 +22,10 @@ export type {
     FloatingPlacementProps,
     FloatingSide,
 } from "./placement";
+export {
+    acquireRootScrollLock,
+    releaseRootScrollLock,
+    useRootScrollLock,
+} from "./root-scroll-lock";
 export { SHEET_QUERY, useSheetWidth } from "./sheet-width";
 export { useModalShortcutBarrier } from "./shortcuts";

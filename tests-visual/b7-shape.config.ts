@@ -13,6 +13,7 @@ export const B7_SPECS = [
     "overlay-sizing.spec.ts",
     "radius-scale.spec.ts",
     "press-scale.spec.ts",
+    "CommandDialog.b7c.spec.ts",
 ];
 
 export default {

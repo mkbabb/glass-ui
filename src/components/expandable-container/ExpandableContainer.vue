@@ -65,41 +65,6 @@
     </Teleport>
 </template>
 
-<script lang="ts">
-/* THE SCROLL LOCK RIDES THE ROOT, NOT `body` (U/B7 D-2). `overflow: hidden` on `body`,
- * under a root whose own overflow is not `visible` (a consumer's `overflow-x: clip`),
- * makes `body` a scroll container, so every sticky element on the page drops to its
- * in-flow position while the lock holds. On the root element the value propagates to
- * the viewport, which stays the page's one scroller, and the root's
- * `scrollbar-gutter: stable` keeps the layout from shifting when the bar hides. It also
- * no longer shares `body` with reka's own modal lock, so the two cannot restore each
- * other's stale value when they close out of order (U-F04). */
-let rootOverflowLockDepth = 0;
-let rootOverflowBeforeLock: string | null = null;
-
-function acquireRootOverflowLock() {
-    if (typeof document === "undefined") return false;
-
-    const root = document.documentElement;
-    if (rootOverflowLockDepth === 0) {
-        rootOverflowBeforeLock = root.style.overflow;
-        root.style.overflow = "hidden";
-    }
-    rootOverflowLockDepth += 1;
-    return true;
-}
-
-function releaseRootOverflowLock() {
-    if (typeof document === "undefined" || rootOverflowLockDepth === 0) return;
-
-    rootOverflowLockDepth -= 1;
-    if (rootOverflowLockDepth === 0) {
-        document.documentElement.style.overflow = rootOverflowBeforeLock ?? "";
-        rootOverflowBeforeLock = null;
-    }
-}
-</script>
-
 <script setup lang="ts">
 import { nextTick, onUnmounted, ref, watch } from "vue";
 import { Maximize2, Minimize2 } from "@lucide/vue";
@@ -107,6 +72,7 @@ import { FocusScope } from "reka-ui";
 import { registerShortcut } from "../../composables/keyboard";
 import type { Surface } from "../_shared/axes";
 import { FOCUSABLE_SELECTOR } from "../_shared/focus";
+import { acquireRootScrollLock, releaseRootScrollLock } from "../_shared/overlay";
 
 defineOptions({ inheritAttrs: false });
 
@@ -163,9 +129,9 @@ let restoreTarget: HTMLElement | null = null;
 
 function syncRootOverflowLock(fullscreen: boolean) {
     if (fullscreen && !holdsRootOverflowLock) {
-        holdsRootOverflowLock = acquireRootOverflowLock();
+        holdsRootOverflowLock = acquireRootScrollLock();
     } else if (!fullscreen && holdsRootOverflowLock) {
-        releaseRootOverflowLock();
+        releaseRootScrollLock();
         holdsRootOverflowLock = false;
     }
 }
