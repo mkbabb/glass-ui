@@ -1,0 +1,15 @@
+# 2026-10-29 12:52:43 start · load { 27.31 23.32 19.20 }
+# cmd: node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/e7-one-writer.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/C-E8/wt/.ce8out/builds/cand8 --wt /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/C-E8/wt --engine chromium --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-8/C-E8/json/cand8
+# E-7 · one writer of data-engaged, meaning held
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/C-E8/wt/.ce8out/builds/cand8 · engine chromium · lock wait 18.1 s · other headless processes: chromium 15, webkit 0 · load 25.9/23.2/19.2 at start
+# scene app: harness scenes/App.vue (sha1 310d45686fce)
+# chromium 149.0.7827.55
+  PASS       E-7 writers data-engaged (static) · 1 writer file(s): src/composables/motion/engage/stage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/C-E8/wt · load 26.5/23.4/19.3
+  FAIL       E-7 writers data-held (static) · 2 writer file(s): src/components/dock/GlassDock.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/C-E8/wt · load 26.5/23.4/19.3
+  PASS       E-7 writers data-press (static) · 1 writer file(s): src/composables/motion/engage/press.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/C-E8/wt · load 26.5/23.4/19.3
+  PASS       E-7 writers data-commit (static) · 1 writer file(s): src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/C-E8/wt · load 26.5/23.4/19.3
+  PASS       E-7 slider held · [data-engaged] nodes while pointer-held 1 · bound ≥ 1 · load 26.5/23.4/19.3
+  PASS       E-7 slider held PRM · reduce · [data-engaged] nodes while pointer-held 1 · bound ≥ 1 · load 26.5/23.4/19.3
+  PASS       E-7 modal open, nothing held · dialog open true · veil nodes 1 · [data-engaged] nodes 0 · bound 0 · load 26.5/23.4/19.3
+E-7 chromium FAIL · 6 pass, 1 fail, 0 unmeasured of 7 gating cells (0 reported) · load 25.9/23.2/19.2 at start, 26.5/23.4/19.3 at end
+# 2026-10-29 12:53:11 end · exit 1 · load { 25.43 23.21 19.28 }

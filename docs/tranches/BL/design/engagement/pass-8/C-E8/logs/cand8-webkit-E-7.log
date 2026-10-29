@@ -1,0 +1,15 @@
+# 2026-10-29 14:03:46 start · load { 6.06 7.15 10.73 }
+# cmd: node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/e7-one-writer.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/C-E8/wt/.ce8out/builds/cand8 --wt /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/C-E8/wt --engine webkit --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-8/C-E8/json/cand8
+# E-7 · one writer of data-engaged, meaning held
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/C-E8/wt/.ce8out/builds/cand8 · engine webkit · lock wait 0.0 s · other headless processes: chromium 11, webkit 0 · load 6.1/7.1/10.7 at start
+# scene app: harness scenes/App.vue (sha1 310d45686fce)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  PASS       E-7 writers data-engaged (static) · 1 writer file(s): src/composables/motion/engage/stage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/C-E8/wt · load 6.1/7.1/10.7
+  FAIL       E-7 writers data-held (static) · 2 writer file(s): src/components/dock/GlassDock.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/C-E8/wt · load 6.1/7.1/10.7
+  PASS       E-7 writers data-press (static) · 1 writer file(s): src/composables/motion/engage/press.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/C-E8/wt · load 6.1/7.1/10.7
+  PASS       E-7 writers data-commit (static) · 1 writer file(s): src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/C-E8/wt · load 6.1/7.1/10.7
+  PASS       E-7 slider held · [data-engaged] nodes while pointer-held 1 · bound ≥ 1 · load 6.1/7.1/10.7
+  PASS       E-7 slider held PRM · reduce · [data-engaged] nodes while pointer-held 1 · bound ≥ 1 · load 6.1/7.1/10.7
+  PASS       E-7 modal open, nothing held · dialog open true · veil nodes 1 · [data-engaged] nodes 0 · bound 0 · load 6.1/7.1/10.7
+E-7 webkit FAIL · 6 pass, 1 fail, 0 unmeasured of 7 gating cells (0 reported) · load 6.1/7.1/10.7 at start, 6.1/7.1/10.7 at end
+# 2026-10-29 14:03:51 end · exit 1 · load { 6.06 7.13 10.70 }

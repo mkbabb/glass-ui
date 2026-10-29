@@ -1,0 +1,22 @@
+# 2026-10-29 12:52:05 start · load { 24.24 22.15 18.60 }
+# cmd: node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/e6-idle.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/C-E8/wt/.ce8out/builds/cand8 --wt /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/C-E8/wt --engine chromium --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-8/C-E8/json/cand8
+# E-6 · the idle rung under the compositor-only bound
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/C-E8/wt/.ce8out/builds/cand8 · engine chromium · lock wait 21.6 s · other headless processes: chromium 15, webkit 0 · load 27.9/23.2/19.1 at start
+# scene app: harness scenes/App.vue (sha1 310d45686fce)
+# chromium 149.0.7827.55
+  FAIL       E-6 s6 present light · 0 running infinite animation(s) at rest · load 28.8/23.5/19.2
+  UNMEASURED E-6 s6 channel light · no idle animation to read · load 28.8/23.5/19.2
+  UNMEASURED E-6 s6 shape light · no idle animation to read · load 28.8/23.5/19.2
+  UNMEASURED E-6 s6 amplitude light · no idle animation to read · load 28.8/23.5/19.2
+  UNMEASURED E-6 s6 period light · no idle animation to read · load 28.8/23.5/19.2
+  PASS       E-6 s6 layouts/s light · layouts/s 0.0 · style recalcs/s 0.0 over 3 s at rest (bound 0 layouts/s) · load 28.8/23.5/19.2
+  PASS       E-6 s6 PRM light · 0 idle animation(s) under reduced motion, 0 spatial · load 28.8/23.5/19.2
+  FAIL       E-6 s6 present dark · 0 running infinite animation(s) at rest · load 27.5/23.3/19.2
+  UNMEASURED E-6 s6 channel dark · no idle animation to read · load 27.5/23.3/19.2
+  UNMEASURED E-6 s6 shape dark · no idle animation to read · load 27.5/23.3/19.2
+  UNMEASURED E-6 s6 amplitude dark · no idle animation to read · load 27.5/23.3/19.2
+  UNMEASURED E-6 s6 period dark · no idle animation to read · load 27.5/23.3/19.2
+  PASS       E-6 s6 layouts/s dark · layouts/s 0.0 · style recalcs/s 0.0 over 3 s at rest (bound 0 layouts/s) · load 27.5/23.3/19.2
+  PASS       E-6 s6 PRM dark · 0 idle animation(s) under reduced motion, 0 spatial · load 27.5/23.3/19.2
+E-6 chromium FAIL · 4 pass, 2 fail, 8 unmeasured of 14 gating cells (0 reported) · load 27.9/23.2/19.1 at start, 27.5/23.3/19.2 at end
+# 2026-10-29 12:52:43 end · exit 1 · load { 27.31 23.32 19.20 }
