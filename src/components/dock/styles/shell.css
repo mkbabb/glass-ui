@@ -284,17 +284,12 @@
        legitimate scroll ports (`.dock-scroll-{x,y}`, `overflow: auto`) STAY
        `auto` — the orthogonality holds: the
        `containerName` opt-in does not touch the clip. */
-    /* The box `overflow: clip` MORPH APERTURE is DELETED (all four
-       `:not(.vertical)`/`.vertical` × `[data-morphing]` aperture rules + the rest-expanded
-       lift). `.glass-dock` NEVER clips its descendants now: the L0 `.dock-plate` owns the
-       visible-extent morph via `clip-path` off `--dock-t`, and the L1 control run is
-       `overflow: visible` BOTH axes — a hover/press plate at the dock edge overhangs
-       UN-CLIPPED. The legitimate vertical SCROLL port (`overflow-y: auto`)
-       stays below; its cross axis is `visible` (the `overflow-clip-margin` band-aid is
-       gone — the plate is the clip). During the transitional window (until
-       re-points the plate scalar) the box-size morph still drives the
-       extent + the plate clip is a corner-safe no-op; a mid-morph content spill is the
-       tolerated transitional state the content-wrapper clip closes. */
+    /* AT REST `.glass-dock` clips nothing. The L0 `.dock-plate` owns the visible extent,
+       and the L1 control run is `overflow: visible` on both axes, so a hover/press plate
+       at the settled dock's edge overhangs it. The vertical SCROLL port
+       (`overflow-y: auto`, below) keeps its cross axis `visible`. The box's one clip is
+       the morph clip in the next rule: on the morph axis only, only while
+       `[data-morphing]` is set, and lifted under the press keepalive. */
     .glass-dock {
         overflow: visible;
     }

@@ -423,8 +423,9 @@ defineExpose({
             L1 THE CONTROLS. The normal-flow control run OVER the plate.
             `display: contents` (dock/dock.css) so it GROUPS the controls the SFC places
             WITHOUT interposing a flex context — the controls stay direct flex children of
-            `.glass-dock` (the flex layout is unchanged), and NO ancestor clips them
-            (`overflow: visible` both axes; the box carries no clip/contain).
+            `.glass-dock` (the flex layout is unchanged). At rest no ancestor clips them
+            (`overflow: visible` both axes); while `[data-morphing]` is set the box clips
+            on the morph axis only (dock/styles/shell.css, the morph clip).
         -->
         <div class="dock-controls">
         <!--

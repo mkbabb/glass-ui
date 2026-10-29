@@ -116,9 +116,8 @@ or renamed, and a consumer has nothing to change.
   expand shifts the entering summary to its rest at the end scalar), RED on the round-2
   cure. Engine `release-10-1-3.spec.ts`: `collapse()` 120 ms into a hover expand, right,
   left and bottom at 390. The summary glyph paints inside the plate on every frame after
-  it and its last morph frame is its rest. RED on 10.1.2 and on the round-2 cure in
-  Chromium. The WebKit cells are owed: Playwright WebKit 2287 crashes on every dock page
-  at load, on v10.1.2 alike (`docs/release-10.1.3/implement.md`, Round 3).
+  it and its last morph frame is its rest. RED on 10.1.2 in Chromium and Playwright
+  WebKit 2287, and on the round-2 cure in Chromium; GREEN on the branch in both engines.
 
 - **The morph clips its content to the plate (critique-4 D-1).** The layers lay out where
   they rest and the plate grows over them from the measured origin, so a pane's controls

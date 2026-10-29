@@ -82,8 +82,9 @@
        ledger, not this wave's — recorded so the count is not double-claimed.
 
        The clip that IS load-bearing is untouched and lives elsewhere: the L0
-       `.dock-plate` owns the visible extent and its own clip (dock.css, shell.css:285 —
-       "`.glass-dock` NEVER clips its descendants now"). Striking this register does not
+       `.dock-plate` owns the visible extent and its own clip (dock.css), and the box
+       clips only on its morph axis while `[data-morphing]` is set (shell.css, the morph
+       clip). Striking this register does not
        remove a clip from the dock; it removes a second, inert claimant to one. */
 
     /* ── The box-size morph — the deformation-FREE convex-blend scale ─────────────
